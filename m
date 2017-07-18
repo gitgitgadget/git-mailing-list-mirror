@@ -2,801 +2,197 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B83520387
-	for <e@80x24.org>; Tue, 18 Jul 2017 20:50:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E4C0A20387
+	for <e@80x24.org>; Tue, 18 Jul 2017 20:54:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752244AbdGRUuA (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Jul 2017 16:50:00 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:35380 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751997AbdGRUt7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Jul 2017 16:49:59 -0400
-Received: by mail-pg0-f68.google.com with SMTP id d193so4187255pgc.2
-        for <git@vger.kernel.org>; Tue, 18 Jul 2017 13:49:59 -0700 (PDT)
+        id S1751815AbdGRUyl (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Jul 2017 16:54:41 -0400
+Received: from mail-vk0-f54.google.com ([209.85.213.54]:33373 "EHLO
+        mail-vk0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751602AbdGRUyk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jul 2017 16:54:40 -0400
+Received: by mail-vk0-f54.google.com with SMTP id r126so276415vkg.0
+        for <git@vger.kernel.org>; Tue, 18 Jul 2017 13:54:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=WS8Ivnwo9UEJs1vekaTwGlhRyYNZUf0lFZ8PsAxPGrY=;
-        b=BpusWlKqvjj1U9UWd1+D4Wl0wh13UfspfSszW8xRdmb6pLXWAPp3jgDUm0Nqgaz5Gw
-         PeBPLlP4W52WcT9oCdZz3nCsQ3fqW5EXoCq+URpE2SJFBE48E+tq6aMszLgJpGI5KbhG
-         vvQiWdiGen3OOD0yqNjRtfntMX/QNC1CTKEPte6wJpbNBMMKzwY0goJJWcllKsZU9bSl
-         ddTU39yf26DsXovsXISmoVsolG9raKbTQWEtMko4HAOALsoV+Y05GPVX5kzC3VMZjroD
-         lqjIw+Xi9CvwZGfiEe7DX1aRJiiEc0JCc/NtKsLSd+EYY1wrpagnh3HiRZMEFMZPArkU
-         mxwA==
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=BnX/b5eQ4aQ5VNQgFWBX+D5Yu2bQcFzen3Ivk7n/VwI=;
+        b=a5dOBBCU/NAcUKsqNjHbu0uHn/x+H3P647g38EQjMk5LOqhqPtN1TNcZ2qSrmmFJoJ
+         5istXy4DrqB2hBz9a7ogNrSdRKliTnowcAbZ7gq2cDHtq98lHo6zYtpg7zRPP/RGCBt6
+         i3uwc3b5XJAeBHHlx4erDE0PPmMDKVzmyAgs8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=WS8Ivnwo9UEJs1vekaTwGlhRyYNZUf0lFZ8PsAxPGrY=;
-        b=gPFkpzTmd77ng/cxeA/zlpnOiYn4eHdNWvYwyLhync3IGomGJg4n20F416YHFj8UP9
-         NnDtXX8G9+i9ZWvNyMHbr8XZHP7mgpq7MUuWlAPHHLzdhyZavhWj8VP+EPVGzRSHXHLR
-         at1LldVT9dfxrDe4PgATtJK4W4Muq5SxS6XoBC4uPwDmSwntuk0dc6lQOxfIdfgBpyMT
-         dQO2L0oaj2WlqNF6GDdSxN+l7d9rcGfhlh2Azjl/3R6s27YHpGPeLYV4FkNPZA0oFZHo
-         jSUPieREe/9zoVhCksdChF60ogSI8gKyBjQQP5rTbcwLYKQ2veHcGXE7Bhy4RqTAXOsi
-         3tFw==
-X-Gm-Message-State: AIVw112z1hBkQjAdHeodKa/KKInRly/Phhxh5pXF3b3rkqddfZE6dLB8
-        OHs0AAugZIsbXwSQXgk=
-X-Received: by 10.98.95.67 with SMTP id t64mr3596328pfb.127.1500410998856;
-        Tue, 18 Jul 2017 13:49:58 -0700 (PDT)
-Received: from localhost.localdomain ([47.11.2.197])
-        by smtp.gmail.com with ESMTPSA id e5sm402742pfd.41.2017.07.18.13.49.52
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 18 Jul 2017 13:49:58 -0700 (PDT)
-From:   Prathamesh Chavan <pc44800@gmail.com>
-To:     git@vger.kernel.org
-Cc:     sbeller@google.com, christian.couder@gmail.com,
-        Prathamesh Chavan <pc44800@gmail.com>
-Subject: [GSoC][PATCH 8/8] submodule: port submodule subcommand 'summary' from shell to C
-Date:   Wed, 19 Jul 2017 02:19:04 +0530
-Message-Id: <20170718204904.3768-9-pc44800@gmail.com>
-X-Mailer: git-send-email 2.13.0
-In-Reply-To: <20170718204904.3768-1-pc44800@gmail.com>
-References: <20170718204904.3768-1-pc44800@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=BnX/b5eQ4aQ5VNQgFWBX+D5Yu2bQcFzen3Ivk7n/VwI=;
+        b=IsmIVdqBofSu7fBl9217NuXNP9tmv/wCCnAYSeQoFf7/DxSF56qojKojVtSoxNKGtf
+         4761ius7D4HcJDsnlZWefsOLr8IBHPv8kIc2jpv7Z2L/CS3hCVMePIK1yZAkVnALztxu
+         M+zcM6nYYeGC6SImvYmKe5o5VYlKVw6HzY843GQr144hHSJSRaBKIeDgDNU1XsrfSm7j
+         UGE5yJx11L7k5ZHlwp5qF4qR7h28zqGI4qqMzYyJJbK5nGnL/5IO+ToXxvWPfxSIFyJI
+         tMe6p7CcbOdw0ReSIhAnDJZ6RsyHB93SxUljSV8GRN5RFrUt2PX2OymubZYlkF7RU4z+
+         E+Ew==
+X-Gm-Message-State: AIVw110m0nn3hQ3zF+ajBkITafYK5cii8MyfbQROsx3dem9jg6MrA2Rd
+        Nnp4jxpT40BCZ017ccJSvKgvUS9Uv2QU4Ss=
+X-Received: by 10.31.59.69 with SMTP id i66mr2106600vka.105.1500411279551;
+ Tue, 18 Jul 2017 13:54:39 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.103.137.4 with HTTP; Tue, 18 Jul 2017 13:54:18 -0700 (PDT)
+In-Reply-To: <xmqqlgnmhmep.fsf@gitster.mtv.corp.google.com>
+References: <CAJo=hJtTp2eA3z9wW9cHo-nA7kK40vVThqh6inXpbCcqfdMP9g@mail.gmail.com>
+ <xmqqlgnmhmep.fsf@gitster.mtv.corp.google.com>
+From:   Shawn Pearce <spearce@spearce.org>
+Date:   Tue, 18 Jul 2017 13:54:18 -0700
+Message-ID: <CAJo=hJuP9GdudFsA_ToFQwx-zESaDHRDXHLxmvAXSX5CKmh7JQ@mail.gmail.com>
+Subject: Re: reftable [v2]: new ref storage format
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The submodule subcommand 'summary' is ported in the process of
-making git-submodule a builtin. The function cmd_summary() from
-git-submodule.sh is ported to functions module_summary(),
-compute_summary_module_list(), prepare_submodule_summary() and
-print_submodule_summary().
+On Mon, Jul 17, 2017 at 12:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Shawn Pearce <spearce@spearce.org> writes:
+>> You can read a rendered version of this here:
+>> https://googlers.googlesource.com/sop/jgit/+/reftable/Documentation/technical/reftable.md
+>
+> Just a few comments.
+>
+>> A variable number of 4-byte `restart_offset` values follows the
+>> records.  Offsets are relative to the start of the block (0 in first
+>> block to include file header) and refer to the first byte of any
+>> `ref_record` whose name has not been prefixed compressed.  Readers can
+>> start linear scans from any of these records.
+>
+> It is unclear what "0 in first block to include file header" wants
+> to say.  Do I write "8" if I want to express the offset of the first
+> record in the first block, or do I write "0"?
 
-The first function module_summary() parses the options of submodule
-subcommand and also acts as the front-end of this subcommand.
-After parsing them, it calls the compute_summary_module_list()
+"8". I've updated the text to try and clarify this better.
 
-The functions compute_summary_module_list() runs the diff_cmd,
-and generates the modules list, as required by the subcommand.
-The generation of this module list is done by the using the
-callback function submodule_summary_callback(), and stored in the
-structure module_cb.
 
-Once the module list is generated, prepare_submodule_summary()
-further goes through the list and filters the list, for
-eventually calling the print_submodule_summary() function.
+>> The 2-byte `number_of_restarts + 1` stores the number of entries in
+>> the `restart_offset` list.
+>
+> It is unclear whose responsibility it is to add this "1".  Does this
+> mean a reader thinks there is one entry in the restart table when it
+> sees "0" in the number_of_restarts field (hence you can have max
+> 65536 entries in total)?
 
-Finally, the print_submodule_summary() takes care of generating
-and printing the summary for each submodule.
+Correct, I've reworded this section to clarify the reader must add +1
+to reach the potential max of 65536 entries in total.
 
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
----
-In this new version of patch,
-instead of adding the GIT_DIR to the env_variables of child_process,
-we use the function prepare_submodule_repo_env().
+>> Readers can use the restart count to binary search between restarts
+>> before starting a linear scan.  The `number_of_restarts` field must be
+>> the last 2 bytes of the block as specified by `block_len` from the
+>> block header.
+>
+> Does the new term "restart count" mean the same thing as
+> number_of_restarts?
 
-Complete build report of this series is available at:
-https://travis-ci.org/pratham-pc/git/builds/
-Branch: week-9
-Build #135
+Not quite (because of the +1 issue), I've fixed the document to
+introduce and define restart_count.
 
- builtin/submodule--helper.c | 469 ++++++++++++++++++++++++++++++++++++++++++++
- git-submodule.sh            | 182 +----------------
- 2 files changed, 470 insertions(+), 181 deletions(-)
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 8a679abf6..c438a922d 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -13,6 +13,9 @@
- #include "remote.h"
- #include "refs.h"
- #include "connect.h"
-+#include "revision.h"
-+#include "diffcore.h"
-+#include "diff.h"
- 
- typedef void (*submodule_list_func_t)(const struct cache_entry *list_item,
- 				      void *cb_data);
-@@ -757,6 +760,471 @@ static int module_name(int argc, const char **argv, const char *prefix)
- 	return 0;
- }
- 
-+struct module_cb {
-+	unsigned int mod_src;
-+	unsigned int mod_dst;
-+	struct object_id oid_src;
-+	struct object_id oid_dst;
-+	char status;
-+	const char *sm_path;
-+};
-+#define MODULE_CB_INIT { 0, 0, NULL, NULL, '\0', NULL }
-+
-+struct module_cb_list {
-+	struct module_cb **entries;
-+	int alloc, nr;
-+};
-+#define MODULE_CB_LIST_INIT { NULL, 0, 0 }
-+
-+struct summary_cb {
-+	int argc;
-+	const char **argv;
-+	const char *prefix;
-+	char *diff_cmd;
-+	unsigned int cached: 1;
-+	unsigned int for_status: 1;
-+	unsigned int quiet: 1;
-+	unsigned int files: 1;
-+	int summary_limits;
-+};
-+#define SUMMARY_CB_INIT { 0, NULL, NULL, NULL, 0, 0, 0, 0, 0 }
-+
-+static void print_submodule_summary(struct summary_cb *info,
-+				    struct module_cb *p)
-+{
-+	int missing_src = 0;
-+	int missing_dst = 0;
-+	char *displaypath;
-+	char *sha1_abbr_src;
-+	char *sha1_abbr_dst;
-+	int errmsg = 0;
-+	int total_commits = -1;
-+	struct strbuf sb_sha1_src = STRBUF_INIT;
-+	struct strbuf sb_sha1_dst = STRBUF_INIT;
-+	char *sha1_dst = oid_to_hex(&p->oid_dst);
-+	char *sha1_src = oid_to_hex(&p->oid_src);
-+	char *sm_git_dir = xstrfmt("%s/.git", p->sm_path);
-+	int is_sm_git_dir = 0;
-+
-+	if (!info->cached && !strcmp(sha1_dst, sha1_to_hex(null_sha1))) {
-+		if (S_ISGITLINK(p->mod_dst)) {
-+			struct child_process cp_rev_parse = CHILD_PROCESS_INIT;
-+			struct strbuf sb_rev_parse = STRBUF_INIT;
-+
-+			cp_rev_parse.git_cmd = 1;
-+			cp_rev_parse.no_stderr = 1;
-+			cp_rev_parse.dir = p->sm_path;
-+			prepare_submodule_repo_env(&cp_rev_parse.env_array);
-+
-+			argv_array_pushl(&cp_rev_parse.args,
-+					 "rev-parse", "HEAD", NULL);
-+			if (!capture_command(&cp_rev_parse, &sb_rev_parse, 0)) {
-+				strbuf_strip_suffix(&sb_rev_parse, "\n");
-+				sha1_dst = xstrdup(sb_rev_parse.buf);
-+			}
-+			strbuf_release(&sb_rev_parse);
-+		} else if (S_ISLNK(p->mod_dst) || S_ISREG(p->mod_dst)) {
-+			struct child_process cp_hash_object = CHILD_PROCESS_INIT;
-+			struct strbuf sb_hash_object = STRBUF_INIT;
-+
-+			cp_hash_object.git_cmd = 1;
-+			argv_array_pushl(&cp_hash_object.args,
-+					 "hash-object", p->sm_path,
-+					 NULL);
-+			if (!capture_command(&cp_hash_object,
-+					     &sb_hash_object, 0)) {
-+				strbuf_strip_suffix(&sb_hash_object, "\n");
-+				sha1_dst = xstrdup(sb_hash_object.buf);
-+			}
-+			strbuf_release(&sb_hash_object);
-+		} else {
-+			if (p->mod_dst != 0)
-+				die(_("unexpected mode %d\n"), p->mod_dst);
-+		}
-+	}
-+
-+	if (is_git_directory(sm_git_dir))
-+		is_sm_git_dir = 1;
-+
-+	if (is_sm_git_dir && S_ISGITLINK(p->mod_src)) {
-+		struct child_process cp_rev_parse = CHILD_PROCESS_INIT;
-+
-+		cp_rev_parse.git_cmd = 1;
-+		cp_rev_parse.no_stdout = 1;
-+		cp_rev_parse.dir = p->sm_path;
-+		prepare_submodule_repo_env(&cp_rev_parse.env_array);
-+
-+		argv_array_pushl(&cp_rev_parse.args, "rev-parse", "-q",
-+				 "--verify", NULL);
-+		argv_array_pushf(&cp_rev_parse.args, "%s^0", sha1_src);
-+
-+		if (run_command(&cp_rev_parse))
-+			missing_src = 1;
-+	}
-+
-+	if (is_sm_git_dir && S_ISGITLINK(p->mod_dst)) {
-+		struct child_process cp_rev_parse = CHILD_PROCESS_INIT;
-+
-+		cp_rev_parse.git_cmd = 1;
-+		cp_rev_parse.no_stdout = 1;
-+		cp_rev_parse.dir = p->sm_path;
-+		prepare_submodule_repo_env(&cp_rev_parse.env_array);
-+
-+		argv_array_pushl(&cp_rev_parse.args, "rev-parse", "-q",
-+				 "--verify", NULL);
-+		argv_array_pushf(&cp_rev_parse.args, "%s^0", sha1_dst);
-+
-+		if (run_command(&cp_rev_parse))
-+			missing_dst = 1;
-+	}
-+
-+	displaypath = get_submodule_displaypath(p->sm_path, info->prefix);
-+
-+	if (!missing_dst && !missing_src) {
-+		if (is_sm_git_dir) {
-+			struct child_process cp_rev_list = CHILD_PROCESS_INIT;
-+			struct strbuf sb_rev_list = STRBUF_INIT;
-+			const char *range;
-+
-+			if (S_ISGITLINK(p->mod_src) && S_ISGITLINK(p->mod_dst))
-+				range = xstrfmt("%s...%s", sha1_src, sha1_dst);
-+			else if (S_ISGITLINK(p->mod_src))
-+				range = xstrdup(sha1_src);
-+			else
-+				range = xstrdup(sha1_dst);
-+
-+			cp_rev_list.git_cmd = 1;
-+			cp_rev_list.dir = p->sm_path;
-+			prepare_submodule_repo_env(&cp_rev_list.env_array);
-+
-+			argv_array_pushl(&cp_rev_list.args, "rev-list",
-+					 "--first-parent", range, "--", NULL);
-+			if (!capture_command(&cp_rev_list, &sb_rev_list, 0)) {
-+				if (sb_rev_list.len)
-+					total_commits = count_lines(sb_rev_list.buf,
-+								    sb_rev_list.len);
-+				else
-+					total_commits = 0;
-+			}
-+			strbuf_release(&sb_rev_list);
-+		}
-+	} else {
-+		errmsg = 1;
-+	}
-+
-+	strbuf_addstr(&sb_sha1_src, sha1_src);
-+	strbuf_addstr(&sb_sha1_dst, sha1_dst);
-+
-+	strbuf_remove(&sb_sha1_src, 7, 33);
-+	strbuf_remove(&sb_sha1_dst, 7, 33);
-+
-+	sha1_abbr_src = strbuf_detach(&sb_sha1_src, NULL);
-+	sha1_abbr_dst = strbuf_detach(&sb_sha1_dst, NULL);
-+
-+	if (p->status == 'T') {
-+		if (S_ISGITLINK(p->mod_dst)) {
-+			if (total_commits < 0)
-+				printf(_("* %s %s(blob)->%s(submodule):\n"),
-+					 displaypath, sha1_abbr_src,
-+					 sha1_abbr_dst);
-+			else
-+				printf(_("* %s %s(blob)->%s(submodule) (%d):\n"),
-+					 displaypath, sha1_abbr_src,
-+					 sha1_abbr_dst, total_commits);
-+		} else {
-+			if (total_commits < 0)
-+				printf(_("* %s %s(submodule)->%s(blob):\n"),
-+					 displaypath, sha1_abbr_src,
-+					 sha1_abbr_dst);
-+			else
-+				printf(_("* %s %s(submodule)->%s(blob) (%d):\n"),
-+					 displaypath, sha1_abbr_src,
-+					 sha1_abbr_dst, total_commits);
-+		}
-+	} else {
-+		if (total_commits < 0)
-+			printf("* %s %s...%s:\n", displaypath, sha1_abbr_src,
-+				 sha1_abbr_dst);
-+		else
-+			printf("* %s %s...%s (%d):\n", displaypath,
-+				 sha1_abbr_src, sha1_abbr_dst, total_commits);
-+	}
-+
-+	if (errmsg) {
-+		/*
-+		 * Don't give error msg for modification whose dst is not
-+		 * submodule, i.e. deleted or changed to blob
-+		 */
-+		if (S_ISGITLINK(p->mod_src)) {
-+			if (missing_src && missing_dst) {
-+				printf(_("  Warn: %s doesn't contain commits %s and %s\n"),
-+				 displaypath, sha1_src, sha1_dst);
-+			} else if (missing_src) {
-+				printf(_("  Warn: %s doesn't contain commit %s\n"),
-+				 displaypath, sha1_src);
-+			} else {
-+				printf(_("  Warn: %s doesn't contain commit %s\n"),
-+				 displaypath, sha1_dst);
-+			}
-+		}
-+
-+	} else if (is_sm_git_dir) {
-+		if (S_ISGITLINK(p->mod_src) && S_ISGITLINK(p->mod_dst)) {
-+			struct child_process cp_log = CHILD_PROCESS_INIT;
-+			char *limit = NULL;
-+
-+			if (info->summary_limits > 0)
-+				limit = xstrfmt("-%d", info->summary_limits);
-+
-+			cp_log.git_cmd = 1;
-+			cp_log.dir = p->sm_path;
-+			prepare_submodule_repo_env(&cp_log.env_array);
-+
-+			argv_array_pushl(&cp_log.args, "log", NULL);
-+			if (limit)
-+				argv_array_push(&cp_log.args, limit);
-+			argv_array_pushl(&cp_log.args, "--pretty=  %m %s",
-+					 "--first-parent", NULL);
-+			argv_array_pushf(&cp_log.args, "%s...%s", sha1_src,
-+					 sha1_dst);
-+
-+			run_command(&cp_log);
-+
-+		} else if (S_ISGITLINK(p->mod_dst)) {
-+			struct child_process cp_log = CHILD_PROCESS_INIT;
-+
-+			cp_log.git_cmd = 1;
-+			cp_log.dir = p->sm_path;
-+			prepare_submodule_repo_env(&cp_log.env_array);
-+
-+			argv_array_pushl(&cp_log.args, "log",
-+					 "--pretty=  > %s", "-1",
-+					 sha1_dst, NULL);
-+
-+			run_command(&cp_log);
-+		} else {
-+			struct child_process cp_log = CHILD_PROCESS_INIT;
-+
-+			cp_log.git_cmd = 1;
-+			cp_log.dir = p->sm_path;
-+			prepare_submodule_repo_env(&cp_log.env_array);
-+
-+			argv_array_pushl(&cp_log.args, "log",
-+					 "--pretty=  < %s",
-+					 "-1", sha1_src, NULL);
-+
-+			run_command(&cp_log);
-+		}
-+	}
-+	printf("\n");
-+}
-+
-+static void prepare_submodule_summary(struct summary_cb *info,
-+				      struct module_cb_list *list)
-+{
-+	int i;
-+	for (i = 0; i < list->nr; i++) {
-+		struct module_cb *p = list->entries[i];
-+		struct child_process cp_rev_parse = CHILD_PROCESS_INIT;
-+
-+		if (p->status == 'D' || p->status == 'T') {
-+			print_submodule_summary(info, p);
-+			continue;
-+		}
-+
-+		if (info->for_status) {
-+			char *config_key;
-+			const char *ignore_config = "none";
-+			const char *value;
-+			const struct submodule *sub = submodule_from_path(null_sha1, p->sm_path);
-+
-+			if (sub) {
-+				config_key = xstrfmt("submodule.%s.ignore",
-+						     sub->name);
-+				if (!git_config_get_value(config_key, &value))
-+					ignore_config = value;
-+				else if (sub->ignore)
-+					ignore_config = sub->ignore;
-+
-+				if (p->status != 'A' && !strcmp(ignore_config,
-+								"all"))
-+					continue;
-+			}
-+		}
-+
-+		/* Also show added or modified modules which are checked out */
-+		cp_rev_parse.dir = p->sm_path;
-+		cp_rev_parse.git_cmd = 1;
-+		cp_rev_parse.no_stderr = 1;
-+		cp_rev_parse.no_stdout = 1;
-+
-+		argv_array_pushl(&cp_rev_parse.args, "rev-parse",
-+				 "--git-dir", NULL);
-+
-+		if (!run_command(&cp_rev_parse))
-+			print_submodule_summary(info, p);
-+	}
-+}
-+
-+static void submodule_summary_callback(struct diff_queue_struct *q,
-+				       struct diff_options *options,
-+				       void *data)
-+{
-+	int i;
-+	struct module_cb_list *list = data;
-+	for (i = 0; i < q->nr; i++) {
-+		struct diff_filepair *p = q->queue[i];
-+		struct module_cb *temp;
-+
-+		if (!S_ISGITLINK(p->one->mode) && !S_ISGITLINK(p->two->mode))
-+			continue;
-+		temp = (struct module_cb*)malloc(sizeof(struct module_cb));
-+		temp->mod_src = p->one->mode;
-+		temp->mod_dst = p->two->mode;
-+		temp->oid_src = p->one->oid;
-+		temp->oid_dst = p->two->oid;
-+		temp->status = p->status;
-+		temp->sm_path = xstrdup(p->one->path);
-+
-+		ALLOC_GROW(list->entries, list->nr + 1, list->alloc);
-+		list->entries[list->nr++] = temp;
-+	}
-+}
-+
-+static int compute_summary_module_list(char *head, struct summary_cb *info)
-+{
-+	struct argv_array diff_args = ARGV_ARRAY_INIT;
-+	struct rev_info rev;
-+	struct module_cb_list list = MODULE_CB_LIST_INIT;
-+
-+	argv_array_push(&diff_args, info->diff_cmd);
-+	if (info->cached)
-+		argv_array_push(&diff_args, "--cached");
-+	argv_array_pushl(&diff_args, "--ignore-submodules=dirty", "--raw",
-+			 NULL);
-+	if (head)
-+		argv_array_push(&diff_args, head);
-+	argv_array_push(&diff_args, "--");
-+	if (info->argc)
-+		argv_array_pushv(&diff_args, info->argv);
-+
-+	git_config(git_diff_basic_config, NULL);
-+	init_revisions(&rev, info->prefix);
-+	gitmodules_config();
-+	rev.abbrev = 0;
-+	precompose_argv(diff_args.argc, diff_args.argv);
-+
-+	diff_args.argc = setup_revisions(diff_args.argc, diff_args.argv,
-+					 &rev, NULL);
-+	rev.diffopt.output_format = DIFF_FORMAT_NO_OUTPUT | DIFF_FORMAT_CALLBACK;
-+	rev.diffopt.format_callback = submodule_summary_callback;
-+	rev.diffopt.format_callback_data = &list;
-+
-+	if (!info->cached) {
-+		if (!strcmp(info->diff_cmd, "diff-index"))
-+			setup_work_tree();
-+		if (read_cache_preload(&rev.diffopt.pathspec) < 0) {
-+			perror("read_cache_preload");
-+			return -1;
-+		}
-+	} else if (read_cache() < 0) {
-+		perror("read_cache");
-+		return -1;
-+	}
-+
-+	if (!strcmp(info->diff_cmd, "diff-index"))
-+		run_diff_index(&rev, info->cached);
-+	else
-+		run_diff_files(&rev, 0);
-+	prepare_submodule_summary(info, &list);
-+	return 0;
-+
-+}
-+
-+static int module_summary(int argc, const char **argv, const char *prefix)
-+{
-+	struct summary_cb info = SUMMARY_CB_INIT;
-+	int cached = 0;
-+	char *diff_cmd = "diff-index";
-+	int for_status = 0;
-+	int quiet = 0;
-+	int files = 0;
-+	int summary_limits = -1;
-+	char *head = NULL;
-+	struct child_process cp_rev = CHILD_PROCESS_INIT;
-+	struct strbuf sb_rev = STRBUF_INIT;
-+
-+	struct option module_summary_options[] = {
-+		OPT__QUIET(&quiet, N_("Suppress output for initializing a submodule")),
-+		OPT_BOOL(0, "cached", &cached, N_("Use the commit stored in the index instead of the submodule HEAD")),
-+		OPT_BOOL(0, "files", &files, N_("To compares the commit in the index with that in the submodule HEAD")),
-+		OPT_BOOL(0, "for-status", &for_status, N_("Skip submodules with 'all' ignore_config value")),
-+		OPT_INTEGER('n', "summary-limits", &summary_limits, N_("Limit the summary size")),
-+		OPT_END()
-+	};
-+
-+	const char *const git_submodule_helper_usage[] = {
-+		N_("git submodule--helper summary [<options>] [--] [<path>]"),
-+		NULL
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, module_summary_options,
-+			     git_submodule_helper_usage, 0);
-+
-+	if (!summary_limits)
-+		return 0;
-+
-+	cp_rev.git_cmd = 1;
-+	argv_array_pushl(&cp_rev.args, "rev-parse", "-q", "--verify",
-+			 NULL);
-+	if (argc)
-+		argv_array_push(&cp_rev.args, argv[0]);
-+	else
-+		argv_array_pushl(&cp_rev.args, "HEAD", NULL);
-+
-+	if (!capture_command(&cp_rev, &sb_rev, 0)) {
-+		strbuf_strip_suffix(&sb_rev, "\n");
-+		head = xstrdup(sb_rev.buf);
-+		if (argc) {
-+			argv++;
-+			argc--;
-+		}
-+		strbuf_release(&sb_rev);
-+	} else if (!argc || !strcmp(argv[0], "HEAD")) {
-+		/* before the first commit: compare with an empty tree */
-+		struct stat st;
-+		unsigned char sha1[20];
-+		if (fstat(0, &st) < 0 || index_fd(sha1, 0, &st, 2, prefix, 3))
-+			die("Unable to add %s to database", sha1);
-+		head = sha1_to_hex(sha1);
-+		if (argc) {
-+			argv++;
-+			argc--;
-+		}
-+	} else {
-+		head = "HEAD";
-+	}
-+
-+	if (files) {
-+		if (cached)
-+			die(_("The --cached option cannot be used with the --files option"));
-+		diff_cmd = "diff-files";
-+		head = NULL;
-+	}
-+
-+	info.argc = argc;
-+	info.argv = argv;
-+	info.prefix = prefix;
-+	info.cached = cached;
-+	info.for_status = for_status;
-+	info.quiet = quiet;
-+	info.files = files;
-+	info.summary_limits = summary_limits;
-+	info.diff_cmd = diff_cmd;
-+
-+	return compute_summary_module_list(head, &info);
-+}
-+
- struct sync_cb {
- 	const char *prefix;
- 	unsigned int quiet: 1;
-@@ -1774,6 +2242,7 @@ static struct cmd_struct commands[] = {
- 	{"print-default-remote", print_default_remote, 0},
- 	{"sync", module_sync, SUPPORT_SUPER_PREFIX},
- 	{"deinit", module_deinit, SUPPORT_SUPER_PREFIX},
-+	{"summary", module_summary, SUPPORT_SUPER_PREFIX},
- 	{"remote-branch", resolve_remote_submodule_branch, 0},
- 	{"push-check", push_check, 0},
- 	{"absorb-git-dirs", absorb_git_dirs, SUPPORT_SUPER_PREFIX},
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 73e6f093f..a427ddafd 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -51,31 +51,6 @@ die_if_unmatched ()
- 	fi
- }
- 
--#
--# Print a submodule configuration setting
--#
--# $1 = submodule name
--# $2 = option name
--# $3 = default value
--#
--# Checks in the usual git-config places first (for overrides),
--# otherwise it falls back on .gitmodules.  This allows you to
--# distribute project-wide defaults in .gitmodules, while still
--# customizing individual repositories if necessary.  If the option is
--# not in .gitmodules either, print a default value.
--#
--get_submodule_config () {
--	name="$1"
--	option="$2"
--	default="$3"
--	value=$(git config submodule."$name"."$option")
--	if test -z "$value"
--	then
--		value=$(git config -f .gitmodules submodule."$name"."$option")
--	fi
--	printf '%s' "${value:-$default}"
--}
--
- isnumber()
- {
- 	n=$(($1 + 0)) 2>/dev/null && test "$n" = "$1"
-@@ -755,163 +730,8 @@ cmd_summary() {
- 		shift
- 	done
- 
--	test $summary_limit = 0 && return
--
--	if rev=$(git rev-parse -q --verify --default HEAD ${1+"$1"})
--	then
--		head=$rev
--		test $# = 0 || shift
--	elif test -z "$1" || test "$1" = "HEAD"
--	then
--		# before the first commit: compare with an empty tree
--		head=$(git hash-object -w -t tree --stdin </dev/null)
--		test -z "$1" || shift
--	else
--		head="HEAD"
--	fi
--
--	if [ -n "$files" ]
--	then
--		test -n "$cached" &&
--		die "$(gettext "The --cached option cannot be used with the --files option")"
--		diff_cmd=diff-files
--		head=
--	fi
--
--	cd_to_toplevel
--	eval "set $(git rev-parse --sq --prefix "$wt_prefix" -- "$@")"
--	# Get modified modules cared by user
--	modules=$(git $diff_cmd $cached --ignore-submodules=dirty --raw $head -- "$@" |
--		sane_egrep '^:([0-7]* )?160000' |
--		while read -r mod_src mod_dst sha1_src sha1_dst status sm_path
--		do
--			# Always show modules deleted or type-changed (blob<->module)
--			if test "$status" = D || test "$status" = T
--			then
--				printf '%s\n' "$sm_path"
--				continue
--			fi
--			# Respect the ignore setting for --for-status.
--			if test -n "$for_status"
--			then
--				name=$(git submodule--helper name "$sm_path")
--				ignore_config=$(get_submodule_config "$name" ignore none)
--				test $status != A && test $ignore_config = all && continue
--			fi
--			# Also show added or modified modules which are checked out
--			GIT_DIR="$sm_path/.git" git-rev-parse --git-dir >/dev/null 2>&1 &&
--			printf '%s\n' "$sm_path"
--		done
--	)
--
--	test -z "$modules" && return
--
--	git $diff_cmd $cached --ignore-submodules=dirty --raw $head -- $modules |
--	sane_egrep '^:([0-7]* )?160000' |
--	cut -c2- |
--	while read -r mod_src mod_dst sha1_src sha1_dst status name
--	do
--		if test -z "$cached" &&
--			test $sha1_dst = 0000000000000000000000000000000000000000
--		then
--			case "$mod_dst" in
--			160000)
--				sha1_dst=$(GIT_DIR="$name/.git" git rev-parse HEAD)
--				;;
--			100644 | 100755 | 120000)
--				sha1_dst=$(git hash-object $name)
--				;;
--			000000)
--				;; # removed
--			*)
--				# unexpected type
--				eval_gettextln "unexpected mode \$mod_dst" >&2
--				continue ;;
--			esac
--		fi
--		missing_src=
--		missing_dst=
--
--		test $mod_src = 160000 &&
--		! GIT_DIR="$name/.git" git-rev-parse -q --verify $sha1_src^0 >/dev/null &&
--		missing_src=t
--
--		test $mod_dst = 160000 &&
--		! GIT_DIR="$name/.git" git-rev-parse -q --verify $sha1_dst^0 >/dev/null &&
--		missing_dst=t
-+	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper summary ${GIT_QUIET:+--quiet} ${prefix:+--prefix "$prefix"} ${for_status:+--for-status} ${files:+--files} ${cached:+--cached} ${summary_limit:+-n $summary_limit} "$@"
- 
--		display_name=$(git submodule--helper relative-path "$name" "$wt_prefix")
--
--		total_commits=
--		case "$missing_src,$missing_dst" in
--		t,)
--			errmsg="$(eval_gettext "  Warn: \$display_name doesn't contain commit \$sha1_src")"
--			;;
--		,t)
--			errmsg="$(eval_gettext "  Warn: \$display_name doesn't contain commit \$sha1_dst")"
--			;;
--		t,t)
--			errmsg="$(eval_gettext "  Warn: \$display_name doesn't contain commits \$sha1_src and \$sha1_dst")"
--			;;
--		*)
--			errmsg=
--			total_commits=$(
--			if test $mod_src = 160000 && test $mod_dst = 160000
--			then
--				range="$sha1_src...$sha1_dst"
--			elif test $mod_src = 160000
--			then
--				range=$sha1_src
--			else
--				range=$sha1_dst
--			fi
--			GIT_DIR="$name/.git" \
--			git rev-list --first-parent $range -- | wc -l
--			)
--			total_commits=" ($(($total_commits + 0)))"
--			;;
--		esac
--
--		sha1_abbr_src=$(echo $sha1_src | cut -c1-7)
--		sha1_abbr_dst=$(echo $sha1_dst | cut -c1-7)
--		if test $status = T
--		then
--			blob="$(gettext "blob")"
--			submodule="$(gettext "submodule")"
--			if test $mod_dst = 160000
--			then
--				echo "* $display_name $sha1_abbr_src($blob)->$sha1_abbr_dst($submodule)$total_commits:"
--			else
--				echo "* $display_name $sha1_abbr_src($submodule)->$sha1_abbr_dst($blob)$total_commits:"
--			fi
--		else
--			echo "* $display_name $sha1_abbr_src...$sha1_abbr_dst$total_commits:"
--		fi
--		if test -n "$errmsg"
--		then
--			# Don't give error msg for modification whose dst is not submodule
--			# i.e. deleted or changed to blob
--			test $mod_dst = 160000 && echo "$errmsg"
--		else
--			if test $mod_src = 160000 && test $mod_dst = 160000
--			then
--				limit=
--				test $summary_limit -gt 0 && limit="-$summary_limit"
--				GIT_DIR="$name/.git" \
--				git log $limit --pretty='format:  %m %s' \
--				--first-parent $sha1_src...$sha1_dst
--			elif test $mod_dst = 160000
--			then
--				GIT_DIR="$name/.git" \
--				git log --pretty='format:  > %s' -1 $sha1_dst
--			else
--				GIT_DIR="$name/.git" \
--				git log --pretty='format:  < %s' -1 $sha1_src
--			fi
--			echo
--		fi
--		echo
--	done
- }
- #
- # List all submodules, prefixed with:
--- 
-2.13.0
+>> ### Log block format
+>>
+>> A log block is written as:
+>>
+>>     'g'
+>>     uint24( block_len )
+>>     zlib_deflate {
+>>       log_record*
+>>       int32( restart_offset )*
+>>       int16( number_of_restarts )
+>>     }
+>>
+>> Log blocks look similar to ref blocks, except `block_type = 'g'`.
+>
+> Is there a general recommended strategy for writers to choose how
+> many entries to include in a single physical block?  I understand
+> that the deflated whole must fit in the physical block whose length
+> is defined in the footer of the whole file, and in general you would
+> not know how small the data deflates down to before compressing,
+> right?
 
+No, this is an  incorrect understanding. The deflated log blocks do
+not match the physical block length of the file. They are variable
+length, matching whatever the deflater output, with no inter-block
+padding.
+
+Writers should allocate a "reasonable buffer" (my prototype has it
+default to 2x the ref block length), pack log records into that, then
+deflate that when its at capacity.
+
+
+>> Log record keys are structured as:
+>>
+>>     ref_name '\0' reverse_int32( time_sec )
+>>
+>> where `time_sec` is the update time in seconds since the epoch.  The
+>> `reverse_int32` function inverses the value so lexographical ordering
+>> the network byte order time sorts more recent records first:
+>>
+>>     reverse_int(int32 t) {
+>>       return 0xffffffff - t;
+>>     }
+>
+> Is 2038 an issue, or by that time we'd all be retired together with
+> this file format and it won't be our problem?
+
+Based on discussion with Michael Haggerty, this is now an 8 byte field
+storing microseconds since the epoch. We should be good through year
+9999.
+
+
+>> ### Log index
+>>
+>> The log index stores the log key (`refname \0 reverse_int32(time_sec)`)
+>> for the last log record of every log block in the file, supporting
+>> bounded-time lookup.
+>
+> This assumes that timestamps never wildly rewind in the reflog,
+> doesn't it?  Is that a sensible assumption?
+
+Oy. I forgot that local clock skew can cause this sort of behavior. :(
+
+> Or does "the last log record" in the above mean "the log record with
+> largest timestamp?  ... ah, not that is still not sufficient.  You'd
+> still need to assume that timestamps on entries in one log block must
+> be all older than the ones on entries in later log blocks.  Hmph...
+
+Correct; I was assuming the times would be in order.
+
+> Also it is not clear to me how reflogs for two refs would be
+> intermixed in the log blocks, and what log keys for the entries must
+> be recorded in the log index, to facilitate efficient lookup.  Is it
+> assumed that a consecutive sequence of log blocks record reflogs for
+> the same ref, before the sequence of log blocks switch to record
+> reflogs for another ref, or something?
+
+Multiple refs share the same log block.
+
+>> A log index block must be written if 2 or more log blocks are written
+>> to the file.  If present, the log index appears after the first log
+>> block.  There is no padding used to align the log index to block
+>> alignment.
+>>
+>> Log index format is identical to ref index, except the keys are 5
+>> bytes longer to include `'\0'` and the 4-byte `reverse_int32(time)`.
+>> Records use `block_offset` to refer to the start of a log block.
+>
+> I am assuming that we do not care about being able to quickly
+> determine master@{24028}; I would imagine that it wouldn't be too
+> hard to add an index to help such query, but I offhand would not
+> know the details until I figure out how the format handles reflog
+> entries for multiple refs first.
+
+There is no assistance for master@{24028} quickly, its just a brute
+force scan through 24,028 log records that pertain to master. Roughly
+the same as the current reflog format.
