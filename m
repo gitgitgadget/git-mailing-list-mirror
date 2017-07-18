@@ -6,111 +6,114 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C89351FF30
-	for <e@80x24.org>; Tue, 18 Jul 2017 21:34:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F7941FF30
+	for <e@80x24.org>; Tue, 18 Jul 2017 21:38:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752109AbdGRVed (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Jul 2017 17:34:33 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60079 "EHLO
+        id S1752598AbdGRVig (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Jul 2017 17:38:36 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63972 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751560AbdGRVec (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Jul 2017 17:34:32 -0400
+        with ESMTP id S1752360AbdGRVif (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jul 2017 17:38:35 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 122B87C2E5;
-        Tue, 18 Jul 2017 17:34:26 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 35AA58008F;
+        Tue, 18 Jul 2017 17:38:34 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=bR8GlziAkqIpRBETAhwgzR/iSMM=; b=jP3Qth
-        3lzM392nndARVwknNS852bXT6TPBT4vDUqMoiL6jeLPGBSjnXmnYGGhGlizesl28
-        nXhvQJCnvvaz4jnJbXM5SE4snAu8teKzO9+yAUoarCK8VelUwl+4FcXHFhl1n1+i
-        yEJv8BSrIz00bRIaklsBvroeLi6vm4Vb5k3aI=
+        :content-type; s=sasl; bh=auF9V3syuoFDj8UvQoeWvA3liAk=; b=KmugyE
+        s8bOgfpZpTNu+xQCY/wRUUekyfg9+SLHWtW+qMjbZVYWQ6anAVVAl9oxIwAPni1x
+        xb++WFyGkkYydA6pGDwwIv5HG5dqgdI4PRIegE6QGmzMlHnLj9At+oy3MSbzSbkO
+        jfwVnKeSsYe2TDw8vQ1njl5MC1+O2PDc0vxfU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Z6z2rkX3iYEIU8PLyGv53hvlrMqXcUFs
-        WDP5FS1sTtZ0W3qbkoTuzzs4JyXQ9BHobKbiNN0I671r5DSOIZjK3wDxeXM1UBQk
-        vGLiVaSwtC1rlUunQARz6PAPRBK3K3J6FOFt5qk350qN3MHYcmimNzN/Ym92WZ9V
-        RHobceZnPOM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0AA167C2E4;
-        Tue, 18 Jul 2017 17:34:26 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=kYwpLppegwp9ZlfKPKM4dMbPnGKRXC6X
+        O2gxJVLcHJoYnogfJdV1WjTAdrE9Jr2EsVAbLDBsOlS79toS1IHxdVHDngNGnKvm
+        cpPcsyURsjUZsndMQpvKBMDX4wkuY3W81RbweMvXJSx6lOFQn74WZscLdgtu3qJP
+        weThyqECTdg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2D16F8008E;
+        Tue, 18 Jul 2017 17:38:34 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6EFB57C2E3;
-        Tue, 18 Jul 2017 17:34:25 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6C4CA8008D;
+        Tue, 18 Jul 2017 17:38:33 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
-        sbeller@google.com
-Subject: Re: [PATCH 2/3] setup: have the_repository use the_index
-References: <20170711220408.173269-1-bmwill@google.com>
-        <20170711220408.173269-3-bmwill@google.com>
-        <xmqqzica1pli.fsf@gitster.mtv.corp.google.com>
-        <20170712180143.GD65927@google.com>
-        <xmqqmv891jct.fsf@gitster.mtv.corp.google.com>
-        <20170712213339.GI93855@aiede.mtv.corp.google.com>
-        <xmqqvamxz63i.fsf@gitster.mtv.corp.google.com>
-Date:   Tue, 18 Jul 2017 14:34:24 -0700
-In-Reply-To: <xmqqvamxz63i.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Wed, 12 Jul 2017 14:40:49 -0700")
-Message-ID: <xmqq379to2e7.fsf@gitster.mtv.corp.google.com>
+To:     Santiago Torres <santiago@nyu.edu>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jul 2017, #04; Thu, 13)
+References: <xmqqo9snsy0k.fsf@gitster.mtv.corp.google.com>
+        <20170714002754.jyck5qmykbmuado7@LykOS.localdomain>
+        <xmqqfudzsq7u.fsf@gitster.mtv.corp.google.com>
+        <20170714140241.mqg5256ml3grmrn6@LykOS.localdomain>
+        <xmqqwp7bqbvg.fsf@gitster.mtv.corp.google.com>
+        <20170717214241.yui75hywg2ddkfsb@LykOS.localdomain>
+        <xmqqmv82g1g7.fsf@gitster.mtv.corp.google.com>
+        <20170718175458.hadk64c3yccyv57t@LykOS.localdomain>
+        <xmqqeftdpor5.fsf@gitster.mtv.corp.google.com>
+        <20170718211651.rcnbkhcwem4sbcb5@LykOS.localdomain>
+Date:   Tue, 18 Jul 2017 14:38:32 -0700
+In-Reply-To: <20170718211651.rcnbkhcwem4sbcb5@LykOS.localdomain> (Santiago
+        Torres's message of "Tue, 18 Jul 2017 17:16:52 -0400")
+Message-ID: <xmqqvampmnmv.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: DEF7BDAC-6C00-11E7-89BE-EFB41968708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 72C7FCB8-6C01-11E7-9C54-61520C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Santiago Torres <santiago@nyu.edu> writes:
 
-> Jonathan Nieder <jrnieder@gmail.com> writes:
->
->>
->> All that said, I don't have a strong opinion on this.  Both the 1-word
->> approach (a pointer) and 24-word approach (embedding) are tolerable
->> and there are reasons to prefer each.
->
-> I do not care too much about 24-word wastage.  If this were not "a
-> pointer pretending to be embedded object", the fix in 1/3 wouldn't
-> have been necessary.  I am worried about this being an invitations
-> for such unnecesasry bugs.
+> ... It seems Debian oldstable and other variants still ship gpg1,
+> which doesn't have it. Would it make sense to have a fallthrough branch
+> on the switch statement for gpg2.1 instead? something like the attached patch.
 
-Another thing I noticed that you already pointed out was this bit in
-your review message:
+If the problem of leftover agent is limited to a narrow versions of
+GPG2, alternatively we could unconditionally attempt to use gpgconf
+and ignore the failure ;-), but as long as we know all problematic
+ones identify themselves as "gpg (GnuPG) 2.1*", then your patch
+(with s/;&/;;/ of course ;-)) sounds very sensible.
 
-> I wonder if this can be done sooner.  For example, does the following
-> work?  This way, 'the_repository->index == &the_index' would be an
-> invariant that always holds, even in the early setup stage before
-> setup_git_directory_gently has run completely.
-> 
 > Thanks,
-> Jonathan
-> 
-> diff --git i/repository.c w/repository.c
-> index edca907404..bdc1f93282 100644
-> --- i/repository.c
-> +++ w/repository.c
-> @@ -4,7 +4,7 @@
->  #include "submodule-config.h"
->  
->  /* The main repository */
-> -static struct repository the_repo;
-> +static struct repository the_repo = { .index = &the_index };
->  struct repository *the_repository = &the_repo;
->  
->  static char *git_path_from_env(const char *envvar, const char *git_dir,
 
-With a pointer that can point at a random instance of index_state,
-the current "struct repository" allows two or more instances of it
-to share the same index_state.  I do not think that is a designed
-and a desirable "feature" but an invitation for a mistake.
+Thank *you* for working on this.
 
-Embedding the real instance in it would solve that, too.
+> From 07ab87c1ddb31197a3a5c124ad5a2462a460d4e3 Mon Sep 17 00:00:00 2001
+> From: Santiago Torres <santiago@nyu.edu>
+> Date: Tue, 18 Jul 2017 13:16:11 -0400
+> Subject: [RFC/PATCH] t: lib-gpg: flush gpg agent on startup
 
-So, after saying "I am not (yet) telling you to fix the design" and
-then hearing what a potential advanage could be (and none of that
-was a convincing one), I am inclined to say that this eventually
-needs to be fixed, preferrably before too much code starts relying
-on it and making it more work to fix it later.
+Perhaps it is about time we lost RFC/ mark from here.
+
+>
+> When running gpg-relevant tests, a gpg-daemon is spawned for each
+> GNUPGHOME used. This daemon may stay running after the test and cache
+> file descriptors for the trash directories, even after the trash
+> directory is removed. This leads to ENOENT errors when attempting to
+> create files if tests are run multiple times.
+>
+> Add a cleanup script to force flushing the gpg-agent for that GNUPGHOME
+> (if any) before setting up the GPG relevant-environment.
+>
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Santiago Torres <santiago@nyu.edu>
+> ---
+>  t/lib-gpg.sh | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
+> index ec2aa8f68..ffb20a438 100755
+> --- a/t/lib-gpg.sh
+> +++ b/t/lib-gpg.sh
+> @@ -10,6 +10,8 @@ then
+>  	'gpg (GnuPG) 1.0.6'*)
+>  		say "Your version of gpg (1.0.6) is too buggy for testing"
+>  		;;
+> +	'gpg (GnuPG) 2.1'*)
+> +		GNUPGHOME="$(pwd)/gpghome" gpgconf --kill all ;&
+>  	*)
+>  		# Available key info:
+>  		# * Type DSA and Elgamal, size 2048 bits, no expiration date,
