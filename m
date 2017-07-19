@@ -2,119 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID,
+	URI_HEX shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A51E20288
-	for <e@80x24.org>; Wed, 19 Jul 2017 14:56:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5605120898
+	for <e@80x24.org>; Wed, 19 Jul 2017 15:11:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754186AbdGSO42 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Jul 2017 10:56:28 -0400
-Received: from mout.gmx.net ([212.227.17.21]:57102 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751299AbdGSO41 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jul 2017 10:56:27 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MHH3P-1dSZ4o1q9z-00E4h4; Wed, 19
- Jul 2017 16:56:21 +0200
-Date:   Wed, 19 Jul 2017 16:56:19 +0200 (CEST)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: [PATCH] run_processes_parallel: change confusing task_cb
- convention
-Message-ID: <7151686aba3c5254bfff35bfd7cdd1d48992e99a.1500476164.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1754184AbdGSPLo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Jul 2017 11:11:44 -0400
+Received: from mail-wm0-f53.google.com ([74.125.82.53]:37527 "EHLO
+        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751967AbdGSPLn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jul 2017 11:11:43 -0400
+Received: by mail-wm0-f53.google.com with SMTP id g127so2021219wmd.0
+        for <git@vger.kernel.org>; Wed, 19 Jul 2017 08:11:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to;
+        bh=6ZhBUEd04rVravaQleJfLr9A5s42Sxf/KVJu9kfZxGM=;
+        b=EukRiSnOcJQ1ReYy/qcypc7cGWZJqyd21BemnsJASbGpDiyU9K4emj3wnKKicTX4DS
+         mLw0qklsxKamyvNW31AE7j+PXELbeTVZ9ZuHd92Oi9zPodLC6K+lovOZKq+m2QUisanb
+         yBNdrqcG8J+wB2fzR+Eep7sTWBnfEvkut83/ZVdegLHEgefFLn4wnnnvbmTvRcbelYR+
+         g2UZnAlBJDklVDyCqKPxfePXZ/FDvTaXhzSDBYF0NgZdpTMA/GmdIdCWyODJIN/ggzY2
+         CMZA0fNnaKETIFwbm8W+4EvJW0RtxUSe5pPTjrtCkz90FYLSB8Kk+wb+tgLEikhftrH3
+         6HBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to;
+        bh=6ZhBUEd04rVravaQleJfLr9A5s42Sxf/KVJu9kfZxGM=;
+        b=I9P85KRAZIOB/KlzLsX8CIwrw+R/e+Jy4L+n2yTFUB+LDLbQZajnFQwapGc5QU5Mod
+         xjgDNg+kEl4z2kmfzSNftJ9DIfOox7QQILY6OrUMN6Z8H4Nv+qJpkZEGzmxRpshVyuAu
+         pprPGE3J8k5TBMh9P7ysSXjo0Kf+2Ge7Ky5bzp5i/y/Pl/A47F0aUlzTxeRJUhbX7Hy7
+         vFDfMKVbDLfOQ00skJAfMC5qwKZ4BwLEeSqhFeW2OMg3vnkzqnGGGiQCE55aVXD2+kvr
+         IotarQWd+JOIea1JGSE9Xa7ze/TYs7IavQKG89abPCnS/UkXkGk+GkwfKOmzyhduUs7W
+         aglA==
+X-Gm-Message-State: AIVw110zU12X9H0OyuyDkJHxfGpE4aTgvBA6HyoX14Nx6mm0Rm3B/4xI
+        aRM2OTZDjjtNKYuptLi8XrofIY63wEVBZ6A=
+X-Received: by 10.28.95.137 with SMTP id t131mr235489wmb.102.1500477101715;
+ Wed, 19 Jul 2017 08:11:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:/PHEj8k1OD9uFX3Ni8teV4+P/AvbBgwmBHB/0Ud6VzGp8uE3Ulq
- X+NJoBANxIJ3MMQCr8VmDe2FpDouP8bIInKXFrkpXZGtrGLhPyjCCKXOfYN4wb0+/91y2Ff
- LI+CE5n0hcmQA9c0iOnWx10Lvn3F9gcQI7X8E4MrENaSkANsCzJGLAbLWZYY9J6NCkBFLTx
- /71inh5LKHjDj9w6Yxs+A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:lUGfSZeLz9w=:vhENuulhldMIjECBrA2fKk
- KypNE4lvv4XcRyctWjSXa1CrtT6qqAZs0EEpxUt6tgDJROUWynNotmCG89X8tiL+vZpsNv54i
- JcvqnEIyd+qCVAHkk2PbXQNfAvlws8pHi8maSNtVjsrZErh76FxIRYwHN3bp9Lmn41mtzXx/e
- woohT9+9uJbTypMol7JYmnoja7DTTxZjQ91YuKV2LX5mhlKJ2CKF4B+TylY5ft4EYkrHLMnf0
- AHBZh8HTQXrYuLMrcHPMUAHjyMnPvLbtKC5j8jSSoUfxYPXlOLsj54ghh7JgjTdC5C6yQgfAR
- b/RmXQMWiOjobGNLo8K1XdGhiYLej+zaOJQesxO8X5K35P9wDIfe0ub+lcAR5pAcWB2J+Ipq1
- 9mV24KEW3/VUXWTILYmAeBF5xH+YbfUDAI4gZSFRS6jedtf4dRGK9RAyeQFKj86Mi9eJ9iqpr
- ye9AjoXCidpg3MYkpLH67e9ZBteKKVtKJJeqiekUW5GEC+/KEfREIr9wTCDi72BNHvsD4186K
- IKv+M192ScpQ1TXSP9SyAelh2y0ZzLLJDDfDcqYfdGYxpog2lTGkNcyb3Wc2odb4Hv3fts+hj
- +2kizjpblFWFnEWZkj7h5SZimmSNdA1gNX7Nz3hoeFwW54igrGHj9hoPf/pn6Am4hNOf+8ikq
- 0O2upXxYwto8j/p43r30JI4XPPwYKkuuPrQMRr6eRQ6mFgQUP0W5uuaqF1jJa5BItBYHriKNt
- y8pbiWZUoOkSIcRsbxtbbCriRpWoQeLBqG/H2ybfpoh7S2IgBEl7++Zb/+DAEKYEpZMWSZgMW
- tlIiv6q7DSmCWAZLchBLMe5MfJOcp8H6geJOOsupfbGteAW0Ag=
+Received: by 10.28.174.83 with HTTP; Wed, 19 Jul 2017 08:11:41 -0700 (PDT)
+In-Reply-To: <CAA6PgK74CTT09RZiQWGoih3x6B5G4tLa_Vz7e9BDNW4+TGdLXw@mail.gmail.com>
+References: <CAA6PgK74CTT09RZiQWGoih3x6B5G4tLa_Vz7e9BDNW4+TGdLXw@mail.gmail.com>
+From:   Jan Keromnes <janx@linux.com>
+Date:   Wed, 19 Jul 2017 17:11:41 +0200
+X-Google-Sender-Auth: _IP0IT_hLO6_VdmRTIAgk281b7E
+Message-ID: <CAA6PgK7W7rCp92QbjRr01LmHa7Tf0Z+rm7L58tsZMNAA4LiaPg@mail.gmail.com>
+Subject: Re: `make profile-fast` fails with "error: No $GIT_PERF_REPO defined,
+ and your build directory is not a repo"
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-By declaring the task_cb parameter of type `void **`, the signature of
-the get_next_task method suggests that the "task-specific cookie" can be
-defined in that method, and the signatures of the start_failure and of
-the task_finished methods declare that parameter of type `void *`,
-suggesting that those methods are mere users of said cookie.
+Hello again,
 
-That convention makes a total lot of sense, because the tasks are pretty
-much dead when one of the latter two methods is called: there would be
-little use to reset that cookie at that point because nobody would be
-able to see the change afterwards.
+In git/Makefile, we can see that `$(MAKE) PROFILE=GEN -j1 perf` is
+being skipped for the `profile` target when there is no
+`$GIT_PERF_REPO`:
 
-However, this is not what the code actually does. For all three methods,
-it passes the *address* of pp->children[i].data.
+ https://github.com/git/git/blob/cac25fc330fc26050dcbc92c4bfff169a4848e93/Makefile#L1769-L1782
 
-As reasoned above, this behavior makes no sense. So let's change the
-implementation to adhere to the convention suggested by the signatures.
+However, the same is not true for the `profile-fast` target, and it
+wouldn't even make sense to skip `$(MAKE) PROFILE=GEN -j1 perf` there,
+because it's the only command used to generate a profile.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/submodule--helper.c | 2 +-
- run-command.c               | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+What is the best way to have a `$GIT_PERF_REPO` (or a local `.git`) in
+order for `make profile-fast` to work?
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 6abdad3294c..3a3c9ca72b6 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -930,7 +930,7 @@ static int update_clone_task_finished(int result,
- 	const struct cache_entry *ce;
- 	struct submodule_update_clone *suc = suc_cb;
- 
--	int *idxP = *(int**)idx_task_cb;
-+	int *idxP = idx_task_cb;
- 	int idx = *idxP;
- 	free(idxP);
- 
-diff --git a/run-command.c b/run-command.c
-index 9e36151bf97..b5e6eb37c0e 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -1533,7 +1533,7 @@ static int pp_start_one(struct parallel_processes *pp)
- 	if (start_command(&pp->children[i].process)) {
- 		code = pp->start_failure(&pp->children[i].err,
- 					 pp->data,
--					 &pp->children[i].data);
-+					 pp->children[i].data);
- 		strbuf_addbuf(&pp->buffered_output, &pp->children[i].err);
- 		strbuf_reset(&pp->children[i].err);
- 		if (code)
-@@ -1601,7 +1601,7 @@ static int pp_collect_finished(struct parallel_processes *pp)
- 
- 		code = pp->task_finished(code,
- 					 &pp->children[i].err, pp->data,
--					 &pp->children[i].data);
-+					 pp->children[i].data);
- 
- 		if (code)
- 			result = code;
+Can I simply run a `git init .` inside the extracted tarball, or maybe
+`git clone <some-perf-repo> <somewhere-local>`?
 
-base-commit: cac25fc330fc26050dcbc92c4bfff169a4848e93
--- 
-2.13.3.windows.1.13.gaf0c2223da0
+Many thanks,
+Jan Keromnes
 
-Published-As: https://github.com/dscho/git/releases/tag/run-process-parallel-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git run-process-parallel-v1
+On Wed, Jul 19, 2017 at 12:16 PM, Jan Keromnes <janx@linux.com> wrote:
+> Hello,
+>
+> I'm trying to build a profile-optimized Git. I used to do this with
+> the following commands:
+>
+>     mkdir /tmp/git
+>     cd /tmp/git
+>     curl https://www.kernel.org/pub/software/scm/git/git-2.13.3.tar.xz | tar xJ
+>     cd git-2.13.3
+>     make prefix=/usr profile man -j18
+>     sudo make prefix=/usr PROFILE=BUILD install install-man -j18
+>
+> This worked fine. However, on some machines, the build takes more than
+> 8 hours, so I'd like to use "profile-fast" instead of "profile":
+>
+>     [...]
+>     make prefix=/usr profile-fast man -j18
+>     [...]
+>
+> But this fails with the following error:
+>
+>     ./run
+>     === Running 20 tests in this tree ===
+>     error: No $GIT_PERF_REPO defined, and your build directory is not a repo
+>     error: No $GIT_PERF_REPO defined, and your build directory is not a repo
+>     [...]
+>     error: No $GIT_PERF_REPO defined, and your build directory is not a repo
+>     cannot open test-results/p0000-perf-lib-sanity.subtests: No such
+> file or directory at ./aggregate.perl line 78.
+>     make[2]: *** [perf] Error 2
+>     Makefile:7: recipe for target 'perf' failed
+>     make[2]: Leaving directory '/tmp/git/git-2.13.3/t/perf'
+>     Makefile:2325: recipe for target 'perf' failed
+>     make[1]: *** [perf] Error 2
+>     make[1]: Leaving directory '/tmp/git/git-2.13.3'
+>     Makefile:1719: recipe for target 'profile-fast' failed
+>     make: *** [profile-fast] Error 2
+>
+> The following thread gives me the impression that a similar problem
+> was already fixed for `make profile`:
+>
+> http://git.661346.n2.nabble.com/make-profile-issue-on-Git-2-1-0-td7616964.html
+>
+> Is it possible that the above commit fixed `make profile`, but not
+> `make profile-fast`?
+>
+> Or, is there a good way for me to work around this issue?
+>
+> Many thanks,
+> Jan Keromnes
