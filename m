@@ -2,57 +2,52 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID,
-	URI_HEX shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5605120898
-	for <e@80x24.org>; Wed, 19 Jul 2017 15:11:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D56D920898
+	for <e@80x24.org>; Wed, 19 Jul 2017 16:49:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754184AbdGSPLo (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Jul 2017 11:11:44 -0400
-Received: from mail-wm0-f53.google.com ([74.125.82.53]:37527 "EHLO
-        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751967AbdGSPLn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jul 2017 11:11:43 -0400
-Received: by mail-wm0-f53.google.com with SMTP id g127so2021219wmd.0
-        for <git@vger.kernel.org>; Wed, 19 Jul 2017 08:11:42 -0700 (PDT)
+        id S1753731AbdGSQtO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Jul 2017 12:49:14 -0400
+Received: from mail-qt0-f170.google.com ([209.85.216.170]:36470 "EHLO
+        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753559AbdGSQtN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jul 2017 12:49:13 -0400
+Received: by mail-qt0-f170.google.com with SMTP id 21so6730666qtx.3
+        for <git@vger.kernel.org>; Wed, 19 Jul 2017 09:49:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to;
-        bh=6ZhBUEd04rVravaQleJfLr9A5s42Sxf/KVJu9kfZxGM=;
-        b=EukRiSnOcJQ1ReYy/qcypc7cGWZJqyd21BemnsJASbGpDiyU9K4emj3wnKKicTX4DS
-         mLw0qklsxKamyvNW31AE7j+PXELbeTVZ9ZuHd92Oi9zPodLC6K+lovOZKq+m2QUisanb
-         yBNdrqcG8J+wB2fzR+Eep7sTWBnfEvkut83/ZVdegLHEgefFLn4wnnnvbmTvRcbelYR+
-         g2UZnAlBJDklVDyCqKPxfePXZ/FDvTaXhzSDBYF0NgZdpTMA/GmdIdCWyODJIN/ggzY2
-         CMZA0fNnaKETIFwbm8W+4EvJW0RtxUSe5pPTjrtCkz90FYLSB8Kk+wb+tgLEikhftrH3
-         6HBQ==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=0jm6SQynJNK5kAYYCrptVYo9BmF5WRHMTp4tGzfTEB0=;
+        b=o4SDGGVwiQjai+q2bsQqycTQVQZnRwQrknqBQOiUW3HXsK3X0VbMXT3JsiLrn/Bgu7
+         FTnCMRXdbZFwzncvM9mjKh9kX/ChHL/zeL2tE9r0QoPnElaSlg6bVO4PWvH9JDj0DQ66
+         K2zENbA69yhXxlunRyRpF1xVYqgwHKP966QZ5nRIsSvQh3yFC3EV0+W8Qdb4T85k0fyF
+         5h5Jt93RYKQAo8cSimk8rFzdMAB33/P9xUiERU+vN3W307/TD8MpPLr4V4fFDllk3uku
+         xaeeY/KJNrKvnrL4D99NmVMs/PzUpNNX4FUW/8zAOoxtsfTcr6cw669QUlvWXyqJDmQi
+         0Jwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to;
-        bh=6ZhBUEd04rVravaQleJfLr9A5s42Sxf/KVJu9kfZxGM=;
-        b=I9P85KRAZIOB/KlzLsX8CIwrw+R/e+Jy4L+n2yTFUB+LDLbQZajnFQwapGc5QU5Mod
-         xjgDNg+kEl4z2kmfzSNftJ9DIfOox7QQILY6OrUMN6Z8H4Nv+qJpkZEGzmxRpshVyuAu
-         pprPGE3J8k5TBMh9P7ysSXjo0Kf+2Ge7Ky5bzp5i/y/Pl/A47F0aUlzTxeRJUhbX7Hy7
-         vFDfMKVbDLfOQ00skJAfMC5qwKZ4BwLEeSqhFeW2OMg3vnkzqnGGGiQCE55aVXD2+kvr
-         IotarQWd+JOIea1JGSE9Xa7ze/TYs7IavQKG89abPCnS/UkXkGk+GkwfKOmzyhduUs7W
-         aglA==
-X-Gm-Message-State: AIVw110zU12X9H0OyuyDkJHxfGpE4aTgvBA6HyoX14Nx6mm0Rm3B/4xI
-        aRM2OTZDjjtNKYuptLi8XrofIY63wEVBZ6A=
-X-Received: by 10.28.95.137 with SMTP id t131mr235489wmb.102.1500477101715;
- Wed, 19 Jul 2017 08:11:41 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=0jm6SQynJNK5kAYYCrptVYo9BmF5WRHMTp4tGzfTEB0=;
+        b=kYG59xigqq4wGK10D6mlKtmse7A3vEoyX/pN3nOWH+Xslg0EVcchl/R7/eg2vLIH1p
+         888IAee8TT/Nok3pPrcPNf6XPOSRWf8hHu0Gn2+ihr3avre7SVWftE6wioZs+3FTMNMw
+         jiZpmsk6UXOykOhO+hEKGqs/GZPxJGfJ1sihxPilRirNW2LJGf6LgV61An/5mMBiumnc
+         4UokUfDtmJQIVmpsUslnmweXue2L2gs0hxWSkJPKCc6oIcgLzOLCuaj1sp3ESoEE6u5V
+         ZdQbCWbqnTYg/CZfEgBjbDmBKwvWr7Z26xnlsO/TYHcxJWxScTpUizbBH9eSuiCKtlSX
+         RNeg==
+X-Gm-Message-State: AIVw110QmcyijjyWSyazIigPuFbaHcqd5d24xtsnAkwR9L0HuMU7NqSW
+        7fWD+6ivn+wJ9YhL02n6pUAX5HvIHnRW+1w=
+X-Received: by 10.237.35.239 with SMTP id k44mr1132133qtc.125.1500482952079;
+ Wed, 19 Jul 2017 09:49:12 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.28.174.83 with HTTP; Wed, 19 Jul 2017 08:11:41 -0700 (PDT)
-In-Reply-To: <CAA6PgK74CTT09RZiQWGoih3x6B5G4tLa_Vz7e9BDNW4+TGdLXw@mail.gmail.com>
-References: <CAA6PgK74CTT09RZiQWGoih3x6B5G4tLa_Vz7e9BDNW4+TGdLXw@mail.gmail.com>
-From:   Jan Keromnes <janx@linux.com>
-Date:   Wed, 19 Jul 2017 17:11:41 +0200
-X-Google-Sender-Auth: _IP0IT_hLO6_VdmRTIAgk281b7E
-Message-ID: <CAA6PgK7W7rCp92QbjRr01LmHa7Tf0Z+rm7L58tsZMNAA4LiaPg@mail.gmail.com>
-Subject: Re: `make profile-fast` fails with "error: No $GIT_PERF_REPO defined,
- and your build directory is not a repo"
+Received: by 10.237.58.135 with HTTP; Wed, 19 Jul 2017 09:48:41 -0700 (PDT)
+From:   Victor Toni <victor.toni@gmail.com>
+Date:   Wed, 19 Jul 2017 18:48:41 +0200
+Message-ID: <CAG0OSgdEE3g-ugEJU4EZqfbxZ=3h2WPdLC4W4mG7b6UeTaXQ-Q@mail.gmail.com>
+Subject: Handling of paths
 To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
@@ -60,75 +55,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello again,
+Hello,
 
-In git/Makefile, we can see that `$(MAKE) PROFILE=GEN -j1 perf` is
-being skipped for the `profile` target when there is no
-`$GIT_PERF_REPO`:
+I have a .gitconfig in which I try to separate work and private stuff
+by using includes which works great.
 
- https://github.com/git/git/blob/cac25fc330fc26050dcbc92c4bfff169a4848e93/Makefile#L1769-L1782
+When using [include] the path is treated either
+- relative to the including file (if the path itself relative)
+- relative to the home directory if it starts with ~
+- absolute if the path is absolute
 
-However, the same is not true for the `profile-fast` target, and it
-wouldn't even make sense to skip `$(MAKE) PROFILE=GEN -j1 perf` there,
-because it's the only command used to generate a profile.
+This is fine and expected.
 
-What is the best way to have a `$GIT_PERF_REPO` (or a local `.git`) in
-order for `make profile-fast` to work?
+What's unexpected is that paths used for sslKey or sslCert are treated
+differently insofar as they are expected to be absolute.
+Relative paths (whether with or without "~") don't work.
 
-Can I simply run a `git init .` inside the extracted tarball, or maybe
-`git clone <some-perf-repo> <somewhere-local>`?
+It would't be an issue to use absoulte paths if I wouldn't use the
+same config for Linux and Windows and each OS has its own semantic
+where it $HOME ishould be.
 
-Many thanks,
-Jan Keromnes
+To avoid double configurations I tried to use the same directory
+structure within my $HOME for both OS.
 
-On Wed, Jul 19, 2017 at 12:16 PM, Jan Keromnes <janx@linux.com> wrote:
-> Hello,
->
-> I'm trying to build a profile-optimized Git. I used to do this with
-> the following commands:
->
->     mkdir /tmp/git
->     cd /tmp/git
->     curl https://www.kernel.org/pub/software/scm/git/git-2.13.3.tar.xz | tar xJ
->     cd git-2.13.3
->     make prefix=/usr profile man -j18
->     sudo make prefix=/usr PROFILE=BUILD install install-man -j18
->
-> This worked fine. However, on some machines, the build takes more than
-> 8 hours, so I'd like to use "profile-fast" instead of "profile":
->
->     [...]
->     make prefix=/usr profile-fast man -j18
->     [...]
->
-> But this fails with the following error:
->
->     ./run
->     === Running 20 tests in this tree ===
->     error: No $GIT_PERF_REPO defined, and your build directory is not a repo
->     error: No $GIT_PERF_REPO defined, and your build directory is not a repo
->     [...]
->     error: No $GIT_PERF_REPO defined, and your build directory is not a repo
->     cannot open test-results/p0000-perf-lib-sanity.subtests: No such
-> file or directory at ./aggregate.perl line 78.
->     make[2]: *** [perf] Error 2
->     Makefile:7: recipe for target 'perf' failed
->     make[2]: Leaving directory '/tmp/git/git-2.13.3/t/perf'
->     Makefile:2325: recipe for target 'perf' failed
->     make[1]: *** [perf] Error 2
->     make[1]: Leaving directory '/tmp/git/git-2.13.3'
->     Makefile:1719: recipe for target 'profile-fast' failed
->     make: *** [profile-fast] Error 2
->
-> The following thread gives me the impression that a similar problem
-> was already fixed for `make profile`:
->
-> http://git.661346.n2.nabble.com/make-profile-issue-on-Git-2-1-0-td7616964.html
->
-> Is it possible that the above commit fixed `make profile`, but not
-> `make profile-fast`?
->
-> Or, is there a good way for me to work around this issue?
->
-> Many thanks,
-> Jan Keromnes
+This approach fails since paths other than for [include] seem to have
+to be absolute which seems like a bug to me.
+
+Do you have any suggestions how I could make this work?
+
+Thank you,
+Victor
