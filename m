@@ -2,94 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 096F820898
-	for <e@80x24.org>; Wed, 19 Jul 2017 23:03:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6CB0620288
+	for <e@80x24.org>; Wed, 19 Jul 2017 23:26:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754098AbdGSXD0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Jul 2017 19:03:26 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54347 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752288AbdGSXDZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jul 2017 19:03:25 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2D9E895760;
-        Wed, 19 Jul 2017 19:03:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=FYhaJ/kTjn0ObskBF7HDH8AEZos=; b=Isetj3
-        zeTOYF406ae1qnY6Xpz+WAbVT2K9UTD+5VvKfNkJ1/IrDs1IFDaTovtiE/MZReG5
-        a65n5ufIlO+8aNguMOYy1u2vNHjw7QZ2GgIk9Ge8Xt8b/0gaP5bhEW+HPpJKcoLZ
-        Ehd59IxCuMg1JKitvnoM+eCgEigcC2L5TZ/KE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Agw6A6nuem7p3AiFMKBZAd77Wp/w2if1
-        JNUR5cCl18mj+3cPYEe685wyq4dbhfd8+lkvYpgbD2t31ti88B6msdKVYoVTFLIr
-        JdgvVsItV2hKSL1C55992pbH1Ri2qqRFVSnYh1ueMC2RCqTFyMJbWr5H9YuciwT1
-        F+LELr5Sh54=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 235C29575F;
-        Wed, 19 Jul 2017 19:03:24 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6A6CF9575E;
-        Wed, 19 Jul 2017 19:03:23 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jiang Xin <worldhello.net@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
-Subject: Re: [PATCH] PRItime: wrap PRItime for better l10n compatibility
-References: <249ac6f8-af3c-4b20-5bf0-87a82866cc7a@free.fr>
-        <3ccfa2fb49d471f807d77d9a280e4b7cfe56faea.1500304209.git.worldhello.net@gmail.com>
-        <xmqq7ez7htvj.fsf@gitster.mtv.corp.google.com>
-        <CANYiYbEcMrriaor9OT4c2qtfh9Ja5NJ9KBSxa3XhPAuoN0t42A@mail.gmail.com>
-        <xmqq60epfy27.fsf@gitster.mtv.corp.google.com>
-        <CANYiYbFROuyXso2ZKuJWDp4cSwpBu=bNAbC-yZtEyDwkbUcAhQ@mail.gmail.com>
-        <alpine.DEB.2.21.1.1707191456010.4193@virtualbox>
-Date:   Wed, 19 Jul 2017 16:03:21 -0700
-In-Reply-To: <alpine.DEB.2.21.1.1707191456010.4193@virtualbox> (Johannes
-        Schindelin's message of "Wed, 19 Jul 2017 15:25:09 +0200 (CEST)")
-Message-ID: <xmqq8tjkm3ly.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S932326AbdGSX0o (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Jul 2017 19:26:44 -0400
+Received: from mail-pf0-f173.google.com ([209.85.192.173]:36496 "EHLO
+        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932320AbdGSX0n (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jul 2017 19:26:43 -0400
+Received: by mail-pf0-f173.google.com with SMTP id o88so5346872pfk.3
+        for <git@vger.kernel.org>; Wed, 19 Jul 2017 16:26:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Q51BKTiIRJElycO5xWWqCbbmgeKuTk4A4Ilcmdry3lY=;
+        b=sJTrh9ktKIKPyFDC6DfPwXytMB4YbMbL1MzeZESVtbllbMeUBdav28fYJ1v86bOaTA
+         5dIj9JHB5ewq/T2HHz1GkU0stUNlAxNdIZps4F2DM2knUUgsAm61QJns0Tmbmdjk2OWc
+         Czf+lMZvSXzbDw6NpQqZOmps9E6pRAburGmHSk/fAbVnYaKzdscPV30/P+HlAL5uEWLN
+         VTpcqDG9+O6FehB1gYlaXade7xK4mU2u7244EeozZp9n2wKN6ZSufqvkDJ+jRai4Dj9l
+         4wrdfQv13vt0cSjjfFDYEmiAGegBCn4Hn0R6wQKdL2W6mq6+s5lqkSBe0PXj6af53pjY
+         bM6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Q51BKTiIRJElycO5xWWqCbbmgeKuTk4A4Ilcmdry3lY=;
+        b=ZQRSXqcbpShCrnJ33Mif64wOH1A2mQ7uCrtbTtSbTDkM3I7KYwV7LuMTcjq//PUyK5
+         923EjmoWqfi5BM9i0Q2YP+r+yYwEDCPpmvqm2VYR4raOJXRxtXg00u7lsvgSUiw8BRVe
+         odGQOyKzO79fSuEpcMzp2C2bcyXr5slqvEeO0Gjpphjoc3m5/IpJ44pSsf1uZeBLRB0e
+         /BAs+ZhLBnk4Bgn16sntTvyx0VQhZ+g4t8NNNEEgAAZxLhHStzFwCbIRmP7/y0q7Lwan
+         FGdCXHjtO+wvJWcjkAmH3D9n7lVj1e1DY2oPyxJ+IkbkmnRyhUu4O5s2GOwIjnTFjORk
+         7Hgw==
+X-Gm-Message-State: AIVw110Gi+RBA7ubEl6KkHQU7DBzlLaxxgaS/voubH971l1ooHZgxkJt
+        DugG1bHyo+C4d7uFozQ=
+X-Received: by 10.99.97.71 with SMTP id v68mr1678104pgb.339.1500506802910;
+        Wed, 19 Jul 2017 16:26:42 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:e98d:4a71:3ce1:a1f3])
+        by smtp.gmail.com with ESMTPSA id o5sm1284948pfb.184.2017.07.19.16.26.41
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 19 Jul 2017 16:26:41 -0700 (PDT)
+Date:   Wed, 19 Jul 2017 16:25:41 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] fsck: remove redundant parse_tree() invocation
+Message-ID: <20170719232541.GA13924@aiede.mtv.corp.google.com>
+References: <20170718222848.1453-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 77112F58-6CD6-11E7-914B-EFB41968708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170718222848.1453-1-jonathantanmy@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
-> But there may be hope. Since the character sequence "PRItime" is highly
-> unlikely to occur in Git's source code in any context other than the
-> format to print/parse timestamp_t, it should be possible to automate a the
-> string replacement
->
-> 	git ls-files -z \*.[ch] |
-> 	xargs -0r sed -i 's/PRItime/PRIuMAX/g'
->
-> (assuming, of course, that you use GNU sed, not BSD sed, for which the
-> `-i` needs to read `-i ''` instead) as part of the update?
+Jonathan Tan wrote:
 
-I somehow missed this bit.
+> If obj->type == OBJ_TREE, an invocation of fsck_walk() will invoke
+> parse_tree() and return quickly if that returns nonzero, so it is of no
+> use for traverse_one_object() to invoke parse_tree() in this situation
+> before invoking fsck_walk(). Remove that code.
 
-Given that this needs to be done only once every release by only one
-person (i.e. the l10n coordinator who updates *.pot file), as long
-as the procedure is automated as much as possible to ease the pain
-for the l10n coordinator and clearly described in the "Maintaining
-the po/git.pot file" section of po/README, something along that line
-does sound like a very tempting approach.  If it works well, it is
-certainly much easier for normal developers than the other possible
-alternatives I mentioned in my previous response.
+I like the diffstat.  I'm trying to figure out what the old code was
+trying to do, since that will make it easier to understand this
+change.
 
-It is brittle as you already said, but perhaps a bit of anchoring
-like \<PRItime\>, the brittle-ness may not hurt in practice.  
+fsck_walk_tree calls parse_tree, so why did we need to parse it in
+advance?  Was it just about handling the error differently when it
+fails to parse?
 
-I didn't look at "git grep PRItime" output for hits, though.
+It appears this code comes from
+https://public-inbox.org/git/20080214090013.GK24004@spearce.org/:
 
+ +	if (parse_tree(item) < 0)
+ +		return; /* error already displayed */
+ +
+ +	init_tree_desc(&desc, item->buffer, item->size);
+
+At that point the parse_tree call was not redundant.  Later it must
+have been amended and cleaned up to use fsck_walk.
+
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+Thanks for cleaning up.
