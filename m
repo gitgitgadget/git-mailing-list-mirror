@@ -2,108 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5691D20288
-	for <e@80x24.org>; Wed, 19 Jul 2017 12:53:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C94BB20288
+	for <e@80x24.org>; Wed, 19 Jul 2017 13:25:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752858AbdGSMxD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Jul 2017 08:53:03 -0400
-Received: from mout.gmx.net ([212.227.17.22]:52722 "EHLO mout.gmx.net"
+        id S1752257AbdGSNZS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Jul 2017 09:25:18 -0400
+Received: from mout.gmx.net ([212.227.17.21]:56975 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752794AbdGSMxC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jul 2017 08:53:02 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LsOsW-1deWc93NJA-01228W; Wed, 19
- Jul 2017 14:52:53 +0200
-Date:   Wed, 19 Jul 2017 14:52:52 +0200 (CEST)
+        id S1751364AbdGSNZR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jul 2017 09:25:17 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MMCSP-1dYcBf3gEf-0080Ek; Wed, 19
+ Jul 2017 15:25:10 +0200
+Date:   Wed, 19 Jul 2017 15:25:09 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Jonathan Tan <jonathantanmy@google.com>
-cc:     Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 8/8] sha1_file: refactor has_sha1_file_with_flags
-In-Reply-To: <20170718093920.3265c67f@twelve2.svl.corp.google.com>
-Message-ID: <alpine.DEB.2.21.1.1707191450570.4193@virtualbox>
-References: <cover.1497035376.git.jonathantanmy@google.com>        <cover.1498091579.git.jonathantanmy@google.com>        <a4f04b3ec9cc1ba08a5dd7f459dce95411fb03e2.1498091579.git.jonathantanmy@google.com>        <CAP8UFD24QVAuTXXH3zvR5zwZwub20o37uGyt8Uf+rRtjjk8QTA@mail.gmail.com>
- <20170718093920.3265c67f@twelve2.svl.corp.google.com>
+To:     Jiang Xin <worldhello.net@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>
+Subject: Re: [PATCH] PRItime: wrap PRItime for better l10n compatibility
+In-Reply-To: <CANYiYbFROuyXso2ZKuJWDp4cSwpBu=bNAbC-yZtEyDwkbUcAhQ@mail.gmail.com>
+Message-ID: <alpine.DEB.2.21.1.1707191456010.4193@virtualbox>
+References: <249ac6f8-af3c-4b20-5bf0-87a82866cc7a@free.fr> <3ccfa2fb49d471f807d77d9a280e4b7cfe56faea.1500304209.git.worldhello.net@gmail.com> <xmqq7ez7htvj.fsf@gitster.mtv.corp.google.com> <CANYiYbEcMrriaor9OT4c2qtfh9Ja5NJ9KBSxa3XhPAuoN0t42A@mail.gmail.com>
+ <xmqq60epfy27.fsf@gitster.mtv.corp.google.com> <CANYiYbFROuyXso2ZKuJWDp4cSwpBu=bNAbC-yZtEyDwkbUcAhQ@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:VZ0JVLNKwRHicOAYlIJhTCmdtHc5PuSkC5DjHUauxDMsKProEgj
- eHyYyiMismLcDhgKAqacslbwvyUZOgBXI/FSbUUvEc1w/1kpaqHCgxUZgrEjvJCPCY05cKf
- 3fQmSuVkSTMDPdH6hei9KULMCXZXGxG87fga7uJpJlqObBjF0+HFivSKu/QIw3yWOxwxMKP
- kz5P1h43uS2E1pWDREjbQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:oScZE1TAypQ=:DZ/sNsc2EDth7Epe8MGA5L
- W3iJ/Sf3FG06tDlYtHutOUue9I5eIk/dsNuokY9+aMEk7qnK5C2qIOhgWU1J7XCaSd5ljegwJ
- h7QcjVZGK3jO0ORsu8gM7mOLT9BX1YMKD75M8mLQdZnQUXHPxK8DiiedQSa6L/a3DGXifCi9V
- 4t7VJMbJuA4WrQyNbxQBKjaRSOsuUUUcTqJGN012QBt5dwGfcUjw1/0Sh+7JMfQfSE1UMvAHx
- JkcLHhj3OEMR3nGBo4l8IYSu0ipXDdlAsX3LEX7P1r9uyERIHwFNI/2ZJmwOkg+VSQ9eHakpY
- YWqUMKcIOwZrWv3IIMHIjeTp4nkxzfsZohps93H8iiRC7uTEWEV5sDEZcwrGMatQpDOAUsuoI
- P0b0NyNASNsxFe5W80D3PU6PQAoXs3O8FYQAkqJ30vCFv1PHHneU8xmjgooZOejw/XOnKDBWq
- KE3AG3difh34Dh+8FRo8Qijn1/sPAMigQaMu1NEDRal1BGjp6YEoyEiqPnt+DhG9Rc78D9cNR
- zuL9ilhtkwuO1ei++Dcu725q4eqbV4Z1rNbWLdVSnBK0W5SMblTLUCgmPJndUeFNm6Cwu7gcX
- cL/a9NYaqbvH/E0lJGJVCA4xBiWXoXVVJupPT+gb0/NqkWvmhlQh7EpVf4VrrtgqRGsgsohVk
- VyToif0OjxxOlslaAsqO+5JBpnRuij3ArOCSOPOuVtilK81fDWfpcMyv2t0u+jd/SWBJGsSzs
- yxpZI8AHqOhGuMmWZ3PWlyimF3H9vfSOMWIKU7fnBFrxFCW6o6xksJuCQ7jCha0h1u2851KS3
- ny4YnxwdZ7qMTJ0q2FBdXMzBPGreGgD30mPxpv1Afgi64BiX8Y=
+X-Provags-ID: V03:K0:+KW3doQr5xw2GbNY3nnUxGSCFX8GbnPK8NSZS/rSRJhaqjBg/LG
+ pjMdLM3rnpV0SvM6Im2IkUizkdGq2h+lYlfY9LzhHDOksZm32ghhS2z9fjjEXeLOPVilhKn
+ AV3wPS3Z+fI6PCXvneMC9JaevV7hj+QDvDhSZG0Szu6NeliL7wnaeijWC6fxF1YiobEkIDn
+ coVw14s532xgb/gxak+Og==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:q+wElywEADQ=:XRaCjDkSyqEGkTKWaoA6ZJ
+ N4aUOVkXW/3Nt+3U+mNnrar59R3kfkg5WCTplHbuuoILT/L7Z9HnDQkA3Vve0/UwR/v+Z5PdH
+ mFC49SpscIoVizux1R0xHI9WtRwszSMGgBcXHyNcjhYdfgL1/soYJbwwvv5EShE3EEYcsXA51
+ rbSbNdPaC7kkCfccogz0xxhGAtR9iHiYmg+I7oGMcNPUIbO6dd2uK99mQAb1xqkoVll/pOSEE
+ ++tbeGomr2W8YsGGeWTX5xxyzZg1UjjHGa+MhFTGNkDoRHG3xRbNVXLPJmbQqGkAkGiTGxRTE
+ XFtedvT3351Pxk/GVcl7mKqr3qF6XkaBfiQ7YvGbCNpfSp29BbPeKU49HCSgB8YLSoLVzjuep
+ vCEcQuAlGaexiN5k6HD8KvqcF3oNF3zbKXgrtnTjMZ/UDWf4656bIzRrXIkzl2w4RhdiTWqHg
+ +BmEixqDb0o5GnzlkB6/rrc9Js4vAW7JAhx92BO9TdK1DMm1fK67UsYt5JhD7L6wG7uAf2YC1
+ UJPwiMQpsmnDSc2ml/BSmCzGsVDe6JtO1drqweckW0PP94et9TUpJHR4FgOiNiGXMdMCkdlOR
+ mGAhQ3HfZFG7XHxn+myLwKLz3Vk9qZt9rCBtYABJhyfW63mDR+kziTFVbxMUSP0juSpbngGR1
+ w92qja5GS1vmvdJd+BZ1eSOTfCQJiBqzGo0DrRtI8mxYP3fHyyOwg/D4PmeA7XrgvTZBt+cYZ
+ lc+YIys1kHm1uQ55d/32Tx9pmse+s7WcIQwVWf/ie2XDmPuVXW/UH+G5Rcz1PIj4epzU74dPd
+ FD7sPR03Qh3CNlBQ0CSm8j+c1411QXIPdTYsnkYSwrFk7cu3Fc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+Hi Jian (or is it Xin?),
 
-On Tue, 18 Jul 2017, Jonathan Tan wrote:
+On Wed, 19 Jul 2017, Jiang Xin wrote:
 
-> On Tue, 18 Jul 2017 12:30:46 +0200
-> Christian Couder <christian.couder@gmail.com> wrote:
+> 2017-07-19 1:35 GMT+08:00 Junio C Hamano <gitster@pobox.com>:
+> > Jiang Xin <worldhello.net@gmail.com> writes:
+> >
+> >>> Two potential issues are:
+> >>>
+> >>>  - After this patch, there still are quite a many
+> >>>
+> >>>         printf("time is %"PRItime" ...\n", timestamp)
+> >>>
+> >>>    so the burden on the programmers having to remember when it is
+> >>>    required to use format_raw_time() becomes unclear, and makes the
+> >>>    change/churn larger when an existing message needs to be marked
+> >>>    for translation.
+> >>>
+> >>>  - The static struct strbuf here is a cheap way to avoid leaks, but
+> >>>    at the same time it is unfriendly to threaded code.  We could
+> >>>    instead do:
+> >>>
+> >>>         void append_PRItime(struct strbuf *buf, timestamp_t time);
+> >>>
+> >>>    to fix that trivially, but the damage to the caller obviously is
+> >>>    much larger going this way.
+> >>>
+> >>
+> >> I wonder if we can replace the original %lu for timestamp with PRIuMAX
+> >> instead.  PRIuMAX works fine with gettext utils.
+> >
+> > I think the question can better be answered if we know how gettext
+> > tools special case PRIuMAX.  One thing that may be problematic is
+> > that timestamp can later become a signed type and use of one level
+> > of redirection in the current code via PRItime and via timestamp_t
+> > is a good way to keep such a transition much easier.  Reverting it
+> > to use PRIuMAX would make such a transition much harder.
 > 
-> > On Thu, Jun 22, 2017 at 2:40 AM, Jonathan Tan <jonathantanmy@google.com> wrote:
-> > 
-> > > diff --git a/sha1_file.c b/sha1_file.c
-> > > index bf6b64ec8..778f01d92 100644
-> > > --- a/sha1_file.c
-> > > +++ b/sha1_file.c
-> > > @@ -3494,18 +3494,10 @@ int has_sha1_pack(const unsigned char *sha1)
-> > >
-> > >  int has_sha1_file_with_flags(const unsigned char *sha1, int flags)
-> > >  {
-> > > -       struct pack_entry e;
-> > > -
-> > >         if (!startup_info->have_repository)
-> > >                 return 0;
-> > > -       if (find_pack_entry(sha1, &e))
-> > > -               return 1;
-> > > -       if (has_loose_object(sha1))
-> > > -               return 1;
-> > > -       if (flags & HAS_SHA1_QUICK)
-> > > -               return 0;
-> > > -       reprepare_packed_git();
-> > > -       return find_pack_entry(sha1, &e);
-> > > +       return sha1_object_info_extended(sha1, NULL,
-> > > +                                        flags | OBJECT_INFO_SKIP_CACHED) >= 0;
-> > >  }
-> > 
-> > I am not sure if it could affect performance (in one way or another) a
-> > lot or not but I just wanted to note that has_loose_object() calls
-> > check_and_freshen() which calls access() on loose object files, while
-> > sha1_object_info_extended() calls sha1_loose_object_info() which calls
-> > stat_sha1_file() which calls lstat() on loose object files.
-> > 
-> > So depending on the relative performance of access() and lstat() there
-> > could be a performance impact on repos that have a lot of loose object
-> > files.
-> 
-> That is true, but from what little I have read online, they have about
-> the same performance.
+> Gettext handles macros such as PRIuMAX in commit 8b45c5df1 ("Add
+> support for ISO C 99 <inttypes.h> format string directive macros.",
+> 2002-07-23 12:33:13 +0000).
 
-Then your online sources missed out on what we have in compat/mingw.[ch].
-I would expect _waccess() (which is used to emulate access()) to be
-substantially faster than the hoops we jump through to emulate lstat().
+Wow. This is ugly.
+
+If I understand correctly, then this will not even work correctly for
+PRIuMAX on Windows: I highly doubt that the gettext library will interpret
+%I64u in the format string correctly to be what %<PRIuMAX> in the po file
+refers to.
+
+But there may be hope. Since the character sequence "PRItime" is highly
+unlikely to occur in Git's source code in any context other than the
+format to print/parse timestamp_t, it should be possible to automate a the
+string replacement
+
+	git ls-files -z \*.[ch] |
+	xargs -0r sed -i 's/PRItime/PRIuMAX/g'
+
+(assuming, of course, that you use GNU sed, not BSD sed, for which the
+`-i` needs to read `-i ''` instead) as part of the update?
+
+For all the reasons Junio mentioned, I, too, would be reluctant to change
+the source code to cull all of the PRItime mentions, as it is pleasing
+from a semantic point of view that we know what the heck we are talking
+about here.
+
+BTW *thank you so much* for your Herculean effort to keep going with the
+translation.
 
 Ciao,
 Dscho
