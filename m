@@ -6,38 +6,38 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 892FD20288
-	for <e@80x24.org>; Wed, 19 Jul 2017 21:32:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 096F820898
+	for <e@80x24.org>; Wed, 19 Jul 2017 23:03:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754480AbdGSVcr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Jul 2017 17:32:47 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51961 "EHLO
+        id S1754098AbdGSXD0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Jul 2017 19:03:26 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54347 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753614AbdGSVcq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jul 2017 17:32:46 -0400
+        with ESMTP id S1752288AbdGSXDZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jul 2017 19:03:25 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E258F9730C;
-        Wed, 19 Jul 2017 17:32:38 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2D9E895760;
+        Wed, 19 Jul 2017 19:03:24 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=88Jys3alBjzAiyM38fLbyjZn8x0=; b=D0Ms50
-        4DFfJCXcS38lOypRqoi3/ug/bYI4gP0W9QTH7LIGo9Q4QMe4jkIOs6pyQVgCvD2o
-        LbedJGClwcLqUvR9VcKUe5RTQf3xd2mTI8ZNkWoTLT4D9CYsHYvfUPUe80cBzX4o
-        26JjIifhNVLEUHlkrCuekXxpNNp9MDkie1+so=
+        :content-type; s=sasl; bh=FYhaJ/kTjn0ObskBF7HDH8AEZos=; b=Isetj3
+        zeTOYF406ae1qnY6Xpz+WAbVT2K9UTD+5VvKfNkJ1/IrDs1IFDaTovtiE/MZReG5
+        a65n5ufIlO+8aNguMOYy1u2vNHjw7QZ2GgIk9Ge8Xt8b/0gaP5bhEW+HPpJKcoLZ
+        Ehd59IxCuMg1JKitvnoM+eCgEigcC2L5TZ/KE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=GoMIJDWxEyGldk5O0rZ7Wy1FNNL/FQOl
-        QHrH2j4SqIAEb6wDhv5Sa0ZbBP8zFmVxXgESabvpbhTP8yIrR+1059nDlmJaDA1F
-        hIq4GV0hCsdhe0/FzfRqiNQTYObjUUrvQwmNGeZT9EWOEC2nGn7YmbWUpQiz+ZFz
-        lfniMDVhHtA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D92989730B;
-        Wed, 19 Jul 2017 17:32:38 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=Agw6A6nuem7p3AiFMKBZAd77Wp/w2if1
+        JNUR5cCl18mj+3cPYEe685wyq4dbhfd8+lkvYpgbD2t31ti88B6msdKVYoVTFLIr
+        JdgvVsItV2hKSL1C55992pbH1Ri2qqRFVSnYh1ueMC2RCqTFyMJbWr5H9YuciwT1
+        F+LELr5Sh54=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 235C29575F;
+        Wed, 19 Jul 2017 19:03:24 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 392CF9730A;
-        Wed, 19 Jul 2017 17:32:38 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6A6CF9575E;
+        Wed, 19 Jul 2017 19:03:23 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Cc:     Jiang Xin <worldhello.net@gmail.com>,
@@ -51,14 +51,14 @@ References: <249ac6f8-af3c-4b20-5bf0-87a82866cc7a@free.fr>
         <xmqq60epfy27.fsf@gitster.mtv.corp.google.com>
         <CANYiYbFROuyXso2ZKuJWDp4cSwpBu=bNAbC-yZtEyDwkbUcAhQ@mail.gmail.com>
         <alpine.DEB.2.21.1.1707191456010.4193@virtualbox>
-Date:   Wed, 19 Jul 2017 14:32:37 -0700
+Date:   Wed, 19 Jul 2017 16:03:21 -0700
 In-Reply-To: <alpine.DEB.2.21.1.1707191456010.4193@virtualbox> (Johannes
         Schindelin's message of "Wed, 19 Jul 2017 15:25:09 +0200 (CEST)")
-Message-ID: <xmqqd18wm7t6.fsf@gitster.mtv.corp.google.com>
+Message-ID: <xmqq8tjkm3ly.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: C97930D6-6CC9-11E7-B875-61520C78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 77112F58-6CD6-11E7-914B-EFB41968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -66,42 +66,30 @@ X-Mailing-List: git@vger.kernel.org
 
 Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
->> Gettext handles macros such as PRIuMAX in commit 8b45c5df1 ("Add
->> support for ISO C 99 <inttypes.h> format string directive macros.",
->> 2002-07-23 12:33:13 +0000).
+> But there may be hope. Since the character sequence "PRItime" is highly
+> unlikely to occur in Git's source code in any context other than the
+> format to print/parse timestamp_t, it should be possible to automate a the
+> string replacement
 >
-> Wow. This is ugly.
+> 	git ls-files -z \*.[ch] |
+> 	xargs -0r sed -i 's/PRItime/PRIuMAX/g'
 >
-> If I understand correctly, then this will not even work correctly for
-> PRIuMAX on Windows: ...
+> (assuming, of course, that you use GNU sed, not BSD sed, for which the
+> `-i` needs to read `-i ''` instead) as part of the update?
 
-I think it is the other way around.  Without such a special-casing,
-and producing message identifier that has "%<PRIuMAX>" in it, they
-cannot get a .po source that is usable across platforms.
+I somehow missed this bit.
 
-Imagine a hypothetical xgettext that does not have the special case,
-but just does what CPP does.  Running it on a platform where
-uintmax_t is "unsigned long" would have "%lu" in resulting .po for a
-message that uses "%" + PRIuMAX.  But the same source compiled on a
-platform where uintmax_t is larger would pass "%llu" in calls to
-_(...) it makes; such a string will not be found at runtime in the
-corresponding .mo file, because you started with "%lu" in the .po
-file.  By leaving a special marker %<PRIuMAX> in the .po file by
-special casing, the toolchain can make sure that the actual
-parameter given to a _(...) can be found at runtime in .mo file that
-was produced by compiling the .po file for the target platform.
+Given that this needs to be done only once every release by only one
+person (i.e. the l10n coordinator who updates *.pot file), as long
+as the procedure is automated as much as possible to ease the pain
+for the l10n coordinator and clearly described in the "Maintaining
+the po/git.pot file" section of po/README, something along that line
+does sound like a very tempting approach.  If it works well, it is
+certainly much easier for normal developers than the other possible
+alternatives I mentioned in my previous response.
 
-So our own PRItime was a good idea for maintainability's point of
-view of _our_ code, but it was not very friendly to i18n.
+It is brittle as you already said, but perhaps a bit of anchoring
+like \<PRItime\>, the brittle-ness may not hurt in practice.  
 
-I can see two possibly usable approaches to make it i18n-friendly
-while retaining our ability to later change the underlying type of
-timestamp_t.  But neither is very pretty.
-
- - One is what was in Jiang's earlier proposal.
-
- - Another is to replace PRItime with PRIuMAX _but_ leave a comment
-   to tell us that it wanted to be PRItime, so that we can later
-   "git grep" for such a comment if/when we want to update the type
-   of timestamp_t.
+I didn't look at "git grep PRItime" output for hits, though.
 
