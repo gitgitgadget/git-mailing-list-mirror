@@ -2,147 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D4CD220288
-	for <e@80x24.org>; Wed, 19 Jul 2017 14:04:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E8D120288
+	for <e@80x24.org>; Wed, 19 Jul 2017 14:10:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752269AbdGSOEg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Jul 2017 10:04:36 -0400
-Received: from mail-qt0-f174.google.com ([209.85.216.174]:32979 "EHLO
-        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751448AbdGSOEf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jul 2017 10:04:35 -0400
-Received: by mail-qt0-f174.google.com with SMTP id n42so2356642qtn.0
-        for <git@vger.kernel.org>; Wed, 19 Jul 2017 07:04:34 -0700 (PDT)
+        id S1751995AbdGSOKX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Jul 2017 10:10:23 -0400
+Received: from mail-wm0-f44.google.com ([74.125.82.44]:37056 "EHLO
+        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751400AbdGSOKW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jul 2017 10:10:22 -0400
+Received: by mail-wm0-f44.google.com with SMTP id g127so264632wmd.0
+        for <git@vger.kernel.org>; Wed, 19 Jul 2017 07:10:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Q1+deu2TSMlwo6ke91LoBlzvQNx3VDevfPcpi4hblTk=;
-        b=JtMeUMZ/iB9WZbCE7lgHWfZDz+UdgushtK+XebqC92mUMOStEcwi7uBUQq0vLgYJGu
-         Og95xnBZeU03VVZ3RT5NC+GD4AH1WLsJtilsQx7dOBDq1CtTWVFB2siR3tK/7X+y1nJg
-         S8b8sNCUrzek5Xik28I9ksMSEbZQysdYdbDGzZPTzsc8gCTo7P7HP1h5v0uvKjDFikal
-         ZUgnTlLwoVVNkHI2Rh0iW+6ZTZHfGxGTgETsHNXoJYX5IQNudqWD0LT78zpp+8s6SVFK
-         3aF4Hcwte5sRsRURKakikEqzhbxtRLkQDiwszYvx6OCbp6Nhhc9mB5Guf0GG3y5DnJJX
-         wLGA==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=bMnDxT9fvyT7vdCUHwe71hzDrYPoy9DvgzMKbSh2eFc=;
+        b=Tq7uttgJHgyTt4ZYAlMalhHk04Sx8W5cIpo/1kH2VnMI6EpkofFqhHpDguSQS9SCwi
+         pCJ2tfo3mU0yizCTSo/0Au/czftA5v85Un/eHBWrOxFOKlFajDbHZYNBS5BJLtwFuqh8
+         m6BXJhTT8LjhLeWAMvLlNWalH+e8u6754nGKY5M4bE5UCn5BSVGN4ylL7FkOA8BdogPN
+         jqJ6nSGfeoTQKbDfSdg57pWDaHJJx+BF/1ISpgyF6+MaYMfKnpZFD+lR5BF/y8ZRPn1S
+         gDA1MTPDvOWsb1ZCcwfmOdlwDBsYtT2FGPAqZ5owI1blhjslkM4F0/eDtSvqlrW8+o03
+         axqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Q1+deu2TSMlwo6ke91LoBlzvQNx3VDevfPcpi4hblTk=;
-        b=n4rmRfIShnbH0yE5+MK2cnlxDnqxuW7e3MWFppCxYxBYC18idVHrpjODV+eFEFRxTh
-         ruhtMxwvlDGWKEsd6TZ1xJgg4rvXyltjtgYFwysXCdeuexd8txAdPZYe9NGz1wux7FXY
-         /AXZezj10uvtldz5ByftWzM4neNkJFUIPsjbAiGWjeuK81lhY5OBbvtwVc3tsn3JvVul
-         uHSZ0d3gJwILgxZVpVGvs2C3nBDR2b85NmvRCbum7H8u9K/lLMV1r6FFY3mKVJ2N+JeX
-         dh4uGH6gTbl5J19fTQ3bxesATnHVGSR0/v3afMr6rzTL3tDs7HbH+kEnj/A7tGb1NDX5
-         VWZw==
-X-Gm-Message-State: AIVw1123U+v/TE+ENWtNaF/fc14Y4EXL5uSSh0RAFRnHCsK+UdDvRVx5
-        ZIQE8IbGYZ48XU7wmZ7IqYa/wGmiJw==
-X-Received: by 10.55.160.15 with SMTP id j15mr270854qke.324.1500473074325;
- Wed, 19 Jul 2017 07:04:34 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=bMnDxT9fvyT7vdCUHwe71hzDrYPoy9DvgzMKbSh2eFc=;
+        b=hscwEAX/JyY8M5ANdMVhdwhKjucsJ6A7DTyhrR/JUBg4yCbMY+kr+lX/Jx0fCkA0Y9
+         JNkg8ztrsj8Z5mNqOIyD0/y1s8+8NVct7Hpd40rMtNhNJh146lrfxMNCwfC3XpDxP47x
+         f/014FDLfDAT8XmlRzX9SN5RKOgh7+0QjKYNc9iO/9vttvsSDYbL5Bms97OWKFT8dApJ
+         XueAomcE8SPL8HxRI6udTJuLyGG2jd4C0k+lLrJX3JcusKUq8+saWslcr7nJku1LNKhd
+         IzmVbNBSG7mzX1kcSM5XKLvfh9dBU0atyrB0HtGuDazObQxXR9nMY/pTFKObwKCv8Jn4
+         60fw==
+X-Gm-Message-State: AIVw1125gD17W8DPhGhe5JRfeRTM0iJN5z1+20+3imXy7XP4dFoJttqX
+        gN9zGhLri3CYug==
+X-Received: by 10.80.151.22 with SMTP id c22mr166849edb.30.1500472931575;
+        Wed, 19 Jul 2017 07:02:11 -0700 (PDT)
+Received: from snth (157-157-140-194.dsl.dynamic.simnet.is. [157.157.140.194])
+        by smtp.gmail.com with ESMTPSA id z58sm64152edb.50.2017.07.19.07.02.09
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 19 Jul 2017 07:02:10 -0700 (PDT)
+Received: from avar by snth with local (Exim 4.84_2)
+        (envelope-from <avarab@gmail.com>)
+        id 1dXpYG-0006C5-Ii; Wed, 19 Jul 2017 16:02:08 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Shawn Pearce <spearce@spearce.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: reftable [v2]: new ref storage format
+References: <CAJo=hJtTp2eA3z9wW9cHo-nA7kK40vVThqh6inXpbCcqfdMP9g@mail.gmail.com> <xmqqlgnmhmep.fsf@gitster.mtv.corp.google.com> <CAJo=hJuP9GdudFsA_ToFQwx-zESaDHRDXHLxmvAXSX5CKmh7JQ@mail.gmail.com>
+User-agent: Debian GNU/Linux 8.8 (jessie); Emacs 25.1.1; mu4e 0.9.19
+In-reply-to: <CAJo=hJuP9GdudFsA_ToFQwx-zESaDHRDXHLxmvAXSX5CKmh7JQ@mail.gmail.com>
+Date:   Wed, 19 Jul 2017 16:02:08 +0200
+Message-ID: <87k234tti7.fsf@gmail.com>
 MIME-Version: 1.0
-Received: by 10.55.31.13 with HTTP; Wed, 19 Jul 2017 07:04:33 -0700 (PDT)
-In-Reply-To: <20170718204904.3768-7-pc44800@gmail.com>
-References: <20170718204904.3768-1-pc44800@gmail.com> <20170718204904.3768-7-pc44800@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 19 Jul 2017 16:04:33 +0200
-Message-ID: <CAP8UFD07w=57kTazLxrEYUq5jaCDp0B3SJevZM3BBoUhsJUj=w@mail.gmail.com>
-Subject: Re: [GSoC][PATCH 6/8] submodule: port submodule subcommand 'deinit'
- from shell to C
-To:     Prathamesh Chavan <pc44800@gmail.com>
-Cc:     git <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 18, 2017 at 10:49 PM, Prathamesh Chavan <pc44800@gmail.com> wrote:
 
-> +static void deinit_submodule(const struct cache_entry *list_item,
-> +                            void *cb_data)
-> +{
-> +       struct deinit_cb *info = cb_data;
-> +       const struct submodule *sub;
-> +       char *displaypath = NULL;
-> +       struct child_process cp_config = CHILD_PROCESS_INIT;
-> +       struct strbuf sb_config = STRBUF_INIT;
-> +       char *sm_path = xstrdup(list_item->name);
+On Tue, Jul 18 2017, Shawn Pearce jotted:
 
-If I understood the previous rounds correctly, list_item->name is
-duplicated because it is changed below...
+> On Mon, Jul 17, 2017 at 12:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Shawn Pearce <spearce@spearce.org> writes:
+>>> where `time_sec` is the update time in seconds since the epoch.  The
+>>> `reverse_int32` function inverses the value so lexographical ordering
+>>> the network byte order time sorts more recent records first:
+>>>
+>>>     reverse_int(int32 t) {
+>>>       return 0xffffffff - t;
+>>>     }
+>>
+>> Is 2038 an issue, or by that time we'd all be retired together with
+>> this file format and it won't be our problem?
+>
+> Based on discussion with Michael Haggerty, this is now an 8 byte field
+> storing microseconds since the epoch. We should be good through year
+> 9999.
 
-> +       char *sub_git_dir = xstrfmt("%s/.git", sm_path);
-> +       struct stat st;
-> +
-> +       sub = submodule_from_path(null_sha1, sm_path);
-> +
-> +       if (!sub || !sub->name)
-> +               goto cleanup;
-> +
-> +       displaypath = get_submodule_displaypath(sm_path, info->prefix);
-> +
-> +       /* remove the submodule work tree (unless the user already did it) */
-> +       if (is_directory(sm_path)) {
-> +               /* protect submodules containing a .git directory */
-> +               if (is_git_directory(sub_git_dir))
-> +                       die(_("Submodule work tree '%s' contains a .git "
-> +                             "directory use 'rm -rf' if you really want "
-> +                             "to remove it including all of its history"),
-> +                             displaypath);
-> +
-> +               if (!info->force) {
-> +                       struct child_process cp_rm = CHILD_PROCESS_INIT;
-> +                       cp_rm.git_cmd = 1;
-> +                       argv_array_pushl(&cp_rm.args, "rm", "-qn", sm_path,
-> +                                        NULL);
-> +
-> +                       /* list_item->name is changed by cmd_rm() below */
+I think this should be s/microseconds/nanoseconds/, not because there's
+some great need to get better resolution than nanoseconds, but because:
 
-... but it looks like cmd_rm() is not used anymore below, so this
-comment is outdated and I wonder if duplicated list_item->name is
-still needed.
+ a) We already have WIP code (bp/fsmonitor) that's storing 64 bit
+    nanoseconds since the epoch, albeit for the index, not for refs.
 
-> +                       if (run_command(&cp_rm))
-> +                               die(_("Submodule work tree '%s' contains local "
-> +                                     "modifications; use '-f' to discard them"),
-> +                                     displaypath);
-> +               }
-> +
-> +               if (!lstat(sm_path, &st)) {
-> +                       struct strbuf sb_rm = STRBUF_INIT;
-> +                       strbuf_addstr(&sb_rm, sm_path);
-> +
-> +                       if (!remove_dir_recursively(&sb_rm, 0)) {
-> +                               if (!info->quiet)
-> +                                       printf(_("Cleared directory '%s'\n"),
-> +                                                displaypath);
-> +                       } else {
-> +                               if (!info->quiet)
-> +                                       printf(_("Could not remove submodule work tree '%s'\n"),
-> +                                                displaypath);
-> +                       }
+ b) There are several filesystems that have nanosecond resolution now,
+    and it's likely more will start using that.
 
-Nit: maybe this could be:
+Thus:
 
-                       struct strbuf sb_rm = STRBUF_INIT;
-                       const char *format;
+ x) If you use such a filesystem you'll lose time resolution with this
+    ref backend v.s. storing them on disk, which isn't itself a big
+    deal, but more importantly you lose 1=1 time mapping as you
+    transition and convert between the two.
 
-                       strbuf_addstr(&sb_rm, sm_path);
+ y) Our own code will need to juggle second resolution epochs
+    (traditional FSs, any 32bit epoch format), microseconds (this
+    proposal), and nanoseconds (new FSs, bp/fsmonitor) internally in
+    various places.
 
-                       if (!remove_dir_recursively(&sb_rm, 0))
-                               format = _("Cleared directory '%s'\n");
-                       else
-                               format = _("Could not remove submodule
-work tree '%s'\n");
+    Let's not make this harder than it needs to be and just settle on
+    two epoch resolution formats if we can help it, and so far it looks
+    like we can.
 
-                       if (!info->quiet)
-                               printf(format, displaypath);
-
-> +                       strbuf_release(&sb_rm);
-> +               }
-> +       }
+The downside is that instead of lasting through the year 9999 the 64 bit
+nanosecond resolution is only good up until the year 2554, which I think
+is an acceptable trade-off given the above.
