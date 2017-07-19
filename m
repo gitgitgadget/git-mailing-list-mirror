@@ -2,126 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C94BB20288
-	for <e@80x24.org>; Wed, 19 Jul 2017 13:25:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D4CD220288
+	for <e@80x24.org>; Wed, 19 Jul 2017 14:04:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752257AbdGSNZS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Jul 2017 09:25:18 -0400
-Received: from mout.gmx.net ([212.227.17.21]:56975 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751364AbdGSNZR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jul 2017 09:25:17 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MMCSP-1dYcBf3gEf-0080Ek; Wed, 19
- Jul 2017 15:25:10 +0200
-Date:   Wed, 19 Jul 2017 15:25:09 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Jiang Xin <worldhello.net@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>
-Subject: Re: [PATCH] PRItime: wrap PRItime for better l10n compatibility
-In-Reply-To: <CANYiYbFROuyXso2ZKuJWDp4cSwpBu=bNAbC-yZtEyDwkbUcAhQ@mail.gmail.com>
-Message-ID: <alpine.DEB.2.21.1.1707191456010.4193@virtualbox>
-References: <249ac6f8-af3c-4b20-5bf0-87a82866cc7a@free.fr> <3ccfa2fb49d471f807d77d9a280e4b7cfe56faea.1500304209.git.worldhello.net@gmail.com> <xmqq7ez7htvj.fsf@gitster.mtv.corp.google.com> <CANYiYbEcMrriaor9OT4c2qtfh9Ja5NJ9KBSxa3XhPAuoN0t42A@mail.gmail.com>
- <xmqq60epfy27.fsf@gitster.mtv.corp.google.com> <CANYiYbFROuyXso2ZKuJWDp4cSwpBu=bNAbC-yZtEyDwkbUcAhQ@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1752269AbdGSOEg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Jul 2017 10:04:36 -0400
+Received: from mail-qt0-f174.google.com ([209.85.216.174]:32979 "EHLO
+        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751448AbdGSOEf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jul 2017 10:04:35 -0400
+Received: by mail-qt0-f174.google.com with SMTP id n42so2356642qtn.0
+        for <git@vger.kernel.org>; Wed, 19 Jul 2017 07:04:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Q1+deu2TSMlwo6ke91LoBlzvQNx3VDevfPcpi4hblTk=;
+        b=JtMeUMZ/iB9WZbCE7lgHWfZDz+UdgushtK+XebqC92mUMOStEcwi7uBUQq0vLgYJGu
+         Og95xnBZeU03VVZ3RT5NC+GD4AH1WLsJtilsQx7dOBDq1CtTWVFB2siR3tK/7X+y1nJg
+         S8b8sNCUrzek5Xik28I9ksMSEbZQysdYdbDGzZPTzsc8gCTo7P7HP1h5v0uvKjDFikal
+         ZUgnTlLwoVVNkHI2Rh0iW+6ZTZHfGxGTgETsHNXoJYX5IQNudqWD0LT78zpp+8s6SVFK
+         3aF4Hcwte5sRsRURKakikEqzhbxtRLkQDiwszYvx6OCbp6Nhhc9mB5Guf0GG3y5DnJJX
+         wLGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Q1+deu2TSMlwo6ke91LoBlzvQNx3VDevfPcpi4hblTk=;
+        b=n4rmRfIShnbH0yE5+MK2cnlxDnqxuW7e3MWFppCxYxBYC18idVHrpjODV+eFEFRxTh
+         ruhtMxwvlDGWKEsd6TZ1xJgg4rvXyltjtgYFwysXCdeuexd8txAdPZYe9NGz1wux7FXY
+         /AXZezj10uvtldz5ByftWzM4neNkJFUIPsjbAiGWjeuK81lhY5OBbvtwVc3tsn3JvVul
+         uHSZ0d3gJwILgxZVpVGvs2C3nBDR2b85NmvRCbum7H8u9K/lLMV1r6FFY3mKVJ2N+JeX
+         dh4uGH6gTbl5J19fTQ3bxesATnHVGSR0/v3afMr6rzTL3tDs7HbH+kEnj/A7tGb1NDX5
+         VWZw==
+X-Gm-Message-State: AIVw1123U+v/TE+ENWtNaF/fc14Y4EXL5uSSh0RAFRnHCsK+UdDvRVx5
+        ZIQE8IbGYZ48XU7wmZ7IqYa/wGmiJw==
+X-Received: by 10.55.160.15 with SMTP id j15mr270854qke.324.1500473074325;
+ Wed, 19 Jul 2017 07:04:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:+KW3doQr5xw2GbNY3nnUxGSCFX8GbnPK8NSZS/rSRJhaqjBg/LG
- pjMdLM3rnpV0SvM6Im2IkUizkdGq2h+lYlfY9LzhHDOksZm32ghhS2z9fjjEXeLOPVilhKn
- AV3wPS3Z+fI6PCXvneMC9JaevV7hj+QDvDhSZG0Szu6NeliL7wnaeijWC6fxF1YiobEkIDn
- coVw14s532xgb/gxak+Og==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:q+wElywEADQ=:XRaCjDkSyqEGkTKWaoA6ZJ
- N4aUOVkXW/3Nt+3U+mNnrar59R3kfkg5WCTplHbuuoILT/L7Z9HnDQkA3Vve0/UwR/v+Z5PdH
- mFC49SpscIoVizux1R0xHI9WtRwszSMGgBcXHyNcjhYdfgL1/soYJbwwvv5EShE3EEYcsXA51
- rbSbNdPaC7kkCfccogz0xxhGAtR9iHiYmg+I7oGMcNPUIbO6dd2uK99mQAb1xqkoVll/pOSEE
- ++tbeGomr2W8YsGGeWTX5xxyzZg1UjjHGa+MhFTGNkDoRHG3xRbNVXLPJmbQqGkAkGiTGxRTE
- XFtedvT3351Pxk/GVcl7mKqr3qF6XkaBfiQ7YvGbCNpfSp29BbPeKU49HCSgB8YLSoLVzjuep
- vCEcQuAlGaexiN5k6HD8KvqcF3oNF3zbKXgrtnTjMZ/UDWf4656bIzRrXIkzl2w4RhdiTWqHg
- +BmEixqDb0o5GnzlkB6/rrc9Js4vAW7JAhx92BO9TdK1DMm1fK67UsYt5JhD7L6wG7uAf2YC1
- UJPwiMQpsmnDSc2ml/BSmCzGsVDe6JtO1drqweckW0PP94et9TUpJHR4FgOiNiGXMdMCkdlOR
- mGAhQ3HfZFG7XHxn+myLwKLz3Vk9qZt9rCBtYABJhyfW63mDR+kziTFVbxMUSP0juSpbngGR1
- w92qja5GS1vmvdJd+BZ1eSOTfCQJiBqzGo0DrRtI8mxYP3fHyyOwg/D4PmeA7XrgvTZBt+cYZ
- lc+YIys1kHm1uQ55d/32Tx9pmse+s7WcIQwVWf/ie2XDmPuVXW/UH+G5Rcz1PIj4epzU74dPd
- FD7sPR03Qh3CNlBQ0CSm8j+c1411QXIPdTYsnkYSwrFk7cu3Fc=
+Received: by 10.55.31.13 with HTTP; Wed, 19 Jul 2017 07:04:33 -0700 (PDT)
+In-Reply-To: <20170718204904.3768-7-pc44800@gmail.com>
+References: <20170718204904.3768-1-pc44800@gmail.com> <20170718204904.3768-7-pc44800@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 19 Jul 2017 16:04:33 +0200
+Message-ID: <CAP8UFD07w=57kTazLxrEYUq5jaCDp0B3SJevZM3BBoUhsJUj=w@mail.gmail.com>
+Subject: Re: [GSoC][PATCH 6/8] submodule: port submodule subcommand 'deinit'
+ from shell to C
+To:     Prathamesh Chavan <pc44800@gmail.com>
+Cc:     git <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jian (or is it Xin?),
+On Tue, Jul 18, 2017 at 10:49 PM, Prathamesh Chavan <pc44800@gmail.com> wrote:
 
-On Wed, 19 Jul 2017, Jiang Xin wrote:
+> +static void deinit_submodule(const struct cache_entry *list_item,
+> +                            void *cb_data)
+> +{
+> +       struct deinit_cb *info = cb_data;
+> +       const struct submodule *sub;
+> +       char *displaypath = NULL;
+> +       struct child_process cp_config = CHILD_PROCESS_INIT;
+> +       struct strbuf sb_config = STRBUF_INIT;
+> +       char *sm_path = xstrdup(list_item->name);
 
-> 2017-07-19 1:35 GMT+08:00 Junio C Hamano <gitster@pobox.com>:
-> > Jiang Xin <worldhello.net@gmail.com> writes:
-> >
-> >>> Two potential issues are:
-> >>>
-> >>>  - After this patch, there still are quite a many
-> >>>
-> >>>         printf("time is %"PRItime" ...\n", timestamp)
-> >>>
-> >>>    so the burden on the programmers having to remember when it is
-> >>>    required to use format_raw_time() becomes unclear, and makes the
-> >>>    change/churn larger when an existing message needs to be marked
-> >>>    for translation.
-> >>>
-> >>>  - The static struct strbuf here is a cheap way to avoid leaks, but
-> >>>    at the same time it is unfriendly to threaded code.  We could
-> >>>    instead do:
-> >>>
-> >>>         void append_PRItime(struct strbuf *buf, timestamp_t time);
-> >>>
-> >>>    to fix that trivially, but the damage to the caller obviously is
-> >>>    much larger going this way.
-> >>>
-> >>
-> >> I wonder if we can replace the original %lu for timestamp with PRIuMAX
-> >> instead.  PRIuMAX works fine with gettext utils.
-> >
-> > I think the question can better be answered if we know how gettext
-> > tools special case PRIuMAX.  One thing that may be problematic is
-> > that timestamp can later become a signed type and use of one level
-> > of redirection in the current code via PRItime and via timestamp_t
-> > is a good way to keep such a transition much easier.  Reverting it
-> > to use PRIuMAX would make such a transition much harder.
-> 
-> Gettext handles macros such as PRIuMAX in commit 8b45c5df1 ("Add
-> support for ISO C 99 <inttypes.h> format string directive macros.",
-> 2002-07-23 12:33:13 +0000).
+If I understood the previous rounds correctly, list_item->name is
+duplicated because it is changed below...
 
-Wow. This is ugly.
+> +       char *sub_git_dir = xstrfmt("%s/.git", sm_path);
+> +       struct stat st;
+> +
+> +       sub = submodule_from_path(null_sha1, sm_path);
+> +
+> +       if (!sub || !sub->name)
+> +               goto cleanup;
+> +
+> +       displaypath = get_submodule_displaypath(sm_path, info->prefix);
+> +
+> +       /* remove the submodule work tree (unless the user already did it) */
+> +       if (is_directory(sm_path)) {
+> +               /* protect submodules containing a .git directory */
+> +               if (is_git_directory(sub_git_dir))
+> +                       die(_("Submodule work tree '%s' contains a .git "
+> +                             "directory use 'rm -rf' if you really want "
+> +                             "to remove it including all of its history"),
+> +                             displaypath);
+> +
+> +               if (!info->force) {
+> +                       struct child_process cp_rm = CHILD_PROCESS_INIT;
+> +                       cp_rm.git_cmd = 1;
+> +                       argv_array_pushl(&cp_rm.args, "rm", "-qn", sm_path,
+> +                                        NULL);
+> +
+> +                       /* list_item->name is changed by cmd_rm() below */
 
-If I understand correctly, then this will not even work correctly for
-PRIuMAX on Windows: I highly doubt that the gettext library will interpret
-%I64u in the format string correctly to be what %<PRIuMAX> in the po file
-refers to.
+... but it looks like cmd_rm() is not used anymore below, so this
+comment is outdated and I wonder if duplicated list_item->name is
+still needed.
 
-But there may be hope. Since the character sequence "PRItime" is highly
-unlikely to occur in Git's source code in any context other than the
-format to print/parse timestamp_t, it should be possible to automate a the
-string replacement
+> +                       if (run_command(&cp_rm))
+> +                               die(_("Submodule work tree '%s' contains local "
+> +                                     "modifications; use '-f' to discard them"),
+> +                                     displaypath);
+> +               }
+> +
+> +               if (!lstat(sm_path, &st)) {
+> +                       struct strbuf sb_rm = STRBUF_INIT;
+> +                       strbuf_addstr(&sb_rm, sm_path);
+> +
+> +                       if (!remove_dir_recursively(&sb_rm, 0)) {
+> +                               if (!info->quiet)
+> +                                       printf(_("Cleared directory '%s'\n"),
+> +                                                displaypath);
+> +                       } else {
+> +                               if (!info->quiet)
+> +                                       printf(_("Could not remove submodule work tree '%s'\n"),
+> +                                                displaypath);
+> +                       }
 
-	git ls-files -z \*.[ch] |
-	xargs -0r sed -i 's/PRItime/PRIuMAX/g'
+Nit: maybe this could be:
 
-(assuming, of course, that you use GNU sed, not BSD sed, for which the
-`-i` needs to read `-i ''` instead) as part of the update?
+                       struct strbuf sb_rm = STRBUF_INIT;
+                       const char *format;
 
-For all the reasons Junio mentioned, I, too, would be reluctant to change
-the source code to cull all of the PRItime mentions, as it is pleasing
-from a semantic point of view that we know what the heck we are talking
-about here.
+                       strbuf_addstr(&sb_rm, sm_path);
 
-BTW *thank you so much* for your Herculean effort to keep going with the
-translation.
+                       if (!remove_dir_recursively(&sb_rm, 0))
+                               format = _("Cleared directory '%s'\n");
+                       else
+                               format = _("Could not remove submodule
+work tree '%s'\n");
 
-Ciao,
-Dscho
+                       if (!info->quiet)
+                               printf(format, displaypath);
+
+> +                       strbuf_release(&sb_rm);
+> +               }
+> +       }
