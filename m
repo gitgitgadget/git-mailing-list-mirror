@@ -2,82 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BCAC61F600
-	for <e@80x24.org>; Wed, 19 Jul 2017 11:31:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5691D20288
+	for <e@80x24.org>; Wed, 19 Jul 2017 12:53:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932183AbdGSLbh (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Jul 2017 07:31:37 -0400
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:37080 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754074AbdGSLbe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jul 2017 07:31:34 -0400
-Received: by mail-qt0-f195.google.com with SMTP id n43so328302qtc.4
-        for <git@vger.kernel.org>; Wed, 19 Jul 2017 04:31:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=mblETWBZ0UVnELf6QvEdZtYpmkgHG2V2dxnk339B0pw=;
-        b=mY2zOemGOm+QVfXnFX6XBM2jVYTUIGgNRGf7RB9L/+ufZ395+Cmeeski1+qYI2qY3b
-         QNoDL+fp5/P6/FbD7ZZJPjotPt/mUXFsppkxM5ikXxPumF6YbJ6EK2LmgAdE6Tk/9fNB
-         hOMu8g1B+5jgjxB3ws7sZbP4hSj/5Ihs+xoBNJqQwnhPpLHamPXBLBJr/I9hPzCxF8Ta
-         +veBfCK/ybmZ0FkUJpiazJjsN0LPWytyTM6yiUoy+8PUCNyiXWVV//HvzpjysdHkZ7bh
-         0nHbKaEsUwGcG0/Y9od9aPXXK2uHH91p4z+CN35sIa/Jw7k9zdZ0wjqhAnOhwj5eC0PF
-         XJEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=mblETWBZ0UVnELf6QvEdZtYpmkgHG2V2dxnk339B0pw=;
-        b=pn5zX0jpaej9QEYbFiGLi8TU12r5eqOzX/TZiDpwJFXJu7cLCFMaEZQZxnyZTLTcrq
-         pbaTny/rdcizqQ2X3/IsTqHbb7W5Lh2jiekJZjRm/FkfTyl/sR/UVrLRnABcTPD/hRaS
-         jng+SOJyojOwDb1Rq2o3/FqfL+AKEH5v/EGp8oejZLqGm8kai+Cio8VIuzuQ9KOrDN/8
-         Luqt2ghIdPAh+YiXyiJfvR19cEk7OAXF9ZzYzgM4cfsp8AsB0q+f+9ZtmHnXFp+/Y7Wq
-         bBeZ2ymYt4SeYO/shEdFdzqaMXYvoyY34ZocCXTBtlVLh2s4w6amWXcb6W/ERKtt+OJ1
-         ayQg==
-X-Gm-Message-State: AIVw110WnxVA/779i/C9ZDwzCYnHP4CGmz9l9vjyiu6d2QOC5oZy+PeR
-        YEg0Hv7FLhxtJG8s2XX/1Uwr5+iGAW3+
-X-Received: by 10.237.49.194 with SMTP id 60mr2571286qth.73.1500463893015;
- Wed, 19 Jul 2017 04:31:33 -0700 (PDT)
+        id S1752858AbdGSMxD (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Jul 2017 08:53:03 -0400
+Received: from mout.gmx.net ([212.227.17.22]:52722 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752794AbdGSMxC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jul 2017 08:53:02 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LsOsW-1deWc93NJA-01228W; Wed, 19
+ Jul 2017 14:52:53 +0200
+Date:   Wed, 19 Jul 2017 14:52:52 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Jonathan Tan <jonathantanmy@google.com>
+cc:     Christian Couder <christian.couder@gmail.com>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 8/8] sha1_file: refactor has_sha1_file_with_flags
+In-Reply-To: <20170718093920.3265c67f@twelve2.svl.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1707191450570.4193@virtualbox>
+References: <cover.1497035376.git.jonathantanmy@google.com>        <cover.1498091579.git.jonathantanmy@google.com>        <a4f04b3ec9cc1ba08a5dd7f459dce95411fb03e2.1498091579.git.jonathantanmy@google.com>        <CAP8UFD24QVAuTXXH3zvR5zwZwub20o37uGyt8Uf+rRtjjk8QTA@mail.gmail.com>
+ <20170718093920.3265c67f@twelve2.svl.corp.google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.55.31.13 with HTTP; Wed, 19 Jul 2017 04:31:32 -0700 (PDT)
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 19 Jul 2017 13:31:32 +0200
-Message-ID: <CAP8UFD1LBuZHrTXYTr+bqc+44kwwfns6uc=rzzPGAx=vRoQzow@mail.gmail.com>
-Subject: [ANNOUNCE] Git Rev News edition 29
-To:     git <git@vger.kernel.org>
-Cc:     lwn@lwn.net, Thomas Ferris Nicolaisen <tfnico@gmail.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        Brandon Williams <bmwill@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:VZ0JVLNKwRHicOAYlIJhTCmdtHc5PuSkC5DjHUauxDMsKProEgj
+ eHyYyiMismLcDhgKAqacslbwvyUZOgBXI/FSbUUvEc1w/1kpaqHCgxUZgrEjvJCPCY05cKf
+ 3fQmSuVkSTMDPdH6hei9KULMCXZXGxG87fga7uJpJlqObBjF0+HFivSKu/QIw3yWOxwxMKP
+ kz5P1h43uS2E1pWDREjbQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:oScZE1TAypQ=:DZ/sNsc2EDth7Epe8MGA5L
+ W3iJ/Sf3FG06tDlYtHutOUue9I5eIk/dsNuokY9+aMEk7qnK5C2qIOhgWU1J7XCaSd5ljegwJ
+ h7QcjVZGK3jO0ORsu8gM7mOLT9BX1YMKD75M8mLQdZnQUXHPxK8DiiedQSa6L/a3DGXifCi9V
+ 4t7VJMbJuA4WrQyNbxQBKjaRSOsuUUUcTqJGN012QBt5dwGfcUjw1/0Sh+7JMfQfSE1UMvAHx
+ JkcLHhj3OEMR3nGBo4l8IYSu0ipXDdlAsX3LEX7P1r9uyERIHwFNI/2ZJmwOkg+VSQ9eHakpY
+ YWqUMKcIOwZrWv3IIMHIjeTp4nkxzfsZohps93H8iiRC7uTEWEV5sDEZcwrGMatQpDOAUsuoI
+ P0b0NyNASNsxFe5W80D3PU6PQAoXs3O8FYQAkqJ30vCFv1PHHneU8xmjgooZOejw/XOnKDBWq
+ KE3AG3difh34Dh+8FRo8Qijn1/sPAMigQaMu1NEDRal1BGjp6YEoyEiqPnt+DhG9Rc78D9cNR
+ zuL9ilhtkwuO1ei++Dcu725q4eqbV4Z1rNbWLdVSnBK0W5SMblTLUCgmPJndUeFNm6Cwu7gcX
+ cL/a9NYaqbvH/E0lJGJVCA4xBiWXoXVVJupPT+gb0/NqkWvmhlQh7EpVf4VrrtgqRGsgsohVk
+ VyToif0OjxxOlslaAsqO+5JBpnRuij3ArOCSOPOuVtilK81fDWfpcMyv2t0u+jd/SWBJGsSzs
+ yxpZI8AHqOhGuMmWZ3PWlyimF3H9vfSOMWIKU7fnBFrxFCW6o6xksJuCQ7jCha0h1u2851KS3
+ ny4YnxwdZ7qMTJ0q2FBdXMzBPGreGgD30mPxpv1Afgi64BiX8Y=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
+Hi Jonathan,
 
-The 29th edition of Git Rev News is now published:
+On Tue, 18 Jul 2017, Jonathan Tan wrote:
 
-  https://git.github.io/rev_news/2017/07/19/edition-29/
+> On Tue, 18 Jul 2017 12:30:46 +0200
+> Christian Couder <christian.couder@gmail.com> wrote:
+> 
+> > On Thu, Jun 22, 2017 at 2:40 AM, Jonathan Tan <jonathantanmy@google.com> wrote:
+> > 
+> > > diff --git a/sha1_file.c b/sha1_file.c
+> > > index bf6b64ec8..778f01d92 100644
+> > > --- a/sha1_file.c
+> > > +++ b/sha1_file.c
+> > > @@ -3494,18 +3494,10 @@ int has_sha1_pack(const unsigned char *sha1)
+> > >
+> > >  int has_sha1_file_with_flags(const unsigned char *sha1, int flags)
+> > >  {
+> > > -       struct pack_entry e;
+> > > -
+> > >         if (!startup_info->have_repository)
+> > >                 return 0;
+> > > -       if (find_pack_entry(sha1, &e))
+> > > -               return 1;
+> > > -       if (has_loose_object(sha1))
+> > > -               return 1;
+> > > -       if (flags & HAS_SHA1_QUICK)
+> > > -               return 0;
+> > > -       reprepare_packed_git();
+> > > -       return find_pack_entry(sha1, &e);
+> > > +       return sha1_object_info_extended(sha1, NULL,
+> > > +                                        flags | OBJECT_INFO_SKIP_CACHED) >= 0;
+> > >  }
+> > 
+> > I am not sure if it could affect performance (in one way or another) a
+> > lot or not but I just wanted to note that has_loose_object() calls
+> > check_and_freshen() which calls access() on loose object files, while
+> > sha1_object_info_extended() calls sha1_loose_object_info() which calls
+> > stat_sha1_file() which calls lstat() on loose object files.
+> > 
+> > So depending on the relative performance of access() and lstat() there
+> > could be a performance impact on repos that have a lot of loose object
+> > files.
+> 
+> That is true, but from what little I have read online, they have about
+> the same performance.
 
-Thanks a lot to all the contributors and helpers!
+Then your online sources missed out on what we have in compat/mingw.[ch].
+I would expect _waccess() (which is used to emulate access()) to be
+substantially faster than the hoops we jump through to emulate lstat().
 
-Enjoy,
-Christian, Thomas, Jakub and Markus.
+Ciao,
+Dscho
