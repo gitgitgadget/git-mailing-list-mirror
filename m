@@ -2,317 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E2AD820288
-	for <e@80x24.org>; Wed, 19 Jul 2017 14:53:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A51E20288
+	for <e@80x24.org>; Wed, 19 Jul 2017 14:56:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755086AbdGSOxS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Jul 2017 10:53:18 -0400
-Received: from mail-qt0-f174.google.com ([209.85.216.174]:34545 "EHLO
-        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755079AbdGSOxQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jul 2017 10:53:16 -0400
-Received: by mail-qt0-f174.google.com with SMTP id 32so3979481qtv.1
-        for <git@vger.kernel.org>; Wed, 19 Jul 2017 07:53:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Atxd5c52K76Va2F03eKRCwxtoNDC97NDc++xzPEZJWw=;
-        b=rgSexkE36dUSYi4PObZwqRUcykBDG9+/dr07xj16ENeZcQRhWRIUWAkxJ/0rjAuYWD
-         prgqEUf4yAA2jRpL8/DAkWOToBgfbVDQvSh2i3YRlrsnXG9yTgF+V1jLpbEPMEtyMIba
-         RwU+UMMsac9PwWRfpB4PTvZx6NCAHpBO6Qg0SEwSX7LpeVwaO66h1j+GhG2rPlGnvaNU
-         9TRF1ZRvVpDeQKMupmrcbWW8fClfchd3Iq4MlGWmUKeUm1o7n45JPW8wANWxs+pQ2atO
-         x/6nj8Mw6gjf0DkAoWjwfEP4DcLFpVHwHTbTZxZ0UtpCiRDH/kQV/6crG8OaxAENqCtF
-         WjAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Atxd5c52K76Va2F03eKRCwxtoNDC97NDc++xzPEZJWw=;
-        b=ZpiG/pIXifs8QdSTgrnQB4leEMGGcV50yCY7Z+Q7iNCvQyGh7S8zJywvftOi7pVvGJ
-         BNUxPTyP13enmqhzRFPSEEp8OFm4KsAOQwscTru6K9MFppkN8wT4xB0p1TWtMsVZMJO/
-         m3BEJz8k6DSdMScxfp9Mhhz8GEG2SUaMtL2qvaN6r6YbUmYeAZQEEV0u6JxtJjWfU5uM
-         AkcKx6gbJDkkaLLD4CjGWRc2bUOIKiyqaZWag3SpqggDlTjmHisTKhEZD/26o+aox3ii
-         zazPK3USdCGWIkjINMz4HFW76t6oCCwAHn7NbvXxLk40HlqnHfwEjeV5PdMxlrwLmF+V
-         jGVA==
-X-Gm-Message-State: AIVw110NGHdSQ7743cjyZpHCzO5bk6CGFRMLP+Xq7sQcxYdkJYNi/TlK
-        0qeIHJT6aQjx5ZoKD7jz/AzXEJb8ww==
-X-Received: by 10.237.49.194 with SMTP id 60mr487983qth.73.1500475995949; Wed,
- 19 Jul 2017 07:53:15 -0700 (PDT)
+        id S1754186AbdGSO42 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Jul 2017 10:56:28 -0400
+Received: from mout.gmx.net ([212.227.17.21]:57102 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751299AbdGSO41 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jul 2017 10:56:27 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MHH3P-1dSZ4o1q9z-00E4h4; Wed, 19
+ Jul 2017 16:56:21 +0200
+Date:   Wed, 19 Jul 2017 16:56:19 +0200 (CEST)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: [PATCH] run_processes_parallel: change confusing task_cb
+ convention
+Message-ID: <7151686aba3c5254bfff35bfd7cdd1d48992e99a.1500476164.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.55.31.13 with HTTP; Wed, 19 Jul 2017 07:53:15 -0700 (PDT)
-In-Reply-To: <20170718204904.3768-9-pc44800@gmail.com>
-References: <20170718204904.3768-1-pc44800@gmail.com> <20170718204904.3768-9-pc44800@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 19 Jul 2017 16:53:15 +0200
-Message-ID: <CAP8UFD3ySECbyzCooSLetSk-qdnjj1kpvcjVMAO8oGmsFYsEMQ@mail.gmail.com>
-Subject: Re: [GSoC][PATCH 8/8] submodule: port submodule subcommand 'summary'
- from shell to C
-To:     Prathamesh Chavan <pc44800@gmail.com>
-Cc:     git <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:/PHEj8k1OD9uFX3Ni8teV4+P/AvbBgwmBHB/0Ud6VzGp8uE3Ulq
+ X+NJoBANxIJ3MMQCr8VmDe2FpDouP8bIInKXFrkpXZGtrGLhPyjCCKXOfYN4wb0+/91y2Ff
+ LI+CE5n0hcmQA9c0iOnWx10Lvn3F9gcQI7X8E4MrENaSkANsCzJGLAbLWZYY9J6NCkBFLTx
+ /71inh5LKHjDj9w6Yxs+A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:lUGfSZeLz9w=:vhENuulhldMIjECBrA2fKk
+ KypNE4lvv4XcRyctWjSXa1CrtT6qqAZs0EEpxUt6tgDJROUWynNotmCG89X8tiL+vZpsNv54i
+ JcvqnEIyd+qCVAHkk2PbXQNfAvlws8pHi8maSNtVjsrZErh76FxIRYwHN3bp9Lmn41mtzXx/e
+ woohT9+9uJbTypMol7JYmnoja7DTTxZjQ91YuKV2LX5mhlKJ2CKF4B+TylY5ft4EYkrHLMnf0
+ AHBZh8HTQXrYuLMrcHPMUAHjyMnPvLbtKC5j8jSSoUfxYPXlOLsj54ghh7JgjTdC5C6yQgfAR
+ b/RmXQMWiOjobGNLo8K1XdGhiYLej+zaOJQesxO8X5K35P9wDIfe0ub+lcAR5pAcWB2J+Ipq1
+ 9mV24KEW3/VUXWTILYmAeBF5xH+YbfUDAI4gZSFRS6jedtf4dRGK9RAyeQFKj86Mi9eJ9iqpr
+ ye9AjoXCidpg3MYkpLH67e9ZBteKKVtKJJeqiekUW5GEC+/KEfREIr9wTCDi72BNHvsD4186K
+ IKv+M192ScpQ1TXSP9SyAelh2y0ZzLLJDDfDcqYfdGYxpog2lTGkNcyb3Wc2odb4Hv3fts+hj
+ +2kizjpblFWFnEWZkj7h5SZimmSNdA1gNX7Nz3hoeFwW54igrGHj9hoPf/pn6Am4hNOf+8ikq
+ 0O2upXxYwto8j/p43r30JI4XPPwYKkuuPrQMRr6eRQ6mFgQUP0W5uuaqF1jJa5BItBYHriKNt
+ y8pbiWZUoOkSIcRsbxtbbCriRpWoQeLBqG/H2ybfpoh7S2IgBEl7++Zb/+DAEKYEpZMWSZgMW
+ tlIiv6q7DSmCWAZLchBLMe5MfJOcp8H6geJOOsupfbGteAW0Ag=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 18, 2017 at 10:49 PM, Prathamesh Chavan <pc44800@gmail.com> wrote:
+By declaring the task_cb parameter of type `void **`, the signature of
+the get_next_task method suggests that the "task-specific cookie" can be
+defined in that method, and the signatures of the start_failure and of
+the task_finished methods declare that parameter of type `void *`,
+suggesting that those methods are mere users of said cookie.
 
+That convention makes a total lot of sense, because the tasks are pretty
+much dead when one of the latter two methods is called: there would be
+little use to reset that cookie at that point because nobody would be
+able to see the change afterwards.
 
+However, this is not what the code actually does. For all three methods,
+it passes the *address* of pp->children[i].data.
 
-> +static void print_submodule_summary(struct summary_cb *info,
-> +                                   struct module_cb *p)
-> +{
-> +       int missing_src = 0;
-> +       int missing_dst = 0;
-> +       char *displaypath;
-> +       char *sha1_abbr_src;
-> +       char *sha1_abbr_dst;
-> +       int errmsg = 0;
-> +       int total_commits = -1;
-> +       struct strbuf sb_sha1_src = STRBUF_INIT;
-> +       struct strbuf sb_sha1_dst = STRBUF_INIT;
-> +       char *sha1_dst = oid_to_hex(&p->oid_dst);
-> +       char *sha1_src = oid_to_hex(&p->oid_src);
-> +       char *sm_git_dir = xstrfmt("%s/.git", p->sm_path);
-> +       int is_sm_git_dir = 0;
-> +
-> +       if (!info->cached && !strcmp(sha1_dst, sha1_to_hex(null_sha1))) {
-> +               if (S_ISGITLINK(p->mod_dst)) {
-> +                       struct child_process cp_rev_parse = CHILD_PROCESS_INIT;
-> +                       struct strbuf sb_rev_parse = STRBUF_INIT;
-> +
-> +                       cp_rev_parse.git_cmd = 1;
-> +                       cp_rev_parse.no_stderr = 1;
-> +                       cp_rev_parse.dir = p->sm_path;
-> +                       prepare_submodule_repo_env(&cp_rev_parse.env_array);
-> +
-> +                       argv_array_pushl(&cp_rev_parse.args,
-> +                                        "rev-parse", "HEAD", NULL);
-> +                       if (!capture_command(&cp_rev_parse, &sb_rev_parse, 0)) {
-> +                               strbuf_strip_suffix(&sb_rev_parse, "\n");
-> +                               sha1_dst = xstrdup(sb_rev_parse.buf);
-> +                       }
-> +                       strbuf_release(&sb_rev_parse);
-> +               } else if (S_ISLNK(p->mod_dst) || S_ISREG(p->mod_dst)) {
-> +                       struct child_process cp_hash_object = CHILD_PROCESS_INIT;
-> +                       struct strbuf sb_hash_object = STRBUF_INIT;
-> +
-> +                       cp_hash_object.git_cmd = 1;
-> +                       argv_array_pushl(&cp_hash_object.args,
-> +                                        "hash-object", p->sm_path,
-> +                                        NULL);
-> +                       if (!capture_command(&cp_hash_object,
-> +                                            &sb_hash_object, 0)) {
-> +                               strbuf_strip_suffix(&sb_hash_object, "\n");
-> +                               sha1_dst = xstrdup(sb_hash_object.buf);
-> +                       }
-> +                       strbuf_release(&sb_hash_object);
-> +               } else {
-> +                       if (p->mod_dst != 0)
+As reasoned above, this behavior makes no sense. So let's change the
+implementation to adhere to the convention suggested by the signatures.
 
-Maybe: if (p->mod_dst)
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ builtin/submodule--helper.c | 2 +-
+ run-command.c               | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-> +                               die(_("unexpected mode %d\n"), p->mod_dst);
-> +               }
-> +       }
-> +
-> +       if (is_git_directory(sm_git_dir))
-> +               is_sm_git_dir = 1;
-> +
-> +       if (is_sm_git_dir && S_ISGITLINK(p->mod_src)) {
-> +               struct child_process cp_rev_parse = CHILD_PROCESS_INIT;
-> +
-> +               cp_rev_parse.git_cmd = 1;
-> +               cp_rev_parse.no_stdout = 1;
-> +               cp_rev_parse.dir = p->sm_path;
-> +               prepare_submodule_repo_env(&cp_rev_parse.env_array);
-> +
-> +               argv_array_pushl(&cp_rev_parse.args, "rev-parse", "-q",
-> +                                "--verify", NULL);
-> +               argv_array_pushf(&cp_rev_parse.args, "%s^0", sha1_src);
-> +
-> +               if (run_command(&cp_rev_parse))
-> +                       missing_src = 1;
-> +       }
-> +
-> +       if (is_sm_git_dir && S_ISGITLINK(p->mod_dst)) {
-> +               struct child_process cp_rev_parse = CHILD_PROCESS_INIT;
-> +
-> +               cp_rev_parse.git_cmd = 1;
-> +               cp_rev_parse.no_stdout = 1;
-> +               cp_rev_parse.dir = p->sm_path;
-> +               prepare_submodule_repo_env(&cp_rev_parse.env_array);
-> +
-> +               argv_array_pushl(&cp_rev_parse.args, "rev-parse", "-q",
-> +                                "--verify", NULL);
-> +               argv_array_pushf(&cp_rev_parse.args, "%s^0", sha1_dst);
-> +
-> +               if (run_command(&cp_rev_parse))
-> +                       missing_dst = 1;
-> +       }
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 6abdad3294c..3a3c9ca72b6 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -930,7 +930,7 @@ static int update_clone_task_finished(int result,
+ 	const struct cache_entry *ce;
+ 	struct submodule_update_clone *suc = suc_cb;
+ 
+-	int *idxP = *(int**)idx_task_cb;
++	int *idxP = idx_task_cb;
+ 	int idx = *idxP;
+ 	free(idxP);
+ 
+diff --git a/run-command.c b/run-command.c
+index 9e36151bf97..b5e6eb37c0e 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -1533,7 +1533,7 @@ static int pp_start_one(struct parallel_processes *pp)
+ 	if (start_command(&pp->children[i].process)) {
+ 		code = pp->start_failure(&pp->children[i].err,
+ 					 pp->data,
+-					 &pp->children[i].data);
++					 pp->children[i].data);
+ 		strbuf_addbuf(&pp->buffered_output, &pp->children[i].err);
+ 		strbuf_reset(&pp->children[i].err);
+ 		if (code)
+@@ -1601,7 +1601,7 @@ static int pp_collect_finished(struct parallel_processes *pp)
+ 
+ 		code = pp->task_finished(code,
+ 					 &pp->children[i].err, pp->data,
+-					 &pp->children[i].data);
++					 pp->children[i].data);
+ 
+ 		if (code)
+ 			result = code;
 
-The code of the 2 big if() { } clauses above look very similar and
-could be factorized to avoid duplicating code.
+base-commit: cac25fc330fc26050dcbc92c4bfff169a4848e93
+-- 
+2.13.3.windows.1.13.gaf0c2223da0
 
-[...]
-
-> +       if (errmsg) {
-> +               /*
-> +                * Don't give error msg for modification whose dst is not
-> +                * submodule, i.e. deleted or changed to blob
-> +                */
-> +               if (S_ISGITLINK(p->mod_src)) {
-> +                       if (missing_src && missing_dst) {
-> +                               printf(_("  Warn: %s doesn't contain commits %s and %s\n"),
-> +                                displaypath, sha1_src, sha1_dst);
-> +                       } else if (missing_src) {
-> +                               printf(_("  Warn: %s doesn't contain commit %s\n"),
-> +                                displaypath, sha1_src);
-> +                       } else {
-> +                               printf(_("  Warn: %s doesn't contain commit %s\n"),
-> +                                displaypath, sha1_dst);
-> +                       }
-> +               }
-> +
-
-Spurious new line.
-
-> +       } else if (is_sm_git_dir) {
-> +               if (S_ISGITLINK(p->mod_src) && S_ISGITLINK(p->mod_dst)) {
-> +                       struct child_process cp_log = CHILD_PROCESS_INIT;
-> +                       char *limit = NULL;
-> +
-> +                       if (info->summary_limits > 0)
-> +                               limit = xstrfmt("-%d", info->summary_limits);
-> +
-> +                       cp_log.git_cmd = 1;
-> +                       cp_log.dir = p->sm_path;
-> +                       prepare_submodule_repo_env(&cp_log.env_array);
-> +
-> +                       argv_array_pushl(&cp_log.args, "log", NULL);
-> +                       if (limit)
-> +                               argv_array_push(&cp_log.args, limit);
-> +                       argv_array_pushl(&cp_log.args, "--pretty=  %m %s",
-> +                                        "--first-parent", NULL);
-> +                       argv_array_pushf(&cp_log.args, "%s...%s", sha1_src,
-> +                                        sha1_dst);
-> +
-> +                       run_command(&cp_log);
-> +
-
-Spurious new line.
-
-> +               } else if (S_ISGITLINK(p->mod_dst)) {
-> +                       struct child_process cp_log = CHILD_PROCESS_INIT;
-> +
-> +                       cp_log.git_cmd = 1;
-> +                       cp_log.dir = p->sm_path;
-> +                       prepare_submodule_repo_env(&cp_log.env_array);
-> +
-> +                       argv_array_pushl(&cp_log.args, "log",
-> +                                        "--pretty=  > %s", "-1",
-> +                                        sha1_dst, NULL);
-> +
-> +                       run_command(&cp_log);
-> +               } else {
-> +                       struct child_process cp_log = CHILD_PROCESS_INIT;
-> +
-> +                       cp_log.git_cmd = 1;
-> +                       cp_log.dir = p->sm_path;
-> +                       prepare_submodule_repo_env(&cp_log.env_array);
-> +
-> +                       argv_array_pushl(&cp_log.args, "log",
-> +                                        "--pretty=  < %s",
-> +                                        "-1", sha1_src, NULL);
-> +
-> +                       run_command(&cp_log);
-> +               }
-
-It looks like you could factorize the big if () { } else { } clause
-above using something like:
-
-              if (S_ISGITLINK(p->mod_dst))
-                       argv_array_pushl(&cp_log.args, "log",
-                                        "--pretty=  > %s", "-1",
-                                        sha1_dst, NULL);
-              else
-                       argv_array_pushl(&cp_log.args, "log",
-                                        "--pretty=  < %s", "-1",
-                                        sha1_src, NULL);
-
-> +       }
-> +       printf("\n");
-> +}
-> +
-> +static void prepare_submodule_summary(struct summary_cb *info,
-> +                                     struct module_cb_list *list)
-> +{
-> +       int i;
-> +       for (i = 0; i < list->nr; i++) {
-> +               struct module_cb *p = list->entries[i];
-> +               struct child_process cp_rev_parse = CHILD_PROCESS_INIT;
-> +
-> +               if (p->status == 'D' || p->status == 'T') {
-> +                       print_submodule_summary(info, p);
-> +                       continue;
-> +               }
-> +
-> +               if (info->for_status) {
-> +                       char *config_key;
-> +                       const char *ignore_config = "none";
-> +                       const char *value;
-> +                       const struct submodule *sub = submodule_from_path(null_sha1, p->sm_path);
-> +
-> +                       if (sub) {
-> +                               config_key = xstrfmt("submodule.%s.ignore",
-> +                                                    sub->name);
-> +                               if (!git_config_get_value(config_key, &value))
-> +                                       ignore_config = value;
-> +                               else if (sub->ignore)
-> +                                       ignore_config = sub->ignore;
-> +
-> +                               if (p->status != 'A' && !strcmp(ignore_config,
-> +                                                               "all"))
-
-Maybe in the case where p->status == 'A' we could avoid computing ignore_config.
-
-> +                                       continue;
-> +                       }
-
-It looks like config_key is not freed.
-
-> +               }
-
-[...]
-
-> +       cp_rev.git_cmd = 1;
-> +       argv_array_pushl(&cp_rev.args, "rev-parse", "-q", "--verify",
-> +                        NULL);
-> +       if (argc)
-> +               argv_array_push(&cp_rev.args, argv[0]);
-> +       else
-> +               argv_array_pushl(&cp_rev.args, "HEAD", NULL);
-
-Maybe the last 4 lines replaced with:
-
-      argv_array_push(&cp_rev.args, argc ? argv[0] : "HEAD");
-
-or even the last 6 lines with:
-
-       argv_array_pushl(&cp_rev.args, "rev-parse", "-q", "--verify",
-                        argc ? argv[0] : "HEAD", NULL);
-
-> +       if (!capture_command(&cp_rev, &sb_rev, 0)) {
-> +               strbuf_strip_suffix(&sb_rev, "\n");
-> +               head = xstrdup(sb_rev.buf);
-
-It looks like "head" is not freed below.
-
-I wonder if the "head" variable is really needed. Couldn't "sb_rev" be
-used all along?
+Published-As: https://github.com/dscho/git/releases/tag/run-process-parallel-v1
+Fetch-It-Via: git fetch https://github.com/dscho/git run-process-parallel-v1
