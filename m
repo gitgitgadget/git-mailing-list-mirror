@@ -2,108 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E7A6120288
-	for <e@80x24.org>; Wed, 19 Jul 2017 17:43:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF91B20288
+	for <e@80x24.org>; Wed, 19 Jul 2017 18:20:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755914AbdGSRnX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Jul 2017 13:43:23 -0400
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:34950 "EHLO
-        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755911AbdGSRnW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jul 2017 13:43:22 -0400
-Received: by mail-pf0-f179.google.com with SMTP id e199so2673954pfh.2
-        for <git@vger.kernel.org>; Wed, 19 Jul 2017 10:43:22 -0700 (PDT)
+        id S932133AbdGSSUB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Jul 2017 14:20:01 -0400
+Received: from mail-pg0-f54.google.com ([74.125.83.54]:38697 "EHLO
+        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932071AbdGSSUA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jul 2017 14:20:00 -0400
+Received: by mail-pg0-f54.google.com with SMTP id s4so3542365pgr.5
+        for <git@vger.kernel.org>; Wed, 19 Jul 2017 11:20:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=QpXvawQbEHuYHVrOdF+tqGKmFcStiOVGk8mS/dQYjQo=;
-        b=IQeWJx9/mA1xmGWmLuzpZVzW719hDnCZSV/RhvYrjbdAeu18qf+TS5fW+liqpg0Fte
-         D3rdmU+TdldTabz47xZmgPrhHu9ytJe5Lmg+nz9/MdV1wBjmDHSKeYBYWhih9v1fN6Js
-         bN6zSWuCX+uphkZOc36+IHtWuox1gBsOtPE+cevmMshU1Bifk9Y0bWQ1YNTQX+/TR/We
-         yA/R+ALtMZRcp6go2IfVRcNEAH7x+97zsMgJjE8m+C5o4pfD+sb3zdFxuR0hTgcYrw5k
-         gVgmCYD45Nytq81ZnoO6SNgeLeImgOBncdh/gdlRnZLCbyeGvSHDRy+pvDcJN2+crqH6
-         afUw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=2Rc8oP5EZZAW2y1cbgiHl8kuleDmNiqhQASmSyXxJZw=;
+        b=mzH14+LQweA7qUBQY/R54s2RjL15+icolCRoJAXoU2Yzi0+yTRyTrb8/WgCGMzsmZB
+         MhZ3OWPa/fnM3mOIgACjXk1QSYSDU1Lq6oyEPybG4FrHgipqavOIqZWCXyN0NPxgBrYO
+         iGJQHBU0BOJRsrdm+YdRgQMnDfh6V+fWvDnPp2reqcgQWip66Jy9nWxjxS3cFALDqdtf
+         Cs0Ttv7braRculS/5wq2ytcltXWw5P4p2g/ZF7eJoSRMG12+bLs18lw7J85i7XSzJuIh
+         butSD2/k5FIq2oMsIPzL+UHIGk0U4ZgwK4veh1rmomTnavahFR43jCMivLpszK+CWZD+
+         y0RQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=QpXvawQbEHuYHVrOdF+tqGKmFcStiOVGk8mS/dQYjQo=;
-        b=B6d3LMEQ/2L+TwEZg+SKFTH+PMkYVYqIpBbpiExMW2Cvh9R9Kb6NRmcf5EDbpPAkAg
-         9F2P5TVCd5HGBC34nJUocbUbdnd1wpHTZ1JGYNwTgF9yC+g043Nx1kBKzoPR9rNEgMYu
-         dWvx+EGA6GidWEWDQZgNekhv7xCx5LxWL0QChS5wIbhQoirZO8BIU2FV9PSqPtgMfoyX
-         lovRCJ/YYtW2f4EQUta5bdiHcFiERZdwwK7CudihUXhbmYbWgi1lt43RmUZijWGLmvox
-         zObUicT6BJk86xNlSPvmfZtypjzr2tERskwDp6tA85C24MpovdVOnLNIzZ9HsToI7AyE
-         0IZg==
-X-Gm-Message-State: AIVw112UAycNPTJRbLtXWBSJ3bZ/7ycs3X04eMt1JYxyGuKRy5QXIHA9
-        F+TWE2Vp/sz79qDKJsE8QwrYv2bBIZPH
-X-Received: by 10.99.134.72 with SMTP id x69mr898594pgd.210.1500486201655;
- Wed, 19 Jul 2017 10:43:21 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.100.167.81 with HTTP; Wed, 19 Jul 2017 10:43:20 -0700 (PDT)
-In-Reply-To: <CAHd499BovefnyWjauE0vNaofmvL8JBZCSzJ7w-cJ8Sm3eoJ4=w@mail.gmail.com>
-References: <CAHd499BovefnyWjauE0vNaofmvL8JBZCSzJ7w-cJ8Sm3eoJ4=w@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=2Rc8oP5EZZAW2y1cbgiHl8kuleDmNiqhQASmSyXxJZw=;
+        b=ZSiIFoktyCijB9xn3dbZ/6ohWdGxDRSW0vJOTsRK/V35F29b10C85t2XYJc0r8Td6c
+         vHmL2K+RkyV+94EFBp4TKx8gZ1PUPcpuk9RfTwJs+smy9TEFkvhDw5luUAVA+t/lZFNo
+         jrKvtfi70wPCj+2CXC0l7A0wPSkaTSVg80pVDwSer2xqWvB5AyW1E3En5ZeEnvKLJR0Y
+         vv8dE39VrQJCSeFH7IrQlaTNO8REKDxKOoFoQbt1RJtwZzWkuq12vrYT8CAWeJOYu3p4
+         LdvDwxK1Q06dCz1S1rkuAOLxs1fN7M5Ri7nXrq3HRkxVM+16oalyaOYEscW46T3da9GB
+         EdaA==
+X-Gm-Message-State: AIVw112Ra6tvNgmgsBvYdVrKAkVkduXFxegg3Ecr8srR7vM17cUjbirE
+        xbP/m7AmIIF+V+887Wvs9A==
+X-Received: by 10.98.15.71 with SMTP id x68mr1039581pfi.176.1500488399934;
+        Wed, 19 Jul 2017 11:19:59 -0700 (PDT)
+Received: from localhost ([2620:0:100e:422:4dc6:1937:2cfa:7fbe])
+        by smtp.gmail.com with ESMTPSA id w70sm1032541pfd.15.2017.07.19.11.19.58
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 19 Jul 2017 11:19:58 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 19 Jul 2017 10:43:20 -0700
-Message-ID: <CAGZ79kas6jm8+1BhhHqOe4PzFObLVEASXEQfV0H9j=4oLvz7Lw@mail.gmail.com>
-Subject: Re: subrepo vs submodule
-To:     Robert Dailey <rcdailey.lists@gmail.com>
-Cc:     Git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, j6t@kdbg.org, l.s.r@web.de, peff@peff.net,
+        schwab@linux-m68k.org, Stefan Beller <sbeller@google.com>
+Subject: [PATCH] objects: scope count variable to loop
+Date:   Wed, 19 Jul 2017 11:19:56 -0700
+Message-Id: <20170719181956.15845-1-sbeller@google.com>
+X-Mailer: git-send-email 2.14.0.rc0.3.g6c2e499285
+In-Reply-To: <xmqq8tjqrfq4.fsf@gitster.mtv.corp.google.com>
+References: <xmqq8tjqrfq4.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 19, 2017 at 7:27 AM, Robert Dailey <rcdailey.lists@gmail.com> wrote:
-> So I found out about "subrepo" today: https://github.com/ingydotnet/git-subrepo
->
-> I'm still reading about how it works internally, but what do you guys
-> think about it?
+This is another test balloon to see if we get complaints from people
+whose compilers do not support variables scoped to for loops.
 
-Nice find!
+This part of the code base was chosen as it is very old code that does
+not change often, such that a potential revert is easy.
 
-From reading the toplevel ReadMe.pod, I have the impression
-that it is closer to subtree than submodules as the content is
-stored in the main repository using a .gitrepo file to indicate that
-it is a special directory.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
 
-> Is it a more or less perfect alternative to submodules?
+This is a rather aggressive test ballon, my compiler needed some
+good arguments to accept the new world order:
 
-Maybe to subtrees. It does not offer the workflows that
-submodules allow you:
-  " Users get your repo and all your subrepos just
-  by cloning your repo."
+object.c: In function ‘object_array_remove_duplicates’:
+object.c:404:2: error: ‘for’ loop initial declarations are only allowed in C99 mode
+  for (unsigned src = 0; src < nr; src++) {
+  ^
+object.c:404:2: note: use option -std=c99 or -std=gnu99 to compile your code
 
-Submodules allow you to *not* get the content of a submodule.
-There are multiple reasons for not wanting the content, including
-* not needing it (e.g. documentation, hardware specific code
-  for an architecture you don't have)
-* not wanting it (e.g. large binary files yield bandwidth concerns)
+Using -std=c99 works for me.
 
-"Upstream history (clone/pull) is condensed into a single commit."
+Thanks,
+Stefan
 
-Same for submodules, not so(?) for subtrees.
+ object.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Depending on the point of view this is either a feature or a bug.
-For clean history you may view this as a feature, but as soon as
-you want to git-bisect, you'd wish for the most fine grained history
-available.
+diff --git a/object.c b/object.c
+index f818777412..af26ee2fbc 100644
+--- a/object.c
++++ b/object.c
+@@ -397,11 +397,11 @@ static int contains_name(struct object_array *array, const char *name)
+ 
+ void object_array_remove_duplicates(struct object_array *array)
+ {
+-	unsigned nr = array->nr, src;
++	unsigned nr = array->nr;
+ 	struct object_array_entry *objects = array->objects;
+ 
+ 	array->nr = 0;
+-	for (src = 0; src < nr; src++) {
++	for (unsigned src = 0; src < nr; src++) {
+ 		if (!contains_name(array, objects[src].name)) {
+ 			if (src != array->nr)
+ 				objects[array->nr] = objects[src];
+-- 
+2.14.0.rc0.3.g6c2e499285
 
-> What would be a reason not to use it?
-
-There are multiple things that should drive a decision. some:
-* What do you need in terms of workflow (even just talking about
-  "submodule vs subtree" you get different answers for different
-  workflows), and then seeing how subrepo compares to the others.
-* Can you use it? (does it work on your platform? subrepo is bash,
-  whereas submodule, subtree are posix shell; how is it distributed?
-  Some people are uneasy installing from random github repos on
-  the web, so do you install it via the package manager of your
-  distribution, has your organisation a package to use?)
-* Ease of use, do you need to explain the workflow
-  to collaborateurs?
