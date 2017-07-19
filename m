@@ -2,86 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D56D920898
-	for <e@80x24.org>; Wed, 19 Jul 2017 16:49:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C72520288
+	for <e@80x24.org>; Wed, 19 Jul 2017 17:13:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753731AbdGSQtO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Jul 2017 12:49:14 -0400
-Received: from mail-qt0-f170.google.com ([209.85.216.170]:36470 "EHLO
-        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753559AbdGSQtN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jul 2017 12:49:13 -0400
-Received: by mail-qt0-f170.google.com with SMTP id 21so6730666qtx.3
-        for <git@vger.kernel.org>; Wed, 19 Jul 2017 09:49:12 -0700 (PDT)
+        id S1755326AbdGSRNA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Jul 2017 13:13:00 -0400
+Received: from mail-pg0-f54.google.com ([74.125.83.54]:33361 "EHLO
+        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753840AbdGSRM7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jul 2017 13:12:59 -0400
+Received: by mail-pg0-f54.google.com with SMTP id k14so2996100pgr.0
+        for <git@vger.kernel.org>; Wed, 19 Jul 2017 10:12:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=0jm6SQynJNK5kAYYCrptVYo9BmF5WRHMTp4tGzfTEB0=;
-        b=o4SDGGVwiQjai+q2bsQqycTQVQZnRwQrknqBQOiUW3HXsK3X0VbMXT3JsiLrn/Bgu7
-         FTnCMRXdbZFwzncvM9mjKh9kX/ChHL/zeL2tE9r0QoPnElaSlg6bVO4PWvH9JDj0DQ66
-         K2zENbA69yhXxlunRyRpF1xVYqgwHKP966QZ5nRIsSvQh3yFC3EV0+W8Qdb4T85k0fyF
-         5h5Jt93RYKQAo8cSimk8rFzdMAB33/P9xUiERU+vN3W307/TD8MpPLr4V4fFDllk3uku
-         xaeeY/KJNrKvnrL4D99NmVMs/PzUpNNX4FUW/8zAOoxtsfTcr6cw669QUlvWXyqJDmQi
-         0Jwg==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=54xdhynvPj9Hp5LdggROQPoC9+CccXnZ6w2cz2ySKXE=;
+        b=fLvekMJydWaUYzW9HRarb9c2uJV5qAcSU/Ddy3P6CjsI0Svi0yNIYsDmp0kTVI2Dly
+         m5DLo/gOEMT6tgNYDCoF0F6cJxm2Pu/3irDsQG008VlGmo9ySXtvy1eFBGrEFLiScglu
+         4l4GG3vFtoSRxR76E7OckmkbGm8la1PrKpqbHMUAjNwp0jnWvGNQqo37ua8xqc83zlnR
+         YXs6n+s/A1rP0Hr9HbE3pEujig9in2W9shG1BkZdHXmXlvx+gOUJlPpmDkYFznQPJHNq
+         pOpkNx7GrEy50nedxdBf7ghLfegseBD9vGgHjprkrWTYIRvD4EevrEOzlsazF9r/YFmy
+         wFtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=0jm6SQynJNK5kAYYCrptVYo9BmF5WRHMTp4tGzfTEB0=;
-        b=kYG59xigqq4wGK10D6mlKtmse7A3vEoyX/pN3nOWH+Xslg0EVcchl/R7/eg2vLIH1p
-         888IAee8TT/Nok3pPrcPNf6XPOSRWf8hHu0Gn2+ihr3avre7SVWftE6wioZs+3FTMNMw
-         jiZpmsk6UXOykOhO+hEKGqs/GZPxJGfJ1sihxPilRirNW2LJGf6LgV61An/5mMBiumnc
-         4UokUfDtmJQIVmpsUslnmweXue2L2gs0hxWSkJPKCc6oIcgLzOLCuaj1sp3ESoEE6u5V
-         ZdQbCWbqnTYg/CZfEgBjbDmBKwvWr7Z26xnlsO/TYHcxJWxScTpUizbBH9eSuiCKtlSX
-         RNeg==
-X-Gm-Message-State: AIVw110QmcyijjyWSyazIigPuFbaHcqd5d24xtsnAkwR9L0HuMU7NqSW
-        7fWD+6ivn+wJ9YhL02n6pUAX5HvIHnRW+1w=
-X-Received: by 10.237.35.239 with SMTP id k44mr1132133qtc.125.1500482952079;
- Wed, 19 Jul 2017 09:49:12 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.237.58.135 with HTTP; Wed, 19 Jul 2017 09:48:41 -0700 (PDT)
-From:   Victor Toni <victor.toni@gmail.com>
-Date:   Wed, 19 Jul 2017 18:48:41 +0200
-Message-ID: <CAG0OSgdEE3g-ugEJU4EZqfbxZ=3h2WPdLC4W4mG7b6UeTaXQ-Q@mail.gmail.com>
-Subject: Handling of paths
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=54xdhynvPj9Hp5LdggROQPoC9+CccXnZ6w2cz2ySKXE=;
+        b=UOIxoNjUe5V47qVtwZjPqRJhTPCkq4L1DDl55gI+I1BcxG8KPZo82hHaZMwB0ZATC8
+         LUhAqpgKVBtEdzs+C/Cziv80iunKTmjblngxCsLW1kJYMlUQye2MO0A6VuXsOEZ87w4V
+         zCQQ7liOrXKrZ9Z+u4n3V3tAT9TsqUpnBi4IA4XWoHZxqWCM/36iFWkPQXGxKn2ml2xG
+         cFBZA+c0uSDN2eixGCarlMcCdqyIKMlZ3iu1Tu5fV+wmZ5j/FsavsyY4FZ7AM283EwXU
+         SSu6K+0whc4QS9UPWaZUXhcAEdxYV0de63TZ5n9dOqO+U+rC9Qrr5duaRb62mrCULOsJ
+         nNZw==
+X-Gm-Message-State: AIVw110TwEW3fgtHnd5bnGxBhcyxfUNDjeZWz5/X50QF3DnqQDhEOwgo
+        C4yBITSTxsb1x1XFYnJVPQ==
+X-Received: by 10.98.7.87 with SMTP id b84mr848350pfd.216.1500484378667;
+        Wed, 19 Jul 2017 10:12:58 -0700 (PDT)
+Received: from twelve2.svl.corp.google.com ([100.96.218.24])
+        by smtp.gmail.com with ESMTPSA id s17sm778198pfg.166.2017.07.19.10.12.56
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 19 Jul 2017 10:12:57 -0700 (PDT)
+From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Jonathan Tan <jonathantanmy@google.com>, Johannes.Schindelin@gmx.de
+Subject: [PATCH] sha1_file: use access(), not lstat(), if possible
+Date:   Wed, 19 Jul 2017 10:12:51 -0700
+Message-Id: <20170719171251.11906-1-jonathantanmy@google.com>
+X-Mailer: git-send-email 2.14.0.rc0.284.gd933b75aa4-goog
+In-Reply-To: <alpine.DEB.2.21.1.1707191450570.4193@virtualbox>
+References: <alpine.DEB.2.21.1.1707191450570.4193@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+In sha1_loose_object_info(), use access() (indirectly invoked through
+has_loose_object()) instead of lstat() if we do not need the on-disk
+size, as it should be faster on Windows [1].
 
-I have a .gitconfig in which I try to separate work and private stuff
-by using includes which works great.
+[1] https://public-inbox.org/git/alpine.DEB.2.21.1.1707191450570.4193@virtualbox/
 
-When using [include] the path is treated either
-- relative to the including file (if the path itself relative)
-- relative to the home directory if it starts with ~
-- absolute if the path is absolute
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+Thanks for the information - here's a patch. Do you, by any chance, know
+of a web page (or similar thing) that I can cite for this?
+---
+ sha1_file.c | 21 ++++++++++-----------
+ 1 file changed, 10 insertions(+), 11 deletions(-)
 
-This is fine and expected.
+diff --git a/sha1_file.c b/sha1_file.c
+index fca165f13..81962b019 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -2920,20 +2920,19 @@ static int sha1_loose_object_info(const unsigned char *sha1,
+ 
+ 	/*
+ 	 * If we don't care about type or size, then we don't
+-	 * need to look inside the object at all. Note that we
+-	 * do not optimize out the stat call, even if the
+-	 * caller doesn't care about the disk-size, since our
+-	 * return value implicitly indicates whether the
+-	 * object even exists.
++	 * need to look inside the object at all. We only check
++	 * for its existence.
+ 	 */
+ 	if (!oi->typep && !oi->typename && !oi->sizep && !oi->contentp) {
+-		const char *path;
+-		struct stat st;
+-		if (stat_sha1_file(sha1, &st, &path) < 0)
+-			return -1;
+-		if (oi->disk_sizep)
++		if (oi->disk_sizep) {
++			const char *path;
++			struct stat st;
++			if (stat_sha1_file(sha1, &st, &path) < 0)
++				return -1;
+ 			*oi->disk_sizep = st.st_size;
+-		return 0;
++			return 0;
++		}
++		return has_loose_object(sha1) ? 0 : -1;
+ 	}
+ 
+ 	map = map_sha1_file(sha1, &mapsize);
+-- 
+2.14.0.rc0.284.gd933b75aa4-goog
 
-What's unexpected is that paths used for sslKey or sslCert are treated
-differently insofar as they are expected to be absolute.
-Relative paths (whether with or without "~") don't work.
-
-It would't be an issue to use absoulte paths if I wouldn't use the
-same config for Linux and Windows and each OS has its own semantic
-where it $HOME ishould be.
-
-To avoid double configurations I tried to use the same directory
-structure within my $HOME for both OS.
-
-This approach fails since paths other than for [include] seem to have
-to be absolute which seems like a bug to me.
-
-Do you have any suggestions how I could make this work?
-
-Thank you,
-Victor
