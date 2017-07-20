@@ -2,102 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 089681F600
-	for <e@80x24.org>; Thu, 20 Jul 2017 23:05:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3245D1F600
+	for <e@80x24.org>; Thu, 20 Jul 2017 23:11:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965889AbdGTXFQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Jul 2017 19:05:16 -0400
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:35572 "EHLO
-        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965872AbdGTXFM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jul 2017 19:05:12 -0400
-Received: by mail-pf0-f181.google.com with SMTP id r76so185461pfj.2
-        for <git@vger.kernel.org>; Thu, 20 Jul 2017 16:05:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=8n6nbev6jvSob2jmBOrlmtRzASIBnrhuh1Bpqof4eiE=;
-        b=W4leBMMfjaX4awuV5m+/sOkgn0oJU0aUvy9P0qIUXbFafDOtSNYXDTX4zGUVUdu2wL
-         Zcs2KbGp/I8kBMw8DIjMEA9dhjIPO4t7tsQOjQ3yTiZYz+jvoDlkLs1+Tb4w9Cl4GWyL
-         f+OUXwfdKAsTQc2DBpeq85UU9PUwCV49w3QDw5ZGiQl70HOJNM20mBE6oWGgmJ0sVnya
-         0YDeRa15KePVww6P15DQRIdSA4dLQ6T0cIfkz5FXbUn2YXVKT8MaaNfzTleHmItvdMlg
-         RjMBYzC4HXyQvvOtt5tOaRv4qGd2aMKPuEKuiwkX1eekWlwDPcgfrHjp1OnD2KYRQQ1Q
-         EfTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=8n6nbev6jvSob2jmBOrlmtRzASIBnrhuh1Bpqof4eiE=;
-        b=dRRfyMzuZ2fdOmhqk1Liv76oEh1hDhT4sjVb79wKJ5fWvFcsIJA8m2dSVgrktSlHDQ
-         rhyJKRZNmn7U3u8XvGhXsit2Ztu2XtN3kq+vYtdqQcO2E82X5Y3v8EORviTORL3Mp9DS
-         5M8RYMLbAq/+88W8WvNA6LrGLq1DFzYOqkr6AIXAYby54XM1FsuPl+M6BzjjAkZ7EwbW
-         KkYV5OH6feWcAHzZ+ND0MNzY0d33RGaw3FxDk5sQCPWMWgxKJ5vN4DnQFwlE+gHq7C4Z
-         F8LIGu0Q9o9mn2c7mCMWrzSRKnV8ZprlLM0hJl4bcXZDh8zH8dTtAy34agTIsC0IzkES
-         5TUA==
-X-Gm-Message-State: AIVw1132gn8MEI6Rw8WMoCctnnEzq5OClIOyqrWRn2inxvlTDhNbPm3O
-        KnNrPOxm89DDQfu9tXOQA9w+rSjswVkP
-X-Received: by 10.99.97.12 with SMTP id v12mr3303746pgb.97.1500591912344; Thu,
- 20 Jul 2017 16:05:12 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.100.167.81 with HTTP; Thu, 20 Jul 2017 16:05:11 -0700 (PDT)
-In-Reply-To: <20170705091216.ij4uzp3wgsalb56f@sigill.intra.peff.net>
-References: <cover.1498933362.git.mhagger@alum.mit.edu> <20170705091216.ij4uzp3wgsalb56f@sigill.intra.peff.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 20 Jul 2017 16:05:11 -0700
-Message-ID: <CAGZ79kY=N5H2q1SB9ZEtt1EvuAQg+bqVBZNoXE6nLgtoUd2txA@mail.gmail.com>
-Subject: Re: [PATCH v3 00/30] Create a reference backend for packed refs
-To:     Jeff King <peff@peff.net>
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        id S965574AbdGTXLQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Jul 2017 19:11:16 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55523 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1755017AbdGTXLP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jul 2017 19:11:15 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D91FE7FA07;
+        Thu, 20 Jul 2017 19:11:14 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=SMAOshaDvLHnK6bCmLeUrcdpJI4=; b=ALJCJV
+        4Cf8HfacJpFUDp62uX+vV7fwHKbXqpRm8ugR/UHWBvcz06e4cHqEnG/WMjtzEk3y
+        w4VcS+7Z5PqfQi6FKsTZC8Zlk0cf1YEU94AZ9LZ57CmmXU97VYLjzgth1GkDjhVk
+        jIGyIMEtBxnk4tYT8vvxxLj2SBwkAsQgUGc1c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=bOWIGwm8orxzmxsMNHtS/TFL17zV4ieX
+        SRFPHY0YOGWSR+AzJUO8AsdC+grx5kbOQwiH4Opzy2kDNlRMV6xX1P2uutFJxgxP
+        +npqgmLw7uLDqR4NamsuLn7gSW80P19WMHiBeUOri1968nluEBPK4J+h+5aM4bx3
+        ApRuSfPUg0s=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D0C2C7FA05;
+        Thu, 20 Jul 2017 19:11:14 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2B2F17FA04;
+        Thu, 20 Jul 2017 19:11:14 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         David Turner <novalis@novalis.org>,
-        Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Brandon Williams <bmwill@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH 21/28] commit_packed_refs(): use a staging file separate from the lockfile
+References: <cover.1497534157.git.mhagger@alum.mit.edu>
+        <2779ee9a75e75ff80898e51e46d561b8074e0dc2.1497534157.git.mhagger@alum.mit.edu>
+Date:   Thu, 20 Jul 2017 16:11:12 -0700
+In-Reply-To: <2779ee9a75e75ff80898e51e46d561b8074e0dc2.1497534157.git.mhagger@alum.mit.edu>
+        (Michael Haggerty's message of "Thu, 15 Jun 2017 16:47:26 +0200")
+Message-ID: <xmqqy3riiu0f.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: BA19E6B2-6DA0-11E7-8732-61520C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 5, 2017 at 2:12 AM, Jeff King <peff@peff.net> wrote:
-> On Sat, Jul 01, 2017 at 08:30:38PM +0200, Michael Haggerty wrote:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
+
+> We will want to be able to hold the lockfile for `packed-refs` even
+> after we have activated the new values. So use a separate tempfile,
+> `packed-refs.new`, as a place to stage the new contents of the
+> `packed-refs` file. For now this is all done within
+> `commit_packed_refs()`, but that will change shortly.
 >
->> This is v3 of a patch series creating a `packed_ref_store` reference
->> backend. Thanks to Peff and Junio for their comments about v2 [1].
->>
->> Changes since v2:
->>
->> * Delete some debugging `cat` commands in t1408.
->>
->> * Add some tests of reading packed-refs files with bogus contents.
->>
->> * When reporting corruption in packed-refs files, distinguish between
->>   unterminated lines and other corruption.
->>
->> * Fixed a typo in a commit message.
->
-> Thanks. I just quickly re-reviewed based on the diff from v2, and it
-> looks good to me.
->
-> -Peff
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
 
-We have a user that reports:
+The layout created by "contrib/workdir/git-new-workdir" will be
+broken by this line of change.  "git worktree" is supposed to know
+that refs/packed-refs is a shared thing and lives in common-dir,
+so it shouldn't be affected.
 
-  The issue is for users who have a mirrored repository, "git pack-refs"
-  now overwrites the .git/packed-refs symlink instead of following it and
-  replacing the file it points to.
-
-I suspect this series to be at fault, as the bug report came in a day after
-we deployed next containing these changes.
-
-Do symlinks and packed-refs ring a bell for this series?
-
-Thanks,
-Stefan
+Do we care about the ancient layout that used symlinks to emulate
+the more modern worktree one?
