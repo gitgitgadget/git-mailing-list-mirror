@@ -2,95 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE8581F600
-	for <e@80x24.org>; Thu, 20 Jul 2017 15:26:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 833BA1F600
+	for <e@80x24.org>; Thu, 20 Jul 2017 16:58:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965507AbdGTP0g (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Jul 2017 11:26:36 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51473 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S965003AbdGTP0e (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jul 2017 11:26:34 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1E7E476702;
-        Thu, 20 Jul 2017 11:26:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=WN9JlKRtbOBs
-        GCh802gg4CBJjgk=; b=CYZ9JGmw5US/t08K2u3UrHQmdhAEh8sQvHJHq/KV/KRJ
-        S3uJ4uHEugwxcr2//NSYZ/KwGAkZmSR/fcYLYAawP+Zj+hx5VA55AsmBoGXxGxJr
-        z++AQMLrDiG1axnAQk15VNrP5drlC+GEg6I5fQuLt1pkD5hor53gZzt8bfquEqA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=jxNzK4
-        58+RKotJEzGZmFNNrZaG2I36gkOcPqNvpsAJ1A3M5KM66MxFQCS2SZap4O3XIW/8
-        uf4BsvCwaRpmPsI2x/6eg6T2z7eoHveovj/qR4FNg7abdBJIdD8kRQP7P4czMsO1
-        diwm7f/a9YT1TDtRgpEc5tAP6FmsWRQTsMjqY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 15B2B76701;
-        Thu, 20 Jul 2017 11:26:34 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 72ECF76700;
-        Thu, 20 Jul 2017 11:26:33 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 5/6] RelNotes: remove duplicate mention of PCRE v2
-References: <20170720141927.18274-1-avarab@gmail.com>
-        <xmqq7ez6hk2y.fsf@gitster.mtv.corp.google.com>
-        <20170720141927.18274-6-avarab@gmail.com>
-Date:   Thu, 20 Jul 2017 08:26:32 -0700
-In-Reply-To: <20170720141927.18274-6-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 20 Jul 2017 14:19:26 +0000")
-Message-ID: <xmqqvamnku3b.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: CFDD72DE-6D5F-11E7-AB8B-EFB41968708C-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+        id S1754068AbdGTQ6Y (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Jul 2017 12:58:24 -0400
+Received: from mail-qt0-f196.google.com ([209.85.216.196]:33075 "EHLO
+        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753461AbdGTQ6X (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jul 2017 12:58:23 -0400
+Received: by mail-qt0-f196.google.com with SMTP id 50so4281000qtz.0
+        for <git@vger.kernel.org>; Thu, 20 Jul 2017 09:58:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id;
+        bh=ybGLe7vC5Q+w+KVf8oEKhiG7lY8l54FXUQI2asDYMlM=;
+        b=HO8cVN7GAfaKUETbMSd/cXjDhRA6EHZ4gkvmKpU/SGQgS2umtup/nyZ6hUZPL185nA
+         sa5GREeZTWNtRoNOGxqqp1q+cjVfRxedWUKV2eZ11KlRDYQyJkbE+kRV6mphdCIjsjyX
+         aeD/Q802s9Sm9GwMj7Sb24IUCwqMmFgoPXJ6oTwSY4Nx6REcQrsK3onXAQgArkXLWGzJ
+         D2rQ+JMm+LGbNNdgurOz5rWjIe/CDHDPkAaWG5H4WapSJlkHpRYs69aIDdVJnRiJSlS9
+         4hiY7TN97ZouCprR6Y5DoxqYjVB/6z5a26v8Nf/96YMev66WPX5Fs7e7yBai41KHFT6y
+         OlPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=ybGLe7vC5Q+w+KVf8oEKhiG7lY8l54FXUQI2asDYMlM=;
+        b=IdV9xorN/xIiiOCM2MPOya+6Q/jfkzlo8FVbr/kRuq7ukJazqTygvkxsDqbQ14CWHd
+         Iyhd83lGQQjvYKPMhtjVoW+DlVRFRfweU/Ru2yNbRN+rlzTy10HV8NqLyPclTMV2yaCy
+         UpZ6RO4zFIFwnXsLDc9AR8xfkjktkX/+Y9ru1HfepOU1jWYnHaaTLNPL/KO8rLqkFDru
+         ZW5fQNhajDxQ1JWfYuL8F33asfNAtgT7F0cNxuS0/+1wwl9T4Zubzqz5qGVmcLIDpdan
+         1Hgm7TS0PJ7FWLrCJiYJsYq2GqRP053PBnDoLuR3ZxLJmcBIIDMmY0MW1fv89fKvf1wE
+         rHew==
+X-Gm-Message-State: AIVw110w02uTEG/9IJqgHNn7KsGD8M8tRbeUlxU+2yG587UFCdBCwi00
+        Zx7hyhl13TySukVF/jM=
+X-Received: by 10.237.35.110 with SMTP id i43mr5759664qtc.250.1500569902135;
+        Thu, 20 Jul 2017 09:58:22 -0700 (PDT)
+Received: from localhost.localdomain (ENG-KCG295-01.ENGINEERING.NYU.EDU. [216.165.113.136])
+        by smtp.gmail.com with ESMTPSA id f15sm2079077qtf.93.2017.07.20.09.58.21
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 20 Jul 2017 09:58:21 -0700 (PDT)
+From:   santiago@nyu.edu
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, Santiago Torres <santiago@nyu.edu>
+Subject: [PATCH] t: lib-gpg: flush gpg agent on startup
+Date:   Thu, 20 Jul 2017 12:58:14 -0400
+Message-Id: <20170720165814.30037-1-santiago@nyu.edu>
+X-Mailer: git-send-email 2.13.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+From: Santiago Torres <santiago@nyu.edu>
 
-> That we can link to PCRE v2 is already covered above in "Backward
-> compatibility notes and other notable changes", no need to mention it
-> twice.
+When running gpg-relevant tests, a gpg-daemon is spawned for each
+GNUPGHOME used. This daemon may stay running after the test and cache
+file descriptors for the trash directories, even after the trash
+directory is removed. This leads to ENOENT errors when attempting to
+create files if tests are run multiple times.
 
-This is actually deliberate, as I'd prefer to have a description
-that is written at the same detail-level (i.e. "just a bullet item,
-if you want to know more, go read the doc") as the other items in
-the list, whether a more detailed description is given elsewhere.
+Add a cleanup script to force flushing the gpg-agent for that GNUPGHOME
+(if any) before setting up the GPG relevant-environment.
 
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Santiago Torres <santiago@nyu.edu>
+---
+ t/lib-gpg.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
+diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
+index ec2aa8f68..7a6c7ee6f 100755
+--- a/t/lib-gpg.sh
++++ b/t/lib-gpg.sh
+@@ -31,6 +31,7 @@ then
+ 		chmod 0700 ./gpghome &&
+ 		GNUPGHOME="$(pwd)/gpghome" &&
+ 		export GNUPGHOME &&
++		gpgconf --kill gpg-agent 2>&1 >/dev/null
+ 		gpg --homedir "${GNUPGHOME}" 2>/dev/null --import \
+ 			"$TEST_DIRECTORY"/lib-gpg/keyring.gpg &&
+ 		gpg --homedir "${GNUPGHOME}" 2>/dev/null --import-ownertrust \
+-- 
+2.13.3
 
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
-> ---
->  Documentation/RelNotes/2.14.0.txt | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
->
-> diff --git a/Documentation/RelNotes/2.14.0.txt b/Documentation/RelNotes=
-/2.14.0.txt
-> index 0e363f2af3..fb6a3dba31 100644
-> --- a/Documentation/RelNotes/2.14.0.txt
-> +++ b/Documentation/RelNotes/2.14.0.txt
-> @@ -88,8 +88,7 @@ UI, Workflows & Features
->     learned to say "it's a pathspec" a bit more often when the syntax
->     looks like so.
-> =20
-> - * Update "perl-compatible regular expression" support to enable JIT
-> -   and also allow linking with the newer PCRE v2 library.
-> + * Update "perl-compatible regular expression" support to enable JIT.
-> =20
->   * "filter-branch" learned a pseudo filter "--setup" that can be used
->     to define common functions/variables that can be used by other
