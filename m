@@ -2,82 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E2D81F600
-	for <e@80x24.org>; Thu, 20 Jul 2017 17:22:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C20511F600
+	for <e@80x24.org>; Thu, 20 Jul 2017 17:44:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965410AbdGTRWQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Jul 2017 13:22:16 -0400
-Received: from mail-pg0-f45.google.com ([74.125.83.45]:38012 "EHLO
-        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965329AbdGTRWO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jul 2017 13:22:14 -0400
-Received: by mail-pg0-f45.google.com with SMTP id s4so17451113pgr.5
-        for <git@vger.kernel.org>; Thu, 20 Jul 2017 10:22:14 -0700 (PDT)
+        id S964998AbdGTRoM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Jul 2017 13:44:12 -0400
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:37822 "EHLO
+        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S936168AbdGTRoK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jul 2017 13:44:10 -0400
+Received: by mail-qt0-f195.google.com with SMTP id n43so4371794qtc.4
+        for <git@vger.kernel.org>; Thu, 20 Jul 2017 10:44:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=l+Kb6QYXWJxFT+DEB7K+LiFhaMUzRdGL4W3/mlIWOLo=;
-        b=bNrh5KemejBEs0wjMPSqP+s1SPy/TxkptSK4aEsxetAlkoQQFRWl92QQvvTM/fwapc
-         A5JnT9nvvZkUqiGVCvFZGan4+P3DUGKRA7Swdd9h2n26s8mJGpe/YCUSEV3XQe4fn//E
-         xOkOcfXan8gMCRKi/aQFZ9vjPAgVxkoWrCE+U/howFRboT6v2qAVyxkmGWV42OIPPRPw
-         8GCxBFWxHZwunVVc7tKAEjITcghnvBpAmGMFY5F+WXQARVPMwoIndRrBgGDFk8BixkJb
-         K+Y/tGuD5vtOHhNdg/i6bObbGzz7QGFAjYZSuePDFSVb1JVWF5rWToozJvIHDfyTqEjr
-         RmVQ==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=OL9uIXPK9K/pNqpXkXHX5ZPhiudqcq0/7z62ankNaq4=;
+        b=HxdjqECpgMfxfa0xKXRGZWZx7magG6Q7h29CVrxkIkHEwZSEyRrXycSDpj+OLDuwAj
+         U4pY5gz+v1hwgh7dGJScINiOnAqxU21/LAeutMbjACYmoFspZoXSxc3LxBF1+oDKDyfh
+         Rstn86fc/M5Xvt8G/ixkzVW6bjLUAMJMZ9lnbXo03w9uJzMi4AoAMFNqCb+Xta3dwlNl
+         /R1eymP7mOYbxR9Ptvm+auxczjV7p+4NBj+tp916YNzrJt2Y6po6TehVELNv+0s6cJeB
+         GGCkCNx8zJ9u9oyzyHYSY+f7EpG2AKchavdX/dDYw4qdNPpCXcQVTrQUUTIYsctzqNy0
+         PKUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=l+Kb6QYXWJxFT+DEB7K+LiFhaMUzRdGL4W3/mlIWOLo=;
-        b=DxPqt0sTsS6uFkxxxWKT+/aA5jrXzyZXZpBfo2W4xIjsR2WCzK5fJo0FxEP/3PsoFj
-         BMCb10eMb0RxkjCRvghWmnrPWXylr9lhG9yu3hl+Xjh6OKtm24CRghCIDwzwtwxElb9x
-         K7asWD7Jj7MyCCFg06S4ysH7tBdKavTIxtgpSMnQfb+JafEKGWQtTCOqc0nfSAqD04H+
-         xXpSw5fhPv9MVFHutIiKDm6vrf3ENu7J5o88+fpSOQw1Q9LO0YewBBirNQWhdfC/Jyun
-         AI7M20Xlk8l8OYZ3I6645KKH+GQ1oAP8KXhVUWeIQfGMGwqCz/ILtyivY072TKb9f+uS
-         XvLw==
-X-Gm-Message-State: AIVw110k/D7VrJWEC+yGj4t3XN9ExO85oPyCFgS/TX2DCtXcwoWf4UkK
-        seMkVoa3xGQJRXDb0WTwlj/eeXd+nJOX
-X-Received: by 10.84.217.16 with SMTP id o16mr5060773pli.31.1500571334392;
- Thu, 20 Jul 2017 10:22:14 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=OL9uIXPK9K/pNqpXkXHX5ZPhiudqcq0/7z62ankNaq4=;
+        b=WQHi+WTMlie/yrd8r5y6iIYL6ga9zJ0VAAGcBPREc6o3VsgpeXfRuwoz93Z3yMNMY0
+         rRE8O+EU+DBhqq4pmOWnWmhqJAUQQKNaZP310R3vnClGHaUiRCpMJCOyvsyqL5Nimr/S
+         /84JZBIPxKkTuW80n/lepQyNtKGrT0dQJHSd5IZw/QNVqtvv1IdhzDdai5/lAzmIHj9o
+         m3lIr0F2g+zK3FOwcdUFGnp+dwkxt3MoAeXeVuUzeVNn5wJnw1PWhjM10I4S8ScVdQL8
+         F1i5OEasgV25WIeq8mVsdIeMhywDEPyIQsG7GGjq7TrD4Pd+RfaogEAIyKYEKkc4niJs
+         kNCQ==
+X-Gm-Message-State: AIVw112znh2ibOqXJpjQ+aY7l5dsy6IIZ0Qv4/JCWeYscYbCGGJw1sT7
+        Ls2p6Qtkx8qr0Q==
+X-Received: by 10.200.51.23 with SMTP id t23mr5911185qta.38.1500572649329;
+        Thu, 20 Jul 2017 10:44:09 -0700 (PDT)
+Received: from [192.168.1.13] ([65.222.173.206])
+        by smtp.gmail.com with ESMTPSA id s3sm2069665qke.66.2017.07.20.10.44.06
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 20 Jul 2017 10:44:07 -0700 (PDT)
+Subject: Re: [RFC PATCH v2 1/4] object: remove "used" field from struct object
+To:     Jonathan Tan <jonathantanmy@google.com>,
+        Stefan Beller <sbeller@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Philip Oakley <philipoakley@iee.org>
+References: <cover.1499800530.git.jonathantanmy@google.com>
+ <cover.1500508695.git.jonathantanmy@google.com>
+ <0eb270f40095f132bf9383f230506e45d895e5e1.1500508695.git.jonathantanmy@google.com>
+ <CAGZ79kbYebKkSBtiFOMO5+uknbNMnhyT6P6uu=MMhmFyOZRE+w@mail.gmail.com>
+ <20170719175512.4974d1a2@twelve2.svl.corp.google.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <dfa6a97c-683c-66d6-61f1-cf7cde6f8b16@gmail.com>
+Date:   Thu, 20 Jul 2017 13:44:05 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Received: by 10.100.167.81 with HTTP; Thu, 20 Jul 2017 10:22:13 -0700 (PDT)
-In-Reply-To: <CAFc9kS_xYVyPsW7qogDxLugxBb1p2vEFAoP=W9Rdnfqs6XtWKQ@mail.gmail.com>
-References: <CAFc9kS8L-JJoJqKi7bB90qwKVW8gB=EFk9D8c=4YShqnamwa2w@mail.gmail.com>
- <CAFc9kS_xYVyPsW7qogDxLugxBb1p2vEFAoP=W9Rdnfqs6XtWKQ@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 20 Jul 2017 10:22:13 -0700
-Message-ID: <CAGZ79kZ+5G0iOZ5ZpEYpB_Hsc9mftNNWNvixx4k37SzamFvrJw@mail.gmail.com>
-Subject: Re: Binary files
-To:     Volodymyr Sendetskyi <volodymyrse@devcom.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20170719175512.4974d1a2@twelve2.svl.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 20, 2017 at 12:41 AM, Volodymyr Sendetskyi
-<volodymyrse@devcom.com> wrote:
-> It is known, that git handles badly storing binary files in its
-> repositories at all.
-> This is especially about large files: even without any changes to
-> these files, their copies are snapshotted on each commit. So even
-> repositories with a small amount of code can grove very fast in size
-> if they contain some great binary files. Alongside this, the SVN is
-> much better about that, because it make changes to the server version
-> of file only if some changes were done.
->
-> So the question is: why not implementing some feature, that would
-> somehow handle this problem?
 
-There are 'external' solutions such as git LFS and git-annex, mentioned
-in replies nearby.
 
-But note there are also efforts to handle large binary files internally
-https://public-inbox.org/git/3420d9ae9ef86b78af1abe721891233e3f5865a2.1500508695.git.jonathantanmy@google.com/
-https://public-inbox.org/git/20170713173459.3559-1-git@jeffhostetler.com/
-https://public-inbox.org/git/20170620075523.26961-1-chriscool@tuxfamily.org/
+On 7/19/2017 8:55 PM, Jonathan Tan wrote:
+> On Wed, 19 Jul 2017 17:36:39 -0700
+> Stefan Beller <sbeller@google.com> wrote:
+> 
+>> On Wed, Jul 19, 2017 at 5:21 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
+>>> The "used" field in struct object is only used by builtin/fsck. Remove
+>>> that field and modify builtin/fsck to use a flag instead.
+>>
+>> The patch looks good to me (I would even claim this could
+>> go in as an independent cleanup, not tied to the RFCish nature
+>> of the later patches), though I have a question:
+>> How did you select 0x0008 for USED, i.e. does it
+>> collide with other flags (theoretically?), and if so
+>> how do we make sure to avoid the collusion in
+>> the future?
+> 
+> Thanks. 0x0008 was the next one in the series (as you can see in the
+> context). As for whether it collides with other flags, that is what the
+> chart in object.h is for (which I have added to in this patch), I
+> presume. As far as I can tell, each component must make sure not to
+> overlap with any other component running concurrently.
+> 
+
+This patch seems reasonable to me.  I agree it could go in separately as 
+a general cleanup.
