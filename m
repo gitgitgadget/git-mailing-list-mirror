@@ -2,110 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 195ED1F600
-	for <e@80x24.org>; Thu, 20 Jul 2017 22:27:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 089681F600
+	for <e@80x24.org>; Thu, 20 Jul 2017 23:05:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965987AbdGTW1w (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Jul 2017 18:27:52 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63130 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S965970AbdGTW1p (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jul 2017 18:27:45 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E080D8EB0E;
-        Thu, 20 Jul 2017 18:27:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=EFp2M44sqD/L
-        8XLdb9TfZWXliok=; b=xMZyijvju6ilSw1DK9gJMmHqh3yLvW8J62gLSpSg/pQE
-        1Ph6cNis2ih8AiKhoIz1sp5Kk74IIEscVZKKwn1m5hDcmuQOQVIQg1AeXEKl5u52
-        ZlvScH2jqbMFMp44R3KE/w0zCx2mBxFqnauwakjgua0azZb2udlwWp6f3x+ATTA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=L5DplG
-        0Mm3EaDQj1FJ0J1m8TsC7ypEsSpGUSmsfqrpxdoyeLDrLpnOhhpAKXlI0giC0Co+
-        LDn6FJz2phVWdbWG86uyaMfTzZGdmfW0mYQcaZ1CLlD25wjBQ//6jmyQxQfUVEXD
-        NuGaP1VLnVAJ4qK8r/NdCgLgiIo9jNZ/K4+CA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D8E518EB0D;
-        Thu, 20 Jul 2017 18:27:38 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 196698EB0C;
-        Thu, 20 Jul 2017 18:27:38 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Brandon Williams <bmwill@google.com>
-Subject: Re: [PATCH v2 00/10] tag: only respect `pager.tag` in list-mode
-References: <cover.1499723297.git.martin.agren@gmail.com>
-        <cover.1500321657.git.martin.agren@gmail.com>
-Date:   Thu, 20 Jul 2017 15:27:36 -0700
-In-Reply-To: <cover.1500321657.git.martin.agren@gmail.com> ("Martin
- =?utf-8?Q?=C3=85gren=22's?=
-        message of "Mon, 17 Jul 2017 22:10:42 +0200")
-Message-ID: <xmqq379qkalj.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S965889AbdGTXFQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Jul 2017 19:05:16 -0400
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:35572 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965872AbdGTXFM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jul 2017 19:05:12 -0400
+Received: by mail-pf0-f181.google.com with SMTP id r76so185461pfj.2
+        for <git@vger.kernel.org>; Thu, 20 Jul 2017 16:05:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=8n6nbev6jvSob2jmBOrlmtRzASIBnrhuh1Bpqof4eiE=;
+        b=W4leBMMfjaX4awuV5m+/sOkgn0oJU0aUvy9P0qIUXbFafDOtSNYXDTX4zGUVUdu2wL
+         Zcs2KbGp/I8kBMw8DIjMEA9dhjIPO4t7tsQOjQ3yTiZYz+jvoDlkLs1+Tb4w9Cl4GWyL
+         f+OUXwfdKAsTQc2DBpeq85UU9PUwCV49w3QDw5ZGiQl70HOJNM20mBE6oWGgmJ0sVnya
+         0YDeRa15KePVww6P15DQRIdSA4dLQ6T0cIfkz5FXbUn2YXVKT8MaaNfzTleHmItvdMlg
+         RjMBYzC4HXyQvvOtt5tOaRv4qGd2aMKPuEKuiwkX1eekWlwDPcgfrHjp1OnD2KYRQQ1Q
+         EfTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=8n6nbev6jvSob2jmBOrlmtRzASIBnrhuh1Bpqof4eiE=;
+        b=dRRfyMzuZ2fdOmhqk1Liv76oEh1hDhT4sjVb79wKJ5fWvFcsIJA8m2dSVgrktSlHDQ
+         rhyJKRZNmn7U3u8XvGhXsit2Ztu2XtN3kq+vYtdqQcO2E82X5Y3v8EORviTORL3Mp9DS
+         5M8RYMLbAq/+88W8WvNA6LrGLq1DFzYOqkr6AIXAYby54XM1FsuPl+M6BzjjAkZ7EwbW
+         KkYV5OH6feWcAHzZ+ND0MNzY0d33RGaw3FxDk5sQCPWMWgxKJ5vN4DnQFwlE+gHq7C4Z
+         F8LIGu0Q9o9mn2c7mCMWrzSRKnV8ZprlLM0hJl4bcXZDh8zH8dTtAy34agTIsC0IzkES
+         5TUA==
+X-Gm-Message-State: AIVw1132gn8MEI6Rw8WMoCctnnEzq5OClIOyqrWRn2inxvlTDhNbPm3O
+        KnNrPOxm89DDQfu9tXOQA9w+rSjswVkP
+X-Received: by 10.99.97.12 with SMTP id v12mr3303746pgb.97.1500591912344; Thu,
+ 20 Jul 2017 16:05:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: A2C3379E-6D9A-11E7-8026-EFB41968708C-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Received: by 10.100.167.81 with HTTP; Thu, 20 Jul 2017 16:05:11 -0700 (PDT)
+In-Reply-To: <20170705091216.ij4uzp3wgsalb56f@sigill.intra.peff.net>
+References: <cover.1498933362.git.mhagger@alum.mit.edu> <20170705091216.ij4uzp3wgsalb56f@sigill.intra.peff.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 20 Jul 2017 16:05:11 -0700
+Message-ID: <CAGZ79kY=N5H2q1SB9ZEtt1EvuAQg+bqVBZNoXE6nLgtoUd2txA@mail.gmail.com>
+Subject: Re: [PATCH v3 00/30] Create a reference backend for packed refs
+To:     Jeff King <peff@peff.net>
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        David Turner <novalis@novalis.org>,
+        Brandon Williams <bmwill@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin =C3=85gren <martin.agren@gmail.com> writes:
-
-> This is the second version of "[PATCH 0/7] tag: more fine-grained
-> pager-configuration" [1]. That series introduced `pager.tag.list` to
-> address the fact that `pager.tag` can be useful with `git tag -l` but
-> actively hostile with `git tag -a`. Thanks to Junio, Peff and Brandon
-> for helpful feedback.
+On Wed, Jul 5, 2017 at 2:12 AM, Jeff King <peff@peff.net> wrote:
+> On Sat, Jul 01, 2017 at 08:30:38PM +0200, Michael Haggerty wrote:
 >
-> After that feedback, v2 drops `pager.tag.list` and instead teaches
-> `git tag` to only consider `pager.tag` in list-mode, as suggested by
-> Peff.
+>> This is v3 of a patch series creating a `packed_ref_store` reference
+>> backend. Thanks to Peff and Junio for their comments about v2 [1].
+>>
+>> Changes since v2:
+>>
+>> * Delete some debugging `cat` commands in t1408.
+>>
+>> * Add some tests of reading packed-refs files with bogus contents.
+>>
+>> * When reporting corruption in packed-refs files, distinguish between
+>>   unterminated lines and other corruption.
+>>
+>> * Fixed a typo in a commit message.
 >
-> Patches 1-3/10 replace patch 1/7. They move Documentation/technical/
-> api-builtin.txt into builtin.h, tweak the formatting and bring it up to
-> date. I may have gone overboard making this 3 patches...
+> Thanks. I just quickly re-reviewed based on the diff from v2, and it
+> looks good to me.
 >
-> Patches 4-7/10 correspond to patches 2-5/7. `setup_auto_pager()' is now
-> much simpler since we do not need to handle "tag.list" with a clever
-> fallback strategy. IGNORE_PAGER_CONFIG is now called DELAY_PAGER_CONFIG=
-.
-> I now check with pager_in_use() and I moved the handling of `pager.tag`
-> a bit further down.
+> -Peff
 
-I tend to agree with you that 1-3/10 may be better off being a
-single patch (or 3/10 dropped, as Brandon is working on losing it
-nearby).  I would have expected 7-8/10 to be a single patch, as by
-the time a reader reaches 07/10, because of the groundwork laid by
-04-06/10, it is obvious that the general direction is to allow the
-caller, i.e. cmd_tag(), to make a call to setup_auto_pager() only in
-some but not all circumstances, and 07/10 being faithful to the
-original behaviour (only to be updated in 08/10) is somewhat counter
-intuitive.  It is not wrong per-se; it was just unexpected.=20
+We have a user that reports:
 
-> Patches 8-9/10 teach `git tag` to only respect `pager.tag` in list-mode
-> and flip the default value for that config to "on".
->
-> Patch 10/10 is somewhat similar to a hunk in patch 2/7, but is now a
-> bug-fix instead of a feature. It teaches `execv_dashed_external()` not
-> to check `pager.foo` when launching `git-foo` where foo is a builtin.
-> I waffled about where to put this patch. Putting it earlier in the
-> series as a preparatory step, I couldn't come up with a way of writing =
-a
-> test. So patch 8/10 introduces a `test_expect_failure` which this patch
-> then fixes.
+  The issue is for users who have a mirrored repository, "git pack-refs"
+  now overwrites the .git/packed-refs symlink instead of following it and
+  replacing the file it points to.
 
-I haven't thought about ramifications of 9-10/10 to make a comment
-yet, but overall the series was a pleasant read.
+I suspect this series to be at fault, as the bug report came in a day after
+we deployed next containing these changes.
 
-Thanks.
+Do symlinks and packed-refs ring a bell for this series?
+
+Thanks,
+Stefan
