@@ -2,72 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 441E720387
-	for <e@80x24.org>; Thu, 20 Jul 2017 08:48:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1605320387
+	for <e@80x24.org>; Thu, 20 Jul 2017 09:20:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935000AbdGTIsf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Jul 2017 04:48:35 -0400
-Received: from mail-pf0-f174.google.com ([209.85.192.174]:33746 "EHLO
-        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934845AbdGTIrx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jul 2017 04:47:53 -0400
-Received: by mail-pf0-f174.google.com with SMTP id s70so9951253pfs.0
-        for <git@vger.kernel.org>; Thu, 20 Jul 2017 01:47:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=WQHb173qinuKjMBvoFDo8n+vKis+ypDV99yGlYiJ+jE=;
-        b=se2pQDE9x3pnrQRKOZOPBgaW0zDTqDKRTPeu+QOgrZFZL0ukcTdJWnogNjKVprxgjx
-         aPJnasVRwA/v19et0Mo17TZjrehHe7eNfre2HmnfqfbHyZ1IBU7hiN+mkPsDj4818IAQ
-         5wMSC6Ujc9NQOZBxL6MxB4g0QP0a8utRawd+h87/1nZCENNRl4c0FpmtXoBQhQsYjSNU
-         03w183sWJHRnNZkrIeRUPTklq63EwOJjhx6vL5JRssZfSRel5e5366tC1JN2GmV12lFn
-         6q0kHt/aQ4wqEB8oAzsbTnYAJQTwuzRGpJwux6Qf+qbYrekX03Z4Fbte/kxZyTzjtx0E
-         4D2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=WQHb173qinuKjMBvoFDo8n+vKis+ypDV99yGlYiJ+jE=;
-        b=Wv1lHLhvTGKGtj7R2ZJhjoGbDKRjVLRoGXpr0LUM/DXu++eF+4R3e841KV4RYt+lqY
-         y+zn3VDFCAeRqC/rjz37zm+1qW8HTYx0QG6xC35sC7/nkzfXUYaj63qf6Qoo0xjM2lq2
-         kMH5hzxIE3QtkA1M6PhRIm5UcLddmAhbX8VsZJyP9EXjN3qbm2RP7B9ZbZmet/jCHCUC
-         QBQbjHAONlyX0UDFhxHUzC//xj6uXeZMaFeJbBkf3z6OxBqeE9jZzh2eyMLkIexe0RbR
-         iKMs0heKJy7zq/RGGJ+2dG+1LJgNkVjPXvzSjj4BCTVH7AohUrVLwEwyKpc4gCXOE6f7
-         3fpg==
-X-Gm-Message-State: AIVw110wIcGToaKXKNP2NmNfmayrte6kiChBhFV8qZKGE8XaC3MR4qj6
-        maCE4Cn9zotQz3AWg/R/MseL0O7qJWc3
-X-Received: by 10.84.224.141 with SMTP id s13mr3369417plj.212.1500540473172;
- Thu, 20 Jul 2017 01:47:53 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.100.163.102 with HTTP; Thu, 20 Jul 2017 01:47:52 -0700 (PDT)
-In-Reply-To: <55629eef-537e-e5b6-c0dc-6e3372d00b33@gmx.net>
+        id S935685AbdGTJUf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Jul 2017 05:20:35 -0400
+Received: from mout.gmx.net ([212.227.17.22]:56483 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S933731AbdGTJUb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jul 2017 05:20:31 -0400
+Received: from [192.168.0.2] ([86.56.108.44]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MRXVc-1d9pSO3JkG-00SiXE; Thu, 20
+ Jul 2017 11:20:28 +0200
+Subject: =?UTF-8?Q?Re:_--interactive_mode:_readline_support_=e2=8c=a8?=
+ =?UTF-8?B?4qyG?=
+To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>
 References: <55629eef-537e-e5b6-c0dc-6e3372d00b33@gmx.net>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Thu, 20 Jul 2017 10:47:52 +0200
-Message-ID: <CAN0heSoJVf4A=92GPwFGUL0uoqWK3eY89+uCTirVzSYHHhfwwg@mail.gmail.com>
-Subject: =?UTF-8?B?UmU6IC0taW50ZXJhY3RpdmUgbW9kZTogcmVhZGxpbmUgc3VwcG9ydCDijKjirIY=?=
-To:     Marcel Partap <mpartap@gmx.net>
+ <CAN0heSoJVf4A=92GPwFGUL0uoqWK3eY89+uCTirVzSYHHhfwwg@mail.gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+From:   Marcel Partap <mpartap@gmx.net>
+Openpgp: id=2E9589E4B9A4460B66AD9B8D65C6B04A8A39FBDA;
+ url=http://pgp.mit.edu/pks/lookup?op=get&search=mpartap@gmx.net
+Message-ID: <59370040-020f-a5b0-fbd1-677e46d382b3@gmx.net>
+Date:   Thu, 20 Jul 2017 11:20:28 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.6.0
+MIME-Version: 1.0
+In-Reply-To: <CAN0heSoJVf4A=92GPwFGUL0uoqWK3eY89+uCTirVzSYHHhfwwg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:ln8qp1Y9hF9AynTcAh4RbnMKWP1zdXMW67O3Q7wyzFb7KwJvHF2
+ qTIG7kBPN8culPIcJiViml4v0LfPOdbiErM/MORo6DF9Wb5quRpFRWxKiijQJs4YbGH8Nt1
+ syVk5083PYura+AzEAmAKNnh4rANq3jQY1vBxCg96enmWzLNNsDLyexvaXi2szZEfQa/HqE
+ F0SWBr9LEuIXjHFyEfElw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:puJKXckmygM=:xLpyv4QLH8E3rAMd8K1fpW
+ 62o7yrknF+wt8sM1EkMUM62gU7EUZ2/r9ghrVOaROQtgpuPsMiW9TFie3yvaAG7PseTlAc7//
+ VZlezaSrrvlQZLOV06TqWTEyPmGp7yQhnEHfNb15D+Dvl+omAj2vTt6szOf/s0H0/mbc7HPdp
+ t2NrF0qBM3Hnlf8E6fJc8rU5d6CvKan7EqwEKhNb75jk3os30P1qMBvjS27nRfGUrXPy3vYJT
+ jHX3hPc4KXYjsQl2K7NB0RLQ2DXwA3Y/70GgFwqX2wSv/erpHBXxknZ5E9i50WvczNxST2JEz
+ ENVepUxMISgEoa8nw3VsfCe2DnnK3FUIlnzoFd58BjhVnw7D5Bi+pNUXoBgCEK7/yN0UWFclt
+ K1P6H8vudkDEf7SKVLJkRX5seJY3oQN5nnH3t04Cwm5XAfSOtK/utaOz9WoHlEiPC/Vf9qQey
+ gqs43PizIwsUShFMzkDimBddtsjMnlv8J8oaKwgW7xw7xAsTqqNySu9C8/EEZU+HHDL5YfFzA
+ anAuUvoOWRW8xcc+jbC5Kd1+MzRy3JQSm8JefMcZ8x4vZv8nxlGIvhdRKQT31/SgZFKQfqfV7
+ H5CA5wX71x/YOWZm6kR8035jguWOE90kmtU+Y3kcBsLyR2pHgEB4KcbVr00mAntOuA0AFhysq
+ kA5WvCXAow3ZvBN02TOOgtoJxCJp9jQq4pCR0fX62aa0nYs+xdSZrig1rYyQrjRhSwugQx6cJ
+ 8fDbBNKJmLaoJQpsJhpAvOOn6Pg3OvhPztdcA54pkUeOl6QePNVbzm7l0VNzFMSqfWEPN3t10
+ 1lIsxGiZk1ZML2ObeJyRtzcJj5Bon5x0CY00HccvN7yjsjs3os=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 20 July 2017 at 10:21, Marcel Partap <mpartap@gmx.net> wrote:
-> wouldn't it be great to have the power of readline added to the power of git interactive commands? Yes, rlwrap will do the job, but still.
-> Or am I missing something obvious?
+Ok very good point Martin ; )
+I nefariously hid one obvious use case as trailing emoji™ in the subject, but a better way to make a point is to properly explain.
+So the readline library powers the advanced line editing capabilities behind f.e. the bash or the ipython shell. Besides navigating with the cursor keys, it provides a history function accessible by the up cursor key ⌨⬆ .
+At the moment, git interactive mode seems (?) not to make use of it, so there's no line editing at all. A typo at the beginning of a line must be corrected by reverse deleting up to it, then retyping the rest unchanged. With readline, the home/end keys for jumping to beginning or end work, as do the left/right keys in a familiar way.
+The history function comes in handy when f.e. repeatedly using `git clean -i` and feeding the "filter by pattern" command a string like "*.patch". Like, that's the use case that prompted me to write to this list. : )
 
-Well maybe *I* am missing something obvious. :) Could you be a bit
-more specific? What is the use-case? Once this feature were in place,
-what would it look like? Could you give an example of what you as a
-user would do to solve some particular problem -- and how that differs
-from how you would solve it today?
-
-Martin
+#Best Regards/Marcel
