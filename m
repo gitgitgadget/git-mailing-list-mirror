@@ -2,97 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 38B3B20288
-	for <e@80x24.org>; Thu, 20 Jul 2017 00:06:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 606FF20288
+	for <e@80x24.org>; Thu, 20 Jul 2017 00:21:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933516AbdGTAG0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Jul 2017 20:06:26 -0400
-Received: from mail-pg0-f45.google.com ([74.125.83.45]:34670 "EHLO
-        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932173AbdGTAG0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jul 2017 20:06:26 -0400
-Received: by mail-pg0-f45.google.com with SMTP id 123so6794085pgj.1
-        for <git@vger.kernel.org>; Wed, 19 Jul 2017 17:06:25 -0700 (PDT)
+        id S932973AbdGTAVx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Jul 2017 20:21:53 -0400
+Received: from mail-pg0-f47.google.com ([74.125.83.47]:33178 "EHLO
+        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932336AbdGTAVx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jul 2017 20:21:53 -0400
+Received: by mail-pg0-f47.google.com with SMTP id k14so7001646pgr.0
+        for <git@vger.kernel.org>; Wed, 19 Jul 2017 17:21:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=0yqEhDB2Q5BpePlrG96yQpNSYdOJkxqpPOm6IWMlpUQ=;
-        b=iH9rdCXSt/gf0TujHw9sNe+3GbkNgQyXGzRvKm2r0KO6hvmn/cWUmD+3tropCMlTGZ
-         nlRgSRAEaAvuoauo5qSCqojbZ6cjeqkdaxpn1TonLIDh1F+axlA72NpZHGCpROuAGJZn
-         SB+bn1wTklQ4yTbxtNvU6YPkZovP24v88VyvI/5ps/0/l0czUvMz9spNoMxGUxDYeMeK
-         EhLKqHk90yYHp7W79Mifw5HODuo2lpe9d4yE2rN1WyIKolo41FAhTqK3iYeDiVsRpbBX
-         KYiaU+bgNTZA7gJWdVCsGen56YzCAbf+3jOhhk+z/2VsJUKicwxoUNr5lbjYeBBWFRR4
-         snbA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=0yxZushqSQiwhOYdjoDZNvXmM6Vn/nNL5SLDbFyYMMM=;
+        b=TplSnNHi3z5NwscN2lpoW/YYZZyV10m/A/Et9M1AlYycD34HdsGZLN6ztWeWAo6Abj
+         Tzk3xeNgqrAHVCMO0GIloyiLaTKECf1cXBMqm19VHF4M7DsJvkYz4Wj5NTV/VU4j6MYW
+         LBJh3EPTiUNduNk3QK6JHus+j9VUjkMaoq2ve7wMYzIMe9N0clpBbUvYps8EHhZ2VtO6
+         oZNxOK17h3Z8F2A596kUROwVHt+w7T9NU20agRJ42anbkpNzNfVIemjFyf3MGxG6iyXe
+         U+8KsLH/LAu74TPnTSLIgFxeR078nkH5GumVHcQfkOZCLWRc+T0XWck1c+FdCIHWmOcI
+         JvjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=0yqEhDB2Q5BpePlrG96yQpNSYdOJkxqpPOm6IWMlpUQ=;
-        b=DPej3bR7yTRcQkmjC8TzD2iJFWghlpcZZlDCEkwTmg3F7sfvm/WojD5uaukIErI50V
-         PBilVWtygNmOTlB6jYYgiILM3RuKmKkye5cnR4wW+eNNOkCWSqVZ6KjcfFn3cx49/Phy
-         JSFoHcq9Yw05lpL7GWYgV7sC+lAR0MZual7mCZYsJks0O/9oRAtTijMhRrEoTI0KXCRC
-         UKHRJHtR6LOBHphMXXaTo812U3f049473949+zvVkN/qQfSFrsPVa3DteaJjLNR2iaS8
-         +JZrvq5pJGMOCIs7LRdarg7AcT2mJ9F1pc8DRfLefR8AciY9wkL/DSnUWREtxO+I7zu+
-         /GeQ==
-X-Gm-Message-State: AIVw1101FN3NC3CHjD4ho9LjR1RZNBkfyNkaHLu10IoT0CejnXzaFGr9
-        AUBmfdI2o3wxojp2US0llgFNSHn0BbYB
-X-Received: by 10.99.105.200 with SMTP id e191mr1814962pgc.215.1500509185504;
- Wed, 19 Jul 2017 17:06:25 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.100.167.81 with HTTP; Wed, 19 Jul 2017 17:06:24 -0700 (PDT)
-In-Reply-To: <20170719165622.78e463fd@twelve2.svl.corp.google.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=0yxZushqSQiwhOYdjoDZNvXmM6Vn/nNL5SLDbFyYMMM=;
+        b=VOFF8qCgmEWpW+wkl551vMU+khFp3/Tol4kd7b/S/4uoS7kpHb4CTFHaEmsSl9kz1p
+         e7zMB0kEUuDr2elk7zIQu8FQ4VG6yIw2IngOfheNLhYhZMzh2/h91mS2sg15iOjnK90q
+         e7xxIaJPo3umgoBkaweeSzLVxKm3hO7nMdCukamKhX7m/fgJjfw9P2ooZ6p16ThaAQiO
+         nb12yn7O9QaB5UmmXHx23q+Nl+7EY7JFyE4z32O3jS8HcXRQ2lw5PZlUaKYxJKl8yWFq
+         QebxVdENZ1We5pFKlUYtIoO4hSWtM6JHf9OqY5YQvRFNZ0/nsQNamDNagq5fXNVmeKO/
+         yq/Q==
+X-Gm-Message-State: AIVw113poP3NAn4/38IuNDk6Wh3athsb0IF2cUwL8zCS7aS5bDOX+aqB
+        oqfUdwBIIGTViTedQC6fcA==
+X-Received: by 10.99.125.11 with SMTP id y11mr1880610pgc.19.1500510111897;
+        Wed, 19 Jul 2017 17:21:51 -0700 (PDT)
+Received: from twelve2.svl.corp.google.com ([100.96.218.24])
+        by smtp.gmail.com with ESMTPSA id n129sm1285891pfn.27.2017.07.19.17.21.50
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 19 Jul 2017 17:21:50 -0700 (PDT)
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, jrnieder@gmail.com,
+        sbeller@google.com, git@jeffhostetler.com, peartben@gmail.com,
+        philipoakley@iee.org
+Subject: [RFC PATCH v2 0/4] Partial clone: promised objects (not only blobs)
+Date:   Wed, 19 Jul 2017 17:21:43 -0700
+Message-Id: <cover.1500508695.git.jonathantanmy@google.com>
+X-Mailer: git-send-email 2.14.0.rc0.284.gd933b75aa4-goog
+In-Reply-To: <cover.1499800530.git.jonathantanmy@google.com>
 References: <cover.1499800530.git.jonathantanmy@google.com>
- <523f64e1395124a02316071329bedf9884757479.1499800530.git.jonathantanmy@google.com>
- <CAGZ79kZ9Ewxv=8fnRZZaQjpyAdv8df81a9aLRkJzEt5ZU0VcTA@mail.gmail.com> <20170719165622.78e463fd@twelve2.svl.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 19 Jul 2017 17:06:24 -0700
-Message-ID: <CAGZ79kYCr_Ozt3sa5FffgY-kzwAnGc2rTFEQ1AzeruURXQsYmA@mail.gmail.com>
-Subject: Re: [RFC PATCH 2/3] sha1-array: support appending unsigned char hash
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 19, 2017 at 4:56 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
-> On Tue, 11 Jul 2017 15:06:11 -0700
-> Stefan Beller <sbeller@google.com> wrote:
->
->> On Tue, Jul 11, 2017 at 12:48 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
->> > In a subsequent patch, sha1_file will need to append object names in the
->> > form of "unsigned char *" to oid arrays. Teach sha1-array support for
->> > that.
->> >
->> > Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
->>
->> This breaks the oid/sha1 barrier?
->
-> Not sure what you mean by this. This patch is meant to be a change to
-> make "unsigned char *"-using code able to create/modify oid arrays,
-> while we migrate away from "unsigned char *" - I don't know of any
-> barrier.
+Thanks for all your comments on the earlier version. This is a
+substantially different version. In particular:
+ - Now supports all types (tag, commit, tree) of objects, not only blobs
+ - fsck works
+ - Incorporates Ben Peart's code that uses a long-living process
+   (lifetime of the Git invocation) to obtain objects
+ - Implemented as a repository extension
 
-In my mind we have 2 states:
-* the current state where we have "char *sha1"
-* the future in which we have "struct object_id oid"
+If anyone would like to comment on the overall direction of this
+approach, that would be great. In particular, I'm not too sure on the
+names of things. I know that I have some things to still work on
+(documentation and coding style, more improvements to and tests for
+fsck, maybe division of commits?) but I would like some early feedback
+on the bigger picture first.
 
-In both realms you can do things (and the current code
-base has examples for both), but these 2 are connected
-via only a couple well defined functions (sha1_to_hex,
-oid_to_sha1) during the conversion phase.
+If you want to patch this in, this is built off my recent cleanup patch
+[1].
 
-So with that mindset I was slightly irritated to see a function
-that uses both realms so interchangeably.
+About inability to scale if we have the list of promised blobs: In this
+design, we will have a promised blob entry only if we have a concrete
+tree, so in a repository in which many trees are omitted, there will not
+be many promised blob entry objects. In fact, the minimal partial clone
+will be one in which there will be one promised commit for each ref
+(assuming no duplicates), no promised trees, and no promised blobs.
+(I'm not planning to implement such a clone, but someone else could do
+so.)
 
-Revisiting that it is actually not that bad, but also a good
-idea to have in the transition phase.
+About having multiple promise lists: I have retained the single list,
+but am still open to change. The support of all the object types might
+be sufficient mitigation for the issues that caused us to investigate
+multiple promise lists in the first place.
 
-Sorry for the noise,
-Stefan
+[1] https://public-inbox.org/git/20170718222848.1453-1-jonathantanmy@google.com/
+
+Jonathan Tan (4):
+  object: remove "used" field from struct object
+  promised-object, fsck: introduce promised objects
+  sha1-array: support appending unsigned char hash
+  sha1_file: support promised object hook
+
+ Documentation/config.txt                         |   8 +
+ Documentation/gitrepository-layout.txt           |   8 +
+ Documentation/technical/read-object-protocol.txt | 102 +++++++
+ Documentation/technical/repository-version.txt   |   6 +
+ Makefile                                         |   1 +
+ builtin/cat-file.c                               |   9 +
+ builtin/fsck.c                                   |  42 ++-
+ cache.h                                          |   4 +
+ environment.c                                    |   1 +
+ fsck.c                                           |   6 +-
+ object.c                                         |  21 +-
+ object.h                                         |  21 +-
+ promised-object.c                                | 324 +++++++++++++++++++++++
+ promised-object.h                                |  34 +++
+ setup.c                                          |   7 +-
+ sha1-array.c                                     |   7 +
+ sha1-array.h                                     |   1 +
+ sha1_file.c                                      |  44 ++-
+ t/t3907-promised-object.sh                       |  73 +++++
+ t/t3907/read-object                              | 114 ++++++++
+ t/test-lib-functions.sh                          |   6 +
+ 21 files changed, 808 insertions(+), 31 deletions(-)
+ create mode 100644 Documentation/technical/read-object-protocol.txt
+ create mode 100644 promised-object.c
+ create mode 100644 promised-object.h
+ create mode 100755 t/t3907-promised-object.sh
+ create mode 100755 t/t3907/read-object
+
+-- 
+2.14.0.rc0.284.gd933b75aa4-goog
+
