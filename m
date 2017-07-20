@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A1E1D1F600
-	for <e@80x24.org>; Thu, 20 Jul 2017 14:19:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00C931F600
+	for <e@80x24.org>; Thu, 20 Jul 2017 14:19:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965645AbdGTOTx (ORCPT <rfc822;e@80x24.org>);
+        id S965647AbdGTOTx (ORCPT <rfc822;e@80x24.org>);
         Thu, 20 Jul 2017 10:19:53 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:35510 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965632AbdGTOTt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jul 2017 10:19:49 -0400
-Received: by mail-wm0-f67.google.com with SMTP id t3so2731038wme.2
-        for <git@vger.kernel.org>; Thu, 20 Jul 2017 07:19:49 -0700 (PDT)
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:38322 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965642AbdGTOTw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jul 2017 10:19:52 -0400
+Received: by mail-wm0-f65.google.com with SMTP id 143so3709291wmu.5
+        for <git@vger.kernel.org>; Thu, 20 Jul 2017 07:19:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=1qD01O2xDLON6QT4JFLnSzIttyxGRVskeK3SGEyA3dY=;
-        b=b2hiQKqCmSm2W+vfTuPqLAAXK7icbDsgbyWxNd0vEM2ngqmb42RL9pZ25bWchpHvtu
-         jjkge34+JpmYupiEaVEtmyQAp0tU+Id96bJDN3ZtR3X97kSy2I1hsPuaHGuiNPYGHUmI
-         9JMDE4gss3DjeWqG7bXWyLVYhbnkR/TXv10Av7182QNY5tP+zpyXAKNSmp6U0FxmsYyL
-         4OM+JbZGLxt2g9OY0NNkcV9UNW0DucOvdIG9umN9U3pW94HnYzY8o/3FIbqUuAvUPOTM
-         na5CSrggrO8ISs5NGlH89peOxcQzNcVYSUAHl9pdTwDB36baegkwkJafz1YfRCl7xdci
-         GsLQ==
+        bh=afykyWj569HKIJA1lxGWdp/wtd+/2ag06sK7kLVgARI=;
+        b=LyhHir261Gj3HVQ4S2p42D7nBw9mTrbZWEyEOXWm5XMOUK3zJrpVlZ5cvK640DyFM3
+         fNtgRvfa7X+CRgd9WuhtVyImBfSqzwwbQ+hsfl1ym7jET97DoU6bdxTe2G8ERJMulD00
+         +DVRjx9r1di9rHUReG1RtF6Jq58fFn0O4U6Gee3dEAf89WkqckWsFe3eeDYJdci0w80M
+         tU+Xu3WPjQzaLgHAag9rIf/3p0G8I8l+KAsQXlSYZfrTS8Al5ZNtCcMt70DSgfCgKUYu
+         joobz0xZ23aPeZhkEDzwHpBmgc9NftHf5/aAxVXUrdJLnAj274mYtGGDlTU3tH2PfBLX
+         lVvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=1qD01O2xDLON6QT4JFLnSzIttyxGRVskeK3SGEyA3dY=;
-        b=rWpwkYMGAjxZM76NUQWbivjYAdqmlT3/frk0hqwMFBupXJGrmhor/Rb5FpLteKlxiJ
-         pLLQrOozEem6PZwoid2CxZnmo4XLIH8YW4ZoU5ejuYZjdAmDfgIfXLkH3VrMF9ZbzF69
-         pGKI48YKM7FTlkbN2r8iiGeBHuI5bkX4b0/0ahcqabC0733H2/5ZZSFnotuCOPNxvZRi
-         pJ/mBlur4ugVShoI68DKur+r6aFWNldXB+MOPcYXTmfZQStIXFX7zxV0sE0J5LvL20vJ
-         on1yz/3Y7ZhhPZjssGtI70ARF1CVoaQyZz4JM93d+RfiDhhFKAdAOJsBWoQ17QP98QDZ
-         hakQ==
-X-Gm-Message-State: AIVw1109Vhg7zfcx6dtEgQrE8T2IrXNh07bhi7QWMM0T2rOwyGw2tQ57
-        +2RVOjRLyxrRkxXJOzE=
-X-Received: by 10.80.148.211 with SMTP id t19mr1234227eda.128.1500560388274;
-        Thu, 20 Jul 2017 07:19:48 -0700 (PDT)
+        bh=afykyWj569HKIJA1lxGWdp/wtd+/2ag06sK7kLVgARI=;
+        b=WLZ7gkYyCEFpUYRGPqpmjIdwOLcFFn4bBdl9GNogyLzqZCkT1AIBqgm2tTWBeodayi
+         wlUM/600to4Vw3r8mFpkab3CnsE61hpwHcfyREtCUsxYhxHDrMK7nWjcnXXsR1OJyin7
+         CwUFbI11vr9mrILFV1zeMnm7Y414+CSw05fPGzyFD3dulB9mqd07o425gQfto0e0nuUA
+         MDxHknrRs9/5heK/Ee6aUn4YuDvFo5eCNcYppCvIKMtLlnZ0O9Bzn8P0Ix+cBuZr1QYH
+         Z7KkGWsmXg2nIBeZNH45TfsATkpg6Ku51T0CAn4imUwNO0RVUER+ZrJlxlcRLYXroVTl
+         MS+A==
+X-Gm-Message-State: AIVw113IfvhZ0ngetxIMEw9/fOJTTyw1OGcbioU9ffRH+zcSTdHktdCG
+        xRnNIaGscQfsjOC/TLY=
+X-Received: by 10.80.216.66 with SMTP id v2mr3148056edj.255.1500560390680;
+        Thu, 20 Jul 2017 07:19:50 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id l24sm1630566eda.11.2017.07.20.07.19.47
+        by smtp.gmail.com with ESMTPSA id l24sm1630566eda.11.2017.07.20.07.19.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 20 Jul 2017 07:19:47 -0700 (PDT)
+        Thu, 20 Jul 2017 07:19:49 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 5/6] RelNotes: remove duplicate mention of PCRE v2
-Date:   Thu, 20 Jul 2017 14:19:26 +0000
-Message-Id: <20170720141927.18274-6-avarab@gmail.com>
+Subject: [PATCH 6/6] RelNotes: add more notes about PCRE in 2.14
+Date:   Thu, 20 Jul 2017 14:19:27 +0000
+Message-Id: <20170720141927.18274-7-avarab@gmail.com>
 X-Mailer: git-send-email 2.13.2.932.g7449e964c
 In-Reply-To: <20170720141927.18274-1-avarab@gmail.com>
 References: <20170720141927.18274-1-avarab@gmail.com>
@@ -71,26 +71,37 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-That we can link to PCRE v2 is already covered above in "Backward
-compatibility notes and other notable changes", no need to mention it
-twice.
+We were missing any mention that:
+
+ - PCRE is now faster with JIT
+ - That it's now faster than the other regex backends
+ - That therefore you might want to use it by default, but beware of
+   the incompatible syntax.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/RelNotes/2.14.0.txt | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ Documentation/RelNotes/2.14.0.txt | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
 diff --git a/Documentation/RelNotes/2.14.0.txt b/Documentation/RelNotes/2.14.0.txt
-index 0e363f2af3..fb6a3dba31 100644
+index fb6a3dba31..a6a1cb963b 100644
 --- a/Documentation/RelNotes/2.14.0.txt
 +++ b/Documentation/RelNotes/2.14.0.txt
-@@ -88,8 +88,7 @@ UI, Workflows & Features
+@@ -88,7 +88,16 @@ UI, Workflows & Features
     learned to say "it's a pathspec" a bit more often when the syntax
     looks like so.
  
-- * Update "perl-compatible regular expression" support to enable JIT
--   and also allow linking with the newer PCRE v2 library.
-+ * Update "perl-compatible regular expression" support to enable JIT.
+- * Update "perl-compatible regular expression" support to enable JIT.
++ * Update "perl-compatible regular expression" support to enable
++   JIT.
++
++   This makes grep.patternType=perl (and -P and --perl-regexp) much
++   faster for "git grep" and "git log", and is generally faster than
++   the system's POSIX regular expression implementation. Users
++   concerned with "git grep" performance or "git log --grep"
++   performance might want to try setting grep.patternType=perl. Note
++   that the syntax isn't compatible with git's default of
++   grep.patternType=basic.
  
   * "filter-branch" learned a pseudo filter "--setup" that can be used
     to define common functions/variables that can be used by other
