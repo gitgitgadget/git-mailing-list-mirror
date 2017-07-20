@@ -6,79 +6,72 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 090F31F600
-	for <e@80x24.org>; Thu, 20 Jul 2017 20:35:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A6401F600
+	for <e@80x24.org>; Thu, 20 Jul 2017 20:40:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965009AbdGTUf4 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Jul 2017 16:35:56 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:65023 "EHLO
+        id S935711AbdGTUky (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Jul 2017 16:40:54 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53629 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S934670AbdGTUfy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jul 2017 16:35:54 -0400
+        with ESMTP id S935339AbdGTUky (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jul 2017 16:40:54 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 46E54778C6;
-        Thu, 20 Jul 2017 16:35:53 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D9CC88D415;
+        Thu, 20 Jul 2017 16:40:46 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=WCYb5s2qUXme
-        Wcz1Ia1rHDckRMc=; b=dOph0PEipfn0X+5d1akusIiz7lklAGCnRl8Yez7eYaNq
-        evBtSmO4O0IMQEvwnsJS5wsM+x/xl4Q2Y9drt01XI8jpqYYIHmwYzodqBD0j/QL3
-        z1ELiXYfiR3RBvpuozaVnizkIXfz1+yuYX9q7PHEySUE7a9MJf3uWnEOTji05Lc=
+        :content-type; s=sasl; bh=O8Nih34Uflh5DwlhTpuEDtbG5kU=; b=KblNor
+        Z7xEaNetZpESt1oqmM7JH5s+gKSYdL9p7qEd0/myepq3aSYfQLhRYvh0lO19p7nY
+        TL1EUJR5D2ChLpbEDVeZhigZXIHeVVwrUU8Uf2l1icixFw4ztx/SNoQEOHE1dovr
+        4EM5Jcf+Ru3gQ1YBqGKsffpx/PyZVjoB0g71U=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=x72FmR
-        GmEnhBOxeiRTSc6yZTSpQv+162QIyX2uxB46Vd9XZJNcHQM/ccQdkedG6Tiql6uV
-        VMQ7myBwmIH3SFCfPtDXJZFeTfI/xbno0RLHsIBwYJ2RDSZnCVHkylRwZi6mWWFb
-        29cEMd8dz59y2N1m2P6WIWHaHRauUlrNb5ZbU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3F849778C5;
-        Thu, 20 Jul 2017 16:35:53 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=iwkuE5EQQadx9nj98O4MBpyhvx3WbJQf
+        q565Hpy2BJ00ZSG3WkMIqF/HTE77AbdBRXRzQgUZ3+tK/7LSekEHxliSsb4oLm7c
+        q6Th1AQmR3zOJHoNALLNCYu7Sfn7CYWBWLYQVlGyQOP5i1EWhLlJbDi8z9StGl7w
+        +g3xO09E0Io=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C92BC8D413;
+        Thu, 20 Jul 2017 16:40:46 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A223A778C4;
-        Thu, 20 Jul 2017 16:35:52 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2D68E8D412;
+        Thu, 20 Jul 2017 16:40:46 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/6] 2.14 RelNotes improvements
-References: <xmqq7ez6hk2y.fsf@gitster.mtv.corp.google.com>
-        <20170720141927.18274-1-avarab@gmail.com>
-Date:   Thu, 20 Jul 2017 13:35:51 -0700
-In-Reply-To: <20170720141927.18274-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 20 Jul 2017 14:19:21 +0000")
-Message-ID: <xmqqshhqkfrs.fsf@gitster.mtv.corp.google.com>
+To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
+Cc:     Volodymyr Sendetskyi <volodymyrse@devcom.com>, git@vger.kernel.org
+Subject: Re: Binary files
+References: <CAFc9kS8L-JJoJqKi7bB90qwKVW8gB=EFk9D8c=4YShqnamwa2w@mail.gmail.com>
+        <CAFc9kS_xYVyPsW7qogDxLugxBb1p2vEFAoP=W9Rdnfqs6XtWKQ@mail.gmail.com>
+        <d4b1b92d-6ab1-7e6f-4afd-6194a5ba8e40@gmail.com>
+Date:   Thu, 20 Jul 2017 13:40:45 -0700
+In-Reply-To: <d4b1b92d-6ab1-7e6f-4afd-6194a5ba8e40@gmail.com> (Igor
+        Djordjevic's message of "Thu, 20 Jul 2017 20:49:35 +0200")
+Message-ID: <xmqqo9sekfjm.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 0601F0B2-6D8B-11E7-A4D2-61520C78B957-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: B4F5CE4A-6D8B-11E7-ABE1-EFB41968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Igor Djordjevic <igor.d.djordjevic@gmail.com> writes:
 
-> Here's a few patches to improve the relnotes. I started just writing
-> 6/6 since I think (I don't care about the wording) that we should in
-> some way mention the items in the list in the 6/6 commit message.
+> On 20/07/2017 09:41, Volodymyr Sendetskyi wrote:
+>> It is known, that git handles badly storing binary files in its
+>> repositories at all.
+>> This is especially about large files: even without any changes to
+>> these files, their copies are snapshotted on each commit. So even
+>> repositories with a small amount of code can grove very fast in size
+>> if they contain some great binary files. Alongside this, the SVN is
+>> much better about that, because it make changes to the server version
+>> of file only if some changes were done.
 >
-> Along the way I noticed a few more missing things.
->
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (6):
->   RelNotes: mention "log: add -P as a synonym for --perl-regexp"
->   RelNotes: mention "log: make --regexp-ignore-case work with
->     --perl-regexp"
->   RelNotes: mention "sha1dc: optionally use sha1collisiondetection as a
->     submodule"
->   RelNotes: mention that PCRE v2 exposes the same syntax
->   RelNotes: remove duplicate mention of PCRE v2
->   RelNotes: add more notes about PCRE in 2.14
+> You already got some proposals on what you could try for making large 
+> binary files handling easier, but I just wanted to comment on this 
+> part of your message, as it doesn`t seem to be correct.
 
-Thanks.  1-3/6 went straight to 'master'.  I am not outright
-rejecting the remainder, but I do not think these are release notes
-material---if they need to be told, they should be in a part of the
-regular documentation, and I suspect that they already are in your
-series.
+All correct.  Thanks.
