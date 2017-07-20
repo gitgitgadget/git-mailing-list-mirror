@@ -2,175 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F94320898
-	for <e@80x24.org>; Thu, 20 Jul 2017 18:24:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 850011F600
+	for <e@80x24.org>; Thu, 20 Jul 2017 18:36:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935664AbdGTSYK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Jul 2017 14:24:10 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59217 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S935408AbdGTSYJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jul 2017 14:24:09 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8DE5C8B452;
-        Thu, 20 Jul 2017 14:24:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=iAtGl7Dvds0emT11S+uVWQb2ZP8=; b=Qzz3I4
-        0uz3nsjYYd5OjGe0T/PXh+8DWkM2atDZIWC09Inu0WSQBkjNTOhfuWWhxsLbfFed
-        PFiMkUF4aiEHDILIrbaz9DpC/KnU1otPPfNBPxmAKBVOYpyVfKieSKgwyL8ZrTyk
-        Vc5IeDBDllGM6lOaXtY1hzVQ/091vipAizyUA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=uUcSGFboNz6xOImoxmG4flSWaAAckQrR
-        qVgTGA9kANjfZjIyfKG1VEHHf0HxgmUfj5eT5xpntEKPTFFSg2v0Mb2pOIEJTNWM
-        fNLQ7GKxR/67V1eEo8LCuhCmKeIcp1HYDyxp5+khYZDqDpGwZ1BcdthHaPpJAP7Y
-        DFpbR+oqN2k=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 864158B450;
-        Thu, 20 Jul 2017 14:24:08 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E756E8B44F;
-        Thu, 20 Jul 2017 14:24:07 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jiang Xin <worldhello.net@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
-Subject: Re: [PATCH] PRItime: wrap PRItime for better l10n compatibility
-References: <249ac6f8-af3c-4b20-5bf0-87a82866cc7a@free.fr>
-        <3ccfa2fb49d471f807d77d9a280e4b7cfe56faea.1500304209.git.worldhello.net@gmail.com>
-        <xmqq7ez7htvj.fsf@gitster.mtv.corp.google.com>
-        <CANYiYbEcMrriaor9OT4c2qtfh9Ja5NJ9KBSxa3XhPAuoN0t42A@mail.gmail.com>
-        <xmqq60epfy27.fsf@gitster.mtv.corp.google.com>
-        <CANYiYbFROuyXso2ZKuJWDp4cSwpBu=bNAbC-yZtEyDwkbUcAhQ@mail.gmail.com>
-        <alpine.DEB.2.21.1.1707191456010.4193@virtualbox>
-        <xmqq8tjkm3ly.fsf@gitster.mtv.corp.google.com>
-        <xmqqo9sfkm32.fsf@gitster.mtv.corp.google.com>
-Date:   Thu, 20 Jul 2017 11:24:06 -0700
-In-Reply-To: <xmqqo9sfkm32.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Thu, 20 Jul 2017 11:19:29 -0700")
-Message-ID: <xmqqk233klvd.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S936011AbdGTSga (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Jul 2017 14:36:30 -0400
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:36476 "EHLO
+        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935990AbdGTSg3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jul 2017 14:36:29 -0400
+Received: by mail-wm0-f46.google.com with SMTP id v76so3696496wmv.1
+        for <git@vger.kernel.org>; Thu, 20 Jul 2017 11:36:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=LCrI6y7EZKPk4K/Mz0lCgo6765Ygr33O7Hf+A4MvAvo=;
+        b=dl8EcY3gcmTUDQxLvUK/6/ttJcdhMsA/b+Z8IsBtnzJJhOr/LJkdMyDqWoIHDoTAmp
+         bCZ+DuBnEgDircBuE+E/rKjZt/IntGtv30hE92+NzBp/LCyIlLJ95ASz2TuaBEUUT+W/
+         dIN2SUSxG+SJ2TGMViKXohp1jiVou8IjYh2XNbIX4WlLDKxxVaCwflPCuRajS1g8b6dl
+         0QfEbjQ1pI67BD5cEMcnGCh+9UaHd3gUxDJjyAv+CIstt0ehqW5dd2ApBRvHoV8NLdK1
+         s6pb+IdVesiVOFp6TQC/Upq5YP5gSUeToQnX6scZ4LEHOuFXncoWHfrLhCgUI2/jJtjL
+         d9qQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=LCrI6y7EZKPk4K/Mz0lCgo6765Ygr33O7Hf+A4MvAvo=;
+        b=WnyddCuSK375Bio80lQ7wYf+1Vq/84gR9v3RG8A/bn4TbM8tF+XiG/q93wWVcNq2M0
+         6iJH6eG8soda5tsDXyCHZzgkUBAV0b1uuyMOpUO6wayL836A+E9IFIsQCHxpdxi1nn6Y
+         kogaRKHpzduO0O+hytNYYs9QkQ9fnXCraKtfHyMFCV9wzgdf3knX4t1mDrD6TzZV+Z5G
+         UU/DeRjYsSlw645TjaiTNjcfEGnDQDVq0LduYDjAID6QdiJzlFCVepbBxZ1rHn275ddf
+         9eOtgpknEfB1hoWHanjD7Qgy+7l/xw1l6vCBuVPa5WDVKt7giP1URiL2o+6VLKeLYKV+
+         H/YA==
+X-Gm-Message-State: AIVw112Sck3daw0WslZiq2DBt7DBYmsjLrNN3/zaNI0f1b8GkUx4OWGi
+        Vb6HR71yfNevUA==
+X-Received: by 10.28.99.215 with SMTP id x206mr2967841wmb.21.1500575788391;
+        Thu, 20 Jul 2017 11:36:28 -0700 (PDT)
+Received: from ?IPv6:2a02:8108:dc0:3364:a8ea:429:7058:d761? ([2a02:8108:dc0:3364:a8ea:429:7058:d761])
+        by smtp.gmail.com with ESMTPSA id y100sm3081991wmh.7.2017.07.20.11.36.25
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 20 Jul 2017 11:36:27 -0700 (PDT)
+Subject: Re: [PATCH] l10n: de.po: update German translation
+To:     Ralf Thielow <ralf.thielow@gmail.com>, git@vger.kernel.org
+Cc:     Thomas Rast <tr@thomasrast.ch>,
+        =?UTF-8?Q?Jan_Kr=c3=bcger?= <jk@jk.gs>,
+        Christian Stimming <stimming@tuhh.de>,
+        Phillip Szelat <phillip.szelat@gmail.com>,
+        =?UTF-8?Q?Magnus_G=c3=b6rlitz?= <magnus.goerlitz@googlemail.com>
+References: <20170714161220.9565-1-ralf.thielow@gmail.com>
+From:   =?UTF-8?Q?Matthias_R=c3=bcster?= <matthias.ruester@gmail.com>
+Message-ID: <4f846a80-dfd8-f895-3b90-df1f78041a9f@gmail.com>
+Date:   Thu, 20 Jul 2017 20:36:24 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9E6DC410-6D78-11E7-B787-EFB41968708C-77302942!pb-smtp1.pobox.com
+In-Reply-To: <20170714161220.9565-1-ralf.thielow@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi Ralf,
 
-> The use of "make pot" from the top-level is already described in
-> po/README, so the only thing that we need is something like this
-> change.  I'll follow up this message with a sample output from the
-> updated process to ask others to sanity check the result (they are
-> tiny) in a separate message.
-
-Without the Makefile patch in the previous message, I ran "make pot"
-and saved the resulting po/git.pot to git.pot-old.  And then after
-"git reset --hard", I applied the Makefile patch and ran "make pot"
-again, which gave me an updated po/git.pot file.  The difference is
-shown below.
-
-As expected, these look sensible to me.  All the hits from 
-
-	git grep '_(.*PRItime'
-
-are included in the difference.
+I think the following should be "hinzugefügt":
 
 
+>   #: builtin/add.c:288
+> -#, fuzzy
+>   msgid "warn when adding an embedded repository"
+> -msgstr "ein Bare-Repository erstellen"
+> +msgstr "warnen wenn eingebettetes Repository hingefügt wird"
+>   
 
 
---- git.pot-old	2017-07-20 11:17:29.608343390 -0700
-+++ po/git.pot	2017-07-20 11:18:14.744342564 -0700
-@@ -8,7 +8,7 @@
- msgstr ""
- "Project-Id-Version: PACKAGE VERSION\n"
- "Report-Msgid-Bugs-To: Git Mailing List <git@vger.kernel.org>\n"
--"POT-Creation-Date: 2017-07-20 11:17-0700\n"
-+"POT-Creation-Date: 2017-07-20 11:18-0700\n"
- "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
- "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
- "Language-Team: LANGUAGE <LL@li.org>\n"
-@@ -1388,17 +1388,67 @@
- msgid "in the future"
- msgstr ""
- 
--#: date.c:122 date.c:129 date.c:136 date.c:143 date.c:149 date.c:156
--#: date.c:167 date.c:175 date.c:180
--msgid "%"
--msgid_plural "%"
-+#: date.c:122
-+#, c-format
-+msgid "%<PRIuMAX> second ago"
-+msgid_plural "%<PRIuMAX> seconds ago"
-+msgstr[0] ""
-+msgstr[1] ""
-+
-+#: date.c:129
-+#, c-format
-+msgid "%<PRIuMAX> minute ago"
-+msgid_plural "%<PRIuMAX> minutes ago"
-+msgstr[0] ""
-+msgstr[1] ""
-+
-+#: date.c:136
-+#, c-format
-+msgid "%<PRIuMAX> hour ago"
-+msgid_plural "%<PRIuMAX> hours ago"
-+msgstr[0] ""
-+msgstr[1] ""
-+
-+#: date.c:143
-+#, c-format
-+msgid "%<PRIuMAX> day ago"
-+msgid_plural "%<PRIuMAX> days ago"
-+msgstr[0] ""
-+msgstr[1] ""
-+
-+#: date.c:149
-+#, c-format
-+msgid "%<PRIuMAX> week ago"
-+msgid_plural "%<PRIuMAX> weeks ago"
-+msgstr[0] ""
-+msgstr[1] ""
-+
-+#: date.c:156
-+#, c-format
-+msgid "%<PRIuMAX> month ago"
-+msgid_plural "%<PRIuMAX> months ago"
-+msgstr[0] ""
-+msgstr[1] ""
-+
-+#: date.c:167
-+#, c-format
-+msgid "%<PRIuMAX> year"
-+msgid_plural "%<PRIuMAX> years"
- msgstr[0] ""
- msgstr[1] ""
- 
- #. TRANSLATORS: "%s" is "<n> years"
- #: date.c:170
--msgid "%s, %"
--msgid_plural "%s, %"
-+#, c-format
-+msgid "%s, %<PRIuMAX> month ago"
-+msgid_plural "%s, %<PRIuMAX> months ago"
-+msgstr[0] ""
-+msgstr[1] ""
-+
-+#: date.c:175 date.c:180
-+#, c-format
-+msgid "%<PRIuMAX> year ago"
-+msgid_plural "%<PRIuMAX> years ago"
- msgstr[0] ""
- msgstr[1] ""
- 
+Everything else looks great! Thanks!
+
+
+Kind regards,
+Matthias
