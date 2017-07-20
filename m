@@ -2,100 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4702320288
-	for <e@80x24.org>; Thu, 20 Jul 2017 05:01:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E355720387
+	for <e@80x24.org>; Thu, 20 Jul 2017 07:42:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933957AbdGTFBn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Jul 2017 01:01:43 -0400
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:34926 "EHLO
-        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933916AbdGTFBl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jul 2017 01:01:41 -0400
-Received: by mail-pf0-f171.google.com with SMTP id e199so7872012pfh.2
-        for <git@vger.kernel.org>; Wed, 19 Jul 2017 22:01:40 -0700 (PDT)
+        id S934192AbdGTHma (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Jul 2017 03:42:30 -0400
+Received: from mail-yb0-f176.google.com ([209.85.213.176]:37884 "EHLO
+        mail-yb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934186AbdGTHm3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jul 2017 03:42:29 -0400
+Received: by mail-yb0-f176.google.com with SMTP id c127so4120863ybf.4
+        for <git@vger.kernel.org>; Thu, 20 Jul 2017 00:42:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=r9G52olFj6LWim6MGDmIFHAQ0PnTn66irLsrgmXw8hM=;
-        b=f7pYCLZv9ri5sknytEKT0TH9Vgf1x79yuX6Di0Ji87vo6WLj0/wcFkO5i/vj0LPYIH
-         04UAY2VlC66fLyJTdplvG2eD5FLCdZK69QbeCcNzmyMundBIGu0wNDt4PwVXLK408KP5
-         LXCEh1Eg4nq61FPhZZDZqwp+HaVB//RXhYKVd/HuNRiwrl86nJrLWpQmO7C5fdC5JxOc
-         F1vlFiXgo4zCpmsvpxaGVFAD2LgPzQlnIxhMctWX361P367kz54YWWKKVZdgyo4eRZPH
-         pdNfDe6fGoHurkVLdhdZ6Q3EwHqSf8G7BBwNcTZFWltbtIPveXfYtCnEGXD/luSGBA+d
-         ea3A==
+        d=devcom-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=QxVqDI9zSmWzXjRWoioLoqBW0KzUhTVu+PqXLVkzpRo=;
+        b=C4sj1xZ5GMrfcj74Wl0chklBohbFthF32vm5dInq5+4+HnF6vDJeCbGx06i+DImk5K
+         AYqYD4GxFx5PJPsSUoZYZY0Wo1iXLQtvQgjT7k720C08iJxKDRV7NhBB4qumHgSPJAj6
+         QXA1hqnJ90ejV9hgRneAxMBql9QvkPflb9Tb4MKwMiHBP3HDK7wRLLr0EYuUot4EiJM/
+         s2/LDtZwfEV5e6HlO6iQDcBttHTVNR8jCvEpaydsYmSyYLY6TfqRlLsTb3mxOfBuj4qV
+         kMuU2uupx901L/M/nIgrpNTOSd7EmbS+uKXXWT2auuuGAZyMn3AFIX6eNOMWJsP7r+r8
+         1PKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=r9G52olFj6LWim6MGDmIFHAQ0PnTn66irLsrgmXw8hM=;
-        b=MpY5e712sA2WVbPw8ZfbkGx2CqzPj2wb3uU1FnmeHVbPnoWClnvsEyAB/WF4haXjiz
-         0Atn9YacNAbleBpgaEumrYJXnOKwWEb61t2wVaZquA+EgjYzKnnWiHVF8LkEmKkBS9By
-         +pfd4DzyuCy9bOdcgbHLzQaVyHDI+0MKUmzT0hUGahJAGKuIHv+uBRNmP/8B1eZtTYD+
-         eE4i0bnbe+27eB7TN5xXmzv2bpypfnD41Rk+zzZBBet1wozRdK04nxzrnR+vUFg8MLBl
-         8XfHhRjNTZJ5rgtBSrZf+PAlcTaO7UwNI4elR2Qjucnm1/Qss+uLkIswCdrr/dnom7in
-         s/jw==
-X-Gm-Message-State: AIVw110yQvXkat7ImyNlUowNf41blWxNmxLf8Hx6uS6sthFqsGIeA7mj
-        wCBVWzOyzREAEhIMdbZooD/H4uM2HA==
-X-Received: by 10.84.129.12 with SMTP id 12mr2807274plb.242.1500526900509;
- Wed, 19 Jul 2017 22:01:40 -0700 (PDT)
+         :message-id:subject:to;
+        bh=QxVqDI9zSmWzXjRWoioLoqBW0KzUhTVu+PqXLVkzpRo=;
+        b=q6vaqQLHK/LUzar8v5KpbFr0yjzRKRe6oejbsXPJ4spNNReoJ2eNaj95fLIjdW9/xP
+         YvdBWRWplABTHzY1UIgFVyndW+pePuZM0SfRk3GKeS8SZf4ddRXgP5iC9GsTckIKwfnx
+         ahcNaK0Ni7GKW0klaekTiyXn9TkQyqEBOmgYlvqzkEmrrzg0EWPQy1M4rGPZMgqfk3/o
+         y6YwsadVEBksAH5A1VCO5Nym4OkZab7lGysV/EfmPFNv71+RBgmVd7zds0yQRX0w+DIn
+         qsQi9Kegmb80dnLAXzPdXX0gbr4vNO9ZbekdraM0XL8qDItT4YEpEiTwix0PgIWG/MH9
+         ltOQ==
+X-Gm-Message-State: AIVw111wVxmJ/UgSE/0GkT8ZI0+znA8np/UEX18PBVOF7994skLTIOa5
+        16CmqD1VqjHMMHsZhR0XZRp8ca+HsBn7X7f3/wuDB8pifW8hkszhfT21QnVvk8l/sKWQpLqLJh6
+        dEbUGm+zhgw5CkCwifd+wtxQ8ITld8Nj9vPEk8NMDCvfdVNVEu2IjhZs7mkY4Fo8tFKyzRUOp
+X-Received: by 10.37.172.12 with SMTP id w12mr2376230ybi.86.1500536548799;
+ Thu, 20 Jul 2017 00:42:28 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.100.163.102 with HTTP; Wed, 19 Jul 2017 22:01:39 -0700 (PDT)
-In-Reply-To: <CAO1QjAFGnK+riGT_ZffM_-=ymJm08U8adOfHV4wrhR9LJLhSAA@mail.gmail.com>
-References: <CAO1QjAFGnK+riGT_ZffM_-=ymJm08U8adOfHV4wrhR9LJLhSAA@mail.gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Thu, 20 Jul 2017 07:01:39 +0200
-Message-ID: <CAN0heSrzdfpH=ocQrC3SYLNF2K=agdKuRdscSPnnCgBMWhPRxg@mail.gmail.com>
-Subject: Re: Bug Report - Segmentation Fault on "git add --all"
-To:     Tillson Galloway <tillson.galloway@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Received: by 10.129.198.3 with HTTP; Thu, 20 Jul 2017 00:41:48 -0700 (PDT)
+In-Reply-To: <CAFc9kS8L-JJoJqKi7bB90qwKVW8gB=EFk9D8c=4YShqnamwa2w@mail.gmail.com>
+References: <CAFc9kS8L-JJoJqKi7bB90qwKVW8gB=EFk9D8c=4YShqnamwa2w@mail.gmail.com>
+From:   Volodymyr Sendetskyi <volodymyrse@devcom.com>
+Date:   Thu, 20 Jul 2017 10:41:48 +0300
+Message-ID: <CAFc9kS_xYVyPsW7qogDxLugxBb1p2vEFAoP=W9Rdnfqs6XtWKQ@mail.gmail.com>
+Subject: Re: Binary files
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 20 July 2017 at 02:54, Tillson Galloway <tillson.galloway@gmail.com> wrote:
-> Context:
-> We currently have a git project with a root directory ("~/project")
-> for pipelines and deployment of a Node app, and then a subdirectory
-> ("~/project/project-app").
-> After realizing that we didn't need the node app in a subdirectory, we
-> moved the full app into the root directory (using the mv command).
->
-[...]
->
-> Running "git status" shows that git successfully tracked that the
-> original files within ~/project/project-app were deleted, but it did
-> not pick up the "newly created" files from moving.
+It is known, that git handles badly storing binary files in its
+repositories at all.
+This is especially about large files: even without any changes to
+these files, their copies are snapshotted on each commit. So even
+repositories with a small amount of code can grove very fast in size
+if they contain some great binary files. Alongside this, the SVN is
+much better about that, because it make changes to the server version
+of file only if some changes were done.
 
-So you did "mv project-app/* ." and see something like
+So the question is: why not implementing some feature, that would
+somehow handle this problem?
 
-  Changes not staged for commit:
-    (use "git add/rm <file>..." to update what will be committed)
-    (use "git checkout -- <file>..." to discard changes in working directory)
-
-      deleted:    ... lots of files ...
-
-? That means Git has *realized* that the files are gone, but it's not
-*tracking* that fact (yet).
-
-What if you restore the files and instead try "git mv project-app/*
-."? It will move the files like "mv", but it will also do basically
-what you wanted to achieve with "git add --all". After that, you'll
-just have to "git commit".
-
-You'll probably want to "rmdir project-app/" once it's empty. If you
-have some structure like project-app/project-app/ the move might fail
-(should be possible to work around).
-
-This obviously doesn't address the problem you saw and on which I
-cannot comment, but I hope it helps you do what you actually wanted to
-do. :)
-
-Martin
+Of course, I don't know the internal git structure and the way of
+working + some nuances (likely about the snapshots at all and the way
+they are done), so handling this may be a great problem. But the
+easiest feature for me as an end user will be something like
+'.gitbinary', where I can list binary files, that would behave like on
+SVN, or even more optimal, if you can implement it. Maybe there will
+be a need for separate kinds of repositories, or even servers. But
+that would be a great change and a logical way of next git's
+evolution.
