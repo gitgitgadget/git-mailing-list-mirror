@@ -2,66 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1605320387
-	for <e@80x24.org>; Thu, 20 Jul 2017 09:20:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 013C520387
+	for <e@80x24.org>; Thu, 20 Jul 2017 10:37:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935685AbdGTJUf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Jul 2017 05:20:35 -0400
-Received: from mout.gmx.net ([212.227.17.22]:56483 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933731AbdGTJUb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jul 2017 05:20:31 -0400
-Received: from [192.168.0.2] ([86.56.108.44]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MRXVc-1d9pSO3JkG-00SiXE; Thu, 20
- Jul 2017 11:20:28 +0200
-Subject: =?UTF-8?Q?Re:_--interactive_mode:_readline_support_=e2=8c=a8?=
- =?UTF-8?B?4qyG?=
-To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>
-References: <55629eef-537e-e5b6-c0dc-6e3372d00b33@gmx.net>
- <CAN0heSoJVf4A=92GPwFGUL0uoqWK3eY89+uCTirVzSYHHhfwwg@mail.gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-From:   Marcel Partap <mpartap@gmx.net>
-Openpgp: id=2E9589E4B9A4460B66AD9B8D65C6B04A8A39FBDA;
- url=http://pgp.mit.edu/pks/lookup?op=get&search=mpartap@gmx.net
-Message-ID: <59370040-020f-a5b0-fbd1-677e46d382b3@gmx.net>
-Date:   Thu, 20 Jul 2017 11:20:28 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:45.0) Gecko/20100101
- Icedove/45.6.0
+        id S934412AbdGTKhO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Jul 2017 06:37:14 -0400
+Received: from mail-ua0-f171.google.com ([209.85.217.171]:34954 "EHLO
+        mail-ua0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934409AbdGTKhN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jul 2017 06:37:13 -0400
+Received: by mail-ua0-f171.google.com with SMTP id d29so10271949uai.2
+        for <git@vger.kernel.org>; Thu, 20 Jul 2017 03:37:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=eGPls/7AsLQzeyX7zkMMT/nOteNqHMIzC/A2JWgRCeY=;
+        b=GoVXHoM7N2MtYpnIACUta7AYhZYdbs3cZNlsvsfyI2mUNmUZTKdiPvIqiOeTE+o+V5
+         dmBy7dWD1JbdB48o/bdVNdEk0wq7JHC6ojXwXHI6Qn9TP5EsiEIfR871vx++CikSf+47
+         oYllH/UZmrk9trtuHdpzv2xnzzIBXmboEVNP2qRu+Sg1bgMyDZeNz2D4LUi439r6oySp
+         Glz4a2/BFQlnmeEAut7YyWwshj0j/3gXgV/1CmXyw9FsT7WCNOZ9VgKnuLILWUqIMlTa
+         eGAeSNAmhw3JWubeSc373bzqtGe9QepgXic8/5MhUjoakM0sMwBXKLD28mMiCn5l8Hhn
+         45vA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=eGPls/7AsLQzeyX7zkMMT/nOteNqHMIzC/A2JWgRCeY=;
+        b=l6lzWN6B39C02MyiX2H/OpYuRi9BfVhARssgu3ahlefhmPS+ftJdVq/+F5O8Y/e26m
+         ip8Ewt2YxPSRsl8bIOmgxn8a/2Xab/X45wZVUnfKdylveeMYkml+90Nsv29DhQxlL4uy
+         AiR5C5FTBhdBdhjr+ss9RC6yO0/mYn+2Wz6/T0RkdduPHfZcYEjT9WTqI/7LrFpwbMK5
+         EG4tTbir9xm83BkGwMwrwKKYAhxv2zoqLjbAlifJZV2YWVXJSKRxIjRJ3oNGkWJmuuoH
+         NMS236FGiGfPYmHGfXjXztcmenz/+BN5L++lCuU/98l97Eklb0jjuDpe2RhHnTD5Ak1Y
+         B20A==
+X-Gm-Message-State: AIVw112tBXx3kJmMrD5S45nWBIgRXOR1NkqZsIgnAB9hiSFLKmFYdYSp
+        qMdkd8hA/FDR1TlpgRVOpIOkPZuvryE7
+X-Received: by 10.31.66.141 with SMTP id p135mr1784997vka.85.1500547032342;
+ Thu, 20 Jul 2017 03:37:12 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAN0heSoJVf4A=92GPwFGUL0uoqWK3eY89+uCTirVzSYHHhfwwg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:ln8qp1Y9hF9AynTcAh4RbnMKWP1zdXMW67O3Q7wyzFb7KwJvHF2
- qTIG7kBPN8culPIcJiViml4v0LfPOdbiErM/MORo6DF9Wb5quRpFRWxKiijQJs4YbGH8Nt1
- syVk5083PYura+AzEAmAKNnh4rANq3jQY1vBxCg96enmWzLNNsDLyexvaXi2szZEfQa/HqE
- F0SWBr9LEuIXjHFyEfElw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:puJKXckmygM=:xLpyv4QLH8E3rAMd8K1fpW
- 62o7yrknF+wt8sM1EkMUM62gU7EUZ2/r9ghrVOaROQtgpuPsMiW9TFie3yvaAG7PseTlAc7//
- VZlezaSrrvlQZLOV06TqWTEyPmGp7yQhnEHfNb15D+Dvl+omAj2vTt6szOf/s0H0/mbc7HPdp
- t2NrF0qBM3Hnlf8E6fJc8rU5d6CvKan7EqwEKhNb75jk3os30P1qMBvjS27nRfGUrXPy3vYJT
- jHX3hPc4KXYjsQl2K7NB0RLQ2DXwA3Y/70GgFwqX2wSv/erpHBXxknZ5E9i50WvczNxST2JEz
- ENVepUxMISgEoa8nw3VsfCe2DnnK3FUIlnzoFd58BjhVnw7D5Bi+pNUXoBgCEK7/yN0UWFclt
- K1P6H8vudkDEf7SKVLJkRX5seJY3oQN5nnH3t04Cwm5XAfSOtK/utaOz9WoHlEiPC/Vf9qQey
- gqs43PizIwsUShFMzkDimBddtsjMnlv8J8oaKwgW7xw7xAsTqqNySu9C8/EEZU+HHDL5YfFzA
- anAuUvoOWRW8xcc+jbC5Kd1+MzRy3JQSm8JefMcZ8x4vZv8nxlGIvhdRKQT31/SgZFKQfqfV7
- H5CA5wX71x/YOWZm6kR8035jguWOE90kmtU+Y3kcBsLyR2pHgEB4KcbVr00mAntOuA0AFhysq
- kA5WvCXAow3ZvBN02TOOgtoJxCJp9jQq4pCR0fX62aa0nYs+xdSZrig1rYyQrjRhSwugQx6cJ
- 8fDbBNKJmLaoJQpsJhpAvOOn6Pg3OvhPztdcA54pkUeOl6QePNVbzm7l0VNzFMSqfWEPN3t10
- 1lIsxGiZk1ZML2ObeJyRtzcJj5Bon5x0CY00HccvN7yjsjs3os=
+Received: by 10.103.42.7 with HTTP; Thu, 20 Jul 2017 03:37:11 -0700 (PDT)
+From:   John Szakmeister <john@szakmeister.net>
+Date:   Thu, 20 Jul 2017 06:37:11 -0400
+X-Google-Sender-Auth: 1XQ29U2Hxy7b4H80viglkR8qtcI
+Message-ID: <CAEBDL5URsbMazLBy-kWLJzECTEQ=61DN07xuu5NaO2Hw6r=j+w@mail.gmail.com>
+Subject: Expected behavior of "git check-ignore"...
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ok very good point Martin ; )
-I nefariously hid one obvious use case as trailing emoji™ in the subject, but a better way to make a point is to properly explain.
-So the readline library powers the advanced line editing capabilities behind f.e. the bash or the ipython shell. Besides navigating with the cursor keys, it provides a history function accessible by the up cursor key ⌨⬆ .
-At the moment, git interactive mode seems (?) not to make use of it, so there's no line editing at all. A typo at the beginning of a line must be corrected by reverse deleting up to it, then retyping the rest unchanged. With readline, the home/end keys for jumping to beginning or end work, as do the left/right keys in a familiar way.
-The history function comes in handy when f.e. repeatedly using `git clean -i` and feeding the "filter by pattern" command a string like "*.patch". Like, that's the use case that prompted me to write to this list. : )
+A StackOverflow user posted a question about how to reliably check
+whether a file would be ignored by "git add" and expected "git
+check-ignore" to return results that matched git add's behavior.  It
+turns out that it doesn't.  If there is a negation rule, we end up
+returning that exclude and printing it and exiting with 0 (there are
+some ignored files) even though the file has been marked to not be
+ignored.
 
-#Best Regards/Marcel
+Is the expected behavior of "git check-ignore" to return 0 even if the
+file is not ignore when a negation is present?
+
+>>>>
+git init .
+echo 'foo/*' > .gitignore
+echo '!foo/bar' > .gitignore
+mkdir foo
+touch foo/bar
+git check-ignore foo/bar
+<<<<
+
+I expect the last command to return 1 (no files are ignored), but it
+doesn't.  The StackOverflow user had the same expectation, and imagine
+others do as well.  OTOH, it looks like the command is really meant to
+be a debugging tool--to show me the line in a .gitignore associated
+with this file, if there is one.  In which case, the behavior is
+correct but the return code description is a bit misleading (0 means
+the file is ignored, which isn't true here).
+
+Thoughts?  It seems like this question was asked before several years
+ago but didn't get a response.
+
+Thanks!
+
+-John
+
+PS The SO question is here:
+https://stackoverflow.com/questions/45210790/how-to-reliably-check-whether-a-file-is-ignored-by-git
