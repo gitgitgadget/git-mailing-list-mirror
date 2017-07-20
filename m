@@ -2,107 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B52BC20387
-	for <e@80x24.org>; Thu, 20 Jul 2017 08:32:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 441E720387
+	for <e@80x24.org>; Thu, 20 Jul 2017 08:48:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933720AbdGTIcV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Jul 2017 04:32:21 -0400
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:35149 "EHLO
-        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933311AbdGTIcF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jul 2017 04:32:05 -0400
-Received: by mail-wm0-f49.google.com with SMTP id w126so17957454wme.0
-        for <git@vger.kernel.org>; Thu, 20 Jul 2017 01:32:05 -0700 (PDT)
+        id S935000AbdGTIsf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Jul 2017 04:48:35 -0400
+Received: from mail-pf0-f174.google.com ([209.85.192.174]:33746 "EHLO
+        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934845AbdGTIrx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jul 2017 04:47:53 -0400
+Received: by mail-pf0-f174.google.com with SMTP id s70so9951253pfs.0
+        for <git@vger.kernel.org>; Thu, 20 Jul 2017 01:47:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=QE5qDPhBoeidklkk2xscl4ul9P2CsOS9Sp5k4S9WI5g=;
-        b=fqdZVfN3xozW19TmKw9+njN3Mm/evaGKDWaSFT8S17rFTNkH4ee0QRVmTXb9E6QM27
-         REwp0oUZmBXHp+B/+svz68lCWmZ8Ust61CEavxpD4cLRzvmhuDQrtDyuou1xdI87hyjB
-         Tp45hQOsjEQvxXcxrPZzcyLjYcsWjqHDLLRjj3+UsxPQw9Fu36VGodAwhJEVZzzFTdMr
-         7Q/hBHt4E7NbOokYW2863L6uUdb/o3vkMe3OI7PqlTR7WWzkzwro+4EkhpPGCSDhyNwA
-         s9Z/biCGcUmpGpYy6QTkToUzhrzJOVeeZG1mS+Gpvh6EK6LqXDcE/gGrwuEhhicf207I
-         fj8w==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=WQHb173qinuKjMBvoFDo8n+vKis+ypDV99yGlYiJ+jE=;
+        b=se2pQDE9x3pnrQRKOZOPBgaW0zDTqDKRTPeu+QOgrZFZL0ukcTdJWnogNjKVprxgjx
+         aPJnasVRwA/v19et0Mo17TZjrehHe7eNfre2HmnfqfbHyZ1IBU7hiN+mkPsDj4818IAQ
+         5wMSC6Ujc9NQOZBxL6MxB4g0QP0a8utRawd+h87/1nZCENNRl4c0FpmtXoBQhQsYjSNU
+         03w183sWJHRnNZkrIeRUPTklq63EwOJjhx6vL5JRssZfSRel5e5366tC1JN2GmV12lFn
+         6q0kHt/aQ4wqEB8oAzsbTnYAJQTwuzRGpJwux6Qf+qbYrekX03Z4Fbte/kxZyTzjtx0E
+         4D2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=QE5qDPhBoeidklkk2xscl4ul9P2CsOS9Sp5k4S9WI5g=;
-        b=FhiN4umfUFqhjA3stubiEZNW+fNa2KPb+CT2oyXABFRKMtzW0SCf7me6Y/wWGLu75B
-         jekn9kIuItgQ263UTay6mqa9npGuCgB10xuLuwpxvQkCCXR4fIrrUQbZIAxDpdnpapla
-         N3v6tZ3mxU2Zkhll+4tHXJiXenJy6KyO13Zt4o48NAcVMslrOTnmk8K2AISJ0SqJVZfE
-         LrBumUB4bJrrsatSINvQwSPTQ8SA06RO9Md60pyyP642fQP3l/QWeCSbIIxKM0PXVLeG
-         3qgxwV6zx9KWWmg2mhTSEsDC9bwRRTfCWG5WeqBqES0UoJP8SU95itRwv3xRuGGxFbjP
-         XakA==
-X-Gm-Message-State: AIVw112oIMoCdF5yV5WuYugEwWi3YYrHGyx4n3e8tzvr6L2Pyvn822lK
-        9sqYeWhH7obXhEOS5xA=
-X-Received: by 10.28.236.219 with SMTP id h88mr1555339wmi.143.1500539524365;
-        Thu, 20 Jul 2017 01:32:04 -0700 (PDT)
-Received: from rempc0k844e.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
-        by smtp.gmail.com with ESMTPSA id l1sm1821997wmb.18.2017.07.20.01.32.03
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 20 Jul 2017 01:32:03 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: Binary files
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <CAFc9kS_xYVyPsW7qogDxLugxBb1p2vEFAoP=W9Rdnfqs6XtWKQ@mail.gmail.com>
-Date:   Thu, 20 Jul 2017 10:32:03 +0200
-Cc:     git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <6C4E3445-7268-47CA-A6D4-514A8EA348AA@gmail.com>
-References: <CAFc9kS8L-JJoJqKi7bB90qwKVW8gB=EFk9D8c=4YShqnamwa2w@mail.gmail.com> <CAFc9kS_xYVyPsW7qogDxLugxBb1p2vEFAoP=W9Rdnfqs6XtWKQ@mail.gmail.com>
-To:     Volodymyr Sendetskyi <volodymyrse@devcom.com>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=WQHb173qinuKjMBvoFDo8n+vKis+ypDV99yGlYiJ+jE=;
+        b=Wv1lHLhvTGKGtj7R2ZJhjoGbDKRjVLRoGXpr0LUM/DXu++eF+4R3e841KV4RYt+lqY
+         y+zn3VDFCAeRqC/rjz37zm+1qW8HTYx0QG6xC35sC7/nkzfXUYaj63qf6Qoo0xjM2lq2
+         kMH5hzxIE3QtkA1M6PhRIm5UcLddmAhbX8VsZJyP9EXjN3qbm2RP7B9ZbZmet/jCHCUC
+         QBQbjHAONlyX0UDFhxHUzC//xj6uXeZMaFeJbBkf3z6OxBqeE9jZzh2eyMLkIexe0RbR
+         iKMs0heKJy7zq/RGGJ+2dG+1LJgNkVjPXvzSjj4BCTVH7AohUrVLwEwyKpc4gCXOE6f7
+         3fpg==
+X-Gm-Message-State: AIVw110wIcGToaKXKNP2NmNfmayrte6kiChBhFV8qZKGE8XaC3MR4qj6
+        maCE4Cn9zotQz3AWg/R/MseL0O7qJWc3
+X-Received: by 10.84.224.141 with SMTP id s13mr3369417plj.212.1500540473172;
+ Thu, 20 Jul 2017 01:47:53 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.100.163.102 with HTTP; Thu, 20 Jul 2017 01:47:52 -0700 (PDT)
+In-Reply-To: <55629eef-537e-e5b6-c0dc-6e3372d00b33@gmx.net>
+References: <55629eef-537e-e5b6-c0dc-6e3372d00b33@gmx.net>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Thu, 20 Jul 2017 10:47:52 +0200
+Message-ID: <CAN0heSoJVf4A=92GPwFGUL0uoqWK3eY89+uCTirVzSYHHhfwwg@mail.gmail.com>
+Subject: =?UTF-8?B?UmU6IC0taW50ZXJhY3RpdmUgbW9kZTogcmVhZGxpbmUgc3VwcG9ydCDijKjirIY=?=
+To:     Marcel Partap <mpartap@gmx.net>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 20 July 2017 at 10:21, Marcel Partap <mpartap@gmx.net> wrote:
+> wouldn't it be great to have the power of readline added to the power of git interactive commands? Yes, rlwrap will do the job, but still.
+> Or am I missing something obvious?
 
-> On 20 Jul 2017, at 09:41, Volodymyr Sendetskyi =
-<volodymyrse@devcom.com> wrote:
->=20
-> It is known, that git handles badly storing binary files in its
-> repositories at all.
-> This is especially about large files: even without any changes to
-> these files, their copies are snapshotted on each commit. So even
-> repositories with a small amount of code can grove very fast in size
-> if they contain some great binary files. Alongside this, the SVN is
-> much better about that, because it make changes to the server version
-> of file only if some changes were done.
->=20
-> So the question is: why not implementing some feature, that would
-> somehow handle this problem?
->=20
-> Of course, I don't know the internal git structure and the way of
-> working + some nuances (likely about the snapshots at all and the way
-> they are done), so handling this may be a great problem. But the
-> easiest feature for me as an end user will be something like
-> '.gitbinary', where I can list binary files, that would behave like on
-> SVN, or even more optimal, if you can implement it. Maybe there will
-> be a need for separate kinds of repositories, or even servers. But
-> that would be a great change and a logical way of next git's
-> evolution.
+Well maybe *I* am missing something obvious. :) Could you be a bit
+more specific? What is the use-case? Once this feature were in place,
+what would it look like? Could you give an example of what you as a
+user would do to solve some particular problem -- and how that differs
+from how you would solve it today?
 
-GitLFS [1] might be the workaround you want. There are efforts to bring=20=
-
-large file support natively to Git [2].
-
-I tried to explain GitLFS in more detail here:=20
-https://www.youtube.com/watch?v=3DYQzNfb4IwEY
-
-- Lars
-
-
-[1] https://git-lfs.github.com/
-[2] =
-https://public-inbox.org/git/20170620075523.26961-1-chriscool@tuxfamily.or=
-g/
-
+Martin
