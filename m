@@ -2,60 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 69AAD20288
-	for <e@80x24.org>; Thu, 20 Jul 2017 00:22:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17F3220288
+	for <e@80x24.org>; Thu, 20 Jul 2017 00:22:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933118AbdGTAWA (ORCPT <rfc822;e@80x24.org>);
+        id S933280AbdGTAWI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Jul 2017 20:22:08 -0400
+Received: from mail-pg0-f52.google.com ([74.125.83.52]:37324 "EHLO
+        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933078AbdGTAWA (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 19 Jul 2017 20:22:00 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:33444 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932336AbdGTAV6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jul 2017 20:21:58 -0400
-Received: by mail-pf0-f173.google.com with SMTP id s70so5802420pfs.0
-        for <git@vger.kernel.org>; Wed, 19 Jul 2017 17:21:58 -0700 (PDT)
+Received: by mail-pg0-f52.google.com with SMTP id y129so6855482pgy.4
+        for <git@vger.kernel.org>; Wed, 19 Jul 2017 17:22:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=sgbApo/oGivjgcfE03Mkf7w7UnbttdkQSx4aKsSsmq0=;
-        b=fuwG17EGG3y0Bug58dtHGleOeJw2Aoe9uNIlm+yJ0qyfIN7rJ7XFZ84zIXZysdBTpO
-         SP/aDm+mf+HtVrLjUoX6hx5P2x3sGXr80DRdERLVip6hYi6jMbKexPBBeYadnd4hAUgR
-         nGOGPbdqdx1Sds02f1NK7utDNVDbDoG4vkUKWE7htLwu5RsgRbw8N8IrnsyUqLnnFMO7
-         1uYh5IWz4JPYhW9PrpWJtChZAe3t/qqcJN9WUTJ/Y4VTYm22UGOmYc6la4Aw1VpNAIm+
-         vC9B3lB/XnUPClE28geblb12i3YKToaQ9f90C+7ssGmdpxPG6zW1UTjOKh8QaWdfIKQ/
-         PPSA==
+        bh=oIi0FW+W5iqetwXSP9DoBfCgqP5bRtJRt4+Laeh8azY=;
+        b=CXOmpnSFJH1FKY/YWYmmFglt8l3YHxqnayseYrMtS30G76sk1+GOJy9D2fn7ftCOFy
+         1uX6LzkuS1S1J0dXJq66qMeNTrrNOs9Y2NW8QiDeyfkYKPTgWznSyTjD4QUjFMbaGxrN
+         Q5VsQXl21BdQhBhGJVTJYfUY7ejbWmlHDFGQgkFhsGzbsCc1WqqT5CXgz1ZYAW+uJX+q
+         8ibtgZ6JCO/zZvJoLFOQ6klzJI4ybxqGcDdB2TmTJWU/PsXgiaHZh52B13Puei2gTdMR
+         OzZW0Uw9DMAWVS10UJZRU2ZuKzmzePetn3go0gX+tDnVQYKNe+JbQr4zVAagcfXsxbA9
+         mMmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=sgbApo/oGivjgcfE03Mkf7w7UnbttdkQSx4aKsSsmq0=;
-        b=BICZddXB99Ak+VXwjN+GjUTPU83zIjQ7CahbG0SckGHyVgOssbeoPC/r5RZFoIyKrK
-         K80Ix+NxMIsom7hoQWMgkNVUfq1RHLmt3oIY3XqUxp4GIvmjC8n/Cxq58ZNnmwylZ3iW
-         oCHvBSvK13Pt0suCYX/5BXeni4NtF9Ni7FFfAjeJTd+XvSDRAvRQZuuirqKo1FN1mcMp
-         CMiid4HbBjq1ps5Dd3ZJimtSPhITTqRhriE6I7llUXovhif8znVfLP9IaSp966ocRUzB
-         5Zid9eBeCA4K1N3x0j/HGJIHJdukSgXIqWQh08fFze9lrjYOr4IWISYt0VzRXGJPP3SS
-         3gBw==
-X-Gm-Message-State: AIVw113wrpnreuN7Fh5HF04Z8gyuVlDMVJq7JnpaTnrmid+Ug0NWpF65
-        gW5qmNIPOnxY/z+8bPsRwQ==
-X-Received: by 10.99.108.134 with SMTP id h128mr1884889pgc.29.1500510117101;
-        Wed, 19 Jul 2017 17:21:57 -0700 (PDT)
+        bh=oIi0FW+W5iqetwXSP9DoBfCgqP5bRtJRt4+Laeh8azY=;
+        b=hCsYbhyGyPwWl2RdopHHOdOO7sFfMEt2V2BmrvXgY85lQg5jQSIKayVeAK6+gdnQdi
+         slroXu5OBATLnu3at06tapyC9OE1XimkTlV3wHW330Ftbs9if7xaqSALamR/MmStWOxn
+         0rY+BP3C1y70rWSXUovE0+xuYfydDksgMnz9EFsXfISOyIuuVfx7etoT1PpsqjKzKvhv
+         wTlW1b7fnd6o1hLOQWAFyUZNHP95p/2tStAvG5RrxopE3sNJ4gIFajBWHKBBRaCIyGLg
+         KJhJDaci8rqDMWrRE7htxrRcrCEGOcXI0r4oDLwaEdjgO7ZyuCxYV52fWvdvmo9f8rgK
+         yq5A==
+X-Gm-Message-State: AIVw1132FYW4p+2Db5V70avzvGyoRjUro7WDj8zLmDTTFhJCUINnXybq
+        xOwHjPqaAUOsnJ6QX8RvFA==
+X-Received: by 10.99.97.144 with SMTP id v138mr1919556pgb.117.1500510118949;
+        Wed, 19 Jul 2017 17:21:58 -0700 (PDT)
 Received: from twelve2.svl.corp.google.com ([100.96.218.24])
-        by smtp.gmail.com with ESMTPSA id n129sm1285891pfn.27.2017.07.19.17.21.55
+        by smtp.gmail.com with ESMTPSA id n129sm1285891pfn.27.2017.07.19.17.21.57
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 19 Jul 2017 17:21:55 -0700 (PDT)
+        Wed, 19 Jul 2017 17:21:57 -0700 (PDT)
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, jrnieder@gmail.com,
         sbeller@google.com, git@jeffhostetler.com, peartben@gmail.com,
         philipoakley@iee.org
-Subject: [RFC PATCH v2 3/4] sha1-array: support appending unsigned char hash
-Date:   Wed, 19 Jul 2017 17:21:46 -0700
-Message-Id: <0451fd25052ee217df8eca31fe12a08886cd6c34.1500508695.git.jonathantanmy@google.com>
+Subject: [RFC PATCH v2 4/4] sha1_file: support promised object hook
+Date:   Wed, 19 Jul 2017 17:21:47 -0700
+Message-Id: <a7fa848672281e29bff01f8caf2abe9f6ce5f4ba.1500508695.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.14.0.rc0.284.gd933b75aa4-goog
 In-Reply-To: <cover.1500508695.git.jonathantanmy@google.com>
 References: <cover.1500508695.git.jonathantanmy@google.com>
@@ -66,46 +65,788 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a subsequent patch, sha1_file will need to append object names in the
-form of "unsigned char *" to oid arrays. Teach sha1-array support for
-that.
+Teach sha1_file to invoke a hook whenever an object is requested and
+unavailable but is promised. The hook is a shell command that can be
+configured through "git config"; this hook takes in a list of hashes and
+writes (if successful) the corresponding objects to the repo's local
+storage.
 
+The usage of the hook can be suppressed through a flag when invoking
+has_object_file_with_flags() and other similar functions.
+parse_or_promise_object() in object.c requires this functionality, and
+has been modified to use it.
+
+This is meant as a temporary measure to ensure that all Git commands
+work in such a situation. Future patches will update some commands to
+either tolerate promised objects (without invoking the hook) or be more
+efficient in invoking the promised objects hook.
+
+In order to determine the code changes in sha1_file.c necessary, I
+investigated the following:
+ (1) functions in sha1_file that take in a hash, without the user
+     regarding how the object is stored (loose or packed)
+ (2) functions in sha1_file that operate on packed objects (because I
+     need to check callers that know about the loose/packed distinction
+     and operate on both differently, and ensure that they can handle
+     the concept of objects that are neither loose nor packed)
+
+(1) is handled by the modification to sha1_object_info_extended().
+
+For (2), I looked at for_each_packed_object and at the packed-related
+functions that take in a hash. For for_each_packed_object, the callers
+either already work or are fixed in this patch:
+ - reachable - only to find recent objects
+ - builtin/fsck - already knows about promised objects
+ - builtin/cat-file - fixed in this commit
+
+Callers of the other functions do not need to be changed:
+ - parse_pack_index
+   - http - indirectly from http_get_info_packs
+ - find_pack_entry_one
+   - this searches a single pack that is provided as an argument; the
+     caller already knows (through other means) that the sought object
+     is in a specific pack
+ - find_sha1_pack
+   - fast-import - appears to be an optimization to not store a
+     file if it is already in a pack
+   - http-walker - to search through a struct alt_base
+   - http-push - to search through remote packs
+ - has_sha1_pack
+   - builtin/fsck - already knows about promised objects
+   - builtin/count-objects - informational purposes only (check if loose
+     object is also packed)
+   - builtin/prune-packed - check if object to be pruned is packed (if
+     not, don't prune it)
+   - revision - used to exclude packed objects if requested by user
+   - diff - just for optimization
+
+An alternative design that I considered but rejected:
+
+ - Adding a hook whenever a packed object is requested, not on any
+   object.  That is, whenever we attempt to search the packfiles for an
+   object, if it is missing (from the packfiles and from the loose
+   object storage), to invoke the hook (which must then store it as a
+   packfile), open the packfile the hook generated, and report that the
+   object is found in that new packfile. This reduces the amount of
+   analysis needed (in that we only need to look at how packed objects
+   are handled), but requires that the hook generate packfiles (or for
+   sha1_file to pack whatever loose objects are generated), creating one
+   packfile for each missing object and potentially very many packfiles
+   that must be linearly searched. This may be tolerable now for repos
+   that only have a few missing objects (for example, repos that only
+   want to exclude large blobs), and might be tolerable in the future if
+   we have batching support for the most commonly used commands, but is
+   not tolerable now for repos that exclude a large amount of objects.
+
+Helped-by: Ben Peart <benpeart@microsoft.com>
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- sha1-array.c | 7 +++++++
- sha1-array.h | 1 +
- 2 files changed, 8 insertions(+)
+ Documentation/config.txt                         |   8 +
+ Documentation/gitrepository-layout.txt           |   8 +
+ Documentation/technical/read-object-protocol.txt | 102 ++++++++++++
+ builtin/cat-file.c                               |   9 ++
+ cache.h                                          |   2 +
+ object.c                                         |   3 +-
+ promised-object.c                                | 194 +++++++++++++++++++++++
+ promised-object.h                                |  12 ++
+ sha1_file.c                                      |  44 +++--
+ t/t3907-promised-object.sh                       |  32 ++++
+ t/t3907/read-object                              | 114 +++++++++++++
+ 11 files changed, 513 insertions(+), 15 deletions(-)
+ create mode 100644 Documentation/technical/read-object-protocol.txt
+ create mode 100755 t/t3907/read-object
 
-diff --git a/sha1-array.c b/sha1-array.c
-index 838b3bf84..6e0e35391 100644
---- a/sha1-array.c
-+++ b/sha1-array.c
-@@ -9,6 +9,13 @@ void oid_array_append(struct oid_array *array, const struct object_id *oid)
- 	array->sorted = 0;
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index d5c9c4cab..c293ac921 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -393,6 +393,14 @@ The default is false, except linkgit:git-clone[1] or linkgit:git-init[1]
+ will probe and set core.ignoreCase true if appropriate when the repository
+ is created.
+ 
++core.promisedBlobCommand::
++	If set, whenever a blob in the local repo is attempted to be read, but
++	is both missing and a promised blob, invoke this shell command to
++	generate or obtain that blob before reporting an error. This shell
++	command should take one or more hashes, each terminated by a newline,
++	as standard input, and (if successful) should write the corresponding
++	objects to the local repo (packed or loose).
++
+ core.precomposeUnicode::
+ 	This option is only used by Mac OS implementation of Git.
+ 	When core.precomposeUnicode=true, Git reverts the unicode decomposition
+diff --git a/Documentation/gitrepository-layout.txt b/Documentation/gitrepository-layout.txt
+index f51ed4e37..7dea7fe6b 100644
+--- a/Documentation/gitrepository-layout.txt
++++ b/Documentation/gitrepository-layout.txt
+@@ -47,6 +47,10 @@ use with dumb transports but otherwise is OK as long as
+ `objects/info/alternates` points at the object stores it
+ borrows from.
+ +
++. You could have objects that are merely promised by another source.
++When Git requires those objects, it will invoke the command in the
++`extensions.promisedObjects` configuration variable.
+++
+ This directory is ignored if $GIT_COMMON_DIR is set and
+ "$GIT_COMMON_DIR/objects" will be used instead.
+ 
+@@ -91,6 +95,10 @@ objects/info/http-alternates::
+ 	this object store borrows objects from, to be used when
+ 	the repository is fetched over HTTP.
+ 
++objects/promised::
++	This file records the sha1 object names, types, and sizes of
++	promised objects.
++
+ refs::
+ 	References are stored in subdirectories of this
+ 	directory.  The 'git prune' command knows to preserve
+diff --git a/Documentation/technical/read-object-protocol.txt b/Documentation/technical/read-object-protocol.txt
+new file mode 100644
+index 000000000..a893b46e7
+--- /dev/null
++++ b/Documentation/technical/read-object-protocol.txt
+@@ -0,0 +1,102 @@
++Read Object Process
++^^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++The read-object process enables Git to read all missing blobs with a
++single process invocation for the entire life of a single Git command.
++This is achieved by using a packet format (pkt-line, see technical/
++protocol-common.txt) based protocol over standard input and standard
++output as follows. All packets, except for the "*CONTENT" packets and
++the "0000" flush packet, are considered text and therefore are
++terminated by a LF.
++
++Git starts the process when it encounters the first missing object that
++needs to be retrieved. After the process is started, Git sends a welcome
++message ("git-read-object-client"), a list of supported protocol version
++numbers, and a flush packet. Git expects to read a welcome response
++message ("git-read-object-server"), exactly one protocol version number
++from the previously sent list, and a flush packet. All further
++communication will be based on the selected version.
++
++The remaining protocol description below documents "version=1". Please
++note that "version=42" in the example below does not exist and is only
++there to illustrate how the protocol would look with more than one
++version.
++
++After the version negotiation Git sends a list of all capabilities that
++it supports and a flush packet. Git expects to read a list of desired
++capabilities, which must be a subset of the supported capabilities list,
++and a flush packet as response:
++------------------------
++packet: git> git-read-object-client
++packet: git> version=1
++packet: git> version=42
++packet: git> 0000
++packet: git< git-read-object-server
++packet: git< version=1
++packet: git< 0000
++packet: git> capability=get
++packet: git> capability=have
++packet: git> capability=put
++packet: git> capability=not-yet-invented
++packet: git> 0000
++packet: git< capability=get
++packet: git< 0000
++------------------------
++The only supported capability in version 1 is "get".
++
++Afterwards Git sends a list of "key=value" pairs terminated with a flush
++packet. The list will contain at least the command (based on the
++supported capabilities) and the sha1 of the object to retrieve. Please
++note, that the process must not send any response before it received the
++final flush packet.
++
++When the process receives the "get" command, it should make the requested
++object available in the git object store and then return success. Git will
++then check the object store again and this time find it and proceed.
++------------------------
++packet: git> command=get
++packet: git> sha1=0a214a649e1b3d5011e14a3dc227753f2bd2be05
++packet: git> 0000
++------------------------
++
++The process is expected to respond with a list of "key=value" pairs
++terminated with a flush packet. If the process does not experience
++problems then the list must contain a "success" status.
++------------------------
++packet: git< status=success
++packet: git< 0000
++------------------------
++
++In case the process cannot or does not want to process the content, it
++is expected to respond with an "error" status.
++------------------------
++packet: git< status=error
++packet: git< 0000
++------------------------
++
++In case the process cannot or does not want to process the content as
++well as any future content for the lifetime of the Git process, then it
++is expected to respond with an "abort" status at any point in the
++protocol.
++------------------------
++packet: git< status=abort
++packet: git< 0000
++------------------------
++
++Git neither stops nor restarts the process in case the "error"/"abort"
++status is set.
++
++If the process dies during the communication or does not adhere to the
++protocol then Git will stop the process and restart it with the next
++object that needs to be processed.
++
++After the read-object process has processed an object it is expected to
++wait for the next "key=value" list containing a command. Git will close
++the command pipe on exit. The process is expected to detect EOF and exit
++gracefully on its own. Git will wait until the process has stopped.
++
++A long running read-object process demo implementation can be found in
++`contrib/long-running-read-object/example.pl` located in the Git core
++repository. If you develop your own long running process then the
++`GIT_TRACE_PACKET` environment variables can be very helpful for
++debugging (see linkgit:git[1]).
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 96b786e48..33f636926 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -12,6 +12,7 @@
+ #include "streaming.h"
+ #include "tree-walk.h"
+ #include "sha1-array.h"
++#include "promised-object.h"
+ 
+ struct batch_options {
+ 	int enabled;
+@@ -432,6 +433,13 @@ static int batch_packed_object(const struct object_id *oid,
+ 	return 0;
  }
  
-+void oid_array_append_sha1(struct oid_array *array, const unsigned char *sha1)
++static int batch_promised_object(const struct object_id *oid,
++				 void *data)
 +{
-+	ALLOC_GROW(array->oid, array->nr + 1, array->alloc);
-+	hashcpy(array->oid[array->nr++].hash, sha1);
-+	array->sorted = 0;
++	oid_array_append(data, oid);
++	return 0;
 +}
 +
- static int void_hashcmp(const void *a, const void *b)
+ static int batch_objects(struct batch_options *opt)
  {
- 	return oidcmp(a, b);
-diff --git a/sha1-array.h b/sha1-array.h
-index 04b075633..3479959e4 100644
---- a/sha1-array.h
-+++ b/sha1-array.h
-@@ -11,6 +11,7 @@ struct oid_array {
- #define OID_ARRAY_INIT { NULL, 0, 0, 0 }
+ 	struct strbuf buf = STRBUF_INIT;
+@@ -473,6 +481,7 @@ static int batch_objects(struct batch_options *opt)
  
- void oid_array_append(struct oid_array *array, const struct object_id *oid);
-+void oid_array_append_sha1(struct oid_array *array, const unsigned char *sha1);
- int oid_array_lookup(struct oid_array *array, const struct object_id *oid);
- void oid_array_clear(struct oid_array *array);
+ 		for_each_loose_object(batch_loose_object, &sa, 0);
+ 		for_each_packed_object(batch_packed_object, &sa, 0);
++		for_each_promised_object(batch_promised_object, &sa);
  
+ 		cb.opt = opt;
+ 		cb.expand = &data;
+diff --git a/cache.h b/cache.h
+index dd94b5ffc..75b71f38b 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1835,6 +1835,8 @@ struct object_info {
+ #define OBJECT_INFO_SKIP_CACHED 4
+ /* Do not retry packed storage after checking packed and loose storage */
+ #define OBJECT_INFO_QUICK 8
++/* Ignore list of promised objects */
++#define OBJECT_INFO_IGNORE_PROMISES 16
+ extern int sha1_object_info_extended(const unsigned char *, struct object_info *, unsigned flags);
+ extern int packed_object_info(struct packed_git *pack, off_t offset, struct object_info *);
+ 
+diff --git a/object.c b/object.c
+index 0aeb95084..23f2a6cbc 100644
+--- a/object.c
++++ b/object.c
+@@ -285,7 +285,8 @@ struct object *parse_or_promise_object(const struct object_id *oid)
+ {
+ 	enum object_type type;
+ 
+-	if (has_object_file(oid))
++	if (has_object_file_with_flags(oid, OBJECT_INFO_SKIP_CACHED |
++					    OBJECT_INFO_IGNORE_PROMISES))
+ 		return parse_object(oid);
+ 
+ 	if (is_promised_object(oid, &type, NULL)) {
+diff --git a/promised-object.c b/promised-object.c
+index 487ade437..d8d95ebb2 100644
+--- a/promised-object.c
++++ b/promised-object.c
+@@ -2,6 +2,12 @@
+ #include "promised-object.h"
+ #include "sha1-lookup.h"
+ #include "strbuf.h"
++#include "run-command.h"
++#include "sha1-array.h"
++#include "config.h"
++#include "sigchain.h"
++#include "sub-process.h"
++#include "pkt-line.h"
+ 
+ #define ENTRY_SIZE (GIT_SHA1_RAWSZ + 1 + 8)
+ /*
+@@ -128,3 +134,191 @@ int fsck_promised_objects(void)
+ 	}
+ 	return 0;
+ }
++
++#define CAP_GET    (1u<<0)
++
++static int subprocess_map_initialized;
++static struct hashmap subprocess_map;
++
++struct read_object_process {
++	struct subprocess_entry subprocess;
++	unsigned int supported_capabilities;
++};
++
++int start_read_object_fn(struct subprocess_entry *subprocess)
++{
++	int err;
++	struct read_object_process *entry = (struct read_object_process *)subprocess;
++	struct child_process *process;
++	struct string_list cap_list = STRING_LIST_INIT_NODUP;
++	char *cap_buf;
++	const char *cap_name;
++
++	process = subprocess_get_child_process(&entry->subprocess);
++
++	sigchain_push(SIGPIPE, SIG_IGN);
++
++	err = packet_writel(process->in, "git-read-object-client", "version=1", NULL);
++	if (err)
++		goto done;
++
++	err = strcmp(packet_read_line(process->out, NULL), "git-read-object-server");
++	if (err) {
++		error("external process '%s' does not support read-object protocol version 1", subprocess->cmd);
++		goto done;
++	}
++	err = strcmp(packet_read_line(process->out, NULL), "version=1");
++	if (err)
++		goto done;
++	err = packet_read_line(process->out, NULL) != NULL;
++	if (err)
++		goto done;
++
++	err = packet_writel(process->in, "capability=get", NULL);
++	if (err)
++		goto done;
++
++	for (;;) {
++		cap_buf = packet_read_line(process->out, NULL);
++		if (!cap_buf)
++			break;
++		string_list_split_in_place(&cap_list, cap_buf, '=', 1);
++
++		if (cap_list.nr != 2 || strcmp(cap_list.items[0].string, "capability"))
++			continue;
++
++		cap_name = cap_list.items[1].string;
++		if (!strcmp(cap_name, "get")) {
++			entry->supported_capabilities |= CAP_GET;
++		}
++		else {
++			warning(
++				"external process '%s' requested unsupported read-object capability '%s'",
++				subprocess->cmd, cap_name
++			);
++		}
++
++		string_list_clear(&cap_list, 0);
++	}
++
++done:
++	sigchain_pop(SIGPIPE);
++
++	if (err || errno == EPIPE)
++		return err ? err : errno;
++
++	return 0;
++}
++
++static int read_object_process(const unsigned char *sha1)
++{
++	int err;
++	struct read_object_process *entry;
++	struct child_process *process;
++	struct strbuf status = STRBUF_INIT;
++	uint64_t start;
++
++	start = getnanotime();
++
++	if (!repository_format_promised_objects)
++		die("BUG: if extensions.promisedObjects is not set, there "
++		    "should not be any promised objects");
++
++	if (!subprocess_map_initialized) {
++		subprocess_map_initialized = 1;
++		hashmap_init(&subprocess_map, (hashmap_cmp_fn)cmd2process_cmp, 0);
++		entry = NULL;
++	} else {
++		entry = (struct read_object_process *)subprocess_find_entry(&subprocess_map, repository_format_promised_objects);
++	}
++	if (!entry) {
++		entry = xmalloc(sizeof(*entry));
++		entry->supported_capabilities = 0;
++
++		if (subprocess_start(&subprocess_map, &entry->subprocess, repository_format_promised_objects, start_read_object_fn)) {
++			free(entry);
++			return -1;
++		}
++	}
++	process = subprocess_get_child_process(&entry->subprocess);
++
++	if (!(CAP_GET & entry->supported_capabilities))
++		return -1;
++
++	sigchain_push(SIGPIPE, SIG_IGN);
++
++	err = packet_write_fmt_gently(process->in, "command=get\n");
++	if (err)
++		goto done;
++
++	err = packet_write_fmt_gently(process->in, "sha1=%s\n", sha1_to_hex(sha1));
++	if (err)
++		goto done;
++
++	err = packet_flush_gently(process->in);
++	if (err)
++		goto done;
++
++	err = subprocess_read_status(process->out, &status);
++	err = err ? err : strcmp(status.buf, "success");
++
++done:
++	sigchain_pop(SIGPIPE);
++
++	if (err || errno == EPIPE) {
++		err = err ? err : errno;
++		if (!strcmp(status.buf, "error")) {
++			/* The process signaled a problem with the file. */
++		}
++		else if (!strcmp(status.buf, "abort")) {
++			/*
++			 * The process signaled a permanent problem. Don't try to read
++			 * objects with the same command for the lifetime of the current
++			 * Git process.
++			 */
++			entry->supported_capabilities &= ~CAP_GET;
++		}
++		else {
++			/*
++			 * Something went wrong with the read-object process.
++			 * Force shutdown and restart if needed.
++			 */
++			error("external process '%s' failed", repository_format_promised_objects);
++			subprocess_stop(&subprocess_map, (struct subprocess_entry *)entry);
++			free(entry);
++		}
++	}
++
++	trace_performance_since(start, "read_object_process");
++
++	return err;
++}
++
++int request_promised_objects(const struct oid_array *oids)
++{
++	int oids_requested = 0;
++	int i;
++
++	for (i = 0; i < oids->nr; i++) {
++		if (is_promised_object(&oids->oid[i], NULL, NULL))
++			break;
++	}
++
++	if (i == oids->nr)
++		/* Nothing to fetch */
++		return 0;
++
++	for (; i < oids->nr; i++) {
++		if (is_promised_object(&oids->oid[i], NULL, NULL)) {
++			read_object_process(oids->oid[i].hash);
++			oids_requested++;
++		}
++	}
++
++	/*
++	 * The command above may have updated packfiles, so update our record
++	 * of them.
++	 */
++	reprepare_packed_git();
++	return oids_requested;
++}
+diff --git a/promised-object.h b/promised-object.h
+index 7eaedff17..8ad47aa4c 100644
+--- a/promised-object.h
++++ b/promised-object.h
+@@ -2,6 +2,7 @@
+ #define PROMISED_OBJECT_H
+ 
+ #include "cache.h"
++#include "sha1-array.h"
+ 
+ /*
+  * Returns 1 if oid is the name of a promised object. For non-blobs, 0 is
+@@ -19,4 +20,15 @@ int for_each_promised_object(each_promised_object_fn, void *);
+  */
+ int fsck_promised_objects(void);
+ 
++/*
++ * If any of the given objects are promised objects, invokes
++ * core.promisedobjectcommand with those objects and returns the number of
++ * objects requested. No check is made as to whether the invocation actually
++ * populated the repository with the promised objects.
++ *
++ * If none of the given objects are promised objects, this function does not
++ * invoke anything and returns 0.
++ */
++int request_promised_objects(const struct oid_array *oids);
++
+ #endif
+diff --git a/sha1_file.c b/sha1_file.c
+index 5862386cd..ded0ef46b 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -28,6 +28,11 @@
+ #include "list.h"
+ #include "mergesort.h"
+ #include "quote.h"
++#include "iterator.h"
++#include "dir-iterator.h"
++#include "sha1-lookup.h"
++#include "promised-object.h"
++#include "sha1-array.h"
+ 
+ #define SZ_FMT PRIuMAX
+ static inline uintmax_t sz_fmt(size_t s) { return s; }
+@@ -2983,6 +2988,7 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
+ 	const unsigned char *real = (flags & OBJECT_INFO_LOOKUP_REPLACE) ?
+ 				    lookup_replace_object(sha1) :
+ 				    sha1;
++	int already_retried = 0;
+ 
+ 	if (!oi)
+ 		oi = &blank_oi;
+@@ -3007,30 +3013,40 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
+ 		}
+ 	}
+ 
+-	if (!find_pack_entry(real, &e)) {
+-		/* Most likely it's a loose object. */
+-		if (!sha1_loose_object_info(real, oi, flags)) {
+-			oi->whence = OI_LOOSE;
+-			return 0;
+-		}
++retry:
++	if (find_pack_entry(real, &e))
++		goto found_packed;
+ 
+-		/* Not a loose object; someone else may have just packed it. */
+-		if (flags & OBJECT_INFO_QUICK) {
+-			return -1;
+-		} else {
+-			reprepare_packed_git();
+-			if (!find_pack_entry(real, &e))
+-				return -1;
++	/* Most likely it's a loose object. */
++	if (!sha1_loose_object_info(real, oi, flags)) {
++		oi->whence = OI_LOOSE;
++		return 0;
++	}
++
++	/* Not a loose object; someone else may have just packed it. */
++	reprepare_packed_git();
++	if (find_pack_entry(real, &e))
++		goto found_packed;
++
++	/* Check if it is a promised blob */
++	if (!already_retried && !(flags & OBJECT_INFO_IGNORE_PROMISES)) {
++		struct oid_array promised = OID_ARRAY_INIT;
++		oid_array_append_sha1(&promised, real);
++		if (request_promised_objects(&promised)) {
++			already_retried = 1;
++			goto retry;
+ 		}
+ 	}
+ 
++	return -1;
++
++found_packed:
+ 	if (oi == &blank_oi)
+ 		/*
+ 		 * We know that the caller doesn't actually need the
+ 		 * information below, so return early.
+ 		 */
+ 		return 0;
+-
+ 	rtype = packed_object_info(e.p, e.offset, oi);
+ 	if (rtype < 0) {
+ 		mark_bad_packed_object(e.p, real);
+diff --git a/t/t3907-promised-object.sh b/t/t3907-promised-object.sh
+index 3e0caf4f9..d9e6a6486 100755
+--- a/t/t3907-promised-object.sh
++++ b/t/t3907-promised-object.sh
+@@ -38,4 +38,36 @@ test_expect_success '...but fails again with GIT_IGNORE_PROMISED_OBJECTS' '
+ 	unset GIT_IGNORE_PROMISED_OBJECTS
+ '
+ 
++test_expect_success 'sha1_object_info_extended (through git cat-file)' '
++	test_create_repo server &&
++	test_commit -C server 1 1.t abcdefgh &&
++	HASH=$(git hash-object server/1.t) &&
++
++	test_create_repo client &&
++	test_must_fail git -C client cat-file -p "$HASH"
++'
++
++test_expect_success '...succeeds if it is a promised object' '
++	printf "%s03%016x" "$HASH" "$(wc -c <server/1.t)" |
++		hex_pack >client/.git/objects/promised &&
++	git -C client config core.repositoryformatversion 1 &&
++	git -C client config extensions.promisedobjects \
++		"\"$TEST_DIRECTORY/t3907/read-object\" \"$(pwd)/server/.git\"" &&
++	git -C client cat-file -p "$HASH"
++'
++
++test_expect_success 'cat-file --batch-all-objects with promised objects' '
++	rm -rf client &&
++	test_create_repo client &&
++	git -C client config core.repositoryformatversion 1 &&
++	git -C client config extensions.promisedobjects \
++		"\"$TEST_DIRECTORY/t3907/read-object\" \"$(pwd)/server/.git\"" &&
++	printf "%s03%016x" "$HASH" "$(wc -c <server/1.t)" |
++		hex_pack >client/.git/objects/promised &&
++
++	# Verify that the promised object is printed
++	git -C client cat-file --batch --batch-all-objects | tee out |
++		grep abcdefgh
++'
++
+ test_done
+diff --git a/t/t3907/read-object b/t/t3907/read-object
+new file mode 100755
+index 000000000..9666ad597
+--- /dev/null
++++ b/t/t3907/read-object
+@@ -0,0 +1,114 @@
++#!/usr/bin/perl
++#
++# Example implementation for the Git read-object protocol version 1
++# See Documentation/technical/read-object-protocol.txt
++#
++# Allows you to test the ability for blobs to be pulled from a host git repo
++# "on demand."  Called when git needs a blob it couldn't find locally due to
++# a lazy clone that only cloned the commits and trees.
++#
++# A lazy clone can be simulated via the following commands from the host repo
++# you wish to create a lazy clone of:
++#
++# cd /host_repo
++# git rev-parse HEAD
++# git init /guest_repo
++# git cat-file --batch-check --batch-all-objects | grep -v 'blob' |
++#	cut -d' ' -f1 | git pack-objects /guest_repo/.git/objects/pack/noblobs
++# cd /guest_repo
++# git config core.virtualizeobjects true
++# git reset --hard <sha from rev-parse call above>
++#
++# Please note, this sample is a minimal skeleton. No proper error handling
++# was implemented.
++#
++
++use strict;
++use warnings;
++
++#
++# Point $DIR to the folder where your host git repo is located so we can pull
++# missing objects from it
++#
++my $DIR = $ARGV[0];
++
++sub packet_bin_read {
++	my $buffer;
++	my $bytes_read = read STDIN, $buffer, 4;
++	if ( $bytes_read == 0 ) {
++
++		# EOF - Git stopped talking to us!
++		exit();
++	}
++	elsif ( $bytes_read != 4 ) {
++		die "invalid packet: '$buffer'";
++	}
++	my $pkt_size = hex($buffer);
++	if ( $pkt_size == 0 ) {
++		return ( 1, "" );
++	}
++	elsif ( $pkt_size > 4 ) {
++		my $content_size = $pkt_size - 4;
++		$bytes_read = read STDIN, $buffer, $content_size;
++		if ( $bytes_read != $content_size ) {
++			die "invalid packet ($content_size bytes expected; $bytes_read bytes read)";
++		}
++		return ( 0, $buffer );
++	}
++	else {
++		die "invalid packet size: $pkt_size";
++	}
++}
++
++sub packet_txt_read {
++	my ( $res, $buf ) = packet_bin_read();
++	unless ( $buf =~ s/\n$// ) {
++		die "A non-binary line MUST be terminated by an LF.";
++	}
++	return ( $res, $buf );
++}
++
++sub packet_bin_write {
++	my $buf = shift;
++	print STDOUT sprintf( "%04x", length($buf) + 4 );
++	print STDOUT $buf;
++	STDOUT->flush();
++}
++
++sub packet_txt_write {
++	packet_bin_write( $_[0] . "\n" );
++}
++
++sub packet_flush {
++	print STDOUT sprintf( "%04x", 0 );
++	STDOUT->flush();
++}
++
++( packet_txt_read() eq ( 0, "git-read-object-client" ) ) || die "bad initialize";
++( packet_txt_read() eq ( 0, "version=1" ) )				 || die "bad version";
++( packet_bin_read() eq ( 1, "" ) )                       || die "bad version end";
++
++packet_txt_write("git-read-object-server");
++packet_txt_write("version=1");
++packet_flush();
++
++( packet_txt_read() eq ( 0, "capability=get" ) )    || die "bad capability";
++( packet_bin_read() eq ( 1, "" ) )                  || die "bad capability end";
++
++packet_txt_write("capability=get");
++packet_flush();
++
++while (1) {
++	my ($command) = packet_txt_read() =~ /^command=([^=]+)$/;
++
++	if ( $command eq "get" ) {
++		my ($sha1) = packet_txt_read() =~ /^sha1=([0-9a-f]{40})$/;
++		packet_bin_read();
++
++		system ('git --git-dir="' . $DIR . '" cat-file blob ' . $sha1 . ' | git -c core.virtualizeobjects=false hash-object -w --stdin >/dev/null 2>&1');
++		packet_txt_write(($?) ? "status=error" : "status=success");
++		packet_flush();
++	} else {
++		die "bad command '$command'";
++	}
++}
 -- 
 2.14.0.rc0.284.gd933b75aa4-goog
 
