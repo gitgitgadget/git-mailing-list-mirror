@@ -2,80 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3245D1F600
-	for <e@80x24.org>; Thu, 20 Jul 2017 23:11:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0A4211F600
+	for <e@80x24.org>; Thu, 20 Jul 2017 23:21:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965574AbdGTXLQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Jul 2017 19:11:16 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55523 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1755017AbdGTXLP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jul 2017 19:11:15 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D91FE7FA07;
-        Thu, 20 Jul 2017 19:11:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=SMAOshaDvLHnK6bCmLeUrcdpJI4=; b=ALJCJV
-        4Cf8HfacJpFUDp62uX+vV7fwHKbXqpRm8ugR/UHWBvcz06e4cHqEnG/WMjtzEk3y
-        w4VcS+7Z5PqfQi6FKsTZC8Zlk0cf1YEU94AZ9LZ57CmmXU97VYLjzgth1GkDjhVk
-        jIGyIMEtBxnk4tYT8vvxxLj2SBwkAsQgUGc1c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=bOWIGwm8orxzmxsMNHtS/TFL17zV4ieX
-        SRFPHY0YOGWSR+AzJUO8AsdC+grx5kbOQwiH4Opzy2kDNlRMV6xX1P2uutFJxgxP
-        +npqgmLw7uLDqR4NamsuLn7gSW80P19WMHiBeUOri1968nluEBPK4J+h+5aM4bx3
-        ApRuSfPUg0s=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D0C2C7FA05;
-        Thu, 20 Jul 2017 19:11:14 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2B2F17FA04;
-        Thu, 20 Jul 2017 19:11:14 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        id S965697AbdGTXVW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Jul 2017 19:21:22 -0400
+Received: from mail-pg0-f44.google.com ([74.125.83.44]:35330 "EHLO
+        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S964809AbdGTXVU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jul 2017 19:21:20 -0400
+Received: by mail-pg0-f44.google.com with SMTP id v190so20801826pgv.2
+        for <git@vger.kernel.org>; Thu, 20 Jul 2017 16:21:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Z2yTUZDFQxCLNDaRf+MfxAKHJz1yWxKcu1p3Liov7aU=;
+        b=V+FwSjlAaosbimcae9iQ3qmmoQNpFw/am2t/8YgjpR+in7kIF3Y1CV+czwjk74wgci
+         7vEIHyJ7ltdLb3IYr1HZKg/Jv7FMiL7AuoqytalOM1uo02iDy6DiLUqosw/KpOXpaSnR
+         ZrBCZ0iWeDZWSWrkhCAXa5BCupzU3G9RllMAuNFjcH9zYPZohZPsPdWel3oc/RN3ub5y
+         BDeDUDifdEy5SsJSteRAlxLu0N+bLwrzOzyOA9awUqp0TGX3O7OMoRQYzNAX5yCWOZwC
+         hl0M33wGO3hyhkh2eo9FjjB31+lTMFLLtVmzp7DFAIvaTtH7E+ZHKfiliUHbsJTlW60+
+         n9BA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Z2yTUZDFQxCLNDaRf+MfxAKHJz1yWxKcu1p3Liov7aU=;
+        b=X9YMkiu9QWJNCT5xWQZ5q3DLwUbOdK0rNT3npvJOV3687HvCyso7O+0wR/bnI4vFu4
+         N1QxpmEG0AStytD2sKAtVCzYum41Zial0cVjDFl4YchnJ6dcT5QepUMUD5mC3giCCo7X
+         6mZ9gmKbr+5FRKUgzlcuJ+nZt/4XTc0RvaZB7wUcmN/vUI33B6o4Ew0V52B9HLnyCc0C
+         WIlQUTQmAfK7dVvP0RelWeuCr7AbIAvDfmdnh6UpNq5aTjJqqetsgS4VsO3//2w3dNBI
+         eGaLIL4mi9tQ4Jm+dJc8JFiXYjsijS9hvVS5Oos2U5tmezEhcivnINagD0czt7Q/ktRy
+         FDHw==
+X-Gm-Message-State: AIVw112xggUCmbEkmFYZAKZiQVJ4LmhQmveGg2p2HoBMu3C2eweTckPs
+        ewx+lPQ/EfNDXA==
+X-Received: by 10.98.71.13 with SMTP id u13mr5431984pfa.240.1500592880155;
+        Thu, 20 Jul 2017 16:21:20 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:1531:44e7:de5b:a840])
+        by smtp.gmail.com with ESMTPSA id q88sm7408112pfa.10.2017.07.20.16.21.18
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 20 Jul 2017 16:21:18 -0700 (PDT)
+Date:   Thu, 20 Jul 2017 16:20:40 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         David Turner <novalis@novalis.org>,
-        Brandon Williams <bmwill@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH 21/28] commit_packed_refs(): use a staging file separate from the lockfile
-References: <cover.1497534157.git.mhagger@alum.mit.edu>
-        <2779ee9a75e75ff80898e51e46d561b8074e0dc2.1497534157.git.mhagger@alum.mit.edu>
-Date:   Thu, 20 Jul 2017 16:11:12 -0700
-In-Reply-To: <2779ee9a75e75ff80898e51e46d561b8074e0dc2.1497534157.git.mhagger@alum.mit.edu>
-        (Michael Haggerty's message of "Thu, 15 Jun 2017 16:47:26 +0200")
-Message-ID: <xmqqy3riiu0f.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        Brandon Williams <bmwill@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Dave Walker <dawalker@google.com>
+Subject: Re: [PATCH v3 00/30] Create a reference backend for packed refs
+Message-ID: <20170720232040.GA159617@aiede.mtv.corp.google.com>
+References: <cover.1498933362.git.mhagger@alum.mit.edu>
+ <20170705091216.ij4uzp3wgsalb56f@sigill.intra.peff.net>
+ <CAGZ79kY=N5H2q1SB9ZEtt1EvuAQg+bqVBZNoXE6nLgtoUd2txA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BA19E6B2-6DA0-11E7-8732-61520C78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kY=N5H2q1SB9ZEtt1EvuAQg+bqVBZNoXE6nLgtoUd2txA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
++cc: dawalker, who reported the bug
+Stefan Beller wrote:
 
-> We will want to be able to hold the lockfile for `packed-refs` even
-> after we have activated the new values. So use a separate tempfile,
-> `packed-refs.new`, as a place to stage the new contents of the
-> `packed-refs` file. For now this is all done within
-> `commit_packed_refs()`, but that will change shortly.
+> We have a user that reports:
 >
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-> ---
+>   The issue is for users who have a mirrored repository, "git pack-refs"
+>   now overwrites the .git/packed-refs symlink instead of following it and
+>   replacing the file it points to.
+>
+> I suspect this series to be at fault, as the bug report came in a day after
+> we deployed next containing these changes.
+>
+> Do symlinks and packed-refs ring a bell for this series?
 
-The layout created by "contrib/workdir/git-new-workdir" will be
-broken by this line of change.  "git worktree" is supposed to know
-that refs/packed-refs is a shared thing and lives in common-dir,
-so it shouldn't be affected.
+contrib/workdir/git-new-workdir installs packed-refs as a symlink.
+The reported scenario was with another tool that does something
+similar for similar reasons.
 
-Do we care about the ancient layout that used symlinks to emulate
-the more modern worktree one?
+Dave Walker wrote:
+
+> In the meantime, since this is linked to "git gc", it can crop up
+> nearly at any time you modify things from a mirror. I'd recommend
+> extreme care until this is sorted out, and it's probably safest to
+> avoid using the mirror for branch-modifying operations.
+[...]
+> The change at fault is this one:
+> https://github.com/gitster/git/commit/42dfa7ecef22191b004862fb56074b408c94fc97
+
+That's "commit_packed_refs(): use a staging file separate from the
+lockfile", 2017-06-23, which would indeed appear to explain the
+symptoms.
+
+I'll try to make a reproduction recipe.
+
+Thanks,
+Jonathan
