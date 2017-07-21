@@ -2,78 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7B54620288
-	for <e@80x24.org>; Fri, 21 Jul 2017 19:03:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F1342203F3
+	for <e@80x24.org>; Fri, 21 Jul 2017 19:28:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754628AbdGUTDJ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Jul 2017 15:03:09 -0400
-Received: from smtp38.i.mail.ru ([94.100.177.98]:58410 "EHLO smtp38.i.mail.ru"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754603AbdGUTDI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jul 2017 15:03:08 -0400
-X-Greylist: delayed 4974 seconds by postgrey-1.27 at vger.kernel.org; Fri, 21 Jul 2017 15:03:08 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=list.ru; s=mail;
-        h=Content-Transfer-Encoding:Content-Type:In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:Subject; bh=1Rnyw0WGIHRf7nEhsOIAE1pY0yxcK2LC+gB5sXQqHBc=;
-        b=BvbVQGF8FbTmyqZTvs8eFvVpMUVpA60fwiH0POcqPEsb7r3+4D2vXrmBDnhCn/LItfN0VDKmGqPs3yqOinWVr1qAigFF+SRDxgDVTrL/tRNm8GWOZhE4LlrlOUMO/AfJxE0HWZ+pzeyCyKZFLWR0ZZs47pI/8hMCxtWtH4zpIe0=;
-Received: by smtp38.i.mail.ru with esmtpa (envelope-from <stsp@list.ru>)
-        id 1dYdCc-0006lA-DM; Fri, 21 Jul 2017 22:03:06 +0300
-Subject: Re: git gc seems to break --symbolic-full-name
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-References: <234492d7-7fd6-f847-8b85-010732ff43b6@list.ru>
- <xmqqbmodhb5h.fsf@gitster.mtv.corp.google.com>
-From:   Stas Sergeev <stsp@list.ru>
-Message-ID: <223fa7c7-196d-e4fe-85b5-7d7cc576aa52@list.ru>
-Date:   Fri, 21 Jul 2017 22:03:02 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        id S1753509AbdGUT2i (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Jul 2017 15:28:38 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50932 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752780AbdGUT2i (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jul 2017 15:28:38 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 182319BABC;
+        Fri, 21 Jul 2017 15:28:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=PzCYeytIEibWGiJOn02UP6s1OJI=; b=Kpl0Qj
+        UdrWOCSi9odViHEdQGqRUuF9D4Krf+wp9HrLBa325dW2L+LUkwIvhxHsyHe37f21
+        z0oKNByDPTxggY9oKexS5Z75reBbtWWVXZrRlQOZKJWLfoc7PonGpJ5nlg9S1pWl
+        opCXbtjvfjVrkMUYU62FaPEo+Zv+8ND1vY/0c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=lQIRhlowl5UztXPF2mYeAa+H0uQ16jCn
+        hhiJUFTb3waPmNUbH6OdMb48W1Zkf2vHgsgkLOckD/J1XhuAulTza2AUMTph1E3a
+        /kw+FgfU+QaOH+V9AvBUket1l7BfWtO9ykCHwyE4cAexJUoRI0Zmala2WojiUM4d
+        FHAoZIfJPds=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0ED359BABB;
+        Fri, 21 Jul 2017 15:28:32 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6848A9BABA;
+        Fri, 21 Jul 2017 15:28:31 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Adam Dinwoodie <adam@dinwoodie.org>,
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [PATCH] config.mak.uname: set FREAD_READS_DIRECTORIES for cygwin
+References: <506cb9f2-cf59-2df6-2d4c-30c82dfbf85b@ramsayjones.plus.com>
+Date:   Fri, 21 Jul 2017 12:28:30 -0700
+In-Reply-To: <506cb9f2-cf59-2df6-2d4c-30c82dfbf85b@ramsayjones.plus.com>
+        (Ramsay Jones's message of "Fri, 21 Jul 2017 19:43:17 +0100")
+Message-ID: <xmqq4lu5h9nl.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqbmodhb5h.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-MW
-Authentication-Results: smtp38.i.mail.ru; auth=pass smtp.auth=stsp@list.ru smtp.mailfrom=stsp@list.ru
-X-7FA49CB5: 0D63561A33F958A5EFC773DD113F6C84687A05CFEE0ED58BDA13F4E33994491C725E5C173C3A84C369456C5265B6C55C94DB734853BBA024BAAD9279A72BC9ABC4224003CC836476C0CAF46E325F83A50BF2EBBBDD9D6B0FD319CD858665117E2623479134186CDE6BA297DBC24807EABDAD6C7F3747799A
-X-Mailru-Sender: F1845AB6CCC9920DF7838D61D4D05C42B0ADD4D441C52F7D56CD0E05AFEBF77D46138560D21E87E01653177920737CA72999BEE114A20FF4278B2D54D4112F244F0A872F021F905956A8FB0C6EBA5FCCEAB4BC95F72C04283CDA0F3B3F5B9367
-X-Mras: OK
+Content-Type: text/plain
+X-Pobox-Relay-ID: C7A7C54C-6E4A-11E7-BA03-EFB41968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-21.07.2017 21:56, Junio C Hamano пишет:
-> Stas Sergeev <stsp@list.ru> writes:
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> ---
 >
->> I do the following:
->>
->> $ git rev-parse --symbolic-full-name devel
->> refs/heads/devel
->> $ ls -l .git/`git rev-parse --symbolic-full-name devel`
->> -rw-rw-r-- 1 stas stas 41 июл 21 15:05 .git/refs/heads/devel
->>
->> This is fine. But after git gc:
->>
->> $ git rev-parse --symbolic-full-name devel
->> refs/heads/devel
->> $ LC_ALL=C ls -l .git/`git rev-parse --symbolic-full-name devel`
->> ls: cannot access '.git/refs/heads/devel': No such file or directory
-> This is expected, and in the modern world (like, after year 2007),
-> a refname "refs/heads/foo" does *not* mean that there is a file
-> with such a path under .git/ directory.  "rev-parse" does not return
-> any "path" in the filesystem sense.
+> Hi Junio,
 >
-> See "git pack-refs --help", and depending on what you want to learn
-> about the ref in question, perhaps "git show-ref refs/heads/devel"
-> is what you want.
-I wanted some kind of file to use it as a
-build dependency for the files that needs
-to be re-built when the head changes.
-This works very well besides git gc.
-What other method can be used as simply
-as that? git show-ref does not seem to be
-giving this.
+> My 'make test' run for the v2.14.0-rc0 on cygwin turned up a new
+> test failure (over and above the v2.13.0 failures), namely t1308.23.
+> Running the test in the debugger showed that cygwin was fopen-ing
+> the 'a-directory' without problem.
+>
+> On one occasion, while in the debugger, I did see fopen return NULL
+> while trying to open a directory. So, I created a test program which
+> showed reliably that fopen succeeds on a directory. (So, maybe I was
+> just seeing things! :-D ).
+>
+> t1308 was reliably failing before this patch, afterwards it reliably
+> passes, so ...
+>
+> [I have a full test run going at the moment, but it won't finish for
+> about 3 hours.]
+>
+> ATB,
+> Ramsay Jones
+
+Thanks.  Let's apply it for -rc1.
+
+>
+>  config.mak.uname | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/config.mak.uname b/config.mak.uname
+> index 551e465a7..6604b130f 100644
+> --- a/config.mak.uname
+> +++ b/config.mak.uname
+> @@ -185,6 +185,7 @@ ifeq ($(uname_O),Cygwin)
+>  	SPARSE_FLAGS = -isystem /usr/include/w32api -Wno-one-bit-signed-bitfield
+>  	OBJECT_CREATION_USES_RENAMES = UnfortunatelyNeedsTo
+>  	COMPAT_OBJS += compat/cygwin.o
+> +	FREAD_READS_DIRECTORIES = UnfortunatelyYes
+>  endif
+>  ifeq ($(uname_S),FreeBSD)
+>  	NEEDS_LIBICONV = YesPlease
