@@ -2,132 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 54E4920288
-	for <e@80x24.org>; Fri, 21 Jul 2017 16:32:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A721020288
+	for <e@80x24.org>; Fri, 21 Jul 2017 16:44:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754440AbdGUQcb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Jul 2017 12:32:31 -0400
-Received: from mail-wr0-f180.google.com ([209.85.128.180]:37027 "EHLO
-        mail-wr0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754062AbdGUQc3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jul 2017 12:32:29 -0400
-Received: by mail-wr0-f180.google.com with SMTP id 33so27920941wrz.4
-        for <git@vger.kernel.org>; Fri, 21 Jul 2017 09:32:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=VZ3e4OKPzFCnIkMJagGEAnmM3P5/YmYkRkl9Ym9Sdi4=;
-        b=J0hfzFEihroWb8OJRCj/bSYnr5i5ZX4LCaXrkS4TKSecjg5iowEr+qamJpH4/aNhzJ
-         0PXMXfteFBeSD4V3Mqel4eQoHSPt00V1XJn82wFqRKF1ujxZu9RqLsO3XlMbZc0RT+4P
-         j2qLBPZdk4QOJG+dNqeZ/cl67SkQfNI6MtCiDMcGONn5hvW+T1DMPc2q46OIsypCFFJn
-         7gp0a8ynl4rJhUOYMdJmi+CZrheMwFut0HEP21F1Q7ONhcg7ROTPzwYjkgG9QhB2Sy0t
-         vkQ35659N1rlinK0JxCHXUen3d4XERSqGmN3394YDdZrxmhBwEAmBwDioD+pfxlfbHMV
-         PKUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=VZ3e4OKPzFCnIkMJagGEAnmM3P5/YmYkRkl9Ym9Sdi4=;
-        b=AuTTxl8z9RGueY0BrbYoHZRV8+3QdDjaHHF4nqfGer2T5PrU6FQnVJ80TtFwlRaTFD
-         bdmo/vkQDPMVgxbehLDNa7StWR1w6s/c6Csz7AWfUgqB1J9xGyDoV9gbnpZEgRCul9nO
-         BNwn7MzTrD4y+BUIF3mBh1Zy1VkyFSqmC8LbNI92LcqmMJek+GuhpcEe9Wa9x7oz6CW/
-         TQHivF29q9rYr4BBjX5h/pX1tgwhyTuEKWVT85/lR93EUOKkRv+jbSXvZGRSXQ6dXChC
-         tsGi9CG2pgGqZNn+HzxPWy+XLcOLgJ5LoD+THzvdkHdBZySmC2boaTgQDHcQsU3NNX7R
-         qJYA==
-X-Gm-Message-State: AIVw112xF9fN4xtSTe2PP0npH49PtDSIHb++cT+a8O88obZDD92dvJPo
-        V52deqlO2dXx5p9wr1y2QJxv/M3mJw==
-X-Received: by 10.223.157.7 with SMTP id k7mr7754871wre.43.1500654747867; Fri,
- 21 Jul 2017 09:32:27 -0700 (PDT)
+        id S1754387AbdGUQoN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Jul 2017 12:44:13 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51883 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754161AbdGUQoM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jul 2017 12:44:12 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C896499D4F;
+        Fri, 21 Jul 2017 12:44:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=rGMeOlmR6dnxxAGqKxIMDsWecKk=; b=kYEqp3
+        ZcXRqu44skAgxXkKI7rgcGRwruwGTQ11Xlju/Nz6ohx4dJEqSi9RjOG7x5Xsxxn0
+        28ciXC+HXfs/0bOC2vx6Z78ifAgKI9O06BvkfbstqPFE7GV6nia/X2RJB6EC5oAW
+        BxjyA2EckdqZeDblfNt/iHav+9bb1VojeB2u8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=MUwrqxwflNPgahvASg5n+wR7bjHe9qTL
+        WtEyvHZfqeSSOKd/5k+sruqyqGxZt0krha2zVJP+tPczK7arMNJXh9cdxM9ZFm2X
+        P+EfX/DNRgBr5QmrN46TjCXtcwd8SIrNfuMGbrHq/qYHdIhRwx6AKsimUunmYz0l
+        OhDD32gB3sI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C075899D4E;
+        Fri, 21 Jul 2017 12:44:05 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1525499D4B;
+        Fri, 21 Jul 2017 12:44:05 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Git Users <git@vger.kernel.org>
+Subject: Re: Reducing redundant build at Travis?
+References: <xmqqeftlz0dv.fsf@gitster.mtv.corp.google.com>
+        <CADJMNYmGR8Ti0S77y2ykPdSZB68DrBb8O0wfX6PaezV1+j2bnw@mail.gmail.com>
+        <xmqqiniwt35e.fsf@gitster.mtv.corp.google.com>
+        <20170714122401.uahk2fzvcjj3nwve@sigill.intra.peff.net>
+        <xmqqbmonrrvr.fsf@gitster.mtv.corp.google.com>
+        <20170714153224.6qnupcsa3pkig76k@sigill.intra.peff.net>
+        <4BB4EDA1-58A5-45AD-8BEC-1CB06CDC23DD@gmail.com>
+        <xmqq4lu7m94h.fsf@gitster.mtv.corp.google.com>
+        <333FEA3F-BB43-4183-ADD1-14E73E668EA3@gmail.com>
+Date:   Fri, 21 Jul 2017 09:44:03 -0700
+In-Reply-To: <333FEA3F-BB43-4183-ADD1-14E73E668EA3@gmail.com> (Lars
+        Schneider's message of "Fri, 21 Jul 2017 18:11:26 +0200")
+Message-ID: <xmqqo9sdhh9o.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.28.193.66 with HTTP; Fri, 21 Jul 2017 09:32:27 -0700 (PDT)
-In-Reply-To: <xmqqshhphitv.fsf@gitster.mtv.corp.google.com>
-References: <4f846a80-dfd8-f895-3b90-df1f78041a9f@gmail.com>
- <20170721151144.4410-1-ralf.thielow@gmail.com> <xmqqshhphitv.fsf@gitster.mtv.corp.google.com>
-From:   Ralf Thielow <ralf.thielow@gmail.com>
-Date:   Fri, 21 Jul 2017 18:32:27 +0200
-Message-ID: <CAN0XMOL2E3+raBkH3LHg15ZYP8zH4Qv8oh1Zn+G6C6LZxJerdA@mail.gmail.com>
-Subject: Re: [PATCH v2] l10n: de.po: update German translation
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>,
-        =?UTF-8?Q?Matthias_R=C3=BCster?= <matthias.ruester@gmail.com>,
-        Thomas Rast <tr@thomasrast.ch>,
-        =?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>,
-        Christian Stimming <stimming@tuhh.de>,
-        Phillip Szelat <phillip.szelat@gmail.com>,
-        =?UTF-8?Q?Magnus_G=C3=B6rlitz?= <magnus.goerlitz@googlemail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: CEDBEB2A-6E33-11E7-A171-EFB41968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Lars Schneider <larsxschneider@gmail.com> writes:
 
-after applying the patch, entries in date.c turned into this
+> To answer your question: I don't see an easy solution to the problem.
 
--#: date.c:122 date.c:129 date.c:136 date.c:143 date.c:149 date.c:156 date.c:167
--#: date.c:175 date.c:180
--msgid "%"
--msgid_plural "%"
--msgstr[0] "%"
--msgstr[1] "%"
-+#: date.c:122
-+#, fuzzy, c-format
-+msgid "%<PRIuMAX> second ago"
-+msgid_plural "%<PRIuMAX> seconds ago"
-+msgstr[0] "vor %lu Sekunde"
-+msgstr[1] "vor %lu Sekunden"
-...
+That's OK.  Thanks for digging.
 
-which seems to be OK. A full diff after updating de.po after this
-patch can be found at https://pastebin.com/5yeSnGQj.
+I am wondering if the attached would be acceptable as a minimum
+impact patch to address this issue.  
 
-Ralf
+I think I got the "are we building a tag, or are we building a
+branch that happens to be at a tag?" logic right, but I have no idea
+what I am writing in the "script" sections (I am just assuming that
+these lines are squashed into a line by removing line-breaks and
+become a single loooong shell script), and can certainly use guiding
+hands.  I didn't bother skipping the work done in before_script.
 
-2017-07-21 18:10 GMT+02:00 Junio C Hamano <gitster@pobox.com>:
-> Ralf Thielow <ralf.thielow@gmail.com> writes:
->
->>  #: date.c:116
->>  msgid "in the future"
->>  msgstr "in der Zukunft"
->>
->>  #: date.c:122 date.c:129 date.c:136 date.c:143 date.c:149 date.c:156 date.c:167
->>  #: date.c:175 date.c:180
->>  msgid "%"
->>  msgid_plural "%"
->> -msgstr[0] ""
->> -msgstr[1] ""
->> +msgstr[0] "%"
->> +msgstr[1] "%"
->
-> Sorry, but I think these need re-translation after -rc1 because the po/git.pot
-> is generated incorrectly.  See the discussion:
->
->   https://public-inbox.org/git/%3Cxmqqk233klvd.fsf@gitster.mtv.corp.google.com%3E/#t
->
-> Also, if you can, please try the patch in
->
->     <xmqqfudrkkci.fsf@gitster.mtv.corp.google.com>
->
-> like so:
->
->     $ git reset --hard origin/master
->     $ git am <that message>
->     $ make pot
->     $ git commit -m 'update po/git.pot' -a
->     $ cd po
->     $ msgmerge --add-location --backup-off -U de.po git.pot
->
-> to make sure you get corrected entries for date.c.  If it works out
-> correctly, I'd want to ship -rc1 with that Makefile fix so that
-> Jiang can do the first four commands above to give translators a
-> correct po/git.pot to base their work on.
->
-> Thanks.
->
+Thanks.
+
+diff --git a/.travis.yml b/.travis.yml
+index 278943d14a..55af619830 100644
+--- a/.travis.yml
++++ b/.travis.yml
+@@ -53,6 +53,7 @@ matrix:
+       script:
+         - >
+           test "$TRAVIS_REPO_SLUG" != "git/git" ||
++          ci/skip-branch-tip-with-tag.sh ||
+           ci/run-windows-build.sh $TRAVIS_BRANCH $(git rev-parse HEAD)
+       after_failure:
+     - env: Linux32
+@@ -65,6 +66,7 @@ matrix:
+       before_script:
+       script:
+         - >
++          ci/skip-branch-tip-with-tag.sh ||
+           docker run
+           --interactive
+           --env DEVELOPER
+@@ -145,9 +147,10 @@ before_script: make --jobs=2
+ 
+ script:
+   - >
++    ci/skip-branch-tip-with-tag.sh || {
+     mkdir -p $HOME/travis-cache;
+     ln -s $HOME/travis-cache/.prove t/.prove;
+-    make --quiet test;
++    make --quiet test; }
+ 
+ after_failure:
+   - >
+diff --git a/ci/skip-branch-tip-with-tag.sh b/ci/skip-branch-tip-with-tag.sh
+new file mode 100755
+index 0000000000..a57e724b35
+--- /dev/null
++++ b/ci/skip-branch-tip-with-tag.sh
+@@ -0,0 +1,23 @@
++#!/bin/sh
++
++# Sometimes, a branch is pushed at the same time the tag that points
++# at the same commit as the tip of the branch is pushed, and building
++# both at the same time is a waste.
++#
++# Travis gives a tagname e.g. v2.14.0 in $TRAVIS_BRANCH when
++# the build is triggered by a push to a tag.  Let's see if
++# $TRAVIS_BRANCH is exactly at a tag, and if so, if it is 
++# different from $TRAVIS_BRANCH.  That way, we can tell if
++# we are building the tip of a branch that is tagged---and
++# we can skip the build because we won't be skipping a build
++# of a tag.
++
++if TAG=$(git describe --exact-match "$TRAVIS_BRANCH" 2>/dev/null) &&
++	$TAG != $TRAVIS_BRANCH
++then
++	echo "Tip of $TRAVIS_BRANCH is exactly at $TAG"
++	exit 0
++else
++	exit 1
++fi
++
