@@ -2,113 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 772EB20288
-	for <e@80x24.org>; Fri, 21 Jul 2017 07:14:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 33AD2208E0
+	for <e@80x24.org>; Fri, 21 Jul 2017 09:58:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752098AbdGUHOs (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Jul 2017 03:14:48 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61971 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751709AbdGUHOr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jul 2017 03:14:47 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9DC3B8F7BE;
-        Fri, 21 Jul 2017 03:14:46 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=0p8JIuMN54xwmQJG7z0cIiLG0Jg=; b=TNG/qV
-        JVzirx/ttGPSjge9k/3oV5FkdzA3dJYYXrCYDcYGcWfks4OqDOfNdO4PlLUOrbLG
-        vLvNu1W2Frq7tg5JCP8+dBTif9v3USzQuacNXav1KO6kNZGQk3Tlhtx1/5t2rYlR
-        QUvlqczpWx2v3aQZpgtWcjKVLWECPTS2uHJiM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=j1+f376s9tu4gsAdTePyuEIAjsuCa+Is
-        YYbB37dDavvhrptlyCUFRWyTyoBFSx16Q6PRlZfYTavvCi/JQgh6sU96xqvMbEFm
-        6FwEA+JivawQUqF6QaK4fH5pNj6CwSYPEAGOvAAmlAQoyD0TxrLsZcxm8SZqXBI5
-        i+0a4DVwn/Q=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 959B08F7BD;
-        Fri, 21 Jul 2017 03:14:46 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E5FA68F7BB;
-        Fri, 21 Jul 2017 03:14:45 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
-        =?utf-8?B?Tmd1eeG7hW4gVGg=?= =?utf-8?B?w6FpIE5n4buNYw==?= Duy 
-        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
+        id S1753940AbdGUJ60 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Jul 2017 05:58:26 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:35920 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753388AbdGUJ6Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jul 2017 05:58:25 -0400
+Received: by mail-wm0-f65.google.com with SMTP id 184so3792166wmo.3
+        for <git@vger.kernel.org>; Fri, 21 Jul 2017 02:58:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=uwu9zU0QwJbQbL05J5ZdFCrAwtHMO1JKHac8BFt1tqU=;
+        b=N88/DaRxI9Y8b97qWrtkqcrqjapn9tJ0u6aF4xTj9OPSU3sSd38PXgUh612C7HcKIa
+         d1thKNhS3h98/W09zFVHyz7kyy5BSORL1JlUkt6tg4HkdI4BEaZ03uoKo+/PrPY9s+ub
+         R5+toNMAqgKbHW52VU0owHoGk2pNx3zByfIEPoT9zkquApow/OxwkjmPbbcWSqTJqSuS
+         ylpTEGTzetzU20FXxFdmwsQx6bpju26DpGJpWvubndjCvYswbFxwbgLVwevUuN4JVH++
+         PFlvbRB/q4SSOdkbuTp3v5Qud2r1Df9P56pcmYFP27WdkKjIuc89jJCG4zLIYsP4pNKn
+         5GGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=uwu9zU0QwJbQbL05J5ZdFCrAwtHMO1JKHac8BFt1tqU=;
+        b=Zd3fO0YtT9lzlh1rhoVHpueccX3m/ZI2v/R3xo7vltjeeH7Icr51NppiHMJDhRkB+G
+         T1yeUZEuY6FA7aES9ikj3eEa73kkxKIbDMpugtyEZw1AZIYpKrL1jqBoXiSZlX2bW4Iu
+         dl+uQW2sht1N5XKY7nuPKnAb76koJhDqqikZaSiUT7zXDsOqmHsbvCRR+ZxbrBCMIFHZ
+         2sHZ4SciAjeqwVnJxmyzKbB68wvS28YaNpf5AlYS41wA2jebnpCd8ojemaE7UPklUyOU
+         QzZhGZjfTpa2mzyVidA8rdKOiDeqZJ80VQqa1j8nkRLu2IhZYcisYMqQlAtVNaj1lWGo
+         LaWw==
+X-Gm-Message-State: AIVw1104Dv2EhtzhwD3JtDjybWPLAfloTty/ro7/ammBepdl4y55+D6d
+        lqqD2TaIAhuUG8k7
+X-Received: by 10.28.61.4 with SMTP id k4mr4110967wma.148.1500631104253;
+        Fri, 21 Jul 2017 02:58:24 -0700 (PDT)
+Received: from localhost.localdomain (72.198.126.78.rev.sfr.net. [78.126.198.72])
+        by smtp.gmail.com with ESMTPSA id r191sm1133775wmg.6.2017.07.21.02.58.23
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 21 Jul 2017 02:58:23 -0700 (PDT)
+From:   Christian Couder <christian.couder@gmail.com>
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Lukas Fleischer <lfleischer@lfos.de>,
         Jeff King <peff@peff.net>,
-        =?utf-8?B?w4Z2YXIgQXJu?= =?utf-8?B?ZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>, David Turner <novalis@novalis.org>,
-        Brandon Williams <bmwill@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH 21/28] commit_packed_refs(): use a staging file separate from the lockfile
-References: <cover.1497534157.git.mhagger@alum.mit.edu>
-        <2779ee9a75e75ff80898e51e46d561b8074e0dc2.1497534157.git.mhagger@alum.mit.edu>
-        <xmqqy3riiu0f.fsf@gitster.mtv.corp.google.com>
-        <20170720233051.GB159617@aiede.mtv.corp.google.com>
-        <xmqqpocuib06.fsf@gitster.mtv.corp.google.com>
-Date:   Fri, 21 Jul 2017 00:14:44 -0700
-In-Reply-To: <xmqqpocuib06.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Thu, 20 Jul 2017 23:01:45 -0700")
-Message-ID: <xmqqlgnii7mj.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4675F310-6DE4-11E7-8073-61520C78B957-77302942!pb-smtp2.pobox.com
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] refs: use skip_prefix() in ref_is_hidden()
+Date:   Fri, 21 Jul 2017 11:57:57 +0200
+Message-Id: <20170721095757.28373-1-chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.14.0.rc0.26.g981adb928e.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+This saves one line, makes the code a bit easier to understand
+and perhaps a bit faster too.
 
-> The general strategy we take for these atomic update of a file
-> entity at $path is to:
->
->  (1) try to create $path.lock exclusively; if we cannot, somebody
->      else holds the lock so fail (or backoff and retry, which
->      amounts to the same thing in the larger picture).
->
->  (2) update $path.lock and close the fd.
->
->  (3) rename $path.lock to $path atomically to unlock.
->
-> Would it be sufficent to tweak the above procedure with a new,
-> zeroth step?
->
->  (0) see $path is a symlink; if so, readlink it and assign the
->      result to $path.  Then go on to step (1) above.
->
-> I do not think such an enhancement would break atomicity guarantee
-> we want from the locking.  When updating .git/packed-refs in an
-> ancient new-workdir'ed directory, we would end up locking the
-> corresponding file in the real repository, which is exactly what we
-> want anyway.  As the basic assumption of having a symbolic link in
-> the new-workdir'ed directory is that a symlink can stay the same
-> forever while the linked target will be updated, I think this would
-> be a reasonable short-term "fix".
->
-> It would be ideal if we can do this at somewhat a low level, i.e. in
-> the lockfile subsystem.
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ refs.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-One thing I forgot to mention.  For the above to work safely, we
-should think through the possible interaction this may have with the
-core.preferSymlinkRefs configuration.  If the above is implemented
-naively, an update of a symref (e.g. "HEAD") that points at
-something to point at something else would end up taking a lock on
-the underlying ref and updating it, which is not what we want at
-all.
-
-Perhaps it is about time we stopped supporting the configuration.
-We may be able to come up with a solution while keeping it alive,
-but dropping it would mean we would have one less thing we need to
-worry about.
-
-
+diff --git a/refs.c b/refs.c
+index ba22f4acef..15cb36d426 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1160,7 +1160,7 @@ int ref_is_hidden(const char *refname, const char *refname_full)
+ 		const char *match = hide_refs->items[i].string;
+ 		const char *subject;
+ 		int neg = 0;
+-		int len;
++		const char *p;
+ 
+ 		if (*match == '!') {
+ 			neg = 1;
+@@ -1175,10 +1175,9 @@ int ref_is_hidden(const char *refname, const char *refname_full)
+ 		}
+ 
+ 		/* refname can be NULL when namespaces are used. */
+-		if (!subject || !starts_with(subject, match))
++		if (!subject || !skip_prefix(subject, match, &p))
+ 			continue;
+-		len = strlen(match);
+-		if (!subject[len] || subject[len] == '/')
++		if (!*p || *p == '/')
+ 			return !neg;
+ 	}
+ 	return 0;
+-- 
+2.14.0.rc0.26.g981adb928e.dirty
 
