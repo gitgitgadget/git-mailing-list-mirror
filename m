@@ -6,104 +6,101 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 36F7220288
-	for <e@80x24.org>; Fri, 21 Jul 2017 16:03:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA9BA20288
+	for <e@80x24.org>; Fri, 21 Jul 2017 16:10:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754387AbdGUQDU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Jul 2017 12:03:20 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55064 "EHLO
+        id S1754141AbdGUQKX (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Jul 2017 12:10:23 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64466 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754194AbdGUQDT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jul 2017 12:03:19 -0400
+        with ESMTP id S1753516AbdGUQKW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jul 2017 12:10:22 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5CECD995FD;
-        Fri, 21 Jul 2017 12:03:18 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4909194E1E;
+        Fri, 21 Jul 2017 12:10:22 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Q9kjjiJQpkeaO6xUSlkvmOWEB08=; b=gvgjbv
-        Kxzr9vTANxOQx9bVCna09+jdc9+QDYuiofXNnZH/uOP7pHIMUQQgS7T2Pf0HPK0P
-        pAGomTRmbpQ/3+7LOLrn2qxBQxldZsLoKEnvgKZ+56ZL0HA0aPBtWpwzLhBKQWxT
-        bJQD2cYKd9NtQq0m0oQpBUUAY4l6vk30i/Bb4=
+        :content-type; s=sasl; bh=G7pxORNy2wKeTjiaopSu5Fi6fQ0=; b=YK32Jk
+        g5fFUFbgt3yKvTR3qEeSUlHgGjb/mrb9GFsbIdPWIUjg7xSOzGJx4SMEFex4AnS4
+        aw82hpNqeTYrkdZJpq1otYRBNshIjWBrUdHmv7gAf3/05vjk3j+f5LQjFYJBI2YV
+        OgT1D89lO/3ixmnFC1Mb01HZ/gDJ+9WSVA+KA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=sSc7tDHALGBxKufMCQQ1DF1uuXpuK2ms
-        nXs9+t6FUJnsyWp43qaaFkZLX1rOMNeNl4/9QfjT/ZJkZP7NdUg1+mU7r1sgnY48
-        shLyTj4M5puc2Q89lcOHd7UDYumdAahrOL30TiRws/bQyWQ8fFE94k7TR81MnHu0
-        5JWKbZGkC+4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 55011995FC;
-        Fri, 21 Jul 2017 12:03:18 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=RFlVk6eil5jeUkscv5yt8ftl+ToHF2vx
+        MVajIS1qOO6jFlD37VCryBIVWfQByed0V1KzhZdFHsU0tklSZpFts+6qb+z3TdQX
+        0vxY9NLmGe+wtu888YuJYcxAXQ3JUA1ZAuWgLfLIR/wyQESqaTYd1LtWxFIb9uCB
+        dkmg3oNRVPw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3E82894E1D;
+        Fri, 21 Jul 2017 12:10:22 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B56E5995FA;
-        Fri, 21 Jul 2017 12:03:17 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9981694E1C;
+        Fri, 21 Jul 2017 12:10:21 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Blake <eblake@redhat.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] git-contacts: Add recognition of Reported-by
-References: <20170721141530.25907-1-eblake@redhat.com>
-        <xmqqbmodj1pa.fsf@gitster.mtv.corp.google.com>
-        <a8b47a45-0100-dbef-0bff-fdfdb9cbccb4@redhat.com>
-Date:   Fri, 21 Jul 2017 09:03:16 -0700
-In-Reply-To: <a8b47a45-0100-dbef-0bff-fdfdb9cbccb4@redhat.com> (Eric Blake's
-        message of "Fri, 21 Jul 2017 10:27:01 -0500")
-Message-ID: <xmqqwp71hj5n.fsf@gitster.mtv.corp.google.com>
+To:     Ralf Thielow <ralf.thielow@gmail.com>
+Cc:     git@vger.kernel.org,
+        Matthias =?utf-8?Q?R=C3=BCster?= <matthias.ruester@gmail.com>,
+        Thomas Rast <tr@thomasrast.ch>,
+        Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>,
+        Christian Stimming <stimming@tuhh.de>,
+        Phillip Szelat <phillip.szelat@gmail.com>,
+        Magnus =?utf-8?Q?G=C3=B6rlit?= =?utf-8?Q?z?= 
+        <magnus.goerlitz@googlemail.com>
+Subject: Re: [PATCH v2] l10n: de.po: update German translation
+References: <4f846a80-dfd8-f895-3b90-df1f78041a9f@gmail.com>
+        <20170721151144.4410-1-ralf.thielow@gmail.com>
+Date:   Fri, 21 Jul 2017 09:10:20 -0700
+In-Reply-To: <20170721151144.4410-1-ralf.thielow@gmail.com> (Ralf Thielow's
+        message of "Fri, 21 Jul 2017 17:11:44 +0200")
+Message-ID: <xmqqshhphitv.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 1C20C8AC-6E2E-11E7-B096-EFB41968708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 18D33616-6E2F-11E7-A3EF-61520C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Blake <eblake@redhat.com> writes:
+Ralf Thielow <ralf.thielow@gmail.com> writes:
 
-> You mean, something like
->
-> git config --add contacts.autocc Reported-by
-> git config --add contacts.autocc Suggested-by
->
-> where contacts.autocc would be a new multi-valued config option
-> specifying additional Tag: patterns to scrape out of the commit message?
+>  #: date.c:116
+>  msgid "in the future"
+>  msgstr "in der Zukunft"
+>  
+>  #: date.c:122 date.c:129 date.c:136 date.c:143 date.c:149 date.c:156 date.c:167
+>  #: date.c:175 date.c:180
+>  msgid "%"
+>  msgid_plural "%"
+> -msgstr[0] ""
+> -msgstr[1] ""
+> +msgstr[0] "%"
+> +msgstr[1] "%"
 
-Yes, something along that line, and you are correct to point out
-that I should have mentioned the need for command-line override.
+Sorry, but I think these need re-translation after -rc1 because the po/git.pot
+is generated incorrectly.  See the discussion:
 
-In fact, if you anticipate that the primary use of this contributed
-script is as "send-email --cccmd", then we probably are better off
-doing this without any configuration variables, but just add the
-mechanism for command-line override of the hardcoded default.
+  https://public-inbox.org/git/%3Cxmqqk233klvd.fsf@gitster.mtv.corp.google.com%3E/#t
 
-I also should have mentioned the need for a way to say "remove all
-hardcoded default and start from scratch".
+Also, if you can, please try the patch in 
 
-> Also, putting it in 'git config' still means that it is a per-developer
-> responsibility to choose which patterns to add to their list.  Is there
-> any easy way to make a particular repository supply the same list for
-> all developers who check it out, without them having to munge things?
+    <xmqqfudrkkci.fsf@gitster.mtv.corp.google.com> 
 
-That is a good point, but we should be very careful.  "Let's add
-whatever configuration the project supplies to the user's repository
-upon cloning" is an absolute no-no, as a malicious project can ship
-something like [alias] "co" = "!rm -rf ." and unsuspecting victim to
-blindly add it to the configuration.  
+like so:
 
-A standard practice we encourage is to ship a file that records the
-suggested set of configuration variables as part of the source tree
-and mention how to add these to their repository in README (which
-you are already using to talk about how to contribute to the
-project, etc.).
+    $ git reset --hard origin/master
+    $ git am <that message>
+    $ make pot
+    $ git commit -m 'update po/git.pot' -a
+    $ cd po
+    $ msgmerge --add-location --backup-off -U de.po git.pot
 
-That would give them a chance to inspect what potential damage the
-project suggestion will make to their environment (hopefully, there
-is none, but the user must be given a chance to ensure that).
+to make sure you get corrected entries for date.c.  If it works out
+correctly, I'd want to ship -rc1 with that Makefile fix so that
+Jiang can do the first four commands above to give translators a
+correct po/git.pot to base their work on.
 
-The extra lines you may need in your README may become something like
+Thanks.
 
-    Run this in your copy of the project:
-
-    $ git config sendemail.cccmd "git contact --cc Suggested-by"
-
-with such a scheme.
