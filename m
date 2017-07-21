@@ -2,142 +2,168 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B71B203F3
-	for <e@80x24.org>; Fri, 21 Jul 2017 20:33:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B5E96203F3
+	for <e@80x24.org>; Fri, 21 Jul 2017 22:17:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754651AbdGUUdO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Jul 2017 16:33:14 -0400
-Received: from mail-pg0-f42.google.com ([74.125.83.42]:34580 "EHLO
-        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753502AbdGUUdN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jul 2017 16:33:13 -0400
-Received: by mail-pg0-f42.google.com with SMTP id 123so32968020pgj.1
-        for <git@vger.kernel.org>; Fri, 21 Jul 2017 13:33:13 -0700 (PDT)
+        id S1754838AbdGUWRz (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Jul 2017 18:17:55 -0400
+Received: from mail-qk0-f179.google.com ([209.85.220.179]:33615 "EHLO
+        mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753502AbdGUWRy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jul 2017 18:17:54 -0400
+Received: by mail-qk0-f179.google.com with SMTP id f67so5881023qkc.0
+        for <git@vger.kernel.org>; Fri, 21 Jul 2017 15:17:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=+2YIfWtd+BnmpgVQj1wDe+L8Jxv9oWQxjl3zslOshkE=;
-        b=WDt6wwoN/Qi8Afh/j5DTNieT6LhOVz0UqLYquB/49L3wtrDLRgmyFDhXuNPBPGm9Em
-         ohteLw24Q4YTguS5vYkYpiVxisElMjGiD74cUn6SIzAG0Kqavwd+KMf/Ow8vs1UCU39s
-         4ttjNxtIJVRpkkq+lrtO/J5oPNv1ejvIVY1wtioKQV48EL2f0qvzJ8/HWx0qvydu3vDj
-         1EuiIrSXOHrBRT98/wLA3lsBlo9oWKOoCokE76hfA/pelaCd2JwUKc2G5vFXnpXqU/vk
-         7tq2E8QLhaQc/lu4h3D3shaVDxzGMXaMVaRExgpP35+uhP/slqmf/NM6OF0SsP1Ihfdj
-         RCAw==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=0tQxAu5xJv+vs1tjnvokq4xB/fZ/pQVMzm0fgUiarrU=;
+        b=gPqd5zL76ESrqb1z4KIGbGJOp6KlbJhrIrRa7s5KoKnG6sHWAlmX73Rh4FQCFnC4N9
+         spRPv6Q4TiRoRae3cYIayjUuULCWRWxpSihmarQD+E6gAYEElFQcGEln8h9YibdK1fr/
+         B/viS51yQjenJotBGJ7RfwcL+TnAeWdEL5dgm9FehfB+pRNXYbwoOdFkIQwSmZyOKjIW
+         021hOfueuFJFtUdTf+q3cgowPzs1c0X5CTZlWB1UG+tvb/3fttAzS3uFSTmjjk/jvm6B
+         ECo8HfNa/UHj+1YDuQVNKHpF4ETcYeY92rUgcX8yM62bPSHQvYbJF5L+I4lAYdN5eR49
+         oYMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=+2YIfWtd+BnmpgVQj1wDe+L8Jxv9oWQxjl3zslOshkE=;
-        b=L2wUU4sZ+P1QICeLz1kOGm14Dk54ZED0z21Y7mhdFLz9ovp0q83qnD48wkNIvJKS9Q
-         W20HAbwbfa6cTVqekZkbXREHY/wyWdwGjQr/BDFUvIVY03448/EOTwHOcJzbo5E2LhZn
-         Qm5iJcNojtASuWB4z7g2dvzua40Z/O+dmU8AKIIQFsGmffz8yo0WrP/ttLNsVru9uvBo
-         utC2c8RCX6wRe+oz/oH1Kw612Fa12OJWxkkqvEJm49RpGbjvAgS4rupqCnF+fezUrr+k
-         NO3nT+ksr21KqZjXy24MEtA22m2rillVBYCFX2iWNAgY5J/Zr51J6Tc05uW/53J4EALU
-         xjcA==
-X-Gm-Message-State: AIVw113D6PXSztuUgxW0PJi+ynaEpVUDZlmdoGu/P5PrVFHW9uPnEAAv
-        7A5ya4XUXHLKwhLz
-X-Received: by 10.98.212.27 with SMTP id a27mr6593574pfh.157.1500669193203;
-        Fri, 21 Jul 2017 13:33:13 -0700 (PDT)
-Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:d494:1bfb:cc5c:cb29])
-        by smtp.gmail.com with ESMTPSA id w82sm5301324pfa.39.2017.07.21.13.33.12
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 21 Jul 2017 13:33:12 -0700 (PDT)
-Date:   Fri, 21 Jul 2017 13:33:08 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com, sbeller@google.com,
-        git@jeffhostetler.com, philipoakley@iee.org
-Subject: Re: [RFC PATCH v2 2/4] promised-object, fsck: introduce promised
- objects
-Message-ID: <20170721133308.422e736d@twelve2.svl.corp.google.com>
-In-Reply-To: <d014682f-66a5-c3c1-cf66-ef4bb28de076@gmail.com>
-References: <cover.1500508695.git.jonathantanmy@google.com>
-        <3420d9ae9ef86b78af1abe721891233e3f5865a2.1500508695.git.jonathantanmy@google.com>
-        <d8beb406-6d03-d893-4f37-83a7bdd6b9ac@gmail.com>
-        <20170720141342.6a89aace@twelve2.svl.corp.google.com>
-        <d014682f-66a5-c3c1-cf66-ef4bb28de076@gmail.com>
-X-Mailer: Claws Mail 3.9.3 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=0tQxAu5xJv+vs1tjnvokq4xB/fZ/pQVMzm0fgUiarrU=;
+        b=JoZo1T5rKUSk8ynA63/BlX5mRIccleI69zNnhChaDkFj3FoArVToVESTiKZyiNii1d
+         jGYlYhfHSxlMnnu2Gct46rO83Sz7U20uvFsta4gUykjSHFe9o/90xVS19xD0wUOYGqPG
+         aaCxSTGggUmPyHyrY2+1nK7T2dNXmyGaJvUzdth/V8WKfsJd5/sSYJbf2mVEkq2QBEV+
+         AiyIyN9rZLEAKu+QNFxXuLJ7FUqJpBL7lR7y9PdpZKk0atzIJ3GapqDnTdGUXlGGeq4e
+         AOXOnOZJMNf10uCdMXzLAAZgZgUjPLgIRn8JW+mWRqQEOKx+Db+hDpizjUeGYj5qzrga
+         Kqmw==
+X-Gm-Message-State: AIVw113LHPr3nbpphLoMp/cgWmxSj6G/BCt9YM10hi7gkzMsDnH0wQiv
+        qweyQOBqvQiRXFIfDTaRRY0GqCO6NQ==
+X-Received: by 10.55.112.71 with SMTP id l68mr1083938qkc.10.1500675473404;
+ Fri, 21 Jul 2017 15:17:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Received: by 10.12.193.38 with HTTP; Fri, 21 Jul 2017 15:17:52 -0700 (PDT)
+In-Reply-To: <xmqqo9sfkm32.fsf@gitster.mtv.corp.google.com>
+References: <249ac6f8-af3c-4b20-5bf0-87a82866cc7a@free.fr> <3ccfa2fb49d471f807d77d9a280e4b7cfe56faea.1500304209.git.worldhello.net@gmail.com>
+ <xmqq7ez7htvj.fsf@gitster.mtv.corp.google.com> <CANYiYbEcMrriaor9OT4c2qtfh9Ja5NJ9KBSxa3XhPAuoN0t42A@mail.gmail.com>
+ <xmqq60epfy27.fsf@gitster.mtv.corp.google.com> <CANYiYbFROuyXso2ZKuJWDp4cSwpBu=bNAbC-yZtEyDwkbUcAhQ@mail.gmail.com>
+ <alpine.DEB.2.21.1.1707191456010.4193@virtualbox> <xmqq8tjkm3ly.fsf@gitster.mtv.corp.google.com>
+ <xmqqo9sfkm32.fsf@gitster.mtv.corp.google.com>
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Sat, 22 Jul 2017 06:17:52 +0800
+Message-ID: <CANYiYbGSaaFOq7iw=ON1Oo87bSA96o=zyzym5RDT32kMae7bsw@mail.gmail.com>
+Subject: Re: [PATCH] PRItime: wrap PRItime for better l10n compatibility
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Git List <git@vger.kernel.org>,
+        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 21 Jul 2017 12:24:52 -0400
-Ben Peart <peartben@gmail.com> wrote:
+2017-07-21 2:19 GMT+08:00 Junio C Hamano <gitster@pobox.com>:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>>
+>>> But there may be hope. Since the character sequence "PRItime" is highly
+>>> unlikely to occur in Git's source code in any context other than the
+>>> format to print/parse timestamp_t, it should be possible to automate a the
+>>> string replacement
+>>>
+>>>      git ls-files -z \*.[ch] |
+>>>      xargs -0r sed -i 's/PRItime/PRIuMAX/g'
+>>>
+>>> (assuming, of course, that you use GNU sed, not BSD sed, for which the
+>>> `-i` needs to read `-i ''` instead) as part of the update?
+>>
+>> I somehow missed this bit.
+>>
+>> Given that this needs to be done only once every release by only one
+>> person (i.e. the l10n coordinator who updates *.pot file), as long
+>> as the procedure is automated as much as possible to ease the pain
+>> for the l10n coordinator and clearly described in the "Maintaining
+>> the po/git.pot file" section of po/README, something along that line
+>> does sound like a very tempting approach.  If it works well, it is
+>> certainly much easier for normal developers than the other possible
+>> alternatives I mentioned in my previous response.
+>
+> So, I was offline for most of the day yesterday and with this issue
+> blocking the release candidate, didn't manage to tag -rc1.
+>
+> The use of "make pot" from the top-level is already described in
+> po/README, so the only thing that we need is something like this
+> change.  I'll follow up this message with a sample output from the
+> updated process to ask others to sanity check the result (they are
+> tiny) in a separate message.
+>
+> Thanks.
+>
+>
+>  Makefile | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+>
+> diff --git a/Makefile b/Makefile
+> index ba4359ef8d..7069a12f75 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -2216,12 +2216,22 @@ LOCALIZED_SH += t/t0200/test.sh
+>  LOCALIZED_PERL += t/t0200/test.perl
+>  endif
+>
+> +## Note that this is only meant to run by the localization coordinator
+> +## under a very controlled condition, i.e. (1) it is to be run in a
+> +## Git repository (not a tarball extract), (2) any local modifications
+> +## will be lost.
+>  po/git.pot: $(GENERATED_H) FORCE
+> +       @for s in $(LOCALIZED_C) $(LOCALIZED_SH) $(LOCALIZED_PERL); \
+> +       do \
+> +               sed -e 's|PRItime|PRIuMAX|g' <"$$s" >"$$s+" && \
+> +               cat "$$s+" >"$$s" && rm "$$s+"; \
+> +       done
+>         $(QUIET_XGETTEXT)$(XGETTEXT) -o$@+ $(XGETTEXT_FLAGS_C) $(LOCALIZED_C)
+>         $(QUIET_XGETTEXT)$(XGETTEXT) -o$@+ --join-existing $(XGETTEXT_FLAGS_SH) \
+>                 $(LOCALIZED_SH)
+>         $(QUIET_XGETTEXT)$(XGETTEXT) -o$@+ --join-existing $(XGETTEXT_FLAGS_PERL) \
+>                 $(LOCALIZED_PERL)
+> +       @git reset --hard
+>         mv $@+ $@
+>
+>  .PHONY: pot
 
-> Today we have 3.5 million objects * 30 bytes per entry = 105 MB of 
-> promises. Given the average developer only hydrates 56K files (2 MB 
-> promises) that is 103 MB to download that no one will ever need. We 
-> would like to avoid that if possible as this would be a significant 
-> regression in clone times from where we are today.
-> 
-> I'm also concerned about the performance of merging in promises given we 
-> have 100M objects today and growing so the number of promises over time 
-> could get pretty large.
+Sorry, I'm late. I want to try a safer way to change PRItime to
+PRInMax using a hacked version of gettext.
 
-After some thought, maybe a hybrid solution is best, in which it is
-permissible but optional for some missing objects to have promises. In
-that case, it is more of a "size cache" (which stores the type as well)
-rather than a true promise. When fetching, the client can optionally
-request for the sizes and types of missing objects.
+We can change Makefile like this:
 
-This is good for the large-blob case, in which we can always have size
-information of missing blobs, and we can subsequently add blob-size
-filtering (as a parameter) to "git log -S" and friends to avoid needing
-to resolve a missing object. And this is, as far as I can tell, also
-good for the many-blob case - just have an empty size cache all the
-time. (And in the future, use cases could come up that desire non-empty
-but non-comprehensive caches - for example, a directory lister working
-on a partial clone that only needs to cache the sizes of frequently
-accessed directories.)
+    --- a/Makefile
+    +++ b/Makefile
+    @@ -2216,7 +2216,14 @@ LOCALIZED_SH += t/t0200/test.sh
+     LOCALIZED_PERL += t/t0200/test.perl
+     endif
 
-Another option is to have a repo-wide option that toggles between
-mandatory entries in the "size cache" and prohibited entries. Switching
-to mandatory provides stricter fsck and negative lookups, but I think
-it's not worth it for both the developers and users of Git to have to
-know about these two modes.
+    -po/git.pot: $(GENERATED_H) FORCE
+    +check_gettext:
+    +       @if ! $(XGETTEXT) --version | grep -q -i PRItime; then \
+    +               echo >&2 "Error: must use a hacked xgettext, which
+can handle PRItime macro properly."; \
+    +               echo >&2 "Error: download the hacked version of
+gettext from https://github.com/......" ; \
+    +               exit 1; \
+    +       fi
+    +
+    +po/git.pot: check_gettext $(GENERATED_H) FORCE
+           $(QUIET_XGETTEXT)$(XGETTEXT) -o$@+ $(XGETTEXT_FLAGS_C) $(LOCALIZED_C)
+           $(QUIET_XGETTEXT)$(XGETTEXT) -o$@+ --join-existing
+$(XGETTEXT_FLAGS_SH) \
+                   $(LOCALIZED_SH)
 
-> >> I think we should have a flag (off by default) that enables someone to
-> >> say that promised objects are optional. If the flag is set,
-> >> "is_promised_object" will return success and pass the OBJ_ANY type and a
-> >> size of -1.
-> >>
-> >> Nothing today is using the size and in the two places where the object
-> >> type is being checked for consistency (fsck_cache_tree and
-> >> fsck_handle_ref) the test can add a test for OBJ_ANY as well.
-> >>
-> >> This will enable very large numbers of objects to be omitted from the
-> >> clone without triggering a download of the corresponding number of
-> >> promised objects.
-> > 
-> > Eventually I plan to use the size when implementing parameters for
-> > history-searching commands (e.g. "git log -S"), but it's true that
-> > that's in the future.
-> > 
-> > Allowing promised objects to be optional would indeed solve the issue of
-> > downloading too many promises. It would make the code more complicated,
-> > but I'm not sure by how much.
-> > 
-> > For example, in this fsck patch, the easiest way I could think of to
-> > have promised objects was to introduce a 3rd state, called "promised",
-> > of "struct object" - one in which the type is known, but we don't have
-> > access to the full "struct commit" or equivalent. And thus fsck could
-> > assume that if the "struct object" is "parsed" or "promised", the type
-> > is known. Having optional promised objects would require that we let
-> > this "promised" state have a type of OBJ_UNKNOWN (or something like
-> > that) - maybe that would be fine, but I haven't looked into this in
-> > detail.
-> > 
-> 
-> Caveats apply as I only did a quick look but I only found the two 
-> locations that were checking the object type for consistency.
+But I'm not sure I can handle this in this very busy weekend.
 
-I haven't looked into detail, but you are probably right.
+-- 
+Jiang Xin
