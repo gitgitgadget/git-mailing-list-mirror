@@ -2,136 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C1A4203F3
-	for <e@80x24.org>; Sat, 22 Jul 2017 00:52:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E760F203F3
+	for <e@80x24.org>; Sat, 22 Jul 2017 02:45:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753516AbdGVAwv (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Jul 2017 20:52:51 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:35155 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751464AbdGVAwv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jul 2017 20:52:51 -0400
-Received: by mail-pf0-f195.google.com with SMTP id q85so5853673pfq.2
-        for <git@vger.kernel.org>; Fri, 21 Jul 2017 17:52:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=jeJvtewAyGhRNWulqXMnTEahgcJcIYth7Q4KFvwKcWk=;
-        b=gUxUbcl/6Nwl5uwP4jkiRUSY8K1cibbx9Rucm6Y7V+bA+J2zedX/YT1p4o26ClehzU
-         2riBydZhrlobEXr+DS+1TsbwicP7gsO7OufwVptpCRKbs97JoXYBbkqjaxm+oBaJOM1x
-         YsAmZcJ1t+/1xALbcV6THc0kDGKjoWM3beyiRVtwWNa7gbIFEr0QmeK89FzWuW139Ft8
-         9szommUwcG6vLMBtH3XikqsNlPt9RSpcDehyTO77IeDQOfXfX9dCKNBWineUtp/KR2Ks
-         IC00AEdsJTsSNBSs1AFdT1Ii4wgUb2cD4vFgk1dNG3ipJT91/i/2hP/mzGSxXrYxX5WI
-         ui2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=jeJvtewAyGhRNWulqXMnTEahgcJcIYth7Q4KFvwKcWk=;
-        b=PAkyKaKfSYJ1TEDESxzbZG/US3cQYeNX3VvQxD3eUeUSTFos3c5+CutNyP3JirZa+7
-         TGIukRSHIeFnL8jl4US9C2YDYp9d+VU58CdcUZD/ES7aST6gr1g6kB0qmabMprBl+zbM
-         kOcrjMI1GZGuBJ4Jesxmfymn5QPgFtUTGUExN/ppwRVuRWpfrUU1eYgbsu9SSL3ovv1U
-         4QIJ8kaehwCdw2fCASZbnfR/uZf5y5TQa7d4uEo0PXUT5O5F+oohYrh6iuFrUlOf8772
-         EynkYN3/ZuVyMkZfX63iYYtjkPT5tUZH1oiTmzQZ4dRIG68qJryayslrXVdWi/wsKhd5
-         AaIA==
-X-Gm-Message-State: AIVw113/bP8MuA7WqarQBLka4/jcrjvcR8lXd+aYzM1FeEltzkRhZJgi
-        NteXHlqmCrI1IktnCP8=
-X-Received: by 10.98.210.70 with SMTP id c67mr9355318pfg.6.1500684770390;
-        Fri, 21 Jul 2017 17:52:50 -0700 (PDT)
-Received: from localhost.localdomain ([138.68.249.68])
-        by smtp.googlemail.com with ESMTPSA id h27sm10753109pfd.34.2017.07.21.17.52.48
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Fri, 21 Jul 2017 17:52:49 -0700 (PDT)
-From:   Jiang Xin <worldhello.net@gmail.com>
-To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH] Makefile: generate pot file using a tweaked version of xgettext
-Date:   Sat, 22 Jul 2017 08:52:38 +0800
-Message-Id: <a87e7252bf9de8a87e5dc7712946f72459778d6c.1500684532.git.worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.14.0.rc0.1.g3ccfa2fb49
+        id S1753516AbdGVCo6 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Jul 2017 22:44:58 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53708 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751922AbdGVCo5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jul 2017 22:44:57 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 728859FE02;
+        Fri, 21 Jul 2017 22:44:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=R4eh81hofW1JFVr61gS963cEPIQ=; b=rFqn0k
+        2li3nleu5ND8khVeRyLEzJ6FCWsUXH2B7myRCzXZxLByU20S0Z5+95P+rTchAkyV
+        laWiqatus7TH2c6udzwWE+St39448MYezfqxRm6ZQpijf6IL/JLSNuuqjvC7eoo5
+        L3CobYtIbvGns7E9RTgy5l5Nu5Q5ixgZgGA04=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=IGWJVsoLmzyeDFHusLEIktsYtKIMm5O6
+        I+y1zrYFVVWYHDSp4TiJ3vlgmVP7A3Rz4IyKfTE5ZqGjQ805KsKuL90N2CAPf2dB
+        2fYReFZ0ImkaVDpUDHq54MBFEzH53UwX3duorgMmnb5b/9WrkeHau1pbSt1lC8tA
+        tgTHNIuDpV4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 692E99FE01;
+        Fri, 21 Jul 2017 22:44:50 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CE5B79FE00;
+        Fri, 21 Jul 2017 22:44:49 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jiang Xin <worldhello.net@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Git List <git@vger.kernel.org>,
+        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+Subject: Re: [PATCH] PRItime: wrap PRItime for better l10n compatibility
+References: <249ac6f8-af3c-4b20-5bf0-87a82866cc7a@free.fr>
+        <3ccfa2fb49d471f807d77d9a280e4b7cfe56faea.1500304209.git.worldhello.net@gmail.com>
+        <xmqq7ez7htvj.fsf@gitster.mtv.corp.google.com>
+        <CANYiYbEcMrriaor9OT4c2qtfh9Ja5NJ9KBSxa3XhPAuoN0t42A@mail.gmail.com>
+        <xmqq60epfy27.fsf@gitster.mtv.corp.google.com>
+        <CANYiYbFROuyXso2ZKuJWDp4cSwpBu=bNAbC-yZtEyDwkbUcAhQ@mail.gmail.com>
+        <alpine.DEB.2.21.1.1707191456010.4193@virtualbox>
+        <xmqq8tjkm3ly.fsf@gitster.mtv.corp.google.com>
+        <xmqqo9sfkm32.fsf@gitster.mtv.corp.google.com>
+        <CANYiYbGSaaFOq7iw=ON1Oo87bSA96o=zyzym5RDT32kMae7bsw@mail.gmail.com>
+        <xmqqvamlfm6s.fsf@gitster.mtv.corp.google.com>
+        <CANYiYbF+XDANNbpZJ-jL7y81QhggW_snBuWeONSCUc4CPn2zMw@mail.gmail.com>
+        <xmqqr2x9fjpi.fsf@gitster.mtv.corp.google.com>
+        <CANYiYbGkuGNNYn4OF5w=1+Pqn9hEHWcD+DYVB6AXRs0vFEsY2Q@mail.gmail.com>
+Date:   Fri, 21 Jul 2017 19:44:48 -0700
 In-Reply-To: <CANYiYbGkuGNNYn4OF5w=1+Pqn9hEHWcD+DYVB6AXRs0vFEsY2Q@mail.gmail.com>
-References: <CANYiYbGkuGNNYn4OF5w=1+Pqn9hEHWcD+DYVB6AXRs0vFEsY2Q@mail.gmail.com>
+        (Jiang Xin's message of "Sat, 22 Jul 2017 08:43:18 +0800")
+Message-ID: <xmqqmv7xfavz.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: BB35AA8A-6E87-11E7-9F97-EFB41968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of doing a sed (s|PRItime|PRIuMAX) in working tree directly, we
-can use a tweaked version of gettext, which can replace PRItime macro to
-PRIuMAX (version 1.x) in runtime.  We do not need to reset our working
-tree anymore, and this operation can be run without a version controlled
-working tree.
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-The tweaked version of gettext is hosted at:
+> But it is rare to maintain po/git.pot file for 'maint' branch.  And if
+> I need, I will switch to a different version of gettext.  Makefile
+> will throw a error message, if I use a wrong version of gettext.
 
-    https://github.com/jiangxin/gettext
+Is that the "v1" in the check in your Makefile patch is about?  That
+is, when we need to change the underlying type, your updated gettext
+would say something different from "v1" and you will have Makefile
+update to expect that new version?  Then it would be workable, I'd
+guess.
 
-Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
----
- Makefile | 29 ++++++++++-------------------
- 1 file changed, 10 insertions(+), 19 deletions(-)
+>> Compared to that, Dscho's "hack" at least ties what PRItime is
+>> replaced with and what the source code says by being in the
+>> Makefile, which is tracked alongside the rest of the source.  So I
+>> somehow feel that the approach has smaller chance of going wrong.
+>
+> Benefit of using the tweak version of gettext:
+>
+> 1. `make pot` can be run in a tar extract directory (without git controlled).
+> 2. do not need to run `git reset --hard`.
+> 3.  it's quick (nobody cares).
 
-diff --git a/Makefile b/Makefile
-index 461c845d33..782c519133 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2221,33 +2221,23 @@ LOCALIZED_SH += t/t0200/test.sh
- LOCALIZED_PERL += t/t0200/test.perl
- endif
- 
--## Note that this is meant to be run only by the localization coordinator
--## under a very controlled condition, i.e. (1) it is to be run in a
--## Git repository (not a tarball extract), (2) any local modifications
--## will be lost.
- ## Gettext tools cannot work with our own custom PRItime type, so
--## we replace PRItime with PRIuMAX.  We need to update this to
--## PRIdMAX if we switch to a signed type later.
-+## we use a hacked version of xgettext to replace PRItime with PRIuMAX.
-+## We need to update this to PRIdMAX if we switch to a signed type later.
- 
--po/git.pot: $(GENERATED_H) FORCE
--	# All modifications will be reverted at the end, so we do not
--	# want to have any local change.
--	git diff --quiet HEAD && git diff --quiet --cached
--
--	@for s in $(LOCALIZED_C) $(LOCALIZED_SH) $(LOCALIZED_PERL); \
--	do \
--		sed -e 's|PRItime|PRIuMAX|g' <"$$s" >"$$s+" && \
--		cat "$$s+" >"$$s" && rm "$$s+"; \
--	done
-+check-xgettext:
-+	@if ! $(XGETTEXT) --version | grep -q "PRItime tweak v1"; then \
-+		echo >&2 "Error: must use a hacked version of xgettext, which can convert PRItime macro as we need."; \
-+		echo >&2 "Error: download it from https://github.com/jiangxin/gettext"; \
-+		exit 1; \
-+	fi
- 
-+po/git.pot: check-xgettext $(GENERATED_H) FORCE
- 	$(QUIET_XGETTEXT)$(XGETTEXT) -o$@+ $(XGETTEXT_FLAGS_C) $(LOCALIZED_C)
- 	$(QUIET_XGETTEXT)$(XGETTEXT) -o$@+ --join-existing $(XGETTEXT_FLAGS_SH) \
- 		$(LOCALIZED_SH)
- 	$(QUIET_XGETTEXT)$(XGETTEXT) -o$@+ --join-existing $(XGETTEXT_FLAGS_PERL) \
- 		$(LOCALIZED_PERL)
--
--	# Reverting the munged source, leaving only the updated $@
--	git reset --hard
- 	mv $@+ $@
- 
- .PHONY: pot
-@@ -2737,6 +2727,7 @@ check-builtins::
- .PHONY: coverage coverage-clean coverage-compile coverage-test coverage-report
- .PHONY: coverage-untested-functions cover_db cover_db_html
- .PHONY: coverage-clean-results
-+.PHONY: check-xgettext
- 
- coverage:
- 	$(MAKE) coverage-test
--- 
-2.14.0.rc0.1.g3ccfa2fb49
+This is about a tool and workflow only you (and your successor, when
+the time comes) need to use, so ultimately I'd prefer to leave it up
+to you, but I'd want to make sure you are making your decision with
+sound rationale.  I personally do not think 1. and 2. above are real
+issues in practice, because (1) you'd be committing the result of
+"make pot" so that translators can work off of it---which at least
+to me means that being able to run on a tarball extract is not a
+useful feature, and (2) when you are about to run xgettext to
+extract strings from the message, you do not want to have local
+modifications, extracting potentially modified strings with
+potentially offset line numbers in the resulting pot file, so
+having to run "git reset --hard" at the end is not a problem.
 
+I do not know if 3. is a practical issue or not (I did try "make
+pot" with the tip of 'master' tonight myself, and I didn't find it
+much slower than the unmodified one).
+
+Having said all that, again, I'd prefer to leave this up to you, so
+unless I hear that you changed your mind, the tip of 'master' I'll
+tag, probably sometime tomorrow my time, will have your patch to the
+Makefile to rely on your private edition of xgettext.
+
+Thanks.
