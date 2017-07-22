@@ -2,99 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 69B021F89D
-	for <e@80x24.org>; Sat, 22 Jul 2017 16:15:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CFD5B1F89D
+	for <e@80x24.org>; Sat, 22 Jul 2017 17:01:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752131AbdGVQPS (ORCPT <rfc822;e@80x24.org>);
-        Sat, 22 Jul 2017 12:15:18 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62842 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752099AbdGVQPR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Jul 2017 12:15:17 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0A972A1DBE;
-        Sat, 22 Jul 2017 12:15:10 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=wkralpxFZZfThQ77C/qgO1iWE1I=; b=AhlFio
-        dOPODtd8KXhytCO/ZwuYtoukKCMYMx0iO2f/D27Lk9KFn75tgBA75FYknzqkwcSF
-        ZY4BuV+ug71dGswXag+NBIKHKQOEvnkKRIiUS9nubFiOzxCGcspekfabJDnzwDBS
-        N/90cIlt/BzmZATUw9rUFHqJFIj0nz8AgVYNM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=VSkAIUrY3KROhDNgAtZ+rVbZQEJOCIh3
-        ceEjwtbFwLr/GOwuxQ11mqHJCoWB0uUnJ5rvjvUs9+DySzvFcXxzQEHvX5//kYrv
-        48ZTVssPagWldOy+o+A5Q2xKUzncH2m5fdtzdXp+bq4fJcZ+rqI5DjiHer3j35vU
-        fHfjP5rIEFs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 02839A1DBD;
-        Sat, 22 Jul 2017 12:15:10 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4DB5BA1DBB;
-        Sat, 22 Jul 2017 12:15:09 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH] sha1_file: use access(), not lstat(), if possible
-References: <alpine.DEB.2.21.1.1707191450570.4193@virtualbox>
-        <20170719171251.11906-1-jonathantanmy@google.com>
-        <xmqqbmoekce5.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.21.1.1707221309530.4271@virtualbox>
-Date:   Sat, 22 Jul 2017 09:15:08 -0700
-In-Reply-To: <alpine.DEB.2.21.1.1707221309530.4271@virtualbox> (Johannes
-        Schindelin's message of "Sat, 22 Jul 2017 13:16:27 +0200 (CEST)")
-Message-ID: <xmqq1sp8fnxv.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EEACB90A-6EF8-11E7-983D-61520C78B957-77302942!pb-smtp2.pobox.com
+        id S1753859AbdGVRBy (ORCPT <rfc822;e@80x24.org>);
+        Sat, 22 Jul 2017 13:01:54 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:33707 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750865AbdGVRBx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Jul 2017 13:01:53 -0400
+Received: by mail-pf0-f195.google.com with SMTP id k72so3772625pfj.0
+        for <git@vger.kernel.org>; Sat, 22 Jul 2017 10:01:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:cc:in-reply-to:references:date
+         :mime-version:content-transfer-encoding;
+        bh=YX0QiQEY3WE2XcasrrlnoZ1pxOpEiFQnY5itsg/ioaQ=;
+        b=V9DUJp7DFKt+SlVInzfelL5W5nG7b/bGqaePo6V4YcUZyi5PUdMpSV6ePVu0enV7/8
+         0j90ckXkrnueNzw4HPYKbyonvHYIEIfZiceaSgw7+uEV2/tZ+JcvDOc5J6Elxdkxt0qJ
+         Yv1t3FPCBbcAxvIfdjPj9qwG/fFBpuxTzFW3cqFES0cXH6U6LF7lV/nwuhWaVlgiFsdd
+         wk7GKelZeVNtbd1mytTz7VtrYh+Bt6dRECDNfCdHgtdBO07xiAd00JHuwQ2DEJWOs09Q
+         53EHmMvRai28+nZzMSue/J9ZUaRVqMzoOzQW/xtqcV5t4C29kbuQ6mUA24LQy13z/DDA
+         xk8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:cc:in-reply-to
+         :references:date:mime-version:content-transfer-encoding;
+        bh=YX0QiQEY3WE2XcasrrlnoZ1pxOpEiFQnY5itsg/ioaQ=;
+        b=Kq/1TydU6pzJhnUqrljlJx1TsD4S8yOcBQxRcyhgHTOGFjMsN/CiBcU/kQUXbXCgwl
+         unkGprNaeVqAiNeqErvowlyZ4SiOLY32+w8VxnEe0zx/6kXTkIrT1dwNHGgoyF7UpRx4
+         cSjsX4zVGWRzHT1z+8OqHCxth1us7W7kpmXBpEmxvGsV1lEE/blEXJ4gyhmcmKQd7lq4
+         28ChL6FJRkLp/MSAokTRGLJqtrKKIZAVWbFt7RpmXhhtzL5hrwkCHp5HGS5EuRwyuDYJ
+         19URL4whk7Q0kPXr0ydX4sRvGcFiNEF7nIYDpffagt8qpmnchFVGkkRoOl5RS0hNHu6b
+         R2bg==
+X-Gm-Message-State: AIVw112JAuDuijnhwA5dOkuc+RitP6UTYT6wS/+NCdwlc/F3LeVpJZ3V
+        +II7sUqXn/OCQg==
+X-Received: by 10.99.160.25 with SMTP id r25mr10323826pge.6.1500742912802;
+        Sat, 22 Jul 2017 10:01:52 -0700 (PDT)
+Received: from unique-pc ([2405:204:7301:6473:d1d6:310c:7d8b:6df2])
+        by smtp.googlemail.com with ESMTPSA id k12sm13632981pgp.56.2017.07.22.10.01.43
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 22 Jul 2017 10:01:52 -0700 (PDT)
+Message-ID: <1500742926.2744.4.camel@gmail.com>
+Subject: Re: [L10N] Kickoff of translation for Git 2.14.0 round 1
+From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+To:     =?ISO-8859-1?Q?Jean-No=EBl?= Avila <jn.avila@free.fr>,
+        Jiang Xin <worldhello.net@gmail.com>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        Marco Paolone <marcopaolone@gmail.com>,
+        Changwoo Ryu <cwryu@debian.org>,
+        Vasco Almeida <vascomalmeida@sapo.pt>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        =?UTF-8?Q?Tr=E1=BA=A7n_Ng=E1=BB=8Dc_Qu=C3=A2n?= 
+        <vnwildman@gmail.com>, Nelson Martell <nelson6e65@gmail.com>,
+        Brian Gesiak <modocache@gmail.com>, m4sk1n <m4sk1n@o2.pl>,
+        Vitaly <vitaly.gorodetsky@gmail.com>,
+        "Ying Ruei Liang (KK)" <thumbd03803@gmail.com>,
+        babycaseny <babycaseny@gmail.com>, johannes.schindelin@gmx.de
+Cc:     Git List <git@vger.kernel.org>
+In-Reply-To: <249ac6f8-af3c-4b20-5bf0-87a82866cc7a@free.fr>
+References: <CANYiYbET27mNrZZTNmn_dKBHLLEb4wJiznZ2O1X=WQ_GtamN7w@mail.gmail.com>
+         <249ac6f8-af3c-4b20-5bf0-87a82866cc7a@free.fr>
+Content-Type: text/plain; charset="ISO-8859-15"
+Date:   Sat, 22 Jul 2017 22:32:06 +0530
+Mime-Version: 1.0
+X-Mailer: Evolution 3.22.6-1 
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Sat, 2017-07-15 at 21:30 +0200, Jean-Noël Avila wrote:
+>  * commit 4ddb1354e8 ("status: contextually notify user about an initial
+> commit") plays sentence lego while introducing colorization which again
+> does not play well with i18n.
+> 
+What, if anything, should be done about this?
 
-> But this whole thread taps into a gripe I have with parts of Git's code
-> base: part of the code is not clear at all in its intent by virtue of
-> calling whatever POSIX function may seem to give the answer for the
-> intended question, instead of implementing a function whose name says
-> precisely what question is asked.
->
-> In this instance, we do not call a helper get_file_size(). Oh no. That
-> would make it too obvious. We call lstat() instead.
-
-I agree with you for this case and a case like this in general.  
-
-In codepaths at a lot lower level (they tend to be the ancient and
-quite fundamental ones) in our codebase, lstat() is often directly
-used by the caller because they are interested not only in a single
-aspect of a path but many fields in struct stat are of interest.
-
-When the code is interested in existence or size or whatever single
-aspect of a path and nothing else, however, the code would become
-easier to read if a helper function with a more specific name is
-used.  And it may even help individual platforms that do not want to
-use the full lstat() emulation, by telling them that other fields in
-struct stat are not needed.
-
-Of course, then the issue becomes what to do when we are interested
-in not just one but a selected few attributes.  Perhaps we create a
-helper "get_A_B_and_C_attributes_for_path()", which may use lstat()
-on POSIX and the most efficient way to get only A, B and C attributes
-on non-POSIX platforms.  The implementation would be OK, but the naming
-becomes a bit hard; we need to give it a good name.
-
-Things gets even more interesting when the set of attributes we are
-interested in grows by one and we need to rename the function to
-"get_A_B_C_and_D_attributes_for_path()".  When it is a lot easier to
-fall back to the full lstat() emulation on non-POSIX platforms, the
-temptation to just use it even though it would grab attributes that
-are not needed in that function grows, which needs to be resisted by
-those who are doing the actual implementation for a particular platform.
+-- 
+Kaartic
