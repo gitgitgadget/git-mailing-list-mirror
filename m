@@ -2,118 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E760F203F3
-	for <e@80x24.org>; Sat, 22 Jul 2017 02:45:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51005203F3
+	for <e@80x24.org>; Sat, 22 Jul 2017 04:39:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753516AbdGVCo6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Jul 2017 22:44:58 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53708 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751922AbdGVCo5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jul 2017 22:44:57 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 728859FE02;
-        Fri, 21 Jul 2017 22:44:50 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=R4eh81hofW1JFVr61gS963cEPIQ=; b=rFqn0k
-        2li3nleu5ND8khVeRyLEzJ6FCWsUXH2B7myRCzXZxLByU20S0Z5+95P+rTchAkyV
-        laWiqatus7TH2c6udzwWE+St39448MYezfqxRm6ZQpijf6IL/JLSNuuqjvC7eoo5
-        L3CobYtIbvGns7E9RTgy5l5Nu5Q5ixgZgGA04=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=IGWJVsoLmzyeDFHusLEIktsYtKIMm5O6
-        I+y1zrYFVVWYHDSp4TiJ3vlgmVP7A3Rz4IyKfTE5ZqGjQ805KsKuL90N2CAPf2dB
-        2fYReFZ0ImkaVDpUDHq54MBFEzH53UwX3duorgMmnb5b/9WrkeHau1pbSt1lC8tA
-        tgTHNIuDpV4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 692E99FE01;
-        Fri, 21 Jul 2017 22:44:50 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CE5B79FE00;
-        Fri, 21 Jul 2017 22:44:49 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jiang Xin <worldhello.net@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git List <git@vger.kernel.org>,
-        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
-Subject: Re: [PATCH] PRItime: wrap PRItime for better l10n compatibility
-References: <249ac6f8-af3c-4b20-5bf0-87a82866cc7a@free.fr>
-        <3ccfa2fb49d471f807d77d9a280e4b7cfe56faea.1500304209.git.worldhello.net@gmail.com>
-        <xmqq7ez7htvj.fsf@gitster.mtv.corp.google.com>
-        <CANYiYbEcMrriaor9OT4c2qtfh9Ja5NJ9KBSxa3XhPAuoN0t42A@mail.gmail.com>
-        <xmqq60epfy27.fsf@gitster.mtv.corp.google.com>
-        <CANYiYbFROuyXso2ZKuJWDp4cSwpBu=bNAbC-yZtEyDwkbUcAhQ@mail.gmail.com>
-        <alpine.DEB.2.21.1.1707191456010.4193@virtualbox>
-        <xmqq8tjkm3ly.fsf@gitster.mtv.corp.google.com>
-        <xmqqo9sfkm32.fsf@gitster.mtv.corp.google.com>
-        <CANYiYbGSaaFOq7iw=ON1Oo87bSA96o=zyzym5RDT32kMae7bsw@mail.gmail.com>
-        <xmqqvamlfm6s.fsf@gitster.mtv.corp.google.com>
-        <CANYiYbF+XDANNbpZJ-jL7y81QhggW_snBuWeONSCUc4CPn2zMw@mail.gmail.com>
-        <xmqqr2x9fjpi.fsf@gitster.mtv.corp.google.com>
-        <CANYiYbGkuGNNYn4OF5w=1+Pqn9hEHWcD+DYVB6AXRs0vFEsY2Q@mail.gmail.com>
-Date:   Fri, 21 Jul 2017 19:44:48 -0700
-In-Reply-To: <CANYiYbGkuGNNYn4OF5w=1+Pqn9hEHWcD+DYVB6AXRs0vFEsY2Q@mail.gmail.com>
-        (Jiang Xin's message of "Sat, 22 Jul 2017 08:43:18 +0800")
-Message-ID: <xmqqmv7xfavz.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BB35AA8A-6E87-11E7-9F97-EFB41968708C-77302942!pb-smtp1.pobox.com
+        id S1750798AbdGVEjY (ORCPT <rfc822;e@80x24.org>);
+        Sat, 22 Jul 2017 00:39:24 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:33005 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750750AbdGVEjY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Jul 2017 00:39:24 -0400
+Received: by mail-wr0-f195.google.com with SMTP id y43so13411818wrd.0
+        for <git@vger.kernel.org>; Fri, 21 Jul 2017 21:39:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=h7ofG6OS3V9Cj9IOnO05bhbhjOAQvSnTYct7vINsugA=;
+        b=ix1YPdIeGUpOYasGJIbRUsWiqIQFjUZyZHMwLkDMcyU1gGlE4VZbwSK8H4KrW0dNIv
+         OSGiwskFvV+GyHkMu02AfN5aD6FDVd3FLcLceq5HHQnELiLRHrPHHxdfm1xw+8Tms8Tu
+         QmzJIhALySLLkAy81DKycRUaGqKJKlbb0Rs/AviFq0BiYqk9UOEBShur0sgzIsIhTGdP
+         3N52rdBBE9p1o+TmlJb8k/hjLRXec5MDzNNEDzZXGbRG5GwU8UH6r1UP8WQgLlx/TwCV
+         46aK1G6ucR2vWSJCHy+Dl4XaHTKhnV8L094s66Rf4KQ2aXyn2blSJFWEGdFXrdBiNpph
+         rbbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=h7ofG6OS3V9Cj9IOnO05bhbhjOAQvSnTYct7vINsugA=;
+        b=mpfXnuFKYTmj6l+Y7EqoGDSyDdvJtoNQxF3O77JeW9QhAt8juLDi3OAWxAdjJxGm/e
+         mST0pt09X1DISqAatVZVVMElEV6XwpZHARm+kGrPpNmQJLmXcnW/xyGggYj19S2mEtgN
+         As7UCNVkn6wkc+Bh0EsilErUdhQ5GBLCPqypFPTmM+ScfA+UvSRsb9QbC1ro2+zDdxNg
+         z/BdXeqxjNR6wLjTfbDFXKERGG4vkyod9Ja3styTDYsaSU5TD/DM3DYG2Qdbh+SIhbs9
+         PKAURf63xLTnspaPzwPUXM/irFJop8XdUnM/fryNr14vzMJaQJjjTPpVvXtiUCwEaDn4
+         PBTg==
+X-Gm-Message-State: AIVw113J2KGEulERlZlS0Xey/z6Gxds1IybegLQnyVE92ViDdlxf1kUg
+        mr0DSsNXXXLLiTUu
+X-Received: by 10.223.134.26 with SMTP id 26mr8074284wrv.268.1500698362771;
+        Fri, 21 Jul 2017 21:39:22 -0700 (PDT)
+Received: from localhost.localdomain (72.198.126.78.rev.sfr.net. [78.126.198.72])
+        by smtp.gmail.com with ESMTPSA id u49sm4688790wrc.14.2017.07.21.21.39.21
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 21 Jul 2017 21:39:21 -0700 (PDT)
+From:   Christian Couder <christian.couder@gmail.com>
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Lukas Fleischer <lfleischer@lfos.de>,
+        Jeff King <peff@peff.net>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v2] refs: use skip_prefix() in ref_is_hidden()
+Date:   Sat, 22 Jul 2017 06:39:12 +0200
+Message-Id: <20170722043912.32118-1-chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.14.0.rc0.26.g981adb928e.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+This is shorter, makes the logic a bit easier to follow, and is
+perhaps a bit faster too.
 
-> But it is rare to maintain po/git.pot file for 'maint' branch.  And if
-> I need, I will switch to a different version of gettext.  Makefile
-> will throw a error message, if I use a wrong version of gettext.
+The logic is to make the final decision only when "subject" is there,
+its early part matches "match", and the match is at the slash
+boundary (or the whole thing).
 
-Is that the "v1" in the check in your Makefile patch is about?  That
-is, when we need to change the underlying type, your updated gettext
-would say something different from "v1" and you will have Makefile
-update to expect that new version?  Then it would be workable, I'd
-guess.
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
 
->> Compared to that, Dscho's "hack" at least ties what PRItime is
->> replaced with and what the source code says by being in the
->> Makefile, which is tracked alongside the rest of the source.  So I
->> somehow feel that the approach has smaller chance of going wrong.
->
-> Benefit of using the tweak version of gettext:
->
-> 1. `make pot` can be run in a tar extract directory (without git controlled).
-> 2. do not need to run `git reset --hard`.
-> 3.  it's quick (nobody cares).
+The change with the previous version was suggested by Junio in
 
-This is about a tool and workflow only you (and your successor, when
-the time comes) need to use, so ultimately I'd prefer to leave it up
-to you, but I'd want to make sure you are making your decision with
-sound rationale.  I personally do not think 1. and 2. above are real
-issues in practice, because (1) you'd be committing the result of
-"make pot" so that translators can work off of it---which at least
-to me means that being able to run on a tarball extract is not a
-useful feature, and (2) when you are about to run xgettext to
-extract strings from the message, you do not want to have local
-modifications, extracting potentially modified strings with
-potentially offset line numbers in the resulting pot file, so
-having to run "git reset --hard" at the end is not a problem.
+https://public-inbox.org/git/xmqqk231hgpz.fsf@gitster.mtv.corp.google.com/
 
-I do not know if 3. is a practical issue or not (I did try "make
-pot" with the tip of 'master' tonight myself, and I didn't find it
-much slower than the unmodified one).
+ refs.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-Having said all that, again, I'd prefer to leave this up to you, so
-unless I hear that you changed your mind, the tip of 'master' I'll
-tag, probably sometime tomorrow my time, will have your patch to the
-Makefile to rely on your private edition of xgettext.
+diff --git a/refs.c b/refs.c
+index ba22f4acef..ea2b9f84f8 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1160,7 +1160,7 @@ int ref_is_hidden(const char *refname, const char *refname_full)
+ 		const char *match = hide_refs->items[i].string;
+ 		const char *subject;
+ 		int neg = 0;
+-		int len;
++		const char *p;
+ 
+ 		if (*match == '!') {
+ 			neg = 1;
+@@ -1175,10 +1175,9 @@ int ref_is_hidden(const char *refname, const char *refname_full)
+ 		}
+ 
+ 		/* refname can be NULL when namespaces are used. */
+-		if (!subject || !starts_with(subject, match))
+-			continue;
+-		len = strlen(match);
+-		if (!subject[len] || subject[len] == '/')
++		if (subject &&
++		    skip_prefix(subject, match, &p) &&
++		    (!*p || *p == '/'))
+ 			return !neg;
+ 	}
+ 	return 0;
+-- 
+2.14.0.rc0.26.g981adb928e.dirty
 
-Thanks.
