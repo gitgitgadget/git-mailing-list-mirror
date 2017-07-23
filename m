@@ -2,84 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,PI_EMPTY_SUBJ,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	TVD_SPACE_RATIO,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F345203F3
-	for <e@80x24.org>; Sun, 23 Jul 2017 08:43:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1AFAD203F3
+	for <e@80x24.org>; Sun, 23 Jul 2017 09:44:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752345AbdGWIlS (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Jul 2017 04:41:18 -0400
-Received: from mail-lf0-f49.google.com ([209.85.215.49]:33393 "EHLO
-        mail-lf0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752307AbdGWIkb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Jul 2017 04:40:31 -0400
-Received: by mail-lf0-f49.google.com with SMTP id p2so19481906lfg.0
-        for <git@vger.kernel.org>; Sun, 23 Jul 2017 01:40:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=tf7xaf910xTpCV3zS7a+28fePYrn8ajWT/J2ugEMJpw=;
-        b=ntzuyWn4X5tnM1Up+IhrfeQQlVcWFMQ1Lq0aAK9GsfUPsBy8DvkzeZBQHMs18Pedyh
-         eyM3pdlMyvr13yITTAJ9xTkabhf33sC6s0jWeUtj6t3KK0AA5tqsGdyC8QGmP942pvJd
-         7A8TjAI1FYVTXIxeSOIAn3KstO7cAvkHxOtUDUHK7vIBJ4MDErkBdUAhEWP7m9u3c5Y8
-         KtMRuxyxkrUd8E90Wsu5aAUej2A3Nz+bhnAf1W7Gq4AI+afgZhNM3A9TOkxFmC2nuO3h
-         xt6MBcJsty/eaUI+gGN1BKP0tOzUk7c3iI2njBLQDzQOuqG8G84NZpB/t3bVJ8YcdaI/
-         F67A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=tf7xaf910xTpCV3zS7a+28fePYrn8ajWT/J2ugEMJpw=;
-        b=ILWpmCOTqCBFDML0oIJtf+BHF5VbI19rOrdM2/ucDj1vOF4W4h/wPHx/mvV9xN7Bjx
-         Pau2jY2wUo8pNZ5Vu2g4EwntB0DFynxcXGJ4WCXJZe7cOCNirLoXiX5j3wScuAAEWFwt
-         n8BpTv55LgEglivtObFjPCuu5TdcdLAbtF3K9WqVceL9Acr9n0viXbsH0xo76V2lv00s
-         oPHTjbfgGDREb1h1RYGkIIu9lmCCjd82bwBzgHfg84GoTskvN2EXggAuhJbdHfzV4Vg7
-         RkaswrFkdOCAwDhSQpYjPKRsq2SJjeqB0G5aDCZYGSFnK3amohwLmkOCw7vMYwN8N/Dh
-         LzWg==
-X-Gm-Message-State: AIVw1135kPIcvOEQ4YNfKAqiZjDVEEf4FvK0A5uxEVAOHdc20mlDvaJ6
-        lx9usPXz4NQd1nqA73dKU+QjKk5tDw==
-X-Received: by 10.46.88.6 with SMTP id m6mr3008584ljb.58.1500799229544; Sun,
- 23 Jul 2017 01:40:29 -0700 (PDT)
+        id S1751421AbdGWJoS (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Jul 2017 05:44:18 -0400
+Received: from gateway22.websitewelcome.com ([192.185.47.48]:15497 "EHLO
+        gateway22.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750909AbdGWJoR (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 23 Jul 2017 05:44:17 -0400
+X-Greylist: delayed 1260 seconds by postgrey-1.27 at vger.kernel.org; Sun, 23 Jul 2017 05:44:17 EDT
+Received: from cm12.websitewelcome.com (cm12.websitewelcome.com [100.42.49.8])
+        by gateway22.websitewelcome.com (Postfix) with ESMTP id 0E6E516FCE
+        for <git@vger.kernel.org>; Sun, 23 Jul 2017 04:23:15 -0500 (CDT)
+Received: from mx26.hostgator.mx ([192.185.131.20])
+        by cmsmtp with SMTP
+        id ZD5td2q28dHTnZD5tdVbhG; Sun, 23 Jul 2017 04:22:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=cinnergi.mx
+        ; s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:To:From:
+        Message-Id:Subject:Date:Sender:Reply-To:Cc:Content-ID:Content-Description:
+        Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+        In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=d9oKHONRNg6NPuC87dfEE9GlunipP5INY89ZROIjE+A=; b=i5aAsYrEuFts4190oSrVByEFlF
+        /ED94vadyD9bf8jvdcGtnuzmnN1J4FCLuX3p01rN9nkM+DXU78+97MxK3NreRVc7NDQQdvxIUfzbU
+        doAwQZeNbqXbGMKnAgVqHg3EdUcN2Gw77GsX8SsqaqAYUKovcz7dJAqGrceNgulW2PgaNc4BfCEMZ
+        1FEqvzx5zvgcjjcXFWv4FNZZ+uDxC9BFTiiTW/DGsLdUEhj0ywYvVi3TJKKTiV+x5MkroQ5dhUILy
+        10Z99JWsCUWi1b4V6ebSGDnPhITi7rB+QnFRWZrEcqXzH1kCwfsozZdpfY66EvCQc9pRhgdA6OVae
+        b6Hr/qIg==;
+Received: from [106.77.189.136] (port=64892 helo=cinnergi.mx)
+        by mx26.hostgator.mx with esmtpa (Exim 4.87)
+        (envelope-from <gsoto@cinnergi.mx>)
+        id 1dZD6Y-000HCH-0u
+        for git@vger.kernel.org; Sun, 23 Jul 2017 06:23:14 -0300
+Date:   Sun, 23 Jul 2017 12:23:13 +0300
+Subject: 
+Message-Id: <dkqznydpmnhy16xahfthsqq4.15008017934286@email.android.com>
+From:   "madhan_dc" <gsoto@cinnergi.mx>
+To:     "git" <git@vger.kernel.org>
 MIME-Version: 1.0
-Received: by 10.25.74.18 with HTTP; Sun, 23 Jul 2017 01:40:08 -0700 (PDT)
-In-Reply-To: <223fa7c7-196d-e4fe-85b5-7d7cc576aa52@list.ru>
-References: <234492d7-7fd6-f847-8b85-010732ff43b6@list.ru> <xmqqbmodhb5h.fsf@gitster.mtv.corp.google.com>
- <223fa7c7-196d-e4fe-85b5-7d7cc576aa52@list.ru>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Sun, 23 Jul 2017 01:40:08 -0700
-Message-ID: <CA+P7+xrhLf9eS_KkxTmWZgQ+Ho8VN83GS-OvxmboZ=_iY4dY0g@mail.gmail.com>
-Subject: Re: git gc seems to break --symbolic-full-name
-To:     Stas Sergeev <stsp@list.ru>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - mx26.hostgator.mx
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - cinnergi.mx
+X-BWhitelist: no
+X-Source-IP: 106.77.189.136
+X-Exim-ID: 1dZD6Y-000HCH-0u
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: (cinnergi.mx) [106.77.189.136]:64892
+X-Source-Auth: gsoto@cinnergi.mx
+X-Email-Count: 225
+X-Source-Cap: Y2lubmVyZ2k7Y2lubmVyZ2k7bXgyNi5ob3N0Z2F0b3IubXg=
+X-Local-Domain: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 21, 2017 at 12:03 PM, Stas Sergeev <stsp@list.ru> wrote:
-> I wanted some kind of file to use it as a
-> build dependency for the files that needs
-> to be re-built when the head changes.
-> This works very well besides git gc.
-> What other method can be used as simply
-> as that? git show-ref does not seem to be
-> giving this.
+Z3JlZXRpbmdzIEdpdA0KDQoNCg0KaHR0cDovL3Jvb3R5dS5jbi91cGxvYWRfdmlkZW8ucGhwP25v
+dGU9ZXgyYzdrenA0cno4NQ0KDQoNCg0KDQptYWRoYW5fZGM=
 
-There's no real way to do this, and even prior to 2007 when the file
-always existed, there's no guarantee it's modification time is valid.
-
-I'd suggest you have a phony rule which you always run, that checks
-the ref, and sees if it's different from "last time" and then updates
-a different file if that's the case. Then the build can depend on the
-generated file, and you'd be able to figure it out.
-
-What's the real goal for depending on when the ref changes?
-
-Thanks,
-Jake
