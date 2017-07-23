@@ -2,96 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 78A4A1F600
-	for <e@80x24.org>; Sun, 23 Jul 2017 12:42:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9DF161F600
+	for <e@80x24.org>; Sun, 23 Jul 2017 14:59:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751450AbdGWMmk (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Jul 2017 08:42:40 -0400
-Received: from mail-it0-f45.google.com ([209.85.214.45]:36875 "EHLO
-        mail-it0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751346AbdGWMmj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Jul 2017 08:42:39 -0400
-Received: by mail-it0-f45.google.com with SMTP id v127so24157416itd.0
-        for <git@vger.kernel.org>; Sun, 23 Jul 2017 05:42:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ez2Qtbh6yg1j3dVg05qVxMi+dE3KPRCmZm+3WjJrRhg=;
-        b=KqKLJft3mlhaMHZWc+wQxunEJMGCbZedu63/a+whflp+C4PUph/bkCS01IH8eO4fUw
-         MW7I32kOKkTAT+jDnmzHTPIac1aelAwAAvZh6M5n7yXTmYMtY3h1atBtMZxdyHIQNBcu
-         WyPQ9S1s22w0ZqyqR3+kozhEycaRHocM8mcmcrHABdOaQnK3XvrH6sW0plQwLVO6TP5t
-         9zrdEK3n27pNYrEqWyvlTEVJ5jb0grjjONRn2X+Q5cLNGN9Q0Om0LRXKYT4pv6KCwFZ7
-         NWkkxDdNlIFm4pu65CAytP+t6vsuoUnC+USVkfYkLeeaRg64PVFvPNEUUvys/lQguEIh
-         yQcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ez2Qtbh6yg1j3dVg05qVxMi+dE3KPRCmZm+3WjJrRhg=;
-        b=l6kQXsk+6xMgZqroroWoVorVcpABSkOsDCDZWlF63tFo0LzYBUUwH0H2qczn8sLMUn
-         prOMmFPIvRcX9b79LJrtDMawMEvuqzT4HmUUxU8feIw6blbdJE9bsg8QeCebUHNc5pK8
-         RA7T07uIa0U23CPMfBykDe1yVCDEfRgF3qHphDg1e4qoP1IWFV1o7hR5ZgvmAvrVpnBm
-         KZPq43N1msNCxqjMzZvlpYnMjCYUwlx5xUwiKNlqtdB+hgJJXSqJ1KQGzXazirmj1Hxj
-         2AwINPRHP494+XQEM7POPZ0o2o6Rt8ErhhH9nRcJZOHei0h+57rg4DaB2E2Mei6liflg
-         C+vA==
-X-Gm-Message-State: AIVw111Sg6sOhotUtqzHm6Q5IIjwP7IJ+VkG8ACG2huVHxRtNfS62cvk
-        AWKa55ZQDECG5aXlyGf8r9X4f6TwnD8Iisw=
-X-Received: by 10.36.206.196 with SMTP id v187mr4401974itg.44.1500813758652;
- Sun, 23 Jul 2017 05:42:38 -0700 (PDT)
+        id S1751924AbdGWO71 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Jul 2017 10:59:27 -0400
+Received: from mail.mathema.de ([195.110.18.10]:56744 "EHLO mail.mathema.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751625AbdGWO70 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Jul 2017 10:59:26 -0400
+X-Greylist: delayed 502 seconds by postgrey-1.27 at vger.kernel.org; Sun, 23 Jul 2017 10:59:26 EDT
+Received: from localhost (localhost [127.0.0.1])
+        by mail.mathema.de (Postfix) with ESMTP id 854311AC2A99
+        for <git@vger.kernel.org>; Sun, 23 Jul 2017 16:51:02 +0200 (CEST)
+Received: from mail.mathema.de ([127.0.0.1])
+        by localhost (mail.mathema.de [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id 1xqvbB0JngSo for <git@vger.kernel.org>;
+        Sun, 23 Jul 2017 16:51:01 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.mathema.de (Postfix) with ESMTP id CE1A91AC2AF9
+        for <git@vger.kernel.org>; Sun, 23 Jul 2017 16:51:01 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mail.mathema.de
+Received: from mail.mathema.de ([127.0.0.1])
+        by localhost (mail.mathema.de [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id 6MNTrrlCGLxM for <git@vger.kernel.org>;
+        Sun, 23 Jul 2017 16:51:01 +0200 (CEST)
+Received: from [192.168.178.20] (ppp-212-114-233-222.dynamic.mnet-online.de [212.114.233.222])
+        by mail.mathema.de (Postfix) with ESMTPSA id 9EBA01AC2A99
+        for <git@vger.kernel.org>; Sun, 23 Jul 2017 16:51:01 +0200 (CEST)
+To:     Git Mailing List <git@vger.kernel.org>
+From:   Andreas Heiduk <andreas.heiduk@mathema.de>
+Subject: Bug^Feature? fetch protects only current working tree branch
+Message-ID: <cb957174-5e9a-5603-ea9e-ac9b58a2eaad@mathema.de>
+Date:   Sun, 23 Jul 2017 16:50:54 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Received: by 10.107.200.71 with HTTP; Sun, 23 Jul 2017 05:42:18 -0700 (PDT)
-In-Reply-To: <241D60E0-1687-4DD8-A18C-CF7310DBFAEB@jetbrains.com>
-References: <241D60E0-1687-4DD8-A18C-CF7310DBFAEB@jetbrains.com>
-From:   Alexei Lozovsky <a.lozovsky@gmail.com>
-Date:   Sun, 23 Jul 2017 15:42:18 +0300
-Message-ID: <CALhvvbbud3oTTyzErQVumgUcdSPCcfGV4D31c66-J7P-jneqbQ@mail.gmail.com>
-Subject: Re: Remove help advice text from git editors for interactive rebase
- and reword
-To:     Kirill Likhodedov <kirill.likhodedov@jetbrains.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Language: de-BE
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 23 July 2017 at 13:03, Kirill Likhodedov wrote:
-> Hello,
->
-> is it possible to remove the helping text which appears at the bottom
-> of the Git interactive rebase editor (the one with the list of
-> instructions)
+A `git fetch . origin/master:master` protects the currently checked out 
+branch (HEAD) unless the `-u/--update-head-ok` is supplied. This avoids a
+mismatch between the index and HEAD. BUT branches which are HEADs in other
+working trees do not get that care - their state is silently screwed up.
 
-I believe currently there is not way to do it. The interactive rebase
-is implemented in git-rebase--interactive.sh which always makes a call
-to append_todo_help to append the help text to the todo list of commits.
+Is this intended behaviour or and just an oversight while implementing
+`git worktree`?
 
-> and the one which appears at the bottom of the commit editor (which
-> appears on rewording a commit or squashing commits)?
 
-This one too seems to be hardcoded in builtin/commit.c.
+Steps to reproduce
 
-> I can parse and strip out the help pages (but it is not very reliable
-> since the text may change in future)
+    # setup
 
-I doubt the syntax of the interactive rebase todo list will ever change,
-so you can reliably remove all lines that are empty or start with the
-$(git config --get core.commentchar) or '#' if that's empty or 'auto'.
+    git clone -b master $SOMETHING xtemp
+    cd xtemp
+    git reset --hard HEAD~5 # pretend to be back some time
+    git worktree add ../xtemp-wt1
+    git worktree add ../xtemp-wt2
 
-However, it's harder with the commit messages during --amend as the
-comment character is not really fixed and can be dynamically selected
-to not conflict with the characters used in the commit message if the
-core.commentchar is set to 'auto'.
+    # test
 
-> However I suppose that experienced command line users could also
-> benefit from such configuration, since this helping text is intended
-> only for newbies and is more like a noise for advanced users.
+    git fetch . origin/master:master
+    
+        fatal: Refusing to fetch into current branch refs/heads/master  of non-bare repository
+        fatal: The remote end hung up unexpectedly
 
-Well, the text is appended to the todo list of commits, so not that it
-gets too much in the way of editing the list by humans.
+    # OK, current working tree is protected, try another one:
+
+    git fetch . origin/master:xtemp-wt1
+
+        From .
+           b4d1278..6e7b60d  origin/master -> xtemp-wt1
+
+    cd ../xtemp-wt1
+    git status
+
+        # admire messed up working tree here
+
+    # The protection is really "current working tree", not "first/main working tree"!
+
+    git fetch . origin/master:master
+
+        From .
+           b4d1278..6e7b60d  origin/master -> master
+
+    cd ../xtemp
+    git status
+
+        # now it's messed up here too
+
+    # Try with "--update-head-ok" but check first.
+
+    cd ../xtemp-wt2
+
+    git fetch . origin/master:xtemp-wt2
+
+        fatal: Refusing to fetch into current branch refs/heads/xtemp-wt2 of non-bare repository
+        fatal: The remote end hung up unexpectedly
+
+    git fetch --update-head-ok . origin/master:xtemp-wt2
+        
+        From .
+           b4d1278..6e7b60d  origin/master -> xtemp-wt2
+
+
