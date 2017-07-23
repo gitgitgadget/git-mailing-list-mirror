@@ -2,122 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2CA441F89D
-	for <e@80x24.org>; Sun, 23 Jul 2017 03:51:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D1301F89D
+	for <e@80x24.org>; Sun, 23 Jul 2017 06:02:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754501AbdGWDvm (ORCPT <rfc822;e@80x24.org>);
-        Sat, 22 Jul 2017 23:51:42 -0400
-Received: from 2.mo173.mail-out.ovh.net ([178.33.251.49]:57256 "EHLO
-        2.mo173.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751373AbdGWDvm (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Jul 2017 23:51:42 -0400
-X-Greylist: delayed 3599 seconds by postgrey-1.27 at vger.kernel.org; Sat, 22 Jul 2017 23:51:41 EDT
-Received: from player726.ha.ovh.net (b6.ovh.net [213.186.33.56])
-        by mo173.mail-out.ovh.net (Postfix) with ESMTP id 973C762708
-        for <git@vger.kernel.org>; Sun, 23 Jul 2017 04:33:27 +0200 (CEST)
-Received: from [172.31.18.214] (unknown [103.90.76.125])
-        (Authenticated sender: jean-noel.avila@scantech.fr)
-        by player726.ha.ovh.net (Postfix) with ESMTPSA id C4C6E2A007E;
-        Sun, 23 Jul 2017 04:33:22 +0200 (CEST)
-Subject: Re: [PATCH] PRItime: wrap PRItime for better l10n compatibility
-To:     Jiang Xin <worldhello.net@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <249ac6f8-af3c-4b20-5bf0-87a82866cc7a@free.fr>
- <3ccfa2fb49d471f807d77d9a280e4b7cfe56faea.1500304209.git.worldhello.net@gmail.com>
- <xmqq7ez7htvj.fsf@gitster.mtv.corp.google.com>
- <CANYiYbEcMrriaor9OT4c2qtfh9Ja5NJ9KBSxa3XhPAuoN0t42A@mail.gmail.com>
- <xmqq60epfy27.fsf@gitster.mtv.corp.google.com>
- <CANYiYbFROuyXso2ZKuJWDp4cSwpBu=bNAbC-yZtEyDwkbUcAhQ@mail.gmail.com>
- <alpine.DEB.2.21.1.1707191456010.4193@virtualbox>
- <xmqq8tjkm3ly.fsf@gitster.mtv.corp.google.com>
- <xmqqo9sfkm32.fsf@gitster.mtv.corp.google.com>
- <CANYiYbGSaaFOq7iw=ON1Oo87bSA96o=zyzym5RDT32kMae7bsw@mail.gmail.com>
- <xmqqvamlfm6s.fsf@gitster.mtv.corp.google.com>
- <CANYiYbF+XDANNbpZJ-jL7y81QhggW_snBuWeONSCUc4CPn2zMw@mail.gmail.com>
- <xmqqr2x9fjpi.fsf@gitster.mtv.corp.google.com>
- <CANYiYbGkuGNNYn4OF5w=1+Pqn9hEHWcD+DYVB6AXRs0vFEsY2Q@mail.gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git List <git@vger.kernel.org>
-From:   =?UTF-8?Q?Jean-No=c3=abl_AVILA?= <jean-noel.avila@scantech.fr>
-Message-ID: <2421d5f3-12ee-833b-72d8-de627fbfe26c@scantech.fr>
-Date:   Sun, 23 Jul 2017 04:33:18 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        id S1750964AbdGWGCj (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Jul 2017 02:02:39 -0400
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:35657 "EHLO
+        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750815AbdGWGCi (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Jul 2017 02:02:38 -0400
+Received: by mail-wm0-f48.google.com with SMTP id c184so1398025wmd.0
+        for <git@vger.kernel.org>; Sat, 22 Jul 2017 23:02:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=Z/KCO6F83oeGP170O8MQJUi6/7EvOZd2bYqsyhfkCZg=;
+        b=Z47EBrLxktzDU1Rzwf0hIDmr0TU3CeEfZrO3xGZ9hGMPnt4KUUtaGGygM1/vjbXfj2
+         PkXzRxsULB+RFvHmGxW7EFMx/iZl6PF2koUBGlPvFHRr2W+jXmOTdT3EjEBA2NEvKgLu
+         /s64ktxf7/4MjrExXqwJ3sLQipapcx6GZBCAI+xquzWzARPwc7ZHu8QJ9HmSLIzHIJFo
+         9RPSSrxHuOENOnPYA2xPystbPnh5VVZJpiJHVIuNbE1kRMs7D5XpAPKDf3NuK9nru4oG
+         tiCD+B5u/8NrS5qn96zRG6Cv+Wsl6um6NccHZk1pIRXiaIKgZbPFVK6RbdbtSNrwngAZ
+         wb0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=Z/KCO6F83oeGP170O8MQJUi6/7EvOZd2bYqsyhfkCZg=;
+        b=HWp0gF5ykgOOWdffzkeWNJv8iXaAzEMIjZc88NhncN9crIUNOnMJiXhfUWze7dWIIZ
+         BDGv9MqtCXd85CM+QwHZsCZwrLwjJnyDKPsRLJiOEKr6H0LA6A+FadMt3nahj2fDrjW+
+         4KmsjDgrFm9OkVotek+dS1gv3lL2v/jPqGNjpko+YdOhF0Slb4P+lEBbHRXhWtinNkNd
+         ghcVWssx32Qo/DE6guCvew+PH7aCTFIyMEfkwC+UlHmO/Dou4FJgY2edMRHYUgwtPdGJ
+         Gm+AsBpIlcW2XUb0FMC0kRm8gUYwIhjpEoaRR7GxoSFEl5PATk3e4Rw78Xhety9t56Il
+         9nPQ==
+X-Gm-Message-State: AIVw1104coUww7e9hTae/YWQlfOyNASX1cqr0yslA/Vxo8v3Xm4mCDhT
+        KjlOJJ/RK22EItyMO7H9RLQ1HpsOew==
+X-Received: by 10.80.166.133 with SMTP id e5mr10287118edc.71.1500789757326;
+ Sat, 22 Jul 2017 23:02:37 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CANYiYbGkuGNNYn4OF5w=1+Pqn9hEHWcD+DYVB6AXRs0vFEsY2Q@mail.gmail.com>
-Content-Type: multipart/mixed;
- boundary="------------44B95F22952C1C6E3FC5C122"
-Content-Language: fr
-X-Ovh-Tracer-Id: 790100260400235485
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeelkedrhedtgdeikecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+Received: by 10.80.134.76 with HTTP; Sat, 22 Jul 2017 23:02:36 -0700 (PDT)
+From:   Orgad Shaneh <orgads@gmail.com>
+Date:   Sun, 23 Jul 2017 09:02:36 +0300
+Message-ID: <CAGHpTB+dSGza5Lwg76WXg+pPZ=dz3QdCTnDozWG_y+5_bPor6A@mail.gmail.com>
+Subject: recursive grep doesn't respect --color=always inside submodules
+To:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a multi-part message in MIME format.
---------------44B95F22952C1C6E3FC5C122
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Hi,
 
-Le 22/07/2017 à 02:43, Jiang Xin a écrit :
->
-> Benefit of using the tweak version of gettext:
->
-> 1. `make pot` can be run in a tar extract directory (without git controlled).
+When git grep --color=always is used, and the output is redirected to
+a file or a pipe, results inside submodules are not colored. Results
+in the supermodule are colored correctly.
 
-This issue is real for packet maintainers who can patch the original
-source and run their own set of utilities outside of a git repo. This
-can be possible with Junio's proposition by writing the files to a
-temporary directory before running the xgettext, then removing the
-temporary directory.
-
-Please note that with respect to this issue, the patched xgettext
-approach is completely disruptive.
-
-> 2. do not need to run `git reset --hard`.
-
-Same as before.
-
-> 3.  it's quick (nobody cares).
->
-
-Requiring patched tools is really breaking collaboration. Git made a
-great case of relying on standard tools (not even GNU versions), so that
-would really go backward.
-
-
-Plus, I hope that some day, instead of translators finding afterwards
-that a change broke i18n capabilities, developpers would have some kind
-of sanity check. Requiring special versions of i18n tooling stops this hope.
-
-
---------------44B95F22952C1C6E3FC5C122
-Content-Type: text/x-vcard; charset=utf-8;
- name="jean-noel_avila.vcf"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename="jean-noel_avila.vcf"
-
-begin:vcard
-fn;quoted-printable:Jean-No=C3=ABl AVILA
-n;quoted-printable:AVILA;Jean-No=C3=ABl
-org:SCANTECH FRANCE
-adr;quoted-printable:Savoie Technolac, BP244;;34, All=C3=A9e du Lac d'Aiguebelette;Le Bourget du Lac;;73374;FRANCE
-email;internet:jean-noel.avila@scantech.fr
-title:Embedded Systems Manager
-tel;work:+33 479265450
-tel;cell:+33 633046418
-x-mozilla-html:FALSE
-url:http://www.scantech.fr
-version:2.1
-end:vcard
-
-
---------------44B95F22952C1C6E3FC5C122--
+- Orgad
