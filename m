@@ -2,666 +2,271 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D9D49203F3
-	for <e@80x24.org>; Mon, 24 Jul 2017 22:49:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61372203F3
+	for <e@80x24.org>; Mon, 24 Jul 2017 23:00:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932869AbdGXWtr (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Jul 2017 18:49:47 -0400
-Received: from pb-sasl-trial3.pobox.com ([64.147.108.87]:58544 "EHLO
-        pb-sasl-trial3.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752931AbdGXWto (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jul 2017 18:49:44 -0400
-Received: from pb-sasl-trial3.pobox.com (ro.sql.listbox.com [127.0.0.1])
-        by pb-sasl-trial3.pobox.com (Postfix) with ESMTP id 1CE2D13BBB;
-        Mon, 24 Jul 2017 18:49:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-        :subject:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=SKP9rgK5Je1uY/ErN4LCAkuou
-        5A=; b=eEGwxCho2hjerk01JY+i61sxx5RkbD4ZIFjOfCdbmAWXfAf07BIgO9BaA
-        DG7JhDB9LvFGqemkB2vz8dq8+yjq/pZpW37723Zb3B6LCvE0ZhJFksbXVKw8i48L
-        tSwEPxcJyxfQBLOk3hBYBuj1Yn3/HdaXhN+M0F0+MgcNabqTCY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-        :date:message-id:mime-version:content-type
-        :content-transfer-encoding; q=dns; s=sasl; b=DWcJ3xcw3QxvZZfmhKC
-        lPM3zT/QOYwke503vhfyRorK/ZBB/1wcgBLWC7JU5fMqexsiCpZyzsDW9PerrnsW
-        yeGsEEga6SXKEMynoDTtGOoY1pSth6X2GNtwI7naI+2eIiFfvJSPHhxETSHbq2NI
-        IhTkeTPtXdnV6bzjWlV32+yg=
-Received: from pb-smtp1.nyi.icgroup.com (pb-smtp1.pobox.com [10.90.30.53])
-        by pb-sasl-trial3.pobox.com (Postfix) with ESMTP id EAD3C13BBA;
-        Mon, 24 Jul 2017 18:49:35 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D5AB19C57A;
-        Mon, 24 Jul 2017 18:49:34 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Subject: What's cooking in git.git (Jul 2017, #07; Mon, 24)
-X-master-at: 5800c63717ae35286a1441f14ffff753e01f7e2b
-X-next-at: 8e98c6e5c05367936b792dc40ed7cc7876e9d4c7
-Date:   Mon, 24 Jul 2017 15:49:33 -0700
-Message-ID: <xmqqinihbgci.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1754288AbdGXXAx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Jul 2017 19:00:53 -0400
+Received: from mail-ua0-f169.google.com ([209.85.217.169]:37937 "EHLO
+        mail-ua0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752194AbdGXXAv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jul 2017 19:00:51 -0400
+Received: by mail-ua0-f169.google.com with SMTP id w45so90258856uac.5
+        for <git@vger.kernel.org>; Mon, 24 Jul 2017 16:00:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=d4VZO2qEowW+bVuHXPZ0f+pCJu48b6lyqXGS4/GtHtw=;
+        b=OSPp4Ew/1fl+xl2VlCGOR1EU+9mEnoz6moS4MI5xaXn10p3mehqPucYm3yKtKGXDlL
+         q4rnG3yO18BHBCJ0OlYTgLuFYEF5K9lISLee89JsvhcsqKqsisJJygOu0VNbtB7XSTVt
+         bxS/zx+qTxlx/XF8CRrV2OzWLU+mInMizjIMA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=d4VZO2qEowW+bVuHXPZ0f+pCJu48b6lyqXGS4/GtHtw=;
+        b=cfotu7Yo7dTJtHRttuqvIHjp+gDPRbmjxmo+I7VPsxzNlz7kbc/AK6kYVk8Tw0/hLJ
+         QjouZ0zrId/ztUyG25J14QFz5MiJ3IYhVqwkdwKnoAcDTqkEoFWGHrmFn6VFgT2QwaD6
+         rbuj4gp9S5iEckSu0FTyrTS+gxY6arUi8HsFnEdk+PPW1lcpLpZe1c+Pbzl7I2VuzNIE
+         gFe1Ta0bJoe22QbCBuUCUScURsrmFrmwJOcHvG2P5i6pfFudTrg0zzKKUyfUbSKrTP9S
+         KUPeM5LI08u52ZEktDfXrQXXm9pdf6uRSuwnTtO3TJVV1sIBmPPOpNw2zrKS7izjX07Z
+         aDlQ==
+X-Gm-Message-State: AIVw113tesVDMVlhmSDgVYd2JR3+gFYQRMhmNusTvxPANHWiqJb9Wpvv
+        bccnPzmppZVRli6PtUx57plHAGCF0K4P
+X-Received: by 10.31.3.99 with SMTP id 96mr10083778vkd.185.1500937249662; Mon,
+ 24 Jul 2017 16:00:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 5D503CFE-70C2-11E7-8486-EFB41968708C-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Received: by 10.103.137.4 with HTTP; Mon, 24 Jul 2017 16:00:29 -0700 (PDT)
+In-Reply-To: <CAGZ79kZ48zTsHxrW-fvHRFQih=vBuywExSxA8a_=wzjdJPbtrg@mail.gmail.com>
+References: <CAJo=hJvxWg2J-yRiCK3szux=eYM2ThjT0KWo-SFFOOc1RkxXzg@mail.gmail.com>
+ <CAGZ79kZ48zTsHxrW-fvHRFQih=vBuywExSxA8a_=wzjdJPbtrg@mail.gmail.com>
+From:   Shawn Pearce <spearce@spearce.org>
+Date:   Mon, 24 Jul 2017 16:00:29 -0700
+Message-ID: <CAJo=hJuCXFem8saH9kgBu1ROV3uuhRxHcHXz_Bp7xB+taW5S=Q@mail.gmail.com>
+Subject: Re: reftable [v3]: new ref storage format
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Junio C Hamano <gitster@pobox.com>,
+        David Borowitz <dborowitz@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Here are the topics that have been cooking.  Commits prefixed with
-'-' are only in 'pu' (proposed updates) while commits prefixed with
-'+' are in 'next'.  The ones marked with '.' do not appear in any of
-the integration branches, but I am still holding onto them.
-
-With help from Jiang, Dscho and Jean-No=C3=ABl, we agreed on the way to
-handle i18n issues around our custom timestamp_t type and its format
-PRItime, and tagging of -rc1 has been delayed a bit.  But now it has
-happened.  There is a small unrelated change still cooking somewhere
-else that may have to go in the final release, but other than that
-one, no topic is expected to go from 'next' to 'master' until the
-final.  Regression fixes and reverts are possible but let's hope
-there are no need for them.
-
-You can find the changes described here in the integration branches
-of the repositories listed at
-
-    http://git-blame.blogspot.com/p/git-public-repositories.html
-
---------------------------------------------------
-[Graduated to "master"]
-
-* jc/po-pritime-fix (2017-07-20) 1 commit
-  (merged to 'next' on 2017-07-21 at 61f0e3b37f)
- + Makefile: help gettext tools to cope with our custom PRItime format
-
- We started using "%" PRItime, imitating "%" PRIuMAX and friends, as
- a way to format the internal timestamp value, but this does not
- play well with gettext(1) i18n framework, and causes "make pot"
- that is run by the l10n coordinator to create a broken po/git.pot
- file.  This is a possible workaround for that problem.
-
-
-* ks/doc-fixes (2017-07-18) 2 commits
-  (merged to 'next' on 2017-07-20 at c34b00d0a0)
- + doc: reformat the paragraph containing the 'cut-line'
- + doc: camelCase the i18n config variables to improve readability
-
- Doc clean-up.
-
-
-* rj/cygwin-fread-reads-directories (2017-07-21) 1 commit
-  (merged to 'next' on 2017-07-21 at 28694cf254)
- + config.mak.uname: set FREAD_READS_DIRECTORIES for cygwin
-
- It turns out that Cygwin also needs the fopen() wrapper that
- returns failure when a directory is opened for reading.
-
---------------------------------------------------
-[New Topics]
-
-* js/run-process-parallel-api-fix (2017-07-21) 1 commit
- - run_processes_parallel: change confusing task_cb convention
-
- API fix.
-
- Will merge to and cook in 'next'.
-
-
-* cc/ref-is-hidden-microcleanup (2017-07-24) 1 commit
- - refs: use skip_prefix() in ref_is_hidden()
-
- Code cleanup.
-
- Will merge to and cook in 'next'.
-
-
-* js/blame-lib (2017-07-24) 1 commit
- - blame: fix memory corruption scrambling revision name in error message
-
- A hotfix to a topic already in 'master'.
-
- Will merge to 'next'.
-
---------------------------------------------------
-[Stalled]
-
-* mg/status-in-progress-info (2017-05-10) 2 commits
- - status --short --inprogress: spell it as --in-progress
- - status: show in-progress info for short status
-
- "git status" learns an option to report various operations
- (e.g. "merging") that the user is in the middle of.
-
- cf. <xmqqmvakcdqw.fsf@gitster.mtv.corp.google.com>
-
-
-* nd/worktree-move (2017-04-20) 6 commits
- - worktree remove: new command
- - worktree move: refuse to move worktrees with submodules
- - worktree move: accept destination as directory
- - worktree move: new command
- - worktree.c: add update_worktree_location()
- - worktree.c: add validate_worktree()
-
- "git worktree" learned move and remove subcommands.
-
- Expecting a reroll.
- cf. <20170420101024.7593-1-pclouds@gmail.com>
- cf. <20170421145916.mknekgqzhxffu7di@sigill.intra.peff.net>
- cf. <d0e81b1e-5869-299e-f462-4d43dc997bd1@ramsayjones.plus.com>
-
-
-* sg/clone-refspec-from-command-line-config (2017-06-16) 2 commits
- - Documentation/clone: document ignored configuration variables
- - clone: respect additional configured fetch refspecs during initial fet=
-ch
- (this branch is used by sg/remote-no-string-refspecs.)
-
- "git clone -c var=3Dval" is a way to set configuration variables in
- the resulting repository, but it is more useful to also make these
- variables take effect while the initial clone is happening,
- e.g. these configuration variables could be fetch refspecs.
-
- Waiting for a response.
- cf. <20170617112228.vugswym4o4owf6wj@sigill.intra.peff.net>
- cf. <xmqqmv8zhdap.fsf@gitster.mtv.corp.google.com>
-
-
-* js/rebase-i-final (2017-06-15) 10 commits
- - rebase -i: rearrange fixup/squash lines using the rebase--helper
- - t3415: test fixup with wrapped oneline
- - rebase -i: skip unnecessary picks using the rebase--helper
- - rebase -i: check for missing commits in the rebase--helper
- - t3404: relax rebase.missingCommitsCheck tests
- - rebase -i: also expand/collapse the SHA-1s via the rebase--helper
- - rebase -i: do not invent onelines when expanding/collapsing SHA-1s
- - rebase -i: remove useless indentation
- - rebase -i: generate the script via rebase--helper
- - t3415: verify that an empty instructionFormat is handled as before
-
- The final batch to "git rebase -i" updates to move more code from
- the shell script to C.
-
- Expecting a reroll.
- This is at its v5.
- cf. <cover.1497444257.git.johannes.schindelin@gmx.de>
-
---------------------------------------------------
-[Cooking]
-
-* bw/push-options-recursively-to-submodules (2017-07-20) 1 commit
- - submodule--helper: teach push-check to handle HEAD
-
- "git push --recurse-submodules $there HEAD:$target" was not
- propagated down to the submodules, but now it is.
-
- Will merge to and cook in 'next'.
-
-
-* jc/http-sslkey-and-ssl-cert-are-paths (2017-07-20) 1 commit
-  (merged to 'next' on 2017-07-20 at 5489304b99)
- + http.c: http.sslcert and http.sslkey are both pathnames
-
- The http.{sslkey,sslCert} configuration variables are to be
- interpreted as a pathname that honors "~[username]/" prefix, but
- weren't, which has been fixed.
-
- Will cook in 'next'.
-
-
-* jt/fsck-code-cleanup (2017-07-20) 2 commits
-  (merged to 'next' on 2017-07-20 at f7045a8c47)
- + object: remove "used" field from struct object
- + fsck: remove redundant parse_tree() invocation
-
- Code clean-up.
-
- Will cook in 'next'.
-
-
-* rs/pack-objects-pbase-cleanup (2017-07-20) 1 commit
-  (merged to 'next' on 2017-07-20 at a6b618559b)
- + pack-objects: remove unnecessary NULL check
-
- Code clean-up.
-
- Will cook in 'next'.
-
-
-* st/lib-gpg-kill-stray-agent (2017-07-20) 1 commit
-  (merged to 'next' on 2017-07-20 at 8ea68c483f)
- + t: lib-gpg: flush gpg agent on startup
-
- Some versions of GnuPG fails to kill gpg-agent it auto-spawned
- and such a left-over agent can interfere with a test.  Work it
- around by attempting to kill one before starting a new test.
-
- Will cook in 'next'.
-
-
-* jk/c99 (2017-07-18) 2 commits
-  (merged to 'next' on 2017-07-18 at 1cfc30f7c1)
- + clean.c: use designated initializer
- + strbuf: use designated initializers in STRBUF_INIT
-
- Start using selected c99 constructs in small, stable and
- essentialpart of the system to catch people who care about
- older compilers that do not grok them.
-
- Will cook in 'next'.
-
-
-* jk/check-ref-format-oor-fix (2017-07-14) 1 commit
- - check-ref-format: require a repository for --branch
-
- Objected...
- cf. <20170717172709.GL93855@aiede.mtv.corp.google.com>
-
-
-* bw/grep-recurse-submodules (2017-07-18) 10 commits
- - grep: recurse in-process using 'struct repository'
- - submodule: merge repo_read_gitmodules and gitmodules_config
- - submodule: check for unmerged .gitmodules outside of config parsing
- - submodule: check for unstaged .gitmodules outside of config parsing
- - submodule: remove fetch.recursesubmodules from submodule-config parsin=
-g
- - submodule: remove submodule.fetchjobs from submodule-config parsing
- - config: add config_from_gitmodules
- - cache.h: add GITMODULES_FILE macro
- - repository: have the_repository use the_index
- - repo_read_index: don't discard the index
-
-
-* bw/object-id (2017-07-17) 3 commits
-  (merged to 'next' on 2017-07-18 at 90d27c0e7c)
- + receive-pack: don't access hash of NULL object_id pointer
- + notes: don't access hash of NULL object_id pointer
- + tree-diff: don't access hash of NULL object_id pointer
-
- Conversion from uchar[20] to struct object_id continues.
-
- Will cook in 'next'.
-
-
-* ks/commit-abort-on-empty-message-fix (2017-07-17) 1 commit
- - commit: check for empty message before the check for untouched templat=
-e
-
- "git commit" when seeing an totally empty message said "you did not
- edit the message", which is clearly wrong.  The message has been
- corrected.
-
- Will merge to and cook in 'next'.
-
-
-* rs/bswap-ubsan-fix (2017-07-17) 2 commits
-  (merged to 'next' on 2017-07-20 at ce6bad07b0)
- + bswap: convert get_be16, get_be32 and put_be32 to inline functions
- + bswap: convert to unsigned before shifting in get_be32
-
- Code clean-up.
-
- Will cook in 'next'.
-
-
-* rs/move-array (2017-07-17) 4 commits
-  (merged to 'next' on 2017-07-20 at f3086cd20e)
- + ls-files: don't try to prune an empty index
- + apply: use COPY_ARRAY and MOVE_ARRAY in update_image()
- + use MOVE_ARRAY
- + add MOVE_ARRAY
-
- Code clean-up.
-
- Will cook in 'next'.
-
-
-* rs/stat-data-unaligned-reads-fix (2017-07-17) 1 commit
-  (merged to 'next' on 2017-07-20 at e7d3782823)
- + dir: support platforms that require aligned reads
-
- Code clean-up.
-
- Will cook in 'next'.
-
-
-* wd/rebase-conflict-guide (2017-07-17) 1 commit
-  (merged to 'next' on 2017-07-20 at c78e758b23)
- + rebase: make resolve message clearer for inexperienced users
-
- Code clean-up.
-
- Will cook in 'next'.
-
-
-* hb/gitweb-project-list (2017-07-18) 1 commit
- - gitweb: skip unreadable subdirectories
-
- When a directory is not readable, "gitweb" fails to build the
- project list.  Work this around by skipping such a directory.
-
- Undecided.
-
- It might end up hiding a problem under the rug and a better
- solution might be to loudly complain to the administrator pointing
- out the problematic directory, but this will at least make it
- "work".
-
-
-* jk/ref-filter-colors (2017-07-13) 15 commits
-  (merged to 'next' on 2017-07-18 at 75d4eb7ecf)
- + ref-filter: consult want_color() before emitting colors
- + pretty: respect color settings for %C placeholders
- + rev-list: pass diffopt->use_colors through to pretty-print
- + for-each-ref: load config earlier
- + color: check color.ui in git_default_config()
- + ref-filter: pass ref_format struct to atom parsers
- + ref-filter: factor out the parsing of sorting atoms
- + ref-filter: make parse_ref_filter_atom a private function
- + ref-filter: provide a function for parsing sort options
- + ref-filter: move need_color_reset_at_eol into ref_format
- + ref-filter: abstract ref format into its own struct
- + ref-filter: simplify automatic color reset
- + t: use test_decode_color rather than literal ANSI codes
- + docs/for-each-ref: update pointer to color syntax
- + check return value of verify_ref_format()
-
- "%C(color name)" in the pretty print format always produced ANSI
- color escape codes, which was an early design mistake.  They now
- honor the configuration (e.g. "color.ui =3D never") and also tty-ness
- of the output medium.
-
- Will cook in 'next'.
-
-
-* sb/object-id (2017-07-13) 2 commits
-  (merged to 'next' on 2017-07-18 at e4df0ba3b1)
- + tag: convert gpg_verify_tag to use struct object_id
- + commit: convert lookup_commit_graft to struct object_id
- (this branch is used by bc/object-id.)
-
- Conversion from uchar[20] to struct object_id continues.
-
- Will cook in 'next'.
-
-
-* rs/sha1-file-micro-optim (2017-07-09) 2 commits
- - SQUASH???
- - sha1_file: add slash once in for_each_file_in_obj_subdir()
-
- Code cleanup.
-
- Perhaps drop.
- cf. <f59c8256-716b-9305-2a4f-d4fe49f666ff@web.de>
-
-
-* ks/prepare-commit-msg-sample (2017-07-12) 4 commits
-  (merged to 'next' on 2017-07-18 at 48d9650a30)
- + hook: add a simple first example
- + hook: add sign-off using "interpret-trailers"
- + hook: name the positional variables
- + hook: cleanup script
-
- Remove an example that is now obsolete from a sample hook,
- and improve an old example in it that added a sign-off manually
- to use the interpret-trailers command.
-
- Will cook in 'next'.
-
-
-* jc/allow-lazy-cas (2017-07-06) 1 commit
- - push: disable lazy --force-with-lease by default
-
- Because "git push --force-with-lease[=3D<ref>]" that relies on the
- stability of remote-tracking branches is unsafe when something
- fetches into the repository behind user's back, it is now disabled
- by default.  A new configuration variable can be used to enable it
- by users who know what they are doing.  This would pave the way to
- possibly turn `--force` into `--force-with-lease`.
-
- Undecided.
-
- Independent from disabling the feature by default, this stirred up
- a discussion to replace the DWIM heuristics with a better one, which
- deserves to be its own topic.
- cf. <alpine.DEB.2.21.1.1707131435220.4193@virtualbox>
-
-
-* bc/object-id (2017-07-17) 12 commits
-  (merged to 'next' on 2017-07-18 at fd161056e4)
- + sha1_name: convert uses of 40 to GIT_SHA1_HEXSZ
- + sha1_name: convert GET_SHA1* flags to GET_OID*
- + sha1_name: convert get_sha1* to get_oid*
- + Convert remaining callers of get_sha1 to get_oid.
- + builtin/unpack-file: convert to struct object_id
- + bisect: convert bisect_checkout to struct object_id
- + builtin/update_ref: convert to struct object_id
- + sequencer: convert to struct object_id
- + remote: convert struct push_cas to struct object_id
- + submodule: convert submodule config lookup to use object_id
- + builtin/merge-tree: convert remaining caller of get_sha1 to object_id
- + builtin/fsck: convert remaining caller of get_sha1 to object_id
- (this branch uses sb/object-id.)
-
- Conversion from uchar[20] to struct object_id continues.
-
- Will cook in 'next'.
-
-
-* jk/reflog-walk (2017-07-09) 9 commits
-  (merged to 'next' on 2017-07-09 at 7449e964c6)
- + reflog-walk: apply --since/--until to reflog dates
- + reflog-walk: stop using fake parents
- + rev-list: check reflog_info before showing usage
- + get_revision_1(): replace do-while with an early return
- + log: do not free parents when walking reflog
- + log: clarify comment about reflog cycles
- + revision: disallow reflog walking with revs->limited
- + t1414: document some reflog-walk oddities
- + Merge branch 'jk/reflog-walk-maint' into jk/reflog-walk
-
- Numerous bugs in walking of reflogs via "log -g" and friends have
- been fixed.
-
- Will cook in 'next'.
-
-
-* sb/hashmap-cleanup (2017-07-05) 10 commits
-  (merged to 'next' on 2017-07-12 at ce31d06165)
- + t/helper/test-hashmap: use custom data instead of duplicate cmp functi=
-ons
- + name-hash.c: drop hashmap_cmp_fn cast
- + submodule-config.c: drop hashmap_cmp_fn cast
- + remote.c: drop hashmap_cmp_fn cast
- + patch-ids.c: drop hashmap_cmp_fn cast
- + convert/sub-process: drop cast to hashmap_cmp_fn
- + config.c: drop hashmap_cmp_fn cast
- + builtin/describe: drop hashmap_cmp_fn cast
- + builtin/difftool.c: drop hashmap_cmp_fn cast
- + attr.c: drop hashmap_cmp_fn cast
-
- Many uses of comparision callback function the hashmap API uses
- cast the callback function type when registering it to
- hashmap_init(), which defeats the compile time type checking when
- the callback interface changes (e.g. gaining more parameters).
- The callback implementations have been updated to take "void *"
- pointers and cast them to the type they expect instead.
-
- Will cook in 'next'.
-
-
-* ex/deprecate-empty-pathspec-as-match-all (2017-06-23) 2 commits
-  (merged to 'next' on 2017-06-26 at d026281517)
- + pathspec: die on empty strings as pathspec
- + t0027: do not use an empty string as a pathspec element
-
- The final step to make an empty string as a pathspec element
- illegal.  We started this by first deprecating and warning a
- pathspec that has such an element in 2.11 (Nov 2016).
-
- Hopefully we can merge this down to the 'master' by the end of the
- year?  A deprecation warning period that is about 1 year does not
- sound too bad.
-
- Will cook in 'next'.
-
-
-* mh/packed-ref-store (2017-07-03) 30 commits
-  (merged to 'next' on 2017-07-05 at 6c68c603cc)
- + read_packed_refs(): die if `packed-refs` contains bogus data
- + t3210: add some tests of bogus packed-refs file contents
- + repack_without_refs(): don't lock or unlock the packed refs
- + commit_packed_refs(): remove call to `packed_refs_unlock()`
- + clear_packed_ref_cache(): don't protest if the lock is held
- + packed_refs_unlock(), packed_refs_is_locked(): new functions
- + packed_refs_lock(): report errors via a `struct strbuf *err`
- + packed_refs_lock(): function renamed from lock_packed_refs()
- + commit_packed_refs(): use a staging file separate from the lockfile
- + commit_packed_refs(): report errors rather than dying
- + packed_ref_store: make class into a subclass of `ref_store`
- + packed-backend: new module for handling packed references
- + packed_read_raw_ref(): new function, replacing `resolve_packed_ref()`
- + packed_ref_store: support iteration
- + packed_peel_ref(): new function, extracted from `files_peel_ref()`
- + repack_without_refs(): take a `packed_ref_store *` parameter
- + get_packed_ref(): take a `packed_ref_store *` parameter
- + rollback_packed_refs(): take a `packed_ref_store *` parameter
- + commit_packed_refs(): take a `packed_ref_store *` parameter
- + lock_packed_refs(): take a `packed_ref_store *` parameter
- + add_packed_ref(): take a `packed_ref_store *` parameter
- + get_packed_refs(): take a `packed_ref_store *` parameter
- + get_packed_ref_cache(): take a `packed_ref_store *` parameter
- + validate_packed_ref_cache(): take a `packed_ref_store *` parameter
- + clear_packed_ref_cache(): take a `packed_ref_store *` parameter
- + packed_ref_store: move `packed_refs_lock` member here
- + packed_ref_store: move `packed_refs_path` here
- + packed_ref_store: new struct
- + add_packed_ref(): teach function to overwrite existing refs
- + t1408: add a test of stale packed refs covered by loose refs
-
- The "ref-store" code reorganization continues.
-
- Will cook in 'next'.
- cf. <CAGZ79kY=3DN5H2q1SB9ZEtt1EvuAQg+bqVBZNoXE6nLgtoUd2txA@mail.gmail.co=
-m>
-
-
-* sd/branch-copy (2017-06-18) 3 commits
-  (merged to 'next' on 2017-07-18 at 5e3b9357ea)
- + branch: add a --copy (-c) option to go with --move (-m)
- + branch: add test for -m renaming multiple config sections
- + config: create a function to format section headers
-
- "git branch" learned "-c/-C" to create and switch to a new branch
- by copying an existing one.
-
- Will cook in 'next'.
-
- I personally do not think "branch --copy master backup" while on
- "master" that switches to "backup" is a good UI, and I *will* say
- "I told you so" when users complain after we merge this down to
- 'master'.
-
-
-* ls/filter-process-delayed (2017-06-30) 7 commits
-  (merged to 'next' on 2017-07-05 at a35e644082)
- + convert: add "status=3Ddelayed" to filter process protocol
- + convert: refactor capabilities negotiation
- + convert: move multiple file filter error handling to separate function
- + convert: put the flags field before the flag itself for consistent sty=
-le
- + t0021: write "OUT <size>" only on success
- + t0021: make debug log file name configurable
- + t0021: keep filter log files on comparison
-
- The filter-process interface learned to allow a process with long
- latency give a "delayed" response.
-
- Will cook in 'next'.
-
-
-* bp/fsmonitor (2017-06-12) 6 commits
- - fsmonitor: add a sample query-fsmonitor hook script for Watchman
- - fsmonitor: add documentation for the fsmonitor extension.
- - fsmonitor: add test cases for fsmonitor extension
- - fsmonitor: teach git to optionally utilize a file system monitor to sp=
-eed up detecting new or changed files.
- - dir: make lookup_untracked() available outside of dir.c
- - bswap: add 64 bit endianness helper get_be64
-
- We learned to talk to watchman to speed up "git status".
-
- Expecting a reroll.
- cf. <bade1166-e646-b05a-f65b-adb8da8ba0a7@gmail.com>
-
-
-* sb/diff-color-move (2017-06-30) 26 commits
-  (merged to 'next' on 2017-07-06 at 758ed40e4f)
- + diff: document the new --color-moved setting
- + diff.c: add dimming to moved line detection
- + diff.c: color moved lines differently, plain mode
- + diff.c: color moved lines differently
- + diff.c: buffer all output if asked to
- + diff.c: emit_diff_symbol learns about DIFF_SYMBOL_SUMMARY
- + diff.c: emit_diff_symbol learns about DIFF_SYMBOL_STAT_SEP
- + diff.c: convert word diffing to use emit_diff_symbol
- + diff.c: convert show_stats to use emit_diff_symbol
- + diff.c: convert emit_binary_diff_body to use emit_diff_symbol
- + submodule.c: migrate diff output to use emit_diff_symbol
- + diff.c: emit_diff_symbol learns DIFF_SYMBOL_REWRITE_DIFF
- + diff.c: emit_diff_symbol learns about DIFF_SYMBOL_BINARY_FILES
- + diff.c: emit_diff_symbol learns DIFF_SYMBOL_HEADER
- + diff.c: emit_diff_symbol learns DIFF_SYMBOL_FILEPAIR_{PLUS, MINUS}
- + diff.c: emit_diff_symbol learns DIFF_SYMBOL_CONTEXT_INCOMPLETE
- + diff.c: emit_diff_symbol learns DIFF_SYMBOL_WORDS[_PORCELAIN]
- + diff.c: migrate emit_line_checked to use emit_diff_symbol
- + diff.c: emit_diff_symbol learns DIFF_SYMBOL_NO_LF_EOF
- + diff.c: emit_diff_symbol learns DIFF_SYMBOL_CONTEXT_FRAGINFO
- + diff.c: emit_diff_symbol learns DIFF_SYMBOL_CONTEXT_MARKER
- + diff.c: introduce emit_diff_symbol
- + diff.c: factor out diff_flush_patch_all_file_pairs
- + diff.c: move line ending check into emit_hunk_header
- + diff.c: readability fix
- + Merge branch 'sb/hashmap-customize-comparison' into sb/diff-color-move
-
- "git diff" has been taught to optionally paint new lines that are
- the same as deleted lines elsewhere differently from genuinely new
- lines.
-
- Will cook in 'next'.
-
---------------------------------------------------
-[Discarded]
-
-* mh/packed-ref-store-prep-extra (2017-06-18) 1 commit
- . prefix_ref_iterator_advance(): relax the check of trim length
-
- Split out of mh/packed-ref-store-prep.
-
-
-* nd/prune-in-worktree (2017-04-24) 12 commits
- . rev-list: expose and document --single-worktree
- . revision.c: --reflog add HEAD reflog from all worktrees
- . files-backend: make reflog iterator go through per-worktree reflog
- . revision.c: --all adds HEAD from all worktrees
- . refs: remove dead for_each_*_submodule()
- . revision.c: use refs_for_each*() instead of for_each_*_submodule()
- . refs: add refs_head_ref()
- . refs: move submodule slash stripping code to get_submodule_ref_store
- . refs.c: refactor get_submodule_ref_store(), share common free block
- . revision.c: --indexed-objects add objects from all worktrees
- . revision.c: refactor add_index_objects_to_pending()
- . revision.h: new flag in struct rev_info wrt. worktree-related refs
-
- "git gc" and friends when multiple worktrees are used off of a
- single repository did not consider the index and per-worktree refs
- of other worktrees as the root for reachability traversal, making
- objects that are in use only in other worktrees to be subject to
- garbage collection.
+On Mon, Jul 24, 2017 at 3:22 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Sat, Jul 22, 2017 at 11:29 AM, Shawn Pearce <spearce@spearce.org> wrote:
+>> 3rd iteration of the reftable storage format.
+>>
+>> You can read a rendered version of this here:
+>> https://googlers.googlesource.com/sop/jgit/+/reftable/Documentation/technical/reftable.md
+>>
+>> Significant changes from v2:
+>> - efficient lookup by SHA-1 for allow-tip-sha1-in-want.
+>
+> I'll focus on that in the review, it sounds exciting.
+
+
+>> ### Ref block format
+> ...
+>
+>> A variable number of 4-byte `restart_offset` values follow the
+>> records.  Offsets are relative to the start of the block and refer to
+>> the first byte of any `ref_record` whose name has not been prefix
+>> compressed.  Readers can start linear scans from any of these records.
+>> Offsets in the first block are relative to the start of the file
+>> (position 0), and include the file header.  This requires the first
+>> restart in the first block to be at offset 8.
+>>
+>> The 2-byte `restart_count_m1` stores *one less* than the number of
+>> entries in the `restart_offset` list.  There is always a restart
+>> corresponding to the first ref record. Readers are responsible for
+>> computing `restart_count = restart_count_m1 + 1`.
+>
+> I had to reread these two paragraphs a couple of times as it calls out
+> the uninteresting things[1] and the interesting part is the logical
+> conclusion that one has to make themselves,
+> here is how I would write it:
+>
+>     Readers can start linear scans from any record whose name has
+>     not been prefix compressed. The first record of a block must not
+>     be prefix-compressed.
+>
+>     To aid finding the entry points for linear scans, a variable number
+>     of 4-byte `restart_offset` values follow the records. Offsets are
+>     relative to the start of the block and refer to the first byte of any
+>     such `ref_record` that is not prefix compressed.
+>     The first record can be omitted in the `restart_offset` values as it
+>     is implicit.
+
+No, the first record must be listed in the restart_offset table. Its
+not implicit. The count of it is implicit, to allow up to 65536
+restart_offset entries using only a uint16 restart_count. Maybe that
+is being too cute, and the count should just be the entry count.
+
+>     The `restart_offset' values must be sorted (ascending,
+>     descending?).
+
+Sorted, ascending.
+
+
+>> The `value` follows.  Its format is determined by `value_type`, one of
+>> the following:
+>>
+>> - `0x0`: deletion; no value data (see transactions, below)
+>> - `0x1`: one 20-byte object id; value of the ref
+>> - `0x2`: two 20-byte object ids; value of the ref, peeled target
+>
+> Up to here it is easy to spot a pattern:
+> The number indicates how many oids follow.
+>
+>> - `0x3`: symbolic reference: `varint( target_len ) target`
+>> - `0x4`: length delimited extension: `varint( data_len ) data`
+>
+> This breaks the pattern.
+>
+> Instead of hardcoding the numbers here, I wonder if we rather
+> want to make the bits more meaningful:
+>
+>   bit 0, 1: number of oids iff bit 2 unset
+>
+>   Iff bit 2 set, then we have a "varint (len) data"
+>   that follows, bits 0,1 are used for a different purpose,
+>   00 indicates 'symlink' and data is the string
+>   01 indicates 'multihead' such as FETCH_HEAD
+>   1* is reserved for now.
+>
+> This *may* be neat micro optimization, but hardcoding all bits
+> to a lookup table is fine, too.
+
+The problem I have with this bit-based rule is it breaks down later as
+you use additional codes, or you find yourself limited by the bit
+scheme and don't have the full range of 8 values available. So I
+decided to be very literal about what the codes mean, and use a lookup
+table.
+
+
+>   Note that symrefs and multiheads could share the same
+>   type, iff we had dissallowed '\n' in refnames. (we do?
+>   otherwise FETCH_HEAD would be broken)
+>   The differentiator would be the '\n' or '\0' at the end of the
+>   first target.
+
+True, \n is not allowed in a ref name, and neither is \0.
+
+Symrefs in loose ref format use "ref: <target>\n" as their content. We
+could use that format in reftable, and then HEAD and FETCH_HEAD could
+use the same value code, 0x3.
+
+
+>> #### index record
+>>
+>> An index record describes the last entry in another block.
+>> Index records are written as:
+>>
+>>     varint( prefix_length )
+>>     varint( (suffix_length << 3) | 0 )
+>>     suffix
+>>     varint( block_offset )
+>>
+>> Index records use prefix compression exactly like `ref_record`.
+>>
+>> Index records store `block_offset` after the suffix, specifying the
+>> offset in bytes (from the start of the file) of the block that ends
+>> with this reference.
+>
+> Instead of hardcoding the "0" in the last 3 bits, maybe pick one
+> of the reserved bit patterns to be there? I would imagine this
+> makes debugging easier:
+>
+>     0x5? Hah that must be an index block I have been
+>     looking at the wrong block!
+
+This is an excellent suggestion. I'll include it in the next iteration.
+
+
+>> ### Obj block format
+>>
+>> Object blocks use unique, abbreviated 2-20 byte SHA-1s keys, mapping
+>> to ref blocks containing references pointing to that object directly,
+...
+>> Each record contains `block_count` number of block identifiers for ref
+>> blocks.  The `block_count` is determined by:
+>>
+>>     block_count = cnt_3
+>>     if (cnt_3 == 0x7) {
+>>       block_count += cnt_rest
+>>     }
+>
+> Instead of having the first seven blocks treated special (omission of
+> cnt_rest), we could also pick one of the reserved bit patterns here to
+> aid debuggers, as a downside we'd require cnt_rest to be present at
+> all times.
+
+Always including cnt_rest adds a byte per object, which I'm not in favor of.
+
+> Additionally we could give an offset to a restart block to start searching
+> from inside a ref block.
+>
+> Coupled with the idea from above of having a reserved bit pattern, an
+> alternative design could look like:
+>
+>     varint( prefix_length )
+>     varint( (suffix_length << 3) | special_bit_pattern )
+>     suffix
+>     varint( cnt_rest )
+>     (varint( block_delta ), varint( restart_offset ))+
+
+This adds a lot of complexity for a writer to maintain the
+bookkeeping, increases the size per object by at least 1 byte, and
+doesn't improve the performance very much on lookups.
+
+
+>> #### log record
+>>
+>> Log record keys are structured as:
+>>
+>>     ref_name '\0' reverse_int64( time_usec )
+>
+> repeating from v2:
+>
+>   The size of the integer
+>   is determined by the suffix length encoding and the preceding '\0',
+>   such that the file format allows arbitrary integer size. So instead of
+>   pretending we can only do 64 bit here, just say 'reverse_int' ?
+
+I was trying to simplify things for readers and writers by forcing the
+size to be fixed width.
+
+>> ### Log index
+>>
+>> The log index stores the log key (`refname \0 reverse_int32(time_sec)`)
+>
+> int64 now?
+>
+>
+>> Log index format is identical to ref index, except the keys are 5
+>> bytes longer to include `'\0'` and the 4-byte `reverse_int32(time)`.
+>> Records use `block_offset` to refer to the start of a log block.
+>
+> also 64? /me is confused.
+
+Yes, two mistakes. I'll fix them s/32/64/, thank you.
+
+
+>> ### Footer
+...
+> By the design of the footer, refs must come first.
+> Whether objects or logs come thereafter can both be encoded here,
+> however the initial design claims an order.
+
+Even though the footer seems to allow changing the order of objects
+vs. logs, the format is clear the objects (if present) come before
+logs (if present).
