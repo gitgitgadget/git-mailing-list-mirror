@@ -2,133 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97B971F89D
-	for <e@80x24.org>; Mon, 24 Jul 2017 09:52:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F0DB7203F3
+	for <e@80x24.org>; Mon, 24 Jul 2017 12:50:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753393AbdGXJwJ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Jul 2017 05:52:09 -0400
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:5874 "EHLO
-        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751328AbdGXJwH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jul 2017 05:52:07 -0400
-Received: from [192.168.2.201] ([92.22.28.33])
-        by smtp.talktalk.net with SMTP
-        id Za1ydCnFHQ527Za20dZ6nK; Mon, 24 Jul 2017 10:52:05 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
-        t=1500889925; bh=9RyWvHWaUu8XXkf02Sd+XR+6YDMX5u3Ah54tRistttw=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=L98VaVplm5DDgrG6Sgv5iE4wysUZSJR41wKFv7j96iZmMZkyDx8/PLBQFZo/zoFd8
-         DEbOff+TY9TYzTnX0jniu9C5v82r2UEr4+GBOrI4FiIzt5uinfuoHQpBatWPKvlSkN
-         ZdBHKMgTZBCrMeWPgUxvQTdqhA7QjjyQ9sxBSOz4=
-X-Originating-IP: [92.22.28.33]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=MI8io4Rl c=1 sm=1 tr=0 a=BeSdjzhxhZnKGFP9cxuqMA==:117
- a=BeSdjzhxhZnKGFP9cxuqMA==:17 a=IkcTkHD0fZMA:10 a=ybZZDoGAAAAA:8
- a=pGLkceISAAAA:8 a=ZFtLV_ceKORR_y8P5J8A:9 a=QEXdDO2ut3YA:10
- a=0RhZnL1DYvcuLYC8JZ5M:22 a=6kGIvZw6iX1k4Y-7sg4_:22
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH/RFC] rebase: make resolve message clearer for
- inexperienced users
-To:     Philip Oakley <philipoakley@iee.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        William Duclot <william.duclot@gmail.com>
-Cc:     git@vger.kernel.org
-References: <20170709202520.21739-1-william.duclot@gmail.com>
- <xmqqvan06yo8.fsf@gitster.mtv.corp.google.com> <20170710183101.GA13122@Haydn>
- <xmqq4luh1gzw.fsf@gitster.mtv.corp.google.com>
- <7E67FF115BB146A49D486E77404882F2@PhilipOakley>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <fd665e9d-e46a-c9f1-f4ec-3407dd18ab36@talktalk.net>
-Date:   Mon, 24 Jul 2017 10:51:57 +0100
+        id S1755700AbdGXMuS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Jul 2017 08:50:18 -0400
+Received: from fallback10.m.smailru.net ([94.100.178.50]:51871 "EHLO
+        fallback.mail.ru" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1755544AbdGXMuR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jul 2017 08:50:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=list.ru; s=mail;
+        h=Content-Transfer-Encoding:Content-Type:In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:Subject; bh=yn2qji3mwnk0z8ugmNv54n6kzsF4WXQSQ3KxCES65yY=;
+        b=NwOgTJRKFtodoGU1hYFnHJO/UoM7a+06/SeLYnxKKbVUke2vAckFdzP4UY3Whdq3D4aBceuxl82jShVp4ZFdHzv1s4sGyDdXby99wQ0MahxOToI+Kq/e1+t15mEZh2eOHrvl6RQxVNl9UBz+B/u1Yp/CvC2CnVfP8oXMP1vipL0=;
+Received: from [10.161.22.27] (port=48226 helo=smtp57.i.mail.ru)
+        by fallback10.m.smailru.net with esmtp (envelope-from <stsp@list.ru>)
+        id 1dZcoP-0000H5-W5
+        for git@vger.kernel.org; Mon, 24 Jul 2017 15:50:14 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=list.ru; s=mail;
+        h=Content-Transfer-Encoding:Content-Type:In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:Subject; bh=yn2qji3mwnk0z8ugmNv54n6kzsF4WXQSQ3KxCES65yY=;
+        b=NwOgTJRKFtodoGU1hYFnHJO/UoM7a+06/SeLYnxKKbVUke2vAckFdzP4UY3Whdq3D4aBceuxl82jShVp4ZFdHzv1s4sGyDdXby99wQ0MahxOToI+Kq/e1+t15mEZh2eOHrvl6RQxVNl9UBz+B/u1Yp/CvC2CnVfP8oXMP1vipL0=;
+Received: by smtp57.i.mail.ru with esmtpa (envelope-from <stsp@list.ru>)
+        id 1dZcoD-000592-BU; Mon, 24 Jul 2017 15:50:01 +0300
+Subject: Re: git gc seems to break --symbolic-full-name
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>
+References: <234492d7-7fd6-f847-8b85-010732ff43b6@list.ru>
+ <xmqqbmodhb5h.fsf@gitster.mtv.corp.google.com>
+ <223fa7c7-196d-e4fe-85b5-7d7cc576aa52@list.ru>
+ <CA+P7+xrhLf9eS_KkxTmWZgQ+Ho8VN83GS-OvxmboZ=_iY4dY0g@mail.gmail.com>
+ <ed1ddfec-5782-d14b-6717-a1532efc0138@list.ru>
+ <CA+P7+xrpKTuBTueyGGVz4doWMnbGQo+2qj2wbpPvXBaW-iDV2w@mail.gmail.com>
+From:   Stas Sergeev <stsp@list.ru>
+Message-ID: <47a657a1-422d-5947-87bb-8e5db5b8689b@list.ru>
+Date:   Mon, 24 Jul 2017 15:50:00 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.2.1
 MIME-Version: 1.0
-In-Reply-To: <7E67FF115BB146A49D486E77404882F2@PhilipOakley>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfJO+q4kN9fjzE4VdbDmRzgu7z40Xj7xmadJiLVRZ0hiJrG9qaQB0kPIZZYaT6aUBT/T5UOY8IxeQsTytcE3O4OnUX+WUEa9fzopohW9mNqfdjX1Ooz0K
- x5oq8n5O9O19hqK9GQk1KJtUqyp/E7bsL8JsoE7ug9c1s5ByEIiCsJZpM8XTGaj5zirUHv8SAHHGKcVzpgVRayPd+aCnxY7GLlvRf2YD47oaaCbtuwazid+Z
- LS6y/KkOIg6hJ7+pbQy0yMlG3p1L1WWersUflBOrzA8=
+In-Reply-To: <CA+P7+xrpKTuBTueyGGVz4doWMnbGQo+2qj2wbpPvXBaW-iDV2w@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-MW
+X-7FA49CB5: 0D63561A33F958A5F8D79D508DCAD04139E793E6D464D5A8AFC68B5D6BC2C1F1725E5C173C3A84C311BA4339981C382AC088EE10F3B0FD3A2629B07FD02F83A6C4224003CC836476C0CAF46E325F83A50BF2EBBBDD9D6B0FD29CFF114C3378C93B503F486389A921A5CC5B56E945C8DA
+X-Mailru-Sender: F1845AB6CCC9920DF7838D61D4D05C42450394781F4929A2805C5E7C04B9B3163DCE99E73093D3FC1653177920737CA72999BEE114A20FF4278B2D54D4112F244F0A872F021F905956A8FB0C6EBA5FCCEAB4BC95F72C04283CDA0F3B3F5B9367
+X-Mras: OK
+X-7FA49CB5: 0D63561A33F958A5F12E8A1378CD1C43C87F4A2B1C62CE1FE34B6126EFAA27AD462275124DF8B9C923A316D17DDAC330E5BFE6E7EFDEDCD789D4C264860C145E
+X-Mailru-Sender: A5480F10D64C9005032BDE78ED4CC6ECABEA9E0FB38ABB6C409AAA9413CE14DFCA523AD9247EC42BBD9A213A94BF4775DDBB79867CC2C1EC5DD9ADBE8243F6ED0252A3EF2865ED2F733E9BFD465368085FEEDEB644C299C0ED14614B50AE0675
+X-Mras: OK
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 16/07/17 12:39, Philip Oakley wrote:
-> 
-> From: "Junio C Hamano" <gitster@pobox.com>
-> Sent: Wednesday, July 12, 2017 10:29 PM
->> William Duclot <william.duclot@gmail.com> writes:
->>
->>>>  - The original said "When you have resolved this problem", without
->>>>    giving a guidance how to resolve, and without saying what the
->>>>    problem is.  The updated one says "conflict" to clarify the
->>>>    "problem", and suggests "git add" as the tool to use after a
->>>>    manual resolition.
->>>>
->>>>    Modulo that there are cases where "git rm" is the right tool, the
->>>>    updated one is strict improvement.
->>>
->>> I also wrote "<conflicted_file>" when there could be several. Maybe
->>> 'mark it as resolved with "git add/rm"' would be a better (and shorter)
->>> formulation?
->>
->> Another potential source of confusion is if we are seeing "a"
->> conflict, or multiple ones.  I'd say it is OK to treat the whole
->> thing as "a conflict" that Git needs help with by the user editing
->> multiple files and using multiple "git add" or "git rm".  So "mark
->> it as resolved with 'git add/rm'" is fine, I would think, but
->> anything that I say about UI's understandability to new people needs
->> to be taken with a large grain of salt ;-).
->>
->>> ... I feel like a lot of git messages could be improved this way
->>> to offer a UI more welcoming to inexperienced user (which is a
->>> *broad* segment of users). But I am not aware of the cost of
->>> translation of this kind of patch: would several patches like this
->>> one be welcomed?
->>
->> Surely, as long as I can depend on other reviewers who are more
->> passionate about end-user experience than I am, I'll take such
->> patches with their help.
->>
->> Thanks.
-> 
-> One of the other confusions I had / have (and I have a saved note to
-> remind me) is when rebase stops with a conflict, and asks the user to
-> "fix" it, then ues "--continue".
-> 
-> I always expect that Git will do the 'add' of the resolved conflict
-> because that is what it would do normally as the next step after the merge.
-> 
-> I also had a similar issue with the --allow-empty case of 'nothing added
-> to commit but untracked files present' where I had been expecting the
-> commit to be simply omitted. You have to go through a reset dance before
-> continuing.
-> 
-> Philip
-> [I'll be off line till Friday]
-
-git rebase --continue requiring one to git add first confuses/annoys me
-too. I started a patch to autostage unstaged changes if they don't
-contain conflict markers a couple of weeks ago, I'll clean it up and
-post it later this week.
-
-I also find it confusing that it asks me to edit the commit message for
-picks, fixups and non-final squashes after conflicts. I can see that
-perhaps one might want to amend the message to reflect any changes that
-were made while resolving the conflicts but I've never had too. I'd
-rather be able to pass --edit to rebase --continue if I needed to edit
-the message in those cases. Looking through the code I think it would
-require saving some extra state when rebase bails out on conflicts so
-rebase --continue could tell if it should be asking the user to amend
-the message.
-
-Best Wishes
-
-Phillip
+24.07.2017 07:02, Jacob Keller пишет:
+> generally, I'd suggest using "git describe" to output a version based
+> on tag, and as part of your build system set that in some sort of
+> --version output of some kind.
+I am not sure I understand that suggestion.
+I can use 'git describe' (and that seems to be
+what linux kernel does too), but I don't see
+how can I get away without a temporary file,
+maually comparing current 'git describe' with
+the one stored, and updating that file in case
+of a mismatch.
+Could you please clarify? Maybe I am missing
+some makefile trick which you assume I am
+aware about. :)
