@@ -2,82 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 11ADE2089A
-	for <e@80x24.org>; Mon, 24 Jul 2017 19:24:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E0366208AB
+	for <e@80x24.org>; Mon, 24 Jul 2017 19:24:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932589AbdGXTX5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Jul 2017 15:23:57 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50072 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751818AbdGXTX4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jul 2017 15:23:56 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D47AC923AF;
-        Mon, 24 Jul 2017 15:23:48 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=f/6agwtKaRV+yyHjhZsZQDgoeN4=; b=hVZhcd
-        Rw8Tdd/n/Elj3svEqNoa2EBxLEhUAm2xfN4EvlCXB6gtZBryJdKPIfTcdLNlpZOi
-        IZJi1ik+3GsDgPZ51qnfqzj/IPXrrU6T75xTLjt0AvW9Yxw/+rf5s9WwchVUv6ae
-        hwZ9ceKtlH7i+Bgjjb98EEKjrXArh3daahAn0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=eNCYirwyj6bazMrZ6lrWtRFOqnDcwAT6
-        dTpFaQI1DqGCaFrawQcO1yB+FP5vrJW1hB0lsmpF74Pb8XspsVFaltpdeK9tuam6
-        zYawkfJkbMVEm8M8nAwYf64fXdZxxdfcbJeCAVAgyERPqfMtqfRHzFF61dGrq2Kn
-        rK0K0ng2diY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CCFC0923AE;
-        Mon, 24 Jul 2017 15:23:48 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3B613923AD;
-        Mon, 24 Jul 2017 15:23:48 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     John Szakmeister <john@szakmeister.net>
-Cc:     Philip Oakley <philipoakley@iee.org>, git@vger.kernel.org
-Subject: Re: Expected behavior of "git check-ignore"...
-References: <CAEBDL5URsbMazLBy-kWLJzECTEQ=61DN07xuu5NaO2Hw6r=j+w@mail.gmail.com>
-        <1E42613B0CD743C6ADA24B9F1B43F0F9@PhilipOakley>
-        <CAEBDL5X3wr=4A+W_sQzSE9BazoxoS2bwcOBZV5Jw=WCWZHAi6A@mail.gmail.com>
-Date:   Mon, 24 Jul 2017 12:23:46 -0700
-In-Reply-To: <CAEBDL5X3wr=4A+W_sQzSE9BazoxoS2bwcOBZV5Jw=WCWZHAi6A@mail.gmail.com>
-        (John Szakmeister's message of "Mon, 24 Jul 2017 05:33:45 -0400")
-Message-ID: <xmqq4lu1ej0d.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S932606AbdGXTYC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Jul 2017 15:24:02 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47430 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S932592AbdGXTX7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jul 2017 15:23:59 -0400
+Received: (qmail 11804 invoked by uid 109); 24 Jul 2017 19:24:00 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 24 Jul 2017 19:24:00 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12093 invoked by uid 111); 24 Jul 2017 19:24:16 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Mon, 24 Jul 2017 15:24:16 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Jul 2017 15:23:57 -0400
+Date:   Mon, 24 Jul 2017 15:23:57 -0400
+From:   Jeff King <peff@peff.net>
+To:     "tonka3100@gmail.com" <tonka3100@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: change the filetype from binary to text after the file is
+ commited to a git repo
+Message-ID: <20170724192357.y3oj5urfuie7ffjr@sigill.intra.peff.net>
+References: <CAEor4NHDNL4CQP_FpCuJ_3F86-A3P8i=yvp1AZr-NKt0i1=cXw@mail.gmail.com>
+ <20170724181835.zo3lcv7pxmkif2jr@sigill.intra.peff.net>
+ <7DE91669-D603-4C83-9151-78F2D5676E36@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9E1AC8FC-70A5-11E7-8E2F-61520C78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <7DE91669-D603-4C83-9151-78F2D5676E36@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-John Szakmeister <john@szakmeister.net> writes:
+On Mon, Jul 24, 2017 at 09:02:12PM +0200, tonka3100@gmail.com wrote:
 
-> Correct, it appears that if any line in the ignore matches, then it
-> exits with 0.  So it's not that it's ignored, but that there is a
-> matching line in an ignore file somewhere.  I can see the logic in
-> this if it's meant to be a debugging tools, especially combined with
-> -v.  Simply changing it does affect quite a few tests, but I'm not
-> sure that it was intentional for negation to be treated this way.
+> There is no .gitattributes file in the repo. I think that the git
+> heuristic will also detect utf-16 files as binary (in windows), so i
+> think that is the reason why my file is binary (i have to check that
+> tomorrow).
 
-I am reasonably sure that the command started its life as a pure
-debugging aid.  
+Correct. UTF-16 _is_ binary, if you are trying to include it alongside
+ASCII content (like the rest of the text diff headers). The two cannot
+mix.
 
-The treatment of the negation _might_ impose conflicting goals to
-its purpose as a debugging aid---a user who debugs his .gitignore
-file would want to know what causes a thing that wants to be ignored
-is not or vice versa, and use of the exit status to indicate if it
-is ignored may not mesh well with its goal as a debugging aid, but I
-didn't think about the potential issues deeply myself while writing
-this response.  As you mentioned, use of (or not using) "-v" could
-be used as a sign to see which behaviour the end-user expects, I
-guess.
+> If i add a .gitattribute file i have the problem that git
+> diff will treat the old and the new blob as utf-8, which generate
+> garbage.
 
+Git's diff doesn't look at encodings at all; it does a diff of the
+actual bytes without respect to any encoding. So yes, if you use "-a" or
+a gitattribute to ask git to show you the bytes, the UTF-16 is likely to
+look like garbage (and a commit rewriting from utf-16 to utf-8 will
+basically be a rewrite of the whole file contents).
 
+> Do you have another idea?  Could it be possible to add only a space in
+> code (utf-8) and then add the real content in a second commit, so the
+> old and the new one are both utf-8?
+
+I'm not sure exactly what you're trying to accomplish. If you're unhappy
+with the file as utf-16, then you should probably convert to utf-8 as a
+single commit (since the diff will otherwise be unreadable) and then
+make further changes in utf-8.
+
+If you need the file to remain utf-16 but you want more readable diffs
+for those versions, you can ask git to convert to utf-8 before
+performing the diff. Such a diff couldn't be applied, but would be
+useful for reading. E.g., try:
+
+  echo 'file diff=utf16' >.gitattributes
+  git config diff.utf16.textconv 'iconv -f utf16 -t utf8'
+
+You can read more about how this works in the "textconv" section of "git
+help attributes".
+
+Note that I'm relying on the external "iconv" tool to do the conversion
+there. It's pretty standard on most Unix systems, but I don't know what
+would be the best tool on Windows.
+
+-Peff
