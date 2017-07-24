@@ -2,67 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A8F92047F
-	for <e@80x24.org>; Mon, 24 Jul 2017 02:02:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 81BA92047F
+	for <e@80x24.org>; Mon, 24 Jul 2017 02:30:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752153AbdGXCC4 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Jul 2017 22:02:56 -0400
-Received: from mail-qt0-f173.google.com ([209.85.216.173]:33204 "EHLO
-        mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751782AbdGXCCy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Jul 2017 22:02:54 -0400
-Received: by mail-qt0-f173.google.com with SMTP id n42so63398786qtn.0
-        for <git@vger.kernel.org>; Sun, 23 Jul 2017 19:02:54 -0700 (PDT)
+        id S1752745AbdGXCaG (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Jul 2017 22:30:06 -0400
+Received: from mail-qt0-f182.google.com ([209.85.216.182]:37340 "EHLO
+        mail-qt0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752452AbdGXCaE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Jul 2017 22:30:04 -0400
+Received: by mail-qt0-f182.google.com with SMTP id r14so29988372qte.4
+        for <git@vger.kernel.org>; Sun, 23 Jul 2017 19:30:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=JIqhaiG9Zkqb0abuvcEDNbs/mfYrm4EGd/vTLlLzank=;
-        b=s4sgiIgTiKwOyOIxkZ21Q3x/aRoCksoH782b5gTD5qOZhoDv28nP0Z17du9XbeqSQq
-         DmXaxU3gmGF/wu1JnLLQ3XS5oxQ7Zwxg5InFW74rG+mzq8ayVGzTcl3CUD8MjsOvPb31
-         HGhU2lMtYuIWa7VxGBLCecAc25JRCxhaiAZSe/zdWDQfkIzHWhKt51ZUDwOpqzP9PXD0
-         rPr9ZHMU4Eh1zOme8jYZFFIzujif0mOyJFmdngCfkmARopQewgAwdC6wXHdNoKJRY3rI
-         vGjInW/mOEVlopj8KbNL7kqXxNFmT4WgeRYfP+oRGfKejY26ELecLKvApcRGc4XrAF5g
-         Vn9A==
+        bh=vxHMS5co0P3s5GEzAdDXcDBEC5Vxm1F84P6ncttgB7g=;
+        b=YHb9ky0gC2gc//TKSuPvvfWhZDYHmxj3/lvzCW9L9wqpyaJXE0ZcgPkdDKPljW+yL5
+         hzKzFf/Je3tQ0Z8aonas/O2vPPwAQz9sOlw0divhY7Fn6bqnw1Lpn9FT46Lm6jkXwyVy
+         9Rb1NhKWUV4VA6Oxq6rBUemB4R88wqTiJH5a6+D7MtGMW0tYQx0xqtDrqv8t14efIzQS
+         2tTzbUvO31CPBg6oiMvRiVqLbgOlaOUxHWrshVZ+gyoQ0wffpe1WRYnfq8NWfzg1xuCZ
+         fU9ZdjV7RMMUg/oZmIVALmo0dihMTF1cNe8dKrj06hnauIabHWtBgwwTRu4+p5vYou2Z
+         qxiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=JIqhaiG9Zkqb0abuvcEDNbs/mfYrm4EGd/vTLlLzank=;
-        b=uaqJjGp9z1P7sDQ0rou0UCy38r0Y+xX7f6gVR6ZtUjhXHRvAIbbhk1aQN77L+PHn3p
-         Z2+Rg8x791qzCyhQIv9EURomVeZD5FAjQvvJ3zhB29xKFlWGTpH8805uHAUmEhWsP3Z2
-         s9/k6yHk9uZUWob3err2saZ/BPnCDT3dBna9KNiB5cMlmwk5KpYmLSPFshVrlQ5aTciC
-         CAWDnmT5sU0oAURx95yT1MuWWmgBAeCBikf9/7GdYw3knDCfOl2aW3iBcAnI3P78jYo/
-         UfaVQsM0KcHzTwLQtQae7OB6wQYHZ5RNxy+qNLd7EwiXVGFE31cLgtJdLsywuYEeK7zZ
-         +9vg==
-X-Gm-Message-State: AIVw112TlORQW4JZHqP4kLr8bp7zn+0IpWfRG95mLM/U56Yb4jo9dcN3
-        zWrrQGyw8gP92RWJfKNyDrXDFJupfQ==
-X-Received: by 10.200.0.81 with SMTP id i17mr18021594qtg.5.1500861774249; Sun,
- 23 Jul 2017 19:02:54 -0700 (PDT)
+        bh=vxHMS5co0P3s5GEzAdDXcDBEC5Vxm1F84P6ncttgB7g=;
+        b=htcpVHsfRPk9VpQYmLhLRNtl13GQcZy/o2r2O+ftLjmHnxCO2wWF3a9ER27Pm+uEDQ
+         lI7kmzIHcANnmVW0XqB10fg08PP7VSM1mQZVmXukXt9g4JR+yc3WK1nnxiwbG432Kir6
+         iK9omwv3sbuqwIOFXzEaDyRfsndPG7fa43fJi1MmNYSHhzRAaf/5d5DPuUVsCE5aPl8W
+         lGCsdfqylEOQSQgmCfGsF2nDC8jxJXyTxni5Qc4wt10fPI3rpXm6/TRWTzADPe6PUOM6
+         n1i9Wsa0X1wBgq3NxbbungjurtcWRCMN8FEPhP+S5f+H97pOqFnLOPx7ciS4K8E2EM7W
+         +TBw==
+X-Gm-Message-State: AIVw111Da2D61Z1CU99qYxtsZvqyWDjVXF4LdSZV94wajdT2FfLIpjfl
+        FRxSCKm68toRnwGgin4qW6ifhmU1/Q==
+X-Received: by 10.200.2.75 with SMTP id o11mr18224117qtg.26.1500863403970;
+ Sun, 23 Jul 2017 19:30:03 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.12.193.38 with HTTP; Sun, 23 Jul 2017 19:02:53 -0700 (PDT)
-In-Reply-To: <2421d5f3-12ee-833b-72d8-de627fbfe26c@scantech.fr>
-References: <249ac6f8-af3c-4b20-5bf0-87a82866cc7a@free.fr> <3ccfa2fb49d471f807d77d9a280e4b7cfe56faea.1500304209.git.worldhello.net@gmail.com>
- <xmqq7ez7htvj.fsf@gitster.mtv.corp.google.com> <CANYiYbEcMrriaor9OT4c2qtfh9Ja5NJ9KBSxa3XhPAuoN0t42A@mail.gmail.com>
- <xmqq60epfy27.fsf@gitster.mtv.corp.google.com> <CANYiYbFROuyXso2ZKuJWDp4cSwpBu=bNAbC-yZtEyDwkbUcAhQ@mail.gmail.com>
- <alpine.DEB.2.21.1.1707191456010.4193@virtualbox> <xmqq8tjkm3ly.fsf@gitster.mtv.corp.google.com>
- <xmqqo9sfkm32.fsf@gitster.mtv.corp.google.com> <CANYiYbGSaaFOq7iw=ON1Oo87bSA96o=zyzym5RDT32kMae7bsw@mail.gmail.com>
- <xmqqvamlfm6s.fsf@gitster.mtv.corp.google.com> <CANYiYbF+XDANNbpZJ-jL7y81QhggW_snBuWeONSCUc4CPn2zMw@mail.gmail.com>
- <xmqqr2x9fjpi.fsf@gitster.mtv.corp.google.com> <CANYiYbGkuGNNYn4OF5w=1+Pqn9hEHWcD+DYVB6AXRs0vFEsY2Q@mail.gmail.com>
- <2421d5f3-12ee-833b-72d8-de627fbfe26c@scantech.fr>
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Mon, 24 Jul 2017 10:02:53 +0800
-Message-ID: <CANYiYbHi2tbRj159LgLpNRb7esMwZWOjetShF2n51rBavGYsGQ@mail.gmail.com>
-Subject: Re: [PATCH] PRItime: wrap PRItime for better l10n compatibility
-To:     =?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <jean-noel.avila@scantech.fr>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git List <git@vger.kernel.org>
+Received: by 10.237.39.151 with HTTP; Sun, 23 Jul 2017 19:29:23 -0700 (PDT)
+In-Reply-To: <AC260BC2-FED8-4811-9F5D-220EF1DAAA53@gmail.com>
+References: <AC260BC2-FED8-4811-9F5D-220EF1DAAA53@gmail.com>
+From:   Andrew Ardill <andrew.ardill@gmail.com>
+Date:   Mon, 24 Jul 2017 12:29:23 +1000
+Message-ID: <CAH5451mrL=GE6WrX6juoyGPV6trcQhXXthKhjT2=qCDCiffeeA@mail.gmail.com>
+Subject: Re: Should I store large text files on Git LFS?
+To:     Farshid Zavareh <fhzavareh@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -70,17 +61,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2017-07-23 10:33 GMT+08:00 Jean-No=C3=ABl AVILA <jean-noel.avila@scantech.f=
-r>:
-> Plus, I hope that some day, instead of translators finding afterwards
-> that a change broke i18n capabilities, developpers would have some kind
-> of sanity check. Requiring special versions of i18n tooling stops this ho=
-pe.
+Hi Farshid,
+
+On 24 July 2017 at 12:01, Farshid Zavareh <fhzavareh@gmail.com> wrote:
+> I'v been handed over a project that uses Git LFS for storing large CSV fi=
+les.
 >
+> My understanding is that the main benefit of using Git LFS is to keep the=
+ repository small for binary files, where Git can't keep track of the chang=
+es and ends up storing whole files for each revision. For a text file, that=
+ problem does not exist to begin with and Git can store only the changes. A=
+t the same time, this is going to make checkouts unnecessarily slow, not to=
+ mention the financial cost of storing the whole file for each revision.
+>
+> Is there something I'm missing here?
 
-It would be fun to create some tools to help l10n guys finding l10n
-changes on every git commit.
+Git LFS gives benefits when working on *large* files, not just large
+*binary* files.
 
+I can imagine a few reasons for using LFS for some CSV files
+(especially the kinds of files I deal with sometimes!).
 
---=20
-Jiang Xin
+The main one is that many users don't need or want to download the
+large files, or all versions of the large file. Moreover, you probably
+don't care about changes between those files, or there would be so
+many that using the git machinery for comparing them would be
+cumbersome and ineffective.
+
+For me, if I was storing any CSV file over a couple of hundred
+megabyte I would consider using something like LFS. An example would
+be a large Dunn & Bradstreet data file, which I do an analysis on
+every quarter. I want to include the file in the repository, so that
+the analysis can be replicated later on, but I don't want to add 4GB
+of data to the repo every single time the dataset gets updated (also
+every quarter). Storing that in LFS would be a good solution then.
+
+Regards,
+
+Andrew Ardill
