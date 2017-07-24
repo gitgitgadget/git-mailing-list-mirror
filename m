@@ -2,104 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 72DF5203F3
-	for <e@80x24.org>; Mon, 24 Jul 2017 20:53:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 69CFA203F3
+	for <e@80x24.org>; Mon, 24 Jul 2017 20:54:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756082AbdGXUxw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Jul 2017 16:53:52 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55441 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753359AbdGXUxq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jul 2017 16:53:46 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BEBB89AFE6;
-        Mon, 24 Jul 2017 16:53:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=xuBSI24A3SoI0yu+17hn3F0fSOI=; b=TT4wvw
-        SVHk7HxuoWu4y7tcsJjvAjWh4sQ1KhOEum9U71OFKyoWMsHyR4jN6xujd1PRdwt3
-        v6XWIJj8WBmD6K0go3R0X+nP2XkzawJBy+06n2/0mPX7kdM8xVY3374RqmpxYvs0
-        XifdG15K6Eqq+JkgmTfjAOSbGL3Lz71gIUKAM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=T7z3crO8zpGGy2sHAom3thaEPVVpgInw
-        Iw341uUuXy6qLPJWh3Y4S7gq0Lj5lneOLmf0cDKrZnQY/c66Ybur7xffM4YhphlF
-        B5TuEjhxkcfRGi/UmzCs3jn+WVsBUtGhD/SmYMLNLPW6OTURpnv2RKWR3XLLwVYi
-        ohEFKfmTyaI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B48B59AFE5;
-        Mon, 24 Jul 2017 16:53:40 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 23CF09AFE4;
-        Mon, 24 Jul 2017 16:53:40 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood@talktalk.net>
-Cc:     Philip Oakley <philipoakley@iee.org>,
-        William Duclot <william.duclot@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH/RFC] rebase: make resolve message clearer for inexperienced users
-References: <20170709202520.21739-1-william.duclot@gmail.com>
-        <xmqqvan06yo8.fsf@gitster.mtv.corp.google.com>
-        <20170710183101.GA13122@Haydn>
-        <xmqq4luh1gzw.fsf@gitster.mtv.corp.google.com>
-        <7E67FF115BB146A49D486E77404882F2@PhilipOakley>
-        <fd665e9d-e46a-c9f1-f4ec-3407dd18ab36@talktalk.net>
-Date:   Mon, 24 Jul 2017 13:53:38 -0700
-In-Reply-To: <fd665e9d-e46a-c9f1-f4ec-3407dd18ab36@talktalk.net> (Phillip
-        Wood's message of "Mon, 24 Jul 2017 10:51:57 +0100")
-Message-ID: <xmqqmv7td0a5.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S932672AbdGXUyc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Jul 2017 16:54:32 -0400
+Received: from mail-pg0-f48.google.com ([74.125.83.48]:33615 "EHLO
+        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932668AbdGXUya (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jul 2017 16:54:30 -0400
+Received: by mail-pg0-f48.google.com with SMTP id g14so13097389pgu.0
+        for <git@vger.kernel.org>; Mon, 24 Jul 2017 13:54:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=WcMiz8BG0QXxCZZ2k5lhY0IAl+7OMKb4lJh6ZSgzUak=;
+        b=NSShlyiXY+rTzcTDsVLrLpUFPdTWGSPS0Sie8hOGy1fuwVRZ5mJYEGmy7IGQVx5Ir5
+         6iztWz5G01uLef7ORW070Xm09hzWMoWLrgmx8kbv2I6DNBjA/pLZcHI4fEmNMt3dYxMC
+         cS2/bsQEtLSD+Zc+Esg2D0fFisXj4N9cjwSx0svHZ2P03ZTsMZKv9xR2AGdtQNgMwJeZ
+         Zq3xUHq+ILazFtxnj/pMOzz0sENx37U9fdDWzEKA60h4DolrJkQHCkvB7V+8aG4L1UyI
+         vBKfpgAPljLIR1Uj++B/ssSn/52LPCTwAGgj8F9gMfJLQEaipgYYJ0j7tLuVk3PX6Jbk
+         s51A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=WcMiz8BG0QXxCZZ2k5lhY0IAl+7OMKb4lJh6ZSgzUak=;
+        b=JiOIYq1lbvmj3uLC3DHl6urslqyHJh110KwY5OaD0/iYveN/W/aRVObPO2Amqahgxe
+         3icercJl/byOTisyjBPLLuIvRBZ3vhdHdkvslF3AXoM7vDhfdoi8uZ3CuAkzZNmYsBt2
+         dm5rtIh5e/XXy58HVM9/xtGK5MsCEtIaUXhPPJubV8WrTFEfewqvdT6o99ESaxVgazIv
+         0Hq4fVuiwjvPJt14LpP8kycDMB/bjcbAOcB3b5K/enojk8TqcCbp4b4SDpvJXMkQzdIN
+         JfM6OxqOR2tDasPRvGXBSovmCu+2JHbxHscTYhyM4cdK7Z3SArwluCmHLusdsxGbL73d
+         f9PA==
+X-Gm-Message-State: AIVw112YShvxEHGXeTIpqieIapvykd5kvbYWEd8A9/8IT4A8SIB9cmRS
+        +A4kxpFPmjPu70jB
+X-Received: by 10.84.209.132 with SMTP id y4mr13813348plh.460.1500929669717;
+        Mon, 24 Jul 2017 13:54:29 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:c4bc:947:66f8:1cfe])
+        by smtp.gmail.com with ESMTPSA id s9sm25680200pfe.67.2017.07.24.13.54.28
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 24 Jul 2017 13:54:28 -0700 (PDT)
+Date:   Mon, 24 Jul 2017 13:54:27 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Prathamesh Chavan <pc44800@gmail.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, christian.couder@gmail.com
+Subject: Re: [GSoC][PATCH 03/13] submodule: port set_name_rev() from shell to
+ C
+Message-ID: <20170724205427.GA92874@google.com>
+References: <20170724203454.13947-1-pc44800@gmail.com>
+ <20170724203454.13947-4-pc44800@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2BEDA918-70B2-11E7-B991-EFB41968708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170724203454.13947-4-pc44800@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood@talktalk.net> writes:
+On 07/25, Prathamesh Chavan wrote:
+> +static int print_name_rev(int argc, const char **argv, const char *prefix)
+> +{
+> +	char *namerev;
+> +	if (argc != 3)
+> +		die("print-name-rev only accepts two arguments: <path> <sha1>");
+> +
+> +	namerev = get_name_rev(argv[1], argv[2]);
+> +	if (namerev && namerev[0])
+> +		printf(" (%s)", namerev);
+> +	printf("\n");
+> +
 
-> git rebase --continue requiring one to git add first confuses/annoys me
-> too. I started a patch to autostage unstaged changes if they don't
-> contain conflict markers a couple of weeks ago, I'll clean it up and
-> post it later this week.
+'namerev' needs to be freed at the end of this function.
 
-As long as "git rebase" will keep refusing to start in a working
-tree with dirty files and/or index, this could be a good change.
+> +	return 0;
+> +}
+> +
 
-But people _may_ be annoyed because they expect "--continue" to
-remind them that some conflicts are not concluded with an explicit
-"git add", and they would even feel that you made the command unsafe
-if "--continue" just goes ahead by auto-adding their change that is
-still work-in-progress.  Lack of conflict markers is not a sign that
-a file is fully resolved (which they are used to signal by "git
-add", and they do so per set of paths).
-
-> I also find it confusing that it asks me to edit the commit message for
-> picks, fixups and non-final squashes after conflicts. I can see that
-> perhaps one might want to amend the message to reflect any changes that
-> were made while resolving the conflicts but I've never had too. I'd
-> rather be able to pass --edit to rebase --continue if I needed to edit
-> the message in those cases. Looking through the code I think it would
-> require saving some extra state when rebase bails out on conflicts so
-> rebase --continue could tell if it should be asking the user to amend
-> the message.
-
-This is disruptive if done without a careful transition plan and
-you'll annoy existing users who expect to be able to edit by
-default.  Especially since "rebase" keeps going and potentially
-rebuild many commits on top, by the time they realize the mistake of
-not passing "--edit", it is too late and they will hate you for
-forcing them rebase many commits again.
-
-If these suggestions above were given while "rebase -i" was
-developed, it might have made the end-user experience a better one
-than what it currently is, but transitioning after the current
-behaviour has long been established makes it much harder.
-
-
+-- 
+Brandon Williams
