@@ -2,153 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 72B771F89D
-	for <e@80x24.org>; Mon, 24 Jul 2017 09:33:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 97B971F89D
+	for <e@80x24.org>; Mon, 24 Jul 2017 09:52:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752777AbdGXJds (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Jul 2017 05:33:48 -0400
-Received: from mail-ua0-f179.google.com ([209.85.217.179]:34267 "EHLO
-        mail-ua0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751548AbdGXJdr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jul 2017 05:33:47 -0400
-Received: by mail-ua0-f179.google.com with SMTP id q25so55197429uah.1
-        for <git@vger.kernel.org>; Mon, 24 Jul 2017 02:33:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=aKp/1kiZ2e08WVFl35pSAcocAygxc0wk4zkXy7WZo9Y=;
-        b=kk6Ok+LGcwI7kw9WS7rFXROMYCT/5F6Gk6XjkvzSt/Zl6xCw5nrDrND3ARMy/SHiMl
-         3tYIpbUQl4xCFLl9AlVNq5KiGgVc44G/rbmDtGzWYqqvU/tLzdUubKhXIY7RrsdD2DzK
-         3H5jbwO18oHfvyzU5YriYw5YmIaQ0yElbx3OD2AW6ezkcl8nvIFafCe9Dm4+GNhhoQFe
-         cyFSEYwSg68/PbdRsRRKEO5SOzS98of49zbMe72dqxN2abFd1Zx8MF3zDutVRJv9wAPe
-         5N6fbtBPuuGDm1dE3aUyWrqmQzmODUxnuXLl88a2GPDLqjDdQuhC513QfBn7THmQeOT+
-         u/2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=aKp/1kiZ2e08WVFl35pSAcocAygxc0wk4zkXy7WZo9Y=;
-        b=YTVSlAg7oh96Z77RgWA+PgEi38mqI4qInNeW4uyEzrUfX9UeJ3BTzU7ro5mY+1nXjf
-         xs0XK2Zc21mG/O5k3YTEb9QwiIMFFDA7l3eW8VMFfTlV9MTMEU5UWJRYGFz8uUrn/2cR
-         EjfIUEsNSsICk2ipSMw4vOn7joHoUJu4b+qcI0juWpPcgt8pbTUAQG8dleRjgBH+wTv1
-         988HVfVwFFCwGywqolRxMHRwzKO+F4mI53P5mbQ2hgvXExfe/4RJ0Huw3SFx1asx+93K
-         S8O6p1TOWWaJghQrFAiBEsm6l/Jrmu5LxHFsXfsHfouuRXtgoajYH6xpldGkcaW7vXE4
-         AcDQ==
-X-Gm-Message-State: AIVw111nzlzRBXbi2gaterMRZe4HmD7eS5qI0D38r/9X6j01KcRhsWKr
-        CS/iuNH1jX8fwfug7PmSqcZxYfQIPw==
-X-Received: by 10.31.177.1 with SMTP id a1mr1026238vkf.70.1500888826027; Mon,
- 24 Jul 2017 02:33:46 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.103.42.7 with HTTP; Mon, 24 Jul 2017 02:33:45 -0700 (PDT)
-In-Reply-To: <1E42613B0CD743C6ADA24B9F1B43F0F9@PhilipOakley>
-References: <CAEBDL5URsbMazLBy-kWLJzECTEQ=61DN07xuu5NaO2Hw6r=j+w@mail.gmail.com>
- <1E42613B0CD743C6ADA24B9F1B43F0F9@PhilipOakley>
-From:   John Szakmeister <john@szakmeister.net>
-Date:   Mon, 24 Jul 2017 05:33:45 -0400
-X-Google-Sender-Auth: zSzM8Qx4yVoxduaNQMy3sXZCeTs
-Message-ID: <CAEBDL5X3wr=4A+W_sQzSE9BazoxoS2bwcOBZV5Jw=WCWZHAi6A@mail.gmail.com>
-Subject: Re: Expected behavior of "git check-ignore"...
-To:     Philip Oakley <philipoakley@iee.org>
+        id S1753393AbdGXJwJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Jul 2017 05:52:09 -0400
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:5874 "EHLO
+        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751328AbdGXJwH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jul 2017 05:52:07 -0400
+Received: from [192.168.2.201] ([92.22.28.33])
+        by smtp.talktalk.net with SMTP
+        id Za1ydCnFHQ527Za20dZ6nK; Mon, 24 Jul 2017 10:52:05 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
+        t=1500889925; bh=9RyWvHWaUu8XXkf02Sd+XR+6YDMX5u3Ah54tRistttw=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=L98VaVplm5DDgrG6Sgv5iE4wysUZSJR41wKFv7j96iZmMZkyDx8/PLBQFZo/zoFd8
+         DEbOff+TY9TYzTnX0jniu9C5v82r2UEr4+GBOrI4FiIzt5uinfuoHQpBatWPKvlSkN
+         ZdBHKMgTZBCrMeWPgUxvQTdqhA7QjjyQ9sxBSOz4=
+X-Originating-IP: [92.22.28.33]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=MI8io4Rl c=1 sm=1 tr=0 a=BeSdjzhxhZnKGFP9cxuqMA==:117
+ a=BeSdjzhxhZnKGFP9cxuqMA==:17 a=IkcTkHD0fZMA:10 a=ybZZDoGAAAAA:8
+ a=pGLkceISAAAA:8 a=ZFtLV_ceKORR_y8P5J8A:9 a=QEXdDO2ut3YA:10
+ a=0RhZnL1DYvcuLYC8JZ5M:22 a=6kGIvZw6iX1k4Y-7sg4_:22
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH/RFC] rebase: make resolve message clearer for
+ inexperienced users
+To:     Philip Oakley <philipoakley@iee.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        William Duclot <william.duclot@gmail.com>
 Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+References: <20170709202520.21739-1-william.duclot@gmail.com>
+ <xmqqvan06yo8.fsf@gitster.mtv.corp.google.com> <20170710183101.GA13122@Haydn>
+ <xmqq4luh1gzw.fsf@gitster.mtv.corp.google.com>
+ <7E67FF115BB146A49D486E77404882F2@PhilipOakley>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <fd665e9d-e46a-c9f1-f4ec-3407dd18ab36@talktalk.net>
+Date:   Mon, 24 Jul 2017 10:51:57 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
+MIME-Version: 1.0
+In-Reply-To: <7E67FF115BB146A49D486E77404882F2@PhilipOakley>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfJO+q4kN9fjzE4VdbDmRzgu7z40Xj7xmadJiLVRZ0hiJrG9qaQB0kPIZZYaT6aUBT/T5UOY8IxeQsTytcE3O4OnUX+WUEa9fzopohW9mNqfdjX1Ooz0K
+ x5oq8n5O9O19hqK9GQk1KJtUqyp/E7bsL8JsoE7ug9c1s5ByEIiCsJZpM8XTGaj5zirUHv8SAHHGKcVzpgVRayPd+aCnxY7GLlvRf2YD47oaaCbtuwazid+Z
+ LS6y/KkOIg6hJ7+pbQy0yMlG3p1L1WWersUflBOrzA8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jul 23, 2017 at 12:33 PM, Philip Oakley <philipoakley@iee.org> wrote:
-[snip]
+On 16/07/17 12:39, Philip Oakley wrote:
+> 
+> From: "Junio C Hamano" <gitster@pobox.com>
+> Sent: Wednesday, July 12, 2017 10:29 PM
+>> William Duclot <william.duclot@gmail.com> writes:
 >>
->>>>>>
->> git init .
->> echo 'foo/*' > .gitignore
->> echo '!foo/bar' > .gitignore
->
->
-> Is this missing the >> append to get the full two line .gitignore?
-> adding in a `cat .gitignore` would help check.
-
-Yes, sorry about that.
-
->
->> mkdir foo
->> touch foo/bar
->
-> I don't think you need these. It's the given pathnames that are checked, not
-> the file system content.
-
-It was there so you could see that `git status` ignores foo/bar
-(though that wasn't part of the little script).
-
->> git check-ignore foo/bar
->
-> Does this need the `-q` option to set the exit status?
-
-No, it's always set.
-
-> echo $? # to display the status.
-
-Sure.  So, to recap the update reproduction recipe would be:
-
+>>>>  - The original said "When you have resolved this problem", without
+>>>>    giving a guidance how to resolve, and without saying what the
+>>>>    problem is.  The updated one says "conflict" to clarify the
+>>>>    "problem", and suggests "git add" as the tool to use after a
+>>>>    manual resolition.
 >>>>
-git init .
-echo 'foo/*' > .gitignore
-echo '!foo/bar' >> .gitignore
-mkdir foo
-touch foo/bar
-git status # foo/ shows as untracked because bar is present
-git check-ignore foo/bar
-echo $? # show the exit status
-<<<<
+>>>>    Modulo that there are cases where "git rm" is the right tool, the
+>>>>    updated one is strict improvement.
+>>>
+>>> I also wrote "<conflicted_file>" when there could be several. Maybe
+>>> 'mark it as resolved with "git add/rm"' would be a better (and shorter)
+>>> formulation?
+>>
+>> Another potential source of confusion is if we are seeing "a"
+>> conflict, or multiple ones.  I'd say it is OK to treat the whole
+>> thing as "a conflict" that Git needs help with by the user editing
+>> multiple files and using multiple "git add" or "git rm".  So "mark
+>> it as resolved with 'git add/rm'" is fine, I would think, but
+>> anything that I say about UI's understandability to new people needs
+>> to be taken with a large grain of salt ;-).
+>>
+>>> ... I feel like a lot of git messages could be improved this way
+>>> to offer a UI more welcoming to inexperienced user (which is a
+>>> *broad* segment of users). But I am not aware of the cost of
+>>> translation of this kind of patch: would several patches like this
+>>> one be welcomed?
+>>
+>> Surely, as long as I can depend on other reviewers who are more
+>> passionate about end-user experience than I am, I'll take such
+>> patches with their help.
+>>
+>> Thanks.
+> 
+> One of the other confusions I had / have (and I have a saved note to
+> remind me) is when rebase stops with a conflict, and asks the user to
+> "fix" it, then ues "--continue".
+> 
+> I always expect that Git will do the 'add' of the resolved conflict
+> because that is what it would do normally as the next step after the merge.
+> 
+> I also had a similar issue with the --allow-empty case of 'nothing added
+> to commit but untracked files present' where I had been expecting the
+> commit to be simply omitted. You have to go through a reset dance before
+> continuing.
+> 
+> Philip
+> [I'll be off line till Friday]
 
-It seems like it should print "1", but it prints "0".
+git rebase --continue requiring one to git add first confuses/annoys me
+too. I started a patch to autostage unstaged changes if they don't
+contain conflict markers a couple of weeks ago, I'll clean it up and
+post it later this week.
 
->> I expect the last command to return 1 (no files are ignored), but it
->> doesn't.  The StackOverflow user had the same expectation, and imagine
->> others do as well.  OTOH, it looks like the command is really meant to
->> be a debugging tool--to show me the line in a .gitignore associated
->> with this file, if there is one.  In which case, the behavior is
->> correct but the return code description is a bit misleading (0 means
->> the file is ignored, which isn't true here).
->
->
-> Maybe the logic isn't that clear? Maybe it is simply detecting if any one of
-> the ignore lines is active, and doesn't reset the status for a negation?
->
-> I appear to get the same response as yourself, but I haven't spent much time
-> on it - I'm clearing a backlog of work at the moment.
+I also find it confusing that it asks me to edit the commit message for
+picks, fixups and non-final squashes after conflicts. I can see that
+perhaps one might want to amend the message to reflect any changes that
+were made while resolving the conflicts but I've never had too. I'd
+rather be able to pass --edit to rebase --continue if I needed to edit
+the message in those cases. Looking through the code I think it would
+require saving some extra state when rebase bails out on conflicts so
+rebase --continue could tell if it should be asking the user to amend
+the message.
 
-Correct, it appears that if any line in the ignore matches, then it
-exits with 0.  So it's not that it's ignored, but that there is a
-matching line in an ignore file somewhere.  I can see the logic in
-this if it's meant to be a debugging tools, especially combined with
--v.  Simply changing it does affect quite a few tests, but I'm not
-sure that it was intentional for negation to be treated this way.
+Best Wishes
 
-> I also tried the -v -n options, and if I swap the ignore lines around it
-> still says line 2 is the one that ignores.
-> It gets more interesting if two paths are given `foo/bar foo/baz`, to see
-> which line picks up which pathname (and with the swapped ignore lines).
->
-> Is there a test for this in the test suite?
-
-There are several.  But line 427, test_expect_success_multi 'nested
-include', is one that I think is pretty direct about testing this.  I
-imagine what happened is that gitignores used to contain only things
-you wanted to ignore and when the ability to negate came along the
-semantics of this was never changed--and possibly for good reason.
-I'm just wondering if it should change, or if the documentation should
-be updated to reflect how it actually behaves (the file may not be
-ignored, but a line is present in a gitignore that affects its
-status).  The behavior is definitely a little unexpected as it stands,
-given the documentation though.
-
-Thanks for taking a look Philip!
-
--John
+Phillip
