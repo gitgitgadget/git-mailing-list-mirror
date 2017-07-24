@@ -2,96 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6494C203F3
-	for <e@80x24.org>; Mon, 24 Jul 2017 14:45:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 60E5E203F3
+	for <e@80x24.org>; Mon, 24 Jul 2017 15:41:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756190AbdGXOpB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Jul 2017 10:45:01 -0400
-Received: from mail-qt0-f182.google.com ([209.85.216.182]:37449 "EHLO
-        mail-qt0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753249AbdGXOpA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jul 2017 10:45:00 -0400
-Received: by mail-qt0-f182.google.com with SMTP id r14so37885135qte.4
-        for <git@vger.kernel.org>; Mon, 24 Jul 2017 07:45:00 -0700 (PDT)
+        id S1755854AbdGXPlP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Jul 2017 11:41:15 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:32909 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932666AbdGXPlH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jul 2017 11:41:07 -0400
+Received: by mail-pg0-f66.google.com with SMTP id 123so1471005pgj.0
+        for <git@vger.kernel.org>; Mon, 24 Jul 2017 08:41:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=iV2tFeMKZBtqDXlBYu5NSVLg0GoRZA7zynhisn1E44A=;
-        b=DOuA/frTZkNePy+jziw36e01r4xrMQaLtTA0LPOWgU94F3ft7v5QI2XV0VpKkWn3pp
-         LZfqDeRzi2hzJZOHAzx3Rw6FnepAgG81UVqRcMGD8+/WoHR3NSrGAYB0lKsCNu0U2aYM
-         NcrUl0/mvIifr6ZiP7ggc7X5LqXpR65vjmVWEiTfb4hOLGdRw+9h+AheLzIr9rWTCZL4
-         89DPUP3iQdO3p3l/P1E+9nZqHUE6vFJ2uEnN10typD1ruuHUIGex4nZpnFxyzoHYfL2e
-         WMlA4E4MqFVJQ9IxQ+VWp8eHy1PdXteNJaaK8uniNF4OVnr8DWWivQiuLt7gQI2HnIW2
-         1fjQ==
+        h=from:to:cc:subject:date:message-id;
+        bh=SBhlTwSbLGvfSqnrcQDVDu+4C7TgF63hqT+2B8QOgJ0=;
+        b=pq7VfjuyM6AXwwdkjaOZArjio5z5BF9JwDaZ0Jso3+H1l4y1Jp/fdezneBco+gT21y
+         x/uuHRiTuf/OcnGI2LDlX0XOfNOnPq7lt+d1G45r7ql9BLiKp6qNcSAJi7lAXpCoVkfI
+         LGR6l/4ChloA6Ravlwo9f5C7lTJwtrOoA7RXhtqGNS9jTmtwf5PpYdQUg5SiumUWseTo
+         O9uLnW12N+nS2gk4ihpfN9hF2OI1REG0pm4QdT3nFTEdzRlwYE0KeBXH6yrRTAwnnCiU
+         YkVZ8kSC8WljXhTw3kcy1QhBWsKS5HbKXe/g3rm28A1tiydl69M6l6FytzIECu30+ImI
+         Hi2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=iV2tFeMKZBtqDXlBYu5NSVLg0GoRZA7zynhisn1E44A=;
-        b=n7jUUwbOE13U2p63bjENSySjKg7YQfWYR/qwWybFNqbGzrZ13rvlkFbSSNqH5od8WH
-         ZLiNJ1GcVoHMpcePj5Eo5a2t5/paCs31NrWZuXpVa6dXM+ZLsFQb72oeD0L/Kbcw2Xuq
-         upu3z2H1Xl94CukAGEfEUmFLdoPtn9JyIdm3LGRVi6Ef6L49Q34I7lU2Gz0oBXI4bi97
-         89bu3N+WWkE5CXzdSGtrx4/Kfhsg3Rk0Dved5hCNgcqDLlvGk4MBlTa/ALLNG/RLU5tX
-         C8cgZ7zQu0mbe69y6kABM+uz/64HkOAOhZXodTzDJOyVM5Y7zElaRd1Z2BgoO1Y2A3tk
-         tjwg==
-X-Gm-Message-State: AIVw113aX2D4EiIcNxUoGbslO79ScJKIW/o0pgMEc0HegqamABmmf6zd
-        kNRWeDIrx7UVOEoRL2Awp3+x9+YhFg==
-X-Received: by 10.237.42.55 with SMTP id c52mr21837860qtd.311.1500907499527;
- Mon, 24 Jul 2017 07:44:59 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.12.193.38 with HTTP; Mon, 24 Jul 2017 07:44:59 -0700 (PDT)
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Mon, 24 Jul 2017 22:44:59 +0800
-Message-ID: <CANYiYbEJ3Gw=JvbhLBeFWBD7xLXxd=_fFdH3UX76H97ZU_3zKA@mail.gmail.com>
-Subject: [L10N] Kickoff of translation for Git 2.14.0 round 2
-To:     Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        Ralf Thielow <ralf.thielow@gmail.com>,
-        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
-        Marco Paolone <marcopaolone@gmail.com>,
-        Changwoo Ryu <cwryu@debian.org>,
-        Vasco Almeida <vascomalmeida@sapo.pt>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=SBhlTwSbLGvfSqnrcQDVDu+4C7TgF63hqT+2B8QOgJ0=;
+        b=Pz6Y3x9YIAOGK0YUQf2qC86yXXssEPAp1AyDK97fixMJciVeaGWYP8kWcSs1aUuoxW
+         OVq0D5ljB881+6NDrwNah/3kZGbac26H538LqC4jMbX8azTpeNfBK3GUB4OKyKxb4c3F
+         GlEvTZfO+4s0CubXe9AUVzITQ+Z8dpR0206wmS3eo3koxk2wtc4qMaGYZXBUo0huCnCz
+         eqC4hoUxVfV1OsM9+QZZKZUtIwyM0EzohdCXB6wUKr1EJd4agguBxXwNeb7j71VXxukx
+         TIIR0kn94yj53JTHLQPHnpD0YuUwHzLsq9DAXzPx7gXT3jQPUvDncb8f8Y5h44vMzX8P
+         e+Og==
+X-Gm-Message-State: AIVw113r/oK2JKaVde+Yy55vrM+wB+mrFwDEF1ijENAitSYUBpXOwNbL
+        4bCVmrx+GX2v07zap4Q=
+X-Received: by 10.98.71.203 with SMTP id p72mr16869556pfi.106.1500910866594;
+        Mon, 24 Jul 2017 08:41:06 -0700 (PDT)
+Received: from localhost.localdomain ([2405:204:728c:b841:29d6:b2a9:b53c:f664])
+        by smtp.gmail.com with ESMTPSA id c191sm25508626pga.15.2017.07.24.08.41.04
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 24 Jul 2017 08:41:06 -0700 (PDT)
+From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org
+Subject: [PATCH/RFC] branch: warn user about non-existent branch
+Date:   Mon, 24 Jul 2017 21:11:19 +0530
+Message-Id: <20170724154119.2926-1-kaarticsivaraam91196@gmail.com>
+X-Mailer: git-send-email 2.13.2.23.g14d9f4c6d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+The inexistence of the branch trying to be renamed wasn't checked
+and was left for 'rename_ref' to point out. It's better to do it
+explicitly as it leads to unconventional behaviour in the following
+case,
 
-In the last round of l10n, some l10n messages from "date.c" are
-disappeared because of the l10n unfriendly PRItime macro.  This issue
-has been fixed by commit fc0fd5b23b (Makefile: help gettext tools to
-cope with our custom PRItime format), so let's start new round of l10n
-based on the new generated "po/git.pot" file.
+        $ git branch -m foo master
+        fatal: A branch named 'master' already exists.
 
-This time there are 9 updated messages need to be translated since last
-update:
+It's conventional to report that the 'foo' doesn't exist rather than
+repoting that 'master' exists, the same way the 'mv' command does.
 
-    l10n: git.pot: v2.14.0 round 2 (9 new, 2 removed)
+        $ mv foo existing_file
+        mv: cannot stat 'foo': No such file or directory
 
-    Generate po/git.pot from v2.14.0-rc0-40-g5eada8987e for git
-v2.14.0 l10n round 2.
+Further, there's no way for 'master' being overwritten with 'foo',
+as it doesn't exist. Reporting the existence of 'master' is germane
+only when 'master' is *really* going to be overwritten.
 
-    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+So, report the inexistence of the branch explicitly  before reporting
+existence of new branch name to be consistent with it's counterpart,
+the widely used, the 'mv' command.
 
-You can get it from the usual place:
+Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+---
+ I'm sending this patch as I didn't want to leave this thread
+ open ended. I'm not yet sure if this is a good thing to do.
+ This patch is open to comments, as the prvious ones I've sent
+ have been.
 
-    https://github.com/git-l10n/git-po/
+ builtin/branch.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-As how to update your XX.po and help to translate Git, please see
-"Updating a XX.po file" and other sections in =E2=80=9Cpo/README" file.
+diff --git a/builtin/branch.c b/builtin/branch.c
+index a3bd2262b..0a9112335 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -473,6 +473,10 @@ static void rename_branch(const char *oldname, const char *newname, int force)
+ 			die(_("Invalid branch name: '%s'"), oldname);
+ 	}
+ 
++	/* Check for existence of oldref before proceeding */
++	if(!ref_exists(oldref.buf))
++		die(_("Branch '%s' does not exist."), oldname);
++
+ 	/*
+ 	 * A command like "git branch -M currentbranch currentbranch" cannot
+ 	 * cause the worktree to become inconsistent with HEAD, so allow it.
+-- 
+2.13.2.23.g14d9f4c6d
 
---
-Jiang Xin
