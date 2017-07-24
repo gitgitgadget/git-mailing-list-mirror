@@ -2,122 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B8BC203F3
-	for <e@80x24.org>; Mon, 24 Jul 2017 17:08:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7FF3A203F3
+	for <e@80x24.org>; Mon, 24 Jul 2017 17:09:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755991AbdGXRIk (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Jul 2017 13:08:40 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:35924 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755364AbdGXRGp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jul 2017 13:06:45 -0400
-Received: by mail-wm0-f66.google.com with SMTP id 184so13376529wmo.3
-        for <git@vger.kernel.org>; Mon, 24 Jul 2017 10:06:44 -0700 (PDT)
+        id S1755993AbdGXRJV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Jul 2017 13:09:21 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:37623 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754171AbdGXRJT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jul 2017 13:09:19 -0400
+Received: by mail-pg0-f65.google.com with SMTP id g14so7601837pgu.4
+        for <git@vger.kernel.org>; Mon, 24 Jul 2017 10:09:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=PUabWm2ASyGNi7f3L09Fk0JPX1Q1xleZKFXZYmIV0z8=;
-        b=p/T3tJZ4gLKXnhkPYD78a4rB2yRCFg3ORHMvbwwJC4fPMgj2S3mQXIqV9tL42Qg9Sc
-         oTl+ukKq2JioQqJ1dRPiIbQZc8dCkKx/NHYEA5/YuKYQu7hmQSmIZ9aHOqK1CAkdfZTm
-         ZKU+Bzhythw9DdpDhV3pkBzCWgLqj6Bt9/+LjgLvRkU6LKbtNCH/4hWVp1aYr+ycdwqO
-         Q13nzJ2KoTRyaMoOMN8fMCgo3cxt+1lGvWJc1EB6M/Ir7d5zWvjCTEaKtWk2zZRsZM0g
-         G5YKQ9UYEu/bmeBLg0yW4jY2mdXbk4MZVY7WMqfyd5GNIcFbyt589A6UPJv6eV9IsV85
-         +K4w==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=V/hTLiog76G+jKE5tLX+ojUf4EH7oFAirFP7dS0nGko=;
+        b=nmpfRa5FqG+DypjpChW72hNM8O+R6Vxa2GMGQScb8hKRmCDgVyVHZLiXxM8l6CbAei
+         LVowZ7avfyo9XOZ7ts2B1I+cynKEjVxNVlDiSypwM/jveuC1+4mv/Ttaq/ngewKFrV3d
+         YwMqg5CLQ+4zZuaN4qOrqvFTdAZ4SBH89p3v+uor5dPJcPs2hZS0JX+PWKG3wdJg0o7s
+         92YnnEApucqpyc5ydiPiF3W8MdIN4VQYrsWazCtcq2NZhPxM+4scjXpanSP5ChelFnBE
+         RjCqOAxjLObyS7XuTNG3Hlc65CeDE45nKVxXp88A+gfKqm2Df3PtBWkD8fYJ/Rl/qXb/
+         zAxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=PUabWm2ASyGNi7f3L09Fk0JPX1Q1xleZKFXZYmIV0z8=;
-        b=OwCq1zxahWEaO6PGuUH94mrvHRoOTUcuiimCpfHNsOS962gwANrFQmxEjf5Vp3pZRI
-         fDP8Elrp9ew/CD7u9FMHw/iPP4nRbMeOXQATohAY39K8FwzleNl/LXYsno+9RHG5C9i4
-         tIrEV43Ut16x83H97tr3v2ij59j879S8xNRCI2HAWdTB/PTuE8B6wQpd+IqXTddz+wx5
-         CnuvD4Bo3GsLWVVfFcj5iCUN8RfAsCDIdHmletD0gzzgS8U0b64Vnm1ADWClRKoUi4WW
-         vxN5r09RIF/1Ti868nkYTgsq0QKhBJdGWNfwX8JOH8DYSYYuASbNYXtAGowm7krnJvcI
-         RYXA==
-X-Gm-Message-State: AIVw113KDufH1VOtzIPx/wNXlMdGfH7fLOA4Lw5fQkThTnESZJ6ypVqF
-        NPE9sUzFfCuxgw==
-X-Received: by 10.28.23.195 with SMTP id 186mr5109567wmx.173.1500916003297;
-        Mon, 24 Jul 2017 10:06:43 -0700 (PDT)
-Received: from localhost.localdomain (x4db2767d.dyn.telefonica.de. [77.178.118.125])
-        by smtp.gmail.com with ESMTPSA id r70sm8666373wmb.16.2017.07.24.10.06.42
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 24 Jul 2017 10:06:42 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff Smith <whydoubt@gmail.com>, git@vger.kernel.org,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH] blame: fix memory corruption scrambling revision name in error message
-Date:   Mon, 24 Jul 2017 19:06:20 +0200
-Message-Id: <20170724170620.19745-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.14.0.rc0.88.ge338f4246
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=V/hTLiog76G+jKE5tLX+ojUf4EH7oFAirFP7dS0nGko=;
+        b=Oi/mEwQUArBMldCJzsTcxzjfWSg9wXZQ3AE/Od5vK6Uqj/aXtFY2LU3yV4aI57C1dR
+         I2f8B+z6COv0ThARKsFc2IMN5VuVUFD7vWRMW1tXHKQjs2MlwRjYBRr5U+ph3x7Mq1q8
+         kYRnA1OpAuBXWnabAajmINFvPGPDfEtM23X3AkhZQX7M3SalsRBihkMzeXmh4jfT/XuG
+         JGJbuVYCdrqDlWNfsIrPxARgUVHFAsRhaz+vJTnW/iS3Y6bgo/wHcSaO7Lry9EOQEHq9
+         RgC9OumlL+PLVW6g+PfkhD76b7+5xvvU83bna7vPn1h0ymWuHxVqK+5aR+rTTuLWjEcY
+         sYWg==
+X-Gm-Message-State: AIVw1102xtJ1tCTXZ+3xxptGRXMQWM4YOTBGxH+BaNIS5i/OW8RW7yu2
+        QWlPlinHEALIKw==
+X-Received: by 10.84.209.237 with SMTP id y100mr18200614plh.6.1500916158917;
+        Mon, 24 Jul 2017 10:09:18 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:14ca:cb2b:befe:703a])
+        by smtp.gmail.com with ESMTPSA id o7sm22175856pgf.63.2017.07.24.10.09.16
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 24 Jul 2017 10:09:17 -0700 (PDT)
+Date:   Mon, 24 Jul 2017 10:09:15 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        David Turner <novalis@novalis.org>,
+        Brandon Williams <bmwill@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH 21/28] commit_packed_refs(): use a staging file separate
+ from the lockfile
+Message-ID: <20170724170915.GD13924@aiede.mtv.corp.google.com>
+References: <cover.1497534157.git.mhagger@alum.mit.edu>
+ <2779ee9a75e75ff80898e51e46d561b8074e0dc2.1497534157.git.mhagger@alum.mit.edu>
+ <xmqqy3riiu0f.fsf@gitster.mtv.corp.google.com>
+ <20170720233051.GB159617@aiede.mtv.corp.google.com>
+ <xmqqpocuib06.fsf@gitster.mtv.corp.google.com>
+ <20170724165907.53zx657qmizgl4lb@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170724165907.53zx657qmizgl4lb@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When attempting to blame a non-existing path, git should show an error
-message like this:
+Hi,
 
-  $ git blame e83c51633 -- nonexisting-file
-  fatal: no such path nonexisting-file in e83c51633
+Jeff King wrote:
 
-Since the recent commit 835c49f7d (blame: rework methods that
-determine 'final' commit, 2017-05-24) the revision name is either
-missing or some scrambled characters are shown instead.  The reason is
-that the revision name must be duplicated, because it is invalidated
-when the pending objects array is cleared in the meantime, but this
-commit dropped the duplication.
+> This seems like the correct path to me. If the existing behavior is to
+> lock the referring symref, that seems like a violation of the lock
+> procedure in the first place. Because if "A" points to "B", we take
+> "A.lock" and then modify "B". But "B" may have any number of "A" links
+> pointing to it, eliminating the purpose of the lock.
+>
+> I thought we already did this, though. And that modifying HEAD (which
+> might be a symlink) required LOCK_NO_DEREF.
 
-Restore the duplication of the revision name in the affected functions
-(find_single_final() and find_single_initial()).
+Yes, I believe the lockfile API already does so.  Since this patch
+creates a ".new" file, not using the lockfile API, it doesn't benefit
+from that, though.
 
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
- blame.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
-
-diff --git a/blame.c b/blame.c
-index 91e26e93e..9ee0a375f 100644
---- a/blame.c
-+++ b/blame.c
-@@ -1662,8 +1662,8 @@ static struct commit *find_single_final(struct rev_info *revs,
- 		found = (struct commit *)obj;
- 		name = revs->pending.objects[i].name;
- 	}
--	if (name_p)
--		*name_p = name;
-+	if (name_p && name)
-+		*name_p = xstrdup(name);
- 	return found;
- }
- 
-@@ -1735,7 +1735,7 @@ static struct commit *find_single_initial(struct rev_info *revs,
- 		die("No commit to dig up from?");
- 
- 	if (name_p)
--		*name_p = name;
-+		*name_p = xstrdup(name);
- 	return found;
- }
- 
-@@ -1843,6 +1843,8 @@ void setup_scoreboard(struct blame_scoreboard *sb, const char *path, struct blam
- 
- 	if (orig)
- 		*orig = o;
-+
-+	free((char *)final_commit_name);
- }
- 
- 
--- 
-2.14.0.rc0.88.ge338f4246
-
+Thanks,
+Jonathan
