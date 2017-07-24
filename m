@@ -2,147 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C60FE203F3
-	for <e@80x24.org>; Mon, 24 Jul 2017 19:07:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9A0B203F3
+	for <e@80x24.org>; Mon, 24 Jul 2017 19:11:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932335AbdGXTHv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Jul 2017 15:07:51 -0400
-Received: from mail-pf0-f170.google.com ([209.85.192.170]:35668 "EHLO
-        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932321AbdGXTHt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jul 2017 15:07:49 -0400
-Received: by mail-pf0-f170.google.com with SMTP id h29so15206131pfd.2
-        for <git@vger.kernel.org>; Mon, 24 Jul 2017 12:07:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=x8XSoQzdJdUZ1U2Kh9pIysqqI/7+DNvPV8ALg8MheLI=;
-        b=uTo3IjY3WtAdySdxWeqty+K/fsS5JfDVhUy9FB7u78lGKeh0M+lrT2bqlWwgAxRV3k
-         wPOH0IgC+jmlGSoL2aZKYZL535ur+k+ZhUwxT+dnjrMXvyre71vY7nfQjSlEE/ZDdg8k
-         4RXhPCCFWLro8jZlEkiNQ9QEoA67VWeNg7WBaKOu/cEK0Q5rJb5csEHXkCsOjojkSkkN
-         N5GBZZoh5q3ElaFF1EMGqJPShx9ykicL/nen5UXqR7X59Gs1ocA3iMGCt+5dUVZRi93x
-         013Vu5+RvTzPqZ7xY1dWgCz37jAeiinCLpvuTgLYE4sInGG9giuUA64+MDer3HYbm9H7
-         a3aA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=x8XSoQzdJdUZ1U2Kh9pIysqqI/7+DNvPV8ALg8MheLI=;
-        b=A/F/s27yH7yVOS96TAKXMxQRuo4Uh0gNdDsHhgfBPuwhJ0F+NweDq0p/fSjlCK/tdy
-         OYcnsWmrBvWP0PQVQ0UtEoQ/2YwOnSr7CiHX9vcyV39suqjjQ/ELDsI/QU/L3PoJUiZq
-         UkKwXFTOCnHIkb24Wa6j5O0n70Ye6Lg+gld1RWxZA9lgwQ4nKbKez+iqMIlTEtFDnRo5
-         l9EAwnPdnsMav1sUtXOZY78w3JiE7sMy1Yor1t4jCrRcJtiNI2o8GKcWiQrp8q1tnY6D
-         FJkXV5S650hUOrdma8X9+LyDrio9DbBBemlrVyvLmT2HwDKM72AhAaQT3IPClKAnx6Fj
-         yjzA==
-X-Gm-Message-State: AIVw112AYdl4xpwURFa0Eiq4bfhsfH0u7Gs+xHJqsyJzwnka86Z+JAxe
-        HNeDlkJKhFDP4iwJysgF0pJYV9H7FTDi
-X-Received: by 10.98.12.145 with SMTP id 17mr16862885pfm.153.1500923268809;
- Mon, 24 Jul 2017 12:07:48 -0700 (PDT)
+        id S1756247AbdGXTLQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Jul 2017 15:11:16 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54961 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1756182AbdGXTJP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jul 2017 15:09:15 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0CB09920BE;
+        Mon, 24 Jul 2017 15:09:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=/3FkvxQud2wbchbQFZng9Tee0VQ=; b=TauQBd
+        ta5xvnV1H4aT5SMBLHIASZqFZEKkNiOzC+X+CmqSL/OdtlUJEipJ/Y29tZnePuxh
+        dZfbMOdNWMgUxTxq2YueFg7g9ESXkwVCy0K6qj6O1S+5nxrmAESzMcKWN1g5s6c1
+        J9XkVFR6G5TZhXhtPAWWq6uSyRPWD5tRIIeJ8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=PWkcCk4pkZUdUV4RsikrOqVkSvaC7zg7
+        zCUazvhdPgrGLvWNV8jGnO4lg6c56Aax6zSAud6JzCevdL+N17cC2pEyhseBHZNT
+        aYOvRWWxyxYcF33O8Z41ev3kXPSjojI+XwJpJGT7dtTpuNlITgKBiAQRsrKsBhH1
+        d14PeUAGrsM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 03FDF920BD;
+        Mon, 24 Jul 2017 15:09:13 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4DF6A920B9;
+        Mon, 24 Jul 2017 15:09:12 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jiang Xin <worldhello.net@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Git List <git@vger.kernel.org>,
+        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+Subject: Re: [PATCH] PRItime: wrap PRItime for better l10n compatibility
+References: <249ac6f8-af3c-4b20-5bf0-87a82866cc7a@free.fr>
+        <3ccfa2fb49d471f807d77d9a280e4b7cfe56faea.1500304209.git.worldhello.net@gmail.com>
+        <xmqq7ez7htvj.fsf@gitster.mtv.corp.google.com>
+        <CANYiYbEcMrriaor9OT4c2qtfh9Ja5NJ9KBSxa3XhPAuoN0t42A@mail.gmail.com>
+        <xmqq60epfy27.fsf@gitster.mtv.corp.google.com>
+        <CANYiYbFROuyXso2ZKuJWDp4cSwpBu=bNAbC-yZtEyDwkbUcAhQ@mail.gmail.com>
+        <alpine.DEB.2.21.1.1707191456010.4193@virtualbox>
+        <xmqq8tjkm3ly.fsf@gitster.mtv.corp.google.com>
+        <xmqqo9sfkm32.fsf@gitster.mtv.corp.google.com>
+        <CANYiYbGSaaFOq7iw=ON1Oo87bSA96o=zyzym5RDT32kMae7bsw@mail.gmail.com>
+        <xmqqvamlfm6s.fsf@gitster.mtv.corp.google.com>
+        <CANYiYbF+XDANNbpZJ-jL7y81QhggW_snBuWeONSCUc4CPn2zMw@mail.gmail.com>
+        <xmqqr2x9fjpi.fsf@gitster.mtv.corp.google.com>
+        <CANYiYbGkuGNNYn4OF5w=1+Pqn9hEHWcD+DYVB6AXRs0vFEsY2Q@mail.gmail.com>
+        <alpine.DEB.2.21.1.1707221323420.4271@virtualbox>
+        <CANYiYbHMMJ1tubajHNZVsQ=ihmogtF4=FqrRWvPJg4+wuBapbg@mail.gmail.com>
+Date:   Mon, 24 Jul 2017 12:09:10 -0700
+In-Reply-To: <CANYiYbHMMJ1tubajHNZVsQ=ihmogtF4=FqrRWvPJg4+wuBapbg@mail.gmail.com>
+        (Jiang Xin's message of "Mon, 24 Jul 2017 09:38:17 +0800")
+Message-ID: <xmqqd18pejop.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.100.165.44 with HTTP; Mon, 24 Jul 2017 12:07:48 -0700 (PDT)
-In-Reply-To: <20170724180312.GE13924@aiede.mtv.corp.google.com>
-References: <20170724173601.19921-1-sbeller@google.com> <20170724180312.GE13924@aiede.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 24 Jul 2017 12:07:48 -0700
-Message-ID: <CAGZ79kaYzHzSdDZuMpM6UFXLon0SME-nC=9_09PLhLEADfuscw@mail.gmail.com>
-Subject: Re: [PATCH] recursive submodules: detach HEAD from new state
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9403AAE8-70A3-11E7-8A67-61520C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 24, 2017 at 11:03 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Hi,
+Jiang Xin <worldhello.net@gmail.com> writes:
+
+>> So let's go with Junio's patch.
 >
-> Stefan Beller wrote:
->
->> When a submodule is on a branch and in its superproject you run a
->> recursive checkout, the branch of the submodule is updated to what the
->> superproject checks out. This is very unexpected in the current model of
->> Git as e.g. 'submodule update' always detaches the submodule HEAD.
->>
->> Despite having plans to have submodule HEADS not detached in the future,
->> the current behavior is really bad as it doesn't match user expectations
->> and it is not checking for loss of commits (only to be recovered via the
->> reflog).
->
-> I think the corrected behavior doesn't match user expectations,
-> either.
+> I agree.  We just go with the sed-then-cleanup version until we meet
+> ambiguities (I mean some words other than PRItime need to be
+> replaced).
 
-Well, what is the user expectation?
+OK, thanks for all involved to get us to a conclusion.  Jiang, I saw
+you already made an announcement for the second round.  Thank you
+very much for doing so without waiting me---I was stuck on something
+else and my morning was blown X-<.  I'll still try to tag -rc1 by
+the end of business today.
 
->
-> Could this patch include some documentation to help users know what to
-> expect?
-
-Sure, once we figured out what is reasonable.
-
->
->> Detach the HEAD unconditionally in the submodule when updating it.
->>
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
->> This is a resend of [1], which did not receive any attention.
->
-> Yikes.  Yes, this bug looks problematic.  Thanks for working on it.
->
->> I improved the commit message laying out the current state of affairs,
->> arguing that any future plan should not weigh in as much as the current
->> possible data loss.
->
-> Can you elaborate on what you mean about data loss?
-
-Assume we have a submodule 'sub' inside the superproject 'super',
-then
-
-    git -C super/sub checkout <my-unrelated-branch>
-    git -C super checkout <some-tree-ish>
-
-modifies my-unrelated-branch in the submodule, which is not related
-to the superproject in any way.
-
-This patch would detach from that branch and have the HEAD contain
-the desired sha1. To think that further we'd still have potential data loss:
-
-    git -C super/sub checkout <my-unrelated-branch>
-    git -C super checkout <some-tree-ish>
-    # fine so far as sub is in detached HEAD, but:
-     ... hack hack hack ... in 'sub'
-    git -C super/sub commit -m "work"
-    git -C super checkout <other-tree-ish>
-    # subs work is only to be recovered via reflog!
-
-However this matches the current behavior of
-"submodule update" which also tips, that are
-not reachable from any ref.
-
-> At first glance
-> it would seem to me that detaching HEAD could lead to data loss since
-> there isn't a branch to keep track of the user's work.
-
-yes, but that is the same with "submodule update", which is what
-people may have in mind?
-
->  Are you saying
-> the current behavior of updating whatever branch HEAD is on (which,
-> don't get me wrong, is a wrong behavior that needs fixing) bypassed
-> the reflog?
-
-No, I am not saying that.
-I am saying that updating an unrelated branch (which is dragged into
-the affair just because HEAD points at it) is very subtle thing, as any
-commits on that branch can be considered safe (it is on a branch, right?)
-but the detached HEAD is the default unsafe mode we currently have.
-
-Thanks,
-Stefan
