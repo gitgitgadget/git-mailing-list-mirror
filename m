@@ -2,102 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 29B72203F3
-	for <e@80x24.org>; Mon, 24 Jul 2017 17:24:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED59D203F3
+	for <e@80x24.org>; Mon, 24 Jul 2017 17:38:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932468AbdGXRYD (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Jul 2017 13:24:03 -0400
-Received: from cloud.peff.net ([104.130.231.41]:47220 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1754390AbdGXRXh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jul 2017 13:23:37 -0400
-Received: (qmail 6800 invoked by uid 109); 24 Jul 2017 17:23:38 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 24 Jul 2017 17:23:38 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10951 invoked by uid 111); 24 Jul 2017 17:23:54 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Mon, 24 Jul 2017 13:23:54 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Jul 2017 13:23:35 -0400
-Date:   Mon, 24 Jul 2017 13:23:35 -0400
-From:   Jeff King <peff@peff.net>
-To:     Kirill Likhodedov <kirill.likhodedov@jetbrains.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-Subject: Re: Remove help advice text from git editors for interactive rebase
- and reword
-Message-ID: <20170724172335.hcigpdzt4bewlk6w@sigill.intra.peff.net>
-References: <241D60E0-1687-4DD8-A18C-CF7310DBFAEB@jetbrains.com>
- <xmqqshhmerf1.fsf@gitster.mtv.corp.google.com>
- <CEDBC0C9-03F7-4536-809C-9ADB8901B722@jetbrains.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CEDBC0C9-03F7-4536-809C-9ADB8901B722@jetbrains.com>
+        id S1756623AbdGXRil (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Jul 2017 13:38:41 -0400
+Received: from mail-pg0-f48.google.com ([74.125.83.48]:37556 "EHLO
+        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756456AbdGXRgZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jul 2017 13:36:25 -0400
+Received: by mail-pg0-f48.google.com with SMTP id y129so59907344pgy.4
+        for <git@vger.kernel.org>; Mon, 24 Jul 2017 10:36:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=ABhnrj3qE1ypAEg7M8Syyfq3u3eWm5YfWona8ICrhPQ=;
+        b=i4Rq1FaNBzuVtJycfv1oIqYzTT/uolYWUcvVyoqdbt4Rej3pp0RxNuxDEn+5GpQXuu
+         Dih92CuHzs37VjB14zj8SEkkNzWoVIZX0vN+GRUN/ekZp64AL4xutu7NWSIZzWd66oup
+         IYP9aCvuRJhy3M59ADKtAOziOsFHF5+fziKpeJW2h37gXnp+N5kXLPrLi82GaQbwQFxz
+         okwwoIvLF8ddvxd6fiI0xNDP95r+JG3Wsq18qCnxnPOGhfP9ekvQfjMTAP7DSm4KyAaJ
+         J50alWzuiys9hSQMunMlOaF+VNwZJUC7+kfqAxrk/nFK7rKqxFGJus4dAEPolwYzw9kd
+         VFRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=ABhnrj3qE1ypAEg7M8Syyfq3u3eWm5YfWona8ICrhPQ=;
+        b=mdpI+t79LmsHhsliYACjCzBW5YTl0I8pI1GU6XmXuZhaxPtzKoCh0gOl661PIxRkTF
+         O52IlR7WtNwtiu4kz+lxUjSoOKl+XD4gFDe6xG0BvueX9Weajzz9LABNVaw3GieMiZwd
+         pKxoFsII/9QiQlBEfOPZXdhahXTZkUcOVD/v5V7wI9zt8BfUGY9FWg7KZVLKEP7atUVg
+         BjXWjv3IE4o7nEHh4mvlbUgsWVgOiAyPJkfWH2es2fRxsQP8jaOH+HFcK+aci8oq659k
+         RRfq19fv7wSykZXwdYktOPv1l63py8uW1kNNbCgcu3687sB3Cif+hoXzKie1H8YDlLB2
+         S4PQ==
+X-Gm-Message-State: AIVw110r2oPI9nDw3IXKYqie77n/LdnSfE1rI55jqVLBz9Cml5kXJx2c
+        92zRNmCBDHSMFA2WMzIlcA==
+X-Received: by 10.98.33.148 with SMTP id o20mr16472481pfj.89.1500917784021;
+        Mon, 24 Jul 2017 10:36:24 -0700 (PDT)
+Received: from localhost ([2620:0:100e:422:d00e:f9cd:bdce:3a86])
+        by smtp.gmail.com with ESMTPSA id r2sm12599392pgs.85.2017.07.24.10.36.23
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 24 Jul 2017 10:36:23 -0700 (PDT)
+From:   Stefan Beller <sbeller@google.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, jrnieder@gmail.com,
+        Stefan Beller <sbeller@google.com>
+Subject: [PATCH] recursive submodules: detach HEAD from new state
+Date:   Mon, 24 Jul 2017 10:36:01 -0700
+Message-Id: <20170724173601.19921-1-sbeller@google.com>
+X-Mailer: git-send-email 2.14.0.rc0.3.g6c2e499285
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 24, 2017 at 01:26:09AM +0300, Kirill Likhodedov wrote:
+When a submodule is on a branch and in its superproject you run a
+recursive checkout, the branch of the submodule is updated to what the
+superproject checks out. This is very unexpected in the current model of
+Git as e.g. 'submodule update' always detaches the submodule HEAD.
 
-> > Not at all interested, as that would mean your tool will tell its
-> > users to set such a configuration variable and their interactive use
-> > of Git outside your tool will behave differently from other people
-> > who use vanilla Git, and they will complain to us.
-> 
-> That's not true, since the tool can (and would) use the `git -c
-> config.var=value rebase -i` syntax to set the configuration variable
-> just for this particular command, without affecting the environment.
+Despite having plans to have submodule HEADS not detached in the future,
+the current behavior is really bad as it doesn't match user expectations
+and it is not checking for loss of commits (only to be recovered via the
+reflog).
 
-Yes, but if you are adding a config variable that is only ever meant to
-be used from the command line, it probably makes sense to just add a
-command-line option.
+Detach the HEAD unconditionally in the submodule when updating it.
 
-> Btw, if my proposal is so uninteresting, why the existing advice.*
-> variables were previously introduced? I don't know the motivation, but
-> assume that it was about making Git less wordy for experienced users.
-> So I don't see any difference here.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
 
-That is exactly what advice.* is for, but it is about the _user_
-deciding that they don't care about seeing that text. Not a tool that is
-calling Git deciding that in one particular context, it would like to
-suppress the hint text.
+This is a resend of [1], which did not receive any attention.
+I improved the commit message laying out the current state of affairs,
+arguing that any future plan should not weigh in as much as the current
+possible data loss.
 
-So I actually would be OK with having an advice.* option to squelch
-rebase and/or commit instructions. But only if users decide they would
-never like to see that text. So yes, your tool could piggy-back on that
-config option, but it would be a slight abuse of the intent.
+[1] https://public-inbox.org/git/20170630003851.17288-1-sbeller@google.com/
 
-> > But stepping back a bit, as you said in the parentheses, your tool
-> > would need to grab these "hints" from Git, instead of having a
-> > separate hardcoded hints that will go stale while the underlying Git
-> > command improves, to be able to show them "separately".  
-> 
-> There is no need to call Git to get these "hints". They are quite
-> obvious, well-known and can be hardcoded. However, I don't plan to use
-> these hints anyway, since they are a bit foreign to the GUI of the
-> tool I develop. For instance, for reword I'd like to show an editor
-> containing just the plain commit message that the user is about to
-> change.
+Thanks,
+Stefan
 
-If this is all scripted anyway, wouldn't it be an option to just process
-the commit message in your program?  The format is well-known, with
-hints and instructions on lines marked by core.commentChar ("#" by
-default).
+ submodule.c               |  3 ++-
+ t/lib-submodule-update.sh | 17 +++++++++++++++++
+ 2 files changed, 19 insertions(+), 1 deletion(-)
 
-I'm not sure exactly of the flow in which the user sees the commit
-message buffer (i.e., if you are invoking the editor yourself, or if you
-are relying on git-commit to do so). But even in the latter case, you
-can hook the editor invocation to do whatever you like. For example:
+diff --git a/submodule.c b/submodule.c
+index ef83c2a9ee..4b7c0a4c82 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1653,7 +1653,8 @@ int submodule_move_head(const char *path,
+ 			cp.dir = path;
+ 
+ 			prepare_submodule_repo_env(&cp.env_array);
+-			argv_array_pushl(&cp.args, "update-ref", "HEAD", new, NULL);
++			argv_array_pushl(&cp.args, "update-ref", "HEAD",
++					 "--no-deref", new, NULL);
+ 
+ 			if (run_command(&cp)) {
+ 				ret = -1;
+diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
+index 2d26f86800..fc406b95d7 100755
+--- a/t/lib-submodule-update.sh
++++ b/t/lib-submodule-update.sh
+@@ -848,6 +848,23 @@ test_submodule_switch_recursing_with_args () {
+ 			test_submodule_content sub1 origin/add_sub1
+ 		)
+ 	'
++	test_expect_success "$command: submodule branch is not changed, detach HEAD instead" '
++		prolog &&
++		reset_work_tree_to_interested add_sub1 &&
++		(
++			cd submodule_update &&
++			git -C sub1 checkout -b keep_branch &&
++			git -C sub1 rev-parse HEAD >expect &&
++			git branch -t check-keep origin/modify_sub1 &&
++			$command check-keep &&
++			test_superproject_content origin/modify_sub1 &&
++			test_submodule_content sub1 origin/modify_sub1 &&
++			git -C sub1 rev-parse keep_branch >actual &&
++			test_cmp expect actual &&
++			test_must_fail git -C sub1 symbolic-ref HEAD
++		)
++	'
++
+ 	# Replacing a tracked file with a submodule produces a checked out submodule
+ 	test_expect_success "$command: replace tracked file with submodule checks out submodule" '
+ 		prolog &&
+-- 
+2.14.0.rc0.3.g6c2e499285
 
-  GIT_EDITOR='f() { sed -i /^#/d "$1"; $EDITOR "$1"; }; f' git commit
-
-That allows you not only to strip out the existing instructions, but to
-insert whatever other instructions you choose.
-
--Peff
