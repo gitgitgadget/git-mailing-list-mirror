@@ -2,89 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 69CFA203F3
-	for <e@80x24.org>; Mon, 24 Jul 2017 20:54:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61A8E203F3
+	for <e@80x24.org>; Mon, 24 Jul 2017 20:57:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932672AbdGXUyc (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Jul 2017 16:54:32 -0400
-Received: from mail-pg0-f48.google.com ([74.125.83.48]:33615 "EHLO
-        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932668AbdGXUya (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jul 2017 16:54:30 -0400
-Received: by mail-pg0-f48.google.com with SMTP id g14so13097389pgu.0
-        for <git@vger.kernel.org>; Mon, 24 Jul 2017 13:54:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=WcMiz8BG0QXxCZZ2k5lhY0IAl+7OMKb4lJh6ZSgzUak=;
-        b=NSShlyiXY+rTzcTDsVLrLpUFPdTWGSPS0Sie8hOGy1fuwVRZ5mJYEGmy7IGQVx5Ir5
-         6iztWz5G01uLef7ORW070Xm09hzWMoWLrgmx8kbv2I6DNBjA/pLZcHI4fEmNMt3dYxMC
-         cS2/bsQEtLSD+Zc+Esg2D0fFisXj4N9cjwSx0svHZ2P03ZTsMZKv9xR2AGdtQNgMwJeZ
-         Zq3xUHq+ILazFtxnj/pMOzz0sENx37U9fdDWzEKA60h4DolrJkQHCkvB7V+8aG4L1UyI
-         vBKfpgAPljLIR1Uj++B/ssSn/52LPCTwAGgj8F9gMfJLQEaipgYYJ0j7tLuVk3PX6Jbk
-         s51A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=WcMiz8BG0QXxCZZ2k5lhY0IAl+7OMKb4lJh6ZSgzUak=;
-        b=JiOIYq1lbvmj3uLC3DHl6urslqyHJh110KwY5OaD0/iYveN/W/aRVObPO2Amqahgxe
-         3icercJl/byOTisyjBPLLuIvRBZ3vhdHdkvslF3AXoM7vDhfdoi8uZ3CuAkzZNmYsBt2
-         dm5rtIh5e/XXy58HVM9/xtGK5MsCEtIaUXhPPJubV8WrTFEfewqvdT6o99ESaxVgazIv
-         0Hq4fVuiwjvPJt14LpP8kycDMB/bjcbAOcB3b5K/enojk8TqcCbp4b4SDpvJXMkQzdIN
-         JfM6OxqOR2tDasPRvGXBSovmCu+2JHbxHscTYhyM4cdK7Z3SArwluCmHLusdsxGbL73d
-         f9PA==
-X-Gm-Message-State: AIVw112YShvxEHGXeTIpqieIapvykd5kvbYWEd8A9/8IT4A8SIB9cmRS
-        +A4kxpFPmjPu70jB
-X-Received: by 10.84.209.132 with SMTP id y4mr13813348plh.460.1500929669717;
-        Mon, 24 Jul 2017 13:54:29 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:c4bc:947:66f8:1cfe])
-        by smtp.gmail.com with ESMTPSA id s9sm25680200pfe.67.2017.07.24.13.54.28
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 24 Jul 2017 13:54:28 -0700 (PDT)
-Date:   Mon, 24 Jul 2017 13:54:27 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Prathamesh Chavan <pc44800@gmail.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, christian.couder@gmail.com
-Subject: Re: [GSoC][PATCH 03/13] submodule: port set_name_rev() from shell to
- C
-Message-ID: <20170724205427.GA92874@google.com>
-References: <20170724203454.13947-1-pc44800@gmail.com>
- <20170724203454.13947-4-pc44800@gmail.com>
+        id S1756103AbdGXU5W (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Jul 2017 16:57:22 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60229 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1756093AbdGXU5U (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jul 2017 16:57:20 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C6258935D1;
+        Mon, 24 Jul 2017 16:57:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=PMLGGI7J8TSFvCSciMgkY2Spb1M=; b=c+kPK8
+        bvb6db2Gn2qkW0VN/+adlvADOvFNClwQ2PJ+TEXoYAZBbWq8k7I6gX4iqG2aYrKF
+        Frf9xmBmorivtG14rFwzot6EkVYbrhO4hA2ssoSmYJUkAWHlXf+phHB4VS8RiBcO
+        6JDjx68ZQvxw9eFc8scsleoVtAnRRJozlQIMY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=dK75oIKlLGtHfHFRaubnP7BH+VqlPknc
+        Wb6gPj1ClCRVi23G2XVBTftiUt5drftF2WlI+22cU8ATx/uihBkqA3k9UyNjvdSW
+        /q1sH8RzM9Ihk8kQ6mCOvuIJKtKj9pxfZOelvfryMmeKZAHUykPNX+UMd8++qxzF
+        xmIGVGMxP1s=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BDDAC935CF;
+        Mon, 24 Jul 2017 16:57:12 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2C8BA935CE;
+        Mon, 24 Jul 2017 16:57:12 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH] recursive submodules: detach HEAD from new state
+References: <20170724173601.19921-1-sbeller@google.com>
+        <20170724180312.GE13924@aiede.mtv.corp.google.com>
+        <CAGZ79kaYzHzSdDZuMpM6UFXLon0SME-nC=9_09PLhLEADfuscw@mail.gmail.com>
+Date:   Mon, 24 Jul 2017 13:57:11 -0700
+In-Reply-To: <CAGZ79kaYzHzSdDZuMpM6UFXLon0SME-nC=9_09PLhLEADfuscw@mail.gmail.com>
+        (Stefan Beller's message of "Mon, 24 Jul 2017 12:07:48 -0700")
+Message-ID: <xmqqinihd048.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170724203454.13947-4-pc44800@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: AA4FD33A-70B2-11E7-9B0E-61520C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 07/25, Prathamesh Chavan wrote:
-> +static int print_name_rev(int argc, const char **argv, const char *prefix)
-> +{
-> +	char *namerev;
-> +	if (argc != 3)
-> +		die("print-name-rev only accepts two arguments: <path> <sha1>");
-> +
-> +	namerev = get_name_rev(argv[1], argv[2]);
-> +	if (namerev && namerev[0])
-> +		printf(" (%s)", namerev);
-> +	printf("\n");
-> +
+Stefan Beller <sbeller@google.com> writes:
 
-'namerev' needs to be freed at the end of this function.
+>>  Are you saying
+>> the current behavior of updating whatever branch HEAD is on (which,
+>> don't get me wrong, is a wrong behavior that needs fixing) bypassed
+>> the reflog?
+>
+> No, I am not saying that.
+> I am saying that updating an unrelated branch (which is dragged into
+> the affair just because HEAD points at it) is very subtle thing, as any
+> commits on that branch can be considered safe (it is on a branch, right?)
+> but the detached HEAD is the default unsafe mode we currently have.
 
-> +	return 0;
-> +}
-> +
-
--- 
-Brandon Williams
+Then it is not a data loss as you claimed in the proposed log
+message, but is something else, no?
