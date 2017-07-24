@@ -2,100 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 47116203F3
-	for <e@80x24.org>; Mon, 24 Jul 2017 17:13:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 29B72203F3
+	for <e@80x24.org>; Mon, 24 Jul 2017 17:24:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756053AbdGXRNF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Jul 2017 13:13:05 -0400
-Received: from mail-pg0-f41.google.com ([74.125.83.41]:38228 "EHLO
-        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753579AbdGXRNA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jul 2017 13:13:00 -0400
-Received: by mail-pg0-f41.google.com with SMTP id s4so59614403pgr.5
-        for <git@vger.kernel.org>; Mon, 24 Jul 2017 10:13:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=SGFgvKoAaZI/TzQEW1fAZRdS2expiMdD+QqbXBcDqKE=;
-        b=hsY4Not6ttbmxrTVnacsLKnkPYc7eE8yS2TON9F+8mA71qSZTVtmv69OWVcfuM7RfF
-         riOJRZvYIzEBSlegaHB/C5DMkbHEYarZwJOzaVfuLGMUP2QWJ2LDzSDb6q3nveNHMRGf
-         kliur4/nHzGgFqKg3f/3+1Rn0tn3muwhtdMo82Mq7tpEXndDakSM3DFoV6p4tlLEoBVZ
-         dvsurM8bzepHBRgYcMdF36iAW9fVDj5mzqyPG5LsUEYlYeQIfIJlld9hE7x105TWuH+9
-         vuViK/6UpUbAkARzanq7tyYVvZJuocrxGbBV9Sy7eFKZVDKcsrZ3Q6W2krKZHeOdgEZB
-         3wLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=SGFgvKoAaZI/TzQEW1fAZRdS2expiMdD+QqbXBcDqKE=;
-        b=Hr/DtACt2MbemkFccxkMprsJB/bhIhPISd5TpB1kswBL2Z5tY4UDILPGXZSE6blqPO
-         EPMfLZZo3uDF9fatuhKfKNGSUTbROD86bO/D3n9SBbWuaD1OoZ8Z2p47eXNYu8M9d9ss
-         jjZwqAcc7YnbtBTS6WAlnx4t6m/WPBETmcemSGc2yOZ5FDPeCUDqCNkyZ3h61sailm/v
-         SfAWyd3t8eEs+jgdBc+GpNu2/QNVpa6Y2NkW3F7v4mbnpzd/FmC6u7WwaQNaIfIafm/b
-         qso4sfGbIW1HqCzNi2qUPLJHZTyS9LNrFZ7DwE5YWMR5HyR2BrUDSpNKH6szkiJib2P1
-         LMCw==
-X-Gm-Message-State: AIVw1102RX13E+YsmRX+8JRJcYZvyVba/l4L/2e50Gm1V8HXTu5Ofclk
-        dQf5T6bORtjtjF3ARo+ZDYQFAeMNqxFd
-X-Received: by 10.98.12.145 with SMTP id 17mr16574711pfm.153.1500916380101;
- Mon, 24 Jul 2017 10:13:00 -0700 (PDT)
+        id S932468AbdGXRYD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Jul 2017 13:24:03 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47220 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1754390AbdGXRXh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jul 2017 13:23:37 -0400
+Received: (qmail 6800 invoked by uid 109); 24 Jul 2017 17:23:38 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 24 Jul 2017 17:23:38 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 10951 invoked by uid 111); 24 Jul 2017 17:23:54 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Mon, 24 Jul 2017 13:23:54 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Jul 2017 13:23:35 -0400
+Date:   Mon, 24 Jul 2017 13:23:35 -0400
+From:   Jeff King <peff@peff.net>
+To:     Kirill Likhodedov <kirill.likhodedov@jetbrains.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+Subject: Re: Remove help advice text from git editors for interactive rebase
+ and reword
+Message-ID: <20170724172335.hcigpdzt4bewlk6w@sigill.intra.peff.net>
+References: <241D60E0-1687-4DD8-A18C-CF7310DBFAEB@jetbrains.com>
+ <xmqqshhmerf1.fsf@gitster.mtv.corp.google.com>
+ <CEDBC0C9-03F7-4536-809C-9ADB8901B722@jetbrains.com>
 MIME-Version: 1.0
-Received: by 10.100.165.44 with HTTP; Mon, 24 Jul 2017 10:12:59 -0700 (PDT)
-In-Reply-To: <20170724170813.scceigybl5d3fvdd@sigill.intra.peff.net>
-References: <xmqq8tjqrfq4.fsf@gitster.mtv.corp.google.com> <20170719181956.15845-1-sbeller@google.com>
- <20170719182342.GA158344@google.com> <20170724170813.scceigybl5d3fvdd@sigill.intra.peff.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 24 Jul 2017 10:12:59 -0700
-Message-ID: <CAGZ79kZafHBJOVwZzw_ii3T6_X24Uci4vUudp45r8-GTn0a4Sg@mail.gmail.com>
-Subject: Re: [PATCH] objects: scope count variable to loop
-To:     Jeff King <peff@peff.net>
-Cc:     Brandon Williams <bmwill@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Johannes Sixt <j6t@kdbg.org>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Andreas Schwab <schwab@linux-m68k.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CEDBC0C9-03F7-4536-809C-9ADB8901B722@jetbrains.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 24, 2017 at 10:08 AM, Jeff King <peff@peff.net> wrote:
-> On Wed, Jul 19, 2017 at 11:23:42AM -0700, Brandon Williams wrote:
->
->> > object.c: In function =E2=80=98object_array_remove_duplicates=E2=80=99=
-:
->> > object.c:404:2: error: =E2=80=98for=E2=80=99 loop initial declarations=
- are only allowed in C99 mode
->> >   for (unsigned src =3D 0; src < nr; src++) {
->> >   ^
->> > object.c:404:2: note: use option -std=3Dc99 or -std=3Dgnu99 to compile=
- your code
->> >
->> > Using -std=3Dc99 works for me.
->>
->> This would need a change to the makefile then wouldn't it?
->
-> Actually, it complicates things even more, I'd think. We probably can't
-> just blindly add "-std=3Dc99" to CFLAGS, as not all compilers would
-> support it (even if they _do_ support this construct).
->
-> Interestingly I have no problems compiling it here. I wonder if Stefan's
-> config.mak is supplying -std=3Dc89 or some other restrictive flag. Or if
-> his compiler is a different version (though I tried with gcc-6, gcc-4.9,
-> and clang-3.8).
+On Mon, Jul 24, 2017 at 01:26:09AM +0300, Kirill Likhodedov wrote:
 
-Before this patch, I only had
-  CFLAGS +=3D -g -O0
-in config.mak (as I switched working directories recently), I'll throw in
-  DEVELOPER=3D1
+> > Not at all interested, as that would mean your tool will tell its
+> > users to set such a configuration variable and their interactive use
+> > of Git outside your tool will behave differently from other people
+> > who use vanilla Git, and they will complain to us.
+> 
+> That's not true, since the tool can (and would) use the `git -c
+> config.var=value rebase -i` syntax to set the configuration variable
+> just for this particular command, without affecting the environment.
 
-My compiler version is ancient (gcc 4.8.4-2ubuntu1~14.04.3)
-apparently (why did I never check in this environment?)
+Yes, but if you are adding a config variable that is only ever meant to
+be used from the command line, it probably makes sense to just add a
+command-line option.
+
+> Btw, if my proposal is so uninteresting, why the existing advice.*
+> variables were previously introduced? I don't know the motivation, but
+> assume that it was about making Git less wordy for experienced users.
+> So I don't see any difference here.
+
+That is exactly what advice.* is for, but it is about the _user_
+deciding that they don't care about seeing that text. Not a tool that is
+calling Git deciding that in one particular context, it would like to
+suppress the hint text.
+
+So I actually would be OK with having an advice.* option to squelch
+rebase and/or commit instructions. But only if users decide they would
+never like to see that text. So yes, your tool could piggy-back on that
+config option, but it would be a slight abuse of the intent.
+
+> > But stepping back a bit, as you said in the parentheses, your tool
+> > would need to grab these "hints" from Git, instead of having a
+> > separate hardcoded hints that will go stale while the underlying Git
+> > command improves, to be able to show them "separately".  
+> 
+> There is no need to call Git to get these "hints". They are quite
+> obvious, well-known and can be hardcoded. However, I don't plan to use
+> these hints anyway, since they are a bit foreign to the GUI of the
+> tool I develop. For instance, for reword I'd like to show an editor
+> containing just the plain commit message that the user is about to
+> change.
+
+If this is all scripted anyway, wouldn't it be an option to just process
+the commit message in your program?  The format is well-known, with
+hints and instructions on lines marked by core.commentChar ("#" by
+default).
+
+I'm not sure exactly of the flow in which the user sees the commit
+message buffer (i.e., if you are invoking the editor yourself, or if you
+are relying on git-commit to do so). But even in the latter case, you
+can hook the editor invocation to do whatever you like. For example:
+
+  GIT_EDITOR='f() { sed -i /^#/d "$1"; $EDITOR "$1"; }; f' git commit
+
+That allows you not only to strip out the existing instructions, but to
+insert whatever other instructions you choose.
+
+-Peff
