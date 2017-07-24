@@ -2,51 +2,51 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9CCF62047F
-	for <e@80x24.org>; Mon, 24 Jul 2017 01:38:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2DF472047F
+	for <e@80x24.org>; Mon, 24 Jul 2017 01:50:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752290AbdGXBiU (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Jul 2017 21:38:20 -0400
-Received: from mail-qt0-f173.google.com ([209.85.216.173]:37683 "EHLO
-        mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751856AbdGXBiS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Jul 2017 21:38:18 -0400
-Received: by mail-qt0-f173.google.com with SMTP id r14so29624198qte.4
-        for <git@vger.kernel.org>; Sun, 23 Jul 2017 18:38:18 -0700 (PDT)
+        id S1752013AbdGXBuU (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Jul 2017 21:50:20 -0400
+Received: from mail-qt0-f174.google.com ([209.85.216.174]:33297 "EHLO
+        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751782AbdGXBuS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Jul 2017 21:50:18 -0400
+Received: by mail-qt0-f174.google.com with SMTP id n42so63308285qtn.0
+        for <git@vger.kernel.org>; Sun, 23 Jul 2017 18:50:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=fu/Wzqh9cYsIHEhNzxsGNDODU4BifgzvurU2eQVKiEs=;
-        b=U4aHS4Uz+h6zRbKCN/OAaDHciPKeoEGY1+7A87B0A1ltmcwzdAxTLDDYE+jXxkeoLv
-         A0PTvVH5wcVsi60LQtkP65jz/HsRrV281sAL3w99rdMrYfCKmxa8E4U3AHJJs8/h+zxf
-         M7YwCEkxH4NxzUAXasYl6GTT1+svqQiitoO0XvFeSYnHJ8aqCqTqJUBQh5iGVCTDewOy
-         j/wcm1jUBOgI9ZmwlMN4BzeQzVSf3b26sG5vJfikNlT/PYPXYNSx3NWz+1+CIyPd7bSG
-         be93anLge9gPaknAuODuWKTNNi0PDg5ATAHPU6uHekHo3d1t2z4w5iCWA+1kYvBlA8eD
-         tTbw==
+        bh=s5f5HTTC1eBl7BWKfb0guo7UNjUFuj+4Z7xeNw6LyTY=;
+        b=UnIIS2Tw6dJRv3Y8SEIFrMn/gt4TDKLu1U+mp9ziE0xRpRlKw8wxU6IaHt8b3nRA3N
+         +pXHnzp3SpR3zM3ULiYVcX7kMgb/c1lvUFy+GTPCaESfHpzPHgwopdBis5kP3VzE82/e
+         4x8vid8yfoBriAOzrM6yjBJadhdzxPweSTfrsXWJlz+kjJQciU1cQjO/G6GZuTpupame
+         wWFWgVvydNsO6NR29hzHwYFmN/4zT565ejEkhWpWGD5OsRI04/+H9cJ2QjNBidEPqSjd
+         clE9SX/KdRywWJLZF+/9cqE4hMGip20NbPkUL2JGhEsFqxuDjmE8oe6WdwlaMsyQbn22
+         VPsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=fu/Wzqh9cYsIHEhNzxsGNDODU4BifgzvurU2eQVKiEs=;
-        b=kyeUMUHVhaaEyC9Ideo/8aysTn2oio5/hFAaoiAKj/BCTsLMzyuFiNJepyf4/Hr9ug
-         y0QLxvAi8Jy7UPAtH7zVYH5KQ4coD/8+WcCL/0lpxKWdQmeEAzv9I+RHOKQK6DhZ18CZ
-         OlGRnnQwnEBntH+vdXwFO9yrhX6BePipJEkl7DVLrS4Zo1+O1t0B8tF5yC+KaasKd7fw
-         53GxTIGomowKZjjoG42yJHoWZlzfHXsDOpJMqhC7n3PIRyrnJ65ZsAETGQaasirqFMmP
-         YjzPlC8fzGyPQVmVVKYAY1L9noy45yZwUqDA8mVjUOjs4WHyP0VZikIID+RFvK+hHcgH
-         2pew==
-X-Gm-Message-State: AIVw110WB4Qi1zlSNzjK17kGhridKE7HBZhAbPzV3qpXlvZHeb7CXPyl
-        FB4KFDq4Ds/zbj0C4Nruzo6Jzu1/9Q==
-X-Received: by 10.200.32.146 with SMTP id 18mr18292007qtd.146.1500860298213;
- Sun, 23 Jul 2017 18:38:18 -0700 (PDT)
+        bh=s5f5HTTC1eBl7BWKfb0guo7UNjUFuj+4Z7xeNw6LyTY=;
+        b=mncMALk8d6JvCWfUBeMyX+B6BT8uJCHAd3Mh/BQlOZGL0OH2x9bAMh41W1TFJ02EAQ
+         oUMEvKRSqzurzrEcMidWsMv8CQjlB7gzwL6AbXmEpJl9PahEtGp/7xymbwMWDnfk1hL1
+         6eRD6/W2J1n8OfBXsV4yJNX9bl8jXKO1ehWldRBZezBVdeS/hSS5Y2ArKg9g6kqMAPVV
+         yIL8E0PgAGGsXXPoZCVV9DYKxzmUGlz0wBClmWLBcQ2A7knEaCyK1TzOBO9XXi9U7R3f
+         WdQEeBKsWFVrdF0Jec7NA1pnX3ZBYCwL0OYTM5xyXk71o6ZLzmOtF5/1x/0gZq2gtjaM
+         SaTw==
+X-Gm-Message-State: AIVw1112+dBlKazQlX3rS7rFVFRYSKfY4kWKtkzAEgL8daN9YaPg21NK
+        ExJV7QU2u/eorr0aAJVe+MpWYNfyDiCB
+X-Received: by 10.200.8.188 with SMTP id v57mr18281057qth.213.1500861018087;
+ Sun, 23 Jul 2017 18:50:18 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.12.193.38 with HTTP; Sun, 23 Jul 2017 18:38:17 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.21.1.1707221323420.4271@virtualbox>
+Received: by 10.12.193.38 with HTTP; Sun, 23 Jul 2017 18:50:17 -0700 (PDT)
+In-Reply-To: <xmqqeft8fp5j.fsf@gitster.mtv.corp.google.com>
 References: <249ac6f8-af3c-4b20-5bf0-87a82866cc7a@free.fr> <3ccfa2fb49d471f807d77d9a280e4b7cfe56faea.1500304209.git.worldhello.net@gmail.com>
  <xmqq7ez7htvj.fsf@gitster.mtv.corp.google.com> <CANYiYbEcMrriaor9OT4c2qtfh9Ja5NJ9KBSxa3XhPAuoN0t42A@mail.gmail.com>
  <xmqq60epfy27.fsf@gitster.mtv.corp.google.com> <CANYiYbFROuyXso2ZKuJWDp4cSwpBu=bNAbC-yZtEyDwkbUcAhQ@mail.gmail.com>
@@ -54,13 +54,14 @@ References: <249ac6f8-af3c-4b20-5bf0-87a82866cc7a@free.fr> <3ccfa2fb49d471f807d7
  <xmqqo9sfkm32.fsf@gitster.mtv.corp.google.com> <CANYiYbGSaaFOq7iw=ON1Oo87bSA96o=zyzym5RDT32kMae7bsw@mail.gmail.com>
  <xmqqvamlfm6s.fsf@gitster.mtv.corp.google.com> <CANYiYbF+XDANNbpZJ-jL7y81QhggW_snBuWeONSCUc4CPn2zMw@mail.gmail.com>
  <xmqqr2x9fjpi.fsf@gitster.mtv.corp.google.com> <CANYiYbGkuGNNYn4OF5w=1+Pqn9hEHWcD+DYVB6AXRs0vFEsY2Q@mail.gmail.com>
- <alpine.DEB.2.21.1.1707221323420.4271@virtualbox>
+ <alpine.DEB.2.21.1.1707221323420.4271@virtualbox> <xmqqeft8fp5j.fsf@gitster.mtv.corp.google.com>
 From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Mon, 24 Jul 2017 09:38:17 +0800
-Message-ID: <CANYiYbHMMJ1tubajHNZVsQ=ihmogtF4=FqrRWvPJg4+wuBapbg@mail.gmail.com>
+Date:   Mon, 24 Jul 2017 09:50:17 +0800
+Message-ID: <CANYiYbG_gh82M5ccZA-DnVFr0XrCzDJYd=Q0KrDfQXGZ=2z9kw@mail.gmail.com>
 Subject: Re: [PATCH] PRItime: wrap PRItime for better l10n compatibility
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Git List <git@vger.kernel.org>,
         =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
@@ -68,50 +69,65 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2017-07-22 19:28 GMT+08:00 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
-> Hi,
+2017-07-22 23:48 GMT+08:00 Junio C Hamano <gitster@pobox.com>:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> On Sat, 22 Jul 2017, Jiang Xin wrote:
+>>> >> A very small hack on gettext.
+>>
+>> I am 100% opposed to this hack. It is already cumbersome enough to find
+>> out what is involved in i18n (it took *me* five minutes to find out that
+>> much of the information is in po/README, with a lot of information stored
+>> *on an external site*, and I still managed to miss the `make pot` target).
+>>
+>> If at all, we need to make things easier instead of harder.
+>>
+>> Requiring potential volunteers to waste their time to compile an
+>> unnecessary fork of gettext? Not so great an idea.
+>>
+>> Plus, each and every Git build would now have to compile their own
+>> gettext, too, as the vanilla one would not handle the .po files containing
+>> %<PRItime>!!!
+>>
+>> And that requirement would impact instantaneously people like me, and even
+>> worse: some other packagers might be unaware of the new requirement which
+>> would not be caught during the build, and neither by the test suite.
+>> Double bad idea.
 >
->> 2017-07-22 7:34 GMT+08:00 Junio C Hamano <gitster@pobox.com>:
->> > Jiang Xin <worldhello.net@gmail.com> writes:
->> >
->> >> A very small hack on gettext.
+> If I understand correctly, the patch hacks the input processing of
+> xgettext (which reads our source code and generates po/git.pot) so
+> that when it sees PRItime, pretend that it saw PRIuMAX, causing it
+> to output %<PRIuMAX> in its output.
 >
-> I am 100% opposed to this hack.
-
-It's really very small, see:
-
-*  https://github.com/jiangxin/gettext/commit/b0a72643
-*  https://public-inbox.org/git/a87e7252bf9de8a87e5dc7712946f72459778d6c.1500684532.git.worldhello.net@gmail.com/
-
-> It is already cumbersome enough to find
-> out what is involved in i18n (it took *me* five minutes to find out that
-> much of the information is in po/README, with a lot of information stored
-> *on an external site*, and I still managed to miss the `make pot` target).
+> In our workflow,
 >
-> If at all, we need to make things easier instead of harder.
-
-If it is only the l10n coordinate's duty to generate po/git.pot, the
-tweak is OK.  But if other guys need to recreate po/git.pot, it's
-hard, especially for guys working on Mac or Windows.
-
+>     * The po/git.pot file is updated only by the l10n coordinator,
+>       and then the result is committed to our tree.
 >
-> Requiring potential volunteers to waste their time to compile an
-> unnecessary fork of gettext? Not so great an idea.
+>     * Translators build on that commit by (1) running msgmerge which
+>       takes po/git.pot and wiggles its entries into their existing
+>       po/$lang.po file so that po/$lang.po file has new entries from
+>       po/git.pot and (2) editing po/$lang.po file.  The result is
+>       committed to our tree.
 >
-> Plus, each and every Git build would now have to compile their own
-> gettext, too, as the vanilla one would not handle the .po files containing
-> %<PRItime>!!!
-
-No, only l10n coordinator and potential po/git.pot generator are involved.
-
+>     * The build procedure builders use runs the resulting
+>       po/$lang.po files through msgfmt to produce po/$lang.mo files,
+>       which will be installed.
 >
-> So let's go with Junio's patch.
+> As long as the first step results in %<PRIuMAX> (not %<PRItime> or
+> anything that plain vanilla msgmerge and msgfmt do not understand),
+> the second step and third step do not require any hacked version of
+> gettext tools.
+>
+> Even though I tend to agree with your conclusion that pre-processing
+> our source before passing it to xgettext is probably a better
+> solution in the longer term, I think the most of the objections in
+> your message come from your misunderstanding of what Jiang's patch
+> does and are not based on facts.  My understanding is that
+> translators do not need to compile a custom msgmerge and builders do
+> not need a custom msgfmt.
+>
 
-I agree.  We just go with the sed-then-cleanup version until we meet
-ambiguities (I mean some words other than PRItime need to be
-replaced).
+I appreciate Junio's explanation. I totally agree.
 
 -- 
 Jiang Xin
