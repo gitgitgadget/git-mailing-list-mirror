@@ -2,122 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5DF431F89D
-	for <e@80x24.org>; Tue, 25 Jul 2017 20:53:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 474CF1F89D
+	for <e@80x24.org>; Tue, 25 Jul 2017 20:58:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752403AbdGYUxx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jul 2017 16:53:53 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:35870 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751423AbdGYUxv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jul 2017 16:53:51 -0400
-Received: by mail-wr0-f194.google.com with SMTP id y67so19901151wrb.3
-        for <git@vger.kernel.org>; Tue, 25 Jul 2017 13:53:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=idO6SBH9rvgBcAiHLxOW/ExSqnM+Nl2kYeor93iQ5Hw=;
-        b=P7Xc5z2yzbw5ChvxuuT4Mg515o+NfRqQm1hCvr1yZXCVYnC1QQDxKyYh2eBIqrior5
-         froriaQTQ5v9m1Rcc/kGcmlHkzglM2py1uSQ6uO3f51YERoZRJVgUBi8nQlXhWRWCTum
-         a9wUJeYURwUKkvCdhBlVBFGmtF85JXdp8a2rX/SLRPU+UwHvoNhN+ZALG/J1K5Ud8IS5
-         Rv5MBmbNpkA7Dl3KfgcjalrJ4qgA/jhCJXYwZL69uaVtQLaoFSUwho+uxAw4RueUVuVY
-         JcZ0B/ICylbzaPH+OpLl9GSSeFtVhwWYTzBOQY4QQbhTrsnOJwQprpWFF05NhUu7ZAt2
-         yOIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=idO6SBH9rvgBcAiHLxOW/ExSqnM+Nl2kYeor93iQ5Hw=;
-        b=FH7fbaWZdK3g66yJxlrRTYmAsdFabnvrzI2PZVPqy8VcmIzHtx/hNQG3tmQStLDvVX
-         5z2iErBxd3oZSaYXf0twbcbieRKxuSBcRdq61Ajt9RWLDSiynXCVvB/+VXLrVoampl1s
-         jWxKRyL+78sJwYsvhGvnq3Z5J7RpgsHVWnCjadCjOc/FlRXJbcD8mfNK6NDwzFhFOB5k
-         3SwruYKLZhEfDTJqgRijMbuPs2PTPVBKOKMAHuva9dVHZE+6g8OpBm9Owu4GoDOP/EpA
-         nXIWco2bftFB0FdkZAOFy0yGuYktGRQSwc3QtDxZEEJK5T0QIp93a+E97c86qUGk9Ag4
-         7uoQ==
-X-Gm-Message-State: AIVw1136qeKdTkTOS/iau6HMogguEpp1UbFOgi9hgLclZqJmhOE0AKx8
-        Wqof7FavijCU9lvKs+I=
-X-Received: by 10.223.128.163 with SMTP id 32mr7148769wrl.99.1501016029780;
-        Tue, 25 Jul 2017 13:53:49 -0700 (PDT)
-Received: from arrakeen.fritz.box ([2001:a61:3421:5800:cd28:a33e:5f3f:ef7])
-        by smtp.gmail.com with ESMTPSA id 63sm7190156wrj.33.2017.07.25.13.53.48
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 25 Jul 2017 13:53:49 -0700 (PDT)
-From:   Andreas Heiduk <asheiduk@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Andreas Heiduk <asheiduk@gmail.com>
-Subject: [PATCH v2] doc: add missing values "none" and "default" for diff.wsErrorHighlight
-Date:   Tue, 25 Jul 2017 22:53:15 +0200
-Message-Id: <20170725205315.12030-1-asheiduk@gmail.com>
-X-Mailer: git-send-email 2.13.3
-In-Reply-To: <xmqqa83sbamf.fsf@gitster.mtv.corp.google.com>
-References: <xmqqa83sbamf.fsf@gitster.mtv.corp.google.com>
+        id S1752501AbdGYU6q (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jul 2017 16:58:46 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48848 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752423AbdGYU6p (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jul 2017 16:58:45 -0400
+Received: (qmail 13686 invoked by uid 109); 25 Jul 2017 20:58:45 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 25 Jul 2017 20:58:45 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 21289 invoked by uid 111); 25 Jul 2017 20:59:02 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Tue, 25 Jul 2017 16:59:02 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 25 Jul 2017 16:58:43 -0400
+Date:   Tue, 25 Jul 2017 16:58:43 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Raman Gupta <rocketraman@gmail.com>, git@vger.kernel.org
+Subject: Re: [RFC] Git rerere and non-conflicting changes during conflict
+ resolution
+Message-ID: <20170725205843.bi6kyqjlzyodmxuq@sigill.intra.peff.net>
+References: <17c46229-3b64-34f1-30fa-d40b77e1c054@gmail.com>
+ <20170725175202.ar4ykqoadbihwb2w@sigill.intra.peff.net>
+ <xmqqo9s8uuth.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqo9s8uuth.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The values have eluded documentation so far. While at it streamline
-the wording by grouping relevant parts together.
+On Tue, Jul 25, 2017 at 01:26:34PM -0700, Junio C Hamano wrote:
 
-Signed-off-by: Andreas Heiduk <asheiduk@gmail.com>
----
- Documentation/diff-config.txt  | 11 +++++++----
- Documentation/diff-options.txt | 17 ++++++++---------
- 2 files changed, 15 insertions(+), 13 deletions(-)
+> This is not even a limitation but is outside the scope of rerere.
+> Let's understand that first.
+> [...]
+> If we wanted to port the "merge-fix" logic, and I do wish it would
+> happen some day, the update belongs to "git merge".
 
-diff --git a/Documentation/diff-config.txt b/Documentation/diff-config.txt
-index cbce8ec63..5ca942ab5 100644
---- a/Documentation/diff-config.txt
-+++ b/Documentation/diff-config.txt
-@@ -200,7 +200,10 @@ diff.algorithm::
- +
- 
- diff.wsErrorHighlight::
--	A comma separated list of `old`, `new`, `context`, that
--	specifies how whitespace errors on lines are highlighted
--	with `color.diff.whitespace`.  Can be overridden by the
--	command line option `--ws-error-highlight=<kind>`
-+	Highlight whitespace errors in the `context`, `old` or `new`
-+	lines of the diff.  Multiple values are separated by comma,
-+	`none` resets previous values, `default` reset the list to
-+	`new` and `all` is a shorthand for `old,new,context`.  The
-+	whitespace errors are colored with `color.diff.whitespace`.
-+	The command line option `--ws-error-highlight=<kind>`
-+	overrides this setting.
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 89cc0f48d..d60f61ad4 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -300,15 +300,14 @@ ifndef::git-format-patch[]
- 	with --exit-code.
- 
- --ws-error-highlight=<kind>::
--	Highlight whitespace errors on lines specified by <kind>
--	in the color specified by `color.diff.whitespace`.  <kind>
--	is a comma separated list of `old`, `new`, `context`.  When
--	this option is not given, only whitespace errors in `new`
--	lines are highlighted.  E.g. `--ws-error-highlight=new,old`
--	highlights whitespace errors on both deleted and added lines.
--	`all` can be used as a short-hand for `old,new,context`.
--	The `diff.wsErrorHighlight` configuration variable can be
--	used to specify the default behaviour.
-+	Highlight whitespace errors in the `context`, `old` or `new`
-+	lines of the diff.  Multiple values are separated by comma,
-+	`none` resets previous values, `default` reset the list to
-+	`new` and `all` is a shorthand for `old,new,context`.  When
-+	this option is not given, and the configuration variable
-+	`diff.wsErrorHighlight` is not set, only whitespace errors in
-+	`new` lines are highlighted. The whitespace errors are colored
-+	whith `color.diff.whitespace`.
- 
- endif::git-format-patch[]
- 
--- 
-2.13.3
+Looks like this crossed with my latest email. Overall I agree with you.
 
+I almost said the same thing about scope initially, but I decided it
+doesn't really matter. From the user's perspective there may be a tool X
+that replays bits of a previous merge result. And that task can be
+subdivided into replaying conflict resolution and replaying merge-fixes.
+
+From the user's perspective, calling X "rerere" would probably be OK[1].
+But from an implementation perspective (and to keep the existing
+plumbing available and unchanged), it probably makes sense to call it
+something else, and have it run both rerere and a new plumbing command
+to do the merge-fix work (or call it nothing, and assume that users will
+either touch the plumbing directly or will use "git merge" to trigger
+both).
+
+So if you want to shut down immediately the idea that this would be
+bolted onto rerere, I can support that. There are ways of doing it that
+would make sense to combine with rerere (like the "tying fixups to
+conflict resolution" sketch I gave in the other email), but I agree they
+will end up fundamentally hacky (because of the exact "you may not even
+have textual conflicts" I mentioned).
+
+The only part I'd disagree with above is that this belongs to git-merge.
+I think it should be its own plumbing tool that merge calls alongside
+rerere. ;)
+
+>    - Then, it looks up the database to find the keys <A, B> where
+>      A is in X but not in Y, and B is not in X but in Y.
+>      These commits are cherry-picked and squashed into the result of
+>      the above.
+
+I think this is the crux of it. I mentioned in my other email that what
+we really want is some way to say "this is roughly the same merge".
+The Reintegrate script does it with the topic branch name and an
+implicit "merging up to an integration branch".
+
+Not having thought too hard about it yet, this containing relationship
+seems like the right direction. I guess you'd do the lookup by computing
+the merge-base M of <X,Y> (which we already know anyway), walking M..X
+and looking for any entries which mention those commits (in either A or
+B slots of the entry), and then similarly narrowing it according to
+M..Y.
+
+Hrm. That doesn't quite work, though. Because if your <A,B> are the
+merge, then merging a topic to next will get an "A" that is a merge
+commit from next. But that commit will never end up in master. What's
+causing the conflict is really some "A" that is in the history between
+the merge base and "A" (but we don't know which).
+
+So you'd almost have to do an intersection of the left side of "$(git
+merge-base A B)..A" with what's in X and Y (with respect to their merge
+base). Err, maybe vice versa. But the point is that we're looking for
+overlapping set unions, I think, not the presence of particular tips.
+
+> I said A and B in the above are branch names, but in the ideal
+> world, they can be commit object names (possibly in the middle of a
+> branch), as long as we can reliable update the database's keys every
+> time "git rebase" etc. rewrites commits.
+
+What if instead of commit hashes we used patch ids?
+
+There's one trick there, which is that merges don't have a well-defined
+commit id. We could use its actual commit id in that case. That would
+work OK in practice for a workflow like git.git's, because the merge
+commits are never rewritten. But it would fall down if people do mixed
+rebases and merges on their topic branches.
+
+> To populate the database, we'd need a reverse.
+> 
+>  * When merging branch B into branch A (or the other way around) for
+>    the first time, "git merge" would do what it currently does.
+> 
+>  * The user then concludes the merge to resolve *ONLY* the textual
+>    conflict, and commit the result.  It is important that no
+>    additional evil merge to correct for semantic conflicts is done
+>    in this step.  Note that if the auto-merge cleanly succeeds, this
+>    step may not even exist.
+> 
+>  * Then the user makes another commit to correct for semantic
+>    conflicts (aka "merge-fix").
+
+I think it's asking a lot for users to handle the textual conflicts and
+semantic ones separately. It would be nice if we could tell them apart
+automatically (and I think we can based on what isn't part of the
+conflict resolution).
+
+That still ends up with one giant "fixup" commit. But I don't know how
+else you'd do it. I could make several commits, but we still don't know
+how to attribute them to anything but the mass <A,B> merge. We don't
+know which commits were responsible for which fixups (and I wouldn't
+want to ask the user to figure it out), so the best we can do is apply
+them all.
+
+-Peff
