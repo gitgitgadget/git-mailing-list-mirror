@@ -6,61 +6,62 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D3D751F89D
-	for <e@80x24.org>; Tue, 25 Jul 2017 23:37:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 74B911F89D
+	for <e@80x24.org>; Tue, 25 Jul 2017 23:39:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751656AbdGYXhk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jul 2017 19:37:40 -0400
-Received: from mail-pg0-f48.google.com ([74.125.83.48]:38263 "EHLO
-        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751601AbdGYXhj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jul 2017 19:37:39 -0400
-Received: by mail-pg0-f48.google.com with SMTP id k190so10795988pgk.5
-        for <git@vger.kernel.org>; Tue, 25 Jul 2017 16:37:39 -0700 (PDT)
+        id S1751451AbdGYXjG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jul 2017 19:39:06 -0400
+Received: from mail-pg0-f47.google.com ([74.125.83.47]:34149 "EHLO
+        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750886AbdGYXjF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jul 2017 19:39:05 -0400
+Received: by mail-pg0-f47.google.com with SMTP id 123so76323525pgj.1
+        for <git@vger.kernel.org>; Tue, 25 Jul 2017 16:39:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=7cdYsTp3RLUPhjI8zpahPKAczqkMoiStOtQUgCTpppo=;
-        b=LSMnusJRVCzTA/ffEApiBEfzqtAKKHBHQ5i7xgIS+aGAfd9UyxvA1jb55PeMco6iO1
-         HyMvu97PwWvyUssaV1TlS5keu/VnlcJmUmqQh82ONSaJo5CoCFKyXFQp4VE+qGJAzWdM
-         7xxF/T42416bihSf0mxBFBGmZf0a6WJ1GaO11xOonR5oTvrcedRVE7ISAfdkXd8WAd19
-         a56x2yqVSL6Vy54J4f843V/SF7T4L8C+qoW1zQJoBfVbn/9XlS7Bl5ZJbadO8a17M7fJ
-         v/C9rF+NjHWmUNQNaffj7TMBFfDfMRcoU4wgHftXHMFvPtADuO/zoWV0Zr70voy4MRdV
-         SH8Q==
+        bh=zIAz6pF3r0yJBSo4d+GxSx7NRn2keptszG0hVrrJzuw=;
+        b=eoLgEPY9S7uFSXmfbRtrggKTRrnlD9Rnnt0Dc9An35Dr0mvydVPc/phpVMhPuPqvdB
+         ECa+NeJpW+qfsks+wEx/chISi/ugzRy1skVNV8xfJu4gxlidTxNP9+S3eOl/eFLtx7SU
+         tOLxlZ0ntZqB87Gsp+88YbAOjjmiTIlk322zg55AOvE3R2xVdnmIr4CBxdz+4oepDaSg
+         llNI6wXp14B2MnWgPQYHUzwGkTLsxkK/O/czD+fXtp5GNR0qNiKcauFtN3DuxYDS9kg8
+         2SDolPj/hsP7X7cSFJ2Kx93Cnfff8NnGCe2exX7mMxFN5hQJfIjMHEOPm03iUOOqBsoL
+         VfpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=7cdYsTp3RLUPhjI8zpahPKAczqkMoiStOtQUgCTpppo=;
-        b=jtyZqjXrfhW6FkRCXTmUke48wNFhI0Y1IgKK+KDKe25yfVmOVyhI0MYM52CW12327z
-         qvgyiX5MHlXtpKYOLa5jaRVKL4+Bvwo8tw6mr/F0Qpuc+pzy9EdpMrH082kNCB8c3eY9
-         KAtqMIvx7QK7EYW8+gPl1BxC1l56/oiXw+Qr0EEORSUNAzhZTXOJraGZfAvnq37K/YQj
-         GCtqDQcdX2GWqMs9jxzJqIorjW33nmhdjdDTiQcMGVudZawguEfBpN3DZ9orIk7eT/XU
-         MfnvgK6DMQyYpaT8sHhUIIlJXR5tTdkSeHAxrV3WQvQLPyyWR0m+6DUBVRwgRRUeQMbI
-         kuKg==
-X-Gm-Message-State: AIVw1134pxzZnChaguJGS6yGYPM/gOvtRe+ZIl8GKhN0DghMnzw6DQKC
-        07lwbfMFkoLFF/vF
-X-Received: by 10.84.225.146 with SMTP id u18mr22990389plj.328.1501025858679;
-        Tue, 25 Jul 2017 16:37:38 -0700 (PDT)
+        bh=zIAz6pF3r0yJBSo4d+GxSx7NRn2keptszG0hVrrJzuw=;
+        b=SZx5P1ILlqGhDxzb5VylERFSloCqmO491xzak/ePrPAZl2QeLNdFgztuIYuYmXm1y+
+         8Y/rWPuCtq9XiS7cAPWhQHKUZyWsEXjjVu6w1sSTOFoiuXbVU8KX5mUxY5vphwOcxyVO
+         tctbqX4HaXniLVgXcJX3GgC7S/3GjxSiQ16ncxICqZ2zIupOp++PDrqrTejFWbeLtgei
+         XJdxoYRizfYgYlhVHvdIDQaMatHkg0QTwQX4xMOpShoDTBZ6WWfCG9O+1Q7wdFynqIIY
+         LRnA4HRUzzpe70oRN5Rv81VitBAusd9yKwD/IHF+RPRXsL17Mr+sMJgp1Pv5pqPJboOW
+         mydQ==
+X-Gm-Message-State: AIVw112X68rGMHZx4StQX8mZUHRB6VF7yxVZb/I0mdr6jCiG0uHmtU5c
+        JtYzMrZPW4lMZs8o
+X-Received: by 10.99.114.73 with SMTP id c9mr21002998pgn.267.1501025945320;
+        Tue, 25 Jul 2017 16:39:05 -0700 (PDT)
 Received: from google.com ([2620:0:100e:422:cccf:9961:8336:68b3])
-        by smtp.gmail.com with ESMTPSA id n3sm30339723pfb.87.2017.07.25.16.37.37
+        by smtp.gmail.com with ESMTPSA id z8sm7226385pfk.130.2017.07.25.16.39.03
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 25 Jul 2017 16:37:37 -0700 (PDT)
-Date:   Tue, 25 Jul 2017 16:37:36 -0700
+        Tue, 25 Jul 2017 16:39:04 -0700 (PDT)
+Date:   Tue, 25 Jul 2017 16:39:03 -0700
 From:   Brandon Williams <bmwill@google.com>
 To:     Stefan Beller <sbeller@google.com>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
         Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 03/15] add, reset: ensure submodules can be added or reset
-Message-ID: <20170725233736.GA71799@google.com>
+Subject: Re: [PATCH 05/15] submodule--helper: don't overlay config in
+ update-clone
+Message-ID: <20170725233903.GB71799@google.com>
 References: <20170725213928.125998-1-bmwill@google.com>
- <20170725213928.125998-4-bmwill@google.com>
- <CAGZ79kZByzPbyLUNJ8ViVa2TDk-L+TfnF+wVWRj2d92_MhXPbg@mail.gmail.com>
+ <20170725213928.125998-6-bmwill@google.com>
+ <CAGZ79kacdTFVJknTx+ceT8epytXSJDRVAwZO4HyzpsmVbK5VTQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAGZ79kZByzPbyLUNJ8ViVa2TDk-L+TfnF+wVWRj2d92_MhXPbg@mail.gmail.com>
+In-Reply-To: <CAGZ79kacdTFVJknTx+ceT8epytXSJDRVAwZO4HyzpsmVbK5VTQ@mail.gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -69,66 +70,48 @@ X-Mailing-List: git@vger.kernel.org
 
 On 07/25, Stefan Beller wrote:
 > On Tue, Jul 25, 2017 at 2:39 PM, Brandon Williams <bmwill@google.com> wrote:
-> > Commit aee9c7d65 (Submodules: Add the new "ignore" config option for
-> > diff and status) ...
-> 
-> introduced in 2010, so quite widely spread.
-> 
-> > ...  introduced the ignore configuration option for
-> > submodules so that configured submodules could be omitted from the
-> > status and diff commands.  Because this flag is respected in the diff
-> > machinery it has the unintended consequence of potentially prohibiting
-> > users from adding or resetting a submodule, even when a path to the
-> > submodule is explicitly given.
-> >
-> > Ensure that submodules can be added or set, even if they are configured
-> > to be ignored, by setting the `DIFF_OPT_OVERRIDE_SUBMODULE_CONFIG` diff
-> > flag.
+> > Don't rely on overlaying the repository's config on top of the
+> > submodule-config, instead query the repository's config directly for the
+> > url and the update strategy configuration.
 > >
 > > Signed-off-by: Brandon Williams <bmwill@google.com>
 > > ---
-> >  builtin/add.c   | 1 +
-> >  builtin/reset.c | 1 +
-> >  2 files changed, 2 insertions(+)
-> >
-> > diff --git a/builtin/add.c b/builtin/add.c
-> > index e888fb8c5..6f271512f 100644
-> > --- a/builtin/add.c
-> > +++ b/builtin/add.c
-> > @@ -116,6 +116,7 @@ int add_files_to_cache(const char *prefix,
-> >         rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
-> >         rev.diffopt.format_callback = update_callback;
-> >         rev.diffopt.format_callback_data = &data;
-> > +       rev.diffopt.flags |= DIFF_OPT_OVERRIDE_SUBMODULE_CONFIG;
+> ...
 > 
+> > +struct submodule_update_strategy submodule_strategy_with_config_overlayed(struct repository *repo,
+> > +                                                                         const struct submodule *sub)
+> > +{
+> > +       struct submodule_update_strategy strat = sub->update_strategy;
+> > +       const char *update;
+> > +       char *key;
+> > +
+> > +       key = xstrfmt("submodule.%s.update", sub->name);
+> > +       if (!repo_config_get_string_const(repo, key, &update)) {
+> > +               strat.command = NULL;
+> > +               if (!strcmp(update, "none")) {
+> > +                       strat.type = SM_UPDATE_NONE;
+> > +               } else if (!strcmp(update, "checkout")) {
+> > +                       strat.type = SM_UPDATE_CHECKOUT;
+> > +               } else if (!strcmp(update, "rebase")) {
+> > +                       strat.type = SM_UPDATE_REBASE;
+> > +               } else if (!strcmp(update, "merge")) {
+> > +                       strat.type = SM_UPDATE_MERGE;
+> > +               } else if (skip_prefix(update, "!", &update)) {
+> > +                       strat.type = SM_UPDATE_COMMAND;
+> > +                       strat.command = update;
+> > +               } else {
+> > +                       die("invalid submodule update strategy '%s'", update);
+> > +               }
+> > +       }
 > 
-> This flag occurs once in the code base, with the comment:
->     /*
->      * Unless the user did explicitly request a submodule
->      * ignore mode by passing a command line option we do
->      * not ignore any changed submodule SHA-1s when
->      * comparing index and parent, no matter what is
->      * configured. Otherwise we won't commit any
->      * submodules which were manually staged, which would
->      * be really confusing.
->      */
->     int diff_flags = DIFF_OPT_OVERRIDE_SUBMODULE_CONFIG;
-> 
-> in prepare_commit, so commit ignores the .gitmodules file.
-> 
-> This allows git-add to add ignored submodules, currently ignored submodules
-> would have to be added using the plumbing
->     git update-index --add --cacheinfo 160000,$SHA1,<gitlink>
-> 
-> This makes sense, though a test demonstrating the change in behavior
-> would be nice, but git-add doesn't seem to change as it doesn't even load
-> the git modules config?
+> Can this be simplified by reusing
+>     parse_submodule_update_strategy(value, dest)
+> ?
 
-I can add a comment to the code but its already being tested in the
-submodule test suite.  The only reason this doesn't cause any changes
-now is that the gitmodules config is never loaded, but that may
-change if we decide to allow lazy-loading of the gitmodules file (like
-the last couple patches in this series do).
+It would result in a memory leak if we did.  Really I'd like to just
+remove this entirely. The only reason this needs to be done is for
+checkout, which if we don't have respect the update config it can be
+removed.
 
 -- 
 Brandon Williams
