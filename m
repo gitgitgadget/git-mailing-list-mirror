@@ -6,53 +6,53 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1705A1F89D
-	for <e@80x24.org>; Tue, 25 Jul 2017 21:39:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BB0901F89D
+	for <e@80x24.org>; Tue, 25 Jul 2017 21:40:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751562AbdGYVjz (ORCPT <rfc822;e@80x24.org>);
+        id S1750769AbdGYVj6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jul 2017 17:39:58 -0400
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:33472 "EHLO
+        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751097AbdGYVjz (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 25 Jul 2017 17:39:55 -0400
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:33967 "EHLO
-        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751593AbdGYVjx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jul 2017 17:39:53 -0400
-Received: by mail-pf0-f171.google.com with SMTP id q85so63074449pfq.1
-        for <git@vger.kernel.org>; Tue, 25 Jul 2017 14:39:53 -0700 (PDT)
+Received: by mail-pf0-f180.google.com with SMTP id s70so63048894pfs.0
+        for <git@vger.kernel.org>; Tue, 25 Jul 2017 14:39:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=0sCxPOUu9brJZ49+rAqrP2INgHSSjwh6DnRAxlORTIo=;
-        b=YtXxKTeEoQYXS9L+RVAcaVYgFXBXOskbhS+wnsKuZQqhSORWQZ0m1YCwHlBEppZoq1
-         9ERYVCZ6noZxlimLQ93tR6f3ZKxXtKqNS8hohOXI/UO0a44blOIcf2QFbwlvf57EE9yk
-         3T0/6mTxpDay7PGr/nEFZfvpXXKo+oX5fVEbtAOXQF75TGI4NTLzDdO/vfIwlS/q7+Sx
-         UVPZnXK4hqhfR9DaT02lSkc5f75YRWuR5PgBQvuZMpuqyudrFinwsAq19Ioj5M422XqD
-         G30S9Kwg+vyRJKdc+lbzDlzhUSqcXG3LuTBvkLPKQijrH0D+WRtNk23BY6zAnlaW2m+m
-         VgIw==
+        bh=cIKeVLGYyxfGnz/BHkQltwg+QZX+31MnKCXrd/Mc06I=;
+        b=SPiX1rTy0S/sg2+5dAZNUd5rh0Op2ipqY/Bc0Azjf0AFWmb3TZwE9fM1drZ5NjPXM8
+         UbCyXWUtidR4F6xOpA0U/gixtL+om6JlepZo7kOf5Xrcq+tnFATrsnnRFKjE+cWPnQcy
+         SnI+FSwpnfDZxS5h0bz/LmhWs732B9IhvGJfSbedtv8iK2rvCa6KptgvW4OWc3EMFVkn
+         jophTknolR+U2TBqEAO/bCELIHnloQmN3mBSg+/aUhcvYLztP2krhl5LyABmupZmD58v
+         LVDJpOCunQcwamPR50ux/ibsJy5dQ7SWzitWc1itrAMOcj1S4evhU62X3JhBtC+aM5gz
+         zvRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=0sCxPOUu9brJZ49+rAqrP2INgHSSjwh6DnRAxlORTIo=;
-        b=F8Eb76OHVOEtc+zsi/lY7ZB8s/u+HmDo7c8xr/EGd4gagp19D0dkFpwG7LW98BG9qc
-         fgyI88YDn2qv1U3nnlFQNJw63vb+JU8dbZtZqkdWFyRtoq6DvokTL10NG8e2/F+ZKIhP
-         0/fIIz1tVlWLv5HAx5jiC53rvCyg6lPxm6RB+pPuGfZO9K4VcPkRlZtR3gfbgwksRNNi
-         dOw3RSEa4LOe/98SKUWtm46i0gxXrcXZRbziOcD6kIow1QEovK0At55RT39h/Dqzdecj
-         1Oo8pSk3wXUYWLxTYZnshqWKagM/eoT/JstR31M1t3KlXfi/flrInw53dG7NpiJcSeTt
-         taNA==
-X-Gm-Message-State: AIVw110x2hE3jI+hOywp/Ce2yVOkCwi8cuQJPwYTeFL5ylzgSZs+a43R
-        eBIatpuiudE9UH4rJp5XRA==
-X-Received: by 10.101.77.72 with SMTP id j8mr13678034pgt.133.1501018792424;
-        Tue, 25 Jul 2017 14:39:52 -0700 (PDT)
+        bh=cIKeVLGYyxfGnz/BHkQltwg+QZX+31MnKCXrd/Mc06I=;
+        b=G5axJ/gmb53Ve9itHU655cXoBnmJ0YR8hA8W/vVtLjDCo0wtrFH3Zz+mbtSWnQaL6w
+         Azw9kLO2p3xhgQIFjQQhygeN40pE7FVa14SnOo9Rf7QmVBbyXY+yDqGAottvax+eaT6W
+         ONBRw88kgXbTlVg1GZbQsyJ2cfg03N5NZBCkCytj5/Gv+F/etJaAJwL7Jda5Y2wdV74S
+         EuA6SNXcssoX3n874KHQrF59AipR40a4MQ0+YTRBmLgFgA5fHUqXDXYungDoY5geERSe
+         xQDIySmldYyJIMxKeVWAQxv2DMBwuUOHR4FW89mYLHATmrh41W6cvELDfsdcSdoJrjvH
+         Kp5A==
+X-Gm-Message-State: AIVw111w40WH126zSXz8dnoyMwe/3SkHOmK5FgLpgt/qtVtpa+8fWvYc
+        HfGcs5S6H+CJZkinMSpnPw==
+X-Received: by 10.98.87.195 with SMTP id i64mr20300189pfj.175.1501018794001;
+        Tue, 25 Jul 2017 14:39:54 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id m186sm27068839pfc.54.2017.07.25.14.39.50
+        by smtp.gmail.com with ESMTPSA id m186sm27068839pfc.54.2017.07.25.14.39.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 25 Jul 2017 14:39:51 -0700 (PDT)
+        Tue, 25 Jul 2017 14:39:52 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     jrnieder@gmail.com, sbeller@google.com,
         Brandon Williams <bmwill@google.com>
-Subject: [PATCH 08/15] unpack-trees: don't rely on overlayed config
-Date:   Tue, 25 Jul 2017 14:39:21 -0700
-Message-Id: <20170725213928.125998-9-bmwill@google.com>
+Subject: [PATCH 09/15] submodule: remove submodule_config callback routine
+Date:   Tue, 25 Jul 2017 14:39:22 -0700
+Message-Id: <20170725213928.125998-10-bmwill@google.com>
 X-Mailer: git-send-email 2.14.0.rc0.400.g1c36432dff-goog
 In-Reply-To: <20170725213928.125998-1-bmwill@google.com>
 References: <20170725213928.125998-1-bmwill@google.com>
@@ -61,95 +61,89 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Don't rely on overlaying the repository's config on top of the
-submodule-config, instead query the repository's config directory for
-the submodule's update strategy.
+Remove the last remaining caller of 'submodule_config()' as well as the
+function itself.
 
-Also remove the overlaying of the repository's config (via using
-'submodule_config()') from the commands which use the unpack-trees
-logic (checkout, read-tree, reset).
+With 'submodule_config()' being removed the submodule-config API can be
+a little simpler as callers don't need to worry about whether or not
+they need to overlay the repository's config on top of the
+submodule-config.  This also makes it more difficult to accidentally
+add non-submodule specific configuration to the .gitmodules file.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/checkout.c |  2 +-
- submodule.c        |  1 -
- unpack-trees.c     | 12 +++++++++---
- 3 files changed, 10 insertions(+), 5 deletions(-)
+ builtin/submodule--helper.c |  1 -
+ submodule.c                 | 25 ++-----------------------
+ submodule.h                 |  1 -
+ 3 files changed, 2 insertions(+), 25 deletions(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 9661e1bcb..246e0cd16 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -858,7 +858,7 @@ static int git_checkout_config(const char *var, const char *value, void *cb)
- 	}
- 
- 	if (starts_with(var, "submodule."))
--		return submodule_config(var, value, NULL);
-+		return git_default_submodule_config(var, value, NULL);
- 
- 	return git_xmerge_config(var, value, NULL);
- }
-diff --git a/submodule.c b/submodule.c
-index f86b82fbb..13380fed1 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -235,7 +235,6 @@ void load_submodule_cache(void)
- 		return;
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 25f471ba1..c16249e30 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -1196,7 +1196,6 @@ static int absorb_git_dirs(int argc, const char **argv, const char *prefix)
+ 			     git_submodule_helper_usage, 0);
  
  	gitmodules_config();
 -	git_config(submodule_config, NULL);
+ 
+ 	if (module_list_compute(argc, argv, prefix, &pathspec, &list) < 0)
+ 		return 1;
+diff --git a/submodule.c b/submodule.c
+index 13380fed1..f63940347 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -180,27 +180,6 @@ void set_diffopt_flags_from_submodule_config(struct diff_options *diffopt,
+ 	}
  }
  
- static int gitmodules_cb(const char *var, const char *value, void *data)
-diff --git a/unpack-trees.c b/unpack-trees.c
-index dd535bc84..dc66b880d 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1,5 +1,6 @@
- #define NO_THE_INDEX_COMPATIBILITY_MACROS
- #include "cache.h"
-+#include "repository.h"
- #include "config.h"
- #include "dir.h"
- #include "tree.h"
-@@ -255,13 +256,16 @@ static int check_submodule_move_head(const struct cache_entry *ce,
+-/* For loading from the .gitmodules file. */
+-static int git_modules_config(const char *var, const char *value, void *cb)
+-{
+-	if (starts_with(var, "submodule."))
+-		return parse_submodule_config_option(var, value);
+-	return 0;
+-}
+-
+-/* Loads all submodule settings from the config. */
+-int submodule_config(const char *var, const char *value, void *cb)
+-{
+-	if (!strcmp(var, "submodule.recurse")) {
+-		int v = git_config_bool(var, value) ?
+-			RECURSE_SUBMODULES_ON : RECURSE_SUBMODULES_OFF;
+-		config_update_recurse_submodules = v;
+-		return 0;
+-	} else {
+-		return git_modules_config(var, value, cb);
+-	}
+-}
+-
+ /* Cheap function that only determines if we're interested in submodules at all */
+ int git_default_submodule_config(const char *var, const char *value, void *cb)
  {
- 	unsigned flags = SUBMODULE_MOVE_HEAD_DRY_RUN;
- 	const struct submodule *sub = submodule_from_ce(ce);
-+	struct submodule_update_strategy update;
-+
- 	if (!sub)
- 		return 0;
+@@ -271,8 +250,8 @@ void gitmodules_config_oid(const struct object_id *commit_oid)
+ 	struct object_id oid;
  
- 	if (o->reset)
- 		flags |= SUBMODULE_MOVE_HEAD_FORCE;
+ 	if (gitmodule_oid_from_commit(commit_oid, &oid, &rev)) {
+-		git_config_from_blob_oid(submodule_config, rev.buf,
+-					 &oid, NULL);
++		git_config_from_blob_oid(gitmodules_cb, rev.buf,
++					 &oid, the_repository);
+ 	}
+ 	strbuf_release(&rev);
+ }
+diff --git a/submodule.h b/submodule.h
+index f17ca1e34..1c6b2ab4e 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -41,7 +41,6 @@ extern int remove_path_from_gitmodules(const char *path);
+ extern void stage_updated_gitmodules(void);
+ extern void set_diffopt_flags_from_submodule_config(struct diff_options *,
+ 		const char *path);
+-extern int submodule_config(const char *var, const char *value, void *cb);
+ extern int git_default_submodule_config(const char *var, const char *value, void *cb);
  
--	switch (sub->update_strategy.type) {
-+	update = submodule_strategy_with_config_overlayed(the_repository, sub);
-+	switch (update.type) {
- 	case SM_UPDATE_UNSPECIFIED:
- 	case SM_UPDATE_CHECKOUT:
- 		if (submodule_move_head(ce->name, old_id, new_id, flags))
-@@ -293,7 +297,6 @@ static void reload_gitmodules_file(struct index_state *index,
- 				submodule_free();
- 				checkout_entry(ce, state, NULL);
- 				gitmodules_config();
--				git_config(submodule_config, NULL);
- 			} else
- 				break;
- 		}
-@@ -308,7 +311,10 @@ static void unlink_entry(const struct cache_entry *ce)
- {
- 	const struct submodule *sub = submodule_from_ce(ce);
- 	if (sub) {
--		switch (sub->update_strategy.type) {
-+		struct submodule_update_strategy update =
-+			submodule_strategy_with_config_overlayed(the_repository,
-+								 sub);
-+		switch (update.type) {
- 		case SM_UPDATE_UNSPECIFIED:
- 		case SM_UPDATE_CHECKOUT:
- 		case SM_UPDATE_REBASE:
+ struct option;
 -- 
 2.14.0.rc0.400.g1c36432dff-goog
 
