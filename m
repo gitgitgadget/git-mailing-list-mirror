@@ -2,147 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0817E1F89D
-	for <e@80x24.org>; Tue, 25 Jul 2017 18:53:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E7F611F89D
+	for <e@80x24.org>; Tue, 25 Jul 2017 19:05:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750928AbdGYSxj (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jul 2017 14:53:39 -0400
-Received: from mail-pf0-f178.google.com ([209.85.192.178]:32980 "EHLO
-        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750911AbdGYSxi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jul 2017 14:53:38 -0400
-Received: by mail-pf0-f178.google.com with SMTP id s70so61685650pfs.0
-        for <git@vger.kernel.org>; Tue, 25 Jul 2017 11:53:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:in-reply-to:references:date
-         :mime-version:content-transfer-encoding;
-        bh=P89A5pro5PzlYyYwaHU4f5Fh9UMQUv48XPwjL6Oi3PQ=;
-        b=DIGeWmuxQvV3iM/Qiu52GQieEWFqpMzrrtLpCsy1zvMNrH9noC7Z1rI3mxnS5DtzGY
-         UD4qnVHqmS5em9vcfndurKto/sGd6aLOmfWmlzbULaBu/j2cOxJIZxSDxgYgGfOGcEip
-         UZasEKql8l0/r5tyHZ4nt7ZdPDCVH3NGVViX91HqTBnKgQiPQmswCR9b9CyslllUdqVo
-         n57x8QxlNMJcJ6GF86uFVMFzhTU2hTrONjtWhZtQ71JOFtbK0KR12g9Zwa0rAmNgjWWL
-         b81WDDINbr/wKHIkQTWp5kkJztquLWO+VtZw6Im+72ZGCmncvFuAZCzL37iZRG/3IziT
-         1nuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:in-reply-to
-         :references:date:mime-version:content-transfer-encoding;
-        bh=P89A5pro5PzlYyYwaHU4f5Fh9UMQUv48XPwjL6Oi3PQ=;
-        b=l0+/4kGiQQd3JkpxgIvSw3bGkCtsoXa/qyvRn/lpZl/yAT4wVHll7gJRxT7pYpum3t
-         YFLQJD3mKOLXwB47Ewbzd8e88Ch1gn4iL+YXrEvHy0UKQZ/UGtfv9liATY5XyNUvoKN1
-         /FUdMJZpou60o6n+9cRMHKvOtwziJ1OJDLcEnLCzBmB8Fq0aG22w7pzjBjdvtDYWdtB+
-         Gx7/PvSA4vNy82UgRdZonMTY6MP3C+q9BxwcCKigKvo2wZzEUFep9a13tAmWLiSdwKg7
-         hvNl8Hi1iWSnyYZvFKXSajo6lo6Oun4EKEDtYntcAWPAKG8dRuS4Hisf6K8i/8Tke529
-         YocA==
-X-Gm-Message-State: AIVw110r/KPH25Rk9OIjbzX6IkoaP0q5QgoWSqhbtFcVcKoHYA3RSmLZ
-        +gQhWDXv5D2fvFTlzLo=
-X-Received: by 10.84.253.9 with SMTP id z9mr18259996pll.439.1501008817699;
-        Tue, 25 Jul 2017 11:53:37 -0700 (PDT)
-Received: from unique-pc ([182.73.109.146])
-        by smtp.googlemail.com with ESMTPSA id b16sm29120929pfm.84.2017.07.25.11.53.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 25 Jul 2017 11:53:37 -0700 (PDT)
-Message-ID: <1501008842.11979.7.camel@gmail.com>
-Subject: Re: Change in output as a result of patch
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-In-Reply-To: <xmqqd18pcysa.fsf@gitster.mtv.corp.google.com>
-References: <20170724154119.2926-1-kaarticsivaraam91196@gmail.com>
-         <1500923812.20078.8.camel@gmail.com>
-         <xmqqd18pcysa.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset="ISO-8859-15"
-Date:   Wed, 26 Jul 2017 00:24:02 +0530
-Mime-Version: 1.0
-X-Mailer: Evolution 3.22.6-1 
-Content-Transfer-Encoding: 8bit
-X-Cyberoam-smtpxy-version: 1.0.6.3
-X-Cyberoam-AV-Policy: default
-X-CTCH-Error: Unable to connect local ctasd
+        id S1751379AbdGYTFc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jul 2017 15:05:32 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59700 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750911AbdGYTFc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jul 2017 15:05:32 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 85A92A1413;
+        Tue, 25 Jul 2017 15:05:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=82BoGvuFtCIWOuB+0oD8OhaJ6sk=; b=isZDJE
+        sM1beKCjw3jNjruaVt/slP2JO91QNNsK8lXvsI9nFurjY6kBptW6EBp2Q9y0XAHF
+        HV6AdyfJMnJG0Qum0Cw4WHdJNLxMLUdmdOhqOKNteylDbgEhYjgP/cp7euZZHib3
+        6KItXKp12fEEmf+KEuN7oOxYnJR/CzmNp7wDQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=fDDkPlQd6LpGzueKSRJjWhQ0GN+E/SXR
+        SpLn48P1ENeZJjjFBsTimGHXdfYXZJUhcKWjvyfKidT6ggyBjWaMWc67WKnlfbE3
+        YPJncY1t7Ztf1/skWvosXqUaAzRqsILyBCKLUTnAohjZPYQIa5JiBHRzWHaSZV4o
+        IsdMObexoiw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7D554A1412;
+        Tue, 25 Jul 2017 15:05:31 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E0FEBA1411;
+        Tue, 25 Jul 2017 15:05:30 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Andreas Heiduk <asheiduk@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] doc: add missing "none" value for diff.wsErrorHighlight
+References: <20170724223021.9124-1-asheiduk@gmail.com>
+Date:   Tue, 25 Jul 2017 12:05:28 -0700
+In-Reply-To: <20170724223021.9124-1-asheiduk@gmail.com> (Andreas Heiduk's
+        message of "Tue, 25 Jul 2017 00:30:21 +0200")
+Message-ID: <xmqqa83sbamf.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3A768D78-716C-11E7-8830-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Let me see if I got everything correctly. Correct me if any of the
-below observations are wrong.
+Andreas Heiduk <asheiduk@gmail.com> writes:
 
-On Mon, 2017-07-24 at 14:25 -0700, Junio C Hamano wrote:
-> Imagine this scenario instead, which I think is more realistic
-> example of making a typo.  The set of existing branches are like
-> this:
-> 
->      $ git branch
->        devel
->      * test
-> 
-> And then you get these with your patch:
-> 
->      $ git branch -m tets devel
->      fatal: Branch 'tets' does not exist.
-> 
->      $ git branch -m test devel
->      fatal: A branch named 'devel' already exists.
-> 
-> My reaction to the above exchange would be a moderately strong
-> annoyance.  If I were told that I am using 'devel' for something
-> else already, my "corrected" attempt to turn the 'test' branch to a
-> real development branch after getting the first error would have
-> been:
-> 
->      $ git branch -m test devel2
-> 
-> and I didn't have to get the second error.
-> 
-> I think your patch points in the right direction---if an operation
-> can fail due to two reasons, reordering the two checks and still
-> fail with a report for just the first one you happened to check
-> first does not give us a real improvement.  If it is easy to check
-> the other one after you noticed one of the condition is violated,
-> then you could give a more useful diagnosis, namely, "There is
-> branch 'tets' to rename, and there already is 'devel' branch".
-> 
-So what's expected is an error message that details all possible errors
-found in a command in a single message. Now that would be better than
-what 'mv' does.
+> The value has not eluded documentation so far.
 
-> I suspect that with a moderately-sized refactoring around
-> validate_new_branchname() function, this should be doable.  Instead
-> of passing two "int" parameters force and attr_only, make them into
-> a single "unsigned flag" and allow the caller to pass another option
-> to tell the function "do not die, do not issue a message, but tell
-> the caller what is wrong with a return value".  And by using that
-> updated API, rename_branch() could tell four cases apart and fail
-> the three bad cases in a more sensible way.
-> 
-Ok, now that seems to require little work. I'll see what I could come
-up with.
+I am not sure what "has not eluded" means in this context (did you
+mean "has eluded"?).  
 
-Before I get into this I noticed that "--set-upstream" has been
-deprecated since,
+The patch text itself is not wrong per-se, but if we are to add
+documentation for 'none', diff-options.txt must also document that
+it clears the default and previously given values, unlike new, old
+and context that are cumulative.  For that matter, we do not list
+'default' and 'all' (which also clears the previous ones before
+setting their own) in that three-item list, either.
 
-b347d06bf09 (branch: deprecate --set-upstream and show help if we detect possible mistaken use,
-             Thu Aug 30 19:23:13 2012)
+I think we need to either 
 
-Is there any possibility for it to be removed some time in the near
-future?
+ - make it to a six-item list and then describe that 'none', 'all'
+   and 'default' clear the slate before taking any effect, or 
 
-I'm asking this because IIRC, the 'attr_only' parameter of
-"validate_new_branchname" was introduced to fix a regression
-(fa7993767560) caused by the "--set-upstream" option. In case it has
-been planned to be removed some time soon, it could make the word
-easier (?), not sure though.
+ - keep it three-item list of cumulative things, and then in the
+   sentence that talks about `all` in Documentation/diff-options.txt
+   to also explain what 'default' and 'none' do.
 
-> In any case, the illustrations of interaction before and after the
-> change is a very good thing to have when discussing a patch,
-I would like to credit that to "Ævar Arnfjörð Bjarmason", who suggested
-that to me in one of the other threads.
+Thanks.
 
--- 
-Kaartic
+> Signed-off-by: Andreas Heiduk <asheiduk@gmail.com>
+> ---
+>  Documentation/diff-config.txt  | 2 +-
+>  Documentation/diff-options.txt | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/Documentation/diff-config.txt b/Documentation/diff-config.txt
+> index cbce8ec63..c84ced8f6 100644
+> --- a/Documentation/diff-config.txt
+> +++ b/Documentation/diff-config.txt
+> @@ -200,7 +200,7 @@ diff.algorithm::
+>  +
+>  
+>  diff.wsErrorHighlight::
+> -	A comma separated list of `old`, `new`, `context`, that
+> +	A comma separated list of `old`, `new`, `context` and `none`, that
+>  	specifies how whitespace errors on lines are highlighted
+>  	with `color.diff.whitespace`.  Can be overridden by the
+>  	command line option `--ws-error-highlight=<kind>`
+> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+> index 89cc0f48d..903d68eb7 100644
+> --- a/Documentation/diff-options.txt
+> +++ b/Documentation/diff-options.txt
+> @@ -302,7 +302,7 @@ ifndef::git-format-patch[]
+>  --ws-error-highlight=<kind>::
+>  	Highlight whitespace errors on lines specified by <kind>
+>  	in the color specified by `color.diff.whitespace`.  <kind>
+> -	is a comma separated list of `old`, `new`, `context`.  When
+> +	is a comma separated list of `old`, `new`, `context` and `none`.  When
+>  	this option is not given, only whitespace errors in `new`
+>  	lines are highlighted.  E.g. `--ws-error-highlight=new,old`
+>  	highlights whitespace errors on both deleted and added lines.
