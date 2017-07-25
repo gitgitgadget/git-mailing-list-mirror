@@ -2,125 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 50DA71F89D
-	for <e@80x24.org>; Tue, 25 Jul 2017 21:21:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 574171F89D
+	for <e@80x24.org>; Tue, 25 Jul 2017 21:22:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751584AbdGYVVQ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jul 2017 17:21:16 -0400
-Received: from mail-pf0-f170.google.com ([209.85.192.170]:33994 "EHLO
-        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750970AbdGYVVO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jul 2017 17:21:14 -0400
-Received: by mail-pf0-f170.google.com with SMTP id q85so62930464pfq.1
-        for <git@vger.kernel.org>; Tue, 25 Jul 2017 14:21:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=6w48oVxeZPNSWmo7cc9+DJ88t5BmNmgtc6eLW1iIbnA=;
-        b=DZwBG3X2tSvFtgqKKqge/FZRPvJBdGA7MLiL5gGfhBkbj8GemN/zPNCLl4VKFcObhb
-         qROGXJs6w2BES/NlrTmlR2w+Qa7DTKtXUcMNSmiHhKaNR7/06IQ9wbHg9ARrasQnUdO1
-         UtU28p2+9augoVu+8zuW0iOPl/pO0/Ss9Y8rjfVCheeDkAWIuu3JxKPQ4ehbGcw7sUoi
-         X+kBZ9XWQbD12FEQGS4vYk7LHRYP2xZGvxH+FeNoeU49vv6y7Wcd4uMuZmHTv4cgLmI9
-         ciWqPfWhc9hjlSiakhektUEIdtPfYSKehf98gKqATDexfaBxlxVwLZw6tdVhLodyq3vh
-         ZMcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=6w48oVxeZPNSWmo7cc9+DJ88t5BmNmgtc6eLW1iIbnA=;
-        b=T8HbWOZy8mHVDBHB5sx8F5MZ6XW0qCEaCZVy20S1QrQhK7EI4h7JCZSmgKvnHO6iOe
-         bWWaCxvr7paIOqrB5rXADA7zJn1R+SNvn9zHUEJkLWrSRHJPS9aDJRAQfLHG6vuPMsJH
-         6nbCbl4PqYLJj4TEu/jd8KHYTaI6hJCwW93Im0cE0NvXh4aniUKxwbTd3uIdQgQCa4vQ
-         YF7RnOlkWBniEtUjZtP5JjynZs6PulnOzZqGHQbGA6KBLXQLspboh237Z/FCZ25BVXzx
-         Kk64AGMYoHucs7ylHoYA0aX74ma+Qie8XlNIx1f9gdxgPMKSE33EHtb/+eUueImO6ddj
-         4emw==
-X-Gm-Message-State: AIVw111eJtJYUprV+TJyS9RHiO3I4s7eqJigNtiQcfL9QVf6k9a6jMRA
-        IAmqh+cHqd3tIXVkVV0=
-X-Received: by 10.98.95.67 with SMTP id t64mr20309312pfb.127.1501017673471;
-        Tue, 25 Jul 2017 14:21:13 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:66:1d4e:8666:f816])
-        by smtp.gmail.com with ESMTPSA id 85sm30576592pfr.90.2017.07.25.14.21.12
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 25 Jul 2017 14:21:12 -0700 (PDT)
-Date:   Tue, 25 Jul 2017 14:21:10 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH/RFC] setup: update error message to be more meaningful
-Message-ID: <20170725212110.GG13924@aiede.mtv.corp.google.com>
-References: <0102015d7ae53b0a-a6505296-9257-4b0d-84d6-2152e17eb070-000000@eu-west-1.amazonses.com>
+        id S1752288AbdGYVWG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jul 2017 17:22:06 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61945 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752211AbdGYVWD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jul 2017 17:22:03 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E925074FDB;
+        Tue, 25 Jul 2017 17:22:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=iqc8rgjjuCtk5H9rPFJ87yiBIXg=; b=IuZPzW
+        wzujt9blmjAkSQV6o01tY5r5gjobCU6oso0HXzcuu3tt95l4ViTrgYPW4kPbn1CF
+        F1pAh8yTGMQw0rDjD+8Lj/1AKIM91+6AtQcKoqxJLU/VxpDVX2/fc3/KPVxg8Dyk
+        LmLB3cIdz2Sg9G+xx73zvjSQ2ZXfbBWH0AXm0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=duE2Da0puC7iqGlBLZ8gWFl6qaIM8U+b
+        nArHgQK9qJiKkGyfAwHv7e5BHbAbaWiC+8yM/Tuae0dGxUSiROYE94lm9ECupMPZ
+        enI8pkPRtHSikHKEmRngiOnYRcFusVu5p9zCh7xzs4fQJ2z1u1JMdPGt+K7iqiMF
+        rmNWO9m59F8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CBDAC74FDA;
+        Tue, 25 Jul 2017 17:22:02 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1E1AE74FD8;
+        Tue, 25 Jul 2017 17:22:02 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Paolo Bonzini <bonzini@gnu.org>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v3 0/3] interpret-trailers: add --where, --if-exists, --if-missing
+References: <20170724082044.26199-1-bonzini@gnu.org>
+Date:   Tue, 25 Jul 2017 14:22:00 -0700
+In-Reply-To: <20170724082044.26199-1-bonzini@gnu.org> (Paolo Bonzini's message
+        of "Mon, 24 Jul 2017 10:20:41 +0200")
+Message-ID: <xmqqshhktdon.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0102015d7ae53b0a-a6505296-9257-4b0d-84d6-2152e17eb070-000000@eu-west-1.amazonses.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4CD75426-717F-11E7-8618-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Paolo Bonzini <bonzini@gnu.org> writes:
 
-Kaartic Sivaraam wrote:
-
-> The error message shown when a flag is found when expecting a
-> filename wasn't clear as it didn't communicate what was wrong
-> using the 'suitable' words in *all* cases.
+> From: Paolo Bonzini <pbonzini@redhat.com>
 >
-> Correct case,
+> These options are useful to experiment with "git interpret-trailers"
+> without having to tinker with .gitconfig (Junio said git should ahve
+> done this first and only added configuration afterwards).  It can
+> be useful in the case where you want a different placement for the trailer,
+> or for scripts/aliases that don't want to rely on specific .gitconfig
+> settings.
 >
->         $ git rev-parse commit.c --flags
->         commit.c
->         --flags
->         fatal: bad flag '--flags' used after filename
+> Compared to v2, the main change is that option order on the command-line
+> is respected.  That is,
 >
-> Incorrect case,
+> 	--trailer 'acked-by: foo' --where end --trailer 'signed-off-by: me'
 >
->         $ git grep "test" -n
->         fatal: bad flag '-n' used after filename
+> will only apply where=end to the second trailer.  Likewise,
 >
-> Change the error message to be general and communicative.
+> 	--where end --trailer 'signed-off-by: me' --no-where \
+> 	--trailer 'acked-by: foo'
+>
+> will only apply it to the first, reverting to trailer.*.where for the
+> "acked-by" trailer.
 
-Thanks for writing this.  These examples describe *what* the behavior
-is but don't describe *why* it is wrong or what is expected in its
-place.
+I am getting the following in my build after merging these to 'pu'.
 
-For an initial guess: in the example
-
-	git grep test -n
-
-it is confusing that it says "bad flag used after filename" because
-test isn't even a filename!  At first glance, I would imagine that any
-of the following behaviors would be nicer:
-
- 1. Treat the command as "git grep -e test -n", or in other words
-    "do what I mean" since it is clear enough, at least to humans.
-
- 2. Focus on "argument" instead of "filename" so that the message
-    could still apply: something like
-
-	fatal: option '-n' must come before non-option arguments
-
-[...]
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -230,7 +230,7 @@ void verify_filename(const char *prefix,
->  		     int diagnose_misspelt_rev)
->  {
->  	if (*arg == '-')
-> -		die("bad flag '%s' used after filename", arg);
-> +		die("found flag '%s' in place of a filename", arg);
-
-Probably because of the background I am missing described above, it's
-not clear to me that the new message is any better (or worse) than the
-existing one.  The old message with "after filename" has the virtue of
-explaining why an option is not expected there.
-
-Thanks and hope that helps,
-Jonathan
+trailer.c: In function 'apply_arg_if_exists':
+trailer.c:270:2: error: enumeration value 'EXISTS_DEFAULT' not handled in switch [-Werror=switch]
+  switch (arg_tok->conf.if_exists) {
+  ^
+trailer.c: In function 'apply_arg_if_missing':
+trailer.c:307:2: error: enumeration value 'MISSING_DEFAULT' not handled in switch [-Werror=switch]
+  switch (arg_tok->conf.if_missing) {
+  ^
+trailer.c: In function 'process_command_line_args':
+trailer.c:717:3: error: ISO C90 forbids mixed declarations and code [-Werror=declaration-after-statement]
+   int separator_pos = find_separator(string, cl_separators);
+   ^
+cc1: all warnings being treated as errors
+m
