@@ -2,153 +2,215 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 56CBC1F89D
-	for <e@80x24.org>; Tue, 25 Jul 2017 19:54:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 68AA62089A
+	for <e@80x24.org>; Tue, 25 Jul 2017 20:19:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753229AbdGYTyf (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jul 2017 15:54:35 -0400
-Received: from mail-it0-f48.google.com ([209.85.214.48]:35614 "EHLO
-        mail-it0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752952AbdGYTye (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jul 2017 15:54:34 -0400
-Received: by mail-it0-f48.google.com with SMTP id h199so56718631ith.0
-        for <git@vger.kernel.org>; Tue, 25 Jul 2017 12:54:33 -0700 (PDT)
+        id S1751837AbdGYUTE (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jul 2017 16:19:04 -0400
+Received: from mail-pg0-f53.google.com ([74.125.83.53]:33410 "EHLO
+        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751354AbdGYUTB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jul 2017 16:19:01 -0400
+Received: by mail-pg0-f53.google.com with SMTP id g14so25704289pgu.0
+        for <git@vger.kernel.org>; Tue, 25 Jul 2017 13:19:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=7p3iK94VdEXT8FWfDquhNdVO+mF+Dj2C5s69LaLrsXw=;
-        b=mER0yIB5DI4dBpRXXKcQ1eH7IRZ0rj9+dAWuPgeXXRHamS3PUdWxdVgFghon8e8Ssu
-         cRVaJch4B3UNg5VCoucEUE/+QZrzoRS8nFB67MV+HZzu+uG5x9JnrFlNQevj/gR+IzPj
-         otqFxju938bsB3oqJdxSVAqKbqXOAEZ0EtTJ9y+/NmIZD5ppMZl/09ZTDVLqK0tOxgpn
-         Aq/KPNBjn8jWBTW8BRnKf2KytM5I0ifiUb1TopZfi/O5tR+sJ6DkXW445z5EQ6WFgKD/
-         lvfNjyWhOE4fbjzwhXpIMAPsV0RFxv2ezIU0r/2a/nD2t8KReaqUAzEeMCjQDoCBfpXM
-         +lcg==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=+vr2ImCLuBzGhKQLJewY8WpgqebzrcitEGRENNSNVmk=;
+        b=nzEw98MJCC2kYkMFk7PXBIOHGpYzrdpHPABqX36JpyfPp8kIV3+v1GXA9Qem/7Ev0h
+         bFZ4zzT8jPK5A/a68ZRSwzv45AxD/gymxcgmY0sMmF5z1HsATUWQCewH3Ri7kodZ6E6Q
+         reTFEQkFxCq1e6IAho4ciEQscBhOdiPXfZ5srWTkrEM/qkOV9aUu8Qv6R+fgO/iqRop2
+         Koa2aj+tLmUmG7BXOOQ7qY27Ffzr9xU7iFfZJ1Mqekfy4d8bgjVIvixh7e0yvG0NIjWC
+         W20fkz8T1yewlImKRpQpqNAgMhhYHLKf34G5TaFOXY5rocKlnhjx04zBM0LbWO9FHLMX
+         ZkEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=7p3iK94VdEXT8FWfDquhNdVO+mF+Dj2C5s69LaLrsXw=;
-        b=dV9qCGj7jd7wboRpppT+Ll8l5whgA1W06fd7CgcuE1RdaryB5hkiWH4KxbEtgSx6rD
-         uJMhbi6X2v9mxthHVkPgDxagn5grfN+qWNfbtajuzA86lFNXq70ehm1ukO/g8KIVKaT3
-         b2MTAaTJfYpkH4qIr+fizquYpfXNugLiXwPMHQSJGDNzTlNlPv6802AiVxBD7ymWGG/N
-         g4sDOa0nRC+LYJ3rH+Dc5TdJTu35kz90//+Q9XTxXAVvEwzDlDXdW2vH/Nmx7Xc/gbLB
-         TDe41pwSfdzoRTBNfzS+fn3FHG9FGUDQreY9B469eCMEeZ5R3SVIFcC0T9bb2TrlC5c7
-         OkZQ==
-X-Gm-Message-State: AIVw111VUNJtmKeg/sMSXIIhXysTpLmbJiQuurMmGeIIGsnhFuOtUfl6
-        mjIS8Yz+b3os1nhW344=
-X-Received: by 10.36.173.2 with SMTP id c2mr1893421itf.16.1501012473221;
-        Tue, 25 Jul 2017 12:54:33 -0700 (PDT)
-Received: from [192.168.1.6] (d24-150-81-207.home.cgocable.net. [24.150.81.207])
-        by smtp.googlemail.com with ESMTPSA id y12sm7193335iod.83.2017.07.25.12.54.32
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 25 Jul 2017 12:54:32 -0700 (PDT)
-Subject: Re: [RFC] Git rerere and non-conflicting changes during conflict
- resolution
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-References: <17c46229-3b64-34f1-30fa-d40b77e1c054@gmail.com>
- <20170725175202.ar4ykqoadbihwb2w@sigill.intra.peff.net>
-From:   Raman Gupta <rocketraman@gmail.com>
-Message-ID: <1d07fa3b-cd3f-42fd-87c1-0627de7c04f2@gmail.com>
-Date:   Tue, 25 Jul 2017 15:54:32 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=+vr2ImCLuBzGhKQLJewY8WpgqebzrcitEGRENNSNVmk=;
+        b=asqZMg051VbZQfGLJBAUbPRkkVKJnopOSmd1h9Fv57FDOMGxojM6dbBEiCe1e0Yt6a
+         f52ZbvZToofu+aOznhoKPUe4Jh57+KZsHx6EsdLfzWlorArMPeqtUDFzo9j7ltzpo8fo
+         riIEcZ85oF2kQ2rF9HxjrSxSM0YvvneV3DP24FXuvLiSOFxIechMO+dHM0WExXyaGte0
+         1mowWllALHIduyLwqdgO4iE12uZxq4qhoxSp780lQLKSasSq9X0nRhWl/H7cLnv3OSW/
+         8asgOR9EQ+q+LWC96g8xCcJCsaQG/Co/iPQgI8oCtMqCHjKZB7Cs7nG8ESpxLQBth+hh
+         kZAQ==
+X-Gm-Message-State: AIVw113pvKmJpFzDR0exmiBUVPwVmuBBmLBVGdCyEQJx9uwqoWWWlNPS
+        D1gQ1HX6T2PU+32z
+X-Received: by 10.84.232.141 with SMTP id i13mr23214769plk.139.1501013940844;
+        Tue, 25 Jul 2017 13:19:00 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:cccf:9961:8336:68b3])
+        by smtp.gmail.com with ESMTPSA id 64sm16934909pfp.103.2017.07.25.13.18.59
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 25 Jul 2017 13:18:59 -0700 (PDT)
+Date:   Tue, 25 Jul 2017 13:18:58 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, jrnieder@gmail.com, peartben@gmail.com
+Subject: Re: [PATCH v2 1/2] Documentation: migrate sub-process docs to header
+Message-ID: <20170725201858.GJ92874@google.com>
+References: <20170724213810.29831-1-jonathantanmy@google.com>
+ <cover.1501007300.git.jonathantanmy@google.com>
+ <2d97d07a4977048a8147292ac13db48f5202d52f.1501007300.git.jonathantanmy@google.com>
 MIME-Version: 1.0
-In-Reply-To: <20170725175202.ar4ykqoadbihwb2w@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-CA
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2d97d07a4977048a8147292ac13db48f5202d52f.1501007300.git.jonathantanmy@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 25/07/17 01:52 PM, Jeff King wrote:
-> On Tue, Jul 25, 2017 at 11:09:55AM -0400, Raman Gupta wrote:
+On 07/25, Jonathan Tan wrote:
+> Move the documentation for the sub-process API from a separate txt file
+> to its header file.
 > 
->> I had an interesting situation today: resolving a merge conflict
->> required modification in other files that were not themselves conflicting.
->>
->> I just realized that rerere does not remember any changes to these
->> additional files -- only changes to the conflicting files. This makes
->> the end result of rerere obviously incorrect in this situation.
->>
->> So my questions are:
->>
->> 1) Is this a known limitation or is there a reason rerere works in
->> this manner?
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+
+I really like this change!
+
+> ---
+>  Documentation/technical/api-sub-process.txt | 59 -----------------------------
+>  sub-process.h                               | 25 +++++++++++-
+>  2 files changed, 23 insertions(+), 61 deletions(-)
+>  delete mode 100644 Documentation/technical/api-sub-process.txt
 > 
-> Yes, it's known. Rerere works by storing a mapping of conflicted hunks
-> to their resolutions. If there's no conflicted hunk, I'm not sure how
-> we'd decide what to feed into the mapping to see if there is some
-> content to be replaced.
+> diff --git a/Documentation/technical/api-sub-process.txt b/Documentation/technical/api-sub-process.txt
+> deleted file mode 100644
+> index 793508cf3..000000000
+> --- a/Documentation/technical/api-sub-process.txt
+> +++ /dev/null
+> @@ -1,59 +0,0 @@
+> -sub-process API
+> -===============
+> -
+> -The sub-process API makes it possible to run background sub-processes
+> -for the entire lifetime of a Git invocation. If Git needs to communicate
+> -with an external process multiple times, then this can reduces the process
+> -invocation overhead. Git and the sub-process communicate through stdin and
+> -stdout.
+> -
+> -The sub-processes are kept in a hashmap by command name and looked up
+> -via the subprocess_find_entry function.  If an existing instance can not
+> -be found then a new process should be created and started.  When the
+> -parent git command terminates, all sub-processes are also terminated.
+> -
+> -This API is based on the run-command API.
+> -
+> -Data structures
+> ----------------
+> -
+> -* `struct subprocess_entry`
+> -
+> -The sub-process structure.  Members should not be accessed directly.
+> -
+> -Types
+> ------
+> -
+> -'int(*subprocess_start_fn)(struct subprocess_entry *entry)'::
+> -
+> -	User-supplied function to initialize the sub-process.  This is
+> -	typically used to negotiate the interface version and capabilities.
+> -
+> -
+> -Functions
+> ----------
+> -
+> -`cmd2process_cmp`::
+> -
+> -	Function to test two subprocess hashmap entries for equality.
+> -
+> -`subprocess_start`::
+> -
+> -	Start a subprocess and add it to the subprocess hashmap.
+> -
+> -`subprocess_stop`::
+> -
+> -	Kill a subprocess and remove it from the subprocess hashmap.
+> -
+> -`subprocess_find_entry`::
+> -
+> -	Find a subprocess in the subprocess hashmap.
+> -
+> -`subprocess_get_child_process`::
+> -
+> -	Get the underlying `struct child_process` from a subprocess.
+> -
+> -`subprocess_read_status`::
+> -
+> -	Helper function to read packets looking for the last "status=<foo>"
+> -	key/value pair.
+> diff --git a/sub-process.h b/sub-process.h
+> index 96a2cca36..9e6975b5e 100644
+> --- a/sub-process.h
+> +++ b/sub-process.h
+> @@ -6,12 +6,23 @@
+>  #include "run-command.h"
+>  
+>  /*
+> - * Generic implementation of background process infrastructure.
+> - * See: Documentation/technical/api-sub-process.txt
+> + * The sub-process API makes it possible to run background sub-processes
+> + * for the entire lifetime of a Git invocation. If Git needs to communicate
+> + * with an external process multiple times, then this can reduces the process
+> + * invocation overhead. Git and the sub-process communicate through stdin and
+> + * stdout.
+> + *
+> + * The sub-processes are kept in a hashmap by command name and looked up
+> + * via the subprocess_find_entry function.  If an existing instance can not
+> + * be found then a new process should be created and started.  When the
+> + * parent git command terminates, all sub-processes are also terminated.
+> + * 
+> + * This API is based on the run-command API.
+>   */
+>  
+>   /* data structures */
+>  
+> +/* Members should not be accessed directly. */
+>  struct subprocess_entry {
+>  	struct hashmap_entry ent; /* must be the first member! */
+>  	const char *cmd;
+> @@ -20,21 +31,31 @@ struct subprocess_entry {
+>  
+>  /* subprocess functions */
+>  
+> +/* Function to test two subprocess hashmap entries for equality. */
+>  extern int cmd2process_cmp(const void *unused_cmp_data,
+>  			   const struct subprocess_entry *e1,
+>  			   const struct subprocess_entry *e2,
+>  			   const void *unused_keydata);
+>  
+> +/*
+> + * User-supplied function to initialize the sub-process.  This is
+> + * typically used to negotiate the interface version and capabilities.
+> + */
+>  typedef int(*subprocess_start_fn)(struct subprocess_entry *entry);
+> +
+> +/* Start a subprocess and add it to the subprocess hashmap. */
+>  int subprocess_start(struct hashmap *hashmap, struct subprocess_entry *entry, const char *cmd,
+>  		subprocess_start_fn startfn);
+>  
+> +/* Kill a subprocess and remove it from the subprocess hashmap. */
+>  void subprocess_stop(struct hashmap *hashmap, struct subprocess_entry *entry);
+>  
+> +/* Find a subprocess in the subprocess hashmap. */
+>  struct subprocess_entry *subprocess_find_entry(struct hashmap *hashmap, const char *cmd);
+>  
+>  /* subprocess helper functions */
+>  
+> +/* Get the underlying `struct child_process` from a subprocess. */
+>  static inline struct child_process *subprocess_get_child_process(
+>  		struct subprocess_entry *entry)
+>  {
+> -- 
+> 2.14.0.rc0.400.g1c36432dff-goog
 > 
-> That said, I'm far from an expert on how rerere works. Junio might have
-> ideas on how we could handle this better. But I do note that for
-> repeated integration runs (like we do for topics in git.git, as they get
-> merged to "pu", then "next", then "master"), he keeps non-conflict
-> fixups in a separate commit which gets squashed into the merge
-> automatically. See
-> 
->   https://github.com/git/git/blob/todo/Reintegrate#L185-L191
 
-Seems relatively simple to me, at least conceptually.
-
-1) Store the state of the index after the merge.
-
-2) After conflict resolution is complete (i.e. user executes "git
-commit"), diff index @ step 1 with commit.
-
-3) Assume that all changes in that diff are related to conflict
-resolution (as they should be), and save that diff to the rerere cache.
-
-I could be missing something fundamental here though...
-
->> 1b) If it is a limitation/bug, what would be needed to fix it? With
->> some guidance, I might be able to submit a patch...
-> 
-> As far as I know, something like the Reintegrate script above is the
-> state of the art. IMHO it would be useful if something similar were
-> integrated into rerere, but I'm not sure exactly how it would know when
-> to trigger.
-
-I've seen the Reintegrate script before. It is very specific to the
-git.git workflow. I think it makes sense to expose this particular
-capability in git proper, given that rerere itself is exposed. Plus
-that could actually simplify the Reintegrate script a bit.
-
->> 2) In the meantime, is there a way I can identify these cases, without
->> which I cannot really trust rerere is doing the right thing?
-> 
-> I do think it would be useful if rerere could look at a merge result and
-> say "OK, I've recorded these bits, but there are other lines that are
-> not part of either parent and which are not part of a conflict". That
-> gives you a warning that such lines need to be part of a fixup (rather
-> than you being surprised when you redo the merge later and have to
-> rework the fixup).
-
-Agreed.
-
-> But I don't think even then you can ever trust rerere fully.
-> Fundamentally you're applying some changes from one merge into another
-> context. There may be new sites that also need fixing up, and the tool
-> has no way to know. So you should treat a rerere-helped merge as any
-> other merge: assume it's a good starting point but use other tools (like
-> the compiler or automated tests) to confirm that the result is sensible.
-
-While I agree that every case cannot be handled, and this type of
-validation is still necessary, I believe git should cover the cases
-which it is proper and possible to cover.
-
-> -Peff
-> 
-
-Regards,
-Raman
+-- 
+Brandon Williams
