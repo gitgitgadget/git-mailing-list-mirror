@@ -2,58 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 709E31F89D
-	for <e@80x24.org>; Tue, 25 Jul 2017 21:40:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 949911F89D
+	for <e@80x24.org>; Tue, 25 Jul 2017 21:40:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751894AbdGYVkG (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jul 2017 17:40:06 -0400
-Received: from mail-pg0-f54.google.com ([74.125.83.54]:37916 "EHLO
-        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750897AbdGYVkD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jul 2017 17:40:03 -0400
-Received: by mail-pg0-f54.google.com with SMTP id k190so9794748pgk.5
-        for <git@vger.kernel.org>; Tue, 25 Jul 2017 14:40:03 -0700 (PDT)
+        id S1751769AbdGYVkZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jul 2017 17:40:25 -0400
+Received: from mail-pg0-f47.google.com ([74.125.83.47]:35918 "EHLO
+        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751847AbdGYVkB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jul 2017 17:40:01 -0400
+Received: by mail-pg0-f47.google.com with SMTP id 125so75323250pgi.3
+        for <git@vger.kernel.org>; Tue, 25 Jul 2017 14:40:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Ka/gRcttO2XI2naVT8INJMR6Wtj9wuyeCPPBAjtwBxg=;
-        b=k44qtqmhtH7mpv7ju3B+3OC8LS19eRnY8WWCdGQelmKVLyL9S7Q+ep712BjZEl1QXz
-         h4DujLaOlm+xzC3NFBXQZ0Uu/PBk+s0X7T64YDuPqS3gc4O+YoQl1Wyaq34ewNK651ih
-         /tFSoHlhNV1lFwtYJ1WpFCQH+CXkC40Yy32LEqnXxFciPNwZRUPS8g3phgsMkfDDxAtE
-         lZlqsgj7lNeV288vkcaogYVdums132iU5VvIkXeoCPIvB5lJZF9AbjtEO+NaaijR1RDJ
-         RnMe+DjwXiDSyCPWwqTJKTpuwQdzsT+oLK3BaDlRhjBMIdp9ysUGbzVFdXmFr1qFpXWl
-         iUVw==
+        bh=hcY/42sww4GxC1HoJ8VNEJ0kictVSfJ99naQ26WrXNY=;
+        b=f5wcZVZaR9jHJpcqfaQkoz3vo217DI0L34rt3rYmKUp4yDosWTS53HxPW222Hx+iqc
+         4eU4fOvjNKDlyfnRQ+IONaOPnCgqqrU1Opdf3MznOgbeM6Y224h159wg8ry6fdGQSth4
+         3lREwSTzVWJtj3NER6zWmM1ANtcN5mndJKBbMTZBY2aRKo9Hhbp8DNnGd76pxcFVyVdm
+         Ld2a4TkfzGFEp55Mpw4XvjppPJmp91BUd2XPxBsjeTwUKa9FKBF8V11gUpjlTRZWs36h
+         ThQ5f/4QdecDPyHu+jAofXipjxaQGYGKWNTdummhEgMd97zfcBH8JaV0CkbSn1jo6xCI
+         HARg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Ka/gRcttO2XI2naVT8INJMR6Wtj9wuyeCPPBAjtwBxg=;
-        b=S7bg4Rh8XlDbSFpJm5TU7n6JI4tACP83kCWCX+Wt6vqsACuG9u6NzyETAe49a0elZw
-         StG5iGXVpNGs5468Jvlo6L3SwlGXJJJDJ+kaaUC1pbfKlDE5hL8uf9V6kt6TsBIpNe1t
-         P/aPsnUMR6LszwUB2NREaonwZTV4V5s94mgTM1UgKhukbntub1JsfPsddUmm5YgNX56j
-         BWI2d5KAQIJJ1dDEWElrGBKiCDoUjhh4glH5ugYZzJDFzWs3ZWVi/fi2Gm/dtgx6gO3X
-         1fqH5ttZeWQQkYWYpRGXqYem1gZG9JzLASFcrwsP7KCt9oR0FjyfXtW+DhnYRZgGrgjA
-         eHmQ==
-X-Gm-Message-State: AIVw11351dEHNn2FLZaOTsbitqC1rDUr2qyHPLljORi9IyHXU4E3rko+
-        Mf4laEI58jRNW2OPt9uxJg==
-X-Received: by 10.99.1.2 with SMTP id 2mr5892452pgb.213.1501018802291;
-        Tue, 25 Jul 2017 14:40:02 -0700 (PDT)
+        bh=hcY/42sww4GxC1HoJ8VNEJ0kictVSfJ99naQ26WrXNY=;
+        b=qtx++vsSdzDducSBs9+4haHB3hkEQFvWCaLxQTKisB48Wj+OA8VcQGqB2PFjkIz18G
+         eMj6Idvv39BwExKlUdmHuLRq8vF4lU6InfDThny3tIqN9R17rHtAYgwWPuF5iTVaPxdy
+         Ytx4WBf8Kho0pIDP//nII39skBS1VprGYGgNsbSaeSN+bq6h3d8bhoTg3XN8UJ6h+g4T
+         eicGePhqkLOHyVZ7DPXD7gteTjSBiW2ShxeaM7U6GAicBPDXZdwE2zH+APij0LxUbYkh
+         mlTbfmlaSz1xC+Fw+7JHtztqvyw3Pt4skOg+PnmVCCxMZR4QS0oaaQSFUK3jIsiP8N2A
+         KN6A==
+X-Gm-Message-State: AIVw111WhcL/wIwxBCA2XN+WemmDqxPpcVyvlxzk6miovHMTqmBgP3Lx
+        Fg67v2qlZEVdkRCkmDJSzQ==
+X-Received: by 10.84.169.3 with SMTP id g3mr22660593plb.136.1501018800740;
+        Tue, 25 Jul 2017 14:40:00 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id m186sm27068839pfc.54.2017.07.25.14.40.00
+        by smtp.gmail.com with ESMTPSA id m186sm27068839pfc.54.2017.07.25.14.39.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 25 Jul 2017 14:40:01 -0700 (PDT)
+        Tue, 25 Jul 2017 14:39:59 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     jrnieder@gmail.com, sbeller@google.com,
         Brandon Williams <bmwill@google.com>
-Subject: [PATCH 14/15] unpack-trees: improve loading of .gitmodules
-Date:   Tue, 25 Jul 2017 14:39:27 -0700
-Message-Id: <20170725213928.125998-15-bmwill@google.com>
+Subject: [PATCH 13/15] submodule-config: lazy-load a repository's .gitmodules file
+Date:   Tue, 25 Jul 2017 14:39:26 -0700
+Message-Id: <20170725213928.125998-14-bmwill@google.com>
 X-Mailer: git-send-email 2.14.0.rc0.400.g1c36432dff-goog
 In-Reply-To: <20170725213928.125998-1-bmwill@google.com>
 References: <20170725213928.125998-1-bmwill@google.com>
@@ -62,89 +61,146 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When recursing submodules 'check_updates()' needs to have strict control
-over the submodule-config subsystem to ensure that the gitmodules file
-has been read before checking cache entries which are marked for
-removal as well ensuring the proper gitmodules file is read before
-updating cache entries.
+In order to use the submodule-config subsystem, callers first need to
+initialize it by calling 'repo_read_gitmodules()' or
+'gitmodules_config()' (which just redirects to
+'repo_read_gitmodules()').  There are a couple of callers who need to
+load an explicit revision of the repository's .gitmodules file (grep) or
+need to modify the .gitmodules file so they would need to load it before
+modify the file (checkout), but the majority of callers are simply
+reading the .gitmodules file present in the working tree.  For the
+common case it would be nice to avoid the boilerplate of initializing
+the submodule-config system before using it, so instead let's perform
+lazy-loading of the submodule-config system.
 
-Because of this let's not rely on callers of 'check_updates()' to read
-the gitmodules file before calling 'check_updates()' and handle the
-reading explicitly.
+Remove the calls to reading the gitmodules file from ls-files to show
+that lazy-loading the .gitmodules file works.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- unpack-trees.c | 42 ++++++++++++++++++++++++++----------------
- 1 file changed, 26 insertions(+), 16 deletions(-)
+ builtin/ls-files.c |  5 -----
+ submodule-config.c | 27 ++++++++++++++++++++++-----
+ 2 files changed, 22 insertions(+), 10 deletions(-)
 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index dc66b880d..144c556c8 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -283,22 +283,28 @@ static int check_submodule_move_head(const struct cache_entry *ce,
- 	}
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index d14612057..bd74ee07d 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -211,8 +211,6 @@ static void show_submodule(struct repository *superproject,
+ 	if (repo_read_index(&submodule) < 0)
+ 		die("index file corrupt");
+ 
+-	repo_read_gitmodules(&submodule);
+-
+ 	show_files(&submodule, dir);
+ 
+ 	repo_clear(&submodule);
+@@ -611,9 +609,6 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ 	if (require_work_tree && !is_inside_work_tree())
+ 		setup_work_tree();
+ 
+-	if (recurse_submodules)
+-		repo_read_gitmodules(the_repository);
+-
+ 	if (recurse_submodules &&
+ 	    (show_stage || show_deleted || show_others || show_unmerged ||
+ 	     show_killed || show_modified || show_resolve_undo || with_tree))
+diff --git a/submodule-config.c b/submodule-config.c
+index 86636654b..56d9d76d4 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -18,6 +18,7 @@ struct submodule_cache {
+ 	struct hashmap for_path;
+ 	struct hashmap for_name;
+ 	unsigned initialized:1;
++	unsigned gitmodules_read:1;
+ };
+ 
+ /*
+@@ -93,6 +94,7 @@ static void submodule_cache_clear(struct submodule_cache *cache)
+ 	hashmap_free(&cache->for_path, 1);
+ 	hashmap_free(&cache->for_name, 1);
+ 	cache->initialized = 0;
++	cache->gitmodules_read = 0;
  }
  
--static void reload_gitmodules_file(struct index_state *index,
--				   struct checkout *state)
-+/*
-+ * Preform the loading of the repository's gitmodules file.  This function is
-+ * used by 'check_update()' to perform loading of the gitmodules file in two
-+ * differnt situations:
-+ * (1) before removing entries from the working tree if the gitmodules file has
-+ *     been marked for removal.  This situation is specified by 'state' == NULL.
-+ * (2) before checking out entries to the working tree if the gitmodules file
-+ *     has been marked for update.  This situation is specified by 'state' != NULL.
-+ */
-+static void load_gitmodules_file(struct index_state *index,
-+				 struct checkout *state)
+ void submodule_cache_free(struct submodule_cache *cache)
+@@ -557,8 +559,6 @@ static int gitmodules_cb(const char *var, const char *value, void *data)
+ 	struct repository *repo = data;
+ 	struct parse_config_parameter parameter;
+ 
+-	submodule_cache_check_init(repo);
+-
+ 	parameter.cache = repo->submodule_cache;
+ 	parameter.treeish_name = NULL;
+ 	parameter.gitmodules_sha1 = null_sha1;
+@@ -569,6 +569,8 @@ static int gitmodules_cb(const char *var, const char *value, void *data)
+ 
+ void repo_read_gitmodules(struct repository *repo)
  {
--	int i;
--	for (i = 0; i < index->cache_nr; i++) {
--		struct cache_entry *ce = index->cache[i];
--		if (ce->ce_flags & CE_UPDATE) {
--			int r = strcmp(ce->name, ".gitmodules");
--			if (r < 0)
--				continue;
--			else if (r == 0) {
--				submodule_free();
--				checkout_entry(ce, state, NULL);
--				gitmodules_config();
--			} else
--				break;
-+	int pos = index_name_pos(index, GITMODULES_FILE, strlen(GITMODULES_FILE));
++	submodule_cache_check_init(repo);
 +
-+	if (pos >= 0) {
-+		struct cache_entry *ce = index->cache[pos];
-+		if (!state && ce->ce_flags & CE_WT_REMOVE) {
-+			repo_read_gitmodules(the_repository);
-+		} else if (state && (ce->ce_flags & CE_UPDATE)) {
-+			submodule_free();
-+			checkout_entry(ce, state, NULL);
-+			repo_read_gitmodules(the_repository);
- 		}
+ 	if (repo->worktree) {
+ 		char *gitmodules;
+ 
+@@ -582,6 +584,8 @@ void repo_read_gitmodules(struct repository *repo)
+ 
+ 		free(gitmodules);
  	}
++
++	repo->submodule_cache->gitmodules_read = 1;
  }
-@@ -371,6 +377,10 @@ static int check_updates(struct unpack_trees_options *o)
  
- 	if (o->update)
- 		git_attr_set_direction(GIT_ATTR_CHECKOUT, index);
+ void gitmodules_config_oid(const struct object_id *commit_oid)
+@@ -589,24 +593,37 @@ void gitmodules_config_oid(const struct object_id *commit_oid)
+ 	struct strbuf rev = STRBUF_INIT;
+ 	struct object_id oid;
+ 
++	submodule_cache_check_init(the_repository);
 +
-+	if (should_update_submodules() && o->update && !o->dry_run)
-+		load_gitmodules_file(index, NULL);
+ 	if (gitmodule_oid_from_commit(commit_oid, &oid, &rev)) {
+ 		git_config_from_blob_oid(gitmodules_cb, rev.buf,
+ 					 &oid, the_repository);
+ 	}
+ 	strbuf_release(&rev);
 +
- 	for (i = 0; i < index->cache_nr; i++) {
- 		const struct cache_entry *ce = index->cache[i];
++	the_repository->submodule_cache->gitmodules_read = 1;
++}
++
++static void gitmodules_read_check(struct repository *repo)
++{
++	submodule_cache_check_init(repo);
++
++	/* read the repo's .gitmodules file if it hasn't been already */
++	if (!repo->submodule_cache->gitmodules_read)
++		repo_read_gitmodules(repo);
+ }
  
-@@ -384,7 +394,7 @@ static int check_updates(struct unpack_trees_options *o)
- 	remove_scheduled_dirs();
+ const struct submodule *submodule_from_name(const struct object_id *treeish_name,
+ 		const char *name)
+ {
+-	submodule_cache_check_init(the_repository);
++	gitmodules_read_check(the_repository);
+ 	return config_from(the_repository->submodule_cache, treeish_name, name, lookup_name);
+ }
  
- 	if (should_update_submodules() && o->update && !o->dry_run)
--		reload_gitmodules_file(index, &state);
-+		load_gitmodules_file(index, &state);
+ const struct submodule *submodule_from_path(const struct object_id *treeish_name,
+ 		const char *path)
+ {
+-	submodule_cache_check_init(the_repository);
++	gitmodules_read_check(the_repository);
+ 	return config_from(the_repository->submodule_cache, treeish_name, path, lookup_path);
+ }
  
- 	for (i = 0; i < index->cache_nr; i++) {
- 		struct cache_entry *ce = index->cache[i];
+@@ -614,7 +631,7 @@ const struct submodule *submodule_from_cache(struct repository *repo,
+ 					     const struct object_id *treeish_name,
+ 					     const char *key)
+ {
+-	submodule_cache_check_init(repo);
++	gitmodules_read_check(repo);
+ 	return config_from(repo->submodule_cache, treeish_name,
+ 			   key, lookup_path);
+ }
 -- 
 2.14.0.rc0.400.g1c36432dff-goog
 
