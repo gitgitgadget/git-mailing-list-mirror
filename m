@@ -2,94 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 79A941F89D
-	for <e@80x24.org>; Tue, 25 Jul 2017 14:39:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F23B31F89D
+	for <e@80x24.org>; Tue, 25 Jul 2017 15:10:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752402AbdGYOjW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jul 2017 10:39:22 -0400
-Received: from a7-17.smtp-out.eu-west-1.amazonses.com ([54.240.7.17]:46448
-        "EHLO a7-17.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752297AbdGYOjV (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 25 Jul 2017 10:39:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1500993560;
-        h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=Kl5thVxUVpa876tTvN7tUbbB082McI7mt81AFoOTFC4=;
-        b=jodHXn3wI5K6Ql+OxCNhJ0GXbMgA+zF6hIH6F48aHDUL4YpxjPOdL255GZfw6KD3
-        zQdeW8Vgl+CDARaRySw8ERVXWQSV06PmEu7TgqusG0nw+0i7zsLrNYqnoqwWY6L3oFo
-        NmDRMp0PZymyj154BCSG/mRiJXaHFeQl+DKek7eI=
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+        id S1752171AbdGYPJ6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jul 2017 11:09:58 -0400
+Received: from mail-it0-f53.google.com ([209.85.214.53]:38275 "EHLO
+        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752089AbdGYPJ5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jul 2017 11:09:57 -0400
+Received: by mail-it0-f53.google.com with SMTP id h199so52773937ith.1
+        for <git@vger.kernel.org>; Tue, 25 Jul 2017 08:09:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=Oc1xFRlU6ztn5GRBlTsIGCs6sI832WAKHt3PBF/aJyY=;
+        b=okL6tUlyyxxjAvPySZ3vyVFwBrpmLcvAsoEA/QTZHFj5Xrjw71xZJwqkQ4SnsYzYF9
+         eoiSzBEadjKKbfv33G2OcsdGCZAlLqISsQgNP+jza+lYf+kZ+/piho9M1yfqjKr4wTU8
+         hOcUQ7iaCBMidRDM3I1d6Vv1/OjywyqAKszMTQdzhLF5WvrJiioFOgJJCVFo+oNsm4vo
+         Mtdz3nywFxvqIRz0BnQDvt8rynw0DWgDxEPRIvOAEmZdkqdnabZOH1pMaqG1IKOUkFOM
+         60KHBilIwfDfiMV1X+xSJcmA1Z6UnxRf/yKA/Xx2fWOmuHGIG5evTQygGqPMHFMUE1+G
+         mbuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=Oc1xFRlU6ztn5GRBlTsIGCs6sI832WAKHt3PBF/aJyY=;
+        b=kmo2f+vWHWolLGjtxCl9dI/RSKdUeoQ3x46bVniINlJYQQbs9AGhIfzZli70fAYRtd
+         ibk2iTfjFuaCDuOF1IgxzLwj/mAuW0NqFlkZxQLN43XEdBzsy6BfgxrJzK7q20VqqyPV
+         YoIOY41NQ4cutmgJmM2hBqPJyR2cMOyNyS9zNZM3FeRj+uiW44ZAvK6xYZHFWRw+m1vW
+         v42GxRmE/I2WhNqXMg+Cu9gbB4XQyuDvbfkISNM7ByTfZiCGx2ghBRmA5uoRpCi7MIOL
+         ndf+bZIG36pOnIB2rzBlECQzk8/GwpmWnCUHwnxvHDFpvLQp7zWOV0zTCPVfrKWlA6MW
+         rOBQ==
+X-Gm-Message-State: AIVw1136gBF9IINt5wv6cF9FVm5aOPUOx/xkw61Ne5hYkc1sbQheMUXK
+        J4yJ6JbjEYAHNCRmDos=
+X-Received: by 10.36.125.11 with SMTP id b11mr6787333itc.47.1500995397010;
+        Tue, 25 Jul 2017 08:09:57 -0700 (PDT)
+Received: from [192.168.1.6] (d24-150-81-207.home.cgocable.net. [24.150.81.207])
+        by smtp.googlemail.com with ESMTPSA id 77sm2656272itw.3.2017.07.25.08.09.55
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 25 Jul 2017 08:09:56 -0700 (PDT)
 To:     git@vger.kernel.org
-Message-ID: <0102015d7a301def-0d802f3e-6052-4e32-b331-c42c3160012b-000000@eu-west-1.amazonses.com>
-Subject: [PATCH] branch: change the error messages to be more meaningful
+From:   Raman Gupta <rocketraman@gmail.com>
+Subject: [RFC] Git rerere and non-conflicting changes during conflict
+ resolution
+Message-ID: <17c46229-3b64-34f1-30fa-d40b77e1c054@gmail.com>
+Date:   Tue, 25 Jul 2017 11:09:55 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-CA
 Content-Transfer-Encoding: 7bit
-Date:   Tue, 25 Jul 2017 14:39:20 +0000
-X-SES-Outgoing: 2017.07.25-54.240.7.17
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The error messages shown when the branch command is misused
-by supplying it wrong number of parameters wasn't meaningful
-as it used the the phrase, "too many branches" which is not
-meaningful in the following case,
+I had an interesting situation today: resolving a merge conflict
+required modification in other files that were not themselves conflicting.
 
-        $ git branch
-          foo
-        * master
+I just realized that rerere does not remember any changes to these
+additional files -- only changes to the conflicting files. This makes
+the end result of rerere obviously incorrect in this situation.
 
-        $ git branch -m foo foo test
-        fatal: too many branches for a rename operation
+So my questions are:
 
-It's not meaningful as the implementation assumed all parameters
-to be branch names. It's not always the case as exemplified above.
+1) Is this a known limitation or is there a reason rerere works in
+this manner?
 
-Change the messages to be more general thus making no asssumptions
-about the "parameters".
+1b) If it is a limitation/bug, what would be needed to fix it? With
+some guidance, I might be able to submit a patch...
 
-Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
----
- builtin/branch.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+2) In the meantime, is there a way I can identify these cases, without
+which I cannot really trust rerere is doing the right thing?
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index a3bd2262b3367..59fedf085d3db 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -707,12 +707,12 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		else if (argc == 2)
- 			rename_branch(argv[0], argv[1], rename > 1);
- 		else
--			die(_("too many branches for a rename operation"));
-+			die(_("too many parameters for a rename operation"));
- 	} else if (new_upstream) {
- 		struct branch *branch = branch_get(argv[0]);
- 
- 		if (argc > 1)
--			die(_("too many branches to set new upstream"));
-+			die(_("too many parameters to set new upstream"));
- 
- 		if (!branch) {
- 			if (!argc || !strcmp(argv[0], "HEAD"))
-@@ -735,7 +735,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		struct strbuf buf = STRBUF_INIT;
- 
- 		if (argc > 1)
--			die(_("too many branches to unset upstream"));
-+			die(_("too many parameters to unset upstream"));
- 
- 		if (!branch) {
- 			if (!argc || !strcmp(argv[0], "HEAD"))
-
---
-https://github.com/git/git/pull/387
+Regards,
+Raman
