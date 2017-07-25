@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 833FD1F89D
-	for <e@80x24.org>; Tue, 25 Jul 2017 23:35:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 54EC11F89D
+	for <e@80x24.org>; Tue, 25 Jul 2017 23:37:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751328AbdGYXfO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jul 2017 19:35:14 -0400
-Received: from mail-pg0-f41.google.com ([74.125.83.41]:35274 "EHLO
-        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751011AbdGYXfO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jul 2017 19:35:14 -0400
-Received: by mail-pg0-f41.google.com with SMTP id v190so76300646pgv.2
-        for <git@vger.kernel.org>; Tue, 25 Jul 2017 16:35:13 -0700 (PDT)
+        id S1751531AbdGYXhg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jul 2017 19:37:36 -0400
+Received: from mail-pg0-f54.google.com ([74.125.83.54]:33899 "EHLO
+        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751097AbdGYXhf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jul 2017 19:37:35 -0400
+Received: by mail-pg0-f54.google.com with SMTP id 123so76311405pgj.1
+        for <git@vger.kernel.org>; Tue, 25 Jul 2017 16:37:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=F+IDFwJ/4vA825a862iFF/LTNkLbDFgSzrYLGHnUSYg=;
-        b=fkwk6xjcuwhIUFvWUsibvUF3HQnbupQCnZtcVWLfRYr6U0c9MaLL3HSVfxnZdZ2x20
-         0VSyfFt8/iKiSQsX1Y+BH2BARM1k1b0E+zDILy7VMzUUz/xAirgBpA8TZiyqGS6Fyfg1
-         LrD07+adZnxrNvtD/YicaZVbWwW0j7+BDUi6Vb9edlnFkNgEBuBVObQrF3RKVFNjJ3il
-         oMT9xS+nBwqoXu4TbjJ5j0vrIjVRAbI01AfLP2taP9qXrrUOakS4pFi2ptgKSB2NgR/x
-         wGT+DRdbM5CdTpKxiNnjgN7ADJLKgjiB0jk3GNZwkR56oio+wUCHMqRkM3YefbLV2oaB
-         Y6Sg==
+        bh=+XP4fxTscr7mbhQ9LJ9KxK0jxGI68pQOdsjdnhUbvQ4=;
+        b=fJa6i0TDHqRXyGw8+OKWoUe6PmydfWOy21d7D7NFgcgihp0/oh+y5LFF7t90wuHTZz
+         HFHmHDgKWnL4H/9wmMKrBZRsHK5/VZHxqTIroS25Bq7A/XMM8K9/+09PYBLfd22QwIHT
+         S4rV9LXZYTCmRT4crAAPKpVdcIZTqLOzec9+xQMoMLQGc4flWAdi3HflJXvuEBQyCylF
+         fvT5sojC1B1fWOJvgPucOfy+kNTriv+h84qfYuMEecuBv/xCa0ymfJbIQ6r2COKhGHXL
+         X4MLU7U1hWRy8DMMzbKpwZ4/fgj9rypDuwC95TkgKdfe90q/oBWuaDgINDR2rx/qkzZ+
+         u3HA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=F+IDFwJ/4vA825a862iFF/LTNkLbDFgSzrYLGHnUSYg=;
-        b=WM5YKEE7npI1OXDk9TEJmw7qeDWIk/Xl6EFj/RndgKkZiFJwbGShBFRii61ZZaE7Ob
-         F0kepacqQX6x/J/2gy768RuvhHVUPt3dx0TRkv8WiYT4qh7faeCVAu2h0r+69GZno1GA
-         S8uasopbgqIiN5xFQUkpHKP+yxR6A65XwLv03tfEb1fhcis2lYgyXC5D1/C/o0PCkh/9
-         WwH4VBkhZaPCurZvA7Xz2e5kf1b54Tp8pbfVBGPvy2oGfH1zJwSWRUTqCQ40i7uXExo2
-         rnCRxIfxbsheGI1LZVTbyDWW1gyEvagu1qIGY0F/18Zf6QmecJM/Sdh4k78WAY01cvkc
-         EEMA==
-X-Gm-Message-State: AIVw112jBsV6C/lUfESoohdYauoHhlyyiOeQw6GOxYp8kmrClSGPR3RT
-        IKDA0Hi0qHlkB10HQzeHIAQGb5m5CxI9
-X-Received: by 10.98.204.136 with SMTP id j8mr20818865pfk.275.1501025713454;
- Tue, 25 Jul 2017 16:35:13 -0700 (PDT)
+        bh=+XP4fxTscr7mbhQ9LJ9KxK0jxGI68pQOdsjdnhUbvQ4=;
+        b=d+9FrQvQFvFZlpNAtmH2aDzTXUAMmCThxcI/GougSOMnvvq6VE+IBiklyEebSfloQc
+         LbyC0eZragnNH7fYlCdzdWIFmDu6gSXyIxNYvfZ9L/CRQFT21K8RJQGhdz55i6nN4H44
+         XjTHUt3sk5jLfkrncZjIqlP0x81FbkgRezdQKdiQsNSoBPKzKFTj2czqq028A9az0djm
+         21bgk3600vMAiiIvElSlhOsrptgP6W02mpYXJhHgJ8TM8lhaFzn9RfrvbmuPsj/OVpJX
+         LHgFJKg4T2Ck+YTKOmUcAw9VWbV16bWt+UPrkzwCqdEEJLwV/4r+qOoSBjcSSKs95tP9
+         ewPA==
+X-Gm-Message-State: AIVw1105FhIe/sdPlOgIB4z8TZhe4f9lXmfDT2ETX2PuBLjaqvuHwBMX
+        KdGyNQdfaOxTs2fMPDk0UlqTpE/4MD24
+X-Received: by 10.84.225.134 with SMTP id u6mr534642plj.176.1501025854998;
+ Tue, 25 Jul 2017 16:37:34 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.100.165.44 with HTTP; Tue, 25 Jul 2017 16:35:13 -0700 (PDT)
-In-Reply-To: <20170725213928.125998-5-bmwill@google.com>
-References: <20170725213928.125998-1-bmwill@google.com> <20170725213928.125998-5-bmwill@google.com>
+Received: by 10.100.165.44 with HTTP; Tue, 25 Jul 2017 16:37:34 -0700 (PDT)
+In-Reply-To: <20170725213928.125998-6-bmwill@google.com>
+References: <20170725213928.125998-1-bmwill@google.com> <20170725213928.125998-6-bmwill@google.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 25 Jul 2017 16:35:13 -0700
-Message-ID: <CAGZ79kaof5O2EwFjg6-NpGMYdVYWdSxL+5STfEm8WF5gV1qbGQ@mail.gmail.com>
-Subject: Re: [PATCH 04/15] submodule--helper: don't overlay config in remote_submodule_branch
+Date:   Tue, 25 Jul 2017 16:37:34 -0700
+Message-ID: <CAGZ79kacdTFVJknTx+ceT8epytXSJDRVAwZO4HyzpsmVbK5VTQ@mail.gmail.com>
+Subject: Re: [PATCH 05/15] submodule--helper: don't overlay config in update-clone
 To:     Brandon Williams <bmwill@google.com>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
         Jonathan Nieder <jrnieder@gmail.com>
@@ -64,8 +64,38 @@ X-Mailing-List: git@vger.kernel.org
 On Tue, Jul 25, 2017 at 2:39 PM, Brandon Williams <bmwill@google.com> wrote:
 > Don't rely on overlaying the repository's config on top of the
 > submodule-config, instead query the repository's config directly for the
-> branch field.
+> url and the update strategy configuration.
 >
 > Signed-off-by: Brandon Williams <bmwill@google.com>
+> ---
+...
 
-Reviewed-by: Stefan Beller <sbeller@google.com>
+> +struct submodule_update_strategy submodule_strategy_with_config_overlayed(struct repository *repo,
+> +                                                                         const struct submodule *sub)
+> +{
+> +       struct submodule_update_strategy strat = sub->update_strategy;
+> +       const char *update;
+> +       char *key;
+> +
+> +       key = xstrfmt("submodule.%s.update", sub->name);
+> +       if (!repo_config_get_string_const(repo, key, &update)) {
+> +               strat.command = NULL;
+> +               if (!strcmp(update, "none")) {
+> +                       strat.type = SM_UPDATE_NONE;
+> +               } else if (!strcmp(update, "checkout")) {
+> +                       strat.type = SM_UPDATE_CHECKOUT;
+> +               } else if (!strcmp(update, "rebase")) {
+> +                       strat.type = SM_UPDATE_REBASE;
+> +               } else if (!strcmp(update, "merge")) {
+> +                       strat.type = SM_UPDATE_MERGE;
+> +               } else if (skip_prefix(update, "!", &update)) {
+> +                       strat.type = SM_UPDATE_COMMAND;
+> +                       strat.command = update;
+> +               } else {
+> +                       die("invalid submodule update strategy '%s'", update);
+> +               }
+> +       }
+
+Can this be simplified by reusing
+    parse_submodule_update_strategy(value, dest)
+?
