@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D65351F89D
-	for <e@80x24.org>; Tue, 25 Jul 2017 21:40:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB6D81F89D
+	for <e@80x24.org>; Tue, 25 Jul 2017 21:40:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751853AbdGYVkB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jul 2017 17:40:01 -0400
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:35892 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751599AbdGYVj6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jul 2017 17:39:58 -0400
-Received: by mail-pf0-f169.google.com with SMTP id z129so23489898pfb.3
-        for <git@vger.kernel.org>; Tue, 25 Jul 2017 14:39:58 -0700 (PDT)
+        id S1751631AbdGYVkd (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jul 2017 17:40:33 -0400
+Received: from mail-pg0-f52.google.com ([74.125.83.52]:35263 "EHLO
+        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751091AbdGYVj4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jul 2017 17:39:56 -0400
+Received: by mail-pg0-f52.google.com with SMTP id v190so75315841pgv.2
+        for <git@vger.kernel.org>; Tue, 25 Jul 2017 14:39:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=0/xASbBJ0YwNKLCb0MmcmJdR/bL3hGcJ0Zl6MFX+NzI=;
-        b=Qbs+9l0vyEfNCXLCrRzjxDxkP4iqQb7mqTJOXPX+Zu1nqCv8V6Fgdxzx6PKM9E+lgq
-         sZAH8EeiavgjDnQLmLzRZ1/SPxqW/Nh4TMGbgsXSS/4787biF5b/MdYifPDVSkdfQv0n
-         1uOUlgLRWMGXw35bdePGg5CkjHOKgTRJawsfujVj6KHzuVGdnFOsoypzDzVTupSkqWVi
-         BhPNTKFU5q4BHtddlmYDGfGn07HVWTnLuGR/OgXe+rD8nKCaH1W4np9rhinzAhHB6TA3
-         uTfQQiGfsgYi76lO5pkYfJciJLfe/Nfi2CETC+29LLtnbB8xD9BDrgZsIJHry1qFIY65
-         h6eQ==
+        bh=Xsv2wEEqtdFTUW+5SoP1UEUpoShU0PoFE1vD/xpn1aY=;
+        b=I3UHmDux76VXXvHauheiy/H57ulYa41kywgNmtLgcPY9VPYvbC77d0vJQV4jUWQRIW
+         IfE3Uyy7HrirSadovaJcqMkgYvv//olxFtaqKA9gJ92u21O1uUc1PHq6afs2I80oOnvM
+         2EfmN7L+mnUjK0PTzqi4c0XN/Hm4IGFhYfdMDR24RfmY3GzYDuFbRksQqiB+dDHnrUwm
+         s+v7yZWQZACOe4uHiE/IMWi/LRQFfGWFVJ2etnuWb9V5MKpR4tGOlQF1XJeE6MLucjIe
+         7pQA3NcIYmfwGqNE/6gCouPu8yZoP+sik+UBU3agarUSQ7DNYI8zf9jhjPSt2oEjZR6M
+         othQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=0/xASbBJ0YwNKLCb0MmcmJdR/bL3hGcJ0Zl6MFX+NzI=;
-        b=OgV3mPom05GqtzfdYMJ1LmIaCNx1EDUlxt9mt0gyurHt2kFvDio7XHY6FWNVMBI8oG
-         lGgv76EWcR5ofpNM6aPSy2B3nLZNh6TjYhtfeH2U1IngS68S6ulmpgLLirkAOrm8FwNx
-         ofCZOvJZQAAIo/rnClTcMlo+4cnlxqz+Cbrk/bLUVZZTSN26xa8zbi+yAVYB2VWJIb9D
-         p/NC7k8isvZMzmY/BMiSyThAhvxzEpsVYYXi2uXAxoBUwroBzNZxK6ZpC6xmT+C9ctPi
-         g6OQ9vxEfxjjh2GPgwrYUlipSajODsm2EEy/E0NSWzM2PAGcaW1l02uGZu2mtGfPCfxR
-         VwwA==
-X-Gm-Message-State: AIVw112PuBPbqtym7k37XSi9k5otZWxkn/SeoJwtIwJhchtmdFqJXtu9
-        zqyyu0HgjFjZt+/1mI9lYw==
-X-Received: by 10.99.127.83 with SMTP id p19mr21019142pgn.376.1501018797221;
-        Tue, 25 Jul 2017 14:39:57 -0700 (PDT)
-Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id m186sm27068839pfc.54.2017.07.25.14.39.55
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        bh=Xsv2wEEqtdFTUW+5SoP1UEUpoShU0PoFE1vD/xpn1aY=;
+        b=s4QZIqrALmcsnVM/JAXKHTFjoXqFkcLZpmkXxLtQX3pssWsy4yTnYkeL+emEzACX53
+         gF7r3qlDMyhnWxzLYPyAcDLPzPhLvq3A+ZzdA9+NRxJN7nTqCWxs3MYkBCi56NGWddvv
+         Rub+DeUeqqCzeqAJfkvS/uoHbps0R+RDJerO937aD5zVsgf6tVwyDXvTCCv/0jSxLCPB
+         6AvTEXxnywEMr0wcguticIDBOtGZNBw6SD6zU/0lxKuolQ1HZvc2VROFXvEFv/BmSur3
+         98syETMux7GNxqz+qcEp29Cj3uIKPxLNx37F6yAGx5KJdj93jPZ5DXbBNeFVPEc8tINM
+         xvaw==
+X-Gm-Message-State: AIVw111RFSIRuRdmAlZB6HvMLij0FkSfHLLJUC23bdtFlmy0yZ5M4Rh+
+        l8AnZTz9bEJUzmUECzbcJA==
+X-Received: by 10.101.69.196 with SMTP id m4mr18250512pgr.105.1501018795566;
         Tue, 25 Jul 2017 14:39:55 -0700 (PDT)
+Received: from roshar.svl.corp.google.com ([100.96.218.30])
+        by smtp.gmail.com with ESMTPSA id m186sm27068839pfc.54.2017.07.25.14.39.54
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 25 Jul 2017 14:39:54 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     jrnieder@gmail.com, sbeller@google.com,
         Brandon Williams <bmwill@google.com>
-Subject: [PATCH 11/15] submodule-config: remove support for overlaying repository config
-Date:   Tue, 25 Jul 2017 14:39:24 -0700
-Message-Id: <20170725213928.125998-12-bmwill@google.com>
+Subject: [PATCH 10/15] diff: stop allowing diff to have submodules configured in .git/config
+Date:   Tue, 25 Jul 2017 14:39:23 -0700
+Message-Id: <20170725213928.125998-11-bmwill@google.com>
 X-Mailer: git-send-email 2.14.0.rc0.400.g1c36432dff-goog
 In-Reply-To: <20170725213928.125998-1-bmwill@google.com>
 References: <20170725213928.125998-1-bmwill@google.com>
@@ -61,136 +61,127 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-All callers have been migrated to explicitly read any configuration they
-need.  The support for handling it automatically in submodule-config is
-no longer needed.
+Traditionally a submodule is comprised of a gitlink as well as a
+corresponding entry in the .gitmodules file.  Diff doesn't follow this
+paradigm as its config callback routine falls back to populating the
+submodule-config if a config entry starts with 'submodule.'.
+
+Remove this behavior in order to be consistent with how the
+submodule-config is populated, via calling 'gitmodules_config()' or
+'repo_read_gitmodules()'.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- submodule-config.h               |  1 -
- t/helper/test-submodule-config.c |  6 ----
- t/t7411-submodule-config.sh      | 72 ----------------------------------------
- 3 files changed, 79 deletions(-)
+ diff.c                    |  3 ---
+ t/t4027-diff-submodule.sh | 67 -----------------------------------------------
+ 2 files changed, 70 deletions(-)
 
-diff --git a/submodule-config.h b/submodule-config.h
-index cccd34b92..84c2cf515 100644
---- a/submodule-config.h
-+++ b/submodule-config.h
-@@ -34,7 +34,6 @@ extern int option_fetch_parse_recurse_submodules(const struct option *opt,
- 						 const char *arg, int unset);
- extern int parse_update_recurse_submodules_arg(const char *opt, const char *arg);
- extern int parse_push_recurse_submodules_arg(const char *opt, const char *arg);
--extern int parse_submodule_config_option(const char *var, const char *value);
- extern int submodule_config_option(struct repository *repo,
- 				   const char *var, const char *value);
- extern const struct submodule *submodule_from_name(
-diff --git a/t/helper/test-submodule-config.c b/t/helper/test-submodule-config.c
-index e13fbcc1b..f4a7c431c 100644
---- a/t/helper/test-submodule-config.c
-+++ b/t/helper/test-submodule-config.c
-@@ -10,11 +10,6 @@ static void die_usage(int argc, const char **argv, const char *msg)
- 	exit(1);
- }
+diff --git a/diff.c b/diff.c
+index 85e714f6c..e43519b88 100644
+--- a/diff.c
++++ b/diff.c
+@@ -346,9 +346,6 @@ int git_diff_basic_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
  
--static int git_test_config(const char *var, const char *value, void *cb)
--{
--	return parse_submodule_config_option(var, value);
--}
+-	if (starts_with(var, "submodule."))
+-		return parse_submodule_config_option(var, value);
 -
- int cmd_main(int argc, const char **argv)
- {
- 	const char **arg = argv;
-@@ -38,7 +33,6 @@ int cmd_main(int argc, const char **argv)
+ 	if (git_diff_heuristic_config(var, value, cb) < 0)
+ 		return -1;
  
- 	setup_git_directory();
- 	gitmodules_config();
--	git_config(git_test_config, NULL);
- 
- 	while (*arg) {
- 		struct object_id commit_oid;
-diff --git a/t/t7411-submodule-config.sh b/t/t7411-submodule-config.sh
-index 7d6b25ba2..46c09c776 100755
---- a/t/t7411-submodule-config.sh
-+++ b/t/t7411-submodule-config.sh
-@@ -122,78 +122,6 @@ test_expect_success 'using different treeishs works' '
- 	)
+diff --git a/t/t4027-diff-submodule.sh b/t/t4027-diff-submodule.sh
+index 518bf9524..2ffd11a14 100755
+--- a/t/t4027-diff-submodule.sh
++++ b/t/t4027-diff-submodule.sh
+@@ -113,35 +113,6 @@ test_expect_success 'git diff HEAD with dirty submodule (work tree, refs match)'
+ 	! test -s actual4
  '
  
--cat >super/expect_url <<EOF
--Submodule url: 'git@somewhere.else.net:a.git' for path 'b'
--Submodule url: 'git@somewhere.else.net:submodule.git' for path 'submodule'
--EOF
--
--cat >super/expect_local_path <<EOF
--Submodule name: 'a' for path 'c'
--Submodule name: 'submodule' for path 'submodule'
--EOF
--
--test_expect_success 'reading of local configuration' '
--	(cd super &&
--		old_a=$(git config submodule.a.url) &&
--		old_submodule=$(git config submodule.submodule.url) &&
--		git config submodule.a.url git@somewhere.else.net:a.git &&
--		git config submodule.submodule.url git@somewhere.else.net:submodule.git &&
--		test-submodule-config --url \
--			"" b \
--			"" submodule \
--				>actual &&
--		test_cmp expect_url actual &&
--		git config submodule.a.path c &&
--		test-submodule-config \
--			"" c \
--			"" submodule \
--				>actual &&
--		test_cmp expect_local_path actual &&
--		git config submodule.a.url "$old_a" &&
--		git config submodule.submodule.url "$old_submodule" &&
--		git config --unset submodule.a.path c
--	)
+-test_expect_success 'git diff HEAD with dirty submodule (work tree, refs match) [.git/config]' '
+-	git config diff.ignoreSubmodules all &&
+-	git diff HEAD >actual &&
+-	! test -s actual &&
+-	git config submodule.subname.ignore none &&
+-	git config submodule.subname.path sub &&
+-	git diff HEAD >actual &&
+-	sed -e "1,/^@@/d" actual >actual.body &&
+-	expect_from_to >expect.body $subprev $subprev-dirty &&
+-	test_cmp expect.body actual.body &&
+-	git config submodule.subname.ignore all &&
+-	git diff HEAD >actual2 &&
+-	! test -s actual2 &&
+-	git config submodule.subname.ignore untracked &&
+-	git diff HEAD >actual3 &&
+-	sed -e "1,/^@@/d" actual3 >actual3.body &&
+-	expect_from_to >expect.body $subprev $subprev-dirty &&
+-	test_cmp expect.body actual3.body &&
+-	git config submodule.subname.ignore dirty &&
+-	git diff HEAD >actual4 &&
+-	! test -s actual4 &&
+-	git diff HEAD --ignore-submodules=none >actual &&
+-	sed -e "1,/^@@/d" actual >actual.body &&
+-	expect_from_to >expect.body $subprev $subprev-dirty &&
+-	test_cmp expect.body actual.body &&
+-	git config --remove-section submodule.subname &&
+-	git config --unset diff.ignoreSubmodules
 -'
 -
--cat >super/expect_url <<EOF
--Submodule url: '../submodule' for path 'b'
--Submodule url: 'git@somewhere.else.net:submodule.git' for path 'submodule'
--EOF
--
--test_expect_success 'reading of local configuration for uninitialized submodules' '
--	(
--		cd super &&
--		git submodule deinit -f b &&
--		old_submodule=$(git config submodule.submodule.url) &&
--		git config submodule.submodule.url git@somewhere.else.net:submodule.git &&
--		test-submodule-config --url \
--			"" b \
--			"" submodule \
--				>actual &&
--		test_cmp expect_url actual &&
--		git config submodule.submodule.url "$old_submodule" &&
--		git submodule init b
--	)
+ test_expect_success 'git diff HEAD with dirty submodule (work tree, refs match) [.gitmodules]' '
+ 	git config diff.ignoreSubmodules dirty &&
+ 	git diff HEAD >actual &&
+@@ -208,24 +179,6 @@ test_expect_success 'git diff HEAD with dirty submodule (untracked, refs match)'
+ 	! test -s actual4
+ '
+ 
+-test_expect_success 'git diff HEAD with dirty submodule (untracked, refs match) [.git/config]' '
+-	git config submodule.subname.ignore all &&
+-	git config submodule.subname.path sub &&
+-	git diff HEAD >actual2 &&
+-	! test -s actual2 &&
+-	git config submodule.subname.ignore untracked &&
+-	git diff HEAD >actual3 &&
+-	! test -s actual3 &&
+-	git config submodule.subname.ignore dirty &&
+-	git diff HEAD >actual4 &&
+-	! test -s actual4 &&
+-	git diff --ignore-submodules=none HEAD >actual &&
+-	sed -e "1,/^@@/d" actual >actual.body &&
+-	expect_from_to >expect.body $subprev $subprev-dirty &&
+-	test_cmp expect.body actual.body &&
+-	git config --remove-section submodule.subname
 -'
 -
--cat >super/expect_fetchrecurse_die.err <<EOF
--fatal: bad submodule.submodule.fetchrecursesubmodules argument: blabla
--EOF
--
--test_expect_success 'local error in fetchrecursesubmodule dies early' '
--	(cd super &&
--		git config submodule.submodule.fetchrecursesubmodules blabla &&
--		test_must_fail test-submodule-config \
--			"" b \
--			"" submodule \
--				>actual.out 2>actual.err &&
--		touch expect_fetchrecurse_die.out &&
--		test_cmp expect_fetchrecurse_die.out actual.out  &&
--		test_cmp expect_fetchrecurse_die.err actual.err  &&
--		git config --unset submodule.submodule.fetchrecursesubmodules
--	)
+ test_expect_success 'git diff HEAD with dirty submodule (untracked, refs match) [.gitmodules]' '
+ 	git config --add -f .gitmodules submodule.subname.ignore all &&
+ 	git config --add -f .gitmodules submodule.subname.path sub &&
+@@ -261,26 +214,6 @@ test_expect_success 'git diff between submodule commits' '
+ 	! test -s actual
+ '
+ 
+-test_expect_success 'git diff between submodule commits [.git/config]' '
+-	git diff HEAD^..HEAD >actual &&
+-	sed -e "1,/^@@/d" actual >actual.body &&
+-	expect_from_to >expect.body $subtip $subprev &&
+-	test_cmp expect.body actual.body &&
+-	git config submodule.subname.ignore dirty &&
+-	git config submodule.subname.path sub &&
+-	git diff HEAD^..HEAD >actual &&
+-	sed -e "1,/^@@/d" actual >actual.body &&
+-	expect_from_to >expect.body $subtip $subprev &&
+-	test_cmp expect.body actual.body &&
+-	git config submodule.subname.ignore all &&
+-	git diff HEAD^..HEAD >actual &&
+-	! test -s actual &&
+-	git diff --ignore-submodules=dirty HEAD^..HEAD >actual &&
+-	sed -e "1,/^@@/d" actual >actual.body &&
+-	expect_from_to >expect.body $subtip $subprev &&
+-	git config --remove-section submodule.subname
 -'
 -
- test_expect_success 'error in history in fetchrecursesubmodule lets continue' '
- 	(cd super &&
- 		git config -f .gitmodules \
+ test_expect_success 'git diff between submodule commits [.gitmodules]' '
+ 	git diff HEAD^..HEAD >actual &&
+ 	sed -e "1,/^@@/d" actual >actual.body &&
 -- 
 2.14.0.rc0.400.g1c36432dff-goog
 
