@@ -2,91 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4429E1F89D
-	for <e@80x24.org>; Tue, 25 Jul 2017 17:41:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EDABA1F89D
+	for <e@80x24.org>; Tue, 25 Jul 2017 17:52:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751707AbdGYRk5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jul 2017 13:40:57 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:36454 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751663AbdGYRkz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jul 2017 13:40:55 -0400
-Received: by mail-wr0-f194.google.com with SMTP id y67so19565364wrb.3
-        for <git@vger.kernel.org>; Tue, 25 Jul 2017 10:40:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=BIws0S5RqA9WedPG2M2E5dBtJC2sohklpFQ3g74amuI=;
-        b=dTBWCdYCXPAUF+M33Bouyyh1z4Unkli6uG091zgGewuXfcRpUTua6ZvzeGwzxB8/eB
-         9ff33m2WOwGvl15irhsVMClBto3F+7RfNy45HErf3l+STrPXlXHOGiaPvR7netqwKBoB
-         VSH6SuffqDaWbxQfgvxJkVOvrQoYlh+atGFCU6sKgyoFe8EC2nIt/57puBHbW0g/r6XE
-         AN6cgrxalVOcYmE/lVoXjrffVxz/zVhXvBKTQdKBUNAl3VssBCh58mBPBRqXi0jut2S4
-         EZNquNSsq7Y9vm+fg3jLUk0nR77LTJjQ05NZ7mAi3Jks5Va6er4hU2sTgRstacnJl9qn
-         QrpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=BIws0S5RqA9WedPG2M2E5dBtJC2sohklpFQ3g74amuI=;
-        b=QchmgcyUkiTyAV6fyzDUz2879sVS9LyBM/556+384CzFu0EH5C4ShXw+7rgtptDj1w
-         GuZDGvfYMFE73Rvu55m2B5eGQuWtVxaIepxqwwpXBRDsgiohCzvdPUh3X2dxVWQmzUq7
-         SZ0ta+6pxTSySMWy8tHUhwsGkqZH1wKlWOvqd/Z43c5ARGjKR5tycExFVt+0uPfia/jV
-         RFXJhF64WSFrhagMV8eY7htCi0jJ7aoYeQSEaEm98mWdKe1yagcjaHznaM8wTlIMwc8N
-         X7SvgZAvwgZl8ip1FyQXjn+3Tq2ghfDbCvv8ODRQUZNljB4VBYfiCxH+113vBC4llseI
-         RLUg==
-X-Gm-Message-State: AIVw110AUM92f9Qq8+/MNxBfAzF8urG5OYmZcKyIKn9wQYWpqNSQoAF1
-        at1XANt0CX19TsoCl2k=
-X-Received: by 10.223.150.200 with SMTP id u66mr18718681wrb.216.1501002878991;
-        Tue, 25 Jul 2017 10:14:38 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id u66sm22693773wrb.77.2017.07.25.10.14.36
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 25 Jul 2017 10:14:36 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: Deceptive site ahead Waring
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <alpine.DEB.2.21.1.1707251600370.4271@virtualbox>
-Date:   Tue, 25 Jul 2017 19:14:36 +0200
-Cc:     Christos Angelidis <angelidis@csd.uoc.gr>, git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <6FD60D91-E1F9-4A24-9D08-4AE81633574D@gmail.com>
-References: <5d10822a-c697-e117-441b-d162cc40801c@csd.uoc.gr> <alpine.DEB.2.21.1.1707251600370.4271@virtualbox>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-X-Mailer: Apple Mail (2.3124)
+        id S1751428AbdGYRwF (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jul 2017 13:52:05 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48572 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1750980AbdGYRwE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jul 2017 13:52:04 -0400
+Received: (qmail 4226 invoked by uid 109); 25 Jul 2017 17:52:04 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 25 Jul 2017 17:52:04 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19681 invoked by uid 111); 25 Jul 2017 17:52:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Tue, 25 Jul 2017 13:52:21 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 25 Jul 2017 13:52:02 -0400
+Date:   Tue, 25 Jul 2017 13:52:02 -0400
+From:   Jeff King <peff@peff.net>
+To:     Raman Gupta <rocketraman@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC] Git rerere and non-conflicting changes during conflict
+ resolution
+Message-ID: <20170725175202.ar4ykqoadbihwb2w@sigill.intra.peff.net>
+References: <17c46229-3b64-34f1-30fa-d40b77e1c054@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <17c46229-3b64-34f1-30fa-d40b77e1c054@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Jul 25, 2017 at 11:09:55AM -0400, Raman Gupta wrote:
 
-> On 25 Jul 2017, at 16:01, Johannes Schindelin =
-<johannes.schindelin@gmx.de> wrote:
->=20
-> Hi Christos,
->=20
-> On Tue, 25 Jul 2017, Christos Angelidis wrote:
->=20
->> Just tried to download your windows version app and a warning  from =
-chrome
->> popped up saying
->> "Deceptive site ahead", maybe you wonna check it if you haven't done =
-it
->> already.
->=20
-> Kindly provide details. I am really certain that Chrome did not leave =
-it
-> at three words.
+> I had an interesting situation today: resolving a merge conflict
+> required modification in other files that were not themselves conflicting.
+> 
+> I just realized that rerere does not remember any changes to these
+> additional files -- only changes to the conflicting files. This makes
+> the end result of rerere obviously incorrect in this situation.
+> 
+> So my questions are:
+> 
+> 1) Is this a known limitation or is there a reason rerere works in
+> this manner?
 
-Google recognized GitHub asset downloads as malicious.
-The problem should be fixed now: =
-https://twitter.com/kit3bus/status/889819401947631616
+Yes, it's known. Rerere works by storing a mapping of conflicted hunks
+to their resolutions. If there's no conflicted hunk, I'm not sure how
+we'd decide what to feed into the mapping to see if there is some
+content to be replaced.
 
-- Lars
+That said, I'm far from an expert on how rerere works. Junio might have
+ideas on how we could handle this better. But I do note that for
+repeated integration runs (like we do for topics in git.git, as they get
+merged to "pu", then "next", then "master"), he keeps non-conflict
+fixups in a separate commit which gets squashed into the merge
+automatically. See
 
+  https://github.com/git/git/blob/todo/Reintegrate#L185-L191
+
+> 1b) If it is a limitation/bug, what would be needed to fix it? With
+> some guidance, I might be able to submit a patch...
+
+As far as I know, something like the Reintegrate script above is the
+state of the art. IMHO it would be useful if something similar were
+integrated into rerere, but I'm not sure exactly how it would know when
+to trigger.
+
+> 2) In the meantime, is there a way I can identify these cases, without
+> which I cannot really trust rerere is doing the right thing?
+
+I do think it would be useful if rerere could look at a merge result and
+say "OK, I've recorded these bits, but there are other lines that are
+not part of either parent and which are not part of a conflict". That
+gives you a warning that such lines need to be part of a fixup (rather
+than you being surprised when you redo the merge later and have to
+rework the fixup).
+
+But I don't think even then you can ever trust rerere fully.
+Fundamentally you're applying some changes from one merge into another
+context. There may be new sites that also need fixing up, and the tool
+has no way to know. So you should treat a rerere-helped merge as any
+other merge: assume it's a good starting point but use other tools (like
+the compiler or automated tests) to confirm that the result is sensible.
+
+-Peff
