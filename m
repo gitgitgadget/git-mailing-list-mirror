@@ -2,194 +2,390 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6288C1F89D
-	for <e@80x24.org>; Tue, 25 Jul 2017 20:26:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 429561F89D
+	for <e@80x24.org>; Tue, 25 Jul 2017 20:28:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753037AbdGYU0j (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jul 2017 16:26:39 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57551 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751141AbdGYU0h (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jul 2017 16:26:37 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A72416D3F4;
-        Tue, 25 Jul 2017 16:26:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=66FcoYC3srHQKDq2KeG2lwZZLqo=; b=j2vDPi
-        ZS9PWNBkBFpLIHZwB0vel/oA+EChtGOGdXIF5Cqqrio+EG+knhHassq6UDl2eS2e
-        +04p4GKd7CXYvSikq1pZPH2SsCQXjUsUHQ8h1+XPmW6V/VIBqnKSIMscCUZnYvX7
-        H9sLmKuiTDX81CoJ7PGv+AQ8i3hNa35yY3P1A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=bMIdy6hmT3GZUlKV5RmFeIKMVx+x2oR2
-        W0WiHQLFT1b1bEaS7OfCm5enUHfFFtj9Rv0Gs0IdTu977ckQJJNVWV6Sru09A0r9
-        0fpv/TX2QsmsvsHYG1lyQdd+4J9plaJaTi2rL4QIEgrQw092pSRCWwlTZYxb+fE3
-        v2nkIWfh19w=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9F63C6D3F3;
-        Tue, 25 Jul 2017 16:26:36 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 01D8A6D3F2;
-        Tue, 25 Jul 2017 16:26:35 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Raman Gupta <rocketraman@gmail.com>, git@vger.kernel.org
-Subject: Re: [RFC] Git rerere and non-conflicting changes during conflict resolution
-References: <17c46229-3b64-34f1-30fa-d40b77e1c054@gmail.com>
-        <20170725175202.ar4ykqoadbihwb2w@sigill.intra.peff.net>
-Date:   Tue, 25 Jul 2017 13:26:34 -0700
-In-Reply-To: <20170725175202.ar4ykqoadbihwb2w@sigill.intra.peff.net> (Jeff
-        King's message of "Tue, 25 Jul 2017 13:52:02 -0400")
-Message-ID: <xmqqo9s8uuth.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1753104AbdGYU2N (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jul 2017 16:28:13 -0400
+Received: from mail-pg0-f41.google.com ([74.125.83.41]:38442 "EHLO
+        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752059AbdGYU2L (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jul 2017 16:28:11 -0400
+Received: by mail-pg0-f41.google.com with SMTP id k190so9141141pgk.5
+        for <git@vger.kernel.org>; Tue, 25 Jul 2017 13:28:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=RYFlmmY03TuwDWwGVsaRRCo5YjBPz1rYsR197WdlMCQ=;
+        b=SgnFG1WFY+j/T55S5gAqQrBFN/+rcOpTTyWc7ukEHedA9O9MfdIikjNhIVhTWGgx68
+         Eq1a7W8eYZPD86/oO9DgZueM1xjjLmzMfnxw9dCUT5a9P+WZWM54SFjhPQK4d0mie7Bj
+         A0MsFnRjjm5mVAiSOzrx+IMrOpg6SGJP0xriDiXeXoDGEDkGceRPDGQmdfjlNqAx5Ceg
+         OEpTDV4cq1antbIxl5+59Tp5dwyOIz6iFCXHGFjUZANoSsjqGfhcLPbCbwXHOwUawJwt
+         CJdN1pvpIPlsRMsOjlcZYnQ1mC0ClqfGxRzyY8PFFss09B5CWntnHiRrlUtT7a9n8BHs
+         5Nlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=RYFlmmY03TuwDWwGVsaRRCo5YjBPz1rYsR197WdlMCQ=;
+        b=lUP8gahu8I13cpdbocacu9KjIVmX2hPoYpbCptrqemfUNabb0U0YWtsgTk2sHvqA9n
+         VTaDuQP2iVBzNa94L/4xedfYthOOicvSGaSycO7rdLy5bLmJ/Y78ERdzVwOBfl0Uehp9
+         opvQuv3SgOi1O/H4k9OzfxoWlEv72Am2VnAlKQ0A48jNhs4KKZgs3qpYH9U4hPxWEt+F
+         Tj3sI9KDUU9kt7/O4/2i2uqZWT1KDjPEfNDM3WhmY9psAHwHXdtIcS0kZYRc8veulGB2
+         044UZazwFtUJFxXEiyLoNQZ5LjEAz44WIG3lla6y8To7TqyhEaRRe4Qh9aOva0h2K/PP
+         /p6w==
+X-Gm-Message-State: AIVw1135WrndwDsb1TXnwv8QgmMasD2LqN8zg50Hw3KG2KAKHKMpyV0K
+        ZyZ5ujVHL5F3AlCa
+X-Received: by 10.84.241.71 with SMTP id u7mr14068945plm.196.1501014490153;
+        Tue, 25 Jul 2017 13:28:10 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:cccf:9961:8336:68b3])
+        by smtp.gmail.com with ESMTPSA id o10sm28818709pgc.81.2017.07.25.13.28.08
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 25 Jul 2017 13:28:09 -0700 (PDT)
+Date:   Tue, 25 Jul 2017 13:28:07 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, jrnieder@gmail.com, peartben@gmail.com
+Subject: Re: [PATCH v2 2/2] sub-process: refactor handshake to common function
+Message-ID: <20170725202807.GK92874@google.com>
+References: <20170724213810.29831-1-jonathantanmy@google.com>
+ <cover.1501007300.git.jonathantanmy@google.com>
+ <e47344b6e4bce2a038ba62abb158ec720221a96c.1501007300.git.jonathantanmy@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8E479D06-7177-11E7-836E-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e47344b6e4bce2a038ba62abb158ec720221a96c.1501007300.git.jonathantanmy@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On 07/25, Jonathan Tan wrote:
+> Refactor, into a common function, the version and capability negotiation
+> done when invoking a long-running process as a clean or smudge filter.
+> This will be useful for other Git code that needs to interact similarly
+> with a long-running process.
+> 
+> As you can see in the change to t0021, this commit changes the error
+> message reported when the long-running process does not introduce itself
+> with the expected "server"-terminated line. Originally, the error
+> message reports that the filter "does not support filter protocol
+> version 2", differentiating between the old single-file filter protocol
+> and the new multi-file filter protocol - I have updated it to something
+> more generic and useful.
+> 
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+>  convert.c             | 61 ++++-----------------------------
+>  pkt-line.c            | 19 -----------
+>  pkt-line.h            |  2 --
+>  sub-process.c         | 94 +++++++++++++++++++++++++++++++++++++++++++++++++++
+>  sub-process.h         | 26 ++++++++++++++
+>  t/t0021-conversion.sh |  2 +-
+>  6 files changed, 128 insertions(+), 76 deletions(-)
+> 
+> diff --git a/convert.c b/convert.c
+> index deaf0ba7b..ec8ecc2ea 100644
+> --- a/convert.c
+> +++ b/convert.c
+> @@ -512,62 +512,15 @@ static struct hashmap subprocess_map;
+>  
+>  static int start_multi_file_filter_fn(struct subprocess_entry *subprocess)
+>  {
+> -	int err;
+> +	static int versions[] = {2, 0};
+> +	static struct subprocess_capability capabilities[] = {
+> +		{"clean", CAP_CLEAN}, {"smudge", CAP_SMUDGE}, {NULL, 0}
+> +	};
+>  	struct cmd2process *entry = (struct cmd2process *)subprocess;
+> -	struct string_list cap_list = STRING_LIST_INIT_NODUP;
+> -	char *cap_buf;
+> -	const char *cap_name;
+> -	struct child_process *process = &subprocess->process;
+> -	const char *cmd = subprocess->cmd;
+> -
+> -	sigchain_push(SIGPIPE, SIG_IGN);
+> -
+> -	err = packet_writel(process->in, "git-filter-client", "version=2", NULL);
+> -	if (err)
+> -		goto done;
+> -
+> -	err = strcmp(packet_read_line(process->out, NULL), "git-filter-server");
+> -	if (err) {
+> -		error("external filter '%s' does not support filter protocol version 2", cmd);
+> -		goto done;
+> -	}
+> -	err = strcmp(packet_read_line(process->out, NULL), "version=2");
+> -	if (err)
+> -		goto done;
+> -	err = packet_read_line(process->out, NULL) != NULL;
+> -	if (err)
+> -		goto done;
+> -
+> -	err = packet_writel(process->in, "capability=clean", "capability=smudge", NULL);
+> -
+> -	for (;;) {
+> -		cap_buf = packet_read_line(process->out, NULL);
+> -		if (!cap_buf)
+> -			break;
+> -		string_list_split_in_place(&cap_list, cap_buf, '=', 1);
+> -
+> -		if (cap_list.nr != 2 || strcmp(cap_list.items[0].string, "capability"))
+> -			continue;
+> -
+> -		cap_name = cap_list.items[1].string;
+> -		if (!strcmp(cap_name, "clean")) {
+> -			entry->supported_capabilities |= CAP_CLEAN;
+> -		} else if (!strcmp(cap_name, "smudge")) {
+> -			entry->supported_capabilities |= CAP_SMUDGE;
+> -		} else {
+> -			warning(
+> -				"external filter '%s' requested unsupported filter capability '%s'",
+> -				cmd, cap_name
+> -			);
+> -		}
+> -
+> -		string_list_clear(&cap_list, 0);
+> -	}
+> -
+> -done:
+> -	sigchain_pop(SIGPIPE);
+>  
+> -	return err;
+> +	return subprocess_handshake(subprocess, "git-filter-", versions, NULL,
+> +				    capabilities,
+> +				    &entry->supported_capabilities);
+>  }
+>  
+>  static int apply_multi_file_filter(const char *path, const char *src, size_t len,
+> diff --git a/pkt-line.c b/pkt-line.c
+> index 9d845ecc3..7db911957 100644
+> --- a/pkt-line.c
+> +++ b/pkt-line.c
+> @@ -171,25 +171,6 @@ int packet_write_fmt_gently(int fd, const char *fmt, ...)
+>  	return status;
+>  }
+>  
+> -int packet_writel(int fd, const char *line, ...)
+> -{
+> -	va_list args;
+> -	int err;
+> -	va_start(args, line);
+> -	for (;;) {
+> -		if (!line)
+> -			break;
+> -		if (strlen(line) > LARGE_PACKET_DATA_MAX)
+> -			return -1;
+> -		err = packet_write_fmt_gently(fd, "%s\n", line);
+> -		if (err)
+> -			return err;
+> -		line = va_arg(args, const char*);
+> -	}
+> -	va_end(args);
+> -	return packet_flush_gently(fd);
+> -}
+> -
+>  static int packet_write_gently(const int fd_out, const char *buf, size_t size)
+>  {
+>  	static char packet_write_buffer[LARGE_PACKET_MAX];
+> diff --git a/pkt-line.h b/pkt-line.h
+> index 450183b64..66ef610fc 100644
+> --- a/pkt-line.h
+> +++ b/pkt-line.h
+> @@ -25,8 +25,6 @@ void packet_buf_flush(struct strbuf *buf);
+>  void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+>  int packet_flush_gently(int fd);
+>  int packet_write_fmt_gently(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+> -LAST_ARG_MUST_BE_NULL
+> -int packet_writel(int fd, const char *line, ...);
+>  int write_packetized_from_fd(int fd_in, int fd_out);
+>  int write_packetized_from_buf(const char *src_in, size_t len, int fd_out);
+>  
+> diff --git a/sub-process.c b/sub-process.c
+> index a3cfab1a9..1a3f39bdf 100644
+> --- a/sub-process.c
+> +++ b/sub-process.c
+> @@ -105,3 +105,97 @@ int subprocess_start(struct hashmap *hashmap, struct subprocess_entry *entry, co
+>  	hashmap_add(hashmap, entry);
+>  	return 0;
+>  }
+> +
+> +int subprocess_handshake(struct subprocess_entry *entry,
+> +			 const char *welcome_prefix,
+> +			 int *versions,
+> +			 int *chosen_version,
+> +			 struct subprocess_capability *capabilities,
+> +			 unsigned int *supported_capabilities) {
+> +	int version_scratch;
+> +	unsigned int capabilities_scratch;
+> +	struct child_process *process = &entry->process;
+> +	int i;
+> +	char *line;
+> +	const char *p;
+> +
+> +	if (!chosen_version)
+> +		chosen_version = &version_scratch;
+> +	if (!supported_capabilities)
+> +		supported_capabilities = &capabilities_scratch;
+> +
+> +	sigchain_push(SIGPIPE, SIG_IGN);
+> +
+> +	if (packet_write_fmt_gently(process->in, "%sclient\n",
+> +				    welcome_prefix)) {
+> +		error("Could not write client identification");
+> +		goto error;
+> +	}
+> +	for (i = 0; versions[i]; i++) {
+> +		if (packet_write_fmt_gently(process->in, "version=%d\n",
+> +					    versions[i])) {
+> +			error("Could not write requested version");
+> +			goto error;
+> +		}
+> +	}
+> +	if (packet_flush_gently(process->in))
+> +		goto error;
+> +
+> +	if (!(line = packet_read_line(process->out, NULL)) ||
+> +	    !skip_prefix(line, welcome_prefix, &p) ||
+> +	    strcmp(p, "server")) {
+> +		error("Unexpected line '%s', expected %sserver",
+> +		      line ? line : "<flush packet>", welcome_prefix);
+> +		goto error;
+> +	}
+> +	if (!(line = packet_read_line(process->out, NULL)) ||
+> +	    !skip_prefix(line, "version=", &p) ||
+> +	    strtol_i(p, 10, chosen_version)) {
+> +		error("Unexpected line '%s', expected version",
+> +		      line ? line : "<flush packet>");
+> +		goto error;
+> +	}
+> +	for (i = 0; versions[i]; i++) {
+> +		if (versions[i] == *chosen_version)
+> +			goto version_found;
+> +	}
+> +	error("Version %d not supported", *chosen_version);
+> +	goto error;
+> +version_found:
+> +	if ((line = packet_read_line(process->out, NULL))) {
+> +		error("Unexpected line '%s', expected flush", line);
+> +		goto error;
+> +	}
+> +
+> +	for (i = 0; capabilities[i].name; i++) {
+> +		if (packet_write_fmt_gently(process->in, "capability=%s\n",
+> +					    capabilities[i].name)) {
+> +			error("Could not write requested capability");
+> +			goto error;
+> +		}
+> +	}
+> +	if (packet_flush_gently(process->in))
+> +		goto error;
+> +
+> +	while ((line = packet_read_line(process->out, NULL))) {
+> +		if (!skip_prefix(line, "capability=", &p))
+> +			continue;
+> +
+> +		for (i = 0; capabilities[i].name; i++) {
+> +			if (!strcmp(p, capabilities[i].name)) {
+> +				*supported_capabilities |= capabilities[i].flag;
+> +				goto capability_found;
+> +			}
+> +		}
+> +		warning("external filter requested unsupported filter capability '%s'",
+> +			p);
+> +capability_found:
+> +		;
+> +	}
 
->> 1) Is this a known limitation or is there a reason rerere works in
->> this manner?
->
-> Yes, it's known. Rerere works by storing a mapping of conflicted hunks
-> to their resolutions. If there's no conflicted hunk, I'm not sure how
-> we'd decide what to feed into the mapping to see if there is some
-> content to be replaced.
+I'm not familiar with this section of code so I can't comment on what
+the logic is doing.  But I think that this whole function can be written
+better.  Its quite a lengthy function so you may benefit from breaking
+it up into smaller functions to improve readability.  My biggest
+complaint is the use of goto's to jump around the function, in and out
+of loops and the like.  IMO its completely fine to have a 'goto error'
+where you can do any necessary cleanup but it just makes things very
+hard to follow when they are structured using gotos to break out of
+loops or jump to other parts of the function as you have here.
 
-Correct.  
+It should be pretty easy to eliminate the two non-essential goto's by
+making a helper function to determine if a version is found as well as
+finding a capability.  That way you should be able to restructure the
+code using if's instead of gotos.
 
-This is not even a limitation but is outside the scope of rerere.
-Let's understand that first.
+> +
+> +	sigchain_pop(SIGPIPE);
+> +	return 0;
+> +error:
+> +	sigchain_pop(SIGPIPE);
+> +	return 1;
+> +}
+> diff --git a/sub-process.h b/sub-process.h
+> index 9e6975b5e..28863fabc 100644
+> --- a/sub-process.h
+> +++ b/sub-process.h
+> @@ -29,6 +29,16 @@ struct subprocess_entry {
+>  	struct child_process process;
+>  };
+>  
+> +struct subprocess_capability {
+> +	const char *name;
+> +
+> +	/*
+> +	 * subprocess_handshake will "|=" this value to supported_capabilities
+> +	 * if the server reports that it supports this capability.
+> +	 */
+> +	unsigned int flag;
+> +};
+> +
+>  /* subprocess functions */
+>  
+>  /* Function to test two subprocess hashmap entries for equality. */
+> @@ -62,6 +72,22 @@ static inline struct child_process *subprocess_get_child_process(
+>  	return &entry->process;
+>  }
+>  
+> +/*
+> + * Perform the version and capability negotiation as described in the "Long
+> + * Running Filter Process" section of the gitattributes documentation using the
+> + * given requested versions and capabilities. The "versions" and "capabilities"
+> + * parameters are arrays terminated by a 0 or blank struct.
+> + *
+> + * This function is typically called when a subprocess is started (as part of
+> + * the "startfn" passed to subprocess_start).
+> + */
+> +int subprocess_handshake(struct subprocess_entry *entry,
+> +			 const char *welcome_prefix,
+> +			 int *versions,
+> +			 int *chosen_version,
+> +			 struct subprocess_capability *capabilities,
+> +			 unsigned int *supported_capabilities);
+> +
+>  /*
+>   * Helper function that will read packets looking for "status=<foo>"
+>   * key/value pairs and return the value from the last "status" packet
+> diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+> index 161f56044..d191a7228 100755
+> --- a/t/t0021-conversion.sh
+> +++ b/t/t0021-conversion.sh
+> @@ -697,7 +697,7 @@ test_expect_success PERL 'invalid process filter must fail (and not hang!)' '
+>  
+>  		cp "$TEST_ROOT/test.o" test.r &&
+>  		test_must_fail git add . 2>git-stderr.log &&
+> -		grep "does not support filter protocol version" git-stderr.log
+> +		grep "expected git-filter-server" git-stderr.log
+>  	)
+>  '
+>  
+> -- 
+> 2.14.0.rc0.400.g1c36432dff-goog
+> 
 
-A semantic conflict that requires an evil merge that touches a file
-that is not involved in any textual conflict during a merge will
-happen even if there is *NO* textual merge conflict.  
-
-Imagine that there is a global variable 'xyzzy' used in many places
-in the code, and then a side branch forks from the mainline.  The
-mainline renames the variable to 'frotz' in the entire codebase,
-while the side branch adds one more place that the variable is used
-under its original name.  Then you merge these two branches.  This
-will textually merge cleanly if the place the side branch adds a new
-mention of 'xyzzy' is textually far from any block of text in the
-common ancestor that has been updated on the mainline while these
-two branches diverged.
-
-"git checkout mainline && git merge side" will cleanly automerge,
-yet the result is not correct.  The new mention of 'xyzzy' added by
-the merge needs to be corrected to 'frotz'.
-
-Now we take that as the baseline and further imagine that during the
-time these two branches diverged, the mainline also updated some
-documentation of something totally unrelated to 'xyzzy' vs 'frotz'
-variable.  Perhaps README was updated, or something.  The side
-branch also updated the same file in a different way.  This time,
-the changes to this same file may result in textual conflict.
-
-"git checkout mainline && git merge side" will result in a conflict,
-whose resolution may be recorded by rerere for that file.  It should
-be crystal clear that this conflict does *not* have anything to do
-with the semantic conflict between 'xyzzy' vs 'frotz'.  
-
-The realization we must draw from the above observation is that what
-the "merge-fix" machinery in the Reintegrate script you cited in
-your message tries to help, which is the semantic conflict,
-fundamentally cannot be tied to any textual merge conflict that may
-(or may not) happen.  That is what makes the issue outside the scope
-of rerere.
-
-The above is not to say that the need to record and replay such evil
-merges to solve semantic conflict does not exist.  Far from it.  It
-is just clarifying that it is a wrong approach to try to "teach"
-rerere to somehow handle that case as well.
-
-If we wanted to port the "merge-fix" logic, and I do wish it would
-happen some day, the update belongs to "git merge".
-
-You were too kind to call the "merge-fix" logic in Reintegrate "the
-state of the art", but I am not happy about its limitation.  Here
-are the things I wish to have in an ideal version of the "merge-fix"
-logic, which does not exist yet:
-
- * There is a database of "to be cherry-picked" commits, keyed by a
-   pair of branch names.  That is, given branches A and B, the
-   database will return 0 or more commits that can be cherry-picked.
-   The order of branch names in the pair is immaterial, i.e. asking
-   the database for cherry-pickable commits keyed by <A, B> and
-   keyed by <B, A> will yield the identical set of commits.
-
- * When merging commit X to commit Y, "git merge" in the ideal world
-   does the following:
-
-   - It first does what it currently does, i.e. three-way merge with
-     the merge strategy and applying rerere for re-application of an
-     earlier resolution of textual conflicts.
-
-   - Then, it looks up the database to find the keys <A, B> where
-     A is in X but not in Y, and B is not in X but in Y.
-     These commits are cherry-picked and squashed into the result of
-     the above.
-
-The intent is that a pair <A, B> represents the mainline and side
-branch in the above example, where A renamed 'xyzzy' to 'frotz' and
-B added new reference to 'xyzzy'.  And the cherry-pickable commit
-found in the database is to tweak the 'xyzzy' B adds into 'frotz'.
-
-I said A and B in the above are branch names, but in the ideal
-world, they can be commit object names (possibly in the middle of a
-branch), as long as we can reliable update the database's keys every
-time "git rebase" etc. rewrites commits.
-
-To populate the database, we'd need a reverse.
-
- * When merging branch B into branch A (or the other way around) for
-   the first time, "git merge" would do what it currently does.
-
- * The user then concludes the merge to resolve *ONLY* the textual
-   conflict, and commit the result.  It is important that no
-   additional evil merge to correct for semantic conflicts is done
-   in this step.  Note that if the auto-merge cleanly succeeds, this
-   step may not even exist.
-
- * Then the user makes another commit to correct for semantic
-   conflicts (aka "merge-fix").
-
- * Then the user tells Git that semantic conflicts were resolved and
-   need to be recorded (just like running "git rerere" manually,
-   before "git commit" automatically does it for them these days).
-   This will result in the following:
-
-   - The database is updated so that key <A, B> yields the
-     "merge-fix" commit;
-
-   - The head is detached at the tip of branch A before the merge;
-
-   - "git merge B" is done again, which _should_ reproduce the state
-     immediately after the user committed the "merge-fix";
-
-   - The tip of branch A is reset to the result of the above.
-
-The merge-fix logic in Reintegrate is a poor-man's emulation of the
-above ideal.  A value its database yields is not a set of commits,
-but a single commit, and instead of getting keyed by a pair of
-branch names, the database is keyed by a single branch name
-(i.e. recording "I had trouble when merging this branch" without
-saying "... to the integration branch that already had this other
-branch"), so the look-up does not have to do "A is in X but not in
-Y, and B is not in X but in Y".  
-
-It is still usable but the database need to be reorganized every
-time the order of topics merged to 'pu' is changed.
-
-
+-- 
+Brandon Williams
