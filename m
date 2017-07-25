@@ -2,249 +2,285 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C5741F89D
-	for <e@80x24.org>; Tue, 25 Jul 2017 22:25:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 556671F89D
+	for <e@80x24.org>; Tue, 25 Jul 2017 22:27:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751034AbdGYWZU (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jul 2017 18:25:20 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55255 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750996AbdGYWZT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jul 2017 18:25:19 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 98FDB79EF6;
-        Tue, 25 Jul 2017 18:25:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=sYkn6j/iLe8zS7pu1DsFoui2o+M=; b=o/0EW0
-        qqIAiG4bMHckCTpBYAh67t9sfTORx76U4+mnoyeuLSYwH41DVjU9YxTbP9cZZ5C8
-        BIr9RKOjzyeCD+ISuccDJT7oquICKhLtemPMfWkiVCR8uLFJ4/g1AFtrS90djfyx
-        DtdmIGWkIHWwzO5wIRrEhBKsIty4PeJPivk0s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=geXFDnhayS++LTBhjQQ4GMAIOp5Q0ruB
-        hPSX2aVqBnwl/Qb8cO6k5aek/i0RvQjjcsSNvwuRo7JwCFHZkhuGPp4LySKEuyRj
-        4Sxnmwhbq6NCxbT3nyZUM59zRVvjkiQIbEqhW193wxVr4W4NGPyMPX2NoD5T989s
-        3kCBeyZVU7k=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 904F379EF5;
-        Tue, 25 Jul 2017 18:25:17 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EFA9779EF2;
-        Tue, 25 Jul 2017 18:25:16 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com, peartben@gmail.com
-Subject: Re: [PATCH v2 2/2] sub-process: refactor handshake to common function
-References: <cover.1501007300.git.jonathantanmy@google.com>
-        <20170724213810.29831-1-jonathantanmy@google.com>
-        <cover.1501007300.git.jonathantanmy@google.com>
-        <e47344b6e4bce2a038ba62abb158ec720221a96c.1501007300.git.jonathantanmy@google.com>
-Date:   Tue, 25 Jul 2017 15:25:15 -0700
-In-Reply-To: <e47344b6e4bce2a038ba62abb158ec720221a96c.1501007300.git.jonathantanmy@google.com>
-        (Jonathan Tan's message of "Tue, 25 Jul 2017 11:29:38 -0700")
-Message-ID: <xmqqinigtar8.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751465AbdGYW1J (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jul 2017 18:27:09 -0400
+Received: from mail-pf0-f178.google.com ([209.85.192.178]:34861 "EHLO
+        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750857AbdGYW1I (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jul 2017 18:27:08 -0400
+Received: by mail-pf0-f178.google.com with SMTP id h29so28343983pfd.2
+        for <git@vger.kernel.org>; Tue, 25 Jul 2017 15:27:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=hQYiuv2BkTmFW3NQn0uMhX+toYxlAqqfyCzhd+y6Ltk=;
+        b=hSzkLB309JUFVeCwpbKmtiBreohC4q9Mxy/fOUBlbkdGrW6EAviOwR0LbkrIrKfGi/
+         MmEdrZ5Q8RFGyw5IDulkBp9tX3cbVYJVT+ieFHCBAc76xy//uXXFrOboGv0PQfmWx03o
+         wHc9RPuphlnix/1NpbCwFyiUPZq1rOGJc9PfiaFW3X64Nwo4nsz0goC7j/g3cjrf1mD2
+         1SJcBzCKvarN9XAahIPQB9kPcdl/2S7tHhYzXmbA21947f1p6IO+VEsCHz8bZc/RLUlH
+         Pfl0HwnKWFLE5NETCgse61pIDEMQXOYiK5ZiqmQYBwJdcNYewgToP6F0wTqu0vkiwINR
+         6yuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=hQYiuv2BkTmFW3NQn0uMhX+toYxlAqqfyCzhd+y6Ltk=;
+        b=krsc19xK4snqOs7SJuoFHGTSyA7BnGh+w0ZwUdWgvrqA5DgNnVPKrHjZBU28wRazqQ
+         bx4SajVcF88wQjV/5rE247GeiL6f5JpxaX/5dT48oLjYlojYzw92JsbFogHI95L8D5aL
+         EXGhX7n8Qkflo9DZSLEohtGsZaO5FA/q/jtgGTnUCC/sTgckAGThpWsz36seboipraQX
+         0+3wiErZNtBxPe2T9LV0Cl11NMautpJc4TsdVJP0WctvoCepqsY5HkRqeO6g5B+4zMEL
+         zOPP5zThsV8wViC8/WZZlkmDxBvxWAm1lOnxlsvn4VRzOIDe96Dy/B/XBDuMaqtnGv2i
+         +Fkw==
+X-Gm-Message-State: AIVw111jt7yJGZMQEoqxg2apGFoJwNDwnjbUCqutb1WRcaYj2qCcskwU
+        uJ4nJ9AUQ8YjJaa2I65gl4YmoLExVQEV
+X-Received: by 10.99.54.138 with SMTP id d132mr20428258pga.156.1501021627561;
+ Tue, 25 Jul 2017 15:27:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 22B660D4-7188-11E7-9F07-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Received: by 10.100.165.44 with HTTP; Tue, 25 Jul 2017 15:27:07 -0700 (PDT)
+In-Reply-To: <xmqqr2x5bhk7.fsf@gitster.mtv.corp.google.com>
+References: <20170724173601.19921-1-sbeller@google.com> <20170724180312.GE13924@aiede.mtv.corp.google.com>
+ <xmqq8tjdcyf1.fsf@gitster.mtv.corp.google.com> <xmqqr2x5bhk7.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 25 Jul 2017 15:27:07 -0700
+Message-ID: <CAGZ79kZdoktBRBuNxVk-zehZR3Z-egEPG81KQ9WqHTEtrm+5uw@mail.gmail.com>
+Subject: Re: [PATCH] recursive submodules: detach HEAD from new state
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
-
-> Refactor, into a common function, the version and capability negotiation
-> done when invoking a long-running process as a clean or smudge filter.
-> This will be useful for other Git code that needs to interact similarly
-> with a long-running process.
+On Mon, Jul 24, 2017 at 3:23 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> As you can see in the change to t0021, this commit changes the error
-> message reported when the long-running process does not introduce itself
-> with the expected "server"-terminated line. Originally, the error
-> message reports that the filter "does not support filter protocol
-> version 2", differentiating between the old single-file filter protocol
-> and the new multi-file filter protocol - I have updated it to something
-> more generic and useful.
+>> Also, while I do agree with you that the problem exists, it is
+>> unclear why this patch is a solution and not a hack that sweeps a
+>> problem under the rug.
+>>
+>> It is unclear why this "silently detach HEAD without telling the
+>> user" is a better solution than erroring out, for example [*1*].
 >
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> Just to avoid possible confusion; I am not claiming that it would be
+> more (or less for that matter) sensible to error out than silently
+> detaching HEAD, because I am not giving the reason to substantiate
+> the claim and I do not have a strong opinion to favour which one (or
+> another potential solution, if any).
+>
+> I am just saying that the patch that proposes a solution should be
+> backed with an explanation why it is a good idea, especially when
+> there are obvious alternatives that are not so clearly inferior.
+>
+> Thanks.
 
-Overall I like the direction, even though the abstraction the
-resulting code results in seems to me a bit too tightly defined; in
-other words, I cannot be sure that this will be useful enough in a
-more general context, or make some potential applications feel a bit
-too constrained.
+So I took a step back and wrote about different proposals where
+we want to go long term. See below. This will help us
+figuring out how to approach this bug correctly.
+------
 
-> +	static int versions[] = {2, 0};
-> +	static struct subprocess_capability capabilities[] = {
-> +		{"clean", CAP_CLEAN}, {"smudge", CAP_SMUDGE}, {NULL, 0}
-> +	};
->  	struct cmd2process *entry = (struct cmd2process *)subprocess;
-> ...
-> +	return subprocess_handshake(subprocess, "git-filter-", versions, NULL,
-> +				    capabilities,
-> +				    &entry->supported_capabilities);
->  }
 
-I would have defined the welcome prefix to lack the final dash,
-i.e. forcing the hardcoded suffixes for clients and servers in any
-protocol that uses this API to end with "-client" and "-server",
-i.e. with dash.
 
-> diff --git a/sub-process.c b/sub-process.c
-> index a3cfab1a9..1a3f39bdf 100644
-> --- a/sub-process.c
-> +++ b/sub-process.c
-> @@ -105,3 +105,97 @@ int subprocess_start(struct hashmap *hashmap, struct subprocess_entry *entry, co
->  	hashmap_add(hashmap, entry);
->  	return 0;
->  }
-> +
-> +int subprocess_handshake(struct subprocess_entry *entry,
-> +			 const char *welcome_prefix,
-> +			 int *versions,
-> +			 int *chosen_version,
-> +			 struct subprocess_capability *capabilities,
-> +			 unsigned int *supported_capabilities) {
-> +	int version_scratch;
-> +	unsigned int capabilities_scratch;
-> +	struct child_process *process = &entry->process;
-> +	int i;
-> +	char *line;
-> +	const char *p;
-> +
-> +	if (!chosen_version)
-> +		chosen_version = &version_scratch;
-> +	if (!supported_capabilities)
-> +		supported_capabilities = &capabilities_scratch;
-> +
-> +	sigchain_push(SIGPIPE, SIG_IGN);
-> +
-> +	if (packet_write_fmt_gently(process->in, "%sclient\n",
-> +				    welcome_prefix)) {
-> +		error("Could not write client identification");
-> +		goto error;
-> +	}
-> +	for (i = 0; versions[i]; i++) {
-> +		if (packet_write_fmt_gently(process->in, "version=%d\n",
-> +					    versions[i])) {
-> +			error("Could not write requested version");
-> +			goto error;
-> +		}
-> +	}
+RFC: A new type of symbolic refs
 
-This forces version numbers to be positive integers, which is OK, as
-I do not see it a downside that any potential application cannot use
-"version=0".
+A symbolic ref can currently only point at a ref or another symbolic ref.
+This proposal show cases different scenarios on how this could change in
+the future.
 
-> +	if (packet_flush_gently(process->in))
-> +		goto error;
-> +
-> +	if (!(line = packet_read_line(process->out, NULL)) ||
-> +	    !skip_prefix(line, welcome_prefix, &p) ||
-> +	    strcmp(p, "server")) {
-> +		error("Unexpected line '%s', expected %sserver",
-> +		      line ? line : "<flush packet>", welcome_prefix);
-> +		goto error;
-> +	}
-> +	if (!(line = packet_read_line(process->out, NULL)) ||
-> +	    !skip_prefix(line, "version=", &p) ||
-> +	    strtol_i(p, 10, chosen_version)) {
-> +		error("Unexpected line '%s', expected version",
-> +		      line ? line : "<flush packet>");
-> +		goto error;
-> +	}
-> +	for (i = 0; versions[i]; i++) {
-> +		if (versions[i] == *chosen_version)
-> +			goto version_found;
-> +	}
-> +	error("Version %d not supported", *chosen_version);
-> +	goto error;
-> +version_found:
 
-It would have been more natural to do
 
-	for (i = 0; versions[i]; i++)
-		if (versions[i] == *chosen_version)
-			break;
-	if (versions[i]) {
-		error("...");
-		goto error;
-	}
+A: HEAD pointing at the superprojects index
+===========================================
 
-without "version_found:" label.  In general, I'd prefer to avoid
-jumping to a label in the normal/expected case and reserve "goto"
-for error handling.
+Introduce a new symbolic ref that points at the superprojects index of
+the gitlink. The format is
 
-> +	if ((line = packet_read_line(process->out, NULL))) {
-> +		error("Unexpected line '%s', expected flush", line);
-> +		goto error;
-> +	}
-> +
-> +	for (i = 0; capabilities[i].name; i++) {
-> +		if (packet_write_fmt_gently(process->in, "capability=%s\n",
-> +					    capabilities[i].name)) {
-> +			error("Could not write requested capability");
-> +			goto error;
-> +		}
-> +	}
-> +	if (packet_flush_gently(process->in))
-> +		goto error;
-> +
-> +	while ((line = packet_read_line(process->out, NULL))) {
-> +		if (!skip_prefix(line, "capability=", &p))
-> +			continue;
-> +
-> +		for (i = 0; capabilities[i].name; i++) {
-> +			if (!strcmp(p, capabilities[i].name)) {
-> +				*supported_capabilities |= capabilities[i].flag;
-> +				goto capability_found;
-> +			}
-> +		}
-> +		warning("external filter requested unsupported filter capability '%s'",
-> +			p);
-> +capability_found:
-> +		;
+  "repo:" <superprojects gitdir> '\0' <gitlink-path> '\0'
 
-Likewise.
+Ref read operations
+-------------------
+  e.g. git log HEAD
 
-Also, this is the reason why I said this might make future
-applications feel a bit too constrained; is the set of fields in the
-subprocess_capability struct general enough?  It can only say "a
-capability with this name was found" with a single bit, so you can
-have only 32 (or 64) capabilities that are all yes/no.  I am not
-saying that is definitely insufficient (not yet anyway); I am
-wondering if future applications may need to have something like:
+Just like existing symrefs, the content of the ref will be read and followed.
+On reading "repo:", the sha1 will be obtained equivalent to:
 
-	capability=buffer-size=64k
+    git -C <superproject> ls-files -s <gitlink-path> | awk '{ print $2}'
 
-where "=64k" part is not known at this layer but is known by the
-user of the API.
+In case of error
+(superproject not found, gitlink path does not exist), the ref is broken and
 
-> +	}
-> +
-> +	sigchain_pop(SIGPIPE);
-> +	return 0;
-> +error:
-> +	sigchain_pop(SIGPIPE);
-> +	return 1;
+Ref write operations driven by the submodule, affecting symrefs
+---------------------------------------------------------------
+  e.g. git checkout <other branch> (in the submodule)
 
-I would prepare at the beginning of the function:
+In this scenario only the HEAD is optionally attached to the superproject,
+so we can rewrite the HEAD to be anything else, such as a branch just fine.
+Once the HEAD is not pointing at the superproject any more, we'll leave the
+submodule alone in operations driven by the superproject.
 
-	int retval = -1; /* assume failure */
+Ref write operations driven by the submodule, affecting target ref
+------------------------------------------------------------------
+  e.g. git commit, reset --hard, update-ref (in the submodule)
 
-and rewrite the above to
+The HEAD stays the same, pointing at the superproject.
+The gitlink is changed to the target sha1, using
 
-                retval = 0;
-        error:
-                sigchain_pop(SIGPIPE);
-                return retval;
+  git -C <superproject> update-index --add \
+      --cacheinfo 160000,$SHA1,<gitlink-path>
 
-if I were writing this code.
+This will affect the superprojects index, such that then a commit in
+the superproject is needed.
+
+Ref write operations driven by the superproject, changing the gitlink
+---------------------------------------------------------------------
+  e.g. git checkout <tree-ish>, git reset --hard (in the superproject)
+
+This will change the gitlink in the superprojects index, such that the HEAD
+in the submodule changes, which would trigger an update of the
+submodules working tree.
+
+Consistency considerations (gc)
+-------------------------------
+  e.g. git gc --aggressive --prune=now
+
+The repacking logic is already aware of a detached HEAD, such that
+using this new symref mechanism would not generate problems as long as
+we keep the HEAD attached to the superproject. However when commits/objects
+are created while the HEAD is attached to the superproject and then HEAD
+switches to a local branch, there are problems with the created objects
+as they seem unreachable now.
+
+This problem is not new as a superproject may record submodule objects
+that are not reachable from any of the submodule branches. Such objects
+fall prey to overzealous packing in the submodule.
+
+This proposal however exposes this problem a lot more, as the submodule
+has fewer needs for branches.
+
+
+
+
+B: HEAD pointing at a superprojects branch
+==========================================
+
+Instead of pointing at the index of the superproject, we also
+encode a branch name:
+
+    repo:" <superprojects gitdir> '\0' <gitlink-path> '\0' branch '\0'
+
+Ref read operations
+-------------------
+  e.g. git log HEAD
+
+This is similar to the case of pointing at the index, except that the reading
+operation reads from the tip of the branch:
+
+    git -C <superproject> ls-tree <superproject branch> -- \
+        <gitlink-path> | awk '{ print $3}'
+
+Ref write operations driven by the submodule, affecting symrefs
+---------------------------------------------------------------
+  e.g. git checkout <other branch> (in the submodule)
+
+HEAD will be pointed at the local target branch, dropping the affliation to
+the superproject.
+
+Ref write operations driven by the submodule, affecting target ref
+------------------------------------------------------------------
+  e.g. git commit, reset --hard, update-ref (in the submodule)
+
+As we're pointing at the superprojects branch, this would have to create
+a dummy(?) commit in the superproject, that just changes the submodule
+pointer in the superprojects branch, such that the operation of storing
+a new sha1 for the submodule is equivalent to
+
+  git -C <superproject> update-index --add \
+      --cacheinfo 160000,$SHA1,<gitlink-path>
+  git -C <superproject> commit -m "Update submodule"
+
+This behavior in the superproject is similar to Gerrits subscription model
+where superprojects are updated from the submodule.
+
+Each operation in the submodule triggers a local superproject commit.
+
+Ref write operations driven by the superproject, changing the gitlink
+---------------------------------------------------------------------
+  e.g. git merge, git pull (in the superproject)
+
+This will change the gitlink in the superprojects index, such that the HEAD
+in the submodule changes, which would trigger an update of the
+submodules working tree.
+
+This would require a good merge strategy for submodules, i.e. on merge
+the submodule would create a merge commit that is recorded in the
+superprojects merge commit.
+
+Consistency considerations (gc)
+-------------------------------
+  e.g. git gc --aggressive --prune=now
+
+The repacking problem comes with a solution unlike the previous proposal.
+This is because any relevant commit in the submodule is recorded in the
+superproject via a commit in a branch. Then even non-fast-forward histories
+in the submodule can all be kept by walking the superproject and looking at
+all gitlink entries of the submodule.
+
+
+
+C: All branches are symbolic references to the superproject
+===========================================================
+
+Instead of having just HEAD pointed at a superproject, all(!) branches
+in the submodule point at the superprojects branch of the same name.
+Symbolic refs that resolve to a local sha1 are not allowed, any symbolic ref
+ends up pointing at the superproject eventually.
+e.g. HEAD points at a submodule branch, which in turn points at
+the superproject branch of the same name.
+
+Ref read operations
+-------------------
+  e.g. git log
+
+HEAD is read, which may be either (a) locally detached or (b) pointing at a
+superproject branch. Resolve as in B.
+
+Ref write operations driven by the submodule, affecting symrefs
+---------------------------------------------------------------
+  e.g. git checkout <other branch> (in the submodule)
+
+As there is no other local branch, HEAD would point at the other submodule
+branch, which then points at another branch in the superproject.
+
+Ref write operations driven by the submodule, affecting target ref
+------------------------------------------------------------------
+  e.g. git commit, reset --hard, update-ref (in the submodule)
+
+  same as B.
+
+Ref write operations driven by the superproject, changing the gitlink
+---------------------------------------------------------------------
+  e.g. git merge, git pull (in the superproject)
+
+  same as B.
+
+Consistency considerations (gc)
+-------------------------------
+  e.g. git gc --aggressive --prune=now
+
+As the superproject contains all knowledge, the gc starts with a
+walk of all superproject branches, destilling the recorded gitlink entries
+and then starts walking in the submodule from all the recorded gitlinks
+to create a pack.
+
+gc and repacking would either be forbidden in the submodule or deflected
+to the superproject.
