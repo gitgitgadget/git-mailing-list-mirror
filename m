@@ -6,80 +6,118 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97B9E1F89D
-	for <e@80x24.org>; Tue, 25 Jul 2017 20:41:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E17471F89D
+	for <e@80x24.org>; Tue, 25 Jul 2017 20:46:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752855AbdGYUlE (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jul 2017 16:41:04 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61120 "EHLO
+        id S1752768AbdGYUqp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jul 2017 16:46:45 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54786 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751472AbdGYUlC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jul 2017 16:41:02 -0400
+        with ESMTP id S1752546AbdGYUqn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jul 2017 16:46:43 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DF92374692;
-        Tue, 25 Jul 2017 16:41:01 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 41A8C74763;
+        Tue, 25 Jul 2017 16:46:37 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=VOTPV+gZQv6U+vb7Ifm60BnO/08=; b=It7iAR
-        ij0d+rbo6vG/bW3SdhrRIhNz+qa46XivgwmGUWGhmHoVkHC6/g9Gs1F7uLCSGrDr
-        FAIa8Kt7/OXD7Mge+pRwW5cbydxW3znjaz5fTRyfjDFn5nTxdY0Vayddhg71qAxh
-        3cgHtyijAAHVBsLEkb1MJbrCmR8RvLU0W6vkk=
+        :content-type:content-transfer-encoding; s=sasl; bh=wrgTTWjNKu1m
+        PYDY2pqvKuuYtIs=; b=tyWPxUFwYW8swphTaI9MVegIXEZIlrp5RqJJDnlliEu/
+        DhvIqSSWSIzWxsnOrBaXTTmihg60VB6xe6Q+HdVpreIq84FSboz1O6rNzCZHq1BS
+        1cMIRYuZoTTmLVBoWQSvAmMZRfB9ZOuElGmhB3/LcqcGFTV8gDgsyiY4Wvufrew=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=kXfghR7W+YlAjQaRV5cL8Eij+9mbREub
-        Y3CIg/y0WPrmVGFqjfrRn4LxKUdJpISvOhaOr5I3dQxkXuDXrPD0YYpFZ0el2O8r
-        lT9UoAAZzlPyU2NH+OR5PsQ5RfZ9il6N3SMr+fwnOVzYO4uoUh6FnmaddlQZdLYU
-        8VBwsOpRj/Q=
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=om+sQn
+        3lIttboSmvUvCuSGi1AM8n4P7wwDnrYeScJlP/Zxsyk6hT1XX+tdJ99lU1acEqoc
+        0YXGSE3V1F0WCB/DsHLoFsAl7gSIxU7gX26NfdkgzmvadDCyJjn0Olj5s4fYLBby
+        c6neYaEJmMY3Vhi6cr6PFNtzTZdZqkEyqzIsk=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A3DFE74690;
-        Tue, 25 Jul 2017 16:41:01 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3A89574762;
+        Tue, 25 Jul 2017 16:46:37 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7C26B7468E;
-        Tue, 25 Jul 2017 16:41:00 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A67A574761;
+        Tue, 25 Jul 2017 16:46:36 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Raman Gupta <rocketraman@gmail.com>, git@vger.kernel.org
-Subject: Re: [RFC] Git rerere and non-conflicting changes during conflict resolution
-References: <17c46229-3b64-34f1-30fa-d40b77e1c054@gmail.com>
-        <20170725175202.ar4ykqoadbihwb2w@sigill.intra.peff.net>
-        <xmqqo9s8uuth.fsf@gitster.mtv.corp.google.com>
-Date:   Tue, 25 Jul 2017 13:40:59 -0700
-In-Reply-To: <xmqqo9s8uuth.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Tue, 25 Jul 2017 13:26:34 -0700")
-Message-ID: <xmqqk22wuu5g.fsf@gitster.mtv.corp.google.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+        Jiang Xin <worldhello.net@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] PRItime: wrap PRItime for better l10n compatibility
+References: <249ac6f8-af3c-4b20-5bf0-87a82866cc7a@free.fr>
+        <3ccfa2fb49d471f807d77d9a280e4b7cfe56faea.1500304209.git.worldhello.net@gmail.com>
+        <xmqq7ez7htvj.fsf@gitster.mtv.corp.google.com>
+        <CANYiYbEcMrriaor9OT4c2qtfh9Ja5NJ9KBSxa3XhPAuoN0t42A@mail.gmail.com>
+        <xmqq60epfy27.fsf@gitster.mtv.corp.google.com>
+        <CANYiYbFROuyXso2ZKuJWDp4cSwpBu=bNAbC-yZtEyDwkbUcAhQ@mail.gmail.com>
+        <alpine.DEB.2.21.1.1707191456010.4193@virtualbox>
+        <xmqq8tjkm3ly.fsf@gitster.mtv.corp.google.com>
+        <xmqqo9sfkm32.fsf@gitster.mtv.corp.google.com>
+        <xmqqfudrkkci.fsf@gitster.mtv.corp.google.com>
+        <f00aeb42-75ad-d5ec-b4fb-c80b48827db4@free.fr>
+        <xmqq7ez1j0wv.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.21.1.1707221320350.4271@virtualbox>
+        <xmqqa83wfoxj.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.21.1.1707251219480.4271@virtualbox>
+Date:   Tue, 25 Jul 2017 13:46:35 -0700
+In-Reply-To: <alpine.DEB.2.21.1.1707251219480.4271@virtualbox> (Johannes
+        Schindelin's message of "Tue, 25 Jul 2017 12:20:47 +0200 (CEST)")
+Message-ID: <xmqqfudkutw4.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9193C424-7179-11E7-AF52-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 59F0988E-717A-11E7-950E-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> To populate the database, we'd need a reverse.
-> ...
->  * Then the user tells Git that semantic conflicts were resolved and
->    need to be recorded (just like running "git rerere" manually,
->    before "git commit" automatically does it for them these days).
->    This will result in the following:
+> Hi Junio,
 >
->    - The database is updated so that key <A, B> yields the
->      "merge-fix" commit;
-> ...
+> On Sat, 22 Jul 2017, Junio C Hamano wrote:
+>
+>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>>=20
+>> > On Fri, 21 Jul 2017, Junio C Hamano wrote:
+>> >
+>> >> Jean-No=C3=ABl Avila <jn.avila@free.fr> writes:
+>> >>=20
+>> >> > Le 20/07/2017 =C3=A0 20:57, Junio C Hamano a =C3=A9crit :
+>> >> >>
+>> >> >> +	git diff --quiet HEAD && git diff --quiet --cached
+>> >> >> +
+>> >> >> +	@for s in $(LOCALIZED_C) $(LOCALIZED_SH) $(LOCALIZED_PERL); \
+>> >> >
+>> >> > Does PRIuMAX make sense for perl and sh files?
+>> >>=20
+>> >> Not really; I did this primarily because I would prefer to keep
+>> >> things consistent, anticipating there may be some other things we
+>> >> need to replace before running gettext(1) for other reasons later.
+>> >
+>> > It would add unnecessary churn, too, to add those specific exclusion=
+s and
+>> > make things inconsistent: the use of PRItime in Perl or shell script=
+s
+>> > would already make those scripts barf. And if it is unnecessary chur=
+n...
+>> > let's not do it?
+>>=20
+>> Sorry, but I cannot quite tell if you are in favor of limiting the
+>> set of source files that go through the sed substitution (because we
+>> know PRIuMAX is just as nonsensical as PRItime in perl and shell
+>> source), or if you are in favor of keeping the patch as-is (because
+>> changing the set of source files is a churn and substitutions would
+>> not hurt)?
+>
+> I was in favor of keeping the simplest strategy: simply cover all files=
+,
+> including Perl and Unix shell scripts. It would not bring any benefit t=
+o
+> exclude them.
 
-I probably should have been aiming for stars, as I were outlining
-the ideal merge-fix logic.  The key <A, B> is merely a default, and
-the worst one at that.  There should be a way for the user to tell
-which exact pair of commits (i.e. another side branch that was
-merged earlier to the mainline A that renamed 'xyzzy' to 'frotz'
-wholesale, and the exact commit on the side branch B that added an
-extra mention of 'xyzzy').  
-
-If the logic can figure out what these two commits are without
-user's help, mechanically by only looking at the merge-fix commit,
-that would be even better.  But I do not believe in miracles, so...
+OK.  I actually was OK to limit the potential damage to C sources,
+but it does not matter that much in the bigger picture.
 
