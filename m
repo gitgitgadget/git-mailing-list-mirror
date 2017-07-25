@@ -2,118 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76A441F89D
-	for <e@80x24.org>; Tue, 25 Jul 2017 19:22:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 102141F89D
+	for <e@80x24.org>; Tue, 25 Jul 2017 19:30:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752283AbdGYTWg (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jul 2017 15:22:36 -0400
-Received: from mout.gmx.net ([212.227.17.22]:52130 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751000AbdGYTWd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jul 2017 15:22:33 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mc9U3-1dGdNj280t-00JWXy; Tue, 25
- Jul 2017 21:22:20 +0200
-Date:   Tue, 25 Jul 2017 21:22:19 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
+        id S1754293AbdGYTaz (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jul 2017 15:30:55 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61017 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754239AbdGYTax (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jul 2017 15:30:53 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D3B0CA184B;
+        Tue, 25 Jul 2017 15:30:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=NtUjPbOdM14M3NRNDOW8ERJe2Lw=; b=cVYr9p
+        /UQw/Wb++VlIzl0ZXlXkgp8E/PpX4oir3lGqwKcmMOnj/shjTfC9DV93jryttBtV
+        9FlDnN/dbKpfZeLOlCGW6IalAHm/TraZJRD0YlvIKwiJCUTUF19zj8jMjoCV7kG6
+        fnGJPIvHpxFdgKzEBICvEHvvLX/mudhxVW/xs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Ywcgkrp2XAXubp4ohNY+yJRmTm6gGSrA
+        CEaJ6ObCpZiuN8O+GR4mB+pWy956yxm5eLggddvzsnYKop9IWk2aSQQhFcnDTbOf
+        YnaRVdvTc3iIOCqPoQnAgy1gm9RKFoEM3jkiNg29ryUU4uxdp3UVZ1Tuapedv69p
+        MiIlNzHUAbw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CC103A184A;
+        Tue, 25 Jul 2017 15:30:52 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 41F4DA1849;
+        Tue, 25 Jul 2017 15:30:52 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
 Subject: Re: What's cooking in git.git (Jul 2017, #07; Mon, 24)
-In-Reply-To: <xmqqinihbgci.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.21.1.1707252046190.4271@virtualbox>
 References: <xmqqinihbgci.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        <alpine.DEB.2.21.1.1707252046190.4271@virtualbox>
+Date:   Tue, 25 Jul 2017 12:30:51 -0700
+In-Reply-To: <alpine.DEB.2.21.1.1707252046190.4271@virtualbox> (Johannes
+        Schindelin's message of "Tue, 25 Jul 2017 21:22:19 +0200 (CEST)")
+Message-ID: <xmqqy3rcuxec.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:NM1zTkrR8zrNeD/HKvTe4lAq/UFrEAyxC3K+WQFH+oA2ZCmCGUb
- y4VmXTyUw2YY/ab6i40X17waOqqeSO8xSrfzhwDKTTjo6VABYBZkH0Lg7Tg7QZUDjeDInzb
- PX3TOipeBqJh4NHpeeMnIaHy19BJ9wxUTQSVglZeB/MRXbJ3OS3/pmTz1AfXd5jgZvRviBL
- F5VZdhTw3TepYEpKnG0dQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:TdQrJYHi+Yk=:JXwco0pbyyZjoNDMTsyHNa
- SuZmKCrSx8kp6ggdNfaOsIFsNrLSfkU/nzn875nfEYQNhHyh0qDcP4Rut1Hj5zbyu/AoRSHkN
- AjEcJRdWl+aF6XMDcwSRmMPTyYkD9s6X/XtNLGBm1aSLzDW+sGDVGa3XDJCJeVtZFZ5oPBJjx
- 8bc9wcFaSBrUIvn0HNfPy8AWbeUTlYu0X9e+UYvdKQI7coukArkSMjc9sThR35fN2inQvnkGr
- wqEPzSTH2FpqPHqoXCAtcgGfro8jwpvco8HU2tHPItpXCESlrqxavnrWNCrIfATPD/3jI6Xxz
- R/F/WLhkUfOVonvUEZWLQkqB9rPUXFbM4RUJmHY5sZILDnLUGayMKt/8O7JVNrklo//JyUQjt
- Kr3uQKYUpk5VtMuc/AT/fKNNOg8g38bS9No0jhWl1amo9RxU4Kgx4F3DDL4vxawbEsx85SX+U
- 1L9gL7DyLVKQhrumVcFDsNpwwZIhT5vOKX28eoS/jsA3BrroR7Hwr5PRLAdmrFaQcHNUld8p7
- Zo07fn4ed6g3Ntyy6drq9X03qBzqI8swcDgmjqC25MCB6qBtYiNyMNyIYiGvxAV7hUoSAjx4u
- Y8UdPMKTTJ3pJN5BCrXspRReFIyKLNcNNwBqiKbUD13CYciU97QsHgoIWJpXPU8ahq03LB3Pr
- uezZBU+g2pNj0IrGSjp5LAH/0ycydbxYO+13q3ODFWKRCJKP6uRcLrl4DXl31L/Dzp2yka8zN
- LGAKDPGf1YzDr6TGxUMiiEIc87lnEqpUAYSWDW4PsPP6rjKy2uQAelsZtls1AC4FgywKyEK2V
- diyd3sfvBvpeQMT/LEfiOLSXUa6FXnTQzEo826uv/e7S4V9vWI=
+Content-Type: text/plain
+X-Pobox-Relay-ID: C541D7FC-716F-11E7-83DC-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Mon, 24 Jul 2017, Junio C Hamano wrote:
+> Hi Junio,
+>
+> On Mon, 24 Jul 2017, Junio C Hamano wrote:
+>
+>> * js/blame-lib (2017-07-24) 1 commit
+>>  - blame: fix memory corruption scrambling revision name in error message
+>> 
+>>  A hotfix to a topic already in 'master'.
+>> 
+>>  Will merge to 'next'.
+>
+> This sounds more critical than `next`, in particular since you said that
+> you do not want to move anything from `next` to `master` before 2.14
+> final.
 
-> * js/blame-lib (2017-07-24) 1 commit
->  - blame: fix memory corruption scrambling revision name in error message
-> 
->  A hotfix to a topic already in 'master'.
-> 
->  Will merge to 'next'.
+That is why it is not "Will merge to and cook in 'next'" which is a
+norm for new things during -rc.
 
-This sounds more critical than `next`, in particular since you said that
-you do not want to move anything from `next` to `master` before 2.14
-final.
+>>  The final batch to "git rebase -i" updates to move more code from
+>>  the shell script to C.
+>> 
+>>  Expecting a reroll.
+>
+> Since you said yourself that you won't pick up v6...
 
-> * js/rebase-i-final (2017-06-15) 10 commits
->  - rebase -i: rearrange fixup/squash lines using the rebase--helper
->  - t3415: test fixup with wrapped oneline
->  - rebase -i: skip unnecessary picks using the rebase--helper
->  - rebase -i: check for missing commits in the rebase--helper
->  - t3404: relax rebase.missingCommitsCheck tests
->  - rebase -i: also expand/collapse the SHA-1s via the rebase--helper
->  - rebase -i: do not invent onelines when expanding/collapsing SHA-1s
->  - rebase -i: remove useless indentation
->  - rebase -i: generate the script via rebase--helper
->  - t3415: verify that an empty instructionFormat is handled as before
-> 
->  The final batch to "git rebase -i" updates to move more code from
->  the shell script to C.
-> 
->  Expecting a reroll.
+Read the message again and realize that I said won't during -rc
+but may hold onto it.  I am intending to queue it on 2.14 final
+to merge to 'pu' until the topic is rerolled again.
 
-Since you said yourself that you won't pick up v6 (even if I made clear
-that I have a strong preference for resolving merge conflicts myself
-rather than have you guess), it may be a good idea to change this from
-"Expecting a reroll" to something else?
-
-> * jc/http-sslkey-and-ssl-cert-are-paths (2017-07-20) 1 commit
->   (merged to 'next' on 2017-07-20 at 5489304b99)
->  + http.c: http.sslcert and http.sslkey are both pathnames
-> 
->  The http.{sslkey,sslCert} configuration variables are to be
->  interpreted as a pathname that honors "~[username]/" prefix, but
->  weren't, which has been fixed.
-> 
->  Will cook in 'next'.
-
-Just so you know: an identical patch has been cooking in Git for Windows
-as 26b08ecec8d37b976be9e85055a0a9e3d16a56da since Dec 11 2015.
-
-> * wd/rebase-conflict-guide (2017-07-17) 1 commit
->   (merged to 'next' on 2017-07-20 at c78e758b23)
->  + rebase: make resolve message clearer for inexperienced users
-> 
->  Code clean-up.
-
-This is not a code clean-up. It is an improvement of the user experience.
-
-Ciao,
-Dscho
-
-P.S.: Sorry for not branching off of the thread with proper "<branch>,
-was: What's cooking" subjects, but I am seriously short on time. Please
-accept my apologies.
