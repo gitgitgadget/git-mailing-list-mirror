@@ -2,205 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4046C2089A
-	for <e@80x24.org>; Tue, 25 Jul 2017 18:29:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CAB741F89D
+	for <e@80x24.org>; Tue, 25 Jul 2017 18:31:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751515AbdGYS3u (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jul 2017 14:29:50 -0400
-Received: from mail-pg0-f50.google.com ([74.125.83.50]:34289 "EHLO
-        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750989AbdGYS3r (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jul 2017 14:29:47 -0400
-Received: by mail-pg0-f50.google.com with SMTP id 123so73522445pgj.1
-        for <git@vger.kernel.org>; Tue, 25 Jul 2017 11:29:47 -0700 (PDT)
+        id S1750882AbdGYSbd (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jul 2017 14:31:33 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:35012 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750860AbdGYSbc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jul 2017 14:31:32 -0400
+Received: by mail-pg0-f66.google.com with SMTP id d193so15123236pgc.2
+        for <git@vger.kernel.org>; Tue, 25 Jul 2017 11:31:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references;
-        bh=a1eA88ae4w/VxabZzqINovSdUiu7sZaNCobUerdIoIE=;
-        b=lU3rGHYkEEg0y8gCTptykWhYb97ALV3m4FOWYrftRmpDBog1bkOlMVo4ul5rx6WwPs
-         bi6ZyT4APOzF2iwqsnt9MO7tIAklHBW14YMhZiThMJGtoUm2P5+XdhllUMNM/ayKRuss
-         SiTQW18BI5rimyc7VcpxkzrptDGjCbTXZ28QQGek1AbQbuiIOCGQDd+xynHFLwiguucA
-         7fzWsuSQ8mzcWzOMxHAysifb3qJE2vdw67gW1hbP+69UsxU/SqK+32JekAQTr0Su+YCm
-         7FEQ6d3UIZfXY0dW5ifZqOVI5bWUJFdRMKCHkkBo7M9Mb+Em+yvqxJY43zcGmO1WyY+I
-         +viQ==
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:in-reply-to:references:date:mime-version
+         :content-transfer-encoding;
+        bh=OsVYJPhGpO/5+GjH0Tk/ZzGn7eHiNZ2fxeUbx7bpOJw=;
+        b=Glud4RPQHWJlebNMKvNnJ/WWM+iF6Ud8D+h+N5FLv/3QaDDWmWzxcxsLWCWUhdmytE
+         PKrHDd7FmWLhbHVSgovzOc9SgyHQTuq5a//VkPtVOsPgDVs0gFaL+dkOxTZLFUNDqER2
+         E9XUQeIX2PCX596cV1XSbQhAi9LPsitAMr17aU3A+HBed7NYXAoo7aa9okqMVl5PN7E+
+         wuWqNceTPdpkQbOfgpWH56E6bIUeSazjzzMy49sko2YqGIGFEvqVH23VFe2/bpluNdzD
+         wm4K/qSzdXw7JRH0Df7sNj0Ve6GF0Td26fl+ruMhcFE/f/BEDN0+jRsAiG65fScwIzMF
+         V3QA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:in-reply-to:references;
-        bh=a1eA88ae4w/VxabZzqINovSdUiu7sZaNCobUerdIoIE=;
-        b=dcuUbW745eFMJkPUG2YHtfxIg0vSrAchEZQ/hy/BFQCM5pBcSfscQTbwPmo1lTDc0A
-         Jf85XRjwpkz+19n249jQn1pdoY91hjFVvLOSpivm+lhW8yHSTs4abpKGpolpBOYxuZ+y
-         hO5visSQU1o/RdyoC4Z2pKjDcwRImT+Ae+Q90yr0BpVFOim6W7sQrWwd0xHignaMmy8o
-         rZ2hC+5INfOL6Ll7XIMtWTPwbf3NuimKvQMOFqzFEmsjL3Yo62/qNUkyC7BSYR9cQqbA
-         LFmezWHzEtGgjR2wGr9ACkeHK+Ao/IvVxTG3T1wZlz/rwls7myql9fRotAYKyqwpthR9
-         GXVQ==
-X-Gm-Message-State: AIVw110Z3+f/WdSsHObADag5ENZGAZRrgmggS5nkWp+eROkDayVqUlrQ
-        vRG5lvdkOQqF/Sn6uW72/A==
-X-Received: by 10.84.231.139 with SMTP id g11mr22180153plk.283.1501007386088;
-        Tue, 25 Jul 2017 11:29:46 -0700 (PDT)
-Received: from twelve2.svl.corp.google.com ([100.96.218.24])
-        by smtp.gmail.com with ESMTPSA id e10sm3354139pgu.16.2017.07.25.11.29.43
+        h=x-gm-message-state:message-id:subject:from:to:in-reply-to
+         :references:date:mime-version:content-transfer-encoding;
+        bh=OsVYJPhGpO/5+GjH0Tk/ZzGn7eHiNZ2fxeUbx7bpOJw=;
+        b=jxjrvTleBM+QLzJew0wlsAkwd9KeTuLL++jOgL2Wos/VhpIHwZ2sB8wbU4g1iYn1zo
+         mQQQQ8Jc+7a9LmGXonk/EARuegP6KwaAUIMcx8IzCCDS5v1mgObJyXj0nB0UVSt66sV6
+         FiD+r1ZxZPLGF7UgcUwB2D8OpkeNSPDCNOlPZqmOgKEo9G9YLyFYpglMd7rL420wxyCS
+         GMQHh7x+Gv0DExFm2/7gTQH/c/OHlD0pVCxMmiVU9L9VWb4KwZHHJcsK2LLRmN7f2JUL
+         v4jn+PzgIn2xW+TCqbaOIWS/45bIhwH7MA+UPiAJC7r2Ax0iTDxbF62/EEBeslFiqhJ2
+         KsVw==
+X-Gm-Message-State: AIVw1129/eKLN/S8bc7kzc4HuT4ehNfNqhzWVPKANuGUdarbYyxXq4GT
+        nrS9rwzmmIomlijjeVE=
+X-Received: by 10.84.247.9 with SMTP id n9mr22378079pll.287.1501007491321;
+        Tue, 25 Jul 2017 11:31:31 -0700 (PDT)
+Received: from unique-pc ([182.73.109.146])
+        by smtp.googlemail.com with ESMTPSA id 205sm23957216pga.65.2017.07.25.11.31.29
+        for <git@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 25 Jul 2017 11:29:43 -0700 (PDT)
-From:   Jonathan Tan <jonathantanmy@google.com>
+        Tue, 25 Jul 2017 11:31:30 -0700 (PDT)
+Message-ID: <1501007517.11979.4.camel@gmail.com>
+Subject: Re: [PATCH] branch: change the error messages to be more meaningful
+From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, jrnieder@gmail.com,
-        peartben@gmail.com
-Subject: [PATCH v2 1/2] Documentation: migrate sub-process docs to header
-Date:   Tue, 25 Jul 2017 11:29:37 -0700
-Message-Id: <2d97d07a4977048a8147292ac13db48f5202d52f.1501007300.git.jonathantanmy@google.com>
-X-Mailer: git-send-email 2.14.0.rc0.400.g1c36432dff-goog
-In-Reply-To: <cover.1501007300.git.jonathantanmy@google.com>
-References: <cover.1501007300.git.jonathantanmy@google.com>
-In-Reply-To: <cover.1501007300.git.jonathantanmy@google.com>
-References: <20170724213810.29831-1-jonathantanmy@google.com> <cover.1501007300.git.jonathantanmy@google.com>
+In-Reply-To: <0102015d7b021c6c-8741d523-c7d7-4be5-923a-cd4a925842a0-000000@eu-west-1.amazonses.com>
+References: <0102015d7a301def-0d802f3e-6052-4e32-b331-c42c3160012b-000000@eu-west-1.amazonses.com>
+         <0102015d7b021c6c-8741d523-c7d7-4be5-923a-cd4a925842a0-000000@eu-west-1.amazonses.com>
+Content-Type: text/plain; charset="ISO-8859-15"
+Date:   Wed, 26 Jul 2017 00:01:57 +0530
+Mime-Version: 1.0
+X-Mailer: Evolution 3.22.6-1 
+Content-Transfer-Encoding: 7bit
+X-Cyberoam-smtpxy-version: 1.0.6.3
+X-Cyberoam-AV-Policy: default
+X-CTCH-Error: Unable to connect local ctasd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move the documentation for the sub-process API from a separate txt file
-to its header file.
+The second patch differs from the first one only in the commit message.
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
- Documentation/technical/api-sub-process.txt | 59 -----------------------------
- sub-process.h                               | 25 +++++++++++-
- 2 files changed, 23 insertions(+), 61 deletions(-)
- delete mode 100644 Documentation/technical/api-sub-process.txt
-
-diff --git a/Documentation/technical/api-sub-process.txt b/Documentation/technical/api-sub-process.txt
-deleted file mode 100644
-index 793508cf3..000000000
---- a/Documentation/technical/api-sub-process.txt
-+++ /dev/null
-@@ -1,59 +0,0 @@
--sub-process API
--===============
--
--The sub-process API makes it possible to run background sub-processes
--for the entire lifetime of a Git invocation. If Git needs to communicate
--with an external process multiple times, then this can reduces the process
--invocation overhead. Git and the sub-process communicate through stdin and
--stdout.
--
--The sub-processes are kept in a hashmap by command name and looked up
--via the subprocess_find_entry function.  If an existing instance can not
--be found then a new process should be created and started.  When the
--parent git command terminates, all sub-processes are also terminated.
--
--This API is based on the run-command API.
--
--Data structures
-----------------
--
--* `struct subprocess_entry`
--
--The sub-process structure.  Members should not be accessed directly.
--
--Types
-------
--
--'int(*subprocess_start_fn)(struct subprocess_entry *entry)'::
--
--	User-supplied function to initialize the sub-process.  This is
--	typically used to negotiate the interface version and capabilities.
--
--
--Functions
-----------
--
--`cmd2process_cmp`::
--
--	Function to test two subprocess hashmap entries for equality.
--
--`subprocess_start`::
--
--	Start a subprocess and add it to the subprocess hashmap.
--
--`subprocess_stop`::
--
--	Kill a subprocess and remove it from the subprocess hashmap.
--
--`subprocess_find_entry`::
--
--	Find a subprocess in the subprocess hashmap.
--
--`subprocess_get_child_process`::
--
--	Get the underlying `struct child_process` from a subprocess.
--
--`subprocess_read_status`::
--
--	Helper function to read packets looking for the last "status=<foo>"
--	key/value pair.
-diff --git a/sub-process.h b/sub-process.h
-index 96a2cca36..9e6975b5e 100644
---- a/sub-process.h
-+++ b/sub-process.h
-@@ -6,12 +6,23 @@
- #include "run-command.h"
- 
- /*
-- * Generic implementation of background process infrastructure.
-- * See: Documentation/technical/api-sub-process.txt
-+ * The sub-process API makes it possible to run background sub-processes
-+ * for the entire lifetime of a Git invocation. If Git needs to communicate
-+ * with an external process multiple times, then this can reduces the process
-+ * invocation overhead. Git and the sub-process communicate through stdin and
-+ * stdout.
-+ *
-+ * The sub-processes are kept in a hashmap by command name and looked up
-+ * via the subprocess_find_entry function.  If an existing instance can not
-+ * be found then a new process should be created and started.  When the
-+ * parent git command terminates, all sub-processes are also terminated.
-+ * 
-+ * This API is based on the run-command API.
-  */
- 
-  /* data structures */
- 
-+/* Members should not be accessed directly. */
- struct subprocess_entry {
- 	struct hashmap_entry ent; /* must be the first member! */
- 	const char *cmd;
-@@ -20,21 +31,31 @@ struct subprocess_entry {
- 
- /* subprocess functions */
- 
-+/* Function to test two subprocess hashmap entries for equality. */
- extern int cmd2process_cmp(const void *unused_cmp_data,
- 			   const struct subprocess_entry *e1,
- 			   const struct subprocess_entry *e2,
- 			   const void *unused_keydata);
- 
-+/*
-+ * User-supplied function to initialize the sub-process.  This is
-+ * typically used to negotiate the interface version and capabilities.
-+ */
- typedef int(*subprocess_start_fn)(struct subprocess_entry *entry);
-+
-+/* Start a subprocess and add it to the subprocess hashmap. */
- int subprocess_start(struct hashmap *hashmap, struct subprocess_entry *entry, const char *cmd,
- 		subprocess_start_fn startfn);
- 
-+/* Kill a subprocess and remove it from the subprocess hashmap. */
- void subprocess_stop(struct hashmap *hashmap, struct subprocess_entry *entry);
- 
-+/* Find a subprocess in the subprocess hashmap. */
- struct subprocess_entry *subprocess_find_entry(struct hashmap *hashmap, const char *cmd);
- 
- /* subprocess helper functions */
- 
-+/* Get the underlying `struct child_process` from a subprocess. */
- static inline struct child_process *subprocess_get_child_process(
- 		struct subprocess_entry *entry)
- {
 -- 
-2.14.0.rc0.400.g1c36432dff-goog
-
+Kaartic
