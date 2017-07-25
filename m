@@ -2,104 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A9AD2047F
-	for <e@80x24.org>; Tue, 25 Jul 2017 08:37:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 27A512047F
+	for <e@80x24.org>; Tue, 25 Jul 2017 10:19:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751068AbdGYIgi (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jul 2017 04:36:38 -0400
-Received: from mout.gmx.net ([212.227.17.21]:62400 "EHLO mout.gmx.net"
+        id S1751679AbdGYKTS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jul 2017 06:19:18 -0400
+Received: from mout.gmx.net ([212.227.15.18]:51839 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750885AbdGYIgV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jul 2017 04:36:21 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MRXVc-1dBpuo3oue-00SciR; Tue, 25
- Jul 2017 10:35:59 +0200
-Date:   Tue, 25 Jul 2017 10:35:57 +0200 (CEST)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+        id S1751677AbdGYKTR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jul 2017 06:19:17 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MHHZT-1dLwJ22SzD-00E9sM; Tue, 25
+ Jul 2017 12:19:11 +0200
+Date:   Tue, 25 Jul 2017 12:19:10 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Pat Thoyts <patthoyts@users.sourceforge.net>,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH] git-gui (MinGW): make use of MSys2's msgfmt
-Message-ID: <8a13544743fd5e6a3b3b5fdb35e02c9c34695e25.1500971399.git.johannes.schindelin@gmx.de>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH] sha1_file: use access(), not lstat(), if possible
+In-Reply-To: <xmqq1sp8fnxv.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1707251217250.4271@virtualbox>
+References: <alpine.DEB.2.21.1.1707191450570.4193@virtualbox> <20170719171251.11906-1-jonathantanmy@google.com> <xmqqbmoekce5.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.21.1.1707221309530.4271@virtualbox> <xmqq1sp8fnxv.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:S/h80qaA2MlY6Lny/HzrSMdwehv/LP4T2pXlrl/mrkTVwRnHZHP
- 7yVUoPovLBkaYyfbNYmahZX54d/LWoiy0gWIR8BQA54TwYiJgD7pfPIZ2xES6xsZq5UN68G
- 3AmC3TSfC+OUnDCv7d+ej1ulqegeYK2hH/6Sdbj2j9roPTVgxGAMV5MzUa07xz4zFZI7034
- 3oH3PcJMPW/y/3Cq5AQPw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:aWYUPjU88L4=:Rl4VqnlFgpocavJ0BUFgkB
- QTRLE6Ry7bFMRAN8XX0z/9/drfHmNc5qvgJlfONmAk+KL67LmuFT7fGxT43Ry+71rPK1md296
- 1crdJG8wB2gGdAzSv4kpoDv4xPOC/z+At+MCQ8zpKri28A4OxQnV2La95j6T9fj1Byna6xX2g
- BfOZ9XOC7gdywvBh4LwN1kV3zmw8dXzAFTEDB14087ae4JQAR4N/opWlUzpq1ZRod8ZQJ73sf
- C+3KgkX13LCJPf6w5w4rdLGcEVm8Ye5CLoZ4rjuLnHqqTDhRVoPkLAAdmhGbPF8ChtyNkbeNy
- HDFSePRCjqwkhBWQHPjRF2HSrV8D48it4AkP4cZ2jTgaVPHV/JjuEciT3uMT8k/HSn72FArbJ
- H0anlDDQbFMwEgvvbCVc7cD9obYCRWHbeBsiitElUHLzpd811EOdbLB6oaW0t0Nh1yZdsGrOM
- zu1U9va6xxBv1/nsq/N2C5ELB70UHCzO5a9KUtUOl6WXkcly+uNlJ/mVIdFvE0dZzXtUCd2rH
- 3J3YbNhmDpBgZZsx3CMoRY90j/XW67M/A6xe4XzJaus1im5nJwlw4z2LjJBdiOaCvIEWAr0QL
- tdqrJHJbDRDu/0uHrE7b6QJbQ6riTLp9er4LfrmHkw8ue9XkCuIE9bQJOM6D65vGtqSjTr7+0
- vL9rECVJF/g7za7foX/yGZGTWwy8O7bMWXdp8pWW+oiThYMzuu7JZ0aQhLAFO2S8RHV+9pUJE
- vydN0m/BKXsgBv9Qhe1Xs2OtOeuXbqTNUY/LcuHBfQUhJE6D1cB87mh9x4bNcVI2aDkOUpFr7
- B4cKLUm30GJ7qc7dk+WUfWHtsNPxZl/IUay0/SL5b1Vq6MQKyk=
+X-Provags-ID: V03:K0:N2FDkYDWBt0KkWLAKkl7KgasvifYdF0qS/BuzuGaj8wHtbHE6RI
+ yP+TerYy0nSmNEcERR6X6r9VZ4C0/Lbnr9tQzlllWPthGoQFw8Uj5JYZYw65YO1BfbpEwUA
+ PashULugAQiX+czEc5e08w8GXUpWltvRDb/qB7cYnlk2jU+f2gLU0nlyHPriZi8RrBDoUHK
+ kp6atcBz6d+qKE7PV+AJg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:+OMEPCx5P0A=:MdDvLL+UpgXXuNHKoW0LED
+ x3QQKGWjvkSxzpHFZXi8v4wN9jhskwhqTKMG/tG/4HZJdqSgotGSRO2mNmQuhncrV8Wbh3hoq
+ wgmCV1Y3v/yKraF68vFW0C2oi3cCknP3eGHtOg0cV+qNvN4dJoD02fTMo++uEszfipRHF7cqM
+ d7cOsO8aV6ig5bNbsFpkBNh04WRy94yQ+RITyyeLVfbfftFFjYP3Cxt55nceCDFG6gAPRHqEG
+ MIHrHGFkFIuFGajElAz7VtmVeTsI9qL0FE/ZuRxmjzqCwdXqOOOTPzKtJiM0BN8xUMC8PoNVz
+ FZA1Q9n7JH2u+USUoJ84DRLjomlEwdmCzNYQ1k/vVIIqcqOJaYTAP/HQ8o4UYA0We7OTWfSwR
+ FG7VCn8+e4GLkN8QXd8FAeS8ISjJwzxblhQM1USF6PekLeLudzZE/cd3Gv4HPDBOzqYx8prbM
+ GRWIhOEsqhxkRSwwxZKHDIs2hJsmrdzGet7Sp9MIjGTF6Fw5+i/JcnLMSXBRLrJvJz3LIwIq5
+ oEjvgbpXG1UO67naVp3QwwTxy1K8aG6ZJS7ddxUSlgEnXUmhUqlVEvQ2onbMMVZ9ac9VSfU5o
+ MJ7irkNVFMdM+95ubX08VRn+CY5CgqcHBtniQV5WSnUhYZKIN64IGzwp9HL9ZVUykuZwx5ZUt
+ Nnbomyawy5zOOu81G9yl1/imVSbxhamghPk36ZH5t6FPQjKJfW7/KcJTcvLdfoOEotpwdSRmR
+ o9BmNJb9ugzNgEmbekVRttKlz22y7Zkq13rDrAbjFjoP3Q6TRh36jAEmTMW5c8tfAVhIKn7oa
+ RNWtmnBUcmtrISBPEwBCssyNlLTveii9d5lY7EziiQhmx2Vpb0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When Git for Windows was still based on MSys1, we had no gettext, ergo
-no msgfmt, either. Therefore, we introduced a small and simple Tcl
-script to perform the same task.
+Hi,
 
-However, with MSys2, we no longer need that because we have a proper
-msgfmt executable. Plus, the po2msg.sh script somehow manages to hang
-when run in parallel in Git for Windows' SDK (symptom: the Continuous
-Testing tasks timing out).
+On Sat, 22 Jul 2017, Junio C Hamano wrote:
 
-Two reasons to use real msgfmt.exe instead.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > But this whole thread taps into a gripe I have with parts of Git's code
+> > base: part of the code is not clear at all in its intent by virtue of
+> > calling whatever POSIX function may seem to give the answer for the
+> > intended question, instead of implementing a function whose name says
+> > precisely what question is asked.
+> >
+> > In this instance, we do not call a helper get_file_size(). Oh no. That
+> > would make it too obvious. We call lstat() instead.
+> 
+> I agree with you for this case and a case like this in general.  
+> 
+> In codepaths at a lot lower level (they tend to be the ancient and
+> quite fundamental ones) in our codebase, lstat() is often directly
+> used by the caller because they are interested not only in a single
+> aspect of a path but many fields in struct stat are of interest.
+> 
+> When the code is interested in existence or size or whatever single
+> aspect of a path and nothing else, however, the code would become
+> easier to read if a helper function with a more specific name is
+> used.  And it may even help individual platforms that do not want to
+> use the full lstat() emulation, by telling them that other fields in
+> struct stat are not needed.
+> 
+> Of course, then the issue becomes what to do when we are interested
+> in not just one but a selected few attributes.  Perhaps we create a
+> helper "get_A_B_and_C_attributes_for_path()", which may use lstat()
+> on POSIX and the most efficient way to get only A, B and C attributes
+> on non-POSIX platforms.  The implementation would be OK, but the naming
+> becomes a bit hard; we need to give it a good name.
+> 
+> Things gets even more interesting when the set of attributes we are
+> interested in grows by one and we need to rename the function to
+> "get_A_B_C_and_D_attributes_for_path()".  When it is a lot easier to
+> fall back to the full lstat() emulation on non-POSIX platforms, the
+> temptation to just use it even though it would grab attributes that
+> are not needed in that function grows, which needs to be resisted by
+> those who are doing the actual implementation for a particular platform.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+It becomes a lot easier to fall back to lstat(), if a lot less readable,
+yes.
 
-	This hopefully fixes the hangs with the Windows builds triggered
-	by Travis. It was a tough one to figure out originally, and it is
-	my fault for prioritizing other patch contributions of this one;
-	Git for Windows has been carrying this patch since April 6th, 2015.
+Until, that is, one realises that the function name does not have to
+encode what information is sought. It can be a bit field in a parameter
+instead. There are even precendents in Git's own source code for that
+rather smart paradigm.
 
-	Pat, I still have a couple of Pull Request open in your repository
-	at https://github.com/patthoyts/git-gui/pulls/dscho that await any
-	reaction since October 14th last year. Please let me know when you
-	are ready to accept code contributions again. In the meantime, I
-	will send git-gui patches to this here mailing list, Cc:ing you,
-	and hoping that Junio will take the patches.
-
-Published-As: https://github.com/dscho/git/releases/tag/git-gui-msgfmt-on-windows-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git git-gui-msgfmt-on-windows-v1
-
- git-gui/Makefile | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/git-gui/Makefile b/git-gui/Makefile
-index fe30be38dc8..918a8de3691 100644
---- a/git-gui/Makefile
-+++ b/git-gui/Makefile
-@@ -161,7 +161,9 @@ ifeq ($(uname_S),Darwin)
- 	endif
- endif
- ifneq (,$(findstring MINGW,$(uname_S)))
-+ifeq ($(shell expr "$(uname_R)" : '1\.'),2)
- 	NO_MSGFMT=1
-+endif
- 	GITGUI_WINDOWS_WRAPPER := YesPlease
- 	GITGUI_RELATIVE := 1
- endif
-
-base-commit: 5eada8987e79f216f2002a3cd991360a50cd577c
--- 
-2.13.3.windows.1.13.gaf0c2223da0
+Ciao,
+Dscho
