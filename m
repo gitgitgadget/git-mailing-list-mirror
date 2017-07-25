@@ -2,116 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 74B911F89D
-	for <e@80x24.org>; Tue, 25 Jul 2017 23:39:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 33ED21F89D
+	for <e@80x24.org>; Tue, 25 Jul 2017 23:44:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751451AbdGYXjG (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jul 2017 19:39:06 -0400
-Received: from mail-pg0-f47.google.com ([74.125.83.47]:34149 "EHLO
-        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750886AbdGYXjF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jul 2017 19:39:05 -0400
-Received: by mail-pg0-f47.google.com with SMTP id 123so76323525pgj.1
-        for <git@vger.kernel.org>; Tue, 25 Jul 2017 16:39:05 -0700 (PDT)
+        id S1751452AbdGYXoF (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jul 2017 19:44:05 -0400
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:35003 "EHLO
+        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751325AbdGYXoF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jul 2017 19:44:05 -0400
+Received: by mail-pf0-f169.google.com with SMTP id h29so28910182pfd.2
+        for <git@vger.kernel.org>; Tue, 25 Jul 2017 16:44:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=zIAz6pF3r0yJBSo4d+GxSx7NRn2keptszG0hVrrJzuw=;
-        b=eoLgEPY9S7uFSXmfbRtrggKTRrnlD9Rnnt0Dc9An35Dr0mvydVPc/phpVMhPuPqvdB
-         ECa+NeJpW+qfsks+wEx/chISi/ugzRy1skVNV8xfJu4gxlidTxNP9+S3eOl/eFLtx7SU
-         tOLxlZ0ntZqB87Gsp+88YbAOjjmiTIlk322zg55AOvE3R2xVdnmIr4CBxdz+4oepDaSg
-         llNI6wXp14B2MnWgPQYHUzwGkTLsxkK/O/czD+fXtp5GNR0qNiKcauFtN3DuxYDS9kg8
-         2SDolPj/hsP7X7cSFJ2Kx93Cnfff8NnGCe2exX7mMxFN5hQJfIjMHEOPm03iUOOqBsoL
-         VfpQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=dz/T07fG5M3fbX4US/iwBuzvx9OBOeCKosW9uHD6buc=;
+        b=fY6Zj5UCF8o2O+p3goblCoO6KkXhm3+l7wlifa3ES+UKYr+n77IHq4hkqC8tHSoEtg
+         SwdBouyxQiMq4W3wHwQqViKOPdXw5VYtELY72KY+Y3/SYmNQTaNCLp85ZL3z38SXtPvz
+         qg8XUClo9fu3LT9SIM8NVwoCO2EiH5L3uJptgG71CGad8H7BHjqyrIRgSnfa68o3ewyp
+         RJrSZxYhP3qhGSXXUd6SOCaFMKuFVAITZaV4XIbXn0BSJ9SncyV7PBcOUPDAn3d9oOpn
+         O3OdDySvh/JhuBZqhPSh29GnbU1mYXpb4Q2SKVIksv1XvGLhxSac6ZCEfZWk0D70ali4
+         0WMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=zIAz6pF3r0yJBSo4d+GxSx7NRn2keptszG0hVrrJzuw=;
-        b=SZx5P1ILlqGhDxzb5VylERFSloCqmO491xzak/ePrPAZl2QeLNdFgztuIYuYmXm1y+
-         8Y/rWPuCtq9XiS7cAPWhQHKUZyWsEXjjVu6w1sSTOFoiuXbVU8KX5mUxY5vphwOcxyVO
-         tctbqX4HaXniLVgXcJX3GgC7S/3GjxSiQ16ncxICqZ2zIupOp++PDrqrTejFWbeLtgei
-         XJdxoYRizfYgYlhVHvdIDQaMatHkg0QTwQX4xMOpShoDTBZ6WWfCG9O+1Q7wdFynqIIY
-         LRnA4HRUzzpe70oRN5Rv81VitBAusd9yKwD/IHF+RPRXsL17Mr+sMJgp1Pv5pqPJboOW
-         mydQ==
-X-Gm-Message-State: AIVw112X68rGMHZx4StQX8mZUHRB6VF7yxVZb/I0mdr6jCiG0uHmtU5c
-        JtYzMrZPW4lMZs8o
-X-Received: by 10.99.114.73 with SMTP id c9mr21002998pgn.267.1501025945320;
-        Tue, 25 Jul 2017 16:39:05 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:cccf:9961:8336:68b3])
-        by smtp.gmail.com with ESMTPSA id z8sm7226385pfk.130.2017.07.25.16.39.03
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 25 Jul 2017 16:39:04 -0700 (PDT)
-Date:   Tue, 25 Jul 2017 16:39:03 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=dz/T07fG5M3fbX4US/iwBuzvx9OBOeCKosW9uHD6buc=;
+        b=FCum8T9IhHKnRu1LYK3UIKhB3NtrKESEQxJWboarOfydUatwzOSfe6Jy6tzFuenvyc
+         pE+QavWxKybR9REvahqJz7qsOej7PfmbZOCdaFcUXNwtiPJAeVcuEOPoPhLTPqTA0d1n
+         1NXhNU5mRCU7bzDCsT9nEVsDWIqS4114SpERPwN4ykvygzSgBVgK6UAOQv5J7iBGCcgs
+         qDjztb2DhbSWJ8Dt/WOwcWwm+VFuX6kB4gn4L6Knujcxeim7CD8ZKGpJpzVLlAwc1Td3
+         HcBvf36+bfY79okakMayB7eTufqbyYvqGglEs4feA2Qy6gZKbzP2eJVODUHOoL7yEm32
+         bwRA==
+X-Gm-Message-State: AIVw112TIlZzj46KvfxW/IExJoRaJaxLKjJDZL3ksuGTchKoAwMLsAy2
+        SblaO4QwZeBo7Ogh8fJBaCjtih/rj79f
+X-Received: by 10.99.97.12 with SMTP id v12mr18376501pgb.97.1501026244645;
+ Tue, 25 Jul 2017 16:44:04 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.100.165.44 with HTTP; Tue, 25 Jul 2017 16:44:04 -0700 (PDT)
+In-Reply-To: <20170725213928.125998-7-bmwill@google.com>
+References: <20170725213928.125998-1-bmwill@google.com> <20170725213928.125998-7-bmwill@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 25 Jul 2017 16:44:04 -0700
+Message-ID: <CAGZ79kZGFhiNAYqJ9hZqDLEZt-9jYQ=o0ej2VmO0E=pZg85Fsg@mail.gmail.com>
+Subject: Re: [PATCH 06/15] fetch: don't overlay config with submodule-config
+To:     Brandon Williams <bmwill@google.com>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
         Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 05/15] submodule--helper: don't overlay config in
- update-clone
-Message-ID: <20170725233903.GB71799@google.com>
-References: <20170725213928.125998-1-bmwill@google.com>
- <20170725213928.125998-6-bmwill@google.com>
- <CAGZ79kacdTFVJknTx+ceT8epytXSJDRVAwZO4HyzpsmVbK5VTQ@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kacdTFVJknTx+ceT8epytXSJDRVAwZO4HyzpsmVbK5VTQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 07/25, Stefan Beller wrote:
-> On Tue, Jul 25, 2017 at 2:39 PM, Brandon Williams <bmwill@google.com> wrote:
-> > Don't rely on overlaying the repository's config on top of the
-> > submodule-config, instead query the repository's config directly for the
-> > url and the update strategy configuration.
-> >
-> > Signed-off-by: Brandon Williams <bmwill@google.com>
-> > ---
-> ...
-> 
-> > +struct submodule_update_strategy submodule_strategy_with_config_overlayed(struct repository *repo,
-> > +                                                                         const struct submodule *sub)
-> > +{
-> > +       struct submodule_update_strategy strat = sub->update_strategy;
-> > +       const char *update;
-> > +       char *key;
-> > +
-> > +       key = xstrfmt("submodule.%s.update", sub->name);
-> > +       if (!repo_config_get_string_const(repo, key, &update)) {
-> > +               strat.command = NULL;
-> > +               if (!strcmp(update, "none")) {
-> > +                       strat.type = SM_UPDATE_NONE;
-> > +               } else if (!strcmp(update, "checkout")) {
-> > +                       strat.type = SM_UPDATE_CHECKOUT;
-> > +               } else if (!strcmp(update, "rebase")) {
-> > +                       strat.type = SM_UPDATE_REBASE;
-> > +               } else if (!strcmp(update, "merge")) {
-> > +                       strat.type = SM_UPDATE_MERGE;
-> > +               } else if (skip_prefix(update, "!", &update)) {
-> > +                       strat.type = SM_UPDATE_COMMAND;
-> > +                       strat.command = update;
-> > +               } else {
-> > +                       die("invalid submodule update strategy '%s'", update);
-> > +               }
-> > +       }
-> 
-> Can this be simplified by reusing
->     parse_submodule_update_strategy(value, dest)
-> ?
+On Tue, Jul 25, 2017 at 2:39 PM, Brandon Williams <bmwill@google.com> wrote:
+> Don't rely on overlaying the repository's config on top of the
+> submodule-config, instead query the repository's config directly for the
+> fetch_recurse field.
+>
+> Signed-off-by: Brandon Williams <bmwill@google.com>
 
-It would result in a memory leak if we did.  Really I'd like to just
-remove this entirely. The only reason this needs to be done is for
-checkout, which if we don't have respect the update config it can be
-removed.
+Reviewed-by: Stefan Beller <sbeller@google.com>
 
--- 
-Brandon Williams
+> ---
+>  builtin/fetch.c |  1 -
+>  submodule.c     | 24 +++++++++++++++++-------
+>  2 files changed, 17 insertions(+), 8 deletions(-)
+>
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index d84c26391..3fe99073d 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -1362,7 +1362,6 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+>
+>         if (recurse_submodules != RECURSE_SUBMODULES_OFF) {
+>                 gitmodules_config();
+> -               git_config(submodule_config, NULL);
+>         }
+>
+>         if (all) {
+> diff --git a/submodule.c b/submodule.c
+> index 8b9e48a61..c5058a4b8 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -1210,14 +1210,24 @@ static int get_next_submodule(struct child_process *cp,
+>
+>                 default_argv = "yes";
+>                 if (spf->command_line_option == RECURSE_SUBMODULES_DEFAULT) {
+> -                       if (submodule &&
+> -                           submodule->fetch_recurse !=
+> -                                               RECURSE_SUBMODULES_NONE) {
+> -                               if (submodule->fetch_recurse ==
+> -                                               RECURSE_SUBMODULES_OFF)
+> +                       int fetch_recurse = RECURSE_SUBMODULES_NONE;
+> +
+> +                       if (submodule) {
+> +                               char *key;
+> +                               const char *value;
+> +
+> +                               fetch_recurse = submodule->fetch_recurse;
+> +                               key = xstrfmt("submodule.%s.fetchRecurseSubmodules", submodule->name);
+> +                               if (!repo_config_get_string_const(the_repository, key, &value)) {
+> +                                       fetch_recurse = parse_fetch_recurse_submodules_arg(key, value);
+> +                               }
+> +                               free(key);
+> +                       }
+
+I wonder if it would be better to parse this in builtin/fetch.c#git_fetch_config
+and then pass it in here as a parameter, instead of looking it up directly here?
+That way it is easier to keep track of what a builtin pays attention to.
+
+
+> +
+> +                       if (fetch_recurse != RECURSE_SUBMODULES_NONE) {
+> +                               if (fetch_recurse == RECURSE_SUBMODULES_OFF)
+>                                         continue;
+> -                               if (submodule->fetch_recurse ==
+> -                                               RECURSE_SUBMODULES_ON_DEMAND) {
+> +                               if (fetch_recurse == RECURSE_SUBMODULES_ON_DEMAND) {
+>                                         if (!unsorted_string_list_lookup(&changed_submodule_paths, ce->name))
+>                                                 continue;
+>                                         default_argv = "on-demand";
+> --
+> 2.14.0.rc0.400.g1c36432dff-goog
+>
