@@ -2,69 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2219C2047F
-	for <e@80x24.org>; Wed, 26 Jul 2017 18:48:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5B6BA2047F
+	for <e@80x24.org>; Wed, 26 Jul 2017 19:06:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751141AbdGZSsp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Jul 2017 14:48:45 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54839 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751040AbdGZSsp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jul 2017 14:48:45 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4549C8FED1;
-        Wed, 26 Jul 2017 14:48:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=y/RPFzc//EOvmmqV5khY8VnZh/s=; b=hiLp5t
-        ubZhXC7vOpy75V9zn3+g7cgR4RAjfsIlLc52z1aHoSe9/Mhd2O/6f0KppOr/MWjX
-        QpG2sqqAKWka7yyA7zC/JBHYt3FsDcqqtkokzvsn+yN33KtZUQ9qdsmn+BD81l/i
-        v1mEZWvXaxDaUITGQO8UtBqHDRwQvJd7YxjIU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=tJs9rjRJyjp32DOI33sww531v9UxomXH
-        T4eQp2mOFVi2MZAjIfzlRCb0VTn0UQs1B/DCmgwdc79FnN+Dq+2kA20jU2u8zfBF
-        herLWbSZfd9zJhNra8/VS/141hKgwunFBJSrElxHkqu+xnyoOYn/+xj6s2ydRY+H
-        6XObiZnQtuE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3E8138FED0;
-        Wed, 26 Jul 2017 14:48:37 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A48128FECF;
-        Wed, 26 Jul 2017 14:48:36 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jul 2017, #07; Mon, 24)
-References: <xmqqinihbgci.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.21.1.1707252046190.4271@virtualbox>
-Date:   Wed, 26 Jul 2017 11:48:35 -0700
-In-Reply-To: <alpine.DEB.2.21.1.1707252046190.4271@virtualbox> (Johannes
-        Schindelin's message of "Tue, 25 Jul 2017 21:22:19 +0200 (CEST)")
-Message-ID: <xmqq60efrq4c.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0856D47A-7233-11E7-AE06-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+        id S1751588AbdGZTGh (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Jul 2017 15:06:37 -0400
+Received: from mail-pf0-f178.google.com ([209.85.192.178]:34429 "EHLO
+        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751526AbdGZTGg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jul 2017 15:06:36 -0400
+Received: by mail-pf0-f178.google.com with SMTP id q85so74401710pfq.1
+        for <git@vger.kernel.org>; Wed, 26 Jul 2017 12:06:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=Bm2tP9CjLiAOR2TWey9MbfT8njKGF+98J38ozP/s9PM=;
+        b=uXzx24Dq4RjcTYkbuF4/HW3OY7I2HRgB8IPPchRyK3piQRiS3sm5ZvZK0BzNY1lbFQ
+         UQxcEN5ea+NEXGev54FDOjCXtIP2Cmh67sUhOzUQj+7f3dmzjBkuvfmgrz8zSrr5XwfI
+         o94wewJCjdjIqgCx9dIiDjFALK0/s40WbFhgw3Tdr3va6Qsni90t5igH5qBkcQETqHUY
+         aGpzMx1gYlSPJiCLvQnzdiRT8wSWpC/yKJwXrUBGNTFvYpSRg550vAB6d8Qs1p7j0L2r
+         DJiLS2tb9NJZuh5a19W0mkwE3DozcRuV1SDaNHuydIziOuVavi9Wo8++drta0aqbxTuA
+         PXqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=Bm2tP9CjLiAOR2TWey9MbfT8njKGF+98J38ozP/s9PM=;
+        b=mcKufCwvgXf21Rk2JXZBm8js0geABVaSJPAGsQ3um9xeUjj2TK226POvk/ym1sBDC2
+         EQN8kiAwO00/plnzr8uy6a8wYbWae0h4cx8kc0W28UJ57mEMpHsUEk9Ekd3CY0w3Bt0+
+         kH6g1HLvEabhSa3o3VebQVrTiafcY9v6lfYnzx4Wihh6jINtMwVyd+BdRWIUQVRpxZrR
+         kiJFHIDtKDMRH3OO/surpf0oHnZuK0qdrWeATzgso9yuGG7Z+ZiRf2jMA1JJdVl9NBda
+         KAeAAODVCVhdjh34pE4vHYxFK8t54Rbm1rizSEvT5S6scOKajXFVGKhYURrnuKtIYMkA
+         qxAQ==
+X-Gm-Message-State: AIVw112z9gt2N/W8GOFoqvlsAOOH4Xe+Tu1ZQO3ZT0AWHxKIzpMKp27v
+        B7cw1HWI/Zetv9Yv
+X-Received: by 10.84.232.197 with SMTP id x5mr1872393plm.329.1501095995547;
+        Wed, 26 Jul 2017 12:06:35 -0700 (PDT)
+Received: from localhost ([2620:0:100e:422:b827:7828:2b7f:c1e7])
+        by smtp.gmail.com with ESMTPSA id s18sm11662085pfg.166.2017.07.26.12.06.34
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 26 Jul 2017 12:06:34 -0700 (PDT)
+From:   Stefan Beller <sbeller@google.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, sbeller@google.com
+Subject: [PATCHv2] t8008: rely on rev-parse'd HEAD instead of sha1 value
+Date:   Wed, 26 Jul 2017 12:06:31 -0700
+Message-Id: <20170726190631.560-1-sbeller@google.com>
+X-Mailer: git-send-email 2.14.0.rc0.3.g6c2e499285
+In-Reply-To: <xmqqk235o7rm.fsf@gitster.mtv.corp.google.com>
+References: <xmqqk235o7rm.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Remove hard coded sha1 values, obtain the values using
+'git rev-parse HEAD' which should be future proof regardless
+of the hash function used.
 
->> * wd/rebase-conflict-guide (2017-07-17) 1 commit
->>   (merged to 'next' on 2017-07-20 at c78e758b23)
->>  + rebase: make resolve message clearer for inexperienced users
->> 
->>  Code clean-up.
->
-> This is not a code clean-up. It is an improvement of the user experience.
+Additionally future-proof the test by hard coding the
+abbreviation length of the hash.
 
-Indeed it is.  Thanks for spotting.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+
+> Don't hardcoded lengths of the hashes defeat this future-proofing
+> effort, though?  It shouldn't be too hard to do the equivalent of
+> the auto computation of abbreviation in this script, which would be
+> true future-proofing, I guess.
+
+Added --abbrev=n to also hard code hash abbreviation. At first
+I had the impression of a off-by-one-error, but after reading the
+man page for both blame and rev-parse, I realize that blames
+abbrev notion is different than rev-parse precisely for the
+caret that may occur to indicate out-of-range.
+
+ t/t8008-blame-formats.sh | 30 ++++++++++++++++--------------
+ 1 file changed, 16 insertions(+), 14 deletions(-)
+
+diff --git a/t/t8008-blame-formats.sh b/t/t8008-blame-formats.sh
+index 92c8e792d1..ae4b579d24 100755
+--- a/t/t8008-blame-formats.sh
++++ b/t/t8008-blame-formats.sh
+@@ -12,22 +12,25 @@ test_expect_success 'setup' '
+ 	echo c >>file &&
+ 	echo d >>file &&
+ 	test_tick &&
+-	git commit -a -m two
++	git commit -a -m two &&
++	ID1=$(git rev-parse HEAD^) &&
++	shortID1="^$(git rev-parse HEAD^ |cut -c 1-17)" &&
++	ID2=$(git rev-parse HEAD) &&
++	shortID2="$(git rev-parse HEAD |cut -c 1-18)"
+ '
+ 
+-cat >expect <<'EOF'
+-^baf5e0b (A U Thor 2005-04-07 15:13:13 -0700 1) a
+-8825379d (A U Thor 2005-04-07 15:14:13 -0700 2) b
+-8825379d (A U Thor 2005-04-07 15:14:13 -0700 3) c
+-8825379d (A U Thor 2005-04-07 15:14:13 -0700 4) d
++cat >expect <<EOF
++$shortID1 (A U Thor 2005-04-07 15:13:13 -0700 1) a
++$shortID2 (A U Thor 2005-04-07 15:14:13 -0700 2) b
++$shortID2 (A U Thor 2005-04-07 15:14:13 -0700 3) c
++$shortID2 (A U Thor 2005-04-07 15:14:13 -0700 4) d
+ EOF
+ test_expect_success 'normal blame output' '
+-	git blame file >actual &&
++	git blame --abbrev=17 file >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-ID1=baf5e0b3869e0b2b2beb395a3720c7b51eac94fc
+-COMMIT1='author A U Thor
++COMMIT1="author A U Thor
+ author-mail <author@example.com>
+ author-time 1112911993
+ author-tz -0700
+@@ -37,9 +40,8 @@ committer-time 1112911993
+ committer-tz -0700
+ summary one
+ boundary
+-filename file'
+-ID2=8825379dfb8a1267b58e8e5bcf69eec838f685ec
+-COMMIT2='author A U Thor
++filename file"
++COMMIT2="author A U Thor
+ author-mail <author@example.com>
+ author-time 1112912053
+ author-tz -0700
+@@ -48,8 +50,8 @@ committer-mail <committer@example.com>
+ committer-time 1112912053
+ committer-tz -0700
+ summary two
+-previous baf5e0b3869e0b2b2beb395a3720c7b51eac94fc file
+-filename file'
++previous $ID1 file
++filename file"
+ 
+ cat >expect <<EOF
+ $ID1 1 1 1
+-- 
+2.14.0.rc0.3.g6c2e499285
+
