@@ -2,83 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 66E932047F
-	for <e@80x24.org>; Wed, 26 Jul 2017 15:06:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 287A72047F
+	for <e@80x24.org>; Wed, 26 Jul 2017 15:58:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751598AbdGZPG0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Jul 2017 11:06:26 -0400
-Received: from fallback9.m.smailru.net ([94.100.178.49]:39532 "EHLO
-        fallback.mail.ru" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750893AbdGZPGZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jul 2017 11:06:25 -0400
-X-Greylist: delayed 3494 seconds by postgrey-1.27 at vger.kernel.org; Wed, 26 Jul 2017 11:06:25 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=list.ru; s=mail;
-        h=Content-Transfer-Encoding:Content-Type:In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:Subject; bh=gCHU2oI67cAHwGv5CEauOISXkAkR7C5xyNNTix2lMsI=;
-        b=CSH9neseFslDFhlggJ5km4Tph5URai1yFMnKEOBAkcjGgsx/TjcvZ2PeEro8u8vk2sEEzimJ1TXi/Cila7lLSNikGvcLbwCdrR/F8qoHcDKkwfZy8OYLRmdmQTL38Jy3vpACrVqWq6n+Y+tIR48fhZjOuTC9ZL+JhdNJBYW4h1A=;
-Received: from [10.161.29.31] (port=37168 helo=smtp10.mail.ru)
-        by fallback9.m.smailru.net with esmtp (envelope-from <stsp@list.ru>)
-        id 1daMyt-0002Yb-Oy; Wed, 26 Jul 2017 17:08:07 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=list.ru; s=mail;
-        h=Content-Transfer-Encoding:Content-Type:In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:Subject; bh=gCHU2oI67cAHwGv5CEauOISXkAkR7C5xyNNTix2lMsI=;
-        b=CSH9neseFslDFhlggJ5km4Tph5URai1yFMnKEOBAkcjGgsx/TjcvZ2PeEro8u8vk2sEEzimJ1TXi/Cila7lLSNikGvcLbwCdrR/F8qoHcDKkwfZy8OYLRmdmQTL38Jy3vpACrVqWq6n+Y+tIR48fhZjOuTC9ZL+JhdNJBYW4h1A=;
-Received: by smtp10.mail.ru with esmtpa (envelope-from <stsp@list.ru>)
-        id 1daMyr-0001KJ-F8; Wed, 26 Jul 2017 17:08:05 +0300
-Subject: Re: git gc seems to break --symbolic-full-name
-To:     Jeff King <peff@peff.net>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>
-References: <234492d7-7fd6-f847-8b85-010732ff43b6@list.ru>
- <xmqqbmodhb5h.fsf@gitster.mtv.corp.google.com>
- <223fa7c7-196d-e4fe-85b5-7d7cc576aa52@list.ru>
- <CA+P7+xrhLf9eS_KkxTmWZgQ+Ho8VN83GS-OvxmboZ=_iY4dY0g@mail.gmail.com>
- <ed1ddfec-5782-d14b-6717-a1532efc0138@list.ru>
- <CA+P7+xock9gpYVtxj2n6L5Y9dO1VV01OEOT5i0MR7ay68yS+WQ@mail.gmail.com>
- <a6738cae-ad8d-cf51-0fbb-428cf0f88703@list.ru>
- <20170726132322.4cfj73tynrko264o@sigill.intra.peff.net>
-From:   Stas Sergeev <stsp@list.ru>
-Message-ID: <5b86f0e2-b44f-a3ea-bb66-c7826619773b@list.ru>
-Date:   Wed, 26 Jul 2017 17:08:01 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        id S1751013AbdGZP6L (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Jul 2017 11:58:11 -0400
+Received: from mail-it0-f44.google.com ([209.85.214.44]:37942 "EHLO
+        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750883AbdGZP6K (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jul 2017 11:58:10 -0400
+Received: by mail-it0-f44.google.com with SMTP id h199so69350326ith.1
+        for <git@vger.kernel.org>; Wed, 26 Jul 2017 08:58:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=xfWVHa+ljeLf6m9BlSgWM6GBHNx0UBqj/Q6K3EsJMFI=;
+        b=qIbOKg6RLserHBjGzcQi7oEbQk5DIjYyh22b+cK+w5gEsUMY/+SX9UQbMWFIGmmABP
+         +GMzxM/yNqYQmk7knvi03By+succ+y87uHusJ0KYo7UJrkmrd2xxNhWGPwF7frzXNmtf
+         tw7ryooCd6JJXHQosqr+vwzuh5ktAspMkJemYKh4Juob7z1LMt6yIUEKgdxoFC/PC1al
+         TqH0nJoQAKJqws5gwBjlWea+aqnZLK5sC692BBKxHkJZ3jV3bnaqADYefDXjJB4epia5
+         DNQRzuu93kBhVzDQ/AS1hqBMHIUhKc9W86WyQ0vX95tKxb37BFmn+1IIpNfHScNxbU9I
+         uDcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=xfWVHa+ljeLf6m9BlSgWM6GBHNx0UBqj/Q6K3EsJMFI=;
+        b=XALRqg/Cvq8maTo0U+ZXIdCI7vst6kPB/ECLnorKEyd2pJBo89QLZwDxY+Dyvl2iJK
+         +gI+/SOQYpLcCutThFIWJkfqAkANc19bu6XeiqSJ1ULeZvAYslNQyPXx6uKzqb90U0gR
+         3sMzFTvXH8Wp2Q2p9gbKwjgI7zjLx5KkkKe5AhcbEtLYeOYqWkYxWfrUhyRrHFIcECWL
+         lAOVtY8grRMU1oryO1MDHFEsAuFOpT7aOdF4H4GuzK//L+55RF8npgcNR0T+kTknfjka
+         W2TYMq6dAJg7GQaB7fhXBnSoJ2OdVK/r7W/XaHpcEKdD8XBeorVK4blLOdRiLAmdBbbb
+         XYfg==
+X-Gm-Message-State: AIVw113I9khmtHtKEDiA5IiJ6hIWX8sw7sa9L+DJjyjQBG8Dmu1lZTpg
+        xGVz/RkTlEnnEkh1lC2Jw+oDl2xCd9AA
+X-Received: by 10.36.76.10 with SMTP id a10mr1464876itb.96.1501084689879; Wed,
+ 26 Jul 2017 08:58:09 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20170726132322.4cfj73tynrko264o@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-MW
-X-7FA49CB5: 0D63561A33F958A54AD4E8EEFC3DE8A860ECCB9AF2D3C32149D0934BFA5585B5725E5C173C3A84C39472471D10B198B949CD37B04FA45A59A3CCBC2573AEBDE1C4224003CC836476C0CAF46E325F83A50BF2EBBBDD9D6B0F41B67924A99884D73B503F486389A921A5CC5B56E945C8DA
-X-Mailru-Sender: F1845AB6CCC9920DF7838D61D4D05C42C65248277218CF1C947F3BBC46CE35C5E23BA72BC693BAAB1653177920737CA72999BEE114A20FF4278B2D54D4112F244F0A872F021F905956A8FB0C6EBA5FCCEAB4BC95F72C04283CDA0F3B3F5B9367
-X-Mras: OK
-X-7FA49CB5: 0D63561A33F958A5158CE34CBEB7DF13E1BE90109725F5083A25A265ABBF80B8462275124DF8B9C938130EB80001CEACE5BFE6E7EFDEDCD789D4C264860C145E
-X-Mailru-Sender: A5480F10D64C90052575E382D1FF78560CDE0412633BB99940CC4A6F3FC69C0CCF113DD4F50517E8BD9A213A94BF4775DDBB79867CC2C1EC5DD9ADBE8243F6ED0252A3EF2865ED2F733E9BFD465368085FEEDEB644C299C0ED14614B50AE0675
-X-Mras: OK
+Received: by 10.107.47.106 with HTTP; Wed, 26 Jul 2017 08:58:09 -0700 (PDT)
+In-Reply-To: <CAP8UFD1FXPtzHF1J5ZfcsmMiHrfXQOd=qEghJQp3eFYsVd-nxQ@mail.gmail.com>
+References: <20170713065050.19215-1-chriscool@tuxfamily.org>
+ <20170713165840.e5cdw7pa2m6haaen@sigill.intra.peff.net> <CAP8UFD3VnpMuMpcfRcTwL4nRpOF5URj6zsQqiEWYwo=1pi5Phw@mail.gmail.com>
+ <20170713205535.otzi3gjd63ubb2dm@sigill.intra.peff.net> <CAP8UFD1FXPtzHF1J5ZfcsmMiHrfXQOd=qEghJQp3eFYsVd-nxQ@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 26 Jul 2017 17:58:09 +0200
+Message-ID: <CAP8UFD2NNBN=6GHbQPjz19hQUb+k_43YZBKimaA=3M6m4RH7Tw@mail.gmail.com>
+Subject: Re: [PATCH v1 0/4] Teach 'run' perf script to read config files
+To:     Jeff King <peff@peff.net>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Thomas Rast <tr@thomasrast.ch>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-26.07.2017 16:23, Jeff King пишет:
-> In git.git we do something like:
+On Fri, Jul 14, 2017 at 8:27 AM, Christian Couder
+<christian.couder@gmail.com> wrote:
+> On Thu, Jul 13, 2017 at 10:55 PM, Jeff King <peff@peff.net> wrote:
+>> On Thu, Jul 13, 2017 at 08:57:01PM +0200, Christian Couder wrote:
+>>
+>>> >> We want to make it possible to store the parameters to the 'run'
+>>> >> script in a config file. This will make it easier to store, reuse,
+>>> >> share and compare parameters.
+>>> >
+>>> > Because perf-lib is built on test-lib, it already reads
+>>> > GIT-BUILD-OPTIONS.
+>>>
+>>> Actually the 'run' script also sources GIT-BUILD-OPTIONS, so maybe
+>>> this is not necessary.
+>>
+>> Ah, right. The one that comes via perf-lib gets the variables into the
+>> test scripts themselves. But anything "run" would need itself would come
+>> from the source it does itself. And that's where GIT_PERF_MAKE_OPTS has
+>> an effect.
+>>
+>>> Also are the variables in GIT-BUILD-OPTIONS exported already?
+>>
+>> No, I don't think so. But because both "run" and the scripts themselves
+>> source them, they're available more or less everywhere, except for
+>> sub-processes inside the scripts.
 >
-> -- >8 --
-> other: version
-> 	cat $< >$@
->
-> .PHONY: FORCE
-> version: FORCE
-> 	@git rev-parse HEAD >$@+
-> 	@if cmp $@+ $@ >/dev/null 2>&1; then rm $@+; else mv $@+ $@; fi
-> -- >8 --
-Yes, thats a nice recipe that I would be using
-if not for the fact that I already switched to
-"touch", which requires 1 fewer tmp file and
-no comparison.
-But I'll keep this in mind if something wrong
-happens with my current solution, thanks!
-I wonder if git can provide some helper script
-for other projects to solve this in a same way.
+> Ok, I see.
+
+Actually after taking another look at that, it looks like the following happens:
+
+1) the run script sources the original GIT-BUILD-OPTIONS file from
+../.. relative to its location
+2) a git version is built in "build/$rev" using GIT_PERF_MAKE_OPTS
+which generates a new GIT-BUILD-OPTIONS file in "build/$rev/"
+3) when the actual perf scripts are run they source the original
+GIT-BUILD-OPTIONS file (through perf-lib.sh which sources test-lib.sh)
+
+I wonder how useful 1) is, as the variables sourced from original
+GIT-BUILD-OPTIONS are not used inside the "run" script and not
+available to its child processes as they are not exported.
+Is it just so that if people add GIT_PERF_* variables to their
+config.mak before building they can then have those variables used by
+the run script?
+
+I also wonder if it would be better at step 3) to source the
+GIT-BUILD-OPTIONS file generated at step 2) instead of the original
+one, because they can be different as the options in
+$GIT_PERF_MAKE_OPTS will be baked into the new GIT-BUILD-OPTIONS file.
+(Of course if $GIT_PERF_MAKE_OPTS was added to config.mak before
+building, then they will be in the original one too. But
+$GIT_PERF_MAKE_OPTS should work without that.)
