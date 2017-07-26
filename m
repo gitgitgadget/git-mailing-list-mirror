@@ -2,150 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A6C7D1F89D
-	for <e@80x24.org>; Tue, 25 Jul 2017 23:48:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 450DF1F89D
+	for <e@80x24.org>; Wed, 26 Jul 2017 00:21:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751750AbdGYXs3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jul 2017 19:48:29 -0400
-Received: from mail-pg0-f44.google.com ([74.125.83.44]:36045 "EHLO
-        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751730AbdGYXs2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jul 2017 19:48:28 -0400
-Received: by mail-pg0-f44.google.com with SMTP id 125so76410631pgi.3
-        for <git@vger.kernel.org>; Tue, 25 Jul 2017 16:48:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=pe41pyEr8rK5OEA+fphBs8shKbuyVuO1laJdq8/jv6I=;
-        b=DkyinF95FXCUANkgziArudj0Vgu0T/zMTyi4A699i5pdkD+MfBFjnynWNFcs1Pv2Jp
-         mJIjHLmZt1sagqt4cHMXfNwiFC/pYzjfpbInaOYsNkd+n4dz0XY1p1WaKvFG8TJyyOSj
-         S03pP9TVdwOSf+kG2wP6tIbaWKePalXCIS8l0cTMyLGZduXlUBIXcDqn32BxZMtwnGp3
-         vCPIPK3GFCMAsREN2wMqCQSAhoOQD0JMwGsgF7t68bahseD9FhqH6ALPBYA3S/wJqbMQ
-         E9EE4b9YfoN21kUa+ctsU0B00Q3hH80ujzVPcXE3jH+1D5qPkq1ZemrTguskmIFx7ozl
-         nNug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=pe41pyEr8rK5OEA+fphBs8shKbuyVuO1laJdq8/jv6I=;
-        b=kXk3b+x+5v7gfAGC4LavPURH20sWq3JnRX1JLHrbPb7LmiNbEWbmXvflmeVWqc63TF
-         ImRLoSEXcqwRrR7WkmT/Wi2JFdOtkQFMiYFqDWI4CbyV+Kf8glgn2WG6dEJTdCN/LZ2Y
-         dIF45bVj9M0VPbKRNcEJTrZjVR7Lf8vZ3E6jTenaccqrmoOo+MpfIbeaElTP8hokr+MX
-         T7k/hdbsSUPzmnxcyHwrn2e5Ui7h73ueQ7mnpXd+TLzc0VDnrKo8fjXJkAiRpJTDR+c4
-         mqs6DqUALB6AYRTy+DXQ9uhoeYLUiImg0hTBDagmskGxI3LcWclyKVP2JIfYmeZmhRbQ
-         9/IA==
-X-Gm-Message-State: AIVw112tNm3W/zDVo4d4GFGR+hD+tphy87quW1LGkXHukTv7fT+EH2rs
-        Y7R1HmM3sZ73ddok
-X-Received: by 10.98.138.204 with SMTP id o73mr21300765pfk.5.1501026507974;
-        Tue, 25 Jul 2017 16:48:27 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:cccf:9961:8336:68b3])
-        by smtp.gmail.com with ESMTPSA id f74sm13683749pfk.131.2017.07.25.16.48.26
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 25 Jul 2017 16:48:27 -0700 (PDT)
-Date:   Tue, 25 Jul 2017 16:48:25 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 06/15] fetch: don't overlay config with submodule-config
-Message-ID: <20170725234825.GC71799@google.com>
-References: <20170725213928.125998-1-bmwill@google.com>
- <20170725213928.125998-7-bmwill@google.com>
- <CAGZ79kZGFhiNAYqJ9hZqDLEZt-9jYQ=o0ej2VmO0E=pZg85Fsg@mail.gmail.com>
+        id S1751609AbdGZAVY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jul 2017 20:21:24 -0400
+Received: from smtp40.i.mail.ru ([94.100.177.100]:45184 "EHLO smtp40.i.mail.ru"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751595AbdGZAVW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jul 2017 20:21:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=list.ru; s=mail;
+        h=Content-Transfer-Encoding:Content-Type:In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:Subject; bh=mnp38pRXOAi75mJb7XBKLx+bMor16Ay668I13+tIj6Y=;
+        b=oNCXe90liRX1NaSzY76Vr03R8uAjZ/W3eRd6Lv3o8NtoQA6wd04jTxjK5kInFo6LNjr51WtKXQhb2FtduKIyen54u5tTWjqq5jdf1xnf3g+/JatUbGzIqUu3NrBFZlNOD/QFHGIcNDVFiveg/00B1s6pvqzCtm22qyei3+wnvJ8=;
+Received: by smtp40.i.mail.ru with esmtpa (envelope-from <stsp@list.ru>)
+        id 1daA4m-00061i-96; Wed, 26 Jul 2017 03:21:20 +0300
+Subject: Re: git gc seems to break --symbolic-full-name
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>
+References: <234492d7-7fd6-f847-8b85-010732ff43b6@list.ru>
+ <xmqqbmodhb5h.fsf@gitster.mtv.corp.google.com>
+ <223fa7c7-196d-e4fe-85b5-7d7cc576aa52@list.ru>
+ <CA+P7+xrhLf9eS_KkxTmWZgQ+Ho8VN83GS-OvxmboZ=_iY4dY0g@mail.gmail.com>
+ <ed1ddfec-5782-d14b-6717-a1532efc0138@list.ru>
+ <CA+P7+xrpKTuBTueyGGVz4doWMnbGQo+2qj2wbpPvXBaW-iDV2w@mail.gmail.com>
+From:   Stas Sergeev <stsp@list.ru>
+Message-ID: <60331e4f-93a7-5ceb-1443-41212b9fb945@list.ru>
+Date:   Wed, 26 Jul 2017 03:21:17 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kZGFhiNAYqJ9hZqDLEZt-9jYQ=o0ej2VmO0E=pZg85Fsg@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <CA+P7+xrpKTuBTueyGGVz4doWMnbGQo+2qj2wbpPvXBaW-iDV2w@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-MW
+Authentication-Results: smtp40.i.mail.ru; auth=pass smtp.auth=stsp@list.ru smtp.mailfrom=stsp@list.ru
+X-7FA49CB5: 0D63561A33F958A53708C766CA3419D79DCCD0DB222E26931F42DF47398C4A6D725E5C173C3A84C3C9EEE74C166EF7BCCF00CBA460D8C00F89C8E7BF4648B176C4224003CC836476C0CAF46E325F83A50BF2EBBBDD9D6B0FD29CFF114C3378C93B503F486389A921A5CC5B56E945C8DA
+X-Mailru-Sender: F1845AB6CCC9920DF7838D61D4D05C4229833AEAB720B0CBF5FB1BAB58DE5A3CDBF1189B093656B61653177920737CA72999BEE114A20FF4278B2D54D4112F244F0A872F021F905956A8FB0C6EBA5FCCEAB4BC95F72C04283CDA0F3B3F5B9367
+X-Mras: OK
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 07/25, Stefan Beller wrote:
-> On Tue, Jul 25, 2017 at 2:39 PM, Brandon Williams <bmwill@google.com> wrote:
-> > Don't rely on overlaying the repository's config on top of the
-> > submodule-config, instead query the repository's config directly for the
-> > fetch_recurse field.
-> >
-> > Signed-off-by: Brandon Williams <bmwill@google.com>
-> 
-> Reviewed-by: Stefan Beller <sbeller@google.com>
-> 
-> > ---
-> >  builtin/fetch.c |  1 -
-> >  submodule.c     | 24 +++++++++++++++++-------
-> >  2 files changed, 17 insertions(+), 8 deletions(-)
-> >
-> > diff --git a/builtin/fetch.c b/builtin/fetch.c
-> > index d84c26391..3fe99073d 100644
-> > --- a/builtin/fetch.c
-> > +++ b/builtin/fetch.c
-> > @@ -1362,7 +1362,6 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
-> >
-> >         if (recurse_submodules != RECURSE_SUBMODULES_OFF) {
-> >                 gitmodules_config();
-> > -               git_config(submodule_config, NULL);
-> >         }
-> >
-> >         if (all) {
-> > diff --git a/submodule.c b/submodule.c
-> > index 8b9e48a61..c5058a4b8 100644
-> > --- a/submodule.c
-> > +++ b/submodule.c
-> > @@ -1210,14 +1210,24 @@ static int get_next_submodule(struct child_process *cp,
-> >
-> >                 default_argv = "yes";
-> >                 if (spf->command_line_option == RECURSE_SUBMODULES_DEFAULT) {
-> > -                       if (submodule &&
-> > -                           submodule->fetch_recurse !=
-> > -                                               RECURSE_SUBMODULES_NONE) {
-> > -                               if (submodule->fetch_recurse ==
-> > -                                               RECURSE_SUBMODULES_OFF)
-> > +                       int fetch_recurse = RECURSE_SUBMODULES_NONE;
-> > +
-> > +                       if (submodule) {
-> > +                               char *key;
-> > +                               const char *value;
-> > +
-> > +                               fetch_recurse = submodule->fetch_recurse;
-> > +                               key = xstrfmt("submodule.%s.fetchRecurseSubmodules", submodule->name);
-> > +                               if (!repo_config_get_string_const(the_repository, key, &value)) {
-> > +                                       fetch_recurse = parse_fetch_recurse_submodules_arg(key, value);
-> > +                               }
-> > +                               free(key);
-> > +                       }
-> 
-> I wonder if it would be better to parse this in builtin/fetch.c#git_fetch_config
-> and then pass it in here as a parameter, instead of looking it up directly here?
-> That way it is easier to keep track of what a builtin pays attention to.
+24.07.2017 07:02, Jacob Keller пишет:
+> generally, I'd suggest using "git describe" to output a version based
+> on tag, and as part of your build system set that in some sort of
+> --version output of some kind.
+I came to the following solution which
+looks quite simple (avoids comparing the
+output of git describe):
+git log -1 --format=%cd --date=rfc | xargs -I {} touch --date={} $TSTAMP
 
-Really the fact that you can configure individual submodules in
-.gitmodules to be fetched recursively or not is a terrible design IMO.
-Also this is a per-submodule configuration so having it in
-builtin/fetch.c would be incredibly annoying to handle.
-
-> 
-> 
-> > +
-> > +                       if (fetch_recurse != RECURSE_SUBMODULES_NONE) {
-> > +                               if (fetch_recurse == RECURSE_SUBMODULES_OFF)
-> >                                         continue;
-> > -                               if (submodule->fetch_recurse ==
-> > -                                               RECURSE_SUBMODULES_ON_DEMAND) {
-> > +                               if (fetch_recurse == RECURSE_SUBMODULES_ON_DEMAND) {
-> >                                         if (!unsorted_string_list_lookup(&changed_submodule_paths, ce->name))
-> >                                                 continue;
-> >                                         default_argv = "on-demand";
-> > --
-> > 2.14.0.rc0.400.g1c36432dff-goog
-> >
-
--- 
-Brandon Williams
+The care must be taken to put the timestamp
+file as a pre-requisite of the .LOW_RESOLUTION_TIME
+target, and the build seems to work properly.
+This still smells hackish, but this time I blame
+make for an inability to specify the timestamps
+explicitly. :)
