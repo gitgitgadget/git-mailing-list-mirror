@@ -2,125 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B81C2047F
-	for <e@80x24.org>; Wed, 26 Jul 2017 14:37:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66E932047F
+	for <e@80x24.org>; Wed, 26 Jul 2017 15:06:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751623AbdGZOhX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Jul 2017 10:37:23 -0400
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:22449 "EHLO
-        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751210AbdGZOhV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jul 2017 10:37:21 -0400
-Received: from [192.168.2.240] ([92.22.28.33])
-        by smtp.talktalk.net with SMTP
-        id aNR8dJOTdQ527aNR8dcfsF; Wed, 26 Jul 2017 15:37:19 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
-        t=1501079839; bh=kF08pPLCgLyx6rh8SzR4nzvCWtZHSVAxImK83cBG2sI=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=VyK1b4WvituYPN+NUPF2QGFfYDqQxXGVqetUihZKSYKEQOzEJyDhiFYD/LHceF1NZ
-         eOJmlHWVBsSZhUEJ6/Q7oLMhFD43dp+v6tnQ5a4NdWO/SUSRthbWsTlnUIN59K82Uc
-         Eyv4aXyY2w/rByxunvZ3bE58RmRE1BoyaIfk85Ek=
-X-Originating-IP: [92.22.28.33]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=MI8io4Rl c=1 sm=1 tr=0 a=BeSdjzhxhZnKGFP9cxuqMA==:117
- a=BeSdjzhxhZnKGFP9cxuqMA==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
- a=5rxgeBVgAAAA:8 a=sGNl7xXa4WReAld_jdcA:9 a=QEXdDO2ut3YA:10
- a=PwKx63F5tFurRwaNxrlG:22
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH/RFC] rebase: make resolve message clearer for
- inexperienced users
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Philip Oakley <philipoakley@iee.org>,
-        William Duclot <william.duclot@gmail.com>, git@vger.kernel.org
-References: <20170709202520.21739-1-william.duclot@gmail.com>
- <xmqqvan06yo8.fsf@gitster.mtv.corp.google.com> <20170710183101.GA13122@Haydn>
- <xmqq4luh1gzw.fsf@gitster.mtv.corp.google.com>
- <7E67FF115BB146A49D486E77404882F2@PhilipOakley>
- <fd665e9d-e46a-c9f1-f4ec-3407dd18ab36@talktalk.net>
- <xmqqmv7td0a5.fsf@gitster.mtv.corp.google.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <96c186b0-84ca-d97f-d745-099a730745c8@talktalk.net>
-Date:   Wed, 26 Jul 2017 15:37:12 +0100
+        id S1751598AbdGZPG0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Jul 2017 11:06:26 -0400
+Received: from fallback9.m.smailru.net ([94.100.178.49]:39532 "EHLO
+        fallback.mail.ru" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750893AbdGZPGZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jul 2017 11:06:25 -0400
+X-Greylist: delayed 3494 seconds by postgrey-1.27 at vger.kernel.org; Wed, 26 Jul 2017 11:06:25 EDT
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=list.ru; s=mail;
+        h=Content-Transfer-Encoding:Content-Type:In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:Subject; bh=gCHU2oI67cAHwGv5CEauOISXkAkR7C5xyNNTix2lMsI=;
+        b=CSH9neseFslDFhlggJ5km4Tph5URai1yFMnKEOBAkcjGgsx/TjcvZ2PeEro8u8vk2sEEzimJ1TXi/Cila7lLSNikGvcLbwCdrR/F8qoHcDKkwfZy8OYLRmdmQTL38Jy3vpACrVqWq6n+Y+tIR48fhZjOuTC9ZL+JhdNJBYW4h1A=;
+Received: from [10.161.29.31] (port=37168 helo=smtp10.mail.ru)
+        by fallback9.m.smailru.net with esmtp (envelope-from <stsp@list.ru>)
+        id 1daMyt-0002Yb-Oy; Wed, 26 Jul 2017 17:08:07 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=list.ru; s=mail;
+        h=Content-Transfer-Encoding:Content-Type:In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:Subject; bh=gCHU2oI67cAHwGv5CEauOISXkAkR7C5xyNNTix2lMsI=;
+        b=CSH9neseFslDFhlggJ5km4Tph5URai1yFMnKEOBAkcjGgsx/TjcvZ2PeEro8u8vk2sEEzimJ1TXi/Cila7lLSNikGvcLbwCdrR/F8qoHcDKkwfZy8OYLRmdmQTL38Jy3vpACrVqWq6n+Y+tIR48fhZjOuTC9ZL+JhdNJBYW4h1A=;
+Received: by smtp10.mail.ru with esmtpa (envelope-from <stsp@list.ru>)
+        id 1daMyr-0001KJ-F8; Wed, 26 Jul 2017 17:08:05 +0300
+Subject: Re: git gc seems to break --symbolic-full-name
+To:     Jeff King <peff@peff.net>
+Cc:     Jacob Keller <jacob.keller@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>
+References: <234492d7-7fd6-f847-8b85-010732ff43b6@list.ru>
+ <xmqqbmodhb5h.fsf@gitster.mtv.corp.google.com>
+ <223fa7c7-196d-e4fe-85b5-7d7cc576aa52@list.ru>
+ <CA+P7+xrhLf9eS_KkxTmWZgQ+Ho8VN83GS-OvxmboZ=_iY4dY0g@mail.gmail.com>
+ <ed1ddfec-5782-d14b-6717-a1532efc0138@list.ru>
+ <CA+P7+xock9gpYVtxj2n6L5Y9dO1VV01OEOT5i0MR7ay68yS+WQ@mail.gmail.com>
+ <a6738cae-ad8d-cf51-0fbb-428cf0f88703@list.ru>
+ <20170726132322.4cfj73tynrko264o@sigill.intra.peff.net>
+From:   Stas Sergeev <stsp@list.ru>
+Message-ID: <5b86f0e2-b44f-a3ea-bb66-c7826619773b@list.ru>
+Date:   Wed, 26 Jul 2017 17:08:01 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.2.1
 MIME-Version: 1.0
-In-Reply-To: <xmqqmv7td0a5.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <20170726132322.4cfj73tynrko264o@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfMiTX/H/qPTzLLI20FJS+w8//Fp/Fc5PcThJzjN/vq2P/3VQ103MEsSb/VLmBSo5ql2+rfq7tCd4/UoLZM7jYfdZIQ+cdFoXLBWr38UWvvT1ay9RA+zg
- L5KwvsQmN3fw7mYBjg33WzosLv3coVVLKSaCLIs49tFoRst+UblVNSbyu135+cIZJJh3T8oNAWuzKGrsccEX96LfLqsKiw9brVVo/20+m7JNFs6PtkGpoYGa
- luOqsNtColkfZioa7NeDIqoW/RzpGP8NCWW/3AiPuPQ=
+Content-Transfer-Encoding: 8bit
+Content-Language: en-MW
+X-7FA49CB5: 0D63561A33F958A54AD4E8EEFC3DE8A860ECCB9AF2D3C32149D0934BFA5585B5725E5C173C3A84C39472471D10B198B949CD37B04FA45A59A3CCBC2573AEBDE1C4224003CC836476C0CAF46E325F83A50BF2EBBBDD9D6B0F41B67924A99884D73B503F486389A921A5CC5B56E945C8DA
+X-Mailru-Sender: F1845AB6CCC9920DF7838D61D4D05C42C65248277218CF1C947F3BBC46CE35C5E23BA72BC693BAAB1653177920737CA72999BEE114A20FF4278B2D54D4112F244F0A872F021F905956A8FB0C6EBA5FCCEAB4BC95F72C04283CDA0F3B3F5B9367
+X-Mras: OK
+X-7FA49CB5: 0D63561A33F958A5158CE34CBEB7DF13E1BE90109725F5083A25A265ABBF80B8462275124DF8B9C938130EB80001CEACE5BFE6E7EFDEDCD789D4C264860C145E
+X-Mailru-Sender: A5480F10D64C90052575E382D1FF78560CDE0412633BB99940CC4A6F3FC69C0CCF113DD4F50517E8BD9A213A94BF4775DDBB79867CC2C1EC5DD9ADBE8243F6ED0252A3EF2865ED2F733E9BFD465368085FEEDEB644C299C0ED14614B50AE0675
+X-Mras: OK
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 24/07/17 21:53, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood@talktalk.net> writes:
-> 
->> git rebase --continue requiring one to git add first confuses/annoys me
->> too. I started a patch to autostage unstaged changes if they don't
->> contain conflict markers a couple of weeks ago, I'll clean it up and
->> post it later this week.
-> 
-> As long as "git rebase" will keep refusing to start in a working
-> tree with dirty files and/or index, this could be a good change.
-> 
-> But people _may_ be annoyed because they expect "--continue" to
-> remind them that some conflicts are not concluded with an explicit
-> "git add", and they would even feel that you made the command unsafe
-> if "--continue" just goes ahead by auto-adding their change that is
-> still work-in-progress.  Lack of conflict markers is not a sign that
-> a file is fully resolved (which they are used to signal by "git
-> add", and they do so per set of paths).
-
-Thanks for your comments, I've tried to address them in the message with 
-the patches I sent earlier today [1]. In summary autostaging is opt-in 
-and the conflict marker check isn't perfect but it's better than nothing 
-and covers an important case where the user has simply overlooked a 
-conflict.
-
->> I also find it confusing that it asks me to edit the commit message for
->> picks, fixups and non-final squashes after conflicts. I can see that
->> perhaps one might want to amend the message to reflect any changes that
->> were made while resolving the conflicts but I've never had too. I'd
->> rather be able to pass --edit to rebase --continue if I needed to edit
->> the message in those cases. Looking through the code I think it would
->> require saving some extra state when rebase bails out on conflicts so
->> rebase --continue could tell if it should be asking the user to amend
->> the message.
-> 
-> This is disruptive if done without a careful transition plan and
-> you'll annoy existing users who expect to be able to edit by
-> default.  Especially since "rebase" keeps going and potentially
-> rebuild many commits on top, by the time they realize the mistake of
-> not passing "--edit", it is too late and they will hate you for
-> forcing them rebase many commits again.
-
-I agree, I was imagining the new behaviour would be opt in via a config 
-variable. Then if in the future there is a consensus to enable the new 
-behaviour by default there would be a transition phase where users of 
-the old behaviour would get a message telling that the behaviour is 
-going to change in the future and what value to set the config variable 
-to in order to keep the old behaviour if that's what they want.
-
-> If these suggestions above were given while "rebase -i" was
-> developed, it might have made the end-user experience a better one
-> than what it currently is, but transitioning after the current
-> behaviour has long been established makes it much harder.
-
-Sadly I didn't even know git existed at the time rebase was first added.
-
-Best Wishes
-
-Phillip
-
-
-[1] 
-https://public-inbox.org/git/20170726102720.15274-2-phillip.wood@talktalk.net/T/#u
-
+26.07.2017 16:23, Jeff King пишет:
+> In git.git we do something like:
+>
+> -- >8 --
+> other: version
+> 	cat $< >$@
+>
+> .PHONY: FORCE
+> version: FORCE
+> 	@git rev-parse HEAD >$@+
+> 	@if cmp $@+ $@ >/dev/null 2>&1; then rm $@+; else mv $@+ $@; fi
+> -- >8 --
+Yes, thats a nice recipe that I would be using
+if not for the fact that I already switched to
+"touch", which requires 1 fewer tmp file and
+no comparison.
+But I'll keep this in mind if something wrong
+happens with my current solution, thanks!
+I wonder if git can provide some helper script
+for other projects to solve this in a same way.
