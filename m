@@ -2,130 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E3F30208A0
-	for <e@80x24.org>; Wed, 26 Jul 2017 20:08:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0FB732047F
+	for <e@80x24.org>; Wed, 26 Jul 2017 20:10:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751672AbdGZUIh (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Jul 2017 16:08:37 -0400
-Received: from mail-pf0-f170.google.com ([209.85.192.170]:36660 "EHLO
-        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751024AbdGZUIg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jul 2017 16:08:36 -0400
-Received: by mail-pf0-f170.google.com with SMTP id z129so35369102pfb.3
-        for <git@vger.kernel.org>; Wed, 26 Jul 2017 13:08:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=9nQ1VyDPZ51oPQTsQdV1e76/QrCBgfbetD4AwPtNbxU=;
-        b=H+JDJhtHLsIh8VDfnfgLumhH71omCDnhhPA2dOB9UpsAhyZze0HLVvDSY9esYhDUOR
-         grZA7knMQ3o29rBdr4ot6PSsRpiJIJfA3CZ9FHWqkEkcOANFsaGSqErEub2jE3vBbrOl
-         6RuU8KbU3ZJ5qKM/eF/dgeD4sptxEsu/+8GJdnQQCVtOwjzXfb2Nka1Ub/TeFVXGWSWX
-         NbRRtkuSJnDQqLH60qn2iYYvtlnd0Wxi7oW8OnXeWI3+mi3nrVAF12Hj8E8jhyi4FuSC
-         xOtqMpo8vRvoM2LsN0HZ5vVmTnQMu84GCYPIdK/OPStUOdgmcYl1Eql4WVOBHTamKALC
-         oV+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=9nQ1VyDPZ51oPQTsQdV1e76/QrCBgfbetD4AwPtNbxU=;
-        b=dtBKu1Vt7dMKPJV8vx7NrEewMwk5uLFVIqNFAVbYxYalIYA+RMDosdq4FgALdazfho
-         QoDaRP90XKPv1FFcLWUqn5Ma6czzDODkeG7ovNZF9iv1vZdvVxGK+tbSQTJJ0LcGYlNS
-         5Yo3Qw65O2NdZCfKsdLQqcjxUpk1rQhytM00UpP7ZnfWoRVdusb/oy8v70VaMQPb71Mm
-         KDabEZeru4u3hiPHWi//MdDxhFwtpxaGMWL2ziAzf0M9zz0vbR1YIB8elvEcCoGR3E61
-         NQlHVLr9HcLfsM9RMGGORO0o3ZIt7kBwaJCD2FCPrxqPdsgDIV/QjfhGjl6WOoBv81Tp
-         1WXg==
-X-Gm-Message-State: AIVw112qhB4CncDPQXz+q6ekzl01ThsxWrhzTS0Eqz5IhyZ+fuBYvQjk
-        n5DslVZ+Zfv3DoMD
-X-Received: by 10.99.96.193 with SMTP id u184mr1903477pgb.125.1501099716147;
-        Wed, 26 Jul 2017 13:08:36 -0700 (PDT)
-Received: from localhost ([2620:0:100e:422:b827:7828:2b7f:c1e7])
-        by smtp.gmail.com with ESMTPSA id e4sm36976021pga.71.2017.07.26.13.08.35
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 26 Jul 2017 13:08:35 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-To:     jacob.keller@gmail.com
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH] submodule: correct error message for missing commits.
-Date:   Wed, 26 Jul 2017 13:08:32 -0700
-Message-Id: <20170726200832.28522-1-sbeller@google.com>
-X-Mailer: git-send-email 2.14.0.rc0.3.g6c2e499285
+        id S1751481AbdGZUKL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Jul 2017 16:10:11 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:65371 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751202AbdGZUKD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jul 2017 16:10:03 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B60D090F5B;
+        Wed, 26 Jul 2017 16:09:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=gXIl20pwjsbOe7XzTjmcWjCY4eI=; b=MYhydd
+        mpOccPxkNgvoqKVUHdYF9/RzQQZiyafh3wKqJroAPyrs2+iIKpTP9Dm60Qzgt5/T
+        g3Ceu+qZFlNv2jGq7rURCNd9/4HiRaBiMnPP93q2pMVw8jVECmBmUZ7t5tXtdZlL
+        FEVVgaskI68ZU1kE26y9ggId3DLgRtVYQRt10=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=rknty3UrpWiTGTP9KrvOhZJ09T00OLLn
+        4dd7Db7ihUZ8TXOpHUNNXwbIOM1E4hnycEQA4RNXot3ZOVlxyc37CURoPIO2il8/
+        R8q0nh9P4tlkiA3z/9TCjvDL4b52Fv7nLTAtSCV7S5nvQ4ZvfBfok0TUkL2eWYEz
+        ICie+dz2ZjQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AEFA990F5A;
+        Wed, 26 Jul 2017 16:09:57 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1893E90F58;
+        Wed, 26 Jul 2017 16:09:57 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH/RFC] setup: update error message to be more meaningful
+References: <0102015d7ae53b0a-a6505296-9257-4b0d-84d6-2152e17eb070-000000@eu-west-1.amazonses.com>
+        <20170725212110.GG13924@aiede.mtv.corp.google.com>
+Date:   Wed, 26 Jul 2017 13:09:55 -0700
+In-Reply-To: <20170725212110.GG13924@aiede.mtv.corp.google.com> (Jonathan
+        Nieder's message of "Tue, 25 Jul 2017 14:21:10 -0700")
+Message-ID: <xmqqlgnbq7sc.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 654D1F9E-723E-11E7-91A8-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When a submodule diff should be displayed we currently just add the
-submodule objects to the main object store and then e.g. walk the
-revision graph and create a summary for that submodule.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-It is possible that we are missing the submodule either completely or
-partially, which we currently differentiate with different error messages
-depending on whether (1) the whole submodule object store is missing or
-(2) just the needed for this particular diff. (1) is reported as
-"not initialized", and (2) is reported as "commits not present".
+> For an initial guess: in the example
+>
+> 	git grep test -n
+>
+> ...
+>  2. Focus on "argument" instead of "filename" so that the message
+>     could still apply: something like
+>
+> 	fatal: option '-n' must come before non-option arguments
 
-If a submodule is deinit'ed its repository data is still around inside
-the superproject, such that the diff can still be produced. In that way
-the error message (1) is misleading as we can have a diff despite the
-submodule being not initialized.
-
-Downgrade the error message (1) to be the same as (2) and just say
-the commits are not present, as that is the true reason why the diff
-cannot be shown.
-
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
-
-I came across this error message in the series for the
-object store modularisation[1], when I was trying to replace
-'add_submodule_odb' by a custom loaded object store from a
-submodule repo object, which got me thinking on the error
-message and the true cause for it.  
-
-While this could go in separately, I may carry it in that
-series, as there we'd come up with more error messages
-("could not create submodule object store" as well as the
-"commits not present", maybe even "submodule not lookup failed")
-
-Thanks,
-Stefan
-
-[1] https://public-inbox.org/git/20170706202739.6056-1-sbeller@google.com/
-  
-
- submodule.c                               | 2 +-
- t/t4059-diff-submodule-not-initialized.sh | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/submodule.c b/submodule.c
-index 6531c5d609..280c246477 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -567,7 +567,7 @@ static void show_submodule_header(FILE *f, const char *path,
- 
- 	if (add_submodule_odb(path)) {
- 		if (!message)
--			message = "(not initialized)";
-+			message = "(commits not present)";
- 		goto output_header;
- 	}
- 
-diff --git a/t/t4059-diff-submodule-not-initialized.sh b/t/t4059-diff-submodule-not-initialized.sh
-index cd70fd5192..49bca7b48d 100755
---- a/t/t4059-diff-submodule-not-initialized.sh
-+++ b/t/t4059-diff-submodule-not-initialized.sh
-@@ -95,7 +95,7 @@ test_expect_success 'submodule not initialized in new clone' '
- 	git clone . sm3 &&
- 	git -C sm3 diff-tree -p --no-commit-id --submodule=log HEAD >actual &&
- 	cat >expected <<-EOF &&
--	Submodule sm1 $smhead1...$smhead2 (not initialized)
-+	Submodule sm1 $smhead1...$smhead2 (commits not present)
- 	EOF
- 	test_cmp expected actual
- '
--- 
-2.14.0.rc0.3.g6c2e499285
-
+I think this one is the most sensible.  There may or may not be a
+file called "test" in the working tree, and the user may or may not
+meant to look for a pattern "test".  What is wrong in the sample
+command line is that "test" is not a dashed option and yet it has a
+dashed option "-n" after it, and your version clearly explains it.
