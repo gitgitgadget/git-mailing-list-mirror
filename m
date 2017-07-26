@@ -6,150 +6,90 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C96582047F
-	for <e@80x24.org>; Wed, 26 Jul 2017 20:32:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01BD12047F
+	for <e@80x24.org>; Wed, 26 Jul 2017 20:41:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751458AbdGZUcf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Jul 2017 16:32:35 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57584 "EHLO
+        id S1751445AbdGZUle (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Jul 2017 16:41:34 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50888 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751009AbdGZUcf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jul 2017 16:32:35 -0400
+        with ESMTP id S1751024AbdGZUld (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jul 2017 16:41:33 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 546F1951CF;
-        Wed, 26 Jul 2017 16:32:32 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 39F069171B;
+        Wed, 26 Jul 2017 16:41:33 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=y6BopDA2O1q8fVCgRNzEI9gjNQ0=; b=bQvffS
-        qUutMpAeOJPeyYJ3UqEya5c3KFhEoaDyY8LhK8cgJZ/rWIQHl6ZyG3qsmgzokG07
-        Hgl2pgvu48FgmjKxkMXtx072W7MLwZHvJLtbNU5bZd85A+9cBsGTqYy2ao1wMyiQ
-        CvMzzxdf9Cg0FWMipffpPcGtZmmzt/EWPz64s=
+        :content-type; s=sasl; bh=p+BfIKnMkuBYEAgRISzOTSmfYGg=; b=riJfnP
+        iAQRtFMwXZ1uU6nS7NF1OKBxXIxUHkyArTr7NL2vexuuX/Kr+tkNHlCES7QFIm9H
+        ZkDXi/wZzz8bZEabiHCQUXafW/mzMTumdhDCzS3wv7nTW5N3LceoP+UFeYvWX5BP
+        zRk+C3hDHyEEhdX7ykiZZmMvojNh/SxBXUask=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=G/68R0nKjOEHahu4DRCndhyixBB3y32b
-        HB9O3rdXejDk5zOkHe4v4bxfmTANQcsYLTeMrMy0wknJWvf7tZuJBQQSfGQblZBI
-        X7kssbg3z1uuSbbPv5Kcz0CwbMTU3JAitwb+/8vJcgoLFi0VyOEfUnbW027LmTk8
-        IM90QZDu+Kw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4B6D3951CE;
-        Wed, 26 Jul 2017 16:32:32 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=gwngq2BkxHgJJaPSuFe7FC4esbXjUyyR
+        Kl5NaWg1fRJ98AD/oEQuRupylw27QeDihWLS+PS2qlmfX8SPgEoU6vkS1XcoLlGb
+        uk4Dn+O49kt0NLgrO6W4/Ll6+7vrjGl5BKWL2lWKg3suEqLynyWuAmdEPJDstTyn
+        lsBRE3tu85k=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 32FC99171A;
+        Wed, 26 Jul 2017 16:41:33 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9F66E951CD;
-        Wed, 26 Jul 2017 16:32:31 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A226B91719;
+        Wed, 26 Jul 2017 16:41:32 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
+To:     Raman Gupta <rocketraman@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCHv2] t8008: rely on rev-parse'd HEAD instead of sha1 value
-References: <xmqqk235o7rm.fsf@gitster.mtv.corp.google.com>
-        <20170726190631.560-1-sbeller@google.com>
-Date:   Wed, 26 Jul 2017 13:32:30 -0700
-In-Reply-To: <20170726190631.560-1-sbeller@google.com> (Stefan Beller's
-        message of "Wed, 26 Jul 2017 12:06:31 -0700")
-Message-ID: <xmqqd18nq6qp.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH v2] contrib/rerere-train: optionally overwrite existing resolutions
+References: <1caa9bb1-9184-7335-a041-6abd2c8f616c@gmail.com>
+        <xmqqwp6wtdu0.fsf@gitster.mtv.corp.google.com>
+        <ae4d9b77-c47e-199b-d40f-ad5b49c5dd60@gmail.com>
+        <xmqqmv7rrs45.fsf@gitster.mtv.corp.google.com>
+        <32b61c4b-5e58-30d9-4345-8036bc805019@gmail.com>
+Date:   Wed, 26 Jul 2017 13:41:31 -0700
+In-Reply-To: <32b61c4b-5e58-30d9-4345-8036bc805019@gmail.com> (Raman Gupta's
+        message of "Wed, 26 Jul 2017 15:06:51 -0400")
+Message-ID: <xmqq60efq6bo.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 8CACC17C-7241-11E7-8C16-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: CF244EAC-7242-11E7-AB7B-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Raman Gupta <rocketraman@gmail.com> writes:
 
-> Remove hard coded sha1 values, obtain the values using
-> 'git rev-parse HEAD' which should be future proof regardless
-> of the hash function used.
+> On 26/07/17 02:05 PM, Junio C Hamano wrote:
+>> I haven't tried this patch, but would this work well with options
+>> meant for the 'git rev-list --parents "$@"' that grabs the list of
+>> merge commits to learn from?  e.g.
+>> 
+>> 	$ contrib/rerere-train.sh -n 4 --merges master
+>> 	$ contrib/rerere-train.sh --overwrite -n 4 --merges master
+>> 	$ contrib/rerere-train.sh -n 4 --overwrite --merges master
+>> 
+>> I do not think it is necessary to make the last one work; as long as
+>> the first two work as expected, we are good even if the last one
+>> dies with a sensible message e.g. "options X, Y and Z must be given
+>> before other options" (currently "X, Y and Z" consists only of
+>> "--overwrite", but I think you get what I mean).
 >
-> Additionally future-proof the test by hard coding the
-> abbreviation length of the hash.
->
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->
->> Don't hardcoded lengths of the hashes defeat this future-proofing
->> effort, though?  It shouldn't be too hard to do the equivalent of
->> the auto computation of abbreviation in this script, which would be
->> true future-proofing, I guess.
->
-> Added --abbrev=n to also hard code hash abbreviation. At first
-> I had the impression of a off-by-one-error, but after reading the
-> man page for both blame and rev-parse, I realize that blames
-> abbrev notion is different than rev-parse precisely for the
-> caret that may occur to indicate out-of-range.
+> You're right -- I didn't try all the cases. I wasn't able to figure
+> out how to get `rev-parse --parseopt` to deal with this situation, so
+> I did it manually. I'm not super-happy with the result, but it does
+> work. Look for PATCH v3.
 
-OK, and 17 hexdigits ought to be sufficient for a sample repository
-we create for the test---we shouldn't be picking a hash that would
-cause hash prefix collisions with such a small number of objects and
-reasonably long prefix anyway ;-)
+Yes, I think you could squash the two case arms in the later loop
+into one i.e.
 
-Thanks, will queue.
+	-h|--help|-o|--overwrite)
+		die "please don't." ;;
 
->
->  t/t8008-blame-formats.sh | 30 ++++++++++++++++--------------
->  1 file changed, 16 insertions(+), 14 deletions(-)
->
-> diff --git a/t/t8008-blame-formats.sh b/t/t8008-blame-formats.sh
-> index 92c8e792d1..ae4b579d24 100755
-> --- a/t/t8008-blame-formats.sh
-> +++ b/t/t8008-blame-formats.sh
-> @@ -12,22 +12,25 @@ test_expect_success 'setup' '
->  	echo c >>file &&
->  	echo d >>file &&
->  	test_tick &&
-> -	git commit -a -m two
-> +	git commit -a -m two &&
-> +	ID1=$(git rev-parse HEAD^) &&
-> +	shortID1="^$(git rev-parse HEAD^ |cut -c 1-17)" &&
-> +	ID2=$(git rev-parse HEAD) &&
-> +	shortID2="$(git rev-parse HEAD |cut -c 1-18)"
->  '
->  
-> -cat >expect <<'EOF'
-> -^baf5e0b (A U Thor 2005-04-07 15:13:13 -0700 1) a
-> -8825379d (A U Thor 2005-04-07 15:14:13 -0700 2) b
-> -8825379d (A U Thor 2005-04-07 15:14:13 -0700 3) c
-> -8825379d (A U Thor 2005-04-07 15:14:13 -0700 4) d
-> +cat >expect <<EOF
-> +$shortID1 (A U Thor 2005-04-07 15:13:13 -0700 1) a
-> +$shortID2 (A U Thor 2005-04-07 15:14:13 -0700 2) b
-> +$shortID2 (A U Thor 2005-04-07 15:14:13 -0700 3) c
-> +$shortID2 (A U Thor 2005-04-07 15:14:13 -0700 4) d
->  EOF
->  test_expect_success 'normal blame output' '
-> -	git blame file >actual &&
-> +	git blame --abbrev=17 file >actual &&
->  	test_cmp expect actual
->  '
->  
-> -ID1=baf5e0b3869e0b2b2beb395a3720c7b51eac94fc
-> -COMMIT1='author A U Thor
-> +COMMIT1="author A U Thor
->  author-mail <author@example.com>
->  author-time 1112911993
->  author-tz -0700
-> @@ -37,9 +40,8 @@ committer-time 1112911993
->  committer-tz -0700
->  summary one
->  boundary
-> -filename file'
-> -ID2=8825379dfb8a1267b58e8e5bcf69eec838f685ec
-> -COMMIT2='author A U Thor
-> +filename file"
-> +COMMIT2="author A U Thor
->  author-mail <author@example.com>
->  author-time 1112912053
->  author-tz -0700
-> @@ -48,8 +50,8 @@ committer-mail <committer@example.com>
->  committer-time 1112912053
->  committer-tz -0700
->  summary two
-> -previous baf5e0b3869e0b2b2beb395a3720c7b51eac94fc file
-> -filename file'
-> +previous $ID1 file
-> +filename file"
->  
->  cat >expect <<EOF
->  $ID1 1 1 1
+but still the repetition does look ugly.
+
+As a contrib/ material, I do not care too deeply about it, though.
+
+Will queue.
