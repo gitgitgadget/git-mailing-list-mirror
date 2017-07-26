@@ -6,45 +6,44 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D5E5320899
-	for <e@80x24.org>; Wed, 26 Jul 2017 10:27:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E573120899
+	for <e@80x24.org>; Wed, 26 Jul 2017 10:27:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751614AbdGZK1k (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Jul 2017 06:27:40 -0400
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:55916 "EHLO
+        id S1751716AbdGZK1l (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Jul 2017 06:27:41 -0400
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:15482 "EHLO
         smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751503AbdGZK1i (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jul 2017 06:27:38 -0400
+        with ESMTP id S1751446AbdGZK1k (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jul 2017 06:27:40 -0400
 Received: from lindisfarne.localdomain ([92.22.28.33])
         by smtp.talktalk.net with SMTP
-        id aJXGd63uhZtcPaJXUd3j2A; Wed, 26 Jul 2017 11:27:37 +0100
+        id aJXGd63uhZtcPaJXWd3j2I; Wed, 26 Jul 2017 11:27:39 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
-        t=1501064857; bh=zugOFIBOW0n+t/Rg+RLCPe5fDhOG7ANV5y7T54ka8L4=;
+        t=1501064859; bh=ZIc3otd0EJ8F5Ek77YeepPFdzzBhBJBoyzvXY0/BHG8=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
-        b=p9MaoDBmwUxoS7DoFLQoBY1IeaLk3ag2Dhk+pCLJCz3t9lPF7iyR51AECZ5N+DwLU
-         wkggul/VSXsCW5aq+tPanl2rlRr59KaGqCc/Fme1GcAmxZghviVYSaCg9cbLGm2gRt
-         zsppK8HEioPUmgPTayNNuh6v3UuRg4V9ppRH12kQ=
+        b=StcHV5sNCziO5V/IImx8qmbyIXZaNcwO/MsZKGBz299aiKqJPzzH6T9W5RHZ3oZBj
+         141sDGZy0sLV9a7LjWUiSNN+kizUEYqW96Bp5xt9ajxVExk84pa+6oPkHOM6Fc6WBs
+         rgVzUMfDXZhT2GpajRVqLfYekl24mhQvvs5zngec=
 X-Originating-IP: [92.22.28.33]
 X-Spam: 0
 X-OAuthority: v=2.2 cv=QqEc5h6d c=1 sm=1 tr=0 a=BeSdjzhxhZnKGFP9cxuqMA==:117
- a=BeSdjzhxhZnKGFP9cxuqMA==:17 a=evINK-nbAAAA:8 a=5rxgeBVgAAAA:8
- a=1XWaLZrsAAAA:8 a=xU00C62tSnmYIDRk4WkA:9 a=D_owUW3cxAVI-VK6:21
- a=HqelZRk_kKUWIb0q:21 a=RfR_gqz1fSpA9VikTjo0:22 a=PwKx63F5tFurRwaNxrlG:22
+ a=BeSdjzhxhZnKGFP9cxuqMA==:17 a=evINK-nbAAAA:8 a=Vhf1OWbMW8mthwVbdR0A:9
+ a=91LYUdq4JGXBUgOX:21 a=3DAUHYATGIe0lcSQ:21 a=RfR_gqz1fSpA9VikTjo0:22
 From:   Phillip Wood <phillip.wood@talktalk.net>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Philip Oakley <philipoakley@iee.org>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [RFC PATCH 1/5] rebase --continue: add --autostage to stage unstaged changes
-Date:   Wed, 26 Jul 2017 11:27:16 +0100
-Message-Id: <20170726102720.15274-2-phillip.wood@talktalk.net>
+Subject: [RFC PATCH 3/5] Unify rebase amend message when HEAD has changed
+Date:   Wed, 26 Jul 2017 11:27:18 +0100
+Message-Id: <20170726102720.15274-4-phillip.wood@talktalk.net>
 X-Mailer: git-send-email 2.13.3
 In-Reply-To: <20170726102720.15274-1-phillip.wood@talktalk.net>
 References: <20170726102720.15274-1-phillip.wood@talktalk.net>
 Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-X-CMAE-Envelope: MS4wfCjnM9grWYwZBsQ99/6hSPqt6O1LU41gqKFGuLHvpwPaCn/++vV0WgOJf7k3Gv7/pk1mjIAwSEdVPFgKPq6nrATxuZgETXOWUbIQ2UGoVgr9whVnyXIw
- k0JwGVSLGZoq0NK1fVUnsMVurOD+xTYcxFfiQCOhGakosCN0k3g3FYiQdbtE+RH3A96pajZhz+At50NbR/PscbV1iyzMRzKtEuK6WrD/RoyCQJ/H6g5wwsP8
- g4hPG5oVYdzOa4baBR17GsgGZLc9sigIJySPYaMhsczhE3odHIPfkQDsP0yoVWTu
+X-CMAE-Envelope: MS4wfHJp2uKygfPZYpv/Bt8nlB0sXQvCxsCuCTwZmPSt+0MHSnUoeKJp3w/H+bmzZws11Hy5Y4sSyK7sNf7/V54oOIC/MSfz+S/xc5ck5vCX7xBlwbhWgnaz
+ xUdotXfxitJYpy8ZM1oHUTjYlxjsenaiNG2qkDSifJaK0BuA2czdan4cuQ4VcJ8EuoiaNMr1OhoNoMRBDYj6xSU+pPhnvvqFACO1tEnEBtVcacBVErNGJ6mS
+ rzNY/ZuzOQtRp4rVa1Dxr/mtOmPuobj64bWhHtmnJs4WYRvAbJpdSXP/Oc26ZSih
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -52,207 +51,77 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-After resolving conflicts during a rebase it is a pain to have to run
-'git add' before 'git rebase --continue'. Passing --autostage to 'git
-rebase --continue' will stage them automatically so long as 'git diff
---check' says they are ok. This is a safety measure to avoid
-accidentally staging files containing unresolved conflicts.
-
-Continuing an interactive rebase after a failed exec or if HEAD has
-changed since rebase stopped with --autostage will stage changes that
-wont be committed as rebase --continue will bail out. This will be
-fixed in the next commit.
+If rebase --interactive is unable to commit staged changes because
+HEAD has changed since rebase stopped the user gets different messages
+depending on whether they specified --autostage or not. Update the
+messages in the other code paths to match the --autostage one.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
 
-Using diff check is not ideal as it will error out on whitespace
-changes (which should be check in a commit hook if the user is worried
-about them) as well as merge markers. Looking through diff.c it should
-be possible to add a --check=merge-markers optional argument as the
-two checks are enabled independently in the code. As Junio pointed out
-in a previous message [1] the absence of conflict markers does not
-indicate that a file is fully resolved but checking for them does at
-least avoid the case of the user blindly continuing when they have
-forgotten to look at a conflicted file.
+The change from error() to fprintf() is to keep the messages consistent,
+maybe the messages in the shell script should be prefixed with
+'error:' instead.
 
-The autostaging behaviour is opt-in so users who like the additional
-safety of having to do git add before git rebase --continue can
-continue using their current workflow.
+ git-rebase--interactive.sh | 10 ++++++----
+ sequencer.c                | 22 +++++++++++++++++-----
+ 2 files changed, 23 insertions(+), 9 deletions(-)
 
-I wonder if check_unstaged() should give different error messages
-depending on the presence of unmerged paths rather than saying
-'unstaged changes' all the time. Also it should probably have some
-message after the check for merge markers fails rather than just the
-raw output from diff --check.
-
-[1] https://public-inbox.org/git/xmqqmv7td0a5.fsf@gitster.mtv.corp.google.com/
-
-
- git-rebase--am.sh          |  1 +
- git-rebase--interactive.sh |  1 +
- git-rebase--merge.sh       |  1 +
- git-rebase.sh              | 76 +++++++++++++++++++++++++++++++++++++++++-----
- 4 files changed, 71 insertions(+), 8 deletions(-)
-
-diff --git a/git-rebase--am.sh b/git-rebase--am.sh
-index 375239341fbfe885e51a25e9e0dc2d4fee791345..30faa8c24cce2149a883c0055e3f6e93dabd2dd0 100644
---- a/git-rebase--am.sh
-+++ b/git-rebase--am.sh
-@@ -17,6 +17,7 @@ git_rebase__am () {
- 
- case "$action" in
- continue)
-+	check_unstaged
- 	git am --resolved --resolvemsg="$resolvemsg" \
- 		${gpg_sign_opt:+"$gpg_sign_opt"} &&
- 	move_to_original_branch
 diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 90b1fbe9cf6e8dfb2f4331916809fa40bf9050d2..4c037a3f7a9e01406c4205bf8786a3da5060381f 100644
+index 8140c88839b4f3a86f53faaaa2ba4433ecc7f58b..e1845e940b8de05b10b011d8167917a60a7c00b9 100644
 --- a/git-rebase--interactive.sh
 +++ b/git-rebase--interactive.sh
-@@ -1069,6 +1069,7 @@ git_rebase__interactive () {
+@@ -1164,10 +1164,12 @@ $(unstaged_advice)"
+ 			die "$(gettext "Error trying to find the author identity to amend commit")"
+ 		if test -n "$amend_head"
+ 		then
+-			test -n "$amend_ok" ||
+-			die "$(gettext "\
+-You have uncommitted changes in your working tree. Please commit them
+-first and then run 'git rebase --continue' again.")"
++			test -n "$amend_ok" || {
++				gpg_sign_opt_quoted=${gpg_sign_opt:+$(git rev-parse --sq-quote "$gpg_sign_opt")}
++				die "$(gettext "\
++Unable to commit changes as HEAD has changed since git rebase stopped.")
++$(staged_advice)"
++			}
+ 			do_with_author git commit --amend --no-verify -F "$msg" -e \
+ 				${gpg_sign_opt:+"$gpg_sign_opt"} ||
+ 				die "$(gettext "Could not commit staged changes.")"
+diff --git a/sequencer.c b/sequencer.c
+index 3010faf86398697469e903318a35421d911acb23..2722d36781e5c47ee81eb3359aa6178042430e68 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -2214,12 +2214,24 @@ static int commit_staged_changes(struct replay_opts *opts)
+ 		if (get_sha1_hex(rev.buf, to_amend))
+ 			return error(_("invalid contents: '%s'"),
+ 				rebase_path_amend());
+-		if (hashcmp(head, to_amend))
+-			return error(_("\nYou have uncommitted changes in your "
+-				       "working tree. Please, commit them\n"
+-				       "first and then run 'git rebase "
+-				       "--continue' again."));
++		if (hashcmp(head, to_amend)) {
++			const char *gpg_opt = gpg_sign_opt_quoted(opts);
  
- case "$action" in
- continue)
-+	check_unstaged
- 	if test ! -d "$rewritten"
- 	then
- 		exec git rebase--helper ${force_rebase:+--no-ff} --continue
-diff --git a/git-rebase--merge.sh b/git-rebase--merge.sh
-index 06a4723d4db3db74ea17ace60d824e83cdee25e9..81723fc485882750c3ed7214b880d49cf55c6d68 100644
---- a/git-rebase--merge.sh
-+++ b/git-rebase--merge.sh
-@@ -16,6 +16,7 @@ read_state () {
- continue_merge () {
- 	test -d "$state_dir" || die "$state_dir directory does not exist"
- 
-+	check_unstaged
- 	unmerged=$(git ls-files -u)
- 	if test -n "$unmerged"
- 	then
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 2cf73b88e8e83ca34b9eb319dbc2b0a220139b0f..9ca387349b1cde440c4244de9125446fd35a7b67 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -9,7 +9,7 @@ OPTIONS_STUCKLONG=t
- OPTIONS_SPEC="\
- git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] [<upstream>] [<branch>]
- git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] --root [<branch>]
--git-rebase --continue | --abort | --skip | --edit-todo
-+git-rebase --continue [--autostage] | --abort | --skip | --edit-todo
- --
-  Available options are
- v,verbose!         display a diffstat of what changed upstream
-@@ -32,6 +32,7 @@ verify             allow pre-rebase hook to run
- rerere-autoupdate  allow rerere to update index with resolved conflicts
- root!              rebase all reachable commits up to the root(s)
- autosquash         move commits that begin with squash!/fixup! under -i
-+a,autostage        add unstaged changes to the index when continuing
- committer-date-is-author-date! passed to 'git am'
- ignore-date!       passed to 'git am'
- signoff            passed to 'git am'
-@@ -69,6 +70,7 @@ merge_dir="$GIT_DIR"/rebase-merge
- apply_dir="$GIT_DIR"/rebase-apply
- verbose=
- diffstat=
-+autostage=false
- test "$(git config --bool rebase.stat)" = true && diffstat=t
- autostash="$(git config --bool rebase.autostash || echo false)"
- fork_point=auto
-@@ -213,6 +215,67 @@ run_pre_rebase_hook () {
- 	fi
- }
- 
-+check_autostage () {
-+	# If the user has already staged files that contain whitespace
-+	# errors or merge markers then we want ignore them so rebase
-+	# --continue behaves consistency with and without --autostage
-+	git diff-index --diff-filter=U --cached --name-only -z HEAD |
-+		xargs -0 git diff-index --check HEAD -- &&
-+	git diff-files --diff-filter=MA --check &&
-+	git add -u ||
-+		exit $?
-+}
-+
-+autostage_advice () {
-+	gettext "\
-+Unable to continue rebasing as there are unstaged changes.
-+Please stage or reset the changes before continuing with:
-+
-+  git rebase --continue
-+
-+or run:
-+
-+  git rebase --continue --autostage
-+
-+to stage them automatically.
-+"
-+}
-+
-+check_unstaged () {
-+	git update-index --ignore-submodules --refresh >/dev/null
-+	if ! git diff-files --quiet --ignore-submodules
-+	then
-+		if test $autostage = true
-+		then
-+			check_autostage
-+		else
-+			die "$(autostage_advice)"
-+		fi
-+	fi
-+}
-+
-+parse_continue () {
-+	action=continue
-+	shift
-+	while test $# != 0
-+	do
-+		case "$1" in
-+		--autostage)
-+			autostage=true
-+			;;
-+		--no-autostage)
-+			autostage=false
-+			;;
-+		--)
-+			;;
-+		*)
-+			usage
-+			;;
-+		esac
-+	shift
-+	done
-+}
-+
- test -f "$apply_dir"/applying &&
- 	die "$(gettext "It looks like git-am is in progress. Cannot rebase.")"
- 
-@@ -243,7 +306,10 @@ do
- 	--verify)
- 		ok_to_skip_pre_rebase=
- 		;;
--	--continue|--skip|--abort|--quit|--edit-todo)
-+	--continue)
-+		parse_continue "$@"
-+		;;
-+	--skip|--abort|--quit|--edit-todo)
- 		test $total_argc -eq 2 || usage
- 		action=${1##--}
- 		;;
-@@ -374,12 +440,6 @@ continue)
- 	# Sanity check
- 	git rev-parse --verify HEAD >/dev/null ||
- 		die "$(gettext "Cannot read HEAD")"
--	git update-index --ignore-submodules --refresh &&
--	git diff-files --quiet --ignore-submodules || {
--		echo "$(gettext "You must edit all merge conflicts and then
--mark them as resolved using git add")"
--		exit 1
--	}
- 	read_basic_state
- 	run_specific_rebase
- 	;;
++			fprintf(stderr, _(
++"Unable to commit changes as HEAD has changed since git rebase stopped.\n"
++"If you wish to squash the changes into the last commit, run:\n"
++"\n"
++"  git commit --amend %s\n"
++"\n"
++"If they are meant to go into a new commit, run:\n"
++"\n"
++"  git commit %s\n"
++"\n"
++"In both cases, once you're done, continue with:\n"
++"\n"
++"  git rebase --continue\n"), gpg_opt, gpg_opt);
++			return -1;
++		}
+ 		strbuf_release(&rev);
+ 		flags |= AMEND_MSG;
+ 	}
 -- 
 2.13.3
 
