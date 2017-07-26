@@ -6,51 +6,52 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C158F2047F
-	for <e@80x24.org>; Wed, 26 Jul 2017 20:31:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C96582047F
+	for <e@80x24.org>; Wed, 26 Jul 2017 20:32:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751103AbdGZUbE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Jul 2017 16:31:04 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51065 "EHLO
+        id S1751458AbdGZUcf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Jul 2017 16:32:35 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57584 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751022AbdGZUbD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jul 2017 16:31:03 -0400
+        with ESMTP id S1751009AbdGZUcf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jul 2017 16:32:35 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0BBA6914C4;
-        Wed, 26 Jul 2017 16:30:56 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 546F1951CF;
+        Wed, 26 Jul 2017 16:32:32 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=CnOzRmatEXIy9ZGXpV8ArYkKKrM=; b=KRRO+5
-        JQ1E1fKWmjakYyMOXFK6Ft8refnZzSqLLbNg6GWvu2HwQ1OvT6DBitK8GCvdTbEY
-        5Sg5dCfxYf1cEj6Lv4Y8HoQJFiW5LyW0yaPL4y4jbwY1x2EhbWtny98KBtCnRX4E
-        9Wy02VN7elDoCxYHTYFi5yng1V8mxEN1MCeG8=
+        :content-type; s=sasl; bh=y6BopDA2O1q8fVCgRNzEI9gjNQ0=; b=bQvffS
+        qUutMpAeOJPeyYJ3UqEya5c3KFhEoaDyY8LhK8cgJZ/rWIQHl6ZyG3qsmgzokG07
+        Hgl2pgvu48FgmjKxkMXtx072W7MLwZHvJLtbNU5bZd85A+9cBsGTqYy2ao1wMyiQ
+        CvMzzxdf9Cg0FWMipffpPcGtZmmzt/EWPz64s=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=HgzMxMAmMzu7Nr+KQXWa8dB0sga3BuEE
-        hWK9oLfVv2MjrBe0pd5Cc/zXxz7PysiAD/R28CPX/k1M1ozEiKYOYf8IIWTxtatz
-        ZpexbHZJpkzcZ3Bg7CQlixg/hiQQf9gQBv+GRrGgIXdb6VqYgM8LKflOm95QHWTN
-        A2j+btOjn00=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 03672914C3;
-        Wed, 26 Jul 2017 16:30:56 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=G/68R0nKjOEHahu4DRCndhyixBB3y32b
+        HB9O3rdXejDk5zOkHe4v4bxfmTANQcsYLTeMrMy0wknJWvf7tZuJBQQSfGQblZBI
+        X7kssbg3z1uuSbbPv5Kcz0CwbMTU3JAitwb+/8vJcgoLFi0VyOEfUnbW027LmTk8
+        IM90QZDu+Kw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4B6D3951CE;
+        Wed, 26 Jul 2017 16:32:32 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 69EAC914C1;
-        Wed, 26 Jul 2017 16:30:55 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9F66E951CD;
+        Wed, 26 Jul 2017 16:32:31 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Stefan Beller <sbeller@google.com>
-Cc:     jacob.keller@gmail.com, git@vger.kernel.org
-Subject: Re: [PATCH] submodule: correct error message for missing commits.
-References: <20170726200832.28522-1-sbeller@google.com>
-Date:   Wed, 26 Jul 2017 13:30:54 -0700
-In-Reply-To: <20170726200832.28522-1-sbeller@google.com> (Stefan Beller's
-        message of "Wed, 26 Jul 2017 13:08:32 -0700")
-Message-ID: <xmqqh8xzq6td.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCHv2] t8008: rely on rev-parse'd HEAD instead of sha1 value
+References: <xmqqk235o7rm.fsf@gitster.mtv.corp.google.com>
+        <20170726190631.560-1-sbeller@google.com>
+Date:   Wed, 26 Jul 2017 13:32:30 -0700
+In-Reply-To: <20170726190631.560-1-sbeller@google.com> (Stefan Beller's
+        message of "Wed, 26 Jul 2017 12:06:31 -0700")
+Message-ID: <xmqqd18nq6qp.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 53531B92-7241-11E7-BEAE-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 8CACC17C-7241-11E7-8C16-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -58,96 +59,97 @@ X-Mailing-List: git@vger.kernel.org
 
 Stefan Beller <sbeller@google.com> writes:
 
-> When a submodule diff should be displayed we currently just add the
-> submodule objects to the main object store and then e.g. walk the
-> revision graph and create a summary for that submodule.
+> Remove hard coded sha1 values, obtain the values using
+> 'git rev-parse HEAD' which should be future proof regardless
+> of the hash function used.
 >
-> It is possible that we are missing the submodule either completely or
-> partially, which we currently differentiate with different error messages
-> depending on whether (1) the whole submodule object store is missing or
-> (2) just the needed for this particular diff. (1) is reported as
-> "not initialized", and (2) is reported as "commits not present".
->
-> If a submodule is deinit'ed its repository data is still around inside
-> the superproject, such that the diff can still be produced. In that way
-> the error message (1) is misleading as we can have a diff despite the
-> submodule being not initialized.
-
-This is confusing...  
-
-So are you saying that if we do "submodule init A && submodule
-update A" followed by "submodule deinit A", we _could_ show the
-difference for submodule A between two commits in the superproject,
-because we already have the necessary data for the submodule, but we
-_choose_ not to show it because the user told us explicitly that the
-submodule is not interesting?
-
-That sounds like a very sensible and user-centric behaviour to me,
-and "not initialized" sounds like the right message to give in such
-a case (as opposed to "commits not present"---even the user told us
-they are not interesting, we may have them, so "not present" is not
-just incorrect but irrelevant because that is not the reason why we
-are not showing).
-
-Or are you saying that even the user told us that the submodule is
-not interesting, if we had "init" it earlier even once, we show the
-difference and with a wrong label?  Showing the difference sounds
-like a bug that is more severe than using a wrong label to me.
-
-Puzzled.
-
->
-> Downgrade the error message (1) to be the same as (2) and just say
-> the commits are not present, as that is the true reason why the diff
-> cannot be shown.
+> Additionally future-proof the test by hard coding the
+> abbreviation length of the hash.
 >
 > Signed-off-by: Stefan Beller <sbeller@google.com>
 > ---
 >
-> I came across this error message in the series for the
-> object store modularisation[1], when I was trying to replace
-> 'add_submodule_odb' by a custom loaded object store from a
-> submodule repo object, which got me thinking on the error
-> message and the true cause for it.  
+>> Don't hardcoded lengths of the hashes defeat this future-proofing
+>> effort, though?  It shouldn't be too hard to do the equivalent of
+>> the auto computation of abbreviation in this script, which would be
+>> true future-proofing, I guess.
 >
-> While this could go in separately, I may carry it in that
-> series, as there we'd come up with more error messages
-> ("could not create submodule object store" as well as the
-> "commits not present", maybe even "submodule not lookup failed")
+> Added --abbrev=n to also hard code hash abbreviation. At first
+> I had the impression of a off-by-one-error, but after reading the
+> man page for both blame and rev-parse, I realize that blames
+> abbrev notion is different than rev-parse precisely for the
+> caret that may occur to indicate out-of-range.
+
+OK, and 17 hexdigits ought to be sufficient for a sample repository
+we create for the test---we shouldn't be picking a hash that would
+cause hash prefix collisions with such a small number of objects and
+reasonably long prefix anyway ;-)
+
+Thanks, will queue.
+
 >
-> Thanks,
-> Stefan
+>  t/t8008-blame-formats.sh | 30 ++++++++++++++++--------------
+>  1 file changed, 16 insertions(+), 14 deletions(-)
 >
-> [1] https://public-inbox.org/git/20170706202739.6056-1-sbeller@google.com/
->   
->
->  submodule.c                               | 2 +-
->  t/t4059-diff-submodule-not-initialized.sh | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/submodule.c b/submodule.c
-> index 6531c5d609..280c246477 100644
-> --- a/submodule.c
-> +++ b/submodule.c
-> @@ -567,7 +567,7 @@ static void show_submodule_header(FILE *f, const char *path,
->  
->  	if (add_submodule_odb(path)) {
->  		if (!message)
-> -			message = "(not initialized)";
-> +			message = "(commits not present)";
->  		goto output_header;
->  	}
->  
-> diff --git a/t/t4059-diff-submodule-not-initialized.sh b/t/t4059-diff-submodule-not-initialized.sh
-> index cd70fd5192..49bca7b48d 100755
-> --- a/t/t4059-diff-submodule-not-initialized.sh
-> +++ b/t/t4059-diff-submodule-not-initialized.sh
-> @@ -95,7 +95,7 @@ test_expect_success 'submodule not initialized in new clone' '
->  	git clone . sm3 &&
->  	git -C sm3 diff-tree -p --no-commit-id --submodule=log HEAD >actual &&
->  	cat >expected <<-EOF &&
-> -	Submodule sm1 $smhead1...$smhead2 (not initialized)
-> +	Submodule sm1 $smhead1...$smhead2 (commits not present)
->  	EOF
->  	test_cmp expected actual
+> diff --git a/t/t8008-blame-formats.sh b/t/t8008-blame-formats.sh
+> index 92c8e792d1..ae4b579d24 100755
+> --- a/t/t8008-blame-formats.sh
+> +++ b/t/t8008-blame-formats.sh
+> @@ -12,22 +12,25 @@ test_expect_success 'setup' '
+>  	echo c >>file &&
+>  	echo d >>file &&
+>  	test_tick &&
+> -	git commit -a -m two
+> +	git commit -a -m two &&
+> +	ID1=$(git rev-parse HEAD^) &&
+> +	shortID1="^$(git rev-parse HEAD^ |cut -c 1-17)" &&
+> +	ID2=$(git rev-parse HEAD) &&
+> +	shortID2="$(git rev-parse HEAD |cut -c 1-18)"
 >  '
+>  
+> -cat >expect <<'EOF'
+> -^baf5e0b (A U Thor 2005-04-07 15:13:13 -0700 1) a
+> -8825379d (A U Thor 2005-04-07 15:14:13 -0700 2) b
+> -8825379d (A U Thor 2005-04-07 15:14:13 -0700 3) c
+> -8825379d (A U Thor 2005-04-07 15:14:13 -0700 4) d
+> +cat >expect <<EOF
+> +$shortID1 (A U Thor 2005-04-07 15:13:13 -0700 1) a
+> +$shortID2 (A U Thor 2005-04-07 15:14:13 -0700 2) b
+> +$shortID2 (A U Thor 2005-04-07 15:14:13 -0700 3) c
+> +$shortID2 (A U Thor 2005-04-07 15:14:13 -0700 4) d
+>  EOF
+>  test_expect_success 'normal blame output' '
+> -	git blame file >actual &&
+> +	git blame --abbrev=17 file >actual &&
+>  	test_cmp expect actual
+>  '
+>  
+> -ID1=baf5e0b3869e0b2b2beb395a3720c7b51eac94fc
+> -COMMIT1='author A U Thor
+> +COMMIT1="author A U Thor
+>  author-mail <author@example.com>
+>  author-time 1112911993
+>  author-tz -0700
+> @@ -37,9 +40,8 @@ committer-time 1112911993
+>  committer-tz -0700
+>  summary one
+>  boundary
+> -filename file'
+> -ID2=8825379dfb8a1267b58e8e5bcf69eec838f685ec
+> -COMMIT2='author A U Thor
+> +filename file"
+> +COMMIT2="author A U Thor
+>  author-mail <author@example.com>
+>  author-time 1112912053
+>  author-tz -0700
+> @@ -48,8 +50,8 @@ committer-mail <committer@example.com>
+>  committer-time 1112912053
+>  committer-tz -0700
+>  summary two
+> -previous baf5e0b3869e0b2b2beb395a3720c7b51eac94fc file
+> -filename file'
+> +previous $ID1 file
+> +filename file"
+>  
+>  cat >expect <<EOF
+>  $ID1 1 1 1
