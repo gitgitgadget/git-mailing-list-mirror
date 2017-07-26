@@ -2,94 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 01BD12047F
-	for <e@80x24.org>; Wed, 26 Jul 2017 20:41:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 355182047F
+	for <e@80x24.org>; Wed, 26 Jul 2017 20:56:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751445AbdGZUle (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Jul 2017 16:41:34 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50888 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751024AbdGZUld (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jul 2017 16:41:33 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 39F069171B;
-        Wed, 26 Jul 2017 16:41:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=p+BfIKnMkuBYEAgRISzOTSmfYGg=; b=riJfnP
-        iAQRtFMwXZ1uU6nS7NF1OKBxXIxUHkyArTr7NL2vexuuX/Kr+tkNHlCES7QFIm9H
-        ZkDXi/wZzz8bZEabiHCQUXafW/mzMTumdhDCzS3wv7nTW5N3LceoP+UFeYvWX5BP
-        zRk+C3hDHyEEhdX7ykiZZmMvojNh/SxBXUask=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=gwngq2BkxHgJJaPSuFe7FC4esbXjUyyR
-        Kl5NaWg1fRJ98AD/oEQuRupylw27QeDihWLS+PS2qlmfX8SPgEoU6vkS1XcoLlGb
-        uk4Dn+O49kt0NLgrO6W4/Ll6+7vrjGl5BKWL2lWKg3suEqLynyWuAmdEPJDstTyn
-        lsBRE3tu85k=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 32FC99171A;
-        Wed, 26 Jul 2017 16:41:33 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A226B91719;
-        Wed, 26 Jul 2017 16:41:32 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Raman Gupta <rocketraman@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2] contrib/rerere-train: optionally overwrite existing resolutions
-References: <1caa9bb1-9184-7335-a041-6abd2c8f616c@gmail.com>
-        <xmqqwp6wtdu0.fsf@gitster.mtv.corp.google.com>
-        <ae4d9b77-c47e-199b-d40f-ad5b49c5dd60@gmail.com>
-        <xmqqmv7rrs45.fsf@gitster.mtv.corp.google.com>
-        <32b61c4b-5e58-30d9-4345-8036bc805019@gmail.com>
-Date:   Wed, 26 Jul 2017 13:41:31 -0700
-In-Reply-To: <32b61c4b-5e58-30d9-4345-8036bc805019@gmail.com> (Raman Gupta's
-        message of "Wed, 26 Jul 2017 15:06:51 -0400")
-Message-ID: <xmqq60efq6bo.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751471AbdGZU4W (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Jul 2017 16:56:22 -0400
+Received: from mail-pg0-f53.google.com ([74.125.83.53]:37197 "EHLO
+        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751461AbdGZU4T (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jul 2017 16:56:19 -0400
+Received: by mail-pg0-f53.google.com with SMTP id y129so88859981pgy.4
+        for <git@vger.kernel.org>; Wed, 26 Jul 2017 13:56:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=U5fftsNbxgqVH1sAr+KOo66AE8Xxu+zBgD504Y0C34I=;
+        b=fXAS0IBS6FyuOARfFql3p9vYDt1XHFYBNgS5MeCzZrtR7VpMwkvtGG/CCHUEkvo5j8
+         HsxWnoJMlRvJnY8BdE4PUkgMPsGSzpkOUIkfmWphW8dSnTlY3WfJcMfyzWBjYPM+BhFi
+         w+cBF+zkaVAr/h2LTiVrQO2AYz+IsGO8zRz0vHTi+Ha+xWQsXksAeJ+L18lt9WYSkTMt
+         9beZUPnzMtC0HGzxx11Sw8Dj+zAmU0CIu+A68/kICSfjjn3Zi+xxwS+G0fsZCuIKFs6S
+         WouSWDD+7CuIMw3U0WDL1MnMl4iba0QnJTz6Fd+Il0wwD5XGSBqTbNBSe554Vqg53inN
+         FI0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=U5fftsNbxgqVH1sAr+KOo66AE8Xxu+zBgD504Y0C34I=;
+        b=RClM9gJweLbBxDMNPhNQo89D3x+G5MLu7IpJ79pPdEStxkhHJcp5RvfCIzSART09KB
+         IBwyWS3wLL2eBl9lT/AQQen/GMVpdSbOQlfzfNkuT8iwrFwt6RmAh5FjCBl+edlrcqVs
+         zRX41dK6MNuByUe67KVoaT/bmJ1+EnL3em60Qsh4SXuNUQpTmCyYRSBa+ThqwoiDMVZu
+         /gp0T+pNKUXtv2XIln8MwNaUGnlztmKZAjTFm2rbzZYNXZtXFklA6sPIl1RvtK4OiQhD
+         iDrMSa2lhLJbu/PPzehty9/s0hs2O+HzbtRH5X/YdE88db+6/nkKsv2GMcojOAkej7kf
+         CQOQ==
+X-Gm-Message-State: AIVw113h3uXAvi0QAZMJKzzmo49Q8bPQP1K89Kh34vcPq6A/FVCaSeuC
+        23tgXflMeDFdHnR02EGj0uyHIvY7fDpa8pWMNA==
+X-Received: by 10.101.91.137 with SMTP id i9mr1989674pgr.27.1501102578273;
+ Wed, 26 Jul 2017 13:56:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CF244EAC-7242-11E7-AB7B-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Received: by 10.100.165.44 with HTTP; Wed, 26 Jul 2017 13:56:17 -0700 (PDT)
+In-Reply-To: <xmqqh8xzq6td.fsf@gitster.mtv.corp.google.com>
+References: <20170726200832.28522-1-sbeller@google.com> <xmqqh8xzq6td.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 26 Jul 2017 13:56:17 -0700
+Message-ID: <CAGZ79kaYQ5Lzz5i_+uLt3wWtid+YvDxXSyw=isaYj3+98X7Mbg@mail.gmail.com>
+Subject: Re: [PATCH] submodule: correct error message for missing commits.
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jacob Keller <jacob.keller@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Raman Gupta <rocketraman@gmail.com> writes:
-
-> On 26/07/17 02:05 PM, Junio C Hamano wrote:
->> I haven't tried this patch, but would this work well with options
->> meant for the 'git rev-list --parents "$@"' that grabs the list of
->> merge commits to learn from?  e.g.
->> 
->> 	$ contrib/rerere-train.sh -n 4 --merges master
->> 	$ contrib/rerere-train.sh --overwrite -n 4 --merges master
->> 	$ contrib/rerere-train.sh -n 4 --overwrite --merges master
->> 
->> I do not think it is necessary to make the last one work; as long as
->> the first two work as expected, we are good even if the last one
->> dies with a sensible message e.g. "options X, Y and Z must be given
->> before other options" (currently "X, Y and Z" consists only of
->> "--overwrite", but I think you get what I mean).
+On Wed, Jul 26, 2017 at 1:30 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
-> You're right -- I didn't try all the cases. I wasn't able to figure
-> out how to get `rev-parse --parseopt` to deal with this situation, so
-> I did it manually. I'm not super-happy with the result, but it does
-> work. Look for PATCH v3.
+>> When a submodule diff should be displayed we currently just add the
+>> submodule objects to the main object store and then e.g. walk the
+>> revision graph and create a summary for that submodule.
+>>
+>> It is possible that we are missing the submodule either completely or
+>> partially, which we currently differentiate with different error messages
+>> depending on whether (1) the whole submodule object store is missing or
+>> (2) just the needed for this particular diff. (1) is reported as
+>> "not initialized", and (2) is reported as "commits not present".
+>>
+>> If a submodule is deinit'ed its repository data is still around inside
+>> the superproject, such that the diff can still be produced. In that way
+>> the error message (1) is misleading as we can have a diff despite the
+>> submodule being not initialized.
+>
+> This is confusing...
+>
+> So are you saying that if we do "submodule init A && submodule
+> update A" followed by "submodule deinit A",
 
-Yes, I think you could squash the two case arms in the later loop
-into one i.e.
+  $ git clone https://gerrit.googlesource.com/gerrit
+  $ git show --submodule=log bb798b00bb
+  ...
+  Submodule plugins/replication ... (not initialized)
 
-	-h|--help|-o|--overwrite)
-		die "please don't." ;;
+  $ git submodule update --init
+  $ # a good example of cross repo changes:
+  $ git show --submodule=log bb798b00bb
+  ...
+  Submodule plugins/replication db4aecb2b8...98b7156cee:
+  > Stop using WorkQueue#unregisterWorkQueue.
+  < PushOne: Remove redundant string concatenation
 
-but still the repetition does look ugly.
+  $ git submodule deinit -f --all
+  $ git show --submodule=log bb798b00bb
+  ...
+  Submodule plugins/replication db4aecb2b8...98b7156cee:
+  > Stop using WorkQueue#unregisterWorkQueue.
+  < PushOne: Remove redundant string concatenation
 
-As a contrib/ material, I do not care too deeply about it, though.
+  $ rm -rf .git/modules/*
+  $ git show --submodule=log bb798b00bb
+  ...
+  Submodule plugins/replication ... (not initialized)
 
-Will queue.
+> we _could_ show the
+> difference for submodule A between two commits in the superproject,
+> because we already have the necessary data for the submodule, but we
+> _choose_ not to show it because the user told us explicitly that the
+> submodule is not interesting?
+
+We _do_ show the submodule as demonstrated by the code sample above
+if we possess the objects.
+
+Hence the "not initialized" is not quite technically correct. (After deinit it
+is not initialized, but we show nevertheless, so the user perceived
+_reason_ why we do not show the submodule is "commits not present".
+
+> That sounds like a very sensible and user-centric behaviour to me,
+> and "not initialized" sounds like the right message to give in such
+> a case (as opposed to "commits not present"---even the user told us
+> they are not interesting, we may have them, so "not present" is not
+> just incorrect but irrelevant because that is not the reason why we
+> are not showing).
+
+So you are saying we should instead do:
+
+  if (not active)
+    message = "not initialized"
+  if (problems with object loading)
+    message = "commits not present"
+  ...
+
+> Or are you saying that even the user told us that the submodule is
+> not interesting, if we had "init" it earlier even once, we show the
+> difference and with a wrong label?  Showing the difference sounds
+> like a bug that is more severe than using a wrong label to me.
+
+I looked through the man pages and they never specify if submodule
+activeness affects the superproject diff, so we'd want to change that
+so that only active submodules are diffed.
