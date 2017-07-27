@@ -2,123 +2,313 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 075F420899
-	for <e@80x24.org>; Thu, 27 Jul 2017 19:00:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E81E520899
+	for <e@80x24.org>; Thu, 27 Jul 2017 19:09:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751522AbdG0S76 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Jul 2017 14:59:58 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61470 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751458AbdG0S75 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jul 2017 14:59:57 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 992F79F9E7;
-        Thu, 27 Jul 2017 14:59:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=hloGSrwUasefLv0DtriZLaYBtqo=; b=jIo1Xd
-        6fmO62lqDBaC/MjAQiuYvSfTfH1f2pKxgYXLz7P7rRhHjBZf+J8ckEZqkho6HzrX
-        EVGLWamrYijwCQMxWd6OpOE7dFA7b4283iqcjwSR3ULTSfMyFOQ2B4ZUsAgPvAsr
-        ASjdTByrV7GQg7R/CurPFbIJV7EHNpLjWU0Ic=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=veWcePhn99IbiPsqRkflYm6ew9+3OcWY
-        ycs1QAxgvLD/0w/4NMMSrnm7whKUiQt43UOdPwE4WKc1SOEvO/lwYG4dbJOHndd7
-        PGITXGP19VxtorxGHkyRMyJC5Xz/bWo2H6Rj9jUkfQvwXqq6YrdClLWrQzdxeAcM
-        AwLQ0Ju1LTw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 926779F9E6;
-        Thu, 27 Jul 2017 14:59:49 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F1A249F9E5;
-        Thu, 27 Jul 2017 14:59:48 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, peartben@gmail.com, christian.couder@gmail.com
-Subject: Re: [RFC PATCH 2/4] fsck: support refs pointing to lazy objects
-References: <cover.1501111615.git.jonathantanmy@google.com>
-        <cover.1501111615.git.jonathantanmy@google.com>
-        <4c8bc7ab543d8d0d60719f65bd8a150c66123056.1501111615.git.jonathantanmy@google.com>
-Date:   Thu, 27 Jul 2017 11:59:47 -0700
-In-Reply-To: <4c8bc7ab543d8d0d60719f65bd8a150c66123056.1501111615.git.jonathantanmy@google.com>
-        (Jonathan Tan's message of "Wed, 26 Jul 2017 16:30:00 -0700")
-Message-ID: <xmqqvamdn1ss.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751625AbdG0TJ0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Jul 2017 15:09:26 -0400
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:36342 "EHLO
+        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751599AbdG0TJZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jul 2017 15:09:25 -0400
+Received: by mail-wm0-f45.google.com with SMTP id t201so107614264wmt.1
+        for <git@vger.kernel.org>; Thu, 27 Jul 2017 12:09:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=APEpfTGI6l1ucr7ogTTMO2cSlQqgquOBPoI36gMKOMg=;
+        b=ouOptRrgtsrdmyrCkmJkhcKnOcR8BG58uMXLx+B2JAZJYzN5vcG1JfpWbPmAg5oHgt
+         IgOS7r1S8bFnWZo0AloEcPG+n9W289xuZaxdYWP8vgcKZWRDTZhQsPOvLy0hs56PUFDw
+         tqVG/p8SV0FiuEOgxIhnPC4BJyYaRPxoKkIhaLjdRx5tzk0CuZR0OAf60s1axHjDL6F5
+         CzqfeYk0/NkKf64YxOkaV45iIWMazloEhEO71ZitJtQc+/8v2LL0BXzb+DuaXGqy6kiT
+         L+ssYIT6CKWpc3GRJtOLKrBMsqVZp7Vee89023Huj01y5GugtM8elkO0v47cEkITtesT
+         kLmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=APEpfTGI6l1ucr7ogTTMO2cSlQqgquOBPoI36gMKOMg=;
+        b=TlvqvwnxfU7TiUmwF0DlygEiU3MEUhGkDyO6uEV2moEK5+AHkL1NYRVrtDWGO1lM0Y
+         uL2gFLaF2AYFJCSs1M8KPKekldO07nu4nPZ5bXrO3VvzZUtp/hyNXqSHxbFUMXpyD2gY
+         Mwz4sYy3sNtfSCJ2XdTMHScRqghE2Zc9ZKzujlnJycaMoPdIT/REr+LibXo6xtMHXrKQ
+         tA3RFHzjGL42qMQMLwjQlD+ZMyGwRQ2OGTNgx+rdMFv+ZRBpsDe4sGvvJUZ+4Vd7bnnV
+         jr9GZZoutjH54AMPa6PBllDoip99e7xtgJDKgEFYipOuQ6MEYtfO0vCtr+JEHhimCNrh
+         BhBA==
+X-Gm-Message-State: AIVw1124YCeEKTzNdEIK4QRWxKHTs/kYWP1kQ0BBd/YMeMAFniqj5nJl
+        t/MEroLUaYmcFw==
+X-Received: by 10.28.213.75 with SMTP id m72mr3886302wmg.41.1501182564062;
+        Thu, 27 Jul 2017 12:09:24 -0700 (PDT)
+Received: from [192.168.0.136] (ip5f5be42d.dynamic.kabel-deutschland.de. [95.91.228.45])
+        by smtp.googlemail.com with ESMTPSA id m29sm13797669wrm.4.2017.07.27.12.09.22
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 27 Jul 2017 12:09:23 -0700 (PDT)
+Subject: Re: [PATCH v2] l10n: de.po: various fixes in German translation
+To:     Ralf Thielow <ralf.thielow@gmail.com>, git@vger.kernel.org
+References: <20170727173028.8863-1-ralf.thielow@gmail.com>
+ <20170727182320.10267-1-ralf.thielow@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Hartmut Henkel <henkel@vh-s.de>,
+        Thomas Rast <tr@thomasrast.ch>,
+        =?UTF-8?Q?Jan_Kr=c3=bcger?= <jk@jk.gs>,
+        Christian Stimming <stimming@tuhh.de>,
+        Phillip Szelat <phillip.szelat@gmail.com>,
+        =?UTF-8?Q?Magnus_G=c3=b6rlitz?= <magnus.goerlitz@googlemail.com>
+From:   =?UTF-8?Q?Matthias_R=c3=bcster?= <matthias.ruester@gmail.com>
+Message-ID: <058ed692-e6a0-9b78-67fb-09d57e2864aa@gmail.com>
+Date:   Thu, 27 Jul 2017 21:09:16 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C37BBD2C-72FD-11E7-9A5A-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+In-Reply-To: <20170727182320.10267-1-ralf.thielow@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Acked-by: Matthias Rüster <matthias.ruester@gmail.com>
 
-> Teach fsck to not treat refs with missing targets as an error when
-> extensions.lazyobject is set.
->
-> For the purposes of warning about no default refs, such refs are still
-> treated as legitimate refs.
->
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+Thanks!
+
+
+Am 27.07.2017 um 20:23 schrieb Ralf Thielow:
+> From: Hartmut Henkel <henkel@vh-s.de>
+> 
+> Signed-off-by: Hartmut Henkel <henkel@vh-s.de>
+> Helped-by: Stefan Beller <sbeller@google.com>
+> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
 > ---
->  builtin/fsck.c         |  8 ++++++++
->  t/t0410-lazy-object.sh | 20 ++++++++++++++++++++
->  2 files changed, 28 insertions(+)
->
-> diff --git a/builtin/fsck.c b/builtin/fsck.c
-> index 1cfb8d98c..e29ff760b 100644
-> --- a/builtin/fsck.c
-> +++ b/builtin/fsck.c
-> @@ -438,6 +438,14 @@ static int fsck_handle_ref(const char *refname, const struct object_id *oid,
+>  po/de.po | 52 +++++++++++++++++++++++++---------------------------
+>  1 file changed, 25 insertions(+), 27 deletions(-)
+> 
+> diff --git a/po/de.po b/po/de.po
+> index c5b7ed501..362ebb6bb 100644
+> --- a/po/de.po
+> +++ b/po/de.po
+> @@ -1287,7 +1287,7 @@ msgid ""
+>  "variable i18n.commitencoding to the encoding your project uses.\n"
+>  msgstr ""
+>  "Warnung: Die Commit-Beschreibung ist nicht UTF-8 konform.\n"
+> -"Sie können das Nachbessern, nachdem Sie die Beschreibung korrigiert haben,\n"
+> +"Sie können das nachbessern, nachdem Sie die Beschreibung korrigiert haben,\n"
+>  "oder Sie setzen die Konfigurationsvariable i18n.commitencoding auf das "
+>  "Encoding,\n"
+>  "welches von ihrem Projekt verwendet wird.\n"
+> @@ -1465,7 +1465,7 @@ msgstr "Konnte '%s' nicht aufheben."
 >  
->  	obj = parse_object(oid);
->  	if (!obj) {
-> +		if (repository_format_lazy_object) {
-> +			/*
-> +			 * Increment default_refs anyway, because this is a
-> +			 * valid ref.
-> +			 */
-> +			default_refs++;
-> +			return 0;
-> +		}
->  		error("%s: invalid sha1 pointer %s", refname, oid_to_hex(oid));
->  		errors_found |= ERROR_REACHABLE;
-
-At this point, do we know (or can we tell) if this is a missing
-object or a file exists as a loose object but is corrupt?  If we
-could, it would be nice to do this only for the former to avoid
-sweeping a real corruption that is unrelated to the lazy fetch under
-the rug.
-
-> +test_expect_success 'fsck fails on lazy object pointed to by ref' '
-> +	rm -rf repo &&
-> +	test_create_repo repo &&
-> +	test_commit -C repo 1 &&
-> +
-> +	A=$(git -C repo commit-tree -m a HEAD^{tree}) &&
-> +
-> +	# Reference $A only from ref, and delete it
-> +	git -C repo branch mybranch "$A" &&
-> +	delete_object repo "$A" &&
-> +
-> +	test_must_fail git -C repo fsck
-> +'
-
-And a new test that uses a helper different from delete_object
-(perhaps call it corrupt_object?) can be used to make sure that we
-complain in that case here.
-
-> +test_expect_success '...but succeeds if lazyobject is set' '
-> +	git -C repo config core.repositoryformatversion 1 &&
-> +	git -C repo config extensions.lazyobject "arbitrary string" &&
-> +	git -C repo fsck
-> +'
-> +
->  test_done
+>  #: connect.c:50
+>  msgid "The remote end hung up upon initial contact"
+> -msgstr "Die Gegenseite hat sich nach dem erstmaligen Kontakt aufgehangen."
+> +msgstr "Die Gegenseite hat nach dem ersten Kontakt abgebrochen."
+>  
+>  #: connect.c:52
+>  msgid ""
+> @@ -3018,7 +3018,7 @@ msgid ""
+>  "after resolving the conflicts, mark the corrected paths\n"
+>  "with 'git add <paths>' or 'git rm <paths>'"
+>  msgstr ""
+> -"nach Auflösung der Konflikte, markieren Sie die korrigierten Pfade\n"
+> +"nach Auflösung der Konflikte markieren Sie die korrigierten Pfade\n"
+>  "mit 'git add <Pfade>' oder 'git rm <Pfade>'"
+>  
+>  #: sequencer.c:282
+> @@ -3027,8 +3027,8 @@ msgid ""
+>  "with 'git add <paths>' or 'git rm <paths>'\n"
+>  "and commit the result with 'git commit'"
+>  msgstr ""
+> -"nach Auflösung der Konflikte, markieren Sie die korrigierten Pfade\n"
+> -"mit 'git add <Pfade>' oder 'git rm <Pfade>'und tragen Sie das Ergebnis mit\n"
+> +"nach Auflösung der Konflikte markieren Sie die korrigierten Pfade\n"
+> +"mit 'git add <Pfade>' oder 'git rm <Pfade>' und tragen Sie das Ergebnis mit\n"
+>  "'git commit' ein"
+>  
+>  #: sequencer.c:295 sequencer.c:1685
+> @@ -3336,7 +3336,7 @@ msgstr "kann HEAD nicht auflösen"
+>  
+>  #: sequencer.c:1618 sequencer.c:1652
+>  msgid "cannot abort from a branch yet to be born"
+> -msgstr "kann nicht abbrechen: bin auf einem Branch, der noch geboren wird"
+> +msgstr "kann nicht abbrechen: bin auf einem Branch, der noch nicht geboren ist"
+>  
+>  #: sequencer.c:1638 builtin/grep.c:929
+>  #, c-format
+> @@ -3359,8 +3359,7 @@ msgstr "gespeicherte \"pre-cherry-pick\" HEAD Datei '%s' ist beschädigt"
+>  
+>  #: sequencer.c:1658
+>  msgid "You seem to have moved HEAD. Not rewinding, check your HEAD!"
+> -msgstr ""
+> -"Sie scheinen HEAD verschoben zu haben. Keine Zurücksetzung, prüfen Sie HEAD."
+> +msgstr "Sie scheinen HEAD verändert zu haben. Keine Rückspulung, prüfen Sie HEAD."
+>  
+>  #: sequencer.c:1795 sequencer.c:2086
+>  msgid "cannot read HEAD"
+> @@ -3564,7 +3563,7 @@ msgstr "Kein Git-Repository (oder irgendein Elternverzeichnis): %s"
+>  
+>  #: setup.c:812 builtin/index-pack.c:1652
+>  msgid "Cannot come back to cwd"
+> -msgstr "Kann nicht zurück zu Arbeitsverzeichnis wechseln"
+> +msgstr "Kann nicht zurück zum Arbeitsverzeichnis wechseln"
+>  
+>  #: setup.c:1050
+>  msgid "Unable to read current working directory"
+> @@ -3938,7 +3937,7 @@ msgid ""
+>  msgstr ""
+>  "Ihre lokalen Änderungen in den folgenden Dateien würden durch den Merge\n"
+>  "überschrieben werden:\n"
+> -"%%sBitte committen oder stashen Sie Ihre Änderungen, bevor sie mergen."
+> +"%%sBitte committen oder stashen Sie Ihre Änderungen, bevor Sie mergen."
+>  
+>  #: unpack-trees.c:112
+>  #, c-format
+> @@ -5412,7 +5411,7 @@ msgstr "leere SHA-1 für Grenz-Commits anzeigen (Standard: aus)"
+>  
+>  #: builtin/blame.c:670
+>  msgid "Do not treat root commits as boundaries (Default: off)"
+> -msgstr "Ursprungs-Commit nicht als Grenzen behandeln (Standard: aus)"
+> +msgstr "Ursprungs-Commits nicht als Grenzen behandeln (Standard: aus)"
+>  
+>  #: builtin/blame.c:671
+>  msgid "Show work cost statistics"
+> @@ -5523,7 +5522,7 @@ msgstr ""
+>  #.
+>  #: builtin/blame.c:795
+>  msgid "4 years, 11 months ago"
+> -msgstr "vor 4 Jahren, und 11 Monaten"
+> +msgstr "vor 4 Jahren und 11 Monaten"
+>  
+>  #: builtin/blame.c:882
+>  #, c-format
+> @@ -6297,13 +6296,13 @@ msgid_plural ""
+>  "\n"
+>  msgstr[0] ""
+>  "Wenn Sie diese durch einen neuen Branch behalten möchten, dann könnte jetzt\n"
+> -"ein guter Zeitpunkt sein dies zu tun mit:\n"
+> +"ein guter Zeitpunkt sein, dies zu tun mit:\n"
+>  "\n"
+>  " git branch <neuer-Branchname> %s\n"
+>  "\n"
+>  msgstr[1] ""
+>  "Wenn Sie diese durch einen neuen Branch behalten möchten, dann könnte jetzt\n"
+> -"ein guter Zeitpunkt sein dies zu tun mit:\n"
+> +"ein guter Zeitpunkt sein, dies zu tun mit:\n"
+>  "\n"
+>  " git branch <neuer-Branchname> %s\n"
+>  "\n"
+> @@ -6318,7 +6317,7 @@ msgstr "Vorherige Position von HEAD war"
+>  
+>  #: builtin/checkout.c:832 builtin/checkout.c:1070
+>  msgid "You are on a branch yet to be born"
+> -msgstr "Sie sind auf einem Branch, der noch geboren wird"
+> +msgstr "Sie sind auf einem Branch, der noch nicht geboren ist"
+>  
+>  #: builtin/checkout.c:976
+>  #, c-format
+> @@ -6975,7 +6974,7 @@ msgstr ""
+>  msgid "source repository is shallow, ignoring --local"
+>  msgstr ""
+>  "Quelle ist ein Repository mit unvollständiger Historie (shallow),\n"
+> -"--local wird ignoriert"
+> +"ignoriere --local"
+>  
+>  #: builtin/clone.c:1079
+>  msgid "--local is ignored"
+> @@ -7793,7 +7792,7 @@ msgid ""
+>  "#\tname = %s\n"
+>  "#\temail = %s\n"
+>  msgstr ""
+> -"# Das ist Git's benutzerspezifische Konfiguraionsdatei.\n"
+> +"# Das ist Git's benutzerspezifische Konfigurationsdatei.\n"
+>  "[user]\n"
+>  "# Bitte passen Sie die folgenden Zeilen an und kommentieren Sie diese aus:\n"
+>  "#\tname = %s\n"
+> @@ -8396,7 +8395,7 @@ msgstr "(nichts)"
+>  #, c-format
+>  msgid "Refusing to fetch into current branch %s of non-bare repository"
+>  msgstr ""
+> -"Der \"fetch\" in den aktuellen Branch %s von einem nicht-Bare-Repository "
+> +"Der \"fetch\" in den aktuellen Branch %s von einem Nicht-Bare-Repository "
+>  "wurde verweigert."
+>  
+>  #: builtin/fetch.c:997
+> @@ -10077,7 +10076,7 @@ msgstr ""
+>  
+>  #: builtin/ls-remote.c:66
+>  msgid "show underlying ref in addition to the object pointed by it"
+> -msgstr "zusätzlich die auf durch dieses Objekt verwiesene Referenzen anzeigen"
+> +msgstr "zusätzlich zum Objekt die darauf verweisenden Referenzen anzeigen"
+>  
+>  #: builtin/ls-tree.c:29
+>  msgid "git ls-tree [<options>] <tree-ish> [<path>...]"
+> @@ -10366,7 +10365,7 @@ msgstr "--abort akzeptiert keine Argumente"
+>  
+>  #: builtin/merge.c:1149
+>  msgid "There is no merge to abort (MERGE_HEAD missing)."
+> -msgstr "Es gibt keinen Merge zum Abbrechen (MERGE_HEAD fehlt)"
+> +msgstr "Es gibt keinen Merge abzubrechen (MERGE_HEAD fehlt)"
+>  
+>  #: builtin/merge.c:1161
+>  msgid "--continue expects no arguments"
+> @@ -10542,7 +10541,7 @@ msgstr "Commits auflisten, die nicht durch Andere erreichbar sind"
+>  
+>  #: builtin/merge-base.c:224
+>  msgid "is the first one ancestor of the other?"
+> -msgstr "ist der Erste ein Vorgänger-Commit von dem Anderen?"
+> +msgstr "ist der Erste ein Vorgänger-Commit des Anderen?"
+>  
+>  #: builtin/merge-base.c:226
+>  msgid "find where <commit> forked from reflog of <ref>"
+> @@ -11257,8 +11256,7 @@ msgstr "Fortschrittsanzeige anzeigen"
+>  
+>  #: builtin/pack-objects.c:2881
+>  msgid "show progress meter during object writing phase"
+> -msgstr ""
+> -"Forschrittsanzeige während der Phase des Schreibens der Objekte anzeigen"
+> +msgstr "Forschrittsanzeige während des Schreibens von Objekten anzeigen"
+>  
+>  #: builtin/pack-objects.c:2884
+>  msgid "similar to --all-progress when progress meter is shown"
+> @@ -12037,7 +12035,7 @@ msgid ""
+>  "'receive.denyCurrentBranch' configuration variable to 'refuse'."
+>  msgstr ""
+>  "Standardmäßig wird die Aktualisierung des aktuellen Branches in einem\n"
+> -"nicht-Bare-Repository zurückgewiesen, da dies den Index und das Arbeits-\n"
+> +"Nicht-Bare-Repository zurückgewiesen, da dies den Index und das Arbeits-\n"
+>  "verzeichnis inkonsistent zu dem machen würde, was Sie gepushed haben, und\n"
+>  "'git reset --hard' erforderlich wäre, damit das Arbeitsverzeichnis HEAD\n"
+>  "entspricht.\n"
+> @@ -13092,7 +13090,7 @@ msgid ""
+>  "(use --cached to keep the file, or -f to force removal)"
+>  msgstr ""
+>  "\n"
+> -"(benutzen Sie --cached, um die Datei zu behalten, oder -f, um die Entfernung "
+> +"(benutzen Sie --cached, um die Datei zu behalten, oder -f, um das Entfernen "
+>  "zu erzwingen)"
+>  
+>  #: builtin/rm.c:225
+> @@ -13115,7 +13113,7 @@ msgstr "die \"up-to-date\" Prüfung überschreiben"
+>  
+>  #: builtin/rm.c:246
+>  msgid "allow recursive removal"
+> -msgstr "rekursive Entfernung erlauben"
+> +msgstr "rekursives Entfernen erlauben"
+>  
+>  #: builtin/rm.c:248
+>  msgid "exit with a zero status even if nothing matched"
+> @@ -16392,7 +16390,7 @@ msgstr "ungültiges Argument %s, erwarte --"
+>  #: git-send-email.perl:126
+>  msgid "local zone differs from GMT by a non-minute interval\n"
+>  msgstr ""
+> -"lokale Zeitzone unterscheidet sich von GMT nicht um einen Minutenintervall\n"
+> +"lokale Zeitzone unterscheidet sich von GMT nicht um ein Minutenintervall\n"
+>  
+>  #: git-send-email.perl:133 git-send-email.perl:139
+>  msgid "local time offset greater than or equal to 24 hours\n"
+> 
