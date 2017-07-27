@@ -2,110 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 31DF81F89D
-	for <e@80x24.org>; Thu, 27 Jul 2017 10:04:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF05B1F89D
+	for <e@80x24.org>; Thu, 27 Jul 2017 10:36:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751028AbdG0KEu (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Jul 2017 06:04:50 -0400
-Received: from mail-pg0-f53.google.com ([74.125.83.53]:38893 "EHLO
-        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750965AbdG0KEt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jul 2017 06:04:49 -0400
-Received: by mail-pg0-f53.google.com with SMTP id k190so30588647pgk.5
-        for <git@vger.kernel.org>; Thu, 27 Jul 2017 03:04:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Qb7S2Zi/5XpBBcushQphQN/YAPcZlp4zryOvQc4h3Uc=;
-        b=QVaWnoMnwktjkIwhmHPJ6RUQjqsDyagRouQxHIFDFCQrKrl85VMk9vmg9QY0CC21hz
-         BM7yiPRB4PQhGHZwJSLtCyU9yzOkVQ8dj5LjzWV/5ptKUgkbMx7ZzZFmtAhSZoQf8UK3
-         DkJNa+VhS6TGqdgV+C2E7UfP3H4RwkkklqYqATBTB2a2yZ4R2IlE+GDc+KxW99FFZkH1
-         /SMf27T/0l+KDFGEh/G520JXL6cB4fq20BKsJR11MLkjkMycnhM6tISJ/3ohyQY737Ey
-         xsxqV7zGZ7oGJHJLWwdbiP6Y05bqMGty+AgPGGqw9nXFuGJIACnOGhSdxTPF8n3kNwFS
-         dYJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Qb7S2Zi/5XpBBcushQphQN/YAPcZlp4zryOvQc4h3Uc=;
-        b=hssisFvlmIRwhZ/eAH+Y9RuPSItPTJcyBhB4SSct1HORdmL0OFf48Na9swNTX/JRE5
-         i9WVH1S7E+GrCpzFbvXRrbGWrC0XTW/3TD8xDbK5cVFwnavm3cLKONI0xvB5aFI6O/MM
-         VKgAmcHqvS8fdywSXcsLM9f56zrOmniXkPBFFmeW6uGcUclXn5x1nsf2HEuf7KDpjbJ8
-         /CpF84FhHmR7UoHuYw4usD+GoXxrym2tJFKY7Es3ry7sg3LMpjJiJaV97N2KNdppF3/w
-         a0R31JfBIStuigu2bu3oaSXGrx+Ppo8qZkr/8MDAfWcnJdRCIitI4SYJC0qdhQpRVVPe
-         bvkA==
-X-Gm-Message-State: AIVw112smK6N9lFN9C+K4I3HAQTpaTpB5OTT0jO8R7/8c6wX28fkpMTv
-        75AHFkoFSkwnhy6qLZi+UEW/fLB4/Zzh
-X-Received: by 10.99.44.138 with SMTP id s132mr3535183pgs.318.1501149888827;
- Thu, 27 Jul 2017 03:04:48 -0700 (PDT)
+        id S1751014AbdG0KgP (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Jul 2017 06:36:15 -0400
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:50495 "EHLO
+        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750836AbdG0KgO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jul 2017 06:36:14 -0400
+Received: from [192.168.2.201] ([92.22.28.33])
+        by smtp.talktalk.net with SMTP
+        id ag9FdxqLViSHaag9Jdtbmt; Thu, 27 Jul 2017 11:36:12 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
+        t=1501151772; bh=vxy8q5dVSWJ6cI1LZsE07e3FkwnSxwsZoU72XhAUbTQ=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=cZd8jKDUkDStF7k6gYBsw7KW0w9QluZOHO8vG2zWSOaMK9N5+WBO/ON1A7BjpSj9J
+         x417De5nFidVuza5MJEy3qN87CSQpNq80iM6i1B4Uu9scD7ewV3gTvElOPn6zd4Nme
+         x3iJCS1wJaa6TgF1ymi3YcWfSDIug84rWgBVYmdE=
+X-Originating-IP: [92.22.28.33]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=UoATD64B c=1 sm=1 tr=0 a=BeSdjzhxhZnKGFP9cxuqMA==:117
+ a=BeSdjzhxhZnKGFP9cxuqMA==:17 a=IkcTkHD0fZMA:10 a=ybZZDoGAAAAA:8
+ a=jNARPcyGrNI08zdJ1NkA:9 a=QEXdDO2ut3YA:10 a=0RhZnL1DYvcuLYC8JZ5M:22
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [RFC PATCH 0/5] Add option to autostage changes when continuing a
+ rebase
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Philip Oakley <philipoakley@iee.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <20170726102720.15274-1-phillip.wood@talktalk.net>
+ <xmqqa83rrrdu.fsf@gitster.mtv.corp.google.com>
+ <xmqqa83qq2uf.fsf@gitster.mtv.corp.google.com>
+ <xmqq60eeq24l.fsf@gitster.mtv.corp.google.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <8cdda835-0b4f-6ffb-31bf-6192999818be@talktalk.net>
+Date:   Thu, 27 Jul 2017 11:36:05 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Received: by 10.100.165.44 with HTTP; Thu, 27 Jul 2017 03:04:48 -0700 (PDT)
-In-Reply-To: <CAJo=hJuCXFem8saH9kgBu1ROV3uuhRxHcHXz_Bp7xB+taW5S=Q@mail.gmail.com>
-References: <CAJo=hJvxWg2J-yRiCK3szux=eYM2ThjT0KWo-SFFOOc1RkxXzg@mail.gmail.com>
- <CAGZ79kZ48zTsHxrW-fvHRFQih=vBuywExSxA8a_=wzjdJPbtrg@mail.gmail.com> <CAJo=hJuCXFem8saH9kgBu1ROV3uuhRxHcHXz_Bp7xB+taW5S=Q@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 27 Jul 2017 03:04:48 -0700
-Message-ID: <CAGZ79kaLN-_13Y4UifZXy6A1A2Peud90z=oEOw9_1DaXHRWKbQ@mail.gmail.com>
-Subject: Re: reftable [v3]: new ref storage format
-To:     Shawn Pearce <spearce@spearce.org>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Junio C Hamano <gitster@pobox.com>,
-        David Borowitz <dborowitz@google.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <xmqq60eeq24l.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfHztZ2nLYUSfm+Ca4m7Q5IASeE+vrsoOt6bx/ZjbXy64wXYKgULgha2aO57UpkWwnyjaG8x8dlznYtb4g3bCL7RieRUxA5rVSLLMBZYdHH8BE9T1RHuS
+ 85+W7LqLwRhpiJlEvcfA7LvasZufkfddpqZDKkkzUmiJtaWcwynolrDvQWC3vQQQOq4aa8+leP8grX2/U7dHveXUskpX/RE4nfBdzDnVgco/OJZVUE4WvfK1
+ tU+5CvOae/d/Ven6HLBgM8EnHqvzLQHL3bC28OP7YkE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 24, 2017 at 4:00 PM, Shawn Pearce <spearce@spearce.org> wrote:
-> On Mon, Jul 24, 2017 at 3:22 PM, Stefan Beller <sbeller@google.com> wrote:
-
->>> #### index record
->>>
->>> An index record describes the last entry in another block.
->>> Index records are written as:
->>>
->>>     varint( prefix_length )
->>>     varint( (suffix_length << 3) | 0 )
->>>     suffix
->>>     varint( block_offset )
->>>
->>> Index records use prefix compression exactly like `ref_record`.
->>>
->>> Index records store `block_offset` after the suffix, specifying the
->>> offset in bytes (from the start of the file) of the block that ends
->>> with this reference.
+On 26/07/17 23:12, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> Hmph, this is interesting.
 >>
->> Instead of hardcoding the "0" in the last 3 bits, maybe pick one
->> of the reserved bit patterns to be there? I would imagine this
->> makes debugging easier:
+>> "git rebase" does take "--rerere-autoupdate" option from the command
+>> line, and propagates it to a later invocation of "rebase --continue"
+>> by storing the value to $state_dir/allow_rerere_autoupdate file and
+>> reading the value from it.  $allow_rerere_autoupdate shell variable
+>> is used to hold the setting.  
 >>
->>     0x5? Hah that must be an index block I have been
->>     looking at the wrong block!
->
-> This is an excellent suggestion. I'll include it in the next iteration.
+>> I'd expect that this variable to be used in invocations of "git am"
+>> in git-rebase--am.sh; but that does not seem to be the case.  I
+>> wonder if this was once working but over time we broke the feature
+>> without anybody noticing it, or if the support was added but not
+>> completed and the feature was a no-op from the beginning?
+> 
+> At least in v1.7.0 when doing "rebase -m", the rerere-autoupdate was
+> plumbed correctly through to the invocation of "git merge" that is
+> done inside git-rebase.sh.  I do not see the same option passed down
+> to the invocation of "git am", so perhaps nobody cared back then
+> about rerere during "git rebase" that does not use "git am" backend,
+> even though "git am" itself were capable of talking the option.
+> 
+> In any case, if you corrected the existing "git rebase" and its
+> backend so that "--rerere-autoupdate" works as advertised
 
-I was thinking about this a bit more and wondering if this would
-allow mixing all sorts of entries in the same block. Think about one
-of the most common cases client side:
+I've had a quick look and I think it's just a case of adding
+'$allow_rerere_autoupdate' to the invocation of 'git am'. 'git am' calls
+rerere_clear() when skipping so that doesn't need to go into the shell
+script. I'll come up with a test to check it works as I think it does.
 
-    git commit -m "just a lonely ref update, no fancy stuff"
+> I think
+> you are already 80% there without adding a yet another option, as I
+> suspect that the most of the need for avoiding "git add" during a
+> "git rebase" session is during a conflict resolution, and allowing
+> "rerere" to automatically update the index with auto-resolution will
+> leave _only_ changes to the paths the end user actually needs to
+> take a look and manually fix still not in the index. 
 
-For that we need (a) a single ref update and (b) now that the
-format evolved a single reflog entry, maybe (c) an obj entry, too.
+I'm interested in the 20% as it's about 100% of my rebase conflicts.
+I've got rerere enabled but I cannot recall it helping me with a rebase
+conflict in the five or six years I've been using git [1]. A lot of my
+rebase conflicts come from fixup! commits or reordering things with
+rebase -i and generally they're only going to happen once as I don't
+apply the same fixup! more than once and if I've rearranged commits the
+conflicts are likely to be different in the (possibly unlikely) event I
+rearrange them again in the future.
 
-I just realize that in this case we'd crank down the block size
-such that there is very little padding required, but I still wonder
-if it would be possible to omit the second (and third) block,
-but rather go for a "m"ixed block containing just these 3 entries.
+Once I've resolved a conflict I will look at the diff and maybe compile
+and run some tests. Then, if I'm happy I'll run 'git rebase --continue',
+to me the 'git add' stage doesn't really add anything useful, it's just
+an inconvenience.
 
-Additionally by setting the block_size to a special value "0",
-we could indicate the omission of a footer, such that a single
-ref update reftable is super small.
+The other use I have for --autostage is when editing commits with rebase
+-i, once I'm happy with the edit I just want to continue and have rebase
+amend the commit. I don't feel having to run 'git add' is helpful in
+this case.
+
+> And from the
+> workflow point of view, encouraging them to "git add" their manual
+> resolution after they are satisified with their changes by not doing
+> "git add" blindly for all changes, like your --autostage" does, is
+> probably a good thing.
+
+In my mind running 'git rebase --continue' is the signal to git that the
+conflicts are resolved.
+
+Best Wishes
+
+Phillip
+
+[1] Maybe I've not noticed it helping when rebasing onto an updated
+upstream, although if I'm actively changing the rebased commits between
+upstream updates the conflicts may well change between updates. Also I
+don't tend to get many upstream conflicts with the projects I'm working on.
+
