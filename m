@@ -6,115 +6,104 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 399D620899
-	for <e@80x24.org>; Thu, 27 Jul 2017 19:17:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 20C3220899
+	for <e@80x24.org>; Thu, 27 Jul 2017 19:40:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751531AbdG0TRr (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Jul 2017 15:17:47 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53504 "EHLO
+        id S1751688AbdG0Tko (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Jul 2017 15:40:44 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55272 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751461AbdG0TRq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jul 2017 15:17:46 -0400
+        with ESMTP id S1751656AbdG0Tkl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jul 2017 15:40:41 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0086B9FD77;
-        Thu, 27 Jul 2017 15:17:39 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E2720A01CD;
+        Thu, 27 Jul 2017 15:40:32 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=6uH2Rcs7vSNwlElspxqZP6F+R+0=; b=WoP22X
-        4PO/IcVgB0Dv0u6IQPCOLOvx9OpTzHxdJcDRsUCSTsFi48i5QFIGj83JGXVddBgX
-        VwFJm4MRawW4lCNwnlHMy5fWdpTsq+O/a70aCiMbKcJrAfqXkykBp8DynbJigf/p
-        aTnlyetTdfXJ389Bu5k7J/S1FsQEDSiX0SvJs=
+        :content-type; s=sasl; bh=Md9FTjRR5wMn2XZINp7ESyyqSA0=; b=ategHP
+        sOqXSWAKKn2Sv4oR6X6POFqSuSfc0jAA/wT9uIR3qULc2kID0F8ANgXb2gWkWakQ
+        jDgJ0w3r1w6IQqZ9DLZQ8naBMHq+eyrs6H46RXVTvHhhIYzyiiB58xE5m1r/slD2
+        yqLunlJ2w6B9cTA0J8k/3Upx7go/6ECoisolc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=uu0cioMFrcquBptxRkrcA+aTt/y2LH4x
-        cHntWbBlqouZzXpVZW4XK9qDX2frKbvNsPK4XzeUqFPlmvcXmGfwLWU+wyKpLB+r
-        XilQ35It5Pd//tdjKJv9zLOv2ZntVBqBbW3PsYo0JDK+YyjsHeeMXoPl/+VWQlrS
-        /tYI4JpGaTM=
+        :content-type; q=dns; s=sasl; b=t+zCLpDE91o7TdewfehjK3eZs2Jav2vQ
+        u099/RYEXO2J0FJFpQgcD4trOd8IysnWnS9WgBzqw4r78Sed0ju9uZHRHPATFDOp
+        XWpQDMm0zfz/x01ooEYFR7ik6dIJ0ElVZZlmIiSMy/0dKzoLLm34l3Xk8f5brKK9
+        +xyu8PSS3Fk=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id ED3E39FD75;
-        Thu, 27 Jul 2017 15:17:38 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D9E6BA01CC;
+        Thu, 27 Jul 2017 15:40:32 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 61B219FD74;
-        Thu, 27 Jul 2017 15:17:38 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3774CA01CB;
+        Thu, 27 Jul 2017 15:40:32 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, peartben@gmail.com, christian.couder@gmail.com
-Subject: Re: [RFC PATCH 3/4] fsck: support referenced lazy objects
-References: <cover.1501111615.git.jonathantanmy@google.com>
-        <cover.1501111615.git.jonathantanmy@google.com>
-        <1d841f0e4188f0ae9fa3c238c58d3e1b5fb232e8.1501111615.git.jonathantanmy@google.com>
-Date:   Thu, 27 Jul 2017 12:17:37 -0700
-In-Reply-To: <1d841f0e4188f0ae9fa3c238c58d3e1b5fb232e8.1501111615.git.jonathantanmy@google.com>
-        (Jonathan Tan's message of "Wed, 26 Jul 2017 16:30:01 -0700")
-Message-ID: <xmqqpocln0z2.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        =?utf-8?B?w4Z2?= =?utf-8?B?YXIgQXJuZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>, David Turner <novalis@novalis.org>,
+        Brandon Williams <bmwill@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH] packed_ref_store: handle a packed-refs file that is a symlink
+References: <20170720232040.GA159617@aiede.mtv.corp.google.com>
+        <d0da02a8b6f0272fa70ae3b1dc80fee6c6ee8d18.1501111803.git.mhagger@alum.mit.edu>
+        <xmqq8tj9okzv.fsf@gitster.mtv.corp.google.com>
+        <20170727182854.wxjvjs2x746n3x2t@sigill.intra.peff.net>
+Date:   Thu, 27 Jul 2017 12:40:31 -0700
+In-Reply-To: <20170727182854.wxjvjs2x746n3x2t@sigill.intra.peff.net> (Jeff
+        King's message of "Thu, 27 Jul 2017 14:28:54 -0400")
+Message-ID: <xmqqlgn9mzww.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 40E6BAD0-7300-11E7-84BA-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 73CF3906-7303-11E7-ABE4-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Teach fsck to not treat missing objects indirectly pointed to by refs as
-> an error when extensions.lazyobject is set.
+> On Thu, Jul 27, 2017 at 10:19:48AM -0700, Junio C Hamano wrote:
 >
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
->  builtin/fsck.c         | 11 +++++++++++
->  t/t0410-lazy-object.sh | 27 +++++++++++++++++++++++++++
->  2 files changed, 38 insertions(+)
+>> Makes sense.  Makes me wonder why we need a separate .new file
+>> (instead of writing into the .lock instead), but that is a different
+>> issue.
 >
-> diff --git a/builtin/fsck.c b/builtin/fsck.c
-> index e29ff760b..238532cc2 100644
-> --- a/builtin/fsck.c
-> +++ b/builtin/fsck.c
-> @@ -149,6 +149,15 @@ static int mark_object(struct object *obj, int type, void *data, struct fsck_opt
->  		return 0;
->  	obj->flags |= REACHABLE;
->  	if (!(obj->flags & HAS_OBJ)) {
-> +		if (repository_format_lazy_object)
-> +			/*
-> +			 * Return immediately; this is not an error, and further
-> +			 * recursion does not need to be performed on this
-> +			 * object since it is missing (so it does not need to be
-> +			 * added to "pending").
-> +			 */
-> +			return 0;
-> +
+> It comes from 42dfa7ece (commit_packed_refs(): use a staging file
+> separate from the lockfile, 2017-06-23). That commit explains that we
+> want to be able to put the new contents into service before we release
+> the lock. But it doesn't say why that's useful.
 
-The same comment as 2/4 applies here.
+By being able to hold the lock on packed-refs longer, I guess
+something like this becomes possible:
 
-> @@ -212,6 +221,8 @@ static void check_reachable_object(struct object *obj)
->  	 * do a full fsck
->  	 */
->  	if (!(obj->flags & HAS_OBJ)) {
-> +		if (repository_format_lazy_object)
-> +			return;
->  		if (has_sha1_pack(obj->oid.hash))
->  			return; /* it is in pack - forget about it */
->  		printf("missing %s %s\n", printable_type(obj),
+ * hold the lock on packed-refs
+ * hold the lock on loose ref A, B, C, ...
+ * update packed-refs to include the freshest values of these refs
+ * start serving packed-refs without releasing the lock
+ * for X in A, B, C...: delete the loose ref X and unlock X
+ * unlock the packed-refs
 
-Also this reminds as a related issue.  Imagine:
+Other people racing with the sequence to recreate a loose ref that
+is even fresher than the resulting packed-refs file, while we still
+hold the lock on packed-refs, is perfectly OK.
 
- - An object X was once retrieved, perhaps but not necessarily
-   lazily, together with another object Y that is referred to by X
-   (e.g. X is a tree, Y is a blob in the directory at path D, which
-   is represented by X).
+But we must make sure our packed-refs is visible to others before
+starting to delete and unlock the loose refs.
 
- - The same blob Y is added to the index in a different directory at
-   path E.
+Hmph, but that is not a sufficient explanation.  I am not seeing
+anything bad to happen if we unlock the packed-refs before deleting
+loose refs that we have locks on, so there must be something else
+that needs "new packed-refs is made visible way before we unlock it".
 
- - The user decides to make this a slimmed-down "narrow clone" style
-   repository and tells Git that path D is not interesting.  We lose
-   X, but not Y because Y is still referenced from the index.
-
- - "git reset --hard" happens, and there no longer is any reference
-   to Y.
-
-Now, when we run fsck, should we diagnose Y as "unreachable and/or
-dangling"?
+> I recall from past discussions that this will help close some races,
+> and e5cc7d7d2 (repack_without_refs(): don't lock or unlock the packed
+> refs, 2017-07-01) alludes to this. I think the races in question have to
+> do with holding the packed-refs lock while pruning the just-packed
+> files, but I'm having trouble digging up specifics in the archive.
+>
+> -Peff
