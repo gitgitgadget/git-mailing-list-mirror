@@ -2,102 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF48920899
-	for <e@80x24.org>; Thu, 27 Jul 2017 18:57:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 075F420899
+	for <e@80x24.org>; Thu, 27 Jul 2017 19:00:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751582AbdG0S5n (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Jul 2017 14:57:43 -0400
-Received: from mail-pg0-f41.google.com ([74.125.83.41]:38854 "EHLO
-        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751531AbdG0S5n (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jul 2017 14:57:43 -0400
-Received: by mail-pg0-f41.google.com with SMTP id k190so35950868pgk.5
-        for <git@vger.kernel.org>; Thu, 27 Jul 2017 11:57:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=h9So+3paEw/7BRKU6NYefME2/tjZ3grLyzHblphHomU=;
-        b=Q/aAcD94/dW1sMzxWlHVvsPVow7zeAtRy6bIPNJ1DiVvsr65Fd1V+otaWE7RL4NQM4
-         HFgNBI2eeKittsnbluF0Is1G2i6Sm6wqTjAbT7vWT02eyWvX+tP7N9f4q6ulfyYgZkYm
-         FLrhRBOD4/IFHvJaKfqI0mQWOv8cSDUQOOhnfW7tUPjTXCGrsaT5NYiHi34qaGL6z0Ry
-         8uiYTC7ujR7QOwc8VbQTV42Ihr6VyuMoIbwJfpIguF3qZDnXz8H9BQlPhc7JcE8YBZjd
-         dP21zCACpubxWy+03hAo0Xle3nw5dEwTvvh5dFb7TRMB5pzqjw5Gx/ZVEtzVVjx+aTdx
-         qzMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=h9So+3paEw/7BRKU6NYefME2/tjZ3grLyzHblphHomU=;
-        b=r3pGY4oAQR8EcGPDfxebrIvS67uaDuXmPWG4t08ZSBjbPrstB2uaIgXwfQs+sgMNCX
-         FnygtPnhT3Duziyr5soOTEVgOoOBhlUNs8eST7/QK2RRVRMvueXB0xSXMv5gllmWrFoN
-         vy7dLOzdoL2FtLfwCwwW8TRSJDLYrClz/XACbXbei+kk62OX8om+hy5vX3iVmk6lEDET
-         eU1howOynj2xrydgvvprElLYaUUiaqoK04DIgvVkayZfhS1XN8g4TnF6/X37Nq0abUE1
-         BCq/2GEKOdo8X0dfo+COXpEROkJqOswKDudB62VLH4+Vah0LpC6UM13pn3hXVZJxsgpO
-         BSEQ==
-X-Gm-Message-State: AIVw113xjYlcEGmJPry0A/canjF7Dux9cZHof/D+dRvLKs0GU+eUw2zr
-        6RjtiXdnT35V7WDKmcW6yHZStvbCWFPk
-X-Received: by 10.84.130.9 with SMTP id 9mr2872130plc.388.1501181860629; Thu,
- 27 Jul 2017 11:57:40 -0700 (PDT)
+        id S1751522AbdG0S76 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Jul 2017 14:59:58 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61470 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751458AbdG0S75 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jul 2017 14:59:57 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 992F79F9E7;
+        Thu, 27 Jul 2017 14:59:49 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=hloGSrwUasefLv0DtriZLaYBtqo=; b=jIo1Xd
+        6fmO62lqDBaC/MjAQiuYvSfTfH1f2pKxgYXLz7P7rRhHjBZf+J8ckEZqkho6HzrX
+        EVGLWamrYijwCQMxWd6OpOE7dFA7b4283iqcjwSR3ULTSfMyFOQ2B4ZUsAgPvAsr
+        ASjdTByrV7GQg7R/CurPFbIJV7EHNpLjWU0Ic=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=veWcePhn99IbiPsqRkflYm6ew9+3OcWY
+        ycs1QAxgvLD/0w/4NMMSrnm7whKUiQt43UOdPwE4WKc1SOEvO/lwYG4dbJOHndd7
+        PGITXGP19VxtorxGHkyRMyJC5Xz/bWo2H6Rj9jUkfQvwXqq6YrdClLWrQzdxeAcM
+        AwLQ0Ju1LTw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 926779F9E6;
+        Thu, 27 Jul 2017 14:59:49 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F1A249F9E5;
+        Thu, 27 Jul 2017 14:59:48 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, peartben@gmail.com, christian.couder@gmail.com
+Subject: Re: [RFC PATCH 2/4] fsck: support refs pointing to lazy objects
+References: <cover.1501111615.git.jonathantanmy@google.com>
+        <cover.1501111615.git.jonathantanmy@google.com>
+        <4c8bc7ab543d8d0d60719f65bd8a150c66123056.1501111615.git.jonathantanmy@google.com>
+Date:   Thu, 27 Jul 2017 11:59:47 -0700
+In-Reply-To: <4c8bc7ab543d8d0d60719f65bd8a150c66123056.1501111615.git.jonathantanmy@google.com>
+        (Jonathan Tan's message of "Wed, 26 Jul 2017 16:30:00 -0700")
+Message-ID: <xmqqvamdn1ss.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.100.165.44 with HTTP; Thu, 27 Jul 2017 11:57:40 -0700 (PDT)
-In-Reply-To: <xmqq4ltxohv5.fsf@gitster.mtv.corp.google.com>
-References: <20170613023151.9688-1-sbeller@google.com> <20170726230425.24307-1-sbeller@google.com>
- <xmqqwp6uojzr.fsf@gitster.mtv.corp.google.com> <CAGZ79kZ5x8p7CE6zGQ2HOJFPV_8_XKsENKt70ETACvvYZYKp2Q@mail.gmail.com>
- <xmqq4ltxohv5.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 27 Jul 2017 11:57:40 -0700
-Message-ID: <CAGZ79kY6gnRjmCxsz+yH7DDE4c--=u0UzjmkuZrf-RKpN97BFA@mail.gmail.com>
-Subject: Re: [PATCHv2] builtin/blame: highlight interesting things
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: C37BBD2C-72FD-11E7-9A5A-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 27, 2017 at 11:27 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
+Jonathan Tan <jonathantanmy@google.com> writes:
+
+> Teach fsck to not treat refs with missing targets as an error when
+> extensions.lazyobject is set.
 >
->> Well, we could also try a "zebra"  as in sb/diff-color-move to show blocks
->> with the same fancy border detection.
+> For the purposes of warning about no default refs, such refs are still
+> treated as legitimate refs.
 >
-> Luckily, blame output has places for metainfo on each line, unlike
-> diff output, so there won't be a need for painting border
-> differently.
-
-Right.
-
-> For example, if we decide that metainfo is shown only
-> for the first line for each block, then by definition, the border
-> between blocks is just before a line with metainfo and nowhere else.
-> So in that sense, the problem should be a lot easier to solve ;-)
-
-Yes, also the code already provides structured blocks,
-so internally it is also easier.
-
-The question is whether we decide that showing the first line
-is a good choice. We could also put it at the approximated
-middle and draw lines up and down.
-
-In an advanced world, we would not use a dumb pager, but
-e.g. ncurses, such that the line displaying meta information
-may come along when you scroll down a page.
-
-Maybe the discussion here can also feed back into the
-"machine readable move coloring" that Aevar seemed to be
-interested in.
-
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+>  builtin/fsck.c         |  8 ++++++++
+>  t/t0410-lazy-object.sh | 20 ++++++++++++++++++++
+>  2 files changed, 28 insertions(+)
 >
-> Unluckily, a block may span several pages, so "only at the first
-> line" might not be very useful.  I wonder if we can print in black
-> ink on black background and let selection by mouse or in screen
-> still reveal useful information?
+> diff --git a/builtin/fsck.c b/builtin/fsck.c
+> index 1cfb8d98c..e29ff760b 100644
+> --- a/builtin/fsck.c
+> +++ b/builtin/fsck.c
+> @@ -438,6 +438,14 @@ static int fsck_handle_ref(const char *refname, const struct object_id *oid,
+>  
+>  	obj = parse_object(oid);
+>  	if (!obj) {
+> +		if (repository_format_lazy_object) {
+> +			/*
+> +			 * Increment default_refs anyway, because this is a
+> +			 * valid ref.
+> +			 */
+> +			default_refs++;
+> +			return 0;
+> +		}
+>  		error("%s: invalid sha1 pointer %s", refname, oid_to_hex(oid));
+>  		errors_found |= ERROR_REACHABLE;
 
-This is what the dark color approximates, except you don't
-need a mouse selection to read?
+At this point, do we know (or can we tell) if this is a missing
+object or a file exists as a loose object but is corrupt?  If we
+could, it would be nice to do this only for the former to avoid
+sweeping a real corruption that is unrelated to the lazy fetch under
+the rug.
+
+> +test_expect_success 'fsck fails on lazy object pointed to by ref' '
+> +	rm -rf repo &&
+> +	test_create_repo repo &&
+> +	test_commit -C repo 1 &&
+> +
+> +	A=$(git -C repo commit-tree -m a HEAD^{tree}) &&
+> +
+> +	# Reference $A only from ref, and delete it
+> +	git -C repo branch mybranch "$A" &&
+> +	delete_object repo "$A" &&
+> +
+> +	test_must_fail git -C repo fsck
+> +'
+
+And a new test that uses a helper different from delete_object
+(perhaps call it corrupt_object?) can be used to make sure that we
+complain in that case here.
+
+> +test_expect_success '...but succeeds if lazyobject is set' '
+> +	git -C repo config core.repositoryformatversion 1 &&
+> +	git -C repo config extensions.lazyobject "arbitrary string" &&
+> +	git -C repo fsck
+> +'
+> +
+>  test_done
