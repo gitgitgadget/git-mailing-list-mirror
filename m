@@ -6,104 +6,117 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 20C3220899
-	for <e@80x24.org>; Thu, 27 Jul 2017 19:40:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 37A3720899
+	for <e@80x24.org>; Thu, 27 Jul 2017 21:01:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751688AbdG0Tko (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Jul 2017 15:40:44 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55272 "EHLO
+        id S1751577AbdG0VBj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Jul 2017 17:01:39 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64862 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751656AbdG0Tkl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jul 2017 15:40:41 -0400
+        with ESMTP id S1751441AbdG0VBi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jul 2017 17:01:38 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E2720A01CD;
-        Thu, 27 Jul 2017 15:40:32 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EA38D8917C;
+        Thu, 27 Jul 2017 17:01:31 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Md9FTjRR5wMn2XZINp7ESyyqSA0=; b=ategHP
-        sOqXSWAKKn2Sv4oR6X6POFqSuSfc0jAA/wT9uIR3qULc2kID0F8ANgXb2gWkWakQ
-        jDgJ0w3r1w6IQqZ9DLZQ8naBMHq+eyrs6H46RXVTvHhhIYzyiiB58xE5m1r/slD2
-        yqLunlJ2w6B9cTA0J8k/3Upx7go/6ECoisolc=
+        :content-type; s=sasl; bh=1KYwmc45CpPbcl0D62VFLoJxx4E=; b=CjwonX
+        /udRhZ7AkdF9Bjj9t/IxMImGKURn5ZIe6IhnrdWzoKANqEcd1RhSqy8DEfOT4nky
+        cS72viD5bXxsOmbenhXITeofm6jsemj125Gyp6v1m7fBatW112GNCMavnakodwhN
+        fhAV1QUHnnuzHOirmbNi8Yg9SgZOBrPkoeBTQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=t+zCLpDE91o7TdewfehjK3eZs2Jav2vQ
-        u099/RYEXO2J0FJFpQgcD4trOd8IysnWnS9WgBzqw4r78Sed0ju9uZHRHPATFDOp
-        XWpQDMm0zfz/x01ooEYFR7ik6dIJ0ElVZZlmIiSMy/0dKzoLLm34l3Xk8f5brKK9
-        +xyu8PSS3Fk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D9E6BA01CC;
-        Thu, 27 Jul 2017 15:40:32 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=CKzKyE35lKhC818/vKr4Y3ofjs8rgNAq
+        kqeoueqBdGpev7fJLM+vsRFpsygIOaLs+k8XXkn1c6ZJx3v8nSM29gfhtE3vvt0h
+        u/Z02BaXFHiy+AS+3yeKHGYheJYtrwCqcC61l+oBmnDmH/XW37YDbH6+Xac1Q8/Z
+        cJ61i4n543o=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E202D8917B;
+        Thu, 27 Jul 2017 17:01:31 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3774CA01CB;
-        Thu, 27 Jul 2017 15:40:32 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 501FF89178;
+        Thu, 27 Jul 2017 17:01:31 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        =?utf-8?B?w4Z2?= =?utf-8?B?YXIgQXJuZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>, David Turner <novalis@novalis.org>,
-        Brandon Williams <bmwill@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH] packed_ref_store: handle a packed-refs file that is a symlink
-References: <20170720232040.GA159617@aiede.mtv.corp.google.com>
-        <d0da02a8b6f0272fa70ae3b1dc80fee6c6ee8d18.1501111803.git.mhagger@alum.mit.edu>
-        <xmqq8tj9okzv.fsf@gitster.mtv.corp.google.com>
-        <20170727182854.wxjvjs2x746n3x2t@sigill.intra.peff.net>
-Date:   Thu, 27 Jul 2017 12:40:31 -0700
-In-Reply-To: <20170727182854.wxjvjs2x746n3x2t@sigill.intra.peff.net> (Jeff
-        King's message of "Thu, 27 Jul 2017 14:28:54 -0400")
-Message-ID: <xmqqlgn9mzww.fsf@gitster.mtv.corp.google.com>
+Cc:     Raman Gupta <rocketraman@gmail.com>, git@vger.kernel.org
+Subject: Re: [RFC] Git rerere and non-conflicting changes during conflict resolution
+References: <17c46229-3b64-34f1-30fa-d40b77e1c054@gmail.com>
+        <20170725175202.ar4ykqoadbihwb2w@sigill.intra.peff.net>
+        <xmqqo9s8uuth.fsf@gitster.mtv.corp.google.com>
+        <20170725205843.bi6kyqjlzyodmxuq@sigill.intra.peff.net>
+        <xmqqeft3u0u5.fsf@gitster.mtv.corp.google.com>
+Date:   Thu, 27 Jul 2017 14:01:30 -0700
+In-Reply-To: <xmqqeft3u0u5.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Wed, 26 Jul 2017 00:14:10 -0700")
+Message-ID: <xmqqfudhmw5x.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 73CF3906-7303-11E7-ABE4-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: C4040996-730E-11E7-BF18-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Thu, Jul 27, 2017 at 10:19:48AM -0700, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
 >
->> Makes sense.  Makes me wonder why we need a separate .new file
->> (instead of writing into the .lock instead), but that is a different
->> issue.
+>> From the user's perspective, calling X "rerere" would probably be OK[1].
+>> But from an implementation perspective (and to keep the existing
+>> plumbing available and unchanged), it probably makes sense to call it
+>> something else, and have it run both rerere and a new plumbing command
+>> to do the merge-fix work (or call it nothing, and assume that users will
+>> either touch the plumbing directly or will use "git merge" to trigger
+>> both).
+>> ...
+>> I think it should be its own plumbing tool that merge calls alongside
+>> rerere. ;)
 >
-> It comes from 42dfa7ece (commit_packed_refs(): use a staging file
-> separate from the lockfile, 2017-06-23). That commit explains that we
-> want to be able to put the new contents into service before we release
-> the lock. But it doesn't say why that's useful.
+> As long as we use the database keyed with <A,B> and take the merge
+> base into account, "git am" and "git cherry-pick" would not be able
+> to use the merge-fix machinery, so in that sense, calling X "rerere"
+> would not be OK, but I agree with your general sentiment about the
+> UI visible to the end users.
 
-By being able to hold the lock on packed-refs longer, I guess
-something like this becomes possible:
+Actually, I guess "cherry-pick" could use it if we think hard and
+long enough and come up with an ideal scheme to compute the index
+into the merge-fix database.
 
- * hold the lock on packed-refs
- * hold the lock on loose ref A, B, C, ...
- * update packed-refs to include the freshest values of these refs
- * start serving packed-refs without releasing the lock
- * for X in A, B, C...: delete the loose ref X and unlock X
- * unlock the packed-refs
+Imagine this topology:
 
-Other people racing with the sequence to recreate a loose ref that
-is even fresher than the resulting packed-refs file, while we still
-hold the lock on packed-refs, is perfectly OK.
+       A---o---o---...        topic #1
+      /
+ o---o---o---...              mainline
+      \
+       o---B---o---C---...    topic #2
 
-But we must make sure our packed-refs is visible to others before
-starting to delete and unlock the loose refs.
+where topic #1 renames 'xyzzy' to 'frotz' at commit A, and topic #2
+adds a new mention of 'xyzzy' in file F at commit B and another in
+file E at commit C.
 
-Hmph, but that is not a sufficient explanation.  I am not seeing
-anything bad to happen if we unlock the packed-refs before deleting
-loose refs that we have locks on, so there must be something else
-that needs "new packed-refs is made visible way before we unlock it".
+In the ideal world, we would have two merge-fix database entries,
+one that turns 'xyzzy' in file F to 'frotz' that is keyed by the
+pair of commits <A,B>, and the other that does the same in file E
+that is keyed by <A,C>.  When merging the topic #1 and the topic #2
+together, or when merging the topic #2 to a mainline that already
+has merged the topic #1, the merge-fix machinery notices that one
+side has A but not B nor C, and the other side has B and C but not
+A, and finds these two merge-fixes and applies on top of the textual
+merge.
 
-> I recall from past discussions that this will help close some races,
-> and e5cc7d7d2 (repack_without_refs(): don't lock or unlock the packed
-> refs, 2017-07-01) alludes to this. I think the races in question have to
-> do with holding the packed-refs lock while pruning the just-packed
-> files, but I'm having trouble digging up specifics in the archive.
->
-> -Peff
+If we are cherry-picking C to something that already has A, then, we
+should be able to notice that the history that receives the cherry-pick
+has A but not C, and C, which is being picked, does not have A, and
+decide that merge-fix <A,C> is relevant.
+
+If we do this purely with commit object name, it will still not work
+if we cherry-pick A to mainline and then we cherry-pick C.  The
+mainline may hae change from A but does not have the exact commit A.
+
+Which brings us back to your earlier idea to use something like
+patch-id to identify these individual changes.  I am not sure how we
+can structure the merge-fix database so that we can efficiently find
+which "changes" are already on a branch.
