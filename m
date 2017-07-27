@@ -2,77 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E9B51F89D
-	for <e@80x24.org>; Thu, 27 Jul 2017 08:56:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 31DF81F89D
+	for <e@80x24.org>; Thu, 27 Jul 2017 10:04:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751635AbdG0I4g (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Jul 2017 04:56:36 -0400
-Received: from cirse-smtp-out.extra.cea.fr ([132.167.192.148]:58007 "EHLO
-        cirse-smtp-out.extra.cea.fr" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751466AbdG0I4f (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 27 Jul 2017 04:56:35 -0400
-X-Greylist: delayed 1523 seconds by postgrey-1.27 at vger.kernel.org; Thu, 27 Jul 2017 04:56:35 EDT
-Received: from epeire1.extra.cea.fr (epeire1.extra.cea.fr [132.167.198.31])
-        by cirse-sys.extra.cea.fr (8.14.7/8.14.7/CEAnet-Internet-out-4.0) with ESMTP id v6R8V9dB047764;
-        Thu, 27 Jul 2017 10:31:09 +0200
-Received: from epeire1.extra.cea.fr (localhost [127.0.0.1])
-        by localhost (Postfix) with SMTP id 599395C503E;
-        Thu, 27 Jul 2017 10:31:09 +0200 (CEST)
-Received: from orpin2.extra.cea.fr (orpin2.extra.cea.fr [132.167.198.5])
-        by epeire1.extra.cea.fr (Postfix) with ESMTP id 30E2D5C49E8;
-        Thu, 27 Jul 2017 10:31:09 +0200 (CEST)
-Received: from [132.166.17.90] (iram-ha-003601.extra.cea.fr [132.166.17.90])
-        by orpin2.extra.cea.fr (8.15.2/8.15.2/CEAnet-Intranet-out-1.4) with ESMTP id v6R8V8wg006693;
-        Thu, 27 Jul 2017 10:31:09 +0200
-Subject: Re: requesting permission to use some Git for Windows code
-To:     elizaretskii@gmail.com,
-        git-for-windows <git-for-windows@googlegroups.com>
-Cc:     vdhoeven@lix.polytechnique.fr, git@vger.kernel.org
-References: <a730cebb-1782-f32b-0b7c-253bd61475d6@cea.fr>
- <alpine.DEB.2.21.1.1706281259170.84669@virtualbox>
- <83bce6b8-a5eb-4914-a2d3-edd57050bfaa@googlegroups.com>
-From:   Philippe Joyez <philippe.joyez@cea.fr>
-Message-ID: <4517a3d2-5acb-e7b5-8cd6-0c5fe57811d1@cea.fr>
-Date:   Thu, 27 Jul 2017 10:31:08 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
+        id S1751028AbdG0KEu (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Jul 2017 06:04:50 -0400
+Received: from mail-pg0-f53.google.com ([74.125.83.53]:38893 "EHLO
+        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750965AbdG0KEt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jul 2017 06:04:49 -0400
+Received: by mail-pg0-f53.google.com with SMTP id k190so30588647pgk.5
+        for <git@vger.kernel.org>; Thu, 27 Jul 2017 03:04:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Qb7S2Zi/5XpBBcushQphQN/YAPcZlp4zryOvQc4h3Uc=;
+        b=QVaWnoMnwktjkIwhmHPJ6RUQjqsDyagRouQxHIFDFCQrKrl85VMk9vmg9QY0CC21hz
+         BM7yiPRB4PQhGHZwJSLtCyU9yzOkVQ8dj5LjzWV/5ptKUgkbMx7ZzZFmtAhSZoQf8UK3
+         DkJNa+VhS6TGqdgV+C2E7UfP3H4RwkkklqYqATBTB2a2yZ4R2IlE+GDc+KxW99FFZkH1
+         /SMf27T/0l+KDFGEh/G520JXL6cB4fq20BKsJR11MLkjkMycnhM6tISJ/3ohyQY737Ey
+         xsxqV7zGZ7oGJHJLWwdbiP6Y05bqMGty+AgPGGqw9nXFuGJIACnOGhSdxTPF8n3kNwFS
+         dYJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Qb7S2Zi/5XpBBcushQphQN/YAPcZlp4zryOvQc4h3Uc=;
+        b=hssisFvlmIRwhZ/eAH+Y9RuPSItPTJcyBhB4SSct1HORdmL0OFf48Na9swNTX/JRE5
+         i9WVH1S7E+GrCpzFbvXRrbGWrC0XTW/3TD8xDbK5cVFwnavm3cLKONI0xvB5aFI6O/MM
+         VKgAmcHqvS8fdywSXcsLM9f56zrOmniXkPBFFmeW6uGcUclXn5x1nsf2HEuf7KDpjbJ8
+         /CpF84FhHmR7UoHuYw4usD+GoXxrym2tJFKY7Es3ry7sg3LMpjJiJaV97N2KNdppF3/w
+         a0R31JfBIStuigu2bu3oaSXGrx+Ppo8qZkr/8MDAfWcnJdRCIitI4SYJC0qdhQpRVVPe
+         bvkA==
+X-Gm-Message-State: AIVw112smK6N9lFN9C+K4I3HAQTpaTpB5OTT0jO8R7/8c6wX28fkpMTv
+        75AHFkoFSkwnhy6qLZi+UEW/fLB4/Zzh
+X-Received: by 10.99.44.138 with SMTP id s132mr3535183pgs.318.1501149888827;
+ Thu, 27 Jul 2017 03:04:48 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <83bce6b8-a5eb-4914-a2d3-edd57050bfaa@googlegroups.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Received: by 10.100.165.44 with HTTP; Thu, 27 Jul 2017 03:04:48 -0700 (PDT)
+In-Reply-To: <CAJo=hJuCXFem8saH9kgBu1ROV3uuhRxHcHXz_Bp7xB+taW5S=Q@mail.gmail.com>
+References: <CAJo=hJvxWg2J-yRiCK3szux=eYM2ThjT0KWo-SFFOOc1RkxXzg@mail.gmail.com>
+ <CAGZ79kZ48zTsHxrW-fvHRFQih=vBuywExSxA8a_=wzjdJPbtrg@mail.gmail.com> <CAJo=hJuCXFem8saH9kgBu1ROV3uuhRxHcHXz_Bp7xB+taW5S=Q@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 27 Jul 2017 03:04:48 -0700
+Message-ID: <CAGZ79kaLN-_13Y4UifZXy6A1A2Peud90z=oEOw9_1DaXHRWKbQ@mail.gmail.com>
+Subject: Re: reftable [v3]: new ref storage format
+To:     Shawn Pearce <spearce@spearce.org>
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Junio C Hamano <gitster@pobox.com>,
+        David Borowitz <dborowitz@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Jul 24, 2017 at 4:00 PM, Shawn Pearce <spearce@spearce.org> wrote:
+> On Mon, Jul 24, 2017 at 3:22 PM, Stefan Beller <sbeller@google.com> wrote:
 
+>>> #### index record
+>>>
+>>> An index record describes the last entry in another block.
+>>> Index records are written as:
+>>>
+>>>     varint( prefix_length )
+>>>     varint( (suffix_length << 3) | 0 )
+>>>     suffix
+>>>     varint( block_offset )
+>>>
+>>> Index records use prefix compression exactly like `ref_record`.
+>>>
+>>> Index records store `block_offset` after the suffix, specifying the
+>>> offset in bytes (from the start of the file) of the block that ends
+>>> with this reference.
+>>
+>> Instead of hardcoding the "0" in the last 3 bits, maybe pick one
+>> of the reserved bit patterns to be there? I would imagine this
+>> makes debugging easier:
+>>
+>>     0x5? Hah that must be an index block I have been
+>>     looking at the wrong block!
+>
+> This is an excellent suggestion. I'll include it in the next iteration.
 
-Le 25/07/2017 à 15:53, Johannes Schindelin a écrit :
->
-> It is great that you can make use of the code!
->
-> As to the licensing problem, I agree it is a hassle. The biggest obstacle
-> is that you have to have the consent of all the authors.
->
-> You hereby have mine.
->
+I was thinking about this a bit more and wondering if this would
+allow mixing all sorts of entries in the same block. Think about one
+of the most common cases client side:
 
-Many thanks Johannes for your positive personal answer but also for the
-very detailed tips on how to handle this.
+    git commit -m "just a lonely ref update, no fancy stuff"
 
-Le 27/07/2017 à 06:30, elizaretskii@gmail.com a écrit :
->
->
-> An alternative would be for TeXmacs to use the code from GNU Emacs,
-> which also supports Unicode file names on MS-Windows.  Emacs is of
-> course GPL v3+, so there should be no problem with that.
->
-Thanks you too Eli, for bringing up that piece of information; I'll
-definitely take a look into it!
+For that we need (a) a single ref update and (b) now that the
+format evolved a single reflog entry, maybe (c) an obj entry, too.
 
-Philippe
+I just realize that in this case we'd crank down the block size
+such that there is very little padding required, but I still wonder
+if it would be possible to omit the second (and third) block,
+but rather go for a "m"ixed block containing just these 3 entries.
+
+Additionally by setting the block_size to a special value "0",
+we could indicate the omission of a footer, such that a single
+ref update reftable is super small.
