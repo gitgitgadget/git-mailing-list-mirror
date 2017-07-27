@@ -6,103 +6,103 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C64720899
-	for <e@80x24.org>; Thu, 27 Jul 2017 17:05:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9000E2089D
+	for <e@80x24.org>; Thu, 27 Jul 2017 17:19:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751539AbdG0RFo (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Jul 2017 13:05:44 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55638 "EHLO
+        id S1751638AbdG0RT5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Jul 2017 13:19:57 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57219 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751446AbdG0RFn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jul 2017 13:05:43 -0400
+        with ESMTP id S1750981AbdG0RT4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jul 2017 13:19:56 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E35809E475;
-        Thu, 27 Jul 2017 13:05:35 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 97695A2209;
+        Thu, 27 Jul 2017 13:19:50 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=aqluBGSkHq24LffGHHyu8HRxJZ0=; b=b3VtEX
-        jfxJEcXILgmMsaLYrTKvoHi5lE5RVi05VrbSpmU6J0ryx9oBPxFc8i0If6uxfG+B
-        PneXrwZkM1NrSwcW4ZaVMnDY6ynp7cjQ2BqfjBPX2DRwwrQBom8FGmZ17NgNVB06
-        oRr503PM2Fy8JbZCOFirLi/n0sLVAs3UiiRl0=
+        :content-type; s=sasl; bh=zMO8IjA4G2aN3rCf+gPExiRzCbU=; b=qcIgSn
+        r+Er+qryCB4286/nbCWFIM9G26FmhvNoXfM0Ha1MaeAlXyc4vEmsrbEyrgjAYI6C
+        YCIYZ5T6a9YUDURWAx7aJ/ld3EdrGpxRLOIays2X9WY1aPHDPuyidqAzmpbLw8m2
+        xsOVEXO3ZcOkVpgzLzrm4KUhc4/omwK2OkUTY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=dqZQLolKw/q1Yveb3miw8vxo/gzEr/7g
-        eTnfzbSf0MudlLY5kKTr0E9d4ARDVyZzvsKUkq0Bmp7gM7M4TG59LyamDyxnyWPq
-        cysvmMYLln4eKErTNc4B8NFfxXZRwIH/DwViYFXdr3uoOClrx0F8GwESBybljFaR
-        HCSLQNVoUeo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DC26F9E474;
-        Thu, 27 Jul 2017 13:05:35 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=LGfozLYxFDPqGSe2TjoMm1NZ2z5AtQe/
+        E60+92R17hKguOXww/emNJk/Rrt3cdT9ZX0g7q1Jd836SjgkoF8zFEV0O81bMTkb
+        AM3T+0gn+fS8wtEQfdS6WZCl5fFjNkg4k4ybPnTztyYr90b9lBmqwSynRVZUr1KW
+        bYkgc4agPCw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8EA32A2208;
+        Thu, 27 Jul 2017 13:19:50 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3DC0A9E471;
-        Thu, 27 Jul 2017 13:05:35 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D6B43A2206;
+        Thu, 27 Jul 2017 13:19:49 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     John Szakmeister <john@szakmeister.net>
-Cc:     Philip Oakley <philipoakley@iee.org>, git@vger.kernel.org
-Subject: Re: Expected behavior of "git check-ignore"...
-References: <CAEBDL5URsbMazLBy-kWLJzECTEQ=61DN07xuu5NaO2Hw6r=j+w@mail.gmail.com>
-        <1E42613B0CD743C6ADA24B9F1B43F0F9@PhilipOakley>
-        <CAEBDL5X3wr=4A+W_sQzSE9BazoxoS2bwcOBZV5Jw=WCWZHAi6A@mail.gmail.com>
-        <xmqq4lu1ej0d.fsf@gitster.mtv.corp.google.com>
-        <CAEBDL5U=pcqwzeQstiBBJpXngXeB4xTfKb7mos68kRAeumc5Rg@mail.gmail.com>
-Date:   Thu, 27 Jul 2017 10:05:33 -0700
-In-Reply-To: <CAEBDL5U=pcqwzeQstiBBJpXngXeB4xTfKb7mos68kRAeumc5Rg@mail.gmail.com>
-        (John Szakmeister's message of "Thu, 27 Jul 2017 07:20:12 -0400")
-Message-ID: <xmqqd18lolnm.fsf@gitster.mtv.corp.google.com>
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkg?= =?utf-8?B?Tmfhu41j?= Duy 
+        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIgQXJu?= =?utf-8?B?ZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>, David Turner <novalis@novalis.org>,
+        Brandon Williams <bmwill@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH] packed_ref_store: handle a packed-refs file that is a symlink
+References: <20170720232040.GA159617@aiede.mtv.corp.google.com>
+        <d0da02a8b6f0272fa70ae3b1dc80fee6c6ee8d18.1501111803.git.mhagger@alum.mit.edu>
+Date:   Thu, 27 Jul 2017 10:19:48 -0700
+In-Reply-To: <d0da02a8b6f0272fa70ae3b1dc80fee6c6ee8d18.1501111803.git.mhagger@alum.mit.edu>
+        (Michael Haggerty's message of "Wed, 26 Jul 2017 16:39:42 -0700")
+Message-ID: <xmqq8tj9okzv.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: CE56BD2E-72ED-11E7-B658-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: CBC69104-72EF-11E7-B0A8-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-John Szakmeister <john@szakmeister.net> writes:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> On Mon, Jul 24, 2017 at 3:23 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> [snip]
->> I am reasonably sure that the command started its life as a pure
->> debugging aid.
->>
->> The treatment of the negation _might_ impose conflicting goals to
->> its purpose as a debugging aid---a user who debugs his .gitignore
->> file would want to know what causes a thing that wants to be ignored
->> is not or vice versa, and use of the exit status to indicate if it
->> is ignored may not mesh well with its goal as a debugging aid, but I
->> didn't think about the potential issues deeply myself while writing
->> this response.  As you mentioned, use of (or not using) "-v" could
->> be used as a sign to see which behaviour the end-user expects, I
->> guess.
->
-> Is there another way of checking to see if a file is ignored?  If so,...
+> Change `commit_packed_refs()` to use `get_locked_file_path()` to find
+> the path of the file that it should overwrite. Since that path was
+> properly resolved when the lockfile was created, this restores the
+> pre-42dfa7ecef behavior.
 
-Maybe I sounded like waffling, but I do think "check-ignore" when
-used as an end-user tool should be that command, to get a preview of
-what would happen if you gave the path to "git add".  
+Because when we take a lock hold_lock_file() eventually calls into
+lock_file() which by default takes the lock on the target of the
+symbolic link (which is the sensible default, which is triggered in
+this codepath), so this change to use the name of that file is all
+that is needed.
 
-I was merely giving a possible explanation why it may not behave
-like so in the current code, i.e. those who used it for debugging
-their .gitignore files may have felt that the current way to handle
-negation were more convenient during their debugging session.
+Makes sense.  Makes me wonder why we need a separate .new file
+(instead of writing into the .lock instead), but that is a different
+issue.
 
-But I think there is a way out to satisfy both groups of people.
+Thanks.  I'll do the SYMLINKS thing while queuing.
 
-What if we (re)define that "-v" is a way to ask "which entry, if
-any, decides the final fate of this path?" question, and that is a
-sign that the user is using it to debug their .gitignore?  And we
-use the exit status to mean "Yeah, there is an explicit entry that
-decides the fate of the path" in that case, which is what the
-current behaviour seems to be---the command exits with non-zero
-status only when there is nothing that matches in the exclude
-mechanism (which makes the final fate of the path to be 'not
-ignored').
-
-And we interpret the lack of "-v" as a signal that the user wants to
-learn the fate of a given path via the exit status of the command,
-which will "fix" the exit code to match the expectation in your
-initial message in this thread.
-
-Would that work well?
+> diff --git a/t/t3210-pack-refs.sh b/t/t3210-pack-refs.sh
+> index 2bb4b25ed9..0d8a03e2a9 100755
+> --- a/t/t3210-pack-refs.sh
+> +++ b/t/t3210-pack-refs.sh
+> @@ -238,4 +238,19 @@ test_expect_success 'retry acquiring packed-refs.lock' '
+>  	git -c core.packedrefstimeout=3000 pack-refs --all --prune
+>  '
+>  
+> +test_expect_success 'pack symlinked packed-refs' '
+> +	# First make sure that symlinking works when reading:
+> +	git update-ref refs/heads/loosy refs/heads/master &&
+> +	git for-each-ref >all-refs-before &&
+> +	mv .git/packed-refs .git/my-deviant-packed-refs &&
+> +	ln -s my-deviant-packed-refs .git/packed-refs &&
+> +	git for-each-ref >all-refs-linked &&
+> +	test_cmp all-refs-before all-refs-linked &&
+> +	git pack-refs --all --prune &&
+> +	git for-each-ref >all-refs-packed &&
+> +	test_cmp all-refs-before all-refs-packed &&
+> +	test -h .git/packed-refs &&
+> +	test "$(readlink .git/packed-refs)" = "my-deviant-packed-refs"
+> +'
+> +
+>  test_done
