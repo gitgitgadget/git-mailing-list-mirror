@@ -2,110 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 122522047F
-	for <e@80x24.org>; Thu, 27 Jul 2017 00:59:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3AE22047F
+	for <e@80x24.org>; Thu, 27 Jul 2017 01:08:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751327AbdG0AuK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Jul 2017 20:50:10 -0400
-Received: from mail-io0-f172.google.com ([209.85.223.172]:33639 "EHLO
-        mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751150AbdG0AuI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jul 2017 20:50:08 -0400
-Received: by mail-io0-f172.google.com with SMTP id j32so53299205iod.0
-        for <git@vger.kernel.org>; Wed, 26 Jul 2017 17:50:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=JV9uar40eUb7EBekPaj3Jm9i4zMaEyWM5jcri2yQRDQ=;
-        b=AOyKJAjPD9a68zjnxf++12G0DmXQ6rTki0P/7QFmTBXmrlyhOK1AGmeallRdb4jD3L
-         V2rPYlDs0+jZipi/otj/t9572s6cQQszr9mynrkkqF8LUjjjcsF6J0gQVI8Iq/ixD3Rw
-         LKFWuT1Ky2zMtpD+kYZ2hOM7CQKfdvdCHrAQCCMRn76p8QLB1GVISdhyNK4hMRGRe2+L
-         lS5neGpxnY92i7c+exyQbMBby+jdRVUm03i7K2ExKGyJKzFNsU9vLHveqL/Bso4b0MTp
-         2LJoKhYPdTFU8f29ws06dx2BusTGjrcuND3u1cKNskARMhL1t8kdd1RfPrzWixxLuk5/
-         CDCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=JV9uar40eUb7EBekPaj3Jm9i4zMaEyWM5jcri2yQRDQ=;
-        b=dcO9+5VWY30iOTdeq0Fcd6vvKmwx2qOJDZsSf2bhyhOs2ig+1aNfK5PtJfVEdHETwV
-         YQJ/v7G8qWOnVF6TM5YwnUmcI1Ts2a31xwWMM6bon8kVNpQgOywlmf1YKjdTjP2ifzdP
-         H5CkKBA9KZ7ufCCsRMP4Ve7+uW+IHt4amrfjjLmrZMOV2lioVlwcCpYEKjl9Of+gwFi0
-         dAsUJmkkuhCMIRlcN0EF/9slMvlc0DhOR/V03f/FI+Sm1trPX5bGMBkW0X4NziG/tiCl
-         N3Qca13moEDYqdTpvCP954jyjbDu3J/FJ5SDHJfjHGpWtGknFFRo4TD5eX20TUzOgC05
-         AbAw==
-X-Gm-Message-State: AIVw112PP4/u4++lV2F/sS1iIiVMKzu1Zw8Nvxpv3BEtKZassTIaGV5L
-        D5rrQSz35naX7OQw78Zr+x9GHzLIWSg8
-X-Received: by 10.107.56.7 with SMTP id f7mr3427633ioa.52.1501116607719; Wed,
- 26 Jul 2017 17:50:07 -0700 (PDT)
+        id S1751367AbdG0BIo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Jul 2017 21:08:44 -0400
+Received: from avasout06.plus.net ([212.159.14.18]:54848 "EHLO
+        avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751175AbdG0BIn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jul 2017 21:08:43 -0400
+Received: from [10.0.2.15] ([143.159.212.52])
+        by avasout06 with smtp
+        id pd8g1v00918PUFB01d8hRg; Thu, 27 Jul 2017 02:08:42 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=GetnpUfL c=1 sm=1 tr=0
+ a=CKmocqUIrzA4K3l9YJ19NQ==:117 a=CKmocqUIrzA4K3l9YJ19NQ==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=7c8W14kr3H2GgJVUqoEA:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Devin Lehmacher <lehmacdj@gmail.com>,
+        Adam Dinwoodie <adam@dinwoodie.org>,
+        GIT Mailing-list <git@vger.kernel.org>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH] credential-cache: interpret an ECONNRESET as on EOF
+Message-ID: <ab9124d9-6630-49f3-d645-2f4251f88764@ramsayjones.plus.com>
+Date:   Thu, 27 Jul 2017 02:08:40 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Received: by 10.107.131.97 with HTTP; Wed, 26 Jul 2017 17:49:47 -0700 (PDT)
-In-Reply-To: <xmqqa84c6v41.fsf@gitster.mtv.corp.google.com>
-References: <87ziclb2pa.fsf@gmail.com> <20170704071909.phs4bf5ybdord2lv@tigra>
- <87van8boe9.fsf@gmail.com> <20170705083611.jgxbp4sqogicfwdb@sigill.intra.peff.net>
- <xmqqshiaizhz.fsf@gitster.mtv.corp.google.com> <xmqqo9sxdwjp.fsf@gitster.mtv.corp.google.com>
- <CAMy9T_FmE=8xzjRJJRxLwQjoMStJx5sYO_xtODv2OEZm54DurA@mail.gmail.com> <xmqqa84c6v41.fsf@gitster.mtv.corp.google.com>
-From:   Junio C Hamano <gitster@pobox.com>
-Date:   Wed, 26 Jul 2017 17:49:47 -0700
-X-Google-Sender-Auth: lVgxi2tghxOU-YiUU_ksgU88Dd8
-Message-ID: <CAPc5daXj4sBuWP0r6t0nArXt1DJW+9byT49M_g8LcjrqBMJnRg@mail.gmail.com>
-Subject: Fwd: Should "head" also work for "HEAD" on case-insensitive FS?
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Heh, then I'll forward my response and we are even ;-)
 
+Since commit 612c49e94d ("credential-cache: add tests for XDG
+functionality", 17-03-2017), the cygwin build has been failing all the
+new tests added by that commit. In particular, the 'git credential-cache
+exit' command, as part of the test cleanup code, has been die-ing with
+the message:
 
----------- Forwarded message ----------
-From: Junio C Hamano <gitster@pobox.com>
-Date: Mon, Jul 10, 2017 at 10:48 AM
-Subject: Re: Should "head" also work for "HEAD" on case-insensitive FS?
-To: Michael Haggerty <mhagger@alum.mit.edu>
+    fatal: read error from cache daemon: Connection reset by peer
 
+As this git command is part of an && chain in a 'test_when_finished'
+call, the remaining test cleanup is not happening, so practically all
+remaining tests fail due to the unexpected presence of various socket
+files and directories.
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+A simple means of getting the tests to pass, is to simply ignore the
+failure of 'git credential-cache exit' command and make sure all test
+cleanup is done. For example, the diff for test #12 would look like:
 
-> I think the most natural thing would be to use different encoding
-> rules for pseudo-refs (references like "HEAD" and "FETCH_HEAD") and
-> for other references (those starting with "refs/").
->
-> Pseudo-refs (with the partial exception of "HEAD") are quite peculiar
-> beasts....
+    diff --git a/t/t0301-credential-cache.sh b/t/t0301-credential-cache.sh
+    index fd92533ac..87e5001bb 100755
+    --- a/t/t0301-credential-cache.sh
+    +++ b/t/t0301-credential-cache.sh
+    @@ -17,7 +17,7 @@ helper_test cache
 
-I agree with the reasoning, but what I am worried about is that
-their handling in the existing refs.c code may be leaky and/or
-inconsistent.
+     test_expect_success 'socket defaults to ~/.cache/git/credential/socket' '
+            test_when_finished "
+    -               git credential-cache exit &&
+    +               (git credential-cache exit || :) &&
+                    rmdir -p .cache/git/credential/
+            " &&
+            test_path_is_missing "$HOME/.git-credential-cache" &&
 
-What I saw was that a test have ended up with .git/%46%4F%4F when it
-was told to create a ref "FOO" (which indicates that "FOO" was
-passed to the files backend), which later failed to read it back
-because the pseudo_ref handling refs.c wanted to see ".git/FOO" on
-the reading side.
+... and so on for all remaining tests. While this does indeed make all
+tests pass, it is not really a solution.
 
-Perhaps it is only a bug in t/t1405-main-ref-store.sh?
+As an aside, while looking to debug this issue, I added the '--debug'
+option to the invocation of the 'git-credential-cache--daemon' child
+process (see the spawn_daemon() function). This not only fixed the tests,
+but also stopped git-credential-cache exiting with a failure. Since the
+only effect of passing '--debug' was to suppress the redirection of stderr
+to the bit-bucket (/dev/null), I have no idea why this seems to fix the
+protocol interaction between git and git-credential-cache--daemon. (I
+did think that maybe it was a timing issue, so I tried sleeping before
+reading from the daemon on Linux, but that only slowed down the tests!)
 
-> But...since we are talking about introducing a new loose reference
-> filename encoding, ...
+All descriptions of the "Connection reset by peer" error, that I could
+find, say that the peer had destroyed the connection before the client
+attempted to perform I/O on the connection. Since the daemon does not
+respond to an "exit" message from the client, it just closes the socket
+and deletes the socket file (via the atexit handler), it seems that the
+expected result is for the client to receive an EOF.  Indeed, this is
+exactly what seems to be happening on Linux. Also a comment in
+credential-cache--daemon.c reads:
 
-Yes, but that is an encoding detail I do not have to get involved
-and folks with platform needs can add more on top---we need to make
-sure that the places that encode and decode are identified in the
-code first, and the things like "FOO is encoded upon writing because
-files-backend is asked to write it, but not decoded because refs.c
-thinks it is pseudo-ref and does not give a say to files-backend"
-shouldn't be happening before we can start working on the details of
-the encoding.  Making a conscious decision that pseudo-refs are left
-as-is is OK, but we need to see both reading and writing side
-following the same codepath to make that decision, which does not
-seem to be the case in the current code.
+    else if (!strcmp(action.buf, "exit")) {
+            /*
+             * It's important that we clean up our socket first, and then
+             * signal the client only once we have finished the cleanup.
+             * Calling exit() directly does this, because we clean up in
+             * our atexit() handler, and then signal the client when our
+             * process actually ends, which closes the socket and gives
+             * them EOF.
+             */
+            exit(0);
+    }
+
+On cygwin this is not the case, at least when not passing --debug to the
+daemon, and the read following the "exit" gets an error with errno set
+to ECONNRESET.
+
+In order to suppress the fatal exit in this case, check the read error
+for an ECONNRESET and return as if no data was read from the daemon.
+This effectively converts an ECONNRESET into an EOF.
+
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
+ credential-cache.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/credential-cache.c b/credential-cache.c
+index 91550bfb0..1cccc3a0b 100644
+--- a/credential-cache.c
++++ b/credential-cache.c
+@@ -25,7 +25,7 @@ static int send_request(const char *socket, const struct strbuf *out)
+ 		int r;
+ 
+ 		r = read_in_full(fd, in, sizeof(in));
+-		if (r == 0)
++		if (r == 0 || (r < 0 && errno == ECONNRESET))
+ 			break;
+ 		if (r < 0)
+ 			die_errno("read error from cache daemon");
+-- 
+2.13.0
