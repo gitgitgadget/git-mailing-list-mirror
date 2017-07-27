@@ -2,138 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B3AE22047F
-	for <e@80x24.org>; Thu, 27 Jul 2017 01:08:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E9B51F89D
+	for <e@80x24.org>; Thu, 27 Jul 2017 08:56:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751367AbdG0BIo (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Jul 2017 21:08:44 -0400
-Received: from avasout06.plus.net ([212.159.14.18]:54848 "EHLO
-        avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751175AbdG0BIn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jul 2017 21:08:43 -0400
-Received: from [10.0.2.15] ([143.159.212.52])
-        by avasout06 with smtp
-        id pd8g1v00918PUFB01d8hRg; Thu, 27 Jul 2017 02:08:42 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=GetnpUfL c=1 sm=1 tr=0
- a=CKmocqUIrzA4K3l9YJ19NQ==:117 a=CKmocqUIrzA4K3l9YJ19NQ==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=7c8W14kr3H2GgJVUqoEA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Devin Lehmacher <lehmacdj@gmail.com>,
-        Adam Dinwoodie <adam@dinwoodie.org>,
-        GIT Mailing-list <git@vger.kernel.org>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH] credential-cache: interpret an ECONNRESET as on EOF
-Message-ID: <ab9124d9-6630-49f3-d645-2f4251f88764@ramsayjones.plus.com>
-Date:   Thu, 27 Jul 2017 02:08:40 +0100
+        id S1751635AbdG0I4g (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Jul 2017 04:56:36 -0400
+Received: from cirse-smtp-out.extra.cea.fr ([132.167.192.148]:58007 "EHLO
+        cirse-smtp-out.extra.cea.fr" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751466AbdG0I4f (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 27 Jul 2017 04:56:35 -0400
+X-Greylist: delayed 1523 seconds by postgrey-1.27 at vger.kernel.org; Thu, 27 Jul 2017 04:56:35 EDT
+Received: from epeire1.extra.cea.fr (epeire1.extra.cea.fr [132.167.198.31])
+        by cirse-sys.extra.cea.fr (8.14.7/8.14.7/CEAnet-Internet-out-4.0) with ESMTP id v6R8V9dB047764;
+        Thu, 27 Jul 2017 10:31:09 +0200
+Received: from epeire1.extra.cea.fr (localhost [127.0.0.1])
+        by localhost (Postfix) with SMTP id 599395C503E;
+        Thu, 27 Jul 2017 10:31:09 +0200 (CEST)
+Received: from orpin2.extra.cea.fr (orpin2.extra.cea.fr [132.167.198.5])
+        by epeire1.extra.cea.fr (Postfix) with ESMTP id 30E2D5C49E8;
+        Thu, 27 Jul 2017 10:31:09 +0200 (CEST)
+Received: from [132.166.17.90] (iram-ha-003601.extra.cea.fr [132.166.17.90])
+        by orpin2.extra.cea.fr (8.15.2/8.15.2/CEAnet-Intranet-out-1.4) with ESMTP id v6R8V8wg006693;
+        Thu, 27 Jul 2017 10:31:09 +0200
+Subject: Re: requesting permission to use some Git for Windows code
+To:     elizaretskii@gmail.com,
+        git-for-windows <git-for-windows@googlegroups.com>
+Cc:     vdhoeven@lix.polytechnique.fr, git@vger.kernel.org
+References: <a730cebb-1782-f32b-0b7c-253bd61475d6@cea.fr>
+ <alpine.DEB.2.21.1.1706281259170.84669@virtualbox>
+ <83bce6b8-a5eb-4914-a2d3-edd57050bfaa@googlegroups.com>
+From:   Philippe Joyez <philippe.joyez@cea.fr>
+Message-ID: <4517a3d2-5acb-e7b5-8cd6-0c5fe57811d1@cea.fr>
+Date:   Thu, 27 Jul 2017 10:31:08 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+ Thunderbird/52.1.1
 MIME-Version: 1.0
+In-Reply-To: <83bce6b8-a5eb-4914-a2d3-edd57050bfaa@googlegroups.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-Since commit 612c49e94d ("credential-cache: add tests for XDG
-functionality", 17-03-2017), the cygwin build has been failing all the
-new tests added by that commit. In particular, the 'git credential-cache
-exit' command, as part of the test cleanup code, has been die-ing with
-the message:
 
-    fatal: read error from cache daemon: Connection reset by peer
+Le 25/07/2017 à 15:53, Johannes Schindelin a écrit :
+>
+> It is great that you can make use of the code!
+>
+> As to the licensing problem, I agree it is a hassle. The biggest obstacle
+> is that you have to have the consent of all the authors.
+>
+> You hereby have mine.
+>
 
-As this git command is part of an && chain in a 'test_when_finished'
-call, the remaining test cleanup is not happening, so practically all
-remaining tests fail due to the unexpected presence of various socket
-files and directories.
+Many thanks Johannes for your positive personal answer but also for the
+very detailed tips on how to handle this.
 
-A simple means of getting the tests to pass, is to simply ignore the
-failure of 'git credential-cache exit' command and make sure all test
-cleanup is done. For example, the diff for test #12 would look like:
+Le 27/07/2017 à 06:30, elizaretskii@gmail.com a écrit :
+>
+>
+> An alternative would be for TeXmacs to use the code from GNU Emacs,
+> which also supports Unicode file names on MS-Windows.  Emacs is of
+> course GPL v3+, so there should be no problem with that.
+>
+Thanks you too Eli, for bringing up that piece of information; I'll
+definitely take a look into it!
 
-    diff --git a/t/t0301-credential-cache.sh b/t/t0301-credential-cache.sh
-    index fd92533ac..87e5001bb 100755
-    --- a/t/t0301-credential-cache.sh
-    +++ b/t/t0301-credential-cache.sh
-    @@ -17,7 +17,7 @@ helper_test cache
-
-     test_expect_success 'socket defaults to ~/.cache/git/credential/socket' '
-            test_when_finished "
-    -               git credential-cache exit &&
-    +               (git credential-cache exit || :) &&
-                    rmdir -p .cache/git/credential/
-            " &&
-            test_path_is_missing "$HOME/.git-credential-cache" &&
-
-... and so on for all remaining tests. While this does indeed make all
-tests pass, it is not really a solution.
-
-As an aside, while looking to debug this issue, I added the '--debug'
-option to the invocation of the 'git-credential-cache--daemon' child
-process (see the spawn_daemon() function). This not only fixed the tests,
-but also stopped git-credential-cache exiting with a failure. Since the
-only effect of passing '--debug' was to suppress the redirection of stderr
-to the bit-bucket (/dev/null), I have no idea why this seems to fix the
-protocol interaction between git and git-credential-cache--daemon. (I
-did think that maybe it was a timing issue, so I tried sleeping before
-reading from the daemon on Linux, but that only slowed down the tests!)
-
-All descriptions of the "Connection reset by peer" error, that I could
-find, say that the peer had destroyed the connection before the client
-attempted to perform I/O on the connection. Since the daemon does not
-respond to an "exit" message from the client, it just closes the socket
-and deletes the socket file (via the atexit handler), it seems that the
-expected result is for the client to receive an EOF.  Indeed, this is
-exactly what seems to be happening on Linux. Also a comment in
-credential-cache--daemon.c reads:
-
-    else if (!strcmp(action.buf, "exit")) {
-            /*
-             * It's important that we clean up our socket first, and then
-             * signal the client only once we have finished the cleanup.
-             * Calling exit() directly does this, because we clean up in
-             * our atexit() handler, and then signal the client when our
-             * process actually ends, which closes the socket and gives
-             * them EOF.
-             */
-            exit(0);
-    }
-
-On cygwin this is not the case, at least when not passing --debug to the
-daemon, and the read following the "exit" gets an error with errno set
-to ECONNRESET.
-
-In order to suppress the fatal exit in this case, check the read error
-for an ECONNRESET and return as if no data was read from the daemon.
-This effectively converts an ECONNRESET into an EOF.
-
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
----
- credential-cache.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/credential-cache.c b/credential-cache.c
-index 91550bfb0..1cccc3a0b 100644
---- a/credential-cache.c
-+++ b/credential-cache.c
-@@ -25,7 +25,7 @@ static int send_request(const char *socket, const struct strbuf *out)
- 		int r;
- 
- 		r = read_in_full(fd, in, sizeof(in));
--		if (r == 0)
-+		if (r == 0 || (r < 0 && errno == ECONNRESET))
- 			break;
- 		if (r < 0)
- 			die_errno("read error from cache daemon");
--- 
-2.13.0
+Philippe
