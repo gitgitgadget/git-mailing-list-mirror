@@ -6,52 +6,52 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C57481F89D
-	for <e@80x24.org>; Fri, 28 Jul 2017 17:18:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F27C1F89D
+	for <e@80x24.org>; Fri, 28 Jul 2017 17:18:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752479AbdG1RSa (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Jul 2017 13:18:30 -0400
-Received: from mail-pf0-f174.google.com ([209.85.192.174]:36743 "EHLO
-        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752292AbdG1RS1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jul 2017 13:18:27 -0400
-Received: by mail-pf0-f174.google.com with SMTP id z129so58692196pfb.3
-        for <git@vger.kernel.org>; Fri, 28 Jul 2017 10:18:27 -0700 (PDT)
+        id S1752488AbdG1RSc (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Jul 2017 13:18:32 -0400
+Received: from mail-pf0-f175.google.com ([209.85.192.175]:35354 "EHLO
+        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752234AbdG1RS3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jul 2017 13:18:29 -0400
+Received: by mail-pf0-f175.google.com with SMTP id e75so19894501pfj.2
+        for <git@vger.kernel.org>; Fri, 28 Jul 2017 10:18:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=djcUyFhQ4fQPbsoNs+lFYEtOzZg8hbjPuj0yeyGtEiA=;
-        b=T2qKIeKWOrhGbcDX2dMlgZkJoDAwf9xEqNZOui+6Wa3+WP30nCr0p3Fg7UrEwvyohT
-         771zl9xshet5xeXC7TOat6EWN62HOKzuGJVbYliRTyy8nvGdcnjgpon7IlrgoPVJ1HlC
-         xZF02d6QCsKoDntWoKNvB32rLIrLy4iZJzF7cCOxV+bFRBj71jW1AjZgkzm+QTbBggZo
-         bFXHPPNC2N2g5CPcjXL6AvlWuXp6qLUlYSV1PTMeOrcWH/tKtqTM0HA31q0INvvu9RFu
-         Y+LPmw/+L2drYea4Wkq5AUvXIxhzUO/IayHrle36XahOdrwzHPj6UA9oyHdk+A2L7iuQ
-         rWvQ==
+        bh=Fo+LX4EPT4yr9cXlvH2U897TjGx52u7ENrNnH3bVQPM=;
+        b=f8M3qev4IfcEa2yDn/czrRiUW3Rs934j4ibXA5zHRc5d6idwY2BIMy9DEIYIfxsYil
+         lgKgjvhurPebluWhIQyZUTCJDnp3XE0+OlHCZOQZTshWQsgUNTVH+dGpn/puuZrOKCUF
+         sM3jRCzz4as43NY9N5qNEa9Vfbr1lbA4H/Jv+0d6GfRMLrlobZnaEc+D/28v5MsLKIRU
+         +0HTe+Ie5eMcCgFhE0vtw+gA8sU96/ExoSSNg4piZBrjb7qzo+1cbuae6apwlTcNdrlv
+         SBWLsNnHJRz7MsN38F7Y+QwsmY35yXxLW4YJ9q0M+XnQuKJgYV4GkPf8qNyfR3u0AsE7
+         oXYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=djcUyFhQ4fQPbsoNs+lFYEtOzZg8hbjPuj0yeyGtEiA=;
-        b=R0On78+vQXf4MWjrUxCF0QB4FYIh9VRalggtjbI38sHmWmafBFLXLXl9+sH3+/zvj/
-         95w0LFlW7cUGG+RY5EcxMpOsEMA9FeDrsyIMK3N2bznN/qtML9gzdUHFN1fQ7mDdIYly
-         BN8h//tSOaL2QRI4svich1JiPk0VyG8IHfGDksK6wtYhgVqvUjqZr4/GvyuVjA/jil6L
-         KbWWbpB4vfK4//svNrZG5vFca+aopY+NEqbnuC/llKImed2L+Ea71+4DO9olokNF/uAk
-         E9jmKJZ+lJ6gv6wuHxgIDQVB4q5eRy0/7W8obXxLDps7aMmoanx2R5fM7NXh5L0GytKY
-         uliQ==
-X-Gm-Message-State: AIVw112TohBRvNGVllrPU8R8mXQRIBEz/9EESYiiuQ+z2PD9y4PNg/TK
-        cE6ZbZ4gyxRSLt6XJZYmlg==
-X-Received: by 10.98.215.18 with SMTP id b18mr8238190pfh.272.1501262306731;
-        Fri, 28 Jul 2017 10:18:26 -0700 (PDT)
+        bh=Fo+LX4EPT4yr9cXlvH2U897TjGx52u7ENrNnH3bVQPM=;
+        b=jTY5EyTd/sXuJ6r2CTvEBGAlm4V7/AJ75+2w5iBBCBGBwxa6UwYl2gKoPTqsQSHBBR
+         0+yu1NgxgDQL9YWzCaQkD3AO9mnDQE7e86pPnkcqFN4OvHKAMY6D1LACif+kDoDGGJT1
+         W9wLu/GCfs7+GkiaJb/XaQPxq8SxQmG4+8yerSW29/GT0q4Qpc29thQB/yB6AImGiu7U
+         g7zgcOdycVPzKu8auSN3Y/kBdZmHqEs5rFtXGKbkjc9zqbGiZaBePyTdVSF/ArmY/5in
+         /bgUl8+zdn0b1OMEcdSxKt7AwhBcO8bhumePilCZLpU96wBFp1kCrL44xEl1ius8e4tR
+         VMOA==
+X-Gm-Message-State: AIVw110ONt4fh3xSgCwUobwwaWvj6yg4TZEj1J6D6x/YtG1y2pZ5xQ8t
+        8hJ1etT2J77li51lwX4Qrw==
+X-Received: by 10.99.125.11 with SMTP id y11mr8140187pgc.19.1501262308752;
+        Fri, 28 Jul 2017 10:18:28 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:d9da:4cf2:5968:beb4])
-        by smtp.gmail.com with ESMTPSA id l124sm39694248pfl.169.2017.07.28.10.18.25
+        by smtp.gmail.com with ESMTPSA id z74sm44934487pfd.112.2017.07.28.10.18.27
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 28 Jul 2017 10:18:25 -0700 (PDT)
+        Fri, 28 Jul 2017 10:18:27 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>
-Subject: [PATCH 1/2] alter hash function: expose test dependencies on sha1
-Date:   Fri, 28 Jul 2017 10:18:16 -0700
-Message-Id: <20170728171817.21458-2-sbeller@google.com>
+Subject: [PATCH 2/2] t6500: mark tests as SHA1 reliant
+Date:   Fri, 28 Jul 2017 10:18:17 -0700
+Message-Id: <20170728171817.21458-3-sbeller@google.com>
 X-Mailer: git-send-email 2.14.0.rc0.3.g6c2e499285
 In-Reply-To: <20170728171817.21458-1-sbeller@google.com>
 References: <20170728171817.21458-1-sbeller@google.com>
@@ -60,154 +60,69 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-DO NOT APPLY.
+The first test marked relies on hard coded sha1:
 
-Alter the hash function such that with this patch
-any dependency on sha1 in tests will make the test
-fail. This patch applied on master yields this list:
+	# We need to create two object whose sha1s start with 17
+	# since this is what git gc counts.  As it happens, these
+	# two blobs will do so.
+	test_commit 263 &&
+	test_commit 410 &&
 
-./t0000-basic.sh
-./t0002-gitfile.sh
-./t0005-signals.sh
-./t0013-sha1dc.sh
-./t0021-conversion.sh
-./t0090-cache-tree.sh
-./t1001-read-tree-m-2way.sh
-./t1007-hash-object.sh
-./t1011-read-tree-sparse-checkout.sh
-./t1013-read-tree-submodule.sh
-./t1100-commit-tree-options.sh
-./t1200-tutorial.sh
-./t1300-repo-config.sh
-./t1304-default-acl.sh
-./t1400-update-ref.sh
-./t1411-reflog-show.sh
-./t1450-fsck.sh
-./t1507-rev-parse-upstream.sh
-./t1512-rev-parse-disambiguation.sh
-./t1700-split-index.sh
-./t2011-checkout-invalid-head.sh
-./t2013-checkout-submodule.sh
-./t2015-checkout-unborn.sh
-./t2017-checkout-orphan.sh
-./t2022-checkout-paths.sh
-./t2101-update-index-reupdate.sh
-./t2107-update-index-basic.sh
-./t2203-add-intent.sh
-./t3033-merge-toplevel.sh
-./t3102-ls-tree-wildcards.sh
-./t3103-ls-tree-misc.sh
-./t3201-branch-contains.sh
-./t3301-notes.sh
-./t3305-notes-fanout.sh
-./t3306-notes-prune.sh
-./t3308-notes-merge.sh
-./t3309-notes-merge-auto-resolve.sh
-./t3310-notes-merge-manual-resolve.sh
-./t3311-notes-merge-fanout.sh
-./t3400-rebase.sh
-./t3404-rebase-interactive.sh
-./t3405-rebase-malformed.sh
-./t3408-rebase-multi-line.sh
-./t3415-rebase-autosquash.sh
-./t3419-rebase-patch-id.sh
-./t3421-rebase-topology-linear.sh
-./t3501-revert-cherry-pick.sh
-./t3502-cherry-pick-merge.sh
-./t3503-cherry-pick-root.sh
-./t3506-cherry-pick-ff.sh
-./t3509-cherry-pick-merge-df.sh
-./t3600-rm.sh
-./t3700-add.sh
-./t3701-add-interactive.sh
-./t3702-add-edit.sh
-./t3903-stash.sh
-./t3905-stash-include-untracked.sh
-./t4002-diff-basic.sh
-./t4007-rename-3.sh
-./t4008-diff-break-rewrite.sh
-./t4010-diff-pathspec.sh
-./t4011-diff-symlink.sh
-./t4013-diff-various.sh
-./t4014-format-patch.sh
-./t4015-diff-whitespace.sh
-./t4020-diff-external.sh
-./t4022-diff-rewrite.sh
-./t4029-diff-trailing-space.sh
-./t4030-diff-textconv.sh
-./t4033-diff-patience.sh
-./t4034-diff-words.sh
-./t4039-diff-assume-unchanged.sh
-./t4042-diff-textconv-caching.sh
-./t4044-diff-index-unique-abbrev.sh
-./t4045-diff-relative.sh
-./t4048-diff-combined-binary.sh
-./t4050-diff-histogram.sh
-./t4052-stat-output.sh
-./t4054-diff-bogus-tree.sh
-./t4060-diff-submodule-option-diff-format.sh
-./t4126-apply-empty.sh
-./t4151-am-abort.sh
-./t4202-log.sh
-./t4205-log-pretty-formats.sh
-./t4208-log-magic-pathspec.sh
-./t4211-line-log.sh
-./t4300-merge-tree.sh
-./t5150-request-pull.sh
-./t5300-pack-object.sh
-./t5306-pack-nobase.sh
-./t5308-pack-detect-duplicates.sh
-./t5309-pack-delta-cycles.sh
-./t5313-pack-bounds-checks.sh
-./t5512-ls-remote.sh
-./t5515-fetch-merge-logic.sh
-./t5516-fetch-push.sh
-./t5520-pull.sh
-./t5521-pull-options.sh
-./t6000-rev-list-misc.sh
-./t6012-rev-list-simplify.sh
-./t6020-merge-df.sh
-./t6022-merge-rename.sh
-./t6024-recursive-merge.sh
-./t6030-bisect-porcelain.sh
-./t6031-merge-filemode.sh
-./t6035-merge-dir-to-symlink.sh
-./t6300-for-each-ref.sh
-./t6500-gc.sh
-./t7003-filter-branch.sh
-./t7012-skip-worktree-writing.sh
-./t7063-status-untracked-cache.sh
-./t7102-reset.sh
-./t7106-reset-unborn-branch.sh
-./t7112-reset-submodule.sh
-./t7201-co.sh
-./t7400-submodule-basic.sh
-./t7506-status-submodule.sh
-./t7507-commit-verbose.sh
-./t7508-status.sh
-./t7600-merge.sh
-./t7607-merge-overwrite.sh
-./t7609-merge-co-error-msgs.sh
-./t8008-blame-formats.sh
+The next two seem to rely on state from the first one, I did not
+investigate.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- sha1dc/sha1.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t6500-gc.sh | 6 +++---
+ t/test-lib.sh | 4 ++++
+ 2 files changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
-index 25eded1399..e18acee9ca 100644
---- a/sha1dc/sha1.c
-+++ b/sha1dc/sha1.c
-@@ -1756,7 +1756,7 @@ static void sha1_process(SHA1_CTX* ctx, const uint32_t block[16])
- void SHA1DCInit(SHA1_CTX* ctx)
- {
- 	ctx->total = 0;
--	ctx->ihv[0] = 0x67452301;
-+	ctx->ihv[0] = 0x07452301;
- 	ctx->ihv[1] = 0xEFCDAB89;
- 	ctx->ihv[2] = 0x98BADCFE;
- 	ctx->ihv[3] = 0x10325476;
+diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
+index 41b0be575d..3900baa01d 100755
+--- a/t/t6500-gc.sh
++++ b/t/t6500-gc.sh
+@@ -43,7 +43,7 @@ test_expect_success 'gc is not aborted due to a stale symref' '
+ 	)
+ '
+ 
+-test_expect_success 'auto gc with too many loose objects does not attempt to create bitmaps' '
++test_expect_success SHA1 'auto gc with too many loose objects does not attempt to create bitmaps' '
+ 	test_config gc.auto 3 &&
+ 	test_config gc.autodetach false &&
+ 	test_config pack.writebitmaps true &&
+@@ -77,7 +77,7 @@ run_and_wait_for_auto_gc () {
+ 	doesnt_matter=$(git gc --auto 9>&1)
+ }
+ 
+-test_expect_success 'background auto gc does not run if gc.log is present and recent but does if it is old' '
++test_expect_success SHA1 'background auto gc does not run if gc.log is present and recent but does if it is old' '
+ 	test_commit foo &&
+ 	test_commit bar &&
+ 	git repack &&
+@@ -95,7 +95,7 @@ test_expect_success 'background auto gc does not run if gc.log is present and re
+ 	test_line_count = 1 packs
+ '
+ 
+-test_expect_success 'background auto gc respects lock for all operations' '
++test_expect_success SHA1 'background auto gc respects lock for all operations' '
+ 	# make sure we run a background auto-gc
+ 	test_commit make-pack &&
+ 	git repack &&
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 1b6e53f78a..a5a54c6d4a 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -1127,6 +1127,10 @@ test_lazy_prereq JGIT '
+ 	type jgit
+ '
+ 
++test_lazy_prereq SHA1 '
++	false
++'
++
+ # SANITY is about "can you correctly predict what the filesystem would
+ # do by only looking at the permission bits of the files and
+ # directories?"  A typical example of !SANITY is running the test
 -- 
 2.14.0.rc0.3.g6c2e499285
 
