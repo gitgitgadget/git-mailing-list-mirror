@@ -2,92 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9EA432089D
-	for <e@80x24.org>; Fri, 28 Jul 2017 21:40:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0AAB92089D
+	for <e@80x24.org>; Fri, 28 Jul 2017 21:43:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752848AbdG1VkT (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Jul 2017 17:40:19 -0400
-Received: from mail-pg0-f52.google.com ([74.125.83.52]:38880 "EHLO
-        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752628AbdG1VkS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jul 2017 17:40:18 -0400
-Received: by mail-pg0-f52.google.com with SMTP id k190so50200445pgk.5
-        for <git@vger.kernel.org>; Fri, 28 Jul 2017 14:40:18 -0700 (PDT)
+        id S1752700AbdG1Vnx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Jul 2017 17:43:53 -0400
+Received: from mail-lf0-f43.google.com ([209.85.215.43]:37352 "EHLO
+        mail-lf0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752234AbdG1Vnw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jul 2017 17:43:52 -0400
+Received: by mail-lf0-f43.google.com with SMTP id m86so88899899lfi.4
+        for <git@vger.kernel.org>; Fri, 28 Jul 2017 14:43:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=P3glVYO1QMwKZP52QJNFbJDNedKTi2TsVqNg31uhCRs=;
-        b=OKCX3EPCrvVuVOlDpMlS65sml/KgBwCmZuDmi3tOWeVxX1V0e83k1Aq2WuU7AZmaL4
-         4C9u2RcbWs8LbXrPDcGm8dliK+vrk1Fsz1kV/cF/ObzXtkAa+1j3RYTK6gQFqGPDzjce
-         Ko1BKJBVUm55sJOe8/Z1WJ+ki29SX/VubcLucg+bl0vj/xldEqXlmtE0EVyLNI0epwtH
-         R5tQYMZlT4PCkTGdD9VTksRkKC4DATwb8+OI7sb/SJSr7hLFvx98yudaN+8HyrCgu0ac
-         QqHvMXOwQcHGvr95TXWOWDJ2UdM25+PDrOe7scPcos9eRA+SCJpQzrzbQHPT/wgtJKfn
-         L+Ig==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Cq/Ug7sD/bZ0qXU88cvW0BPQCdB5mhxsH25AmJxTnTA=;
+        b=A/c69g8mFD7lJTM+LihiDpHfKwmUiJk9jIpB4gbeu6gLkKSuN7MwD/HIHppn8w/7MX
+         G8ka2dJc5t/E0NmWPwJHgtpFjfWaEHDPCeM7RR9kRFAAI1CA1B2NT9oo5XPQIweKsyWv
+         9fmeSX6xSuySKzFeCkkBJKH+IFWPXxg7iwzQ7hVpPIJZVRqvltazYxgly9SsNxB0wBI8
+         PjUWC9ZnpmPvVu8bjmTg7FyCik9HWDr8zS3TqTFO4olhnkU07IRN4FAZzUmN6T0vKbWO
+         V1nTpaCeq0fzzEwRsCrXeJvx91I+fNMzvcoA2WO+rKeI9H6CrIZGkgdqPH3bQVQwu4z0
+         IOPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=P3glVYO1QMwKZP52QJNFbJDNedKTi2TsVqNg31uhCRs=;
-        b=HaqdiAlZWffCjlFmGcL061MQIK4FD/9z0iWdERJ0b02BV0kKqVLBwO6N7zSxE6ogkF
-         de9BUNQ1N4DQV2HjbUFv/v1tIsXiG2E8GZxdYryPWeo02Z9WsEJCXrUqeug13MC4fwr0
-         ZeePrJOoUaEcSQkYmrvPWOlCnawgoUPXBcUTJaUWKaz0Ga+9j/fbih/qW2tMGAbBdDJB
-         YYUQSXIcdeSxLNWiysJKbZJBaCmB1l1YNTX3P54hsLgyiSKql3jVbUxGKMyrTM3VmRNs
-         +jHduLYo4uKBzZwqui8YUcmfKgywZ8wlU5wDIrgDU3v1gp4iXnk8pk61gjJk+KfJrcyl
-         /C4A==
-X-Gm-Message-State: AIVw1125dCYaByxMrwyhqrtWCLtpUkcKVpPRzF3HBlKITCvSAwdPExI8
-        uAAA7JDgXRFGiLJA
-X-Received: by 10.84.176.131 with SMTP id v3mr9427697plb.142.1501278017970;
-        Fri, 28 Jul 2017 14:40:17 -0700 (PDT)
-Received: from localhost ([2620:0:100e:422:d18e:f3d2:e247:1569])
-        by smtp.gmail.com with ESMTPSA id f3sm10520931pfd.115.2017.07.28.14.40.16
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 28 Jul 2017 14:40:16 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Cq/Ug7sD/bZ0qXU88cvW0BPQCdB5mhxsH25AmJxTnTA=;
+        b=PSff9raN1wy/OByjghH5jWPX1MwkqBIFTe6ld11nhzgUBFCoMz2Qk727VFi7K0ZfXM
+         97kV9NYfyKlxckdn+PS/i2btmLvAjxu/vRZxa9JEN4XMneXmN45+F7OSGZPoP+1p8yME
+         mvXkDz1LcQzgN+Y06TsoL7fx6AkcOQL5ZQ9QlkF63srIyt5kQooLmqKS24S2SzYaFEo8
+         YYk81mXfinGmXC8Nln4G/R/3Wqu/M2wKKldEr8KVxSuzHoOOeLd07s0iQZoDzJY4KahK
+         kEAkMhTAOS52pZ9Y4MR4vgc/aCeFA9zE+8vRNLsE1oDpg/ZTMzi4z77eo5nb0vZmx7qi
+         q7Iw==
+X-Gm-Message-State: AIVw110iT6XTuWLOinexRA99G/QLEMJ0aU5LM4n5aHgcyvdRyGsK8bal
+        RrIFcaMckE0EmoeqbykYw6AMk7xgI4s4
+X-Received: by 10.25.99.145 with SMTP id v17mr3058804lfi.209.1501278230501;
+ Fri, 28 Jul 2017 14:43:50 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.25.1.130 with HTTP; Fri, 28 Jul 2017 14:43:49 -0700 (PDT)
+In-Reply-To: <CAPc5daXgXpwOKB2J7cz7fFYNd3GuRK7fqeROhwouyaCCGU1ToA@mail.gmail.com>
+References: <20170728171817.21458-1-sbeller@google.com> <20170728171817.21458-3-sbeller@google.com>
+ <CAPc5daXgXpwOKB2J7cz7fFYNd3GuRK7fqeROhwouyaCCGU1ToA@mail.gmail.com>
 From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH] Documentation/checkout: clarify submodule HEADs to be detached
-Date:   Fri, 28 Jul 2017 14:40:11 -0700
-Message-Id: <20170728214011.6184-1-sbeller@google.com>
-X-Mailer: git-send-email 2.14.0.rc0.3.g6c2e499285
+Date:   Fri, 28 Jul 2017 14:43:49 -0700
+Message-ID: <CAGZ79kZxVhZjFmTs5oAXh_vBNix4G=LtL8zCjrFCnqS+5pkDwQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] t6500: mark tests as SHA1 reliant
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+On Fri, Jul 28, 2017 at 10:59 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> There is another one that is better suited for this demonstration patch,
+> whose sole point is about creating bunch of objects that prefix conflicts
+> with each other to test the abbreviation machinery.
 
-  On top of sb/submodule-recursive-checkout-detach-head
-  
-  I also checked other man pages such as read-tree, which
-  already mentions the behavior as the fix implements:
-  
-       --[no-]recurse-submodules
-           Using --recurse-submodules will update the content of all
-           initialized submodules according to the commit recorded in the
-           superproject by calling read-tree recursively, also setting the
-           submodules HEAD to be detached at that commit.
+'Another one' meaning in another test file? I'll go look for these
+tests.
 
- Documentation/git-checkout.txt | 2 ++
- 1 file changed, 2 insertions(+)
+The first patch produces lots of false positives, so maybe I'll need
+to work on that (is there another code path for sha1?).
 
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index d6399c0af8..84bd323a00 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -262,6 +262,8 @@ section of linkgit:git-add[1] to learn how to operate the `--patch` mode.
- 	local modifications in a submodule would be overwritten the checkout
- 	will fail unless `-f` is used. If nothing (or --no-recurse-submodules)
- 	is used, the work trees of submodules will not be updated.
-+	Just like linkgit:git-submodule[1], this will detach the
-+	submodules HEAD.
- 
- <branch>::
- 	Branch to checkout; if it refers to a branch (i.e., a name that,
--- 
-2.14.0.rc0.3.g6c2e499285
-
+Thanks,
+Stefan
