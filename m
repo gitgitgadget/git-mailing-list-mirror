@@ -2,75 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0AAB92089D
-	for <e@80x24.org>; Fri, 28 Jul 2017 21:43:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B1EEC2089D
+	for <e@80x24.org>; Fri, 28 Jul 2017 21:53:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752700AbdG1Vnx (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Jul 2017 17:43:53 -0400
-Received: from mail-lf0-f43.google.com ([209.85.215.43]:37352 "EHLO
-        mail-lf0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752234AbdG1Vnw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jul 2017 17:43:52 -0400
-Received: by mail-lf0-f43.google.com with SMTP id m86so88899899lfi.4
-        for <git@vger.kernel.org>; Fri, 28 Jul 2017 14:43:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Cq/Ug7sD/bZ0qXU88cvW0BPQCdB5mhxsH25AmJxTnTA=;
-        b=A/c69g8mFD7lJTM+LihiDpHfKwmUiJk9jIpB4gbeu6gLkKSuN7MwD/HIHppn8w/7MX
-         G8ka2dJc5t/E0NmWPwJHgtpFjfWaEHDPCeM7RR9kRFAAI1CA1B2NT9oo5XPQIweKsyWv
-         9fmeSX6xSuySKzFeCkkBJKH+IFWPXxg7iwzQ7hVpPIJZVRqvltazYxgly9SsNxB0wBI8
-         PjUWC9ZnpmPvVu8bjmTg7FyCik9HWDr8zS3TqTFO4olhnkU07IRN4FAZzUmN6T0vKbWO
-         V1nTpaCeq0fzzEwRsCrXeJvx91I+fNMzvcoA2WO+rKeI9H6CrIZGkgdqPH3bQVQwu4z0
-         IOPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Cq/Ug7sD/bZ0qXU88cvW0BPQCdB5mhxsH25AmJxTnTA=;
-        b=PSff9raN1wy/OByjghH5jWPX1MwkqBIFTe6ld11nhzgUBFCoMz2Qk727VFi7K0ZfXM
-         97kV9NYfyKlxckdn+PS/i2btmLvAjxu/vRZxa9JEN4XMneXmN45+F7OSGZPoP+1p8yME
-         mvXkDz1LcQzgN+Y06TsoL7fx6AkcOQL5ZQ9QlkF63srIyt5kQooLmqKS24S2SzYaFEo8
-         YYk81mXfinGmXC8Nln4G/R/3Wqu/M2wKKldEr8KVxSuzHoOOeLd07s0iQZoDzJY4KahK
-         kEAkMhTAOS52pZ9Y4MR4vgc/aCeFA9zE+8vRNLsE1oDpg/ZTMzi4z77eo5nb0vZmx7qi
-         q7Iw==
-X-Gm-Message-State: AIVw110iT6XTuWLOinexRA99G/QLEMJ0aU5LM4n5aHgcyvdRyGsK8bal
-        RrIFcaMckE0EmoeqbykYw6AMk7xgI4s4
-X-Received: by 10.25.99.145 with SMTP id v17mr3058804lfi.209.1501278230501;
- Fri, 28 Jul 2017 14:43:50 -0700 (PDT)
+        id S1752759AbdG1VxE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Jul 2017 17:53:04 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62425 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752660AbdG1VxD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jul 2017 17:53:03 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 547CC9B684;
+        Fri, 28 Jul 2017 17:52:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=b1A/4YhUewXtI2sMx5dr3N9p+8s=; b=o+TeYl
+        nPJj453cYXMKWBOx40k6DFfRV7kbzjw3LfYsXWVNTnle5TS9n3dhwTeuenQa8mZ3
+        lnPdRsrBLDHSzWJvItzHiSAWk+u0aZkiVMdCN82WT27UDhrKFvG6RMBCINNoNq4X
+        lxxAdCYvG5RjtDBOceERIh3p7ekeSovwXjD10=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=elDawTix4G5sQFh3EDloSC4WggEyGAHK
+        7ebDtfu11J4ssavFxI2LIQJ+3hq2uYa8QTP0Iea5KxIzLeQOZFWrb9YbV3w8U0eL
+        NJ17TT4XVp/jxzlS0CjKSXYRhthhPG5+gXeCjbuI3VlmJeS4wsYUJLQg5OdEQv4/
+        nEnkbWq8vfc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4AF829B682;
+        Fri, 28 Jul 2017 17:52:55 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 894B09B681;
+        Fri, 28 Jul 2017 17:52:54 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/2] alter hash function: expose test dependencies on sha1
+References: <20170728171817.21458-1-sbeller@google.com>
+        <20170728171817.21458-2-sbeller@google.com>
+Date:   Fri, 28 Jul 2017 14:52:53 -0700
+In-Reply-To: <20170728171817.21458-2-sbeller@google.com> (Stefan Beller's
+        message of "Fri, 28 Jul 2017 10:18:16 -0700")
+Message-ID: <xmqq7eysmdoq.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.25.1.130 with HTTP; Fri, 28 Jul 2017 14:43:49 -0700 (PDT)
-In-Reply-To: <CAPc5daXgXpwOKB2J7cz7fFYNd3GuRK7fqeROhwouyaCCGU1ToA@mail.gmail.com>
-References: <20170728171817.21458-1-sbeller@google.com> <20170728171817.21458-3-sbeller@google.com>
- <CAPc5daXgXpwOKB2J7cz7fFYNd3GuRK7fqeROhwouyaCCGU1ToA@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 28 Jul 2017 14:43:49 -0700
-Message-ID: <CAGZ79kZxVhZjFmTs5oAXh_vBNix4G=LtL8zCjrFCnqS+5pkDwQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] t6500: mark tests as SHA1 reliant
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1C2DC802-73DF-11E7-A571-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 28, 2017 at 10:59 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> There is another one that is better suited for this demonstration patch,
-> whose sole point is about creating bunch of objects that prefix conflicts
-> with each other to test the abbreviation machinery.
+Stefan Beller <sbeller@google.com> writes:
 
-'Another one' meaning in another test file? I'll go look for these
-tests.
+> DO NOT APPLY.
+>
+> Alter the hash function such that with this patch
+> any dependency on sha1 in tests will make the test
+> fail. This patch applied on master yields this list:
+>
+> ./t0000-basic.sh
+> ....
+> ./t8008-blame-formats.sh
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  sha1dc/sha1.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-The first patch produces lots of false positives, so maybe I'll need
-to work on that (is there another code path for sha1?).
+Everybody knew and said that we need to make tests less dependent on
+the exact hash and in such a way that the ones that currently do
+would test the morally equivalent thing with a new hash before we
+can go forward.  And everybody said that one way to start that is to
+build a Git with different hash function and trying to run tests.
 
-Thanks,
-Stefan
+This is the first report of doing so, and the large list above is
+the biggest contribution this message makes to the "let's wean
+ourselves off of SHA-1" journey.
+
+Thanks for starting this.
+
+>
+> diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
+> index 25eded1399..e18acee9ca 100644
+> --- a/sha1dc/sha1.c
+> +++ b/sha1dc/sha1.c
+> @@ -1756,7 +1756,7 @@ static void sha1_process(SHA1_CTX* ctx, const uint32_t block[16])
+>  void SHA1DCInit(SHA1_CTX* ctx)
+>  {
+>  	ctx->total = 0;
+> -	ctx->ihv[0] = 0x67452301;
+> +	ctx->ihv[0] = 0x07452301;
+>  	ctx->ihv[1] = 0xEFCDAB89;
+>  	ctx->ihv[2] = 0x98BADCFE;
+>  	ctx->ihv[3] = 0x10325476;
