@@ -2,120 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 81E731F89D
-	for <e@80x24.org>; Fri, 28 Jul 2017 18:40:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F8912089D
+	for <e@80x24.org>; Fri, 28 Jul 2017 20:08:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752633AbdG1Skt (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Jul 2017 14:40:49 -0400
-Received: from mail-io0-f176.google.com ([209.85.223.176]:32876 "EHLO
-        mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752631AbdG1Skp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jul 2017 14:40:45 -0400
-Received: by mail-io0-f176.google.com with SMTP id j32so72288656iod.0
-        for <git@vger.kernel.org>; Fri, 28 Jul 2017 11:40:45 -0700 (PDT)
+        id S1752603AbdG1UII (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Jul 2017 16:08:08 -0400
+Received: from mail-pf0-f172.google.com ([209.85.192.172]:34633 "EHLO
+        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752505AbdG1UIH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jul 2017 16:08:07 -0400
+Received: by mail-pf0-f172.google.com with SMTP id q85so99452389pfq.1
+        for <git@vger.kernel.org>; Fri, 28 Jul 2017 13:08:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=idUcsBoJXzei3io87Kxiz/GBFMUIzWoe4jxs4A63x0k=;
-        b=I9iJq8oY3cBQ/pVgRAgrCJis0wOBoeZEBTNQe/t01dgL8WQCIeSt39A1JCht7M8QHf
-         EREEXetGQqLiCZT+gJ7LHo4/ZSQQEkZKWhsMXLb3/7vQhpsu8q2Bo8xs5crRbFFJVFYo
-         bwVYADLqDypNu222PJ3wZQBtMPNX4jmDUQv3uswpv36h6k+wLkBHb/MU6NL6My2OM6OZ
-         qN2k8Jap1dxAObD7n7F2ZPBnHLQJLrKxNMnyrCHOWdy8stwYJ+rTiN+L+0D9JSXiJA0X
-         /Gaxz4H+0UQsg2Q+a1ite7hBVff5HvfF41fCd0ZmfoAm18mrebHF2htNe/yr1KHlLSQF
-         RDBw==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=m6Rti/eeuVlQTdfDi9pAyZj1/WV1uJhW6jbdjQD/OPk=;
+        b=MLOOBQeo0pLG78lqq+gPX6U5rmL4sc6WVbIjF6d/uyO7rrfyqrsGPM0spxzfO4H6oh
+         dPkJg4qI2aMy8feCwC/ShUIAagkGWpxj6eRu+aqgdfF4Vcc3H0EiRn4L+evDQ3Sd5wpZ
+         4819fW17HmuUw2qWKXQlPQC4ENTlVoQTrFCbEwdlc+KfGasbnZu4ayg2hkbEF4bqc/LX
+         S4JN2fWjGskc78WQnr7qu1pgHKNVS/PIYgmM1IfEdzj/OAZW4f7MkPsQb0wstNfJ25a2
+         cAfB+KmBIqqCNjbodmBFOpwaY29pj7BwOzexcCvxlaLC6PjTWkmlINiUauPAcjzM3Qf8
+         pWLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=idUcsBoJXzei3io87Kxiz/GBFMUIzWoe4jxs4A63x0k=;
-        b=Nc82XtN1pwQh6mPMMK6j/w4FzeCbKl2/v0gwcOcGCcs+d9vwhomM1MzIo+rvlQA0YM
-         rPgdwc1zOvUwB+FKiKYzNT06v0ttJ0W7bAfeKIXn6/8aoTRFnZvsiJyBiktWNw14FrWr
-         R8kG1dn4c1lWQL1mNNBaVtPS/MGICp8QmNvvh+4fu5q64vejDFsVTJ0WeIVMSvRcpDzf
-         3XAT3TLgDRTibEwZyCqwL4j8RdTCiJ1eNJtLPoPwDloRzMnLUeyHpv56Uezio/YMXFim
-         MIOwIzGWe7Ev7HR1FIaqc8KZsCqJYhNat7GigQ5cNZrRlSZY5Mn47e5w4dbmQLhzmEbH
-         8zaw==
-X-Gm-Message-State: AIVw112x0cHeD2OGz7QuhLTtgcfSpb0/G3EecFrdJRteZVNxbfRA8qhM
-        sQwhXcuY45lDTJcOvLs=
-X-Received: by 10.107.59.200 with SMTP id i191mr11097192ioa.171.1501267244851;
-        Fri, 28 Jul 2017 11:40:44 -0700 (PDT)
-Received: from [192.168.1.6] (d24-150-81-207.home.cgocable.net. [24.150.81.207])
-        by smtp.googlemail.com with ESMTPSA id c37sm1441181itf.2.2017.07.28.11.40.43
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 28 Jul 2017 11:40:44 -0700 (PDT)
-Subject: Re: [PATCH v2] contrib/rerere-train: optionally overwrite existing
- resolutions
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-References: <1caa9bb1-9184-7335-a041-6abd2c8f616c@gmail.com>
- <xmqqwp6wtdu0.fsf@gitster.mtv.corp.google.com>
- <ae4d9b77-c47e-199b-d40f-ad5b49c5dd60@gmail.com>
- <xmqqmv7rrs45.fsf@gitster.mtv.corp.google.com>
- <32b61c4b-5e58-30d9-4345-8036bc805019@gmail.com>
- <xmqq60efq6bo.fsf@gitster.mtv.corp.google.com>
-From:   Raman Gupta <rocketraman@gmail.com>
-Message-ID: <c522f452-0b30-3408-1673-8b62ffb7f039@gmail.com>
-Date:   Fri, 28 Jul 2017 14:40:43 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
-MIME-Version: 1.0
-In-Reply-To: <xmqq60efq6bo.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-CA
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=m6Rti/eeuVlQTdfDi9pAyZj1/WV1uJhW6jbdjQD/OPk=;
+        b=fBGXi8Q1hnhCvlxLbbLFAg89KMkBJQ/XSEXAiPfljZc11Lz5iDob8eskqQW6INy5MG
+         1bXoQFGGwyl543B78N8IxP6/ETYiF6qRA+EQyhESdC+UTE86nhWn5rhH5odfg3flPOsp
+         4J1e/mEJ/9C3X9UYTKlznQqV+AoDqV5RJ8I5ox1sgNHkGTIz0GMGFAxITYi2I0cHfnln
+         YT3D7/ncOjB39m48dse20FY3MUJHfWdxCePMdaTCTPnkt/n3/5t+NWlJ3hBYzMFSAZcT
+         J3r+SPHEBqKILayn7brQI4QpIg444vZsdu6EcUN6qVu7l9zUlfEcEv8sBVg/CxlNQ8xz
+         i0gw==
+X-Gm-Message-State: AIVw110VLFUDgKblxeglbHKS+QRAsald/WBMAG6uVKhGLz50zpxTrCr/
+        Flzb/3b+hsSRCS8uF0ZNRw==
+X-Received: by 10.98.111.194 with SMTP id k185mr8416883pfc.235.1501272486477;
+        Fri, 28 Jul 2017 13:08:06 -0700 (PDT)
+Received: from twelve2.svl.corp.google.com ([100.96.218.24])
+        by smtp.gmail.com with ESMTPSA id j14sm47782041pgt.7.2017.07.28.13.08.05
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 28 Jul 2017 13:08:05 -0700 (PDT)
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, peartben@gmail.com,
+        gitster@pobox.com
+Subject: [PATCH] tests: ensure fsck fails on corrupt packfiles
+Date:   Fri, 28 Jul 2017 13:08:02 -0700
+Message-Id: <20170728200802.12496-1-jonathantanmy@google.com>
+X-Mailer: git-send-email 2.14.0.rc0.400.g1c36432dff-goog
+In-Reply-To: <dc3c12fb-38e1-7c62-0d51-cca2f9883927@gmail.com>
+References: <dc3c12fb-38e1-7c62-0d51-cca2f9883927@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 26/07/17 04:41 PM, Junio C Hamano wrote:
-> Raman Gupta <rocketraman@gmail.com> writes:
-> 
->> On 26/07/17 02:05 PM, Junio C Hamano wrote:
->>> I haven't tried this patch, but would this work well with options
->>> meant for the 'git rev-list --parents "$@"' that grabs the list of
->>> merge commits to learn from?  e.g.
->>>
->>> 	$ contrib/rerere-train.sh -n 4 --merges master
->>> 	$ contrib/rerere-train.sh --overwrite -n 4 --merges master
->>> 	$ contrib/rerere-train.sh -n 4 --overwrite --merges master
->>>
->>> I do not think it is necessary to make the last one work; as long as
->>> the first two work as expected, we are good even if the last one
->>> dies with a sensible message e.g. "options X, Y and Z must be given
->>> before other options" (currently "X, Y and Z" consists only of
->>> "--overwrite", but I think you get what I mean).
->>
->> You're right -- I didn't try all the cases. I wasn't able to figure
->> out how to get `rev-parse --parseopt` to deal with this situation, so
->> I did it manually. I'm not super-happy with the result, but it does
->> work. Look for PATCH v3.
-> 
-> Yes, I think you could squash the two case arms in the later loop
-> into one i.e.
-> 
-> 	-h|--help|-o|--overwrite)
-> 		die "please don't." ;;
+t1450-fsck.sh does not have a test that checks fsck's behavior when a
+packfile is invalid. It does have a test for when an object in a
+packfile is invalid, but in that test, the packfile itself is valid.
 
-I considered that but decided the non-collapsed version better
-supports this list growing in the future.
+Add such a test.
 
-> but still the repetition does look ugly.
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+I think the existing packfile corruption test (t5303) is good enough
+that we would notice such things, but just in case we want to test fsck
+specifically, here's a patch.
+---
+ t/t1450-fsck.sh | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-Agreed.
-
-> As a contrib/ material, I do not care too deeply about it, though.
-> 
-> Will queue.
-
-Thanks.
-
-Regards,
-Raman
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index bb89e1a5d..4087150db 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -608,6 +608,22 @@ test_expect_success 'fsck errors in packed objects' '
+ 	! grep corrupt out
+ '
+ 
++test_expect_success 'fsck fails on corrupt packfile' '
++	hsh=$(git commit-tree -m mycommit HEAD^{tree}) &&
++	pack=$(echo $hsh | git pack-objects .git/objects/pack/pack) &&
++
++	# Corrupt the first byte of the first object. (It contains 3 type bits,
++	# at least one of which is not zero, so setting the first byte to 0 is
++	# sufficient.)
++	chmod a+w .git/objects/pack/pack-$pack.pack &&
++	printf '\0' | dd of=.git/objects/pack/pack-$pack.pack bs=1 conv=notrunc seek=12 &&
++
++	test_when_finished "rm -f .git/objects/pack/pack-$pack.*" &&
++	remove_object $hsh &&
++	test_must_fail git fsck 2>out &&
++	test_i18ngrep "checksum mismatch" out
++'
++
+ test_expect_success 'fsck finds problems in duplicate loose objects' '
+ 	rm -rf broken-duplicate &&
+ 	git init broken-duplicate &&
+-- 
+2.14.0.rc0.400.g1c36432dff-goog
 
