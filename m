@@ -2,108 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE5672089D
-	for <e@80x24.org>; Fri, 28 Jul 2017 22:14:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B1E452089D
+	for <e@80x24.org>; Fri, 28 Jul 2017 23:50:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752945AbdG1WOw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Jul 2017 18:14:52 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50148 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752762AbdG1WOv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jul 2017 18:14:51 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3A4E496B15;
-        Fri, 28 Jul 2017 18:14:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=uiej6nBPjmouom/Q3ZC2Y4o+WdE=; b=ZAFE7Q
-        7fcTUJPhfD8HXAylzuUsDz32GDX3HpYDVaeZ0M375KlsWAxqAAomyQimUNiNbPBj
-        E+Yt+QQuxMRYlm5RjJgEK29ayC8ErsaNzhnVBru39jE/aENONipBE8mpoynbrZof
-        vohLL5Kyk9mdfSq8RfwPZA3TVCKy/y2Ykl8co=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=btzyxQv2Et23xprIl/0malqtwaaFE7KX
-        utZDm85PL9Z21YNDyTua1G5q24RKVneG45tcLn016bZTdDDYEBLdiF4TrQD7tFca
-        nVozFYvZLbYfutnegqXhUIbDphM32FN8r+xZGkwmqsVWVDvNWfC6vDxCGpr0W3aL
-        zZ3S7W8MyVg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 32BB496B12;
-        Fri, 28 Jul 2017 18:14:51 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 99A1896B0A;
-        Fri, 28 Jul 2017 18:14:50 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/2] t6500: mark tests as SHA1 reliant
-References: <20170728171817.21458-1-sbeller@google.com>
-        <20170728171817.21458-3-sbeller@google.com>
-Date:   Fri, 28 Jul 2017 15:14:49 -0700
-In-Reply-To: <20170728171817.21458-3-sbeller@google.com> (Stefan Beller's
-        message of "Fri, 28 Jul 2017 10:18:17 -0700")
-Message-ID: <xmqq379gmco6.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1753159AbdG1Xum (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Jul 2017 19:50:42 -0400
+Received: from mail-pg0-f52.google.com ([74.125.83.52]:33405 "EHLO
+        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752987AbdG1Xul (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jul 2017 19:50:41 -0400
+Received: by mail-pg0-f52.google.com with SMTP id c14so24009244pgn.0
+        for <git@vger.kernel.org>; Fri, 28 Jul 2017 16:50:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=+obWntseJyg/QJCIy+tmQOoNvI2vpzHiih6DGX7BYRk=;
+        b=sg5gxW9WCxn/3Pu0RVYRBQpDt8Cw0+QtqMVQeJkSVHt5zJILV8OjOiZXT8IYAZSoHF
+         v0oiGqymF6PQNXYD+oTqCxR9+j2VtWo3uPrkUy7+Be/veN2RFU55zurNFQmMLiB78X/Z
+         oArkqpfpQgnaHet3TKhXNRmw12tMhxppC05UmRT4GmGyNqOrV1J6rhb4JdOAZDlP+O97
+         vMdpixoo+y5OX/kQ0Ey3zenamYM3uDMKflrQOu4fSX+FcuLA00umb0awrjisnWdlo5Ua
+         D/8/TG8PrUWLu/+/juQuIkQB0vxn6S92F9HScgyNw2d4S3zdlCXD7DVkkAny3FvLa1YW
+         uVfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=+obWntseJyg/QJCIy+tmQOoNvI2vpzHiih6DGX7BYRk=;
+        b=iW8lmBfEIfDYdKp68Ts/gcgcUtsRs5IsVyf9PHYiEeAF5iyMMGi/gqUsHpDcPkbYwZ
+         JmLkRQt6nvL/2RUBYRjLAJQlQeH1DN/P1d/kmSGdlsOJJjtkbMS19KallnX2hJtm3smH
+         pGDrb6MXl0qLvSTgYfImX+Gz0QHeCZfgSnYsVrOHIvKGvpQqWY1+wjQkd51V3GzXE03Y
+         2DGI7bkFk1xncUoTrkRMD7UYRdM58Ovr+4RQmzJiUahN6/hJfDFs90EKoyuZ+LzQcwY6
+         LmC1O8pdc4vnWEKEhPVXm574qNCmfHyZBF2m3ozGXUa+VIPpNdlFczT9fRFliyE/nyrV
+         hE8A==
+X-Gm-Message-State: AIVw1122egJsix6nlOoKLbFixRgWQQkPy1PUJG0mBSo66qW3W2phwxk4
+        J7d8fUabL7ZrsY97
+X-Received: by 10.99.121.1 with SMTP id u1mr8688730pgc.217.1501285840710;
+        Fri, 28 Jul 2017 16:50:40 -0700 (PDT)
+Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:857b:d662:4289:61ab])
+        by smtp.gmail.com with ESMTPSA id r2sm30915302pgs.85.2017.07.28.16.50.39
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 28 Jul 2017 16:50:40 -0700 (PDT)
+Date:   Fri, 28 Jul 2017 16:50:35 -0700
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, peartben@gmail.com, christian.couder@gmail.com
+Subject: Re: [RFC PATCH 1/4] environment, fsck: introduce lazyobject
+ extension
+Message-ID: <20170728165035.2be61cec@twelve2.svl.corp.google.com>
+In-Reply-To: <xmqqzibpn1zh.fsf@gitster.mtv.corp.google.com>
+References: <cover.1501111615.git.jonathantanmy@google.com>
+        <cover.1501111615.git.jonathantanmy@google.com>
+        <75766ee26264e50b7fcb3c7a8cc5808907586799.1501111615.git.jonathantanmy@google.com>
+        <xmqqzibpn1zh.fsf@gitster.mtv.corp.google.com>
+X-Mailer: Claws Mail 3.9.3 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2C9DA2CC-73E2-11E7-BD6A-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On Thu, 27 Jul 2017 11:55:46 -0700
+Junio C Hamano <gitster@pobox.com> wrote:
 
-> The first test marked relies on hard coded sha1:
->
-> 	# We need to create two object whose sha1s start with 17
-> 	# since this is what git gc counts.  As it happens, these
-> 	# two blobs will do so.
-> 	test_commit 263 &&
-> 	test_commit 410 &&
->
-> The next two seem to rely on state from the first one, I did not
-> investigate.
+> My reading hiccupped after the first sentence, as the problem
+> description made it sound like this was a boolean ("are we using
+> lazy object feature?"), after reading "data type string".  And then
+> "the command in that option" made me hiccup one more time, as it did
+> not "click" that "in that option" was trying to say that the string
+> is used as the command name (or is it a whole command line?  The
+> leading part of the command line to which some arguments are
+> appended before it gets invoked as a command? or what?).
+> 
+> Logically, I think it is more like
+> 
+>  - extensions.lazyobject can be set to tell Git to consider missing
+>    objects in certain cases are not errors;
+> 
+>  - the value of extensions.lazyobject variable must be a string,
+>    which is used to name the command to lazily make the object
+>    "appear" in the repository on demand.
 
-I am moderately negative on this approach, if it is meant to suggest
-the final shape of our test suite patch 1/2 started.
+OK, I'll update the commit message in the next reroll.
 
-This script may be a good example you can use to demonstrate a much
-better approach.  As the above comment in the test shows, we want to
-create two objects whose object names begin with "17", and running
-test_commit with 263 and 410 at this point in the test was a way to
-achieve that when Git uses SHA-1 as its hash.
+> >  extern int repository_format_precious_objects;
+> > +extern char *repository_format_lazy_object;
+> 
+> This is not a new problem, but I think these two should be
+> called repository_extension_$NAME not repository_format_$NAME.
 
-When we use a hash different from SHA-1, the exact strings 263 and
-410 may change, but we should be able to find two other strings that
-has the same property (i.e. they results in objects that share the
-prefix "17").  Perhaps a better way forward for this kind of test is
-to parameterize these hardcoded constants and make it easier to use
-different values without having to change the rest of the script
-when we switch the hash function?  So perhaps have something like
-
-	case "$GIT_HASH_FUNCTION" in
-	SHA-1)	
-		TEST_17_1="263 410" ;;
-	CORRUPT-SHA-1)	
-		TEST_17_1="something else" ;;
-        esac
-
-near the top of the script and update the above two with:
-
-	for token in $TEST_17_1
-	do
-		test_commit "$token" || return 1
-	done &&
-
-would prepare us to switch to SHA-256 or whatever hash function we
-choose to use in the future?
-
-t1512 is another example with full of such tests that we would want
-to keep moral equivalents in the world with a different hash,
-instead of reducing the test coverage.
+Looking at the original commit 067fbd4 ("introduce "preciousObjects"
+repository extension", 2015-06-24), it seems that this was so named to
+be analogous to the existing "struct repository_format { int version;
+...}" => "int repository_format_version;". The existing
+repository_format_$NAME thus seems reasonable to me.
