@@ -2,277 +2,241 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3204C1F89D
-	for <e@80x24.org>; Fri, 28 Jul 2017 15:26:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2ABB61F89D
+	for <e@80x24.org>; Fri, 28 Jul 2017 15:58:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752230AbdG1P0u (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Jul 2017 11:26:50 -0400
-Received: from mail-oi0-f66.google.com ([209.85.218.66]:32877 "EHLO
-        mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752141AbdG1P0t (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jul 2017 11:26:49 -0400
-Received: by mail-oi0-f66.google.com with SMTP id e124so17538902oig.0
-        for <git@vger.kernel.org>; Fri, 28 Jul 2017 08:26:49 -0700 (PDT)
+        id S1751975AbdG1P6h (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Jul 2017 11:58:37 -0400
+Received: from mail-it0-f68.google.com ([209.85.214.68]:37451 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751882AbdG1P6g (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jul 2017 11:58:36 -0400
+Received: by mail-it0-f68.google.com with SMTP id 77so12548560itj.4
+        for <git@vger.kernel.org>; Fri, 28 Jul 2017 08:58:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=yxjsmc+DcCOJgtPKmp8/PEmstR7xBOfDdSzbbQCuT/g=;
-        b=bGWKjfCkN+4by4hstmeOd+vgTtNFrW/S+XR69OBQSdgawcu58RikdZLGancAUHrPSd
-         UlxM2oAdsoOC1xmpmhaswWvbBqF9XhB9+cQtncZSRvUdVaYSTcjCV4srUfgWrIPlOxUK
-         Io4Z/1bZTLg8xxnUdEdePEsdKVD26TKOsUSNcQyrMANMpQ3ZcGD15joW04r+rLqA0nKB
-         ujK827hHRi+kg7qIN/JVdPDL+pqlWe9cmlYZn/fcUs05522EsklLHxNyjs1ebBbs7irG
-         7qkAtm41i8+U+ltXXs1qjienJrG3RHOryKHTDCxDW81nICv7cKPLoykvxp3vvktbo1q7
-         hoeA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=XeuWaoEyLhvKiO4wLfTk29/q3qFTRsd/bk0F8a3UQV8=;
+        b=rqncgBvfce/aKFaQhyDxIEI05pGW1UxiUPxertong7bgMFoKQMo2HYfoznrL4r+cXd
+         38MSN5Fek7Dxt+InKOBZIFGi7RFiO+fYaFXAsa/aOK+vRnU7TG26AlgJS3tKEg8Eat7X
+         yOSGeBHvvJuHGXCK4e0//lOILzpQzQEHJ5UDjSbkjooLKgJJ1csxkGrrn5Tle1UqmKKE
+         GjTHYlKnchYclX6osWY7HfvtEfsR2lJiTyUb7WPWZdeX5kfGfx2ZjwS7zJ2lLCOF49yc
+         SWzDeRj5TRFwio/KqjioFrZl3zNM70O3Eu3FA+VzdxsbUWIwqfFHku8sgKTuedLQcrj2
+         FKeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=yxjsmc+DcCOJgtPKmp8/PEmstR7xBOfDdSzbbQCuT/g=;
-        b=Wcf0p3TqrahmRKVur/fCJWnfeO4w1LdDID2vi01WTYklRf+Zdbz+XNp/0sNongUbBG
-         ZUWfxGea4TcABh0h6SjjXx7tfPq55zYuXMrpX41+dSNLPHoTj/724CoSa3uCOAZpfYFy
-         R364K7vPuIuq/516GwZziQTZLy2Z7VdvJP9xh0NeoHiXdqRxyK/D7Q5Zky3MJMziAxWO
-         E6in1Zm4NYlQ+LV6oeAqnRcrxAlassDH6QE9U2fqmiCqVWXuMQVI7Rq/9E0K/RWfKDvI
-         EpNpoG7m5vyN80GQE8nBGGoGtrm1gpjb73BWQLZPrq2vbV4N1VCKfIwX0T5aglQOhW9Q
-         r1sw==
-X-Gm-Message-State: AIVw112cEeXmJEVX2WuW1ElNYqL+d3EPp7dZfhITlDqx4kIbcreUv0LH
-        mGR/A59R0Wg+vQ==
-X-Received: by 10.202.79.84 with SMTP id d81mr6907328oib.50.1501255608508;
-        Fri, 28 Jul 2017 08:26:48 -0700 (PDT)
-Received: from [10.3.3.91] ([12.5.200.156])
-        by smtp.gmail.com with ESMTPSA id r136sm8614718oie.20.2017.07.28.08.26.46
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 28 Jul 2017 08:26:47 -0700 (PDT)
-Subject: Re: requesting permission to use some Git for Windows code
-To:     Brandon Casey <drafnel@gmail.com>,
-        Philippe Joyez <philippe.joyez@cea.fr>
-Cc:     Joris van der Hoeven <vdhoeven@lix.polytechnique.fr>,
-        git-for-windows@googlegroups.com,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <a730cebb-1782-f32b-0b7c-253bd61475d6@cea.fr>
- <alpine.DEB.2.21.1.1706281259170.84669@virtualbox>
- <CA+sFfMcAtStAfoc6Zaq7zW3cmYLu1QMX9_mmrRWe=M_GJYDeyw@mail.gmail.com>
-From:   Marius Storm-Olsen <mstormo@gmail.com>
-Message-ID: <d8fc1fdb-f326-d71d-f496-8293ed14bf68@gmail.com>
-Date:   Fri, 28 Jul 2017 10:26:48 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=XeuWaoEyLhvKiO4wLfTk29/q3qFTRsd/bk0F8a3UQV8=;
+        b=bNHw6cW3KXfWdXMNMJMyIGFSSjTpo6GkR5osVVAZN4uxd/kHvomzLJEqJyrNX6/h+D
+         Rk3jPvJqK4Pc29uVr1oTvjRkkiPCa1HJoQmov8VUAFRTJvAubiECv2zLo7KAnHzuib8U
+         mFYgCyb3pOlcPyRLF3u9JRVr3Q47EbAopAjKH1p5TCHx5weycPT/94yI+qEz2JVtYAzg
+         V9AsKDVAjwN70Gp77aY0CBi7YvTBdKUhr6F9/kLekQ4+1Qk2MKQ3LCSn827Wjw5lgDug
+         LN9GF0Z3bS9fAlbOVIXUZ7Nx9mnVLqJZcTMlzeRw9sSi4W985ssbKQ+qrud6SNeUwxed
+         kBCg==
+X-Gm-Message-State: AIVw113aCmyiEF1tA4ODalVtMD3fBNr3RV/VsQlzbcN5qcW40EVwUk/t
+        lDPzEsvU0QQhndlG2TyE7D4ZNUJoEA==
+X-Received: by 10.36.104.140 with SMTP id v134mr9383017itb.11.1501257515245;
+ Fri, 28 Jul 2017 08:58:35 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CA+sFfMcAtStAfoc6Zaq7zW3cmYLu1QMX9_mmrRWe=M_GJYDeyw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Received: by 10.107.155.195 with HTTP; Fri, 28 Jul 2017 08:58:14 -0700 (PDT)
+In-Reply-To: <s5hh8y19hyg.wl-tiwai@suse.de>
+References: <s5hh8y19hyg.wl-tiwai@suse.de>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Fri, 28 Jul 2017 17:58:14 +0200
+Message-ID: <CACBZZX5yv-NzL7H-CH1yMeM9dWkz=PUhx=2wek_jBGpsz1=EAA@mail.gmail.com>
+Subject: Re: [PATCH] hash: Allow building with the external sha1dc library
+To:     Takashi Iwai <tiwai@suse.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Andreas Stieger <astieger@suse.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ditto, on any of my portions, if any left :)
-
--- 
-.marius
-
-On 7/28/2017 00:31, Brandon Casey wrote:
-> Hi Philippe,
+On Tue, Jul 25, 2017 at 7:57 AM, Takashi Iwai <tiwai@suse.de> wrote:
+> Some distros provide SHA1 collision detect code as a shared library.
+> It's the very same code as we have in git tree, and git can link with
+> it as well; at least, it may make maintenance easier, according to our
+> security guys.
 >
-> Please feel free to use my portions of the mentioned works under the GPLv3.
->
-> -Brandon
->
-> On Tue, Jul 25, 2017 at 6:53 AM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
->> Hi Philippe,
->>
->> I am not quite certain whether I have replied to this earlier or not.
->> Under the assumption that I did not, I'll send this mail; Cc:ed to the
->> mailing lists as discussed privately.
->>
->> On Fri, 23 Jun 2017, Philippe Joyez wrote:
->>
->>> This message is to request the permission to use code chunks from Git
->>> for Windows in GNU TeXmacs <http://texmacs.org/>, to which I contribute.
->>> The main developer of TeXmacs is Joris van der Hoeven (in cc).
->>>
->>> Context:
->>>
->>> Just like Git, TeXmacs originated on *nix platforms and was subsequently
->>> ported to windows using MinGW. Naturally, some issues we have in that
->>> port are the very same Git for Windows has faced.
->>>
->>> One specific problem you have solved and that TeXmacs still hasn't, is
->>> dealing with unicode filenames. By taking relevant pieces of code in Git
->>> for windows, I could easily come up with a patch that enables TeXmacs to
->>> handle unicode filenames in windows.
->>>
->>> Now, the problem is that Git code is GPL V2, while TeXmacs is GPL V3:
->>> Incorporating my patch in TeXmacs' trunk would be a violation of GPL
->>> V2... /unless/ we are granted the permission to do so by the authors of
->>> the code. This is precisely the reason for this message.
->> It is great that you can make use of the code!
->>
->> As to the licensing problem, I agree it is a hassle. The biggest obstacle
->> is that you have to have the consent of all the authors.
->>
->> You hereby have mine.
->>
->>> The chunks of code we would like to reuse are from these Git for Windows
->>> files:
->>> git-compat-util.h
->> This file is quite large, maybe you can cut down on the authors to contact
->> by restricting the `git annotate`/`git log`/`git shortlog` calls to
->> specific parts, using the `-L <start-line-no>,<end-line-no>` option?
->>
->>> ctype.c
->> $ git shortlog -nse ctype.c
->>       5  Junio C Hamano <gitster@pobox.com>
->>       4  René Scharfe <l.s.r@web.de>
->>       2  Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
->>       1  Ben Walton <bdwalton@gmail.com>
->>       1  Brandon Casey <drafnel@gmail.com>
->>       1  Gary V. Vaughan <git@mlists.thewrittenword.com>
->>       1  Linus Torvalds <torvalds@linux-foundation.org>
->>       1  Namhyung Kim <namhyung@gmail.com>
->>
->> I *think* Ben Walton's change (189c860c9ec (kwset: use unsigned char to
->> store values with high-bit set, 2015-03-02)) is not copyright-able, as it
->> only changes the type from signed to unsigned. But I am not a lawyer ;-)
->>
->> Likewise, Namhyung Kim's change (1a191a22959 (ctype.c only wants
->> git-compat-util.h, 2012-02-10)) only changes which header is included.
->> That seems to be a too-obvious/too-trivial change to me.
->>
->> Also, it looks as if removing a comma as was done in 4b05548fc05 (enums:
->> omit trailing comma for portability, 2010-05-14) by Gary V. Vaughan would
->> not merit any copyright.
->>
->> If in doubt, you could simply take the version of ctype.c with those
->> changes reverted as basis of your work.
->>
->> You still have to get the consent of Junio, René, Duy, Brandon and Linus
->> to relicense the file's contents.
->>
->>> compat ¬
->>>     mingw.c
->> I count 35 authors other than myself for that file... Maybe you can narrow
->> down what you need?
->>
->>>     mingw.h
->> Still 29 authors other than me...
->>
->>>     win32.h
->> This is more manageable, as it only saw three authors. But then, you could
->> simply reimplement the functionality, it's just two functions, and I do
->> not think that get_file_attr() is implemented in the best way: we have a
->> function called err_win_to_posix() in compat/mingw.c which is much more
->> complete.
->>
->> Having said that, err_win_to_posix() is still not implemented in the best
->> way. The best way is to abuse Windows' own (undocumented) _doserrmap()
->> function along with the information in the header files winerror.h and
->> errno.h to generate the mapping. Those two files, as per mingw-w64's
->> headers, have the very nice preamble:
->>
->>          /**
->>           * This file has no copyright assigned and is placed in the Public Domain.
->>           * This file is part of the mingw-w64 runtime package.
->>           * No warranty is given; refer to the file DISCLAIMER.PD within this
->>           * package.
->>           */
->>
->> Therefore, the result has no copyright assigned and is placed in the
->> Public Domain and we can do the very same, too.
->>
->> As I wanted to have a Windows error -> errno mapping that I could
->> relicense as I see fit, anyway, I took this as an excellent opportunity to
->> generate exactly that.
->>
->> Please find the header attached. Here is how I generated that header file:
->>
->> -- snip --
->> cat >/tmp/generrmap.c <<EOF &&
->> #include <windows.h>
->> #include <stdio.h>
->>
->> static void map_code(unsigned long code, const char *id);
->>
->> int _main(int argc, char **argv)
->> {
->>          printf("/* This file has no copyright assigned and is placed in the "
->>                  "Public Domain. */\\n"
->>                  "\\n"
->>                  "#ifndef WINERR2ERRNO_H\\n"
->>                  "#define WINERR2ERRNO_H\\n"
->>                  "\\n"
->>                  "static int winerror2errno(long code)\\n"
->>                  "{\\n");
->> $(sed -n 's/^#define \([^ ]*\) __MSABI_LONG([1-9].*/\tmap_code(\1, "\1");/p' \
->>          </mingw64/x86_64-w64-mingw32/include/winerror.h)
->>          printf("\\tdefault: errno = EINVAL;\\n"
->>                  "\\t}\\n"
->>                  "\\n"
->>                  "\\treturn -1; /* Typical return value when errno was set */\\n"
->>                  "}\\n"
->>                  "\\n"
->>                  "#endif /* WINERR2ERRNO_H */\\n");
->>          fflush(stdout);
->>          return 0;
->> }
->>
->> /* Undocumented function in the MSVCRT */
->> extern void _dosmaperr(unsigned long code);
->>
->> static const char *errno2constant(int err, const char *id)
->> {
->>          switch (err) {
->> $(sed -n 's/^#define \([^ ]*\) \([0-9]*\)$/\tcase \2: return "\1";/p' \
->>          </mingw64/x86_64-w64-mingw32/include/errno.h)
->>          default:
->>                  fprintf(stderr, "Unhandled err: %d (for %s)\\n", err, id);
->>                  exit(1);
->>          }
->> }
->>
->> static void map_code(unsigned long code, const char *id)
->> {
->>          errno = 0;
->>          _dosmaperr(code);
->>          if (!errno) {
->>                  fprintf(stderr, "Unhandled id: '%s' (%ld)\\n", id, code);
->>                  exit(1);
->>          }
->>          if (errno != EINVAL)
->>                  printf("\\tcase %s: errno = %s;\\n",
->>                          id, errno2constant(errno, id));
->> }
->> EOF
->> gcc -g -nostdlib -o /tmp/generrmap.exe /tmp/generrmap.c -lmsvcr120 &&
->> /tmp/generrmap
->> -- snap --
->>
->>>     win32 ¬
->>>          dirent.c
->>>          dirent.h
->> I encourage you to have a look whether you really need that full-fledged
->> functionality.
->>
->> For vaguely related work, I recently reimplemented this differently, for
->> use in BusyBox-w32, where we really only need to have the file names. The
->> implementation is a lot cleaner, and I am happy to relicense this to
->> whatever license you see fit (even BSD):
->>
->>          https://github.com/git-for-windows/busybox-w32/commit/b76eee3aca
->>
->>>          lazyload.h
->> This one was authored by me, and I am happy to relicense it to GPLv3. Or
->> whatever license, really.
->>
->> Ciao,
->> Johannes
+> This patch allows user to build git linking with the external sha1dc
+> library instead of the built-in sha1dc code.  User needs to define
+> DC_SHA1_EXTERNAL explicitly.  As default, the built-in sha1dc code is
+> used like before.
 
+This whole thing sounds sensible. I reviewed this (but like Junio
+haven't tested it with a lib) and I think it would be worth noting the
+following in the commit message / Makefile documentation:
+
+* The "sha1detectcoll" *.so name for the "sha1collisiondetection"
+library is not something you or suse presumably) made up, it's a name
+the sha1collisiondetection.git itself creates for its library. I think
+the Makefile docs you've added here are a bit confusing, you talk
+about the "external sha1collisiondetection library" but then link
+against sha1detectcoll". It's worth calling out this difference in the
+docs IMO. I.e. not talk about the sha1detectcoll.so library form of
+sha1collisiondetection, not the sha1collisiondetection project name as
+a library.
+
+* It might be worth noting that this is *not* linking against the same
+code we ship ourselves due to the difference in defining
+SHA1DC_INIT_SAFE_HASH_DEFAULT for the git project's needs in the one
+we build, hence your need to have a git_SHA1DCInit() wrapper whereas
+we call SHA1DCInit() directly. It might be interesting to note that
+the library version will always be *slightly* slower (although the
+difference will be trivial).
+
+* Nothing in your commit message or docs explains why DC_SHA1_LINK is
+needed. We don't have these sorts of variables for other external
+libraries we link to, why the difference?
+
+Some other things I observed:
+
+* We now have much of the same header code copy/pasted between
+sha1dc_git.h and sha1dc_git_ext.h, did you consider just always
+including the former but making what it's doing conditional on
+DC_SHA1_EXTERNAL? I don't know if it would be worth it from a cursory
+glance, but again your commit message doesn't list that among options
+considered & discarded.
+
+* I think it makes sense to spew out a "not both!" error in the
+Makefile if you set DC_SHA1_EXTERNAL=Y and DC_SHA1_SUBMODULE=Y. See my
+94da9193a6 ("grep: add support for PCRE v2", 2017-06-01) for an
+example of how to do this.
+
+* The whole business of "#include <sha1.h>" looks very fragile, are
+there really no other packages in e.g. suse that ship a sha1.h? Debian
+has libmd-dev that ships /usr/include/sha1.h that conflicts with this:
+https://packages.debian.org/search?searchon=contents&keywords=sha1.h&mode=exactfilename&suite=unstable&arch=any
+
+Shipping a sha1.h as opposed to a sha1collisiondetection.h or
+sha1detectcoll.h or whatever seems like a *really* bad decision by
+upstream that should be the subject of at least seeing if they'll take
+a pull request to fix it before you package it or before we include
+something that'll probably need to be fixed / worked around anyway in
+Git.
+
+> Signed-off-by: Takashi Iwai <tiwai@suse.de>
+> ---
+>  Makefile         | 12 ++++++++++++
+>  hash.h           |  4 +++-
+>  sha1dc_git_ext.c | 11 +++++++++++
+>  sha1dc_git_ext.h | 25 +++++++++++++++++++++++++
+>  4 files changed, 51 insertions(+), 1 deletion(-)
+>  create mode 100644 sha1dc_git_ext.c
+>  create mode 100644 sha1dc_git_ext.h
+>
+> diff --git a/Makefile b/Makefile
+> index 461c845d33cb..f1a262d56254 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -162,6 +162,12 @@ all::
+>  # algorithm. This is slower, but may detect attempted collision attacks.
+>  # Takes priority over other *_SHA1 knobs.
+>  #
+> +# Define DC_SHA1_EXTERNAL in addition to DC_SHA1 if you want to build / link
+> +# git with the external sha1collisiondetection library.
+> +# Without this option, i.e. the default behavior is to build git with its
+> +# own sha1dc code.  If any extra linker option is required, define them in
+> +# DC_SHA1_LINK variable in addition.
+> +#
+>  # Define DC_SHA1_SUBMODULE in addition to DC_SHA1 to use the
+>  # sha1collisiondetection shipped as a submodule instead of the
+>  # non-submodule copy in sha1dc/. This is an experimental option used
+> @@ -1472,6 +1478,11 @@ ifdef APPLE_COMMON_CRYPTO
+>         BASIC_CFLAGS += -DSHA1_APPLE
+>  else
+>         DC_SHA1 := YesPlease
+> +ifdef DC_SHA1_EXTERNAL
+> +       LIB_OBJS += sha1dc_git_ext.o
+> +       BASIC_CFLAGS += -DSHA1_DC -DDC_SHA1_EXTERNAL
+> +       EXTLIBS += $(DC_SHA1_LINK) -lsha1detectcoll
+> +else
+>  ifdef DC_SHA1_SUBMODULE
+>         LIB_OBJS += sha1collisiondetection/lib/sha1.o
+>         LIB_OBJS += sha1collisiondetection/lib/ubc_check.o
+> @@ -1492,6 +1503,7 @@ endif
+>  endif
+>  endif
+>  endif
+> +endif
+>
+>  ifdef SHA1_MAX_BLOCK_SIZE
+>         LIB_OBJS += compat/sha1-chunked.o
+> diff --git a/hash.h b/hash.h
+> index bef3e630a093..dce327d58d07 100644
+> --- a/hash.h
+> +++ b/hash.h
+> @@ -8,7 +8,9 @@
+>  #elif defined(SHA1_OPENSSL)
+>  #include <openssl/sha.h>
+>  #elif defined(SHA1_DC)
+> -#ifdef DC_SHA1_SUBMODULE
+> +#if defined(DC_SHA1_EXTERNAL)
+> +#include "sha1dc_git_ext.h"
+> +#elif defined(DC_SHA1_SUBMODULE)
+>  #include "sha1collisiondetection/lib/sha1.h"
+>  #else
+>  #include "sha1dc/sha1.h"
+> diff --git a/sha1dc_git_ext.c b/sha1dc_git_ext.c
+> new file mode 100644
+> index 000000000000..359439fc3d93
+> --- /dev/null
+> +++ b/sha1dc_git_ext.c
+> @@ -0,0 +1,11 @@
+> +/* Only for DC_SHA1_EXTERNAL; sharing the same hooks as built-in sha1dc */
+> +
+> +#include "cache.h"
+> +#include <sha1.h>
+> +#include "sha1dc_git.c"
+> +
+> +void git_SHA1DCInit(SHA1_CTX *ctx)
+> +{
+> +       SHA1DCInit(ctx);
+> +       SHA1DCSetSafeHash(ctx, 0);
+> +}
+
+
+
+> diff --git a/sha1dc_git_ext.h b/sha1dc_git_ext.h
+> new file mode 100644
+> index 000000000000..d0ea8ce518db
+> --- /dev/null
+> +++ b/sha1dc_git_ext.h
+> @@ -0,0 +1,25 @@
+> +/*
+> + * This file is included by hash.h for DC_SHA1_EXTERNAL
+> + */
+> +
+> +#include <sha1.h>
+> +
+> +/*
+> + * Same as SHA1DCInit, but with default save_hash=0
+> + */
+> +void git_SHA1DCInit(SHA1_CTX *);
+> +
+> +/*
+> + * Same as SHA1DCFinal, but convert collision attack case into a verbose die().
+> + */
+> +void git_SHA1DCFinal(unsigned char [20], SHA1_CTX *);
+> +
+> +/*
+> + * Same as SHA1DCUpdate, but adjust types to match git's usual interface.
+> + */
+> +void git_SHA1DCUpdate(SHA1_CTX *ctx, const void *data, unsigned long len);
+> +
+> +#define platform_SHA_CTX SHA1_CTX
+> +#define platform_SHA1_Init git_SHA1DCInit
+> +#define platform_SHA1_Update git_SHA1DCUpdate
+> +#define platform_SHA1_Final git_SHA1DCFinal
+> --
+> 2.13.3
+>
