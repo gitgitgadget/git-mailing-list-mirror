@@ -2,180 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 634FC2047F
-	for <e@80x24.org>; Sat, 29 Jul 2017 13:26:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DDB232047F
+	for <e@80x24.org>; Sat, 29 Jul 2017 16:05:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753728AbdG2N04 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 29 Jul 2017 09:26:56 -0400
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:50534 "EHLO
-        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753633AbdG2N0y (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Jul 2017 09:26:54 -0400
-Received: from PhilipOakley ([92.31.218.76])
-        by smtp.talktalk.net with SMTP
-        id bRlcdf56g3CyHbRlcdjHIu; Sat, 29 Jul 2017 14:26:53 +0100
-X-Originating-IP: [92.31.218.76]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=Zo+dE5zG c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
- a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
- a=NEAV23lmAAAA:8 a=xeHo_GJDZS1XWc6Ss7oA:9 a=uBz5hOFO0hgVMxGz:21
- a=nBQ2xry2uNDo_2Xo:21 a=QEXdDO2ut3YA:10 a=6kGIvZw6iX1k4Y-7sg4_:22
-Message-ID: <244AA0848E9D46F480E7CA407582A162@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Jonathan Tan" <jonathantanmy@google.com>,
-        "Ben Peart" <peartben@gmail.com>
-Cc:     <git@vger.kernel.org>, <jrnieder@gmail.com>, <sbeller@google.com>,
-        <git@jeffhostetler.com>
-References: <cover.1500508695.git.jonathantanmy@google.com> <3420d9ae9ef86b78af1abe721891233e3f5865a2.1500508695.git.jonathantanmy@google.com> <d8beb406-6d03-d893-4f37-83a7bdd6b9ac@gmail.com> <20170720141342.6a89aace@twelve2.svl.corp.google.com> <d014682f-66a5-c3c1-cf66-ef4bb28de076@gmail.com> <20170721133308.422e736d@twelve2.svl.corp.google.com> <96e8a347-d6b5-e21e-4129-2957fc26db19@gmail.com>
-Subject: Re: [RFC PATCH v2 2/4] promised-object, fsck: introduce promised objects
-Date:   Sat, 29 Jul 2017 14:26:52 +0100
-Organization: OPDS
+        id S1752854AbdG2QFD (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Jul 2017 12:05:03 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62093 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752644AbdG2QFC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Jul 2017 12:05:02 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C1AD5A0CF0;
+        Sat, 29 Jul 2017 12:04:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=1CBP8SFTEGaSihw5BVRbitMgzyo=; b=ITWXft
+        o2XNaKLEmyLCXDqMPtgzuReaNCNPV4GUUV1SsREixYfJyUOdDUjLk7MJTq1gCG9Q
+        3Yva4k5ORQie1T0lf26RQdVk6EvqaCfACiML0dpMUL2/S4VwpZO2F0Pl7aL2kj1t
+        5NKKaZA26vk0CvKalRfhj+WIz/rKm+w96wLfY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=JtNLZN4kYE2avR3N+gdjbcVVCydNzXp8
+        VjYfRZciqyN92sZDbD7TPTyCD1AqLbwsEkgQ5C7lbezoDSO1XDsMq1bptBSBercu
+        eNTFUMaOU+3I743ZQLJvE1yyW1NV1hdT2LnLv7b6KBg6ni9jjvRbltxV2wCycJAD
+        FSz3MVcV+is=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B9993A0CEF;
+        Sat, 29 Jul 2017 12:04:48 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2769DA0CEE;
+        Sat, 29 Jul 2017 12:04:48 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, peartben@gmail.com, christian.couder@gmail.com
+Subject: Re: [RFC PATCH 3/4] fsck: support referenced lazy objects
+References: <cover.1501111615.git.jonathantanmy@google.com>
+        <cover.1501111615.git.jonathantanmy@google.com>
+        <1d841f0e4188f0ae9fa3c238c58d3e1b5fb232e8.1501111615.git.jonathantanmy@google.com>
+Date:   Sat, 29 Jul 2017 09:04:46 -0700
+In-Reply-To: <1d841f0e4188f0ae9fa3c238c58d3e1b5fb232e8.1501111615.git.jonathantanmy@google.com>
+        (Jonathan Tan's message of "Wed, 26 Jul 2017 16:30:01 -0700")
+Message-ID: <xmqq379fkz4x.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="UTF-8";
-        reply-type=response
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Antivirus: AVG (VPS 170729-0, 29/07/2017), Outbound message
-X-Antivirus-Status: Clean
-X-CMAE-Envelope: MS4wfE1V85YrYHumwcisZpFSm/LNgBLjvwD2V5xgfIN6GlcuTsFY/4xlBnJi0P+zKyhNu2gdsEFzHTmWU+wiEtanyKEEF+kTFIMMCSroaCDLoSnCiWXz/pst
- G3ulsQd6VRVh2Vlvz2gxNldqzMfNl0mHyRI9r0WbdnQbjWDtbpXF9FFxFNJZ1YCGZoDjeCx0kALORhQu7wY/SRyKX3yj457//oB3Az5NJCzjt5wS4i3CB4tz
- 1RA654H8fCMrPJxrQk799kHsOcF3knJRyTozgawLiRcbFmgwOCuBEIzp11pnV5Kv5aL/9+iMEWnKmV1ZVTsiT0mX5JOdk+4+aEMZS0/q2ps=
+Content-Type: text/plain
+X-Pobox-Relay-ID: A553D516-7477-11E7-9CFA-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Ben Peart" <peartben@gmail.com>
-Sent: Tuesday, July 25, 2017 4:10 PM
-> On 7/21/2017 4:33 PM, Jonathan Tan wrote:
->> On Fri, 21 Jul 2017 12:24:52 -0400
->> Ben Peart <peartben@gmail.com> wrote:
->>
->>> Today we have 3.5 million objects * 30 bytes per entry = 105 MB of
->>> promises. Given the average developer only hydrates 56K files (2 MB
->>> promises) that is 103 MB to download that no one will ever need. We
->>> would like to avoid that if possible as this would be a significant
->>> regression in clone times from where we are today.
->>>
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-A question in the broader context of Narrow clones that I'd be interested 
-in.
+> Teach fsck to not treat missing objects indirectly pointed to by refs as
+> an error when extensions.lazyobject is set.
 
-How narrow are the tree levels that contain the hydrated files? The question 
-splits a couple of ways:
+I forgot to mention a potential flaw in this approach in my previous
+message.
 
-A. If one goes to the highest tree that contains all the 56K files, how many 
-files and sub trees would be in that complete tree (i.e. what fraction of 
-that 'top' tree is inflated).
-A2. Is there some deep/wide metric that indicates how tightly together the 
-inflated files tend to cluster?
+If you are a pure sightseer, then this is perfectly fine.  The
+object store in your local Git client working in that mode is purely
+a cache, lazily populated while browsing the object store backed by
+the source of what lazy-object "hook" talks with.  As long as that
+cache does not give us a corrupt object, we are OK, because missing
+objects do not matter.
 
-B. If instead we look at just the trees in the paths of those inflated 
-files, those trees will also reference other trees/blobs that are not 
-inflated, how big is that list (it would indicate the size of a narrow 
-repo's object store that holds the oid stubs)
+But once you start using the repository as more than a sightseer,
+you will have objects that only exist in your local "cache" and are
+not yet in that backing store behind the lazy-object "hook".  You
+need to notice it when any of them goes corrupt or missing, or your
+next "git push" to send them over to a remote location will fail by
+definition because you are the only one with these objects.
 
-I would quess / expect that the typical inflation only has a few clustered 
-areas of interest, but it maybe that in such a big reality (*) the inflated 
-files are actually spread very widely. (*) as per various blog posts saying 
-there was no realistic way of partitioning the BigWin repo!
+If we had the "promise" thing, then we could say that it is OK if
+traversal terminated at a "promised but not fetched yet" boundary,
+but we cannot afford the "promise", and more importantly, I do not
+think "promise" has to be the only approach to ensure that the
+objects that exist only in the local repository are all connected.
 
-I'd be interested in any such sparsity metric (apologies if I've missed 
-previous reports).
---
-Philip
+For example, if we know that the remote 'origin' is the actual
+backing store lazy-object "hook" talks with, a validation rule to
+ensure that we haven't lost any local commit is to ensure that a
+traversal from our local branch tips down to remote-tracking
+branches taken from 'origin' must not hit _any_ missing commit.
 
->>> I'm also concerned about the performance of merging in promises given we
->>> have 100M objects today and growing so the number of promises over time
->>> could get pretty large.
->>
->> After some thought, maybe a hybrid solution is best, in which it is
->> permissible but optional for some missing objects to have promises. In
->> that case, it is more of a "size cache" (which stores the type as well)
->> rather than a true promise. When fetching, the client can optionally
->> request for the sizes and types of missing objects.
->>
->
-> In our GVFS solution today we do not download any size or object type 
-> information at clone as the number of objects and the resulting file would 
-> be too large.  Instead, we have a new sizes endpoint 
-> (https://github.com/Microsoft/GVFS/blob/master/Protocol.md) that enables 
-> us to retrieve object sizes "on demand" much like we are enabling for the 
-> actual object content.
->
-> This protocol could easily be extended to return both size and type so 
-> that it could be used to retrieve "promise" data for objects as they are 
-> needed. Having a way to "cache" that data locally so that both git and 
-> other code could share it would be great.
->
-> At a minimum, we should ensure the data stream passed back is the same 
-> whether at clone time or when hitting a "promises" end point. I think it 
-> would also be helpful to enable promises to be downloaded on demand much 
-> like we are doing for the object data itself.
->
->> This is good for the large-blob case, in which we can always have size
->> information of missing blobs, and we can subsequently add blob-size
->> filtering (as a parameter) to "git log -S" and friends to avoid needing
->> to resolve a missing object. And this is, as far as I can tell, also
->> good for the many-blob case - just have an empty size cache all the
->> time. (And in the future, use cases could come up that desire non-empty
->> but non-comprehensive caches - for example, a directory lister working
->> on a partial clone that only needs to cache the sizes of frequently
->> accessed directories.)
->>
->> Another option is to have a repo-wide option that toggles between
->> mandatory entries in the "size cache" and prohibited entries. Switching
->> to mandatory provides stricter fsck and negative lookups, but I think
->> it's not worth it for both the developers and users of Git to have to
->> know about these two modes.
->>
->>>>> I think we should have a flag (off by default) that enables someone to
->>>>> say that promised objects are optional. If the flag is set,
->>>>> "is_promised_object" will return success and pass the OBJ_ANY type and 
->>>>> a
->>>>> size of -1.
->>>>>
->>>>> Nothing today is using the size and in the two places where the object
->>>>> type is being checked for consistency (fsck_cache_tree and
->>>>> fsck_handle_ref) the test can add a test for OBJ_ANY as well.
->>>>>
->>>>> This will enable very large numbers of objects to be omitted from the
->>>>> clone without triggering a download of the corresponding number of
->>>>> promised objects.
->>>>
->>>> Eventually I plan to use the size when implementing parameters for
->>>> history-searching commands (e.g. "git log -S"), but it's true that
->>>> that's in the future.
->>>>
->>>> Allowing promised objects to be optional would indeed solve the issue 
->>>> of
->>>> downloading too many promises. It would make the code more complicated,
->>>> but I'm not sure by how much.
->>>>
->>>> For example, in this fsck patch, the easiest way I could think of to
->>>> have promised objects was to introduce a 3rd state, called "promised",
->>>> of "struct object" - one in which the type is known, but we don't have
->>>> access to the full "struct commit" or equivalent. And thus fsck could
->>>> assume that if the "struct object" is "parsed" or "promised", the type
->>>> is known. Having optional promised objects would require that we let
->>>> this "promised" state have a type of OBJ_UNKNOWN (or something like
->>>> that) - maybe that would be fine, but I haven't looked into this in
->>>> detail.
->>>>
->>>
->>> Caveats apply as I only did a quick look but I only found the two
->>> locations that were checking the object type for consistency.
->>
->> I haven't looked into detail, but you are probably right.
->> 
+That covers only the commit objects.  I do not know offhand if we
+can and how we extend this concept to protect the tags, trees and
+blobs we have locally generated and haven't pushed out, but you and
+Ben hopefully can come up with ways to cover them.
+
+
 
