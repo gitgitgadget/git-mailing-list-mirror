@@ -2,104 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B1E452089D
-	for <e@80x24.org>; Fri, 28 Jul 2017 23:50:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 54CE82089D
+	for <e@80x24.org>; Sat, 29 Jul 2017 00:21:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753159AbdG1Xum (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Jul 2017 19:50:42 -0400
-Received: from mail-pg0-f52.google.com ([74.125.83.52]:33405 "EHLO
-        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752987AbdG1Xul (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jul 2017 19:50:41 -0400
-Received: by mail-pg0-f52.google.com with SMTP id c14so24009244pgn.0
-        for <git@vger.kernel.org>; Fri, 28 Jul 2017 16:50:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=+obWntseJyg/QJCIy+tmQOoNvI2vpzHiih6DGX7BYRk=;
-        b=sg5gxW9WCxn/3Pu0RVYRBQpDt8Cw0+QtqMVQeJkSVHt5zJILV8OjOiZXT8IYAZSoHF
-         v0oiGqymF6PQNXYD+oTqCxR9+j2VtWo3uPrkUy7+Be/veN2RFU55zurNFQmMLiB78X/Z
-         oArkqpfpQgnaHet3TKhXNRmw12tMhxppC05UmRT4GmGyNqOrV1J6rhb4JdOAZDlP+O97
-         vMdpixoo+y5OX/kQ0Ey3zenamYM3uDMKflrQOu4fSX+FcuLA00umb0awrjisnWdlo5Ua
-         D/8/TG8PrUWLu/+/juQuIkQB0vxn6S92F9HScgyNw2d4S3zdlCXD7DVkkAny3FvLa1YW
-         uVfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=+obWntseJyg/QJCIy+tmQOoNvI2vpzHiih6DGX7BYRk=;
-        b=iW8lmBfEIfDYdKp68Ts/gcgcUtsRs5IsVyf9PHYiEeAF5iyMMGi/gqUsHpDcPkbYwZ
-         JmLkRQt6nvL/2RUBYRjLAJQlQeH1DN/P1d/kmSGdlsOJJjtkbMS19KallnX2hJtm3smH
-         pGDrb6MXl0qLvSTgYfImX+Gz0QHeCZfgSnYsVrOHIvKGvpQqWY1+wjQkd51V3GzXE03Y
-         2DGI7bkFk1xncUoTrkRMD7UYRdM58Ovr+4RQmzJiUahN6/hJfDFs90EKoyuZ+LzQcwY6
-         LmC1O8pdc4vnWEKEhPVXm574qNCmfHyZBF2m3ozGXUa+VIPpNdlFczT9fRFliyE/nyrV
-         hE8A==
-X-Gm-Message-State: AIVw1122egJsix6nlOoKLbFixRgWQQkPy1PUJG0mBSo66qW3W2phwxk4
-        J7d8fUabL7ZrsY97
-X-Received: by 10.99.121.1 with SMTP id u1mr8688730pgc.217.1501285840710;
-        Fri, 28 Jul 2017 16:50:40 -0700 (PDT)
-Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:857b:d662:4289:61ab])
-        by smtp.gmail.com with ESMTPSA id r2sm30915302pgs.85.2017.07.28.16.50.39
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 28 Jul 2017 16:50:40 -0700 (PDT)
-Date:   Fri, 28 Jul 2017 16:50:35 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
+        id S1753308AbdG2AVP (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Jul 2017 20:21:15 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52763 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752987AbdG2AVO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jul 2017 20:21:14 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B8F9B98092;
+        Fri, 28 Jul 2017 20:21:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=AnKfaAM7AcKIQtiTXHufl+MMNtU=; b=CiiUlG
+        YLahpHdK2QYAL51Piwz/nvBEKOT51UEfarNIHoRXYNsTZJUqT3LVGRbqvrqj8Ddw
+        CZXD1ur9wOkvHi4zKFfiqLiTcqukTH8Wv6bg1f8KB02gMOC4Pv8Crkl0y3tZYObN
+        0kvDYWRkhmB1f7hDAOIOe4nJlysQSoZJxdyN0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=OeUrH+45n3HOIc3TX2iWDwMuZZmwfUxy
+        qLVvUT/QLGVyotaTBq/RMCqOhVYNoc40O60Jc+cjo4k+6zFCAg7MEFrnjpEMizno
+        GF6QwHR3nvHQ0TiMFMnLB7j0EHZ2lJyKFpFHnCWDoBRBLbu9pMVHQ/DxCWsYtB6V
+        9HlCa668Yc8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B003798091;
+        Fri, 28 Jul 2017 20:21:13 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1F91A98090;
+        Fri, 28 Jul 2017 20:21:13 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
 Cc:     git@vger.kernel.org, peartben@gmail.com, christian.couder@gmail.com
-Subject: Re: [RFC PATCH 1/4] environment, fsck: introduce lazyobject
- extension
-Message-ID: <20170728165035.2be61cec@twelve2.svl.corp.google.com>
-In-Reply-To: <xmqqzibpn1zh.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [RFC PATCH 1/4] environment, fsck: introduce lazyobject extension
 References: <cover.1501111615.git.jonathantanmy@google.com>
         <cover.1501111615.git.jonathantanmy@google.com>
         <75766ee26264e50b7fcb3c7a8cc5808907586799.1501111615.git.jonathantanmy@google.com>
         <xmqqzibpn1zh.fsf@gitster.mtv.corp.google.com>
-X-Mailer: Claws Mail 3.9.3 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+        <20170728165035.2be61cec@twelve2.svl.corp.google.com>
+Date:   Fri, 28 Jul 2017 17:21:12 -0700
+In-Reply-To: <20170728165035.2be61cec@twelve2.svl.corp.google.com> (Jonathan
+        Tan's message of "Fri, 28 Jul 2017 16:50:35 -0700")
+Message-ID: <xmqqinicks93.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: D42351F2-73F3-11E7-B121-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 27 Jul 2017 11:55:46 -0700
-Junio C Hamano <gitster@pobox.com> wrote:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-> My reading hiccupped after the first sentence, as the problem
-> description made it sound like this was a boolean ("are we using
-> lazy object feature?"), after reading "data type string".  And then
-> "the command in that option" made me hiccup one more time, as it did
-> not "click" that "in that option" was trying to say that the string
-> is used as the command name (or is it a whole command line?  The
-> leading part of the command line to which some arguments are
-> appended before it gets invoked as a command? or what?).
-> 
-> Logically, I think it is more like
-> 
->  - extensions.lazyobject can be set to tell Git to consider missing
->    objects in certain cases are not errors;
-> 
->  - the value of extensions.lazyobject variable must be a string,
->    which is used to name the command to lazily make the object
->    "appear" in the repository on demand.
+>> >  extern int repository_format_precious_objects;
+>> > +extern char *repository_format_lazy_object;
+>> 
+>> This is not a new problem, but I think these two should be
+>> called repository_extension_$NAME not repository_format_$NAME.
+>
+> Looking at the original commit 067fbd4 ("introduce "preciousObjects"
+> repository extension", 2015-06-24), it seems that this was so named to
+> be analogous to the existing "struct repository_format { int version;
+> ...}" => "int repository_format_version;". The existing
+> repository_format_$NAME thus seems reasonable to me.
 
-OK, I'll update the commit message in the next reroll.
+OK.  They smell like "repository extension" to me, but probably the
+fully spelled name of the concept is "repository format extension",
+so using the word "format" out of that phrase sounds OK to me.
 
-> >  extern int repository_format_precious_objects;
-> > +extern char *repository_format_lazy_object;
-> 
-> This is not a new problem, but I think these two should be
-> called repository_extension_$NAME not repository_format_$NAME.
-
-Looking at the original commit 067fbd4 ("introduce "preciousObjects"
-repository extension", 2015-06-24), it seems that this was so named to
-be analogous to the existing "struct repository_format { int version;
-...}" => "int repository_format_version;". The existing
-repository_format_$NAME thus seems reasonable to me.
+Thanks.
