@@ -2,80 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 54CE82089D
-	for <e@80x24.org>; Sat, 29 Jul 2017 00:21:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 89BE72089D
+	for <e@80x24.org>; Sat, 29 Jul 2017 02:31:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753308AbdG2AVP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Jul 2017 20:21:15 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52763 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752987AbdG2AVO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jul 2017 20:21:14 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B8F9B98092;
-        Fri, 28 Jul 2017 20:21:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=AnKfaAM7AcKIQtiTXHufl+MMNtU=; b=CiiUlG
-        YLahpHdK2QYAL51Piwz/nvBEKOT51UEfarNIHoRXYNsTZJUqT3LVGRbqvrqj8Ddw
-        CZXD1ur9wOkvHi4zKFfiqLiTcqukTH8Wv6bg1f8KB02gMOC4Pv8Crkl0y3tZYObN
-        0kvDYWRkhmB1f7hDAOIOe4nJlysQSoZJxdyN0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=OeUrH+45n3HOIc3TX2iWDwMuZZmwfUxy
-        qLVvUT/QLGVyotaTBq/RMCqOhVYNoc40O60Jc+cjo4k+6zFCAg7MEFrnjpEMizno
-        GF6QwHR3nvHQ0TiMFMnLB7j0EHZ2lJyKFpFHnCWDoBRBLbu9pMVHQ/DxCWsYtB6V
-        9HlCa668Yc8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B003798091;
-        Fri, 28 Jul 2017 20:21:13 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1F91A98090;
-        Fri, 28 Jul 2017 20:21:13 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, peartben@gmail.com, christian.couder@gmail.com
-Subject: Re: [RFC PATCH 1/4] environment, fsck: introduce lazyobject extension
-References: <cover.1501111615.git.jonathantanmy@google.com>
-        <cover.1501111615.git.jonathantanmy@google.com>
-        <75766ee26264e50b7fcb3c7a8cc5808907586799.1501111615.git.jonathantanmy@google.com>
-        <xmqqzibpn1zh.fsf@gitster.mtv.corp.google.com>
-        <20170728165035.2be61cec@twelve2.svl.corp.google.com>
-Date:   Fri, 28 Jul 2017 17:21:12 -0700
-In-Reply-To: <20170728165035.2be61cec@twelve2.svl.corp.google.com> (Jonathan
-        Tan's message of "Fri, 28 Jul 2017 16:50:35 -0700")
-Message-ID: <xmqqinicks93.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1753156AbdG2CSU (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Jul 2017 22:18:20 -0400
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:59099 "EHLO
+        alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752996AbdG2CST (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 28 Jul 2017 22:18:19 -0400
+X-AuditID: 1207440d-a07ff70000000c0c-81-597bf06a9579
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 97.CB.03084.A60FB795; Fri, 28 Jul 2017 22:18:18 -0400 (EDT)
+Received: from mail-it0-f53.google.com (mail-it0-f53.google.com [209.85.214.53])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v6T2IH9G031757
+        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT)
+        for <git@vger.kernel.org>; Fri, 28 Jul 2017 22:18:18 -0400
+Received: by mail-it0-f53.google.com with SMTP id v205so88423347itf.1
+        for <git@vger.kernel.org>; Fri, 28 Jul 2017 19:18:17 -0700 (PDT)
+X-Gm-Message-State: AIVw113Pko+MlTl3NxsHfirhAgF7SdyUQSk7gqUd48ItRzZFir7SK7HZ
+        pGwDVrk//odX/XJwas8ZSGf0slc8rA==
+X-Received: by 10.36.117.204 with SMTP id y195mr11870603itc.34.1501294697293;
+ Fri, 28 Jul 2017 19:18:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D42351F2-73F3-11E7-B121-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Reply-To: mhagger@alum.mit.edu
+Received: by 10.107.129.91 with HTTP; Fri, 28 Jul 2017 19:18:16 -0700 (PDT)
+In-Reply-To: <CAJo=hJvR_rV356Mna0cMoTY2mrVnG9MH39wDS1tLCRT1h_f65Q@mail.gmail.com>
+References: <CAJo=hJvxWg2J-yRiCK3szux=eYM2ThjT0KWo-SFFOOc1RkxXzg@mail.gmail.com>
+ <CAMy9T_GeE5Xh7HJ7VZPX5B5SGUmjUbELER07-u0se5Y0ZJ5YtQ@mail.gmail.com> <CAJo=hJvR_rV356Mna0cMoTY2mrVnG9MH39wDS1tLCRT1h_f65Q@mail.gmail.com>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Date:   Fri, 28 Jul 2017 19:18:16 -0700
+X-Gmail-Original-Message-ID: <CAMy9T_F9oH926ShUGpFqJz4bMrJofvbsfb0_oME2NhsYvObq9Q@mail.gmail.com>
+Message-ID: <CAMy9T_F9oH926ShUGpFqJz4bMrJofvbsfb0_oME2NhsYvObq9Q@mail.gmail.com>
+Subject: Re: reftable [v3]: new ref storage format
+To:     Shawn Pearce <spearce@spearce.org>
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        David Borowitz <dborowitz@google.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFKsWRmVeSWpSXmKPExsUixO6iqJv1oTrS4MASaYuuK91MDowenzfJ
+        BTBGcdmkpOZklqUW6dslcGU8uj+HseA1W0Xn66PMDYz7WbsYOTkkBEwkJnyYzdjFyMUhJLCD
+        SeLcknOMIAkhgUdMEu+XykMk+hklJr//wQTRkS/R2byJGcIulZhzfBIbiM0rIChxcuYTFohm
+        OYlXG25ADfKWuNHaD2ZzCgRKnOw4ygQx9A6jxK4rEA1sAroSi3qawRawCKhKPGvuY4RYkCjx
+        oOc8I8SCAIm+bQ/AzhYWMJLoONsP1isioCax/UIPK8hQZoGpjBLHZhwDu4hZQFOidftv9gmM
+        wrOQHDgLSWoBI9MqRrnEnNJc3dzEzJzi1GTd4uTEvLzUIl0jvdzMEr3UlNJNjJBA5t3B+H+d
+        zCFGAQ5GJR5ej8rqSCHWxLLiytxDjJIcTEqivP9XAYX4kvJTKjMSizPii0pzUosPMUpwMCuJ
+        8F5/D5TjTUmsrEotyodJSXOwKInzqi1R9xMSSE8sSc1OTS1ILYLJynBwKEnwHnwH1ChYlJqe
+        WpGWmVOCkGbi4AQZzgM0fB9IDW9xQWJucWY6RP4Uoz3HlSvrvjBxNH3YAiSnHNgOYn//+J1J
+        iCUvPy9VSpxXEeQmAZC2jNI8uMmwJPWKURzoUWFedZAqHmCCg5v9CmgtE9DaiU2VIGtLEhFS
+        Ug2MYR+tFtwr4W2KbjS4FqDJKV5WovDEaOoTJiE5G2PvxcLxf71uPl9g8GzD4mf3twqbfD75
+        QNYx1s5/29m04hhJpXWdJSYbxb/Oz9pSY/CmS9LqNnNhnx/LzMTslRW3FeT0NpUzOH/2d2DL
+        959jeHpSpIH1lwkbtJZeXl/7ztowdfMc19oX89OVWIozEg21mIuKEwG8Y8TZLQMAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+On Fri, Jul 28, 2017 at 3:12 PM, Shawn Pearce <spearce@spearce.org> wrote:
+> I'm with you this far, and like the {min,max}_update_index in the
+> header. I'm concerned about update_index in 32 bits. At some point you
+> need to reset the counter, or the repository is broken. 4b updates is
+> enough for anyone? I'd feel better about this being a 64 bit field.
 
->> >  extern int repository_format_precious_objects;
->> > +extern char *repository_format_lazy_object;
->> 
->> This is not a new problem, but I think these two should be
->> called repository_extension_$NAME not repository_format_$NAME.
->
-> Looking at the original commit 067fbd4 ("introduce "preciousObjects"
-> repository extension", 2015-06-24), it seems that this was so named to
-> be analogous to the existing "struct repository_format { int version;
-> ...}" => "int repository_format_version;". The existing
-> repository_format_$NAME thus seems reasonable to me.
+Yes, I was a little bit nervous about 32 bits, too. But that's a *lot*
+of updates: one per second for 136 years. If that limit were ever
+reached, there could be a compaction step, where any update indices
+that don't have associated reflog entries are "compacted out" of the
+numerical sequence and the remaining indices are renumbered
+contiguously.
 
-OK.  They smell like "repository extension" to me, but probably the
-fully spelled name of the concept is "repository format extension",
-so using the word "format" out of that phrase sounds OK to me.
+But it's ok with me to make it 64 bits. Usually those extra bytes
+would be appear as FFFFFFFF and so should prefix- and zlib-compress
+well.
 
-Thanks.
+Michael
