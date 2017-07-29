@@ -7,101 +7,134 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0AC762047F
-	for <e@80x24.org>; Sat, 29 Jul 2017 22:24:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D0622047F
+	for <e@80x24.org>; Sat, 29 Jul 2017 22:24:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752355AbdG2WYZ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 29 Jul 2017 18:24:25 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:33441 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751754AbdG2WYY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Jul 2017 18:24:24 -0400
-Received: by mail-pf0-f193.google.com with SMTP id k72so19916363pfj.0
-        for <git@vger.kernel.org>; Sat, 29 Jul 2017 15:24:24 -0700 (PDT)
+        id S1752947AbdG2WY3 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Jul 2017 18:24:29 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:37629 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752372AbdG2WY2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Jul 2017 18:24:28 -0400
+Received: by mail-pg0-f65.google.com with SMTP id k190so11206292pgk.4
+        for <git@vger.kernel.org>; Sat, 29 Jul 2017 15:24:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Uor+06tVtV1c8DZd4M3T39dkh9yhIp4XvWH6ajRZj2E=;
-        b=vWbucUqTwp8aKkOVK4p3/elRWDd3jqmkuPbJr0Var8QfUZvh9/FFBtk+g/Ut8OmB71
-         D5GxpX1Yy0KjpflDIb0nL0JoXNyYqPlv7m4Y5RIExZbnCt/OEnUOo83l3KGGVEqsJ68Y
-         U59NgsKqdHhAgBRn3IyeiCeqdp4x/m8oj41RysVRQI0MMZi5Mr3sEub9t5ciMaUkVxil
-         MjElbMZeWmjBxEJLoXgEo+1KS8ZRr43yRFXbJBFPt8g75gPU7rbRUE0Jo7+jSqqELEqK
-         ISiwbIAWPGgBA4/eYY+YkxmHVkH5XOYwi2dBiruo3AUfY+ByqR50oRhMtGy9muIxVFnX
-         aG+A==
+        bh=Uifl4K2osCvghD7KhtZcuheg0SILRjUalsatIfQnr8o=;
+        b=Gx67RmVed24UfJq+7NLREk6FC8jrRa5LBNmDOdJLWh0btAsWdtRJS1R04WpBWos90W
+         m0gej4Xm8rui0Ga+pKNVqGp4o2tif+yF419gQCvf5qa6ZH5dAA6zDYpbbe1LwpTbVfAf
+         04STxa8gGtfiyYLJ7eRbfvgtFeJ7IkzJ/6MrnlWDdoWzRg0cK7JFxw12VrB/f5/N1kwc
+         DI9VwrTKnu8heXlRVDkRWDFJNkTbvJIHQNVpB4+h6HWUER+qPsJWPUY31QQcHmMLPFh+
+         x2PKCbBSbMKF36vt5Ro6YX/PnDUtRrOBwx1ZyiS68uGd4OJXFTp6HzNRHo2hKkyF2Fhl
+         Mkpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Uor+06tVtV1c8DZd4M3T39dkh9yhIp4XvWH6ajRZj2E=;
-        b=gIpF1bBFIF2+9OZNvcYbrd5aO9+qp8m+tEzRcw2VKtAXQgtuREi2VRcdggX5GBkK7L
-         FJzNqRC5Hewp0hd63A+hcjWmwfPa/poYImBNB224PZS/a33TF7Mb80pecSdqEUX6Ffl9
-         uUiga+kl2otsS2iMqu3apZL1PKNDtUyelRuJZJPOFugTZoZDnLMtdHH8+3N2/8sWZ7vB
-         W/vdL9lzLelCDp0DW/OhQ4deqrX/R0ddWhxnPo0nRFXVWeiHKtLhS+cSeIVMdgOrAGjM
-         aaISMhKLLraGi8ydFGY7HEUqFZguTuaquvigIRL2s8bSdsS253Ui9YTwAK8xC9dpgdfx
-         LqiQ==
-X-Gm-Message-State: AIVw111X0u5ZP7+5vxqguPzbvy2SghPnIS1UJe4HW+xHiqHzjP+KJWXI
-        qOE6eORKsW997W1l5Nc=
-X-Received: by 10.84.210.203 with SMTP id a69mr12118934pli.395.1501367063999;
-        Sat, 29 Jul 2017 15:24:23 -0700 (PDT)
+        bh=Uifl4K2osCvghD7KhtZcuheg0SILRjUalsatIfQnr8o=;
+        b=qeWFbKxP+Fieav0Hef1PFJss1zjC1romcaxUHRVLFsee3THTO1/Wzhm+MKH2ElR+Ux
+         mdWbvV/HU5xJjERwUSz/Oj78tmbRklkUW2n5rSe6ers8DYj/poP2RXp1qjonFd+NNBOI
+         /ckaePCoglkHarCSSATH+D6Hpte1jyZfin7wfLhiOBYanrVOYHpbaiq8aDRiOHfEcGI/
+         LBXBywQQ9RQJMKAEhNUO9l5fzAgGIalqYQQzzdWt0CvMsg6PO1UiqadRzwOyUawMTIu8
+         FPA/BR4GVxMUxKowb8t9kzzpEj5l5/99L3vL4aUqXoCWGjsqGdGhdo0W6DXIxZ1sLWMl
+         PdAA==
+X-Gm-Message-State: AIVw111JSly2ckIPUVnYh54rRaqmwZTlNlJ+SF44pa4y3H8zRf7kUZTE
+        p8mAB4ul8o3Uy70mG6Y=
+X-Received: by 10.84.224.137 with SMTP id s9mr12456942plj.427.1501367067454;
+        Sat, 29 Jul 2017 15:24:27 -0700 (PDT)
 Received: from localhost.localdomain ([47.11.7.4])
-        by smtp.gmail.com with ESMTPSA id w125sm43476409pfb.117.2017.07.29.15.24.20
+        by smtp.gmail.com with ESMTPSA id w125sm43476409pfb.117.2017.07.29.15.24.24
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 29 Jul 2017 15:24:23 -0700 (PDT)
+        Sat, 29 Jul 2017 15:24:26 -0700 (PDT)
 From:   Prathamesh Chavan <pc44800@gmail.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, christian.couder@gmail.com, bmwill@google.com,
         Prathamesh Chavan <pc44800@gmail.com>
-Subject: [GSoC][PATCH v2 00/13] Update: Week 10
-Date:   Sun, 30 Jul 2017 03:53:48 +0530
-Message-Id: <20170729222401.12381-1-pc44800@gmail.com>
+Subject: [GSoC][PATCH v2 01/13] submodule--helper: introduce get_submodule_displaypath()
+Date:   Sun, 30 Jul 2017 03:53:49 +0530
+Message-Id: <20170729222401.12381-2-pc44800@gmail.com>
 X-Mailer: git-send-email 2.13.0
-In-Reply-To: <20170724203454.13947-1-pc44800@gmail.com>
+In-Reply-To: <20170729222401.12381-1-pc44800@gmail.com>
 References: <20170724203454.13947-1-pc44800@gmail.com>
+ <20170729222401.12381-1-pc44800@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you Brandon Williams <bmwill@google.com> for reviewing the previous
-patch series.
-Also, I'm sorry for repling late to your reviews. The main reason was
-to give sufficient time to prepare the next version of each patch as
-suggested.
-The changes made in each patch are enlisted in the patch itself.
+Introduce function get_submodule_displaypath() to replace the code
+occurring in submodule_init() for generating displaypath of the
+submodule with a call to it.
 
-Complete build report of this work is available at: [1]
-Branch: week-10
-Build #142
+This new function will also be used in other parts of the system
+in later patches.
 
-Also, I have push the work on github as well and can be checked out at: [2]
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
+---
+ builtin/submodule--helper.c | 33 ++++++++++++++++++++++-----------
+ 1 file changed, 22 insertions(+), 11 deletions(-)
 
-[1]: https://travis-ci.org/pratham-pc/git/builds
-[2]: https://github.com/pratham-pc/git/commits/week-10
-
-Prathamesh Chavan (13):
-  submodule--helper: introduce get_submodule_displaypath()
-  submodule--helper: introduce for_each_submodule_list()
-  submodule: port set_name_rev() from shell to C
-  submodule: port submodule subcommand 'status' from shell to C
-  submodule: port submodule subcommand 'sync' from shell to C
-  submodule: port submodule subcommand 'deinit' from shell to C
-  diff: change scope of the function count_lines()
-  submodule: port submodule subcommand 'summary' from shell to C
-  submodule foreach: correct '$path' in nested submodules from a
-    subdirectory
-  submodule foreach: document '$sm_path' instead of '$path'
-  submodule foreach: clarify the '$toplevel' variable documentation
-  submodule foreach: document variable '$displaypath'
-  submodule: port submodule subcommand 'foreach' from shell to C
-
- Documentation/git-submodule.txt |   15 +-
- builtin/submodule--helper.c     | 1186 ++++++++++++++++++++++++++++++++++++++-
- diff.c                          |    2 +-
- diff.h                          |    1 +
- git-submodule.sh                |  394 +------------
- t/t7407-submodule-foreach.sh    |   38 +-
- 6 files changed, 1218 insertions(+), 418 deletions(-)
-
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 6abdad329..7af4de09b 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -220,6 +220,27 @@ static int resolve_relative_url_test(int argc, const char **argv, const char *pr
+ 	return 0;
+ }
+ 
++static char *get_submodule_displaypath(const char *path, const char *prefix)
++{
++	const char *super_prefix = get_super_prefix();
++
++	if (prefix && super_prefix) {
++		BUG("cannot have prefix '%s' and superprefix '%s'",
++		    prefix, super_prefix);
++	} else if (prefix) {
++		struct strbuf sb = STRBUF_INIT;
++		char *displaypath = xstrdup(relative_path(path, prefix, &sb));
++		strbuf_release(&sb);
++		return displaypath;
++	} else if (super_prefix) {
++		int len = strlen(super_prefix);
++		const char *format = is_dir_sep(super_prefix[len - 1]) ? "%s%s" : "%s/%s";
++		return xstrfmt(format, super_prefix, path);
++	} else {
++		return xstrdup(path);
++	}
++}
++
+ struct module_list {
+ 	const struct cache_entry **entries;
+ 	int alloc, nr;
+@@ -339,16 +360,7 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
+ 
+ 	/* Only loads from .gitmodules, no overlay with .git/config */
+ 	gitmodules_config();
+-
+-	if (prefix && get_super_prefix())
+-		die("BUG: cannot have prefix and superprefix");
+-	else if (prefix)
+-		displaypath = xstrdup(relative_path(path, prefix, &sb));
+-	else if (get_super_prefix()) {
+-		strbuf_addf(&sb, "%s%s", get_super_prefix(), path);
+-		displaypath = strbuf_detach(&sb, NULL);
+-	} else
+-		displaypath = xstrdup(path);
++	displaypath = get_submodule_displaypath(path, prefix);
+ 
+ 	sub = submodule_from_path(null_sha1, path);
+ 
+@@ -363,7 +375,6 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
+ 	 * Set active flag for the submodule being initialized
+ 	 */
+ 	if (!is_submodule_active(the_repository, path)) {
+-		strbuf_reset(&sb);
+ 		strbuf_addf(&sb, "submodule.%s.active", sub->name);
+ 		git_config_set_gently(sb.buf, "true");
+ 	}
 -- 
 2.13.0
 
