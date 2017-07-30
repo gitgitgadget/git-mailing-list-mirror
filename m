@@ -2,97 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 93ABD20899
-	for <e@80x24.org>; Sun, 30 Jul 2017 16:18:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AFC6B20899
+	for <e@80x24.org>; Sun, 30 Jul 2017 18:01:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754219AbdG3QSL (ORCPT <rfc822;e@80x24.org>);
-        Sun, 30 Jul 2017 12:18:11 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:36857 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754125AbdG3QSK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Jul 2017 12:18:10 -0400
-Received: by mail-pg0-f67.google.com with SMTP id y129so28307245pgy.3
-        for <git@vger.kernel.org>; Sun, 30 Jul 2017 09:18:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=zMLFU6FRMxrGUlrUWWZeh2z4HfxULRrVIyQOgF7nTP8=;
-        b=a9VGqGI/AQtbGMJim2mWLmBBESogtdBLXNcy5in5dFnIi1YkxyZUpPFmD/4s35jVRR
-         3EYR3ZUKVqfVvj7jnCoVJmzeSGK3j/8wYA2INWRzC1cIG2QIx7ST+GHCKAm/SP0Pv7sP
-         Q/b3oNnhrPQSBT/D6+KasN2obC7T1pLyq01fnoZRyV0PGpt/zwvtDKQY42xP5nIEB+P9
-         erTPiayfGEkBYLtH3/l0jupa4wRzjZ/iVBPM8bRMAD0k2QaTWFVcQQoRDCCNh7SAqJEV
-         W18oTvVKVTcbIsw0jvluTBjVXRIV3XtInBrUM2DiFceG+xXSHOT1PqvIjbCeEZT8Fpc5
-         CYng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=zMLFU6FRMxrGUlrUWWZeh2z4HfxULRrVIyQOgF7nTP8=;
-        b=Tkqe3bF33sW+KQoY/LkjxXamYGZadPBafoEKKUMAyV679fSrAKl3WZ6f+Mrn0SQCWP
-         Sg52CwyvUhvwz8NP+T9jHkaTE5JB+0gKFTOS5fWaXWkA6yacKKvQ6ubTNAUS2sLWuXTY
-         bUErpOwVQPzWv3UFClAtlYhbag0X4RpIXlMD2A4NK2d2RsCNqHpH4M4ydN32RJTLtU/W
-         sMHFmiU7Xk2np1o24sMOfR6uF+CKj4d+SKdJ1RbYIgjiIrjsOscj7XtpMf1R3txVI4ZN
-         4A0AVdtmWTNydQflA2U4Yo2/aOdS2L61E9ZX/w4ZcQ/JneAPaJLlXdi1LXR6AGD7uu4l
-         gmTw==
-X-Gm-Message-State: AIVw112/qoiRPCfCGGqD1Y0vFJ52rKp5FtorviIDruq+JXMTm1QfJiuu
-        FawN/ZtXmyWIvw==
-X-Received: by 10.101.83.138 with SMTP id x10mr13030147pgq.201.1501431490457;
-        Sun, 30 Jul 2017 09:18:10 -0700 (PDT)
-Received: from localhost.localdomain ([117.209.220.229])
-        by smtp.gmail.com with ESMTPSA id j8sm32038433pgc.24.2017.07.30.09.18.02
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 30 Jul 2017 09:18:09 -0700 (PDT)
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     gitster@pobox.com, philipoakley@iee.org
-Cc:     git@vger.kernel.org
-Subject: [PATCH 1/2] doc: fix small issues in SubmittingPatches
-Date:   Sun, 30 Jul 2017 21:48:16 +0530
-Message-Id: <20170730161816.2412-1-kaarticsivaraam91196@gmail.com>
-X-Mailer: git-send-email 2.14.0.rc1.434.g6eded367a
-In-Reply-To: <8256C530C7DE43D7BC72BFB327DF4726@PhilipOakley>
-References: <8256C530C7DE43D7BC72BFB327DF4726@PhilipOakley>
+        id S1754228AbdG3SBj (ORCPT <rfc822;e@80x24.org>);
+        Sun, 30 Jul 2017 14:01:39 -0400
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:21988 "EHLO
+        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754183AbdG3SBi (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Jul 2017 14:01:38 -0400
+Received: from PhilipOakley ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id bsX3d3osAiSHabsX3dv641; Sun, 30 Jul 2017 19:01:37 +0100
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=UoATD64B c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
+ a=NEAV23lmAAAA:8 a=5rxgeBVgAAAA:8 a=49B8Qy0mYDbi_iZE0doA:9 a=QEXdDO2ut3YA:10
+ a=6kGIvZw6iX1k4Y-7sg4_:22 a=PwKx63F5tFurRwaNxrlG:22
+Message-ID: <6EF3784A5C1F420699D881AF642F28CD@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     <christopher.diaz.riv@gmail.com>, <git@vger.kernel.org>
+Cc:     "Jiang Xin" <worldhello.net@gmail.com>
+References: <1501423608.3232.30.camel@gmail.com>
+Subject: Re: Contact with Latinamerica
+Date:   Sun, 30 Jul 2017 19:01:38 +0100
+Organization: OPDS
+MIME-Version: 1.0
+Content-Type: text/plain;
+        format=flowed;
+        charset="UTF-8";
+        reply-type=original
+Content-Transfer-Encoding: 8bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Antivirus: AVG (VPS 170730-2, 30/07/2017), Outbound message
+X-Antivirus-Status: Clean
+X-CMAE-Envelope: MS4wfBhG2JVk1LglLnXdQLPvLS7nui5ioP+G4ljZghmwlt+xXqtzQHbJat26tLOeLuwjX5y2IdP2dc/tXG3nJwge69HgHAjgtx6gLhX6Kb1yPOaetQrPpcw2
+ uwOXUP0NvMNcaySKkrH9j/KG4P0mZ/N5scqTt2iwii0jh3P2OIUeBRNd0HjtI9kXqwiA420356Z1LITwKXuNMbHXRktbWgdXu5UXVkCPCRXpGnxkhKBtNnqa
+ 8o/V/hR37EOWJFYUm5iTHg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Replace the dashed version of a command with undashed
-version and quote it.
+From: "Christopher Díaz" <christopher.diaz.riv@gmail.com>
+>
+> My name is Christopher Díaz Riveros, I'm a software development student
+> in Lima, Peru. For some time now I have been supporting my Linux
+> community, Gentoo Linux, and I have discovered a wide world of
+> possibilities in open source.
+>
+> I tell you this because it has been so much benefit in my training as a
+> a developer that I am determined to start a new community in my country
+> to be able to make technology-related career students find an open
+> source community in which they can learn to work and get the same
+> positive effect that I have had on mine. I have already been talking to
+> some teachers, I am about to begin my final year of studies in the
+> institute, and they agree to start the community with students of the
+> institution.
+>
+> As one of the main problems when getting involved with a community here
+> is the barrier of english language, and few are able to have fluent
+> conversations in that language, as it is a bit intimidating for most to
+> approach an open source community. My community hopes to get in touch
+> with different open source projects throughout the world and seeks to
+> be a midpoint to interact with young developers and communities.
+>
+> Having said all this I have only to offer to your community, the
+> availability of our community (we still do not have a definite name)
+> and see if anyone is interested in supporting this group of developers
+> here and with a bit of luck be able to turn it into a movement of all
+> Latin America.
+>
+> Thanks and any kind of feedback is welcome :)
+> Christopher Diaz Riveros
 
-Further, remove duplicated space character.
+I can see two simple steps toward your goal that may help.
 
-Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
----
- Documentation/SubmittingPatches | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+The first is to ensure that the open source tools do have localisation 
+(l10n) of their command line messages, for which I'm sure Git's l10n team 
+would be happy to have your communities support. - 
+https://github.com/git-l10n and 
+https://public-inbox.org/git/CANYiYbEJ3Gw=JvbhLBeFWBD7xLXxd=_fFdH3UX76H97ZU_3zKA@mail.gmail.com/#r
 
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index 558d465b6..9d0dab08d 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -293,7 +293,7 @@ then you just add a line saying
- 
-         Signed-off-by: Random J Developer <random@developer.example.org>
- 
--This line can be automatically added by Git if you run the git-commit
-+This line can be automatically added by Git if you run the 'git commit'
- command with the -s option.
- 
- Notice that you can place your own Signed-off-by: line when
-@@ -366,7 +366,7 @@ suggests to the contributors:
-      spend their time to improve your patch.  Go back to step (2).
- 
-  (4) The list forms consensus that the last round of your patch is
--     good.  Send it to the maintainer and cc the list.
-+     good. Send it to the maintainer and cc the list.
- 
-  (5) A topic branch is created with the patch and is merged to 'next',
-      and cooked further and eventually graduates to 'master'.
--- 
-2.14.0.rc1.434.g6eded367a
+The other idea is to consider how Git's version message, or something 
+similar, should report the users current i18n settings, and any links to the 
+right (e.g. local) support groups. At present, I don't see any obvious 
+command to help users (and those on the help forums and lists) know what 
+i18n nationality / language names to use for discussions. Sometimes it is 
+worth ensuring these baby steps are in place.
+
+--
+Philip
+
 
