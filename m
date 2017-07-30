@@ -7,84 +7,109 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC58A2089D
-	for <e@80x24.org>; Sun, 30 Jul 2017 11:09:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EDA3C2089D
+	for <e@80x24.org>; Sun, 30 Jul 2017 11:13:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754039AbdG3LJE (ORCPT <rfc822;e@80x24.org>);
-        Sun, 30 Jul 2017 07:09:04 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:35017 "EHLO
+        id S1751360AbdG3LNN (ORCPT <rfc822;e@80x24.org>);
+        Sun, 30 Jul 2017 07:13:13 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:36085 "EHLO
         mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752120AbdG3LJC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Jul 2017 07:09:02 -0400
-Received: by mail-pg0-f65.google.com with SMTP id d193so27846645pgc.2
-        for <git@vger.kernel.org>; Sun, 30 Jul 2017 04:09:02 -0700 (PDT)
+        with ESMTP id S1750957AbdG3LNN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Jul 2017 07:13:13 -0400
+Received: by mail-pg0-f65.google.com with SMTP id y129so27905224pgy.3
+        for <git@vger.kernel.org>; Sun, 30 Jul 2017 04:13:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=vJqQ2VhYc+Cm29LO4PXfYHoX33ObaXckkqhxGbxaoP0=;
-        b=qngN1nbKgieTwKZZpGqEB/h6qPu/HbDBPHRmHG+v4b5/gFEhn0L0QNtMCYN5Ks5oWT
-         xsHe5ZsQjKnyi5U/t517MHfvOBn4Y0YVNxS2ZJqAUUT5obyN3tIfxpX8fFH+MUMOw7so
-         wAYWAw2AEMHO90mnX49vSYNZgNEFrrkCFy2Bnhuqw/7DJ8m8nj63F9CocHZeMpxy2Kvs
-         mD0Hqpfr2qN4moLdID9+ifB38vG4u99rUUigldIcKfvK5wu36WeduZZXEVUO9a4aiQz5
-         LhFu82RfOjJ167WlvMRQD+h9crJUTKaWk8cDQ3AoApCiHQPNI/5Znpfr9BP1VkKYCVR/
-         CjmA==
+        bh=dpgPhwGroWntewoWQgOp9uYmSGHgkFy0A+2TFcwmvw4=;
+        b=PrvVzrpTDdBZznRl9U7ujcd6YXdDDsjykNvHrF/zHOLZa/YaBBeZb59FBwwzHlzUcA
+         vL/SPA7JWMyfU+g2yS87UQAM6LkZZmQ9bBms9JDRuKD2MZ6AVlksz8NPztNprzngWWQj
+         Jm+DzcPR+UpchTYJUiH0/RAix+cqdLt1eTs+aYmqiil5U81PPHks9IR9AtqJOyWRuYqs
+         iWWfgrNd5uuu89u1pIsRtuOvPZMgFDQUtfnQXTVDsVldEaqpaDE3l479hH3O2qVpGd6j
+         N0/A0Wv+Hg2mi2xm7L2C0dBea/r9q53z36p6ktIFlxt9/bIywgx9OzvGlh6Y041gZ1As
+         OgSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=vJqQ2VhYc+Cm29LO4PXfYHoX33ObaXckkqhxGbxaoP0=;
-        b=qvOoJXdQItw5Fxl2bYc9zMTOn+LN6Gpy6g1KPDjVajBDkoRKw/4Y7xC+0J5DB3WqXO
-         PtvWklpOdN8+VWTtheNeDFBJFcxjjtOGwJSv6AqDfsoF30+J+PrSENjDAI10sDu90Mgo
-         4Cq6oNcOP/JiJePAeSwqhYHkR96dkqPbaT/AB4PLpVaNJwssuArKRB35qIq9QW2QpuE/
-         qVJXOcT+WIDzgD5pxTGZP4RVxse/HqRz4i8mI3m9ZbpmGJezR8jMX+tN4jvxAWO29ilr
-         7c0Y9mAAv3nBO/SltXkU0mR6SKS+hjuqrCf2ne6gOgY2C5Nhvrv24jE9rohmoCMxucmN
-         FfJg==
-X-Gm-Message-State: AIVw111yJxSgEhwekGMJzvHUZ7PJSNO4vD5fX1AhBHBXXt3LnB2Sqe9u
-        1aWjdLzUKZGnBA==
-X-Received: by 10.101.70.70 with SMTP id k6mr12494143pgr.39.1501412942055;
-        Sun, 30 Jul 2017 04:09:02 -0700 (PDT)
+        bh=dpgPhwGroWntewoWQgOp9uYmSGHgkFy0A+2TFcwmvw4=;
+        b=I6B+D+a0sKDhuDcy8kzf3EyjL5NUH004VYU1hRglTNFHtVOFmaXrYlr3jJRyEmVlE9
+         n+NnEFerTT6uX7A1VJgmHSMk/1EA4ri4/cbYAFakWWlenZMKlrKGbDSSkQcQjGpGC0cp
+         IRG8l1AqVMf83f3MgYesDnS9n0h1YxiF0YuKMo9LTvCDBpTL7z4tTWQp7JIcOK/NJ2s4
+         oq/5gRbfkMprGEAPu4MawtlW+mKP2B0rRTtPidMK9g2SfOdKN775c/72u82j1CUzE3Ay
+         oOk28+U7ipOCgjcwxgxFQPIyPfpu8lqbmvBqoD6JfuX1Ctx4tZ7TobJVXmxko5LVzLsy
+         Lsvg==
+X-Gm-Message-State: AIVw110NLo2Kpt/ef5PN1oZx+vlCWKgBfjQ7JBZ+RS73kygwvPtZXqgy
+        5CC1sCMvnt51Ww==
+X-Received: by 10.84.230.134 with SMTP id e6mr14254518plk.2.1501413192582;
+        Sun, 30 Jul 2017 04:13:12 -0700 (PDT)
 Received: from localhost.localdomain ([2405:204:72c2:f76:6d01:c56f:1310:5568])
-        by smtp.gmail.com with ESMTPSA id q199sm45824704pfq.135.2017.07.30.04.08.59
+        by smtp.gmail.com with ESMTPSA id i133sm11479242pgc.0.2017.07.30.04.13.10
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 30 Jul 2017 04:09:01 -0700 (PDT)
+        Sun, 30 Jul 2017 04:13:12 -0700 (PDT)
 From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org
-Subject: [PATCH 2/2] doc: add another way to identify if a patch has been merged
-Date:   Sun, 30 Jul 2017 16:39:21 +0530
-Message-Id: <20170730110921.11805-2-kaarticsivaraam91196@gmail.com>
+Subject: [PATCH] branch: change the error messages to be more meaningful
+Date:   Sun, 30 Jul 2017 16:43:26 +0530
+Message-Id: <20170730111326.12139-1-kaarticsivaraam91196@gmail.com>
 X-Mailer: git-send-email 2.14.0.rc1.434.g6eded367a
-In-Reply-To: <20170730110921.11805-1-kaarticsivaraam91196@gmail.com>
-References: <20170730110921.11805-1-kaarticsivaraam91196@gmail.com>
+In-Reply-To: <0102015d7f0c9403-16bd1de5-3b6c-4d23-a3fb-75a26c378c62-000000@eu-west-1.amazonses.com>
+References: <0102015d7f0c9403-16bd1de5-3b6c-4d23-a3fb-75a26c378c62-000000@eu-west-1.amazonses.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The error messages shown when the branch command is misused
+by supplying it wrong number of parameters wasn't meaningful.
+That's because it used the the phrase "too many branches"
+assuming all parameters to be "valid" branch names. It's not
+always the case as exemplified below,
+
+        $ git branch
+          foo
+        * master
+
+        $ git branch -m foo foo old
+        fatal: too many branches for a rename operation
+
+Change the messages to be more general thus making no assumptions
+about the "parameters".
+
 Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
 ---
- I'm not sure if the first one (pull --rebase) is still
- required and hence leaving it as such. Let me know if it
- could be removed.
+ builtin/branch.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
- Documentation/SubmittingPatches | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index 9d0dab08d..a800e54a7 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -386,6 +386,10 @@ Know the status of your patch after submission
-   tell you if your patch is merged in pu if you rebase on top of
-   master).
+diff --git a/builtin/branch.c b/builtin/branch.c
+index a3bd2262b..59fedf085 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -707,12 +707,12 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		else if (argc == 2)
+ 			rename_branch(argv[0], argv[1], rename > 1);
+ 		else
+-			die(_("too many branches for a rename operation"));
++			die(_("too many parameters for a rename operation"));
+ 	} else if (new_upstream) {
+ 		struct branch *branch = branch_get(argv[0]);
  
-+* If you made your change in a separate branch (<branch>) you can use
-+  'git cherry master <branch>' to see if the change has been merged
-+  into master.
-+
- * Read the Git mailing list, the maintainer regularly posts messages
-   entitled "What's cooking in git.git" and "What's in git.git" giving
-   the status of various proposed changes.
+ 		if (argc > 1)
+-			die(_("too many branches to set new upstream"));
++			die(_("too many parameters to set new upstream"));
+ 
+ 		if (!branch) {
+ 			if (!argc || !strcmp(argv[0], "HEAD"))
+@@ -735,7 +735,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		struct strbuf buf = STRBUF_INIT;
+ 
+ 		if (argc > 1)
+-			die(_("too many branches to unset upstream"));
++			die(_("too many parameters to unset upstream"));
+ 
+ 		if (!branch) {
+ 			if (!argc || !strcmp(argv[0], "HEAD"))
 -- 
 2.14.0.rc1.434.g6eded367a
 
