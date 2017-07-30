@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 88DE12047F
-	for <e@80x24.org>; Sun, 30 Jul 2017 05:28:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E8362047F
+	for <e@80x24.org>; Sun, 30 Jul 2017 05:35:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753928AbdG3F2s (ORCPT <rfc822;e@80x24.org>);
-        Sun, 30 Jul 2017 01:28:48 -0400
-Received: from mail-qk0-f194.google.com ([209.85.220.194]:35759 "EHLO
-        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753924AbdG3F2r (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Jul 2017 01:28:47 -0400
-Received: by mail-qk0-f194.google.com with SMTP id a77so6878911qkb.2
-        for <git@vger.kernel.org>; Sat, 29 Jul 2017 22:28:46 -0700 (PDT)
+        id S1750782AbdG3Ffu (ORCPT <rfc822;e@80x24.org>);
+        Sun, 30 Jul 2017 01:35:50 -0400
+Received: from mail-qk0-f180.google.com ([209.85.220.180]:36715 "EHLO
+        mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750764AbdG3Fft (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Jul 2017 01:35:49 -0400
+Received: by mail-qk0-f180.google.com with SMTP id d136so139381781qkg.3
+        for <git@vger.kernel.org>; Sat, 29 Jul 2017 22:35:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=8v6VOQQA6XtjDsiMYkC8zISHOqAT/npRB3fzCggyN94=;
-        b=ZUZosE1Jwrc2ajsSNgI4TifVrXlKFss66XMAyliinTaFEqYQR+xkXwtLrGiU7sZkd0
-         JWCyA4JwvNl3AUkhp0A849MLCRvx4oG90knDxRWXopuTN9dnJO5X6IgY3fTmhAeC5P7D
-         213PD3DLoHAWgnQnFqDSSrMAk5KXpoJ8bnRNPOumT9RBBLUuQXyf7aOMg7YHyLpEiP9c
-         SW0qBzh7wR2rRvyvgdp/yKgQQ8fWMU2NX41gSiGWnde/lxeVY0jPYDdv5iFyge1E4fyU
-         MkGGN0JxD4xcCffQiixbU+WdGYFxc6R/n15w97IxnWrqsAVGbbotG+a3bZqvBgL9B/MQ
-         NlVw==
+        bh=A5rFItUxMQsBoVR4YjwVAu1f2oqOhccD4N7DmF18DVY=;
+        b=E12dxGVxuK2W51uWnBvCukqsWAOOxuJCYsvjaFn6lv3Hg/xf+EkKemUgSVsqevdoqQ
+         1wse4T5kJ/8u9uko2UWMK8BHVlriXz85HRcxPgyZecGJ96B5VcaX/+MryIyD1qW3pJZm
+         iaFZUmoo5i/XRlXM6ytUbQBodZn4iXW8C8lkNVuAGpxIBmElNfbP4tT35r+WDTDAXR8M
+         Jr+lgL6XfVtOvRuN86U2wIb3y6KbMUEx26hJU5nX1j5/BNW/EcS8bD0DDsDNStlsKzXN
+         n5MzGdtKMtIWFmK8MY60iIcLe/iFooUE19+u4jq+mzWJ/h3cgH9/PQb5kDdfGLRZdyZm
+         1whw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=8v6VOQQA6XtjDsiMYkC8zISHOqAT/npRB3fzCggyN94=;
-        b=azi98nCii911RmOpzVYLGiBJuSelBmYbNPN0S4AsbnFNOhW80iR49il2xlHCHorrcA
-         AxqMwlUfRjQI7excli9EGbuVTSsvMxRoQ7p2atOsit4XnYZBPGaCquedtcmQ3RJ36IiK
-         RYSFC/dCuqW0rzR7gnu1P9xnM3BBjTWMnepodulLKQf3jFtn7hbc5CGTtGperpnj0gj1
-         LpQGVMlmBPrOj00p5avCvwu7su+JFGQXn0mOR/A0xL9cINRAR/W6qvrGSXW2CdzDS9CR
-         4wcgNbASpgPZBVfhmlGuEE9DJHsNwNGpa7o5Y2JZQXRfUYGtIW5dcSQEgxiHJCdQzdGC
-         APxA==
-X-Gm-Message-State: AIVw113sUUjMhrHZUGB0xTwiDvUouqtbgHDrLZ8j5w5JmlkNG87VwFt8
-        RtETihqeuwzi7ri4llv5cNWRQRrCAQ==
-X-Received: by 10.55.111.4 with SMTP id k4mr15571119qkc.287.1501392526395;
- Sat, 29 Jul 2017 22:28:46 -0700 (PDT)
+        bh=A5rFItUxMQsBoVR4YjwVAu1f2oqOhccD4N7DmF18DVY=;
+        b=JCRm9Pzxzfj5L94lyD2ScCcMVGrIwg2KtCHropEdwfW45jI8zInKPFTLZ7WhAg45OJ
+         HQL3sPtsaTs7kR+reG5W6skNqF57haqAKPuJK5dPWaZzLVHQ/LEUdLnpZcc5RPmIb3bc
+         3HXcaYGt//Z1b6F08Ql/y+jeXvE0QkbbVsxXppgIALHctTpOKcjVFXTOpdp+fl/p/OMk
+         svl+c4P/T0C/3BSKkenQKVTg8D3k2RLI6p00ajcmB57oSfYLw6OSIbHcBSJ8b4UXyrmv
+         XHG6aB3w0ah0kLGRwgpBLN1zcnh+PrwUa1SHRoUz6MQhsXPBMsBjsllYQU2J7e7mBbPX
+         EMGA==
+X-Gm-Message-State: AIVw112QB2MbmFe+kbJjV8USH8Mh9VZSV7wEvoaKJEDBvYUnDKWteVYR
+        2oMcXl6ll/+zww/GGeh0dlC9BXc3oA==
+X-Received: by 10.55.163.69 with SMTP id m66mr17180591qke.139.1501392948881;
+ Sat, 29 Jul 2017 22:35:48 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.55.31.13 with HTTP; Sat, 29 Jul 2017 22:28:45 -0700 (PDT)
-In-Reply-To: <20170729222401.12381-9-pc44800@gmail.com>
+Received: by 10.55.31.13 with HTTP; Sat, 29 Jul 2017 22:35:48 -0700 (PDT)
+In-Reply-To: <20170729222401.12381-5-pc44800@gmail.com>
 References: <20170724203454.13947-1-pc44800@gmail.com> <20170729222401.12381-1-pc44800@gmail.com>
- <20170729222401.12381-9-pc44800@gmail.com>
+ <20170729222401.12381-5-pc44800@gmail.com>
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sun, 30 Jul 2017 07:28:45 +0200
-Message-ID: <CAP8UFD2XWm-m1CZoX121mhQ+WunCRTMJT5RjrZAXKBY3axcSJQ@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v2 08/13] submodule: port submodule subcommand
- 'summary' from shell to C
+Date:   Sun, 30 Jul 2017 07:35:48 +0200
+Message-ID: <CAP8UFD23VmxHKaUFLkXSvEuze3QjiknaNPPgqn8CF-dx_Y_C4A@mail.gmail.com>
+Subject: Re: [GSoC][PATCH v2 04/13] submodule: port submodule subcommand
+ 'status' from shell to C
 To:     Prathamesh Chavan <pc44800@gmail.com>
 Cc:     git <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>,
         Brandon Williams <bmwill@google.com>
@@ -65,109 +65,49 @@ X-Mailing-List: git@vger.kernel.org
 
 On Sun, Jul 30, 2017 at 12:23 AM, Prathamesh Chavan <pc44800@gmail.com> wrote:
 
-> +static int module_summary(int argc, const char **argv, const char *prefix)
+> +static void print_status(struct status_cb *info, char state, const char *path,
+> +                        const struct object_id *oid, const char *displaypath)
 > +{
-> +       struct summary_cb info = SUMMARY_CB_INIT;
-> +       int cached = 0;
-> +       char *diff_cmd = "diff-index";
-> +       int for_status = 0;
-> +       int quiet = 0;
-> +       int files = 0;
-> +       int summary_limits = -1;
-> +       struct child_process cp_rev = CHILD_PROCESS_INIT;
-> +       char *head;
-> +       struct strbuf sb = STRBUF_INIT;
-> +       int ret;
+> +       if (info->quiet)
+> +               return;
 > +
-> +       struct option module_summary_options[] = {
-> +               OPT__QUIET(&quiet, N_("Suppress output for initializing a submodule")),
-> +               OPT_BOOL(0, "cached", &cached, N_("Use the commit stored in the index instead of the submodule HEAD")),
-> +               OPT_BOOL(0, "files", &files, N_("To compares the commit in the index with that in the submodule HEAD")),
-> +               OPT_BOOL(0, "for-status", &for_status, N_("Skip submodules with 'all' ignore_config value")),
-> +               OPT_INTEGER('n', "summary-limits", &summary_limits, N_("Limit the summary size")),
-> +               OPT_END()
-> +       };
+> +       printf("%c%s %s", state, oid_to_hex(oid), displaypath);
 > +
-> +       const char *const git_submodule_helper_usage[] = {
-> +               N_("git submodule--helper summary [<options>] [--] [<path>]"),
-> +               NULL
-> +       };
-> +
-> +       argc = parse_options(argc, argv, prefix, module_summary_options,
-> +                            git_submodule_helper_usage, 0);
-> +
-> +       if (!summary_limits)
-> +               return 0;
-> +
-> +       cp_rev.git_cmd = 1;
-> +       argv_array_pushl(&cp_rev.args, "rev-parse", "-q", "--verify",
-> +                        argc ? argv[0] : "HEAD", NULL);
-> +
-> +       if (!capture_command(&cp_rev, &sb, 0)) {
-> +               strbuf_strip_suffix(&sb, "\n");
-> +               if (argc) {
-> +                       argv++;
-> +                       argc--;
-> +               }
-> +       } else if (!argc || !strcmp(argv[0], "HEAD")) {
-> +               /* before the first commit: compare with an empty tree */
-> +               struct stat st;
-> +               struct object_id oid;
-> +               if (fstat(0, &st) < 0 || index_fd(oid.hash, 0, &st, 2, prefix, 3))
-> +                       die("Unable to add %s to database", oid.hash);
-> +               strbuf_addstr(&sb, oid_to_hex(&oid));
-> +               if (argc) {
-> +                       argv++;
-> +                       argc--;
-> +               }
-> +       } else {
-> +               strbuf_addstr(&sb, "HEAD");
-> +       }
-> +
-> +       head = strbuf_detach(&sb, NULL);
-
-I am not sure this "head" variable is really needed.
-
-> +       if (files) {
-> +               if (cached)
-> +                       die(_("The --cached option cannot be used with the --files option"));
-> +               diff_cmd = "diff-files";
-> +
-> +               free(head);
-> +
-> +               head = NULL;
-
-If "head" isn't used, "strbuf_reset(&sb)" could be used instead.
-If "head" is still needed, "FREE_AND_NULL(head)" could be used.
-
-> +       }
-> +
-> +       info.argc = argc;
-> +       info.argv = argv;
-> +       info.prefix = prefix;
-> +       info.cached = !!cached;
-> +       info.for_status = !!for_status;
-> +       info.quiet = quiet;
-> +       info.files = files;
-> +       info.summary_limits = summary_limits;
-> +       info.diff_cmd = diff_cmd;
-> +
-> +       ret = compute_summary_module_list(head, &info);
-> +       if (head)
-> +               free(head);
-
-"sb.buf" could be passed to compute_summary_module_list() instead of
-"head". In this case that function should check that head is not an
-empty string before using it.
-
-If "head" is not used then strbuf_release(&sb) can be used to free any
-memory sb still holds.
-If "head" is still used, "if (head)" can be removed before
-"free(head)" as free() already checks if its argument is NULL.
-
-> +       return ret;
 > +
 
 Spurious new line.
 
+> +       if (state == ' ' || state == '+') {
+> +               struct argv_array name_rev_args = ARGV_ARRAY_INIT;
+> +
+> +               argv_array_pushl(&name_rev_args, "print-name-rev",
+> +                                path, oid_to_hex(oid), NULL);
+> +               print_name_rev(name_rev_args.argc, name_rev_args.argv,
+> +                              info->prefix);
+> +       } else {
+> +               printf("\n");
+> +       }
 > +}
+
+> +static void status_submodule(const struct cache_entry *list_item, void *cb_data)
+> +{
+> +       struct status_cb *info = cb_data;
+> +       char *displaypath;
+> +       struct argv_array diff_files_args = ARGV_ARRAY_INIT;
+> +
+> +       if (!submodule_from_path(null_sha1, list_item->name))
+> +               die(_("no submodule mapping found in .gitmodules for path '%s'"),
+> +                     list_item->name);
+> +
+> +       displaypath = get_submodule_displaypath(list_item->name, info->prefix);
+> +
+> +       trace_printf("the value of flag is %d\n", list_item->ce_flags);
+
+Debugging left over.
+
+> +       if (list_item->ce_flags) {
+> +               trace_printf("for U the value of flag is %d\n", list_item->ce_flags);
+> +               print_status(info, 'U', list_item->name,
+> +                            &null_oid, displaypath);
+> +               goto cleanup;
+> +       }
