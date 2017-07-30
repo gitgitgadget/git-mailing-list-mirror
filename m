@@ -2,99 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 104C320899
-	for <e@80x24.org>; Sun, 30 Jul 2017 14:49:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5536320899
+	for <e@80x24.org>; Sun, 30 Jul 2017 15:44:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754011AbdG3OtW (ORCPT <rfc822;e@80x24.org>);
-        Sun, 30 Jul 2017 10:49:22 -0400
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:31300 "EHLO
-        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753925AbdG3OtW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Jul 2017 10:49:22 -0400
-Received: from PhilipOakley ([92.31.218.76])
-        by smtp.talktalk.net with SMTP
-        id bpWyd3YF1iSHabpWydv1JX; Sun, 30 Jul 2017 15:49:20 +0100
-X-Originating-IP: [92.31.218.76]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=UoATD64B c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
- a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=8nJEP1OIZ-IA:10 a=pGLkceISAAAA:8
- a=QIhr-27iAAAA:8 a=VANrzf5gZ-bd6q1UB9EA:9 a=wPNLvfGTeEIA:10
- a=6kGIvZw6iX1k4Y-7sg4_:22 a=cgaYBWEFosGJW4rWv5Lf:22
-Message-ID: <8256C530C7DE43D7BC72BFB327DF4726@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Kaartic Sivaraam" <kaarticsivaraam91196@gmail.com>,
-        <gitster@pobox.com>
-Cc:     <git@vger.kernel.org>
-References: <20170730110921.11805-1-kaarticsivaraam91196@gmail.com>
-Subject: Re: [PATCH 1/2] doc: fix small issues in SubmittingPatches
-Date:   Sun, 30 Jul 2017 15:49:21 +0100
-Organization: OPDS
+        id S1754052AbdG3Poc (ORCPT <rfc822;e@80x24.org>);
+        Sun, 30 Jul 2017 11:44:32 -0400
+Received: from mail-wm0-f50.google.com ([74.125.82.50]:36456 "EHLO
+        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753963AbdG3Poc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Jul 2017 11:44:32 -0400
+Received: by mail-wm0-f50.google.com with SMTP id t201so160557341wmt.1
+        for <git@vger.kernel.org>; Sun, 30 Jul 2017 08:44:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=FslsAH+oEE82P932K/HB7DgR23SKu2Eqnoj7LbRR8FY=;
+        b=EQYibmsngO65zkfKJaH2kpvUEzZUPhBNM2vRaR9OTf1DDD6VbsXrx6ydWs7p7vubxD
+         0/Rnv7AYctCEfCTr1lx3JrNsV6wl1upFSkM0BQUeAZj90KLsKBXlEitSs08W/IHaC6tN
+         p8bi+Ma0RX+4k49FqxQMAajFf7nOa4rniLUbDpHbDEA6dYV+uB9IWT5eF112FlK2SGYM
+         XPFkAx5tHA3g5yutYZcdBn7RIms13frHa4wlRs8E2wacmGHVKA3+UU0C5mQ5ojPSYpgS
+         /JtspVTiC+PzZukszmgmrENt24D7x10Kq+JBhbrxVbcjxfJInENxAK7ABLNTTpvpw4LX
+         nAHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=FslsAH+oEE82P932K/HB7DgR23SKu2Eqnoj7LbRR8FY=;
+        b=uRZgjduEK3fzkyY79g9uG+gmHxndXKSMioHTFxf0RDY34loPXYomXTaJdvlMDGt/lY
+         N6YiM+4XBryeDSrl4UtJnzNvEW30CvPxMzAyH1iQv5k5dYlzUutW9eRwSuk4TpG1MKOZ
+         /IyXO/VG43KpzjymQDveEt07ranIDhq9yxYpaWLPZBKzBPWjPBm4AgNwF7HAFfh5p5ks
+         PW01T8oF6PqDQJZa2ngk5o7Qrev3ougCwBdr3h/eOXYQTDDQTq7uUV+4z6oyKxtcPiJs
+         fF2h/UGQ2P69XKA8X1uqFTmzMBDIvRaQVVPZvzW6dcU9R38ydLp8HnolwMl/WgC5hYYf
+         Gkiw==
+X-Gm-Message-State: AIVw1121B9OFXnpZ66RJvchpSD2H0JeuwRP5/9S1mpQqa7lbW3QvIWCS
+        DJGUwkIMbK0+iaAtlTqVEovm4u4fOnd3
+X-Received: by 10.28.71.5 with SMTP id u5mr10356652wma.138.1501429470719; Sun,
+ 30 Jul 2017 08:44:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="iso-8859-1";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Antivirus: AVG (VPS 170730-2, 30/07/2017), Outbound message
-X-Antivirus-Status: Clean
-X-CMAE-Envelope: MS4wfMJKhliXVhi4CRwkNqCDBs++jOk3j49kpHNYEhiZxXLo5eDcOW+0B0WSmKZ2v44aN+VH+cs0zf+4q7sIr4Wjaj5/3LN7GolOe76HFTmLLX20jIkRa0qE
- wy3lG9FFeASZdBLF6RZQ32KaAhsqzkwQ+Wx2XIm8sOH9rWM/mcnlX6Mc9HyKJgJwqTW3wQVJ82GvQBLIgAjjAya6VnCqAfZBzDf9RICCb1n2QmtDhr7+UhIP
- Ko/8H75ijeNN75b+MbMBJw==
+Received: by 10.28.18.197 with HTTP; Sun, 30 Jul 2017 08:44:30 -0700 (PDT)
+From:   Gholamreza Sabery <gr.sabery@gmail.com>
+Date:   Sun, 30 Jul 2017 20:14:30 +0430
+Message-ID: <CAJx6kgVnd=EGWWupFmHggJ=Vz3HOqsQ0_f8mCuA6SqSca9M-EQ@mail.gmail.com>
+Subject: A repository that contains List of all free and non-free Git books
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Kaartic Sivaraam" <kaarticsivaraam91196@gmail.com>
+I gathered together a list that contains all free and non-free Git
+books. Here you can see it:
 
-minor nit: It's nice, for these single character changes, to give a clue in 
-the commit message as to what to look for.
 
-E.g.
-
-Quote the command, and remove duplicated space character
-
---
-Philip.
-
-> Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-> ---
-> Documentation/SubmittingPatches | 4 ++--
-> 1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/Documentation/SubmittingPatches 
-> b/Documentation/SubmittingPatches
-> index 558d465b6..9d0dab08d 100644
-> --- a/Documentation/SubmittingPatches
-> +++ b/Documentation/SubmittingPatches
-> @@ -293,7 +293,7 @@ then you just add a line saying
->
->         Signed-off-by: Random J Developer <random@developer.example.org>
->
-> -This line can be automatically added by Git if you run the git-commit
-> +This line can be automatically added by Git if you run the 'git commit'
-> command with the -s option.
->
-> Notice that you can place your own Signed-off-by: line when
-> @@ -366,7 +366,7 @@ suggests to the contributors:
->      spend their time to improve your patch.  Go back to step (2).
->
->  (4) The list forms consensus that the last round of your patch is
-> -     good.  Send it to the maintainer and cc the list.
-> +     good. Send it to the maintainer and cc the list.
->
->  (5) A topic branch is created with the patch and is merged to 'next',
->      and cooked further and eventually graduates to 'master'.
-> -- 
-> 2.14.0.rc1.434.g6eded367a
-> 
-
+https://github.com/ghrst/git-books
