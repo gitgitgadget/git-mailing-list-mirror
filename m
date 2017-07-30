@@ -2,105 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AFC6B20899
-	for <e@80x24.org>; Sun, 30 Jul 2017 18:01:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6BAF920899
+	for <e@80x24.org>; Sun, 30 Jul 2017 21:22:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754228AbdG3SBj (ORCPT <rfc822;e@80x24.org>);
-        Sun, 30 Jul 2017 14:01:39 -0400
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:21988 "EHLO
-        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754183AbdG3SBi (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Jul 2017 14:01:38 -0400
-Received: from PhilipOakley ([92.31.218.76])
-        by smtp.talktalk.net with SMTP
-        id bsX3d3osAiSHabsX3dv641; Sun, 30 Jul 2017 19:01:37 +0100
-X-Originating-IP: [92.31.218.76]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=UoATD64B c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
- a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
- a=NEAV23lmAAAA:8 a=5rxgeBVgAAAA:8 a=49B8Qy0mYDbi_iZE0doA:9 a=QEXdDO2ut3YA:10
- a=6kGIvZw6iX1k4Y-7sg4_:22 a=PwKx63F5tFurRwaNxrlG:22
-Message-ID: <6EF3784A5C1F420699D881AF642F28CD@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     <christopher.diaz.riv@gmail.com>, <git@vger.kernel.org>
-Cc:     "Jiang Xin" <worldhello.net@gmail.com>
-References: <1501423608.3232.30.camel@gmail.com>
-Subject: Re: Contact with Latinamerica
-Date:   Sun, 30 Jul 2017 19:01:38 +0100
-Organization: OPDS
+        id S1754546AbdG3VWA (ORCPT <rfc822;e@80x24.org>);
+        Sun, 30 Jul 2017 17:22:00 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57485 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754236AbdG3VV7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Jul 2017 17:21:59 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id ED6438A4D9;
+        Sun, 30 Jul 2017 17:21:51 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=WOZCSfSzn9/Oa/EtGN+6luMnvCY=; b=NCXm01
+        OU55yS2lzLdK8kgwqURSWGLSAdhw9L5iHcVwFag4EFPmbRtyb8GZ+l5inqe+meLM
+        ZdiInxW5V6yDPug5qoK2wYRQA3VviPGFOQdz8tD0SCQjpdfEqoMNiQlasNh3hk83
+        +QT7c6+96uPnkl676m2sdVjSNDBdokN+CkYXU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=MWBRFO7MLO7kEcOt+8Ut8BpWAOFr5a8H
+        FWuVDH/bVP0hbdjDeEBjfj8OwKMvqHhJKemFIY1+4d6YIpn/5g0NM5aeUIu3r7x8
+        jGoaGf2GI9eB3qpSOLxWvCXcqP6j3GawXYKykBIJMiFownQBkq7HMG891oUm1NQF
+        Biq4XnUKAIY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E5C1B8A4D6;
+        Sun, 30 Jul 2017 17:21:51 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5F6128A4D3;
+        Sun, 30 Jul 2017 17:21:51 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH 2/2] t6500: mark tests as SHA1 reliant
+References: <20170728171817.21458-1-sbeller@google.com>
+        <20170728171817.21458-3-sbeller@google.com>
+        <xmqq379gmco6.fsf@gitster.mtv.corp.google.com>
+        <20170729175833.4idan3befldn5vgp@genre.crustytoothpaste.net>
+Date:   Sun, 30 Jul 2017 14:21:50 -0700
+In-Reply-To: <20170729175833.4idan3befldn5vgp@genre.crustytoothpaste.net>
+        (brian m. carlson's message of "Sat, 29 Jul 2017 17:58:33 +0000")
+Message-ID: <xmqqini9k4cx.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="UTF-8";
-        reply-type=original
-Content-Transfer-Encoding: 8bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Antivirus: AVG (VPS 170730-2, 30/07/2017), Outbound message
-X-Antivirus-Status: Clean
-X-CMAE-Envelope: MS4wfBhG2JVk1LglLnXdQLPvLS7nui5ioP+G4ljZghmwlt+xXqtzQHbJat26tLOeLuwjX5y2IdP2dc/tXG3nJwge69HgHAjgtx6gLhX6Kb1yPOaetQrPpcw2
- uwOXUP0NvMNcaySKkrH9j/KG4P0mZ/N5scqTt2iwii0jh3P2OIUeBRNd0HjtI9kXqwiA420356Z1LITwKXuNMbHXRktbWgdXu5UXVkCPCRXpGnxkhKBtNnqa
- 8o/V/hR37EOWJFYUm5iTHg==
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1A7833C8-756D-11E7-92B2-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Christopher Díaz" <christopher.diaz.riv@gmail.com>
->
-> My name is Christopher Díaz Riveros, I'm a software development student
-> in Lima, Peru. For some time now I have been supporting my Linux
-> community, Gentoo Linux, and I have discovered a wide world of
-> possibilities in open source.
->
-> I tell you this because it has been so much benefit in my training as a
-> a developer that I am determined to start a new community in my country
-> to be able to make technology-related career students find an open
-> source community in which they can learn to work and get the same
-> positive effect that I have had on mine. I have already been talking to
-> some teachers, I am about to begin my final year of studies in the
-> institute, and they agree to start the community with students of the
-> institution.
->
-> As one of the main problems when getting involved with a community here
-> is the barrier of english language, and few are able to have fluent
-> conversations in that language, as it is a bit intimidating for most to
-> approach an open source community. My community hopes to get in touch
-> with different open source projects throughout the world and seeks to
-> be a midpoint to interact with young developers and communities.
->
-> Having said all this I have only to offer to your community, the
-> availability of our community (we still do not have a definite name)
-> and see if anyone is interested in supporting this group of developers
-> here and with a bit of luck be able to turn it into a movement of all
-> Latin America.
->
-> Thanks and any kind of feedback is welcome :)
-> Christopher Diaz Riveros
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-I can see two simple steps toward your goal that may help.
+> One approach I had considered taking is having a helper of some sort
+> that wrapped a simple key/value store.  We could pass the wrapper the
+> SHA-1 value (or, if necessary, an arbitrary key) and have it return the
+> proper value based on the given hash function.
+>
+> That does have the downsides that the values may not present in the
+> tests themselves, and that people adding new tests will of course need
+> to run the test suite twice.  But it does make the tests easier to read.
+>
+> Opinions on the desirability of this approach are of course welcome.
 
-The first is to ensure that the open source tools do have localisation 
-(l10n) of their command line messages, for which I'm sure Git's l10n team 
-would be happy to have your communities support. - 
-https://github.com/git-l10n and 
-https://public-inbox.org/git/CANYiYbEJ3Gw=JvbhLBeFWBD7xLXxd=_fFdH3UX76H97ZU_3zKA@mail.gmail.com/#r
+I am not quite sure if I follow.  There was a proposal to tweak the
+commit format that uses the new hash in such a way that we can tell
+what SHA-1 would have been used if everything were SHA-1 (I think it
+was from Jonathan, but I may be mistaken), and I recall that
+generally the list were receptive to the idea.  But I have a feeling
+that your "helper of some sort" is something else.
 
-The other idea is to consider how Git's version message, or something 
-similar, should report the users current i18n settings, and any links to the 
-right (e.g. local) support groups. At present, I don't see any obvious 
-command to help users (and those on the help forums and lists) know what 
-i18n nationality / language names to use for discussions. Sometimes it is 
-worth ensuring these baby steps are in place.
+If your <key,value> is about letting us store something like
 
---
-Philip
+ - If you hash "hello\n" the resulting blob in SHA-1 world has this
+   object name, and with that, you can find out the equivalent
+   object name in SHA-256 world.
+
+ - If you have a tree with the above blob at path P and nothing
+   else, then the object name of that tree in the SHA-1 world and
+   SHA-256 world are different and we can map between them.
+
+ - Likewise for a commit that points at the above tree with fixed
+   date, author and message.
+
+I am not sure how much it would help.  Are you aiming to make it
+easier and more structured to create a patch like what Stefan did
+recently for t8008 in 0ba9c9a0 ("t8008: rely on rev-parse'd HEAD
+instead of sha1 value", 2017-07-26)?
+
+I also suspect that tests like t1512 and t6500 would not benefit
+that much from such a mapping.  In these tests, the object names by
+themselves are not interesting.  These tests are about what Git does
+when the names of the objects involved in them happen to share a
+certain prefix.  We are not interested in using the same payload in
+these tests using different hash, which is likely to destroy the
+aspect of the object names that these tests are interested in,
+namely, they share the same prefix.  When updating these tests to
+adjust for the SHA-256 world, we want to preserve that the resulting
+object names happen to share the same prefix by tweaking the payload
+strings (i.e. "263 and 410" in t6500 are chosen to cause the
+resulting objects to share "17/" prefix and fall inside a same
+fan-out directory as loose objects.  We want to choose different
+strings so that the names of the resulting objects share the same
+prefix, not necessarily "17/" but preferrably so, in the SHA-256
+world.  Similarly, Random-looking strings like "a2onsxbvj" in t1512
+are chosen to cause blobs, trees, commits and tags that are involved
+in the test to all share the same prefix "000000..."; we want to
+choose different set of such random-looking strings that cause all
+objects involved to hash to the same prefix, not necessarily but
+preferrably "000000...").
 
 
