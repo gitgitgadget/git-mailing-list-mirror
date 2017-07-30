@@ -2,81 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8FC2E20899
-	for <e@80x24.org>; Sun, 30 Jul 2017 21:26:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B875020899
+	for <e@80x24.org>; Sun, 30 Jul 2017 23:00:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750926AbdG3V0A (ORCPT <rfc822;e@80x24.org>);
-        Sun, 30 Jul 2017 17:26:00 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61121 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750741AbdG3VZ7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Jul 2017 17:25:59 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 356A993D70;
-        Sun, 30 Jul 2017 17:25:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=zEx1n/wdcmbBnW1+LAbTe7jN944=; b=s5ERvV
-        p6YWqUB4RB/CU11YWkIefo86bic18Bf5/DQF6i9ony1BMNL16R+N8exHB0tb1bnu
-        SuxFUS5gK15vmxgarHyZ8eXxXGaeU10LjPJr0OPyIc3qh9RZ55iP9m8gq5Y3tw1H
-        V6jbPWX+xOr2TCVNEoQjd6+510g6BZ4P0hueA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=t7WZIhD3sbD0cFRgvorkJkGug4W0pzdA
-        2Y77Z/77NxTXTUga+fA6D/J6FcP+n9VcwTJchZzwLNl8KYYjq+NzxEHHE0CBXLSR
-        nze0AugxWoKOv+1rpkR2ylLQw/M0P0nzN9P0PAgPJmtpFDbSVra3oNLQHJ/nQJ2V
-        XyhYFMyA2ZU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2DD6693D6D;
-        Sun, 30 Jul 2017 17:25:52 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        id S1751246AbdG3XA1 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 30 Jul 2017 19:00:27 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:42952 "EHLO
+        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750961AbdG3XA0 (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 30 Jul 2017 19:00:26 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9912893D6A;
-        Sun, 30 Jul 2017 17:25:51 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jens Lehmann <Jens.Lehmann@web.de>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Brandon Williams <bmwill@google.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 02/15] submodule: don't use submodule_from_name
-References: <20170725213928.125998-1-bmwill@google.com>
-        <20170725213928.125998-3-bmwill@google.com>
-        <CAGZ79kY9Pdk5C8=k-AQpCPwo3q9Jzfg9A93UQxGyyf_OyrMS_Q@mail.gmail.com>
-        <xmqqwp6uq56s.fsf@gitster.mtv.corp.google.com>
-        <a3650c9a-fa42-09e6-efcd-f912d5ffc042@web.de>
-Date:   Sun, 30 Jul 2017 14:25:50 -0700
-In-Reply-To: <a3650c9a-fa42-09e6-efcd-f912d5ffc042@web.de> (Jens Lehmann's
-        message of "Sun, 30 Jul 2017 15:43:25 +0200")
-Message-ID: <xmqqefsxk469.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 5BA1D280AD;
+        Sun, 30 Jul 2017 23:00:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+        s=default; t=1501455625;
+        bh=skOCS/bdeyO8c284CWN//LfGod/wKJ2S05a1ioByxAk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=N7Mg4UPW17u9LXuircW8aSHpE4UcO5goTQlXCeASbcqAgZwrvVkZhIuxI8ZTemEcj
+         TUxsLB9ylQ6xFwWZx9kv5E/8E8TsyjtGqt1tO8jjilJUUZ8wsYNGKgZ+1V+JhfuOTi
+         04ExdPZRDa31KAb/cDZriTv9bxr7IqUcmRkF4Ojyn8igsxM1JOS7WJ9CKlULhoM/Cl
+         IIBK417o1Vllwg9rWtIXTLTHH2mJnZ42g0LyHsz8tmw+gtRltyRcVeyvV/N7g9FZhB
+         sPpQQAnqQ/+elA1j17Wx9W9vtTLpxEUrdNoQpPDqtOcQ3OCksYDUMz8sgCV4h/i5FQ
+         yAlM6n7Aw47GK9PiGO82SqgFpr1sBfSKy5w8bm8RpscheC09fL38/9DaEbXshPmtVf
+         eTKZoUfjGAwDhGbrf8SvlbGmic0HyYW5tJMZr7sue4ky0jzVo+KSUqyrD8IzygDRJO
+         pqp1GdRzrdbWsVxuOwRncTyikU9QKaZf2ZdOn8gpu5YOxJ7WY/Q
+Date:   Sun, 30 Jul 2017 23:00:19 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH 2/2] t6500: mark tests as SHA1 reliant
+Message-ID: <20170730230019.ch74ska6wgbrh7ql@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>, git@vger.kernel.org
+References: <20170728171817.21458-1-sbeller@google.com>
+ <20170728171817.21458-3-sbeller@google.com>
+ <xmqq379gmco6.fsf@gitster.mtv.corp.google.com>
+ <20170729175833.4idan3befldn5vgp@genre.crustytoothpaste.net>
+ <xmqqini9k4cx.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A9A937EA-756D-11E7-B4D3-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="jst6tiahopjbmqjj"
+Content-Disposition: inline
+In-Reply-To: <xmqqini9k4cx.fsf@gitster.mtv.corp.google.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.11.0-2-amd64)
+User-Agent: NeoMutt/20170609 (1.8.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
 
->> I wonder if we should barf loudly if there shouldn't be a submodule
->> at that path, i.e.
->>
->> 	if (!submodule)
->> 		die("there is no submodule defined for path '%s'"...);
->>
->> though.
->
-> Not sure if you want to die() or just issue a warning(), but yes.
+--jst6tiahopjbmqjj
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-As long as the code after that point is prepared to see a NULL
-submodule and still behaves sensibly, then I would of course prefer
-not dying.  Continuing with just a warning() may not be a safe thing
-to do if we are not prepared to see a NULL submodule after that
-point, though.
+On Sun, Jul 30, 2017 at 02:21:50PM -0700, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>=20
+> > One approach I had considered taking is having a helper of some sort
+> > that wrapped a simple key/value store.  We could pass the wrapper the
+> > SHA-1 value (or, if necessary, an arbitrary key) and have it return the
+> > proper value based on the given hash function.
+> >
+> > That does have the downsides that the values may not present in the
+> > tests themselves, and that people adding new tests will of course need
+> > to run the test suite twice.  But it does make the tests easier to read.
+> >
+> > Opinions on the desirability of this approach are of course welcome.
+>=20
+> I am not quite sure if I follow.  There was a proposal to tweak the
+> commit format that uses the new hash in such a way that we can tell
+> what SHA-1 would have been used if everything were SHA-1 (I think it
+> was from Jonathan, but I may be mistaken), and I recall that
+> generally the list were receptive to the idea.  But I have a feeling
+> that your "helper of some sort" is something else.
+>=20
+> If your <key,value> is about letting us store something like
+>=20
+>  - If you hash "hello\n" the resulting blob in SHA-1 world has this
+>    object name, and with that, you can find out the equivalent
+>    object name in SHA-256 world.
+>=20
+>  - If you have a tree with the above blob at path P and nothing
+>    else, then the object name of that tree in the SHA-1 world and
+>    SHA-256 world are different and we can map between them.
+>=20
+>  - Likewise for a commit that points at the above tree with fixed
+>    date, author and message.
+>=20
+> I am not sure how much it would help.  Are you aiming to make it
+> easier and more structured to create a patch like what Stefan did
+> recently for t8008 in 0ba9c9a0 ("t8008: rely on rev-parse'd HEAD
+> instead of sha1 value", 2017-07-26)?
+
+Yes, basically, but a bit more generally.  There will always be cases in
+which we need to specify an object ID or an arbitrary string and the
+behavior will need to vary based on the hash.  That can be something
+like, in this case, the two blob contents that would have the similar
+prefix.
+
+So in this case, we pass the helper the string "263 410" and get back a
+value for either the hacked SHA-1 hash or the SHA-256 or whatever we're
+using.
+
+This was basically a nicer way of wrapping the case statement that you
+had given as an example.  Of course, it doesn't relieve us of doing the
+hard work of analyzing the tests, which Stefan is doing, and with which
+I don't want to interfere.
+
+It was simply a proposal for a future direction which we could take if
+we found ourselves needing to write a large number of hash-specific case
+statements.  I'm happy to wait to actually implement that code until we
+decide we need such a thing.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
+https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
+
+--jst6tiahopjbmqjj
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.21 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAll+ZQMACgkQv1NdgR9S
+9ouN/xAAuC2JuZrcDS1vPUee3Ua8OCYyZq60M3+fU0tbh+RRaVx7m64vnysN74u+
+17+I/L0s8ITMZJ+jwUSz4Q+cwNIdq+w8/JTRxatgb9Rt6Gbs6dmqs37QAjG8eOfW
+O5RSSEdRi14QVDGgt2fhGb7Ohs64O+je5Ma+vYaAraIv3ED70gqSEeZt4USHQrO9
+NQvHSdQ7A1GPB+ODdMgMMqjRY+p9eJkQbkePWAEZwjozB7yJIZqPcCQRQMtfiMw+
+gOwkm2PQtqbR/zOGPHUsjRvYZZPbolKRfqdFJCfipIoLR370Tl4RqjxsMMcCBPFY
++gKrwOhBvTXscBy5SBpUT0dEo0VZ+GEym+K+qxeK5e/mx8czpFnIIgnkSFP+a2pF
+Tf1XwJm0UJLuRTsRP2pboKBU8gZcajdc7eC5PEhcroQeUAWHQm0nRELsF2lSxnOF
+MfmH6mV4sygD322eKoL2tHH6Tns3uAykEye6btfX779TT2TwfsKOWC8vGCRaZE/5
+1qxaoq/RbpELrsRLbIHv0Ogg2gBL2dYZBwa62PUqtR7lntla77O8nUqIrSPNb+pL
+ufHrX2ALCx8/3p1jpCh2L9cDpqqbu4D7Sf/bzP1VS9KUSZALm2sJPwtNrKThIC0a
+WR2fSzdyOY2NwUxo5G1sGAf7CJoJdvDKraBUyWS25MgRQNBD2ok=
+=aUId
+-----END PGP SIGNATURE-----
+
+--jst6tiahopjbmqjj--
