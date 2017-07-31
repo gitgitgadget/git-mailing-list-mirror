@@ -2,114 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A60020899
-	for <e@80x24.org>; Sun, 30 Jul 2017 23:27:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 26DE820899
+	for <e@80x24.org>; Mon, 31 Jul 2017 00:01:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751593AbdG3XYd (ORCPT <rfc822;e@80x24.org>);
-        Sun, 30 Jul 2017 19:24:33 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:42972 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751266AbdG3XYc (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 30 Jul 2017 19:24:32 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 7AB84280AD;
-        Sun, 30 Jul 2017 23:24:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1501457071;
-        bh=CZoiQYS5phkdpW7GU5NqImjNJwsOz8I5wFLx5H7rKQc=;
-        h=Date:From:To:Subject:References:In-Reply-To:From;
-        b=S3CTEiGu/g8JLwzWjjMy9a2xK36dO9yIhC4R3lQ5YlnONcBpuH6sEEZPF9ot47Wmj
-         82l9YLmsVOm7RvBqRdZcVzMSddEpza4Zxh9BSbyAstz2h0t/g/OEWtAov1685bD231
-         AZWJfkWFN1UPHUmU/3f83zaocjTd1D6BG9by1TbXjG5Rq+hTXY5LIGOLBUkn5vq+7d
-         AKCLMpnau0FsMJj8WWouCk4bK64wqEdpreRXKGbOkrkWt9QWIDd/3aGCIbD0Ly+sAJ
-         YPnOHp/I2oPijxaT1NhIN2o0XbAHSktzmRow1luzhlBnkk7ETI185Q4+KrQzIwaQYi
-         BmTojeinEF31243qgIHA03F25IzSm9+5W+wdxIBL4XQif1AjLDsdnIshZPdH9IVF+x
-         FHtY2OwPjT12L1VI1aRr3dP3wYo8HsPt4DsLwCQxGWn5CtpO76GNQxwGmoeR/2bzUD
-         Z7Ue1xKKg62nh4hhTtZt+5ws0mGGEgRlICJk3CpJLn2kP3+x5Uw
-Date:   Sun, 30 Jul 2017 23:24:27 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] t6500: mark tests as SHA1 reliant
-Message-ID: <20170730232427.vrqrrhlsap55ax7t@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-References: <20170728171817.21458-1-sbeller@google.com>
- <20170728171817.21458-3-sbeller@google.com>
- <xmqq379gmco6.fsf@gitster.mtv.corp.google.com>
- <20170729175833.4idan3befldn5vgp@genre.crustytoothpaste.net>
- <xmqqini9k4cx.fsf@gitster.mtv.corp.google.com>
- <20170730230019.ch74ska6wgbrh7ql@genre.crustytoothpaste.net>
+        id S1751217AbdGaABa (ORCPT <rfc822;e@80x24.org>);
+        Sun, 30 Jul 2017 20:01:30 -0400
+Received: from mail-qk0-f178.google.com ([209.85.220.178]:34283 "EHLO
+        mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751099AbdGaABa (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Jul 2017 20:01:30 -0400
+Received: by mail-qk0-f178.google.com with SMTP id u139so78202232qka.1
+        for <git@vger.kernel.org>; Sun, 30 Jul 2017 17:01:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=rVQdCovVDLoXS1vdLq3oos5cwXueogEaC1TcsZf342k=;
+        b=SwsLD7McZj3Rk4ErOEiK9EltVkM6oMGNIjbkh/QLsg1j6p/tM/3yWWHl37OWNMRQsP
+         XcZzDXQ9RH3DOf5nKm8N3caGA8Lz8EkJ60B9Arqp5st9si2p+lS/8whaaLuugpyue5bz
+         xiXJrekto0RSRGyBVNQRTRH/QnuMPNM+UnsDA2xxvOjlhart4DLRqaec9f6AcERJwbwZ
+         Er1/2u/bWv/czB9Zln7LnywyRdNHVdSzsNa7Gy+W/ZPe1nVS+IL6fnzbJ4dB6tEac41U
+         Nuv2THC5H8YUluATkSLzcGqGCDeWN8JG99hQtU7aGmOrceCqdhBTm2f1APJ23JktcG+n
+         DAUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=rVQdCovVDLoXS1vdLq3oos5cwXueogEaC1TcsZf342k=;
+        b=kPHbUa8V4z6MsENFx7vIguVDXLqx9JAQgE28vHMScwNwY+tbxEWLbdi803jcnUvSgB
+         Igv9Lzj8xn+QDjiN3ifGNtQVpzXQQ8mFp+GHyK7hE45VxJvQSvVthrc09kwPVBVhYRyc
+         t86hzw2Gz1vy6URITp5GVuwuig520Gibw1kPpzMR+RoR9qL/JP3pfduWImRA93yf01lF
+         JQXrsdz76OV2IjCbnYtJwO4a6q4pCslPtI/dVGRylTL6SdKBdOdEHDvwd+YI/jR0BbjX
+         EQJ1x6m2IscDkXWZMKs5CZAbieOsdDrKmUpuMIpIFD6Krl7/45UynA9ilVrYa6JxnSpI
+         tmvw==
+X-Gm-Message-State: AIVw110Kyz+UCO3LnocOpqrPzFCRkXuHZQsKhNlVrHkPo601Xpm3bnZS
+        0IrfP/8i8rdjjFr2j/gZ7l/TaEDi6g==
+X-Received: by 10.55.140.71 with SMTP id o68mr17967473qkd.18.1501459289342;
+ Sun, 30 Jul 2017 17:01:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="7pm6blj77jiniwwu"
-Content-Disposition: inline
-In-Reply-To: <20170730230019.ch74ska6wgbrh7ql@genre.crustytoothpaste.net>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.11.0-2-amd64)
-User-Agent: NeoMutt/20170609 (1.8.3)
+Received: by 10.237.39.151 with HTTP; Sun, 30 Jul 2017 17:00:48 -0700 (PDT)
+In-Reply-To: <6EF3784A5C1F420699D881AF642F28CD@PhilipOakley>
+References: <1501423608.3232.30.camel@gmail.com> <6EF3784A5C1F420699D881AF642F28CD@PhilipOakley>
+From:   Andrew Ardill <andrew.ardill@gmail.com>
+Date:   Mon, 31 Jul 2017 10:00:48 +1000
+Message-ID: <CAH5451kzm-gh-7MRYie8nt17+yZdFLgzyPF3ZAwmL74SrR0XvA@mail.gmail.com>
+Subject: Re: Contact with Latinamerica
+To:     christopher.diaz.riv@gmail.com
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jiang Xin <worldhello.net@gmail.com>,
+        Philip Oakley <philipoakley@iee.org>,
+        Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 31 July 2017 at 04:01, Philip Oakley <philipoakley@iee.org> wrote:
+> From: "Christopher D=C3=ADaz" <christopher.diaz.riv@gmail.com>
+>
+>> As one of the main problems when getting involved with a community here
+>> is the barrier of english language, and few are able to have fluent
+>> conversations in that language, as it is a bit intimidating for most to
+>> approach an open source community. My community hopes to get in touch
+>> with different open source projects throughout the world and seeks to
+>> be a midpoint to interact with young developers and communities.
+>>
+>
+> I can see two simple steps toward your goal that may help.
+>
 
---7pm6blj77jiniwwu
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Another idea, and I don't think anyone has done this yet, would be to
+localise news posts coming out of projects.
 
-On Sun, Jul 30, 2017 at 11:00:19PM +0000, brian m. carlson wrote:
-> Yes, basically, but a bit more generally.  There will always be cases in
-> which we need to specify an object ID or an arbitrary string and the
-> behavior will need to vary based on the hash.  That can be something
-> like, in this case, the two blob contents that would have the similar
-> prefix.
->=20
-> So in this case, we pass the helper the string "263 410" and get back a
-> value for either the hacked SHA-1 hash or the SHA-256 or whatever we're
-> using.
+For git, one option would be to localise 'Git Rev News' [0].
 
-I realize this was worded poorly.  So for my example, in this case, we'd
-do:
+Christian Couder (cc'd) organised the last few editions, and might
+have an idea about how it could be localised if that was something
+your community wanted to support.
+Regards,
 
-test-helper-hash-string "263 410"
+Andrew Ardill
 
-For SHA-1, we'd get "263 410".  For SHA-256, we'd get "313 481" (which,
-as SHA-256 blobs, both start with "17" in their hex representation).
-Presumably we'd read some environment variable to determine the proper
-value.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
-
---7pm6blj77jiniwwu
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.21 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAll+aqoACgkQv1NdgR9S
-9osr9A//SyUt5Yqhd/r5wlKaTTbDJyXLNNQEzjzJjqJvRhYRXmFHITX6+5hs52GK
-GaNW94kZsGnl3PyWPstnMPJXEGqJttDp5H9Vh7n/1vVqPDSwbJYqqZ8At2Or2qNI
-QEfuUHvKFxQBUHCFcKqLsb0wjbWptcKzwIFgST6JAlmmrtoTj7KqbT4qVTZl3oiU
-DLu/2mUXOBlC+MyqAysIQ81TyIG0vHhUhQBl+YvrOCNulLLd3vWswdqsEjy87v3T
-pyHXdob/NkHHf9qVIPXQUsSJo6rBra6LOk78zteHugibpPxiF2nTA06R3y6YSgXZ
-Bg0CaYyM1hBNnpgEOpG5DsM908yVT/HPuOcDvlfatgSNbLkEzfNn0J8aTQDnRMR0
-tC/UIaAXT5EER/d7kV+p6e5sr6eeH+Qi42EmVx6rvyOxVjk8y8IWx4GfyPrxp8Xq
-rkQwxCBM1Vqr2YIqvjLKi5NT285Lj5OYxdt3ngyVWrB3MbSCJc708OfnIywbYrFo
-4bz/HlbYWuI3bnwdAYvdsAvHXhe8w/419WJq7FafqKbF19y6mdZi5gYzzUWq84lX
-x5NvF/IOq0+c7rfz4XaEWZ+yJM6GdnIoTs8rDrHMo8aJOYf9kCXlujQ0j3Xju/wy
-rUNBHTgdorULze+ANBs7dk6OLnOgmwgJC/WThrrFdIcI8XIpKwk=
-=Xptk
------END PGP SIGNATURE-----
-
---7pm6blj77jiniwwu--
+[0] https://git.github.io/rev_news/
