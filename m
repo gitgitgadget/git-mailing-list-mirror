@@ -2,140 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D1801F991
-	for <e@80x24.org>; Mon, 31 Jul 2017 21:29:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9C6151F991
+	for <e@80x24.org>; Mon, 31 Jul 2017 21:42:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751126AbdGaV3Z (ORCPT <rfc822;e@80x24.org>);
-        Mon, 31 Jul 2017 17:29:25 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57689 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751017AbdGaV3Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Jul 2017 17:29:24 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E406CA638E;
-        Mon, 31 Jul 2017 17:29:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=uUy0uzjgBZgVGm9Z6BH8MnA/DOk=; b=dVOr3V
-        i8WdcIlCq8cWoEv3karEtkHOM8S6sAf02NMw5fCNpa9GvHkFYZyRnCc7rqIC9EHW
-        fwXHEMyjob8SlRX9GEf/xdgAdJoxv2ZVKklslSurTU/oL6aqoib4Xrhl6CKgKRS1
-        JDgQjb/xJtPHePpfoa6kTOitudE34a5fMHmSk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=YPeHptHRyc5Xgm6JBf8OllHRugQP1bsG
-        rNhYb5XTGXyCa+XfaKSQkGuQS9OxtN1468RA4D7k/n+W/9U4HY3V0qgYtB3OCZFl
-        CzwMg/ZHqtmgH3bsDpCNITP7HcUF6pFeLLEdI+INEjO7IYM1W+f0+CYMpicaxlMf
-        +NyyEc9HkNc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DC7BDA638C;
-        Mon, 31 Jul 2017 17:29:23 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 33817A6389;
-        Mon, 31 Jul 2017 17:29:23 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, peartben@gmail.com, christian.couder@gmail.com
-Subject: Re: [PATCH v2 5/5] sha1_file: support loading lazy objects
-References: <cover.1501532294.git.jonathantanmy@google.com>
-        <cover.1501111615.git.jonathantanmy@google.com>
-        <cover.1501532294.git.jonathantanmy@google.com>
-        <eadce97b6a1e80345a2621e71ce187e9e6bc05bf.1501532294.git.jonathantanmy@google.com>
-Date:   Mon, 31 Jul 2017 14:29:21 -0700
-In-Reply-To: <eadce97b6a1e80345a2621e71ce187e9e6bc05bf.1501532294.git.jonathantanmy@google.com>
-        (Jonathan Tan's message of "Mon, 31 Jul 2017 14:02:47 -0700")
-Message-ID: <xmqqzibkgury.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751625AbdGaVmK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 31 Jul 2017 17:42:10 -0400
+Received: from mail-lf0-f52.google.com ([209.85.215.52]:33760 "EHLO
+        mail-lf0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751114AbdGaVmI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Jul 2017 17:42:08 -0400
+Received: by mail-lf0-f52.google.com with SMTP id d17so51351863lfe.0
+        for <git@vger.kernel.org>; Mon, 31 Jul 2017 14:42:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=G2D5aUqURjNN8iMPVlt2+Gm1aLB7TRzRHEkl/5ukP3o=;
+        b=ApDMuqmkxpf6USTdqNJpXImhaAdV0xlAPznFgZRJ6GdzjzzdMMsZpTn79OTQAr/7I/
+         zw5oPie2mQ/hDep84Qlz7RvMDWQAHBvD66wuHqFbTAjmP7n+PB/YzACvCoUOrZklYTfT
+         27kRPCYNFEfCvKwA1mCUOs/TPT3E4f9HDzGa6O0jq5/Fd9jS5lyO7QGKsvU6Lp2DXrxz
+         9nkCzdipMJz5pCQerK2LgMR3aBnn+OEayI1Lv4CnvlyP0UPjvaGwACpZiBO5iM8StEKo
+         aeyFTwgO0WuVwXhVN6HDncOwrSQ1KS158AL3EaC+2FjtON36SV/lYM4R52df0OSytqlp
+         /gng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=G2D5aUqURjNN8iMPVlt2+Gm1aLB7TRzRHEkl/5ukP3o=;
+        b=A/1znPPROsnr5oIka50S0aYXiopdmMNi8Z7ckMW17i3ZFhzF4Tm/ekCOnFj66IvPET
+         PUDjdbZvvAYI1CmagvmvFDbY9Vv/v2UEylJ9wl+Fzkw7htWamf1jVlTuPFp4JlARR60n
+         yf2N4mlvpviUTv5yelPTSqAOT3jfQrX4r9c9ShelW8qoKi+WeN+EClzu3PouuXeJ6Z2R
+         Xra9zFq0CU1xIhGVlL2kIe4RBT3RLCE9ETPd3ZAXyayDt/bkdG6+u0/pEZ56YDflGXix
+         YIsz90r+iHLXYsgcCKTviVLYan0FhEsj8mEQnr7pqBV1idadJtLBbjjaF0Hui5STaVVg
+         BH9w==
+X-Gm-Message-State: AIVw112cU+T4wgky3HtzsLGTbBzmD/p5aLRwmeGDEoMbVX0GmIwxQ53W
+        giZZ8UpXTzqu/p+J2m+itscX91RrSq2s
+X-Received: by 10.25.204.149 with SMTP id c143mr4961390lfg.195.1501537327067;
+ Mon, 31 Jul 2017 14:42:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 523A5D52-7637-11E7-9442-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Received: by 10.25.1.130 with HTTP; Mon, 31 Jul 2017 14:42:06 -0700 (PDT)
+In-Reply-To: <20170731205621.24305-7-pc44800@gmail.com>
+References: <20170731205621.24305-1-pc44800@gmail.com> <20170731205621.24305-7-pc44800@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 31 Jul 2017 14:42:06 -0700
+Message-ID: <CAGZ79kbyyR54me_+wQDZRrikqKTp_a98yozVfr8P85QHfyyy=Q@mail.gmail.com>
+Subject: Re: [GSoC][PATCH 06/13] submodule: port submodule subcommand 'deinit'
+ from shell to C
+To:     Prathamesh Chavan <pc44800@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
-
-> Teach sha1_file to invoke the command configured in
-> extensions.lazyObject whenever an object is requested and unavailable.
+On Mon, Jul 31, 2017 at 1:56 PM, Prathamesh Chavan <pc44800@gmail.com> wrote:
+> The same mechanism is used even for porting this submodule
+> subcommand, as used in the ported subcommands till now.
+> The function cmd_deinit in split up after porting into three
+> functions: module_deinit(), for_each_submodule_list() and
+> deinit_submodule().
 >
-> The usage of the hook can be suppressed through a flag when invoking
-> has_object_file_with_flags() and other similar functions.
->
-> This is meant as a temporary measure to ensure that all Git commands
-> work in such a situation. Future patches will update some commands to
-> either tolerate missing objects (without invoking the command) or be
-> more efficient in invoking this command.
->
-> In order to determine the code changes in sha1_file.c necessary, I
-> investigated the following:
->  (1) functions in sha1_file that take in a hash, without the user
->      regarding how the object is stored (loose or packed)
->  (2) functions in sha1_file that operate on packed objects (because I
->      need to check callers that know about the loose/packed distinction
->      and operate on both differently, and ensure that they can handle
->      the concept of objects that are neither loose nor packed)
->
-> (1) is handled by the modification to sha1_object_info_extended().
->
-> For (2), I looked at for_each_packed_object and at the packed-related
-> functions that take in a hash. For for_each_packed_object, the callers
-> either already work or are fixed in this patch:
->  - reachable - only to find recent objects
->  - builtin/fsck - already knows about missing objects
->  - builtin/cat-file - warning message added in this commit
->
-> Callers of the other functions do not need to be changed:
->  - parse_pack_index
->    - http - indirectly from http_get_info_packs
->  - find_pack_entry_one
->    - this searches a single pack that is provided as an argument; the
->      caller already knows (through other means) that the sought object
->      is in a specific pack
->  - find_sha1_pack
->    - fast-import - appears to be an optimization to not store a
->      file if it is already in a pack
->    - http-walker - to search through a struct alt_base
->    - http-push - to search through remote packs
->  - has_sha1_pack
->    - builtin/fsck - already knows about promised objects
->    - builtin/count-objects - informational purposes only (check if loose
->      object is also packed)
->    - builtin/prune-packed - check if object to be pruned is packed (if
->      not, don't prune it)
->    - revision - used to exclude packed objects if requested by user
->    - diff - just for optimization
->
-> An alternative design that I considered but rejected:
->
->  - Adding a hook whenever a packed object is requested, not on any
->    object.  That is, whenever we attempt to search the packfiles for an
->    object, if it is missing (from the packfiles and from the loose
->    object storage), to invoke the hook (which must then store it as a
->    packfile), open the packfile the hook generated, and report that the
->    object is found in that new packfile. This reduces the amount of
->    analysis needed (in that we only need to look at how packed objects
->    are handled), but requires that the hook generate packfiles (or for
->    sha1_file to pack whatever loose objects are generated), creating one
->    packfile for each missing object and potentially very many packfiles
->    that must be linearly searched. This may be tolerable now for repos
->    that only have a few missing objects (for example, repos that only
->    want to exclude large blobs), and might be tolerable in the future if
->    we have batching support for the most commonly used commands, but is
->    not tolerable now for repos that exclude a large amount of objects.
->
-> Helped-by: Ben Peart <benpeart@microsoft.com>
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> Mentored-by: Christian Couder <christian.couder@gmail.com>
+> Mentored-by: Stefan Beller <sbeller@google.com>
+> Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
 > ---
+> In this new version, the following changes have been made:
+> * In the function deinit_submodule, since the test is_git_directory()
+>   adds an additional condition, instead is_directory() is used to check
+>   if "sm_path/.git" is a directory.
 
-Even though I said a hugely negative thing about the "missing
-objects are always OK" butchering of fsck, I do like what this patch
-does.  The interface is reasonably well isolated, and moving of the
-long-running-process documentation to a standalone file is very
-sensible.
+Thanks for writing these patches.
+I wonder if (some of) these notes are best put into the code
+as a comment such as
 
+    /* NEEDSWORK: convert to is_submodule_active */
+
+such that people reading this code later realize that checking
+for a directory may not be the "correct" thing, but a thing which
+was easy to express using shell.
+
+> +struct deinit_cb {
+> +       const char *prefix;
+> +       unsigned int quiet: 1;
+> +       unsigned int force: 1;
+> +       unsigned int all: 1;
+
+The value 'all' seems to be unused, i.e. we assign it but never read it?
+
+> +};
+> +#define DEINIT_CB_INIT { NULL, 0, 0, 0 }
+> +
+> +static void deinit_submodule(const struct cache_entry *list_item,
+> +                            void *cb_data)
+> +{
+> +       struct deinit_cb *info = cb_data;
+> +       const struct submodule *sub;
+> +       char *displaypath = NULL;
+> +       struct child_process cp_config = CHILD_PROCESS_INIT;
+> +       struct strbuf sb_config = STRBUF_INIT;
+> +       char *sub_git_dir = xstrfmt("%s/.git", list_item->name);
+> +       mode_t mode = 0777;
+> +
+> +       sub = submodule_from_path(null_sha1, list_item->name);
+> +
+> +       if (!sub || !sub->name)
+> +               goto cleanup;
+> +
+> +       displaypath = get_submodule_displaypath(list_item->name, info->prefix);
+> +
+> +       /* remove the submodule work tree (unless the user already did it) */
+> +       if (is_directory(list_item->name)) {
+> +               struct stat st;
+> +               /* protect submodules containing a .git directory */
+
+Here may a good place to put:
+  /* NEEDSWORK: automatically call absorbgitdirs before warning/die. */
+(It was not in the shell version, so feel free to ignore)
+
+> +               if (!info->force) {
+> +                       struct child_process cp_rm = CHILD_PROCESS_INIT;
+> +                       cp_rm.git_cmd = 1;
+> +                       argv_array_pushl(&cp_rm.args, "rm", "-qn",
+> +                                        list_item->name, NULL);
+
+A bug that exists in the shell version as well as here:
+What if the submodule has the name '--cached', which happens
+to be a valid argument for git-rm?
+
+The call to git-rm would die claiming that the <file> is missing,
+as the file name was miss-interpreted as another flag.
+
+To solve this problem we would insert a '--' after the options,
+before the file name to state that the last argument is a <file>.
+
+Not sure if we want to fix the bug while we're here or if we rather
+want to add
+
+    /* NEEDSWORK: add '--' to confirm <file> argument */
+
+> +       if (mkdir(list_item->name, mode))
+> +               die(_("could not create empty submodule directory %s"),
+> +                     displaypath);
+
+In the shell version we used the shell mkdir, which on failure
+would print the error to stderr on its own. The added "|| say"
+is just to clarify the bigger picture.
+
+mkdir in C doesn't print the actual error (e.g.
+no diskspace, permissions) so we have to do it.
+Use 'die_errno' instead as then the reason will be given as well.
+
+> +       cp_config.git_cmd = 1;
+> +       argv_array_pushl(&cp_config.args, "config", "--get-regexp", NULL);
+> +       argv_array_pushf(&cp_config.args, "submodule.%s\\.", sub->name);
+
+It would be nice if the commit message could give hints as why a literal
+translation was chosen here and not e.g. one of the builtin config
+calls, as that would omit spawning a process.
