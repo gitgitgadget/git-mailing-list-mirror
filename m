@@ -2,87 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 79A2320899
-	for <e@80x24.org>; Mon, 31 Jul 2017 00:16:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5984320899
+	for <e@80x24.org>; Mon, 31 Jul 2017 03:34:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751561AbdGaAQ1 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 30 Jul 2017 20:16:27 -0400
-Received: from mail-ua0-f194.google.com ([209.85.217.194]:34794 "EHLO
-        mail-ua0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751169AbdGaAQ0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Jul 2017 20:16:26 -0400
-Received: by mail-ua0-f194.google.com with SMTP id k43so18458779uaf.1
-        for <git@vger.kernel.org>; Sun, 30 Jul 2017 17:16:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:reply-to:to:cc:date:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Sip7dygASo1E1yl6Z0UAWhdIgM7vjd0yqlZafkhHaAI=;
-        b=Mq0ujaP1TOvF66w5FhGDMbfO/VpryLhN/Ik8jKzB5vCyUw/fo4KHICAAYPhXZBWl0i
-         yME4jzQ+ZPOJodLP1gYp2rX0b0lL/+O4fnJq5KXZ+WSI1cCCSqU2ksgIzip4eaDu5cHK
-         YO9E22fCgDkkJTuhvu+/sSd2U/FBackTTMVSJsxpG4XAUHVzgJe+NrFPk85ROcJL9iwJ
-         SBc2vTJHOkbZDEy12IjntmnD9kyK28HLtnNTO7FRcFkSMJBgEbfUMIYV+p4pTIXZJkUu
-         zXHtpN9AqhToNLAXf3duN1jTl23tz0GuG9L+MdL7oo8UK0ICQZMxku5xSpq3JOOJ16fs
-         x2Tg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:reply-to:to:cc:date
-         :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=Sip7dygASo1E1yl6Z0UAWhdIgM7vjd0yqlZafkhHaAI=;
-        b=J6leTIJ9mEkypaMWd4AiGdot9xfVsL+ozDNv/dNYj2g8QSyYnVLWT6082sh7OvvjsO
-         nKJY7MC4GQyyPeUC92UXwiENn70gjTJ+lQYVcYwJF9zLE0s8shkgNVMIaiRFexCkJG9y
-         p3OtJBgjwG6bxXWvKWkonEB5kfEnx7oL2VVu+uXtne94zlcmhz1MlrTwYdX/XWTuDKCI
-         HPnjcRvMo6zDdQKWh3/hwdEvpm/nghCxrsZN+br3aAGazo4rUFxjkqoCeBQxztvoIJ/r
-         z9iXIg84DIDpu4Dq405MpurFCChQpY8ziooULAdqjuh2R3UbVShlLdrWKv5/lBxDmDtS
-         Zkvw==
-X-Gm-Message-State: AIVw113RCgAI4QoORFs+OhRbmF+68MxUDfy5Z2GRHGKjcyoV0BuUpuj8
-        R5XxClXfkFGXPA==
-X-Received: by 10.176.77.96 with SMTP id k32mr8303387uag.39.1501460185935;
-        Sun, 30 Jul 2017 17:16:25 -0700 (PDT)
-Received: from [192.168.1.7] ([190.236.205.11])
-        by smtp.googlemail.com with ESMTPSA id b76sm6125984vkd.44.2017.07.30.17.16.24
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 30 Jul 2017 17:16:25 -0700 (PDT)
-Message-ID: <1501460182.3232.54.camel@gmail.com>
-Subject: Re: Contact with Latinamerica
-From:   Christopher =?ISO-8859-1?Q?D=EDaz?= 
-        <christopher.diaz.riv@gmail.com>
-Reply-To: christopher.diaz.riv@gmail.com
-To:     Andrew Ardill <andrew.ardill@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        Philip Oakley <philipoakley@iee.org>,
-        Christian Couder <christian.couder@gmail.com>
-Date:   Sun, 30 Jul 2017 19:16:22 -0500
-In-Reply-To: <CAH5451kzm-gh-7MRYie8nt17+yZdFLgzyPF3ZAwmL74SrR0XvA@mail.gmail.com>
-References: <1501423608.3232.30.camel@gmail.com>
-         <6EF3784A5C1F420699D881AF642F28CD@PhilipOakley>
-         <CAH5451kzm-gh-7MRYie8nt17+yZdFLgzyPF3ZAwmL74SrR0XvA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.22.6 
-Mime-Version: 1.0
+        id S1751774AbdGaDec (ORCPT <rfc822;e@80x24.org>);
+        Sun, 30 Jul 2017 23:34:32 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53092 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751746AbdGaDeb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Jul 2017 23:34:31 -0400
+Received: (qmail 28151 invoked by uid 109); 31 Jul 2017 03:34:31 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 31 Jul 2017 03:34:31 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 22905 invoked by uid 111); 31 Jul 2017 03:34:50 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Sun, 30 Jul 2017 23:34:50 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 30 Jul 2017 23:34:29 -0400
+Date:   Sun, 30 Jul 2017 23:34:29 -0400
+From:   Jeff King <peff@peff.net>
+To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Brandon Williams <bmwill@google.com>
+Subject: Re: [PATCH v2 05/10] git.c: provide setup_auto_pager()
+Message-ID: <20170731033429.dgftfeum6n3ddxua@sigill.intra.peff.net>
+References: <cover.1499723297.git.martin.agren@gmail.com>
+ <cover.1500321657.git.martin.agren@gmail.com>
+ <b6ab825d3bda4b40201b0aa8e97c9fd721ed8171.1500321658.git.martin.agren@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <b6ab825d3bda4b40201b0aa8e97c9fd721ed8171.1500321658.git.martin.agren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> 
-> 
-> Another idea, and I don't think anyone has done this yet, would be to
-> localise news posts coming out of projects.
-> 
+On Mon, Jul 17, 2017 at 10:10:47PM +0200, Martin Ågren wrote:
 
-That's awesome Andrew, thanks a lot for the idea, it could be very good
-to have such a media where all the news about projects could be easily
-found! Indeed that's something we could help with since it would be
-much easier for us to invite people when we have all that information
-to show.
+> The previous patch introduced a way for builtins to declare that they
+> will take responsibility for handling the `pager.foo`-config item. (See
+> the commit message of that patch for why that could be useful.)
+> 
+> Provide setup_auto_pager(), which builtins can call in order to handle
+> `pager.<cmd>`, including possibly starting the pager. Make this function
+> don't do anything if a pager has already been started, as indicated by
+> use_pager or pager_in_use().
+> 
+> Whenever this function is called from a builtin, git.c will already have
+> called commit_pager_choice(). Since commit_pager_choice() treats the
+> special value -1 as "punt" or "not yet decided", it is not a problem
+> that we might end up calling commit_pager_choice() once in git.c and
+> once (or more) in the builtin. Make the new function use -1 in the same
+> way and document it as "punt".
 
-Thanks again all of you,
-Christopher Díaz Riveros
+At first I wasn't sure if it would ever make sense to use "-1" here. The
+"punt" that happens in earlier calls to commit_pager_choice() is there
+because we might adjust our decision later. And this would generally be
+the final decision, I would think. So I'd be surprised if we had
+anything besides "0" or "1" in the "def" argument.
+
+But thinking on it, the most plausible case is something like:
+
+  setup_auto_pager("foo", -1);
+  ...
+  /* fallback to some historical compatibility name */
+  setup_auto_pager("bar", 0);
+
+And it's important for the "-1" there to be a true punt, and not do
+anything in commit_pager_choice(). So it's probably worth documenting
+the "-1" behavior as you did here as a possible value for "def".
+
+-Peff
