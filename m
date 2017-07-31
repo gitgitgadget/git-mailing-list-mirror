@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C6151F991
-	for <e@80x24.org>; Mon, 31 Jul 2017 21:42:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7BE021F991
+	for <e@80x24.org>; Mon, 31 Jul 2017 22:15:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751625AbdGaVmK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 31 Jul 2017 17:42:10 -0400
-Received: from mail-lf0-f52.google.com ([209.85.215.52]:33760 "EHLO
+        id S1751227AbdGaWPn (ORCPT <rfc822;e@80x24.org>);
+        Mon, 31 Jul 2017 18:15:43 -0400
+Received: from mail-lf0-f52.google.com ([209.85.215.52]:34497 "EHLO
         mail-lf0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751114AbdGaVmI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Jul 2017 17:42:08 -0400
-Received: by mail-lf0-f52.google.com with SMTP id d17so51351863lfe.0
-        for <git@vger.kernel.org>; Mon, 31 Jul 2017 14:42:08 -0700 (PDT)
+        with ESMTP id S1751106AbdGaWPm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Jul 2017 18:15:42 -0400
+Received: by mail-lf0-f52.google.com with SMTP id g25so115559948lfh.1
+        for <git@vger.kernel.org>; Mon, 31 Jul 2017 15:15:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=G2D5aUqURjNN8iMPVlt2+Gm1aLB7TRzRHEkl/5ukP3o=;
-        b=ApDMuqmkxpf6USTdqNJpXImhaAdV0xlAPznFgZRJ6GdzjzzdMMsZpTn79OTQAr/7I/
-         zw5oPie2mQ/hDep84Qlz7RvMDWQAHBvD66wuHqFbTAjmP7n+PB/YzACvCoUOrZklYTfT
-         27kRPCYNFEfCvKwA1mCUOs/TPT3E4f9HDzGa6O0jq5/Fd9jS5lyO7QGKsvU6Lp2DXrxz
-         9nkCzdipMJz5pCQerK2LgMR3aBnn+OEayI1Lv4CnvlyP0UPjvaGwACpZiBO5iM8StEKo
-         aeyFTwgO0WuVwXhVN6HDncOwrSQ1KS158AL3EaC+2FjtON36SV/lYM4R52df0OSytqlp
-         /gng==
+        bh=Q4L5k6rvb4QQQYvZkQX+M3chT8+g+/OyokIQ69FTnKc=;
+        b=gvjulrjfF7I9pkPNXDBIm3UA8A1LmuM4PQie3Y9OgZYzBpV1iB5XvY0TzLKcgPP7c2
+         NiydZLCni5OyCqIC7WsPylVvFG3UxVyWGNNkD9PdZD+RGVFp8mCEXs95bz+nO9Q1wcH4
+         JSLa4zfi9WkcV56pyE6JzC5RYJApuQhVqs0ytIONeTRwwArzBq+1veufsipzZEZj4M0L
+         zOuiH/NM2nI111sPAGVbDr68LU3b4HTCffkrz+wE1ICJGmyZAtW4stnU2Q/fLKZuL4sz
+         p2AZzCwTA6Tp9+Up5H6qB1nYD6XHmjnbbcdd3yAzX/YBHPULo/WASkqlueiZQ9jY0Wjn
+         feeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=G2D5aUqURjNN8iMPVlt2+Gm1aLB7TRzRHEkl/5ukP3o=;
-        b=A/1znPPROsnr5oIka50S0aYXiopdmMNi8Z7ckMW17i3ZFhzF4Tm/ekCOnFj66IvPET
-         PUDjdbZvvAYI1CmagvmvFDbY9Vv/v2UEylJ9wl+Fzkw7htWamf1jVlTuPFp4JlARR60n
-         yf2N4mlvpviUTv5yelPTSqAOT3jfQrX4r9c9ShelW8qoKi+WeN+EClzu3PouuXeJ6Z2R
-         Xra9zFq0CU1xIhGVlL2kIe4RBT3RLCE9ETPd3ZAXyayDt/bkdG6+u0/pEZ56YDflGXix
-         YIsz90r+iHLXYsgcCKTviVLYan0FhEsj8mEQnr7pqBV1idadJtLBbjjaF0Hui5STaVVg
-         BH9w==
-X-Gm-Message-State: AIVw112cU+T4wgky3HtzsLGTbBzmD/p5aLRwmeGDEoMbVX0GmIwxQ53W
-        giZZ8UpXTzqu/p+J2m+itscX91RrSq2s
-X-Received: by 10.25.204.149 with SMTP id c143mr4961390lfg.195.1501537327067;
- Mon, 31 Jul 2017 14:42:07 -0700 (PDT)
+        bh=Q4L5k6rvb4QQQYvZkQX+M3chT8+g+/OyokIQ69FTnKc=;
+        b=q8FD8+zcDgtlHxI+Ql1kkL87Q09BueWsRVUzjxN3D5E5NadXcBpldhVk4xdL8kOvyN
+         YcuOTH7fdlGWxPh2hPsovOxuK1EmdfJjxmyQXwGGstwaHwsneBVvvFQ/4gm/HSTW3wvv
+         PNQyYvngSHDh7rXnTXOluXgVK/GVjSzQNwTKtZaMq+zSfdZL1noaIlzpb8ZrGiUxpZOd
+         EKaQdQATx0jpRQ+Sy8g91ZReo7kaomQ8xQLh7DEQWHYVYXcnNs2GYTDWPmB9+ydx9xX+
+         1rRXa6U2QB3BSR6Ov70bWuliaQOnIe90K6j4n9EUtdeT3x/fI82YTcvix1BuzSujdcnW
+         DA+Q==
+X-Gm-Message-State: AIVw1127SE1B/DFtK6cgt4mrOZF33GD3ZVyG909J7OjJtx8X0HOAsIhG
+        9mD25euXcs0ls+qQ1FM6bxbvdhAo1jUq
+X-Received: by 10.25.204.149 with SMTP id c143mr4978519lfg.195.1501539340592;
+ Mon, 31 Jul 2017 15:15:40 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.25.1.130 with HTTP; Mon, 31 Jul 2017 14:42:06 -0700 (PDT)
-In-Reply-To: <20170731205621.24305-7-pc44800@gmail.com>
-References: <20170731205621.24305-1-pc44800@gmail.com> <20170731205621.24305-7-pc44800@gmail.com>
+Received: by 10.25.1.130 with HTTP; Mon, 31 Jul 2017 15:15:39 -0700 (PDT)
+In-Reply-To: <20170731205621.24305-9-pc44800@gmail.com>
+References: <20170731205621.24305-1-pc44800@gmail.com> <20170731205621.24305-9-pc44800@gmail.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 31 Jul 2017 14:42:06 -0700
-Message-ID: <CAGZ79kbyyR54me_+wQDZRrikqKTp_a98yozVfr8P85QHfyyy=Q@mail.gmail.com>
-Subject: Re: [GSoC][PATCH 06/13] submodule: port submodule subcommand 'deinit'
- from shell to C
+Date:   Mon, 31 Jul 2017 15:15:39 -0700
+Message-ID: <CAGZ79kaWn9z47Va=VW4R2Aswws1N5n2u4Kvatn73s0YnV0pVqQ@mail.gmail.com>
+Subject: Re: [GSoC][PATCH 08/13] submodule: port submodule subcommand
+ 'summary' from shell to C
 To:     Prathamesh Chavan <pc44800@gmail.com>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
         Christian Couder <christian.couder@gmail.com>
@@ -63,106 +63,241 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Mon, Jul 31, 2017 at 1:56 PM, Prathamesh Chavan <pc44800@gmail.com> wrote:
-> The same mechanism is used even for porting this submodule
-> subcommand, as used in the ported subcommands till now.
-> The function cmd_deinit in split up after porting into three
-> functions: module_deinit(), for_each_submodule_list() and
-> deinit_submodule().
+> The submodule subcommand 'summary' is ported in the process of
+> making git-submodule a builtin. The function cmd_summary() from
+> git-submodule.sh is ported to functions module_summary(),
+> compute_summary_module_list(), prepare_submodule_summary() and
+> print_submodule_summary().
+>
+> The first function module_summary() parses the options of submodule
+> subcommand and also acts as the front-end of this subcommand.
+> After parsing them, it calls the compute_summary_module_list()
+>
+> The functions compute_summary_module_list() runs the diff_cmd,
+> and generates the modules list, as required by the subcommand.
+> The generation of this module list is done by the using the
+> callback function submodule_summary_callback(), and stored in the
+> structure module_cb.
+>
+> Once the module list is generated, prepare_submodule_summary()
+> further goes through the list and filters the list, for
+> eventually calling the print_submodule_summary() function.
+>
+> Finally, the print_submodule_summary() takes care of generating
+> and printing the summary for each submodule.
 >
 > Mentored-by: Christian Couder <christian.couder@gmail.com>
 > Mentored-by: Stefan Beller <sbeller@google.com>
 > Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
 > ---
 > In this new version, the following changes have been made:
-> * In the function deinit_submodule, since the test is_git_directory()
->   adds an additional condition, instead is_directory() is used to check
->   if "sm_path/.git" is a directory.
-
-Thanks for writing these patches.
-I wonder if (some of) these notes are best put into the code
-as a comment such as
-
-    /* NEEDSWORK: convert to is_submodule_active */
-
-such that people reading this code later realize that checking
-for a directory may not be the "correct" thing, but a thing which
-was easy to express using shell.
-
-> +struct deinit_cb {
-> +       const char *prefix;
-> +       unsigned int quiet: 1;
-> +       unsigned int force: 1;
-> +       unsigned int all: 1;
-
-The value 'all' seems to be unused, i.e. we assign it but never read it?
-
+>
+> * Firstly, about the function compute_summary_module_list().
+>   This function is created to generate the list of modules, for which
+>   we will generate the summary further. Since the list is actually
+>   generated using the git-diff-files or git-diff-index command, but for
+>   porting this, we required to create a function similar to the builtin
+>   functions of the above commands. But we can't directly call cmd_diff_files()
+>   and cmd_diff_index() since we don't have to display the output and instead
+>   need to store it. Hence, this function is introduced.
+>
+> * Also, the module_cb_list *list is not freed since it is a non-heap object.
+>   Hence, free() can't be using on the non-heap objects.
+>
+> * In the function prepare_submodule_summary(), as suggested
+>   'git_config_get_string_const' was used instead of instead of '_value'
+>
+> * Some variables which weren't modified throughout the function-call were
+>   passed as const.
+>
+> * The '!!' trick, which wasn't used in the last patch, is now used in this
+>   new version .
+>
+> * the variables sha1_dst and sha1_src are removed from the function
+>   print_submodule_summary(), and instead the p->oid_src and p->oid_dst are
+>   used.
+>
+> * The variable sm_git_dir is freed at the end of the function.
+>
+> * variable head was no longer used in module_summary() and instead the strbuf
+>   was utilized.
+>
+>  builtin/submodule--helper.c | 425 ++++++++++++++++++++++++++++++++++++++++++++
+>  git-submodule.sh            | 182 +------------------
+>  2 files changed, 426 insertions(+), 181 deletions(-)
+>
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index f642f9889..94438d6ce 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -13,6 +13,9 @@
+>  #include "remote.h"
+>  #include "refs.h"
+>  #include "connect.h"
+> +#include "revision.h"
+> +#include "diffcore.h"
+> +#include "diff.h"
+>
+>  typedef void (*submodule_list_func_t)(const struct cache_entry *list_item,
+>                                       void *cb_data);
+> @@ -766,6 +769,427 @@ static int module_name(int argc, const char **argv, const char *prefix)
+>         return 0;
+>  }
+>
+> +struct module_cb {
+> +       unsigned int mod_src;
+> +       unsigned int mod_dst;
+> +       struct object_id oid_src;
+> +       struct object_id oid_dst;
+> +       char status;
+> +       const char *sm_path;
 > +};
-> +#define DEINIT_CB_INIT { NULL, 0, 0, 0 }
+> +#define MODULE_CB_INIT { 0, 0, NULL, NULL, '\0', NULL }
 > +
-> +static void deinit_submodule(const struct cache_entry *list_item,
-> +                            void *cb_data)
+> +struct module_cb_list {
+> +       struct module_cb **entries;
+> +       int alloc, nr;
+> +};
+> +#define MODULE_CB_LIST_INIT { NULL, 0, 0 }
+> +
+> +struct summary_cb {
+> +       int argc;
+> +       const char **argv;
+> +       const char *prefix;
+> +       char *diff_cmd;
+> +       unsigned int cached: 1;
+> +       unsigned int for_status: 1;
+> +       unsigned int quiet: 1;
+> +       unsigned int files: 1;
+> +       int summary_limits;
+> +};
+> +#define SUMMARY_CB_INIT { 0, NULL, NULL, NULL, 0, 0, 0, 0, 0 }
+> +
+> +static int verify_submodule_object_name(const char *sm_path, const char *sha1)
 > +{
-> +       struct deinit_cb *info = cb_data;
-> +       const struct submodule *sub;
-> +       char *displaypath = NULL;
-> +       struct child_process cp_config = CHILD_PROCESS_INIT;
-> +       struct strbuf sb_config = STRBUF_INIT;
-> +       char *sub_git_dir = xstrfmt("%s/.git", list_item->name);
-> +       mode_t mode = 0777;
+> +       struct child_process cp_rev_parse = CHILD_PROCESS_INIT;
 > +
-> +       sub = submodule_from_path(null_sha1, list_item->name);
+> +       cp_rev_parse.git_cmd = 1;
+> +       cp_rev_parse.no_stdout = 1;
+> +       cp_rev_parse.dir = sm_path;
+> +       prepare_submodule_repo_env(&cp_rev_parse.env_array);
 > +
-> +       if (!sub || !sub->name)
-> +               goto cleanup;
+> +       argv_array_pushl(&cp_rev_parse.args, "rev-parse", "-q",
+> +                        "--verify", NULL);
+> +       argv_array_pushf(&cp_rev_parse.args, "%s^0", sha1);
 > +
-> +       displaypath = get_submodule_displaypath(list_item->name, info->prefix);
+> +       if (run_command(&cp_rev_parse))
+> +               return 1;
 > +
-> +       /* remove the submodule work tree (unless the user already did it) */
-> +       if (is_directory(list_item->name)) {
-> +               struct stat st;
-> +               /* protect submodules containing a .git directory */
+> +       return 0;
+> +}
+> +
+> +static void print_submodule_summary(struct summary_cb *info,
+> +                                   struct module_cb *p)
+> +{
+> +       int missing_src = 0;
+> +       int missing_dst = 0;
+> +       char *displaypath;
+> +       const char *sha1_abbr_src;
+> +       const char *sha1_abbr_dst;
+> +       int errmsg = 0;
+> +       int total_commits = -1;
+> +       char *sm_git_dir = xstrfmt("%s/.git", p->sm_path);
+> +       int is_sm_git_dir = 0;
+> +
+> +       if (!info->cached && !oidcmp(&p->oid_dst, &null_oid)) {
+> +               if (S_ISGITLINK(p->mod_dst)) {
+> +                       struct child_process cp_rev_parse = CHILD_PROCESS_INIT;
+> +                       struct strbuf sb_rev_parse = STRBUF_INIT;
+> +
+> +                       cp_rev_parse.git_cmd = 1;
+> +                       cp_rev_parse.no_stderr = 1;
+> +                       cp_rev_parse.dir = p->sm_path;
+> +                       prepare_submodule_repo_env(&cp_rev_parse.env_array);
+> +
+> +                       argv_array_pushl(&cp_rev_parse.args,
+> +                                        "rev-parse", "HEAD", NULL);
+> +                       if (!capture_command(&cp_rev_parse, &sb_rev_parse, 0)) {
+> +                               strbuf_strip_suffix(&sb_rev_parse, "\n");
+> +
+> +                               get_oid_hex(sb_rev_parse.buf, &p->oid_dst);
+> +                       }
+> +                       strbuf_release(&sb_rev_parse);
 
-Here may a good place to put:
-  /* NEEDSWORK: automatically call absorbgitdirs before warning/die. */
-(It was not in the shell version, so feel free to ignore)
+I think this could be replaced via
+head_ref_submodule(sub->path, callback function, &where_to_store)
+or is there some trickery going on, that this also works on
+non-compliant submodules?
+(Maybe add that as a NEEDSWORK/TODO)
 
-> +               if (!info->force) {
-> +                       struct child_process cp_rm = CHILD_PROCESS_INIT;
-> +                       cp_rm.git_cmd = 1;
-> +                       argv_array_pushl(&cp_rm.args, "rm", "-qn",
-> +                                        list_item->name, NULL);
+> +static int compute_summary_module_list(char *head, struct summary_cb *info)
+> +{
+> +       struct argv_array diff_args = ARGV_ARRAY_INIT;
+> +       struct rev_info rev;
+> +       struct module_cb_list list = MODULE_CB_LIST_INIT;
+> +
+> +       argv_array_push(&diff_args, info->diff_cmd);
+> +       if (info->cached)
+> +               argv_array_push(&diff_args, "--cached");
+> +       argv_array_pushl(&diff_args, "--ignore-submodules=dirty", "--raw",
+> +                        NULL);
+> +       if (head)
+> +               argv_array_push(&diff_args, head);
+> +       argv_array_push(&diff_args, "--");
+> +       if (info->argc)
+> +               argv_array_pushv(&diff_args, info->argv);
+> +
+> +       git_config(git_diff_basic_config, NULL);
+> +       init_revisions(&rev, info->prefix);
+> +       gitmodules_config();
+> +       rev.abbrev = 0;
 
-A bug that exists in the shell version as well as here:
-What if the submodule has the name '--cached', which happens
-to be a valid argument for git-rm?
+Recently there was a discussion how to operate the
+revision machinery best (search for earlier versions of
+js/rebase-i-final if interested), whether we can and want
+to directly set flags such as .abbrev or if we'd rather
+want to push "--abbrev=0" to the diff_args before the --
 
-The call to git-rm would die claiming that the <file> is missing,
-as the file name was miss-interpreted as another flag.
+bisect and archive both assign abbrev directly, so I think
+we're fine here.
 
-To solve this problem we would insert a '--' after the options,
-before the file name to state that the last argument is a <file>.
+> +       precompose_argv(diff_args.argc, diff_args.argv);
+> +
+> +       diff_args.argc = setup_revisions(diff_args.argc, diff_args.argv,
+> +                                        &rev, NULL);
+> +       rev.diffopt.output_format = DIFF_FORMAT_NO_OUTPUT | DIFF_FORMAT_CALLBACK;
+> +       rev.diffopt.format_callback = submodule_summary_callback;
+> +       rev.diffopt.format_callback_data = &list;
+> +
+> +       if (!info->cached) {
+> +               if (!strcmp(info->diff_cmd, "diff-index"))
 
-Not sure if we want to fix the bug while we're here or if we rather
-want to add
+This strcmp smells like we're encoding the state not optimally
+in 'info'.  Maybe we can have an enum { DIFF_FILES, DIFF_INDEX }
+instead of a string (that we assign earlier) and then have to
+compare to it again.
 
-    /* NEEDSWORK: add '--' to confirm <file> argument */
+> +                       setup_work_tree();
+> +               if (read_cache_preload(&rev.diffopt.pathspec) < 0) {
+> +                       perror("read_cache_preload");
+> +                       return -1;
+> +               }
+> +       } else if (read_cache() < 0) {
+> +               perror("read_cache");
+> +               return -1;
+> +       }
 
-> +       if (mkdir(list_item->name, mode))
-> +               die(_("could not create empty submodule directory %s"),
-> +                     displaypath);
+This cascaded decision whether to use
+setup_work_tree / read_cache_preload / read_cache
+seems quite optimized, hence complicated to read. :)
+I like it, though.
 
-In the shell version we used the shell mkdir, which on failure
-would print the error to stderr on its own. The added "|| say"
-is just to clarify the bigger picture.
+> +
+> +       if (!summary_limits)
+> +               return 0;
 
-mkdir in C doesn't print the actual error (e.g.
-no diskspace, permissions) so we have to do it.
-Use 'die_errno' instead as then the reason will be given as well.
-
-> +       cp_config.git_cmd = 1;
-> +       argv_array_pushl(&cp_config.args, "config", "--get-regexp", NULL);
-> +       argv_array_pushf(&cp_config.args, "submodule.%s\\.", sub->name);
-
-It would be nice if the commit message could give hints as why a literal
-translation was chosen here and not e.g. one of the builtin config
-calls, as that would omit spawning a process.
+Good call for converting "test $summary_limit = 0 && return".
+I suspected this may be an overeager optimization (as no
+error checking is done at all, but that is what it is)
+f2dc06a344 (git-submodule summary: limit summary size,
+2008-03-11) introduced it like this.
