@@ -2,58 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B0AF1F991
-	for <e@80x24.org>; Mon, 31 Jul 2017 20:57:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2574D1F991
+	for <e@80x24.org>; Mon, 31 Jul 2017 20:57:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751722AbdGaU46 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 31 Jul 2017 16:56:58 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:36164 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751612AbdGaU4z (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Jul 2017 16:56:55 -0400
-Received: by mail-pg0-f66.google.com with SMTP id y129so32274330pgy.3
-        for <git@vger.kernel.org>; Mon, 31 Jul 2017 13:56:55 -0700 (PDT)
+        id S1751736AbdGaU5C (ORCPT <rfc822;e@80x24.org>);
+        Mon, 31 Jul 2017 16:57:02 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:37054 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751102AbdGaU47 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Jul 2017 16:56:59 -0400
+Received: by mail-pf0-f196.google.com with SMTP id 72so6976434pfl.4
+        for <git@vger.kernel.org>; Mon, 31 Jul 2017 13:56:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=d4b6EiYAqg5+2Aho/MNlhFBc/z0DatRWJdApMdw7sFk=;
-        b=HyRVAGOyS8k77xtbgPxkmtH12GdkA/TUD0YG374x375KyWx6Bqo/6qeM9kZX/E568i
-         +Wcy4MfjbQx6FLKIpXVnG3jetbyi82Qz2BCNVa/A3KWRJAlsR8fmE0TmcppmIa2JszF4
-         E/n2CUZTjgdDWz256u6t+h7S+mRHBUrLMf6ho4aw3HeJT2goaST7YIxf9yWatOIe/A/z
-         QWPoBgTcyiBERoav/rWpWRRW9cSk7pCF6KwEQZvdrQO1eqi+6IfG1GaMUcyQ06tDQ7Ei
-         6AK+Rwlsg6dUadOPWagx8KncLVpF4QLMmUdBA046YiBZ+8KqafZyrM0b/A/JnaY8iBQG
-         Z0AA==
+        bh=yYe9GlQcibhWcUx06aHtNBxSuqjNiLPYp6cyhcLUSkM=;
+        b=SndqGDWMAy7DNi1vjdPDLuMrpnNgWEvK3JkZswixy4cTvEIDOzciTaMjX28cnomxhG
+         LJRwPlTpCyYu4GlQPJcms2+wVqbs+5gbnkgo7aVZuIEOc3Z877KFYmiAPXY51BhK3ZIN
+         MlqcK2O20BiEieC8gAP60h1HwYEY+WtFkyfLwe24OzEEBpKbEr899Sf0qDs0mXPoByDo
+         avHKO6IMoTy4P6JAZuBRK0hW9Qd5zboY0d+AcKliTpcpj1pIUoM7xv9kUWssAEMDiqW8
+         CVesYjUmygHUYV14fCZag+h5kegVp8i3JeFsPeL2kA84xvW9QzNEzm6f6b0mMzSv42PD
+         cq4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=d4b6EiYAqg5+2Aho/MNlhFBc/z0DatRWJdApMdw7sFk=;
-        b=KBGnZnwZEdlLcJWVjd6fW842mipNrMVKXJLPmFJczApyiAZZrZSld9HbGEW3VkZY0f
-         WzKMNZ7TpUECz0xUIVwCxas3BN2+nK9AXllIePGw1q603GnxJ1cfTcVJfGADc1/ZQwUi
-         ZG8Sscz2F+aveCn3QQgFRTP/AJ2dKVQjg+DtEvYP5Qi1SPtIj+8VWz9zfb8VCVMd5vtY
-         gwaKTBX9bv6ovg7dGJ/tjgHFW4XJRZpaje4p4vDApOeVnkY+QOXAcHyeiewaVY+OZpT7
-         YnzjJKP2LQMMYDkuHKaFCWxlfExR4LlyidTP9WAhETEOSM2sbABUgz+/1UUeRyq1XFpu
-         u3hg==
-X-Gm-Message-State: AIVw113Ns4jtdXZmM+ciuinBfqZok0FrkEj7Lzv5lQhHP2i+wwfnv6FN
-        JT7BDO/T1QyPbOcFJFhbDw==
-X-Received: by 10.98.106.6 with SMTP id f6mr17006033pfc.53.1501534614815;
-        Mon, 31 Jul 2017 13:56:54 -0700 (PDT)
+        bh=yYe9GlQcibhWcUx06aHtNBxSuqjNiLPYp6cyhcLUSkM=;
+        b=nScZ3mScpO8YVsdFwhE4f5yZCpJzAqJwUcg72xbE+jp+G3D1cCTU8/atrHwYJk6co6
+         kDyp/1AAjcdmU/hR6RMnXhPVWx6+xMFY7K+yIIRJcVlYEnjrvX/2JluBZKpDipwxSbRK
+         xLljPBgoYS6x0SPXz/c6fiwqdLCfD/hM8Cp29K26CWK+x6j45dPcEZmQhCmw/cqrouXu
+         /cl0LdvwNK6GGsF7mNjKADBRtWtVfcUrpzan5ZwxiBIHEUX02+4mYhCP5/LD4YCSrKbE
+         qnSDLaIQD/DE5lnBMtt3j+J0zrFRRjTXVRJasd5djB+pofGS8r/9XR6VUrI9QGlKLwmR
+         lzRw==
+X-Gm-Message-State: AIVw112hWNPC/4GjTMw+0rVJPN0aBlXxKHHop/CszG2BLRWzoc47TKKn
+        F40cB3XcedY9+NIohGpRWg==
+X-Received: by 10.98.166.153 with SMTP id r25mr16579258pfl.155.1501534618171;
+        Mon, 31 Jul 2017 13:56:58 -0700 (PDT)
 Received: from localhost.localdomain ([2405:205:6182:3b53:5da6:3508:cb8e:5545])
-        by smtp.gmail.com with ESMTPSA id 16sm52881007pfq.151.2017.07.31.13.56.51
+        by smtp.gmail.com with ESMTPSA id 16sm52881007pfq.151.2017.07.31.13.56.55
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 31 Jul 2017 13:56:54 -0700 (PDT)
+        Mon, 31 Jul 2017 13:56:57 -0700 (PDT)
 From:   Prathamesh Chavan <pc44800@gmail.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, christian.couder@gmail.com,
         Prathamesh Chavan <pc44800@gmail.com>
-Subject: [GSoC][PATCH 04/13] submodule: port submodule subcommand 'status' from shell to C
-Date:   Tue,  1 Aug 2017 02:26:12 +0530
-Message-Id: <20170731205621.24305-5-pc44800@gmail.com>
+Subject: [GSoC][PATCH 05/13] submodule: port submodule subcommand 'sync' from shell to C
+Date:   Tue,  1 Aug 2017 02:26:13 +0530
+Message-Id: <20170731205621.24305-6-pc44800@gmail.com>
 X-Mailer: git-send-email 2.13.0
 In-Reply-To: <20170731205621.24305-1-pc44800@gmail.com>
 References: <20170731205621.24305-1-pc44800@gmail.com>
@@ -62,167 +62,169 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This aims to make git-submodule 'status' a built-in. Hence, the function
-cmd_status() is ported from shell to C. This is done by introducing
-three functions: module_status(), submodule_status() and print_status().
+Port the submodule subcommand 'sync' from shell to C using the same
+mechanism as that used for porting submodule subcommand 'status'.
+Hence, here the function cmd_sync() is ported from shell to C.
+This is done by introducing three functions: module_sync(),
+sync_submodule() and print_default_remote().
 
-The function module_status() acts as the front-end of the subcommand.
-It parses subcommand's options and then calls the function
-module_list_compute() for computing the list of submodules. Then
-this functions calls for_each_submodule_list() looping through the
-list obtained.
-
-Then for_each_submodule_list() calls submodule_status() for each of the
-submodule in its list. The function submodule_status() is responsible
-for generating the status each submodule it is called for, and
-then calls print_status().
-
-Finally, the function print_status() handles the printing of submodule's
-status.
+The function print_default_remote() is introduced for getting
+the default remote as stdout.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
 ---
 In this new version, the following changes have been made:
-* parameters passed to the function print_status() have been changed.
-  Instead of passing char *sub_sha1, instead the object_id is being passed.
- 
-* Also, since the passed parameter displaypath's value isn't changed
-  by the function, it is passed to the funcition as const char *displaypath
-  instead of char *displaypath.
+* There was no good reason for using puts in the function print_default_remote()
+  Hence, in this patch, we instead use printf to do the same, as it is what
+  is generally used throughout the codebase.
 
-* the output type of the function handle_submodule_head_ref() is changed
-  from strbuf to object_id, as we will use the object_id instead of the
-  hex of sha1 being stored in a struct strbuf.
+* As suggested, this patch ensures a more efficient use of variables, and
+  removes most of the variables by reusing 'strbuf sb' at places required.
 
-* diff_files_args is cleared after using it by passing it as args in the
-  function cmd_diff_files.
-
-* In the function status_submodule(), for checking if a submodule has merge
-  conflicts, the patch currently checks if the value of any of the ce_flags
-  is non-zero. Currently, I think the we aren't interested in a partiular flag,
-  but I'm not sure on this.
-
-* Debugging leftovers and suprious new-lines are removed.
-
-* The confusion with displaypath being passed as te super-prefix in many
-  of the ported subcommands may be a result of the fact that the
-  function generating the displaypath: get_submodule_displaypath()
-  uses the super-prefix as simply a path concatenated with the current
-  submodule name to denote our current location.
-  The function get_super_prefix() is declared in cache.h and defined in
-  environment.c, but is majorly used in the builtin/submodule--helper.c
-  and also in unpack-trees.c
-  Also, for generating any submodule's displaypath, it would be important to
-  have ".." passed to the submodule, and currently it is possible only via the
-  super-prefix.
-  This is also other instaces where the super-prefix contained ".." as well.
-  One of such instance is Test 4 from t7406-submodule-update.sh
-  Hence, maybe documenting the value of displaypath might a solution
-  for the above problem.
-  I'm just stating my views and would like to recieve your opinion on this
-  matter.
-
- builtin/submodule--helper.c | 154 ++++++++++++++++++++++++++++++++++++++++++++
- git-submodule.sh            |  49 +-------------
- 2 files changed, 155 insertions(+), 48 deletions(-)
+ builtin/submodule--helper.c | 182 ++++++++++++++++++++++++++++++++++++++++++++
+ git-submodule.sh            |  56 +-------------
+ 2 files changed, 183 insertions(+), 55 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 2cb72d68e..a6e6a48cc 100644
+index a6e6a48cc..91945337f 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -561,6 +561,159 @@ static int module_init(int argc, const char **argv, const char *prefix)
- 	return 0;
+@@ -44,6 +44,20 @@ static char *get_default_remote(void)
+ 	return ret;
  }
  
-+struct status_cb {
-+	const char *prefix;
-+	unsigned int quiet: 1;
-+	unsigned int recursive: 1;
-+	unsigned int cached: 1;
-+};
-+#define STATUS_CB_INIT { NULL, 0, 0, 0 }
-+
-+static void print_status(struct status_cb *info, char state, const char *path,
-+			 const struct object_id *oid, const char *displaypath)
++static int print_default_remote(int argc, const char **argv, const char *prefix)
 +{
-+	if (info->quiet)
-+		return;
++	const char *remote;
 +
-+	printf("%c%s %s", state, oid_to_hex(oid), displaypath);
++	if (argc != 1)
++		die(_("submodule--helper print-default-remote takes no arguments"));
 +
-+	if (state == ' ' || state == '+') {
-+		struct argv_array name_rev_args = ARGV_ARRAY_INIT;
-+
-+		argv_array_pushl(&name_rev_args, "print-name-rev",
-+				 path, oid_to_hex(oid), NULL);
-+		print_name_rev(name_rev_args.argc, name_rev_args.argv,
-+			       info->prefix);
-+	} else {
-+		printf("\n");
-+	}
-+}
-+
-+static int handle_submodule_head_ref(const char *refname,
-+				     const struct object_id *oid, int flags,
-+				     void *cb_data)
-+{
-+	struct object_id *output = cb_data;
-+	if (oid)
-+		oidcpy(output, oid);
++	remote = get_default_remote();
++	if (remote)
++		printf("%s\n", remote);
 +
 +	return 0;
 +}
 +
-+static void status_submodule(const struct cache_entry *list_item, void *cb_data)
+ static int starts_with_dot_slash(const char *str)
+ {
+ 	return str[0] == '.' && is_dir_sep(str[1]);
+@@ -380,6 +394,25 @@ static void module_list_active(struct module_list *list)
+ 	*list = active_modules;
+ }
+ 
++static char *get_up_path(const char *path)
 +{
-+	struct status_cb *info = cb_data;
-+	char *displaypath;
-+	struct argv_array diff_files_args = ARGV_ARRAY_INIT;
++	int i;
++	struct strbuf sb = STRBUF_INIT;
 +
-+	if (!submodule_from_path(null_sha1, list_item->name))
-+		die(_("no submodule mapping found in .gitmodules for path '%s'"),
-+		      list_item->name);
++	for (i = count_slashes(path); i; i--)
++		strbuf_addstr(&sb, "../");
++
++	/*
++	 * Check if 'path' ends with slash or not
++	 * for having the same output for dir/sub_dir
++	 * and dir/sub_dir/
++	 */
++	if (!is_dir_sep(path[strlen(path) - 1]))
++		strbuf_addstr(&sb, "../");
++
++	return strbuf_detach(&sb, NULL);
++}
++
+ static int module_list(int argc, const char **argv, const char *prefix)
+ {
+ 	int i;
+@@ -733,6 +766,153 @@ static int module_name(int argc, const char **argv, const char *prefix)
+ 	return 0;
+ }
+ 
++struct sync_cb {
++	const char *prefix;
++	unsigned int quiet: 1;
++	unsigned int recursive: 1;
++};
++#define SYNC_CB_INIT { NULL, 0, 0 }
++
++static void sync_submodule(const struct cache_entry *list_item, void *cb_data)
++{
++	struct sync_cb *info = cb_data;
++	const struct submodule *sub;
++	char *remote_key;
++	char *sub_origin_url, *super_config_url, *displaypath;
++	struct strbuf sb = STRBUF_INIT;
++	struct child_process cp = CHILD_PROCESS_INIT;
++	char *sub_config_path = NULL;
++
++	if (!is_submodule_active(the_repository, list_item->name))
++		return;
++
++	sub = submodule_from_path(null_sha1, list_item->name);
++
++	if (sub && sub->url) {
++		if (starts_with_dot_dot_slash(sub->url) || starts_with_dot_slash(sub->url)) {
++			char *remote_url, *up_path;
++			char *remote = get_default_remote();
++			strbuf_addf(&sb, "remote.%s.url", remote);
++
++			if (git_config_get_string(sb.buf, &remote_url))
++				remote_url = xgetcwd();
++
++			up_path = get_up_path(list_item->name);
++			sub_origin_url = relative_url(remote_url, sub->url, up_path);
++			super_config_url = relative_url(remote_url, sub->url, NULL);
++
++			free(remote);
++			free(up_path);
++			free(remote_url);
++		} else {
++			sub_origin_url = xstrdup(sub->url);
++			super_config_url = xstrdup(sub->url);
++		}
++	} else {
++		sub_origin_url = "";
++		super_config_url = "";
++	}
 +
 +	displaypath = get_submodule_displaypath(list_item->name, info->prefix);
 +
-+	if (list_item->ce_flags) {
-+		print_status(info, 'U', list_item->name,
-+			     &null_oid, displaypath);
++	if (!info->quiet)
++		printf(_("Synchronizing submodule url for '%s'\n"),
++			 displaypath);
++
++	strbuf_reset(&sb);
++	strbuf_addf(&sb, "submodule.%s.url", sub->name);
++	if (git_config_set_gently(sb.buf, super_config_url))
++		die(_("failed to register url for submodule path '%s'"),
++		      displaypath);
++
++	if (!is_submodule_populated_gently(list_item->name, NULL))
 +		goto cleanup;
-+	}
 +
-+	if (!is_submodule_active(the_repository, list_item->name)) {
-+		print_status(info, '-', list_item->name, &list_item->oid,
-+			     displaypath);
-+		goto cleanup;
-+	}
++	prepare_submodule_repo_env(&cp.env_array);
++	cp.git_cmd = 1;
++	cp.dir = list_item->name;
++	argv_array_pushl(&cp.args, "submodule--helper",
++			 "print-default-remote", NULL);
 +
-+	argv_array_pushl(&diff_files_args, "diff-files",
-+			 "--ignore-submodules=dirty", "--quiet", "--",
-+			 list_item->name, NULL);
++	strbuf_reset(&sb);
++	if (capture_command(&cp, &sb, 0))
++		die(_("failed to get the default remote for submodule '%s'"),
++		      list_item->name);
 +
-+	if (!cmd_diff_files(diff_files_args.argc, diff_files_args.argv,
-+			    info->prefix)) {
-+		print_status(info, ' ', list_item->name, &list_item->oid,
-+			     displaypath);
-+	} else {
-+		if (!info->cached) {
-+			struct object_id oid;
++	strbuf_strip_suffix(&sb, "\n");
++	remote_key = xstrfmt("remote.%s.url", sb.buf);
 +
-+			if (head_ref_submodule(list_item->name,
-+					       handle_submodule_head_ref, &oid))
-+				die(_("could not resolve HEAD ref inside the"
-+				      "submodule '%s'"), list_item->name);
++	strbuf_reset(&sb);
++	submodule_to_gitdir(&sb, list_item->name);
++	strbuf_addstr(&sb, "/config");
 +
-+			print_status(info, '+', list_item->name, &oid,
-+				     displaypath);
-+		} else {
-+			print_status(info, '+', list_item->name,
-+				     &list_item->oid, displaypath);
-+		}
-+	}
++	if (git_config_set_in_file_gently(sb.buf, remote_key, sub_origin_url))
++		die(_("failed to update remote for submodule '%s'"),
++		      list_item->name);
 +
 +	if (info->recursive) {
 +		struct child_process cpr = CHILD_PROCESS_INIT;
@@ -232,11 +234,8 @@ index 2cb72d68e..a6e6a48cc 100644
 +		prepare_submodule_repo_env(&cpr.env_array);
 +
 +		argv_array_pushl(&cpr.args, "--super-prefix", displaypath,
-+				 "submodule--helper", "status", "--recursive",
++				 "submodule--helper", "sync", "--recursive",
 +				 NULL);
-+
-+		if (info->cached)
-+			argv_array_push(&cpr.args, "--cached");
 +
 +		if (info->quiet)
 +			argv_array_push(&cpr.args, "--quiet");
@@ -247,32 +246,34 @@ index 2cb72d68e..a6e6a48cc 100644
 +	}
 +
 +cleanup:
-+	argv_array_clear(&diff_files_args);
++	strbuf_release(&sb);
++	free(super_config_url);
 +	free(displaypath);
++	free(sub_config_path);
++	free(sub_origin_url);
 +}
 +
-+static int module_status(int argc, const char **argv, const char *prefix)
++static int module_sync(int argc, const char **argv, const char *prefix)
 +{
-+	struct status_cb info = STATUS_CB_INIT;
++	struct sync_cb info = SYNC_CB_INIT;
 +	struct pathspec pathspec;
 +	struct module_list list = MODULE_LIST_INIT;
 +	int quiet = 0;
-+	int cached = 0;
 +	int recursive = 0;
 +
-+	struct option module_status_options[] = {
-+		OPT__QUIET(&quiet, N_("Suppress submodule status output")),
-+		OPT_BOOL(0, "cached", &cached, N_("Use commit stored in the index instead of the one stored in the submodule HEAD")),
-+		OPT_BOOL(0, "recursive", &recursive, N_("Recurse into nested submodules")),
++	struct option module_sync_options[] = {
++		OPT__QUIET(&quiet, N_("Suppress output of synchronizing submodule url")),
++		OPT_BOOL(0, "recursive", &recursive,
++			N_("Recurse into nested submodules")),
 +		OPT_END()
 +	};
 +
 +	const char *const git_submodule_helper_usage[] = {
-+		N_("git submodule status [--quiet] [--cached] [--recursive] [<path>]"),
++		N_("git submodule--helper sync [--quiet] [--recursive] [<path>]"),
 +		NULL
 +	};
 +
-+	argc = parse_options(argc, argv, prefix, module_status_options,
++	argc = parse_options(argc, argv, prefix, module_sync_options,
 +			     git_submodule_helper_usage, 0);
 +
 +	if (module_list_compute(argc, argv, prefix, &pathspec, &list) < 0)
@@ -281,33 +282,34 @@ index 2cb72d68e..a6e6a48cc 100644
 +	info.prefix = prefix;
 +	info.quiet = !!quiet;
 +	info.recursive = !!recursive;
-+	info.cached = !!cached;
 +
 +	gitmodules_config();
-+	for_each_submodule_list(list, status_submodule, &info);
++	for_each_submodule_list(list, sync_submodule, &info);
 +
 +	return 0;
 +}
 +
- static int module_name(int argc, const char **argv, const char *prefix)
- {
- 	const struct submodule *sub;
-@@ -1307,6 +1460,7 @@ static struct cmd_struct commands[] = {
- 	{"resolve-relative-url-test", resolve_relative_url_test, 0},
+ static int clone_submodule(const char *path, const char *gitdir, const char *url,
+ 			   const char *depth, struct string_list *reference,
+ 			   int quiet, int progress)
+@@ -1461,6 +1641,8 @@ static struct cmd_struct commands[] = {
  	{"print-name-rev", print_name_rev, 0},
  	{"init", module_init, SUPPORT_SUPER_PREFIX},
-+	{"status", module_status, SUPPORT_SUPER_PREFIX},
+ 	{"status", module_status, SUPPORT_SUPER_PREFIX},
++	{"print-default-remote", print_default_remote, 0},
++	{"sync", module_sync, SUPPORT_SUPER_PREFIX},
  	{"remote-branch", resolve_remote_submodule_branch, 0},
  	{"push-check", push_check, 0},
  	{"absorb-git-dirs", absorb_git_dirs, SUPPORT_SUPER_PREFIX},
 diff --git a/git-submodule.sh b/git-submodule.sh
-index e988167e0..51b057d82 100755
+index 51b057d82..6bfc5e17d 100755
 --- a/git-submodule.sh
 +++ b/git-submodule.sh
-@@ -1005,54 +1005,7 @@ cmd_status()
- 		shift
+@@ -1037,63 +1037,9 @@ cmd_sync()
+ 			;;
+ 		esac
  	done
- 
+-	cd_to_toplevel
 -	{
 -		git submodule--helper list --prefix "$wt_prefix" "$@" ||
 -		echo "#unmatched" $?
@@ -315,51 +317,59 @@ index e988167e0..51b057d82 100755
 -	while read -r mode sha1 stage sm_path
 -	do
 -		die_if_unmatched "$mode" "$sha1"
--		name=$(git submodule--helper name "$sm_path") || exit
--		displaypath=$(git submodule--helper relative-path "$prefix$sm_path" "$wt_prefix")
--		if test "$stage" = U
+-
+-		# skip inactive submodules
+-		if ! git submodule--helper is-active "$sm_path"
 -		then
--			say "U$sha1 $displaypath"
 -			continue
 -		fi
--		if ! git submodule--helper is-active "$sm_path" ||
--		{
--			! test -d "$sm_path"/.git &&
--			! test -f "$sm_path"/.git
--		}
--		then
--			say "-$sha1 $displaypath"
--			continue;
--		fi
--		if git diff-files --ignore-submodules=dirty --quiet -- "$sm_path"
--		then
--			revname=$(git submodule--helper print-name-rev "$sm_path" "$sha1")
--			say " $sha1 $displaypath$revname"
--		else
--			if test -z "$cached"
--			then
--				sha1=$(sanitize_submodule_env; cd "$sm_path" && git rev-parse --verify HEAD)
--			fi
--			revname=$(git submodule--helper print-name-rev "$sm_path" "$sha1")
--			say "+$sha1 $displaypath$revname"
--		fi
 -
--		if test -n "$recursive"
+-		name=$(git submodule--helper name "$sm_path")
+-		url=$(git config -f .gitmodules --get submodule."$name".url)
+-
+-		# Possibly a url relative to parent
+-		case "$url" in
+-		./*|../*)
+-			# rewrite foo/bar as ../.. to find path from
+-			# submodule work tree to superproject work tree
+-			up_path="$(printf '%s\n' "$sm_path" | sed "s/[^/][^/]*/../g")" &&
+-			# guarantee a trailing /
+-			up_path=${up_path%/}/ &&
+-			# path from submodule work tree to submodule origin repo
+-			sub_origin_url=$(git submodule--helper resolve-relative-url "$url" "$up_path") &&
+-			# path from superproject work tree to submodule origin repo
+-			super_config_url=$(git submodule--helper resolve-relative-url "$url") || exit
+-			;;
+-		*)
+-			sub_origin_url="$url"
+-			super_config_url="$url"
+-			;;
+-		esac
+ 
+-		displaypath=$(git submodule--helper relative-path "$prefix$sm_path" "$wt_prefix")
+-		say "$(eval_gettext "Synchronizing submodule url for '\$displaypath'")"
+-		git config submodule."$name".url "$super_config_url"
+-
+-		if test -e "$sm_path"/.git
 -		then
--			(
--				prefix="$displaypath/"
--				sanitize_submodule_env
--				wt_prefix=
--				cd "$sm_path" &&
--				eval cmd_status
--			) ||
--			die "$(eval_gettext "Failed to recurse into submodule path '\$sm_path'")"
+-		(
+-			sanitize_submodule_env
+-			cd "$sm_path"
+-			remote=$(get_default_remote)
+-			git config remote."$remote".url "$sub_origin_url"
++	git ${wt_prefix:+-C "$wt_prefix"} ${prefix:+--super-prefix "$prefix"} submodule--helper sync ${GIT_QUIET:+--quiet} ${recursive:+--recursive} "$@"
+ 
+-			if test -n "$recursive"
+-			then
+-				prefix="$prefix$sm_path/"
+-				eval cmd_sync
+-			fi
+-		)
 -		fi
 -	done
-+	git ${wt_prefix:+-C "$wt_prefix"} ${prefix:+--super-prefix "$prefix"} submodule--helper status ${GIT_QUIET:+--quiet} ${cached:+--cached} ${recursive:+--recursive} "$@"
  }
- #
- # Sync remote urls for submodules
+ 
+ cmd_absorbgitdirs()
 -- 
 2.13.0
 
