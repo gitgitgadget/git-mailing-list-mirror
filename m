@@ -2,73 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5ACEE1F991
-	for <e@80x24.org>; Mon, 31 Jul 2017 21:19:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 545CE1F991
+	for <e@80x24.org>; Mon, 31 Jul 2017 21:22:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751610AbdGaVTH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 31 Jul 2017 17:19:07 -0400
-Received: from mail-lf0-f43.google.com ([209.85.215.43]:34967 "EHLO
-        mail-lf0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751113AbdGaVTG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Jul 2017 17:19:06 -0400
-Received: by mail-lf0-f43.google.com with SMTP id t128so89090487lff.2
-        for <git@vger.kernel.org>; Mon, 31 Jul 2017 14:19:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Zl3hSnoW/1qgZXxbpHV838nkoquxMDI/mwi0ix7lIKw=;
-        b=IPd9Rr9k35X9LexTw9v8/fNobCEh5dDp9G9w1Nft20HizRLVvX0s3i0k965Cwc3PGp
-         owbYAajUAYfyV7LaPePiHVRCFtsEX9aGSjIigsnVuVM/3HpWGYYqOPpZ1Gm4XDR6vy3u
-         A4c2bmoE3HXZ78QSTNXOwFAmyExWra70ycGSzatnYMGhiEO2zf5A2G3yvaSTSCwoVsyI
-         y4Wq5PWsVkcDY2SatxzkGn6xR9RM2Za2s7y9Ie2hrIcjVmFljhkRw+R3CXdY3XUsfYVd
-         dy0naeYKT8Szeu5vQVdUr53W9mPIo5HSxS+lfkbT0tWJ6GioNqwzbzs2H/dplH7jWiFH
-         8MaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Zl3hSnoW/1qgZXxbpHV838nkoquxMDI/mwi0ix7lIKw=;
-        b=thf80SZIOHE9kwmKdYhwWHnk6n0zGgdIOw5mNvQ0y8J/thY79HZVRNdW2kN14An2FT
-         FErYnV9S2j9Pgqj8Yb+pUKQqJl1uE6iCfPlmzyzehQUUJWqeH+7PwMxfj3GSzsVoGFyk
-         EWW7RR9CzAGYu3b+W2wmNPAQqBw8spgqsWKxwEbSzKGbyq3P98+ug/82/lBwDko7Djr8
-         q1gsoDwXJQ2UNo0s35ipCVOIrSw51IVJD+aR2B/ZQWhpYyaioxXLPOU2LmzYstoSMYwr
-         az2eaAPx5S7h9uaMxz4oiVLuK5/RlC83uuGBcrLW75vNd2VVt/7U3aepB5qWg4Mrn11q
-         tmHw==
-X-Gm-Message-State: AIVw112DyK4wCQRzv80/nc9qhPoQQ1DKYixQ2Mbu48ncUd4ZZHUV+wjN
-        wfUZ9zQUbJdK6tbu4/MoFwJAr1o0wnUO
-X-Received: by 10.46.69.66 with SMTP id s63mr6781091lja.116.1501535944783;
- Mon, 31 Jul 2017 14:19:04 -0700 (PDT)
+        id S1751106AbdGaVWD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 31 Jul 2017 17:22:03 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52682 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751052AbdGaVWC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Jul 2017 17:22:02 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CC679905D9;
+        Mon, 31 Jul 2017 17:21:58 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=x9qAOqm/I9+dzXJStx0a00YmQTY=; b=M5/eS/
+        EcsFoY2scZAcO3/WCrhWyfZMBgvvTYQiFhdhE0DhKsrxd45j2UvpAUbMNypTM83l
+        gCxRXayNVSpapGqYVBBD4TBdwulXSSSd2PwL4Ih9Bnavcm283xpJ1FlWnovLwlQA
+        DfcOmyBWX/7W4Sm3EkEy5yBBYge07ACqaNgfc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=gzjLWhA0iQ235vMDqv0bRoCsJlQx6Ec7
+        bTZySEssCS73PT+ODutwz+M9NSoJLxLsGBInoHDb0J5YuNh8Xrpw16wtsXFjb5Fl
+        wPZXaWszlU3Db/6dorBYCZhyPGNsCERKyd3PhZILoCUPJpOJIEnd/cx3ylnv+Xfd
+        72pzUKUD5qU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C3BE9905D7;
+        Mon, 31 Jul 2017 17:21:58 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 19DEF905D6;
+        Mon, 31 Jul 2017 17:21:58 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, peartben@gmail.com, christian.couder@gmail.com
+Subject: Re: [PATCH v2 0/5] Fsck for lazy objects, and (now) actual invocation of loader
+References: <cover.1501111615.git.jonathantanmy@google.com>
+        <cover.1501532294.git.jonathantanmy@google.com>
+Date:   Mon, 31 Jul 2017 14:21:56 -0700
+In-Reply-To: <cover.1501532294.git.jonathantanmy@google.com> (Jonathan Tan's
+        message of "Mon, 31 Jul 2017 14:02:42 -0700")
+Message-ID: <xmqq4ltsi9or.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.25.1.130 with HTTP; Mon, 31 Jul 2017 14:19:04 -0700 (PDT)
-In-Reply-To: <20170731205621.24305-6-pc44800@gmail.com>
-References: <20170731205621.24305-1-pc44800@gmail.com> <20170731205621.24305-6-pc44800@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 31 Jul 2017 14:19:04 -0700
-Message-ID: <CAGZ79kaxMKHgLoz-NnFGDs2MbB6i5kbhAGC9FZL8KJ8YYRAvLQ@mail.gmail.com>
-Subject: Re: [GSoC][PATCH 05/13] submodule: port submodule subcommand 'sync'
- from shell to C
-To:     Prathamesh Chavan <pc44800@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 48EC150C-7636-11E7-A2B4-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 31, 2017 at 1:56 PM, Prathamesh Chavan <pc44800@gmail.com> wrote:
-> In this new version, the following changes have been made:
-> * There was no good reason for using puts in the function print_default_remote()
->   Hence, in this patch, we instead use printf to do the same, as it is what
->   is generally used throughout the codebase.
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-Hah! I refrained on suggesting the opposite at the last patch.
-In older code there are lots of "puts", c.f. "git grep puts", so I assumed
-it to be a micro optimization, hence I would have suggested it.
-Either way is fine with me.
+> Besides review changes, this patch set now includes my rewritten
+> lazy-loading sha1_file patch, so you can now do this (excerpted from one
+> of the tests):
+>
+>     test_create_repo server
+>     test_commit -C server 1 1.t abcdefgh
+>     HASH=$(git hash-object server/1.t)
+>     
+>     test_create_repo client
+>     test_must_fail git -C client cat-file -p "$HASH"
+>     git -C client config core.repositoryformatversion 1
+>     git -C client config extensions.lazyobject \
+>         "\"$TEST_DIRECTORY/t0410/lazy-object\" \"$(pwd)/server/.git\""
+>     git -C client cat-file -p "$HASH"
+>
+> with fsck still working. Also, there is no need for a list of promised
+> blobs, and the long-running process protocol is being used.
+
+I do not think I read your response to my last comment on this
+series, so I could be missing something large, but I am afraid that
+the resulting fsck is only half as useful as the normal fsck.  I do
+not see it any better than a hypothetical castrated version of fsck
+that only checks the integrity of objects that appear in the local
+object store, without doing any connectivity checks.
+
+Don't get me wrong.  The integrity check on local objects you still
+do is important---that is what allows us to make sure that the local
+"cache" does not prevent us from going to the real source of the
+remote object store by having a corrupt copy.  
+
+But not being able to tell if a missing object is OK to be missing
+(because we can get them if/as needed from elsewhere) or we lost the
+sole copy of an object that we created and have not pushed out
+(hence we are in deep yogurt) makes it pretty much pointless to run
+"fsck", doesn't it?  It does not give us any guarantee that our
+repository plus perfect network connectivity gives us an environment
+to build further work on.
+
+Or am I missing something fundamental?
