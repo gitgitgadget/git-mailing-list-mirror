@@ -2,106 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A3AF81F991
-	for <e@80x24.org>; Mon, 31 Jul 2017 20:18:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E76EA1F991
+	for <e@80x24.org>; Mon, 31 Jul 2017 20:23:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751296AbdGaUSP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 31 Jul 2017 16:18:15 -0400
-Received: from mail-io0-f196.google.com ([209.85.223.196]:33086 "EHLO
-        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751114AbdGaUSO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Jul 2017 16:18:14 -0400
-Received: by mail-io0-f196.google.com with SMTP id q64so89818ioi.0
-        for <git@vger.kernel.org>; Mon, 31 Jul 2017 13:18:13 -0700 (PDT)
+        id S1751153AbdGaUX0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 31 Jul 2017 16:23:26 -0400
+Received: from mail-lf0-f48.google.com ([209.85.215.48]:33826 "EHLO
+        mail-lf0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751017AbdGaUXZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Jul 2017 16:23:25 -0400
+Received: by mail-lf0-f48.google.com with SMTP id g25so114619272lfh.1
+        for <git@vger.kernel.org>; Mon, 31 Jul 2017 13:23:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=y+pvMW0bKeb/4uBLBvq7diWb8fS/z5JpkZ5U1TCAnHQ=;
-        b=RMvt0+VpXWmFwTQEWEVOSJGttCxU0OSJydcysmzKWYYYMinAvqS8iDCp/QXECINzxY
-         dd+tNLuawtLPOPww4sqe9OiT8xve4F/C65mWx48pLjbOQw+kHsCpM6ef5g8igoRK4AfJ
-         eSbpgqJ8Y4QIAgzUS6szO1+K8QXrvkTKyns/MhU+TTd4RWiu6ViZcVXnMNkYIZuB6WR8
-         8lO2aQGhyzVdzvZyYewbogv9Q370INE+vNjGZ3SLT6Mqgkh3x1GMZPIYFQTB4T93LLTr
-         t4NH3rODa/SxJS0/5Lwv1RbwtyNWW5NUPU0wPB6TywuFrC+zY3JCXjCQxXUC2nPdERbg
-         M0yA==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=imzHzdT0FAYZvDnQlex3l3bjdN5QwztK+pZxVQVNgBo=;
+        b=udz8uPJtxuerm1H2x/1HHQFTfMX9N8HpNB3ZnCqg9svV29CVdSkyUuq4X9AouZnJqv
+         LrldZ+VeN6F1dFMApbgqkMHxnbOo53CS5M6cE2XXg9tmXXSQm3q6SZrmyvmU4HpkMWA1
+         1o8hxP8eNtCaXYVp9g69LaVHmtdXnKE0r9SPNmIIYOe95LLnGx62Bnafgrr51d0VEgLD
+         zojrYuWZnGwIfQB6HUeT8j6r/5L29krtvnnRCnss1O9BhpZ03Jt98awuY08c3FVnqvf6
+         jK8qv4ymZednD38uioIPnvKszqn8P3PSGu5Y5H2hlO7ixU+h0rfKFPH1mXT7/lSby+CN
+         V9Tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=y+pvMW0bKeb/4uBLBvq7diWb8fS/z5JpkZ5U1TCAnHQ=;
-        b=I4ROC5GX7vJ6+1xOdzs6E/clF4PucsLB+yxiY8KzC/uEKU34hX3lRtPSyoAbJ0m+LB
-         MXZKCT97r0l3/Vp2wDkRjvvySQftnO8Ult57aI8qee5DZKvudBsW3rHZnPWcxrd9ao1X
-         O8mfqG8uIrDbutPV0kPB2C6K/MQJF9t1ClQWL+loPcC5bW2vhu8J/aMRD4f0AKDjD7FZ
-         mZ04JdXEiCtUyx26hC07QaMXVuMWTqTfVN88lqfDzCyAjtB6uTkEPeaZZW21OaEYBU9z
-         LMNC27dJr1Tid2jhAZ1Lp8O6bsCpTkc/5jOhSO+Dk79bJEfKwBJGjh9zdF1hsgn7em7f
-         noeA==
-X-Gm-Message-State: AIVw112W1ADnYcBlbll7aEwrNyJxyo+y8VdBcKmfqZoE7pnVKG+FRcy+
-        mW7n+UvRkioWuIC/uDNDAekO7ufBHw==
-X-Received: by 10.107.178.200 with SMTP id b191mr19880171iof.68.1501532293415;
- Mon, 31 Jul 2017 13:18:13 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=imzHzdT0FAYZvDnQlex3l3bjdN5QwztK+pZxVQVNgBo=;
+        b=U3hoii0wwA/1ih8+dlLnjMSOWwYQ7RpJXcxcRZmigdstRK22Qd63pDr0YrgiUVZjZU
+         puk4m4roOsWimc4oOxUk+NdNVVhbRFIJ5xEPCwifzg8pf93QCrygVoe646cazWENkraR
+         dj82G3ybFZ9v7zNqenpXXwf61WbSaiXyQ31R68JtHEOPjWdD6usbc9+19xQas9ek2R09
+         r5O3QtQzyPunUyb2wmfnGrTfpoWLYcuRGJX/zWrplT5MTllkdGWkoHQFkTB/AePEH994
+         Wkmp7yVkszBUBH94OKtfSn7mTeLzvXHq2G+7tEuIlCJ8oIqMJMvQsH1v922sq/CfY43B
+         h4zw==
+X-Gm-Message-State: AIVw110BJp8WovSiC4YGQCxj4GfupjLLLvX9unbw4SjHdPTiQCxQxTQ1
+        9jiLOOui6q4ie4rz7u8q3sbnG2L+GQJN
+X-Received: by 10.46.69.66 with SMTP id s63mr6737595lja.116.1501532604317;
+ Mon, 31 Jul 2017 13:23:24 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.167.139 with HTTP; Mon, 31 Jul 2017 13:17:52 -0700 (PDT)
-In-Reply-To: <20170730232427.vrqrrhlsap55ax7t@genre.crustytoothpaste.net>
-References: <20170728171817.21458-1-sbeller@google.com> <20170728171817.21458-3-sbeller@google.com>
- <xmqq379gmco6.fsf@gitster.mtv.corp.google.com> <20170729175833.4idan3befldn5vgp@genre.crustytoothpaste.net>
- <xmqqini9k4cx.fsf@gitster.mtv.corp.google.com> <20170730230019.ch74ska6wgbrh7ql@genre.crustytoothpaste.net>
- <20170730232427.vrqrrhlsap55ax7t@genre.crustytoothpaste.net>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Mon, 31 Jul 2017 22:17:52 +0200
-Message-ID: <CACBZZX43JFOAOTffWVEMT1fPuzAiZnYi4JoE55QWquZ4kLA2Hg@mail.gmail.com>
-Subject: Re: [PATCH 2/2] t6500: mark tests as SHA1 reliant
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Git Mailing List <git@vger.kernel.org>
+Received: by 10.25.1.130 with HTTP; Mon, 31 Jul 2017 13:23:23 -0700 (PDT)
+In-Reply-To: <20170730161816.2412-1-kaarticsivaraam91196@gmail.com>
+References: <8256C530C7DE43D7BC72BFB327DF4726@PhilipOakley> <20170730161816.2412-1-kaarticsivaraam91196@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 31 Jul 2017 13:23:23 -0700
+Message-ID: <CAGZ79kYg9jQ3kaKnNEJCH9fde=ar1KPiUr7=X+TguNc0Twqdzg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] doc: fix small issues in SubmittingPatches
+To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Philip Oakley <philipoakley@iee.org>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 31, 2017 at 1:24 AM, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> On Sun, Jul 30, 2017 at 11:00:19PM +0000, brian m. carlson wrote:
->> Yes, basically, but a bit more generally.  There will always be cases in
->> which we need to specify an object ID or an arbitrary string and the
->> behavior will need to vary based on the hash.  That can be something
->> like, in this case, the two blob contents that would have the similar
->> prefix.
->>
->> So in this case, we pass the helper the string "263 410" and get back a
->> value for either the hacked SHA-1 hash or the SHA-256 or whatever we're
->> using.
+On Sun, Jul 30, 2017 at 9:18 AM, Kaartic Sivaraam
+<kaarticsivaraam91196@gmail.com> wrote:
+> Replace the dashed version of a command with undashed
+> version and quote it.
+
+I like it, but similar as below, we'd want to go for
+consistency.
+
 >
-> I realize this was worded poorly.  So for my example, in this case, we'd
-> do:
+> Further, remove duplicated space character.
+
+https://en.wikipedia.org/wiki/Sentence_spacing
+seems like a globally controversial thing. (I assumed
+it was some sort of local dialect before researching
+it properly)
+
+I personally do not mind one way or another regarding
+(double) spaces after a period, but I would think we'd
+strive for consistency throughout the project.
+
 >
-> test-helper-hash-string "263 410"
+> Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+> ---
+>  Documentation/SubmittingPatches | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 >
-> For SHA-1, we'd get "263 410".  For SHA-256, we'd get "313 481" (which,
-> as SHA-256 blobs, both start with "17" in their hex representation).
-> Presumably we'd read some environment variable to determine the proper
-> value.
-
-I've been mostly out of the loop on this hash transition plan, but
-don't we expect to be compiling a git that knows about both SHA-1 and
-whatever the $newhash is? If so it seems better to just test all N
-hashes we have:
-
-    test_expect_success_hash $desc_description '
-        hash_value=$(test-helper-hash-string $CURRENT_HASH)
-        ....
-    '
-
-Then test_expect_success_hash would run N times for the N hashes we have.
-
-This would obviously be slightly more hassle to write & convert, but I
-think it would be worth it, particularly with something like Travis
-where we can test all hashes, instead of being in some mode where we
-fragment on all of hashes/gettext poison and whatever other
-compilation option we have that really requires compiling a new git
-version...
+> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+> index 558d465b6..9d0dab08d 100644
+> --- a/Documentation/SubmittingPatches
+> +++ b/Documentation/SubmittingPatches
+> @@ -293,7 +293,7 @@ then you just add a line saying
+>
+>          Signed-off-by: Random J Developer <random@developer.example.org>
+>
+> -This line can be automatically added by Git if you run the git-commit
+> +This line can be automatically added by Git if you run the 'git commit'
+>  command with the -s option.
+>
+>  Notice that you can place your own Signed-off-by: line when
+> @@ -366,7 +366,7 @@ suggests to the contributors:
+>       spend their time to improve your patch.  Go back to step (2).
+>
+>   (4) The list forms consensus that the last round of your patch is
+> -     good.  Send it to the maintainer and cc the list.
+> +     good. Send it to the maintainer and cc the list.
+>
+>   (5) A topic branch is created with the patch and is merged to 'next',
+>       and cooked further and eventually graduates to 'master'.
+> --
+> 2.14.0.rc1.434.g6eded367a
+>
