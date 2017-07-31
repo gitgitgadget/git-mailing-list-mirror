@@ -2,153 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 17BAB1F991
-	for <e@80x24.org>; Mon, 31 Jul 2017 13:51:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 694661F991
+	for <e@80x24.org>; Mon, 31 Jul 2017 14:00:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751997AbdGaNvi (ORCPT <rfc822;e@80x24.org>);
-        Mon, 31 Jul 2017 09:51:38 -0400
-Received: from mail-ua0-f177.google.com ([209.85.217.177]:35920 "EHLO
-        mail-ua0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751328AbdGaNvh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Jul 2017 09:51:37 -0400
-Received: by mail-ua0-f177.google.com with SMTP id k43so154230693uaf.3
-        for <git@vger.kernel.org>; Mon, 31 Jul 2017 06:51:37 -0700 (PDT)
+        id S1752063AbdGaOAd (ORCPT <rfc822;e@80x24.org>);
+        Mon, 31 Jul 2017 10:00:33 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:35453 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751862AbdGaOAc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Jul 2017 10:00:32 -0400
+Received: by mail-pf0-f193.google.com with SMTP id q85so26279043pfq.2
+        for <git@vger.kernel.org>; Mon, 31 Jul 2017 07:00:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:reply-to:to:cc:date:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=T22r6boFOGPxd0dDPAqjxH5f3Abs/jWqGqGRd46x5aY=;
-        b=dI5VKOtCWIWUGyfkFXZ+isVOByGxTn187meZjFH0AWFjRWiGaL1BrZzTzzXrkEz4Rk
-         jA+h/Ecw3Vt1W62h64agYRoX2d27hV5XgudSrSG8W03wCDiBBbnMIgWqe4ZoNsg0TdTm
-         3h/9AZRl5REgfEpfsWn+E1qvhfIrxlpT0E6oVQ13cfuBFJ9lSDkVLGEDZl5oBPzFe9mM
-         XehinvYOgb2DjNuqD5tdYUVgs7TyvChfSOkrs6qKcJ96jX+Ba0aVR6Ip8IJi+0pK4HuE
-         /S3iKsLDaei6lOw+aDAtzefik67/UfCwFASwogMjXjf+58zAuXsWsERk86b5B0yCs6I0
-         PECQ==
+        d=umich.edu; s=google-2016-06-03;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=/RdC2tKloIjtGmurmCk4GWdAbPqBirSZ48SuM7rIiZY=;
+        b=Ohxn5Ext7YjxhYQWkqiSxgjPeC5ZyreHfuPXMR24YbpnoFqZDm7aLSBF6BNhUkFC+K
+         R0EY9Y90OAweLZQqpy9SEiUU+mKwfUQ/sDy1UYTdutCYxhKd6P6Lv5jq/dkmsXmk5EXC
+         /zt6Gg0Fmg8ecg1fS/37gG+uTTFnaNIVr1FKag5AKxzROmaDCXmsZgg85N7oht/gn5tp
+         P4XrwVTDHwCS5FaumXhMokH/i+dFJSSSPtfUkBW+3g1bq6jL+2SE21nPYfFqx4HPcHFT
+         J+vIK11LE8SSdpgFtGgNq2g8Hkgr7fZz4swEN1GpOD0VZb116OD2++UP1JHyVEjKycol
+         s1nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:reply-to:to:cc:date
-         :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=T22r6boFOGPxd0dDPAqjxH5f3Abs/jWqGqGRd46x5aY=;
-        b=NWefWW6Y7XVniMZ+Ii7pVurRrvmaEM+U396zynMn6RDGVwfd92IC06+Gelw0QT9FhD
-         6BDrBm3wGeGcU0ffLZthY5t6BgqCnXJbTGu9mdETrjwAIMDaMoN/Q4y2cLpDfmVYvSiA
-         ZI2xmkVQZGbWA4xMJ76IitcqBAQlmDK7g5dT2Qld0ZP+H4c/vJU6ukV0cA+tD646+UQt
-         WtARx8tkXWU+4GpH4kj7LuR8BBj4UuN11vU+H6C/HDoyKcsaiFbESookXSdKMQPoGkGA
-         92lPOTqPkQ3i5NG2iBG87Y3XDKL6pkKoAN5XL5P6o9v2uRH/HDFX0+bhQkLktYu3jtwA
-         5/yg==
-X-Gm-Message-State: AIVw113iUDO3h+iYn94dotmCp9aguOH0b3IF/0yMWj3Bz+xUghN9ToYj
-        P4tlGkORotkg3g==
-X-Received: by 10.159.62.154 with SMTP id x26mr9967945uai.67.1501509096434;
-        Mon, 31 Jul 2017 06:51:36 -0700 (PDT)
-Received: from [192.168.1.7] ([190.236.205.11])
-        by smtp.googlemail.com with ESMTPSA id j11sm1920878uaa.6.2017.07.31.06.51.34
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 31 Jul 2017 06:51:35 -0700 (PDT)
-Message-ID: <1501509093.3232.58.camel@gmail.com>
-Subject: Re: Contact with Latinamerica
-From:   Christopher =?ISO-8859-1?Q?D=EDaz?= 
-        <christopher.diaz.riv@gmail.com>
-Reply-To: christopher.diaz.riv@gmail.com
-To:     Philip Oakley <philipoakley@iee.org>
-Cc:     Git List <git@vger.kernel.org>
-Date:   Mon, 31 Jul 2017 08:51:33 -0500
-In-Reply-To: <BEDE2127EE5B47F1A739DF583B7DBDE9@PhilipOakley>
-References: <1501423608.3232.30.camel@gmail.com>
-         <6EF3784A5C1F420699D881AF642F28CD@PhilipOakley>
-         <1501438901.3232.46.camel@gmail.com>
-         <BEDE2127EE5B47F1A739DF583B7DBDE9@PhilipOakley>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=/RdC2tKloIjtGmurmCk4GWdAbPqBirSZ48SuM7rIiZY=;
+        b=ZkXISfOyKSWDF7GCUZcwqE8sW9NurJMpRcpRgXl3Nyy/QwOfOrst0qoWuO3FWbJjqZ
+         ZRZSwNP+SUWNXmH3y6wyhmqGGMhxfFzltv2miE4IdtpnTby7unbaA1UaZvC1qnaAyeTw
+         ykzZPyaC5ZUr5vmATXiB7Cn/n+/b8Xl/J1gFGkRYiFOdHb4PRnYhkyfrbCPdc6FFgOy6
+         gYHwUK/DDAPtcnQPy8NwQwks1PSrWxL0sE/dOEQvCE4xgwjyA+YH1DCf35fLfsBlGcdO
+         xI8bY8ngVnaUYzmoxFhNqF/dlEHnenKzoCgMLMLKOwJcuMIMNLlN5p88tMTEzNI/Kbvo
+         jghQ==
+X-Gm-Message-State: AIVw112nm00LFLyNsGVo2mkSJapUzeaYQf19Xm8zEpfoT/CSUslKhUqQ
+        +gnTzeXC548TgxSSKhiFExRhd+miOj+v2TA=
+X-Received: by 10.99.125.68 with SMTP id m4mr15486303pgn.259.1501509631716;
+ Mon, 31 Jul 2017 07:00:31 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.100.132.193 with HTTP; Mon, 31 Jul 2017 07:00:31 -0700 (PDT)
+From:   Anthony Sottile <asottile@umich.edu>
+Date:   Mon, 31 Jul 2017 07:00:31 -0700
+Message-ID: <CA+dzEB=cDvp7ZS8x+p+U-5NbK3SNd0FPyj_wP=gvi8mJi6D2ag@mail.gmail.com>
+Subject: [PATCH] Fix minor typo in git-diff docs.
+To:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.22.6 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+To be honest, I'm a bit overwhelmed by the documentation for submitting a patch!
 
-> You may also want to look at the https://git-scm.com/book/en/v2 free
-> book 
-> which can be translated by volunteers, and is possibly one of the
-> first 
-> ports of call for most users (top or near-top of search engine hits)
-> 
+I tried to follow as best I could, here's my attempt (please advise).
 
-Thanks for that info, I've already read that one a couple of weeks ago
-when I was trying to make my first PR to my community :) sure I can
-help with translations.
+From e88ad689a7587c11f270a10f191a3b6bc52a90d4 Mon Sep 17 00:00:00 2001
+From: Anthony Sottile <asottile@umich.edu>
+Date: Mon, 31 Jul 2017 06:54:14 -0700
+Subject: [PATCH] Fix minor typo in git-diff docs.
 
+Signed-off-by: Anthony Sottile <asottile@umich.edu>
+---
+ Documentation/diff-options.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-
-> Another very simple step is to read and comment on the commit
-> messages sent 
-> to the list, particulalrly for ease of readability and ease of 
-> translation/comprehension.
-> 
-> It is very easy to write sentences that are too long. And with too
-> many 
-> conjunctions.
-> 
-> We do not notice when we do it, having only been taught to write
-> long 
-> flowery sentences for essays and novels...
-> 
-> Proof-reading the commit messages will also allow the reader to do
-> directed 
-> research on just the particular item (both the use of language and
-> the code 
-> style)
-> 
-
-That is a very good point, I'll keep it on mind when we have more
-members and that may help them in having "more" fluent conversations.
-
-
-> > 
-> Welcome to the community! All it takes is one email (a journey of a
-> thousand 
-> miles starts with the first step) [1]
-> 
-
-Thank yoou all very much! I'll present myself then, since the last
-presentations don't say a lot about myself hehe.
-
-Well you all know that I am a software development student here. The
-institute here teaches us things like web (java, php, javascript) and
-mobile development (java, swift). On the other hand I think that in
-order to be a good developer (like real hackers) someone needs to
-understand how the machine thinks and works, that's why I've been
-learning OS concepts and low level languages like Assembly and C by
-myself in order to really understand how a computer works. I love open
-source given the fact that it helps you to discover how other amazing
-developers think and work. I've been using Linux-based distros since a
-couple of years, I could even create my own Linux From Scratch once a
-couple of months ago, that was a great learning experience :D but I
-stay with Gentoo linux since I've found there a lot of great
-information and the ability to learn about source code and get the max
-performance from my laptop.
-
-I don't like web and mobile development, but I do enjoy breaking mobile
-and web apps :D that's why I'm focusing right now on cybersecurity.
-Right now I'm and intern in a company called BroderJobs here in Lima,
-as security analist (actually I'm the whole TI dptmnt).
-
-Here in Peru, sadly, open source is like a taboo... noone uses it,
-neither companies nor educational institutions. That's why I'm founding
-this community, in order to give students the ability to connect with
-open source communities and work with great developers. Right now we
-are 4, but I believe that when the classes begin again ( on August 15th
-me and some other universities one week later) I'm going to be able to
-invite them and see how this project growths :D
- 
-That's why right now I'm getting in touch with lots of communities to
-see how can we contribute and this could help me to present the
-community to universities and other institutions so that they can see
-that we actually help big communities.
-
-That's me :) nice to meet you all
-Christopher Díaz Riveros
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index 89cc0f4..43d18a4 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -392,7 +392,7 @@ endif::git-log[]
+        the diff between the preimage and `/dev/null`. The resulting patch
+        is not meant to be applied with `patch` or `git apply`; this is
+        solely for people who want to just concentrate on reviewing the
+-       text after the change. In addition, the output obviously lack
++       text after the change. In addition, the output obviously lacks
+        enough information to apply such a patch in reverse, even manually,
+        hence the name of the option.
+ +
+-- 
+2.7.4
