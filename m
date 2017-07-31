@@ -2,91 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C7D981F991
-	for <e@80x24.org>; Mon, 31 Jul 2017 20:26:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F0AC1F991
+	for <e@80x24.org>; Mon, 31 Jul 2017 20:28:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751708AbdGaU0n (ORCPT <rfc822;e@80x24.org>);
-        Mon, 31 Jul 2017 16:26:43 -0400
-Received: from mail-lf0-f47.google.com ([209.85.215.47]:34510 "EHLO
-        mail-lf0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751701AbdGaU0m (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Jul 2017 16:26:42 -0400
-Received: by mail-lf0-f47.google.com with SMTP id g25so114649390lfh.1
-        for <git@vger.kernel.org>; Mon, 31 Jul 2017 13:26:42 -0700 (PDT)
+        id S1751352AbdGaU24 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 31 Jul 2017 16:28:56 -0400
+Received: from mail-pg0-f52.google.com ([74.125.83.52]:37532 "EHLO
+        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751157AbdGaU2y (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Jul 2017 16:28:54 -0400
+Received: by mail-pg0-f52.google.com with SMTP id y129so142563793pgy.4
+        for <git@vger.kernel.org>; Mon, 31 Jul 2017 13:28:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=DZ/e/GKxDWw0a29hzdkFwrIWbMXu2Ely8HLI4dyW+kI=;
-        b=PJCYkET57dxjz5nIu50l06kto4tVsA9wGTBMXyuBf4f1niT67fNNKmmL8bEP6lncs1
-         79jvyb3nn55LJvuS09+e2aAq1da6msCtFGHepexJLoYZvNEMq8dY5vjA/HUymgIsyhV2
-         4GuihWCYWB0gED4oMJQLBW4anizc0EMVMvQsXv37WQdmXiPIxSmOtC3eFnqUdP+W8imR
-         5M1cXzh5Nxj6S4xGS9UQhDEU9h5WS6qDX0vGVkdb2x9vDJiVKgN6c9TvA+3BSxbGqY9A
-         0lUM4dz2wuhNn7db/4JVDvTcIrq4rcdBNolsTlazy3HK0Ib0uzVDObskUctctIpzFz+2
-         tTaA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Q4VtPWheSDM4j1mIOqU6iZgLGmoyswJnlyV2N16z9fY=;
+        b=ankdBU0UHTj7Npaa3Of8IPFCWPvrDvSzKRU/Jh3Xv6ZbznFB54kURPG1zL+myOcPR1
+         KBXgOyw78PliGW0M6Bh3tFOXSZaYcwZpBT0wCYsyIWHJuhIA0JwNJe1nxxp9B0SC/4Nr
+         LGrAlJNNShvAOgvhworm0qy2Nz6Oa+5r5Uf0C5ZE5CqzIy/UlzlC99f9zIcSwwculVJo
+         GR/bnwciZAKFqWjC8+0BL4AZZPw9SNBsh42lq8Jt9VSr+8gShr7+ebB52JP/u2ovo+nE
+         qOCiTAeSOeiDtLhDvsQFYoKBalcUvskjGmP1WQkI0aLuaHbCh45MID1HYVGcyf+XDxtt
+         cKOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=DZ/e/GKxDWw0a29hzdkFwrIWbMXu2Ely8HLI4dyW+kI=;
-        b=F7CzUYiNVIKFR7Q+SLS49osuitEmSrQWKfaQ8R8YtKeLvU26cIohuTHe+UWEgrv+SU
-         0bL2RVl3rfpZK34cA2N1CBQXsytZ6Agnfendl9Q0C8jYDn/s5nbsVapgjpHMFr2vSXwz
-         tvIGQlxU0dQkUvp+AahZPehcdVIrDJ4LkrtGTMLb6zX96SV9xCjnD1dAr0cl56OudcKM
-         67dKvMeO2Jz8uCqgliXYBaWwXm0jJRvU8X2v0MBxA9dTU0dwsYafZcIsAMHC6M2ZO030
-         8IjnXAo86+pD+VDks2LOJ51s1QRo8HWeVI09BJOoV6YaQNqX8U9bB4wnpXjJmwRgHel9
-         d9ag==
-X-Gm-Message-State: AIVw112ZanK6SmPklearN9MzeLPO+wp209/KFLFAqXjZftCv59P5XHZg
-        tPgOm6Jv5S1ieptfO/WQC6WwXQCb/Y6E
-X-Received: by 10.25.204.149 with SMTP id c143mr4919462lfg.195.1501532801377;
- Mon, 31 Jul 2017 13:26:41 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Q4VtPWheSDM4j1mIOqU6iZgLGmoyswJnlyV2N16z9fY=;
+        b=d9rYvyrBmES6oP169eU0iIBV+rzRVp6p/eGMT35jL95hkoa+awDxuLlhHoybibkvZr
+         bKVcAHrc3HENtaz0oKnqZiYG86U2wXRoZrEgLDcTgp0/dbUM/MiAh7fr9CEAUDv3WkU+
+         avE0DQfHRsv01Dg9YDGe7GmXj8uUNiS7d1l2ENTdxyjffKZXkDSZkJm28cz2jNgpoM9O
+         36c8uE1CaK/53GoyPGerPBVDUAPXFm+NFG622lO1DKz9YGbfXK0RqJPVjKEIcgYI1z3Q
+         GZzlOwClparNrni9MI1nJRKeB4cdBceJehj6QpebkDNyTQ5RZnY/H7Mg7qFZVhutc/59
+         lUaQ==
+X-Gm-Message-State: AIVw111jT7t9Tne+P9TTaO9fN6s26nsL+aWjs0tD3U1ZdHIl3gJeL2FZ
+        YZ27X8CqzRY0JUF9
+X-Received: by 10.99.122.20 with SMTP id v20mr16995446pgc.342.1501532933729;
+        Mon, 31 Jul 2017 13:28:53 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:e129:2029:93fa:b589])
+        by smtp.gmail.com with ESMTPSA id 79sm54234742pfn.51.2017.07.31.13.28.52
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 31 Jul 2017 13:28:52 -0700 (PDT)
+Date:   Mon, 31 Jul 2017 13:28:51 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Prathamesh Chavan <pc44800@gmail.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, christian.couder@gmail.com
+Subject: Re: [GSoC][PATCH v2 00/13] Update: Week 10
+Message-ID: <20170731202851.GA181489@google.com>
+References: <20170724203454.13947-1-pc44800@gmail.com>
+ <20170729222401.12381-1-pc44800@gmail.com>
 MIME-Version: 1.0
-Received: by 10.25.1.130 with HTTP; Mon, 31 Jul 2017 13:26:40 -0700 (PDT)
-In-Reply-To: <20170730232427.vrqrrhlsap55ax7t@genre.crustytoothpaste.net>
-References: <20170728171817.21458-1-sbeller@google.com> <20170728171817.21458-3-sbeller@google.com>
- <xmqq379gmco6.fsf@gitster.mtv.corp.google.com> <20170729175833.4idan3befldn5vgp@genre.crustytoothpaste.net>
- <xmqqini9k4cx.fsf@gitster.mtv.corp.google.com> <20170730230019.ch74ska6wgbrh7ql@genre.crustytoothpaste.net>
- <20170730232427.vrqrrhlsap55ax7t@genre.crustytoothpaste.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 31 Jul 2017 13:26:40 -0700
-Message-ID: <CAGZ79kaBUpVwymjmzmOtHgfiWyxPQZCtFOX_Zm5v7N-H+C9cNA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] t6500: mark tests as SHA1 reliant
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170729222401.12381-1-pc44800@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jul 30, 2017 at 4:24 PM, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> On Sun, Jul 30, 2017 at 11:00:19PM +0000, brian m. carlson wrote:
->> Yes, basically, but a bit more generally.  There will always be cases in
->> which we need to specify an object ID or an arbitrary string and the
->> behavior will need to vary based on the hash.  That can be something
->> like, in this case, the two blob contents that would have the similar
->> prefix.
->>
->> So in this case, we pass the helper the string "263 410" and get back a
->> value for either the hacked SHA-1 hash or the SHA-256 or whatever we're
->> using.
->
-> I realize this was worded poorly.  So for my example, in this case, we'd
-> do:
->
-> test-helper-hash-string "263 410"
->
-> For SHA-1, we'd get "263 410".  For SHA-256, we'd get "313 481" (which,
-> as SHA-256 blobs, both start with "17" in their hex representation).
-> Presumably we'd read some environment variable to determine the proper
-> value.
+On 07/30, Prathamesh Chavan wrote:
+> Thank you Brandon Williams <bmwill@google.com> for reviewing the previous
+> patch series.
+> Also, I'm sorry for repling late to your reviews. The main reason was
+> to give sufficient time to prepare the next version of each patch as
+> suggested.
 
-This is what Junio proposed in the first message, except that we defer that
-to a shell script as for each test we may need different things, so a helper may
-be of little value?
+No worries, things take time.  That and I was busy most of last week
+anyway :)
+
+> The changes made in each patch are enlisted in the patch itself.
+> 
+> Complete build report of this work is available at: [1]
+> Branch: week-10
+> Build #142
+> 
+> Also, I have push the work on github as well and can be checked out at: [2]
+> 
+> [1]: https://travis-ci.org/pratham-pc/git/builds
+> [2]: https://github.com/pratham-pc/git/commits/week-10
+> 
+> Prathamesh Chavan (13):
+>   submodule--helper: introduce get_submodule_displaypath()
+>   submodule--helper: introduce for_each_submodule_list()
+>   submodule: port set_name_rev() from shell to C
+>   submodule: port submodule subcommand 'status' from shell to C
+>   submodule: port submodule subcommand 'sync' from shell to C
+>   submodule: port submodule subcommand 'deinit' from shell to C
+>   diff: change scope of the function count_lines()
+>   submodule: port submodule subcommand 'summary' from shell to C
+>   submodule foreach: correct '$path' in nested submodules from a
+>     subdirectory
+>   submodule foreach: document '$sm_path' instead of '$path'
+>   submodule foreach: clarify the '$toplevel' variable documentation
+>   submodule foreach: document variable '$displaypath'
+>   submodule: port submodule subcommand 'foreach' from shell to C
+> 
+>  Documentation/git-submodule.txt |   15 +-
+>  builtin/submodule--helper.c     | 1186 ++++++++++++++++++++++++++++++++++++++-
+>  diff.c                          |    2 +-
+>  diff.h                          |    1 +
+>  git-submodule.sh                |  394 +------------
+>  t/t7407-submodule-foreach.sh    |   38 +-
+>  6 files changed, 1218 insertions(+), 418 deletions(-)
+> 
+> -- 
+> 2.13.0
+> 
+
+-- 
+Brandon Williams
