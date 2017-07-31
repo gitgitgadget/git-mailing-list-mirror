@@ -2,930 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F0CB920899
-	for <e@80x24.org>; Mon, 31 Jul 2017 03:51:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4120B2047F
+	for <e@80x24.org>; Mon, 31 Jul 2017 11:29:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751809AbdGaDvs (ORCPT <rfc822;e@80x24.org>);
-        Sun, 30 Jul 2017 23:51:48 -0400
-Received: from mail-vk0-f50.google.com ([209.85.213.50]:35033 "EHLO
-        mail-vk0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751674AbdGaDvq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Jul 2017 23:51:46 -0400
-Received: by mail-vk0-f50.google.com with SMTP id d124so11656507vkf.2
-        for <git@vger.kernel.org>; Sun, 30 Jul 2017 20:51:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=cHJqTLdUFlky3t4lovUF7hOmTL6yvTk2dmfb7lmxhKI=;
-        b=GxYLVWY8sar4iQGwJRjOtOAsjviHENL4sB88AEPtjoHhdKmKWpB6DGKbwRPNFpEAGG
-         Dwf+D9TfExKtIFQW+aT02ruDATMLp7kOJ/JKFRVnCxhhWBf274dxnshWooUQnF1VbKgh
-         IIqwjzwpQkYULlb5c30zMiLVwz2JEGPysYuzg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=cHJqTLdUFlky3t4lovUF7hOmTL6yvTk2dmfb7lmxhKI=;
-        b=B/MEr3OBkLHOicTd8PVCXTCS2fPTlM+fo1wffPsAV7P0MpejFBX+ooUOY+C9C77Unr
-         Yixml4jQPZ4R7FH4gTXfvdD8V/lQx0OsCVVBA3zPqD9WGBxuXFegB7w0t98WkgwlZyMV
-         KDFKbAdOEe1VMC5ftfdAlbo3IVZ92SEqa2MZZZNik4E8FkEGrK/OAupnGU6MXldFZH+f
-         zo6qZ4R+bB2NW4L02GW/N88j2SB+Ils+hZaSfWz6g/c5bcIcdiH0aVdy7JrQJ6HRPUlg
-         RVDjRj8SAtTc/JykTQXphnZnQkjDNXLq4lPI/J2WTCt45To32jwXcaKnEcPdSeMBTC7X
-         6UjQ==
-X-Gm-Message-State: AIVw1138awDin+guaO6/+zyZStf8ATmQV+UlTGonYZXXZFQJMW4j2rgM
-        U6TG2hL1JSqM+bgIjbo58UNDMu+f0ptwSlEQOA==
-X-Received: by 10.31.195.3 with SMTP id t3mr9843970vkf.98.1501473104774; Sun,
- 30 Jul 2017 20:51:44 -0700 (PDT)
+        id S1752106AbdGaL26 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 31 Jul 2017 07:28:58 -0400
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:62678 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750869AbdGaL26 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Jul 2017 07:28:58 -0400
+Received: from PhilipOakley ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id c8sPdKlAVlmqOc8sQdKnRO; Mon, 31 Jul 2017 12:28:56 +0100
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=H+Sr+6Qi c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
+ a=NEAV23lmAAAA:8 a=5rxgeBVgAAAA:8 a=anyJmfQTAAAA:8 a=w41elzSGI3lyMduBvLwA:9
+ a=yZoVVUbC94zAuYIM:21 a=UAJTVN-rOyqpC2Tz:21 a=QEXdDO2ut3YA:10
+ a=6kGIvZw6iX1k4Y-7sg4_:22 a=PwKx63F5tFurRwaNxrlG:22 a=YJ_ntbLOlx1v6PCnmBeL:22
+Message-ID: <BEDE2127EE5B47F1A739DF583B7DBDE9@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     <christopher.diaz.riv@gmail.com>
+Cc:     "Git List" <git@vger.kernel.org>
+References: <1501423608.3232.30.camel@gmail.com> <6EF3784A5C1F420699D881AF642F28CD@PhilipOakley> <1501438901.3232.46.camel@gmail.com>
+Subject: Re: Contact with Latinamerica
+Date:   Mon, 31 Jul 2017 12:28:45 +0100
+Organization: OPDS
 MIME-Version: 1.0
-Received: by 10.103.83.7 with HTTP; Sun, 30 Jul 2017 20:51:24 -0700 (PDT)
-From:   Shawn Pearce <spearce@spearce.org>
-Date:   Sun, 30 Jul 2017 20:51:24 -0700
-Message-ID: <CAJo=hJv7scc1L0_MdRkFeLAJGjYm2UkTFNOgj2e4+9Zj7KSiiQ@mail.gmail.com>
-Subject: Re: reftable [v4]: new ref storage format
-To:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        David Borowitz <dborowitz@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        format=flowed;
+        charset="UTF-8";
+        reply-type=original
+Content-Transfer-Encoding: 8bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Antivirus: AVG (VPS 170731-0, 31/07/2017), Outbound message
+X-Antivirus-Status: Clean
+X-CMAE-Envelope: MS4wfOtnLlf31SsnMI9gURdhfmqZ5PIPI1sRauSKf9EOepXxwcYw3MrF4L2z5z+UtgK5mELlja6ZicwqBocD1LbRLNRtsLBfHIaQLk0eMKKBr/K9zdcq6HkA
+ KUmWuJXd1F+94ZdFjZPga2StNVFw7O9jFUYE0OHhICaPkR8enfA/26qiSzdiG5zZdAbhNYGb0CA6qlo+btl17qehEzLpn+bNc1g=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-4th iteration of the reftable storage format.
+From: "Christopher Díaz" <christopher.diaz.riv@gmail.com>
+
+Hi Christopher,
+I've included the Git list to keep the discussion open to all the community. 
+(we usually use reply all)
+
+> El dom, 30-07-2017 a las 19:01 +0100, Philip Oakley escribió:
+>
+> Hi Philip,
+>
+> Thank you very much for such a fast reply.
+>
+>
+>> I can see two simple steps toward your goal that may help.
+>>
+>> The first is to ensure that the open source tools do have
+>> localisation
+>> (l10n) of their command line messages, for which I'm sure Git's l10n
+>> team
+>> would be happy to have your communities support. -
+>> https://github.com/git-l10n and
+>> https://public-inbox.org/git/CANYiYbEJ3Gw=JvbhLBeFWBD7xLXxd=_fFdH3UX7
+>> 6H97ZU_3zKA@mail.gmail.com/#r
+>>
+>
+> That would be amazing since the second step in order to help open
+> source communities is knowing how to use git (the first one is teaching
+> them a programming language in order to be able to understand the code,
+> we are taking care of that too). This is something that we will need to
+> teach practicaly all of the members to do if they don't already know.
+> I'll be in contact with the team.
+>
+
+You may also want to look at the https://git-scm.com/book/en/v2 free book 
+which can be translated by volunteers, and is possibly one of the first 
+ports of call for most users (top or near-top of search engine hits)
+
+>> The other idea is to consider how Git's version message, or
+>> something
+>> similar, should report the users current i18n settings, and any links
+>> to the
+>> right (e.g. local) support groups. At present, I don't see any
+>> obvious
+>> command to help users (and those on the help forums and lists) know
+>> what
+>> i18n nationality / language names to use for discussions. Sometimes
+>> it is
+>> worth ensuring these baby steps are in place.
+>>
+
+Another very simple step is to read and comment on the commit messages sent 
+to the list, particulalrly for ease of readability and ease of 
+translation/comprehension.
+
+It is very easy to write sentences that are too long. And with too many 
+conjunctions.
+
+We do not notice when we do it, having only been taught to write long 
+flowery sentences for essays and novels...
+
+Proof-reading the commit messages will also allow the reader to do directed 
+research on just the particular item (both the use of language and the code 
+style)
+
+>
+> Yes, thanks for taking this in consideration, the reallity here in
+> Peru, and I could say maybe in a lot of parts in Latinamerica is that
+> they don't produce technology since it is mucho more easy just to buy
+> something and the language doesn't help to make the learning curve
+> easier.
+>
+> I'll contact the translation team and I hope you won't mind if we could
+> say here that we contribute to the git project. It would be a lot
+> easier for me in order to go to invite people to the community in
+> educational institutions if I could say that the community helps very
+> big open source projects like git. And if there are some legal
+> procedures that I need to accomplish in order to be able to say it
+> publicly, it would be very kind of you if you point me into the right
+> direction.
+>
+Welcome to the community! All it takes is one email (a journey of a thousand 
+miles starts with the first step) [1]
+
+>
+> Thanks for all the info
+> Christopher Díaz Riveros
+
+[1] It's easy to feel overwhelmed by other who post..  can find the article 
+but... 
 
-You can read a rendered version of this here:
-https://googlers.googlesource.com/sop/jgit/+/reftable/Documentation/technical/reftable.md
-
-Significant changes from v3:
-- Incorporated Michael Haggerty's update_index concept for reflog.
-- Explicitly documented log-only tables.
-
-- Magic changed to 'REFT'
-- Symlinks now use type 0x3 with "ref: " prefix.
-- Ref-like files (FETCH_HEAD, MERGE_HEAD) also use type 0x3.
-- restart_count simplified, obj block_count simplified
-
-
-# reftable
-
-[TOC]
-
-## Overview
-
-### Problem statement
-
-Some repositories contain a lot of references (e.g.  android at 866k,
-rails at 31k).  The existing packed-refs format takes up a lot of
-space (e.g.  62M), and does not scale with additional references.
-Lookup of a single reference requires linearly scanning the file.
-
-Atomic pushes modifying multiple references require copying the
-entire packed-refs file, which can be a considerable amount of data
-moved (e.g. 62M in, 62M out) for even small transactions (2 refs
-modified).
-
-Repositories with many loose references occupy a large number of disk
-blocks from the local file system, as each reference is its own file
-storing 41 bytes (and another file for the corresponding reflog).
-This negatively affects the number of inodes available when a large
-number of repositories are stored on the same filesystem.  Readers can
-be penalized due to the larger number of syscalls required to traverse
-and read the `$GIT_DIR/refs` directory.
-
-### Objectives
-
-- Near constant time lookup for any single reference, even when the
-  repository is cold and not in process or kernel cache.
-- Near constant time verification a SHA-1 is referred to by at least
-  one reference (for allow-tip-sha1-in-want).
-- Efficient lookup of an entire namespace, such as `refs/tags/`.
-- Support atomic push with `O(size_of_update)` operations.
-- Combine reflog storage with ref storage for small transactions.
-- Separate reflog storage for base refs and historical logs.
-
-### Description
-
-A reftable file is a portable binary file format customized for
-reference storage. References are sorted, enabling linear scans,
-binary search lookup, and range scans.
-
-Storage in the file is organized into blocks.  Prefix compression
-is used within a single block to reduce disk space.  Block size is
-tunable by the writer.
-
-### Performance
-
-Space used, packed-refs vs. reftable:
-
-repository | packed-refs | reftable | % original | avg ref  | avg obj
------------|------------:|---------:|-----------:|---------:|--------:
-android    |      62.2 M |   34.4 M |     55.2%  | 33 bytes | 8 bytes
-rails      |       1.8 M |    1.1 M |     57.7%  | 29 bytes | 6 bytes
-git        |      78.7 K |   44.0 K |     60.0%  | 50 bytes | 6 bytes
-git (heads)|       332 b |    276 b |     83.1%  | 34 bytes | 0 bytes
-
-Scan (read 866k refs), by reference name lookup (single ref from 866k
-refs), and by SHA-1 lookup (refs with that SHA-1, from 866k refs):
-
-format      | cache | scan    | by name        | by SHA-1
-------------|------:|--------:|---------------:|---------------:
-packed-refs | cold  |  402 ms | 409,660.1 usec | 412,535.8 usec
-packed-refs | hot   |         |   6,844.6 usec |  20,110.1 usec
-reftable    | cold  |  112 ms |      33.9 usec |     323.2 usec
-reftable    | hot   |         |      20.2 usec |     320.8 usec
-
-Space used for 149,932 log entries for 43,061 refs,
-reflog vs. reftable:
-
-format        | size  | avg entry
---------------|------:|-----------:
-$GIT_DIR/logs | 173 M | 1209 bytes
-reftable      |   5 M |   37 bytes
-
-## Details
-
-### Peeling
-
-References in a reftable are always peeled.
-
-### Reference name encoding
-
-Reference names should be encoded with UTF-8.
-
-### Network byte order
-
-All multi-byte, fixed width fields are in network byte order.
-
-### Ordering
-
-Blocks are lexicographically ordered by their first reference.
-
-### Directory/file conflicts
-
-The reftable format accepts both `refs/heads/foo` and
-`refs/heads/foo/bar` as distinct references.
-
-This property is useful for retaining log records in reftable, but may
-confuse versions of Git using `$GIT_DIR/refs` directory tree to
-maintain references.  Users of reftable may choose to continue to
-reject `foo` and `foo/bar` type conflicts to prevent problems for
-peers.
-
-## File format
-
-### Structure
-
-A reftable file has the following high-level structure:
-
-    first_block {
-      header
-      first_ref_block
-    }
-    ref_blocks*
-    ref_index?
-    obj_blocks*
-    obj_index?
-    log_blocks*
-    log_index?
-    footer
-
-A log-only file omits the `ref_blocks`, `ref_index`, `obj_blocks` and
-`obj_index` sections, containing only the file header and log blocks:
-
-    first_block {
-      header
-    }
-    log_blocks*
-    log_index?
-    footer
-
-in a log-only file the first log block immediately follows the file
-header, without padding to block alignment.
-
-### Block size
-
-The `block_size` is arbitrarily determined by the writer, and does not
-have to be a power of 2.  The block size must be larger than the
-longest reference name or log entry used in the repository, as
-references cannot span blocks.
-
-Powers of two that are friendly to the virtual memory system or
-filesystem (such as 4k or 8k) are recommended.  Larger sizes (64k) can
-yield better compression, with a possible increased cost incurred by
-readers during access.
-
-The largest block size is `16777215` bytes (15.99 MiB).
-
-### Header
-
-A 24-byte header appears at the beginning of the file:
-
-    'REFT'
-    uint8( version_number = 1 )
-    uint24( block_size )
-    uint64( min_update_index )
-    uint64( max_update_index )
-
-The `min_update_index` and `max_update_index` describe bounds for the
-`update_index` field of all log records in this file.  When reftables
-are used in a stack for transactions (see below), these fields can
-order the files such that the prior file's `max_update_index + 1` is
-the next file's `min_update_index`.
-
-### First ref block
-
-The first ref block shares the same block as the file header, and is
-24 bytes smaller than all other blocks in the file.  The first block
-immediately begins after the file header, at offset 24.
-
-If the first block is a log block (a log only table), its block header
-begins immediately at offset 24.
-
-### Ref block format
-
-A ref block is written as:
-
-    'r'
-    uint24( block_len )
-    ref_record+
-    uint32( restart_offset )+
-    uint16( restart_count )
-    padding?
-
-Blocks begin with `block_type = 'r'` and a 3-byte `block_len` which
-encodes the number of bytes in the block up to, but not including the
-optional `padding`.  This is almost always shorter than the file's
-`block_size`.  In the first ref block, `block_len` includes 24 bytes
-for the file header.
-
-The 4-byte block header is followed by a variable number of
-`ref_record`, describing reference names and values.  The format
-is described below.
-
-A variable number of 4-byte `restart_offset` values follow the
-records.  Offsets are relative to the start of the block and refer to
-the first byte of any `ref_record` whose name has not been prefix
-compressed.  Entries in the `restart_offset` list must be sorted,
-ascending.  Readers can start linear scans from any of these records.
-
-As the first ref block shares the first file block with the file
-header, offsets in the first block are relative to the start of the
-file (position 0), and include the file header.  This requires the
-first restart in the first block to be at offset 24.  Restarts in
-subsequent ref blocks are relative to the start of the ref block.
-
-The 2-byte `restart_count` stores the number of entries in the
-`restart_offset` list, which must not be empty.
-
-Readers can use the restart count to binary search between restarts
-before starting a linear scan.  The `restart_count` field must be
-the last 2 bytes of the block as specified by `block_len` from the
-block header.
-
-The end of the block may be filled with `padding` NUL bytes to fill
-out the block to the common `block_size` as specified in the file
-header.  Padding may be necessary to ensure the following block starts
-at a block alignment, and does not spill into the tail of this block.
-Padding may be omitted if the block is the last block of the file, and
-there is no index block.  This allows reftable to efficiently scale
-down to a small number of refs.
-
-#### ref record
-
-A `ref_record` describes a single reference, storing both the name and
-its value(s). Records are formatted as:
-
-    varint( prefix_length )
-    varint( (suffix_length << 3) | value_type )
-    suffix
-    value?
-
-The `prefix_length` field specifies how many leading bytes of the
-prior reference record's name should be copied to obtain this
-reference's name.  This must be 0 for the first reference in any
-block, and also must be 0 for any `ref_record` whose offset is listed
-in the `restart_offset` table at the end of the block.
-
-Recovering a reference name from any `ref_record` is a simple concat:
-
-    this_name = prior_name[0..prefix_length] + suffix
-
-The `suffix_length` value provides the number of bytes to copy from
-`suffix` to complete the reference name.
-
-The `value` follows.  Its format is determined by `value_type`, one of
-the following:
-
-- `0x0`: deletion; no value data (see transactions, below)
-- `0x1`: one 20-byte object id; value of the ref
-- `0x2`: two 20-byte object ids; value of the ref, peeled target
-- `0x3`: symref and text: `varint( text_len ) text`
-- `0x4`: index record (see below)
-- `0x5`: log record (see below)
-
-Symbolic references use `0x3` with a `text` string starting with `"ref: "`,
-followed by the complete name of the reference target.  No
-compression is applied to the target name.  Other types of contents
-that are also reference like, such as `FETCH_HEAD` and `MERGE_HEAD`,
-may also be stored using type `0x3`.
-
-Types `0x6..0x7` are reserved for future use.
-
-### Ref index
-
-The ref index stores the name of the last reference from every ref
-block in the file, enabling constant O(1) disk seeks for all lookups.
-Any reference can be found by searching the index, identifying the
-containing block, and searching within that block.
-
-If present the ref index block appears after the last ref block.  The
-prior ref block should be padded to ensure the ref index starts on a
-block alignment.
-
-An index block should only be written if there are at least 4 blocks
-in the file, as cold reads using the index requires 2 disk reads (read
-index, read block), and binary searching <= 4 blocks also requires <=
-2 reads.  Omitting the index block from smaller files saves space.
-
-Index block format:
-
-    uint32( (0x80 << 24) | block_len )
-    index_record+
-    uint32( restart_offset )+
-    uint16( restart_count )
-    padding?
-
-The index block header starts with the high bit set.  This identifies
-the block as an index block, and not as a ref block, log block or file
-footer.  The `block_len` field in an index block is 30-bits network
-byte order, and allowed to occupy space normally used by the block
-type in other blocks.  This supports indexes significantly larger than
-the file's `block_size`.
-
-The `restart_offset` and `restart_count` fields are identical in
-format, meaning and usage as in ref blocks.
-
-To reduce the number of reads required for random access in very large
-files, the index block may be larger than the other blocks.  However,
-readers must hold the entire index in memory to benefit from this, so
-it's a time-space tradeoff in both file size and reader memory.
-Increasing the block size decreases the index size.
-
-When object blocks are present the ref index block is padded with
-`padding` to maintain alignment for the next block. No padding is
-necessary if log blocks or the file trailer follows the ref index.
-
-#### index record
-
-An index record describes the last entry in another block.
-Index records are written as:
-
-    varint( prefix_length )
-    varint( (suffix_length << 3) | 0x4 )
-    suffix
-    varint( block_position )
-
-Index records use prefix compression exactly like `ref_record`.
-
-Index records store `block_position` after the suffix, specifying the
-absolute position in bytes (from the start of the file) of the block
-that ends with this reference. Readers can seek to `block_position` to
-begin reading the block header.
-
-#### Reading the index
-
-Readers loading the ref index must first read the footer (below) to
-obtain `ref_index_offset`. If not present, the offset will be 0.
-
-### Obj block format
-
-Object blocks use unique, abbreviated 2-20 byte SHA-1 keys, mapping
-to ref blocks containing references pointing to that object directly,
-or as the peeled value of an annotated tag.  Like ref blocks, object
-blocks use the file's standard `block_size`.
-
-To save space in small files, object blocks may be omitted if the ref
-index is not present.  When missing readers should brute force a
-linear search of all references to lookup by SHA-1.
-
-An object block is written as:
-
-    'o'
-    uint24( block_len )
-    obj_record+
-    uint32( restart_offset )+
-    uint16( restart_count )
-    padding?
-
-Fields are identical to ref block.  Binary search using the restart
-table works the same as in reference blocks.
-
-Because object identifiers are abbreviated by writers to the shortest
-unique abbreviation within the reftable, obj key lengths are variable
-between 2 and 20 bytes.  Readers must compare only for common prefix
-match within an obj block or obj index.
-
-Object blocks should be block aligned, according to `block_size` from
-the file header.  The `padding` field is filled with NULs to maintain
-alignment for the next block.
-
-#### obj record
-
-An `obj_record` describes a single object abbreviation, and the blocks
-containing references using that unique abbreviation:
-
-    varint( prefix_length )
-    varint( (suffix_length << 3) | cnt_3 )
-    suffix
-    varint( cnt_large )?
-    varint( block_delta )+
-
-Like in reference blocks, abbreviations are prefix compressed within
-an obj block.  On large reftables with many unique objects, higher
-block sizes (64k), and higher restart interval (128), a
-`prefix_length` of 2 or 3 and `suffix_length` of 3 may be common in
-obj records (unique abbreviation of 5-6 raw bytes, 10-12 hex digits).
-
-Each record contains `block_count` number of block identifiers for ref
-blocks.  For 1-7 blocks the block count is stored in `cnt_3`.  When
-`cnt_3 = 0` the actual block count follows in a varint, `cnt_large`.
-
-The first `block_delta` is the absolute block identifier counting from
-the start of the file. The offset of that block can be obtained by
-`block_delta[0] * block_size`.  Additional `block_delta` entries are
-relative to the prior entry, e.g. a reader would perform:
-
-    block_id = block_delta[0]
-    prior = block_id
-    for (j = 1; j < block_count; j++) {
-      block_id = prior + block_delta[j]
-      prior = block_id
-    }
-
-With a `block_id` in hand, a reader must linearly scan the ref block
-at `block_id * block_size` offset in the file, starting from the first
-`ref_record`, testing each reference's SHA-1s (for `value_type = 0x1`
-or `0x2`) for full equality.  Faster searching by SHA-1 within a
-single ref block is not supported by the reftable format.  Smaller
-block sizes reduces the number of candidates this step must consider.
-
-### Obj index
-
-The obj index stores the abbreviation from the last entry for every
-obj block in the file, enabling constant O(1) disk seeks for all
-lookups.  It is formatted exactly the same as the ref index, but
-refers to obj blocks.
-
-The obj index should be present if obj blocks are present, as
-obj blocks should only be written in larger files.
-
-The obj index should be block aligned, according to `block_size` from
-the file header.  This requires padding the last obj block to maintain
-alignment.
-
-Readers loading the obj index must first read the footer (below) to
-obtain `obj_index_offset`.  If not present, the offset will be 0.
-
-### Log block format
-
-Unlike ref and obj blocks, log block sizes are variable in size, and
-do not match the `block_size` specified in the file header or footer.
-Writers should choose an appropriate buffer size to prepare a log block
-for deflation, such as `2 * block_size`.
-
-A log block is written as:
-
-    'g'
-    uint24( block_len )
-    zlib_deflate {
-      log_record+
-      int32( restart_offset )+
-      int16( restart_count )
-    }
-
-Log blocks look similar to ref blocks, except `block_type = 'g'`.
-
-The 4-byte block header is followed by the deflated block contents
-using zlib deflate.  The `block_len` in the header is the inflated
-size (including 4-byte block header), and should be used by readers to
-preallocate the inflation output buffer.  Offsets within the block
-(e.g.  `restart_offset`) still include the 4-byte header.  Readers may
-prefer prefixing the inflation output buffer with the 4-byte header.
-
-Within the deflate container, a variable number of `log_record`
-describe reference changes.  The log record format is described
-below.  See ref block format (above) for a description of
-`restart_offset` and `restart_count`.
-
-Unlike ref blocks, log blocks are written at any alignment, without
-padding.  The first log block immediately follows the end of the prior
-block, which omits its trailing padding.  In very small files the log
-block may appear in the first block.
-
-Because log blocks have no alignment or padding between blocks,
-readers must keep track of the bytes consumed by the inflater to
-know where the next log block begins.
-
-#### log record
-
-Log record keys are structured as:
-
-    ref_name '\0' reverse_int64( update_index )
-
-where `update_index` is the unique transaction identifier.  The
-`update_index` field must be unique within the scope of a `ref_name`.
-See the update index section below for further details.
-
-The `reverse_int64` function inverses the value so lexographical
-ordering the network byte order encoding sorts the more recent records
-with higher `update_index` values first:
-
-    reverse_int64(int64 t) {
-      return 0xffffffffffffffff - t;
-    }
-
-Log records have a similar starting structure to ref and index
-records, utilizing the same prefix compression scheme applied to the
-log record key described above.
-
-```
-    varint( prefix_length )
-    varint( (suffix_length << 3) | 0x5 )
-    suffix
-
-    old_id
-    new_id
-    varint( time_seconds )
-    sint16( tz_offset )
-    varint( name_length    )  name
-    varint( email_length   )  email
-    varint( message_length )  message
-```
-
-The value data following the key suffix is complex:
-
-- two 20-byte SHA-1s (old id, new id)
-- varint time in seconds since epoch (Jan 1, 1970)
-- 2-byte timezone offset (signed)
-- varint string of committer's name
-- varint string of committer's email
-- varint string of message
-
-`tz_offset` is the absolute number of minutes from GMT the committer
-was at the time of the update.  For example `GMT-0800` is encoded in
-reftable as `sint16(-480)` and `GMT+0230` is `sint16(150)`.
-
-The `message_length` may be 0, in which case there was no message
-supplied for the update.
-
-#### Reading the log
-
-Readers accessing the log must first read the footer (below) to
-determine the `log_offset`.  The first block of the log begins at
-`log_offset` bytes since the start of the file.  The `log_offset` is
-not block aligned.
-
-#### Importing logs
-
-When importing from `$GIT_DIR/logs` writers should globally order all
-log records roughly by timestamp while preserving file order, and
-assign unique, increasing `update_index` values for each log line.
-
-### Log index
-
-The log index stores the log key (`refname \0 reverse_int64(update_index)`)
-for the last log record of every log block in the file, supporting
-bounded-time lookup.
-
-A log index block must be written if 2 or more log blocks are written
-to the file.  If present, the log index appears after the last log
-block.  There is no padding used to align the log index to block
-alignment.
-
-Log index format is identical to ref index, except the keys are 9
-bytes longer to include `'\0'` and the 8-byte
-`reverse_int64(update_index)`.  Records use `block_position` to
-refer to the start of a log block.
-
-#### Reading the index
-
-Readers loading the log index must first read the footer (below) to
-obtain `log_index_offset`. If not present, the offset will be 0.
-
-### Footer
-
-After the last block of the file, a file footer is written.  It begins
-like the file header, but is extended with additional data.
-
-A 68-byte footer appears at the end:
-
-```
-    'REFT'
-    uint8( version_number = 1 )
-    uint24( block_size )
-    uint64( min_update_index )
-    uint64( max_update_index )
-
-    uint64( ref_index_offset )
-    uint64( obj_offset )
-    uint64( obj_index_offset )
-
-    uint64( log_offset )
-    uint64( log_index_offset )
-
-    uint32( CRC-32 of above )
-```
-
-If a section is missing (e.g. ref index) the corresponding offset
-field (e.g. `ref_index_offset`) will be 0.
-
-- `obj_offset`: byte offset for the first obj block.
-- `log_offset`: byte offset for the first log block.
-- `ref_index_offset`: byte offset for the start of the ref index.
-- `obj_index_offset`: byte offset for the start of the obj index.
-- `log_index_offset`: byte offset for the start of the log index.
-
-#### Reading the footer
-
-Readers must seek to `file_length - 68` to access the footer.  A
-trusted external source (such as `stat(2)`) is necessary to obtain
-`file_length`.  When reading the footer, readers must verify:
-
-- 4-byte magic is correct
-- 1-byte version number is recognized
-- 4-byte CRC-32 matches the other 64 bytes (including magic, and version)
-
-Once verified, the other fields of the footer can be accessed.
-
-### Varint encoding
-
-Varint encoding is identical to the ofs-delta encoding method used
-within pack files.
-
-Decoder works such as:
-
-    val = buf[ptr] & 0x7f
-    while (buf[ptr] & 0x80) {
-      ptr++
-      val = ((val + 1) << 7) | (buf[ptr] & 0x7f)
-    }
-
-### Binary search
-
-Binary search within a block is supported by the `restart_offset`
-fields at the end of the block.  Readers can binary search through the
-restart table to locate between which two restart points the sought
-reference or key should appear.
-
-Each record identified by a `restart_offset` stores the complete key
-in the `suffix` field of the record, making the compare operation
-during binary search straightforward.
-
-Once a restart point lexicographically before the sought reference has
-been identified, readers can linearly scan through the following
-record entries to locate the sought record, terminating if the current
-record sorts after (and therefore the sought key is not present).
-
-#### Restart point selection
-
-Writers determine the restart points at file creation.  The process is
-arbitrary, but every 16 or 64 records is recommended.  Every 16 may
-be more suitable for smaller block sizes (4k or 8k), every 64 for
-larger block sizes (64k).
-
-More frequent restart points reduces prefix compression and increases
-space consumed by the restart table, both of which increase file size.
-
-Less frequent restart points makes prefix compression more effective,
-decreasing overall file size, with increased penalities for readers
-walking through more records after the binary search step.
-
-A maximum of `65535` restart points per block is supported.
-
-## Considerations
-
-### Lightweight refs dominate
-
-The reftable format assumes the vast majority of references are single
-SHA-1 valued with common prefixes, such as Gerrit Code Review's
-`refs/changes/` namespace, GitHub's `refs/pulls/` namespace, or many
-lightweight tags in the `refs/tags/` namespace.
-
-Annotated tags storing the peeled object cost only an additional 20
-bytes per reference.
-
-### Low overhead
-
-A reftable with very few references (e.g. git.git with 5 heads)
-is 276 bytes for reftable, vs. 332 bytes for packed-refs.  This
-supports reftable scaling down for transaction logs (below).
-
-### Block size
-
-For a Gerrit Code Review type repository with many change refs, larger
-block sizes (64 KiB) and less frequent restart points (every 64) yield
-better compression due to more references within the block compressing
-against the prior reference.
-
-Larger block sizes reduces the index size, as the reftable will
-require fewer blocks to store the same number of references.
-
-### Minimal disk seeks
-
-Assuming the index block has been loaded into memory, binary searching
-for any single reference requires exactly 1 disk seek to load the
-containing block.
-
-### Scans and lookups dominate
-
-Scanning all references and lookup by name (or namespace such as
-`refs/heads/`) are the most common activities performed by repositories.
-SHA-1s are stored twice when obj blocks are present, avoiding disk
-seeks for the common cases of scan and lookup by name.
-
-### Logs are infrequently read
-
-Logs are infrequently accessed, but can be large.  Deflating log
-blocks saves disk space, with some increased penalty at read time.
-
-Logs are stored in an isolated section from refs, reducing the burden
-on reference readers that want to ignore logs.  Further, historical
-logs can be isolated into log-only reftables.
-
-### Logs are read backwards
-
-Logs are frequently accessed backwards (most recent N records for
-master to answer `master@{4}`), so log records are grouped by
-reference, and sorted descending by update index.
-
-## Repository format
-
-### Version 1
-
-A repository must set its `$GIT_DIR/config` to configure reftable:
-
-    [core]
-        repositoryformatversion = 1
-    [extensions]
-        reftable = 1
-
-### Layout
-
-The `$GIT_DIR/refs` path is a file when reftable is configured, not a
-directory.  This prevents loose references from being stored.
-
-A collection of reftable files are stored in the `$GIT_DIR/reftable/`
-directory:
-
-    00000001_UF4paF
-    00000002_bUVgy4
-
-where reftable files are named by a unique name such as produced by
-the function:
-
-    mktemp "${update_index}_XXXXXX"
-
-The stack ordering file is `$GIT_DIR/refs` and lists the current
-files, one per line, in order, from oldest (base) to newest (most
-recent):
-
-    $ cat .git/refs
-    00000001_UF4paF
-    00000002_bUVgy4
-
-Readers must read `$GIT_DIR/refs` to determine which files are
-relevant right now, and search through the stack in reverse order
-(last reftable is examined first).
-
-Reftable files not listed in `refs` may be new (and about to be added
-to the stack by the active writer), or ancient and ready to be pruned.
-
-### Update transactions
-
-Although reftables are immutable, mutations are supported by writing a
-new reftable and atomically appending it to the stack:
-
-1. Acquire `refs.lock`.
-2. Read `refs` to determine current reftables.
-3. Select `update_index` to be most recent file's `max_update_index + 1`.
-4. Prepare new reftable `${update_index}_XXXXXX`, including log entries.
-5. Copy `refs` to `refs.lock`, appending file from (4).
-6. Rename `refs.lock` to `refs`.
-
-During step 4 the new file's `min_update_index` and `max_update_index`
-are both set to the `update_index` selected by step 3.  All log
-records for the transaction use the same `update_index` in their keys.
-This enables later correlation of which references were updated by the
-same transaction.
-
-Because a single `refs.lock` file is used to manage locking, the
-repository is single-threaded for writers.  Writers may have to
-busy-spin (with backoff) around creating `refs.lock`, for up to an
-acceptable wait period, aborting if the repository is too busy to
-mutate.  Application servers wrapped around repositories (e.g.  Gerrit
-Code Review) can layer their own lock/wait queue to improve fairness
-to writers.
-
-### Reference deletions
-
-Deletion of any reference can be explicitly stored by setting the
-`type` to `0x0` and omitting the `value` field of the `ref_record`.
-This entry shadows the reference in earlier files in the stack.
-
-### Compaction
-
-A partial stack of reftables can be compacted by merging references
-using a straightforward merge join across reftables, selecting the
-most recent value for output, and omitting deleted references that do
-not appear in remaining, lower reftables.
-
-A compacted reftable should set its `min_update_index` to the smallest of
-the input files' `min_update_index`, and its `max_update_index`
-likewise to the largest input `max_update_index`.
-
-For sake of illustration, assume the stack currently consists of
-reftable files (from oldest to newest): A, B, C, and D. The compactor
-is going to compact B and C, leaving A and D alone.
-
-1.  Obtain lock `refs.lock` and read the `refs` file.
-2.  Obtain locks `B.lock` and `C.lock`.
-    Ownership of these locks prevents other processes from trying
-    to compact these files.
-3.  Release `refs.lock`.
-4.  Compact `B` and `C` into a new file `${min_update_index}_XXXXXX`.
-5.  Reacquire lock `refs.lock`.
-6.  Verify that `B` and `C` are still in the stack, in that order. This
-    should always be the case, assuming that other processes are adhering
-    to the locking protocol.
-7.  Write the new stack to `refs.lock`, replacing `B` and `C` with the
-    file from (4).
-8.  Rename `refs.lock` to `refs`.
-9.  Delete `B` and `C`, perhaps after a short sleep to avoid forcing
-    readers to backtrack.
-
-This strategy permits compactions to proceed independently of updates.
-
-## Alternatives considered
-
-### bzip packed-refs
-
-`bzip2` can significantly shrink a large packed-refs file (e.g. 62
-MiB compresses to 23 MiB, 37%).  However the bzip format does not support
-random access to a single reference. Readers must inflate and discard
-while performing a linear scan.
-
-Breaking packed-refs into chunks (individually compressing each chunk)
-would reduce the amount of data a reader must inflate, but still
-leaves the problem of indexing chunks to support readers efficiently
-locating the correct chunk.
-
-Given the compression achieved by reftable's encoding, it does not
-seem necessary to add the complexity of bzip/gzip/zlib.
-
-### JGit Ketch RefTree
-
-[JGit Ketch][ketch] proposed [RefTree][reftree], an encoding of
-references inside Git tree objects stored as part of the repository's
-object database.
-
-The RefTree format adds additional load on the object database storage
-layer (more loose objects, more objects in packs), and relies heavily
-on the packer's delta compression to save space.  Namespaces which are
-flat (e.g.  thousands of tags in refs/tags) initially create very
-large loose objects, and so RefTree does not address the problem of
-copying many references to modify a handful.
-
-Flat namespaces are not efficiently searchable in RefTree, as tree
-objects in canonical formatting cannot be binary searched. This fails
-the need to handle a large number of references in a single namespace,
-such as GitHub's `refs/pulls`, or a project with many tags.
-
-[ketch]: https://dev.eclipse.org/mhonarc/lists/jgit-dev/msg03073.html
-[reftree]: https://public-inbox.org/git/CAJo=hJvnAPNAdDcAAwAvU9C4RVeQdoS3Ev9WTguHx4fD0V_nOg@mail.gmail.com/
-
-### LMDB
-
-David Turner proposed [using LMDB][dt-lmdb], as LMDB is lightweight
-(64k of runtime code) and GPL-compatible license.
-
-A downside of LMDB is its reliance on a single C implementation.  This
-makes embedding inside JGit (a popular reimplemenation of Git)
-difficult, and hoisting onto virtual storage (for JGit DFS) virtually
-impossible.
-
-A common format that can be supported by all major Git implementations
-(git-core, JGit, libgit2) is strongly preferred.
-
-[dt-lmdb]: https://public-inbox.org/git/1455772670-21142-26-git-send-email-dturner@twopensource.com/
-
-## Future
-
-### Longer hashes
-
-Version will bump (e.g.  2) to indicate `value` uses a different
-object id length other than 20.  The length could be stored in an
-expanded file header, or hardcoded as part of the version.
