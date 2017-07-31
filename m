@@ -2,302 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7BE021F991
-	for <e@80x24.org>; Mon, 31 Jul 2017 22:15:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 410201F991
+	for <e@80x24.org>; Mon, 31 Jul 2017 22:18:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751227AbdGaWPn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 31 Jul 2017 18:15:43 -0400
-Received: from mail-lf0-f52.google.com ([209.85.215.52]:34497 "EHLO
-        mail-lf0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751106AbdGaWPm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Jul 2017 18:15:42 -0400
-Received: by mail-lf0-f52.google.com with SMTP id g25so115559948lfh.1
-        for <git@vger.kernel.org>; Mon, 31 Jul 2017 15:15:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Q4L5k6rvb4QQQYvZkQX+M3chT8+g+/OyokIQ69FTnKc=;
-        b=gvjulrjfF7I9pkPNXDBIm3UA8A1LmuM4PQie3Y9OgZYzBpV1iB5XvY0TzLKcgPP7c2
-         NiydZLCni5OyCqIC7WsPylVvFG3UxVyWGNNkD9PdZD+RGVFp8mCEXs95bz+nO9Q1wcH4
-         JSLa4zfi9WkcV56pyE6JzC5RYJApuQhVqs0ytIONeTRwwArzBq+1veufsipzZEZj4M0L
-         zOuiH/NM2nI111sPAGVbDr68LU3b4HTCffkrz+wE1ICJGmyZAtW4stnU2Q/fLKZuL4sz
-         p2AZzCwTA6Tp9+Up5H6qB1nYD6XHmjnbbcdd3yAzX/YBHPULo/WASkqlueiZQ9jY0Wjn
-         feeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Q4L5k6rvb4QQQYvZkQX+M3chT8+g+/OyokIQ69FTnKc=;
-        b=q8FD8+zcDgtlHxI+Ql1kkL87Q09BueWsRVUzjxN3D5E5NadXcBpldhVk4xdL8kOvyN
-         YcuOTH7fdlGWxPh2hPsovOxuK1EmdfJjxmyQXwGGstwaHwsneBVvvFQ/4gm/HSTW3wvv
-         PNQyYvngSHDh7rXnTXOluXgVK/GVjSzQNwTKtZaMq+zSfdZL1noaIlzpb8ZrGiUxpZOd
-         EKaQdQATx0jpRQ+Sy8g91ZReo7kaomQ8xQLh7DEQWHYVYXcnNs2GYTDWPmB9+ydx9xX+
-         1rRXa6U2QB3BSR6Ov70bWuliaQOnIe90K6j4n9EUtdeT3x/fI82YTcvix1BuzSujdcnW
-         DA+Q==
-X-Gm-Message-State: AIVw1127SE1B/DFtK6cgt4mrOZF33GD3ZVyG909J7OjJtx8X0HOAsIhG
-        9mD25euXcs0ls+qQ1FM6bxbvdhAo1jUq
-X-Received: by 10.25.204.149 with SMTP id c143mr4978519lfg.195.1501539340592;
- Mon, 31 Jul 2017 15:15:40 -0700 (PDT)
+        id S1751537AbdGaWSZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 31 Jul 2017 18:18:25 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53201 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751157AbdGaWSY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Jul 2017 18:18:24 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 847A7A7472;
+        Mon, 31 Jul 2017 18:18:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ZPfVHJDJWnvNK++G6IPDzqO389E=; b=owL+vU
+        YeqFSHzJ750vUvafw5zxx7HW+6e5rQCKrB63DEbfWaOvUrx8/j3Fnoxsfl6dGBg3
+        UueACgsj7BSCvU+aLpYSAtK+vRSy3gQw85CZAro/kUrYg6ORCnUuYztMDA4db/ER
+        CbEXwdEfCytNuyhbJjm50L0N6YV2sLzVvt6r8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=IUziC1Y9JnbkwP85LK2fQe4yWIqxTXQg
+        jMTxeSqdtzWUBhUAIVUFvvxqEBOmeijqMKPWpkdx6RK69wFOz/f1PMwiBiZG+56G
+        qXhxBytfL3/ZFgg/tYymuM6QmndM7md0djsqimi9tuixtDIqDXcClLa1M3+f4jUB
+        hvaGHglk6h4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7D7B4A7471;
+        Mon, 31 Jul 2017 18:18:23 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E07ACA746F;
+        Mon, 31 Jul 2017 18:18:22 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Adam Spiers <git@adamspiers.org>
+Cc:     git list <git@vger.kernel.org>
+Subject: Re: [PATCH 0/1] add git-splice subcommand for non-interactive branch splicing
+References: <cover.55495badd28b73b39c60ca4107b50aae7ee95028.1501535033.git-series.git@adamspiers.org>
+Date:   Mon, 31 Jul 2017 15:18:21 -0700
+In-Reply-To: <cover.55495badd28b73b39c60ca4107b50aae7ee95028.1501535033.git-series.git@adamspiers.org>
+        (Adam Spiers's message of "Mon, 31 Jul 2017 22:18:48 +0100")
+Message-ID: <xmqqo9s0gsia.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.25.1.130 with HTTP; Mon, 31 Jul 2017 15:15:39 -0700 (PDT)
-In-Reply-To: <20170731205621.24305-9-pc44800@gmail.com>
-References: <20170731205621.24305-1-pc44800@gmail.com> <20170731205621.24305-9-pc44800@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 31 Jul 2017 15:15:39 -0700
-Message-ID: <CAGZ79kaWn9z47Va=VW4R2Aswws1N5n2u4Kvatn73s0YnV0pVqQ@mail.gmail.com>
-Subject: Re: [GSoC][PATCH 08/13] submodule: port submodule subcommand
- 'summary' from shell to C
-To:     Prathamesh Chavan <pc44800@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2A63DDC4-763E-11E7-BF38-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 31, 2017 at 1:56 PM, Prathamesh Chavan <pc44800@gmail.com> wrote:
-> The submodule subcommand 'summary' is ported in the process of
-> making git-submodule a builtin. The function cmd_summary() from
-> git-submodule.sh is ported to functions module_summary(),
-> compute_summary_module_list(), prepare_submodule_summary() and
-> print_submodule_summary().
->
-> The first function module_summary() parses the options of submodule
-> subcommand and also acts as the front-end of this subcommand.
-> After parsing them, it calls the compute_summary_module_list()
->
-> The functions compute_summary_module_list() runs the diff_cmd,
-> and generates the modules list, as required by the subcommand.
-> The generation of this module list is done by the using the
-> callback function submodule_summary_callback(), and stored in the
-> structure module_cb.
->
-> Once the module list is generated, prepare_submodule_summary()
-> further goes through the list and filters the list, for
-> eventually calling the print_submodule_summary() function.
->
-> Finally, the print_submodule_summary() takes care of generating
-> and printing the summary for each submodule.
->
-> Mentored-by: Christian Couder <christian.couder@gmail.com>
-> Mentored-by: Stefan Beller <sbeller@google.com>
-> Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
-> ---
-> In this new version, the following changes have been made:
->
-> * Firstly, about the function compute_summary_module_list().
->   This function is created to generate the list of modules, for which
->   we will generate the summary further. Since the list is actually
->   generated using the git-diff-files or git-diff-index command, but for
->   porting this, we required to create a function similar to the builtin
->   functions of the above commands. But we can't directly call cmd_diff_files()
->   and cmd_diff_index() since we don't have to display the output and instead
->   need to store it. Hence, this function is introduced.
->
-> * Also, the module_cb_list *list is not freed since it is a non-heap object.
->   Hence, free() can't be using on the non-heap objects.
->
-> * In the function prepare_submodule_summary(), as suggested
->   'git_config_get_string_const' was used instead of instead of '_value'
->
-> * Some variables which weren't modified throughout the function-call were
->   passed as const.
->
-> * The '!!' trick, which wasn't used in the last patch, is now used in this
->   new version .
->
-> * the variables sha1_dst and sha1_src are removed from the function
->   print_submodule_summary(), and instead the p->oid_src and p->oid_dst are
->   used.
->
-> * The variable sm_git_dir is freed at the end of the function.
->
-> * variable head was no longer used in module_summary() and instead the strbuf
->   was utilized.
->
->  builtin/submodule--helper.c | 425 ++++++++++++++++++++++++++++++++++++++++++++
->  git-submodule.sh            | 182 +------------------
->  2 files changed, 426 insertions(+), 181 deletions(-)
->
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index f642f9889..94438d6ce 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -13,6 +13,9 @@
->  #include "remote.h"
->  #include "refs.h"
->  #include "connect.h"
-> +#include "revision.h"
-> +#include "diffcore.h"
-> +#include "diff.h"
->
->  typedef void (*submodule_list_func_t)(const struct cache_entry *list_item,
->                                       void *cb_data);
-> @@ -766,6 +769,427 @@ static int module_name(int argc, const char **argv, const char *prefix)
->         return 0;
->  }
->
-> +struct module_cb {
-> +       unsigned int mod_src;
-> +       unsigned int mod_dst;
-> +       struct object_id oid_src;
-> +       struct object_id oid_dst;
-> +       char status;
-> +       const char *sm_path;
-> +};
-> +#define MODULE_CB_INIT { 0, 0, NULL, NULL, '\0', NULL }
-> +
-> +struct module_cb_list {
-> +       struct module_cb **entries;
-> +       int alloc, nr;
-> +};
-> +#define MODULE_CB_LIST_INIT { NULL, 0, 0 }
-> +
-> +struct summary_cb {
-> +       int argc;
-> +       const char **argv;
-> +       const char *prefix;
-> +       char *diff_cmd;
-> +       unsigned int cached: 1;
-> +       unsigned int for_status: 1;
-> +       unsigned int quiet: 1;
-> +       unsigned int files: 1;
-> +       int summary_limits;
-> +};
-> +#define SUMMARY_CB_INIT { 0, NULL, NULL, NULL, 0, 0, 0, 0, 0 }
-> +
-> +static int verify_submodule_object_name(const char *sm_path, const char *sha1)
-> +{
-> +       struct child_process cp_rev_parse = CHILD_PROCESS_INIT;
-> +
-> +       cp_rev_parse.git_cmd = 1;
-> +       cp_rev_parse.no_stdout = 1;
-> +       cp_rev_parse.dir = sm_path;
-> +       prepare_submodule_repo_env(&cp_rev_parse.env_array);
-> +
-> +       argv_array_pushl(&cp_rev_parse.args, "rev-parse", "-q",
-> +                        "--verify", NULL);
-> +       argv_array_pushf(&cp_rev_parse.args, "%s^0", sha1);
-> +
-> +       if (run_command(&cp_rev_parse))
-> +               return 1;
-> +
-> +       return 0;
-> +}
-> +
-> +static void print_submodule_summary(struct summary_cb *info,
-> +                                   struct module_cb *p)
-> +{
-> +       int missing_src = 0;
-> +       int missing_dst = 0;
-> +       char *displaypath;
-> +       const char *sha1_abbr_src;
-> +       const char *sha1_abbr_dst;
-> +       int errmsg = 0;
-> +       int total_commits = -1;
-> +       char *sm_git_dir = xstrfmt("%s/.git", p->sm_path);
-> +       int is_sm_git_dir = 0;
-> +
-> +       if (!info->cached && !oidcmp(&p->oid_dst, &null_oid)) {
-> +               if (S_ISGITLINK(p->mod_dst)) {
-> +                       struct child_process cp_rev_parse = CHILD_PROCESS_INIT;
-> +                       struct strbuf sb_rev_parse = STRBUF_INIT;
-> +
-> +                       cp_rev_parse.git_cmd = 1;
-> +                       cp_rev_parse.no_stderr = 1;
-> +                       cp_rev_parse.dir = p->sm_path;
-> +                       prepare_submodule_repo_env(&cp_rev_parse.env_array);
-> +
-> +                       argv_array_pushl(&cp_rev_parse.args,
-> +                                        "rev-parse", "HEAD", NULL);
-> +                       if (!capture_command(&cp_rev_parse, &sb_rev_parse, 0)) {
-> +                               strbuf_strip_suffix(&sb_rev_parse, "\n");
-> +
-> +                               get_oid_hex(sb_rev_parse.buf, &p->oid_dst);
-> +                       }
-> +                       strbuf_release(&sb_rev_parse);
+Adam Spiers <git@adamspiers.org> writes:
 
-I think this could be replaced via
-head_ref_submodule(sub->path, callback function, &where_to_store)
-or is there some trickery going on, that this also works on
-non-compliant submodules?
-(Maybe add that as a NEEDSWORK/TODO)
+> Therefore there is a risk that each new UI for higher-level workflows
+> will end up re-implementing these mid-level operations.  This
+> undesirable situation could be avoided if git itself provided those
+> mid-level operations.
 
-> +static int compute_summary_module_list(char *head, struct summary_cb *info)
-> +{
-> +       struct argv_array diff_args = ARGV_ARRAY_INIT;
-> +       struct rev_info rev;
-> +       struct module_cb_list list = MODULE_CB_LIST_INIT;
-> +
-> +       argv_array_push(&diff_args, info->diff_cmd);
-> +       if (info->cached)
-> +               argv_array_push(&diff_args, "--cached");
-> +       argv_array_pushl(&diff_args, "--ignore-submodules=dirty", "--raw",
-> +                        NULL);
-> +       if (head)
-> +               argv_array_push(&diff_args, head);
-> +       argv_array_push(&diff_args, "--");
-> +       if (info->argc)
-> +               argv_array_pushv(&diff_args, info->argv);
-> +
-> +       git_config(git_diff_basic_config, NULL);
-> +       init_revisions(&rev, info->prefix);
-> +       gitmodules_config();
-> +       rev.abbrev = 0;
+Let me make sure if I get your general idea right, first.
 
-Recently there was a discussion how to operate the
-revision machinery best (search for earlier versions of
-js/rebase-i-final if interested), whether we can and want
-to directly set flags such as .abbrev or if we'd rather
-want to push "--abbrev=0" to the diff_args before the --
+Is your aim is to give a single unified mid-layer that these other
+tools can build on instead of rolling their own "cherry-pick these
+ranges, then squash that in, and then merge the other one in, ..."
+sequencing machinery?
 
-bisect and archive both assign abbrev directly, so I think
-we're fine here.
+If so, I think that is a very good goal.
 
-> +       precompose_argv(diff_args.argc, diff_args.argv);
-> +
-> +       diff_args.argc = setup_revisions(diff_args.argc, diff_args.argv,
-> +                                        &rev, NULL);
-> +       rev.diffopt.output_format = DIFF_FORMAT_NO_OUTPUT | DIFF_FORMAT_CALLBACK;
-> +       rev.diffopt.format_callback = submodule_summary_callback;
-> +       rev.diffopt.format_callback_data = &list;
-> +
-> +       if (!info->cached) {
-> +               if (!strcmp(info->diff_cmd, "diff-index"))
+>     # Remove commits A..B (i.e. excluding A) from the current branch.
+>     git splice A..B
+>     # Remove commit A from the current branch.
+>     git splice A^!
+>     # Remove commits A..B from the current branch, and cherry-pick
+>     # commits C..D at the same point.
+>     git splice A..B C..D
 
-This strcmp smells like we're encoding the state not optimally
-in 'info'.  Maybe we can have an enum { DIFF_FILES, DIFF_INDEX }
-instead of a string (that we assign earlier) and then have to
-compare to it again.
+We need to make sure that the mid-layer tool offers a good set of
+primitive operations that serve all of these other tools' needs.  I
+do not know offhand if what you implemented that are illustrated by
+these examples is or isn't that "good set".
 
-> +                       setup_work_tree();
-> +               if (read_cache_preload(&rev.diffopt.pathspec) < 0) {
-> +                       perror("read_cache_preload");
-> +                       return -1;
-> +               }
-> +       } else if (read_cache() < 0) {
-> +               perror("read_cache");
-> +               return -1;
-> +       }
+Assuming that there is such a "good set of primitives" surfaced at
+the UI level so that these other tools can express what they want to
+perform with, I'd personally prefer to see a solution that extends
+and uses the common "sequencer" machinery we have been using to
+drive cherry-picks, reverts and interactive rebases that work on
+multiple commits.  IOW, it would be nice to see that the only thing
+"git splice A..B" does is to prepare a series of instructions in a
+file, e.g. .git/sequencer/todo, just like "git cherry-pick A..B"
+would, and let the sequencer machinery to handle the sequencing.
 
-This cascaded decision whether to use
-setup_work_tree / read_cache_preload / read_cache
-seems quite optimized, hence complicated to read. :)
-I like it, though.
+E.g. In a history like
 
-> +
-> +       if (!summary_limits)
-> +               return 0;
+    ---o---A---o---B---X---Y---Z   HEAD
 
-Good call for converting "test $summary_limit = 0 && return".
-I suspected this may be an overeager optimization (as no
-error checking is done at all, but that is what it is)
-f2dc06a344 (git-submodule summary: limit summary size,
-2008-03-11) introduced it like this.
+"git splice A..B" command would write something like this:
+
+    reset to A
+    pick X
+    pick Y
+    pick Z
+
+to the todo file and drive the sequencer.  As you notice, you would
+need to extend the vocabulary of the sequencer a bit to allow
+various things that the current users of the sequencer machinery do
+not need, like resetting the HEAD to a specific commit, merging a
+side branch, remembering the result of an operation, and referring
+to such a commit in later operation.  For example, if you tell "git
+splice" to expunge A from this sample history (I am not sure how you
+express that operation in your UI):
+
+         B---C---D
+        /         \
+    ---o---A---E---F---G   HEAD
+
+it might create a "todo" list like this to rebuild the history:
+
+    reset to A^
+    pick B
+    pick C
+    pick D
+    mark :1
+    reset to A^
+    pick E
+    merge :1 using F's log message and conflict resolution as reference
+    pick G
+
+to result in:
+
+         B---C---D
+        /         \
+    ---o-------E---F---G   HEAD
+
+Do not pay too much attention to how the hypothetical "extended todo
+instruction set" is spelled in the above illustration (e.g. I am not
+advocating for multi-word command like "reset to"); these are only
+to illustrate what kind of features would be needed for the job.  In
+the final shape of the system, "merge" in the illustration above may
+be a more succinct "merge F :1", for example (i.e. the first
+parameter would name an existing merge to use as reference, the
+remainder is a list of commits to be merged to the current HEAD),
+just like "pick X" is a succinct way to say "cherry-pick the change
+introduced by existing commit X to HEAD, reusing X's log message
+and author information".
+
+Something like that may have a place in the git-core, I would think. 
+
+I am not sure if a bash script that calls rebase/cherry-pick/commit
+manually can serve as a good "universal mid-layer" or just adding
+another random command to the set of existing third-party commands
+for "higher-level workflows".
