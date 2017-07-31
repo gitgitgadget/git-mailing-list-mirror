@@ -2,114 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 84D5E1F991
-	for <e@80x24.org>; Mon, 31 Jul 2017 22:21:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA8E81F991
+	for <e@80x24.org>; Mon, 31 Jul 2017 22:28:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751970AbdGaWUt (ORCPT <rfc822;e@80x24.org>);
-        Mon, 31 Jul 2017 18:20:49 -0400
-Received: from mail-lf0-f52.google.com ([209.85.215.52]:38720 "EHLO
-        mail-lf0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751705AbdGaWUq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Jul 2017 18:20:46 -0400
-Received: by mail-lf0-f52.google.com with SMTP id y15so119205527lfd.5
-        for <git@vger.kernel.org>; Mon, 31 Jul 2017 15:20:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=crh7yzKM6Qzn6FJKg+5YWqVavr1XRTo0vg8wAnZ16KM=;
-        b=G23s9tDx694ZhvJXXe9N/HCn15OI1HCI1unMJvj9I4/A7HvoiOCwiw1lGy+Qi57XqS
-         v+K5AQbeKefr9POsf3O1xWxjrEDhBZtHt5ee7fckq4WtgJ2GnYrRKNGIg1YOj3BI1SzF
-         Y9bPKjtPVGWZitQxNsKBHObCigS4h9IXyob7/2Hm77jNNGHPJSsoP6gUZ/wqt4yA2Gcl
-         JELlGMEAoh6O/yLGukqnPws3vjEv50mmb2oYVkl0/wqVmONu2JPmeMawPmRxzLCE0oXt
-         +Y02Iaj5Ipdw2x0+Ztx/ig+F6mC1FSePAxF0SHvsLbBFI0AvwLcKXWFAUyXj+AhJkM/k
-         KIOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=crh7yzKM6Qzn6FJKg+5YWqVavr1XRTo0vg8wAnZ16KM=;
-        b=e0aBneVbGPVG52gwXu3/DLOq2m876oilB8PocJbBlwpCNjuxtPeH140b1nVQQ4x/nk
-         15GmOegXJg8Xwvwvan+X4VxKnFP1nbw6Q0Eqgv8xTSuifjSRFdr9MQAbolSSgRNH3Ypc
-         GZ+mL8q8DejMw3QsX0lMrgmhccpfkgmxUTekRtYsJ2xZddLgTEJVoTr6pLyva4pmSVeo
-         JNOZzVkTm2Sv+OwMMobH/QJcvploHRdjd29nUjzbD+tZuQLFLYdoHPf1FxbfxKNiOBaC
-         dlaF6HpwfIYQjmKgJ2VqOfqyBdLv9fDPlUQtuB7Hl+ovsf+xkD/HR8eniC4hvRDTXeRb
-         8Lpg==
-X-Gm-Message-State: AIVw113P45B3RJq1iQI90hhkmyOYalEoAKEI4Jumkb6K3FwLGqFctbpY
-        ZOa8MEAEmpQKkls9eisXD6uSO/eclYsN
-X-Received: by 10.46.32.41 with SMTP id g41mr6024847ljg.96.1501539644930; Mon,
- 31 Jul 2017 15:20:44 -0700 (PDT)
+        id S1751607AbdGaW2V (ORCPT <rfc822;e@80x24.org>);
+        Mon, 31 Jul 2017 18:28:21 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55016 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751176AbdGaW2U (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Jul 2017 18:28:20 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3F6B4A76B2;
+        Mon, 31 Jul 2017 18:28:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=3r5tfdJt2u2u
+        yKf3wLoFMIsx/Sk=; b=CgYcon2O1G79z72Sh+H9plMOsSU/vAdQklYeuy20CgFP
+        9ypArAnTcCMnbYvY/2oXXU2hO3pMju8bYag6kHXBCFjZtpyeWXSSAF3fTd3swMXm
+        5ErkoAYekju7lzihFeFcQ1hdrkXHN8pEz1K7tYokJ70vf9DCx7i3N0GXeypU82g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=pScaT+
+        xLdtvTidQ3WDlt5ssqrGDbR5wBT3itzCV11ExPwIFVRSoymDQexpCbnhgoT9eOty
+        NqhKWCPunrQ0t1+33DNKrQ6sl6mMpKhMwi1QiuUr7Spto9LanmkpuPamXZDiZyid
+        1g5oAlRo7vaQvTIaX2VImsbumkyN/J9j6Lb54=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 385F0A76B1;
+        Mon, 31 Jul 2017 18:28:13 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8EA49A76B0;
+        Mon, 31 Jul 2017 18:28:12 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Takashi Iwai <tiwai@suse.de>,
+        Git Mailing List <git@vger.kernel.org>,
+        Andreas Stieger <astieger@suse.com>
+Subject: Re: [PATCH] hash: Allow building with the external sha1dc library
+References: <s5hh8y19hyg.wl-tiwai@suse.de>
+        <CACBZZX5yv-NzL7H-CH1yMeM9dWkz=PUhx=2wek_jBGpsz1=EAA@mail.gmail.com>
+        <CACBZZX7M=H8tNkZXpHBvv0rbY58EJk4dkoUzGKMftWoKUqF8sA@mail.gmail.com>
+Date:   Mon, 31 Jul 2017 15:28:11 -0700
+In-Reply-To: <CACBZZX7M=H8tNkZXpHBvv0rbY58EJk4dkoUzGKMftWoKUqF8sA@mail.gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 28 Jul
+ 2017 18:04:18
+        +0200")
+Message-ID: <xmqqk22ogs1w.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.25.1.130 with HTTP; Mon, 31 Jul 2017 15:20:44 -0700 (PDT)
-In-Reply-To: <20170731205621.24305-14-pc44800@gmail.com>
-References: <20170731205621.24305-1-pc44800@gmail.com> <20170731205621.24305-14-pc44800@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 31 Jul 2017 15:20:44 -0700
-Message-ID: <CAGZ79kYow5a-dwggDAvGweajrxYNhmtb+oWKTGKriiHtBj-kbw@mail.gmail.com>
-Subject: Re: [GSoC][PATCH 13/13] submodule: port submodule subcommand
- 'foreach' from shell to C
-To:     Prathamesh Chavan <pc44800@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 89DB7F5E-763F-11E7-815F-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 31, 2017 at 1:56 PM, Prathamesh Chavan <pc44800@gmail.com> wrote:
-> This aims to make git-submodule foreach a builtin. This is the very
-> first step taken in this direction. Hence, 'foreach' is ported to
-> submodule--helper, and submodule--helper is called from git-submodule.sh.
-> The code is split up to have one function to obtain all the list of
-> submodules. This function acts as the front-end of git-submodule foreach
-> subcommand. It calls the function for_each_submodule_list, which basically
-> loops through the list and calls function fn, which in this case is
-> runcommand_in_submodule. This third function is a calling function that
-> takes care of running the command in that submodule, and recursively
-> perform the same when --recursive is flagged.
->
-> The first function module_foreach first parses the options present in
-> argv, and then with the help of module_list_compute, generates the list of
-> submodules present in the current working tree.
->
-> The second function for_each_submodule_list traverses through the
-> list, and calls function fn (which in case of submodule subcommand
-> foreach is runcommand_in_submodule) is called for each entry.
->
-> The third function runcommand_in_submodule, generates a submodule struct sub
-> for $name, value and then later prepends name=sub->name; and other
-> value assignment to the env argv_array structure of a child_process.
-> Also the <command> of submodule-foreach is push to args argv_array
-> structure and finally, using run_command the commands are executed
-> using a shell.
->
-> The third function also takes care of the recursive flag, by creating
-> a separate child_process structure and prepending "--super-prefix displaypath",
-> to the args argv_array structure. Other required arguments and the
-> input <command> of submodule-foreach is also appended to this argv_array.
->
-> Helped-by: Brandon Williams <bmwill@google.com>
-> Mentored-by: Christian Couder <christian.couder@gmail.com>
-> Mentored-by: Stefan Beller <sbeller@google.com>
-> Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
-> ---
-> In this new version, the following changes have been made:
-> * Comment style is improved in the function runcommand_in_submodule()
->
-> * Comment in added about why the variable "path" was exposed via args
->   argv_array instead of exposing it via the env_array.
->
-> * This patch exposes the various variables when argc == 1 only, just
->   for maintaining a faithful porting. You can also find discussion about
->   the same at [1].
->
-> [1]: https://public-inbox.org/git/CAME+mvUSGAFbN5j-_hv7QpAS57hq4wgH+yZ7XJMPuyQN1gALaA@mail.gmail.com/
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-Ah right, maybe add a NEEDSWORK or have the commit message explain
-this behavior.
+> So the upstream library expects you (and it's documented in their READM=
+E) to do:
+>
+>     #include <sha1dc/sha1.h>
+>
+> But your patch is just doing:
+>
+>     #include <sha1.h>
+>
+> At best this seems like a trivial bug and at worst us encoding some
+> Suse-specific packaging convention in git, since other distros would
+> presumably want to package this in /usr/include/sha1dc/sha1.h as
+> upstream suggests. I.e. using the ambiguous sha1.h name is not
+> something upstream's doing by default, it's something you're doing in
+> your package.
+
+It seems there still needs a bit more work on this patch.  Thanks
+for reviewing and pointing out what needs to be addressed.
+
