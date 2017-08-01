@@ -6,76 +6,146 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E5B012047F
-	for <e@80x24.org>; Tue,  1 Aug 2017 18:42:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BB1132047F
+	for <e@80x24.org>; Tue,  1 Aug 2017 19:45:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752075AbdHASmJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 Aug 2017 14:42:09 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56669 "EHLO
+        id S1752132AbdHATos (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 Aug 2017 15:44:48 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53602 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751980AbdHASmH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Aug 2017 14:42:07 -0400
+        with ESMTP id S1752090AbdHATor (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Aug 2017 15:44:47 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E37C29E8CA;
-        Tue,  1 Aug 2017 14:41:59 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6A2D5AA9B1;
+        Tue,  1 Aug 2017 15:44:46 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=aWxqod9ZNxZsU3+PjfZl1++dR0U=; b=Q77lg3
-        gpMS/qEqILMlj3vGCmHG7qZWHYZGI+H3k10ugdQDaJ61GASPrWo1kyrngo7mEH+w
-        vhyUF53grQr2MetWyVrUY5yjBxLhkswQsJX34i5mLbxbxa5dNKbXNBnL/xXPW0Go
-        0TC3qtUzv8MKwzXwYvIQOLKGEHW9t8RwHllkg=
+        :subject:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=jwe/6Km2jjLjf+nMQISS6nvCW
+        pc=; b=HKx/a+WEMrlQbYkcoHaDBzZIuW9FpQKWvVRtxb/dd7I17GL+bDXlP731O
+        6f9MSZbEcOLWa3GXtLOFVY2sDLXlL4ud/vxzUZkBWVuMibXFWoaV3PvKngtpq4rZ
+        /u3RE9q+jJZGAPHn0GpPnANibvhEuZguYD+HzYS1EJsfntpw3Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ZCuB75YTO8dYDqse2/KRlJTyHKOwcR/6
-        Rr3m9gLmh+f3DJbBx6POhseG8fOJW5nV1K5C0609RuMf/uIqY1phmdkQkIjShWsn
-        gDySd7lZBNDYQfp4t4YsOqJi+Ui779vdkLwot9/Ua8u9Y4pO31QWf41aS4A/0T1w
-        D4zSgRZfeck=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DBCA59E8C9;
-        Tue,  1 Aug 2017 14:41:59 -0400 (EDT)
+        :subject:date:message-id:mime-version:content-type
+        :content-transfer-encoding; q=dns; s=sasl; b=vY23WFlqah/uwyJBTJ0
+        S5t4Ctm9QmzkUTtJVgNH5X1bZ8wzj7tlDoy56kdeDqpVlV82kaROFWYbUbjXfeUL
+        KbTxNGsVNq3MFLKMZobFwrImHcQ5K5rr9VqnlhBb0fNUvoL6dexZ6E2jsdkpImMp
+        ktWN1+oe1gV04diBpPFHq7FM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 61AC6AA9B0;
+        Tue,  1 Aug 2017 15:44:46 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 476D29E8C8;
-        Tue,  1 Aug 2017 14:41:59 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BCD52AA9AF;
+        Tue,  1 Aug 2017 15:44:45 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Paul Jolly <paul@myitcv.io>, git@vger.kernel.org,
-        jacob.keller@gmail.com
-Subject: Re: [PATCH 3/2] ls-files: only recurse on active submodules
-References: <xmqqefwpdx9x.fsf@gitster.mtv.corp.google.com>
-        <20170512162109.49752-1-paul@myitcv.io>
-        <20170512172657.GA98586@google.com>
-        <CACoUkn5fyk054BJ5e+C8KynYMJg=EkMLOTiZya8KTNZh+=u5dQ@mail.gmail.com>
-        <20170512181950.GE98586@google.com>
-        <CACoUkn7i76dEsQa3eoN+7WR8QmsD1pWsRQ0dvhkxzFN0sxTmRQ@mail.gmail.com>
-        <20170801181820.GA110646@google.com>
-        <CACoUkn46an6rStWhhJfgP-vbRU_+898S-TgDcefN3zL-jyDFJQ@mail.gmail.com>
-        <20170801182033.GB110646@google.com>
-Date:   Tue, 01 Aug 2017 11:41:57 -0700
-In-Reply-To: <20170801182033.GB110646@google.com> (Brandon Williams's message
-        of "Tue, 1 Aug 2017 11:20:33 -0700")
-Message-ID: <xmqqshhbf7uy.fsf@gitster.mtv.corp.google.com>
+To:     git@vger.kernel.org
+Cc:     Linux Kernel <linux-kernel@vger.kernel.org>
+Subject: [ANNOUNCE] Git v2.13.4
+Date:   Tue, 01 Aug 2017 12:44:44 -0700
+Message-ID: <xmqqk22nf4yb.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 19F5A728-76E9-11E7-BC77-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: DEF4D4B0-76F1-11E7-B06D-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
+The latest maintenance release Git v2.13.4 is now available at
+the usual places.
 
-> On 08/01, Paul Jolly wrote:
->> > It looks like it was merged to master.  This should be the relevant
->> > commit: 188dce131 (ls-files: use repository object, 2017-06-22).
->> 
->> I was just typing a response to my response. Apologies, I was testing
->> locally with the wrong compiled version of git.
->> 
->> Confirmed fixed for me in e2d9c4613 at least.
->
-> Perfect!  Glad to hear that it fixed the problem.
+There is no update that is particulary important or controversial in
+this release; it is primarily to flush the safer fixes that have
+already been in the 'master' branch in preparation for the v2.14.0
+release down to the maintenance track.
 
-Thanks, both, for tying potentially loose ends.
+The tarballs are found at:
+
+    https://www.kernel.org/pub/software/scm/git/
+
+The following public repositories all have a copy of the 'v2.13.4'
+tag and the 'maint' branch that the tag points at:
+
+  url =3D https://kernel.googlesource.com/pub/scm/git/git
+  url =3D git://repo.or.cz/alt-git.git
+  url =3D https://github.com/gitster/git
+
+----------------------------------------------------------------
+
+Git v2.13.4 Release Notes
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Fixes since v2.13.3
+-------------------
+
+ * Update the character width tables.
+
+ * A recent update broke an alias that contained an uppercase letter,
+   which has been fixed.
+
+ * On Cygwin, similar to Windows, "git push //server/share/repository"
+   ought to mean a repository on a network share that can be accessed
+   locally, but this did not work correctly due to stripping the double
+   slashes at the beginning.
+
+ * The progress meter did not give a useful output when we haven't had
+   0.5 seconds to measure the throughput during the interval.  Instead
+   show the overall throughput rate at the end, which is a much more
+   useful number.
+
+ * We run an early part of "git gc" that deals with refs before
+   daemonising (and not under lock) even when running a background
+   auto-gc, which caused multiple gc processes attempting to run the
+   early part at the same time.  This is now prevented by running the
+   early part also under the GC lock.
+
+Also contains a handful of small code and documentation clean-ups.
+
+----------------------------------------------------------------
+
+Changes since v2.13.3 are as follows:
+
+Beat Bolli (1):
+      unicode: update the width tables to Unicode 10
+
+Eric Wong (1):
+      set FD_CLOEXEC properly when O_CLOEXEC is not supported
+
+Jeff King (2):
+      gc: run pre-detach operations under lock
+      t: handle EOF in test_copy_bytes()
+
+Johannes Schindelin (2):
+      t1300: demonstrate that CamelCased aliases regressed
+      alias: compare alias name *case-insensitively*
+
+Jonathan Nieder (1):
+      pre-rebase hook: capture documentation in a <<here document
+
+Junio C Hamano (3):
+      fixes from 'master' for 2.13.4
+      Preparation for 2.13.4 continues
+      Git 2.13.4
+
+Kaartic Sivaraam (3):
+      doc: correct a mistake in an illustration
+      doc: camelCase the i18n config variables to improve readability
+      doc: reformat the paragraph containing the 'cut-line'
+
+Phillip Wood (4):
+      add -i: move unquote_path() to Git.pm
+      Git::unquote_path(): handle '\a'
+      Git::unquote_path(): throw an exception on bad path
+      t9700: add tests for Git::unquote_path()
+
+Ren=C3=A9 Scharfe (3):
+      apply: use starts_with() in gitdiff_verify_name()
+      apply: use strcmp(3) for comparing strings in gitdiff_verify_name()
+      progress: show overall rate in last update
+
+Torsten B=C3=B6gershausen (1):
+      cygwin: allow pushing to UNC paths
+
