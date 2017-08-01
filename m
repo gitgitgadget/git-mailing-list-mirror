@@ -6,29 +6,30 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D1961F991
-	for <e@80x24.org>; Tue,  1 Aug 2017 05:46:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7EA3B1F991
+	for <e@80x24.org>; Tue,  1 Aug 2017 05:53:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751535AbdHAFqX (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 Aug 2017 01:46:23 -0400
-Received: from mx2.suse.de ([195.135.220.15]:60390 "EHLO mx1.suse.de"
+        id S1750832AbdHAFxA (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 Aug 2017 01:53:00 -0400
+Received: from mx2.suse.de ([195.135.220.15]:60631 "EHLO mx1.suse.de"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1750786AbdHAFqW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Aug 2017 01:46:22 -0400
+        id S1750716AbdHAFw7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Aug 2017 01:52:59 -0400
 X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay1.suse.de (charybdis-ext.suse.de [195.135.220.254])
-        by mx1.suse.de (Postfix) with ESMTP id 23105AEA0;
-        Tue,  1 Aug 2017 05:46:21 +0000 (UTC)
-Date:   Tue, 01 Aug 2017 07:46:20 +0200
-Message-ID: <s5h8tj37scz.wl-tiwai@suse.de>
+Received: from relay2.suse.de (charybdis-ext.suse.de [195.135.220.254])
+        by mx1.suse.de (Postfix) with ESMTP id 7878CAEA1;
+        Tue,  1 Aug 2017 05:52:58 +0000 (UTC)
+Date:   Tue, 01 Aug 2017 07:52:58 +0200
+Message-ID: <s5h7eyn7s1x.wl-tiwai@suse.de>
 From:   Takashi Iwai <tiwai@suse.de>
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Andreas Stieger <astieger@suse.com>
 Subject: Re: [PATCH] hash: Allow building with the external sha1dc library
-In-Reply-To: <CACBZZX5yv-NzL7H-CH1yMeM9dWkz=PUhx=2wek_jBGpsz1=EAA@mail.gmail.com>
+In-Reply-To: <CACBZZX7M=H8tNkZXpHBvv0rbY58EJk4dkoUzGKMftWoKUqF8sA@mail.gmail.com>
 References: <s5hh8y19hyg.wl-tiwai@suse.de>
         <CACBZZX5yv-NzL7H-CH1yMeM9dWkz=PUhx=2wek_jBGpsz1=EAA@mail.gmail.com>
+        <CACBZZX7M=H8tNkZXpHBvv0rbY58EJk4dkoUzGKMftWoKUqF8sA@mail.gmail.com>
 User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI/1.14.6 (Maruoka)
  FLIM/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL/10.8 Emacs/25.2
  (x86_64-suse-linux-gnu) MULE/6.0 (HANACHIRUSATO)
@@ -40,113 +41,106 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 28 Jul 2017 17:58:14 +0200,
+On Fri, 28 Jul 2017 18:04:18 +0200,
 Ævar Arnfjörð Bjarmason wrote:
 > 
-> On Tue, Jul 25, 2017 at 7:57 AM, Takashi Iwai <tiwai@suse.de> wrote:
-> > Some distros provide SHA1 collision detect code as a shared library.
-> > It's the very same code as we have in git tree, and git can link with
-> > it as well; at least, it may make maintenance easier, according to our
-> > security guys.
+> On Fri, Jul 28, 2017 at 5:58 PM, Ævar Arnfjörð Bjarmason
+> <avarab@gmail.com> wrote:
+> > On Tue, Jul 25, 2017 at 7:57 AM, Takashi Iwai <tiwai@suse.de> wrote:
+> >> Some distros provide SHA1 collision detect code as a shared library.
+> >> It's the very same code as we have in git tree, and git can link with
+> >> it as well; at least, it may make maintenance easier, according to our
+> >> security guys.
+> >>
+> >> This patch allows user to build git linking with the external sha1dc
+> >> library instead of the built-in sha1dc code.  User needs to define
+> >> DC_SHA1_EXTERNAL explicitly.  As default, the built-in sha1dc code is
+> >> used like before.
 > >
-> > This patch allows user to build git linking with the external sha1dc
-> > library instead of the built-in sha1dc code.  User needs to define
-> > DC_SHA1_EXTERNAL explicitly.  As default, the built-in sha1dc code is
-> > used like before.
+> > This whole thing sounds sensible. I reviewed this (but like Junio
+> > haven't tested it with a lib) and I think it would be worth noting the
+> > following in the commit message / Makefile documentation:
+> >
+> > * The "sha1detectcoll" *.so name for the "sha1collisiondetection"
+> > library is not something you or suse presumably) made up, it's a name
+> > the sha1collisiondetection.git itself creates for its library. I think
+> > the Makefile docs you've added here are a bit confusing, you talk
+> > about the "external sha1collisiondetection library" but then link
+> > against sha1detectcoll". It's worth calling out this difference in the
+> > docs IMO. I.e. not talk about the sha1detectcoll.so library form of
+> > sha1collisiondetection, not the sha1collisiondetection project name as
+> > a library.
+> >
+> > * It might be worth noting that this is *not* linking against the same
+> > code we ship ourselves due to the difference in defining
+> > SHA1DC_INIT_SAFE_HASH_DEFAULT for the git project's needs in the one
+> > we build, hence your need to have a git_SHA1DCInit() wrapper whereas
+> > we call SHA1DCInit() directly. It might be interesting to note that
+> > the library version will always be *slightly* slower (although the
+> > difference will be trivial).
+> >
+> > * Nothing in your commit message or docs explains why DC_SHA1_LINK is
+> > needed. We don't have these sorts of variables for other external
+> > libraries we link to, why the difference?
+> >
+> > Some other things I observed:
+> >
+> > * We now have much of the same header code copy/pasted between
+> > sha1dc_git.h and sha1dc_git_ext.h, did you consider just always
+> > including the former but making what it's doing conditional on
+> > DC_SHA1_EXTERNAL? I don't know if it would be worth it from a cursory
+> > glance, but again your commit message doesn't list that among options
+> > considered & discarded.
+> >
+> > * I think it makes sense to spew out a "not both!" error in the
+> > Makefile if you set DC_SHA1_EXTERNAL=Y and DC_SHA1_SUBMODULE=Y. See my
+> > 94da9193a6 ("grep: add support for PCRE v2", 2017-06-01) for an
+> > example of how to do this.
+> >
+> > * The whole business of "#include <sha1.h>" looks very fragile, are
+> > there really no other packages in e.g. suse that ship a sha1.h? Debian
+> > has libmd-dev that ships /usr/include/sha1.h that conflicts with this:
+> > https://packages.debian.org/search?searchon=contents&keywords=sha1.h&mode=exactfilename&suite=unstable&arch=any
+> >
+> > Shipping a sha1.h as opposed to a sha1collisiondetection.h or
+> > sha1detectcoll.h or whatever seems like a *really* bad decision by
+> > upstream that should be the subject of at least seeing if they'll take
+> > a pull request to fix it before you package it or before we include
+> > something that'll probably need to be fixed / worked around anyway in
+> > Git.
 > 
-> This whole thing sounds sensible. I reviewed this (but like Junio
-> haven't tested it with a lib) and I think it would be worth noting the
-> following in the commit message / Makefile documentation:
-
-Hi,
-
-sorry for the late reply, and thanks for the review.
-
-> * The "sha1detectcoll" *.so name for the "sha1collisiondetection"
-> library is not something you or suse presumably) made up, it's a name
-> the sha1collisiondetection.git itself creates for its library. I think
-> the Makefile docs you've added here are a bit confusing, you talk
-> about the "external sha1collisiondetection library" but then link
-> against sha1detectcoll". It's worth calling out this difference in the
-> docs IMO. I.e. not talk about the sha1detectcoll.so library form of
-> sha1collisiondetection, not the sha1collisiondetection project name as
-> a library.
-
-Heh, I was confused and annoyed by this inconsistency, too :)
-IIRC, I used "sha1collisiondetection" since the text for
-DC_SHA1_SUBMODULE refers to this term already.
-
-I'll keep using the more readable term (e.g. SHA1 collision-detection
-or sha1dc as abbreviated form) instead of the project name.
-
-> * It might be worth noting that this is *not* linking against the same
-> code we ship ourselves due to the difference in defining
-> SHA1DC_INIT_SAFE_HASH_DEFAULT for the git project's needs in the one
-> we build, hence your need to have a git_SHA1DCInit() wrapper whereas
-> we call SHA1DCInit() directly. It might be interesting to note that
-> the library version will always be *slightly* slower (although the
-> difference will be trivial).
-
-Well, it's just a matter of definition of "code".  If you think of the
-source code, it is the same code.  The difference is merely the build
-option and how it's compiled.  The performance difference is also not
-worth to note.  If the call pattern differs due to shlib, it does
-change no matter whether it's with the same option or not.  Using
-shlib always implies that, you must know it.
-
-In anyway, I'm going to rephrase "code" with "source code" to avoid
-confusion.
-
-> * Nothing in your commit message or docs explains why DC_SHA1_LINK is
-> needed. We don't have these sorts of variables for other external
-> libraries we link to, why the difference?
-
-IMO, it's other way round.  If we didn't provide any such option for
-using external library, we were too lazy.
-
-Actually, I was lazy and didn't provide DC_SHA1_CFLAGS, and you've
-proven this to be bad -- the library header might be installed in a
-different location than the standard path.  The DC_SHA1_CFLAGS can be
-set as default to -Isha1dc so that it covers that path.
-
-I'll add this to the revised patch.
-
-> Some other things I observed:
+> I sent this last bit a tad too soon in a checkout of sha1collisiondetection.git:
 > 
-> * We now have much of the same header code copy/pasted between
-> sha1dc_git.h and sha1dc_git_ext.h, did you consider just always
-> including the former but making what it's doing conditional on
-> DC_SHA1_EXTERNAL? I don't know if it would be worth it from a cursory
-> glance, but again your commit message doesn't list that among options
-> considered & discarded.
-
-I don't mind either way, there is no perfect solution in this case.
-As you know, many people think the ifdef ugly no matter how.
-
-I leave the decision to maintainer.  Just let me know which option is
-preferred.
-
-
-> * I think it makes sense to spew out a "not both!" error in the
-> Makefile if you set DC_SHA1_EXTERNAL=Y and DC_SHA1_SUBMODULE=Y. See my
-> 94da9193a6 ("grep: add support for PCRE v2", 2017-06-01) for an
-> example of how to do this.
-
-Yeah, that's a good point.  Will add the check.
-
-> * The whole business of "#include <sha1.h>" looks very fragile, are
-> there really no other packages in e.g. suse that ship a sha1.h? Debian
-> has libmd-dev that ships /usr/include/sha1.h that conflicts with this:
-> https://packages.debian.org/search?searchon=contents&keywords=sha1.h&mode=exactfilename&suite=unstable&arch=any
+>     $ make PREFIX=/tmp/local install >/dev/null 2>&1 && find /tmp/local/ -type f
+>     /tmp/local/include/sha1dc/sha1.h
+>     /tmp/local/bin/sha1dcsum
+>     /tmp/local/bin/sha1dcsum_partialcoll
+>     /tmp/local/lib/libsha1detectcoll.a
+>     /tmp/local/lib/libsha1detectcoll.so.1.0.0
+>     /tmp/local/lib/libsha1detectcoll.la
 > 
-> Shipping a sha1.h as opposed to a sha1collisiondetection.h or
-> sha1detectcoll.h or whatever seems like a *really* bad decision by
-> upstream that should be the subject of at least seeing if they'll take
-> a pull request to fix it before you package it or before we include
-> something that'll probably need to be fixed / worked around anyway in
-> Git.
+> So the upstream library expects you (and it's documented in their README) to do:
+> 
+>     #include <sha1dc/sha1.h>
+> 
+> But your patch is just doing:
+> 
+>     #include <sha1.h>
+>
+> At best this seems like a trivial bug and at worst us encoding some
+> Suse-specific packaging convention in git, since other distros would
+> presumably want to package this in /usr/include/sha1dc/sha1.h as
+> upstream suggests. I.e. using the ambiguous sha1.h name is not
+> something upstream's doing by default, it's something you're doing in
+> your package.
 
-Yeah, a unique header name would be better indeed.
+Actually it seems to be a wrong usage of $INCLUDEDIR in the upstream
+Makefile, and SUSE package blindly override $INCLUDEDIR.
+
+But sha1dc/sha1.h looks like the correct path, as README.md mentions,
+indeed, so maybe we need to work around in SUSE package side.
+
+Andreas, could you work on it please?
 
 
 thanks,
