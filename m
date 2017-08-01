@@ -2,88 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A46F72047F
-	for <e@80x24.org>; Tue,  1 Aug 2017 13:41:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D4402047F
+	for <e@80x24.org>; Tue,  1 Aug 2017 13:55:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752009AbdHANPS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 Aug 2017 09:15:18 -0400
-Received: from siwi.pair.com ([209.68.5.199]:39002 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751937AbdHANOw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Aug 2017 09:14:52 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 104A8845FE;
-        Tue,  1 Aug 2017 09:14:51 -0400 (EDT)
-Received: from [10.160.98.77] (unknown [167.220.148.86])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id BD3F2845FC;
-        Tue,  1 Aug 2017 09:14:50 -0400 (EDT)
-Subject: Re: [PATCH] convert any hard coded .gitmodules file string to the
- MACRO
-To:     Stefan Beller <sbeller@google.com>, bmwill@google.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, jrnieder@gmail.com
-References: <20170718190527.78049-4-bmwill@google.com>
- <20170731231142.15053-1-sbeller@google.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <413e4f55-5f8b-a80f-775b-b456c4de8a46@jeffhostetler.com>
-Date:   Tue, 1 Aug 2017 09:14:50 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        id S1751960AbdHANzS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 Aug 2017 09:55:18 -0400
+Received: from mail-qt0-f173.google.com ([209.85.216.173]:35762 "EHLO
+        mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751805AbdHANzR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Aug 2017 09:55:17 -0400
+Received: by mail-qt0-f173.google.com with SMTP id p3so9325134qtg.2
+        for <git@vger.kernel.org>; Tue, 01 Aug 2017 06:55:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=dMQziRcgkwD5WPcugTh9TUqpNcDmi211byXNz+NjM4Q=;
+        b=Iv5ErkRCP+gEjeceETbFmNdphGvaP8i3jO8O5f5uhZ6zb3mnZYcVf1OPH1qNVNJGAw
+         CE7E49DYoHs5cBmqFDsnLeUvZfwYpm7NvxQho5STMVTbuTEFgkc6AgLoerMy7tqUS6FF
+         4wDE0iTD4wIQ9hpHg3Mb1OjiP7X2oZyNAnVi6qMe5jHwLG18zO9OF/oorB8q5i4ugM3t
+         LrunEdWFnMeOAEL2kDu1FnGJYxKqJgkZmZz2R5hRnE8dukEkolNQckq7XfRVlr3wYQvc
+         s2TVrbKlqfyLnMCd5kvDEJoEL69ob2XzZu+HAQtWv0Q7sz/K1LBxoShIIWxilY2ybjA8
+         2ggA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=dMQziRcgkwD5WPcugTh9TUqpNcDmi211byXNz+NjM4Q=;
+        b=i1SXT2I5Sw/saD6htFsZQj3g0lo08qKajq2Zh8FvpdAw39zyolKt42qvA0zfjqiD5f
+         oleM/k6VoilEo8v03Shqp4QUbnq+6KBVFRVjhmdwPi4cjH5BAZVCdodhJZlsJR/Hl7zi
+         7C1PG0vaBf85sv9LmdkeWEeJkpfzuP+uX5pVRvAEcoYQJy14ryBtx3qh/PR4MLlN+iNA
+         MPDgg48S7ZC2AhbG/UhmNWMp+4blJWF0YnBUX8o+A5nhoJtG1OGwPwgf15FIjmKB9Wub
+         235O2kYqLCtRqMBfEp+Xe32tGN5CDOB383ln6mC1qt26XAIBXQ8BplSm0gE+gDEoyZx6
+         ceNw==
+X-Gm-Message-State: AIVw111woWsQruufy0Td/CdKLThFRULDiElAxZ2DQZ03Oh8A5rNXVGGk
+        tTAu0z0UVJa3APK3ps2+Hmsyvg0Tj/7L
+X-Received: by 10.237.49.103 with SMTP id 94mr25720351qtg.16.1501595716562;
+ Tue, 01 Aug 2017 06:55:16 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20170731231142.15053-1-sbeller@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Received: by 10.140.44.102 with HTTP; Tue, 1 Aug 2017 06:54:55 -0700 (PDT)
+In-Reply-To: <CAJo=hJv7scc1L0_MdRkFeLAJGjYm2UkTFNOgj2e4+9Zj7KSiiQ@mail.gmail.com>
+References: <CAJo=hJv7scc1L0_MdRkFeLAJGjYm2UkTFNOgj2e4+9Zj7KSiiQ@mail.gmail.com>
+From:   Dave Borowitz <dborowitz@google.com>
+Date:   Tue, 1 Aug 2017 09:54:55 -0400
+Message-ID: <CAD0k6qTFV2AAbWiKvi4=OoodoXEgxswLEbraC3xP1LzvtRRaGg@mail.gmail.com>
+Subject: Re: reftable [v4]: new ref storage format
+To:     Shawn Pearce <spearce@spearce.org>
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, Jul 30, 2017 at 11:51 PM, Shawn Pearce <spearce@spearce.org> wrote:
+> - Ref-like files (FETCH_HEAD, MERGE_HEAD) also use type 0x3.
 
+> - Combine reflog storage with ref storage for small transactions.
+> - Separate reflog storage for base refs and historical logs.
 
-On 7/31/2017 7:11 PM, Stefan Beller wrote:
-> I used these commands:
->    $ cat sem.cocci
->    @@
->    @@
->    - ".gitmodules"
->    + GITMODULES_FILE
-> 
->    $ spatch --in-place --sp-file sem.cocci builtin/*.c *.c *.h
-> 
-> Feel free to regenerate or squash it in or have it as a separate commit.
-> 
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->   submodule.c    | 18 +++++++++---------
->   unpack-trees.c |  2 +-
->   2 files changed, 10 insertions(+), 10 deletions(-)
-> 
-> diff --git a/submodule.c b/submodule.c
-> index 37f4a92872..b75d02ba7b 100644
-> --- a/submodule.c
-> +++ b/submodule.c
->   
-> @@ -233,18 +233,18 @@ void gitmodules_config(void)
->   		strbuf_addstr(&gitmodules_path, "/.gitmodules");
+How is the stash implemented in reftable? In particular, "git stash
+drop" needs to be able to remove an arbitrary single entry from a
+reflog.
 
-Did you mean to also change "/.gitmodules" ??
+I don't think the current proposal supports writing tombstones for
+reflog entries, so this maybe implies that "stash drop" would have to
+be implemented by rewriting the whole reflog for the stash ref during
+compaction. Can the current compaction algorithm support this?
 
->   		if (read_cache() < 0)
->   			die("index file corrupt");
-> -		pos = cache_name_pos(".gitmodules", 11);
-> +		pos = cache_name_pos(GITMODULES_FILE, 11);
->   		if (pos < 0) { /* .gitmodules not found or isn't merged */
->   			pos = -1 - pos;
->   			if (active_nr > pos) {  /* there is a .gitmodules */
-
-It might also be nice to change the literals in the comments to
-use the macro.
-
-Jeff
-
+I suppose there are more exotic alternatives:
+* Go back to the normal ref(log) format for refs/stash. I figure you
+probably don't want to do this, given that you already moved other
+ref-like files into the reftable in a later revision of this proposal.
+* Implement the whole stash storage/command in some other way that
+doesn't depend on reflog.
