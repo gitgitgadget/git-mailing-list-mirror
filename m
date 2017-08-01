@@ -2,92 +2,236 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 098A82047F
-	for <e@80x24.org>; Tue,  1 Aug 2017 20:55:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5CD11208B4
+	for <e@80x24.org>; Tue,  1 Aug 2017 20:59:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752421AbdHAUzG (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 Aug 2017 16:55:06 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50838 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752492AbdHAUzF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Aug 2017 16:55:05 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9B712A0C6C;
-        Tue,  1 Aug 2017 16:55:04 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=1RoWet/705nIuZHtHJ1XYJDqzFw=; b=BjORkP
-        aMfnLwxoInGyJ4OAO86V+SghBEJEa+D1zpz+BCtr4RvxG6RDd8SkZHDSGIiDj1DH
-        EwY7HZQazvL8HP0M7AcRhKB7rW3q4TaqMWCrzIqnSzdDII3YA4sk64D3JTkxOmvV
-        HNVmxjVG/AucwmEIuN2nhioCaPTlHYqv7YVfI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=OBfbseL2uLU84Gt4oOWkd3UAAr8CTo0g
-        KHGjSMtBRDVnppsHF81rsO+dsvPkifGHivpcoNjgzxtK89BSBHL/dGIzemGKhFmn
-        iOeLgH0XAeaiG9GAe6OsdMnX4VjaRqoDEYXA2Yxb4zj6CUKcg4XeW1oUVpQmVX5f
-        //gCz7AfJtE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8EFE6A0C6A;
-        Tue,  1 Aug 2017 16:55:04 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 60988A0C69;
-        Tue,  1 Aug 2017 16:55:03 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     greened@obbligato.org (David A. Greene)
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC] Moving main git-subtree development. to GitHub
-References: <87mv7kf369.fsf@waller.obbligato.org>
-Date:   Tue, 01 Aug 2017 13:55:02 -0700
-In-Reply-To: <87mv7kf369.fsf@waller.obbligato.org> (David A. Greene's message
-        of "Mon, 31 Jul 2017 21:10:54 -0500")
-Message-ID: <xmqqzibjdn4p.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1752770AbdHAU7N (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 Aug 2017 16:59:13 -0400
+Received: from mail-pg0-f52.google.com ([74.125.83.52]:37641 "EHLO
+        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752635AbdHAU6e (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Aug 2017 16:58:34 -0400
+Received: by mail-pg0-f52.google.com with SMTP id y129so12537084pgy.4
+        for <git@vger.kernel.org>; Tue, 01 Aug 2017 13:58:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=umich.edu; s=google-2016-06-03;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=TA8fprzmmSMcHcAh+KG2tNx2eER99xnhA7ULURzD3+E=;
+        b=e9Cek5i9lzBkFwFJHGCumDw2baIVJv9iZZXUDz42XmBG/U2unK5q+CFI3Q24L3IzU1
+         Op0DHPtOSunaOsy6w81h4pdyeCEIW2WUnizRw4IEJB7nL5lVGhMCR65bdJuFKHXDyxmz
+         z7NrwMwNGKKPJWYtkjaNFbTqeIqQfft91pFUcEfWcfRyzWTvUcR3RKmiXL1u/HVmJG7D
+         znTp2xAKjlIcuQZQ+OHVinieXsilGvqjPkuHA5msji4PznxgAmfmauWSQPKIYvrp8hnW
+         n2Z0Jq+4JFBYOUNqwiHbU3CFXeh9yvVimHf/NT2L8vjQlGFsppgIWtCmwHM+5h92YLyy
+         Dj4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=TA8fprzmmSMcHcAh+KG2tNx2eER99xnhA7ULURzD3+E=;
+        b=bZNDAuN4JQ+n+dK5kN35AA2TQ73eZd3t46n9l7yX89oef9C0uvgYTfAn0AWz9n9SCJ
+         qo0++3JiNWYh4jbyAAH4WRjvkkmjhLfPiEkH79fyCkWh3WwTy6Tpvy7PtDYKhDluqkWs
+         /o4rsxpQD7JJRYlnt5FdYP+Rj+8yAltc02XkMOm79C1bCkwDjvnVwQ5EazF8kbtO0ZCg
+         2ZNHa40DeReLIDp68IXaqbx4aHDWIzKZci5zW3zxPl5icPptUO58vbRUpEIlPDhsTt2j
+         HOEvdzsFW1KEDFPT1aB//e2opyHcPBIZnZ8oVTybQgTzmDEjE3lGbqsPtSxD0zmBeGPS
+         F3vg==
+X-Gm-Message-State: AIVw112iql3hjjIho2vKoDC1kDOTMEbbq0/RFQw2OHnIr71PKEx4yGOc
+        wjJK9hFyiK5eM4wmj6pSO3wKsmXSOvUS
+X-Received: by 10.84.146.140 with SMTP id g12mr12608740pla.80.1501621112789;
+ Tue, 01 Aug 2017 13:58:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B0DAC51C-76FB-11E7-A458-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Received: by 10.100.132.193 with HTTP; Tue, 1 Aug 2017 13:58:32 -0700 (PDT)
+In-Reply-To: <287407ac-b0d0-ef24-4950-0982a2db9bed@web.de>
+References: <CA+dzEBmsgUjmf5fUmeiwS=Q81OgpL6K5p=8dBuTjuZ4XE1V5SA@mail.gmail.com>
+ <287407ac-b0d0-ef24-4950-0982a2db9bed@web.de>
+From:   Anthony Sottile <asottile@umich.edu>
+Date:   Tue, 1 Aug 2017 13:58:32 -0700
+Message-ID: <CA+dzEB=3OMw_YM4K_a8dyDG_FwGavU382stXrEOkbYoyM4DSZQ@mail.gmail.com>
+Subject: Re: core.autocrlf=true causes `git apply` to fail on patch generated
+ with `git diff-index HEAD --patch`
+To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-greened@obbligato.org (David A. Greene) writes:
+Here's where I'm hitting the problem described:
+https://github.com/pre-commit/pre-commit/issues/570
 
-> Going forward, I would like to do the main feature and bug fix work on
-> GitHub and periodically subtree-merge to git's main repository under
-> contrib when the code has stabilized and we are reasonably confident
-> interfaces are stable.  This will allow us to experiment with new ideas
-> while keeping a stable codebase for end users.
-> ...
-> Does this mode of operation work for the larger git community?  Are
-> there suggestions of how to make this work as smoothly as possible?
+Note that `git -c core.autocrlf=3Dfalse` apply patch fixes this
+situation, but breaks others.
 
-As a reasonably well-known and mature project, I'd actually welcome
-the idea of git-subtree graduating from my tree and standing on its
-own, managed in the way its developers and users prefer using the
-workflow they choose to use.
+Here's a testcase where `git -c core.autocrlf=3Dfalse apply patch`
+causes a *different* patch failure:
 
-If it is a good idea to keep a copy in contrib/, that will stay to
-be slightly to moderately stale depending on the phase of the
-"upstream" development, by periodically accepting code dumps?  I do
-not have a strong opinion on this.  It is not too much work for me
-personally to do so, but
+```
+#!/bin/bash
+set -ex
 
- - I think git-subtree no longer needs the "contrib/ bump" to
-   sustain its userbase and community; otherwise you wouldn't be
-   sending out the message I am responding to.
+rm -rf foo
+git init foo
+cd foo
 
- - Seen from the world outside the Git world, it may be confusing if
-   two different "sources" of git-subtree exist; the users and the
-   distro packagers want fewer choices in things like this.
+git config --local core.autocrlf true
 
-So I do not have a good answer to what should be done to the copy in
-contrib/, at least not yet, but I think it is a good idea to separate
-it out as its own development project with its own community.
+# Commit lf into repository
+python3 -c 'open("foo", "wb").write(b"1\r\n2\r\n")'
+git add foo
+python3 -c 'open("foo", "wb").write(b"3\n4\n")'
+
+# Generate a patch, check it out, restore it
+git diff --ignore-submodules --binary --no-color --no-ext-diff > patch
+python3 -c 'print(open("patch", "rb").read())'
+git checkout -- .
+git -c core.autocrlf=3Dfalse apply patch
+```
+
+output:
+
+```
++ rm -rf foo
++ git init foo
+Initialized empty Git repository in /tmp/foo/.git/
++ cd foo
++ git config --local core.autocrlf true
++ python3 -c 'open("foo", "wb").write(b"1\r\n2\r\n")'
++ git add foo
++ python3 -c 'open("foo", "wb").write(b"3\n4\n")'
++ git diff --ignore-submodules --binary --no-color --no-ext-diff
+warning: LF will be replaced by CRLF in foo.
+The file will have its original line endings in your working directory.
++ python3 -c 'print(open("patch", "rb").read())'
+b'diff --git a/foo b/foo\nindex 1191247..b944734 100644\n---
+a/foo\n+++ b/foo\n@@ -1,2 +1,2 @@\n-1\n-2\n+3\n+4\n'
++ git checkout -- .
++ git -c core.autocrlf=3Dfalse apply patch
+error: patch failed: foo:1
+```
+
+My current workaround is:
+- try `git apply patch`
+- try `git -c core.autocrlf=3Dfalse apply patch`
+
+which seems to work pretty well.
+
+Anthony
 
 
+On Tue, Aug 1, 2017 at 1:47 PM, Torsten B=C3=B6gershausen <tboegi@web.de> w=
+rote:
+>
+>
+> On 08/01/2017 08:24 PM, Anthony Sottile wrote:
+>>
+>> Here's my minimal reproduction -- it's slightly far-fetched in that it
+>> involves*committing crlf*  and
+>>
+>> then using `autocrlf=3Dtrue` (commit lf, check out crlf).
+>>
+>> ```
+>> #!/bin/bash
+>> set -ex
+>>
+>> rm -rf foo
+>> git init foo
+>> cd foo
+>>
+>> # Commit crlf into repository
+>> git config --local core.autocrlf false
+>> python3 -c 'open("foo", "wb").write(b"1\r\n2\r\n")'
+>> git add foo
+>> git commit -m "Initial commit with crlf"
+>>
+>> # Change whitespace mode to autocrlf, "commit lf, checkout crlf"
+>> git config --local core.autocrlf true
+>> python3 -c 'open("foo", "wb").write(b"1\r\n2\r\n\r\n\r\n\r\n")'
+>>
+>> # Generate a patch, check it out, restore it
+>> git diff --ignore-submodules --binary --no-color --no-ext-diff > patch
+>> python3 -c 'print(open("patch", "rb").read())'
+>> git checkout -- .
+>> # I expect this to succeed, it fails
+>> git apply patch
+>> ```
+>>
+>> And here's the output:
+>>
+>> ```
+>> + rm -rf foo
+>> + git init foo
+>> Initialized empty Git repository in/tmp/foo/.git/
+>> + cd foo
+>> + git config --local core.autocrlf false
+>> + python3 -c 'open("foo", "wb").write(b"1\r\n2\r\n")'
+>> + git add foo
+>> + git commit -m 'Initial commit with crlf'
+>> [master (root-commit) 02d3246] Initial commit with crlf
+>>   1 file changed, 2 insertions(+)
+>>   create mode 100644 foo
+>> + git config --local core.autocrlf true
+>> + python3 -c 'open("foo", "wb").write(b"1\r\n2\r\n\r\n\r\n\r\n")'
+>> + git diff --ignore-submodules --binary --no-color --no-ext-diff
+>> + python3 -c 'print(open("patch", "rb").read())'
+>> b'diff --git a/foo b/foo\nindex bd956ea..fbf7936 100644\n---
+>> a/foo\n+++ b/foo\n@@ -1,2 +1,5 @@\n 1\r\n 2\r\n+\r\n+\r\n+\r\n'
+>> + git checkout -- .
+>> + git apply patch
+>> patch:8: trailing whitespace.
+>>
+>> patch:9: trailing whitespace.
+>>
+>> patch:10: trailing whitespace.
+>>
+>> error: patch failed: foo:1
+>> error: foo: patch does not apply
+>> ```
+>>
+>> I also tried with `git apply --ignore-whitespace`, but this causes the
+>> line endings of the existing contents to be changed to*lf*  (there may
+>> be two bugs here?)
+>>
+>> Thanks,
+>>
+>> Anthony
+>
+>
+>
+> I can reproduce you test case here.
+>
+> The line
+>
+> git apply patch
+>
+> would succeed, if you temporally (for the runtime of the apply command) s=
+et
+> core.autocrlf to false:
+>
+> git -c core.autocrlf=3Dfalse apply patch
+>
+> So this seems to be a bug (in a corner case ?):
+>
+> Typically repos which had been commited with CRLF should be normalized,
+> which means that the CRLF in the repo are replaced by LF.
+> So you test script is a corner case, for which Git has not been designed,
+> It seems as if "git apply" gets things wrong here.
+> Especially, as the '\r' is not a whitespace as a white space. but part
+> of the line ending.
+> So in my understanding the "--ignore-whitespace" option shouldn't affect
+> the line endings at all.
+>
+> Fixes are possible, does anyone have a clue, why the '\r' is handled
+> like this in apply ?
+>
+> And out of interest: is this a real life problem ?
+>
+>
+>
+>
+>
