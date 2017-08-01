@@ -2,156 +2,178 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1364F2047F
-	for <e@80x24.org>; Tue,  1 Aug 2017 21:19:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B05632047F
+	for <e@80x24.org>; Tue,  1 Aug 2017 23:28:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752412AbdHAVTS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 Aug 2017 17:19:18 -0400
-Received: from mail-it0-f68.google.com ([209.85.214.68]:36270 "EHLO
-        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751938AbdHAVTR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Aug 2017 17:19:17 -0400
-Received: by mail-it0-f68.google.com with SMTP id r9so2517417ita.3
-        for <git@vger.kernel.org>; Tue, 01 Aug 2017 14:19:17 -0700 (PDT)
+        id S1751599AbdHAX17 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 Aug 2017 19:27:59 -0400
+Received: from mail-ua0-f171.google.com ([209.85.217.171]:33707 "EHLO
+        mail-ua0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750999AbdHAX16 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Aug 2017 19:27:58 -0400
+Received: by mail-ua0-f171.google.com with SMTP id 80so13780041uas.0
+        for <git@vger.kernel.org>; Tue, 01 Aug 2017 16:27:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=spearce.org; s=google;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=zT/SRk1OC64oNme4ws3ikQ+o1NjNtJ296PpyBhBkLOU=;
-        b=kibBOgk9857KXVanhWfm486KrENJar0UfRvgIL+V9USSi4Y6/agVoNbhjFj9Kyi1s+
-         ZIXRIdox5ndcoejVBDNB4Q+P7GWG774tkFPHSxML7V73GnBazZsKUvk/i4wRjv2rj9gi
-         ac7Ry+4vhSBa4hMwb7LHPzDCpcPBi5Hg9w56AhcuwAfeyxwEzKGRCgaNc32+n6dwz/03
-         hU9UvSpElW1K4dqxSDf62r74sJQJqzWy/F/QKY+8rntCt2YS71Dr/idQEQznwABbEKhI
-         +wsqEsnLGr0XtW321oIlEdz1mSMvNTJiKlFuHE9jaXqqPkgXnuaTA5sosxZ6nXT1fiVf
-         bmkw==
+        bh=X/6n+SscaoOixTOJxJ+eJ+LradG0zAoh03zo3YFrdY0=;
+        b=Zc3CKeAXTU+juB6Z77Ux/X0GpLxrOEewLsegnKvpTi+6OikBtAYbAqbs/jn9JTc0TX
+         NNRmFm33vbeNcaLFIToPAgOVfDgn+7pbitNQ78wWiYVpYEbon/+8HCNMxLQ4lCyjvBQT
+         Xags9dWiK6PiEKvMMjetcR4168SmG8B7ajZsU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=zT/SRk1OC64oNme4ws3ikQ+o1NjNtJ296PpyBhBkLOU=;
-        b=KWiZHaJ82qFJO55f40iyvOeolhhncDntwJE0K7dnd9cwpQTToIDnpTLiMPVI2VVXpe
-         GonJTR3dRwbvnjYmDgFC2Updcg/DydUCltai+rh/1r9NFT9BXImGO3xTZCcK7rkGU80g
-         FWJGuNfWl2WVx4lVb8s7sfPPH1nVrS71M91SZhDFZkASK+1xxfV/vWeMsOPDGlZ4qg7k
-         iRg6ghdlnyue/zFV6HqaEG7WFXWtoeJ6A7B+p6Qs9qbzJxwUnumgvUEuU4jiRD77urAa
-         7hj+SA2NalPRi9HWqdssnvNfkYz2NCJGbKTqtmFNFiGRG4rW0kGKjzco8dVEbPpmQDKY
-         lyaQ==
-X-Gm-Message-State: AIVw112Fe7fbawT77PTSCPWqBTVDlD8oGZfYDEDtbfOq+vHlyO/rPDkS
-        U5HeKneNcugUZf8wzZDtCRaF3D5O1g==
-X-Received: by 10.36.53.133 with SMTP id k127mr3415412ita.175.1501622357100;
- Tue, 01 Aug 2017 14:19:17 -0700 (PDT)
+        bh=X/6n+SscaoOixTOJxJ+eJ+LradG0zAoh03zo3YFrdY0=;
+        b=iNyqrMOAGZ1W+QnTfOHcb/AIi0PUSSxw0e7FxwUbmlbQdO66XTPY7ezdzJeVW94bNz
+         nIpb5PKFlMqPaKW4MelGm7tX2321APsEEJsVBtrky4tg0gCRyKac6C8sfeMt4be/47Ep
+         nnQ815TL3CexL3jYT2GMSBlytAjt1mfO3kPMo+LTi0xZKVOxrHOhfvvirNqkEJTYT1ht
+         lgBDajX2IkFVP8tAbQKVxVuM+9x+9boJZ3kaubySbdRrNYYFJyLkGViKiNc50Nyr9qcR
+         eOLt4KpDwXUrxbhXFQeuDKSBd2gmoPdzLS/sEf12oASDz732nwx922ErHEyRqN4i4hhk
+         jxIA==
+X-Gm-Message-State: AIVw111UbAwDIM8RSb07g1t0nbyDixRc4uXNB9CiZj1KKFwasVIBdvXj
+        YCiZcywfSU98n8PyTmMyx8xi9QQEr4zk
+X-Received: by 10.176.70.96 with SMTP id z32mr14774478uab.37.1501630077226;
+ Tue, 01 Aug 2017 16:27:57 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.79.149.134 with HTTP; Tue, 1 Aug 2017 14:19:16 -0700 (PDT)
-In-Reply-To: <CAGZ79kbyyR54me_+wQDZRrikqKTp_a98yozVfr8P85QHfyyy=Q@mail.gmail.com>
-References: <20170731205621.24305-1-pc44800@gmail.com> <20170731205621.24305-7-pc44800@gmail.com>
- <CAGZ79kbyyR54me_+wQDZRrikqKTp_a98yozVfr8P85QHfyyy=Q@mail.gmail.com>
-From:   Prathamesh Chavan <pc44800@gmail.com>
-Date:   Wed, 2 Aug 2017 02:49:16 +0530
-Message-ID: <CAME+mvUJxiD2TwqvLYr73DfCGw7FRSgY3je6VNwasTFY4vH-kg@mail.gmail.com>
-Subject: Re: [GSoC][PATCH 06/13] submodule: port submodule subcommand 'deinit'
- from shell to C
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>
+Received: by 10.103.83.7 with HTTP; Tue, 1 Aug 2017 16:27:36 -0700 (PDT)
+In-Reply-To: <CAMy9T_HCnyc1g8XWOOWhe7nN0aEFyyBskV2aOMb_fe+wGvEJ7A@mail.gmail.com>
+References: <CAJo=hJv7scc1L0_MdRkFeLAJGjYm2UkTFNOgj2e4+9Zj7KSiiQ@mail.gmail.com>
+ <CAMy9T_HCnyc1g8XWOOWhe7nN0aEFyyBskV2aOMb_fe+wGvEJ7A@mail.gmail.com>
+From:   Shawn Pearce <spearce@spearce.org>
+Date:   Tue, 1 Aug 2017 16:27:36 -0700
+Message-ID: <CAJo=hJvFRJ7honjenB6sUofK14xiUXGwJ1DQHZyTauVKA5v5vw@mail.gmail.com>
+Subject: Re: reftable [v4]: new ref storage format
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        David Borowitz <dborowitz@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 1, 2017 at 3:12 AM, Stefan Beller <sbeller@google.com> wrote:
-> On Mon, Jul 31, 2017 at 1:56 PM, Prathamesh Chavan <pc44800@gmail.com> wrote:
->> The same mechanism is used even for porting this submodule
->> subcommand, as used in the ported subcommands till now.
->> The function cmd_deinit in split up after porting into three
->> functions: module_deinit(), for_each_submodule_list() and
->> deinit_submodule().
->>
->> Mentored-by: Christian Couder <christian.couder@gmail.com>
->> Mentored-by: Stefan Beller <sbeller@google.com>
->> Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
->> ---
->> In this new version, the following changes have been made:
->> * In the function deinit_submodule, since the test is_git_directory()
->>   adds an additional condition, instead is_directory() is used to check
->>   if "sm_path/.git" is a directory.
+On Mon, Jul 31, 2017 at 11:41 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> On Sun, Jul 30, 2017 at 8:51 PM, Shawn Pearce <spearce@spearce.org> wrote:
+>> 4th iteration of the reftable storage format.
+>> [...]
 >
-> Thanks for writing these patches.
-> I wonder if (some of) these notes are best put into the code
-> as a comment such as
->
->     /* NEEDSWORK: convert to is_submodule_active */
->
-> such that people reading this code later realize that checking
-> for a directory may not be the "correct" thing, but a thing which
-> was easy to express using shell.
->
->> +struct deinit_cb {
->> +       const char *prefix;
->> +       unsigned int quiet: 1;
->> +       unsigned int force: 1;
->> +       unsigned int all: 1;
->
-> The value 'all' seems to be unused, i.e. we assign it but never read it?
->
->> +};
->> +#define DEINIT_CB_INIT { NULL, 0, 0, 0 }
->> +
->> +static void deinit_submodule(const struct cache_entry *list_item,
->> +                            void *cb_data)
->> +{
->> +       struct deinit_cb *info = cb_data;
->> +       const struct submodule *sub;
->> +       char *displaypath = NULL;
->> +       struct child_process cp_config = CHILD_PROCESS_INIT;
->> +       struct strbuf sb_config = STRBUF_INIT;
->> +       char *sub_git_dir = xstrfmt("%s/.git", list_item->name);
->> +       mode_t mode = 0777;
->> +
->> +       sub = submodule_from_path(null_sha1, list_item->name);
->> +
->> +       if (!sub || !sub->name)
->> +               goto cleanup;
->> +
->> +       displaypath = get_submodule_displaypath(list_item->name, info->prefix);
->> +
->> +       /* remove the submodule work tree (unless the user already did it) */
->> +       if (is_directory(list_item->name)) {
->> +               struct stat st;
->> +               /* protect submodules containing a .git directory */
->
-> Here may a good place to put:
->   /* NEEDSWORK: automatically call absorbgitdirs before warning/die. */
-> (It was not in the shell version, so feel free to ignore)
->
->> +               if (!info->force) {
->> +                       struct child_process cp_rm = CHILD_PROCESS_INIT;
->> +                       cp_rm.git_cmd = 1;
->> +                       argv_array_pushl(&cp_rm.args, "rm", "-qn",
->> +                                        list_item->name, NULL);
->
-> A bug that exists in the shell version as well as here:
-> What if the submodule has the name '--cached', which happens
-> to be a valid argument for git-rm?
->
-> The call to git-rm would die claiming that the <file> is missing,
-> as the file name was miss-interpreted as another flag.
->
-> To solve this problem we would insert a '--' after the options,
-> before the file name to state that the last argument is a <file>.
->
-> Not sure if we want to fix the bug while we're here or if we rather
-> want to add
->
->     /* NEEDSWORK: add '--' to confirm <file> argument */
->
-IMO, I would first port the subcommand, and add an additional comment
-for pointing the bug out. And then later, we may have a bug-fix patch in this
-series of patch itself for tackling this bug out.
+> Before we commit to Shawn's reftable proposal, I wanted to explore
+> what a contrasting design that is not block based would look like.
 
-Thanks,
-Prathamesh Chavan
+I forgot to look at a 1k chunk size, as you suggested that might also
+be suitable. Here is the more complete experiment table:
+
+       | size   | seek_cold | seek_hot  |
+mh  1k | 36.6 M | 20.6 usec | 10.7 usec |
+mh  4k | 28.3 M | 24.5 usec | 14.5 usec |
+sp  4k | 29.2 M | 63.0 usec |  5.8 usec |
+sp 64k | 27.7 M | 35.6 usec | 23.3 usec |
+
+
+A couple of other notes about your contrasting design:
+
+>     elif chunk_type == INDEX {
+>         chunk_length : varint
+
+Using a varint for the chunk length made for a complicated reader.
+JGit doesn't have the luxury of mmap to access the file, so we have to
+allocate a byte[] and read data from a file descriptor to do anything
+fancy like decoding a varint. For my experiment I wound up just
+hardcoding the IO to read 1k or 4k from whatever address.
+
+A "real" implementation would likely prefer to read a fixed width
+field here such that chunks have a 3 byte header (1 byte chunk_type, 2
+byte chunk_length), and then issue a second read to acquire the rest
+of the chunk. Given that encoding a chunk length of 1024 or 4096 both
+requires 2 bytes of varint, its always going to be 2 bytes in your
+design anyway. With the way chunks are scanned, I don't think you want
+chunks as large as 16k, which would have caused the varint to go to 3
+bytes (but still fits in a fixed 2-byte chunk_length).
+
+My reftable proposal should still do well in a mmap region. Most of
+the cold start penalty for reftable is JGit copying the ref index from
+the file descriptor to the memory block where we can parse the format.
+That is why the cold_seek time declines for a larger block size, the
+index is smaller.
+
+
+>         first_child : {
+>             refname : varstr
+>             index_payload
+>         }
+>         other_children : {
+>             # Length of prefix being carried over from the previous
+>             # record:
+>             prefix_len : varint
+>             suffix : varstr
+>             index_payload
+
+Having no prefix_len on first_child made for a slightly funkier
+parser. It does save you a byte, but the parser has to know if its
+looking at the first child, or an other_children to know if it should
+expect the prefix_len. Its a simple condition, but it kind of grated
+on me when I wrote that particular section of the experiment. For the
+majority of records the parser considers, the prefix_len is always
+present.
+
+That is why I proposed the restart_offsets point to the prefix_len,
+and prefix_len = 0 at restart points. It slightly simplified the
+parser.
+
+
+>     elif chunk_type == OBJS_INDEX {
+>         chunk_length : varint
+>
+>         # The offset, relative to the start of this chunk, of the
+>         # chunk containing the next level of the obj index, for each
+>         # of the possible "next" bytes in the SHA-1, or zero if there
+>         # are no references with the given next byte.
+>         child_offset : varint * 256
+
+This is space saving and cute, but kind of annoying. If it was fixed
+width 32 bit you can address up to 4G away from this chunk's address,
+and you can directly jump to the byte of interest. By being varints
+you do save a little space, as most files will probably only need 3
+byte varints, and the 0s do collapse down to 1 byte, but you have to
+linearly walk the list to find any specific byte.
+
+
+> ref_payload = {
+>     value_type : enum NO_VALUE
+>                     | DELETED
+>                     | VALUE | VALUE_PEELED
+>                     | SYMREF | SYMREF_PEELED
+>                     | SPECIAL
+>     log_type : enum NO_REFLOG | REFLOG | REFLOG_COMPRESSED
+>     symref_target : bool
+
+FWIW I didn't implement log_type or symref_target in my experiment, so
+the size per ref was maybe a few bytes smaller than what you outlined
+here.
+
+
+>     # This field is used to keep backwards links from references to
+>     # any symrefs that point at them, to make it tractable to update
+>     # the reflog of the symref if the reference is changed directly:
+>     if symref_target {
+>         referer : varstr
+>         varint(0)
+>     }
+
+I wonder how desirable this feature is. Most updates are done through
+HEAD, which is a symref and can therefore update both HEAD and the
+target's reflogs in the same operation. It seems to me its rare to
+issue an update directly on the ref that HEAD points at. Its even
+rarer to have a non-HEAD symbolic reference whose reflog you expect to
+track something else.
+
+Is this for refs/remotes/origin/HEAD to be a symref and have its
+reflog mirror the fetch operations that touched the underlying ref?
