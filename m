@@ -2,101 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 226551F991
-	for <e@80x24.org>; Wed,  2 Aug 2017 10:45:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D91820899
+	for <e@80x24.org>; Wed,  2 Aug 2017 12:21:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752877AbdHBKpB (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Aug 2017 06:45:01 -0400
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:46790 "EHLO
-        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752757AbdHBKov (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Aug 2017 06:44:51 -0400
-Received: from lindisfarne.localdomain ([92.22.28.33])
-        by smtp.talktalk.net with SMTP
-        id cr8nd8nSUiSHacr90dwio6; Wed, 02 Aug 2017 11:44:50 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
-        t=1501670690; bh=encTC7oAJjJFUTVh5T6oQGy+eLBJ+ZHt/CftngfGRtw=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
-        b=naBoXopI/fBV6fbjj/GV5GqCP5AqwgSxAaERsL28C2Qnblkcwaoa58PLhwgQmseiZ
-         0W+1mi4ml+dBh4RPaNML4KzmScUb2RWRNTEP/7/b25z2AVXfVa6etnRO20nHRbP+L3
-         AWbr85vmWE/7gIj4OOYVEWqcx1IKesNOQcR+4tUA=
-X-Originating-IP: [92.22.28.33]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=UoATD64B c=1 sm=1 tr=0 a=BeSdjzhxhZnKGFP9cxuqMA==:117
- a=BeSdjzhxhZnKGFP9cxuqMA==:17 a=evINK-nbAAAA:8 a=9MXahgpz6xUu425BIzAA:9
- a=dXnhgfItdGqR5gIV:21 a=jcX2Oo9QQSeCK6DK:21 a=RfR_gqz1fSpA9VikTjo0:22
-From:   Phillip Wood <phillip.wood@talktalk.net>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH 4/6] t3504: use test_commit
-Date:   Wed,  2 Aug 2017 11:44:18 +0100
-Message-Id: <20170802104420.12809-5-phillip.wood@talktalk.net>
-X-Mailer: git-send-email 2.13.3
-In-Reply-To: <20170802104420.12809-1-phillip.wood@talktalk.net>
-References: <20170802104420.12809-1-phillip.wood@talktalk.net>
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-X-CMAE-Envelope: MS4wfGFgNDPmHmHxbaa6KO3FNj8ydScWMeFLeEPctnOWT+5K227wVrwj9LUGxnVnV+YNfx6QyJB5omdtwrUczAQ1isL599QPrsA5edWE8No8x8QjLQIoD5wW
- aFJQqdyryPuocn5IzV/Puv5q2pn4kF0H7hYRZXmEJQEvV/TkkHCYnGeL0xGaQmt/Hm0woWjhZ8DxhP4q9cSXzieCcslf1E2ppIdVEg+fd5nBTap6BaZWREna
- 99E2GIwkZGPiazsOy5QyXA==
+        id S1753150AbdHBMVH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Aug 2017 08:21:07 -0400
+Received: from mail-qt0-f170.google.com ([209.85.216.170]:36907 "EHLO
+        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753114AbdHBMVG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Aug 2017 08:21:06 -0400
+Received: by mail-qt0-f170.google.com with SMTP id 16so25617947qtz.4
+        for <git@vger.kernel.org>; Wed, 02 Aug 2017 05:21:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=pAoHhHSxSlVkUrPbApDJi6zG/2RXlglvGw/4fdMKwis=;
+        b=flYUcyfrvFY6ZrVFwymurVneZE7Gn+NVNiAMvvu0Ml1XrmBp/YoWoGOKUddGDS9sFQ
+         WiVqNK2Kx9N21f7Hq+H42dpDVosKs6WzTlPvJdnUlL5ie70MsoYMBfdMcZ/E3th1qly+
+         TU8hT6QPcAKE/D1RgQEOM3K6If70aK+TEMmTs2qId3U6u8h1xEd3RA7s/OcKTXf80I2+
+         gDbZ2N3Z0vdg+zvWlLNiliCOQmSYxB83VwIqZ0R9weJnI0fw9udQOmZWkmc9fsJLqLXW
+         WrTn1Hi0Mmciiyv7XV/e/9/4MuahxJxsyCwr8gVr2OakSXFMjn4vVzvhltNnBZJNDm8r
+         keUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=pAoHhHSxSlVkUrPbApDJi6zG/2RXlglvGw/4fdMKwis=;
+        b=dXyKX0ySq+dHAFBqcByJGV+i+etw4VwynZ+MnhkdqSeZM55UAf59vP7kTV8wbBeHJg
+         JLvhVeRxaTGqe3EMZfMXN+CPOq0XiDq1IMyKMwyg8KCM6AWuslgHBQlXKuSvxtpFBKN1
+         43C8FLOtPr41cFwqcsAHDve5N8M9TkvPDo3ZZIg/R3Y7ozhG70a/4jI/2U2S01+KQ0aS
+         m0+VThsPXq+GjDAw5SE++5sJDvBx5Xtssk4xFP+10sayelVkNpM1fL2zlCeowK0tY6DI
+         7hq658f2pYGsfayAsGUkohdjuWZvtxr0A3Z4TZGGjEuTk5ugyLeCEia5bO01ICR9xVEV
+         shsQ==
+X-Gm-Message-State: AIVw110/dGXe1GGA7iA5lihnK0z1kwE2SkwskigGFNOEX4f5K02pH3E1
+        +LeTJ8CeHOZ2Axz7tIJxRpdhttvgUrT7
+X-Received: by 10.200.9.47 with SMTP id t44mr2777519qth.16.1501676465488; Wed,
+ 02 Aug 2017 05:21:05 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.140.44.102 with HTTP; Wed, 2 Aug 2017 05:20:44 -0700 (PDT)
+In-Reply-To: <CAJo=hJv=zJvbzfAZwspxECXrnBJR4XfJbGZegsNUCx=6uheO2Q@mail.gmail.com>
+References: <CAJo=hJv7scc1L0_MdRkFeLAJGjYm2UkTFNOgj2e4+9Zj7KSiiQ@mail.gmail.com>
+ <CAMy9T_HCnyc1g8XWOOWhe7nN0aEFyyBskV2aOMb_fe+wGvEJ7A@mail.gmail.com>
+ <CAJo=hJvFRJ7honjenB6sUofK14xiUXGwJ1DQHZyTauVKA5v5vw@mail.gmail.com>
+ <CAMy9T_HUoD4--s1gNTUjnCgdiAqfYbX-GSqygDwNO-JRwdh4NQ@mail.gmail.com> <CAJo=hJv=zJvbzfAZwspxECXrnBJR4XfJbGZegsNUCx=6uheO2Q@mail.gmail.com>
+From:   Dave Borowitz <dborowitz@google.com>
+Date:   Wed, 2 Aug 2017 08:20:44 -0400
+Message-ID: <CAD0k6qRTa6jSgEBBX1Ux5yg4QMMWPpyOGTa471cRhtzBaS-KjQ@mail.gmail.com>
+Subject: Re: reftable [v4]: new ref storage format
+To:     Shawn Pearce <spearce@spearce.org>
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>, git <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On Tue, Aug 1, 2017 at 10:38 PM, Shawn Pearce <spearce@spearce.org> wrote:
+>> Peff and I discussed off-list whether the lookup-by-SHA-1 feature is
+>> so important in the first place. Currently, all references must be
+>> scanned for the advertisement anyway,
+>
+> Not really. You can hide refs and allow-tip-sha1 so clients can fetch
+> a ref even if it wasn't in the advertisement. We really want to use
+> that wire protocol capability with Gerrit Code Review to hide the
+> refs/changes/ namespace from the advertisement, but allow clients to
+> fetch any of those refs if they send its current SHA-1 in a want line
+> anyway.
+>
+> So a server could scan only the refs/{heads,tags}/ prefixes for the
+> advertisement, and then leverage the lookup-by-SHA1 to verify other
+> SHA-1s sent by the client.
+>
+>> so avoiding a second scan to vet
+>> SHA-1s received from the client is at best going to reduce the effort
+>> by a constant factor. Do you have numbers showing that this
+>> optimization is worth it?
+>
+> No, but I don't think I need to do much to prove it. My 866k ref
+> example advertisement right now is >62 MiB. If we do what I'm
+> suggesting in the paragraphs above, the advertisement is ~51 KiB.
 
-Using test_commit is simpler than chaining echo && git add &&
-test_tick && commit. Also having tags makes it clearer which commit
-is being selecting by reset.
+That being said, our bias towards minimizing the number of ref scans
+is rooted in our experience where scanning 866k refs takes 5 seconds
+to get the response from the storage backend into the git server.
+Cutting ref scans from 2 to 1 (or 1 to 0) is a big deal in that case.
+But that 5s number is based on our current, slow storage, not on
+reftable. If migrating to reftable turns each 5s scan into a 400ms
+scan, we might be able to live with that, even if we don't have fast
+lookup by SHA-1.
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- t/t3504-cherry-pick-rerere.sh | 19 ++++++++-----------
- 1 file changed, 8 insertions(+), 11 deletions(-)
+>> OTOH a mythical protocol v2 might reduce the need to scan the
+>> references for advertisement, so maybe this optimization will be more
+>> helpful in the future?
 
-diff --git a/t/t3504-cherry-pick-rerere.sh b/t/t3504-cherry-pick-rerere.sh
-index e6a64816efef0e53018c7a56784d1af62602e9d3..33f902b1b0d8eb651e0e6857f8f5b86ef633ef4a 100755
---- a/t/t3504-cherry-pick-rerere.sh
-+++ b/t/t3504-cherry-pick-rerere.sh
-@@ -5,14 +5,11 @@ test_description='cherry-pick should rerere for conflicts'
- . ./test-lib.sh
- 
- test_expect_success setup '
--	echo foo >foo &&
--	git add foo && test_tick && git commit -q -m 1 &&
--	echo foo-master >foo &&
--	git add foo && test_tick && git commit -q -m 2 &&
-+	test_commit foo &&
-+	test_commit foo-master foo &&
- 
--	git checkout -b dev HEAD^ &&
--	echo foo-dev >foo &&
--	git add foo && test_tick && git commit -q -m 3 &&
-+	git checkout -b dev foo &&
-+	test_commit foo-dev foo &&
- 	git config rerere.enabled true
- '
- 
-@@ -21,10 +18,10 @@ test_expect_success 'conflicting merge' '
- '
- 
- test_expect_success 'fixup' '
--	echo foo-dev >foo &&
--	git add foo && test_tick && git commit -q -m 4 &&
--	git reset --hard HEAD^ &&
--	echo foo-dev >expect
-+	echo foo-resolved >foo &&
-+	git commit -am resolved &&
-+	cp foo expect &&
-+	git reset --hard HEAD^
- '
- 
- test_expect_success 'cherry-pick conflict' '
--- 
-2.13.3
-
+I haven't been following the status of the proposal, but I was
+assuming a client-speaks-first protocol would also imply the client
+asking for refnames, not SHA-1s, in which case lookup by SHA-1 is no
+longer relevant.
