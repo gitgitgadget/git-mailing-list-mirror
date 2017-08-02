@@ -6,43 +6,43 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8AAC91F991
-	for <e@80x24.org>; Wed,  2 Aug 2017 10:44:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 411101F991
+	for <e@80x24.org>; Wed,  2 Aug 2017 10:45:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752868AbdHBKo6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Aug 2017 06:44:58 -0400
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:19419 "EHLO
+        id S1752801AbdHBKov (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Aug 2017 06:44:51 -0400
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:20384 "EHLO
         smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752802AbdHBKow (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Aug 2017 06:44:52 -0400
+        with ESMTP id S1752327AbdHBKou (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Aug 2017 06:44:50 -0400
 Received: from lindisfarne.localdomain ([92.22.28.33])
         by smtp.talktalk.net with SMTP
-        id cr8nd8nSUiSHacr91dwioE; Wed, 02 Aug 2017 11:44:51 +0100
+        id cr8nd8nSUiSHacr8ydwins; Wed, 02 Aug 2017 11:44:49 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
-        t=1501670691; bh=dUDmrDN+P42G8VY4sMPoWDC5iwsxl1CWemyocVgXkYQ=;
+        t=1501670689; bh=5IkzOWBmAOsMTZeSnYdPnsHBExXyeqLfEdTQyUSVcPA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
-        b=ctT2BHOY0WVIwmGvN6gIxoswFYOHxmne7Kk43Ljcn6BD2QBDnN0OjTAZJ/peqQ/+G
-         wiw6gd5tEvypoqi9FjKi42bEal3FoArks7W/QnG+fduYOFmQw4iCHyL8KEx8XGyC1M
-         VSaft7WkgbjTTOsqHeoTI+X4Q4f/QYG1fumRJzw4=
+        b=pylThXBt9CoBlEQ/5MTPpdtS1t8+wBFG1FtY/W0mg4SrfzuemxMix0YylTzJYI1Wh
+         pqSFm3YML8Ob5DBVeWuLP/U4zNN7p+0/8mlK/hoR8kn7hA7RftdnygKD+8CNwnhNsH
+         eGbzhSiPJMc+PasC2EGQ7TGrVuq+/+i1IJlvajRo=
 X-Originating-IP: [92.22.28.33]
 X-Spam: 0
 X-OAuthority: v=2.2 cv=UoATD64B c=1 sm=1 tr=0 a=BeSdjzhxhZnKGFP9cxuqMA==:117
- a=BeSdjzhxhZnKGFP9cxuqMA==:17 a=evINK-nbAAAA:8 a=edZChGTwqRupLB35ZbsA:9
- a=hnRqJLJbb7wSGUDe:21 a=laUHkEsl5FVuuehE:21 a=RfR_gqz1fSpA9VikTjo0:22
+ a=BeSdjzhxhZnKGFP9cxuqMA==:17 a=evINK-nbAAAA:8 a=nN53kmj_4rbOlxUli4MA:9
+ a=lg3XbccdkaWyW6yr:21 a=nMBdqodhwWIVy9En:21 a=RfR_gqz1fSpA9VikTjo0:22
 From:   Phillip Wood <phillip.wood@talktalk.net>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH 6/6] cherry-pick/revert: reject --rerere-autoupdate when continuing
-Date:   Wed,  2 Aug 2017 11:44:20 +0100
-Message-Id: <20170802104420.12809-7-phillip.wood@talktalk.net>
+Subject: [PATCH 1/6] am: remember --rerere-autoupdate setting
+Date:   Wed,  2 Aug 2017 11:44:15 +0100
+Message-Id: <20170802104420.12809-2-phillip.wood@talktalk.net>
 X-Mailer: git-send-email 2.13.3
 In-Reply-To: <20170802104420.12809-1-phillip.wood@talktalk.net>
 References: <20170802104420.12809-1-phillip.wood@talktalk.net>
 Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-X-CMAE-Envelope: MS4wfHgTvAKC5DzJMwXWW/jNZWquGPQiWHTnLai/0GbLU8Wwy7vr44e8FZ+DXIwkTQDlcUYx3S6WeFvcPxd6Ofdr8BHQGBszDtH5x+JpcgE3JRJ4e5kJBYDf
- B1Fy0CB9lpdpET7RndUApAUEzVNclFWHtyuLr3+O0IH2oqGrDqbzH2pnhPoQtfGvF2gJ2Fv2OOuNQTZbahkJ3DkCBgNoTcaTSghAulfL7oRlQ5QKZWrJuba/
- q3lILs8howUQs1jUW0Jamw==
+X-CMAE-Envelope: MS4wfF6fWZIVaOiFSYBjC/Gxl8S6yJ08Rz3yIex//sDF/XiAdK07nMR4nmGMzAQKSfVLK5GHn4zInnyYx/VmLTVyvLVtZmytS3jgJbZ1ICgAGl2lfTIubPoD
+ DtJDbypgZIfYFZehKKyPLBNbcMHLiwfR8zuyCOxExIOqIVoAXcGddVjwQWiFyS3YUGG89eyQalOpREROfTIV4q1vPk8TZG0AgAC0IaQYWfBN69aGzpZliIP/
+ urQEJXngqoYPL/cRdR2gLA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -50,61 +50,48 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-cherry-pick and revert should not accept --[no-]rerere-autoupdate once
-they have started.
+Save the rerere-autoupdate setting so that it is remembered after
+stopping for the user to resolve conflicts.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
 
-This will break scripts that pass --[no-]rerere-autoupdate to 'git
-cherry-pick --continue'. I don't think that this will be an issue for
-the vast majority of users as I think most people will have assumed
-that you cannot pass any other options with '--continue'.
-'--rerere-autoupdate' is mentioned by 'git cherry-pick -h' but it is
-not mentioned in the documentation. Hopefully a note in the release
-notes should be enough to alert anyone who is affected by this.
+There are no new tests, but this code is exercised by the new rebase
+tests in the next patch.
 
-builtin/revert.c              |  2 ++
- t/t3504-cherry-pick-rerere.sh | 13 +++++++++++++
- 2 files changed, 15 insertions(+)
+builtin/am.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/builtin/revert.c b/builtin/revert.c
-index 16028b9ea82edee9cf41044c69a47e8994d78fc6..b9d927eb09c9ed87c84681df1396f4e6d9b13c97 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -155,6 +155,8 @@ static int run_sequencer(int argc, const char **argv, struct replay_opts *opts)
- 				"--strategy-option", opts->xopts ? 1 : 0,
- 				"-x", opts->record_origin,
- 				"--ff", opts->allow_ff,
-+				"--rerere-autoupdate", opts->allow_rerere_auto == RERERE_AUTOUPDATE,
-+				"--no-rerere-autoupdate", opts->allow_rerere_auto == RERERE_NOAUTOUPDATE,
- 				NULL);
- 	}
+diff --git a/builtin/am.c b/builtin/am.c
+index c973bd96dcb5d630d56e935733bfa4530ccd2872..6962d4db5ffceef3022b7f877a43c8833a839b31 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -431,6 +431,14 @@ static void am_load(struct am_state *state)
+ 	read_state_file(&sb, state, "utf8", 1);
+ 	state->utf8 = !strcmp(sb.buf, "t");
  
-diff --git a/t/t3504-cherry-pick-rerere.sh b/t/t3504-cherry-pick-rerere.sh
-index af316cb40b7b16c95881eb8483eea4f6191c7cfa..a267b2d144df4a84f18ba4907b317e757ba98f16 100755
---- a/t/t3504-cherry-pick-rerere.sh
-+++ b/t/t3504-cherry-pick-rerere.sh
-@@ -65,6 +65,19 @@ test_expect_success 'cherry-pick conflict with --no-rerere-autoupdate' '
- 	git reset --hard bar-dev
- '
- 
-+test_expect_success 'cherry-pick --continue rejects --rerere-autoupdate' '
-+	test_must_fail git cherry-pick --rerere-autoupdate foo..bar-master &&
-+	test_cmp foo-expect foo &&
-+	git diff-files --quiet &&
-+	test_must_fail git cherry-pick --continue --rerere-autoupdate >actual 2>&1 &&
-+	echo "fatal: cherry-pick: --rerere-autoupdate cannot be used with --continue" >expect &&
-+	test_i18ncmp expect actual &&
-+	test_must_fail git cherry-pick --continue --no-rerere-autoupdate >actual 2>&1 &&
-+	echo "fatal: cherry-pick: --no-rerere-autoupdate cannot be used with --continue" >expect &&
-+	test_i18ncmp expect actual &&
-+	git cherry-pick --abort
-+'
++	if (file_exists(am_path(state, "rerere-autoupdate"))) {
++		read_state_file(&sb, state, "rerere-autoupdate", 1);
++		state->allow_rerere_autoupdate = strcmp(sb.buf, "t") ?
++			RERERE_NOAUTOUPDATE : RERERE_AUTOUPDATE;
++	} else {
++		state->allow_rerere_autoupdate = 0;
++	}
 +
- test_expect_success 'cherry-pick --rerere-autoupdate more than once' '
- 	test_must_fail git cherry-pick --rerere-autoupdate --rerere-autoupdate foo..bar-master &&
- 	test_cmp foo-expect foo &&
+ 	read_state_file(&sb, state, "keep", 1);
+ 	if (!strcmp(sb.buf, "t"))
+ 		state->keep = KEEP_TRUE;
+@@ -1003,6 +1011,10 @@ static void am_setup(struct am_state *state, enum patch_format patch_format,
+ 	write_state_bool(state, "sign", state->signoff);
+ 	write_state_bool(state, "utf8", state->utf8);
+ 
++	if (state->allow_rerere_autoupdate)
++		write_state_bool(state, "rerere-autoupdate",
++			 state->allow_rerere_autoupdate == RERERE_AUTOUPDATE);
++
+ 	switch (state->keep) {
+ 	case KEEP_FALSE:
+ 		str = "f";
 -- 
 2.13.3
 
