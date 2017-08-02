@@ -2,121 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0BAE820899
-	for <e@80x24.org>; Wed,  2 Aug 2017 17:46:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D503720899
+	for <e@80x24.org>; Wed,  2 Aug 2017 17:58:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752158AbdHBRqU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Aug 2017 13:46:20 -0400
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:34438 "EHLO
-        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751948AbdHBRqU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Aug 2017 13:46:20 -0400
-Received: by mail-pf0-f181.google.com with SMTP id o86so20401000pfj.1
-        for <git@vger.kernel.org>; Wed, 02 Aug 2017 10:46:19 -0700 (PDT)
+        id S1752982AbdHBR6W (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Aug 2017 13:58:22 -0400
+Received: from mail-lf0-f53.google.com ([209.85.215.53]:37018 "EHLO
+        mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752963AbdHBR6V (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Aug 2017 13:58:21 -0400
+Received: by mail-lf0-f53.google.com with SMTP id m86so23076923lfi.4
+        for <git@vger.kernel.org>; Wed, 02 Aug 2017 10:58:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=aXcoS/eura1ITrdvUU98cMC4UMkejt5K8pLyz3ZucOQ=;
-        b=OIMJCe6TTtMKDij631X1BjNrHHtE1Punh3cZVxlGoxlXZw5EFrlahmI9846tolEzhX
-         c2Y2sxveKOD707TSAYWmi8M24mppc9Rqj+kscFtDT9NEFxS2rPNbrPgZ6Y2eK0CKU3bU
-         qpkyoKmq6EmDDYr/kFOeipsM5WVxMqt/f5GuZfx8YxhEiAfG3BvgcH74cvD0vmDpKc4N
-         tDUSNfgPnq9dBJdQ4NhZQkUvXjkdN7HE/QTHknMu3CLghBVCmlGoYNSqgi0Y5mA+FX4d
-         buAi8kRAsKWinEOWduV5//vAw/rJxiF7GOyHbrdhztm5EXMDqQUO6gVRJlG0QZQJz0v2
-         /CkQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=iNpfmLProuhvDbtB2XoIj+C/ngu0rZBseR+G8Q1j2gQ=;
+        b=obAVWmTRwV0MOc11JrZehY8GK7N7tsnuCPaZmi//3RfRdTMKToorehd5Ge4nAyYHeK
+         7HnlTPVBDI6KkliKesJbvuM0BTtkcGnWtMW0L648p8sblnW/p8sDU4j247Qh7NUhobLq
+         4XkkD9qQ2nMqLNmo2CAPn5nffW6FXBS2/azH5brYvPXnU5swPXsGvt8YX4PUGH+tM0z3
+         xOIoTvxDA+aNJ0e0HSPLPgwv1aTV+1VFXwS/0gMOIqHtIIReTIrPS1oYWQ8ENFUfIMVW
+         JYc9e9JLoRfQ+Tgm/ZhRrSKihfg6lNYOiUVb6WPCFlpeA0pgqVSbUtCrmdOFUttp5nOG
+         /fFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=aXcoS/eura1ITrdvUU98cMC4UMkejt5K8pLyz3ZucOQ=;
-        b=BIug2gEyIdGavxhCGwoYC7uw3569C9+MI8c9QiWjciPEmcZENlB++o9recMD/ntIBt
-         pQtNTrRNqSzKv8+aAcVDzt7Cd/sy5AFcxjIx2PA04ZyQiVfk3Zp/n07Xyj1xk9oSkawU
-         wkIKwj2zWFsX+Nu0ZUBY3vNlO7Tlx/6g9Bg+dhqzfLQ1YFFtZzvVbJ5o+i5akVNG9n6s
-         ZLOSVaIBhIiAD2AIEiclu+EsDxovV75RqypfmBCBTXPnLtlz70I2mPFoYbQTwFB2dRol
-         e+ypcd7xFsTdHVrLYtnFwGYSWZCZAKHtfj7Pdz/vvx+NNjq+l8oDQwrwWmGo/ugHk652
-         WtGQ==
-X-Gm-Message-State: AIVw111RSlO/RuXQVNHIO7IqJTPdXew0J9fUaiRZyNmbc2AM1TZIkRzn
-        XzAzuCFteM6AiAt34wVfRw==
-X-Received: by 10.84.170.67 with SMTP id i61mr25711397plb.114.1501695979416;
-        Wed, 02 Aug 2017 10:46:19 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:5415:3cb1:21dc:39fd])
-        by smtp.gmail.com with ESMTPSA id m186sm59307082pfc.54.2017.08.02.10.46.18
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 02 Aug 2017 10:46:18 -0700 (PDT)
-Date:   Wed, 2 Aug 2017 10:46:17 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] convert any hard coded .gitmodules file string to the
- MACRO
-Message-ID: <20170802174617.GC36159@google.com>
-References: <20170718190527.78049-4-bmwill@google.com>
- <20170731231142.15053-1-sbeller@google.com>
- <413e4f55-5f8b-a80f-775b-b456c4de8a46@jeffhostetler.com>
- <CAGZ79kY-H7rWW_h-k4fHXkwqfMJvd8MtGBooNH8J7PaA2Gj1Yg@mail.gmail.com>
- <xmqq4ltrf30q.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=iNpfmLProuhvDbtB2XoIj+C/ngu0rZBseR+G8Q1j2gQ=;
+        b=HS9G9lbF0lg7gfUMW/yqHmexOlmcP3BEN2DoRlRfq1ySDRzOIbGcmkdB4ZRUg30iIU
+         mkRg9VO1xmC9KBAQp9mQRWwU3k/xegkXZQ71vKpJ1WfCyqg4J++PmlZjO98oJ3EXrRnd
+         jIRF5ugq5Px3I8sTA/vTnozRDhMa4HrXB0vCyM826bF73Z3rDxKmMDlXgv1qV3F+VGu/
+         8hJ5+nd0ilSiIdX3vCPjSSdOAD0S1DIoOBH3tQHdOE9vFazSHPYrjLuDlSdxYEUdd9A5
+         X4A3DcwTvDmrSZcGkt5828yvHRFALghE172NJPhKUSlp24o5rxKkyi9DOubYI4rXgMfr
+         O7+A==
+X-Gm-Message-State: AIVw112gTN3CaaUCDMqI1dL16eh3THbd0F/hiNKZ3fvUwMeuKF8XANgJ
+        klp/MdQu8YfO2lTV8axZMN3hNt2UTKPI
+X-Received: by 10.25.204.149 with SMTP id c143mr7011742lfg.195.1501696699298;
+ Wed, 02 Aug 2017 10:58:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq4ltrf30q.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.25.1.130 with HTTP; Wed, 2 Aug 2017 10:58:18 -0700 (PDT)
+In-Reply-To: <xmqq60e6djcu.fsf@gitster.mtv.corp.google.com>
+References: <CAGZ79kYg9jQ3kaKnNEJCH9fde=ar1KPiUr7=X+TguNc0Twqdzg@mail.gmail.com>
+ <20170801160539.5587-1-kaarticsivaraam91196@gmail.com> <20170801160539.5587-2-kaarticsivaraam91196@gmail.com>
+ <CAGZ79kZgV1=2HcYeXyoCy2Jk6v__trvTh_-rH+kbFX7fgWziyw@mail.gmail.com>
+ <1501677122.1957.8.camel@gmail.com> <xmqqini6dkmu.fsf@gitster.mtv.corp.google.com>
+ <xmqq60e6djcu.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 2 Aug 2017 10:58:18 -0700
+Message-ID: <CAGZ79kYArf6R-vx1-Lm4X_ANLMrXc3VNd2aCQMnqq3J6y-s31Q@mail.gmail.com>
+Subject: Re: [PATCH 2/2] doc: add another way to identify if a patch has been merged
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08/01, Junio C Hamano wrote:
-> Stefan Beller <sbeller@google.com> writes:
-> 
-> >>>   @@ -233,18 +233,18 @@ void gitmodules_config(void)
-> >>>                 strbuf_addstr(&gitmodules_path, "/.gitmodules");
-> >>
-> >>
-> >> Did you mean to also change "/.gitmodules" ??
-> >
-> > Goog point. We should pick that up as well. However as we do not have
-> > a macro for that, we'd have to have 2 calls to strbuf API
-> >
-> >     strbuf_addch(&sb, '/');
-> >     strbuf_addstr(&sb, GITMODULES);
-> 
-> Ehh, doesn't string literal concatenation work here?  I.e. something
-> like:
-> 
->     strbuf_addstr(&gitmodules_path, "/" GITMODULES_FILE);
+On Wed, Aug 2, 2017 at 9:28 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> I think the exchange Stefan cited was an example that we want to
+>> have more of.  The contributor is indicating that, even though the
+>> patch could be a drive-by patch by one-timer from whom we will never
+>> hear again, it is not--the contributor is willing to learn the way
+>> things are done here, and showing that it is worth _our_ time to
+>> explain the things so that the future patches will take less effort
+>> to accept on our side.
 
-Also this doesn't really matter much since this line is removed latter
-on in the series, but I'll go with the string literal concatenation for
-the intermediate state.
+The example I cited contains two important parts that I considered.
 
-> 
-> 
-> >>>                 if (pos < 0) { /* .gitmodules not found or isn't merged */
-> >>>                         pos = -1 - pos;
-> >>>                         if (active_nr > pos) {  /* there is a .gitmodules
-> >>> */
-> >>
-> >>
-> >> It might also be nice to change the literals in the comments to
-> >> use the macro.
-> 
-> The reason you want this patch is not like we want to make it easy
-> to rename the file to ".gitprojects" later, right?  The patch is
-> about avoiding misspelled string constant, like "/.gitmdoules",
-> without getting caught by the compiler, no?
-> 
-> Assuming that I am correctly guessing the intention, I think it is a
-> bad idea to rename these in the comments.
-> 
-> 
+> I tried to follow as best I could, here's my attempt (please advise).
 
--- 
-Brandon Williams
+    ok, I can help out as that conversation is very likely
+    to deliver some impact.
+
+> I'm a bit overwhelmed by the documentation for submitting a patch!
+
+    That may be either a contributors problem (lacking time or
+    motivation to go through a long document) or a problem with
+    the community.
+
+Here are my thoughts on the "problem with the community":
+
+    We are using Git ourselves as a mere (content-)version-control-system
+    What we really need is a community oriented workflow tool:
+    Instead of writing a long-winded document on what you can
+    do wrong in each contribution, we should have technical solutions
+    that just present the single issue that needs addressing.
+
+    For example when a contributor forgets to sign-off a patch,
+    git-send-email could warn about the missing sign-off and
+    present the rationale why our community needs sign-offs.
+
+    As this is specific to our community, such that it cannot be
+    baked into git-send-email, but rather we'd need a distributed
+    configuration that is respected by various git commands.
+
+We had the discussion on shipping a project config which is
+respected by git commands lately when discussing the
+.gitorder file that I proposed, and IIRC such a thing "doesn't
+quite fit into the broad picture of a version control system",
+so maybe we need another tooling in our community?
+
+    Another example would be to show a hint/advice when
+    commits with no or very short commit message are created.
+    (also this is project specific, other communities do not expect
+    commit messages as we do. So they would not want to utilize
+    such an advice given).
+
+>>
+>> Because we do not have a group of dedicated volunteers, it is done
+>> by more experienced people around here but that can be done only
+>> when they have time.  I view it as a more severe problem than any
+>> documentation.  An abbreviated version of the documentation to
+>> invite more new people means that we must be prepared to give more
+>> high-touch onboarding help to them.
+>
+> Just to make sure there is no misunderstanding, I am not saying "do
+> not update the doc to have an abbreviated version, because we will
+> get more clueless newbies".  I am saying that it is not a good idea
+> to add an abbreviated version _before_ we are prepared to handle
+> more patches from new people that require high-touch help.
+>
+> If you are volunteering to coordinate and form the onboarding
+> helpers group, that would be great.
+
+I would not want to explain the same thing over and over again,
+but rather have a technical solution that explains the problem and
+solution once it is detected.
+
+Coming up with a technical solution for each little quirk
+is not the hard part (e.g. grep for the sign off string, count lines of
+the commit message), but rather to put it in place. (How can I make
+sure that contributors run these small checker scripts?
+Currently I cannot.)
+
+Thanks.
