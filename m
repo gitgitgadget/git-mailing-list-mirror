@@ -2,58 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3392C20899
-	for <e@80x24.org>; Wed,  2 Aug 2017 19:49:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8DC4A20899
+	for <e@80x24.org>; Wed,  2 Aug 2017 19:49:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752491AbdHBTtk (ORCPT <rfc822;e@80x24.org>);
+        id S1752595AbdHBTt4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Aug 2017 15:49:56 -0400
+Received: from mail-pg0-f45.google.com ([74.125.83.45]:36892 "EHLO
+        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751739AbdHBTtk (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 2 Aug 2017 15:49:40 -0400
-Received: from mail-pg0-f46.google.com ([74.125.83.46]:36610 "EHLO
-        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751739AbdHBTth (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Aug 2017 15:49:37 -0400
-Received: by mail-pg0-f46.google.com with SMTP id v77so19415843pgb.3
-        for <git@vger.kernel.org>; Wed, 02 Aug 2017 12:49:37 -0700 (PDT)
+Received: by mail-pg0-f45.google.com with SMTP id y129so25101293pgy.4
+        for <git@vger.kernel.org>; Wed, 02 Aug 2017 12:49:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=1KQCFUgZUu9WlhWOXZV4qmr5Q1boN5PDEkgfHieUSRs=;
-        b=Mhic2hctG5yg7xXB0UVETQ7yX6tAIEQE3OqyQeRvaAjO68i6NZnCdkgfdiYiYNzdEU
-         nWeLPhDipTNH4OTsQurk8HIJReqUAfHu0zYIcVGp0Lu3pjJL2iH4zoVE26WIFg/bJC2B
-         9/DgKpINOK6upz6Ru/9lbXr3pXcUnHZnM/dSCP6gF7wmY+ZDvPkVXz0w0/A43TF4xCPs
-         igoKN/HHc9ciOBhDBzTxhM1j9Lo+6Ez80mQORdwoa3k6Z+I4vp1Bxy6BubOmCr0cpxzc
-         1tWvKEK/XvQkCYP2rFA7eWkmgYK7UudF2G0ci0amKfe5z6kJCrmR1u5F3ddio6xwAtX+
-         pX6A==
+        bh=4WwNlPS6ILayXxGk8PMHAzLHYX9/Ri5GKqr/Qrk+Q1g=;
+        b=grZ6KBV2WPJfTx3aDcmWSeuhrgPA1ghqvdhp4cUwoC6DR2GVLh3nXfcA7U4sJ2IoPo
+         VkKKhXo2jAccoY6rdpU8Dqep0Pu+hDkE860lp3Ghzvrz1pDDTf3SxnkCPApLHouvsSf6
+         v/I1vrMvQt2VEEIXAs/lKm2yAO4277u9mFdngnhp7afASX+Gl388An/aHGNXfry7qmB0
+         8QAye/4FHdsHDflM3S1IsO3Gzpe9Jqwxy6t+ljrZlg7u/7a5zwahvqQjhVzrlPyQF8Qg
+         SQuJ5U2IuqE0MDkiWCeIW5TbGY1JQ+bP22nGF2JhGQ4MzlkM0WGLS5QzaGvsBoXXo/9B
+         iXvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=1KQCFUgZUu9WlhWOXZV4qmr5Q1boN5PDEkgfHieUSRs=;
-        b=HRT4xXOGUkLQmSRsG1xULuijMVVJQiqs20ayphR8YA5IY4uvmnbzktVTyO15wXcx++
-         rO1Hqt83zK3FdQEQQrD+T9hcfn1qD0T82vPu/urw5CVcUi7rpDizGrSAHEq9JusslYrz
-         rQYvGnCO1DtBk1eQESr/B/8bUkIMam4HD+NEN/D6SejIy+pzHhDHlIt/BydwC0DjMOEi
-         6KaSTCznMgG6IUqnFkqvEHzwaaO3MaFWIMI+hjx12RVMMSodIv6P+5py2g3n7nUfvrza
-         DHC4GMwmzFrwPSGsEZG6Ufmu9P2C6RH1CV/O4tDYTASylpPMVybmRkoup/QQltAYp9YX
-         6FtQ==
-X-Gm-Message-State: AIVw1100Dss4fFGx88nTisLHmknDfPv5LWCnazjBscdixX2doxlNFiTc
-        bhK3XIPIMvWsXEGKajWMxg==
-X-Received: by 10.84.174.67 with SMTP id q61mr18896502plb.463.1501703376188;
-        Wed, 02 Aug 2017 12:49:36 -0700 (PDT)
+        bh=4WwNlPS6ILayXxGk8PMHAzLHYX9/Ri5GKqr/Qrk+Q1g=;
+        b=j8ytj9mbDJDP9eZOGgTpAUi9gAl7nR6NeqQcb+/TmD16ROqcqKghGeimk2NiAJ9mgC
+         NhGqUSlanal9I7eUgFZoCsW0aVCXvf4mbMsidM5jiXns6sgFgzFKquz2f11F0H96U3lM
+         w6799zOAvx4TB0m5JE8tPKtBB+l6EyR5X4Gqken4sfn2+5tYAqWSqYe1rRAV5dI597qA
+         aokzVLpohgUf0F0l8+lBRP4/xlrgwaKK+hN4VlWjAmuYfua1JklnavcamRSKCEeTI96R
+         cX7KHPSAHBER5XWxV24fnkf0UiC/15+4sCIJ9zYS2FppkMGmBpUBYpZ5hH6V/SWJy3dL
+         F8jw==
+X-Gm-Message-State: AIVw1122M899GCxm8eSNtaqMHQXfhjrTG8+168Q+WItTjqtOIEl1W3nV
+        i77LsrCFVkwJMRWU+uLdBw==
+X-Received: by 10.98.11.135 with SMTP id 7mr24331695pfl.45.1501703379537;
+        Wed, 02 Aug 2017 12:49:39 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id e64sm63401460pfb.129.2017.08.02.12.49.34
+        by smtp.gmail.com with ESMTPSA id e64sm63401460pfb.129.2017.08.02.12.49.38
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 02 Aug 2017 12:49:35 -0700 (PDT)
+        Wed, 02 Aug 2017 12:49:38 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, jrnieder@gmail.com, gitster@pobox.com,
         Brandon Williams <bmwill@google.com>
-Subject: [PATCH v4 05/10] submodule: remove submodule.fetchjobs from submodule-config parsing
-Date:   Wed,  2 Aug 2017 12:49:18 -0700
-Message-Id: <20170802194923.88239-6-bmwill@google.com>
+Subject: [PATCH v4 07/10] submodule: check for unstaged .gitmodules outside of config parsing
+Date:   Wed,  2 Aug 2017 12:49:20 -0700
+Message-Id: <20170802194923.88239-8-bmwill@google.com>
 X-Mailer: git-send-email 2.14.0.rc1.383.gd1ce394fe2-goog
 In-Reply-To: <20170802194923.88239-1-bmwill@google.com>
 References: <20170718190527.78049-1-bmwill@google.com>
@@ -63,209 +62,110 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The '.gitmodules' file should only contain information pertinent to
-configuring individual submodules (name to path mapping, URL where to
-obtain the submodule, etc.) while other configuration like the number of
-jobs to use when fetching submodules should be a part of the
-repository's config.
-
-Remove the 'submodule.fetchjobs' configuration option from the general
-submodule-config parsing and instead rely on using the
-'config_from_gitmodules()' in order to maintain backwards compatibility
-with this config being placed in the '.gitmodules' file.
+Teach 'is_staging_gitmodules_ok()' to be able to determine in the
+'.gitmodules' file has unstaged changes based on the passed in index
+instead of relying on a global variable which is set during the
+submodule-config parsing.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/fetch.c             | 18 +++++++++++++++++-
- builtin/submodule--helper.c | 17 +++++++++++++----
- submodule-config.c          |  8 ++++++++
- submodule-config.h          |  1 +
- submodule.c                 | 16 +---------------
- submodule.h                 |  1 -
- 6 files changed, 40 insertions(+), 21 deletions(-)
+ builtin/mv.c |  2 +-
+ builtin/rm.c |  2 +-
+ submodule.c  | 32 +++++++++++++++++---------------
+ submodule.h  |  2 +-
+ 4 files changed, 20 insertions(+), 18 deletions(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index c87e59f3b..ade092bf8 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -39,7 +39,7 @@ static int prune = -1; /* unspecified */
- static int all, append, dry_run, force, keep, multiple, update_head_ok, verbosity, deepen_relative;
- static int progress = -1;
- static int tags = TAGS_DEFAULT, unshallow, update_shallow, deepen;
--static int max_children = -1;
-+static int max_children = 1;
- static enum transport_family family;
- static const char *depth;
- static const char *deepen_since;
-@@ -68,9 +68,24 @@ static int git_fetch_config(const char *k, const char *v, void *cb)
- 		recurse_submodules = r;
+diff --git a/builtin/mv.c b/builtin/mv.c
+index dcf6736b5..94fbaaa5d 100644
+--- a/builtin/mv.c
++++ b/builtin/mv.c
+@@ -81,7 +81,7 @@ static void prepare_move_submodule(const char *src, int first,
+ 	struct strbuf submodule_dotgit = STRBUF_INIT;
+ 	if (!S_ISGITLINK(active_cache[first]->ce_mode))
+ 		die(_("Directory %s is in index and no submodule?"), src);
+-	if (!is_staging_gitmodules_ok())
++	if (!is_staging_gitmodules_ok(&the_index))
+ 		die(_("Please stage your changes to .gitmodules or stash them to proceed"));
+ 	strbuf_addf(&submodule_dotgit, "%s/.git", src);
+ 	*submodule_gitfile = read_gitfile(submodule_dotgit.buf);
+diff --git a/builtin/rm.c b/builtin/rm.c
+index 52826d137..4057e73fa 100644
+--- a/builtin/rm.c
++++ b/builtin/rm.c
+@@ -286,7 +286,7 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
+ 		list.entry[list.nr].name = xstrdup(ce->name);
+ 		list.entry[list.nr].is_submodule = S_ISGITLINK(ce->ce_mode);
+ 		if (list.entry[list.nr++].is_submodule &&
+-		    !is_staging_gitmodules_ok())
++		    !is_staging_gitmodules_ok(&the_index))
+ 			die (_("Please stage your changes to .gitmodules or stash them to proceed"));
  	}
  
-+	if (!strcmp(k, "submodule.fetchjobs")) {
-+		max_children = parse_submodule_fetchjobs(k, v);
-+		return 0;
-+	}
-+
- 	return git_default_config(k, v, cb);
- }
- 
-+static int gitmodules_fetch_config(const char *var, const char *value, void *cb)
-+{
-+	if (!strcmp(var, "submodule.fetchjobs")) {
-+		max_children = parse_submodule_fetchjobs(var, value);
-+		return 0;
-+	}
-+
-+	return 0;
-+}
-+
- static int parse_refmap_arg(const struct option *opt, const char *arg, int unset)
- {
- 	ALLOC_GROW(refmap_array, refmap_nr + 1, refmap_alloc);
-@@ -1311,6 +1326,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 	for (i = 1; i < argc; i++)
- 		strbuf_addf(&default_rla, " %s", argv[i]);
- 
-+	config_from_gitmodules(gitmodules_fetch_config, NULL);
- 	git_config(git_fetch_config, NULL);
- 
- 	argc = parse_options(argc, argv, prefix,
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 6abdad329..6d9600d4f 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -960,10 +960,19 @@ static int update_clone_task_finished(int result,
- 	return 0;
- }
- 
-+static int gitmodules_update_clone_config(const char *var, const char *value,
-+					  void *cb)
-+{
-+	int *max_jobs = cb;
-+	if (!strcmp(var, "submodule.fetchjobs"))
-+		*max_jobs = parse_submodule_fetchjobs(var, value);
-+	return 0;
-+}
-+
- static int update_clone(int argc, const char **argv, const char *prefix)
- {
- 	const char *update = NULL;
--	int max_jobs = -1;
-+	int max_jobs = 1;
- 	struct string_list_item *item;
- 	struct pathspec pathspec;
- 	struct submodule_update_clone suc = SUBMODULE_UPDATE_CLONE_INIT;
-@@ -1000,6 +1009,9 @@ static int update_clone(int argc, const char **argv, const char *prefix)
- 	};
- 	suc.prefix = prefix;
- 
-+	config_from_gitmodules(gitmodules_update_clone_config, &max_jobs);
-+	git_config(gitmodules_update_clone_config, &max_jobs);
-+
- 	argc = parse_options(argc, argv, prefix, module_update_clone_options,
- 			     git_submodule_helper_usage, 0);
- 
-@@ -1017,9 +1029,6 @@ static int update_clone(int argc, const char **argv, const char *prefix)
- 	gitmodules_config();
- 	git_config(submodule_config, NULL);
- 
--	if (max_jobs < 0)
--		max_jobs = parallel_submodules();
--
- 	run_processes_parallel(max_jobs,
- 			       update_clone_get_next_task,
- 			       update_clone_start_failure,
-diff --git a/submodule-config.c b/submodule-config.c
-index 5fe2d0787..70400f553 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -248,6 +248,14 @@ static int parse_fetch_recurse(const char *opt, const char *arg,
- 	}
- }
- 
-+int parse_submodule_fetchjobs(const char *var, const char *value)
-+{
-+	int fetchjobs = git_config_int(var, value);
-+	if (fetchjobs < 0)
-+		die(_("negative values not allowed for submodule.fetchjobs"));
-+	return fetchjobs;
-+}
-+
- int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg)
- {
- 	return parse_fetch_recurse(opt, arg, 1);
-diff --git a/submodule-config.h b/submodule-config.h
-index 233bfcb7f..995d404f8 100644
---- a/submodule-config.h
-+++ b/submodule-config.h
-@@ -27,6 +27,7 @@ struct repository;
- 
- extern void submodule_cache_free(struct submodule_cache *cache);
- 
-+extern int parse_submodule_fetchjobs(const char *var, const char *value);
- extern int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
- struct option;
- extern int option_fetch_parse_recurse_submodules(const struct option *opt,
 diff --git a/submodule.c b/submodule.c
-index 64ad5c12d..aa4fb1eaa 100644
+index 1d9d2ce09..677b5c401 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -22,7 +22,6 @@
+@@ -37,18 +37,25 @@ static struct oid_array ref_tips_after_fetch;
+ static int gitmodules_is_unmerged;
  
- static int config_fetch_recurse_submodules = RECURSE_SUBMODULES_ON_DEMAND;
- static int config_update_recurse_submodules = RECURSE_SUBMODULES_OFF;
--static int parallel_jobs = 1;
- static struct string_list changed_submodule_paths = STRING_LIST_INIT_DUP;
- static int initialized_fetch_ref_tips;
- static struct oid_array ref_tips_before_fetch;
-@@ -159,12 +158,7 @@ void set_diffopt_flags_from_submodule_config(struct diff_options *diffopt,
- /* For loading from the .gitmodules file. */
- static int git_modules_config(const char *var, const char *value, void *cb)
- {
--	if (!strcmp(var, "submodule.fetchjobs")) {
--		parallel_jobs = git_config_int(var, value);
--		if (parallel_jobs < 0)
--			die(_("negative values not allowed for submodule.fetchJobs"));
--		return 0;
--	} else if (starts_with(var, "submodule."))
-+	if (starts_with(var, "submodule."))
- 		return parse_submodule_config_option(var, value);
- 	else if (!strcmp(var, "fetch.recursesubmodules")) {
- 		config_fetch_recurse_submodules = parse_fetch_recurse_submodules_arg(var, value);
-@@ -1303,9 +1297,6 @@ int fetch_populated_submodules(const struct argv_array *options,
- 	argv_array_push(&spf.args, "--recurse-submodules-default");
- 	/* default value, "--submodule-prefix" and its value are added later */
- 
--	if (max_parallel_jobs < 0)
--		max_parallel_jobs = parallel_jobs;
+ /*
+- * This flag is set if the .gitmodules file had unstaged modifications on
+- * startup. This must be checked before allowing modifications to the
+- * .gitmodules file with the intention to stage them later, because when
+- * continuing we would stage the modifications the user didn't stage herself
+- * too. That might change in a future version when we learn to stage the
+- * changes we do ourselves without staging any previous modifications.
++ * Check if the .gitmodules file has unstaged modifications.  This must be
++ * checked before allowing modifications to the .gitmodules file with the
++ * intention to stage them later, because when continuing we would stage the
++ * modifications the user didn't stage herself too. That might change in a
++ * future version when we learn to stage the changes we do ourselves without
++ * staging any previous modifications.
+  */
+-static int gitmodules_is_modified;
 -
- 	calculate_changed_submodule_paths();
- 	run_processes_parallel(max_parallel_jobs,
- 			       get_next_submodule,
-@@ -1825,11 +1816,6 @@ int merge_submodule(struct object_id *result, const char *path,
- 	return 0;
+-int is_staging_gitmodules_ok(void)
++int is_staging_gitmodules_ok(const struct index_state *istate)
+ {
+-	return !gitmodules_is_modified;
++	int pos = index_name_pos(istate, GITMODULES_FILE, strlen(GITMODULES_FILE));
++
++	if ((pos >= 0) && (pos < istate->cache_nr)) {
++		struct stat st;
++		if (lstat(GITMODULES_FILE, &st) == 0 &&
++		    ce_match_stat(istate->cache[pos], &st, 0) & DATA_CHANGED)
++			return 0;
++	}
++
++	return 1;
  }
  
--int parallel_submodules(void)
--{
--	return parallel_jobs;
--}
--
  /*
-  * Embeds a single submodules git directory into the superprojects git dir,
-  * non recursively.
+@@ -231,11 +238,6 @@ void gitmodules_config(void)
+ 				    !memcmp(ce->name, GITMODULES_FILE, 11))
+ 					gitmodules_is_unmerged = 1;
+ 			}
+-		} else if (pos < active_nr) {
+-			struct stat st;
+-			if (lstat(GITMODULES_FILE, &st) == 0 &&
+-			    ce_match_stat(active_cache[pos], &st, 0) & DATA_CHANGED)
+-				gitmodules_is_modified = 1;
+ 		}
+ 
+ 		if (!gitmodules_is_unmerged)
 diff --git a/submodule.h b/submodule.h
-index e85b14486..c8164a3b2 100644
+index 29a1ecd19..b14660585 100644
 --- a/submodule.h
 +++ b/submodule.h
-@@ -112,7 +112,6 @@ extern int push_unpushed_submodules(struct oid_array *commits,
- 				    const struct string_list *push_options,
- 				    int dry_run);
- extern void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir);
--extern int parallel_submodules(void);
- /*
-  * Given a submodule path (as in the index), return the repository
-  * path of that submodule in 'buf'. Return -1 on error or when the
+@@ -33,7 +33,7 @@ struct submodule_update_strategy {
+ };
+ #define SUBMODULE_UPDATE_STRATEGY_INIT {SM_UPDATE_UNSPECIFIED, NULL}
+ 
+-extern int is_staging_gitmodules_ok(void);
++extern int is_staging_gitmodules_ok(const struct index_state *istate);
+ extern int update_path_in_gitmodules(const char *oldpath, const char *newpath);
+ extern int remove_path_from_gitmodules(const char *path);
+ extern void stage_updated_gitmodules(void);
 -- 
 2.14.0.rc1.383.gd1ce394fe2-goog
 
