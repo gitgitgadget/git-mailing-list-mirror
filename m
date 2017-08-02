@@ -2,88 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AC0BF20899
-	for <e@80x24.org>; Wed,  2 Aug 2017 20:35:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A18420899
+	for <e@80x24.org>; Wed,  2 Aug 2017 20:42:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752389AbdHBUfC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Aug 2017 16:35:02 -0400
-Received: from mail-lf0-f54.google.com ([209.85.215.54]:38786 "EHLO
-        mail-lf0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751739AbdHBUfB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Aug 2017 16:35:01 -0400
-Received: by mail-lf0-f54.google.com with SMTP id y15so24615941lfd.5
-        for <git@vger.kernel.org>; Wed, 02 Aug 2017 13:35:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=JbzcgSj3YxD/6XJ6cE4q8NtDCuWkW6EmpP2ir9aLAJ4=;
-        b=s5hwiyqq9rXFuDHq3JdJlyifs3SBrSS494+0H9aDKETpATklo8XKzpuVmo0jD2KgeG
-         1MceeyCOL2NOjosnjgB2eqJnlfzBr9X4T5t77TMrtXV8AoWpUQBFz8utfuy0V7ymMLG2
-         iAfLw3j5Ly0ra8S61UruRuZjg3PxHKnyQ5JzwH5y0Q9uF4zSH/jEuQM0bX/pGlCiIgem
-         S38ghc6IbUPf1ww6zSXNAmsQmfjrKnVn1RxxDOHcux4tBz/2KA9qtPKvyfdOj8VzsSNM
-         p8DXYKsCyqiL30YDefAYpx56ekTwG1rEXifwdC13IzWdfcEv8FI54w2TvnXkzoZvqdIv
-         uqLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=JbzcgSj3YxD/6XJ6cE4q8NtDCuWkW6EmpP2ir9aLAJ4=;
-        b=S8gKeBenZXIR5xQ+BUuHxSXJRjLkj+cHsRzLsy/W0sZ9ytdK7sYCO++tc+16OZVp74
-         K+NVEaZdeoPp2XP06VvHul3WnbaaJ2AIAeXmcQz4OlAPPPlH/QqoBCClboiXrNdCpcEy
-         5Cx+Vgb2+ftdXnoyDF84Jy0t8kA1Oyx5+WR4avVbbBt0nLt9DStJvGpTJ3aDwClV/TxI
-         zVEsTRQ7xdEVhgINg881vL0iq2rikI/Qi4DOiO3ZK/ueExzu4+8Y1mS2rf2ECB4vGo7m
-         J4f6Y7YzDJN4QWRTqHLk0Q7dZEqMP7GOQ0Y73riNVsmp8jwt4raEhFSYxjse9Kx8xVIi
-         Z0fA==
-X-Gm-Message-State: AIVw110SAXH6Z8tBZ30fkDVy9D9AKC8JpQ4nPkJ3XjASnl7RiPmOTxJc
-        W5pQPt7IdXNESEFz3A3QsGmhJvvb6DIj
-X-Received: by 10.25.204.149 with SMTP id c143mr7120672lfg.195.1501706099849;
- Wed, 02 Aug 2017 13:34:59 -0700 (PDT)
+        id S1753244AbdHBUmP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Aug 2017 16:42:15 -0400
+Received: from mout.web.de ([212.227.15.4]:59352 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752116AbdHBUmN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Aug 2017 16:42:13 -0400
+Received: from tor.lan ([195.198.252.176]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MKaDH-1ddpwg314Z-0022ND; Wed, 02
+ Aug 2017 22:42:05 +0200
+From:   tboegi@web.de
+To:     git@vger.kernel.org, asottile@umich.edu
+Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH v1 1/1] correct apply for files commited with CRLF
+Date:   Wed,  2 Aug 2017 22:42:03 +0200
+Message-Id: <20170802204203.29484-1-tboegi@web.de>
+X-Mailer: git-send-email 2.13.2.533.ge0aaa1b
+In-Reply-To: <cceaf377-73e0-e733-20ba-c4e547226382@web.de>
+References: <cceaf377-73e0-e733-20ba-c4e547226382@web.de>
 MIME-Version: 1.0
-Received: by 10.25.1.130 with HTTP; Wed, 2 Aug 2017 13:34:58 -0700 (PDT)
-In-Reply-To: <598215C8.4000100@game-point.net>
-References: <xmqqoay9wvo6.fsf@gitster.dls.corp.google.com> <1401874256-13332-1-git-send-email-judge.packham@gmail.com>
- <xmqqvbsgvb9l.fsf@gitster.dls.corp.google.com> <538F6E52.9000009@web.de>
- <xmqq4mzzte2z.fsf@gitster.dls.corp.google.com> <20140606052601.GB77405@book.hvoigt.net>
- <598215C8.4000100@game-point.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 2 Aug 2017 13:34:58 -0700
-Message-ID: <CAGZ79kYy3oBvKXNDnBj01AoOz_JMEg409OTOm+rePz2q+14Hdw@mail.gmail.com>
-Subject: Re: [RFC PATCH] clone: add clone.recursesubmodules config option
-To:     Jeremy Morton <admin@game-point.net>
-Cc:     Heiko Voigt <hvoigt@hvoigt.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jens Lehmann <Jens.Lehmann@web.de>,
-        Chris Packham <judge.packham@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        mara.kim@vanderbilt.edu, Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:2OU5K151Rjt/0sgiBFUn5pJaVgMJKoaEJ7hxuMgzwAhn28SCtyz
+ ioW2GGCeDCJj9U87GmmpHmFfcwNbXzMhE6Q4xDS2R3UZFzphjtRM4ceev5huk7xYXY1R+RW
+ dhyz3RJfnryOqrT8UQ/gN/KfQCy+9BWe7otSlcOKuQkFLqXpJFkB7qvC+42uX6SZO3QTjIh
+ mcBy9D10jrI5zjuh4XWgw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:vF4kuO5/0C0=:24wafMymx5f13kodSsZVE/
+ nQ667hN50trraFyWwv/Dq/fWA+IL+Z+0jG3otlrqZWps7oxYhvnnrxDjlhwCI/rchdQqxiKLI
+ B3YBAhugXInHSWoITTgQw48aI5YUpt7gfUhW4MmYTmlMQzYjZvegbBCLrVwUilaCcxJ0YCmUr
+ ZPeOh7lqGZRhhm6zIQWZ1vzbGV9pD7ODvqFXRO38SfmVUR3Dws0LcGQSoBbsLca/h7V3yHBxV
+ fUhJsX8BgUv5Mny23Ah1yrgajtZPkE9RCqsQPH2U5mVqxk9h+0IPXnyZ4j4KYoUD0eoYVAHza
+ LOCwgVKuRvxIVnSLIF07/+W50be2NthBj98r2NKKqHrcFSyyOoJcqICxlRar95YeZalJN5073
+ unmmqoh5KWmyKvKU2iTHKC/KkIRmWFFyk7dfADZuBjPkX+7nLzZb0woCqWjOPLJs05+CuvzEP
+ 2/wm+zBIi8ojPzK5OgUiaLzVHO2IVemGchTcZirdo5X+Qohwjv5VCRCNR0B1lyhjClB+ZBdzy
+ GJjP9fnb8g/ymNJ8/oDwm5NrIkExqGI1AIUI6tT5DU2lCyH33BOD37FIcKylCgnmjYd9Gj2ZZ
+ ewIHohqVEvNvRo2A4x2vZW+PDb+TPj5GbpVsq9pbOZujozlRKAi8wauqThGZxj/SDXrbP2oZB
+ d5wX+Mn/BsLADvM7GHCoxhNK0D3BQMsryeLSoTRvQRGrn6XZpFDeS3BiFt2yoorPolw750iz9
+ FZRI0NCRJ47Gx4VDPXQ/sqlFiTslRKPaHO2nhv4tBOypBCEKZt4IdeptsmAsMiKrHmUwPK2To
+ 750Y/oP1F0q1SZO3uQfQpI0LqaQdwKzOLJLw18JMqQVCrHT3fQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 2, 2017 at 11:11 AM, Jeremy Morton <admin@game-point.net> wrote:
-> Did this ever get anywhere?  If not why not?  It would be very useful to me
-> to be able to clone recursively by default, especially considering you can't
-> use 'alias' to override the existing 'clone' command.
->
+From: Torsten Bögershausen <tboegi@web.de>
 
-Note that there is 3c548de378 (Merge branch 'sb/submodule-blanket-recursive',
-2017-06-13), which adds recursing into submodules to a couple of commands.
+git apply does not find the source lines when files have CRLF in the index
+and core.autocrlf is true:
+These files should not get the CRLF converted to LF. Because cmd_apply()
+does not load the index, this does not work, CRLF are converted into LF
+and apply fails.
 
-clone is not one of them, because at that time I thought you'd want to select
-explicitly at clone time which submodules you want. Unlike most other commands
-that can recurse into submodules, clone supports a pathspec for the recurse
-parameter, such that you can express a fine grained selection of submodules
-that you are interested in.
+Fix this in the spirit of commit a08feb8ef0b6,
+"correct blame for files commited with CRLF" by loading the index.
 
-I wonder if submodule.recurse is set if we'd just want to recurse into
-all submodules for clone? That may have negative consequences though
-as people may have forgotten that they set that config a long time ago and then
-are surprised to get so many submodules.
+As an optimization, skip read_cache() when no conversion is specified
+for this path.
+
+Reported-by: Anthony Sottile <asottile@umich.edu>
+Signed-off-by: Torsten Bögershausen <tboegi@web.de>
+---
+ apply.c         |  2 ++
+ t/t0020-crlf.sh | 12 ++++++++++++
+ 2 files changed, 14 insertions(+)
+
+diff --git a/apply.c b/apply.c
+index f2d599141d..66b8387360 100644
+--- a/apply.c
++++ b/apply.c
+@@ -2278,6 +2278,8 @@ static int read_old_data(struct stat *st, const char *path, struct strbuf *buf)
+ 	case S_IFREG:
+ 		if (strbuf_read_file(buf, path, st->st_size) != st->st_size)
+ 			return error(_("unable to open or read %s"), path);
++		if (would_convert_to_git(&the_index, path))
++			read_cache();
+ 		convert_to_git(&the_index, path, buf->buf, buf->len, buf, 0);
+ 		return 0;
+ 	default:
+diff --git a/t/t0020-crlf.sh b/t/t0020-crlf.sh
+index 71350e0657..6611f8a6f6 100755
+--- a/t/t0020-crlf.sh
++++ b/t/t0020-crlf.sh
+@@ -386,4 +386,16 @@ test_expect_success 'New CRLF file gets LF in repo' '
+ 	test_cmp alllf alllf2
+ '
+ 
++test_expect_success 'CRLF in repo, apply with autocrlf=true' '
++	git config core.autocrlf false &&
++	printf "1\r\n2\r\n" >crlf &&
++	git add crlf &&
++	git commit -m "commit crlf with crlf" &&
++	git config core.autocrlf true &&
++	printf "1\r\n2\r\n\r\n\r\n\r\n" >crlf &&
++	git diff >patch &&
++	git checkout -- . &&
++	git apply patch
++'
++
+ test_done
+-- 
+2.13.2.533.ge0aaa1b
+
