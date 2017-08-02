@@ -2,94 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0292D208B4
-	for <e@80x24.org>; Wed,  2 Aug 2017 17:28:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A758320899
+	for <e@80x24.org>; Wed,  2 Aug 2017 17:32:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752000AbdHBR2s (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Aug 2017 13:28:48 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55800 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751162AbdHBR2r (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Aug 2017 13:28:47 -0400
-Received: (qmail 9178 invoked by uid 109); 2 Aug 2017 17:28:47 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 02 Aug 2017 17:28:47 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10594 invoked by uid 111); 2 Aug 2017 17:29:07 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Wed, 02 Aug 2017 13:29:07 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Aug 2017 13:28:45 -0400
-Date:   Wed, 2 Aug 2017 13:28:45 -0400
-From:   Jeff King <peff@peff.net>
-To:     Shawn Pearce <spearce@spearce.org>
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>, git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        David Borowitz <dborowitz@google.com>
-Subject: Re: reftable [v4]: new ref storage format
-Message-ID: <20170802172844.pkwjovofrzarjrgn@sigill.intra.peff.net>
-References: <CAJo=hJv7scc1L0_MdRkFeLAJGjYm2UkTFNOgj2e4+9Zj7KSiiQ@mail.gmail.com>
- <CAMy9T_HCnyc1g8XWOOWhe7nN0aEFyyBskV2aOMb_fe+wGvEJ7A@mail.gmail.com>
- <CAJo=hJvFRJ7honjenB6sUofK14xiUXGwJ1DQHZyTauVKA5v5vw@mail.gmail.com>
- <CAMy9T_HUoD4--s1gNTUjnCgdiAqfYbX-GSqygDwNO-JRwdh4NQ@mail.gmail.com>
- <CAJo=hJv=zJvbzfAZwspxECXrnBJR4XfJbGZegsNUCx=6uheO2Q@mail.gmail.com>
- <20170802092846.u4lyiogvvl7ezdfq@sigill.intra.peff.net>
- <CAJo=hJu1rud5pEZ93HDty1qyaCOHmwn89aEvPFe2ER0JD1ExwQ@mail.gmail.com>
+        id S1752621AbdHBRcb (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Aug 2017 13:32:31 -0400
+Received: from mail-lf0-f41.google.com ([209.85.215.41]:33719 "EHLO
+        mail-lf0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752380AbdHBRca (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Aug 2017 13:32:30 -0400
+Received: by mail-lf0-f41.google.com with SMTP id d17so22976094lfe.0
+        for <git@vger.kernel.org>; Wed, 02 Aug 2017 10:32:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=xLC1K64/2kkl+NqKzQ+bUcCZyHLZCBKmC+c2tczuCXI=;
+        b=iNOdKasVyZXo3S42fAnE1BjpJENDO1ck3CrY6+khTJSC7qDi9yJp2u0S9/DtQkREgA
+         l0tpJ/m9dNJJ8tEAmks4nP84b+2NX191jUI+SUcp1dWFab1oj3KaQNA9+LCWZ1VUUINL
+         ZzYt2U3mdXLME8jRXOdR0zz6eRL/dbWQajC58l2x8/DgxDW7cZ3aFLhPhDDpSmDoX119
+         WSZD7KHBPKxg6bsUkctewk0TwieJnWjT5Sv1LdPEUgVsNslbdpo7NPNL5WD9jlnZDW/u
+         HWX3hvuaevgo/SA2T0VOSG13OixxDkIKMcZqe7zm+V7VWjfIBCGxF9B9YaKgpWAeJ2C+
+         4w3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=xLC1K64/2kkl+NqKzQ+bUcCZyHLZCBKmC+c2tczuCXI=;
+        b=hPU/ucNSyXjX8D4aRnSYTpLm9cMR+tZL3LNMJRLfl3uLCeB4TVwvldUAZpKryy3elv
+         Xsos0khI8cyy7eKz1OiGTRTJ4S1YMppA1WsKmNkZ3fxZmIeBEmW4GvJoJIrve7D8syPB
+         JtaY90t7j8fvwKb/6ZL+u9wOOzM6YnaSuMDMYdGfPrIpWaeSYmJ7i34g7Xeba7qUv+4R
+         rqgV5ThRUXdq5McVGtIBHVcwTxu2Uk9fbPjS86n+zK3JgDU0OB4uyutZw4e92vKlVq1J
+         ZHBersyVxJX5D7oLQWxnsi2rVPY4+knbvYNKdjI6PnI9GKgwiWU+VM3u9RuQvTeOf7JY
+         qsNA==
+X-Gm-Message-State: AIVw113MWnztSEKO6C840V2YhCYT/jsi+fSbBb8/uctSS/AZcZgY9nVV
+        WcqIT2gOe0SOQIE4S8lOQKBOjhjPb/Wq
+X-Received: by 10.46.69.6 with SMTP id s6mr9402864lja.40.1501695148477; Wed,
+ 02 Aug 2017 10:32:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAJo=hJu1rud5pEZ93HDty1qyaCOHmwn89aEvPFe2ER0JD1ExwQ@mail.gmail.com>
+Received: by 10.25.1.130 with HTTP; Wed, 2 Aug 2017 10:32:27 -0700 (PDT)
+In-Reply-To: <1501676577.1957.4.camel@gmail.com>
+References: <8256C530C7DE43D7BC72BFB327DF4726@PhilipOakley>
+ <20170730161816.2412-1-kaarticsivaraam91196@gmail.com> <CAGZ79kYg9jQ3kaKnNEJCH9fde=ar1KPiUr7=X+TguNc0Twqdzg@mail.gmail.com>
+ <1501603171.1671.8.camel@gmail.com> <CAGZ79kY_NdBe1QjJWrLUkfDOk8Zrnopa945F1xBq=WFDNpRWMg@mail.gmail.com>
+ <1501676577.1957.4.camel@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 2 Aug 2017 10:32:27 -0700
+Message-ID: <CAGZ79kbCg+xdVE1U0dv8MJ6vUuWvraWQCMSzKOTBsOvtdSvkGg@mail.gmail.com>
+Subject: Re: [RFC] The correct and consistent alternative to quote a command ?
+To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Philip Oakley <philipoakley@iee.org>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 02, 2017 at 08:17:29AM -0700, Shawn Pearce wrote:
+On Wed, Aug 2, 2017 at 5:22 AM, Kaartic Sivaraam
+<kaarticsivaraam91196@gmail.com> wrote:
+> On Tue, 2017-08-01 at 10:38 -0700, Stefan Beller wrote:
+>> On Tue, Aug 1, 2017 at 8:59 AM, Kaartic Sivaraam wrote:
+>> > I assume you mean the consistency in quoting i.e., you're expecting the
+>> > patch to use (") instead of (') for quoting. Correct me, if I'm wrong.
+>>
+>> Actually I did not imply any expectation on the outcome, because I
+>> do not know what the consistency end game looks like for this issue.
+>>
+>> So maybe we'd want to go with the currently most used way?
+> On scanning through Documentation/SubmittingPatches, I saw that most of
+> the commands were quoted using double quotes and chose to use it for
+> this patch. I'm not sure if it's the right one to use.
 
-> > Just peeking at torvalds/linux, we have some objects with ~35K refs
-> > pointing to them (e.g., the v2.6.11 tag).
-> 
-> Oy. I'll bet that every occurrence winds up in its own block due to
-> the layout of the namespace, and so the obj block list needs 35k
-> varint pointers. That requires a larger block size if it has any
-> chance of fitting into the reftable format.
-> 
-> Another option is disable the obj table for these shared-object repos.
-> Its an optional part of the format and can be omitted if the reader
-> isn't likely to need to lookup by SHA-1, or is willing to pay the
-> brute force cost of scanning every ref.
+Thanks for checking. I think it is a reasonable thing to do then.
 
-Yeah, sorry, I meant to write a few more paragraphs. I think refusing to
-generate the object table for these repos would be OK. We don't serve
-any user-facing operations out of them directly[1].
-
-I'm also open to the argument that they're simply insane. Most of the
-time we don't need them to be a real repository at all. They could exist
-as a bare "objects/" directory. It's only at repack time that we
-actually need to know which objects are reachable[2], so we could
-do a special repack that generates the list on the fly from the child
-repositories.
-
--Peff
-
-[1] We actually disable the ".have" advertisements, because the cost of
-    showing all of the shared-storage ref tips is too high. One thing
-    I'd like to do is be able to advertise a subset of the alternate
-    refs (if you're a fork of torvalds/linux, then share _just_ the refs
-    from there). But with the current ref code, I can't even ask for a
-    subset of the refs without paying the cost to walk all of them.
-    That's one of the things I'd like to build on top of the mmap'd
-    packed-refs solution (and naturally would work with reftables, too).
-
-[2] It's a bit more complicated than just knowing the list of reachable
-    objects. We also want to know which ones are reachable from which
-    fork, as we do some trickery to avoid creating deltas across forks.
-    So we really do want the whole ref-list, and not something like a
-    de-duped set of reachable tips. I don't think that makes a
-    difference for anything we're discussing here, but just a bit of
-    trivia in case somebody is thinking about the shared-storage problem
-    space.
+>
+> Changing the subject of this mail; hoping some one who has thoughts
+> about this would dive-in.
+>
+>> (Are there only three? (a) with dash, (b) with single quotes and
+>> (c) with double quotes?)
+>
+> --
+> Kaartic
