@@ -2,93 +2,181 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 92A5920899
-	for <e@80x24.org>; Wed,  2 Aug 2017 18:59:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2425B20899
+	for <e@80x24.org>; Wed,  2 Aug 2017 19:41:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752169AbdHBS7F (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Aug 2017 14:59:05 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:35231 "EHLO
+        id S1751773AbdHBTlK (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Aug 2017 15:41:10 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:33365 "EHLO
         mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751925AbdHBS7E (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Aug 2017 14:59:04 -0400
-Received: by mail-wm0-f67.google.com with SMTP id r77so34756wmd.2
-        for <git@vger.kernel.org>; Wed, 02 Aug 2017 11:59:03 -0700 (PDT)
+        with ESMTP id S1751154AbdHBTlJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Aug 2017 15:41:09 -0400
+Received: by mail-wm0-f67.google.com with SMTP id q189so186016wmd.0
+        for <git@vger.kernel.org>; Wed, 02 Aug 2017 12:41:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=instituut-net.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=pMR1rKF/5WC+LBuYFiMr4Wfb80Xf8V/uTA5wGjIgZyE=;
-        b=fTFOzpLwpQeeKoSQHUKxDp+RMoivRUSVCLHNUoMXErHoWZHmTtbS13PuN1Nr4jbQ/x
-         fVyXgyqoW+LPbQh9DZfxII3Ru8HJGMq11rMAyUxwEbAb3Wp6/CKSsZchAkSE691h9Ofp
-         qAvKiCn6qxKZys8BcL2G85d/K7BiubgjJLaWDHDOKET53LuhmgSvkwNaiIRJUwmAvfyH
-         UJYm8ftsk15EagPIIAipD5oFRi6cKkZIApdyBfPHw/fo3psaatAshBjgs2GvefCHTzoP
-         emCfFKpf3Bbf40ImHDVtqE5bBJkKs9uHTKZhBfn3bN1jBybtE9dXse1H+mJQRlxxBBMu
-         xfJQ==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=N41SvyNkBdhKL7g9tGK0MvDhm++LslhD4MkrcVXylDU=;
+        b=a3I3KYaDaOfdMyom518MsyWnoWY762503ZfdbEOuZV90jIolqObwIR3b/TclVGfAbJ
+         l4dDaL7qLPkmuMWwbVoJh/igopAPRNUbYOrCNJS0k+beM8AzYocoenAzhYq+T1fROoQd
+         j6g+n/nhJcapOY0QMhcAcp6jbC9ckKQrWZ+A6Is0svM9oXGgcWALyj+mr2q5EGXYO3w0
+         7YV1MyHbiK7xCRuJUFzAohaSlZQ9fKVTl7JGWmPhx7wZnhszG4qiBZ22nJpXP9W82GFp
+         TvebJcNygAIIhKjcvx39lmAIs4PlbG9lu48BoU3mhuF1XYuMcVfSQUvS+pAs/UdsNL3p
+         ZIdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=pMR1rKF/5WC+LBuYFiMr4Wfb80Xf8V/uTA5wGjIgZyE=;
-        b=kaFOGYY0IDdV29GxNAp2HxwrjcmqGKaJYRjCGwBzV9Kn91k+d5KIbXjCbmAu4OPQgs
-         CW8tyV6qMGtElUhhpiou61NOYag3tSWVPzku7lQu949ccQF42um3k5HFD+BjB484SJQs
-         gEczqNL9Pr7zHCPqPwLWqmrPZvNbXs8rQz8FTnTwEzYDJ3yQrRvr7OXnj1aePcgYHj9a
-         Y0O6EZXHQBoOL9IbwHSA+ATbLeXlk6/r5Dier7ghi+bAzgLOTrYveni13F2bO4CWkTNL
-         lFkmGmKTOK4hOcu0yZ9rfMYzwrG59zF0l9N7py3JViW0XZeJrEhDezAISAkxipM1mMxZ
-         tlmQ==
-X-Gm-Message-State: AIVw112Ccxk7W1wlmI4F+3oi/UKYC68WllNZKn25/uLYcA6k9CIkPcs3
-        JYqPEgaju8cLfYqgkY8Kag==
-X-Received: by 10.80.148.107 with SMTP id q40mr21356705eda.28.1501700342951;
-        Wed, 02 Aug 2017 11:59:02 -0700 (PDT)
-Received: from localhost ([2001:67c:208c:10:3dc6:a9a2:10ff:6f76])
-        by smtp.gmail.com with ESMTPSA id f29sm18870edd.23.2017.08.02.11.59.01
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 02 Aug 2017 11:59:02 -0700 (PDT)
-Date:   Wed, 2 Aug 2017 20:59:01 +0200
-From:   Job Snijders <job@instituut.net>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=N41SvyNkBdhKL7g9tGK0MvDhm++LslhD4MkrcVXylDU=;
+        b=aJLRQpgBpAr9QTdVPFI9hBlXBKdfZp9zXdQ9JRXUAhZZhPRFVRNjwUGzY3DJfhtup3
+         Q31Pw8HT7CF3GQOU2pt+CwIXAeV9NCIZTNzKgyxkOdz0kvuoSR2OYwiYYkge+1Wwp5Ep
+         u2je4o9QYk67xU+YMLcHz8q2Y8zVzk8to3TOIqYvEOTYdTeRT4H8ukJLnQpyJ0tZWgWX
+         2VfrvF1RPEJ3TKKXJkQeDVqfkhXLUQzA7FRLivujUixuxQ9svox54lP4hO96g2N0SNIr
+         d2IhG/RopoIpMhqq9Jg/J1ppQszi3cihFyfAFkObON4Yjr9xIt2bbNBifPQ+6gqq7Ur1
+         HaWA==
+X-Gm-Message-State: AIVw110Cvk2dQIB7k7E/kH7gxMeRkQzWzUkiS4HI9dZshecyg0DGHwsf
+        H5ZJW0TU2cJ3ZXTt
+X-Received: by 10.28.91.140 with SMTP id p134mr4750279wmb.79.1501702867525;
+        Wed, 02 Aug 2017 12:41:07 -0700 (PDT)
+Received: from localhost.localdomain ([2a02:aa16:5782:c100:1208:b1ff:fee6:d811])
+        by smtp.gmail.com with ESMTPSA id t13sm103576wra.22.2017.08.02.12.41.06
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 02 Aug 2017 12:41:06 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
-Subject: [PATCH] Add 'raw' blob_plain link in history overview
-Message-ID: <20170802185901.GA27243@Vurt.local>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Subject: [PATCH v3 0/7] tag: only respect `pager.tag` in list-mode
+Date:   Wed,  2 Aug 2017 21:40:48 +0200
+Message-Id: <cover.1501701128.git.martin.agren@gmail.com>
+X-Mailer: git-send-email 2.14.0.rc1.12.ge2d9c4613
+In-Reply-To: <cover.1500321657.git.martin.agren@gmail.com>
+References: <cover.1500321657.git.martin.agren@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-Clacks-Overhead: GNU Terry Pratchett
-User-Agent: Mutt/1.8.3 (2017-05-23)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We often work with very large plain text files in our repositories and
-found it friendlier to the users if we can click directly to the raw
-version of such files.
+This is the third version of my attempt to make `pager tag` useful (v1
+at [1], v2 at [2]). Thanks to Junio and Peff for comments on v2.
 
-This patch adds a 'raw' blob_plain link in history overview.
+I've squashed patches 01-03/10 and 07-08/10, respectively. The interdiff
+is below. I managed to clean up some tests thanks to a drive-by comment
+by Peff which cleared up a misunderstanding I had. Some minor changes,
+e.g., I write "built-in" instead of "builtin", since that seemed
+preferred, at least locally in builtin.h. I documented why a default
+value of "punt" could be useful, but also that it's probably not wanted.
 
-Signed-off-by: Job Snijders <job@instituut.net>
----
- gitweb/gitweb.perl | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+Martin
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 3d4a8ee27..ad79c518e 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -5961,8 +5961,11 @@ sub git_history_body {
- 		                          href(action=>"commit", hash=>$commit), $ref);
- 		print "</td>\n" .
- 		      "<td class=\"link\">" .
--		      $cgi->a({-href => href(action=>$ftype, hash_base=>$commit, file_name=>$file_name)}, $ftype) . " | " .
--		      $cgi->a({-href => href(action=>"commitdiff", hash=>$commit)}, "commitdiff");
-+		      $cgi->a({-href => href(action=>$ftype, hash_base=>$commit, file_name=>$file_name)}, $ftype) . " | ";
-+		if ($ftype eq 'blob') {
-+			print $cgi->a({-href => href(action=>"blob_plain", hash_base=>$commit, file_name=>$file_name)}, "raw") . " | ";
-+		}
-+		print $cgi->a({-href => href(action=>"commitdiff", hash=>$commit)}, "commitdiff");
+[1] https://public-inbox.org/git/cover.1499723297.git.martin.agren@gmail.com/T/
+
+[2] https://public-inbox.org/git/cover.1500321657.git.martin.agren@gmail.com/T/#u
+
+Martin Ågren (7):
+  builtin.h: take over documentation from api-builtin.txt
+  git.c: let builtins opt for handling `pager.foo` themselves
+  git.c: provide setup_auto_pager()
+  t7006: add tests for how git tag paginates
+  tag: respect `pager.tag` in list-mode only
+  tag: change default of `pager.tag` to "on"
+  git.c: ignore pager.* when launching builtin as dashed external
+
+ Documentation/git-tag.txt               |   3 +
+ Documentation/technical/api-builtin.txt |  73 -----------------------
+ t/t7006-pager.sh                        |  80 +++++++++++++++++++++++++
+ builtin.h                               | 100 ++++++++++++++++++++++++++++++++
+ builtin/tag.c                           |   3 +
+ git.c                                   |  18 +++++-
+ 6 files changed, 201 insertions(+), 76 deletions(-)
+ delete mode 100644 Documentation/technical/api-builtin.txt
+
+Interdiff vs v2:
+diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
+index 8b2ffb1aa..9128ec5ac 100755
+--- a/t/t7006-pager.sh
++++ b/t/t7006-pager.sh
+@@ -162,7 +162,7 @@ test_expect_success TTY 'git tag with no args defaults to paging' '
+ test_expect_success TTY 'git tag with no args respects pager.tag' '
+ 	# no args implies -l so this should page like -l
+ 	rm -f paginated.out &&
+-	test_terminal git -c pager.tag=no tag &&
++	test_terminal git -c pager.tag=false tag &&
+ 	! test -e paginated.out
+ '
  
- 		if ($ftype eq 'blob') {
- 			my $blob_current = $file_hash;
+@@ -202,20 +202,15 @@ test_expect_success TTY 'git tag -a respects --paginate' '
+ '
+ 
+ test_expect_success TTY 'git tag as alias ignores pager.tag with -a' '
+-	# git-tag will be launched as a dashed external, which
+-	# 1) is the source of a potential bug, and
+-	# 2) is why we use test_config and not -c.
+ 	test_when_finished "git tag -d newtag" &&
+ 	rm -f paginated.out &&
+-	test_config pager.tag true &&
+-	test_terminal git -c alias.t=tag t -am message newtag &&
++	test_terminal git -c pager.tag -c alias.t=tag t -am message newtag &&
+ 	! test -e paginated.out
+ '
+ 
+ test_expect_success TTY 'git tag as alias respects pager.tag with -l' '
+ 	rm -f paginated.out &&
+-	test_config pager.tag false &&
+-	test_terminal git -c alias.t=tag t -l &&
++	test_terminal git -c pager.tag=false -c alias.t=tag t -l &&
+ 	! test -e paginated.out
+ '
+ 
+diff --git a/builtin.h b/builtin.h
+index 3ca4a53a8..42378f3aa 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -51,15 +51,15 @@
+  *	on bare repositories.
+  *	This only makes sense when `RUN_SETUP` is also set.
+  *
+- * `SUPPORT_SUPER_PREFIX`::
++ * `SUPPORT_SUPER_PREFIX`:
+  *
+- *	The builtin supports `--super-prefix`.
++ *	The built-in supports `--super-prefix`.
+  *
+- * `DELAY_PAGER_CONFIG`::
++ * `DELAY_PAGER_CONFIG`:
+  *
+  *	If RUN_SETUP or RUN_SETUP_GENTLY is set, git.c normally handles
+  *	the `pager.<cmd>`-configuration. If this flag is used, git.c
+- *	will skip that step, instead allowing the builtin to make a
++ *	will skip that step, instead allowing the built-in to make a
+  *	more informed decision, e.g., by ignoring `pager.<cmd>` for
+  *	certain subcommands.
+  *
+@@ -114,11 +114,14 @@ extern int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
+ 			 struct fmt_merge_msg_opts *);
+ 
+ /**
+- * If a builtin has DELAY_PAGER_CONFIG set, the builtin should call this early
++ * If a built-in has DELAY_PAGER_CONFIG set, the built-in should call this early
+  * when it wishes to respect the `pager.foo`-config. The `cmd` is the name of
+- * the builtin, e.g., "foo". If a paging-choice has already been setup, this
++ * the built-in, e.g., "foo". If a paging-choice has already been setup, this
+  * does nothing. The default in `def` should be 0 for "pager off", 1 for "pager
+  * on" or -1 for "punt".
++ *
++ * You should most likely use a default of 0 or 1. "Punt" (-1) could be useful
++ * to be able to fall back to some historical compatibility name.
+  */
+ extern void setup_auto_pager(const char *cmd, int def);
+ 
+-- 
+2.14.0.rc1.12.ge2d9c4613
+
