@@ -2,86 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 476BE208B4
-	for <e@80x24.org>; Wed,  2 Aug 2017 15:37:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 06F4820899
+	for <e@80x24.org>; Wed,  2 Aug 2017 15:45:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751972AbdHBPhV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Aug 2017 11:37:21 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55917 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751914AbdHBPhT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Aug 2017 11:37:19 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 603809A4A5;
-        Wed,  2 Aug 2017 11:37:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=GLf2mSTXduyI
-        N83vo2rN4G5aCWI=; b=Fe/0B73BQ665ozszRhDUAP0RP3HfPp/nWSjMdBf2Shp8
-        0R68xiO3ZXSZYGjLGYEaecI5D+RT8/Nj/rxx2UhwxlZf9Eu2eanXeAaWqD+rdYsh
-        FhP87ZGd6fgeFdL2CpZGQpVO9wx5oIfiP5tNKjdDRX7kdMr/it9PecfKdrCHtBs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=XI2dpF
-        Sdgjd4hNRSdkJxdemtUjFyCJdip3zUG3EsC/WLegASm864CRL2CARRByGNVzmUia
-        Qnd1f804UJ/kOzbGT+3pi2X9PoQcLM2wKDQi3osxtpr2UhV+pwGABZcLVbBBPHDY
-        aNNWBuVltDIo3PIcsK4LHY3GhN1cqR2aDC/mo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 568FA9A4A4;
-        Wed,  2 Aug 2017 11:37:18 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 82D3B9A4A3;
-        Wed,  2 Aug 2017 11:37:17 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Philip Oakley <philipoakley@iee.org>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [RFC] The correct and consistent alternative to quote a command ?
-References: <8256C530C7DE43D7BC72BFB327DF4726@PhilipOakley>
-        <20170730161816.2412-1-kaarticsivaraam91196@gmail.com>
-        <CAGZ79kYg9jQ3kaKnNEJCH9fde=ar1KPiUr7=X+TguNc0Twqdzg@mail.gmail.com>
-        <1501603171.1671.8.camel@gmail.com>
-        <CAGZ79kY_NdBe1QjJWrLUkfDOk8Zrnopa945F1xBq=WFDNpRWMg@mail.gmail.com>
-        <1501676577.1957.4.camel@gmail.com>
-Date:   Wed, 02 Aug 2017 08:37:16 -0700
-In-Reply-To: <1501676577.1957.4.camel@gmail.com> (Kaartic Sivaraam's message
-        of "Wed, 02 Aug 2017 17:52:57 +0530")
-Message-ID: <xmqqo9rydlqr.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751884AbdHBPpH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Aug 2017 11:45:07 -0400
+Received: from mout.web.de ([212.227.17.12]:65061 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751177AbdHBPpG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Aug 2017 11:45:06 -0400
+Received: from [192.168.209.18] ([195.198.252.176]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0Lu52Q-1dVXmX1m4s-011TEQ; Wed, 02
+ Aug 2017 17:44:59 +0200
+Subject: Re: core.autocrlf=true causes `git apply` to fail on patch generated
+ with `git diff-index HEAD --patch`
+To:     Anthony Sottile <asottile@umich.edu>
+References: <CA+dzEBmsgUjmf5fUmeiwS=Q81OgpL6K5p=8dBuTjuZ4XE1V5SA@mail.gmail.com>
+ <287407ac-b0d0-ef24-4950-0982a2db9bed@web.de>
+ <CA+dzEB=3OMw_YM4K_a8dyDG_FwGavU382stXrEOkbYoyM4DSZQ@mail.gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Message-ID: <cceaf377-73e0-e733-20ba-c4e547226382@web.de>
+Date:   Wed, 2 Aug 2017 17:44:50 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 7721A122-7798-11E7-ADC8-FE4B1A68708C-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CA+dzEB=3OMw_YM4K_a8dyDG_FwGavU382stXrEOkbYoyM4DSZQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:6ZpstacGJC6p8bt5PpmsD1GejjI6f01jQKbrV2++toKE/umWZTR
+ CjBGZLLFM+1/3f5y3O5ZUUi8EcTpp85uZKfIuq3j+iIshEiMAYqff/i/qJm8dhIldsgcMcJ
+ l6LovFOgu8fpyhEpVb2Zbi+yMsZYWz+kQ8E+mjHqcraELbzke9Y8y/0YLcwtOnzrVLQqqoV
+ mi72GQYZjjbv1FeePWzdQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:wqTfMgEQklE=:BwDV5LFKMaaDiQUQgxb8fx
+ z6jIz9Jrr4btZ9W1VDgrEMgzfQCUquJScp6C7ITHm4G6Dno6SPF94F5VHSVM09dVxcJHkDkLM
+ MqNocFT+y4kizLCaIIzBI/ntnSRodtLbq1sUwj2d9uNExg1Bh2d4oSnPvWes+CaM+l6XeL1Fs
+ aL8/5FEOHC8/NEEloGMhOR8ASnMpUdWoxIwMObf5q0q25IO1jK4MFTUIRcOUHzsKRJpq5ZpN/
+ IVvl21ZYUiWr0/649v6H7SDlbNlEyYkR5+So2aiUJqdlkwvaYkBhKJdKR4MbDMRJo7ULRVexB
+ Ni9HGpKdsQotmA+9mzHWIZGwwUXF6UDTtHaYiIr2LNlngUg1oYCWqKmqRHCXB/UavdGqoudmm
+ 4gYFXlQ69jA9BWSdoz8x9fTaEyXtueqJelDfaTbqMwA8o8roq+k1AtQpAY4MmJlK5gpRm0YdD
+ TN6Q7ZgUTEqK3z4pDa2kKbnZjR11bVbe5V2d+j61DyhLn3KzooeLlx7JqgOi5ift0RWky5iBd
+ CyS0vr+KAaRx/NaEMduhro8URha6PjeHKU6qh/xi910m271AA2XwQVfYQ8kTBoQz/0xeqHuTw
+ pmsC8zoSugWMTFFM4YHCWr7Nnn3vaTHQcwV3SMq3EUzc+Q6T7Rb/RhxiLXbDZCp/ag+5P5/Yc
+ mlfqLMv23VopBUeHKwGOm5sSz6gChDDOojbPmM6AvB9YrysRwXKDXlz+wa2hCwvZo1wyzIZwI
+ t7ZI2/inH5VP15YUwOeBvNKpdjUvEYHkwx2pMdwi6CQR+ydVXhboUydDgIgK8qWlKvRbFFJu6
+ edjrJVaAqEa8v47XipLnZ6JdsnEVAI8+UVdiV68TA3NoAtsc6A=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
 
-> On Tue, 2017-08-01 at 10:38 -0700, Stefan Beller wrote:
->> On Tue, Aug 1, 2017 at 8:59 AM, Kaartic Sivaraam wrote:
->> > I assume you mean the consistency in quoting i.e., you're expecting =
-the
->> > patch to use (") instead of (') for quoting. Correct me, if I'm wron=
-g.
->>=20
->> Actually I did not imply any expectation on the outcome, because I
->> do not know what the consistency end game looks like for this issue.
->>=20
->> So maybe we'd want to go with the currently most used way?
-> On scanning through Documentation/SubmittingPatches, I saw that most of
-> the commands were quoted using double quotes and chose to use it for
-> this patch.=C2=A0I'm not sure if it's the right one to use.
 
-After reading the patch before seeing the above, I also came to the
-conclusion that the above is exactly what you are aiming at, and I
-thought that was a reasonable thing to do.
+On 08/01/2017 10:58 PM, Anthony Sottile wrote:
+> Here's where I'm hitting the problem described:
+> https://github.com/pre-commit/pre-commit/issues/570
+>
+> Note that `git -c core.autocrlf=false` apply patch fixes this
+> situation, but breaks others.
+
+[]
+I wasn't thinking of that - and thanks for the detailed report.
+I seems as there are 3 things to be done:
+- Make a workaround in your scripts/tools. It seems as if that is 
+already done.
+- Fix Git.
+   My very first investigation shows that a patch like this could fix 
+the problem:
+
+diff --git a/apply.c b/apply.c
+index f2d599141d..66b8387360 100644
+--- a/apply.c
++++ b/apply.c
+@@ -2278,6 +2278,8 @@ static int read_old_data(struct stat *st, const 
+char *path, struct strbuf *buf)
+         case S_IFREG:
+                 if (strbuf_read_file(buf, path, st->st_size) != 
+st->st_size)
+                         return error(_("unable to open or read %s"), path);
++               if (would_convert_to_git(&the_index, path))
++                       read_cache();
+                 convert_to_git(&the_index, path, buf->buf, buf->len, 
+buf, 0);
+                 return 0;
+         default:
+----------------
+   I will probably do some more investigations if this is the core 
+problem, so it will take some days or weeks.
+
+- Convince people to normalize their repos and convert all CRLF in the 
+repo into LF.
+    This may take even longer.
+
 
