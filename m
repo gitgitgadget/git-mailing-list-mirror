@@ -2,132 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7ACD62047F
-	for <e@80x24.org>; Wed,  2 Aug 2017 00:19:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD1782047F
+	for <e@80x24.org>; Wed,  2 Aug 2017 00:49:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751162AbdHBATw (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 Aug 2017 20:19:52 -0400
-Received: from mail-pg0-f44.google.com ([74.125.83.44]:35818 "EHLO
-        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751029AbdHBATv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Aug 2017 20:19:51 -0400
-Received: by mail-pg0-f44.google.com with SMTP id v189so14171081pgd.2
-        for <git@vger.kernel.org>; Tue, 01 Aug 2017 17:19:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=tKL851Qqj+GFwoo5vGmo7FlsswDpgK+m5E1WS4W8yck=;
-        b=uNXf7G6x7vvL5kgEemDggdGEdJQCRSjhucQQQK1qNwMKSMEFYbFk2uc7Kq7rGQlc3j
-         d2ZJsO35raTLG8l4RIa072eyRgutgZ9RpXB07dzfpVb/RfBIJbThT6kcWIjtzJorXjdb
-         4CPIBIuFC8lCNqNgyC+/MEnv8UrzJ9+PDMKZJF32yvO/c9qGQt5YrQsBp4cj+1CqpZ3I
-         t5VB961Zkv3rie52mz/Isj94gEuu5IczhtvwWTFNVYnSgBTcaERDDeu0CK+IaAOg3HaD
-         MZa1Qf7Urq8KhSb//6NSg8p7qVeWfxpFRTMafGZt4kp1Om5MHgx9xlg7oWyAMAcYC/Tz
-         HrTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=tKL851Qqj+GFwoo5vGmo7FlsswDpgK+m5E1WS4W8yck=;
-        b=eFFuvJdES9aCBRa37KkZpkYCd1hvVIEn34mzcZcSU85hhhBGQGns01Abzhz+W3Pkiu
-         NWy0DC0UKGpQHc4SatbEaGy3h3FxuXmeL3EgNp43FQUfojKJiHjMN1qVB4DZEvRDYFgN
-         JJMp9L5XYMRozb45z7S2KIXl/NKfwFUnr2nmPwKJdrIdvVTTIG5WE5dWRrAFWi5McsJw
-         p9Y0iVXNcQO+f1aO2etQ7MXvGc9q2cDHwbKgRMiWanDap1EBjMb0vqvXOaEg/6Zq6mUJ
-         wIoUN0Qm8M7tdf+VMY3m99kAcWZWPZd3JD7lkJNkFB03hePmG51pyBlsbbFC20HCexHz
-         +x1g==
-X-Gm-Message-State: AIVw110bJc3dIbbEjt5bFCKNVgiiwbw2AKN20LJGTC+RhnDz4e4Q/2FV
-        FNLEMuLRBR6gK+GD
-X-Received: by 10.98.38.68 with SMTP id m65mr20644055pfm.47.1501633190725;
-        Tue, 01 Aug 2017 17:19:50 -0700 (PDT)
-Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:89e8:42fb:7e1e:307a])
-        by smtp.gmail.com with ESMTPSA id n129sm50005789pfn.27.2017.08.01.17.19.49
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 01 Aug 2017 17:19:50 -0700 (PDT)
-Date:   Tue, 1 Aug 2017 17:19:44 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, peartben@gmail.com, christian.couder@gmail.com
-Subject: Re: [PATCH v2 0/5] Fsck for lazy objects, and (now) actual
- invocation of loader
-Message-ID: <20170801171944.7690a63f@twelve2.svl.corp.google.com>
-In-Reply-To: <xmqq379bgqlx.fsf@gitster.mtv.corp.google.com>
-References: <cover.1501111615.git.jonathantanmy@google.com>
-        <cover.1501532294.git.jonathantanmy@google.com>
-        <xmqq4ltsi9or.fsf@gitster.mtv.corp.google.com>
-        <20170731160533.0a446244@twelve2.svl.corp.google.com>
-        <xmqq379bgqlx.fsf@gitster.mtv.corp.google.com>
-X-Mailer: Claws Mail 3.9.3 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+        id S1751554AbdHBAtw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 Aug 2017 20:49:52 -0400
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:51993 "EHLO
+        alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751029AbdHBAtv (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 1 Aug 2017 20:49:51 -0400
+X-AuditID: 1207440f-32bff70000000b50-36-598121aed741
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id B5.94.02896.EA121895; Tue,  1 Aug 2017 20:49:50 -0400 (EDT)
+Received: from mail-io0-f170.google.com (mail-io0-f170.google.com [209.85.223.170])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v720nn7F004582
+        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT)
+        for <git@vger.kernel.org>; Tue, 1 Aug 2017 20:49:50 -0400
+Received: by mail-io0-f170.google.com with SMTP id c74so14551447iod.4
+        for <git@vger.kernel.org>; Tue, 01 Aug 2017 17:49:49 -0700 (PDT)
+X-Gm-Message-State: AIVw110HbJS8UvKWY+B0jQPUcC6/sU1+fUDYzygktgeipXTHLrYtoS6Z
+        CH5IaRNx4pPjqCL5jOZo5NvOJDMc9w==
+X-Received: by 10.107.187.129 with SMTP id l123mr23393909iof.122.1501634988951;
+ Tue, 01 Aug 2017 17:49:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Reply-To: mhagger@alum.mit.edu
+Received: by 10.107.129.91 with HTTP; Tue, 1 Aug 2017 17:49:47 -0700 (PDT)
+In-Reply-To: <CAJo=hJtrdCOF-RxzXfyLx7R-1f2-7pZVO_UOg28J=wUDNdf3yw@mail.gmail.com>
+References: <CAJo=hJv7scc1L0_MdRkFeLAJGjYm2UkTFNOgj2e4+9Zj7KSiiQ@mail.gmail.com>
+ <CAMy9T_HCnyc1g8XWOOWhe7nN0aEFyyBskV2aOMb_fe+wGvEJ7A@mail.gmail.com> <CAJo=hJtrdCOF-RxzXfyLx7R-1f2-7pZVO_UOg28J=wUDNdf3yw@mail.gmail.com>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Date:   Tue, 1 Aug 2017 17:49:47 -0700
+X-Gmail-Original-Message-ID: <CAMy9T_FA1RV+NFxaXR65gw7G6OxL7Z8Ve3VNLrF4oyCdqtdahg@mail.gmail.com>
+Message-ID: <CAMy9T_FA1RV+NFxaXR65gw7G6OxL7Z8Ve3VNLrF4oyCdqtdahg@mail.gmail.com>
+Subject: Re: reftable [v4]: new ref storage format
+To:     Shawn Pearce <spearce@spearce.org>
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        David Borowitz <dborowitz@google.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupjleLIzCtJLcpLzFFi42IRYndR1F2n2Bhp0PZK0aLrSjeTA6PH501y
+        AYxRXDYpqTmZZalF+nYJXBn/jl5gKXgiUbH06z+WBsYDwl2MnBwSAiYSU0++Zu9i5OIQEtjB
+        JPFvfj8jhPOESeLX/YUsEE4/o8TOnplsEC35Euefv2aFsMslPn1+zAhi8woISpyc+YQFxBYS
+        kJN4teEGI4TtJbFm4yQmEJtTIFDi0tFPUEPvMEosPPCAGSTBJqArsainGayIRUBFYtXvHVDL
+        EiWaTv0AGsQBtCBAYsELV5CwsICRRMeFfWCtIgJqEtsv9LCCzGQWmMoocWzGMbBeZgFNidbt
+        v9knMArPQnLfLCSpBYxMqxjlEnNKc3VzEzNzilOTdYuTE/PyUot0TfRyM0v0UlNKNzFCApl/
+        B2PXeplDjAIcjEo8vBztDZFCrIllxZW5hxglOZiURHkVe+ojhfiS8lMqMxKLM+KLSnNSiw8x
+        SnAwK4nwLpVujBTiTUmsrEotyodJSXOwKInzqi9R9xMSSE8sSc1OTS1ILYLJynBwKEnwuigA
+        NQoWpaanVqRl5pQgpJk4OEGG8wANtwGp4S0uSMwtzkyHyJ9iNOa4cmXdFyaOKQe2f2ESYsnL
+        z0uVEucNBSkVACnNKM2DmwZLRq8YxYGeE+Y9C1LFA0xkcPNeAa1iAlolWVoLsqokESEl1cAo
+        eLBX54H8PWklttpYsThhxSrhm5/X7Tx1Zb989pF/P+zff4jX0xJY9aExkW/GWZ/Yu+W6zvwn
+        Hzuncz0PWe34wLV94lYhzvLwtDeHt9b1Lugu+r2y9PwE/r8RH9sswk5KZAiu3//8rwV/sfDy
+        +iusvaZhSW+qbp6xChRkbe0QS2bc8FayRUSJpTgj0VCLuag4EQCSEXaiIQMAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 01 Aug 2017 10:11:38 -0700
-Junio C Hamano <gitster@pobox.com> wrote:
+On Tue, Aug 1, 2017 at 1:23 PM, Shawn Pearce <spearce@spearce.org> wrote:
+> On Mon, Jul 31, 2017 at 11:41 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>> On Sun, Jul 30, 2017 at 8:51 PM, Shawn Pearce <spearce@spearce.org> wrote:
+>>> 4th iteration of the reftable storage format.
+>>> [...]
+>>
+>> Before we commit to Shawn's reftable proposal, I wanted to explore
+>> what a contrasting design that is not block based would look like. So
+>> I threw together a sketch of such a design. It is not as refined as
+>> Shawn's, and I haven't had time to program an implementation or
+>> collect statistics, but maybe it is interesting anyway.
+>
+> Thanks for taking the time to write this out. Its constructive to see
+> other possible approaches.
+>
+> I roughly implemented your proposed design in JGit for references
+> only. I skipped the object lookup and log handling for the sake of
+> studying the basics of this approach.
 
-> Let's step back a bit and think what already happens in the pre-
-> lazy-object world.  We record cut-off commits when a depth limited
-> clone is created in "shallow".  These essentially are promises,
-> saying something like:
-> 
->     Rest assured that everything in the history behind these commits
->     are on the other side and you can retrieve them by unshallowing.
-> 
->     If you traverse from your local tips and find no missing objects
->     before reaching one of these commits, then you do not have any
->     local corruption you need to worry about.
-> 
-> the other end made to us, when the shallow clone was made.  And we
-> take this promise and build more commits on top, and then we adjust
-> these cut-off commits incrementally as we deepen our clone or make
-> it even shallower.  For this assurance to work, we of course need to
-> assume a bit more than what we assume for a complete clone, namely,
-> the "other side" will hold onto the history behind these, i.e. does
-> not remind the tips it already has shown to us, or even if it does,
-> the objects that are reachable from these cut-off points will
-> somehow always be available to us on demand.
-> 
-> Can we do something similar, i.e. maintain minimum set of cut-off
-> points and adjust that set incrementally, just sufficient to ensure
-> the integrity of objects locally created and not yet safely stored
-> away by pushing them the "other side"?
+Wow, that's awesome, thanks!
 
-This suggestion (the "frontier" of what we have) does seem to incur less
-overhead than the original promise suggestion (the "frontier" of what we
-don't have), but after some in-office discussion, I'm convinced that it
-might not be the case - for example, one tree (that we have) might
-reference many blobs (that we don't have), but at the same time, many
-trees (that we have) might have the same blob (that we don't have). And
-the promise overhead was already decided to be too much - which is why
-we moved away from it.
+>        | size   | seek_cold | seek_hot  |
+> mh     | 28.3 M | 24.5 usec | 14.5 usec |
+> sp  4k | 29.2 M | 63.0 usec |  5.8 usec |
+> sp 64k | 27.7 M | 35.6 usec | 23.3 usec |
 
-One possibility to conceptually have the same thing without the overhead
-of the list is to put the obtained-from-elsewhere objects into its own
-alternate object store, so that we can distinguish the two. I mentioned
-this in my e-mail but rejected it, but after some more thought, this
-might be sufficient - we might still need to iterate through every
-object to know exactly what we can assume the remote to have, but the
-"frontier" solution also needs this iteration, so we are no worse off.
+OK, so it's at least in the right ballpark.
 
-Going back to the original use cases that motivated this (the monorepo
-like Microsoft's repo and the large-blob repo like Android's repo), it
-might be better just to disable the connectivity check when
-extensions.lazyObject is set (as you mentioned). This does change the
-meaning of fsck, but it may be fine since the "meaning" of the repo (a
-view of another repo, and no longer a full repo) has changed too. Then
-this patch set will be more about ensuring that the lazy object loader
-is not inadvertently run. As future work, we could add diagnostics that,
-for example, attempt a walk anyway and print a list of missing SHA-1s.
+>> * Multiple related chunks can be stored in a 64 kiB block (interesting
+>>   for people who prefer to read files in 64k segments). By storing
+>>   related chunks near each other, the number of seeks will probably
+>>   typically be smaller than the number of chunks that have to be
+>>   accessed.
+>
+> This is difficult. The most related chunks are actually index chunks
+> in the multi-level index. You want the next step(s) near the current
+> step to avoid an actual disk seek. But that is hard to do when the
+> index is several levels deep.
 
-(I suspect that we will also need to disable the connectivity check for
-things like "git fetch", which means that we won't be able to tell
-locally if the server sent us all the objects that we requested for.
-This might not be a problem, though, since the local repo already has
-some measure of trust for the server.)
+Given the 64k read size that you prefer, it seems to me that it would
+probably be possible to keep pairs of index layers (i.e., one index
+node and all of its direct children) in the same 64k range, though
+this might require adjusting their sizes somewhat. And possibly to
+keep the lowest index layer close to the reference chunks that it
+describes (analogous to your format, where the restart records form
+something like an index that is located close to the references). So I
+would think that it is plausible to arrange things so that a reference
+can be read within two 64k reads even if the index has three levels.
+
+>> * The file can be written in two possible ways: with cross-references
+>>   between chunks always pointing to later parts of the file (probably
+>>   preferable if the data will be read from a local hard disk) or
+>>   always pointing to earlier parts of the file (to accomodate writers
+>>   who need to write their data in order). See the `offsets_negative`
+>>   field in the header. (I'm not sure that the former variant is
+>>   actually needed.)
+>
+> This seems like unnecessary complexity. I'd prefer to just say the
+> offsets are negative, and reference backwards.
+
+Maybe. I just wasn't sure whether a hard disk would perform
+significantly worse when reading backwards rather than forwards
+(because of pre-fetch of blocks). It could very well be unnecessary.
+
+Michael
