@@ -2,121 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E13EB20899
-	for <e@80x24.org>; Wed,  2 Aug 2017 19:50:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D826420899
+	for <e@80x24.org>; Wed,  2 Aug 2017 19:54:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752457AbdHBTun (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Aug 2017 15:50:43 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61965 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752116AbdHBTum (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Aug 2017 15:50:42 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D550B92DB3;
-        Wed,  2 Aug 2017 15:50:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=C7PiEYe9sRfsVtk9/pKEQH+sJhw=; b=fAnlMH
-        4Ap5iOFv3PgCx/lrSjVC0MNjYu13aSP2OuER9qI35jK7zmqpvVkhGn5psBJRXWaR
-        hOl01TPk7lEGzEdEKtHthAVdkV6AA8Osp13H5v/rooTaXdR93b7YulKZQlu0qGGS
-        I6OXbDeZHN3qjIzS7lhGAZCJtkyqAMW9hmjSQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=xk+Fslxz/CLq/sgulX1La1HZbhuMNbcN
-        EdXcoPHR0uekPzxj9ruuQCFSXaGhN0Ra5y4hBF386SZmRGvJ/ZogC+lvKMdp4LGN
-        w0eVocZ9aPlHeGkBgPypy0LSgn3R+rP6JJ29vTi/Aibh+MTi3NirJNZ3i01uqJ9D
-        OLcMlW7fY1w=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CC5C092DB0;
-        Wed,  2 Aug 2017 15:50:40 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4747792DAF;
-        Wed,  2 Aug 2017 15:50:40 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S1752154AbdHBTyn (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Aug 2017 15:54:43 -0400
+Received: from mail-lf0-f46.google.com ([209.85.215.46]:34693 "EHLO
+        mail-lf0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751739AbdHBTym (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Aug 2017 15:54:42 -0400
+Received: by mail-lf0-f46.google.com with SMTP id g25so24356414lfh.1
+        for <git@vger.kernel.org>; Wed, 02 Aug 2017 12:54:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=lxeBBIXyqgzKDL5D7w+wWyJofb9U6UjSkApMRIqCydU=;
+        b=h3XHmGQ53iKW02np+j9mFPQcFvWxqHH0F8SDmwqm7wIlPn/TSTcwjGNF6AtmFbIMHc
+         YxfwpxqY02uAzsvwQWcu7n/YD7C7QufRnCh4Z1m8Pn1K0RTe+ABdmi/rbeBMWOeKRKy5
+         IBfSWKbLLnH9iBFis4e0z02NESDVwoY+8oEqxc2Eki9L9vodDpP/GxvRKQIZTxlsxC+W
+         fER+Oh3MryTyrSq+fPFp//2yDiBzQM+JEVEOpJ1Q60IFnZH66uCkRIM5wGGi9qopKKe0
+         Oqs2IlUfvhq7MbXNylyNpikZlfhvuRjUMQC27mcRz/vx6bBJKdwntLmfNCm6lQhUOPr5
+         yJdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=lxeBBIXyqgzKDL5D7w+wWyJofb9U6UjSkApMRIqCydU=;
+        b=O9x+Yt8BKXSxmDczE3Ltlk5eUgYNZ9HHc2+FEV+Q4SyC37Oprd8TtA/EEyf+R11oSs
+         FjSiVy5P7IAvbD0mFvhbH6nJzS3SkNyzP00x3Scnp+Dh0pot7xYLuhwaMSvkAzkBcFgz
+         Yz8q8c/L+NbaeG1owM2tvK5ljijQZg380Ixyot/ykxynkzSYa52FXJsyB9mtMHlbL/kc
+         JdxrEokr+HQIMv3zUDNLbtgY8zlUUZbWGdOR7hN4Q/QWxmOlhm8vLyA0p2B+pfwRlkkq
+         vVxUxDa0fY7vvgm+e306qSfHSSV4CROX+kBjCzobh6Tn7X6kSXCGLFJbP++xsbsY04Fg
+         8Usw==
+X-Gm-Message-State: AIVw110nyy7iunzczHNWn1XlUn2/jF2p32hrZXGkDu0hkkYe98e2/MH7
+        j+uDhMenx0RHz3BmXe2KrLEkFVi/EeU2
+X-Received: by 10.46.20.88 with SMTP id 24mr8402330lju.51.1501703680922; Wed,
+ 02 Aug 2017 12:54:40 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.25.1.130 with HTTP; Wed, 2 Aug 2017 12:54:39 -0700 (PDT)
+In-Reply-To: <CAJo=hJv7scc1L0_MdRkFeLAJGjYm2UkTFNOgj2e4+9Zj7KSiiQ@mail.gmail.com>
+References: <CAJo=hJv7scc1L0_MdRkFeLAJGjYm2UkTFNOgj2e4+9Zj7KSiiQ@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 2 Aug 2017 12:54:39 -0700
+Message-ID: <CAGZ79kb5UjxQFpQWy-muCwkuQsmuxQcKfs4f5HGenGSb+SiOhw@mail.gmail.com>
+Subject: Re: reftable [v4]: new ref storage format
 To:     Shawn Pearce <spearce@spearce.org>
 Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
         Michael Haggerty <mhagger@alum.mit.edu>,
+        Junio C Hamano <gitster@pobox.com>,
         David Borowitz <dborowitz@google.com>
-Subject: Re: reftable [v4]: new ref storage format
-References: <CAJo=hJv7scc1L0_MdRkFeLAJGjYm2UkTFNOgj2e4+9Zj7KSiiQ@mail.gmail.com>
-Date:   Wed, 02 Aug 2017 12:50:39 -0700
-In-Reply-To: <CAJo=hJv7scc1L0_MdRkFeLAJGjYm2UkTFNOgj2e4+9Zj7KSiiQ@mail.gmail.com>
-        (Shawn Pearce's message of "Sun, 30 Jul 2017 20:51:24 -0700")
-Message-ID: <xmqqh8xpsq9c.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DCADA9E6-77BB-11E7-8B0C-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shawn Pearce <spearce@spearce.org> writes:
+> ### Ref block format
+>
+> A ref block is written as:
+>
+>     'r'
+>     uint24( block_len )
+>     ref_record+
+>     uint32( restart_offset )+
+>     uint16( restart_count )
+>     padding?
+>
 
-> ### Layout
->
-> The `$GIT_DIR/refs` path is a file when reftable is configured, not a
-> directory.  This prevents loose references from being stored.
->
-> A collection of reftable files are stored in the `$GIT_DIR/reftable/`
-> directory:
->
->     00000001_UF4paF
->     00000002_bUVgy4
->
-> where reftable files are named by a unique name such as produced by
-> the function:
->
->     mktemp "${update_index}_XXXXXX"
->
-> The stack ordering file is `$GIT_DIR/refs` and lists the current
-> files, one per line, in order, from oldest (base) to newest (most
-> recent):
->
->     $ cat .git/refs
->     00000001_UF4paF
->     00000002_bUVgy4
->
-> Readers must read `$GIT_DIR/refs` to determine which files are
-> relevant right now, and search through the stack in reverse order
-> (last reftable is examined first).
->
-> Reftable files not listed in `refs` may be new (and about to be added
-> to the stack by the active writer), or ancient and ready to be pruned.
+So I learned that your current writer is a two block pass,
+i.e. the block is first written into memory and then once
+the block looks complete it is written out to disk.
 
-I like the general idea, what the file format can represent and how
-it does so, but I am a bit uneasy about how well this "stacked" part
-would work for desktop clients.  The structure presented here is for
-optimizing the "we want to learn about many (or all) refs" access
-pattern, which probably matters a lot on the server implementations,
-but I do not feel comfortable without knowing how much it penalizes
-"I want the current value of this single ref" access pattern.
+This would allow us to shuffle the data around during
+the actual out-to-disk-phase, such as this:
 
-With the traditional "packed-refs plus loose" layout, no matter how
-many times a handful of selected busy refs are updated during the
-day, you'd need to open at most two files to find out the current
-value of a single ref (admittedly, the accessing of the second file,
-after we realize that there is no loose one, would be very costly).
-If you make a few commits on a topic branch A, then build a 100
-commit series on top of another topic branch B, finding the current
-value of A is still one open and read of refs/heads/A.
+  'r'
+  uint24( restart_count )
+  uint32( restart_offset )+
+  ref_record+
+  ref_record_endmarker
+  padding?
 
-With the reftable format, we'd need to open and read all 100
-incremental transactions that touch branch B before realizing that
-none of them talk about A, and read the next transaction file to
-find the current value of A.  To keep this number low, we'd need
-quite a frequent compaction.
+(A) In nearby emails we discussed to have the restart offsets
+to be 24 bit, but now they are 32-bit aligned to the start of a block
+so we could keep them 32 bit for simplicity of reading.
 
-We can just declare that reftable format is not for desktop clients
-but for server implementations where frequent compaction would not
-be an annoyance to the users, but I'd wish we do not have to.
+(B) Note how there is no block_len encoding, which was originally
+only needed to lookup the position of restart_count. (so even for that
+we could rename it to padding_len, such that the position of
+restart_count can be decoded easily)
 
+We no longer need the block_len as the restart_count comes right
+after the 'r'.
 
-
+Instead we'll have a ref_record_endmarker that reads as a ref
+with both prefix and suffix to '0', type deletion (such that there is
+no further cost). The end marker would only need two '0's, which
+makes it indistinguishable from padding.
