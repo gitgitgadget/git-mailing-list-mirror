@@ -2,106 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_BL_SPAMCOP_NET,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SBL_CSS,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0ED1920899
-	for <e@80x24.org>; Wed,  2 Aug 2017 12:31:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC50420899
+	for <e@80x24.org>; Wed,  2 Aug 2017 13:46:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753117AbdHBMbf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Aug 2017 08:31:35 -0400
-Received: from mail-it0-f68.google.com ([209.85.214.68]:36730 "EHLO
-        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752370AbdHBMbf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Aug 2017 08:31:35 -0400
-Received: by mail-it0-f68.google.com with SMTP id r9so3755279ita.3
-        for <git@vger.kernel.org>; Wed, 02 Aug 2017 05:31:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:in-reply-to:references:date
-         :mime-version:content-transfer-encoding;
-        bh=DDA1IRjeyEcu7pFoY3J3mDEUFvgZ9P3N7xgxrwuFS8k=;
-        b=PTXkQGUHjHESYNbJtTDl3/ikG+Xa6J3Arp5N0aOOjJTZGkI08iigF5cf9q2Ij3di2H
-         FQhEectR8Bzn52w2SvSz5SgCL7W47hRdDnpDeRNw8atqMblzXnXvXfNywDkoOQsdoNr+
-         iRilELGOkqVegIFyHOAHNQEB3n/tSrQO46MWDFWYZYMewOxkubmp2AweVr1VTqDvUY+q
-         C8EV1uFz8my9FdNEVIAhnyjf/G7UiyKRFLzZFEGYV37AIrd5588vt41GSYoQJSiQVJo/
-         U0Djm4GZhPdJkqpJBX/zfyGGDv7WpVe0s/4ZhCcDolAu5v7TH9dXKtW3vat6D8gPHkrc
-         Ewvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:in-reply-to
-         :references:date:mime-version:content-transfer-encoding;
-        bh=DDA1IRjeyEcu7pFoY3J3mDEUFvgZ9P3N7xgxrwuFS8k=;
-        b=Cz+9fBmYkXMlaZoXbjQZOMKdQt/s5G2ck2IX/sqxcAc8z98mbKGWXEKEifHYZbCcZE
-         VO+JzDN2s2ZnTQp683a//QemwIw6ozVayW+9eofkaH839SpT1xIl4afIt8nW2KW1e5kc
-         ayJzNvR0s8wFtbrez9jX1OqS9gbHD35xyWu5SmNSqbE6BCTVD9ShnqK4bJwVv3qHiG65
-         MUN5mzVm0KI3/HTFiNSCl58BD7YlhSQ20hjAMZXcn19CzHmG+KoJmlIobiZeSJ098P5C
-         p8r39Mr2eT0IAfnoas0uEh0Dd1/6lMRhrl8fuRDmx+WymYQ2KAS0iBtLpi9+acFmDEQ/
-         M+EA==
-X-Gm-Message-State: AIVw113QhFLppfujhaCxIM2nBCZTbftnX5p9z4ivwWHt3nkmk27j3S37
-        0b5Vw/aJ6uslWA==
-X-Received: by 10.36.160.72 with SMTP id o69mr5403569ite.150.1501677094472;
-        Wed, 02 Aug 2017 05:31:34 -0700 (PDT)
-Received: from unique-pc ([182.73.109.146])
-        by smtp.googlemail.com with ESMTPSA id l193sm1978826itl.13.2017.08.02.05.31.29
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 02 Aug 2017 05:31:33 -0700 (PDT)
-Message-ID: <1501677122.1957.8.camel@gmail.com>
-Subject: Re: [PATCH 2/2] doc: add another way to identify if a patch has
- been merged
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-In-Reply-To: <CAGZ79kZgV1=2HcYeXyoCy2Jk6v__trvTh_-rH+kbFX7fgWziyw@mail.gmail.com>
-References: <CAGZ79kYg9jQ3kaKnNEJCH9fde=ar1KPiUr7=X+TguNc0Twqdzg@mail.gmail.com>
-         <20170801160539.5587-1-kaarticsivaraam91196@gmail.com>
-         <20170801160539.5587-2-kaarticsivaraam91196@gmail.com>
-         <CAGZ79kZgV1=2HcYeXyoCy2Jk6v__trvTh_-rH+kbFX7fgWziyw@mail.gmail.com>
-Content-Type: text/plain; charset="ISO-8859-15"
-Date:   Wed, 02 Aug 2017 18:02:02 +0530
-Mime-Version: 1.0
-X-Mailer: Evolution 3.22.6-1 
-Content-Transfer-Encoding: 7bit
-X-Cyberoam-smtpxy-version: 1.0.6.3
-X-Cyberoam-AV-Policy: default
-X-CTCH-Error: Unable to connect local ctasd
+        id S1751961AbdHBNqm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Aug 2017 09:46:42 -0400
+Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.220]:30103 "EHLO
+        mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751918AbdHBNql (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Aug 2017 09:46:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1501681599;
+        l=942; s=domk; d=aepfle.de;
+        h=Content-Disposition:Content-Type:MIME-Version:Subject:To:From:Date;
+        bh=GTgJ3M/juXxMGA2U9Br5gpYx6oe2yUamL+1glBgHQsk=;
+        b=m8zqTBipGUX6B6y8c1BVwLmjLSGL4p3sbnHFY9TmVzSvbA/Cwx3eGOWTTSZeVcHZ65
+        /0H+tESDI3ph+l6xTU0x34ZUWWUe8NINe6EciSEhecyRlb/V2vyTW0IjA/n4v1rLzA32
+        dz0snrFPbTF7aHGTWE7cCxMRfG5e7lryUIBo4=
+X-RZG-AUTH: :P2EQZWCpfu+qG7CngxMFH1J+yackYocTD1iAi8x+OWi/zfN1cLnAYQ78mmFeN6Aqp4B5pIVlTUWUm3u3pWh1+4rEzpLBkg==
+X-RZG-CLASS-ID: mo00
+Received: from aepfle.de ([2001:a61:102e:7fff:27ee:68a5:7ddc:d3db])
+        by smtp.strato.de (RZmta 41.1 AUTH)
+        with ESMTPSA id k0732at72DkdIBj
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (curve secp521r1 with 521 ECDH bits, eq. 15360 bits RSA))
+        (Client did not present a certificate)
+        for <git@vger.kernel.org>;
+        Wed, 2 Aug 2017 15:46:39 +0200 (CEST)
+Date:   Wed, 2 Aug 2017 15:46:35 +0200
+From:   Olaf Hering <olaf@aepfle.de>
+To:     git@vger.kernel.org
+Subject: git send-email -v n fails
+Message-ID: <20170802134635.GA19311@aepfle.de>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+        protocol="application/pgp-signature"; boundary="xHFwDpU9dbj6ez1V"
+Content-Disposition: inline
+User-Agent: Mutt/1.8.3 (7113)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 2017-08-01 at 10:46 -0700, Stefan Beller wrote:
-> Actually I am slightly negative on this one, because of
-> occurrences like [1].
-> 
-> Our SubmittingPatches is already considered *too long* for most people
-> who just want to drop a drive-by patch.
-> 
-> Adding more knowledge (which btw is about general git usage and not
-> specific to our development workflow; you'd find the same tip in the
-> kernel community).
-> 
-> I wonder if we need a document that describes workflows.
-> (Oh, look we have 'man gitworkflows'! I did not know)
-> 
-> So maybe we want to cut a lot of workflow related commendatory from
-> the SubmitingPatches and then encourage to read such man page?
-> 
-That's right. Maybe Documentation/SubmittingPatches needs a revamp to
-be one-time contributor friendly? Maybe introducing a "gist" for people
-who do not have the time to read the whole document, might be of help?
 
-> [1 ]https://public-inbox.org/git/CA+dzEB=cDvp7ZS8x+p+U-5NbK3SNd0FPyj_wP=gvi8mJi6D2ag@mail.gmail.com/
-> 
-> 
-> 
-> > --
-> > 2.14.0.rc1.434.g6eded367a
-> > 
+--xHFwDpU9dbj6ez1V
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
--- 
-Kaartic
+I think send-email should understand all options of format-patch.
+At least for '-v n' this fails, one has to type '--reroll-count n' as a
+workaround with git version 2.13.3:
+
++ git send-email -v 2 --annotate --confirm=always --to-cmd=scripts/get_maintainer.pl 'HEAD^'
+fatal: ambiguous argument '2': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+format-patch -o /tmp/fVUtbB6OWI 1 HEAD^: command returned error: 128
+
+Olaf
+
+--xHFwDpU9dbj6ez1V
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EARECAB0WIQSkRyP6Rn//f03pRUBdQqD6ppg2fgUCWYHXtwAKCRBdQqD6ppg2
+fvHcAKCKhmQr5AaVMq1vPqXTiRS9jOIVIgCeP+J1mbLUqw5wiK5fimdFwpgcEf8=
+=IHuK
+-----END PGP SIGNATURE-----
+
+--xHFwDpU9dbj6ez1V--
