@@ -2,116 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D79420899
-	for <e@80x24.org>; Wed,  2 Aug 2017 16:51:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7CAAE20899
+	for <e@80x24.org>; Wed,  2 Aug 2017 17:18:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752492AbdHBQvn (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Aug 2017 12:51:43 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51752 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751964AbdHBQvn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Aug 2017 12:51:43 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6FBD98FCFC;
-        Wed,  2 Aug 2017 12:51:42 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=gldMVSmwEn005ny/HlRScxWjS5A=; b=rDTfC9
-        3jLOweKGXWKjWVCSFiu0QcEksbjdPmhBKNjRhsRfnOks7IfYhRxeAsUGWLJZoW5F
-        0p8rYXYMTlNF10OnKIv8UxI0H8HSnNR3fWkd/PjWk6yIL5y0npOYLgS4S46e5r8R
-        LTRLV0x5cvGtru/QEwNV4VTWVkocAFoTz/mAk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=gbAhYVgL8UVXPoyDbwKaRxEoMsLu3Dm+
-        ptgd8v3hKrGgxnpLw/ETm7YfF0pQ9pg+5qFflj6TNjBogwnBo/B8KDmjNJCsP7iC
-        4jJjwWAQTVjJY1tCMRHv6YG1J7NTKrzUQgq3vPFvr2CteHk/jJWLM6+XcAU9b67v
-        STCInRky/So=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 66B0E8FCFB;
-        Wed,  2 Aug 2017 12:51:42 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CBE6F8FCFA;
-        Wed,  2 Aug 2017 12:51:41 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Shawn Pearce <spearce@spearce.org>
-Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
-        git <git@vger.kernel.org>, David Borowitz <dborowitz@google.com>
+        id S1752916AbdHBRSx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Aug 2017 13:18:53 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55782 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1753201AbdHBRSv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Aug 2017 13:18:51 -0400
+Received: (qmail 8442 invoked by uid 109); 2 Aug 2017 17:18:51 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 02 Aug 2017 17:18:51 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 10558 invoked by uid 111); 2 Aug 2017 17:19:11 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Wed, 02 Aug 2017 13:19:11 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Aug 2017 13:18:49 -0400
+Date:   Wed, 2 Aug 2017 13:18:49 -0400
+From:   Jeff King <peff@peff.net>
+To:     Dave Borowitz <dborowitz@google.com>
+Cc:     Shawn Pearce <spearce@spearce.org>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 Subject: Re: reftable [v4]: new ref storage format
+Message-ID: <20170802171849.qwg36gahgrav3o25@sigill.intra.peff.net>
 References: <CAJo=hJv7scc1L0_MdRkFeLAJGjYm2UkTFNOgj2e4+9Zj7KSiiQ@mail.gmail.com>
-        <CAMy9T_HCnyc1g8XWOOWhe7nN0aEFyyBskV2aOMb_fe+wGvEJ7A@mail.gmail.com>
-        <CAJo=hJvFRJ7honjenB6sUofK14xiUXGwJ1DQHZyTauVKA5v5vw@mail.gmail.com>
-        <CAMy9T_HUoD4--s1gNTUjnCgdiAqfYbX-GSqygDwNO-JRwdh4NQ@mail.gmail.com>
-        <CAJo=hJv=zJvbzfAZwspxECXrnBJR4XfJbGZegsNUCx=6uheO2Q@mail.gmail.com>
-        <20170802092846.u4lyiogvvl7ezdfq@sigill.intra.peff.net>
-        <CAJo=hJu1rud5pEZ93HDty1qyaCOHmwn89aEvPFe2ER0JD1ExwQ@mail.gmail.com>
-Date:   Wed, 02 Aug 2017 09:51:40 -0700
-In-Reply-To: <CAJo=hJu1rud5pEZ93HDty1qyaCOHmwn89aEvPFe2ER0JD1ExwQ@mail.gmail.com>
-        (Shawn Pearce's message of "Wed, 2 Aug 2017 08:17:29 -0700")
-Message-ID: <xmqqshh9diar.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+ <CAMy9T_HCnyc1g8XWOOWhe7nN0aEFyyBskV2aOMb_fe+wGvEJ7A@mail.gmail.com>
+ <CAJo=hJvFRJ7honjenB6sUofK14xiUXGwJ1DQHZyTauVKA5v5vw@mail.gmail.com>
+ <CAMy9T_HUoD4--s1gNTUjnCgdiAqfYbX-GSqygDwNO-JRwdh4NQ@mail.gmail.com>
+ <CAJo=hJv=zJvbzfAZwspxECXrnBJR4XfJbGZegsNUCx=6uheO2Q@mail.gmail.com>
+ <CAD0k6qRTa6jSgEBBX1Ux5yg4QMMWPpyOGTa471cRhtzBaS-KjQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DC0FE8D2-77A2-11E7-9E81-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAD0k6qRTa6jSgEBBX1Ux5yg4QMMWPpyOGTa471cRhtzBaS-KjQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shawn Pearce <spearce@spearce.org> writes:
+On Wed, Aug 02, 2017 at 08:20:44AM -0400, Dave Borowitz wrote:
 
-> On Wed, Aug 2, 2017 at 2:28 AM, Jeff King <peff@peff.net> wrote:
->> On Tue, Aug 01, 2017 at 07:38:37PM -0700, Shawn Pearce wrote:
->>
->>> > OBJS blocks can also be
->>> > unbounded in size if very many references point at the same object,
->>> > thought that is perhaps only a theoretical problem.
->>>
->>> Gah, I missed that in reftable. The block id pointer list could cause
->>> a single object id to exceed what fits in a block, and that will cause
->>> the writer to fail unless its caller sets the block size larger. I
->>> basically assumed this overflow condition is very unlikely, as its not
->>> common to have a huge number of refs pointing to the same object.
->>
->> It's actually quite common for us, as we have big shared-object repos
->> that contain a copy of the refs of all of their child repos (for
->> reachability during packing, etc). So tags, where the value is the same
->> in each fork, you have one ref per fork pointing to it.
->>
->> Just peeking at torvalds/linux, we have some objects with ~35K refs
->> pointing to them (e.g., the v2.6.11 tag).
->
-> Oy. I'll bet that every occurrence winds up in its own block due to
-> the layout of the namespace, and so the obj block list needs 35k
-> varint pointers. That requires a larger block size if it has any
-> chance of fitting into the reftable format.
->
-> Another option is disable the obj table for these shared-object repos.
-> Its an optional part of the format and can be omitted if the reader
-> isn't likely to need to lookup by SHA-1, or is willing to pay the
-> brute force cost of scanning every ref.
+> >> OTOH a mythical protocol v2 might reduce the need to scan the
+> >> references for advertisement, so maybe this optimization will be more
+> >> helpful in the future?
+> 
+> I haven't been following the status of the proposal, but I was
+> assuming a client-speaks-first protocol would also imply the client
+> asking for refnames, not SHA-1s, in which case lookup by SHA-1 is no
+> longer relevant.
 
-I am wondering if we need the reverse look-up for a regular
-repository that allows "fetch anything at the tip".  It only needs
-"I got this request for an object name--does it sit at the tip of
-any ref?  Yes/No".  It does not need to know exactly which ref
-points at the asked object.
+Good point. The hidden-refs thing Shawn described is a trick that would
+be used because the current protocol is so lousy. It's not clear how a
+stateless-rpc request would work, but in theory the follow-up requests
+could also say "hey, I'm only interested in refs/{heads,tags}" and the
+stateless server could limit is marking to that.
 
-Yes, I know Gerrit has its own ACL that limits the visibility of
-refs so the question becomes "does it sit at the tip of any ref that
-is visible to the current user?".  An Yes/No answer for "any ref?"
-may still give you a short-cut when rejecting, but you'd then need
-to scan to give a positive answer without a full reverse mapping.
+But that would still leave something like allowReachableSHA1InWant
+having to look at all refs (and I don't see why a client requesting by
+sha1 would give any limiting refspec at all). On the other hand, looking
+at the ref tips would probably be dominated by actually traversing the
+commits in most cases. Of course one could come up with a pathological
+case pretty easily (tons of refs, and people asking for submodules at
+tip commits).
 
-For the use of "consolidated object store for all forks", I do not
-think it makes sense to even have "Does it sit at a tip, Yes/No"
-information.  Even when Linus's repository and a fork share the same
-object store, I do not think anybody expects to be able to fetch a
-commit at the tip of a branch in the fork but not in Linus's
-repository.
+So I do think there are cases where the optimization would help, but I
+still not sure how much. If it's an optional bit of the design, we at
+least have the option of just not generating if it turns out not to be
+useful. My only concern would be if we make other protocol sacrifices or
+complications to include it.
 
+-Peff
