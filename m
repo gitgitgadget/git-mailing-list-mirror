@@ -2,170 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8DC4A20899
-	for <e@80x24.org>; Wed,  2 Aug 2017 19:49:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E13EB20899
+	for <e@80x24.org>; Wed,  2 Aug 2017 19:50:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752595AbdHBTt4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Aug 2017 15:49:56 -0400
-Received: from mail-pg0-f45.google.com ([74.125.83.45]:36892 "EHLO
-        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751739AbdHBTtk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Aug 2017 15:49:40 -0400
-Received: by mail-pg0-f45.google.com with SMTP id y129so25101293pgy.4
-        for <git@vger.kernel.org>; Wed, 02 Aug 2017 12:49:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=4WwNlPS6ILayXxGk8PMHAzLHYX9/Ri5GKqr/Qrk+Q1g=;
-        b=grZ6KBV2WPJfTx3aDcmWSeuhrgPA1ghqvdhp4cUwoC6DR2GVLh3nXfcA7U4sJ2IoPo
-         VkKKhXo2jAccoY6rdpU8Dqep0Pu+hDkE860lp3Ghzvrz1pDDTf3SxnkCPApLHouvsSf6
-         v/I1vrMvQt2VEEIXAs/lKm2yAO4277u9mFdngnhp7afASX+Gl388An/aHGNXfry7qmB0
-         8QAye/4FHdsHDflM3S1IsO3Gzpe9Jqwxy6t+ljrZlg7u/7a5zwahvqQjhVzrlPyQF8Qg
-         SQuJ5U2IuqE0MDkiWCeIW5TbGY1JQ+bP22nGF2JhGQ4MzlkM0WGLS5QzaGvsBoXXo/9B
-         iXvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=4WwNlPS6ILayXxGk8PMHAzLHYX9/Ri5GKqr/Qrk+Q1g=;
-        b=j8ytj9mbDJDP9eZOGgTpAUi9gAl7nR6NeqQcb+/TmD16ROqcqKghGeimk2NiAJ9mgC
-         NhGqUSlanal9I7eUgFZoCsW0aVCXvf4mbMsidM5jiXns6sgFgzFKquz2f11F0H96U3lM
-         w6799zOAvx4TB0m5JE8tPKtBB+l6EyR5X4Gqken4sfn2+5tYAqWSqYe1rRAV5dI597qA
-         aokzVLpohgUf0F0l8+lBRP4/xlrgwaKK+hN4VlWjAmuYfua1JklnavcamRSKCEeTI96R
-         cX7KHPSAHBER5XWxV24fnkf0UiC/15+4sCIJ9zYS2FppkMGmBpUBYpZ5hH6V/SWJy3dL
-         F8jw==
-X-Gm-Message-State: AIVw1122M899GCxm8eSNtaqMHQXfhjrTG8+168Q+WItTjqtOIEl1W3nV
-        i77LsrCFVkwJMRWU+uLdBw==
-X-Received: by 10.98.11.135 with SMTP id 7mr24331695pfl.45.1501703379537;
-        Wed, 02 Aug 2017 12:49:39 -0700 (PDT)
-Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id e64sm63401460pfb.129.2017.08.02.12.49.38
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 02 Aug 2017 12:49:38 -0700 (PDT)
-From:   Brandon Williams <bmwill@google.com>
-To:     git@vger.kernel.org
-Cc:     sbeller@google.com, jrnieder@gmail.com, gitster@pobox.com,
-        Brandon Williams <bmwill@google.com>
-Subject: [PATCH v4 07/10] submodule: check for unstaged .gitmodules outside of config parsing
-Date:   Wed,  2 Aug 2017 12:49:20 -0700
-Message-Id: <20170802194923.88239-8-bmwill@google.com>
-X-Mailer: git-send-email 2.14.0.rc1.383.gd1ce394fe2-goog
-In-Reply-To: <20170802194923.88239-1-bmwill@google.com>
-References: <20170718190527.78049-1-bmwill@google.com>
- <20170802194923.88239-1-bmwill@google.com>
+        id S1752457AbdHBTun (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Aug 2017 15:50:43 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61965 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752116AbdHBTum (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Aug 2017 15:50:42 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D550B92DB3;
+        Wed,  2 Aug 2017 15:50:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=C7PiEYe9sRfsVtk9/pKEQH+sJhw=; b=fAnlMH
+        4Ap5iOFv3PgCx/lrSjVC0MNjYu13aSP2OuER9qI35jK7zmqpvVkhGn5psBJRXWaR
+        hOl01TPk7lEGzEdEKtHthAVdkV6AA8Osp13H5v/rooTaXdR93b7YulKZQlu0qGGS
+        I6OXbDeZHN3qjIzS7lhGAZCJtkyqAMW9hmjSQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=xk+Fslxz/CLq/sgulX1La1HZbhuMNbcN
+        EdXcoPHR0uekPzxj9ruuQCFSXaGhN0Ra5y4hBF386SZmRGvJ/ZogC+lvKMdp4LGN
+        w0eVocZ9aPlHeGkBgPypy0LSgn3R+rP6JJ29vTi/Aibh+MTi3NirJNZ3i01uqJ9D
+        OLcMlW7fY1w=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CC5C092DB0;
+        Wed,  2 Aug 2017 15:50:40 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4747792DAF;
+        Wed,  2 Aug 2017 15:50:40 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Shawn Pearce <spearce@spearce.org>
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        David Borowitz <dborowitz@google.com>
+Subject: Re: reftable [v4]: new ref storage format
+References: <CAJo=hJv7scc1L0_MdRkFeLAJGjYm2UkTFNOgj2e4+9Zj7KSiiQ@mail.gmail.com>
+Date:   Wed, 02 Aug 2017 12:50:39 -0700
+In-Reply-To: <CAJo=hJv7scc1L0_MdRkFeLAJGjYm2UkTFNOgj2e4+9Zj7KSiiQ@mail.gmail.com>
+        (Shawn Pearce's message of "Sun, 30 Jul 2017 20:51:24 -0700")
+Message-ID: <xmqqh8xpsq9c.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: DCADA9E6-77BB-11E7-8B0C-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach 'is_staging_gitmodules_ok()' to be able to determine in the
-'.gitmodules' file has unstaged changes based on the passed in index
-instead of relying on a global variable which is set during the
-submodule-config parsing.
+Shawn Pearce <spearce@spearce.org> writes:
 
-Signed-off-by: Brandon Williams <bmwill@google.com>
----
- builtin/mv.c |  2 +-
- builtin/rm.c |  2 +-
- submodule.c  | 32 +++++++++++++++++---------------
- submodule.h  |  2 +-
- 4 files changed, 20 insertions(+), 18 deletions(-)
+> ### Layout
+>
+> The `$GIT_DIR/refs` path is a file when reftable is configured, not a
+> directory.  This prevents loose references from being stored.
+>
+> A collection of reftable files are stored in the `$GIT_DIR/reftable/`
+> directory:
+>
+>     00000001_UF4paF
+>     00000002_bUVgy4
+>
+> where reftable files are named by a unique name such as produced by
+> the function:
+>
+>     mktemp "${update_index}_XXXXXX"
+>
+> The stack ordering file is `$GIT_DIR/refs` and lists the current
+> files, one per line, in order, from oldest (base) to newest (most
+> recent):
+>
+>     $ cat .git/refs
+>     00000001_UF4paF
+>     00000002_bUVgy4
+>
+> Readers must read `$GIT_DIR/refs` to determine which files are
+> relevant right now, and search through the stack in reverse order
+> (last reftable is examined first).
+>
+> Reftable files not listed in `refs` may be new (and about to be added
+> to the stack by the active writer), or ancient and ready to be pruned.
 
-diff --git a/builtin/mv.c b/builtin/mv.c
-index dcf6736b5..94fbaaa5d 100644
---- a/builtin/mv.c
-+++ b/builtin/mv.c
-@@ -81,7 +81,7 @@ static void prepare_move_submodule(const char *src, int first,
- 	struct strbuf submodule_dotgit = STRBUF_INIT;
- 	if (!S_ISGITLINK(active_cache[first]->ce_mode))
- 		die(_("Directory %s is in index and no submodule?"), src);
--	if (!is_staging_gitmodules_ok())
-+	if (!is_staging_gitmodules_ok(&the_index))
- 		die(_("Please stage your changes to .gitmodules or stash them to proceed"));
- 	strbuf_addf(&submodule_dotgit, "%s/.git", src);
- 	*submodule_gitfile = read_gitfile(submodule_dotgit.buf);
-diff --git a/builtin/rm.c b/builtin/rm.c
-index 52826d137..4057e73fa 100644
---- a/builtin/rm.c
-+++ b/builtin/rm.c
-@@ -286,7 +286,7 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 		list.entry[list.nr].name = xstrdup(ce->name);
- 		list.entry[list.nr].is_submodule = S_ISGITLINK(ce->ce_mode);
- 		if (list.entry[list.nr++].is_submodule &&
--		    !is_staging_gitmodules_ok())
-+		    !is_staging_gitmodules_ok(&the_index))
- 			die (_("Please stage your changes to .gitmodules or stash them to proceed"));
- 	}
- 
-diff --git a/submodule.c b/submodule.c
-index 1d9d2ce09..677b5c401 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -37,18 +37,25 @@ static struct oid_array ref_tips_after_fetch;
- static int gitmodules_is_unmerged;
- 
- /*
-- * This flag is set if the .gitmodules file had unstaged modifications on
-- * startup. This must be checked before allowing modifications to the
-- * .gitmodules file with the intention to stage them later, because when
-- * continuing we would stage the modifications the user didn't stage herself
-- * too. That might change in a future version when we learn to stage the
-- * changes we do ourselves without staging any previous modifications.
-+ * Check if the .gitmodules file has unstaged modifications.  This must be
-+ * checked before allowing modifications to the .gitmodules file with the
-+ * intention to stage them later, because when continuing we would stage the
-+ * modifications the user didn't stage herself too. That might change in a
-+ * future version when we learn to stage the changes we do ourselves without
-+ * staging any previous modifications.
-  */
--static int gitmodules_is_modified;
--
--int is_staging_gitmodules_ok(void)
-+int is_staging_gitmodules_ok(const struct index_state *istate)
- {
--	return !gitmodules_is_modified;
-+	int pos = index_name_pos(istate, GITMODULES_FILE, strlen(GITMODULES_FILE));
-+
-+	if ((pos >= 0) && (pos < istate->cache_nr)) {
-+		struct stat st;
-+		if (lstat(GITMODULES_FILE, &st) == 0 &&
-+		    ce_match_stat(istate->cache[pos], &st, 0) & DATA_CHANGED)
-+			return 0;
-+	}
-+
-+	return 1;
- }
- 
- /*
-@@ -231,11 +238,6 @@ void gitmodules_config(void)
- 				    !memcmp(ce->name, GITMODULES_FILE, 11))
- 					gitmodules_is_unmerged = 1;
- 			}
--		} else if (pos < active_nr) {
--			struct stat st;
--			if (lstat(GITMODULES_FILE, &st) == 0 &&
--			    ce_match_stat(active_cache[pos], &st, 0) & DATA_CHANGED)
--				gitmodules_is_modified = 1;
- 		}
- 
- 		if (!gitmodules_is_unmerged)
-diff --git a/submodule.h b/submodule.h
-index 29a1ecd19..b14660585 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -33,7 +33,7 @@ struct submodule_update_strategy {
- };
- #define SUBMODULE_UPDATE_STRATEGY_INIT {SM_UPDATE_UNSPECIFIED, NULL}
- 
--extern int is_staging_gitmodules_ok(void);
-+extern int is_staging_gitmodules_ok(const struct index_state *istate);
- extern int update_path_in_gitmodules(const char *oldpath, const char *newpath);
- extern int remove_path_from_gitmodules(const char *path);
- extern void stage_updated_gitmodules(void);
--- 
-2.14.0.rc1.383.gd1ce394fe2-goog
+I like the general idea, what the file format can represent and how
+it does so, but I am a bit uneasy about how well this "stacked" part
+would work for desktop clients.  The structure presented here is for
+optimizing the "we want to learn about many (or all) refs" access
+pattern, which probably matters a lot on the server implementations,
+but I do not feel comfortable without knowing how much it penalizes
+"I want the current value of this single ref" access pattern.
+
+With the traditional "packed-refs plus loose" layout, no matter how
+many times a handful of selected busy refs are updated during the
+day, you'd need to open at most two files to find out the current
+value of a single ref (admittedly, the accessing of the second file,
+after we realize that there is no loose one, would be very costly).
+If you make a few commits on a topic branch A, then build a 100
+commit series on top of another topic branch B, finding the current
+value of A is still one open and read of refs/heads/A.
+
+With the reftable format, we'd need to open and read all 100
+incremental transactions that touch branch B before realizing that
+none of them talk about A, and read the next transaction file to
+find the current value of A.  To keep this number low, we'd need
+quite a frequent compaction.
+
+We can just declare that reftable format is not for desktop clients
+but for server implementations where frequent compaction would not
+be an annoyance to the users, but I'd wish we do not have to.
+
+
 
