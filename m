@@ -6,30 +6,30 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 399C520899
-	for <e@80x24.org>; Wed,  2 Aug 2017 22:25:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49ADD20899
+	for <e@80x24.org>; Wed,  2 Aug 2017 22:26:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751677AbdHBWZa (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Aug 2017 18:25:30 -0400
-Received: from cloud.peff.net ([104.130.231.41]:56274 "HELO cloud.peff.net"
+        id S1751719AbdHBW0J (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Aug 2017 18:26:09 -0400
+Received: from cloud.peff.net ([104.130.231.41]:56282 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751161AbdHBWZ3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Aug 2017 18:25:29 -0400
-Received: (qmail 3496 invoked by uid 109); 2 Aug 2017 22:25:29 -0000
+        id S1751058AbdHBW0I (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Aug 2017 18:26:08 -0400
+Received: (qmail 3573 invoked by uid 109); 2 Aug 2017 22:26:09 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 02 Aug 2017 22:25:29 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 02 Aug 2017 22:26:09 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14111 invoked by uid 111); 2 Aug 2017 22:25:49 -0000
+Received: (qmail 14128 invoked by uid 111); 2 Aug 2017 22:26:28 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Wed, 02 Aug 2017 18:25:49 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Wed, 02 Aug 2017 18:26:28 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Aug 2017 18:25:27 -0400
-Date:   Wed, 2 Aug 2017 18:25:27 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Aug 2017 18:26:06 -0400
+Date:   Wed, 2 Aug 2017 18:26:06 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/4] revision: add rev_input_given flag
-Message-ID: <20170802222527.mnn7e6hlyevsgk7a@sigill.intra.peff.net>
+Subject: [PATCH 3/4] rev-list: don't show usage when we see empty ref patterns
+Message-ID: <20170802222606.lbibwzygs5mr2xv5@sigill.intra.peff.net>
 References: <20170802222425.7xkoxniz2xbjlnku@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -40,60 +40,65 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Normally a caller that invokes setup_revisions() has to
-check rev.pending to see if anything was actually queued for
-the traversal. But they can't tell the difference between
-two cases:
-
-  1. The user gave us no tip from which to start a
-     traversal.
-
-  2. The user tried to give us tips via --glob, --all, etc,
-     but their patterns ended up being empty.
-
-Let's set a flag in the rev_info struct that callers can use
-to tell the difference.  We can set this from the
-init_all_refs_cb() function.  That's a little funny because
-it's not exactly about initializing the "cb" struct itself.
-But that function is the common setup place for doing
-pattern traversals that is used by --glob, --all, etc.
+If the user gives us no starting point for a traversal, we
+want to complain with our normal usage message. But if they
+tried to do so with "--all" or "--glob", but that happened
+not to match any refs, the usage message isn't helpful. We
+should just give them the empty output they asked for
+instead.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- revision.c | 1 +
- revision.h | 7 +++++++
- 2 files changed, 8 insertions(+)
+This will have a minor textual conflict with my reflog series, which
+touches the same conditional.
 
-diff --git a/revision.c b/revision.c
-index 6603af944..08d5806b8 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1168,6 +1168,7 @@ static void init_all_refs_cb(struct all_refs_cb *cb, struct rev_info *revs,
- {
- 	cb->all_revs = revs;
- 	cb->all_flags = flags;
-+	revs->rev_input_given = 1;
- }
+ builtin/rev-list.c       | 3 ++-
+ t/t6018-rev-list-glob.sh | 6 +++---
+ 2 files changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index 95d84d5cd..1e9cc5948 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -350,7 +350,8 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
  
- void clear_ref_exclusion(struct string_list **ref_excludes_p)
-diff --git a/revision.h b/revision.h
-index f96e7f7f4..c8f4e91f2 100644
---- a/revision.h
-+++ b/revision.h
-@@ -71,6 +71,13 @@ struct rev_info {
- 	const char *def;
- 	struct pathspec prune_data;
+ 	if ((!revs.commits &&
+ 	     (!(revs.tag_objects || revs.tree_objects || revs.blob_objects) &&
+-	      !revs.pending.nr)) ||
++	      !revs.pending.nr) &&
++	     !revs.rev_input_given) ||
+ 	    revs.diff)
+ 		usage(rev_list_usage);
  
-+	/*
-+	 * Whether the arguments parsed by setup_revisions() included any
-+	 * "input" revisions that might still have yielded an empty pending
-+	 * list (e.g., patterns like "--all" or "--glob").
-+	 */
-+	int rev_input_given;
-+
- 	/* topo-sort */
- 	enum rev_sort_order sort_order;
+diff --git a/t/t6018-rev-list-glob.sh b/t/t6018-rev-list-glob.sh
+index f8367b829..d3453c583 100755
+--- a/t/t6018-rev-list-glob.sh
++++ b/t/t6018-rev-list-glob.sh
+@@ -261,13 +261,13 @@ test_expect_failure 'rev-list should succeed with empty output on empty stdin' '
+ 	test_cmp expect actual
+ '
  
+-test_expect_failure 'rev-list should succeed with empty output with all refs excluded' '
++test_expect_success 'rev-list should succeed with empty output with all refs excluded' '
+ 	>expect &&
+ 	git rev-list --exclude=* --all >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_failure 'rev-list should succeed with empty output with empty --all' '
++test_expect_success 'rev-list should succeed with empty output with empty --all' '
+ 	(
+ 		test_create_repo empty &&
+ 		cd empty &&
+@@ -277,7 +277,7 @@ test_expect_failure 'rev-list should succeed with empty output with empty --all'
+ 	)
+ '
+ 
+-test_expect_failure 'rev-list should succeed with empty output with empty glob' '
++test_expect_success 'rev-list should succeed with empty output with empty glob' '
+ 	>expect &&
+ 	git rev-list --glob=does-not-match-anything >actual &&
+ 	test_cmp expect actual
 -- 
 2.14.0.rc1.586.g00244b0b6
 
