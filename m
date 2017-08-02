@@ -8,66 +8,64 @@ X-Spam-Status: No, score=-0.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SBL_CSS,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19AAC20899
-	for <e@80x24.org>; Wed,  2 Aug 2017 12:22:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0ED1920899
+	for <e@80x24.org>; Wed,  2 Aug 2017 12:31:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753208AbdHBMW1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Aug 2017 08:22:27 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:35398 "EHLO
-        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752368AbdHBMW0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Aug 2017 08:22:26 -0400
-Received: by mail-io0-f193.google.com with SMTP id f1so3596216ioj.2
-        for <git@vger.kernel.org>; Wed, 02 Aug 2017 05:22:25 -0700 (PDT)
+        id S1753117AbdHBMbf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Aug 2017 08:31:35 -0400
+Received: from mail-it0-f68.google.com ([209.85.214.68]:36730 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752370AbdHBMbf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Aug 2017 08:31:35 -0400
+Received: by mail-it0-f68.google.com with SMTP id r9so3755279ita.3
+        for <git@vger.kernel.org>; Wed, 02 Aug 2017 05:31:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:subject:from:to:cc:in-reply-to:references:date
          :mime-version:content-transfer-encoding;
-        bh=Wo+0FGe6Ryh/BdEO4NeyFziFcXM85domqB7x68bIbM0=;
-        b=Nq8eooFsqbvpgw7BhuT2D1FFxXp4YzZkqI1XwsbYj9h+DaMSNy0mDcZaDLl8KERXxv
-         9mTfPxM6kZJVnuWNyNtJmxAG+7m3JX5FpkAK5n68Lpp33VkQ6O+n5YvtSmfrQi61H9TJ
-         XG1cL4ywQsCm63sgnlOVI1wttjHQ40SNMSpqWDUUsB3/n+RDkQOd2yrmBTopPwLV8fkl
-         s4u2KktCwoLdvVFaz/Pl0CF/KiWogGxdyvPUEXqXu2en4KI6wiQAp3Shh7sfbEq84BLv
-         Uj5iXJ4JVJQIjPiQxTw17g499YtWnneGzTTowQ4LnuYya47iA+kjSHrXPYS4HMSuGCh9
-         JriA==
+        bh=DDA1IRjeyEcu7pFoY3J3mDEUFvgZ9P3N7xgxrwuFS8k=;
+        b=PTXkQGUHjHESYNbJtTDl3/ikG+Xa6J3Arp5N0aOOjJTZGkI08iigF5cf9q2Ij3di2H
+         FQhEectR8Bzn52w2SvSz5SgCL7W47hRdDnpDeRNw8atqMblzXnXvXfNywDkoOQsdoNr+
+         iRilELGOkqVegIFyHOAHNQEB3n/tSrQO46MWDFWYZYMewOxkubmp2AweVr1VTqDvUY+q
+         C8EV1uFz8my9FdNEVIAhnyjf/G7UiyKRFLzZFEGYV37AIrd5588vt41GSYoQJSiQVJo/
+         U0Djm4GZhPdJkqpJBX/zfyGGDv7WpVe0s/4ZhCcDolAu5v7TH9dXKtW3vat6D8gPHkrc
+         Ewvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:subject:from:to:cc:in-reply-to
          :references:date:mime-version:content-transfer-encoding;
-        bh=Wo+0FGe6Ryh/BdEO4NeyFziFcXM85domqB7x68bIbM0=;
-        b=D0mp7tHNXyhXRHav/+GVxpdpj0JUBhytK68ZZDd8fY1szVvywKRZhrDjwarL2UTT6O
-         mI9R9d/urvo6MoZk7HhknH+t5elV+Uf7kMvx8TEpwzb/1yvMnOJT5Kl9Upy2Ad3RCaxt
-         gTe+R3vfXFblyh4DtExTi/nfzY/udMbI5Vq0x+0DYO8iBP7JFql9ByNf/1CVkmnmX4c2
-         JqumMe55u3LwzLc5sqyI2yvZWEct9LVmNWkRquOZcQMcIvfGirba1jY+j3vXmzhw7MVG
-         kzyp5/Fzvk6Rv/S+3FXlIGflzOP6oPgQITC8zQVuLaI6n3t/ZBRcpqsfzRVfloyIBZnT
-         q1zg==
-X-Gm-Message-State: AIVw110qHIGv2bRDNzlSj9wBeAACyzSyiiXyEbD0IoL+1sDExMYsdFiU
-        UOGRurhUNWVzJQ==
-X-Received: by 10.107.130.33 with SMTP id e33mr25568541iod.322.1501676545595;
-        Wed, 02 Aug 2017 05:22:25 -0700 (PDT)
+        bh=DDA1IRjeyEcu7pFoY3J3mDEUFvgZ9P3N7xgxrwuFS8k=;
+        b=Cz+9fBmYkXMlaZoXbjQZOMKdQt/s5G2ck2IX/sqxcAc8z98mbKGWXEKEifHYZbCcZE
+         VO+JzDN2s2ZnTQp683a//QemwIw6ozVayW+9eofkaH839SpT1xIl4afIt8nW2KW1e5kc
+         ayJzNvR0s8wFtbrez9jX1OqS9gbHD35xyWu5SmNSqbE6BCTVD9ShnqK4bJwVv3qHiG65
+         MUN5mzVm0KI3/HTFiNSCl58BD7YlhSQ20hjAMZXcn19CzHmG+KoJmlIobiZeSJ098P5C
+         p8r39Mr2eT0IAfnoas0uEh0Dd1/6lMRhrl8fuRDmx+WymYQ2KAS0iBtLpi9+acFmDEQ/
+         M+EA==
+X-Gm-Message-State: AIVw113QhFLppfujhaCxIM2nBCZTbftnX5p9z4ivwWHt3nkmk27j3S37
+        0b5Vw/aJ6uslWA==
+X-Received: by 10.36.160.72 with SMTP id o69mr5403569ite.150.1501677094472;
+        Wed, 02 Aug 2017 05:31:34 -0700 (PDT)
 Received: from unique-pc ([182.73.109.146])
-        by smtp.googlemail.com with ESMTPSA id b83sm14132387iod.35.2017.08.02.05.22.21
+        by smtp.googlemail.com with ESMTPSA id l193sm1978826itl.13.2017.08.02.05.31.29
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 02 Aug 2017 05:22:25 -0700 (PDT)
-Message-ID: <1501676577.1957.4.camel@gmail.com>
-Subject: Re: [RFC] The correct and consistent alternative to quote a
- command ?
+        Wed, 02 Aug 2017 05:31:33 -0700 (PDT)
+Message-ID: <1501677122.1957.8.camel@gmail.com>
+Subject: Re: [PATCH 2/2] doc: add another way to identify if a patch has
+ been merged
 From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
 To:     Stefan Beller <sbeller@google.com>
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Philip Oakley <philipoakley@iee.org>,
         "git@vger.kernel.org" <git@vger.kernel.org>
-In-Reply-To: <CAGZ79kY_NdBe1QjJWrLUkfDOk8Zrnopa945F1xBq=WFDNpRWMg@mail.gmail.com>
-References: <8256C530C7DE43D7BC72BFB327DF4726@PhilipOakley>
-         <20170730161816.2412-1-kaarticsivaraam91196@gmail.com>
-         <CAGZ79kYg9jQ3kaKnNEJCH9fde=ar1KPiUr7=X+TguNc0Twqdzg@mail.gmail.com>
-         <1501603171.1671.8.camel@gmail.com>
-         <CAGZ79kY_NdBe1QjJWrLUkfDOk8Zrnopa945F1xBq=WFDNpRWMg@mail.gmail.com>
+In-Reply-To: <CAGZ79kZgV1=2HcYeXyoCy2Jk6v__trvTh_-rH+kbFX7fgWziyw@mail.gmail.com>
+References: <CAGZ79kYg9jQ3kaKnNEJCH9fde=ar1KPiUr7=X+TguNc0Twqdzg@mail.gmail.com>
+         <20170801160539.5587-1-kaarticsivaraam91196@gmail.com>
+         <20170801160539.5587-2-kaarticsivaraam91196@gmail.com>
+         <CAGZ79kZgV1=2HcYeXyoCy2Jk6v__trvTh_-rH+kbFX7fgWziyw@mail.gmail.com>
 Content-Type: text/plain; charset="ISO-8859-15"
-Date:   Wed, 02 Aug 2017 17:52:57 +0530
+Date:   Wed, 02 Aug 2017 18:02:02 +0530
 Mime-Version: 1.0
 X-Mailer: Evolution 3.22.6-1 
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Cyberoam-smtpxy-version: 1.0.6.3
 X-Cyberoam-AV-Policy: default
 X-CTCH-Error: Unable to connect local ctasd
@@ -76,24 +74,34 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 2017-08-01 at 10:38 -0700, Stefan Beller wrote:
-> On Tue, Aug 1, 2017 at 8:59 AM, Kaartic Sivaraam wrote:
-> > I assume you mean the consistency in quoting i.e., you're expecting the
-> > patch to use (") instead of (') for quoting. Correct me, if I'm wrong.
+On Tue, 2017-08-01 at 10:46 -0700, Stefan Beller wrote:
+> Actually I am slightly negative on this one, because of
+> occurrences like [1].
 > 
-> Actually I did not imply any expectation on the outcome, because I
-> do not know what the consistency end game looks like for this issue.
+> Our SubmittingPatches is already considered *too long* for most people
+> who just want to drop a drive-by patch.
 > 
-> So maybe we'd want to go with the currently most used way?
-On scanning through Documentation/SubmittingPatches, I saw that most of
-the commands were quoted using double quotes and chose to use it for
-this patch. I'm not sure if it's the right one to use.
+> Adding more knowledge (which btw is about general git usage and not
+> specific to our development workflow; you'd find the same tip in the
+> kernel community).
+> 
+> I wonder if we need a document that describes workflows.
+> (Oh, look we have 'man gitworkflows'! I did not know)
+> 
+> So maybe we want to cut a lot of workflow related commendatory from
+> the SubmitingPatches and then encourage to read such man page?
+> 
+That's right. Maybe Documentation/SubmittingPatches needs a revamp to
+be one-time contributor friendly? Maybe introducing a "gist" for people
+who do not have the time to read the whole document, might be of help?
 
-Changing the subject of this mail; hoping some one who has thoughts
-about this would dive-in.
-
-> (Are there only three? (a) with dash, (b) with single quotes and
-> (c) with double quotes?)
+> [1 ]https://public-inbox.org/git/CA+dzEB=cDvp7ZS8x+p+U-5NbK3SNd0FPyj_wP=gvi8mJi6D2ag@mail.gmail.com/
+> 
+> 
+> 
+> > --
+> > 2.14.0.rc1.434.g6eded367a
+> > 
 
 -- 
 Kaartic
