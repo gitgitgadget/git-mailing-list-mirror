@@ -2,103 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 49ADD20899
-	for <e@80x24.org>; Wed,  2 Aug 2017 22:26:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EAD6B20899
+	for <e@80x24.org>; Wed,  2 Aug 2017 22:29:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751719AbdHBW0J (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Aug 2017 18:26:09 -0400
-Received: from cloud.peff.net ([104.130.231.41]:56282 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751058AbdHBW0I (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Aug 2017 18:26:08 -0400
-Received: (qmail 3573 invoked by uid 109); 2 Aug 2017 22:26:09 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 02 Aug 2017 22:26:09 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14128 invoked by uid 111); 2 Aug 2017 22:26:28 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Wed, 02 Aug 2017 18:26:28 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Aug 2017 18:26:06 -0400
-Date:   Wed, 2 Aug 2017 18:26:06 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/4] rev-list: don't show usage when we see empty ref patterns
-Message-ID: <20170802222606.lbibwzygs5mr2xv5@sigill.intra.peff.net>
-References: <20170802222425.7xkoxniz2xbjlnku@sigill.intra.peff.net>
+        id S1751656AbdHBW3w (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Aug 2017 18:29:52 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64644 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751161AbdHBW3v (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Aug 2017 18:29:51 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 74690A0F66;
+        Wed,  2 Aug 2017 18:29:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=1lI0rYLLZasMC361pXNMpVrg34M=; b=FyV/qs
+        //rYhY+mQP3lDscCZ3MZHKEEk2TzgvKn/NhcD+XDEt5xQKnNdzcrZ5NKfXEWThJZ
+        JVhu9HCuT/Zoh7Bw2I1mWBGxcERwOJ3aENBTlyzB2rsYhyf8dz1epq6+YwUdx+tU
+        8DusUvwyX5MVAejyCJ+LjHSnrumjSBqEumAGo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=vgdoDPOzwiDunqZcaV10ukcXTe9aUXWX
+        pokm8It8+pEglmZzROjhQSX70ShGVc87Yu34chfR3SV86HAQ8VvA/DLzjOtgKf/p
+        euedIk7Fw5U+TcEl3AC0e3LsFI9PYxEbflARR9zGcZTzfzRIW437lKYWrFXCtaDG
+        sALMc2m2GNs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6D1AAA0F65;
+        Wed,  2 Aug 2017 18:29:43 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CD128A0F64;
+        Wed,  2 Aug 2017 18:29:42 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood@talktalk.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH 6/6] cherry-pick/revert: reject --rerere-autoupdate when continuing
+References: <20170802104420.12809-1-phillip.wood@talktalk.net>
+        <20170802104420.12809-7-phillip.wood@talktalk.net>
+        <xmqqpocdr5tu.fsf@gitster.mtv.corp.google.com>
+Date:   Wed, 02 Aug 2017 15:29:41 -0700
+In-Reply-To: <xmqqpocdr5tu.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Wed, 02 Aug 2017 14:57:17 -0700")
+Message-ID: <xmqqlgn1r4bu.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170802222425.7xkoxniz2xbjlnku@sigill.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 147AE60C-77D2-11E7-9DA5-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If the user gives us no starting point for a traversal, we
-want to complain with our normal usage message. But if they
-tried to do so with "--all" or "--glob", but that happened
-not to match any refs, the usage message isn't helpful. We
-should just give them the empty output they asked for
-instead.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-This will have a minor textual conflict with my reflog series, which
-touches the same conditional.
+> Phillip Wood <phillip.wood@talktalk.net> writes:
+>
+>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>
+>> cherry-pick and revert should not accept --[no-]rerere-autoupdate once
+>> they have started.
+>
+> Hmph, why shouldn't they?  In other words, shouldn't the usual "try
+> to carry forward from the original invocation (saved in the state
+> file), but allow overriding from the command line" rule apply?
 
- builtin/rev-list.c       | 3 ++-
- t/t6018-rev-list-glob.sh | 6 +++---
- 2 files changed, 5 insertions(+), 4 deletions(-)
+Actually, I do not care _too_ deeply between
 
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 95d84d5cd..1e9cc5948 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -350,7 +350,8 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
- 
- 	if ((!revs.commits &&
- 	     (!(revs.tag_objects || revs.tree_objects || revs.blob_objects) &&
--	      !revs.pending.nr)) ||
-+	      !revs.pending.nr) &&
-+	     !revs.rev_input_given) ||
- 	    revs.diff)
- 		usage(rev_list_usage);
- 
-diff --git a/t/t6018-rev-list-glob.sh b/t/t6018-rev-list-glob.sh
-index f8367b829..d3453c583 100755
---- a/t/t6018-rev-list-glob.sh
-+++ b/t/t6018-rev-list-glob.sh
-@@ -261,13 +261,13 @@ test_expect_failure 'rev-list should succeed with empty output on empty stdin' '
- 	test_cmp expect actual
- '
- 
--test_expect_failure 'rev-list should succeed with empty output with all refs excluded' '
-+test_expect_success 'rev-list should succeed with empty output with all refs excluded' '
- 	>expect &&
- 	git rev-list --exclude=* --all >actual &&
- 	test_cmp expect actual
- '
- 
--test_expect_failure 'rev-list should succeed with empty output with empty --all' '
-+test_expect_success 'rev-list should succeed with empty output with empty --all' '
- 	(
- 		test_create_repo empty &&
- 		cd empty &&
-@@ -277,7 +277,7 @@ test_expect_failure 'rev-list should succeed with empty output with empty --all'
- 	)
- '
- 
--test_expect_failure 'rev-list should succeed with empty output with empty glob' '
-+test_expect_success 'rev-list should succeed with empty output with empty glob' '
- 	>expect &&
- 	git rev-list --glob=does-not-match-anything >actual &&
- 	test_cmp expect actual
--- 
-2.14.0.rc1.586.g00244b0b6
+ * You can only give "--[no-]rerere-autoupdate" at the beginning and
+   cannot change your mind later.
 
+and
+
+ * The "--[no-]rerere-autoupdate" you give at the beginning is used
+   throughout your multi-commit cherry-pick session, but you can
+   give an opposite one from the command line when you say
+   "--continue", and in that case it takes effect only for a single
+   commit.
+
+If I understand correctly, the former is what 5-6/6 implements.  The
+latter makes it more in line with how "am -3" followed by "am --no-3
+--continue" behaves.
+
+Thanks.
