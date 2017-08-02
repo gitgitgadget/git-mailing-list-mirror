@@ -6,68 +6,112 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D099E20899
-	for <e@80x24.org>; Wed,  2 Aug 2017 16:35:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D79420899
+	for <e@80x24.org>; Wed,  2 Aug 2017 16:51:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751133AbdHBQf2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Aug 2017 12:35:28 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60122 "EHLO
+        id S1752492AbdHBQvn (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Aug 2017 12:51:43 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51752 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751162AbdHBQf2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Aug 2017 12:35:28 -0400
+        with ESMTP id S1751964AbdHBQvn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Aug 2017 12:51:43 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 772079B531;
-        Wed,  2 Aug 2017 12:35:20 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6FBD98FCFC;
+        Wed,  2 Aug 2017 12:51:42 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=b6RRWS+kxv92crjP/v7QZ0ARQIw=; b=xWOScO
-        p7iwgfruxiqRyrcQivg/NZSLZj9rUTRNwl1j+DGZlkXG1MqrJKycHR35F2U1y1Ag
-        k8OHjEM7HgZaRYboygrmBlr/0RbQdjGcUr8NQy6oJNc2huV/NQmCDbTcLX1FzPmg
-        /+Lhs91K7gn3zU8cak2iuo3uvjaCRG91v3KvY=
+        :content-type; s=sasl; bh=gldMVSmwEn005ny/HlRScxWjS5A=; b=rDTfC9
+        3jLOweKGXWKjWVCSFiu0QcEksbjdPmhBKNjRhsRfnOks7IfYhRxeAsUGWLJZoW5F
+        0p8rYXYMTlNF10OnKIv8UxI0H8HSnNR3fWkd/PjWk6yIL5y0npOYLgS4S46e5r8R
+        LTRLV0x5cvGtru/QEwNV4VTWVkocAFoTz/mAk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=XZo1R2IPPnTAc10DSoFey/GUFmWK6NM6
-        E0BxtDnhGrI2b2x8z/LQXtbQAW5GD5QmodECE1smyDHR8BgIj5BUNIqtFXqTmnQY
-        u60x0y3HRCo6qo7WHIIjUZcwdWHyCJWD/rlxKoB54bUo0tSvzlycMd1ruYdYr6lL
-        CElZ2w53RWk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6DC369B52F;
-        Wed,  2 Aug 2017 12:35:20 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=gbAhYVgL8UVXPoyDbwKaRxEoMsLu3Dm+
+        ptgd8v3hKrGgxnpLw/ETm7YfF0pQ9pg+5qFflj6TNjBogwnBo/B8KDmjNJCsP7iC
+        4jJjwWAQTVjJY1tCMRHv6YG1J7NTKrzUQgq3vPFvr2CteHk/jJWLM6+XcAU9b67v
+        STCInRky/So=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 66B0E8FCFB;
+        Wed,  2 Aug 2017 12:51:42 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 833FB9B52D;
-        Wed,  2 Aug 2017 12:35:19 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CBE6F8FCFA;
+        Wed,  2 Aug 2017 12:51:41 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Olaf Hering <olaf@aepfle.de>
-Cc:     git@vger.kernel.org
-Subject: Re: git send-email -v n fails
-References: <20170802134635.GA19311@aepfle.de>
-Date:   Wed, 02 Aug 2017 09:35:18 -0700
-In-Reply-To: <20170802134635.GA19311@aepfle.de> (Olaf Hering's message of
-        "Wed, 2 Aug 2017 15:46:35 +0200")
-Message-ID: <xmqqy3r2c4hl.fsf@gitster.mtv.corp.google.com>
+To:     Shawn Pearce <spearce@spearce.org>
+Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
+        git <git@vger.kernel.org>, David Borowitz <dborowitz@google.com>
+Subject: Re: reftable [v4]: new ref storage format
+References: <CAJo=hJv7scc1L0_MdRkFeLAJGjYm2UkTFNOgj2e4+9Zj7KSiiQ@mail.gmail.com>
+        <CAMy9T_HCnyc1g8XWOOWhe7nN0aEFyyBskV2aOMb_fe+wGvEJ7A@mail.gmail.com>
+        <CAJo=hJvFRJ7honjenB6sUofK14xiUXGwJ1DQHZyTauVKA5v5vw@mail.gmail.com>
+        <CAMy9T_HUoD4--s1gNTUjnCgdiAqfYbX-GSqygDwNO-JRwdh4NQ@mail.gmail.com>
+        <CAJo=hJv=zJvbzfAZwspxECXrnBJR4XfJbGZegsNUCx=6uheO2Q@mail.gmail.com>
+        <20170802092846.u4lyiogvvl7ezdfq@sigill.intra.peff.net>
+        <CAJo=hJu1rud5pEZ93HDty1qyaCOHmwn89aEvPFe2ER0JD1ExwQ@mail.gmail.com>
+Date:   Wed, 02 Aug 2017 09:51:40 -0700
+In-Reply-To: <CAJo=hJu1rud5pEZ93HDty1qyaCOHmwn89aEvPFe2ER0JD1ExwQ@mail.gmail.com>
+        (Shawn Pearce's message of "Wed, 2 Aug 2017 08:17:29 -0700")
+Message-ID: <xmqqshh9diar.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 9291590E-77A0-11E7-B7B4-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: DC0FE8D2-77A2-11E7-9E81-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Olaf Hering <olaf@aepfle.de> writes:
+Shawn Pearce <spearce@spearce.org> writes:
 
-> I think send-email should understand all options of format-patch.
+> On Wed, Aug 2, 2017 at 2:28 AM, Jeff King <peff@peff.net> wrote:
+>> On Tue, Aug 01, 2017 at 07:38:37PM -0700, Shawn Pearce wrote:
+>>
+>>> > OBJS blocks can also be
+>>> > unbounded in size if very many references point at the same object,
+>>> > thought that is perhaps only a theoretical problem.
+>>>
+>>> Gah, I missed that in reftable. The block id pointer list could cause
+>>> a single object id to exceed what fits in a block, and that will cause
+>>> the writer to fail unless its caller sets the block size larger. I
+>>> basically assumed this overflow condition is very unlikely, as its not
+>>> common to have a huge number of refs pointing to the same object.
+>>
+>> It's actually quite common for us, as we have big shared-object repos
+>> that contain a copy of the refs of all of their child repos (for
+>> reachability during packing, etc). So tags, where the value is the same
+>> in each fork, you have one ref per fork pointing to it.
+>>
+>> Just peeking at torvalds/linux, we have some objects with ~35K refs
+>> pointing to them (e.g., the v2.6.11 tag).
+>
+> Oy. I'll bet that every occurrence winds up in its own block due to
+> the layout of the namespace, and so the obj block list needs 35k
+> varint pointers. That requires a larger block size if it has any
+> chance of fitting into the reftable format.
+>
+> Another option is disable the obj table for these shared-object repos.
+> Its an optional part of the format and can be omitted if the reader
+> isn't likely to need to lookup by SHA-1, or is willing to pay the
+> brute force cost of scanning every ref.
 
-I actually think it was a mistake to allow send-email drive
-format-patch ;-).
+I am wondering if we need the reverse look-up for a regular
+repository that allows "fetch anything at the tip".  It only needs
+"I got this request for an object name--does it sit at the tip of
+any ref?  Yes/No".  It does not need to know exactly which ref
+points at the asked object.
 
-> At least for '-v n' this fails, one has to type '--reroll-count n' as a
-> workaround with git version 2.13.3:
+Yes, I know Gerrit has its own ACL that limits the visibility of
+refs so the question becomes "does it sit at the tip of any ref that
+is visible to the current user?".  An Yes/No answer for "any ref?"
+may still give you a short-cut when rejecting, but you'd then need
+to scan to give a positive answer without a full reverse mapping.
 
-I wonder if "-v2" would work here, though.  It seems that the hack
-send-email uses to "understand" format-patch options (i.e. the
-subroutine is_format_patch_arg) is not prepared to take an option
-with parameter.
+For the use of "consolidated object store for all forks", I do not
+think it makes sense to even have "Does it sit at a tip, Yes/No"
+information.  Even when Linus's repository and a fork share the same
+object store, I do not think anybody expects to be able to fetch a
+commit at the tip of a branch in the fork but not in Linus's
+repository.
 
