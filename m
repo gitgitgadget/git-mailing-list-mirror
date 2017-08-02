@@ -2,101 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 06F4820899
-	for <e@80x24.org>; Wed,  2 Aug 2017 15:45:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E3A6D20899
+	for <e@80x24.org>; Wed,  2 Aug 2017 15:56:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751884AbdHBPpH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Aug 2017 11:45:07 -0400
-Received: from mout.web.de ([212.227.17.12]:65061 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751177AbdHBPpG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Aug 2017 11:45:06 -0400
-Received: from [192.168.209.18] ([195.198.252.176]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0Lu52Q-1dVXmX1m4s-011TEQ; Wed, 02
- Aug 2017 17:44:59 +0200
-Subject: Re: core.autocrlf=true causes `git apply` to fail on patch generated
- with `git diff-index HEAD --patch`
-To:     Anthony Sottile <asottile@umich.edu>
-References: <CA+dzEBmsgUjmf5fUmeiwS=Q81OgpL6K5p=8dBuTjuZ4XE1V5SA@mail.gmail.com>
- <287407ac-b0d0-ef24-4950-0982a2db9bed@web.de>
- <CA+dzEB=3OMw_YM4K_a8dyDG_FwGavU382stXrEOkbYoyM4DSZQ@mail.gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <cceaf377-73e0-e733-20ba-c4e547226382@web.de>
-Date:   Wed, 2 Aug 2017 17:44:50 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S1752100AbdHBP4I (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Aug 2017 11:56:08 -0400
+Received: from mail-qt0-f169.google.com ([209.85.216.169]:35305 "EHLO
+        mail-qt0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751773AbdHBP4H (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Aug 2017 11:56:07 -0400
+Received: by mail-qt0-f169.google.com with SMTP id p3so29337424qtg.2
+        for <git@vger.kernel.org>; Wed, 02 Aug 2017 08:56:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:subject:message-id:reply-to:mime-version
+         :content-disposition:user-agent;
+        bh=g1YbtWN2BjeerTaJxy/Szvp3dmNV9CIVLiYiEW+/GCc=;
+        b=Qto3h1BHTNgdqdFmNAYvsUwAsdTSoaqYcZXp6/fAblx8EearRNFaGGlHYBgT+wCpSi
+         +X1OKptf67087epwmy82gFVthQsM/+s2WCaHTM+Pu2oYJiVskknkHmM3DdR9E53PVoHx
+         iEYMAwL5h/YuJJg5UVxV4jJn7HDikEVoaG1/d3EuXiTTd+vOB//Obd9436On2H7cAwrH
+         dU6m49IHeCxJVLjlE4vvV2SFB/WwwTxghygFXBxiAvH8tYmgMukeZq0NNOimkIUg8AkH
+         chs9SzehA1c1FzCFoB4zNlP1nVs2fgqwWEYCT/ohbmLLl0giVhz7dSVQi28m95brUQat
+         QfxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:reply-to
+         :mime-version:content-disposition:user-agent;
+        bh=g1YbtWN2BjeerTaJxy/Szvp3dmNV9CIVLiYiEW+/GCc=;
+        b=V0Dwfu0qXweICUFI2AXvtIOlE6Z9+kz+j5MpwySRYODtstNKVpQPN0erFUebKPOgiX
+         0gPsX0RqPF744zZsTzUC+WjprrCFxTv9pAqTdJaoRkow8d5JxZ1fZI4meeoRrkmEiyTL
+         tW+cmqAfxI9Q6dhnvYb2rVJrlKD7UV4nbmENVE0e+cMelqi2iOXeBfe1Cktv5Dy/ed4Y
+         igVB0OR9mQZtqA2H+dSNbDxLdJFli0CZ+JCzP3EcW9g6eznN8gMBOANUY1kAuK2Kx2G1
+         dvOIysvmjrdqL7n4eKUgD+p5b3qcfsC2vF/wK3PPI+pIPyXfEeXS8H1K5eOisWK9Yp31
+         ehhQ==
+X-Gm-Message-State: AIVw111WMc6uf9L/yZvLuH2R4u2N89VhbVxfCwN+p0tjrJ4LhJ9c5FkW
+        mrRos05EsLF4gqibs8Q=
+X-Received: by 10.237.32.68 with SMTP id 62mr6705519qta.164.1501689366661;
+        Wed, 02 Aug 2017 08:56:06 -0700 (PDT)
+Received: from localhost (tripoint.kitware.com. [66.194.253.20])
+        by smtp.gmail.com with ESMTPSA id m123sm23512471qke.12.2017.08.02.08.56.06
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 02 Aug 2017 08:56:06 -0700 (PDT)
+Date:   Wed, 2 Aug 2017 11:56:05 -0400
+From:   Ben Boeckel <mathstuf@gmail.com>
+To:     git@vger.kernel.org
+Subject: git bisect "commits left" miscount
+Message-ID: <20170802155605.GA31021@megas.kitware.com>
+Reply-To: mathstuf@gmail.com
 MIME-Version: 1.0
-In-Reply-To: <CA+dzEB=3OMw_YM4K_a8dyDG_FwGavU382stXrEOkbYoyM4DSZQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:6ZpstacGJC6p8bt5PpmsD1GejjI6f01jQKbrV2++toKE/umWZTR
- CjBGZLLFM+1/3f5y3O5ZUUi8EcTpp85uZKfIuq3j+iIshEiMAYqff/i/qJm8dhIldsgcMcJ
- l6LovFOgu8fpyhEpVb2Zbi+yMsZYWz+kQ8E+mjHqcraELbzke9Y8y/0YLcwtOnzrVLQqqoV
- mi72GQYZjjbv1FeePWzdQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:wqTfMgEQklE=:BwDV5LFKMaaDiQUQgxb8fx
- z6jIz9Jrr4btZ9W1VDgrEMgzfQCUquJScp6C7ITHm4G6Dno6SPF94F5VHSVM09dVxcJHkDkLM
- MqNocFT+y4kizLCaIIzBI/ntnSRodtLbq1sUwj2d9uNExg1Bh2d4oSnPvWes+CaM+l6XeL1Fs
- aL8/5FEOHC8/NEEloGMhOR8ASnMpUdWoxIwMObf5q0q25IO1jK4MFTUIRcOUHzsKRJpq5ZpN/
- IVvl21ZYUiWr0/649v6H7SDlbNlEyYkR5+So2aiUJqdlkwvaYkBhKJdKR4MbDMRJo7ULRVexB
- Ni9HGpKdsQotmA+9mzHWIZGwwUXF6UDTtHaYiIr2LNlngUg1oYCWqKmqRHCXB/UavdGqoudmm
- 4gYFXlQ69jA9BWSdoz8x9fTaEyXtueqJelDfaTbqMwA8o8roq+k1AtQpAY4MmJlK5gpRm0YdD
- TN6Q7ZgUTEqK3z4pDa2kKbnZjR11bVbe5V2d+j61DyhLn3KzooeLlx7JqgOi5ift0RWky5iBd
- CyS0vr+KAaRx/NaEMduhro8URha6PjeHKU6qh/xi910m271AA2XwQVfYQ8kTBoQz/0xeqHuTw
- pmsC8zoSugWMTFFM4YHCWr7Nnn3vaTHQcwV3SMq3EUzc+Q6T7Rb/RhxiLXbDZCp/ag+5P5/Yc
- mlfqLMv23VopBUeHKwGOm5sSz6gChDDOojbPmM6AvB9YrysRwXKDXlz+wa2hCwvZo1wyzIZwI
- t7ZI2/inH5VP15YUwOeBvNKpdjUvEYHkwx2pMdwi6CQR+ydVXhboUydDgIgK8qWlKvRbFFJu6
- edjrJVaAqEa8v47XipLnZ6JdsnEVAI8+UVdiV68TA3NoAtsc6A=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+User-Agent: Mutt/1.8.3 (2017-05-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
+When bisecting given a set of paths, git counts the number of remaining
+commits improperly. Here's example output (based in the git.git
+repository):
 
-On 08/01/2017 10:58 PM, Anthony Sottile wrote:
-> Here's where I'm hitting the problem described:
-> https://github.com/pre-commit/pre-commit/issues/570
->
-> Note that `git -c core.autocrlf=false` apply patch fixes this
-> situation, but breaks others.
+    % git bisect start -- sha1_file.c
+    % git bisect good v2.10.0
+    % git bisect bad v2.10.3
+    Bisecting: 1 revision left to test after this (roughly 1 step)
+    [f7f0a87e0a27a1baaf782af7cec18fd23fdf35de] Merge branch 'jc/verify-loose-object-header' into maint
+    % git bisect good
+    Bisecting: 0 revisions left to test after this (roughly 0 steps)
+    [5827a03545663f6d6b491a35edb313900608568b] fetch: use "quick" has_sha1_file for tag following
+    % git bisect good
+    Bisecting: -1 revisions left to test after this (roughly 0 steps)
+    [39000e849970a554a257577dcb2fb844a523a1d1] Merge branch 'jk/fetch-quick-tag-following' into maint
+    % git bisect good
+    No testable commit found.
+    Maybe you started with bad path parameters?
 
-[]
-I wasn't thinking of that - and thanks for the detailed report.
-I seems as there are 3 things to be done:
-- Make a workaround in your scripts/tools. It seems as if that is 
-already done.
-- Fix Git.
-   My very first investigation shows that a patch like this could fix 
-the problem:
+Note that it ends up with -1 revisions left and it doesn't end up with a
+"this commit is the first bad commit" message.
 
-diff --git a/apply.c b/apply.c
-index f2d599141d..66b8387360 100644
---- a/apply.c
-+++ b/apply.c
-@@ -2278,6 +2278,8 @@ static int read_old_data(struct stat *st, const 
-char *path, struct strbuf *buf)
-         case S_IFREG:
-                 if (strbuf_read_file(buf, path, st->st_size) != 
-st->st_size)
-                         return error(_("unable to open or read %s"), path);
-+               if (would_convert_to_git(&the_index, path))
-+                       read_cache();
-                 convert_to_git(&the_index, path, buf->buf, buf->len, 
-buf, 0);
-                 return 0;
-         default:
-----------------
-   I will probably do some more investigations if this is the core 
-problem, so it will take some days or weeks.
+Should git find the newest ancestors(s) of the given bad commit which
+modifies the given paths and start counting from there?
 
-- Convince people to normalize their repos and convert all CRLF in the 
-repo into LF.
-    This may take even longer.
+I haven't bisected to find out when this was introduced yet (first seen
+with 2.9.4; confirmed with 2.14.0-rc1).
 
+Thanks,
 
+--Ben
