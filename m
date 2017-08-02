@@ -2,147 +2,199 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5CDF61F991
-	for <e@80x24.org>; Wed,  2 Aug 2017 09:28:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 72B7D1F991
+	for <e@80x24.org>; Wed,  2 Aug 2017 10:44:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752527AbdHBJ2u (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Aug 2017 05:28:50 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55358 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751142AbdHBJ2s (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Aug 2017 05:28:48 -0400
-Received: (qmail 4641 invoked by uid 109); 2 Aug 2017 09:28:48 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 02 Aug 2017 09:28:48 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7460 invoked by uid 111); 2 Aug 2017 09:29:08 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Wed, 02 Aug 2017 05:29:08 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Aug 2017 05:28:46 -0400
-Date:   Wed, 2 Aug 2017 05:28:46 -0400
-From:   Jeff King <peff@peff.net>
-To:     Shawn Pearce <spearce@spearce.org>
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>, git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        David Borowitz <dborowitz@google.com>
-Subject: Re: reftable [v4]: new ref storage format
-Message-ID: <20170802092846.u4lyiogvvl7ezdfq@sigill.intra.peff.net>
-References: <CAJo=hJv7scc1L0_MdRkFeLAJGjYm2UkTFNOgj2e4+9Zj7KSiiQ@mail.gmail.com>
- <CAMy9T_HCnyc1g8XWOOWhe7nN0aEFyyBskV2aOMb_fe+wGvEJ7A@mail.gmail.com>
- <CAJo=hJvFRJ7honjenB6sUofK14xiUXGwJ1DQHZyTauVKA5v5vw@mail.gmail.com>
- <CAMy9T_HUoD4--s1gNTUjnCgdiAqfYbX-GSqygDwNO-JRwdh4NQ@mail.gmail.com>
- <CAJo=hJv=zJvbzfAZwspxECXrnBJR4XfJbGZegsNUCx=6uheO2Q@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAJo=hJv=zJvbzfAZwspxECXrnBJR4XfJbGZegsNUCx=6uheO2Q@mail.gmail.com>
+        id S1752852AbdHBKow (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Aug 2017 06:44:52 -0400
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:10764 "EHLO
+        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752577AbdHBKou (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Aug 2017 06:44:50 -0400
+Received: from lindisfarne.localdomain ([92.22.28.33])
+        by smtp.talktalk.net with SMTP
+        id cr8nd8nSUiSHacr8zdwinx; Wed, 02 Aug 2017 11:44:49 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
+        t=1501670689; bh=i+Nlp9PF1AfHZQt+teuErXgbycfJzIqYojYXmVOHy3s=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
+        b=i8uEg2uzyPQMzWxAX0k7kSP6AKYdHMSs9RhF0Xff4CTFOhoQMKiCHUN6A7G0lhITH
+         a78I1LLY1pFmWKOuda+U1wp3vh3KLQ9UEJx2V/6hy/GQzR8u9pPB14sfqjVmklwcap
+         qmXpr0TbhFv9s3Jgog+woRyjFaAtHSEL9wOp52OM=
+X-Originating-IP: [92.22.28.33]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=UoATD64B c=1 sm=1 tr=0 a=BeSdjzhxhZnKGFP9cxuqMA==:117
+ a=BeSdjzhxhZnKGFP9cxuqMA==:17 a=evINK-nbAAAA:8 a=ybZZDoGAAAAA:8
+ a=1GoPJPuayXcPpOOgDuQA:9 a=aELoKnN1OsnrT1SA:21 a=a3k4yHTwTw0fwyIl:21
+ a=RfR_gqz1fSpA9VikTjo0:22 a=0RhZnL1DYvcuLYC8JZ5M:22
+From:   Phillip Wood <phillip.wood@talktalk.net>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH 2/6] rebase: honor --rerere-autoupdate
+Date:   Wed,  2 Aug 2017 11:44:16 +0100
+Message-Id: <20170802104420.12809-3-phillip.wood@talktalk.net>
+X-Mailer: git-send-email 2.13.3
+In-Reply-To: <20170802104420.12809-1-phillip.wood@talktalk.net>
+References: <20170802104420.12809-1-phillip.wood@talktalk.net>
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+X-CMAE-Envelope: MS4wfF6fWZIVaOiFSYBjC/Gxl8S6yJ08Rz3yIex//sDF/XiAdK07nMR4nmGMzAQKSfVLK5GHn4zInnyYx/VmLTVyvLVtZmytS3jgJbZ1ICgAGl2lfTIubPoD
+ DtJDbypgZIfYFZehKKyPLBNbcMHLiwfR8zuyCOxExIOqIVoAXcGddVjwQWiFyS3YUGG89eyQalOpREROfTIV4q1vPk8TZG0AgAC0IaQYWfBN69aGzpZliIP/
+ urQEJXngqoYPL/cRdR2gLA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 01, 2017 at 07:38:37PM -0700, Shawn Pearce wrote:
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-> > OBJS blocks can also be
-> > unbounded in size if very many references point at the same object,
-> > thought that is perhaps only a theoretical problem.
-> 
-> Gah, I missed that in reftable. The block id pointer list could cause
-> a single object id to exceed what fits in a block, and that will cause
-> the writer to fail unless its caller sets the block size larger. I
-> basically assumed this overflow condition is very unlikely, as its not
-> common to have a huge number of refs pointing to the same object.
+Rebase accepts '--rerere-autoupdate' as an option but only honors it
+if '-m' is also given. Fix it for a non-interactive rebase by passing
+on the option to 'git am' and 'git cherry-pick'. Rework the tests so
+that they can be used for each rebase flavor and extend them.
 
-It's actually quite common for us, as we have big shared-object repos
-that contain a copy of the refs of all of their child repos (for
-reachability during packing, etc). So tags, where the value is the same
-in each fork, you have one ref per fork pointing to it.
+Reported-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+ git-rebase--am.sh          |  3 +-
+ t/t3418-rebase-continue.sh | 82 +++++++++++++++++++++++++++++++---------------
+ 2 files changed, 57 insertions(+), 28 deletions(-)
 
-Just peeking at torvalds/linux, we have some objects with ~35K refs
-pointing to them (e.g., the v2.6.11 tag).
+diff --git a/git-rebase--am.sh b/git-rebase--am.sh
+index 375239341fbfe885e51a25e9e0dc2d4fee791345..319933e70a34f9da4ec93d063eb102eff33b6787 100644
+--- a/git-rebase--am.sh
++++ b/git-rebase--am.sh
+@@ -45,7 +45,7 @@ then
+ 	# itself well to recording empty patches.  fortunately, cherry-pick
+ 	# makes this easy
+ 	git cherry-pick ${gpg_sign_opt:+"$gpg_sign_opt"} --allow-empty \
+-		--right-only "$revisions" \
++		$allow_rerere_autoupdate --right-only "$revisions" \
+ 		${restrict_revision+^$restrict_revision}
+ 	ret=$?
+ else
+@@ -82,6 +82,7 @@ else
+ 	fi
+ 
+ 	git am $git_am_opt --rebasing --resolvemsg="$resolvemsg" \
++		$allow_rerere_autoupdate \
+ 		${gpg_sign_opt:+"$gpg_sign_opt"} <"$GIT_DIR/rebased-patches"
+ 	ret=$?
+ 
+diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
+index 4428b9086e8bcb383df801834d0de323f316f4fa..2b746f1559ad21a5ebf3bebd726c9a1b3d071c5a 100755
+--- a/t/t3418-rebase-continue.sh
++++ b/t/t3418-rebase-continue.sh
+@@ -40,25 +40,6 @@ test_expect_success 'non-interactive rebase --continue works with touched file'
+ 	git rebase --continue
+ '
+ 
+-test_expect_success 'non-interactive rebase --continue with rerere enabled' '
+-	test_config rerere.enabled true &&
+-	test_when_finished "test_might_fail git rebase --abort" &&
+-	git reset --hard commit-new-file-F2-on-topic-branch &&
+-	git checkout master &&
+-	rm -fr .git/rebase-* &&
+-
+-	test_must_fail git rebase --onto master master topic &&
+-	echo "Resolved" >F2 &&
+-	git add F2 &&
+-	cp F2 F2.expected &&
+-	git rebase --continue &&
+-
+-	git reset --hard commit-new-file-F2-on-topic-branch &&
+-	git checkout master &&
+-	test_must_fail git rebase --onto master master topic &&
+-	test_cmp F2.expected F2
+-'
+-
+ test_expect_success 'rebase --continue can not be used with other options' '
+ 	test_must_fail git rebase -v --continue &&
+ 	test_must_fail git rebase --continue -v
+@@ -93,25 +74,72 @@ test_expect_success 'rebase --continue remembers merge strategy and options' '
+ 	test -f funny.was.run
+ '
+ 
+-test_expect_success 'rebase --continue remembers --rerere-autoupdate' '
++test_expect_success 'setup rerere database' '
+ 	rm -fr .git/rebase-* &&
+ 	git reset --hard commit-new-file-F3-on-topic-branch &&
+ 	git checkout master &&
+ 	test_commit "commit-new-file-F3" F3 3 &&
+-	git config rerere.enabled true &&
++	test_config rerere.enabled true &&
+ 	test_must_fail git rebase -m master topic &&
+ 	echo "Resolved" >F2 &&
++	cp F2 expected-F2 &&
+ 	git add F2 &&
+ 	test_must_fail git rebase --continue &&
+ 	echo "Resolved" >F3 &&
++	cp F3 expected-F3 &&
+ 	git add F3 &&
+ 	git rebase --continue &&
+-	git reset --hard topic@{1} &&
+-	test_must_fail git rebase -m --rerere-autoupdate master &&
+-	test "$(cat F2)" = "Resolved" &&
+-	test_must_fail git rebase --continue &&
+-	test "$(cat F3)" = "Resolved" &&
+-	git rebase --continue
++	git reset --hard topic@{1}
+ '
+ 
++prepare () {
++	rm -fr .git/rebase-* &&
++	git reset --hard commit-new-file-F3-on-topic-branch &&
++	git checkout master &&
++	test_config rerere.enabled true
++}
++
++test_rerere_autoupdate () {
++	action=$1 &&
++	test_expect_success "rebase $action --continue remembers --rerere-autoupdate" '
++		prepare &&
++		test_must_fail git rebase $action --rerere-autoupdate master topic &&
++		test_cmp expected-F2 F2 &&
++		git diff-files --quiet &&
++		test_must_fail git rebase --continue &&
++		test_cmp expected-F3 F3 &&
++		git diff-files --quiet &&
++		git rebase --continue
++	'
++
++	test_expect_success "rebase $action --continue honors rerere.autoUpdate" '
++		prepare &&
++		test_config rerere.autoupdate true &&
++		test_must_fail git rebase $action master topic &&
++		test_cmp expected-F2 F2 &&
++		git diff-files --quiet &&
++		test_must_fail git rebase --continue &&
++		test_cmp expected-F3 F3 &&
++		git diff-files --quiet &&
++		git rebase --continue
++	'
++
++	test_expect_success "rebase $action --continue remembers --no-rerere-autoupdate" '
++		prepare &&
++		test_config rerere.autoupdate true &&
++		test_must_fail git rebase $action --no-rerere-autoupdate master topic &&
++		test_cmp expected-F2 F2 &&
++		test_must_fail git diff-files --quiet &&
++		git add F2 &&
++		test_must_fail git rebase --continue &&
++		test_cmp expected-F3 F3 &&
++		test_must_fail git diff-files --quiet &&
++		git add F3 &&
++		git rebase --continue
++	'
++}
++
++test_rerere_autoupdate
++test_rerere_autoupdate -m
++
+ test_done
+-- 
+2.13.3
 
-> > Peff and I discussed off-list whether the lookup-by-SHA-1 feature is
-> > so important in the first place. Currently, all references must be
-> > scanned for the advertisement anyway,
-> 
-> Not really. You can hide refs and allow-tip-sha1 so clients can fetch
-> a ref even if it wasn't in the advertisement. We really want to use
-> that wire protocol capability with Gerrit Code Review to hide the
-> refs/changes/ namespace from the advertisement, but allow clients to
-> fetch any of those refs if they send its current SHA-1 in a want line
-> anyway.
-> 
-> So a server could scan only the refs/{heads,tags}/ prefixes for the
-> advertisement, and then leverage the lookup-by-SHA1 to verify other
-> SHA-1s sent by the client.
-
-Yeah, that makes sense (though I hope in the end that strategy will go
-away in favor of a better protocol, as getting the sha1 out-of-band has
-obvious UX complexities).
-
-> > OTOH a mythical protocol v2 might reduce the need to scan the
-> > references for advertisement, so maybe this optimization will be more
-> > helpful in the future?
-> 
-> Yes, I'm hopeful we can get a v2 protocol built on the work Jonathan
-> Tan is doing, and switch the advertisement around to "client speaks
-> first", so that we can be smarter on the server about which refs are
-> read and sent. That is a long way off, lets say 3-5 years before its
-> really common in clients.
-
-I was actually planning to spend some time on this in the next month or
-two. I don't think it needs to be that complicated. We don't need a
-whole protocol revamp. We just need a way to get a few bits from the
-client before the advertisement, and from there we can bootstrap any
-more radical protocol changes we want.
-
-I know it will take a while before it's something we can expect in
-clients, but it's definitely worth planning around. And sometimes a
-feature like this can drive upgrades, if it's something that produces an
-immediate and obvious benefit to the client.
-
-> Servers today don't update HEAD reflog when a branch is pushed. I
-> think trying to record that is overkill, you have the reflog data in
-> the ref itself that the client sent the command to modify.
-
-I think they do, at least for C git:
-
-  $ git init --bare dst.git
-  $ git -C dst.git config core.logallrefupdates
-  $ git push dst.git
-  ...
-  To dst.git
-   * [new branch]      master -> master
-  $ find dst.git/logs -type f | xargs wc -l
-    1 dst.git/logs/refs/heads/master
-    1 dst.git/logs/HEAD
-
-The special logic for "see if we're updating the ref that HEAD points
-to" is deep in the ref machinery, so it gets triggered for all updates,
-including pushes.
-
-I agree it's not actually that interesting for a bare repo, where HEAD
-isn't that meaningful (and doesn't tend to change a lot anyway).
-
-> > That's what I was thinking. But I've yet to hear anybody complain
-> > about missing reflogs for symrefs if the underlying reference is
-> > updated directly, so maybe we should just leave that "problem"
-> > unsolved. It is certainly simpler and less brittle not to have to keep
-> > backreferences like these in sync with the forward references.
-> 
-> Yup, that is my take on it, and why I didn't try to put this into
-> reftable drafts, even though it was discussed between us on the list
-> in earlier messages.
-
-Yeah, I'd agree. It might be worth doing a better job of showing the
-before/after destinations in the reflog when updating a symbolic ref,
-which would let you reconstruct the state from the pointed-to reflogs if
-you cared to. But that's orthogonal to the storage format (you can do it
-already if you bother to pass a good message to "symbolic-ref -m").
-
--Peff
