@@ -2,125 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00E2A20899
-	for <e@80x24.org>; Wed,  2 Aug 2017 14:47:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61DA820899
+	for <e@80x24.org>; Wed,  2 Aug 2017 15:17:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752268AbdHBOrZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Aug 2017 10:47:25 -0400
-Received: from oker.escape.de ([194.120.234.254]:32826 "EHLO oker.escape.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752014AbdHBOrZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Aug 2017 10:47:25 -0400
-X-Greylist: delayed 440 seconds by postgrey-1.27 at vger.kernel.org; Wed, 02 Aug 2017 10:47:24 EDT
-Received: from oker.escape.de (localhost [127.0.0.1])
-        (envelope-sender: urs@isnogud.escape.de)
-        by oker.escape.de (8.14.4/8.14.4/$Revision: 1.86 $) with ESMTP id v72Ee3Zq030582
-        for <git@vger.kernel.org>; Wed, 2 Aug 2017 16:40:03 +0200
-Received: (from uucp@localhost)
-        by oker.escape.de (8.14.4/8.14.4/Submit) with UUCP id v72Ee3hB030570
-        for git@vger.kernel.org; Wed, 2 Aug 2017 16:40:03 +0200
-Received: from tehran.isnogud.escape.de (localhost [127.0.0.1])
-        by tehran.isnogud.escape.de (8.14.9/8.14.9) with ESMTP id v72EaUsq025937
-        for <git@vger.kernel.org>; Wed, 2 Aug 2017 16:36:30 +0200
-Received: (from urs@localhost)
-        by tehran.isnogud.escape.de (8.14.9/8.14.9/Submit) id v72EaPQZ025934;
-        Wed, 2 Aug 2017 16:36:25 +0200
-X-Authentication-Warning: tehran.isnogud.escape.de: urs set sender to urs@isnogud.escape.de using -f
-To:     git <git@vger.kernel.org>
-Subject: git svn fetch --localtime produces wrong commit times
-From:   Urs Thuermann <urs@isnogud.escape.de>
-Date:   02 Aug 2017 16:36:25 +0200
-Message-ID: <ygf8tj26npy.fsf@tehran.isnogud.escape.de>
-User-Agent: Gnus/5.0808 (Gnus v5.8.8) Emacs/20.7
+        id S1752645AbdHBPRw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Aug 2017 11:17:52 -0400
+Received: from mail-ua0-f182.google.com ([209.85.217.182]:38103 "EHLO
+        mail-ua0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752617AbdHBPRv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Aug 2017 11:17:51 -0400
+Received: by mail-ua0-f182.google.com with SMTP id w45so22025678uac.5
+        for <git@vger.kernel.org>; Wed, 02 Aug 2017 08:17:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=19aH8vcOv9ETNZ5I6XRmiv+qbDRp4MQho34GSvNBif4=;
+        b=U76jlyvXfRKSm75k0NQ1129+nHy/Fc4SjCCQNl0mCiresUcOuY8PrkkTQ+arrd5c1g
+         B4KvhtNGbkcSK0FqTO1fBLAbu1hlEAgBxkkaZfG5OxpAgGlAkYBPCudhNzakaz9Uk4YL
+         cRkVq3cXX25jQ7hR3r/EnK/UNvRn41wgWxdpQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=19aH8vcOv9ETNZ5I6XRmiv+qbDRp4MQho34GSvNBif4=;
+        b=bog2g29Ma0iZubVc4eK5VI/3jwlKQ91rk+xLrOGEYtoAT5dmeA9CimtNgj1QtHZffz
+         hFk+cPVwOXkLgh+AGBh4TR9hnfbGxLzVAmvd1ovJuc3cG++COKNNWfEfbMCWPVRBHJ9P
+         qyu6rX5+jheZaGKDRcraNvw8IUPXbm/3xwJ9z50uaYrckw5RN1PTSJsdVh2JrDo37pTl
+         KhDe/qnvWZJXgzI+yOn7uulKWQQhz9wSJDnT5Kl1W2l65dihUpEn9mVuvxomGa3My+03
+         2hdUL9v4OvrZvOOYzkW5IEw6Tt7vLinR2Fo6etrs6AcISrSSAdDcc0GW9V373rL4u9ip
+         eF1g==
+X-Gm-Message-State: AIVw112JSmFdYxRg3DYijl6sdHAk9YgZ1hvTN02VLzqOCbCo/A+aLb28
+        UUl52l1cUmdst83IuqdFWxVWWH7oJ6HAqoM=
+X-Received: by 10.176.82.68 with SMTP id j4mr13714777uaa.72.1501687070244;
+ Wed, 02 Aug 2017 08:17:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Received: by 10.103.83.7 with HTTP; Wed, 2 Aug 2017 08:17:29 -0700 (PDT)
+In-Reply-To: <20170802092846.u4lyiogvvl7ezdfq@sigill.intra.peff.net>
+References: <CAJo=hJv7scc1L0_MdRkFeLAJGjYm2UkTFNOgj2e4+9Zj7KSiiQ@mail.gmail.com>
+ <CAMy9T_HCnyc1g8XWOOWhe7nN0aEFyyBskV2aOMb_fe+wGvEJ7A@mail.gmail.com>
+ <CAJo=hJvFRJ7honjenB6sUofK14xiUXGwJ1DQHZyTauVKA5v5vw@mail.gmail.com>
+ <CAMy9T_HUoD4--s1gNTUjnCgdiAqfYbX-GSqygDwNO-JRwdh4NQ@mail.gmail.com>
+ <CAJo=hJv=zJvbzfAZwspxECXrnBJR4XfJbGZegsNUCx=6uheO2Q@mail.gmail.com> <20170802092846.u4lyiogvvl7ezdfq@sigill.intra.peff.net>
+From:   Shawn Pearce <spearce@spearce.org>
+Date:   Wed, 2 Aug 2017 08:17:29 -0700
+Message-ID: <CAJo=hJu1rud5pEZ93HDty1qyaCOHmwn89aEvPFe2ER0JD1ExwQ@mail.gmail.com>
+Subject: Re: reftable [v4]: new ref storage format
+To:     Jeff King <peff@peff.net>
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>, git <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        David Borowitz <dborowitz@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In converting a SVN repository to git, the commit timestamp is
-generated incorrectly.  I use "git svn fetch --localtime" and the
-offset from UTC is always set to +0200 (probably because that is the
-current local offset here, i.e. Europe/Berlin) even for times when it
-should be +0100.
+On Wed, Aug 2, 2017 at 2:28 AM, Jeff King <peff@peff.net> wrote:
+> On Tue, Aug 01, 2017 at 07:38:37PM -0700, Shawn Pearce wrote:
+>
+>> > OBJS blocks can also be
+>> > unbounded in size if very many references point at the same object,
+>> > thought that is perhaps only a theoretical problem.
+>>
+>> Gah, I missed that in reftable. The block id pointer list could cause
+>> a single object id to exceed what fits in a block, and that will cause
+>> the writer to fail unless its caller sets the block size larger. I
+>> basically assumed this overflow condition is very unlikely, as its not
+>> common to have a huge number of refs pointing to the same object.
+>
+> It's actually quite common for us, as we have big shared-object repos
+> that contain a copy of the refs of all of their child repos (for
+> reachability during packing, etc). So tags, where the value is the same
+> in each fork, you have one ref per fork pointing to it.
+>
+> Just peeking at torvalds/linux, we have some objects with ~35K refs
+> pointing to them (e.g., the v2.6.11 tag).
 
-For example, in my SVN working copy I get
+Oy. I'll bet that every occurrence winds up in its own block due to
+the layout of the namespace, and so the obj block list needs 35k
+varint pointers. That requires a larger block size if it has any
+chance of fitting into the reftable format.
 
-    $ svn log -r152
-    ------------------------------------------------------------------------
-    r152 | urs | 2010-08-16 11:05:52 +0200 (Mon, 16 Aug 2010) | 2 lines
-
-    Add error checks on input file streams
-
-    ------------------------------------------------------------------------
-    $ svn log -r158
-    ------------------------------------------------------------------------
-    r158 | urs | 2010-11-24 00:24:13 +0100 (Wed, 24 Nov 2010) | 16 lines
-
-    Make code portable to Linux/amd64
-
-After converting to git using
-
-    $ mkdir use
-    $ cd use
-    $ git svn init -s file://$HOME/SVN/use
-    Initialized empty Git repository in /home/urs/GIT/use/.git/
-    $ git svn fetch -q -A ../ADM/git.svn-authors --localtime
-    r1 = 12cb83315be96e594a98b42db7ae57d19e0c7973 (refs/remotes/origin/trunk)
-    ...
-    r162 = 99ff393f1d64f330b14d6e06412b94fd3023d616 (refs/remotes/origin/trunk)
-    Checked out HEAD:
-      file:///home/urs/SVN/use/trunk r162
-
-I see wrong commit timestamps:
-
-    $ git log
-    ...
-    commit c6b4f7aaa66650a16de67d32fb83d541b1973331
-    Author: Urs Thuermann <urs@isnogud.escape.de>
-    Date:   Wed Nov 24 00:24:13 2010 +0200
-
-        Make code portable to Linux/amd64
-
-
-        git-svn-id: file:///home/urs/SVN/use/trunk@158 b3714422-7cff-11dd-9a33-b89007e0d947
-    ...
-    commit a9d95e506681ac5742d2d0927c93f22c541ff170
-    Author: Urs Thuermann <urs@isnogud.escape.de>
-    Date:   Mon Aug 16 11:05:52 2010 +0200
-
-        Add error checks on input file streams
-
-
-        git-svn-id: file:///home/urs/SVN/use/trunk@152 b3714422-7cff-11dd-9a33-b89007e0d947
-    ...
-
-In revision 152 the timestamp is correct, but for revision 158 the UTC
-offset is +0200 instead of +0100.  Then, of course, also the POSIX
-timestamp in the commit object is wrong:
-
-    $ git cat-file -p c6b4f7aaa66650a16de67d32fb83d541b1973331
-    tree ff4528220ddcf8beca9f4958fbb947d5ed85808e
-    parent edcaeb292153663664d850bafe1dad12daab4165
-    author Urs Thuermann <urs@isnogud.escape.de> 1290551053 +0200
-    committer Urs Thuermann <urs@isnogud.escape.de> 1290551053 +0200
-
-        Make code portable to Linux/amd64
-    ...
-    $ date -d@1290551053 +%F\ %T\ %z
-    2010-11-23 23:24:13 +0100
-
-The correct timestamp would be 2010-11-24 00:24:13 +0100, or, as a
-POSIX time_t 1290554653.
-
-I could find the bug grepping through /usr/lib/git-core/git-svn, maybe
-it's in GIT::SVN::Fetcher or some other GIT::SVN module.
-
-Is a fix available for this bug?
-
-urs
+Another option is disable the obj table for these shared-object repos.
+Its an optional part of the format and can be omitted if the reader
+isn't likely to need to lookup by SHA-1, or is willing to pay the
+brute force cost of scanning every ref.
