@@ -2,98 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E3A6D20899
-	for <e@80x24.org>; Wed,  2 Aug 2017 15:56:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C0A5320899
+	for <e@80x24.org>; Wed,  2 Aug 2017 16:01:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752100AbdHBP4I (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Aug 2017 11:56:08 -0400
-Received: from mail-qt0-f169.google.com ([209.85.216.169]:35305 "EHLO
-        mail-qt0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751773AbdHBP4H (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Aug 2017 11:56:07 -0400
-Received: by mail-qt0-f169.google.com with SMTP id p3so29337424qtg.2
-        for <git@vger.kernel.org>; Wed, 02 Aug 2017 08:56:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:subject:message-id:reply-to:mime-version
-         :content-disposition:user-agent;
-        bh=g1YbtWN2BjeerTaJxy/Szvp3dmNV9CIVLiYiEW+/GCc=;
-        b=Qto3h1BHTNgdqdFmNAYvsUwAsdTSoaqYcZXp6/fAblx8EearRNFaGGlHYBgT+wCpSi
-         +X1OKptf67087epwmy82gFVthQsM/+s2WCaHTM+Pu2oYJiVskknkHmM3DdR9E53PVoHx
-         iEYMAwL5h/YuJJg5UVxV4jJn7HDikEVoaG1/d3EuXiTTd+vOB//Obd9436On2H7cAwrH
-         dU6m49IHeCxJVLjlE4vvV2SFB/WwwTxghygFXBxiAvH8tYmgMukeZq0NNOimkIUg8AkH
-         chs9SzehA1c1FzCFoB4zNlP1nVs2fgqwWEYCT/ohbmLLl0giVhz7dSVQi28m95brUQat
-         QfxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:reply-to
-         :mime-version:content-disposition:user-agent;
-        bh=g1YbtWN2BjeerTaJxy/Szvp3dmNV9CIVLiYiEW+/GCc=;
-        b=V0Dwfu0qXweICUFI2AXvtIOlE6Z9+kz+j5MpwySRYODtstNKVpQPN0erFUebKPOgiX
-         0gPsX0RqPF744zZsTzUC+WjprrCFxTv9pAqTdJaoRkow8d5JxZ1fZI4meeoRrkmEiyTL
-         tW+cmqAfxI9Q6dhnvYb2rVJrlKD7UV4nbmENVE0e+cMelqi2iOXeBfe1Cktv5Dy/ed4Y
-         igVB0OR9mQZtqA2H+dSNbDxLdJFli0CZ+JCzP3EcW9g6eznN8gMBOANUY1kAuK2Kx2G1
-         dvOIysvmjrdqL7n4eKUgD+p5b3qcfsC2vF/wK3PPI+pIPyXfEeXS8H1K5eOisWK9Yp31
-         ehhQ==
-X-Gm-Message-State: AIVw111WMc6uf9L/yZvLuH2R4u2N89VhbVxfCwN+p0tjrJ4LhJ9c5FkW
-        mrRos05EsLF4gqibs8Q=
-X-Received: by 10.237.32.68 with SMTP id 62mr6705519qta.164.1501689366661;
-        Wed, 02 Aug 2017 08:56:06 -0700 (PDT)
-Received: from localhost (tripoint.kitware.com. [66.194.253.20])
-        by smtp.gmail.com with ESMTPSA id m123sm23512471qke.12.2017.08.02.08.56.06
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 02 Aug 2017 08:56:06 -0700 (PDT)
-Date:   Wed, 2 Aug 2017 11:56:05 -0400
-From:   Ben Boeckel <mathstuf@gmail.com>
-To:     git@vger.kernel.org
-Subject: git bisect "commits left" miscount
-Message-ID: <20170802155605.GA31021@megas.kitware.com>
-Reply-To: mathstuf@gmail.com
+        id S1752437AbdHBQBT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Aug 2017 12:01:19 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54706 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752436AbdHBQBR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Aug 2017 12:01:17 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AF4F69ABC9;
+        Wed,  2 Aug 2017 12:01:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=bUXeEjtZMqGLRdw/Yg5vAnobgY0=; b=bztH68
+        tl0ZC7Z08p5HiqdxbXayr5FL304i4oaSU7eFbT4wxGmB6R8vQJ9nXm/6Nd3BoWr+
+        MEhzCB+wR6s6Xk0VW4rTs0aemWWeIpLrqfeBg1t8yuskq0HhzreABgKqB+jy6RuS
+        YPlg96Wm78ub747BUuG2bkUsUMtTB5CkPHK3w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=dWHiDB3hiJc2AHUpSZW7Shm8tfErIUrd
+        7PfHWUM9t7Zev5jomH1okiDk2o9YWuO/o4s6QiciTMrsdDzzh+u2NKmV8lyddYM/
+        JdHtxdWWoWEolO3abuGT6Uvl+U3nsdnn7HG+G30QC3mzQj6NF25z7jEbVDaanO/K
+        jjZpFdSFXow=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A3DEC9ABC8;
+        Wed,  2 Aug 2017 12:01:16 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0788E9ABC6;
+        Wed,  2 Aug 2017 12:01:15 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH 2/2] doc: add another way to identify if a patch has been merged
+References: <CAGZ79kYg9jQ3kaKnNEJCH9fde=ar1KPiUr7=X+TguNc0Twqdzg@mail.gmail.com>
+        <20170801160539.5587-1-kaarticsivaraam91196@gmail.com>
+        <20170801160539.5587-2-kaarticsivaraam91196@gmail.com>
+        <CAGZ79kZgV1=2HcYeXyoCy2Jk6v__trvTh_-rH+kbFX7fgWziyw@mail.gmail.com>
+        <1501677122.1957.8.camel@gmail.com>
+Date:   Wed, 02 Aug 2017 09:01:13 -0700
+In-Reply-To: <1501677122.1957.8.camel@gmail.com> (Kaartic Sivaraam's message
+        of "Wed, 02 Aug 2017 18:02:02 +0530")
+Message-ID: <xmqqini6dkmu.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-User-Agent: Mutt/1.8.3 (2017-05-23)
+Content-Type: text/plain
+X-Pobox-Relay-ID: D08A9270-779B-11E7-8280-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
 
-When bisecting given a set of paths, git counts the number of remaining
-commits improperly. Here's example output (based in the git.git
-repository):
+> On Tue, 2017-08-01 at 10:46 -0700, Stefan Beller wrote:
+>> Actually I am slightly negative on this one, because of
+>> occurrences like [1].
+>> 
+>> Our SubmittingPatches is already considered *too long* for most people
+>> who just want to drop a drive-by patch.
+>> 
+>> Adding more knowledge (which btw is about general git usage and not
+>> specific to our development workflow; you'd find the same tip in the
+>> kernel community).
+>> 
+>> I wonder if we need a document that describes workflows.
+>> (Oh, look we have 'man gitworkflows'! I did not know)
+>> 
+>> So maybe we want to cut a lot of workflow related commendatory from
+>> the SubmitingPatches and then encourage to read such man page?
+>> 
+> That's right. Maybe Documentation/SubmittingPatches needs a revamp to
+> be one-time contributor friendly? Maybe introducing a "gist" for people
+> who do not have the time to read the whole document, might be of help?
 
-    % git bisect start -- sha1_file.c
-    % git bisect good v2.10.0
-    % git bisect bad v2.10.3
-    Bisecting: 1 revision left to test after this (roughly 1 step)
-    [f7f0a87e0a27a1baaf782af7cec18fd23fdf35de] Merge branch 'jc/verify-loose-object-header' into maint
-    % git bisect good
-    Bisecting: 0 revisions left to test after this (roughly 0 steps)
-    [5827a03545663f6d6b491a35edb313900608568b] fetch: use "quick" has_sha1_file for tag following
-    % git bisect good
-    Bisecting: -1 revisions left to test after this (roughly 0 steps)
-    [39000e849970a554a257577dcb2fb844a523a1d1] Merge branch 'jk/fetch-quick-tag-following' into maint
-    % git bisect good
-    No testable commit found.
-    Maybe you started with bad path parameters?
+First of all, I do not think lack of one-time contributor is
+something we should consider to be a problem.  Supporting new
+contributors so that they will be involved more in the development
+process is a lot more important issue.
 
-Note that it ends up with -1 revisions left and it doesn't end up with a
-"this commit is the first bad commit" message.
+A new contributor will get something wrong no matter what the
+documentation says.  One-time contributor's intention is "I am
+sending a patch this time, but I have no plan to get involved
+further---I do not have time for this".  It ridiculous to ask for a
+patch that adds an 's' to the end of a third-party-singular verb in
+the present tense to be rerolled only because the title had an extra
+full-stop at the end.  Practically, a patch like that by a "one time
+contributor" will always have to be fixed before committing it.
 
-Should git find the newest ancestors(s) of the given bad commit which
-modifies the given paths and start counting from there?
+I think the exchange Stefan cited was an example that we want to
+have more of.  The contributor is indicating that, even though the
+patch could be a drive-by patch by one-timer from whom we will never
+hear again, it is not--the contributor is willing to learn the way
+things are done here, and showing that it is worth _our_ time to
+explain the things so that the future patches will take less effort
+to accept on our side.
 
-I haven't bisected to find out when this was introduced yet (first seen
-with 2.9.4; confirmed with 2.14.0-rc1).
+Because we do not have a group of dedicated volunteers, it is done
+by more experienced people around here but that can be done only
+when they have time.  I view it as a more severe problem than any
+documentation.  An abbreviated version of the documentation to
+invite more new people means that we must be prepared to give more
+high-touch onboarding help to them.
 
-Thanks,
 
---Ben
+
+
