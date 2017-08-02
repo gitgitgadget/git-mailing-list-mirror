@@ -2,148 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F94C2047F
-	for <e@80x24.org>; Wed,  2 Aug 2017 00:16:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7ACD62047F
+	for <e@80x24.org>; Wed,  2 Aug 2017 00:19:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751352AbdHBAQZ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 Aug 2017 20:16:25 -0400
-Received: from mail-qk0-f169.google.com ([209.85.220.169]:35563 "EHLO
-        mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751029AbdHBAQX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Aug 2017 20:16:23 -0400
-Received: by mail-qk0-f169.google.com with SMTP id d145so18631173qkc.2
-        for <git@vger.kernel.org>; Tue, 01 Aug 2017 17:16:23 -0700 (PDT)
+        id S1751162AbdHBATw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 Aug 2017 20:19:52 -0400
+Received: from mail-pg0-f44.google.com ([74.125.83.44]:35818 "EHLO
+        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751029AbdHBATv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Aug 2017 20:19:51 -0400
+Received: by mail-pg0-f44.google.com with SMTP id v189so14171081pgd.2
+        for <git@vger.kernel.org>; Tue, 01 Aug 2017 17:19:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=U+cjC21VgIyPlAA6uM+/bizi8lELoUo7EVet9k+zaX4=;
-        b=d7qHu5qwgXpB3jiHQXhQjCChBT9rRVazPh7X1RzKb16vX3/pP6zf4zf4UxeCLKlb+z
-         gWTPlAjsKoWmXCKNUEMFlRlU+xNf3Rz0gic/Utc25Uo9b2Y5AigusTLwxRgFLqbo8BU7
-         oBvumVuG7Uh74syVVjjK1JTIA89h4al6qyp8NkYAIFLO6B+V0Nfrg1CQLwaUTF0j2Qes
-         8igdMmwNeZIC6vyKTAh5fQAGYrV7OhEQhPGGW6tVerKiSVTs7qtyvIusXrJdY1U/BE2W
-         Wrhcc5erYug/oZ0Ci+I2DFgJWNpvnHWWF+9R1X6GzZpbwDoq2krowRBFdwk8H0NGY6Mn
-         JDVw==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=tKL851Qqj+GFwoo5vGmo7FlsswDpgK+m5E1WS4W8yck=;
+        b=uNXf7G6x7vvL5kgEemDggdGEdJQCRSjhucQQQK1qNwMKSMEFYbFk2uc7Kq7rGQlc3j
+         d2ZJsO35raTLG8l4RIa072eyRgutgZ9RpXB07dzfpVb/RfBIJbThT6kcWIjtzJorXjdb
+         4CPIBIuFC8lCNqNgyC+/MEnv8UrzJ9+PDMKZJF32yvO/c9qGQt5YrQsBp4cj+1CqpZ3I
+         t5VB961Zkv3rie52mz/Isj94gEuu5IczhtvwWTFNVYnSgBTcaERDDeu0CK+IaAOg3HaD
+         MZa1Qf7Urq8KhSb//6NSg8p7qVeWfxpFRTMafGZt4kp1Om5MHgx9xlg7oWyAMAcYC/Tz
+         HrTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=U+cjC21VgIyPlAA6uM+/bizi8lELoUo7EVet9k+zaX4=;
-        b=fuIH7bpkvVcqDXRiZ+HhldymhFxvH2NSDHHAbwOt8GIyI6GSgi2JUPb6DmgxMWAAtc
-         oCQLC6iUcQjNMkOBISNQ2+0NiqpDb5EKJXBoAiSX5QD9pCFGOWeQb140RRJVrdEFycZ0
-         s8EEJN51TBzIWaGtUotiWH3yVlaz4iThxj9Q2Jf+OoqjexIsx4Xr3F3vO3Nf29/0grlC
-         4Bk62Z1X5dETggzCCir70465vLPfdJEeFCrlMElNp8lzp+KJqcJapCT5lNtjraa7+EqL
-         MQGn+ild2xuuA0TqZYX6652mZXNWClRhAVgOH2D4bsNHhM1rhY9SnKREmy1fTl5vdyzu
-         ekxQ==
-X-Gm-Message-State: AIVw112OBkn836rDci7FlXHWHyT8Fql6Ls+Oc/GdMU4XLEeFjuLfpjpK
-        VTg19a+QjwxeKEUAerUoICmPUzqHlQ==
-X-Received: by 10.55.131.65 with SMTP id f62mr26518817qkd.290.1501632983212;
- Tue, 01 Aug 2017 17:16:23 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.12.137.236 with HTTP; Tue, 1 Aug 2017 17:16:22 -0700 (PDT)
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Wed, 2 Aug 2017 08:16:22 +0800
-Message-ID: <CANYiYbE+bv21GdvmeefjuARBP_iEH7Xrxp-btNRsq0bjdqabYQ@mail.gmail.com>
-Subject: [GIT PULL] l10n updates for 2.14.0 round 2
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=tKL851Qqj+GFwoo5vGmo7FlsswDpgK+m5E1WS4W8yck=;
+        b=eFFuvJdES9aCBRa37KkZpkYCd1hvVIEn34mzcZcSU85hhhBGQGns01Abzhz+W3Pkiu
+         NWy0DC0UKGpQHc4SatbEaGy3h3FxuXmeL3EgNp43FQUfojKJiHjMN1qVB4DZEvRDYFgN
+         JJMp9L5XYMRozb45z7S2KIXl/NKfwFUnr2nmPwKJdrIdvVTTIG5WE5dWRrAFWi5McsJw
+         p9Y0iVXNcQO+f1aO2etQ7MXvGc9q2cDHwbKgRMiWanDap1EBjMb0vqvXOaEg/6Zq6mUJ
+         wIoUN0Qm8M7tdf+VMY3m99kAcWZWPZd3JD7lkJNkFB03hePmG51pyBlsbbFC20HCexHz
+         +x1g==
+X-Gm-Message-State: AIVw110bJc3dIbbEjt5bFCKNVgiiwbw2AKN20LJGTC+RhnDz4e4Q/2FV
+        FNLEMuLRBR6gK+GD
+X-Received: by 10.98.38.68 with SMTP id m65mr20644055pfm.47.1501633190725;
+        Tue, 01 Aug 2017 17:19:50 -0700 (PDT)
+Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:89e8:42fb:7e1e:307a])
+        by smtp.gmail.com with ESMTPSA id n129sm50005789pfn.27.2017.08.01.17.19.49
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 01 Aug 2017 17:19:50 -0700 (PDT)
+Date:   Tue, 1 Aug 2017 17:19:44 -0700
+From:   Jonathan Tan <jonathantanmy@google.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        Ralf Thielow <ralf.thielow@gmail.com>,
-        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
-        Marco Paolone <marcopaolone@gmail.com>,
-        Changwoo Ryu <cwryu@debian.org>,
-        Vasco Almeida <vascomalmeida@sapo.pt>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc:     git@vger.kernel.org, peartben@gmail.com, christian.couder@gmail.com
+Subject: Re: [PATCH v2 0/5] Fsck for lazy objects, and (now) actual
+ invocation of loader
+Message-ID: <20170801171944.7690a63f@twelve2.svl.corp.google.com>
+In-Reply-To: <xmqq379bgqlx.fsf@gitster.mtv.corp.google.com>
+References: <cover.1501111615.git.jonathantanmy@google.com>
+        <cover.1501532294.git.jonathantanmy@google.com>
+        <xmqq4ltsi9or.fsf@gitster.mtv.corp.google.com>
+        <20170731160533.0a446244@twelve2.svl.corp.google.com>
+        <xmqq379bgqlx.fsf@gitster.mtv.corp.google.com>
+X-Mailer: Claws Mail 3.9.3 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Tue, 01 Aug 2017 10:11:38 -0700
+Junio C Hamano <gitster@pobox.com> wrote:
 
-Would you please pull the following git l10n updates.
+> Let's step back a bit and think what already happens in the pre-
+> lazy-object world.  We record cut-off commits when a depth limited
+> clone is created in "shallow".  These essentially are promises,
+> saying something like:
+> 
+>     Rest assured that everything in the history behind these commits
+>     are on the other side and you can retrieve them by unshallowing.
+> 
+>     If you traverse from your local tips and find no missing objects
+>     before reaching one of these commits, then you do not have any
+>     local corruption you need to worry about.
+> 
+> the other end made to us, when the shallow clone was made.  And we
+> take this promise and build more commits on top, and then we adjust
+> these cut-off commits incrementally as we deepen our clone or make
+> it even shallower.  For this assurance to work, we of course need to
+> assume a bit more than what we assume for a complete clone, namely,
+> the "other side" will hold onto the history behind these, i.e. does
+> not remind the tips it already has shown to us, or even if it does,
+> the objects that are reachable from these cut-off points will
+> somehow always be available to us on demand.
+> 
+> Can we do something similar, i.e. maintain minimum set of cut-off
+> points and adjust that set incrementally, just sufficient to ensure
+> the integrity of objects locally created and not yet safely stored
+> away by pushing them the "other side"?
 
-The following changes since commit 91d443d0d8dd942dcfc322ea200edddb9cef2b4e=
-:
+This suggestion (the "frontier" of what we have) does seem to incur less
+overhead than the original promise suggestion (the "frontier" of what we
+don't have), but after some in-office discussion, I'm convinced that it
+might not be the case - for example, one tree (that we have) might
+reference many blobs (that we don't have), but at the same time, many
+trees (that we have) might have the same blob (that we don't have). And
+the promise overhead was already decided to be too much - which is why
+we moved away from it.
 
-  l10n: git.pot: v2.14.0 round 2 (9 new, 2 removed) (2017-07-24 22:00:44 +0=
-800)
+One possibility to conceptually have the same thing without the overhead
+of the list is to put the obtained-from-elsewhere objects into its own
+alternate object store, so that we can distinguish the two. I mentioned
+this in my e-mail but rejected it, but after some more thought, this
+might be sufficient - we might still need to iterate through every
+object to know exactly what we can assume the remote to have, but the
+"frontier" solution also needs this iteration, so we are no worse off.
 
-are available in the git repository at:
+Going back to the original use cases that motivated this (the monorepo
+like Microsoft's repo and the large-blob repo like Android's repo), it
+might be better just to disable the connectivity check when
+extensions.lazyObject is set (as you mentioned). This does change the
+meaning of fsck, but it may be fine since the "meaning" of the repo (a
+view of another repo, and no longer a full repo) has changed too. Then
+this patch set will be more about ensuring that the lazy object loader
+is not inadvertently run. As future work, we could add diagnostics that,
+for example, attempt a walk anyway and print a list of missing SHA-1s.
 
-  git://github.com/git-l10n/git-po tags/l10n-2.14.0-rnd2
-
-for you to fetch changes up to 554e8501704f14182562b9df3236bfaacdc53aa4:
-
-  l10n: zh_CN: review for git v2.14.0 l10n (2017-08-02 08:02:37 +0800)
-
-----------------------------------------------------------------
-l10n for Git 2.14.0 round 2
-
-----------------------------------------------------------------
-Alexander Shopov (1):
-      l10n: bg.po: Updated Bulgarian translation (3213t)
-
-Changwoo Ryu (1):
-      l10n: ko.po: Update Korean translation
-
-Dimitriy Ryazantcev (1):
-      l10n: ru.po: update Russian translation
-
-Hartmut Henkel (1):
-      l10n: de.po: various fixes in German translation
-
-Hugues Peccatte (1):
-      l10n: fr.po Fix some translations
-
-Jean-Noel Avila (1):
-      l10n: fr.po v2.14.0 rnd 2
-
-Jiang Xin (7):
-      Merge branch 'master' of git://github.com/alshopov/git-po
-      Merge branch 'master' of https://github.com/Softcatala/git-po
-      Merge branch 'fr_l10n_v2.14.0rnd2' of git://github.com/jnavila/git
-      Merge branch 'master' of https://github.com/ralfth/git-po-de
-      Merge branch 'russian-l10n' of https://github.com/DJm00n/git-po-ru
-      l10n: zh_CN: for git v2.14.0 l10n round 2
-      l10n: zh_CN: review for git v2.14.0 l10n
-
-Jordi Mas (1):
-      l10n: Update Catalan translation
-
-Louis (1):
-      l10n: fr.po Fix typo
-
-Ralf Thielow (1):
-      l10n: de.po: update German translation
-
-Sylvestre Ledru (1):
-      l10n: fr.po Fix some french typos
-
-Tr=E1=BA=A7n Ng=E1=BB=8Dc Qu=C3=A2n (1):
-      l10n: vi.po (3213t): Updated 9 new strings
-
- po/TEAMS    |    5 +-
- po/bg.po    |   84 +-
- po/ca.po    | 7572 ++++++++++++++++++++++++++++++++-----------------------=
-----
- po/de.po    | 6241 ++++++++++++++++++++++++------------------------
- po/fr.po    | 6260 ++++++++++++++++++++++++------------------------
- po/ko.po    |   69 +-
- po/ru.po    | 6164 ++++++++++++++++++++++++------------------------
- po/vi.po    |  115 +-
- po/zh_CN.po | 6313 +++++++++++++++++++++++++------------------------
- 9 files changed, 17022 insertions(+), 15801 deletions(-)
-
---
-Jiang Xin
+(I suspect that we will also need to disable the connectivity check for
+things like "git fetch", which means that we won't be able to tell
+locally if the server sent us all the objects that we requested for.
+This might not be a problem, though, since the local repo already has
+some measure of trust for the server.)
