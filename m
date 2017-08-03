@@ -6,38 +6,38 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 307EA1F991
-	for <e@80x24.org>; Thu,  3 Aug 2017 19:34:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B5E0F1F991
+	for <e@80x24.org>; Thu,  3 Aug 2017 19:50:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751656AbdHCTef (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Aug 2017 15:34:35 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50498 "EHLO
+        id S1751700AbdHCTua (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Aug 2017 15:50:30 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54041 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751251AbdHCTef (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Aug 2017 15:34:35 -0400
+        with ESMTP id S1751696AbdHCTua (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Aug 2017 15:50:30 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 95AF7A69B6;
-        Thu,  3 Aug 2017 15:34:27 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1059B8A3ED;
+        Thu,  3 Aug 2017 15:50:29 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=d76d0ngPC5eQTvsXLwgih1kbGNY=; b=vkewk3
-        KNyGmW3LVLqVAon+CmrjsVCL4V/bi2It/m+QKWIpp06bDsGDuso7rx96px1NQQQa
-        m85OI5v3Xi4oDqURIIZgUwv2i6t8XHet7f5Kb+ed+/52P/UcY+T9o8IkZrJrFEVn
-        ZfSWMbqwspSjeJ0F3+hguGtjHtNkWE/WTmPPo=
+        :content-type; s=sasl; bh=15dbuMcwtZE/xGBRtP14vLhpD4c=; b=iWU9fO
+        A4vTCtK0rW0JksqOLm/x/zSt7iyNbn3ua6JgrxHIHKXgRZIf7ZQFJNqmnrDDhdMl
+        actz42uD/EMPqxlL8M/AC1tUlJd2yOB+Ahm/3awkBbNyFTYIkqP6EyeRgLOhvWHq
+        pMRVbfoYHz9K3rwTok0I7xlzvHcbo5P3TfSQ0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=O+H90VPFVhnrqqx8fvJGC/CZik2sLuxJ
-        DNuXAX1yYXszxgAJHmTc4lvOSlb7MU4V/uCMbp9rGzqdG5W56cgp4GpntaNfNLsF
-        rA+YZF+LRZrNYKSJH+O6zCD/Pos8pQ11P7VcBVTRU8yXlJRQ9A12O5BC6Fm7hf96
-        PWwR6xyHYLQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8D2BFA69B5;
-        Thu,  3 Aug 2017 15:34:27 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=wr7E0W4p/xPpWqxEsHtKPGChWHO+crS4
+        Ycf05307xMl36zh90kWQnUT8+Kd0wMuO53zV8mEHcxXPLGYUbqEBlInaiMxQFF3U
+        kkVKNRTJnc3vcICuZR5DwZ6kWq8n9vnLqo4YT2Y0/0b1BZk63+eAfVHXA1zNcLXP
+        Ip4iwkgGN64=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 05BD48A3E7;
+        Thu,  3 Aug 2017 15:50:29 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DBEDFA69B4;
-        Thu,  3 Aug 2017 15:34:26 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 25A7E8A3E4;
+        Thu,  3 Aug 2017 15:50:28 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Christian Couder <christian.couder@gmail.com>
 Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
@@ -48,17 +48,17 @@ Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v5 10/40] Add initial external odb support
+Subject: Re: [PATCH v5 13/40] external odb: add 'put_raw_obj' support
 References: <20170803091926.1755-1-chriscool@tuxfamily.org>
-        <20170803091926.1755-11-chriscool@tuxfamily.org>
-Date:   Thu, 03 Aug 2017 12:34:25 -0700
-In-Reply-To: <20170803091926.1755-11-chriscool@tuxfamily.org> (Christian
-        Couder's message of "Thu, 3 Aug 2017 11:18:56 +0200")
-Message-ID: <xmqqfud8xx6m.fsf@gitster.mtv.corp.google.com>
+        <20170803091926.1755-14-chriscool@tuxfamily.org>
+Date:   Thu, 03 Aug 2017 12:50:27 -0700
+In-Reply-To: <20170803091926.1755-14-chriscool@tuxfamily.org> (Christian
+        Couder's message of "Thu, 3 Aug 2017 11:18:59 +0200")
+Message-ID: <xmqqbmnwxwfw.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: C2F1C114-7882-11E7-9A13-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: FFE58266-7884-11E7-9237-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -66,67 +66,25 @@ X-Mailing-List: git@vger.kernel.org
 
 Christian Couder <christian.couder@gmail.com> writes:
 
-> +int external_odb_has_object(const unsigned char *sha1)
-> +{
-> +	struct odb_helper *o;
-> +
-> +	external_odb_init();
-> +
-> +	for (o = helpers; o; o = o->next)
-> +		if (odb_helper_has_object(o, sha1))
-> +			return 1;
-> +	return 0;
-> +}
-> +
-> +int external_odb_get_object(const unsigned char *sha1)
-> +{
-> +	struct odb_helper *o;
-> +	const char *path;
-> +
-> +	if (!external_odb_has_object(sha1))
-> +		return -1;
+> Add support for a 'put_raw_obj' capability/instruction to send new
+> objects to an external odb. Objects will be sent as they are (in
+> their 'raw' format). They will not be converted to Git objects.
+>
+> For now any new Git object (blob, tree, commit, ...) would be sent
+> if 'put_raw_obj' is supported by an odb helper. This is not a great
+> default, but let's leave it to following commits to tweak that.
+>
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
 
-This probably would not matter, as I do not expect one repository to
-connect to and backed by very many external odb instances, but I
-would have expected that the interaction would go more like "ah, we
-need this object that is lacking locally. let's see if there is
-anybody with the object. now we found who claims to have the object,
-let's ask that guy (and nobody else) to give the object to us".
+I thought in an earlier step that I saw this thing initialized in
+the codepath that adds alternate object stores, which are read-only
+places we "borrow" from.  Being able to write into it is good, but
+conceptually it no longer feels correct to initialize it from the
+alternate object database initialization codepath.
 
-IOW, I would have expected two functions:
+Another way to say it is that an object store, whether it is local
+or external, is not "alt" if it will result in storing new objects
+we locally create.  It's just an extension of our local object
+store.
 
- - struct odb_helper *external_odb_with(struct object_id *oid);
- - int external_odb_get(struct object_id *oid, struct odb_helper *odb);
-
-where the latter may start like
-
-    if (!odb) {
-	odb = external_odb_with(oid);
-	if (!odb)
-	    return -1;
-    }
-    ... go ask that odb for the object ...
-
-> diff --git a/external-odb.h b/external-odb.h
-> new file mode 100644
-> index 0000000000..9989490c9e
-> --- /dev/null
-> +++ b/external-odb.h
-> @@ -0,0 +1,8 @@
-> +#ifndef EXTERNAL_ODB_H
-> +#define EXTERNAL_ODB_H
-> +
-> +const char *external_odb_root(void);
-> +int external_odb_has_object(const unsigned char *sha1);
-> +int external_odb_get_object(const unsigned char *sha1);
-
-Even though ancient codebase of ours deliberately omitted them, I
-think our recent trend is to explicitly spell "extern " in headers.
-
-> diff --git a/odb-helper.h b/odb-helper.h
-> new file mode 100644
-> index 0000000000..5800661704
-> --- /dev/null
-> +++ b/odb-helper.h
-
-Likewise.
