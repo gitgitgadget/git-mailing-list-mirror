@@ -2,122 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F7291F991
-	for <e@80x24.org>; Thu,  3 Aug 2017 18:21:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D1C681F991
+	for <e@80x24.org>; Thu,  3 Aug 2017 18:21:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751985AbdHCSUJ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Aug 2017 14:20:09 -0400
-Received: from mail-pf0-f174.google.com ([209.85.192.174]:35617 "EHLO
-        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751966AbdHCSUH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Aug 2017 14:20:07 -0400
-Received: by mail-pf0-f174.google.com with SMTP id t86so9378312pfe.2
-        for <git@vger.kernel.org>; Thu, 03 Aug 2017 11:20:06 -0700 (PDT)
+        id S1752130AbdHCSVe (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Aug 2017 14:21:34 -0400
+Received: from mail-pg0-f50.google.com ([74.125.83.50]:38363 "EHLO
+        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751966AbdHCSUK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Aug 2017 14:20:10 -0400
+Received: by mail-pg0-f50.google.com with SMTP id l64so9223111pge.5
+        for <git@vger.kernel.org>; Thu, 03 Aug 2017 11:20:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=CFDB6f6opk0OACnTh7SbMBuZoebCgTAt+Wgv3VCuGfQ=;
-        b=lcTYFL5XRzXag62xUCEtDEnVDaZuqG8j3F+8R76voXnDercQ/cLOWwmw8hgRIvQrv/
-         o7JVb13kCxY/W7sBflB1Ti8xuSlUtlWVyYR3Tt5JrRC1EKOqz4bb+ZC5g3f2sQOZagF9
-         jwRDfhfcidJm8R+4s3mYmtsXBDNruSuPLsU7BhLTDq22qnJRAD8sqPOTQUmpjaP5PvR8
-         Bj3Tx6jvhROH+zIGehwP4vIbs4poGvmGRTB5R6U43kwnShjHIoSCidmcEWpY1i/F3Knw
-         trSZf8DaMt3M8uZvctR5n1WKahJrXdkthow9fJ6/Wqw6sUsym78IZEsnwL9qtdbBzIDH
-         /5uA==
+        bh=wmpO/xIQ5qyM7TD63yqxvQeo/Cm/CrbRgYWhtHrBIBk=;
+        b=nWS4K0yTFpao61rsAaczt3UEJY+gBwtw3JEOc5HZQIAB+TX2PrDyb02He3eXpEJxew
+         Fq3lauGnr1P0tDzYarWQR9CJeCwV4Qn97WaBqcxLdrUYtePlXM9P0Rj4huj/VKWE11+v
+         ci86Cz7kQ5VVHBB//4EuzEk1qxWiStrlgAgQ60E4rD2zep9YtNnaHv6b0OVWa93FrkuG
+         G8QnxDBW0Qyyl/jsHX+QFrpCtbYRghCA++I7y06qdaeLX8F1Yypb35ilSzxV+Zm/j5jD
+         0g2SkSTIyl4npjAxT+UySi2Ggkj8lITA/99J/Wof/6zX6/cc7BEr7vq3WE8Dan/XBw5W
+         GFzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=CFDB6f6opk0OACnTh7SbMBuZoebCgTAt+Wgv3VCuGfQ=;
-        b=pcyw6mrxo5jAD2znhLLs/q2DepOlLgIKzbN9C2NJ0UtTMh4il75zR7qfXz5Ed4onv8
-         DtNsJIZsz2GBid247w4pFZdPvKj9sfb5JX4k+Z6O0JPlICCLLgA9kHhZx1UR0PN61XAC
-         dZ5DC7LB28oUi/xqZH2hkfebgNctM29BRr3oHS3iIQee8BBbKd0ccw99E+XhvcpfoHBQ
-         GcZawQb72m7HcOKLqo9fKT4cntQu6or98aQJrVjOighBSBEBoqCjiS9Fcpm+DPpREZK7
-         WXLDh+P8GTR+E8XnxYRlbTHeM7UtuleVhM7/0or6tR0LRejV5GKSCqgiEB3TITBSgL+u
-         z9Cw==
-X-Gm-Message-State: AIVw113Ed/g6bbze0wwZrRt4UbBazC/oyaCcxajaCsdyTKH5DTQKCaiq
-        Gs/H4ZCXD8KvTj/tqv0pBg==
-X-Received: by 10.84.179.165 with SMTP id b34mr2874302plc.455.1501784405967;
-        Thu, 03 Aug 2017 11:20:05 -0700 (PDT)
+        bh=wmpO/xIQ5qyM7TD63yqxvQeo/Cm/CrbRgYWhtHrBIBk=;
+        b=bzBUXWzKOqtain2xQf5maZsT1qYseZuVyHQiM/sv4CTpvA2csHkxFWPN07r7li6DKG
+         JXNEF/VH36IQtYEcb24J5aTpvGK0+YEklUEf8wYCYPxB+0OgpZNO+oQC3O238Bt6IKXd
+         /+ZL8AP59oNRs2o1kqkloSN/EzcBuoLrsc4P0GIBDDWmyJS8lptYrFYfj/EwqfF04M/K
+         zuXX2zOE+g7i/+jt+YdSywdcACkGj1R3taKP/ja6Cl0YKwYyqsVNmnjKm2Th//JZ33ZS
+         Bm4/euerwBcc7jLipENTDD3pDS5gNHAxGPQ4KQt/mRm2UvVmAUAh4GlhTGB733UIxYFx
+         09kQ==
+X-Gm-Message-State: AIVw112D8pMvT4sV56ZEYZEjGmku6JXVfXw50biRYw1p+3Wls3QPqQQw
+        6atnTBE63qE+WXUbM4IH0g==
+X-Received: by 10.84.176.195 with SMTP id v61mr2816366plb.271.1501784409032;
+        Thu, 03 Aug 2017 11:20:09 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id d1sm10706293pgc.57.2017.08.03.11.20.04
+        by smtp.gmail.com with ESMTPSA id d1sm10706293pgc.57.2017.08.03.11.20.07
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 03 Aug 2017 11:20:04 -0700 (PDT)
+        Thu, 03 Aug 2017 11:20:07 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, gitster@pobox.com, jrnieder@gmail.com,
         Jens.Lehmann@web.de, Brandon Williams <bmwill@google.com>
-Subject: [PATCH v2 00/15] submodule-config cleanup
-Date:   Thu,  3 Aug 2017 11:19:45 -0700
-Message-Id: <20170803182000.179328-1-bmwill@google.com>
+Subject: [PATCH v2 02/15] submodule: don't use submodule_from_name
+Date:   Thu,  3 Aug 2017 11:19:47 -0700
+Message-Id: <20170803182000.179328-3-bmwill@google.com>
 X-Mailer: git-send-email 2.14.0.rc1.383.gd1ce394fe2-goog
-In-Reply-To: <20170725213928.125998-1-bmwill@google.com>
+In-Reply-To: <20170803182000.179328-1-bmwill@google.com>
 References: <20170725213928.125998-1-bmwill@google.com>
+ <20170803182000.179328-1-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Changes in v2:
- * Rebased on latest 'bw/grep-recurse-submodules' branch (Still also requires
-   the 'bc/object-id' series).
- * Changed unpack-trees.c (checkout command) so that it no longer respects the
-   'submodule.<name>.update' config since it really didn't make much sense for
-   it to respect it.
- * The above point also enabled me to fix some issues that coverity found with
-   how I was overlaying the repo config with the submodule update strategy.
-   Instead the update strategy parsing logic is separated into two functions so
-   that just the enum can be determined from a string (which is all
-   update-clone needed).
+The function 'submodule_from_name()' is being used incorrectly here as a
+submodule path is being used instead of a submodule name.  Since the
+correct function to use with a path to a submodule is already being used
+('submodule_from_path()') let's remove the call to
+'submodule_from_name()'.
 
-Brandon Williams (15):
-  t7411: check configuration parsing errors
-  submodule: don't use submodule_from_name
-  add, reset: ensure submodules can be added or reset
-  submodule--helper: don't overlay config in remote_submodule_branch
-  submodule--helper: don't overlay config in update-clone
-  fetch: don't overlay config with submodule-config
-  submodule: don't rely on overlayed config when setting diffopts
-  unpack-trees: don't respect submodule.update
-  submodule: remove submodule_config callback routine
-  diff: stop allowing diff to have submodules configured in .git/config
-  submodule-config: remove support for overlaying repository config
-  submodule-config: move submodule-config functions to
-    submodule-config.c
-  submodule-config: lazy-load a repository's .gitmodules file
-  unpack-trees: improve loading of .gitmodules
-  submodule: remove gitmodules_config
+Signed-off-by: Brandon Williams <bmwill@google.com>
+---
+ submodule.c | 2 --
+ 1 file changed, 2 deletions(-)
 
- builtin/add.c                    |   1 +
- builtin/checkout.c               |   3 +-
- builtin/commit.c                 |   1 -
- builtin/diff-files.c             |   1 -
- builtin/diff-index.c             |   1 -
- builtin/diff-tree.c              |   1 -
- builtin/diff.c                   |   2 -
- builtin/fetch.c                  |   5 --
- builtin/grep.c                   |   4 --
- builtin/ls-files.c               |   6 +-
- builtin/mv.c                     |   1 -
- builtin/read-tree.c              |   2 -
- builtin/reset.c                  |   3 +-
- builtin/rm.c                     |   1 -
- builtin/submodule--helper.c      |  51 ++++++++------
- diff.c                           |   3 -
- submodule-config.c               |  65 +++++++++++++----
- submodule-config.h               |   8 +--
- submodule.c                      | 148 ++++++++++++++-------------------------
- submodule.h                      |   6 +-
- t/helper/test-submodule-config.c |   7 --
- t/t4027-diff-submodule.sh        |  67 ------------------
- t/t7400-submodule-basic.sh       |  10 ---
- t/t7411-submodule-config.sh      |  87 ++++-------------------
- unpack-trees.c                   |  81 +++++++++------------
- 25 files changed, 192 insertions(+), 373 deletions(-)
-
+diff --git a/submodule.c b/submodule.c
+index 5139b9256..19bd13bb2 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1177,8 +1177,6 @@ static int get_next_submodule(struct child_process *cp,
+ 			continue;
+ 
+ 		submodule = submodule_from_path(&null_oid, ce->name);
+-		if (!submodule)
+-			submodule = submodule_from_name(&null_oid, ce->name);
+ 
+ 		default_argv = "yes";
+ 		if (spf->command_line_option == RECURSE_SUBMODULES_DEFAULT) {
 -- 
 2.14.0.rc1.383.gd1ce394fe2-goog
 
