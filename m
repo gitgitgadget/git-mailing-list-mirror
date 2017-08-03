@@ -2,51 +2,51 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B6722047F
-	for <e@80x24.org>; Thu,  3 Aug 2017 09:22:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B2F672047F
+	for <e@80x24.org>; Thu,  3 Aug 2017 09:22:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751968AbdHCJTv (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Aug 2017 05:19:51 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:36518 "EHLO
+        id S1751946AbdHCJTp (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Aug 2017 05:19:45 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:36464 "EHLO
         mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751948AbdHCJTs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Aug 2017 05:19:48 -0400
-Received: by mail-wm0-f66.google.com with SMTP id d40so1421400wma.3
-        for <git@vger.kernel.org>; Thu, 03 Aug 2017 02:19:48 -0700 (PDT)
+        with ESMTP id S1751775AbdHCJTk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Aug 2017 05:19:40 -0400
+Received: by mail-wm0-f66.google.com with SMTP id d40so1420918wma.3
+        for <git@vger.kernel.org>; Thu, 03 Aug 2017 02:19:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=XjBiYYy+Vj6h4s+HoD/eQuhEo/5RZZ+ihqYN4h3mGfw=;
-        b=t703nNYKbMDQYDQm0oAnRIXojx6wWFoGnbLjcudhs0NKY7knOduC5sn2kL/MxMvllu
-         RBkjZnkhC1tXFsLEuKrKVXR7xCw7V11D+82z/K0FapQEoLCoOUAPZX1UQ2mKvcWm68Eb
-         syqHj7WKj0Dy0/TfsrpgQV1WhafyJBHPyx/wz4tTa/8L+o0QksWtCjapil5x5t2d+m8l
-         +t9cj8zHemRJkNgFdZ6rHyIiXms6NC/znv4uA6ta/xhQ1GI52fy1/2qCr05W29kzQHad
-         9cWgiDuzn3wyWqCfkxTLZ4E0DbhNqCu2dKjZuQg1/M/qD3iHr37WTvjBsVFUFYdi2rpo
-         kgHQ==
+        bh=F4vUuRPdxMjG3ruz3Rt2OUBeOaq5D4YiIqIfNVRaJSQ=;
+        b=NVNzgk8NU6K16am8dBw3itS/Tkc37rvfKkruTZduwaOqiZVrcDavgHej5gBVXZGDiO
+         UMIWbfl0PzPf5cCHA32Mico+Q1wBipP2+nisYgIIvEW7IO3R//2/8MlRN21y9E2oTko5
+         e3n8Q1GA+cBaJKJ9vmuM09jR/gB8xN0KwRM0N+iIAiw89RlRm1/GHVS2FfO7vGZr4xlD
+         iOVshwvVjK3k+5mKLZXytTyYwdUZWagc1HRTFLYocuQtKJWI0Cph+L/ofmKCYPI/o7k9
+         sUqLMXegnRJvWiGmECKZLXne4D9DZVBICmqNbG+joxWySWtQq+uK0P4syGQb6wkHXDaV
+         BK9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=XjBiYYy+Vj6h4s+HoD/eQuhEo/5RZZ+ihqYN4h3mGfw=;
-        b=jjiSIpaFq5g+fCdskDwRIDpl0C3VZcNgQN430YdGPCG2xHAYGRoGBQxW0zoIY9fM5D
-         afBWE7Hvt7VugJsrvTUZMUjIYR0oLBlO3wyszgPgX8cBVdtfYMbdhFdh2K0QGA6UgsFh
-         7GE6hN6SvPVPLI4zFhAmbMNGHm6MqFWYV9KmYCm3UjJlzHSmNSYxmZn+P1x2kttTw1vS
-         gYMoD1H1idGIh2kW+lD4v7mGTovkW9RAlLnP3cqv7CmLA68s2+SMDjt528FpBvzdMICO
-         Lkp8az8T+Lb8jF7UFfEzQf7+1zEvHK2bq0qwtrL9pRpya5e4oXl5r9MlELS5kvmSccM3
-         StuQ==
-X-Gm-Message-State: AHYfb5gixfPDhv53z6zzmv1bq2vFEOIhSUAHCQ9zHnSVvUi/++k/Q0Yn
-        V8RwkGAjLI17AWvx
-X-Received: by 10.28.14.149 with SMTP id 143mr677491wmo.102.1501751987459;
-        Thu, 03 Aug 2017 02:19:47 -0700 (PDT)
+        bh=F4vUuRPdxMjG3ruz3Rt2OUBeOaq5D4YiIqIfNVRaJSQ=;
+        b=g9XCah8C8ZXWmA86ywqLaKPbgD2tJOpFCU9aq07H1eADWfPEWZkPDhvuf1YdOfMyFH
+         MJvlrOcW6TOlzmEN6XGhyeh9XTKjFs7OgiEbNKfeH5NOWmvx1LeT1Rwz/Bpphon/z0ad
+         AQsU+0EgSHoa8ljGpTz1bFoEArv5KVSXRZOWSCBMCNo/2RWQz1f+cezAksaXUn+vf57O
+         1I28UvS4W7B+y2+kv2sjAZKPw+NfwolyKzFsdVu4EayoOYm7sZD8z8B0I7xoYnFdHIhg
+         zfy/6XBzbN6Ttm/cotQYQCJ7Ae+HFhHUGyLmeDbbuVNif7w1pfr2h4U4v9g4rF8IxT3M
+         UKYQ==
+X-Gm-Message-State: AIVw112Io+et9tQw53bDt2PSWb/3Pz8qOi9BBXBpHlBiVmUipNB/eNFa
+        XP7vj6cGPJjXg/Jb
+X-Received: by 10.28.238.85 with SMTP id m82mr714535wmh.107.1501751978916;
+        Thu, 03 Aug 2017 02:19:38 -0700 (PDT)
 Received: from localhost.localdomain (sud35-h04-89-95-107-230.dsl.sta.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id n184sm1308051wme.33.2017.08.03.02.19.46
+        by smtp.gmail.com with ESMTPSA id n184sm1308051wme.33.2017.08.03.02.19.37
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 03 Aug 2017 02:19:47 -0700 (PDT)
+        Thu, 03 Aug 2017 02:19:38 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v5 08/40] Git/Packet.pm: add capability functions
-Date:   Thu,  3 Aug 2017 11:18:54 +0200
-Message-Id: <20170803091926.1755-9-chriscool@tuxfamily.org>
+Subject: [PATCH v5 01/40] builtin/clone: get rid of 'value' strbuf
+Date:   Thu,  3 Aug 2017 11:18:47 +0200
+Message-Id: <20170803091926.1755-2-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.14.0.rc1.52.gf02fb0ddac.dirty
 In-Reply-To: <20170803091926.1755-1-chriscool@tuxfamily.org>
 References: <20170803091926.1755-1-chriscool@tuxfamily.org>
@@ -69,84 +69,56 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add functions to help read and write capabilities.
-Use these functions in 't/t0021/rot13-filter.pl'.
+This makes the code simpler by removing a few lines, and getting
+rid of one variable.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- perl/Git/Packet.pm      | 33 +++++++++++++++++++++++++++++++++
- t/t0021/rot13-filter.pl |  9 ++-------
- 2 files changed, 35 insertions(+), 7 deletions(-)
+ builtin/clone.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/perl/Git/Packet.pm b/perl/Git/Packet.pm
-index b0233caf37..4443b67724 100644
---- a/perl/Git/Packet.pm
-+++ b/perl/Git/Packet.pm
-@@ -20,6 +20,9 @@ our @EXPORT = qw(
- 			packet_txt_write
- 			packet_flush
- 			packet_initialize
-+			packet_read_capabilities
-+			packet_write_capabilities
-+			packet_read_and_check_capabilities
- 		);
- our @EXPORT_OK = @EXPORT;
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 08b5cc433c..4b5340c55f 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -871,7 +871,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	const struct ref *our_head_points_at;
+ 	struct ref *mapped_refs;
+ 	const struct ref *ref;
+-	struct strbuf key = STRBUF_INIT, value = STRBUF_INIT;
++	struct strbuf key = STRBUF_INIT;
+ 	struct strbuf branch_top = STRBUF_INIT, reflog_msg = STRBUF_INIT;
+ 	struct transport *transport = NULL;
+ 	const char *src_ref_prefix = "refs/heads/";
+@@ -1036,7 +1036,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		strbuf_addf(&branch_top, "refs/remotes/%s/", option_origin);
+ 	}
  
-@@ -83,3 +86,33 @@ sub packet_initialize {
- 	packet_txt_write( "version=" . $version );
- 	packet_flush();
- }
-+
-+sub packet_read_capabilities {
-+	my @cap;
-+	while (1) {
-+		my ( $res, $buf ) = packet_bin_read();
-+		return ( $res, @cap ) if ( $res != 0 );
-+		unless ( $buf =~ s/\n$// ) {
-+			die "A non-binary line MUST be terminated by an LF.\n"
-+			    . "Received: '$buf'";
-+		}
-+		die "bad capability buf: '$buf'" unless ( $buf =~ s/capability=// );
-+		push @cap, $buf;
-+	}
-+}
-+
-+sub packet_read_and_check_capabilities {
-+	my @local_caps = @_;
-+	my @remote_res_caps = packet_read_capabilities();
-+	my $res = shift @remote_res_caps;
-+	my %remote_caps = map { $_ => 1 } @remote_res_caps;
-+	foreach (@local_caps) {
-+	    die "'$_' capability not available" unless (exists($remote_caps{$_}));
-+	}
-+	return $res;
-+}
-+
-+sub packet_write_capabilities {
-+	packet_txt_write( "capability=" . $_ ) foreach (@_);
-+	packet_flush();
-+}
-diff --git a/t/t0021/rot13-filter.pl b/t/t0021/rot13-filter.pl
-index 5b05518640..bbfd52619d 100644
---- a/t/t0021/rot13-filter.pl
-+++ b/t/t0021/rot13-filter.pl
-@@ -42,14 +42,9 @@ $debug->flush();
+-	strbuf_addf(&value, "+%s*:%s*", src_ref_prefix, branch_top.buf);
+ 	strbuf_addf(&key, "remote.%s.url", option_origin);
+ 	git_config_set(key.buf, repo);
+ 	strbuf_reset(&key);
+@@ -1050,10 +1049,9 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	if (option_required_reference.nr || option_optional_reference.nr)
+ 		setup_reference();
  
- packet_initialize("git-filter", 2);
+-	fetch_pattern = value.buf;
++	fetch_pattern = xstrfmt("+%s*:%s*", src_ref_prefix, branch_top.buf);
+ 	refspec = parse_fetch_refspec(1, &fetch_pattern);
+-
+-	strbuf_reset(&value);
++	free((char *)fetch_pattern);
  
--( packet_txt_read() eq ( 0, "capability=clean" ) )  || die "bad capability";
--( packet_txt_read() eq ( 0, "capability=smudge" ) ) || die "bad capability";
--( packet_bin_read() eq ( 1, "" ) )                  || die "bad capability end";
-+packet_read_and_check_capabilities("clean", "smudge");
-+packet_write_capabilities(@capabilities);
+ 	remote = remote_get(option_origin);
+ 	transport = transport_get(remote, remote->url[0]);
+@@ -1192,7 +1190,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	strbuf_release(&reflog_msg);
+ 	strbuf_release(&branch_top);
+ 	strbuf_release(&key);
+-	strbuf_release(&value);
+ 	junk_mode = JUNK_LEAVE_ALL;
  
--foreach (@capabilities) {
--	packet_txt_write( "capability=" . $_ );
--}
--packet_flush();
- print $debug "init handshake complete\n";
- $debug->flush();
- 
+ 	free(refspec);
 -- 
 2.14.0.rc1.52.gf02fb0ddac.dirty
 
