@@ -2,120 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DBFD71F991
-	for <e@80x24.org>; Thu,  3 Aug 2017 17:55:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E3121F991
+	for <e@80x24.org>; Thu,  3 Aug 2017 18:20:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751820AbdHCRzx (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Aug 2017 13:55:53 -0400
-Received: from mail-yw0-f179.google.com ([209.85.161.179]:33042 "EHLO
-        mail-yw0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751236AbdHCRzx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Aug 2017 13:55:53 -0400
-Received: by mail-yw0-f179.google.com with SMTP id p68so13173494ywg.0
-        for <git@vger.kernel.org>; Thu, 03 Aug 2017 10:55:52 -0700 (PDT)
+        id S1752024AbdHCSUO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Aug 2017 14:20:14 -0400
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:33051 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751978AbdHCSUL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Aug 2017 14:20:11 -0400
+Received: by mail-pf0-f181.google.com with SMTP id d67so9428945pfc.0
+        for <git@vger.kernel.org>; Thu, 03 Aug 2017 11:20:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=g8glFMwkbCJSU0Kuar7TBXO3dnbcFnySOgfcJqa6GIk=;
-        b=JMReiU0x0LyOG/PeXu/povWvxnDiVzrGu/uiNNjFQ1AI06WiMCnEfszewQO6ZmFdnY
-         02RgfMjiNEBJkirk+QAUIgE2sRGXoxNnKhPXAdtfjvgjnWx96swnuA5K4JnN3SEMsJfd
-         M+1AIXUS/nB0qMkqiEhrXjFe/gf5EcPGMXbLZXzK5RxuQ6Tv6Al6OjsEzFBKa4jd8r0q
-         eM+nGZ/udz2ob/x07UCUwUGL3qSA1NXVv3EPy8NW0JaukI3UrIVDCPQ2B4tZ8qkAHQzy
-         75oFFw1NBZTSzlqKsK791mbon0h8cMQcQSL+0cR2WdbWSmTNwMC1gn18aBO70Tku2yFf
-         tOyw==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=fmyeYfAlOxA+Z/c5f2jitKwl1Xtxa3LPCdxZlZNJvS8=;
+        b=NTIE0jXxYYLC7fk3PWxYiBZRcxlk5MPFQWnGhmX0lpqPJrE+BtY6D1yy7OdCtsTRTh
+         leUjElm1lE0ZxOySMaJKgoCGyRHQI5TtLq42zI3Ih9t1OjmtPRW9XJgsCm5cLFq50hlG
+         wtJ/hyHhE/c4r/cF1fMiJifVMf7i6mF5VjhE8GBt0H2gjev/0zO8dlVwcS3QOyyRkeMM
+         3nBJxNs3RRirwRpP8P4cbJvUijOzJrIzVhLRDnPXgRVQZwX6PdW7vhk3iGSykcYn9BCZ
+         itL9UKjK+Xl6Pcw+CHRgfz39Td986zWbsTGFSFOGviRNRqq+wCRyHPoSyZBuhB7PGysG
+         ZtUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=g8glFMwkbCJSU0Kuar7TBXO3dnbcFnySOgfcJqa6GIk=;
-        b=R3QDBRMHclAmDkv76owoTXchhmV5GEQRmNkYs8JP2EmscWVSpwfjNkOmsHPvC5kLGT
-         P1pFPm8By8t0EkuNzxwlaxp+s+bu7KS7LByjTkducCyJrEIhHwG3hpqgf8zVGm4nougx
-         q719j0+d4LO0jQkValCe0/oSqUsbLyLb6ncUCj/66jjyEomowR+xRxuD9ZlLQsHsKuxt
-         TilzaPhMkemdkDWukkiAiIq8zhv1wL1/iB6Z+/qavUz9SlmHpdvioJG9qXw6QJv7EER6
-         WyR+AkelNsl1etva1kyUaZVF/prIKQP+ObLbNn1+4j413Vv+ZwehB41B5q+JDuf2RFL9
-         wfdQ==
-X-Gm-Message-State: AIVw111Sqt/bykiS+/5BH8hsMCHYrisX1UphS5nW3HNfKr52BJlWPcVk
-        8KDUflNR2F+5y1rRdNPP5orxXfYEWHx7
-X-Received: by 10.129.57.214 with SMTP id g205mr1808993ywa.105.1501782952336;
- Thu, 03 Aug 2017 10:55:52 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.13.215.84 with HTTP; Thu, 3 Aug 2017 10:55:31 -0700 (PDT)
-In-Reply-To: <xmqqtw1opnla.fsf@gitster.mtv.corp.google.com>
-References: <CA+kp=uoHiP8t_40yZvT7r9ziB4uSxgcc=NRY0+XzQJDkuJpx4A@mail.gmail.com>
- <xmqqtw1opnla.fsf@gitster.mtv.corp.google.com>
-From:   Alejandro Aguila <aguilasainz@gmail.com>
-Date:   Thu, 3 Aug 2017 12:55:31 -0500
-Message-ID: <CA+kp=uq1L7TFjXMCoFaNxq5wCNtKWw48MXFX_Unh-QxDf587dg@mail.gmail.com>
-Subject: Re: Cloning an specific commit from the hash
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=fmyeYfAlOxA+Z/c5f2jitKwl1Xtxa3LPCdxZlZNJvS8=;
+        b=H4gOm1MDTPQP6N+B6YV+F9eGZbe3kO7RS7ee6KgRgi5RnSZSc5CnHxBMwMLtnijqm5
+         +TDdsdsEoZ6sZsR9KsOqvyKel+kXb9fU46SQ0f+ZjWOlAjYxWO7GmXxASaS9lj7WQQvM
+         HvCqf5lkEi9doQApAdiFzYRF3h4eWrBFaEI5ITtFDmL9qM6pgQPer4lDYqs/U00IoINf
+         7X9jxJchXewVHPuFSFmWmzNAgQTp67K2JCuTGCaZ594YpJjtXxyLHuxQquGxm69Rhy7H
+         7B30vswZBd3/+MKhfm5gzWg2/AwlV+aqF6xvwwvxEDUrl9pKlMNM9AiF0kMYSTjmYcQR
+         jwMg==
+X-Gm-Message-State: AIVw110hHgvXaxQTTI7UtP/CNmPKFbORlh2ts9odvOVJ9Kb/xnPfJqIa
+        QYqLF2ubqeK08xq902dGLA==
+X-Received: by 10.84.141.3 with SMTP id 3mr3010077plu.128.1501784410493;
+        Thu, 03 Aug 2017 11:20:10 -0700 (PDT)
+Received: from roshar.svl.corp.google.com ([100.96.218.30])
+        by smtp.gmail.com with ESMTPSA id d1sm10706293pgc.57.2017.08.03.11.20.09
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 03 Aug 2017 11:20:09 -0700 (PDT)
+From:   Brandon Williams <bmwill@google.com>
+To:     git@vger.kernel.org
+Cc:     sbeller@google.com, gitster@pobox.com, jrnieder@gmail.com,
+        Jens.Lehmann@web.de, Brandon Williams <bmwill@google.com>
+Subject: [PATCH v2 03/15] add, reset: ensure submodules can be added or reset
+Date:   Thu,  3 Aug 2017 11:19:48 -0700
+Message-Id: <20170803182000.179328-4-bmwill@google.com>
+X-Mailer: git-send-email 2.14.0.rc1.383.gd1ce394fe2-goog
+In-Reply-To: <20170803182000.179328-1-bmwill@google.com>
+References: <20170725213928.125998-1-bmwill@google.com>
+ <20170803182000.179328-1-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks Junio!
+Commit aee9c7d65 (Submodules: Add the new "ignore" config option for
+diff and status) introduced the ignore configuration option for
+submodules so that configured submodules could be omitted from the
+status and diff commands.  Because this flag is respected in the diff
+machinery it has the unintended consequence of potentially prohibiting
+users from adding or resetting a submodule, even when a path to the
+submodule is explicitly given.
 
-Is there any chance to find out what are the trees for the dependencies?
+Ensure that submodules can be added or set, even if they are configured
+to be ignored, by setting the `DIFF_OPT_OVERRIDE_SUBMODULE_CONFIG` diff
+flag.
 
-Cheers!
+Signed-off-by: Brandon Williams <bmwill@google.com>
+---
+ builtin/add.c   | 1 +
+ builtin/reset.c | 1 +
+ 2 files changed, 2 insertions(+)
 
-On 3 August 2017 at 12:28, Junio C Hamano <gitster@pobox.com> wrote:
-> Alejandro Aguila <aguilasainz@gmail.com> writes:
->
->> I've been working with Oscomo's project OpenBSC
->> https://github.com/osmocom/openbsc and my old hardware won't work with
->> the latest version, which is 0.15. So I asked for help to osmocom guys
->> and there's someone who told me that his version is working with the
->> same hardware I have, so have gave me the OpenBSC hash for it (
->> 7f100c9712de5c684462e809bf31a58c0c326337 ).
->>
->> To be honest I don't use git more apart of cloning repos, so I would
->> like to know how can I pull the files for that hash. And since OpenBSC
->> has some dependencies that are in osmocom's github repo, I don't know
->> if I can get the version that worked for the one committed in the
->> hash.
->
-> When a user of a project that uses Git says "try this version"
-> without telling you on which branch that version appears, that
-> statement typically means that anybody who clones that project
-> would get the commit, i.e.
->
->     $ git clone https://github.com/.../openbsc
->     $ cd openbsc
->     $ git checkout 7f100c9712de
->
-> This will give you a checkout without being on any named branch,
-> which would be sufficient for you to build; if you want further work
-> on top of that commit, you might want to do the last step more like
-> so:
->
->     $ git checkout -b mybranch 7f100c9712de
->
-> If you are not developing at all, then starting at this URL
->
-> https://github.com/osmocom/openbsc/commit/7f100c9712de5c684462e809bf31a58=
-c0c326337
->
-> and clicking around, you should be able to find this URL
->
-> https://github.com/osmocom/openbsc/archive/7f100c9712de5c684462e809bf31a5=
-8c0c326337.zip
->
-> which would presumably give you a Zip archive that contains the
-> files in that particular commit.
->
->
+diff --git a/builtin/add.c b/builtin/add.c
+index e888fb8c5..6f271512f 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -116,6 +116,7 @@ int add_files_to_cache(const char *prefix,
+ 	rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
+ 	rev.diffopt.format_callback = update_callback;
+ 	rev.diffopt.format_callback_data = &data;
++	rev.diffopt.flags |= DIFF_OPT_OVERRIDE_SUBMODULE_CONFIG;
+ 	rev.max_count = 0; /* do not compare unmerged paths with stage #2 */
+ 	run_diff_files(&rev, DIFF_RACY_IS_MODIFIED);
+ 	return !!data.add_errors;
+diff --git a/builtin/reset.c b/builtin/reset.c
+index 046403ed6..772d078b8 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -156,6 +156,7 @@ static int read_from_tree(const struct pathspec *pathspec,
+ 	opt.output_format = DIFF_FORMAT_CALLBACK;
+ 	opt.format_callback = update_index_from_diff;
+ 	opt.format_callback_data = &intent_to_add;
++	opt.flags |= DIFF_OPT_OVERRIDE_SUBMODULE_CONFIG;
+ 
+ 	if (do_diff_cache(tree_oid, &opt))
+ 		return 1;
+-- 
+2.14.0.rc1.383.gd1ce394fe2-goog
 
-
-
---=20
-Alejandro Aguila S=C3=A1inz
