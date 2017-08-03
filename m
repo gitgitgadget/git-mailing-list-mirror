@@ -6,53 +6,53 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 371381F991
-	for <e@80x24.org>; Thu,  3 Aug 2017 18:20:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E63A1F991
+	for <e@80x24.org>; Thu,  3 Aug 2017 18:20:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752035AbdHCSUS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Aug 2017 14:20:18 -0400
-Received: from mail-pg0-f54.google.com ([74.125.83.54]:34640 "EHLO
-        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751978AbdHCSUP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Aug 2017 14:20:15 -0400
-Received: by mail-pg0-f54.google.com with SMTP id u185so9325785pgb.1
-        for <git@vger.kernel.org>; Thu, 03 Aug 2017 11:20:15 -0700 (PDT)
+        id S1752047AbdHCSUW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Aug 2017 14:20:22 -0400
+Received: from mail-pg0-f49.google.com ([74.125.83.49]:34658 "EHLO
+        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752037AbdHCSUU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Aug 2017 14:20:20 -0400
+Received: by mail-pg0-f49.google.com with SMTP id u185so9326646pgb.1
+        for <git@vger.kernel.org>; Thu, 03 Aug 2017 11:20:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=3alwUgH5spuX3NXEIu/YaOF83gncu2J9UVKVqwfN8/o=;
-        b=tpQJeOSs9o4VLtr9Jt6jV0hHjBx6koTlXOdiPuM/+DkVo/1qJr3ipgD4TSI4O7s04Y
-         Wh1H0uhau9wKiZx/tNufH4qt8iwz8FATkcT3H6Hus2937SyeCtO22xDQkUPjGWFhzH+5
-         dFfGhz6tCXnjXnKCyLvgoSqAXdwp/ROSKxN60uGVwP6lhfbyFE32JMGO9PrlZCc7XhI7
-         Z2uCfrbzUkvP/BooTyXZCAAgFUAVPSmVRCFTlJZidLaQxetsBUyjZL41HPqUB5IPqGbJ
-         wYz0U2aPF0TjULSY35qZbckrWdZiEZdzyZBTFLlIYF4I9wguOtDjpk1umwzCZhwKTVu0
-         9t9A==
+        bh=PxJtNEapzflt7EqWmxUF1gB7i+Afw+MT9p0++41Wop4=;
+        b=dToii3MmXed6aBe7W7RbgkjXLPM0WXyY1ljwU6NOcuD3JHz7tj7I+2TC+wFs8dkxcG
+         PDeVHhOjZm7npbPs92I9m2rKEOzmDMHteXkGC/b9RsjNAEjPtoFvzjArDLk8H3j7T7WZ
+         0WTVUmi25ElkGXI449gU605lA9MnM/7U5rhWXNep8U14jMkVTGXVbjfejO9pRXPxl7P+
+         Vf0jPOzGos+wTBs3mM3ZcXVm2cbdPxJE99vrCbW98ZEy4xxBx9QqCJKOZkUAuvtqlJMe
+         iaXbSg9X1mDB3pbfYtYYvxBJnDkhiUQi5oWvccaxsEESFozk3GgFuoPTRlrcnQ6Fzkk/
+         J7CA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=3alwUgH5spuX3NXEIu/YaOF83gncu2J9UVKVqwfN8/o=;
-        b=byNwZsNQzZ/iegLNr5wADH8wUYyJ6JfNBJInn+Mj3RHqUkhr1opK8wox4KGQprMXrJ
-         Ps3X3yjI4WVCxnqFVQ8WJJp1BTxNNrlM1hiVvsdHGWVcSnmJkhqxAh6inum4w+yKnwgB
-         NwPa63qMoaLy/2N5TPy3B1S+QmHlVoX+7SkllTa49f2yyvZCnh8vysj1qfFy6VA2bEGB
-         XDzU7d6u8brZ83jMvqBR86zU1aTEkVtC7Vy77h7Ye7V8o2ZG9NtWjzk8thOariNkTtOF
-         S/BojztLD8ajIjyFohxmsqFg4M+E/EKZqRUGsovJk6s7cTamS8sskEVRTXyrfkF6OV5W
-         qGsA==
-X-Gm-Message-State: AIVw113aaP0t0wDFdIy9dIYqq+mBcOJZxlO1KzJ8fSYu3nyDsVC4D6WK
-        z7lBX9Ye9cVsfK1bblwF+A==
-X-Received: by 10.84.171.195 with SMTP id l61mr2958313plb.464.1501784414501;
-        Thu, 03 Aug 2017 11:20:14 -0700 (PDT)
+        bh=PxJtNEapzflt7EqWmxUF1gB7i+Afw+MT9p0++41Wop4=;
+        b=POAnQxCbDioJQgt0E54jNCM6ygTJ1BWiVOHASUpWA24o8cQyY5DjnJWm00GQhfQwDu
+         EwS2D+7SprXLR4GwQP1GRSeF+nrrqLfyzN0I60MDAEXL8jEbRm3KVOURcEYFmFBSZ+mI
+         DFBAXm8/tJbAr15GIVBl258OVIm1+fH5cFWVSdbrgLF2N4Vngi+hU12degR8J7vgn9xU
+         iNZ6I456o2dKX9x3MzLMMnIU+JvkRgyvG1fJE6I888yHehj/6++nL5/01JcDkyunMp/6
+         yqfPKBNMteZT0l+/TPveQJWsjSUwSXRezOX6PoisM0d5hJjTityUTrnYYS863MedLN1s
+         dUFw==
+X-Gm-Message-State: AIVw112AAXP87cc4wMXd4I/s2x6y+sIMD3N1ZfvOiEt0YR6B6chCBcdf
+        XcmlSKS4gaQw+/EC8tDYnQ==
+X-Received: by 10.98.59.82 with SMTP id i79mr2513237pfa.37.1501784419371;
+        Thu, 03 Aug 2017 11:20:19 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id d1sm10706293pgc.57.2017.08.03.11.20.12
+        by smtp.gmail.com with ESMTPSA id d1sm10706293pgc.57.2017.08.03.11.20.17
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 03 Aug 2017 11:20:13 -0700 (PDT)
+        Thu, 03 Aug 2017 11:20:18 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, gitster@pobox.com, jrnieder@gmail.com,
         Jens.Lehmann@web.de, Brandon Williams <bmwill@google.com>
-Subject: [PATCH v2 05/15] submodule--helper: don't overlay config in update-clone
-Date:   Thu,  3 Aug 2017 11:19:50 -0700
-Message-Id: <20170803182000.179328-6-bmwill@google.com>
+Subject: [PATCH v2 08/15] unpack-trees: don't respect submodule.update
+Date:   Thu,  3 Aug 2017 11:19:53 -0700
+Message-Id: <20170803182000.179328-9-bmwill@google.com>
 X-Mailer: git-send-email 2.14.0.rc1.383.gd1ce394fe2-goog
 In-Reply-To: <20170803182000.179328-1-bmwill@google.com>
 References: <20170725213928.125998-1-bmwill@google.com>
@@ -62,149 +62,119 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Don't rely on overlaying the repository's config on top of the
-submodule-config, instead query the repository's config directly for the
-url and the update strategy configuration.
+The 'submodule.update' config was historically used and respected by the
+'submodule update' command because update handled a variety of different
+ways it updated a submodule.  As we begin teaching other commands about
+submodules it makes more sense for the different settings of
+'submodule.update' to be handled by the individual commands themselves
+(checkout, rebase, merge, etc) so it shouldn't be respected by the
+native checkout command.
+
+Also remove the overlaying of the repository's config (via using
+'submodule_config()') from the commands which use the unpack-trees
+logic (checkout, read-tree, reset).
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/submodule--helper.c | 23 +++++++++++++++++++----
- submodule.c                 | 38 ++++++++++++++++++++++++++------------
- submodule.h                 |  1 +
- 3 files changed, 46 insertions(+), 16 deletions(-)
+ builtin/checkout.c |  2 +-
+ submodule.c        |  1 -
+ unpack-trees.c     | 38 ++++++++------------------------------
+ 3 files changed, 9 insertions(+), 32 deletions(-)
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index f71f4270d..36df7ab78 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -780,6 +780,10 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
- 					   struct strbuf *out)
- {
- 	const struct submodule *sub = NULL;
-+	const char *url = NULL;
-+	const char *update_string;
-+	enum submodule_update_type update_type;
-+	char *key;
- 	struct strbuf displaypath_sb = STRBUF_INIT;
- 	struct strbuf sb = STRBUF_INIT;
- 	const char *displaypath = NULL;
-@@ -808,9 +812,17 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
- 		goto cleanup;
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 9661e1bcb..246e0cd16 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -858,7 +858,7 @@ static int git_checkout_config(const char *var, const char *value, void *cb)
  	}
  
-+	key = xstrfmt("submodule.%s.update", sub->name);
-+	if (!repo_config_get_string_const(the_repository, key, &update_string)) {
-+		update_type = parse_submodule_update_type(update_string);
-+	} else {
-+		update_type = sub->update_strategy.type;
-+	}
-+	free(key);
-+
- 	if (suc->update.type == SM_UPDATE_NONE
- 	    || (suc->update.type == SM_UPDATE_UNSPECIFIED
--		&& sub->update_strategy.type == SM_UPDATE_NONE)) {
-+		&& update_type == SM_UPDATE_NONE)) {
- 		strbuf_addf(out, _("Skipping submodule '%s'"), displaypath);
- 		strbuf_addch(out, '\n');
- 		goto cleanup;
-@@ -822,6 +834,11 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
- 		goto cleanup;
- 	}
+ 	if (starts_with(var, "submodule."))
+-		return submodule_config(var, value, NULL);
++		return git_default_submodule_config(var, value, NULL);
  
-+	strbuf_reset(&sb);
-+	strbuf_addf(&sb, "submodule.%s.url", sub->name);
-+	if (repo_config_get_string_const(the_repository, sb.buf, &url))
-+		url = sub->url;
-+
- 	strbuf_reset(&sb);
- 	strbuf_addf(&sb, "%s/.git", ce->name);
- 	needs_cloning = !file_exists(sb.buf);
-@@ -851,7 +868,7 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
- 		argv_array_push(&child->args, "--depth=1");
- 	argv_array_pushl(&child->args, "--path", sub->path, NULL);
- 	argv_array_pushl(&child->args, "--name", sub->name, NULL);
--	argv_array_pushl(&child->args, "--url", sub->url, NULL);
-+	argv_array_pushl(&child->args, "--url", url, NULL);
- 	if (suc->references.nr) {
- 		struct string_list_item *item;
- 		for_each_string_list_item(item, &suc->references)
-@@ -1025,9 +1042,7 @@ static int update_clone(int argc, const char **argv, const char *prefix)
- 	if (pathspec.nr)
- 		suc.warn_if_uninitialized = 1;
- 
--	/* Overlay the parsed .gitmodules file with .git/config */
- 	gitmodules_config();
--	git_config(submodule_config, NULL);
- 
- 	run_processes_parallel(max_jobs,
- 			       update_clone_get_next_task,
+ 	return git_xmerge_config(var, value, NULL);
+ }
 diff --git a/submodule.c b/submodule.c
-index 19bd13bb2..8a9b964ce 100644
+index a32043893..f913c2341 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -398,24 +398,38 @@ void die_path_inside_submodule(const struct index_state *istate,
- 	}
+@@ -235,7 +235,6 @@ void load_submodule_cache(void)
+ 		return;
+ 
+ 	gitmodules_config();
+-	git_config(submodule_config, NULL);
  }
  
--int parse_submodule_update_strategy(const char *value,
--		struct submodule_update_strategy *dst)
-+enum submodule_update_type parse_submodule_update_type(const char *value)
+ static int gitmodules_cb(const char *var, const char *value, void *data)
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 05335fe5b..5dce7ff7d 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -255,28 +255,17 @@ static int check_submodule_move_head(const struct cache_entry *ce,
  {
--	free((void*)dst->command);
--	dst->command = NULL;
- 	if (!strcmp(value, "none"))
--		dst->type = SM_UPDATE_NONE;
-+		return SM_UPDATE_NONE;
- 	else if (!strcmp(value, "checkout"))
--		dst->type = SM_UPDATE_CHECKOUT;
-+		return SM_UPDATE_CHECKOUT;
- 	else if (!strcmp(value, "rebase"))
--		dst->type = SM_UPDATE_REBASE;
-+		return SM_UPDATE_REBASE;
- 	else if (!strcmp(value, "merge"))
--		dst->type = SM_UPDATE_MERGE;
--	else if (skip_prefix(value, "!", &value)) {
--		dst->type = SM_UPDATE_COMMAND;
--		dst->command = xstrdup(value);
--	} else
-+		return SM_UPDATE_MERGE;
-+	else if (*value == '!')
-+		return SM_UPDATE_COMMAND;
-+	else
-+		return SM_UPDATE_UNSPECIFIED;
-+}
+ 	unsigned flags = SUBMODULE_MOVE_HEAD_DRY_RUN;
+ 	const struct submodule *sub = submodule_from_ce(ce);
 +
-+int parse_submodule_update_strategy(const char *value,
-+		struct submodule_update_strategy *dst)
-+{
-+	enum submodule_update_type type;
-+
-+	free((void*)dst->command);
-+	dst->command = NULL;
-+
-+	type = parse_submodule_update_type(value);
-+	if (type == SM_UPDATE_UNSPECIFIED)
- 		return -1;
-+
-+	dst->type = type;
-+	if (type == SM_UPDATE_COMMAND)
-+		dst->command = xstrdup(value + 1);
-+
- 	return 0;
+ 	if (!sub)
+ 		return 0;
+ 
+ 	if (o->reset)
+ 		flags |= SUBMODULE_MOVE_HEAD_FORCE;
+ 
+-	switch (sub->update_strategy.type) {
+-	case SM_UPDATE_UNSPECIFIED:
+-	case SM_UPDATE_CHECKOUT:
+-		if (submodule_move_head(ce->name, old_id, new_id, flags))
+-			return o->gently ? -1 :
+-				add_rejected_path(o, ERROR_WOULD_LOSE_SUBMODULE, ce->name);
+-		return 0;
+-	case SM_UPDATE_NONE:
+-		return 0;
+-	case SM_UPDATE_REBASE:
+-	case SM_UPDATE_MERGE:
+-	case SM_UPDATE_COMMAND:
+-	default:
+-		warning(_("submodule update strategy not supported for submodule '%s'"), ce->name);
+-		return -1;
+-	}
++	if (submodule_move_head(ce->name, old_id, new_id, flags))
++		return o->gently ? -1 :
++				   add_rejected_path(o, ERROR_WOULD_LOSE_SUBMODULE, ce->name);
++	return 0;
  }
  
-diff --git a/submodule.h b/submodule.h
-index e402b004f..48586efe7 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -62,6 +62,7 @@ extern void die_in_unpopulated_submodule(const struct index_state *istate,
- 					 const char *prefix);
- extern void die_path_inside_submodule(const struct index_state *istate,
- 				      const struct pathspec *ps);
-+extern enum submodule_update_type parse_submodule_update_type(const char *value);
- extern int parse_submodule_update_strategy(const char *value,
- 		struct submodule_update_strategy *dst);
- extern const char *submodule_strategy_to_string(const struct submodule_update_strategy *s);
+ static void reload_gitmodules_file(struct index_state *index,
+@@ -293,7 +282,6 @@ static void reload_gitmodules_file(struct index_state *index,
+ 				submodule_free();
+ 				checkout_entry(ce, state, NULL);
+ 				gitmodules_config();
+-				git_config(submodule_config, NULL);
+ 			} else
+ 				break;
+ 		}
+@@ -308,19 +296,9 @@ static void unlink_entry(const struct cache_entry *ce)
+ {
+ 	const struct submodule *sub = submodule_from_ce(ce);
+ 	if (sub) {
+-		switch (sub->update_strategy.type) {
+-		case SM_UPDATE_UNSPECIFIED:
+-		case SM_UPDATE_CHECKOUT:
+-		case SM_UPDATE_REBASE:
+-		case SM_UPDATE_MERGE:
+-			/* state.force is set at the caller. */
+-			submodule_move_head(ce->name, "HEAD", NULL,
+-					    SUBMODULE_MOVE_HEAD_FORCE);
+-			break;
+-		case SM_UPDATE_NONE:
+-		case SM_UPDATE_COMMAND:
+-			return; /* Do not touch the submodule. */
+-		}
++		/* state.force is set at the caller. */
++		submodule_move_head(ce->name, "HEAD", NULL,
++				    SUBMODULE_MOVE_HEAD_FORCE);
+ 	}
+ 	if (!check_leading_path(ce->name, ce_namelen(ce)))
+ 		return;
 -- 
 2.14.0.rc1.383.gd1ce394fe2-goog
 
