@@ -2,145 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C2821F991
-	for <e@80x24.org>; Thu,  3 Aug 2017 17:44:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DBFD71F991
+	for <e@80x24.org>; Thu,  3 Aug 2017 17:55:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751743AbdHCRot (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Aug 2017 13:44:49 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56877 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751236AbdHCRos (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Aug 2017 13:44:48 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AE65CA4FB9;
-        Thu,  3 Aug 2017 13:44:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=7zOwQ2H1Zbc4
-        5EFphi6F9927G5g=; b=xqkcn39UegDUxW5vfzlxoxz7uzIUTUM2mO86P7ROb+PZ
-        fgagurmHv80xtuGX4LsPwJgwZsGQhDkCwpGQaIKwZ6ub6eTUtTJkSQNi7HPBbOXt
-        LqvgONAICublV2TTTWXLQBXvMrwlyEsQroocKGjmXaSMdXKYIo3kc6x7RnUC6Co=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=ciSdLL
-        JwrZh1tKw8MnHeARUxaDnXMOVdh/VXvqvvgP8TMD4gX2i1VDWjkPUmAbvhKjTH/3
-        NEn9xj0fcohyaAu+PM+7Mw2CPTc19HT3b1mvLd1+gEVkDYr8OZIfRgJvmKZ4DAYz
-        1LnmcON2TwaxACpQKtlg/L0B0iiOH0NEnLeNw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A6720A4FB8;
-        Thu,  3 Aug 2017 13:44:40 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1B28CA4FB7;
-        Thu,  3 Aug 2017 13:44:40 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 1/7] builtin.h: take over documentation from api-builtin.txt
-References: <cover.1500321657.git.martin.agren@gmail.com>
-        <cover.1501701128.git.martin.agren@gmail.com>
-        <e660a9cdaff6d114305a475f9a12876b56b473d1.1501701128.git.martin.agren@gmail.com>
-Date:   Thu, 03 Aug 2017 10:44:38 -0700
-In-Reply-To: <e660a9cdaff6d114305a475f9a12876b56b473d1.1501701128.git.martin.agren@gmail.com>
-        ("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Wed, 2 Aug 2017 21:40:49
- +0200")
-Message-ID: <xmqqpoccpmux.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751820AbdHCRzx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Aug 2017 13:55:53 -0400
+Received: from mail-yw0-f179.google.com ([209.85.161.179]:33042 "EHLO
+        mail-yw0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751236AbdHCRzx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Aug 2017 13:55:53 -0400
+Received: by mail-yw0-f179.google.com with SMTP id p68so13173494ywg.0
+        for <git@vger.kernel.org>; Thu, 03 Aug 2017 10:55:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=g8glFMwkbCJSU0Kuar7TBXO3dnbcFnySOgfcJqa6GIk=;
+        b=JMReiU0x0LyOG/PeXu/povWvxnDiVzrGu/uiNNjFQ1AI06WiMCnEfszewQO6ZmFdnY
+         02RgfMjiNEBJkirk+QAUIgE2sRGXoxNnKhPXAdtfjvgjnWx96swnuA5K4JnN3SEMsJfd
+         M+1AIXUS/nB0qMkqiEhrXjFe/gf5EcPGMXbLZXzK5RxuQ6Tv6Al6OjsEzFBKa4jd8r0q
+         eM+nGZ/udz2ob/x07UCUwUGL3qSA1NXVv3EPy8NW0JaukI3UrIVDCPQ2B4tZ8qkAHQzy
+         75oFFw1NBZTSzlqKsK791mbon0h8cMQcQSL+0cR2WdbWSmTNwMC1gn18aBO70Tku2yFf
+         tOyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=g8glFMwkbCJSU0Kuar7TBXO3dnbcFnySOgfcJqa6GIk=;
+        b=R3QDBRMHclAmDkv76owoTXchhmV5GEQRmNkYs8JP2EmscWVSpwfjNkOmsHPvC5kLGT
+         P1pFPm8By8t0EkuNzxwlaxp+s+bu7KS7LByjTkducCyJrEIhHwG3hpqgf8zVGm4nougx
+         q719j0+d4LO0jQkValCe0/oSqUsbLyLb6ncUCj/66jjyEomowR+xRxuD9ZlLQsHsKuxt
+         TilzaPhMkemdkDWukkiAiIq8zhv1wL1/iB6Z+/qavUz9SlmHpdvioJG9qXw6QJv7EER6
+         WyR+AkelNsl1etva1kyUaZVF/prIKQP+ObLbNn1+4j413Vv+ZwehB41B5q+JDuf2RFL9
+         wfdQ==
+X-Gm-Message-State: AIVw111Sqt/bykiS+/5BH8hsMCHYrisX1UphS5nW3HNfKr52BJlWPcVk
+        8KDUflNR2F+5y1rRdNPP5orxXfYEWHx7
+X-Received: by 10.129.57.214 with SMTP id g205mr1808993ywa.105.1501782952336;
+ Thu, 03 Aug 2017 10:55:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 6CE00BA0-7873-11E7-A55A-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Received: by 10.13.215.84 with HTTP; Thu, 3 Aug 2017 10:55:31 -0700 (PDT)
+In-Reply-To: <xmqqtw1opnla.fsf@gitster.mtv.corp.google.com>
+References: <CA+kp=uoHiP8t_40yZvT7r9ziB4uSxgcc=NRY0+XzQJDkuJpx4A@mail.gmail.com>
+ <xmqqtw1opnla.fsf@gitster.mtv.corp.google.com>
+From:   Alejandro Aguila <aguilasainz@gmail.com>
+Date:   Thu, 3 Aug 2017 12:55:31 -0500
+Message-ID: <CA+kp=uq1L7TFjXMCoFaNxq5wCNtKWw48MXFX_Unh-QxDf587dg@mail.gmail.com>
+Subject: Re: Cloning an specific commit from the hash
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin =C3=85gren <martin.agren@gmail.com> writes:
+Thanks Junio!
 
-> diff --git a/builtin.h b/builtin.h
-> index 498ac80d0..8d87d06da 100644
-> --- a/builtin.h
-> +++ b/builtin.h
-> @@ -6,6 +6,86 @@
->  #include "cache.h"
->  #include "commit.h"
-> =20
-> +/*
-> + * builtin API
-> + * =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> + *
-> + * Adding a new built-in
-> + * ---------------------
-> + *
-> + * There are 4 things to do to add a built-in command implementation t=
-o
-> + * Git:
-> + *
-> + * . Define the implementation of the built-in command `foo` with
-> + *   signature:
-> + *
-> + *	int cmd_foo(int argc, const char **argv, const char *prefix);
-> + *
-> + * . Add the external declaration for the function to `builtin.h`.
-> + *
-> + * . Add the command to the `commands[]` table defined in `git.c`.
-> + *   The entry should look like:
-> + *
-> + *	{ "foo", cmd_foo, <options> },
-> + *
-> + * where options is the bitwise-or of:
-> + *
-> + * `RUN_SETUP`:
-> + *	If there is not a Git directory to work on, abort.  If there
-> + *	is a work tree, chdir to the top of it if the command was
-> + *	invoked in a subdirectory.  If there is no work tree, no
-> + *	chdir() is done.
-> + *
-> + * `RUN_SETUP_GENTLY`:
-> + *	If there is a Git directory, chdir as per RUN_SETUP, otherwise,
-> + *	don't chdir anywhere.
-> + *
-> + * `USE_PAGER`:
-> + *
-> + *	If the standard output is connected to a tty, spawn a pager and
-> + *	feed our output to it.
-> + *
-> + * `NEED_WORK_TREE`:
-> + *
-> + *	Make sure there is a work tree, i.e. the command cannot act
-> + *	on bare repositories.
-> + *	This only makes sense when `RUN_SETUP` is also set.
-> + *
-> + * `SUPPORT_SUPER_PREFIX`:
-> + *
-> + *	The built-in supports `--super-prefix`.
-> + *
-> + * . Add `builtin/foo.o` to `BUILTIN_OBJS` in `Makefile`.
+Is there any chance to find out what are the trees for the dependencies?
 
-Not a new problem but it will become much easier to follow if we
-moved this item between the "implement cmd_foo()" and "declare
-cmd_foo in builtin.h", like so:
+Cheers!
 
- . Define the implementation of the built-in command `foo` with
-   signature:
+On 3 August 2017 at 12:28, Junio C Hamano <gitster@pobox.com> wrote:
+> Alejandro Aguila <aguilasainz@gmail.com> writes:
+>
+>> I've been working with Oscomo's project OpenBSC
+>> https://github.com/osmocom/openbsc and my old hardware won't work with
+>> the latest version, which is 0.15. So I asked for help to osmocom guys
+>> and there's someone who told me that his version is working with the
+>> same hardware I have, so have gave me the OpenBSC hash for it (
+>> 7f100c9712de5c684462e809bf31a58c0c326337 ).
+>>
+>> To be honest I don't use git more apart of cloning repos, so I would
+>> like to know how can I pull the files for that hash. And since OpenBSC
+>> has some dependencies that are in osmocom's github repo, I don't know
+>> if I can get the version that worked for the one committed in the
+>> hash.
+>
+> When a user of a project that uses Git says "try this version"
+> without telling you on which branch that version appears, that
+> statement typically means that anybody who clones that project
+> would get the commit, i.e.
+>
+>     $ git clone https://github.com/.../openbsc
+>     $ cd openbsc
+>     $ git checkout 7f100c9712de
+>
+> This will give you a checkout without being on any named branch,
+> which would be sufficient for you to build; if you want further work
+> on top of that commit, you might want to do the last step more like
+> so:
+>
+>     $ git checkout -b mybranch 7f100c9712de
+>
+> If you are not developing at all, then starting at this URL
+>
+> https://github.com/osmocom/openbsc/commit/7f100c9712de5c684462e809bf31a58=
+c0c326337
+>
+> and clicking around, you should be able to find this URL
+>
+> https://github.com/osmocom/openbsc/archive/7f100c9712de5c684462e809bf31a5=
+8c0c326337.zip
+>
+> which would presumably give you a Zip archive that contains the
+> files in that particular commit.
+>
+>
 
-	int cmd_foo(int argc, const char **argv, const char *prefix);
 
-   in a new file `builtin/foo.c`.
 
- . Add `builtin/foo.o` to `BUILTIN_OBJS` in `Makefile`.
-
-Alternatively, we may merge these two into one item (i.e. "in a new
-file `builtin/foo.c` and add `builtin/foo.o` to ...").
-
-But of course, this patch 1/7 should not do any of the above.  I am
-suggesting a possible future clean-up for anybody on the list
-listening from sidelines, and you do not have to be the person who
-does it.
-
-Thanks.
+--=20
+Alejandro Aguila S=C3=A1inz
