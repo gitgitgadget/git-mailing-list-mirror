@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B2F672047F
-	for <e@80x24.org>; Thu,  3 Aug 2017 09:22:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA8E12047F
+	for <e@80x24.org>; Thu,  3 Aug 2017 09:22:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751946AbdHCJTp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Aug 2017 05:19:45 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:36464 "EHLO
+        id S1751743AbdHCJWh (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Aug 2017 05:22:37 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:33173 "EHLO
         mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751775AbdHCJTk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Aug 2017 05:19:40 -0400
-Received: by mail-wm0-f66.google.com with SMTP id d40so1420918wma.3
-        for <git@vger.kernel.org>; Thu, 03 Aug 2017 02:19:39 -0700 (PDT)
+        with ESMTP id S1751941AbdHCJTp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Aug 2017 05:19:45 -0400
+Received: by mail-wm0-f66.google.com with SMTP id q189so1445728wmd.0
+        for <git@vger.kernel.org>; Thu, 03 Aug 2017 02:19:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=F4vUuRPdxMjG3ruz3Rt2OUBeOaq5D4YiIqIfNVRaJSQ=;
-        b=NVNzgk8NU6K16am8dBw3itS/Tkc37rvfKkruTZduwaOqiZVrcDavgHej5gBVXZGDiO
-         UMIWbfl0PzPf5cCHA32Mico+Q1wBipP2+nisYgIIvEW7IO3R//2/8MlRN21y9E2oTko5
-         e3n8Q1GA+cBaJKJ9vmuM09jR/gB8xN0KwRM0N+iIAiw89RlRm1/GHVS2FfO7vGZr4xlD
-         iOVshwvVjK3k+5mKLZXytTyYwdUZWagc1HRTFLYocuQtKJWI0Cph+L/ofmKCYPI/o7k9
-         sUqLMXegnRJvWiGmECKZLXne4D9DZVBICmqNbG+joxWySWtQq+uK0P4syGQb6wkHXDaV
-         BK9g==
+        bh=XGkwu7T5+DMdaXO3G0kzZgfdBGr1B/sMoE1dRQ0yPHg=;
+        b=Ai/07/qk8mfbDSgZPDU6pTRe2diMytR5ni2/DYqayl9CmyliYcEepJAKA/jrhh3Bho
+         Tu3P9lzAc0iIk0rLSvoQRSlCj07lavnAxjGaxpzVf2S2IPObk35PmnjRYnKvhaGZ/Pjv
+         hlfeMf6+K8qpLXpGk415/6eFuchNB0N4Zi4k6Hqvo+v946SaOs9pSRv4HAh3nsRwUnmB
+         jOZ0QNJFnjAFLZKMDyIKG3MaOo9xKBHf+2ZQlJT//jMacX/o0+gUfWU9B7Z/5EWhYrLK
+         vzuBAnbHICgS18sscq3tpCqifHxnu/9DPP3VEmy9IWQUOUhSJoDUjobaWwBJ//g/xdzy
+         36Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=F4vUuRPdxMjG3ruz3Rt2OUBeOaq5D4YiIqIfNVRaJSQ=;
-        b=g9XCah8C8ZXWmA86ywqLaKPbgD2tJOpFCU9aq07H1eADWfPEWZkPDhvuf1YdOfMyFH
-         MJvlrOcW6TOlzmEN6XGhyeh9XTKjFs7OgiEbNKfeH5NOWmvx1LeT1Rwz/Bpphon/z0ad
-         AQsU+0EgSHoa8ljGpTz1bFoEArv5KVSXRZOWSCBMCNo/2RWQz1f+cezAksaXUn+vf57O
-         1I28UvS4W7B+y2+kv2sjAZKPw+NfwolyKzFsdVu4EayoOYm7sZD8z8B0I7xoYnFdHIhg
-         zfy/6XBzbN6Ttm/cotQYQCJ7Ae+HFhHUGyLmeDbbuVNif7w1pfr2h4U4v9g4rF8IxT3M
-         UKYQ==
-X-Gm-Message-State: AIVw112Io+et9tQw53bDt2PSWb/3Pz8qOi9BBXBpHlBiVmUipNB/eNFa
-        XP7vj6cGPJjXg/Jb
-X-Received: by 10.28.238.85 with SMTP id m82mr714535wmh.107.1501751978916;
-        Thu, 03 Aug 2017 02:19:38 -0700 (PDT)
+        bh=XGkwu7T5+DMdaXO3G0kzZgfdBGr1B/sMoE1dRQ0yPHg=;
+        b=WpODsWxGJ63yTWSqJh7wfCJjiIuly+iNNKgG1akukhCOMZZ+S+s07bPzfK1cMfNtqw
+         QXL5c8cKR195u0yq+R1a99mWblW7LMI2Sk5E+BDNzoYrmDgkQ5Rz6Ey2YWI9IDJd8Rlq
+         5vQ82yncZyIcsbjBrWzY1FSRoiMC95DOdImEavxkZwwhxEqHdixSs4zxEI9g1zssIQ12
+         bzNVgvWpX1rgWBrPjSB7LMTpGfA2j75I/9BGQcJAYK7MdXkqPYqO/NATX/XxbVb+Zlnn
+         xB9IHTwSIW4cIVQjeO9uRk2YOSntx6/913LLwfuLEMq/G9w+xryUkKhuKATPnwKAJPoz
+         qmiw==
+X-Gm-Message-State: AIVw113CPELEIjeROk5ZAd0LIqToBKi0ze9H0+Uw5NOz93xKdi2B8bvu
+        txO0uoJA7x5SLKe2
+X-Received: by 10.28.238.85 with SMTP id m82mr714685wmh.107.1501751983900;
+        Thu, 03 Aug 2017 02:19:43 -0700 (PDT)
 Received: from localhost.localdomain (sud35-h04-89-95-107-230.dsl.sta.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id n184sm1308051wme.33.2017.08.03.02.19.37
+        by smtp.gmail.com with ESMTPSA id n184sm1308051wme.33.2017.08.03.02.19.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 03 Aug 2017 02:19:38 -0700 (PDT)
+        Thu, 03 Aug 2017 02:19:43 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v5 01/40] builtin/clone: get rid of 'value' strbuf
-Date:   Thu,  3 Aug 2017 11:18:47 +0200
-Message-Id: <20170803091926.1755-2-chriscool@tuxfamily.org>
+Subject: [PATCH v5 05/40] t0021/rot13-filter: use Git/Packet.pm
+Date:   Thu,  3 Aug 2017 11:18:51 +0200
+Message-Id: <20170803091926.1755-6-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.14.0.rc1.52.gf02fb0ddac.dirty
 In-Reply-To: <20170803091926.1755-1-chriscool@tuxfamily.org>
 References: <20170803091926.1755-1-chriscool@tuxfamily.org>
@@ -69,56 +69,86 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This makes the code simpler by removing a few lines, and getting
-rid of one variable.
+After creating Git/Packet.pm from part of t0021/rot13-filter.pl,
+we can now simplify this script by using Git/Packet.pm.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/clone.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ t/t0021/rot13-filter.pl | 51 +++----------------------------------------------
+ 1 file changed, 3 insertions(+), 48 deletions(-)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 08b5cc433c..4b5340c55f 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -871,7 +871,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	const struct ref *our_head_points_at;
- 	struct ref *mapped_refs;
- 	const struct ref *ref;
--	struct strbuf key = STRBUF_INIT, value = STRBUF_INIT;
-+	struct strbuf key = STRBUF_INIT;
- 	struct strbuf branch_top = STRBUF_INIT, reflog_msg = STRBUF_INIT;
- 	struct transport *transport = NULL;
- 	const char *src_ref_prefix = "refs/heads/";
-@@ -1036,7 +1036,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 		strbuf_addf(&branch_top, "refs/remotes/%s/", option_origin);
- 	}
+diff --git a/t/t0021/rot13-filter.pl b/t/t0021/rot13-filter.pl
+index 1fc581c814..36a9eb3608 100644
+--- a/t/t0021/rot13-filter.pl
++++ b/t/t0021/rot13-filter.pl
+@@ -19,9 +19,12 @@
+ #     same command.
+ #
  
--	strbuf_addf(&value, "+%s*:%s*", src_ref_prefix, branch_top.buf);
- 	strbuf_addf(&key, "remote.%s.url", option_origin);
- 	git_config_set(key.buf, repo);
- 	strbuf_reset(&key);
-@@ -1050,10 +1049,9 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	if (option_required_reference.nr || option_optional_reference.nr)
- 		setup_reference();
++use 5.008;
++use lib (split(/:/, $ENV{GITPERLLIB}));
+ use strict;
+ use warnings;
+ use IO::File;
++use Git::Packet;
  
--	fetch_pattern = value.buf;
-+	fetch_pattern = xstrfmt("+%s*:%s*", src_ref_prefix, branch_top.buf);
- 	refspec = parse_fetch_refspec(1, &fetch_pattern);
+ my $MAX_PACKET_CONTENT_SIZE = 65516;
+ my @capabilities            = @ARGV;
+@@ -34,54 +37,6 @@ sub rot13 {
+ 	return $str;
+ }
+ 
+-sub packet_bin_read {
+-	my $buffer;
+-	my $bytes_read = read STDIN, $buffer, 4;
+-	if ( $bytes_read == 0 ) {
+-		# EOF - Git stopped talking to us!
+-		return ( -1, "" );
+-	} elsif ( $bytes_read != 4 ) {
+-		die "invalid packet: '$buffer'";
+-	}
+-	my $pkt_size = hex($buffer);
+-	if ( $pkt_size == 0 ) {
+-		return ( 1, "" );
+-	} elsif ( $pkt_size > 4 ) {
+-		my $content_size = $pkt_size - 4;
+-		$bytes_read = read STDIN, $buffer, $content_size;
+-		if ( $bytes_read != $content_size ) {
+-			die "invalid packet ($content_size bytes expected; $bytes_read bytes read)";
+-		}
+-		return ( 0, $buffer );
+-	} else {
+-		die "invalid packet size: $pkt_size";
+-	}
+-}
 -
--	strbuf_reset(&value);
-+	free((char *)fetch_pattern);
+-sub packet_txt_read {
+-	my ( $res, $buf ) = packet_bin_read();
+-	unless ( $res == -1 || $buf =~ s/\n$// ) {
+-		die "A non-binary line MUST be terminated by an LF.";
+-	}
+-	return ( $res, $buf );
+-}
+-
+-sub packet_bin_write {
+-	my $buf = shift;
+-	print STDOUT sprintf( "%04x", length($buf) + 4 );
+-	print STDOUT $buf;
+-	STDOUT->flush();
+-}
+-
+-sub packet_txt_write {
+-	packet_bin_write( $_[0] . "\n" );
+-}
+-
+-sub packet_flush {
+-	print STDOUT sprintf( "%04x", 0 );
+-	STDOUT->flush();
+-}
+-
+ print $debug "START\n";
+ $debug->flush();
  
- 	remote = remote_get(option_origin);
- 	transport = transport_get(remote, remote->url[0]);
-@@ -1192,7 +1190,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	strbuf_release(&reflog_msg);
- 	strbuf_release(&branch_top);
- 	strbuf_release(&key);
--	strbuf_release(&value);
- 	junk_mode = JUNK_LEAVE_ALL;
- 
- 	free(refspec);
 -- 
 2.14.0.rc1.52.gf02fb0ddac.dirty
 
