@@ -2,111 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 75CD32047F
-	for <e@80x24.org>; Thu,  3 Aug 2017 10:15:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA39E1F991
+	for <e@80x24.org>; Thu,  3 Aug 2017 15:35:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751897AbdHCKPw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Aug 2017 06:15:52 -0400
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:6095 "EHLO
-        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751872AbdHCKPu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Aug 2017 06:15:50 -0400
-Received: from [192.168.2.201] ([92.22.28.33])
-        by smtp.talktalk.net with SMTP
-        id dDARdnpMV3CyHdDASdldUt; Thu, 03 Aug 2017 11:15:48 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
-        t=1501755348; bh=cOdV/nawFO+1UaKtQTrYRPRAvq0QBim2VLlN+nfw3Zw=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=o95d1d+K4JIa9LwrjvnabWCU5rR1iMq+p2v96yGs605DyNH4b4P8RG2E3MnasBH3n
-         tZsQynDCZ/L1NBujlNw/fo5sU4vpniBO/tJ642He7ifP1V+0DCRRpYGU3DqTdPZykY
-         xXglrkpkgZJaTaZ365I9kR4mTp4T2TtCFM88Exv8=
-X-Originating-IP: [92.22.28.33]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=Zo+dE5zG c=1 sm=1 tr=0 a=BeSdjzhxhZnKGFP9cxuqMA==:117
- a=BeSdjzhxhZnKGFP9cxuqMA==:17 a=IkcTkHD0fZMA:10 a=ybZZDoGAAAAA:8
- a=nN7BH9HXAAAA:8 a=evINK-nbAAAA:8 a=jXHeF1nPi7Ykd0SGJz0A:9
- a=siTAzFYvtCBd-EJv:21 a=WY8eTnZ8ocSMVg1M:21 a=QEXdDO2ut3YA:10
- a=UF-tvkePCJwA:10 a=SHUmGpGg8TAA:10 a=0RhZnL1DYvcuLYC8JZ5M:22
- a=RfR_gqz1fSpA9VikTjo0:22
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 6/6] cherry-pick/revert: reject --rerere-autoupdate when
- continuing
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <20170802104420.12809-1-phillip.wood@talktalk.net>
- <20170802104420.12809-7-phillip.wood@talktalk.net>
- <xmqqpocdr5tu.fsf@gitster.mtv.corp.google.com>
- <xmqqlgn1r4bu.fsf@gitster.mtv.corp.google.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <6a7c9661-9f12-99c9-1fc1-4a4abd3d0660@talktalk.net>
-Date:   Thu, 3 Aug 2017 11:15:48 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
-MIME-Version: 1.0
-In-Reply-To: <xmqqlgn1r4bu.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
+        id S1751238AbdHCPf1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Aug 2017 11:35:27 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:33309 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751010AbdHCPf1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Aug 2017 11:35:27 -0400
+Received: by mail-pf0-f195.google.com with SMTP id c65so1829718pfl.0
+        for <git@vger.kernel.org>; Thu, 03 Aug 2017 08:35:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:cc:in-reply-to:references:date
+         :mime-version:content-transfer-encoding;
+        bh=wAOGbzKxwlvAwNYaIpCWrTVMN3CobdB2l5tdYJ4Z6zA=;
+        b=HWza0W/5bw//1XmH4eci8yYG8//0fXvksptthaIwKCyvQTwCh+ORzGAuTAIGCiHht9
+         u4O3r3WLuPGel9Ocb7PUZ2+n0HbtGYsHZY/iQq3s/s6N4/j+KlDticCKaBHpSznrPPu4
+         Cxbp89zVQ7/LRgavPfrWH/MI5Y3VZ/A9pnnTKymGb9aaU1DyvxwlkuRmmcjXMWDbDz5m
+         aGZaobcpYn/XjfFDuoO9Er83lY9gF59MSE9Q/gV3CQR5Wc8GfaCuETA8dkUrXKk1S20z
+         ulB0l3iDoUcFOJclsw+nCf62aYZgOKGc4HIW6fI9fs+iM1OQh1/Oa0H7LeOdqyoiiNuy
+         TFnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:cc:in-reply-to
+         :references:date:mime-version:content-transfer-encoding;
+        bh=wAOGbzKxwlvAwNYaIpCWrTVMN3CobdB2l5tdYJ4Z6zA=;
+        b=YfGdJGv9F/xBOqYw0WwOlA9Dua6VnvbcSsZvTbYerjiKWm8V4XUTah2o+uZqqYoJD1
+         QTq9Qc424hpiC4bpEfl/ntPsb9eQvnN7iP5lqiwMy7AfnpEGT53xP19sOQrvZPxmSm+y
+         NvCza8Qad1tcJ4O/a6mivZ+3HJ+dC1NhbJoyxpxPl0qdTIvvHK1b0s4ARhpi0fuet3eJ
+         zoKRdyT5ZpofANiuuPzVr6Pp08WPtwAzTHBSRlAenCB2oZNihVm7z+/F6aWI3FRvDuAS
+         eF4OuPRrNk1npxNgVSiRhSWe8fRXL8MYOwxQgWkKTqQ4otXpa1hcGmZzGmaN5lExYLXN
+         oSmQ==
+X-Gm-Message-State: AIVw113q362C7LX1uBXdXu0MhoIr9prAB0C+2lm+aCTpY0nMr4uCupJx
+        RdK8nCHPSmZgDQ==
+X-Received: by 10.99.97.194 with SMTP id v185mr1908817pgb.165.1501774526556;
+        Thu, 03 Aug 2017 08:35:26 -0700 (PDT)
+Received: from unique-pc ([117.249.241.161])
+        by smtp.googlemail.com with ESMTPSA id 66sm23569580pfb.149.2017.08.03.08.35.21
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 03 Aug 2017 08:35:25 -0700 (PDT)
+Message-ID: <1501774553.9604.1.camel@gmail.com>
+Subject: Re: [RFC] The correct and consistent alternative to quote a
+ command ?
+From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Philip Oakley <philipoakley@iee.org>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+In-Reply-To: <CAGZ79kbCg+xdVE1U0dv8MJ6vUuWvraWQCMSzKOTBsOvtdSvkGg@mail.gmail.com>
+References: <8256C530C7DE43D7BC72BFB327DF4726@PhilipOakley>
+         <20170730161816.2412-1-kaarticsivaraam91196@gmail.com>
+         <CAGZ79kYg9jQ3kaKnNEJCH9fde=ar1KPiUr7=X+TguNc0Twqdzg@mail.gmail.com>
+         <1501603171.1671.8.camel@gmail.com>
+         <CAGZ79kY_NdBe1QjJWrLUkfDOk8Zrnopa945F1xBq=WFDNpRWMg@mail.gmail.com>
+         <1501676577.1957.4.camel@gmail.com>
+         <CAGZ79kbCg+xdVE1U0dv8MJ6vUuWvraWQCMSzKOTBsOvtdSvkGg@mail.gmail.com>
+Content-Type: text/plain; charset="ISO-8859-15"
+Date:   Thu, 03 Aug 2017 21:05:53 +0530
+Mime-Version: 1.0
+X-Mailer: Evolution 3.22.6-1 
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfPn3+SKFxorD+AgrRDBFEcb8fDphoLC0AkRTB8oHfO/zDbLsCgukRDUTRHFGZrI/5/6y4x2HDCsL1w7rIhQmhP0AadRAYQvZ8Asqfd8MLzw+lTZi7Z9q
- Dhix62mcoYs78CbogpgY0EMNN8C3eaYORUJvtrOsI0/q4/Z6XcaM5oRMvsXmgRLTuXw7sQS1DrLZaimVuRnkoU/929RTdI9+oq7CkPYqnhlPtgNZwSCdK8dS
- aN6fGXAS0VHAzWsUDxzPAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio
+On Wed, 2017-08-02 at 10:32 -0700, Stefan Beller wrote:
+> Thanks for checking.
+You're welcome. :)
 
-Thanks for your comments.
-
-On 02/08/17 23:29, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
->> Phillip Wood <phillip.wood@talktalk.net> writes:
->>
->>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>>
->>> cherry-pick and revert should not accept --[no-]rerere-autoupdate once
->>> they have started.
->>
->> Hmph, why shouldn't they?  In other words, shouldn't the usual "try
->> to carry forward from the original invocation (saved in the state
->> file), but allow overriding from the command line" rule apply?
-> 
-> Actually, I do not care _too_ deeply between
-> 
->  * You can only give "--[no-]rerere-autoupdate" at the beginning and
->    cannot change your mind later.
-> 
-> and
-> 
->  * The "--[no-]rerere-autoupdate" you give at the beginning is used
->    throughout your multi-commit cherry-pick session, but you can
->    give an opposite one from the command line when you say
->    "--continue", and in that case it takes effect only for a single
->    commit.
-> 
-> If I understand correctly, the former is what 5-6/6 implements.
-
-Yes, that's correct. It was easier to implement it that way
-
-> The
-> latter makes it more in line with how "am -3" followed by "am --no-3
-> --continue" behaves.
-
-I'm a bit confused about what am does when you pass extra options to
---continue. It looks like they do not persist if there's another
-conflict and may only apply to the first patch that is applied when
-resuming - I'd need to spend more time looking at the code or run a test
-to be sure.
-
-Best Wishes
-
-Phillip
-
-
+-- 
+Kaartic
