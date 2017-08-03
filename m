@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 87E63208CB
-	for <e@80x24.org>; Thu,  3 Aug 2017 09:19:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C3602208B8
+	for <e@80x24.org>; Thu,  3 Aug 2017 09:19:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751974AbdHCJTw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Aug 2017 05:19:52 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:33187 "EHLO
+        id S1751982AbdHCJTx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Aug 2017 05:19:53 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:34873 "EHLO
         mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751821AbdHCJTr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Aug 2017 05:19:47 -0400
-Received: by mail-wm0-f67.google.com with SMTP id q189so1445831wmd.0
-        for <git@vger.kernel.org>; Thu, 03 Aug 2017 02:19:47 -0700 (PDT)
+        with ESMTP id S1751895AbdHCJTu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Aug 2017 05:19:50 -0400
+Received: by mail-wm0-f67.google.com with SMTP id r77so1442930wmd.2
+        for <git@vger.kernel.org>; Thu, 03 Aug 2017 02:19:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=FaRIzeJSqOlc2CiL76dCoVlHZ5JzDqJ00OeHAIwutpk=;
-        b=lrIdYtAvsdUMeHQu5b3pAao++usHBhcT2VXgcaiOA6dIfMHzIL7zCZ5KM2YwC9daBA
-         ONJNqQCw7wG2AdNWd+QTJr5whiThMNIQCarg4bY4AFJvZcij0L9idwtDTpyI3BvOwwWb
-         Osel45kxi3rq+0NwFX/ymSevu2nYYc/ER4oTwunQlMCeTE5VkoHXmx3MtuI2/A1Uahx/
-         sFvrGasDT84Y9ENOtv+lna/3XFEjxySYgTXsxGzqDSOCeKTAwum9o3y2DbLqWXA4GvC8
-         /RUJBAy/3mWg0wHekbQBiLErxsmaICeBXiP81zQ5MJhmpDMdgFGR+z6u8GE/3Q3J3Zxu
-         WetA==
+        bh=SQX/ravUjqccQqiv5ch+TxBeGBKRcXAOu9HFQCHf/50=;
+        b=jVX4aPfG3BCHCEemasD3g41lovrciUMjNFGELMXjLznt2mxTgg8rB+ttjbJMxKI4Lb
+         J+L4VFinhCzG3j+jtzo5TqtCk4kB05klFQ1gHnFAiAQS+fAa/dL11xNUp2VbLyp58IeW
+         bm03/UM6CHsC80Mw7OjIQHT89d4IOjB8fO7vVQ2SyxHxyDNoBvNLiXX8vMci4vioyg2s
+         5vRRLTOlJ6olEoC2aCLzIQAlFQjmcjAaWl53BjGRwI21Oc87Lsp4M5qdtJaAkVuJ1ClO
+         i+bq7OW+ooxkdMQ/SbiDZ2edwETJRlg7M5ARz6ycBYR6ADfYxZjg2ozf0y3tWHb6iyjc
+         psLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=FaRIzeJSqOlc2CiL76dCoVlHZ5JzDqJ00OeHAIwutpk=;
-        b=W8n2YcAIC5rRbM9TKNCCAzN3LCv15MKEjCBiQKGBLQSGMvTBBxw1YLpK4X/VJn2hI0
-         a/x0EJ0GN1DNPsNG7PiTyIswMUt++W+odVmc3xpD+VF1bPvDEqX5ymXdpOPEV1VTGNzz
-         gRaivQ9U6oxAsoTfXCGOHonRNAoZKMaq9vlnpQYXQy/Qm111Ladulxt+5wYf4lmef8wC
-         /OJneSSAFvtzRGtReYsQfNj0KswZvxk7eWE2C8a9xejwz+WrwknS/byF4SwlA7Dpl+Gb
-         DsJu9z8VZAkyCQlCpuJvJOZxhhdmLlInzcSmeZFm66gYtN6DGZwg7h24K2yejWqUEB/N
-         MEgw==
-X-Gm-Message-State: AHYfb5iz+INw3O0BGt4wWboqCVx/3kEvDZlR9wb1cZa6PZl8bprvljkb
-        i7/xi1FVoKH3anti
-X-Received: by 10.28.236.70 with SMTP id k67mr699128wmh.30.1501751986358;
-        Thu, 03 Aug 2017 02:19:46 -0700 (PDT)
+        bh=SQX/ravUjqccQqiv5ch+TxBeGBKRcXAOu9HFQCHf/50=;
+        b=obWQXMqDOnRWrGArDBneCashOJseSbUPzsO44lVL7esyoW2r2NfuU/FiGoW+FTBIsj
+         4xpv5jhuXb+CLRVkp+L7GesiHAGGX7plf4RSFKTq9OOuJu7sPNkxyLsiMXZeu/tMmE6N
+         QQAdat/K/m7ZNmBxQsw1THv4dSmHU1S0eYv68mX85Qg2aeD4SpLFEzE0u58UHAvc/iW+
+         RMYBei4wE6dT3byDBGf463JT+eKnIi3F0n7NFY+BuZNwUfMeBwh9tDl0BknphmWxtZPO
+         s9jWPGLqfU2fCKeT5v1+jWffAVX6GbDuhQMwFNHuqMA4n/v5PvndP7I34uhnOxK/8hzF
+         bdHQ==
+X-Gm-Message-State: AHYfb5hxccrSRfHnSta1OrCW8GuL3A/0Zwn0O/ut+Gbxcxwz8jZPoFEQ
+        TCunea9Vykz/q2DW
+X-Received: by 10.28.7.202 with SMTP id 193mr674116wmh.143.1501751988602;
+        Thu, 03 Aug 2017 02:19:48 -0700 (PDT)
 Received: from localhost.localdomain (sud35-h04-89-95-107-230.dsl.sta.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id n184sm1308051wme.33.2017.08.03.02.19.45
+        by smtp.gmail.com with ESMTPSA id n184sm1308051wme.33.2017.08.03.02.19.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 03 Aug 2017 02:19:45 -0700 (PDT)
+        Thu, 03 Aug 2017 02:19:48 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v5 07/40] Git/Packet.pm: add packet_initialize()
-Date:   Thu,  3 Aug 2017 11:18:53 +0200
-Message-Id: <20170803091926.1755-8-chriscool@tuxfamily.org>
+Subject: [PATCH v5 09/40] sha1_file: prepare for external odbs
+Date:   Thu,  3 Aug 2017 11:18:55 +0200
+Message-Id: <20170803091926.1755-10-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.14.0.rc1.52.gf02fb0ddac.dirty
 In-Reply-To: <20170803091926.1755-1-chriscool@tuxfamily.org>
 References: <20170803091926.1755-1-chriscool@tuxfamily.org>
@@ -69,62 +69,169 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a function to initialize the communication. And use this
-function in 't/t0021/rot13-filter.pl'.
+In the following commits we will need some functions that were
+internal to sha1_file.c, so let's first make them non static
+and declare them in "cache.h". While at it, let's rename
+'create_tmpfile()' to 'create_object_tmpfile()' to make its
+name less generic.
 
+Let's also split out 'sha1_file_name_alt()' from
+'sha1_file_name()' and 'open_sha1_file_alt()' from
+'open_sha1_file()', as we will need both of these new
+functions too.
+
+Helped-by: Jeff King <peff@peff.net>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- perl/Git/Packet.pm      | 13 +++++++++++++
- t/t0021/rot13-filter.pl |  8 +-------
- 2 files changed, 14 insertions(+), 7 deletions(-)
+ cache.h     |  8 ++++++++
+ sha1_file.c | 57 ++++++++++++++++++++++++++++++++++++---------------------
+ 2 files changed, 44 insertions(+), 21 deletions(-)
 
-diff --git a/perl/Git/Packet.pm b/perl/Git/Packet.pm
-index 2ad6b00d6c..b0233caf37 100644
---- a/perl/Git/Packet.pm
-+++ b/perl/Git/Packet.pm
-@@ -19,6 +19,7 @@ our @EXPORT = qw(
- 			packet_bin_write
- 			packet_txt_write
- 			packet_flush
-+			packet_initialize
- 		);
- our @EXPORT_OK = @EXPORT;
+diff --git a/cache.h b/cache.h
+index 71fe092644..06da3d8a3f 100644
+--- a/cache.h
++++ b/cache.h
+@@ -902,6 +902,12 @@ extern void check_repository_format(void);
+  */
+ extern const char *sha1_file_name(const unsigned char *sha1);
  
-@@ -70,3 +71,15 @@ sub packet_flush {
- 	print STDOUT sprintf( "%04x", 0 );
- 	STDOUT->flush();
++/*
++ * Like sha1_file_name, but return the filename within a specific alternate
++ * object directory. Shares the same static buffer with sha1_file_name.
++ */
++extern const char *sha1_file_name_alt(const char *objdir, const unsigned char *sha1);
++
+ /*
+  * Return the name of the (local) packfile with the specified sha1 in
+  * its name.  The return value is a pointer to memory that is
+@@ -1205,6 +1211,8 @@ extern int do_check_packed_object_crc;
+ 
+ extern int check_sha1_signature(const unsigned char *sha1, void *buf, unsigned long size, const char *type);
+ 
++extern int create_object_tmpfile(struct strbuf *tmp, const char *filename);
++extern void close_sha1_file(int fd);
+ extern int finalize_object_file(const char *tmpfile, const char *filename);
+ 
+ extern int has_sha1_pack(const unsigned char *sha1);
+diff --git a/sha1_file.c b/sha1_file.c
+index b60ae15f70..d330996bc4 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -253,12 +253,12 @@ static void fill_sha1_path(struct strbuf *buf, const unsigned char *sha1)
+ 	}
  }
-+
-+sub packet_initialize {
-+	my ($name, $version) = @_;
-+
-+	( packet_txt_read() eq ( 0, $name . "-client" ) )	|| die "bad initialize";
-+	( packet_txt_read() eq ( 0, "version=" . $version ) )	|| die "bad version";
-+	( packet_bin_read() eq ( 1, "" ) )			|| die "bad version end";
-+
-+	packet_txt_write( $name . "-server" );
-+	packet_txt_write( "version=" . $version );
-+	packet_flush();
+ 
+-const char *sha1_file_name(const unsigned char *sha1)
++const char *sha1_file_name_alt(const char *objdir, const unsigned char *sha1)
+ {
+ 	static struct strbuf buf = STRBUF_INIT;
+ 
+ 	strbuf_reset(&buf);
+-	strbuf_addf(&buf, "%s/", get_object_directory());
++	strbuf_addf(&buf, "%s/", objdir);
+ 
+ 	fill_sha1_path(&buf, sha1);
+ 	return buf.buf;
+@@ -278,9 +278,14 @@ static const char *alt_sha1_path(struct alternate_object_database *alt,
+ 	return buf->buf;
+ }
+ 
+- char *odb_pack_name(struct strbuf *buf,
+-		     const unsigned char *sha1,
+-		     const char *ext)
++const char *sha1_file_name(const unsigned char *sha1)
++{
++	return sha1_file_name_alt(get_object_directory(), sha1);
 +}
-diff --git a/t/t0021/rot13-filter.pl b/t/t0021/rot13-filter.pl
-index 36a9eb3608..5b05518640 100644
---- a/t/t0021/rot13-filter.pl
-+++ b/t/t0021/rot13-filter.pl
-@@ -40,13 +40,7 @@ sub rot13 {
- print $debug "START\n";
- $debug->flush();
++
++char *odb_pack_name(struct strbuf *buf,
++		    const unsigned char *sha1,
++		    const char *ext)
+ {
+ 	strbuf_reset(buf);
+ 	strbuf_addf(buf, "%s/pack/pack-%s.%s", get_object_directory(),
+@@ -1727,24 +1732,14 @@ static int stat_sha1_file(const unsigned char *sha1, struct stat *st,
+ 	return -1;
+ }
  
--( packet_txt_read() eq ( 0, "git-filter-client" ) ) || die "bad initialize";
--( packet_txt_read() eq ( 0, "version=2" ) )         || die "bad version";
--( packet_bin_read() eq ( 1, "" ) )                  || die "bad version end";
+-/*
+- * Like stat_sha1_file(), but actually open the object and return the
+- * descriptor. See the caveats on the "path" parameter above.
+- */
+-static int open_sha1_file(const unsigned char *sha1, const char **path)
++static int open_sha1_file_alt(const unsigned char *sha1, const char **path)
+ {
+-	int fd;
+ 	struct alternate_object_database *alt;
+-	int most_interesting_errno;
 -
--packet_txt_write("git-filter-server");
--packet_txt_write("version=2");
--packet_flush();
-+packet_initialize("git-filter", 2);
+-	*path = sha1_file_name(sha1);
+-	fd = git_open(*path);
+-	if (fd >= 0)
+-		return fd;
+-	most_interesting_errno = errno;
++	int most_interesting_errno = errno;
  
- ( packet_txt_read() eq ( 0, "capability=clean" ) )  || die "bad capability";
- ( packet_txt_read() eq ( 0, "capability=smudge" ) ) || die "bad capability";
+ 	prepare_alt_odb();
+ 	for (alt = alt_odb_list; alt; alt = alt->next) {
++		int fd;
+ 		*path = alt_sha1_path(alt, sha1);
+ 		fd = git_open(*path);
+ 		if (fd >= 0)
+@@ -1756,6 +1751,26 @@ static int open_sha1_file(const unsigned char *sha1, const char **path)
+ 	return -1;
+ }
+ 
++/*
++ * Like stat_sha1_file(), but actually open the object and return the
++ * descriptor. See the caveats on the "path" parameter above.
++ */
++static int open_sha1_file(const unsigned char *sha1, const char **path)
++{
++	int fd;
++
++	*path = sha1_file_name(sha1);
++	fd = git_open(*path);
++	if (fd >= 0)
++		return fd;
++
++	fd = open_sha1_file_alt(sha1, path);
++	if (fd >= 0)
++		return fd;
++
++	return fd;
++}
++
+ /*
+  * Map the loose object at "path" if it is not NULL, or the path found by
+  * searching for a loose object named "sha1".
+@@ -3284,7 +3299,7 @@ int hash_sha1_file(const void *buf, unsigned long len, const char *type,
+ }
+ 
+ /* Finalize a file on disk, and close it. */
+-static void close_sha1_file(int fd)
++void close_sha1_file(int fd)
+ {
+ 	if (fsync_object_files)
+ 		fsync_or_die(fd, "sha1 file");
+@@ -3308,7 +3323,7 @@ static inline int directory_size(const char *filename)
+  * We want to avoid cross-directory filename renames, because those
+  * can have problems on various filesystems (FAT, NFS, Coda).
+  */
+-static int create_tmpfile(struct strbuf *tmp, const char *filename)
++int create_object_tmpfile(struct strbuf *tmp, const char *filename)
+ {
+ 	int fd, dirlen = directory_size(filename);
+ 
+@@ -3348,7 +3363,7 @@ static int write_loose_object(const unsigned char *sha1, char *hdr, int hdrlen,
+ 	static struct strbuf tmp_file = STRBUF_INIT;
+ 	const char *filename = sha1_file_name(sha1);
+ 
+-	fd = create_tmpfile(&tmp_file, filename);
++	fd = create_object_tmpfile(&tmp_file, filename);
+ 	if (fd < 0) {
+ 		if (errno == EACCES)
+ 			return error("insufficient permission for adding an object to repository database %s", get_object_directory());
 -- 
 2.14.0.rc1.52.gf02fb0ddac.dirty
 
