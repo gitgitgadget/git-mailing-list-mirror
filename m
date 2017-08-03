@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C47B208B5
-	for <e@80x24.org>; Thu,  3 Aug 2017 09:19:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB864208BD
+	for <e@80x24.org>; Thu,  3 Aug 2017 09:19:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751900AbdHCJTr (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Aug 2017 05:19:47 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:37915 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751750AbdHCJTn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Aug 2017 05:19:43 -0400
-Received: by mail-wm0-f67.google.com with SMTP id y206so1406423wmd.5
-        for <git@vger.kernel.org>; Thu, 03 Aug 2017 02:19:42 -0700 (PDT)
+        id S1751950AbdHCJTs (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Aug 2017 05:19:48 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:36491 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751895AbdHCJTo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Aug 2017 05:19:44 -0400
+Received: by mail-wm0-f65.google.com with SMTP id d40so1421187wma.3
+        for <git@vger.kernel.org>; Thu, 03 Aug 2017 02:19:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=/ooUG+RBNF2PzfTQfDhDcmjNB656gYtJGtQ26H47tkE=;
-        b=DvG6Kx6CPik3Suo8p584VfAZ1vs0YI7tMJk4wbhP9PjyYSE75zLywjzIHBYQ8MMFO0
-         f250RBnzsyB4E9TxqoYsDagjvlOdODHv2ICmdFChvYM6RADSQCX5/RCueUF3pBIAD3d/
-         Ug2uX8S7BvjwgDFa0zVzE/kja6U0cNd803nmV+s6NCZ9fQ60bokQs4GSJbdDprXIpf4F
-         co/6ugE4SmqlyiWfYMUvORhUt7uxc74YQdkUoXWhv5YFRzpKvkyYFL0Tq4UmLDuddMIY
-         wREueTTaeDFd3v6ZYahsG6OONNM7GUl274G1GCtHrJ++RymZu2DsQUoKg4sTLzMtfARy
-         o5Ng==
+        bh=FNn0Xx59PLByEtMRC1G6D7k7Y96rwW9Di0kUaZOJ36Y=;
+        b=KrGyXlBeGwFVDfPXe4YVgWQNQU0Ez2+wTh3Ae/ED4PK5WmaLowsfHBNnRZv24PhRwP
+         oW2MaXK+gc0mvLWm4APbrpK7IJ5UwLnNzG8uewz+7hIeapB9wjrhieXXmvAdr+QFDBK5
+         s4EDITek1/wxc7ei8Oaz8yHdMAKQpx27UGbmt3Xm+rioihvuAag0VgldOZ8Uf+m6+UKF
+         5+PFOl/LVnM+omOaM0Y6bLnGvxsTLPeIKqQp4mZvKyHD98fp2fIqkaDzAWBexTqVn7Wt
+         KZfrMTGV4vTt3r11k7l9R6lr+1CRBTL1UACC3opXQanf7RJw/Uae2CODuY7bR+YqVKR8
+         NrUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=/ooUG+RBNF2PzfTQfDhDcmjNB656gYtJGtQ26H47tkE=;
-        b=DEZRBi4xLXUqxdOPvIsBRkWGzgQNUGXE07rUUxOS51nj4t9cT9GdUzr+DyCribjADb
-         Bd/MfURh5FZs6EetVSRSDzggEYSBR/+1M8rg20uq+i9Z07ddoaObNun1s3jouQEMvRZX
-         dEMRyu4S+ZudIvleE2n4VzBoWeQ62sxMTrARJziDHMoiaebTl2le3KanNJ6j4QXyLM71
-         91vHIgh9USW2tptP2wxz8GUHGs60nDhkV6Gxj8o3x3KKbN7Kp1129jcc9KzcoPhG4/vE
-         IqJVaTugjXza4IkWx2fP/+iVWrYC1h/soJoOOKEJXlkHqBaKRIFxwjFTZe9xxbMc9Hxm
-         Uvvg==
-X-Gm-Message-State: AIVw112aE6WrbDwe7L9nAcKx35hlXUiENbKUiwsjhV6QPYMa1nxpIQuM
-        ave5OPeNIcThnXoC
-X-Received: by 10.28.68.138 with SMTP id r132mr694148wma.26.1501751981519;
-        Thu, 03 Aug 2017 02:19:41 -0700 (PDT)
+        bh=FNn0Xx59PLByEtMRC1G6D7k7Y96rwW9Di0kUaZOJ36Y=;
+        b=pF4FTUpakbYDz+37rRW3gQhjPs45NKAAzHyOBTLz1LlXfsbYx7Wh4CL/gm1lZXGded
+         4KZSaePMyW5Yx60P1j4+zKY3JriX2HLZ/rsoe5olUXnb1RIo9UxxfbP4GRheKjNSvCfW
+         DrphtOU/8sgY2HgAtD6TjqgRCV0qN8ykw7k1ZoRH68T3XeM37yJNJI2TWx16dvzBJGNX
+         +tkFXDy4Yo8p+3KnA7A5lyn7vP+496I8AKYX6YCvVaZaX3oR8xD6ra5JZ1865msqakrt
+         mPItpXSWZxy9okvlTmDjyJy9t2Z9PjrgH3p8XKIQRkUC6AdEZc4dMfKX7R8qnolhfOOa
+         FSCQ==
+X-Gm-Message-State: AHYfb5ggpDwq0X7MgpGGUGyaAL28yd1Z7Oo37cs/Dy0Tf0tWv2KgMUOA
+        U3SLjpJlAAtL5I3I
+X-Received: by 10.28.14.149 with SMTP id 143mr677348wmo.102.1501751982601;
+        Thu, 03 Aug 2017 02:19:42 -0700 (PDT)
 Received: from localhost.localdomain (sud35-h04-89-95-107-230.dsl.sta.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id n184sm1308051wme.33.2017.08.03.02.19.40
+        by smtp.gmail.com with ESMTPSA id n184sm1308051wme.33.2017.08.03.02.19.41
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 03 Aug 2017 02:19:40 -0700 (PDT)
+        Thu, 03 Aug 2017 02:19:42 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v5 03/40] t0021/rot13-filter: improve 'if .. elsif .. else' style
-Date:   Thu,  3 Aug 2017 11:18:49 +0200
-Message-Id: <20170803091926.1755-4-chriscool@tuxfamily.org>
+Subject: [PATCH v5 04/40] Add Git/Packet.pm from parts of t0021/rot13-filter.pl
+Date:   Thu,  3 Aug 2017 11:18:50 +0200
+Message-Id: <20170803091926.1755-5-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.14.0.rc1.52.gf02fb0ddac.dirty
 In-Reply-To: <20170803091926.1755-1-chriscool@tuxfamily.org>
 References: <20170803091926.1755-1-chriscool@tuxfamily.org>
@@ -69,92 +69,92 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Before further refactoring the "t0021/rot13-filter.pl" script,
-let's modernize the style of its 'if .. elsif .. else' clauses
-to improve its readability by making it more similar to our
-other perl scripts.
+This will make it possible to reuse packet reading and writing
+functions in other test scripts.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/t0021/rot13-filter.pl | 27 +++++++++------------------
- 1 file changed, 9 insertions(+), 18 deletions(-)
+ perl/Git/Packet.pm | 71 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 71 insertions(+)
+ create mode 100644 perl/Git/Packet.pm
 
-diff --git a/t/t0021/rot13-filter.pl b/t/t0021/rot13-filter.pl
-index d6411ca523..1fc581c814 100644
---- a/t/t0021/rot13-filter.pl
-+++ b/t/t0021/rot13-filter.pl
-@@ -40,23 +40,20 @@ sub packet_bin_read {
- 	if ( $bytes_read == 0 ) {
- 		# EOF - Git stopped talking to us!
- 		return ( -1, "" );
--	}
--	elsif ( $bytes_read != 4 ) {
+diff --git a/perl/Git/Packet.pm b/perl/Git/Packet.pm
+new file mode 100644
+index 0000000000..aaffecbe2a
+--- /dev/null
++++ b/perl/Git/Packet.pm
+@@ -0,0 +1,71 @@
++package Git::Packet;
++use 5.008;
++use strict;
++use warnings;
++BEGIN {
++	require Exporter;
++	if ($] < 5.008003) {
++		*import = \&Exporter::import;
++	} else {
++		# Exporter 5.57 which supports this invocation was
++		# released with perl 5.8.3
++		Exporter->import('import');
++	}
++}
++
++our @EXPORT = qw(
++			packet_bin_read
++			packet_txt_read
++			packet_bin_write
++			packet_txt_write
++			packet_flush
++		);
++our @EXPORT_OK = @EXPORT;
++
++sub packet_bin_read {
++	my $buffer;
++	my $bytes_read = read STDIN, $buffer, 4;
++	if ( $bytes_read == 0 ) {
++		# EOF - Git stopped talking to us!
++		return ( -1, "" );
 +	} elsif ( $bytes_read != 4 ) {
- 		die "invalid packet: '$buffer'";
- 	}
- 	my $pkt_size = hex($buffer);
- 	if ( $pkt_size == 0 ) {
- 		return ( 1, "" );
--	}
--	elsif ( $pkt_size > 4 ) {
++		die "invalid packet: '$buffer'";
++	}
++	my $pkt_size = hex($buffer);
++	if ( $pkt_size == 0 ) {
++		return ( 1, "" );
 +	} elsif ( $pkt_size > 4 ) {
- 		my $content_size = $pkt_size - 4;
- 		$bytes_read = read STDIN, $buffer, $content_size;
- 		if ( $bytes_read != $content_size ) {
- 			die "invalid packet ($content_size bytes expected; $bytes_read bytes read)";
- 		}
- 		return ( 0, $buffer );
--	}
--	else {
++		my $content_size = $pkt_size - 4;
++		$bytes_read = read STDIN, $buffer, $content_size;
++		if ( $bytes_read != $content_size ) {
++			die "invalid packet ($content_size bytes expected; $bytes_read bytes read)";
++		}
++		return ( 0, $buffer );
 +	} else {
- 		die "invalid packet size: $pkt_size";
- 	}
- }
-@@ -144,14 +141,11 @@ while (1) {
- 	my $output;
- 	if ( $pathname eq "error.r" or $pathname eq "abort.r" ) {
- 		$output = "";
--	}
--	elsif ( $command eq "clean" and grep( /^clean$/, @capabilities ) ) {
-+	} elsif ( $command eq "clean" and grep( /^clean$/, @capabilities ) ) {
- 		$output = rot13($input);
--	}
--	elsif ( $command eq "smudge" and grep( /^smudge$/, @capabilities ) ) {
-+	} elsif ( $command eq "smudge" and grep( /^smudge$/, @capabilities ) ) {
- 		$output = rot13($input);
--	}
--	else {
-+	} else {
- 		die "bad command '$command'";
- 	}
- 
-@@ -163,14 +157,12 @@ while (1) {
- 		$debug->flush();
- 		packet_txt_write("status=error");
- 		packet_flush();
--	}
--	elsif ( $pathname eq "abort.r" ) {
-+	} elsif ( $pathname eq "abort.r" ) {
- 		print $debug "[ABORT]\n";
- 		$debug->flush();
- 		packet_txt_write("status=abort");
- 		packet_flush();
--	}
--	else {
-+	} else {
- 		packet_txt_write("status=success");
- 		packet_flush();
- 
-@@ -187,8 +179,7 @@ while (1) {
- 			print $debug ".";
- 			if ( length($output) > $MAX_PACKET_CONTENT_SIZE ) {
- 				$output = substr( $output, $MAX_PACKET_CONTENT_SIZE );
--			}
--			else {
-+			} else {
- 				$output = "";
- 			}
- 		}
++		die "invalid packet size: $pkt_size";
++	}
++}
++
++sub packet_txt_read {
++	my ( $res, $buf ) = packet_bin_read();
++	unless ( $res == -1 || $buf =~ s/\n$// ) {
++		die "A non-binary line MUST be terminated by an LF.";
++	}
++	return ( $res, $buf );
++}
++
++sub packet_bin_write {
++	my $buf = shift;
++	print STDOUT sprintf( "%04x", length($buf) + 4 );
++	print STDOUT $buf;
++	STDOUT->flush();
++}
++
++sub packet_txt_write {
++	packet_bin_write( $_[0] . "\n" );
++}
++
++sub packet_flush {
++	print STDOUT sprintf( "%04x", 0 );
++	STDOUT->flush();
++}
 -- 
 2.14.0.rc1.52.gf02fb0ddac.dirty
 
