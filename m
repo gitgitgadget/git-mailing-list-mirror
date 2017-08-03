@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 88C74209B8
-	for <e@80x24.org>; Thu,  3 Aug 2017 09:20:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 54CFA208B4
+	for <e@80x24.org>; Thu,  3 Aug 2017 09:20:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752090AbdHCJU1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Aug 2017 05:20:27 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:33325 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752015AbdHCJUV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Aug 2017 05:20:21 -0400
-Received: by mail-wr0-f195.google.com with SMTP id y43so578064wrd.0
-        for <git@vger.kernel.org>; Thu, 03 Aug 2017 02:20:20 -0700 (PDT)
+        id S1752114AbdHCJUe (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Aug 2017 05:20:34 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:35630 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752074AbdHCJUW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Aug 2017 05:20:22 -0400
+Received: by mail-wr0-f193.google.com with SMTP id c24so578519wra.2
+        for <git@vger.kernel.org>; Thu, 03 Aug 2017 02:20:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=cWol0pFw+5wBrnht5rzbFTY53bkS3POcGjcbNCBUU50=;
-        b=GGFWEMjPp5O7e14YgRx8TJQIYsmC7Ph14nc1RzhmhMcjOWCD30oCj67ZcxgsyQhgLX
-         bgDpubDYmbtFfuOG2vqS4NuL46yhxgGsLsmfryHjNTPSzUbwBy8q6fhxRMG0PEB1DIiV
-         FmDUFvDgs+1W9k4u7QuWlgBjUF3nNzXgzb1xqyIemFesEbrJ7Bka4B9Ui6Gap5hznpPQ
-         3w+py8mgIOpIk4CldviXaG2SDKPDQ4frUb1mB5/cN5uv+YP5x4uw8SnAtckEkYCry1zq
-         XTkgw5jFBlWq8q+cTwZvLOwxDt9HAQ5aiO4BJ2GBYPwFOBsOcVCCLsgqPfZ43+Mahdlp
-         KQ2Q==
+        bh=X+UpGTg6YjojNs6DbHVjTiT6fiwzRb9+2OClj3ySsLI=;
+        b=mWPqgnpzJRpyF2S7GVEAzLkUpaG0w/w5wIr2cp31cPd/eDsJCFvPPEsqX94mJJD+OD
+         YW4Kj5IaBTLZKcncZIz9cDK0bbtbEo4Pihe285Ipyzp/F8sCqv+99z3EqLpB8KHiWKu9
+         T7mPKud4LNeuEaSAazk+sF1MwL+ymswKo/+JFM88/Aw3ZSrN2EPCrBRsiFRhcsTfzKLW
+         bN+zvNm0ECt0H8Yn5iImRC95LARYjUFOdEIlT+fwGNlBybS1fzS2Ye93OOnPTOetkF/j
+         d5hb4FOixlCH2KUF+qfeZs1z1cNn+Iy/7Hty4rN7HMvEMIeabr5flKo9hU1EzhwI/mPH
+         KZjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=cWol0pFw+5wBrnht5rzbFTY53bkS3POcGjcbNCBUU50=;
-        b=GuZAEGpKezYjrUQQY33QwT2DLN9O9LqQs80dHm/k7C41/+TI/mI9bXDydeb08s/bKS
-         A6vlxXeyiqwTksJwyymNjygPYy/tGAUdtyBysekIRQy0KNklW4SFXpA4qhBLXbL46pEe
-         Wo0Dji0PbkmTj+FN+wPqML2piMLqbG7+MEibHhrdwh+0yv2tVHNB2M1gYQg9pC18B4Td
-         BolmAZSSNgZJNb25ziyhXXiGRW3FOZj1IvTy7VF1LhKxrC+1SHru2A+qVhOjelrqV0FY
-         FPx7hp/tCm0wGpn42mjx8Ivw7xe28l33tMP9xLzPk+pjMWyh96iuf2a13zHYIk+AHeTr
-         y6zQ==
-X-Gm-Message-State: AIVw110N1/rWBMN1uS85O+P3elnnkXkpKXAcJ6GnPcmb4VNRCqDuFk3U
-        HX97GHfev41/pEkh
-X-Received: by 10.223.175.38 with SMTP id z35mr735334wrc.213.1501752019258;
-        Thu, 03 Aug 2017 02:20:19 -0700 (PDT)
+        bh=X+UpGTg6YjojNs6DbHVjTiT6fiwzRb9+2OClj3ySsLI=;
+        b=UVqeAnY750VPG12q3YeJMJB7t2Bgiw2cB8iNni0WO0T9L4nXsN4LViE3gaoQs7HmKY
+         gbakkmTUIeWZ13JI0j8IOVH6Rj6zNjE4TO+uvTGKHZbpd5KSe4LU672R8F1v9G+K2tiR
+         0mY8Kd4ELJV8YHCUhQTnN8HCfYAsMn53SqpB13aY5X27BtTR8eTQmWbRlo2h33VSFfyr
+         726eD0wloeBE4jFDq/LhDMKIuv38EilKdrYabScb4J3uS0AI5UT9GrHG1DEISdBdgM93
+         9CyHebW9qZkaM/MVfWHWNRC+2VlaqBkDCkJlgO0LktN3/O4K+2rirz6Z27dZ3Nc7DGp+
+         x//g==
+X-Gm-Message-State: AIVw111XSZNEYg8/ufODu0IEasTWYfCvp0nwi3MdkPVAS9DSAjsJtTbX
+        aX/T6cIc9EJ3IFJv
+X-Received: by 10.223.172.86 with SMTP id v80mr918276wrc.112.1501752020484;
+        Thu, 03 Aug 2017 02:20:20 -0700 (PDT)
 Received: from localhost.localdomain (sud35-h04-89-95-107-230.dsl.sta.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id n184sm1308051wme.33.2017.08.03.02.20.18
+        by smtp.gmail.com with ESMTPSA id n184sm1308051wme.33.2017.08.03.02.20.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 03 Aug 2017 02:20:18 -0700 (PDT)
+        Thu, 03 Aug 2017 02:20:20 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v5 33/40] Add t0480 to test "have" capability and raw objects
-Date:   Thu,  3 Aug 2017 11:19:19 +0200
-Message-Id: <20170803091926.1755-34-chriscool@tuxfamily.org>
+Subject: [PATCH v5 34/40] external-odb: use 'odb=magic' attribute to mark odb blobs
+Date:   Thu,  3 Aug 2017 11:19:20 +0200
+Message-Id: <20170803091926.1755-35-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.14.0.rc1.52.gf02fb0ddac.dirty
 In-Reply-To: <20170803091926.1755-1-chriscool@tuxfamily.org>
 References: <20170803091926.1755-1-chriscool@tuxfamily.org>
@@ -69,238 +69,216 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+To tell which blobs should be sent to the "magic" external odb,
+let's require that the blobs be marked using the 'odb=magic'
+attribute.
+
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/t0480-read-object-have-http-e-odb.sh | 109 +++++++++++++++++++++++++++++++++
- t/t0480/read-object-plain-have         | 103 +++++++++++++++++++++++++++++++
- 2 files changed, 212 insertions(+)
- create mode 100755 t/t0480-read-object-have-http-e-odb.sh
- create mode 100755 t/t0480/read-object-plain-have
+ external-odb.c                         | 22 ++++++++++++++++++++--
+ external-odb.h                         |  3 ++-
+ sha1_file.c                            | 20 +++++++++++++++-----
+ t/t0400-external-odb.sh                |  3 +++
+ t/t0410-transfer-e-odb.sh              |  3 +++
+ t/t0420-transfer-http-e-odb.sh         |  3 +++
+ t/t0470-read-object-http-e-odb.sh      |  3 +++
+ t/t0480-read-object-have-http-e-odb.sh |  3 +++
+ 8 files changed, 52 insertions(+), 8 deletions(-)
 
-diff --git a/t/t0480-read-object-have-http-e-odb.sh b/t/t0480-read-object-have-http-e-odb.sh
-new file mode 100755
-index 0000000000..056a40f2bb
---- /dev/null
-+++ b/t/t0480-read-object-have-http-e-odb.sh
-@@ -0,0 +1,109 @@
-+#!/bin/sh
+diff --git a/external-odb.c b/external-odb.c
+index 084cd32e0b..e103514a46 100644
+--- a/external-odb.c
++++ b/external-odb.c
+@@ -1,6 +1,7 @@
+ #include "cache.h"
+ #include "external-odb.h"
+ #include "odb-helper.h"
++#include "attr.h"
+ 
+ static struct odb_helper *helpers;
+ static struct odb_helper **helpers_tail = &helpers;
+@@ -155,8 +156,23 @@ int external_odb_get_object(const unsigned char *sha1)
+ 	return external_odb_do_get_object(sha1);
+ }
+ 
++static int has_odb_attrs(struct odb_helper *o, const char *path)
++{
++	static struct attr_check *check;
 +
-+test_description='tests for read-object process with "have" cap and plain objects'
++	if (!check)
++		check = attr_check_initl("odb", NULL);
 +
-+. ./test-lib.sh
-+
-+# If we don't specify a port, the current test number will be used
-+# which will not work as it is less than 1024, so it can only be used by root.
-+LIB_HTTPD_PORT=$(expr ${this_test#t} + 12000)
-+
-+. "$TEST_DIRECTORY"/lib-httpd.sh
-+
-+start_httpd apache-e-odb.conf
-+
-+PATH="$PATH:$TEST_DIRECTORY/t0480"
-+
-+# odb helper script must see this
-+export HTTPD_URL
-+
-+HELPER="read-object-plain-have"
-+
-+test_expect_success 'setup repo with a root commit' '
-+	test_commit zero
-+'
-+
-+test_expect_success 'setup another repo from the first one' '
-+	git init other-repo &&
-+	(cd other-repo &&
-+	 git remote add origin .. &&
-+	 git pull origin master &&
-+	 git checkout master &&
-+	 git log)
-+'
-+
-+test_expect_success 'setup the helper in the root repo' '
-+	git config odb.magic.subprocessCommand "$HELPER"
-+'
-+
-+UPLOADFILENAME="hello_apache_upload.txt"
-+
-+UPLOAD_URL="$HTTPD_URL/upload/?sha1=$UPLOADFILENAME&size=123&type=blob"
-+
-+test_expect_success 'can upload a file' '
-+	echo "Hello Apache World!" >hello_to_send.txt &&
-+	echo "How are you?" >>hello_to_send.txt &&
-+	curl --data-binary @hello_to_send.txt --include "$UPLOAD_URL" >out_upload
-+'
-+
-+LIST_URL="$HTTPD_URL/list/"
-+
-+test_expect_success 'can list uploaded files' '
-+	curl --include "$LIST_URL" >out_list &&
-+	grep "$UPLOADFILENAME" out_list
-+'
-+
-+test_expect_success 'can delete uploaded files' '
-+	curl --data "delete" --include "$UPLOAD_URL&delete=1" >out_delete &&
-+	curl --include "$LIST_URL" >out_list2 &&
-+	! grep "$UPLOADFILENAME" out_list2
-+'
-+
-+FILES_DIR="httpd/www/files"
-+
-+test_expect_success 'new blobs are transfered to the http server' '
-+	test_commit one &&
-+	hash1=$(git ls-tree HEAD | grep one.t | cut -f1 | cut -d\  -f3) &&
-+	echo "$hash1-4-blob" >expected &&
-+	ls "$FILES_DIR" >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'blobs can be retrieved from the http server' '
-+	git cat-file blob "$hash1" &&
-+	git log -p >expected
-+'
-+
-+test_expect_success 'update other repo from the first one' '
-+	(cd other-repo &&
-+	 git fetch origin "refs/odbs/magic/*:refs/odbs/magic/*" &&
-+	 test_must_fail git cat-file blob "$hash1" &&
-+	 git config odb.magic.subprocessCommand "$HELPER" &&
-+	 git cat-file blob "$hash1" &&
-+	 git pull origin master)
-+'
-+
-+test_expect_success 'local clone from the first repo' '
-+	mkdir my-clone &&
-+	(cd my-clone &&
-+	 git clone .. . &&
-+	 git cat-file blob "$hash1")
-+'
-+
-+test_expect_success 'no-local clone from the first repo fails' '
-+	mkdir my-other-clone &&
-+	(cd my-other-clone &&
-+	 test_must_fail git clone --no-local .. .) &&
-+	rm -rf my-other-clone
-+'
-+
-+test_expect_success 'no-local clone from the first repo with helper succeeds' '
-+	mkdir my-other-clone &&
-+	(cd my-other-clone &&
-+	 git clone -c odb.magic.subprocessCommand="$HELPER" --no-local .. .) &&
-+	rm -rf my-other-clone
-+'
-+
-+stop_httpd
-+
-+test_done
-diff --git a/t/t0480/read-object-plain-have b/t/t0480/read-object-plain-have
-new file mode 100755
-index 0000000000..d63e327f33
---- /dev/null
-+++ b/t/t0480/read-object-plain-have
-@@ -0,0 +1,103 @@
-+#!/usr/bin/perl
-+#
-+
-+use 5.008;
-+use lib (split(/:/, $ENV{GITPERLLIB}));
-+use strict;
-+use warnings;
-+use Git::Packet;
-+use LWP::UserAgent;
-+use HTTP::Request::Common;
-+
-+packet_initialize("git-read-object", 1);
-+
-+packet_read_and_check_capabilities("get_raw_obj", "put_raw_obj", "have");
-+packet_write_capabilities("get_raw_obj", "put_raw_obj", "have");
-+
-+my $http_url = $ENV{HTTPD_URL};
-+
-+while (1) {
-+	my ($res, $command) = packet_txt_read();
-+
-+	if ( $res == -1 ) {
-+		exit 0;
++	if (!git_check_attr(path, check)) {
++		const char *value = check->items[0].value;
++		return value ? !strcmp(o->name, value) : 0;
 +	}
-+
-+	$command =~ s/^command=//;
-+
-+	if ( $command eq "init" ) {
-+		packet_bin_read();
-+
-+		packet_txt_write("status=success");
-+		packet_flush();
-+	} elsif ( $command eq "have" ) {
-+		# read the flush after the command
-+		packet_bin_read();
-+
-+		my $have_url = $http_url . "/list/";
-+
-+		my $userAgent = LWP::UserAgent->new();
-+		my $response = $userAgent->get( $have_url );
-+
-+		if ($response->is_error) {
-+			packet_bin_write("");
-+			packet_flush();
-+			packet_txt_write("status=failure");
-+		} else {
-+			packet_bin_write($response->content);
-+			packet_flush();
-+			packet_txt_write("status=success");
-+		}
-+		packet_flush();
-+	} elsif ( $command eq "get_raw_obj" ) {
-+		my ($sha1) = packet_txt_read() =~ /^sha1=([0-9a-f]{40})$/;
-+		packet_bin_read();
-+
-+		my $get_url = $http_url . "/list/?sha1=" . $sha1;
-+
-+		my $userAgent = LWP::UserAgent->new();
-+
-+		my $response = $userAgent->get( $get_url );
-+
-+		if ($response->is_error) {
-+			packet_txt_write("size=0");
-+			packet_txt_write("kind=none");	    
-+			packet_txt_write("status=notfound");
-+		} else {
-+			packet_txt_write("size=" . length($response->content));
-+			packet_txt_write("kind=blob");
-+			packet_bin_write($response->content);
-+			packet_flush();
-+			packet_txt_write("status=success");
-+		}
-+
-+		packet_flush();
-+	} elsif ( $command eq "put_raw_obj" ) {
-+		my ($sha1) = packet_txt_read() =~ /^sha1=([0-9a-f]{40})$/;
-+		my ($size) = packet_txt_read() =~ /^size=([0-9]+)$/;
-+		my ($kind) = packet_txt_read() =~ /^kind=(\w+)$/;
-+
-+		packet_bin_read();
-+
-+		# We must read the content we are sent and send it to the right url
-+		my ($res, $buf) = packet_bin_read();
-+		die "bad packet_bin_read res ($res)" unless ($res eq 0);
-+		( packet_bin_read() eq ( 1, "" ) ) || die "bad send end";		
-+
-+		my $upload_url = $http_url . "/upload/?sha1=" . $sha1 . "&size=" . $size . "&type=blob";
-+
-+		my $userAgent = LWP::UserAgent->new();
-+		my $request = POST $upload_url, Content_Type => 'multipart/form-data', Content => $buf;
-+
-+		my $response = $userAgent->request($request);
-+
-+		if ($response->is_error) {
-+			packet_txt_write("status=failure");
-+		} else {
-+			packet_txt_write("status=success");
-+		}
-+		packet_flush();
-+	} else {
-+		die "bad command '$command'";
-+	}
++	return 0;
 +}
++
+ int external_odb_put_object(const void *buf, size_t len,
+-			    const char *type, unsigned char *sha1)
++			    const char *type, unsigned char *sha1,
++			    const char *path)
+ {
+ 	struct odb_helper *o;
+ 
+@@ -164,12 +180,14 @@ int external_odb_put_object(const void *buf, size_t len,
+ 		return 1;
+ 
+ 	/* For now accept only blobs */
+-	if (strcmp(type, "blob"))
++	if (!path || strcmp(type, "blob"))
+ 		return 1;
+ 
+ 	external_odb_init();
+ 
+ 	for (o = helpers; o; o = o->next) {
++		if (!has_odb_attrs(o, path))
++			continue;
+ 		int r = odb_helper_put_object(o, buf, len, type, sha1);
+ 		if (r <= 0)
+ 			return r;
+diff --git a/external-odb.h b/external-odb.h
+index 247b131fd5..9bd7856b60 100644
+--- a/external-odb.h
++++ b/external-odb.h
+@@ -6,6 +6,7 @@ int external_odb_has_object(const unsigned char *sha1);
+ int external_odb_get_object(const unsigned char *sha1);
+ int external_odb_get_direct(const unsigned char *sha1);
+ int external_odb_put_object(const void *buf, size_t len,
+-			    const char *type, unsigned char *sha1);
++			    const char *type, unsigned char *sha1,
++			    const char *path);
+ 
+ #endif /* EXTERNAL_ODB_H */
+diff --git a/sha1_file.c b/sha1_file.c
+index fb34f0b18d..75188850da 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -3487,7 +3487,9 @@ static int freshen_packed_object(const unsigned char *sha1)
+ 	return 1;
+ }
+ 
+-int write_sha1_file(const void *buf, unsigned long len, const char *type, unsigned char *sha1)
++static int write_sha1_file_with_path(const void *buf, unsigned long len,
++				     const char *type, unsigned char *sha1,
++				     const char *path)
+ {
+ 	char hdr[32];
+ 	int hdrlen = sizeof(hdr);
+@@ -3496,13 +3498,19 @@ int write_sha1_file(const void *buf, unsigned long len, const char *type, unsign
+ 	 * it out into .git/objects/??/?{38} file.
+ 	 */
+ 	write_sha1_file_prepare(buf, len, type, sha1, hdr, &hdrlen);
+-	if (!external_odb_put_object(buf, len, type, sha1))
++	if (!external_odb_put_object(buf, len, type, sha1, path))
+ 		return 0;
+ 	if (freshen_packed_object(sha1) || freshen_loose_object(sha1))
+ 		return 0;
+ 	return write_loose_object(sha1, hdr, hdrlen, buf, len, 0);
+ }
+ 
++int write_sha1_file(const void *buf, unsigned long len,
++		    const char *type, unsigned char *sha1)
++{
++	write_sha1_file_with_path(buf, len, type, sha1, NULL);
++}
++
+ int hash_sha1_file_literally(const void *buf, unsigned long len, const char *type,
+ 			     unsigned char *sha1, unsigned flags)
+ {
+@@ -3637,7 +3645,8 @@ static int index_mem(unsigned char *sha1, void *buf, size_t size,
+ 	}
+ 
+ 	if (write_object)
+-		ret = write_sha1_file(buf, size, typename(type), sha1);
++		ret = write_sha1_file_with_path(buf, size, typename(type),
++						sha1, path);
+ 	else
+ 		ret = hash_sha1_file(buf, size, typename(type), sha1);
+ 	if (re_allocated)
+@@ -3659,8 +3668,9 @@ static int index_stream_convert_blob(unsigned char *sha1, int fd,
+ 				 write_object ? safe_crlf : SAFE_CRLF_FALSE);
+ 
+ 	if (write_object)
+-		ret = write_sha1_file(sbuf.buf, sbuf.len, typename(OBJ_BLOB),
+-				      sha1);
++		ret = write_sha1_file_with_path(sbuf.buf, sbuf.len,
++						typename(OBJ_BLOB),
++						sha1, path);
+ 	else
+ 		ret = hash_sha1_file(sbuf.buf, sbuf.len, typename(OBJ_BLOB),
+ 				     sha1);
+diff --git a/t/t0400-external-odb.sh b/t/t0400-external-odb.sh
+index fa355bd7bb..f2c45a625c 100755
+--- a/t/t0400-external-odb.sh
++++ b/t/t0400-external-odb.sh
+@@ -73,6 +73,9 @@ test_expect_success 'helper can add objects to alt repo' '
+ 
+ test_expect_success 'commit adds objects to alt repo' '
+ 	test_config odb.magic.scriptCommand "$HELPER" &&
++	echo "* odb=magic" >.gitattributes &&
++	GIT_NO_EXTERNAL_ODB=1 git add .gitattributes &&
++	GIT_NO_EXTERNAL_ODB=1 git commit -m "Add .gitattributes" &&
+ 	test_commit three &&
+ 	hash3=$(git ls-tree HEAD | grep three.t | cut -f1 | cut -d\  -f3) &&
+ 	content=$(cd alt-repo && git show "$hash3") &&
+diff --git a/t/t0410-transfer-e-odb.sh b/t/t0410-transfer-e-odb.sh
+index 065ec7d759..fd3e37918c 100755
+--- a/t/t0410-transfer-e-odb.sh
++++ b/t/t0410-transfer-e-odb.sh
+@@ -111,6 +111,9 @@ test_expect_success 'setup other repo and its alternate repo' '
+ '
+ 
+ test_expect_success 'new blobs are put in first object store' '
++	echo "* odb=magic" >.gitattributes &&
++	GIT_NO_EXTERNAL_ODB=1 git add .gitattributes &&
++	GIT_NO_EXTERNAL_ODB=1 git commit -m "Add .gitattributes" &&
+ 	test_commit one &&
+ 	hash1=$(git ls-tree HEAD | grep one.t | cut -f1 | cut -d\  -f3) &&
+ 	content=$(cd alt-repo1 && git show "$hash1") &&
+diff --git a/t/t0420-transfer-http-e-odb.sh b/t/t0420-transfer-http-e-odb.sh
+index f84fe950ec..d307af0457 100755
+--- a/t/t0420-transfer-http-e-odb.sh
++++ b/t/t0420-transfer-http-e-odb.sh
+@@ -94,6 +94,9 @@ test_expect_success 'can delete uploaded files' '
+ FILES_DIR="httpd/www/files"
+ 
+ test_expect_success 'new blobs are transfered to the http server' '
++	echo "* odb=magic" >.gitattributes &&
++	GIT_NO_EXTERNAL_ODB=1 git add .gitattributes &&
++	GIT_NO_EXTERNAL_ODB=1 git commit -m "Add .gitattributes" &&
+ 	test_commit one &&
+ 	hash1=$(git ls-tree HEAD | grep one.t | cut -f1 | cut -d\  -f3) &&
+ 	echo "$hash1-4-blob" >expected &&
+diff --git a/t/t0470-read-object-http-e-odb.sh b/t/t0470-read-object-http-e-odb.sh
+index 774528c04f..d814a43d59 100755
+--- a/t/t0470-read-object-http-e-odb.sh
++++ b/t/t0470-read-object-http-e-odb.sh
+@@ -62,6 +62,9 @@ test_expect_success 'can delete uploaded files' '
+ FILES_DIR="httpd/www/files"
+ 
+ test_expect_success 'new blobs are transfered to the http server' '
++	echo "* odb=magic" >.gitattributes &&
++	GIT_NO_EXTERNAL_ODB=1 git add .gitattributes &&
++	GIT_NO_EXTERNAL_ODB=1 git commit -m "Add .gitattributes" &&
+ 	test_commit one &&
+ 	hash1=$(git ls-tree HEAD | grep one.t | cut -f1 | cut -d\  -f3) &&
+ 	echo "$hash1-4-blob" >expected &&
+diff --git a/t/t0480-read-object-have-http-e-odb.sh b/t/t0480-read-object-have-http-e-odb.sh
+index 056a40f2bb..fe1fac5ef3 100755
+--- a/t/t0480-read-object-have-http-e-odb.sh
++++ b/t/t0480-read-object-have-http-e-odb.sh
+@@ -62,6 +62,9 @@ test_expect_success 'can delete uploaded files' '
+ FILES_DIR="httpd/www/files"
+ 
+ test_expect_success 'new blobs are transfered to the http server' '
++	echo "* odb=magic" >.gitattributes &&
++	GIT_NO_EXTERNAL_ODB=1 git add .gitattributes &&
++	GIT_NO_EXTERNAL_ODB=1 git commit -m "Add .gitattributes" &&
+ 	test_commit one &&
+ 	hash1=$(git ls-tree HEAD | grep one.t | cut -f1 | cut -d\  -f3) &&
+ 	echo "$hash1-4-blob" >expected &&
 -- 
 2.14.0.rc1.52.gf02fb0ddac.dirty
 
