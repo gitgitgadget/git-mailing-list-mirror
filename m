@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 54CFA208B4
-	for <e@80x24.org>; Thu,  3 Aug 2017 09:20:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 22F4C208B6
+	for <e@80x24.org>; Thu,  3 Aug 2017 09:20:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752114AbdHCJUe (ORCPT <rfc822;e@80x24.org>);
+        id S1752105AbdHCJUe (ORCPT <rfc822;e@80x24.org>);
         Thu, 3 Aug 2017 05:20:34 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:35630 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752074AbdHCJUW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Aug 2017 05:20:22 -0400
-Received: by mail-wr0-f193.google.com with SMTP id c24so578519wra.2
-        for <git@vger.kernel.org>; Thu, 03 Aug 2017 02:20:21 -0700 (PDT)
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:36951 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751898AbdHCJUZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Aug 2017 05:20:25 -0400
+Received: by mail-wr0-f196.google.com with SMTP id 12so571075wrb.4
+        for <git@vger.kernel.org>; Thu, 03 Aug 2017 02:20:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=X+UpGTg6YjojNs6DbHVjTiT6fiwzRb9+2OClj3ySsLI=;
-        b=mWPqgnpzJRpyF2S7GVEAzLkUpaG0w/w5wIr2cp31cPd/eDsJCFvPPEsqX94mJJD+OD
-         YW4Kj5IaBTLZKcncZIz9cDK0bbtbEo4Pihe285Ipyzp/F8sCqv+99z3EqLpB8KHiWKu9
-         T7mPKud4LNeuEaSAazk+sF1MwL+ymswKo/+JFM88/Aw3ZSrN2EPCrBRsiFRhcsTfzKLW
-         bN+zvNm0ECt0H8Yn5iImRC95LARYjUFOdEIlT+fwGNlBybS1fzS2Ye93OOnPTOetkF/j
-         d5hb4FOixlCH2KUF+qfeZs1z1cNn+Iy/7Hty4rN7HMvEMIeabr5flKo9hU1EzhwI/mPH
-         KZjg==
+        bh=fGRbs7+jVLy9pPzzf7KcAI4pqUTit+mrrI+w7M2E6uw=;
+        b=K8/3doTIfhJ9s7zy7APLiYaqBRPQIpR3l4lRe6hS3z9W/HgBz+zKXssZNgKBs+JwqC
+         lypSxhB58F/VkcPetYGI7vQ/TQBnavWSXH3AnBqMAGX8UNc2tvFQ/5YI4AJk90+p+HQS
+         s+DGszb11FgGXDD4EYzleYTF9fqn73J6zwTObraysCfpNvvPGFzLL6guynQaNRBDL/NU
+         dbGBo0E62tom2uHqzvRfOzKXXRS5SJGDXg3l10hvZRuePZoLMBTnldo5onDTpUVtZjgo
+         eA0ftF7kQMxfLpKVEpiSzJ5Z6PMv2Tw6RPShhYrsIYV1+ePTFGsSoku9s+MtkaO/Tqp4
+         p4TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=X+UpGTg6YjojNs6DbHVjTiT6fiwzRb9+2OClj3ySsLI=;
-        b=UVqeAnY750VPG12q3YeJMJB7t2Bgiw2cB8iNni0WO0T9L4nXsN4LViE3gaoQs7HmKY
-         gbakkmTUIeWZ13JI0j8IOVH6Rj6zNjE4TO+uvTGKHZbpd5KSe4LU672R8F1v9G+K2tiR
-         0mY8Kd4ELJV8YHCUhQTnN8HCfYAsMn53SqpB13aY5X27BtTR8eTQmWbRlo2h33VSFfyr
-         726eD0wloeBE4jFDq/LhDMKIuv38EilKdrYabScb4J3uS0AI5UT9GrHG1DEISdBdgM93
-         9CyHebW9qZkaM/MVfWHWNRC+2VlaqBkDCkJlgO0LktN3/O4K+2rirz6Z27dZ3Nc7DGp+
-         x//g==
-X-Gm-Message-State: AIVw111XSZNEYg8/ufODu0IEasTWYfCvp0nwi3MdkPVAS9DSAjsJtTbX
-        aX/T6cIc9EJ3IFJv
-X-Received: by 10.223.172.86 with SMTP id v80mr918276wrc.112.1501752020484;
-        Thu, 03 Aug 2017 02:20:20 -0700 (PDT)
+        bh=fGRbs7+jVLy9pPzzf7KcAI4pqUTit+mrrI+w7M2E6uw=;
+        b=AA3K9OOeDjr+uipJdtWXpvAjh23FR/ECaa6fZQxFMB33SPgLAaiB6YLxwpeMpZqZJT
+         N7EwMjQ2hKYZTi9/RyIs0kUlKV91/CFVEgdFh3jYjLCf0MgcQEyKYxZDmE/vtofI2BT7
+         G93szQZXMfEyuzysPB6vCHy9SQu5H9huUig2wiauxmWxvR7AG69oxYDHgRPvZJGGTgeg
+         Z2VTXp6+pS1M3Qz3apWHEoB8vvfDRzlukZxsWgWFywhzsYn74RsouSrX3r9PEbvPrEyG
+         J3bkW+ZNsG35sDPda+3kVGVYX7n6V8+AL6ByuYJVX/KCUoivOAvi+onN4AQ5sK/31vK+
+         MTFA==
+X-Gm-Message-State: AIVw112spSd3mlHH/UTKUPJH4KPEZW6wugKi7ACvz73s3KSjMZzpP12u
+        4zTobIp+Jyzt8mTc
+X-Received: by 10.223.183.12 with SMTP id l12mr752052wre.103.1501752024140;
+        Thu, 03 Aug 2017 02:20:24 -0700 (PDT)
 Received: from localhost.localdomain (sud35-h04-89-95-107-230.dsl.sta.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id n184sm1308051wme.33.2017.08.03.02.20.19
+        by smtp.gmail.com with ESMTPSA id n184sm1308051wme.33.2017.08.03.02.20.22
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 03 Aug 2017 02:20:20 -0700 (PDT)
+        Thu, 03 Aug 2017 02:20:23 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v5 34/40] external-odb: use 'odb=magic' attribute to mark odb blobs
-Date:   Thu,  3 Aug 2017 11:19:20 +0200
-Message-Id: <20170803091926.1755-35-chriscool@tuxfamily.org>
+Subject: [PATCH v5 37/40] clone: add --initial-refspec option
+Date:   Thu,  3 Aug 2017 11:19:23 +0200
+Message-Id: <20170803091926.1755-38-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.14.0.rc1.52.gf02fb0ddac.dirty
 In-Reply-To: <20170803091926.1755-1-chriscool@tuxfamily.org>
 References: <20170803091926.1755-1-chriscool@tuxfamily.org>
@@ -69,216 +69,128 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To tell which blobs should be sent to the "magic" external odb,
-let's require that the blobs be marked using the 'odb=magic'
-attribute.
+This option makes it possible to separate fetching refs when cloning
+in two parts, an initial part and a later normal part.
+
+This way after the initial part, mechanisms like the external odb
+mechanism can be used to prefetch some objects using information
+that has been made available during the initial fetch.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- external-odb.c                         | 22 ++++++++++++++++++++--
- external-odb.h                         |  3 ++-
- sha1_file.c                            | 20 +++++++++++++++-----
- t/t0400-external-odb.sh                |  3 +++
- t/t0410-transfer-e-odb.sh              |  3 +++
- t/t0420-transfer-http-e-odb.sh         |  3 +++
- t/t0470-read-object-http-e-odb.sh      |  3 +++
- t/t0480-read-object-have-http-e-odb.sh |  3 +++
- 8 files changed, 52 insertions(+), 8 deletions(-)
+ builtin/clone.c | 55 ++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 54 insertions(+), 1 deletion(-)
 
-diff --git a/external-odb.c b/external-odb.c
-index 084cd32e0b..e103514a46 100644
---- a/external-odb.c
-+++ b/external-odb.c
-@@ -1,6 +1,7 @@
- #include "cache.h"
- #include "external-odb.h"
- #include "odb-helper.h"
-+#include "attr.h"
- 
- static struct odb_helper *helpers;
- static struct odb_helper **helpers_tail = &helpers;
-@@ -155,8 +156,23 @@ int external_odb_get_object(const unsigned char *sha1)
- 	return external_odb_do_get_object(sha1);
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 2362dda880..76e561534d 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -56,6 +56,7 @@ static enum transport_family family;
+ static struct string_list option_config = STRING_LIST_INIT_NODUP;
+ static struct string_list option_required_reference = STRING_LIST_INIT_NODUP;
+ static struct string_list option_optional_reference = STRING_LIST_INIT_NODUP;
++static struct string_list option_initial_refspec = STRING_LIST_INIT_NODUP;
+ static int option_dissociate;
+ static int max_jobs = -1;
+ static struct string_list option_recurse_submodules = STRING_LIST_INIT_NODUP;
+@@ -106,6 +107,8 @@ static struct option builtin_clone_options[] = {
+ 			N_("reference repository")),
+ 	OPT_STRING_LIST(0, "reference-if-able", &option_optional_reference,
+ 			N_("repo"), N_("reference repository")),
++	OPT_STRING_LIST(0, "initial-refspec", &option_initial_refspec,
++			N_("refspec"), N_("fetch this refspec first")),
+ 	OPT_BOOL(0, "dissociate", &option_dissociate,
+ 		 N_("use --reference only while cloning")),
+ 	OPT_STRING('o', "origin", &option_origin, N_("name"),
+@@ -865,6 +868,47 @@ static void dissociate_from_references(void)
+ 	free(alternates);
  }
  
-+static int has_odb_attrs(struct odb_helper *o, const char *path)
++static struct refspec *parse_initial_refspecs(void)
 +{
-+	static struct attr_check *check;
++	const char **refspecs;
++	struct refspec *initial_refspecs;
++	struct string_list_item *rs;
++	int i = 0;
 +
-+	if (!check)
-+		check = attr_check_initl("odb", NULL);
++	if (!option_initial_refspec.nr)
++		return NULL;
 +
-+	if (!git_check_attr(path, check)) {
-+		const char *value = check->items[0].value;
-+		return value ? !strcmp(o->name, value) : 0;
++	refspecs = xcalloc(option_initial_refspec.nr, sizeof(const char *));
++
++	for_each_string_list_item(rs, &option_initial_refspec)
++		refspecs[i++] = rs->string;
++
++	initial_refspecs = parse_fetch_refspec(option_initial_refspec.nr, refspecs);
++
++	free(refspecs);
++
++	return initial_refspecs;
++}
++
++static void fetch_initial_refs(struct transport *transport,
++			       const struct ref *refs,
++			       struct refspec *initial_refspecs,
++			       const char *branch_top,
++			       const char *reflog_msg,
++			       int is_local)
++{
++	int i;
++
++	for (i = 0; i < option_initial_refspec.nr; i++) {
++		struct ref *init_refs = NULL;
++		struct ref **tail = &init_refs;
++		get_fetch_map(refs, &initial_refspecs[i], &tail, 0);
++		transport_fetch_refs(transport, init_refs);
++		update_remote_refs(refs, init_refs, NULL, branch_top, reflog_msg,
++				   transport, !is_local, 1);
 +	}
-+	return 0;
 +}
 +
- int external_odb_put_object(const void *buf, size_t len,
--			    const char *type, unsigned char *sha1)
-+			    const char *type, unsigned char *sha1,
-+			    const char *path)
+ int cmd_clone(int argc, const char **argv, const char *prefix)
  {
- 	struct odb_helper *o;
+ 	int is_bundle = 0, is_local;
+@@ -888,6 +932,9 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	struct refspec *refspec;
+ 	const char *fetch_pattern;
  
-@@ -164,12 +180,14 @@ int external_odb_put_object(const void *buf, size_t len,
- 		return 1;
- 
- 	/* For now accept only blobs */
--	if (strcmp(type, "blob"))
-+	if (!path || strcmp(type, "blob"))
- 		return 1;
- 
- 	external_odb_init();
- 
- 	for (o = helpers; o; o = o->next) {
-+		if (!has_odb_attrs(o, path))
-+			continue;
- 		int r = odb_helper_put_object(o, buf, len, type, sha1);
- 		if (r <= 0)
- 			return r;
-diff --git a/external-odb.h b/external-odb.h
-index 247b131fd5..9bd7856b60 100644
---- a/external-odb.h
-+++ b/external-odb.h
-@@ -6,6 +6,7 @@ int external_odb_has_object(const unsigned char *sha1);
- int external_odb_get_object(const unsigned char *sha1);
- int external_odb_get_direct(const unsigned char *sha1);
- int external_odb_put_object(const void *buf, size_t len,
--			    const char *type, unsigned char *sha1);
-+			    const char *type, unsigned char *sha1,
-+			    const char *path);
- 
- #endif /* EXTERNAL_ODB_H */
-diff --git a/sha1_file.c b/sha1_file.c
-index fb34f0b18d..75188850da 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -3487,7 +3487,9 @@ static int freshen_packed_object(const unsigned char *sha1)
- 	return 1;
- }
- 
--int write_sha1_file(const void *buf, unsigned long len, const char *type, unsigned char *sha1)
-+static int write_sha1_file_with_path(const void *buf, unsigned long len,
-+				     const char *type, unsigned char *sha1,
-+				     const char *path)
- {
- 	char hdr[32];
- 	int hdrlen = sizeof(hdr);
-@@ -3496,13 +3498,19 @@ int write_sha1_file(const void *buf, unsigned long len, const char *type, unsign
- 	 * it out into .git/objects/??/?{38} file.
- 	 */
- 	write_sha1_file_prepare(buf, len, type, sha1, hdr, &hdrlen);
--	if (!external_odb_put_object(buf, len, type, sha1))
-+	if (!external_odb_put_object(buf, len, type, sha1, path))
- 		return 0;
- 	if (freshen_packed_object(sha1) || freshen_loose_object(sha1))
- 		return 0;
- 	return write_loose_object(sha1, hdr, hdrlen, buf, len, 0);
- }
- 
-+int write_sha1_file(const void *buf, unsigned long len,
-+		    const char *type, unsigned char *sha1)
-+{
-+	write_sha1_file_with_path(buf, len, type, sha1, NULL);
-+}
++	struct refspec *initial_refspecs;
++	int is_initial;
 +
- int hash_sha1_file_literally(const void *buf, unsigned long len, const char *type,
- 			     unsigned char *sha1, unsigned flags)
- {
-@@ -3637,7 +3645,8 @@ static int index_mem(unsigned char *sha1, void *buf, size_t size,
- 	}
+ 	packet_trace_identity("clone");
+ 	argc = parse_options(argc, argv, prefix, builtin_clone_options,
+ 			     builtin_clone_usage, 0);
+@@ -1055,6 +1102,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	if (option_required_reference.nr || option_optional_reference.nr)
+ 		setup_reference();
  
- 	if (write_object)
--		ret = write_sha1_file(buf, size, typename(type), sha1);
-+		ret = write_sha1_file_with_path(buf, size, typename(type),
-+						sha1, path);
- 	else
- 		ret = hash_sha1_file(buf, size, typename(type), sha1);
- 	if (re_allocated)
-@@ -3659,8 +3668,9 @@ static int index_stream_convert_blob(unsigned char *sha1, int fd,
- 				 write_object ? safe_crlf : SAFE_CRLF_FALSE);
++	initial_refspecs = parse_initial_refspecs();
++
+ 	fetch_pattern = xstrfmt("+%s*:%s*", src_ref_prefix, branch_top.buf);
+ 	refspec = parse_fetch_refspec(1, &fetch_pattern);
+ 	free((char *)fetch_pattern);
+@@ -1110,6 +1159,9 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	refs = transport_get_remote_refs(transport);
  
- 	if (write_object)
--		ret = write_sha1_file(sbuf.buf, sbuf.len, typename(OBJ_BLOB),
--				      sha1);
-+		ret = write_sha1_file_with_path(sbuf.buf, sbuf.len,
-+						typename(OBJ_BLOB),
-+						sha1, path);
- 	else
- 		ret = hash_sha1_file(sbuf.buf, sbuf.len, typename(OBJ_BLOB),
- 				     sha1);
-diff --git a/t/t0400-external-odb.sh b/t/t0400-external-odb.sh
-index fa355bd7bb..f2c45a625c 100755
---- a/t/t0400-external-odb.sh
-+++ b/t/t0400-external-odb.sh
-@@ -73,6 +73,9 @@ test_expect_success 'helper can add objects to alt repo' '
+ 	if (refs) {
++		fetch_initial_refs(transport, refs, initial_refspecs,
++				   branch_top.buf, reflog_msg.buf, is_local);
++
+ 		mapped_refs = wanted_peer_refs(refs, refspec);
+ 		/*
+ 		 * transport_get_remote_refs() may return refs with null sha-1
+@@ -1169,9 +1221,10 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	else if (refs && complete_refs_before_fetch)
+ 		transport_fetch_refs(transport, mapped_refs);
  
- test_expect_success 'commit adds objects to alt repo' '
- 	test_config odb.magic.scriptCommand "$HELPER" &&
-+	echo "* odb=magic" >.gitattributes &&
-+	GIT_NO_EXTERNAL_ODB=1 git add .gitattributes &&
-+	GIT_NO_EXTERNAL_ODB=1 git commit -m "Add .gitattributes" &&
- 	test_commit three &&
- 	hash3=$(git ls-tree HEAD | grep three.t | cut -f1 | cut -d\  -f3) &&
- 	content=$(cd alt-repo && git show "$hash3") &&
-diff --git a/t/t0410-transfer-e-odb.sh b/t/t0410-transfer-e-odb.sh
-index 065ec7d759..fd3e37918c 100755
---- a/t/t0410-transfer-e-odb.sh
-+++ b/t/t0410-transfer-e-odb.sh
-@@ -111,6 +111,9 @@ test_expect_success 'setup other repo and its alternate repo' '
- '
++	is_initial = !refs || option_initial_refspec.nr == 0;
+ 	update_remote_refs(refs, mapped_refs, remote_head_points_at,
+ 			   branch_top.buf, reflog_msg.buf, transport,
+-			   !is_local, 0);
++			   !is_local, is_initial);
  
- test_expect_success 'new blobs are put in first object store' '
-+	echo "* odb=magic" >.gitattributes &&
-+	GIT_NO_EXTERNAL_ODB=1 git add .gitattributes &&
-+	GIT_NO_EXTERNAL_ODB=1 git commit -m "Add .gitattributes" &&
- 	test_commit one &&
- 	hash1=$(git ls-tree HEAD | grep one.t | cut -f1 | cut -d\  -f3) &&
- 	content=$(cd alt-repo1 && git show "$hash1") &&
-diff --git a/t/t0420-transfer-http-e-odb.sh b/t/t0420-transfer-http-e-odb.sh
-index f84fe950ec..d307af0457 100755
---- a/t/t0420-transfer-http-e-odb.sh
-+++ b/t/t0420-transfer-http-e-odb.sh
-@@ -94,6 +94,9 @@ test_expect_success 'can delete uploaded files' '
- FILES_DIR="httpd/www/files"
+ 	update_head(our_head_points_at, remote_head, reflog_msg.buf);
  
- test_expect_success 'new blobs are transfered to the http server' '
-+	echo "* odb=magic" >.gitattributes &&
-+	GIT_NO_EXTERNAL_ODB=1 git add .gitattributes &&
-+	GIT_NO_EXTERNAL_ODB=1 git commit -m "Add .gitattributes" &&
- 	test_commit one &&
- 	hash1=$(git ls-tree HEAD | grep one.t | cut -f1 | cut -d\  -f3) &&
- 	echo "$hash1-4-blob" >expected &&
-diff --git a/t/t0470-read-object-http-e-odb.sh b/t/t0470-read-object-http-e-odb.sh
-index 774528c04f..d814a43d59 100755
---- a/t/t0470-read-object-http-e-odb.sh
-+++ b/t/t0470-read-object-http-e-odb.sh
-@@ -62,6 +62,9 @@ test_expect_success 'can delete uploaded files' '
- FILES_DIR="httpd/www/files"
- 
- test_expect_success 'new blobs are transfered to the http server' '
-+	echo "* odb=magic" >.gitattributes &&
-+	GIT_NO_EXTERNAL_ODB=1 git add .gitattributes &&
-+	GIT_NO_EXTERNAL_ODB=1 git commit -m "Add .gitattributes" &&
- 	test_commit one &&
- 	hash1=$(git ls-tree HEAD | grep one.t | cut -f1 | cut -d\  -f3) &&
- 	echo "$hash1-4-blob" >expected &&
-diff --git a/t/t0480-read-object-have-http-e-odb.sh b/t/t0480-read-object-have-http-e-odb.sh
-index 056a40f2bb..fe1fac5ef3 100755
---- a/t/t0480-read-object-have-http-e-odb.sh
-+++ b/t/t0480-read-object-have-http-e-odb.sh
-@@ -62,6 +62,9 @@ test_expect_success 'can delete uploaded files' '
- FILES_DIR="httpd/www/files"
- 
- test_expect_success 'new blobs are transfered to the http server' '
-+	echo "* odb=magic" >.gitattributes &&
-+	GIT_NO_EXTERNAL_ODB=1 git add .gitattributes &&
-+	GIT_NO_EXTERNAL_ODB=1 git commit -m "Add .gitattributes" &&
- 	test_commit one &&
- 	hash1=$(git ls-tree HEAD | grep one.t | cut -f1 | cut -d\  -f3) &&
- 	echo "$hash1-4-blob" >expected &&
 -- 
 2.14.0.rc1.52.gf02fb0ddac.dirty
 
