@@ -2,110 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A96B41F991
-	for <e@80x24.org>; Thu,  3 Aug 2017 15:59:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A65941F991
+	for <e@80x24.org>; Thu,  3 Aug 2017 16:27:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751211AbdHCP7j (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Aug 2017 11:59:39 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58500 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751183AbdHCP7i (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Aug 2017 11:59:38 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B54C1A366D;
-        Thu,  3 Aug 2017 11:59:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=KsIz9eCZtbuXL8CkNoqv0Ks98BI=; b=wOrm6g
-        hPC0/rXKXv9LnKzVUxQ+UeT6bCtX7zkkZ3IfSBnjr1G1pLF1T4Js2xI87lWhA6Sh
-        NZYjnGoAwZ4uIXhMQDVTNoSP/3RvBq4FqYBTkVaERA7Cu7mN4bhTT41x6TVIwt6O
-        ty8cr5MlY1FUL2xITcNbsfc6UVxRtAwpZZK20=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=sSfDaOUS6bJNSahaXHqak1oknaHTKvIE
-        AwX2YlM1/PVodB6CmkL4xEisnne/Zmdb656kdYk6rTjb7vZlYyAFU2Lmg4y1FVTY
-        SqmHC5UveTH0ueKs+UPGXbosn31mv4UssV5fDvo2HKxkkhg3muHnJoscFpGB1eBq
-        thDlwAjRRFU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AE74EA366C;
-        Thu,  3 Aug 2017 11:59:35 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1A4BCA366B;
-        Thu,  3 Aug 2017 11:59:35 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH DONOTAPPLY 5/4] revision: let --stdin set rev_input_given
-References: <20170802222425.7xkoxniz2xbjlnku@sigill.intra.peff.net>
-        <20170802223416.gwiezhbuxbdmbjzx@sigill.intra.peff.net>
-Date:   Thu, 03 Aug 2017 08:59:33 -0700
-In-Reply-To: <20170802223416.gwiezhbuxbdmbjzx@sigill.intra.peff.net> (Jeff
-        King's message of "Wed, 2 Aug 2017 18:34:16 -0400")
-Message-ID: <xmqq3798r6ai.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751895AbdHCQ11 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Aug 2017 12:27:27 -0400
+Received: from mail-yw0-f172.google.com ([209.85.161.172]:35000 "EHLO
+        mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751158AbdHCQ10 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Aug 2017 12:27:26 -0400
+Received: by mail-yw0-f172.google.com with SMTP id l82so11653728ywc.2
+        for <git@vger.kernel.org>; Thu, 03 Aug 2017 09:27:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=05dkzwiOWrg41QVAHqceIm3C9yzk0piTJEhJ4o4MJVA=;
+        b=Y09y41VY/g5bxhjOK/WLYBiNXxggDrUvV/8WD7He99OWxmny0o4nmYijvgT1NIvjD3
+         sK10KvA+ZvSzz1hlyqtzNMTxDJYkKc24l7r8MX92DrZAbeZC+lXn8UAUzA0ubVQN3GuV
+         CJvy7OQL+eLnYuKxcTYE1G7aIUgUmef+3oikPU+y1kkqPohiJf5Eq3y/n+5/z6lKHhim
+         MAMC1dh1fdBNvbAF4Me/IsWxLZMx/0jAFP4PjgEFTFjWrXEuliqg8qEYmkzZz1SZ9l1L
+         qwsNQGIPz3hEq2WEqFWah0Gm8K35CxsiDW3eXJvP0bFYWerZDX3NoW633h2at69oLkeL
+         S6PA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=05dkzwiOWrg41QVAHqceIm3C9yzk0piTJEhJ4o4MJVA=;
+        b=ZjLvp55+0z76fP17JjYB08CQrlEF6MCwgNmNSGgMRCAjt6Lkj/UWEDh61XrFf/Z70Y
+         /zzxyv+kk0J1JOgLudtevxyL4cI/Gxaru1ZNMJiR5oiYHWXcsIu3SpHvs4yYx3wfCH5W
+         nK/+man4+OIrBva/cy7MIuRpXMbLSBag3uz2kCK8db4Vf+zcx4zMKyjnwC4pIJ8cTlqu
+         r21y2lRRRbCEgZaMT2/xfz+QzlF9MMbyGGI3JywgnKoYkqUmn4TfYWZ4AgQlrigwRKBj
+         QNTGCf/9jTlCxXwT+bEAd6j0pJfZYxLFWLefowrmgCdz72H6OqXveci/YKdgGXnDxEUz
+         PPkg==
+X-Gm-Message-State: AIVw1134b0EsSj9dU2zcWu5as8pywHcxVfU2DLbs0TQPhB30db1TVCwL
+        AAKWblckiPMSrTD4Le5e5D3Wt0laHF5AQA0=
+X-Received: by 10.129.159.82 with SMTP id w79mr1711778ywg.393.1501777645445;
+ Thu, 03 Aug 2017 09:27:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BECCC782-7864-11E7-AD08-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Received: by 10.13.215.84 with HTTP; Thu, 3 Aug 2017 09:27:05 -0700 (PDT)
+From:   Alejandro Aguila <aguilasainz@gmail.com>
+Date:   Thu, 3 Aug 2017 11:27:05 -0500
+Message-ID: <CA+kp=uoHiP8t_40yZvT7r9ziB4uSxgcc=NRY0+XzQJDkuJpx4A@mail.gmail.com>
+Subject: Cloning an specific commit from the hash
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Hi there!
 
-> This patch makes "rev-list --stdin </dev/null" return an empty set.
-> Which makes sense to me. But a side effect is that:
->
->   git log --stdin </dev/null
->
-> now shows nothing (rather than HEAD). I think that's probably the right
-> thing. But:
->
->   (echo --; echo t) | git log --stdin
->
-> no longer defaults to HEAD. Which maybe people would see as a
-> regression. I could see arguments either way.
+I've been working with Oscomo's project OpenBSC
+https://github.com/osmocom/openbsc and my old hardware won't work with
+the latest version, which is 0.15. So I asked for help to osmocom guys
+and there's someone who told me that his version is working with the
+same hardware I have, so have gave me the OpenBSC hash for it (
+7f100c9712de5c684462e809bf31a58c0c326337 ).
 
-Yeah, thanks for thinking this through.  I do think this would be a
-regression.  On the other hand,
+To be honest I don't use git more apart of cloning repos, so I would
+like to know how can I pull the files for that hash. And since OpenBSC
+has some dependencies that are in osmocom's github repo, I don't know
+if I can get the version that worked for the one committed in the
+hash.
 
-    (printf "%s\n" --tags=no-such -- t) | git log --stdin
+Sorry for the noob question, but I've been googling and trying some
+stuff and my brain is now blocked. Help will be very appreciated :)
 
-should not default to HEAD and show nothing, I would think.
+Cheers!
 
-So if we wanted to do the "--stdin" thing properly, we probably need
-to keep the "--stdin" option itself neutral wrt "did we get rev
-input?"; instead, each input item that comes in from the standard
-input stream would decide if the user wants us to fall back to the
-default, perhaps?
-
-> But this also breaks filter-branch (or at least a few of its tests),
-> which really wants to do:
->
->   git rev-list --default HEAD --stdin <maybe-empty
->
-> and traverse HEAD.
-
-Hmph.  Do you mean the former should traverse from HEAD while the
-latter should give us empty in the following two, because unlike
-"log", "rev-list" does not do the "default to HEAD" thing if it is
-not told to do so?
-
-    git rev-list --default HEAD --stdin </dev/null
-    git rev-list --stdin </dev/null
-
-If so, I think the reasoning makes sense.
-
-> I didn't dig enough to see if it's actually sane or
-> not. The failing tests seem to be weird noop filters that our test
-> script uses. But I'm worried it would break some real case, too.
-
-Thanks.  Let's not rush things.  
-
-The ones you sent for application 1-4/4 all are improvements.
+--=20
+Alejandro Aguila S=C3=A1inz
