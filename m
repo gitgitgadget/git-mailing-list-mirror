@@ -2,94 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D067E2047F
-	for <e@80x24.org>; Thu,  3 Aug 2017 07:53:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 53FE72047F
+	for <e@80x24.org>; Thu,  3 Aug 2017 08:06:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751840AbdHCHxI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Aug 2017 03:53:08 -0400
-Received: from mail-qk0-f194.google.com ([209.85.220.194]:36188 "EHLO
-        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752024AbdHCHso (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Aug 2017 03:48:44 -0400
-Received: by mail-qk0-f194.google.com with SMTP id d136so541713qkg.3
-        for <git@vger.kernel.org>; Thu, 03 Aug 2017 00:48:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=hgLbrWviPka4FW4+OdmdqFPdHcgPNTfhi7fV7zJ0Ysk=;
-        b=Z934WEzZVtlGv/rodGsIFDygKxg6nsH94Wgt80XvHMLgh3MIk0Y0MRa7+CCYrH2Rtz
-         T+sVnHiyA6xeE9kBwDACT6I6+I4LOZTJ565Mb7VrZJTnxFg9hBbPRDM/8zhpx+uQJuuK
-         bGFlxZv4GDHN4MMnO1VGWp5I6se9L2a5AMNWxnI5mw1ak1nra93m2yoa3Dg5JHORWmCU
-         r4GB7fiVSm20bapTUDKA6tNTJs35RB90DorBEI3M4ErmpAim1sZlgzpM4pcFjrv/OtEZ
-         mfJ5CtHk/Z43IiWxjr0xyet8JHbxANQL5Vb1mDMAFymEwTviuYJ0b+EgF9RmLODTc3kj
-         0Mxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=hgLbrWviPka4FW4+OdmdqFPdHcgPNTfhi7fV7zJ0Ysk=;
-        b=dwcJJISv+X2iOuX+TxFSGUG0X2ijP1KabWtovpdVkuD/Wn7cDX8hLR7rYf6hPGQ5UT
-         EX7CCzqx5n/8MnZt1kdwL1Ybqk0zHVBRFbwoAOvuIa+e/GBK8KlFe7hIEP8ECyqFieRv
-         L2+TY5fcCMGUZTmjRsvdN57oEwmZE5ZUhltTKsSGh4ZnmsieSrBiBUDOAzKcrNe5KdSe
-         pBbLQk+9e9o1DCIprCTHFhtmIRuuE1JrItnJFem6nnd0FKgT7oEXAI7iL7YR6jsCX1bv
-         QX7X32hZvfFl1nvB7w3v0lLdnOpFN1WmOwiTJVXo2x5X70VoNOIj+t3ksLQhAZNBWOrF
-         30cA==
-X-Gm-Message-State: AHYfb5gbxI3xaehUM9Wg8/m0uT61oQccc/Q67V+S5In6uu+FnDkkOadk
-        eMKfhfSLembI7hHVDsYk523uNV1Gjg==
-X-Received: by 10.55.138.71 with SMTP id m68mr1191309qkd.137.1501746523732;
- Thu, 03 Aug 2017 00:48:43 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.55.31.13 with HTTP; Thu, 3 Aug 2017 00:48:42 -0700 (PDT)
-In-Reply-To: <20161130233721.7yqu7pbr2oc53o7v@sigill.intra.peff.net>
-References: <20161130210420.15982-1-chriscool@tuxfamily.org>
- <20161130210420.15982-2-chriscool@tuxfamily.org> <xmqqmvggbl6m.fsf@gitster.mtv.corp.google.com>
- <20161130233721.7yqu7pbr2oc53o7v@sigill.intra.peff.net>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 3 Aug 2017 09:48:42 +0200
-Message-ID: <CAP8UFD32uYggO1s3h9Ysqtp5hqDWg3LUkCr5_1LoPBLwY3fXgA@mail.gmail.com>
-Subject: Re: [RFC/PATCH v3 01/16] Add initial external odb support
-To:     Jeff King <peff@peff.net>
+        id S1751223AbdHCIGI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Aug 2017 04:06:08 -0400
+Received: from cloud.peff.net ([104.130.231.41]:56526 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751050AbdHCIGF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Aug 2017 04:06:05 -0400
+Received: (qmail 9943 invoked by uid 109); 3 Aug 2017 08:06:03 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 03 Aug 2017 08:06:03 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16842 invoked by uid 111); 3 Aug 2017 08:06:22 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Thu, 03 Aug 2017 04:06:22 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 03 Aug 2017 04:06:00 -0400
+Date:   Thu, 3 Aug 2017 04:06:00 -0400
+From:   Jeff King <peff@peff.net>
+To:     Christian Couder <christian.couder@gmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
         Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
         Mike Hommey <mh@glandium.org>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [RFC/PATCH v3 01/16] Add initial external odb support
+Message-ID: <20170803080600.aeaprj5hb6ucrkgy@sigill.intra.peff.net>
+References: <20161130210420.15982-1-chriscool@tuxfamily.org>
+ <20161130210420.15982-2-chriscool@tuxfamily.org>
+ <xmqqmvggbl6m.fsf@gitster.mtv.corp.google.com>
+ <CAP8UFD0ecFW2Sk0fr3ysAXPERNp1RiBMqZMTjYxgt_mvtY-kaw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAP8UFD0ecFW2Sk0fr3ysAXPERNp1RiBMqZMTjYxgt_mvtY-kaw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 1, 2016 at 12:37 AM, Jeff King <peff@peff.net> wrote:
-> On Wed, Nov 30, 2016 at 03:30:09PM -0800, Junio C Hamano wrote:
->
->> Christian Couder <christian.couder@gmail.com> writes:
->>
->> > From: Jeff King <peff@peff.net>
->> >
->> > Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
->> > ---
->>
->> By the time the series loses RFC prefix, we'd need to see the above
->> three lines straightened out a bit more, e.g. a real message and a
->> more proper sign-off sequence.
->
-> Actually, I would assume that this patch would go away altogether and
-> get folded into commits that get us closer to the end state. But I
-> haven't read the series carefully yet, so maybe it really does work
-> better with this as a base.
->
-> I am perfectly OK dropping my commit count by one and getting "based on
-> a patch by Peff" in a cover letter or elsewhere.
+On Thu, Aug 03, 2017 at 09:46:38AM +0200, Christian Couder wrote:
 
-Ok I have dropped your commit count and added "Helped-by: Jeff King
-<peff@peff.net>" in the patches that come from your work.
+> >> +static int external_odb_config(const char *var, const char *value, void *data)
+> >> +{
+> >> +     struct odb_helper *o;
+> >> +     const char *key, *dot;
+> >> +
+> >> +     if (!skip_prefix(var, "odb.", &key))
+> >> +             return 0;
+> >> +     dot = strrchr(key, '.');
+> >> +     if (!dot)
+> >> +             return 0;
+> >
+> > Is this something Peff wrote long time ago?  I find it surprising
+> > that he would write this without using parse_config_key().
+> 
+> parse_config_key() is used now.
 
-Thanks!
+Yeah, I think the original was from 2012. We didn't add
+parse_config_key() until 2013. Definitely worth using.
+
+> >> +     for (;;) {
+> >> +             unsigned char buf[4096];
+> >> +             int r;
+> >> +
+> >> +             r = xread(cmd.child.out, buf, sizeof(buf));
+> >> +             if (r < 0) {
+> >> +                     error("unable to read from odb helper '%s': %s",
+> >> +                           o->name, strerror(errno));
+> >> +                     close(cmd.child.out);
+> >> +                     odb_helper_finish(o, &cmd);
+> >> +                     git_inflate_end(&stream);
+> >> +                     return -1;
+> >> +             }
+> >> +             if (r == 0)
+> >> +                     break;
+> >> +
+> >> +             write_or_die(fd, buf, r);
+> >> +
+> >> +             stream.next_in = buf;
+> >> +             stream.avail_in = r;
+> >> +             do {
+> >> +                     unsigned char inflated[4096];
+> >> +                     unsigned long got;
+> >> +
+> >> +                     stream.next_out = inflated;
+> >> +                     stream.avail_out = sizeof(inflated);
+> >> +                     zret = git_inflate(&stream, Z_SYNC_FLUSH);
+> >> +                     got = sizeof(inflated) - stream.avail_out;
+> >> +
+> >> +                     git_SHA1_Update(&hash, inflated, got);
+> >> +                     /* skip header when counting size */
+> >> +                     if (!total_got) {
+> >> +                             const unsigned char *p = memchr(inflated, '\0', got);
+> [reconstructed quoted function so we can see the whole thing]
+> >> +                             if (p)
+> >> +                                     got -= p - inflated + 1;
+> >> +                             else
+> >> +                                     got = 0;
+> >> +                     }
+> >> +                     total_got += got;
+> >> +             } while (stream.avail_in && zret == Z_OK);
+> >> +     }
+> >
+> > Does this assume that a single xread() that can result in a
+> > short-read would not return in the middle of "header", and if so, is
+> > that a safe assumption to make?
+> 
+> I am not sure what would go wrong in case of a short read.
+> My guess is that as long as we test that p is not NULL below we should be fine.
+> As Peff wrote this code, he could probably answer much better than me.
+
+I think it's OK. The idea is to suck up characters until we hit the
+end-of-header NUL. So "total_got" only becomes non-zero once we've seen
+that NUL. If we get a short read then that memchr() returns NULL, and we
+set "got" to 0, and don't advance total_got at all. When we finally do
+hit a partial read that contains the NUL, then "p" will be non-NULL, and
+we'll reduce "got" as appropriate.
+
+All that said, I agree with the bits you both said later that we should
+probably be checking the actual content of the header (if we're indeed
+going to keep this on-the-wire format -- see below).
+
+> > I am tempted to debate myself if it is a sensible design to require
+> > "get" to return a loose object representation, but cannot decide
+> > without seeing the remainder of the series.  An obvious alternative
+> > is to define the "get" request to interface with us via the raw
+> > contents (not even deflated) and leave the deflating to us, i.e. Git
+> > sitting on the receiving end, which would allow us to choose to
+> > store it differently (e.g. we may want to try streaming it into its
+> > own pack using the streaming.h API, for example).
+> 
+> There is now both a get_raw_obj and a get_git_obj to handle both cases.
+
+Yeah, I don't recall why I picked the loose format as the transfer
+mechanism. I guess I figured that the objects would be large, so we'd
+want them in their own loose objects (not part of a pack that might have
+to get rewritten). So storing and sending as a loose-object zlib stream
+means we can avoid any recompression and just send it out to disk.
+
+But that was a long time ago. I think these days we prefer to put even
+large objects into packfiles. If we wanted something the client could
+stream directly into storage, the pack format would probably make more
+sense. But it also probably isn't the end of the world to just get raw
+contents and then re-zlib them. That's a little extra overhead on the
+receiving side, but it makes things nice and simple. And we're already
+uncompressing and computing the sha1 to verify the incoming content
+anyway.
+
+-Peff
