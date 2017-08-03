@@ -2,81 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7EDE91F991
-	for <e@80x24.org>; Thu,  3 Aug 2017 20:26:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 155831F991
+	for <e@80x24.org>; Thu,  3 Aug 2017 20:26:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751879AbdHCU0G (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Aug 2017 16:26:06 -0400
-Received: from mail-lf0-f41.google.com ([209.85.215.41]:34511 "EHLO
-        mail-lf0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751743AbdHCU0F (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Aug 2017 16:26:05 -0400
-Received: by mail-lf0-f41.google.com with SMTP id g25so10758065lfh.1
-        for <git@vger.kernel.org>; Thu, 03 Aug 2017 13:26:05 -0700 (PDT)
+        id S1751904AbdHCU0c (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Aug 2017 16:26:32 -0400
+Received: from mail-qt0-f182.google.com ([209.85.216.182]:34869 "EHLO
+        mail-qt0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751743AbdHCU0b (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Aug 2017 16:26:31 -0400
+Received: by mail-qt0-f182.google.com with SMTP id p3so14412697qtg.2
+        for <git@vger.kernel.org>; Thu, 03 Aug 2017 13:26:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=zlRSyvAXe34GNxmdU3EkvijnMeO/3Dk2U4KSbQQ4MD8=;
-        b=LCBdikGgIXNkgxrZB/EKVUjlxIV7Yqig1mLhn+T1FuvIATF4D4hSvr4QAj4AI72rni
-         yj6B+OXp4piu1yBKBg42tWKigCbRCyqQGdE8Dc4lEoA3796gMuw44onFS/PmyRwdSAJp
-         aDw6gpI6wL4emIVMvnk8HFDHv/gORCvQ7mnCsg7T4vrOwkLArYiqikjof65KBbpueEIa
-         B4/R7iJW/mT9bLndWmM7tbfo79s4umzJnVHES6WtuyWBPqcuuTA6ZtqPPsHOJcFgEgAD
-         IsAIqHa7ivYWiewy7XePPHeP8x6iUGeFhY4JKvPAXY+ZRSQZytPurw7G7vjCaT/++dNA
-         Ntmg==
+        bh=yORJFNEoitsTt/HmuGWd0DWy5kanRWXEMxaxfVdWmlc=;
+        b=PWtYnaNRb4fdkeal6834fVBY1/Vbcw4rquTm3/GlXkM2dCstpoZs4kFihAoEEQoReM
+         R6s7n/G167jL4gErRSrZvKzJsN56vx2jDqGJzCfye7oMXLCNsDLv67iYDaR6PBPiMJ8H
+         RY3BEJTpITnaxFSpy/+SxiAKpfNLYpVSl4VRCcdPm4jEseZElelhrvrnNdfR0uuBZdMi
+         i1l/dtziF/NAdkO4P19MhOHOmXfsnCYxGdi8nyJMEyAqtQP6V2DnrwA80GB9j5vfwK9Z
+         LozE/rVSya2Nm3a+tijeMY4uRh0aHdeT3oXfeRTUncCa+xa50n4PH0CWjZZqIdBXyFM1
+         VO9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=zlRSyvAXe34GNxmdU3EkvijnMeO/3Dk2U4KSbQQ4MD8=;
-        b=WB0dNkLq6SGiOHq3OvmOguQI6wRxmiu8W9nDvLiRY4yuK5s03j/wcsoNPVyfs8qUwG
-         iuSIvkYngq2AdL7KV08COnxoy/AJT9xFd3Te3f+BagDJPa27MIELrCwFrhTP18pkfloO
-         xD6bTOkimbwBtjRLR/7GbvBK9PpzP3/qU7o27bIlDQJ+UgqayrUHhOmFjHyzC05CVbOt
-         EXPUhXJ07TetKUOAwumIRMekbya5dSZ+lqrRVcRSb1KUOHoyRwZuGLxdOnZdwJe1WUQz
-         Za5bEwvxxsVMz7zSQ2Etc9bWuyjok5hHXVdlMmG4eyjdyjwEZP9V9rXDJEIIPzwh35cg
-         svKw==
-X-Gm-Message-State: AHYfb5iMMTvGEXq+FgFfThkGn7DJrYJlYlH2JnSDEfQ1x/X9QrtSG6KB
-        1xqtmWR31DiBrZduCiV5zHLKiit1OPHm
-X-Received: by 10.25.232.41 with SMTP id f41mr18191lfh.90.1501791964051; Thu,
- 03 Aug 2017 13:26:04 -0700 (PDT)
+        bh=yORJFNEoitsTt/HmuGWd0DWy5kanRWXEMxaxfVdWmlc=;
+        b=P/YvTrtgWyPI4CJcjtXtO8UMRiQKWK3hhXHaoNc+5oWzXHjoeBnAIVMO7vAxytB953
+         bYnKh4/Bdkk261o1FSbddt4Q9veknQIgAEPHNeP9THOLYcOyiNyEckG1YM4KcaDjlkZQ
+         8+tF1+SUIygjbxuv70R9qR+6ZyB/kBeRagU5+ldc+ufLzCuFff75YYmKvw9J8nU+sLCC
+         qna199sP37eNFcdvtDF6xvfUadhmSIrg0y/u4s6bTDLYnvUPnS45pgmNFijsMKZ/Y8Xa
+         rMWd0gTAR3RZWIOGIABL0BwKkGvC3ybwAqVtGu37Qhqmw8GUaXc9rO8VRfpZGHaEriby
+         P2Dg==
+X-Gm-Message-State: AHYfb5jF690odXZmKG1HflFlWWgcIiy9mW8rQMekgyMaweHKVulKK3KF
+        fKiUiGvlkPq6nJpXbscbcUz4N+vj2w==
+X-Received: by 10.200.48.25 with SMTP id f25mr32012qte.257.1501791990613; Thu,
+ 03 Aug 2017 13:26:30 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.25.1.130 with HTTP; Thu, 3 Aug 2017 13:26:03 -0700 (PDT)
-In-Reply-To: <20170803182000.179328-9-bmwill@google.com>
-References: <20170725213928.125998-1-bmwill@google.com> <20170803182000.179328-1-bmwill@google.com>
- <20170803182000.179328-9-bmwill@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 3 Aug 2017 13:26:03 -0700
-Message-ID: <CAGZ79kZOLkJEJE-Rtid5LfmwgQ_AVnC0Mm-GwQJFOL+1SWB-nw@mail.gmail.com>
-Subject: Re: [PATCH v2 08/15] unpack-trees: don't respect submodule.update
-To:     Brandon Williams <bmwill@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jens Lehmann <Jens.Lehmann@web.de>
+Received: by 10.237.39.194 with HTTP; Thu, 3 Aug 2017 13:26:10 -0700 (PDT)
+In-Reply-To: <232547ab-3b87-debc-36a4-d2285ec10a06@ramsayjones.plus.com>
+References: <xmqqfudcgryb.fsf@gitster.mtv.corp.google.com> <232547ab-3b87-debc-36a4-d2285ec10a06@ramsayjones.plus.com>
+From:   Sahil Dua <sahildua2305@gmail.com>
+Date:   Thu, 3 Aug 2017 22:26:10 +0200
+Message-ID: <CALiud+nm9wu4rBY6zBXmenJj_0Mn7xeU_FAvSdn4fdH+q--Jag@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Jul 2017, #09; Mon, 31)
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 3, 2017 at 11:19 AM, Brandon Williams <bmwill@google.com> wrote:
-> The 'submodule.update' config was historically used and respected by the
-> 'submodule update' command because update handled a variety of different
-> ways it updated a submodule.  As we begin teaching other commands about
-> submodules it makes more sense for the different settings of
-> 'submodule.update' to be handled by the individual commands themselves
-> (checkout, rebase, merge, etc) so it shouldn't be respected by the
-> native checkout command.
+Ah! I had skipped this reply from Ramsay earlier.
+
+On Tue, Aug 1, 2017 at 1:36 AM, Ramsay Jones
+<ramsay@ramsayjones.plus.com> wrote:
 >
-> Also remove the overlaying of the repository's config (via using
-> 'submodule_config()') from the commands which use the unpack-trees
-> logic (checkout, read-tree, reset).
+>
+> On 31/07/17 23:30, Junio C Hamano wrote:
+> [snip]
+>>
+>> * sd/branch-copy (2017-06-18) 3 commits
+>>   (merged to 'next' on 2017-07-18 at 5e3b9357ea)
+>>  + branch: add a --copy (-c) option to go with --move (-m)
+>>  + branch: add test for -m renaming multiple config sections
+>>  + config: create a function to format section headers
+>>
+>>  "git branch" learned "-c/-C" to create and switch to a new branch
+>>  by copying an existing one.
+>>
+>>  Will cook in 'next'.
+>>
+>>  I personally do not think "branch --copy master backup" while on
+>>  "master" that switches to "backup" is a good UI, and I *will* say
+>>  "I told you so" when users complain after we merge this down to
+>>  'master'.
+>
+> I wouldn't normally comment on an issue like this because I am
+> not very good at specifying, designing and evaluating UIs (so
+> who in their right mind would listen to me). ;-)
+>
+> FWIW, I suspect that I would not like using this interface either
+> and would, therefore, not use it.
 
-That was a mistake that I introduced with the checkout series.
+Does that mean you'd use it when "branch --copy feature-branch
+new-feature-branch" in the case when you would want to start working
+on a new branch (to modify or experiment with your current feature
+branch) on top of a branch keeping intact all the configuration and
+logs?
 
-Thanks for fixing it.
+I think it's really a matter of how this feature is seen from the
+end-user point of view. If we consider example "branch --copy master
+backup" - obviously, switching to backup isn't the ideal situation.
+However, if we consider the example above, switching makes sense. None
+of them is going to be correct in 100% cases. :)
+
+> However, I guess the worst that
+> would happen, is that it would gain another 'wort' (--option) to
+> turn off the "switches to backup" branch. :-D
+>
+> I didn't want you to think that the lack of comments on this was
+> because everybody agreed that it was a good idea.
+>
+> ATB,
+> Ramsay Jones
+>
+>
