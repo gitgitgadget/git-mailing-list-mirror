@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CB864208BD
-	for <e@80x24.org>; Thu,  3 Aug 2017 09:19:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 87E63208CB
+	for <e@80x24.org>; Thu,  3 Aug 2017 09:19:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751950AbdHCJTs (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Aug 2017 05:19:48 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:36491 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751895AbdHCJTo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Aug 2017 05:19:44 -0400
-Received: by mail-wm0-f65.google.com with SMTP id d40so1421187wma.3
-        for <git@vger.kernel.org>; Thu, 03 Aug 2017 02:19:43 -0700 (PDT)
+        id S1751974AbdHCJTw (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Aug 2017 05:19:52 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:33187 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751821AbdHCJTr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Aug 2017 05:19:47 -0400
+Received: by mail-wm0-f67.google.com with SMTP id q189so1445831wmd.0
+        for <git@vger.kernel.org>; Thu, 03 Aug 2017 02:19:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=FNn0Xx59PLByEtMRC1G6D7k7Y96rwW9Di0kUaZOJ36Y=;
-        b=KrGyXlBeGwFVDfPXe4YVgWQNQU0Ez2+wTh3Ae/ED4PK5WmaLowsfHBNnRZv24PhRwP
-         oW2MaXK+gc0mvLWm4APbrpK7IJ5UwLnNzG8uewz+7hIeapB9wjrhieXXmvAdr+QFDBK5
-         s4EDITek1/wxc7ei8Oaz8yHdMAKQpx27UGbmt3Xm+rioihvuAag0VgldOZ8Uf+m6+UKF
-         5+PFOl/LVnM+omOaM0Y6bLnGvxsTLPeIKqQp4mZvKyHD98fp2fIqkaDzAWBexTqVn7Wt
-         KZfrMTGV4vTt3r11k7l9R6lr+1CRBTL1UACC3opXQanf7RJw/Uae2CODuY7bR+YqVKR8
-         NrUg==
+        bh=FaRIzeJSqOlc2CiL76dCoVlHZ5JzDqJ00OeHAIwutpk=;
+        b=lrIdYtAvsdUMeHQu5b3pAao++usHBhcT2VXgcaiOA6dIfMHzIL7zCZ5KM2YwC9daBA
+         ONJNqQCw7wG2AdNWd+QTJr5whiThMNIQCarg4bY4AFJvZcij0L9idwtDTpyI3BvOwwWb
+         Osel45kxi3rq+0NwFX/ymSevu2nYYc/ER4oTwunQlMCeTE5VkoHXmx3MtuI2/A1Uahx/
+         sFvrGasDT84Y9ENOtv+lna/3XFEjxySYgTXsxGzqDSOCeKTAwum9o3y2DbLqWXA4GvC8
+         /RUJBAy/3mWg0wHekbQBiLErxsmaICeBXiP81zQ5MJhmpDMdgFGR+z6u8GE/3Q3J3Zxu
+         WetA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=FNn0Xx59PLByEtMRC1G6D7k7Y96rwW9Di0kUaZOJ36Y=;
-        b=pF4FTUpakbYDz+37rRW3gQhjPs45NKAAzHyOBTLz1LlXfsbYx7Wh4CL/gm1lZXGded
-         4KZSaePMyW5Yx60P1j4+zKY3JriX2HLZ/rsoe5olUXnb1RIo9UxxfbP4GRheKjNSvCfW
-         DrphtOU/8sgY2HgAtD6TjqgRCV0qN8ykw7k1ZoRH68T3XeM37yJNJI2TWx16dvzBJGNX
-         +tkFXDy4Yo8p+3KnA7A5lyn7vP+496I8AKYX6YCvVaZaX3oR8xD6ra5JZ1865msqakrt
-         mPItpXSWZxy9okvlTmDjyJy9t2Z9PjrgH3p8XKIQRkUC6AdEZc4dMfKX7R8qnolhfOOa
-         FSCQ==
-X-Gm-Message-State: AHYfb5ggpDwq0X7MgpGGUGyaAL28yd1Z7Oo37cs/Dy0Tf0tWv2KgMUOA
-        U3SLjpJlAAtL5I3I
-X-Received: by 10.28.14.149 with SMTP id 143mr677348wmo.102.1501751982601;
-        Thu, 03 Aug 2017 02:19:42 -0700 (PDT)
+        bh=FaRIzeJSqOlc2CiL76dCoVlHZ5JzDqJ00OeHAIwutpk=;
+        b=W8n2YcAIC5rRbM9TKNCCAzN3LCv15MKEjCBiQKGBLQSGMvTBBxw1YLpK4X/VJn2hI0
+         a/x0EJ0GN1DNPsNG7PiTyIswMUt++W+odVmc3xpD+VF1bPvDEqX5ymXdpOPEV1VTGNzz
+         gRaivQ9U6oxAsoTfXCGOHonRNAoZKMaq9vlnpQYXQy/Qm111Ladulxt+5wYf4lmef8wC
+         /OJneSSAFvtzRGtReYsQfNj0KswZvxk7eWE2C8a9xejwz+WrwknS/byF4SwlA7Dpl+Gb
+         DsJu9z8VZAkyCQlCpuJvJOZxhhdmLlInzcSmeZFm66gYtN6DGZwg7h24K2yejWqUEB/N
+         MEgw==
+X-Gm-Message-State: AHYfb5iz+INw3O0BGt4wWboqCVx/3kEvDZlR9wb1cZa6PZl8bprvljkb
+        i7/xi1FVoKH3anti
+X-Received: by 10.28.236.70 with SMTP id k67mr699128wmh.30.1501751986358;
+        Thu, 03 Aug 2017 02:19:46 -0700 (PDT)
 Received: from localhost.localdomain (sud35-h04-89-95-107-230.dsl.sta.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id n184sm1308051wme.33.2017.08.03.02.19.41
+        by smtp.gmail.com with ESMTPSA id n184sm1308051wme.33.2017.08.03.02.19.45
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 03 Aug 2017 02:19:42 -0700 (PDT)
+        Thu, 03 Aug 2017 02:19:45 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v5 04/40] Add Git/Packet.pm from parts of t0021/rot13-filter.pl
-Date:   Thu,  3 Aug 2017 11:18:50 +0200
-Message-Id: <20170803091926.1755-5-chriscool@tuxfamily.org>
+Subject: [PATCH v5 07/40] Git/Packet.pm: add packet_initialize()
+Date:   Thu,  3 Aug 2017 11:18:53 +0200
+Message-Id: <20170803091926.1755-8-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.14.0.rc1.52.gf02fb0ddac.dirty
 In-Reply-To: <20170803091926.1755-1-chriscool@tuxfamily.org>
 References: <20170803091926.1755-1-chriscool@tuxfamily.org>
@@ -69,92 +69,62 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This will make it possible to reuse packet reading and writing
-functions in other test scripts.
+Add a function to initialize the communication. And use this
+function in 't/t0021/rot13-filter.pl'.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- perl/Git/Packet.pm | 71 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 71 insertions(+)
- create mode 100644 perl/Git/Packet.pm
+ perl/Git/Packet.pm      | 13 +++++++++++++
+ t/t0021/rot13-filter.pl |  8 +-------
+ 2 files changed, 14 insertions(+), 7 deletions(-)
 
 diff --git a/perl/Git/Packet.pm b/perl/Git/Packet.pm
-new file mode 100644
-index 0000000000..aaffecbe2a
---- /dev/null
+index 2ad6b00d6c..b0233caf37 100644
+--- a/perl/Git/Packet.pm
 +++ b/perl/Git/Packet.pm
-@@ -0,0 +1,71 @@
-+package Git::Packet;
-+use 5.008;
-+use strict;
-+use warnings;
-+BEGIN {
-+	require Exporter;
-+	if ($] < 5.008003) {
-+		*import = \&Exporter::import;
-+	} else {
-+		# Exporter 5.57 which supports this invocation was
-+		# released with perl 5.8.3
-+		Exporter->import('import');
-+	}
-+}
+@@ -19,6 +19,7 @@ our @EXPORT = qw(
+ 			packet_bin_write
+ 			packet_txt_write
+ 			packet_flush
++			packet_initialize
+ 		);
+ our @EXPORT_OK = @EXPORT;
+ 
+@@ -70,3 +71,15 @@ sub packet_flush {
+ 	print STDOUT sprintf( "%04x", 0 );
+ 	STDOUT->flush();
+ }
 +
-+our @EXPORT = qw(
-+			packet_bin_read
-+			packet_txt_read
-+			packet_bin_write
-+			packet_txt_write
-+			packet_flush
-+		);
-+our @EXPORT_OK = @EXPORT;
++sub packet_initialize {
++	my ($name, $version) = @_;
 +
-+sub packet_bin_read {
-+	my $buffer;
-+	my $bytes_read = read STDIN, $buffer, 4;
-+	if ( $bytes_read == 0 ) {
-+		# EOF - Git stopped talking to us!
-+		return ( -1, "" );
-+	} elsif ( $bytes_read != 4 ) {
-+		die "invalid packet: '$buffer'";
-+	}
-+	my $pkt_size = hex($buffer);
-+	if ( $pkt_size == 0 ) {
-+		return ( 1, "" );
-+	} elsif ( $pkt_size > 4 ) {
-+		my $content_size = $pkt_size - 4;
-+		$bytes_read = read STDIN, $buffer, $content_size;
-+		if ( $bytes_read != $content_size ) {
-+			die "invalid packet ($content_size bytes expected; $bytes_read bytes read)";
-+		}
-+		return ( 0, $buffer );
-+	} else {
-+		die "invalid packet size: $pkt_size";
-+	}
-+}
++	( packet_txt_read() eq ( 0, $name . "-client" ) )	|| die "bad initialize";
++	( packet_txt_read() eq ( 0, "version=" . $version ) )	|| die "bad version";
++	( packet_bin_read() eq ( 1, "" ) )			|| die "bad version end";
 +
-+sub packet_txt_read {
-+	my ( $res, $buf ) = packet_bin_read();
-+	unless ( $res == -1 || $buf =~ s/\n$// ) {
-+		die "A non-binary line MUST be terminated by an LF.";
-+	}
-+	return ( $res, $buf );
++	packet_txt_write( $name . "-server" );
++	packet_txt_write( "version=" . $version );
++	packet_flush();
 +}
-+
-+sub packet_bin_write {
-+	my $buf = shift;
-+	print STDOUT sprintf( "%04x", length($buf) + 4 );
-+	print STDOUT $buf;
-+	STDOUT->flush();
-+}
-+
-+sub packet_txt_write {
-+	packet_bin_write( $_[0] . "\n" );
-+}
-+
-+sub packet_flush {
-+	print STDOUT sprintf( "%04x", 0 );
-+	STDOUT->flush();
-+}
+diff --git a/t/t0021/rot13-filter.pl b/t/t0021/rot13-filter.pl
+index 36a9eb3608..5b05518640 100644
+--- a/t/t0021/rot13-filter.pl
++++ b/t/t0021/rot13-filter.pl
+@@ -40,13 +40,7 @@ sub rot13 {
+ print $debug "START\n";
+ $debug->flush();
+ 
+-( packet_txt_read() eq ( 0, "git-filter-client" ) ) || die "bad initialize";
+-( packet_txt_read() eq ( 0, "version=2" ) )         || die "bad version";
+-( packet_bin_read() eq ( 1, "" ) )                  || die "bad version end";
+-
+-packet_txt_write("git-filter-server");
+-packet_txt_write("version=2");
+-packet_flush();
++packet_initialize("git-filter", 2);
+ 
+ ( packet_txt_read() eq ( 0, "capability=clean" ) )  || die "bad capability";
+ ( packet_txt_read() eq ( 0, "capability=smudge" ) ) || die "bad capability";
 -- 
 2.14.0.rc1.52.gf02fb0ddac.dirty
 
