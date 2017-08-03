@@ -6,53 +6,54 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 343AD1F991
-	for <e@80x24.org>; Thu,  3 Aug 2017 20:09:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4968F1F991
+	for <e@80x24.org>; Thu,  3 Aug 2017 20:17:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751696AbdHCUJa (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Aug 2017 16:09:30 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57554 "EHLO
+        id S1751944AbdHCURN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Aug 2017 16:17:13 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50805 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751236AbdHCUJ3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Aug 2017 16:09:29 -0400
+        with ESMTP id S1751600AbdHCURK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Aug 2017 16:17:10 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0AF59A739D;
-        Thu,  3 Aug 2017 16:09:22 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E92E28AD66;
+        Thu,  3 Aug 2017 16:17:02 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Pp9962GacoWHUE6GuM7Lbh3cwwk=; b=oKcUm7
-        EORDluVikimwoyAZNmkYktq1pcWjgVExNPGDI08kty17/xmGRgtfgSe0WMkcis+g
-        zjtk2mFWnQM7WlwT7nWVGJYSrEyQN9MarCWRLcbzdK3a6Y2unBqVvOq2qyOt+ggf
-        0nxnewIO7nXuzY+8DphBJCtmdcxKzXcZI9q5c=
+        :content-type; s=sasl; bh=xrPDun/cJIB5PNc8Pf3euvz/gvw=; b=ZPOW+J
+        3shtS/c2tH615vfYjvUyJFLP1dj5qZG7LERnDzhribSpGkqcw1RRmhVkzg0nWH0J
+        JlJYQkKiQHKR7thRrEhRwDLmRHFC57UYp74TMcGxpAtwoB1F9vVxtIs1D7WcFCiU
+        XHu5B8pzUIYIu3Szt6mhsadm2wGdKcuFzNh4o=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=gPLbcvVWSpHzGxnpiK99CMueTDAU5kEH
-        +y2A3jiY5G0WDwuogRfyna/PmcMB7VrX5ohymdwD9Y4KjY2HtspweJg/CFSSTxb/
-        H7sLIqLRHTEhBgSQ2522rIT3CeqpJDh2GqVn+6NorRv/yLeJajeQ28lPwYwihFxl
-        WTTMll/xWGA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 01AC6A739B;
-        Thu,  3 Aug 2017 16:09:22 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=YaEhsX35QghaqEdw9QZc8OR5mKiRLs0V
+        kmc93BsNHECjHNsrk+j6IrBGGV4LiLnkLwZUpDBt+kNvtXYyquERtOVYbxNUbGOc
+        Pu3FwxrKd6V3r15kYoQxyVCJ9uhLmHnIsyvp8Bbxjimm+PQ3qqXbp0v+TWYHXBa9
+        WYmQvne3CDw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E03EA8AD65;
+        Thu,  3 Aug 2017 16:17:02 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 500B7A739A;
-        Thu,  3 Aug 2017 16:09:21 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 49BB48AD61;
+        Thu,  3 Aug 2017 16:17:02 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Brandon Williams <bmwill@google.com>
 Cc:     git@vger.kernel.org, sbeller@google.com, jrnieder@gmail.com,
         Jens.Lehmann@web.de
-Subject: Re: [PATCH v2 00/15] submodule-config cleanup
+Subject: Re: [PATCH v2 02/15] submodule: don't use submodule_from_name
 References: <20170725213928.125998-1-bmwill@google.com>
         <20170803182000.179328-1-bmwill@google.com>
-Date:   Thu, 03 Aug 2017 13:09:20 -0700
-In-Reply-To: <20170803182000.179328-1-bmwill@google.com> (Brandon Williams's
-        message of "Thu, 3 Aug 2017 11:19:45 -0700")
-Message-ID: <xmqqy3r0wgzz.fsf@gitster.mtv.corp.google.com>
+        <20170803182000.179328-3-bmwill@google.com>
+Date:   Thu, 03 Aug 2017 13:17:00 -0700
+In-Reply-To: <20170803182000.179328-3-bmwill@google.com> (Brandon Williams's
+        message of "Thu, 3 Aug 2017 11:19:47 -0700")
+Message-ID: <xmqqtw1owgn7.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: A3529BEE-7887-11E7-B982-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: B60B4B22-7888-11E7-8759-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -60,17 +61,39 @@ X-Mailing-List: git@vger.kernel.org
 
 Brandon Williams <bmwill@google.com> writes:
 
-> Changes in v2:
->  * Rebased on latest 'bw/grep-recurse-submodules' branch (Still also requires
->    the 'bc/object-id' series).
->  * Changed unpack-trees.c (checkout command) so that it no longer respects the
->    'submodule.<name>.update' config since it really didn't make much sense for
->    it to respect it.
->  * The above point also enabled me to fix some issues that coverity found with
->    how I was overlaying the repo config with the submodule update strategy.
->    Instead the update strategy parsing logic is separated into two functions so
->    that just the enum can be determined from a string (which is all
->    update-clone needed).
+> The function 'submodule_from_name()' is being used incorrectly here as a
+> submodule path is being used instead of a submodule name.  Since the
+> correct function to use with a path to a submodule is already being used
+> ('submodule_from_path()') let's remove the call to
+> 'submodule_from_name()'.
+>
+> Signed-off-by: Brandon Williams <bmwill@google.com>
+> ---
+>  submodule.c | 2 --
+>  1 file changed, 2 deletions(-)
+>
+> diff --git a/submodule.c b/submodule.c
+> index 5139b9256..19bd13bb2 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -1177,8 +1177,6 @@ static int get_next_submodule(struct child_process *cp,
+>  			continue;
+>  
+>  		submodule = submodule_from_path(&null_oid, ce->name);
+> -		if (!submodule)
+> -			submodule = submodule_from_name(&null_oid, ce->name);
+>  
+>  		default_argv = "yes";
+>  		if (spf->command_line_option == RECURSE_SUBMODULES_DEFAULT) {
 
-Thanks.  I was wondering what the status of this series was when I
-accepted the updated "grep --recurse-submodules" the other day.
+It appears to me that the scope of the variable "submodule" in this
+function can be narrowed to be limited to the block inside this "if"
+statement we see in the post-context of this hunk.  That would make
+it even easier to see why leaving submodule to NULL is a safe thing
+to do.
+
+This comment applies to the state of this function before or after
+this patch.  It can be left outside the scope of this immediate
+series, and instead be done as a follow-up (or preparatory) cleanup.
+
+Thanks.
