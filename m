@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 42CB42047F
-	for <e@80x24.org>; Thu,  3 Aug 2017 09:21:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D9A422047F
+	for <e@80x24.org>; Thu,  3 Aug 2017 09:21:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751701AbdHCJVw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Aug 2017 05:21:52 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:38202 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751895AbdHCJUI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Aug 2017 05:20:08 -0400
-Received: by mail-wr0-f194.google.com with SMTP id g32so571598wrd.5
-        for <git@vger.kernel.org>; Thu, 03 Aug 2017 02:20:07 -0700 (PDT)
+        id S1751926AbdHCJVv (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Aug 2017 05:21:51 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:34626 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751933AbdHCJUJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Aug 2017 05:20:09 -0400
+Received: by mail-wr0-f196.google.com with SMTP id o33so575817wrb.1
+        for <git@vger.kernel.org>; Thu, 03 Aug 2017 02:20:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=XjICGp7PnxmsmAV5SQ3IUZQHjmn48zDhmcQsSFqX3rM=;
-        b=HzrfKBQuA8M9FijsraXmJkQorqgrZOIGXzSNAn4cdAxCDs4jISwWln5pHJA8tzvbbo
-         AdNX0Nrpbb1jVzj22WbY3rtkfAqAFurWVThcFYxurAMg858M0LpuD/IEBkgB5HPcfuJb
-         l9bS+cFP/Tvo4gMUdTxKWa6c5tvKfYAgx7kWs+CfeWpVwDqYdJT1nVeHaEQ5XjqxBdGh
-         bwm5frZ8u2T+A3Bs9dt/sjs8dc4EO0qM1vziorbNDQa/H/Rzy8Ltp1vpFcjYctXXuDuD
-         YJdadyf1rovEXspumdZ+WnORywqUE3jFpPqqEI3zqWjk2XdVekEFwpY+YIs9l8CflMoU
-         5gyw==
+        bh=i5pCE3/7MsK7P8SlyEgnwbzESgovnYft/GxvCjJ+4Ao=;
+        b=ECIpbdgucglyfUFdO6BShCvA9byA1qeAsSIcSGGs9Oqsgk44iPBZxBpFcTmPtyaAvg
+         zL6m+vgRKr2Br+wzw3I3qid/eNlSeu9KlqYEE+BaNHzK7OKIpzms+eF29DAJYsQdSOpK
+         ephdWr48BRsMsNgRQx4R80poPrc6Vyh+Hc19gYxqHH2hkUWE5VP8I4VBRt7TCO6+49p5
+         1ERX4w4BlS7lduklFx7ibamFqs787bw9MWqXXgwUKzPGZXsjyVAehvECC1y6G9COd2g8
+         ML0UJjBF2TsAYJulePBSczSrDhNr935m42w4F517CLvY9c7ygjMKif+f2IEtjfP8xNE1
+         9+Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=XjICGp7PnxmsmAV5SQ3IUZQHjmn48zDhmcQsSFqX3rM=;
-        b=qdFyzhl7Dal3zf9cKuiLUwVQqnySZ0PQaJDRMlktcHKgss4sbtMu+4oy/TsTuSo0pG
-         iqf/eN4+OHMVMRkbbk7wn2B64qcbXDKaTDwvVnvTMpDjGh5AL9QU5LZUEdV1DPQP5Hk4
-         qTid4xz9GXPg1xVCH6UhHNoNvRUcASa9mQ0LANcqjT+guaaiFOQoZn/k6n/2TSd/5qZy
-         AnAbrNUxYPxQZONKe2k8OWELGq3ZCPgZ3TNXeVnE0ebf26rfojISy3PqCj3XK6+973FW
-         zJIDa3CHDleakSpCe0PG29N5uRxee+N08tS3S1oZTYpOscELgOxbXuk1gav2cmx2YASW
-         PcsQ==
-X-Gm-Message-State: AIVw113rr0fhR4xTFdFhU3SkCtxa7ju8OB1iwLojJLbGTqcqUSc+kx6h
-        MF/vHcqQu6RNwZTi
-X-Received: by 10.223.169.68 with SMTP id u62mr752886wrc.285.1501752006617;
-        Thu, 03 Aug 2017 02:20:06 -0700 (PDT)
+        bh=i5pCE3/7MsK7P8SlyEgnwbzESgovnYft/GxvCjJ+4Ao=;
+        b=IcloeToESYt7xz3aSTWx0QRKxHxBY43DMJh5bTctV1oMqCN6b8BlX1ATFhjtVpfqbJ
+         4WnltzoV2lPyXT06en2IVd6s0BlEAuwzyBFiqqXurrB6W5M5TYg0rIsrTe3DNsGotk70
+         rqtuNxRiZRGYGBzrAaWyvGW4RrVe2SRdAlSpn/04YZXQVtGZwihR9MDJDpJ92HPqHbJj
+         DbAvaf/777fc185X4qFHufk2F8TLu90OfktB+uf5nFnmUsimf4I4MmRjEntTVbCr1isS
+         6Xi+XoCE8Z9tBPFMvXdpZTfHASmhMyTbi8hGD3d72a9lewTinB3E2BR62qE/ASOayBca
+         3aew==
+X-Gm-Message-State: AIVw113KqEHKhrKh6AJORrCYU+89ScxHRULwPI2lrRbnuIT/yadc7TKn
+        MZ1ZDim99jSbD/vR
+X-Received: by 10.223.161.200 with SMTP id v8mr777015wrv.135.1501752007795;
+        Thu, 03 Aug 2017 02:20:07 -0700 (PDT)
 Received: from localhost.localdomain (sud35-h04-89-95-107-230.dsl.sta.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id n184sm1308051wme.33.2017.08.03.02.20.05
+        by smtp.gmail.com with ESMTPSA id n184sm1308051wme.33.2017.08.03.02.20.06
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 03 Aug 2017 02:20:06 -0700 (PDT)
+        Thu, 03 Aug 2017 02:20:07 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v5 24/40] Add t0420 to test transfer to HTTP external odb
-Date:   Thu,  3 Aug 2017 11:19:10 +0200
-Message-Id: <20170803091926.1755-25-chriscool@tuxfamily.org>
+Subject: [PATCH v5 25/40] external-odb: add 'get_direct' support
+Date:   Thu,  3 Aug 2017 11:19:11 +0200
+Message-Id: <20170803091926.1755-26-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.14.0.rc1.52.gf02fb0ddac.dirty
 In-Reply-To: <20170803091926.1755-1-chriscool@tuxfamily.org>
 References: <20170803091926.1755-1-chriscool@tuxfamily.org>
@@ -69,164 +69,131 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This tests that an apache web server can be used as an
-external object database and store files in their native
-format instead of converting them to a Git object.
+This implements the 'get_direct' capability/instruction that makes
+it possible for external odb helper scripts to pass blobs to Git
+by directly writing them as loose objects files.
+
+It is better to call this a "direct" mode rather than a "fault-in"
+mode as we could have the same kind of mechanism to "put" objects
+into an external odb, where the odb helper would access blobs it
+wants to send to an external odb directly from files, but it
+would be strange to call that a fault-in mode too.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/t0420-transfer-http-e-odb.sh | 142 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 142 insertions(+)
- create mode 100755 t/t0420-transfer-http-e-odb.sh
+ external-odb.c | 21 ++++++++++++++++++++-
+ external-odb.h |  1 +
+ odb-helper.c   | 27 +++++++++++++++++++++++++--
+ odb-helper.h   |  1 +
+ 4 files changed, 47 insertions(+), 3 deletions(-)
 
-diff --git a/t/t0420-transfer-http-e-odb.sh b/t/t0420-transfer-http-e-odb.sh
-new file mode 100755
-index 0000000000..f84fe950ec
---- /dev/null
-+++ b/t/t0420-transfer-http-e-odb.sh
-@@ -0,0 +1,142 @@
-+#!/bin/sh
+diff --git a/external-odb.c b/external-odb.c
+index 52cb448d01..31d21bfe04 100644
+--- a/external-odb.c
++++ b/external-odb.c
+@@ -96,7 +96,8 @@ int external_odb_get_object(const unsigned char *sha1)
+ 		int ret;
+ 		int fd;
+ 
+-		if (!odb_helper_has_object(o, sha1))
++		if (!(o->supported_capabilities & ODB_HELPER_CAP_GET_RAW_OBJ) &&
++		    !(o->supported_capabilities & ODB_HELPER_CAP_GET_GIT_OBJ))
+ 			continue;
+ 
+ 		fd = create_object_tmpfile(&tmpfile, path);
+@@ -122,6 +123,24 @@ int external_odb_get_object(const unsigned char *sha1)
+ 	return -1;
+ }
+ 
++int external_odb_get_direct(const unsigned char *sha1)
++{
++	struct odb_helper *o;
 +
-+test_description='tests for transfering external objects to an HTTPD server'
++	if (!external_odb_has_object(sha1))
++		return -1;
 +
-+. ./test-lib.sh
++	for (o = helpers; o; o = o->next) {
++		if (!(o->supported_capabilities & ODB_HELPER_CAP_GET_DIRECT))
++			continue;
++		if (odb_helper_get_direct(o, sha1) < 0)
++			continue;
++		return 0;
++	}
 +
-+# If we don't specify a port, the current test number will be used
-+# which will not work as it is less than 1024, so it can only be used by root.
-+LIB_HTTPD_PORT=$(expr ${this_test#t} + 12000)
-+
-+. "$TEST_DIRECTORY"/lib-httpd.sh
-+
-+start_httpd apache-e-odb.conf
-+
-+# odb helper script must see this
-+export HTTPD_URL
-+
-+write_script odb-http-helper <<\EOF
-+die() {
-+	printf >&2 "%s\n" "$@"
-+	exit 1
++	return -1;
 +}
-+echo >&2 "odb-http-helper args:" "$@"
-+case "$1" in
-+init)
-+	echo "capability=get_raw_obj"
-+	echo "capability=put_raw_obj"
-+	echo "capability=have"
-+	;;
-+have)
-+	list_url="$HTTPD_URL/list/"
-+	curl "$list_url" ||
-+	die "curl '$list_url' failed"
-+	;;
-+get_raw_obj)
-+	get_url="$HTTPD_URL/list/?sha1=$2"
-+	curl "$get_url" ||
-+	die "curl '$get_url' failed"
-+	;;
-+put_raw_obj)
-+	sha1="$2"
-+	size="$3"
-+	kind="$4"
-+	upload_url="$HTTPD_URL/upload/?sha1=$sha1&size=$size&type=$kind"
-+	curl --data-binary @- --include "$upload_url" >out ||
-+	die "curl '$upload_url' failed"
-+	ref_hash=$(echo "$sha1 $size $kind" | GIT_NO_EXTERNAL_ODB=1 git hash-object -w -t blob --stdin) || exit
-+	git update-ref refs/odbs/magic/"$sha1" "$ref_hash"
-+	;;
-+*)
-+	die "unknown command '$1'"
-+	;;
-+esac
-+EOF
-+HELPER="\"$PWD\"/odb-http-helper"
 +
-+test_expect_success 'setup repo with a root commit and the helper' '
-+	test_commit zero &&
-+	git config odb.magic.scriptCommand "$HELPER"
-+'
+ int external_odb_put_object(const void *buf, size_t len,
+ 			    const char *type, unsigned char *sha1)
+ {
+diff --git a/external-odb.h b/external-odb.h
+index 3e0e6d0165..247b131fd5 100644
+--- a/external-odb.h
++++ b/external-odb.h
+@@ -4,6 +4,7 @@
+ const char *external_odb_root(void);
+ int external_odb_has_object(const unsigned char *sha1);
+ int external_odb_get_object(const unsigned char *sha1);
++int external_odb_get_direct(const unsigned char *sha1);
+ int external_odb_put_object(const void *buf, size_t len,
+ 			    const char *type, unsigned char *sha1);
+ 
+diff --git a/odb-helper.c b/odb-helper.c
+index 0603993057..b1f5464214 100644
+--- a/odb-helper.c
++++ b/odb-helper.c
+@@ -405,14 +405,37 @@ static int odb_helper_get_git_object(struct odb_helper *o,
+ 	return 0;
+ }
+ 
++int odb_helper_get_direct(struct odb_helper *o,
++			  const unsigned char *sha1)
++{
++	struct odb_helper_object *obj;
++	struct odb_helper_cmd cmd;
 +
-+test_expect_success 'setup another repo from the first one' '
-+	git init other-repo &&
-+	(cd other-repo &&
-+	 git remote add origin .. &&
-+	 git pull origin master &&
-+	 git checkout master &&
-+	 git log)
-+'
++	obj = odb_helper_lookup(o, sha1);
++	if (!obj)
++		return -1;
 +
-+UPLOADFILENAME="hello_apache_upload.txt"
++	if (odb_helper_start(o, &cmd, 0, "get_direct %s", sha1_to_hex(sha1)) < 0)
++		return -1;
 +
-+UPLOAD_URL="$HTTPD_URL/upload/?sha1=$UPLOADFILENAME&size=123&type=blob"
++	if (odb_helper_finish(o, &cmd))
++		return -1;
 +
-+test_expect_success 'can upload a file' '
-+	echo "Hello Apache World!" >hello_to_send.txt &&
-+	echo "How are you?" >>hello_to_send.txt &&
-+	curl --data-binary @hello_to_send.txt --include "$UPLOAD_URL" >out_upload
-+'
++	return 0;
++}
 +
-+LIST_URL="$HTTPD_URL/list/"
+ int odb_helper_get_object(struct odb_helper *o,
+ 			  const unsigned char *sha1,
+ 			  int fd)
+ {
++	if (o->supported_capabilities & ODB_HELPER_CAP_GET_GIT_OBJ)
++		return odb_helper_get_git_object(o, sha1, fd);
+ 	if (o->supported_capabilities & ODB_HELPER_CAP_GET_RAW_OBJ)
+ 		return odb_helper_get_raw_object(o, sha1, fd);
+-	else
+-		return odb_helper_get_git_object(o, sha1, fd);
++	if (o->supported_capabilities & ODB_HELPER_CAP_GET_DIRECT)
++		return 0;
 +
-+test_expect_success 'can list uploaded files' '
-+	curl --include "$LIST_URL" >out_list &&
-+	grep "$UPLOADFILENAME" out_list
-+'
-+
-+test_expect_success 'can delete uploaded files' '
-+	curl --data "delete" --include "$UPLOAD_URL&delete=1" >out_delete &&
-+	curl --include "$LIST_URL" >out_list2 &&
-+	! grep "$UPLOADFILENAME" out_list2
-+'
-+
-+FILES_DIR="httpd/www/files"
-+
-+test_expect_success 'new blobs are transfered to the http server' '
-+	test_commit one &&
-+	hash1=$(git ls-tree HEAD | grep one.t | cut -f1 | cut -d\  -f3) &&
-+	echo "$hash1-4-blob" >expected &&
-+	ls "$FILES_DIR" >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'blobs can be retrieved from the http server' '
-+	git cat-file blob "$hash1" &&
-+	git log -p >expected
-+'
-+
-+test_expect_success 'update other repo from the first one' '
-+	(cd other-repo &&
-+	 git fetch origin "refs/odbs/magic/*:refs/odbs/magic/*" &&
-+	 test_must_fail git cat-file blob "$hash1" &&
-+	 git config odb.magic.scriptCommand "$HELPER" &&
-+	 git cat-file blob "$hash1" &&
-+	 git pull origin master)
-+'
-+
-+test_expect_success 'local clone from the first repo' '
-+	mkdir my-clone &&
-+	(cd my-clone &&
-+	 git clone .. . &&
-+	 git cat-file blob "$hash1")
-+'
-+
-+test_expect_success 'no-local clone from the first repo fails' '
-+	mkdir my-other-clone &&
-+	(cd my-other-clone &&
-+	 test_must_fail git clone --no-local .. .) &&
-+	rm -rf my-other-clone
-+'
-+
-+test_expect_success 'no-local clone from the first repo with helper succeeds' '
-+	mkdir my-other-clone &&
-+	(cd my-other-clone &&
-+	 git clone -c odb.magic.scriptCommand="$HELPER" \
-+		--no-local .. .) &&
-+	rm -rf my-other-clone
-+'
-+
-+stop_httpd
-+
-+test_done
++	BUG("invalid get capability (capabilities: '%d')", o->supported_capabilities);
+ }
+ 
+ int odb_helper_put_object(struct odb_helper *o,
+diff --git a/odb-helper.h b/odb-helper.h
+index 318e0d48dc..f2fd2b7c9c 100644
+--- a/odb-helper.h
++++ b/odb-helper.h
+@@ -33,6 +33,7 @@ int odb_helper_init(struct odb_helper *o);
+ int odb_helper_has_object(struct odb_helper *o, const unsigned char *sha1);
+ int odb_helper_get_object(struct odb_helper *o, const unsigned char *sha1,
+ 			  int fd);
++int odb_helper_get_direct(struct odb_helper *o, const unsigned char *sha1);
+ int odb_helper_put_object(struct odb_helper *o,
+ 			  const void *buf, size_t len,
+ 			  const char *type, unsigned char *sha1);
 -- 
 2.14.0.rc1.52.gf02fb0ddac.dirty
 
