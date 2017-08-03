@@ -2,97 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B06261F991
-	for <e@80x24.org>; Thu,  3 Aug 2017 18:57:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7511C1F991
+	for <e@80x24.org>; Thu,  3 Aug 2017 19:01:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751911AbdHCS5w (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Aug 2017 14:57:52 -0400
-Received: from mail-lf0-f51.google.com ([209.85.215.51]:37311 "EHLO
-        mail-lf0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751739AbdHCS5v (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Aug 2017 14:57:51 -0400
-Received: by mail-lf0-f51.google.com with SMTP id m86so9860429lfi.4
-        for <git@vger.kernel.org>; Thu, 03 Aug 2017 11:57:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Uom3N6OQCPrt0tGAnaz6L3rKG1m6+JiEqHJOoX75wac=;
-        b=n2nMbiMCRIR/vJtrNozK4bLoKWApm5gY8Q5uv5nkqMnaswk7u0O8rv/aCNytKP5i4J
-         dly/eQ0PdJ3K2hlkRkwGtiXsXwmH26r5YMg7gzuB42AjFBVI9mLcACjEBjiRwqYHCaEW
-         1nvfe8OGdDNBa93mEa3pUbg3a9vGzVn2EX4j9l4eb05lPkKNFiIfF7aU/RgrQ2lMBdIV
-         llX9GLKt2VBKqvsaQU9XGMqyFFWK8EFSs9rimGySTpbbj7Hvl1EGgkdP4NkQyiJgw23L
-         pbIf250SURkYncMErNPbLJxiBTM6VHgyblY2g1/4BD/zV/Rq8SQ7viD0cDM81mbcE0WG
-         bMhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Uom3N6OQCPrt0tGAnaz6L3rKG1m6+JiEqHJOoX75wac=;
-        b=Nyxl/WkdcbZv1zpgwEJFDtUtkeiVqRcLGd6a+EQJkflTdfaEDBVO1oFrOBjN6yyjst
-         qwaMtIhiugwEky8zZvVo6c9bJLPE4vDOegUy/HIECEMbJe1m1ZVEglvwDVcGnTh3TqWt
-         3xe5EmVeDJQUESINW4JGvwJxERpQapQjerA4DKs2uUqsQxo1Fuz3F5P3qhnEpVzGj3l3
-         Ja5bFOi+1RWh8G45YrFAvG/XxD1i9vdTaJDBNlHFEm5AdNSqX63V3uPah3qezmhc9xhV
-         MVX8UE1zbW2rvq9QBnYRhbAf9sygnRvLYEmCVMe1Wj8HQ3ak0FdMHaFjwtFqVn/628QJ
-         HbcQ==
-X-Gm-Message-State: AHYfb5gmtQEhhPDery1XjsVBpND95W2ogiUZ1kfLWq+CTgQJ3bnFLhjg
-        O4RMnFw11xWQjmwsTsEhc1Uhi1Y+ZELE
-X-Received: by 10.25.15.221 with SMTP id 90mr973323lfp.220.1501786670258; Thu,
- 03 Aug 2017 11:57:50 -0700 (PDT)
+        id S1751754AbdHCTBX convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 3 Aug 2017 15:01:23 -0400
+Received: from mx0b-00105401.pphosted.com ([67.231.152.184]:52117 "EHLO
+        mx0b-00105401.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751739AbdHCTBX (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 3 Aug 2017 15:01:23 -0400
+X-Greylist: delayed 5037 seconds by postgrey-1.27 at vger.kernel.org; Thu, 03 Aug 2017 15:01:22 EDT
+Received: from pps.filterd (m0074333.ppops.net [127.0.0.1])
+        by m0074333.ppops.net (8.16.0.20/8.16.0.20) with SMTP id v73HYRwS046763
+        for <git@vger.kernel.org>; Thu, 3 Aug 2017 13:37:22 -0400
+Received: from xnwpv31.utc.com ([167.17.239.11])
+        by m0074333.ppops.net with ESMTP id 2c46rq5swf-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL)
+        for <git@vger.kernel.org>; Thu, 03 Aug 2017 13:37:22 -0400
+Received: from pps.filterd (xnwpv31.utc.com [127.0.0.1])
+        by xnwpv31.utc.com (8.15.0.59/8.15.0.59) with SMTP id v73HKgGE022078
+        for <git@vger.kernel.org>; Thu, 3 Aug 2017 13:37:21 -0400
+Received: from uusmna1q.utc.com (uusmna1q.utc.com [159.82.219.65])
+        by xnwpv31.utc.com with ESMTP id 2c4859r73s-1
+        (version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL)
+        for <git@vger.kernel.org>; Thu, 03 Aug 2017 13:37:21 -0400
+Received: from UUSALE0P.utcmail.com (UUSALE0P.utcmail.com [10.220.35.34])
+        by uusmna1q.utc.com (Sentrion-MTA-4.3.2/Sentrion-MTA-4.3.2) with ESMTP id v73HbKwa014435
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=OK)
+        for <git@vger.kernel.org>; Thu, 3 Aug 2017 13:37:21 -0400
+Received: from UUSALE0M.utcmail.com (10.220.35.32) by UUSALE0P.utcmail.com
+ (10.220.35.34) with Microsoft SMTP Server (TLS) id 15.0.1263.5; Thu, 3 Aug
+ 2017 13:37:20 -0400
+Received: from UUSALE0M.utcmail.com ([10.220.35.32]) by UUSALE0M.utcmail.com
+ ([10.220.35.32]) with mapi id 15.00.1263.000; Thu, 3 Aug 2017 13:37:20 -0400
+From:   "Burkhardt, Glenn B        UTAS" <Glenn.Burkhardt@utas.utc.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: gitk -m ?
+Thread-Topic: gitk -m ?
+Thread-Index: AdMMfuPtWkaB7cx3TfmXS1g/Ao0Bcw==
+Date:   Thu, 3 Aug 2017 17:37:19 +0000
+Message-ID: <6ef11677ca184e78a545452ffffe55a1@UUSALE0M.utcmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.220.3.242]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-Received: by 10.25.1.130 with HTTP; Thu, 3 Aug 2017 11:57:49 -0700 (PDT)
-In-Reply-To: <20170803182000.179328-3-bmwill@google.com>
-References: <20170725213928.125998-1-bmwill@google.com> <20170803182000.179328-1-bmwill@google.com>
- <20170803182000.179328-3-bmwill@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 3 Aug 2017 11:57:49 -0700
-Message-ID: <CAGZ79kaZcpZ-6+=19CbW1v+h-njguXZH9z9GMYA3Ci=acfreKQ@mail.gmail.com>
-Subject: Re: [PATCH v2 02/15] submodule: don't use submodule_from_name
-To:     Brandon Williams <bmwill@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jens Lehmann <Jens.Lehmann@web.de>
-Content-Type: text/plain; charset="UTF-8"
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1011 lowpriorityscore=0 impostorscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1706020000
+ definitions=main-1708030270
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 3, 2017 at 11:19 AM, Brandon Williams <bmwill@google.com> wrote:
-> The function 'submodule_from_name()' is being used incorrectly here as a
-> submodule path is being used instead of a submodule name.  Since the
-> correct function to use with a path to a submodule is already being used
-> ('submodule_from_path()') let's remove the call to
-> 'submodule_from_name()'.
->
-> Signed-off-by: Brandon Williams <bmwill@google.com>
+I've been looking in 'gitk' for an option that does what 'git log -m' does.  Did I miss something?  In particular, I'd like to get information about a file that's currently available with "git log -m --all --follow", but presented in 'gitk'.  If it's not there, please consider this a feature request.
 
-In case a reroll is needed, you could incorperate Jens feedback
-stating that 851e18c385 should have done it.
-
-> ---
->  submodule.c | 2 --
->  1 file changed, 2 deletions(-)
->
-> diff --git a/submodule.c b/submodule.c
-> index 5139b9256..19bd13bb2 100644
-> --- a/submodule.c
-> +++ b/submodule.c
-> @@ -1177,8 +1177,6 @@ static int get_next_submodule(struct child_process *cp,
->                         continue;
->
->                 submodule = submodule_from_path(&null_oid, ce->name);
-> -               if (!submodule)
-> -                       submodule = submodule_from_name(&null_oid, ce->name);
->
->                 default_argv = "yes";
->                 if (spf->command_line_option == RECURSE_SUBMODULES_DEFAULT) {
-> --
-> 2.14.0.rc1.383.gd1ce394fe2-goog
->
+Thanks.
