@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DEF681F991
-	for <e@80x24.org>; Fri,  4 Aug 2017 04:19:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A4E491F991
+	for <e@80x24.org>; Fri,  4 Aug 2017 04:21:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751260AbdHDETB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 Aug 2017 00:19:01 -0400
-Received: from mail-pg0-f46.google.com ([74.125.83.46]:37387 "EHLO
-        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751005AbdHDETA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Aug 2017 00:19:00 -0400
-Received: by mail-pg0-f46.google.com with SMTP id y129so2990970pgy.4
-        for <git@vger.kernel.org>; Thu, 03 Aug 2017 21:19:00 -0700 (PDT)
+        id S1751272AbdHDEVt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 Aug 2017 00:21:49 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:36977 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751041AbdHDEVs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Aug 2017 00:21:48 -0400
+Received: by mail-pf0-f196.google.com with SMTP id p13so688128pfd.4
+        for <git@vger.kernel.org>; Thu, 03 Aug 2017 21:21:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=KUNzNlaGOXb7YFIUsMKmr2c82viuWnuCv+dRp5Te2Kg=;
-        b=FWW2vXWuwcELIewA8nkA0dxiB4qak+KyU1BtN2OxSAfgSHKBm5VPBhgO+Mu8/M7jgd
-         MJYtddzku1vM11NQCKc3XNJJhYpE+Ao19GzpGqsOMF3MUA3hXAGc2fnNQaR2WpUYPvSG
-         Ggoe8rO6mdzj5XDFCvSH1fPazMQy4T/qdCM4RbKGKSuX5xk805ws4xZciDGBupV3Bh0+
-         H8OBDXVQhf7jLJ5mDo3vlm1jqQ0qpnA2EX5V/NXfCyDPNAhyaaVxUKM43XOmm/2cTt/0
-         MZwLvqATf+O+CLG2dxZLSSH4+DHNiOYTi8dUtkNkkurF4KkCfjUUj8gGj6KXfvvC3YWP
-         vdfg==
+        bh=5Ft1niT2jGRaJv9dtj/dPZnR0rkgadfYcRxVzHDKdso=;
+        b=eV6rWi3bYiR4C3E5ZAlzoWhdK63ySVof6HSDroQabGyJs6okrC9n2rZI2dD2LYgmI0
+         3f0AKzqa0O7uSNEPU0q8sl6qZmP6UcXi6sNJYCs2avdrXaZDSL132/QrQpEDqL730C6e
+         CEV/VXJbTK2MwMWfFr0jjWN5ATIahsZ4JPpbCR/pIVyWNI2x5nwZnreA83CKmpoKY/Lx
+         oOFbPBEXPpRQ58zfw7KwLWpRkHHE/gqAFEli4RYju6b8sY06c5OZQZpirAR/mm6eyKFL
+         GsW1Q3AgQWTwbiSMoU2hsBIHbm6EJYfgFxYe5UN4TfddpHotnTn3K28RRRzg8hnOzp4M
+         R9uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=KUNzNlaGOXb7YFIUsMKmr2c82viuWnuCv+dRp5Te2Kg=;
-        b=I5fES49xHysAiZ+OHQB3cBSRdRcrIOYuIH/+5UYz+4MWKXCROgkUx4xe0dBxCTh08p
-         oG7vQdEqZPUhmhcgiCdfyZOw/frpwikz3ZiErwXPz/8Dp/MM/kMbFsIynpXhGzcaFW6b
-         R8Ipv5/+41Q4ddqvTuO2Yty7KaBfXhlwlEQrLxq+4vMkcNCxbTknNiFTF7Wn253y3bj6
-         WxjPLB4nMtR//DiPzjy+6ZAFUa7hzEzeEsS+gJNGqzx+A4q8ECqki4IAMCUdDrIn9Mmy
-         smGNG4Sl9yOFlY2pJSpHEV4qT/I6CKX5UAfF6gpI7+5b2S0VpfMI2Z1mANOGynpDvtjy
-         aEuw==
-X-Gm-Message-State: AIVw1131Ku3boFimQGBW+k062nbi+EJi9bUnRXh7rYrDj+KAxt94RqE7
-        IwLRxydzFWcuLjZ3MgQz99VNU3AnMg==
-X-Received: by 10.99.47.2 with SMTP id v2mr954027pgv.203.1501820340098; Thu,
- 03 Aug 2017 21:19:00 -0700 (PDT)
+        bh=5Ft1niT2jGRaJv9dtj/dPZnR0rkgadfYcRxVzHDKdso=;
+        b=CMgoOJ28y9A6xNxTEEmHIAf8svxwVuTFufTn9/AuPqLu7+2vVTrr+g7Vlivxx/hMv+
+         VPy3fk86sbHF1JSxm37m4198wnLY9oLpumXdYacv6OQ12L/SE0oNh5zAtPfPfAcWLINz
+         s76gzYewjBTl6o0lyVazFgyUB/g+V28hmvMKouVV2D6pq4z7XZT8aoLvgQ1J6oKLwwID
+         RX0WPvLSKCw44t/CsHYCUlpUKo9MSdeVwFz9fpRJ335cnDcR6k1w1ncqAiQnvm5KrN/0
+         +x7z7aJd+122UK7TbhjkL9yLCeQXwvfKFxMer0ruCpA7+g5Gg+/Sro2mebe+na09Ci6T
+         7Jvw==
+X-Gm-Message-State: AIVw113UdSQcrxc2d4xG6BUL+snf54JD+E9NRn1suMZizbzzOlS5u883
+        r7qL2hqmB0iOBKmSNkRnmuoJB1v4Uw==
+X-Received: by 10.84.231.131 with SMTP id g3mr1158480plk.283.1501820508455;
+ Thu, 03 Aug 2017 21:21:48 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.100.165.238 with HTTP; Thu, 3 Aug 2017 21:18:59 -0700 (PDT)
-In-Reply-To: <xmqqpoccpmux.fsf@gitster.mtv.corp.google.com>
+Received: by 10.100.165.238 with HTTP; Thu, 3 Aug 2017 21:21:47 -0700 (PDT)
+In-Reply-To: <20170803192947.7x5tadwb7lxermdk@sigill.intra.peff.net>
 References: <cover.1500321657.git.martin.agren@gmail.com> <cover.1501701128.git.martin.agren@gmail.com>
- <e660a9cdaff6d114305a475f9a12876b56b473d1.1501701128.git.martin.agren@gmail.com>
- <xmqqpoccpmux.fsf@gitster.mtv.corp.google.com>
+ <20170803192947.7x5tadwb7lxermdk@sigill.intra.peff.net>
 From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Fri, 4 Aug 2017 06:18:59 +0200
-Message-ID: <CAN0heSrP=HeUcpfwXS9DyzCYCnCCocyV4iCHyAxrYPmW=LgZ+g@mail.gmail.com>
-Subject: Re: [PATCH v3 1/7] builtin.h: take over documentation from api-builtin.txt
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Date:   Fri, 4 Aug 2017 06:21:47 +0200
+Message-ID: <CAN0heSpzg4jCMetyhdpQn2Zz7nDhv1X14SLQ26WvnRDe9NYCCg@mail.gmail.com>
+Subject: Re: [PATCH v3 0/7] tag: only respect `pager.tag` in list-mode
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -63,54 +63,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3 August 2017 at 19:44, Junio C Hamano <gitster@pobox.com> wrote:
-> Martin =C3=85gren <martin.agren@gmail.com> writes:
->> + * . Add `builtin/foo.o` to `BUILTIN_OBJS` in `Makefile`.
+On 3 August 2017 at 21:29, Jeff King <peff@peff.net> wrote:
+> On Wed, Aug 02, 2017 at 09:40:48PM +0200, Martin =C3=85gren wrote:
 >
-> Not a new problem but it will become much easier to follow if we
-> moved this item between the "implement cmd_foo()" and "declare
-> cmd_foo in builtin.h", like so:
+>> This is the third version of my attempt to make `pager tag` useful (v1
+>> at [1], v2 at [2]). Thanks to Junio and Peff for comments on v2.
 >
->  . Define the implementation of the built-in command `foo` with
->    signature:
+> This looks good to me overall. One minor question from the interdiff:
 >
->         int cmd_foo(int argc, const char **argv, const char *prefix);
+>> diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
+>> index 8b2ffb1aa..9128ec5ac 100755
+>> --- a/t/t7006-pager.sh
+>> +++ b/t/t7006-pager.sh
+>> @@ -162,7 +162,7 @@ test_expect_success TTY 'git tag with no args defaul=
+ts to paging' '
+>>  test_expect_success TTY 'git tag with no args respects pager.tag' '
+>>       # no args implies -l so this should page like -l
+>>       rm -f paginated.out &&
+>> -     test_terminal git -c pager.tag=3Dno tag &&
+>> +     test_terminal git -c pager.tag=3Dfalse tag &&
+>>       ! test -e paginated.out
+>>  '
 >
->    in a new file `builtin/foo.c`.
->
->  . Add `builtin/foo.o` to `BUILTIN_OBJS` in `Makefile`.
->
-> Alternatively, we may merge these two into one item (i.e. "in a new
-> file `builtin/foo.c` and add `builtin/foo.o` to ...").
->
-> But of course, this patch 1/7 should not do any of the above.  I am
-> suggesting a possible future clean-up for anybody on the list
-> listening from sidelines, and you do not have to be the person who
-> does it.
+> These should behave the same, right? So this is just a style/consistency
+> fix, not a bugfix?
 
-Thank you. If this series needs to be rerolled, I could do it as patch 2.
-And if not, I could try to remember to do it once this series has landed.
-A that point in time, I'd also like to try changing other commands ("git
-branch") similar to "git tag" (although maybe your suggestion above
-shouldn't be part of that series, but go on its own).
+Right. I realized I was using "false" everywhere else.  It wouldn't have hu=
+rt
+to exercise the config-parsing a tiny bit differently, but I assume that's
+already being done explicitly in some other test, so I went for consistency=
+.
 
-Since this is my first code contribution to Git, I'll ask about this part o=
-f
-SubmittingPatches:
-
-"After the list reached a consensus that it is a good idea to apply the
-patch, re-send it with "To:" set to the maintainer [*1*] and "cc:" the
-list [*2*] for inclusion."
-
-I will boldly assume that I should not be doing this. It seems to me this
-doesn't happen very often or not at all -- possibly because you tend to
-be involved in virtually all threads anyway, before the list reaches a
-consensus.
-
-Which brings me to my final point: Thanks for your very helpful feedback
-throughout all three versions and even more thanks for your work on Git.
-I find it amazing how much time you are able to constantly spend on all
-aspects -- "high and low" -- of Git. It goes a long way to explaining how
-Git can be so very useful. Thanks a lot!
+Thanks for all the feedback and thoughts throughout the different versions
+of this series. It changed quite a bit since v1, so thanks a lot.
 
 Martin
