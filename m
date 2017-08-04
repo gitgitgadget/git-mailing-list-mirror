@@ -2,105 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E2622047F
-	for <e@80x24.org>; Fri,  4 Aug 2017 16:07:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3FDD42047F
+	for <e@80x24.org>; Fri,  4 Aug 2017 16:42:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752769AbdHDQHz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 Aug 2017 12:07:55 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59156 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752242AbdHDQHy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Aug 2017 12:07:54 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0A3089D466;
-        Fri,  4 Aug 2017 12:07:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=JB5svLt4UMmdRFUw9zl3SV5H3xU=; b=Qia5Rs
-        DxXZTxs0rrQLHXjq5co/r4JYRESx8pH7bZDqFKRVoU1auRnW8PKiYRlZtNdcHKKx
-        cMkgxWv0/okW/+ZyYqP5rfbyubys4k4k4b/Pi0ac6XeGt6lSjLb63nofSsBgp7Zk
-        VuEeNOgOn4wAFMDLkLUhkUeHWILoyoHmMugE4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=N/CjU8P+QbBfGDZMRkbaPSnZydLfTD2l
-        rOAhg6rGiTctJte3RaC96JqRROZN+5E3aXkV2iGvzBCkyTFOYjLG5K09SPx5wVTY
-        fDzG5AueoYaRAzmD2ZLpsZXOSW9c1AFi7BsHs8t4Pagd6G51eqzHHPwwAXtX6ITx
-        VOcVrYw1t0s=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 00C659D465;
-        Fri,  4 Aug 2017 12:07:54 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 47B6C9D45D;
-        Fri,  4 Aug 2017 12:07:53 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] clone: teach recursive clones to respect -q
-References: <20170803222544.17216-1-bmwill@google.com>
-Date:   Fri, 04 Aug 2017 09:07:52 -0700
-In-Reply-To: <20170803222544.17216-1-bmwill@google.com> (Brandon Williams's
-        message of "Thu, 3 Aug 2017 15:25:44 -0700")
-Message-ID: <xmqqvam3uxif.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1753153AbdHDQme (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 Aug 2017 12:42:34 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:37492 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752986AbdHDQmc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Aug 2017 12:42:32 -0400
+Received: by mail-pg0-f65.google.com with SMTP id 83so2258946pgb.4
+        for <git@vger.kernel.org>; Fri, 04 Aug 2017 09:42:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=GN83Ip8nbeGt2pEH2z1iaGUygpGEuuuIJhH9pqGwH4g=;
+        b=cM3SSx48mD8UnGEHan1cExSRQvoX2XvcC+jc8czOjtwR/nDi9Ir/GPFHDiW9BeLq7r
+         R7OfJr4DsjFxsH8WOH9gyk5HQZkrnklbm4FLx9Q411CL4Jf6rGra68OIAOkO6/hhbH8x
+         gJFb1qyUlMwqFLGXWIB2J1IfKUsUOPBgG0LfI07WVZZwlHsLXFVOiDFpMRaS2jj2PoDf
+         BT+qxbtLQQr207CzrXuQaBFjmIaet2LDfAjjYruSSRTCodoV/gsR88OOZuyNHjOEYl6Q
+         aIwXVse9DgAGdotbLNnw2tDrFq7IYRBrOlovcU9WImEOZiBadJJgGx205l3ddfqc9YIj
+         fJ3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=GN83Ip8nbeGt2pEH2z1iaGUygpGEuuuIJhH9pqGwH4g=;
+        b=DEq0W/l7WeviPwhiJEW72ygmKKCEl3gM58SNAP01gP2YM7KGO7SOpnUfKbLB1ZGRFu
+         CgIlXMCrbwfmcvfzL1BvfCcSUjEyY8PHBNmP+mlWmD8c00Sl6DDbKTeZTlTLvevbGb+F
+         QCl01VkMsKgIu7sGYfyKSBH/F9cVdCNFuY0qx9G5ruoDde4OBv4ZFWxOZzx5D9LabRom
+         N1LfXU3KTiN0FuFifh4fKp+VpTPz/i6lEkv+pBzg9VOHrBlLUbjaj9sWSGNik8PtmnJ0
+         V5Kvo4R4cSJNrG9Oeu3dFdSszCc5ZZ2/NCm3DbaVY/HlFvkhAYcHRVtmTK6V6T+wdaGa
+         WGig==
+X-Gm-Message-State: AIVw112MbVqDQjRV6jxAxfa13chzk9K/ZeaW/CJTotOEFi63/gRFFS0u
+        Jlc2jzK4GzCzD2Ev0en59OR+ah1lPH/G
+X-Received: by 10.98.220.134 with SMTP id c6mr3145387pfl.253.1501864951812;
+ Fri, 04 Aug 2017 09:42:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 12274B62-792F-11E7-B946-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Received: by 10.100.165.238 with HTTP; Fri, 4 Aug 2017 09:42:31 -0700 (PDT)
+In-Reply-To: <xmqqzibfuxu9.fsf@gitster.mtv.corp.google.com>
+References: <cover.1500321657.git.martin.agren@gmail.com> <cover.1501701128.git.martin.agren@gmail.com>
+ <e660a9cdaff6d114305a475f9a12876b56b473d1.1501701128.git.martin.agren@gmail.com>
+ <xmqqpoccpmux.fsf@gitster.mtv.corp.google.com> <CAN0heSrP=HeUcpfwXS9DyzCYCnCCocyV4iCHyAxrYPmW=LgZ+g@mail.gmail.com>
+ <xmqqzibfuxu9.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Fri, 4 Aug 2017 18:42:31 +0200
+Message-ID: <CAN0heSq=YE7ep57V6+3M3DKcyamutjug7EkxdXpG5HnSGT-f2A@mail.gmail.com>
+Subject: Re: [PATCH v3 1/7] builtin.h: take over documentation from api-builtin.txt
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
-
-> Teach 'git clone --recurse-submodules' to respect the '-q' option by
-> passing down the quiet flag to the process which handles cloning of
-> submodules.
+On 4 August 2017 at 18:00, Junio C Hamano <gitster@pobox.com> wrote:
+> Martin =C3=85gren <martin.agren@gmail.com> writes:
 >
-> Signed-off-by: Brandon Williams <bmwill@google.com>
-> ---
->  builtin/clone.c            | 3 +++
->  t/t7400-submodule-basic.sh | 6 ++++++
->  2 files changed, 9 insertions(+)
+>> Since this is my first code contribution to Git, I'll ask about this par=
+t of
+>> SubmittingPatches:
+>>
+>> "After the list reached a consensus that it is a good idea to apply the
+>> patch, re-send it with "To:" set to the maintainer [*1*] and "cc:" the
+>> list [*2*] for inclusion."
+>>
+>> I will boldly assume that I should not be doing this. It seems to me thi=
+s
+>> doesn't happen very often or not at all -- possibly because you tend to
+>> be involved in virtually all threads anyway, before the list reaches a
+>> consensus.
 >
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index 08b5cc433..f7e17d229 100644
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> @@ -768,6 +768,9 @@ static int checkout(int submodule_progress)
->  		if (submodule_progress)
->  			argv_array_push(&args, "--progress");
->  
-> +		if (option_verbosity < 0)
-> +			argv_array_push(&args, "--quiet");
-> +
->  		err = run_command_v_opt(args.argv, RUN_GIT_CMD);
->  		argv_array_clear(&args);
->  	}
+> Yeah, that is in the "ideal patch flow" section, isn't it?
 
-Good spotting.  Makes me wonder if there still are other options we
-might have missed, but we can incrementally improve as bug report
-comes in ;-)
+Yes and no. It's in the main part above it, under "(4) Sending your
+patches." But you are right that the ideal patch flow section then
+says the same thing: "(4) The list forms consensus that the last
+round of your patch is good. Send it to the maintainer and cc the
+list."
 
-Will queue.  Thanks.
+> We
+> rarely achieve the "ideal" and often instead go for a more expedited
+> option, it appears---perhaps I should try to be less involved in
+> individual patch reviews and place more review burden on other
+> reviewers ;-)
 
-> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-> index dcac364c5..e9c3335b7 100755
-> --- a/t/t7400-submodule-basic.sh
-> +++ b/t/t7400-submodule-basic.sh
-> @@ -1289,4 +1289,10 @@ test_expect_success 'init properly sets the config' '
->  	test_must_fail git -C multisuper_clone config --get submodule.sub1.active
->  '
->  
-> +test_expect_success 'recursive clone respects -q' '
-> +	test_when_finished "rm -rf multisuper_clone" &&
-> +	git clone -q --recurse-submodules multisuper multisuper_clone >actual &&
-> +	test_must_be_empty actual
-> +'
-> +
->  test_done
+:-)
