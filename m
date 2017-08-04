@@ -2,123 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D769208B4
-	for <e@80x24.org>; Fri,  4 Aug 2017 06:32:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1087B2047F
+	for <e@80x24.org>; Fri,  4 Aug 2017 16:00:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751318AbdHDGcE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 Aug 2017 02:32:04 -0400
-Received: from mail-qt0-f181.google.com ([209.85.216.181]:35496 "EHLO
-        mail-qt0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751259AbdHDGcD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Aug 2017 02:32:03 -0400
-Received: by mail-qt0-f181.google.com with SMTP id p3so4282506qtg.2
-        for <git@vger.kernel.org>; Thu, 03 Aug 2017 23:32:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=IH1WRB6e3tWE6ia4hSWQy0uMFXhLpsN4flusUolEw6U=;
-        b=oKPevPADuLBFrFDSOmZNmzisqoLFF/WWMJVJ2gaNZTfZUxn4m2bvWjUVqrvb0TPm0c
-         +OLy56GE2DAZa8ZCLmfWeK89YtFqoMVQEtlPSHQcwVH51MrTiptNB3uStYhl5MnG2yZl
-         snRk5YjBDWGT6lo3BwWMeOfVL2vNij/79+aE9Tmi3WfrNMyYRayRTlqjAfhUtYpbjESZ
-         T3eLKT/X32ZATVFbx+NnoQMNyasoJqS212IyhtBYtFKQXJUbkvqDyk0sQY5jGSal91kh
-         dTZs1HgNrk2yP5gJxgb71jfxF5Hx3/XHjlOxBK4y5bwKIUc/VfwmIBTyzi2zJ29eFiv6
-         hDGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=IH1WRB6e3tWE6ia4hSWQy0uMFXhLpsN4flusUolEw6U=;
-        b=ZG+RPKcfLEwFVWxYcceLyqe9JN1Z1ylZFrjDOl0y9GilC4TBaTanufMViL5O2DPF35
-         J18Mi3IzKn04WLZS1/C0JUPex3axl/Mft+O1XyodjxWKmLb4bGjQfI7l81MmuRWQfCli
-         jPtekS+XH3QAZGKzV3vFHVTHJrpTt2QsSFQC1zxkn5c7TG1rT1m3pir9Sj2/dNxe6+Ie
-         UFHlhaiz4qocqVilZGhAnsld1Kmq488OpHIAFaoFSqDYJZE8eFRnkc8tH9y+TxfyAlmL
-         9HXi0vSI2g4jinIYJUH2Atr/MAXiy7oip4Rrj1tSlFYkgG4VeOjB7F4uyytI3/7AAB0j
-         Lfqg==
-X-Gm-Message-State: AHYfb5iGXhTVl05h0nYw/cAerrvVLflmXTD0wpQFg8ENnoM4Sz8WDJqo
-        oTz1Dy+SRZx/FPEKyVaAbuogTmWUtw==
-X-Received: by 10.237.34.75 with SMTP id o11mr1606131qtc.299.1501828322258;
- Thu, 03 Aug 2017 23:32:02 -0700 (PDT)
+        id S1752544AbdHDQAz (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 Aug 2017 12:00:55 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55111 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752160AbdHDQAy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Aug 2017 12:00:54 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CC3F9981D8;
+        Fri,  4 Aug 2017 12:00:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=JZuYFSk4naEJ
+        BL4vh3cC2+5dtVo=; b=OqVzfZgGZouLxmi/18HfdNZJAAO18CWnYg8S3Pj334UZ
+        Pm0NgdWT2LCUeSvaYbi7l/KyVmzDz718m33kXeWkj9djYtRngi789fX86m/6Ix//
+        RTs5UajdhP0EWyViuTw5VDSrahuJAQvl7jRo+y6quIlJD4b22j92xdIlIKh56u4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=KB3sEs
+        PsOD0ZWTMcG7Qe9ueeW53RUckOJL2wm0q6LtNCm2sUvC/2+GYKxxez+mRsuk2/o6
+        iO3Xk7cmU+dvVc2VGnzAUVdWTBYTMEztwcHYI08AgAxbNFSxf5oCfHcWonrEhsI8
+        VC5t8vPVrniY84g7cHkQCm/TxV/J+X3+tp8qU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C59DA981D7;
+        Fri,  4 Aug 2017 12:00:48 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 38E88981D6;
+        Fri,  4 Aug 2017 12:00:48 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 1/7] builtin.h: take over documentation from api-builtin.txt
+References: <cover.1500321657.git.martin.agren@gmail.com>
+        <cover.1501701128.git.martin.agren@gmail.com>
+        <e660a9cdaff6d114305a475f9a12876b56b473d1.1501701128.git.martin.agren@gmail.com>
+        <xmqqpoccpmux.fsf@gitster.mtv.corp.google.com>
+        <CAN0heSrP=HeUcpfwXS9DyzCYCnCCocyV4iCHyAxrYPmW=LgZ+g@mail.gmail.com>
+Date:   Fri, 04 Aug 2017 09:00:46 -0700
+In-Reply-To: <CAN0heSrP=HeUcpfwXS9DyzCYCnCCocyV4iCHyAxrYPmW=LgZ+g@mail.gmail.com>
+        ("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Fri, 4 Aug 2017 06:18:59
+ +0200")
+Message-ID: <xmqqzibfuxu9.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.55.31.13 with HTTP; Thu, 3 Aug 2017 23:32:01 -0700 (PDT)
-In-Reply-To: <xmqqo9rwxy8k.fsf@gitster.mtv.corp.google.com>
-References: <20170803091926.1755-1-chriscool@tuxfamily.org>
- <20170803091926.1755-5-chriscool@tuxfamily.org> <xmqqo9rwxy8k.fsf@gitster.mtv.corp.google.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 4 Aug 2017 08:32:01 +0200
-Message-ID: <CAP8UFD3KaTEWiPmdNGmMx_5Dc+UDTWbPgeV8-=7y26-26q0Mxw@mail.gmail.com>
-Subject: Re: [PATCH v5 04/40] Add Git/Packet.pm from parts of t0021/rot13-filter.pl
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 14CC382E-792E-11E7-B16C-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 3, 2017 at 9:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
+Martin =C3=85gren <martin.agren@gmail.com> writes:
 
->> diff --git a/perl/Git/Packet.pm b/perl/Git/Packet.pm
->> new file mode 100644
->> index 0000000000..aaffecbe2a
->> --- /dev/null
->> +++ b/perl/Git/Packet.pm
->> @@ -0,0 +1,71 @@
->> +package Git::Packet;
->> +use 5.008;
->> +use strict;
->> +use warnings;
->> +BEGIN {
->> +     require Exporter;
->> +     if ($] < 5.008003) {
->> +             *import = \&Exporter::import;
->> +     } else {
->> +             # Exporter 5.57 which supports this invocation was
->> +             # released with perl 5.8.3
->> +             Exporter->import('import');
->> +     }
->> +}
+> Since this is my first code contribution to Git, I'll ask about this pa=
+rt of
+> SubmittingPatches:
 >
-> This is merely me being curious, but do we want this boilerplate,
-> which we do not use in perl/Git.pm but we do in perl/Git/I18N.pm?
-
-I don't know. I copied it as I thought that we wanted to support Perl
-versions starting from 5.8.0, but I am ok to remove it or to leave it
-depending on what the Perl experts think (CCing AEvar) and what we
-decide.
-
->> +our @EXPORT = qw(
->> +                     packet_bin_read
->> +                     packet_txt_read
->> +                     packet_bin_write
->> +                     packet_txt_write
->> +                     packet_flush
->> +             );
->> +our @EXPORT_OK = @EXPORT;
+> "After the list reached a consensus that it is a good idea to apply the
+> patch, re-send it with "To:" set to the maintainer [*1*] and "cc:" the
+> list [*2*] for inclusion."
 >
-> We can see that you made sure that the only thing 05/40 needs to do
-> is to use this package and remove the definition of these subs,
-> without having to touch any caller by first updating the original
-> implementation in 03/40 and then exporting these names in 04/40.
-> Knowing that the preparation is nicely done already, it is a bit
-> irritating to see that 05/40 is a separate patch, as we need to
-> switch between the patches to see if there is any difference between
-> the original implementation of the subs, and the replacement
-> implemented in here.  It would have been nicer to have changes in
-> 04/40 and 05/40 in a single patch.
+> I will boldly assume that I should not be doing this. It seems to me th=
+is
+> doesn't happen very often or not at all -- possibly because you tend to
+> be involved in virtually all threads anyway, before the list reaches a
+> consensus.
 
-Ok, I have squashed 04/40 and 05/40 together in my current version of
-this series.
+Yeah, that is in the "ideal patch flow" section, isn't it?  We
+rarely achieve the "ideal" and often instead go for a more expedited
+option, it appears---perhaps I should try to be less involved in
+individual patch reviews and place more review burden on other
+reviewers ;-)
+
+In any case, it was a pleasure to cheer-lead on the progress of this
+series.  Thanks.
