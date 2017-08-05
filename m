@@ -2,168 +2,220 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0CD3D1F991
-	for <e@80x24.org>; Sat,  5 Aug 2017 06:50:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D13BE1F991
+	for <e@80x24.org>; Sat,  5 Aug 2017 10:28:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751198AbdHEGua (ORCPT <rfc822;e@80x24.org>);
-        Sat, 5 Aug 2017 02:50:30 -0400
-Received: from mail-pg0-f48.google.com ([74.125.83.48]:38232 "EHLO
-        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751140AbdHEGu3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Aug 2017 02:50:29 -0400
-Received: by mail-pg0-f48.google.com with SMTP id l64so15689556pge.5
-        for <git@vger.kernel.org>; Fri, 04 Aug 2017 23:50:29 -0700 (PDT)
+        id S1751392AbdHEK2H (ORCPT <rfc822;e@80x24.org>);
+        Sat, 5 Aug 2017 06:28:07 -0400
+Received: from mail-it0-f67.google.com ([209.85.214.67]:37913 "EHLO
+        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751250AbdHEK2F (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Aug 2017 06:28:05 -0400
+Received: by mail-it0-f67.google.com with SMTP id f16so280858itb.5
+        for <git@vger.kernel.org>; Sat, 05 Aug 2017 03:28:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=mforney-org.20150623.gappssmtp.com; s=20150623;
-        h=from:to:subject:date:message-id;
-        bh=+rrMKzZCYytLvyeNoxnW/jq17h7xzHfPY3rbWmuw0Q0=;
-        b=tED/AsYpaXfNNOlR2k178lbdhkJ5wlvI0/s8gQluul4k185vBLRy6gddwuSnfdIDiy
-         AZ/KZe5VBGCDlg26sR7tXIkiYT9a2YXjzETBL70dt+xXh7Jm9rqDYVvN8hHPAI16ERVi
-         qBnute0GDu0sdNPlv6lSh8JHRk3eMQU5dr1mBPbhwhLrv4ibiBa1qZlsJo6145C4//Ze
-         3OvM+r5jZ8QBii7R9WYNEXO8DfkCPd4OHYvndnca/aZ/nFhKiY4Q+1PDeP/BxPHpfaRR
-         VnM/gdYXL2kBNDdAgRkSteolIxEXK5kGAFRgXV5Bf1EoQPWB/6EtvYazkBtct651gtPh
-         LzTQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=BJAGc370u9lqXW9dp/MdyA+9xGe/REoagF6so8SrcbE=;
+        b=e7up2fJisXV6gXZaMCDhKTasF0Co6rPoVpZeHkYg+hmgYEHYIRY91kgsS7pIPQeEs+
+         /BWuTSLfXlg9CiRHhz6qgH9jkF1qguLQbuIWCIN4Ws+OLfl1K+zrNV9TR1we5k3g2F6n
+         iwGL1dup7BIp+lmjcsFFYtfSarAume8o5P/3M8j5X3Zs02yzoZZ4wL5tLe9QZY5kv2o7
+         VWLXkt47zBxB5T1+KrWOChoBy+Xbpd4cHbullvD9NUipxHQPKI55jw+7XBlWSrXKdMGw
+         6NCl1vUmzZu40vsejw14SggJbfENfzAXIeZr+Yjp3YPhhsjbzd2Ij+4QWYPYTGKlWh7z
+         3ojA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id;
-        bh=+rrMKzZCYytLvyeNoxnW/jq17h7xzHfPY3rbWmuw0Q0=;
-        b=OCSwYTvYB5T94LAaM1BRENoR2q65AgUU0LdaL1q4ETN9hfalkupRDFp70HOsmYC/hQ
-         f0vf8ZELKWi13+9eBk0grP3Th7xkTVjtBOXIykY8hhBDam2iaccnTg7BEYkB7jtKioAA
-         s6sGwQgks+l2UYtkAdbzdxg/q3XyP7um68lMHCatxyUapzd/eiM2FdYWS58DGc0YUe1j
-         t/1kVx1/fjPEj/0x8IQkMri/Xf2R51EzyUPuMOUvIYx/YwiTw94g0oCQKbZ10TaiyOdD
-         O1H9SsEFucjR/++gPc+RFDd+KoR/vFhvPi0SFL2cjwZnccdl88ZwRyTBt4B7oZ5vYljM
-         lvpg==
-X-Gm-Message-State: AIVw113XUyRDwULYe5WWyZcGZqSGlwolBgExlzsiNsXZat+uK9PiWdI4
-        Z2wV6BJET3prKxlLbFvqaw==
-X-Received: by 10.99.126.85 with SMTP id o21mr4715766pgn.262.1501915828664;
-        Fri, 04 Aug 2017 23:50:28 -0700 (PDT)
-Received: from localhost ([2601:647:5100:4a0:8a6:e1ff:fe64:a87d])
-        by smtp.gmail.com with ESMTPSA id e67sm2333897pfd.122.2017.08.04.23.50.27
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 04 Aug 2017 23:50:28 -0700 (PDT)
-From:   Michael Forney <mforney@mforney.org>
-To:     git@vger.kernel.org
-Subject: [PATCH] Drop some dashes from built-in invocations in scripts
-Date:   Fri,  4 Aug 2017 23:49:05 -0700
-Message-Id: <20170805064905.5948-1-mforney@mforney.org>
-X-Mailer: git-send-email 2.13.4
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=BJAGc370u9lqXW9dp/MdyA+9xGe/REoagF6so8SrcbE=;
+        b=EbPwBKlBseCvQVETT9So+944smcz/cQIQlLn++EdDJHhu+E3pQFvT+rnBMBiH7vtiW
+         2NBHYgnAR1TGfZnjbByCTFVLqeh+aymrcUV+6LJxCgEUFVISZRYJMxP6J7iYJfFe6fRj
+         M0hG/79JjGdIzWnTaVNvC65sort2bOTtD46D/KjtMlBL93lYYlZsHgBUtPtuRSnxrwqc
+         DBGyfed6KAsrU729jvEheuJzzsWLR79GAH2ysbs0tuIhVKaP2iXoXDCCkUC9KJTaL/Sh
+         sGsoe+zdC0CDKmtXGXS19uvDdaUhAQ5rVitqeWjStv0fccIV10OC5PRD7vjLPwIR+d2k
+         qTmw==
+X-Gm-Message-State: AIVw113U5lyMZKMhOcK37KwDNTp3GHJyNh+Y84DexIMspG6rI+CKNbuY
+        HKwnuHXRSrC6vM1P5gYazBxlK+QINg==
+X-Received: by 10.36.89.140 with SMTP id p134mr5128118itb.20.1501928884433;
+ Sat, 05 Aug 2017 03:28:04 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.79.149.134 with HTTP; Sat, 5 Aug 2017 03:28:03 -0700 (PDT)
+In-Reply-To: <CAP8UFD3_zX0=h9tuNA-w+30V4P8zZGyUCEnpciTkwRWpXjjmNg@mail.gmail.com>
+References: <20170731205621.24305-1-pc44800@gmail.com> <20170731205621.24305-9-pc44800@gmail.com>
+ <CAP8UFD3_zX0=h9tuNA-w+30V4P8zZGyUCEnpciTkwRWpXjjmNg@mail.gmail.com>
+From:   Prathamesh Chavan <pc44800@gmail.com>
+Date:   Sat, 5 Aug 2017 15:58:03 +0530
+Message-ID: <CAME+mvUAspzuzbB4pFiQeOtT7NGRTO25M-k8o8hoysMFLGy_0w@mail.gmail.com>
+Subject: Re: [GSoC][PATCH 08/13] submodule: port submodule subcommand
+ 'summary' from shell to C
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This way, they still work even if the built-in symlinks aren't
-installed.
+On Tue, Aug 1, 2017 at 4:57 AM, Christian Couder
+<christian.couder@gmail.com> wrote:
+> On Mon, Jul 31, 2017 at 10:56 PM, Prathamesh Chavan <pc44800@gmail.com> wrote:
+>
+>> * variable head was no longer used in module_summary() and instead the strbuf
+>>   was utilized.
+>
+> Good but there might be a few problems in the way it is used. See below.
+>
+>> +static int compute_summary_module_list(char *head, struct summary_cb *info)
+>> +{
+>> +       struct argv_array diff_args = ARGV_ARRAY_INIT;
+>> +       struct rev_info rev;
+>> +       struct module_cb_list list = MODULE_CB_LIST_INIT;
+>> +
+>> +       argv_array_push(&diff_args, info->diff_cmd);
+>> +       if (info->cached)
+>> +               argv_array_push(&diff_args, "--cached");
+>> +       argv_array_pushl(&diff_args, "--ignore-submodules=dirty", "--raw",
+>> +                        NULL);
+>> +       if (head)
+>> +               argv_array_push(&diff_args, head);
+>> +       argv_array_push(&diff_args, "--");
+>> +       if (info->argc)
+>> +               argv_array_pushv(&diff_args, info->argv);
+>> +
+>> +       git_config(git_diff_basic_config, NULL);
+>> +       init_revisions(&rev, info->prefix);
+>> +       gitmodules_config();
+>> +       rev.abbrev = 0;
+>> +       precompose_argv(diff_args.argc, diff_args.argv);
+>> +
+>> +       diff_args.argc = setup_revisions(diff_args.argc, diff_args.argv,
+>> +                                        &rev, NULL);
+>> +       rev.diffopt.output_format = DIFF_FORMAT_NO_OUTPUT | DIFF_FORMAT_CALLBACK;
+>> +       rev.diffopt.format_callback = submodule_summary_callback;
+>> +       rev.diffopt.format_callback_data = &list;
+>> +
+>> +       if (!info->cached) {
+>> +               if (!strcmp(info->diff_cmd, "diff-index"))
+>> +                       setup_work_tree();
+>> +               if (read_cache_preload(&rev.diffopt.pathspec) < 0) {
+>> +                       perror("read_cache_preload");
+>> +                       return -1;
+>> +               }
+>> +       } else if (read_cache() < 0) {
+>> +               perror("read_cache");
+>> +               return -1;
+>> +       }
+>> +
+>> +       if (!strcmp(info->diff_cmd, "diff-index"))
+>> +               run_diff_index(&rev, info->cached);
+>> +       else
+>> +               run_diff_files(&rev, 0);
+>> +       prepare_submodule_summary(info, &list);
+>> +
+>> +       free(head);
+>
+> It is a bit strange to have this function free() an argument it is passed.
+>
+>> +       return 0;
+>> +
+>
+> Spurious new line.
+>
+>> +}
+>> +
+>> +static int module_summary(int argc, const char **argv, const char *prefix)
+>> +{
+>> +       struct summary_cb info = SUMMARY_CB_INIT;
+>> +       int cached = 0;
+>> +       char *diff_cmd = "diff-index";
+>> +       int for_status = 0;
+>> +       int quiet = 0;
+>> +       int files = 0;
+>> +       int summary_limits = -1;
+>> +       struct child_process cp_rev = CHILD_PROCESS_INIT;
+>> +       struct strbuf sb = STRBUF_INIT;
+>
+> [...]
+>
+>> +       if (!capture_command(&cp_rev, &sb, 0)) {
+>> +               strbuf_strip_suffix(&sb, "\n");
+>> +               if (argc) {
+>> +                       argv++;
+>> +                       argc--;
+>> +               }
+>> +       } else if (!argc || !strcmp(argv[0], "HEAD")) {
+>> +               /* before the first commit: compare with an empty tree */
+>> +               struct stat st;
+>> +               struct object_id oid;
+>> +               if (fstat(0, &st) < 0 || index_fd(oid.hash, 0, &st, 2, prefix, 3))
+>> +                       die("Unable to add %s to database", oid.hash);
+>> +               strbuf_addstr(&sb, oid_to_hex(&oid));
+>> +               if (argc) {
+>> +                       argv++;
+>> +                       argc--;
+>> +               }
+>> +       } else {
+>> +               strbuf_addstr(&sb, "HEAD");
+>> +       }
+>> +
+>> +       if (files) {
+>> +               if (cached)
+>> +                       die(_("The --cached option cannot be used with the --files option"));
+>> +               diff_cmd = "diff-files";
+>> +
+>> +               strbuf_reset(&sb);
+>
+> strbuf_reset() does not free the memory allocated to sb.buf...
+>
+>> +               sb.buf = NULL;
+>
+> ...then this makes sure that the memory previously allocated to sb.buf
+> will not be free()d.
+>
+> Maybe instead of the above 2 lines just: strbuf_release(&sb)
+> Or maybe just don't set sb.buf to NULL.
+>
+>> +       }
+>> +
+>> +       info.argc = argc;
+>> +       info.argv = argv;
+>> +       info.prefix = prefix;
+>> +       info.cached = !!cached;
+>> +       info.for_status = !!for_status;
+>> +       info.quiet = quiet;
+>> +       info.files = files;
+>> +       info.summary_limits = summary_limits;
+>> +       info.diff_cmd = diff_cmd;
+>> +
+>> +       return compute_summary_module_list(strbuf_detach(&sb, NULL), &info);
+>
+> Maybe you could pass: "sb.len > 0 ? strbuf_detach(&sb, NULL) : NULL"
+> This way if sb has previously been released or reset, NULL will be passed.
+>
+> I would suggest though to just pass sb.buf and to strbuf_release(&sb)
+> after calling compute_summary_module_list() and before returning from
+> module_summary() instead of having compute_summary_module_list() free
+> its first argument.
+> If you do that then compute_summary_module_list() should be changed so
+> that when it is passed "" it will behave in the same way as when it is
+> passed NULL.
+>
+We can avoid it to behave same for "" and NULL, by checking if diff_cmd
+is "cmd_diff_files", since its value is set NULL by this case.
 
-Signed-off-by: Michael Forney <mforney@mforney.org>
----
-It looks like there was an effort to do this a number of years ago (through
-`make remove-dashes`). These are just a few I noticed were still left in the
-.sh scripts.
+ret = compute_summary_module_list(strcmp(diff_cmd, "diff-files") ?
+NULL: sb.buf, &info);
+strbuf_release(&sb);
 
- git-merge-octopus.sh  | 2 +-
- git-merge-one-file.sh | 8 ++++----
- git-merge-resolve.sh  | 2 +-
- git-stash.sh          | 2 +-
- git-submodule.sh      | 6 +++---
- 5 files changed, 10 insertions(+), 10 deletions(-)
+instead of:
+ret = compute_summary_module_list(sb.len ? sb.buf : NULL, &info);
+if (sb.len)
+strbuf_release(&sb);
 
-diff --git a/git-merge-octopus.sh b/git-merge-octopus.sh
-index bcf0d92ec..6c390d6c2 100755
---- a/git-merge-octopus.sh
-+++ b/git-merge-octopus.sh
-@@ -100,7 +100,7 @@ do
- 	if test $? -ne 0
- 	then
- 		gettextln "Simple merge did not work, trying automatic merge."
--		git-merge-index -o git-merge-one-file -a ||
-+		git merge-index -o git-merge-one-file -a ||
- 		OCTOPUS_FAILURE=1
- 		next=$(git write-tree 2>/dev/null)
- 	fi
-diff --git a/git-merge-one-file.sh b/git-merge-one-file.sh
-index 424b034e3..9879c5939 100755
---- a/git-merge-one-file.sh
-+++ b/git-merge-one-file.sh
-@@ -115,16 +115,16 @@ case "${1:-.}${2:-.}${3:-.}" in
- 		;;
- 	esac
- 
--	src1=$(git-unpack-file $2)
--	src2=$(git-unpack-file $3)
-+	src1=$(git unpack-file $2)
-+	src2=$(git unpack-file $3)
- 	case "$1" in
- 	'')
- 		echo "Added $4 in both, but differently."
--		orig=$(git-unpack-file e69de29bb2d1d6434b8b29ae775ad8c2e48c5391)
-+		orig=$(git unpack-file e69de29bb2d1d6434b8b29ae775ad8c2e48c5391)
- 		;;
- 	*)
- 		echo "Auto-merging $4"
--		orig=$(git-unpack-file $1)
-+		orig=$(git unpack-file $1)
- 		;;
- 	esac
- 
-diff --git a/git-merge-resolve.sh b/git-merge-resolve.sh
-index c9da747fc..343fe7bcc 100755
---- a/git-merge-resolve.sh
-+++ b/git-merge-resolve.sh
-@@ -45,7 +45,7 @@ then
- 	exit 0
- else
- 	echo "Simple merge failed, trying Automatic merge."
--	if git-merge-index -o git-merge-one-file -a
-+	if git merge-index -o git-merge-one-file -a
- 	then
- 		exit 0
- 	else
-diff --git a/git-stash.sh b/git-stash.sh
-index 9b6c2da7b..9aa09c3a3 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -573,7 +573,7 @@ apply_stash () {
- 
- 	if test -n "$u_tree"
- 	then
--		GIT_INDEX_FILE="$TMPindex" git-read-tree "$u_tree" &&
-+		GIT_INDEX_FILE="$TMPindex" git read-tree "$u_tree" &&
- 		GIT_INDEX_FILE="$TMPindex" git checkout-index --all &&
- 		rm -f "$TMPindex" ||
- 		die "$(gettext "Could not restore untracked files from stash entry")"
-diff --git a/git-submodule.sh b/git-submodule.sh
-index e131760ee..ffa2d6648 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -864,7 +864,7 @@ cmd_summary() {
- 				test $status != A && test $ignore_config = all && continue
- 			fi
- 			# Also show added or modified modules which are checked out
--			GIT_DIR="$sm_path/.git" git-rev-parse --git-dir >/dev/null 2>&1 &&
-+			GIT_DIR="$sm_path/.git" git rev-parse --git-dir >/dev/null 2>&1 &&
- 			printf '%s\n' "$sm_path"
- 		done
- 	)
-@@ -898,11 +898,11 @@ cmd_summary() {
- 		missing_dst=
- 
- 		test $mod_src = 160000 &&
--		! GIT_DIR="$name/.git" git-rev-parse -q --verify $sha1_src^0 >/dev/null &&
-+		! GIT_DIR="$name/.git" git rev-parse -q --verify $sha1_src^0 >/dev/null &&
- 		missing_src=t
- 
- 		test $mod_dst = 160000 &&
--		! GIT_DIR="$name/.git" git-rev-parse -q --verify $sha1_dst^0 >/dev/null &&
-+		! GIT_DIR="$name/.git" git rev-parse -q --verify $sha1_dst^0 >/dev/null &&
- 		missing_dst=t
- 
- 		display_name=$(git submodule--helper relative-path "$name" "$wt_prefix")
--- 
-2.13.3
-
+>> +}
