@@ -2,74 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE5012047F
-	for <e@80x24.org>; Mon,  7 Aug 2017 21:48:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A5C3C2047F
+	for <e@80x24.org>; Mon,  7 Aug 2017 21:49:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751799AbdHGVsK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Aug 2017 17:48:10 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53300 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751589AbdHGVsK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2017 17:48:10 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 84DCCA5CAC;
-        Mon,  7 Aug 2017 17:48:01 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=fwkz++1TzIFIpjucOT5g4VteKcY=; b=ezI/u5
-        c8CetlTGWxmZ0z02dUnol8GoNrDX8/Xx5wk8oc68wVOhphcwGVbLmOH9I91rl9EM
-        1hCY5H7Ees8kDiTLOgIG3Cq76QswEgtpuy1b1e1b9UwfCMRKOyFrHMvWoJ8YRG9k
-        8WxB63owyYOSsmK/VIALvST9qGpdhoNd6tBV0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=auwMbxO0kta3TzV+VRc2wfwOZOiCJfHR
-        rfxuDwt9jDe2p0D3SRGfQzFsU2NAFBdSoNQYw9zfMvnGDOhoyqJ0E3RTKOnw4FSb
-        SvyOwtCmec2aSBaVfsJjm3Hff1clPjyNWocSQzgo7skuhM+xmo2+zDCxBoLXBSSc
-        ijdrNzpw780=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BE3D4A5CAA;
-        Mon,  7 Aug 2017 17:48:00 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 07E30A5CA8;
-        Mon,  7 Aug 2017 17:47:59 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Michael Forney <mforney@mforney.org>, git@vger.kernel.org
-Subject: Re: [PATCH] Drop some dashes from built-in invocations in scripts
-References: <20170805064905.5948-1-mforney@mforney.org>
-        <xmqqshh3qqs4.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.21.1.1708072300310.4271@virtualbox>
-Date:   Mon, 07 Aug 2017 14:47:58 -0700
-In-Reply-To: <alpine.DEB.2.21.1.1708072300310.4271@virtualbox> (Johannes
-        Schindelin's message of "Mon, 7 Aug 2017 23:07:04 +0200 (CEST)")
-Message-ID: <xmqqshh3nj75.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751919AbdHGVtk (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Aug 2017 17:49:40 -0400
+Received: from mail-qk0-f178.google.com ([209.85.220.178]:32817 "EHLO
+        mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751662AbdHGVtj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2017 17:49:39 -0400
+Received: by mail-qk0-f178.google.com with SMTP id a77so10333667qkb.0
+        for <git@vger.kernel.org>; Mon, 07 Aug 2017 14:49:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=neosmart.net; s=google;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=RVERTBWRR4G20ElbbmWImm3mjfDp9kS3Tg6AClrY1Lo=;
+        b=QQ5FiqCHWivTC21Ujsq5rkQHq6FwscKUyrq7ZBspnilZiPSr2/DQ4xnu096iAvgM4P
+         XhzhEwc6pPuqYe9YA6XickHINUi7U82XV2oM4qVuOsQgq/9xC4WkjNzKczvFK2Aom/dH
+         jBdZTuWQcoOgPK3YmEdi7l3P50U2pAZk3WYT0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=RVERTBWRR4G20ElbbmWImm3mjfDp9kS3Tg6AClrY1Lo=;
+        b=m2awTB/WTxIlNVeVpsbFLhwmQDXTNyRw7hthK0vHfvjEONaCPJz3zzdKFUDJEOGuig
+         g8Dt1d9sF7Ue3hn6OLS6uCToXqiMbaB9eklckmXZYapPj9TmjkkmVslW57M0BURUuNl+
+         vWcD1pYj4o/NwCz+NMMaLmMjDno9Y4wELbB47dcXx11/iVDv3Hmu1PYp7Ev1pN3POTdp
+         /FlRQa2TxEieGNFab4XXZSfeAtFvr6lY0nuAF0hv33VqJnvaCabvC+KwkoTGhcyg+2qb
+         /QA834qThUosneSNpHP8kfdpR7NpY/MxebJQTnh+KBJptQpSjl8lxQZ5znc8y1FeTa6Z
+         /joA==
+X-Gm-Message-State: AHYfb5hs2Tm4jXJyScPfMpRiiWTv+9TL1BYCKzQdxY5yk3bKSdn6RHYx
+        eaFBcdwFtFEs4fhLbkOMvlN+JmR+vY1baMM=
+X-Received: by 10.55.105.67 with SMTP id e64mr2568779qkc.134.1502142578951;
+ Mon, 07 Aug 2017 14:49:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 14C1D594-7BBA-11E7-9074-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Received: by 10.140.35.85 with HTTP; Mon, 7 Aug 2017 14:49:18 -0700 (PDT)
+From:   Mahmoud Al-Qudsi <mqudsi@neosmart.net>
+Date:   Mon, 7 Aug 2017 16:49:18 -0500
+Message-ID: <CACcTrKdzVCKUR8EfwhqBQR7vWzRqTLcwRJ_r-hx3VztD=xvNuQ@mail.gmail.com>
+Subject: Suggestion: better error message when an ambiguous checkout is executed
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hello,
 
-> I feel a bit talked to my hand, as the only reply I was graced was a "I
-> think I already did". So this will be my last reply on this matter for a
-> while.
+The default git behavior when attempting to `git checkout xxx` for
+some value of "xxx" that cannot be resolved to a single, unique
+file/path/branch/tag/commit/etc is to display the following:
 
-Ah, I meant this thing:
+> error: pathspec 'xxx' did not match any file(s) known to git
 
-  https://public-inbox.org/git/xmqqo9rrqp3l.fsf@gitster.mtv.corp.google.com
+Unfortunately, this is (IMHO) at best misleading when the actual case
+is that "git could not unambiguously resolve pathspec xxx"
 
-I got an impression that you didn't read it before you typed the
-message I gave that response to.
+Can the case where xxx _was_ resolved but to more than one value be
+improved in both utility and comprehensibility by providing an error
+message that
 
-There are a few more exchanged, including Michael's response to that
-message on that thread.
+1) indicates that xxx was a valid pathspec, but not a unique one
+2) provides a list of unique pathspecs that xxx matched against
+
+e.g. in the case where xxx is the name of a branch on both origin1 and
+origin2, it would be ideal if git could instead report
+
+> error: pathspec 'xxx' could not be uniquely resolved
+> xxx can refer to one of the following:
+> * branch origin1/xxx
+> * branch origin2/xxx
+
+or, less ideally but much simpler, only the first line of that message?
+
+Thank you,
+
+Mahmoud Al-Qudsi
+NeoSmart Technologies
