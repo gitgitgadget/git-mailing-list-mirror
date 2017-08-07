@@ -2,121 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 977D620899
-	for <e@80x24.org>; Mon,  7 Aug 2017 10:02:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0563920899
+	for <e@80x24.org>; Mon,  7 Aug 2017 10:17:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752724AbdHGKCO (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Aug 2017 06:02:14 -0400
-Received: from mout.gmx.net ([212.227.17.21]:49168 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752606AbdHGKCN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2017 06:02:13 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lb5Tp-1dCQiA15RJ-00kgZ4; Mon, 07
- Aug 2017 12:02:11 +0200
-Date:   Mon, 7 Aug 2017 12:02:10 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Johannes Sixt <j6t@kdbg.org>
-cc:     git-for-windows@googlegroups.com, git@vger.kernel.org
-Subject: Re: [git-for-windows] [ANNOUNCE] Git for Windows 2.14.0
-In-Reply-To: <c532df98-b020-810a-c378-04c7dd5b0fa7@kdbg.org>
-Message-ID: <alpine.DEB.2.21.1.1708071147430.4271@virtualbox>
-References: <20170805230001.3232-1-johannes.schindelin@gmx.de> <c532df98-b020-810a-c378-04c7dd5b0fa7@kdbg.org>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1753015AbdHGKRL (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Aug 2017 06:17:11 -0400
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:54836 "EHLO
+        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753011AbdHGKRK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2017 06:17:10 -0400
+Received: from [192.168.2.201] ([92.22.15.146])
+        by smtp.talktalk.net with SMTP
+        id ef5tdo7sCAp17ef5udIbuW; Mon, 07 Aug 2017 11:17:07 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
+        t=1502101027; bh=UdZsM7yUVVt9lFWiXsB7lRItlD08uJkf907L6U7iGno=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=QnCBt0bcA8EQIWGG0bTM1uP4z4QOmBfBNAUpaRM2VEh3D9h9KRaCFEFBDjHD8Q4yP
+         dYvqfPcVaWAQjxIRSluOxLoIsNQI2FDI51eZq6odugVjdE23zNER8MX/UbM3Utczgr
+         2uE+5HkN8MXEfGvuJnhax6+GevyOGRsJLtnWbf4I=
+X-Originating-IP: [92.22.15.146]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=EsGilWUA c=1 sm=1 tr=0 a=PRKyDR6jJsLBrgZYJ8A23w==:117
+ a=PRKyDR6jJsLBrgZYJ8A23w==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
+ a=kxd9BUofY8qykjmLWfsA:9 a=j9hWU7E8Wl5-uYLQ:21 a=3hPXX2amhwAeC6rf:21
+ a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 6/6] cherry-pick/revert: reject --rerere-autoupdate when
+ continuing
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <20170802104420.12809-1-phillip.wood@talktalk.net>
+ <20170802104420.12809-7-phillip.wood@talktalk.net>
+ <xmqqpocdr5tu.fsf@gitster.mtv.corp.google.com>
+ <xmqqlgn1r4bu.fsf@gitster.mtv.corp.google.com>
+ <6a7c9661-9f12-99c9-1fc1-4a4abd3d0660@talktalk.net>
+ <xmqqy3r0po0i.fsf@gitster.mtv.corp.google.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <bcaccf25-b033-259b-9ca7-b77a7240029b@talktalk.net>
+Date:   Mon, 7 Aug 2017 11:17:04 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Wrie9k+uQPlDBwo+UWiOdvuQcGZ/400x0uPZDHo9ORIl5rIZnWU
- QVL7flj/1Durr2YTyxlWDdDT6RR6DhJ2jRUcHifsqeXRYMdH6Eh98aMi0v3oYoEKnf1CmH1
- 5gw5c/ONdEdNjdejxmWVNUIVYSX2WWPt9QIaQbwFhnL+5jX2+nsKVDr1BZg3dfXyHyrf4oC
- ZkeKyAV4Z6ZQnDWzzF1og==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:3Jc3NXLbYS4=:xYpyAwT1om/JzypuZYylzn
- thcox3YSS65qHLZcsHKjAY+lSGrSIJ58khZUmHEO5DQIJw1U1KxORHK2Ht7zL9RQAwIc9po8W
- zpqN5SB8bpdoIQ6N8xfuQs7DMF6cK3yyV0QlKaMgAWtwB0N6DE5lbKfb/Gq/r7zsJmqOqkSKj
- +H4tBeo+mhb38zxL1Sl4xO8gjXM7rEve12IX5kSFbjgMPtLX4AIJ13mUjhLyyLgEi+TAdO9g6
- OTJ4BTG3DhstyYe3urMOqsAEkVHy+jDIECjp0ASFTVeCE0vl5Go345Jmrk6Ij2qTxZ2LyBTDV
- wjzwPDS2aPZ7VAPyB/rtiNnmsswyp/q4FObvrRjSwgLRURw5Mhe6rbOPhL90JpKAAoLwCfwdD
- w3piEkSJc3sRzq7MPmbzYYF1wYMHiju4ZhKLmwTCo1N07TlU8iOaa4dVkGmn6ODq/WGclQUTX
- kKbbbEaZYL+bnV3WeVcuXpmUGK7riD5hUtkSwdGmfWJoKNLJHWp6bbjZkuASASb4aHz+DZSt+
- 4daBq5DJdxqG4JiWWinPIYosHLCG5xGsyiTR2iQ2UwZzgWawCyPOTI2WfrM5QnjkL0uwLZ8Rc
- fDZrRuD/QnUmz/RNsZjcy7LZxwqlWtQ2drToR8wylySum9vMzaOk61VCF1d60UoUav/TW+OyF
- rsOF8RXMq9aB8NCsX60LW4QxowsK0uR9ykaJw9N9fWQ+rH2WvewIrUEaPMbiwVdIySq6zn6GQ
- xaFrMqbAeWmU5yzopvudXchZ6JGshHJxdcZxJlycV3OWkrMbxO32lt1MNW7QCGoqJ85sL/k1r
- lhfvMTV1/24DXdvZrT68GT+HLSNqEDnmdxEoMxW0qhaX/3He5Y=
+In-Reply-To: <xmqqy3r0po0i.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfO9XVqnBXjAe5eoEI12hrZICcq/jCYYlG3TRR5eMPmhO1DY7K+jrc09D/kDG13qmCRC5MeahLK2HGyvyzLN08biPSy/gC2mpeIuE+0mQnIkPsuo7hYTI
+ bXZQeQgSHl3aeJXFETwVT+GoihhVpgbN79U3gF6wAf+/TaTQ/YpXTDf0DLcb6gt2M+rA0cb3hNqrBlnPo7ZGfJDZjUSym0lix3vBVabK+6x9EwYNcEtA0xZo
+ pR2yTcrckJGmndnWPLR4uw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Hannes,
-
-On Sun, 6 Aug 2017, Johannes Sixt wrote:
-
-> Am 06.08.2017 um 01:00 schrieb Johannes Schindelin:
-> > Dear Git users,
-> > 
-> > It is my pleasure to announce that Git for Windows 2.14.0 is available from:
-> > 
-> >  https://git-for-windows.github.io/
-> > 
-> > Changes since Git for Windows v2.13.3 (July 13th 2017)
+On 03/08/17 18:19, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood@talktalk.net> writes:
 > 
-> Thank you so much! One question, though:
+>> On 02/08/17 23:29, Junio C Hamano wrote:
+>> ...
+>>> The
+>>> latter makes it more in line with how "am -3" followed by "am --no-3
+>>> --continue" behaves.
+>>
+>> I'm a bit confused about what am does when you pass extra options to
+>> --continue. It looks like they do not persist if there's another
+>> conflict and may only apply to the first patch that is applied when
+>> resuming - I'd need to spend more time looking at the code or run a test
+>> to be sure.
 > 
-> >New Features
-> >...
-> >    * Comes with [BusyBox v1.28.0pre.15857.9480dca7c](https://github.com/
-> >      git-for-windows/busybox-w32/commit/9480dca7c].
+> I think you got what "am" wants to do.  
 > 
-> What is the implication of this addition? I guess it is not just for the
-> fun of it. Does it mean that all POSIX command line tools invoked by Git
-> including a POSIX shell are now routed through busybox instead of the
-> MSYS2 variant?
+> The idea is that the user would say she does not trust the three-way
+> fallback when she starts to apply many patches in an mbox, i.e.
+> 
+>    $ git am mbox
+> 
+> Upon seeing a message that does not apply, she would examine the
+> patch that caused _this_ stoppage, and then decide that it is safe
+> to apply _this_ patch (but not necessarily later ones) with
+> three-way fallback and move on:
+> 
+>     $ git am -3 --continue
+> 
+> I have not thought too deeply if the parallel applies to
+> multi-commit pick, though.  
+> 
+> "am" (rather, its underlying machinery "apply") is designed to be
+> all-or-none, so a failed --no-3way application would leave the index
+> and the working tree intact.  "-3 --continue" can retry the failed
+> step, with "--3way" processing turned on for only one message, from
+> that state.
+> 
+> But a multi-commit cherry-pick/revert would stop _after_ it munges
+> the conflicted paths in the index into an unmerged state and writes
+> the conflicted state into the working tree files.  For "--continue
+> --rerere-autoupdate" to work more like "am --continue -3", it would
+> have to learn to reset to the state before the failed cherry-pick
+> first, before re-attempting the failed cherry-pick with the auto
+> update enabled only for the single commit and keep going.  So it may
+> not as trivial as "am --continue", even though it sounds doable.
+> 
+Thanks for explaining that, as you say having cherry-pick take
+'--rerere-autoupadate' with '--continue' sounds more complicated than
+the am case. Also I'm not sure it would be as helpful to toggle
+'--rerere-autoupdate' with cherry-pick as it is to toggle '--3way' with
+am as it's not that hard for the user to stage the merged files
+themselves. If you're happy with the way it is currently implemented I'm
+not inclined to change it.
 
-As I wrote a little later:
+Thanks
 
-* Git for Windows releases now also include an experimental [BusyBox-based
-  MinGit](https://github.com/git-for-windows/git/wiki/MinGit#experimental-busybox-based-mingit).
-
-And as I described in that Wiki entry, no, Git for Windows does not make
-use of BusyBox just yet. Only the experimental version of MinGit.
-
-It would be *awesome*, of course, to benefit from using BusyBox: size,
-speed, robustness (reducing the MSYS2 dependency). But we're just not
-there yet. What needs to happen before that?
-
-- lots of testing. And I mean *lotsssss* of testing. BusyBox is by far
-  less tried and tested than Bash, and BusyBox-w32 is *even less* tried
-  and tested. And BusyBox-w32 *with my patches* is tried and tested only a
-  little, and only by me. Before I risk getting bug reports about a
-  BusyBox-based Git for Windows, I want to be a lot more certain that
-  it is basically solid.
-
-- BusyBox-w32' interactive functionality expects a Win32 Console. In Git
-  Bash, we only have MSYS2's pseudo terminal, no Win32 Console. If we ever
-  want to be able to execute Git's scripts via BusyBox-w32, it *needs* to
-  learn about MSYS2 ptys, at least to emulate isatty() accordingly (we
-  have code in Git for Windows itself to do that, of course, it's no witch
-  craft, but... yet another thing to do).
-
-- judging by the number of bugs on Git for Windows' bug tracker, there
-  *are* some users out there installing their own hooks and aliases, and a
-  really tiny fraction of those users seems to be really happy to have a
-  full suite of GNU utilities available. BusyBox, however, does not
-  support that full functionality. Therefore, switching to BusyBox would
-  possibly break those setups.
-
-Mind you, I really want to get there. And I think we will be able to get
-there. By inviting testing (the BusyBox-based MinGit is a very good start,
-for example). By adding an experimental option to Git for Windows'
-installer to switch to BusyBox. By announcing in Git for Windows' release
-notes that this will become the default at some stage ("please test your
-aliases and hooks!").
-
-Ciao,
-Dscho
+Phillip
