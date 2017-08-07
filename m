@@ -2,52 +2,52 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2399E2047F
-	for <e@80x24.org>; Mon,  7 Aug 2017 21:07:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 334DD2047F
+	for <e@80x24.org>; Mon,  7 Aug 2017 21:10:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752092AbdHGVHR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Aug 2017 17:07:17 -0400
-Received: from mout.gmx.net ([212.227.15.15]:51422 "EHLO mout.gmx.net"
+        id S1751931AbdHGVKq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Aug 2017 17:10:46 -0400
+Received: from mout.gmx.net ([212.227.15.18]:50727 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751826AbdHGVHQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2017 17:07:16 -0400
+        id S1751662AbdHGVKp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2017 17:10:45 -0400
 Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LedVG-1dI9vE2Am6-00qQxQ; Mon, 07
- Aug 2017 23:07:10 +0200
-Date:   Mon, 7 Aug 2017 23:07:04 +0200 (CEST)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LqzIJ-1dAhDA2SkF-00eYyL; Mon, 07
+ Aug 2017 23:10:39 +0200
+Date:   Mon, 7 Aug 2017 23:10:39 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     Michael Forney <mforney@mforney.org>, git@vger.kernel.org
-Subject: Re: [PATCH] Drop some dashes from built-in invocations in scripts
-In-Reply-To: <xmqqshh3qqs4.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.21.1.1708072300310.4271@virtualbox>
-References: <20170805064905.5948-1-mforney@mforney.org> <xmqqshh3qqs4.fsf@gitster.mtv.corp.google.com>
+cc:     Martin Koegler <martin.koegler@chello.at>, git@vger.kernel.org
+Subject: Re: [PATCH] Fix delta integer overflows
+In-Reply-To: <xmqqshh3p3b0.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1708072307410.4271@virtualbox>
+References: <1502129437-31226-1-git-send-email-martin@mail.zuhause> <xmqq1sonql76.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.21.1.1708072136290.4271@virtualbox> <xmqqshh3p3b0.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:fpXKMPZ1TH3C9bMiJT88V+rDDz+T1eKh43UkxV1P187eFUS62Bo
- 5buPJOj61Y20WUm/W86UTyl63fQ1xo9bBkgHN8ClXc9DRgPXzyHt2pknJEaaFNSDP26hysX
- 5JjsOBgHrf5lm46/z+hci6UoR4Sxt6CFu/xx7iZIDwCc3hrTl78PGD++EJn/KQVD0iJkWc0
- ClboyNK8NKRs4m+80WNUw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:DzdNl30pU7E=:wMp/tiLBs57jk3JFyih0VJ
- zalz3HkAkl/BXLwFFqyvfBPyExcBIHx7JjCQg1sn4bRRDZZsAAJrRrDDcwYrQhdc6WZcWQdNY
- VPTEKeCJ/Sdnmg5n166WipDUc8oV9rnHty+Utjk2snJOg3FzRKzAdGP0gj9LPogfVI970RGBL
- CdiRXwXktnL2Hl8IqI7jgt1tDe3Q1hLVfYBGpR3qkOUVylHJV8/Yd2IXCJ6YNbNh1Atulbpqd
- 3R4UEDkaoSVuIbtlnHqVcdQtT8RvRyzsRhYxUyqSEwBrtwDdZ2MdpnJaeV9TD0z1eXpyaf+fk
- K+0gudHX5NVoJsupk3a8t96U2TppYgZJllXM1HaMhchQGkJeHwjazP6hOqoy8KVuhUwrQPhxX
- RRepQtmFeex26ZdVVj+0U2xOPSnskW3bW+fPZjZaajfbXq/ZbmniNafGhbQYnSaZ+cf5Mcvgg
- CTHqSUqQ6i2w+h/0zkkRsYOc5BE75Y2B97WeTvmtSQRNb00LfhjyT5TrPniWWdEjqJgSZSZF5
- fV9RJB9LRpEEnfpylp5i72tXDLu2+2qQh6n9yjcCg/1VK7OKhsROgVrzHt2YBIcgeFPMfXpDe
- R9GgDUpI9Ylq7Sm1+whjm7a/HScnLzCYCucvZxRa9wvEj06n12J6WmS/2GiljFywg6PpQTiyT
- eYWkEDXRF48Ws3LT1BLt1zbnfKIYmK0cTn4sX9udanNzfWEt0Fqypo514m1aRFTZjOcnDS4lY
- A7GcCXY1MRcIwo43FQukAqxbbPlqmlgVMHg8mDGyatBERD7wB8wiboOBSlkvCEff9YVjITu64
- n2Q5X7NRfDqZ2YDcMCcbZyPA+gbAsgCFhQAu1xn+qsSMM+ePjs=
+X-Provags-ID: V03:K0:REZ/g782EmKLSAQP+pHiv9egzazRd7MOd2WlmD/vhbTtlhFi/vU
+ +JjSuFzv4lzihPvVsTGtBXMzYwKqbX6ki9EMO145KUIpXBhydobW8pERWQeRJFosIZDFqF3
+ R9a44zjCum/ItPJJ1ye0ESpmV67DdeU5VkjfniaXQrL8QiYTqOSw9Ji02g4QDz2gKmr7MEJ
+ NRnTiQqaAEjuBQGgoa6Ew==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:7AlFsr8tQI8=:+xqxgOb7k+z7nWUe/5C72E
+ RpdStXuLvtIXsTffmfkA2VBVyU2YnU8O3IPoUtG57ivJ831Fv90JQ/4iRrrE+VL1c2ljPcYwX
+ jWvdFNUompfD9evybWzNyHJsRGqxv9C0cYDMA/6i2VPwLdQDciwVby1uMqUHtkk2mLFeezTGG
+ ui6UqMZnTMxFTyD5/f6r/CnGoA92TqMM82w0Q3N8pn467hhOnSoyVeSb/iu8I+9sDJGtpgUeC
+ KpRLO9QW+ppVUrEqUJgjrWl4NVmUTM974SDUex/Nf94ms64FcFZ2WX+mDcdRrpEmcjGaA04dU
+ XBD2tZuVVrhSHeiu6ebXpxqAJoFSehek6ZNZ5+dNGX5wnGIn8IZVvnzSW/X6WmfWxBjARslDH
+ EiPsxyXWofa2X575kOMARf7ekEiB+eAUroc0g7DL429gf/S7a8KR7dcGGBRVqk3AnOxn2eVZi
+ KR5+9+lSMf2QJNUW1VN2trQdNDiiN3NJgUvJ4LQJY6Z6Ws2WZwsVdgVAt7zJCa1k8wx8w46dB
+ chxNDHfiVsObAZIM+QFXhZ/O85miwCIXOqFgJnvlF2FrDe3y1vMW05kxfsyYA98tpuvLDdw1M
+ 49U53lg+ldSBPhNPGtuShLihbBdS02uY20TMSSG37RAJ/OU1nxBYck1NwFhufh1T7uS8S0Z0s
+ g4RsQv7sAjE8H4Dlyp5aqkNFikzVV+nbfgOC3drvEf9AYohZCdSH+5I56ayJNKGoasz9ezWCK
+ Y+wRm0ii8tPSwas4Wx1Br9MqGjjB82XoVCdWHDSPqdHzcyJNdpemVtDV7bDQ0JL2B4NuIoO33
+ BHchhNZvL4VcymT4y4nygEMbhvuQ1KwtD0ZxLGQQxUeDuDa9JQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -55,30 +55,40 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Junio,
 
-I feel a bit talked to my hand, as the only reply I was graced was a "I
-think I already did". So this will be my last reply on this matter for a
-while.
-
 On Mon, 7 Aug 2017, Junio C Hamano wrote:
 
-> IIUC, you will need "$GIT_EXEC_PATH/git-checkout" on the filesystem if
-> you want your "git co" alias to work, as we spawn built-in as a dashed
-> external.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >> The patch obviously makes the code better and self consistent in
+> >> that "struct delta_index" has src_size as ulong, and this function
+> >> takes trg_size as ulong, and it was plain wrong for the code to
+> >> assume that "i", which is uint, can receive it safely.
+> >> 
+> >> In the longer term we might want to move to size_t or even
+> >> uintmax_t, as the ulong on a platform may not be long enough in
+> >> order to express the largest file size the platform can have, but
+> >> this patch (1) is good even without such a change, and (2) gives a
+> >> good foundation to build on if we want such a change on top.
+> >> 
+> >> Thanks.  Will queue.
+> >
+> > This is sad. There is no "may not be long enough". We already know a
+> > platform where unsigned long is not long enough, don't we? Why leave this
+> > patch in this intermediate state?
+> 
+> This is a good foundation to build on, and I never said no further
+> update on top of this patch is desired.  Look for "(2)" in what you
+> quoted.
 
-And of course this is just the status quo, not an argument why it should
-be so for eternity. Because that would be circular reasoning and prevent
-us from improving things.
+So are you saying that starting with v2.14.0, you accept patches into `pu`
+for which you would previously have required multiple iterations before
+even considering it for `pu`?
 
-It is still arguably wrong to call the dashed form for builtins when we
-already have enough information at our hands to tell that it is a builtin:
-
-	https://github.com/git-for-windows/git/commit/bad2c6978ec
-
-Granted, this duplicates code a little, as it was developed under time
-pressure (and it is necessary to allow the test suite to be run on Git
-built in Visual Studio using an installed Git for Windows for the Unix
-utilities). As above, though, the current state of this patch does not
-prevent any improvement in the future.
+Frankly, I am a bit surprised that this obvious change from `unsigned
+long` to `size_t` is not required in this case before queuing, but if the
+rules have changed to lower the bar for patch submissions, I am all for
+it. I always felt that we are wasting contributors' time a little too
+freely and too deliberately.
 
 Ciao,
 Dscho
