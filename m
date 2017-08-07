@@ -2,123 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE3DF2047F
-	for <e@80x24.org>; Mon,  7 Aug 2017 18:17:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 199CA2047F
+	for <e@80x24.org>; Mon,  7 Aug 2017 18:18:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751864AbdHGSRM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Aug 2017 14:17:12 -0400
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:36728 "EHLO
-        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751834AbdHGSRL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2017 14:17:11 -0400
-Received: by mail-pf0-f181.google.com with SMTP id c28so4527731pfe.3
-        for <git@vger.kernel.org>; Mon, 07 Aug 2017 11:17:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=QAL3kOO6UsXKKKRmKzHtSVVBLg2tpBxLo8l5oph7Smg=;
-        b=I1Gk4AiU6RZRgML6HZ3jVI+Ua1uuMvD6GkFQPX400s6KFYYoFKNKl+ALMoPv74S1Tl
-         rM9H7VKFpI2V0h2hT52u7KqGBi2Wq8S+gkC5iSQfBrhosTS5cgsncXc1c7Nc0SmPVZ0r
-         akDZkqM00nt4LWT1Kxjf9ymVZqtM3IZKrKs0FTJNM6EGbBeDTQFv/PkZkIGbZ8qM96sT
-         8whZ69mNvWzFdKu66FYKdE6JR2RJjUfa7iolYipJdibA7V8SNRj/aJ78SdOmQH9N+x8d
-         xXN8iwbciakx8ZNJBJJdm2+u3rsUq6FV5DHw/eKE4Zwf+tgk69wb3zmMee0XUCAu6nfx
-         urkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=QAL3kOO6UsXKKKRmKzHtSVVBLg2tpBxLo8l5oph7Smg=;
-        b=m+HxK1kaBwUhjWlnCTjcarj7TUZqiIscvpICN1eWFpyB7IbViwIn5OSgvcrWlimIo3
-         J6wLZyQsYm8KnrCPvYVYyHeDJNXwCVLFMmG+TEGJzm9OkBSC+dIf6PZWQyfVZS79X0+j
-         W35TM52rRaRtbAQwyXIqO9L5tDUstUbMIASiE01s71eiA+/P/ZhEYI2aYIUqJ2VK25Pt
-         GfX8jIYs/93XaVW1V70xT4XEbOLe9t/33qw+q8Kw3Ip6npqwp8u6W2UadJDFC0DzMktY
-         tOMWvlMBxB5wJDDpbAnKWXof+Q4BBoeZ0X3kF1AxiTUYwGb4h6KBJCP4o+SJtLuBXViE
-         rrVw==
-X-Gm-Message-State: AHYfb5jTDI9B6zOznSzznHZj9wqiYTggj7A2O87VffOz5rm88ks5p7sO
-        WsiwDQAqFQdPFQoqhJ9fjQ==
-X-Received: by 10.99.117.30 with SMTP id q30mr1362653pgc.437.1502129830851;
-        Mon, 07 Aug 2017 11:17:10 -0700 (PDT)
-Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:a0fe:8dcf:c61c:f231])
-        by smtp.gmail.com with ESMTPSA id i90sm17019604pfi.106.2017.08.07.11.17.10
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 07 Aug 2017 11:17:10 -0700 (PDT)
-Date:   Mon, 7 Aug 2017 11:17:08 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     benpeart@microsoft.com, git@vger.kernel.org, bmwill@google.com,
-        gitster@pobox.com
-Subject: Re: [PATCH for NEXT v3 2/2] sub-process: refactor handshake to
- common function
-Message-ID: <20170807111708.2d745df2@twelve2.svl.corp.google.com>
-In-Reply-To: <2BEA5CEF-44C9-45DC-A462-579864790EDB@gmail.com>
-References: <cover.1501092795.git.jonathantanmy@google.com>
-        <20170724213810.29831-1-jonathantanmy@google.com>
-        <cover.1501092795.git.jonathantanmy@google.com>
-        <6327579311fdb941a11b6d452318777a3c42ee65.1501092795.git.jonathantanmy@google.com>
-        <323E470B-994B-4AD8-9F30-588C2B97A845@gmail.com>
-        <20170807102136.30b23023@twelve2.svl.corp.google.com>
-        <2BEA5CEF-44C9-45DC-A462-579864790EDB@gmail.com>
-X-Mailer: Claws Mail 3.9.3 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+        id S1751748AbdHGSSj (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Aug 2017 14:18:39 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62503 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751426AbdHGSSj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2017 14:18:39 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7DC129CD08;
+        Mon,  7 Aug 2017 14:18:38 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=lK3d4KLHvbmKJGOMbCbYNQUBAHk=; b=BLFTVu
+        +Yya5JzhD6lqiZ62Au8AwJndYXXgvGhhnMi+lYf2Su706CIafmEpPJL3tHCHXHFG
+        YMrgI+UL3pYhech/kYGMudMZg4sV7GK7B2U31TH4shr+w2Mv3BS3VBJknQ8T+X5N
+        aZogZfMB6zvMpKuigURuntMkDH4gbk/D8I1hg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=gP7fR4jtLloQrZqHgF8OZVNAGMDfB295
+        KNl7H7kthzJtZoJhvpOp+l9q3FKoyc9IWlzj8H3BfoZAPfUDAswcmwPIPffCx7yR
+        Lwn/ykAdtA42SOw6MkKj5YREjlwvfTJm7Ao7T90+AxXMHhI2raNeHVj37ThwJChg
+        xOW+5//nBe4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 75FBF9CD07;
+        Mon,  7 Aug 2017 14:18:38 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DCDF09CD06;
+        Mon,  7 Aug 2017 14:18:37 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Michael Forney <mforney@mforney.org>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] Drop some dashes from built-in invocations in scripts
+References: <20170805064905.5948-1-mforney@mforney.org>
+        <xmqqshh3qqs4.fsf@gitster.mtv.corp.google.com>
+        <xmqqo9rrqp3l.fsf@gitster.mtv.corp.google.com>
+        <CAGw6cBvE-OJW0gSRCYOS5VT+Ff+eiCMdJg2A2rBi_HXFObdJRw@mail.gmail.com>
+Date:   Mon, 07 Aug 2017 11:18:36 -0700
+In-Reply-To: <CAGw6cBvE-OJW0gSRCYOS5VT+Ff+eiCMdJg2A2rBi_HXFObdJRw@mail.gmail.com>
+        (Michael Forney's message of "Mon, 7 Aug 2017 10:58:34 -0700")
+Message-ID: <xmqq60dzqm0z.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: D524ED80-7B9C-11E7-9CA9-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 7 Aug 2017 19:51:04 +0200
-Lars Schneider <larsxschneider@gmail.com> wrote:
+Michael Forney <mforney@mforney.org> writes:
 
-> 
-> > On 07 Aug 2017, at 19:21, Jonathan Tan <jonathantanmy@google.com> wrote:
-> > 
-> > On Sun, 6 Aug 2017 21:58:24 +0200
-> > Lars Schneider <larsxschneider@gmail.com> wrote:
-> > 
-> >>> +	struct cmd2process *entry = (struct cmd2process *)subprocess;
-> >>> +	return subprocess_handshake(subprocess, "git-filter", versions, NULL,
-> >>> +				    capabilities,
-> >>> +				    &entry->supported_capabilities);
-> >> 
-> >> Wouldn't it make sense to add `supported_capabilities` to `struct subprocess_entry` ?
-> > 
-> > The members of "struct subprocess_entry" are not supposed to be accessed
-> > directly, according to the documentation. If we relaxed that, then we
-> > could do this, but before that I think it's better to let the caller
-> > handle it.
-> 
-> @Ben: You wrote that " Members should not be accessed directly.":
-> https://github.com/git/git/commit/99605d62e8e7e568035dc953b24b79b3d52f0522#diff-c1655ad5d68943a3dc5bfae8c98466f2R22
-> Can you give me a hint why?
-> 
-> @Jonathan: What do you mean by "it's better to let the caller handle it"
+> However, I still think the patch should be applied for
+> self-consistency at least (git-submodule.sh currently calls both `git
+> rev-parse` and `git-rev-parse`).
 
-Let the caller provide their own place to store the capabilities, I
-mean, instead of (say) using a field as you describe and an accessor
-method.
+Oh, there is no question about the changes in the patch being good,
+as I already said.  We want to make sure that people who copy &
+paste code would see fewer instances of "git-foo".
 
-I don't feel strongly about this, though.
+I was commenting on the justification in your proposed log message,
+which I realized was a bit misleading, after deciding that the patch
+text itself is good and I need to apply it.
 
-> > It does, but so does chosen_version. This is meant to allow the caller
-> > to pass NULL to this function.
-> 
-> Hm. I think every protocol should be versioned otherwise we could run
-> into trouble in the long run.
-> 
-> TBH I wouldn't support NULL in that case in the first place. If you
-> want to support it then I think we should document it.
-
-Note that this NULL is for the chosen version as chosen by the server,
-not the versions declared as supported by the client.
-
-The protocol is versioned. Some users (e.g. the filter mechanism) of
-this subprocess thing would want to pass NULL because they only support
-one version and the subprocess thing already ensures that the server
-report that it supports one of the versions sent.
+Thanks for the clean-up.
