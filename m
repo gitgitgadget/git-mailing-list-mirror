@@ -2,96 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E406C2047F
-	for <e@80x24.org>; Mon,  7 Aug 2017 21:43:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE5012047F
+	for <e@80x24.org>; Mon,  7 Aug 2017 21:48:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752002AbdHGVn3 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Aug 2017 17:43:29 -0400
-Received: from mail-qk0-f196.google.com ([209.85.220.196]:33940 "EHLO
-        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751775AbdHGVn3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2017 17:43:29 -0400
-Received: by mail-qk0-f196.google.com with SMTP id q66so1719701qki.1
-        for <git@vger.kernel.org>; Mon, 07 Aug 2017 14:43:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=RPag603Yq7EuGoSotltQR47vzojeBWfVGUFmrEHFGg0=;
-        b=FWDtNA3cp0yCPRmihPU2wnN0XRevaNQkncDES9FjCayj2WWrtvRpOwcgfUy3wgfcRU
-         V6k6GdL6r0h7SO4qBMCmUS+Jgs7jEIJazjQn4FaFHijz29g4dHFA1B0VAEZJQedpMLt/
-         JF76ROscXCqwnnuZUxJ+xIRU2JYat9rUiqX84e+09M/a1Wegv7d4871vW3dH24S/hvKs
-         EDysp/zgLQTzGNC6hmjpBUmGDhlDojpvx58qUcOhqavD+6QoxGvo+1S/sWduAFGaTC+i
-         g+GXHb1uD6ignTgBeSWtvE4qMHCQR87do+JDufz+HxljN7ScEynT0hYLXdH0B88AoHo9
-         5leA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=RPag603Yq7EuGoSotltQR47vzojeBWfVGUFmrEHFGg0=;
-        b=eLDd0nn/gWjkBfSmFtvJqJYHL3qV9T8AlnS+Q786gEsyyi+0mUQAATPUVWUZFoSkkz
-         TfcMJIDfRN4XM9jjbHy9Qh8d8NG6C0hBegplggJHWPRBI1+8xtLaJ8zAgrQJDKQHSP+y
-         L04pASPNZ/PqpJ36UI8Ssxuny2+Krn/dXY0EfKajoIGYdGJqxr0SiNUThO38x/ToaPu6
-         DisrJn+/wAom8glSep2xA2B4Fzzvgake1pT/RTKGscmx1GYQv2gCyNYH7IlT85QR8a+d
-         RPWjJzrM7gGS2kvn5c0DoyjnlA4zGxmQy0uQS9bbP0IuvL6aLCcvxmNbKb9uILPG1RvU
-         U9Vw==
-X-Gm-Message-State: AHYfb5igOxG0EHoP8n3BDfTitbSZuU8f0TmfscnhEQzLpDtIurfisItq
-        fx3cy6P9eO0PjPdERD2fxlMJb7z1dm/k
-X-Received: by 10.55.71.76 with SMTP id u73mr2852962qka.25.1502142208105; Mon,
- 07 Aug 2017 14:43:28 -0700 (PDT)
+        id S1751799AbdHGVsK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Aug 2017 17:48:10 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53300 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751589AbdHGVsK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2017 17:48:10 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 84DCCA5CAC;
+        Mon,  7 Aug 2017 17:48:01 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=fwkz++1TzIFIpjucOT5g4VteKcY=; b=ezI/u5
+        c8CetlTGWxmZ0z02dUnol8GoNrDX8/Xx5wk8oc68wVOhphcwGVbLmOH9I91rl9EM
+        1hCY5H7Ees8kDiTLOgIG3Cq76QswEgtpuy1b1e1b9UwfCMRKOyFrHMvWoJ8YRG9k
+        8WxB63owyYOSsmK/VIALvST9qGpdhoNd6tBV0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=auwMbxO0kta3TzV+VRc2wfwOZOiCJfHR
+        rfxuDwt9jDe2p0D3SRGfQzFsU2NAFBdSoNQYw9zfMvnGDOhoyqJ0E3RTKOnw4FSb
+        SvyOwtCmec2aSBaVfsJjm3Hff1clPjyNWocSQzgo7skuhM+xmo2+zDCxBoLXBSSc
+        ijdrNzpw780=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BE3D4A5CAA;
+        Mon,  7 Aug 2017 17:48:00 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 07E30A5CA8;
+        Mon,  7 Aug 2017 17:47:59 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Michael Forney <mforney@mforney.org>, git@vger.kernel.org
+Subject: Re: [PATCH] Drop some dashes from built-in invocations in scripts
+References: <20170805064905.5948-1-mforney@mforney.org>
+        <xmqqshh3qqs4.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.21.1.1708072300310.4271@virtualbox>
+Date:   Mon, 07 Aug 2017 14:47:58 -0700
+In-Reply-To: <alpine.DEB.2.21.1.1708072300310.4271@virtualbox> (Johannes
+        Schindelin's message of "Mon, 7 Aug 2017 23:07:04 +0200 (CEST)")
+Message-ID: <xmqqshh3nj75.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.55.31.13 with HTTP; Mon, 7 Aug 2017 14:43:27 -0700 (PDT)
-In-Reply-To: <20170807211900.15001-9-pc44800@gmail.com>
-References: <20170807211900.15001-1-pc44800@gmail.com> <20170807211900.15001-9-pc44800@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 7 Aug 2017 23:43:27 +0200
-Message-ID: <CAP8UFD0kdyVSvmh=JgnZLTXyTL0PnK5L1F7agHCfke1NM1Z5aw@mail.gmail.com>
-Subject: Re: [GSoC][PATCH 08/13] submodule: port submodule subcommand
- 'summary' from shell to C
-To:     Prathamesh Chavan <pc44800@gmail.com>
-Cc:     git <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 14C1D594-7BBA-11E7-9074-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 7, 2017 at 11:18 PM, Prathamesh Chavan <pc44800@gmail.com> wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> +static enum {
-> +       DIFF_INDEX,
-> +       DIFF_FILES
-> +} diff_cmd = DIFF_INDEX;
+> I feel a bit talked to my hand, as the only reply I was graced was a "I
+> think I already did". So this will be my last reply on this matter for a
+> while.
 
-Using an enum could be a good idea, but I am not sure about using a
-static variable.
+Ah, I meant this thing:
 
-> +static int compute_summary_module_list(char *head, struct summary_cb *info)
-> +{
-> +       struct argv_array diff_args = ARGV_ARRAY_INIT;
-> +       struct rev_info rev;
-> +       struct module_cb_list list = MODULE_CB_LIST_INIT;
-> +
-> +       argv_array_push(&diff_args, diff_cmd ? "diff-files" : "diff-index");
+  https://public-inbox.org/git/xmqqo9rrqp3l.fsf@gitster.mtv.corp.google.com
 
-Maybe diff_cmd could be an argument of compute_summary_module_list()
-instead of a static variable, as it's only used in this function and
-in module_summary() below which is calling it.
+I got an impression that you didn't read it before you typed the
+message I gave that response to.
 
-[...]
-
-> +       if (files) {
-> +               if (cached)
-> +                       die(_("The --cached option cannot be used with the --files option"));
-> +               diff_cmd++;
-
-Couldn't this be:
-
-               diff_cmd = DIFF_FILES;
-
-?
+There are a few more exchanged, including Michael's response to that
+message on that thread.
