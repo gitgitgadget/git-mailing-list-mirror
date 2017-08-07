@@ -2,119 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8615A2047F
-	for <e@80x24.org>; Mon,  7 Aug 2017 21:41:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E406C2047F
+	for <e@80x24.org>; Mon,  7 Aug 2017 21:43:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751905AbdHGVlk (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Aug 2017 17:41:40 -0400
-Received: from mail-qk0-f181.google.com ([209.85.220.181]:36291 "EHLO
-        mail-qk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751662AbdHGVlk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2017 17:41:40 -0400
-Received: by mail-qk0-f181.google.com with SMTP id d136so10217594qkg.3
-        for <git@vger.kernel.org>; Mon, 07 Aug 2017 14:41:39 -0700 (PDT)
+        id S1752002AbdHGVn3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Aug 2017 17:43:29 -0400
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:33940 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751775AbdHGVn3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2017 17:43:29 -0400
+Received: by mail-qk0-f196.google.com with SMTP id q66so1719701qki.1
+        for <git@vger.kernel.org>; Mon, 07 Aug 2017 14:43:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=neosmart.net; s=google;
+        d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=Eu4Q/HFc0WERqdPR4BeDhEmtl5NbgEunRDlmL0DXYK8=;
-        b=QRxmt5riCMpSxz1E28xrShlJWUy2Du6MuShsETYJgdX+lJB+wyWkDL3iZIX5FTWDut
-         j7qibMhmZyhjlz0KwCjTpkQKJ6clgGVbwkHC5FRM9z9Ge1hcSkRoijlkHqN8SbNS2OdK
-         Y/n5t99kmYWNtOcRiUJASRIhDHtMT6bG0R/ZE=
+        bh=RPag603Yq7EuGoSotltQR47vzojeBWfVGUFmrEHFGg0=;
+        b=FWDtNA3cp0yCPRmihPU2wnN0XRevaNQkncDES9FjCayj2WWrtvRpOwcgfUy3wgfcRU
+         V6k6GdL6r0h7SO4qBMCmUS+Jgs7jEIJazjQn4FaFHijz29g4dHFA1B0VAEZJQedpMLt/
+         JF76ROscXCqwnnuZUxJ+xIRU2JYat9rUiqX84e+09M/a1Wegv7d4871vW3dH24S/hvKs
+         EDysp/zgLQTzGNC6hmjpBUmGDhlDojpvx58qUcOhqavD+6QoxGvo+1S/sWduAFGaTC+i
+         g+GXHb1uD6ignTgBeSWtvE4qMHCQR87do+JDufz+HxljN7ScEynT0hYLXdH0B88AoHo9
+         5leA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=Eu4Q/HFc0WERqdPR4BeDhEmtl5NbgEunRDlmL0DXYK8=;
-        b=mv6u/ReA6Yl7eT5XsoNcq3vLUEOuvReYcALz3cwBACDzYiYlzmpVf3OnhpC+qoC/3k
-         CXqzGm+s2VSeI/uAeQBJIzqxnIxa/1c8SCJT1qDpsCCurZH/LRXJVNSXuwlZyBltOaqk
-         A5aO6JI1PkAKA8jm9ZVWG8RW2op2I/SbG/Gut7xacItEdfzOudP5Ga3EO1TuEQXwH3FF
-         GobOvrWMfDZ3pVXEYJgmSJCGnsuY9utULByDjRht+FsKz/XkELbfUnqS57KUStV0NHpy
-         zhNcpOLSObzqXngrqWer1lgpdVr+GHVDX0XNuvlZ0NXyUaXfkOdxObYcE7onI5VP7O6J
-         V6oA==
-X-Gm-Message-State: AHYfb5gQSs7nHhwA4m4x3NuMqgsVKMhsbMf+KVfGU44hAmqU8RBjSxWu
-        CJ00CAkrh2vn0mi9wKX5204nQDpwfV1j
-X-Received: by 10.55.160.135 with SMTP id j129mr2521491qke.341.1502142099090;
- Mon, 07 Aug 2017 14:41:39 -0700 (PDT)
+        bh=RPag603Yq7EuGoSotltQR47vzojeBWfVGUFmrEHFGg0=;
+        b=eLDd0nn/gWjkBfSmFtvJqJYHL3qV9T8AlnS+Q786gEsyyi+0mUQAATPUVWUZFoSkkz
+         TfcMJIDfRN4XM9jjbHy9Qh8d8NG6C0hBegplggJHWPRBI1+8xtLaJ8zAgrQJDKQHSP+y
+         L04pASPNZ/PqpJ36UI8Ssxuny2+Krn/dXY0EfKajoIGYdGJqxr0SiNUThO38x/ToaPu6
+         DisrJn+/wAom8glSep2xA2B4Fzzvgake1pT/RTKGscmx1GYQv2gCyNYH7IlT85QR8a+d
+         RPWjJzrM7gGS2kvn5c0DoyjnlA4zGxmQy0uQS9bbP0IuvL6aLCcvxmNbKb9uILPG1RvU
+         U9Vw==
+X-Gm-Message-State: AHYfb5igOxG0EHoP8n3BDfTitbSZuU8f0TmfscnhEQzLpDtIurfisItq
+        fx3cy6P9eO0PjPdERD2fxlMJb7z1dm/k
+X-Received: by 10.55.71.76 with SMTP id u73mr2852962qka.25.1502142208105; Mon,
+ 07 Aug 2017 14:43:28 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.140.35.85 with HTTP; Mon, 7 Aug 2017 14:41:18 -0700 (PDT)
-In-Reply-To: <xmqqefujwqz0.fsf@gitster.mtv.corp.google.com>
-References: <CACcTrKfPKdPCVONMcGRbisK_WOt70yLdjavZnLTMMVocrwzk1w@mail.gmail.com>
- <xmqqefujwqz0.fsf@gitster.mtv.corp.google.com>
-From:   Mahmoud Al-Qudsi <mqudsi@neosmart.net>
-Date:   Mon, 7 Aug 2017 16:41:18 -0500
-Message-ID: <CACcTrKewZRZpHotZ8GpO9zFifTdjkzP2th=KqkQqTvJb_k3W9w@mail.gmail.com>
-Subject: Re: [suggestion] Include commit-ish in git status output
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
+Received: by 10.55.31.13 with HTTP; Mon, 7 Aug 2017 14:43:27 -0700 (PDT)
+In-Reply-To: <20170807211900.15001-9-pc44800@gmail.com>
+References: <20170807211900.15001-1-pc44800@gmail.com> <20170807211900.15001-9-pc44800@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 7 Aug 2017 23:43:27 +0200
+Message-ID: <CAP8UFD0kdyVSvmh=JgnZLTXyTL0PnK5L1F7agHCfke1NM1Z5aw@mail.gmail.com>
+Subject: Re: [GSoC][PATCH 08/13] submodule: port submodule subcommand
+ 'summary' from shell to C
+To:     Prathamesh Chavan <pc44800@gmail.com>
+Cc:     git <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 16, 2017 at 4:41 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> HEAD is, unless you are about to create a root commit, always a
-> commit and not other kind of commit-ish, so there is no need to say
-> "or commit-ish" here.
+On Mon, Aug 7, 2017 at 11:18 PM, Prathamesh Chavan <pc44800@gmail.com> wrote:
 
-I apologize for my errant terminology, I thought commitish was what
-the abbreviated
-SHA1 was called. My proposal was to show either the full SHA1 or the abbreviated
-SHA1 in the output of `git status`.
+> +static enum {
+> +       DIFF_INDEX,
+> +       DIFF_FILES
+> +} diff_cmd = DIFF_INDEX;
 
-> What would you do differently, after seeing this random-looking
-> 40-character string, based on what it is?  Do you know recent commit
-> object names by heart and can tell, immediately when you see 88ce3...,
-> "ah, that was me fixing foo", as opposed to e140f7a... that is a
-> different change you can immediately identify?
+Using an enum could be a good idea, but I am not sure about using a
+static variable.
 
-I obviously do not know recent commits by heart - the aim is to be
-able to easily
-copy & paste or visually compare against another value.
+> +static int compute_summary_module_list(char *head, struct summary_cb *info)
+> +{
+> +       struct argv_array diff_args = ARGV_ARRAY_INIT;
+> +       struct rev_info rev;
+> +       struct module_cb_list list = MODULE_CB_LIST_INIT;
+> +
+> +       argv_array_push(&diff_args, diff_cmd ? "diff-files" : "diff-index");
 
-Aside from the practical implications of having the commit SHA
-included in the output
-of `git status`, I have also pointed out my ideological reasons for
-it. `git status` currently
-prints an incomplete picture of the local repository state, and
-without an indication of
-_which_ commit HEAD currently is, the remainder of the content
-"expires" and is of no
-use at some later date.
+Maybe diff_cmd could be an argument of compute_summary_module_list()
+instead of a static variable, as it's only used in this function and
+in module_summary() below which is calling it.
 
-Looking back, I probably should have started with that. `git status`
-gives the status of the
-_relative_ current state of the local repository without printing any
-information that can be
-used as an _absolute_ reference to "frame" the results of the `git
-status` command. The
-relative state of a repository is useless for any sort of machine or
-human analysis, since it
-would require the state of both the cached remote and local indices to
-be identical to be of
-any use.
+[...]
 
-If I run `git status`, make, commit, and push some changes, then run
-`git status` once more,
-the output of the command can be identical to the previous run, _even
-though the actual
-state of the repo has changed_ which is... less than useful and
-potentially misleading.
+> +       if (files) {
+> +               if (cached)
+> +                       die(_("The --cached option cannot be used with the --files option"));
+> +               diff_cmd++;
 
-Yes, anyone familiar with git knows that the output of `git status` is
-only showing you a summary
-of the diff of the working tree vs HEAD. My argument is that all it
-would take is another 8 characters
-appending to the "On branch xxxx" line to make it an infinitely more
-useful command.
+Couldn't this be:
 
-Thank you,
+               diff_cmd = DIFF_FILES;
 
-Mahmoud Al-Qudsi
-NeoSmart Technologies
+?
