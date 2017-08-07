@@ -2,154 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C7BD22047F
-	for <e@80x24.org>; Mon,  7 Aug 2017 21:26:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4AD942047F
+	for <e@80x24.org>; Mon,  7 Aug 2017 21:37:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751905AbdHGV0E (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Aug 2017 17:26:04 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:36312 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751662AbdHGV0D (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2017 17:26:03 -0400
-Received: by mail-wr0-f195.google.com with SMTP id y67so1127094wrb.3
-        for <git@vger.kernel.org>; Mon, 07 Aug 2017 14:26:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=qewlG95D96lhPQLzvWYWPxJ/3jhLgOVQXAPGbUDxXTA=;
-        b=Ds8GnAhdg3GMthuDRNLtkJ9E2wLdzLYcqK/fcoEsYWxrq96oUMBrLsCaX0F4Chw4D7
-         Q+SDOhzkSC7JUX63uIKTfDxJUqgeEO1nWWyNmybp4O+E5xkJ3bXCrPBdYtKNzbmLc3bs
-         xR4PyqOXcjUA3F+b9QJWCaKTDgYVWGhzgHw+oCNzS9F7r7uFszO6vvswR8g1nR9QE8jR
-         0DuNzG4zIdop1w+Bn0HqFC4dz1GbZG3rTgHXVq+BYMFqWtmKTFGp7yUcCnSQieFx3G/x
-         Pbz26llC7XMFUhUfCKJiOiWNeNu3mJDXT72IPokEd/oPDu5QpdRxtGtGNn4+30OHK/px
-         Zw/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=qewlG95D96lhPQLzvWYWPxJ/3jhLgOVQXAPGbUDxXTA=;
-        b=pAcbq+necAjl9Od33Z972DSfNyQ8STyVhwDXBi5/8h0ardPKnDP1F3NpKJYto9fc/N
-         a2ktaWXxDDhkSk4LS3Ur8Ntkxb0sQsEnOhMI4S25wuwpJAhCHP/sTrA4S7QgJzN5Y6Cz
-         xXv+Wo/kcK33/c/wE/yHGZ8NgahKCqI3oG2NQpbCzIeY9ME0dxPma+xMIrwbwtd8qx5i
-         201fADPVcdSLFJoOqLreln++Soyn6A/jlAJJQrbp0A+0Nd+SE09/LZpeh7B5Ma7Dhy5Y
-         jbxNaJ/NdkL67LQONhLBmw4PixcfdCh5OA2YN/r2K1HW/LjGoyEjARelUQ8n7n6SWBzE
-         swDg==
-X-Gm-Message-State: AHYfb5iZx/knYPVih8b9scsiw+tbNNN8nRYaBla21FNi6VOVunqsSkAE
-        qWRQOO94oeEo70axwrI=
-X-Received: by 10.223.164.79 with SMTP id e15mr1195401wra.101.1502141161800;
-        Mon, 07 Aug 2017 14:26:01 -0700 (PDT)
-Received: from [192.168.5.102] (cable-24-135-63-71.dynamic.sbb.rs. [24.135.63.71])
-        by smtp.gmail.com with ESMTPSA id m127sm21324wmm.46.2017.08.07.14.26.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 07 Aug 2017 14:26:00 -0700 (PDT)
-Subject: Re: What's cooking in git.git (Jul 2017, #09; Mon, 31)
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Sahil Dua <sahildua2305@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Git Mailing List <git@vger.kernel.org>
-References: <xmqqfudcgryb.fsf@gitster.mtv.corp.google.com>
- <232547ab-3b87-debc-36a4-d2285ec10a06@ramsayjones.plus.com>
- <CALiud+nm9wu4rBY6zBXmenJj_0Mn7xeU_FAvSdn4fdH+q--Jag@mail.gmail.com>
- <xmqqd18cweak.fsf@gitster.mtv.corp.google.com> <87shh57nzs.fsf@gmail.com>
- <xmqqpoc9sksg.fsf@gitster.mtv.corp.google.com> <873794zbls.fsf@gmail.com>
-From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
-Message-ID: <e5564e40-702f-390b-69e2-2ed6e45610c8@gmail.com>
-Date:   Mon, 7 Aug 2017 23:25:54 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        id S1751950AbdHGVhD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Aug 2017 17:37:03 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60384 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751589AbdHGVhC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2017 17:37:02 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A1BF8A0A41;
+        Mon,  7 Aug 2017 17:37:01 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=tE9irWROfXJiropYShKo71F0+O0=; b=uoAkOp
+        jhC+W7CTwsJUFPuY2UpS7jaMN4oCX52X7SbBW9Qk7wGEGr+6/a1ImqaLtBSY2wO+
+        fz/cSGylwpEs/qg/pCnU1RUZtUXDkyRl7Y266UA3EwYkuzPAJzQ9J8YvpUJeQKl7
+        pVC1Ted4tjwtg/MtMkRUTZhuvufq7kDmUIzAk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=G9kJm3H5LR24mZURVIX0/A/2m0BHbZCI
+        yCDWUSzADzv+wvCO+sLsaSls4Djv2CTxQfK0umtlTeFnxc32FDEBRuN9c4/GKjqu
+        AP7FHiDV37O2l+ex/npgBCrS9jEp1IM4NqPm2pXIHvsOejkKZMZWOlGGFaAr27pJ
+        A0CqKXvOt0M=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 97A59A0A40;
+        Mon,  7 Aug 2017 17:37:01 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7C9CBA0A3E;
+        Mon,  7 Aug 2017 17:37:00 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Martin Koegler <martin.koegler@chello.at>, git@vger.kernel.org
+Subject: Re: [PATCH] Fix delta integer overflows
+References: <1502129437-31226-1-git-send-email-martin@mail.zuhause>
+        <xmqq1sonql76.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.21.1.1708072136290.4271@virtualbox>
+        <xmqqshh3p3b0.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.21.1.1708072307410.4271@virtualbox>
+Date:   Mon, 07 Aug 2017 14:36:59 -0700
+In-Reply-To: <alpine.DEB.2.21.1.1708072307410.4271@virtualbox> (Johannes
+        Schindelin's message of "Mon, 7 Aug 2017 23:10:39 +0200 (CEST)")
+Message-ID: <xmqqwp6fnjpg.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <873794zbls.fsf@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8BA6CAEA-7BB8-11E7-8C40-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/08/2017 22:26, Ævar Arnfjörð Bjarmason wrote:
-> On Sat, Aug 05 2017, Junio C. Hamano jotted:
->> I actually consider "branch" to *never* invoking a checkout.  Even
->> when "git branch -m A B" happens to be done when your checked out
->> branch is A and you end up being on B.  That is not a "checkout".
-> 
-> I think we just have a different mental model of what "checkout"
-> means. In my mind any operation that updates the HEAD to point to a new
-> branch is a checkout of that branch.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-If I may, from a side-viewer`s point of view, it seems you`re 
-thinking in low-level implementation details, where what Junio 
-describes seems more as a high-level, conceptual/end-user`s point of 
-view.
+> So are you saying that starting with v2.14.0, you accept patches into `pu`
+> for which you would previously have required multiple iterations before
+> even considering it for `pu`?
+>
+> Frankly, I am a bit surprised that this obvious change from `unsigned
+> long` to `size_t` is not required in this case before queuing, but if the
+> rules have changed to lower the bar for patch submissions, I am all for
+> it. I always felt that we are wasting contributors' time a little too
+> freely and too deliberately.
 
-Needing to update HEAD reference once we "rename" a branch, too, what 
-you consider a "checkout", seems to be required only because branch 
-name _is_ the branch reference in Git, so we need to update HEAD to 
-point to a new/renamed branch reference -- but it`s still the same 
-branch, conceptually.
+This is not about where the bar is set.  It is about expectation.  I
+do not expect much from occasional (or new) contributors and I try
+not to demand too much from them.  The consequence is that as long
+as a small patch makes things better without making anything worse,
+I'd want to be inclusive to encourage them to build obvious
+improvements on top.  Maybe they just want a single patch landed to
+fix their immediate needs (which may be generic enough and expected
+to be shared with many other people) without going further, so I may
+end up queuing something that only helps 40% of people until follow
+up patches are done to cover the remaining 60% of people, but that
+is fine as long as the patch does not make things worse (it is not
+like a patch that helps 40% while hurting the remaining 60% until
+a follow-up happens).
 
-Documentation for "git-checkout" states that it is used to "*Switch 
-branches*...[snip]", and that is not what happens here. 
-Implementation-wise it does because we can`t do it differently at the 
-moment, but in user`s eyes it`s still the same branch, so no switch 
-is made as far as the user is concerned.
+I would expect a lot more from experienced contributors, when I know
+they are capable of helping the remaining 60% inside the same series
+and without requiring too much hand-holding from me.  The same thing
+I cannot say to a occasional (or new) contributor---they may not be
+coorperative, or they may be willing to do more but may require more
+help polishing their work than the bandwidth I can afford.
 
-In a different implementation, where branches would have permanent 
-references other than their names, no HEAD update would be needed as 
-the reference would still be the same, no matter the name change, 
-making the `git branch -m` situation clear even from your standpoint, 
-I`d say.
+So if you are volunteering to help by either guiding Martin to aim
+higher and make this a series with a larger and more complete scope,
+I'd very much appreciate it.  Or you can do a follow-up series on
+top of what Martin posted.  Either is fine by me.  Just do not step
+on each others' toes ;-)
 
->> Really from the end-user's point of view that is not a checkout.
->> The user renamed the branch A and the same conceptual entity, which
->> is a branch, is now called B.  If that branch was what was checked
->> out (IOW, if that branch was what would be grown by one commit if
->> the user did "git commit"), then now that branch's name is B.  It is
->> natural if you ask "symbolic-ref HEAD" what branch is checked out
->> after renaming A to B (and A happened to be what was checked out),
->> the answer chould be B.
->>
->> It's like the city you live in changed the name of the street your
->> house is on.  You do not call movers, you do not do anything, but
->> your address changes.
-> 
-> Yeah I see what you mean, although this analogy rapidly breaks down when
-> you poke at it as shown above. My house (a sha1) can be on any number of
-> streets and new ones can be added/removed all the time without changing
-> where my house is at.
+I avoided saying all of the above because I didn't want my word
+taken out of context later to make it sound as if I were belittling
+the competence of Martin, but you seem to want to force me to say
+this, so here it is.
 
-I may be missing something, but I find the house/address analogy a 
-good one, actually, as I understood that "house" resembles a branch 
-reference HEAD is pointing to, not a sha1.
-
-Even further, and that might be the point of confusion, "house" seems 
-to be more like a "permanent branch reference" I mentioned above, 
-where your address can change (branch being renamed), but you would 
-still be in the same house (HEAD would still point to the same 
-permanent branch reference).
-
-If you move to another house, only then would HEAD change to point to 
-another (permanent) branch reference (a different house), and that 
-would be a checkout.
-
-Yes, it`s not really how it works from the inside, but I think that`s 
-irrelevant for the end-user experience :)
-
-> So it's just a way to get something exactly like -m except the "move &&
-> checkout" logic is changed to "copy && checkout".
-Again, it seems the "checkout" part of "move && checkout" you`re 
-talking about is a user-wise unnecessary implementation detail. For 
-the user, it`s just a simple "move", staying on the same, but renamed 
-branch, thus no branch switching occurred (no "checkout", as per 
-documentation).
-
-Regards,
-Buga
