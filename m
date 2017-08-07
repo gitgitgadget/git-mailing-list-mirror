@@ -7,148 +7,133 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 634CC2047F
-	for <e@80x24.org>; Mon,  7 Aug 2017 21:19:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B90B02047F
+	for <e@80x24.org>; Mon,  7 Aug 2017 21:19:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752106AbdHGVTQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Aug 2017 17:19:16 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:37069 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751834AbdHGVTP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2017 17:19:15 -0400
-Received: by mail-pf0-f194.google.com with SMTP id p13so1446017pfd.4
-        for <git@vger.kernel.org>; Mon, 07 Aug 2017 14:19:15 -0700 (PDT)
+        id S1752119AbdHGVTT (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Aug 2017 17:19:19 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:33487 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752107AbdHGVTS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2017 17:19:18 -0400
+Received: by mail-pf0-f195.google.com with SMTP id c65so1467690pfl.0
+        for <git@vger.kernel.org>; Mon, 07 Aug 2017 14:19:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=XdT/ZyF0ohHY3BcprReND2EMZtPAZoFQEMX0D6A8RJM=;
-        b=bKhHBPCytjskST0HDNslHW+KKM3alF44OU7cYtC6tLrsO6LK6NsGZBaCfRZCaPVla7
-         jy/OjKZBZHPWEYhmmLF3B+0yh+8j+hV0yi6YT9YKGOYSx/ilaIkgOqmSBZsOl6561VMf
-         KPIF/zRppuRdfswq/rqVWgF4cTkoPTOPRkjwY+kd4yKRAbOMtYjCUEU8/CizDkQEe2pK
-         WLjUJ1iQ1RTeTNlA/Ock0VazH3rDKiUAkpek9pqM2tF6ypBEJqI5ACkLuVJFq0XaSUZt
-         X90oag5CozSyRa/weubjRNSJuUPfa7KShkXUdblCE4yo2YrMYMNe/pFv3uTXqeNj5Nul
-         XQaw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=Uifl4K2osCvghD7KhtZcuheg0SILRjUalsatIfQnr8o=;
+        b=TXds3/Vhj6DtyscIA4zlNjSQffKSn8Oz9aZZIv9+y/LGuIE1k7tg5br7WB+rnbrEfK
+         Lo6QWCkW/mrWhFVJZjeaatAAmGQQSNQzOur5rK4B+Vtkq7L7NloylJ0DxESsNlN52a1M
+         WUk/1qNiwiTD3YSW0+RvUYmDqE9bS5/2L/CO9oaMTlW4jQWwEFXP6/SV2zHBZ352/kcr
+         GrUNRwqw1N0E8YIWM6JD9SR5/M3RF0IDD68Qrk/6pLTH+R4k7z7XHc2fDDAUt3W8Zw+t
+         Sv7E8msJ08FJofPC+x2yfjOP/QWIYTXOZ6m9cqtnC+nAAxxCclWt1I5IjkxfDaLAUWB0
+         k2zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=XdT/ZyF0ohHY3BcprReND2EMZtPAZoFQEMX0D6A8RJM=;
-        b=kgIrpu5BmrHP8LVRwn7SjvZw+aS9kMP0UvSQqr/NQMhlkEIrfLBtNMRx8tiaAiKNlm
-         9lSoWkes9OAtCaL8plSdngySbotIYLIQs6mXn7rCpruyHTM04aXBPxKWQmEOTsvxsv+N
-         zbsHCs2kW6h0IeUpGYGcSRtXZCiVosY1HwTbTN+mgtpcuuzb6QsqDBle0wCOIYnHktxJ
-         vQHiZVP/JFZseaAV+/NQAIGLiZXIw0bS+Jq3kjOzLnP4dgano3szu0NfGZ802kJycfSs
-         dFRXMm10GQ0pgwd8W5zPLGsy1EbPNTHOrJCgDVqj5pZTRvB127CMF+CMQ0dUcRsrX2ZW
-         kZug==
-X-Gm-Message-State: AHYfb5j9v8XUTO45yMZZd0rJA0oOqhtXJ7eU7TrBDZLE+ueQVsAWn4qV
-        kuSM2tw5KqN+2kHX1pY=
-X-Received: by 10.98.83.130 with SMTP id h124mr1982216pfb.13.1502140754055;
-        Mon, 07 Aug 2017 14:19:14 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=Uifl4K2osCvghD7KhtZcuheg0SILRjUalsatIfQnr8o=;
+        b=PrkLHtVyvZ7jGU2mUsQWsJJ5y9DK5knaKRZHv6OqMVUsXk5OyO8C9FzArFPFw1WYdm
+         GXd8t6lGpqXhbOpuDDLlVbQ5gqM+VXfPPtL96oaN36fv4uwyPML+pJ1E78Z06+yiGhHq
+         aaRhHVVf+IHq9bygv//CPKhdpLq/bYM0Fp7p8QnFnPbY3tYBRDNuJmonWyLCK/r31Zzo
+         ytY/5d4Fda61khEr6NO1UTgrvD40syteek+oBYmji2dD2tmlZ2CEW1yN/EsGvmcDjgw3
+         lFzI6YDvi16ww5QjnwlAdgOnfWUO4zKyro91stmnzGY77An9q/8MSrZrFtADJSrn7pQh
+         kLqA==
+X-Gm-Message-State: AHYfb5h7r+6Lw6xxfKWE8YVgCvH+FKkp9OK/RCjaXalaWLza6mlYWVti
+        hB34iaNMuJiPfzIoybM=
+X-Received: by 10.84.172.1 with SMTP id m1mr2076819plb.174.1502140757338;
+        Mon, 07 Aug 2017 14:19:17 -0700 (PDT)
 Received: from localhost.localdomain ([2405:205:6016:3285:fd77:5453:49e2:f3b5])
-        by smtp.gmail.com with ESMTPSA id z127sm15141084pfb.64.2017.08.07.14.19.11
+        by smtp.gmail.com with ESMTPSA id z127sm15141084pfb.64.2017.08.07.14.19.14
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 07 Aug 2017 14:19:13 -0700 (PDT)
+        Mon, 07 Aug 2017 14:19:16 -0700 (PDT)
 From:   Prathamesh Chavan <pc44800@gmail.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, christian.couder@gmail.com,
         Prathamesh Chavan <pc44800@gmail.com>
-Subject: [GSoC][PATCH 00/13] Update: Week-12
-Date:   Tue,  8 Aug 2017 02:48:47 +0530
-Message-Id: <20170807211900.15001-1-pc44800@gmail.com>
+Subject: [GSoC][PATCH 01/13] submodule--helper: introduce get_submodule_displaypath()
+Date:   Tue,  8 Aug 2017 02:48:48 +0530
+Message-Id: <20170807211900.15001-2-pc44800@gmail.com>
 X-Mailer: git-send-email 2.13.0
+In-Reply-To: <20170807211900.15001-1-pc44800@gmail.com>
+References: <20170807211900.15001-1-pc44800@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SUMMARY OF MY PROJECT:
+Introduce function get_submodule_displaypath() to replace the code
+occurring in submodule_init() for generating displaypath of the
+submodule with a call to it.
 
-Git submodule subcommands are currently implemented by using shell script
-'git-submodule.sh'. There are several reasons why we'll prefer not to
-use the shell script. My project intends to convert the subcommands into
-C code, thus making them builtins. This will increase Git's portability
-and hence the efficiency of working with the git-submodule commands.
-Link to the complete proposal: [1]
+This new function will also be used in other parts of the system
+in later patches.
 
-Mentors:
-Stefan Beller <sbeller@google.com>
-Christian Couder <christian.couder@gmail.com>
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
+---
+ builtin/submodule--helper.c | 33 ++++++++++++++++++++++-----------
+ 1 file changed, 22 insertions(+), 11 deletions(-)
 
-UPDATES:
-
-Following are the updates about my ongoing project:
-
-* Following patches were updated after the previous reviews:
-  submodule subcommands:
-  - deinit
-  - summary
-  - foreach
-
-* summary: the function print_submodule_summary() is split-up
-  into two separate functions: generate_submodule_summary()
-  and print_summary().
-
-* porting of submodule subcommand 'add' is completed and I have
-  started with debugging ported function. Currently, the
-  entire function cmd_add() is ported to the function
-  module_add() in C. Soon, its first patch will be floated
-  here as well once debugging is completed. Its progress can be
-  viewed at [2].
-
-* displaypath: Last week, there was some confusion produced
-  with the way, the value of displaypath is being generated,
-  which led to some discussion, which is available at: [3].
-
-PLAN FOR WEEK-13 (8 August 2017 to 14 August 2017):
-
-* patches: IMO, the patches till deinit are reviewed many times,
-  and hence will try to get at least these patches merged.
-
-* add: As this subcommand is widely used in the test suite, there
-  are many tests this ported function is failing at. Hence,
-  debugging the subcommand would be another task for the next week.
-
-* deinit: A bug was identified by Stefan in the last patch-series.
-  its details are available at: [4]
-  Currenlty, the bug was handled by adding a NEEDSWORK tagged
-  comment as suggest. If possible, I will also start working
-  on debugging the issue asap.
-
-A complete build report of these series of patches is available at: [5].
-Build #151
-Branch: week-12
-
-The work is pushed on Github and is available at: [6].
-
-[1]: https://docs.google.com/document/d/1krxVLooWl--75Pot3dazhfygR3wCUUWZWzTXtK1L-xU/
-[2]: https://github.com/pratham-pc/git/commits/sub-add
-[3]: https://public-inbox.org/git/CAME+mvXsh53kLJ4se4uKY=SJcvSbHtEZQ6K2CgAPs=1wxUxk1A@mail.gmail.com/
-[4]: https://public-inbox.org/git/CAGZ79kbyyR54me_+wQDZRrikqKTp_a98yozVfr8P85QHfyyy=Q@mail.gmail.com/
-[5]: https://travis-ci.org/pratham-pc/git/builds/
-[6]: https://github.com/pratham-pc/git/commits/week-12
-
-Prathamesh Chavan (13):
-  submodule--helper: introduce get_submodule_displaypath()
-  submodule--helper: introduce for_each_submodule_list()
-  submodule: port set_name_rev() from shell to C
-  submodule: port submodule subcommand 'status' from shell to C
-  submodule: port submodule subcommand 'sync' from shell to C
-  submodule: port submodule subcommand 'deinit' from shell to C
-  diff: change scope of the function count_lines()
-  submodule: port submodule subcommand 'summary' from shell to C
-  submodule foreach: correct '$path' in nested submodules from a
-    subdirectory
-  submodule foreach: document '$sm_path' instead of '$path'
-  submodule foreach: clarify the '$toplevel' variable documentation
-  submodule foreach: document variable '$displaypath'
-  submodule: port submodule subcommand 'foreach' from shell to C
-
- Documentation/git-submodule.txt |   15 +-
- builtin/submodule--helper.c     | 1190 ++++++++++++++++++++++++++++++++++++++-
- diff.c                          |    2 +-
- diff.h                          |    1 +
- git-submodule.sh                |  396 +------------
- t/t7407-submodule-foreach.sh    |   38 +-
- 6 files changed, 1222 insertions(+), 420 deletions(-)
-
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 6abdad329..7af4de09b 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -220,6 +220,27 @@ static int resolve_relative_url_test(int argc, const char **argv, const char *pr
+ 	return 0;
+ }
+ 
++static char *get_submodule_displaypath(const char *path, const char *prefix)
++{
++	const char *super_prefix = get_super_prefix();
++
++	if (prefix && super_prefix) {
++		BUG("cannot have prefix '%s' and superprefix '%s'",
++		    prefix, super_prefix);
++	} else if (prefix) {
++		struct strbuf sb = STRBUF_INIT;
++		char *displaypath = xstrdup(relative_path(path, prefix, &sb));
++		strbuf_release(&sb);
++		return displaypath;
++	} else if (super_prefix) {
++		int len = strlen(super_prefix);
++		const char *format = is_dir_sep(super_prefix[len - 1]) ? "%s%s" : "%s/%s";
++		return xstrfmt(format, super_prefix, path);
++	} else {
++		return xstrdup(path);
++	}
++}
++
+ struct module_list {
+ 	const struct cache_entry **entries;
+ 	int alloc, nr;
+@@ -339,16 +360,7 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
+ 
+ 	/* Only loads from .gitmodules, no overlay with .git/config */
+ 	gitmodules_config();
+-
+-	if (prefix && get_super_prefix())
+-		die("BUG: cannot have prefix and superprefix");
+-	else if (prefix)
+-		displaypath = xstrdup(relative_path(path, prefix, &sb));
+-	else if (get_super_prefix()) {
+-		strbuf_addf(&sb, "%s%s", get_super_prefix(), path);
+-		displaypath = strbuf_detach(&sb, NULL);
+-	} else
+-		displaypath = xstrdup(path);
++	displaypath = get_submodule_displaypath(path, prefix);
+ 
+ 	sub = submodule_from_path(null_sha1, path);
+ 
+@@ -363,7 +375,6 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
+ 	 * Set active flag for the submodule being initialized
+ 	 */
+ 	if (!is_submodule_active(the_repository, path)) {
+-		strbuf_reset(&sb);
+ 		strbuf_addf(&sb, "submodule.%s.active", sub->name);
+ 		git_config_set_gently(sb.buf, "true");
+ 	}
 -- 
 2.13.0
 
