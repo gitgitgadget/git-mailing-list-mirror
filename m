@@ -2,84 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB6EB2047F
-	for <e@80x24.org>; Mon,  7 Aug 2017 21:15:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 634CC2047F
+	for <e@80x24.org>; Mon,  7 Aug 2017 21:19:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752076AbdHGVPG (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Aug 2017 17:15:06 -0400
-Received: from mout.gmx.net ([212.227.15.15]:50789 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751662AbdHGVPF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2017 17:15:05 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M5tU1-1dPTN01dof-00xohC; Mon, 07
- Aug 2017 23:15:03 +0200
-Date:   Mon, 7 Aug 2017 23:15:01 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-cc:     Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] test-path-utils: handle const parameter of basename and
- dirname
-In-Reply-To: <5bfd3c7c-c3c8-5115-713a-63f6f8cd7eb7@web.de>
-Message-ID: <alpine.DEB.2.21.1.1708072314420.4271@virtualbox>
-References: <5bfd3c7c-c3c8-5115-713a-63f6f8cd7eb7@web.de>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-415137267-1502140503=:4271"
-X-Provags-ID: V03:K0:QO5fqiH8xv66bixb7g2S4gnajRo3SgP9TqxDxHRf3vP7QOxIZFi
- KCVHxDoItwRoxvYPXrRYRyo1GRG8MFPpkdilCQHdUKyFAIowezQ2S6oP/kna5CnmP4BTg21
- mB28HHG+4h7K36NdUyXQ56J9XBr5FiPoLsV9WndZ+3SurPayRkwpjJPV/2Ed4iFt5xmB9gb
- rj8ZAVsHkMCVqB8QZcRqQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:NjQaEqOseZE=:k7NEEsQK+6YSrvD6tR1w1B
- L6/CeR/F2YKqEYdHsxpoyOSXdbwL2a05iLfQq2FO3ePE1Vj42ICQcX9pMwDgVAFUbJBBMdzNL
- 4nRocFnxUt/QRhkhBvhR6PPlCVcN2yYRLG8lVgnyAhbxlSyMNfsazzySD+TIemCXtOl2Xm/34
- zGkBxawATKdLxKRpEzXChxrV8vznhS21jrGx1aEfNI1QU3d/uoxa2+bF4bmpwyraaF/2kovNH
- N3819u77zWD0+VjWmWbEPJubbXlKwaL+aLvdEgyXmAtJDwWWldcm2xz+afFncJ97yBhdxbE8I
- gb0lwroCzymVLRr8Z7csxjXK0TqTVv1G7jX4JjpaQ6U2vppDHhvUCaz93q/T6pso7Mz9yzDID
- 60ZWx5zGt2yP0pYzZfHUzKqPD4Cr7Pz99cr/vSk1WB5GMdZhJxbRK8iknmIZgGjxNBtUeZZjH
- xqn4JP72fJ85mkGPsJrp5869hAm6GPfbAQz9CwkheyCB/+wyAzyYYGUbzsO78arvJtx6I0/vt
- LbCmMaxK52i+7m1D6PAoHG3s7yoERzGHZKczJg6U6WaJd3GiqJzbj/G2CPQD2uBAT6X9pDH0w
- KjnyFjxU8tynXvef9nw4FXXIR0AV7O9NR1MMIFONZbbIufkl4NrILCf5Ax6yWhacXJ9ExCe76
- RxBS4NH518kyXhUG6QP572xBNBvrROmDZ1Y2fauoRLM1s4oF5HH14pnKm0WdEJAVQxijhHQYx
- ka2kYbp1XKQg+QLtHi83vZlFoz7oLA7TtWDKTvD1lRiCNFaxc/uYQHsOCsjSFHZGOGRpCPV3f
- C8g6xoC1YcjGvrksGy9xz+p7kGCDJ4F5LwxLZmEzqaVPuHjm1Y=
+        id S1752106AbdHGVTQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Aug 2017 17:19:16 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:37069 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751834AbdHGVTP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2017 17:19:15 -0400
+Received: by mail-pf0-f194.google.com with SMTP id p13so1446017pfd.4
+        for <git@vger.kernel.org>; Mon, 07 Aug 2017 14:19:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=XdT/ZyF0ohHY3BcprReND2EMZtPAZoFQEMX0D6A8RJM=;
+        b=bKhHBPCytjskST0HDNslHW+KKM3alF44OU7cYtC6tLrsO6LK6NsGZBaCfRZCaPVla7
+         jy/OjKZBZHPWEYhmmLF3B+0yh+8j+hV0yi6YT9YKGOYSx/ilaIkgOqmSBZsOl6561VMf
+         KPIF/zRppuRdfswq/rqVWgF4cTkoPTOPRkjwY+kd4yKRAbOMtYjCUEU8/CizDkQEe2pK
+         WLjUJ1iQ1RTeTNlA/Ock0VazH3rDKiUAkpek9pqM2tF6ypBEJqI5ACkLuVJFq0XaSUZt
+         X90oag5CozSyRa/weubjRNSJuUPfa7KShkXUdblCE4yo2YrMYMNe/pFv3uTXqeNj5Nul
+         XQaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=XdT/ZyF0ohHY3BcprReND2EMZtPAZoFQEMX0D6A8RJM=;
+        b=kgIrpu5BmrHP8LVRwn7SjvZw+aS9kMP0UvSQqr/NQMhlkEIrfLBtNMRx8tiaAiKNlm
+         9lSoWkes9OAtCaL8plSdngySbotIYLIQs6mXn7rCpruyHTM04aXBPxKWQmEOTsvxsv+N
+         zbsHCs2kW6h0IeUpGYGcSRtXZCiVosY1HwTbTN+mgtpcuuzb6QsqDBle0wCOIYnHktxJ
+         vQHiZVP/JFZseaAV+/NQAIGLiZXIw0bS+Jq3kjOzLnP4dgano3szu0NfGZ802kJycfSs
+         dFRXMm10GQ0pgwd8W5zPLGsy1EbPNTHOrJCgDVqj5pZTRvB127CMF+CMQ0dUcRsrX2ZW
+         kZug==
+X-Gm-Message-State: AHYfb5j9v8XUTO45yMZZd0rJA0oOqhtXJ7eU7TrBDZLE+ueQVsAWn4qV
+        kuSM2tw5KqN+2kHX1pY=
+X-Received: by 10.98.83.130 with SMTP id h124mr1982216pfb.13.1502140754055;
+        Mon, 07 Aug 2017 14:19:14 -0700 (PDT)
+Received: from localhost.localdomain ([2405:205:6016:3285:fd77:5453:49e2:f3b5])
+        by smtp.gmail.com with ESMTPSA id z127sm15141084pfb.64.2017.08.07.14.19.11
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 07 Aug 2017 14:19:13 -0700 (PDT)
+From:   Prathamesh Chavan <pc44800@gmail.com>
+To:     git@vger.kernel.org
+Cc:     sbeller@google.com, christian.couder@gmail.com,
+        Prathamesh Chavan <pc44800@gmail.com>
+Subject: [GSoC][PATCH 00/13] Update: Week-12
+Date:   Tue,  8 Aug 2017 02:48:47 +0530
+Message-Id: <20170807211900.15001-1-pc44800@gmail.com>
+X-Mailer: git-send-email 2.13.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+SUMMARY OF MY PROJECT:
 
---8323329-415137267-1502140503=:4271
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Git submodule subcommands are currently implemented by using shell script
+'git-submodule.sh'. There are several reasons why we'll prefer not to
+use the shell script. My project intends to convert the subcommands into
+C code, thus making them builtins. This will increase Git's portability
+and hence the efficiency of working with the git-submodule commands.
+Link to the complete proposal: [1]
 
-Hi Ren=C3=A9,
+Mentors:
+Stefan Beller <sbeller@google.com>
+Christian Couder <christian.couder@gmail.com>
 
-On Mon, 7 Aug 2017, Ren=C3=A9 Scharfe wrote:
+UPDATES:
 
-> The parameter to basename(3) and dirname(3) traditionally had the type
-> "char *", but on OpenBSD it's been "const char *" for years.  That
-> causes (at least) Clang to throw an incompatible-pointer-types warning
-> for test-path-utils, where we try to pass around pointers to these
-> functions.
->=20
-> Avoid this warning (which is fatal in DEVELOPER mode) by ignoring the
-> promise of OpenBSD's implementations to keep input strings unmodified
-> and enclosing them in POSIX-compatible wrappers.
->=20
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
-> ---
+Following are the updates about my ongoing project:
 
-This patch is Fine By Me.
+* Following patches were updated after the previous reviews:
+  submodule subcommands:
+  - deinit
+  - summary
+  - foreach
 
-Thanks,
-Dscho
---8323329-415137267-1502140503=:4271--
+* summary: the function print_submodule_summary() is split-up
+  into two separate functions: generate_submodule_summary()
+  and print_summary().
+
+* porting of submodule subcommand 'add' is completed and I have
+  started with debugging ported function. Currently, the
+  entire function cmd_add() is ported to the function
+  module_add() in C. Soon, its first patch will be floated
+  here as well once debugging is completed. Its progress can be
+  viewed at [2].
+
+* displaypath: Last week, there was some confusion produced
+  with the way, the value of displaypath is being generated,
+  which led to some discussion, which is available at: [3].
+
+PLAN FOR WEEK-13 (8 August 2017 to 14 August 2017):
+
+* patches: IMO, the patches till deinit are reviewed many times,
+  and hence will try to get at least these patches merged.
+
+* add: As this subcommand is widely used in the test suite, there
+  are many tests this ported function is failing at. Hence,
+  debugging the subcommand would be another task for the next week.
+
+* deinit: A bug was identified by Stefan in the last patch-series.
+  its details are available at: [4]
+  Currenlty, the bug was handled by adding a NEEDSWORK tagged
+  comment as suggest. If possible, I will also start working
+  on debugging the issue asap.
+
+A complete build report of these series of patches is available at: [5].
+Build #151
+Branch: week-12
+
+The work is pushed on Github and is available at: [6].
+
+[1]: https://docs.google.com/document/d/1krxVLooWl--75Pot3dazhfygR3wCUUWZWzTXtK1L-xU/
+[2]: https://github.com/pratham-pc/git/commits/sub-add
+[3]: https://public-inbox.org/git/CAME+mvXsh53kLJ4se4uKY=SJcvSbHtEZQ6K2CgAPs=1wxUxk1A@mail.gmail.com/
+[4]: https://public-inbox.org/git/CAGZ79kbyyR54me_+wQDZRrikqKTp_a98yozVfr8P85QHfyyy=Q@mail.gmail.com/
+[5]: https://travis-ci.org/pratham-pc/git/builds/
+[6]: https://github.com/pratham-pc/git/commits/week-12
+
+Prathamesh Chavan (13):
+  submodule--helper: introduce get_submodule_displaypath()
+  submodule--helper: introduce for_each_submodule_list()
+  submodule: port set_name_rev() from shell to C
+  submodule: port submodule subcommand 'status' from shell to C
+  submodule: port submodule subcommand 'sync' from shell to C
+  submodule: port submodule subcommand 'deinit' from shell to C
+  diff: change scope of the function count_lines()
+  submodule: port submodule subcommand 'summary' from shell to C
+  submodule foreach: correct '$path' in nested submodules from a
+    subdirectory
+  submodule foreach: document '$sm_path' instead of '$path'
+  submodule foreach: clarify the '$toplevel' variable documentation
+  submodule foreach: document variable '$displaypath'
+  submodule: port submodule subcommand 'foreach' from shell to C
+
+ Documentation/git-submodule.txt |   15 +-
+ builtin/submodule--helper.c     | 1190 ++++++++++++++++++++++++++++++++++++++-
+ diff.c                          |    2 +-
+ diff.h                          |    1 +
+ git-submodule.sh                |  396 +------------
+ t/t7407-submodule-foreach.sh    |   38 +-
+ 6 files changed, 1222 insertions(+), 420 deletions(-)
+
+-- 
+2.13.0
+
