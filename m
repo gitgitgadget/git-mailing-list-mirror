@@ -2,81 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4C9852047F
-	for <e@80x24.org>; Mon,  7 Aug 2017 18:30:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EDDE52047F
+	for <e@80x24.org>; Mon,  7 Aug 2017 18:36:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751800AbdHGSav (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Aug 2017 14:30:51 -0400
-Received: from mail-vk0-f46.google.com ([209.85.213.46]:36557 "EHLO
-        mail-vk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751505AbdHGSau (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2017 14:30:50 -0400
-Received: by mail-vk0-f46.google.com with SMTP id u133so4867876vke.3
-        for <git@vger.kernel.org>; Mon, 07 Aug 2017 11:30:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=MVaLQz7os8D9CInlQTJ88rQBvOQbCHG1C4RR/Fsi9w0=;
-        b=WdK0DfAlhPck/R1SCyksheiEyW82WNsNrhmnNDLOVdn2/VJcxnsgfYdNuLUsfdnSq5
-         RW79EBWOYhUFqvLA3ctIqVR86C/hllZlfagsJXUsFnyUfSsiiGlo0uFMLWf4+CDL5ZgA
-         8poXL6gVpgBWn2LFxZ9qd1+NNHTI9WhGXxvnw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=MVaLQz7os8D9CInlQTJ88rQBvOQbCHG1C4RR/Fsi9w0=;
-        b=XAAwR0FDNURkogNNxwe6kDXd/dQVhcS6cMcxJBK+fe+NrmxeE1/AEFO6QvXGMddPB7
-         /h6R9IGO7l4EtHVF3Wy5hvX0FuQR8UbIzI7/uNnDfP1uOcYkwWkPSegAG9jYrZpy5BBU
-         3F8Ur+mTva3F4+5BzFLObdsXxZRb8p9WM6cngTeRRWDN7dehkjzh2lD+ceIjJLK3oDN2
-         8lnOKUtjoXfPcorDOcZsvyrCsS3NSd5a2K9rzd2GtVoGjZ9+KJpOMRS2Un9X4SLoXFBf
-         ylketo2PvgjkazfBe2uIkHfJF/jyMHCHT+SOmvWc8ZbMbgaWm/gwWEW/T64yEcGFl0Jp
-         I7Nw==
-X-Gm-Message-State: AHYfb5hcCfdyjfKTuyJK4yc4NMzWZF0TwF6NILE9DPIlvJORHDKNcv6V
-        mvQcH+wYk5s7LeWNHXiIYc+87kGLIJEa6k0=
-X-Received: by 10.31.211.70 with SMTP id k67mr903927vkg.129.1502130649654;
- Mon, 07 Aug 2017 11:30:49 -0700 (PDT)
+        id S1751589AbdHGSgh (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Aug 2017 14:36:37 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57855 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751429AbdHGSgh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2017 14:36:37 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1C9679D2DF;
+        Mon,  7 Aug 2017 14:36:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=7rJNq7XoElKJ7nrUKqsmvrTswkM=; b=gLOd4f
+        N35MPIiAh7fkxrvLT4rPlQi72e5p5wP+0/C7GvS4Y6qHyVroX6HjprX0tSpwN8kn
+        Nj6cLrwxYBr3jlD5mgPiukND7X+47Vs02IqfJ3TqcVZWjPo4SkDp0HVg3MvP1NFn
+        YdCmMebdqPMsn98x9sz2RXdQreeoH+mt+QVkk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Y6ZrSpX6hVDTqMjjOezvDODH2qaMxmUC
+        k//e0L7xRYEQ5SijeBsc02/rUd3gwWXHvaI1WfjJo7K8yXbRJNIIbSVbYR9vuE5h
+        G+GnWouGEjuWEjFH43KyhO9pnbEsEHo7ka08ink2rdJuffloXjTREAw6uq7w79Rd
+        vwN9M39XmTs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 154319D2DE;
+        Mon,  7 Aug 2017 14:36:31 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 783C59D2DD;
+        Mon,  7 Aug 2017 14:36:30 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Martin Koegler <martin.koegler@chello.at>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] Fix delta integer overflows
+References: <1502129437-31226-1-git-send-email-martin@mail.zuhause>
+Date:   Mon, 07 Aug 2017 11:36:29 -0700
+In-Reply-To: <1502129437-31226-1-git-send-email-martin@mail.zuhause> (Martin
+        Koegler's message of "Mon, 7 Aug 2017 20:10:37 +0200")
+Message-ID: <xmqq1sonql76.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.103.83.7 with HTTP; Mon, 7 Aug 2017 11:30:29 -0700 (PDT)
-In-Reply-To: <CAGZ79kZO517Bg+O2z3dr+oHqO_av1__FU3h9bP=rhXJUSDnRjA@mail.gmail.com>
-References: <CAJo=hJtg0PAVHT1phbArdra8+4LfnEEuaj3fBid==BXkZghi8g@mail.gmail.com>
- <CAGZ79kZO517Bg+O2z3dr+oHqO_av1__FU3h9bP=rhXJUSDnRjA@mail.gmail.com>
-From:   Shawn Pearce <spearce@spearce.org>
-Date:   Mon, 7 Aug 2017 11:30:29 -0700
-Message-ID: <CAJo=hJvsdkrv6uELF0BHxqk4+as8-tr1bdYNHiQ3paTmn=2sRw@mail.gmail.com>
-Subject: Re: reftable [v6]: new ref storage format
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Junio C Hamano <gitster@pobox.com>,
-        David Borowitz <dborowitz@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 54752DC8-7B9F-11E7-9ABF-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 7, 2017 at 11:27 AM, Stefan Beller <sbeller@google.com> wrote:
-> On Sun, Aug 6, 2017 at 6:47 PM, Shawn Pearce <spearce@spearce.org> wrote:
->> 6th iteration of the reftable storage format.
->>
->> You can read a rendered version of this here:
->> https://googlers.googlesource.com/sop/jgit/+/reftable/Documentation/technical/reftable.md
->>
->> The index may be organized into a multi-level index, where ...
->> which may in turn point to either index blocks (3rd level) or ref blocks (leaf level).
+Martin Koegler <martin.koegler@chello.at> writes:
+
+> From: Martin Koegler <martin.koegler@chello.at>
 >
-> So we allow 3 levels at most?
+> The current delta code produces incorrect pack objects for files > 4GB.
+>
+> Signed-off-by: Martin Koegler <martin.koegler@chello.at>
+> ---
+>  diff-delta.c | 23 ++++++++++++-----------
+>  1 file changed, 12 insertions(+), 11 deletions(-)
+>
+> Just pass any file > 4 GB to the delta-compression [by increasing the delta limits].
+> As file size, a truncated 32bit value will be encoded, leading to broken pack files.
 
-No, its just an example. Large ref sets with small block size need 4
-levels. Or more.
+The patch obviously makes the code better and self consistent in
+that "struct delta_index" has src_size as ulong, and this function
+takes trg_size as ulong, and it was plain wrong for the code to
+assume that "i", which is uint, can receive it safely.
 
-> The file format structure marks the indexes '?', should that be
-> rather '*' to indicate there can be more than one index block?
+In the longer term we might want to move to size_t or even
+uintmax_t, as the ulong on a platform may not be long enough in
+order to express the largest file size the platform can have, but
+this patch (1) is good even without such a change, and (2) gives a
+good foundation to build on if we want such a change on top.
 
-Will fix in the next respin of the document, thanks.
+Thanks.  Will queue.
+
+>
+> diff --git a/diff-delta.c b/diff-delta.c
+> index 3797ce6..13e5a01 100644
+> --- a/diff-delta.c
+> +++ b/diff-delta.c
+> @@ -319,7 +319,8 @@ create_delta(const struct delta_index *index,
+>  	     const void *trg_buf, unsigned long trg_size,
+>  	     unsigned long *delta_size, unsigned long max_size)
+>  {
+> -	unsigned int i, outpos, outsize, moff, msize, val;
+> +	unsigned int i, val;
+> +	unsigned long l, outpos, outsize, moff, msize;
+>  	int inscnt;
+>  	const unsigned char *ref_data, *ref_top, *data, *top;
+>  	unsigned char *out;
+> @@ -336,20 +337,20 @@ create_delta(const struct delta_index *index,
+>  		return NULL;
+>  
+>  	/* store reference buffer size */
+> -	i = index->src_size;
+> -	while (i >= 0x80) {
+> -		out[outpos++] = i | 0x80;
+> -		i >>= 7;
+> +	l = index->src_size;
+> +	while (l >= 0x80) {
+> +		out[outpos++] = l | 0x80;
+> +		l >>= 7;
+>  	}
+> -	out[outpos++] = i;
+> +	out[outpos++] = l;
+>  
+>  	/* store target buffer size */
+> -	i = trg_size;
+> -	while (i >= 0x80) {
+> -		out[outpos++] = i | 0x80;
+> -		i >>= 7;
+> +	l = trg_size;
+> +	while (l >= 0x80) {
+> +		out[outpos++] = l | 0x80;
+> +		l >>= 7;
+>  	}
+> -	out[outpos++] = i;
+> +	out[outpos++] = l;
+>  
+>  	ref_data = index->src_buf;
+>  	ref_top = ref_data + index->src_size;
