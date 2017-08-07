@@ -2,82 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C717C2047F
-	for <e@80x24.org>; Mon,  7 Aug 2017 19:53:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EAC9D2047F
+	for <e@80x24.org>; Mon,  7 Aug 2017 19:56:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751743AbdHGTxi (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Aug 2017 15:53:38 -0400
-Received: from mout.web.de ([212.227.15.4]:51726 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751505AbdHGTxh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2017 15:53:37 -0400
-Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MV4tp-1e8lYr02hB-00YOQC; Mon, 07
- Aug 2017 21:53:20 +0200
-To:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Cc:     Edward Thomson <ethomson@edwardthomson.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] t3700: fix broken test under !POSIXPERM
-Message-ID: <ed5c4105-a383-ef7c-c8de-75f22d41edbe@web.de>
-Date:   Mon, 7 Aug 2017 21:53:16 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        id S1751913AbdHGT4A convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 7 Aug 2017 15:56:00 -0400
+Received: from 8.mo176.mail-out.ovh.net ([46.105.58.67]:58032 "EHLO
+        8.mo176.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751826AbdHGT4A (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2017 15:56:00 -0400
+Received: from ex2.mail.ovh.net (gw1.ex2.mail.ovh.net [164.132.80.186])
+        by mo176.mail-out.ovh.net (Postfix) with ESMTPS id 3759C6AFF7;
+        Mon,  7 Aug 2017 21:55:58 +0200 (CEST)
+Received: from [10.0.2.127] (86.200.136.234) by EX7.indiv2.local (172.16.2.7)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Mon, 7 Aug
+ 2017 21:55:57 +0200
+Subject: Re: [PATCH 1/4] imap-send: add wrapper to get server credentials if
+ needed
+To:     Jeff King <peff@peff.net>,
+        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>
+CC:     Git Mailing List <git@vger.kernel.org>
+References: <9687e182-1e23-f84d-3fad-83fdf15dba4c@morey-chaisemartin.com>
+ <CAN0heSoA_Xm+14V49hjJBMT7PS_ge0wyhmuvKiw-MHD99rApYQ@mail.gmail.com>
+ <fdd74c52-7d9a-b12e-2e1f-524479201701@morey-chaisemartin.com>
+ <CAN0heSqVmrFwP7LdjDJmH0JivoCc+DhGtUiTSBs=8nTppzG79A@mail.gmail.com>
+ <20170807194257.jrdmpvoseauz37uc@sigill.intra.peff.net>
+From:   Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
+Message-ID: <a4761418-0464-baa1-b415-836f33503eb8@morey-chaisemartin.com>
+Date:   Mon, 7 Aug 2017 21:55:56 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:55.0) Gecko/20100101
+ Thunderbird/55.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:snieq9TsWbSU78URL5O4xZIpOo3k8Jg9VseuLgfGbvo+/JG83rH
- G4AYD9KT1HpKEZsvh5LUGLRp1g5oinRJaIZSaKTXJ/+M4J603+rMlg1tT1OBheFiUw7qcsl
- O4/0jpWjn+96gnR9bdnn6Qeo+13V/7OFF+ty+axDO91CpVOYsSmrkgONnK6WUuGPTY83QEi
- j3oxqhgHzDASjYiA1MBvw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:pWi9TvX5pOg=:eKhO03d1B61aYpUfXWqUSh
- bbdO0U3ep3mY563g3fbF9fxXEPHYi5x/4OZaL1RWnWm7mrFQgKaIcJ2RhphKJ2dWoeRtZAIzT
- 2XOQpUtgfknn0w0cYpSTkR81ZlOt91jgrHDYCWzsOnai1+rCAIRRaoOqDx3P81A0Kmh9ZE7yS
- maFfN9Q+YrlXG24ZpXhqS/PJD9PZDCHdmgbqcwbKpmls7ESB02t/HrBzO+bMNd0n01TnMzwN5
- 4drZG+PGjPa4KhJ4O+8shd4Lm1pQjCflZWNM5mDziS0Om+edz74rByvWSnIDl0jvVOQ0nTKpG
- AmzxomqD38X6K4bYjcsLzlqEzOrZhBMmC/e2rv0B3zTQQMX/u+6VswHGKEHfeI19YwNOKG3jH
- tep4wD44EoJRZCrgWYiZPXuKPO58CMlv/H3uD8EOwCqkSFXakmKDXl9Np0hjHAd5jlGpfn2gd
- l656g3n9deMeC4taNVvCJfHkZvhVUjufKPRymknxYD3nPhDrHCPyCf+nZexOgQ9Yo38dNrpbz
- fl/cYSOph6y5a/3ImpXIabP3Ddm28vED+czvDDNdGjtl/nrKE6/xgkSHRNlIdLi6mY6FRzGXz
- /OojMGU1pllfxIYXTeCerFTGd5NUkfJ/lpsxfrSggpn/1u/0S6WJhW9cdCy3b6SOFbBZF4MyA
- S8BS1xP6SD+yBsesxcOlSQew57P6AcV8sNWuL/vSk1aRKp5Ag8TD+0JHP4Memdu792dleMyTz
- bY+tIzQp4mlCeU8Ag0v8WSXiqrtP0nyfotaoZRopX9KiodemSBZMbOjDCm046JJNRC0x4/+bp
- QigqFoxJjw7rNnqlSGbIX1h3bt8gfxfGHIWno87i0M4m+xfAgs=
+In-Reply-To: <20170807194257.jrdmpvoseauz37uc@sigill.intra.peff.net>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+Content-Language: fr-xx-classique+reforme1990
+X-Originating-IP: [86.200.136.234]
+X-ClientProxiedBy: CAS1.indiv2.local (172.16.1.1) To EX7.indiv2.local
+ (172.16.2.7)
+X-Ovh-Tracer-Id: 14253329874879965149
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeelkedrkedugddugeejucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddm
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-76e368c378 (t3700: fix broken test under !SANITY) explains that the test
-'git add --chmod=[+-]x changes index with already added file' can fail
-if xfoo3 is still present as a symlink from a previous test and deletes
-it with rm(1).  That still leaves it present in the index, which causes
-the test to fail if POSIXPERM is not defined.  Get rid of it by calling
-"git reset --hard" instead, as 76e368c378 already mentioned in passing.
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- t/t3700-add.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t3700-add.sh b/t/t3700-add.sh
-index f3a4b4a913..4111fa3b7a 100755
---- a/t/t3700-add.sh
-+++ b/t/t3700-add.sh
-@@ -355,7 +355,7 @@ test_expect_success POSIXPERM,SYMLINKS 'git add --chmod=+x with symlinks' '
- '
- 
- test_expect_success 'git add --chmod=[+-]x changes index with already added file' '
--	rm -f foo3 xfoo3 &&
-+	git reset --hard &&
- 	echo foo >foo3 &&
- 	git add foo3 &&
- 	git add --chmod=+x foo3 &&
--- 
-2.14.0
+Le 07/08/2017 à 21:42, Jeff King a écrit :
+> On Mon, Aug 07, 2017 at 07:18:32PM +0200, Martin Ågren wrote:
+>
+>>>> "cred.username" is checked further down, but now it will always be NULL,
+>>>> no?
+>>> You're right I missed this.
+>>> Not sure if this is needed though.
+>>> From what I understand this means the username/password are store for the next access to credential. but in the current state, there is only one.
+>>> Maybe the credential_approved can be dropped ?
+>> I'm no credentials-expert, but api-credentials.txt says this:
+>>
+>> "Credential helpers are programs executed by Git to fetch or save
+>> credentials from and to long-term storage (where "long-term" is simply
+>> longer than a single Git process; e.g., credentials may be stored
+>> in-memory for a few minutes, or indefinitely on disk)."
+>>
+>> So the calls to approve/reject probably do matter in some scenarios.
+> Right, this is important. credential_fill() may actually prompt the
+> user, and we'd want to then pass along that credential for storage. Or
+> the user may have changed their password, and the credential_reject() is
+> the only thing that prevents us from trying an out-dated password over
+> and over.
+>
+>> The current code is a bit non-obvious as we just discovered since it
+>> duplicates the strings (for good reasons, I believe) and then still
+>> refers to the originals (also for good reasons, I believe). I suppose
+>> your new function could be called like
+>>
+>> server_fill_credential(&cred, srvc);
+>>
+>> That should limit the impact of the change, but I'm not sure it's a
+>> brilliant interface. Just my 2c.
+> That would work. I'm also tempted to say that imap_server_conf could
+> just store the "struct credential" inside it. We could even potentially
+> drop its parallel user/pass fields to minimize confusion.
+>
+> Once upon a time imap-send was a fork of another program, which is why
+> most of its code isn't well-integrated with Git. But I think at this
+> point there's very little chance of merging changes back and forth
+> between the two.
+>
+> On the other hand, if we're hoping to get rid of this code in favor of
+> the curl-based approach, then it's not worth spending time on
+> cosmetic refactoring, as long as it still behaves correctly in the
+> interim.
+>
+> -Peff
+
+Looking at the code, it seems the tunnel mode always uses the legacy imap approach.
+This would have to be ported to curl and stabilized before dropping the legacy code.
+In the meantime, it might be worth doing a bit of cleanup.
+And as I said in patch 4, I have a current IMAP account where it works without curl but not with curl (for unknown reason yet).
+Meaning legacy needs to stay for a while. But switching to curl as default to get out all the bugs (hence this slightly broken patch series)
+
+I think it would make sense to get patch 1 (fixed), 2 and 4 in to really test out the curl implementation and take some time to prepare another serie with code cleanups: dropping imap_server_conf parameters, storing cred therem etc.)
+
+Nicolas
+
+
+
