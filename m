@@ -2,93 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 334DD2047F
-	for <e@80x24.org>; Mon,  7 Aug 2017 21:10:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 33F2C2047F
+	for <e@80x24.org>; Mon,  7 Aug 2017 21:13:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751931AbdHGVKq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Aug 2017 17:10:46 -0400
-Received: from mout.gmx.net ([212.227.15.18]:50727 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751662AbdHGVKp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2017 17:10:45 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LqzIJ-1dAhDA2SkF-00eYyL; Mon, 07
- Aug 2017 23:10:39 +0200
-Date:   Mon, 7 Aug 2017 23:10:39 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Martin Koegler <martin.koegler@chello.at>, git@vger.kernel.org
-Subject: Re: [PATCH] Fix delta integer overflows
-In-Reply-To: <xmqqshh3p3b0.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.21.1.1708072307410.4271@virtualbox>
-References: <1502129437-31226-1-git-send-email-martin@mail.zuhause> <xmqq1sonql76.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.21.1.1708072136290.4271@virtualbox> <xmqqshh3p3b0.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751993AbdHGVNK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Aug 2017 17:13:10 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59950 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751971AbdHGVNJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2017 17:13:09 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9695EA0203;
+        Mon,  7 Aug 2017 17:13:01 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=eQgNw4KJpYKPN3SCyYWIvVhovYk=; b=kax1mK
+        5DMZLZPgOSbH256FgdgZgXTaut+VoUhn0chzb4BTKaCXBIvpVTKqZo34QEKFLsKs
+        kvwpYF7peNydsHXOvmEG2hD7fgy0GsMdKDvsuWucUdMzUe3Mv3Mt0kq6HYz52IIO
+        EFYNF1HBePTvq7Hhxqgja5mlDISKka4FXu07Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=xI8EcV5qWRrz1b1K7xGsk0dMtIDvi/Yb
+        DogV4K5oiDckzQEOmXJje1+kusGcMmVXzKTkSVE3La76OsUDqcoGtmH4X71DRBL/
+        8GzehqNwOVThNQH96L0hxA8voS8dhOBwbDOFoPrZafgiu7gDOFGeB1DKYIXW7pre
+        vMjKSrYoljE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 80F4EA0201;
+        Mon,  7 Aug 2017 17:13:01 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9F57CA01FD;
+        Mon,  7 Aug 2017 17:13:00 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        Dave Borowitz <dborowitz@google.com>
+Subject: Re: [PATCH 0/6] clean up parsing of maybe_bool
+References: <cover.1502128418.git.martin.agren@gmail.com>
+        <CAGZ79kaEA7DRm4inO=XPCVvA3mJioV_yckAVEUbCo5DEwoxbUQ@mail.gmail.com>
+Date:   Mon, 07 Aug 2017 14:12:58 -0700
+In-Reply-To: <CAGZ79kaEA7DRm4inO=XPCVvA3mJioV_yckAVEUbCo5DEwoxbUQ@mail.gmail.com>
+        (Stefan Beller's message of "Mon, 7 Aug 2017 11:44:06 -0700")
+Message-ID: <xmqq1sonozdx.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:REZ/g782EmKLSAQP+pHiv9egzazRd7MOd2WlmD/vhbTtlhFi/vU
- +JjSuFzv4lzihPvVsTGtBXMzYwKqbX6ki9EMO145KUIpXBhydobW8pERWQeRJFosIZDFqF3
- R9a44zjCum/ItPJJ1ye0ESpmV67DdeU5VkjfniaXQrL8QiYTqOSw9Ji02g4QDz2gKmr7MEJ
- NRnTiQqaAEjuBQGgoa6Ew==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:7AlFsr8tQI8=:+xqxgOb7k+z7nWUe/5C72E
- RpdStXuLvtIXsTffmfkA2VBVyU2YnU8O3IPoUtG57ivJ831Fv90JQ/4iRrrE+VL1c2ljPcYwX
- jWvdFNUompfD9evybWzNyHJsRGqxv9C0cYDMA/6i2VPwLdQDciwVby1uMqUHtkk2mLFeezTGG
- ui6UqMZnTMxFTyD5/f6r/CnGoA92TqMM82w0Q3N8pn467hhOnSoyVeSb/iu8I+9sDJGtpgUeC
- KpRLO9QW+ppVUrEqUJgjrWl4NVmUTM974SDUex/Nf94ms64FcFZ2WX+mDcdRrpEmcjGaA04dU
- XBD2tZuVVrhSHeiu6ebXpxqAJoFSehek6ZNZ5+dNGX5wnGIn8IZVvnzSW/X6WmfWxBjARslDH
- EiPsxyXWofa2X575kOMARf7ekEiB+eAUroc0g7DL429gf/S7a8KR7dcGGBRVqk3AnOxn2eVZi
- KR5+9+lSMf2QJNUW1VN2trQdNDiiN3NJgUvJ4LQJY6Z6Ws2WZwsVdgVAt7zJCa1k8wx8w46dB
- chxNDHfiVsObAZIM+QFXhZ/O85miwCIXOqFgJnvlF2FrDe3y1vMW05kxfsyYA98tpuvLDdw1M
- 49U53lg+ldSBPhNPGtuShLihbBdS02uY20TMSSG37RAJ/OU1nxBYck1NwFhufh1T7uS8S0Z0s
- g4RsQv7sAjE8H4Dlyp5aqkNFikzVV+nbfgOC3drvEf9AYohZCdSH+5I56ayJNKGoasz9ezWCK
- Y+wRm0ii8tPSwas4Wx1Br9MqGjjB82XoVCdWHDSPqdHzcyJNdpemVtDV7bDQ0JL2B4NuIoO33
- BHchhNZvL4VcymT4y4nygEMbhvuQ1KwtD0ZxLGQQxUeDuDa9JQ=
+Content-Type: text/plain
+X-Pobox-Relay-ID: 316E4362-7BB5-11E7-9232-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Stefan Beller <sbeller@google.com> writes:
 
-On Mon, 7 Aug 2017, Junio C Hamano wrote:
+> The series looks fine to me overall, though patch 5 is overly gentle IMHO.
+> We could have removed it right there as Junio is very good at resolving
+> conflicts or producing dirty merges for such a situation.
+> But delaying it until no other series' are in flight is fine with me, too.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> >> The patch obviously makes the code better and self consistent in
-> >> that "struct delta_index" has src_size as ulong, and this function
-> >> takes trg_size as ulong, and it was plain wrong for the code to
-> >> assume that "i", which is uint, can receive it safely.
-> >> 
-> >> In the longer term we might want to move to size_t or even
-> >> uintmax_t, as the ulong on a platform may not be long enough in
-> >> order to express the largest file size the platform can have, but
-> >> this patch (1) is good even without such a change, and (2) gives a
-> >> good foundation to build on if we want such a change on top.
-> >> 
-> >> Thanks.  Will queue.
-> >
-> > This is sad. There is no "may not be long enough". We already know a
-> > platform where unsigned long is not long enough, don't we? Why leave this
-> > patch in this intermediate state?
-> 
-> This is a good foundation to build on, and I never said no further
-> update on top of this patch is desired.  Look for "(2)" in what you
-> quoted.
+If you remove the old one, it would cause compilation error due to
+removal of the declaration of the old one when other series that are
+in flight adds new callsites to it.  Which makes life a bit easier
+for the integrators when it is trivial to convert these callsites to
+use the new one.  If the way the old one and the new one are called
+are vastly different, of course, leaving the compatibility layer
+that no longer is used after the series will make it easier to live
+with other topics in flight, on the other hand.
 
-So are you saying that starting with v2.14.0, you accept patches into `pu`
-for which you would previously have required multiple iterations before
-even considering it for `pu`?
+I am fine with either in this case, but I probably would have opted
+for removal at the end of this series if I were doing this series,
+because
 
-Frankly, I am a bit surprised that this obvious change from `unsigned
-long` to `size_t` is not required in this case before queuing, but if the
-rules have changed to lower the bar for patch submissions, I am all for
-it. I always felt that we are wasting contributors' time a little too
-freely and too deliberately.
+-	git_config_maybe_bool(K,V)
++	git_parse_maybe_bool(V)
 
-Ciao,
-Dscho
+that may have to happen during evil merges would have been trivial.
+
+Thanks.
