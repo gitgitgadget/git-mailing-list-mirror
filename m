@@ -2,98 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D86E72047F
-	for <e@80x24.org>; Mon,  7 Aug 2017 20:59:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2399E2047F
+	for <e@80x24.org>; Mon,  7 Aug 2017 21:07:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751905AbdHGU70 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Aug 2017 16:59:26 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50246 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751662AbdHGU7Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2017 16:59:25 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id ADDD7A4D13;
-        Mon,  7 Aug 2017 16:59:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=IkuDwQzByrl42avxlXj1RrzH4sU=; b=q07nZV
-        AawolgrI+acw+zlD7r7QHO/oGA0t7gwztwOwRxNlSDOxl3UL/CvWBn2jtoHf+5yj
-        zH5rV/+Slt2M04o29MQ7jjfAA7wd0j44lsFXJuerxWAk81/yq3Rdzvnns13lGyZa
-        LQU0OadHRCqU6lLaGD8O5VdJUZe4zFrIbEblc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=OcAN3ZyCJEgvLp4P7MbVjHDHJizV13gO
-        1pkuka9vGTl0D3QgP7nsOUP3kRElnKE2w2T0TE8Dwgr2zNOMkBqard2bsD3zpu2R
-        Djz/Wfdn/ccXSGdMe12DGeML64xsVFgOznPGC8UpWaBLi7bPLX4ZLbdxXEILvnzo
-        db0wiD7l19U=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A6C1AA4D12;
-        Mon,  7 Aug 2017 16:59:24 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1E742A4D11;
-        Mon,  7 Aug 2017 16:59:24 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Can the '--set-upstream' option of branch be removed ?
-References: <xmqq1sp2q1cc.fsf@gitster.mtv.corp.google.com>
-        <20170807143938.5127-1-kaarticsivaraam91196@gmail.com>
-Date:   Mon, 07 Aug 2017 13:59:22 -0700
-In-Reply-To: <20170807143938.5127-1-kaarticsivaraam91196@gmail.com> (Kaartic
-        Sivaraam's message of "Mon, 7 Aug 2017 20:09:36 +0530")
-Message-ID: <xmqq60dzp00l.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1752092AbdHGVHR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Aug 2017 17:07:17 -0400
+Received: from mout.gmx.net ([212.227.15.15]:51422 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751826AbdHGVHQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2017 17:07:16 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LedVG-1dI9vE2Am6-00qQxQ; Mon, 07
+ Aug 2017 23:07:10 +0200
+Date:   Mon, 7 Aug 2017 23:07:04 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Michael Forney <mforney@mforney.org>, git@vger.kernel.org
+Subject: Re: [PATCH] Drop some dashes from built-in invocations in scripts
+In-Reply-To: <xmqqshh3qqs4.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1708072300310.4271@virtualbox>
+References: <20170805064905.5948-1-mforney@mforney.org> <xmqqshh3qqs4.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4ABD8172-7BB3-11E7-A827-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:fpXKMPZ1TH3C9bMiJT88V+rDDz+T1eKh43UkxV1P187eFUS62Bo
+ 5buPJOj61Y20WUm/W86UTyl63fQ1xo9bBkgHN8ClXc9DRgPXzyHt2pknJEaaFNSDP26hysX
+ 5JjsOBgHrf5lm46/z+hci6UoR4Sxt6CFu/xx7iZIDwCc3hrTl78PGD++EJn/KQVD0iJkWc0
+ ClboyNK8NKRs4m+80WNUw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:DzdNl30pU7E=:wMp/tiLBs57jk3JFyih0VJ
+ zalz3HkAkl/BXLwFFqyvfBPyExcBIHx7JjCQg1sn4bRRDZZsAAJrRrDDcwYrQhdc6WZcWQdNY
+ VPTEKeCJ/Sdnmg5n166WipDUc8oV9rnHty+Utjk2snJOg3FzRKzAdGP0gj9LPogfVI970RGBL
+ CdiRXwXktnL2Hl8IqI7jgt1tDe3Q1hLVfYBGpR3qkOUVylHJV8/Yd2IXCJ6YNbNh1Atulbpqd
+ 3R4UEDkaoSVuIbtlnHqVcdQtT8RvRyzsRhYxUyqSEwBrtwDdZ2MdpnJaeV9TD0z1eXpyaf+fk
+ K+0gudHX5NVoJsupk3a8t96U2TppYgZJllXM1HaMhchQGkJeHwjazP6hOqoy8KVuhUwrQPhxX
+ RRepQtmFeex26ZdVVj+0U2xOPSnskW3bW+fPZjZaajfbXq/ZbmniNafGhbQYnSaZ+cf5Mcvgg
+ CTHqSUqQ6i2w+h/0zkkRsYOc5BE75Y2B97WeTvmtSQRNb00LfhjyT5TrPniWWdEjqJgSZSZF5
+ fV9RJB9LRpEEnfpylp5i72tXDLu2+2qQh6n9yjcCg/1VK7OKhsROgVrzHt2YBIcgeFPMfXpDe
+ R9GgDUpI9Ylq7Sm1+whjm7a/HScnLzCYCucvZxRa9wvEj06n12J6WmS/2GiljFywg6PpQTiyT
+ eYWkEDXRF48Ws3LT1BLt1zbnfKIYmK0cTn4sX9udanNzfWEt0Fqypo514m1aRFTZjOcnDS4lY
+ A7GcCXY1MRcIwo43FQukAqxbbPlqmlgVMHg8mDGyatBERD7wB8wiboOBSlkvCEff9YVjITu64
+ n2Q5X7NRfDqZ2YDcMCcbZyPA+gbAsgCFhQAu1xn+qsSMM+ePjs=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
+Hi Junio,
 
-> I refactored builtin/branch.c to remove the '--set-upstream'
-> option,successfully. The corresponding patch follows. 
->
-> There's just one issue with the version of git that doesn't
-> have the '--set-upstream' option. It's described in the commit
-> log message of the following patch.
+I feel a bit talked to my hand, as the only reply I was graced was a "I
+think I already did". So this will be my last reply on this matter for a
+while.
 
-which is...
+On Mon, 7 Aug 2017, Junio C Hamano wrote:
 
-> Note that, 'git branch' still *accepts* '--set-upstream' as a consequence
-> of "unique prefix can be abbrievated in option names". '--set-upstream'
-> is a unique prefix of '--set-upstream-to' after '--set-upstream' has
-> been removed.
+> IIUC, you will need "$GIT_EXEC_PATH/git-checkout" on the filesystem if
+> you want your "git co" alias to work, as we spawn built-in as a dashed
+> external.
 
-... this.
+And of course this is just the status quo, not an argument why it should
+be so for eternity. Because that would be circular reasoning and prevent
+us from improving things.
 
-Thanks for spotting the issue.  
+It is still arguably wrong to call the dashed form for builtins when we
+already have enough information at our hands to tell that it is a builtin:
 
-I think in the longer term we still want to remove --set-upstream as
-many people seem to say that its behaviour has been uttering
-confusing to them and that is why we keep giving the warning any
-time it is used.
+	https://github.com/git-for-windows/git/commit/bad2c6978ec
 
-> I guess it would be difficult to detect the removal of the option in
-> case it's used in scripts and might cause confusion to users?
+Granted, this duplicates code a little, as it was developed under time
+pressure (and it is necessary to allow the test suite to be run on Git
+built in Visual Studio using an installed Git for Windows for the Unix
+utilities). As above, though, the current state of this patch does not
+prevent any improvement in the future.
 
-If we want to follow through the transition, because of the issue
-you spotted, we'd need one extra step to make sure users won't be
-hurt before removal: we would need to still recognize --set-upstream
-as an option distinct from --set-upstream-to, and actively fail the
-request, telling them that the former option no longer is supported.
-
-Then after waiting for a few years, we may be able to re-introduce
-the "--set-upstream" option that takes the arguments in the same
-order as "--set-upstream-to", which would be the ideal endgame
-(assuming that the reason why we started deprecating "--set-upstream"
-and encouraged users to use "--set-upstream-to" still holds).
-
+Ciao,
+Dscho
