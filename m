@@ -6,89 +6,70 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4C0771F991
-	for <e@80x24.org>; Mon,  7 Aug 2017 06:08:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6348F20899
+	for <e@80x24.org>; Mon,  7 Aug 2017 08:21:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751883AbdHGGIe (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Aug 2017 02:08:34 -0400
-Received: from smtp122.ord1c.emailsrvr.com ([108.166.43.122]:49876 "EHLO
-        smtp122.ord1c.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751795AbdHGGId (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 7 Aug 2017 02:08:33 -0400
-Received: from smtp24.relay.ord1c.emailsrvr.com (localhost [127.0.0.1])
-        by smtp24.relay.ord1c.emailsrvr.com (SMTP Server) with ESMTP id 001F560338
-        for <git@vger.kernel.org>; Mon,  7 Aug 2017 02:08:32 -0400 (EDT)
-X-SMTPDoctor-Processed: csmtpprox beta
-Received: from smtp24.relay.ord1c.emailsrvr.com (localhost [127.0.0.1])
-        by smtp24.relay.ord1c.emailsrvr.com (SMTP Server) with ESMTP id F2EE96033D
-        for <git@vger.kernel.org>; Mon,  7 Aug 2017 02:08:32 -0400 (EDT)
-Received: from smtp192.mex09.emailsrvr.com (unknown [184.106.73.70])
-        by smtp24.relay.ord1c.emailsrvr.com (SMTP Server) with ESMTPS id D415660338
-        for <git@vger.kernel.org>; Mon,  7 Aug 2017 02:08:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=statseeker.com;
-        s=20170629-l0wbkvum; t=1502086112;
-        bh=1I8UcdDC2gf6hbHgCs+vbRkme/EZ/Qdkhs9tmyGZT5g=;
-        h=From:To:Subject:Date:From;
-        b=NNxqpyRC/yjMjSRaf511WYKrGRkOHN+4ekBMQwZ2d+yP8q6txp4tYraflDMj4e4SV
-         xhlXBMn0NDXrd3DPszaNeCr2JwXwtvsQ0QYPVK/PWNTVhHiwM5JwzSDKbgHeXJ6C7g
-         romlEiaMeSbOMuu7yFk1nBF1OlDH0gpWJY90unG8=
-X-Sender-Id: james.wells@statseeker.com
-Received: from smtp192.mex09.emailsrvr.com ([UNAVAILABLE]. [184.106.73.70])
-        (using TLSv1.2 with cipher AES256-SHA256)
-        by 0.0.0.0:25 (trex/5.7.12);
-        Mon, 07 Aug 2017 02:08:32 -0400
-Received: from MBX04D-ORD1.mex09.mlsrvr.com (172.29.128.30) by
- MBX04D-ORD1.mex09.mlsrvr.com (172.29.128.30) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
- 15.1.669.32; Mon, 7 Aug 2017 01:08:32 -0500
-Received: from MBX04D-ORD1.mex09.mlsrvr.com ([fe80::40b3:1086:160a:405e]) by
- MBX04D-ORD1.mex09.mlsrvr.com ([fe80::40b3:1086:160a:405e%21]) with mapi id
- 15.01.0669.032; Mon, 7 Aug 2017 01:08:32 -0500
-From:   James Wells <james.wells@statseeker.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: upgarding GIT
-Thread-Topic: upgarding GIT
-Thread-Index: AdMPQ2NPbrFDYd5KTIq487yWwoqxgg==
-Date:   Mon, 7 Aug 2017 06:08:32 +0000
-Message-ID: <9a2576ed8b7146459585af4238613286@statseeker.com>
-Accept-Language: en-AU, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [14.203.103.145]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        id S1752119AbdHGIVU (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Aug 2017 04:21:20 -0400
+Received: from fallback11.m.smailru.net ([94.100.179.26]:54676 "EHLO
+        fallback.mail.ru" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751442AbdHGIVT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2017 04:21:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
+        h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=qrN6HgOuulOrcRL2UE8sG6uhE/YDqcxQrFDflFRyKqk=;
+        b=cpOJxMCLWTUkYacSRxZ6ESn82UKIpcREfyDlmAGVqQF5U4ZOO5jt+XUD3lP7rTBkss+e83Am5nNZu1X4n54k4gS67zjiDRvcS+4hnNXOxo03DVg7XLQV4WPC01Z3t8Vmqyu2KI8W7lbcjGIY1H8YvScRqfNaIlcegoAmuQLNAJc=;
+Received: from [10.161.64.43] (port=58198 helo=smtp35.i.mail.ru)
+        by fallback11.m.smailru.net with esmtp (envelope-from <kostix@bswap.ru>)
+        id 1dedHm-0005FY-Lj
+        for git@vger.kernel.org; Mon, 07 Aug 2017 11:21:16 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
+        h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=qrN6HgOuulOrcRL2UE8sG6uhE/YDqcxQrFDflFRyKqk=;
+        b=cpOJxMCLWTUkYacSRxZ6ESn82UKIpcREfyDlmAGVqQF5U4ZOO5jt+XUD3lP7rTBkss+e83Am5nNZu1X4n54k4gS67zjiDRvcS+4hnNXOxo03DVg7XLQV4WPC01Z3t8Vmqyu2KI8W7lbcjGIY1H8YvScRqfNaIlcegoAmuQLNAJc=;
+Received: by smtp35.i.mail.ru with esmtpa (envelope-from <kostix@bswap.ru>)
+        id 1dedHk-0000iN-4h; Mon, 07 Aug 2017 11:21:12 +0300
+Date:   Mon, 7 Aug 2017 11:21:05 +0300
+From:   Konstantin Khomoutov <kostix@bswap.ru>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git-for-windows@googlegroups.com, git@vger.kernel.org
+Subject: Re: [git-for-windows] [ANNOUNCE] Git for Windows 2.14.0
+Message-ID: <20170807082105.fwbv7d7hotsqeddx@tigra>
+References: <20170805230001.3232-1-johannes.schindelin@gmx.de>
+ <978038E7-74E8-4F9F-A3B9-0BAD82C80FFE@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <978038E7-74E8-4F9F-A3B9-0BAD82C80FFE@gmail.com>
+User-Agent: NeoMutt/20170306 (1.8.0)
+X-7FA49CB5: 0D63561A33F958A52C904464C66A5B7E2FF93FAEF9E69F60625722D541A4D6C1725E5C173C3A84C363D77626233CE5AB732AC0210F880A15B17145F0B7815491C4224003CC836476C0CAF46E325F83A50BF2EBBBDD9D6B0F9A3D58A9A349F5073B503F486389A921A5CC5B56E945C8DA
+X-Mailru-Sender: 3EA917A0E6524472E50B252446CEFEA412AE7A4705EE9EA8EFFBF4142A25EA4AC87DFF528253291DFD27B1545737DED76F53C80213D1719CB3360D9C94DE366A1CC4A9B39F20364B73395D515EC5B64AAE208404248635DF
+X-Mras: OK
+X-7FA49CB5: 0D63561A33F958A530E76A4F713727B93E8471B670D13F1BFA0CC13645DFA404462275124DF8B9C975FAC89DD1A0FDCBE5BFE6E7EFDEDCD789D4C264860C145E
+X-Mailru-Sender: A5480F10D64C90059EC859477DBBED74CFAFA9B35919B18CAEAD2E69F8F4D1217942E65D3B0E2994FD27B1545737DED76F53C80213D1719CB3360D9C94DE366A1CC4A9B39F20364B73395D515EC5B64AAE208404248635DF
+X-Mras: OK
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi All
+On Sun, Aug 06, 2017 at 01:16:46PM +0200, Lars Schneider wrote:
 
-I am fairly new to git, however I have a challenge of upgrading git from 2.=
-0.4 to 2.4.12 and my initial 2.0.4 install was done via TAR BALL on my serv=
-er.
+[...]
+> >  * It is now possible to switch between Secure Channel and OpenSSL for
+> >    Git's HTTPS transport by setting the http.sslBackend config
+> >    variable to "openssl" or "schannel"; This is now also the method
+> >    used by the installer (rather than copying libcurl-4.dll files
+> >    around).
+> 
+> Does anyone have a pros/cons list for this option? AFAIK OpenSSL is still
+> the default in the GfW installer and I wonder why. My gut feeling would be to 
+> go with the SSL implementation shipped with the OS. However, I don't have enough 
+> knowledge of either implementation to make an assessment.
 
-I have a centos server running git and Atlassian STASH and my challenge is =
-for me to upgrade the STASH application I need to move to a newer version o=
-f git.
-
-How do I go about upgrading git from TAR BALL installs , is there an easy w=
-ay as I would prefer not to have to create a new server and migrate everyth=
-ing across , I would like to perform the upgrade on the current local serve=
-r if it is at all possible.
-
-Any assistance is most welcome and I would appreciate your feedback or comm=
-ents on how you would go about achieving this task.
-
-Thanks
-J
-
-
-
-
-
-
-
+One fact which immediately comes to mind is that both frameworks use
+different sets of certificates (schannel uses the system's one, and
+OpenSSL uses what gets shipped with it).  Another fact is that they
+might have different sets or protocols implemented and/or enabled by
+default.  Hence switching schannel on for people who used OpenSSL might
+break things for them.
 
