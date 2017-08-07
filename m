@@ -7,137 +7,116 @@ X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E46920899
-	for <e@80x24.org>; Mon,  7 Aug 2017 09:20:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 977D620899
+	for <e@80x24.org>; Mon,  7 Aug 2017 10:02:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752674AbdHGJUT (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Aug 2017 05:20:19 -0400
-Received: from mout.gmx.net ([212.227.17.22]:50632 "EHLO mout.gmx.net"
+        id S1752724AbdHGKCO (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Aug 2017 06:02:14 -0400
+Received: from mout.gmx.net ([212.227.17.21]:49168 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752367AbdHGJUS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2017 05:20:18 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MeLKt-1e0RFY2PfT-00Q9Y8; Mon, 07
- Aug 2017 11:20:15 +0200
-Date:   Mon, 7 Aug 2017 11:20:14 +0200 (CEST)
+        id S1752606AbdHGKCN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2017 06:02:13 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lb5Tp-1dCQiA15RJ-00kgZ4; Mon, 07
+ Aug 2017 12:02:11 +0200
+Date:   Mon, 7 Aug 2017 12:02:10 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Konstantin Khomoutov <kostix@bswap.ru>
-cc:     Lars Schneider <larsxschneider@gmail.com>,
-        git-for-windows@googlegroups.com, git@vger.kernel.org
+To:     Johannes Sixt <j6t@kdbg.org>
+cc:     git-for-windows@googlegroups.com, git@vger.kernel.org
 Subject: Re: [git-for-windows] [ANNOUNCE] Git for Windows 2.14.0
-In-Reply-To: <20170807082105.fwbv7d7hotsqeddx@tigra>
-Message-ID: <alpine.DEB.2.21.1.1708071103220.4271@virtualbox>
-References: <20170805230001.3232-1-johannes.schindelin@gmx.de> <978038E7-74E8-4F9F-A3B9-0BAD82C80FFE@gmail.com> <20170807082105.fwbv7d7hotsqeddx@tigra>
+In-Reply-To: <c532df98-b020-810a-c378-04c7dd5b0fa7@kdbg.org>
+Message-ID: <alpine.DEB.2.21.1.1708071147430.4271@virtualbox>
+References: <20170805230001.3232-1-johannes.schindelin@gmx.de> <c532df98-b020-810a-c378-04c7dd5b0fa7@kdbg.org>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:uZWA4tEO3TuJLpHHWoQP1FlwnV1njGheypDPPQxPlKPk/6huEL3
- CeKLmpPNVjaKiuXhsudZRVxZul5lHnBwYunBeUD5x4R7+alt0FiudRxN30CaTqoHAVncrdD
- FWKzbaftF3yzlz70EzoApv4iQq8OfkNRVvkt9OzAYtaoZR/xmZgjzcDRKin37eWfD7iYHjY
- WKbB9q5VxsKZCF7xVtepA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:z4Ml8kmuv80=:zco4qR2K8A4yu5Wu9yiMFo
- ZGFwiC5C8g1f2QmNR7041oIQ4xTLGK9Ih19cOsUo6VxnHhH8Tzj3/WOu6qsDBubwxtngMOPO0
- +DLT9g9m7bc+TVXHB6j6qAaRfdgfbvbFQ+EKNDL179j09EXg5pyb6bM89vq1GO+hqQXJErnt0
- 5dPd6KQLO4Yly0ZswSEBMPEAihRwSNMfmPNNjzPMAtnX7UhF4OSP3RqU3zWeG0W1ceGYRpkGy
- 5ZUA3enhdLfRLFRasTVovHJv+g2hldlsoxSR6XNqMEzDQKaOfJbiQ0MrDM7hKxQyJq20kj6qu
- hHBInoET1E8u/4Q3m2jqwenqHI+L2EJY8S1jrWjnAimOoj26VgVZXOST3YVt9wTjSKsuUuAzT
- 6Tygsrjer65zW3QpcgQIaR3b3jhto9jF6xpDjqpRhIWWLW6SbtozWkcw3DQQVRE+z5To6rnNv
- ga1xYPI7/DTVICqPfaNp8p8GllEJqUXoQfZzkUTwV+kZyuIXb8BBqEmZuYwXgX5mgOR8hqlLo
- ZRQz+em5WPcVrRqu19g6XwvKolmB91+RsGxPnMiOVQwFGhf0vbXIw+kTV/9lnbuFmuToKOqyD
- I1pISFkzDao+aoSlfe++OItchJm14tflwo9gTpdiLG2Of9iXj5lR4mx4BpvCji7N5hHhn+LCF
- UifFNTbjjFaIbu69rzhb00zDjKwqAgvrS2BXSMXW20yhbKqtwx9a9EkROk3p/zlBOELdtDxQ7
- 9V0SNc4NmR/sSwZNwK8J6cW3Y8Pz7mkL79aZBnI+8PDtVlZUIUcnJRcoJqeSZLpDAA0eoQAKG
- pmBg3qbWpNWBqDlv8GntbFCHrKRtuDO35tqnH6khkCCfjoH98k=
+X-Provags-ID: V03:K0:Wrie9k+uQPlDBwo+UWiOdvuQcGZ/400x0uPZDHo9ORIl5rIZnWU
+ QVL7flj/1Durr2YTyxlWDdDT6RR6DhJ2jRUcHifsqeXRYMdH6Eh98aMi0v3oYoEKnf1CmH1
+ 5gw5c/ONdEdNjdejxmWVNUIVYSX2WWPt9QIaQbwFhnL+5jX2+nsKVDr1BZg3dfXyHyrf4oC
+ ZkeKyAV4Z6ZQnDWzzF1og==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:3Jc3NXLbYS4=:xYpyAwT1om/JzypuZYylzn
+ thcox3YSS65qHLZcsHKjAY+lSGrSIJ58khZUmHEO5DQIJw1U1KxORHK2Ht7zL9RQAwIc9po8W
+ zpqN5SB8bpdoIQ6N8xfuQs7DMF6cK3yyV0QlKaMgAWtwB0N6DE5lbKfb/Gq/r7zsJmqOqkSKj
+ +H4tBeo+mhb38zxL1Sl4xO8gjXM7rEve12IX5kSFbjgMPtLX4AIJ13mUjhLyyLgEi+TAdO9g6
+ OTJ4BTG3DhstyYe3urMOqsAEkVHy+jDIECjp0ASFTVeCE0vl5Go345Jmrk6Ij2qTxZ2LyBTDV
+ wjzwPDS2aPZ7VAPyB/rtiNnmsswyp/q4FObvrRjSwgLRURw5Mhe6rbOPhL90JpKAAoLwCfwdD
+ w3piEkSJc3sRzq7MPmbzYYF1wYMHiju4ZhKLmwTCo1N07TlU8iOaa4dVkGmn6ODq/WGclQUTX
+ kKbbbEaZYL+bnV3WeVcuXpmUGK7riD5hUtkSwdGmfWJoKNLJHWp6bbjZkuASASb4aHz+DZSt+
+ 4daBq5DJdxqG4JiWWinPIYosHLCG5xGsyiTR2iQ2UwZzgWawCyPOTI2WfrM5QnjkL0uwLZ8Rc
+ fDZrRuD/QnUmz/RNsZjcy7LZxwqlWtQ2drToR8wylySum9vMzaOk61VCF1d60UoUav/TW+OyF
+ rsOF8RXMq9aB8NCsX60LW4QxowsK0uR9ykaJw9N9fWQ+rH2WvewIrUEaPMbiwVdIySq6zn6GQ
+ xaFrMqbAeWmU5yzopvudXchZ6JGshHJxdcZxJlycV3OWkrMbxO32lt1MNW7QCGoqJ85sL/k1r
+ lhfvMTV1/24DXdvZrT68GT+HLSNqEDnmdxEoMxW0qhaX/3He5Y=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Lars & Konst,
+Hi Hannes,
 
-On Mon, 7 Aug 2017, Konstantin Khomoutov wrote:
+On Sun, 6 Aug 2017, Johannes Sixt wrote:
 
-> On Sun, Aug 06, 2017 at 01:16:46PM +0200, Lars Schneider wrote:
-> 
-> [...]
-> > >  * It is now possible to switch between Secure Channel and OpenSSL for
-> > >    Git's HTTPS transport by setting the http.sslBackend config
-> > >    variable to "openssl" or "schannel"; This is now also the method
-> > >    used by the installer (rather than copying libcurl-4.dll files
-> > >    around).
+> Am 06.08.2017 um 01:00 schrieb Johannes Schindelin:
+> > Dear Git users,
 > > 
-> > Does anyone have a pros/cons list for this option?
+> > It is my pleasure to announce that Git for Windows 2.14.0 is available from:
+> > 
+> >  https://git-for-windows.github.io/
+> > 
+> > Changes since Git for Windows v2.13.3 (July 13th 2017)
+> 
+> Thank you so much! One question, though:
+> 
+> >New Features
+> >...
+> >    * Comes with [BusyBox v1.28.0pre.15857.9480dca7c](https://github.com/
+> >      git-for-windows/busybox-w32/commit/9480dca7c].
+> 
+> What is the implication of this addition? I guess it is not just for the
+> fun of it. Does it mean that all POSIX command line tools invoked by Git
+> including a POSIX shell are now routed through busybox instead of the
+> MSYS2 variant?
 
-There is no exhaustive list of pros/cons as of time of writing. Off the
-top of my head:
+As I wrote a little later:
 
-OpenSSL pros:
-- well-tested
-- been the only option for Git for Windows in almost a decade
+* Git for Windows releases now also include an experimental [BusyBox-based
+  MinGit](https://github.com/git-for-windows/git/wiki/MinGit#experimental-busybox-based-mingit).
 
-OpenSSL cons:
-- does not integrate with the Windows Certificate Store
+And as I described in that Wiki entry, no, Git for Windows does not make
+use of BusyBox just yet. Only the experimental version of MinGit.
 
-Secure Channel pros:
-- well-tested
-- is an integral part of the Windows Operating System
-- supports the Windows Certificate Store
+It would be *awesome*, of course, to benefit from using BusyBox: size,
+speed, robustness (reducing the MSYS2 dependency). But we're just not
+there yet. What needs to happen before that?
 
-Secure Channel cons:
-- has not been used by many Git for Windows users yet (so may have some
-  surprising issues?)
-- does not support OpenSSL's way of adding custom certificates via
-  ca-bundle.crt
+- lots of testing. And I mean *lotsssss* of testing. BusyBox is by far
+  less tried and tested than Bash, and BusyBox-w32 is *even less* tried
+  and tested. And BusyBox-w32 *with my patches* is tried and tested only a
+  little, and only by me. Before I risk getting bug reports about a
+  BusyBox-based Git for Windows, I want to be a lot more certain that
+  it is basically solid.
 
-The big deal with the Windows Certificate Store? It can be administered
-enterprise-wide via regular Windows administration tools. That makes a
-huge difference when working with an internal server that has a custom SSL
-certificate.
+- BusyBox-w32' interactive functionality expects a Win32 Console. In Git
+  Bash, we only have MSYS2's pseudo terminal, no Win32 Console. If we ever
+  want to be able to execute Git's scripts via BusyBox-w32, it *needs* to
+  learn about MSYS2 ptys, at least to emulate isatty() accordingly (we
+  have code in Git for Windows itself to do that, of course, it's no witch
+  craft, but... yet another thing to do).
 
-Please note that I, personally, have used Git for Windows almost
-exclusively via Secure Channel since late January this year. I have not
-had *any* trouble. But then, I do not use servers with custom SSL
-certificates at the moment.
+- judging by the number of bugs on Git for Windows' bug tracker, there
+  *are* some users out there installing their own hooks and aliases, and a
+  really tiny fraction of those users seems to be really happy to have a
+  full suite of GNU utilities available. BusyBox, however, does not
+  support that full functionality. Therefore, switching to BusyBox would
+  possibly break those setups.
 
-> > AFAIK OpenSSL is still the default in the GfW installer and I wonder
-> > why.
-
-Only one reason: the law of least surprise. Some users went to certain
-lengths when working with custom SSL certificates, building elaborate
-upgrade scenarios that modify the ca-bundle.crt file (and of course none
-of those efforts try to help any other user having the same problem).
-
-> > My gut feeling would be to go with the SSL implementation shipped with
-> > the OS. However, I don't have enough knowledge of either
-> > implementation to make an assessment.
-
-The reason I worked on cURL to allow choosing the SSL backend at runtime
-rather than build time is so that you can test this easier.
-
-Personally, I think that Secure Channel is the better option, for the same
-reason you mentioned: it is integrated with Windows. So if you configure
-proxies via regular Windows settings, Secure Channel will definitely
-handle it as expected. If you trust individual custom certificates via
-regular Windows mechanisms, Secure Channel will pick that up (IIUC).
-
-Therefore I would expect Secure Channel to provide a far superior user
-experience to OpenSSL.
-
-As a consequence, my plan is to switch the default from OpenSSL to Secure
-Channel when I feel that enough users have tested that backend and are as
-satisfied with it as I am. This will of course *not* affect users who
-upgrade, as the Git for Windows installer remembers previous settings and
-reapplies them on upgrades.
-
-> One fact which immediately comes to mind is that both frameworks use
-> different sets of certificates (schannel uses the system's one, and
-> OpenSSL uses what gets shipped with it).  Another fact is that they
-> might have different sets or protocols implemented and/or enabled by
-> default.  Hence switching schannel on for people who used OpenSSL might
-> break things for them.
-
-Indeed. OTOH Secure Channel should be a safe default.
+Mind you, I really want to get there. And I think we will be able to get
+there. By inviting testing (the BusyBox-based MinGit is a very good start,
+for example). By adding an experimental option to Git for Windows'
+installer to switch to BusyBox. By announcing in Git for Windows' release
+notes that this will become the default at some stage ("please test your
+aliases and hooks!").
 
 Ciao,
 Dscho
