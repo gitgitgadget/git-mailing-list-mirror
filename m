@@ -2,130 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EDDE52047F
-	for <e@80x24.org>; Mon,  7 Aug 2017 18:36:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 777682047F
+	for <e@80x24.org>; Mon,  7 Aug 2017 18:44:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751589AbdHGSgh (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Aug 2017 14:36:37 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57855 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751429AbdHGSgh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2017 14:36:37 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1C9679D2DF;
-        Mon,  7 Aug 2017 14:36:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=7rJNq7XoElKJ7nrUKqsmvrTswkM=; b=gLOd4f
-        N35MPIiAh7fkxrvLT4rPlQi72e5p5wP+0/C7GvS4Y6qHyVroX6HjprX0tSpwN8kn
-        Nj6cLrwxYBr3jlD5mgPiukND7X+47Vs02IqfJ3TqcVZWjPo4SkDp0HVg3MvP1NFn
-        YdCmMebdqPMsn98x9sz2RXdQreeoH+mt+QVkk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Y6ZrSpX6hVDTqMjjOezvDODH2qaMxmUC
-        k//e0L7xRYEQ5SijeBsc02/rUd3gwWXHvaI1WfjJo7K8yXbRJNIIbSVbYR9vuE5h
-        G+GnWouGEjuWEjFH43KyhO9pnbEsEHo7ka08ink2rdJuffloXjTREAw6uq7w79Rd
-        vwN9M39XmTs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 154319D2DE;
-        Mon,  7 Aug 2017 14:36:31 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 783C59D2DD;
-        Mon,  7 Aug 2017 14:36:30 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin Koegler <martin.koegler@chello.at>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] Fix delta integer overflows
-References: <1502129437-31226-1-git-send-email-martin@mail.zuhause>
-Date:   Mon, 07 Aug 2017 11:36:29 -0700
-In-Reply-To: <1502129437-31226-1-git-send-email-martin@mail.zuhause> (Martin
-        Koegler's message of "Mon, 7 Aug 2017 20:10:37 +0200")
-Message-ID: <xmqq1sonql76.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751683AbdHGSoK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Aug 2017 14:44:10 -0400
+Received: from mail-lf0-f43.google.com ([209.85.215.43]:34225 "EHLO
+        mail-lf0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751508AbdHGSoJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2017 14:44:09 -0400
+Received: by mail-lf0-f43.google.com with SMTP id g25so5600794lfh.1
+        for <git@vger.kernel.org>; Mon, 07 Aug 2017 11:44:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=JxpyOp0pc0Kbcm9vL/OD36o21jYhfUcvzlgG7TZGINQ=;
+        b=N7HaPjoarS7MClgJHtR8QjX9zt3ZakRDV042mY00rFvtofGXXB4uHphw6M69R7ZjQG
+         vQcJlsKaE0NwIZAE2+I1zxaZrBm3Y+3FEHYuiof4HHd7PU8y7oXygAFL6X7imB+qxvxl
+         81KTEk/lFTQRWbQey/ybMu6tH7ifM/VSND5awK0nT/n2G1GLKijg7f9cLyfFk21RNhO4
+         T8YLigxtAdxCrfh62/YvNvrKwhXG5YaLx/OuHKr9RoqtuLfYR9sU0ILRktlK5er5WRbr
+         i0dpDwz2CpJjnqEyYqom6ty2M7FTyNJmNuAWB3Ts0Kdw/lgb8DW3pVomhGKoNsIqn3B3
+         Q+kg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=JxpyOp0pc0Kbcm9vL/OD36o21jYhfUcvzlgG7TZGINQ=;
+        b=EClU/NshjibZQXwHVW7+JjgQcQObVERXpVbCEbXesNQ1YPZHOXfPc3NsXSeFPa3Djp
+         k3Tv0ORdkc94MG1olP1d59Pi0nPg4DCDzREsKRE12G1nexwaRfUS0aZkXrQhO8VJU2H/
+         cwL/3R0FxUjoH4jD/4qgzo0S8bnhnPoeqZ48rYh+q/OLBSd8M0xaADGNR9FLDwyp6Dm4
+         V/hSUgT4pR6mKYXKdyOkUasV3A/i9kT2/O6sxxaaVQYPOm81yQzyVd8c6lmohlXOk0tV
+         lqmgXfGHuGck+I0pxEwVomhpT0HnqYyfsS5/AbFTtL2rTfHNEAO3cflyRELuxkTVcM/F
+         vgGA==
+X-Gm-Message-State: AHYfb5gseARz5wunoyngjnb/WBtYPW/c07f76c+5tab/4SXlEMVq7zdB
+        Dkl35uJZRkK4y2qiaXFAcdGmJdntT015
+X-Received: by 10.46.5.80 with SMTP id 77mr497690ljf.91.1502131447647; Mon, 07
+ Aug 2017 11:44:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 54752DC8-7B9F-11E7-9ABF-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Received: by 10.25.1.130 with HTTP; Mon, 7 Aug 2017 11:44:06 -0700 (PDT)
+In-Reply-To: <cover.1502128418.git.martin.agren@gmail.com>
+References: <cover.1502128418.git.martin.agren@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 7 Aug 2017 11:44:06 -0700
+Message-ID: <CAGZ79kaEA7DRm4inO=XPCVvA3mJioV_yckAVEUbCo5DEwoxbUQ@mail.gmail.com>
+Subject: Re: [PATCH 0/6] clean up parsing of maybe_bool
+To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Dave Borowitz <dborowitz@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin Koegler <martin.koegler@chello.at> writes:
-
-> From: Martin Koegler <martin.koegler@chello.at>
+On Mon, Aug 7, 2017 at 11:20 AM, Martin =C3=85gren <martin.agren@gmail.com>=
+ wrote:
+> When we want to parse a boolean config item without dying on error, we
+> call git_config_maybe_bool() which takes two arguments: the value to be
+> parsed (obviously) and a `name` which is completely ignored. Junio has
+> suggested to drop `name` and rename the function [1]. That effort even
+> started shortly after that, by introducing git_parse_maybe_bool(). The
+> new function currently only has a single user outside config.c.
 >
-> The current delta code produces incorrect pack objects for files > 4GB.
+> Patch 5 of this series deprecates the old function and updates all
+> callers to use git_parse_maybe_bool() instead. Patch 6 is a final
+> cleanup: one of the converted callers suddenly had an unused argument.
 >
-> Signed-off-by: Martin Koegler <martin.koegler@chello.at>
-> ---
->  diff-delta.c | 23 ++++++++++++-----------
->  1 file changed, 12 insertions(+), 11 deletions(-)
+> Patches 3 and 4 prepare for the switch. In particular, patch 4 ensures
+> that the two functions are actually equivalent. In doing so, it affects
+> `git push --signed=3D..` which was very slightly inconsistent to the rest
+> of Git.
 >
-> Just pass any file > 4 GB to the delta-compression [by increasing the delta limits].
-> As file size, a truncated 32bit value will be encoded, leading to broken pack files.
-
-The patch obviously makes the code better and self consistent in
-that "struct delta_index" has src_size as ulong, and this function
-takes trg_size as ulong, and it was plain wrong for the code to
-assume that "i", which is uint, can receive it safely.
-
-In the longer term we might want to move to size_t or even
-uintmax_t, as the ulong on a platform may not be long enough in
-order to express the largest file size the platform can have, but
-this patch (1) is good even without such a change, and (2) gives a
-good foundation to build on if we want such a change on top.
-
-Thanks.  Will queue.
-
+> Patch 2 adds a failing test in preparation for patch 4. Patch 1 corrects
+> the documentation not to say "git push --sign=3D.." to make it a bit more
+> obvious that the opposite typo is not being made in patches 2 and 4.
 >
-> diff --git a/diff-delta.c b/diff-delta.c
-> index 3797ce6..13e5a01 100644
-> --- a/diff-delta.c
-> +++ b/diff-delta.c
-> @@ -319,7 +319,8 @@ create_delta(const struct delta_index *index,
->  	     const void *trg_buf, unsigned long trg_size,
->  	     unsigned long *delta_size, unsigned long max_size)
->  {
-> -	unsigned int i, outpos, outsize, moff, msize, val;
-> +	unsigned int i, val;
-> +	unsigned long l, outpos, outsize, moff, msize;
->  	int inscnt;
->  	const unsigned char *ref_data, *ref_top, *data, *top;
->  	unsigned char *out;
-> @@ -336,20 +337,20 @@ create_delta(const struct delta_index *index,
->  		return NULL;
->  
->  	/* store reference buffer size */
-> -	i = index->src_size;
-> -	while (i >= 0x80) {
-> -		out[outpos++] = i | 0x80;
-> -		i >>= 7;
-> +	l = index->src_size;
-> +	while (l >= 0x80) {
-> +		out[outpos++] = l | 0x80;
-> +		l >>= 7;
->  	}
-> -	out[outpos++] = i;
-> +	out[outpos++] = l;
->  
->  	/* store target buffer size */
-> -	i = trg_size;
-> -	while (i >= 0x80) {
-> -		out[outpos++] = i | 0x80;
-> -		i >>= 7;
-> +	l = trg_size;
-> +	while (l >= 0x80) {
-> +		out[outpos++] = l | 0x80;
-> +		l >>= 7;
->  	}
-> -	out[outpos++] = i;
-> +	out[outpos++] = l;
->  
->  	ref_data = index->src_buf;
->  	ref_top = ref_data + index->src_size;
+> git_parse_maybe_bool is used in sb/diff-color-move, which is in "next".
+> This series makes --color-moved and diff.colormoved consistent with
+> other booleans. That should be a good thing, but cc Stefan to be sure.
+
+The series looks fine to me overall, though patch 5 is overly gentle IMHO.
+We could have removed it right there as Junio is very good at resolving
+conflicts or producing dirty merges for such a situation.
+But delaying it until no other series' are in flight is fine with me, too.
+
+Looking back at sb/diff-color-move and the code where
+git_parse_maybe_bool is used, I do not think this will be an issue.
+
+Thanks,
+Stefan
