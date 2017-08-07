@@ -2,141 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D6ED2047F
-	for <e@80x24.org>; Mon,  7 Aug 2017 18:29:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C9852047F
+	for <e@80x24.org>; Mon,  7 Aug 2017 18:30:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751970AbdHGS3b (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Aug 2017 14:29:31 -0400
-Received: from mail-qk0-f172.google.com ([209.85.220.172]:34479 "EHLO
-        mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751508AbdHGS3a (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2017 14:29:30 -0400
-Received: by mail-qk0-f172.google.com with SMTP id u139so7415492qka.1
-        for <git@vger.kernel.org>; Mon, 07 Aug 2017 11:29:30 -0700 (PDT)
+        id S1751800AbdHGSav (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Aug 2017 14:30:51 -0400
+Received: from mail-vk0-f46.google.com ([209.85.213.46]:36557 "EHLO
+        mail-vk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751505AbdHGSau (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2017 14:30:50 -0400
+Received: by mail-vk0-f46.google.com with SMTP id u133so4867876vke.3
+        for <git@vger.kernel.org>; Mon, 07 Aug 2017 11:30:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=YHOpRVZ581AQCp5i6od62oFvI9jpIGLQQJjtAJKs4RY=;
-        b=q5J4ruqRh8CiVt6gviNEvFEFldLm/Kmw5+g8ECWGd5RA8tWiVaQZusSxLKYDG2MfKa
-         yGLY7b0FaaOOyY02Pc/rlNngz7l1XJp2jW/e/hVBlJCJ53wjKDakjAUHu/WA8bhqVv7c
-         Qij0nF9fInSFSS+uTFpLiPXeE+eDPak0WfxDvpB0Co8N32M8BcRFvOErD7kIPrh+ddc4
-         j8aWMb5ZIa0x6XKHixCNTbnIza3sB65ksDqv739NuRJcqYUTqGPTZuGyycbZMzIgowSE
-         Fr/v5djFk5EFh/lDCVhpo4+pzr/+hrO8h8jevG73KJ3wG8WHEZ4dUNjsaexiiWi5IkIG
-         iI5w==
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=MVaLQz7os8D9CInlQTJ88rQBvOQbCHG1C4RR/Fsi9w0=;
+        b=WdK0DfAlhPck/R1SCyksheiEyW82WNsNrhmnNDLOVdn2/VJcxnsgfYdNuLUsfdnSq5
+         RW79EBWOYhUFqvLA3ctIqVR86C/hllZlfagsJXUsFnyUfSsiiGlo0uFMLWf4+CDL5ZgA
+         8poXL6gVpgBWn2LFxZ9qd1+NNHTI9WhGXxvnw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=YHOpRVZ581AQCp5i6od62oFvI9jpIGLQQJjtAJKs4RY=;
-        b=Upl9Jbiq7uMwgSVok6xOxlGXaTWJNNeqqaec+tvCjUrwrQZ3xoutGLJ7WIuDQpfiBD
-         hFRQSYKFK+XJ1RKWm4QDie5l7UVOo+0WBBjRD7tjr8WX2IuhVknsXJOn9nZMA+2WpjZQ
-         SpykLAm9mmoVxDQuznVzToZef//0F5mDZouYMoW4oWIlkiN8JwKCaIB/5zd97iO/LJeS
-         9GvsF2uFpwRon9z4/vezdbLy9rjf23C4YaFh3FDjQ4jtQNuidlryxNLWVIGGgfsUFfhw
-         /H14wn9AMWD1hTZ6Q7gWU/Wp5hzeMxB/yCwpeg8lARPTm9KKLo3ePhw1HWQkdWolkdUi
-         gdrA==
-X-Gm-Message-State: AHYfb5inDjJBa1DKjDDgOmQgx7F0kHxS+vbPisMV1JxKHijfKtJr42pI
-        RtQxd/Hd0IEvSQ==
-X-Received: by 10.55.49.11 with SMTP id x11mr2015931qkx.224.1502130569507;
-        Mon, 07 Aug 2017 11:29:29 -0700 (PDT)
-Received: from [192.168.1.13] ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id h42sm6151648qtb.97.2017.08.07.11.29.28
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 07 Aug 2017 11:29:29 -0700 (PDT)
-Subject: Re: [PATCH for NEXT v3 2/2] sub-process: refactor handshake to common
- function
-To:     Jonathan Tan <jonathantanmy@google.com>,
-        Lars Schneider <larsxschneider@gmail.com>
-Cc:     benpeart@microsoft.com, git@vger.kernel.org, bmwill@google.com,
-        gitster@pobox.com
-References: <cover.1501092795.git.jonathantanmy@google.com>
- <20170724213810.29831-1-jonathantanmy@google.com>
- <cover.1501092795.git.jonathantanmy@google.com>
- <6327579311fdb941a11b6d452318777a3c42ee65.1501092795.git.jonathantanmy@google.com>
- <323E470B-994B-4AD8-9F30-588C2B97A845@gmail.com>
- <20170807102136.30b23023@twelve2.svl.corp.google.com>
- <2BEA5CEF-44C9-45DC-A462-579864790EDB@gmail.com>
- <20170807111708.2d745df2@twelve2.svl.corp.google.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <142c1757-d366-61fe-ffa8-a398bdfd8c03@gmail.com>
-Date:   Mon, 7 Aug 2017 14:29:27 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=MVaLQz7os8D9CInlQTJ88rQBvOQbCHG1C4RR/Fsi9w0=;
+        b=XAAwR0FDNURkogNNxwe6kDXd/dQVhcS6cMcxJBK+fe+NrmxeE1/AEFO6QvXGMddPB7
+         /h6R9IGO7l4EtHVF3Wy5hvX0FuQR8UbIzI7/uNnDfP1uOcYkwWkPSegAG9jYrZpy5BBU
+         3F8Ur+mTva3F4+5BzFLObdsXxZRb8p9WM6cngTeRRWDN7dehkjzh2lD+ceIjJLK3oDN2
+         8lnOKUtjoXfPcorDOcZsvyrCsS3NSd5a2K9rzd2GtVoGjZ9+KJpOMRS2Un9X4SLoXFBf
+         ylketo2PvgjkazfBe2uIkHfJF/jyMHCHT+SOmvWc8ZbMbgaWm/gwWEW/T64yEcGFl0Jp
+         I7Nw==
+X-Gm-Message-State: AHYfb5hcCfdyjfKTuyJK4yc4NMzWZF0TwF6NILE9DPIlvJORHDKNcv6V
+        mvQcH+wYk5s7LeWNHXiIYc+87kGLIJEa6k0=
+X-Received: by 10.31.211.70 with SMTP id k67mr903927vkg.129.1502130649654;
+ Mon, 07 Aug 2017 11:30:49 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20170807111708.2d745df2@twelve2.svl.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Received: by 10.103.83.7 with HTTP; Mon, 7 Aug 2017 11:30:29 -0700 (PDT)
+In-Reply-To: <CAGZ79kZO517Bg+O2z3dr+oHqO_av1__FU3h9bP=rhXJUSDnRjA@mail.gmail.com>
+References: <CAJo=hJtg0PAVHT1phbArdra8+4LfnEEuaj3fBid==BXkZghi8g@mail.gmail.com>
+ <CAGZ79kZO517Bg+O2z3dr+oHqO_av1__FU3h9bP=rhXJUSDnRjA@mail.gmail.com>
+From:   Shawn Pearce <spearce@spearce.org>
+Date:   Mon, 7 Aug 2017 11:30:29 -0700
+Message-ID: <CAJo=hJvsdkrv6uELF0BHxqk4+as8-tr1bdYNHiQ3paTmn=2sRw@mail.gmail.com>
+Subject: Re: reftable [v6]: new ref storage format
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Junio C Hamano <gitster@pobox.com>,
+        David Borowitz <dborowitz@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 8/7/2017 2:17 PM, Jonathan Tan wrote:
-> On Mon, 7 Aug 2017 19:51:04 +0200
-> Lars Schneider <larsxschneider@gmail.com> wrote:
-> 
+On Mon, Aug 7, 2017 at 11:27 AM, Stefan Beller <sbeller@google.com> wrote:
+> On Sun, Aug 6, 2017 at 6:47 PM, Shawn Pearce <spearce@spearce.org> wrote:
+>> 6th iteration of the reftable storage format.
 >>
->>> On 07 Aug 2017, at 19:21, Jonathan Tan <jonathantanmy@google.com> wrote:
->>>
->>> On Sun, 6 Aug 2017 21:58:24 +0200
->>> Lars Schneider <larsxschneider@gmail.com> wrote:
->>>
->>>>> +	struct cmd2process *entry = (struct cmd2process *)subprocess;
->>>>> +	return subprocess_handshake(subprocess, "git-filter", versions, NULL,
->>>>> +				    capabilities,
->>>>> +				    &entry->supported_capabilities);
->>>>
->>>> Wouldn't it make sense to add `supported_capabilities` to `struct subprocess_entry` ?
->>>
->>> The members of "struct subprocess_entry" are not supposed to be accessed
->>> directly, according to the documentation. If we relaxed that, then we
->>> could do this, but before that I think it's better to let the caller
->>> handle it.
+>> You can read a rendered version of this here:
+>> https://googlers.googlesource.com/sop/jgit/+/reftable/Documentation/technical/reftable.md
 >>
->> @Ben: You wrote that " Members should not be accessed directly.":
->> https://github.com/git/git/commit/99605d62e8e7e568035dc953b24b79b3d52f0522#diff-c1655ad5d68943a3dc5bfae8c98466f2R22
->> Can you give me a hint why?
->>
+>> The index may be organized into a multi-level index, where ...
+>> which may in turn point to either index blocks (3rd level) or ref blocks (leaf level).
+>
+> So we allow 3 levels at most?
 
-It's just good object oriented design of providing a layer of 
-abstraction between the implementation details and the use of the 
-class/object/API.  I was following the model in api-hashmap.txt but 
-there are many other examples of where we don't do this.
+No, its just an example. Large ref sets with small block size need 4
+levels. Or more.
 
-Perhaps providing a function that returns the property you want to 
-access (similar to subprocess_get_child_process) would work.
+> The file format structure marks the indexes '?', should that be
+> rather '*' to indicate there can be more than one index block?
 
->> @Jonathan: What do you mean by "it's better to let the caller handle it"
-> 
-> Let the caller provide their own place to store the capabilities, I
-> mean, instead of (say) using a field as you describe and an accessor
-> method.
-> 
-> I don't feel strongly about this, though.
-> 
->>> It does, but so does chosen_version. This is meant to allow the caller
->>> to pass NULL to this function.
->>
->> Hm. I think every protocol should be versioned otherwise we could run
->> into trouble in the long run.
->>
->> TBH I wouldn't support NULL in that case in the first place. If you
->> want to support it then I think we should document it.
-> 
-> Note that this NULL is for the chosen version as chosen by the server,
-> not the versions declared as supported by the client.
-> 
-> The protocol is versioned. Some users (e.g. the filter mechanism) of
-> this subprocess thing would want to pass NULL because they only support
-> one version and the subprocess thing already ensures that the server
-> report that it supports one of the versions sent.
-> 
+Will fix in the next respin of the document, thanks.
