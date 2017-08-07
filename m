@@ -2,85 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A5C3C2047F
-	for <e@80x24.org>; Mon,  7 Aug 2017 21:49:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 14EBD2047F
+	for <e@80x24.org>; Mon,  7 Aug 2017 22:08:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751919AbdHGVtk (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Aug 2017 17:49:40 -0400
-Received: from mail-qk0-f178.google.com ([209.85.220.178]:32817 "EHLO
-        mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751662AbdHGVtj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2017 17:49:39 -0400
-Received: by mail-qk0-f178.google.com with SMTP id a77so10333667qkb.0
-        for <git@vger.kernel.org>; Mon, 07 Aug 2017 14:49:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=neosmart.net; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=RVERTBWRR4G20ElbbmWImm3mjfDp9kS3Tg6AClrY1Lo=;
-        b=QQ5FiqCHWivTC21Ujsq5rkQHq6FwscKUyrq7ZBspnilZiPSr2/DQ4xnu096iAvgM4P
-         XhzhEwc6pPuqYe9YA6XickHINUi7U82XV2oM4qVuOsQgq/9xC4WkjNzKczvFK2Aom/dH
-         jBdZTuWQcoOgPK3YmEdi7l3P50U2pAZk3WYT0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=RVERTBWRR4G20ElbbmWImm3mjfDp9kS3Tg6AClrY1Lo=;
-        b=m2awTB/WTxIlNVeVpsbFLhwmQDXTNyRw7hthK0vHfvjEONaCPJz3zzdKFUDJEOGuig
-         g8Dt1d9sF7Ue3hn6OLS6uCToXqiMbaB9eklckmXZYapPj9TmjkkmVslW57M0BURUuNl+
-         vWcD1pYj4o/NwCz+NMMaLmMjDno9Y4wELbB47dcXx11/iVDv3Hmu1PYp7Ev1pN3POTdp
-         /FlRQa2TxEieGNFab4XXZSfeAtFvr6lY0nuAF0hv33VqJnvaCabvC+KwkoTGhcyg+2qb
-         /QA834qThUosneSNpHP8kfdpR7NpY/MxebJQTnh+KBJptQpSjl8lxQZ5znc8y1FeTa6Z
-         /joA==
-X-Gm-Message-State: AHYfb5hs2Tm4jXJyScPfMpRiiWTv+9TL1BYCKzQdxY5yk3bKSdn6RHYx
-        eaFBcdwFtFEs4fhLbkOMvlN+JmR+vY1baMM=
-X-Received: by 10.55.105.67 with SMTP id e64mr2568779qkc.134.1502142578951;
- Mon, 07 Aug 2017 14:49:38 -0700 (PDT)
+        id S1751775AbdHGWIl (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Aug 2017 18:08:41 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62606 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751662AbdHGWIk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2017 18:08:40 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CC06CA12E8;
+        Mon,  7 Aug 2017 18:08:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=2vR39eTydvoSbNjVa+4USWev1yk=; b=dayXgg
+        KgQGZCbPkGng8NWNVghgezCqC9RUF/911pj0K/URRyKsFqiEUiP6YfLsADX6ucBJ
+        qjPINFYDARXNcMgsDn+X9geg+zDYi6FhloAlibp56eU7Jyzbytvpe98GTtczb2RL
+        iJvpriFc1pSjrnJtyyjtqeyunRiGyNHUdJenA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=jzSo/ri7POHXW8vmw1JD+kVCbcbUoCJi
+        oL7nENXYq+YwLoH/5gQT1cpOgiv0zims9acVSzWe7jKWjto6duyJHtt95QiBWqwn
+        bInMvEiyS9/wbwcNDVxkwl9fGk9j1VlhUR26B4F4yK7G+9q0JiKBpYEYZFhwCFqH
+        JlTfm/t7+s8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C45FCA12E7;
+        Mon,  7 Aug 2017 18:08:32 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 337C9A12E4;
+        Mon,  7 Aug 2017 18:08:32 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Wong <e@80x24.org>
+Cc:     git@vger.kernel.org, Urs Thuermann <urs@isnogud.escape.de>
+Subject: Re: [PATCH] git svn fetch: Create correct commit timestamp when using --localtime
+References: <ygf8tiyx480.fsf@tehran.isnogud.escape.de>
+Date:   Mon, 07 Aug 2017 15:08:30 -0700
+In-Reply-To: <ygf8tiyx480.fsf@tehran.isnogud.escape.de> (Urs Thuermann's
+        message of "05 Aug 2017 02:12:15 +0200")
+Message-ID: <xmqqlgmvni8x.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.140.35.85 with HTTP; Mon, 7 Aug 2017 14:49:18 -0700 (PDT)
-From:   Mahmoud Al-Qudsi <mqudsi@neosmart.net>
-Date:   Mon, 7 Aug 2017 16:49:18 -0500
-Message-ID: <CACcTrKdzVCKUR8EfwhqBQR7vWzRqTLcwRJ_r-hx3VztD=xvNuQ@mail.gmail.com>
-Subject: Suggestion: better error message when an ambiguous checkout is executed
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: F3313F84-7BBC-11E7-9B51-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Urs Thuermann <urs@isnogud.escape.de> writes:
 
-The default git behavior when attempting to `git checkout xxx` for
-some value of "xxx" that cannot be resolved to a single, unique
-file/path/branch/tag/commit/etc is to display the following:
+> In parse_svn_date() prepend the correct UTC offset to the timestamp
+> returned.  This is the offset in effect at the commit time instead of
+> the offset in effect at calling time.
+>
+> Signed-off-by: Urs Thuermann <urs@isnogud.escape.de>
+> ---
+>  perl/Git/SVN.pm | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-> error: pathspec 'xxx' did not match any file(s) known to git
+Thanks; sounds sensible.  
 
-Unfortunately, this is (IMHO) at best misleading when the actual case
-is that "git could not unambiguously resolve pathspec xxx"
+Eric?
 
-Can the case where xxx _was_ resolved but to more than one value be
-improved in both utility and comprehensibility by providing an error
-message that
-
-1) indicates that xxx was a valid pathspec, but not a unique one
-2) provides a list of unique pathspecs that xxx matched against
-
-e.g. in the case where xxx is the name of a branch on both origin1 and
-origin2, it would be ideal if git could instead report
-
-> error: pathspec 'xxx' could not be uniquely resolved
-> xxx can refer to one of the following:
-> * branch origin1/xxx
-> * branch origin2/xxx
-
-or, less ideally but much simpler, only the first line of that message?
-
-Thank you,
-
-Mahmoud Al-Qudsi
-NeoSmart Technologies
+>
+> diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
+> index 98518f4..bc4eed3 100644
+> --- a/perl/Git/SVN.pm
+> +++ b/perl/Git/SVN.pm
+> @@ -1416,7 +1416,7 @@ sub parse_svn_date {
+>  			delete $ENV{TZ};
+>  		}
+>  
+> -		my $our_TZ = get_tz_offset();
+> +		my $our_TZ = get_tz_offset($epoch_in_UTC);
+>  
+>  		# This converts $epoch_in_UTC into our local timezone.
+>  		my ($sec, $min, $hour, $mday, $mon, $year,
