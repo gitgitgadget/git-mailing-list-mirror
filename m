@@ -2,61 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 32586208B5
-	for <e@80x24.org>; Mon,  7 Aug 2017 18:21:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A1CD52047F
+	for <e@80x24.org>; Mon,  7 Aug 2017 18:21:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751869AbdHGSVN (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Aug 2017 14:21:13 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:38212 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751426AbdHGSVM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2017 14:21:12 -0400
-Received: by mail-wm0-f68.google.com with SMTP id y206so1898219wmd.5
-        for <git@vger.kernel.org>; Mon, 07 Aug 2017 11:21:11 -0700 (PDT)
+        id S1751901AbdHGSVT (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Aug 2017 14:21:19 -0400
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:37599 "EHLO
+        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751875AbdHGSVS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2017 14:21:18 -0400
+Received: by mail-wm0-f45.google.com with SMTP id t201so13365832wmt.0
+        for <git@vger.kernel.org>; Mon, 07 Aug 2017 11:21:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=n+nHb5UQhw6Lu775WT89nh3EqBMNu6FkI9vYgHHAgm8=;
-        b=sI/DdfWmrgpWNKuAMOYzirjdNDi+domGWrZh74vUYDijJPsQ2xtgGxFnL4lgQyoHOL
-         R7T+x+CEuFFKC96wvoWK6col8R/15BfApuGIrjmO++Ra+Zc0AivG8Jx9STttPGfM3zVD
-         +oC7bQRb22ll7cdnqTQB26AOYPo8BlTbj+u0BNubUsSOfHPgD6jmhrNWXQX1N/NSpu2K
-         5eGj0isSSH5UZ+TjMypARTiShPtnJtMVJVYPo9LeL53xSTCSSXg8+K1THKIOCkVzfsgh
-         /nw2h9SFaTFRQoLIh+QgE+Ky7GPIuJKPXlFQMvLsZrPMm9omua6c+ciy2oSE2a97NcpO
-         RKvA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=AjGyIIY+m2GL05ZY5NSj+ZgMFOvKbPdTVE9paHLGrqc=;
+        b=FrDltceTL+QAu3WejFpJvLAVDmsuqG2eb9JzK7tcTEiEGrNF4Y8ArZ6J/kZrAiEe1U
+         mrtL4v1bWsqWevO0ZxiMIN5Sr6QDjcuGNW1VqoM75l6Ip6uxgWkNLyUUZtW9cj+8Yc1P
+         /XESzcP99jTxCDF0kMktCit5SUh6ztNIGuwN4cCctpOUr9sxuQ3IGLjWNPmBFdM3qlfr
+         5U5xMr/9jJFJLA3r3fpjlHkOsnSqEGtaQJvzQ2bOsLlAjScytKpJM2GzvW+4iM6mklg+
+         zmtsV/8DwxnsJjo39dMkD0l/W2NiKJ9jHodXMh55No0QHgt4GB0fY6mqdcIJZSihiyqI
+         M0SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=n+nHb5UQhw6Lu775WT89nh3EqBMNu6FkI9vYgHHAgm8=;
-        b=Op9vuYUZBPJ5ZdoxO6kAdvjj1rpQkhUseiywbh7DYo1etn7NBcUTXIxWemtVVfv2P7
-         PwEYjpF9w+HpAiopkFx87FebGvEwFX4cDdtkmcOEFIfOxS7IZwCkhpzGExRzlM4Ei0qW
-         LaRdM/1YpEUVA6uaxBlOnSxZ50UitapToIZPPFrfnPQnDRt01gpC2+U79E4Y1X5X8tT0
-         TalQrYZzSRxaBqXXdW2Kq1ZbRYH6lbUvoT1g0rE3o8P/X6MuO4D67FNnyYGyh4b0j6Yk
-         pLzuhlI9rcDmvN9KTfav6zOqNrpJbQx4j//0WDXOkL35Jgl3kp/3m6gfwtqUxYPTwjjf
-         n1Tg==
-X-Gm-Message-State: AHYfb5jxMZ1tlEIUhN041pLPOqUAT/PZi23HjklsMcDLPrzqAiUQOqp8
-        Cooo122jZGdxbB5z
-X-Received: by 10.28.27.69 with SMTP id b66mr1468351wmb.11.1502130071021;
-        Mon, 07 Aug 2017 11:21:11 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=AjGyIIY+m2GL05ZY5NSj+ZgMFOvKbPdTVE9paHLGrqc=;
+        b=FmcvLh0BG3WZKLUy0GEYVGMBkR+LF+KSeu9Nh8/cM+/PpwuXXbY9atiBlRygVGhD8m
+         tQvrvldaYdplPDPB9fZI6CgHQEvpYx1IYoN3jsaayx6+vTKfrw0ioipUTHzDYZmc3LHS
+         VYnUNVDqMth9Ug42RDtHPOwhm9M+Q+8d6oQD9IbptNj/eRTqczfyh6MsfrnBnuM6f4ds
+         CQVfDUsC9QxJJfzvf94slQdifVqzCOo1ed6i+NnhxfxD3GMkz3SYWA93W4j7lg6JdhF6
+         DYKhDE1n435BVGLEqhIhVfPWIl1lQPGltNZDUbR80MqC3FsKaQYtcUAwp8p+Aj/ir/KW
+         AOcw==
+X-Gm-Message-State: AHYfb5hxSIWoM4nwBrM6PXhL1+fUlSgxFYElsKHls4Zd3hNazRGXMbT1
+        b/dyBtB6U4CgVHCy
+X-Received: by 10.28.30.88 with SMTP id e85mr1166592wme.10.1502130076972;
+        Mon, 07 Aug 2017 11:21:16 -0700 (PDT)
 Received: from localhost.localdomain ([2a02:aa16:5782:c100:1208:b1ff:fee6:d811])
-        by smtp.gmail.com with ESMTPSA id e27sm11519422wra.25.2017.08.07.11.21.09
+        by smtp.gmail.com with ESMTPSA id e27sm11519422wra.25.2017.08.07.11.21.15
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 07 Aug 2017 11:21:10 -0700 (PDT)
+        Mon, 07 Aug 2017 11:21:16 -0700 (PDT)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Dave Borowitz <dborowitz@google.com>,
         Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH 0/6] clean up parsing of maybe_bool
-Date:   Mon,  7 Aug 2017 20:20:44 +0200
-Message-Id: <cover.1502128418.git.martin.agren@gmail.com>
+Subject: [PATCH 1/6] Doc/git-{push,send-pack}: correct --sign= to --signed=
+Date:   Mon,  7 Aug 2017 20:20:45 +0200
+Message-Id: <8721e94741955eb32b3e8f08ff7f7319c79f93bf.1502128418.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.14.0.5.g0f7b1ed27
+In-Reply-To: <cover.1502128418.git.martin.agren@gmail.com>
+References: <cover.1502128418.git.martin.agren@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -65,57 +67,84 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we want to parse a boolean config item without dying on error, we
-call git_config_maybe_bool() which takes two arguments: the value to be
-parsed (obviously) and a `name` which is completely ignored. Junio has
-suggested to drop `name` and rename the function [1]. That effort even
-started shortly after that, by introducing git_parse_maybe_bool(). The
-new function currently only has a single user outside config.c.
+Since we're about to touch the behavior of --signed=, do this as a
+preparatory step.
 
-Patch 5 of this series deprecates the old function and updates all
-callers to use git_parse_maybe_bool() instead. Patch 6 is a final
-cleanup: one of the converted callers suddenly had an unused argument.
+The documentation mentions --sign=, and it works. But that's just
+because it's an unambiguous abbreviation of --signed, which is how it is
+actually implemented. This was added in commit 30261094 ("push: support
+signing pushes iff the server supports it", 2015-08-19). Back when that
+series was developed [1] [2], there were suggestions about both --sign=
+and --signed=. The final implementation settled on --signed=, but some
+of the documentation and commit messages ended up using --sign=.
 
-Patches 3 and 4 prepare for the switch. In particular, patch 4 ensures
-that the two functions are actually equivalent. In doing so, it affects
-`git push --signed=..` which was very slightly inconsistent to the rest
-of Git.
+The option is referred to as --signed= in Documentation/config.txt
+(under push.gpgSign).
 
-Patch 2 adds a failing test in preparation for patch 4. Patch 1 corrects
-the documentation not to say "git push --sign=.." to make it a bit more
-obvious that the opposite typo is not being made in patches 2 and 4.
+One could argue that we have promised --sign for two years now, so we
+should implement it as an alias for --signed. (Then we might also
+deprecate the latter, something which was considered already then.) That
+would be a slightly more intrusive change.
 
-git_parse_maybe_bool is used in sb/diff-color-move, which is in "next".
-This series makes --color-moved and diff.colormoved consistent with
-other booleans. That should be a good thing, but cc Stefan to be sure.
+This minor issue would only be a problem once we want to implement some
+other option --signfoo, but the earlier we do this step, the better.
 
-Martin
+[1] v1-thread:
+https://public-inbox.org/git/1439492451-11233-1-git-send-email-dborowitz@google.com/T/#u
 
-[1] https://public-inbox.org/git/xmqq7fotd71o.fsf@gitster.dls.corp.google.com/
+[2] v2-thread:
+https://public-inbox.org/git/1439998007-28719-1-git-send-email-dborowitz@google.com/T/#m6533a6c4707a30b0d81e86169ff8559460cbf6eb
 
-Martin Ågren (6):
-  Doc/git-{push,send-pack}: correct --sign= to --signed=
-  t5334: document that git push --signed=1 does not work
-  config: introduce git_parse_maybe_bool_text
-  config: make git_{config,parse}_maybe_bool equivalent
-  treewide: deprecate git_config_maybe_bool, use git_parse_maybe_bool
-  parse_decoration_style: drop unused argument `var`
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+ Documentation/git-push.txt      | 4 ++--
+ Documentation/git-send-pack.txt | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
- Documentation/git-push.txt             |  4 ++--
- Documentation/git-send-pack.txt        |  4 ++--
- Documentation/technical/api-config.txt |  4 ++++
- t/t5534-push-signed.sh                 |  7 +++++++
- builtin/log.c                          | 10 +++++-----
- builtin/merge.c                        |  4 ++--
- builtin/pull.c                         |  4 ++--
- builtin/push.c                         |  2 +-
- builtin/remote.c                       |  2 +-
- builtin/send-pack.c                    |  2 +-
- config.c                               | 15 ++++++++++-----
- pager.c                                |  2 +-
- submodule-config.c                     |  6 +++---
- 13 files changed, 41 insertions(+), 25 deletions(-)
-
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index 0a639664f..3e76e99f3 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -12,7 +12,7 @@ SYNOPSIS
+ 'git push' [--all | --mirror | --tags] [--follow-tags] [--atomic] [-n | --dry-run] [--receive-pack=<git-receive-pack>]
+ 	   [--repo=<repository>] [-f | --force] [-d | --delete] [--prune] [-v | --verbose]
+ 	   [-u | --set-upstream] [--push-option=<string>]
+-	   [--[no-]signed|--sign=(true|false|if-asked)]
++	   [--[no-]signed|--signed=(true|false|if-asked)]
+ 	   [--force-with-lease[=<refname>[:<expect>]]]
+ 	   [--no-verify] [<repository> [<refspec>...]]
+ 
+@@ -141,7 +141,7 @@ already exists on the remote side.
+ 	information, see `push.followTags` in linkgit:git-config[1].
+ 
+ --[no-]signed::
+---sign=(true|false|if-asked)::
++--signed=(true|false|if-asked)::
+ 	GPG-sign the push request to update refs on the receiving
+ 	side, to allow it to be checked by the hooks and/or be
+ 	logged.  If `false` or `--no-signed`, no signing will be
+diff --git a/Documentation/git-send-pack.txt b/Documentation/git-send-pack.txt
+index 966abb0df..f51c64939 100644
+--- a/Documentation/git-send-pack.txt
++++ b/Documentation/git-send-pack.txt
+@@ -11,7 +11,7 @@ SYNOPSIS
+ [verse]
+ 'git send-pack' [--all] [--dry-run] [--force] [--receive-pack=<git-receive-pack>]
+ 		[--verbose] [--thin] [--atomic]
+-		[--[no-]signed|--sign=(true|false|if-asked)]
++		[--[no-]signed|--signed=(true|false|if-asked)]
+ 		[<host>:]<directory> [<ref>...]
+ 
+ DESCRIPTION
+@@ -71,7 +71,7 @@ be in a separate packet, and the list must end with a flush packet.
+ 	refs.
+ 
+ --[no-]signed::
+---sign=(true|false|if-asked)::
++--signed=(true|false|if-asked)::
+ 	GPG-sign the push request to update refs on the receiving
+ 	side, to allow it to be checked by the hooks and/or be
+ 	logged.  If `false` or `--no-signed`, no signing will be
 -- 
 2.14.0.5.g0f7b1ed27
 
