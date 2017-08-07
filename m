@@ -2,112 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 91E732047F
-	for <e@80x24.org>; Mon,  7 Aug 2017 13:57:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 31C7F2047F
+	for <e@80x24.org>; Mon,  7 Aug 2017 14:04:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751442AbdHGN5g (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Aug 2017 09:57:36 -0400
-Received: from mout.web.de ([212.227.17.11]:63705 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750751AbdHGN5f (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2017 09:57:35 -0400
-Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0M73SD-1dSwmW2QpZ-00wlUh; Mon, 07
- Aug 2017 15:57:33 +0200
-To:     Git List <git@vger.kernel.org>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] test-path-utils: handle const parameter of basename and
- dirname
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Git List <git@vger.kernel.org>
-Message-ID: <5bfd3c7c-c3c8-5115-713a-63f6f8cd7eb7@web.de>
-Date:   Mon, 7 Aug 2017 15:57:31 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        id S1751408AbdHGOD5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Aug 2017 10:03:57 -0400
+Received: from 8.mo176.mail-out.ovh.net ([46.105.58.67]:54039 "EHLO
+        8.mo176.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750751AbdHGOD5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2017 10:03:57 -0400
+X-Greylist: delayed 66907 seconds by postgrey-1.27 at vger.kernel.org; Mon, 07 Aug 2017 10:03:56 EDT
+Received: from ex2.mail.ovh.net (gw1.ex2.mail.ovh.net [164.132.80.186])
+        by mo176.mail-out.ovh.net (Postfix) with ESMTPS id D078E65FDC
+        for <git@vger.kernel.org>; Mon,  7 Aug 2017 16:03:55 +0200 (CEST)
+Received: from [10.0.2.127] (86.200.136.234) by EX7.indiv2.local (172.16.2.7)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Mon, 7 Aug
+ 2017 16:03:55 +0200
+From:   Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
+Subject: [PATCH 2/4] imap_send: setup_curl: prompt user for username/password
+ if not set in config file
+To:     <git@vger.kernel.org>
+References: <c74c8c386f2c2d8b6cebd4addf925d0121986067.1502114584.git.nicolas@morey-chaisemartin.com>
+Message-ID: <38d3ae5b-4020-63cc-edfa-0a77e42798b8@morey-chaisemartin.com>
+Date:   Mon, 7 Aug 2017 16:03:55 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:55.0) Gecko/20100101
+ Thunderbird/55.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+In-Reply-To: <c74c8c386f2c2d8b6cebd4addf925d0121986067.1502114584.git.nicolas@morey-chaisemartin.com>
+Content-Type: text/plain; charset="windows-1252"
+Content-Language: fr-xx-classique+reforme1990
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:w4mGhEBzeEgk6UHAZOPhjSVzGKqwKsnTnIHUqlw/MhKFydlBsMl
- d6emSukgTK46rKzqnIwFbOxyVvkZKEul50ry+ROITuZmZtmauXDPWxn6mq7+FthhtDIsrN7
- +LID3vY5Xh2Xo1PulT///cVXBFmvABIo52qHEB4abSQxQH1YQt/xMCZ6YsDn+ivaHy5kJjM
- mwv8OMsN5vxTSMc3W5TlA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:wXmY373NDVc=:6shGSJ62OWvPReBx+ChbhQ
- n2FIdOJU/tmwvi5vLA+/TmiTMUFPv+K7nruSG24ngfZWLaOv0WpRr5fLRc7+5WV19YBQ3tJQA
- cURzZttbUAFz49OAphpUwDPyINIPaviE0ePO3P/wFZ6ocCfIV42tc2rrhTVHz6UOftCYhNQIx
- 6gPGmPZSwrPG8oXOcbgKiTnfsY68uIxdg7hv/1N787orGlXbCyvkiBRSfwUsM0x4Y8UV33nF6
- eo+F5h4gYKFfNc0VFYJbVMse1U5sqBuLyuRWWZSSxd+CYSdtnXYDDc9x686TWsMM0r4qhgcuK
- qXx1Y8FI41gIbIXlgWcP6Cyvor00jpzUhMhp/uxY6pIgSAdq7b/2Shs5ZfrCHPiV6NpHNIx/v
- 6AyDzeCS6iCLWqhEQWPRV6wWlE9uPRQeNoW8rzYuGKoa6DGeAWGLEFlRoW7kNpcD+Z2I4tCYQ
- KNPxJYVO8GMc2xJV7iGg1pkBdqjMcEu0aS43lAZpeblDlpSVezjEcCHep7SsYdFMwfwQ0l2qp
- RIT6dWakCi1UkD3pymj+zeviK6lapEKVUj2Go5DJN6EcI35Jah98nEGPpsyS2qdqqZ+0hXl8W
- Fl/6UAqhfqiPiiMcgt/JMnblyiCFDkHmCcfiFbr26vRE/2Np+tyJJwj864q3uVJtkXXjULYj4
- b1cfOpcv7TR3YajNbIH97MhxWm2W97B366my0bH+n8q+UhQbVTVYv1D/Qvm4D480hdLplD9Wd
- aaogkGZd1NpkkY317hss0qpSURhY735xmi24h1PbWpUcZuBWNG4Yy3GRuwYdXc8Tn3Q+TwsTz
- 3NCXLZybOgRC2Uguf2lIAyjSTjPEWnEd/bQi+6l9DfD4GNd4Sw=
+X-Originating-IP: [86.200.136.234]
+X-ClientProxiedBy: EX3.indiv2.local (172.16.2.3) To EX7.indiv2.local
+ (172.16.2.7)
+X-Ovh-Tracer-Id: 8307733938618165213
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeelkedrkedugdejgecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemuceftddtnecu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The parameter to basename(3) and dirname(3) traditionally had the type
-"char *", but on OpenBSD it's been "const char *" for years.  That
-causes (at least) Clang to throw an incompatible-pointer-types warning
-for test-path-utils, where we try to pass around pointers to these
-functions.
-
-Avoid this warning (which is fatal in DEVELOPER mode) by ignoring the
-promise of OpenBSD's implementations to keep input strings unmodified
-and enclosing them in POSIX-compatible wrappers.
-
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
+Signed-off-by: Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
 ---
- t/helper/test-path-utils.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ imap-send.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/t/helper/test-path-utils.c b/t/helper/test-path-utils.c
-index 1ebe0f750c..2b3c5092a1 100644
---- a/t/helper/test-path-utils.c
-+++ b/t/helper/test-path-utils.c
-@@ -38,6 +38,20 @@ struct test_data {
- 	const char *alternative; /* output: ... or this.      */
- };
+diff --git a/imap-send.c b/imap-send.c
+index 38b3c817e..682a06551 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -1415,6 +1415,7 @@ static CURL *setup_curl(struct imap_server_conf *srvc)
+ 	if (!curl)
+ 		die("curl_easy_init failed");
  
-+/*
-+ * Compatibility wrappers for OpenBSD, whose basename(3) and dirname(3)
-+ * have const parameters.
-+ */
-+static char *posix_basename(char *path)
-+{
-+	return basename(path);
-+}
-+
-+static char *posix_dirname(char *path)
-+{
-+	return dirname(path);
-+}
-+
- static int test_function(struct test_data *data, char *(*func)(char *input),
- 	const char *funcname)
- {
-@@ -251,10 +265,10 @@ int cmd_main(int argc, const char **argv)
- 	}
++	server_fill_credential(&server);
+ 	curl_easy_setopt(curl, CURLOPT_USERNAME, server.user);
+ 	curl_easy_setopt(curl, CURLOPT_PASSWORD, server.pass);
  
- 	if (argc == 2 && !strcmp(argv[1], "basename"))
--		return test_function(basename_data, basename, argv[1]);
-+		return test_function(basename_data, posix_basename, argv[1]);
- 
- 	if (argc == 2 && !strcmp(argv[1], "dirname"))
--		return test_function(dirname_data, dirname, argv[1]);
-+		return test_function(dirname_data, posix_dirname, argv[1]);
- 
- 	fprintf(stderr, "%s: unknown function name: %s\n", argv[0],
- 		argv[1] ? argv[1] : "(there was none)");
 -- 
-2.14.0
+2.14.0.rc1.16.g87fcec1e8
+
 
