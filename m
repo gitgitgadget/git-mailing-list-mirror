@@ -7,63 +7,65 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 49D9E2047F
-	for <e@80x24.org>; Mon,  7 Aug 2017 14:33:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2FE832047F
+	for <e@80x24.org>; Mon,  7 Aug 2017 14:34:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752283AbdHGOc7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Aug 2017 10:32:59 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:33341 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752277AbdHGOcz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2017 10:32:55 -0400
-Received: by mail-pg0-f65.google.com with SMTP id u185so567671pgb.0
-        for <git@vger.kernel.org>; Mon, 07 Aug 2017 07:32:55 -0700 (PDT)
+        id S1751408AbdHGOeS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Aug 2017 10:34:18 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:37679 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750751AbdHGOeR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2017 10:34:17 -0400
+Received: by mail-pg0-f68.google.com with SMTP id 83so539240pgb.4
+        for <git@vger.kernel.org>; Mon, 07 Aug 2017 07:34:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:subject:from:to:cc:in-reply-to:references:date
          :mime-version:content-transfer-encoding;
-        bh=sBCfpc+0gEI6nCUwy7Fm+BYRav1IVPYJpWmLI9iPSrU=;
-        b=RE1ku+YYfn4Kcd5EPfVl6JXtHMTQDjD6DUjRy577dc6gqbTilW+FXbdggBLKmBAKbw
-         /X49C3yAknj3eP7lzjU6ftLI66vAL0CE1EYQrKLL1j+UKJdqJ6JvrYJSMNjHV0xcwu9I
-         C5KqGmMmZ0ayMgFmPq20pyVLQn4htdkqfyZLWVfqFKfYJFjRCRarGxkOp9GUE/G7bln5
-         NA0Cue2CvFz+ejvS0JsDhkmiDI9ASbo2fFYFRFdBSOY/y6zeB5IWRBADqGheM+r/GfvF
-         64IjkI5yDdiV+1/20Zdmbr3XOT0qCAj9rtOk7ZoMI/iEzIoxJUkl4R8IoyKomwvGZfQM
-         Up7A==
+        bh=ZD15KVy9CyhDQ04b0ZO+dSc8+q1tvgjFYDoiNhi/tAc=;
+        b=r09fhVhT84eHB1WwftO8fmenjHb18JbPUDIEe+zJL6n4lXHNLMwS1356WIPUYkQeq4
+         icdZ/j4zZng0/2E+9CIfaRx+a/8azki2/LLWh9ygAiWq9W1pSlnsKsobDkl1QAQ9Ynkp
+         9b6an0XFxUjHZHfPQlVvn8aaXO9R+Gl+2Wcyb0x6X5qxGIjE/koqZfDx7oL0t5efMApq
+         WTdefbUHS+7ZjFz0BW6V7nOeETwU4yfvKj83vrYdbGMC7g9XBivXrvKq75xSsJJw2gB2
+         gHLNT/7Rvm3p2bkjj4jhYcxqTK1WoH8/+U7eeyQ9e1RAIb1D/7gjHUT1Qjm7FA+w8nBy
+         HkVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:subject:from:to:cc:in-reply-to
          :references:date:mime-version:content-transfer-encoding;
-        bh=sBCfpc+0gEI6nCUwy7Fm+BYRav1IVPYJpWmLI9iPSrU=;
-        b=Yko0JaPUjGotX32x9V9ADwJ6Xd2Nkba1DNdLv6mtwZUXWhQjNoUoWPwRB7F9XfOC9l
-         JNKEJXnIEAW2HqKbb0mv8BQ1nmzmO9u2B4P+lASX2rfe/+cSZ+Yphlm/d+2f3ybQXjV7
-         Q67ZDGpjs79qY6vX0uCj+pP+3cC1bp4uxH14LG5i+gInfOGCZ0KdmB3aJl1q1/I809oy
-         7sMLnDy+UqwVWIVsVwtQNYewzJ25De0oZkSFlPNNUHoY1hppWW2WhEhjFQqIyUX+W5i8
-         o9YU2PWRPSMwz2PJoaNEE3AGWSkwmA87mxaYnCrcu4G6mfp4ZmNHRVlKYx8SKtddMbji
-         eUiQ==
-X-Gm-Message-State: AHYfb5hHGe7OUo9FynLhGcxUXAYp8kkMIArB+x7Qlltfr0vDkRQqQov6
-        SsOWW0tFyndbDhKhTsQ=
-X-Received: by 10.98.137.202 with SMTP id n71mr754463pfk.243.1502116375312;
-        Mon, 07 Aug 2017 07:32:55 -0700 (PDT)
+        bh=ZD15KVy9CyhDQ04b0ZO+dSc8+q1tvgjFYDoiNhi/tAc=;
+        b=Nd5tTBL0JSEFwqBXNYqn0rtaTobjFfTMHsW09vFsiLXQDsIAQExAYhSvDqnirVD5dH
+         Wh+hc0PM3GDEw8+qm40jzNJoNr/qIFreAbKEkAbmM01+62SJUylFkAqgGf7qioKtMMtO
+         8GKCT1ICmdU3eanu268iwNTg4F2WIE+uBB6YfGaCv5lp4dO4WSvR2IoHzpD0an3EAgnx
+         dFNJJI9hBk/g4J8EJqVK6UyVghQANv4T+lHwCdcGWhMMYEt9FnBSdoPipH/jkB2m6cP8
+         UPdB7zAbOagsX3hpGbMV2EYQM+Q1MZvU9NppvRT70xvB+Xh2HCF4P/1DyW622V2k6W10
+         shbA==
+X-Gm-Message-State: AHYfb5h1BNxondJkG+3hHcOvZorKtoxQNPfr17JMXM2nSX9GwDmpq48+
+        un9Jw3AfsahR0w==
+X-Received: by 10.99.4.3 with SMTP id 3mr761703pge.102.1502116456477;
+        Mon, 07 Aug 2017 07:34:16 -0700 (PDT)
 Received: from unique-pc ([117.249.143.188])
-        by smtp.googlemail.com with ESMTPSA id l132sm15972670pfc.150.2017.08.07.07.32.52
+        by smtp.googlemail.com with ESMTPSA id m2sm12986220pgs.72.2017.08.07.07.34.12
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 07 Aug 2017 07:32:54 -0700 (PDT)
-Message-ID: <1502116408.3172.3.camel@gmail.com>
+        Mon, 07 Aug 2017 07:34:15 -0700 (PDT)
+Message-ID: <1502116490.3172.6.camel@gmail.com>
 Subject: Re: [PATCH 2/2] doc: add another way to identify if a patch has
  been merged
 From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-In-Reply-To: <xmqqini6dkmu.fsf@gitster.mtv.corp.google.com>
+To:     Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+In-Reply-To: <CAGZ79kYArf6R-vx1-Lm4X_ANLMrXc3VNd2aCQMnqq3J6y-s31Q@mail.gmail.com>
 References: <CAGZ79kYg9jQ3kaKnNEJCH9fde=ar1KPiUr7=X+TguNc0Twqdzg@mail.gmail.com>
          <20170801160539.5587-1-kaarticsivaraam91196@gmail.com>
          <20170801160539.5587-2-kaarticsivaraam91196@gmail.com>
          <CAGZ79kZgV1=2HcYeXyoCy2Jk6v__trvTh_-rH+kbFX7fgWziyw@mail.gmail.com>
          <1501677122.1957.8.camel@gmail.com>
          <xmqqini6dkmu.fsf@gitster.mtv.corp.google.com>
+         <xmqq60e6djcu.fsf@gitster.mtv.corp.google.com>
+         <CAGZ79kYArf6R-vx1-Lm4X_ANLMrXc3VNd2aCQMnqq3J6y-s31Q@mail.gmail.com>
 Content-Type: text/plain; charset="ISO-8859-15"
-Date:   Mon, 07 Aug 2017 20:03:28 +0530
+Date:   Mon, 07 Aug 2017 20:04:50 +0530
 Mime-Version: 1.0
 X-Mailer: Evolution 3.22.6-1 
 Content-Transfer-Encoding: 7bit
@@ -72,56 +74,59 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 2017-08-02 at 09:01 -0700, Junio C Hamano wrote:
-> Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
+On Wed, 2017-08-02 at 10:58 -0700, Stefan Beller wrote:
+>     That may be either a contributors problem (lacking time or
+>     motivation to go through a long document) or a problem with
+>     the community.
 > 
-> > On Tue, 2017-08-01 at 10:46 -0700, Stefan Beller wrote:
-> > > So maybe we want to cut a lot of workflow related commendatory from
-> > > the SubmitingPatches and then encourage to read such man page?
-> > > 
-> > 
-> > That's right. Maybe Documentation/SubmittingPatches needs a revamp to
-> > be one-time contributor friendly? Maybe introducing a "gist" for people
-> > who do not have the time to read the whole document, might be of help?
-> 
-> First of all, I do not think lack of one-time contributor is
-> something we should consider to be a problem.  Supporting new
-> contributors so that they will be involved more in the development
-> process is a lot more important issue.
-> 
-First of all, I would like to clear a little mis-interpretation here.
-Though I used the phrase 'one-time contributor', I didn't want a gist
-that targets only *those* people. I was thinking, in general, about
-people who would like to contribute but find the documentation
-overwhelming (an example might be the thread pointed out by Stefan). In
-which case, they would want to check if their patch meets the *basic
-criterias* and send it to the community hoping it would be accepted
-with at least 75% probability.
+I'm trying to avoid the former.
 
-I'll send a patch that tries to make 'Documentation/SubmittingPatches'
-less overwhelming without losing much of it's content, some time soon.
-
-> I think the exchange Stefan cited was an example that we want to
-> have more of.  The contributor is indicating that, even though the
-> patch could be a drive-by patch by one-timer from whom we will never
-> hear again, it is not--the contributor is willing to learn the way
-> things are done here, and showing that it is worth _our_ time to
-> explain the things so that the future patches will take less effort
-> to accept on our side.
+> I would not want to explain the same thing over and over again,
+> but rather have a technical solution that explains the problem and
+> solution once it is detected.
 > 
-I thought a *good* 'gist' would obviate that kind of effort. Let's see
-if I could come up with something.
-
-> Because we do not have a group of dedicated volunteers, it is done
-> by more experienced people around here but that can be done only
-> when they have time.  I view it as a more severe problem than any
-> documentation.  An abbreviated version of the documentation to
-> invite more new people means that we must be prepared to give more
-> high-touch onboarding help to them.
+> Coming up with a technical solution for each little quirk
+> is not the hard part (e.g. grep for the sign off string, count lines of
+> the commit message), but rather to put it in place. (How can I make
+> sure that contributors run these small checker scripts?
+> Currently I cannot.)
 > 
-I think an abbrievated documentation whilst inviting new people
-*should* obviate the onboarding help, saving everyone's time (win-win).
+I could see quite some alternatives for this.
+
+1. scripts
+
+    I guess the kernel community use some scripts to check if the patch
+    has the required style.[ref 1][ref 2]. I guess we could do something
+    similar. Like writing a script that checks the log messages for the
+    required format (sign-off, area etc.) and giving users advice about
+    how to fix the issue. After a all script test pass we could give
+    some advice to the user about how the patch needs to be sent.
+
+    To identify the set of commit messages that need to be checked we
+    could make the script accept a single parameter that specifies the
+    base of the branch. I'm not sure if this part could be automated.
+
+2. Hooks
+
+    warning: this might be a little over thought.
+
+    1. Code all the checks as 'hooks scripts' that aren't samples.
+    Possibly scripts related to 'commit-msg'.
+
+    2. Place them in a 'hooks' directory under a new directory, possibly
+    named 'hook-checks'.
+
+    3. Inform the new contributor to re-initialize his git.git with
+
+            $ git init --template=/path/to/git/hook-checks
+
+    4. Rebasing their commits with 'rewording' each
+
+    Of course, this relies on the fact that he wouldn't have enabled
+    hooks in their git.git. In which case he would have to merge the
+    scripts with his own scripts.
+
+I'm not pretty sure if they're feasible or not.
 
 -- 
 Kaartic
-
