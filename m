@@ -2,66 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 17D6F2047F
-	for <e@80x24.org>; Mon,  7 Aug 2017 19:48:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB01D2047F
+	for <e@80x24.org>; Mon,  7 Aug 2017 19:50:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751864AbdHGTsw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Aug 2017 15:48:52 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54694 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751826AbdHGTsv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2017 15:48:51 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D45BFA3794;
-        Mon,  7 Aug 2017 15:48:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Yu1Rq4p9M3auzBT08Liz39X3Bqw=; b=FoPgum
-        1sFqVyXvjWJU1jQAUzI7YPST2lPQQZBn5eseHpbo2zAiCi/qvyuvWZ8S9e1QIAMg
-        JlgQYaWuvzUNsR3jpsXS6OaheJasjK3spqLzU9HK1n+ve0MXbTeuzz8xiqtbP56g
-        yhT/mnxp1pCooD7nmF3rr4jXBbHJ9McSfnecE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=TVPpMBrrPE/FTojgmV170iFCWjj8uz2z
-        EdMMLLh9XtlEalUtTyX7ZllL23EgSKEdyZfrwsRqqrljfyjjGE282XdeLi13kV1X
-        CjQsEWsxg6FeVC2cWl24t7F8JGmUjpDDDgrqJzxc+3Q013OfYECsJX6n8yisyvrk
-        X10GQRMYvDY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CC739A3793;
-        Mon,  7 Aug 2017 15:48:45 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 37B87A3792;
-        Mon,  7 Aug 2017 15:48:45 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Michael Forney <mforney@mforney.org>, git@vger.kernel.org
-Subject: Re: [PATCH] Drop some dashes from built-in invocations in scripts
-References: <20170805064905.5948-1-mforney@mforney.org>
-        <xmqqshh3qqs4.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.21.1.1708072113570.4271@virtualbox>
-Date:   Mon, 07 Aug 2017 12:48:44 -0700
-In-Reply-To: <alpine.DEB.2.21.1.1708072113570.4271@virtualbox> (Johannes
-        Schindelin's message of "Mon, 7 Aug 2017 21:22:57 +0200 (CEST)")
-Message-ID: <xmqqo9rrp3ab.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751748AbdHGTuG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Aug 2017 15:50:06 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59544 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751508AbdHGTuG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2017 15:50:06 -0400
+Received: (qmail 27450 invoked by uid 109); 7 Aug 2017 19:50:06 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 07 Aug 2017 19:50:06 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9887 invoked by uid 111); 7 Aug 2017 19:50:27 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Mon, 07 Aug 2017 15:50:27 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 07 Aug 2017 15:50:03 -0400
+Date:   Mon, 7 Aug 2017 15:50:03 -0400
+From:   Jeff King <peff@peff.net>
+To:     Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
+Cc:     Bernhard Reiter <ockham@raz.or.at>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 3/4] imap_send: setup_curl: use server_conf parameter
+ instead of the global variable
+Message-ID: <20170807195003.clo2vmnmufmfalb6@sigill.intra.peff.net>
+References: <c74c8c386f2c2d8b6cebd4addf925d0121986067.1502114584.git.nicolas@morey-chaisemartin.com>
+ <4a1f931c-9813-36a5-9c37-63b8abc4fecd@morey-chaisemartin.com>
+ <CAN0heSqyiisjWyDBXLJcyx=Hh3NA562DoFqP8rpFyi_zuGKLEA@mail.gmail.com>
+ <71817815-4e52-4623-b226-bbb57ca08047@morey-chaisemartin.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6C2972BC-7BA9-11E7-BEAD-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <71817815-4e52-4623-b226-bbb57ca08047@morey-chaisemartin.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Mon, Aug 07, 2017 at 07:06:07PM +0200, Nicolas Morey-Chaisemartin wrote:
 
-> So I would love to hear the arguments for keeping the dashed forms of
-> builtins, even if the only surviving argument may be "I dig in my feet
-> because I always said we'd keep them".
+> >> -       server_fill_credential(&server);
+> >> -       curl_easy_setopt(curl, CURLOPT_USERNAME, server.user);
+> >> -       curl_easy_setopt(curl, CURLOPT_PASSWORD, server.pass);
+> >> +       server_fill_credential(srvc);
+> >> +       curl_easy_setopt(curl, CURLOPT_USERNAME, srvc->user);
+> >> +       curl_easy_setopt(curl, CURLOPT_PASSWORD, srvc->pass);
+> > Here you change the server_fill_credential-call that you just added.
+> > Maybe do this patch earlier, perhaps even as patch 1?
+> >
+> > I'm snipping lots of s/server/srvc/-changes... There's a less noisy
+> > way of addressing the fact that srvc is unused: dropping it. I'm not
+> > saying that's a good idea, but it could be considered, then explained
+> > why this approach is better. There are some other functions which
+> > access "server" directly, and some which take (and use!) a "srvc".
+> > Maybe make the whole file consistent?
+> >
+> That's why I applied it after #2. I was not sure if this one made
+> sense or not. And it  can be dropped with the rest of the series still
+> applying.
+> I don't know what is the right approach here. Someone with more
+> knowledge of why there is a mix of global variable and local can maybe
+> help ?
 
-I think I already did ;-)
+I suspect it's just code in need of a cleanup. But let's cc the original
+author of 1e16b255b (git-imap-send: use libcurl for implementation,
+2014-11-09) to see if he has any comments[1].
+
+-Peff
+
+[1] Bernhard, the whole series is at:
+
+      https://public-inbox.org/git/38d3ae5b-4020-63cc-edfa-0a77e42798b8@morey-chaisemartin.com/
+
+    The general idea is to make sure the original and curl imap-send
+    implementations have feature parity, make the curl version the
+    default, and then hopefully eventually drop the non-curl one
+    entirely.
