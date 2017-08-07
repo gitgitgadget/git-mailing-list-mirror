@@ -2,141 +2,183 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DBEF02047F
-	for <e@80x24.org>; Mon,  7 Aug 2017 23:10:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B2DB2047F
+	for <e@80x24.org>; Mon,  7 Aug 2017 23:20:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751914AbdHGXKf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Aug 2017 19:10:35 -0400
-Received: from mail-pg0-f41.google.com ([74.125.83.41]:35120 "EHLO
-        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751875AbdHGXKe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2017 19:10:34 -0400
-Received: by mail-pg0-f41.google.com with SMTP id v189so7160181pgd.2
-        for <git@vger.kernel.org>; Mon, 07 Aug 2017 16:10:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=jJkB6Fn/7+tU66PEkcZ4n/+yNnkrUtQ7L3TbFPAM6zY=;
-        b=UmBew6Gk+zzw6tP73bXAICL60AiSOqyM7/vdQjJmB8U0HStS38ku51A6tNUvwHsHhH
-         T6H4HnvrqZJqnSe8+6hGM08XXZlimS7US0Su38r8JFoAJTxFoDi2GJpR7bDxMV7ppcSv
-         6LUDleaNLtpMLL2D5kbiJZjwJkGmukCECGK+SNbw9LIWSKsAqWQz+/JcNKB2L5tBJKeY
-         RTten2VhJE2LsOqWtvubbdMqulKCiE9xnIUhizfqG/a6D9/WS7Rhzml1ScQjOdQEmMZV
-         WS9oYl2IE1CW2MQOzFiqfLDitzzJr9Mp1HmxNLVey8TkgbCYC9xetdz+AymqcIXWiGbb
-         HeyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=jJkB6Fn/7+tU66PEkcZ4n/+yNnkrUtQ7L3TbFPAM6zY=;
-        b=SKlt/5izpYpXA/XuWz+1Oe3i2OXNyTQrGA2O6ucxoVMwV3/icY01mCdeN5NicYDIRM
-         /k8xmFG3tU2uukrKdLSaAm5wyVg2WIQKjVhhRCgkeBLaaVN6bAt1HZGQsJc62omoYJDK
-         BABTascKI2Uv2XRfLXmNx0+1o14v/1TI6CKFFMupNgelijPmYEn0wvqXeHfcr6GmRnxg
-         xLutkTvVBCCrp+ZxsgIkjXUbi4GZmrWFXiEct9YTVzQFLLX1ZfJG+RO5vEyqnqXNVBdT
-         IBQtg4mLdB3KuuCHJ/+61q3eFE+IJXqNxm7AR3AQ7uLcIzRJLanqN4HhjVg0MhMMSY9C
-         s6Rg==
-X-Gm-Message-State: AHYfb5ifDld8XFt9qfRQQ+08g7k6Wv0rrviYGozogQ5sfGWfUuiKrcOX
-        jImCLD6jh6kNtbpy
-X-Received: by 10.99.167.70 with SMTP id w6mr2038183pgo.17.1502147433940;
-        Mon, 07 Aug 2017 16:10:33 -0700 (PDT)
-Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:a0fe:8dcf:c61c:f231])
-        by smtp.gmail.com with ESMTPSA id i4sm5879428pfg.51.2017.08.07.16.10.33
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 07 Aug 2017 16:10:33 -0700 (PDT)
-Date:   Mon, 7 Aug 2017 16:10:31 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        christian.couder@gmail.com
-Subject: Re: Partial clone design (with connectivity check for
- locally-created objects)
-Message-ID: <20170807161031.7c4eae50@twelve2.svl.corp.google.com>
-In-Reply-To: <0633771f-ce19-6211-fabe-3f7f676e53ab@gmail.com>
-References: <20170804145113.5ceafafa@twelve2.svl.corp.google.com>
-        <xmqqtw1nrlpf.fsf@gitster.mtv.corp.google.com>
-        <20170804172137.42f27653@twelve2.svl.corp.google.com>
-        <0633771f-ce19-6211-fabe-3f7f676e53ab@gmail.com>
-X-Mailer: Claws Mail 3.9.3 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+        id S1751919AbdHGXUc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Aug 2017 19:20:32 -0400
+Received: from smtp74.ord1c.emailsrvr.com ([108.166.43.74]:38321 "EHLO
+        smtp74.ord1c.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751881AbdHGXUb (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 7 Aug 2017 19:20:31 -0400
+Received: from smtp18.relay.ord1c.emailsrvr.com (localhost [127.0.0.1])
+        by smtp18.relay.ord1c.emailsrvr.com (SMTP Server) with ESMTP id 0E91BE01ED;
+        Mon,  7 Aug 2017 19:20:31 -0400 (EDT)
+X-SMTPDoctor-Processed: csmtpprox beta
+Received: from smtp18.relay.ord1c.emailsrvr.com (localhost [127.0.0.1])
+        by smtp18.relay.ord1c.emailsrvr.com (SMTP Server) with ESMTP id 0A14BE046E;
+        Mon,  7 Aug 2017 19:20:31 -0400 (EDT)
+Received: from smtp192.mex09.emailsrvr.com (unknown [184.106.73.70])
+        by smtp18.relay.ord1c.emailsrvr.com (SMTP Server) with ESMTPS id D4931E01ED;
+        Mon,  7 Aug 2017 19:20:30 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=statseeker.com;
+        s=20170629-l0wbkvum; t=1502148030;
+        bh=uNlNlE9N4BmoYcwid2c8p4u1+daghdWozHcXGoYUjQE=;
+        h=From:To:Subject:Date:From;
+        b=V1Vqx/Sc/+eynrPqo6O40XF6MzZkoVNYTRWLaQbajWZCJ87YluwIHIASdcU10UZzi
+         Xtt+/6sVzfD0kHyLEkoZkTOhVvA3MGKb/YVNpfOhmfKMS19VzmV26QQsbs/F28AiS2
+         DtmBIqiQSlghh+wP+1wzgJEWTynjCAx9anncNkF4=
+X-Sender-Id: james.wells@statseeker.com
+Received: from smtp192.mex09.emailsrvr.com ([UNAVAILABLE]. [184.106.73.70])
+        (using TLSv1.2 with cipher AES256-SHA256)
+        by 0.0.0.0:25 (trex/5.7.12);
+        Mon, 07 Aug 2017 19:20:30 -0400
+Received: from MBX04D-ORD1.mex09.mlsrvr.com (172.29.128.30) by
+ MBX04C-ORD1.mex09.mlsrvr.com (172.29.128.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
+ 15.1.669.32; Mon, 7 Aug 2017 18:20:30 -0500
+Received: from MBX04D-ORD1.mex09.mlsrvr.com ([fe80::40b3:1086:160a:405e]) by
+ MBX04D-ORD1.mex09.mlsrvr.com ([fe80::40b3:1086:160a:405e%21]) with mapi id
+ 15.01.0669.032; Mon, 7 Aug 2017 18:20:30 -0500
+From:   James Wells <james.wells@statseeker.com>
+To:     Todd Zullinger <tmz@pobox.com>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: upgarding GIT
+Thread-Topic: upgarding GIT
+Thread-Index: AdMPQ2NPbrFDYd5KTIq487yWwoqxggAVCqkAAAyCtYAAAevSUA==
+Date:   Mon, 7 Aug 2017 23:20:30 +0000
+Message-ID: <f5d92196d19a4029bb4e282837c53a46@statseeker.com>
+References: <9a2576ed8b7146459585af4238613286@statseeker.com>
+ <871sonzlar.fsf@gmail.com> <20170807170745.GG25542@zaya.teonanacatl.net>
+In-Reply-To: <20170807170745.GG25542@zaya.teonanacatl.net>
+Accept-Language: en-AU, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [14.203.103.145]
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 7 Aug 2017 15:12:11 -0400
-Ben Peart <peartben@gmail.com> wrote:
+Hi Todd
 
-> I missed the offline discussion and so am trying to piece together what 
-> this latest design is trying to do.  Please let me know if I'm not 
-> understanding something correctly.
-> 
->  From what I can tell, objects are going to be segmented into two 
-> "types" - those that were fetched from a remote source that allows 
-> partial clones/fetches (lazyobject/imported) and those that come from 
-> "regular" remote sources (homegrown) that requires all objects to exist 
-> locally.
-> 
-> FWIW, the names here are not making things clearer for me. If I'm 
-> correct perhaps "partial" and "normal" would be better to indicate the 
-> type of the source? Anyway...
+Thanks for replying, below is my current install information
 
-That's right. As for names, I'm leaning now towards "imported" and
-"non-imported". "Partial" is a bit strange because such an object is
-fully available; it's just that the objects that it references are
-promised by the server.
+Current ( STASH and GIT are installed on the same server ):
 
-> Once the objects are segmented into the 2 types, the fsck connectivity 
-> check code is updated to ignore missing objects from "partial" remotes 
-> but still expect/validate them from "normal" remotes.
-> 
-> This compromise seems reasonable - don't generate errors for missing 
-> objects for remotes that returned a partial clone but do generate errors 
-> for missing objects from normal clones as a missing object is always an 
-> error in this case.
+STASH ( BitBucket ) =3D 3.9.2
+Git =3D 2.0.4 ( installed from tar Ball and not from an RPM as the RPM was =
+too old.
+Centos =3D 6.6
 
-Yes. In addition, the references of "imported" objects are also
-potentially used when connectivity-checking "non-imported" objects - if
-a "non-imported" object refers to an object that an "imported" object
-refers to, that is fine, even though we don't have that object.
+Required:
 
-> This segmentation is what is driving the need for the object loader to 
-> build a new local pack file for every command that has to fetch a 
-> missing object.  For example, we can't just write a tree object from a 
-> "partial" clone into the loose object store as we have no way for fsck 
-> to treat them differently and ignore any missing objects referenced by 
-> that tree object.
-> 
-> My concern with this proposal is the combination of 1) writing a new 
-> pack file for every git command that ends up bringing down a missing 
-> object and 2) gc not compressing those pack files into a single pack file.
-> 
-> We all know that git doesn't scale well with a lot of pack files as it 
-> has to do a linear search through all the pack files when attempting to 
-> find an object.  I can see that very quickly, there would be a lot of 
-> pack files generated and with gc ignoring "partial" pack files, this 
-> would never get corrected.
-> 
-> In our usage scenarios, _all_ of the objects come from "partial" clones 
-> so all of our objects would end up in a series of "partial" pack files 
-> and would have pretty poor performance as a result.
+BitBucket =3D 5.2
+Git =3D 2.2 + and above
 
-One possible solution...would support for annotating loose objects with
-".remote" be sufficient? (That is, for each loose object file created,
-create another of the same name but with ".remote" appended.) This means
-that a loose-object-creating lazy loader would need to create 2 files
-per object instead of one.
+https://confluence.atlassian.com/bitbucketserver/supported-platforms-776640=
+981.html
 
-The lazy loader protocol will thus be updated to something resembling a
-prior version with the loader writing objects directly to the object
-database, but now the loader is also responsible for creating the
-".remote" files.  (In the Android use case, we probably won't need the
-writing-to-partial-packfile mechanism anymore since only comparatively
-few and large blobs will go in there.)
+As you can see my version of git is not supported with the current version =
+of bitbucket. I will have to perform a two stage upgrade anyway as the vers=
+ion of STASH I am running cannot be upgraded directly to bitbucket 5.2 as w=
+ell.
+
+Is there an easy way just to install a higher support version of git like 2=
+.9 on the same server and then move all the repos and basically everything =
+across. Can you install another TAR ball later version on top of another gi=
+t , so it's like overwriting it.=20
+
+
+Kind regards,
+
+James Wells | Operations and Regional Account Manager ANZ=A0=A0=A0=A0=A0=A0=
+=A0=20
+
+www.statseeker.com
+
+This email is intended only for the entity or individual to whom it is addr=
+essed and may contain information that is privileged or confidential.=A0If =
+you are not the intended recipient, you are hereby notified that distributi=
+on, copying or any form of dissemination of the content of this email is st=
+rictly prohibited.=A0If you have received this email in error, please advis=
+e us immediately by return email and destroy the original message. Thank yo=
+u.
+
+
+-----Original Message-----
+From: Todd Zullinger [mailto:todd.zullinger@gmail.com] On Behalf Of Todd Zu=
+llinger
+Sent: Tuesday, 8 August 2017 3:08 AM
+To: =C6var Arnfj=F6r=F0 Bjarmason
+Cc: James Wells; git@vger.kernel.org
+Subject: Re: upgarding GIT
+
+=C6var Arnfj=F6r=F0 Bjarmason wrote:
+> On Mon, Aug 07 2017, James Wells jotted:
+>> I am fairly new to git, however I have a challenge of upgrading git=20
+>> from 2.0.4 to 2.4.12 and my initial 2.0.4 install was done via TAR=20
+>> BALL on my server.
+>>
+>> I have a centos server running git and Atlassian STASH and my=20
+>> challenge is for me to upgrade the STASH application I need to move=20
+>> to a newer version of git.
+
+Which release of CentOS are you using James?  And what git version is requi=
+red for the Atlassian Stash (which is now called Bitbucket) release you're =
+trying to use?  IIRC, they support as far back as git 1.8?
+
+> You're going to want to install git via RPM/yum. CentOS already has a=20
+> package for it.
+
+Indeed.  (But I'm biased because I would never, ever install software via '=
+sudo make install' on anything other than a throw-away test
+instance.)
+
+The one problem folks run into on CentOS/RHEL is that the versions may be s=
+omewhat old.  CentOS/RHEL 6 ships with git 1.7.1, for instance.=20
+CentOS/RHEL 7 is only a little newer, with git 1.8.3.  There are "software =
+collections" which provide git 1.9=B9 and 2.9=B2, but personally I've never=
+ liked using software collections for software that I need to integrate wit=
+h other tools.
+
+For users of CentOS/RHEL who want to run the current git release in a packa=
+ged form, the Fedora git package maintainers take care to ensure that the F=
+edora packages can be built for the current supported releases of CentOS/RH=
+EL (6 & 7 at the moment).  Grabbing the current code and/or srpm from Fedor=
+a should (almost=B3) always build cleanly using the mock build tool for Cen=
+tOS/RHEL.
+
+I also try to keep a semi-official COPR repo up to date, here:
+
+    https://copr.fedorainfracloud.org/coprs/g/git-maint/git/
+
+(Even as the primary maintainer of that repo, I'd still suggest that it's w=
+ise to either mirror it locally or rebuild the srpm's in your own infrastru=
+cture, to ensure that if the copr service is ever down you can reinstall im=
+portant systems.)
+
+=B9 https://www.softwarecollections.org/en/scls/rhscl/git19/
+=B2 https://www.softwarecollections.org/en/scls/rhscl/rh-git29/
+=B3 Right now, there's a slight issue building the current git for
+  CentOS 7 because RHEL 7.4 moved the pcre2 package from EPEL into
+  RHEL and CentOS 7.4 is not yet built.  The Fedora packages are
+  built against pcre2 now (thanks =C6var ;).  So for a few weeks it
+  won't be possible to build them for CentOS 7 without a minor change.
+
+--=20
+Todd
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Ocean, n. A body of water occupying about two-thirds of a world made
+for man -- who has no gills.
+    -- Ambrose Bierce, "The Devil's Dictionary"
+
