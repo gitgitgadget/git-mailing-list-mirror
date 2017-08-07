@@ -2,105 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 110F02047F
-	for <e@80x24.org>; Mon,  7 Aug 2017 18:27:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D6ED2047F
+	for <e@80x24.org>; Mon,  7 Aug 2017 18:29:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751560AbdHGS1V (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Aug 2017 14:27:21 -0400
-Received: from mail-lf0-f42.google.com ([209.85.215.42]:36191 "EHLO
-        mail-lf0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751426AbdHGS1U (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2017 14:27:20 -0400
-Received: by mail-lf0-f42.google.com with SMTP id o85so5377467lff.3
-        for <git@vger.kernel.org>; Mon, 07 Aug 2017 11:27:19 -0700 (PDT)
+        id S1751970AbdHGS3b (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Aug 2017 14:29:31 -0400
+Received: from mail-qk0-f172.google.com ([209.85.220.172]:34479 "EHLO
+        mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751508AbdHGS3a (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2017 14:29:30 -0400
+Received: by mail-qk0-f172.google.com with SMTP id u139so7415492qka.1
+        for <git@vger.kernel.org>; Mon, 07 Aug 2017 11:29:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=oahiIAEgTY+iYVjpWVn3591HoCx+p9cvYUN6Vf0nPNo=;
-        b=UhTNJtK5yETHRF8AGDo7HOUPvhI3Sc3jSWLBZrff/Y6Yk89zRnrORc+V9ZHQbpu7Ie
-         Pp0YQosx8c223tx0ECRdNmVbJ2oW94ORScn4YbH9ntZPdOh4IBlMaX9wHW0MM7ZpPNF0
-         3YEOc3Oyh6rbnrnuvbdgVPLcf27SqH83g9nRf8cb1nLWn+5eS5hec8rlTTw+1VAAW6u8
-         M/Ex5L/wd5hxv+YrA9o+KIv0K9IUXLeB8ESpCJEip2OLQyUe3LOiQwLsVuhXZwzBznjw
-         PPKFBbIthWRUB9mUsRWta3OXAXmS/qxGRz4gL1vJna/fx5GIPEPJIaOTz6V/cOUyWMGP
-         nmow==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=YHOpRVZ581AQCp5i6od62oFvI9jpIGLQQJjtAJKs4RY=;
+        b=q5J4ruqRh8CiVt6gviNEvFEFldLm/Kmw5+g8ECWGd5RA8tWiVaQZusSxLKYDG2MfKa
+         yGLY7b0FaaOOyY02Pc/rlNngz7l1XJp2jW/e/hVBlJCJ53wjKDakjAUHu/WA8bhqVv7c
+         Qij0nF9fInSFSS+uTFpLiPXeE+eDPak0WfxDvpB0Co8N32M8BcRFvOErD7kIPrh+ddc4
+         j8aWMb5ZIa0x6XKHixCNTbnIza3sB65ksDqv739NuRJcqYUTqGPTZuGyycbZMzIgowSE
+         Fr/v5djFk5EFh/lDCVhpo4+pzr/+hrO8h8jevG73KJ3wG8WHEZ4dUNjsaexiiWi5IkIG
+         iI5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=oahiIAEgTY+iYVjpWVn3591HoCx+p9cvYUN6Vf0nPNo=;
-        b=MnlskMvsprcHYlyKWuPVHCK5sR5fq0V/BsFwO7YTQvLpIyG12qm0hZsAjTLX1U037w
-         wBxCt9ZaPlIyZHL9rtCy4KhTcCxgyBNzcP3jOnMXg++QBSsVs9o25FP9i9m5EJ/qwH4c
-         vlhQWfQib4QBdTOFkWFKRA2m2yo1GMulQdsIcG2Fc2ENDYRSs1YkqPw6/Ie3KJRZAL6y
-         jZh8Px8fwaqb6lFw/InhrU3M7GEnT121gWwiHUJDxOvtuCKo0salmk+8XUvHN+f513ij
-         8oa7rIscNIRoMioBBnFUIPrb89cxT1rr72D9aU8vhoLn7dVZrYZYNBECzp79szpMLYML
-         wJLA==
-X-Gm-Message-State: AHYfb5gJQZAwxPMnhZs9HAuy5ItJ+QIiJfpccPCuyXL7HM1id3gtGyt/
-        svNhNecwa1toYV3JSj6lYYyfChwtgjvu
-X-Received: by 10.25.15.221 with SMTP id 90mr477703lfp.220.1502130438423; Mon,
- 07 Aug 2017 11:27:18 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=YHOpRVZ581AQCp5i6od62oFvI9jpIGLQQJjtAJKs4RY=;
+        b=Upl9Jbiq7uMwgSVok6xOxlGXaTWJNNeqqaec+tvCjUrwrQZ3xoutGLJ7WIuDQpfiBD
+         hFRQSYKFK+XJ1RKWm4QDie5l7UVOo+0WBBjRD7tjr8WX2IuhVknsXJOn9nZMA+2WpjZQ
+         SpykLAm9mmoVxDQuznVzToZef//0F5mDZouYMoW4oWIlkiN8JwKCaIB/5zd97iO/LJeS
+         9GvsF2uFpwRon9z4/vezdbLy9rjf23C4YaFh3FDjQ4jtQNuidlryxNLWVIGGgfsUFfhw
+         /H14wn9AMWD1hTZ6Q7gWU/Wp5hzeMxB/yCwpeg8lARPTm9KKLo3ePhw1HWQkdWolkdUi
+         gdrA==
+X-Gm-Message-State: AHYfb5inDjJBa1DKjDDgOmQgx7F0kHxS+vbPisMV1JxKHijfKtJr42pI
+        RtQxd/Hd0IEvSQ==
+X-Received: by 10.55.49.11 with SMTP id x11mr2015931qkx.224.1502130569507;
+        Mon, 07 Aug 2017 11:29:29 -0700 (PDT)
+Received: from [192.168.1.13] ([65.222.173.206])
+        by smtp.gmail.com with ESMTPSA id h42sm6151648qtb.97.2017.08.07.11.29.28
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 07 Aug 2017 11:29:29 -0700 (PDT)
+Subject: Re: [PATCH for NEXT v3 2/2] sub-process: refactor handshake to common
+ function
+To:     Jonathan Tan <jonathantanmy@google.com>,
+        Lars Schneider <larsxschneider@gmail.com>
+Cc:     benpeart@microsoft.com, git@vger.kernel.org, bmwill@google.com,
+        gitster@pobox.com
+References: <cover.1501092795.git.jonathantanmy@google.com>
+ <20170724213810.29831-1-jonathantanmy@google.com>
+ <cover.1501092795.git.jonathantanmy@google.com>
+ <6327579311fdb941a11b6d452318777a3c42ee65.1501092795.git.jonathantanmy@google.com>
+ <323E470B-994B-4AD8-9F30-588C2B97A845@gmail.com>
+ <20170807102136.30b23023@twelve2.svl.corp.google.com>
+ <2BEA5CEF-44C9-45DC-A462-579864790EDB@gmail.com>
+ <20170807111708.2d745df2@twelve2.svl.corp.google.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <142c1757-d366-61fe-ffa8-a398bdfd8c03@gmail.com>
+Date:   Mon, 7 Aug 2017 14:29:27 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Received: by 10.25.1.130 with HTTP; Mon, 7 Aug 2017 11:27:17 -0700 (PDT)
-In-Reply-To: <CAJo=hJtg0PAVHT1phbArdra8+4LfnEEuaj3fBid==BXkZghi8g@mail.gmail.com>
-References: <CAJo=hJtg0PAVHT1phbArdra8+4LfnEEuaj3fBid==BXkZghi8g@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 7 Aug 2017 11:27:17 -0700
-Message-ID: <CAGZ79kZO517Bg+O2z3dr+oHqO_av1__FU3h9bP=rhXJUSDnRjA@mail.gmail.com>
-Subject: Re: reftable [v6]: new ref storage format
-To:     Shawn Pearce <spearce@spearce.org>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Junio C Hamano <gitster@pobox.com>,
-        David Borowitz <dborowitz@google.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20170807111708.2d745df2@twelve2.svl.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Aug 6, 2017 at 6:47 PM, Shawn Pearce <spearce@spearce.org> wrote:
-> 6th iteration of the reftable storage format.
->
-> You can read a rendered version of this here:
-> https://googlers.googlesource.com/sop/jgit/+/reftable/Documentation/technical/reftable.md
->
-> Changes from v5:
-> - extensions.refStorage = reftable is used to select this format.
->
-> - Log records can be explicitly deleted (for refs/stash).
-> - Log records may use Michael Haggerty's chained idea to compress before zlib.
->   This saved ~5.8% on one of my example repositories.
 
-Some observations:
 
-Also the bits in the records changed in v5 or v6:
-  0x0..0x3 is valid for a ref,
-  obj records have a ccnt
-  0x0, 0x1, 0x4..0x7 are used in the logs
+On 8/7/2017 2:17 PM, Jonathan Tan wrote:
+> On Mon, 7 Aug 2017 19:51:04 +0200
+> Lars Schneider <larsxschneider@gmail.com> wrote:
+> 
+>>
+>>> On 07 Aug 2017, at 19:21, Jonathan Tan <jonathantanmy@google.com> wrote:
+>>>
+>>> On Sun, 6 Aug 2017 21:58:24 +0200
+>>> Lars Schneider <larsxschneider@gmail.com> wrote:
+>>>
+>>>>> +	struct cmd2process *entry = (struct cmd2process *)subprocess;
+>>>>> +	return subprocess_handshake(subprocess, "git-filter", versions, NULL,
+>>>>> +				    capabilities,
+>>>>> +				    &entry->supported_capabilities);
+>>>>
+>>>> Wouldn't it make sense to add `supported_capabilities` to `struct subprocess_entry` ?
+>>>
+>>> The members of "struct subprocess_entry" are not supposed to be accessed
+>>> directly, according to the documentation. If we relaxed that, then we
+>>> could do this, but before that I think it's better to let the caller
+>>> handle it.
+>>
+>> @Ben: You wrote that " Members should not be accessed directly.":
+>> https://github.com/git/git/commit/99605d62e8e7e568035dc953b24b79b3d52f0522#diff-c1655ad5d68943a3dc5bfae8c98466f2R22
+>> Can you give me a hint why?
+>>
 
-We have the following block indicators:
-  'r'  ref block
-  'o' object block
-  'g' log block
+It's just good object oriented design of providing a layer of 
+abstraction between the implementation details and the use of the 
+class/object/API.  I was following the model in api-hashmap.txt but 
+there are many other examples of where we don't do this.
 
-  high bit for any index.
+Perhaps providing a function that returns the property you want to 
+access (similar to subprocess_get_child_process) would work.
 
-Without prior knowledge an index doesn't indicate if it
-indexes refs, objects or logs. To find out, one must follow
-an arbitrary entry which points to either an index again
-or at a block marked with 'r', 'o' or 'g'.
-
-Okay with me.
-
-> The index may be organized into a multi-level index, where ...
-> which may in turn point to either index blocks (3rd level) or ref blocks (leaf level).
-
-So we allow 3 levels at most?
-
-The file format structure marks the indexes '?', should that be
-rather '*' to indicate there can be more than one index block?
+>> @Jonathan: What do you mean by "it's better to let the caller handle it"
+> 
+> Let the caller provide their own place to store the capabilities, I
+> mean, instead of (say) using a field as you describe and an accessor
+> method.
+> 
+> I don't feel strongly about this, though.
+> 
+>>> It does, but so does chosen_version. This is meant to allow the caller
+>>> to pass NULL to this function.
+>>
+>> Hm. I think every protocol should be versioned otherwise we could run
+>> into trouble in the long run.
+>>
+>> TBH I wouldn't support NULL in that case in the first place. If you
+>> want to support it then I think we should document it.
+> 
+> Note that this NULL is for the chosen version as chosen by the server,
+> not the versions declared as supported by the client.
+> 
+> The protocol is versioned. Some users (e.g. the filter mechanism) of
+> this subprocess thing would want to pass NULL because they only support
+> one version and the subprocess thing already ensures that the server
+> report that it supports one of the versions sent.
+> 
