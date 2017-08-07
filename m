@@ -2,109 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2CBB22047F
-	for <e@80x24.org>; Mon,  7 Aug 2017 17:32:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 387C32047F
+	for <e@80x24.org>; Mon,  7 Aug 2017 17:37:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751862AbdHGRcP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Aug 2017 13:32:15 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58060 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751426AbdHGRcO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2017 13:32:14 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DD2669BE2E;
-        Mon,  7 Aug 2017 13:32:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=GbOHuQNVDXNH
-        erdXqpw4IVMveCE=; b=IK3SqwVTibHCQe06bzUTh+Y4ExaLrGKM+HStUQTA7yqG
-        JjhkOOp9i5mbqP9KzgULaOPf+crRJH42bCmfMTHt6HvYgBBHnQaWR/7U4X0bF2Gh
-        s9c+JDjzKgz7dPhSZ4pp2RNIIKMtrp2LoVqU480Eztsj6/NQXxqOJUTNHsNqgVY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=RqQK4z
-        8KhHStQhTpn0tvaK3LECyWeABkj2srmjN1L56glRT4RsOHt6i/e+2kmJ+SQztsYb
-        yvwbd0be/vh7xtgTmqCBoytGd5R4793ubKRpMBninW+EHmtcbZB71QrXk0Z1qKiQ
-        xGXakmw/D3TeW0IEZ5l5Qc4J4x1w4Iw76sYxE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D42229BE2D;
-        Mon,  7 Aug 2017 13:32:08 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4AAD49BE2C;
-        Mon,  7 Aug 2017 13:32:08 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, David Coppa <dcoppa@openbsd.org>,
-        =?utf-8?Q?Ren?= =?utf-8?Q?=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH] tests: don't give unportable ">" to "test" built-in, use -gt
-References: <20170806233850.14711-1-avarab@gmail.com>
-Date:   Mon, 07 Aug 2017 10:32:07 -0700
-In-Reply-To: <20170806233850.14711-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Sun, 6 Aug 2017 23:38:50 +0000")
-Message-ID: <xmqqk22fqo6g.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751826AbdHGRhj (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Aug 2017 13:37:39 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:35517 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751453AbdHGRhi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2017 13:37:38 -0400
+Received: by mail-pf0-f196.google.com with SMTP id j68so995559pfc.2
+        for <git@vger.kernel.org>; Mon, 07 Aug 2017 10:37:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=7zHo9Ww7ixww3F0RpYGVfTSziNOeujzCbYWL7mFuRl4=;
+        b=A9Mn1s/0tJLDBPV+3F0g22Ss4el/Z1JT3bS1r7jQrSD8WzazUFrPXgzeTHpCs0KkuX
+         mil9Xga+fGhyKZ5PbqMSlX0jpZo/vXSGvX8+/+jOum0ick3d6PVvgS3pbY2BP62XTh7F
+         DUmnqUQpa+KO/8j1SbJiLJvPds84gnnksakBfp+o/jFnDysbXd4j/y7zoW7601EvM8H5
+         H01YNXSEnwlzdRew5KRcgKL+GJtycBR10RNHlQ91s7kyY33+M3dkjT+SRYWRL7R2ct/f
+         lacqt4AaCZqBclvm0DokTrmbp5oREVrcBHWEkUtaKpnhWmyrOtaEnPEitnCDNXEWZlVL
+         65Cg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=7zHo9Ww7ixww3F0RpYGVfTSziNOeujzCbYWL7mFuRl4=;
+        b=UmtdThDG8iYQcOnCYVszhAgdTMaU3gW6NHzM2w+4LU5O+6HLtsrjXHPzzg5hXhJ7Gi
+         rkkeB/VU1C2aQSa75uZL8HDe/Jnw1AtH8nvqdoNA7ed9UGnObzw6t+eimaPyWf5mkW95
+         +WrmUL6dy9bYDxC8pk2qV4PLYZv/Y8iarj+N3oO/6QNh4Hbdrmic9AkIPTMmKPhrF7vQ
+         JTvHGFJKeybVRyTl0zYaScxk/TZFmG7ETxgtlVzvQ+tIvvyD+ZBgAnJkBl7VeMzrXrPG
+         LosXk/c8WbABHn2/MFHj0HTgSqiEhDcD+lW/zicbEYIkxSwuuGv5FP8u55TrU/zZO+AN
+         ZaRQ==
+X-Gm-Message-State: AHYfb5gBoryb/F5auD8kLw1a+KZftNWpyzY6GQVAke4skMpM7rAhKrTj
+        kry25jmZ9YcjCOmPUO8dU4rMfY4fMQ==
+X-Received: by 10.99.179.9 with SMTP id i9mr1234378pgf.413.1502127458353; Mon,
+ 07 Aug 2017 10:37:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 566A7C2C-7B96-11E7-B155-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Received: by 10.100.165.238 with HTTP; Mon, 7 Aug 2017 10:37:37 -0700 (PDT)
+In-Reply-To: <890d4028-1351-a7b9-1797-cf419d5f01e8@morey-chaisemartin.com>
+References: <c74c8c386f2c2d8b6cebd4addf925d0121986067.1502114584.git.nicolas@morey-chaisemartin.com>
+ <71479602-fabc-1861-124b-90b26b952344@morey-chaisemartin.com>
+ <CAN0heSoRXX_9-yzFf=2Obj_5WosLwK4UtrFrLsw8asdUea1+Yg@mail.gmail.com> <890d4028-1351-a7b9-1797-cf419d5f01e8@morey-chaisemartin.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Mon, 7 Aug 2017 19:37:37 +0200
+Message-ID: <CAN0heSpSXRNgGeJ7TKOwPZJ3Puc1EvVUv1u84ghwDHhtE7=VHQ@mail.gmail.com>
+Subject: Re: [PATCH 4/4] imap-send: use curl by default
+To:     Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+On 7 August 2017 at 19:10, Nicolas Morey-Chaisemartin
+<nicolas@morey-chaisemartin.com> wrote:
+>
+>
+> Le 07/08/2017 =C3=A0 18:37, Martin =C3=85gren a =C3=A9crit :
+>> On 7 August 2017 at 16:04, Nicolas Morey-Chaisemartin
+>> <nicolas@morey-chaisemartin.com> wrote:
+>>> Signed-off-by: Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.c=
+om>
+>>> ---
+>>>  imap-send.c | 6 ------
+>>>  1 file changed, 6 deletions(-)
+>>>
+>>> diff --git a/imap-send.c b/imap-send.c
+>>> index 90b8683ed..4ebc16437 100644
+>>> --- a/imap-send.c
+>>> +++ b/imap-send.c
+>>> @@ -35,13 +35,7 @@ typedef void *SSL;
+>>>  #include "http.h"
+>>>  #endif
+>>>
+>>> -#if defined(USE_CURL_FOR_IMAP_SEND) && defined(NO_OPENSSL)
+>>> -/* only available option */
+>>>  #define USE_CURL_DEFAULT 1
+>>> -#else
+>>> -/* strictly opt in */
+>>> -#define USE_CURL_DEFAULT 0
+>>> -#endif
+>>>
+>>>  static int verbosity;
+>>>  static int use_curl =3D USE_CURL_DEFAULT;
+>> So this is now basically "static int use_curl =3D 1;".
+>>
+>> Do we need a compile-time escape-hatch in case someone really needs
+>> to avoid curl, e.g., because they have a too old version? I suppose
+>> there is a conceptual difference between the "default", i.e., the value
+>> of USE_CURL_DEFAULT that is assigned to "use_curl", and the "default
+>> default", i.e., the value that is normally assigned to USE_CURL_DEFAULT.
+>>
+>> Martin
+>
+> The curl code depends on USE_CURL_FOR_IMAP_SEND so even with use_curl =3D=
+=3D 1, it won't be an issue for people without curl (or old one).
 
-> Change an argument to test_line_count (which'll ultimately be turned
-> into a "test" expression) to use "-gt" instead of ">" for an
-> arithmetic test.
->
-> This broken on e.g. OpenBSD as of v2.13.0 with my commit
-> ac3f5a3468 ("ref-filter: add --no-contains option to
-> tag/branch/for-each-ref", 2017-03-24).
->
-> Upstream just worked around it by patching git and didn't tell us
+I have just looked at the sources and haven't thought too hard about it,
+but doesn't it mean that compiling without USE_CURL_FOR_IMAP_SEND
+results in a binary such that you must use --no-curl or get used to seeing
+"warning: --curl not supported in this build"?
 
-I'm tempted to do s/Upstream/Downstream/ while queuing, but please
-tell me I am confused.
+> I wasn't sure whether to drop the define or not and figure it might be wo=
+rth keeping in case in change in the future for some reason.
+> I don't mind dropping it and hardcofing the default to 1
 
-> about it, I discovered this when reading various Git packaging
-> implementations: https://github.com/openbsd/ports/commit/7e48bf88a20
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
-> ---
->
-> David, it would be great to get a quick bug report to
-> git@vger.kernel.org if you end up having to monkeypatch something
-> we've done. We won't bite, promise :)
->
-> As shown in that linked Github commit OpenBSD has another recent
-> workaround in turning on DIR_HAS_BSD_GROUP_SEMANTICS and skipping a
-> related test, maybe Ren=C3=A9 can make more sense of that?
->
-> There's more patches in their ports which indicate possible bugs of
-> ours: https://github.com/openbsd/ports/tree/master/devel/git/patches/
->
->  t/t7004-tag.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-> index 0ef7b94394..0e2e57aa3d 100755
-> --- a/t/t7004-tag.sh
-> +++ b/t/t7004-tag.sh
-> @@ -1887,7 +1887,7 @@ EOF"
->  	run_with_limited_stack git tag --contains HEAD >actual &&
->  	test_cmp expect actual &&
->  	run_with_limited_stack git tag --no-contains HEAD >actual &&
-> -	test_line_count ">" 10 actual
-> +	test_line_count "-gt" 10 actual
->  '
-> =20
->  test_expect_success '--format should list tags as per format given' '
+I did not intend to suggest that. Just to be clear, I am very unfamiliar
+with most of the Git codebase. Please don't take anything I say as
+advice. :) As a question about something you have or haven't already
+thought about, sure. :)
+
+Martin
