@@ -2,105 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C863320899
-	for <e@80x24.org>; Mon,  7 Aug 2017 11:09:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 91E732047F
+	for <e@80x24.org>; Mon,  7 Aug 2017 13:57:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753125AbdHGLJg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Aug 2017 07:09:36 -0400
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:35806 "EHLO
-        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752918AbdHGLJf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2017 07:09:35 -0400
-Received: by mail-wm0-f49.google.com with SMTP id m85so4388607wma.0
-        for <git@vger.kernel.org>; Mon, 07 Aug 2017 04:09:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=Q64idla6Uy4ygIvprhk8t53mtRhyuWKAe75CaZEAOsQ=;
-        b=hPTtS2bgU2FIPQM91r8+xrugpO1OmykMoHINegJ2/WoUpnI70SU6MRDasre6XCVydP
-         dhIKbUwoUXyrdWiarGw81GBJ6eqW5dWdA0gIMGg9xCo8m9kEoHWun5w+zLC6xRmj219Y
-         laopYTcMakgJdzH5NCQHfFJMJ++e8fBNr8+4kHjXL3DKoN0SiS9WSXoq6CvzZSxeAOzl
-         ywidZ9tfDKY0HVYMcxmhGlPGAAqbZj2tTVIu4z8UesyT7D6pbM6cIF0ONWan0eLibTGI
-         g25ux8XqUpUSZLbK8vUdiY43JkuORBllPb/v27k/b6lo8myqQjoh/fkcyGUVJt3V99w7
-         6JFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=Q64idla6Uy4ygIvprhk8t53mtRhyuWKAe75CaZEAOsQ=;
-        b=Z1oyuUfmJL0FKqJoMj/kSe+JM1DTYjowQ5hY7Si8Me8WcZ79tdsiqfbiiokWGtaQtz
-         fbNTGN3GNfGcexWVBI5yjmomc+wVGmL8AYXXN9nRy28Sya07YeNBqwZNRBxPLbYlw3nI
-         G1MNJdIKAGeNEJ6LBfT4uJxwi/OnVxL5He7+4DiloQeO+uQgu+vutWtPvTPuLBdCfamR
-         W9Pxt6JZ/cZ/wL1o6BveDLTCWnu7bYBNL4wRgPaQ31FHVBJjVnnHHx70cMDZhrXZYiV5
-         3/3SZRH5sGBfEA3Qk+bcZB/b22K1Dmy7WgfWZXvtj3ySjhIbpn19LWpY0vDUKDBhRoP9
-         /OVw==
-X-Gm-Message-State: AHYfb5hPHJeutlFL20YckpG12H7gx+eoZpBLCrtnOpd4rw4kqxnaX71l
-        gkYdsaJbb/W9SIsoAFI=
-X-Received: by 10.80.218.3 with SMTP id z3mr590334edj.228.1502104174278;
-        Mon, 07 Aug 2017 04:09:34 -0700 (PDT)
-Received: from snth (157-157-140-194.dsl.dynamic.simnet.is. [157.157.140.194])
-        by smtp.gmail.com with ESMTPSA id j16sm6939787eda.46.2017.08.07.04.09.33
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 07 Aug 2017 04:09:33 -0700 (PDT)
-Received: from avar by snth with local (Exim 4.84_2)
-        (envelope-from <avarab@gmail.com>)
-        id 1defue-0005po-Em; Mon, 07 Aug 2017 13:09:32 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     James Wells <james.wells@statseeker.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: upgarding GIT
-References: <9a2576ed8b7146459585af4238613286@statseeker.com>
-User-agent: Debian GNU/Linux 8.9 (jessie); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <9a2576ed8b7146459585af4238613286@statseeker.com>
-Date:   Mon, 07 Aug 2017 13:09:32 +0200
-Message-ID: <871sonzlar.fsf@gmail.com>
+        id S1751442AbdHGN5g (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Aug 2017 09:57:36 -0400
+Received: from mout.web.de ([212.227.17.11]:63705 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750751AbdHGN5f (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2017 09:57:35 -0400
+Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0M73SD-1dSwmW2QpZ-00wlUh; Mon, 07
+ Aug 2017 15:57:33 +0200
+To:     Git List <git@vger.kernel.org>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] test-path-utils: handle const parameter of basename and
+ dirname
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Git List <git@vger.kernel.org>
+Message-ID: <5bfd3c7c-c3c8-5115-713a-63f6f8cd7eb7@web.de>
+Date:   Mon, 7 Aug 2017 15:57:31 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:w4mGhEBzeEgk6UHAZOPhjSVzGKqwKsnTnIHUqlw/MhKFydlBsMl
+ d6emSukgTK46rKzqnIwFbOxyVvkZKEul50ry+ROITuZmZtmauXDPWxn6mq7+FthhtDIsrN7
+ +LID3vY5Xh2Xo1PulT///cVXBFmvABIo52qHEB4abSQxQH1YQt/xMCZ6YsDn+ivaHy5kJjM
+ mwv8OMsN5vxTSMc3W5TlA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:wXmY373NDVc=:6shGSJ62OWvPReBx+ChbhQ
+ n2FIdOJU/tmwvi5vLA+/TmiTMUFPv+K7nruSG24ngfZWLaOv0WpRr5fLRc7+5WV19YBQ3tJQA
+ cURzZttbUAFz49OAphpUwDPyINIPaviE0ePO3P/wFZ6ocCfIV42tc2rrhTVHz6UOftCYhNQIx
+ 6gPGmPZSwrPG8oXOcbgKiTnfsY68uIxdg7hv/1N787orGlXbCyvkiBRSfwUsM0x4Y8UV33nF6
+ eo+F5h4gYKFfNc0VFYJbVMse1U5sqBuLyuRWWZSSxd+CYSdtnXYDDc9x686TWsMM0r4qhgcuK
+ qXx1Y8FI41gIbIXlgWcP6Cyvor00jpzUhMhp/uxY6pIgSAdq7b/2Shs5ZfrCHPiV6NpHNIx/v
+ 6AyDzeCS6iCLWqhEQWPRV6wWlE9uPRQeNoW8rzYuGKoa6DGeAWGLEFlRoW7kNpcD+Z2I4tCYQ
+ KNPxJYVO8GMc2xJV7iGg1pkBdqjMcEu0aS43lAZpeblDlpSVezjEcCHep7SsYdFMwfwQ0l2qp
+ RIT6dWakCi1UkD3pymj+zeviK6lapEKVUj2Go5DJN6EcI35Jah98nEGPpsyS2qdqqZ+0hXl8W
+ Fl/6UAqhfqiPiiMcgt/JMnblyiCFDkHmCcfiFbr26vRE/2Np+tyJJwj864q3uVJtkXXjULYj4
+ b1cfOpcv7TR3YajNbIH97MhxWm2W97B366my0bH+n8q+UhQbVTVYv1D/Qvm4D480hdLplD9Wd
+ aaogkGZd1NpkkY317hss0qpSURhY735xmi24h1PbWpUcZuBWNG4Yy3GRuwYdXc8Tn3Q+TwsTz
+ 3NCXLZybOgRC2Uguf2lIAyjSTjPEWnEd/bQi+6l9DfD4GNd4Sw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The parameter to basename(3) and dirname(3) traditionally had the type
+"char *", but on OpenBSD it's been "const char *" for years.  That
+causes (at least) Clang to throw an incompatible-pointer-types warning
+for test-path-utils, where we try to pass around pointers to these
+functions.
 
-On Mon, Aug 07 2017, James Wells jotted:
+Avoid this warning (which is fatal in DEVELOPER mode) by ignoring the
+promise of OpenBSD's implementations to keep input strings unmodified
+and enclosing them in POSIX-compatible wrappers.
 
-> Hi All
->
-> I am fairly new to git, however I have a challenge of upgrading git from 2.0.4 to 2.4.12 and my initial 2.0.4 install was done via TAR BALL on my server.
->
-> I have a centos server running git and Atlassian STASH and my challenge is for me to upgrade the STASH application I need to move to a newer version of git.
->
-> How do I go about upgrading git from TAR BALL installs , is there an easy way as I would prefer not to have to create a new server and migrate everything across , I would like to perform the upgrade on the current local server if it is at all possible.
->
-> Any assistance is most welcome and I would appreciate your feedback or comments on how you would go about achieving this task.
->
-> Thanks
-> J
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ t/helper/test-path-utils.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-This is really a question of "hey I ran 'make install' on this thing in
-the past, how do I now upgrade it?". There's nothing git-specific about
-this, git doesn't do anything special that 99% of the software you run
-on CentOS wouldn't do in this scenario.
+diff --git a/t/helper/test-path-utils.c b/t/helper/test-path-utils.c
+index 1ebe0f750c..2b3c5092a1 100644
+--- a/t/helper/test-path-utils.c
++++ b/t/helper/test-path-utils.c
+@@ -38,6 +38,20 @@ struct test_data {
+ 	const char *alternative; /* output: ... or this.      */
+ };
+ 
++/*
++ * Compatibility wrappers for OpenBSD, whose basename(3) and dirname(3)
++ * have const parameters.
++ */
++static char *posix_basename(char *path)
++{
++	return basename(path);
++}
++
++static char *posix_dirname(char *path)
++{
++	return dirname(path);
++}
++
+ static int test_function(struct test_data *data, char *(*func)(char *input),
+ 	const char *funcname)
+ {
+@@ -251,10 +265,10 @@ int cmd_main(int argc, const char **argv)
+ 	}
+ 
+ 	if (argc == 2 && !strcmp(argv[1], "basename"))
+-		return test_function(basename_data, basename, argv[1]);
++		return test_function(basename_data, posix_basename, argv[1]);
+ 
+ 	if (argc == 2 && !strcmp(argv[1], "dirname"))
+-		return test_function(dirname_data, dirname, argv[1]);
++		return test_function(dirname_data, posix_dirname, argv[1]);
+ 
+ 	fprintf(stderr, "%s: unknown function name: %s\n", argv[0],
+ 		argv[1] ? argv[1] : "(there was none)");
+-- 
+2.14.0
 
-I'm not saying this to be an unhelpful smartass, but just to point out
-that to look for a solution you don't need to search for e.g. "how to
-replace git package" on Google, but just how to replace manually
-installed packages in general.
-
-You're going to want to install git via RPM/yum. CentOS already has a
-package for it.
-
-It may fail because of existing files, you can likely force it or
-manually remove the files first.
-
-Be careful not to end up with directories which contain some
-Frankensteinian combination of old tar.gz installed files & newly
-installed files. You can use RPM to list what package owns given files,
-you should manually remove e.g. some git-whatever command that's not
-managed by rpm living alongside your newly installed stuff.
