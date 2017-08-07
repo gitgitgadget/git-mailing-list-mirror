@@ -2,96 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,PI_IMPORTANCE_HIGH,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 376DA208B4
-	for <e@80x24.org>; Mon,  7 Aug 2017 16:34:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3DEBB208B4
+	for <e@80x24.org>; Mon,  7 Aug 2017 16:36:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751967AbdHGQep (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Aug 2017 12:34:45 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:34044 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751560AbdHGQen (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Aug 2017 12:34:43 -0400
-Received: by mail-pg0-f65.google.com with SMTP id y192so822123pgd.1
-        for <git@vger.kernel.org>; Mon, 07 Aug 2017 09:34:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=aRb47QNdZ7cYqCiROEc/zdtWI88G+rduNf+IbNwj6H0=;
-        b=W8vMB4lAhSglbluCwj+jLtvJZ0CxVzG/N8OzgAGJIkfeD1R4wtEgLBwOQVDOTxdj49
-         PvwqgDv9oILT0I/5H8I4MbVvWIgwLIW7gut3JbCFoDDhqttu67g7tJN9Ev7d7CHV/5mf
-         uyPgm7bwLZ8WHTNiCl0DgzZxP6pyoDPwI6V6x9zSu1uDcZdn6Lax3/mq+39Pxf+AMk3C
-         IteuJV8IrLJLoOR5xkJandVKgQs/CVnEhGSRucUQNKUilNNlMgS1eHdBs17MP1FH04Q+
-         JjHWB+QbQeaI/kU4J3Bh2nJ6Nmr2kLNHbvKwFUKLauRRTUNBTjGl4F/dfya1Pp1iR10i
-         HQmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=aRb47QNdZ7cYqCiROEc/zdtWI88G+rduNf+IbNwj6H0=;
-        b=On8Op7TzG1f7eztlMBPx/eJfxxTmS86drSguEiV7Q17Q8pis+xWLvECdZEx4+wNf5t
-         uaXS9DCKUNKDpfsODelAphFlYnqWqhEv3PE1YLkZ4pe1ySsnExLyE6g/sjNmruGGOYvg
-         Ubtbv2m6pdLEgUKUerTdbvHOozICk02U9nwNwsyuk1hdgBB8IThcDH7MYb9/gJTc/O1B
-         2lfF95lrsGHRKjTrtUGFpOKt502m0u/s6xkOmRaPsqqqJFl70iV6dk7L8Q7s2UKj6aOQ
-         Mnoa9w81FPl9dufAStGOi7uez+WlXrnr5a5DKJcYn69R2IpQkUcifswMRRcBbPriJk3s
-         OaXQ==
-X-Gm-Message-State: AHYfb5gWEhlOe8ddM7Ytx3QqEvK6WnVFrZoHo/Xlb3EEqybX7SltI59G
-        p0Ip7n9wA/dnWZMaGjHO9uj1SgS5Pw==
-X-Received: by 10.98.89.140 with SMTP id k12mr1197554pfj.71.1502123683256;
- Mon, 07 Aug 2017 09:34:43 -0700 (PDT)
+        id S1751875AbdHGQf7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Aug 2017 12:35:59 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58720 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751860AbdHGQf6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2017 12:35:58 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A5F619FA33;
+        Mon,  7 Aug 2017 12:35:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=yeaX/BFvNjc99Pfubc1Hx8svaMs=; b=wxM8wY
+        jG43TjKmJMZ5+bKon4h50Z8hCWuMZtEtMElkePRJtHrMvp9cIOImZbB1vFcy4RFY
+        NkWENkmmWHSZT/baF6861g/v6pAqiEP087mAfEDV1SJDIY3uqpYnJwKzs0kwyLeg
+        b9ulwypYk3a0AGFYVh2qPmybQD9ue33Hq1Mys=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=jpXty7LqXy5CaYYBfSwpcnF+Yq8LtIEM
+        /AgH686lOu7AoHjulq18vgmjLlkXEp07fFT4SclxHHNuJmM+/xRlWlu48eZt58Lw
+        cI3plGdoFuu6P1WJ+RwhoLsILvu+hPEhA8PpWIvrD1pfsK+NRa4+GN2HEn3PSib4
+        kHfjdBw/aiQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9DB219FA32;
+        Mon,  7 Aug 2017 12:35:57 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 03C9F9FA31;
+        Mon,  7 Aug 2017 12:35:56 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Michael Forney <mforney@mforney.org>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] Drop some dashes from built-in invocations in scripts
+References: <20170805064905.5948-1-mforney@mforney.org>
+Importance: high
+Date:   Mon, 07 Aug 2017 09:35:55 -0700
+In-Reply-To: <20170805064905.5948-1-mforney@mforney.org> (Michael Forney's
+        message of "Fri, 4 Aug 2017 23:49:05 -0700")
+Message-ID: <xmqqshh3qqs4.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.100.165.238 with HTTP; Mon, 7 Aug 2017 09:34:42 -0700 (PDT)
-In-Reply-To: <4a1f931c-9813-36a5-9c37-63b8abc4fecd@morey-chaisemartin.com>
-References: <c74c8c386f2c2d8b6cebd4addf925d0121986067.1502114584.git.nicolas@morey-chaisemartin.com>
- <4a1f931c-9813-36a5-9c37-63b8abc4fecd@morey-chaisemartin.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Mon, 7 Aug 2017 18:34:42 +0200
-Message-ID: <CAN0heSqyiisjWyDBXLJcyx=Hh3NA562DoFqP8rpFyi_zuGKLEA@mail.gmail.com>
-Subject: Re: [PATCH 3/4] imap_send: setup_curl: use server_conf parameter
- instead of the global variable
-To:     Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7CF86EA6-7B8E-11E7-BA0D-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7 August 2017 at 16:04, Nicolas Morey-Chaisemartin
-<nicolas@morey-chaisemartin.com> wrote:
-> Signed-off-by: Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
+Michael Forney <mforney@mforney.org> writes:
+
+> This way, they still work even if the built-in symlinks aren't
+> installed.
+>
+> Signed-off-by: Michael Forney <mforney@mforney.org>
 > ---
->  imap-send.c | 24 ++++++++++++------------
->  1 file changed, 12 insertions(+), 12 deletions(-)
->
-> diff --git a/imap-send.c b/imap-send.c
-> index 682a06551..90b8683ed 100644
-> --- a/imap-send.c
-> +++ b/imap-send.c
-> @@ -1415,37 +1415,37 @@ static CURL *setup_curl(struct imap_server_conf *srvc)
->         if (!curl)
->                 die("curl_easy_init failed");
->
-> -       server_fill_credential(&server);
-> -       curl_easy_setopt(curl, CURLOPT_USERNAME, server.user);
-> -       curl_easy_setopt(curl, CURLOPT_PASSWORD, server.pass);
-> +       server_fill_credential(srvc);
-> +       curl_easy_setopt(curl, CURLOPT_USERNAME, srvc->user);
-> +       curl_easy_setopt(curl, CURLOPT_PASSWORD, srvc->pass);
+> It looks like there was an effort to do this a number of years ago (through
+> `make remove-dashes`). These are just a few I noticed were still left in the
+> .sh scripts.
 
-Here you change the server_fill_credential-call that you just added.
-Maybe do this patch earlier, perhaps even as patch 1?
+Our goal was *not* to have *no* "git-foo" on the filesystem,
+though.  It happened in v1.6.0 timeframe and it was about removing
+"git-foo" from end-user's $PATH.
 
-I'm snipping lots of s/server/srvc/-changes... There's a less noisy
-way of addressing the fact that srvc is unused: dropping it. I'm not
-saying that's a good idea, but it could be considered, then explained
-why this approach is better. There are some other functions which
-access "server" directly, and some which take (and use!) a "srvc".
-Maybe make the whole file consistent?
+Earlier there was a more ambitious proposal to remove all "git-foo"
+even from $GIT_EXEC_PATH for built-in commands, but that plan was
+scuttled [*1*].
 
-Martin
+The changes in your patch still are good changes to make sure people
+who copy & paste code would see fewer instances of "git-foo", but
+"will still work even if I break my installation of Git by removing
+them from the filesystem" is not the project's goal.  
+
+IIUC, you will need "$GIT_EXEC_PATH/git-checkout" on the filesystem
+if you want your "git co" alias to work, as we spawn built-in as a
+dashed external.
+
+
+[Reference]
+
+*1* https://public-inbox.org/git/alpine.LFD.1.10.0808261114070.3363@nehalem.linux-foundation.org/
+
+
