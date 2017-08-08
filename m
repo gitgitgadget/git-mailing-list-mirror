@@ -2,183 +2,258 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B2DB2047F
-	for <e@80x24.org>; Mon,  7 Aug 2017 23:20:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 31E2B2047F
+	for <e@80x24.org>; Tue,  8 Aug 2017 01:26:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751919AbdHGXUc (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Aug 2017 19:20:32 -0400
-Received: from smtp74.ord1c.emailsrvr.com ([108.166.43.74]:38321 "EHLO
-        smtp74.ord1c.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751881AbdHGXUb (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 7 Aug 2017 19:20:31 -0400
-Received: from smtp18.relay.ord1c.emailsrvr.com (localhost [127.0.0.1])
-        by smtp18.relay.ord1c.emailsrvr.com (SMTP Server) with ESMTP id 0E91BE01ED;
-        Mon,  7 Aug 2017 19:20:31 -0400 (EDT)
-X-SMTPDoctor-Processed: csmtpprox beta
-Received: from smtp18.relay.ord1c.emailsrvr.com (localhost [127.0.0.1])
-        by smtp18.relay.ord1c.emailsrvr.com (SMTP Server) with ESMTP id 0A14BE046E;
-        Mon,  7 Aug 2017 19:20:31 -0400 (EDT)
-Received: from smtp192.mex09.emailsrvr.com (unknown [184.106.73.70])
-        by smtp18.relay.ord1c.emailsrvr.com (SMTP Server) with ESMTPS id D4931E01ED;
-        Mon,  7 Aug 2017 19:20:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=statseeker.com;
-        s=20170629-l0wbkvum; t=1502148030;
-        bh=uNlNlE9N4BmoYcwid2c8p4u1+daghdWozHcXGoYUjQE=;
-        h=From:To:Subject:Date:From;
-        b=V1Vqx/Sc/+eynrPqo6O40XF6MzZkoVNYTRWLaQbajWZCJ87YluwIHIASdcU10UZzi
-         Xtt+/6sVzfD0kHyLEkoZkTOhVvA3MGKb/YVNpfOhmfKMS19VzmV26QQsbs/F28AiS2
-         DtmBIqiQSlghh+wP+1wzgJEWTynjCAx9anncNkF4=
-X-Sender-Id: james.wells@statseeker.com
-Received: from smtp192.mex09.emailsrvr.com ([UNAVAILABLE]. [184.106.73.70])
-        (using TLSv1.2 with cipher AES256-SHA256)
-        by 0.0.0.0:25 (trex/5.7.12);
-        Mon, 07 Aug 2017 19:20:30 -0400
-Received: from MBX04D-ORD1.mex09.mlsrvr.com (172.29.128.30) by
- MBX04C-ORD1.mex09.mlsrvr.com (172.29.128.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
- 15.1.669.32; Mon, 7 Aug 2017 18:20:30 -0500
-Received: from MBX04D-ORD1.mex09.mlsrvr.com ([fe80::40b3:1086:160a:405e]) by
- MBX04D-ORD1.mex09.mlsrvr.com ([fe80::40b3:1086:160a:405e%21]) with mapi id
- 15.01.0669.032; Mon, 7 Aug 2017 18:20:30 -0500
-From:   James Wells <james.wells@statseeker.com>
-To:     Todd Zullinger <tmz@pobox.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: upgarding GIT
-Thread-Topic: upgarding GIT
-Thread-Index: AdMPQ2NPbrFDYd5KTIq487yWwoqxggAVCqkAAAyCtYAAAevSUA==
-Date:   Mon, 7 Aug 2017 23:20:30 +0000
-Message-ID: <f5d92196d19a4029bb4e282837c53a46@statseeker.com>
-References: <9a2576ed8b7146459585af4238613286@statseeker.com>
- <871sonzlar.fsf@gmail.com> <20170807170745.GG25542@zaya.teonanacatl.net>
-In-Reply-To: <20170807170745.GG25542@zaya.teonanacatl.net>
-Accept-Language: en-AU, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [14.203.103.145]
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-MIME-Version: 1.0
+        id S1751930AbdHHB0H (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Aug 2017 21:26:07 -0400
+Received: from mail-pf0-f171.google.com ([209.85.192.171]:36258 "EHLO
+        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751828AbdHHB0G (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Aug 2017 21:26:06 -0400
+Received: by mail-pf0-f171.google.com with SMTP id c28so8060283pfe.3
+        for <git@vger.kernel.org>; Mon, 07 Aug 2017 18:26:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=NyoQxTC0uZdQJbOy+LD6B14cACrxPCWUdt8pb9MI+ZY=;
+        b=siyencOJH/bmIX/PtdWH2fdnUuoBI+dD18brt0ivUocKbngjQGA2YfNAj/PaMzA6Z7
+         z/4lBCJV2TROAJYBNKDHwhd+ieoPsUWw5L1hy6rBXlyFlwuFFtDdZHVT5GWMGO5u3q0t
+         +NM94ABqpDFnQPwQBtIpZtDBjdTrYEsmt06Mh1EX989OawkZDmkuh/SuuUhhEM5IigFs
+         8xsfxW2w5x7GkQjNZ/bKUMsbeQWmCL/FkH/zhDm9R1EpPcCLRnjhejoAPIVO/M9qjUJL
+         jee9cgA1qbMD10y0bCgdTtFSdO7KijoET74+XicAKazXJK8Fc6JSTjh39hLfxLLoY2pf
+         5eVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=NyoQxTC0uZdQJbOy+LD6B14cACrxPCWUdt8pb9MI+ZY=;
+        b=UDsMX95LhiikcM2onLwGc5fwe68mcCHeI69OJLTvwUee0yeBEMrZti3Rnbuf4dJQk1
+         L0viihkiTNkJkOgLusugO3UrOh0geLDJyaQ7on+wusmitX8K+HkixuAYjGXc0IFrKUDz
+         EM9cib7UXQoDcfuxGUljHf6l/bfDNuRfeNfZ+l5/OdQcoFiFRR8OaS5QMoM0A8zABNKf
+         8cm45D6GXclExyVwygbFlpIZvX31WCCEJ0Ul6xk4GwuNkMElr2Dr9Ynoukw90cFYHwAL
+         sYquKNQvEwIZvLyYowhKdV14SmFaUVQ+GD0rbxHEQNlWhqlaw2SGs22Gy54VzEuhKNu3
+         90gw==
+X-Gm-Message-State: AHYfb5ievk7wfGfnH5jQxuj7gnD8PexEc7dschG7acI10Hrm2uHB7ZIo
+        pfEXN5MVGsXRIDnLcqu6tA==
+X-Received: by 10.99.98.69 with SMTP id w66mr2337537pgb.58.1502155565202;
+        Mon, 07 Aug 2017 18:26:05 -0700 (PDT)
+Received: from roshar.svl.corp.google.com ([100.96.218.30])
+        by smtp.gmail.com with ESMTPSA id s18sm118476pfg.166.2017.08.07.18.26.03
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 07 Aug 2017 18:26:04 -0700 (PDT)
+From:   Brandon Williams <bmwill@google.com>
+To:     git@vger.kernel.org
+Cc:     Brandon Williams <bmwill@google.com>
+Subject: [RFC] clang-format: outline the git project's coding style
+Date:   Mon,  7 Aug 2017 18:25:54 -0700
+Message-Id: <20170808012554.186051-1-bmwill@google.com>
+X-Mailer: git-send-email 2.14.0.434.g98096fd7a8-goog
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Todd
+Add a '.clang-format' file which outlines the git project's coding
+style.  This can be used with clang-format to auto-format .c and .h
+files to conform with git's style.
 
-Thanks for replying, below is my current install information
+Signed-off-by: Brandon Williams <bmwill@google.com>
+---
 
-Current ( STASH and GIT are installed on the same server ):
+I'm sure this sort of thing comes up every so often on the list but back at
+git-merge I mentioned how it would be nice to not have to worry about style
+when reviewing patches as that is something mechanical and best left to a
+machine (for the most part).  I saw that 'clang-format' was brought up on the
+list once before a couple years ago
+(https://public-inbox.org/git/20150121220903.GA10267@peff.net/) but nothing
+really came of it.  I spent a little bit of time combing through the various
+options and came up with this config based on the general style of our code
+base.  The big issue though is that our code base isn't consistent so try as
+you might you wont be able to come up with a config which matches everything we
+do (mostly due to the inconsistencies in our code base).
 
-STASH ( BitBucket ) =3D 3.9.2
-Git =3D 2.0.4 ( installed from tar Ball and not from an RPM as the RPM was =
-too old.
-Centos =3D 6.6
+Anyway, I thought I'd bring this topic back up and see how people feel about it.
 
-Required:
+ .clang-format | 166 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 166 insertions(+)
+ create mode 100644 .clang-format
 
-BitBucket =3D 5.2
-Git =3D 2.2 + and above
-
-https://confluence.atlassian.com/bitbucketserver/supported-platforms-776640=
-981.html
-
-As you can see my version of git is not supported with the current version =
-of bitbucket. I will have to perform a two stage upgrade anyway as the vers=
-ion of STASH I am running cannot be upgraded directly to bitbucket 5.2 as w=
-ell.
-
-Is there an easy way just to install a higher support version of git like 2=
-.9 on the same server and then move all the repos and basically everything =
-across. Can you install another TAR ball later version on top of another gi=
-t , so it's like overwriting it.=20
-
-
-Kind regards,
-
-James Wells | Operations and Regional Account Manager ANZ=A0=A0=A0=A0=A0=A0=
-=A0=20
-
-www.statseeker.com
-
-This email is intended only for the entity or individual to whom it is addr=
-essed and may contain information that is privileged or confidential.=A0If =
-you are not the intended recipient, you are hereby notified that distributi=
-on, copying or any form of dissemination of the content of this email is st=
-rictly prohibited.=A0If you have received this email in error, please advis=
-e us immediately by return email and destroy the original message. Thank yo=
-u.
-
-
------Original Message-----
-From: Todd Zullinger [mailto:todd.zullinger@gmail.com] On Behalf Of Todd Zu=
-llinger
-Sent: Tuesday, 8 August 2017 3:08 AM
-To: =C6var Arnfj=F6r=F0 Bjarmason
-Cc: James Wells; git@vger.kernel.org
-Subject: Re: upgarding GIT
-
-=C6var Arnfj=F6r=F0 Bjarmason wrote:
-> On Mon, Aug 07 2017, James Wells jotted:
->> I am fairly new to git, however I have a challenge of upgrading git=20
->> from 2.0.4 to 2.4.12 and my initial 2.0.4 install was done via TAR=20
->> BALL on my server.
->>
->> I have a centos server running git and Atlassian STASH and my=20
->> challenge is for me to upgrade the STASH application I need to move=20
->> to a newer version of git.
-
-Which release of CentOS are you using James?  And what git version is requi=
-red for the Atlassian Stash (which is now called Bitbucket) release you're =
-trying to use?  IIRC, they support as far back as git 1.8?
-
-> You're going to want to install git via RPM/yum. CentOS already has a=20
-> package for it.
-
-Indeed.  (But I'm biased because I would never, ever install software via '=
-sudo make install' on anything other than a throw-away test
-instance.)
-
-The one problem folks run into on CentOS/RHEL is that the versions may be s=
-omewhat old.  CentOS/RHEL 6 ships with git 1.7.1, for instance.=20
-CentOS/RHEL 7 is only a little newer, with git 1.8.3.  There are "software =
-collections" which provide git 1.9=B9 and 2.9=B2, but personally I've never=
- liked using software collections for software that I need to integrate wit=
-h other tools.
-
-For users of CentOS/RHEL who want to run the current git release in a packa=
-ged form, the Fedora git package maintainers take care to ensure that the F=
-edora packages can be built for the current supported releases of CentOS/RH=
-EL (6 & 7 at the moment).  Grabbing the current code and/or srpm from Fedor=
-a should (almost=B3) always build cleanly using the mock build tool for Cen=
-tOS/RHEL.
-
-I also try to keep a semi-official COPR repo up to date, here:
-
-    https://copr.fedorainfracloud.org/coprs/g/git-maint/git/
-
-(Even as the primary maintainer of that repo, I'd still suggest that it's w=
-ise to either mirror it locally or rebuild the srpm's in your own infrastru=
-cture, to ensure that if the copr service is ever down you can reinstall im=
-portant systems.)
-
-=B9 https://www.softwarecollections.org/en/scls/rhscl/git19/
-=B2 https://www.softwarecollections.org/en/scls/rhscl/rh-git29/
-=B3 Right now, there's a slight issue building the current git for
-  CentOS 7 because RHEL 7.4 moved the pcre2 package from EPEL into
-  RHEL and CentOS 7.4 is not yet built.  The Fedora packages are
-  built against pcre2 now (thanks =C6var ;).  So for a few weeks it
-  won't be possible to build them for CentOS 7 without a minor change.
-
---=20
-Todd
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Ocean, n. A body of water occupying about two-thirds of a world made
-for man -- who has no gills.
-    -- Ambrose Bierce, "The Devil's Dictionary"
+diff --git a/.clang-format b/.clang-format
+new file mode 100644
+index 000000000..7f28dc259
+--- /dev/null
++++ b/.clang-format
+@@ -0,0 +1,166 @@
++# Defaults
++
++# Use tabs whenever we need to fill whitespace that spans at least from one tab
++# stop to the next one.
++UseTab: Always
++TabWidth: 8
++IndentWidth: 8
++ContinuationIndentWidth: 8
++ColumnLimit: 80
++
++# C Language specifics
++Language: Cpp
++
++# Align parameters on the open bracket
++# someLongFunction(argument1,
++#                  argument2);
++AlignAfterOpenBracket: Align
++
++# Don't align consecutive assignments
++# int aaaa = 12;
++# int b = 14;
++AlignConsecutiveAssignments: false
++
++# Don't align consecutive declarations
++# int aaaa = 12;
++# double b = 3.14;
++AlignConsecutiveDeclarations: false
++
++# Align escaped newlines as far left as possible
++# #define A   \
++#   int aaaa; \
++#   int b;    \
++#   int cccccccc;
++AlignEscapedNewlines: Left
++
++# Align operands of binary and ternary expressions
++# int aaa = bbbbbbbbbbb +
++#           cccccc;
++AlignOperands: true
++
++# Don't align trailing comments
++# int a; // Comment a
++# int b = 2; // Comment b
++AlignTrailingComments: false
++
++# By default don't allow putting parameters onto the next line
++# myFunction(foo, bar, baz);
++AllowAllParametersOfDeclarationOnNextLine: false
++
++# Don't allow short braced statements to be on a single line
++# if (a)           not       if (a) return;
++#   return;
++AllowShortBlocksOnASingleLine: false
++AllowShortCaseLabelsOnASingleLine: false
++AllowShortFunctionsOnASingleLine: false
++AllowShortIfStatementsOnASingleLine: false
++AllowShortLoopsOnASingleLine: false
++
++# Add a line break after the return type of top-level functions
++# int
++# foo();
++AlwaysBreakAfterReturnType: TopLevel
++
++# Pack as many parameters or arguments onto the same line as possible
++# int myFunction(int aaaaaaaaaaaa, int bbbbbbbb,
++#                int cccc);
++BinPackArguments: true
++BinPackParameters: true
++
++# Attach braces to surrounding context except break before braces on function
++# definitions.
++# void foo()
++# {
++#    if (true) {
++#    } else {
++#    }
++# };
++BreakBeforeBraces: Linux
++
++# Break after operators
++# int valuve = aaaaaaaaaaaaa +
++#              bbbbbb -
++#              ccccccccccc;
++BreakBeforeBinaryOperators: None
++BreakBeforeTernaryOperators: false
++
++# Don't break string literals
++BreakStringLiterals: false
++
++# Use the same indentation level as for the switch statement.
++# Switch statement body is always indented one level more than case labels.
++IndentCaseLabels: false
++
++# Don't indent a function definition or declaration if it is wrapped after the
++# type
++IndentWrappedFunctionNames: false
++
++# Align pointer to the right
++# int *a;
++PointerAlignment: Right
++
++# Insert a space after a cast
++# x = (int32) y;    not    x = (int32)y;
++SpaceAfterCStyleCast: true
++
++# Insert spaces before and after assignment operators
++# int a = 5;    not    int a=5;
++# a += 42;             a+=42;
++SpaceBeforeAssignmentOperators: true
++
++# Put a space before opening parentheses only after control statement keywords.
++# void f() {
++#   if (true) {
++#     f();
++#   }
++# }
++SpaceBeforeParens: ControlStatements
++
++# Don't insert spaces inside empty '()'
++SpaceInEmptyParentheses: false
++
++# The number of spaces before trailing line comments (// - comments).
++# This does not affect trailing block comments (/* - comments).
++SpacesBeforeTrailingComments: 1
++
++# Don't insert spaces in casts
++# x = (int32) y;    not    x = ( int32 ) y;
++SpacesInCStyleCastParentheses: false
++
++# Don't insert spaces inside container literals
++# var arr = [1, 2, 3];    not    var arr = [ 1, 2, 3 ];
++SpacesInContainerLiterals: false
++
++# Don't insert spaces after '(' or before ')'
++# f(arg);    not    f( arg );
++SpacesInParentheses: false
++
++# Don't insert spaces after '[' or before ']'
++# int a[5];    not    int a[ 5 ];
++SpacesInSquareBrackets: false
++
++# Insert a space after '{' and before '}' in struct initializers
++Cpp11BracedListStyle: false
++
++# A list of macros that should be interpreted as foreach loops instead of as
++# function calls.
++ForEachMacros: ['for_each_string_list_item']
++
++# The maximum number of consecutive empty lines to keep.
++MaxEmptyLinesToKeep: 1
++
++# No empty line at the start of a block.
++KeepEmptyLinesAtTheStartOfBlocks: false
++
++# Penalties
++# This decides what order things should be done if a line is too long
++PenaltyBreakAssignment: 100
++PenaltyBreakBeforeFirstCallParameter: 100
++PenaltyBreakComment: 100
++PenaltyBreakFirstLessLess: 0
++PenaltyBreakString: 100
++PenaltyExcessCharacter: 5
++PenaltyReturnTypeOnItsOwnLine: 0
++
++# Don't sort #include's
++SortIncludes: false
+-- 
+2.14.0.434.g98096fd7a8-goog
 
