@@ -2,79 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 08E2420899
-	for <e@80x24.org>; Tue,  8 Aug 2017 21:21:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EBC6920899
+	for <e@80x24.org>; Tue,  8 Aug 2017 21:36:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752460AbdHHVVu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Aug 2017 17:21:50 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59989 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752444AbdHHVVt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Aug 2017 17:21:49 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 63BFE9F8C9;
-        Tue,  8 Aug 2017 17:21:42 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=cB62DpGSZ2T3C1YieN9bwwQLKDA=; b=Jsz/qN
-        hjkcdTpyeVg0QBRiOi44nxT4EgsJJbXjLsHk0GPw5MZuqEMLqnZLechfszXwQJgr
-        /UIPU2/BSRjsXAbDv3xT94BTfZpAZCh/XsSXCA9mabQumrZj392U1nWSQgVxUa9w
-        ybZZrLCqPizkX1OWlGh5K1lsilikECMJ4znkQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=UlK2OwVvPCPHPcz92+AeLWETGKhCu/LS
-        jB/bIvtHhw/W7j3pJqoyumo9d8d0YVSma9sUoOpySJa5ej9FoqrDGXlIlMV9jIgS
-        eoecK2rFb9is49hl4H34/LoyLr58cs8HQ4yfFYTpPONiaKnIZccW3wWnLVPWfXWn
-        FXbX8Hp/jDk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5B03D9F8C6;
-        Tue,  8 Aug 2017 17:21:42 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BAFD19F8C4;
-        Tue,  8 Aug 2017 17:21:41 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin Koegler <martin.koegler@chello.at>
-Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH] Convert size datatype to size_t
-References: <1502222450-20815-1-git-send-email-martin@mail.zuhause>
-Date:   Tue, 08 Aug 2017 14:21:40 -0700
-In-Reply-To: <1502222450-20815-1-git-send-email-martin@mail.zuhause> (Martin
-        Koegler's message of "Tue, 8 Aug 2017 22:00:50 +0200")
-Message-ID: <xmqqr2wlah7f.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1752224AbdHHVgg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Aug 2017 17:36:36 -0400
+Received: from avasout05.plus.net ([84.93.230.250]:57067 "EHLO
+        avasout05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752100AbdHHVgg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Aug 2017 17:36:36 -0400
+Received: from [10.0.2.15] ([143.159.212.52])
+        by avasout05 with smtp
+        id ulcZ1v00418PUFB01lcavW; Tue, 08 Aug 2017 22:36:34 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=Iav3YSia c=1 sm=1 tr=0
+ a=CKmocqUIrzA4K3l9YJ19NQ==:117 a=CKmocqUIrzA4K3l9YJ19NQ==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=40NccKzHFzZnWGhQKAwA:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     GIT Mailing-list <git@vger.kernel.org>,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH] builtin/add: add a missing newline to an stderr message
+Message-ID: <4b0d092f-5a1b-73c7-38fe-48455099bcff@ramsayjones.plus.com>
+Date:   Tue, 8 Aug 2017 22:36:32 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 92739EEE-7C7F-11E7-939C-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin Koegler <martin.koegler@chello.at> writes:
 
-> From: Martin Koegler <martin.koegler@chello.at>
->
-> It changes the signature of the core object access function
-> including any other functions to assure a clean compile if
-> sizeof(size_t) != sizeof(unsigned long).
->
-> Signed-off-by: Martin Koegler <martin.koegler@chello.at>
-> ---
-> ...
->  66 files changed, 193 insertions(+), 191 deletions(-)
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
 
-Wow, that's a lot of changes.  What version did you worked this
-patch on?  The reason I ask is because...
+Hi Junio,
 
-> diff --git a/diff-delta.c b/diff-delta.c
-> index cd238c8..3d5e1ef 100644
+I noticed this while looking into the t3700 failure on cygwin tonight.
+Also, I couldn't decide whether or not to add the i18n '_()' brackets
+around the message. In the end I didn't, but will happily add them
+if you think I should.
 
-... I do not see any version of Git that had blob cd238c8 at that
-path, so "git am -3" is having hard time applying this pach to allow
-me reviewing it.
+Thanks!
+
+ATB,
+Ramsay Jones
+
+ builtin/add.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/builtin/add.c b/builtin/add.c
+index e888fb8c5..385b53ae7 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -43,7 +43,7 @@ static void chmod_pathspec(struct pathspec *pathspec, int force_mode)
+ 			continue;
+ 
+ 		if (chmod_cache_entry(ce, force_mode) < 0)
+-			fprintf(stderr, "cannot chmod '%s'", ce->name);
++			fprintf(stderr, "cannot chmod '%s'\n", ce->name);
+ 	}
+ }
+ 
+-- 
+2.14.0
