@@ -2,101 +2,179 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8AB7E20899
-	for <e@80x24.org>; Tue,  8 Aug 2017 17:40:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8DFAF20899
+	for <e@80x24.org>; Tue,  8 Aug 2017 17:45:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752105AbdHHRk1 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Aug 2017 13:40:27 -0400
-Received: from mail-lf0-f45.google.com ([209.85.215.45]:34072 "EHLO
-        mail-lf0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752030AbdHHRk0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Aug 2017 13:40:26 -0400
-Received: by mail-lf0-f45.google.com with SMTP id g25so18008779lfh.1
-        for <git@vger.kernel.org>; Tue, 08 Aug 2017 10:40:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=PCmFELiB2UxairimEc+I0Wc0I+KLmIO/8EUYypjUx2w=;
-        b=qrs40mpulyB33ZVnGx4Orf0y7b+cM2EFHRXkUvzJvT6xVamLZMclr9xZpPiCg9hOCr
-         70pLbQUUODMjOK1VNMlBYVrZ1pL3e0xt+wT7TiVBwk+7nUfZyiL2P576vA2tUlaBMbze
-         poBIiGEdwns7QnOY2/WRbUAQrmcfMNWxoaI/FlNzytVgUhYnDjjxMVNg0q9+QvHafdfO
-         YknEt+brQYWvH4frBgohhwP6xBJF4XoVnWm8JT5oBzU95awNTf3NlNeuEcObNn7zU9Fn
-         mZAYY48219eQwm0abWgVGwbvSm4Fn7ZsT+bXeSpNsk8Y8G7iGGLiwL2eL5/ooZMTUbVq
-         ptFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=PCmFELiB2UxairimEc+I0Wc0I+KLmIO/8EUYypjUx2w=;
-        b=uM9aL7hk0fyhNrZPJJY2drWIU8b2UIXE41X0IZAjPRkrUZbIzcwbiEGwjMkfaoPPCR
-         6TZ+XmKtzTr3bVkK//VMqq8yjZkwFIpO/PC3Ge/zJhsdcDxm+mViHFJ38cfbg1NY7RLZ
-         40wOYCKl75+WGrt46ToL3C71i+AwViHLs+AiN13mVUVPajS7okErjng9yOu9Exj2OUbP
-         dvEbkNWXInA4AARWnmBhDxpb7/nhHZUwmgHhwUMeFvjO5jKrRIzGZqhoyUYqvgZEh8NA
-         jy6ojm6WVAWAUXfTSC5Awa6jWBN8kTE6yu9UVWBKMTgISHQjn3/+TTioiUAbNzXmY8Ef
-         2yqA==
-X-Gm-Message-State: AHYfb5gNtVWKPOujC91Xijd4li8RE3QASKkcW4sYmWpWvScFa/jSDPzu
-        oVHLZwnNPm+ioLtQdgagPQUBTjKCVAQF
-X-Received: by 10.25.232.41 with SMTP id f41mr1991215lfh.90.1502214024993;
- Tue, 08 Aug 2017 10:40:24 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.25.1.130 with HTTP; Tue, 8 Aug 2017 10:40:24 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.21.1.1708081404200.4271@virtualbox>
-References: <20170808012554.186051-1-bmwill@google.com> <alpine.DEB.2.21.1.1708081404200.4271@virtualbox>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 8 Aug 2017 10:40:24 -0700
-Message-ID: <CAGZ79kb2860nUs46bP=x-gAx9Ao6DxnvXQv3x387Wxw+kEyxJw@mail.gmail.com>
+        id S1752162AbdHHRpf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Aug 2017 13:45:35 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54452 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752100AbdHHRpe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Aug 2017 13:45:34 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 589189B2CD;
+        Tue,  8 Aug 2017 13:45:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=w7PIOmFnx1stYOU2UR+2Mo8r9nk=; b=uvjdHk
+        8o/q/znrmmKedd3BmQFFjCbcIUiDZ85k7SwunDM0PAXzHDBZsKC5Wr0xQDSLqYJV
+        lU3UR+S3lUdc/ma5iW6ZiRdSqnACyOH5q/u0qaI4+o4SIEJ4pvzPwYE0LfaKR/yM
+        BU9rt2M1jLoU3Bw/dfC2NJmJUTmD8Jnb/HCOA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=cZ0M1IEzIHMidLqV10RQNWUkP15JmTBi
+        GoV74GzoMSwOc4OnNA8J/iVQD4gRgZqsffZ1olXu7EFMMPseSpFJsVXs98BcbhwA
+        K8Nwsdy0Eb64SAATXDMLbAxUIGNSepMomGBY7H2Ic3h45keQdUYDWVADvwps9ast
+        c5XL+oAr8fM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4EB7D9B2CC;
+        Tue,  8 Aug 2017 13:45:26 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 87C739B2CB;
+        Tue,  8 Aug 2017 13:45:25 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org
 Subject: Re: [RFC] clang-format: outline the git project's coding style
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+References: <20170808012554.186051-1-bmwill@google.com>
+Date:   Tue, 08 Aug 2017 10:45:24 -0700
+In-Reply-To: <20170808012554.186051-1-bmwill@google.com> (Brandon Williams's
+        message of "Mon, 7 Aug 2017 18:25:54 -0700")
+Message-ID: <xmqq3792c5sb.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5C0736B8-7C61-11E7-B3BF-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 8, 2017 at 5:05 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Brandon,
->
-> On Mon, 7 Aug 2017, Brandon Williams wrote:
->
->> Add a '.clang-format' file which outlines the git project's coding
->> style.  This can be used with clang-format to auto-format .c and .h
->> files to conform with git's style.
->>
->> Signed-off-by: Brandon Williams <bmwill@google.com>
->> ---
->>
->> I'm sure this sort of thing comes up every so often on the list but back at
->> git-merge I mentioned how it would be nice to not have to worry about style
->> when reviewing patches as that is something mechanical and best left to a
->> machine (for the most part).
->
-> Amen.
->
-> If I never have to see a review mentioning an unwrapped line, I am quite
-> certain I will be quite content.
->
-> Ciao,
-> Dscho
+Brandon Williams <bmwill@google.com> writes:
 
-As a thought experiment I'd like to propose to take it one step further:
+> Add a '.clang-format' file which outlines the git project's coding
+> style.  This can be used with clang-format to auto-format .c and .h
+> files to conform with git's style.
+>
+> Signed-off-by: Brandon Williams <bmwill@google.com>
+> ---
+>
+> I'm sure this sort of thing comes up every so often on the list but back at
+> git-merge I mentioned how it would be nice to not have to worry about style
+> when reviewing patches as that is something mechanical and best left to a
+> machine (for the most part).  I saw that 'clang-format' was brought up on the
+> list once before a couple years ago
+> (https://public-inbox.org/git/20150121220903.GA10267@peff.net/) but nothing
+> really came of it.  I spent a little bit of time combing through the various
+> options and came up with this config based on the general style of our code
+> base.  The big issue though is that our code base isn't consistent so try as
+> you might you wont be able to come up with a config which matches everything we
+> do (mostly due to the inconsistencies in our code base).
+>
+> Anyway, I thought I'd bring this topic back up and see how people feel about it.
 
-  If the code was formatted perfectly in one style such that a formatter for
-  this style would not produce changes when rerun again on the code, then
-  each individual could have a clean/smudge filter to work in their preferred
-  style, and only the exchange and storage of code is in a mutual agreed
-  style. If the mutually agreed style is close to what I prefer, I don't have to
-  use clean/smudge filters.
+I gave just one pass over all the rules you have here.  I didn't
+think too deeply about implications of some of them, but most of
+them looked sensible.  Thanks for compiling this set of rules.
 
-Additionally to this patch, we'd want to either put a note into
-SubmittingPatches or Documentation/gitworkflows.txt to hint at
-how to use this formatting to just affect the patch that is currently
-worked on or rather a pre-commit hook?
+Having said that, it is easier to refine individual rules you have
+below than to make sure that among the develoepers there is a shared
+notion of how these rules are to be used.  If we get that part wrong,
+we'd see unpleasant consequences, e.g.
+
+ - We may see unwanted code churn on existing codebase, only for the
+   sake of satisfying the formatting rules specified here.
+
+ - We may see far more style-only critique to patches posted on the
+   list simply because there are more readers than writers, and it
+   is likely that running the tool to nitpick other people's patches
+   is far easier than writing these patches in the first place (and
+   forgetting to ask the formatter to nitpick before sending them
+   out).
+
+ - Human aesthetics judgement often is necessary to overrule
+   mechanical rules (e.g. A human may have two pairs of <ptr, len>
+   parameters on separate lines in a function declaration;
+   BinPackParameters may try to break after ptrA, lenA, ptrB before
+   lenB in such a case).
+
+We need to set our expectation and a guideline to apply these rules
+straight, before introducing something like this.
+
+
+>  .clang-format | 166 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 166 insertions(+)
+>  create mode 100644 .clang-format
+>
+> diff --git a/.clang-format b/.clang-format
+> new file mode 100644
+> index 000000000..7f28dc259
+> --- /dev/null
+> +++ b/.clang-format
+> @@ -0,0 +1,166 @@
+> +# Defaults
+> +
+> +# Use tabs whenever we need to fill whitespace that spans at least from one tab
+> +# stop to the next one.
+> +UseTab: Always
+> +TabWidth: 8
+> +IndentWidth: 8
+> +ContinuationIndentWidth: 8
+> +ColumnLimit: 80
+
+I often deliberately chomp my lines much shorter than this limit,
+and also I deliberately write a line that is a tad longer than this
+limit some other times, if doing so makes the result easier to read.
+And I know other develoepers with good taste do the same.  It is
+pointless to have a discussion that begins with "who uses a physical
+terminal these days that can only show 80-columns?" to tweak this
+value, I think.  It is more important to give a guideline on what to
+do when lines in your code goes over this limit.
+
+A mechanical "formatter" would just find an appropriate point in a
+line with least "penalty" and chomp it into two.  But an appropriate
+way to make such a code that is way too deeply indented readable may
+instead be judicious use of goto's and one-time helper functions,
+for example, which mechanical tools would not do.
+
+That is an example of what I meant above, i.e. a guideline to apply
+these rules.  We would not want to say "clang-format suggests this
+rewrite, so we should accept the resulting code that is still too
+deeply indented as-is"---using the tool to point out an issue is
+good, though.
+
+> +
+> +# C Language specifics
+> +Language: Cpp
+
+Hmph ;-)
+
+> +# Add a line break after the return type of top-level functions
+> +# int
+> +# foo();
+> +AlwaysBreakAfterReturnType: TopLevel
+
+We do that?
+
+> +# Pack as many parameters or arguments onto the same line as possible
+> +# int myFunction(int aaaaaaaaaaaa, int bbbbbbbb,
+> +#                int cccc);
+> +BinPackArguments: true
+> +BinPackParameters: true
+
+I am OK with this but with the caveats I already mentioned.
+
+> +# Insert a space after a cast
+> +# x = (int32) y;    not    x = (int32)y;
+> +SpaceAfterCStyleCast: true
+
+Hmph, I thought we did the latter, i.e. cast sticks to the casted
+expression without SP.
+
+Thanks.
