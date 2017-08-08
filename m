@@ -2,99 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 34B9420899
-	for <e@80x24.org>; Tue,  8 Aug 2017 19:39:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1DD9320899
+	for <e@80x24.org>; Tue,  8 Aug 2017 19:43:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752263AbdHHTjR (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Aug 2017 15:39:17 -0400
-Received: from avasout05.plus.net ([84.93.230.250]:37667 "EHLO
-        avasout05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752163AbdHHTjQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Aug 2017 15:39:16 -0400
-Received: from [10.0.2.15] ([143.159.212.52])
-        by avasout05 with smtp
-        id ujfE1v00118PUFB01jfFzm; Tue, 08 Aug 2017 20:39:15 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=Iav3YSia c=1 sm=1 tr=0
- a=CKmocqUIrzA4K3l9YJ19NQ==:117 a=CKmocqUIrzA4K3l9YJ19NQ==:17
- a=IkcTkHD0fZMA:10 a=FEWp7enXAAAA:8 a=nbrm1AV8fFJFaNuTDr4A:9 a=QEXdDO2ut3YA:10
- a=IjYSrUNMXUflr7qE6tl5:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH v2] t3700: fix broken test under !POSIXPERM
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Edward Thomson <ethomson@edwardthomson.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Adam Dinwoodie <adam@dinwoodie.org>
-References: <ed5c4105-a383-ef7c-c8de-75f22d41edbe@web.de>
- <7c104440-5903-472c-36c2-779cd0e81be5@web.de>
- <d6c6c246-ef15-64dd-208f-e8a4c240bd3d@ramsayjones.plus.com>
-Message-ID: <5b918c3f-a518-3a7b-716e-a5dbe690cf0e@ramsayjones.plus.com>
-Date:   Tue, 8 Aug 2017 20:39:13 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        id S1752171AbdHHTnW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Aug 2017 15:43:22 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60716 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752152AbdHHTnV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Aug 2017 15:43:21 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BBB399D696;
+        Tue,  8 Aug 2017 15:43:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=zfSokOoHn6568KGS/wDQu1YWr3M=; b=KCo+ak
+        Ez6DaE1fn+V9WUxyH48kRXB34F1Kmq63xRXs3sBmdAufiuJE1Ba3aSpAewSu/vOi
+        I3epUSDHCEGxctmLkCf1FAXAVdP6bDN1XSL/6yk2kTUrgKtBfweCFYWQtlyQi05A
+        Wn+oJ0yWlMPFQCAGuq98Qv7Aet1Jw9hMm5CDE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ZcJXM2lt7mpFwLP8nr0q3Zy2igCVKQ0v
+        dW/UsOq+igDAopMK5VP9yiNStLRRU9lxzEs2IY/c8T/SHP5FgP6olI2M0hhNQW8q
+        KqFHG9c4OzO+EiEYA1/8FJNbzYYuQiQ8XwKReCtNxTeX6+vVBZ7Kj5pjpZwW+gbF
+        99zpjSex450=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B3E0E9D695;
+        Tue,  8 Aug 2017 15:43:13 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 221279D692;
+        Tue,  8 Aug 2017 15:43:13 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH v2 2/2 / RFC] branch: quote branch/ref names to improve readability
+References: <xmqq60dzp00l.fsf@gitster.mtv.corp.google.com>
+        <20170808171136.31168-1-kaarticsivaraam91196@gmail.com>
+        <20170808171136.31168-2-kaarticsivaraam91196@gmail.com>
+        <CAGZ79ka779gwmLKuSumRdFj3PqXkUe8SfG2ri+qmf_9Z3gsckg@mail.gmail.com>
+Date:   Tue, 08 Aug 2017 12:43:11 -0700
+In-Reply-To: <CAGZ79ka779gwmLKuSumRdFj3PqXkUe8SfG2ri+qmf_9Z3gsckg@mail.gmail.com>
+        (Stefan Beller's message of "Tue, 8 Aug 2017 11:55:43 -0700")
+Message-ID: <xmqqh8xhc0c0.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <d6c6c246-ef15-64dd-208f-e8a4c240bd3d@ramsayjones.plus.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: D0A246CE-7C71-11E7-BEA0-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Stefan Beller <sbeller@google.com> writes:
 
+> (Though wondering for non-submodule users, if they perceive it as
+> inconsistency as other parts of the code may not follow the rigorous quoting)
 
-On 08/08/17 20:32, Ramsay Jones wrote:
-> 
-> 
-> On 08/08/17 20:21, René Scharfe wrote:
->> 76e368c378 (t3700: fix broken test under !SANITY) explains that the test
->> 'git add --chmod=[+-]x changes index with already added file' can fail
->> if xfoo3 is still present as a symlink from a previous test and deletes
->> it with rm(1).  That still leaves it present in the index, which causes
->> the test to fail if POSIXPERM is not defined.  Get rid of it by calling
->> "git reset --hard" as well, as 76e368c378 already mentioned in passing.
-> 
-> Hmm, I don't think its POSIXPERM (which is defined on cygwin) but
-> the lack of SANITY that is the problem. The test would fail on Linux
-> as well, if it skipped the prior tests marked with SANITY (they get
-> rid of the xfoo3->xfoo2 symlinks, among others).
+Do you mean that we may instead want to remove the excessive quoting
+of branch names and stuff from submodule.c code, because they are
+newer ones that broke the consistency existed before them (i.e. not
+quoting)?
 
-Yep, I didn't read the commit message properly! ;-)
-
-> 
-> Ack, this fixes it for me.
-> 
-> ATB,
-> Ramsay Jones
-> 
->>
->> Helped-by: Adam Dinwoodie <adam@dinwoodie.org>
->> Signed-off-by: Rene Scharfe <l.s.r@web.de>
->> ---
->> Change since v1: Keep the rm(1) call to avoid a problem on Cygwin.
->>
->>  t/t3700-add.sh | 1 +
->>  1 file changed, 1 insertion(+)
->>
->> diff --git a/t/t3700-add.sh b/t/t3700-add.sh
->> index f3a4b4a913..0aae21d698 100755
->> --- a/t/t3700-add.sh
->> +++ b/t/t3700-add.sh
->> @@ -356,6 +356,7 @@ test_expect_success POSIXPERM,SYMLINKS 'git add --chmod=+x with symlinks' '
->>  
->>  test_expect_success 'git add --chmod=[+-]x changes index with already added file' '
->>  	rm -f foo3 xfoo3 &&
->> +	git reset --hard &&
->>  	echo foo >foo3 &&
->>  	git add foo3 &&
->>  	git add --chmod=+x foo3 &&
->>
-> 
+That certainly is tempting, but I personally find it easier to read
+a message that marks parts that holds "external data" differently
+from the message's text, so I think this patch 2/2 goes in the right
+direction.
