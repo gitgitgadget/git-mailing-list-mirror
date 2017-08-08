@@ -2,85 +2,165 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BED5E20899
-	for <e@80x24.org>; Tue,  8 Aug 2017 14:50:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A42CB20899
+	for <e@80x24.org>; Tue,  8 Aug 2017 15:18:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752093AbdHHOuI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Aug 2017 10:50:08 -0400
-Received: from mout.gmx.net ([212.227.15.18]:61335 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751880AbdHHOuH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Aug 2017 10:50:07 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LhwLy-1dJYWg2akE-00n7zR; Tue, 08
- Aug 2017 16:50:00 +0200
-Date:   Tue, 8 Aug 2017 16:49:59 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-cc:     Git List <git@vger.kernel.org>, David Coppa <dcoppa@openbsd.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH] t4062: stop using repetition in regex
-In-Reply-To: <861dc875-7300-fe5a-1360-0ed546c8c2bb@web.de>
-Message-ID: <alpine.DEB.2.21.1.1708081648130.11175@virtualbox>
-References: <861dc875-7300-fe5a-1360-0ed546c8c2bb@web.de>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1752166AbdHHPSS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Aug 2017 11:18:18 -0400
+Received: from mail-wr0-f180.google.com ([209.85.128.180]:37736 "EHLO
+        mail-wr0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752062AbdHHPSR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Aug 2017 11:18:17 -0400
+Received: by mail-wr0-f180.google.com with SMTP id 33so14171727wrz.4
+        for <git@vger.kernel.org>; Tue, 08 Aug 2017 08:18:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dinwoodie.org; s=google;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=ywW2WOkPsSyHDDmh6WUiz2IGjDGEVZVR0qtblayaLvA=;
+        b=SQ3xWkzalGslamvJc5SUME2cZepR9USD1tPIYL7TMw/Cq461o7DTJIk+HHCXtA/oYs
+         dMfgpHXCPbNRX2J+H8H8O4WQesEckKuUugknUNpKE3XSJXp+OmBwQfcc7jpoefS575Br
+         Hu6wr11OGxL2DBWBSNRgfqzuD0vXKBFt+0EZI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=ywW2WOkPsSyHDDmh6WUiz2IGjDGEVZVR0qtblayaLvA=;
+        b=EWcPz1bVHa3jxwK4I5sOA5qSxYMgup7i7aA7oIYqGdSLLKMtE7gpndzS7mcOo9ghB6
+         qSNQKXRlsWrBrycLVxilhi6WOnfNKOvZwBPksdmuFV/67ZnOUYIVgR2z4B0ugef5jIY2
+         GYuTwpRRYz+Rew6TYDtk7n67usFxKhJ0FTXQSFoiXXIb3inryrwVEB9rcyJRyzsI2Pd/
+         4hcS9nbq6qEk3MzlpRQJ/hcS7YR3i7wqmLlRUvA9MvNPxK4hqXwYZ0qhLcAvOiBtrYqV
+         Xr85R0n0sQbZRJ9XJNzSx35Ytwg1vTrjytjCvN8pP6+C0+Zk3K10apWdE8Z9nN8cdUBa
+         NuxQ==
+X-Gm-Message-State: AHYfb5j+w07x/dq6yk7nBPSUmwlcd2+H6dPxO7ldjFBK+xaeiWflnOyc
+        zB7oBU7UIv4RXR+0Mmw7Sg==
+X-Received: by 10.223.130.202 with SMTP id 68mr3251839wrc.46.1502205495831;
+        Tue, 08 Aug 2017 08:18:15 -0700 (PDT)
+Received: from dinwoodie.org ([2001:ba8:0:1c0::9:1])
+        by smtp.gmail.com with ESMTPSA id 9sm1475505wrl.57.2017.08.08.08.18.14
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 08 Aug 2017 08:18:14 -0700 (PDT)
+Date:   Tue, 8 Aug 2017 16:18:08 +0100
+From:   Adam Dinwoodie <adam@dinwoodie.org>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
+        Emily Xie <emilyxxie@gmail.com>
+Subject: t3700 broken on pu on Cygwin
+Message-ID: <20170808151808.GA32640@dinwoodie.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-1406963667-1502203800=:11175"
-X-Provags-ID: V03:K0:xysRm0bpE8fTikbBVgeMXU+hQOlppS29ptHCkAWMDh6L1fXlI1a
- iYt7+HqoTh0LQ89ufW2JgbF/HYLbRLLd24pnLHQiKNI2woplmfHhlCpxKpCUda+eLOlHkZm
- EgDV49BB0BCTcbsH54sZeK6hpD2C1zre9INWEQNYAeldiV+BiU1eAsq6KqK+eRQrqBFjV/h
- qK9LKDrXwiQ3QHibJJiag==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:AAQ7ZLY7v08=:HJWcdnwhYm/daYGw0fd1yj
- aNLHH62RV+jcqEXqI2gkcQKnUB01514Aki0hZxPm5LPgGQVkMdd3WwjYJocDRuL+8PpE2TmEr
- ZuSHNRXcAB/Eo41T7UkJiKA1vxmNmceEmELtiygQ/vItMpm//jCBWg0+1nPYBGUHEpttwDXEH
- 4g2GLad5VYYLcjJzzxtXl/+S5CKOL8BFZii7YEjh8gf4jbDx1rER0H9yX0qbKrawvh9A55QpI
- YBjya5/26+bcVW2LO3P6IXzo2IvRT+WvMQEuT/VDM7ixfrXFyhFQdtR8GVrhJ/813wf4Wj02E
- 95sHJHfwDTnj4OtFk48M0avif7mcNsIVvnhvcqudpR+orsRtzoNUXqIFTv6YGqM1yewAtQzdK
- GrBM8+m/a6hXLn/+vi42iGgJ9SAEziYQ3lw8VfYftJp8i71w3BU5et2QWyctPT5VPBhgj1DXk
- ZDlT80sB35CPdhSL5B22DhHO1grTk/yJhQ/jLAEufUJXC9iNtT5+N9m4jPMDdBQcfBge3redN
- y2xySKFULf0O0MVD68BVn5y+a6pZlQudRuHJ4uifMCqY5sSGbJBxN2bVSHCmImVt61LQaMjHU
- wofBe4ZWhdlQ7vJykOLbvoCjMEzyt6yMXoFNSfkh53Hjfl3Dwd+PTH7PGdBcYb5RG4DClJE1u
- Dp3pyuxbu3YpfgBBBv2bEtR56YM0xSDRNXtNWRrg1CiSvEFYoaj6mjMGYMCNinZAIKDRf4bkD
- I0774oF0drnxpwuBINY38+tLEWuW45o7w49OY7O1iIeuNdUYjzTjQwgaLFcQjCk/wr+RgUpYS
- DpA6XThObjcAm0psu/pAYNq67fYkQ7WenkxZk6+psodYCuWA38=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+The t3700-add.sh test is currently failing on the pu branch on Cygwin.
+To my surprise, the problem appears to have been introduced by a merge,
+867fa1d6a.  Both parents of that merge have the test succeeding, but
+it's failing on that merge commit.
 
---8323329-1406963667-1502203800=:11175
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Failing test output below:
 
-Hi Ren=C3=A9,
+    $ ./t3700-add.sh -i --verbose-only=41 -x
+    Initialized empty Git repository in /home/add/vcs/git/x64/t/trash directory.t3700-add/.git/
+    ok 1 - Test of git add
+    ok 2 - Post-check that foo is in the index
+    ok 3 - Test that "git add -- -q" works
+    ok 4 - git add: Test that executable bit is not used if core.filemode=0
+    ok 5 - git add: filemode=0 should not get confused by symlink
+    ok 6 - git update-index --add: Test that executable bit is not used...
+    ok 7 - git add: filemode=0 should not get confused by symlink
+    ok 8 - git update-index --add: Test that executable bit is not used...
+    ok 9 - .gitignore test setup
+    ok 10 - .gitignore is honored
+    ok 11 - error out when attempting to add ignored ones without -f
+    ok 12 - error out when attempting to add ignored ones without -f
+    ok 13 - error out when attempting to add ignored ones but add others
+    ok 14 - add ignored ones with -f
+    ok 15 - add ignored ones with -f
+    ok 16 - add ignored ones with -f
+    ok 17 - .gitignore with subdirectory
+    ok 18 - check correct prefix detection
+    ok 19 - git add with filemode=0, symlinks=0, and unmerged entries
+    ok 20 - git add with filemode=0, symlinks=0 prefers stage 2 over stage 1
+    ok 21 - git add --refresh
+    ok 22 - git add --refresh with pathspec
+    ok 23 # skip git add should fail atomically upon an unreadable file (missing SANITY of POSIXPERM,SANITY)
+    ok 24 # skip git add --ignore-errors (missing SANITY of POSIXPERM,SANITY)
+    ok 25 # skip git add (add.ignore-errors) (missing SANITY of POSIXPERM,SANITY)
+    ok 26 # skip git add (add.ignore-errors = false) (missing SANITY of POSIXPERM,SANITY)
+    ok 27 # skip --no-ignore-errors overrides config (missing SANITY of POSIXPERM,SANITY)
+    ok 28 # skip git add 'fo\[ou\]bar' ignores foobar (missing BSLASHPSPEC)
+    ok 29 - git add to resolve conflicts on otherwise ignored path
+    ok 30 - "add non-existent" should fail
+    ok 31 - git add -A on empty repo does not error out
+    ok 32 - "git add ." in empty repo
+    ok 33 - git add --dry-run of existing changed file
+    ok 34 - git add --dry-run of non-existing file
+    ok 35 - git add --dry-run of an existing file output
+    ok 36 - git add --dry-run --ignore-missing of non-existing file
+    ok 37 - git add --dry-run --ignore-missing of non-existing file output
+    ok 38 - git add empty string should fail
+    ok 39 - git add --chmod=[+-]x stages correctly
+    ok 40 - git add --chmod=+x with symlinks
 
-On Tue, 8 Aug 2017, Ren=C3=A9 Scharfe wrote:
+    expecting success:
+    		git reset --hard &&
+    		echo foo >foo3 &&
+    		git add foo3 &&
+    		git add --chmod=+x foo3 &&
+    		test_mode_in_index 100755 foo3 &&
+    		echo foo >xfoo3 &&
+    		chmod 755 xfoo3 &&
+    		git add xfoo3 &&
+    		git add --chmod=-x xfoo3 &&
+    		test_mode_in_index 100644 xfoo3
 
-> OpenBSD's regex library has a repetition limit (RE_DUP_MAX) of 255.
-> That's the minimum acceptable value according to POSIX.  In t4062 we use
-> 4096 repetitions in the test "-G matches", though, causing it to fail.
->=20
-> Do the same as the test "-S --pickaxe-regex" in the same file and search
-> for a single zero instead.  That still suffices to trigger the buffer
-> overrun in older versions (checked with b7d36ffca02^ and --valgrind on
-> Linux), simplifies the test a bit, and avoids exceeding OpenBSD's limit.
-
-I am afraid not. The 4096 is precisely the page size required to trigger
-the bug on Windows against which this regression test tries to safeguard.
-
-Maybe simply disable the test on OpenBSD instead? Or guard the {4096}
-behind the MINGW prereq.
-
-Ciao,
-Dscho
---8323329-1406963667-1502203800=:11175--
+    ++ git reset --hard
+    HEAD is now at d12df1f commit all
+    ++ echo foo
+    ++ git add foo3
+    ++ git add --chmod=+x foo3
+    ++ test_mode_in_index 100755 foo3
+    ++ case "$(git ls-files -s "$2")" in
+    +++ git ls-files -s foo3
+    ++ echo pass
+    pass
+    ++ echo foo
+    ++ chmod 755 xfoo3
+    ++ git add xfoo3
+    ++ git add --chmod=-x xfoo3
+    cannot chmod 'xfoo3'++ test_mode_in_index 100644 xfoo3
+    ++ case "$(git ls-files -s "$2")" in
+    +++ git ls-files -s xfoo3
+    ++ echo fail
+    fail
+    ++ git ls-files -s xfoo3
+    120000 c5c4ca97a3a080c32920941b665e94a997901491 0       xfoo3
+    ++ return 1
+    + test_eval_ret_=1
+    + want_trace
+    + test t = t
+    + test t = t
+    + set +x
+    error: last command exited with $?=1
+    not ok 41 - git add --chmod=[+-]x changes index with already added file
+    #
+    #               git reset --hard &&
+    #               echo foo >foo3 &&
+    #               git add foo3 &&
+    #               git add --chmod=+x foo3 &&
+    #               test_mode_in_index 100755 foo3 &&
+    #               echo foo >xfoo3 &&
+    #               chmod 755 xfoo3 &&
+    #               git add xfoo3 &&
+    #               git add --chmod=-x xfoo3 &&
+    #               test_mode_in_index 100644 xfoo3
+    #
