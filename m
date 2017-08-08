@@ -2,89 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 469FF20899
-	for <e@80x24.org>; Tue,  8 Aug 2017 23:52:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E212E20899
+	for <e@80x24.org>; Tue,  8 Aug 2017 23:55:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752143AbdHHXwv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Aug 2017 19:52:51 -0400
-Received: from mail-lf0-f52.google.com ([209.85.215.52]:36442 "EHLO
-        mail-lf0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751229AbdHHXwu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Aug 2017 19:52:50 -0400
-Received: by mail-lf0-f52.google.com with SMTP id o85so21297327lff.3
-        for <git@vger.kernel.org>; Tue, 08 Aug 2017 16:52:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=PCCP7Q3sr42gt1pbOfOA6EimbMGDG2yFR1FSfHVZ7h8=;
-        b=PBNJeucf4JGIg1BNF10TJKB8giq/xgblwUFndM2a+TPhKxSTEPCibb0Bv200uoVtUM
-         5hCIAVnTpmT/tc3r5TCFVJBDfrmyXJbswd5pvgaqVD7JdBxsTaG17HtKO+AGAki9Ptky
-         M1hRO1WNUjUdGjXW1KfEPDF8mTyBNCGxNSRNou6V+6kPG0F35RIlX+tPhBS/JwBZ2kXF
-         YVP0IOiTSdpxttZozNXJMGUwwDR0vAWOVxEcWhXi6O38/5mmH8CNKzD1X6e30wtJuw9c
-         pyYFIM/jyK6O+tyCQ0Nc5o842FSTwUdZCET6Pn0OpQOfXZO/ocfWwBJskM280y4Cs7cg
-         Ii5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=PCCP7Q3sr42gt1pbOfOA6EimbMGDG2yFR1FSfHVZ7h8=;
-        b=aWc/5SPoHv5a7tAbCWxYjg1V3nO3wpRqaxpm4IOeuq/gFCogKmC96ZKs5g8alBiqc+
-         kMzFrDJN1eBdpVABHMMl+oKHtp30N8FRIf47DwA3Co+QBd8zlDi+y94l/qTBik3Lf4PW
-         w1l8AfHtmLt5MCgvHGdAe8pH94GxFeg32GtGE4SRYltEBpt4kMBBJsGAQfQtgqMXV6Za
-         7zf5Loz1Vfi59xdYHJZmP5DQMuD/EJuHzhfiPrdSS6oewLI4C9D3HCv2W76IvSgCu8pf
-         R8P3wvVPeywxYx/3XpOLjt37GcU4OIMlq6y48YaLSITcnaRH55/fg/SR1riCBTeUx7Zx
-         SC9Q==
-X-Gm-Message-State: AHYfb5hnuM6Czlb+m4lEAeZ5QJdpEDD/2Kb6n+MQ52cM3wQOWcU7cruA
-        KZdNvpIwRw0s4tDJlQZTK0KAnVnqiYqr
-X-Received: by 10.25.232.41 with SMTP id f41mr2345865lfh.90.1502236368695;
- Tue, 08 Aug 2017 16:52:48 -0700 (PDT)
+        id S1752449AbdHHXzM (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Aug 2017 19:55:12 -0400
+Received: from avasout05.plus.net ([84.93.230.250]:44884 "EHLO
+        avasout05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752047AbdHHXzM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Aug 2017 19:55:12 -0400
+Received: from [10.0.2.15] ([143.159.212.52])
+        by avasout05 with smtp
+        id unv91v00D18PUFB01nvBWz; Wed, 09 Aug 2017 00:55:11 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=Iav3YSia c=1 sm=1 tr=0
+ a=CKmocqUIrzA4K3l9YJ19NQ==:117 a=CKmocqUIrzA4K3l9YJ19NQ==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=5rxgeBVgAAAA:8 a=MZYHxiS0tvsB-1DhoTQA:9
+ a=QEXdDO2ut3YA:10 a=yJM6EZoI5SlJf8ks9Ge_:22 a=PwKx63F5tFurRwaNxrlG:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH] builtin/add: add a missing newline to an stderr message
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     GIT Mailing-list <git@vger.kernel.org>
+References: <4b0d092f-5a1b-73c7-38fe-48455099bcff@ramsayjones.plus.com>
+ <2821200b-0428-a5dd-9680-f291cee0ec47@web.de>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <a04808d5-8a53-d9d7-0168-55a9aa79cf7b@ramsayjones.plus.com>
+Date:   Wed, 9 Aug 2017 00:55:09 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Received: by 10.25.1.130 with HTTP; Tue, 8 Aug 2017 16:52:47 -0700 (PDT)
-In-Reply-To: <CAJo=hJvsdkrv6uELF0BHxqk4+as8-tr1bdYNHiQ3paTmn=2sRw@mail.gmail.com>
-References: <CAJo=hJtg0PAVHT1phbArdra8+4LfnEEuaj3fBid==BXkZghi8g@mail.gmail.com>
- <CAGZ79kZO517Bg+O2z3dr+oHqO_av1__FU3h9bP=rhXJUSDnRjA@mail.gmail.com> <CAJo=hJvsdkrv6uELF0BHxqk4+as8-tr1bdYNHiQ3paTmn=2sRw@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 8 Aug 2017 16:52:47 -0700
-Message-ID: <CAGZ79kbZiUDmp64FLYPOvT-Y4a8+YJF=fanYTB8Urxif9h6ZTg@mail.gmail.com>
-Subject: Re: reftable [v6]: new ref storage format
-To:     Shawn Pearce <spearce@spearce.org>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Junio C Hamano <gitster@pobox.com>,
-        David Borowitz <dborowitz@google.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <2821200b-0428-a5dd-9680-f291cee0ec47@web.de>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 7, 2017 at 11:30 AM, Shawn Pearce <spearce@spearce.org> wrote:
-> On Mon, Aug 7, 2017 at 11:27 AM, Stefan Beller <sbeller@google.com> wrote:
->> On Sun, Aug 6, 2017 at 6:47 PM, Shawn Pearce <spearce@spearce.org> wrote:
->>> 6th iteration of the reftable storage format.
->>>
->>> You can read a rendered version of this here:
->>> https://googlers.googlesource.com/sop/jgit/+/reftable/Documentation/technical/reftable.md
->>>
->>> The index may be organized into a multi-level index, where ...
->>> which may in turn point to either index blocks (3rd level) or ref blocks (leaf level).
+
+
+On 08/08/17 22:45, René Scharfe wrote:
+> Am 08.08.2017 um 23:36 schrieb Ramsay Jones:
 >>
->> So we allow 3 levels at most?
->
-> No, its just an example. Large ref sets with small block size need 4
-> levels. Or more.
+>> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+>> ---
+>>
+>> Hi Junio,
+>>
+>> I noticed this while looking into the t3700 failure on cygwin tonight.
+>> Also, I couldn't decide whether or not to add the i18n '_()' brackets
+>> around the message. In the end I didn't, but will happily add them
+>> if you think I should.
+>>
+>> Thanks!
+>>
+>> ATB,
+>> Ramsay Jones
+>>
+>>   builtin/add.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/builtin/add.c b/builtin/add.c
+>> index e888fb8c5..385b53ae7 100644
+>> --- a/builtin/add.c
+>> +++ b/builtin/add.c
+>> @@ -43,7 +43,7 @@ static void chmod_pathspec(struct pathspec *pathspec, int force_mode)
+>>   			continue;
+>>   
+>>   		if (chmod_cache_entry(ce, force_mode) < 0)
+>> -			fprintf(stderr, "cannot chmod '%s'", ce->name);
+>> +			fprintf(stderr, "cannot chmod '%s'\n", ce->name);
+>>   	}
+>>   }
+>>   
+> 
+> FYI: I brought this up yesterday in the original thread, along with a
+> few other observations:
+> 
+>   https://public-inbox.org/git/3c61d9f6-e0fd-22a4-68e0-89fd9ce9b944@web.de/
 
-A malicious (or buggy) writer can produce indexes pointing to
-each other producing a circle. (Who would do that?)
+Ah, I missed that.
 
-A reader should  - instead of segfaulting due to unbounded
-recursion or being stuck in an infinite loop - ignore the indexes
-in this case and fallback to the slow non-indexed behavior,
-i.e. while the file format allows for unbounded levels, a reader
-should not.
+Hmm, I just looked at the code in builtin/update-index.c. Yes, it
+would probably be a good idea to harmonize the messages - but just
+where did 'flip' come from? ;-)
+
+ATB,
+Ramsay Jones
+
