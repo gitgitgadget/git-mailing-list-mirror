@@ -2,100 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CCE1920899
-	for <e@80x24.org>; Tue,  8 Aug 2017 21:45:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B6BFC20899
+	for <e@80x24.org>; Tue,  8 Aug 2017 21:46:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752487AbdHHVpV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Aug 2017 17:45:21 -0400
-Received: from mout.web.de ([212.227.15.3]:56750 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752464AbdHHVpV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Aug 2017 17:45:21 -0400
-Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MUSOp-1e5MGR0I4Z-00RH9r; Tue, 08
- Aug 2017 23:45:12 +0200
-Subject: Re: [PATCH] builtin/add: add a missing newline to an stderr message
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     GIT Mailing-list <git@vger.kernel.org>
-References: <4b0d092f-5a1b-73c7-38fe-48455099bcff@ramsayjones.plus.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <2821200b-0428-a5dd-9680-f291cee0ec47@web.de>
-Date:   Tue, 8 Aug 2017 23:45:11 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        id S1752293AbdHHVqu (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Aug 2017 17:46:50 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64006 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752137AbdHHVqu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Aug 2017 17:46:50 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1C30D9FFD6;
+        Tue,  8 Aug 2017 17:46:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=WYF6aXXEJPUZBCxjCLIgnMisr2c=; b=v5QuDJ
+        QUZXfjrROPYf6YgyUGuk+e3NLzlkF3ut+Ta9KI3U/APgMhoChU+p+MpjrUftquch
+        7qKPkBfwy0ytINCHr3fH6yLZgntE4MlXX+EFrSAKdKlgt5WlUPl9BKiUtr9el8RD
+        5cuZVtr+8n0gwsY4YQdw0mO4MwCYTgVJbjIHw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=tt6DoOVr9rS3ZYV5+r+NX+b+8osEU8D+
+        A1npdsHIkP/pOLOMdsxQ0SOZvQPPMygqIkpg7JJ00HguT5lcUDxiQY+egTg17ly2
+        4ujGEYOPBFXAJQGtCAqAjMkcQ5uLALIlkwQ9RWqp3JOQ3fYgPOQqlJXAYrALDQoJ
+        2i2cr1taPD0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 13C0D9FFD5;
+        Tue,  8 Aug 2017 17:46:42 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7E4AD9FFD4;
+        Tue,  8 Aug 2017 17:46:41 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Martin Koegler <martin.koegler@chello.at>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH] Convert size datatype to size_t
+References: <1502222450-20815-1-git-send-email-martin@mail.zuhause>
+Date:   Tue, 08 Aug 2017 14:46:40 -0700
+In-Reply-To: <1502222450-20815-1-git-send-email-martin@mail.zuhause> (Martin
+        Koegler's message of "Tue, 8 Aug 2017 22:00:50 +0200")
+Message-ID: <xmqqmv79ag1r.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <4b0d092f-5a1b-73c7-38fe-48455099bcff@ramsayjones.plus.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:sNir932QsUzbupft2Lxo295olbvDDa0vfYRaWEKAxAZEepax5VL
- WLJBqgvawFpaIfI70JdU2W134V4nigvQR+RoOza2sM9A+hDJPaCeATCg66k1MPV+64ip1gX
- mUWeJA/tCGsqCIwFAtHwq3yOqLA6UUrJosu2h2MdRspoOzqw+IzYWM1bPJFwxWPmPQE74sZ
- O0y2hsTZrbWAaj+cRzKQQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ptwLr0N8siU=:cYC6koxFNp4m1dvVnv5ut6
- AWkrUJZwRRh+PIe2WQLVfq2z7N/9AbfRj/u3fdlQdfIeuQ12PQ39PlMQlzu+uKs4W2fIjUJ83
- G6HUN4/IxaiI7Nbz4d0cwmjmkXld4CWT1I1ecALxGF1Mc14tX69RH7WnQMD3OsA50eq4RMDEw
- 9ZtTEeTOQ3H3RAi+cE04ddSAhxR6woZt2WIeiiN2kDX1KPdFbXwMnvTpRwsP+Sb3rIzJp5D6u
- zveVWVKgxO/EZmnkdSqr+YFgQPiPNSl+riynCdtZSmDU1bjR/9xWf8iUYaLw5/8OZV4RnlgeR
- ++fWfKUEp3x720tg+hMWfKY7084dDny2Y6yquQ9NEDNxOXYYONbOEVdrqwHj3l/DltITR9LV2
- zC555c+nSeqBU5qb5osVD2TdI3vvCmzFPmZPl0WjHywTsgxo7tZT4s2NK5Bv7D5PM/hn3X9mC
- DHw/Bx4AVxX+ogtGueI/Z4bovhZwNyVQMfALYSLJJPWe1cqGoi6tCA+4RNLE4Aq/FFrKVPBo+
- iT5i78OCGNImpnAGy++VBWgHoBW/rD5F/qrFla2dOmOYcb5HprpFh2bjhBlfUMsrBsGVkGBUA
- cupGTlFc3NIkmb49G4JUyOz0tKAXCfpuMOotnfqn9rh5fqV+ZVSFbxlIRiPMA3Tm2QtndhYEO
- nTLoMEh9vPw3B3GFsEFCsirSV0ocADtVGQA2P6Pa3WuYXQ/ntAHSvfww/jhIJ9BEintmYwljn
- szQUL4gE76viHmxEWkYiPp25ZOnpuacmKX6T+5bX0MqqzDkWxLKtup9JUn3Ml+bLJUYRj38/u
- 1BiLDky5BzQRTKP02Ix9oPgkNJzgG/y0UZ1CrWMYd8jHAIwgsQ=
+Content-Type: text/plain
+X-Pobox-Relay-ID: 105EED42-7C83-11E7-929D-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 08.08.2017 um 23:36 schrieb Ramsay Jones:
-> 
-> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
-> ---
-> 
-> Hi Junio,
-> 
-> I noticed this while looking into the t3700 failure on cygwin tonight.
-> Also, I couldn't decide whether or not to add the i18n '_()' brackets
-> around the message. In the end I didn't, but will happily add them
-> if you think I should.
-> 
-> Thanks!
-> 
-> ATB,
-> Ramsay Jones
-> 
->   builtin/add.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/builtin/add.c b/builtin/add.c
-> index e888fb8c5..385b53ae7 100644
-> --- a/builtin/add.c
-> +++ b/builtin/add.c
-> @@ -43,7 +43,7 @@ static void chmod_pathspec(struct pathspec *pathspec, int force_mode)
->   			continue;
->   
->   		if (chmod_cache_entry(ce, force_mode) < 0)
-> -			fprintf(stderr, "cannot chmod '%s'", ce->name);
-> +			fprintf(stderr, "cannot chmod '%s'\n", ce->name);
->   	}
->   }
->   
+Martin Koegler <martin.koegler@chello.at> writes:
 
-FYI: I brought this up yesterday in the original thread, along with a
-few other observations:
+> diff --git a/apply.c b/apply.c
+> index f2d5991..ea97fd2 100644
+> --- a/apply.c
+> +++ b/apply.c
+> @@ -3085,7 +3085,7 @@ static int apply_binary_fragment(struct apply_state *state,
+>  				 struct patch *patch)
+>  {
+>  	struct fragment *fragment = patch->fragments;
+> -	unsigned long len;
+> +	size_t len;
+>  	void *dst;
+>  
+>  	if (!fragment)
 
-  https://public-inbox.org/git/3c61d9f6-e0fd-22a4-68e0-89fd9ce9b944@web.de/
+This variable is made size_t because it receives the result size of
+patch_delta().  And it later is assigned to img->len field, which
+already is size_t before this patch.
 
-Not sure if the discussion can or should be revived after all this
-time, though; just sending patches like yours might be the way to go.
+Curiously, the patch_delta() invocation with this patch reads like
+this:
 
-René
+		dst = patch_delta(img->buf, img->len, fragment->patch,
+				  fragment->size, &len);
+
+where patch_delta() is updated (correctly) to:
+
+    void *patch_delta(const void *src_buf, size_t src_size,
+                      const void *delta_buf, size_t delta_size,
+                      size_t *dst_size)
+
+with this patch.  But "size" field in "struct fragment" is still
+"int".  So we'd need to update it as well, not necessarily in this
+patch (which is already too big) but as part of a larger whole.
+
+> @@ -3174,7 +3174,7 @@ static int apply_binary(struct apply_state *state,
+>  	if (has_sha1_file(oid.hash)) {
+>  		/* We already have the postimage */
+>  		enum object_type type;
+> -		unsigned long size;
+> +		size_t size;
+>  		char *result;
+>  
+>  		result = read_sha1_file(oid.hash, &type, &size);
+
+This is to receive the resulting size from read_sha1_file().  It is
+assigned to img->len, which is already size_t, so all is good here.
+
+> @@ -3236,7 +3236,7 @@ static int read_blob_object(struct strbuf *buf, const struct object_id *oid, uns
+>  		strbuf_addf(buf, "Subproject commit %s\n", oid_to_hex(oid));
+>  	} else {
+>  		enum object_type type;
+> -		unsigned long sz;
+> +		size_t sz;
+>  		char *result;
+>  
+>  		result = read_sha1_file(oid->hash, &type, &sz);
+
+By reading the remainder of this function, this conversion also is
+good.  sz that is now size_t is used as the size attached to an
+existing strbuf like so:
+
+		result = read_sha1_file(oid->hash, &type, &sz);
+		if (!result)
+			return -1;
+		/* XXX read_sha1_file NUL-terminates */
+		strbuf_attach(buf, result, sz, sz + 1);
+
+in the part beyond the post context of this hunk.  In the longer
+term, sz+1 we see here may want to become the overflow-safe variant
+st_add().
+
+As you said in the comment after three-dashes in the patch, a lot
+more work is needed and your patch is a good starting point.
+
+I am not sure if we can split the patch somehow to make it easier to
+review.  The deceptively small part of your patch, i.e.
+
+ apply.c                  |  6 +++---
+
+needs the above analysis to see if they are correct and what more
+work is necessary, and there are 65 more files with ~190 lines
+changed.
+
