@@ -2,142 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6BFC20899
-	for <e@80x24.org>; Tue,  8 Aug 2017 21:46:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A7E220899
+	for <e@80x24.org>; Tue,  8 Aug 2017 22:07:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752293AbdHHVqu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Aug 2017 17:46:50 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64006 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752137AbdHHVqu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Aug 2017 17:46:50 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1C30D9FFD6;
-        Tue,  8 Aug 2017 17:46:42 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=WYF6aXXEJPUZBCxjCLIgnMisr2c=; b=v5QuDJ
-        QUZXfjrROPYf6YgyUGuk+e3NLzlkF3ut+Ta9KI3U/APgMhoChU+p+MpjrUftquch
-        7qKPkBfwy0ytINCHr3fH6yLZgntE4MlXX+EFrSAKdKlgt5WlUPl9BKiUtr9el8RD
-        5cuZVtr+8n0gwsY4YQdw0mO4MwCYTgVJbjIHw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=tt6DoOVr9rS3ZYV5+r+NX+b+8osEU8D+
-        A1npdsHIkP/pOLOMdsxQ0SOZvQPPMygqIkpg7JJ00HguT5lcUDxiQY+egTg17ly2
-        4ujGEYOPBFXAJQGtCAqAjMkcQ5uLALIlkwQ9RWqp3JOQ3fYgPOQqlJXAYrALDQoJ
-        2i2cr1taPD0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 13C0D9FFD5;
-        Tue,  8 Aug 2017 17:46:42 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7E4AD9FFD4;
-        Tue,  8 Aug 2017 17:46:41 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin Koegler <martin.koegler@chello.at>
-Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH] Convert size datatype to size_t
-References: <1502222450-20815-1-git-send-email-martin@mail.zuhause>
-Date:   Tue, 08 Aug 2017 14:46:40 -0700
-In-Reply-To: <1502222450-20815-1-git-send-email-martin@mail.zuhause> (Martin
-        Koegler's message of "Tue, 8 Aug 2017 22:00:50 +0200")
-Message-ID: <xmqqmv79ag1r.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1752176AbdHHWHi (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Aug 2017 18:07:38 -0400
+Received: from mout.web.de ([212.227.15.3]:53602 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751931AbdHHWHh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Aug 2017 18:07:37 -0400
+Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MGANT-1dtAcW0PzD-00FDdt; Wed, 09
+ Aug 2017 00:07:31 +0200
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] sha1_file: avoid comparison if no packed hash matches the
+ first byte
+Message-ID: <0c1f898c-46c4-033d-001b-114b17d7d36f@web.de>
+Date:   Wed, 9 Aug 2017 00:07:30 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 105EED42-7C83-11E7-929D-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:DzHPNpUHg8trD63zVULU4+o0lGGkam1Dcmb0iVYd+/RMkTsmXC3
+ ugVGrDyB9O1BH6PMb+d8JdOhSvgQNOMlY/J9ale+zhGb0whRcGWx7AVvPYboWBX2SulfB52
+ Zj+BZabBQBIMvjRX6Tt8T0kXEiF62h8NokERFmVIGVzGibFUOKSC67N5MFudJefkF9iFwg7
+ orEpV7yKX1dCFhKV6gGqg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:zcMd0yWc3vY=:nY1N/A3iOPwgYejw49b1gc
+ EZoJCw7uTXZn3+bVmDpcgyMAqjbwfFpKLw+eniH8YiM7bB2sbHrrlgNRIUYWGa7rQAHHO9qbC
+ v3PRdN8m69P896Wbc5P05vmnHZADfYKhh130eJNkoBx7W9qhpFQl95Eu3WJ3j7mRgPwr1VE7x
+ CpRPTaBA4TEzJUaHOXiBSDbkN7LK9uSQsezflNxDShunroqpkcEjNOaGNkoghVG7DVilMluGk
+ xq+sJQCuCuIsINPpxi9zruFmxZh2a8yAZoCLt+S1Ymd+NsX0NhzezQwzLpnf4awE0nLPHh9eN
+ GEypRRy0bT961nl35Wm+jQPZ6eD7yMIdaPNgAHFI2YMeKDe+6Fz2C5rGNxEiVxvvDMlf3d2ZH
+ SF2eaKRr/SmUvn1b6nIec1Fj2iCDI0pLBBXFJJ3n52ZLZBpS8kx/U49Y+bf7nbUXsedEcDEnS
+ //gj3PvjuhluarVrBwrm+0mGjiBilee1R2GUVMeMNswe9JgJcZQeJaBdw8826iYrUH14th8WC
+ TafRYJIw6j+Kp/Wvx+UknpPjvWxFVTWOQeKFtj6JqywDcXX0qc+SZ5uOivnIkYYTrb58l9QjK
+ zVSoROTYGPs0xxH6OIGUP3lLpZz0u+7ses4idpehA5PT2MKwHip4Lndwm3tQ0geiNGuj9hHLC
+ R5pIFduyClLqffGEEtjbNl7So9BZsg6JbFF+WFIwHEW8tLvjqAAz+G3PlkyAMVW6+KupHSLvd
+ jYCgL/Jh2CvzPkuccCNcWGtvmvwu4yxx1oxjl5OXrCyeiBAHWCf2EJMOQxUqAoFRQcz23PpDh
+ dmlCiGzUEybe3UCa+Vs9YhRpQM7QxfKzH6GvFwoO8vyobpTqyM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin Koegler <martin.koegler@chello.at> writes:
+find_pack_entry_one() uses the fan-out table of pack indexes to find out
+which entries match the first byte of the searched hash and does a
+binary search on this subset of the main index table.
 
-> diff --git a/apply.c b/apply.c
-> index f2d5991..ea97fd2 100644
-> --- a/apply.c
-> +++ b/apply.c
-> @@ -3085,7 +3085,7 @@ static int apply_binary_fragment(struct apply_state *state,
->  				 struct patch *patch)
->  {
->  	struct fragment *fragment = patch->fragments;
-> -	unsigned long len;
-> +	size_t len;
->  	void *dst;
->  
->  	if (!fragment)
+If there are no matching entries then lo and hi will have the same
+value.  The binary search still starts and compares the hash of the
+following entry (which has a non-matching first byte, so won't cause any
+trouble), or whatever comes after the sorted list of entries.
 
-This variable is made size_t because it receives the result size of
-patch_delta().  And it later is assigned to img->len field, which
-already is size_t before this patch.
+The probability of that stray comparison matching by mistake is low, but
+let's not take any chances and check when entering the binary search
+loop if we're actually done already.
 
-Curiously, the patch_delta() invocation with this patch reads like
-this:
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ sha1_file.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-		dst = patch_delta(img->buf, img->len, fragment->patch,
-				  fragment->size, &len);
-
-where patch_delta() is updated (correctly) to:
-
-    void *patch_delta(const void *src_buf, size_t src_size,
-                      const void *delta_buf, size_t delta_size,
-                      size_t *dst_size)
-
-with this patch.  But "size" field in "struct fragment" is still
-"int".  So we'd need to update it as well, not necessarily in this
-patch (which is already too big) but as part of a larger whole.
-
-> @@ -3174,7 +3174,7 @@ static int apply_binary(struct apply_state *state,
->  	if (has_sha1_file(oid.hash)) {
->  		/* We already have the postimage */
->  		enum object_type type;
-> -		unsigned long size;
-> +		size_t size;
->  		char *result;
->  
->  		result = read_sha1_file(oid.hash, &type, &size);
-
-This is to receive the resulting size from read_sha1_file().  It is
-assigned to img->len, which is already size_t, so all is good here.
-
-> @@ -3236,7 +3236,7 @@ static int read_blob_object(struct strbuf *buf, const struct object_id *oid, uns
->  		strbuf_addf(buf, "Subproject commit %s\n", oid_to_hex(oid));
->  	} else {
->  		enum object_type type;
-> -		unsigned long sz;
-> +		size_t sz;
->  		char *result;
->  
->  		result = read_sha1_file(oid->hash, &type, &sz);
-
-By reading the remainder of this function, this conversion also is
-good.  sz that is now size_t is used as the size attached to an
-existing strbuf like so:
-
-		result = read_sha1_file(oid->hash, &type, &sz);
-		if (!result)
-			return -1;
-		/* XXX read_sha1_file NUL-terminates */
-		strbuf_attach(buf, result, sz, sz + 1);
-
-in the part beyond the post context of this hunk.  In the longer
-term, sz+1 we see here may want to become the overflow-safe variant
-st_add().
-
-As you said in the comment after three-dashes in the patch, a lot
-more work is needed and your patch is a good starting point.
-
-I am not sure if we can split the patch somehow to make it easier to
-review.  The deceptively small part of your patch, i.e.
-
- apply.c                  |  6 +++---
-
-needs the above analysis to see if they are correct and what more
-work is necessary, and there are 65 more files with ~190 lines
-changed.
+diff --git a/sha1_file.c b/sha1_file.c
+index b60ae15f70..11ee69a99d 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -2799,7 +2799,7 @@ off_t find_pack_entry_one(const unsigned char *sha1,
+ 		return nth_packed_object_offset(p, pos);
+ 	}
+ 
+-	do {
++	while (lo < hi) {
+ 		unsigned mi = (lo + hi) / 2;
+ 		int cmp = hashcmp(index + mi * stride, sha1);
+ 
+@@ -2812,7 +2812,7 @@ off_t find_pack_entry_one(const unsigned char *sha1,
+ 			hi = mi;
+ 		else
+ 			lo = mi+1;
+-	} while (lo < hi);
++	}
+ 	return 0;
+ }
+ 
+-- 
+2.14.0
 
