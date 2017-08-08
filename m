@@ -2,106 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1247F20899
-	for <e@80x24.org>; Tue,  8 Aug 2017 20:08:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EBB5620899
+	for <e@80x24.org>; Tue,  8 Aug 2017 20:19:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752174AbdHHUIS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Aug 2017 16:08:18 -0400
-Received: from mail-lf0-f53.google.com ([209.85.215.53]:34362 "EHLO
-        mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752145AbdHHUIR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Aug 2017 16:08:17 -0400
-Received: by mail-lf0-f53.google.com with SMTP id g25so19568905lfh.1
-        for <git@vger.kernel.org>; Tue, 08 Aug 2017 13:08:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=n7jpr2VARJyTAsc1kfU8CNKrC9CJJMBT+Tu3XB8YPPU=;
-        b=l41HfgiiXaOobNtMCB+6CmgUL1Wgdu3/CNZLjI/WAGELLH+PPJZkHcHDOSrQ83jSzU
-         2cAO9411OxXDOL9eM7096huLGJ1QffkJG0rnkcwMEUV3GZWPNCD/oGTO4e9g7ciBr0EO
-         Tw00qjKfz1uZdBk9GHUH6cPJm6TjZft6p/sHSf8i24ykTZvqxbugHkZR1VlGfDCHMi5k
-         zAL9D7sxskNMr0/2j7uPyeX4YqHuuKCBnkawAbFh7rPndB2krQKqTx45N4UMM2kNv6I9
-         BXrEW2CQto4uT/FziZE++nHBpwWtiauGv69RVrpTS8HqMjamH9Am4pbRdH/s0sc48yC6
-         4Zrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=n7jpr2VARJyTAsc1kfU8CNKrC9CJJMBT+Tu3XB8YPPU=;
-        b=Fb3fJ1HUClE4C2pzenRa0hW/oe8q8OQP6PExi/L/RAZEWeqMeNbJDmGFiEIqmmRSrW
-         f6X5W76WLiCzOFXYTsK0FlYFy906rGMHwHJb2ncoN/+HnYs0OhAgxWvCXgdxnngTG/Ff
-         YAdwiu/HOyIvxrnnUPxikLis2ccBbGF/TmG5h0ppWECRwqvgeICCGqeoau7trU/Vor3W
-         37v+YoDHWC9uNQJX7KzOEVWHPrVfKcZwI+Oivqy1dvEnVX2m11i4Yw9US2zKnRGd+OOC
-         ORQzr0q9acYlpVs8g43vdVox7H0yaV/SBLLS0YbMPIdBVMZefljXV7nw0d6v0d7L5JNB
-         kcIw==
-X-Gm-Message-State: AHYfb5iONFOChd7VSOIHDBfcCXIHPadcwy9LFwLI0JRsNf5qaXwvqfE/
-        /wCRalUlIgMzzKm8Y3WGRHqtb7iuMsms
-X-Received: by 10.25.15.221 with SMTP id 90mr1937831lfp.220.1502222895853;
- Tue, 08 Aug 2017 13:08:15 -0700 (PDT)
+        id S1752264AbdHHUT0 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Aug 2017 16:19:26 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61895 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752222AbdHHUTZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Aug 2017 16:19:25 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D50639563C;
+        Tue,  8 Aug 2017 16:19:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ea+U8+KDZrjWp63bNt3/wq1ERs0=; b=AkNIyx
+        yNYf3CfG6tS98ScoQNrv9LENWS95sfiTf/zjKKrM73rL7ZSAEArJF+WYZB63bV92
+        z0xdDRAn7Wo61pc8OHSaj5Jo6guPrLoJHbcYrjhbM/QXYBAT+F05FnAjFVPHBV77
+        9SxGMMnrll7RiPkfJk6f6+AUgvCcaCTyWFt14=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ol81ZXkxJ2gAJfVgT82oHcP4kidS4obd
+        e3ZHjyroW7F4bGY63bBHzAHc8gxhY+GQeit3kiXaSAbS0ZFWddvBEMNJFMNWUBYv
+        etavhKLT+4766SIMk6MLRAd5qw3SfQt/cirUWRvL8PX7ii40MQCfgt6PuaIp6xa5
+        kd/Ko1ORRbM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CB0309563B;
+        Tue,  8 Aug 2017 16:19:24 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 31A7F9563A;
+        Tue,  8 Aug 2017 16:19:24 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH 04/10] pack: move open_pack_index(), parse_pack_index()
+References: <cover.1502220307.git.jonathantanmy@google.com>
+        <cover.1502220307.git.jonathantanmy@google.com>
+        <02e77a90110bdd6dad13c60aa08107b6345a60b9.1502220307.git.jonathantanmy@google.com>
+Date:   Tue, 08 Aug 2017 13:19:23 -0700
+In-Reply-To: <02e77a90110bdd6dad13c60aa08107b6345a60b9.1502220307.git.jonathantanmy@google.com>
+        (Jonathan Tan's message of "Tue, 8 Aug 2017 12:32:34 -0700")
+Message-ID: <xmqq8titbyno.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.25.1.130 with HTTP; Tue, 8 Aug 2017 13:08:15 -0700 (PDT)
-In-Reply-To: <xmqqh8xhc0c0.fsf@gitster.mtv.corp.google.com>
-References: <xmqq60dzp00l.fsf@gitster.mtv.corp.google.com> <20170808171136.31168-1-kaarticsivaraam91196@gmail.com>
- <20170808171136.31168-2-kaarticsivaraam91196@gmail.com> <CAGZ79ka779gwmLKuSumRdFj3PqXkUe8SfG2ri+qmf_9Z3gsckg@mail.gmail.com>
- <xmqqh8xhc0c0.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 8 Aug 2017 13:08:15 -0700
-Message-ID: <CAGZ79kbn4Ew1g4oUhukOF9Qny6OW2wGBRv9QQr3M4E_sWD0ZMg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2 / RFC] branch: quote branch/ref names to improve readability
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: DEB02A24-7C76-11E7-A22B-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 8, 2017 at 12:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> (Though wondering for non-submodule users, if they perceive it as
->> inconsistency as other parts of the code may not follow the rigorous quoting)
->
-> Do you mean that we may instead want to remove the excessive quoting
-> of branch names and stuff from submodule.c code, because they are
-> newer ones that broke the consistency existed before them (i.e. not
-> quoting)?
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-No, I do not. I was just wondering if a non-submodule user
-may see differences between different commands now.
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+>  builtin/count-objects.c |   1 +
+>  cache.h                 |   8 ---
+>  pack.c                  | 149 ++++++++++++++++++++++++++++++++++++++++++++++++
+>  pack.h                  |   8 +++
+>  sha1_file.c             | 140 ---------------------------------------------
+>  sha1_name.c             |   1 +
+>  6 files changed, 159 insertions(+), 148 deletions(-)
 
-For example "checkout -b" already quotes 'external data', which
-would be inline with this proposal, but there may be others.
-My question was rather an encouragement to check the code base
-if there are other occurrences left that do not quote.
+This patch is a bit strange...
 
-In an ideal code base we could just grep for any %s that has no
-surrounding quotes, but of course it is not as easy in the real world:
-* some outputs use %s construction for non-human consumption
-  in e.g. the diff machinery
-* sometimes we play sentence lego, stringing words together
-  which also is using %s unquoted correctly.
+> diff --git a/pack.c b/pack.c
+> index 60d9fc3b0..6edc43228 100644
+> --- a/pack.c
+> +++ b/pack.c
+> ...
+> +static struct packed_git *alloc_packed_git(int extra)
+> +{
+> +	struct packed_git *p = xmalloc(st_add(sizeof(*p), extra));
+> +	memset(p, 0, sizeof(*p));
+> +	p->pack_fd = -1;
+> +	return p;
+> +}
+> +
+> +struct packed_git *parse_pack_index(unsigned char *sha1, const char *idx_path)
+> +{
+> +	const char *path = sha1_pack_name(sha1);
+> +	size_t alloc = st_add(strlen(path), 1);
+> +	struct packed_git *p = alloc_packed_git(alloc);
+> +
+> +	memcpy(p->pack_name, path, alloc); /* includes NUL */
+> +	hashcpy(p->sha1, sha1);
+> +	if (check_packed_git_idx(idx_path, p)) {
+> +		free(p);
+> +		return NULL;
+> +	}
+> +
+> +	return p;
+> +}
 
-> That certainly is tempting, but I personally find it easier to read
-> a message that marks parts that holds "external data" differently
-> from the message's text, so I think this patch 2/2 goes in the right
-> direction.
+We see these two functions appear in pack.c
 
-Yes. I like the direction this patch is going.
+> diff --git a/sha1_file.c b/sha1_file.c
+> index 0de39f480..2e414f5f5 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> ...
+> @@ -1300,22 +1176,6 @@ struct packed_git *add_packed_git(const char *path, size_t path_len, int local)
+>  	return p;
+>  }
+>  
+> -struct packed_git *parse_pack_index(unsigned char *sha1, const char *idx_path)
+> -{
+> -	const char *path = sha1_pack_name(sha1);
+> -	size_t alloc = st_add(strlen(path), 1);
+> -	struct packed_git *p = alloc_packed_git(alloc);
+> -
+> -	memcpy(p->pack_name, path, alloc); /* includes NUL */
+> -	hashcpy(p->sha1, sha1);
+> -	if (check_packed_git_idx(idx_path, p)) {
+> -		free(p);
+> -		return NULL;
+> -	}
+> -
+> -	return p;
+> -}
+> -
 
-A note on 'external data':
-For branchs, paths, submodule names a single quote seems
-to be best (my opinion), whereas in e.g. git-status:
+And we see parse_pack_index() came from sha1_file.c
 
-    Submodule 'sm1' 0000000...1beffeb (new submodule)
+But where did alloc_packed_git() come from?  Was the patch split
+incorrectly or something?
 
-parens seem to do a better job as they describe the state,
-not reproducing external data. (This is also the place
-where I was reminded of potential sentence lego)
+When I applied the whole series and did
+
+    git blame -s -w -M -C -C master.. pack.c
+
+expecting that pretty much everything has come from sha1_file.c but
+noticed that some lines were actually blamed to a version of pack.c
+and these functions were among them.
