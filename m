@@ -2,151 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C585C20899
-	for <e@80x24.org>; Tue,  8 Aug 2017 19:37:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 34B9420899
+	for <e@80x24.org>; Tue,  8 Aug 2017 19:39:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752362AbdHHThT (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Aug 2017 15:37:19 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63007 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752153AbdHHThS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Aug 2017 15:37:18 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D11A3946CB;
-        Tue,  8 Aug 2017 15:37:10 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=iybzaBGRWvjfLT1A2xLe+/8WWiY=; b=eya9jj
-        EgePbNq1TkUQ/vPT2SCIFo38X6Cu+Aj/3plLIj98090Fhy6dsijKICyh4NYHqO51
-        nF0N/rfr+dRToU189oXoJbzS3wGnHvv2oc8hF8R9HwVMj1YFcfmQ+OwMzgtY5OdO
-        4YEUUV99wXu9wYdBZuOazhtMlVlG6EDiwdiTI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=UdvRvLPdPLRqHQ7MWS8XXBNlv9L6wLv8
-        P8Ll2dCVnALj2mQOLWr/SGQDCTeWUqcH2V2+cRom72ICp8/RCc3FdjOA3ev0SqN4
-        dqdDP1yKj0Jw/tbw4K3Kcm2bnqSo+wb/FUXFM90ww/eZ5zhamQW39UrqSF+uvQIq
-        EyKrpZWlm6g=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C9A8B946CA;
-        Tue,  8 Aug 2017 15:37:10 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3FDFF946C9;
-        Tue,  8 Aug 2017 15:37:10 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood@talktalk.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2] am: fix signoff when other trailers are present
-References: <20170807102929.25151-1-phillip.wood@talktalk.net>
-        <20170808102533.27516-1-phillip.wood@talktalk.net>
-Date:   Tue, 08 Aug 2017 12:37:09 -0700
-In-Reply-To: <20170808102533.27516-1-phillip.wood@talktalk.net> (Phillip
-        Wood's message of "Tue, 8 Aug 2017 11:25:33 +0100")
-Message-ID: <xmqqlgmtc0m2.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1752263AbdHHTjR (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Aug 2017 15:39:17 -0400
+Received: from avasout05.plus.net ([84.93.230.250]:37667 "EHLO
+        avasout05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752163AbdHHTjQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Aug 2017 15:39:16 -0400
+Received: from [10.0.2.15] ([143.159.212.52])
+        by avasout05 with smtp
+        id ujfE1v00118PUFB01jfFzm; Tue, 08 Aug 2017 20:39:15 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=Iav3YSia c=1 sm=1 tr=0
+ a=CKmocqUIrzA4K3l9YJ19NQ==:117 a=CKmocqUIrzA4K3l9YJ19NQ==:17
+ a=IkcTkHD0fZMA:10 a=FEWp7enXAAAA:8 a=nbrm1AV8fFJFaNuTDr4A:9 a=QEXdDO2ut3YA:10
+ a=IjYSrUNMXUflr7qE6tl5:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH v2] t3700: fix broken test under !POSIXPERM
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Edward Thomson <ethomson@edwardthomson.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Adam Dinwoodie <adam@dinwoodie.org>
+References: <ed5c4105-a383-ef7c-c8de-75f22d41edbe@web.de>
+ <7c104440-5903-472c-36c2-779cd0e81be5@web.de>
+ <d6c6c246-ef15-64dd-208f-e8a4c240bd3d@ramsayjones.plus.com>
+Message-ID: <5b918c3f-a518-3a7b-716e-a5dbe690cf0e@ramsayjones.plus.com>
+Date:   Tue, 8 Aug 2017 20:39:13 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F857BD3A-7C70-11E7-A8AA-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+In-Reply-To: <d6c6c246-ef15-64dd-208f-e8a4c240bd3d@ramsayjones.plus.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood@talktalk.net> writes:
 
->  test_expect_success 'am --signoff does not add Signed-off-by: line if already there' '
-> -	git format-patch --stdout HEAD^ >patch3 &&
-> -	sed -e "/^Subject/ s,\[PATCH,Re: Re: Re: & 1/5 v2] [foo," patch3 >patch4 &&
-> -	rm -fr .git/rebase-apply &&
-> -	git reset --hard &&
-> -	git checkout HEAD^ &&
-> -	git am --signoff patch4 &&
-> -	git cat-file commit HEAD >actual &&
-> -	test $(grep -c "^Signed-off-by:" actual) -eq 1
-> +	git format-patch --stdout first >patch3 &&
-> +	git reset --hard first &&
-> +	git am --signoff <patch3 &&
-> +	git log --pretty=%B -2 HEAD >actual &&
-> +	test_cmp expected-log actual
-> +'
-> +
-> +test_expect_success 'am --signoff adds Signed-off-by: if another author is preset' '
 
-Present?
+On 08/08/17 20:32, Ramsay Jones wrote:
+> 
+> 
+> On 08/08/17 20:21, René Scharfe wrote:
+>> 76e368c378 (t3700: fix broken test under !SANITY) explains that the test
+>> 'git add --chmod=[+-]x changes index with already added file' can fail
+>> if xfoo3 is still present as a symlink from a previous test and deletes
+>> it with rm(1).  That still leaves it present in the index, which causes
+>> the test to fail if POSIXPERM is not defined.  Get rid of it by calling
+>> "git reset --hard" as well, as 76e368c378 already mentioned in passing.
+> 
+> Hmm, I don't think its POSIXPERM (which is defined on cygwin) but
+> the lack of SANITY that is the problem. The test would fail on Linux
+> as well, if it skipped the prior tests marked with SANITY (they get
+> rid of the xfoo3->xfoo2 symlinks, among others).
 
-I think the motivation for adding this is to make sure that what the
-previous test checks will be true only when the one we are about to
-add is already at the end.  So perhaps the previous test needs to be
-retitled from "if already there" to something a bit tighter,
-e.g. "if already at the end"?
+Yep, I didn't read the commit message properly! ;-)
 
-Also, strictly speaking, I think this isn't testing if another
-author is present---it is specifying what should happen when the
-last one is not us.
-
-> +	NAME="A N Other" &&
-> +	EMAIL="a.n.other@example.com" &&
-> +	{
-> +		printf "third\n\nSigned-off-by: %s <%s>\nSigned-off-by: %s <%s>\n\n" \
-> +			"$GIT_COMMITTER_NAME" "$GIT_COMMITTER_EMAIL" \
-> +			"$NAME" "$EMAIL" &&
-
-A "printf" tip: you can do
-
-	printf "third\n\n"
-	printf "S-o-b: %s <%s>\n" A B C D
-
-to get two lines of the latter.  That would clarify what the next
-test does which wants to add three of them.
-
-> +		cat msg &&
-> +		printf "Signed-off-by: %s <%s>\nSigned-off-by: %s <%s>\n\n" \
-> +			"$GIT_COMMITTER_NAME" "$GIT_COMMITTER_EMAIL" \
-> +			"$NAME" "$EMAIL"
-> +	} >expected-log &&
-> +	git reset --hard first &&
-> +	GIT_COMMITTER_NAME="$NAME" GIT_COMMITTER_EMAIL="$EMAIL" \
-> +		git am --signoff <patch3 &&
-> +	git log --pretty=%B -2 HEAD >actual &&
-> +	test_cmp expected-log actual
-> +'
-> +
-> +test_expect_success 'am --signoff duplicates Signed-off-by: if it is not the last one' '
-> +	NAME="A N Other" &&
-> +	EMAIL="a.n.other@example.com" &&
-> +	{
-> +		printf "third\n\nSigned-off-by: %s <%s>\n\
-> +Signed-off-by: %s <%s>\nSigned-off-by: %s <%s>\n\n" \
-> +			"$GIT_COMMITTER_NAME" "$GIT_COMMITTER_EMAIL" \
-> +			"$NAME" "$EMAIL" \
-> +			"$GIT_COMMITTER_NAME" "$GIT_COMMITTER_EMAIL" &&
-> +		cat msg &&
-> +		printf "Signed-off-by: %s <%s>\nSigned-off-by: %s <%s>\n\
-> +Signed-off-by: %s <%s>\n\n" \
-> +			"$GIT_COMMITTER_NAME" "$GIT_COMMITTER_EMAIL" \
-> +			"$NAME" "$EMAIL" \
-> +			"$GIT_COMMITTER_NAME" "$GIT_COMMITTER_EMAIL"
-> +	} >expected-log &&
-> +	git format-patch --stdout first >patch3 &&
-> +	git reset --hard first &&
-> +	git am --signoff <patch3 &&
-> +	git log --pretty=%B -2 HEAD >actual &&
-> +	test_cmp expected-log actual
->  '
->  
->  test_expect_success 'am without --keep removes Re: and [PATCH] stuff' '
-> +	git format-patch --stdout HEAD^ >tmp &&
-> +	sed -e "/^Subject/ s,\[PATCH,Re: Re: Re: & 1/5 v2] [foo," tmp >patch4 &&
-> +	git reset --hard HEAD^ &&
-> +	git am <patch4 &&
->  	git rev-parse HEAD >expected &&
->  	git rev-parse master2 >actual &&
->  	test_cmp expected actual
+> 
+> Ack, this fixes it for me.
+> 
+> ATB,
+> Ramsay Jones
+> 
+>>
+>> Helped-by: Adam Dinwoodie <adam@dinwoodie.org>
+>> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+>> ---
+>> Change since v1: Keep the rm(1) call to avoid a problem on Cygwin.
+>>
+>>  t/t3700-add.sh | 1 +
+>>  1 file changed, 1 insertion(+)
+>>
+>> diff --git a/t/t3700-add.sh b/t/t3700-add.sh
+>> index f3a4b4a913..0aae21d698 100755
+>> --- a/t/t3700-add.sh
+>> +++ b/t/t3700-add.sh
+>> @@ -356,6 +356,7 @@ test_expect_success POSIXPERM,SYMLINKS 'git add --chmod=+x with symlinks' '
+>>  
+>>  test_expect_success 'git add --chmod=[+-]x changes index with already added file' '
+>>  	rm -f foo3 xfoo3 &&
+>> +	git reset --hard &&
+>>  	echo foo >foo3 &&
+>>  	git add foo3 &&
+>>  	git add --chmod=+x foo3 &&
+>>
+> 
