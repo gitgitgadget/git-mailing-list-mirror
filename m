@@ -2,90 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 38B7120899
-	for <e@80x24.org>; Tue,  8 Aug 2017 19:25:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CFF3520899
+	for <e@80x24.org>; Tue,  8 Aug 2017 19:32:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752387AbdHHTZV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Aug 2017 15:25:21 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53639 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752364AbdHHTZT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Aug 2017 15:25:19 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A9AAF941A4;
-        Tue,  8 Aug 2017 15:25:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=hS27GwjHie5CCy3+MsWnyOjrQ00=; b=WvD/yQ
-        qEcAh8TiaNterGXKTS18R+SKD/WkNYI0w7xNTbwi28ePoppfafmMwDJRaw+Yw27H
-        fBgCQJsq9UlyofvfIX9MRK9Tirdwa20AWLVbQ9ed08NDYz2poQTIigqbLILde+S8
-        5KNsYhslTD3IweJH31DTBjUTIypWXYnbd3l1Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=geCXtEItFcnCO3kXy4gIg6VSG8UUwoaC
-        TWYrPIVdioxiz847+G/qrCe0tPcwqJpkaVydVhX9NNRzfEm5AZWwF+oTos0q1n4c
-        Tlz0jHeOXP3xmVL6KncdCVLRZzdSE/u8b09WdPzcJv3gTre2sRWJ0+K0/V5A7tUg
-        vSL1bS1Apc8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 99747941A3;
-        Tue,  8 Aug 2017 15:25:18 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E940F941A2;
-        Tue,  8 Aug 2017 15:25:17 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Shawn Pearce <spearce@spearce.org>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        David Borowitz <dborowitz@google.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: reftable [v6]: new ref storage format
-References: <CAJo=hJtg0PAVHT1phbArdra8+4LfnEEuaj3fBid==BXkZghi8g@mail.gmail.com>
-Date:   Tue, 08 Aug 2017 12:25:16 -0700
-In-Reply-To: <CAJo=hJtg0PAVHT1phbArdra8+4LfnEEuaj3fBid==BXkZghi8g@mail.gmail.com>
-        (Shawn Pearce's message of "Sun, 6 Aug 2017 18:47:06 -0700")
-Message-ID: <xmqqpoc5c15v.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1752221AbdHHTcs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Aug 2017 15:32:48 -0400
+Received: from avasout05.plus.net ([84.93.230.250]:36708 "EHLO
+        avasout05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752037AbdHHTcr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Aug 2017 15:32:47 -0400
+Received: from [10.0.2.15] ([143.159.212.52])
+        by avasout05 with smtp
+        id ujYj1v00C18PUFB01jYlrQ; Tue, 08 Aug 2017 20:32:45 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=Iav3YSia c=1 sm=1 tr=0
+ a=CKmocqUIrzA4K3l9YJ19NQ==:117 a=CKmocqUIrzA4K3l9YJ19NQ==:17
+ a=IkcTkHD0fZMA:10 a=FEWp7enXAAAA:8 a=c8tWdsqibDOn2_a__r8A:9 a=QEXdDO2ut3YA:10
+ a=IjYSrUNMXUflr7qE6tl5:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH v2] t3700: fix broken test under !POSIXPERM
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Edward Thomson <ethomson@edwardthomson.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Adam Dinwoodie <adam@dinwoodie.org>
+References: <ed5c4105-a383-ef7c-c8de-75f22d41edbe@web.de>
+ <7c104440-5903-472c-36c2-779cd0e81be5@web.de>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <d6c6c246-ef15-64dd-208f-e8a4c240bd3d@ramsayjones.plus.com>
+Date:   Tue, 8 Aug 2017 20:32:43 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4FCFE80A-7C6F-11E7-8AC7-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+In-Reply-To: <7c104440-5903-472c-36c2-779cd0e81be5@web.de>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shawn Pearce <spearce@spearce.org> writes:
-
-> For `log_type = 0x4..0x7` the `log_chained` section is used instead to
-> compress information that already appeared in a prior log record.  The
-> `log_chained` always includes `old_id` for this record, as `new_id` is
-> implied by the prior (by file order, more recent) record's `old_id`.
->
-> The `not_same_committer` block appears if `log_type & 0x1` is true,
-> `not_same_message` block appears if `log_type & 0x2` is true.  When
-> one of these blocks is missing, its values are implied by the prior
-> (more recent) log record.
-
-Two comments.
-
- * not-same-committer would be what I would use when I switch
-   timezones, even if I stay to be me, right?  I am just wondering
-   if it is clear to everybody that "committer" in that phrase is a
-   short-hand for "committer information other than the timestamp".
-
- * Should the set of entries that are allowed to use of "chained"
-   log be related to the set of entries that appear in the restart
-   table in any way?  For a reader that scans starting at a restart
-   point, it would be very cumbersome if the entry were chained from
-   the previous entry, as it would force it to backtrack entries to
-   find the first non-chained log entry.  A simple "log_chained must
-   not be used for an entry that appear in the restart table" rule
-   would solve that, but I didn't see it in the document.
 
 
+On 08/08/17 20:21, René Scharfe wrote:
+> 76e368c378 (t3700: fix broken test under !SANITY) explains that the test
+> 'git add --chmod=[+-]x changes index with already added file' can fail
+> if xfoo3 is still present as a symlink from a previous test and deletes
+> it with rm(1).  That still leaves it present in the index, which causes
+> the test to fail if POSIXPERM is not defined.  Get rid of it by calling
+> "git reset --hard" as well, as 76e368c378 already mentioned in passing.
 
+Hmm, I don't think its POSIXPERM (which is defined on cygwin) but
+the lack of SANITY that is the problem. The test would fail on Linux
+as well, if it skipped the prior tests marked with SANITY (they get
+rid of the xfoo3->xfoo2 symlinks, among others).
+
+Ack, this fixes it for me.
+
+ATB,
+Ramsay Jones
+
+> 
+> Helped-by: Adam Dinwoodie <adam@dinwoodie.org>
+> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+> ---
+> Change since v1: Keep the rm(1) call to avoid a problem on Cygwin.
+> 
+>  t/t3700-add.sh | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/t/t3700-add.sh b/t/t3700-add.sh
+> index f3a4b4a913..0aae21d698 100755
+> --- a/t/t3700-add.sh
+> +++ b/t/t3700-add.sh
+> @@ -356,6 +356,7 @@ test_expect_success POSIXPERM,SYMLINKS 'git add --chmod=+x with symlinks' '
+>  
+>  test_expect_success 'git add --chmod=[+-]x changes index with already added file' '
+>  	rm -f foo3 xfoo3 &&
+> +	git reset --hard &&
+>  	echo foo >foo3 &&
+>  	git add foo3 &&
+>  	git add --chmod=+x foo3 &&
+> 
