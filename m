@@ -2,62 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EDF1B20899
-	for <e@80x24.org>; Tue,  8 Aug 2017 22:58:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D174208B5
+	for <e@80x24.org>; Tue,  8 Aug 2017 23:34:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752317AbdHHW6y (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Aug 2017 18:58:54 -0400
-Received: from cloud.peff.net ([104.130.231.41]:60900 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751965AbdHHW6y (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Aug 2017 18:58:54 -0400
-Received: (qmail 28334 invoked by uid 109); 8 Aug 2017 22:58:54 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 08 Aug 2017 22:58:54 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23504 invoked by uid 111); 8 Aug 2017 22:59:16 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Tue, 08 Aug 2017 18:59:16 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Aug 2017 18:58:51 -0400
-Date:   Tue, 8 Aug 2017 18:58:51 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH] sha1_file: avoid comparison if no packed hash matches
- the first byte
-Message-ID: <20170808225851.kgbyrlqrtlurzc73@sigill.intra.peff.net>
-References: <0c1f898c-46c4-033d-001b-114b17d7d36f@web.de>
- <xmqq3791adfi.fsf@gitster.mtv.corp.google.com>
- <20170808225231.3l7gyoxxvghsvtv7@sigill.intra.peff.net>
+        id S1752154AbdHHXeT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Aug 2017 19:34:19 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58677 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751791AbdHHXeS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Aug 2017 19:34:18 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 404199997B;
+        Tue,  8 Aug 2017 19:34:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Rd9GpitrQq9nRQwCGuRkgDFy0G0=; b=Lxqdmh
+        M1bqwCqYvlcAkQCahOUBSqJk08ILTXL0RZ06xGUyKtsbeoYsx3mhvnARzIbmjWse
+        r+vK3JmVBNH4XCVSy0HrFX00+l7QRywD20Nr/2qrwJ+PAemtODc8m4HoZC4Qr+or
+        HB7UjKq2UwE6sqjbGUK2V8ZN3C8wMRWe+C9z4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=K20VUtKtqy8vdIK4JD59d9v4xCvlOrvN
+        k3ShmxY7robTO3k3u0xGg4esnGX2GvtbpIGoDFZdSAY6fLdh1RCdNE4sxKfwRN5Z
+        1I22O4gsIZaTBprqIsG+XfPwBbUnUXzFFVmHnY7jH132wtpW8k+764Foew1otf5Q
+        ykpkvlnFWyE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 35AAC9997A;
+        Tue,  8 Aug 2017 19:34:17 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8CBDC99979;
+        Tue,  8 Aug 2017 19:34:16 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Shawn Pearce <spearce@spearce.org>
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        David Borowitz <dborowitz@google.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: reftable [v6]: new ref storage format
+References: <CAJo=hJtg0PAVHT1phbArdra8+4LfnEEuaj3fBid==BXkZghi8g@mail.gmail.com>
+        <xmqqtw1hc28z.fsf@gitster.mtv.corp.google.com>
+        <CAJo=hJsyoFeCQbeJ=2XCRcE1U0zYaRr8VvzXHwkPwisdfUm71Q@mail.gmail.com>
+Date:   Tue, 08 Aug 2017 16:34:15 -0700
+In-Reply-To: <CAJo=hJsyoFeCQbeJ=2XCRcE1U0zYaRr8VvzXHwkPwisdfUm71Q@mail.gmail.com>
+        (Shawn Pearce's message of "Tue, 8 Aug 2017 15:27:05 -0700")
+Message-ID: <xmqqy3qt8wi0.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170808225231.3l7gyoxxvghsvtv7@sigill.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 17ED0BA2-7C92-11E7-9B4C-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 08, 2017 at 06:52:31PM -0400, Jeff King wrote:
+Shawn Pearce <spearce@spearce.org> writes:
 
-> > Interesting.  I see that we still have the conditional code to call
-> > out to sha1-lookup.c::sha1_entry_pos().  Do we need a similar change
-> > over there, I wonder?  Alternatively, as we have had the experimental
-> > sha1-lookup.c::sha1_entry_pos() long enough without anybody using it,
-> > perhaps we should write it off as a failed experiment and retire it?
-> 
-> There is also sha1_pos(), which seems to have the same problem (and is
-> used in several places).
+> Given that the index can now also be multi-level, I don't expect to
+> see a 2G index. A 2G index forces the reader to load the entire 2G to
+> take advantage of the restart table. It may be more efficient for such
+> a reader to have had the writer make a mutli-level index, instead of a
+> single monster index block. And so perhaps the writer shouldn't make a
+> 2G index block that she is forced to buffer. :)
 
-Actually, I take it back. The problem happens when we enter the loop
-with no entries to look at. But both sha1_pos() and sha1_entry_pos()
-return early before hitting their do-while loops in that case.
-
--Peff
+Ah, OK, then it is sensible to have all table blocks to have the
+same format, and restart at the beginning to help readers would be a
+fine choice.  For the same "let's make them as consistent" sake, I
+am tempted to suggest that we lift "the index block can be 2G" and
+have it also be within uint_24(), perhaps?  Otherwise the readers
+would have to read (or mmap) the whole 2G.
