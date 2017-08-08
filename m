@@ -6,53 +6,53 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7ADCD20899
-	for <e@80x24.org>; Tue,  8 Aug 2017 19:33:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E12420899
+	for <e@80x24.org>; Tue,  8 Aug 2017 19:33:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752370AbdHHTdM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Aug 2017 15:33:12 -0400
-Received: from mail-pg0-f49.google.com ([74.125.83.49]:33357 "EHLO
-        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752255AbdHHTcy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Aug 2017 15:32:54 -0400
-Received: by mail-pg0-f49.google.com with SMTP id u5so18691677pgn.0
-        for <git@vger.kernel.org>; Tue, 08 Aug 2017 12:32:54 -0700 (PDT)
+        id S1752364AbdHHTdK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Aug 2017 15:33:10 -0400
+Received: from mail-pg0-f47.google.com ([74.125.83.47]:36289 "EHLO
+        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752324AbdHHTdB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Aug 2017 15:33:01 -0400
+Received: by mail-pg0-f47.google.com with SMTP id v77so18590423pgb.3
+        for <git@vger.kernel.org>; Tue, 08 Aug 2017 12:33:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=IMu30IS8Fo4J+1OEHhTdA5CvtyREqZTNQxdYdGZZMto=;
-        b=VRv8DVdodFmmY692d7wKFI3YWmc4RVNWZ8gHLI59czr1/hjaEjplBDcAKLFAYKricy
-         XBbipSAl5u5AMt1GA4N8BoqEMQpaQas1e2v7GwKPUcY4jDNqfpvtagxH6BgvgRB9gdMu
-         h6gsRK3kz2yfCqgGCc/dkTPKh30QWlXKGSB6AlbpiLFde7s+CE8LhtvFeJdUTIM+fS3x
-         I7+6A4/5Hlj/wk0yKpk+1NvJFWqF4hIS+7hYZB+wVzZZ/jaIPfGyAn1YFMck6hV4Nb/0
-         rQ2CPig4QOaz/IlKyJ1gbbdaqZjP9yI7hRdgSCfO9+0UHa1aqTgjpQl3sfUHSKvKzb4X
-         QNbg==
+        bh=lGsCfhjzq3sfHC5E5TNLGbHeYtDET1yQSzJ1A3fEyAw=;
+        b=nLipOwRR0I7wxB6FxnoFEVkBQiqWdeNFrW02FzRi7QAHBtpek4U9tXJLKnfdidKN8M
+         H1gCzrWoVLBaWw5+lpvyhAgoREru79C7d1Xe6RluCjiv7uHCya73IYCDSuUHG7Z2f9Ou
+         t1ZYlo4t6LT90W7tMD2mLp+rxCdXWLO7UsqqL947gf5hmolofjMbWfWLxM2oXp/vxefu
+         Qnd8/RJmDWk2ZZESzTSfVkzynY6fag0tZNLb+hjFOviobsY1VvgoL6gdb9zBpr7iJF2P
+         OtJ1Ka1fabIVPHBwNgbLI8IEXgPI8RhEDUfN4rUrutyYsCErYezxmxxrv/3YZhwY6xzV
+         A33Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=IMu30IS8Fo4J+1OEHhTdA5CvtyREqZTNQxdYdGZZMto=;
-        b=MAaWm2T6EQC9jjYwImad6XrG3K1YlG/Rc0Xk0Iu/SuMUMxUvfZqSLx3pdfWODQuTS/
-         7VZkXbBqktkVbpnrMnpJr0OfmIhzO0INATHTjdJn6y3DzHrR7SfxMmxLUiVD2wWffU7h
-         OaMAHbpOo3pu6fQ3bE6aoE2qjxR60gs5FjVGlLqnLp4nDGqIInVOVI9KBt9UYRoVZOcB
-         bsn8ETnXAr7g0Y1sNCSG07Ip7mufnz+hPF/iauVh44Q976XEdrafEw7YQDDiTxL5+Mcz
-         huPnvpwoX4Jjk2VMqmzmZUe3E3UN21Pgj1RS2Oc/dc56dZuhnFRGxH0VDDiQZNaqnGtQ
-         BVQQ==
-X-Gm-Message-State: AHYfb5iY1+FyKPb0b9gSTi5VKRnvD+jXQHdlSJIpWmdXBfABZ5V6pmMy
-        G2371NuoSj6Pf7wq7GCF7g==
-X-Received: by 10.84.133.111 with SMTP id 102mr470681plf.277.1502220773105;
-        Tue, 08 Aug 2017 12:32:53 -0700 (PDT)
+        bh=lGsCfhjzq3sfHC5E5TNLGbHeYtDET1yQSzJ1A3fEyAw=;
+        b=Y79+30ReBG1gDkLoxW5VZigBdWX4gEv489wf4HibmGm9R0rAfHSCMkJHcvsGnEt+fA
+         b2uOifQRarYVd0S2JGClmBkmYaphePDphuGlzZza5rG4DltAXO6ruBtPC2ftavTZPAdy
+         TwV++9gQo2/HX33rGEZ+RwSZoIiKWu5f9UKMZ/5QrA5SGhP+xUblx8IssKr2SKk5pnta
+         ctcHoC2pRtWnNmIJyZ+Ra60R96dMuR5vXnLFsFwntKRnG3oE93/eIfAUcP9zl529JfdZ
+         ZylvQNNBb1ZQaMe1CV9/h37ycU0lWCFl9Hl9mZkzZkTC9oGAYVmDONry8jcxDIQwOWer
+         4gbQ==
+X-Gm-Message-State: AHYfb5gVNJ+HMphuE9p5PY1vj50dZrxxn4ESPF4HP4crXQWt3tmqZ08X
+        6h3aPf74DmPUq/3G1ToG1Q==
+X-Received: by 10.98.18.11 with SMTP id a11mr5639572pfj.116.1502220780349;
+        Tue, 08 Aug 2017 12:33:00 -0700 (PDT)
 Received: from twelve2.svl.corp.google.com ([100.96.218.24])
-        by smtp.gmail.com with ESMTPSA id k186sm4332547pfc.173.2017.08.08.12.32.51
+        by smtp.gmail.com with ESMTPSA id k186sm4332547pfc.173.2017.08.08.12.32.59
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 08 Aug 2017 12:32:51 -0700 (PDT)
+        Tue, 08 Aug 2017 12:32:59 -0700 (PDT)
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>
-Subject: [RFC PATCH 04/10] pack: move open_pack_index(), parse_pack_index()
-Date:   Tue,  8 Aug 2017 12:32:34 -0700
-Message-Id: <02e77a90110bdd6dad13c60aa08107b6345a60b9.1502220307.git.jonathantanmy@google.com>
+Subject: [RFC PATCH 08/10] pack: move unuse_pack()
+Date:   Tue,  8 Aug 2017 12:32:38 -0700
+Message-Id: <106f64e0995c85dd1dd3916cea8a8408facd335b.1502220307.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.14.0.434.g98096fd7a8-goog
 In-Reply-To: <cover.1502220307.git.jonathantanmy@google.com>
 References: <cover.1502220307.git.jonathantanmy@google.com>
@@ -65,402 +65,72 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- builtin/count-objects.c |   1 +
- cache.h                 |   8 ---
- pack.c                  | 149 ++++++++++++++++++++++++++++++++++++++++++++++++
- pack.h                  |   8 +++
- sha1_file.c             | 140 ---------------------------------------------
- sha1_name.c             |   1 +
- 6 files changed, 159 insertions(+), 148 deletions(-)
+ cache.h     | 1 -
+ pack.c      | 9 +++++++++
+ pack.h      | 1 +
+ sha1_file.c | 9 ---------
+ 4 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/builtin/count-objects.c b/builtin/count-objects.c
-index 1d82e61f2..185d3190a 100644
---- a/builtin/count-objects.c
-+++ b/builtin/count-objects.c
-@@ -10,6 +10,7 @@
- #include "builtin.h"
- #include "parse-options.h"
- #include "quote.h"
-+#include "pack.h"
- 
- static unsigned long garbage;
- static off_t size_garbage;
 diff --git a/cache.h b/cache.h
-index c7f802e4a..5d6839525 100644
+index dd9f9a9ae..4812f3a63 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -1603,8 +1603,6 @@ struct pack_entry {
- 	struct packed_git *p;
- };
- 
--extern struct packed_git *parse_pack_index(unsigned char *sha1, const char *idx_path);
--
- /* A hook to report invalid files in pack directory */
- #define PACKDIR_FILE_PACK 1
- #define PACKDIR_FILE_IDX 2
-@@ -1639,12 +1637,6 @@ extern int odb_mkstemp(struct strbuf *template, const char *pattern);
+@@ -1637,7 +1637,6 @@ extern int odb_mkstemp(struct strbuf *template, const char *pattern);
   */
  extern int odb_pack_keep(const char *name);
  
--/*
-- * mmap the index file for the specified packfile (if it is not
-- * already mmapped).  Return 0 on success.
-- */
--extern int open_pack_index(struct packed_git *);
--
- /*
-  * munmap the index file for the specified packfile (if it is
-  * currently mmapped).
+-extern void unuse_pack(struct pack_window **);
+ extern void clear_delta_base_cache(void);
+ extern struct packed_git *add_packed_git(const char *path, size_t path_len, int local);
+ 
 diff --git a/pack.c b/pack.c
-index 60d9fc3b0..6edc43228 100644
+index 85cb65558..93526ea7b 100644
 --- a/pack.c
 +++ b/pack.c
-@@ -1,5 +1,6 @@
- #include "cache.h"
- #include "mru.h"
-+#include "pack.h"
- 
- char *odb_pack_name(struct strbuf *buf,
- 		    const unsigned char *sha1,
-@@ -59,3 +60,151 @@ void pack_report(void)
- 		pack_open_windows, peak_pack_open_windows,
- 		sz_fmt(pack_mapped), sz_fmt(peak_pack_mapped));
+@@ -596,3 +596,12 @@ unsigned char *use_pack(struct packed_git *p,
+ 		*left = win->len - xsize_t(offset);
+ 	return win->base + offset;
  }
 +
-+/*
-+ * Open and mmap the index file at path, perform a couple of
-+ * consistency checks, then record its information to p.  Return 0 on
-+ * success.
-+ */
-+static int check_packed_git_idx(const char *path, struct packed_git *p)
++void unuse_pack(struct pack_window **w_cursor)
 +{
-+	void *idx_map;
-+	struct pack_idx_header *hdr;
-+	size_t idx_size;
-+	uint32_t version, nr, i, *index;
-+	int fd = git_open(path);
-+	struct stat st;
-+
-+	if (fd < 0)
-+		return -1;
-+	if (fstat(fd, &st)) {
-+		close(fd);
-+		return -1;
++	struct pack_window *w = *w_cursor;
++	if (w) {
++		w->inuse_cnt--;
++		*w_cursor = NULL;
 +	}
-+	idx_size = xsize_t(st.st_size);
-+	if (idx_size < 4 * 256 + 20 + 20) {
-+		close(fd);
-+		return error("index file %s is too small", path);
-+	}
-+	idx_map = xmmap(NULL, idx_size, PROT_READ, MAP_PRIVATE, fd, 0);
-+	close(fd);
-+
-+	hdr = idx_map;
-+	if (hdr->idx_signature == htonl(PACK_IDX_SIGNATURE)) {
-+		version = ntohl(hdr->idx_version);
-+		if (version < 2 || version > 2) {
-+			munmap(idx_map, idx_size);
-+			return error("index file %s is version %"PRIu32
-+				     " and is not supported by this binary"
-+				     " (try upgrading GIT to a newer version)",
-+				     path, version);
-+		}
-+	} else
-+		version = 1;
-+
-+	nr = 0;
-+	index = idx_map;
-+	if (version > 1)
-+		index += 2;  /* skip index header */
-+	for (i = 0; i < 256; i++) {
-+		uint32_t n = ntohl(index[i]);
-+		if (n < nr) {
-+			munmap(idx_map, idx_size);
-+			return error("non-monotonic index %s", path);
-+		}
-+		nr = n;
-+	}
-+
-+	if (version == 1) {
-+		/*
-+		 * Total size:
-+		 *  - 256 index entries 4 bytes each
-+		 *  - 24-byte entries * nr (20-byte sha1 + 4-byte offset)
-+		 *  - 20-byte SHA1 of the packfile
-+		 *  - 20-byte SHA1 file checksum
-+		 */
-+		if (idx_size != 4*256 + nr * 24 + 20 + 20) {
-+			munmap(idx_map, idx_size);
-+			return error("wrong index v1 file size in %s", path);
-+		}
-+	} else if (version == 2) {
-+		/*
-+		 * Minimum size:
-+		 *  - 8 bytes of header
-+		 *  - 256 index entries 4 bytes each
-+		 *  - 20-byte sha1 entry * nr
-+		 *  - 4-byte crc entry * nr
-+		 *  - 4-byte offset entry * nr
-+		 *  - 20-byte SHA1 of the packfile
-+		 *  - 20-byte SHA1 file checksum
-+		 * And after the 4-byte offset table might be a
-+		 * variable sized table containing 8-byte entries
-+		 * for offsets larger than 2^31.
-+		 */
-+		unsigned long min_size = 8 + 4*256 + nr*(20 + 4 + 4) + 20 + 20;
-+		unsigned long max_size = min_size;
-+		if (nr)
-+			max_size += (nr - 1)*8;
-+		if (idx_size < min_size || idx_size > max_size) {
-+			munmap(idx_map, idx_size);
-+			return error("wrong index v2 file size in %s", path);
-+		}
-+		if (idx_size != min_size &&
-+		    /*
-+		     * make sure we can deal with large pack offsets.
-+		     * 31-bit signed offset won't be enough, neither
-+		     * 32-bit unsigned one will be.
-+		     */
-+		    (sizeof(off_t) <= 4)) {
-+			munmap(idx_map, idx_size);
-+			return error("pack too large for current definition of off_t in %s", path);
-+		}
-+	}
-+
-+	p->index_version = version;
-+	p->index_data = idx_map;
-+	p->index_size = idx_size;
-+	p->num_objects = nr;
-+	return 0;
-+}
-+
-+int open_pack_index(struct packed_git *p)
-+{
-+	char *idx_name;
-+	size_t len;
-+	int ret;
-+
-+	if (p->index_data)
-+		return 0;
-+
-+	if (!strip_suffix(p->pack_name, ".pack", &len))
-+		die("BUG: pack_name does not end in .pack");
-+	idx_name = xstrfmt("%.*s.idx", (int)len, p->pack_name);
-+	ret = check_packed_git_idx(idx_name, p);
-+	free(idx_name);
-+	return ret;
-+}
-+
-+static struct packed_git *alloc_packed_git(int extra)
-+{
-+	struct packed_git *p = xmalloc(st_add(sizeof(*p), extra));
-+	memset(p, 0, sizeof(*p));
-+	p->pack_fd = -1;
-+	return p;
-+}
-+
-+struct packed_git *parse_pack_index(unsigned char *sha1, const char *idx_path)
-+{
-+	const char *path = sha1_pack_name(sha1);
-+	size_t alloc = st_add(strlen(path), 1);
-+	struct packed_git *p = alloc_packed_git(alloc);
-+
-+	memcpy(p->pack_name, path, alloc); /* includes NUL */
-+	hashcpy(p->sha1, sha1);
-+	if (check_packed_git_idx(idx_path, p)) {
-+		free(p);
-+		return NULL;
-+	}
-+
-+	return p;
 +}
 diff --git a/pack.h b/pack.h
-index 6098bfe40..5be0ed42a 100644
+index bf2b99bf9..3876e9ae6 100644
 --- a/pack.h
 +++ b/pack.h
-@@ -135,4 +135,12 @@ extern size_t pack_mapped;
+@@ -149,5 +149,6 @@ extern void close_all_packs(void);
+ extern int open_packed_git(struct packed_git *p);
  
- extern void pack_report(void);
+ extern unsigned char *use_pack(struct packed_git *, struct pack_window **, off_t, unsigned long *);
++extern void unuse_pack(struct pack_window **);
  
-+/*
-+ * mmap the index file for the specified packfile (if it is not
-+ * already mmapped).  Return 0 on success.
-+ */
-+extern int open_pack_index(struct packed_git *);
-+
-+extern struct packed_git *parse_pack_index(unsigned char *sha1, const char *idx_path);
-+
  #endif
 diff --git a/sha1_file.c b/sha1_file.c
-index 0de39f480..2e414f5f5 100644
+index 8f17a07e9..12501ef06 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -679,130 +679,6 @@ static int has_loose_object(const unsigned char *sha1)
- 	return check_and_freshen(sha1, 0);
+@@ -717,15 +717,6 @@ void *xmmap(void *start, size_t length,
+ 	return ret;
  }
  
--/*
-- * Open and mmap the index file at path, perform a couple of
-- * consistency checks, then record its information to p.  Return 0 on
-- * success.
-- */
--static int check_packed_git_idx(const char *path, struct packed_git *p)
+-void unuse_pack(struct pack_window **w_cursor)
 -{
--	void *idx_map;
--	struct pack_idx_header *hdr;
--	size_t idx_size;
--	uint32_t version, nr, i, *index;
--	int fd = git_open(path);
--	struct stat st;
--
--	if (fd < 0)
--		return -1;
--	if (fstat(fd, &st)) {
--		close(fd);
--		return -1;
+-	struct pack_window *w = *w_cursor;
+-	if (w) {
+-		w->inuse_cnt--;
+-		*w_cursor = NULL;
 -	}
--	idx_size = xsize_t(st.st_size);
--	if (idx_size < 4 * 256 + 20 + 20) {
--		close(fd);
--		return error("index file %s is too small", path);
--	}
--	idx_map = xmmap(NULL, idx_size, PROT_READ, MAP_PRIVATE, fd, 0);
--	close(fd);
--
--	hdr = idx_map;
--	if (hdr->idx_signature == htonl(PACK_IDX_SIGNATURE)) {
--		version = ntohl(hdr->idx_version);
--		if (version < 2 || version > 2) {
--			munmap(idx_map, idx_size);
--			return error("index file %s is version %"PRIu32
--				     " and is not supported by this binary"
--				     " (try upgrading GIT to a newer version)",
--				     path, version);
--		}
--	} else
--		version = 1;
--
--	nr = 0;
--	index = idx_map;
--	if (version > 1)
--		index += 2;  /* skip index header */
--	for (i = 0; i < 256; i++) {
--		uint32_t n = ntohl(index[i]);
--		if (n < nr) {
--			munmap(idx_map, idx_size);
--			return error("non-monotonic index %s", path);
--		}
--		nr = n;
--	}
--
--	if (version == 1) {
--		/*
--		 * Total size:
--		 *  - 256 index entries 4 bytes each
--		 *  - 24-byte entries * nr (20-byte sha1 + 4-byte offset)
--		 *  - 20-byte SHA1 of the packfile
--		 *  - 20-byte SHA1 file checksum
--		 */
--		if (idx_size != 4*256 + nr * 24 + 20 + 20) {
--			munmap(idx_map, idx_size);
--			return error("wrong index v1 file size in %s", path);
--		}
--	} else if (version == 2) {
--		/*
--		 * Minimum size:
--		 *  - 8 bytes of header
--		 *  - 256 index entries 4 bytes each
--		 *  - 20-byte sha1 entry * nr
--		 *  - 4-byte crc entry * nr
--		 *  - 4-byte offset entry * nr
--		 *  - 20-byte SHA1 of the packfile
--		 *  - 20-byte SHA1 file checksum
--		 * And after the 4-byte offset table might be a
--		 * variable sized table containing 8-byte entries
--		 * for offsets larger than 2^31.
--		 */
--		unsigned long min_size = 8 + 4*256 + nr*(20 + 4 + 4) + 20 + 20;
--		unsigned long max_size = min_size;
--		if (nr)
--			max_size += (nr - 1)*8;
--		if (idx_size < min_size || idx_size > max_size) {
--			munmap(idx_map, idx_size);
--			return error("wrong index v2 file size in %s", path);
--		}
--		if (idx_size != min_size &&
--		    /*
--		     * make sure we can deal with large pack offsets.
--		     * 31-bit signed offset won't be enough, neither
--		     * 32-bit unsigned one will be.
--		     */
--		    (sizeof(off_t) <= 4)) {
--			munmap(idx_map, idx_size);
--			return error("pack too large for current definition of off_t in %s", path);
--		}
--	}
--
--	p->index_version = version;
--	p->index_data = idx_map;
--	p->index_size = idx_size;
--	p->num_objects = nr;
--	return 0;
 -}
 -
--int open_pack_index(struct packed_git *p)
--{
--	char *idx_name;
--	size_t len;
--	int ret;
--
--	if (p->index_data)
--		return 0;
--
--	if (!strip_suffix(p->pack_name, ".pack", &len))
--		die("BUG: pack_name does not end in .pack");
--	idx_name = xstrfmt("%.*s.idx", (int)len, p->pack_name);
--	ret = check_packed_git_idx(idx_name, p);
--	free(idx_name);
--	return ret;
--}
--
- static void scan_windows(struct packed_git *p,
- 	struct packed_git **lru_p,
- 	struct pack_window **lru_w,
-@@ -1300,22 +1176,6 @@ struct packed_git *add_packed_git(const char *path, size_t path_len, int local)
- 	return p;
- }
- 
--struct packed_git *parse_pack_index(unsigned char *sha1, const char *idx_path)
--{
--	const char *path = sha1_pack_name(sha1);
--	size_t alloc = st_add(strlen(path), 1);
--	struct packed_git *p = alloc_packed_git(alloc);
--
--	memcpy(p->pack_name, path, alloc); /* includes NUL */
--	hashcpy(p->sha1, sha1);
--	if (check_packed_git_idx(idx_path, p)) {
--		free(p);
--		return NULL;
--	}
--
--	return p;
--}
--
- void install_packed_git(struct packed_git *pack)
+ static struct packed_git *alloc_packed_git(int extra)
  {
- 	if (pack->pack_fd != -1)
-diff --git a/sha1_name.c b/sha1_name.c
-index 74fcb6d78..28b7c9fd8 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -9,6 +9,7 @@
- #include "remote.h"
- #include "dir.h"
- #include "sha1-array.h"
-+#include "pack.h"
- 
- static int get_sha1_oneline(const char *, unsigned char *, struct commit_list *);
- 
+ 	struct packed_git *p = xmalloc(st_add(sizeof(*p), extra));
 -- 
 2.14.0.434.g98096fd7a8-goog
 
