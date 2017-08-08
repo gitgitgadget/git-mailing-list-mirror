@@ -2,277 +2,198 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0680C20899
-	for <e@80x24.org>; Tue,  8 Aug 2017 13:14:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B587220899
+	for <e@80x24.org>; Tue,  8 Aug 2017 14:18:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752038AbdHHNOJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Aug 2017 09:14:09 -0400
-Received: from mail-wm0-f51.google.com ([74.125.82.51]:37518 "EHLO
-        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751925AbdHHNOH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Aug 2017 09:14:07 -0400
-Received: by mail-wm0-f51.google.com with SMTP id t201so6875550wmt.0
-        for <git@vger.kernel.org>; Tue, 08 Aug 2017 06:14:06 -0700 (PDT)
+        id S1752172AbdHHOSv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Aug 2017 10:18:51 -0400
+Received: from mail-qk0-f195.google.com ([209.85.220.195]:36526 "EHLO
+        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752014AbdHHOSr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Aug 2017 10:18:47 -0400
+Received: by mail-qk0-f195.google.com with SMTP id d136so3227165qkg.3
+        for <git@vger.kernel.org>; Tue, 08 Aug 2017 07:18:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=azbmC6laUiRgFBnJjqoBT6LPwBT4IYXQ6SvuvT8DKc0=;
-        b=nbb5jAV857FBLCzRMhMj7thNzXJ1AuPO7fkoDl5eoP8SyjTgf0/36+1bU1WXn1XBLB
-         kb8x8uFPlPoO3TwqPTO5/rfKJq1O7pRRzQUCjQfqEYV0OkIkUqmr7+Z2Ws3wy9nWrCHw
-         4cTbw6fngLotEy5w9pTSA2Aa1/jNqXDSRfNYO3kaDYpa7xnIHt113/88jUwqRiQtBXZF
-         0QcuyIemezKSGHRyC39x+qwN+TqXqvz2HAx1QnFdDGgl1LUO0DWfMc2ikO7/uQyVIbFR
-         BVLnWov2LPb3VrjDO6uBfwusF7l7h12bpGRAIdGI18OSUmuhAsDzhhunaXbxMrK3Tyw5
-         F4wQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=2mgeGEIoSaiTjtpVf0Gt9AwboKV+FjD6Lx3DuCXwxHg=;
+        b=jpqcbjB6EcCDx1lsAY+w1uXYjdzrtkROepP+9eoAdUqZSqRy91hzSctHtUKdUw1pX6
+         PPc9PkAuD5e9IGSROLN0WTMYuIiak9loU/IA3TB0Z4waFci5ghH1g7v9rL3nrwY+9Z5o
+         auMKier0GJ9tqTvwQfOtcs+UyADL9rSR0dJVkqCAE1L8kaQnLWd/+9lUp6mfk1tU/TzC
+         kj8BX+mQH2YlIj6CaDfV6he8o51T+na7cBX9SvdHig+QoCLPXUtKD9Zy553D00zMzDgI
+         JEP9P4/bfluRoEt41kDHHJh5KCRwanuRM1PmLUm0CxfUA+uk4rrI4i8/zx8sHRkBFdmO
+         hmZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=azbmC6laUiRgFBnJjqoBT6LPwBT4IYXQ6SvuvT8DKc0=;
-        b=hk2E4ajj5MkTbPgmM34xzG77v6oyT04hrl9fIaTBkwg5X8ujkpLgbmpQxVZF1ujEgw
-         rzsefkHivNJMSuQEqBGhHkqiFrGUI6hg4aCO/oXSOYqnIeK+BIMuiDMeCNgzSVl+bpXH
-         pEN8UatmAM89RRsJDK/QV1L23QFVa+4RelCe/JA7Ldl0IaIFBKNoWJoRsAeKPdBgUWax
-         NcK1cFIrhlqVyI/1mO3HkjmPlJ0jff8U/qots1ay4Dl4oOJDZHuBkYzWiWAa+trzO44O
-         4uIsjjoQSRT75rXpVygQhbF/w1B71PXRUR7jQQ4ex+42TWeBeEt10ZjZDZmKN+91ZOlo
-         nH9Q==
-X-Gm-Message-State: AHYfb5iM487dMO6kXyKHqMXQmxSYffK6gQ18eKRYYC3jo+nVgDjUSEsK
-        P0+zmp0BDHHnPQ==
-X-Received: by 10.80.225.196 with SMTP id m4mr4508937edl.222.1502198046052;
-        Tue, 08 Aug 2017 06:14:06 -0700 (PDT)
-Received: from snth (157-157-140-194.dsl.dynamic.simnet.is. [157.157.140.194])
-        by smtp.gmail.com with ESMTPSA id e34sm782373edb.9.2017.08.08.06.14.03
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=2mgeGEIoSaiTjtpVf0Gt9AwboKV+FjD6Lx3DuCXwxHg=;
+        b=DNrNH82IsKmVgewRDb0kHUpQpeJ4MGFasS1wXaxmT4nqVBrraqrr6I91Iav15qegTf
+         E4IkYTHSyzVdMnP8IQOQoQM1hEg1iSWN8BFdMXI75op7shB9Fp/tZYCDCyaKVDPYFOmk
+         CRMfjjkM2c1i9Mb7EMoUQBxNTqD7gqC6fHqnrRB0/88IdXU+zJWAqWWH+smor2M/e2pt
+         DLtdMDjVGWa+7XO4P4D+suqqbQfftAUX8gKKyOsdOQgtuoTGuEYckdotKTK0zHRsRINM
+         H2RqkFcx7jsiyNLwkNBPjNns1Ke2ZcOKgh8YS9MxREoMWS6b/KrkglcZFZlWbJe0nlu2
+         1woQ==
+X-Gm-Message-State: AHYfb5gGoePMFfdgVIaall2PhxMB1e2wTKMjioBJ9DysijwAxdBMDSJq
+        kIs06KKCWt6k2EuvJH4=
+X-Received: by 10.55.78.23 with SMTP id c23mr5210649qkb.323.1502201926679;
+        Tue, 08 Aug 2017 07:18:46 -0700 (PDT)
+Received: from [192.168.1.13] ([65.222.173.206])
+        by smtp.gmail.com with ESMTPSA id f15sm724635qtf.93.2017.08.08.07.18.43
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 08 Aug 2017 06:14:04 -0700 (PDT)
-Received: from avar by snth with local (Exim 4.84_2)
-        (envelope-from <avarab@gmail.com>)
-        id 1df4Kg-00047u-VT; Tue, 08 Aug 2017 15:14:02 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Sahil Dua <sahildua2305@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Jul 2017, #09; Mon, 31)
-References: <xmqqfudcgryb.fsf@gitster.mtv.corp.google.com> <232547ab-3b87-debc-36a4-d2285ec10a06@ramsayjones.plus.com> <CALiud+nm9wu4rBY6zBXmenJj_0Mn7xeU_FAvSdn4fdH+q--Jag@mail.gmail.com> <xmqqd18cweak.fsf@gitster.mtv.corp.google.com> <87shh57nzs.fsf@gmail.com> <xmqqpoc9sksg.fsf@gitster.mtv.corp.google.com> <873794zbls.fsf@gmail.com> <e5564e40-702f-390b-69e2-2ed6e45610c8@gmail.com> <db848b3e-e4cc-ddf4-9e4c-7b47b2f5d7a7@gmail.com>
-User-agent: Debian GNU/Linux 8.9 (jessie); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <db848b3e-e4cc-ddf4-9e4c-7b47b2f5d7a7@gmail.com>
-Date:   Tue, 08 Aug 2017 15:14:02 +0200
-Message-ID: <874ltigq1x.fsf@gmail.com>
+        Tue, 08 Aug 2017 07:18:45 -0700 (PDT)
+Subject: Re: Partial clone design (with connectivity check for locally-created
+ objects)
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        christian.couder@gmail.com
+References: <20170804145113.5ceafafa@twelve2.svl.corp.google.com>
+ <xmqqtw1nrlpf.fsf@gitster.mtv.corp.google.com>
+ <20170804172137.42f27653@twelve2.svl.corp.google.com>
+ <0633771f-ce19-6211-fabe-3f7f676e53ab@gmail.com>
+ <20170807192151.GX13924@aiede.mtv.corp.google.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <12fbcba3-1b31-2240-a330-e7cc11820f4a@gmail.com>
+Date:   Tue, 8 Aug 2017 10:18:43 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20170807192151.GX13924@aiede.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Mon, Aug 07 2017, Igor Djordjevic jotted:
 
-> On 07/08/2017 23:25, Igor Djordjevic wrote:
->> On 06/08/2017 22:26, Ævar Arnfjörð Bjarmason wrote:
->>> On Sat, Aug 05 2017, Junio C. Hamano jotted:
->>>> I actually consider "branch" to *never* invoking a checkout.  Even
->>>> when "git branch -m A B" happens to be done when your checked out
->>>> branch is A and you end up being on B.  That is not a "checkout".
->>>
->>> I think we just have a different mental model of what "checkout"
->>> means. In my mind any operation that updates the HEAD to point to a new
->>> branch is a checkout of that branch.
->>
->> If I may, from a side-viewer`s point of view, it seems you`re
->> thinking in low-level implementation details, where what Junio
->> describes seems more as a high-level, conceptual/end-user`s point of
->> view.
-
-Yeah, I think that's a fair summary. Also I didn't mean to de-rail this
-whole thread on what "checkout" really means, just explain what I meant
-with previous comments, since there seemed to be confusion about that.
-
->> Needing to update HEAD reference once we "rename" a branch, too, what
->> you consider a "checkout", seems to be required only because branch
->> name _is_ the branch reference in Git, so we need to update HEAD to
->> point to a new/renamed branch reference -- but it`s still the same
->> branch, conceptually.
-
-It's not *required* we could do one of three things:
-
- 1) Do what we do now, i.e. rename the branch/reflog & check out the new
-    name.
-
- 2) Rename the branch/reflog and checkout HEAD^0, i.e. say "the branch
-    is now elsewhere, but we haven't moved your commit".
-
- 3) Just not run replace_each_worktree_head_symref() which would end up
- on a branch with no commits, i.e. an orphan branch.
-
-Now, I think 2 & 3 are pretty nonsensical and wouldn't ever propose we
-should do that, but it's illustrative that #1 is not some required
-inevitability in terms of explaining what's happening with the new name
-being checked out (i.e. HEAD being updated).
-
->> Documentation for "git-checkout" states that it is used to "*Switch
->> branches*...[snip]", and that is not what happens here.
-
-That's just the summary at the top but not the full story of what
-git-checkout does. E.g. you can checkout a bare SHA1 which is not
-switching branches, or a tag or whatever.
-
->> Implementation-wise it does because we can`t do it differently at the
->> moment, but in user`s eyes it`s still the same branch, so no switch
->> is made as far as the user is concerned.
-
-Kind of, it's also worthwhile to think about that in some sense no
-switch would be performed as far as the user is concerned by taking
-option #2, i.e. we'd be in the same working tree / you could still make
-commits.
-
-You just couldn't make new commits on your "master" which is now called
-"topic" and get new commits on "topic". I think it makes sense to do
-that, but again, it's illustrative that it's not inevitable for
-discussing the implementation.
-
->> In a different implementation, where branches would have permanent
->> references other than their names, no HEAD update would be needed as
->> the reference would still be the same, no matter the name change,
->> making the `git branch -m` situation clear even from your standpoint,
->> I`d say.
->>
->>>> Really from the end-user's point of view that is not a checkout.
->>>> The user renamed the branch A and the same conceptual entity, which
->>>> is a branch, is now called B.  If that branch was what was checked
->>>> out (IOW, if that branch was what would be grown by one commit if
->>>> the user did "git commit"), then now that branch's name is B.  It is
->>>> natural if you ask "symbolic-ref HEAD" what branch is checked out
->>>> after renaming A to B (and A happened to be what was checked out),
->>>> the answer chould be B.
+On 8/7/2017 3:21 PM, Jonathan Nieder wrote:
+> Hi,
+> 
+> Ben Peart wrote:
+>>> On Fri, 04 Aug 2017 15:51:08 -0700
+>>> Junio C Hamano <gitster@pobox.com> wrote:
+>>>> Jonathan Tan <jonathantanmy@google.com> writes:
+> 
+>>>>> "Imported" objects must be in a packfile that has a "<pack name>.remote"
+>>>>> file with arbitrary text (similar to the ".keep" file). They come from
+>>>>> clones, fetches, and the object loader (see below).
+>>>>> ...
+>>>>>
+>>>>> A "homegrown" object is valid if each object it references:
+>>>>>   1. is a "homegrown" object,
+>>>>>   2. is an "imported" object, or
+>>>>>   3. is referenced by an "imported" object.
 >>>>
->>>> It's like the city you live in changed the name of the street your
->>>> house is on.  You do not call movers, you do not do anything, but
->>>> your address changes.
->>>
->>> Yeah I see what you mean, although this analogy rapidly breaks down when
->>> you poke at it as shown above. My house (a sha1) can be on any number of
->>> streets and new ones can be added/removed all the time without changing
->>> where my house is at.
+>>>> Overall it captures what was discussed, and I think it is a good
+>>>> start.
 >>
->> I may be missing something, but I find the house/address analogy a
->> good one, actually, as I understood that "house" resembles a branch
->> reference HEAD is pointing to, not a sha1.
+>> I missed the offline discussion and so am trying to piece together
+>> what this latest design is trying to do.  Please let me know if I'm
+>> not understanding something correctly.
+> 
+> I believe
+> https://public-inbox.org/git/cover.1501532294.git.jonathantanmy@google.com/
+> and the surrounding thread (especially
+> https://public-inbox.org/git/xmqqefsudjqk.fsf@gitster.mtv.corp.google.com/)
+> is the discussion Junio is referring to.
+> 
+> [...]
+>> This segmentation is what is driving the need for the object loader
+>> to build a new local pack file for every command that has to fetch a
+>> missing object.  For example, we can't just write a tree object from
+>> a "partial" clone into the loose object store as we have no way for
+>> fsck to treat them differently and ignore any missing objects
+>> referenced by that tree object.
+> 
+> That's related and how it got lumped into this proposal, but it's not
+> the only motivation.
+> 
+> Other aspects:
+> 
+>   1. using pack files instead of loose objects means we can use deltas.
+>      This is the primary motivation.
+> 
+>   2. pack files can use reachability bitmaps (I realize there are
+>      obstacles to getting benefit out of this because git's bitmap
+>      format currently requires a pack to be self-contained, but I
+>      thought it was worth mentioning for completeness).
+> 
+>   3. existing git servers are oriented around pack files; they can
+>      more cheaply serve objects from pack files in pack format,
+>      including reusing deltas from them.
+> 
+>   4. file systems cope better with a few large files than many small
+>      files
+> 
+> [...]
+>> We all know that git doesn't scale well with a lot of pack files as
+>> it has to do a linear search through all the pack files when
+>> attempting to find an object.  I can see that very quickly, there
+>> would be a lot of pack files generated and with gc ignoring
+>> "partial" pack files, this would never get corrected.
+> 
+> Yes, that's an important point.  Regardless of this proposal, we need
+> to get more aggressive about concatenating pack files (e.g. by
+> implementing exponential rollup in "git gc --auto").
+> 
+>> In our usage scenarios, _all_ of the objects come from "partial"
+>> clones so all of our objects would end up in a series of "partial"
+>> pack files and would have pretty poor performance as a result.
+> 
+> Can you say more about this?  Why would the pack files (or loose
+> objects, for that matter) never end up being consolidated into few
+> pack files?
+> 
+
+Our initial clone is very sparse - we only pull down the commit we are 
+about to checkout and none of the blobs. All missing objects are then 
+downloaded on demand (and in this proposal, would end up in a "partial" 
+pack file).  For performance reasons, we also (by default) download a 
+server computed pack file of commits and trees to pre-populate the local 
+cache.
+
+Without modification, fsck, repack, prune, gc will trigger every object 
+in the repo to be downloaded.  We punted for now and just block those 
+commands but eventually they need to be aware of missing objects so that 
+they do not cause them to be downloaded.  Jonathan is already working on 
+this for fsck in another patch series.
+
+> [...]
+>> That thinking did lead me back to wondering again if we could live
+>> with a repo specific flag.  If any clone/fetch was "partial" the
+>> flag is set and fsck ignore missing objects whether they came from a
+>> "partial" remote or not.
 >>
->> Even further, and that might be the point of confusion, "house" seems
->> to be more like a "permanent branch reference" I mentioned above,
->> where your address can change (branch being renamed), but you would
->> still be in the same house (HEAD would still point to the same
->> permanent branch reference).
->>
->> If you move to another house, only then would HEAD change to point to
->> another (permanent) branch reference (a different house), and that
->> would be a checkout.
+>> I'll admit it isn't as robust if someone is mixing and matching
+>> remotes from different servers some of which are partial and some of
+>> which are not.  I'm not sure how often that would actually happen
+>> but I _am_ certain a single repo specific flag is a _much_ simpler
+>> model than anything else we've come up with so far.
+> 
+> The primary motivation in this thread is locally-created objects, not
+> objects obtained from other remotes.  Objects obtained from other
+> remotes are more of an edge case.
+> 
 
-I've yet to see a good real-world analogy of "DAG with labels", which is
-all git really is, that doesn't break down at some point. Trees are
-probably the best comparison, but even that breaks down in the face of
-branch merges or even merges of entirely unrelated trees.
+Thank you - that helps me to better understand the requirements of the 
+problem we're trying to solve.  In short, that means what we really need 
+is a way to identify locally created objects so that fsck can do a 
+complete connectivity check on them.  I'll have to think about a good 
+way to do that - we've talked about a few but each has a different set 
+of trade-offs and none of them are great (yet :)).
 
-So it's probably pointless to discuss this tangent any further, I don't
-think it helps with deciding what to do about this new -c construct.
-
->> Yes, it`s not really how it works from the inside, but I think that`s
->> irrelevant for the end-user experience :)
->>
->>> So it's just a way to get something exactly like -m except the "move &&
->>> checkout" logic is changed to "copy && checkout".
->>
->> Again, it seems the "checkout" part of "move && checkout" you`re
->> talking about is a user-wise unnecessary implementation detail. For
->> the user, it`s just a simple "move", staying on the same, but renamed
->> branch, thus no branch switching occurred (no "checkout", as per
->> documentation).
-
-Yes I agree that this has little to no impact on what's happening for
-the user, I've merely been discussing "checkout" in the terms of what's
-happening under the hood here.
-
-> All this said, having you mentioning the two argument version:
->
->>     $ git checkout master
->>     $ git branch -m topic avar/topic
->
-> ... exactly proves the point that "git branch -m" is not expected to
-> involve a checkout, even from implementation perspective. It`s just a
-> consequence of needing to update the (now obsolete) reference HEAD
-> points to (only) when the branch we`re renaming (moving) is the one
-> that is currently checked-out.
-
-Hrm, I think you're confused about what this example does. For the sake
-of avoiding confusion let's stop talking about checkout and just talk
-about updating the HEAD.
-
-The point of that example is to show that the HEAD is only updated by
-git branch [-m|-c] if the branch being moved/copied is the branch you're
-currently on.
-
-Here the user just checked out master and then moved an unrelated topic
-to avar/topic, that just manipulates the ref store & config, and won't
-touch the HEAD.
-
-The reason I'm mentioning that example (and talking about a "subset") is
-that amending git-checkout to do some of what this new "git-branch -c"
-option would do would only cover a subset of what it does, since both -m
-and -c are two-mode options in the sense that some of the time they
-manipulate the refstore and the HEAD, and some of the time only the
-refstore.
-
->> Yeah it's not something I'm interested in or have a use-case for,
->> although I think in the same way we have -t for checkout it might be
->> sensible to have e.g.:
->>
->>     $ git checkout -b topic-2 -c topic -t origin/master
->>
->> Where the new -c or --config-from would mean "...and get the config from
->> 'topic'". Such a name would probably be less confusing than
->> --super-b[branch?] which to be implies some ongoing hierarchical
->> relationship.
->
-> This, on the other hand, sounds sensible, staying true to the
-> existing logic. In the same manner you can do either:
-
-To continue the explanation above, yeah it's sensible, but I'm pointing
-out that it's *also* sensible, i.e. whatever mode git-checkout has for
-"let's create a branch with the same start point & config as [some other
-branch]" it's always going to be complimentary but not a replacement for
-git branch [-m|-c], since [-m|-c] has a mode for doing that without
-doing any checkout whatsoever, just manipulating the refstore.
-
->     $ git branch topic -t origin/master
->     $ git checkout topic
->
-> ... or shorter equivalent:
->
->     $ git checkout -b topic -t origin/master
->
-> ..., you should be able to do:
->
->     $ git branch -c topic topic-2
->     $ git checkout topic-2
->
-> ..., or equivalent:
->
->     $ git checkout -b topic-2 -c topic
->
-> ..., where "-c" would follow the same (or similar) logic as "-t" does
-> now, as you already pointed out :)
->
-> p.s. That said, is `git checkout -b topic-2 --move topic` being
-> missed now...? :P That one would/could/should actually be expected to
-> move (rename) the branch *and* check it out, no matter if HEAD
-> currently points to it or not.
->
-> Regards,
-> Buga
+> Thanks for your thoughtful comments.
+> 
+> Jonathan
+> 
