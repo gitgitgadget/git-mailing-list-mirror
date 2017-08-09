@@ -2,97 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E212E20899
-	for <e@80x24.org>; Tue,  8 Aug 2017 23:55:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5FB2420899
+	for <e@80x24.org>; Wed,  9 Aug 2017 00:02:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752449AbdHHXzM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Aug 2017 19:55:12 -0400
-Received: from avasout05.plus.net ([84.93.230.250]:44884 "EHLO
-        avasout05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752047AbdHHXzM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Aug 2017 19:55:12 -0400
-Received: from [10.0.2.15] ([143.159.212.52])
-        by avasout05 with smtp
-        id unv91v00D18PUFB01nvBWz; Wed, 09 Aug 2017 00:55:11 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=Iav3YSia c=1 sm=1 tr=0
- a=CKmocqUIrzA4K3l9YJ19NQ==:117 a=CKmocqUIrzA4K3l9YJ19NQ==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=5rxgeBVgAAAA:8 a=MZYHxiS0tvsB-1DhoTQA:9
- a=QEXdDO2ut3YA:10 a=yJM6EZoI5SlJf8ks9Ge_:22 a=PwKx63F5tFurRwaNxrlG:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH] builtin/add: add a missing newline to an stderr message
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     GIT Mailing-list <git@vger.kernel.org>
-References: <4b0d092f-5a1b-73c7-38fe-48455099bcff@ramsayjones.plus.com>
- <2821200b-0428-a5dd-9680-f291cee0ec47@web.de>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <a04808d5-8a53-d9d7-0168-55a9aa79cf7b@ramsayjones.plus.com>
-Date:   Wed, 9 Aug 2017 00:55:09 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        id S1752492AbdHIACN (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Aug 2017 20:02:13 -0400
+Received: from mail-ua0-f177.google.com ([209.85.217.177]:36143 "EHLO
+        mail-ua0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751970AbdHIACL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Aug 2017 20:02:11 -0400
+Received: by mail-ua0-f177.google.com with SMTP id k43so22278625uaf.3
+        for <git@vger.kernel.org>; Tue, 08 Aug 2017 17:02:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=RaXaRBywd4oDQe/MEnI6uNl+2A3/C4pn+xzb24aM29Q=;
+        b=TN7yY5wi/mnwzSbThqvX9RlX5rd+ILu1hBrt2AIx7WgP2RCAjrA7wpin7I7wFJPZ/x
+         gzfNywI8sQwHLfShEIm65vtGW8n4bCu9NJ/zYoLb7L9jNeCEEIlJ2/x5EpbPdFZ9+iCl
+         96PNH0OYNoeisl2vsVgNgf65KGXM3dkqtCbiY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=RaXaRBywd4oDQe/MEnI6uNl+2A3/C4pn+xzb24aM29Q=;
+        b=FPBMvnA0nLgenDHi8f7XPe2hEtFzPRUMkg6YTGmAjMarFXvL9LVIwTvH5jcs//C3MF
+         bdquxPiUWllAG3cGX2fnxezIs5TWzRfTSpddNSqc9LH3uNu1JjsCy1XTINhCX1n4PzEu
+         wRPW/pNG4Lq72DdW9NfDtNcELsV/a0/VDcES3b1SHY3bKfd4jVbGGaBAPdDbJZhJjAw2
+         vyFURz4det7j+RXjU2/82gEUixxaoYOxO4E7HdpCj/x1XZV52mUFNOSBLbfZG59PNVW6
+         yhe0loIYKoqObk1uMsfKyzFUSGwBqbJieRYAF+DnBlQmJtlr3zdP7a74vCzRlqVcWQeH
+         4NKA==
+X-Gm-Message-State: AHYfb5jydAqhdeMxoYNQG/Ah7WE96QehcxYIKtoVplltUx1eYtoS2041
+        gdHJiJZI4NcGBa0I9OtnomWwVMc7wedr
+X-Received: by 10.176.75.167 with SMTP id v39mr4482128uaf.11.1502236930280;
+ Tue, 08 Aug 2017 17:02:10 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <2821200b-0428-a5dd-9680-f291cee0ec47@web.de>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
+Received: by 10.103.83.7 with HTTP; Tue, 8 Aug 2017 17:01:49 -0700 (PDT)
+In-Reply-To: <xmqqy3qt8wi0.fsf@gitster.mtv.corp.google.com>
+References: <CAJo=hJtg0PAVHT1phbArdra8+4LfnEEuaj3fBid==BXkZghi8g@mail.gmail.com>
+ <xmqqtw1hc28z.fsf@gitster.mtv.corp.google.com> <CAJo=hJsyoFeCQbeJ=2XCRcE1U0zYaRr8VvzXHwkPwisdfUm71Q@mail.gmail.com>
+ <xmqqy3qt8wi0.fsf@gitster.mtv.corp.google.com>
+From:   Shawn Pearce <spearce@spearce.org>
+Date:   Tue, 8 Aug 2017 17:01:49 -0700
+Message-ID: <CAJo=hJt5b=e1-k7FnMixe7vqH8V0ynCHQU80aWKAMJzghU+s3A@mail.gmail.com>
+Subject: Re: reftable [v6]: new ref storage format
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        David Borowitz <dborowitz@google.com>,
+        Stefan Beller <sbeller@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Aug 8, 2017 at 4:34 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Shawn Pearce <spearce@spearce.org> writes:
+>
+>> Given that the index can now also be multi-level, I don't expect to
+>> see a 2G index. A 2G index forces the reader to load the entire 2G to
+>> take advantage of the restart table. It may be more efficient for such
+>> a reader to have had the writer make a mutli-level index, instead of a
+>> single monster index block. And so perhaps the writer shouldn't make a
+>> 2G index block that she is forced to buffer. :)
+>
+> Ah, OK, then it is sensible to have all table blocks to have the
+> same format, and restart at the beginning to help readers would be a
+> fine choice.  For the same "let's make them as consistent" sake, I
+> am tempted to suggest that we lift "the index block can be 2G" and
+> have it also be within uint_24(), perhaps?  Otherwise the readers
+> would have to read (or mmap) the whole 2G.
 
+Gah. I just finished moving the restart table back to the end of the block. :)
 
-On 08/08/17 22:45, René Scharfe wrote:
-> Am 08.08.2017 um 23:36 schrieb Ramsay Jones:
->>
->> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
->> ---
->>
->> Hi Junio,
->>
->> I noticed this while looking into the t3700 failure on cygwin tonight.
->> Also, I couldn't decide whether or not to add the i18n '_()' brackets
->> around the message. In the end I didn't, but will happily add them
->> if you think I should.
->>
->> Thanks!
->>
->> ATB,
->> Ramsay Jones
->>
->>   builtin/add.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/builtin/add.c b/builtin/add.c
->> index e888fb8c5..385b53ae7 100644
->> --- a/builtin/add.c
->> +++ b/builtin/add.c
->> @@ -43,7 +43,7 @@ static void chmod_pathspec(struct pathspec *pathspec, int force_mode)
->>   			continue;
->>   
->>   		if (chmod_cache_entry(ce, force_mode) < 0)
->> -			fprintf(stderr, "cannot chmod '%s'", ce->name);
->> +			fprintf(stderr, "cannot chmod '%s'\n", ce->name);
->>   	}
->>   }
->>   
-> 
-> FYI: I brought this up yesterday in the original thread, along with a
-> few other observations:
-> 
->   https://public-inbox.org/git/3c61d9f6-e0fd-22a4-68e0-89fd9ce9b944@web.de/
-
-Ah, I missed that.
-
-Hmm, I just looked at the code in builtin/update-index.c. Yes, it
-would probably be a good idea to harmonize the messages - but just
-where did 'flip' come from? ;-)
-
-ATB,
-Ramsay Jones
-
+However, I think I can agree with the index fitting into the uint24
+size of 15M, and asking writers making an index that exceeds that to
+use multi-level indexing.
