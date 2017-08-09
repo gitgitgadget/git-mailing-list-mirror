@@ -6,82 +6,85 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E9AA1F991
-	for <e@80x24.org>; Wed,  9 Aug 2017 12:04:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 372BD1F991
+	for <e@80x24.org>; Wed,  9 Aug 2017 12:21:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752563AbdHIMEh (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Aug 2017 08:04:37 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33170 "HELO cloud.peff.net"
+        id S1752529AbdHIMVu (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Aug 2017 08:21:50 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33190 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752472AbdHIMEf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Aug 2017 08:04:35 -0400
-Received: (qmail 2009 invoked by uid 109); 9 Aug 2017 12:04:34 -0000
+        id S1752439AbdHIMVu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Aug 2017 08:21:50 -0400
+Received: (qmail 2915 invoked by uid 109); 9 Aug 2017 12:21:49 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 09 Aug 2017 12:04:34 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 09 Aug 2017 12:21:49 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26539 invoked by uid 111); 9 Aug 2017 12:04:57 -0000
+Received: (qmail 26654 invoked by uid 111); 9 Aug 2017 12:22:12 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Wed, 09 Aug 2017 08:04:57 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Wed, 09 Aug 2017 08:22:12 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 09 Aug 2017 08:04:32 -0400
-Date:   Wed, 9 Aug 2017 08:04:32 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 09 Aug 2017 08:21:47 -0400
+Date:   Wed, 9 Aug 2017 08:21:47 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Andreas Schwab <schwab@linux-m68k.org>,
-        Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>,
-        git@vger.kernel.org
-Subject: Re: [RFC] imap-send: escape backslash in password
-Message-ID: <20170809120432.am77utnrnkh6mpgt@sigill.intra.peff.net>
-References: <58b783d6-c024-4491-2f88-edfb9c43c55c@morey-chaisemartin.com>
- <xmqqbmnvtain.fsf@gitster.mtv.corp.google.com>
- <87bmnvktee.fsf@linux-m68k.org>
- <20170804202255.3oia7ivsoa6vu4me@sigill.intra.peff.net>
- <xmqq3797t4kq.fsf@gitster.mtv.corp.google.com>
- <20170804212231.pl3uipcsujflcuha@sigill.intra.peff.net>
- <xmqqzibcqhy9.fsf@gitster.mtv.corp.google.com>
- <20170808072510.leb525df4hmbwcvo@sigill.intra.peff.net>
- <xmqqk22ec84i.fsf@gitster.mtv.corp.google.com>
+To:     git@vger.kernel.org
+Subject: [PATCH 0/5] make interpret-trailers useful for parsing
+Message-ID: <20170809122147.g44nwaitzctbadzm@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqk22ec84i.fsf@gitster.mtv.corp.google.com>
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 08, 2017 at 09:54:53AM -0700, Junio C Hamano wrote:
+Parsing trailers out of a commit message is _mostly_ easy, but there
+area a lot of funny corner cases (e.g., heuristics for how many
+non-trailers must be present before a final paragraph isn't a trailer
+block anymore).  The code in trailer.c already knows about these corner
+cases, but there's no way to access it from the command line.
 
-> > For comparison, nothing older than curl 7.19.4 will work for building
-> > Git since v2.12.0, as we added some unconditional uses of CURLPROTO_*
-> > there. Nobody seems to have noticed or complained. I pointed this out a
-> > few months ago[1] and suggested we clean up some of the more antiquated
-> > #if blocks in http.c that don't even build. There was some complaint
-> > that we should keep even these ancient versions working, but the
-> > compile error is still in "master".
-> >
-> > So it's not clear to me that anybody cares about going that far back
-> > (which is mid-2009), but I'd guess that 2013 might cause some problems.
-> >
-> > [1] https://public-inbox.org/git/20170404025438.bgxz5sfmrawqswcj@sigill.intra.peff.net/
-> >     if you're curious (you were offline for a while at that time, I
-> >     think).
-> 
-> Thanks for digging.  It would not help the issue on this thread at
-> all.  While I agree with your conclusion in the quoted thread:
-> 
->     I think it might be nice to declare a "too old" version, though,
->     just so we can stop adding _new_ ifdefs. Maybe 7.11.1 is that
->     version now, and in another few years we can bump to 7.16.0. :)
-> 
-> it appears that we silently declared it to 7.19.4 and found out that
-> nobody complained, without us having to wait for a few years?
+This series teaches interpret-trailers to parse and output just the
+trailers. So now you can do:
 
-Yeah, I think the 7.19.4 breakage was discussed after I wrote that (and
-after investigating, I think the 7.16.0 cutoff is probably pretty
-reasonable even without that). I do think it's worth addressing. I just
-sent a series:
+  $ git log --format=%B -1 8d44797cc91231cd44955279040dc4a1ee0a797f |
+    git interpret-trailers --parse
+  Signed-off-by: Hartmut Henkel <henkel@vh-s.de>
+  Helped-by: Stefan Beller <sbeller@google.com>
+  Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+  Acked-by: Matthias Rüster <matthias.ruester@gmail.com>
 
-  https://public-inbox.org/git/20170809120024.7phdjzjv54uv5dpz@sigill.intra.peff.net/
+I considered a few different approaches before deciding on
+what's here:
+
+  1. The output format is actually the normal "key: value" trailers. I
+     considered something more structured like JSON. But the "key:
+     value" format is quite easy to parse, once it has been normalized
+     (finding the trailers, unfolding whitespace continuation, etc).
+
+  2. This series introduces several orthogonal options which can be used
+     together to achieve my goal, when there could just be a "parse"
+     mode. Since interpret-trailers is plumbing, I reasoned that the
+     individual options might still be useful apart from each other (for
+     instance, you could re-normalize existing trailers while writing
+     your new ones from a commit hook). I did add a "--parse" for
+     convenience and to help point users in the right direction.
+
+     For the same reason (and so we could build on other orthogonal
+     features like --in-place and --trim-empty), I decided against
+     having a separate command like "git parse-trailers".
+
+  [1/5]: trailer: put process_trailers() options into a struct
+  [2/5]: interpret-trailers: add an option to show only the trailers
+  [3/5]: interpret-trailers: add an option to show only existing trailers
+  [4/5]: interpret-trailers: add an option to normalize output
+  [5/5]: interpret-trailers: add --parse convenience option
+
+ Documentation/git-interpret-trailers.txt | 17 ++++++++
+ builtin/interpret-trailers.c             | 34 ++++++++++++---
+ t/t7513-interpret-trailers.sh            | 73 ++++++++++++++++++++++++++++++++
+ trailer.c                                | 65 ++++++++++++++++++++++------
+ trailer.h                                | 12 +++++-
+ 5 files changed, 180 insertions(+), 21 deletions(-)
 
 -Peff
