@@ -2,117 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 543A31F991
-	for <e@80x24.org>; Wed,  9 Aug 2017 14:03:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB9931F991
+	for <e@80x24.org>; Wed,  9 Aug 2017 14:15:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752840AbdHIODu (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Aug 2017 10:03:50 -0400
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:35109 "EHLO
-        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752461AbdHIODs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Aug 2017 10:03:48 -0400
-Received: by mail-wm0-f45.google.com with SMTP id m85so32801819wma.0
-        for <git@vger.kernel.org>; Wed, 09 Aug 2017 07:03:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=HsjrhgTEKCKoHQCFveZm+7OkpEGWHUwqh3Z+Bgh0FOM=;
-        b=rU24SzGKD2QX+w93qdpjylXBx6ocS/cw3rCvPALBcWrnDMyRwnwptOly/OV5gPm+kS
-         LatBoCTZDAdwlMZ+ptMQzqhP6zvpiqmPqTe6nxKyKCwcm39zaP+duN1Ds46MXsWraXd6
-         xWmhgE76AcnjsymnMR0TeZw2giMaQ63NKdPCiMjTCvEevegT1EfesM0EnYOPCYqNLplj
-         tjEafZ3181Kg7KJ3uwMT40OmD88cUB1bCg3itDXhL9C+G0j9EmYMKuMC2P9lvHZE5iwK
-         ykdqDPn2vMRpC0jAYPfheebkRy0tcvedGjPyrHhtbK+JQ9QTr5XtxVnjR8c0nB4Qh7PA
-         l6RA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=HsjrhgTEKCKoHQCFveZm+7OkpEGWHUwqh3Z+Bgh0FOM=;
-        b=ObcupLqSbOiwpVYHzgQa9sNulQgPIu8oKoznBHltsRbmPo0aiaLu95Jg4IUIjwP+vA
-         hUvmLCmcZMw/brNnWG3qPbpwq7QOboNLuMeM6LOiPppyD/5Fm/0Ky9e42IE95nh04rsv
-         WkDI2m8Sad9FohYtNN8nuFpMGAsXfwBWf1IpggRp1rST9oB7/zR0FZnB87BiL7UyEk/G
-         iuskYTzkXQ/Aa5M58KRfTba5gG+0bEgSF/Wpk35S9+TcnlO2vDvbHq6s7lnx0aw0kYfT
-         MQcCVj8Fq+PygQtm9OQZW+PhL3lllc1eiGx/bFvtWSKC/4weQNdNzmGZITFA3wimc76Q
-         5yag==
-X-Gm-Message-State: AHYfb5heuRngSiTOl+58Za93GnAnKoNzopOHJU4xXn7qojEo0NEZZV8a
-        domo3l4cVc7cy82BLIA=
-X-Received: by 10.80.195.93 with SMTP id q29mr8192370edb.144.1502287427573;
-        Wed, 09 Aug 2017 07:03:47 -0700 (PDT)
-Received: from snth (157-157-140-194.dsl.dynamic.simnet.is. [157.157.140.194])
-        by smtp.gmail.com with ESMTPSA id t2sm1780934edj.76.2017.08.09.07.03.46
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 09 Aug 2017 07:03:46 -0700 (PDT)
-Received: from avar by snth with local (Exim 4.84_2)
-        (envelope-from <avarab@gmail.com>)
-        id 1dfRaL-000535-MI; Wed, 09 Aug 2017 16:03:45 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org
-Subject: Re: [RFC] clang-format: outline the git project's coding style
-References: <20170808012554.186051-1-bmwill@google.com> <20170809130127.ekd4tvyp2rrb7ftk@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux 8.9 (jessie); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <20170809130127.ekd4tvyp2rrb7ftk@sigill.intra.peff.net>
-Date:   Wed, 09 Aug 2017 16:03:45 +0200
-Message-ID: <87y3qsg7ni.fsf@gmail.com>
+        id S1752857AbdHIOPd (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Aug 2017 10:15:33 -0400
+Received: from mout.web.de ([217.72.192.78]:58413 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752291AbdHIOPc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Aug 2017 10:15:32 -0400
+Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MLPNm-1detne0ogE-000bkc; Wed, 09
+ Aug 2017 16:15:12 +0200
+Subject: Re: [PATCH] t4062: stop using repetition in regex
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Git List <git@vger.kernel.org>,
+        David Coppa <dcoppa@openbsd.org>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+References: <861dc875-7300-fe5a-1360-0ed546c8c2bb@web.de>
+ <alpine.DEB.2.21.1.1708081648130.11175@virtualbox>
+ <1e7ed028-77fe-195a-4acf-6c80d1704463@web.de>
+ <xmqqinhxaf0i.fsf@gitster.mtv.corp.google.com>
+ <xmqq7eydae7r.fsf@gitster.mtv.corp.google.com>
+ <cd60d779-fe38-4f0e-4d36-2c40b2afec7d@web.de>
+ <xmqqtw1h8g1u.fsf@gitster.mtv.corp.google.com>
+ <50c2eaab-d1d8-3376-6e7a-1c898d978d12@web.de>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <e3e65635-2dc8-de58-5662-3eab619aedb3@web.de>
+Date:   Wed, 9 Aug 2017 16:15:10 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <50c2eaab-d1d8-3376-6e7a-1c898d978d12@web.de>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:BBUIPZSQvP9IfOqGpETt9FHSQ4gt/S0atpbhSpPOyg/nyHfdK4f
+ iM+LaaT1AmWj10078ObpvinuIh8yMHHmryaD+NENZ3PYsaoF6yklnk1ufrs8OvFVAJWmYWd
+ OM+JUn3n+7YzJ/jCYfTV7UN/UE7yc2mEbznKMjEAal/KvzWtwQZEpzQIpAZXd4Y4/A4Sfle
+ 2ICOwQ2qBBBdR0SQ1Hl7Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:yFC/q4yLZI0=:gjyssht2JB1pbuUlg/tYMF
+ cBX654Ar+ujDg8iD/ZBk9rzxVi85IHITduIcGtFzt4E2lSu1pOVpAgQIgwXC1gPLqjFUchJYB
+ zOXYbGMjPKaZ2rp2aQfdkoIcD7S4tY72W3fag4DoVrprV+Bw+wTBRXWU/PLVo8CTf44MwGxp+
+ /ynTU6Z+K70mzajy8vC6wvbg/MqF9mVKDvsVuI0Ua103CoqBqSxOI4LtAYN0qhhbZ87EN1XQz
+ prGI1R+yV9Bg8jNbgVFrMrKCCJyf+k3K4kEMWOSj+sMxbQlMU2Y7XkH3I6nusB8kmjHAtqSYd
+ Hj8ahjQVU2+cNE6wwrUSFC9Qd00eseqZv24Y3hoE2RcQCWi0KrzrBc0chWzAqFd6mkpLaSGNq
+ gk2KfVTjfAY3q6iFbhh8FCjQQ5afbMTUieWcKPnaFmN4W8DwyXXeaqn+0W+HxQ5Xa0Qi7Pc72
+ uSClTnh3Vi7U/1sckDfm9KxWHICymJbSxDVOgUeiLdXSaJxSq0nBfbKgSUw8xVwLrzSpX2fWj
+ OrHw4dhommL4/NOspfykw/I3g8i4wyqwBNkJhLD9fOlpHqABb416cfA0io0fGJXVYs+iaZF0X
+ FdHwZd8PAY6HR/G61Fw7RM3380u2/Wqw+6a9zFl2H8Rf1aJ8S/JS/XOnBVKfAPbM1iv4YIbfy
+ 63GQA3g9OnEVk57DRT/Y/eyauTXMMtAXoxyALjG9E67CYa0zHi/mETiJnoPL1nGfh3paxEKfV
+ YGvDFsJGH0vgsd1qeuk4voqlvedmXrrUT4PJo0BAqplsz/ZKjfNRMb4EaVLU+fR9humfijmAm
+ DD+9rmQpZo9oOfx+yCRTb06QBXVD7bTVeHwDD/nM2LG8BULN4E=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Am 09.08.2017 um 08:15 schrieb René Scharfe:
+> Am 09.08.2017 um 07:29 schrieb Junio C Hamano:
+>> René Scharfe <l.s.r@web.de> writes:
+>>
+>>> Am 09.08.2017 um 00:26 schrieb Junio C Hamano:
+>>>> ... but in the meantime, I think replacing the test with "0$" to
+>>>> force the scanner to find either the end of line or the end of the
+>>>> buffer may be a good workaround.  We do not have to care how many of
+>>>> random bytes are in front of the last "0" in order to ensure that
+>>>> the regexec_buf() does not overstep to 4097th byte, while seeing
+>>>> that regexec() that does not know how long the haystack is has to do
+>>>> so, no?
+>>>
+>>> Our regexec() calls strlen() (see my other reply).
+>>>
+>>> Using "0$" looks like the best option to me.
+>>
+>> Yeah, it seems that way.  If we want to be close/faithful to the
+>> original, we could do "^0*$", but the part that is essential to
+>> trigger the old bug is not the "we have many zeroes" (or "we have
+>> 4096 zeroes") part, but "zero is at the end of the string" part, so
+>> "0$" would be the minimal pattern that also would work for OBSD.
+> 
+> Thought about it a bit more.
+> 
+> "^0{4096}$" checks if the byte after the buffer is \n or \0 in the
+> hope of triggering a segfault.  On Linux I can access that byte just
+> fine; perhaps there is no guard page.  Also there is a 2 in 256
+> chance of the byte being \n or \0 (provided its value is random),
+> which would cause the test to falsely report success.
+> 
+> "0$" effectively looks for "0\n" or "0\0", which can only occur
+> after the buffer.  If that string is found close enough then we
+> may not trigger a segfault and report a false positive.
+> 
+> In the face of unreliable segfaults we need to reverse our strategy,
+> I think.  Searching for something not in the buffer (e.g. "1") and
+> considering matches and segfaults as confirmation that the bug is
+> still present should avoid any false positives.  Right?
 
-On Wed, Aug 09 2017, Jeff King jotted:
+And that's not it either. *sigh*
 
-> On Mon, Aug 07, 2017 at 06:25:54PM -0700, Brandon Williams wrote:
->
->> I'm sure this sort of thing comes up every so often on the list but back at
->> git-merge I mentioned how it would be nice to not have to worry about style
->> when reviewing patches as that is something mechanical and best left to a
->> machine (for the most part).  I saw that 'clang-format' was brought up on the
->> list once before a couple years ago
->> (https://public-inbox.org/git/20150121220903.GA10267@peff.net/) but nothing
->> really came of it.  I spent a little bit of time combing through the various
->> options and came up with this config based on the general style of our code
->> base.  The big issue though is that our code base isn't consistent so try as
->> you might you wont be able to come up with a config which matches everything we
->> do (mostly due to the inconsistencies in our code base).
->
-> Right, the reason I stopped pursuing it was that I couldn't find a way
-> to have it make suggestions for new code without nagging about existing
-> code. If we were to aggressively reformat to match the tool for existing
-> code, that would help. But I'm a bit worried that there would always be
-> suggestions from the tool that we don't agree with (i.e., where the
-> guiding principle is "do what is readable").
->
-> I dunno. I guess "go fmt" people decided to just treat the tool's output
-> as the One True Way. I haven't written enough Go to have an opinion
-> myself, but it seems to at least work for them.
+If the 4097th byte is NUL or LF then we can only hope its access
+triggers a segfault -- there is no other way to distinguish the
+result from a legitimate match when limiting with REG_STARTEND.  So
+we have to accept this flakiness.
 
-(I have no opinion either way on whether this clang formatting this is a
-good idea or not)
+We can check the value of that byte with [^0] and interpret a
+match as failure, but that adds negation and makes the test more
+complex.
 
-> What does the tooling look like these days for just adjusting lines
-> touched by a given patch?
+^0*$ would falsely match if the 4097th byte (and possibly later
+ones) is 0.  We need to make sure we check for end-of-line after
+the 4096th byte, not later.
 
-Presumably even if it sucked we could easily write a "./git-fmt-check.sh
-<file>" script to do it which would do the following:
+Sorry, Dscho, I thought we could take a shortcut here, but -- as
+you wrote all along -- we can't.
 
- 1. Check out the master branch
- 2. Apply code formatting to entire project (or just the files you
-    changed)
- 3. Commit that on a throwaway branch
- 4. Switch back to your WIP branch
- 5. See if it would merge cleanly with the throwaway code formatting
-    branch (I forget the actual 'not a real merge but check' command to
-    do this, but it exists).
+So how about this?
 
-If there were any reported conflicts presumably the new code you're
-adding is violating the coding standards laid out in this file. If not
-you're good.
+-- >8 --
+Subject: [PATCH] t4062: use less than 256 repetitions in regex
+
+OpenBSD's regex library has a repetition limit (RE_DUP_MAX) of 255.
+That's the minimum acceptable value according to POSIX.  In t4062 we use
+4096 repetitions in the test "-G matches", though, causing it to fail.
+Combine two repetition operators, both less than 256, to arrive at 4096
+zeros instead of using a single one, to fix the test on OpenBSD.
+
+Original-patch-by: David Coppa <dcoppa@openbsd.org>
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ t/t4062-diff-pickaxe.sh | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/t/t4062-diff-pickaxe.sh b/t/t4062-diff-pickaxe.sh
+index 7c4903f497..1130c8019b 100755
+--- a/t/t4062-diff-pickaxe.sh
++++ b/t/t4062-diff-pickaxe.sh
+@@ -14,8 +14,10 @@ test_expect_success setup '
+ 	test_tick &&
+ 	git commit -m "A 4k file"
+ '
++
++# OpenBSD only supports up to 255 repetitions, so repeat twice for 64*64=4096.
+ test_expect_success '-G matches' '
+-	git diff --name-only -G "^0{4096}$" HEAD^ >out &&
++	git diff --name-only -G "^(0{64}){64}$" HEAD^ >out &&
+ 	test 4096-zeroes.txt = "$(cat out)"
+ '
+ 
+-- 
+2.14.0
