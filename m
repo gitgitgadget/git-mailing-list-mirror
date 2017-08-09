@@ -7,66 +7,81 @@ X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B4B2208B8
-	for <e@80x24.org>; Wed,  9 Aug 2017 21:35:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0AAE7208B8
+	for <e@80x24.org>; Wed,  9 Aug 2017 21:42:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752171AbdHIVfK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Aug 2017 17:35:10 -0400
-Received: from mout.gmx.net ([212.227.15.15]:62604 "EHLO mout.gmx.net"
+        id S1752326AbdHIVmS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Aug 2017 17:42:18 -0400
+Received: from mout.gmx.net ([212.227.15.15]:49465 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751958AbdHIVfJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Aug 2017 17:35:09 -0400
+        id S1752244AbdHIVmR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Aug 2017 17:42:17 -0400
 Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LrvWY-1dV7uD393e-013eCn; Wed, 09
- Aug 2017 23:34:55 +0200
-Date:   Wed, 9 Aug 2017 23:34:54 +0200 (CEST)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Llm9w-1d6DvJ1y6a-00ZQ7V; Wed, 09
+ Aug 2017 23:42:13 +0200
+Date:   Wed, 9 Aug 2017 23:42:12 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Stefan Beller <sbeller@google.com>
-cc:     gitster@pobox.com, git@vger.kernel.org, jrnieder@gmail.com
-Subject: Re: [PATCH] t1200: remove t1200-tutorial.sh
-In-Reply-To: <20170809212253.27597-1-sbeller@google.com>
-Message-ID: <alpine.DEB.2.21.1.1708092334420.11175@virtualbox>
-References: <xmqqh8xh8fcb.fsf@gitster.mtv.corp.google.com> <20170809212253.27597-1-sbeller@google.com>
+To:     Jeff King <peff@peff.net>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/4] dropping support for older curl
+In-Reply-To: <20170809120024.7phdjzjv54uv5dpz@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.21.1.1708092337350.11175@virtualbox>
+References: <20170809120024.7phdjzjv54uv5dpz@sigill.intra.peff.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:wR5zWcIztmxCmO2pv8dKxT+72n3ToeWbFlW29cweRQJL6bV2921
- Tg1ZEJGyVU5sC9R+E7COP8BTF+D53mbHScfXS+Y/oVpiaFQbCRaWW4YxH7X/Rea3UEPoFQu
- /P/h4nL3lJdjNpxLO3rVgjGSfw9gxAgOTzcryTMppJewXakyIyeX4gFOZ6dpgOL7mfVyOGT
- uUvU6rSwEUNYli326QBJg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:gUmoZ9lpgls=:L/KIi2V10PAqZXb6hSD/sS
- JiX2G5IhL6dUFJcrJaCki9sa33u67zgSFfva0pWgW6mW5ahVIQm0C/teVUeNuG5xNACcSU7vt
- roLeXZYqnitbd/dH2w4MirwY/Izh8iPy1geAxsnhFLI/H27HwVsObdhmnUeklMmTO82mok8AU
- rHGQUn9k0sd1ZJU6OzXwbKPtKwYE4+kJEaOiupYoSvRx0IcB+Q29SjRu7ChguquoDQ3bqM0Jv
- 6w7crhJNxdM3eMU7Uw6luB/Lx+cdB3C92B5Ctc8ka3hwn5JuK7iEsBTXPFewsKtNG23muA8AQ
- thv4EuhmeXr/QBfJ0blwjVqv3f8ZP+kt6ujL7bRAcrlsIn1vF8my9X/ItIAaGELC0yboGEBmv
- sXuBsorQJEYPrWmCmFIWzYxQbuCas4/Ii70EmZ4goGrWvsp5vU9ibrBe4FZunFdnOJg6noe0a
- HW/Ry9sTzoxTNNStQAPlaBzG+x3t7zG0167xrC1FVy2/mIpkNDgSNyBH33CSt+5rifLmrf/w1
- jY9KvlkxZWJgG0T4cYOn+cQpqCpgH1bFS7QmmOlIpINZ0c/zzUb2ivR4xXPjJq8NoV8JAEM+I
- Kb0m6iTvIw9DrKnYxq0kZwAZPIR0Fc6OY7fjUT3nz3s9/BrrZYQAdw/fNPLKDVxkUcUy5JuON
- JucWkT94BpC+byLEPiI1T08WDTaYs9aT3JIuhpnXd95TGvBusARDpjEhEjmaJnOvZrGgQ2W2C
- 6jEoxLTetHKj8RX8TBTxP7T1yGXnxOr3MS+jxzJYs0a1hnf4CCbcUvyh2bvC6QCaf7BWoeUe0
- VQQVf1jsV+c06zx5fnNcBmHUJYRInP29zJ84Invbe0xAGF2Lqw=
+X-Provags-ID: V03:K0:6smS3GSf3A+2+WiWnFi5sD5sIp9ANlOftaf9RDmAvVK3qWEJFs3
+ plEgiQHSohfBBjaluv4vruC/U2IpXVxeUWEZ+6f8UQSnIBpDoBnza+j2dITc2dDhvYSuLm3
+ 1qNRgnVD2J8Vh3kHfDT0Qt6wSr6xSBT8bkVNvW1MAZVwCpUraJXWjwZQ0CHpGWGQqNHShZ+
+ 1GBXqXd9Z2eWNjViiblww==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:CDYMgSKRAW4=:fQCeNLx3QmMLU/0hhH2YkC
+ 694iH0ZPk8W0X5kvbhKbrqHEoa67kwA13xjpbdEeFfm56sVjA/Rufb60nCJ23dJ2zvMpplXwO
+ m5/Qsl3pvPWX58AbDT2cRF6FVQb2tOLtTD3m1P9rPFLp7nXGVO3gW0Q1uBca3U7oBtcNAAi3f
+ UOxdZ1bS0D00D1QWXY9kFUHSRvDs4XGlJ6s483JxKXnnzRgrZNIvqq926OrBjN2yUJIybStvt
+ fZ1tU4Ers8aRFtowIed26iPAeID/XgZX8q7VolUbBgMZj5X6bKmvQ7tm4cT4W0tL3a2bHKzII
+ gtZQtQaxL+RjnSjRwLZId7t/BY+xx9Xib97QtsYIl/Hl5Y+vTlUa0Xoh2fGOx4h0kqTCoFwsC
+ Z+N61oG2kvUi26e+mcR4D6egDqWEEAW0K9yfVqA2P4HIfRAlAu4/7h4gbF6D295NcBVw0d7ru
+ 9mXIwjvEw2VkfXyRbt7G7odOMGbsjt7AFXB2Qd0sSoSWKS/xZrSvwu8vuqptnpAn/AjmJSzyA
+ EJJhMXBUViXXAdy7VZpYm521geaRnOKNuiEL2B2WJxZam7NZkJQgYsRHZ8SQIPPL7NHrJUJAG
+ BsFwp/pf1PqmGRgORV82MIrSTbk8pgXl5CbfLAKiY3jpSH1q/pLcCdtsVtbc6H7qzqdFSu2jC
+ sf7boYm6bsDPjufkl6MB3QA8NR3FK8QPQY/Kmp1y4TxIronSWJz4/BLszbbEa1dAbX1IWkUXI
+ aJgzMjg5x1H7+2Qh6hzMW2IvsxvlU7Q0DVXwGfvW08gsA5woW0O7JvdbzFNmdfTu2yINOzWg/
+ NOwO/zXdz1uJocwgfWdmt6XU4g96Gtf+sKi2spUxAoileBCIeo=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Peff,
 
-On Wed, 9 Aug 2017, Stefan Beller wrote:
+On Wed, 9 Aug 2017, Jeff King wrote:
 
-> v1.2.0~121 (New tutorial, 2006-01-22) rewrote the tutorial such that the
-> original intent of 2ae6c70674 (Adapt tutorial to cygwin and add test case,
-> 2005-10-13) to test the examples from the tutorial doesn't hold any more.
+> This is a resurrection of the thread from April:
 > 
-> There are dedicated tests for the commands used, even "git whatchanged",
-> such that removing these tests doesn't seem like a reduction in test
-> coverage.
-> 
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
+>   https://public-inbox.org/git/20170404025438.bgxz5sfmrawqswcj@sigill.intra.peff.net/
 
-ACK,
+As before, I would like to point out that people running with older cURL
+are most likely not at liberty to change the system libraries.
+
+I know that I didn't when I was working on a very expensive microscope
+whose only certified control computer ran a very old version of CentOS,
+and I really needed to install Git on it.
+
+In such a case, it is often preferable to be able to build against an old
+cURL -- even if some of the fancier features might be broken, and even if
+some minor compile errors need to be fixed.
+
+I know I was happy to compile Git against an ancient cURL back then.
+
+Just so you understand where I come from when I would like to caution
+against dropping support for older cURL unless it *really* adds an
+*enormous* amount of maintenance burden.
+
+I mean, if we even go out of our way to support the completely outdated
+and obsolete .git/branches/ for what is likely a single user, it may not
+be the worst to keep those couple of #ifdef guards to keep at least
+nominal support for older cURLs?
+
+Ciao,
 Dscho
