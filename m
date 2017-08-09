@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F3E6A20899
-	for <e@80x24.org>; Wed,  9 Aug 2017 01:24:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D1F8D20899
+	for <e@80x24.org>; Wed,  9 Aug 2017 01:24:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752629AbdHIBYF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Aug 2017 21:24:05 -0400
-Received: from mail-pg0-f41.google.com ([74.125.83.41]:33254 "EHLO
-        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752483AbdHIBXK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Aug 2017 21:23:10 -0400
-Received: by mail-pg0-f41.google.com with SMTP id u5so21620842pgn.0
-        for <git@vger.kernel.org>; Tue, 08 Aug 2017 18:23:10 -0700 (PDT)
+        id S1752612AbdHIBYE (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Aug 2017 21:24:04 -0400
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:32921 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752517AbdHIBXN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Aug 2017 21:23:13 -0400
+Received: by mail-pf0-f181.google.com with SMTP id h68so21349779pfk.0
+        for <git@vger.kernel.org>; Tue, 08 Aug 2017 18:23:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=QMfQCLpktqG8h61+g47uy5FErzXoJGWLH9VVeOySGLs=;
-        b=Nym416d4MxSvLiuOQSERagWAbs2dhgUe0OwZPrPyAfdVuCYydYSwRVAjvJGNpaOq8w
-         nlDNgOauY6ZDnxQnxkv+ge7uld7UGyiYoe17G7+F7GoCq3J0STMVK4wHJSu5yB6KZrIZ
-         QvvdJisjyIWijkim3iAcZd+LoBX9jaVLfiSm89JUWA6d6+I3LqumuzAMr5g/MIAJ4kqY
-         3p8o5ImMABrofpIBIbvL82XyDFow/S5IjG9/ZZlOgR2XXCT9TrORO2TNNrAiHa6+/703
-         qyziZSoKB4p/Gnv1ClAnIfuP+V8IlZ57focB7FgfMCqnOqpvoAB2eVC5cA00sJ7saQLR
-         Y12g==
+        bh=0Jn16nkxQEFmkqYYryRrFsO2l0FHMiAjFZqLNdmAB/E=;
+        b=sXyEwipAA4vPk0XMLf/sYoKf/X16XhFe+GcaVLlBDR3g98engjRXXnGn1t0Rhhf7Rh
+         VyHe+peVWInjqs+zDzumMaKOhnT2yqB0oUqNJ40owyc6tw0z+scQMVpisYof11RJqFNr
+         RxWBbSBzfmcosddFt3QiwuDxgxMUB58b9eMMEcAtWDkui0CwNfyDS4Si5V7aPEP5/sU3
+         uzQ/YarVtd0HEkMmkpOHuwBP63/eqPK49Y+sDJRe7K2AWDyoFg/C/bdWQGsDDDT011p9
+         G9KyWmPoJCjscYG+1aPcrUqmuJrt88uj0Fo4N3ggcBz5HWm66imIojrn3lDAedlPb94P
+         qGSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=QMfQCLpktqG8h61+g47uy5FErzXoJGWLH9VVeOySGLs=;
-        b=tA8PKAMFyCEyEuZ+GD6KMP+5RLriXku23+qAqg7YKQDBGNqStRUOINuzqPrTkzDC9L
-         OQ4/yXoHfbIujm7TgQgYDz3b9Yi6YPGNaXjdBr3jlqHhJHmrlQeNoQ0J7fuTihxrBn9O
-         h7tMtYuUx1Sg0zs419fQqcFAsC1ydD3gTSO7sRkAsyvKSoAhHExUNH+7zs4O2xxlubDO
-         sFGsIfQO21cN/88kFNndR0/YbgS2TYif1JyESy65ouDZT7aXmPDGLselLlIK5dg86NXP
-         GycCHnmdgqJ1P8+uN3lJc5Fl6eDvExOT7kElWiW0IFaUMfFiNpjnMjVhYeZ8Napzy6xR
-         Yvew==
-X-Gm-Message-State: AHYfb5gl9iBAo91neAU0KYtcbwnlL41Sqi3x1VhrAxdNcowo2E0CkGrR
-        ibh/KjwxUrRLe0FWtqF0EA==
-X-Received: by 10.101.90.195 with SMTP id d3mr5833208pgt.223.1502241789476;
-        Tue, 08 Aug 2017 18:23:09 -0700 (PDT)
+        bh=0Jn16nkxQEFmkqYYryRrFsO2l0FHMiAjFZqLNdmAB/E=;
+        b=h2Zp9eLDcluPhhHqIjF06pfY1VEfXf2/6EoUswATEnhcxAMhKzUjVOQYy6vyuZJq6V
+         xLbV218Nx4G1tTw6AJ6ZxyZ+wmtSzYyk/TTTqi+UjRVbhpCT51g9jdlgdJLE1Jl1FCbF
+         BVsXVipOBgEP6zc5HfayAFNhxQH5ZevSDSEWQdSzA/1BMGo5z1iGoJ+f0g3T3JE6vhmA
+         csOtjVOWG78X9pObT7ozI5n2xtvgBcFiVTmePE3aP2IJ3KqM3CQwMlOh2Q7joQMbf158
+         Inx4rE4WUDp5NLt2uakH4hgzLUEupPczzuUb+xJQ3zqYyE1ZAGXanV2Hhm/CiB/8Yknp
+         WXTg==
+X-Gm-Message-State: AHYfb5j3ljcmD+kYnondMrOSlwspWXwzRQxymQi87NhAWYc/7kX5SOVn
+        FmwTtqBjwSdz2tWbyMHEwg==
+X-Received: by 10.98.1.9 with SMTP id 9mr6355741pfb.223.1502241792776;
+        Tue, 08 Aug 2017 18:23:12 -0700 (PDT)
 Received: from twelve2.svl.corp.google.com ([100.96.218.24])
-        by smtp.gmail.com with ESMTPSA id r5sm4479602pgn.45.2017.08.08.18.23.07
+        by smtp.gmail.com with ESMTPSA id r5sm4479602pgn.45.2017.08.08.18.23.11
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 08 Aug 2017 18:23:08 -0700 (PDT)
+        Tue, 08 Aug 2017 18:23:11 -0700 (PDT)
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com,
         sbeller@google.com
-Subject: [PATCH v2 06/25] pack: move pack-closing functions
-Date:   Tue,  8 Aug 2017 18:22:38 -0700
-Message-Id: <8909048c39578f0fe5e52d0056f3911553dbe6f9.1502241234.git.jonathantanmy@google.com>
+Subject: [PATCH v2 09/25] pack: move add_packed_git()
+Date:   Tue,  8 Aug 2017 18:22:41 -0700
+Message-Id: <c5c1c653bde97f5488e0595a51776ced35ea272b.1502241234.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.14.0.434.g98096fd7a8-goog
 In-Reply-To: <cover.1502241234.git.jonathantanmy@google.com>
 References: <cover.1502241234.git.jonathantanmy@google.com>
@@ -65,242 +65,183 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The function close_pack_fd() needs to be temporarily made global. Its
-scope will be restored to static in a subsequent commit.
-
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- builtin/am.c    |  1 +
- builtin/clone.c |  1 +
- builtin/fetch.c |  1 +
- builtin/merge.c |  1 +
- cache.h         |  8 --------
- pack.h          |  9 +++++++++
- packfile.c      | 54 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- sha1_file.c     | 55 -------------------------------------------------------
- 8 files changed, 67 insertions(+), 63 deletions(-)
+ cache.h     |  1 -
+ connected.c |  1 +
+ pack.h      |  1 +
+ packfile.c  | 53 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ sha1_file.c | 61 -------------------------------------------------------------
+ 5 files changed, 55 insertions(+), 62 deletions(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index c973bd96d..c38dd10a3 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -31,6 +31,7 @@
- #include "mailinfo.h"
- #include "apply.h"
- #include "string-list.h"
-+#include "pack.h"
+diff --git a/cache.h b/cache.h
+index 4812f3a63..bf93477e8 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1638,7 +1638,6 @@ extern int odb_mkstemp(struct strbuf *template, const char *pattern);
+ extern int odb_pack_keep(const char *name);
  
- /**
-  * Returns 1 if the file is empty or does not exist, 0 otherwise.
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 08b5cc433..53410a45d 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -25,6 +25,7 @@
- #include "remote.h"
- #include "run-command.h"
+ extern void clear_delta_base_cache(void);
+-extern struct packed_git *add_packed_git(const char *path, size_t path_len, int local);
+ 
+ /*
+  * Make sure that a pointer access into an mmap'd index file is within bounds,
+diff --git a/connected.c b/connected.c
+index 136c2ac16..3e3f0148c 100644
+--- a/connected.c
++++ b/connected.c
+@@ -3,6 +3,7 @@
+ #include "sigchain.h"
  #include "connected.h"
+ #include "transport.h"
 +#include "pack.h"
  
  /*
-  * Overall FIXMEs:
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index c87e59f3b..196a3bfc4 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -17,6 +17,7 @@
- #include "connected.h"
- #include "argv-array.h"
- #include "utf8.h"
-+#include "pack.h"
- 
- static const char * const builtin_fetch_usage[] = {
- 	N_("git fetch [<options>] [<repository> [<refspec>...]]"),
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 900bafdb4..9cff4b276 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -32,6 +32,7 @@
- #include "gpg-interface.h"
- #include "sequencer.h"
- #include "string-list.h"
-+#include "pack.h"
- 
- #define DEFAULT_TWOHEAD (1<<0)
- #define DEFAULT_OCTOPUS (1<<1)
-diff --git a/cache.h b/cache.h
-index 5d6839525..25a21a61f 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1637,15 +1637,7 @@ extern int odb_mkstemp(struct strbuf *template, const char *pattern);
-  */
- extern int odb_pack_keep(const char *name);
- 
--/*
-- * munmap the index file for the specified packfile (if it is
-- * currently mmapped).
-- */
--extern void close_pack_index(struct packed_git *);
--
- extern unsigned char *use_pack(struct packed_git *, struct pack_window **, off_t, unsigned long *);
--extern void close_pack_windows(struct packed_git *);
--extern void close_all_packs(void);
- extern void unuse_pack(struct pack_window **);
- extern void clear_delta_base_cache(void);
- extern struct packed_git *add_packed_git(const char *path, size_t path_len, int local);
+  * If we feed all the commits we want to verify to this command
 diff --git a/pack.h b/pack.h
-index c16220586..fd4668528 100644
+index 3876e9ae6..c1f3ff32d 100644
 --- a/pack.h
 +++ b/pack.h
-@@ -147,4 +147,13 @@ extern int unuse_one_window(struct packed_git *current);
+@@ -150,5 +150,6 @@ extern int open_packed_git(struct packed_git *p);
  
- extern void release_pack_memory(size_t);
+ extern unsigned char *use_pack(struct packed_git *, struct pack_window **, off_t, unsigned long *);
+ extern void unuse_pack(struct pack_window **);
++extern struct packed_git *add_packed_git(const char *path, size_t path_len, int local);
  
-+extern void close_pack_windows(struct packed_git *);
-+extern int close_pack_fd(struct packed_git *);
-+/*
-+ * munmap the index file for the specified packfile (if it is
-+ * currently mmapped).
-+ */
-+extern void close_pack_index(struct packed_git *);
-+extern void close_all_packs(void);
-+
  #endif
 diff --git a/packfile.c b/packfile.c
-index 8daa74ad1..c8e2dbdee 100644
+index 93526ea7b..efe0ed3e8 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -257,3 +257,57 @@ void release_pack_memory(size_t need)
- 	while (need >= (cur - pack_mapped) && unuse_one_window(NULL))
- 		; /* nothing */
+@@ -605,3 +605,56 @@ void unuse_pack(struct pack_window **w_cursor)
+ 		*w_cursor = NULL;
+ 	}
  }
 +
-+void close_pack_windows(struct packed_git *p)
++static void try_to_free_pack_memory(size_t size)
 +{
-+	while (p->windows) {
-+		struct pack_window *w = p->windows;
-+
-+		if (w->inuse_cnt)
-+			die("pack '%s' still has open windows to it",
-+			    p->pack_name);
-+		munmap(w->base, w->len);
-+		pack_mapped -= w->len;
-+		pack_open_windows--;
-+		p->windows = w->next;
-+		free(w);
-+	}
++	release_pack_memory(size);
 +}
 +
-+int close_pack_fd(struct packed_git *p)
++struct packed_git *add_packed_git(const char *path, size_t path_len, int local)
 +{
-+	if (p->pack_fd < 0)
-+		return 0;
-+
-+	close(p->pack_fd);
-+	pack_open_fds--;
-+	p->pack_fd = -1;
-+
-+	return 1;
-+}
-+
-+void close_pack_index(struct packed_git *p)
-+{
-+	if (p->index_data) {
-+		munmap((void *)p->index_data, p->index_size);
-+		p->index_data = NULL;
-+	}
-+}
-+
-+static void close_pack(struct packed_git *p)
-+{
-+	close_pack_windows(p);
-+	close_pack_fd(p);
-+	close_pack_index(p);
-+}
-+
-+void close_all_packs(void)
-+{
++	static int have_set_try_to_free_routine;
++	struct stat st;
++	size_t alloc;
 +	struct packed_git *p;
 +
-+	for (p = packed_git; p; p = p->next)
-+		if (p->do_not_close)
-+			die("BUG: want to close pack marked 'do-not-close'");
-+		else
-+			close_pack(p);
++	if (!have_set_try_to_free_routine) {
++		have_set_try_to_free_routine = 1;
++		set_try_to_free_routine(try_to_free_pack_memory);
++	}
++
++	/*
++	 * Make sure a corresponding .pack file exists and that
++	 * the index looks sane.
++	 */
++	if (!strip_suffix_mem(path, &path_len, ".idx"))
++		return NULL;
++
++	/*
++	 * ".pack" is long enough to hold any suffix we're adding (and
++	 * the use xsnprintf double-checks that)
++	 */
++	alloc = st_add3(path_len, strlen(".pack"), 1);
++	p = alloc_packed_git(alloc);
++	memcpy(p->pack_name, path, path_len);
++
++	xsnprintf(p->pack_name + path_len, alloc - path_len, ".keep");
++	if (!access(p->pack_name, F_OK))
++		p->pack_keep = 1;
++
++	xsnprintf(p->pack_name + path_len, alloc - path_len, ".pack");
++	if (stat(p->pack_name, &st) || !S_ISREG(st.st_mode)) {
++		free(p);
++		return NULL;
++	}
++
++	/* ok, it looks sane as far as we can check without
++	 * actually mapping the pack file.
++	 */
++	p->pack_size = st.st_size;
++	p->pack_local = local;
++	p->mtime = st.st_mtime;
++	if (path_len < 40 || get_sha1_hex(path + path_len - 40, p->sha1))
++		hashclr(p->sha1);
++	return p;
 +}
 diff --git a/sha1_file.c b/sha1_file.c
-index 644876e4e..e2927244f 100644
+index 12501ef06..7f12b1ee0 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -717,53 +717,6 @@ void *xmmap(void *start, size_t length,
+@@ -717,67 +717,6 @@ void *xmmap(void *start, size_t length,
  	return ret;
  }
  
--void close_pack_windows(struct packed_git *p)
+-static struct packed_git *alloc_packed_git(int extra)
 -{
--	while (p->windows) {
--		struct pack_window *w = p->windows;
--
--		if (w->inuse_cnt)
--			die("pack '%s' still has open windows to it",
--			    p->pack_name);
--		munmap(w->base, w->len);
--		pack_mapped -= w->len;
--		pack_open_windows--;
--		p->windows = w->next;
--		free(w);
--	}
--}
--
--static int close_pack_fd(struct packed_git *p)
--{
--	if (p->pack_fd < 0)
--		return 0;
--
--	close(p->pack_fd);
--	pack_open_fds--;
+-	struct packed_git *p = xmalloc(st_add(sizeof(*p), extra));
+-	memset(p, 0, sizeof(*p));
 -	p->pack_fd = -1;
--
--	return 1;
+-	return p;
 -}
 -
--static void close_pack(struct packed_git *p)
+-static void try_to_free_pack_memory(size_t size)
 -{
--	close_pack_windows(p);
--	close_pack_fd(p);
--	close_pack_index(p);
+-	release_pack_memory(size);
 -}
 -
--void close_all_packs(void)
+-struct packed_git *add_packed_git(const char *path, size_t path_len, int local)
 -{
+-	static int have_set_try_to_free_routine;
+-	struct stat st;
+-	size_t alloc;
 -	struct packed_git *p;
 -
--	for (p = packed_git; p; p = p->next)
--		if (p->do_not_close)
--			die("BUG: want to close pack marked 'do-not-close'");
--		else
--			close_pack(p);
--}
--
--
- /*
-  * The LRU pack is the one with the oldest MRU window, preferring packs
-  * with no used windows, or the oldest mtime if it has no windows allocated.
-@@ -846,14 +799,6 @@ void unuse_pack(struct pack_window **w_cursor)
- 	}
- }
- 
--void close_pack_index(struct packed_git *p)
--{
--	if (p->index_data) {
--		munmap((void *)p->index_data, p->index_size);
--		p->index_data = NULL;
+-	if (!have_set_try_to_free_routine) {
+-		have_set_try_to_free_routine = 1;
+-		set_try_to_free_routine(try_to_free_pack_memory);
 -	}
+-
+-	/*
+-	 * Make sure a corresponding .pack file exists and that
+-	 * the index looks sane.
+-	 */
+-	if (!strip_suffix_mem(path, &path_len, ".idx"))
+-		return NULL;
+-
+-	/*
+-	 * ".pack" is long enough to hold any suffix we're adding (and
+-	 * the use xsnprintf double-checks that)
+-	 */
+-	alloc = st_add3(path_len, strlen(".pack"), 1);
+-	p = alloc_packed_git(alloc);
+-	memcpy(p->pack_name, path, path_len);
+-
+-	xsnprintf(p->pack_name + path_len, alloc - path_len, ".keep");
+-	if (!access(p->pack_name, F_OK))
+-		p->pack_keep = 1;
+-
+-	xsnprintf(p->pack_name + path_len, alloc - path_len, ".pack");
+-	if (stat(p->pack_name, &st) || !S_ISREG(st.st_mode)) {
+-		free(p);
+-		return NULL;
+-	}
+-
+-	/* ok, it looks sane as far as we can check without
+-	 * actually mapping the pack file.
+-	 */
+-	p->pack_size = st.st_size;
+-	p->pack_local = local;
+-	p->mtime = st.st_mtime;
+-	if (path_len < 40 || get_sha1_hex(path + path_len - 40, p->sha1))
+-		hashclr(p->sha1);
+-	return p;
 -}
 -
- static unsigned int get_max_fd_limit(void)
+ void install_packed_git(struct packed_git *pack)
  {
- #ifdef RLIMIT_NOFILE
+ 	if (pack->pack_fd != -1)
 -- 
 2.14.0.434.g98096fd7a8-goog
 
