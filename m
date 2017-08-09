@@ -2,81 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 591F51F991
-	for <e@80x24.org>; Wed,  9 Aug 2017 14:53:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B4180208B5
+	for <e@80x24.org>; Wed,  9 Aug 2017 14:56:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753247AbdHIOxg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Aug 2017 10:53:36 -0400
-Received: from 8.mo176.mail-out.ovh.net ([46.105.58.67]:50554 "EHLO
-        8.mo176.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751864AbdHIOxf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Aug 2017 10:53:35 -0400
-Received: from ex2.mail.ovh.net (gw1.ex2.mail.ovh.net [164.132.80.186])
-        by mo176.mail-out.ovh.net (Postfix) with ESMTPS id A0BA5695F8;
-        Wed,  9 Aug 2017 16:43:27 +0200 (CEST)
-Received: from [10.0.2.127] (86.200.136.234) by EX7.indiv2.local (172.16.2.7)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Wed, 9 Aug
- 2017 16:43:27 +0200
-From:   Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
-Subject: [RFC 0/3] imap-send curl tunnelling support
-To:     <git@vger.kernel.org>, Jeff King <peff@peff.net>
-Message-ID: <ab866314-608b-eaca-b335-12cffe165526@morey-chaisemartin.com>
-Date:   Wed, 9 Aug 2017 16:43:26 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:55.0) Gecko/20100101
- Thunderbird/55.0
+        id S1752808AbdHIO4J (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Aug 2017 10:56:09 -0400
+Received: from mout.web.de ([212.227.17.12]:50117 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751864AbdHIO4J (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Aug 2017 10:56:09 -0400
+Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LjJL9-1d4U5V1kvH-00dWJz; Wed, 09
+ Aug 2017 16:55:46 +0200
+Subject: Re: [PATCH 2/2] hashcmp: use memcmp instead of open-coded loop
+To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>
+References: <20170809101106.p45y34uk6wcruqxv@sigill.intra.peff.net>
+ <20170809101645.7wv4mcsmnejxzhvs@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <2b111a78-dea4-85ff-3d8f-94d2eee0ca26@web.de>
+Date:   Wed, 9 Aug 2017 16:55:43 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="windows-1252"
-Content-Language: fr-xx-classique+reforme1990
+In-Reply-To: <20170809101645.7wv4mcsmnejxzhvs@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [86.200.136.234]
-X-ClientProxiedBy: CAS4.indiv2.local (172.16.1.4) To EX7.indiv2.local
- (172.16.2.7)
-X-Ovh-Tracer-Id: 2274036337695320055
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeelkedrkeehgdekfecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemuceftddtnecu
+X-Provags-ID: V03:K0:STvN75hxL9q38Z4H6+7I8e/tfdchFxW9vVE7oqk8Fi7HDyaR5Cm
+ dM+ndSpJIs3XclYhsR8xEr/yiRIEbq4qH1J/OnzEC+bpkG8HoEJ06r0b+Kea/lr+ZPPYDmW
+ DXP8whtjletg1os3hVc/orW9gTC12+h1w8NdwnuYsSDwuQRUwR694UJBgRFLKXvMJxiqIOw
+ uytTc3+CiRmpUV4JIYN6w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:1g4k7pv0fi4=:mx+w1rFp7li7c8PcOV5Y8J
+ R3Q3/krvBNT0FVGw8R9Ho3ZYS4QNz25UvM5pjXVedC0BpRPa4qMj0fKYZCYmm5z2Nw7p315Eb
+ Xz3Anip1uJ8wkNlIb7eXs+0JzsZptHTSdQ9RaDKnOBCmBIJfXXaH+QHEnXbPmkdNj1aknaRYI
+ 8WDRb2RdgGJRkisX7SmJXGGlO11JtlncZXY4L5KMnWyMTMtRtwQdladibHdDxyYyvujQe+l0H
+ qyFfQk0giitxaFpalWG5FYqiRt99H8tYf20KmF57jpy81mel8BkRlh5XnKVQzWMNTytctvtmf
+ 1/zSLrttc3SgZAA//k1vrn685L2lKNrwlfsZFQiH0P0HD9FAaFzGS+rYsxOIBTJezYqxD+lKm
+ eGjMlG7hLmh25D9xIsF54tFoGPU0uNVN/iHJ4U2/dBjMzaboj8GLGXEbt0MZJQb3F15Acqj4N
+ mqzfp/avbqWiMGCy3BU/c8hJN0UgeEoI5Xy1bP1g9NsVTfHGEzyl08vb+JhhnQmBwFpnjHPw+
+ XHIj6ZOf8TxeihDkNZtylGvzCpleA186+oMDVfBbukDTVHkcHuvq0quQOyDrq7t894XepFqQW
+ fIeITYiqWqRyPIG5Z5DVBUWB7HhSsL21x0mYRMY86K/chg/dJjwgsRjtJ9TqcK79WUrRYELhN
+ ngwX1pVWYisZnKAmRrBls8/PvRqfsdlJjoM2YvPZZyPicT94aJU1qnGHFgokrR5YtND512yl0
+ A70xKmT02UIZ/0rTdl5B5a/tiZN4jY6REnpxSxgr/5n4VDZT1VtJOb0ss5l15SRrV+DQCR+mj
+ 1yM/X66cKCnkWAlDu0mcBIbJ2F24TXt+2pxyIPBfV8QcGC4Un0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From 7.21.5, curl can be tricked into using an open fd.
-This series uses this to allow using curl over a tunnel.
+Am 09.08.2017 um 12:16 schrieb Jeff King:
+> In 1a812f3a70 (hashcmp(): inline memcmp() by hand to
+> optimize, 2011-04-28), it was reported that an open-coded
+> loop outperformed memcmp() for comparing sha1s.
+> 
+> Discussion[1] a few years later in 2013 showed that this
+> depends on your libc's version of memcmp(). In particular,
+> glibc 2.13 optimized their memcmp around 2011. Here are
+> current timings with glibc 2.24 (best-of-five, on
+> linux.git):
+> 
+>    [before this patch, open-coded]
+>    $ time git rev-list --objects --all
+>    real	0m35.357s
+>    user	0m35.016s
+>    sys	0m0.340s
+> 
+>    [after this patch, memcmp]
+>    real	0m32.930s
+>    user	0m32.630s
+>    sys	0m0.300s
 
-I have a few doubt on patch #2:
-- is socketpair working on all git supported system (windows ?)
-- should socketpair always be used or limited to the curl over tunnel case ?
-  I don't think there is too much different between an unname pipe and a socketpair but I'm not sure either :)
+Nice.  And here's the size of the git executable in my build:
 
-This series also shows a "bug" in curl.
-When trying out the tunnel example fro imap-send documentation, this happends:
-Starting tunnel 'ssh -q -C localhost /usr/sbin/imapd ./Maildir'... ok
-sending 3 messages
-16:38:54.055221 http.c:639              == Info: Hostname was NOT found in DNS cache
-16:38:54.059505 http.c:639              == Info:   Trying ::1...
-16:38:54.059545 http.c:639              == Info: Connected to localhost () port 143 (#0)
-16:38:54.354379 http.c:586              <= Recv header, 0000000332 bytes (0x0000014c)
-16:38:54.354405 http.c:598              <= Recv header: * PREAUTH [CAPABILITY IMAP4REV1 I18NLEVEL=1 LITERAL+ IDLE UIDPLUS NAMESPACE CHILDREN MAILBOX-REFERRALS BINARY UNSELECT ESEARCH WITHIN SCAN SORT THREAD=REFERENCES THREAD=ORDEREDSUBJECT MULTIAPPEND] Pre-authenticated user nmorey portia.home.nicolas.morey-chaisemartin.com IMAP4rev1 2007e.404 at Wed, 9 Aug 2017 16:38:54 +0200 (CEST)
-16:38:54.354425 http.c:639              == Info: Bad tagged response
-16:38:54.354448 http.c:639              == Info: Closing connection 0
-curl_easy_perform() failed: FTP: weird server reply
+         unstripped stripped
+  before    8048176  2082416
+  after     8006064  2037360
 
-It appears curl do not support the PREAUTH tag.
+> I also wondered if using memcmp() could be a hint to the compiler to use
+> an intrinsic or some other trick, especially because the "len" here is a
+> constant. But in a toy function compiled with "gcc -S", it looks like we
+> do keep the call to memcmp (so the speedup really is glibc, and not some
+> compiler magic).
 
-However a test with "nc imap.server.ext 143" is working fine.
+GCC 7 inlines memcmp() if we only need a binary result:
 
-Nicolas Morey-Chaisemartin (3):
-  imap-send: move tunnel setup to its own function
-  imap-send: use a socketpair instead of pipe to communicate with the
-    tunnel
-  imap_send: add support for curl over tunnel
+	https://godbolt.org/g/iZ11Ne
 
- Documentation/git-imap-send.txt |  4 +-
- imap-send.c                     | 91 +++++++++++++++++++++++++++++++----------
- 2 files changed, 72 insertions(+), 23 deletions(-)
-
+René
