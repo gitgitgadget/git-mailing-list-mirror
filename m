@@ -6,70 +6,66 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E951F208B8
-	for <e@80x24.org>; Wed,  9 Aug 2017 21:09:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D2B8208B8
+	for <e@80x24.org>; Wed,  9 Aug 2017 21:13:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752066AbdHIVJu (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Aug 2017 17:09:50 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33790 "HELO cloud.peff.net"
+        id S1752119AbdHIVNV (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Aug 2017 17:13:21 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33808 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751904AbdHIVJt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Aug 2017 17:09:49 -0400
-Received: (qmail 27927 invoked by uid 109); 9 Aug 2017 21:09:49 -0000
+        id S1752066AbdHIVNU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Aug 2017 17:13:20 -0400
+Received: (qmail 28120 invoked by uid 109); 9 Aug 2017 21:13:20 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 09 Aug 2017 21:09:49 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 09 Aug 2017 21:13:20 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31194 invoked by uid 111); 9 Aug 2017 21:10:12 -0000
+Received: (qmail 31221 invoked by uid 111); 9 Aug 2017 21:13:43 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Wed, 09 Aug 2017 17:10:12 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Wed, 09 Aug 2017 17:13:43 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 09 Aug 2017 17:09:47 -0400
-Date:   Wed, 9 Aug 2017 17:09:47 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 09 Aug 2017 17:13:18 -0400
+Date:   Wed, 9 Aug 2017 17:13:18 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH 1/2] sha1_file: drop experimental GIT_USE_LOOKUP search
-Message-ID: <20170809210946.2pzz5rze4u57c4lr@sigill.intra.peff.net>
-References: <20170809101106.p45y34uk6wcruqxv@sigill.intra.peff.net>
- <20170809101432.6jquwmev423o56pb@sigill.intra.peff.net>
- <xmqqshh06264.fsf@gitster.mtv.corp.google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH 2/4] http: drop support for curl < 7.16.0
+Message-ID: <20170809211317.5znle4vq4zxf56af@sigill.intra.peff.net>
+References: <20170809120024.7phdjzjv54uv5dpz@sigill.intra.peff.net>
+ <20170809120157.il4ktf75wscqoyic@sigill.intra.peff.net>
+ <CAGZ79kYUn_V81pRHsAuOoqNOpjfnng2NqLu7jPK93GM=LuvywQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqshh06264.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <CAGZ79kYUn_V81pRHsAuOoqNOpjfnng2NqLu7jPK93GM=LuvywQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 09, 2017 at 11:12:19AM -0700, Junio C Hamano wrote:
+On Wed, Aug 09, 2017 at 10:29:04AM -0700, Stefan Beller wrote:
 
-> Thanks for reducing the count of binary search functions by one.
+> >  Documentation/config.txt |  3 +--
+> >  http-push.c              | 23 --------------------
+> >  http-walker.c            | 12 -----------
+> >  http.c                   | 56 +-----------------------------------------------
+> >  http.h                   | 20 +----------------
+> >  remote-curl.c            |  4 ----
+> >  6 files changed, 3 insertions(+), 115 deletions(-)
 > 
-> I think the "just one round of newton-raphson" in sha1_pos() comes
-> from [*1*]; I agree that it needs benchmarking before tweaking it.
+> `git grep USE_CURL_MULTI` also yields
+> Documentation/config.txt
+> t/t5540-http-push-webdav.sh
+> 
+> Would these also need adaption in this patch?
 
-Actually, it's weirder than that. You mentioned it in that thread, but
-the code dates back much further. It was moved to the file in 96beef8,
-but that was just a copy from patch-ids.c. The original seems to be from
-5d23e133d2 (Refactor patch-id filtering out of git-cherry and
-git-format-patch., 2007-04-09), which predates the sha1_entry_pos()
-experiment.
+That one threw me off for a minute. How does a test even know about
+USE_CURL_MULTI?
 
-I always thought those two sha1-lookup functions came in the opposite
-order, but I guess was wrong. Or possibly you are a time traveler.
+But it is just a bad error message. :) You cannot fix it by compiling
+with "make USE_CURL_MULTI=1". The right message is more like "skipping
+http-push tests, your curl is too old".
 
-> We may want to tell libgit2 folks about this change, though [*2*].
-> I think they too are carrying dead code that is only used under CPP
-> macro GIT_USE_LOOKUP, which they do not seem to define.
-
-Good thinking. It looks like they could use all three of the patches
-under discussion. I opened some PRs:
-
-  https://github.com/libgit2/libgit2/pull/4326
-  https://github.com/libgit2/libgit2/pull/4327
-  https://github.com/libgit2/libgit2/pull/4328
+But that does mean there's another problem: Makefile can drop its
+conditional curl_check for http-push.o. I'll add that to a re-roll.
 
 -Peff
