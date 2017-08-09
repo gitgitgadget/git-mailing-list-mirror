@@ -6,79 +6,67 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F21E20899
-	for <e@80x24.org>; Wed,  9 Aug 2017 05:36:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F22BB20899
+	for <e@80x24.org>; Wed,  9 Aug 2017 05:37:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752158AbdHIFgh (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Aug 2017 01:36:37 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60346 "EHLO
+        id S1751314AbdHIFh5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Aug 2017 01:37:57 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53216 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752067AbdHIFgg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Aug 2017 01:36:36 -0400
+        with ESMTP id S1750770AbdHIFh4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Aug 2017 01:37:56 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9497CA90E6;
-        Wed,  9 Aug 2017 01:36:35 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CC24BA0602;
+        Wed,  9 Aug 2017 01:37:50 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=rdI4y2Dg/VyyyeVheC0Olsne0YE=; b=qmI78Y
-        hEfyRvA1MbMhZMDMjF1nVaYITwrOzdmnpoZeHim+ruIgMqllcL8kaa5pi+OTbkRE
-        k1DkCB4tKUUXa+dsph727eXHVIAJhRaPN3BQ40XefXO2wE6OXFa5OGFR+Ws1prMu
-        sP3dWSe2/3/obQBwK4gs4NfvR8SkJKdvrO3Jk=
+        :content-type; s=sasl; bh=F9tOkkCXR0/orcBYAkdtV9cjOeQ=; b=nlubzS
+        bFmUJjEYvpebB6HvQpJTjjEJa6Eg3uZXgUkklcuVq74rrOjK/oLm+eXuJ4XDeJPM
+        rjfC4W4pUr4Tp3WueAD+8pOpeT1kXPaauEN3dCn007uQyQTM2brlGmF0rHVkDxqU
+        ksAoE6WIUghgvP+D5YClOLUXzYbY0/bUTe91E=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=gBY9QoK1x5jxDXtUtWwahP4jFAgy+c2R
-        GhdlmoE/8p08lBDq0VM7QMXd28bzgAOPrfjP7OmLqln1Oa9TxicCPIigOzo4qw+E
-        hScoMQimisUR/dUkJhBZF9h6iqUAV+k/YKFkoxVEwsr9TDwLwtYOfum2Y5r7lHsu
-        ZOBeOBsbkas=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8BE50A90E5;
-        Wed,  9 Aug 2017 01:36:35 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=PbXbBjx55QWUjIUj53RrJytJdIIAmqT4
+        l31r0+4mosylPYl9nQ1mLLp3zgMsw/mwyzlmJGeqQwgjHnVjanYtMFlJqmPS4xQu
+        CJR0h8GYki3tXb1UKq8/FnKfZv/Qo2MDpLz/+wL7vdl55UNBAlgRc3HoafKXMGsl
+        +uLKSnIzLYk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C4D83A0601;
+        Wed,  9 Aug 2017 01:37:50 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DB805A90E4;
-        Wed,  9 Aug 2017 01:36:34 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3CB01A0600;
+        Wed,  9 Aug 2017 01:37:50 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
+To:     Jonathan Nieder <jrnieder@gmail.com>
 Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH] sha1_file: avoid comparison if no packed hash matches the first byte
-References: <0c1f898c-46c4-033d-001b-114b17d7d36f@web.de>
-        <xmqq3791adfi.fsf@gitster.mtv.corp.google.com>
-        <20170808225231.3l7gyoxxvghsvtv7@sigill.intra.peff.net>
-        <20170808225851.kgbyrlqrtlurzc73@sigill.intra.peff.net>
-Date:   Tue, 08 Aug 2017 22:36:33 -0700
-In-Reply-To: <20170808225851.kgbyrlqrtlurzc73@sigill.intra.peff.net> (Jeff
-        King's message of "Tue, 8 Aug 2017 18:58:51 -0400")
-Message-ID: <xmqqpoc58fq6.fsf@gitster.mtv.corp.google.com>
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [PATCH] builtin/add: add a missing newline to an stderr message
+References: <4b0d092f-5a1b-73c7-38fe-48455099bcff@ramsayjones.plus.com>
+        <2821200b-0428-a5dd-9680-f291cee0ec47@web.de>
+        <xmqqefslaerf.fsf@gitster.mtv.corp.google.com>
+        <20170808223407.GB169894@aiede.mtv.corp.google.com>
+Date:   Tue, 08 Aug 2017 22:37:48 -0700
+In-Reply-To: <20170808223407.GB169894@aiede.mtv.corp.google.com> (Jonathan
+        Nieder's message of "Tue, 8 Aug 2017 15:34:07 -0700")
+Message-ID: <xmqqlgmt8fo3.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: B4F02B00-7CC4-11E7-934B-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: E1D8EEEA-7CC4-11E7-B80E-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> On Tue, Aug 08, 2017 at 06:52:31PM -0400, Jeff King wrote:
->
->> > Interesting.  I see that we still have the conditional code to call
->> > out to sha1-lookup.c::sha1_entry_pos().  Do we need a similar change
->> > over there, I wonder?  Alternatively, as we have had the experimental
->> > sha1-lookup.c::sha1_entry_pos() long enough without anybody using it,
->> > perhaps we should write it off as a failed experiment and retire it?
->> 
->> There is also sha1_pos(), which seems to have the same problem (and is
->> used in several places).
->
-> Actually, I take it back. The problem happens when we enter the loop
-> with no entries to look at. But both sha1_pos() and sha1_entry_pos()
-> return early before hitting their do-while loops in that case.
+> I don't believe the force_mode without an 'x' provides a clear signal
+> to the end user.  Perhaps you meant %cx?
 
-Ah, I was not looking at that part of the code.  Thanks.
+Indeed you are right.  I think I saw Ramsay's v2 that has the 'x',
+so let's use that version.
 
-I still wonder if we want to retire that conditional invocation of
-sha1_entry_pos(), though.
+Thanks.
