@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D3F421F991
-	for <e@80x24.org>; Wed,  9 Aug 2017 17:34:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BEE9E1F991
+	for <e@80x24.org>; Wed,  9 Aug 2017 17:37:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751977AbdHIReM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Aug 2017 13:34:12 -0400
-Received: from mail-lf0-f51.google.com ([209.85.215.51]:32983 "EHLO
-        mail-lf0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751443AbdHIReL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Aug 2017 13:34:11 -0400
-Received: by mail-lf0-f51.google.com with SMTP id d17so31133238lfe.0
-        for <git@vger.kernel.org>; Wed, 09 Aug 2017 10:34:11 -0700 (PDT)
+        id S1752564AbdHIRhs (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Aug 2017 13:37:48 -0400
+Received: from mail-lf0-f54.google.com ([209.85.215.54]:34364 "EHLO
+        mail-lf0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751704AbdHIRhr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Aug 2017 13:37:47 -0400
+Received: by mail-lf0-f54.google.com with SMTP id g25so31103925lfh.1
+        for <git@vger.kernel.org>; Wed, 09 Aug 2017 10:37:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=zPmcFKpRa5jerD25IAFnxb14sssTqD9ulrcqT4Yn5Wc=;
-        b=YPAr5P/Ipkb11cc6qIYEhRpmiyGuf8hYvgzUyOGvPYD7M2+gYC77UPVvY8Ji24Qyzg
-         24igGTJSIBECfML7frzOwUzbm042mQD48FiXPu6G/F03D0LMlIzrfCa66HCMBodutCQi
-         dpN6dwMpEMdGUAiAcSqaXBZzM6eSeKWBgBq+7Vw8N7dc49WOkx11LHCmGOOuZ2bQYhhe
-         O/oPAYyjGgf5S5CWwWd3ihzMRvVGCaXwMLfI+dtF4K+7mhwLJ+5dcuFK8z0rOMiraM25
-         KQujoazIMVL2aOPM2hOyC+tIG8UboW1Fw4TjBSwcvEnRiuHxAOyh9ac/M9s+eK4ba9a3
-         hm0A==
+        bh=YSm+ZigpE5DWwTb7iMuF3EKf4caPiaIjz6fFf8NLxE0=;
+        b=b3ZWbWPDo0cVdemFgiKQJ1YGQXoELDOLcLrI1N4GtURRRX8tMVnALVuKODs0qyxkyl
+         J8L7NUCPfdPE0LpMSMFjTJZIrTKQGnr66nJzmKviiElJVjyj6nmyxDy9gJKEZv9aggVG
+         DOohfi6X/svMbLj2bX0jDlT2l7z5aPenjdgqZjU+0eR626ILBusO1FoH/WTaklCPp1Vp
+         V7eq/WMh1uvTmRK7aaj0zs9RqM2GReWEsrQEXFuSKLi5os6SK8QYGtZ4RjxeHzyITjtL
+         VQjYNVkhAbk6cdt0CQpWFy7yW2VHsd8utZYhqoG/LAPVfDtatQ98+3WE2nkxliX3mhtS
+         KU1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=zPmcFKpRa5jerD25IAFnxb14sssTqD9ulrcqT4Yn5Wc=;
-        b=V8IwseqhREnKQ4/4PIrX17VjGLIt8pa/yMGQVbVA1a22O0kG+I+4z1fS8eUhRWZMgr
-         bDtqqOVLa6p/IOQ1PUmPiLvlp2+EIf33xe99eNF2WVpiGQsaHT3zlWV7HODXLeSCgVZi
-         q3Q+ymcZlloou2g0bPzOqunzD/fwA7mfQTAseQzrI3Rot4YpRT4PKCcV7JOsrDpx6RkM
-         KWs+maLoC5nDNstHPG2iQhOP/jKW59FTFrYE6uPSsyAmZlr53kIqSb2WAuwtx2Z0JhVy
-         KdVYLqjaULQgQlyUBKsUWpxxATFcBmDMDqzLHzdVqm9ln64GG8TvArQENI7q5108WPuY
-         HjZA==
-X-Gm-Message-State: AHYfb5gvNo0AQ8It7C5RGkvcMfFbTO+SIWWQaHaWu2SJ3H/X6OsHqgqZ
-        /uEA6w/xSmIQ13ylcSyN9s9pJmMETnTY
-X-Received: by 10.25.15.221 with SMTP id 90mr3132303lfp.220.1502300050405;
- Wed, 09 Aug 2017 10:34:10 -0700 (PDT)
+        bh=YSm+ZigpE5DWwTb7iMuF3EKf4caPiaIjz6fFf8NLxE0=;
+        b=o9SF5l4V/pJo1I16eiwL5aDFRI9xs+h0992PvmPim7FlrhFc6IcEC+C1jCppvcnZF/
+         KoM3HTfcsRkYgIm7MtidfXRd/jtrPV7qv+RFxjt7fzxg+DUfJAkIgbjQFM5gTOvjOG9g
+         h4gcYEyCFjw5prkmtQwqTd/KF8SUCNFNmEn5OGQ0+bqfB2jw3ftnAUsu8u0USoR/71/E
+         4V8jr3cDuJRRAlaA+IRJwlEt9/eoC/rP2ia1vDlKsCmzfqrL8PHDRVDN+cLYbMxGqoTS
+         saa5yhgMs1wVfhw0by985XRAgNnUDiPHsySvYJ+VYI7lbLWEpbEo9HYQi25LLeYydvRe
+         LeSA==
+X-Gm-Message-State: AHYfb5gNAV/n4XRSSlFFjrlwL+NGGOJjl79t7DA8VbtIFHEO+6qcOP7G
+        hoNkWHmbjvjS8jBGwiR1gxNZpzofXRw7bZCt2A==
+X-Received: by 10.25.20.68 with SMTP id k65mr3947641lfi.260.1502300266037;
+ Wed, 09 Aug 2017 10:37:46 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.25.1.130 with HTTP; Wed, 9 Aug 2017 10:34:09 -0700 (PDT)
-In-Reply-To: <20170809120201.2eagzkljervqeusx@sigill.intra.peff.net>
-References: <20170809120024.7phdjzjv54uv5dpz@sigill.intra.peff.net> <20170809120201.2eagzkljervqeusx@sigill.intra.peff.net>
+Received: by 10.25.1.130 with HTTP; Wed, 9 Aug 2017 10:37:45 -0700 (PDT)
+In-Reply-To: <20170809120207.amjpwhxz3evjci6x@sigill.intra.peff.net>
+References: <20170809120024.7phdjzjv54uv5dpz@sigill.intra.peff.net> <20170809120207.amjpwhxz3evjci6x@sigill.intra.peff.net>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 9 Aug 2017 10:34:09 -0700
-Message-ID: <CAGZ79kZ-Ra6MCvvq-dqnsXowmykBt9ghqUgHgzSC_zt=Q1_=CA@mail.gmail.com>
-Subject: Re: [PATCH 3/4] http: drop support for curl < 7.19.4
+Date:   Wed, 9 Aug 2017 10:37:45 -0700
+Message-ID: <CAGZ79kai_d4sU0D-oR=VpGQea6ZGVTsFd7P5Ch8VqQyc4h5obA@mail.gmail.com>
+Subject: Re: [PATCH 4/4] http: #error on too-old curl
 To:     Jeff King <peff@peff.net>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
@@ -61,26 +61,34 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Wed, Aug 9, 2017 at 5:02 AM, Jeff King <peff@peff.net> wrote:
-> Since v2.12.0, Git does not compile with versions of curl
-> older than 7.19.4. That version of curl is about 8 years
-> old. This means it may still be used in some distributions
-> with long-running support periods. But the fact that we
-> haven't received a single bug report about the compile-time
-> breakage implies that nobody cares about building recent
-> releases on such platforms.
+> We already fail to build with versions of curl older than
+> 7.19.4. But doing an explicit check with an #error has two
+> benefits.
+>
+> One is that it makes it clear to users that the build
+> failure is intentional, so they don't waste time trying to
+> debug it.
+>
+> And two is that it documents our current "too old"
+> assumption, so that we know whether we need use an #ifdef
+> when using newer curl features in future patches.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  http.h | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/http.h b/http.h
+> index da4d8589d8..29acfe8c55 100644
+> --- a/http.h
+> +++ b/http.h
+> @@ -10,6 +10,10 @@
+>  #include "remote.h"
+>  #include "url.h"
+>
+> +#if LIBCURL_VERSION_NUM < 0x071304
 
-I would not state it as bland, see how
-https://public-inbox.org/git/20170806233850.14711-1-avarab@gmail.com/
-came here to the mailing list.
+Oh, it's hex. 0x13 == 19. Makes sense.
 
-
-> As discussed in the previous two commits, this cleans up the
-> code and gives a more realistic signal to users about which
-> versions of Git are actually tested (in particular, this
-> moves us past the potential use-after-free issues with curl
-> older than 7.17.0).
-
-This is a good reason for this patch, though, so maybe just elide
-the "nobody cares" part?
-
-Thanks for these cleanups!
+Thanks,
+Stefan
