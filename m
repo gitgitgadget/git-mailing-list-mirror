@@ -2,88 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7042720899
-	for <e@80x24.org>; Wed,  9 Aug 2017 00:51:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6D06E20899
+	for <e@80x24.org>; Wed,  9 Aug 2017 01:23:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752495AbdHIAv1 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Aug 2017 20:51:27 -0400
-Received: from avasout05.plus.net ([84.93.230.250]:50090 "EHLO
-        avasout05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752319AbdHIAv0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Aug 2017 20:51:26 -0400
-Received: from [10.0.2.15] ([143.159.212.52])
-        by avasout05 with smtp
-        id uorQ1v00218PUFB01orRUd; Wed, 09 Aug 2017 01:51:25 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=Iav3YSia c=1 sm=1 tr=0
- a=CKmocqUIrzA4K3l9YJ19NQ==:117 a=CKmocqUIrzA4K3l9YJ19NQ==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=UfWjdcGjbSTrn8ewzUUA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH] builtin/add: add detail to a 'cannot chmod' error message
-Message-ID: <aa004526-3e0d-66d4-287f-30abd29758fc@ramsayjones.plus.com>
-Date:   Wed, 9 Aug 2017 01:51:23 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+        id S1752222AbdHIBXC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Aug 2017 21:23:02 -0400
+Received: from mail-pg0-f50.google.com ([74.125.83.50]:35617 "EHLO
+        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751973AbdHIBXB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Aug 2017 21:23:01 -0400
+Received: by mail-pg0-f50.google.com with SMTP id v189so21577558pgd.2
+        for <git@vger.kernel.org>; Tue, 08 Aug 2017 18:23:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=zGx03m1vsfIyWQTjF/c//uIxzivShY+RaLJb3EVb40s=;
+        b=HgI1GLRtVPaehbvJTRRFCd+quk+YU+3mR3DueoiqWFweG+dZUkCzfBNsfzRf7aTlEt
+         /uRgYBNDboAYrSSI3hHK6Kh6UUolot6NZnDzwIvnpW9s36TEkNcnMPpftjO8sC9RHa1c
+         24SgK7pjdobytoeA9fCSxfAJDOM2Fgg/jt3ENdhzmDyeD+9Ll9yaUsY0W9zY2x0+X4FD
+         XcBaUC0VcvimXvMdPxJvoOiuJIECpYLWGjD1ZewfgIr6dCVXQfUW0EWsrIIyB7poC7h2
+         EOdorqhLj094uA3OLI+xLF9bivbYs/EpqLD2ndqT3TQag417jM6ARGk+0QzswQa8Yluk
+         2b4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=zGx03m1vsfIyWQTjF/c//uIxzivShY+RaLJb3EVb40s=;
+        b=FX0eIoIfeJMbzc+4AdwMktE9mUaCbVC6bsOsXpjS+3HP/wUIype1Sf1JFNTK10sI8B
+         KvjfDRq1h5tbrI8jKVHDAgCV/qgeaR0zMa4djb1Blcj/b9R4CeyKvRmURDCWtpG4iUhI
+         XLOs4UK4pH4U+xFWBTlIWhoLCBdqw7vaEeRuuIoAehV4xU1jt6bQCDQvdi69Bqt9cQ1W
+         kTjL7GZSBV2BqwD7LSaP8PEbGL0fYeu7Z3iz6q9FvGhPAyESDv/L2c/47zPbYfE06Vi2
+         wFLjkb9Y8nHJZiW4VnrZNMB4BBBa3sNjsNBVoV4Gb6nObzLUC/uLFjftSEIxILBACXvt
+         y1Yw==
+X-Gm-Message-State: AHYfb5iVVIuc/FQ4iCPSVinoN+BRCKzb8n3RSDbDht3Rc557XlBnvS3y
+        nsO7IfjFVXHaU5XYtOcAlA==
+X-Received: by 10.84.131.71 with SMTP id 65mr6915726pld.35.1502241780809;
+        Tue, 08 Aug 2017 18:23:00 -0700 (PDT)
+Received: from twelve2.svl.corp.google.com ([100.96.218.24])
+        by smtp.gmail.com with ESMTPSA id r5sm4479602pgn.45.2017.08.08.18.22.59
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 08 Aug 2017 18:23:00 -0700 (PDT)
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com,
+        sbeller@google.com
+Subject: [PATCH v2 00/25] Move exported packfile funcs to its own file
+Date:   Tue,  8 Aug 2017 18:22:32 -0700
+Message-Id: <cover.1502241234.git.jonathantanmy@google.com>
+X-Mailer: git-send-email 2.14.0.434.g98096fd7a8-goog
+In-Reply-To: <cover.1502220307.git.jonathantanmy@google.com>
+References: <cover.1502220307.git.jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Here is the complete patch set. I have only moved the exported functions
+that operate with packfiles and their static helpers - for example,
+static functions like freshen_packed_object() that are used only by
+non-pack-specific functions are not moved.
 
-In addition to adding the missing newline, add the x-ecutable bit
-'mode change' character to the error message. This message now has
-the same form as similar messages output by 'update-index'.
+In the end, 3 functions needed to be made global. They are
+find_pack_entry(), mark_bad_packed_object(), and has_packed_and_bad().
 
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
----
+Of the 3, find_pack_entry() is probably legitimately promoted. But I
+think that the latter two functions needing to be accessed from
+sha1_file.c points to a design that could be improved - they are only
+used when packed_object_info() detects corruption, and used for marking
+as bad and printing messages to the user respectively, which
+packed_object_info() should probably do itself. But I have not made this
+change in this patch set.
 
-Hi Junio,
+(Other than the 3 functions above, there are some variables and
+functions that are temporarily made global, but reduced back to static
+when the wide scope is no longer needed.)
 
-This is v2 of the earlier "add a newline" patch. Thanks!
+Jonathan Tan (25):
+  pack: move pack name-related functions
+  pack: move static state variables
+  pack: move pack_report()
+  pack: move open_pack_index(), parse_pack_index()
+  pack: move release_pack_memory()
+  pack: move pack-closing functions
+  pack: move use_pack()
+  pack: move unuse_pack()
+  pack: move add_packed_git()
+  pack: move install_packed_git()
+  pack: move {,re}prepare_packed_git and approximate_object_count
+  pack: move unpack_object_header()
+  pack: move get_size_from_delta()
+  pack: move unpack_object_header()
+  sha1_file: set whence in storage-specific info fn
+  sha1_file: remove read_packed_sha1()
+  pack: move packed_object_info(), unpack_entry()
+  pack: move nth_packed_object_{sha1,oid}
+  pack: move check_pack_index_ptr(), nth_packed_object_offset()
+  pack: move find_pack_entry_one(), is_pack_valid()
+  pack: move find_sha1_pack()
+  pack: move find_pack_entry() and make it global
+  pack: move has_sha1_pack()
+  pack: move has_pack_index()
+  pack: move for_each_packed_object()
 
-ATB,
-Ramsay Jones
+ Makefile                 |    1 +
+ builtin/am.c             |    1 +
+ builtin/cat-file.c       |    1 +
+ builtin/clone.c          |    1 +
+ builtin/count-objects.c  |    1 +
+ builtin/fetch.c          |    1 +
+ builtin/gc.c             |    1 +
+ builtin/merge.c          |    1 +
+ builtin/pack-redundant.c |    1 +
+ builtin/prune-packed.c   |    1 +
+ cache.h                  |  122 +--
+ connected.c              |    1 +
+ diff.c                   |    1 +
+ git-compat-util.h        |    2 -
+ http-backend.c           |    1 +
+ http-push.c              |    1 +
+ http-walker.c            |    1 +
+ pack.h                   |  137 +++
+ packfile.c               | 1905 +++++++++++++++++++++++++++++++++++
+ path.c                   |    1 +
+ reachable.c              |    1 +
+ revision.c               |    1 +
+ server-info.c            |    1 +
+ sha1_file.c              | 2484 ++++++----------------------------------------
+ sha1_name.c              |    1 +
+ streaming.c              |    1 +
+ 26 files changed, 2350 insertions(+), 2321 deletions(-)
+ create mode 100644 packfile.c
 
- builtin/add.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/add.c b/builtin/add.c
-index e888fb8c5..5d5773d5c 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -32,7 +32,7 @@ struct update_callback_data {
- 	int add_errors;
- };
- 
--static void chmod_pathspec(struct pathspec *pathspec, int force_mode)
-+static void chmod_pathspec(struct pathspec *pathspec, char flip)
- {
- 	int i;
- 
-@@ -42,8 +42,8 @@ static void chmod_pathspec(struct pathspec *pathspec, int force_mode)
- 		if (pathspec && !ce_path_match(ce, pathspec, NULL))
- 			continue;
- 
--		if (chmod_cache_entry(ce, force_mode) < 0)
--			fprintf(stderr, "cannot chmod '%s'", ce->name);
-+		if (chmod_cache_entry(ce, flip) < 0)
-+			fprintf(stderr, "cannot chmod %cx '%s'\n", flip, ce->name);
- 	}
- }
- 
 -- 
-2.14.0
+2.14.0.434.g98096fd7a8-goog
+
