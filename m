@@ -6,78 +6,74 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E0EE1208B8
-	for <e@80x24.org>; Wed,  9 Aug 2017 21:48:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8644D208B8
+	for <e@80x24.org>; Wed,  9 Aug 2017 21:49:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752436AbdHIVsC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Aug 2017 17:48:02 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33888 "HELO cloud.peff.net"
+        id S1752411AbdHIVts (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Aug 2017 17:49:48 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33898 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752378AbdHIVsB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Aug 2017 17:48:01 -0400
-Received: (qmail 29716 invoked by uid 109); 9 Aug 2017 21:48:01 -0000
+        id S1752247AbdHIVtr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Aug 2017 17:49:47 -0400
+Received: (qmail 29790 invoked by uid 109); 9 Aug 2017 21:49:47 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 09 Aug 2017 21:48:01 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 09 Aug 2017 21:49:47 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31598 invoked by uid 111); 9 Aug 2017 21:48:23 -0000
+Received: (qmail 31621 invoked by uid 111); 9 Aug 2017 21:50:10 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Wed, 09 Aug 2017 17:48:23 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Wed, 09 Aug 2017 17:50:10 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 09 Aug 2017 17:47:58 -0400
-Date:   Wed, 9 Aug 2017 17:47:58 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 09 Aug 2017 17:49:45 -0400
+Date:   Wed, 9 Aug 2017 17:49:45 -0400
 From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/4] dropping support for older curl
-Message-ID: <20170809214758.p77fqrwxanb4zn5a@sigill.intra.peff.net>
+To:     Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH 2/4] http: drop support for curl < 7.16.0
+Message-ID: <20170809214945.jx2tqbs72g5hwsau@sigill.intra.peff.net>
 References: <20170809120024.7phdjzjv54uv5dpz@sigill.intra.peff.net>
- <alpine.DEB.2.21.1.1708092337350.11175@virtualbox>
+ <20170809120157.il4ktf75wscqoyic@sigill.intra.peff.net>
+ <xmqq1sok7i82.fsf@gitster.mtv.corp.google.com>
+ <38dfdc54-65ea-694a-4b72-fe0006a008cf@suse.de>
+ <20170809211734.dcyo2gppznzk6kng@sigill.intra.peff.net>
+ <7468c434-88ca-48de-0bda-894baf8020f2@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.21.1.1708092337350.11175@virtualbox>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <7468c434-88ca-48de-0bda-894baf8020f2@suse.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 09, 2017 at 11:42:12PM +0200, Johannes Schindelin wrote:
+On Wed, Aug 09, 2017 at 11:29:30PM +0200, Nicolas Morey-Chaisemartin wrote:
 
-> > This is a resurrection of the thread from April:
-> > 
-> >   https://public-inbox.org/git/20170404025438.bgxz5sfmrawqswcj@sigill.intra.peff.net/
+> > But the #ifdef above says 071700, which is 7.23.0. I wonder if we just
+> > got it wrong back then (maybe hex confusion with 7.17.0?). I have a
+> > build setup for old versions of curl, so I'll double-check that 7.19.4
+> > builds with KEYPASSWD. And dig in the history to see if there's any
+> > comment on this mismatch.
+>
+> It seems to be a decimal/hex issue:
+> docs/libcurl/symbols-in-versions:153:CURLOPT_KEYPASSWD               7.17.0
 > 
-> As before, I would like to point out that people running with older cURL
-> are most likely not at liberty to change the system libraries.
+> I guess it should still work because it is now defined like this:
+> curl.h:#define CURLOPT_SSLKEYPASSWD CURLOPT_KEYPASSWD
 > 
-> I know that I didn't when I was working on a very expensive microscope
-> whose only certified control computer ran a very old version of CentOS,
-> and I really needed to install Git on it.
-> 
-> In such a case, it is often preferable to be able to build against an old
-> cURL -- even if some of the fancier features might be broken, and even if
-> some minor compile errors need to be fixed.
-> 
-> I know I was happy to compile Git against an ancient cURL back then.
-> 
-> Just so you understand where I come from when I would like to caution
-> against dropping support for older cURL unless it *really* adds an
-> *enormous* amount of maintenance burden.
-> 
-> I mean, if we even go out of our way to support the completely outdated
-> and obsolete .git/branches/ for what is likely a single user, it may not
-> be the worst to keep those couple of #ifdef guards to keep at least
-> nominal support for older cURLs?
+> If I'm not mistaken on cpp behaviour it means CURLOPT_KEYPASSWD is
+> evaluated to CURLOPT_SSLKEYPASSWD (git define) which is evaluated into
+> CURLOPT_KEYPASSWD (curl define).
+>
+> It should stop here as CURLOPT_KEYPASSWD was not a defined macro when
+> the curl one was evaluated.  It might be worth cleaning though,
+> specially it wouldn't work anymore if the git macro is ever moved
+> before the curl include.
 
-You've totally ignored the argument I made back then[1], and which I
-reiterated in this thread. So I'll say it one more time: the more
-compelling reason is not the #ifdefs, but the fact that the older
-versions are totally untested.  In fact, they do not even compile, and
-yet I have not seen any patches to fix that.
+Hmph. That makes me think the original should have just been using
+CURLOPT_SSLKEYPASSWD through the code, if curl was providing
+a backwards-compatible macro. But it won't matter either way if we just
+get rid of it. :)
 
-So IMHO this is about being honest with users about which versions we
-_actually_ support.
+Thanks for digging up the curl history.
 
 -Peff
-
-[1] https://public-inbox.org/git/20170410182215.figy7hm4sogwipyz@sigill.intra.peff.net/
