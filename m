@@ -6,57 +6,70 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 95AAD208B8
-	for <e@80x24.org>; Wed,  9 Aug 2017 20:23:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E951F208B8
+	for <e@80x24.org>; Wed,  9 Aug 2017 21:09:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752218AbdHIUXq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Aug 2017 16:23:46 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33746 "HELO cloud.peff.net"
+        id S1752066AbdHIVJu (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Aug 2017 17:09:50 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33790 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752202AbdHIUXp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Aug 2017 16:23:45 -0400
-Received: (qmail 25870 invoked by uid 109); 9 Aug 2017 20:23:45 -0000
+        id S1751904AbdHIVJt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Aug 2017 17:09:49 -0400
+Received: (qmail 27927 invoked by uid 109); 9 Aug 2017 21:09:49 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 09 Aug 2017 20:23:45 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 09 Aug 2017 21:09:49 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30888 invoked by uid 111); 9 Aug 2017 20:24:07 -0000
+Received: (qmail 31194 invoked by uid 111); 9 Aug 2017 21:10:12 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Wed, 09 Aug 2017 16:24:07 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Wed, 09 Aug 2017 17:10:12 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 09 Aug 2017 16:23:42 -0400
-Date:   Wed, 9 Aug 2017 16:23:42 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 09 Aug 2017 17:09:47 -0400
+Date:   Wed, 9 Aug 2017 17:09:47 -0400
 From:   Jeff King <peff@peff.net>
-To:     Ian Campbell <ijc@hellion.org.uk>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] filter-branch: Handle rewritting (very) old style
- tags which lack tagger
-Message-ID: <20170809202342.si5d72s44v3xywvq@sigill.intra.peff.net>
-References: <1502179560.2735.22.camel@hellion.org.uk>
- <20170808080620.9536-2-ijc@hellion.org.uk>
- <20170809102040.l5sb6ukqh2225zqm@sigill.intra.peff.net>
- <xmqqlgms7nbl.fsf@gitster.mtv.corp.google.com>
- <1502305353.2735.33.camel@hellion.org.uk>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH 1/2] sha1_file: drop experimental GIT_USE_LOOKUP search
+Message-ID: <20170809210946.2pzz5rze4u57c4lr@sigill.intra.peff.net>
+References: <20170809101106.p45y34uk6wcruqxv@sigill.intra.peff.net>
+ <20170809101432.6jquwmev423o56pb@sigill.intra.peff.net>
+ <xmqqshh06264.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1502305353.2735.33.camel@hellion.org.uk>
+In-Reply-To: <xmqqshh06264.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 09, 2017 at 08:02:33PM +0100, Ian Campbell wrote:
+On Wed, Aug 09, 2017 at 11:12:19AM -0700, Junio C Hamano wrote:
 
-> > > Should we instead make git-mktag more lenient (possibly with a
-> > > command-line option to reduce accidental omissions)?
-> > 
-> > That sounds sensible. Thanks for injecting a dose of sanity.
+> Thanks for reducing the count of binary search functions by one.
 > 
-> Indeed. I'll add a --allow-missing-tagger option (suggestions for a
-> snappier name accepted!) and pass it unconditionally from the filter-
-> branch script.
+> I think the "just one round of newton-raphson" in sha1_pos() comes
+> from [*1*]; I agree that it needs benchmarking before tweaking it.
 
-I think that name is the right amount of snappy. It's not meant to be
-used very often. :)
+Actually, it's weirder than that. You mentioned it in that thread, but
+the code dates back much further. It was moved to the file in 96beef8,
+but that was just a copy from patch-ids.c. The original seems to be from
+5d23e133d2 (Refactor patch-id filtering out of git-cherry and
+git-format-patch., 2007-04-09), which predates the sha1_entry_pos()
+experiment.
+
+I always thought those two sha1-lookup functions came in the opposite
+order, but I guess was wrong. Or possibly you are a time traveler.
+
+> We may want to tell libgit2 folks about this change, though [*2*].
+> I think they too are carrying dead code that is only used under CPP
+> macro GIT_USE_LOOKUP, which they do not seem to define.
+
+Good thinking. It looks like they could use all three of the patches
+under discussion. I opened some PRs:
+
+  https://github.com/libgit2/libgit2/pull/4326
+  https://github.com/libgit2/libgit2/pull/4327
+  https://github.com/libgit2/libgit2/pull/4328
 
 -Peff
