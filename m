@@ -2,93 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A88C31F991
-	for <e@80x24.org>; Wed,  9 Aug 2017 18:12:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA11E1F991
+	for <e@80x24.org>; Wed,  9 Aug 2017 18:18:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751297AbdHISMW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Aug 2017 14:12:22 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62684 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750770AbdHISMV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Aug 2017 14:12:21 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CFA258D01B;
-        Wed,  9 Aug 2017 14:12:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=WMS0zAaIARI38IlxErVUwb1RibU=; b=SSP5yG
-        lXLAqf0eV+bq10HlSEHsFNU7+d6fR4vOZGZSPN1peYKOKSUbMxSZ2QJehFTw9sPD
-        gTawyzchtXbogo+c2Lj/vkdUtWxiyO1FXq6gqAN5BP5rZBl+gTP0JAXeNAygB+TT
-        a9NkcUC1EmU4i1JaA+sE0xvxU0pN+7GbADI7E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=F6DPa06QX82bAr+sMrUyzWygNxWFqLhh
-        ReYc7Gixt2jsQEBb7kHQFH0digiQPa9ELAunR7j9NgBHNS3b+PdWTtZ5hwW8w+Y8
-        JTdjySs269BTa4QqMavDLcAkEanqwbrgIrEbz42Y4BzFHV4IOnhPeOImjQOoAO/i
-        wKa7i3/5hck=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C7DEA8D01A;
-        Wed,  9 Aug 2017 14:12:20 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2B96D8D016;
-        Wed,  9 Aug 2017 14:12:20 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH 1/2] sha1_file: drop experimental GIT_USE_LOOKUP search
-References: <20170809101106.p45y34uk6wcruqxv@sigill.intra.peff.net>
-        <20170809101432.6jquwmev423o56pb@sigill.intra.peff.net>
-Date:   Wed, 09 Aug 2017 11:12:19 -0700
-In-Reply-To: <20170809101432.6jquwmev423o56pb@sigill.intra.peff.net> (Jeff
-        King's message of "Wed, 9 Aug 2017 06:14:32 -0400")
-Message-ID: <xmqqshh06264.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1752945AbdHISSY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Aug 2017 14:18:24 -0400
+Received: from mail-lf0-f48.google.com ([209.85.215.48]:34067 "EHLO
+        mail-lf0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752240AbdHISSV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Aug 2017 14:18:21 -0400
+Received: by mail-lf0-f48.google.com with SMTP id g25so31544127lfh.1
+        for <git@vger.kernel.org>; Wed, 09 Aug 2017 11:18:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=8BYwa905k1UecOF57PtdotpmouJpTtZIkD5+95W3lcM=;
+        b=cXelD408NYQV1uGuBF4g1Qei1cR3lKfCCT30cQRy0CLu9G/HUApDuS4jN/g0eDH1pA
+         znR7skmpTvLV8R0RjEnu2X/A84HMumssxJsur69lDI45QB13H3WhMPyW+NWiN1IGX0PM
+         9hoUivJoCb3ktSbp8lU+h+J7CaAQBvncSzdHWhc7SA0DwL+gv0h2Jnj49d46ZFE/BpbU
+         4bgKkrXBXaMRuYKniUwub4ykfwxqknwiWO0jm9K2JzGCgKVan5MIAL/OnxE12TaoOeQ9
+         j5KXc74KlOissFUOG80FvH2iWJhy/6cPNoAboQhVdtfDqTG4Up5MtSdZA0ikwxYCRFjg
+         D+fQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=8BYwa905k1UecOF57PtdotpmouJpTtZIkD5+95W3lcM=;
+        b=kPGBDWhkONiFv8bZjxS1IkfLJHZfXNpoW2LGPk9tpeeU3ZwZGNS9r89WwTYvL03Nd9
+         r/BReP+2ZKuzeogETsgtGV4C7QNcUCgVgEioHt7tBuqejskgqcjgxZFtWyH+d2NSX4sT
+         RGVw0NYJTIC0OiOT2z+4mHwP2ZyLYiBPR254cPoFDg/5O27csNP79IBADP80N6/Hoy79
+         QBfRA9BiW9njrl8pSfNPeYRcAqBIFMIQO7Y57L1J6HZZjPjBpDDUzZ2Tx6ohyHxt7mIp
+         PDBhsGdJsRCkyuTCn5Hu6wMLNXv1pejWKP6QoP8dOBTb4JPU00ecj74jBQhLXiqHFBlZ
+         YrxQ==
+X-Gm-Message-State: AHYfb5gh/WSJc9jwTzoIVUT92Rl9P66RTVX/RZ8Auho972FPKQaPFZ/C
+        oyYxys9nos+RnU1SvXeyV1IoB7GRdoIGRvY=
+X-Received: by 10.25.161.209 with SMTP id k200mr3251002lfe.132.1502302700073;
+ Wed, 09 Aug 2017 11:18:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 48D43370-7D2E-11E7-BEE5-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Received: by 10.25.1.130 with HTTP; Wed, 9 Aug 2017 11:18:19 -0700 (PDT)
+In-Reply-To: <20170809122439.fscozhyvxcx2oq2n@sigill.intra.peff.net>
+References: <20170809122147.g44nwaitzctbadzm@sigill.intra.peff.net> <20170809122439.fscozhyvxcx2oq2n@sigill.intra.peff.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 9 Aug 2017 11:18:19 -0700
+Message-ID: <CAGZ79kYqq_EhRxckM4iV=99r59Y7_y94j+-65xXLUF4y2vNUUw@mail.gmail.com>
+Subject: Re: [PATCH 3/5] interpret-trailers: add an option to show only
+ existing trailers
+To:     Jeff King <peff@peff.net>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Wed, Aug 9, 2017 at 5:24 AM, Jeff King <peff@peff.net> wrote:
+> It can be useful to invoke interpret-trailers for the
+> primary purpose of parsing existing trailers. But in that
+> case, we don't want to apply existing ifMissing or ifExists
+> rules from the config. Let's add a special mode where we
+> avoid applying those rules. Coupled with --only-trailers,
+> this gives us a reasonable parsing tool.
 
-> This lets us remove sha1_entry_pos() entirely, as the .idx
-> lookup code was the only caller.  Note that sha1-lookup.c
-> still contains sha1_pos(), which differs from
-> sha1_entry_pos() in two ways:
->
->   - it has a different interface; it uses a function pointer
->     to access sha1 entries rather than a size/offset pair
->     describing the table's memory layout
->
->   - it only scales the initial selection of "mi", rather
->     than each iteration of the search
->
-> We can't get rid of this function, as it's called from
-> several places. It may be that we could replace it with a
-> simple binary search, but that's out of scope for this patch
-> (and would need benchmarking).
+I have the impression that the name is slightly misleading
+because 'only' just reduces the set. it does not enhance it.
+(Do we have a configuration that says "remove this trailer
+anytime"?)
 
-Thanks for reducing the count of binary search functions by one.
-
-I think the "just one round of newton-raphson" in sha1_pos() comes
-from [*1*]; I agree that it needs benchmarking before tweaking it.
-
-We may want to tell libgit2 folks about this change, though [*2*].
-I think they too are carrying dead code that is only used under CPP
-macro GIT_USE_LOOKUP, which they do not seem to define.
-
-
-[Reference]
-
-*1* https://public-inbox.org/git/7v38vso8kz.fsf@alter.siamese.dyndns.org/
-*2* https://github.com/libgit2/libgit2/commit/dd453c4dbf9a1fa38530b1f51e079852736b8f66
+So maybe this is rather worded as 'exact-trailers' ?
