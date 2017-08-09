@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F23720899
-	for <e@80x24.org>; Wed,  9 Aug 2017 01:23:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 47E9E20899
+	for <e@80x24.org>; Wed,  9 Aug 2017 01:23:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752574AbdHIBX1 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Aug 2017 21:23:27 -0400
-Received: from mail-pg0-f41.google.com ([74.125.83.41]:36905 "EHLO
-        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752557AbdHIBXW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Aug 2017 21:23:22 -0400
-Received: by mail-pg0-f41.google.com with SMTP id y129so21570871pgy.4
-        for <git@vger.kernel.org>; Tue, 08 Aug 2017 18:23:21 -0700 (PDT)
+        id S1752600AbdHIBXn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Aug 2017 21:23:43 -0400
+Received: from mail-pg0-f42.google.com ([74.125.83.42]:36191 "EHLO
+        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752581AbdHIBX3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Aug 2017 21:23:29 -0400
+Received: by mail-pg0-f42.google.com with SMTP id v77so21520608pgb.3
+        for <git@vger.kernel.org>; Tue, 08 Aug 2017 18:23:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=Q6PMFLfdfFnDqDm/Q0ByaxJL7AxHcERdgJtOlTiQ2Ac=;
-        b=Mk7q3iNBCYNASXygJYbb4hKPdIo4UhCCnSLAcFLWPwOhElpccwhlcSzmW4d+5arlPu
-         kz3htREpTKPNkYe4dU60zQVG1ayeZf44f0kLMuJ3eo1FBkyfoPn60vf9xUko7jBx35Ie
-         uFnDfFfX+kWDd9cm8EjKd+AU0pJfjKiebpr6E1GQxs6Acz7EHD3MV7NOZ6c184v1+V7i
-         HAERBROfIttVwOvrCCgSSLgxsXM85Sqib6E47mNqTJ5x3UImrZ2nTKxodn7TC8S2Ywuc
-         g2JrEQR+3KLe2plDiBI6+hAyfJmJWrZwgpHlna8WJr5irmcR1JZz6DsLlxsWV/nxJoJH
-         /I7Q==
+        bh=sojk7zQWLQif7Zl6z9AQuBsGmEqn+dsdCYR8irdqMKg=;
+        b=A1EpxSnXn+X/nuUwlt1R8Tqp9SNJJyUoLmUtF/faleMBxD8FsbroVTok7avzrXikOU
+         XeXIIfr+ZAtRln9X9a8EqkqHMbKoYyb4wZKVFyANzJncfMoINOd/hOIo4KJ3U3uX3PH1
+         EbPFnu6ZPmqaHG2dr+3NBlfLXLGwUylSRd/CWfINyVe0mGm9pPm0OHu+RXZOUUUz7NVY
+         wM/bWTWijmk00T2pUlVFak6oi4o51msargzoCq+ekT5yEDsZqsNOt5y2kNhbRI0XNw9N
+         PxKGyXJIJyZ7/tuvMmJzlmwmLdlbJAHOij1/enG2HUZ74le8EFQNA1JwehhOrYqJWQ6u
+         6sww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=Q6PMFLfdfFnDqDm/Q0ByaxJL7AxHcERdgJtOlTiQ2Ac=;
-        b=qDQklAS7P5a4+RyjX+FODgCmTzj/wlevSDLFjYii+AP0hEHLaa+eCj7ucDZbD0kmO9
-         W/vjSoEEj7UTF/ES3wTPqBzL0BrIkL0nDh4Qu4iGSK3y/7IFz/92LKsL8BEoBO2dtnwD
-         a3FaYO5NxIna5T+Cdbhx9UVLQE6K9yswCrb1ZKJoBqt4Z7bxdXhamhPI8y13bogLAKvN
-         u7B80kIigl9Gc7DimxBnCZGW+r+GItVw0yA6Tz4O8wWb/LiAYiChPvb08sifitWbk8dH
-         /C1HS/io5eQ+gF+NfJ6AvoZ22azOgm5jq2FoXhSGJrNrn/uEZjdMkV2zgWXAZhdO2yCC
-         ZK/w==
-X-Gm-Message-State: AHYfb5htKVrOHwqNdqrh78rVLxRbmCYOBUs/KlI79Qk24RgYeUy2XT72
-        D2+1Eot8KryJ9s3anrklhQ==
-X-Received: by 10.84.131.105 with SMTP id 96mr6892694pld.226.1502241800933;
-        Tue, 08 Aug 2017 18:23:20 -0700 (PDT)
+        bh=sojk7zQWLQif7Zl6z9AQuBsGmEqn+dsdCYR8irdqMKg=;
+        b=JvGmXyovDCa6TjKqyBKHt3hmilRRRaBvEc3uX9kq0x7tgDAKFt7llPRWCVyjP7Y8y/
+         QXLYLghSaxfEyuYBxI5CX+sf/IQApK/WLAjCpl58CGnAdnKwyd1JIQjWuq3YBse1co+F
+         LRS1S+rKv5NQ8QVKSmZjHN12OzOT3WJpJQGtg5dLFZbTip9H/CiP1k6DwptfM3iyml7O
+         lqf77wWzzbyqwkFkbKRjYfqzGt5PG3eeNhVGFlwTJOumMHwn+uW8RylR8mbof/e148jO
+         cCJ8lIUnZhB25kK1ZrK62/x/n8Nret031AfvjJSGYwFAmt1YXMEtrQp2S9W5xoYDJWra
+         y3/w==
+X-Gm-Message-State: AHYfb5hKalzJPCT6j8LF6pi3Bv5t22O2bqBqDKdVTgUmgAFaxvxW0fzy
+        XUoTL6dxHy9VIlcEXWuLiQ==
+X-Received: by 10.101.87.140 with SMTP id b12mr5908409pgr.174.1502241808228;
+        Tue, 08 Aug 2017 18:23:28 -0700 (PDT)
 Received: from twelve2.svl.corp.google.com ([100.96.218.24])
-        by smtp.gmail.com with ESMTPSA id r5sm4479602pgn.45.2017.08.08.18.23.19
+        by smtp.gmail.com with ESMTPSA id r5sm4479602pgn.45.2017.08.08.18.23.27
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 08 Aug 2017 18:23:20 -0700 (PDT)
+        Tue, 08 Aug 2017 18:23:27 -0700 (PDT)
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com,
         sbeller@google.com
-Subject: [PATCH v2 16/25] sha1_file: remove read_packed_sha1()
-Date:   Tue,  8 Aug 2017 18:22:48 -0700
-Message-Id: <daff41cb37b1385e34a92b08ba1109a943586a70.1502241234.git.jonathantanmy@google.com>
+Subject: [PATCH v2 23/25] pack: move has_sha1_pack()
+Date:   Tue,  8 Aug 2017 18:22:55 -0700
+Message-Id: <5849701548adb4a116ecc2d5d110029a1b409cd4.1502241234.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.14.0.434.g98096fd7a8-goog
 In-Reply-To: <cover.1502241234.git.jonathantanmy@google.com>
 References: <cover.1502241234.git.jonathantanmy@google.com>
@@ -65,60 +65,108 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Use read_object() in its place instead. This avoids duplication of code.
-
-This makes force_object_loose() slightly slower (because of a redundant
-check of loose object storage), but only in the error case.
-
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- sha1_file.c | 26 +-------------------------
- 1 file changed, 1 insertion(+), 25 deletions(-)
+ builtin/prune-packed.c | 1 +
+ cache.h                | 2 --
+ diff.c                 | 1 +
+ pack.h                 | 2 ++
+ packfile.c             | 6 ++++++
+ revision.c             | 1 +
+ sha1_file.c            | 6 ------
+ 7 files changed, 11 insertions(+), 8 deletions(-)
 
+diff --git a/builtin/prune-packed.c b/builtin/prune-packed.c
+index ac978ad40..79130aa2e 100644
+--- a/builtin/prune-packed.c
++++ b/builtin/prune-packed.c
+@@ -2,6 +2,7 @@
+ #include "cache.h"
+ #include "progress.h"
+ #include "parse-options.h"
++#include "pack.h"
+ 
+ static const char * const prune_packed_usage[] = {
+ 	N_("git prune-packed [-n | --dry-run] [-q | --quiet]"),
+diff --git a/cache.h b/cache.h
+index 06a8caae6..d96d36d50 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1190,8 +1190,6 @@ extern int check_sha1_signature(const unsigned char *sha1, void *buf, unsigned l
+ 
+ extern int finalize_object_file(const char *tmpfile, const char *filename);
+ 
+-extern int has_sha1_pack(const unsigned char *sha1);
+-
+ /*
+  * Open the loose object at path, check its sha1, and return the contents,
+  * type, and size. If the object is a blob, then "contents" may return NULL,
+diff --git a/diff.c b/diff.c
+index 85e714f6c..6bbc46326 100644
+--- a/diff.c
++++ b/diff.c
+@@ -20,6 +20,7 @@
+ #include "string-list.h"
+ #include "argv-array.h"
+ #include "graph.h"
++#include "pack.h"
+ 
+ #ifdef NO_FAST_WORKING_DIRECTORY
+ #define FAST_WORKING_DIRECTORY 0
+diff --git a/pack.h b/pack.h
+index 1021a781c..ce0e15deb 100644
+--- a/pack.h
++++ b/pack.h
+@@ -223,4 +223,6 @@ extern struct packed_git *find_sha1_pack(const unsigned char *sha1,
+ 
+ extern int find_pack_entry(const unsigned char *sha1, struct pack_entry *e);
+ 
++extern int has_sha1_pack(const unsigned char *sha1);
++
+ #endif
+diff --git a/packfile.c b/packfile.c
+index 0f1e3338b..507f65236 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -1849,3 +1849,9 @@ int find_pack_entry(const unsigned char *sha1, struct pack_entry *e)
+ 	}
+ 	return 0;
+ }
++
++int has_sha1_pack(const unsigned char *sha1)
++{
++	struct pack_entry e;
++	return find_pack_entry(sha1, &e);
++}
+diff --git a/revision.c b/revision.c
+index 6603af944..2868c4fc8 100644
+--- a/revision.c
++++ b/revision.c
+@@ -19,6 +19,7 @@
+ #include "dir.h"
+ #include "cache-tree.h"
+ #include "bisect.h"
++#include "pack.h"
+ 
+ volatile show_early_output_fn_t show_early_output;
+ 
 diff --git a/sha1_file.c b/sha1_file.c
-index 9eadda388..9e5444334 100644
+index 1a505eae5..2610ea057 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -2091,30 +2091,6 @@ int sha1_object_info(const unsigned char *sha1, unsigned long *sizep)
- 	return type;
+@@ -1629,12 +1629,6 @@ int has_pack_index(const unsigned char *sha1)
+ 	return 1;
  }
  
--static void *read_packed_sha1(const unsigned char *sha1,
--			      enum object_type *type, unsigned long *size)
+-int has_sha1_pack(const unsigned char *sha1)
 -{
 -	struct pack_entry e;
--	void *data;
--
--	if (!find_pack_entry(sha1, &e))
--		return NULL;
--	data = cache_or_unpack_entry(e.p, e.offset, size, type);
--	if (!data) {
--		/*
--		 * We're probably in deep shit, but let's try to fetch
--		 * the required object anyway from another pack or loose.
--		 * This should happen only in the presence of a corrupted
--		 * pack, and is better than failing outright.
--		 */
--		error("failed to read object %s at offset %"PRIuMAX" from %s",
--		      sha1_to_hex(sha1), (uintmax_t)e.offset, e.p->pack_name);
--		mark_bad_packed_object(e.p, sha1);
--		data = read_object(sha1, type, size);
--	}
--	return data;
+-	return find_pack_entry(sha1, &e);
 -}
 -
- int pretend_sha1_file(void *buf, unsigned long len, enum object_type type,
- 		      unsigned char *sha1)
+ int has_sha1_file_with_flags(const unsigned char *sha1, int flags)
  {
-@@ -2497,7 +2473,7 @@ int force_object_loose(const unsigned char *sha1, time_t mtime)
- 
- 	if (has_loose_object(sha1))
- 		return 0;
--	buf = read_packed_sha1(sha1, &type, &len);
-+	buf = read_object(sha1, &type, &len);
- 	if (!buf)
- 		return error("cannot read sha1_file for %s", sha1_to_hex(sha1));
- 	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %lu", typename(type), len) + 1;
+ 	if (!startup_info->have_repository)
 -- 
 2.14.0.434.g98096fd7a8-goog
 
