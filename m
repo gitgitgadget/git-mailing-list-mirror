@@ -6,85 +6,79 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE1FC20899
-	for <e@80x24.org>; Wed,  9 Aug 2017 05:29:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F21E20899
+	for <e@80x24.org>; Wed,  9 Aug 2017 05:36:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751536AbdHIF3j (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Aug 2017 01:29:39 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59218 "EHLO
+        id S1752158AbdHIFgh (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Aug 2017 01:36:37 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60346 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750830AbdHIF3i (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Aug 2017 01:29:38 -0400
+        with ESMTP id S1752067AbdHIFgg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Aug 2017 01:36:36 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B8C51A0354;
-        Wed,  9 Aug 2017 01:29:35 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9497CA90E6;
+        Wed,  9 Aug 2017 01:36:35 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=iMW/Y2BFwqdY
-        4EjHTjPYswY0yW8=; b=HOc9o4+7sQ0vaUl4/6Y5fMu3AcYaegP8TYgnMxL7e3j2
-        dOTPvZP54uJA0Jgu5yGRdi9G4S8hK6VK2OcNDTrd48JGiOyt1YkUJN2D7NO43Roe
-        5IhclwMx1VqSp6phBJnZfRKC0uf9v8unWDzBlKjDPY1h9VGGgqyCpKpIpByZLU8=
+        :content-type; s=sasl; bh=rdI4y2Dg/VyyyeVheC0Olsne0YE=; b=qmI78Y
+        hEfyRvA1MbMhZMDMjF1nVaYITwrOzdmnpoZeHim+ruIgMqllcL8kaa5pi+OTbkRE
+        k1DkCB4tKUUXa+dsph727eXHVIAJhRaPN3BQ40XefXO2wE6OXFa5OGFR+Ws1prMu
+        sP3dWSe2/3/obQBwK4gs4NfvR8SkJKdvrO3Jk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=tiDEpX
-        18jjl3DVzyfRasZvfoKI86G+rhN3rk7P80X6CghfcqJ9iSrVRqouMBlsieQqXfBQ
-        8AqiFMknku10ZsL0YbwbdYHphIhs1nJFERNEmGTL25C+m0XyEn7U9s14fw25e6V/
-        vTvl3m6zxwiaXIymXOGm2hRYtb9C15fns8TP4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B1133A0353;
-        Wed,  9 Aug 2017 01:29:35 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=gBY9QoK1x5jxDXtUtWwahP4jFAgy+c2R
+        GhdlmoE/8p08lBDq0VM7QMXd28bzgAOPrfjP7OmLqln1Oa9TxicCPIigOzo4qw+E
+        hScoMQimisUR/dUkJhBZF9h6iqUAV+k/YKFkoxVEwsr9TDwLwtYOfum2Y5r7lHsu
+        ZOBeOBsbkas=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8BE50A90E5;
+        Wed,  9 Aug 2017 01:36:35 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1DCC7A0352;
-        Wed,  9 Aug 2017 01:29:35 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DB805A90E4;
+        Wed,  9 Aug 2017 01:36:34 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
         Git List <git@vger.kernel.org>,
-        David Coppa <dcoppa@openbsd.org>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH] t4062: stop using repetition in regex
-References: <861dc875-7300-fe5a-1360-0ed546c8c2bb@web.de>
-        <alpine.DEB.2.21.1.1708081648130.11175@virtualbox>
-        <1e7ed028-77fe-195a-4acf-6c80d1704463@web.de>
-        <xmqqinhxaf0i.fsf@gitster.mtv.corp.google.com>
-        <xmqq7eydae7r.fsf@gitster.mtv.corp.google.com>
-        <cd60d779-fe38-4f0e-4d36-2c40b2afec7d@web.de>
-Date:   Tue, 08 Aug 2017 22:29:33 -0700
-In-Reply-To: <cd60d779-fe38-4f0e-4d36-2c40b2afec7d@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Wed, 9 Aug 2017 00:34:30 +0200")
-Message-ID: <xmqqtw1h8g1u.fsf@gitster.mtv.corp.google.com>
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH] sha1_file: avoid comparison if no packed hash matches the first byte
+References: <0c1f898c-46c4-033d-001b-114b17d7d36f@web.de>
+        <xmqq3791adfi.fsf@gitster.mtv.corp.google.com>
+        <20170808225231.3l7gyoxxvghsvtv7@sigill.intra.peff.net>
+        <20170808225851.kgbyrlqrtlurzc73@sigill.intra.peff.net>
+Date:   Tue, 08 Aug 2017 22:36:33 -0700
+In-Reply-To: <20170808225851.kgbyrlqrtlurzc73@sigill.intra.peff.net> (Jeff
+        King's message of "Tue, 8 Aug 2017 18:58:51 -0400")
+Message-ID: <xmqqpoc58fq6.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: BABB22A2-7CC3-11E7-8E04-9D2B0D78B957-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: B4F02B00-7CC4-11E7-934B-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+Jeff King <peff@peff.net> writes:
 
-> Am 09.08.2017 um 00:26 schrieb Junio C Hamano:
->> ... but in the meantime, I think replacing the test with "0$" to
->> force the scanner to find either the end of line or the end of the
->> buffer may be a good workaround.  We do not have to care how many of
->> random bytes are in front of the last "0" in order to ensure that
->> the regexec_buf() does not overstep to 4097th byte, while seeing
->> that regexec() that does not know how long the haystack is has to do
->> so, no?
+> On Tue, Aug 08, 2017 at 06:52:31PM -0400, Jeff King wrote:
 >
-> Our regexec() calls strlen() (see my other reply).
+>> > Interesting.  I see that we still have the conditional code to call
+>> > out to sha1-lookup.c::sha1_entry_pos().  Do we need a similar change
+>> > over there, I wonder?  Alternatively, as we have had the experimental
+>> > sha1-lookup.c::sha1_entry_pos() long enough without anybody using it,
+>> > perhaps we should write it off as a failed experiment and retire it?
+>> 
+>> There is also sha1_pos(), which seems to have the same problem (and is
+>> used in several places).
 >
-> Using "0$" looks like the best option to me.
+> Actually, I take it back. The problem happens when we enter the loop
+> with no entries to look at. But both sha1_pos() and sha1_entry_pos()
+> return early before hitting their do-while loops in that case.
 
-Yeah, it seems that way.  If we want to be close/faithful to the
-original, we could do "^0*$", but the part that is essential to
-trigger the old bug is not the "we have many zeroes" (or "we have
-4096 zeroes") part, but "zero is at the end of the string" part, so
-"0$" would be the minimal pattern that also would work for OBSD.
+Ah, I was not looking at that part of the code.  Thanks.
 
-Dscho?
+I still wonder if we want to retire that conditional invocation of
+sha1_entry_pos(), though.
