@@ -2,69 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B41D208B4
-	for <e@80x24.org>; Thu, 10 Aug 2017 18:37:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 05FFA208B4
+	for <e@80x24.org>; Thu, 10 Aug 2017 18:42:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752740AbdHJShQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Aug 2017 14:37:16 -0400
-Received: from cloud.peff.net ([104.130.231.41]:34858 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752504AbdHJShP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Aug 2017 14:37:15 -0400
-Received: (qmail 21472 invoked by uid 109); 10 Aug 2017 18:37:15 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 10 Aug 2017 18:37:15 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7481 invoked by uid 111); 10 Aug 2017 18:37:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Thu, 10 Aug 2017 14:37:38 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Aug 2017 14:37:13 -0400
-Date:   Thu, 10 Aug 2017 14:37:13 -0400
-From:   Jeff King <peff@peff.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH 4/5] interpret-trailers: add an option to normalize output
-Message-ID: <20170810183713.z75bwk5eeavi6z22@sigill.intra.peff.net>
-References: <20170810080246.njjd5zkphytzmlda@sigill.intra.peff.net>
- <20170810080325.tehbbgajm4cgn2ku@sigill.intra.peff.net>
- <CAGZ79kabhz-FWNyjB6KjF4qpGfSqONBNVBcVd=+J=5XT+emz-A@mail.gmail.com>
+        id S1752639AbdHJSm2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Aug 2017 14:42:28 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:65219 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752504AbdHJSm2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Aug 2017 14:42:28 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5C742988F3;
+        Thu, 10 Aug 2017 14:42:20 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=oVow1G9LzS0VDW1y0u7ziijsWfA=; b=cXBEBX
+        OFB/XWsnuP6ZXOaCAxwPEgfJ/PqD35GJO/ZuIN34Wbybc3qrg3JZbEyLxu+ZTpsv
+        utHXf7axeeGHZtUFqRfNt+HqV2/yX+wqEO3n3EI4XdtQzQHbSp0UkKK8mBXiT4+7
+        9/HceJLzK5Z5e2OGkZOfFbITJ5sNDStcuM9vc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=beWxkhrj73nso4G7D7SFGjaZ1Pdc294D
+        2jvyb2XdeYwv1hZQ6mZWX0EV9PScXZXci/gTSHIJHc2q7S7M6IyRwg4Qw1JIBqc+
+        KuZEwAL7EEknXuGzyqa+S6823ySdO5ysp1svbeDi75JyO9k1bIukbvX0lw5xEfWc
+        RuWA4dvzVrI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 556DF988EF;
+        Thu, 10 Aug 2017 14:42:20 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C26B9988EE;
+        Thu, 10 Aug 2017 14:42:19 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Jacob Keller <jacob.keller@gmail.com>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH 0/5] make interpret-trailers useful for parsing
+References: <20170809122147.g44nwaitzctbadzm@sigill.intra.peff.net>
+        <xmqq60dw7j5u.fsf@gitster.mtv.corp.google.com>
+        <CA+P7+xoifkJyH34Q0NJdE_=UzWK1SA+2gwyXrHpF7Sv2PBHATQ@mail.gmail.com>
+        <20170810072822.rj6y6zcqhyfz4yi7@sigill.intra.peff.net>
+Date:   Thu, 10 Aug 2017 11:42:18 -0700
+In-Reply-To: <20170810072822.rj6y6zcqhyfz4yi7@sigill.intra.peff.net> (Jeff
+        King's message of "Thu, 10 Aug 2017 03:28:22 -0400")
+Message-ID: <xmqqd1834645.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kabhz-FWNyjB6KjF4qpGfSqONBNVBcVd=+J=5XT+emz-A@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: A3E5ED1C-7DFB-11E7-8308-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 10, 2017 at 11:35:00AM -0700, Stefan Beller wrote:
+Jeff King <peff@peff.net> writes:
 
-> On Thu, Aug 10, 2017 at 1:03 AM, Jeff King <peff@peff.net> wrote:
-> > The point of "--only-trailers" is to give a caller an output
-> > that's easy for them to parse. Getting rid of the
-> > non-trailer material helps, but we still may see more
-> > complicated syntax like whitespace continuation. Let's add
-> > an option to normalize the output into one "key: value" line
-> > per trailer.
-> >
-> > As a bonus, this could be used even without --only-trailers
-> > to clean up unusual formatting in the incoming data.
-> 
-> This is useful for the parsing part, but for the writing part we'd
-> rather want to have the opposite thing, such as
-> '--line-break=rfc822'. But this doesn't have to be part of this
-> series. With this in mind, I do not quite understand the latter
-> use case how you would use normalized trailers without
-> --only-trailers?
+>> > The above example made me wonder if we also want a format specifier
+>> > to do the above without piping, but it turns out that we already
+>> > have "log --format=%(trailers)", so we are good ;-)
+>> 
+>> I was going to say, I thought we had a way to get trailers for a
+>> commit via the pretty format, since that is what i used in the past.
+>
+> I do like that you could get the trailers for many commits in a single
+> invocation. That doesn't matter for my current use-case, but obviously
+> piping through O(n) interpret-trailers invocations is a bad idea.
+> But there are a few difficulties with using %(trailers) for this,...
 
-If you prefer the normalized form (and the input was line-broken in a
-way that you don't like), then this would convert to your preferred
-form. I agree that you could potentially want the opposite (folding long
-lines). Perhaps something like --wrap=72.
+I think it is clear to you, but it may not be clear to others, that
+I did not mean to say "because 'log --format' already knows about
+it, this change to interpret-trailers is unnecessary".
 
--Peff
+> For (1) I think many callers would prefer to see the original
+> formatting. Maybe we'd need a %(trailers:normalize) or something.
+
+Thanks; that is exactly the line of thought I had in the back of my
+head without even realizing when I brought up %(trailers) format
+element.
