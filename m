@@ -2,67 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 537A9208B4
-	for <e@80x24.org>; Thu, 10 Aug 2017 18:13:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C0F4D208B4
+	for <e@80x24.org>; Thu, 10 Aug 2017 18:18:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753089AbdHJSNY (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Aug 2017 14:13:24 -0400
-Received: from vie01a-dmta-pe08-1.mx.upcmail.net ([84.116.36.20]:54580 "EHLO
-        vie01a-dmta-pe05-1.mx.upcmail.net" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1752807AbdHJSNX (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 10 Aug 2017 14:13:23 -0400
-Received: from [172.31.216.44] (helo=vie01a-pemc-psmtp-pe02)
-        by vie01a-dmta-pe08.mx.upcmail.net with esmtp (Exim 4.88)
-        (envelope-from <martin.koegler@chello.at>)
-        id 1dfrxQ-0006MK-HJ
-        for git@vger.kernel.org; Thu, 10 Aug 2017 20:13:20 +0200
-Received: from master.zuhause ([80.108.242.240])
-        by vie01a-pemc-psmtp-pe02 with SMTP @ mailcloud.upcmail.net
-        id vWDG1v00y5BuuEg01WDHGg; Thu, 10 Aug 2017 20:13:17 +0200
-X-SourceIP: 80.108.242.240
-Received: by master.zuhause (Postfix, from userid 1006)
-        id 4D02145D4513; Thu, 10 Aug 2017 20:13:16 +0200 (CEST)
-From:   Martin Koegler <martin.koegler@chello.at>
-To:     git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de
-Cc:     Martin Koegler <martin.koegler@chello.at>
-Subject: [PATCH 4/4] Fix delta offset overflow
-Date:   Thu, 10 Aug 2017 20:13:09 +0200
-Message-Id: <1502388789-5775-2-git-send-email-martin@mail.zuhause>
-X-Mailer: git-send-email 2.1.4
-In-Reply-To: <1502388789-5775-1-git-send-email-martin@mail.zuhause>
-References: <1502388789-5775-1-git-send-email-martin@mail.zuhause>
+        id S1753139AbdHJSSm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Aug 2017 14:18:42 -0400
+Received: from [195.159.176.226] ([195.159.176.226]:34494 "EHLO
+        blaine.gmane.org" rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org
+        with ESMTP id S1752751AbdHJSSc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Aug 2017 14:18:32 -0400
+Received: from list by blaine.gmane.org with local (Exim 4.84_2)
+        (envelope-from <gcvg-git-2@m.gmane.org>)
+        id 1dfs2I-0006B4-Kg
+        for git@vger.kernel.org; Thu, 10 Aug 2017 20:18:22 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To:     git@vger.kernel.org
+From:   Harry Putnam <reader@newsguy.com>
+Subject: Re: Not understanding with git wants to copy one file to another
+Date:   Thu, 10 Aug 2017 14:18:12 -0400
+Organization: Still searching...
+Message-ID: <87efsj70d7.fsf@local.lan>
+References: <87mv7773tp.fsf@local.lan>
+        <CAGZ79kbgb2P7KT_b9xuMj1pN1+jsPfH7YSJNDyDB5dY3cwXCQg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+X-Complaints-To: usenet@blaine.gmane.org
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.0.50 (gnu/linux)
+Cancel-Lock: sha1:q5oFhYxCd/NhsTZB5CJ6/h8ZOO8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Martin Koegler <martin.koegler@chello.at>
+Stefan Beller <sbeller@google.com> writes:
 
-Prevent generating delta offsets beyond 4G.
+> On Thu, Aug 10, 2017 at 10:03 AM, Harry Putnam <reader@newsguy.com> wrote:
 
-Signed-off-by: Martin Koegler <martin.koegler@chello.at>
----
- diff-delta.c | 3 +++
- 1 file changed, 3 insertions(+)
+[...]
 
-diff --git a/diff-delta.c b/diff-delta.c
-index 3d5e1ef..633883e 100644
---- a/diff-delta.c
-+++ b/diff-delta.c
-@@ -454,6 +454,9 @@ create_delta(const struct delta_index *index,
- 			moff += msize;
- 			msize = left;
- 
-+			if (moff > 0xffffffff)
-+				msize = 0;
-+
- 			if (msize < 4096) {
- 				int j;
- 				val = 0;
--- 
-2.1.4
+Harry wrote:
+>> Here are two that are at least kind of similar but would never be seen
+>> as the same:
+>>
+>> < 192.168.1.43      m2.local.lan       m2       # 00-90-F5-A1-F9-E5
+>>> 192.168.1.43    m2.local.lan        m2         # win 7
+
+ Stefan B replied:
+> The diff machinery has a threshold for when it assumes
+> a copy/move of a file. (e.g. "A file is assumed copied when
+> at least 55% of lines are equal")
+>
+> https://git-scm.com/docs/git-diff
+>
+> See -C and -M option.
+>
+> git-status seems to use this machinery as well, but does
+> not expose the options?
+
+Well, now I'm even more confused.  What actually happens? Is either
+file changed? Is only one file kept?
+
+On the surface it sounds like complete anathema to what git is all
+about.
+
+However, I know a tool this sophisticated is not doing something just
+outright stupid... so must be really missing the point here.
+
+I get the way you can make -M stricter or not... but I didn't call
+git-diff to see that copy thing comeup.
+
+I called git commit.
+
+There must be some way to set stricter guidlines to calling things
+copies.
+
+But then I must really not get it because it still seems almost silly
+to consider one file a copy of another if only 55% is the same.
+
+What am I missing?
+
+
 
