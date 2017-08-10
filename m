@@ -2,99 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C828208BD
-	for <e@80x24.org>; Thu, 10 Aug 2017 18:00:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 34448208B4
+	for <e@80x24.org>; Thu, 10 Aug 2017 18:03:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752979AbdHJSAJ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Aug 2017 14:00:09 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57426 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752827AbdHJSAI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Aug 2017 14:00:08 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id EB9298EA4F;
-        Thu, 10 Aug 2017 14:00:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:mime-version:content-type; s=sasl; bh=V
-        26jA3LzNR7JYA7d7Ox+vSK6dsQ=; b=wy6ZQmk9EljXl8cFYBkITSyj+ybkge2vZ
-        +117yDUGR8q57Zz70WrUREWZTcYZVCsZEiC3K02MKC/3lL8noXrhL+rUDdGo6ckX
-        5J1Qrj1ttNMNNod0wjMbDIDyjb2KTA6nBhPMZvshyNWBpyKJruu4XLqS2HbX231r
-        q7DVVtYn4s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:mime-version:content-type; q=dns; s=
-        sasl; b=jQ7JCic72dV5kUPNjnblZYt+N59G/u8HNbPAbXTTgHUIK9p3lWuy/9GC
-        OIs6M6B+gTlRRvyFQXSOPsMN6poEwS9axuaK1CnjN39aTEqsdnJmZVSIIxh9Cr12
-        Te02kZG1mMwzuiRRDGeeHNJzeWbu+eeJHDQJIbNxdQkZzlEgSFQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E33FB8EA4E;
-        Thu, 10 Aug 2017 14:00:06 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 03ED68EA3E;
-        Thu, 10 Aug 2017 14:00:05 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S1752800AbdHJSD2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Aug 2017 14:03:28 -0400
+Received: from cloud.peff.net ([104.130.231.41]:34724 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752740AbdHJSD2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Aug 2017 14:03:28 -0400
+Received: (qmail 19859 invoked by uid 109); 10 Aug 2017 18:03:28 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 10 Aug 2017 18:03:28 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6805 invoked by uid 111); 10 Aug 2017 18:03:51 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Thu, 10 Aug 2017 14:03:51 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Aug 2017 14:03:26 -0400
+Date:   Thu, 10 Aug 2017 14:03:26 -0400
+From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Cc:     Linux Kernel <linux-kernel@vger.kernel.org>
-Subject: [ANNOUNCE] Git v2.14.1, v2.13.5, and others
-Date:   Thu, 10 Aug 2017 11:00:04 -0700
-Message-ID: <xmqqh8xf482j.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+Cc:     Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 0/5] make interpret-trailers useful for parsing
+Message-ID: <20170810180326.4kkmawywvdbuzwnp@sigill.intra.peff.net>
+References: <20170809122147.g44nwaitzctbadzm@sigill.intra.peff.net>
+ <20170810080246.njjd5zkphytzmlda@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BDA7BA10-7DF5-11E7-B61F-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20170810080246.njjd5zkphytzmlda@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The latest maintenance release Git v2.14.1 is now available at the
-usual places, together with releases for older maintenance track for
-the same issue: v2.7.6, v2.8.6, v2.9.5, v2.10.4, v2.11.3, v2.12.4,
-and v2.13.5.
+On Thu, Aug 10, 2017 at 04:02:46AM -0400, Jeff King wrote:
 
-These contain a security fix for CVE-2017-1000117, and are released
-in coordination with Subversion and Mercurial that share a similar
-issue.  CVE-2017-9800 and CVE-2017-1000116 are assigned to these
-systems, respectively, for issues similar to it that are now
-addressed in their part of this coordinated release.
+> On Wed, Aug 09, 2017 at 08:21:47AM -0400, Jeff King wrote:
+> 
+> > This series teaches interpret-trailers to parse and output just the
+> > trailers. So now you can do:
+> > 
+> >   $ git log --format=%B -1 8d44797cc91231cd44955279040dc4a1ee0a797f |
+> >     git interpret-trailers --parse
+> >   Signed-off-by: Hartmut Henkel <henkel@vh-s.de>
+> >   Helped-by: Stefan Beller <sbeller@google.com>
+> >   Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+> >   Acked-by: Matthias Rüster <matthias.ruester@gmail.com>
+> 
+> And here's a v2 that addresses all of the comments except one: Stefan
+> suggested that --only-existing wasn't a great name. I agree, but I like
+> everything else less.
 
-The tarballs are found at:
+Here's a v3 that takes care of that (renaming it to --only-input).
 
-    https://www.kernel.org/pub/software/scm/git/
+It's otherwise the same as v2, but since the name-change ripples through
+the remaining patches, I wanted to get v3 in front of people sooner
+rather than later.
 
-The following public repositories all have a copy of these tags:
+  [1/5]: trailer: put process_trailers() options into a struct
+  [2/5]: interpret-trailers: add an option to show only the trailers
+  [3/5]: interpret-trailers: add an option to show only existing trailers
+  [4/5]: interpret-trailers: add an option to normalize output
+  [5/5]: interpret-trailers: add --parse convenience option
 
-  url = https://kernel.googlesource.com/pub/scm/git/git
-  url = git://repo.or.cz/alt-git.git
-  url = https://github.com/gitster/git
+ Documentation/git-interpret-trailers.txt | 34 +++++++++++---
+ builtin/interpret-trailers.c             | 34 +++++++++++---
+ t/t7513-interpret-trailers.sh            | 76 ++++++++++++++++++++++++++++++++
+ trailer.c                                | 68 ++++++++++++++++++++++------
+ trailer.h                                | 13 +++++-
+ 5 files changed, 196 insertions(+), 29 deletions(-)
 
-A malicious third-party can give a crafted "ssh://..." URL to an
-unsuspecting victim, and an attempt to visit the URL can result in
-any program that exists on the victim's machine being executed.
-Such a URL could be placed in the .gitmodules file of a malicious
-project, and an unsuspecting victim could be tricked into running
-"git clone --recurse-submodules" to trigger the vulnerability.
-
-Credits to find and fix the issue go to Brian Neel at GitLab, Joern
-Schneeweisz of Recurity Labs and Jeff King at GitHub.
-
- * A "ssh://..." URL can result in a "ssh" command line with a
-   hostname that begins with a dash "-", which would cause the "ssh"
-   command to instead (mis)treat it as an option.  This is now
-   prevented by forbidding such a hostname (which should not impact
-   any real-world usage).
-
- * Similarly, when GIT_PROXY_COMMAND is configured, the command is
-   run with host and port that are parsed out from "ssh://..." URL;
-   a poorly written GIT_PROXY_COMMAND could be tricked into treating
-   a string that begins with a dash "-" as an option.  This is now
-   prevented by forbidding such a hostname and port number (again,
-   which should not impact any real-world usage).
-
- * In the same spirit, a repository name that begins with a dash "-"
-   is also forbidden now.
