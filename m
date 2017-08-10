@@ -2,36 +2,36 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A48A7208B4
-	for <e@80x24.org>; Thu, 10 Aug 2017 19:25:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D8039208B4
+	for <e@80x24.org>; Thu, 10 Aug 2017 19:25:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753286AbdHJTZT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Aug 2017 15:25:19 -0400
-Received: from vie01a-dmta-pe07-1.mx.upcmail.net ([84.116.36.17]:43338 "EHLO
-        vie01a-dmta-pe05-1.mx.upcmail.net" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1753206AbdHJTZR (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 10 Aug 2017 15:25:17 -0400
+        id S1753293AbdHJTZW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Aug 2017 15:25:22 -0400
+Received: from vie01a-dmta-pe04-3.mx.upcmail.net ([62.179.121.165]:32101 "EHLO
+        vie01a-dmta-pe04-3.mx.upcmail.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753279AbdHJTZT (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 10 Aug 2017 15:25:19 -0400
 Received: from [172.31.216.44] (helo=vie01a-pemc-psmtp-pe02)
-        by vie01a-dmta-pe07.mx.upcmail.net with esmtp (Exim 4.88)
+        by vie01a-dmta-pe04.mx.upcmail.net with esmtp (Exim 4.88)
         (envelope-from <martin.koegler@chello.at>)
-        id 1dft51-00015Q-KR
-        for git@vger.kernel.org; Thu, 10 Aug 2017 21:25:15 +0200
+        id 1dft54-0004ln-17
+        for git@vger.kernel.org; Thu, 10 Aug 2017 21:25:18 +0200
 Received: from master.zuhause ([80.108.242.240])
         by vie01a-pemc-psmtp-pe02 with SMTP @ mailcloud.upcmail.net
-        id vXRD1v00s5BuuEg01XRElY; Thu, 10 Aug 2017 21:25:14 +0200
+        id vXRB1v01u5BuuEg01XRCkm; Thu, 10 Aug 2017 21:25:13 +0200
 X-SourceIP: 80.108.242.240
 Received: by master.zuhause (Postfix, from userid 1006)
-        id 72FA445D4513; Thu, 10 Aug 2017 21:25:13 +0200 (CEST)
+        id D001245D4513; Thu, 10 Aug 2017 21:25:11 +0200 (CEST)
 From:   Martin Koegler <martin.koegler@chello.at>
 To:     git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de
 Cc:     Martin Koegler <martin.koegler@chello.at>
-Subject: [PATCH 9/9] Convert cache functions to size_t
-Date:   Thu, 10 Aug 2017 21:25:10 +0200
-Message-Id: <1502393110-31996-5-git-send-email-martin@mail.zuhause>
+Subject: [PATCH 6/9] Use size_t for sha1
+Date:   Thu, 10 Aug 2017 21:25:07 +0200
+Message-Id: <1502393110-31996-2-git-send-email-martin@mail.zuhause>
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <1502393110-31996-1-git-send-email-martin@mail.zuhause>
 References: <1502393110-31996-1-git-send-email-martin@mail.zuhause>
@@ -44,263 +44,106 @@ From: Martin Koegler <martin.koegler@chello.at>
 
 Signed-off-by: Martin Koegler <martin.koegler@chello.at>
 ---
- cache-tree.c  |  6 +++---
- cache-tree.h  |  2 +-
- cache.h       |  6 +++---
- convert.c     | 18 +++++++++---------
- environment.c |  4 ++--
- read-cache.c  | 18 +++++++++---------
- 6 files changed, 27 insertions(+), 27 deletions(-)
+ block-sha1/sha1.c | 2 +-
+ block-sha1/sha1.h | 2 +-
+ ppc/sha1.c        | 2 +-
+ ppc/sha1.h        | 2 +-
+ sha1dc_git.c      | 2 +-
+ sha1dc_git.h      | 2 +-
+ sha1dc_git_ext.h  | 2 +-
+ 7 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/cache-tree.c b/cache-tree.c
-index 2440d1d..77b3253 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -485,10 +485,10 @@ void cache_tree_write(struct strbuf *sb, struct cache_tree *root)
- 	write_one(sb, root, "", 0);
+diff --git a/block-sha1/sha1.c b/block-sha1/sha1.c
+index 22b125c..8681031 100644
+--- a/block-sha1/sha1.c
++++ b/block-sha1/sha1.c
+@@ -203,7 +203,7 @@ void blk_SHA1_Init(blk_SHA_CTX *ctx)
+ 	ctx->H[4] = 0xc3d2e1f0;
  }
  
--static struct cache_tree *read_one(const char **buffer, unsigned long *size_p)
-+static struct cache_tree *read_one(const char **buffer, size_t *size_p)
+-void blk_SHA1_Update(blk_SHA_CTX *ctx, const void *data, unsigned long len)
++void blk_SHA1_Update(blk_SHA_CTX *ctx, const void *data, size_t len)
  {
- 	const char *buf = *buffer;
--	unsigned long size = *size_p;
-+	size_t size = *size_p;
- 	const char *cp;
- 	char *ep;
- 	struct cache_tree *it;
-@@ -568,7 +568,7 @@ static struct cache_tree *read_one(const char **buffer, unsigned long *size_p)
- 	return NULL;
+ 	unsigned int lenW = ctx->size & 63;
+ 
+diff --git a/block-sha1/sha1.h b/block-sha1/sha1.h
+index 4df6747..9fb0441 100644
+--- a/block-sha1/sha1.h
++++ b/block-sha1/sha1.h
+@@ -13,7 +13,7 @@ typedef struct {
+ } blk_SHA_CTX;
+ 
+ void blk_SHA1_Init(blk_SHA_CTX *ctx);
+-void blk_SHA1_Update(blk_SHA_CTX *ctx, const void *dataIn, unsigned long len);
++void blk_SHA1_Update(blk_SHA_CTX *ctx, const void *dataIn, size_t len);
+ void blk_SHA1_Final(unsigned char hashout[20], blk_SHA_CTX *ctx);
+ 
+ #define platform_SHA_CTX	blk_SHA_CTX
+diff --git a/ppc/sha1.c b/ppc/sha1.c
+index ec6a192..f0dfcfb 100644
+--- a/ppc/sha1.c
++++ b/ppc/sha1.c
+@@ -25,7 +25,7 @@ int ppc_SHA1_Init(ppc_SHA_CTX *c)
+ 	return 0;
  }
  
--struct cache_tree *cache_tree_read(const char *buffer, unsigned long size)
-+struct cache_tree *cache_tree_read(const char *buffer, size_t size)
+-int ppc_SHA1_Update(ppc_SHA_CTX *c, const void *ptr, unsigned long n)
++int ppc_SHA1_Update(ppc_SHA_CTX *c, const void *ptr, size_t n)
  {
- 	if (buffer[0])
- 		return NULL; /* not the whole tree */
-diff --git a/cache-tree.h b/cache-tree.h
-index f7b9cab..df59e6e 100644
---- a/cache-tree.h
-+++ b/cache-tree.h
-@@ -28,7 +28,7 @@ void cache_tree_invalidate_path(struct index_state *, const char *);
- struct cache_tree_sub *cache_tree_sub(struct cache_tree *, const char *);
+ 	unsigned long nb;
+ 	const unsigned char *p = ptr;
+diff --git a/ppc/sha1.h b/ppc/sha1.h
+index 9b24b32..52cac23 100644
+--- a/ppc/sha1.h
++++ b/ppc/sha1.h
+@@ -16,7 +16,7 @@ typedef struct {
+ } ppc_SHA_CTX;
  
- void cache_tree_write(struct strbuf *, struct cache_tree *root);
--struct cache_tree *cache_tree_read(const char *buffer, unsigned long size);
-+struct cache_tree *cache_tree_read(const char *buffer, size_t size);
+ int ppc_SHA1_Init(ppc_SHA_CTX *c);
+-int ppc_SHA1_Update(ppc_SHA_CTX *c, const void *p, unsigned long n);
++int ppc_SHA1_Update(ppc_SHA_CTX *c, const void *p, size_t n);
+ int ppc_SHA1_Final(unsigned char *hash, ppc_SHA_CTX *c);
  
- int cache_tree_fully_valid(struct cache_tree *);
- int cache_tree_update(struct index_state *, int);
-diff --git a/cache.h b/cache.h
-index 9322303..f77d9ec 100644
---- a/cache.h
-+++ b/cache.h
-@@ -667,7 +667,7 @@ extern int chmod_index_entry(struct index_state *, struct cache_entry *ce, char
- extern int ce_same_name(const struct cache_entry *a, const struct cache_entry *b);
- extern void set_object_name_for_intent_to_add_entry(struct cache_entry *ce);
- extern int index_name_is_other(const struct index_state *, const char *, int);
--extern void *read_blob_data_from_index(const struct index_state *, const char *, unsigned long *);
-+extern void *read_blob_data_from_index(const struct index_state *, const char *, size_t *);
+ #define platform_SHA_CTX	ppc_SHA_CTX
+diff --git a/sha1dc_git.c b/sha1dc_git.c
+index 4d32b4f..a9076bc 100644
+--- a/sha1dc_git.c
++++ b/sha1dc_git.c
+@@ -11,7 +11,7 @@ void git_SHA1DCFinal(unsigned char hash[20], SHA1_CTX *ctx)
+ 	    sha1_to_hex(hash));
+ }
  
- /* do stat comparison even if CE_VALID is true */
- #define CE_MATCH_IGNORE_VALID		01
-@@ -743,8 +743,8 @@ extern int pack_compression_level;
- extern size_t packed_git_window_size;
- extern size_t packed_git_limit;
- extern size_t delta_base_cache_limit;
--extern unsigned long big_file_threshold;
--extern unsigned long pack_size_limit_cfg;
-+extern size_t big_file_threshold;
-+extern size_t pack_size_limit_cfg;
- 
+-void git_SHA1DCUpdate(SHA1_CTX *ctx, const void *vdata, unsigned long len)
++void git_SHA1DCUpdate(SHA1_CTX *ctx, const void *vdata, size_t len)
+ {
+ 	const char *data = vdata;
+ 	/* We expect an unsigned long, but sha1dc only takes an int */
+diff --git a/sha1dc_git.h b/sha1dc_git.h
+index a8a5c1d..f6051aa 100644
+--- a/sha1dc_git.h
++++ b/sha1dc_git.h
+@@ -11,7 +11,7 @@ void git_SHA1DCFinal(unsigned char [20], SHA1_CTX *);
  /*
-  * Accessors for the core.sharedrepository config which lazy-load the value
-diff --git a/convert.c b/convert.c
-index 1012462..445599b 100644
---- a/convert.c
-+++ b/convert.c
-@@ -41,9 +41,9 @@ struct text_stat {
- 	unsigned printable, nonprintable;
- };
- 
--static void gather_stats(const char *buf, unsigned long size, struct text_stat *stats)
-+static void gather_stats(const char *buf, size_t size, struct text_stat *stats)
- {
--	unsigned long i;
-+	size_t i;
- 
- 	memset(stats, 0, sizeof(*stats));
- 
-@@ -90,7 +90,7 @@ static void gather_stats(const char *buf, unsigned long size, struct text_stat *
-  * The same heuristics as diff.c::mmfile_is_binary()
-  * We treat files with bare CR as binary
+  * Same as SHA1DCUpdate, but adjust types to match git's usual interface.
   */
--static int convert_is_binary(unsigned long size, const struct text_stat *stats)
-+static int convert_is_binary(size_t size, const struct text_stat *stats)
- {
- 	if (stats->lonecr)
- 		return 1;
-@@ -101,7 +101,7 @@ static int convert_is_binary(unsigned long size, const struct text_stat *stats)
- 	return 0;
- }
+-void git_SHA1DCUpdate(SHA1_CTX *ctx, const void *data, unsigned long len);
++void git_SHA1DCUpdate(SHA1_CTX *ctx, const void *data, size_t len);
  
--static unsigned int gather_convert_stats(const char *data, unsigned long size)
-+static unsigned int gather_convert_stats(const char *data, size_t size)
- {
- 	struct text_stat stats;
- 	int ret = 0;
-@@ -118,7 +118,7 @@ static unsigned int gather_convert_stats(const char *data, unsigned long size)
- 	return ret;
- }
- 
--static const char *gather_convert_stats_ascii(const char *data, unsigned long size)
-+static const char *gather_convert_stats_ascii(const char *data, size_t size)
- {
- 	unsigned int convert_stats = gather_convert_stats(data, size);
- 
-@@ -140,7 +140,7 @@ const char *get_cached_convert_stats_ascii(const struct index_state *istate,
- 					   const char *path)
- {
- 	const char *ret;
--	unsigned long sz;
-+	size_t sz;
- 	void *data = read_blob_data_from_index(istate, path, &sz);
- 	ret = gather_convert_stats_ascii(data, sz);
- 	free(data);
-@@ -222,7 +222,7 @@ static void check_safe_crlf(const char *path, enum crlf_action crlf_action,
- 
- static int has_cr_in_index(const struct index_state *istate, const char *path)
- {
--	unsigned long sz;
-+	size_t sz;
- 	void *data;
- 	int has_cr;
- 
-@@ -384,7 +384,7 @@ static int crlf_to_worktree(const char *path, const char *src, size_t len,
- 
- struct filter_params {
- 	const char *src;
--	unsigned long size;
-+	size_t size;
- 	int fd;
- 	const char *cmd;
- 	const char *path;
-@@ -798,7 +798,7 @@ static int read_convert_config(const char *var, const char *value, void *cb)
- 	return 0;
- }
- 
--static int count_ident(const char *cp, unsigned long size)
-+static int count_ident(const char *cp, size_t size)
- {
- 	/*
- 	 * "$Id: 0000000000000000000000000000000000000000 $" <=> "$Id$"
-diff --git a/environment.c b/environment.c
-index 3fd4b10..7cf201f 100644
---- a/environment.c
-+++ b/environment.c
-@@ -40,7 +40,7 @@ int fsync_object_files;
- size_t packed_git_window_size = DEFAULT_PACKED_GIT_WINDOW_SIZE;
- size_t packed_git_limit = DEFAULT_PACKED_GIT_LIMIT;
- size_t delta_base_cache_limit = 96 * 1024 * 1024;
--unsigned long big_file_threshold = 512 * 1024 * 1024;
-+size_t big_file_threshold = 512 * 1024 * 1024;
- int pager_use_color = 1;
- const char *editor_program;
- const char *askpass_program;
-@@ -63,7 +63,7 @@ int grafts_replace_parents = 1;
- int core_apply_sparse_checkout;
- int merge_log_config = -1;
- int precomposed_unicode = -1; /* see probe_utf8_pathname_composition() */
--unsigned long pack_size_limit_cfg;
-+size_t pack_size_limit_cfg;
- enum hide_dotfiles_type hide_dotfiles = HIDE_DOTFILES_DOTGITONLY;
- enum log_refs_config log_all_ref_updates = LOG_REFS_UNSET;
- 
-diff --git a/read-cache.c b/read-cache.c
-index 854a5d6..8a32619 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1509,7 +1509,7 @@ struct ondisk_cache_entry_extended {
- /* Allow fsck to force verification of the index checksum. */
- int verify_index_checksum;
- 
--static int verify_hdr(struct cache_header *hdr, unsigned long size)
-+static int verify_hdr(struct cache_header *hdr, size_t size)
- {
- 	git_SHA_CTX c;
- 	unsigned char sha1[20];
-@@ -1533,7 +1533,7 @@ static int verify_hdr(struct cache_header *hdr, unsigned long size)
- }
- 
- static int read_index_extension(struct index_state *istate,
--				const char *ext, void *data, unsigned long sz)
-+				const char *ext, void *data, size_t sz)
- {
- 	switch (CACHE_EXT(ext)) {
- 	case CACHE_EXT_TREE:
-@@ -1602,7 +1602,7 @@ static struct cache_entry *cache_entry_from_ondisk(struct ondisk_cache_entry *on
-  * number of bytes to be stripped from the end of the previous name,
-  * and the bytes to append to the result, to come up with its name.
+ #define platform_SHA_CTX SHA1_CTX
+ #define platform_SHA1_Init SHA1DCInit
+diff --git a/sha1dc_git_ext.h b/sha1dc_git_ext.h
+index d0ea8ce..aede828 100644
+--- a/sha1dc_git_ext.h
++++ b/sha1dc_git_ext.h
+@@ -17,7 +17,7 @@ void git_SHA1DCFinal(unsigned char [20], SHA1_CTX *);
+ /*
+  * Same as SHA1DCUpdate, but adjust types to match git's usual interface.
   */
--static unsigned long expand_name_field(struct strbuf *name, const char *cp_)
-+static size_t expand_name_field(struct strbuf *name, const char *cp_)
- {
- 	const unsigned char *ep, *cp = (const unsigned char *)cp_;
- 	size_t len = decode_varint(&cp);
-@@ -1617,7 +1617,7 @@ static unsigned long expand_name_field(struct strbuf *name, const char *cp_)
- }
+-void git_SHA1DCUpdate(SHA1_CTX *ctx, const void *data, unsigned long len);
++void git_SHA1DCUpdate(SHA1_CTX *ctx, const void *data, size_t len);
  
- static struct cache_entry *create_from_disk(struct ondisk_cache_entry *ondisk,
--					    unsigned long *ent_size,
-+					    size_t *ent_size,
- 					    struct strbuf *previous_name)
- {
- 	struct cache_entry *ce;
-@@ -1651,7 +1651,7 @@ static struct cache_entry *create_from_disk(struct ondisk_cache_entry *ondisk,
- 
- 		*ent_size = ondisk_ce_size(ce);
- 	} else {
--		unsigned long consumed;
-+		size_t consumed;
- 		consumed = expand_name_field(previous_name, name);
- 		ce = cache_entry_from_ondisk(ondisk, flags,
- 					     previous_name->buf,
-@@ -1728,7 +1728,7 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
- {
- 	int fd, i;
- 	struct stat st;
--	unsigned long src_offset;
-+	size_t src_offset;
- 	struct cache_header *hdr;
- 	void *mmap;
- 	size_t mmap_size;
-@@ -1778,7 +1778,7 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
- 	for (i = 0; i < istate->cache_nr; i++) {
- 		struct ondisk_cache_entry *disk_ce;
- 		struct cache_entry *ce;
--		unsigned long consumed;
-+		size_t consumed;
- 
- 		disk_ce = (struct ondisk_cache_entry *)((char *)mmap + src_offset);
- 		ce = create_from_disk(disk_ce, &consumed, previous_name);
-@@ -1914,7 +1914,7 @@ int unmerged_index(const struct index_state *istate)
- 
- #define WRITE_BUFFER_SIZE 8192
- static unsigned char write_buffer[WRITE_BUFFER_SIZE];
--static unsigned long write_buffer_len;
-+static size_t write_buffer_len;
- 
- static int ce_write_flush(git_SHA_CTX *context, int fd)
- {
-@@ -2580,7 +2580,7 @@ int index_name_is_other(const struct index_state *istate, const char *name,
- }
- 
- void *read_blob_data_from_index(const struct index_state *istate,
--				const char *path, unsigned long *size)
-+				const char *path, size_t *size)
- {
- 	int pos, len;
- 	size_t sz;
+ #define platform_SHA_CTX SHA1_CTX
+ #define platform_SHA1_Init git_SHA1DCInit
 -- 
 2.1.4
 
