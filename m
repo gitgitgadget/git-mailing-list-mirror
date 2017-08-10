@@ -2,147 +2,245 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7D7ED208B4
-	for <e@80x24.org>; Thu, 10 Aug 2017 18:04:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0689A208B4
+	for <e@80x24.org>; Thu, 10 Aug 2017 18:13:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753123AbdHJSER (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Aug 2017 14:04:17 -0400
-Received: from cloud.peff.net ([104.130.231.41]:34760 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1753064AbdHJSEQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Aug 2017 14:04:16 -0400
-Received: (qmail 19931 invoked by uid 109); 10 Aug 2017 18:04:16 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 10 Aug 2017 18:04:16 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6889 invoked by uid 111); 10 Aug 2017 18:04:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Thu, 10 Aug 2017 14:04:39 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Aug 2017 14:04:14 -0400
-Date:   Thu, 10 Aug 2017 14:04:14 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>
-Subject: [PATCH v3 5/5] interpret-trailers: add --parse convenience option
-Message-ID: <20170810180414.figto5eri4ebi632@sigill.intra.peff.net>
-References: <20170810180326.4kkmawywvdbuzwnp@sigill.intra.peff.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170810180326.4kkmawywvdbuzwnp@sigill.intra.peff.net>
+        id S1753104AbdHJSNY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Aug 2017 14:13:24 -0400
+Received: from vie01a-dmta-pe05-1.mx.upcmail.net ([84.116.36.11]:47543 "EHLO
+        vie01a-dmta-pe05-1.mx.upcmail.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752894AbdHJSNX (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 10 Aug 2017 14:13:23 -0400
+Received: from [172.31.216.44] (helo=vie01a-pemc-psmtp-pe02)
+        by vie01a-dmta-pe05.mx.upcmail.net with esmtp (Exim 4.88)
+        (envelope-from <martin.koegler@chello.at>)
+        id 1dfrxR-0001w9-HC
+        for git@vger.kernel.org; Thu, 10 Aug 2017 20:13:21 +0200
+Received: from master.zuhause ([80.108.242.240])
+        by vie01a-pemc-psmtp-pe02 with SMTP @ mailcloud.upcmail.net
+        id vWDG1v00K5BuuEg01WDHGa; Thu, 10 Aug 2017 20:13:17 +0200
+X-SourceIP: 80.108.242.240
+Received: by master.zuhause (Postfix, from userid 1006)
+        id A6D4245D4512; Thu, 10 Aug 2017 20:13:15 +0200 (CEST)
+From:   Martin Koegler <martin.koegler@chello.at>
+To:     git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de
+Cc:     Martin Koegler <martin.koegler@chello.at>
+Subject: [PATCH 3/4] Convert zlib.c to size_t
+Date:   Thu, 10 Aug 2017 20:13:08 +0200
+Message-Id: <1502388789-5775-1-git-send-email-martin@mail.zuhause>
+X-Mailer: git-send-email 2.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The last few commits have added command line options that
-can turn interpret-trailers into a parsing tool. Since
-they'd most often be used together, let's provide a
-convenient single option for callers to invoke this mode.
+From: Martin Koegler <martin.koegler@chello.at>
 
-This is implemented as a callback rather than a boolean so
-that its effect is applied immediately, as if those options
-had been specified. Later options can then override them.
-E.g.:
-
-  git interpret-trailers --parse --no-normalize
-
-would work.
-
-Let's also update the documentation to make clear that this
-parsing mode behaves quite differently than the normal
-"add trailers to the input" mode.
-
-Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Martin Koegler <martin.koegler@chello.at>
 ---
- Documentation/git-interpret-trailers.txt | 21 ++++++++++++++-------
- builtin/interpret-trailers.c             | 12 ++++++++++++
- 2 files changed, 26 insertions(+), 7 deletions(-)
+ builtin/pack-objects.c | 10 +++++-----
+ cache.h                | 12 ++++++------
+ pack-check.c           |  6 +++---
+ pack.h                 |  2 +-
+ sha1_file.c            |  6 +++---
+ wrapper.c              |  8 ++++----
+ zlib.c                 |  8 ++++----
+ 7 files changed, 26 insertions(+), 26 deletions(-)
 
-diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
-index 598b74efd7..54c8b081c6 100644
---- a/Documentation/git-interpret-trailers.txt
-+++ b/Documentation/git-interpret-trailers.txt
-@@ -3,24 +3,27 @@ git-interpret-trailers(1)
- 
- NAME
- ----
--git-interpret-trailers - help add structured information into commit messages
-+git-interpret-trailers - add or parse structured information in commit messages
- 
- SYNOPSIS
- --------
- [verse]
--'git interpret-trailers' [--in-place] [--trim-empty] [(--trailer <token>[(=|:)<value>])...] [<file>...]
-+'git interpret-trailers' [options] [(--trailer <token>[(=|:)<value>])...] [<file>...]
-+'git interpret-trailers' [options] [--parse] [<file>...]
- 
- DESCRIPTION
- -----------
--Help adding 'trailers' lines, that look similar to RFC 822 e-mail
-+Help parsing or adding 'trailers' lines, that look similar to RFC 822 e-mail
- headers, at the end of the otherwise free-form part of a commit
- message.
- 
- This command reads some patches or commit messages from either the
--<file> arguments or the standard input if no <file> is specified. Then
--this command applies the arguments passed using the `--trailer`
--option, if any, to the commit message part of each input file. The
--result is emitted on the standard output.
-+<file> arguments or the standard input if no <file> is specified. If
-+`--parse` is specified, the output consists of the parsed trailers.
-+
-+Otherwise, the this command applies the arguments passed using the
-+`--trailer` option, if any, to the commit message part of each input
-+file. The result is emitted on the standard output.
- 
- Some configuration variables control the way the `--trailer` arguments
- are applied to each commit message and the way any existing trailer in
-@@ -93,6 +96,10 @@ OPTIONS
- 	line, with any existing whitespace continuation folded into a
- 	single line.
- 
-+--parse::
-+	A convenience alias for `--only-trailers --only-input
-+	--normalize`.
-+
- CONFIGURATION VARIABLES
- -----------------------
- 
-diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
-index b7592bedd9..010c181492 100644
---- a/builtin/interpret-trailers.c
-+++ b/builtin/interpret-trailers.c
-@@ -16,6 +16,16 @@ static const char * const git_interpret_trailers_usage[] = {
- 	NULL
- };
- 
-+static int parse_opt_parse(const struct option *opt, const char *arg,
-+			   int unset)
-+{
-+	struct process_trailer_options *v = opt->value;
-+	v->only_trailers = 1;
-+	v->only_input = 1;
-+	v->normalize = 1;
-+	return 0;
-+}
-+
- int cmd_interpret_trailers(int argc, const char **argv, const char *prefix)
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index d94fd17..aa70f80 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -222,15 +222,15 @@ static void copy_pack_data(struct sha1file *f,
+ 		struct packed_git *p,
+ 		struct pack_window **w_curs,
+ 		off_t offset,
+-		off_t len)
++		size_t len)
  {
- 	struct process_trailer_options opts = PROCESS_TRAILER_OPTIONS_INIT;
-@@ -27,6 +37,8 @@ int cmd_interpret_trailers(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL(0, "only-trailers", &opts.only_trailers, N_("output only the trailers")),
- 		OPT_BOOL(0, "only-input", &opts.only_input, N_("do not apply config rules")),
- 		OPT_BOOL(0, "normalize", &opts.normalize, N_("normalize trailer formatting")),
-+		{ OPTION_CALLBACK, 0, "parse", &opts, NULL, N_("set parsing options"),
-+			PARSE_OPT_NOARG | PARSE_OPT_NONEG, parse_opt_parse },
- 		OPT_STRING_LIST(0, "trailer", &trailers, N_("trailer"),
- 				N_("trailer(s) to add")),
- 		OPT_END()
+ 	unsigned char *in;
+-	unsigned long avail;
++	size_t avail;
+ 
+ 	while (len) {
+ 		in = use_pack(p, w_curs, offset, &avail);
+ 		if (avail > len)
+-			avail = (unsigned long)len;
++			avail = len;
+ 		sha1write(f, in, avail);
+ 		offset += avail;
+ 		len -= avail;
+@@ -1388,8 +1388,8 @@ static void check_object(struct object_entry *entry)
+ 		struct pack_window *w_curs = NULL;
+ 		const unsigned char *base_ref = NULL;
+ 		struct object_entry *base_entry;
+-		unsigned long used, used_0;
+-		unsigned long avail;
++		size_t used, used_0;
++		size_t avail;
+ 		off_t ofs;
+ 		unsigned char *buf, c;
+ 
+diff --git a/cache.h b/cache.h
+index 26a3eaa..9185763 100644
+--- a/cache.h
++++ b/cache.h
+@@ -42,10 +42,10 @@
+ #include <zlib.h>
+ typedef struct git_zstream {
+ 	z_stream z;
+-	unsigned long avail_in;
+-	unsigned long avail_out;
+-	unsigned long total_in;
+-	unsigned long total_out;
++	size_t avail_in;
++	size_t avail_out;
++	size_t total_in;
++	size_t total_out;
+ 	unsigned char *next_in;
+ 	unsigned char *next_out;
+ } git_zstream;
+@@ -62,7 +62,7 @@ void git_deflate_end(git_zstream *);
+ int git_deflate_abort(git_zstream *);
+ int git_deflate_end_gently(git_zstream *);
+ int git_deflate(git_zstream *, int flush);
+-unsigned long git_deflate_bound(git_zstream *, unsigned long);
++size_t git_deflate_bound(git_zstream *, size_t);
+ 
+ /* The length in bytes and in hex digits of an object name (SHA-1 value). */
+ #define GIT_SHA1_RAWSZ 20
+@@ -1678,7 +1678,7 @@ extern int open_pack_index(struct packed_git *);
+  */
+ extern void close_pack_index(struct packed_git *);
+ 
+-extern unsigned char *use_pack(struct packed_git *, struct pack_window **, off_t, unsigned long *);
++extern unsigned char *use_pack(struct packed_git *, struct pack_window **, off_t, size_t *);
+ extern void close_pack_windows(struct packed_git *);
+ extern void close_all_packs(void);
+ extern void unuse_pack(struct pack_window **);
+diff --git a/pack-check.c b/pack-check.c
+index 6f7714f..8cc2364 100644
+--- a/pack-check.c
++++ b/pack-check.c
+@@ -24,13 +24,13 @@ static int compare_entries(const void *e1, const void *e2)
+ }
+ 
+ int check_pack_crc(struct packed_git *p, struct pack_window **w_curs,
+-		   off_t offset, off_t len, unsigned int nr)
++		   off_t offset, size_t len, unsigned int nr)
+ {
+ 	const uint32_t *index_crc;
+ 	uint32_t data_crc = crc32(0, NULL, 0);
+ 
+ 	do {
+-		unsigned long avail;
++		size_t avail;
+ 		void *data = use_pack(p, w_curs, offset, &avail);
+ 		if (avail > len)
+ 			avail = len;
+@@ -65,7 +65,7 @@ static int verify_packfile(struct packed_git *p,
+ 
+ 	git_SHA1_Init(&ctx);
+ 	do {
+-		unsigned long remaining;
++		size_t remaining;
+ 		unsigned char *in = use_pack(p, w_curs, offset, &remaining);
+ 		offset += remaining;
+ 		if (!pack_sig_ofs)
+diff --git a/pack.h b/pack.h
+index 8294341..ca89ad0 100644
+--- a/pack.h
++++ b/pack.h
+@@ -78,7 +78,7 @@ struct progress;
+ typedef int (*verify_fn)(const struct object_id *, enum object_type, unsigned long, void*, int*);
+ 
+ extern const char *write_idx_file(const char *index_name, struct pack_idx_entry **objects, int nr_objects, const struct pack_idx_option *, const unsigned char *sha1);
+-extern int check_pack_crc(struct packed_git *p, struct pack_window **w_curs, off_t offset, off_t len, unsigned int nr);
++extern int check_pack_crc(struct packed_git *p, struct pack_window **w_curs, off_t offset, size_t len, unsigned int nr);
+ extern int verify_pack_index(struct packed_git *);
+ extern int verify_pack(struct packed_git *, verify_fn fn, struct progress *, uint32_t);
+ extern off_t write_pack_header(struct sha1file *f, uint32_t);
+diff --git a/sha1_file.c b/sha1_file.c
+index 97b39b0..3428172 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1228,7 +1228,7 @@ static int in_window(struct pack_window *win, off_t offset)
+ unsigned char *use_pack(struct packed_git *p,
+ 		struct pack_window **w_cursor,
+ 		off_t offset,
+-		unsigned long *left)
++		size_t *left)
+ {
+ 	struct pack_window *win = *w_cursor;
+ 
+@@ -2122,8 +2122,8 @@ int unpack_object_header(struct packed_git *p,
+ 			 size_t *sizep)
+ {
+ 	unsigned char *base;
+-	unsigned long left;
+-	unsigned long used;
++	size_t left;
++	size_t used;
+ 	enum object_type type;
+ 
+ 	/* use_pack() assures us we have [base, base + 20) available
+diff --git a/wrapper.c b/wrapper.c
+index 36630e5..c4253f7 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -67,11 +67,11 @@ static void *do_xmalloc(size_t size, int gentle)
+ 			ret = malloc(1);
+ 		if (!ret) {
+ 			if (!gentle)
+-				die("Out of memory, malloc failed (tried to allocate %lu bytes)",
+-				    (unsigned long)size);
++				die("Out of memory, malloc failed (tried to allocate %" PRIuMAX " bytes)",
++				    (uintmax_t)size);
+ 			else {
+-				error("Out of memory, malloc failed (tried to allocate %lu bytes)",
+-				      (unsigned long)size);
++				error("Out of memory, malloc failed (tried to allocate %" PRIuMAX " bytes)",
++				      (uintmax_t)size);
+ 				return NULL;
+ 			}
+ 		}
+diff --git a/zlib.c b/zlib.c
+index 4223f1a..e98e499 100644
+--- a/zlib.c
++++ b/zlib.c
+@@ -29,7 +29,7 @@ static const char *zerr_to_string(int status)
+  */
+ /* #define ZLIB_BUF_MAX ((uInt)-1) */
+ #define ZLIB_BUF_MAX ((uInt) 1024 * 1024 * 1024) /* 1GB */
+-static inline uInt zlib_buf_cap(unsigned long len)
++static inline uInt zlib_buf_cap(size_t len)
+ {
+ 	return (ZLIB_BUF_MAX < len) ? ZLIB_BUF_MAX : len;
+ }
+@@ -46,8 +46,8 @@ static void zlib_pre_call(git_zstream *s)
+ 
+ static void zlib_post_call(git_zstream *s)
+ {
+-	unsigned long bytes_consumed;
+-	unsigned long bytes_produced;
++	size_t bytes_consumed;
++	size_t bytes_produced;
+ 
+ 	bytes_consumed = s->z.next_in - s->next_in;
+ 	bytes_produced = s->z.next_out - s->next_out;
+@@ -150,7 +150,7 @@ int git_inflate(git_zstream *strm, int flush)
+ #define deflateBound(c,s)  ((s) + (((s) + 7) >> 3) + (((s) + 63) >> 6) + 11)
+ #endif
+ 
+-unsigned long git_deflate_bound(git_zstream *strm, unsigned long size)
++size_t git_deflate_bound(git_zstream *strm, size_t size)
+ {
+ 	return deflateBound(&strm->z, size);
+ }
 -- 
-2.14.0.614.g0beb26d5e9
+2.1.4
+
