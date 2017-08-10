@@ -2,70 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 08D14208B4
-	for <e@80x24.org>; Thu, 10 Aug 2017 21:10:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62B47208B4
+	for <e@80x24.org>; Thu, 10 Aug 2017 21:20:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753126AbdHJVKm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Aug 2017 17:10:42 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35266 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752816AbdHJVKl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Aug 2017 17:10:41 -0400
-Received: (qmail 28741 invoked by uid 109); 10 Aug 2017 21:10:41 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 10 Aug 2017 21:10:41 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9828 invoked by uid 111); 10 Aug 2017 21:11:04 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Thu, 10 Aug 2017 17:11:04 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Aug 2017 17:10:39 -0400
-Date:   Thu, 10 Aug 2017 17:10:39 -0400
-From:   Jeff King <peff@peff.net>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH 4/5] interpret-trailers: add an option to normalize output
-Message-ID: <20170810211039.okpwglvcmkngzri2@sigill.intra.peff.net>
-References: <20170810080246.njjd5zkphytzmlda@sigill.intra.peff.net>
- <20170810080325.tehbbgajm4cgn2ku@sigill.intra.peff.net>
- <CAGZ79kabhz-FWNyjB6KjF4qpGfSqONBNVBcVd=+J=5XT+emz-A@mail.gmail.com>
- <20170810183713.z75bwk5eeavi6z22@sigill.intra.peff.net>
- <CAP8UFD2kWW41NDHVKjzdL2O2=QAeEtzKEPdJW3zR-zoeTiJPgw@mail.gmail.com>
- <CAGZ79kYeNb3sN4b8xZvYAjQOXWKP9oi+dNsJmS8fyz+iUH9p8A@mail.gmail.com>
- <CAP8UFD08oyY9eK-0Ydm2qh2etvc2_QGc0ujNswGUgUumwhy4+w@mail.gmail.com>
+        id S1753027AbdHJVUL (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Aug 2017 17:20:11 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56226 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752882AbdHJVUK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Aug 2017 17:20:10 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 408169F511;
+        Thu, 10 Aug 2017 17:20:03 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=pbAFXy5M8paiBNyJJUtNYQvIikI=; b=QjvUZ3
+        4hBmsbWyUA507S6CX5e8XzpSm7ZaIUJmZDjXCMF2hmgzi28veLNqwsx9nM7chsDT
+        hkbyHqWZTpKkiSHWpiZCnUemk87sLIFteZhewlcQERPEtaxall3FCEGse69l5EEy
+        mcFxwuvjSnM6a9D0SncGyXtdzcBjhP7RoRiCM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=JywGQ5z98xN1nRcszpv0vQPPFBtufP8t
+        6skEwTS3FJHnInqa9tpKZaVqDJ0w0HwFHvxxx7kJnNFdNs5IXATOZLdB7MGPRBSB
+        xrgVtm7y2cTOGivqEg7pa5Exhw2MsNg4YKFH5WFUV8g1sAJSZwjqK//7mGF1CDk3
+        45i2K1fUxmE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C7DE89F50D;
+        Thu, 10 Aug 2017 17:20:02 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 205AD9F50A;
+        Thu, 10 Aug 2017 17:20:00 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com
+Subject: Re: [PATCH v2 00/25] Move exported packfile funcs to its own file
+References: <cover.1502220307.git.jonathantanmy@google.com>
+        <cover.1502241234.git.jonathantanmy@google.com>
+Date:   Thu, 10 Aug 2017 14:19:59 -0700
+In-Reply-To: <cover.1502241234.git.jonathantanmy@google.com> (Jonathan Tan's
+        message of "Tue, 8 Aug 2017 18:22:32 -0700")
+Message-ID: <xmqq7eyb2k8w.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAP8UFD08oyY9eK-0Ydm2qh2etvc2_QGc0ujNswGUgUumwhy4+w@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: AB4BB2CE-7E11-11E7-BE06-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 10, 2017 at 11:06:40PM +0200, Christian Couder wrote:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-> >> Related to this, I wonder if people might want to "normalize" in
-> >> different ways later. If that happens, we might regret having called
-> >> this option "--normalize" instead of "--one-per-line" for example.
-> >
-> > What is normal?
-> >
-> > Maybe --style=[one-line, wrapped:72, rfc, json, xml, ...]
-> > then?
-> 
-> Yeah, we could go there right now (using perhaps "--pretty" or
-> "--format" instead of "--style", so that we are more consistent with
-> other commands), but on the other hand we don't know yet if the other
-> formats will really be needed.
+> Here is the complete patch set. I have only moved the exported functions
+> that operate with packfiles and their static helpers - for example,
+> static functions like freshen_packed_object() that are used only by
+> non-pack-specific functions are not moved.
 
-But some of those things are not 1:1 mappings with normalization.  For
-instance, --json presumably implies --only-trailers. Or are we proposing
-to break the whole commit message down into components and output it all
-as json?
+This will interfere with smaller changes and fixes we want to have
+early in the 'master' branch, so while I think it is a good idea to
+do something like this in the longer term, I'd have to ask you to
+either hold on or rebase this on them (you'll know what else you are
+conflicting with when you try to merge this to 'pu' yourself).
 
--Peff
+Thanks.
