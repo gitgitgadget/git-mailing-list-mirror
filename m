@@ -2,100 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D373208B4
-	for <e@80x24.org>; Thu, 10 Aug 2017 20:29:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2AEE9208B4
+	for <e@80x24.org>; Thu, 10 Aug 2017 20:33:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753169AbdHJU3u (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Aug 2017 16:29:50 -0400
-Received: from washoe.dartmouth.edu ([129.170.30.229]:41312 "EHLO
-        smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753089AbdHJU3t (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Aug 2017 16:29:49 -0400
-Received: from hopa.kiewit.dartmouth.edu ([129.170.31.166] helo=localhost)
-        by smtp.onerussian.com with esmtpsa (TLS1.2:RSA_AES_256_CBC_SHA1:256)
-        (Exim 4.80)
-        (envelope-from <yoh@onerussian.com>)
-        id 1dfu5U-0001VO-0y
-        for git@vger.kernel.org; Thu, 10 Aug 2017 16:29:48 -0400
-Date:   Thu, 10 Aug 2017 16:29:42 -0400
-From:   Yaroslav Halchenko <yoh@onerussian.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Message-ID: <20170810202942.s232yr5stjxmmz4t@hopa.kiewit.dartmouth.edu>
-References: <20170809173928.h2ylvg5tp2p5inem@hopa.kiewit.dartmouth.edu>
- <8e307474-d180-6d98-2c6b-062f2181bd14@web.de>
- <xmqqzib72qvs.fsf@gitster.mtv.corp.google.com>
- <6d7b0d30-48ea-f79f-78cd-088557ea06ac@web.de>
- <20170810200502.rutab4z3ft7gcpjz@sigill.intra.peff.net>
+        id S1753089AbdHJUdW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Aug 2017 16:33:22 -0400
+Received: from sub4.mail.dreamhost.com ([69.163.253.135]:53198 "EHLO
+        homiemail-a111.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752889AbdHJUdV (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 10 Aug 2017 16:33:21 -0400
+Received: from homiemail-a111.g.dreamhost.com (localhost [127.0.0.1])
+        by homiemail-a111.g.dreamhost.com (Postfix) with ESMTP id 80E183C001C18;
+        Thu, 10 Aug 2017 13:33:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=jupiterrise.com; h=from
+        :subject:to:cc:references:message-id:date:mime-version
+        :in-reply-to:content-type:content-transfer-encoding; s=
+        jupiterrise.com; bh=Fncv8tGZee4k7+sOhQ3MQkypeOo=; b=aJ/VcMKA+MRV
+        /BCSmpXjlj3KLPrzWtxwlZkfegOezrDHbkJWK0Hik/X9KwIYBEliyRriCozrYcG5
+        5BqS2WSZUQxnaE7Sn+TSrSddzV6BVEfVSVXh9K3uLRH8P1y4IfB2crcw7I74mSXo
+        Gj2YFSIOOhhBMVYiSMYAEITyk2dJjU8=
+Received: from merlin.tgcnet.jupiterrise.com (2-106-159-182-static.dk.customer.tdc.net [2.106.159.182])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: tgc99@jupiterrise.com)
+        by homiemail-a111.g.dreamhost.com (Postfix) with ESMTPSA id 492D03C001C16;
+        Thu, 10 Aug 2017 13:33:21 -0700 (PDT)
+Received: from [192.168.20.50] (router.tgcnet.jupiterrise.com [192.168.20.58])
+        by merlin.tgcnet.jupiterrise.com (Postfix) with ESMTPSA id 9F2CD605F0;
+        Thu, 10 Aug 2017 22:33:18 +0200 (CEST)
+From:   "Tom G. Christensen" <tgc@jupiterrise.com>
+Subject: Re: [PATCH 0/4] dropping support for older curl
+To:     Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+References: <20170809120024.7phdjzjv54uv5dpz@sigill.intra.peff.net>
+ <alpine.DEB.2.21.1.1708092337350.11175@virtualbox>
+ <20170809214758.p77fqrwxanb4zn5a@sigill.intra.peff.net>
+Message-ID: <873e1f31-2a96-5b72-2f20-a5816cad1b51@jupiterrise.com>
+Date:   Thu, 10 Aug 2017 22:33:18 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20170810200502.rutab4z3ft7gcpjz@sigill.intra.peff.net>
-X-URL:  http://www.onerussian.com
-X-Image-Url: http://www.onerussian.com/img/yoh.png
-X-PGP-Key: http://www.onerussian.com/gpg-yoh.asc
-X-fingerprint: C5B9 05F0 E8D9 FD96 68FF  366F A2DE 2350 62DA 33FA
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-SA-Exim-Connect-IP: 129.170.31.166
-X-SA-Exim-Rcpt-To: git@vger.kernel.org
-X-SA-Exim-Mail-From: yoh@onerussian.com
-Subject: Re: fatal: Out of memory, getdelim failed under NFS mounts
-X-SA-Exim-Version: 4.2.1 (built Mon, 26 Dec 2011 16:57:07 +0000)
-X-SA-Exim-Scanned: Yes (on smtp.onerussian.com)
+In-Reply-To: <20170809214758.p77fqrwxanb4zn5a@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GH
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+[I am resending this since the original does not seem to have made it to 
+the list, at least I cannot find it in any archives]
 
-On Thu, 10 Aug 2017, Jeff King wrote:
+On 09/08/17 23:47, Jeff King wrote:
+> On Wed, Aug 09, 2017 at 11:42:12PM +0200, Johannes Schindelin wrote:
+>> I mean, if we even go out of our way to support the completely outdated
+>> and obsolete .git/branches/ for what is likely a single user, it may not
+>> be the worst to keep those couple of #ifdef guards to keep at least
+>> nominal support for older cURLs?
+> 
+> You've totally ignored the argument I made back then[1], and which I
+> reiterated in this thread. So I'll say it one more time: the more
+> compelling reason is not the #ifdefs, but the fact that the older
+> versions are totally untested. 
 
-> On Thu, Aug 10, 2017 at 09:58:37PM +0200, René Scharfe wrote:
+Perhaps you forgot but I stated in the original thread that I build RPMS 
+for RHEL/CentOS 3, 4, 5, 6 and 7. I still do and I run the testsuite 
+every single time.
+I currently have 2.13.3 up for el4, el5, el6 and el7.
+Only el4 requires any patches, the rest will build out of the box with 
+the vendor supplied version of curl.
 
-> > > So the function is returning -1 and leaving ENOMEM in errno on
-> > > Yaroslav's system.
+The plan was to drop the el4 builds for 2.14.0 to get rid of the patches.
 
-> > > I wonder if we are truly hitting out of memory, though.  The same
-> > > symptom could bee seen if getdelim() does not touch errno when it
-> > > returns -1, but some other system call earlier set it to ENOMEM,
-> > > for example.
+> In fact, they do not even compile, and
+> yet I have not seen any patches to fix that.
+> 
 
-> > That can happen when the end of a file is reached; getdelim() returns
-> > -1 and leaves errno unchanged.  So we need to set errno to 0 just
-> > before that call.
+I just built a pristine 2.14.0 on CentOS 5 with curl 7.15.5. No problems 
+at all neither with building nor with running the testsuite.
 
-> Good catch. That's a bug in my original conversoin of
-> strbuf_getwholeline().
+> So IMHO this is about being honest with users about which versions we
+> _actually_ support.
+> 
 
-I think this did it!  at least on this simple test... yet to test a bit
-more in those scenarios we ran into it before while testing git-annex.
+I have no problem with you wanting to drop support for older curl 
+releases (such as 7.15.5) but don't use the argument that it doesn't 
+currently build and nobody cares.
 
-commit 36ef5e3ad2c187d3be664c33dbc8c06e59bceaf4 (HEAD -> bf-seterrno0)
-Author: Yaroslav O. Halchenko <yhalchen@smaug.cns.dartmouth.edu>
-Date:   Thu Aug 10 20:26:47 2017 +0000
+Also FWIW Red Hat continues to support RHEL 5 with the Extended 
+Life-cycle Support program until 2020-11-30.
 
-    BF: set errno to 0 before getdelim call to get unbiased assesment later
-
-diff --git a/strbuf.c b/strbuf.c
-index 89d22e3b0..323c49ceb 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -476,6 +476,7 @@ int strbuf_getwholeline(struct strbuf *sb, FILE *fp, int term)
-        /* Translate slopbuf to NULL, as we cannot call realloc on it */
-        if (!sb->alloc)
-                sb->buf = NULL;
-+       errno = 0;
-        r = getdelim(&sb->buf, &sb->alloc, term, fp);
- 
-        if (r > 0) {
-
--- 
-Yaroslav O. Halchenko
-Center for Open Neuroscience     http://centerforopenneuroscience.org
-Dartmouth College, 419 Moore Hall, Hinman Box 6207, Hanover, NH 03755
-Phone: +1 (603) 646-9834                       Fax: +1 (603) 646-1419
-WWW:   http://www.linkedin.com/in/yarik        
+-tgc
