@@ -2,80 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8128D20899
-	for <e@80x24.org>; Thu, 10 Aug 2017 10:24:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 97FF4208BD
+	for <e@80x24.org>; Thu, 10 Aug 2017 12:36:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752023AbdHJKYH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Aug 2017 06:24:07 -0400
-Received: from mout.web.de ([217.72.192.78]:57671 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752012AbdHJKYF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Aug 2017 06:24:05 -0400
-Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0M8iLA-1dlDjc170O-00C7mE; Thu, 10
- Aug 2017 12:23:48 +0200
-To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] win32: plug memory leak on realloc() failure in syslog()
-Message-ID: <245410ce-1f4c-f2a9-fd8d-98ff2d2c0335@web.de>
-Date:   Thu, 10 Aug 2017 12:23:45 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        id S1752366AbdHJMgp (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Aug 2017 08:36:45 -0400
+Received: from lb1-smtp-cloud8.xs4all.net ([194.109.24.21]:51298 "EHLO
+        lb1-smtp-cloud8.xs4all.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751982AbdHJMgp (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 10 Aug 2017 08:36:45 -0400
+Received: from tri.shiar.net ([IPv6:2001:982:11b7:1:dacb:8aff:fee3:29ec])
+        by smtp-cloud8.xs4all.net with ESMTP
+        id fmhedIzIpcQyLfmhfd4efM; Thu, 10 Aug 2017 14:36:43 +0200
+Received: by tri.shiar.net (Postfix, from userid 1000)
+        id DBE94FD39D; Thu, 10 Aug 2017 14:36:41 +0200 (CEST)
+Date:   Thu, 10 Aug 2017 14:36:41 +0200
+From:   Mischa POSLAWSKY <git@shiar.nl>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 3/4] http: drop support for curl < 7.19.4
+Message-ID: <20170810123641.GG2363@shiar.net>
+References: <20170809120024.7phdjzjv54uv5dpz@sigill.intra.peff.net>
+ <20170809120201.2eagzkljervqeusx@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:2NYblIMp4jJww6dgRjYP89rRVCxTKBgBZZwBkQj+nCI9EfT5HGg
- WWIewb8ItGCrwbP+B8RcxJnh/ovv4tLbKB64bJbXm5j+pfDSfk43BUZI96xGBULG9SSjBAI
- UgfxhvcH2Lgu6wO6T88EdTIWsHHTrzlb6PHl87no51HJANQIU8FLTCtoTLzQMpzcR5Jgpnu
- HeJ/vVzicsD7eZApmalag==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Dl4PSVJCDaE=:VtGnie7RtINznLvE84UbbZ
- iISuUL7qwhjwQczpaJ0qDBd8Pd/7Ilf3nx0PkYa2w0upow+8HSDrdY8LZjvp/NuBB4oPF4J2J
- tVnLEwPdzSDOLQB1UE+wQnDVx6a286UIXu51fD7VhPXvaNkkD1qkGj0Xw9xymEuelkI7dsF8J
- xT12RjlWRANbTSAu0aSAOmpe9VlLbNw64H5CgRAdgwTm+crLXe/d9n6Nv0fNCH+2HPF7zoJjm
- hXFAKoZE2EcpK6UGEJhbh0il0DhI2/J4U8jV4gLldPoWAM9MTX5Szn3OduIQcOZxkW2hirQS1
- JvltUgbik76xxt69/7iptC67x3qvUjDe+hg2DWLnCuTBAdjfhCQf4qZOvFtNwXujV9NVlggrC
- W5yXYgt6cfTgvZsDO9KnsBTRRky75Q1pKvTJLci7lsRWlj5AqISzW8/7VU4JUtOR3iffgarl8
- FDT3FLXO3AyE1oGD6iY9rIYknlbGbpqq6vntUECIm66R9FvR8Ij4CvatZeHUM+3sTcdAAE85A
- EcnmVEyc5VwKoThxGd785SrALJnT6Bx8S4zHZFhLqDEqqrKJgVP0UWT0Rebs6K8EXx8OWbBrp
- M8S9Nz9CzDZVmFSOPPz8IrOfT0AARVPaxseguZkPX3V00ouVSJkZxxA/xkVKHtLZ5EQlAaXtF
- 6IHa4iEpx9HkqJZJKr607dIE6oTke5rmCZ6rmo9jlTE4EF1y5i+5IIHwGrzTPbk3TWhn0oC8z
- ep9OtegLjc3MGjYCxdqhaM6OLKFeq9rS1EAxUxacRuH1rTYUNTlTp9v6qEbh2dBm/sIRv2Xee
- HYQoKCOOxQ4KBEnZyiB9eLtTY+rX0f6p4McjCWGCX3odvWmZo8=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170809120201.2eagzkljervqeusx@sigill.intra.peff.net>
+User-Agent: Mutt 1.5.23 + Vim 7.4 (Debian 8.8 GNU/Linux 3.16.0-4-amd64)
+X-URL:  http://shiar.nl/
+X-Accept-Language: nl, eo, en
+X-CMAE-Envelope: MS4wfD4u0F+D/kdL5Y9T2EAGupQBUeUqdbQQVZV/nPTQlAiRkfFguIbWCcuZRIuyv+kSDOz/0+IxOzhltEx3NRwDv3uscQfWMJeIL+MQh8Qr51ZGs2lhi/AG
+ xzsAtjwPqspluAtbdWLSavio/1T+kdaghQUT28kkzfewsZMaySQYRExWLNNM0Dv5dX5G0BbDJQ3trQo8f/vQQRYq5L2BRuG0FlFV+9JCFcZkSqjKKcbLZBI6
+ 5rLtrN790I8Z/biFPFigoQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If realloc() fails then the original buffer is still valid.  Free it
-before exiting the function.
+Jeff King wrote:
+> -#if LIBCURL_VERSION_NUM >= 0x071301
+>  	curl_easy_setopt(result, CURLOPT_POSTREDIR, CURL_REDIR_POST_ALL);
+> -#elif LIBCURL_VERSION_NUM >= 0x071101
+>  	curl_easy_setopt(result, CURLOPT_POST301, 1);
+> -#endif
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- compat/win32/syslog.c | 2 ++
- 1 file changed, 2 insertions(+)
+This seems to be an unintended behavioural change: the second condition
+wouldn't have applied previously and overrides the first option
+(equivalent to CURLOPT_POSTREDIR = CURL_REDIR_POST_301).
 
-diff --git a/compat/win32/syslog.c b/compat/win32/syslog.c
-index 6c7c9b6053..161978d720 100644
---- a/compat/win32/syslog.c
-+++ b/compat/win32/syslog.c
-@@ -43,8 +43,10 @@ void syslog(int priority, const char *fmt, ...)
- 	va_end(ap);
- 
- 	while ((pos = strstr(str, "%1")) != NULL) {
-+		char *oldstr = str;
- 		str = realloc(str, st_add(++str_len, 1));
- 		if (!str) {
-+			free(oldstr);
- 			warning_errno("realloc failed");
- 			return;
- 		}
 -- 
-2.14.0
+Mischa
