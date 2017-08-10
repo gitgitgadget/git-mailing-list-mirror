@@ -6,98 +6,86 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 96AD6208BD
-	for <e@80x24.org>; Thu, 10 Aug 2017 22:05:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3FBE51F667
+	for <e@80x24.org>; Thu, 10 Aug 2017 22:17:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753123AbdHJWFA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Aug 2017 18:05:00 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63263 "EHLO
+        id S1753456AbdHJWRe (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Aug 2017 18:17:34 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60483 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751487AbdHJWE7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Aug 2017 18:04:59 -0400
+        with ESMTP id S1753417AbdHJWRT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Aug 2017 18:17:19 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 345CDA1343;
-        Thu, 10 Aug 2017 18:04:53 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D2DECA1A80;
+        Thu, 10 Aug 2017 18:17:07 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=T0TdP2I2F2OrYhcUEZA92iHqda4=; b=Z5Neh6
-        cL1G2IT7ZGBbeDYNtN2sz6UwW3svo3nf+q7XFaO/goCrmmSV6nzdCyCEurGvoKxl
-        nhMWY9451o4wvq8PMufQFBZMGe3ZWutJWxSO09AZv7O6k7AoOlYkCQRI6+RRVG9L
-        PN5SSgGfDI/87tJRJLiLSmOey/CHi7dWkkkec=
+        :content-type; s=sasl; bh=bwSryLtwE1r++WcA+u29+eTIcSc=; b=Yvh9qw
+        fL94sbeRSHZMUE7EMifRzDyClQgne2JLrjQRudUJbgBdZVoEAo5y24rl+XkF1Lph
+        +HrvzG4+g0nrkA5EgfFjIB4MMorIm4jfx1mk2jAsZE3oS3O42PyLl2HShxrvV/D5
+        /7ISJqR236uXgTxasrcFP60KVy2Xm6w125gos=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=iArKtXoZayWNTxPdcn6cxAeg41wqZ9KM
-        1wZkEnFTaFgZbWpN0FlED4DWf3/38Un4x48OS02zGKgvxCEePKClZuTL8KsxIuIi
-        oGuCmEliPV+7t2c+W54f2G257nEXyaxakEVpcwDHns4+LgvLLc0/a8mhwA8TwJCZ
-        S4ghan3JL3E=
+        :content-type; q=dns; s=sasl; b=CN/mPBsBIhJxZ2wOuX/LdivAYR6E5wul
+        xKksaQr3WtPbXhocpO5WLtLuewa6y11XkajgfYLnyDdJSRP/reDOMTDZKFsUTGtx
+        U2vzN9bWZC57BnQ8Xt7lROcFBTbw1n5EQXVqnO3XeKTFCPKgJqT6QnShYbNsQuAZ
+        eaPGqOkgjH4=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2CC84A1342;
-        Thu, 10 Aug 2017 18:04:53 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C9A49A1A7F;
+        Thu, 10 Aug 2017 18:17:07 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8A207A1340;
-        Thu, 10 Aug 2017 18:04:52 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 32AA6A1A7E;
+        Thu, 10 Aug 2017 18:17:07 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin Koegler <martin.koegler@chello.at>
-Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH V2 2/2] Convert size datatype to size_t
-References: <1502348462-4992-1-git-send-email-martin@mail.zuhause>
-        <1502348462-4992-2-git-send-email-martin@mail.zuhause>
-Date:   Thu, 10 Aug 2017 15:04:51 -0700
-In-Reply-To: <1502348462-4992-2-git-send-email-martin@mail.zuhause> (Martin
-        Koegler's message of "Thu, 10 Aug 2017 09:01:02 +0200")
-Message-ID: <xmqqwp6b13lo.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/4] dropping support for older curl
+References: <20170809120024.7phdjzjv54uv5dpz@sigill.intra.peff.net>
+        <alpine.DEB.2.21.1.1708092337350.11175@virtualbox>
+        <20170809214758.p77fqrwxanb4zn5a@sigill.intra.peff.net>
+        <alpine.DEB.2.21.1.1708101111080.11175@virtualbox>
+        <20170810213348.g4lue3j4uz6qapal@sigill.intra.peff.net>
+Date:   Thu, 10 Aug 2017 15:17:06 -0700
+In-Reply-To: <20170810213348.g4lue3j4uz6qapal@sigill.intra.peff.net> (Jeff
+        King's message of "Thu, 10 Aug 2017 17:33:49 -0400")
+Message-ID: <xmqqshgz1319.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: EF83AC16-7E17-11E7-A706-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: A56528BA-7E19-11E7-8AEE-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin Koegler <martin.koegler@chello.at> writes:
+Jeff King <peff@peff.net> writes:
 
-> For next. As this touches core functions, it will likely produce
-> conflicts with other changes. Please provide the commit you want
-> to rebase the patch on and I'll produce a V3.
+> On Thu, Aug 10, 2017 at 11:36:41AM +0200, Johannes Schindelin wrote:
+>
+>> Hopefully I had better luck expressing my concerns this time?
+>
+> I understand your argument much better now. I'm still not sure I agree.
+>
+> -Peff
 
-No matter what base you pick, by the time the series is merged with
-other topics in flight to form an updated 'pu' branch, any series of
-this invasiveness will cause conflict.  
+I do not think "there are a dozen #ifdefs and I don't know whether
+they still work. I don't know whether anybody (who most likely has
+better things to do than read the Git mailing list) is still using
+those.  So let's just remove them." was why you were suggesting to
+clean up the (apparent) support of older curl in the code, though.
 
-So from that point of view, picking 'master' or 'next' as the base
-would not make much difference.
+Isn't the reason why your series simplifies these #ifdefs away
+because we by accident started using some features that require a
+version that is even newer than any of these #ifdef's try to cater
+to and yet nobody complained?  That is a lot more similar to the
+removal of rsync transport that happened in a not so distant past,
+where the reason for removal was "We have been shipping code that
+couldn't have possibly worked for some time and nobody complained
+---we know nobody is depending on it."
 
-However, picking 'next' (or 'pu') as the base is definitely worse
-than 'master' for a different reason.  Anything based on 'next',
-even though it may apply cleanly there, will not be able to graduate
-to 'master' without dragging all the other topics that are in 'next'
-with it.  Immediately after a feature release is the worst time, as
-we will rewind and rebuild 'next' on top of 'master'.
-
-In practice, the only sensible base for an invasive change is the
-mimimum one you create yourself.  You would:
-
- (1) Start from a reasonably stable base, like 'master'.
-
- (2) Among topics that are in flight but not in 'master', find the
-     ones that materially interfere with your changes.  Merge them
-     on top of (1).
-
- (3) Then build your change on top.
-
-In the patch series you create in step 3, you would note which base
-you chosen (e.g. "v2.14.1") in step 1, plus the names of the topics
-you merged in step 2, after three-dash lines.
-
-The set of topics you find in step 2 might end up including a topic
-that is of dubious doneness (e.g. especially the ones that are not
-yet in 'next').  In such a case, you or the other topic may have to
-yield and wait for the other to stabilize.  Git is not a substitute
-for inter-developer communication, and you'd talk to the author of
-the other topic and coordinate between yourselves when it happens.
-
-Thanks.
-
+Or "We accidentally started shipping code with comma after the last
+element of enum decl and nobody compalined---everybody's compiler
+must be ready" ;-)
