@@ -2,120 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4FEA7208B4
-	for <e@80x24.org>; Thu, 10 Aug 2017 17:16:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E55EC208B4
+	for <e@80x24.org>; Thu, 10 Aug 2017 17:21:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753004AbdHJRPt (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Aug 2017 13:15:49 -0400
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:32916 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752953AbdHJRPs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Aug 2017 13:15:48 -0400
-Received: by mail-pf0-f169.google.com with SMTP id h68so5595632pfk.0
-        for <git@vger.kernel.org>; Thu, 10 Aug 2017 10:15:48 -0700 (PDT)
+        id S1752658AbdHJRV0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Aug 2017 13:21:26 -0400
+Received: from mail-lf0-f46.google.com ([209.85.215.46]:36424 "EHLO
+        mail-lf0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752339AbdHJRVZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Aug 2017 13:21:25 -0400
+Received: by mail-lf0-f46.google.com with SMTP id o85so6400586lff.3
+        for <git@vger.kernel.org>; Thu, 10 Aug 2017 10:21:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=rYaofm5+gFXbkdz47y+EC28idDX8oQeOWZFI4or8dSA=;
-        b=sVyCRgJBuUr8+AeahBWavsrjlowTuDlyfZZTPfNNhYmnPoIMci6GEVjUrx1k3MasxA
-         a+6So5dPWheJHwjasbpg95DqJz4x4UDGo+R3PVUJOXLIwvynHW3vl2e4MCuloyWOtCna
-         /rM+sjpf5UzjsKmBvrJo+IFBmEfZpyj3uni0/SAHOAbKs2MNWWS6tDviYK2vqnjpxKLE
-         BA83JKXW5aJ/FrhNtrqfFMms49byPgwNLHYHVlOpcBP1YTQ/yHpW2EagUQdVgqNnDMtT
-         vZSKb7wpOjSJyg6eJgsrLiLiJrY6a7gdS4ST68ZueFPBbWj3hiBNgO7cYLGag81++7N7
-         sfOw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=4jy9icGElEM1WL7oN2OdZFgVECy4bgT5rbynYGm/GQ0=;
+        b=Mvs9yXk5oRkKtoivCyzNKTKiQe+dIPFgFIj6NxIROgEQqD4JQNBgHpCTAAOz2Tv3WV
+         BM5rgzgbWvUr7/dc4ZgU2prGgdY+Y6yVEjWxclkgrA0qig+M8geNLouCTBOeRqtLUvR/
+         ybq6yTLwfgMXTXvgRNbnThkHxM23/50lPiwnLiQoXiYfHkZ5OqhsQE/NJIvdUf6RvBRQ
+         0cRna7soo8J2rOElPw2i8Q7XD/Iyr0vjLaZFxIzO4Zxa/zu2StQR6OxS7Y1U6+V86PkP
+         P2LPlNxjQUhviOegBgLBR1CWBtbS4I5iALNiAsLeDpdCiI893TyP5ZH0Sa1ZI1qaBvKy
+         hReQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=rYaofm5+gFXbkdz47y+EC28idDX8oQeOWZFI4or8dSA=;
-        b=VRGhwH6zXpgswax8KCr3N8sgmiyp9oYKm67lta4dJ1EPkQ6epq0+C1geNjmRoaVYrG
-         lcu7D5YPGJru3F2RFPqxmvB6777ppZNBWIeiHBBu/6gMTnjXF4pII+o+Ks3CW7J97wFQ
-         9O87SS+oJTnGpDZTaLFiJP+eczf1VVx3ZyVoJNlcInrOg6sy0wLGNHS5elDaDA93FQog
-         ntsQJN1V9dnOi2VwaUSIzCB/zdmp1epP7yrLJnDynSWzePss/xYs8if6MNeHFCYrng22
-         PZqDUEeJKpnIclDLS0irXfd2fp49pfMIZCFcpWBhtyZD0CPiLAhZHaPf+RzNAiEItEMi
-         ACfw==
-X-Gm-Message-State: AHYfb5ixIhWQFBMHS0TEyhcR1AakioghzcU3JIDJTJ/NeRNjfwIMdPtw
-        58UmpCusgue4FsWB
-X-Received: by 10.98.104.1 with SMTP id d1mr12880949pfc.197.1502385347748;
-        Thu, 10 Aug 2017 10:15:47 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:ed9d:9bd9:5ee6:bf0b])
-        by smtp.gmail.com with ESMTPSA id l22sm14952608pfj.138.2017.08.10.10.15.46
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 10 Aug 2017 10:15:46 -0700 (PDT)
-Date:   Thu, 10 Aug 2017 10:15:45 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Stefan Beller <sbeller@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [RFC] clang-format: outline the git project's coding style
-Message-ID: <20170810171545.GC73298@google.com>
-References: <20170808012554.186051-1-bmwill@google.com>
- <alpine.DEB.2.21.1.1708081404200.4271@virtualbox>
- <CAGZ79kb2860nUs46bP=x-gAx9Ao6DxnvXQv3x387Wxw+kEyxJw@mail.gmail.com>
- <20170808182324.GB73298@google.com>
- <alpine.DEB.2.21.1.1708100032050.11175@virtualbox>
- <CAGZ79kb6Ljk8brLN1bbOnBLfm=Q=aCnkZ=ZBtDPzf7MZionmSw@mail.gmail.com>
- <alpine.DEB.2.21.1.1708101137190.11175@virtualbox>
- <xmqqk22b5q9m.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=4jy9icGElEM1WL7oN2OdZFgVECy4bgT5rbynYGm/GQ0=;
+        b=bOMk25eLS8oJCI2n0P+ouoCyI2+2LyO/1GT6GwNLH9VvPai2HViHvdwl/vGDYePOAu
+         pDNCE0C+SKIkAIlvPki9IpwdEBUhJWq3Z+KDNINnnri+QR7EW+8ez0nvomdl+8cgMMO7
+         D3cD9l3NgZF4fy3giSQyc5I5Y3LR9aLtEzckGb9FxAXvqhT6Rqbw1HA20bUU0PqSgQWQ
+         c89tKDgmM+Mhep+kLyDSTK4n5Z7WwcMs1+HemU8n/G5NGvoynTo/8QYDH/L6KsvmVcWU
+         9bDT/8+1CjP16PDfOzLU73qj/2/YjfeOJc5iBmiaNmq6kbLKvawMvFGEKWYC+9ji6GNd
+         sx7A==
+X-Gm-Message-State: AHYfb5gFD4HuYli9xW2HqhaUT6CwFgB2ABikpTaZlam4xGi5fQ3Tb860
+        TcrQzNVxK4jm6r7GkUPc5RcrhkcpQgeX
+X-Received: by 10.46.5.80 with SMTP id 77mr4301610ljf.91.1502385683916; Thu,
+ 10 Aug 2017 10:21:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqk22b5q9m.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.25.1.130 with HTTP; Thu, 10 Aug 2017 10:21:23 -0700 (PDT)
+In-Reply-To: <cover.1502241234.git.jonathantanmy@google.com>
+References: <cover.1502220307.git.jonathantanmy@google.com> <cover.1502241234.git.jonathantanmy@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 10 Aug 2017 10:21:23 -0700
+Message-ID: <CAGZ79kbGUOWT7_Uxoc4Hp0m4XSo8YUycd0aRZwm6sMZD829irw@mail.gmail.com>
+Subject: Re: [PATCH v2 00/25] Move exported packfile funcs to its own file
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08/10, Junio C Hamano wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > On Wed, 9 Aug 2017, Stefan Beller wrote:
-> >
-> >> > I am sure that something even better will be possible: a Continuous
-> >> > "Integration" that fixes the coding style automatically by using
-> >> > `filter-branch` (avoiding the merge conflicts that would arise if
-> >> > `rebase -i` was used).
-> >> 
-> >> I do not quite follow. Is that to be used by Junio while integrating
-> >> branches?
-> >
-> > I was more thinking about a bot on GitHub. "Code cleanup as a service".
-> 
-> I vaguely recall that there was a discussion to have SubmitGit wait
-> for success from Travis CI; if that is already in place, then I can
-> sort of see how it would help individual contributors to have the
-> style checker in that pipeline as well.  
-> 
-> I have a mixed feelings about "fixing" styles automatically, though.
-> 
+On Tue, Aug 8, 2017 at 6:22 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
+> Here is the complete patch set. I have only moved the exported functions
+> that operate with packfiles and their static helpers - for example,
+> static functions like freshen_packed_object() that are used only by
+> non-pack-specific functions are not moved.
+>
+> In the end, 3 functions needed to be made global. They are
+> find_pack_entry(), mark_bad_packed_object(), and has_packed_and_bad().
+>
+> Of the 3, find_pack_entry() is probably legitimately promoted. But I
+> think that the latter two functions needing to be accessed from
+> sha1_file.c points to a design that could be improved - they are only
+> used when packed_object_info() detects corruption, and used for marking
+> as bad and printing messages to the user respectively, which
+> packed_object_info() should probably do itself. But I have not made this
+> change in this patch set.
+>
+> (Other than the 3 functions above, there are some variables and
+> functions that are temporarily made global, but reduced back to static
+> when the wide scope is no longer needed.)
 
-I still think we are far away from a world where we can fix style
-automatically.  If we do want to keep pursuing this there are a number
-steps we'd want to take first.
+I read through the patches yesterday and had no comment.
 
-1. Settle on a concrete style and document it using a formatter's rules
-   (in say a .clang-format file).  This style would most likely need to
-   be tuned a little bit, at least the 'Penalty' configuration would
-   need to be tuned which (as far as I understand it) is used to
-   determine which rule to break first to ensure a line isn't too long.
-
-2. Start getting contributors to use the tool to format their patches.
-   This would include having some script or hook that a contributor
-   could run to only format the sections of code that they touched.
-
-3. Slowly the code base would begin to have a uniform style.  At
-   some point we may want to then reformat the remaining sections of the
-   code base.  At this point we could have some automated bot that fixes
-   style.
-
-I'm sure I missed a step in there somewhere though.
-
--- 
-Brandon Williams
+Thanks,
+Stefan
