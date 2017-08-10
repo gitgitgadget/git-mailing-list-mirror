@@ -2,82 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A784208B4
-	for <e@80x24.org>; Thu, 10 Aug 2017 19:39:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F224E208B4
+	for <e@80x24.org>; Thu, 10 Aug 2017 19:39:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753304AbdHJTjJ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Aug 2017 15:39:09 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54013 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753270AbdHJTjI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Aug 2017 15:39:08 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 75087938DA;
-        Thu, 10 Aug 2017 15:39:07 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=u+2LSqBuwMg/1ro6J1EU5ljwmeY=; b=jHJqo9
-        9k0ek8cRcnLruNqqc7Z3ubXHIbEd9Nz1O8ynw27J8OztMTgbTxpeU8cYey9YdoZX
-        ujVn8/8G4IUkITOW46nsuouO1kFawVNDd0SHKFPDm01qLDMCQKxz9Z8jMjF1wVFo
-        Gc4X71eA2hdAcvGuhmKPjfpHV1+W0v7fzxYH4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=xGFVCsXw6YJHfbenSOd/d4bsqaweDWfi
-        x8TlVyZo3xPj11h7f9Cx7cE1106w76u/yTAv3M7QsWYVPIjxlYz204sbz+j+5G03
-        9FnRRDaO5F8CgKQTDXihRFnffyDYIRB9t4kG022FYSPS+JzUMWAj5twX6LhmwaLS
-        TnO15Kf+n/4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6BD93938D9;
-        Thu, 10 Aug 2017 15:39:07 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CAA46938D6;
-        Thu, 10 Aug 2017 15:39:06 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
-        jrnieder@gmail.com
-Subject: Re: [PATCH] t1200: remove t1200-tutorial.sh
-References: <xmqqh8xh8fcb.fsf@gitster.mtv.corp.google.com>
-        <20170809212253.27597-1-sbeller@google.com>
-        <alpine.DEB.2.21.1.1708092334420.11175@virtualbox>
-Date:   Thu, 10 Aug 2017 12:39:05 -0700
-In-Reply-To: <alpine.DEB.2.21.1.1708092334420.11175@virtualbox> (Johannes
-        Schindelin's message of "Wed, 9 Aug 2017 23:34:54 +0200 (CEST)")
-Message-ID: <xmqqvalv2ox2.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1753308AbdHJTjX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Aug 2017 15:39:23 -0400
+Received: from mail-qk0-f173.google.com ([209.85.220.173]:38860 "EHLO
+        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753270AbdHJTjW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Aug 2017 15:39:22 -0400
+Received: by mail-qk0-f173.google.com with SMTP id x191so9873601qka.5
+        for <git@vger.kernel.org>; Thu, 10 Aug 2017 12:39:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=TghPVExgFElsZOBR207Tf4svLzG7+9zQLZFEEhH+Rsg=;
+        b=IXg8I/FlHXUsxjWA+d/n2IS5URUVIlIeV4Xl1GJdQOoGjuSa6pQ1NPf9emXdoh8ino
+         /kZ1A3U6DquZiPkTQcoqsguhkP2ylA6rf8af3kjpZJ1plxuspHHqrYI29Wxn8qr90njO
+         GbW2WaWgoS72ZceI20Qizjf0mM6u0WKO7WIQGx7ylKKPt9ndqiN/smoOqcqqYF4Z6x++
+         G82mXkdi8rN7Vkv0m2X3LXYA4DUOU3we8GaR1jeNwjlMgE1Cs5ZkKflgxd3hyjwYtRXm
+         shymFwacPbLeAWyQWvikq3B87j2PmQu7XXxUXdxdcUts+ah7yASg+ekz+irmdE5dHB6M
+         G7AA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=TghPVExgFElsZOBR207Tf4svLzG7+9zQLZFEEhH+Rsg=;
+        b=bu4RxXRXp9wfNnQRZdoMpRWyQ0VHuA2LS+j0lx2WTU4RLS/YvpfdB2+4FS6ZAPeFgd
+         NWJzEU4Z0AFs4b8pYi1l+dvkx8AlHT3GkQjGMobJpdu6rz08HUsg3bhQ8Xj6HN0fbDYE
+         sg6QHNGC6/qH7CeQtTClJvyDLnMJwmQF3YiMsSQJ61k9OEls/pW1kbRoDedKwckzOSm5
+         LnC5dbfCBYy52zeAxwKfrUq4k398NnkNualLXK9l67LEHbA4FoMIkScK8yn9N9Vvn0cj
+         wj8c4QtX4Y/8eLiPD/piALPbsntuCRu7jEtL4tQ4+gLAGpmikTfEEPliqc1vMWdwEKHd
+         1E3Q==
+X-Gm-Message-State: AHYfb5iGO92BQkeaoCfd2mgvOi/1AAMfvhTTmb0zHciaRZ0egzl5zMg5
+        IclSP00bJmW5BT7Uj4MsYrMKoGsg3g==
+X-Received: by 10.55.71.76 with SMTP id u73mr17907665qka.25.1502393961599;
+ Thu, 10 Aug 2017 12:39:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 92A65372-7E03-11E7-BDE5-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Received: by 10.55.31.13 with HTTP; Thu, 10 Aug 2017 12:39:21 -0700 (PDT)
+In-Reply-To: <20170810183713.z75bwk5eeavi6z22@sigill.intra.peff.net>
+References: <20170810080246.njjd5zkphytzmlda@sigill.intra.peff.net>
+ <20170810080325.tehbbgajm4cgn2ku@sigill.intra.peff.net> <CAGZ79kabhz-FWNyjB6KjF4qpGfSqONBNVBcVd=+J=5XT+emz-A@mail.gmail.com>
+ <20170810183713.z75bwk5eeavi6z22@sigill.intra.peff.net>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 10 Aug 2017 21:39:21 +0200
+Message-ID: <CAP8UFD2kWW41NDHVKjzdL2O2=QAeEtzKEPdJW3zR-zoeTiJPgw@mail.gmail.com>
+Subject: Re: [PATCH 4/5] interpret-trailers: add an option to normalize output
+To:     Jeff King <peff@peff.net>
+Cc:     Stefan Beller <sbeller@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Thu, Aug 10, 2017 at 8:37 PM, Jeff King <peff@peff.net> wrote:
+> On Thu, Aug 10, 2017 at 11:35:00AM -0700, Stefan Beller wrote:
+>
+>> On Thu, Aug 10, 2017 at 1:03 AM, Jeff King <peff@peff.net> wrote:
+>> > The point of "--only-trailers" is to give a caller an output
+>> > that's easy for them to parse. Getting rid of the
+>> > non-trailer material helps, but we still may see more
+>> > complicated syntax like whitespace continuation. Let's add
+>> > an option to normalize the output into one "key: value" line
+>> > per trailer.
+>> >
+>> > As a bonus, this could be used even without --only-trailers
+>> > to clean up unusual formatting in the incoming data.
+>>
+>> This is useful for the parsing part, but for the writing part we'd
+>> rather want to have the opposite thing, such as
+>> '--line-break=rfc822'. But this doesn't have to be part of this
+>> series. With this in mind, I do not quite understand the latter
+>> use case how you would use normalized trailers without
+>> --only-trailers?
+>
+> If you prefer the normalized form (and the input was line-broken in a
+> way that you don't like), then this would convert to your preferred
+> form. I agree that you could potentially want the opposite (folding long
+> lines). Perhaps something like --wrap=72.
 
-> Hi,
->
-> On Wed, 9 Aug 2017, Stefan Beller wrote:
->
->> v1.2.0~121 (New tutorial, 2006-01-22) rewrote the tutorial such that the
->> original intent of 2ae6c70674 (Adapt tutorial to cygwin and add test case,
->> 2005-10-13) to test the examples from the tutorial doesn't hold any more.
->> 
->> There are dedicated tests for the commands used, even "git whatchanged",
->> such that removing these tests doesn't seem like a reduction in test
->> coverage.
->> 
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
->
-> ACK,
-> Dscho
-
-Thanks, both.
-Will queue.
+Related to this, I wonder if people might want to "normalize" in
+different ways later. If that happens, we might regret having called
+this option "--normalize" instead of "--one-per-line" for example.
