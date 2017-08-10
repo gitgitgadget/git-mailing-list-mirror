@@ -6,86 +6,128 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3FBE51F667
-	for <e@80x24.org>; Thu, 10 Aug 2017 22:17:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 980241F667
+	for <e@80x24.org>; Thu, 10 Aug 2017 22:23:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753456AbdHJWRe (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Aug 2017 18:17:34 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60483 "EHLO
+        id S1752942AbdHJWXE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Aug 2017 18:23:04 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62373 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753417AbdHJWRT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Aug 2017 18:17:19 -0400
+        with ESMTP id S1752281AbdHJWXD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Aug 2017 18:23:03 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D2DECA1A80;
-        Thu, 10 Aug 2017 18:17:07 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D79179A819;
+        Thu, 10 Aug 2017 18:22:55 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=bwSryLtwE1r++WcA+u29+eTIcSc=; b=Yvh9qw
-        fL94sbeRSHZMUE7EMifRzDyClQgne2JLrjQRudUJbgBdZVoEAo5y24rl+XkF1Lph
-        +HrvzG4+g0nrkA5EgfFjIB4MMorIm4jfx1mk2jAsZE3oS3O42PyLl2HShxrvV/D5
-        /7ISJqR236uXgTxasrcFP60KVy2Xm6w125gos=
+        :content-type; s=sasl; bh=RJJSIb3yRtW/lrw5gt+ljLDz/Ms=; b=bS2XUx
+        rBVOFQ5U+3OefnwrLGil22GtM2llZFNFtUxckGSu6TfsF/gUE/NWE/N0Z255jZGs
+        LwXgN670T1mc4+TJ6xYL4gxxMW7ObzfyxFKsC1Vd+3MYOdHxZlY+kO+PeaCrGrHf
+        S7Dsrzdl/YAMfh+KC3RqJhzA7dQac0Ooyb1ds=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=CN/mPBsBIhJxZ2wOuX/LdivAYR6E5wul
-        xKksaQr3WtPbXhocpO5WLtLuewa6y11XkajgfYLnyDdJSRP/reDOMTDZKFsUTGtx
-        U2vzN9bWZC57BnQ8Xt7lROcFBTbw1n5EQXVqnO3XeKTFCPKgJqT6QnShYbNsQuAZ
-        eaPGqOkgjH4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C9A49A1A7F;
-        Thu, 10 Aug 2017 18:17:07 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=T22qQkvOXsDbyl2myukUfmrhKt3GgcYL
+        ae/A23Pjzx+L697XBCEnjY9eT8p3H2QqyeUh+6LnciosfdP34tjeuo+jXol8qEIO
+        Xe72uzK84nvCLB2Nx/mJLDd9Emk2ulvop4uYB2KUkCJQCmKLQ9yvjW1bb3eZI6Xx
+        3eFXN2adPJk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CEBC59A818;
+        Thu, 10 Aug 2017 18:22:55 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 32AA6A1A7E;
-        Thu, 10 Aug 2017 18:17:07 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2FA949A816;
+        Thu, 10 Aug 2017 18:22:55 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/4] dropping support for older curl
-References: <20170809120024.7phdjzjv54uv5dpz@sigill.intra.peff.net>
-        <alpine.DEB.2.21.1.1708092337350.11175@virtualbox>
-        <20170809214758.p77fqrwxanb4zn5a@sigill.intra.peff.net>
-        <alpine.DEB.2.21.1.1708101111080.11175@virtualbox>
-        <20170810213348.g4lue3j4uz6qapal@sigill.intra.peff.net>
-Date:   Thu, 10 Aug 2017 15:17:06 -0700
-In-Reply-To: <20170810213348.g4lue3j4uz6qapal@sigill.intra.peff.net> (Jeff
-        King's message of "Thu, 10 Aug 2017 17:33:49 -0400")
-Message-ID: <xmqqshgz1319.fsf@gitster.mtv.corp.google.com>
+To:     Kevin Willford <kcwillford@gmail.com>
+Cc:     git@vger.kernel.org, peff@peff.net, peartben@gmail.com,
+        Kevin Willford <kewillf@microsoft.com>
+Subject: Re: [PATCH] commit: skip discarding the index if there is no pre-commit hook
+References: <20170810185416.8224-1-kewillf@microsoft.com>
+Date:   Thu, 10 Aug 2017 15:22:54 -0700
+In-Reply-To: <20170810185416.8224-1-kewillf@microsoft.com> (Kevin Willford's
+        message of "Thu, 10 Aug 2017 14:54:16 -0400")
+Message-ID: <xmqqo9rn12rl.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: A56528BA-7E19-11E7-8AEE-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 74D92696-7E1A-11E7-A33E-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Kevin Willford <kcwillford@gmail.com> writes:
 
-> On Thu, Aug 10, 2017 at 11:36:41AM +0200, Johannes Schindelin wrote:
+> If there is not a pre-commit hook, there is no reason to discard
+> the index and reread it.
 >
->> Hopefully I had better luck expressing my concerns this time?
+> This change checks to presence of a pre-commit hook and then only
+> discards the index if there was one.
 >
-> I understand your argument much better now. I'm still not sure I agree.
+> Signed-off-by: Kevin Willford <kewillf@microsoft.com>
+> ---
+
+Peff already has done a good job reviewing the patch text, and I
+agree that this is a worthwhile optimization.
+
+Could Microsoft folks all make sure that their signed-off-by lines
+match their From: address (or leave an in-body From: to override
+the From: address your MUA places in your messages)?
+
+Thanks.
+
+>  builtin/commit.c | 29 +++++++++++++++++++++--------
+>  1 file changed, 21 insertions(+), 8 deletions(-)
 >
-> -Peff
-
-I do not think "there are a dozen #ifdefs and I don't know whether
-they still work. I don't know whether anybody (who most likely has
-better things to do than read the Git mailing list) is still using
-those.  So let's just remove them." was why you were suggesting to
-clean up the (apparent) support of older curl in the code, though.
-
-Isn't the reason why your series simplifies these #ifdefs away
-because we by accident started using some features that require a
-version that is even newer than any of these #ifdef's try to cater
-to and yet nobody complained?  That is a lot more similar to the
-removal of rsync transport that happened in a not so distant past,
-where the reason for removal was "We have been shipping code that
-couldn't have possibly worked for some time and nobody complained
----we know nobody is depending on it."
-
-Or "We accidentally started shipping code with comma after the last
-element of enum decl and nobody compalined---everybody's compiler
-must be ready" ;-)
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index e7a2cb6285..443949d87b 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -671,12 +671,22 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+>  	const char *hook_arg2 = NULL;
+>  	int clean_message_contents = (cleanup_mode != CLEANUP_NONE);
+>  	int old_display_comment_prefix;
+> +	const char *precommit_hook = NULL;
+>  
+>  	/* This checks and barfs if author is badly specified */
+>  	determine_author_info(author_ident);
+>  
+> -	if (!no_verify && run_commit_hook(use_editor, index_file, "pre-commit", NULL))
+> -		return 0;
+> +
+> +	if (!no_verify) {
+> +		/*
+> +		 * Check to see if there is a pre-commit hook
+> +		 * If there not one we can skip discarding the index later on
+> +		 */
+> +		precommit_hook = find_hook("pre-commit");
+> +		if (precommit_hook &&
+> +		    run_commit_hook(use_editor, index_file, "pre-commit", NULL))
+> +			return 0;
+> +	}
+>  
+>  	if (squash_message) {
+>  		/*
+> @@ -940,12 +950,15 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+>  		return 0;
+>  	}
+>  
+> -	/*
+> -	 * Re-read the index as pre-commit hook could have updated it,
+> -	 * and write it out as a tree.  We must do this before we invoke
+> -	 * the editor and after we invoke run_status above.
+> -	 */
+> -	discard_cache();
+> +	if (!no_verify && precommit_hook) {
+> +		/*
+> +		 * Re-read the index as pre-commit hook could have updated it,
+> +		 * and write it out as a tree.  We must do this before we invoke
+> +		 * the editor and after we invoke run_status above.
+> +		 */
+> +		discard_cache();
+> +	}
+> +
+>  	read_cache_from(index_file);
+>  	if (update_main_cache_tree(0)) {
+>  		error(_("Error building trees"));
