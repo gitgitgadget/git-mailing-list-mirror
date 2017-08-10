@@ -2,79 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 96CF0208B4
-	for <e@80x24.org>; Thu, 10 Aug 2017 16:48:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D1831208B4
+	for <e@80x24.org>; Thu, 10 Aug 2017 17:03:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753353AbdHJQsG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Aug 2017 12:48:06 -0400
-Received: from mout.web.de ([212.227.15.4]:55516 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753023AbdHJQsE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Aug 2017 12:48:04 -0400
-Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MQ5zf-1dl5Y53OJn-005MDa; Thu, 10
- Aug 2017 18:47:58 +0200
-To:     Git List <git@vger.kernel.org>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] merge: use skip_prefix()
-Cc:     Junio C Hamano <gitster@pobox.com>
-Message-ID: <7ebe2ff6-bc4b-3694-7978-a1f5f8628b8a@web.de>
-Date:   Thu, 10 Aug 2017 18:47:55 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:1rSBZEyk6FB+zC4iFPlXGa71DVIaB5xkzPLlFUKz9anm7EH7Zut
- IaVcFXLu4HmWOetL/aOm1k8Ddmu02drxXsNoKwaVtzJcvAJU7jwKcTefdDz8mcAckxWQ7Vl
- db3CmXxb7oCEXv/H9o088nuRw+wTAJwJCF9/u0L/x7r1LimNmUfl/aTy6+2NSXX/WZEEfum
- XFDQbzLtZUhCXfnENxjPQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:OyUC54KhQIk=:c0kb9KFqXylMY4tBAvQgkU
- 9kmh5ndLHVfp+mCsqNRXp3kOOR2v6u1+ZVgZq+d8TnBpyMZeA98jPt9W1NrbAojviWUMNglfQ
- RCbJlgEri8EfqgyCSquY1lmrgiqxu9agsOpvdqisMlKHBilcPxuznbSmDovXZN7YneYIq580h
- vobjc3CBgWmeEdgpBmErdMeH3n+5SAhSbowIELxiUPN4DHbLauB6Us839yFTQy7IBjUYzP/cn
- dhPexvbozI981qx4TFsNBFsuH6CyvmZGtBKXPcGEJUokk1zgOiMM0jgD7EBcFYN5Mnn9gtBVs
- 4zjCz6Li3pbRT5cgEWfjG9aAZNEfGlTe28NB3lErOtKAa5n5H3sStOwn+1jQNONHvbWMRuiRO
- piHu/Ar1VxXZzg6bwhToYwxvTULPCPaayU1PsSW8cLS9CBskyVSYW7fg/r7TzpYY6tmjFn2rN
- MRek5t/6sjFUVruZ9nhXVEAO/s8qbBQRHPjHLBknx6ILWYySzv6vxXSdM9gnlObzbxtVz+QW2
- zIYceshgb1IM6rzAfSDfZdmIpSSwps4VOpRXfl3MxWqNHY5jWkV28X0gMejuTHf4rfRNP95W2
- rBrNWZQYIERORhccZ7b/oPIG5x6zLIXEqlOTJGo3j6QessLRqkRPehjwMbq7xLMRNUDCtvUPL
- K+hzYg4caz1rPgvWy6Ol8DTogbTLWLK8F8zAvRKD7R/AICG7vG2x6NdS/KN0fPsWB9U5iZHo7
- 5SiBXXauwRpYsy+nWajmXvaFHbjlV0qCEl6igKHpd/BjeeLIor7tcuzOn10y/yRj9jMgM32bW
- AhKz9i8l8HLv2GhvHxDXYT/pJb/v8lbZPjGzoi6e5EoB/nMpRw=
+        id S1752721AbdHJRDj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Aug 2017 13:03:39 -0400
+Received: from [195.159.176.226] ([195.159.176.226]:47723 "EHLO
+        blaine.gmane.org" rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org
+        with ESMTP id S1752559AbdHJRDi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Aug 2017 13:03:38 -0400
+Received: from list by blaine.gmane.org with local (Exim 4.84_2)
+        (envelope-from <gcvg-git-2@m.gmane.org>)
+        id 1dfqrp-00021h-Gg
+        for git@vger.kernel.org; Thu, 10 Aug 2017 19:03:29 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To:     git@vger.kernel.org
+From:   Harry Putnam <reader@newsguy.com>
+Subject: Not understanding with git wants to copy one file to another
+Date:   Thu, 10 Aug 2017 13:03:30 -0400
+Organization: Still searching...
+Message-ID: <87mv7773tp.fsf@local.lan>
+Mime-Version: 1.0
+Content-Type: text/plain
+X-Complaints-To: usenet@blaine.gmane.org
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.0.50 (gnu/linux)
+Cancel-Lock: sha1:l6iAQHTSqDTem6o17h3PAdXLVj0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Get rid of a magic string length constant by using skip_prefix() instead
-of starts_with().
+I ran into a line in git commit ouput I had not see before
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- builtin/merge.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+  #copied:     d0/etc/hosts -> misc/old-readerHOSTvcs-files/etc/hosts
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 900bafdb45..4facb6fdd0 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -1117,8 +1117,8 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 	 * current branch.
- 	 */
- 	branch = branch_to_free = resolve_refdup("HEAD", 0, head_oid.hash, NULL);
--	if (branch && starts_with(branch, "refs/heads/"))
--		branch += 11;
-+	if (branch)
-+		skip_prefix(branch, "refs/heads/", &branch);
- 	if (!branch || is_null_oid(&head_oid))
- 		head_commit = NULL;
- 	else
--- 
-2.14.0
+So googling I learned that this might happen if git thinks the two
+files are the same.
+
+I was pretty sure they were not the same so checked them>
+
+ <inside git repo>
+
+diff d0/etc/host misc/old-readerHOSTvcs-files/etc/hosts
+
+The output is a bit long but shows them being quite different.
+
+Some 2 dozen or so lines that dramatically differ.
+
+Here are two that are at least kind of similar but would never be seen
+as the same:
+
+< 192.168.1.43      m2.local.lan       m2       # 00-90-F5-A1-F9-E5
+> 192.168.1.43    m2.local.lan        m2         # win 7
+
+Not to mention they are quite different lines as well.
+
+So what is going on and what should I be looking at?
+
