@@ -2,116 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BF29A208B4
-	for <e@80x24.org>; Thu, 10 Aug 2017 18:57:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E591208B4
+	for <e@80x24.org>; Thu, 10 Aug 2017 18:58:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752772AbdHJS4y (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Aug 2017 14:56:54 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51068 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752552AbdHJS4x (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Aug 2017 14:56:53 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 98F24918D7;
-        Thu, 10 Aug 2017 14:56:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=7nLjgH28EM2N
-        /WFDKFXXNV9Yp68=; b=xQmD7gCHLq06xX3Gk8eMKB/CdAfEEJqciFeDZoErcgkX
-        RxrcXKh6EXExLkiBOdbs8yI0J1bkaT3CbvoXv9FReu4wUhTG0OG0IMPkUb0cUjGG
-        dz6nDIbkPp2Zxc7KJnhLb6SQCa8W9sybKlrEY/F7IhDgNYctwH5jo43Ycbz13sA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=j7/ZWY
-        /mpu7d1NglHp9uYHSfWu3PVMu6JZTrNNWXhnWMcvXpOTY1xxKo7nBq4jV2RzwL/G
-        cqyzsu1buGWQSmbfrKc2BfUV71jhDWhMfAYqz4AEdzRnCTOcWxfUYCxVNS1h4W/s
-        9+3vBYnwBDl/7dzuKJiQUsUWu6yTE8wDzoiAM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 91610918D6;
-        Thu, 10 Aug 2017 14:56:41 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 00200918D4;
-        Thu, 10 Aug 2017 14:56:40 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Yaroslav Halchenko <yoh@onerussian.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: fatal: Out of memory, getdelim failed under NFS mounts
-References: <20170809173928.h2ylvg5tp2p5inem@hopa.kiewit.dartmouth.edu>
-        <8e307474-d180-6d98-2c6b-062f2181bd14@web.de>
-Date:   Thu, 10 Aug 2017 11:56:39 -0700
-In-Reply-To: <8e307474-d180-6d98-2c6b-062f2181bd14@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Thu, 10 Aug 2017 15:27:29 +0200")
-Message-ID: <xmqqzib72qvs.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1752826AbdHJS6i (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Aug 2017 14:58:38 -0400
+Received: from mail-lf0-f53.google.com ([209.85.215.53]:33624 "EHLO
+        mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752713AbdHJS6h (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Aug 2017 14:58:37 -0400
+Received: by mail-lf0-f53.google.com with SMTP id d17so7533921lfe.0
+        for <git@vger.kernel.org>; Thu, 10 Aug 2017 11:58:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=n6mZwUWj3J6A0MXeQd3pOD4i609g2JayqLHyBMKKPJY=;
+        b=j+Vf5tp2JbO1s8jaNdE5hA8QDQvlADSBBMZU0rk26fVHwcTWGbq7opERUkeFWX3yTT
+         3Opmqk1mB5DQw82xHmrJzFJADjSKJo8WLgfKJ+dPpPe5UpV+i8ieqp+E/gda3LywuFMh
+         jg9k52Q25SCV0K2Y2cQLI8UYbC1cywEickKctWX4tCjKV2HACLhYBb6IgvcTczFTcT4/
+         Be/iTi32EW2LodeanVMnwUW0blOLYUiDXdd2oyOUB0ApiRGwSG1lftFJOsn1U4MszT0Z
+         lSzTSOd9ThWkmdfAURnbK6SNuMAH9WhgIkGFzL1J112ayWFl4MTg5/8Qe4IDJ+Jp+2ep
+         vO+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=n6mZwUWj3J6A0MXeQd3pOD4i609g2JayqLHyBMKKPJY=;
+        b=oLq/V4VqpvVx7ut5D/GVdLS5iitvu3d8eCJM2vLZAvdkYm7e926RUZN8Ws4O0LMf/Y
+         KwAFbN/UFp/gAM6DSESFWwt1PiN4LvAcZnrRYCG41p14N0ABEb44p6q7q9iOJAIEuApc
+         rlXrI5eMqMVePkFHmzVRBV+QPv2T48z9khOQzP39rrTeSTlnVwn1O3Qi+K9gWffDLfpp
+         wKxoKoHsBuJ28X/CUgm4GWV2yN4J5PSEddJ9JWAMUfxZpInywhwuSvaDEIyIrLNIELv/
+         trV/jl49SNUizHU53A8Xvr/hn4/RBofoo2jp58IDNdzzWbFxocz3Bl8EtFldtNMQ8SEw
+         JeDQ==
+X-Gm-Message-State: AHYfb5jj1SzPppzgMcFK/UiTCyzG9aWxgIkXi8XO7jSG8yZn0JwnM1yz
+        xZHnp9UcRKsHdOcB5+p6JkKXBtLZ1DAV
+X-Received: by 10.25.20.68 with SMTP id k65mr5775390lfi.260.1502391515615;
+ Thu, 10 Aug 2017 11:58:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: A53735DE-7DFD-11E7-A594-9D2B0D78B957-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Received: by 10.25.1.130 with HTTP; Thu, 10 Aug 2017 11:58:34 -0700 (PDT)
+In-Reply-To: <20170810184723.12424-1-kewillf@microsoft.com>
+References: <20170810184723.12424-1-kewillf@microsoft.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 10 Aug 2017 11:58:34 -0700
+Message-ID: <CAGZ79kaB7w+OD_8LOgqHjBJ8gCtXUGWPj7Cw8bWXEEQweqMaFw@mail.gmail.com>
+Subject: Re: [PATCH] cache-tree: remove use of strbuf_addf in update_one
+To:     Kevin Willford <kcwillford@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Ben Peart <peartben@gmail.com>,
+        Kevin Willford <kewillf@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+On Thu, Aug 10, 2017 at 11:47 AM, Kevin Willford <kcwillford@gmail.com> wrote:
+> String formatting can be a performance issue when there are
+> hundreds of thousands of trees.
 
-> I doubt the type of file system matters.  The questions are: How much
-> main memory do you have, what is git trying to cram into it, is there
-> a way to reduce the memory footprint or do you need to add more RAM?
+When changing this for the sake of performance, could you give
+an example (which kind of repository you need for this to become
+a bottleneck? I presume the large Windows repo? Or can I
+reproduce it with a small repo such as linux.git or even git.git?)
+and some numbers how this improves the performance?
+
+> Change to stop using the strbuf_addf and just add the strings
+> or characters individually.
 >
->> any recommendations on how to pin point the "offender"? ;)
-> Running "GIT_TRACE=3D1 git pull --ff-only origin master" would be a
-> good start, I think, to find out which of the different activities
-> that pull is doing causes the out-of-memory error.
+> There are a limited number of modes so added a switch for the
+> known ones and a default case if something comes through that
+> are not a known one for git.
 >
-> "free" and "ulimit -a" can help you find out how much memory you can
-> use.
+> Signed-off-by: Kevin Willford <kewillf@microsoft.com>
+> ---
+>  cache-tree.c | 24 +++++++++++++++++++++++-
+>  1 file changed, 23 insertions(+), 1 deletion(-)
 >
-> Also: What does "wc -L .git/FETCH_HEAD .git/packed-refs" report?
-> getdelim() is used mostly to read lines from files like these and in
-> the admittedly unlikely case that they are *really* long such an
-> error would be expected.
+> diff --git a/cache-tree.c b/cache-tree.c
+> index 2440d1dc89..41744b3db7 100644
+> --- a/cache-tree.c
+> +++ b/cache-tree.c
+> @@ -390,7 +390,29 @@ static int update_one(struct cache_tree *it,
+>                         continue;
+>
+>                 strbuf_grow(&buffer, entlen + 100);
+> -               strbuf_addf(&buffer, "%o %.*s%c", mode, entlen, path + baselen, '\0');
+> +
+> +               switch (mode) {
+> +               case 0100644:
+> +                       strbuf_add(&buffer, "100644 ", 7);
+> +                       break;
+> +               case 0100664:
+> +                       strbuf_add(&buffer, "100664 ", 7);
+> +                       break;
+> +               case 0100755:
+> +                       strbuf_add(&buffer, "100755 ", 7);
+> +                       break;
+> +               case 0120000:
+> +                       strbuf_add(&buffer, "120000 ", 7);
+> +                       break;
+> +               case 0160000:
+> +                       strbuf_add(&buffer, "160000 ", 7);
+> +                       break;
 
-There is only one getdelim() call, which was introduced in v2.5.0
-timeframe, and it is used like this:
+Maybe it is worth spelling out the modes in non-numeric,
+but e.g. S_IFGITLINK.
 
-	r =3D getdelim(&sb->buf, &sb->alloc, term, fp);
+> +               default:
+> +                       strbuf_addf(&buffer, "%o ", mode);
 
-	if (r > 0) {
-		sb->len =3D r;
-		return 0;
-	}
-	assert(r =3D=3D -1);
+Given the repository you are measuring, maybe we could
+get away with fewer entries here and only take the 2 or
+3 most used entries and special case them?
 
-	/*
-	 * Normally we would have called xrealloc, which will try to free
-	 * memory and recover. But we have no way to tell getdelim() to do so.
-	 * Worse, we cannot try to recover ENOMEM ourselves, because we have
-	 * no idea how many bytes were read by getdelim.
-	 *
-	 * Dying here is reasonable. It mirrors what xrealloc would do on
-	 * catastrophic memory failure. We skip the opportunity to free pack
-	 * memory and retry, but that's unlikely to help for a malloc small
-	 * enough to hold a single line of input, anyway.
-	 */
-	if (errno =3D=3D ENOMEM)
-		die("Out of memory, getdelim failed");
+Or in case this is assumed to be the exhaustive list,
+we could issue a warning here?
 
-So the function is returning -1 and leaving ENOMEM in errno on
-Yaroslav's system. =20
-
-I wonder if we are truly hitting out of memory, though.  The same
-symptom could bee seen if getdelim() does not touch errno when it
-returns -1, but some other system call earlier set it to ENOMEM,
-for example.
-
-If the same version of Git is recompiled there without HAVE_GETDELIM
-defined, would it still die with out of memory (presumably inside
-the call to strbuf_grow() in the strbuf_getwholeline() function)?
+Thanks,
+Stefan
