@@ -7,82 +7,100 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E55EC208B4
-	for <e@80x24.org>; Thu, 10 Aug 2017 17:21:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 81151208B4
+	for <e@80x24.org>; Thu, 10 Aug 2017 17:27:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752658AbdHJRV0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Aug 2017 13:21:26 -0400
-Received: from mail-lf0-f46.google.com ([209.85.215.46]:36424 "EHLO
+        id S1752767AbdHJR1p (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Aug 2017 13:27:45 -0400
+Received: from mail-lf0-f46.google.com ([209.85.215.46]:36970 "EHLO
         mail-lf0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752339AbdHJRVZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Aug 2017 13:21:25 -0400
-Received: by mail-lf0-f46.google.com with SMTP id o85so6400586lff.3
-        for <git@vger.kernel.org>; Thu, 10 Aug 2017 10:21:24 -0700 (PDT)
+        with ESMTP id S1753183AbdHJR1V (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Aug 2017 13:27:21 -0400
+Received: by mail-lf0-f46.google.com with SMTP id m86so6428781lfi.4
+        for <git@vger.kernel.org>; Thu, 10 Aug 2017 10:27:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=4jy9icGElEM1WL7oN2OdZFgVECy4bgT5rbynYGm/GQ0=;
-        b=Mvs9yXk5oRkKtoivCyzNKTKiQe+dIPFgFIj6NxIROgEQqD4JQNBgHpCTAAOz2Tv3WV
-         BM5rgzgbWvUr7/dc4ZgU2prGgdY+Y6yVEjWxclkgrA0qig+M8geNLouCTBOeRqtLUvR/
-         ybq6yTLwfgMXTXvgRNbnThkHxM23/50lPiwnLiQoXiYfHkZ5OqhsQE/NJIvdUf6RvBRQ
-         0cRna7soo8J2rOElPw2i8Q7XD/Iyr0vjLaZFxIzO4Zxa/zu2StQR6OxS7Y1U6+V86PkP
-         P2LPlNxjQUhviOegBgLBR1CWBtbS4I5iALNiAsLeDpdCiI893TyP5ZH0Sa1ZI1qaBvKy
-         hReQ==
+        bh=lCR6eHEGopvNgnr9Y/ORRSTRoQ9sfTyDA2ja/OAdW/0=;
+        b=AKSJP1+nWTEmba92NlREnQ0k/Ix+lzlUIqpYOsPBjOVyuS9Uqy4Vua0xqW1saJbKD/
+         FYF64YzNPY03CbyHI8/RzYXeOp4QreNNudGgVeaQe6qhTFqkN0jAm1iKeUBH+SP2x1NT
+         vHzvZk/MVn7kVf2wA9OCOH33+iQuk5BDX1hGBAjyTjpE2MlHvD0ZEFQI8tAXMq4VtjhP
+         xlOMR1oKUe8Cf6vOcKxonEhal8WNosRqYt7krsIO2EcdyU4gtLrsQQf1yk/nCl5NAoGg
+         X0N6suIYlIzxqWUmkyL8E6nbfyO55CyzvC1CMJcbwsou0pjAkHZFeLvm7HqaIXGofAJg
+         lpfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=4jy9icGElEM1WL7oN2OdZFgVECy4bgT5rbynYGm/GQ0=;
-        b=bOMk25eLS8oJCI2n0P+ouoCyI2+2LyO/1GT6GwNLH9VvPai2HViHvdwl/vGDYePOAu
-         pDNCE0C+SKIkAIlvPki9IpwdEBUhJWq3Z+KDNINnnri+QR7EW+8ez0nvomdl+8cgMMO7
-         D3cD9l3NgZF4fy3giSQyc5I5Y3LR9aLtEzckGb9FxAXvqhT6Rqbw1HA20bUU0PqSgQWQ
-         c89tKDgmM+Mhep+kLyDSTK4n5Z7WwcMs1+HemU8n/G5NGvoynTo/8QYDH/L6KsvmVcWU
-         9bDT/8+1CjP16PDfOzLU73qj/2/YjfeOJc5iBmiaNmq6kbLKvawMvFGEKWYC+9ji6GNd
-         sx7A==
-X-Gm-Message-State: AHYfb5gFD4HuYli9xW2HqhaUT6CwFgB2ABikpTaZlam4xGi5fQ3Tb860
-        TcrQzNVxK4jm6r7GkUPc5RcrhkcpQgeX
-X-Received: by 10.46.5.80 with SMTP id 77mr4301610ljf.91.1502385683916; Thu,
- 10 Aug 2017 10:21:23 -0700 (PDT)
+        bh=lCR6eHEGopvNgnr9Y/ORRSTRoQ9sfTyDA2ja/OAdW/0=;
+        b=UR13FcC62X/KgyOrV9DhZDjpMakdU1qdPyII4hMuWQ1jFZKorpe/xLNfodC4/iSb/q
+         HN8O7BaEK5LlSMXhggBvOT7jf+5jfShuPbY+BpPd/Koa7Wz198J8906UMq/tlDqKcMb1
+         JAmhLYpSyFiWwafbR6JZBfBOwk3ScYA64yMiHs32V/bK/1DloJ0kA3upgL8wrwUdUuZK
+         w+30VJYDPR3rX+LlSPAnP1SP7EpUyhpVYTqIwvuY77xuO5WkOo2PAf1G4rvLPyvUnfNJ
+         bVsxJE4HaoPjIY8IJo2BeUfgrAUmCdBxu+4eBEzBF3b/nTvGJATfv85Cwgt+w0yMPGXj
+         mKOA==
+X-Gm-Message-State: AHYfb5j0DD55o3leiSFak7NB/8s2yXF9A178faymd5deQaybbjJroovs
+        cRgW845zyprvfokyhHKuqMdNuydtuSIL
+X-Received: by 10.25.228.206 with SMTP id x75mr3844014lfi.94.1502386039972;
+ Thu, 10 Aug 2017 10:27:19 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.25.1.130 with HTTP; Thu, 10 Aug 2017 10:21:23 -0700 (PDT)
-In-Reply-To: <cover.1502241234.git.jonathantanmy@google.com>
-References: <cover.1502220307.git.jonathantanmy@google.com> <cover.1502241234.git.jonathantanmy@google.com>
+Received: by 10.25.1.130 with HTTP; Thu, 10 Aug 2017 10:27:19 -0700 (PDT)
+In-Reply-To: <20170810073239.ny64rqmwb3yqbpb6@sigill.intra.peff.net>
+References: <20170809122147.g44nwaitzctbadzm@sigill.intra.peff.net>
+ <20170809122439.fscozhyvxcx2oq2n@sigill.intra.peff.net> <CAGZ79kYqq_EhRxckM4iV=99r59Y7_y94j+-65xXLUF4y2vNUUw@mail.gmail.com>
+ <20170810073239.ny64rqmwb3yqbpb6@sigill.intra.peff.net>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 10 Aug 2017 10:21:23 -0700
-Message-ID: <CAGZ79kbGUOWT7_Uxoc4Hp0m4XSo8YUycd0aRZwm6sMZD829irw@mail.gmail.com>
-Subject: Re: [PATCH v2 00/25] Move exported packfile funcs to its own file
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
+Date:   Thu, 10 Aug 2017 10:27:19 -0700
+Message-ID: <CAGZ79kYHPhaZLSsBq2vM=D+_QMP9MY=xYjRwfG5q36neFyNH3w@mail.gmail.com>
+Subject: Re: [PATCH 3/5] interpret-trailers: add an option to show only
+ existing trailers
+To:     Jeff King <peff@peff.net>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 8, 2017 at 6:22 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
-> Here is the complete patch set. I have only moved the exported functions
-> that operate with packfiles and their static helpers - for example,
-> static functions like freshen_packed_object() that are used only by
-> non-pack-specific functions are not moved.
+On Thu, Aug 10, 2017 at 12:32 AM, Jeff King <peff@peff.net> wrote:
+> On Wed, Aug 09, 2017 at 11:18:19AM -0700, Stefan Beller wrote:
 >
-> In the end, 3 functions needed to be made global. They are
-> find_pack_entry(), mark_bad_packed_object(), and has_packed_and_bad().
+>> On Wed, Aug 9, 2017 at 5:24 AM, Jeff King <peff@peff.net> wrote:
+>> > It can be useful to invoke interpret-trailers for the
+>> > primary purpose of parsing existing trailers. But in that
+>> > case, we don't want to apply existing ifMissing or ifExists
+>> > rules from the config. Let's add a special mode where we
+>> > avoid applying those rules. Coupled with --only-trailers,
+>> > this gives us a reasonable parsing tool.
+>>
+>> I have the impression that the name is slightly misleading
+>> because 'only' just reduces the set. it does not enhance it.
+>> (Do we have a configuration that says "remove this trailer
+>> anytime"?)
 >
-> Of the 3, find_pack_entry() is probably legitimately promoted. But I
-> think that the latter two functions needing to be accessed from
-> sha1_file.c points to a design that could be improved - they are only
-> used when packed_object_info() detects corruption, and used for marking
-> as bad and printing messages to the user respectively, which
-> packed_object_info() should probably do itself. But I have not made this
-> change in this patch set.
+> No, I think you can only add trailers via ifExists or ifMissing.
+> I actually called this --no-config originally, because to me it meant
+> "do not apply config". But the processing applies also to --trailer
+> arguments no the command line, which is how I ended up with
+> --only-existing.
 >
-> (Other than the 3 functions above, there are some variables and
-> functions that are temporarily made global, but reduced back to static
-> when the wide scope is no longer needed.)
+>> So maybe this is rather worded as 'exact-trailers' ?
+>
+> I'm not fond of that, as it's vague about which exact trailers we're
+> talking about. I also thought of something like --verbatim, but I'd
+> worry that would seem to conflict with --normalize.
+>
+> I dunno. All of the names seem not quite descriptive enough to me.
 
-I read through the patches yesterday and had no comment.
+I meant 'exact' as in 'exactly from the patch/commit, no external
+influence such as config', so maybe '--from-patch' or '--from-commit'
+(which says the same as --no-config just the other way round.
+Having --no- in config options as the standard is a UX disaster
+IMHO as then we have to forbid the --no-no-X or reintroduce X
+and flip the default)
 
-Thanks,
-Stefan
+Maybe --genuine ?
+
+>
+> -Peff
