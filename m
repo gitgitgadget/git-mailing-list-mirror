@@ -2,153 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6FB3C208B4
-	for <e@80x24.org>; Thu, 10 Aug 2017 20:07:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A6CC8208B4
+	for <e@80x24.org>; Thu, 10 Aug 2017 20:08:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753270AbdHJUHL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Aug 2017 16:07:11 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60645 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753017AbdHJUHK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Aug 2017 16:07:10 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6AA519C33F;
-        Thu, 10 Aug 2017 16:07:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=aif4tKcF1VFHAiJF7y2+ngoJE30=; b=nIZ5AA
-        V9truQIxNHXUP+eT+CaR9/G/pq36QeYzqKrzcHvqf5nYR8kSnyLR4sta3twmmx4s
-        iODel8ZgkoumKFgbAHJ25O+f7DpjJDhjgT+tQTl4X271GJdQMe1mdkoq3NtaziA+
-        PA77pwoLO5s7/wSo2LsvAyHeuV1goLwHcbgoU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=NRBGGXfWT8pjX/9grDGQtqoPVv99JpJh
-        SusSy/XhMTCBaS4UdAMKmhVUL7tcsSwtShtnl5XvWQRUzzudzcvMdXemODYQDK3r
-        tY83A8fyeX+iHPI1JRcR/UrYTx8kEwrr3uqAv/uIRal8kFWGYeXP2rC9dPxBX0sQ
-        Upqb7bYuMj4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6364A9C33E;
-        Thu, 10 Aug 2017 16:07:09 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CAF7E9C33D;
-        Thu, 10 Aug 2017 16:07:08 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin Koegler <martin.koegler@chello.at>
-Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH V2 1/2] Fix delta integer overflows
-References: <1502348462-4992-1-git-send-email-martin@mail.zuhause>
-Date:   Thu, 10 Aug 2017 13:07:07 -0700
-In-Reply-To: <1502348462-4992-1-git-send-email-martin@mail.zuhause> (Martin
-        Koegler's message of "Thu, 10 Aug 2017 09:01:01 +0200")
-Message-ID: <xmqqmv772nmc.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1753329AbdHJUIH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Aug 2017 16:08:07 -0400
+Received: from mout.gmx.net ([212.227.15.18]:64091 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753318AbdHJUIG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Aug 2017 16:08:06 -0400
+Received: from localhost.localdomain ([37.201.192.198]) by mail.gmx.com
+ (mrgmx002 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 0LkxLZ-1d5jW53y2n-00aniz; Thu, 10 Aug 2017 22:08:05 +0200
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.14.1
+Date:   Thu, 10 Aug 2017 22:07:47 +0200
+Message-Id: <20170810200747.8180-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.12.1.windows.1
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7D3342DA-7E07-11E7-A6CE-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Fcc:    Sent
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:bA2tXFKTB6ivd4c1ZqhsUCqW+2PxriZMWTloJWS8h7Lyo5GYxGR
+ +fRobvgrP4qhDFJU2KbjzOQU3CnY78o9ORYzv4J1ckPiAd70Q8BBKaDmJNWTQMI1S/UsoBP
+ byo07LZG1GOT6U/NOxGIu0sAaqOWHZdmY+0u9DZT31tWCx7/6nq3eQFjLUXnou8a4q44Llq
+ 4uz0y4E2O/EgMekD+IFNg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:rPspqi/XzQc=:L615rxQqPELiU0VUhxwz5D
+ cIAKFqcLkfwS4+797qy34y/4cQ9IfgUNTlwOBPdzbHjO6r4yNkN84vPK4N5GCfzyASv3a23Bf
+ 44n3Pvkx3X8iH89sNjkbxD6B2BLkEJLbcB1HHQawQZdfA4du30vnPBZ8/u/bs4O1B380MQpiA
+ tBiX8BCn2StDEO9C3BWM6Z8FGUsUqrPqMBZOTB9I3WUPqcNBDJEiRJiFxRubS/exNRAWmxjCD
+ hghEk9eSxdygaj7NeeuJWAZdHVfEUBqCG+2mtilam02wkthFrRVXQkJXJoNxVvfbaWG2VM9JH
+ e2ZEiklj00aWsk5gPclwIm/yGJg2cglljybaL6UNeRkvOvkS8Wldo2RDiaSfK+NSzOj8elZ/U
+ w44FBEti6Xb0dwxvR1TDH3rYBvo+R62aB/IvroYVUtO6BpAWvm1qW5b2t80+gdcslSe2vVHhd
+ VB/Bv3kOC1Dli1uWCjqIzPtOVO0k8IHFwkBR+lhr4/i6cqtmLYl2BuBkI88YJADLjwk+p7ME3
+ NFggEZVv+C3kFlBACKo/qANrPBclAqczb6dBB8dKUh/gMHbPcPtuN8XzRXyPp+saoi0wKH/wk
+ IBgc1Mr8Zqk11yCB5fmguIAFwBWuLse3T9HoQTn6U0QvT8rUL458tqJ0mjkIzW4imWATU+g+0
+ qMJTm7WNBAYqCrh/7nCbeDS3dBxSgrLHI9mZ710dvVfxD5nEFqI9CSkdF7Tf3N4psqe4L46h7
+ 0YoO4f+XoMna36S4kG9/QHBdK9jJQ1ygBbkwh9tKgqpEyF3TJRAgL0HfTAY2l9TfYfKUCzWoB
+ OCg/jZNmOo2JaTiMzI6J00P8cPiNkcdlINwJfawlmHc+IUUjvE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin Koegler <martin.koegler@chello.at> writes:
+Dear Git users,
 
-> From: Martin Koegler <martin.koegler@chello.at>
+It is my pleasure to announce that Git for Windows 2.14.1 is available from:
 
-Just a nitpick on the patch title.  As "git shortlog --no-merges"
-output would tell you, we try to prefix the title with a short name
-of the area of codebase we are touching, followed by a colon and a
-space and then remainder without extra capitalization.  Perhaps
+	https://git-for-windows.github.io/
 
-    Subject: delta: fix enconding size larger than an "uint" can hold
+Changes since Git for Windows v2.14.0(2) (August 7th 2017)
 
-> The current delta code produces incorrect pack objects for files > 4GB.
->
-> Signed-off-by: Martin Koegler <martin.koegler@chello.at>
+Note: there have been MinGit-only releases v2.12.2(3) and v2.13.1(3)
+with backports of the important bug fix in v2.14.1 as well as the
+experimental --show-ignored-directory option of git status.
 
-I am a bit torn on this change.
+New Features
 
-The original is indeed bad in that the code does not guarantee that
-an intermediate variable like 'l' is not large enough to hold the
-true size we know in index->src_size, and in that sense this change
-is an improvement.
+  * Comes with Git v2.14.1.
+  * Comes with cURL v7.55.0.
+  * The Git Bash Here context menu item is now also available in the
+    special Libraries folders.
 
-Given that this is not merely a local storage format but it also is
-an interchange format, we would probably want to make sure that the
-receiving end (e.g. get_delta_hdr_size() that is used at the
-beginning of patch_delta()) on a platform whose size_t is smaller
-than that of a platform that produced the delta stream with this
-code behaves "sensibly".
+Filename | SHA-256
+-------- | -------
+Git-2.14.1-64-bit.exe | 0dc556503e3ce4699228fc910a8e4a8d81172635ac8e8e16a11be107254c4901
+Git-2.14.1-32-bit.exe | 0129e21eaed8efa6d795f712656463ee4f90aa2b3b66168f29b0da98f74104f7
+PortableGit-2.14.1-64-bit.7z.exe | 3c3270a9df5f3db1f7637d86b94fb54a96e9145ba43c98a3e993cdffb1a1842e
+PortableGit-2.14.1-32-bit.7z.exe | df3f9b6c2dd2b12e5cb7035b9ca48d13b973d054a35b0939953aa6e7a00a0659
+MinGit-2.14.1-64-bit.zip | 65c12e4959b8874187b68ec37e532fe7fc526e10f6f0f29e699fa1d2449e7d92
+MinGit-2.14.1-32-bit.zip | 77b468e0ead1e7da4cb3a1cf35dabab5210bf10457b4142f5e9430318217cdef
+MinGit-2.14.1-busybox-64-bit.zip | 7e72a78e0711d27d98f851ec81a6fe27b4159066d548c2013dd7ce57a1b8cd03
+MinGit-2.14.1-busybox-32-bit.zip | 2f3a3ae26391e5e3487501b3b16ee1c6385259ebfdaafcbee9947d7513dc0a0f
+Git-2.14.1-64-bit.tar.bz2 | 544615e2ef5e2040a67878ce7aac42cb103f948d52989239b3715dd6023b1007
+Git-2.14.1-32-bit.tar.bz2 | 0aede42a7ec7a6351a3f273ab519679f95e9341cb63899c54be18a57819da6aa
 
-If we replaced ulong we use in create/patch delta codepaths with
-uint32_t, that would be safer, just because the encoder would not be
-able to emit varint that is larger than the receivers to handle.
-But that defeats the whole point of using varint() to encode the
-sizes in the first place.  It was partly done for space saving, but
-more for allowing larger sizes and larger ulong in the future
-without having to change the file format.
-
-Perhaps we should teach the receiving end to notice that the varint
-data it reads encodes a size that is too large for it to grok and
-die.  With that, we can safely move forward with whatever size_t
-each platform uses.
-
-Thanks.
-
-> ---
-> For next.
->
->  diff-delta.c | 24 +++++++++++++-----------
->  1 file changed, 13 insertions(+), 11 deletions(-)
->
-> diff --git a/diff-delta.c b/diff-delta.c
-> index 3797ce6..cd238c8 100644
-> --- a/diff-delta.c
-> +++ b/diff-delta.c
-> @@ -319,7 +319,9 @@ create_delta(const struct delta_index *index,
->  	     const void *trg_buf, unsigned long trg_size,
->  	     unsigned long *delta_size, unsigned long max_size)
->  {
-> -	unsigned int i, outpos, outsize, moff, msize, val;
-> +	unsigned int i, val;
-> +	off_t outpos, moff;
-> +	size_t l, outsize, msize;
->  	int inscnt;
->  	const unsigned char *ref_data, *ref_top, *data, *top;
->  	unsigned char *out;
-> @@ -336,20 +338,20 @@ create_delta(const struct delta_index *index,
->  		return NULL;
->  
->  	/* store reference buffer size */
-> -	i = index->src_size;
-> -	while (i >= 0x80) {
-> -		out[outpos++] = i | 0x80;
-> -		i >>= 7;
-> +	l = index->src_size;
-> +	while (l >= 0x80) {
-> +		out[outpos++] = l | 0x80;
-> +		l >>= 7;
->  	}
-> -	out[outpos++] = i;
-> +	out[outpos++] = l;
->  
->  	/* store target buffer size */
-> -	i = trg_size;
-> -	while (i >= 0x80) {
-> -		out[outpos++] = i | 0x80;
-> -		i >>= 7;
-> +	l = trg_size;
-> +	while (l >= 0x80) {
-> +		out[outpos++] = l | 0x80;
-> +		l >>= 7;
->  	}
-> -	out[outpos++] = i;
-> +	out[outpos++] = l;
->  
->  	ref_data = index->src_buf;
->  	ref_top = ref_data + index->src_size;
+Ciao,
+Johannes
