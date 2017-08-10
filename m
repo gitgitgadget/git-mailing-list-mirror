@@ -2,86 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A8F35208B4
-	for <e@80x24.org>; Thu, 10 Aug 2017 16:41:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 96CF0208B4
+	for <e@80x24.org>; Thu, 10 Aug 2017 16:48:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752861AbdHJQlr (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Aug 2017 12:41:47 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64219 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752524AbdHJQlq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Aug 2017 12:41:46 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 830758912B;
-        Thu, 10 Aug 2017 12:41:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=sINf+0TuuJX3iyiqffAzOcE25wU=; b=QhyZri
-        ZjKNIKpmI2tGra/lgAkd7ZkfSsVh+iCxu6ywFHjqJJhUFKpUjRh7zhxty/9GT9vy
-        LzsJR6nBa34g9GQevbS/ocUSKezminscWzJJJ8kgToB/UfzGAjXUWRr1pGicIvhO
-        JTEOmGsSWgg6QNyRbsvHhWBKcFlSUZ85YREEc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=k6Y31wiZbf3zpvwGuK/HJd2pr5XKvcwy
-        1Dw12Z82z5pzdXcVVWbsDeeMTOfXlNmo5xKt4HMuB8ztm0YZIm7ruLAgW3PVPSm0
-        ugBQAKHKjkJN97PiV6XgFcTo1q0I6W8Papj6uVtLD1poDSUrlky6a1gpcqyGuojj
-        xbTS17EYTIs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 79FB88912A;
-        Thu, 10 Aug 2017 12:41:43 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E851789128;
-        Thu, 10 Aug 2017 12:41:42 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Brandon Williams <bmwill@google.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [RFC] clang-format: outline the git project's coding style
-References: <20170808012554.186051-1-bmwill@google.com>
-        <alpine.DEB.2.21.1.1708081404200.4271@virtualbox>
-        <CAGZ79kb2860nUs46bP=x-gAx9Ao6DxnvXQv3x387Wxw+kEyxJw@mail.gmail.com>
-        <20170808182324.GB73298@google.com>
-        <alpine.DEB.2.21.1.1708100032050.11175@virtualbox>
-        <CAGZ79kb6Ljk8brLN1bbOnBLfm=Q=aCnkZ=ZBtDPzf7MZionmSw@mail.gmail.com>
-        <alpine.DEB.2.21.1.1708101137190.11175@virtualbox>
-Date:   Thu, 10 Aug 2017 09:41:41 -0700
-In-Reply-To: <alpine.DEB.2.21.1.1708101137190.11175@virtualbox> (Johannes
-        Schindelin's message of "Thu, 10 Aug 2017 11:38:09 +0200 (CEST)")
-Message-ID: <xmqqk22b5q9m.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1753353AbdHJQsG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Aug 2017 12:48:06 -0400
+Received: from mout.web.de ([212.227.15.4]:55516 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753023AbdHJQsE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Aug 2017 12:48:04 -0400
+Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MQ5zf-1dl5Y53OJn-005MDa; Thu, 10
+ Aug 2017 18:47:58 +0200
+To:     Git List <git@vger.kernel.org>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] merge: use skip_prefix()
+Cc:     Junio C Hamano <gitster@pobox.com>
+Message-ID: <7ebe2ff6-bc4b-3694-7978-a1f5f8628b8a@web.de>
+Date:   Thu, 10 Aug 2017 18:47:55 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CA673AA6-7DEA-11E7-9C94-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:1rSBZEyk6FB+zC4iFPlXGa71DVIaB5xkzPLlFUKz9anm7EH7Zut
+ IaVcFXLu4HmWOetL/aOm1k8Ddmu02drxXsNoKwaVtzJcvAJU7jwKcTefdDz8mcAckxWQ7Vl
+ db3CmXxb7oCEXv/H9o088nuRw+wTAJwJCF9/u0L/x7r1LimNmUfl/aTy6+2NSXX/WZEEfum
+ XFDQbzLtZUhCXfnENxjPQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:OyUC54KhQIk=:c0kb9KFqXylMY4tBAvQgkU
+ 9kmh5ndLHVfp+mCsqNRXp3kOOR2v6u1+ZVgZq+d8TnBpyMZeA98jPt9W1NrbAojviWUMNglfQ
+ RCbJlgEri8EfqgyCSquY1lmrgiqxu9agsOpvdqisMlKHBilcPxuznbSmDovXZN7YneYIq580h
+ vobjc3CBgWmeEdgpBmErdMeH3n+5SAhSbowIELxiUPN4DHbLauB6Us839yFTQy7IBjUYzP/cn
+ dhPexvbozI981qx4TFsNBFsuH6CyvmZGtBKXPcGEJUokk1zgOiMM0jgD7EBcFYN5Mnn9gtBVs
+ 4zjCz6Li3pbRT5cgEWfjG9aAZNEfGlTe28NB3lErOtKAa5n5H3sStOwn+1jQNONHvbWMRuiRO
+ piHu/Ar1VxXZzg6bwhToYwxvTULPCPaayU1PsSW8cLS9CBskyVSYW7fg/r7TzpYY6tmjFn2rN
+ MRek5t/6sjFUVruZ9nhXVEAO/s8qbBQRHPjHLBknx6ILWYySzv6vxXSdM9gnlObzbxtVz+QW2
+ zIYceshgb1IM6rzAfSDfZdmIpSSwps4VOpRXfl3MxWqNHY5jWkV28X0gMejuTHf4rfRNP95W2
+ rBrNWZQYIERORhccZ7b/oPIG5x6zLIXEqlOTJGo3j6QessLRqkRPehjwMbq7xLMRNUDCtvUPL
+ K+hzYg4caz1rPgvWy6Ol8DTogbTLWLK8F8zAvRKD7R/AICG7vG2x6NdS/KN0fPsWB9U5iZHo7
+ 5SiBXXauwRpYsy+nWajmXvaFHbjlV0qCEl6igKHpd/BjeeLIor7tcuzOn10y/yRj9jMgM32bW
+ AhKz9i8l8HLv2GhvHxDXYT/pJb/v8lbZPjGzoi6e5EoB/nMpRw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Get rid of a magic string length constant by using skip_prefix() instead
+of starts_with().
 
-> On Wed, 9 Aug 2017, Stefan Beller wrote:
->
->> > I am sure that something even better will be possible: a Continuous
->> > "Integration" that fixes the coding style automatically by using
->> > `filter-branch` (avoiding the merge conflicts that would arise if
->> > `rebase -i` was used).
->> 
->> I do not quite follow. Is that to be used by Junio while integrating
->> branches?
->
-> I was more thinking about a bot on GitHub. "Code cleanup as a service".
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ builtin/merge.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-I vaguely recall that there was a discussion to have SubmitGit wait
-for success from Travis CI; if that is already in place, then I can
-sort of see how it would help individual contributors to have the
-style checker in that pipeline as well.  
-
-I have a mixed feelings about "fixing" styles automatically, though.
-
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 900bafdb45..4facb6fdd0 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -1117,8 +1117,8 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 	 * current branch.
+ 	 */
+ 	branch = branch_to_free = resolve_refdup("HEAD", 0, head_oid.hash, NULL);
+-	if (branch && starts_with(branch, "refs/heads/"))
+-		branch += 11;
++	if (branch)
++		skip_prefix(branch, "refs/heads/", &branch);
+ 	if (!branch || is_null_oid(&head_oid))
+ 		head_commit = NULL;
+ 	else
+-- 
+2.14.0
