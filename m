@@ -2,133 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 62787208B4
-	for <e@80x24.org>; Thu, 10 Aug 2017 21:30:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7BE81208B4
+	for <e@80x24.org>; Thu, 10 Aug 2017 21:32:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752192AbdHJVaR (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Aug 2017 17:30:17 -0400
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:32771 "EHLO
-        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751455AbdHJVaQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Aug 2017 17:30:16 -0400
-Received: by mail-pf0-f177.google.com with SMTP id h68so7987758pfk.0
-        for <git@vger.kernel.org>; Thu, 10 Aug 2017 14:30:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=yAj8LjZMujvM3S1EQR62eTMC5ZGEPyEPb0rYqnnviwc=;
-        b=CrqfHpNeMtS93izqn+5FGUzXTUDi5gnfuPNFvoDEUAtTfOz1+oS1tBxvYkG1bbKK3F
-         mQVYzrju4RGnMv6JoCkm1JLcceQZi6lsoFl+NYBMHOBeVTy38YSGX4eHKTRlU+soN0FA
-         oaoZvSyu6qVn//NrdNAxYrJ3eo44e/H9zYZ0thLGPASrQx6wAtlnzjzCgBMJbD/apD+t
-         Y25vQWZerudwtH5ag8pu9TtFgLM3Zh5J3etj/UZg1ML+u5T537M5GgQFR4Jfx9fZA6ki
-         KSMcqlaOGryKqy2FImYhfNq8Hofpfq8Qq9kktPpfE7N+BItTi3RPuxSIACfdwr2W0RiQ
-         4yoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=yAj8LjZMujvM3S1EQR62eTMC5ZGEPyEPb0rYqnnviwc=;
-        b=Y56ZawnDbWW00Xi7OCuAzg5dsZnvbtEYE5D6izaaoUbawpxdT+rc0I/RK4HYpBbmKa
-         ej/YKMU8fKF0fophGe1Kn4+jPG3TbgbWfr8EJPJZMEYRSZTcITb7DM0fCyAukl/fcC9d
-         l3nX4witof6r4vpZJpbOktSiVyE1lhq9zGFZDVUKVI3wtVam88FFDAEtBQS2FN/ujFnH
-         d7stKjzWayPZqIu5sLoe5fnkPeKHGlbnYoX3XBv7JDlgJoAQCfodMRiUfE74fdLFn//1
-         2XyU5DcdW+Lzp+JcTmd2xzEDapy41wFftEUe1ZgrvkLfj0HRy/xR6cU8ipqucClu3TlH
-         mL4w==
-X-Gm-Message-State: AHYfb5jww033kvgPriGnZ1IKf4b09XohIUOvbnY49Myd7see46DsTDG0
-        +QBMRR4sjgRDmAg3
-X-Received: by 10.98.33.148 with SMTP id o20mr13704459pfj.89.1502400615958;
-        Thu, 10 Aug 2017 14:30:15 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:ed9d:9bd9:5ee6:bf0b])
-        by smtp.gmail.com with ESMTPSA id c25sm12978818pfj.85.2017.08.10.14.30.14
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 10 Aug 2017 14:30:14 -0700 (PDT)
-Date:   Thu, 10 Aug 2017 14:30:13 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
+        id S1753141AbdHJVcj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Aug 2017 17:32:39 -0400
+Received: from cloud.peff.net ([104.130.231.41]:35344 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752366AbdHJVci (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Aug 2017 17:32:38 -0400
+Received: (qmail 29770 invoked by uid 109); 10 Aug 2017 21:32:38 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 10 Aug 2017 21:32:38 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 10356 invoked by uid 111); 10 Aug 2017 21:33:01 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Thu, 10 Aug 2017 17:33:01 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Aug 2017 17:32:36 -0400
+Date:   Thu, 10 Aug 2017 17:32:36 -0400
+From:   Jeff King <peff@peff.net>
+To:     "Tom G. Christensen" <tgc@jupiterrise.com>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Stefan Beller <sbeller@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [RFC] clang-format: outline the git project's coding style
-Message-ID: <20170810213013.GD73298@google.com>
-References: <20170808012554.186051-1-bmwill@google.com>
- <alpine.DEB.2.21.1.1708081404200.4271@virtualbox>
- <CAGZ79kb2860nUs46bP=x-gAx9Ao6DxnvXQv3x387Wxw+kEyxJw@mail.gmail.com>
- <20170808182324.GB73298@google.com>
- <alpine.DEB.2.21.1.1708100032050.11175@virtualbox>
- <CAGZ79kb6Ljk8brLN1bbOnBLfm=Q=aCnkZ=ZBtDPzf7MZionmSw@mail.gmail.com>
- <alpine.DEB.2.21.1.1708101137190.11175@virtualbox>
- <xmqqk22b5q9m.fsf@gitster.mtv.corp.google.com>
- <20170810171545.GC73298@google.com>
- <xmqqzib749ix.fsf@gitster.mtv.corp.google.com>
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/4] dropping support for older curl
+Message-ID: <20170810213236.dej4ibsag2lxf5w2@sigill.intra.peff.net>
+References: <20170809120024.7phdjzjv54uv5dpz@sigill.intra.peff.net>
+ <alpine.DEB.2.21.1.1708092337350.11175@virtualbox>
+ <20170809214758.p77fqrwxanb4zn5a@sigill.intra.peff.net>
+ <873e1f31-2a96-5b72-2f20-a5816cad1b51@jupiterrise.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqzib749ix.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <873e1f31-2a96-5b72-2f20-a5816cad1b51@jupiterrise.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08/10, Junio C Hamano wrote:
-> Brandon Williams <bmwill@google.com> writes:
-> 
-> > On 08/10, Junio C Hamano wrote:
-> >
-> >> I vaguely recall that there was a discussion to have SubmitGit wait
-> >> for success from Travis CI; if that is already in place, then I can
-> >> sort of see how it would help individual contributors to have the
-> >> style checker in that pipeline as well.  
-> >> 
-> >> I have a mixed feelings about "fixing" styles automatically, though.
-> >
-> > I still think we are far away from a world where we can fix style
-> > automatically.  If we do want to keep pursuing this there are a number
-> > steps we'd want to take first.
-> >
-> > 1. Settle on a concrete style and document it using a formatter's rules
-> >    (in say a .clang-format file).  This style would most likely need to
-> >    be tuned a little bit, at least the 'Penalty' configuration would
-> >    need to be tuned which (as far as I understand it) is used to
-> >    determine which rule to break first to ensure a line isn't too long.
-> 
-> Yes.  I think this is what you started to get the ball rolling.
-> Together with what checkpatch.pl already diagnoses, I think we can
-> get a guideline that is more or less reasonable.
-> 
-> > 2. Start getting contributors to use the tool to format their patches.
-> >    This would include having some script or hook that a contributor
-> >    could run to only format the sections of code that they touched.
-> 
-> This, too.  Running checkpatch.pl (possibly combined with a bit of
-> tweaking it to match our needs) already catches many of the issues,
-> so a tool with a similar interface would be easy to use, I would
-> imagine.
-> 
-> > 3. Slowly the code base would begin to have a uniform style.  At
-> >    some point we may want to then reformat the remaining sections of the
-> >    code base.  At this point we could have some automated bot that fixes
-> >    style.
-> 
-> I suspect I am discussing this based on a different assumption.
-> 
-> I think the primary goal of this effort is to make it easier to
-> cleanse the new patches that appear on the list of trivial style
-> issues, so that contributors and reviewers do not have to spend
-> bandwidth and brain cycles during the review.  And I have been
-> assuming that we can do so even without waiting for a "tree wide"
-> code churn on existing code to complete.
+On Thu, Aug 10, 2017 at 10:33:18PM +0200, Tom G. Christensen wrote:
 
-Yes that's one of the steps I missed we can call it 2.5 ;)  (3) could be
-a long term goal which is what I was trying to get at by saying:
+> > You've totally ignored the argument I made back then[1], and which I
+> > reiterated in this thread. So I'll say it one more time: the more
+> > compelling reason is not the #ifdefs, but the fact that the older
+> > versions are totally untested.
+> 
+> Perhaps you forgot but I stated in the original thread that I build RPMS for
+> RHEL/CentOS 3, 4, 5, 6 and 7. I still do and I run the testsuite every
+> single time.
 
-> > 3. Slowly the code base would begin to have a uniform style.
+I didn't forget. I actually double-checked the patches you sent at the
+time, but I didn't see one for the CURLPROTO issue. And indeed, it is
+still broken for me:
 
--- 
-Brandon Williams
+  $ cd /path/to/curl/repo
+  $ git checkout curl-7_15_5
+  $ ./buildconf && ./configure --prefix=/tmp/foo && make install
+  $ cd /path/to/git
+  $ git checkout v2.14.0
+  $ make CURLDIR=/tmp/foo V=1 http.o
+  gcc -o http.o -c -MF ./.depend/http.o.d -MQ http.o -MMD -MP   -g -O0 -Wall -Werror -Wdeclaration-after-statement -Wpointer-arith -Wstrict-prototypes -Wvla -Wold-style-declaration -Wold-style-definition -Wno-error -Wno-cpp -Wno-unused-value -Wno-strict-prototypes  -I. -DUSE_LIBPCRE1 -DHAVE_ALLOCA_H -I/tmp/foo/include -DUSE_CURL_FOR_IMAP_SEND -DNO_GETTEXT -DSHA1_DC -DSHA1DC_NO_STANDARD_INCLUDES -DSHA1DC_INIT_SAFE_HASH_DEFAULT=0 -DSHA1DC_CUSTOM_INCLUDE_SHA1_C="\"cache.h\"" -DSHA1DC_CUSTOM_TRAILING_INCLUDE_SHA1_C="\"sha1dc_git.c\"" -DSHA1DC_CUSTOM_TRAILING_INCLUDE_SHA1_H="\"sha1dc_git.h\"" -DSHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C="\"git-compat-util.h\""  -DHAVE_PATHS_H -DHAVE_DEV_TTY -DHAVE_CLOCK_GETTIME -DHAVE_CLOCK_MONOTONIC -DHAVE_GETDELIM  -DFREAD_READS_DIRECTORIES -DNO_STRLCPY -DSHELL_PATH='"/bin/sh"' -DPAGER_ENV='"LESS=FRX LV=-c"'  http.c
+  http.c: In function ‘get_curl_allowed_protocols’:
+  http.c:685:24: error: ‘CURLPROTO_HTTP’ undeclared (first use in this function); did you mean ‘CURLPROXY_HTTP’?
+     allowed_protocols |= CURLPROTO_HTTP;
+                          ^~~~~~~~~~~~~~
+                          CURLPROXY_HTTP
+  [and so on]
+
+> I just built a pristine 2.14.0 on CentOS 5 with curl 7.15.5. No problems at
+> all neither with building nor with running the testsuite.
+
+As you can see, this does not compile for me. What's going on?
+
+I don't see how it could work, as CURLPROTO_HTTP is not defined at all
+in that version of curl.  Can you please double-check that you're
+building against the correct version of curl, and that you are building
+the HTTP parts of Git (which _are_ optional, and the test suite will
+pass without them).
+
+> > So IMHO this is about being honest with users about which versions we
+> > _actually_ support.
+> 
+> I have no problem with you wanting to drop support for older curl releases
+> (such as 7.15.5) but don't use the argument that it doesn't currently build
+> and nobody cares.
+
+My argument isn't quite that nobody cares. It's that we do users a
+disservice by shipping a version of the code that very well may have
+hidden problems like security holes (for instance, we do not handle
+redirects safely in old versions of curl). So if you can get it to build
+it may _seem_ fine, but it's a bit of a booby-trap waiting to spring.
+
+I also won't claim any absolutes. I think we all agree this is a
+cost/benefit tradeoff. But there are a lot of options for building on a
+very old system. For instance, building without http if you don't need
+it. Or building a more recent libcurl (and even linking statically for
+simplicity).
+
+I'd find arguments against the latter more compelling if recent curl
+were hard to compile on old systems. I don't know whether that's the
+case (certainly on a modern system, it's much easier to get newer
+versions of curl to compile than older ones).
+
+> Also FWIW Red Hat continues to support RHEL 5 with the Extended Life-cycle
+> Support program until 2020-11-30.
+
+I saw that, too. But as I understand it, they provide no code updates:
+no bugfixes and no security updates. They just promise to answer the
+phone and help you with troubleshooting. It's possible my perception is
+wrong, though; I'm certainly not one of their customers.
+
+-Peff
