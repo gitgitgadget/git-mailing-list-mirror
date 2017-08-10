@@ -6,35 +6,33 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B096B208B4
-	for <e@80x24.org>; Thu, 10 Aug 2017 19:25:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E38A208B4
+	for <e@80x24.org>; Thu, 10 Aug 2017 19:25:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753295AbdHJTZZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Aug 2017 15:25:25 -0400
-Received: from vie01a-dmta-pe01-1.mx.upcmail.net ([62.179.121.154]:39254 "EHLO
-        vie01a-dmta-pe01-1.mx.upcmail.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752807AbdHJTZX (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 10 Aug 2017 15:25:23 -0400
+        id S1753134AbdHJTZc (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Aug 2017 15:25:32 -0400
+Received: from vie01a-dmta-pe07-1.mx.upcmail.net ([84.116.36.17]:43344 "EHLO
+        vie01a-dmta-pe05-1.mx.upcmail.net" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1753232AbdHJTZR (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 10 Aug 2017 15:25:17 -0400
 Received: from [172.31.216.44] (helo=vie01a-pemc-psmtp-pe02)
-        by vie01a-dmta-pe01.mx.upcmail.net with esmtp (Exim 4.88)
+        by vie01a-dmta-pe07.mx.upcmail.net with esmtp (Exim 4.88)
         (envelope-from <martin.koegler@chello.at>)
-        id 1dft57-0005fw-4T
-        for git@vger.kernel.org; Thu, 10 Aug 2017 21:25:21 +0200
+        id 1dft52-00015Q-KR
+        for git@vger.kernel.org; Thu, 10 Aug 2017 21:25:16 +0200
 Received: from master.zuhause ([80.108.242.240])
         by vie01a-pemc-psmtp-pe02 with SMTP @ mailcloud.upcmail.net
-        id vXRD1v0025BuuEg01XRElK; Thu, 10 Aug 2017 21:25:14 +0200
+        id vXRB1v00X5BuuEg01XRCkV; Thu, 10 Aug 2017 21:25:12 +0200
 X-SourceIP: 80.108.242.240
 Received: by master.zuhause (Postfix, from userid 1006)
-        id E10F145D4512; Thu, 10 Aug 2017 21:25:12 +0200 (CEST)
+        id 2E98545D4512; Thu, 10 Aug 2017 21:25:11 +0200 (CEST)
 From:   Martin Koegler <martin.koegler@chello.at>
 To:     git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de
 Cc:     Martin Koegler <martin.koegler@chello.at>
-Subject: [PATCH 8/9] Convert fsck.c & commit.c to size_t
-Date:   Thu, 10 Aug 2017 21:25:09 +0200
-Message-Id: <1502393110-31996-4-git-send-email-martin@mail.zuhause>
+Subject: [PATCH 5/9] Convert sha1_file.c to size_t
+Date:   Thu, 10 Aug 2017 21:25:06 +0200
+Message-Id: <1502393110-31996-1-git-send-email-martin@mail.zuhause>
 X-Mailer: git-send-email 2.1.4
-In-Reply-To: <1502393110-31996-1-git-send-email-martin@mail.zuhause>
-References: <1502393110-31996-1-git-send-email-martin@mail.zuhause>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -44,201 +42,313 @@ From: Martin Koegler <martin.koegler@chello.at>
 
 Signed-off-by: Martin Koegler <martin.koegler@chello.at>
 ---
- builtin/replace.c |  2 +-
- commit.c          | 14 +++++++-------
- commit.h          |  8 ++++----
- fsck.c            | 14 +++++++-------
- fsck.h            |  2 +-
- 5 files changed, 20 insertions(+), 20 deletions(-)
+ cache.h     | 16 +++++++--------
+ sha1_file.c | 68 ++++++++++++++++++++++++++++++-------------------------------
+ streaming.c |  2 +-
+ 3 files changed, 43 insertions(+), 43 deletions(-)
 
-diff --git a/builtin/replace.c b/builtin/replace.c
-index f4a85a1..dcd0d1e 100644
---- a/builtin/replace.c
-+++ b/builtin/replace.c
-@@ -391,7 +391,7 @@ static int create_graft(int argc, const char **argv, int force)
- 	struct commit *commit;
- 	struct strbuf buf = STRBUF_INIT;
- 	const char *buffer;
+diff --git a/cache.h b/cache.h
+index 9185763..9322303 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1189,15 +1189,15 @@ static inline const unsigned char *lookup_replace_object(const unsigned char *sh
+ 
+ /* Read and unpack a sha1 file into memory, write memory to a sha1 file */
+ extern int sha1_object_info(const unsigned char *, size_t *);
+-extern int hash_sha1_file(const void *buf, unsigned long len, const char *type, unsigned char *sha1);
+-extern int write_sha1_file(const void *buf, unsigned long len, const char *type, unsigned char *return_sha1);
+-extern int hash_sha1_file_literally(const void *buf, unsigned long len, const char *type, unsigned char *sha1, unsigned flags);
+-extern int pretend_sha1_file(void *, unsigned long, enum object_type, unsigned char *);
++extern int hash_sha1_file(const void *buf, size_t len, const char *type, unsigned char *sha1);
++extern int write_sha1_file(const void *buf, size_t len, const char *type, unsigned char *return_sha1);
++extern int hash_sha1_file_literally(const void *buf, size_t len, const char *type, unsigned char *sha1, unsigned flags);
++extern int pretend_sha1_file(void *, size_t, enum object_type, unsigned char *);
+ extern int force_object_loose(const unsigned char *sha1, time_t mtime);
+ extern int git_open_cloexec(const char *name, int flags);
+ #define git_open(name) git_open_cloexec(name, O_RDONLY)
+-extern void *map_sha1_file(const unsigned char *sha1, unsigned long *size);
+-extern int unpack_sha1_header(git_zstream *stream, unsigned char *map, unsigned long mapsize, void *buffer, unsigned long bufsiz);
++extern void *map_sha1_file(const unsigned char *sha1, size_t *size);
++extern int unpack_sha1_header(git_zstream *stream, unsigned char *map, size_t mapsize, void *buffer, size_t bufsiz);
+ extern int parse_sha1_header(const char *hdr, size_t *sizep);
+ 
+ /* global flag to enable extra checks when accessing packed objects */
+@@ -1723,8 +1723,8 @@ extern off_t find_pack_entry_one(const unsigned char *sha1, struct packed_git *)
+ 
+ extern int is_pack_valid(struct packed_git *);
+ extern void *unpack_entry(struct packed_git *, off_t, enum object_type *, size_t *);
+-extern unsigned long unpack_object_header_buffer(const unsigned char *buf, unsigned long len, enum object_type *type, size_t *sizep);
+-extern unsigned long get_size_from_delta(struct packed_git *, struct pack_window **, off_t);
++extern size_t unpack_object_header_buffer(const unsigned char *buf, size_t len, enum object_type *type, size_t *sizep);
++extern size_t get_size_from_delta(struct packed_git *, struct pack_window **, off_t);
+ extern int unpack_object_header(struct packed_git *, struct pack_window **, off_t *, size_t *);
+ 
+ /*
+diff --git a/sha1_file.c b/sha1_file.c
+index 3428172..1b3efea 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -51,7 +51,7 @@ static struct cached_object {
+ 	unsigned char sha1[20];
+ 	enum object_type type;
+ 	void *buf;
 -	unsigned long size;
 +	size_t size;
+ } *cached_objects;
+ static int cached_object_nr, cached_object_alloc;
  
- 	if (get_oid(old_ref, &old) < 0)
- 		die(_("Not a valid object name: '%s'"), old_ref);
-diff --git a/commit.c b/commit.c
-index 79decc2..5ebac6a 100644
---- a/commit.c
-+++ b/commit.c
-@@ -231,19 +231,19 @@ int unregister_shallow(const struct object_id *oid)
+@@ -818,8 +818,8 @@ static int check_packed_git_idx(const char *path, struct packed_git *p)
+ 		 * variable sized table containing 8-byte entries
+ 		 * for offsets larger than 2^31.
+ 		 */
+-		unsigned long min_size = 8 + 4*256 + nr*(20 + 4 + 4) + 20 + 20;
+-		unsigned long max_size = min_size;
++		size_t min_size = 8 + 4*256 + nr*(20 + 4 + 4) + 20 + 20;
++		size_t max_size = min_size;
+ 		if (nr)
+ 			max_size += (nr - 1)*8;
+ 		if (idx_size < min_size || idx_size > max_size) {
+@@ -1763,7 +1763,7 @@ static int open_sha1_file(const unsigned char *sha1, const char **path)
+  */
+ static void *map_sha1_file_1(const char *path,
+ 			     const unsigned char *sha1,
+-			     unsigned long *size)
++			     size_t *size)
+ {
+ 	void *map;
+ 	int fd;
+@@ -1790,13 +1790,13 @@ static void *map_sha1_file_1(const char *path,
+ 	return map;
+ }
  
- struct commit_buffer {
- 	void *buffer;
+-void *map_sha1_file(const unsigned char *sha1, unsigned long *size)
++void *map_sha1_file(const unsigned char *sha1, size_t *size)
+ {
+ 	return map_sha1_file_1(NULL, sha1, size);
+ }
+ 
+-unsigned long unpack_object_header_buffer(const unsigned char *buf,
+-		unsigned long len, enum object_type *type, size_t *sizep)
++size_t unpack_object_header_buffer(const unsigned char *buf,
++				   size_t len, enum object_type *type, size_t *sizep)
+ {
+ 	unsigned shift;
+ 	size_t size, c;
+@@ -1821,8 +1821,8 @@ unsigned long unpack_object_header_buffer(const unsigned char *buf,
+ }
+ 
+ static int unpack_sha1_short_header(git_zstream *stream,
+-				    unsigned char *map, unsigned long mapsize,
+-				    void *buffer, unsigned long bufsiz)
++				    unsigned char *map, size_t mapsize,
++				    void *buffer, size_t bufsiz)
+ {
+ 	/* Get the data stream */
+ 	memset(stream, 0, sizeof(*stream));
+@@ -1836,8 +1836,8 @@ static int unpack_sha1_short_header(git_zstream *stream,
+ }
+ 
+ int unpack_sha1_header(git_zstream *stream,
+-		       unsigned char *map, unsigned long mapsize,
+-		       void *buffer, unsigned long bufsiz)
++		       unsigned char *map, size_t mapsize,
++		       void *buffer, size_t bufsiz)
+ {
+ 	int status = unpack_sha1_short_header(stream, map, mapsize,
+ 					      buffer, bufsiz);
+@@ -1852,8 +1852,8 @@ int unpack_sha1_header(git_zstream *stream,
+ }
+ 
+ static int unpack_sha1_header_to_strbuf(git_zstream *stream, unsigned char *map,
+-					unsigned long mapsize, void *buffer,
+-					unsigned long bufsiz, struct strbuf *header)
++					size_t mapsize, void *buffer,
++					size_t bufsiz, struct strbuf *header)
+ {
+ 	int status;
+ 
+@@ -1887,11 +1887,11 @@ static int unpack_sha1_header_to_strbuf(git_zstream *stream, unsigned char *map,
+ 	return -1;
+ }
+ 
+-static void *unpack_sha1_rest(git_zstream *stream, void *buffer, unsigned long size, const unsigned char *sha1)
++static void *unpack_sha1_rest(git_zstream *stream, void *buffer, size_t size, const unsigned char *sha1)
+ {
+ 	int bytes = strlen(buffer) + 1;
+ 	unsigned char *buf = xmallocz(size);
+-	unsigned long n;
++	size_t n;
+ 	int status = Z_OK;
+ 
+ 	n = stream->total_out - bytes;
+@@ -1941,7 +1941,7 @@ static int parse_sha1_header_extended(const char *hdr, struct object_info *oi,
+ 			       unsigned int flags)
+ {
+ 	const char *type_buf = hdr;
+-	unsigned long size;
++	size_t size;
+ 	int type, type_len = 0;
+ 
+ 	/*
+@@ -2006,9 +2006,9 @@ int parse_sha1_header(const char *hdr, size_t *sizep)
+ 	return parse_sha1_header_extended(hdr, &oi, 0);
+ }
+ 
+-unsigned long get_size_from_delta(struct packed_git *p,
+-				  struct pack_window **w_curs,
+-			          off_t curpos)
++size_t get_size_from_delta(struct packed_git *p,
++			   struct pack_window **w_curs,
++			   off_t curpos)
+ {
+ 	const unsigned char *data;
+ 	unsigned char delta_head[20], *in;
+@@ -2242,7 +2242,7 @@ struct delta_base_cache_entry {
+ 	struct delta_base_cache_key key;
+ 	struct list_head lru;
+ 	void *data;
+-	unsigned long size;
++	size_t size;
+ 	enum object_type type;
+ };
+ 
+@@ -2339,7 +2339,7 @@ void clear_delta_base_cache(void)
+ }
+ 
+ static void add_delta_base_cache(struct packed_git *p, off_t base_offset,
+-	void *base, unsigned long base_size, enum object_type type)
++	void *base, size_t base_size, enum object_type type)
+ {
+ 	struct delta_base_cache_entry *ent = xmalloc(sizeof(*ent));
+ 	struct list_head *lru, *tmp;
+@@ -2453,7 +2453,7 @@ int packed_object_info(struct packed_git *p, off_t obj_offset,
+ static void *unpack_compressed_entry(struct packed_git *p,
+ 				    struct pack_window **w_curs,
+ 				    off_t curpos,
+-				    unsigned long size)
++				    size_t size)
+ {
+ 	int st;
+ 	git_zstream stream;
+@@ -2500,7 +2500,7 @@ int do_check_packed_object_crc;
+ struct unpack_entry_stack_ent {
+ 	off_t obj_offset;
+ 	off_t curpos;
 -	unsigned long size;
 +	size_t size;
  };
- define_commit_slab(buffer_slab, struct commit_buffer);
- static struct buffer_slab buffer_slab = COMMIT_SLAB_INIT(1, buffer_slab);
  
--void set_commit_buffer(struct commit *commit, void *buffer, unsigned long size)
-+void set_commit_buffer(struct commit *commit, void *buffer, size_t size)
+ void *unpack_entry(struct packed_git *p, off_t obj_offset,
+@@ -2909,7 +2909,7 @@ static int sha1_loose_object_info(const unsigned char *sha1,
+ 				  int flags)
  {
- 	struct commit_buffer *v = buffer_slab_at(&buffer_slab, commit);
- 	v->buffer = buffer;
- 	v->size = size;
+ 	int status = 0;
+-	unsigned long mapsize;
++	size_t mapsize;
+ 	void *map;
+ 	git_zstream stream;
+ 	char hdr[32];
+@@ -3088,7 +3088,7 @@ static void *read_packed_sha1(const unsigned char *sha1,
+ 	return data;
  }
  
--const void *get_cached_commit_buffer(const struct commit *commit, unsigned long *sizep)
-+const void *get_cached_commit_buffer(const struct commit *commit, size_t *sizep)
+-int pretend_sha1_file(void *buf, unsigned long len, enum object_type type,
++int pretend_sha1_file(void *buf, size_t len, enum object_type type,
+ 		      unsigned char *sha1)
  {
- 	struct commit_buffer *v = buffer_slab_peek(&buffer_slab, commit);
- 	if (!v) {
-@@ -256,7 +256,7 @@ const void *get_cached_commit_buffer(const struct commit *commit, unsigned long
- 	return v->buffer;
- }
- 
--const void *get_commit_buffer(const struct commit *commit, unsigned long *sizep)
-+const void *get_commit_buffer(const struct commit *commit, size_t *sizep)
- {
- 	const void *ret = get_cached_commit_buffer(commit, sizep);
- 	if (!ret) {
-@@ -291,7 +291,7 @@ void free_commit_buffer(struct commit *commit)
+ 	struct cached_object *co;
+@@ -3209,14 +3209,14 @@ void *read_object_with_reference(const unsigned char *sha1,
  	}
  }
  
--const void *detach_commit_buffer(struct commit *commit, unsigned long *sizep)
-+const void *detach_commit_buffer(struct commit *commit, size_t *sizep)
+-static void write_sha1_file_prepare(const void *buf, unsigned long len,
++static void write_sha1_file_prepare(const void *buf, size_t len,
+                                     const char *type, unsigned char *sha1,
+                                     char *hdr, int *hdrlen)
  {
- 	struct commit_buffer *v = buffer_slab_peek(&buffer_slab, commit);
- 	void *ret;
-@@ -1128,7 +1128,7 @@ int parse_signed_commit(const struct commit *commit,
- 			struct strbuf *payload, struct strbuf *signature)
- {
+ 	git_SHA_CTX c;
  
--	unsigned long size;
-+	size_t size;
- 	const char *buffer = get_commit_buffer(commit, &size);
- 	int in_signature, saw_signature = -1;
- 	const char *line, *tail;
-@@ -1284,7 +1284,7 @@ struct commit_extra_header *read_commit_extra_headers(struct commit *commit,
- 						      const char **exclude)
- {
- 	struct commit_extra_header *extra = NULL;
--	unsigned long size;
-+	size_t size;
- 	const char *buffer = get_commit_buffer(commit, &size);
- 	extra = read_commit_extra_header_lines(buffer, size, exclude);
- 	unuse_commit_buffer(commit, buffer);
-diff --git a/commit.h b/commit.h
-index 82e966e..fd44de3 100644
---- a/commit.h
-+++ b/commit.h
-@@ -70,20 +70,20 @@ void parse_commit_or_die(struct commit *item);
-  * Associate an object buffer with the commit. The ownership of the
-  * memory is handed over to the commit, and must be free()-able.
-  */
--void set_commit_buffer(struct commit *, void *buffer, unsigned long size);
-+void set_commit_buffer(struct commit *, void *buffer, size_t size);
+ 	/* Generate the header */
+-	*hdrlen = xsnprintf(hdr, *hdrlen, "%s %lu", type, len)+1;
++	*hdrlen = xsnprintf(hdr, *hdrlen, "%s %" PRIuMAX, type, (uintmax_t)len)+1;
  
- /*
-  * Get any cached object buffer associated with the commit. Returns NULL
-  * if none. The resulting memory should not be freed.
-  */
--const void *get_cached_commit_buffer(const struct commit *, unsigned long *size);
-+const void *get_cached_commit_buffer(const struct commit *, size_t *size);
- 
- /*
-  * Get the commit's object contents, either from cache or by reading the object
-  * from disk. The resulting memory should not be modified, and must be given
-  * to unuse_commit_buffer when the caller is done.
-  */
--const void *get_commit_buffer(const struct commit *, unsigned long *size);
-+const void *get_commit_buffer(const struct commit *, size_t *size);
- 
- /*
-  * Tell the commit subsytem that we are done with a particular commit buffer.
-@@ -102,7 +102,7 @@ void free_commit_buffer(struct commit *);
-  * Disassociate any cached object buffer from the commit, but do not free it.
-  * The buffer (or NULL, if none) is returned.
-  */
--const void *detach_commit_buffer(struct commit *, unsigned long *sizep);
-+const void *detach_commit_buffer(struct commit *, size_t *sizep);
- 
- /* Find beginning and length of commit subject. */
- int find_commit_subject(const char *commit_buffer, const char **subject);
-diff --git a/fsck.c b/fsck.c
-index feca3a8..9039373 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -632,18 +632,18 @@ static int fsck_tree(struct tree *item, struct fsck_options *options)
- 	return retval;
+ 	/* Sha1.. */
+ 	git_SHA1_Init(&c);
+@@ -3275,7 +3275,7 @@ static int write_buffer(int fd, const void *buf, size_t len)
+ 	return 0;
  }
  
--static int verify_headers(const void *data, unsigned long size,
-+static int verify_headers(const void *data, size_t size,
- 			  struct object *obj, struct fsck_options *options)
+-int hash_sha1_file(const void *buf, unsigned long len, const char *type,
++int hash_sha1_file(const void *buf, size_t len, const char *type,
+                    unsigned char *sha1)
  {
- 	const char *buffer = (const char *)data;
--	unsigned long i;
-+	size_t i;
- 
- 	for (i = 0; i < size; i++) {
- 		switch (buffer[i]) {
- 		case '\0':
- 			return report(options, obj,
- 				FSCK_MSG_NUL_IN_HEADER,
--				"unterminated header: NUL at offset %ld", i);
-+				"unterminated header: NUL at offset %" PRIuMAX, (uintmax_t)i);
- 		case '\n':
- 			if (i + 1 < size && buffer[i + 1] == '\n')
- 				return 0;
-@@ -708,7 +708,7 @@ static int fsck_ident(const char **ident, struct object *obj, struct fsck_option
+ 	char hdr[32];
+@@ -3339,7 +3339,7 @@ static int create_tmpfile(struct strbuf *tmp, const char *filename)
  }
  
- static int fsck_commit_buffer(struct commit *commit, const char *buffer,
--	unsigned long size, struct fsck_options *options)
-+	size_t size, struct fsck_options *options)
+ static int write_loose_object(const unsigned char *sha1, char *hdr, int hdrlen,
+-			      const void *buf, unsigned long len, time_t mtime)
++			      const void *buf, size_t len, time_t mtime)
  {
- 	unsigned char tree_sha1[20], sha1[20];
- 	struct commit_graft *graft;
-@@ -786,7 +786,7 @@ static int fsck_commit_buffer(struct commit *commit, const char *buffer,
+ 	int fd, ret;
+ 	unsigned char compressed[4096];
+@@ -3423,7 +3423,7 @@ static int freshen_packed_object(const unsigned char *sha1)
+ 	return 1;
  }
  
- static int fsck_commit(struct commit *commit, const char *data,
--	unsigned long size, struct fsck_options *options)
-+	size_t size, struct fsck_options *options)
+-int write_sha1_file(const void *buf, unsigned long len, const char *type, unsigned char *sha1)
++int write_sha1_file(const void *buf, size_t len, const char *type, unsigned char *sha1)
  {
- 	const char *buffer = data ?  data : get_commit_buffer(commit, &size);
- 	int ret = fsck_commit_buffer(commit, buffer, size, options);
-@@ -890,7 +890,7 @@ static int fsck_tag_buffer(struct tag *tag, const char *data,
+ 	char hdr[32];
+ 	int hdrlen = sizeof(hdr);
+@@ -3437,7 +3437,7 @@ int write_sha1_file(const void *buf, unsigned long len, const char *type, unsign
+ 	return write_loose_object(sha1, hdr, hdrlen, buf, len, 0);
  }
  
- static int fsck_tag(struct tag *tag, const char *data,
--	unsigned long size, struct fsck_options *options)
-+	size_t size, struct fsck_options *options)
+-int hash_sha1_file_literally(const void *buf, unsigned long len, const char *type,
++int hash_sha1_file_literally(const void *buf, size_t len, const char *type,
+ 			     unsigned char *sha1, unsigned flags)
  {
- 	struct object *tagged = tag->tagged;
+ 	char *header;
+@@ -3929,14 +3929,14 @@ int for_each_packed_object(each_packed_object_fn cb, void *data, unsigned flags)
  
-@@ -900,7 +900,7 @@ static int fsck_tag(struct tag *tag, const char *data,
- 	return fsck_tag_buffer(tag, data, size, options);
- }
- 
--int fsck_object(struct object *obj, void *data, unsigned long size,
-+int fsck_object(struct object *obj, void *data, size_t size,
- 	struct fsck_options *options)
+ static int check_stream_sha1(git_zstream *stream,
+ 			     const char *hdr,
+-			     unsigned long size,
++			     size_t size,
+ 			     const char *path,
+ 			     const unsigned char *expected_sha1)
  {
- 	if (!obj)
-diff --git a/fsck.h b/fsck.h
-index 4525510..3de5807 100644
---- a/fsck.h
-+++ b/fsck.h
-@@ -50,7 +50,7 @@ struct fsck_options {
-  */
- int fsck_walk(struct object *obj, void *data, struct fsck_options *options);
- /* If NULL is passed for data, we assume the object is local and read it. */
--int fsck_object(struct object *obj, void *data, unsigned long size,
-+int fsck_object(struct object *obj, void *data, size_t size,
- 	struct fsck_options *options);
+ 	git_SHA_CTX c;
+ 	unsigned char real_sha1[GIT_MAX_RAWSZ];
+ 	unsigned char buf[4096];
+-	unsigned long total_read;
++	size_t total_read;
+ 	int status = Z_OK;
  
- #endif
+ 	git_SHA1_Init(&c);
+@@ -3992,7 +3992,7 @@ int read_loose_object(const char *path,
+ {
+ 	int ret = -1;
+ 	void *map = NULL;
+-	unsigned long mapsize;
++	size_t mapsize;
+ 	git_zstream stream;
+ 	char hdr[32];
+ 
+diff --git a/streaming.c b/streaming.c
+index 04a8b99..448c4aa 100644
+--- a/streaming.c
++++ b/streaming.c
+@@ -77,7 +77,7 @@ struct git_istream {
+ 
+ 		struct {
+ 			void *mapped;
+-			unsigned long mapsize;
++			size_t mapsize;
+ 			char hdr[32];
+ 			int hdr_avail;
+ 			int hdr_used;
 -- 
 2.1.4
 
