@@ -2,36 +2,36 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D8039208B4
-	for <e@80x24.org>; Thu, 10 Aug 2017 19:25:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B096B208B4
+	for <e@80x24.org>; Thu, 10 Aug 2017 19:25:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753293AbdHJTZW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Aug 2017 15:25:22 -0400
-Received: from vie01a-dmta-pe04-3.mx.upcmail.net ([62.179.121.165]:32101 "EHLO
-        vie01a-dmta-pe04-3.mx.upcmail.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753279AbdHJTZT (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 10 Aug 2017 15:25:19 -0400
+        id S1753295AbdHJTZZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Aug 2017 15:25:25 -0400
+Received: from vie01a-dmta-pe01-1.mx.upcmail.net ([62.179.121.154]:39254 "EHLO
+        vie01a-dmta-pe01-1.mx.upcmail.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752807AbdHJTZX (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 10 Aug 2017 15:25:23 -0400
 Received: from [172.31.216.44] (helo=vie01a-pemc-psmtp-pe02)
-        by vie01a-dmta-pe04.mx.upcmail.net with esmtp (Exim 4.88)
+        by vie01a-dmta-pe01.mx.upcmail.net with esmtp (Exim 4.88)
         (envelope-from <martin.koegler@chello.at>)
-        id 1dft54-0004ln-17
-        for git@vger.kernel.org; Thu, 10 Aug 2017 21:25:18 +0200
+        id 1dft57-0005fw-4T
+        for git@vger.kernel.org; Thu, 10 Aug 2017 21:25:21 +0200
 Received: from master.zuhause ([80.108.242.240])
         by vie01a-pemc-psmtp-pe02 with SMTP @ mailcloud.upcmail.net
-        id vXRB1v01u5BuuEg01XRCkm; Thu, 10 Aug 2017 21:25:13 +0200
+        id vXRD1v0025BuuEg01XRElK; Thu, 10 Aug 2017 21:25:14 +0200
 X-SourceIP: 80.108.242.240
 Received: by master.zuhause (Postfix, from userid 1006)
-        id D001245D4513; Thu, 10 Aug 2017 21:25:11 +0200 (CEST)
+        id E10F145D4512; Thu, 10 Aug 2017 21:25:12 +0200 (CEST)
 From:   Martin Koegler <martin.koegler@chello.at>
 To:     git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de
 Cc:     Martin Koegler <martin.koegler@chello.at>
-Subject: [PATCH 6/9] Use size_t for sha1
-Date:   Thu, 10 Aug 2017 21:25:07 +0200
-Message-Id: <1502393110-31996-2-git-send-email-martin@mail.zuhause>
+Subject: [PATCH 8/9] Convert fsck.c & commit.c to size_t
+Date:   Thu, 10 Aug 2017 21:25:09 +0200
+Message-Id: <1502393110-31996-4-git-send-email-martin@mail.zuhause>
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <1502393110-31996-1-git-send-email-martin@mail.zuhause>
 References: <1502393110-31996-1-git-send-email-martin@mail.zuhause>
@@ -44,106 +44,201 @@ From: Martin Koegler <martin.koegler@chello.at>
 
 Signed-off-by: Martin Koegler <martin.koegler@chello.at>
 ---
- block-sha1/sha1.c | 2 +-
- block-sha1/sha1.h | 2 +-
- ppc/sha1.c        | 2 +-
- ppc/sha1.h        | 2 +-
- sha1dc_git.c      | 2 +-
- sha1dc_git.h      | 2 +-
- sha1dc_git_ext.h  | 2 +-
- 7 files changed, 7 insertions(+), 7 deletions(-)
+ builtin/replace.c |  2 +-
+ commit.c          | 14 +++++++-------
+ commit.h          |  8 ++++----
+ fsck.c            | 14 +++++++-------
+ fsck.h            |  2 +-
+ 5 files changed, 20 insertions(+), 20 deletions(-)
 
-diff --git a/block-sha1/sha1.c b/block-sha1/sha1.c
-index 22b125c..8681031 100644
---- a/block-sha1/sha1.c
-+++ b/block-sha1/sha1.c
-@@ -203,7 +203,7 @@ void blk_SHA1_Init(blk_SHA_CTX *ctx)
- 	ctx->H[4] = 0xc3d2e1f0;
+diff --git a/builtin/replace.c b/builtin/replace.c
+index f4a85a1..dcd0d1e 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -391,7 +391,7 @@ static int create_graft(int argc, const char **argv, int force)
+ 	struct commit *commit;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	const char *buffer;
+-	unsigned long size;
++	size_t size;
+ 
+ 	if (get_oid(old_ref, &old) < 0)
+ 		die(_("Not a valid object name: '%s'"), old_ref);
+diff --git a/commit.c b/commit.c
+index 79decc2..5ebac6a 100644
+--- a/commit.c
++++ b/commit.c
+@@ -231,19 +231,19 @@ int unregister_shallow(const struct object_id *oid)
+ 
+ struct commit_buffer {
+ 	void *buffer;
+-	unsigned long size;
++	size_t size;
+ };
+ define_commit_slab(buffer_slab, struct commit_buffer);
+ static struct buffer_slab buffer_slab = COMMIT_SLAB_INIT(1, buffer_slab);
+ 
+-void set_commit_buffer(struct commit *commit, void *buffer, unsigned long size)
++void set_commit_buffer(struct commit *commit, void *buffer, size_t size)
+ {
+ 	struct commit_buffer *v = buffer_slab_at(&buffer_slab, commit);
+ 	v->buffer = buffer;
+ 	v->size = size;
  }
  
--void blk_SHA1_Update(blk_SHA_CTX *ctx, const void *data, unsigned long len)
-+void blk_SHA1_Update(blk_SHA_CTX *ctx, const void *data, size_t len)
+-const void *get_cached_commit_buffer(const struct commit *commit, unsigned long *sizep)
++const void *get_cached_commit_buffer(const struct commit *commit, size_t *sizep)
  {
- 	unsigned int lenW = ctx->size & 63;
- 
-diff --git a/block-sha1/sha1.h b/block-sha1/sha1.h
-index 4df6747..9fb0441 100644
---- a/block-sha1/sha1.h
-+++ b/block-sha1/sha1.h
-@@ -13,7 +13,7 @@ typedef struct {
- } blk_SHA_CTX;
- 
- void blk_SHA1_Init(blk_SHA_CTX *ctx);
--void blk_SHA1_Update(blk_SHA_CTX *ctx, const void *dataIn, unsigned long len);
-+void blk_SHA1_Update(blk_SHA_CTX *ctx, const void *dataIn, size_t len);
- void blk_SHA1_Final(unsigned char hashout[20], blk_SHA_CTX *ctx);
- 
- #define platform_SHA_CTX	blk_SHA_CTX
-diff --git a/ppc/sha1.c b/ppc/sha1.c
-index ec6a192..f0dfcfb 100644
---- a/ppc/sha1.c
-+++ b/ppc/sha1.c
-@@ -25,7 +25,7 @@ int ppc_SHA1_Init(ppc_SHA_CTX *c)
- 	return 0;
+ 	struct commit_buffer *v = buffer_slab_peek(&buffer_slab, commit);
+ 	if (!v) {
+@@ -256,7 +256,7 @@ const void *get_cached_commit_buffer(const struct commit *commit, unsigned long
+ 	return v->buffer;
  }
  
--int ppc_SHA1_Update(ppc_SHA_CTX *c, const void *ptr, unsigned long n)
-+int ppc_SHA1_Update(ppc_SHA_CTX *c, const void *ptr, size_t n)
+-const void *get_commit_buffer(const struct commit *commit, unsigned long *sizep)
++const void *get_commit_buffer(const struct commit *commit, size_t *sizep)
  {
- 	unsigned long nb;
- 	const unsigned char *p = ptr;
-diff --git a/ppc/sha1.h b/ppc/sha1.h
-index 9b24b32..52cac23 100644
---- a/ppc/sha1.h
-+++ b/ppc/sha1.h
-@@ -16,7 +16,7 @@ typedef struct {
- } ppc_SHA_CTX;
- 
- int ppc_SHA1_Init(ppc_SHA_CTX *c);
--int ppc_SHA1_Update(ppc_SHA_CTX *c, const void *p, unsigned long n);
-+int ppc_SHA1_Update(ppc_SHA_CTX *c, const void *p, size_t n);
- int ppc_SHA1_Final(unsigned char *hash, ppc_SHA_CTX *c);
- 
- #define platform_SHA_CTX	ppc_SHA_CTX
-diff --git a/sha1dc_git.c b/sha1dc_git.c
-index 4d32b4f..a9076bc 100644
---- a/sha1dc_git.c
-+++ b/sha1dc_git.c
-@@ -11,7 +11,7 @@ void git_SHA1DCFinal(unsigned char hash[20], SHA1_CTX *ctx)
- 	    sha1_to_hex(hash));
+ 	const void *ret = get_cached_commit_buffer(commit, sizep);
+ 	if (!ret) {
+@@ -291,7 +291,7 @@ void free_commit_buffer(struct commit *commit)
+ 	}
  }
  
--void git_SHA1DCUpdate(SHA1_CTX *ctx, const void *vdata, unsigned long len)
-+void git_SHA1DCUpdate(SHA1_CTX *ctx, const void *vdata, size_t len)
+-const void *detach_commit_buffer(struct commit *commit, unsigned long *sizep)
++const void *detach_commit_buffer(struct commit *commit, size_t *sizep)
  {
- 	const char *data = vdata;
- 	/* We expect an unsigned long, but sha1dc only takes an int */
-diff --git a/sha1dc_git.h b/sha1dc_git.h
-index a8a5c1d..f6051aa 100644
---- a/sha1dc_git.h
-+++ b/sha1dc_git.h
-@@ -11,7 +11,7 @@ void git_SHA1DCFinal(unsigned char [20], SHA1_CTX *);
- /*
-  * Same as SHA1DCUpdate, but adjust types to match git's usual interface.
+ 	struct commit_buffer *v = buffer_slab_peek(&buffer_slab, commit);
+ 	void *ret;
+@@ -1128,7 +1128,7 @@ int parse_signed_commit(const struct commit *commit,
+ 			struct strbuf *payload, struct strbuf *signature)
+ {
+ 
+-	unsigned long size;
++	size_t size;
+ 	const char *buffer = get_commit_buffer(commit, &size);
+ 	int in_signature, saw_signature = -1;
+ 	const char *line, *tail;
+@@ -1284,7 +1284,7 @@ struct commit_extra_header *read_commit_extra_headers(struct commit *commit,
+ 						      const char **exclude)
+ {
+ 	struct commit_extra_header *extra = NULL;
+-	unsigned long size;
++	size_t size;
+ 	const char *buffer = get_commit_buffer(commit, &size);
+ 	extra = read_commit_extra_header_lines(buffer, size, exclude);
+ 	unuse_commit_buffer(commit, buffer);
+diff --git a/commit.h b/commit.h
+index 82e966e..fd44de3 100644
+--- a/commit.h
++++ b/commit.h
+@@ -70,20 +70,20 @@ void parse_commit_or_die(struct commit *item);
+  * Associate an object buffer with the commit. The ownership of the
+  * memory is handed over to the commit, and must be free()-able.
   */
--void git_SHA1DCUpdate(SHA1_CTX *ctx, const void *data, unsigned long len);
-+void git_SHA1DCUpdate(SHA1_CTX *ctx, const void *data, size_t len);
+-void set_commit_buffer(struct commit *, void *buffer, unsigned long size);
++void set_commit_buffer(struct commit *, void *buffer, size_t size);
  
- #define platform_SHA_CTX SHA1_CTX
- #define platform_SHA1_Init SHA1DCInit
-diff --git a/sha1dc_git_ext.h b/sha1dc_git_ext.h
-index d0ea8ce..aede828 100644
---- a/sha1dc_git_ext.h
-+++ b/sha1dc_git_ext.h
-@@ -17,7 +17,7 @@ void git_SHA1DCFinal(unsigned char [20], SHA1_CTX *);
  /*
-  * Same as SHA1DCUpdate, but adjust types to match git's usual interface.
+  * Get any cached object buffer associated with the commit. Returns NULL
+  * if none. The resulting memory should not be freed.
   */
--void git_SHA1DCUpdate(SHA1_CTX *ctx, const void *data, unsigned long len);
-+void git_SHA1DCUpdate(SHA1_CTX *ctx, const void *data, size_t len);
+-const void *get_cached_commit_buffer(const struct commit *, unsigned long *size);
++const void *get_cached_commit_buffer(const struct commit *, size_t *size);
  
- #define platform_SHA_CTX SHA1_CTX
- #define platform_SHA1_Init git_SHA1DCInit
+ /*
+  * Get the commit's object contents, either from cache or by reading the object
+  * from disk. The resulting memory should not be modified, and must be given
+  * to unuse_commit_buffer when the caller is done.
+  */
+-const void *get_commit_buffer(const struct commit *, unsigned long *size);
++const void *get_commit_buffer(const struct commit *, size_t *size);
+ 
+ /*
+  * Tell the commit subsytem that we are done with a particular commit buffer.
+@@ -102,7 +102,7 @@ void free_commit_buffer(struct commit *);
+  * Disassociate any cached object buffer from the commit, but do not free it.
+  * The buffer (or NULL, if none) is returned.
+  */
+-const void *detach_commit_buffer(struct commit *, unsigned long *sizep);
++const void *detach_commit_buffer(struct commit *, size_t *sizep);
+ 
+ /* Find beginning and length of commit subject. */
+ int find_commit_subject(const char *commit_buffer, const char **subject);
+diff --git a/fsck.c b/fsck.c
+index feca3a8..9039373 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -632,18 +632,18 @@ static int fsck_tree(struct tree *item, struct fsck_options *options)
+ 	return retval;
+ }
+ 
+-static int verify_headers(const void *data, unsigned long size,
++static int verify_headers(const void *data, size_t size,
+ 			  struct object *obj, struct fsck_options *options)
+ {
+ 	const char *buffer = (const char *)data;
+-	unsigned long i;
++	size_t i;
+ 
+ 	for (i = 0; i < size; i++) {
+ 		switch (buffer[i]) {
+ 		case '\0':
+ 			return report(options, obj,
+ 				FSCK_MSG_NUL_IN_HEADER,
+-				"unterminated header: NUL at offset %ld", i);
++				"unterminated header: NUL at offset %" PRIuMAX, (uintmax_t)i);
+ 		case '\n':
+ 			if (i + 1 < size && buffer[i + 1] == '\n')
+ 				return 0;
+@@ -708,7 +708,7 @@ static int fsck_ident(const char **ident, struct object *obj, struct fsck_option
+ }
+ 
+ static int fsck_commit_buffer(struct commit *commit, const char *buffer,
+-	unsigned long size, struct fsck_options *options)
++	size_t size, struct fsck_options *options)
+ {
+ 	unsigned char tree_sha1[20], sha1[20];
+ 	struct commit_graft *graft;
+@@ -786,7 +786,7 @@ static int fsck_commit_buffer(struct commit *commit, const char *buffer,
+ }
+ 
+ static int fsck_commit(struct commit *commit, const char *data,
+-	unsigned long size, struct fsck_options *options)
++	size_t size, struct fsck_options *options)
+ {
+ 	const char *buffer = data ?  data : get_commit_buffer(commit, &size);
+ 	int ret = fsck_commit_buffer(commit, buffer, size, options);
+@@ -890,7 +890,7 @@ static int fsck_tag_buffer(struct tag *tag, const char *data,
+ }
+ 
+ static int fsck_tag(struct tag *tag, const char *data,
+-	unsigned long size, struct fsck_options *options)
++	size_t size, struct fsck_options *options)
+ {
+ 	struct object *tagged = tag->tagged;
+ 
+@@ -900,7 +900,7 @@ static int fsck_tag(struct tag *tag, const char *data,
+ 	return fsck_tag_buffer(tag, data, size, options);
+ }
+ 
+-int fsck_object(struct object *obj, void *data, unsigned long size,
++int fsck_object(struct object *obj, void *data, size_t size,
+ 	struct fsck_options *options)
+ {
+ 	if (!obj)
+diff --git a/fsck.h b/fsck.h
+index 4525510..3de5807 100644
+--- a/fsck.h
++++ b/fsck.h
+@@ -50,7 +50,7 @@ struct fsck_options {
+  */
+ int fsck_walk(struct object *obj, void *data, struct fsck_options *options);
+ /* If NULL is passed for data, we assume the object is local and read it. */
+-int fsck_object(struct object *obj, void *data, unsigned long size,
++int fsck_object(struct object *obj, void *data, size_t size,
+ 	struct fsck_options *options);
+ 
+ #endif
 -- 
 2.1.4
 
