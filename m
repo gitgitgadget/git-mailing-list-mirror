@@ -2,92 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 14259208B4
-	for <e@80x24.org>; Thu, 10 Aug 2017 15:58:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8F35208B4
+	for <e@80x24.org>; Thu, 10 Aug 2017 16:41:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752713AbdHJP6k (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Aug 2017 11:58:40 -0400
-Received: from mail-qt0-f174.google.com ([209.85.216.174]:33439 "EHLO
-        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752612AbdHJP6j (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Aug 2017 11:58:39 -0400
-Received: by mail-qt0-f174.google.com with SMTP id a18so6968210qta.0
-        for <git@vger.kernel.org>; Thu, 10 Aug 2017 08:58:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=CP+/ClB/LlYwmVWYzjuOfPOAW30V4bD2OP3PzBktDOM=;
-        b=r46sI8iSlAB45M1mEM2aLFfRu4hTJVmawjyM244pdTe5jzQS5EhC1q8QeTLrRNepjo
-         0uXfFyKMgA32HU2VzKl/Y8tBLPg6e77gpg/X9JfoLHiUjlCMeMjtbDh1LiJI55j9nj1l
-         l8O8Nu7zRrKuxOGn0LY1MouTt3dNTAgoR0mdYOhVCsSuLUZFHIV0lUMHSJEwGEkhBlBy
-         EgHvKMBF+5zySmfqS5OHZIyWA+e6sJsnVhNaWyApbNCvyKqJ8ti07damLJrts3KKz1AO
-         crDHBMCNnboBCU7NbNK4cDkHMkQF6Ze28bANjjeO0CCtlLWGALQplARbmB2rzMdoEH7k
-         x0lw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=CP+/ClB/LlYwmVWYzjuOfPOAW30V4bD2OP3PzBktDOM=;
-        b=fCHKcuA22jduUTgeWxMLmGgddWNT0Cpl629eXtFMeOu7qIgXUDoaOO/Z7a6weY3hFu
-         LqxG/y9OcmWZ0iOXZi9wiS7YYdUMKaKrjEnLXAGQjQg4waujkX90WZFDoXJzZIvMPVR2
-         hNIhzRIunjJQzA/FabsI9TGlUfHKOoezMnsxZFurzOjI+RSaHTVFs8nkIUTLvsb163Co
-         JQk0wouDUW4E10Zlk+R1fRCBH6XVqZ+1AMchF+fGbsyojw/MNJLtioj8tIABH/Uo45tf
-         fCU3AUYhElSYt7ZhEvpFFYSPktbbIJWDW/36UBIY5kxBO/nMT/rAwvk3oIZ9GO/HOYPQ
-         RuvQ==
-X-Gm-Message-State: AHYfb5gcj2HPQj7KQQ6yRN+MZnGBzVD477x8hgMArBFckLuDuwx28Vst
-        ypC9dEmLWYd/EoZVYQ3f6OJlzmZUBw==
-X-Received: by 10.237.49.194 with SMTP id 60mr16128905qth.73.1502380718949;
- Thu, 10 Aug 2017 08:58:38 -0700 (PDT)
+        id S1752861AbdHJQlr (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Aug 2017 12:41:47 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64219 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752524AbdHJQlq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Aug 2017 12:41:46 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 830758912B;
+        Thu, 10 Aug 2017 12:41:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=sINf+0TuuJX3iyiqffAzOcE25wU=; b=QhyZri
+        ZjKNIKpmI2tGra/lgAkd7ZkfSsVh+iCxu6ywFHjqJJhUFKpUjRh7zhxty/9GT9vy
+        LzsJR6nBa34g9GQevbS/ocUSKezminscWzJJJ8kgToB/UfzGAjXUWRr1pGicIvhO
+        JTEOmGsSWgg6QNyRbsvHhWBKcFlSUZ85YREEc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=k6Y31wiZbf3zpvwGuK/HJd2pr5XKvcwy
+        1Dw12Z82z5pzdXcVVWbsDeeMTOfXlNmo5xKt4HMuB8ztm0YZIm7ruLAgW3PVPSm0
+        ugBQAKHKjkJN97PiV6XgFcTo1q0I6W8Papj6uVtLD1poDSUrlky6a1gpcqyGuojj
+        xbTS17EYTIs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 79FB88912A;
+        Thu, 10 Aug 2017 12:41:43 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E851789128;
+        Thu, 10 Aug 2017 12:41:42 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Brandon Williams <bmwill@google.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [RFC] clang-format: outline the git project's coding style
+References: <20170808012554.186051-1-bmwill@google.com>
+        <alpine.DEB.2.21.1.1708081404200.4271@virtualbox>
+        <CAGZ79kb2860nUs46bP=x-gAx9Ao6DxnvXQv3x387Wxw+kEyxJw@mail.gmail.com>
+        <20170808182324.GB73298@google.com>
+        <alpine.DEB.2.21.1.1708100032050.11175@virtualbox>
+        <CAGZ79kb6Ljk8brLN1bbOnBLfm=Q=aCnkZ=ZBtDPzf7MZionmSw@mail.gmail.com>
+        <alpine.DEB.2.21.1.1708101137190.11175@virtualbox>
+Date:   Thu, 10 Aug 2017 09:41:41 -0700
+In-Reply-To: <alpine.DEB.2.21.1.1708101137190.11175@virtualbox> (Johannes
+        Schindelin's message of "Thu, 10 Aug 2017 11:38:09 +0200 (CEST)")
+Message-ID: <xmqqk22b5q9m.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.55.31.13 with HTTP; Thu, 10 Aug 2017 08:58:38 -0700 (PDT)
-In-Reply-To: <24fb9d9c-0b1c-4aaa-7d89-12d322066cff@web.de>
-References: <24fb9d9c-0b1c-4aaa-7d89-12d322066cff@web.de>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 10 Aug 2017 17:58:38 +0200
-Message-ID: <CAP8UFD1W5DnXe8a3VUREhzdAOFCExQrudpP4z4CYNuS==rN0eQ@mail.gmail.com>
-Subject: Re: [PATCH] apply: remove prefix_length member from apply_state
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: CA673AA6-7DEA-11E7-9C94-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 9, 2017 at 5:54 PM, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
-> Use a NULL-and-NUL check to see if we have a prefix and consistently use
-> C string functions on it instead of storing its length in a member of
-> struct apply_state.  This avoids strlen() calls and simplifies the code.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-This looks like a good idea.
-
-> @@ -2088,10 +2087,9 @@ static int use_patch(struct apply_state *state, st=
-ruct patch *p)
->         int i;
+> On Wed, 9 Aug 2017, Stefan Beller wrote:
 >
->         /* Paths outside are not touched regardless of "--include" */
-> -       if (0 < state->prefix_length) {
-> -               int pathlen =3D strlen(pathname);
-> -               if (pathlen <=3D state->prefix_length ||
-> -                   memcmp(state->prefix, pathname, state->prefix_length)=
-)
-> +       if (state->prefix && *state->prefix) {
-> +               const char *rest;
-> +               if (!skip_prefix(pathname, state->prefix, &rest) || !*res=
-t)
->                         return 0;
->         }
+>> > I am sure that something even better will be possible: a Continuous
+>> > "Integration" that fixes the coding style automatically by using
+>> > `filter-branch` (avoiding the merge conflicts that would arise if
+>> > `rebase -i` was used).
+>> 
+>> I do not quite follow. Is that to be used by Junio while integrating
+>> branches?
+>
+> I was more thinking about a bot on GitHub. "Code cleanup as a service".
 
-Yeah, or maybe declare "const char *rest;" just after "int i;" and then use=
-:
+I vaguely recall that there was a discussion to have SubmitGit wait
+for success from Travis CI; if that is already in place, then I can
+sort of see how it would help individual contributors to have the
+style checker in that pipeline as well.  
 
-       if (state->prefix && *state->prefix &&
-          (!skip_prefix(pathname, state->prefix, &rest) || !*rest))
-               return 0;
+I have a mixed feelings about "fixing" styles automatically, though.
+
