@@ -7,52 +7,56 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 99A5A208B4
-	for <e@80x24.org>; Thu, 10 Aug 2017 17:36:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D7F1208B4
+	for <e@80x24.org>; Thu, 10 Aug 2017 17:38:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752816AbdHJRgr (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Aug 2017 13:36:47 -0400
-Received: from mail-lf0-f51.google.com ([209.85.215.51]:35731 "EHLO
-        mail-lf0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752629AbdHJRgq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Aug 2017 13:36:46 -0400
-Received: by mail-lf0-f51.google.com with SMTP id t128so6587162lff.2
-        for <git@vger.kernel.org>; Thu, 10 Aug 2017 10:36:45 -0700 (PDT)
+        id S1752737AbdHJRit (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Aug 2017 13:38:49 -0400
+Received: from mail-lf0-f42.google.com ([209.85.215.42]:36617 "EHLO
+        mail-lf0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752559AbdHJRis (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Aug 2017 13:38:48 -0400
+Received: by mail-lf0-f42.google.com with SMTP id o85so6587285lff.3
+        for <git@vger.kernel.org>; Thu, 10 Aug 2017 10:38:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=GfOpii2iB0pAZEaABFllReZTGTKZxCuJyCvx8EiWpTM=;
-        b=M+VJaPhFMqgTglJs6/mkiYvwM8a+ixys3ONBXNgGYEdVvGlZoPIKI7fErMOhGMMEJg
-         UaGy7HWQq5xAzSHmo+6fHgz7NnCcf3TndIUeaX0QvM+5y3cInCcyDQQD7cKiZ5I7W8GT
-         yXBEB76AGd2dg1mMItCw0yTMWSbsWsSD2cEz6eRe9tiAiNn7757nma0BA8w4UhTWPEuc
-         W9ZlaNq1ku8Bpq6PNzSXlyagvCyXLrovX8KG4x3WxfTW4dZI7+Wt0uOadCzz4yJE4n7i
-         RLqkWA9vBjyq91WX9CH7j7rmUZ/aA5N+9ZHh/2u+AOnVPyJXT6xk9l3YPWeHXsjOty6V
-         ieRg==
+        bh=oaoP2hLOHMAhwVvR8l/fo7Y4V4nZCQ6YKuyL68Gbzk0=;
+        b=GouddC+hZKL0srowqeTSuODH8Hdr2ZbOtf+GvZdCpjn54ODWqYR+SlifwM75G/RgwR
+         k6ypIX0PrVDpGkcKP3MXc+jc6GPyZEKy71uztu8FS6qSs1fPkHrw5MWuZV8fs5Our3uE
+         rgYwBEknklooQZSjg0DUojg+iCBRST5jPuuwR7Yu7jznfzl/WMdsxYBH9LsDVY6Wd79d
+         sVaGWhTozBaObkw3RLx2qI4mWUagGkGKHQo0bkEqscn0NQHRS4eeGKuXz7shT3aTLAGK
+         le0IYTyr59Fqo7+J0VNufLqvrDe15O37argRe9EWNKa5ctwvTVvuoyo/xPJ9MN1r/Ufj
+         5Slg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=GfOpii2iB0pAZEaABFllReZTGTKZxCuJyCvx8EiWpTM=;
-        b=moCkxJxJ53+uJkYVLKKlmPb8BUasV+oH/rxV/oZ0oFBu4SMvaZ5o6T3OnjYmxZqmeC
-         2XVEmvyOV+BxKfuhPCuUMhViaRJs94LtG3KXhBrVLelEqLBQ7uL3ziS/0BilAcCrXYjb
-         rZls24va8rnUQB0KxLnYzxx3LZVoNLzRqBx7pJlJrExpcp8lvsGxMwCEme4w9zOh5Skw
-         gG3NZY5M7LVYav/f+5Y5f74Da5YfjVetgYaKNDpLyh9QVqgk/KbDLhIfFJQBM2FYESyT
-         7JuqQyMf7FPlFzsCQAbhl8M0OJjReAX+bXUnscU3J3Opq1F8/U5/Ee75UDAeINatqADh
-         CIbQ==
-X-Gm-Message-State: AHYfb5iwq2lt+yPLWmlqA/CeSD5t0GbFAf5V997ikEcE4lhhL84gQxmJ
-        s9drrjvwzFzwxwhngxPLjozIMbbqg6Ehhg92sw==
-X-Received: by 10.25.92.9 with SMTP id q9mr5704606lfb.117.1502386605060; Thu,
- 10 Aug 2017 10:36:45 -0700 (PDT)
+        bh=oaoP2hLOHMAhwVvR8l/fo7Y4V4nZCQ6YKuyL68Gbzk0=;
+        b=eCqKSu/0hn1kH0xVAbRAx0O+/iRz6k+xbKKYU++ZAe1USPla49JcBRDT1UlTo/GiU5
+         Sb5dVhPDzMJhWCuMK+Az/FFxR+P2CO0yJnQYJCo7ciaaOcvArl4kgq1KV5Dg779VBZO5
+         S85DmBykGosy+JPPnSmMtsBeSl1/lI1JNkGnpMjANOlDjs99mr4CzAlLgZ3CX1SO1XsY
+         FMjegFr+le4XkauI4qT+nbVNqFAo5n/KoUBlPHr0HH4qHnWVXRXs3crh9U5fn8m8f3+n
+         QUw2kPJgBXQ/m5d3OGYLg32BEKpJSe/shDge4JgrCcRmz0iZXO+oJbXT1pDxLpxN5EdA
+         JmJg==
+X-Gm-Message-State: AHYfb5jvsVQ9+YNhztAxsPYlW6Kt9dquv5gwUP4184RJ93DB4Hnkeb22
+        T/kJzcVWsbEgdJWYqyEQUYQcNVQOGndC
+X-Received: by 10.46.69.6 with SMTP id s6mr4334504lja.40.1502386726557; Thu,
+ 10 Aug 2017 10:38:46 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.25.1.130 with HTTP; Thu, 10 Aug 2017 10:36:44 -0700 (PDT)
-In-Reply-To: <87mv7773tp.fsf@local.lan>
-References: <87mv7773tp.fsf@local.lan>
+Received: by 10.25.1.130 with HTTP; Thu, 10 Aug 2017 10:38:45 -0700 (PDT)
+In-Reply-To: <20170810173328.xfrswan6tijwkaex@sigill.intra.peff.net>
+References: <20170809122147.g44nwaitzctbadzm@sigill.intra.peff.net>
+ <20170809122439.fscozhyvxcx2oq2n@sigill.intra.peff.net> <CAGZ79kYqq_EhRxckM4iV=99r59Y7_y94j+-65xXLUF4y2vNUUw@mail.gmail.com>
+ <20170810073239.ny64rqmwb3yqbpb6@sigill.intra.peff.net> <CAGZ79kYHPhaZLSsBq2vM=D+_QMP9MY=xYjRwfG5q36neFyNH3w@mail.gmail.com>
+ <20170810173328.xfrswan6tijwkaex@sigill.intra.peff.net>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 10 Aug 2017 10:36:44 -0700
-Message-ID: <CAGZ79kbgb2P7KT_b9xuMj1pN1+jsPfH7YSJNDyDB5dY3cwXCQg@mail.gmail.com>
-Subject: Re: Not understanding with git wants to copy one file to another
-To:     Harry Putnam <reader@newsguy.com>
+Date:   Thu, 10 Aug 2017 10:38:45 -0700
+Message-ID: <CAGZ79kaAK-kKTw37S6OtvecmiXyS4XJF9BH=LDXi67cUxA_JHg@mail.gmail.com>
+Subject: Re: [PATCH 3/5] interpret-trailers: add an option to show only
+ existing trailers
+To:     Jeff King <peff@peff.net>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
@@ -60,41 +64,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 10, 2017 at 10:03 AM, Harry Putnam <reader@newsguy.com> wrote:
-> I ran into a line in git commit ouput I had not see before
+On Thu, Aug 10, 2017 at 10:33 AM, Jeff King <peff@peff.net> wrote:
+> On Thu, Aug 10, 2017 at 10:27:19AM -0700, Stefan Beller wrote:
 >
->   #copied:     d0/etc/hosts -> misc/old-readerHOSTvcs-files/etc/hosts
+>> > I'm not fond of that, as it's vague about which exact trailers we're
+>> > talking about. I also thought of something like --verbatim, but I'd
+>> > worry that would seem to conflict with --normalize.
+>> >
+>> > I dunno. All of the names seem not quite descriptive enough to me.
+>>
+>> I meant 'exact' as in 'exactly from the patch/commit, no external
+>> influence such as config', so maybe '--from-patch' or '--from-commit'
+>> (which says the same as --no-config just the other way round.
+>> Having --no- in config options as the standard is a UX disaster
+>> IMHO as then we have to forbid the --no-no-X or reintroduce X
+>> and flip the default)
 >
-> So googling I learned that this might happen if git thinks the two
-> files are the same.
+> Yes, that was definitely the other reason I didn't want to call it
+> "--no-config".  :)
 >
-> I was pretty sure they were not the same so checked them>
+> It's not always from a patch or commit. The most accurate along those
+> lines is "--from-input".
 >
->  <inside git repo>
+>> Maybe --genuine ?
 >
-> diff d0/etc/host misc/old-readerHOSTvcs-files/etc/hosts
->
-> The output is a bit long but shows them being quite different.
->
-> Some 2 dozen or so lines that dramatically differ.
->
-> Here are two that are at least kind of similar but would never be seen
-> as the same:
->
-> < 192.168.1.43      m2.local.lan       m2       # 00-90-F5-A1-F9-E5
->> 192.168.1.43    m2.local.lan        m2         # win 7
->
-> Not to mention they are quite different lines as well.
->
-> So what is going on and what should I be looking at?
+> But in the greater context I think that's vague again; we don't know
+> which part of the command's operation is "genuine".
 
-The diff machinery has a threshold for when it assumes
-a copy/move of a file. (e.g. "A file is assumed copied when
-at least 55% of lines are equal")
+The input of course. ;) --genuine-input.
 
-https://git-scm.com/docs/git-diff
+>
+> Perhaps "--exact-input" hits all of those. Or maybe "--only-input" to
+> match the other "--only".
+>
+> I think I like that last one the best. It makes it clear that we are
+> looking just at the input, and not anything else. Which is exactly what
+> the feature does.
 
-See -C and -M option.
+Makes sense to me,
 
-git-status seems to use this machinery as well, but does
-not expose the options?
+Thanks,
+Stefan
