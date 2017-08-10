@@ -6,100 +6,70 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C98BE20899
-	for <e@80x24.org>; Thu, 10 Aug 2017 07:28:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9989020899
+	for <e@80x24.org>; Thu, 10 Aug 2017 07:32:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752286AbdHJH2Z (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Aug 2017 03:28:25 -0400
-Received: from cloud.peff.net ([104.130.231.41]:34134 "HELO cloud.peff.net"
+        id S1751511AbdHJHcn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Aug 2017 03:32:43 -0400
+Received: from cloud.peff.net ([104.130.231.41]:34148 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751715AbdHJH2Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Aug 2017 03:28:24 -0400
-Received: (qmail 25497 invoked by uid 109); 10 Aug 2017 07:28:24 -0000
+        id S1750868AbdHJHcm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Aug 2017 03:32:42 -0400
+Received: (qmail 25683 invoked by uid 109); 10 Aug 2017 07:32:41 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 10 Aug 2017 07:28:24 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 10 Aug 2017 07:32:41 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2199 invoked by uid 111); 10 Aug 2017 07:28:47 -0000
+Received: (qmail 2224 invoked by uid 111); 10 Aug 2017 07:33:05 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Thu, 10 Aug 2017 03:28:47 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Thu, 10 Aug 2017 03:33:05 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Aug 2017 03:28:22 -0400
-Date:   Thu, 10 Aug 2017 03:28:22 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Aug 2017 03:32:40 -0400
+Date:   Thu, 10 Aug 2017 03:32:40 -0400
 From:   Jeff King <peff@peff.net>
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH 0/5] make interpret-trailers useful for parsing
-Message-ID: <20170810072822.rj6y6zcqhyfz4yi7@sigill.intra.peff.net>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH 3/5] interpret-trailers: add an option to show only
+ existing trailers
+Message-ID: <20170810073239.ny64rqmwb3yqbpb6@sigill.intra.peff.net>
 References: <20170809122147.g44nwaitzctbadzm@sigill.intra.peff.net>
- <xmqq60dw7j5u.fsf@gitster.mtv.corp.google.com>
- <CA+P7+xoifkJyH34Q0NJdE_=UzWK1SA+2gwyXrHpF7Sv2PBHATQ@mail.gmail.com>
+ <20170809122439.fscozhyvxcx2oq2n@sigill.intra.peff.net>
+ <CAGZ79kYqq_EhRxckM4iV=99r59Y7_y94j+-65xXLUF4y2vNUUw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CA+P7+xoifkJyH34Q0NJdE_=UzWK1SA+2gwyXrHpF7Sv2PBHATQ@mail.gmail.com>
+In-Reply-To: <CAGZ79kYqq_EhRxckM4iV=99r59Y7_y94j+-65xXLUF4y2vNUUw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 10, 2017 at 12:04:49AM -0700, Jacob Keller wrote:
+On Wed, Aug 09, 2017 at 11:18:19AM -0700, Stefan Beller wrote:
 
-> >>   $ git log --format=%B -1 8d44797cc91231cd44955279040dc4a1ee0a797f |
-> >>     git interpret-trailers --parse
-> >>   Signed-off-by: Hartmut Henkel <henkel@vh-s.de>
-> >>   Helped-by: Stefan Beller <sbeller@google.com>
-> >>   Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
-> >>   Acked-by: Matthias Rüster <matthias.ruester@gmail.com>
-> >
-> > Thank-you, thank-you, thank-you.
-> >
-> > The above example made me wonder if we also want a format specifier
-> > to do the above without piping, but it turns out that we already
-> > have "log --format=%(trailers)", so we are good ;-)
+> On Wed, Aug 9, 2017 at 5:24 AM, Jeff King <peff@peff.net> wrote:
+> > It can be useful to invoke interpret-trailers for the
+> > primary purpose of parsing existing trailers. But in that
+> > case, we don't want to apply existing ifMissing or ifExists
+> > rules from the config. Let's add a special mode where we
+> > avoid applying those rules. Coupled with --only-trailers,
+> > this gives us a reasonable parsing tool.
 > 
-> I was going to say, I thought we had a way to get trailers for a
-> commit via the pretty format, since that is what i used in the past.
+> I have the impression that the name is slightly misleading
+> because 'only' just reduces the set. it does not enhance it.
+> (Do we have a configuration that says "remove this trailer
+> anytime"?)
 
-I do like that you could get the trailers for many commits in a single
-invocation. That doesn't matter for my current use-case, but obviously
-piping through O(n) interpret-trailers invocations is a bad idea.
+No, I think you can only add trailers via ifExists or ifMissing.
+I actually called this --no-config originally, because to me it meant
+"do not apply config". But the processing applies also to --trailer
+arguments no the command line, which is how I ended up with
+--only-existing.
 
-But there are a few difficulties with using %(trailers) for this, as it
-shows everything between the start/end points of the trailer block. In
-particular:
+> So maybe this is rather worded as 'exact-trailers' ?
 
-  1. You don't get any kind of normalization, so you're on your own for
-     parsing things like whitespace continuation, extra spaces before
-     separators, etc.
+I'm not fond of that, as it's vague about which exact trailers we're
+talking about. I also thought of something like --verbatim, but I'd
+worry that would seem to conflict with --normalize.
 
-  2. It prints non-trailers that fall inside the block. For instance:
-
-       $ git commit --allow-empty -F - <<-\EOF
-       subject
-
-       body
-
-       Signed-off-by: me
-       this is not a trailer
-       Signed-off-by: you
-       EOF
- 
-       $ git log -1 --format=%B | git interpret-trailers --parse
-       Signed-off-by: me
-       Signed-off-by: you
-
-       $ git log -1 --format='%(trailers)'
-       Signed-off-by: me
-       this is not a trailer
-       Signed-off-by: you
-
-For (1) I think many callers would prefer to see the original
-formatting. Maybe we'd need a %(trailers:normalize) or something.
-
-I'm tempted to call (2) a bug, but I guess it's unclear whether callers
-would want to see the whole block, or if they really want just the
-individual trailers.
+I dunno. All of the names seem not quite descriptive enough to me.
 
 -Peff
