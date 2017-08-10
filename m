@@ -6,70 +6,67 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A01151F667
-	for <e@80x24.org>; Thu, 10 Aug 2017 23:10:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2423F1F667
+	for <e@80x24.org>; Thu, 10 Aug 2017 23:17:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752800AbdHJXKl (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Aug 2017 19:10:41 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35538 "HELO cloud.peff.net"
+        id S1753406AbdHJXRJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Aug 2017 19:17:09 -0400
+Received: from cloud.peff.net ([104.130.231.41]:35552 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752440AbdHJXKl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Aug 2017 19:10:41 -0400
-Received: (qmail 1774 invoked by uid 109); 10 Aug 2017 23:10:41 -0000
+        id S1753400AbdHJXRI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Aug 2017 19:17:08 -0400
+Received: (qmail 2054 invoked by uid 109); 10 Aug 2017 23:17:08 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 10 Aug 2017 23:10:41 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 10 Aug 2017 23:17:08 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11562 invoked by uid 111); 10 Aug 2017 23:11:04 -0000
+Received: (qmail 11690 invoked by uid 111); 10 Aug 2017 23:17:31 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Thu, 10 Aug 2017 19:11:04 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Thu, 10 Aug 2017 19:17:31 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Aug 2017 19:10:39 -0400
-Date:   Thu, 10 Aug 2017 19:10:39 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Aug 2017 19:17:06 -0400
+Date:   Thu, 10 Aug 2017 19:17:06 -0400
 From:   Jeff King <peff@peff.net>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH 4/5] interpret-trailers: add an option to normalize output
-Message-ID: <20170810231038.4s2btsotoq76atuu@sigill.intra.peff.net>
-References: <20170810080246.njjd5zkphytzmlda@sigill.intra.peff.net>
- <20170810080325.tehbbgajm4cgn2ku@sigill.intra.peff.net>
- <CAGZ79kabhz-FWNyjB6KjF4qpGfSqONBNVBcVd=+J=5XT+emz-A@mail.gmail.com>
- <20170810183713.z75bwk5eeavi6z22@sigill.intra.peff.net>
- <CAP8UFD2kWW41NDHVKjzdL2O2=QAeEtzKEPdJW3zR-zoeTiJPgw@mail.gmail.com>
- <CAGZ79kYeNb3sN4b8xZvYAjQOXWKP9oi+dNsJmS8fyz+iUH9p8A@mail.gmail.com>
- <CAP8UFD08oyY9eK-0Ydm2qh2etvc2_QGc0ujNswGUgUumwhy4+w@mail.gmail.com>
- <20170810211039.okpwglvcmkngzri2@sigill.intra.peff.net>
- <98b14604-33f1-6d91-8c9e-ddfa0c5cb0e7@ramsayjones.plus.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Kevin Willford <kcwillford@gmail.com>, git@vger.kernel.org,
+        Kevin Willford <kewillf@microsoft.com>
+Subject: Re: [PATCH v2 0/2] Add progress for format-patch and rebase
+Message-ID: <20170810231706.vixs6wms5cpwwsab@sigill.intra.peff.net>
+References: <20170531150427.7820-1-kewillf@microsoft.com>
+ <20170810183256.12668-1-kewillf@microsoft.com>
+ <xmqqbmnn11kw.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <98b14604-33f1-6d91-8c9e-ddfa0c5cb0e7@ramsayjones.plus.com>
+In-Reply-To: <xmqqbmnn11kw.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 11, 2017 at 12:02:49AM +0100, Ramsay Jones wrote:
+On Thu, Aug 10, 2017 at 03:48:31PM -0700, Junio C Hamano wrote:
 
-> > But some of those things are not 1:1 mappings with normalization.  For
-> > instance, --json presumably implies --only-trailers. Or are we proposing
-> > to break the whole commit message down into components and output it all
-> > as json?
+> Kevin Willford <kcwillford@gmail.com> writes:
 > 
-> Hmm, to me the operation wasn't so much a normalization, rather
-> it was an --unfold (or maybe --un-fold ;-D). I suppose going in
-> the other direction could be --fold=72, or some such.
+> > Changes since last patch:
+> > 1. Use start_progress_delay so progress isn't shown if generating
+> >    the patches is fast enough
+> > 2. Updated to have text of "Generating patches"
+> > 3. Only show progress when the --progress flag is passed
+> > 4. In the rebase script check stderr and the quiet option is not
+> >    set before propagating the progress flag to format-patch
+> >
+> > Kevin Willford (2):
+> >   format-patch: have progress option while generating patches
+> >   rebase: turn on progress option by default for format-patch
+> 
+> Do you have a pointer to the previous discussion handy (if you do
+> not, that is OK---I think I can dig the list archive myself)?
 
-But I really don't want callers to think of it as "unfold". I want it to
-be "turn this into something I can parse simply". Hence if we were to
-find another case where the output is irregular, I'd feel comfortable
-calling that a bug and fixing it (one that I suspect but haven't tested
-is that alternate separators probably should all be converted to
-colons).
+https://public-inbox.org/git/20170531150427.7820-1-kewillf@microsoft.com/
 
-> [blue is my favourite colour ... :-P ]
+is what I turned up.
 
-Yes, I'm feeling that, too. :-/
+Overall this version looks good to me, and addresses all of the previous
+points. I have two minor points which I'll make inline.
 
 -Peff
