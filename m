@@ -2,66 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A040F208B4
-	for <e@80x24.org>; Thu, 10 Aug 2017 21:52:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D9851208BD
+	for <e@80x24.org>; Thu, 10 Aug 2017 21:59:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753306AbdHJVwl (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Aug 2017 17:52:41 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51778 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753167AbdHJVwk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Aug 2017 17:52:40 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id EEFD0A0BB5;
-        Thu, 10 Aug 2017 17:52:39 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=7qIOYdqANa4VStFt+1+3t/mLtiY=; b=qihFQ/
-        /+Fa5K3oLIHUJPgUIDH6Q9/QY7mbE4NbxEst+EtHsxlrdQ33lvDGDVnaMNTs41m8
-        EX+w0X1cTZIt3wyu1b8XLMTnsh3Bo+vl4L/G55ZQRPaFOtIWaopeCdSu+Eo+qqRZ
-        R8+zP5j4HvpnAv1yv6vmSQGuiPKX0aJ4ClDqM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=UPzYrVt7fjTMXo+T6zvmyVjhD32gjgmb
-        1bXtDWcSIuVbrm6fauDHD2Q1wpkf5As+qSEjHjw/c+9COJunVUq+nwxFBhj2gDcu
-        Nx8e8jLwYR323kV+rei2Go7Ac4FjBS0fGiNqhLDGy0fWmtqxR3+N0L2SEqmSn7/j
-        nH8O+jNgpzc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E5A26A0BB4;
-        Thu, 10 Aug 2017 17:52:39 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 41DDEA0BB1;
-        Thu, 10 Aug 2017 17:52:39 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin Koegler <martin.koegler@chello.at>
-Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH 3/4] Convert zlib.c to size_t
-References: <1502388789-5775-1-git-send-email-martin@mail.zuhause>
-Date:   Thu, 10 Aug 2017 14:52:37 -0700
-In-Reply-To: <1502388789-5775-1-git-send-email-martin@mail.zuhause> (Martin
-        Koegler's message of "Thu, 10 Aug 2017 20:13:08 +0200")
-Message-ID: <xmqqy3qr1462.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1753478AbdHJV7w (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Aug 2017 17:59:52 -0400
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:35682 "EHLO
+        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752439AbdHJV7v (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Aug 2017 17:59:51 -0400
+Received: by mail-pf0-f180.google.com with SMTP id t86so8181641pfe.2
+        for <git@vger.kernel.org>; Thu, 10 Aug 2017 14:59:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=adyX6W5hyc07duanYgObcWlrCxSj4MNrsBCN6w3qolQ=;
+        b=YRRIQHBWCCF9gecZUE3aojmokHM1oJOT2FzKddLz1Z5daHgdij98S15RNG9EIJLzf6
+         NNelZfk1ls6CKRcytOmH61RG1OR1Ik3Nmyi0DE/sAHE75VZVZ9Bq87BmK89Om01o/Upt
+         BApFv9bozXSk+Ur42poWxg5eTEIaNLA0e4mK6WgFaYPqalb24kTNl6/MpyTbw1Zs5awj
+         6SCJIN9tvWlGgc5IE2eRWHxljgXDD0I7qA0CcnfbwNJtoY7oWfxxOrYTCJBVy/cB84B9
+         cH3aWO3dt5FrxQ915zEbuTH+ajDwLo/znov8UalBcVRd1Te3KvArXtGy1Mj+ac5UpuPQ
+         EeTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=adyX6W5hyc07duanYgObcWlrCxSj4MNrsBCN6w3qolQ=;
+        b=oP8Cx8YBs8ph22DAySeCt/QDN8AsV/r0AYsSz3ggMVr0KSc11yU270kUN2ItYZ0JNf
+         t1I9clIhyezWg4af/HJXx9+kG8KFjd2IAae9PUDcF6WxkmfKX5xQi7OPqy/nH0cQTfnL
+         e0lpJSN12bgi9sDIn7ep7xypIYfSgYCXbo08JM7lQpziSw/TnGdaO/uztO4YDMjj2Ab9
+         XkNSoauGCW15FcXryVXuhQ+6vO3k9BUuePSUrfF/Bqy39bXENwkh3YZiK2xIbtlKAvMB
+         hP6eAQubylU3ke1Oziag61IF8wY9Wqj0Q+s7lIkEPOQv9T7lL9kjtLjtm+qwTkTAFjUD
+         ziQw==
+X-Gm-Message-State: AHYfb5j6s86PPLGxi38WgiDXu4S4KIPBpEJ3cK/DNGt/TzqijoS93kAd
+        G/uIWfcp/O2ynAGu
+X-Received: by 10.84.217.216 with SMTP id d24mr15268695plj.144.1502402391097;
+        Thu, 10 Aug 2017 14:59:51 -0700 (PDT)
+Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:f02f:914e:af6e:3f60])
+        by smtp.gmail.com with ESMTPSA id w6sm13008455pgt.38.2017.08.10.14.59.50
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 10 Aug 2017 14:59:50 -0700 (PDT)
+Date:   Thu, 10 Aug 2017 14:59:48 -0700
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, sbeller@google.com
+Subject: Re: [PATCH v2 00/25] Move exported packfile funcs to its own file
+Message-ID: <20170810145948.60c2b9f8@twelve2.svl.corp.google.com>
+In-Reply-To: <xmqq7eyb2k8w.fsf@gitster.mtv.corp.google.com>
+References: <cover.1502220307.git.jonathantanmy@google.com>
+        <cover.1502241234.git.jonathantanmy@google.com>
+        <xmqq7eyb2k8w.fsf@gitster.mtv.corp.google.com>
+X-Mailer: Claws Mail 3.9.3 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3A6F79B4-7E16-11E7-B478-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin Koegler <martin.koegler@chello.at> writes:
+On Thu, 10 Aug 2017 14:19:59 -0700
+Junio C Hamano <gitster@pobox.com> wrote:
 
-> From: Martin Koegler <martin.koegler@chello.at>
->
-> Signed-off-by: Martin Koegler <martin.koegler@chello.at>
-> ---
+> Jonathan Tan <jonathantanmy@google.com> writes:
+> 
+> > Here is the complete patch set. I have only moved the exported functions
+> > that operate with packfiles and their static helpers - for example,
+> > static functions like freshen_packed_object() that are used only by
+> > non-pack-specific functions are not moved.
+> 
+> This will interfere with smaller changes and fixes we want to have
+> early in the 'master' branch, so while I think it is a good idea to
+> do something like this in the longer term, I'd have to ask you to
+> either hold on or rebase this on them (you'll know what else you are
+> conflicting with when you try to merge this to 'pu' yourself).
+> 
+> Thanks.
 
-Thanks.  I haven't thought things through but this looks sensible.
-Will queue.
+OK, I'll wait until you have updated the master branch, then I'll try to
+rebase on it.
