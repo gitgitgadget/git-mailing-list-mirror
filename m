@@ -2,87 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 760241F667
-	for <e@80x24.org>; Fri, 11 Aug 2017 00:17:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 35825208B8
+	for <e@80x24.org>; Fri, 11 Aug 2017 06:50:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752061AbdHKAR3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Aug 2017 20:17:29 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35634 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751492AbdHKAR2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Aug 2017 20:17:28 -0400
-Received: (qmail 4777 invoked by uid 109); 11 Aug 2017 00:17:29 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 11 Aug 2017 00:17:29 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12124 invoked by uid 111); 11 Aug 2017 00:17:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Thu, 10 Aug 2017 20:17:51 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Aug 2017 20:17:26 -0400
-Date:   Thu, 10 Aug 2017 20:17:26 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/4] dropping support for older curl
-Message-ID: <20170811001726.tmgascordtw4ksiz@sigill.intra.peff.net>
-References: <20170809120024.7phdjzjv54uv5dpz@sigill.intra.peff.net>
- <alpine.DEB.2.21.1.1708092337350.11175@virtualbox>
- <20170809214758.p77fqrwxanb4zn5a@sigill.intra.peff.net>
- <alpine.DEB.2.21.1.1708101111080.11175@virtualbox>
- <20170810213348.g4lue3j4uz6qapal@sigill.intra.peff.net>
- <xmqqshgz1319.fsf@gitster.mtv.corp.google.com>
- <20170810230902.wnzoiaxdaus74a5i@sigill.intra.peff.net>
+        id S1752702AbdHKGuO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Aug 2017 02:50:14 -0400
+Received: from mail-qt0-f173.google.com ([209.85.216.173]:33900 "EHLO
+        mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751559AbdHKGuJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Aug 2017 02:50:09 -0400
+Received: by mail-qt0-f173.google.com with SMTP id s6so16686162qtc.1
+        for <git@vger.kernel.org>; Thu, 10 Aug 2017 23:50:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=EQNi3C+FqaGyn0jlBOcQ/osdaBiIjykvAPEekbsq4zo=;
+        b=Y0elP4McPnHpgRjcfEgzmK3SQripKTUWZ0A9GemRQlqe7JePwywoKQrA880fNQGdgt
+         5HMSQ67Q+Q6a1PzudnXC0j7xhyuUyyO9MIwt72MirXHLjMCWgjw/eIfkMNDRNAekIIP0
+         CkhD8otevYgTKyAHAAxc+0MTxKe6fkB4fcM3Q1rCxIT/5jepVFNFUhjAgY2uwrn+JPDl
+         WI/BckKZGIDNVdyWTIKcmBvpDHuBh7xL6Fph2e/tveHz/iBrAxnh/6q38FYevjvjXe+d
+         15kOKVQEcG7ArtYzZueNnbEP0/FkHGUGFnflFO46J9iE2jEFB7xtPgy19SWg9e3cl8Wo
+         do5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=EQNi3C+FqaGyn0jlBOcQ/osdaBiIjykvAPEekbsq4zo=;
+        b=QaG7z/J/rkGAP8FU32y/tyzBLuIk7x1pN/IXpsowRaRhLSGWeltiia9J3gnFdrZOzw
+         ygoi4lfspA7uyVc7b8C/LjMXIEj61YSlS3VTTyd0zpFWdiX9f0Dx6Q+KtglmxrYS6H2+
+         8M8erRcbXRW+fAyG2pfyoEkpK2LY3skzFv4tUAKvmjNknGQIuLeLTteNBc2nt36QfEq/
+         KjyjXv4h0T9+MO+0PRZWKW7feVh37raoO7KI0kx8apF2YryIB3ZdGG864cFvkn11kkXR
+         e43qtf1gxHzfmd3ON25mv1L/elFZknaj+0Hc8Zq/KKSV+VuCtoO6C5dR38QyoTUJI89F
+         0Aww==
+X-Gm-Message-State: AHYfb5jd10T9oZVbT4u7MYaNaPLwq7dWINZLFgN1QNQ6JStMl7EJDntv
+        TEKY3/+/9+BYQKOOVpfs+KAcTha6Mw==
+X-Received: by 10.237.49.194 with SMTP id 60mr19055978qth.73.1502434208827;
+ Thu, 10 Aug 2017 23:50:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170810230902.wnzoiaxdaus74a5i@sigill.intra.peff.net>
+Received: by 10.140.32.165 with HTTP; Thu, 10 Aug 2017 23:50:08 -0700 (PDT)
+From:   Davide Cavallari <davide.cavallari@gmail.com>
+Date:   Fri, 11 Aug 2017 08:50:08 +0200
+Message-ID: <CANOKeme4j9fHuQoQY3MQeoNuietjez8m1wPkAO=1eSDtHG3J9w@mail.gmail.com>
+Subject: git-describe --contains
+To:     git@vger.kernel.org
+Cc:     davide cavallari <davide.cavallari@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 10, 2017 at 07:09:02PM -0400, Jeff King wrote:
+Please help me understand how this command works. There is one case in the
+linux kernel repository that puzzles me. Let's consider patch "drm/i915/
+execlists: Reset RING registers upon resume" [1]. This patch was committed 641
+commits after version 4.8-rc2:
 
-> The first is "should we eventually drop support for antiquated versions
-> of dependencies?". And the argument in favor is the one I was making
-> here: besides lowering maintenance cost, it is more honest to our users
-> about what to expect[1].
+~$ git describe bafb2f7d4755bf1571bd5e9a03b97f3fc4fe69ae
+v4.8-rc2-641-gbafb2f7d4755
 
-As usual, I forgot all my footnotes.
+So I would expect to find it in version 4.8-rc3 and later versions.
 
-[1] When I've talked about keeping expectations reasonable, I'm a lot
-    less interested in "oops, I built Git and this particular feature
-    didn't work". It's easy to write that off as "well, you have an old
-    version of curl, patches welcome". I'm much more concerned about
-    security issues. Curl is network-facing. Leaving aside security
-    vulnerabilities in curl itself (which hopefully distros with 10-year
-    support periods would fix), I wouldn't be surprised if there are
-    bad interactions possible due to our tangle of ifdefs.
+However, if I search for the tag that follows (and hence contains) that
+commit, I do not find version 4.8-rc3, nor version 4.8, nor version 4.9, but
+4.10-rc1:
 
-    One way to address that would be more careful auditing. But then
-    that goes back to the cost/benefit thing.
+~$ git describe --contains bafb2f7d4755bf1571bd5e9a03b97f3fc4fe69ae
+v4.10-rc1~154^2~44^2~178
 
-> One is to do it by date and what dependencies are in long-term OS
-> releases, and then compare that to the benefit. Requiring curl 7.11.1
-> still keeps us working back to rhel4, which was already end-of-lifed
-> completely after a 12 year run. Bumping to 7.16.0 drops rhel4 and rhel5,
-> the latter of which is in its final "barely supported" phase after 10
-> years. But it gives us a bit more bang for our buck by making CURL_MULTI
-> uconditional[2].  Requiring 7.19.4 actually doesn't drop any more rhel
-> releases. So by that metric, we might as well go there.
+Why? Why not v4.8-rc3? This means that the patch has been included neither in
+v4.8 nor in v4.9, but only in version 4.10-rc1, right? Why so much time was
+needed, considering it was the 621st commit on top ov v4.8-rc2?
 
-[2] The line-count change from dropping CURL_MULTI isn't _too_ exciting.
-    But a lot of the tangled design of our http code revolves around
-    the abstractions we've introduced. I have a feeling that it will
-    enable further cleanups as we move forward (OTOH, a lot of the worst
-    parts of our design are because of _using_ curl_multi for dumb http,
-    which of course hardly anyone does these days. But I have a feeling
-    if I suggested removing that, people would really scream).
+BTW, what are the numbers 154^2~44^2~178 that follow the tag name?
 
--Peff
+Thanks & Regards,
+   Davide
+
+[1] https://patchwork.freedesktop.org/patch/111587/
