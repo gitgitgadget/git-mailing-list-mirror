@@ -6,146 +6,93 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F22D420899
-	for <e@80x24.org>; Fri, 11 Aug 2017 22:11:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2282F20899
+	for <e@80x24.org>; Fri, 11 Aug 2017 22:15:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753842AbdHKWLS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Aug 2017 18:11:18 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56921 "EHLO
+        id S1753815AbdHKWPM (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Aug 2017 18:15:12 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51425 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753791AbdHKWLQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Aug 2017 18:11:16 -0400
+        with ESMTP id S1753627AbdHKWPK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Aug 2017 18:15:10 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D26DE93CEE;
-        Fri, 11 Aug 2017 18:11:15 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9FC9DAC7D7;
+        Fri, 11 Aug 2017 18:15:09 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=edaSgRBHoUwa7nqaqAzexEFIYdE=; b=lFb5fz
-        n2DFV1zLpbO7riRuZS2jZuhS+vK5C8pYlXQLCE8KUoTg5jBgOat5KTdJMxKrUq33
-        ctFEKUnG5MMgxouhPKXtWCTTCXQKQH58PfK4XPx+gLmnwyZ/jqSBiwZDrzPwhAoX
-        fCxoNSZIQw3PV4HXQ684Na664SHjPyJbPqUaY=
+        :content-type; s=sasl; bh=kI/KLo2ub4jPsdwrI7fkWj81XyM=; b=ocRgGM
+        MAfHPz506TXURPtT8xByku9U4GSpAdVTe6/4S0Z5lNfKTINpnSIOr05zvhjWg/dG
+        NN7RNDkJOgLYLYzNg+orQ573D0cSgVLkhidxQY59RGhyfsw+sIwXbYjZNUqQFsoF
+        Wwflj8+j8paQLSHRBwYsNAEfXSEbErDj9xtec=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=v1249ZZ0o2lnKeZ34/fAHOc/9rqFAG9Q
-        edK2CboWf1Q4LzymnBrVB99dvCf/QYwbHvmByKYKk6Z32Nb8o4ZcnT5mlXHBOvSm
-        vbsAmszOzjtqDn8oV0Bf2tgk4w4aFR4fD8qTg4MznpL6p7SZYMD+i6/4m+Ou9Tn+
-        ay0jQKDQM1E=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CB1FD93CED;
-        Fri, 11 Aug 2017 18:11:15 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=EHOQAFiI1du2E+9oITJwi3ljgftXmHMc
+        RSM7qSRRtvE5kbb64lgJkObjwtyyTLuwLWD28Qn2xaHwB8GYR0Ap/oWTpDL5jmfw
+        XZIENZoFy5Vkn9tE7x92QvvM2KmL4llRcto5rOKQ7YDpCZpgSkS8Wk91X4BeS95G
+        T4lm25vmsFw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8D6CBAC7D6;
+        Fri, 11 Aug 2017 18:15:09 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 37BF093CEA;
-        Fri, 11 Aug 2017 18:11:15 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E6996AC7CC;
+        Fri, 11 Aug 2017 18:15:07 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
-Cc:     <git@vger.kernel.org>, <sam@whiteoctober.co.uk>
-Subject: Re: [PATCH] stash: clean untracked files before reset
-References: <CAPuLQgNq_7Kdeio-59cbDjZ5mWC1VRd_1_KK33Gbka9KJ13vfQ@mail.gmail.com>
-        <b87007d1-eb5a-f092-9e03-5c6549044b42@morey-chaisemartin.com>
-Date:   Fri, 11 Aug 2017 15:11:14 -0700
-In-Reply-To: <b87007d1-eb5a-f092-9e03-5c6549044b42@morey-chaisemartin.com>
-        (Nicolas Morey-Chaisemartin's message of "Fri, 11 Aug 2017 19:14:43
-        +0200")
-Message-ID: <xmqq60dtzrel.fsf@gitster.mtv.corp.google.com>
+To:     "Tom G. Christensen" <tgc@jupiterrise.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/2] http: handle curl with vendor backports
+References: <030356f8-0472-7400-c9f6-7492788dd2d0@jupiterrise.com>
+        <cover.1502462884.git.tgc@jupiterrise.com>
+Date:   Fri, 11 Aug 2017 15:15:06 -0700
+In-Reply-To: <cover.1502462884.git.tgc@jupiterrise.com> (Tom G. Christensen's
+        message of "Fri, 11 Aug 2017 18:37:32 +0200")
+Message-ID: <xmqq1sohzr85.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: FE030FA0-7EE1-11E7-9245-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 895133AC-7EE2-11E7-99A2-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com> writes:
+"Tom G. Christensen" <tgc@jupiterrise.com> writes:
 
-> If calling git stash -u on a repo that contains a file that is not
-> ignored any more due to a current modification of the gitignore file,
-> this file is stashed but not remove from the working tree.
-> This is due to git-stash first doing a reset --hard which clears the
-> .gitignore file modification and the call git clean, leaving the file
-> untouched.
-> This causes git stash pop to fail due to the file existing.
+> The curl packages provided by Red Hat for RHEL contain several
+> backports of features from later curl releases.
+> This causes problems with current version based checks in http.c.
 >
-> This patch simply switches the order between cleaning and resetting
-> and adds a test for this usecase.
+> Here is an overview of the features that have been backported:
+> 7.10.6 (el3) Backports CURLPROTO_*
+> 7.12.1 (el4) Backports CURLPROTO_*
+> 7.15.5 (el5) Backports GSSAPI_DELEGATION_*
+>              Backports CURLPROTO_*
+> 7.19.7 (el6) Backports GSSAPI_DELEGATION_*
+>              Backports CURL_SSL_VERSION_TLSv1_{0,1,2}
+> 7.29.0 (el7) Backports CURL_SSL_VERSION_TLSv1_{0,1,2}
 >
-> Signed-off-by: Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
-> Reported-by: Sam Partington <sam@whiteoctober.co.uk>
+> This patch series will update the current version based checks for
+> protocol restriction and GSSAPI delegation control support to ones
+> based on features to properly deal with the above listed backports.
+> The fine grained TLS version support does not seem to be
+> distinguishable via a preprocessor macro so I've left that alone.
 
-These two lines are the other way around; a report/finding was made
-and then you wrote a fix, which is signed-off by you.
+Thanks; these feature macros ought to be more dependable, and I
+think this moves things in the right direction (regardless of which
+features we might later pick as mandatory and cut off supports for
+older versions).
 
-I tried to think of a scenario where it is more desirable to use the
-contents of the .gitignore file before modification gets stash away,
-but I came up empty, so let's hope that this change will not make
-50% people happier while making the other 50% sadder.
+> I have build tested these changes against upstream curl 7.12.0 (fails),
+> 7.12.1 and 7.15.5. I have also built and run the testsuite against the
+> Red Hat provided curl versions listed above.
 
-> ---
->  git-stash.sh                       | 11 ++++++-----
->  t/t3905-stash-include-untracked.sh | 18 ++++++++++++++++++
->  2 files changed, 24 insertions(+), 5 deletions(-)
+Hmph, what does "(fails)" mean here?
+
 >
-> diff --git a/git-stash.sh b/git-stash.sh
-> index 9b6c2da7b..39083b4d9 100755
-> --- a/git-stash.sh
-> +++ b/git-stash.sh
-> @@ -300,6 +300,12 @@ push_stash () {
->  
->  	if test -z "$patch_mode"
->  	then
-> +		test "$untracked" = "all" && CLEAN_X_OPTION=-x || CLEAN_X_OPTION=
-> +		if test -n "$untracked"
-> +		then
-> +			git clean --force --quiet -d $CLEAN_X_OPTION -- "$@"
-> +		fi
-> +
->  		if test $# != 0
->  		then
->  			git reset -q -- "$@"
-> @@ -309,11 +315,6 @@ push_stash () {
->  		else
->  			git reset --hard -q
->  		fi
-> -		test "$untracked" = "all" && CLEAN_X_OPTION=-x || CLEAN_X_OPTION=
-> -		if test -n "$untracked"
-> -		then
-> -			git clean --force --quiet -d $CLEAN_X_OPTION -- "$@"
-> -		fi
->  
->  		if test "$keep_index" = "t" && test -n "$i_tree"
->  		then
-> diff --git a/t/t3905-stash-include-untracked.sh b/t/t3905-stash-include-untracked.sh
-> index 193adc7b6..c1f84d3d5 100755
-> --- a/t/t3905-stash-include-untracked.sh
-> +++ b/t/t3905-stash-include-untracked.sh
-> @@ -211,4 +211,22 @@ test_expect_success 'stash push with $IFS character' '
->  	test_path_is_file bar
->  '
->  
-> +cat > .gitignore <<EOF
-> +ignored
-> +ignored.d/*
-> +EOF
-> +
-> +test_expect_success 'stash previously ignored file' '
-> +which git &&
-
-I will remove this line while queuing, though.
-
-> +	git reset HEAD &&
-> +	git add .gitignore &&
-> +	git commit -m "Add .gitignore" && 
-> +	>ignored.d/foo &&
-> +	echo "!ignored.d/foo" >> .gitignore &&
-> +	git stash save --include-untracked &&
-> +	test_path_is_missing ignored.d/foo &&
-> +	git stash pop &&
-> +	test_path_is_file ignored.d/foo
-> +'
-> +
->  test_done
-
-Will queue.  Thanks.
-
+> Tom G. Christensen (2):
+>   http: Fix handling of missing CURLPROTO_*
+>   http: use a feature check to enable GSSAPI delegation control
+>
+>  http.c | 10 ++++++----
+>  1 file changed, 6 insertions(+), 4 deletions(-)
