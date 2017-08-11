@@ -6,35 +6,39 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D43A20899
-	for <e@80x24.org>; Fri, 11 Aug 2017 17:18:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E0A920899
+	for <e@80x24.org>; Fri, 11 Aug 2017 17:24:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753435AbdHKRSQ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Aug 2017 13:18:16 -0400
-Received: from smtprelay06.ispgateway.de ([80.67.18.29]:62276 "EHLO
+        id S1753584AbdHKRYd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Aug 2017 13:24:33 -0400
+Received: from smtprelay06.ispgateway.de ([80.67.18.29]:12885 "EHLO
         smtprelay06.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753386AbdHKRSP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Aug 2017 13:18:15 -0400
-X-Greylist: delayed 1108 seconds by postgrey-1.27 at vger.kernel.org; Fri, 11 Aug 2017 13:18:15 EDT
+        with ESMTP id S1753577AbdHKRYc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Aug 2017 13:24:32 -0400
 Received: from [46.91.38.38] (helo=book.hvoigt.net)
         by smtprelay06.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
         (Exim 4.89)
         (envelope-from <hvoigt@hvoigt.net>)
-        id 1dgDZd-0004Sq-AM; Fri, 11 Aug 2017 19:18:13 +0200
-Date:   Fri, 11 Aug 2017 19:18:11 +0200
+        id 1dgDHi-0001eP-Bv; Fri, 11 Aug 2017 18:59:42 +0200
+Date:   Fri, 11 Aug 2017 18:59:40 +0200
 From:   Heiko Voigt <hvoigt@hvoigt.net>
 To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, gitster@pobox.com,
-        jrnieder@gmail.com, Jens.Lehmann@web.de
-Subject: Re: [PATCH v2 14/15] unpack-trees: improve loading of .gitmodules
-Message-ID: <20170811171811.GC1472@book.hvoigt.net>
+Cc:     Stefan Beller <sbeller@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH v2 02/15] submodule: don't use submodule_from_name
+Message-ID: <20170811165940.GB1472@book.hvoigt.net>
 References: <20170725213928.125998-1-bmwill@google.com>
  <20170803182000.179328-1-bmwill@google.com>
- <20170803182000.179328-15-bmwill@google.com>
+ <20170803182000.179328-3-bmwill@google.com>
+ <CAGZ79kaZcpZ-6+=19CbW1v+h-njguXZH9z9GMYA3Ci=acfreKQ@mail.gmail.com>
+ <20170804215311.GB126093@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20170803182000.179328-15-bmwill@google.com>
+In-Reply-To: <20170804215311.GB126093@google.com>
 User-Agent: Mutt/1.5.23 (2014-03-12)
 X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
@@ -42,29 +46,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 03, 2017 at 11:19:59AM -0700, Brandon Williams wrote:
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index 5dce7ff7d..3c7f464fa 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -1,5 +1,6 @@
->  #define NO_THE_INDEX_COMPATIBILITY_MACROS
->  #include "cache.h"
-> +#include "repository.h"
->  #include "config.h"
->  #include "dir.h"
->  #include "tree.h"
-> @@ -268,22 +269,28 @@ static int check_submodule_move_head(const struct cache_entry *ce,
->  	return 0;
->  }
->  
-> -static void reload_gitmodules_file(struct index_state *index,
-> -				   struct checkout *state)
-> +/*
-> + * Preform the loading of the repository's gitmodules file.  This function is
+On Fri, Aug 04, 2017 at 02:53:11PM -0700, Brandon Williams wrote:
+> On 08/03, Stefan Beller wrote:
+> > On Thu, Aug 3, 2017 at 11:19 AM, Brandon Williams <bmwill@google.com> wrote:
+> > > The function 'submodule_from_name()' is being used incorrectly here as a
+> > > submodule path is being used instead of a submodule name.  Since the
+> > > correct function to use with a path to a submodule is already being used
+> > > ('submodule_from_path()') let's remove the call to
+> > > 'submodule_from_name()'.
+> > >
+> > > Signed-off-by: Brandon Williams <bmwill@google.com>
+> > 
+> > In case a reroll is needed, you could incorperate Jens feedback
+> > stating that 851e18c385 should have done it.
+> 
+> K I'll add that into the commit message.
 
-s/Preform/Perform/
+Well, thats not 100% correct... IMO, it should have been a follow up patch
+which I never got to implement. See my other reply to the v1 of this
+patch I just sent out.
 
-and a nit: There is some extra space after the end of this sentence.
+As stated there I will have a look into where it makes sense to pass a
+commit id and behave more correctly.
 
 Cheers Heiko
