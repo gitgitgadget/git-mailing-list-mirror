@@ -6,127 +6,146 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 601CF20899
-	for <e@80x24.org>; Fri, 11 Aug 2017 22:07:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F22D420899
+	for <e@80x24.org>; Fri, 11 Aug 2017 22:11:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754254AbdHKWG6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Aug 2017 18:06:58 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51049 "EHLO
+        id S1753842AbdHKWLS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Aug 2017 18:11:18 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56921 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754152AbdHKWG5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Aug 2017 18:06:57 -0400
+        with ESMTP id S1753791AbdHKWLQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Aug 2017 18:11:16 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 67659AC033;
-        Fri, 11 Aug 2017 18:06:56 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D26DE93CEE;
+        Fri, 11 Aug 2017 18:11:15 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=08I7utNa9p8LkvD7W2l5+LFCdzI=; b=H0zYmT
-        19lSAc51K4Dn7prO7dNI35nRoe0SWGzi+SRs5Sti/qx0TUrL1jUL81o4aHSRxZTd
-        S0mdv0OKX/mMn8h+slntv+Rx4100na9NLWk4OOK++U5OodtQzTXMchuCqEz7q+hv
-        dsyE07sWYwA3ZN3kPkUh9X6ou7gmN6YhFH1z4=
+        :content-type; s=sasl; bh=edaSgRBHoUwa7nqaqAzexEFIYdE=; b=lFb5fz
+        n2DFV1zLpbO7riRuZS2jZuhS+vK5C8pYlXQLCE8KUoTg5jBgOat5KTdJMxKrUq33
+        ctFEKUnG5MMgxouhPKXtWCTTCXQKQH58PfK4XPx+gLmnwyZ/jqSBiwZDrzPwhAoX
+        fCxoNSZIQw3PV4HXQ684Na664SHjPyJbPqUaY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=CfiLuvxV5DbeA/AxaMuxb6JrgdvSm6ot
-        6Xz+F6BfIyR6wyCC0QGSrej2gncqmmmPX5IbDcPnY87lXuJPDcnzUZfBthfU0lTI
-        MvgRa5HnwDHZ6n+rRqTOQ7+ZSEKur291ZhTscCcM9g/Wy03dBdqBBPeN57WRvTLU
-        vLVJL9Mqk/0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5EB81AC032;
-        Fri, 11 Aug 2017 18:06:56 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=v1249ZZ0o2lnKeZ34/fAHOc/9rqFAG9Q
+        edK2CboWf1Q4LzymnBrVB99dvCf/QYwbHvmByKYKk6Z32Nb8o4ZcnT5mlXHBOvSm
+        vbsAmszOzjtqDn8oV0Bf2tgk4w4aFR4fD8qTg4MznpL6p7SZYMD+i6/4m+Ou9Tn+
+        ay0jQKDQM1E=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CB1FD93CED;
+        Fri, 11 Aug 2017 18:11:15 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B3781AC030;
-        Fri, 11 Aug 2017 18:06:55 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 37BF093CEA;
+        Fri, 11 Aug 2017 18:11:15 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/2] sha1_file: remove read_packed_sha1()
-References: <cover.1502483486.git.jonathantanmy@google.com>
-        <xmqqfucz11yb.fsf@gitster.mtv.corp.google.com>
-        <cover.1502483486.git.jonathantanmy@google.com>
-        <557fbeeac6a0f65d48ba0902f20c0650e75ae332.1502483486.git.jonathantanmy@google.com>
-Date:   Fri, 11 Aug 2017 15:06:54 -0700
-In-Reply-To: <557fbeeac6a0f65d48ba0902f20c0650e75ae332.1502483486.git.jonathantanmy@google.com>
-        (Jonathan Tan's message of "Fri, 11 Aug 2017 13:36:15 -0700")
-Message-ID: <xmqqa835zrlt.fsf@gitster.mtv.corp.google.com>
+To:     Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
+Cc:     <git@vger.kernel.org>, <sam@whiteoctober.co.uk>
+Subject: Re: [PATCH] stash: clean untracked files before reset
+References: <CAPuLQgNq_7Kdeio-59cbDjZ5mWC1VRd_1_KK33Gbka9KJ13vfQ@mail.gmail.com>
+        <b87007d1-eb5a-f092-9e03-5c6549044b42@morey-chaisemartin.com>
+Date:   Fri, 11 Aug 2017 15:11:14 -0700
+In-Reply-To: <b87007d1-eb5a-f092-9e03-5c6549044b42@morey-chaisemartin.com>
+        (Nicolas Morey-Chaisemartin's message of "Fri, 11 Aug 2017 19:14:43
+        +0200")
+Message-ID: <xmqq60dtzrel.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 635747A0-7EE1-11E7-A301-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: FE030FA0-7EE1-11E7-9245-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com> writes:
 
-> Use read_object() in its place instead. This avoids duplication of code.
+> If calling git stash -u on a repo that contains a file that is not
+> ignored any more due to a current modification of the gitignore file,
+> this file is stashed but not remove from the working tree.
+> This is due to git-stash first doing a reset --hard which clears the
+> .gitignore file modification and the call git clean, leaving the file
+> untouched.
+> This causes git stash pop to fail due to the file existing.
 >
-> This makes force_object_loose() slightly slower (because of a redundant
-> check of loose object storage), but only in the error case.
+> This patch simply switches the order between cleaning and resetting
+> and adds a test for this usecase.
 >
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> Signed-off-by: Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
+> Reported-by: Sam Partington <sam@whiteoctober.co.uk>
+
+These two lines are the other way around; a report/finding was made
+and then you wrote a fix, which is signed-off by you.
+
+I tried to think of a scenario where it is more desirable to use the
+contents of the .gitignore file before modification gets stash away,
+but I came up empty, so let's hope that this change will not make
+50% people happier while making the other 50% sadder.
+
 > ---
->  sha1_file.c | 26 +-------------------------
->  1 file changed, 1 insertion(+), 25 deletions(-)
-
-The original code insisted on reading from pack and never from a
-loose object, because it knew it would return early when it found a
-loose version.  Now we allow a loose one to appear in the middle of
-force_object_loose() operation and happily read from it when we do
-not see a pack entry for the object---presumably because we are
-racing with another simultanous repack process, or something?---and
-then write it out as a new (and identical) loose object, which would
-not do any harm.
-
-So this is not strictly a no-op conversion; I have a gut feeling
-that it would make it more robust, not less, in the presence of
-another racing repack process, but I haven't really thought through
-race scenarios that may make difference in its behaviour.
-
-
-> diff --git a/sha1_file.c b/sha1_file.c
-> index 910109fd9..0f758eabf 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -3062,30 +3062,6 @@ int sha1_object_info(const unsigned char *sha1, unsigned long *sizep)
->  	return type;
->  }
+>  git-stash.sh                       | 11 ++++++-----
+>  t/t3905-stash-include-untracked.sh | 18 ++++++++++++++++++
+>  2 files changed, 24 insertions(+), 5 deletions(-)
+>
+> diff --git a/git-stash.sh b/git-stash.sh
+> index 9b6c2da7b..39083b4d9 100755
+> --- a/git-stash.sh
+> +++ b/git-stash.sh
+> @@ -300,6 +300,12 @@ push_stash () {
 >  
-> -static void *read_packed_sha1(const unsigned char *sha1,
-> -			      enum object_type *type, unsigned long *size)
-> -{
-> -	struct pack_entry e;
-> -	void *data;
-> -
-> -	if (!find_pack_entry(sha1, &e))
-> -		return NULL;
-> -	data = cache_or_unpack_entry(e.p, e.offset, size, type);
-> -	if (!data) {
-> -		/*
-> -		 * We're probably in deep shit, but let's try to fetch
-> -		 * the required object anyway from another pack or loose.
-> -		 * This should happen only in the presence of a corrupted
-> -		 * pack, and is better than failing outright.
-> -		 */
-> -		error("failed to read object %s at offset %"PRIuMAX" from %s",
-> -		      sha1_to_hex(sha1), (uintmax_t)e.offset, e.p->pack_name);
-> -		mark_bad_packed_object(e.p, sha1);
-> -		data = read_object(sha1, type, size);
-> -	}
-> -	return data;
-> -}
-> -
->  int pretend_sha1_file(void *buf, unsigned long len, enum object_type type,
->  		      unsigned char *sha1)
->  {
-> @@ -3468,7 +3444,7 @@ int force_object_loose(const unsigned char *sha1, time_t mtime)
+>  	if test -z "$patch_mode"
+>  	then
+> +		test "$untracked" = "all" && CLEAN_X_OPTION=-x || CLEAN_X_OPTION=
+> +		if test -n "$untracked"
+> +		then
+> +			git clean --force --quiet -d $CLEAN_X_OPTION -- "$@"
+> +		fi
+> +
+>  		if test $# != 0
+>  		then
+>  			git reset -q -- "$@"
+> @@ -309,11 +315,6 @@ push_stash () {
+>  		else
+>  			git reset --hard -q
+>  		fi
+> -		test "$untracked" = "all" && CLEAN_X_OPTION=-x || CLEAN_X_OPTION=
+> -		if test -n "$untracked"
+> -		then
+> -			git clean --force --quiet -d $CLEAN_X_OPTION -- "$@"
+> -		fi
 >  
->  	if (has_loose_object(sha1))
->  		return 0;
-> -	buf = read_packed_sha1(sha1, &type, &len);
-> +	buf = read_object(sha1, &type, &len);
->  	if (!buf)
->  		return error("cannot read sha1_file for %s", sha1_to_hex(sha1));
->  	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %lu", typename(type), len) + 1;
+>  		if test "$keep_index" = "t" && test -n "$i_tree"
+>  		then
+> diff --git a/t/t3905-stash-include-untracked.sh b/t/t3905-stash-include-untracked.sh
+> index 193adc7b6..c1f84d3d5 100755
+> --- a/t/t3905-stash-include-untracked.sh
+> +++ b/t/t3905-stash-include-untracked.sh
+> @@ -211,4 +211,22 @@ test_expect_success 'stash push with $IFS character' '
+>  	test_path_is_file bar
+>  '
+>  
+> +cat > .gitignore <<EOF
+> +ignored
+> +ignored.d/*
+> +EOF
+> +
+> +test_expect_success 'stash previously ignored file' '
+> +which git &&
+
+I will remove this line while queuing, though.
+
+> +	git reset HEAD &&
+> +	git add .gitignore &&
+> +	git commit -m "Add .gitignore" && 
+> +	>ignored.d/foo &&
+> +	echo "!ignored.d/foo" >> .gitignore &&
+> +	git stash save --include-untracked &&
+> +	test_path_is_missing ignored.d/foo &&
+> +	git stash pop &&
+> +	test_path_is_file ignored.d/foo
+> +'
+> +
+>  test_done
+
+Will queue.  Thanks.
+
