@@ -6,99 +6,67 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6097A20899
-	for <e@80x24.org>; Fri, 11 Aug 2017 18:50:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD8FB20899
+	for <e@80x24.org>; Fri, 11 Aug 2017 19:00:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753343AbdHKSuY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Aug 2017 14:50:24 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61110 "EHLO
+        id S1753242AbdHKTAH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Aug 2017 15:00:07 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51047 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753158AbdHKSuX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Aug 2017 14:50:23 -0400
+        with ESMTP id S1752995AbdHKTAG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Aug 2017 15:00:06 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DDBA9AC975;
-        Fri, 11 Aug 2017 14:50:15 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A7D31AD0A1;
+        Fri, 11 Aug 2017 15:00:05 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=JEdwME10ErvqoGfhD2EOEilp4fg=; b=k0Nymz
-        vmAEhoTtzeanlKtqu3+/xHfgLJF1LKvmD+OZkXRSFIBhVyM9DP16QhkCozXhGEaA
-        Hchqgv1xz2fupySRgekrE1U24t7jMgAz2NO8VLx/HOzB0qbXT1Uzudx42U3a+Dqe
-        u+E4pVLrGnLYmjAkbizEYVS97aVwfxaZNpbdE=
+        :content-type; s=sasl; bh=THDgaHhPCvDf99TYbicrvwkUJS0=; b=mdcuCK
+        FWca7zcHGAm09X2C1detGecXQujDawDFvjeK1ilBqO122M6EvVXbAb1A/Vei/lPf
+        jWA+ijdm7MvD+O5fWT0afF1KGJLrRb93o9wNi83cTBuiiRVnr6DMdp6HrzXyju0r
+        FrqoWCb0SO9VJVqpK4bQcgc8hwRMUXPdBAZFo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=yC5M4EjK588CiHXPcCCwgiSWco33sxmV
-        PQn7zJtMAxzAzP2qMJu4kpzw8FB/bHYvAyLxc9YYsZmBw+wvogZE5XEfz2DNE8Kn
-        vnrK46Giy52j7rs8sKWWGfix6EOu16jIipCEgsKCRpM/4wLsr9F0wLYLYoeYhzK4
-        RYBJVCxXcgU=
+        :content-type; q=dns; s=sasl; b=pxUg5YLuCS6WJ37UivrX1LIZg7zfbp/c
+        FZ59OFFJGbgAHZ+pkhSTIRwAVeaqdufZt4XBZ65mARmN1Ui50ERUIWPdrea/5RZX
+        Sp8qIXKLcB3W1uB7dqsp0FLvPfpsYjEctxez4uqb730FUlfO0yy99pp3Fml1wEe9
+        osHaLbejbHA=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D3272AC974;
-        Fri, 11 Aug 2017 14:50:15 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9F304AD0A0;
+        Fri, 11 Aug 2017 15:00:05 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2A56CAC96F;
-        Fri, 11 Aug 2017 14:50:15 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3F3F2AD098;
+        Fri, 11 Aug 2017 15:00:04 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin Koegler <martin.koegler@chello.at>
-Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de,
-        Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH 4/4] Fix delta offset overflow
-References: <1502388789-5775-1-git-send-email-martin@mail.zuhause>
-        <1502388789-5775-2-git-send-email-martin@mail.zuhause>
-        <xmqqbmnn2lnv.fsf@gitster.mtv.corp.google.com>
-        <20170811065732.GA15128@mail.zuhause>
-Date:   Fri, 11 Aug 2017 11:50:13 -0700
-In-Reply-To: <20170811065732.GA15128@mail.zuhause> (Martin Koegler's message
-        of "Fri, 11 Aug 2017 08:57:32 +0200")
-Message-ID: <xmqqtw1eym56.fsf@gitster.mtv.corp.google.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC] clang-format: outline the git project's coding style
+References: <20170808012554.186051-1-bmwill@google.com>
+        <xmqq3792c5sb.fsf@gitster.mtv.corp.google.com>
+        <20170808180317.GA73298@google.com>
+        <xmqqy3qtc3x4.fsf@gitster.mtv.corp.google.com>
+        <xmqqpoc56x27.fsf@gitster.mtv.corp.google.com>
+        <20170811174958.GB59325@google.com>
+Date:   Fri, 11 Aug 2017 12:00:01 -0700
+In-Reply-To: <20170811174958.GB59325@google.com> (Brandon Williams's message
+        of "Fri, 11 Aug 2017 10:49:58 -0700")
+Message-ID: <xmqqpoc2ylou.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: E9A983FC-7EC5-11E7-85F2-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 48DB2974-7EC7-11E7-89E2-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin Koegler <martin.koegler@chello.at> writes:
+Brandon Williams <bmwill@google.com> writes:
 
-> On Thu, Aug 10, 2017 at 01:49:24PM -0700, Junio C Hamano wrote:
->> The lower 4-byte of moff (before incrementing it with msize) were
->> already encoded to the output stream before this hunk.  Shouldn't
->> we be checking if moff would fit in uint32_t _before_ that happens?
+>> checkpatch.pl also warns a SP immediately before HT, which I do pay
 >
-> moff is otherwise only decremented or assigned with an offset generated by
-> create_delta_index. These offsets are limited by 4GB.
->
-> Any larger offets would be a programming bug - so qualify for just a "assert".
+> I'm sorry what's 'HT'?
 
-OK, in that case, I agree that a check before encoding moff into
-(upto) 4 output bytes is unnecessary.  Sorry, I didn't read the
-function that populates index->hash[] before responding, and I admit
-that I haven't read it for a while.
+Horizontal tab.
 
->> Cutting it off at here by resetting msize to 0 might help the next
->> iteration (I didn't check, but is the effect of it is to corrupt the
->> "val" rolling checksum and make it unlikely that the hash
->> computation would not find a correct match?) but it somehow feels
->> like closing the barn door after the horse has already bolted...
->
-> The current code produces incorrect deltas - its not just a checksum issue.
-
-Again, I mis-read what role msize was playing in the original (or in
-your update).  I'd need to re-read that part of the code to make
-sure I get how your change will fix the issue.
-
-Thanks.
-
-> By the way: 
->
-> Somebody interested in JGIT should also look at these two bugs:
->
-> https://github.com/eclipse/jgit/blob/005e5feb4ecd08c4e4d141a38b9e7942accb3212/org.eclipse.jgit/src/org/eclipse/jgit/internal/storage/pack/DeltaEncoder.java
-> copy would also encode beyond 4GB - producing truncated delta offset.
->
-> https://github.com/eclipse/jgit/blob/005e5feb4ecd08c4e4d141a38b9e7942accb3212/org.eclipse.jgit/src/org/eclipse/jgit/internal/storage/pack/BinaryDelta.java
-> apply uses int for decoding length values.
-
-I'll cc: an obvious suspect; thanks for the note.
+"man ascii" or http://man7.org/linux/man-pages/man7/ascii.7.html
