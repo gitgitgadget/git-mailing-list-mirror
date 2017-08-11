@@ -7,66 +7,60 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 581D920899
-	for <e@80x24.org>; Fri, 11 Aug 2017 19:38:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8DE8320899
+	for <e@80x24.org>; Fri, 11 Aug 2017 19:41:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753638AbdHKTig (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Aug 2017 15:38:36 -0400
-Received: from mail-qk0-f195.google.com ([209.85.220.195]:38406 "EHLO
-        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753517AbdHKTif (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Aug 2017 15:38:35 -0400
-Received: by mail-qk0-f195.google.com with SMTP id m84so4424163qki.5
-        for <git@vger.kernel.org>; Fri, 11 Aug 2017 12:38:35 -0700 (PDT)
+        id S1753671AbdHKTla (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Aug 2017 15:41:30 -0400
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:35863 "EHLO
+        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753343AbdHKTl3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Aug 2017 15:41:29 -0400
+Received: by mail-qt0-f195.google.com with SMTP id c15so4596331qta.3
+        for <git@vger.kernel.org>; Fri, 11 Aug 2017 12:41:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=WlPYXf8M1rcsde0vcH3N6poGtqE/pjxeoF15g9G0GFc=;
-        b=DXt/BuA/96IJpfynvO5SR+V1XqFE9In+e73JtsjwADaAHgoj4/0hRulDmg+56ezmMm
-         Pmt6WYKnQ4/W0HPVSJ0Kg2/OWuYra4RyiZ4Rz0OJOoL+U/p8GdYPASbAKedJ6xv5PM+e
-         bdBW5aFjyzyABjYyTbADqflvHNpNMpUYDCyViZ4pomkLsQk6ck/sing0S6bisQ6cW4Ib
-         9kXcyDv8NaeBkFeYNJQkc5dQLKaM7iAv9ZSqxiuGjFGR2QZmAF6mQxclDnqoL4KQIN+E
-         SdKn1lVKIU11x6xqoKaYMFukMbLFIeHMDJ+Gm/JgBvu5HEEiR9H18Z0ZZEzHgeIhXGp/
-         aV9A==
+        bh=NPkd6+VgvoZoUcnvjZan4BEr6BOPy9NgqtFPvu8KD1Q=;
+        b=Y5l8IUboEjUO5f953LD1DVqF53HiLnMUYgAuBOd6vZIKpuKpH6YSvSiTvxV2MGX2a6
+         iYUZXrsrdyNhaCh2LTRxm6DIEKrklYcHkKAHcxmvBylz8+CRNCmXiyXU5Q71qv67bDcZ
+         c2Mx1/7kluCC26dJtUROZCwPlYTkqARZPH1mVb1B0LmV2zYsKQ6BHF1LZ4z9/wCyuUi4
+         BslNfUn9eBs4ky6qGVVfVPclJA2g5h2ss3KqzmECIT5zW+0/7ySq2NFgjS8ccYhorHXg
+         lnuNCDudMO4U4Fi30KTZuMjR6bHm8TG9PtgH1BoctNZyz/pNQkPNK6n84ORGHFkD7Dfq
+         yMHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=WlPYXf8M1rcsde0vcH3N6poGtqE/pjxeoF15g9G0GFc=;
-        b=lO0+dxI4EoM9Zk97C0jAEsngfSX2H4jH9ZL4jDkdsANbOzj2LmoG4nPRrThy6/rhY3
-         HFjitiNzPIo7BZuPnVrdFO+y9+ZoKN9sGkSVUNFEiXpnMYmZE540QC3qr4lyYp56YIy3
-         I5/m5Rx3/JSMUeoJ9CZh/XqxZSCYiBDzBByDW6ZyIMpYg1IhTMa/iornX8V9m552E9hF
-         i2RDLi0bFsZ0aOKKm9nzsJS0GkYPVt6w4oenHQGlnsL/aQXPsPY8+nuQ8OuX7pzmLpEA
-         DdmA1MI+otaYc+a+MmFs8K1Ylpp4kRlSwc114bYo7s9w0sbtfEePiZLqedS/nH7EkFX/
-         9Dzw==
-X-Gm-Message-State: AHYfb5gKlAtbT9JEWHIQQnZBp1XCQvDsF6F5nqE3ESwoIcjECkznwucC
-        baTIPad4Z+P7N0+uzdE=
-X-Received: by 10.55.42.216 with SMTP id q85mr20322716qkq.202.1502480314216;
-        Fri, 11 Aug 2017 12:38:34 -0700 (PDT)
+        bh=NPkd6+VgvoZoUcnvjZan4BEr6BOPy9NgqtFPvu8KD1Q=;
+        b=HiL5xdKzRrzSCIpSMkF/5H3od//Kt8AwMrpksSwEEtee9Hv1a1vMRiMWuEK5zcyFL/
+         WQqChlz7vHjdwxZOls0FBLxAjzIyvv8E0zEHX0ge1K0F+91l9RZpfy9zGCzeWll6mQKw
+         IfIhpS+7ns1/XWZ5Vh4ct6vcWPBKwVyBpJF8uhFRNRVQRS/uCsBzK+VxyfgyoNogziyQ
+         5JYOjDInm/uiTjm/7dEQuA9O5t6LsJkus31neCGLAH/HgLBVeVwMCZNMyWAJm96vmMMv
+         eU0O8hHfSnQOzRbfbj14Gy4TE7q00pX7aF66+BP4nBqefSduym5AIm7Tm2eHICahXLQY
+         zMRg==
+X-Gm-Message-State: AHYfb5heoq0QJnSF+/aKSfHkFTBV5XdAYJvM/cPDQ5Xjqd+jonn6VgGk
+        fGpkM5E5NaCVlw==
+X-Received: by 10.237.62.156 with SMTP id n28mr24091427qtf.203.1502480489104;
+        Fri, 11 Aug 2017 12:41:29 -0700 (PDT)
 Received: from [192.168.1.13] ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id z30sm1063610qta.84.2017.08.11.12.38.32
+        by smtp.gmail.com with ESMTPSA id v55sm1036787qtc.90.2017.08.11.12.41.28
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 11 Aug 2017 12:38:32 -0700 (PDT)
-Subject: Re: [RFC PATCH 01/10] pack: move pack name-related functions
-To:     Jonathan Tan <jonathantanmy@google.com>,
-        Christian Couder <christian.couder@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
+        Fri, 11 Aug 2017 12:41:28 -0700 (PDT)
+Subject: Re: [PATCH v2 00/25] Move exported packfile funcs to its own file
+To:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Cc:     gitster@pobox.com, sbeller@google.com
 References: <cover.1502220307.git.jonathantanmy@google.com>
- <368a1095557aa5f68cebd4d4e08628351c03b843.1502220307.git.jonathantanmy@google.com>
- <CAGZ79kYQP74fTu1hFDLyKhS-2NTbUhtirWTxRMNavgO09SenYg@mail.gmail.com>
- <20170808135001.48f2440e@twelve2.svl.corp.google.com>
- <CAP8UFD20_Q7djbJfMmrGEnN3j2NasHyvuNAfZHMr_bNRjO0qpw@mail.gmail.com>
- <20170809101646.4bc67606@twelve2.svl.corp.google.com>
+ <cover.1502241234.git.jonathantanmy@google.com>
 From:   Ben Peart <peartben@gmail.com>
-Message-ID: <b65a5d52-490f-5ea6-aef5-8d2f6c916536@gmail.com>
-Date:   Fri, 11 Aug 2017 15:38:31 -0400
+Message-ID: <588e6770-58f8-0320-014b-0ce195d498ac@gmail.com>
+Date:   Fri, 11 Aug 2017 15:41:28 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.2.1
 MIME-Version: 1.0
-In-Reply-To: <20170809101646.4bc67606@twelve2.svl.corp.google.com>
+In-Reply-To: <cover.1502241234.git.jonathantanmy@google.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -77,30 +71,31 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-On 8/9/2017 1:16 PM, Jonathan Tan wrote:
-> On Wed, 9 Aug 2017 14:00:40 +0200
-> Christian Couder <christian.couder@gmail.com> wrote:
+On 8/8/2017 9:22 PM, Jonathan Tan wrote:
+> Here is the complete patch set. I have only moved the exported functions
+> that operate with packfiles and their static helpers - for example,
+> static functions like freshen_packed_object() that are used only by
+> non-pack-specific functions are not moved.
 > 
->> On Tue, Aug 8, 2017 at 10:50 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
->>> On Tue, 8 Aug 2017 13:36:24 -0700
->>> Stefan Beller <sbeller@google.com> wrote:
->>>>
->>>> There are also packed refs, so one could (like I did) think that
->>>> pack.c is for generic packing of things, maybe packfile.c
->>>> would be more clear?
->>>
->>> Good point. I'll use packfile.c and packfile.h in the next version.
->>
->> It looks like you used "packfile.c" and "pack.h" in v2. Is there a
->> reason why it's not using "packfile.h"?
+> In the end, 3 functions needed to be made global. They are
+> find_pack_entry(), mark_bad_packed_object(), and has_packed_and_bad().
 > 
-> Ah, I forgot to mention this in the cover letter. I thought that one
-> header was sufficient to cover all pack-related things, so if we wanted
-> to know which files used pack-related things, we would only need to
-> search for one string instead of two. Also, the division between
-> "pack.h" and the hypothetical "packfile.h" was not so clear to me.
+> Of the 3, find_pack_entry() is probably legitimately promoted. But I
+> think that the latter two functions needing to be accessed from
+> sha1_file.c points to a design that could be improved - they are only
+> used when packed_object_info() detects corruption, and used for marking
+> as bad and printing messages to the user respectively, which
+> packed_object_info() should probably do itself. But I have not made this
+> change in this patch set.
+> 
+> (Other than the 3 functions above, there are some variables and
+> functions that are temporarily made global, but reduced back to static
+> when the wide scope is no longer needed.)
 > 
 
-I prefer having source and the header files that export the functions 
-have matching names to make it easy to find them.  I would prefer 
-packfile.h vs pack.h myself.
+Nice to see the pack file functions being refactored out.  I looked at 
+the end result and it looked good to me.
+
+Do you have the energy to do a similar refactoring for the remaining 
+public functions residing in sha1_file.c?  Perhaps a new sha1_file.h? It 
+would be nice to get more things out of cache.h. :)
