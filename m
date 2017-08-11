@@ -2,87 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 434C7208B8
-	for <e@80x24.org>; Fri, 11 Aug 2017 06:58:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 27036208B8
+	for <e@80x24.org>; Fri, 11 Aug 2017 07:02:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751492AbdHKG6B (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Aug 2017 02:58:01 -0400
-Received: from vie01a-dmta-pe02-3.mx.upcmail.net ([62.179.121.159]:41838 "EHLO
-        vie01a-dmta-pe02-3.mx.upcmail.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751299AbdHKG6A (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 11 Aug 2017 02:58:00 -0400
-Received: from [172.31.216.44] (helo=vie01a-pemc-psmtp-pe02)
-        by vie01a-dmta-pe02.mx.upcmail.net with esmtp (Exim 4.88)
-        (envelope-from <martin.koegler@chello.at>)
-        id 1dg3t9-0004kx-HD
-        for git@vger.kernel.org; Fri, 11 Aug 2017 08:57:43 +0200
-Received: from master.zuhause ([80.108.242.240])
-        by vie01a-pemc-psmtp-pe02 with SMTP @ mailcloud.upcmail.net
-        id vixY1v0215BuuEg01ixZ3q; Fri, 11 Aug 2017 08:57:34 +0200
-X-SourceIP: 80.108.242.240
-Received: by master.zuhause (Postfix, from userid 1006)
-        id 8B2F445D4512; Fri, 11 Aug 2017 08:57:32 +0200 (CEST)
-Date:   Fri, 11 Aug 2017 08:57:32 +0200
-From:   Martin Koegler <martin.koegler@chello.at>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Martin Koegler <martin.koegler@chello.at>, git@vger.kernel.org,
-        Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH 4/4] Fix delta offset overflow
-Message-ID: <20170811065732.GA15128@mail.zuhause>
-References: <1502388789-5775-1-git-send-email-martin@mail.zuhause>
- <1502388789-5775-2-git-send-email-martin@mail.zuhause>
- <xmqqbmnn2lnv.fsf@gitster.mtv.corp.google.com>
+        id S1752016AbdHKHC1 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Aug 2017 03:02:27 -0400
+Received: from mail-qk0-f169.google.com ([209.85.220.169]:35777 "EHLO
+        mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751388AbdHKHC0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Aug 2017 03:02:26 -0400
+Received: by mail-qk0-f169.google.com with SMTP id d145so16166154qkc.2
+        for <git@vger.kernel.org>; Fri, 11 Aug 2017 00:02:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=yX0kw4kbFmbt67OqzueUYwEffw55BSUHoCvDEkJ0EfE=;
+        b=UdfhrRPMiQs2t0o5sYduyvDqD1YDvehNW0mP4kFEfKAEhQOSNPLilPBFrgo3esfY76
+         xgohwyYGNbj08Ga7X+MHS0YZ8GQ7KCsf2T/WeHogwV+EveM8mnqquyqsfBTcHn+MUlqv
+         rm6WkbZkH3nOtsPboTXGtUpGEwPvIehASe05NtFtQpdMveTuNiJYemKBbr+0Zr5UpXsr
+         eFOJEM3kyc7ltngWomNqKs9VzQxR8mwlycmnX8lxpgZe2jghftMiCkV0XRf29TnrWZvE
+         s0PbYC/HALGVNlwXODEdftBZkoy+vpg3X//aCh+0dQpTI2RuGZg7nb9PbhCMEZgA6M3C
+         IhbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=yX0kw4kbFmbt67OqzueUYwEffw55BSUHoCvDEkJ0EfE=;
+        b=eQ6C7GVkU0LizZk2LWxGf5sz2hy3nCiluhuGNL1UiB0gGnkgkyhD3i3L1OJwLDI5Tt
+         Mq4mT4Y4JpSLet669NA2yJSX4nsS70w69Ncap1PFDeSJoHaPl93PRBBw3MF/U34qfRpF
+         Hkj56IjU+2eGqB6+yG3GAEx0C/nCY3kY8jxhHbW9OPtxEbOGJZVl3+SxBqs31eTQs++x
+         PEpPwDzOsrfWQMIozAAKGqWtMjAS4BsYjtd1Prv12y5LWNiUMQTJFI6jYIBsF0pFzJ2p
+         x41Ovlp9HuMsLSdrAhRJxTBHa1vJ12XfEZ+dlSP4I/FvyZfqQLa4QxCEWu1s2lifoM4L
+         I0dw==
+X-Gm-Message-State: AHYfb5jRtxsFvV2laAn6o8xJcHJ2Ews5T858Y0Im88wDbIBtBJo7aCH6
+        6pdLnW9MFCT0Xty70JzGJ8BwGmlXEQ==
+X-Received: by 10.55.163.69 with SMTP id m66mr19252952qke.139.1502434945313;
+ Fri, 11 Aug 2017 00:02:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqbmnn2lnv.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+Received: by 10.55.31.13 with HTTP; Fri, 11 Aug 2017 00:02:24 -0700 (PDT)
+In-Reply-To: <20170810231038.4s2btsotoq76atuu@sigill.intra.peff.net>
+References: <20170810080246.njjd5zkphytzmlda@sigill.intra.peff.net>
+ <20170810080325.tehbbgajm4cgn2ku@sigill.intra.peff.net> <CAGZ79kabhz-FWNyjB6KjF4qpGfSqONBNVBcVd=+J=5XT+emz-A@mail.gmail.com>
+ <20170810183713.z75bwk5eeavi6z22@sigill.intra.peff.net> <CAP8UFD2kWW41NDHVKjzdL2O2=QAeEtzKEPdJW3zR-zoeTiJPgw@mail.gmail.com>
+ <CAGZ79kYeNb3sN4b8xZvYAjQOXWKP9oi+dNsJmS8fyz+iUH9p8A@mail.gmail.com>
+ <CAP8UFD08oyY9eK-0Ydm2qh2etvc2_QGc0ujNswGUgUumwhy4+w@mail.gmail.com>
+ <20170810211039.okpwglvcmkngzri2@sigill.intra.peff.net> <98b14604-33f1-6d91-8c9e-ddfa0c5cb0e7@ramsayjones.plus.com>
+ <20170810231038.4s2btsotoq76atuu@sigill.intra.peff.net>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Fri, 11 Aug 2017 09:02:24 +0200
+Message-ID: <CAP8UFD3RWByUBZf=E_EBCW2Zk7voogfB+Qpsx4U2YNq0T0Hqag@mail.gmail.com>
+Subject: Re: [PATCH 4/5] interpret-trailers: add an option to normalize output
+To:     Jeff King <peff@peff.net>
+Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Stefan Beller <sbeller@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 10, 2017 at 01:49:24PM -0700, Junio C Hamano wrote:
-> The lower 4-byte of moff (before incrementing it with msize) were
-> already encoded to the output stream before this hunk.  Shouldn't
-> we be checking if moff would fit in uint32_t _before_ that happens?
+On Fri, Aug 11, 2017 at 1:10 AM, Jeff King <peff@peff.net> wrote:
+> On Fri, Aug 11, 2017 at 12:02:49AM +0100, Ramsay Jones wrote:
+>
+>> > But some of those things are not 1:1 mappings with normalization.  For
+>> > instance, --json presumably implies --only-trailers. Or are we proposing
+>> > to break the whole commit message down into components and output it all
+>> > as json?
 
-moff is otherwise only decremented or assigned with an offset generated by
-create_delta_index. These offsets are limited by 4GB.
+Well who knows what people might want/need?
+Anyway in `git log` --oneline is not a direct mapping with
+--pretty=oneline as it also means --abbrev-commit, and this is not a
+big problem.
 
-Any larger offets would be a programming bug - so qualify for just a "assert".
- 
-> IOW, in a much earlier part of that "while (data < top)" loop, there
-> is a code that tries to find a match that gives us a large msize by
-> iterating over index->hash[], and it sets msize and moff as a potential
-> location that we may want to use.  If moff is already big there, then
-> we shouldn't consider it a match because we cannot encode its location
-> using 4-byte anyway, no?
+>> Hmm, to me the operation wasn't so much a normalization, rather
+>> it was an --unfold (or maybe --un-fold ;-D). I suppose going in
+>> the other direction could be --fold=72, or some such.
 
-Recovering from an incorrect moff would add more complex code for a case, that
-should not happen. A bailout would be sufficient.
- 
-> Cutting it off at here by resetting msize to 0 might help the next
-> iteration (I didn't check, but is the effect of it is to corrupt the
-> "val" rolling checksum and make it unlikely that the hash
-> computation would not find a correct match?) but it somehow feels
-> like closing the barn door after the horse has already bolted...
+Yeah, we could call that --no-fold or --no-wrap if we expect to need
+--fold=72 or --wrap=72.
+At least it is more descriptive than --normalize and if we later
+introduce --pretty or --format we can say that it is a shorthand for
+--pretty=nofold or --pretty=unfolded.
 
-The current code produces incorrect deltas - its not just a checksum issue.
+> But I really don't want callers to think of it as "unfold". I want it to
+> be "turn this into something I can parse simply". Hence if we were to
+> find another case where the output is irregular, I'd feel comfortable
+> calling that a bug and fixing it (one that I suspect but haven't tested
+> is that alternate separators probably should all be converted to
+> colons).
 
-By the way: 
+Though "fixing" this after a release has been made might introduce a
+regression for people who would already use the option on trailers
+with different separators. That's also why I don't like --normalize.
+We just don't know if we will need to "fix" it a lot to make sure
+scripts using it will work in all cases.
 
-Somebody interested in JGIT should also look at these two bugs:
-
-https://github.com/eclipse/jgit/blob/005e5feb4ecd08c4e4d141a38b9e7942accb3212/org.eclipse.jgit/src/org/eclipse/jgit/internal/storage/pack/DeltaEncoder.java
-copy would also encode beyond 4GB - producing truncated delta offset.
-
-https://github.com/eclipse/jgit/blob/005e5feb4ecd08c4e4d141a38b9e7942accb3212/org.eclipse.jgit/src/org/eclipse/jgit/internal/storage/pack/BinaryDelta.java
-apply uses int for decoding length values.
-
-Regards,
-Martin
+If we use --no-fold or --oneline instead, we don't promise too much
+from this option, so users cannot say that they expect it to work for
+them in all cases.
