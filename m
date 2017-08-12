@@ -6,32 +6,32 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 95C831F667
-	for <e@80x24.org>; Sat, 12 Aug 2017 08:47:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C3A5F1F667
+	for <e@80x24.org>; Sat, 12 Aug 2017 08:47:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751567AbdHLIrc (ORCPT <rfc822;e@80x24.org>);
-        Sat, 12 Aug 2017 04:47:32 -0400
-Received: from vie01a-dmta-pe06-1.mx.upcmail.net ([84.116.36.14]:33575 "EHLO
+        id S1751807AbdHLIrg (ORCPT <rfc822;e@80x24.org>);
+        Sat, 12 Aug 2017 04:47:36 -0400
+Received: from vie01a-dmta-pe07-1.mx.upcmail.net ([84.116.36.17]:58242 "EHLO
         vie01a-dmta-pe05-1.mx.upcmail.net" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1751016AbdHLIra (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 12 Aug 2017 04:47:30 -0400
+        by vger.kernel.org with ESMTP id S1751016AbdHLIrd (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 12 Aug 2017 04:47:33 -0400
 Received: from [172.31.216.44] (helo=vie01a-pemc-psmtp-pe02)
-        by vie01a-dmta-pe06.mx.upcmail.net with esmtp (Exim 4.88)
+        by vie01a-dmta-pe07.mx.upcmail.net with esmtp (Exim 4.88)
         (envelope-from <martin.koegler@chello.at>)
-        id 1dgS4t-0004cn-Qy
-        for git@vger.kernel.org; Sat, 12 Aug 2017 10:47:27 +0200
+        id 1dgS4x-0001vZ-HF
+        for git@vger.kernel.org; Sat, 12 Aug 2017 10:47:31 +0200
 Received: from master.zuhause ([80.108.242.240])
         by vie01a-pemc-psmtp-pe02 with SMTP @ mailcloud.upcmail.net
-        id w8nR1v01q5BuuEg018nSwu; Sat, 12 Aug 2017 10:47:26 +0200
+        id w8nU1v00Y5BuuEg018nVyL; Sat, 12 Aug 2017 10:47:29 +0200
 X-SourceIP: 80.108.242.240
 Received: by master.zuhause (Postfix, from userid 1006)
-        id 9261B45D4514; Sat, 12 Aug 2017 10:47:25 +0200 (CEST)
+        id 5F25C45D4513; Sat, 12 Aug 2017 10:47:28 +0200 (CEST)
 From:   Martin Koegler <martin.koegler@chello.at>
 To:     git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de
 Cc:     Martin Koegler <martin.koegler@chello.at>
-Subject: [PATCH 3/9] Convert unpack-objects to size_t
-Date:   Sat, 12 Aug 2017 10:47:17 +0200
-Message-Id: <1502527643-21944-3-git-send-email-martin@mail.zuhause>
+Subject: [PATCH 8/9] Convert tree-walk to size_t
+Date:   Sat, 12 Aug 2017 10:47:22 +0200
+Message-Id: <1502527643-21944-8-git-send-email-martin@mail.zuhause>
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <1502527643-21944-1-git-send-email-martin@mail.zuhause>
 References: <1502527643-21944-1-git-send-email-martin@mail.zuhause>
@@ -44,103 +44,104 @@ From: Martin Koegler <martin.koegler@chello.at>
 
 Signed-off-by: Martin Koegler <martin.koegler@chello.at>
 ---
- builtin/unpack-objects.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ tree-walk.c | 17 +++++++++--------
+ tree-walk.h |  4 ++--
+ tree.h      |  2 +-
+ 3 files changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-index 001dd4b..0d8b6b3 100644
---- a/builtin/unpack-objects.c
-+++ b/builtin/unpack-objects.c
-@@ -31,7 +31,7 @@ static struct fsck_options fsck_options = FSCK_OPTIONS_STRICT;
-  */
- struct obj_buffer {
- 	char *buffer;
+diff --git a/tree-walk.c b/tree-walk.c
+index 7c9f9e3..a7d8b2a 100644
+--- a/tree-walk.c
++++ b/tree-walk.c
+@@ -22,10 +22,11 @@ static const char *get_mode(const char *str, unsigned int *modep)
+ 	return str;
+ }
+ 
+-static int decode_tree_entry(struct tree_desc *desc, const char *buf, unsigned long size, struct strbuf *err)
++static int decode_tree_entry(struct tree_desc *desc, const char *buf, size_t size, struct strbuf *err)
+ {
+ 	const char *path;
+-	unsigned int mode, len;
++	unsigned int mode;
++	size_t len;
+ 
+ 	if (size < 23 || buf[size - 21]) {
+ 		strbuf_addstr(err, _("too-short tree object"));
+@@ -51,7 +52,7 @@ static int decode_tree_entry(struct tree_desc *desc, const char *buf, unsigned l
+ 	return 0;
+ }
+ 
+-static int init_tree_desc_internal(struct tree_desc *desc, const void *buffer, unsigned long size, struct strbuf *err)
++static int init_tree_desc_internal(struct tree_desc *desc, const void *buffer, size_t size, struct strbuf *err)
+ {
+ 	desc->buffer = buffer;
+ 	desc->size = size;
+@@ -60,7 +61,7 @@ static int init_tree_desc_internal(struct tree_desc *desc, const void *buffer, u
+ 	return 0;
+ }
+ 
+-void init_tree_desc(struct tree_desc *desc, const void *buffer, unsigned long size)
++void init_tree_desc(struct tree_desc *desc, const void *buffer, size_t size)
+ {
+ 	struct strbuf err = STRBUF_INIT;
+ 	if (init_tree_desc_internal(desc, buffer, size, &err))
+@@ -68,7 +69,7 @@ void init_tree_desc(struct tree_desc *desc, const void *buffer, unsigned long si
+ 	strbuf_release(&err);
+ }
+ 
+-int init_tree_desc_gently(struct tree_desc *desc, const void *buffer, unsigned long size)
++int init_tree_desc_gently(struct tree_desc *desc, const void *buffer, size_t size)
+ {
+ 	struct strbuf err = STRBUF_INIT;
+ 	int result = init_tree_desc_internal(desc, buffer, size, &err);
+@@ -106,8 +107,8 @@ static int update_tree_entry_internal(struct tree_desc *desc, struct strbuf *err
+ {
+ 	const void *buf = desc->buffer;
+ 	const unsigned char *end = desc->entry.oid->hash + 20;
+-	unsigned long size = desc->size;
+-	unsigned long len = end - (const unsigned char *)buf;
++	size_t size = desc->size;
++	size_t len = end - (const unsigned char *)buf;
+ 
+ 	if (size < len)
+ 		die(_("too-short tree file"));
+@@ -487,7 +488,7 @@ int traverse_trees(int n, struct tree_desc *t, struct traverse_info *info)
+ 
+ struct dir_state {
+ 	void *tree;
 -	unsigned long size;
 +	size_t size;
+ 	unsigned char sha1[20];
  };
  
- static struct decoration obj_decorate;
-@@ -41,7 +41,7 @@ static struct obj_buffer *lookup_object_buffer(struct object *base)
- 	return lookup_decoration(&obj_decorate, base);
- }
+diff --git a/tree-walk.h b/tree-walk.h
+index 68bb78b..9160cc2 100644
+--- a/tree-walk.h
++++ b/tree-walk.h
+@@ -32,8 +32,8 @@ static inline int tree_entry_len(const struct name_entry *ne)
  
--static void add_object_buffer(struct object *object, char *buffer, unsigned long size)
-+static void add_object_buffer(struct object *object, char *buffer, size_t size)
- {
- 	struct obj_buffer *obj;
- 	obj = xcalloc(1, sizeof(struct obj_buffer));
-@@ -93,7 +93,7 @@ static void use(int bytes)
- 		die(_("pack exceeds maximum allowed size"));
- }
- 
--static void *get_data(unsigned long size)
-+static void *get_data(size_t size)
- {
- 	git_zstream stream;
- 	void *buf = xmallocz(size);
-@@ -130,7 +130,7 @@ struct delta_info {
- 	struct object_id base_oid;
- 	unsigned nr;
- 	off_t base_offset;
--	unsigned long size;
-+	size_t size;
- 	void *delta;
- 	struct delta_info *next;
- };
-@@ -139,7 +139,7 @@ static struct delta_info *delta_list;
- 
- static void add_delta_to_list(unsigned nr, const struct object_id *base_oid,
- 			      off_t base_offset,
--			      void *delta, unsigned long size)
-+			      void *delta, size_t size)
- {
- 	struct delta_info *info = xmalloc(sizeof(*info));
- 
-@@ -226,7 +226,7 @@ static void write_rest(void)
- }
- 
- static void added_object(unsigned nr, enum object_type type,
--			 void *data, unsigned long size);
-+			 void *data, size_t size);
+ void update_tree_entry(struct tree_desc *);
+ int update_tree_entry_gently(struct tree_desc *);
+-void init_tree_desc(struct tree_desc *desc, const void *buf, unsigned long size);
+-int init_tree_desc_gently(struct tree_desc *desc, const void *buf, unsigned long size);
++void init_tree_desc(struct tree_desc *desc, const void *buf, size_t size);
++int init_tree_desc_gently(struct tree_desc *desc, const void *buf, size_t size);
  
  /*
-  * Write out nr-th object from the list, now we know the contents
-@@ -234,7 +234,7 @@ static void added_object(unsigned nr, enum object_type type,
-  * to be checked at the end.
-  */
- static void write_object(unsigned nr, enum object_type type,
--			 void *buf, unsigned long size)
-+			 void *buf, size_t size)
- {
- 	if (!strict) {
- 		if (write_sha1_file(buf, size, typename(type), obj_list[nr].oid.hash) < 0)
-@@ -291,7 +291,7 @@ static void resolve_delta(unsigned nr, enum object_type type,
-  * resolve all the deltified objects that are based on it.
-  */
- static void added_object(unsigned nr, enum object_type type,
--			 void *data, unsigned long size)
-+			 void *data, size_t size)
- {
- 	struct delta_info **p = &delta_list;
- 	struct delta_info *info;
-@@ -310,7 +310,7 @@ static void added_object(unsigned nr, enum object_type type,
- 	}
- }
+  * Helper function that does both tree_entry_extract() and update_tree_entry()
+diff --git a/tree.h b/tree.h
+index 1dac7fc..69b9233 100644
+--- a/tree.h
++++ b/tree.h
+@@ -9,7 +9,7 @@ struct strbuf;
+ struct tree {
+ 	struct object object;
+ 	void *buffer;
+-	unsigned long size;
++	size_t size;
+ };
  
--static void unpack_non_delta_entry(enum object_type type, unsigned long size,
-+static void unpack_non_delta_entry(enum object_type type, size_t size,
- 				   unsigned nr)
- {
- 	void *buf = get_data(size);
-@@ -436,7 +436,7 @@ static void unpack_one(unsigned nr)
- {
- 	unsigned shift;
- 	unsigned char *pack;
--	unsigned long size, c;
-+	size_t size, c;
- 	enum object_type type;
- 
- 	obj_list[nr].offset = consumed_bytes;
+ struct tree *lookup_tree(const struct object_id *oid);
 -- 
 2.1.4
 
