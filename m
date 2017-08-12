@@ -3,102 +3,260 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BEABD208B8
-	for <e@80x24.org>; Sat, 12 Aug 2017 14:59:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1FDE3208B8
+	for <e@80x24.org>; Sat, 12 Aug 2017 15:55:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750973AbdHLO7d (ORCPT <rfc822;e@80x24.org>);
-        Sat, 12 Aug 2017 10:59:33 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:51304 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750774AbdHLO7c (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 12 Aug 2017 10:59:32 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 3D25A280AD;
-        Sat, 12 Aug 2017 14:59:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1502549972;
-        bh=RbuBQY0hviJAWBlMz7wbhkTH7tr/UG8qbptr3GI9Qr4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=BQwBWrliKYY8GHhUnH8zUq69ikAHeHfXO0CxSe/WM+njN49tkZca8iPV9gGBGAlZn
-         VRuTUhdhJHDoKrnOpfJkdIm9xvrojI4LKr43T3Gv05VXF99DZ9RtrlvGEK2sL2nRAm
-         c1qXi0NbissySvRtpXH6j/wRXE/JY/XsvGn5zkb4PypLJn2EAdolt21eDcnILOnwSj
-         4tCORQDO+8w5tDx63G7OQMTKNwK8kM7nEe6+mbVpxe0wQXzSLAYtkCgJ076aD7XGxb
-         X+cLOadz1bzEVlA4yeXstWG6Kono4Vqjhq7rCHWJMYGncmPWKus1q/8lhWWfdOSCi9
-         YWd6fjkymIWS1nPaxHZnS+I0ypTAgP73PkiatA6P/5PQuRYKW+9PPFFJzfsKO+2xC5
-         G5Ts5LM70SGFaKe4JpUB0PJTccjn7RdLCzKe74efKKdKk5hWjLAwT+0/KuKaU1D/KN
-         YD1vOjY0z1VQiexK5djzuyW6LRNOTe7QpFyE5SjHHSTkppiSurq
-Date:   Sat, 12 Aug 2017 14:59:28 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v2] tree-walk: convert fill_tree_descriptor() to object_id
-Message-ID: <20170812145928.jadxm3digocyejzg@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Johannes Sixt <j6t@kdbg.org>
-References: <d1e4b270-4f8b-85e4-b6fd-09657720bed2@web.de>
- <9534aa87-def3-5105-652d-f136c72902c2@web.de>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="nwi7kq6mby3xzdge"
-Content-Disposition: inline
-In-Reply-To: <9534aa87-def3-5105-652d-f136c72902c2@web.de>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.11.0-2-amd64)
-User-Agent: NeoMutt/20170609 (1.8.3)
+        id S1750995AbdHLPzr (ORCPT <rfc822;e@80x24.org>);
+        Sat, 12 Aug 2017 11:55:47 -0400
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:36542 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750851AbdHLPzq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 Aug 2017 11:55:46 -0400
+Received: from lindisfarne.localdomain ([92.22.15.146])
+        by smtp.talktalk.net with SMTP
+        id gYlCdjpunlmqOgYlKdRq5w; Sat, 12 Aug 2017 16:55:44 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
+        t=1502553344; bh=vi/o3WrqpqB19scnbIruUdpo8HnSvXd8IqVYOnqK+G0=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
+        b=X1EpVUsGY7ZHfpavIi6jpOGaxaUoxVR2VlmdcvrC3okAczp8frIM0m51pBrmYSER3
+         p7gLfbCospVwWgzsSNMs1hWOcUAUJT4Mawn8zyZHw5pk6ktUl1m172NxPdY+xEnDfQ
+         QJihh/GRh5DsUwb8q/wjQd0gulhgHC6DiBlvdPQc=
+X-Originating-IP: [92.22.15.146]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=H+Sr+6Qi c=1 sm=1 tr=0 a=PRKyDR6jJsLBrgZYJ8A23w==:117
+ a=PRKyDR6jJsLBrgZYJ8A23w==:17 a=evINK-nbAAAA:8 a=ybZZDoGAAAAA:8
+ a=A1X0JdhQAAAA:8 a=4lHDZAM4FGC0cBypDCoA:9 a=k50f4ZuFHWMs3ao6:21
+ a=7IjeWR1j6f2_eYhS:21 a=cssNWy7hh4kA:10 a=RfR_gqz1fSpA9VikTjo0:22
+ a=0RhZnL1DYvcuLYC8JZ5M:22 a=Df3jFdWbhGDLdZNm0fyq:22
+From:   Phillip Wood <phillip.wood@talktalk.net>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH v3] am: fix signoff when other trailers are present
+Date:   Sat, 12 Aug 2017 16:55:30 +0100
+Message-Id: <20170812155530.22434-1-phillip.wood@talktalk.net>
+X-Mailer: git-send-email 2.13.3
+In-Reply-To: <20170807102929.25151-1-phillip.wood@talktalk.net>
+References: <20170807102929.25151-1-phillip.wood@talktalk.net>
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+X-CMAE-Envelope: MS4wfMQkgzUK4NqpUFuZE3JY/Ol2XuPTrkQ6zO5+zK7xzkeD+AMFVIO5CWaUlfdOL6JOlqiOc9XPy/NNLegFZeLXsC7n+HfojE6rVc8fnmkpG2XNR/XHl7jp
+ rT1QWb+KCyDPRb9n38BVB64X8o/I/QKRZEHoGA2ivqWOPHlgLiQujUJBMyjpaVrtI60YMbnJEwFa247ZWVzXYp1YfdaSl675cr7E0ntaXGyvGG5oi85J/mEm
+ 9L9lTQARF1sfxOG6ibzheacZsEeLMI32qRXcFIu1CFtJ4fDgvVVmPmB1LTA+VL/ZdrhVjiJnFbC9EBOJNLdlXWpImI7SIotYura381/vIBc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
---nwi7kq6mby3xzdge
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+If there was no 'Signed-off-by:' trailer but another trailer such as
+'Reported-by:' then 'git am --signoff' would add a blank line between
+the existing trailers and the added 'Signed-off-by:' line. e.g.
 
-On Sat, Aug 12, 2017 at 10:32:59AM +0200, Ren=C3=A9 Scharfe wrote:
-> All callers of fill_tree_descriptor() have been converted to object_id
-> already, so convert that function as well.  As a nice side-effect we get
-> rid of NULL checks in tree-diff.c, as fill_tree_descriptor() already
-> does them for us.
->=20
-> Helped-by: Johannes Sixt <j6t@kdbg.org>
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+    Rebase accepts '--rerere-autoupdate' as an option but only honors
+    it if '-m' is also given. Fix it for a non-interactive rebase by
+    passing on the option to 'git am' and 'git cherry-pick'.
 
-This looks good to me.  I had written a very similar patch for a later
-series, and they're pretty much identical.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
+    Reported-by: Junio C Hamano <gitster@pobox.com>
 
---nwi7kq6mby3xzdge
-Content-Type: application/pgp-signature; name="signature.asc"
+    Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.22 (GNU/Linux)
+Fix by using the code provided for this purpose in sequencer.c.
+Change the tests so that they check the formatting of the
+'Signed-off-by:' lines rather than just grepping for them.
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlmPF9AACgkQv1NdgR9S
-9ovOnA/6A6CYPFDxCVGo9eQaDSNlS38TxRBwPLMVC8LLvHzqT9DsTTV0b3rzUlB1
-ILgBIPjKDRdzJi2F+O0N96KpxqwKDUaVXLhhOsmuQDdOaQtLDASwXt+Trsxlyni9
-8L2SFD9KngwD4lkcZTDKQuOgKh04HujthjJxQrBXUSzc+t+EKdFhwjU46RA69lhL
-gWf2grzyQ/H0X8zlwgUPpwl8ZlFU4s72kbi/M9OefMgSxS46cGd+S5gMRYo+DxN+
-jXsBuK/TgavHFcx7BTSe72XXlHSdzaqAQqnjKNVTM7Qz670FXJKFI4YALzcUQA4f
-LQS5cDGFH9qsP/HbntjxERE6m+KqJJP/+Qe8kaAPGWYY8Bw5foyOysXJ/fKHEwY8
-dwYecETlPtW6NWssLz/wFUE5cEOWvNNYGHZX0WLXpEPmjzfRiFeLhnGcSjYg0eth
-YXusj3Ce3P4wqLocyQFCj4r6t030mmhYfKqfh5TY63iTRR6YwRTe7OFy+5GTn001
-6a+shLnYelBjy4KHNl9HE/uyaOw4gYTaJQVab8ImvJ5LBQs577HMVsaSsZdzzUpv
-JpG5t4LGvWGBx25eZa5BVK6XRABTi3qqOOMqnaM1ZZJpDOlieKrmrDvCNiwspeJY
-Pd9SnNoMV1naF5HLFV3cdBLgr8CzrgswGLEkd7OcYDlgzjwoqnI=
-=ghXu
------END PGP SIGNATURE-----
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+I've changed the test names and cleaned up the printf in the tests as
+Junio suggested. Otherwise this is unchanged from the previous version.
 
---nwi7kq6mby3xzdge--
+ builtin/am.c  | 26 +----------------
+ t/t4150-am.sh | 89 +++++++++++++++++++++++++++++++++++++++++++++--------------
+ 2 files changed, 69 insertions(+), 46 deletions(-)
+
+diff --git a/builtin/am.c b/builtin/am.c
+index c973bd96dcb5d630d56e935733bfa4530ccd2872..3aaef59676452fd2e7c6d4a375dc7c95558744c6 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1181,34 +1181,10 @@ static void NORETURN die_user_resolve(const struct am_state *state)
+  */
+ static void am_append_signoff(struct am_state *state)
+ {
+-	char *cp;
+-	struct strbuf mine = STRBUF_INIT;
+ 	struct strbuf sb = STRBUF_INIT;
+ 
+ 	strbuf_attach(&sb, state->msg, state->msg_len, state->msg_len);
+-
+-	/* our sign-off */
+-	strbuf_addf(&mine, "\n%s%s\n",
+-		    sign_off_header,
+-		    fmt_name(getenv("GIT_COMMITTER_NAME"),
+-			     getenv("GIT_COMMITTER_EMAIL")));
+-
+-	/* Does sb end with it already? */
+-	if (mine.len < sb.len &&
+-	    !strcmp(mine.buf, sb.buf + sb.len - mine.len))
+-		goto exit; /* no need to duplicate */
+-
+-	/* Does it have any Signed-off-by: in the text */
+-	for (cp = sb.buf;
+-	     cp && *cp && (cp = strstr(cp, sign_off_header)) != NULL;
+-	     cp = strchr(cp, '\n')) {
+-		if (sb.buf == cp || cp[-1] == '\n')
+-			break;
+-	}
+-
+-	strbuf_addstr(&sb, mine.buf + !!cp);
+-exit:
+-	strbuf_release(&mine);
++	append_signoff(&sb, 0, 0);
+ 	state->msg = strbuf_detach(&sb, &state->msg_len);
+ }
+ 
+diff --git a/t/t4150-am.sh b/t/t4150-am.sh
+index 44807e218d7016f58bd41b89af71104a37f31a8b..ae23adfb7548a4a28aaa52e689094f727f0f4cf2 100755
+--- a/t/t4150-am.sh
++++ b/t/t4150-am.sh
+@@ -40,6 +40,8 @@ test_expect_success 'setup: messages' '
+ 	dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio
+ 	dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te
+ 	feugait nulla facilisi.
++
++	Reported-by: A N Other <a.n.other@example.com>
+ 	EOF
+ 
+ 	cat >failmail <<-\EOF &&
+@@ -93,7 +95,7 @@ test_expect_success setup '
+ 	echo world >>file &&
+ 	git add file &&
+ 	test_tick &&
+-	git commit -s -F msg &&
++	git commit -F msg &&
+ 	git tag second &&
+ 
+ 	git format-patch --stdout first >patch1 &&
+@@ -124,8 +126,6 @@ test_expect_success setup '
+ 		echo "Date: $GIT_AUTHOR_DATE" &&
+ 		echo &&
+ 		sed -e "1,2d" msg &&
+-		echo &&
+-		echo "Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>" &&
+ 		echo "---" &&
+ 		git diff-tree --no-commit-id --stat -p second
+ 	} >patch1-stgit.eml &&
+@@ -144,8 +144,6 @@ test_expect_success setup '
+ 		echo "# Parent  $_z40" &&
+ 		cat msg &&
+ 		echo &&
+-		echo "Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>" &&
+-		echo &&
+ 		git diff-tree --no-commit-id -p second
+ 	} >patch1-hg.eml &&
+ 
+@@ -470,13 +468,15 @@ test_expect_success 'am --signoff adds Signed-off-by: line' '
+ 	git reset --hard &&
+ 	git checkout -b master2 first &&
+ 	git am --signoff <patch2 &&
+-	printf "%s\n" "$signoff" >expected &&
+-	echo "Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>" >>expected &&
+-	git cat-file commit HEAD^ | grep "Signed-off-by:" >actual &&
+-	test_cmp expected actual &&
+-	echo "Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>" >expected &&
+-	git cat-file commit HEAD | grep "Signed-off-by:" >actual &&
+-	test_cmp expected actual
++	{
++		printf "third\n\nSigned-off-by: %s <%s>\n\n" \
++			"$GIT_COMMITTER_NAME" "$GIT_COMMITTER_EMAIL" &&
++		cat msg &&
++		printf "Signed-off-by: %s <%s>\n\n" \
++			"$GIT_COMMITTER_NAME" "$GIT_COMMITTER_EMAIL"
++	} >expected-log &&
++	git log --pretty=%B -2 HEAD >actual &&
++	test_cmp expected-log actual
+ '
+ 
+ test_expect_success 'am stays in branch' '
+@@ -485,18 +485,65 @@ test_expect_success 'am stays in branch' '
+ 	test_cmp expected actual
+ '
+ 
+-test_expect_success 'am --signoff does not add Signed-off-by: line if already there' '
+-	git format-patch --stdout HEAD^ >patch3 &&
+-	sed -e "/^Subject/ s,\[PATCH,Re: Re: Re: & 1/5 v2] [foo," patch3 >patch4 &&
+-	rm -fr .git/rebase-apply &&
+-	git reset --hard &&
+-	git checkout HEAD^ &&
+-	git am --signoff patch4 &&
+-	git cat-file commit HEAD >actual &&
+-	test $(grep -c "^Signed-off-by:" actual) -eq 1
++test_expect_success 'am --signoff does not add Signed-off-by: line if it matches the last trailer' '
++	git format-patch --stdout first >patch3 &&
++	git reset --hard first &&
++	git am --signoff <patch3 &&
++	git log --pretty=%B -2 HEAD >actual &&
++	test_cmp expected-log actual
++'
++
++test_expect_success 'am --signoff adds Signed-off-by: if it does not match the last trailer' '
++	NAME="A N Other" &&
++	EMAIL="a.n.other@example.com" &&
++	{
++		printf "third\n\n" &&
++		printf "Signed-off-by: %s <%s>\n" \
++			"$GIT_COMMITTER_NAME" "$GIT_COMMITTER_EMAIL" \
++			"$NAME" "$EMAIL" &&
++		printf "\n" &&
++		cat msg &&
++		printf "Signed-off-by: %s <%s>\n" \
++			"$GIT_COMMITTER_NAME" "$GIT_COMMITTER_EMAIL" \
++			"$NAME" "$EMAIL" &&
++		printf "\n"
++	} >expected-log &&
++	git reset --hard first &&
++	GIT_COMMITTER_NAME="$NAME" GIT_COMMITTER_EMAIL="$EMAIL" \
++		git am --signoff <patch3 &&
++	git log --pretty=%B -2 HEAD >actual &&
++	test_cmp expected-log actual
++'
++
++test_expect_success 'am --signoff duplicates Signed-off-by: if it does not match the last trailer' '
++	NAME="A N Other" &&
++	EMAIL="a.n.other@example.com" &&
++	{
++		printf "third\n\n" &&
++		printf "Signed-off-by: %s <%s>\n" \
++			"$GIT_COMMITTER_NAME" "$GIT_COMMITTER_EMAIL" \
++			"$NAME" "$EMAIL" \
++			"$GIT_COMMITTER_NAME" "$GIT_COMMITTER_EMAIL" &&
++		printf "\n" &&
++		cat msg &&
++		printf "Signed-off-by: %s <%s>\n" \
++			"$GIT_COMMITTER_NAME" "$GIT_COMMITTER_EMAIL" \
++			"$NAME" "$EMAIL" \
++			"$GIT_COMMITTER_NAME" "$GIT_COMMITTER_EMAIL"
++		printf "\n"
++	} >expected-log &&
++	git format-patch --stdout first >patch3 &&
++	git reset --hard first &&
++	git am --signoff <patch3 &&
++	git log --pretty=%B -2 HEAD >actual &&
++	test_cmp expected-log actual
+ '
+ 
+ test_expect_success 'am without --keep removes Re: and [PATCH] stuff' '
++	git format-patch --stdout HEAD^ >tmp &&
++	sed -e "/^Subject/ s,\[PATCH,Re: Re: Re: & 1/5 v2] [foo," tmp >patch4 &&
++	git reset --hard HEAD^ &&
++	git am <patch4 &&
+ 	git rev-parse HEAD >expected &&
+ 	git rev-parse master2 >actual &&
+ 	test_cmp expected actual
+-- 
+2.13.3
+
