@@ -2,59 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 815A01F667
-	for <e@80x24.org>; Sat, 12 Aug 2017 09:59:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 69260208C4
+	for <e@80x24.org>; Sat, 12 Aug 2017 10:02:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750864AbdHLJ7a (ORCPT <rfc822;e@80x24.org>);
-        Sat, 12 Aug 2017 05:59:30 -0400
-Received: from mout.web.de ([212.227.15.4]:61454 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750844AbdHLJ73 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Aug 2017 05:59:29 -0400
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M40zy-1dO7Ko1Du6-00rW3v; Sat, 12
- Aug 2017 11:59:16 +0200
-Date:   Sat, 12 Aug 2017 11:59:15 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Martin Koegler <martin.koegler@chello.at>
-Cc:     git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH 1/9] Convert pack-objects to size_t
-Message-ID: <20170812095915.GA5768@tor.lan>
-References: <1502527643-21944-1-git-send-email-martin@mail.zuhause>
+        id S1750803AbdHLKCy (ORCPT <rfc822;e@80x24.org>);
+        Sat, 12 Aug 2017 06:02:54 -0400
+Received: from zucker.schokokeks.org ([178.63.68.96]:52927 "EHLO
+        zucker.schokokeks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750778AbdHLKCx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 Aug 2017 06:02:53 -0400
+Received: from localhost ([::1])
+  (AUTH: PLAIN simon@ruderich.org, TLS: TLSv1/SSLv3,256bits,ECDHE-RSA-AES256-GCM-SHA384)
+  by zucker.schokokeks.org with ESMTPSA; Sat, 12 Aug 2017 12:02:51 +0200
+  id 0000000000000012.00000000598ED24B.00001D97
+Date:   Sat, 12 Aug 2017 12:02:52 +0200
+From:   Simon Ruderich <simon@ruderich.org>
+To:     =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Yaroslav Halchenko <yoh@onerussian.com>
+Subject: Re: [PATCH] strbuf: clear errno before calling getdelim(3)
+Message-ID: <20170812100252.bhbgg5jjlom7dfl2@ruderich.org>
+References: <20170809173928.h2ylvg5tp2p5inem@hopa.kiewit.dartmouth.edu>
+ <8e307474-d180-6d98-2c6b-062f2181bd14@web.de>
+ <xmqqzib72qvs.fsf@gitster.mtv.corp.google.com>
+ <6d7b0d30-48ea-f79f-78cd-088557ea06ac@web.de>
+ <20170810200502.rutab4z3ft7gcpjz@sigill.intra.peff.net>
+ <cd49ce13-db87-89c1-77e7-998fdb9442c3@web.de>
+ <20170811075059.nn6lru7uy6s6vpza@ruderich.org>
+ <e8e7f028-6e23-368c-484f-9f069bae5dc8@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1502527643-21944-1-git-send-email-martin@mail.zuhause>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Provags-ID: V03:K0:TJv5A5De75Lno2dnrCm2p+I4GwOL5ojeURfYPwsIq+fs1z41FN3
- 6U/axOjYSvhNtDk0bJWYLnJoI+Uh7ZZK5DRkWLAlhWU7JOBhBCemFxTDZkwPD8HtQOSXXKU
- Gsb+hOI1O2Ipu4jdQ/tQUcl2TG/Kf4RTUJvj3u3rvYdUBbeqCjuwUaDxQnDhviNwuMVhyqg
- k5JbyNT2NutqyOpRl9iNg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:7TuTsKlrdKA=:RiXFMM43LLczQUuy37bymd
- LtKhM1amOlBnVCfq1sC0MNHwQyTv5uBRekPHQDKyxJf90p/G14tUIuUxz0FtBowwmOmR60Dt9
- lkwjH7YKFbtsWhdUDiaeE8JTV068Ar7G86S4KdnXv4V7N1BsZz8TNXHctX2+cXVeQVckTSa94
- YkeGEjUXTtdJL31ydkdUzYhqLFqpixX2YGFM4joyZMjKkHBpRIU9+I22E6xI+rzmdB9uXMUbx
- 9XMBiLmHYvF1UF7+sgkS5Wv6cYybb931iKNfMs5wXp+ZF1+PDXcYKT3yhCos5rkoSbSQv/rLf
- sDpwA5CyopNB70FeaDEuD6HD1KYmRF5IkdeFhdsRtYoZogTOUht48SDpzu4Clw0/oOqGYV/9P
- RnfQhTPgohYthZ/PAEQOyQShNtlq6U4v33USlpl6JebkxZevdz64Dz/2dl3wxUOfKYXV9XCwH
- hQsbyxwBfkJU5a7WWlPzBbZZ2zSMbw+C+ILilOWAbjPKHNb7QwTKn6Q+K7P2X703n5xN7tnRi
- wXopPuueW+63snL7LUIHP6zl1bTjNKiIGlKCTEJ0J1gqxdkn916CvGbH6o42fsOl7CS84bIRN
- +fyn2a+MjLjpD52QjRVA4azw/n5Sg1AmQ1DafBiE8JMfAbZPltr4EDcjGIsyHMhejiwGXOQq2
- amCxkkuL4s160M1ezsnSnXR6WXTdA2QtBcJYsAcQFafwM0oFDzL9IIKI3RabwhSQvoJqk4omG
- kTsMaJwGkKZcDIs4i1zBox1ldaNFvT1lgbef/ZkA8eotz5WCsDLbkbLuE5CTbRUWiOSfEU48n
- OxCWhy3SK+r25LTQ8ZbccGszX2mmg==
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <e8e7f028-6e23-368c-484f-9f069bae5dc8@web.de>
+User-Agent: NeoMutt/20170609 (1.8.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for working on this - unfortunatly the patch does not apply on
-git.git/master.
+On Fri, Aug 11, 2017 at 10:52:51AM +0200, René Scharfe wrote:
+> Am 11.08.2017 um 09:50 schrieb Simon Ruderich:
+>> On Thu, Aug 10, 2017 at 10:56:40PM +0200, René Scharfe wrote:
+>>> getdelim(3) returns -1 at the end of the file and if it encounters an
+>>> error, but sets errno only in the latter case.  Set errno to zero before
+>>> calling it to avoid misdiagnosing an out-of-memory condition due to a
+>>> left-over value from some other function call.
+>>
+>> getdelim(3p) doesn't explicitly forbid changing the errno on EOF:
+>>
+>>      If no characters were read, and the end-of-file indicator for
+>>      the stream is set, or if the stream is at end-of-file, the
+>>      end-of-file indicator for the stream shall be set and the
+>>      function shall return −1. If an error occurs, the error
+>>      indicator for the stream shall be set, and the function shall
+>>      return −1 and set errno to indicate the error.
+>
+> [snip]
+>
+>> I don't think that it matters in practice, but the "most" correct
+>> way to handle this would be to check if feof(3) is true to check
+>> for the non-errno case.
+>
+> Only if errors at EOF are guaranteed to be impossible.  Imagine
+> getdelim being able to read to the end and then failing to get memory
+> for the final NUL.  Other scenarios may be possible.
 
-Which baseline did you use ?
+Good point. Instead of feof(3), checking ferror(3) should handle
+that properly. It's guaranteed to be set by getdelim for any
+error.
 
+For example like this (as replacement for the original patch):
+
+diff --git i/strbuf.c w/strbuf.c
+index 89d22e3b0..831be21ce 100644
+--- i/strbuf.c
++++ w/strbuf.c
+@@ -495,7 +495,7 @@ int strbuf_getwholeline(struct strbuf *sb, FILE *fp, int term)
+ 	 * memory and retry, but that's unlikely to help for a malloc small
+ 	 * enough to hold a single line of input, anyway.
+ 	 */
+-	if (errno == ENOMEM)
++	if (ferror(fp) && errno == ENOMEM)
+ 		die("Out of memory, getdelim failed");
+ 
+ 	/*
+
+An edge case is if the error indicator was already set before
+calling getdelim() and the errno was already set to ENOMEM. This
+could be fixed by checking ferror() before calling getdelim, but
+I'm not sure if that's necessary:
+
+diff --git i/strbuf.c w/strbuf.c
+index 89d22e3b0..4d394bb91 100644
+--- i/strbuf.c
++++ w/strbuf.c
+@@ -468,7 +468,7 @@ int strbuf_getwholeline(struct strbuf *sb, FILE *fp, int term)
+ {
+ 	ssize_t r;
+ 
+-	if (feof(fp))
++	if (feof(fp) || ferror(fp))
+ 		return EOF;
+ 
+ 	strbuf_reset(sb);
+
+Regards
+Simon
+-- 
++ Privatsphäre ist notwendig
++ Ich verwende GnuPG http://gnupg.org
++ Öffentlicher Schlüssel: 0x92FEFDB7E44C32F9
