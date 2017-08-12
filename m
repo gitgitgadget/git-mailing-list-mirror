@@ -2,90 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 335AC208B8
-	for <e@80x24.org>; Sat, 12 Aug 2017 13:27:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 44B1D208B8
+	for <e@80x24.org>; Sat, 12 Aug 2017 13:29:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750948AbdHLN1X (ORCPT <rfc822;e@80x24.org>);
-        Sat, 12 Aug 2017 09:27:23 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:34766 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750864AbdHLN1W (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Aug 2017 09:27:22 -0400
-Received: by mail-pf0-f196.google.com with SMTP id t86so5843062pfe.1
-        for <git@vger.kernel.org>; Sat, 12 Aug 2017 06:27:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=2Npa8c7pU1LVJkZbdQ18BRZDh8T3n+HoHf+NdMIGhJM=;
-        b=ocxuCy7ytB/sImEa/MejuNvitknUIDDTmdfKRAbvHvILxXhds8jAX4wLwURLN74EpJ
-         MlUmVtTgcFJ2M/xgfTFO2BhXi3Q/8/7a2gNUiaJq6368NqaTK7fw/mPtU/Z758P7ZtlW
-         rr16Zs2T54KOaxXeCQPzXRohPXf/uo3xQT+L+yahqlexF5HOV3BQ/GUWzOy5hUTco1Gc
-         JFeBvk/MW84Rg1d9V9ygRads+a4dsURPgPRYji/UhaMndHv5tq6NjNHgmUldhmgzaw1u
-         hu4KrzXIJ5nYzjn+C32E3StQVucXqS/oNJuc9Jx6Hr2+tZA1jR/dLw83/ATrT3ODS8Tx
-         YmZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=2Npa8c7pU1LVJkZbdQ18BRZDh8T3n+HoHf+NdMIGhJM=;
-        b=i820zh0SaM8+6WsZeLmdha6NERCZ2hAGWVDCwtUc1Uc8M86ZruacmzIKoST5Bxlmhe
-         NrCNLvNZYQNXNPJxLyLIn6Ry+lluLqm4r0wMQg6kNHawwfy23zkuLACigYilWAp1IkHO
-         djt7EMHuec69G3bpcD0GaoIevaFnRMnX+yHCpEX2vJr+l9U4LAS2qRxO3u5QbZ1Ey8cO
-         kplymU6R6yPNh11llkFiEojPvAuiT+MGjH+VOojqRW4HCLwmD5Y6mAVCOhkg+9+S+DBi
-         bpgpHeg692SPKhOgtVKAu+bg1yC3lqOvKleydgrbfODkWPFJkIH4iKDzyq/HjQnJdq0M
-         rIPw==
-X-Gm-Message-State: AHYfb5g9rYbKmZoQhSMRNypnFJWWVDS//fapNkXDKDDuGsLM94dk1Crm
-        MimlmmQxkqyW8kvtN+lqxtQ1nj6HFw==
-X-Received: by 10.98.220.134 with SMTP id c6mr19882454pfl.253.1502544442412;
- Sat, 12 Aug 2017 06:27:22 -0700 (PDT)
+        id S1750995AbdHLN32 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 12 Aug 2017 09:29:28 -0400
+Received: from forward101o.mail.yandex.net ([37.140.190.181]:42480 "EHLO
+        forward101o.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750972AbdHLN31 (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 12 Aug 2017 09:29:27 -0400
+X-Greylist: delayed 437 seconds by postgrey-1.27 at vger.kernel.org; Sat, 12 Aug 2017 09:29:27 EDT
+Received: from mxback1g.mail.yandex.net (mxback1g.mail.yandex.net [IPv6:2a02:6b8:0:1472:2741:0:8b7:162])
+        by forward101o.mail.yandex.net (Yandex) with ESMTP id E0FB113426D4
+        for <git@vger.kernel.org>; Sat, 12 Aug 2017 16:22:08 +0300 (MSK)
+Received: from web54o.yandex.ru (web54o.yandex.ru [95.108.205.234])
+        by mxback1g.mail.yandex.net (nwsmtp/Yandex) with ESMTP id GRNDQbNPmC-M8bS2ntr;
+        Sat, 12 Aug 2017 16:22:08 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1502544128;
+        bh=ANUZ5N9QKzzqqYFT89vi93D72vhO4e4J8x6y6a2oo/M=;
+        h=From:To:Subject:Message-Id:Date;
+        b=VVVyaUnAq9NB50vl4uk1AlmWLV6zsrv0tgCWPofd1mMnES7omSHJ/jfZMXrz4f/oG
+         +7I7qESHgRAN8O6LQMo/GSe2DMCMwgNf256lZRDzChEJMY40l9YP4ixxw7qLNiRsZO
+         GM7z6amYXhw5vYmp6O8gFzaPkiPiPKrij8w+4o6g=
+Authentication-Results: mxback1g.mail.yandex.net; dkim=pass header.i=@yandex.ru
+Received: by web54o.yandex.ru with HTTP;
+        Sat, 12 Aug 2017 16:22:08 +0300
+From:   KES <kes-kes@yandex.ru>
+Envelope-From: kes-kes@yandex.ua
+To:     git <git@vger.kernel.org>
+Subject: Error: Permition denied. git should not try to access root account if I work under common user
 MIME-Version: 1.0
-Received: by 10.100.162.37 with HTTP; Sat, 12 Aug 2017 06:27:21 -0700 (PDT)
-In-Reply-To: <1502527643-21944-5-git-send-email-martin@mail.zuhause>
-References: <1502527643-21944-1-git-send-email-martin@mail.zuhause> <1502527643-21944-5-git-send-email-martin@mail.zuhause>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sat, 12 Aug 2017 15:27:21 +0200
-Message-ID: <CAN0heSqu0evvo7dFPwWvgEthoafCVZmJKbRftBbHRhtN_du4HQ@mail.gmail.com>
-Subject: Re: [PATCH 5/9] Convert various things to size_t
-To:     Martin Koegler <martin.koegler@chello.at>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes.Schindelin@gmx.de
-Content-Type: text/plain; charset="UTF-8"
+Message-Id: <273951502544128@web54o.yandex.ru>
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
+Date:   Sat, 12 Aug 2017 16:22:08 +0300
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12 August 2017 at 10:47, Martin Koegler <martin.koegler@chello.at> wrote:
-> From: Martin Koegler <martin.koegler@chello.at>
->
-> ---
->  bisect.c                | 2 +-
->  blame.c                 | 2 +-
->  builtin/fmt-merge-msg.c | 2 +-
->  builtin/mktag.c         | 2 +-
->  dir.c                   | 4 ++--
->  dir.h                   | 2 +-
->  6 files changed, 7 insertions(+), 7 deletions(-)
->
-> diff --git a/bisect.c b/bisect.c
-> index 2549eaf..0580c82 100644
-> --- a/bisect.c
-> +++ b/bisect.c
-> @@ -131,7 +131,7 @@ static void show_list(const char *debug, int counted, int nr,
->                 struct commit *commit = p->item;
->                 unsigned flags = commit->object.flags;
->                 enum object_type type;
-> -               unsigned long size;
-> +               size_t size;
->                 char *buf = read_sha1_file(commit->object.sha1, &type, &size);
->                 const char *subject_start;
->                 int subject_len;
+Hi. 
 
-Would this need to be done in a patch where read_sha1_file is converted?
+When I use `git pull -v --rebase` command under user I got this error:
+
+POST git-upload-pack (947 bytes)
+POST git-upload-pack (452 bytes)
+remote: warning: unable to access '/root/.config/git/attributes': Permission denied
+remote: Counting objects: 4, done.
+remote: Compressing objects: 100% (4/4), done.
+remote: Total 4 (delta 3), reused 0 (delta 0)
+Unpacking objects: 100% (4/4), done.
+From https://xxxx/gitdev/main
+   b446c31..f275d62  master     -> origin/master
+ = [up to date]      buy_dev    -> origin/buy_dev
+Created autostash: 48d1246
+HEAD is now at 3ecd306 Do not guard by default
+Changes from b446c313d9a9caccfeb34ef2c521c4ac03c24c6e to f275d62585211806e8e0b2350bbf4f0f3025da79:
+ conf/app.staging.conf | 1 +
+ 1 file changed, 1 insertion(+)
+First, rewinding head to replay your work on top of it...
+Applying: BUGFIX: Do not fall if we are creating new database
+Applying: Do not pull data from server. Do not count all rows
+Applying: Do not guard by default
+Applied autostash.
+
+
+git should not try to access root account if I work under common user
