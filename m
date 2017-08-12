@@ -2,122 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1ABE1208B8
-	for <e@80x24.org>; Sat, 12 Aug 2017 14:07:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B923208B8
+	for <e@80x24.org>; Sat, 12 Aug 2017 14:56:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751205AbdHLOHw (ORCPT <rfc822;e@80x24.org>);
-        Sat, 12 Aug 2017 10:07:52 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:34961 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750896AbdHLOHv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Aug 2017 10:07:51 -0400
-Received: by mail-pg0-f65.google.com with SMTP id l64so5260265pge.2
-        for <git@vger.kernel.org>; Sat, 12 Aug 2017 07:07:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=gZ9/LaU5vR37SdVDCgle3bR+NE3UlCdHqyugV8YnrIA=;
-        b=IHZf5ZjssSOTOhiPIRKMnZQFi9JfPE3I60g1xeRItzhxaPhTSaqRwk+VQREBwfShp8
-         FZSEkKsULAOrULso+mFIY6mghiPL3OLEgLTaaHlTbeBZf/5yFM18BYcbAF3LOBj/2nvr
-         kC4IGLhi4wAyKRRuyISquS/BxJpySjfSMHDs8EljKTLWoo/3QKidWBqr7aPp6c19QQ7M
-         mGLt8Ht2kVSSicF4SW0PZVm0HnnnTIxOr9p8jbh4x1RgZCzhiI87uEihapiL0tIyfnxp
-         64aJYNpnThgC2Ms9IXXITsMkOlZ97kRDUZ3MFfiFpFEKl3Dc0SqIfmsh8WhKpD3hNxXJ
-         codw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=gZ9/LaU5vR37SdVDCgle3bR+NE3UlCdHqyugV8YnrIA=;
-        b=reiTb2ZUEKoEvsnqs8VWSHlXwsBAGY2s8Lh4iLHASrUYArbYdYRRmimelhDfNNbADV
-         Z4GDAtu2JrrMUrUwkq/+dT1dZFakXnfA3d+tiRhuzII2yPWY7ObjoIb59YUfvYiZ8sb5
-         Hio6nVnN9BcSdkmFaaSHiDB0bhIinFB5hwpxeUi0IBOL/C3D0iBdBsHHnOY7at2w4tBc
-         jr17TAK9Q9k3H//h7N9ak4NmI/1VGmfWyJD7F5v73m8XFHSiE+TrGRM5zO+oW/UeUqy7
-         ccvehQGRA+s2CMZQUeygVf64PYAkVvU6xpL+gqQM8o5oz+VKAgiuC/BILD6WOLj+SzDJ
-         2+JA==
-X-Gm-Message-State: AHYfb5h2RCDdNnPCss9sjklFgvtixheePUFvlBqOPVu2hiexbS5Qe2CR
-        sbexhCyve1Ai2hFz5QJsuqsb0HIGZA==
-X-Received: by 10.84.129.6 with SMTP id 6mr21825075plb.289.1502546870559; Sat,
- 12 Aug 2017 07:07:50 -0700 (PDT)
+        id S1751155AbdHLO4d (ORCPT <rfc822;e@80x24.org>);
+        Sat, 12 Aug 2017 10:56:33 -0400
+Received: from mout.web.de ([212.227.15.4]:61741 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750851AbdHLO4c (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 Aug 2017 10:56:32 -0400
+Received: from tor.lan ([195.198.252.176]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lvjoa-1dZ4dg3YdQ-017TQv; Sat, 12
+ Aug 2017 16:56:24 +0200
+From:   tboegi@web.de
+To:     git@vger.kernel.org, asottile@umich.edu
+Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH/RFC] convert: Add SAFE_CRLF_KEEP_CRLF
+Date:   Sat, 12 Aug 2017 16:56:23 +0200
+Message-Id: <20170812145623.31517-1-tboegi@web.de>
+X-Mailer: git-send-email 2.14.1.145.gb3622a4ee9
+In-Reply-To: <xmqq4ltpsn42.fsf@gitster.mtv.corp.google.com>
+References: <xmqq4ltpsn42.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.100.162.37 with HTTP; Sat, 12 Aug 2017 07:07:50 -0700 (PDT)
-In-Reply-To: <1502527643-21944-3-git-send-email-martin@mail.zuhause>
-References: <1502527643-21944-1-git-send-email-martin@mail.zuhause> <1502527643-21944-3-git-send-email-martin@mail.zuhause>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sat, 12 Aug 2017 16:07:50 +0200
-Message-ID: <CAN0heSpViT-Nz8OO7Bww3Fbm=mzA6wvm0EfgfRjsz+cVfvu3Yw@mail.gmail.com>
-Subject: Re: [PATCH 3/9] Convert unpack-objects to size_t
-To:     Martin Koegler <martin.koegler@chello.at>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes.Schindelin@gmx.de
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:YkkWj3kDvWv9hSxwCdYMobN8nW25+GxS1t5r9xJGWgIzbHK32gp
+ u6pKdemnExSPAd84q0bHaCKvlILkdofULmD3GlEMB+HTLhuG/XyVmQMfFDxga4ClEQtX+IU
+ XM+qefbsFgcISni/GIX8BctNzPdKH2NfgiD+KeNmhUgscf5AV1ajBY+s4XMpXq/edB0EAHm
+ sSUgZ77xvebldv9DNGmlw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:du9sIKRuwfc=:6yIWBV6cPBStd2ge7k2DWq
+ bd6zRDPMJJRlWLpmOkVXuRNn+UAv2nPu1RtHVv0guJEcbd4NBjzHgcDy2G7DdHMmzJocCBx1f
+ 1EnPRr/kzv/HY7W8oXgIUpoL/gXJoadHnqXPipcZKO+jGnZEOcXpIbtIQHPiULwXuqZ7Mc4wp
+ zVBR6X+zP3m2Nb1DdbzTy/c+yqCi/LIfOsLdW1DQ0eA/zIOCZt19vP302944mGtsuzVA/IWoO
+ g6MA1pl9wRtE/rRIc+HUCHfr+Zm51Z1/qTg6f4bi+gXUife1Tf5LsOEO2w/Sn3eaWHNp+5qZ4
+ JXXXNRuTS5vDORsdU7Ol3GXdazNLZQp5ataY60Z0G+MTaZTWgTr+gXxVK03I46jVzNMnkvAl+
+ iLmpNRUbwRlfky7YMk27+3QwFPifZwkfAY1lInNKd7Q3EZmJQ9Rg96D7jjiwbXfiIvubRw9pQ
+ tLsV7PPLs8j82otC4zoWsDmkI2VX2yjl0IL6jO2rX6gtbEWpsCLH2t6fwWwTrGHWPhGsGrT+g
+ bPAmI+ghGb0SdA0ty+HOjgG1XbEVIGUTd1bC5tm+ABcZxcBZ2zcpLaFzDmWbw/nvoQOsE4PlO
+ T5IZ1Bl3L6K7sA0QqKbXDKLiFASqhVD/ibTmboXbRpPPk7/KkyHns//l106oeZZnOtavmdaYT
+ Bi49MEOhI+zJ4+yOrzKzPIy+TZ1CHMSszz0cQ23N2UFQbOmAkbLdHKx+k8PD4BDPZcwoW4OVn
+ dAv0uLc7XuLpofvBi0oocs8llnpNSGY3fPLfpNARpT9JdlvbdmevWeAlSZqqn5QqkpzLhOPVS
+ x7R1XtpOhDYHmbxE4eCMBwwA7jgjkzG5ADFn+JCZJWzBSQmw30=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12 August 2017 at 10:47, Martin Koegler <martin.koegler@chello.at> wrote:
-> From: Martin Koegler <martin.koegler@chello.at>
->
-> Signed-off-by: Martin Koegler <martin.koegler@chello.at>
-> ---
->  builtin/unpack-objects.c | 20 ++++++++++----------
->  1 file changed, 10 insertions(+), 10 deletions(-)
->
-> diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-> index 001dd4b..0d8b6b3 100644
-> --- a/builtin/unpack-objects.c
-> +++ b/builtin/unpack-objects.c
-> @@ -31,7 +31,7 @@ static struct fsck_options fsck_options = FSCK_OPTIONS_STRICT;
->   */
->  struct obj_buffer {
->         char *buffer;
-> -       unsigned long size;
-> +       size_t size;
->  };
->
->  static struct decoration obj_decorate;
-> @@ -41,7 +41,7 @@ static struct obj_buffer *lookup_object_buffer(struct object *base)
->         return lookup_decoration(&obj_decorate, base);
->  }
->
-> -static void add_object_buffer(struct object *object, char *buffer, unsigned long size)
-> +static void add_object_buffer(struct object *object, char *buffer, size_t size)
->  {
->         struct obj_buffer *obj;
->         obj = xcalloc(1, sizeof(struct obj_buffer));
-> @@ -93,7 +93,7 @@ static void use(int bytes)
->                 die(_("pack exceeds maximum allowed size"));
->  }
->
-> -static void *get_data(unsigned long size)
-> +static void *get_data(size_t size)
->  {
->         git_zstream stream;
->         void *buf = xmallocz(size);
+From: Torsten Bögershausen <tboegi@web.de>
 
-"size" is handed over to a "git_zstream" and goes through zlib.c,
-eventually ending up in zlib, which is outside Git's control, and which
-seems to work with "uLong"s. How do these kind of changes interact with
-zlib? For example, I wonder about this line further down in get_data:
+When convert_to_git() is called, the caller may want to keep CRLF
+to be kept as CRLF (and not converted into LF).
 
-if (stream.total_out == size && ret == Z_STREAM_END)
+This will be used in the next commit, when apply works with files that have
+CRLF and patches are applied onto these files.
 
-If total_out isn't converted, I guess this would never hit if "size" is
-too large. And if total_out /is/ converted, I guess we'd risk truncation
-in zlib_pre_call in zlib.c. Maybe that might cause Git and zlib to have
-different ideas about how much data is available and/or should be
-processed. Maybe we could then hit things like this in git.c:
+Add the new value "SAFE_CRLF_KEEP_CRLF" to safe_crlf.
 
-if (s->z.total_out != s->total_out + bytes_produced)
-        die("BUG: total_out mismatch");
+Prepare convert_to_git() to be able to run the clean filter,
+skip the CRLF conversion and run the ident filter.
 
-I am not very familiar with zlib, so apologies if this is just noise...
+Signed-off-by: Torsten Bögershausen <tboegi@web.de>
+---
+ convert.c | 10 ++++++----
+ convert.h |  3 ++-
+ 2 files changed, 8 insertions(+), 5 deletions(-)
 
-Martin
+diff --git a/convert.c b/convert.c
+index deaf0ba7b3..040123b4fe 100644
+--- a/convert.c
++++ b/convert.c
+@@ -1104,10 +1104,12 @@ int convert_to_git(const struct index_state *istate,
+ 		src = dst->buf;
+ 		len = dst->len;
+ 	}
+-	ret |= crlf_to_git(istate, path, src, len, dst, ca.crlf_action, checksafe);
+-	if (ret && dst) {
+-		src = dst->buf;
+-		len = dst->len;
++	if (checksafe != SAFE_CRLF_KEEP_CRLF) {
++		ret |= crlf_to_git(istate, path, src, len, dst, ca.crlf_action, checksafe);
++		if (ret && dst) {
++			src = dst->buf;
++			len = dst->len;
++		}
+ 	}
+ 	return ret | ident_to_git(path, src, len, dst, ca.ident);
+ }
+diff --git a/convert.h b/convert.h
+index cecf59d1aa..cabd5ed6dd 100644
+--- a/convert.h
++++ b/convert.h
+@@ -10,7 +10,8 @@ enum safe_crlf {
+ 	SAFE_CRLF_FALSE = 0,
+ 	SAFE_CRLF_FAIL = 1,
+ 	SAFE_CRLF_WARN = 2,
+-	SAFE_CRLF_RENORMALIZE = 3
++	SAFE_CRLF_RENORMALIZE = 3,
++	SAFE_CRLF_KEEP_CRLF = 4
+ };
+ 
+ extern enum safe_crlf safe_crlf;
+-- 
+2.14.1.145.gb3622a4ee9
+
