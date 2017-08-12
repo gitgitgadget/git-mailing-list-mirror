@@ -2,66 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6BBE11F667
-	for <e@80x24.org>; Sat, 12 Aug 2017 08:04:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B23F1F667
+	for <e@80x24.org>; Sat, 12 Aug 2017 08:30:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750814AbdHLIE3 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 12 Aug 2017 04:04:29 -0400
-Received: from bsmtp8.bon.at ([213.33.87.20]:56321 "EHLO bsmtp8.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750774AbdHLIE2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Aug 2017 04:04:28 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp8.bon.at (Postfix) with ESMTPSA id 3xTvXn6hdMz5tlG;
-        Sat, 12 Aug 2017 10:04:25 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 31B0F2079;
-        Sat, 12 Aug 2017 10:04:25 +0200 (CEST)
-Subject: Re: [PATCH] tree-walk: convert fill_tree_descriptor() to object_id
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-References: <d1e4b270-4f8b-85e4-b6fd-09657720bed2@web.de>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <fb99b685-327a-1c01-52d6-f0a1d106544c@kdbg.org>
-Date:   Sat, 12 Aug 2017 10:04:24 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        id S1750802AbdHLIam (ORCPT <rfc822;e@80x24.org>);
+        Sat, 12 Aug 2017 04:30:42 -0400
+Received: from mail-io0-f180.google.com ([209.85.223.180]:33428 "EHLO
+        mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750771AbdHLIal (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 Aug 2017 04:30:41 -0400
+Received: by mail-io0-f180.google.com with SMTP id j32so26963424iod.0
+        for <git@vger.kernel.org>; Sat, 12 Aug 2017 01:30:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=kg2PXmKmdnr4fbeEWjQ9FSwi1cpL7WxN877k+4NKw+0=;
+        b=UWQjfjIzg3RcDSBxPr/apalnspHzKMGQ0hFeFr2O/Q3ZM5LTq4V/1wdxEB+Hjb1t7s
+         RK0ugLEyh36Gr4woxYFIOY4M3Tdtzo8mKNx5ZKBtwUyYbYTqt4oxKweRa5u0JMgViq5M
+         cnWURB+N7ywLIRme9aVvD2UOODxNn/1j1tMfw/ZUGR1a1SOaTfVFgtVBXrgzhkrdXJag
+         ELibVELTdoLduPct4CoqTkQE05d84zP9SyVq9t0XaTwe9fWJWuxAZstwEKzVWBl/vjED
+         QW1tNePHwsmRMjeTmyK7CWkNLC3WiNk8TeDiFEfzcCxadVw7bXLYOTq/Hy4Igt8scNsL
+         Zyqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=kg2PXmKmdnr4fbeEWjQ9FSwi1cpL7WxN877k+4NKw+0=;
+        b=mLVS3x8f18RKhIUlmcwn2wq0mkKfv7vKVtaE2uLWLKZSKGhj/LuXxqeHexF237/TEF
+         Vs0nA/xQcZeCFce3td0o14KHte5aV6eBE4b6mOKvGbBkBJAYYdVTbPxOkUw8fkFKClxc
+         TaQ1ohFaRRO3s7g9Y5kJ0dlIFBK4AcbY2qmOcqIToaYK3Pr5FGOLYw7s7NAlgIQhiC/Q
+         teH4Ob3awU4R/POW3VZq1XHWTiK6eEF+hEFGiwUOBfxo7JiM4SvcVqLSBvCr3cevoUgn
+         STpidcXMgVuSVpILrOT+UT2rh+uXfyOgTNH56JI3w/icRYRYckDB7lta7HVC3aMUCVfy
+         rlIA==
+X-Gm-Message-State: AHYfb5jq/+lTrGZOivt9MethlzK/oEgI6PC6GmzKuuqvAVRTjqdQOXCC
+        NxT84RIplrpe5s8nIIuza583xbeDChY3
+X-Received: by 10.107.19.132 with SMTP id 4mr14906953iot.311.1502526641074;
+ Sat, 12 Aug 2017 01:30:41 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <d1e4b270-4f8b-85e4-b6fd-09657720bed2@web.de>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Received: by 10.107.8.34 with HTTP; Sat, 12 Aug 2017 01:30:40 -0700 (PDT)
+From:   Kazuki Tsunemi <ksilverknowledge@gmail.com>
+Date:   Sat, 12 Aug 2017 17:30:40 +0900
+Message-ID: <CAJ7dDEdM=e76qhGStH8X6AJ9vkbVCh8gREj6Xnzux3FJ5XEb_Q@mail.gmail.com>
+Subject: description about necessary libs on INSTALL
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 12.08.2017 um 09:14 schrieb René Scharfe:
-> -	Initialize a `tree_desc` and decode its first entry given the sha1 of
-> -	a tree. Returns the `buffer` member if the sha1 is a valid tree
-> -	identifier and NULL otherwise.
-> +	Initialize a `tree_desc` and decode its first entry given the
-> +	object ID of a tree. Returns the `buffer` member if the sha1 is
-> +	a valid tree identifier and NULL otherwise.
+Hello!
 
-There is another mention of "sha1" in the rewritten text. Intended or an 
-oversight?
+I have an idea about document.
+I installed git with INSTALL. I executed 'make install' but got some
+errors while building. I found necessary libs written in INSTALL after
+all build errors have solved.
+How about write about libs before install command ? I think it is better :)
 
-> -#define ENTRY_SHA1(e) (((e)->mode && S_ISDIR((e)->mode)) ? (e)->oid->hash : NULL)
-> -	buf0 = fill_tree_descriptor(t+0, ENTRY_SHA1(n + 0));
-> -	buf1 = fill_tree_descriptor(t+1, ENTRY_SHA1(n + 1));
-> -	buf2 = fill_tree_descriptor(t+2, ENTRY_SHA1(n + 2));
-> +#define ENTRY_OID(e) (((e)->mode && S_ISDIR((e)->mode)) ? (e)->oid : NULL)
-> +	buf0 = fill_tree_descriptor(t + 0, ENTRY_OID(n + 0));
-> +	buf1 = fill_tree_descriptor(t + 1, ENTRY_OID(n + 1));
-> +	buf2 = fill_tree_descriptor(t + 2, ENTRY_OID(n + 2));
->   #undef ENTRY_SHA1
-
-This whould be #undef ENTRY_OID.
-
--- Hannes
+---
+Kazuki Tsunemi
