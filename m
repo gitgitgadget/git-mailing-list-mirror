@@ -2,85 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1553C208CD
-	for <e@80x24.org>; Sat, 12 Aug 2017 13:50:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 494FC208C4
+	for <e@80x24.org>; Sat, 12 Aug 2017 13:51:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750975AbdHLNt7 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 12 Aug 2017 09:49:59 -0400
-Received: from mail.teddy.ch ([82.197.162.18]:35054 "EHLO mail.teddy.ch"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750864AbdHLNt6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Aug 2017 09:49:58 -0400
-X-Greylist: delayed 337 seconds by postgrey-1.27 at vger.kernel.org; Sat, 12 Aug 2017 09:49:57 EDT
-Received: from [192.168.0.118] (adsl-178-38-69-218.adslplus.ch [178.38.69.218])
-        (authenticated bits=0)
-        by mail.teddy.ch (8.15.2/8.15.2/Teddy) with ESMTPSA id v7CDiHJd014584
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-        for <git@vger.kernel.org>; Sat, 12 Aug 2017 15:44:17 +0200
-To:     git@vger.kernel.org
-From:   "Dominik Mahrer (Teddy)" <teddy@teddy.ch>
-Subject: NO_MSGFMT
-Message-ID: <b6b12040-100f-5965-6dfd-344c84dddf96@teddy.ch>
-Date:   Sat, 12 Aug 2017 15:44:17 +0200
+        id S1751127AbdHLNvR (ORCPT <rfc822;e@80x24.org>);
+        Sat, 12 Aug 2017 09:51:17 -0400
+Received: from avasout05.plus.net ([84.93.230.250]:56513 "EHLO
+        avasout05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750983AbdHLNvQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 Aug 2017 09:51:16 -0400
+Received: from [10.0.2.15] ([143.159.212.52])
+        by avasout05 with smtp
+        id wDrE1v00918PUFB01DrFiR; Sat, 12 Aug 2017 14:51:15 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=Iav3YSia c=1 sm=1 tr=0
+ a=CKmocqUIrzA4K3l9YJ19NQ==:117 a=CKmocqUIrzA4K3l9YJ19NQ==:17
+ a=IkcTkHD0fZMA:10 a=FQcsDvbEE3GYX54BhYsA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH 2/9] Convert index-pack to size_t
+To:     Martin Koegler <martin.koegler@chello.at>, git@vger.kernel.org,
+        gitster@pobox.com, Johannes.Schindelin@gmx.de
+References: <1502527643-21944-1-git-send-email-martin@mail.zuhause>
+ <1502527643-21944-2-git-send-email-martin@mail.zuhause>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <0f19234c-524e-7d93-4700-c44aa1e6f3a6@ramsayjones.plus.com>
+Date:   Sat, 12 Aug 2017 14:51:13 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.2.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: de-CH
+In-Reply-To: <1502527643-21944-2-git-send-email-martin@mail.zuhause>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
-X-Milter-Limit: Version: 1.0.1; IP-Address: 178.38.69.218; Host: mail
-X-Milter-Log: Version: 1.0.2; Logged as: logall-170812154417-0Wlfsz; Host: mail
-X-Virus-Scanned: clamav-milter 0.99.2 at mail
-X-Virus-Status: Clean
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.6.2 (mail.teddy.ch [82.197.162.18]); Sat, 12 Aug 2017 15:44:18 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all
-
-I'm compiling git from source code on a mashine without msgfmt. This 
-leads to compile errors. To be able to compile git I created a patch 
-that at least works for me:
-
-diff -Naur ../git-2.14.1.orig/Makefile ./Makefile
---- ../git-2.14.1.orig/Makefile	2017-08-09 21:54:31.000000000 +0200
-+++ ./Makefile	2017-08-12 15:22:06.000000000 +0200
-@@ -2261,7 +2261,11 @@
-  endif
-
-  po/build/locale/%/LC_MESSAGES/git.mo: po/%.po
-+ifndef NO_MSGFMT
-  	$(QUIET_MSGFMT)mkdir -p $(dir $@) && $(MSGFMT) -o $@ $<
-+else
-+	@echo Skipping file $@
-+endif
-
-  FIND_SOURCE_FILES = ( \
-  	git ls-files \
-@@ -2523,7 +2527,9 @@
-  endif
-  ifndef NO_TCLTK
-  	$(MAKE) -C gitk-git install
--	$(MAKE) -C git-gui gitexecdir='$(gitexec_instdir_SQ)' install
-+	ifndef NO_MSGFMT
-+		$(MAKE) -C git-gui gitexecdir='$(gitexec_instdir_SQ)' install
-+	endif
-  endif
-  ifneq (,$X)
-  	$(foreach p,$(patsubst %$X,%,$(filter %$X,$(ALL_PROGRAMS) 
-$(BUILT_INS) git$X)), test '$(DESTDIR_SQ)$(gitexec_instdir_SQ)/$p' -ef 
-'$(DESTDIR_SQ)$(gitexec_instdir_SQ)/$p$X' || $(RM) 
-'$(DESTDIR_SQ)$(gitexec_instdir_SQ)/$p';)
 
 
+On 12/08/17 09:47, Martin Koegler wrote:
+> From: Martin Koegler <martin.koegler@chello.at>
+> 
+> Signed-off-by: Martin Koegler <martin.koegler@chello.at>
+> ---
+>  builtin/index-pack.c | 26 +++++++++++++-------------
+>  1 file changed, 13 insertions(+), 13 deletions(-)
+> 
+> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+> index 7f3ccd0..bf2d728 100644
+> --- a/builtin/index-pack.c
+> +++ b/builtin/index-pack.c
+> @@ -435,7 +435,7 @@ static int is_delta_type(enum object_type type)
+>  	return (type == OBJ_REF_DELTA || type == OBJ_OFS_DELTA);
+>  }
+>  
+> -static void *unpack_entry_data(off_t offset, unsigned long size,
+> +static void *unpack_entry_data(off_t offset, size_t size,
+>  			       enum object_type type, unsigned char *sha1)
+>  {
+>  	static char fixed_buf[8192];
+> @@ -444,10 +444,10 @@ static void *unpack_entry_data(off_t offset, unsigned long size,
+>  	void *buf;
+>  	git_SHA_CTX c;
+>  	char hdr[32];
+> -	int hdrlen;
+> +	size_t hdrlen;
+>  
+>  	if (!is_delta_type(type)) {
+> -		hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %lu", typename(type), size) + 1;
+> +		hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %" PRIuMAX, typename(type), (uintmax_t)size) + 1;
+>  		git_SHA1_Init(&c);
+>  		git_SHA1_Update(&c, hdr, hdrlen);
+>  	} else
+> @@ -489,7 +489,7 @@ static void *unpack_raw_entry(struct object_entry *obj,
+>  			      unsigned char *sha1)
+>  {
+>  	unsigned char *p;
+> -	unsigned long size, c;
+> +	size_t size, c;
+>  	off_t base_offset;
+>  	unsigned shift;
+>  	void *data;
+> @@ -551,11 +551,11 @@ static void *unpack_raw_entry(struct object_entry *obj,
+>  }
+>  
+>  static void *unpack_data(struct object_entry *obj,
+> -			 int (*consume)(const unsigned char *, unsigned long, void *),
+> +			 int (*consume)(const unsigned char *, size_t, void *),
+>  			 void *cb_data)
+>  {
+>  	off_t from = obj[0].idx.offset + obj[0].hdr_size;
+> -	off_t len = obj[1].idx.offset - from;
+> +	size_t len = obj[1].idx.offset - from;
 
-It would be great if it (or something similar) could be included in git.
+Similar comment to previous patch.
 
-Regards
-Teddy
+ATB,
+Ramsay Jones
+
