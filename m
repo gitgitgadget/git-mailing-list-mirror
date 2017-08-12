@@ -2,40 +2,37 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D58F1F667
-	for <e@80x24.org>; Sat, 12 Aug 2017 08:47:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D0F461F667
+	for <e@80x24.org>; Sat, 12 Aug 2017 08:56:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751074AbdHLIra (ORCPT <rfc822;e@80x24.org>);
-        Sat, 12 Aug 2017 04:47:30 -0400
-Received: from vie01a-dmta-pe02-3.mx.upcmail.net ([62.179.121.159]:60483 "EHLO
+        id S1750778AbdHLI4m (ORCPT <rfc822;e@80x24.org>);
+        Sat, 12 Aug 2017 04:56:42 -0400
+Received: from vie01a-dmta-pe02-3.mx.upcmail.net ([62.179.121.159]:40585 "EHLO
         vie01a-dmta-pe02-3.mx.upcmail.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750975AbdHLIr3 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 12 Aug 2017 04:47:29 -0400
+        by vger.kernel.org with ESMTP id S1750761AbdHLI4m (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 12 Aug 2017 04:56:42 -0400
 Received: from [172.31.216.44] (helo=vie01a-pemc-psmtp-pe02)
         by vie01a-dmta-pe02.mx.upcmail.net with esmtp (Exim 4.88)
         (envelope-from <martin.koegler@chello.at>)
-        id 1dgS4t-0000l9-7c
-        for git@vger.kernel.org; Sat, 12 Aug 2017 10:47:27 +0200
+        id 1dgSDo-0001Uz-1E
+        for git@vger.kernel.org; Sat, 12 Aug 2017 10:56:40 +0200
 Received: from master.zuhause ([80.108.242.240])
         by vie01a-pemc-psmtp-pe02 with SMTP @ mailcloud.upcmail.net
-        id w8nR1v00N5BuuEg018nSwj; Sat, 12 Aug 2017 10:47:26 +0200
+        id w8nQ1v00t5BuuEg018nRwV; Sat, 12 Aug 2017 10:47:25 +0200
 X-SourceIP: 80.108.242.240
 Received: by master.zuhause (Postfix, from userid 1006)
-        id 07C8345D4513; Sat, 12 Aug 2017 10:47:24 +0200 (CEST)
+        id 6B86245D4512; Sat, 12 Aug 2017 10:47:24 +0200 (CEST)
 From:   Martin Koegler <martin.koegler@chello.at>
 To:     git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de
 Cc:     Martin Koegler <martin.koegler@chello.at>
-Subject: [PATCH 2/9] Convert index-pack to size_t
-Date:   Sat, 12 Aug 2017 10:47:16 +0200
-Message-Id: <1502527643-21944-2-git-send-email-martin@mail.zuhause>
+Subject: [PATCH 1/9] Convert pack-objects to size_t
+Date:   Sat, 12 Aug 2017 10:47:15 +0200
+Message-Id: <1502527643-21944-1-git-send-email-martin@mail.zuhause>
 X-Mailer: git-send-email 2.1.4
-In-Reply-To: <1502527643-21944-1-git-send-email-martin@mail.zuhause>
-References: <1502527643-21944-1-git-send-email-martin@mail.zuhause>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -45,107 +42,174 @@ From: Martin Koegler <martin.koegler@chello.at>
 
 Signed-off-by: Martin Koegler <martin.koegler@chello.at>
 ---
- builtin/index-pack.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ builtin/pack-objects.c | 48 ++++++++++++++++++++++++------------------------
+ 1 file changed, 24 insertions(+), 24 deletions(-)
 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 7f3ccd0..bf2d728 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -435,7 +435,7 @@ static int is_delta_type(enum object_type type)
- 	return (type == OBJ_REF_DELTA || type == OBJ_OFS_DELTA);
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index aa70f80..f8db283 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -56,7 +56,7 @@ static struct pack_idx_option pack_idx_opts;
+ static const char *base_name;
+ static int progress = 1;
+ static int window = 10;
+-static unsigned long pack_size_limit;
++static size_t pack_size_limit;
+ static int depth = 50;
+ static int delta_search_threads;
+ static int pack_to_stdout;
+@@ -72,11 +72,11 @@ static int use_bitmap_index = -1;
+ static int write_bitmap_index;
+ static uint16_t write_bitmap_options;
+ 
+-static unsigned long delta_cache_size = 0;
+-static unsigned long max_delta_cache_size = 256 * 1024 * 1024;
+-static unsigned long cache_max_small_delta_size = 1000;
++static size_t delta_cache_size = 0;
++static size_t max_delta_cache_size = 256 * 1024 * 1024;
++static size_t cache_max_small_delta_size = 1000;
+ 
+-static unsigned long window_memory_limit = 0;
++static size_t window_memory_limit = 0;
+ 
+ /*
+  * stats
+@@ -124,11 +124,11 @@ static void *get_delta(struct object_entry *entry)
+ 	return delta_buf;
  }
  
--static void *unpack_entry_data(off_t offset, unsigned long size,
-+static void *unpack_entry_data(off_t offset, size_t size,
- 			       enum object_type type, unsigned char *sha1)
+-static unsigned long do_compress(void **pptr, unsigned long size)
++static size_t do_compress(void **pptr, size_t size)
  {
- 	static char fixed_buf[8192];
-@@ -444,10 +444,10 @@ static void *unpack_entry_data(off_t offset, unsigned long size,
+ 	git_zstream stream;
+ 	void *in, *out;
+-	unsigned long maxsize;
++	size_t maxsize;
+ 
+ 	git_deflate_init(&stream, pack_compression_level);
+ 	maxsize = git_deflate_bound(&stream, size);
+@@ -149,13 +149,13 @@ static unsigned long do_compress(void **pptr, unsigned long size)
+ 	return stream.total_out;
+ }
+ 
+-static unsigned long write_large_blob_data(struct git_istream *st, struct sha1file *f,
++static size_t write_large_blob_data(struct git_istream *st, struct sha1file *f,
+ 					   const unsigned char *sha1)
+ {
+ 	git_zstream stream;
+ 	unsigned char ibuf[1024 * 16];
+ 	unsigned char obuf[1024 * 16];
+-	unsigned long olen = 0;
++	size_t olen = 0;
+ 
+ 	git_deflate_init(&stream, pack_compression_level);
+ 
+@@ -196,7 +196,7 @@ static int check_pack_inflate(struct packed_git *p,
+ 		struct pack_window **w_curs,
+ 		off_t offset,
+ 		off_t len,
+-		unsigned long expect)
++		size_t expect)
+ {
+ 	git_zstream stream;
+ 	unsigned char fakebuf[4096], *in;
+@@ -238,13 +238,13 @@ static void copy_pack_data(struct sha1file *f,
+ }
+ 
+ /* Return 0 if we will bust the pack-size limit */
+-static unsigned long write_no_reuse_object(struct sha1file *f, struct object_entry *entry,
+-					   unsigned long limit, int usable_delta)
++static size_t write_no_reuse_object(struct sha1file *f, struct object_entry *entry,
++				    size_t limit, int usable_delta)
+ {
+ 	size_t size, datalen;
+ 	unsigned char header[MAX_PACK_OBJECT_HEADER],
+ 		      dheader[MAX_PACK_OBJECT_HEADER];
+-	unsigned hdrlen;
++	size_t hdrlen;
+ 	enum object_type type;
  	void *buf;
- 	git_SHA_CTX c;
- 	char hdr[32];
--	int hdrlen;
+ 	struct git_istream *st = NULL;
+@@ -350,17 +350,17 @@ static unsigned long write_no_reuse_object(struct sha1file *f, struct object_ent
+ 
+ /* Return 0 if we will bust the pack-size limit */
+ static off_t write_reuse_object(struct sha1file *f, struct object_entry *entry,
+-				unsigned long limit, int usable_delta)
++				size_t limit, int usable_delta)
+ {
+ 	struct packed_git *p = entry->in_pack;
+ 	struct pack_window *w_curs = NULL;
+ 	struct revindex_entry *revidx;
+ 	off_t offset;
+ 	enum object_type type = entry->type;
+-	off_t datalen;
++	size_t datalen;
+ 	unsigned char header[MAX_PACK_OBJECT_HEADER],
+ 		      dheader[MAX_PACK_OBJECT_HEADER];
+-	unsigned hdrlen;
 +	size_t hdrlen;
  
- 	if (!is_delta_type(type)) {
--		hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %lu", typename(type), size) + 1;
-+		hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %" PRIuMAX, typename(type), (uintmax_t)size) + 1;
- 		git_SHA1_Init(&c);
- 		git_SHA1_Update(&c, hdr, hdrlen);
- 	} else
-@@ -489,7 +489,7 @@ static void *unpack_raw_entry(struct object_entry *obj,
- 			      unsigned char *sha1)
+ 	if (entry->delta)
+ 		type = (allow_ofs_delta && entry->delta->idx.offset) ?
+@@ -431,7 +431,7 @@ static off_t write_object(struct sha1file *f,
+ 			  struct object_entry *entry,
+ 			  off_t write_offset)
  {
- 	unsigned char *p;
--	unsigned long size, c;
-+	size_t size, c;
- 	off_t base_offset;
- 	unsigned shift;
- 	void *data;
-@@ -551,11 +551,11 @@ static void *unpack_raw_entry(struct object_entry *obj,
- }
+-	unsigned long limit;
++	size_t limit;
+ 	off_t len;
+ 	int usable_delta, to_reuse;
  
- static void *unpack_data(struct object_entry *obj,
--			 int (*consume)(const unsigned char *, unsigned long, void *),
-+			 int (*consume)(const unsigned char *, size_t, void *),
- 			 void *cb_data)
- {
- 	off_t from = obj[0].idx.offset + obj[0].hdr_size;
--	off_t len = obj[1].idx.offset - from;
-+	size_t len = obj[1].idx.offset - from;
- 	unsigned char *data, *inbuf;
- 	git_zstream stream;
- 	int status;
-@@ -728,10 +728,10 @@ struct compare_data {
- 	struct object_entry *entry;
- 	struct git_istream *st;
- 	unsigned char *buf;
--	unsigned long buf_size;
-+	size_t buf_size;
+@@ -1120,7 +1120,7 @@ struct pbase_tree_cache {
+ 	int ref;
+ 	int temporary;
+ 	void *tree_data;
+-	unsigned long tree_size;
++	size_t tree_size;
  };
  
--static int compare_objects(const unsigned char *buf, unsigned long size,
-+static int compare_objects(const unsigned char *buf, size_t size,
- 			   void *cb_data)
+ static struct pbase_tree_cache *(pbase_tree_cache[256]);
+@@ -1759,8 +1759,8 @@ struct unpacked {
+ 	unsigned depth;
+ };
+ 
+-static int delta_cacheable(unsigned long src_size, unsigned long trg_size,
+-			   unsigned long delta_size)
++static int delta_cacheable(size_t src_size, size_t trg_size,
++			   size_t delta_size)
  {
- 	struct compare_data *data = cb_data;
-@@ -783,7 +783,7 @@ static int check_collison(struct object_entry *entry)
+ 	if (max_delta_cache_size && delta_cache_size + delta_size > max_delta_cache_size)
+ 		return 0;
+@@ -1801,7 +1801,7 @@ static pthread_mutex_t progress_mutex;
+ #endif
+ 
+ static int try_delta(struct unpacked *trg, struct unpacked *src,
+-		     unsigned max_depth, unsigned long *mem_usage)
++		     unsigned max_depth, size_t *mem_usage)
+ {
+ 	struct object_entry *trg_entry = trg->entry;
+ 	struct object_entry *src_entry = src->entry;
+@@ -1962,9 +1962,9 @@ static unsigned int check_delta_limit(struct object_entry *me, unsigned int n)
+ 	return m;
  }
  
- static void sha1_object(const void *data, struct object_entry *obj_entry,
--			unsigned long size, enum object_type type,
-+			size_t size, enum object_type type,
- 			const struct object_id *oid)
+-static unsigned long free_unpacked(struct unpacked *n)
++static size_t free_unpacked(struct unpacked *n)
  {
- 	void *new_data = NULL;
-@@ -1311,11 +1311,11 @@ static int write_compressed(struct sha1file *f, void *in, unsigned int size)
+-	unsigned long freed_mem = sizeof_delta_index(n->index);
++	size_t freed_mem = sizeof_delta_index(n->index);
+ 	free_delta_index(n->index);
+ 	n->index = NULL;
+ 	if (n->data) {
+@@ -1981,7 +1981,7 @@ static void find_deltas(struct object_entry **list, unsigned *list_size,
+ {
+ 	uint32_t i, idx = 0, count = 0;
+ 	struct unpacked *array;
+-	unsigned long mem_usage = 0;
++	size_t mem_usage = 0;
  
- static struct object_entry *append_obj_to_pack(struct sha1file *f,
- 			       const unsigned char *sha1, void *buf,
--			       unsigned long size, enum object_type type)
-+			       size_t size, enum object_type type)
- {
- 	struct object_entry *obj = &objects[nr_objects++];
- 	unsigned char header[10];
--	unsigned long s = size;
-+	size_t s = size;
- 	int n = 0;
- 	unsigned char c = (type << 4) | (s & 15);
- 	s >>= 4;
-@@ -1585,10 +1585,10 @@ static void show_pack_info(int stat_only)
- 			chain_histogram[obj_stat[i].delta_depth - 1]++;
- 		if (stat_only)
- 			continue;
--		printf("%s %-6s %" PRIuMAX " %lu %" PRIuMAX,
-+		printf("%s %-6s %" PRIuMAX " %" PRIuMAX " %" PRIuMAX,
- 		       oid_to_hex(&obj->idx.oid),
- 		       typename(obj->real_type), (uintmax_t)obj->size,
--		       (unsigned long)(obj[1].idx.offset - obj->idx.offset),
-+		       (uintmax_t)(obj[1].idx.offset - obj->idx.offset),
- 		       (uintmax_t)obj->idx.offset);
- 		if (is_delta_type(obj->type)) {
- 			struct object_entry *bobj = &objects[obj_stat[i].base_object_no];
+ 	array = xcalloc(window, sizeof(struct unpacked));
+ 
 -- 
 2.1.4
 
