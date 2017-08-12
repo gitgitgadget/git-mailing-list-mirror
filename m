@@ -6,32 +6,32 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 30B041F667
-	for <e@80x24.org>; Sat, 12 Aug 2017 08:47:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 037241F667
+	for <e@80x24.org>; Sat, 12 Aug 2017 08:47:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751557AbdHLIrc (ORCPT <rfc822;e@80x24.org>);
-        Sat, 12 Aug 2017 04:47:32 -0400
-Received: from vie01a-dmta-pe08-1.mx.upcmail.net ([84.116.36.20]:58161 "EHLO
+        id S1751978AbdHLIrk (ORCPT <rfc822;e@80x24.org>);
+        Sat, 12 Aug 2017 04:47:40 -0400
+Received: from vie01a-dmta-pe06-1.mx.upcmail.net ([84.116.36.14]:33601 "EHLO
         vie01a-dmta-pe05-1.mx.upcmail.net" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1750983AbdHLIrb (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 12 Aug 2017 04:47:31 -0400
+        by vger.kernel.org with ESMTP id S1751344AbdHLIre (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 12 Aug 2017 04:47:34 -0400
 Received: from [172.31.216.44] (helo=vie01a-pemc-psmtp-pe02)
-        by vie01a-dmta-pe08.mx.upcmail.net with esmtp (Exim 4.88)
+        by vie01a-dmta-pe06.mx.upcmail.net with esmtp (Exim 4.88)
         (envelope-from <martin.koegler@chello.at>)
-        id 1dgS4u-0005VZ-Qt
-        for git@vger.kernel.org; Sat, 12 Aug 2017 10:47:28 +0200
+        id 1dgS4z-0004d1-18
+        for git@vger.kernel.org; Sat, 12 Aug 2017 10:47:33 +0200
 Received: from master.zuhause ([80.108.242.240])
         by vie01a-pemc-psmtp-pe02 with SMTP @ mailcloud.upcmail.net
-        id w8nS1v01F5BuuEg018nTxu; Sat, 12 Aug 2017 10:47:27 +0200
+        id w8nT1v01r5BuuEg018nUyA; Sat, 12 Aug 2017 10:47:29 +0200
 X-SourceIP: 80.108.242.240
 Received: by master.zuhause (Postfix, from userid 1006)
-        id 96B5A45D4513; Sat, 12 Aug 2017 10:47:26 +0200 (CEST)
+        id D1DF045D4512; Sat, 12 Aug 2017 10:47:27 +0200 (CEST)
 From:   Martin Koegler <martin.koegler@chello.at>
 To:     git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de
 Cc:     Martin Koegler <martin.koegler@chello.at>
-Subject: [PATCH 5/9] Convert various things to size_t
-Date:   Sat, 12 Aug 2017 10:47:19 +0200
-Message-Id: <1502527643-21944-5-git-send-email-martin@mail.zuhause>
+Subject: [PATCH 7/9] Convert ref-filter to size_t
+Date:   Sat, 12 Aug 2017 10:47:21 +0200
+Message-Id: <1502527643-21944-7-git-send-email-martin@mail.zuhause>
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <1502527643-21944-1-git-send-email-martin@mail.zuhause>
 References: <1502527643-21944-1-git-send-email-martin@mail.zuhause>
@@ -42,102 +42,136 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Martin Koegler <martin.koegler@chello.at>
 
+Signed-off-by: Martin Koegler <martin.koegler@chello.at>
 ---
- bisect.c                | 2 +-
- blame.c                 | 2 +-
- builtin/fmt-merge-msg.c | 2 +-
- builtin/mktag.c         | 2 +-
- dir.c                   | 4 ++--
- dir.h                   | 2 +-
- 6 files changed, 7 insertions(+), 7 deletions(-)
+ ref-filter.c | 34 +++++++++++++++++-----------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/bisect.c b/bisect.c
-index 2549eaf..0580c82 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -131,7 +131,7 @@ static void show_list(const char *debug, int counted, int nr,
- 		struct commit *commit = p->item;
- 		unsigned flags = commit->object.flags;
- 		enum object_type type;
--		unsigned long size;
-+		size_t size;
- 		char *buf = read_sha1_file(commit->object.sha1, &type, &size);
- 		const char *subject_start;
- 		int subject_len;
-diff --git a/blame.c b/blame.c
-index 739a280..f628b42 100644
---- a/blame.c
-+++ b/blame.c
-@@ -1621,7 +1621,7 @@ static const char *get_next_line(const char *start, const char *end)
- static int prepare_lines(struct blame_scoreboard *sb)
- {
- 	const char *buf = sb->final_buf;
--	unsigned long len = sb->final_buf_size;
-+	size_t len = sb->final_buf_size;
- 	const char *end = buf + len;
- 	const char *p;
- 	int *lineno;
-diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
-index 61ab796..3faf100 100644
---- a/builtin/fmt-merge-msg.c
-+++ b/builtin/fmt-merge-msg.c
-@@ -464,7 +464,7 @@ static void fmt_merge_msg_title(struct strbuf *out,
- static void fmt_tag_signature(struct strbuf *tagbuf,
- 			      struct strbuf *sig,
- 			      const char *buf,
--			      unsigned long len)
-+			      size_t len)
- {
- 	const char *tag_body = strstr(buf, "\n\n");
- 	if (tag_body) {
-diff --git a/builtin/mktag.c b/builtin/mktag.c
-index 0663106..ff919a7 100644
---- a/builtin/mktag.c
-+++ b/builtin/mktag.c
-@@ -34,7 +34,7 @@ static int verify_object(const unsigned char *sha1, const char *expected_type)
- 	return ret;
+diff --git a/ref-filter.c b/ref-filter.c
+index 5c903a5..30f249c 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -724,7 +724,7 @@ static int grab_objectname(const char *name, const unsigned char *sha1,
  }
  
--static int verify_tag(char *buffer, unsigned long size)
-+static int verify_tag(char *buffer, size_t size)
+ /* See grab_values */
+-static void grab_common_values(struct atom_value *val, int deref, struct object *obj, void *buf, unsigned long sz)
++static void grab_common_values(struct atom_value *val, int deref, struct object *obj, void *buf, size_t sz)
  {
- 	int typelen;
- 	char type[20];
-diff --git a/dir.c b/dir.c
-index f161c26..0c7c767 100644
---- a/dir.c
-+++ b/dir.c
-@@ -180,7 +180,7 @@ static size_t common_prefix_len(const struct pathspec *pathspec)
+ 	int i;
+ 
+@@ -739,7 +739,7 @@ static void grab_common_values(struct atom_value *val, int deref, struct object
+ 			v->s = typename(obj->type);
+ 		else if (!strcmp(name, "objectsize")) {
+ 			v->value = sz;
+-			v->s = xstrfmt("%lu", sz);
++			v->s = xstrfmt("%" PRIuMAX, (uintmax_t)sz);
+ 		}
+ 		else if (deref)
+ 			grab_objectname(name, obj->oid.hash, v, &used_atom[i]);
+@@ -747,7 +747,7 @@ static void grab_common_values(struct atom_value *val, int deref, struct object
+ }
+ 
+ /* See grab_values */
+-static void grab_tag_values(struct atom_value *val, int deref, struct object *obj, void *buf, unsigned long sz)
++static void grab_tag_values(struct atom_value *val, int deref, struct object *obj, void *buf, size_t sz)
+ {
+ 	int i;
+ 	struct tag *tag = (struct tag *) obj;
+@@ -769,7 +769,7 @@ static void grab_tag_values(struct atom_value *val, int deref, struct object *ob
+ }
+ 
+ /* See grab_values */
+-static void grab_commit_values(struct atom_value *val, int deref, struct object *obj, void *buf, unsigned long sz)
++static void grab_commit_values(struct atom_value *val, int deref, struct object *obj, void *buf, size_t sz)
+ {
+ 	int i;
+ 	struct commit *commit = (struct commit *) obj;
+@@ -786,7 +786,7 @@ static void grab_commit_values(struct atom_value *val, int deref, struct object
+ 		}
+ 		else if (!strcmp(name, "numparent")) {
+ 			v->value = commit_list_count(commit->parents);
+-			v->s = xstrfmt("%lu", (unsigned long)v->value);
++			v->s = xstrfmt("%" PRIuMAX, (uintmax_t)v->value);
+ 		}
+ 		else if (!strcmp(name, "parent")) {
+ 			struct commit_list *parents;
+@@ -802,7 +802,7 @@ static void grab_commit_values(struct atom_value *val, int deref, struct object
+ 	}
+ }
+ 
+-static const char *find_wholine(const char *who, int wholen, const char *buf, unsigned long sz)
++static const char *find_wholine(const char *who, int wholen, const char *buf, size_t sz)
+ {
+ 	const char *eol;
+ 	while (*buf) {
+@@ -848,7 +848,7 @@ static const char *copy_email(const char *buf)
+ 	return xmemdupz(email, eoemail + 1 - email);
+ }
+ 
+-static char *copy_subject(const char *buf, unsigned long len)
++static char *copy_subject(const char *buf, size_t len)
+ {
+ 	char *r = xmemdupz(buf, len);
+ 	int i;
+@@ -898,7 +898,7 @@ static void grab_date(const char *buf, struct atom_value *v, const char *atomnam
+ }
+ 
+ /* See grab_values */
+-static void grab_person(const char *who, struct atom_value *val, int deref, struct object *obj, void *buf, unsigned long sz)
++static void grab_person(const char *who, struct atom_value *val, int deref, struct object *obj, void *buf, size_t sz)
+ {
+ 	int i;
+ 	int wholen = strlen(who);
+@@ -957,11 +957,11 @@ static void grab_person(const char *who, struct atom_value *val, int deref, stru
+ 	}
+ }
+ 
+-static void find_subpos(const char *buf, unsigned long sz,
+-			const char **sub, unsigned long *sublen,
+-			const char **body, unsigned long *bodylen,
+-			unsigned long *nonsiglen,
+-			const char **sig, unsigned long *siglen)
++static void find_subpos(const char *buf, size_t sz,
++			const char **sub, size_t *sublen,
++			const char **body, size_t *bodylen,
++			size_t *nonsiglen,
++			const char **sig, size_t *siglen)
+ {
+ 	const char *eol;
+ 	/* skip past header until we hit empty line */
+@@ -1005,7 +1005,7 @@ static void find_subpos(const char *buf, unsigned long sz,
+  * If 'lines' is greater than 0, append that many lines from the given
+  * 'buf' of length 'size' to the given strbuf.
   */
- char *common_prefix(const struct pathspec *pathspec)
+-static void append_lines(struct strbuf *out, const char *buf, unsigned long size, int lines)
++static void append_lines(struct strbuf *out, const char *buf, size_t size, int lines)
  {
--	unsigned long len = common_prefix_len(pathspec);
-+	size_t len = common_prefix_len(pathspec);
- 
- 	return len ? xmemdupz(pathspec->items[0].match, len) : NULL;
- }
-@@ -2673,7 +2673,7 @@ static void load_sha1_stat(struct sha1_stat *sha1_stat,
- 	sha1_stat->valid = 1;
+ 	int i;
+ 	const char *sp, *eol;
+@@ -1026,11 +1026,11 @@ static void append_lines(struct strbuf *out, const char *buf, unsigned long size
  }
  
--struct untracked_cache *read_untracked_extension(const void *data, unsigned long sz)
-+struct untracked_cache *read_untracked_extension(const void *data, size_t sz)
+ /* See grab_values */
+-static void grab_sub_body_contents(struct atom_value *val, int deref, struct object *obj, void *buf, unsigned long sz)
++static void grab_sub_body_contents(struct atom_value *val, int deref, struct object *obj, void *buf, size_t sz)
  {
- 	struct untracked_cache *uc;
- 	struct read_data rd;
-diff --git a/dir.h b/dir.h
-index e371705..709c72c 100644
---- a/dir.h
-+++ b/dir.h
-@@ -349,7 +349,7 @@ void untracked_cache_remove_from_index(struct index_state *, const char *);
- void untracked_cache_add_to_index(struct index_state *, const char *);
+ 	int i;
+ 	const char *subpos = NULL, *bodypos = NULL, *sigpos = NULL;
+-	unsigned long sublen = 0, bodylen = 0, nonsiglen = 0, siglen = 0;
++	size_t sublen = 0, bodylen = 0, nonsiglen = 0, siglen = 0;
  
- void free_untracked_cache(struct untracked_cache *);
--struct untracked_cache *read_untracked_extension(const void *data, unsigned long sz);
-+struct untracked_cache *read_untracked_extension(const void *data, size_t sz);
- void write_untracked_extension(struct strbuf *out, struct untracked_cache *untracked);
- void add_untracked_cache(struct index_state *istate);
- void remove_untracked_cache(struct index_state *istate);
+ 	for (i = 0; i < used_atom_cnt; i++) {
+ 		struct used_atom *atom = &used_atom[i];
+@@ -1100,7 +1100,7 @@ static void fill_missing_values(struct atom_value *val)
+  * pointed at by the ref itself; otherwise it is the object the
+  * ref (which is a tag) refers to.
+  */
+-static void grab_values(struct atom_value *val, int deref, struct object *obj, void *buf, unsigned long sz)
++static void grab_values(struct atom_value *val, int deref, struct object *obj, void *buf, size_t sz)
+ {
+ 	grab_common_values(val, deref, obj, buf, sz);
+ 	switch (obj->type) {
 -- 
 2.1.4
 
