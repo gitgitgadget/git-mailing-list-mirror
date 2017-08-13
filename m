@@ -6,69 +6,75 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6DE4A208B8
-	for <e@80x24.org>; Sun, 13 Aug 2017 04:32:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F36BB208B8
+	for <e@80x24.org>; Sun, 13 Aug 2017 04:39:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750783AbdHMEcq (ORCPT <rfc822;e@80x24.org>);
-        Sun, 13 Aug 2017 00:32:46 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37262 "HELO cloud.peff.net"
+        id S1750826AbdHMEjn (ORCPT <rfc822;e@80x24.org>);
+        Sun, 13 Aug 2017 00:39:43 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37272 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750768AbdHMEcp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Aug 2017 00:32:45 -0400
-Received: (qmail 10998 invoked by uid 109); 13 Aug 2017 04:32:41 -0000
+        id S1750772AbdHMEjn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Aug 2017 00:39:43 -0400
+Received: (qmail 11277 invoked by uid 109); 13 Aug 2017 04:39:44 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 13 Aug 2017 04:32:41 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 13 Aug 2017 04:39:44 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28362 invoked by uid 111); 13 Aug 2017 04:33:04 -0000
+Received: (qmail 28384 invoked by uid 111); 13 Aug 2017 04:40:06 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Sun, 13 Aug 2017 00:33:04 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Sun, 13 Aug 2017 00:40:06 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 13 Aug 2017 00:32:37 -0400
-Date:   Sun, 13 Aug 2017 00:32:37 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 13 Aug 2017 00:39:40 -0400
+Date:   Sun, 13 Aug 2017 00:39:40 -0400
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Simon Ruderich <simon@ruderich.org>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Yaroslav Halchenko <yoh@onerussian.com>
-Subject: Re: [PATCH] strbuf: clear errno before calling getdelim(3)
-Message-ID: <20170813043237.ndcm77i43ivepo7b@sigill.intra.peff.net>
-References: <20170809173928.h2ylvg5tp2p5inem@hopa.kiewit.dartmouth.edu>
- <8e307474-d180-6d98-2c6b-062f2181bd14@web.de>
- <xmqqzib72qvs.fsf@gitster.mtv.corp.google.com>
- <6d7b0d30-48ea-f79f-78cd-088557ea06ac@web.de>
- <20170810200502.rutab4z3ft7gcpjz@sigill.intra.peff.net>
- <cd49ce13-db87-89c1-77e7-998fdb9442c3@web.de>
- <20170811075059.nn6lru7uy6s6vpza@ruderich.org>
- <e8e7f028-6e23-368c-484f-9f069bae5dc8@web.de>
- <20170812100252.bhbgg5jjlom7dfl2@ruderich.org>
- <510f566b-3aee-98fd-9663-d97c3dcfeb96@web.de>
+To:     Philip Oakley <philipoakley@iee.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Kevin Willford <kcwillford@gmail.com>, git@vger.kernel.org,
+        Kevin Willford <kewillf@microsoft.com>
+Subject: Re: [PATCH v2 1/2] format-patch: have progress option while
+ generating patches
+Message-ID: <20170813043940.muj7z3dvl3nh4k6a@sigill.intra.peff.net>
+References: <20170531150427.7820-1-kewillf@microsoft.com>
+ <20170810183256.12668-2-kewillf@microsoft.com>
+ <20170810232033.46ujnozvnodkguog@sigill.intra.peff.net>
+ <xmqqwp69ycim.fsf@gitster.mtv.corp.google.com>
+ <EA124B72FA7542DBA1C31213235F1B94@PhilipOakley>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <510f566b-3aee-98fd-9663-d97c3dcfeb96@web.de>
+In-Reply-To: <EA124B72FA7542DBA1C31213235F1B94@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Aug 12, 2017 at 01:57:06PM +0200, René Scharfe wrote:
+On Sat, Aug 12, 2017 at 09:06:18AM +0100, Philip Oakley wrote:
 
-> But we probably want to check for other errors.  They look unlikely
-> enough that we may get away with something like this:
+> > > > + progress = start_progress_delay(_("Generating patches"), total, 0, 1);
+> > > 
+> > > I don't really have an opinion on a 1 second delay versus 2. I thought
+> > > we used 2 pretty consistently, though grepping around I do see a couple
+> > > of 1's. It probably doesn't matter, but just a curiosity.
+> > 
+> > Yeah, I also thought 2-second was what we used by default.  Perhaps
+> > we would want to bring others in line?
 > 
-> 	-	if (errno == ENOMEM)
-> 	-		die("Out of memory, getdelim failed");
-> 	+	if (errno || ferror(fp))
-> 	+		die_errno(_("getdelim failed"));
-> 
-> NB: The other errors are EINVAL (input pointers are NULL or the
-> stream is invalid) and EOVERFLOW (read more than fits into ssize_t)
-> according to POSIX and the Linux manpage.
+> <bikeshed> Surely the choice should depend on the purpose of the delay. IIRC
+> the 1 second between patches on the formal 'sent' time was simply to ensure
+> the patches had the right sequence. Delays for warnings and progress have
+> different purposes, so I think it's more about the purpose than
+> standardising the time (along with expectations [least surprise] if other
+> messages are displayed).
 
-Can't we also get any of the errors that fgetc() would return. I.e., any
-normal read errors? We should return EOF on those, not die (and the
-caller can check ferror()).
+I think you're confusing two unrelated things. There's a 1-second fake
+time-advance on patches, but that's done by send-email, not
+format-patch.
+
+Here we're just talking about calls to start_progress_delay(), and how
+long it waits before deciding that the operation is slow enough to show
+progress. Blame, rename detection, and checkout use 1 second. Prune,
+prune-packed, and connectivity checks all use 2 seconds. I doubt it
+matters all that much, but presumably the purpose in all is "how long
+before a user starts to wonder if things are actually happening", which
+is probably command-independent.
 
 -Peff
