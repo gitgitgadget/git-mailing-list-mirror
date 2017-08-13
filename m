@@ -2,91 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8815D1F667
-	for <e@80x24.org>; Sun, 13 Aug 2017 16:36:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 37B061F667
+	for <e@80x24.org>; Sun, 13 Aug 2017 17:33:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751040AbdHMQgl (ORCPT <rfc822;e@80x24.org>);
-        Sun, 13 Aug 2017 12:36:41 -0400
-Received: from avasout06.plus.net ([212.159.14.18]:39363 "EHLO
-        avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751000AbdHMQgk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Aug 2017 12:36:40 -0400
-Received: from [10.0.2.15] ([143.159.212.52])
-        by avasout06 with smtp
-        id wgce1v00118PUFB01gcf8V; Sun, 13 Aug 2017 17:36:39 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=GetnpUfL c=1 sm=1 tr=0
- a=CKmocqUIrzA4K3l9YJ19NQ==:117 a=CKmocqUIrzA4K3l9YJ19NQ==:17
- a=IkcTkHD0fZMA:10 a=iTWjZBjrYC9huTXt-uQA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: [RFC] clang-format: outline the git project's coding style
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Cc:     Brandon Williams <bmwill@google.com>,
+        id S1751129AbdHMRd0 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 13 Aug 2017 13:33:26 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52932 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751025AbdHMRdZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Aug 2017 13:33:25 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B4FD5A9A5B;
+        Sun, 13 Aug 2017 13:33:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=iL+FP905Oxw+1JMjlZLcXvg1PS8=; b=WDeYAo
+        ATASLvQjdYMMHJYBlZvhtufGY1P1aNX73ffotCOslAAXYPmG5aez9CCrtdV9tcHk
+        kbSjHF97eSMaZNcSSXh1/WVzG0U5z9vHCaI8oduOWb/+iiHEmdRFblCWUHLaYb4q
+        imbtXkTvm1nlgOJMaczEpmAFokzIxb+68eoc8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=uTQJrOGXMzdO9PfjIxoDMTktPq3XoYQ4
+        DY6Tf3IrJvZra59jBCcJ3pzwC5J2TIULv9+2RKztGWGqftL6lV/VrRrZD9gkvbci
+        28+8AMKR8SyZZtHYr5hs01f0QQcZ6h/uaeuJLkCn00Ood4qPTfGf9IW9Yj2vhpGM
+        FDdpdfQ3gCg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id ABA80A9A5A;
+        Sun, 13 Aug 2017 13:33:15 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0F84FA9A59;
+        Sun, 13 Aug 2017 13:33:14 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Jeff King <peff@peff.net>, Brandon Williams <bmwill@google.com>,
         Stefan Beller <sbeller@google.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [RFC] clang-format: outline the git project's coding style
 References: <20170808012554.186051-1-bmwill@google.com>
- <20170809130127.ekd4tvyp2rrb7ftk@sigill.intra.peff.net>
- <87y3qsg7ni.fsf@gmail.com>
- <CAGZ79kYEyebHxFO++u5RkPBj16xx5nMcahBPxra4xWUfMrXydA@mail.gmail.com>
- <CAGZ79kZRhTNez1jJq+DcCyERufd_YfWK7L+ujPjRCivzHz7LBw@mail.gmail.com>
- <20170811175237.GC59325@google.com>
- <20170811211845.tpgmafenhahus77o@sigill.intra.peff.net>
- <xmqq378xxuvk.fsf@gitster.mtv.corp.google.com>
- <20170813044145.xz4o47oog3z5eycg@sigill.intra.peff.net>
- <26bebb5b-857f-1501-5139-a5513d9875ec@ramsayjones.plus.com>
-Message-ID: <4ded81fc-a495-023f-02e7-2dbd2ec1be68@ramsayjones.plus.com>
-Date:   Sun, 13 Aug 2017 17:36:36 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
-MIME-Version: 1.0
+        <20170809130127.ekd4tvyp2rrb7ftk@sigill.intra.peff.net>
+        <87y3qsg7ni.fsf@gmail.com>
+        <CAGZ79kYEyebHxFO++u5RkPBj16xx5nMcahBPxra4xWUfMrXydA@mail.gmail.com>
+        <CAGZ79kZRhTNez1jJq+DcCyERufd_YfWK7L+ujPjRCivzHz7LBw@mail.gmail.com>
+        <20170811175237.GC59325@google.com>
+        <20170811211845.tpgmafenhahus77o@sigill.intra.peff.net>
+        <xmqq378xxuvk.fsf@gitster.mtv.corp.google.com>
+        <20170813044145.xz4o47oog3z5eycg@sigill.intra.peff.net>
+        <26bebb5b-857f-1501-5139-a5513d9875ec@ramsayjones.plus.com>
+Date:   Sun, 13 Aug 2017 10:33:13 -0700
 In-Reply-To: <26bebb5b-857f-1501-5139-a5513d9875ec@ramsayjones.plus.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+        (Ramsay Jones's message of "Sun, 13 Aug 2017 17:14:55 +0100")
+Message-ID: <xmqqy3qnwexy.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7CAF1EB8-804D-11E7-BBC8-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
-
-On 13/08/17 17:14, Ramsay Jones wrote:
-> 
-> 
-> On 13/08/17 05:41, Jeff King wrote:
->> On Fri, Aug 11, 2017 at 09:39:11PM -0700, Junio C Hamano wrote:
->>
->>>> Yeah, I just dug in the archive. The script I ran way back when was
->>>> actually clang-format-diff.
->>>
->>> I am confident with the competence of people around here that we can
->>> come up with a reasonable checker for obvious style violations. In
->>> the worst case, we could customize and/or tweak checkpatch.pl and
->>> start from there.
->>
->> I am confident we _can_, too. My question is whether we will. :)
->>
->>> Assuming that we can have such a checker, I am more interested in
->>> the way how people envision such a checker fits in our workflow to
->>> help people.  Earlier Dscho floated an idea to integrate with the
->>> GitHub pull requests in a way similar to how Travis and SubmitGit
->>> are triggered, and I can sort of see how it may help, but I haven't
->>> seen ideas from others.
->>
->> Yeah, I agree. I assume most people already run "make test" locally. I'd
->> be happy enough if we started with a "make style" that offers style
->> suggestions for you to accept. From there we can grow into
->> "automatically apply suggestions" and integrating with things like
->> submitGit.
-> 
 > As a start, how about something like this:
-> 
+>
 > -- >8 --
 > $ git diff
 > diff --git a/Makefile b/Makefile
@@ -114,89 +99,27 @@ On 13/08/17 17:14, Ramsay Jones wrote:
 >         then \
 > $ 
 > -- >8 --
-> 
-> To give it a try:
-> 
->     $ make git.stc    # just run checkpatch over git.c
->     $ make cache.sth  # just run checkpatch over cache.h
->     $ make -k style >style.out 2>&1  # yep, large output!
-> 
-> A bit crude, but workable. ;-)
-> 
-> Just FYI, for me:
-> 
-> $ wc -l style.out
-> 144076 style.out
-> $ 
-> $ grep '^WARNING' style.out | cut -d: -f1,2 | sort | uniq -c
->       2 WARNING:AVOID_EXTERNS
->     495 WARNING:BLOCK_COMMENT_STYLE
->     127 WARNING:BRACES
->     213 WARNING:CONSTANT_COMPARISON
->   12584 WARNING:CONST_STRUCT
->       5 WARNING:CVS_KEYWORD
->      26 WARNING:DEEP_INDENTATION
->       2 WARNING:DEFAULT_NO_BREAK
->      77 WARNING:EMBEDDED_FUNCTION_NAME
->       5 WARNING:ENOSYS
->     773 WARNING:FUNCTION_ARGUMENTS
->      39 WARNING:INDENTED_LABEL
->    2610 WARNING:LEADING_SPACE
->       1 WARNING:LINE_CONTINUATIONS
->    2680 WARNING:LINE_SPACING
->    3975 WARNING:LONG_LINE
->     330 WARNING:LONG_LINE_COMMENT
->     380 WARNING:LONG_LINE_STRING
->       2 WARNING:MACRO_WITH_FLOW_CONTROL
->       1 WARNING:MISORDERED_TYPE
->      17 WARNING:MISSING_SPACE
->       1 WARNING:ONE_SEMICOLON
->      77 WARNING:PREFER_PRINTF
->       7 WARNING:QUOTED_WHITESPACE_BEFORE_NEWLINE
->      10 WARNING:RETURN_VOID
->       5 WARNING:SINGLE_STATEMENT_DO_WHILE_MACRO
->       6 WARNING:SIZEOF_PARENTHESIS
->      61 WARNING:SPACE_BEFORE_TAB
->     347 WARNING:SPACING
->     322 WARNING:SPLIT_STRING
->      87 WARNING:STATIC_CONST_CHAR_ARRAY
->       2 WARNING:STORAGE_CLASS
->     538 WARNING:SUSPECT_CODE_INDENT
->      29 WARNING:SYMBOLIC_PERMS
->     279 WARNING:TABSTOP
->       9 WARNING:TRAILING_SEMICOLON
->       3 WARNING:TYPECAST_INT_CONSTANT
->       2 WARNING:UNNECESSARY_BREAK
->      56 WARNING:UNNECESSARY_ELSE
->     568 WARNING:UNSPECIFIED_INT
->       4 WARNING:USE_NEGATIVE_ERRNO
->      26 WARNING:VOLATILE
-> $ 
-
-oops, I forgot this:
-
-$ grep '^ERROR' style.out | cut -d: -f1,2 | sort | uniq -c
-    216 ERROR:ASSIGN_IN_IF
-     46 ERROR:CODE_INDENT
-     41 ERROR:COMPLEX_MACRO
-    317 ERROR:ELSE_AFTER_BRACE
-      3 ERROR:FUNCTION_WITHOUT_ARGS
-      1 ERROR:GLOBAL_INITIALISERS
-     46 ERROR:INITIALISED_STATIC
-      2 ERROR:INLINE_LOCATION
-      5 ERROR:MULTISTATEMENT_MACRO_USE_DO_WHILE
-    305 ERROR:OPEN_BRACE
-    314 ERROR:POINTER_LOCATION
-      5 ERROR:RETURN_PARENTHESES
-   3464 ERROR:SPACING
-      7 ERROR:SWITCH_CASE_INDENT_LEVEL
-    326 ERROR:TRAILING_STATEMENTS
-     15 ERROR:TRAILING_WHITESPACE
-$ 
-
+> ...
 > Hmm, on reflection, it may be a bit too crude! :-D
-> 
-> ATB,
-> Ramsay Jones
-> 
-> 
+
+As you already saw in the output from this, I think this is a good
+illustration that shows why we want an incremental tool that works
+on the changes, not on full file contents.  Contributors who want
+their changes accepted and want to help the review process by
+avoiding trivial coding style violations in their patches should not
+have to find _their_ piece from an output about the whole file
+contents, most of which is likely to have been inherited from the
+original.  They are not working on Git to produce unnecessary code
+churn whose only purpose is to make existing and otherwise dormant
+code conform to the style tool's liking.  That's not their focus.
+
+IOW I was expecting something that works on the output from "git
+diff HEAD" or "git format-patch --stdout @{u}.."
+
+Unless you were somehow envisioning that having a baseline line
+this, and then take another full dump after their patch and
+comparing the two, would make a good foundation for that incremental
+checker, that is.  I am not sure if that would be a workable
+approach myself, though.
+
+Thanks.
