@@ -2,94 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A71951F667
-	for <e@80x24.org>; Sun, 13 Aug 2017 19:04:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F40F21F667
+	for <e@80x24.org>; Sun, 13 Aug 2017 19:17:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751119AbdHMTEI (ORCPT <rfc822;e@80x24.org>);
-        Sun, 13 Aug 2017 15:04:08 -0400
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:38027 "EHLO
-        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751011AbdHMTEH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Aug 2017 15:04:07 -0400
-Received: by mail-wm0-f48.google.com with SMTP id f15so28550277wmg.1
-        for <git@vger.kernel.org>; Sun, 13 Aug 2017 12:04:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=KOZtZMT37MKpftTvDbHiG8PhO9C8dA9MTuz5JFQum1E=;
-        b=ePFUS0FPPRCBHikB+iYiroQbd15G1Yvr12YokBbZ1KDFPjDkuc0xKzAyUKGguXynLE
-         B/Y7VvEA2HICCf+4Q43ghaw/EQlgmsU0Xfl0DEH+drCAEGakzPmw5tMSYhQetyGsRBgt
-         y8toebwW4T8MQ1P0SaK3+xWqTnChsH16e5MHh2tZU4M1a4x1Ddn539csKm91p4b2xKc8
-         lOEjJRl7Ie1ojBCP+jpDkOS74l6QwKtz0zYFDDUYBEv4wIpZ5hKfOjTTngzANpG/QDPV
-         qdWvS9ZafCLGlF3SRY+t+QQVrT/CsK82HAzieWiq6/3q1kBAwRrl6/NnxqKghg8q1YUL
-         g9HQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=KOZtZMT37MKpftTvDbHiG8PhO9C8dA9MTuz5JFQum1E=;
-        b=RnkE+rriWPw0KNzPdJcdD0nJwY9pq9j8YmolFx/qGKYWrIyMI9sVCma4S923V8uQQ8
-         2KZNzjclyCRrVFpfuL/GNNRqA9WPnXSaklaip/tEyvJpkk+zAioRYHiydg+pKHvveN9i
-         V2rIC5X1Jo04/QFZTZuMMWqnXKsUc0xUFqft/k7G2WAycjLQKC3VKBD2EgW85Ssenzda
-         v82EJx78PZruk5Q30P25ybNOUpsM9yrQFJAxNRLrQNbKWslivzm2zvuYvLMgQrZM2G8/
-         05IlLPBTYOBMTeV0wG0D38oK/dvdIV80Fyw9TfiJENCNrkUDJRKT6apYC2UP7yA6xzhO
-         fH/w==
-X-Gm-Message-State: AHYfb5j5d+5LLOyLU+YFHkcHvUPl2kdiHXHxK/KSYJlr1QV5qqv/AyV9
-        n+sZuvQQ8Zi7lnAboU8PpUk5c1ydCg==
-X-Received: by 10.80.137.61 with SMTP id e58mr22693714ede.67.1502651046504;
- Sun, 13 Aug 2017 12:04:06 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.80.134.38 with HTTP; Sun, 13 Aug 2017 12:03:45 -0700 (PDT)
-In-Reply-To: <xmqqd1834645.fsf@gitster.mtv.corp.google.com>
-References: <20170809122147.g44nwaitzctbadzm@sigill.intra.peff.net>
- <xmqq60dw7j5u.fsf@gitster.mtv.corp.google.com> <CA+P7+xoifkJyH34Q0NJdE_=UzWK1SA+2gwyXrHpF7Sv2PBHATQ@mail.gmail.com>
- <20170810072822.rj6y6zcqhyfz4yi7@sigill.intra.peff.net> <xmqqd1834645.fsf@gitster.mtv.corp.google.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Sun, 13 Aug 2017 12:03:45 -0700
-Message-ID: <CA+P7+xoLNzVE4ogw+TEij=DtZM4648Jz3JvxdMBQnUb9t+Ez5A@mail.gmail.com>
-Subject: Re: [PATCH 0/5] make interpret-trailers useful for parsing
+        id S1751068AbdHMTRJ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 13 Aug 2017 15:17:09 -0400
+Received: from avasout06.plus.net ([212.159.14.18]:37494 "EHLO
+        avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750955AbdHMTRJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Aug 2017 15:17:09 -0400
+Received: from [10.0.2.15] ([143.159.212.52])
+        by avasout06 with smtp
+        id wjH61v00C18PUFB01jH7Jr; Sun, 13 Aug 2017 20:17:08 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=GetnpUfL c=1 sm=1 tr=0
+ a=CKmocqUIrzA4K3l9YJ19NQ==:117 a=CKmocqUIrzA4K3l9YJ19NQ==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=mhb2F0Gq5HUpnSjw8dsA:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [RFC] clang-format: outline the git project's coding style
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Jeff King <peff@peff.net>, Brandon Williams <bmwill@google.com>,
+        Stefan Beller <sbeller@google.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <20170808012554.186051-1-bmwill@google.com>
+ <20170809130127.ekd4tvyp2rrb7ftk@sigill.intra.peff.net>
+ <87y3qsg7ni.fsf@gmail.com>
+ <CAGZ79kYEyebHxFO++u5RkPBj16xx5nMcahBPxra4xWUfMrXydA@mail.gmail.com>
+ <CAGZ79kZRhTNez1jJq+DcCyERufd_YfWK7L+ujPjRCivzHz7LBw@mail.gmail.com>
+ <20170811175237.GC59325@google.com>
+ <20170811211845.tpgmafenhahus77o@sigill.intra.peff.net>
+ <xmqq378xxuvk.fsf@gitster.mtv.corp.google.com>
+ <20170813044145.xz4o47oog3z5eycg@sigill.intra.peff.net>
+ <26bebb5b-857f-1501-5139-a5513d9875ec@ramsayjones.plus.com>
+ <xmqqy3qnwexy.fsf@gitster.mtv.corp.google.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <d58118f7-e9d2-e74f-30be-7d66477b128b@ramsayjones.plus.com>
+Date:   Sun, 13 Aug 2017 20:17:04 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
+MIME-Version: 1.0
+In-Reply-To: <xmqqy3qnwexy.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 10, 2017 at 11:42 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jeff King <peff@peff.net> writes:
->
->>> > The above example made me wonder if we also want a format specifier
->>> > to do the above without piping, but it turns out that we already
->>> > have "log --format=%(trailers)", so we are good ;-)
->>>
->>> I was going to say, I thought we had a way to get trailers for a
->>> commit via the pretty format, since that is what i used in the past.
->>
->> I do like that you could get the trailers for many commits in a single
->> invocation. That doesn't matter for my current use-case, but obviously
->> piping through O(n) interpret-trailers invocations is a bad idea.
->> But there are a few difficulties with using %(trailers) for this,...
->
-> I think it is clear to you, but it may not be clear to others, that
-> I did not mean to say "because 'log --format' already knows about
-> it, this change to interpret-trailers is unnecessary".
->
->> For (1) I think many callers would prefer to see the original
->> formatting. Maybe we'd need a %(trailers:normalize) or something.
->
-> Thanks; that is exactly the line of thought I had in the back of my
-> head without even realizing when I brought up %(trailers) format
-> element.
 
-I'll add that I also think this patch series is good, it's useful to
-have a separate command.
 
-Thanks,
-Jake
+On 13/08/17 18:33, Junio C Hamano wrote:
+> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+>> Hmm, on reflection, it may be a bit too crude! :-D
+> 
+> As you already saw in the output from this, I think this is a good
+> illustration that shows why we want an incremental tool that works
+> on the changes, not on full file contents.  Contributors who want
+> their changes accepted and want to help the review process by
+> avoiding trivial coding style violations in their patches should not
+> have to find _their_ piece from an output about the whole file
+> contents, most of which is likely to have been inherited from the
+> original.  They are not working on Git to produce unnecessary code
+> churn whose only purpose is to make existing and otherwise dormant
+> code conform to the style tool's liking.  That's not their focus.
+> 
+> IOW I was expecting something that works on the output from "git
+> diff HEAD" or "git format-patch --stdout @{u}.."
+
+Yes, I had already tried the following, which maybe more workable,
+but it is only lightly tested. (we may want to create our own version
+of checkpatch.pl, which is written specifically for the kernel ...)
+
+$ git diff
+diff --git a/Makefile b/Makefile
+index 461c845d3..a25028e68 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2440,6 +2440,15 @@ $(SP_OBJ): %.sp: %.c GIT-CFLAGS FORCE
+ .PHONY: sparse $(SP_OBJ)
+ sparse: $(SP_OBJ)
+ 
++STYLE_REVS = HEAD
++STYLE_IGNORES = NEW_TYPEDEFS,INLINE
++
++.PHONY: style
++style:
++       @git diff $(STYLE_REVS) -- '*.[ch]' | \
++               checkpatch.pl -q --no-tree --show-types \
++               --ignore=$(STYLE_IGNORES) --patch - 2>/dev/null || true
++
+ check: common-cmds.h
+        @if sparse; \
+        then \
+$ make style  # I don't have any changes to *.[ch] files!
+$ make STYLE_REVS=HEAD~3 style
+WARNING:LONG_LINE: line over 80 characters
+#181: FILE: git.c:320:
++		if (use_pager == -1 && p->option & (RUN_SETUP | RUN_SETUP_GENTLY) &&
+
+WARNING:LONG_LINE: line over 80 characters
+#221: FILE: revision.c:2317:
++	if (revs->def && !revs->pending.nr && !revs->rev_input_given && !got_rev_arg) {
+
+total: 0 errors, 2 warnings, 206 lines checked
+$ 
+
+I suspect this closer to what you had in mind. ;-)
+(although the --ignore list may need adding to).
+
+ATB,
+Ramsay Jones
+
+
