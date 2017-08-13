@@ -2,124 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 37B061F667
-	for <e@80x24.org>; Sun, 13 Aug 2017 17:33:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 29CD91F667
+	for <e@80x24.org>; Sun, 13 Aug 2017 18:04:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751129AbdHMRd0 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 13 Aug 2017 13:33:26 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52932 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751025AbdHMRdZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Aug 2017 13:33:25 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B4FD5A9A5B;
-        Sun, 13 Aug 2017 13:33:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=iL+FP905Oxw+1JMjlZLcXvg1PS8=; b=WDeYAo
-        ATASLvQjdYMMHJYBlZvhtufGY1P1aNX73ffotCOslAAXYPmG5aez9CCrtdV9tcHk
-        kbSjHF97eSMaZNcSSXh1/WVzG0U5z9vHCaI8oduOWb/+iiHEmdRFblCWUHLaYb4q
-        imbtXkTvm1nlgOJMaczEpmAFokzIxb+68eoc8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=uTQJrOGXMzdO9PfjIxoDMTktPq3XoYQ4
-        DY6Tf3IrJvZra59jBCcJ3pzwC5J2TIULv9+2RKztGWGqftL6lV/VrRrZD9gkvbci
-        28+8AMKR8SyZZtHYr5hs01f0QQcZ6h/uaeuJLkCn00Ood4qPTfGf9IW9Yj2vhpGM
-        FDdpdfQ3gCg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id ABA80A9A5A;
-        Sun, 13 Aug 2017 13:33:15 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0F84FA9A59;
-        Sun, 13 Aug 2017 13:33:14 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Jeff King <peff@peff.net>, Brandon Williams <bmwill@google.com>,
-        Stefan Beller <sbeller@google.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [RFC] clang-format: outline the git project's coding style
-References: <20170808012554.186051-1-bmwill@google.com>
-        <20170809130127.ekd4tvyp2rrb7ftk@sigill.intra.peff.net>
-        <87y3qsg7ni.fsf@gmail.com>
-        <CAGZ79kYEyebHxFO++u5RkPBj16xx5nMcahBPxra4xWUfMrXydA@mail.gmail.com>
-        <CAGZ79kZRhTNez1jJq+DcCyERufd_YfWK7L+ujPjRCivzHz7LBw@mail.gmail.com>
-        <20170811175237.GC59325@google.com>
-        <20170811211845.tpgmafenhahus77o@sigill.intra.peff.net>
-        <xmqq378xxuvk.fsf@gitster.mtv.corp.google.com>
-        <20170813044145.xz4o47oog3z5eycg@sigill.intra.peff.net>
-        <26bebb5b-857f-1501-5139-a5513d9875ec@ramsayjones.plus.com>
-Date:   Sun, 13 Aug 2017 10:33:13 -0700
-In-Reply-To: <26bebb5b-857f-1501-5139-a5513d9875ec@ramsayjones.plus.com>
-        (Ramsay Jones's message of "Sun, 13 Aug 2017 17:14:55 +0100")
-Message-ID: <xmqqy3qnwexy.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751078AbdHMR5j (ORCPT <rfc822;e@80x24.org>);
+        Sun, 13 Aug 2017 13:57:39 -0400
+Received: from vie01a-dmta-pe06-1.mx.upcmail.net ([84.116.36.14]:12259 "EHLO
+        vie01a-dmta-pe05-1.mx.upcmail.net" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1751025AbdHMR5i (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 13 Aug 2017 13:57:38 -0400
+Received: from [172.31.216.44] (helo=vie01a-pemc-psmtp-pe02)
+        by vie01a-dmta-pe06.mx.upcmail.net with esmtp (Exim 4.88)
+        (envelope-from <martin.koegler@chello.at>)
+        id 1dgx8q-0003Dt-16
+        for git@vger.kernel.org; Sun, 13 Aug 2017 19:57:36 +0200
+Received: from master.zuhause ([80.108.242.240])
+        by vie01a-pemc-psmtp-pe02 with SMTP @ mailcloud.upcmail.net
+        id whoN1v0015BuuEg01hoPFd; Sun, 13 Aug 2017 19:48:23 +0200
+X-SourceIP: 80.108.242.240
+Received: by master.zuhause (Postfix, from userid 1006)
+        id B1B3E45D4512; Sun, 13 Aug 2017 19:48:21 +0200 (CEST)
+Date:   Sun, 13 Aug 2017 19:48:21 +0200
+From:   Martin Koegler <martin.koegler@chello.at>
+To:     Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>
+Cc:     Martin Koegler <martin.koegler@chello.at>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH 5/9] Convert various things to size_t
+Message-ID: <20170813174821.GA30330@mail.zuhause>
+References: <1502527643-21944-1-git-send-email-martin@mail.zuhause>
+ <1502527643-21944-5-git-send-email-martin@mail.zuhause>
+ <CAN0heSqu0evvo7dFPwWvgEthoafCVZmJKbRftBbHRhtN_du4HQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7CAF1EB8-804D-11E7-BBC8-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAN0heSqu0evvo7dFPwWvgEthoafCVZmJKbRftBbHRhtN_du4HQ@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+On Sat, Aug 12, 2017 at 03:27:21PM +0200, Martin Ågren wrote:
+> On 12 August 2017 at 10:47, Martin Koegler <martin.koegler@chello.at> wrote:
+> > From: Martin Koegler <martin.koegler@chello.at>
+> >
+> > ---
+> >  bisect.c                | 2 +-
+> >  blame.c                 | 2 +-
+> >  builtin/fmt-merge-msg.c | 2 +-
+> >  builtin/mktag.c         | 2 +-
+> >  dir.c                   | 4 ++--
+> >  dir.h                   | 2 +-
+> >  6 files changed, 7 insertions(+), 7 deletions(-)
+> >
+> > diff --git a/bisect.c b/bisect.c
+> > index 2549eaf..0580c82 100644
+> > --- a/bisect.c
+> > +++ b/bisect.c
+> > @@ -131,7 +131,7 @@ static void show_list(const char *debug, int counted, int nr,
+> >                 struct commit *commit = p->item;
+> >                 unsigned flags = commit->object.flags;
+> >                 enum object_type type;
+> > -               unsigned long size;
+> > +               size_t size;
+> >                 char *buf = read_sha1_file(commit->object.sha1, &type, &size);
+> >                 const char *subject_start;
+> >                 int subject_len;
+> 
+> Would this need to be done in a patch where read_sha1_file is converted?
 
-> As a start, how about something like this:
->
-> -- >8 --
-> $ git diff
-> diff --git a/Makefile b/Makefile
-> index 461c845d3..7555def45 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -2440,6 +2440,18 @@ $(SP_OBJ): %.sp: %.c GIT-CFLAGS FORCE
->  .PHONY: sparse $(SP_OBJ)
->  sparse: $(SP_OBJ)
->  
-> +ST_C = $(patsubst %.o,%.stc,$(C_OBJ))
-> +ST_H = $(patsubst %.h,%.sth,$(LIB_H))
-> +
-> +$(ST_C): %.stc: %.c FORCE
-> +       checkpatch.pl --no-tree --show-types --ignore=NEW_TYPEDEFS,INLINE -f $<
-> +
-> +$(ST_H): %.sth: %.h FORCE
-> +       checkpatch.pl --no-tree --show-types --ignore=NEW_TYPEDEFS,INLINE -f $<
-> +
-> +.PHONY: style $(ST_C) $(ST_H)
-> +style: $(ST_C) $(ST_H)
-> +
->  check: common-cmds.h
->         @if sparse; \
->         then \
-> $ 
-> -- >8 --
-> ...
-> Hmm, on reflection, it may be a bit too crude! :-D
+I missed this first, because it is debug code requiring a code change to be enabled. 
 
-As you already saw in the output from this, I think this is a good
-illustration that shows why we want an incremental tool that works
-on the changes, not on full file contents.  Contributors who want
-their changes accepted and want to help the review process by
-avoiding trivial coding style violations in their patches should not
-have to find _their_ piece from an output about the whole file
-contents, most of which is likely to have been inherited from the
-original.  They are not working on Git to produce unnecessary code
-churn whose only purpose is to make existing and otherwise dormant
-code conform to the style tool's liking.  That's not their focus.
+It probably should be merged in my second patch. On the other hand that patch is already considered too large.
 
-IOW I was expecting something that works on the output from "git
-diff HEAD" or "git format-patch --stdout @{u}.."
-
-Unless you were somehow envisioning that having a baseline line
-this, and then take another full dump after their patch and
-comparing the two, would make a good foundation for that incremental
-checker, that is.  I am not sure if that would be a workable
-approach myself, though.
-
-Thanks.
+Regards,
+Martin
