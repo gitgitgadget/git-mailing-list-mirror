@@ -2,100 +2,175 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9769620899
-	for <e@80x24.org>; Sun, 13 Aug 2017 09:48:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9C8F11F667
+	for <e@80x24.org>; Sun, 13 Aug 2017 16:15:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751097AbdHMJsd (ORCPT <rfc822;e@80x24.org>);
-        Sun, 13 Aug 2017 05:48:33 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:33473 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750955AbdHMJsc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Aug 2017 05:48:32 -0400
-Received: by mail-wr0-f196.google.com with SMTP id y41so314119wrd.0
-        for <git@vger.kernel.org>; Sun, 13 Aug 2017 02:48:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=NennIra1P875DibbA6a9NnUszKP7K7Gz4PTACa/ydk4=;
-        b=DYps+1mfouxwC5ldeLksqVOpGpxe4jjKLNOkZNJiXbPErbWzRc53zMFfDoP9whel2n
-         KiXuYBCDJM9KSezmjA8rjVCwz+4V1OZYaQJLsRdzr2hvk+/zqMnRckhkeOYY0P8DJ5yD
-         5GKJZJEu8UrltruOijjv6tq0IHlGWYHXOnKKA8YOc2L0D4ENrHkc0ucLZQQzgHjYx35S
-         twZ4ob4aG4WkTjNSIrEVKdCXTgvYwdK55tTcC2IYT3Hm0qvI7FxlWRlOIobxyjqlKDrJ
-         B35WrWCx+Hu4n9AsUbHK/HtrsTdOtvKA393NSiO6wK2F7H3U8Qm1fxYU/o0obAdCwO8U
-         gZdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=NennIra1P875DibbA6a9NnUszKP7K7Gz4PTACa/ydk4=;
-        b=aTG2jvy84LJwXqBOjjFj90ODjlGQxqLlqxh6A+BNgcqAA9rdmD9KgeqTHIxBNV08Ws
-         qofx+/o8c6EccPdGmns7b0zMtK1Vtu68iprB5xuOSw/eL8sG4gmlvGngi5tGLUYbFzHM
-         /CToSdwTnzVLMewiBNQZlbuWlEEs07sHfsrVZT8QK1KHHYTWjbeOc6RYQ6v+RKJYNcjH
-         CRF6aDqXsCwHiHT749CHprhYK8Yv05A+yh42pCAz0kDxwdeDSgI5uPY7bXwD1OcgjG2y
-         Hw6nFjoTWGXcvyVDEuwy2rNnRelHhE5w5OBZJt8byvAtzwhRhHi6JPyOYC2jnYk8Z1GB
-         P+jA==
-X-Gm-Message-State: AHYfb5iTaMkYrd2ceKyIJlFtZhovSnqyKQFdNot64m1a+BTHs/eRcp2I
-        WzY2vpqOXtfQP9Pq
-X-Received: by 10.223.148.36 with SMTP id 33mr15901817wrq.24.1502617711235;
-        Sun, 13 Aug 2017 02:48:31 -0700 (PDT)
-Received: from arrakeen.fritz.box ([2001:a61:340a:f800:1926:4388:d603:b0d9])
-        by smtp.gmail.com with ESMTPSA id v9sm2403673wmg.41.2017.08.13.02.48.29
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 13 Aug 2017 02:48:29 -0700 (PDT)
-From:   Andreas Heiduk <asheiduk@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Andreas Heiduk <asheiduk@gmail.com>
-Subject: [PATCH] doc: clarify "config --bool" behaviour with empty values
-Date:   Sun, 13 Aug 2017 11:48:16 +0200
-Message-Id: <20170813094816.7754-1-asheiduk@gmail.com>
-X-Mailer: git-send-email 2.13.3
+        id S1751498AbdHMQPB (ORCPT <rfc822;e@80x24.org>);
+        Sun, 13 Aug 2017 12:15:01 -0400
+Received: from avasout06.plus.net ([212.159.14.18]:35575 "EHLO
+        avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751490AbdHMQPA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Aug 2017 12:15:00 -0400
+Received: from [10.0.2.15] ([143.159.212.52])
+        by avasout06 with smtp
+        id wgEx1v00418PUFB01gEyZQ; Sun, 13 Aug 2017 17:14:59 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=GetnpUfL c=1 sm=1 tr=0
+ a=CKmocqUIrzA4K3l9YJ19NQ==:117 a=CKmocqUIrzA4K3l9YJ19NQ==:17
+ a=IkcTkHD0fZMA:10 a=uRCf44rWQiLDkb8AJjAA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [RFC] clang-format: outline the git project's coding style
+To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        Stefan Beller <sbeller@google.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <20170808012554.186051-1-bmwill@google.com>
+ <20170809130127.ekd4tvyp2rrb7ftk@sigill.intra.peff.net>
+ <87y3qsg7ni.fsf@gmail.com>
+ <CAGZ79kYEyebHxFO++u5RkPBj16xx5nMcahBPxra4xWUfMrXydA@mail.gmail.com>
+ <CAGZ79kZRhTNez1jJq+DcCyERufd_YfWK7L+ujPjRCivzHz7LBw@mail.gmail.com>
+ <20170811175237.GC59325@google.com>
+ <20170811211845.tpgmafenhahus77o@sigill.intra.peff.net>
+ <xmqq378xxuvk.fsf@gitster.mtv.corp.google.com>
+ <20170813044145.xz4o47oog3z5eycg@sigill.intra.peff.net>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <26bebb5b-857f-1501-5139-a5513d9875ec@ramsayjones.plus.com>
+Date:   Sun, 13 Aug 2017 17:14:55 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
+MIME-Version: 1.0
+In-Reply-To: <20170813044145.xz4o47oog3z5eycg@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-`git config --bool xxx.yyy` returns `true` for `[xxx]yyy` but
-`false` for `[xxx]yyy=` or `[xxx]yyy=""`.  This is tested in
-t1300-repo-config.sh since 09bc098c2.
 
-Signed-off-by: Andreas Heiduk <asheiduk@gmail.com>
----
- Documentation/config.txt | 3 ++-
- Documentation/git.txt    | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index d5c9c4cab..d3261006b 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -221,7 +221,8 @@ boolean::
- 		is taken as true.
+On 13/08/17 05:41, Jeff King wrote:
+> On Fri, Aug 11, 2017 at 09:39:11PM -0700, Junio C Hamano wrote:
+> 
+>>> Yeah, I just dug in the archive. The script I ran way back when was
+>>> actually clang-format-diff.
+>>
+>> I am confident with the competence of people around here that we can
+>> come up with a reasonable checker for obvious style violations. In
+>> the worst case, we could customize and/or tweak checkpatch.pl and
+>> start from there.
+> 
+> I am confident we _can_, too. My question is whether we will. :)
+> 
+>> Assuming that we can have such a checker, I am more interested in
+>> the way how people envision such a checker fits in our workflow to
+>> help people.  Earlier Dscho floated an idea to integrate with the
+>> GitHub pull requests in a way similar to how Travis and SubmitGit
+>> are triggered, and I can sort of see how it may help, but I haven't
+>> seen ideas from others.
+> 
+> Yeah, I agree. I assume most people already run "make test" locally. I'd
+> be happy enough if we started with a "make style" that offers style
+> suggestions for you to accept. From there we can grow into
+> "automatically apply suggestions" and integrating with things like
+> submitGit.
+
+As a start, how about something like this:
+
+-- >8 --
+$ git diff
+diff --git a/Makefile b/Makefile
+index 461c845d3..7555def45 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2440,6 +2440,18 @@ $(SP_OBJ): %.sp: %.c GIT-CFLAGS FORCE
+ .PHONY: sparse $(SP_OBJ)
+ sparse: $(SP_OBJ)
  
-        false;; Boolean false can be spelled as `no`, `off`,
--		`false`, or `0`.
-+		`false`, `0`, no value (but still with `=`) or the
-+		empty string.
- +
- When converting value to the canonical form using `--bool` type
- specifier; 'git config' will ensure that the output is "true" or
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 7dd5e0328..6e3a6767e 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -75,7 +75,8 @@ example the following invocations are equivalent:
- Note that omitting the `=` in `git -c foo.bar ...` is allowed and sets
- `foo.bar` to the boolean true value (just like `[foo]bar` would in a
- config file). Including the equals but with an empty value (like `git -c
--foo.bar= ...`) sets `foo.bar` to the empty string.
-+foo.bar= ...`) sets `foo.bar` to the empty string which ` git config
-+--bool` will convert to `false`.
- 
- --exec-path[=<path>]::
- 	Path to wherever your core Git programs are installed.
--- 
-2.13.3
++ST_C = $(patsubst %.o,%.stc,$(C_OBJ))
++ST_H = $(patsubst %.h,%.sth,$(LIB_H))
++
++$(ST_C): %.stc: %.c FORCE
++       checkpatch.pl --no-tree --show-types --ignore=NEW_TYPEDEFS,INLINE -f $<
++
++$(ST_H): %.sth: %.h FORCE
++       checkpatch.pl --no-tree --show-types --ignore=NEW_TYPEDEFS,INLINE -f $<
++
++.PHONY: style $(ST_C) $(ST_H)
++style: $(ST_C) $(ST_H)
++
+ check: common-cmds.h
+        @if sparse; \
+        then \
+$ 
+-- >8 --
+
+To give it a try:
+
+    $ make git.stc    # just run checkpatch over git.c
+    $ make cache.sth  # just run checkpatch over cache.h
+    $ make -k style >style.out 2>&1  # yep, large output!
+
+A bit crude, but workable. ;-)
+
+Just FYI, for me:
+
+$ wc -l style.out
+144076 style.out
+$ 
+$ grep '^WARNING' style.out | cut -d: -f1,2 | sort | uniq -c
+      2 WARNING:AVOID_EXTERNS
+    495 WARNING:BLOCK_COMMENT_STYLE
+    127 WARNING:BRACES
+    213 WARNING:CONSTANT_COMPARISON
+  12584 WARNING:CONST_STRUCT
+      5 WARNING:CVS_KEYWORD
+     26 WARNING:DEEP_INDENTATION
+      2 WARNING:DEFAULT_NO_BREAK
+     77 WARNING:EMBEDDED_FUNCTION_NAME
+      5 WARNING:ENOSYS
+    773 WARNING:FUNCTION_ARGUMENTS
+     39 WARNING:INDENTED_LABEL
+   2610 WARNING:LEADING_SPACE
+      1 WARNING:LINE_CONTINUATIONS
+   2680 WARNING:LINE_SPACING
+   3975 WARNING:LONG_LINE
+    330 WARNING:LONG_LINE_COMMENT
+    380 WARNING:LONG_LINE_STRING
+      2 WARNING:MACRO_WITH_FLOW_CONTROL
+      1 WARNING:MISORDERED_TYPE
+     17 WARNING:MISSING_SPACE
+      1 WARNING:ONE_SEMICOLON
+     77 WARNING:PREFER_PRINTF
+      7 WARNING:QUOTED_WHITESPACE_BEFORE_NEWLINE
+     10 WARNING:RETURN_VOID
+      5 WARNING:SINGLE_STATEMENT_DO_WHILE_MACRO
+      6 WARNING:SIZEOF_PARENTHESIS
+     61 WARNING:SPACE_BEFORE_TAB
+    347 WARNING:SPACING
+    322 WARNING:SPLIT_STRING
+     87 WARNING:STATIC_CONST_CHAR_ARRAY
+      2 WARNING:STORAGE_CLASS
+    538 WARNING:SUSPECT_CODE_INDENT
+     29 WARNING:SYMBOLIC_PERMS
+    279 WARNING:TABSTOP
+      9 WARNING:TRAILING_SEMICOLON
+      3 WARNING:TYPECAST_INT_CONSTANT
+      2 WARNING:UNNECESSARY_BREAK
+     56 WARNING:UNNECESSARY_ELSE
+    568 WARNING:UNSPECIFIED_INT
+      4 WARNING:USE_NEGATIVE_ERRNO
+     26 WARNING:VOLATILE
+$ 
+
+Hmm, on reflection, it may be a bit too crude! :-D
+
+ATB,
+Ramsay Jones
 
