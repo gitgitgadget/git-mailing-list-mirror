@@ -2,98 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 547BD20899
-	for <e@80x24.org>; Mon, 14 Aug 2017 22:29:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 10CE220899
+	for <e@80x24.org>; Mon, 14 Aug 2017 22:29:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752778AbdHNW3X (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Aug 2017 18:29:23 -0400
-Received: from mail-yw0-f170.google.com ([209.85.161.170]:35855 "EHLO
-        mail-yw0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752574AbdHNW2w (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Aug 2017 18:28:52 -0400
-Received: by mail-yw0-f170.google.com with SMTP id u207so63196329ywc.3
-        for <git@vger.kernel.org>; Mon, 14 Aug 2017 15:28:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=57d5B2/lRP/RP/MmRvTicits9RactMYdBz8W4C84v4Q=;
-        b=eB7IULewNJnT4xqokMgEVVtlSXKR/NYW1fa+fs0BfHP26t0aQbA0cOSHsZf63zp6ne
-         dX+OSNMiG6/Hby1nzQom9PqJ5IZLCR4sSp9fOSX3wmEFoRLEOo8wc+2esZ2FG5CrDV6X
-         gRRh5lHM6nO3oazNPswck/WpJJR4iwrZOPx8fr3BMiyoi5RH6m02jc1++gDaTcczum+M
-         frF2q4BbK/Bhtkoz+zCrc22x1robbMx9pAbpoZfxIlfatugop/W8xDwbSUhS8Dk7keUH
-         zgFEzcID4xkXTYEPAuclJDEHWGE9DtGiBF70LCvoIUJuzBBJGhSITYe0hiD+LNtu31HE
-         aopQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=57d5B2/lRP/RP/MmRvTicits9RactMYdBz8W4C84v4Q=;
-        b=FGhSnNYZHE7BanB+gV9PF6rDIsLrJB1hlANfsnjdNt1CNcAOZbigegt1OqSirrQt4K
-         AwNU2QhMDoMfz/eWFtZ8OXZtvJ9Nz0WqUYLzZDolouEMsGKlvuQRNbdZTDxnM/z+iYny
-         SM0j3prsd53vixOZibU1ZGFvkSx3o4xIQCAwxk9xyYnzScYAo+2hmbj3xOdsSG5PnA/N
-         /+9dTZyFnGvv4bxlUcNVcPKRh1PICJ0ccLDKMh53eQxkAAykgS7+wLWn2gGgYWp4hBOI
-         FExCFFTRDmi3o60oC17Q+3azreYJZKPXDig56rTlGkeupjIm265VdpMJxkb+IKSz+Den
-         0Hzw==
-X-Gm-Message-State: AHYfb5h9Buo7xsHM+V7WbVFSXChvyRfV3vmJJEwTWBh7CR2/0Pu2EIRE
-        jUJDygn/IJPWK62kKj8QCppKGTmHIlaO
-X-Received: by 10.37.55.79 with SMTP id e76mr21376312yba.215.1502749731173;
- Mon, 14 Aug 2017 15:28:51 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.37.56.142 with HTTP; Mon, 14 Aug 2017 15:28:50 -0700 (PDT)
-In-Reply-To: <xmqqd17xu6qg.fsf@gitster.mtv.corp.google.com>
-References: <20170808012554.186051-1-bmwill@google.com> <20170814213046.107576-1-bmwill@google.com>
- <20170814213046.107576-3-bmwill@google.com> <xmqqd17xu6qg.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 14 Aug 2017 15:28:50 -0700
-Message-ID: <CAGZ79kbAp0p8-y-UpamU0J65A2P0B9r7KEWM0ZCBv=x4E77sGw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] Makefile: add style build rule
+        id S1753028AbdHNW3v (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Aug 2017 18:29:51 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38578 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1753022AbdHNW3t (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Aug 2017 18:29:49 -0400
+Received: (qmail 28317 invoked by uid 109); 14 Aug 2017 22:29:49 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 14 Aug 2017 22:29:49 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6468 invoked by uid 111); 14 Aug 2017 22:30:13 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Mon, 14 Aug 2017 18:30:13 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Aug 2017 18:29:47 -0400
+Date:   Mon, 14 Aug 2017 18:29:47 -0400
+From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Jeff King <peff@peff.net>, Ben Peart <peartben@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Philip Oakley <philipoakley@iee.org>,
+        Kevin Willford <kcwillford@gmail.com>, git@vger.kernel.org,
+        Kevin Willford <kewillf@microsoft.com>
+Subject: Re: [PATCH v2 1/2] format-patch: have progress option while
+ generating patches
+Message-ID: <20170814222947.edvuz7b2hxuwcsqj@sigill.intra.peff.net>
+References: <20170531150427.7820-1-kewillf@microsoft.com>
+ <20170810183256.12668-2-kewillf@microsoft.com>
+ <20170810232033.46ujnozvnodkguog@sigill.intra.peff.net>
+ <xmqqwp69ycim.fsf@gitster.mtv.corp.google.com>
+ <EA124B72FA7542DBA1C31213235F1B94@PhilipOakley>
+ <20170813043940.muj7z3dvl3nh4k6a@sigill.intra.peff.net>
+ <xmqqpobyw11t.fsf@gitster.mtv.corp.google.com>
+ <xmqqshguuhe2.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqshguuhe2.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 14, 2017 at 3:25 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Brandon Williams <bmwill@google.com> writes:
->
->> Add the 'style' build rule which will run git-clang-format on the diff
->> between HEAD and the current worktree.  The result is a diff of
->> suggested changes.
->>
->> Signed-off-by: Brandon Williams <bmwill@google.com>
->> ---
->>  Makefile | 4 ++++
->>  1 file changed, 4 insertions(+)
->>
->> diff --git a/Makefile b/Makefile
->> index ba4359ef8..acfd096b7 100644
->> --- a/Makefile
->> +++ b/Makefile
->> @@ -2414,6 +2414,10 @@ $(SP_OBJ): %.sp: %.c GIT-CFLAGS FORCE
->>  .PHONY: sparse $(SP_OBJ)
->>  sparse: $(SP_OBJ)
->>
->> +.PHONY: style
->> +style:
->> +     git clang-format --style file --diff --extensions c,h
->
-> Did we get "git clang-format" subcommand, or is "s/git //" implied
-> somewhere?
+On Mon, Aug 14, 2017 at 11:35:33AM -0700, Junio C Hamano wrote:
 
-You need to have clang-format installed (debian/Ubuntu package, or
-however it is named in your distribution), which provides this command
-for us.
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > Perhaps we may want to replace the calls to progress_delay() with a
+> > call to a simpler wrapper that does not let the callers give their
+> > own delay threashold to simplify the API.
+> 
+> ... which does not look too bad, but because it makes me wonder if
+> we even need to make the delay-threshold customizable per callers,
+> I'll wait further discussions before committing to the approach.
+
+For what it's worth, I had a similar "why is this even part of the API"
+thought when writing earlier in the thread.
+
+> For example, I do not quite understand why 95 is a good value for
+> prune-packed while 0 is a good value for prune.
+
+And I also wondered this same thing. I do not have a good answer.
+
+> The rename detection in diffcore-rename, delay in blame, and
+> checkout (via unpack-trees) all of which use 50-percent threshold
+> with 1 second delay, sort of make sense to me in that if we
+> completed 50 percent within 1 second, it is likely we will finish
+> all in 2 seconds (which is the norm for everybody else), perhaps as
+> a better version of 0-percent 2 seconds rule.
+
+Just thinking what could go wrong for a moment.
+
+If we reach 51% in one second, would we then never show progress? That
+seems like a misfeature when the counter is spiky. E.g., consider
+something like object transfer (which doesn't do a delayed progress, but
+pretend for a moment as it makes a simple example). Imagine we have 100
+objects, 99 of which are 10KB and one of which is 100MB. And that the
+big object comes at slot 75.
+
+No matter how the delay works, the counter is going to jump quickly to
+75% as we send the small objects, and then appear to stall on the large
+one. That's unavoidable without feeding the progress code more data
+about the items. But what does the user see?
+
+With (0,2), we start the progress meter at 2 seconds, the user sees it
+stall at 75%, and then eventually it unclogs.
+
+With (50,1), we check the percentage after 1 second and see we are
+already at 75%. We then disable the meter totally. After 2 seconds, we
+get the same stall but the user sees nothing.
+
+So in that case we should always base our decision only on time taken.
+
+And that gives me an answer for your question above: the difference is
+whether we expect the counter to move smoothly, or to be spiky.
+
+If it's smooth, the (50,1) case is slightly nicer in that it puts the
+progress in front of the user more quickly. I'm not sure if that's
+actually worth pushing an additional decision onto the person writing
+the calling code, though (especially when we are just now puzzling out
+the method for making such a decision from first principles).
+
+So I'd vote to drop that parameter entirely. And if 1 second seems
+noticeably snappier, then we should probably just move everything to a 1
+second delay (I don't have a strong feeling either way).
+
+-Peff
