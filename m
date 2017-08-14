@@ -2,104 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF62D20899
-	for <e@80x24.org>; Mon, 14 Aug 2017 23:15:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A0CD620899
+	for <e@80x24.org>; Mon, 14 Aug 2017 23:23:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752768AbdHNXPm (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Aug 2017 19:15:42 -0400
-Received: from mail-yw0-f181.google.com ([209.85.161.181]:35104 "EHLO
-        mail-yw0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752744AbdHNXPl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Aug 2017 19:15:41 -0400
-Received: by mail-yw0-f181.google.com with SMTP id l82so63442961ywc.2
-        for <git@vger.kernel.org>; Mon, 14 Aug 2017 16:15:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ADEW9UqB+xctuw8mguYTf76/P8J+iWJbvu1LYMgUMxE=;
-        b=FRbZgusc/oOOthP9tDV0xOpuTucisEBk4FJ3IRNzyDNj2yTxqO3mtmAWSWEadCIUHX
-         Sz9UP3M8qdytarGY89dGBdg4gtsrfBYCOjv/MS54yz88WNYBwgEPAVcaCt0oFycxze3N
-         Ffy1blXQoz1LAfbR1ZakY9pE4cLGHWdi5FUZX1ILS0XL2iCvEixwBEvDNx0eZ2S7TUMF
-         muU9gLsTRBJCPj1OZ1a3TySEmsY1zvufLuDw3sdPObdIWNPNojS2jMRfIuWAd+1Rsodv
-         7fNE0o4pCdC+0BBc26+IHbheGIEDpI5JQZGgIZgld7Jo87cIQhyXOg6q1N7jAQYjnamn
-         0o/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ADEW9UqB+xctuw8mguYTf76/P8J+iWJbvu1LYMgUMxE=;
-        b=PbXGKIgmHffogJct7ephB1GDm0JH04W551fD+cYbxrSwrIKfEkY0L+6HZTsfUbPWvV
-         yOwaECtsB3oSjHLgYC6PMyYhQSaIW401fNBtBaLgt6m4i6X7I1jh3zZawbWvn31w/bYa
-         kbK3IxcJvPqtOBN3XbFztw8JM7IRaz9yLdpA+bCwGJcSi24iu8pEvuIdUsdh11TeDBvM
-         UgLIBSuiTHh4WqR6d02v41i/uOw+VLBz+66RNZc/DVzBLCUSNq3IQ7qyEGyPM3ddcPXS
-         Gu3qOotLBTo1+Jz6dCLOuK3FmxO1P3pjeXd0lFfKciPWT4EgG6ssvKbK4hpO2ZqFC1sn
-         7aTA==
-X-Gm-Message-State: AHYfb5h36qObcIrooRiwk0OAnlri9x4B9Apy3ca0sNT0/TS1xnQoEA1Q
-        7hAeKY6AXZg40dgvVMqJgHKP1zHGyvPm
-X-Received: by 10.37.183.130 with SMTP id n2mr10524178ybh.353.1502752541028;
- Mon, 14 Aug 2017 16:15:41 -0700 (PDT)
+        id S1752757AbdHNXXU (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Aug 2017 19:23:20 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63352 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752643AbdHNXXU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Aug 2017 19:23:20 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2F8939D35E;
+        Mon, 14 Aug 2017 19:23:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=POTZdAdQCY+JyCqYTC68PNaxQuc=; b=WNuYDO
+        ozHXB6eEwW/BogBMey4gpeSZD24k4/di+NGgG269bz18T0ChZgUiepwmru5NjgUa
+        IENHvOfAa8eAsmKkr0vHe+qQVglWemUNPD4gYXzHk830xQRiuDBTPyGhr6Y4X6Fs
+        L7SMIwztdeRaoiY5hSOxKSTVUpqoFSKsLNMJg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=hh38fE5h0T6frCwcBjtREsI9l0HLhEpm
+        dA3VJPc2mQw987KOItnZN/5fFUHlmsXwkcs/2yn52tBYevNdJL5jxb4lHRwDxlp+
+        z4yvtYgEv4XhvsuV/eJqb8OarwU2XYGyiWESQYt1mZSxjsKB7QBDdLpOivwYi+Pb
+        nHTdesSP4wg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 27EB59D35D;
+        Mon, 14 Aug 2017 19:23:13 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8D65D9D35A;
+        Mon, 14 Aug 2017 19:23:12 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Philip Oakley <philipoakley@iee.org>,
+        Kevin Willford <kcwillford@gmail.com>, git@vger.kernel.org,
+        Kevin Willford <kewillf@microsoft.com>
+Subject: Re: [PATCH v2 1/2] format-patch: have progress option while generating patches
+References: <20170531150427.7820-1-kewillf@microsoft.com>
+        <20170810183256.12668-2-kewillf@microsoft.com>
+        <20170810232033.46ujnozvnodkguog@sigill.intra.peff.net>
+        <xmqqwp69ycim.fsf@gitster.mtv.corp.google.com>
+        <EA124B72FA7542DBA1C31213235F1B94@PhilipOakley>
+        <20170813043940.muj7z3dvl3nh4k6a@sigill.intra.peff.net>
+        <xmqqpobyw11t.fsf@gitster.mtv.corp.google.com>
+        <xmqqshguuhe2.fsf@gitster.mtv.corp.google.com>
+        <20170814222947.edvuz7b2hxuwcsqj@sigill.intra.peff.net>
+        <xmqq8tilu5yx.fsf@gitster.mtv.corp.google.com>
+        <20170814230829.4elsuvosezybw3qn@sigill.intra.peff.net>
+Date:   Mon, 14 Aug 2017 16:23:11 -0700
+In-Reply-To: <20170814230829.4elsuvosezybw3qn@sigill.intra.peff.net> (Jeff
+        King's message of "Mon, 14 Aug 2017 19:08:30 -0400")
+Message-ID: <xmqq4lt9u42o.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.37.56.142 with HTTP; Mon, 14 Aug 2017 16:15:40 -0700 (PDT)
-In-Reply-To: <20170814230657.bmn7exoqmqw3tlyh@sigill.intra.peff.net>
-References: <20170808012554.186051-1-bmwill@google.com> <20170814213046.107576-1-bmwill@google.com>
- <20170814230657.bmn7exoqmqw3tlyh@sigill.intra.peff.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 14 Aug 2017 16:15:40 -0700
-Message-ID: <CAGZ79kZgRTzWiufZUE02YYOJpH66x_hShBfcv=4RWDn-qR2LUg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] clang-format
-To:     Jeff King <peff@peff.net>, llvm-dev@lists.llvm.org
-Cc:     Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Ben Peart <peartben@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8A97A7F2-8147-11E7-B65E-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-+ llvm-dev@lists.llvm.org
+Jeff King <peff@peff.net> writes:
 
-The Git community is currently discussing adopting a coding style
-defined by clang-format, here is a bug report:
+> On Mon, Aug 14, 2017 at 03:42:14PM -0700, Junio C Hamano wrote:
+>
+>> Jeff King <peff@peff.net> writes:
+>> 
+>> > If it's smooth, the (50,1) case is slightly nicer in that it puts the
+>> > progress in front of the user more quickly. I'm not sure if that's
+>> > actually worth pushing an additional decision onto the person writing
+>> > the calling code, though (especially when we are just now puzzling out
+>> > the method for making such a decision from first principles).
+>> >
+>> > So I'd vote to drop that parameter entirely. And if 1 second seems
+>> > noticeably snappier, then we should probably just move everything to a 1
+>> > second delay (I don't have a strong feeling either way).
+>> 
+>> Sounds like a good idea to me.  
+>> 
+>> I've already locally tweaked Kevin's patch to use (0,2) instead of
+>> (0,1) without introducing the simpler wrapper.  It should be trivial
+>> to do a wrapper to catch and migrate all the (0,2) users to a
+>> start_delayed_progress() that takes neither percentage or time with
+>> mechanical replacement.
+>
+> I was actually proposing to move (50,1) cases to the simpler wrapper,
+> too. IOW, drop the delayed_percent_treshold code entirely.
 
-On Mon, Aug 14, 2017 at 4:06 PM, Jeff King <peff@peff.net> wrote:
->
-> One more oddity I found while playing with this that Git folks might run
-> into:
->
->   $ git init tmp && cd tmp
->   $ git commit --allow-empty -m foo
->   $ echo "[mysection]mykey" >>.git/config
->   $ git clang-format-5.0
->   Traceback (most recent call last):
->     File "/usr/bin/git-clang-format-5.0", line 579, in <module>
->       main()
->     File "/usr/bin/git-clang-format-5.0", line 62, in main
->       config = load_git_config()
->     File "/usr/bin/git-clang-format-5.0", line 194, in load_git_config
->       name, value = entry.split('\n', 1)
->   ValueError: need more than 1 value to unpack
->
->   $ sed -i 's/mykey/&=true/' .git/config
->   $ git clang-format-5.0
->   no modified files to format
->
-> So it looks like they do their own config parsing and it's not quite
-> compatible. :(
->
-> That's not the end of the world, and something we can try to fix
-> upstream. I just wanted to mention it here so other people don't waste
-> time trying to track down the problem.
->
-> -Peff
+I should have mentioned that (50,1) should also be treated just like
+(0,2) case--they should mean the same thing.  Other oddness like 95
+might merit individual consideration, and I didn't want to add (0,1)
+as another oddball to the mix.
