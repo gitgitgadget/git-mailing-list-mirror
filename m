@@ -2,90 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 562C220899
-	for <e@80x24.org>; Mon, 14 Aug 2017 17:07:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BEA2D20899
+	for <e@80x24.org>; Mon, 14 Aug 2017 17:08:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752166AbdHNRHG (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Aug 2017 13:07:06 -0400
-Received: from mail-yw0-f170.google.com ([209.85.161.170]:36023 "EHLO
-        mail-yw0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751481AbdHNRHF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Aug 2017 13:07:05 -0400
-Received: by mail-yw0-f170.google.com with SMTP id u207so58532608ywc.3
-        for <git@vger.kernel.org>; Mon, 14 Aug 2017 10:07:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=0q7Wsw9GnOVehkaOimSjUJubHDneDSLmf0X5F3hQKdQ=;
-        b=MNr0QqEMzyqhlyifTTy/UbzzbOgHIc0ryvPw57XODKashxU8X/OowM1Wp99BFvU+tc
-         Gor/aoSnIjikARs57bpk1I31fWly5vSKejmYXTOXbvn82hOyGXn53jS0mRM0ls6V0Wbh
-         KMYQDwGCwZa2bgHCOfj3T0W7X8BpJHy/74roRZ8drIU0HX1haQpwRpqZVr+pJljmP4I2
-         7cfqbvi2uWFAOE2+JibMLFUiwLpm+urODO9lm0yogvb/9XtpIr6C//1o0SRPIDBOft+c
-         55ypE8pUS2y85zDt4zHPo2h6kgYzA7yuEbc6v3vtAfZJdu3RbtwafRX+44bUr0xLXKCa
-         5Sfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=0q7Wsw9GnOVehkaOimSjUJubHDneDSLmf0X5F3hQKdQ=;
-        b=FUxs5m7rz4e303hpzXpilTzAYHuinCs1zHheg4mWR0BtXalFI0pXDfLkTy2okHIcLJ
-         HHWKVsnw+bEdkdgCHFNOFBhKfHz6DT3NEC7Zi7qCX1jfvmFv0QQCaegd71dwu1Ecb7PH
-         3y+NffxZQ02bcjWz3ieqVg7oL2IkbMRoiLZsHDfALwdP9O6O32ELg3yg7nxoXIY+Pe1N
-         nbpE1giuW2HoQAWtFejcHpw8U2CHk0ZBHijti/1XbKaOhNmstfEzPUqoDh+mOLJQGHSE
-         r53z+uJ1zU4kS35s4cq4qh+zr4y1IJVAqmXQ2IEA568rdQ7jZgO9p1Aak76GqfFGGovL
-         Qx0Q==
-X-Gm-Message-State: AHYfb5jkgrUaSENHHc3hMFNWF2PhSZun1ruZOnmJIvG8xMFrLqkZiLBq
-        EMjW4YlPNgKRPiEGbNcNXv8s1YJhjfpD
-X-Received: by 10.129.120.4 with SMTP id t4mr20632227ywc.422.1502730424500;
- Mon, 14 Aug 2017 10:07:04 -0700 (PDT)
+        id S1752176AbdHNRIK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Aug 2017 13:08:10 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54922 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751570AbdHNRIJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Aug 2017 13:08:09 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 85C15ABF8F;
+        Mon, 14 Aug 2017 13:08:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=F7TcfndRytWraKX0dlAl7VhMPok=; b=A2vU/C
+        bP5KdNwW98AIEloift+WAu2zZ5ZvIYnX3vd227W3AjCvfWdvqlop2BCpMKWOKptI
+        lvSBd+SBihE9NQB1uRvLWvP4D1eAyn2GPl5VUu+fYbeo/usBAdmPtSkviXXwwmfy
+        Ons418aTw4BYSrCt+nArSiFc5eGakJaD/wqoU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=h7Aq3dTQl4bam1Q2D9VD6OFIyEypabvW
+        n2ML94veRqg3ZtpGYEwpTksgNFsn7HWQ3xKkrqnffOhDVS+mefjTH/a+cirEHpqZ
+        WRm03CH21+CExpExRK7P2jz4nMeCAHWeaP01e6lZvaeP10ZgwQBLG2oWcK3Ii00u
+        3Amczm5T7sY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7CFACABF8E;
+        Mon, 14 Aug 2017 13:08:07 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C75B7ABF8C;
+        Mon, 14 Aug 2017 13:08:06 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Martin Koegler <martin.koegler@chello.at>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH 1/9] Convert pack-objects to size_t
+References: <1502527643-21944-1-git-send-email-martin@mail.zuhause>
+        <87fc215e-b860-10f5-5c5e-60652502fae8@ramsayjones.plus.com>
+        <20170813183026.GC31079@mail.zuhause>
+        <627042be-ab86-e9da-8c4e-5aac3278f5c6@ramsayjones.plus.com>
+        <xmqqtw1bw1v6.fsf@gitster.mtv.corp.google.com>
+Date:   Mon, 14 Aug 2017 10:08:05 -0700
+In-Reply-To: <xmqqtw1bw1v6.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Sun, 13 Aug 2017 15:15:41 -0700")
+Message-ID: <xmqqfucuw00a.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.37.75.3 with HTTP; Mon, 14 Aug 2017 10:07:04 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.21.1.1708141802510.19382@virtualbox>
-References: <1232852793.287524.1502435085656.JavaMail.zimbra@absint.com> <alpine.DEB.2.21.1.1708141802510.19382@virtualbox>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 14 Aug 2017 10:07:04 -0700
-Message-ID: <CAGZ79kaYi=mqw615ZHiNAbDdnnKLawzZDy3ecLYDVV=e7e5qbQ@mail.gmail.com>
-Subject: Re: Bug with corruption on clone/fsck/... with large packs + 64-bit
- Windows, problem with usage of "long" datatype for sizes/offsets?
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        martin.koegler@chello.at
-Cc:     "Dr.-Ing. Christoph Cullmann" <cullmann@absint.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 24262FF4-8113-11E7-898D-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 14, 2017 at 9:05 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Christoph,
->
-> On Fri, 11 Aug 2017, Dr.-Ing. Christoph Cullmann wrote:
->
->> on Windows 64-bit, for a repository having a .pack file > 4GB I get
->> during cloning:
->
-> The reason is Git's source code that over-uses the `unsigned long`
-> datatype.
->
-> In a nearby-thread, an underappreciated effort by Martin Koegler is
-> underway to get the ball rolling in getting it fixed. Maybe you can help
-> making Martin a lot more welcome on the Git mailing list, and maybe even
-> help getting his patches reviewed and integrated?
+Junio C Hamano <gitster@pobox.com> writes:
 
-'nearby' as in [1] ;-)
-
-[1] https://public-inbox.org/git/1502527643-21944-1-git-send-email-martin@mail.zuhause/
-
-I had the impression the review is going well there?
-
+> One interesting question is which of these two types we should use
+> for the size of objects Git uses.  
 >
-> Ciao,
-> Johannes
+> Most of the "interesting" operations done by Git require that the
+> thing is in core as a whole before we can do anything (e.g. compare
+> two such things to produce delta, have one in core and apply patch),
+> so it is tempting that we deal with size_t, but at the lowest level
+> to serve as a SCM, i.e. recording the state of a file at each
+> version, we actually should be able to exceed the in-core
+> limit---both "git add" of a huge file whose contents would not fit
+> in-core and "git checkout" of a huge blob whose inflated contents
+> would not fit in-core should (in theory, modulo bugs) be able to
+> exercise the streaming interface to handle such case without holding
+> everything in-core at once.  So from that point of view, even size_t
+> may not be the "correct" type to use.
+
+A few additions to the above observations.
+
+ - We have varint that encodes how far the location from a delta
+   representation of an object to its base object in the packfile.
+   Both encoding and decoding sides in the current code use off_t to
+   represent this offset, so we can already reference an object that
+   is far in the same packfile as a base.
+
+ - I think it is OK in practice to limit the size of individual
+   objects to size_t (i.e. on 32-bit arch, you cannot interact with
+   a repository with an object whose size exceeds 4GB).  Using off_t
+   would allow occasional ultra-huge objects that can only be added
+   and checked in via the streaming API on such a platform, but I
+   suspect that it may become too much of a hassle to maintain.
+
+   It may help reducing the maintenance if we introduced obj_size_t
+   that is defined to be size_t for now, so that we can later swap
+   it to ofs_t or some larger type when we know we do need to
+   support objects whose size cannot be expressed in size_t, but I
+   do not offhand know what the pros-and-cons with such an approach
+   would look like.
+
+Thanks.
