@@ -2,97 +2,382 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE91320899
-	for <e@80x24.org>; Mon, 14 Aug 2017 18:57:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1687220899
+	for <e@80x24.org>; Mon, 14 Aug 2017 19:14:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750936AbdHNS5y (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Aug 2017 14:57:54 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64716 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750753AbdHNS5x (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Aug 2017 14:57:53 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 24E6F91958;
-        Mon, 14 Aug 2017 14:57:53 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=FBc8qbaADiVGDDb7uvN/pWI+458=; b=Cq+Ua0
-        cUZKtx/q5mcElFgtuFk4q6JtB63wH/xgUc/50z0MSq3wEC++bP5ULCpsd+spDx7P
-        dT58IG/AzfJpeJiOSeaPRPLDfQ1tuDVgK3vyQgIVAXH0o5K3I273/6fHStlp8Pzb
-        gFmT9tSUrkrAQa31WhrPi+BO86YZweqMB9Tuw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=qaeLvbWUU0femKsY+Fke1lhzr/fetATE
-        s+CiFUZxNRpYVMNsgrmDeai7zavaOueBbyx0yUqlv1+a8YUBFRHCjzBG5dDgqv3g
-        u/PI6AViIVS1+QXmt36gXDXBMisFoBRjzdahlV45Gygw1lENPw/aGHTwGyaa4u65
-        gmvVwUw26bo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1C81091956;
-        Mon, 14 Aug 2017 14:57:53 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7109391952;
-        Mon, 14 Aug 2017 14:57:52 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        martin.koegler@chello.at,
-        "Dr.-Ing. Christoph Cullmann" <cullmann@absint.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Bug with corruption on clone/fsck/... with large packs + 64-bit Windows, problem with usage of "long" datatype for sizes/offsets?
-References: <1232852793.287524.1502435085656.JavaMail.zimbra@absint.com>
-        <alpine.DEB.2.21.1.1708141802510.19382@virtualbox>
-        <CAGZ79kaYi=mqw615ZHiNAbDdnnKLawzZDy3ecLYDVV=e7e5qbQ@mail.gmail.com>
-Date:   Mon, 14 Aug 2017 11:57:51 -0700
-In-Reply-To: <CAGZ79kaYi=mqw615ZHiNAbDdnnKLawzZDy3ecLYDVV=e7e5qbQ@mail.gmail.com>
-        (Stefan Beller's message of "Mon, 14 Aug 2017 10:07:04 -0700")
-Message-ID: <xmqqk226ugcw.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1752426AbdHNTOc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Aug 2017 15:14:32 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:37501 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751603AbdHNTOU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Aug 2017 15:14:20 -0400
+Received: by mail-pg0-f66.google.com with SMTP id 83so12050618pgb.4
+        for <git@vger.kernel.org>; Mon, 14 Aug 2017 12:14:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=VySL0UnONAn5pcA4anyA0yKfxRac84v3vc7NszaKzFc=;
+        b=kn0qmUoDNxDqVbpXeQ4z40VEoQe3lUmseo7pv8gFSqm9lG+jtlvzkSVoU3QUZkRd2j
+         sbNBH14DJQDvde+kAA9Gf03U8LP+tU5KxDXGeTZy2LpM+HgPxwFWbKhbL24Zw90AgW1T
+         REv1O/sy0eAvlEkt1lrjDLAO6I2S3EvTNCQEsgAKk7xtH3nWbmEwPDeXWL3FSMhCIOj7
+         xoLXwSjetNtF3ftUwn/b18dWRx0/14Hc8kfLcgMlu3LJgGm0fQ7Wx7E1M8/4fpH9jCE3
+         ANS+9tEhg8P47o1rGqgqPK0QSQe2BtbhRLwsnnZqjh+hDX/jshL4W5Ods7arV2PAIHgi
+         dY6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=VySL0UnONAn5pcA4anyA0yKfxRac84v3vc7NszaKzFc=;
+        b=SeS9K/+VYDp6/TN7+/oZH1FyN7+VY7jVM0ChqQZt28ar2ol97Qp3NEW/pAVWEZ+tHg
+         4KiofgX8wvRxGPEQ7ntHDe/b21yPbbZK+kfaLs3H0sjzJUgDZKJ0/byyqQ+BKJ3grexx
+         P1lX9xjxhIQV9zuJG3GUwzvqV6UWZa1Mvd8ymcw0K4eISZcUBvOuUUQ9F/PkFjxS0ulg
+         S8t1AMIq3L1mU+roQznYyTJD0Gc3/eHFpz6rTvnKEq0RIrUOaDSjQmsvHfnfLXBASKCX
+         H4HBMB8jpfj/w1UslK8YUaRQvwmhFXUfj1FvzuX6WdBbcePYecp3LcsatikFPAbHpI4x
+         laWQ==
+X-Gm-Message-State: AHYfb5hfM3ekOZqMNMNFXPcmDyaWnrgVMpEIh26GfyHXdJ/FxefZMOhT
+        hI6qSDG7hPI5zMhUt8mJjFb4whu7ZQ==
+X-Received: by 10.98.89.140 with SMTP id k12mr26373253pfj.71.1502738059919;
+ Mon, 14 Aug 2017 12:14:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 79802DA6-8122-11E7-8DF8-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Received: by 10.100.162.37 with HTTP; Mon, 14 Aug 2017 12:14:19 -0700 (PDT)
+In-Reply-To: <20170814085442.31174-1-kaarticsivaraam91196@gmail.com>
+References: <20170808171136.31168-1-kaarticsivaraam91196@gmail.com> <20170814085442.31174-1-kaarticsivaraam91196@gmail.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Mon, 14 Aug 2017 21:14:19 +0200
+Message-ID: <CAN0heSr1FjayzX-SnNVcgQuh+Cc-f=AjY8H=pGG6uvf8rrJM=A@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2 / RFC] builtin/branch: stop supporting the use of
+ --set-upstream option
+To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
-
-> On Mon, Aug 14, 2017 at 9:05 AM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
->> Hi Christoph,
->>
->> On Fri, 11 Aug 2017, Dr.-Ing. Christoph Cullmann wrote:
->>
->>> on Windows 64-bit, for a repository having a .pack file > 4GB I get
->>> during cloning:
->>
->> The reason is Git's source code that over-uses the `unsigned long`
->> datatype.
->>
->> In a nearby-thread, an underappreciated effort by Martin Koegler is
->> underway to get the ball rolling in getting it fixed. Maybe you can help
->> making Martin a lot more welcome on the Git mailing list, and maybe even
->> help getting his patches reviewed and integrated?
+On 14 August 2017 at 10:54, Kaartic Sivaraam
+<kaarticsivaraam91196@gmail.com> wrote:
+> The '--set-upstream' option of branch was deprecated in,
 >
-> 'nearby' as in [1] ;-)
+>     b347d06bf branch: deprecate --set-upstream and show help if we
+>     detect possible mistaken use (Thu, 30 Aug 2012 19:23:13 +0200)
 >
-> [1] https://public-inbox.org/git/1502527643-21944-1-git-send-email-martin@mail.zuhause/
+> It was deprecated for the reasons specified in the commit message of the
+> referenced commit.
 >
-> I had the impression the review is going well there?
+> Make 'branch' die with an appropraite error message when the '--set-upstream'
+> option is used.
+>
+> Note that there's a reason behind "dying with an error message" instead of
+> "not accepting the option". 'git branch' would *accept* '--set-upstream'
+> even after it's removal as a consequence of,
+>
+>         Unique prefix can be abbrievated in option names
+>
+>                           AND
+>
+>     '--set-upstream' is a unique prefix of '--set-upstream-to'
+>        (when the '--set-upstream' option has been removed)
+>
+> In order to smooth the transition for users and to avoid them being affected
+> by the "prefix issue" it was decided to make branch die when seeing the
+> '--set-upstream' flag for a few years and let the users know that it would be
+> removed some time in the future.
+>
+> The before/after behaviour for a simple case follows,
+>
+>     $ git remote
+>     origin
+>
+> Before,
+>
+>     $ git branch
+>     * master
+>
+>     $ git branch --set-upstream origin/master
+>     The --set-upstream flag is deprecated and will be removed. Consider using --track or --set-upstream-to
+>     Branch origin/master set up to track local branch master.
+>
+>     $ echo $?
+>     0
+>
+>     $ git branch
+>     * master
+>       origin/master
+>
+> After,
+>
+>     $ git branch
+>     * master
+>
+>     $ git branch --set-upstream origin/master
+>     fatal: the '--set-upstream' flag is no longer supported and will be removed. Consider using '--track' or '--set-upstream-to'
+>
+>     $ echo $?
+>     128
+>
+>     $ git branch
+>     * master
+>
+> Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+> ---
+>  Changes in v3:
+>
+>     A few tweaks to the following:
+>      * Commit message
+>      * Error message (the one shown when '--set-upstream' is seen)
+>      * Updated the corresponding message in the options structure
+>      * Documentation
+>
+>  A query,
+>
+>     I see the following code in the code path a little above the die statement
+>     added in this change,
+>
+>             if (!strcmp(argv[0], "HEAD"))
+>                         die(_("it does not make sense to create 'HEAD' manually"));
+>
+>     It does seem to be doing quite a nice job of avoiding an ambiguity that could
+>     have bad consequences but it's still possible to create a branch named 'HEAD'
+>     using the '-b' option of 'checkout'. Should 'git checkout -b HEAD' actually
+>     fail(it does not currently) for the same reason 'git branch HEAD' fails?
+>
+>     My guess is that people would use 'git checkout -b <new_branch_name> <starting_point>'
+>     more than it's 'git branch' counterpart.
+>
+>
+>  Documentation/git-branch.txt |  8 +++----
+>  builtin/branch.c             | 23 ++------------------
+>  t/t3200-branch.sh            | 50 ++++----------------------------------------
+>  t/t6040-tracking-info.sh     | 16 +++++++-------
+>  4 files changed, 18 insertions(+), 79 deletions(-)
+>
+> diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+> index 81bd0a7b7..93ee05c55 100644
+> --- a/Documentation/git-branch.txt
+> +++ b/Documentation/git-branch.txt
+> @@ -195,10 +195,10 @@ start-point is either a local or remote-tracking branch.
+>         branch.autoSetupMerge configuration variable is true.
+>
+>  --set-upstream::
+> -       If specified branch does not exist yet or if `--force` has been
+> -       given, acts exactly like `--track`. Otherwise sets up configuration
+> -       like `--track` would when creating the branch, except that where
+> -       branch points to is not changed.
+> +       As this option has confusing syntax it's no longer supported. Please use
 
-I do not know if it is "going well", but I do not agree with the
-"underappreciated" bit at all.  I find such a blanket statement
-toxic and detrimental to the community.
+"has" or "had"? (I guess when someone reads this, it "has" no syntax at
+all. ;) )
 
-It is true that many topics in flight are broken with a tree-wide
-change that is presented as a single ball of wax.  Unlike the
-ongoing "struct object_id" effort, which also is tree-wide but tries
-to find a step-wise refinement to reduce its impact on other topics,
-it is harder to integrate such a change.  But that does not have any
-relation to how much the effort is appreciated.
+> +  --track or --set-upstream-to  instead.
+
+Maybe indent with a tab instead of two spaces for consistency with the
+rest of the file.
+
+> ++
+> +Note: This could possibly become an alias of --set-upstream-to in the future.
+
+(But not here.)
+
+>
+>  -u <upstream>::
+>  --set-upstream-to=<upstream>::
+> diff --git a/builtin/branch.c b/builtin/branch.c
+> index a3bd2262b..b92070393 100644
+> --- a/builtin/branch.c
+> +++ b/builtin/branch.c
+> @@ -557,7 +557,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+>                 OPT__QUIET(&quiet, N_("suppress informational messages")),
+>                 OPT_SET_INT('t', "track",  &track, N_("set up tracking mode (see git-pull(1))"),
+>                         BRANCH_TRACK_EXPLICIT),
+> -               OPT_SET_INT( 0, "set-upstream",  &track, N_("change upstream info"),
+> +               OPT_SET_INT( 0, "set-upstream",  &track, N_("no longer supported"),
+>                         BRANCH_TRACK_OVERRIDE),
+>                 OPT_STRING('u', "set-upstream-to", &new_upstream, N_("upstream"), N_("change the upstream info")),
+>                 OPT_BOOL(0, "unset-upstream", &unset_upstream, N_("Unset the upstream info")),
+> @@ -755,8 +755,6 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+>                 strbuf_release(&buf);
+>         } else if (argc > 0 && argc <= 2) {
+>                 struct branch *branch = branch_get(argv[0]);
+> -               int branch_existed = 0, remote_tracking = 0;
+> -               struct strbuf buf = STRBUF_INIT;
+>
+>                 if (!strcmp(argv[0], "HEAD"))
+>                         die(_("it does not make sense to create 'HEAD' manually"));
+> @@ -768,28 +766,11 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+>                         die(_("-a and -r options to 'git branch' do not make sense with a branch name"));
+>
+>                 if (track == BRANCH_TRACK_OVERRIDE)
+> -                       fprintf(stderr, _("The --set-upstream flag is deprecated and will be removed. Consider using --track or --set-upstream-to\n"));
+> +                       die(_("the '--set-upstream' option is no longer supported. Please use '--track' or '--set-upstream-to' instead."));
+>
+> -               strbuf_addf(&buf, "refs/remotes/%s", branch->name);
+> -               remote_tracking = ref_exists(buf.buf);
+> -               strbuf_release(&buf);
+> -
+> -               branch_existed = ref_exists(branch->refname);
+>                 create_branch(argv[0], (argc == 2) ? argv[1] : head,
+>                               force, reflog, 0, quiet, track);
+>
+> -               /*
+> -                * We only show the instructions if the user gave us
+> -                * one branch which doesn't exist locally, but is the
+> -                * name of a remote-tracking branch.
+> -                */
+> -               if (argc == 1 && track == BRANCH_TRACK_OVERRIDE &&
+> -                   !branch_existed && remote_tracking) {
+> -                       fprintf(stderr, _("\nIf you wanted to make '%s' track '%s', do this:\n\n"), head, branch->name);
+> -                       fprintf(stderr, "    git branch -d %s\n", branch->name);
+> -                       fprintf(stderr, "    git branch --set-upstream-to %s\n", branch->name);
+> -               }
+> -
+
+Nice. :)
+
+>         } else
+>                 usage_with_options(builtin_branch_usage, options);
+>
+> diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+> index dd37ac47c..249be4b1a 100755
+> --- a/t/t3200-branch.sh
+> +++ b/t/t3200-branch.sh
+> @@ -561,7 +561,8 @@ test_expect_success 'use --set-upstream-to modify a particular branch' '
+>         git branch my13 &&
+>         git branch --set-upstream-to master my13 &&
+>         test "$(git config branch.my13.remote)" = "." &&
+> -       test "$(git config branch.my13.merge)" = "refs/heads/master"
+> +       test "$(git config branch.my13.merge)" = "refs/heads/master" &&
+> +       git branch --unset-upstream my13
+
+I think it would be safer to use test_when_finished like on line 625.
+Out of curiosity: are you adding this out of caution, or did some later
+test fail without this?
+
+>  '
+>
+>  test_expect_success '--unset-upstream should fail if given a non-existent branch' '
+> @@ -605,38 +606,8 @@ test_expect_success 'test --unset-upstream on a particular branch' '
+>         test_must_fail git config branch.my14.merge
+>  '
+>
+> -test_expect_success '--set-upstream shows message when creating a new branch that exists as remote-tracking' '
+> -       git update-ref refs/remotes/origin/master HEAD &&
+> -       git branch --set-upstream origin/master 2>actual &&
+> -       test_when_finished git update-ref -d refs/remotes/origin/master &&
+> -       test_when_finished git branch -d origin/master &&
+> -       cat >expected <<EOF &&
+> -The --set-upstream flag is deprecated and will be removed. Consider using --track or --set-upstream-to
+> -
+> -If you wanted to make '"'master'"' track '"'origin/master'"', do this:
+> -
+> -    git branch -d origin/master
+> -    git branch --set-upstream-to origin/master
+> -EOF
+> -       test_i18ncmp expected actual
+> -'
+> -
+> -test_expect_success '--set-upstream with two args only shows the deprecation message' '
+> -       git branch --set-upstream master my13 2>actual &&
+> -       test_when_finished git branch --unset-upstream master &&
+> -       cat >expected <<EOF &&
+> -The --set-upstream flag is deprecated and will be removed. Consider using --track or --set-upstream-to
+> -EOF
+> -       test_i18ncmp expected actual
+> -'
+> -
+> -test_expect_success '--set-upstream with one arg only shows the deprecation message if the branch existed' '
+> -       git branch --set-upstream my13 2>actual &&
+> -       test_when_finished git branch --unset-upstream my13 &&
+> -       cat >expected <<EOF &&
+> -The --set-upstream flag is deprecated and will be removed. Consider using --track or --set-upstream-to
+> -EOF
+> -       test_i18ncmp expected actual
+> +test_expect_success '--set-upstream fails' '
+> +    test_must_fail git branch --set-upstream origin/master
+>  '
+>
+>  test_expect_success '--set-upstream-to notices an error to set branch as own upstream' '
+> @@ -961,19 +932,6 @@ test_expect_success 'attempt to delete a branch merged to its base' '
+>         test_must_fail git branch -d my10
+>  '
+>
+> -test_expect_success 'use set-upstream on the current branch' '
+> -       git checkout master &&
+> -       git --bare init myupstream.git &&
+> -       git push myupstream.git master:refs/heads/frotz &&
+> -       git remote add origin myupstream.git &&
+> -       git fetch &&
+> -       git branch --set-upstream master origin/frotz &&
+> -
+> -       test "z$(git config branch.master.remote)" = "zorigin" &&
+> -       test "z$(git config branch.master.merge)" = "zrefs/heads/frotz"
+> -
+> -'
+> -
+>  test_expect_success 'use --edit-description' '
+>         write_script editor <<-\EOF &&
+>                 echo "New contents" >"$1"
+> diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
+> index 97a07655a..4b522f456 100755
+> --- a/t/t6040-tracking-info.sh
+> +++ b/t/t6040-tracking-info.sh
+> @@ -188,35 +188,35 @@ test_expect_success 'fail to track annotated tags' '
+>         test_must_fail git checkout heavytrack
+>  '
+>
+> -test_expect_success 'setup tracking with branch --set-upstream on existing branch' '
+> +test_expect_success 'setup tracking with branch --set-upstream-to on existing branch' '
+>         git branch from-master master &&
+>         test_must_fail git config branch.from-master.merge > actual &&
+> -       git branch --set-upstream from-master master &&
+> +       git branch --set-upstream-to master from-master &&
+>         git config branch.from-master.merge > actual &&
+>         grep -q "^refs/heads/master$" actual
+>  '
+>
+> -test_expect_success '--set-upstream does not change branch' '
+> +test_expect_success '--set-upstream-to does not change branch' '
+>         git branch from-master2 master &&
+>         test_must_fail git config branch.from-master2.merge > actual &&
+>         git rev-list from-master2 &&
+>         git update-ref refs/heads/from-master2 from-master2^ &&
+>         git rev-parse from-master2 >expect2 &&
+> -       git branch --set-upstream from-master2 master &&
+> +       git branch --set-upstream-to master from-master2 &&
+>         git config branch.from-master.merge > actual &&
+>         git rev-parse from-master2 >actual2 &&
+>         grep -q "^refs/heads/master$" actual &&
+>         cmp expect2 actual2
+>  '
+
+The two tests above were added when --set-upstream was originally added.
+Now that you're converting them to use --set-upstream-to, to what extent
+do they just test the same thing as the tests in t3200?
+
+>
+> -test_expect_success '--set-upstream @{-1}' '
+> -       git checkout from-master &&
+> +test_expect_success '--set-upstream-to @{-1}' '
+> +       git checkout follower &&
+>         git checkout from-master2 &&
+>         git config branch.from-master2.merge > expect2 &&
+> -       git branch --set-upstream @{-1} follower &&
+> +       git branch --set-upstream-to @{-1} from-master &&
+>         git config branch.from-master.merge > actual &&
+>         git config branch.from-master2.merge > actual2 &&
+> -       git branch --set-upstream from-master follower &&
+> +       git branch --set-upstream-to follower from-master &&
+>         git config branch.from-master.merge > expect &&
+>         test_cmp expect2 actual2 &&
+>         test_cmp expect actual
+
+I couldn't find any test of --set-upstream-to=@{...} in t3200, so this
+probably does test something previously untested.
+
+Martin
