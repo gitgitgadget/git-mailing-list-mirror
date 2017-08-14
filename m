@@ -2,103 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BEA2D20899
-	for <e@80x24.org>; Mon, 14 Aug 2017 17:08:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC9BC20899
+	for <e@80x24.org>; Mon, 14 Aug 2017 17:13:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752176AbdHNRIK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Aug 2017 13:08:10 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54922 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751570AbdHNRIJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Aug 2017 13:08:09 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 85C15ABF8F;
-        Mon, 14 Aug 2017 13:08:07 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=F7TcfndRytWraKX0dlAl7VhMPok=; b=A2vU/C
-        bP5KdNwW98AIEloift+WAu2zZ5ZvIYnX3vd227W3AjCvfWdvqlop2BCpMKWOKptI
-        lvSBd+SBihE9NQB1uRvLWvP4D1eAyn2GPl5VUu+fYbeo/usBAdmPtSkviXXwwmfy
-        Ons418aTw4BYSrCt+nArSiFc5eGakJaD/wqoU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=h7Aq3dTQl4bam1Q2D9VD6OFIyEypabvW
-        n2ML94veRqg3ZtpGYEwpTksgNFsn7HWQ3xKkrqnffOhDVS+mefjTH/a+cirEHpqZ
-        WRm03CH21+CExpExRK7P2jz4nMeCAHWeaP01e6lZvaeP10ZgwQBLG2oWcK3Ii00u
-        3Amczm5T7sY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7CFACABF8E;
-        Mon, 14 Aug 2017 13:08:07 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C75B7ABF8C;
-        Mon, 14 Aug 2017 13:08:06 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin Koegler <martin.koegler@chello.at>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH 1/9] Convert pack-objects to size_t
-References: <1502527643-21944-1-git-send-email-martin@mail.zuhause>
-        <87fc215e-b860-10f5-5c5e-60652502fae8@ramsayjones.plus.com>
-        <20170813183026.GC31079@mail.zuhause>
-        <627042be-ab86-e9da-8c4e-5aac3278f5c6@ramsayjones.plus.com>
-        <xmqqtw1bw1v6.fsf@gitster.mtv.corp.google.com>
-Date:   Mon, 14 Aug 2017 10:08:05 -0700
-In-Reply-To: <xmqqtw1bw1v6.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Sun, 13 Aug 2017 15:15:41 -0700")
-Message-ID: <xmqqfucuw00a.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1752378AbdHNRNt (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Aug 2017 13:13:49 -0400
+Received: from mail-yw0-f176.google.com ([209.85.161.176]:34907 "EHLO
+        mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752370AbdHNRNr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Aug 2017 13:13:47 -0400
+Received: by mail-yw0-f176.google.com with SMTP id l82so58449205ywc.2
+        for <git@vger.kernel.org>; Mon, 14 Aug 2017 10:13:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=OwYG+s3sUVgWKf4R4YkvKZvHoO1T+7Y+NhiyrORtTwc=;
+        b=DNQDt+lLpa4h3jVcXUZSwpfrkbd9qrbhYGz0xn2EnI4EhvYrNPsJf5gGqDVwS2A5ZA
+         HDpRUcdmCM4tNiS0xgaG0lbq7oMVgoYfY5ODIKh0A9sF4HdL/jidPnOc5DxwN4KHd60p
+         vD3J97HI/fmyyI7o9lc9JFvV2GCfGVGhk3dqb5Iv28v61JvXZuR8m4TezZHfHUY6255g
+         mbQyiVaTjnkt8V/HWXu1YWQFUD0LwBERAcAZlO5NhUI6/2kSEeSC2HH0B+rX60bRU9UB
+         JcL5D9eT52SfVRyEGBsh7/sMFzY5lgiwYyFBMz8bTnpkbbjETDaIfctSfTkI9Mcso9Yn
+         A+qQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=OwYG+s3sUVgWKf4R4YkvKZvHoO1T+7Y+NhiyrORtTwc=;
+        b=bVnpgXlbio9Sa9mPCtlt3qbHrTRpSmNwZrS2vE2hv8ib53PDAoV51S6FxalcEwJHat
+         2XZEweg0yO9OGwDtJzGYk9EcSdg92kj9QgcOgMbM/4mBgK0uvosQie0IXPamMBGtkCzk
+         2jAWVMISOffWQYN2w0vhGKDSGCAWjOcL0K0hbKWY8Fwbrs62ZMCv3D2j17Q3TJlg/rQZ
+         mxtwtPnMyoCphZxzXQ/afHKFri+XuqWG+X7yFh5oMv73+IGZOgU9pW6ooIMAEKToU1V8
+         iNacYFuQ8Sj8FtPlhzjtvrn1SRdM5sWLGW2WpqIrFZbZNG9srpxYMHMpuzmveKWiiZMK
+         cbow==
+X-Gm-Message-State: AHYfb5h+svCvNtNfGQMCClOiOBNZzGqZ7nP62hZgGPQ64dxCbDCx+JJi
+        wd4VSrGOy/w0If2ZOV+TL/hmsLX++a6E
+X-Received: by 10.129.31.215 with SMTP id f206mr20412249ywf.29.1502730826264;
+ Mon, 14 Aug 2017 10:13:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 24262FF4-8113-11E7-898D-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Received: by 10.37.75.3 with HTTP; Mon, 14 Aug 2017 10:13:45 -0700 (PDT)
+In-Reply-To: <ae81b1cf697b2d541eadd21b40ead497a0c32eb9.1502491372.git.jonathantanmy@google.com>
+References: <cover.1502491372.git.jonathantanmy@google.com> <ae81b1cf697b2d541eadd21b40ead497a0c32eb9.1502491372.git.jonathantanmy@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 14 Aug 2017 10:13:45 -0700
+Message-ID: <CAGZ79kZZLOr70Ly=VGbic_5pj_cey6mfxwNd6WCtAAPZa5GTWQ@mail.gmail.com>
+Subject: Re: [RFC PATCH 1/3] diff: avoid redundantly clearing a flag
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Aug 11, 2017 at 3:49 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
+> No code in diff.c sets DIFF_SYMBOL_MOVED_LINE except in
+> mark_color_as_moved(), so it is redundant to clear it for the current
+> line. Therefore, clear it only for previous lines.
 
-> One interesting question is which of these two types we should use
-> for the size of objects Git uses.  
+Oh that part. I remember debating with myself if I rather want to have
+the upper bound adjusted by one less (block_length instead of
+'block_length + 1'), and then add a constant to 'buf[n - i];'
+
+The patch as implemented is fine, too.
+
+> This makes a refactoring in a subsequent patch easier.
 >
-> Most of the "interesting" operations done by Git require that the
-> thing is in core as a whole before we can do anything (e.g. compare
-> two such things to produce delta, have one in core and apply patch),
-> so it is tempting that we deal with size_t, but at the lowest level
-> to serve as a SCM, i.e. recording the state of a file at each
-> version, we actually should be able to exceed the in-core
-> limit---both "git add" of a huge file whose contents would not fit
-> in-core and "git checkout" of a huge blob whose inflated contents
-> would not fit in-core should (in theory, modulo bugs) be able to
-> exercise the streaming interface to handle such case without holding
-> everything in-core at once.  So from that point of view, even size_t
-> may not be the "correct" type to use.
-
-A few additions to the above observations.
-
- - We have varint that encodes how far the location from a delta
-   representation of an object to its base object in the packfile.
-   Both encoding and decoding sides in the current code use off_t to
-   represent this offset, so we can already reference an object that
-   is far in the same packfile as a base.
-
- - I think it is OK in practice to limit the size of individual
-   objects to size_t (i.e. on 32-bit arch, you cannot interact with
-   a repository with an object whose size exceeds 4GB).  Using off_t
-   would allow occasional ultra-huge objects that can only be added
-   and checked in via the streaming API on such a platform, but I
-   suspect that it may become too much of a hassle to maintain.
-
-   It may help reducing the maintenance if we introduced obj_size_t
-   that is defined to be size_t for now, so that we can later swap
-   it to ofs_t or some larger type when we know we do need to
-   support objects whose size cannot be expressed in size_t, but I
-   do not offhand know what the pros-and-cons with such an approach
-   would look like.
-
-Thanks.
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+>  diff.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/diff.c b/diff.c
+> index f84346b47..4965ffbc4 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -895,7 +895,7 @@ static void mark_color_as_moved(struct diff_options *o,
+>                 if (!match) {
+>                         if (block_length < COLOR_MOVED_MIN_BLOCK_LENGTH &&
+>                             o->color_moved != COLOR_MOVED_PLAIN) {
+> -                               for (i = 0; i < block_length + 1; i++) {
+> +                               for (i = 1; i < block_length + 1; i++) {
+>                                         l = &o->emitted_symbols->buf[n - i];
+>                                         l->flags &= ~DIFF_SYMBOL_MOVED_LINE;
+>                                 }
+> --
+> 2.14.0.434.g98096fd7a8-goog
+>
