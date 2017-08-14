@@ -2,90 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9289D20899
-	for <e@80x24.org>; Mon, 14 Aug 2017 22:13:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B41C920899
+	for <e@80x24.org>; Mon, 14 Aug 2017 22:21:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752560AbdHNWNM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Aug 2017 18:13:12 -0400
-Received: from cloud.peff.net ([104.130.231.41]:38516 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752275AbdHNWNM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Aug 2017 18:13:12 -0400
-Received: (qmail 27440 invoked by uid 109); 14 Aug 2017 22:13:12 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 14 Aug 2017 22:13:12 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6153 invoked by uid 111); 14 Aug 2017 22:13:36 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Mon, 14 Aug 2017 18:13:36 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Aug 2017 18:13:10 -0400
-Date:   Mon, 14 Aug 2017 18:13:10 -0400
-From:   Jeff King <peff@peff.net>
-To:     Kevin Willford <kewillf@microsoft.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH v2] commit: skip discarding the index if there is no
- pre-commit hook
-Message-ID: <20170814221309.tg7wizmvx3gtzfc7@sigill.intra.peff.net>
-References: <20170810185416.8224-1-kewillf@microsoft.com>
- <20170814215425.23784-1-kewillf@microsoft.com>
+        id S1752670AbdHNWVP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Aug 2017 18:21:15 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55448 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752408AbdHNWVN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Aug 2017 18:21:13 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 14E7690D96;
+        Mon, 14 Aug 2017 18:21:06 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=fEZjJCHN2o/30NH5nVAgBszEOtc=; b=gdHFdg
+        kyx5WI+bUvc9ekAzVxFh5JhauY6iB1fwG0Ml3H7Czih0wWgYvg4uygIXYFLky2BI
+        Rvwh4Y+1oL+wKpJOcHBf0RgiZoc05TzssedaxDoYowUaKFy3rZhK6Es7aCmGUaER
+        OXUZlgERV4/leSmZo2hemIbov3zjyOd8m7OiI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=rSdhU2+rMAiTqqegpRLy3TEjoLEmbViV
+        BxOfgMM3/eMEZOTKvbLLjhrYAv0yO+IGoUrq0E0JTAPzLHLweDU18Hnr5i7ND/Kp
+        ie9qIqqlR7F2nk1pNHkn5ha0EkXT52jU6qrPFHcxRG/KkdW36GDXr51qO5B4eRSp
+        ttpVPpOjZ9I=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0D1CA90D95;
+        Mon, 14 Aug 2017 18:21:06 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 52CEE90D94;
+        Mon, 14 Aug 2017 18:21:05 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Andreas Heiduk <asheiduk@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] doc: clarify "config --bool" behaviour with empty values
+References: <20170813094816.7754-1-asheiduk@gmail.com>
+        <xmqq60dqvxw1.fsf@gitster.mtv.corp.google.com>
+        <914098af-00a9-fbc8-cdfe-a65918b2951b@gmail.com>
+Date:   Mon, 14 Aug 2017 15:21:04 -0700
+In-Reply-To: <914098af-00a9-fbc8-cdfe-a65918b2951b@gmail.com> (Andreas
+        Heiduk's message of "Tue, 15 Aug 2017 00:07:26 +0200")
+Message-ID: <xmqqlgmlu6y7.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170814215425.23784-1-kewillf@microsoft.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: DCFB9E62-813E-11E7-BF17-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 14, 2017 at 03:54:25PM -0600, Kevin Willford wrote:
+Andreas Heiduk <asheiduk@gmail.com> writes:
 
-> If there is not a pre-commit hook, there is no reason to discard
-> the index and reread it.
-> 
-> This change checks to presence of a pre-commit hook and then only
-> discards the index if there was one.
-> 
-> Signed-off-by: Kevin Willford <kewillf@microsoft.com>
-> ---
->  builtin/commit.c | 15 +++++++++------
->  1 file changed, 9 insertions(+), 6 deletions(-)
-
-Thanks, this looks nice and simple.
-
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index e7a2cb6285..ab71b93518 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -940,12 +940,15 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
->  		return 0;
->  	}
+>> However, I think this "no value (but still with '=')" is making it
+>> more confusing than necessary for two reasons.
+> [...]
 >  
-> -	/*
-> -	 * Re-read the index as pre-commit hook could have updated it,
-> -	 * and write it out as a tree.  We must do this before we invoke
-> -	 * the editor and after we invoke run_status above.
-> -	 */
-> -	discard_cache();
-> +	if (!no_verify && find_hook("pre-commit")) {
-> +		/*
-> +		 * Re-read the index as pre-commit hook could have updated it,
-> +		 * and write it out as a tree.  We must do this before we invoke
-> +		 * the editor and after we invoke run_status above.
-> +		 */
-> +		discard_cache();
-> +	}
-> +
->  	read_cache_from(index_file);
+>> I notice that in this Values section (where the boolean:: is the
+>> first entry) there is no mention on how to spell a string value.
+>
+> I assumed this is due to the pretext of the definition list:
+>
+> 	Values of many variables are treated as a simple string, but there
+> 	are variables that take values of specific types and there are rules
+> 	as to how to spell them.
 
-This read_cache_from() should be a noop, right, because it immediately
-sees istate->initialized is set? So it shouldn't matter that it is not
-in the conditional with discard_cache(). Though if its only purpose is
-to re-read the just-discarded contents, perhaps it makes sense to put it
-there for readability.
+I assumed so too.  
 
--Peff
+But if you knew that "[section] var =" is a valid way to spell an
+empty string, I'd thought that you wouldn't have written "no value
+but still with '=')" there.
+
+The description for "true" (i.e. "[section] var" and nothing else)
+is also spelled out perfectly well in the Syntax section, but it is
+duplicated in Values section.  I think that it is a good thing to
+have the complete picture in a single Values section, without
+assuming readers to know what is in the other Syntax section.
+
+So if it bothers you to have a non-specific "string" description in
+the Values section, I think it would be more helpful to update the
+pretext so that including the description of a simple string there
+does not look unnatural, IMHO.
