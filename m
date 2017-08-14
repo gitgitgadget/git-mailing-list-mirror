@@ -7,68 +7,85 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 48F8B20899
-	for <e@80x24.org>; Mon, 14 Aug 2017 17:00:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 562C220899
+	for <e@80x24.org>; Mon, 14 Aug 2017 17:07:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751482AbdHNRAL (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Aug 2017 13:00:11 -0400
-Received: from mail-yw0-f173.google.com ([209.85.161.173]:33074 "EHLO
-        mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751427AbdHNRAK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Aug 2017 13:00:10 -0400
-Received: by mail-yw0-f173.google.com with SMTP id p68so58543823ywg.0
-        for <git@vger.kernel.org>; Mon, 14 Aug 2017 10:00:10 -0700 (PDT)
+        id S1752166AbdHNRHG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Aug 2017 13:07:06 -0400
+Received: from mail-yw0-f170.google.com ([209.85.161.170]:36023 "EHLO
+        mail-yw0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751481AbdHNRHF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Aug 2017 13:07:05 -0400
+Received: by mail-yw0-f170.google.com with SMTP id u207so58532608ywc.3
+        for <git@vger.kernel.org>; Mon, 14 Aug 2017 10:07:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=nnoMdt0CmzxHMRfJj6Au9sRy3WmLahHm1GL33VtEigw=;
-        b=v4Cv3EXlV5Y7Tv8x6xevsP2hs1pXnTHKiTLY/R/i3mq839lrAGYGm2c4wtCnwLANbG
-         soCpApE/wUjnYJeEO/MQOnwwdDCXXrWeFFLW+xGnJNB4tlrd8v8+VmrRJiyED+G0qq2q
-         gdWgzV9/bjiTnzWmh0+tf4KUJYqotGbj/ymGf2DbL9wnRZbLSwBLZ1bda47quwtpE2oe
-         YxY8cREE4A3aCGpOnIPozrhGupwkDEoVi1AM3xLE/liaHjSW735uMl73QEsCXrkVoKnQ
-         BD39jXoYNM1igjweL6/Qk6bu/PKb2EFfi1NYzkww78mgJnODGKnnM4CmBrt457Wy6qYl
-         CTpg==
+        bh=0q7Wsw9GnOVehkaOimSjUJubHDneDSLmf0X5F3hQKdQ=;
+        b=MNr0QqEMzyqhlyifTTy/UbzzbOgHIc0ryvPw57XODKashxU8X/OowM1Wp99BFvU+tc
+         Gor/aoSnIjikARs57bpk1I31fWly5vSKejmYXTOXbvn82hOyGXn53jS0mRM0ls6V0Wbh
+         KMYQDwGCwZa2bgHCOfj3T0W7X8BpJHy/74roRZ8drIU0HX1haQpwRpqZVr+pJljmP4I2
+         7cfqbvi2uWFAOE2+JibMLFUiwLpm+urODO9lm0yogvb/9XtpIr6C//1o0SRPIDBOft+c
+         55ypE8pUS2y85zDt4zHPo2h6kgYzA7yuEbc6v3vtAfZJdu3RbtwafRX+44bUr0xLXKCa
+         5Sfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=nnoMdt0CmzxHMRfJj6Au9sRy3WmLahHm1GL33VtEigw=;
-        b=lqpwXaa3P94kBsEX6kBrb/cnNLlXbE1R53BZr1TBCat2nz2FJKWrfZGfxDLSzxZ5br
-         my2S2U9ZlMN8Q571j1HQ2AMgr42X+j2TNoIxjkIU+2Ylfe073joDAaqXqMy6EfSGZu00
-         8EeF6YFIRDEe+1W1w7tvc0l64vYiwpG3fKkdwNKpY5DFaZ8i/BqUJEinJe5LdhaAWxuY
-         MzAZTsXP8g6aSBgd5q+qh2snlp42RfY6j48VFsmocmtypagEVo9pZr7iOHh43JQH88lv
-         zqLonV+DR16j62Rrjl1IwxNLDZgrRWRER2737m+IMnHCI9+mL3qQgMPGn+gIL7I30zPq
-         2ggg==
-X-Gm-Message-State: AHYfb5hOKKesqCJlLXSr7fGdFfckKqC7UHSGtb6yyTz8Nh1Vca/BzH4r
-        Rs2zlARAeuFBn6HilDEu6TkM5gZWDJepmocM/g==
-X-Received: by 10.13.206.132 with SMTP id q126mr20569059ywd.337.1502730009660;
- Mon, 14 Aug 2017 10:00:09 -0700 (PDT)
+        bh=0q7Wsw9GnOVehkaOimSjUJubHDneDSLmf0X5F3hQKdQ=;
+        b=FUxs5m7rz4e303hpzXpilTzAYHuinCs1zHheg4mWR0BtXalFI0pXDfLkTy2okHIcLJ
+         HHWKVsnw+bEdkdgCHFNOFBhKfHz6DT3NEC7Zi7qCX1jfvmFv0QQCaegd71dwu1Ecb7PH
+         3y+NffxZQ02bcjWz3ieqVg7oL2IkbMRoiLZsHDfALwdP9O6O32ELg3yg7nxoXIY+Pe1N
+         nbpE1giuW2HoQAWtFejcHpw8U2CHk0ZBHijti/1XbKaOhNmstfEzPUqoDh+mOLJQGHSE
+         r53z+uJ1zU4kS35s4cq4qh+zr4y1IJVAqmXQ2IEA568rdQ7jZgO9p1Aak76GqfFGGovL
+         Qx0Q==
+X-Gm-Message-State: AHYfb5jkgrUaSENHHc3hMFNWF2PhSZun1ruZOnmJIvG8xMFrLqkZiLBq
+        EMjW4YlPNgKRPiEGbNcNXv8s1YJhjfpD
+X-Received: by 10.129.120.4 with SMTP id t4mr20632227ywc.422.1502730424500;
+ Mon, 14 Aug 2017 10:07:04 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.37.75.3 with HTTP; Mon, 14 Aug 2017 10:00:09 -0700 (PDT)
-In-Reply-To: <20170813193611.4233-1-richard.maw@gmail.com>
-References: <20170813193611.4233-1-richard.maw@gmail.com>
+Received: by 10.37.75.3 with HTTP; Mon, 14 Aug 2017 10:07:04 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.21.1.1708141802510.19382@virtualbox>
+References: <1232852793.287524.1502435085656.JavaMail.zimbra@absint.com> <alpine.DEB.2.21.1.1708141802510.19382@virtualbox>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 14 Aug 2017 10:00:09 -0700
-Message-ID: <CAGZ79kZz16kwwMOxoi+6UksT2CaPBU5O+r3QzxfrUBf8c3whhg@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/7] Implement ref namespaces as a ref storage backend
-To:     Richard Maw <richard.maw@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Date:   Mon, 14 Aug 2017 10:07:04 -0700
+Message-ID: <CAGZ79kaYi=mqw615ZHiNAbDdnnKLawzZDy3ecLYDVV=e7e5qbQ@mail.gmail.com>
+Subject: Re: Bug with corruption on clone/fsck/... with large packs + 64-bit
+ Windows, problem with usage of "long" datatype for sizes/offsets?
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        martin.koegler@chello.at
+Cc:     "Dr.-Ing. Christoph Cullmann" <cullmann@absint.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Technical description
-> =====================
+On Mon, Aug 14, 2017 at 9:05 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Christoph,
 >
-> This patch series adds a new refs backend, stacking on top of the files backend,
-> based on whether `core.namespace` is set in git config.
+> On Fri, 11 Aug 2017, Dr.-Ing. Christoph Cullmann wrote:
+>
+>> on Windows 64-bit, for a repository having a .pack file > 4GB I get
+>> during cloning:
+>
+> The reason is Git's source code that over-uses the `unsigned long`
+> datatype.
+>
+> In a nearby-thread, an underappreciated effort by Martin Koegler is
+> underway to get the ball rolling in getting it fixed. Maybe you can help
+> making Martin a lot more welcome on the Git mailing list, and maybe even
+> help getting his patches reviewed and integrated?
 
-Currently there is another Big Thing getting started in in the refs backend.
-https://public-inbox.org/git/CAJo=hJtg0PAVHT1phbArdra8+4LfnEEuaj3fBid==BXkZghi8g@mail.gmail.com/
-Maybe it is worth looking into that as well? Reftables solve
-the problem of scaling (i.e. a repo containing a million refs works
-just fine, and fast(!) for reading/writing refs, which is not the case
-for packed refs)
+'nearby' as in [1] ;-)
+
+[1] https://public-inbox.org/git/1502527643-21944-1-git-send-email-martin@mail.zuhause/
+
+I had the impression the review is going well there?
+
+>
+> Ciao,
+> Johannes
