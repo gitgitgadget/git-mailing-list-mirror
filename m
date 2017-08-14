@@ -2,100 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BBB7120899
-	for <e@80x24.org>; Mon, 14 Aug 2017 18:07:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8210120899
+	for <e@80x24.org>; Mon, 14 Aug 2017 18:19:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752148AbdHNSHb (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Aug 2017 14:07:31 -0400
-Received: from mail-yw0-f173.google.com ([209.85.161.173]:34052 "EHLO
-        mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752079AbdHNSHa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Aug 2017 14:07:30 -0400
-Received: by mail-yw0-f173.google.com with SMTP id s143so59512302ywg.1
-        for <git@vger.kernel.org>; Mon, 14 Aug 2017 11:07:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=VaNTkpR3teTxDvwgxw8IqaOM+iUvJqSjqgqfDCq0nGo=;
-        b=WDnOMd0P/Xi8nFyNory1juBzMeopwn+ydgBI15aLCtTjWJnQk3IYqvKlGkuLAlIb6V
-         Nnumi6W5wosCx9jiqxw7viXNy6MJbrAvDe1F6XZyUFiIIU9IhFHE8IKr+48hgpxJuOaV
-         eikfS0pT6m/tHx7IJeKePJz1JPkhjAypGriH0TV85CJWomHQwQAgSVyN+tX4K5eKRdeI
-         Lm2a/s+ApKLn7h8ZW/0ey3+Vlk740MZ9frjGRC095SYuxeCwB9ZjUUxbJlvvIExyrXFa
-         ps8BD44Ng3aFvg1IU4A5dB2q3zD7uqp+zpRZrQ0db4BPvpqT9oRo9NiElkWD3C1b3WWP
-         4/oQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=VaNTkpR3teTxDvwgxw8IqaOM+iUvJqSjqgqfDCq0nGo=;
-        b=joCEEjp8XYnw3wMwRk5RYDWOaHFtcQtWkyRpfBvG1+uqOgCsV8BCY6ox8AD9CIdGlD
-         sz14OZRuufveAU2K+LgXgjURNdaJOFkXtxdX6NDlqbQ62MGd5yKJMvf4va8FIcZEwENe
-         ivq5GUpGmzGisSJbP95F2JosfS675yGOywwqx6FAZeeYbzXIVw5CWX+8VMDVEBNGaLsx
-         KK0kD1P1BGLDdTm/9KAEt59UEZ7t+OZdO1XSJ4iXYVfsIWEFg2EqYTg3Ygn9sz/5c3oH
-         UHZRrjhiro6uYXtGcJZqfXz5mxWI8qO2c6gv9IPhJLkg5SijfYc1lwPtkt3mrlorzGpK
-         Op2g==
-X-Gm-Message-State: AHYfb5hJ2XqiNtsnknJTsC8K8+fopIL/z7AysHTVjbkW9T5xlLxuWD22
-        3vwhH1ZpQx1TzmRi44X2QD8brjWs70IB
-X-Received: by 10.37.123.129 with SMTP id w123mr21168212ybc.305.1502734049725;
- Mon, 14 Aug 2017 11:07:29 -0700 (PDT)
+        id S1751570AbdHNSTR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Aug 2017 14:19:17 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61562 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751031AbdHNSTQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Aug 2017 14:19:16 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8151CAA6E0;
+        Mon, 14 Aug 2017 14:19:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=BUwVSjgjSU/5wwL3+hgdJN8fWqE=; b=aWRGLN
+        Lzm8H+U/Y2BymEzQ5m7u6YC5hI4iLMTBnDQK3kgwCjj4qZnXEM8qqfgNzd1hryL6
+        PI5TUbbdmYl+9FTOL3QmybQnWXSOCu5po9WRsulQoayqm9idNz4T2/RzBmw2Sj0K
+        rUn1WJcItehZIk3jzkKI1DOsxfrEZw8oCM8+g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=SeUwAI6JhKh1T0w8FNVyc+eSZpcvRpMM
+        H3zfW7yctGYblVxYMgePFWgga6ZFNDqsZPP0zZ6uskbBEg91W3Gl91jeLEnR21iO
+        3700XgVuOdhI/69RyyWMk4D32mq7Qadrj5AnGtmCqOv3wcOzXKIo9XQS2qmg9Fso
+        2jg2Cr9jG1o=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7A79DAA6DF;
+        Mon, 14 Aug 2017 14:19:08 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E4233AA6DC;
+        Mon, 14 Aug 2017 14:19:07 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] hook: use correct logical variable
+References: <20170711141111.7538-3-kaarticsivaraam91196@gmail.com>
+        <20170814084646.30781-1-kaarticsivaraam91196@gmail.com>
+Date:   Mon, 14 Aug 2017 11:19:06 -0700
+In-Reply-To: <20170814084646.30781-1-kaarticsivaraam91196@gmail.com> (Kaartic
+        Sivaraam's message of "Mon, 14 Aug 2017 14:16:46 +0530")
+Message-ID: <xmqqwp66ui5h.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.37.75.3 with HTTP; Mon, 14 Aug 2017 11:07:29 -0700 (PDT)
-In-Reply-To: <87shgx3khv.fsf@local.lan>
-References: <87mv7773tp.fsf@local.lan> <CAGZ79kbgb2P7KT_b9xuMj1pN1+jsPfH7YSJNDyDB5dY3cwXCQg@mail.gmail.com>
- <87efsj70d7.fsf@local.lan> <CAGZ79kZN1-DuiaS=bFgNUXBonAR3BHqtAFSqoJ+MJ4esMdmz-g@mail.gmail.com>
- <87shgx3khv.fsf@local.lan>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 14 Aug 2017 11:07:29 -0700
-Message-ID: <CAGZ79kaCuaxgGwuw7AHKTjsmwsTBuv=gWzeGDJv3TJv+b25Uvw@mail.gmail.com>
-Subject: Re: Not understanding with git wants to copy one file to another
-To:     Harry Putnam <reader@newsguy.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0FEF388C-811D-11E7-86FC-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 11, 2017 at 1:41 PM, Harry Putnam <reader@newsguy.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->
-> [...]
->
->> Ah. Sorry for confusing even more.
->> By pointing out the options for git-diff, I just wanted to point out that
->> such a mechanism ("rename/copy detection") exists.
->
->
-> [...]
->
->>> What am I missing?
->>>
->>
->> https://www.reddit.com/r/git/comments/3ogkk1/beginner_disable_rename_detection/
->>
->> "Rename detection is just GUI sugar".
->
-> Thanks there is a nice full explanation at the cited url.
->
-> What is still a bit puzzling is that in that same commit, there are
-> files that are true copies of each other, just in different locations,
-> But nothing pops up about them in a git commit.
->
+Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
 
-The heuristic to find the renames/copies only looks at modified files
-to be fast(, the assumption is that each commit only touches few
-files, but the project consists of a lot of files).
+> Sign-off added should be that of the "committer" not that of the
+> "commit's author".
+>
+> Use the correct logical variable that identifies the committer.
+>
+> Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+> ---
+>  This fixes a small issue when trying to do the following with the script enabled,
+>
+>     $ git commit --amend -s
+>
+>  If the commit being amended was signed off by the commit's author
+>  then the above command would *append* the sign-off of the
+>  committer followed by that of the commit's author.
+>  That' because the script is invoked only after the sign-off is
+>  added by the '-s' option AND the default of 'trailer.ifexists'
+>  for interpret-trailers currently defaults to the
+>  'addIfDifferentNeighbor' thus interpret-trailer fails to identify
+>  the existing sign-off of the commit's author and adds it.
+>
+>  Anyways, it doesn't make sense for a script to add the sign-off
+>  of the commit's author. So, fixing it seemed correct to me.
 
-For that git-diff knows about '--find-copies-harder' that looks at
-all files even those not modified. This would point out the true
-copies, I would assume.
+I tend to agree with "Anyways" above ;-) simply because I found the
+long paragraph more confusing than enlightening, leaving me wonder
+"why is the user using different settings for author and committer
+name" at the end, which _is_ an irrelevant point in the issue being
+addressed.
 
-I don't think we'd want to include the '--find-copies-harder' flag
-to status or commit, as it may take some time in large projects.
+The real issue is that this commented-out sample hook uses "author"
+ident for the sign-off, while all the rest of Git (i.e. all callers
+of append_signoff() in sequencer.c) use committer ident.
+
+If anything to be changed to this patch, I would say its "should be"
+in the log message can be clarified with "why", perhaps like:
+
+    Sign-off added should be that of the "committer", not that of
+    the "commit's author"; that is how the rest of Git adds sign-off
+    using sequencer.c::append_signoff().
+
+Thanks.
+
+>  templates/hooks--prepare-commit-msg.sample | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/templates/hooks--prepare-commit-msg.sample b/templates/hooks--prepare-commit-msg.sample
+> index a84c3e5a8..12dd8fd88 100755
+> --- a/templates/hooks--prepare-commit-msg.sample
+> +++ b/templates/hooks--prepare-commit-msg.sample
+> @@ -34,7 +34,7 @@ SHA1=$3
+>  #  *) ;;
+>  # esac
+>  
+> -# SOB=$(git var GIT_AUTHOR_IDENT | sed -n 's/^\(.*>\).*$/Signed-off-by: \1/p')
+> +# SOB=$(git var GIT_COMMITTER_IDENT | sed -n 's/^\(.*>\).*$/Signed-off-by: \1/p')
+>  # git interpret-trailers --in-place --trailer "$SOB" "$COMMIT_MSG_FILE"
+>  # if test -z "$COMMIT_SOURCE"
+>  # then
