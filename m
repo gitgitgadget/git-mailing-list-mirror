@@ -2,113 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C0EF220899
-	for <e@80x24.org>; Mon, 14 Aug 2017 17:54:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E911B20899
+	for <e@80x24.org>; Mon, 14 Aug 2017 17:57:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751590AbdHNRyq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Aug 2017 13:54:46 -0400
-Received: from mail-yw0-f175.google.com ([209.85.161.175]:35532 "EHLO
-        mail-yw0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750753AbdHNRyo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Aug 2017 13:54:44 -0400
-Received: by mail-yw0-f175.google.com with SMTP id l82so59094868ywc.2
-        for <git@vger.kernel.org>; Mon, 14 Aug 2017 10:54:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=jzSaznWnkvHoMUKZKIEjGUTDFI0TZamhfdjpqdZeu74=;
-        b=dvpTZfwKm+dGaz9lKUh07LDlelsrWPjJL55FMf5ZAmtDbBGMcvYo/tWyk2mTg8O9yG
-         FznF3L+MNJ0kTt+Zd1rQSiAICxud8zTcnU+r2QaR8U+q78bktgY7UpJj9nDb/+pvZpJ1
-         q+D7M60azTENcyNtc/pXburSJth38GROAu8I5jjpTTUnXMrhbhqxfaSPu/01iUYsCR2V
-         wUzWzM6zlL3s1NTOItDc3i07OUeRWz8dEkzy/PMcwArx8u2m0rL22sCK0LqCiNlJcZja
-         /9q/QF4RMy+KIBqO9sVLsQa+F0h+EBIKYoRMvn6NE8Tk30FTpwdLUnUdBBNU/pgg8P5T
-         VqDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=jzSaznWnkvHoMUKZKIEjGUTDFI0TZamhfdjpqdZeu74=;
-        b=UkVFVFqxjjTWQmvVlFuADHHPAx6DnNiOIpTLrbOKzLzvVW8DMdBvvzckP+p4+WwWBQ
-         jE19+ZSeeFud1nrF55J7UNCtQm8+OKgdg2gqcha/YVlDNgHxhO/GvoGXFIbFhamJm0dD
-         bxj5KdifIm0xlqLwNabrDRVmtBZV7gihHeDO7wrPxT9E06ivZvc0zzGFjMwCNwhsKD6O
-         Ib25xVKMMXf/p80awj+5FwgoGGz9Gapr/TVzgwhpnsp1wDNSp0Qwiz+u2nEiadbGxFY5
-         pwbK+18Jl5MDMEatywNrsFDqLbY8cdz8MSofPu/wef7B+xpTf8p098+vMAm5ZeGWJckZ
-         GQIg==
-X-Gm-Message-State: AHYfb5iLHOhXGqJKAmyE+1FVIpkrrT9z+HLw0VuaP7tc64qJ2WwTfz+F
-        FEJuJjbvpJgBwl57+vU0Faw+aEw+FQJ6GW8=
-X-Received: by 10.37.51.7 with SMTP id z7mr20394036ybz.145.1502733283659; Mon,
- 14 Aug 2017 10:54:43 -0700 (PDT)
+        id S1751510AbdHNR50 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Aug 2017 13:57:26 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54638 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751196AbdHNR50 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Aug 2017 13:57:26 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4083CA992E;
+        Mon, 14 Aug 2017 13:57:25 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=RKunA5LLRXGYumSLPgW49JODICc=; b=qLw95n
+        pVY1OxYQo6wUYkA0tnq1b1ywXvIPbxYgrU0Y5sJ937XVn8a/ZhD9quvdEh/FFx5c
+        77NGod0gRH+aLWtKqhX9NRuijbrNz/UjrJGAGYwR+O/cQ2QSoR0Sp2Pu5FsgYzcj
+        CoxOUOu23THwvktD0UcXrcVL6DYW2z6vtGoW8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=EEiiGLL1aEqW6siDezkZqaDZkV7OUgCm
+        Qxb6mF3/Pyw5fS+gDPpJeQPV/AeajoqGdRge5skwE8W8by0ammgxVhsChSvjbS4l
+        sVu87+Hucnm90bGZ7x4hC857eA8phreXlmKhwRKjLrKNJOv+3wH1SO7RX284W9MV
+        VW0qkT1uN4A=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 30E11A992D;
+        Mon, 14 Aug 2017 13:57:25 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8417DA992B;
+        Mon, 14 Aug 2017 13:57:24 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Paolo Bonzini <bonzini@gnu.org>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v4 0/4] interpret-trailers: add --where, --if-exists, --if-missing
+References: <20170801090333.32642-1-bonzini@gnu.org>
+        <0ac82014-4da9-9ef2-5da0-07996c8aa8fd@gnu.org>
+Date:   Mon, 14 Aug 2017 10:57:23 -0700
+In-Reply-To: <0ac82014-4da9-9ef2-5da0-07996c8aa8fd@gnu.org> (Paolo Bonzini's
+        message of "Mon, 14 Aug 2017 11:26:29 +0200")
+Message-ID: <xmqq1soevxq4.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.37.75.3 with HTTP; Mon, 14 Aug 2017 10:54:43 -0700 (PDT)
-In-Reply-To: <20170814084646.30781-1-kaarticsivaraam91196@gmail.com>
-References: <20170711141111.7538-3-kaarticsivaraam91196@gmail.com> <20170814084646.30781-1-kaarticsivaraam91196@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 14 Aug 2017 10:54:43 -0700
-Message-ID: <CAGZ79kYPE1qQT6Lqd4M=uBUjX3e3p-ABOEm+ggAJMgfw0ENB0Q@mail.gmail.com>
-Subject: Re: [PATCH] hook: use correct logical variable
-To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 070D8000-811A-11E7-8B0F-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 14, 2017 at 1:46 AM, Kaartic Sivaraam
-<kaarticsivaraam91196@gmail.com> wrote:
-> Sign-off added should be that of the "committer" not that of the
-> "commit's author".
->
-> Use the correct logical variable that identifies the committer.
->
-> Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-> ---
->  This fixes a small issue when trying to do the following with the script enabled,
->
->     $ git commit --amend -s
->
->  If the commit being amended was signed off by the commit's author then the above command
->  would *append* the sign-off of the committer followed by that of the commit's author.
->  That' because the script is invoked only after the sign-off is added by the '-s' option AND
->  the default of 'trailer.ifexists' for interpret-trailers currently defaults to the 'addIfDifferentNeighbor'
->  thus interpret-trailer fails to identify the existing sign-off of the commit's author and adds it.
+Paolo Bonzini <bonzini@gnu.org> writes:
 
-The background knowledge provided up to here seems like
-a valuable information that we'd want to preserve in the commit
-history, i.e. make it part of the commit message?
+> On 01/08/2017 11:03, Paolo Bonzini wrote:
+>> From: Paolo Bonzini <pbonzini@redhat.com>
+>> 
+>> These options are useful to experiment with "git interpret-trailers"
+>> without having to tinker with .gitconfig (Junio said git should ahve
+>> done this first and only added configuration afterwards).  It can
+>> be useful in the case where you want a different placement for the trailer,
+>> or for scripts/aliases that don't want to rely on specific .gitconfig
+>> settings.
+>> 
+>> Compared to v2, the main change is that option order on the command-line
+>> is respected.  That is,
+>> 
+>> 	--trailer 'acked-by: foo' --where end --trailer 'signed-off-by: me'
+>> 
+>> will only apply where=end to the second trailer.  Likewise,
+>> 
+>> 	--where end --trailer 'signed-off-by: me' --no-where \
+>> 	--trailer 'acked-by: foo'
+>> 
+>> will only apply it to the first, reverting to trailer.*.where for the
+>> "acked-by" trailer.
+>
+> Junio, I see you haven't yet applied this v4 to origin/pu, did you miss it?
 
-Code looks good.
-
-Thanks,
-Stefan
-
->
->  Anyways, it doesn't make sense for a script to add the sign-off of the commit's author. So,
->  fixing it seemed correct to me.
->
->  templates/hooks--prepare-commit-msg.sample | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/templates/hooks--prepare-commit-msg.sample b/templates/hooks--prepare-commit-msg.sample
-> index a84c3e5a8..12dd8fd88 100755
-> --- a/templates/hooks--prepare-commit-msg.sample
-> +++ b/templates/hooks--prepare-commit-msg.sample
-> @@ -34,7 +34,7 @@ SHA1=$3
->  #  *) ;;
->  # esac
->
-> -# SOB=$(git var GIT_AUTHOR_IDENT | sed -n 's/^\(.*>\).*$/Signed-off-by: \1/p')
-> +# SOB=$(git var GIT_COMMITTER_IDENT | sed -n 's/^\(.*>\).*$/Signed-off-by: \1/p')
->  # git interpret-trailers --in-place --trailer "$SOB" "$COMMIT_MSG_FILE"
->  # if test -z "$COMMIT_SOURCE"
->  # then
-> --
-> 2.14.1.534.g641031ecb
->
+Thanks for pinging.  Either it was not noticed by mistake or was
+deliberately ignored during the pre-release freeze, I do not
+remember.
