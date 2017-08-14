@@ -2,185 +2,238 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC53920899
-	for <e@80x24.org>; Mon, 14 Aug 2017 18:32:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 342C820899
+	for <e@80x24.org>; Mon, 14 Aug 2017 18:35:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751031AbdHNScV (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Aug 2017 14:32:21 -0400
-Received: from mail-ua0-f178.google.com ([209.85.217.178]:33850 "EHLO
-        mail-ua0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750859AbdHNScU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Aug 2017 14:32:20 -0400
-Received: by mail-ua0-f178.google.com with SMTP id q25so39945953uah.1
-        for <git@vger.kernel.org>; Mon, 14 Aug 2017 11:32:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=madiva-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=BZmwjMYuW8aiHfuQ+zkVlDQKt8hij3M6/77IXl1SAgQ=;
-        b=GLD3VoOiLECX5KnJITMw7LwwcnDs6K1WX1W7SOv1dTRymkrW+BGNnU6dsVzHOgY1Ti
-         IEek4sBrXbCfiNG0log8/olfUDlm89/+sySKH54wCcMSgSngil4YNQm0AznenjEQv6eb
-         ZYKBlO2036oH07ZiXoTZ1nP2chjDkmR9+BWXBPiLTmPfmxmhXpBkC2QyAuq1pKWfQtF9
-         GJG2WYjpyVKp2ONgtTz42pizDQHtgEm5/6AaH97xO3ybIr3dH4av30QBi/YfPXQxA3Fw
-         Td3vFD2Pvk27pmnvlEp8VlJmrS+/ThqpYSE5bO47d6PvJ4Pl2eQJ26J3YPMipIYhKbJ3
-         NqLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=BZmwjMYuW8aiHfuQ+zkVlDQKt8hij3M6/77IXl1SAgQ=;
-        b=GLc5UYQcdP3bHYUhgOPpVwn/AvxRK5thHomPbgsSs+2Hx8iszk4t2LhIZUN5fUtLQ6
-         hID74r/deA08X/EzjuK3/5bVAlYqcRhwJ2vojh7dP6xz+EHXRl9KE3AOEEN61TWnH7Rq
-         pc9u95LM23BWd/GzKHt+BFRyVYhvL+T9s8SctO15iv6b0jb+FRvDIC27qHkb8GZT1nrF
-         29RQJ+uwVzdyyIv4uR40TjzxOF502er0F3QBX4/hG3Lz8Tovb4OjRyGA8bTqGWvdxFC/
-         2H4kAtiokRn+8xwfcKxWj+uqbbph8uSKQHgyEx3zvWHnegUl9XkDADn1VK+gQDMPPfbq
-         lV/Q==
-X-Gm-Message-State: AHYfb5hhX70AiEt+X5rTe2L5vImfW7DQs2U/LHoSxyOi5/vySdoXJC4T
-        GUSpmevNM9CmvkNRp6/5U87WYw6WsKiI
-X-Received: by 10.176.84.221 with SMTP id q29mr15615982uaa.173.1502735539646;
- Mon, 14 Aug 2017 11:32:19 -0700 (PDT)
+        id S1751196AbdHNSfo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Aug 2017 14:35:44 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50524 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750910AbdHNSfm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Aug 2017 14:35:42 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 584CFAB219;
+        Mon, 14 Aug 2017 14:35:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=7RWjK9QA8yBZ9juOF1AE1IwCLlY=; b=DycAON
+        FMces4/7jJGhDkDyAPRvB/4kSBUKPoN2o3YbQ1t/Pn1GHkJewB34sbti2xzlSajF
+        BtfokVrAXPAKxYMhEj3FS2wjZJhiUSDQYDp1PVbzi7Uh82iYcxYesdJCW5yKTiJC
+        YTxA0CI2ChtyfXXGHBM51S3Yvf22yQzpuUxSE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=MXErJVw8f59geYwFNfcr55Lb0ejXD6eb
+        ugslGe2tVMNYrw2nyRfYMpWRUqBTnY2C4ZxeDWvKdo6Fo/zbldLKrXDqqS9ZimQC
+        6P9Ma2sKC7LHIeDxEoJ1/76Q+1XdblDt7PQVrZFSsvlLwIXBLjFSm57LfLfpMvHc
+        bChwojgpSIA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 50F09AB218;
+        Mon, 14 Aug 2017 14:35:35 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B8231AB216;
+        Mon, 14 Aug 2017 14:35:34 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Philip Oakley <philipoakley@iee.org>,
+        Kevin Willford <kcwillford@gmail.com>, git@vger.kernel.org,
+        Kevin Willford <kewillf@microsoft.com>
+Subject: Re: [PATCH v2 1/2] format-patch: have progress option while generating patches
+References: <20170531150427.7820-1-kewillf@microsoft.com>
+        <20170810183256.12668-2-kewillf@microsoft.com>
+        <20170810232033.46ujnozvnodkguog@sigill.intra.peff.net>
+        <xmqqwp69ycim.fsf@gitster.mtv.corp.google.com>
+        <EA124B72FA7542DBA1C31213235F1B94@PhilipOakley>
+        <20170813043940.muj7z3dvl3nh4k6a@sigill.intra.peff.net>
+        <xmqqpobyw11t.fsf@gitster.mtv.corp.google.com>
+Date:   Mon, 14 Aug 2017 11:35:33 -0700
+In-Reply-To: <xmqqpobyw11t.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Mon, 14 Aug 2017 09:45:34 -0700")
+Message-ID: <xmqqshguuhe2.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.103.123.82 with HTTP; Mon, 14 Aug 2017 11:32:19 -0700 (PDT)
-In-Reply-To: <6d6b4dedba7147b6bd585956db368c8b@UUSALE0M.utcmail.com>
-References: <6ef11677ca184e78a545452ffffe55a1@UUSALE0M.utcmail.com>
- <7F03EAEF-DFDA-4CD0-86A1-A06C775A895B@madiva.com> <605cecc7f196495fa3d25113f28915e0@UUSALE0M.utcmail.com>
- <CANidDKbad2rYK0Cm=VejSp0FU7MRvCzo5Sxfzr-XTLYjbtfWtg@mail.gmail.com> <6d6b4dedba7147b6bd585956db368c8b@UUSALE0M.utcmail.com>
-From:   =?UTF-8?Q?Ux=C3=ADo_Prego?= <uprego@madiva.com>
-Date:   Mon, 14 Aug 2017 20:32:19 +0200
-Message-ID: <CANidDKbrt32oYjsgTuC7ji99TV0_cjbZoH2Un9UZzEicj7YtFQ@mail.gmail.com>
-Subject: Re: [External] Re: gitk -m ?
-To:     "Burkhardt, Glenn B UTAS" <Glenn.Burkhardt@utas.utc.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5C2099BA-811F-11E7-8089-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Maybe there is a chance that combining `gitk `git log -m --follow
---pretty=3Dformat:%h PATHSPEC`` with typing in _Enter files and directories=
- to
-include, one per line:_ any (or maybe all) of the paths the doc had through
-history, would do; but /me more pessimistic now.
-Ux=C3=ADo Prego
+Junio C Hamano <gitster@pobox.com> writes:
 
+> Perhaps we may want to replace the calls to progress_delay() with a
+> call to a simpler wrapper that does not let the callers give their
+> own delay threashold to simplify the API.
 
+... which does not look too bad, but because it makes me wonder if
+we even need to make the delay-threshold customizable per callers,
+I'll wait further discussions before committing to the approach.
 
-Madiva Soluciones
-CL / SERRANO GALVACHE 56
-BLOQUE ABEDUL PLANTA 4
-28033 MADRID
-+34 917 56 84 94
-www.madiva.com
-www.bbva.com
+For example, I do not quite understand why 95 is a good value for
+prune-packed while 0 is a good value for prune.  
 
-The activity of email inboxes can be systematically tracked by
-colleagues, business partners and third parties. Turn off automatic
-loading of images to hamper it.
+The rename detection in diffcore-rename, delay in blame, and
+checkout (via unpack-trees) all of which use 50-percent threshold
+with 1 second delay, sort of make sense to me in that if we
+completed 50 percent within 1 second, it is likely we will finish
+all in 2 seconds (which is the norm for everybody else), perhaps as
+a better version of 0-percent 2 seconds rule.
 
+ builtin/blame.c        |  3 +--
+ builtin/fsck.c         |  2 +-
+ builtin/prune-packed.c |  4 ++--
+ builtin/prune.c        |  2 +-
+ builtin/rev-list.c     |  2 +-
+ diffcore-rename.c      |  4 ++--
+ progress.c             | 10 ++++++++--
+ progress.h             |  4 ++--
+ unpack-trees.c         |  3 +--
+ 9 files changed, 19 insertions(+), 15 deletions(-)
 
-2017-08-14 19:54 GMT+02:00 Burkhardt, Glenn B        UTAS
-<Glenn.Burkhardt@utas.utc.com>:
-> Neither of those two work for me.  They don't limit the view to the singl=
-e file of interest.
->
-> Also, I tried "additional arguments to git log", using "-m --follow".  I =
-filled in the single file of interest in the 'Enter files' section.  The er=
-ror message was:
->
->         Can't parse git log output:  {commit 9cc8be... faab99... }
->
-> -----Original Message-----
-> From: Ux=C3=ADo Prego [mailto:uprego@madiva.com]
-> Sent: Monday, August 14, 2017 12:47
-> To: Burkhardt, Glenn B UTAS
-> Cc: git@vger.kernel.org
-> Subject: Re: [External] Re: gitk -m ?
->
-> I do not know if you can do what you want, mostly if you can do what you =
-want as simply as you might be wanting that you want it, but I guess you co=
-uld use this gitk boot command as a _simple_ work around somehow aliased wi=
-thin your command line configuration:
->
->     $ gitk (--all)? $(git log -m --follow --pretty=3Dformat:%h PATHSPEC)
->
-> Alternatively, there is a _view configuration_ menu (_new view_, _edit vi=
-ew_) where there is a text box labeled _Command to generate more commits to=
- include_. If you type here:
->
->     git log -m --follow --pretty=3Dformat:%h PATHSPEC
->
-> I do not know what will happen and I can not test that now (I eventually =
-will), but chances are it could do what you wanted. Maybe you can even use =
-custom aliases in there that text box.
->
-> I guess you are receiving a more authorized answer soonish, in the meanwh=
-ile, hope that helped.
->
-> Regards,
->
->
-> On 14 Aug 2017, at 15:20, Burkhardt, Glenn B UTAS <Glenn.Burkhardt@utas.u=
-tc.com> wrote:
->
-> They don't.  In particular, information about commits that are parts of m=
-erges is missing.
->
-> Here's an example.  There are only two entries listed in 'gitk --all'
-> for a particular file (sorry, I'd prefer to include a screen sho, but the=
- mailing list doesn't allow HTML messages).
->
-> gitk --all MANIFEST.MF
->
-> Parent: f7462684ae78720aac05c929256d770118cf01fa (initial clone from Clea=
-rcase integ3 branch)
-> Branches: master, remotes/origin/master, remotes/origin/ww, ww
-> Follows:
-> Precedes:
->
->    require java 1.8
->
-> Child:  240f151d61fd4fd06f377bc52970b3574e5f9031 (require java 1.8)
-> Branches: master, remotes/origin/master, remotes/origin/ww, ww
-> Follows:
-> Precedes:
->
->    initial clone from Clearcase integ3 branch
->
->
-> git log with '-m' and '-follow' shows:
->
-> $ git log -m --follow --oneline MANIFEST.MF
-> 9cc8be4 (from 1222d7c) Merge branch 'master' into ww; strategy "ours"
-> a423f2d (from f869950) merge from ww branch; remove Bundle-NativeCode
-> 51f0628 (from 2c6478c) Merge branch 'ww' of coverity:rmps into ww
-> 240f151 require java 1.8
-> f746268 initial clone from Clearcase integ3 branch
->
->
-> -----Original Message-----
-> From: Ux=C3=ADo Prego [mailto:uprego@madiva.com]
-> Sent: Monday, August 14, 2017 01:12
-> To: Burkhardt, Glenn B UTAS
-> Cc: git@vger.kernel.org
-> Subject: [External] Re: gitk -m ?
->
-> Not sure what you are wanting to achieve, but please make sure neither `g=
-itk PATHSPEC` nor `gitk --all PATHSPEC` are presenting you enough informati=
-on.
->
-> On 3 Aug 2017, at 19:37, Burkhardt, Glenn B UTAS <Glenn.Burkhardt@utas.ut=
-c.com> wrote:
->
-> I've been looking in 'gitk' for an option that does what 'git log -m'
-> does.  Did I miss something?  In particular, I'd like to get information =
-about a file that's currently available with "git log -m --all --follow", b=
-ut presented in 'gitk'.  If it's not there, please consider this a feature =
-request.
->
-> Thanks.
+diff --git a/builtin/blame.c b/builtin/blame.c
+index bda1a78726..05115900f3 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -925,8 +925,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 	sb.found_guilty_entry = &found_guilty_entry;
+ 	sb.found_guilty_entry_data = &pi;
+ 	if (show_progress)
+-		pi.progress = start_progress_delay(_("Blaming lines"),
+-						   sb.num_lines, 50, 1);
++		pi.progress = start_delayed_progress(_("Blaming lines"), sb.num_lines, 50);
+ 
+ 	assign_blame(&sb, opt);
+ 
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 99dea7adf6..6a26079ebc 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -188,7 +188,7 @@ static int traverse_reachable(void)
+ 	unsigned int nr = 0;
+ 	int result = 0;
+ 	if (show_progress)
+-		progress = start_progress_delay(_("Checking connectivity"), 0, 0, 2);
++		progress = start_delayed_progress(_("Checking connectivity"), 0, 0);
+ 	while (pending.nr) {
+ 		struct object_array_entry *entry;
+ 		struct object *obj;
+diff --git a/builtin/prune-packed.c b/builtin/prune-packed.c
+index ac978ad401..4fc6b175de 100644
+--- a/builtin/prune-packed.c
++++ b/builtin/prune-packed.c
+@@ -37,8 +37,8 @@ static int prune_object(const struct object_id *oid, const char *path,
+ void prune_packed_objects(int opts)
+ {
+ 	if (opts & PRUNE_PACKED_VERBOSE)
+-		progress = start_progress_delay(_("Removing duplicate objects"),
+-			256, 95, 2);
++		progress = start_delayed_progress(_("Removing duplicate objects"),
++						  256, 95);
+ 
+ 	for_each_loose_file_in_objdir(get_object_directory(),
+ 				      prune_object, NULL, prune_subdir, &opts);
+diff --git a/builtin/prune.c b/builtin/prune.c
+index c378690545..f32adaa0e9 100644
+--- a/builtin/prune.c
++++ b/builtin/prune.c
+@@ -138,7 +138,7 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
+ 	if (show_progress == -1)
+ 		show_progress = isatty(2);
+ 	if (show_progress)
+-		progress = start_progress_delay(_("Checking connectivity"), 0, 0, 2);
++		progress = start_delayed_progress(_("Checking connectivity"), 0, 0);
+ 
+ 	mark_reachable_objects(&revs, 1, expire, progress);
+ 	stop_progress(&progress);
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index 95d84d5cda..5cfc4b35f4 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -364,7 +364,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 		revs.limited = 1;
+ 
+ 	if (show_progress)
+-		progress = start_progress_delay(show_progress, 0, 0, 2);
++		progress = start_delayed_progress(show_progress, 0, 0);
+ 
+ 	if (use_bitmap_index && !revs.prune) {
+ 		if (revs.count && !revs.left_right && !revs.cherry_mark) {
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index 786f389498..0eafa43618 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -532,9 +532,9 @@ void diffcore_rename(struct diff_options *options)
+ 	}
+ 
+ 	if (options->show_rename_progress) {
+-		progress = start_progress_delay(
++		progress = start_delayed_progress(
+ 				_("Performing inexact rename detection"),
+-				rename_dst_nr * rename_src_nr, 50, 1);
++				rename_dst_nr * rename_src_nr, 50);
+ 	}
+ 
+ 	mx = xcalloc(st_mult(NUM_CANDIDATE_PER_DST, num_create), sizeof(*mx));
+diff --git a/progress.c b/progress.c
+index 73e36d4a42..eeebe15b6f 100644
+--- a/progress.c
++++ b/progress.c
+@@ -205,8 +205,8 @@ int display_progress(struct progress *progress, unsigned n)
+ 	return progress ? display(progress, n, NULL) : 0;
+ }
+ 
+-struct progress *start_progress_delay(const char *title, unsigned total,
+-				       unsigned percent_treshold, unsigned delay)
++static struct progress *start_progress_delay(const char *title, unsigned total,
++					     unsigned percent_treshold, unsigned delay)
+ {
+ 	struct progress *progress = malloc(sizeof(*progress));
+ 	if (!progress) {
+@@ -227,6 +227,12 @@ struct progress *start_progress_delay(const char *title, unsigned total,
+ 	return progress;
+ }
+ 
++struct progress *start_delayed_progress(const char *title,
++					unsigned total,	unsigned percent_treshold)
++{
++	return start_progress_delay(title, total, percent_treshold, 2);
++}
++
+ struct progress *start_progress(const char *title, unsigned total)
+ {
+ 	return start_progress_delay(title, total, 0, 0);
+diff --git a/progress.h b/progress.h
+index 611e4c4d42..c7fc431989 100644
+--- a/progress.h
++++ b/progress.h
+@@ -6,8 +6,8 @@ struct progress;
+ void display_throughput(struct progress *progress, off_t total);
+ int display_progress(struct progress *progress, unsigned n);
+ struct progress *start_progress(const char *title, unsigned total);
+-struct progress *start_progress_delay(const char *title, unsigned total,
+-				       unsigned percent_treshold, unsigned delay);
++struct progress *start_delayed_progress(const char *title, unsigned total,
++					unsigned percent_treshold);
+ void stop_progress(struct progress **progress);
+ void stop_progress_msg(struct progress **progress, const char *msg);
+ 
+diff --git a/unpack-trees.c b/unpack-trees.c
+index dd535bc849..03d1b37578 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -343,8 +343,7 @@ static struct progress *get_progress(struct unpack_trees_options *o)
+ 			total++;
+ 	}
+ 
+-	return start_progress_delay(_("Checking out files"),
+-				    total, 50, 1);
++	return start_delayed_progress(_("Checking out files"), total, 50);
+ }
+ 
+ static int check_updates(struct unpack_trees_options *o)
+
