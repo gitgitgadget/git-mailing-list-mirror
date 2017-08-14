@@ -2,162 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B5818208B8
-	for <e@80x24.org>; Mon, 14 Aug 2017 07:38:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2AAB3208B8
+	for <e@80x24.org>; Mon, 14 Aug 2017 08:46:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752105AbdHNHiI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Aug 2017 03:38:08 -0400
-Received: from mail-lf0-f50.google.com ([209.85.215.50]:37399 "EHLO
-        mail-lf0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751692AbdHNHiH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Aug 2017 03:38:07 -0400
-Received: by mail-lf0-f50.google.com with SMTP id m86so36222696lfi.4
-        for <git@vger.kernel.org>; Mon, 14 Aug 2017 00:38:06 -0700 (PDT)
+        id S1752435AbdHNIqK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Aug 2017 04:46:10 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:36226 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752148AbdHNIqJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Aug 2017 04:46:09 -0400
+Received: by mail-pg0-f65.google.com with SMTP id y129so9615451pgy.3
+        for <git@vger.kernel.org>; Mon, 14 Aug 2017 01:46:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=whiteoctober.co.uk; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=X6bMuAPsZBrWOPQBpgQblISDdPljZ5YoQo1iXD3nUsA=;
-        b=p3JKHqmBmcgUWH/zDcTaFemWAyG7tC3BgphQL7m9DkMbNujyy+ZdqjEXqfo08szUM2
-         0rxROM+OJ0nicBv2tppU5VHl/lt5bMeln3ucmwHzvMNyLAeZZEZx3wPpF1AcrHW0yDp9
-         uDVZwGWJQu9NuDMgoUnXYGNCE263i44LtBvog=
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=28JRh0mK5zUiiZGMI9TnJ44oDfsmvNFP1sUohMVeUG0=;
+        b=NDTlqEBZZDfMWKNhC2Ov1NYpyJIhnG1+hEbYrnM0H/2FlcdJgcI9ZbPlUBebIIe/SE
+         j0oEEEDFclWe5DzUp4Fy9rMzrKm27KtB0VmxgCsrvX2uqmYrAY66ZRe8ir9s63XA/fLq
+         zzUmF53yZ2BB9fVfhjNfuA7pWPyedh+zMNPmNhtpNE+yyziHTW8prA2/oJbh8a6J3wRS
+         Dm1KA5QQBoXGCpFzCXRzy2HKpAzZcePs9hKli/3jVisKtP0f7e1Z0/ccbYz9nJm6k4kM
+         1j1L4qEu/djUpibF3Y0teBxVMFFAwMpUv8gCn4ykjF1cNl1+LgepKQ3BM3yRk8wZS782
+         nFUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=X6bMuAPsZBrWOPQBpgQblISDdPljZ5YoQo1iXD3nUsA=;
-        b=hJfFBQqEptFIEirDpH24kkHoRmB0X/wcV3DWS9/rxMOjqv9qF3WQV5u3ED8MVwrBWB
-         4YekXYX8dvOmyza3ovlFzJxInJtg2h0DrrU7WgfkJ2Mm6eZoELwStGUuKZmUjsYET9nB
-         XQnWNjjONrd5n3zgLZuwSbcCcutaFQod2KaFw+LR0ZIORhXBsHaVgVBRmG5PlWdoOLlf
-         T8IBRAADqIVX1hqr3LoX0U9C4xwnYSBIOFohSJqkeZFGOCYP7Bqhw+zvmV/oiYINuBvK
-         Q8utjKRVgHjKzCxOeoGMavQ9jR8OwlGW+clT+eYPuJzPuAx2bR3wjjkq5ktosK/1qH4C
-         Hw/Q==
-X-Gm-Message-State: AHYfb5hr/10Sg4bwOTNgUnWf4WHTD/RMiKMGAKa7KLxza0IkzhwMCwuK
-        volGc0qCeLdnl1p8r+WSBg1kKJwZRGsW+qk=
-X-Received: by 10.25.196.23 with SMTP id u23mr8400345lff.238.1502696286099;
- Mon, 14 Aug 2017 00:38:06 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.25.83.156 with HTTP; Mon, 14 Aug 2017 00:38:05 -0700 (PDT)
-In-Reply-To: <20170814044756.GA8587@alpha.vpn.ikke.info>
-References: <CAPuLQgNq_7Kdeio-59cbDjZ5mWC1VRd_1_KK33Gbka9KJ13vfQ@mail.gmail.com>
- <20170814044756.GA8587@alpha.vpn.ikke.info>
-From:   Sam Partington <sam@whiteoctober.co.uk>
-Date:   Mon, 14 Aug 2017 08:38:05 +0100
-Message-ID: <CAPuLQgPt=NPtd=14BLZ+q8zJyFGOdxNZQX7F1OCdhGrgkFB1+A@mail.gmail.com>
-Subject: Re: Bug when stashing previously-ignored file plus associated
- .gitignore change
-To:     Kevin Daudt <me@ikke.info>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=28JRh0mK5zUiiZGMI9TnJ44oDfsmvNFP1sUohMVeUG0=;
+        b=IebyqTxIJ6LzcoMASfmmD4XF+wMmrJ5e1P68rMYWXYf8cFK27dWGi06/T6DY2f41sY
+         D+9/rWqMKB7wdR6LrSojMCkZJgMTsamDoANKpCkZ1cXT++UjKD/ebjX+OalmJwXWz09m
+         lto6fpig/xxetPmKZGdO89TQ9gtft+PJKhjTeo67Z8A+8sZ8cAJsIIMjSxEvZ9yZ2Rc5
+         P0QTa3XVEPgdzZGxu+7R9mmHrnOHyOU0Iwn/igeG72KQ9TMo96NqAIzyK+Xm3CDNunKf
+         sp5Vrv+6K2HeKRlcUOFcV8aObT9qqACEiEhLz1moC5E1NSiaqVc5G/1/TAdj0VUGmhjP
+         qbiQ==
+X-Gm-Message-State: AHYfb5hQMLF7u1D9QOMld7fv0EDsuyr/6fsxllp73MwX6PR2PMQReYqs
+        eZBP5oCR9hDxhYQmd8aSmA==
+X-Received: by 10.99.97.68 with SMTP id v65mr23221223pgb.200.1502700369392;
+        Mon, 14 Aug 2017 01:46:09 -0700 (PDT)
+Received: from localhost.localdomain ([2405:204:7086:24:a9b7:4f7d:37ad:9d03])
+        by smtp.gmail.com with ESMTPSA id g1sm12296165pfk.92.2017.08.14.01.46.06
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 14 Aug 2017 01:46:08 -0700 (PDT)
+From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+To:     gitster@pobox.com
 Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: [PATCH] hook: use correct logical variable
+Date:   Mon, 14 Aug 2017 14:16:46 +0530
+Message-Id: <20170814084646.30781-1-kaarticsivaraam91196@gmail.com>
+X-Mailer: git-send-email 2.14.1.534.g641031ecb
+In-Reply-To: <20170711141111.7538-3-kaarticsivaraam91196@gmail.com>
+References: <20170711141111.7538-3-kaarticsivaraam91196@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Kevin,
+Sign-off added should be that of the "committer" not that of the
+"commit's author".
 
-Yes, you're right - I didn't commit the change to the .gitignore file,
-so that addition is also being stashed.
+Use the correct logical variable that identifies the committer.
 
-Thanks
-Sam
-Sam Partington
-Senior Developer
+Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+---
+ This fixes a small issue when trying to do the following with the script enabled,
 
+    $ git commit --amend -s
 
+ If the commit being amended was signed off by the commit's author then the above command
+ would *append* the sign-off of the committer followed by that of the commit's author.
+ That' because the script is invoked only after the sign-off is added by the '-s' option AND
+ the default of 'trailer.ifexists' for interpret-trailers currently defaults to the 'addIfDifferentNeighbor'
+ thus interpret-trailer fails to identify the existing sign-off of the commit's author and adds it.
 
-www.whiteoctober.co.uk
-Office: +44 (0)1865 920 707
+ Anyways, it doesn't make sense for a script to add the sign-off of the commit's author. So,
+ fixing it seemed correct to me.
 
-This email message and any attachments are confidential and solely for
-the use of the intended recipient. If you are not the intended
-recipient, you have received this message in error. Please notify us
-immediately and delete the message from your computer. You should not
-distribute, copy or disclose its contents to any other person. Any
-views or opinions expressed in this email are solely those of the
-author and do not necessarily represent those of White October
-Limited. White October is a private limited company registered in
-England & Wales under registration number 3982889. The company=E2=80=99s
-registered office is at 264 Banbury Road, Oxford, OX2 7DY.
+ templates/hooks--prepare-commit-msg.sample | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/templates/hooks--prepare-commit-msg.sample b/templates/hooks--prepare-commit-msg.sample
+index a84c3e5a8..12dd8fd88 100755
+--- a/templates/hooks--prepare-commit-msg.sample
++++ b/templates/hooks--prepare-commit-msg.sample
+@@ -34,7 +34,7 @@ SHA1=$3
+ #  *) ;;
+ # esac
+ 
+-# SOB=$(git var GIT_AUTHOR_IDENT | sed -n 's/^\(.*>\).*$/Signed-off-by: \1/p')
++# SOB=$(git var GIT_COMMITTER_IDENT | sed -n 's/^\(.*>\).*$/Signed-off-by: \1/p')
+ # git interpret-trailers --in-place --trailer "$SOB" "$COMMIT_MSG_FILE"
+ # if test -z "$COMMIT_SOURCE"
+ # then
+-- 
+2.14.1.534.g641031ecb
 
-On 14 August 2017 at 05:47, Kevin Daudt <me@ikke.info> wrote:
-> On Fri, Aug 11, 2017 at 04:55:38PM +0100, Sam Partington wrote:
->> Hi there,
->>
->> I'm running git 2.7.4 on Ubuntu 16.04.  I've found a couple of
->> problems when "un-ignoring" files in tandem with git stash.
->>
->> Here's how to reproduce:
->>
->> Say you have a project using git, with a .gitignore file which
->> contains the following line:
->>
->> bin/*
->>
->> You can then see the problems by doing this:
->>
->> $ touch bin/mynewfile # this file will be ignored at this point >
->> and then updating .gitignore to look like this (adding that second line)=
-:
->>
->> bin/*
->> !bin/mynewfile
->>
->> So far, so good; the new file is no longer ignored.
->>
->> But now, try stashing the changes and including untracked files in the s=
-tash:
->>
->> $ git stash save -u
->>
->> Here's the first problem, bin/mynewfile is still there:
->>
->> $ ls bin/mynewfile
->> bin/mynewfile
->>
->> But you'd expect it to not be there and be in the stash, I think.
->> This is what would normally happen with the untracked-files option for
->> git stash.
->>
->> This leads to the second problem - you can't now pop the stash:
->>
->> $ git stash pop
->> bin/mynewfile already exists, no checkout
->> Could not restore untracked files from stash
->>
->> If you want to apply the stash, you have to remove the file:
->>
->> $ rm bin/mynewfile
->> $ git stash pop # this works, and re-creates bin/mynewfile
->>
->> This is quite an unusual edge case, but I have hit it two or three
->> times now and so thought it worth reporting, but I'll understand if
->> it's deemed not worth fixing!
->>
->> Do let me know if you need any more information from me here.
->>
->> Thanks
->> Sam
->>
->> PS Sorry for the lack of formatting - I'm sending this as plain text
->> as my original HTML emails was rejected as possible spam by your
->> mailserver.
->>
->> Sam Partington
->> Senior Developer
->>
->
-> Hello Sam,
->
-> Is it the case that you did not commit the addition of '!bin/mynewfile'
-> yet? I suspect that by running git stash save -u, you also are stashing
-> this addition to the .gitigore file. Can you confirm this?
->
-> Kevin
