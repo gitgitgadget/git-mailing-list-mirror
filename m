@@ -2,90 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E911B20899
-	for <e@80x24.org>; Mon, 14 Aug 2017 17:57:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BBB7120899
+	for <e@80x24.org>; Mon, 14 Aug 2017 18:07:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751510AbdHNR50 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Aug 2017 13:57:26 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54638 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751196AbdHNR50 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Aug 2017 13:57:26 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4083CA992E;
-        Mon, 14 Aug 2017 13:57:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=RKunA5LLRXGYumSLPgW49JODICc=; b=qLw95n
-        pVY1OxYQo6wUYkA0tnq1b1ywXvIPbxYgrU0Y5sJ937XVn8a/ZhD9quvdEh/FFx5c
-        77NGod0gRH+aLWtKqhX9NRuijbrNz/UjrJGAGYwR+O/cQ2QSoR0Sp2Pu5FsgYzcj
-        CoxOUOu23THwvktD0UcXrcVL6DYW2z6vtGoW8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=EEiiGLL1aEqW6siDezkZqaDZkV7OUgCm
-        Qxb6mF3/Pyw5fS+gDPpJeQPV/AeajoqGdRge5skwE8W8by0ammgxVhsChSvjbS4l
-        sVu87+Hucnm90bGZ7x4hC857eA8phreXlmKhwRKjLrKNJOv+3wH1SO7RX284W9MV
-        VW0qkT1uN4A=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 30E11A992D;
-        Mon, 14 Aug 2017 13:57:25 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8417DA992B;
-        Mon, 14 Aug 2017 13:57:24 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Paolo Bonzini <bonzini@gnu.org>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v4 0/4] interpret-trailers: add --where, --if-exists, --if-missing
-References: <20170801090333.32642-1-bonzini@gnu.org>
-        <0ac82014-4da9-9ef2-5da0-07996c8aa8fd@gnu.org>
-Date:   Mon, 14 Aug 2017 10:57:23 -0700
-In-Reply-To: <0ac82014-4da9-9ef2-5da0-07996c8aa8fd@gnu.org> (Paolo Bonzini's
-        message of "Mon, 14 Aug 2017 11:26:29 +0200")
-Message-ID: <xmqq1soevxq4.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1752148AbdHNSHb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Aug 2017 14:07:31 -0400
+Received: from mail-yw0-f173.google.com ([209.85.161.173]:34052 "EHLO
+        mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752079AbdHNSHa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Aug 2017 14:07:30 -0400
+Received: by mail-yw0-f173.google.com with SMTP id s143so59512302ywg.1
+        for <git@vger.kernel.org>; Mon, 14 Aug 2017 11:07:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=VaNTkpR3teTxDvwgxw8IqaOM+iUvJqSjqgqfDCq0nGo=;
+        b=WDnOMd0P/Xi8nFyNory1juBzMeopwn+ydgBI15aLCtTjWJnQk3IYqvKlGkuLAlIb6V
+         Nnumi6W5wosCx9jiqxw7viXNy6MJbrAvDe1F6XZyUFiIIU9IhFHE8IKr+48hgpxJuOaV
+         eikfS0pT6m/tHx7IJeKePJz1JPkhjAypGriH0TV85CJWomHQwQAgSVyN+tX4K5eKRdeI
+         Lm2a/s+ApKLn7h8ZW/0ey3+Vlk740MZ9frjGRC095SYuxeCwB9ZjUUxbJlvvIExyrXFa
+         ps8BD44Ng3aFvg1IU4A5dB2q3zD7uqp+zpRZrQ0db4BPvpqT9oRo9NiElkWD3C1b3WWP
+         4/oQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=VaNTkpR3teTxDvwgxw8IqaOM+iUvJqSjqgqfDCq0nGo=;
+        b=joCEEjp8XYnw3wMwRk5RYDWOaHFtcQtWkyRpfBvG1+uqOgCsV8BCY6ox8AD9CIdGlD
+         sz14OZRuufveAU2K+LgXgjURNdaJOFkXtxdX6NDlqbQ62MGd5yKJMvf4va8FIcZEwENe
+         ivq5GUpGmzGisSJbP95F2JosfS675yGOywwqx6FAZeeYbzXIVw5CWX+8VMDVEBNGaLsx
+         KK0kD1P1BGLDdTm/9KAEt59UEZ7t+OZdO1XSJ4iXYVfsIWEFg2EqYTg3Ygn9sz/5c3oH
+         UHZRrjhiro6uYXtGcJZqfXz5mxWI8qO2c6gv9IPhJLkg5SijfYc1lwPtkt3mrlorzGpK
+         Op2g==
+X-Gm-Message-State: AHYfb5hJ2XqiNtsnknJTsC8K8+fopIL/z7AysHTVjbkW9T5xlLxuWD22
+        3vwhH1ZpQx1TzmRi44X2QD8brjWs70IB
+X-Received: by 10.37.123.129 with SMTP id w123mr21168212ybc.305.1502734049725;
+ Mon, 14 Aug 2017 11:07:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 070D8000-811A-11E7-8B0F-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Received: by 10.37.75.3 with HTTP; Mon, 14 Aug 2017 11:07:29 -0700 (PDT)
+In-Reply-To: <87shgx3khv.fsf@local.lan>
+References: <87mv7773tp.fsf@local.lan> <CAGZ79kbgb2P7KT_b9xuMj1pN1+jsPfH7YSJNDyDB5dY3cwXCQg@mail.gmail.com>
+ <87efsj70d7.fsf@local.lan> <CAGZ79kZN1-DuiaS=bFgNUXBonAR3BHqtAFSqoJ+MJ4esMdmz-g@mail.gmail.com>
+ <87shgx3khv.fsf@local.lan>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 14 Aug 2017 11:07:29 -0700
+Message-ID: <CAGZ79kaCuaxgGwuw7AHKTjsmwsTBuv=gWzeGDJv3TJv+b25Uvw@mail.gmail.com>
+Subject: Re: Not understanding with git wants to copy one file to another
+To:     Harry Putnam <reader@newsguy.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Paolo Bonzini <bonzini@gnu.org> writes:
-
-> On 01/08/2017 11:03, Paolo Bonzini wrote:
->> From: Paolo Bonzini <pbonzini@redhat.com>
->> 
->> These options are useful to experiment with "git interpret-trailers"
->> without having to tinker with .gitconfig (Junio said git should ahve
->> done this first and only added configuration afterwards).  It can
->> be useful in the case where you want a different placement for the trailer,
->> or for scripts/aliases that don't want to rely on specific .gitconfig
->> settings.
->> 
->> Compared to v2, the main change is that option order on the command-line
->> is respected.  That is,
->> 
->> 	--trailer 'acked-by: foo' --where end --trailer 'signed-off-by: me'
->> 
->> will only apply where=end to the second trailer.  Likewise,
->> 
->> 	--where end --trailer 'signed-off-by: me' --no-where \
->> 	--trailer 'acked-by: foo'
->> 
->> will only apply it to the first, reverting to trailer.*.where for the
->> "acked-by" trailer.
+On Fri, Aug 11, 2017 at 1:41 PM, Harry Putnam <reader@newsguy.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
-> Junio, I see you haven't yet applied this v4 to origin/pu, did you miss it?
+>
+> [...]
+>
+>> Ah. Sorry for confusing even more.
+>> By pointing out the options for git-diff, I just wanted to point out that
+>> such a mechanism ("rename/copy detection") exists.
+>
+>
+> [...]
+>
+>>> What am I missing?
+>>>
+>>
+>> https://www.reddit.com/r/git/comments/3ogkk1/beginner_disable_rename_detection/
+>>
+>> "Rename detection is just GUI sugar".
+>
+> Thanks there is a nice full explanation at the cited url.
+>
+> What is still a bit puzzling is that in that same commit, there are
+> files that are true copies of each other, just in different locations,
+> But nothing pops up about them in a git commit.
+>
 
-Thanks for pinging.  Either it was not noticed by mistake or was
-deliberately ignored during the pre-release freeze, I do not
-remember.
+The heuristic to find the renames/copies only looks at modified files
+to be fast(, the assumption is that each commit only touches few
+files, but the project consists of a lot of files).
+
+For that git-diff knows about '--find-copies-harder' that looks at
+all files even those not modified. This would point out the true
+copies, I would assume.
+
+I don't think we'd want to include the '--find-copies-harder' flag
+to status or commit, as it may take some time in large projects.
