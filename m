@@ -2,118 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 58E8520899
-	for <e@80x24.org>; Mon, 14 Aug 2017 13:20:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AFD7320899
+	for <e@80x24.org>; Mon, 14 Aug 2017 15:52:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752261AbdHNNUi convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 14 Aug 2017 09:20:38 -0400
-Received: from mx0b-00105401.pphosted.com ([67.231.152.184]:56085 "EHLO
-        mx0b-00105401.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752253AbdHNNUh (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 14 Aug 2017 09:20:37 -0400
-Received: from pps.filterd (m0074334.ppops.net [127.0.0.1])
-        by m0074334.ppops.net (8.16.0.21/8.16.0.21) with SMTP id v7EDKECO037377;
-        Mon, 14 Aug 2017 09:20:34 -0400
-Received: from xnwpv32.utc.com ([167.17.239.12])
-        by m0074334.ppops.net with ESMTP id 2cbap6a7jw-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Mon, 14 Aug 2017 09:20:34 -0400
-Received: from pps.filterd (xnwpv32.utc.com [127.0.0.1])
-        by xnwpv32.utc.com (8.15.0.59/8.15.0.59) with SMTP id v7EDAgw5028437;
-        Mon, 14 Aug 2017 09:20:33 -0400
-Received: from uusnwa4u.utc.com (uusnwa4u.utc.com [159.82.101.254])
-        by xnwpv32.utc.com with ESMTP id 2cbch3r4r3-1
-        (version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Mon, 14 Aug 2017 09:20:33 -0400
-Received: from UUSALE0P.utcmail.com (UUSALE0P.utcmail.com [10.220.35.34])
-        by uusnwa4u.utc.com (Sentrion-MTA-4.3.2/Sentrion-MTA-4.3.2) with ESMTP id v7EDKVn2023857
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=OK);
-        Mon, 14 Aug 2017 09:20:32 -0400
-Received: from UUSALE0M.utcmail.com (10.220.35.32) by UUSALE0P.utcmail.com
- (10.220.35.34) with Microsoft SMTP Server (TLS) id 15.0.1263.5; Mon, 14 Aug
- 2017 09:20:31 -0400
-Received: from UUSALE0M.utcmail.com ([10.220.35.32]) by UUSALE0M.utcmail.com
- ([10.220.35.32]) with mapi id 15.00.1263.000; Mon, 14 Aug 2017 09:20:31 -0400
-From:   "Burkhardt, Glenn B        UTAS" <Glenn.Burkhardt@utas.utc.com>
-To:     =?iso-8859-1?Q?Ux=EDo_Prego?= <uprego@madiva.com>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: [External] Re: gitk -m ?
-Thread-Topic: [External] Re: gitk -m ?
-Thread-Index: AdMMfuPtWkaB7cx3TfmXS1g/Ao0BcwIXnU4AAAgsbxA=
-Date:   Mon, 14 Aug 2017 13:20:31 +0000
-Message-ID: <605cecc7f196495fa3d25113f28915e0@UUSALE0M.utcmail.com>
-References: <6ef11677ca184e78a545452ffffe55a1@UUSALE0M.utcmail.com>
- <7F03EAEF-DFDA-4CD0-86A1-A06C775A895B@madiva.com>
-In-Reply-To: <7F03EAEF-DFDA-4CD0-86A1-A06C775A895B@madiva.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-titus-version: 3.5.15.2
-x-tituslabs-classificationhash-30: VgNFIFU9Hx+/nZJb9Kg7IjMlMi8h89VCWKDzkBE7Ya2KD7Y6lQ/WIAxaTs8E6hU/BkiIy4U1JUwVOsB72QRUIU/1pLVt2/8wZMGFG7Pmp5tyz3cnbrL/FBF0cMH0Q1YzoysBYF2uH37MP8oTq6MU0qQOWZYDX9pC3Z/EWqh3WE/C6PqQkPc7kGHX7VYRizlB
-x-tituslabs-classifications-30: TLPropertyRoot=UTC;TechnicalData=No;
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.220.3.240]
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 8BIT
+        id S1753012AbdHNPwy (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Aug 2017 11:52:54 -0400
+Received: from mout.gmx.net ([212.227.15.15]:52945 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752882AbdHNPww (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Aug 2017 11:52:52 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Ld1CS-1dGmca1SXw-00iBQ4; Mon, 14
+ Aug 2017 17:52:40 +0200
+Date:   Mon, 14 Aug 2017 17:52:39 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Stefan Beller <sbeller@google.com>,
+        Brandon Williams <bmwill@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [RFC] clang-format: outline the git project's coding style
+In-Reply-To: <xmqqk22b5q9m.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1708141751590.19382@virtualbox>
+References: <20170808012554.186051-1-bmwill@google.com> <alpine.DEB.2.21.1.1708081404200.4271@virtualbox> <CAGZ79kb2860nUs46bP=x-gAx9Ao6DxnvXQv3x387Wxw+kEyxJw@mail.gmail.com> <20170808182324.GB73298@google.com> <alpine.DEB.2.21.1.1708100032050.11175@virtualbox>
+ <CAGZ79kb6Ljk8brLN1bbOnBLfm=Q=aCnkZ=ZBtDPzf7MZionmSw@mail.gmail.com> <alpine.DEB.2.21.1.1708101137190.11175@virtualbox> <xmqqk22b5q9m.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1011 lowpriorityscore=0 impostorscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1706020000
- definitions=main-1708140219
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:7+lVUVqnuMwv7G0n9ZGlupkTQU7J3xOafCnY1mCxwpraHh7JjcX
+ RHJmDY2JKWydcg/TIAUKhffYATM0emXJ8KjaUaPsJCDTFOzhI9vArCMu17jjPMtYzuDv3SS
+ ZfBGJZQBarIKHUrJtWiLbzoIYAkzlaBmeGguRH6EXUJ+lmcusoJuqr1btAmdH/fUPkAF9bG
+ EvFFXdL4q/AnuxQ44XKUQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:7pvTA1M4pZ8=:9FV3QWcOlvpkhP0+AKvQob
+ quCTyuxblM7S/bCWQn4QCg7HshnWMzL84Tf2V/cM//8mS21JtWzyXCIRi0LO42ZfdD9AAz5zb
+ L3pwdhuwGIWvwsIYcxFcFx5ciD9uwg6aUN5Ox1FAiBx27512lRjcCRZkSvmmzKeDu4yOgEG3l
+ MsNPBldlfP7OWzIJkgorwLacvca3cDkZjso8yV2NF430zQjaFaagkdRxlubDvcLPaHtN1/wib
+ ChbnFQKgipTDG6Jy2AGZwl3vfAWuYmTbhs4fUsNLn+M/CDhhtHDvUUtgojqkcCAlKD96Tcrd7
+ r7Nk9LQf2v5TNnoFaRRj6qGT46hx/cCHe1hLiMCmzXK78cyoBT41P5/JXNTfCtKqOqCUVhYfP
+ kLDvE9Xh0jdctXAUb/theMGa4EIGJJpKAuA30ajcR3o+TFcP9U/Ine4cluSBFkbRl95ZR8PyK
+ IyUemaS8AtGOO1NIAfA2S6vSXPxv35qUQJ5PUceJKtLkPgrkjH6Be8Xd3NXUN17ajFm02L6K8
+ IyCDXxs6H07d2q136XuTpisI3v44/QBJt9JxP02ZJTMf/FcDG2do8hfN2G1WyDpjwHyVG3fHX
+ a/l/ne2zqgyUAppVvh+YVrZVA7l7gpsilTcp94y/FMJEdAfdo4kyPrN3JWC8cWjHOyWolkpxB
+ aVK2yYwYMlIjb+D8z8pyVAN8UUke7sWGv2BFx0wapoy6keHEK1wWEV5951NCDMHEB6gz8jjBj
+ XBWzkzFfiEJsZq95UTVvp1ETmp1jK5bAs53AKcAS49JsySHD8dJPEgANd4uPQCQ6AuHOjBeyW
+ oGT1tHwH5+J+oe7YDCkiG8HfDnaXHEVGIiodZZDu1X9ctLGHes=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-They don't.  In particular, information about commits that are parts of merges is missing.
+Hi Junio,
 
-Here's an example.  There are only two entries listed in 'gitk --all' for a particular file (sorry, I'd prefer to include a screen sho, but the mailing list doesn't allow HTML messages).
+On Thu, 10 Aug 2017, Junio C Hamano wrote:
 
-gitk --all MANIFEST.MF
-
-Parent: f7462684ae78720aac05c929256d770118cf01fa (initial clone from Clearcase integ3 branch)
-Branches: master, remotes/origin/master, remotes/origin/ww, ww
-Follows: 
-Precedes: 
-
-    require java 1.8
-
-Child:  240f151d61fd4fd06f377bc52970b3574e5f9031 (require java 1.8)
-Branches: master, remotes/origin/master, remotes/origin/ww, ww
-Follows: 
-Precedes: 
-
-    initial clone from Clearcase integ3 branch
-
-
-git log with '-m' and '-follow' shows:
-
-$ git log -m --follow --oneline MANIFEST.MF
-9cc8be4 (from 1222d7c) Merge branch 'master' into ww; strategy "ours"
-a423f2d (from f869950) merge from ww branch; remove Bundle-NativeCode
-51f0628 (from 2c6478c) Merge branch 'ww' of coverity:rmps into ww
-240f151 require java 1.8
-f746268 initial clone from Clearcase integ3 branch
-
-
------Original Message-----
-From: Uxío Prego [mailto:uprego@madiva.com] 
-Sent: Monday, August 14, 2017 01:12
-To: Burkhardt, Glenn B UTAS
-Cc: git@vger.kernel.org
-Subject: [External] Re: gitk -m ?
-
-Not sure what you are wanting to achieve, but please make sure neither `gitk PATHSPEC` nor `gitk --all PATHSPEC` are presenting you enough information.
-
-> On 3 Aug 2017, at 19:37, Burkhardt, Glenn B UTAS <Glenn.Burkhardt@utas.utc.com> wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> I've been looking in 'gitk' for an option that does what 'git log -m' does.  Did I miss something?  In particular, I'd like to get information about a file that's currently available with "git log -m --all --follow", but presented in 'gitk'.  If it's not there, please consider this a feature request.
+> > On Wed, 9 Aug 2017, Stefan Beller wrote:
+> >
+> >> > I am sure that something even better will be possible: a Continuous
+> >> > "Integration" that fixes the coding style automatically by using
+> >> > `filter-branch` (avoiding the merge conflicts that would arise if
+> >> > `rebase -i` was used).
+> >> 
+> >> I do not quite follow. Is that to be used by Junio while integrating
+> >> branches?
+> >
+> > I was more thinking about a bot on GitHub. "Code cleanup as a service".
 > 
-> Thanks.
+> I vaguely recall that there was a discussion to have SubmitGit wait
+> for success from Travis CI; if that is already in place, then I can
+> sort of see how it would help individual contributors to have the
+> style checker in that pipeline as well.  
+> 
+> I have a mixed feelings about "fixing" styles automatically, though.
 
+That's too bad. I would much rather focus on quality of code than
+conformance of style, even if the latter is a lot easier than the former.
+
+Ciao,
+Dscho
