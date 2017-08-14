@@ -2,118 +2,185 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8210120899
-	for <e@80x24.org>; Mon, 14 Aug 2017 18:19:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC53920899
+	for <e@80x24.org>; Mon, 14 Aug 2017 18:32:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751570AbdHNSTR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Aug 2017 14:19:17 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61562 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751031AbdHNSTQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Aug 2017 14:19:16 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8151CAA6E0;
-        Mon, 14 Aug 2017 14:19:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=BUwVSjgjSU/5wwL3+hgdJN8fWqE=; b=aWRGLN
-        Lzm8H+U/Y2BymEzQ5m7u6YC5hI4iLMTBnDQK3kgwCjj4qZnXEM8qqfgNzd1hryL6
-        PI5TUbbdmYl+9FTOL3QmybQnWXSOCu5po9WRsulQoayqm9idNz4T2/RzBmw2Sj0K
-        rUn1WJcItehZIk3jzkKI1DOsxfrEZw8oCM8+g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=SeUwAI6JhKh1T0w8FNVyc+eSZpcvRpMM
-        H3zfW7yctGYblVxYMgePFWgga6ZFNDqsZPP0zZ6uskbBEg91W3Gl91jeLEnR21iO
-        3700XgVuOdhI/69RyyWMk4D32mq7Qadrj5AnGtmCqOv3wcOzXKIo9XQS2qmg9Fso
-        2jg2Cr9jG1o=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7A79DAA6DF;
-        Mon, 14 Aug 2017 14:19:08 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E4233AA6DC;
-        Mon, 14 Aug 2017 14:19:07 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] hook: use correct logical variable
-References: <20170711141111.7538-3-kaarticsivaraam91196@gmail.com>
-        <20170814084646.30781-1-kaarticsivaraam91196@gmail.com>
-Date:   Mon, 14 Aug 2017 11:19:06 -0700
-In-Reply-To: <20170814084646.30781-1-kaarticsivaraam91196@gmail.com> (Kaartic
-        Sivaraam's message of "Mon, 14 Aug 2017 14:16:46 +0530")
-Message-ID: <xmqqwp66ui5h.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751031AbdHNScV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Aug 2017 14:32:21 -0400
+Received: from mail-ua0-f178.google.com ([209.85.217.178]:33850 "EHLO
+        mail-ua0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750859AbdHNScU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Aug 2017 14:32:20 -0400
+Received: by mail-ua0-f178.google.com with SMTP id q25so39945953uah.1
+        for <git@vger.kernel.org>; Mon, 14 Aug 2017 11:32:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=madiva-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=BZmwjMYuW8aiHfuQ+zkVlDQKt8hij3M6/77IXl1SAgQ=;
+        b=GLD3VoOiLECX5KnJITMw7LwwcnDs6K1WX1W7SOv1dTRymkrW+BGNnU6dsVzHOgY1Ti
+         IEek4sBrXbCfiNG0log8/olfUDlm89/+sySKH54wCcMSgSngil4YNQm0AznenjEQv6eb
+         ZYKBlO2036oH07ZiXoTZ1nP2chjDkmR9+BWXBPiLTmPfmxmhXpBkC2QyAuq1pKWfQtF9
+         GJG2WYjpyVKp2ONgtTz42pizDQHtgEm5/6AaH97xO3ybIr3dH4av30QBi/YfPXQxA3Fw
+         Td3vFD2Pvk27pmnvlEp8VlJmrS+/ThqpYSE5bO47d6PvJ4Pl2eQJ26J3YPMipIYhKbJ3
+         NqLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=BZmwjMYuW8aiHfuQ+zkVlDQKt8hij3M6/77IXl1SAgQ=;
+        b=GLc5UYQcdP3bHYUhgOPpVwn/AvxRK5thHomPbgsSs+2Hx8iszk4t2LhIZUN5fUtLQ6
+         hID74r/deA08X/EzjuK3/5bVAlYqcRhwJ2vojh7dP6xz+EHXRl9KE3AOEEN61TWnH7Rq
+         pc9u95LM23BWd/GzKHt+BFRyVYhvL+T9s8SctO15iv6b0jb+FRvDIC27qHkb8GZT1nrF
+         29RQJ+uwVzdyyIv4uR40TjzxOF502er0F3QBX4/hG3Lz8Tovb4OjRyGA8bTqGWvdxFC/
+         2H4kAtiokRn+8xwfcKxWj+uqbbph8uSKQHgyEx3zvWHnegUl9XkDADn1VK+gQDMPPfbq
+         lV/Q==
+X-Gm-Message-State: AHYfb5hhX70AiEt+X5rTe2L5vImfW7DQs2U/LHoSxyOi5/vySdoXJC4T
+        GUSpmevNM9CmvkNRp6/5U87WYw6WsKiI
+X-Received: by 10.176.84.221 with SMTP id q29mr15615982uaa.173.1502735539646;
+ Mon, 14 Aug 2017 11:32:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0FEF388C-811D-11E7-86FC-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Received: by 10.103.123.82 with HTTP; Mon, 14 Aug 2017 11:32:19 -0700 (PDT)
+In-Reply-To: <6d6b4dedba7147b6bd585956db368c8b@UUSALE0M.utcmail.com>
+References: <6ef11677ca184e78a545452ffffe55a1@UUSALE0M.utcmail.com>
+ <7F03EAEF-DFDA-4CD0-86A1-A06C775A895B@madiva.com> <605cecc7f196495fa3d25113f28915e0@UUSALE0M.utcmail.com>
+ <CANidDKbad2rYK0Cm=VejSp0FU7MRvCzo5Sxfzr-XTLYjbtfWtg@mail.gmail.com> <6d6b4dedba7147b6bd585956db368c8b@UUSALE0M.utcmail.com>
+From:   =?UTF-8?Q?Ux=C3=ADo_Prego?= <uprego@madiva.com>
+Date:   Mon, 14 Aug 2017 20:32:19 +0200
+Message-ID: <CANidDKbrt32oYjsgTuC7ji99TV0_cjbZoH2Un9UZzEicj7YtFQ@mail.gmail.com>
+Subject: Re: [External] Re: gitk -m ?
+To:     "Burkhardt, Glenn B UTAS" <Glenn.Burkhardt@utas.utc.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
+Maybe there is a chance that combining `gitk `git log -m --follow
+--pretty=3Dformat:%h PATHSPEC`` with typing in _Enter files and directories=
+ to
+include, one per line:_ any (or maybe all) of the paths the doc had through
+history, would do; but /me more pessimistic now.
+Ux=C3=ADo Prego
 
-> Sign-off added should be that of the "committer" not that of the
-> "commit's author".
+
+
+Madiva Soluciones
+CL / SERRANO GALVACHE 56
+BLOQUE ABEDUL PLANTA 4
+28033 MADRID
++34 917 56 84 94
+www.madiva.com
+www.bbva.com
+
+The activity of email inboxes can be systematically tracked by
+colleagues, business partners and third parties. Turn off automatic
+loading of images to hamper it.
+
+
+2017-08-14 19:54 GMT+02:00 Burkhardt, Glenn B        UTAS
+<Glenn.Burkhardt@utas.utc.com>:
+> Neither of those two work for me.  They don't limit the view to the singl=
+e file of interest.
 >
-> Use the correct logical variable that identifies the committer.
+> Also, I tried "additional arguments to git log", using "-m --follow".  I =
+filled in the single file of interest in the 'Enter files' section.  The er=
+ror message was:
 >
-> Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-> ---
->  This fixes a small issue when trying to do the following with the script enabled,
+>         Can't parse git log output:  {commit 9cc8be... faab99... }
 >
->     $ git commit --amend -s
+> -----Original Message-----
+> From: Ux=C3=ADo Prego [mailto:uprego@madiva.com]
+> Sent: Monday, August 14, 2017 12:47
+> To: Burkhardt, Glenn B UTAS
+> Cc: git@vger.kernel.org
+> Subject: Re: [External] Re: gitk -m ?
 >
->  If the commit being amended was signed off by the commit's author
->  then the above command would *append* the sign-off of the
->  committer followed by that of the commit's author.
->  That' because the script is invoked only after the sign-off is
->  added by the '-s' option AND the default of 'trailer.ifexists'
->  for interpret-trailers currently defaults to the
->  'addIfDifferentNeighbor' thus interpret-trailer fails to identify
->  the existing sign-off of the commit's author and adds it.
+> I do not know if you can do what you want, mostly if you can do what you =
+want as simply as you might be wanting that you want it, but I guess you co=
+uld use this gitk boot command as a _simple_ work around somehow aliased wi=
+thin your command line configuration:
 >
->  Anyways, it doesn't make sense for a script to add the sign-off
->  of the commit's author. So, fixing it seemed correct to me.
-
-I tend to agree with "Anyways" above ;-) simply because I found the
-long paragraph more confusing than enlightening, leaving me wonder
-"why is the user using different settings for author and committer
-name" at the end, which _is_ an irrelevant point in the issue being
-addressed.
-
-The real issue is that this commented-out sample hook uses "author"
-ident for the sign-off, while all the rest of Git (i.e. all callers
-of append_signoff() in sequencer.c) use committer ident.
-
-If anything to be changed to this patch, I would say its "should be"
-in the log message can be clarified with "why", perhaps like:
-
-    Sign-off added should be that of the "committer", not that of
-    the "commit's author"; that is how the rest of Git adds sign-off
-    using sequencer.c::append_signoff().
-
-Thanks.
-
->  templates/hooks--prepare-commit-msg.sample | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>     $ gitk (--all)? $(git log -m --follow --pretty=3Dformat:%h PATHSPEC)
 >
-> diff --git a/templates/hooks--prepare-commit-msg.sample b/templates/hooks--prepare-commit-msg.sample
-> index a84c3e5a8..12dd8fd88 100755
-> --- a/templates/hooks--prepare-commit-msg.sample
-> +++ b/templates/hooks--prepare-commit-msg.sample
-> @@ -34,7 +34,7 @@ SHA1=$3
->  #  *) ;;
->  # esac
->  
-> -# SOB=$(git var GIT_AUTHOR_IDENT | sed -n 's/^\(.*>\).*$/Signed-off-by: \1/p')
-> +# SOB=$(git var GIT_COMMITTER_IDENT | sed -n 's/^\(.*>\).*$/Signed-off-by: \1/p')
->  # git interpret-trailers --in-place --trailer "$SOB" "$COMMIT_MSG_FILE"
->  # if test -z "$COMMIT_SOURCE"
->  # then
+> Alternatively, there is a _view configuration_ menu (_new view_, _edit vi=
+ew_) where there is a text box labeled _Command to generate more commits to=
+ include_. If you type here:
+>
+>     git log -m --follow --pretty=3Dformat:%h PATHSPEC
+>
+> I do not know what will happen and I can not test that now (I eventually =
+will), but chances are it could do what you wanted. Maybe you can even use =
+custom aliases in there that text box.
+>
+> I guess you are receiving a more authorized answer soonish, in the meanwh=
+ile, hope that helped.
+>
+> Regards,
+>
+>
+> On 14 Aug 2017, at 15:20, Burkhardt, Glenn B UTAS <Glenn.Burkhardt@utas.u=
+tc.com> wrote:
+>
+> They don't.  In particular, information about commits that are parts of m=
+erges is missing.
+>
+> Here's an example.  There are only two entries listed in 'gitk --all'
+> for a particular file (sorry, I'd prefer to include a screen sho, but the=
+ mailing list doesn't allow HTML messages).
+>
+> gitk --all MANIFEST.MF
+>
+> Parent: f7462684ae78720aac05c929256d770118cf01fa (initial clone from Clea=
+rcase integ3 branch)
+> Branches: master, remotes/origin/master, remotes/origin/ww, ww
+> Follows:
+> Precedes:
+>
+>    require java 1.8
+>
+> Child:  240f151d61fd4fd06f377bc52970b3574e5f9031 (require java 1.8)
+> Branches: master, remotes/origin/master, remotes/origin/ww, ww
+> Follows:
+> Precedes:
+>
+>    initial clone from Clearcase integ3 branch
+>
+>
+> git log with '-m' and '-follow' shows:
+>
+> $ git log -m --follow --oneline MANIFEST.MF
+> 9cc8be4 (from 1222d7c) Merge branch 'master' into ww; strategy "ours"
+> a423f2d (from f869950) merge from ww branch; remove Bundle-NativeCode
+> 51f0628 (from 2c6478c) Merge branch 'ww' of coverity:rmps into ww
+> 240f151 require java 1.8
+> f746268 initial clone from Clearcase integ3 branch
+>
+>
+> -----Original Message-----
+> From: Ux=C3=ADo Prego [mailto:uprego@madiva.com]
+> Sent: Monday, August 14, 2017 01:12
+> To: Burkhardt, Glenn B UTAS
+> Cc: git@vger.kernel.org
+> Subject: [External] Re: gitk -m ?
+>
+> Not sure what you are wanting to achieve, but please make sure neither `g=
+itk PATHSPEC` nor `gitk --all PATHSPEC` are presenting you enough informati=
+on.
+>
+> On 3 Aug 2017, at 19:37, Burkhardt, Glenn B UTAS <Glenn.Burkhardt@utas.ut=
+c.com> wrote:
+>
+> I've been looking in 'gitk' for an option that does what 'git log -m'
+> does.  Did I miss something?  In particular, I'd like to get information =
+about a file that's currently available with "git log -m --all --follow", b=
+ut presented in 'gitk'.  If it's not there, please consider this a feature =
+request.
+>
+> Thanks.
