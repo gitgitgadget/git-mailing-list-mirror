@@ -2,115 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 180A020899
-	for <e@80x24.org>; Mon, 14 Aug 2017 22:13:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9289D20899
+	for <e@80x24.org>; Mon, 14 Aug 2017 22:13:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752523AbdHNWNE (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Aug 2017 18:13:04 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:33070 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752275AbdHNWND (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Aug 2017 18:13:03 -0400
-Received: by mail-wr0-f196.google.com with SMTP id y41so2850118wrd.0
-        for <git@vger.kernel.org>; Mon, 14 Aug 2017 15:13:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=r00xSJ4WNWJFYWDobaxef6sNexnhhcdyLgJG6qIrvZM=;
-        b=IDPIVstk5A334WINa7HyavtXNfuNp3lMJDKosShZ6ZaalJ9Kg8A0yrsukasM1V488u
-         2Ndbx8gsCrm2nRBvnk5uG1FVwhuA3wNH+LAy5cIWo0EzXwkcCxc4/ezmZEaZnfPN/1Z2
-         eoICWeIbPH30SNotKmqAxnc1BZTh8PQq40TaPs8X7FvA/0y/0fF8nO6YyTt32d3xcQ9B
-         fnPaVt/pOxM7eAV1/cdvya3ncipnjfZDY5lPyspJdejLkuNx0XM4JDYcI97mGMEkdbH0
-         jOZuw0ZxxVqFk1utKVypVzSssjfLCX6GyunMkDaIcVKg2w8+N7IBp2G5FMjrVBuGE+zi
-         WpGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=r00xSJ4WNWJFYWDobaxef6sNexnhhcdyLgJG6qIrvZM=;
-        b=b+gf9+XFwlOwtYi4pnfI/HBUlM8RJR+B+dawUa6RpdBKxJDE3ullTh72LdMGvJCugP
-         pietnciF+2NS8yHQO6i/U2gH2FNc8R6fdH7OaN07gKK6FAXd3kf/8P63V+hBYoGtenpt
-         rkO+/8+WHpZDU/rIDwSiP+RVwJvITFnJwf1/WItrBp2Y2VkFIb+WJn88KAjV9StBgzHE
-         4YFjmx+103ozCmCbTWj0W1BBbNyBgOq9VHaph7MKWK0HjkjAOL82LbUENeSNRr/227KD
-         odpDm/8ENjVzgQhduHYC4x22kxDAG2oH7E96H8Erl+ZshNOEgWrqLdh0oIrgpUQJVbAb
-         nvpA==
-X-Gm-Message-State: AHYfb5ik1WVmA5vL8ntdSsMFo8q9Bofi5IBbfeKFb86Zsc3CDMAL/ZUd
-        smhmvk+7XEmQ9pCNyQY=
-X-Received: by 10.223.150.101 with SMTP id c34mr16074058wra.266.1502748781702;
-        Mon, 14 Aug 2017 15:13:01 -0700 (PDT)
-Received: from arrakeen.fritz.box ([2001:a61:10aa:9a01:58c4:fe9a:8665:891])
-        by smtp.gmail.com with ESMTPSA id y39sm9331303wry.32.2017.08.14.15.13.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 14 Aug 2017 15:13:01 -0700 (PDT)
-From:   Andreas Heiduk <asheiduk@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Andreas Heiduk <asheiduk@gmail.com>
-Subject: [PATCH v2] doc: clarify "config --bool" behaviour with empty values
-Date:   Tue, 15 Aug 2017 00:12:18 +0200
-Message-Id: <20170814221218.18874-1-asheiduk@gmail.com>
-X-Mailer: git-send-email 2.14.1
-In-Reply-To: <914098af-00a9-fbc8-cdfe-a65918b2951b@gmail.com>
-References: <914098af-00a9-fbc8-cdfe-a65918b2951b@gmail.com>
+        id S1752560AbdHNWNM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Aug 2017 18:13:12 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38516 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752275AbdHNWNM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Aug 2017 18:13:12 -0400
+Received: (qmail 27440 invoked by uid 109); 14 Aug 2017 22:13:12 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 14 Aug 2017 22:13:12 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6153 invoked by uid 111); 14 Aug 2017 22:13:36 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Mon, 14 Aug 2017 18:13:36 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Aug 2017 18:13:10 -0400
+Date:   Mon, 14 Aug 2017 18:13:10 -0400
+From:   Jeff King <peff@peff.net>
+To:     Kevin Willford <kewillf@microsoft.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH v2] commit: skip discarding the index if there is no
+ pre-commit hook
+Message-ID: <20170814221309.tg7wizmvx3gtzfc7@sigill.intra.peff.net>
+References: <20170810185416.8224-1-kewillf@microsoft.com>
+ <20170814215425.23784-1-kewillf@microsoft.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170814215425.23784-1-kewillf@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-`git config --bool xxx.yyy` returns `true` for `[xxx]yyy` but
-`false` for `[xxx]yyy=` or `[xxx]yyy=""`.  This is tested in
-t1300-repo-config.sh since 09bc098c2.
+On Mon, Aug 14, 2017 at 03:54:25PM -0600, Kevin Willford wrote:
 
-Signed-off-by: Andreas Heiduk <asheiduk@gmail.com>
----
- Documentation/config.txt | 10 +++++-----
- Documentation/git.txt    |  3 ++-
- 2 files changed, 7 insertions(+), 6 deletions(-)
+> If there is not a pre-commit hook, there is no reason to discard
+> the index and reread it.
+> 
+> This change checks to presence of a pre-commit hook and then only
+> discards the index if there was one.
+> 
+> Signed-off-by: Kevin Willford <kewillf@microsoft.com>
+> ---
+>  builtin/commit.c | 15 +++++++++------
+>  1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index d5c9c4cab..478b9431e 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -216,15 +216,15 @@ boolean::
-        synonyms are accepted for 'true' and 'false'; these are all
-        case-insensitive.
- 
--       true;; Boolean true can be spelled as `yes`, `on`, `true`,
--		or `1`.  Also, a variable defined without `= <value>`
-+	true;; Boolean true literals are `yes`, `on`, `true`,
-+		and `1`.  Also, a variable defined without `= <value>`
- 		is taken as true.
- 
--       false;; Boolean false can be spelled as `no`, `off`,
--		`false`, or `0`.
-+	false;; Boolean false literals are `no`, `off`, `false`,
-+		`0` and the empty string.
- +
- When converting value to the canonical form using `--bool` type
--specifier; 'git config' will ensure that the output is "true" or
-+specifier, 'git config' will ensure that the output is "true" or
- "false" (spelled in lowercase).
- 
- integer::
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 7dd5e0328..6e3a6767e 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -75,7 +75,8 @@ example the following invocations are equivalent:
- Note that omitting the `=` in `git -c foo.bar ...` is allowed and sets
- `foo.bar` to the boolean true value (just like `[foo]bar` would in a
- config file). Including the equals but with an empty value (like `git -c
--foo.bar= ...`) sets `foo.bar` to the empty string.
-+foo.bar= ...`) sets `foo.bar` to the empty string which ` git config
-+--bool` will convert to `false`.
- 
- --exec-path[=<path>]::
- 	Path to wherever your core Git programs are installed.
--- 
-2.14.1
+Thanks, this looks nice and simple.
 
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index e7a2cb6285..ab71b93518 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -940,12 +940,15 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+>  		return 0;
+>  	}
+>  
+> -	/*
+> -	 * Re-read the index as pre-commit hook could have updated it,
+> -	 * and write it out as a tree.  We must do this before we invoke
+> -	 * the editor and after we invoke run_status above.
+> -	 */
+> -	discard_cache();
+> +	if (!no_verify && find_hook("pre-commit")) {
+> +		/*
+> +		 * Re-read the index as pre-commit hook could have updated it,
+> +		 * and write it out as a tree.  We must do this before we invoke
+> +		 * the editor and after we invoke run_status above.
+> +		 */
+> +		discard_cache();
+> +	}
+> +
+>  	read_cache_from(index_file);
+
+This read_cache_from() should be a noop, right, because it immediately
+sees istate->initialized is set? So it shouldn't matter that it is not
+in the conditional with discard_cache(). Though if its only purpose is
+to re-read the just-discarded contents, perhaps it makes sense to put it
+there for readability.
+
+-Peff
