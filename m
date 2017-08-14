@@ -2,140 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 200D220899
-	for <e@80x24.org>; Mon, 14 Aug 2017 21:50:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A551820899
+	for <e@80x24.org>; Mon, 14 Aug 2017 21:53:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752535AbdHNVuS (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Aug 2017 17:50:18 -0400
-Received: from mout.gmx.net ([212.227.17.22]:56050 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752491AbdHNVuR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Aug 2017 17:50:17 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mh5h7-1dutmt0yYb-00MIKx; Mon, 14
- Aug 2017 23:50:10 +0200
-Date:   Mon, 14 Aug 2017 23:50:09 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
-cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/4] dropping support for older curl
-In-Reply-To: <CAHVLzcnnrABmkYNg31Aq99NgBbyuCKEM60pHGygyjXbjmaUEYQ@mail.gmail.com>
-Message-ID: <alpine.DEB.2.21.1.1708142302180.19382@virtualbox>
-References: <20170809120024.7phdjzjv54uv5dpz@sigill.intra.peff.net> <alpine.DEB.2.21.1.1708092337350.11175@virtualbox> <20170809214758.p77fqrwxanb4zn5a@sigill.intra.peff.net> <alpine.DEB.2.21.1.1708101111080.11175@virtualbox>
- <CAHVLzcnnrABmkYNg31Aq99NgBbyuCKEM60pHGygyjXbjmaUEYQ@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1752339AbdHNVxH (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Aug 2017 17:53:07 -0400
+Received: from mail-yw0-f178.google.com ([209.85.161.178]:36037 "EHLO
+        mail-yw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751471AbdHNVxH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Aug 2017 17:53:07 -0400
+Received: by mail-yw0-f178.google.com with SMTP id u207so62802881ywc.3
+        for <git@vger.kernel.org>; Mon, 14 Aug 2017 14:53:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=wzOfbhyTvUp2PTUhtBwps5ukGRWTD8CYfDGloT4mG/c=;
+        b=DJ744yxEFsMUZThTIdI23qOWVT7GYE/4JB2SMs8BAD28Da/N1iMEIUaoM30GTVC1bw
+         SQgIPqSgW+DBu/qo3ZVMNW4QmcrEiNs2/ZAbFWxO3IrM1EMYCkM2PrdlmN/eXCfhQwV6
+         taIgAQsAYCWxjl/xub/P/GsmXF3kRYGUmbBqzE34CM0nQryUg6iFnA9Pc18T2HQM85bx
+         utc+65fh3fDypo0ZCqm8pBI0uVOAeqvpLnTk73TAu8LCH2vg8yXQXGhdfw1vVrhV+d2H
+         DvwluWO+/0uKo5r10l18H2CiGOqUa/PtI1p/Yb+/CZRSE7CuBRavk7+VGjiBQyB0KseG
+         q0jQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=wzOfbhyTvUp2PTUhtBwps5ukGRWTD8CYfDGloT4mG/c=;
+        b=JjWA9mu2av4tq1v3MoRn1IIMuNUqzSrHqJSPt+QEyhCVBJlf4T9/Liekwntm6N8cb7
+         /zgsuKk2KLAu88cwObfFhdG53Rwiy/DR6giPOXlM8LPZpwKR1ZnStY7ebFFN7/GHdmEa
+         OfCu5cgXZrKYyiyGuz14TwusawXQgGiQC7tX6R77E3zSqVGNigMn/pBcsWQf9NUg0LnS
+         /YIF6QF7UDGsXgfws2+hGtl5eAWkNu8XS3qB6Y8QuV+1QCgt5IddZIOt5J874V1nV/cD
+         +nYZwiomC8d4QmEAxslBnypJclQBhOv5BNgrpvmb53ZTriAUL2b8k8IjkqPDJ9JYbrz+
+         d5YA==
+X-Gm-Message-State: AHYfb5jodBNyOUz7rBtpglAvh0wsHMXQVY8Z4n0bk8ZkboIwdPs4/iFJ
+        atyPohtntJ5I3cwpOgcNZfLFmmP78u7ffizOAg==
+X-Received: by 10.129.120.4 with SMTP id t4mr21251185ywc.422.1502747586208;
+ Mon, 14 Aug 2017 14:53:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:S05jasgXoT4RhRUnHziySs+xEsCw4Lk7p1C1h0MTFyqIMEhCSr8
- HmusFGMcuqKxXAFi+ymtyng5fyz+v1jEU5WiduM6rar4dXT/YHBbEMLmAMTbdX1RjAOf8PR
- a6dTpHbfS4Qj82SOQoJCwYQ0NBzHBvlaQTSpwBiVKGNfAwKvOhTfiihTo/sVLC3hyqSokuA
- eiz5fSHmi5auML030XP6Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Ef6HuA3g9Kw=:L6VvvAbaDIou2rDvK7wS9g
- RMnuq9X8OlbFn02wap6X0ON6oR7uGOi28m4AY/pQQFTEjZBtzgwfO8hwSOjXHyhHQ5xieG+2E
- 5L+I1ApA1XHH3SkVnAmFPGbBTK09iCuGNUxdCWam7ih/jNtPndiMM5lnavgHb8IlaAZczqR6q
- bx6amlwJ17rZ8H+hZOeklFhHNpdrVMfGOlIPNnXrnuyUWHchF2vdly+XattgjwQzbjcCkru+C
- loyJDtG4SI7APkqpglVxjwLQw8zgdA6jp4dP/Rk/sGJ4BxkrwFXFHRQBSIcUdkfwuxiG3IcVL
- hWXmHPgQpMwN6+tOnJTKAiu64DVrXu32Vae31zcJSPdV8pFjHDvOOxh5lr7yYt01QL55RH8ef
- yk6qxajqK8SVOsIcPaWeudWU3BurLYPjKyLyDgbwkEkNMeUhcUx7Y0rK63EY9D6anBoH/1BcR
- A1mGTzBzdN8atjmY4UXk5maZKSKme37MkU3nw62uOOh4W8T6TTZs2umFZNPGYNrSWn1dVfjtq
- Hp0I8yjzQNBQtg/0vX55BX4Ndo3Fr8x5WBlXFFEOXMY0hyttZe3xCQQ6QPtcc3NKJYf93YCJP
- VBIeXXyz0uM2bNxB45FknE1QSHNRK2RfnE8/TICgWKhy8/W47Tc7nqgReeWOdVLP0neN6Pvot
- DyeX40zCO2ts5era06yT9+Y1mR9CT1BLRSRJeLoJJU/epZNHPbZS3rXzkgIz2Oq4Y1L1dZQDa
- hqkcLkEWJWHdo7ot6nCz6TC1qnYi1ADU7CQ0tWXjmCzMYLfLKR7cOnOIfJiCygB5gVCRK5P0R
- 7PaVyByvXD1UQSs3x+OziuWCPWp1p0NyaDr/ZTXKScbllkRlVA=
+Received: by 10.37.56.142 with HTTP; Mon, 14 Aug 2017 14:53:05 -0700 (PDT)
+In-Reply-To: <20170814213046.107576-3-bmwill@google.com>
+References: <20170808012554.186051-1-bmwill@google.com> <20170814213046.107576-1-bmwill@google.com>
+ <20170814213046.107576-3-bmwill@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 14 Aug 2017 14:53:05 -0700
+Message-ID: <CAGZ79kbv-zdCiShVOdpJsX1OEqUayMVq3zUYcfxJVA+JoFw3oA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] Makefile: add style build rule
+To:     Brandon Williams <bmwill@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Jeff King <peff@peff.net>, Ben Peart <peartben@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Paolo,
+On Mon, Aug 14, 2017 at 2:30 PM, Brandon Williams <bmwill@google.com> wrote:
+> Add the 'style' build rule which will run git-clang-format on the diff
+> between HEAD and the current worktree.  The result is a diff of
+> suggested changes.
 
-On Thu, 10 Aug 2017, Paolo Ciarrocchi wrote:
+Notes from in-office discussion:
 
-> Il 10 ago 2017 11:39 AM, "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-> ha scritto:
-> 
-> 
-> 
-> Footnote *1*: It is no secret that I find our patch submission less than
-> inviting. Granted, *I* use it. *I* did not have problems entering the
-> mailing list. But then, my mails were not swallowed silently, because my
-> mail program does not send HTML by default. And prepared by the German
-> school system (I learned the term "sugar coating" only when exposed to
-> some US culture), I had little emotional problems with being criticized
-> and not thanked for my contribution, I persisted nevertheless. The opinion
-> that the Git contribution process is a lot less inviting than it could be
-> is not only my view, by the way. I hear this a lot. I give you that we are
-> not quite as textbook "keep out from here unless you look like us, smell
-> like us, talk like us, have the same genital setup like us" as the Linux
-> kernel mailing list, but we are in a different universe compared to, say,
-> the Drupal community. And their universe is a lot nicer to live in.
-> 
-> 
-> Isn't SumbitGit a possible answer to your doubts (I strongly agree with
-> you) about the current development process?
+* 'git clang-format --style file -f --extensions c,h'
+   to apply suggested changes. (Useful for contributors,
+   maybe even as a precommit hook)
+* you can also give a range of commits to git clang-format, as
+   git clang-format --diff origin/master..HEAD to see if other
+   local commits need tweaking.
 
-No. I hate to say that SubmitGit neither integrates well with GitHub Pull
-Requests (code comments on GitHub are approximately 1,523x easier to
-write, read, associate with the actual code, and see the current state of,
-compared to the mailing list, and SubmitGit does not even hint at
-integrating with that user experience).
 
-Also, the barrier to start using SubmitGit is rather high. If you open a
-Pull Request on github.com/git/git, you get *no* indication that SubmitGit
-is an option to *actually* get the code into Git. There are also concerns
-about required permissions that Junio Hamano himself would not accept.
-
-Now, let's assume that you submitted the code via SubmitGit. The
-challenges of the patch submission process do not end there, yet SubmitGit
-goes home and has a beer. But the hard part, the discussions on the
-mailing list, the status updates in the completely separate What's cooking
-mails, the missing links back to the original source code (let alone the
-information in which worktree on your computer under which branch name
-that topic was developed again?), the diverging mail threads, the
-"rerolls" that should not forget to Cc: all reviewers of previous rounds,
-all that jazz is still all very, very manual.
-
-And even if there was an easier path from having a local branch that works
-to finally getting it onto the list in the required form, your mail is an
-eloquent example of one of the most preposterous hurdles along the way: we
-pride ourselves with the openness we demonstrate by communicating via a
-mailing list, everybody has a mail address, amirite? But of course, HTML
-mails, like, about 130% of all mails on the internet (or so it feels),
-including yours, are dropped. Silently. Not so open anymore, are we.
-
-It is all so frustrating, really. I work in a team (Visual Studio Team
-Services, you can think of it as kind of a Microsoft take on Git hosting
-plus a lot of other tooling) where we get really, really positive feedback
-regarding our user experience, in particular the frequent enhancements to
-PRs. It is really powerful to open, review and merge PRs, interact with
-other developers, see the state of PRs and their respective discussions,
-open and resolve issues, automate workflows and build tasks [*1*]. And
-then I try to convince people here on this mailing list that it really
-makes a difference if you start using tools to lighten the load of
-everybody, and... little changes.
-
-At least thanks to Lars Schneider's incredible efforts we have Continuous
-Testing (I know how much time he spent on this, it is another thing
-deserving the label "preposterous", and I know how much time I spent on
-top to add the Windows part which mostly works). If only we could push it
-further to true Continuous Integration. Or at least to accepting PRs from
-professionals who simply have no time to fight with our patch contribution
-process and whose expertise we lose as a consequence.
-
-Ciao,
-Johannes
-
-Footnote *1*: The funniest part about this is that I do get mails about
-all of this all the time. When I am pulled in as a reviewer. When a build
-failed. When a previously failing task was fixed by a new build. When
-somebody responded to my comments. The difference to the mailing
-list-centric approach is of course that those mails are only
-notifications, and link back to the tool appropriately supporting what
-I, the user, want to get done.
+>
+> Signed-off-by: Brandon Williams <bmwill@google.com>
+> ---
+>  Makefile | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/Makefile b/Makefile
+> index ba4359ef8..acfd096b7 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -2414,6 +2414,10 @@ $(SP_OBJ): %.sp: %.c GIT-CFLAGS FORCE
+>  .PHONY: sparse $(SP_OBJ)
+>  sparse: $(SP_OBJ)
+>
+> +.PHONY: style
+> +style:
+> +       git clang-format --style file --diff --extensions c,h
+> +
+>  check: common-cmds.h
+>         @if sparse; \
+>         then \
+> --
+> 2.14.1.480.gb18f417b89-goog
+>
