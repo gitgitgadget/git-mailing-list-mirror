@@ -2,119 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 818EF20899
-	for <e@80x24.org>; Mon, 14 Aug 2017 19:52:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 30DD620899
+	for <e@80x24.org>; Mon, 14 Aug 2017 19:58:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751544AbdHNTv6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Aug 2017 15:51:58 -0400
-Received: from mail-yw0-f182.google.com ([209.85.161.182]:33633 "EHLO
-        mail-yw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751000AbdHNTv5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Aug 2017 15:51:57 -0400
-Received: by mail-yw0-f182.google.com with SMTP id p68so61251827ywg.0
-        for <git@vger.kernel.org>; Mon, 14 Aug 2017 12:51:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=40D00RRsmiQfhygUcqQ+QxZOZxFMXnjEGj5IqyPgcjY=;
-        b=a3Ui89bW4vmfFB/muh/WO1qnvR07jELRApK77HAVWuWxsYRjx+WE20GPJbGgz1UKob
-         MQm4EC+hSMTTS8L1mJZ578HJwEHGN9cRHZDu1gzVKzeM+UPqzxPZh1XP2VpeXyvCnBBP
-         C/bUl0JdESUQYObg1Ee+ORjyoblWVmvcAQTrLyx6aDLfkVo727DdFpobFKoXY3vPDUXb
-         q3tl7ZEWLiiL4XFEhR7qfqMSXq+21qHTQuWTblE3YM5Er4V0dCq7GMoRqFDwYEvJT10F
-         x98kmpj2MigH9/YagMYgZ5sCTknl2lGV6bbaW7f/ClDpZkkQIBfvtlE3DAS757vnADAl
-         GtgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=40D00RRsmiQfhygUcqQ+QxZOZxFMXnjEGj5IqyPgcjY=;
-        b=bFdDVldvdDIKDv59oLS4pMcRfJT04WVZixaqv9OH9sSSA1hxDVm7Z7Qh2cWnLQlseT
-         Z2ko+JBDBbbDs/aDWl4Z53a34UqIp/A2dCtxDi/Rj78yw7AT/dJZU6DwK7RgJpkqiLCw
-         AXlz8ZyBpP0uOv8hhocbAgP7jQeWeDv1LiqDbCb6z/igpitjrGFtOSByHS1cA029yViQ
-         73vmC8ce/ngt1KabLlHVixTrFsoosEXu3uUMascDBi3E15BPBLwVwlyG5Kbq9qptcZnn
-         GtUmdN9ejximiE90SCQPzVbGsF5stwwOwAZ/6xWgioZjowSd3Bn6D6HH/OMJeFyZ05Rq
-         eHDw==
-X-Gm-Message-State: AHYfb5jz++yXo0uBOh4NR6t5vVEu9ejFlNW/i01aKiIKiYpoUjipC6yg
-        GdEHAhr5nopsXHqvId2C2s5g+7CKsByY
-X-Received: by 10.37.115.78 with SMTP id o75mr15575150ybc.244.1502740317151;
- Mon, 14 Aug 2017 12:51:57 -0700 (PDT)
+        id S1751665AbdHNT6y (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Aug 2017 15:58:54 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50502 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751575AbdHNT6y (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Aug 2017 15:58:54 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3200D94757;
+        Mon, 14 Aug 2017 15:58:53 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=01B0dQV3xiuxhYyaKAnxdtLSggE=; b=Sx4VaI
+        hSYxlN4O2qpFU2qalBizdDS0fzLmkpqNMFxXYikR1Ba6y/krvil0+HTOD+sHVvCS
+        Y6gb2WXlB5l6haB8P58t2dsLKKRKEAVoxkJkk5laF0Fg5BuvA/wBu5l5vdTF034m
+        NFzZG5wZP9HJS3gkznLPm+3royqO9cTBbX8XI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=UKCqGFxXHqtO8eGt8m0iRPGLNc+kR+mu
+        ZovLC50kH/kyO9eCKFPA2KJ53MxDMJHULa5jTYxviQJLNnAGdRand9byPkEoHsnY
+        wVMitYAxKhEIx3n/B3MGKCfLFd5mglZLcyAXdsbMIL9BGVyZxxNC2G9yaAgaI8WR
+        s/smf7HiFZU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 29BCF94756;
+        Mon, 14 Aug 2017 15:58:53 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9AAD594753;
+        Mon, 14 Aug 2017 15:58:52 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Martin Koegler <martin.koegler@chello.at>, git@vger.kernel.org,
+        Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH 1/9] Convert pack-objects to size_t
+References: <1502527643-21944-1-git-send-email-martin@mail.zuhause>
+        <87fc215e-b860-10f5-5c5e-60652502fae8@ramsayjones.plus.com>
+        <20170813183026.GC31079@mail.zuhause>
+        <627042be-ab86-e9da-8c4e-5aac3278f5c6@ramsayjones.plus.com>
+        <xmqqtw1bw1v6.fsf@gitster.mtv.corp.google.com>
+        <xmqqfucuw00a.fsf@gitster.mtv.corp.google.com>
+        <c49628e0-6a57-34d6-6727-f8111b80cbab@ramsayjones.plus.com>
+Date:   Mon, 14 Aug 2017 12:58:51 -0700
+In-Reply-To: <c49628e0-6a57-34d6-6727-f8111b80cbab@ramsayjones.plus.com>
+        (Ramsay Jones's message of "Mon, 14 Aug 2017 20:31:50 +0100")
+Message-ID: <xmqq378tvs3o.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.37.75.3 with HTTP; Mon, 14 Aug 2017 12:51:56 -0700 (PDT)
-In-Reply-To: <xmqqbmniuei9.fsf@gitster.mtv.corp.google.com>
-References: <cover.1502491372.git.jonathantanmy@google.com>
- <xmqqk229y5zd.fsf@gitster.mtv.corp.google.com> <CAGZ79kadqx3PcchM6h_U5U6nsMVf3wHSUHt1XpD_XWxYdoYudg@mail.gmail.com>
- <xmqqbmniuei9.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 14 Aug 2017 12:51:56 -0700
-Message-ID: <CAGZ79kYHW3bpexhiDnoNfyp=etBJ6nPhyLYR09+4jMpw25hR_A@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/3] Fixes to "diff --color-moved" MIN_BLOCK_LENGTH handling
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: FF1811E2-812A-11E7-8E74-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 14, 2017 at 12:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> On Fri, Aug 11, 2017 at 5:39 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> ...
->>> My preference however is to keep sb/diff-color-move topic as-is
->>> without replacing and fixing it with incremental updates like these
->>> patches.
->>
->> I would have hoped to not need to reroll that topic.
->> Though I do find patches 1&2 valuable either on top or squashed
->> into "[PATCH] diff.c: color moved lines differently" and
->> "[PATCH] diff.c: color moved lines differently, plain mode"
->> respectively.
->>
->> So I'd ask to pick at least patches 1&2 on top of that series, please?
->
-> Yeah, that is exactly what I did before reading this message but
-> after reading your comments on the patches ;-)
->
->> (I am missing the context for *why* you preference is to not do
->> exactly this).
->
-> I see what I wrote can be misread, especially due to its lack of
-> ",instead", that I want to keep the broken one as-is, with neither
-> reroll nor fixup.  That is not what I meant.
->
->  - If you choose to squash so that the resulting history after the
->    series graduates to 'master' will be simpler to read (due to lack
->    of "oops, that was a mistake"), I do not mind a reroll.
->
->  - On the other hand, as the topic has been in 'next' for some time
->    and presumably people tried it in their real daily work when
->    needed, keeping what is queued as-is has a value---we have a
->    fixed reference point that we can go back to to compare the code
->    with and without the fix.
->
-> I do not have a strong preference, but if I were asked to choose,
-> I'd choose the latter.
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
-We'll go with the latter then. Thanks!
+> In a previous comment, I said that (on 32-bit Linux) it was likely
+> that an object of > 4GB could not be handled correctly anyway. (more
+> likely > 2GB). This was based on the code from (quite some) years ago.
+> In particular, before you added the "streaming API". So, maybe a 32-bit
+> arch _should_ be able to handle objects as large as the LFS API allows.
+> (Ignoring, for the moment, that I think anybody who puts files of that
+> size into an SCM probably gets what they deserve. :-P ).
+>
+> The two patches I commented on, however, changed the type of some
+> variables from off_t to size_t. In general, the patches did not
+> seem to make anything worse, but these type changes could potentially
+> do harm. Hence my comment. (I still haven't tried the patches on my
+> 32-bit Linux system. I only boot it up about once a week, and I would
+> rather wait until the patches are in the 'pu' branch before testing).
 
-Other reasons for the latter that I want to add:
-* The patches are written 2 month apart, which may indicate that
-  there was real usage and hence fixes with a more substantiated
-  understanding of the new feature.
-* We should not strive for "perfect" history IMHO. That is because
-  commit messages provide a lot of reasoning and add a lot of value
-  for understanding the code. If I were to squash and reroll, I would
-  need to make sure these points are addressed in the commit
-  message to have a result that is equally good.
-  The history only needs to be "good-enough", which we defined to
-  "bisectable on all platforms that we care about", fixups/bugfixes
-  are like the cherry on the cake, it draw attention on its own.
-  Not a bad thing IMHO.
+We are in perfect agreement.
+
+I didn't mean to say that it is OK to replace off_t with size_t
+without a good reason, especially when the current code (at least
+the part I looked at anyway, like the OFS_DELTA part) seems to use
+off_t correctly, and your review comments are very much appreciated,
+so is the effort started by Martin to take us in the direction of
+using types more appropriate than "ulong".
