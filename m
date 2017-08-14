@@ -2,79 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 422B520899
-	for <e@80x24.org>; Mon, 14 Aug 2017 20:26:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8DAAC20899
+	for <e@80x24.org>; Mon, 14 Aug 2017 20:32:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751575AbdHNU0x (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Aug 2017 16:26:53 -0400
-Received: from mout.gmx.net ([212.227.17.20]:57333 "EHLO mout.gmx.net"
+        id S1752203AbdHNUcs (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Aug 2017 16:32:48 -0400
+Received: from ikke.info ([178.21.113.177]:52898 "EHLO vps892.directvps.nl"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751098AbdHNU0w (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Aug 2017 16:26:52 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M82zV-1dLqr940zh-00vcDa; Mon, 14
- Aug 2017 22:26:47 +0200
-Date:   Mon, 14 Aug 2017 22:26:45 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] win32: plug memory leak on realloc() failure in
- syslog()
-In-Reply-To: <245410ce-1f4c-f2a9-fd8d-98ff2d2c0335@web.de>
-Message-ID: <alpine.DEB.2.21.1.1708142225330.19382@virtualbox>
-References: <245410ce-1f4c-f2a9-fd8d-98ff2d2c0335@web.de>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1752124AbdHNUcr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Aug 2017 16:32:47 -0400
+Received: by vps892.directvps.nl (Postfix, from userid 1008)
+        id 71E64440119; Mon, 14 Aug 2017 22:32:46 +0200 (CEST)
+Date:   Mon, 14 Aug 2017 22:32:46 +0200
+From:   Kevin Daudt <me@ikke.info>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] stash: prevent warning about null bytes in input
+Message-ID: <20170814203246.GA3839@alpha.vpn.ikke.info>
+References: <20170814050801.7158-1-me@ikke.info>
+ <xmqq7ey6udvl.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-682565032-1502742406=:19382"
-X-Provags-ID: V03:K0:dfRJWhUOU7cIPmqfA9m44UScW5TVXdmBz6eQaSovNrwUXsibJlQ
- OhhKNr0e+zJdjlPcFdmGFJ5YIFfzK7dF3J2N93CdVhL3buGSrpcC/D6n9LIftAgKFDshHzI
- rUoIeNO2sH05OqBxq+0QLKtoYOpy74nEnKLkhYmsBSstCls3p/FjvY2RkgQorKDt6+isqwK
- xdcorWUHRhh7cuLXp8VAw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Lb1I362fgvc=:N3bGFOM4aMepixCaiSV04Z
- HcTyZSH+YIpd0BM1WSlZ3l6l3rbm7iTm3HQTcWTt9Sk2JPz5LCWilf0hjz3Vhd/e2EV2kanjX
- TTINfXjiIhgLcEtVqCKnYxmmKVLoYjmddq6+X0w4skmxAfWxb+4MuWXZhuZXfPDc3M5hLgu5s
- 6AfufPN1K270Mfa4enyAL2oJb7N1JNiC6yG9UWOqFO2GU6eR4KQO38a4OmJ2WkNbTW0m8Jk2X
- ++HZt6UwHNitkxXo7azTlTJ1y78MTwD8oAbPGBRcuvP7jXsBbI5m8TiSwl5MZv5nVbGz1xPoc
- hxn2LLycDWsyCZARgTFv3lYPwk+KgJKces+erAyJsfjDvWD2FWAW6K2LwnWLsIpFwEJihMalx
- v45H/JNITyPlc7ndEgKliW0gqBdKCcb6S/HmBJRel8davezbgAc4nTd99Fg8q0a5bNbMD78tH
- LEtDpNzJKZDfSxQJ8c4MdVcfAoG6pshmQis5UO0IdpS0GLhKOYW/KNhoLdPdYi4/P1IwBIHsC
- RJQg3grOYBotRdQW/vaJ4fbAQDqV/OjRh35mD9eJ0cjZcK092Kl8D2vT3RS4Ts/yNIEbWHrBb
- QL4jK4tswFc40AuodxANqf1BXUyb1HfhEQPzT4X592NNgaYrQhON15yEVkHFEe6NPYm5e7+oQ
- F8er8VROMt2g8aBhBHNanzDYlj0VO2g1UNtnWEx72D7nbEGUfTxAoMpLPuM0MLKmflLlo/hcQ
- sRShydMQcJK1p/OVF7NJuy4izAAqbLUNJ1dhxe3LoC/9O9edhnx424/2Xexi8t5Rxzp/cizav
- tI0KPf0+umNNgGnu+EPYXHyP6hQtWQeZ8VXsyrnaivljcp3Ti4=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq7ey6udvl.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.8.3 (2017-05-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Mon, Aug 14, 2017 at 12:51:26PM -0700, Junio C Hamano wrote:
+> Kevin Daudt <me@ikke.info> writes:
+> 
+> > The no_changes function calls the untracked_files function through
+> > command substitution. untracked_files will return null bytes because it
+> > runs ls-files with the '-z' option.
+> >
+> > Bash since version 4.4 warns about these null bytes. As they are not
+> > required for the test that is being done, remove null bytes from the
+> > input.
+> 
+> That's an interesting one ;-)
+> 
+> I wonder if you considered giving an option to untracked_files
+> helper function, though.  After all, it has only two callers,
+> and it feels a bit suboptimal to ask the command to do a special
+> thing (i.e. "-z") only to clean it up with a pipe.
 
---8323329-682565032-1502742406=:19382
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+As a matter of fact, I did not consider that option. I do agree that's a
+much better approach.
 
-Hi Ren=C3=A9,
+> 
+> IOW, something along the lines of (totally untested)...
+> 
 
-On Thu, 10 Aug 2017, Ren=C3=A9 Scharfe wrote:
+How should I proceed with this? Resubmit it after testing with the
+appropriate attribution?
 
-> If realloc() fails then the original buffer is still valid.  Free it
-> before exiting the function.
->=20
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
 
-The subject had me worried for a second... The realloc() fails so rarely
-that I, for one, have never encountered that problem.
-
-Still, it is a correct fix for a real bug.
-
-Thanks,
-Dscho
---8323329-682565032-1502742406=:19382--
+>  git-stash.sh | 11 +++++++++--
+>  1 file changed, 9 insertions(+), 2 deletions(-)
+> 
+> diff --git a/git-stash.sh b/git-stash.sh
+> index 9b6c2da7b4..5f09a47f0a 100755
+> --- a/git-stash.sh
+> +++ b/git-stash.sh
+> @@ -43,9 +43,16 @@ no_changes () {
+>  }
+>  
+>  untracked_files () {
+> +	if test "$1" = "-z"
+> +	then
+> +		shift
+> +		z=-z
+> +	else
+> +		z=
+> +	fi
+>  	excl_opt=--exclude-standard
+>  	test "$untracked" = "all" && excl_opt=
+> -	git ls-files -o -z $excl_opt -- "$@"
+> +	git ls-files -o $z $excl_opt -- "$@"
+>  }
+>  
+>  clear_stash () {
+> @@ -114,7 +121,7 @@ create_stash () {
+>  		# Untracked files are stored by themselves in a parentless commit, for
+>  		# ease of unpacking later.
+>  		u_commit=$(
+> -			untracked_files "$@" | (
+> +			untracked_files -z "$@" | (
+>  				GIT_INDEX_FILE="$TMPindex" &&
+>  				export GIT_INDEX_FILE &&
+>  				rm -f "$TMPindex" &&
+> 
+> 
