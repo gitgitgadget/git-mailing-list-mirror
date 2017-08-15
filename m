@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-2.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C6CB208C4
-	for <e@80x24.org>; Tue, 15 Aug 2017 11:49:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E9351F667
+	for <e@80x24.org>; Tue, 15 Aug 2017 11:49:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751529AbdHOLte (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Aug 2017 07:49:34 -0400
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:36257 "EHLO
-        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751500AbdHOLtd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Aug 2017 07:49:33 -0400
-Received: by mail-lf0-f68.google.com with SMTP id t128so462176lff.3
-        for <git@vger.kernel.org>; Tue, 15 Aug 2017 04:49:32 -0700 (PDT)
+        id S1751552AbdHOLth (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Aug 2017 07:49:37 -0400
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:38385 "EHLO
+        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751129AbdHOLtf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Aug 2017 07:49:35 -0400
+Received: by mail-lf0-f65.google.com with SMTP id y15so457171lfd.5
+        for <git@vger.kernel.org>; Tue, 15 Aug 2017 04:49:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=s94XtxIqoT0FaVgISdKU+LyfOR4TBzEOZ4cYCZp0PwQ=;
-        b=UE6k3LiDAZwYT7IcV6M01D/sWBEfKDDk91LZo2P7pevbPy3/w1vUfjPMyWbarNb4lI
-         xcof3RPDm/zZOemYiKHQMezNwPLcA3NVIrMxUri/x0eeY611PT9RjFt7hBNTloOctSlb
-         DxKDbpYh3EtO6mTImeQNy/HpCOKGqD1TEaUK41qS4dOb+x0QjQ8VoHWx63j04+I7lEm1
-         /ntLhq4aukMHaJqJD5ZEgsfu5ZRUD+t8t82B7N3EeVSIWLZJNot1WVM7V4+7DSR5XDLp
-         k6OBd7miAHQ6ZQgoOUZh6wEo5BD0Nr2a87YC5nrYQOr1v0Fc6JQw9bQwtQYWAM+jCZQn
-         OBDA==
+        bh=LUc59hODwzgARKEp6B6vWJMCO0FwUZK0B1rVw567sIk=;
+        b=oQ3eO615Z8Nw3LkMWuRamHvxqwLLVft/JdOGyc++Al0C3KyulNpsR2vvv0Haabm+eq
+         jDg2WYtm7zRHSwLoFhJWXEnG1PclJo2XAFFJooZGZpQsBqQ2LhEnMBV+gm77xoLyaekU
+         4qy6wT/APPCnsciwVXfmS4uewkfYbROniR5tbsRprLrqSFFYUKty1shK099S3v5Runtl
+         WZ1WOIorVwQBXR69gKGfQrGjN/sjXEPQdtysGdhQQJ+V7sN1YDGmgGznQzgrCoLpjG4g
+         4czTrEn2HNdppqSKZcUNxlpNPL+/rCUw0T3TKNU2GU2D9WQPu4kM2tRnDNDHwK/23pIe
+         oAdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
          :in-reply-to:references:in-reply-to:references;
-        bh=s94XtxIqoT0FaVgISdKU+LyfOR4TBzEOZ4cYCZp0PwQ=;
-        b=S+vLuQmFFBkbKYIu3C/D3wlDnjhEdHk2WJHeYPNjXZ1bCZ8ap4zWJp1DFPcsdim1HZ
-         h7omtDIz+shfCz+0q+wrOEH/RlCAIOSCim2Num4z317cx/+SHMNUBfKQskpEHduY7QB6
-         S96Iy3icvI8sxkiUPL6C1s42fJQWr4uyswT2KirqiPVb4FYJnQu/SRODzITNYvq3wsHq
-         squES3r11bxbhN6Ee3mO6LDYsBvfOJMP1E6ejfci0P/K7DyNuMB/AuWOUF76HwWxilZv
-         75e9EStX7X0O/SQWc7Bs8ei12XdzZ36tFScvBv/Iezvixd9iNfeNIBzqDg52lygwvuy0
-         Bnog==
-X-Gm-Message-State: AHYfb5goJVwoX5u57i0MHO/AalKSlevemkit9KrGlI1nGJlSgiD9aS+O
-        2p7Q5ep5gctTPnAuY3Q=
-X-Received: by 10.46.69.87 with SMTP id s84mr10253354lja.129.1502797771948;
-        Tue, 15 Aug 2017 04:49:31 -0700 (PDT)
+        bh=LUc59hODwzgARKEp6B6vWJMCO0FwUZK0B1rVw567sIk=;
+        b=m0AtAYdzRf8FbLspKQV7Ma3z8YKOkKntUPvg6MoEPnTc8WfpUJyVih+nnvodyZLTm8
+         nU6IE2dJVi8DRbqGc2Eo6hH3v7GpZQxS9sLoUwcdwshW5WAYqxmZbgetL0H9lWeIWghe
+         ekwxCYtgKzBsbhfcHlnR/GL7E/68LL9y1hco7wRfEvWI+RJKgA/cC5M6HQHzgNdoikGU
+         gvhm4HMcnqRVsbUQf/3NCyJrpTTqiHlfpN6azCGElQcXaEea81bcbELhFge3Gf6LFKDD
+         EaceuHPlj1Az09owXDoD56zz8vicFsdDewuC94tE3NOXh+8DB5Na0mn+Tfq4P+8sDl+n
+         VpSw==
+X-Gm-Message-State: AHYfb5hAvqU+BM11FFEpvVH6+7XrfnKOqAd3uKQ8sEsWOtzAAhZXExT9
+        iZqR/Wc1wt8aZH/jGLc=
+X-Received: by 10.46.33.77 with SMTP id h74mr9031924ljh.79.1502797773374;
+        Tue, 15 Aug 2017 04:49:33 -0700 (PDT)
 Received: from localhost.localdomain (user-94-254-225-26.play-internet.pl. [94.254.225.26])
-        by smtp.gmail.com with ESMTPSA id z25sm1575317lja.1.2017.08.15.04.49.30
+        by smtp.gmail.com with ESMTPSA id z25sm1575317lja.1.2017.08.15.04.49.32
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 15 Aug 2017 04:49:31 -0700 (PDT)
+        Tue, 15 Aug 2017 04:49:32 -0700 (PDT)
 From:   Patryk Obara <patryk.obara@gmail.com>
 To:     git@vger.kernel.org,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         Junio C Hamano <gitster@pobox.com>
 Cc:     Patryk Obara <patryk.obara@gmail.com>
-Subject: [PATCH 1/5] cache: extend object_id size to sha3-256
-Date:   Tue, 15 Aug 2017 13:49:02 +0200
-Message-Id: <c6d4d0a52c5d33a2c6e3e8249fcf5696f06e3e0c.1502796628.git.patryk.obara@gmail.com>
+Subject: [PATCH 2/5] sha1_file: fix hardcoded size in null_sha1
+Date:   Tue, 15 Aug 2017 13:49:03 +0200
+Message-Id: <a21088f049390828cdee957f88503e8466e1d34e.1502796628.git.patryk.obara@gmail.com>
 X-Mailer: git-send-email 2.9.5
 In-Reply-To: <cover.1502796628.git.patryk.obara@gmail.com>
 References: <cover.1502796628.git.patryk.obara@gmail.com>
@@ -67,34 +67,26 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This commit is not intended to be merged - it serves only as context for
-next patches in this thread.
+This prevents compilation error if GIT_MAX_RAWSZ is different than 20.
 
 Signed-off-by: Patryk Obara <patryk.obara@gmail.com>
 ---
- cache.h | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ sha1_file.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/cache.h b/cache.h
-index 1c69d2a..ad8a57c 100644
---- a/cache.h
-+++ b/cache.h
-@@ -68,9 +68,13 @@ unsigned long git_deflate_bound(git_zstream *, unsigned long);
- #define GIT_SHA1_RAWSZ 20
- #define GIT_SHA1_HEXSZ (2 * GIT_SHA1_RAWSZ)
+diff --git a/sha1_file.c b/sha1_file.c
+index b60ae15..f5b5bec 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -32,7 +32,7 @@
+ #define SZ_FMT PRIuMAX
+ static inline uintmax_t sz_fmt(size_t s) { return s; }
  
-+/* The length in bytes and in hex digits of an object name (SHA3-256 value). */
-+#define GIT_SHA3_256_RAWSZ 32
-+#define GIT_SHA3_256_HEXSZ (2 * GIT_SHA3_256_RAWSZ)
-+
- /* The length in byte and in hex digits of the largest possible hash value. */
--#define GIT_MAX_RAWSZ GIT_SHA1_RAWSZ
--#define GIT_MAX_HEXSZ GIT_SHA1_HEXSZ
-+#define GIT_MAX_RAWSZ GIT_SHA3_256_RAWSZ
-+#define GIT_MAX_HEXSZ GIT_SHA3_256_HEXSZ
- 
- struct object_id {
- 	unsigned char hash[GIT_MAX_RAWSZ];
+-const unsigned char null_sha1[20];
++const unsigned char null_sha1[GIT_MAX_RAWSZ];
+ const struct object_id null_oid;
+ const struct object_id empty_tree_oid = {
+ 	EMPTY_TREE_SHA1_BIN_LITERAL
 -- 
 2.9.5
 
