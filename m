@@ -7,91 +7,161 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D6F03208B8
-	for <e@80x24.org>; Tue, 15 Aug 2017 12:54:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 834F5208CA
+	for <e@80x24.org>; Tue, 15 Aug 2017 13:56:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752948AbdHOMxl (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Aug 2017 08:53:41 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:34942 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752939AbdHOMxi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Aug 2017 08:53:38 -0400
-Received: by mail-wm0-f66.google.com with SMTP id r77so1371392wmd.2
-        for <git@vger.kernel.org>; Tue, 15 Aug 2017 05:53:38 -0700 (PDT)
+        id S1751471AbdHON4N (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Aug 2017 09:56:13 -0400
+Received: from mail-qk0-f195.google.com ([209.85.220.195]:37030 "EHLO
+        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750827AbdHON4M (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Aug 2017 09:56:12 -0400
+Received: by mail-qk0-f195.google.com with SMTP id x77so743762qka.4
+        for <git@vger.kernel.org>; Tue, 15 Aug 2017 06:56:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=CfirOHkYDbfOtMlxR8tdwKnxsW5v0JvL7K9lwCWk1YM=;
-        b=HXym3WsKg3u4WielK2D6VD0AQFuu4hB5aEoSNX/gmz/BrYILYOV39VpZW1CGctENpz
-         86J0dRvi7qYPb8TfD0Wj0oXW/dKaL+9AIGwBbNDmgX78H3R16Edgx9IqUoHT+glKalmv
-         69pn87SKj4QA/mfI3zR/cT6BUKob9n2DxvrCYQlQvVLM5LKornIE4jzZ2QlwY9UfrKes
-         6MH9w4uJPOOscDieUxxXsl5qqa1VUf+VTKAFE7BuChF2/1LDeII9O6mThUB/o8pMBLwe
-         ooLefFqzh1Hb5t5FYDPGi4GNGwEW4RYEGPxyr3gHz2sQdt5+amUeY2HQIGjZMixZzvM4
-         vVOQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=o27xcLXbjmAUv1KZIgCzT9OtTrht8H5orI6JCLwTtTE=;
+        b=Oot1byZOhyPxHjyaMVpld85xNXV6exA57MXpyEjMVuC0GJ69MlPjO1BU3eQDzy56Hk
+         V5Jy5EoiQgvAtW1/TE02O7YeYHlFTiYuEj40m1FfOZp2NU+U9bbunDuI0QWulfwYwokN
+         Q5wzCCn2E1KXF9433N2d1Wp91m5nA6w+wAZu1yKVMLoZLC9qov8MPkrHFqFNgMsmw+v8
+         FqeNVcyzg96AYV4yHYFH5rovRALqLo/ZUxQB7iEvbwC5UaMLxLzaB3ElhNbHpGdaicv2
+         z+6Khsls44wP6Rd8rvnDF9HAXtV67uyrwa9ZN5SmEUc1qu3aBFOk5fxrYMS7XJ2FhCkv
+         TPug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=CfirOHkYDbfOtMlxR8tdwKnxsW5v0JvL7K9lwCWk1YM=;
-        b=N6c7uAbpDeKBOd4B6Jh7Dyj3fJSM5ZuqiCUxgwVpXTOrwcd8Em/6BE1Ub2U2FIo0po
-         OeC+J7jXZsJ2/J9AKt7K7Ee/uYMpyn3MswxSH3L5MTP1N9ocEAKiCFx44h/PU6kq/sHT
-         h5x+IbeyYn6gtS7G3AQgDAMtY9dHOX4mk/yRlQNXcdSd09N1oR/+3SsZmtmpIEObOrWh
-         qBay0ryTPM7Zd9JMXk/Jy4jNX0bEFKX+XozFGRAiEPkV3uX2etPXL7Lk3VoNA3TfmN+7
-         VHq/Aed3obRABExMZUh5dT5yU5YPlORixeGomXMpb07yDCanPaAsMWSKA7k18KAr3doB
-         OfSQ==
-X-Gm-Message-State: AHYfb5giAyVsGnD0NRLQp3i99I4d0xhoFDyk+t6822jIR44ypW/piFat
-        wcBWdjkgcNdDpQUM
-X-Received: by 10.28.161.3 with SMTP id k3mr610876wme.155.1502801617256;
-        Tue, 15 Aug 2017 05:53:37 -0700 (PDT)
-Received: from localhost.localdomain ([2a02:aa16:5782:c100:1208:b1ff:fee6:d811])
-        by smtp.gmail.com with ESMTPSA id k14sm4006617wrg.11.2017.08.15.05.53.36
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 15 Aug 2017 05:53:36 -0700 (PDT)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     git@vger.kernel.org
-Subject: [PATCH 3/5] Makefile: define GIT_THREAD_SANITIZER
-Date:   Tue, 15 Aug 2017 14:53:03 +0200
-Message-Id: <258b5b68f29d680fea0a35b5db40783819df222e.1502780344.git.martin.agren@gmail.com>
-X-Mailer: git-send-email 2.14.1.151.gdfeca7a7e
-In-Reply-To: <cover.1502780343.git.martin.agren@gmail.com>
-References: <cover.1502780343.git.martin.agren@gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=o27xcLXbjmAUv1KZIgCzT9OtTrht8H5orI6JCLwTtTE=;
+        b=QSkiVxuMILt/PaATCtszvIfRyAL/zYYnpr1KYedUfFTyXb+MoVvDFHSEbLwZcEyudz
+         e+amenoK/q51ESoUEJ+Ykas8xFipS/y/3s6rXkbxjpoZ60qJN7IPXBONB8nCC4ex/Rkj
+         o5UZ05PNW2dXW/uIR87LkbtXCmaNxXuXibZqAGdhFEO6rYoxfZjH6T5sejPomFs5V82N
+         CzS3O8vJz/QQiYoJ5u7Jp3+IYRycxTTcjlyjQEB19j3ZF9l/3bRakk5nQjPbunF00iBq
+         0N8x66I1o1RujyhFuAs4mmIFSVmV9DvmICYWbWlncAvWWLl3KOwSdYGKpQRKvqaefMfB
+         NAwg==
+X-Gm-Message-State: AHYfb5hz44XLav/YS7zIkkcFAv8m1oU4posQDoJLq6epnLdbZpG8fMfB
+        Vll1LHH/Xk1kyQ==
+X-Received: by 10.55.121.1 with SMTP id u1mr19554411qkc.264.1502805371905;
+        Tue, 15 Aug 2017 06:56:11 -0700 (PDT)
+Received: from [192.168.1.13] ([65.222.173.206])
+        by smtp.gmail.com with ESMTPSA id v23sm6546352qkb.65.2017.08.15.06.56.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 15 Aug 2017 06:56:10 -0700 (PDT)
+Subject: Re: [PATCH v2 1/2] clang-format: outline the git project's coding
+ style
+To:     Stefan Beller <sbeller@google.com>,
+        Brandon Williams <bmwill@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <20170808012554.186051-1-bmwill@google.com>
+ <20170814213046.107576-1-bmwill@google.com>
+ <20170814213046.107576-2-bmwill@google.com>
+ <CAGZ79kau6_XeEQqYDhFC2FmyJiqWY2+SuRzvGFrfmLdhAaQS+Q@mail.gmail.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <41c8c119-af98-f16f-1585-81b29429afe8@gmail.com>
+Date:   Tue, 15 Aug 2017 09:56:07 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAGZ79kau6_XeEQqYDhFC2FmyJiqWY2+SuRzvGFrfmLdhAaQS+Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When using ThreadSanitizer (tsan), it can be useful to avoid triggering
-false or irrelevant alarms. This should obviously be done with care and
-not to paper over real problems. Detecting that tsan is in use in a
-cross-compiler way is non-trivial.
 
-Tie into our existing SANITIZE=...-framework and define
-GIT_THREAD_SANITIZER when we are compiling for tsan.
 
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
----
- Makefile | 3 +++
- 1 file changed, 3 insertions(+)
+On 8/14/2017 6:02 PM, Stefan Beller wrote:
+> On Mon, Aug 14, 2017 at 2:30 PM, Brandon Williams <bmwill@google.com> wrote:
+>> Add a '.clang-format' file which outlines the git project's coding
+>> style.  This can be used with clang-format to auto-format .c and .h
+>> files to conform with git's style.
+>>
+>> Signed-off-by: Brandon Williams <bmwill@google.com>
+> 
+> Applying this patch and running
+>      clang-format -i -style file *.c *.h builtin/*.c
+> produces a diff, that I'd mostly agree with.
+> This style guide is close to our current style.
+> 
 
-diff --git a/Makefile b/Makefile
-index 461c845d3..e77a60d1f 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1033,6 +1033,9 @@ BASIC_CFLAGS += -fno-omit-frame-pointer
- ifneq ($(filter undefined,$(SANITIZERS)),)
- BASIC_CFLAGS += -DNO_UNALIGNED_LOADS
- endif
-+ifneq ($(filter thread,$(SANITIZERS)),)
-+BASIC_CFLAGS += -DGIT_THREAD_SANITIZER
-+endif
- endif
- 
- ifndef sysconfdir
--- 
-2.14.1.151.gdfeca7a7e
+I'm happy to see progress being made in helping reduce the time spent 
+manually reviewing and fixing style formatting errors.  In an effort to 
+help, I installed this in Windows and tried it as well.  The tools all 
+appear to be working fine and are supported on Windows.
 
+For the most part, the formatting rules look pretty consistent with the 
+existing style.  I ran the same test and looked at the diffs and saw a 
+couple of things that looked odd. For example, how it wrapped the 
+"static int" on the function header below was different.  Not sure why 
+as it didn't wrap all the other function headers the same even later in 
+the file it didn't do that with "static void mute_routine"
+
+diff --git a/apply.c b/apply.c
+index f2d599141d..bb77242e3d 100644
+--- a/apply.c
++++ b/apply.c
+@@ -58,12 +59,11 @@ static int parse_whitespace_option(struct 
+apply_state *state, const char *option
+         return error(_("unrecognized whitespace option '%s'"), option);
+  }
+
+-static int parse_ignorewhitespace_option(struct apply_state *state,
+-                                                const char *option)
++static int
++parse_ignorewhitespace_option(struct apply_state *state, const char 
+*option)
+  {
+-       if (!option || !strcmp(option, "no") ||
+-           !strcmp(option, "false") || !strcmp(option, "never") ||
+-           !strcmp(option, "none")) {
++       if (!option || !strcmp(option, "no") || !strcmp(option, "false") ||
++           !strcmp(option, "never") || !strcmp(option, "none")) {
+                 state->ws_ignore_action = ignore_ws_none;
+                 return 0;
+         }
+
+
+Later in the file it wraps some of them again: (add_line_info, 
+prepare_image, find_name_common, etc).  Again, it appears to be 
+inconsistent but there must be some rule that is causing this behavior.
+
+
+
+Here is an example of how it wrapped bit fields differently.  Again, it 
+didn't seem to be consistent with itself as just below this, it left 
+them on separate lines.
+
+
+@@ -182,8 +185,7 @@ struct fragment {
+          * but some codepaths store an allocated buffer.
+          */
+         const char *patch;
+-       unsigned free_patch:1,
+-               rejected:1;
++       unsigned free_patch : 1, rejected : 1;
+         int size;
+         int linenr;
+         struct fragment *next;
+
+
+Big thanks to those working on this!
+
+> As noted in patch 2/2 we'd now need an easy way to
+> expose this for use in various situations, such as
+> * contributor wanting to format their patch
+> * reformatting code for readability
+> 
+> Thanks,
+> Stefan
+> 
