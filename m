@@ -2,110 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EEFAD208CD
-	for <e@80x24.org>; Tue, 15 Aug 2017 22:43:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 023F6208CD
+	for <e@80x24.org>; Tue, 15 Aug 2017 22:43:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752757AbdHOWnf (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Aug 2017 18:43:35 -0400
-Received: from mail-pg0-f45.google.com ([74.125.83.45]:33557 "EHLO
-        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751471AbdHOWnf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Aug 2017 18:43:35 -0400
-Received: by mail-pg0-f45.google.com with SMTP id u5so14075815pgn.0
-        for <git@vger.kernel.org>; Tue, 15 Aug 2017 15:43:34 -0700 (PDT)
+        id S1752843AbdHOWnx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Aug 2017 18:43:53 -0400
+Received: from mail-pg0-f50.google.com ([74.125.83.50]:34780 "EHLO
+        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752130AbdHOWnw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Aug 2017 18:43:52 -0400
+Received: by mail-pg0-f50.google.com with SMTP id u185so14041274pgb.1
+        for <git@vger.kernel.org>; Tue, 15 Aug 2017 15:43:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=AEN7IHDeduqHlLtAImuTH44xNpbBysOgSmQSPgJk5Ww=;
-        b=WsQceLcaA05E4wCRA4AYZbU1bN7+TcHmGGe4G5jLnC1NVNCGkija+M6GRuUCU3wac2
-         drCisvRgnyw9B/6cAJ2CTf+/nXoENaIrBf0QNMCFg0ZB8SD7qUlacT1e1bD948F8ghF6
-         Lq5kvGrDcqp2X84lIyTgbC72OHY4C8iAaKj2pB1AkHqj4kZLkp/4JceMjOkVNMlVzuaa
-         Y4I04cv74hZzVBkR21mPr9lK7Tiib2zokuOJlzJl9dyo/HIesUSnp4ItAOhsET9osnJR
-         N/BUE07N3KopqGdnr9lsZhaQkRj7sgPPTwCrD7wIbyCrxWv66tR3iAm6P8LisYnAT57G
-         CHrA==
+        d=umich.edu; s=google-2016-06-03;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=4Y7m2mt/5KEDXFBvmWA00TC7Tpmx8jha2k4yTcFAPzg=;
+        b=S43ehJD1x1COin7JVpiZw2/4iBZJwl3w1v+GIhEIHIe+bSbbg9fFMEkcd/AXXHerBw
+         L9gsAZSJEU2ai4ir3AhPjmOtp7Sh83phrAPDQ2NFtsLL6L3T95e4PtJ6r/z5MVBpEkiR
+         d7piivho/JOBmrus63HyGdeqwWHqq4Hy14M8fue95VM8iVpn0xB2TehL287yyK5ys5xE
+         Xi0Z78jheU+fJtoIL55p2bebc6thVahUY3yTUW8cnkxW5nyzI/E+gmIr5HwHwXi71QDs
+         qRstmaW6OK/nRMuhras+8OccfqVcRdMJf7tl/uDHaFBBhtoQOHsfdXOrdGUOGRqbSt8e
+         lDNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=AEN7IHDeduqHlLtAImuTH44xNpbBysOgSmQSPgJk5Ww=;
-        b=Je/g/3MbV0mbOGS5QxdUAfpMunQk9RWusLj8rq9sJSHoWSxOJSn8Jp1fWxZpkpXZ0I
-         Hsa4QJTHTrpOtT130IyLrxzzHscCq6VzUGxtQ0eRxeE1Q/SOjjr0jUxiSIf5f+4s0Owb
-         HaHoFWcdXm/15UC4owO7vJ+cidiDi4YE8PzxtMNtIptfsCMm+jvcjC2NjufP0vLx/30Y
-         oAX6NEesiRiQ4IBYsQkoCDRXkdmoL7qakb5ejsp3ZnfXmJX+WItUiaHhYL8S/YHlBK7/
-         m5+oq1U58GaTIk3ITe47/8bQ7bSu7ER7+XUbmAsgWPoxrf1jIcScUO40aR4vM62hh27S
-         2OxQ==
-X-Gm-Message-State: AHYfb5h3ua8vFvKOey+5tOORU9r8br5u69JYIo2QWJ6tfIGFM8hI3VsH
-        TtHrqAPleo15qM+8e2LwVg==
-X-Received: by 10.84.137.169 with SMTP id 38mr32647149pln.331.1502837014397;
-        Tue, 15 Aug 2017 15:43:34 -0700 (PDT)
-Received: from localhost ([2620:0:100e:422:f954:a93e:8e20:9fe8])
-        by smtp.gmail.com with ESMTPSA id n23sm19102511pfh.133.2017.08.15.15.43.33
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 15 Aug 2017 15:43:33 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-To:     sbeller@google.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, jrnieder@gmail.com
-Subject: [PATCH] push: do not add submodule odb as an alternate when recursing on demand
-Date:   Tue, 15 Aug 2017 15:43:32 -0700
-Message-Id: <20170815224332.22730-1-sbeller@google.com>
-X-Mailer: git-send-email 2.14.0.rc0.3.g6c2e499285
-In-Reply-To: <CAGZ79kZouNBxOKr7X8j6wqebp3Wh3cDqhYR-t_PxaF7AwQ0Wzg@mail.gmail.com>
-References: <CAGZ79kZouNBxOKr7X8j6wqebp3Wh3cDqhYR-t_PxaF7AwQ0Wzg@mail.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=4Y7m2mt/5KEDXFBvmWA00TC7Tpmx8jha2k4yTcFAPzg=;
+        b=Hfaq7WjZ3M062Fc099SACfg8Dpk75QNI7lPHfAE4FnDKjyZ/r/eE7jAE9TT4e4p7ZO
+         Jv+jm/VlP+5EL/rDwUJ2JQoB1Ph/PZjCM8AspzzO9kBHQv8wY4WMVq/LYtSkWANR6LXe
+         5hN/wXC9Ukfz0xhhNBGbuRUoWYWRQkJ04idWG0IeTJY7RlZyNfHRWpfNK74D1/tB70Fb
+         wmDNat+pAM0WihkGfynkEXCbR9T+8j5Ziy//YqHNFS9EpU/sWPsHbDH6wwHeJZwWfi34
+         1yVowtefrGAWx9IMOZSjf7apXK6LSey4pQ6PJrWEz7/b6m+pIht9S+jguQHvbGmYzFR9
+         c2wQ==
+X-Gm-Message-State: AHYfb5hCPV4jUSCs32ETrtvjozoXSq1rpz+wd7SBsLkvd7s0hy9gzHur
+        4nMp3CWCc9d/fCgNuSEDC0Y6dF377OeMUms=
+X-Received: by 10.98.223.18 with SMTP id u18mr29543189pfg.166.1502837031840;
+ Tue, 15 Aug 2017 15:43:51 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.100.132.193 with HTTP; Tue, 15 Aug 2017 15:43:51 -0700 (PDT)
+In-Reply-To: <xmqqlgmkpizm.fsf@gitster.mtv.corp.google.com>
+References: <20170815203503.12299-1-asottile@umich.edu> <xmqqpobwplde.fsf@gitster.mtv.corp.google.com>
+ <CA+dzEBnMOoXYaP7QadQ+gzKKJ7OzJKAPwbW=zr=1fksCQNBVcw@mail.gmail.com> <xmqqlgmkpizm.fsf@gitster.mtv.corp.google.com>
+From:   Anthony Sottile <asottile@umich.edu>
+Date:   Tue, 15 Aug 2017 15:43:51 -0700
+Message-ID: <CA+dzEB=ggLQGaEL21TChLkeiAvCGf4LZ0QFevBZCAEMhxyJwqQ@mail.gmail.com>
+Subject: Re: [PATCH/RFC] git-grep: correct exit code with --quiet and -L
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"git push --recurse-submodules=on-demand" adds each submodule as an
-alternate with add_submodule_odb before checking whether the
-submodule has anything to push and pushing it if so.
+Sounds good, I'll wait.
 
-However, it never accesses any objects from the submodule.  In the
-parent process it uses the submodule's ref database to see if there
-is anything to push.  The actual push (which does rely on objects)
-occurs in a child process.
+I've also created a mailing list entry on the gnu grep mailing list as
+I believe the current exit status for --files-without-match is
+inconsistent:
 
-The same was true when this call was originally added in
-v1.7.11-rc0~111^2 (push: teach --recurse-submodules the on-demand
-option, 2012-03-29).  Most likely it was added by analogy with
-fetch --recurse-submodules=on-demand, which did use the submodule's
-object database.
+http://lists.gnu.org/archive/html/bug-grep/2017-08/msg00010.html
 
-Use is_submodule_populated_gently instead, which is simpler and
-cheaper.
+Anthony
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
-
- Originally I intended to send this out as part of a larger series,
- but the series is getting too large series, sending all things in smaller
- units!
- 
- Thanks,
- Stefan
-
- submodule.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/submodule.c b/submodule.c
-index 111a3007fc..e20216bc0f 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -966,7 +966,9 @@ static int push_submodule(const char *path,
- 			  const struct string_list *push_options,
- 			  int dry_run)
- {
--	if (add_submodule_odb(path))
-+	int code;
-+
-+	if (!is_submodule_populated_gently(path, &code))
- 		return 1;
- 
- 	if (for_each_remote_ref_submodule(path, has_remote, NULL) > 0) {
--- 
-2.14.0.rc0.3.g6c2e499285
-
+On Tue, Aug 15, 2017 at 3:24 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Anthony Sottile <asottile@umich.edu> writes:
+>
+>> Ah yes, I didn't intend to include the first hunk (forgot to amend it
+>> out when formatting the patch).
+>>
+>> I think git's exit codes for -L actually make more sense than the GNU
+>> exit codes (especially when comparing with `grep` vs `grep -v`) --
+>> that is, produce `0` when the search is successful (producing
+>> *something* on stdout) and `1` when the search fails.
+>>
+>> Shall I create a new mail with the adjusted patch as suggested above?
+>
+> I do not mind seeing an updated patch that does not change the exit
+> status (as you seem to like what we have currently that contradicts
+> what GNU grep does) but makes it consistent between "--quiet" and
+> "--no-quiet".  But I would not be surprised if people seeing this
+> exchange from the sideline are already working on fixing the exit
+> status and also making sure that the fixed code would produce the
+> same corrected exit status with or without "--quiet", so an updated
+> patch from you will likely conflict with their effort.
+>
+> So if I were you, I'd wait to see what other people would say about
+> the actual exit codes we give when "git grep -L" is run without the
+> "--quiet" option, and if they are also happy with the current exit
+> code, then send in an updated patch.
+>
+> Thanks.
+>
+>
