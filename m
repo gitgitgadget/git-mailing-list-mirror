@@ -7,54 +7,56 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E9BB208B8
-	for <e@80x24.org>; Tue, 15 Aug 2017 12:53:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2FD43208B8
+	for <e@80x24.org>; Tue, 15 Aug 2017 12:53:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752927AbdHOMx2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Aug 2017 08:53:28 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:38396 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752916AbdHOMx1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Aug 2017 08:53:27 -0400
-Received: by mail-wm0-f68.google.com with SMTP id y206so1352433wmd.5
-        for <git@vger.kernel.org>; Tue, 15 Aug 2017 05:53:26 -0700 (PDT)
+        id S1752935AbdHOMxf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Aug 2017 08:53:35 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:37250 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752916AbdHOMxc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Aug 2017 08:53:32 -0400
+Received: by mail-wm0-f65.google.com with SMTP id t138so1357356wmt.4
+        for <git@vger.kernel.org>; Tue, 15 Aug 2017 05:53:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=xqtbAvAHmmdh9xmOSDBaV1MZQO+Q4HHNpm/HXmo13CA=;
-        b=RD1a5CQN+s3JwhZrCTAQokma2PFl0w7MaLYolSV5lZzCuxmH+N/hTub0OK0T876nz7
-         tQNQqfGJ9wsDYwmovfcGk6QQTNMA8CcLCaP4s0Z+irXtiO+KbxsgMNMzSEy6QKvwpo33
-         jGV3V5pWgfkHHQcm3nqkUl1a4/rSWZ/OW8g7RWHPgPPszsiikyUHM1c7O+DRdOGDF9yG
-         Tyee2frA+CbxQfef1N3dKJoMcmZ6FpCsxapMPhjxONvcCOwju7t+8uloWa1jDkVusdck
-         N8zUGJYtZW9eZNDGWtJrsLp3PDvXmAktk6I20Yaa74rUndfvhzk9ukiINxi/8k0xKbfK
-         Xv3w==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=oGWog2b4mk6qWLMBEk++X8mfhG+++WoBJuqde43SbiM=;
+        b=F4E9SLo1hj+4ILuJU1VsqyRuCtO8P0Sb0DN5NvAGL6oBkPUcMeVcyVlxG/k0OyCuZT
+         WcJYol2vK/a9iCEeZJoJ3xDFIy7RvwAK92LlrpNHXAeTIa4743DHUOBbO2iEsu31aiIJ
+         pc6KhAacr09fpeYXEyWr2dY1QKDsiN3Lr+0JwWwbLv5t1AHciHzLKu4TYa/uTJjKew5S
+         YDtTQOZVZs2lQ9HDRx7qqZFnCzACxBWg2c0RU1NB0jaBSpJB0omehlr4iTgI/KxEgVUZ
+         bEgNqN4e1obx5WmaUXst67vTcNT0MMcnVTYgGauUJJHlY30lyIGLoaw01p/gPyLqSC36
+         j4KQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=xqtbAvAHmmdh9xmOSDBaV1MZQO+Q4HHNpm/HXmo13CA=;
-        b=DOPXMWQac6rNVCcFUSjx2f5nLIhAeEY/qC27eSvrnRjh9mFJ65obVi6BZJaziDS8wT
-         zWZld7FyZwKCDh3vnOirn3mlrnhBuNsuMzfS1o0R03k5rlgtqxUlnemuJvRe+ahkLbd5
-         h4LF0g3/DGloN1Lppdohp/ETDvxMuc+4p0Dmrsrx93WtFqQIedgew1KuV7O0nLg2s0/N
-         6+Gy5AB4Abwt/cnP5Iq0jFQ9b0xXSWschrVmw//KVQFcpLGURJf2ez3N49CSbP09mkue
-         du6ByCtzbGP5qj7xMctEeYXQVq0f9uAVgizDrkl6W9i0gPWx4hxHIhpHt1SkcMlxM5ay
-         P8Xg==
-X-Gm-Message-State: AHYfb5gtOEw45C6Phaxi6Aq3s14TcyanGKZf8i1xLTfJ24OHQ7WdwwWM
-        pR8Gf/Ysje1j/G45
-X-Received: by 10.28.174.209 with SMTP id x200mr1245498wme.106.1502801605770;
-        Tue, 15 Aug 2017 05:53:25 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=oGWog2b4mk6qWLMBEk++X8mfhG+++WoBJuqde43SbiM=;
+        b=bsschcbNHeGhLZRjkQ971y0wSqf90GgivRHzOAz8Gs1pvMWbywDcIoSSWCfXj2XQYB
+         yI8f8lO6IYFSJhEWCSicZQIOG2wsb/oZuoK18Gcs6aDCUj8b5aQ8EtjynKNMLF8LaOxN
+         +JrYZFLfDRkv1JTzA/u7lSzplMIbEC/UgCFkG36lnCLB/Y09wbew7f0L5xdtNcoTuGHJ
+         0KgNAAXtQI2LF283RovpFjf+RyZv/YuIh76hbVh6gdLCxHORxBoqPj4yw4abJIW1Ow5z
+         9PsURxCLBmZWpN6z+6uH9DjASnBfUgMcHjvKVTd1HKeS8trVYVIkhN9mlncQl6JBPmqF
+         LiRA==
+X-Gm-Message-State: AHYfb5j26xfVfkK5+C45MSmNuYyh3h6Lrbce42dqIRO+uWVxIIKp2dg9
+        aBO48AiRzaJLHbLg
+X-Received: by 10.28.99.196 with SMTP id x187mr1225161wmb.125.1502801610188;
+        Tue, 15 Aug 2017 05:53:30 -0700 (PDT)
 Received: from localhost.localdomain ([2a02:aa16:5782:c100:1208:b1ff:fee6:d811])
-        by smtp.gmail.com with ESMTPSA id k14sm4006617wrg.11.2017.08.15.05.53.24
-        for <git@vger.kernel.org>
+        by smtp.gmail.com with ESMTPSA id k14sm4006617wrg.11.2017.08.15.05.53.29
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 15 Aug 2017 05:53:24 -0700 (PDT)
+        Tue, 15 Aug 2017 05:53:29 -0700 (PDT)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
-Subject: [PATCH/RFC 0/5] Some ThreadSanitizer-results
-Date:   Tue, 15 Aug 2017 14:53:00 +0200
-Message-Id: <cover.1502780343.git.martin.agren@gmail.com>
+Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH 1/5] convert: initialize attr_action in convert_attrs
+Date:   Tue, 15 Aug 2017 14:53:01 +0200
+Message-Id: <0fd7f3184d285df8867ea44dd1adf418ebfc5ef3.1502780344.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.14.1.151.gdfeca7a7e
+In-Reply-To: <cover.1502780343.git.martin.agren@gmail.com>
+References: <cover.1502780343.git.martin.agren@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -63,37 +65,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I tried running the test suite on Git compiled with ThreadSanitizer
-(SANITIZE=thread). Maybe this series could be useful for someone else
-trying to do the same. I needed the first patch to avoid warnings when
-compiling, although it actually has nothing to do with threads.
+convert_attrs populates a struct conv_attrs. The field attr_action is
+not set in all code paths, but still one caller unconditionally reads
+it. Since git_check_attr always returns the same value, we'll always end
+up in the same code path and there is no problem right now. But
+convert_attrs is obviously trying not to rely on such an
+implementation-detail of another component.
 
-The last four patches are about avoiding some issues where
-ThreadSanitizer complains for reasonable reasons, but which to the best
-of my understanding are not real problems. These patches could be useful
-to make "actual" problems stand out more. Of course, if no-one ever runs
-ThreadSanitizer, they are of little to no (or even negative) value...
+Initialize attr_action to CRLF_UNDEFINED in the dead code path.
 
-I'll follow up with the two remaining issues that I found but which I do
-not try to address in this series.
+Actually, in the code path that /is/ taken, the variable is assigned to
+twice and the first assignment has no effect. That's not wrong, but
+let's remove that first assignment while we're here.
 
-Martin
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+I hit a warning about attr_action possibly being uninitialized when
+building with SANITIZE=thread. I guess it's some random interaction
+between code added by tsan, the optimizer (-O3) and the warning
+machinery. (This was with gcc 5.4.0.)
 
-Martin Ågren (5):
-  convert: initialize attr_action in convert_attrs
-  pack-objects: take lock before accessing `remaining`
-  Makefile: define GIT_THREAD_SANITIZER
-  strbuf_reset: don't write to slopbuf with ThreadSanitizer
-  ThreadSanitizer: add suppressions
+ convert.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- strbuf.h               | 12 ++++++++++++
- builtin/pack-objects.c |  6 ++++++
- convert.c              |  2 +-
- Makefile               |  3 +++
- .tsan-suppressions     | 12 ++++++++++++
- 5 files changed, 34 insertions(+), 1 deletion(-)
- create mode 100644 .tsan-suppressions
-
+diff --git a/convert.c b/convert.c
+index 1012462e3..943d957b4 100644
+--- a/convert.c
++++ b/convert.c
+@@ -1040,7 +1040,6 @@ static void convert_attrs(struct conv_attrs *ca, const char *path)
+ 		ca->crlf_action = git_path_check_crlf(ccheck + 4);
+ 		if (ca->crlf_action == CRLF_UNDEFINED)
+ 			ca->crlf_action = git_path_check_crlf(ccheck + 0);
+-		ca->attr_action = ca->crlf_action;
+ 		ca->ident = git_path_check_ident(ccheck + 1);
+ 		ca->drv = git_path_check_convert(ccheck + 2);
+ 		if (ca->crlf_action != CRLF_BINARY) {
+@@ -1058,6 +1057,7 @@ static void convert_attrs(struct conv_attrs *ca, const char *path)
+ 	} else {
+ 		ca->drv = NULL;
+ 		ca->crlf_action = CRLF_UNDEFINED;
++		ca->attr_action = CRLF_UNDEFINED;
+ 		ca->ident = 0;
+ 	}
+ 	if (ca->crlf_action == CRLF_TEXT)
 -- 
 2.14.1.151.gdfeca7a7e
 
