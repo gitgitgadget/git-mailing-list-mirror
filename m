@@ -2,110 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD,UNPARSEABLE_RELAY shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE893208CD
-	for <e@80x24.org>; Tue, 15 Aug 2017 20:49:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9039A208CD
+	for <e@80x24.org>; Tue, 15 Aug 2017 20:54:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752796AbdHOUs6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Aug 2017 16:48:58 -0400
-Received: from planetterror.mr.itd.umich.edu ([141.211.125.114]:52462 "EHLO
-        planetterror.mr.itd.umich.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752154AbdHOUs5 (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 15 Aug 2017 16:48:57 -0400
-X-Greylist: delayed 790 seconds by postgrey-1.27 at vger.kernel.org; Tue, 15 Aug 2017 16:48:57 EDT
-Received: FROM maleficent.mr.itd.umich.edu (smtp.mail.umich.edu [141.211.125.12])
-        By planetterror.mr.itd.umich.edu ID 59935B23.C1F64.12881;
-        Tue, 15 Aug 2017 16:35:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=umich.edu;
-        s=relay-2016-05-12; t=1502829346;
-        bh=uLLO87wH+63Z4Z9X5hLNLtl+Tl25M04EnnCuL0VUmkY=;
-        h=From:To:Cc:Subject:Date;
-        b=L3ZkjSMfQve9z9NHrlokCIGZT57sXqB1iujOuebtEKmiuVMZboF7HgyfI685YNdcO
-         266e7lp6H2Ma1GEqB15jkP20Hh15J28UxLDBDjfA3D/su/7nG0A28EymVGKh9JU1m/
-         vLLe4OwOt9Nr56GVIQTkFZiyoCgyRuuTVlai+ZydFWcdR9SncMrW3zHY1b83Vc1ogT
-         mvO3xAPEZycj05edeApGOW4zvUq9WjoHS2Hzn9+l+la3cPwNn1rRb8MCGeTsIcg3YR
-         otK4fw2WFwkiYeMJK3mjbQH0xCaYwn14NgIOrrcNS4fZA79mCGU7pKiKs2sJkGC46C
-         KSRJ9lYhszbHQ==
-Authentication-Results: maleficent.mr.itd.umich.edu;
-        iprev=pass policy.iprev=99.231.24.59 (CPEe03f496bc050-CM1cabc0a3e3c0.cpe.net.cable.rogers.com);
-        auth=pass smtp.auth=asottile
-Received: FROM localhost.localdomain (CPEe03f496bc050-CM1cabc0a3e3c0.cpe.net.cable.rogers.com [99.231.24.59])
-        By maleficent.mr.itd.umich.edu ID 59935B21.CBD13.20669;
-        Authuser asottile;
-        Tue, 15 Aug 2017 16:35:45 -0400
-From:   Anthony Sottile <asottile@umich.edu>
-To:     git@vger.kernel.org
-Cc:     Anthony Sottile <asottile@umich.edu>
-Subject: [PATCH/RFC] git-grep: correct exit code with --quiet and -L
-Date:   Tue, 15 Aug 2017 13:35:03 -0700
-Message-Id: <20170815203503.12299-1-asottile@umich.edu>
-X-Mailer: git-send-email 2.14.GIT
+        id S1752517AbdHOUx6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Aug 2017 16:53:58 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57895 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751129AbdHOUx5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Aug 2017 16:53:57 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3A2E4AAB5B;
+        Tue, 15 Aug 2017 16:53:56 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Jv9EIOYAvpAcBRDbMrSDevGiceM=; b=MqBaeC
+        PnZAJK++PDXUlgb2NiDa1qP+9QIkZyMy9PARmonGPdN12edabOpOjC2BRLZELgJX
+        1tU6s+oSfhpupokh42a8cK722SRvcFxW95Nk6uTuoqlzXROYIE/2G4j8qYO2E72T
+        HsgGJg0xX5CYFpeUz7P208/tpW0CLO+pUCtgk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=p9K8PG75heajYTkpayyzfPUouqQ/Ojdg
+        wvFD+WmNcdtGJ2Xwqm1xMnnzHDhP6hjgvYa63ehIlsNZQGjXOADtMcJHvI3YnpjL
+        XVBEfkkmQMcAG4eBWVOQDXW2IXjay7dTgYGxw8Mvg+Bf6u6bzLWg56aD3wtHcyfV
+        nUtcegOUjuc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2FE63AAB59;
+        Tue, 15 Aug 2017 16:53:56 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 92225AAB58;
+        Tue, 15 Aug 2017 16:53:55 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH v3 3/3] diff: define block by number of non-space chars
+References: <cover.1502491372.git.jonathantanmy@google.com>
+        <cover.1502754962.git.jonathantanmy@google.com>
+        <41a7ff674072559415f98b81ffde798d94aed2fc.1502754962.git.jonathantanmy@google.com>
+        <xmqqy3qkppxt.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kahg7q2CSg7OiaLNvHKzCUgTtq2-n=Km0N+eGRuNZ=yJw@mail.gmail.com>
+Date:   Tue, 15 Aug 2017 13:53:54 -0700
+In-Reply-To: <CAGZ79kahg7q2CSg7OiaLNvHKzCUgTtq2-n=Km0N+eGRuNZ=yJw@mail.gmail.com>
+        (Stefan Beller's message of "Tue, 15 Aug 2017 13:06:49 -0700")
+Message-ID: <xmqqtw18pn6l.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: DA3ADE8C-81FB-11E7-B2CE-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The handling of `status_only` no longer interferes with the handling of
-`unmatch_name_only`.  `--quiet` no longer affects the exit code when using
-`-L`/`--files-without-match`.
+Stefan Beller <sbeller@google.com> writes:
 
-Signed-off-by: Anthony Sottile <asottile@umich.edu>
----
- grep.c          | 9 +++++----
- t/t7810-grep.sh | 5 +++++
- 2 files changed, 10 insertions(+), 4 deletions(-)
+> The function blame_entry_score is documented to approach
+> this exact problem that we are trying to solve here, so I agree
+> we should have a common heuristic.
 
-diff --git a/grep.c b/grep.c
-index 2efec0e..a893d09 100644
---- a/grep.c
-+++ b/grep.c
-@@ -1755,7 +1755,7 @@ static int grep_source_1(struct grep_opt *opt, struct grep_source *gs, int colle
- 		}
- 		if (hit) {
- 			count++;
--			if (opt->status_only)
-+			if (!opt->unmatch_name_only && opt->status_only)
- 				return 1;
- 			if (opt->name_only) {
- 				show_name(opt, gs->name);
-@@ -1820,13 +1820,14 @@ static int grep_source_1(struct grep_opt *opt, struct grep_source *gs, int colle
- 	if (collect_hits)
- 		return 0;
- 
--	if (opt->status_only)
--		return 0;
- 	if (opt->unmatch_name_only) {
- 		/* We did not see any hit, so we want to show this */
--		show_name(opt, gs->name);
-+		if (!opt->status_only)
-+			show_name(opt, gs->name);
- 		return 1;
- 	}
-+	if (opt->status_only)
-+		return 0;
- 
- 	xdiff_clear_find_func(&xecfg);
- 	opt->priv = NULL;
-diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-index f106387..2a6679c 100755
---- a/t/t7810-grep.sh
-+++ b/t/t7810-grep.sh
-@@ -374,6 +374,11 @@ test_expect_success 'grep -L -C' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'grep --files-without-match --quiet' '
-+	git grep --files-without-match --quiet nonexistent_string >actual &&
-+	test_cmp /dev/null actual
-+'
-+
- cat >expected <<EOF
- file:foo mmap bar_mmap
- EOF
--- 
-2.14.GIT
-
+While I do not think it is necessary to do such a refactoring within
+the scope of this series, we should at least leave a NEEDSWORK
+in-code comment next to the new heuristics code to remind those who
+revisit the code of this possible small project idea, I would think.
