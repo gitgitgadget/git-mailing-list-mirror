@@ -2,89 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BAE9A208B8
-	for <e@80x24.org>; Tue, 15 Aug 2017 18:45:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 97F5F208B8
+	for <e@80x24.org>; Tue, 15 Aug 2017 18:48:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752527AbdHOSpn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Aug 2017 14:45:43 -0400
-Received: from mail-ua0-f170.google.com ([209.85.217.170]:36689 "EHLO
-        mail-ua0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751640AbdHOSpn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Aug 2017 14:45:43 -0400
-Received: by mail-ua0-f170.google.com with SMTP id k43so6074441uaf.3
-        for <git@vger.kernel.org>; Tue, 15 Aug 2017 11:45:42 -0700 (PDT)
+        id S1752839AbdHOSsa (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Aug 2017 14:48:30 -0400
+Received: from mail-yw0-f172.google.com ([209.85.161.172]:34857 "EHLO
+        mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752332AbdHOSs3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Aug 2017 14:48:29 -0400
+Received: by mail-yw0-f172.google.com with SMTP id l82so9890905ywc.2
+        for <git@vger.kernel.org>; Tue, 15 Aug 2017 11:48:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kimbirkelund-dk.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:sender:from:date:message-id:subject:to;
-        bh=Yz/YncUNdq1YELs1gBAW37/qJA9MnUj1JkKAdnLtjjU=;
-        b=a3af3dWIIVqFGxsOSy0i4lm60B616zEWSVtuckIWB6NionVD/UVZNrISsoe9Z/3E15
-         +e0hHxeVKc7LusYGFnMrY40ZZ0m/IAIUjtNYW/DXjT8zXckgC3mu4RbvGJY8E04m9CIt
-         CMwrZtJYMwEY1NYiWXCV/jALQLvF0b8B8aNHSBCL183cSDKrg4MZIAT5I5C4S2KaXg6K
-         oAYCb5lcXXM3GhvlsY019IBV/RMGe1XqHkQCLB8pKcl/1FwqD9TIg2+eDJqz5U+cLNTT
-         MWQzVlfFB5+5V5GW4qrr6NaQF3mNJhL3DXvLdccIMG9N9b8wOPQelOb1vwDiRa5+KQG3
-         y5/A==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=qxHr6BPPrlTih0uCuml9REqvcqiL4KfaH7d9vhKmIjI=;
+        b=ZKF7iKxLyaRexprbt0scUZHPveL6o1NGM2TOck+hInQ94BGstUDJ8xahjnrmk9Sayj
+         bWmy+8XysK/y/dZOPkOIozj/70HYUoGRwZ+hoe2evL8w7UT1akO7oIYGbQC5rgqZVqQ7
+         EgiIM25S4HXmPC009c/KuXnU87KRkCjfs/7/unMAHJpuLGdw8lpieImOYEnWvqb+7Cw8
+         aGv+t7bdUtwDBUJq5L8+KihAypnE5zCuI/lns8YvdFR5EjshHKDS7oL9J4Rkq7IxkXIy
+         8ZUjZaxHbQW8iw0Q1WeQti3zcD3eRPVNH9B1X2pj3adFoV97FsCZG9nWWPrEF77pHxJx
+         +UMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to;
-        bh=Yz/YncUNdq1YELs1gBAW37/qJA9MnUj1JkKAdnLtjjU=;
-        b=lz6qCdpfQk2XkcJXxdCUV4Yz/xHYY3j/9ab3YApest+9Xama3gvxtW0V5Q24LDgzoS
-         N50gB60PqnPv2K2E5K17yTpFAH77mzZRSmjKVevSu/34j9ihVXLDw0PnaYICrwI/X+1h
-         Jx/5Kc1B+mctqOTrtFnV9PZpTKREW+x5ChPMkRStHaoaVflLXUVIH1eQ4VvdxyfNfxtR
-         JmRvrRWmvWNCvP+5NgS2ornP5uxmmuxsZemG/S47kFYo9TCFnk75935pFqmv0if/PEEX
-         mH31Pu5Kez3DjEQzLlkyKGUFqiD3j++i++7TZYlB8SNzSzlJIrJFVJol58sHVq+C2hPc
-         9UpA==
-X-Gm-Message-State: AHYfb5hCSJEJQ5Goo4CyjG9iBdunz9gWb0UN+JJSvaUDvWk3B8w2GgK6
-        EzYrVqa0WOTVZG6IyvRrDsaYlS+FfcyNx0Q=
-X-Received: by 10.176.84.153 with SMTP id p25mr21094741uaa.174.1502822741845;
- Tue, 15 Aug 2017 11:45:41 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=qxHr6BPPrlTih0uCuml9REqvcqiL4KfaH7d9vhKmIjI=;
+        b=CidOBLAwnKyiRCkHH3l5wBEXuzoEYxOonoAl6L7F6rHu0OcO2jAW4KBubDs+4THDE8
+         1LT2wjgxzp6D81MZe96eDwcovNNoEUOTpjlYpzdrrskmE64R/ip9z5Qe6N86xaR+iA1p
+         d89gPcQ20wJAoObFsHzrHjtxE10S1OQp9ur1JR56b2Vxyr1srH61qPwc+JRuNQQmwXMr
+         T+v6++OVNmdjTRHiuTu6AL0GiP+XKTMM7c99gdB3o9/agG02gffw7p98mFtybrgvPEHo
+         Cvjki6doPACJm75OQwhsMDM53kk2WEtPbpi1IB+XunfNV78iN0TDVSiQxUrva63qaaFs
+         CXGA==
+X-Gm-Message-State: AHYfb5hvta07T5MQMASgHOiqOwEUVxB3BIDWZchGbd5i8pCyY0mAYXt1
+        Q1wUima/ETuUH5TtkqvgSpWcaYhpKsb0
+X-Received: by 10.37.55.79 with SMTP id e76mr23787059yba.215.1502822909275;
+ Tue, 15 Aug 2017 11:48:29 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.159.39.68 with HTTP; Tue, 15 Aug 2017 11:45:20 -0700 (PDT)
-X-Originating-IP: [85.191.104.86]
-From:   Kim Birkelund <kim@birkelund.me>
-Date:   Tue, 15 Aug 2017 20:45:20 +0200
-X-Google-Sender-Auth: teXZvhkkGi8bdJr6yZBq3hcoqFo
-Message-ID: <CAOCG=_p--J5PKGrQTdquMvcBNQs67MNaN3vM8Tbwn2nZNwVR+Q@mail.gmail.com>
-Subject: git clean -fdx deletes tracked files
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Received: by 10.37.56.142 with HTTP; Tue, 15 Aug 2017 11:48:28 -0700 (PDT)
+In-Reply-To: <CAN0heSoXysu=6E_ScfWQVLOk805V=j7AYJi=z62SmNkP5U=A9Q@mail.gmail.com>
+References: <cover.1502780343.git.martin.agren@gmail.com> <adb37b70139fd1e2bac18bfd22c8b96683ae18eb.1502780344.git.martin.agren@gmail.com>
+ <cff383c2-ca57-caba-5a46-7dec4abc25a4@jeffhostetler.com> <CAGZ79kbf52Uu-Th9W20QZV204A81kOAPTj2x6JkEP1rN=GTYtw@mail.gmail.com>
+ <CAN0heSoXysu=6E_ScfWQVLOk805V=j7AYJi=z62SmNkP5U=A9Q@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 15 Aug 2017 11:48:28 -0700
+Message-ID: <CAGZ79kb-1S9F4Pp0dzkDX488uiZ8Zu_1m2U=hQ1CcsgSu314rQ@mail.gmail.com>
+Subject: Re: tsan: t3008: hashmap_add touches size from multiple threads
+To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi
+>>>         /* total number of entries (0 means the hashmap is empty) */
+>>> -       unsigned int size;
+>>> +       /* -1 means size is unknown for threading reasons */
+>>> +       int size;
+>>
+>> This double-encodes the state of disallow_rehash (i.e. if we had
+>> signed size, then the invariant disallow_rehash === (size < 0)
+>> is true, such that we could omit either the flag and just check for
+>> size < 0 or we do not need the negative size as any user would
+>> need to check disallow_rehash first. Not sure which API is harder
+>> to misuse. I'd think just having the size and getting rid of
+>> disallow_rehash might be hard to to reused.
+>
+> (Do you mean "might be hard to be misused"?)
 
-I hope this is gonna sound as weird to you as it does to me.
+yes, I do.
 
-The link below is a zip of a small git repository that I can reproduce
-the bug in on 2 machines.
+> One good thing about turning off the size-tracking with threading is
+> that someone who later wants to know the size in a threaded application
+> will not introduce any subtle bugs by misusing size, but will be forced
+> to provide and use some sort of InterlockedIncrement().
 
-Repo: https://www.dropbox.com/s/fz4d0i5ko7s7ktr/test.zip?dl=0
+agreed.
 
-It contains 2 folders: helpers and b, each of which is an empty npm
-module. b\package.json refers to the helpers module.
+> When/if that
+> change happens, it would be nice if no-one relied on the value of size
+> to say anything about threading. So it might make sense to have an
+> implementation-independent way of accessing disallow_rehash a.k.a.
+> (size < 0).
 
-The following reproduces the bug:
+Yes, and my point was whether we want to keep disallow_rehash around,
+as when a patch as this is applied, we'd have it encoded twice,
+both size < 0 as well as disallow_rehash set indicate the rehashing
+disabled.
 
-1) in terminal cd to the b folder
-2) run npm install
-3) run git reset HEAD --hard
-4) run git clean -fdx
+If we were to reduce it to one, we would not have "invalid" state possible
+such as size < 0 and disallow_rehash = 0.
 
-At this point both files in the helpers folder has been deleted and
-running git status confirms this.
+In the future we may have more options that make size impossible to
+compute efficiently, such that in that case we'd want to know which
+condition lead to it. In that case we'd want to have the flags around.
 
-Tool version:
+> For example a function hashmap_disallow_rehash(), except that's
+> obviously taken. :-) Maybe the existing function would then be
+> hashmap_set_disallow_rehash(). Oh well..
 
-git --version => git version 2.10.2.windows.1
-node -v => v6.11.2
-npm -v => 5.3.0
-
-
-I have no idea what is going. Very much hope you can explain :-)
+Not sure I understand this one.
