@@ -2,103 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A306B1F667
-	for <e@80x24.org>; Tue, 15 Aug 2017 11:27:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66BC61F667
+	for <e@80x24.org>; Tue, 15 Aug 2017 11:49:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751772AbdHOL05 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Aug 2017 07:26:57 -0400
-Received: from mail-pg0-f52.google.com ([74.125.83.52]:37336 "EHLO
-        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751703AbdHOL0y (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Aug 2017 07:26:54 -0400
-Received: by mail-pg0-f52.google.com with SMTP id y129so4149083pgy.4
-        for <git@vger.kernel.org>; Tue, 15 Aug 2017 04:26:54 -0700 (PDT)
+        id S1751494AbdHOLtc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Aug 2017 07:49:32 -0400
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:36255 "EHLO
+        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751129AbdHOLtc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Aug 2017 07:49:32 -0400
+Received: by mail-lf0-f66.google.com with SMTP id t128so462160lff.3
+        for <git@vger.kernel.org>; Tue, 15 Aug 2017 04:49:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=i814jOycviSAyIvX/cvSBwj4XMKOtaVgIQ6tqmDUjUo=;
-        b=S3EXEIHzOJmQ/iFo9jXaBc6YcCfZAS50AYITaaoHWab3Z6ttEQHqtFwQ4u4czZafVY
-         q0t2WEda5SVhSwfXj9YCVuFMgqAaXPyGGjlXm2JoBc83uZwed7kAHccePi2ksS/ho6aw
-         lI6nLboMIAR2Lx5E7rtibaUELJoJrOLPKTKiJI8f4FGuj7Llfo1g0pWXegYrMYTt8hl6
-         txgDAs2whkbBzXrS/NZ6hZYRJuPkDwEE7bKhlHEtnhRBV7y3HfHckNUUFSxZrhNRqIB9
-         o+c5AqtwhbN/QXR7FQPe4ypaBq5vWfcHy42GrLIQhM+KE96mV/Cp2FYKhu7fFFDdERU5
-         Va4g==
+        h=sender:from:to:cc:subject:date:message-id;
+        bh=zoTRhjQmAD60az2pGRuXfLeZkIKY9jihl3rHJ3DUCxc=;
+        b=t6bycY1tNY0m+UGxBk6pNLUzp5wFp2mFZO8VIuy34lyXKR3l/GaNUqKzeyP+VQ8ofW
+         1itYRG+Ec+dPPIbzZZUTYvlRClo48tn2tRR62pADrfnG6d4ugkvrZGB3UTJGN4G3q85V
+         mgrRumE7z7OhE87pDZZe/XBgnuOfCb0ku1nYAcpyaFLuWXROrAj/IvLFNYoPTeqBWmtF
+         I5hZugu/6WddgkSQHmmzeAWrGE0IFhiFWeG+u4yn+iT0hjWsivspAAL6B+KDgO4q5iNk
+         LSgUnAD4YEWc20Do1hMI6DUAsKattY1JeTnCuQJR7kF3jzypdZHDTajCnRaguxSXzoac
+         CThA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=i814jOycviSAyIvX/cvSBwj4XMKOtaVgIQ6tqmDUjUo=;
-        b=jaNa08thX7e4Lx1gRVqJ+ZTyB+hUwneq1Uxd0UDumo2Yq5FB9CZr7xzBHvlPJn6vT1
-         yVUbddeV64moHXJihNMIVcv9ScK8MHUupT1DsXRebct3mlTGKXmiM2ypq7A6ir8vJcRI
-         1SvDw5UnStsjabAUzJDNQPGk++o2dcWMbscGsqoWvt/jNwFUo30aztiWDdH6td+eme62
-         57t3JpLJERpxGq47pMScE7k9W74cQ32KBEaJ3yR8geZUnuAJ2xHKLz4Sk0ZCMK1wd7yY
-         txQORRYrVNBxeMgrbQZHvqK62Qpgx6zuWcUYrTYOZvyfQtWQlgBQDsM5qK2zsxw/xibW
-         093w==
-X-Gm-Message-State: AHYfb5gl0YFPlTgKsd0cjLmQYrgB5eX0l20oy2NmdSmaNCWb7+l6ZqWz
-        O9hJf86RF38v7f4TgUje0BjDfJgd+A==
-X-Received: by 10.84.129.6 with SMTP id 6mr31821470plb.289.1502796414099; Tue,
- 15 Aug 2017 04:26:54 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.100.162.37 with HTTP; Tue, 15 Aug 2017 04:26:53 -0700 (PDT)
-In-Reply-To: <20170815102334.qc4w7akl44bti44x@sigill.intra.peff.net>
-References: <20170815102254.knccmhgralfijwli@sigill.intra.peff.net> <20170815102334.qc4w7akl44bti44x@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Tue, 15 Aug 2017 13:26:53 +0200
-Message-ID: <CAN0heSrUz2jU2ijeSjYRhvyXA8qpw=JoOhaK-4Fuyv4_1L6Gtw@mail.gmail.com>
-Subject: Re: [PATCH v4 5/8] interpret-trailers: add --parse convenience option
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id;
+        bh=zoTRhjQmAD60az2pGRuXfLeZkIKY9jihl3rHJ3DUCxc=;
+        b=NsYTAaQ9N9PkGXCC0o3BgQSlFKPCfg5lPwdLhGaetT6eTgy3mQb7vn/HsuSzPZa09H
+         GrxGV3KEga+wDTioV00uKpxvCltfuorKkXlsklObvHxQkx8RGES1rnhMmSjV6lqgSTdg
+         yqhSydGZI+TRdepGXkwyOxBrZWOGXYMp7rTV8pd1JmvjelpmdwHNhFst0M7xhWCzRHEo
+         E4sdliTsqgG2YfMHmcpQUm/l0zNp3LVZYOxtN+mpqZdzHlF/ldfXjk1w6KpQ0Z/dnirD
+         a3Vk4Fvhas1yWR8gHvdv/pugK1bAKivfVy/GA9VamQHjmVF4UOLbISpMlBp9ywKukB4F
+         5DiA==
+X-Gm-Message-State: AHYfb5jEPf/C8v9TcD1N91XiwQySzwtZ4JLJffxlloBhCv6ZY85leYEf
+        yVsX9Orq6yE7jGZpX9c=
+X-Received: by 10.46.1.20 with SMTP id 20mr9056259ljb.5.1502797770398;
+        Tue, 15 Aug 2017 04:49:30 -0700 (PDT)
+Received: from localhost.localdomain (user-94-254-225-26.play-internet.pl. [94.254.225.26])
+        by smtp.gmail.com with ESMTPSA id z25sm1575317lja.1.2017.08.15.04.49.28
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 15 Aug 2017 04:49:29 -0700 (PDT)
+From:   Patryk Obara <patryk.obara@gmail.com>
+To:     git@vger.kernel.org,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Patryk Obara <patryk.obara@gmail.com>
+Subject: [PATCH 0/5] Modernize read_graft_line implementation
+Date:   Tue, 15 Aug 2017 13:49:01 +0200
+Message-Id: <cover.1502796628.git.patryk.obara@gmail.com>
+X-Mailer: git-send-email 2.9.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 15 August 2017 at 12:23, Jeff King <peff@peff.net> wrote:
->  SYNOPSIS
->  --------
->  [verse]
-> -'git interpret-trailers' [--in-place] [--trim-empty] [(--trailer <token>[(=|:)<value>])...] [<file>...]
-> +'git interpret-trailers' [options] [(--trailer <token>[(=|:)<value>])...] [<file>...]
-> +'git interpret-trailers' [options] [--parse] [<file>...]
->
->  DESCRIPTION
->  -----------
-> -Help adding 'trailers' lines, that look similar to RFC 822 e-mail
-> +Help parsing or adding 'trailers' lines, that look similar to RFC 822 e-mail
->  headers, at the end of the otherwise free-form part of a commit
->  message.
->
->  This command reads some patches or commit messages from either the
-> -<file> arguments or the standard input if no <file> is specified. Then
-> -this command applies the arguments passed using the `--trailer`
-> -option, if any, to the commit message part of each input file. The
-> -result is emitted on the standard output.
-> +<file> arguments or the standard input if no <file> is specified. If
-> +`--parse` is specified, the output consists of the parsed trailers.
-> +
-> +Otherwise, the this command applies the arguments passed using the
-> +`--trailer` option, if any, to the commit message part of each input
-> +file. The result is emitted on the standard output.
+I experimented with using a different hash algorithm (I am aware of
+existing "Git hash function transition plan", I just want to push
+things forward a bit) - and immediately hit a small issue - changing
+the size of object_id hash buffer leads to compilation issues and
+breaks graft-related tests.
 
-"the this"
+I am sending patch 1 only to show a modification, that I did to
+increase buffer size - it's not intended to be merged.
 
-I think I get why you use --parse above (and in the synopsis), although
-it kind of feels like it should be --only-input or perhaps "--only-input
-(or --parse)".
+Patch 2 fixes trivial compilation issue.
 
---only-input is sort of not covered by the "--parse"-part above, and it
-is sort of not covered in the "Otherwise", since --only-input and
---trailer are incompatible. So it is sort of lost. :-) Probably doesn't
-matter much. (I'm just thinking out loud without constructive ideas.)
-Those who care about such details can continue reading..
+Patches 3, 4, and 5 touch graft implementation to remove calculations
+using GIT_SHA1_*, that lead to broken tests. I replaced FLEX_ARRAY of
+object_id's representing parents with oid_array. New implementation
+should be more future-proof, I think.
 
-Martin
+New implementation has tiny behaviour change: previously parents in
+graft line needed to be separated with single space - now any number
+of whitespace characters will do.
+
+Alternative implementation approaches
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Strbuf could be replaced with string_list with
+string_list_split_in_place instead of while loop in read_graft_line.
+I didn't implement it this way because I learned
+about string_list_split_in_place after finishing this implementation
+draft. Right now I'm not sure which approach is better.
+
+Another possibility is dropping graft feature altogether - that would
+mean removing code for parsing grafts and 'parent' field in the struct,
+but preserving the struct itself as a shallow clone marker. Grafts are
+a little-known feature with modern replacement, but this seems like
+bigger task and rather out of the scope of transition to the new
+hashing algorithm.
+
+I considered making function read_graft_line a static one and
+read_graft_file non-static, but read_graft_line is used in
+'builtin/blame.c' in function read_ancestry, which is almost a copy of
+read_graft_file (difference of single boolean flag passed to
+register_commit_graft). Removal of this duplication may be worthwhile,
+but I think it's out of scope.
+
+Patryk Obara (5):
+  cache: extend object_id size to sha3-256
+  sha1_file: fix hardcoded size in null_sha1
+  commit: replace the raw buffer with strbuf in read_graft_line
+  commit: implement free_commit_graft
+  commit: rewrite read_graft_line
+
+ builtin/blame.c |  2 +-
+ cache.h         |  8 ++++++--
+ commit.c        | 55 ++++++++++++++++++++++++++++++++-----------------------
+ commit.h        |  5 +++--
+ sha1_file.c     |  2 +-
+ shallow.c       |  1 +
+ 6 files changed, 44 insertions(+), 29 deletions(-)
+
+-- 
+2.9.5
+
