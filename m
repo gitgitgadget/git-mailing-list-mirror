@@ -2,93 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C1DA208B8
-	for <e@80x24.org>; Tue, 15 Aug 2017 17:28:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7428B208C4
+	for <e@80x24.org>; Tue, 15 Aug 2017 17:34:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753044AbdHOR2h (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Aug 2017 13:28:37 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62566 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752347AbdHOR2g (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Aug 2017 13:28:36 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D0CDE9888E;
-        Tue, 15 Aug 2017 13:28:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=l+W1rUzjfPqyaucdvmSnJ9ZEszE=; b=L1OVLj
-        KH9tn+y8ZEP8IEfntzZMYZ3WnvT7oA5SYapkJilk0OnYmc4bR20shPWgCLhC0VAL
-        KXfYHoCK1GYWEjhQRX9hQY6y1S7WGhBDCCAte3z98hNoYo5606w1zZhz1hWnpeyR
-        efCaxDkyl0T9PoUgXcD+gDa9zRS70wRRlqSu4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=clfUPMt5zBoW0jIg+8MombLWlx7Va7+l
-        qGKmNJYSKFF11rymNZOG+t46v0YOPh/Ij/lqDqY/mz00kDz0gPx580qsWWn7tW/i
-        ZNfn5lRE/stVoBVsatHMST5DDoddshSLt0YyQaSQb9Er5kQIXL0Tauyx27pSwkvB
-        1t0bu69IRpA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C84049888D;
-        Tue, 15 Aug 2017 13:28:35 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1D5D09888C;
-        Tue, 15 Aug 2017 13:28:35 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Cc:     sbeller@google.com, git@vger.kernel.org
-Subject: Re: [PATCH] hook: use correct logical variable
-References: <20170711141111.7538-3-kaarticsivaraam91196@gmail.com>
-        <20170814084646.30781-1-kaarticsivaraam91196@gmail.com>
-        <xmqqwp66ui5h.fsf@gitster.mtv.corp.google.com>
-        <4e2c5bd8-48c9-fc8c-2c2c-ede3951019fc@gmail.com>
-Date:   Tue, 15 Aug 2017 10:28:33 -0700
-In-Reply-To: <4e2c5bd8-48c9-fc8c-2c2c-ede3951019fc@gmail.com> (Kaartic
-        Sivaraam's message of "Tue, 15 Aug 2017 15:01:14 +0530")
-Message-ID: <xmqqa830sptq.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1753415AbdHOReu (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Aug 2017 13:34:50 -0400
+Received: from mail-pg0-f45.google.com ([74.125.83.45]:38878 "EHLO
+        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753402AbdHORes (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Aug 2017 13:34:48 -0400
+Received: by mail-pg0-f45.google.com with SMTP id l64so9519720pge.5
+        for <git@vger.kernel.org>; Tue, 15 Aug 2017 10:34:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=EEh28l9eQLY8LTEcp8nkOdHezs9njjHTNK9Jgrwn9oA=;
+        b=r9GgrOTQrF535wQ81B+u3atAzNQkCpv30eQMDXUeearZYRQwciTAmEd4+8BxkzdOVm
+         kFVUn7aZJqLhYDAtI6s0EhCWVFU0e/OlMLkx7e/rxf+xlURffMXcuiTIoNRGC81lhFBf
+         E6+t586R2MPA02ji4SJixh1Xt69BYZcNIqSnL6G/dH4ghSjGOhPd/BA2/3lLFDJHfxdF
+         hreK+HcW4eSvqlIJHKYCXEBDr0ji8tnfe7McDCU9OTBe8NY/yQ/8YYYORtEzQE6qBNef
+         ouZhAgd3JzZx5HlOjSXhuTvbBUswsZ3YXlrEiz3e8UayCD0OdWulhXMXTglQcxViSUnX
+         Z6iA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=EEh28l9eQLY8LTEcp8nkOdHezs9njjHTNK9Jgrwn9oA=;
+        b=B4m6pkCAnC2ETi7CO2l38AaR2scrujbtJCZfsDBAoKOG0BG0jJhBPkJ+KVPtynlE/k
+         4pT5weSFe2yWedAeA3DR3l53E97w37bEz7YSN0lxdoeP4FoDXe9A1MuUAbpgyJCILCN9
+         1daV03z3VvXp63fUc1Lhfineu1PmVJKMOTQV+Ckjri1iXeFB8U1LyFQdm6ASOw5L2vgK
+         MnFot/fECltJ1qVpzbBJk2YesniwnB72LKiN+99Zlt+fuVWwBY9fpYPGpvE+/H44IZwF
+         6X68u8HA6yTuEo9aGkVKXe5Rwh+TmDPL7xDYMhrOtdOvsrQsWjw6xdqZBjkILMMmDeyF
+         cV3Q==
+X-Gm-Message-State: AHYfb5iNhxHcNy+lvVvT+GzA8y8RFxVeTrCb79GNQB+kjJX2EeHyEobb
+        tvRpv5H+rGPgrrxH
+X-Received: by 10.84.131.101 with SMTP id 92mr31608137pld.84.1502818488088;
+        Tue, 15 Aug 2017 10:34:48 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:593a:8ead:b053:9e22])
+        by smtp.gmail.com with ESMTPSA id q21sm2898403pfj.126.2017.08.15.10.34.46
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 15 Aug 2017 10:34:46 -0700 (PDT)
+Date:   Tue, 15 Aug 2017 10:34:45 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Ben Peart <peartben@gmail.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, gitster@pobox.com,
+        Johannes.Schindelin@gmx.de, jrnieder@gmail.com,
+        ramsay@ramsayjones.plus.com, peff@peff.net, avarab@gmail.com
+Subject: Re: [PATCH v2 1/2] clang-format: outline the git project's coding
+ style
+Message-ID: <20170815173445.GA21874@google.com>
+References: <20170808012554.186051-1-bmwill@google.com>
+ <20170814213046.107576-1-bmwill@google.com>
+ <20170814213046.107576-2-bmwill@google.com>
+ <9c9a9b98-9308-95d6-a912-85a49bd3e21d@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2AA6F7BA-81DF-11E7-938B-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9c9a9b98-9308-95d6-a912-85a49bd3e21d@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
+On 08/15, Ben Peart wrote:
+> 
+> 
+> On 8/14/2017 5:30 PM, Brandon Williams wrote:
+> >Add a '.clang-format' file which outlines the git project's coding
+> >style.  This can be used with clang-format to auto-format .c and .h
+> >files to conform with git's style.
+> >
+> >Signed-off-by: Brandon Williams <bmwill@google.com>
+> >---
+> >  .clang-format | 165 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+> >  1 file changed, 165 insertions(+)
+> >  create mode 100644 .clang-format
+> >
+> 
+> I applied this and then ran:
+>     clang-format -i -style file *.c *.h builtin/*.c
+> 
+> The modified files generate lots of line ending warnings.
+> Apparently clang-format isn't respecting the git settings for line
+> endings as it converted CRLF to LF in all the files it edited.
+> 
+> $ git add .
+> warning: LF will be replaced by CRLF in alloc.c.
+> The file will have its original line endings in your working directory.
+> warning: LF will be replaced by CRLF in base85.c.
+> The file will have its original line endings in your working directory.
+> warning: LF will be replaced by CRLF in bisect.h.
+> [...]
+> 
 
-> I guess Junio's suggestion found below seems concise enough
-> although it doesn't capture the reason I did the change.
+I would think that there  must be some setting to permit CRLF on windows
+machines.  As I work on a unix machine I don't see this sort of
+behavior.
 
-I did shoot for conciseness, but what is a lot more important is to
-record what is at the core of the issue.  "I found it by doing A"
-can hint to careful readers why doing A leads to an undesirable
-behaviour, but when there are other ways to trigger problems that
-come from the same cause, "I found it by doing A" is less useful
-unless we also record "Doing A reveals the underlying problem X"
-that can be shared by other ways B, C, ... to trigger it.  The
-careful readers need to guess what the X is.
-
-And once you identify the underlying problem X and record _that_ in
-the log message, I and A in "I found it by doing A" becomes much
-less interesting and the readers do not have to guess.
-
-Your "A" is 'git commit --amend -s' with the disabled part of hook
-enabled.  But I think 'git commit' without "--amend" and "-s" would
-also show an issue that come from the same root cause.  The hook
-will add SoB that is based on the author, not the committer.  That
-resulting commit would be different from 'git commit -s' without the
-hook enabled, which would add SoB based on the commiter name (that
-would be a "B", that causes a related but different problem that
-comes from the same underlying issue "X" which is "we should
-consistently use the committer info like other parts of the
-system").
-
-In any case, thanks for a fix-up.  Let's move this forward quickly,
-as it is an update to a topic that is already in 'master'.
-
-Thanks.
+-- 
+Brandon Williams
