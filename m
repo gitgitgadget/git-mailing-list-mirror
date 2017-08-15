@@ -8,117 +8,93 @@ X-Spam-Status: No, score=-2.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 66BC61F667
-	for <e@80x24.org>; Tue, 15 Aug 2017 11:49:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C6CB208C4
+	for <e@80x24.org>; Tue, 15 Aug 2017 11:49:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751494AbdHOLtc (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Aug 2017 07:49:32 -0400
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:36255 "EHLO
-        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751129AbdHOLtc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Aug 2017 07:49:32 -0400
-Received: by mail-lf0-f66.google.com with SMTP id t128so462160lff.3
-        for <git@vger.kernel.org>; Tue, 15 Aug 2017 04:49:31 -0700 (PDT)
+        id S1751529AbdHOLte (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Aug 2017 07:49:34 -0400
+Received: from mail-lf0-f68.google.com ([209.85.215.68]:36257 "EHLO
+        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751500AbdHOLtd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Aug 2017 07:49:33 -0400
+Received: by mail-lf0-f68.google.com with SMTP id t128so462176lff.3
+        for <git@vger.kernel.org>; Tue, 15 Aug 2017 04:49:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id;
-        bh=zoTRhjQmAD60az2pGRuXfLeZkIKY9jihl3rHJ3DUCxc=;
-        b=t6bycY1tNY0m+UGxBk6pNLUzp5wFp2mFZO8VIuy34lyXKR3l/GaNUqKzeyP+VQ8ofW
-         1itYRG+Ec+dPPIbzZZUTYvlRClo48tn2tRR62pADrfnG6d4ugkvrZGB3UTJGN4G3q85V
-         mgrRumE7z7OhE87pDZZe/XBgnuOfCb0ku1nYAcpyaFLuWXROrAj/IvLFNYoPTeqBWmtF
-         I5hZugu/6WddgkSQHmmzeAWrGE0IFhiFWeG+u4yn+iT0hjWsivspAAL6B+KDgO4q5iNk
-         LSgUnAD4YEWc20Do1hMI6DUAsKattY1JeTnCuQJR7kF3jzypdZHDTajCnRaguxSXzoac
-         CThA==
+        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
+         :in-reply-to:references;
+        bh=s94XtxIqoT0FaVgISdKU+LyfOR4TBzEOZ4cYCZp0PwQ=;
+        b=UE6k3LiDAZwYT7IcV6M01D/sWBEfKDDk91LZo2P7pevbPy3/w1vUfjPMyWbarNb4lI
+         xcof3RPDm/zZOemYiKHQMezNwPLcA3NVIrMxUri/x0eeY611PT9RjFt7hBNTloOctSlb
+         DxKDbpYh3EtO6mTImeQNy/HpCOKGqD1TEaUK41qS4dOb+x0QjQ8VoHWx63j04+I7lEm1
+         /ntLhq4aukMHaJqJD5ZEgsfu5ZRUD+t8t82B7N3EeVSIWLZJNot1WVM7V4+7DSR5XDLp
+         k6OBd7miAHQ6ZQgoOUZh6wEo5BD0Nr2a87YC5nrYQOr1v0Fc6JQw9bQwtQYWAM+jCZQn
+         OBDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id;
-        bh=zoTRhjQmAD60az2pGRuXfLeZkIKY9jihl3rHJ3DUCxc=;
-        b=NsYTAaQ9N9PkGXCC0o3BgQSlFKPCfg5lPwdLhGaetT6eTgy3mQb7vn/HsuSzPZa09H
-         GrxGV3KEga+wDTioV00uKpxvCltfuorKkXlsklObvHxQkx8RGES1rnhMmSjV6lqgSTdg
-         yqhSydGZI+TRdepGXkwyOxBrZWOGXYMp7rTV8pd1JmvjelpmdwHNhFst0M7xhWCzRHEo
-         E4sdliTsqgG2YfMHmcpQUm/l0zNp3LVZYOxtN+mpqZdzHlF/ldfXjk1w6KpQ0Z/dnirD
-         a3Vk4Fvhas1yWR8gHvdv/pugK1bAKivfVy/GA9VamQHjmVF4UOLbISpMlBp9ywKukB4F
-         5DiA==
-X-Gm-Message-State: AHYfb5jEPf/C8v9TcD1N91XiwQySzwtZ4JLJffxlloBhCv6ZY85leYEf
-        yVsX9Orq6yE7jGZpX9c=
-X-Received: by 10.46.1.20 with SMTP id 20mr9056259ljb.5.1502797770398;
-        Tue, 15 Aug 2017 04:49:30 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :in-reply-to:references:in-reply-to:references;
+        bh=s94XtxIqoT0FaVgISdKU+LyfOR4TBzEOZ4cYCZp0PwQ=;
+        b=S+vLuQmFFBkbKYIu3C/D3wlDnjhEdHk2WJHeYPNjXZ1bCZ8ap4zWJp1DFPcsdim1HZ
+         h7omtDIz+shfCz+0q+wrOEH/RlCAIOSCim2Num4z317cx/+SHMNUBfKQskpEHduY7QB6
+         S96Iy3icvI8sxkiUPL6C1s42fJQWr4uyswT2KirqiPVb4FYJnQu/SRODzITNYvq3wsHq
+         squES3r11bxbhN6Ee3mO6LDYsBvfOJMP1E6ejfci0P/K7DyNuMB/AuWOUF76HwWxilZv
+         75e9EStX7X0O/SQWc7Bs8ei12XdzZ36tFScvBv/Iezvixd9iNfeNIBzqDg52lygwvuy0
+         Bnog==
+X-Gm-Message-State: AHYfb5goJVwoX5u57i0MHO/AalKSlevemkit9KrGlI1nGJlSgiD9aS+O
+        2p7Q5ep5gctTPnAuY3Q=
+X-Received: by 10.46.69.87 with SMTP id s84mr10253354lja.129.1502797771948;
+        Tue, 15 Aug 2017 04:49:31 -0700 (PDT)
 Received: from localhost.localdomain (user-94-254-225-26.play-internet.pl. [94.254.225.26])
-        by smtp.gmail.com with ESMTPSA id z25sm1575317lja.1.2017.08.15.04.49.28
+        by smtp.gmail.com with ESMTPSA id z25sm1575317lja.1.2017.08.15.04.49.30
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 15 Aug 2017 04:49:29 -0700 (PDT)
+        Tue, 15 Aug 2017 04:49:31 -0700 (PDT)
 From:   Patryk Obara <patryk.obara@gmail.com>
 To:     git@vger.kernel.org,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         Junio C Hamano <gitster@pobox.com>
 Cc:     Patryk Obara <patryk.obara@gmail.com>
-Subject: [PATCH 0/5] Modernize read_graft_line implementation
-Date:   Tue, 15 Aug 2017 13:49:01 +0200
-Message-Id: <cover.1502796628.git.patryk.obara@gmail.com>
+Subject: [PATCH 1/5] cache: extend object_id size to sha3-256
+Date:   Tue, 15 Aug 2017 13:49:02 +0200
+Message-Id: <c6d4d0a52c5d33a2c6e3e8249fcf5696f06e3e0c.1502796628.git.patryk.obara@gmail.com>
 X-Mailer: git-send-email 2.9.5
+In-Reply-To: <cover.1502796628.git.patryk.obara@gmail.com>
+References: <cover.1502796628.git.patryk.obara@gmail.com>
+In-Reply-To: <cover.1502796628.git.patryk.obara@gmail.com>
+References: <cover.1502796628.git.patryk.obara@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I experimented with using a different hash algorithm (I am aware of
-existing "Git hash function transition plan", I just want to push
-things forward a bit) - and immediately hit a small issue - changing
-the size of object_id hash buffer leads to compilation issues and
-breaks graft-related tests.
+This commit is not intended to be merged - it serves only as context for
+next patches in this thread.
 
-I am sending patch 1 only to show a modification, that I did to
-increase buffer size - it's not intended to be merged.
+Signed-off-by: Patryk Obara <patryk.obara@gmail.com>
+---
+ cache.h | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-Patch 2 fixes trivial compilation issue.
-
-Patches 3, 4, and 5 touch graft implementation to remove calculations
-using GIT_SHA1_*, that lead to broken tests. I replaced FLEX_ARRAY of
-object_id's representing parents with oid_array. New implementation
-should be more future-proof, I think.
-
-New implementation has tiny behaviour change: previously parents in
-graft line needed to be separated with single space - now any number
-of whitespace characters will do.
-
-Alternative implementation approaches
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Strbuf could be replaced with string_list with
-string_list_split_in_place instead of while loop in read_graft_line.
-I didn't implement it this way because I learned
-about string_list_split_in_place after finishing this implementation
-draft. Right now I'm not sure which approach is better.
-
-Another possibility is dropping graft feature altogether - that would
-mean removing code for parsing grafts and 'parent' field in the struct,
-but preserving the struct itself as a shallow clone marker. Grafts are
-a little-known feature with modern replacement, but this seems like
-bigger task and rather out of the scope of transition to the new
-hashing algorithm.
-
-I considered making function read_graft_line a static one and
-read_graft_file non-static, but read_graft_line is used in
-'builtin/blame.c' in function read_ancestry, which is almost a copy of
-read_graft_file (difference of single boolean flag passed to
-register_commit_graft). Removal of this duplication may be worthwhile,
-but I think it's out of scope.
-
-Patryk Obara (5):
-  cache: extend object_id size to sha3-256
-  sha1_file: fix hardcoded size in null_sha1
-  commit: replace the raw buffer with strbuf in read_graft_line
-  commit: implement free_commit_graft
-  commit: rewrite read_graft_line
-
- builtin/blame.c |  2 +-
- cache.h         |  8 ++++++--
- commit.c        | 55 ++++++++++++++++++++++++++++++++-----------------------
- commit.h        |  5 +++--
- sha1_file.c     |  2 +-
- shallow.c       |  1 +
- 6 files changed, 44 insertions(+), 29 deletions(-)
-
+diff --git a/cache.h b/cache.h
+index 1c69d2a..ad8a57c 100644
+--- a/cache.h
++++ b/cache.h
+@@ -68,9 +68,13 @@ unsigned long git_deflate_bound(git_zstream *, unsigned long);
+ #define GIT_SHA1_RAWSZ 20
+ #define GIT_SHA1_HEXSZ (2 * GIT_SHA1_RAWSZ)
+ 
++/* The length in bytes and in hex digits of an object name (SHA3-256 value). */
++#define GIT_SHA3_256_RAWSZ 32
++#define GIT_SHA3_256_HEXSZ (2 * GIT_SHA3_256_RAWSZ)
++
+ /* The length in byte and in hex digits of the largest possible hash value. */
+-#define GIT_MAX_RAWSZ GIT_SHA1_RAWSZ
+-#define GIT_MAX_HEXSZ GIT_SHA1_HEXSZ
++#define GIT_MAX_RAWSZ GIT_SHA3_256_RAWSZ
++#define GIT_MAX_HEXSZ GIT_SHA3_256_HEXSZ
+ 
+ struct object_id {
+ 	unsigned char hash[GIT_MAX_RAWSZ];
 -- 
 2.9.5
 
