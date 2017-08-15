@@ -2,111 +2,217 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B899F208B8
-	for <e@80x24.org>; Tue, 15 Aug 2017 17:42:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7ED4A208B8
+	for <e@80x24.org>; Tue, 15 Aug 2017 17:59:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753527AbdHORl7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Aug 2017 13:41:59 -0400
-Received: from mail-yw0-f169.google.com ([209.85.161.169]:36835 "EHLO
-        mail-yw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752629AbdHORl6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Aug 2017 13:41:58 -0400
-Received: by mail-yw0-f169.google.com with SMTP id u207so8879216ywc.3
-        for <git@vger.kernel.org>; Tue, 15 Aug 2017 10:41:58 -0700 (PDT)
+        id S1753031AbdHOR7B (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Aug 2017 13:59:01 -0400
+Received: from mail-ua0-f174.google.com ([209.85.217.174]:35377 "EHLO
+        mail-ua0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752305AbdHOR7A (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Aug 2017 13:59:00 -0400
+Received: by mail-ua0-f174.google.com with SMTP id d29so5648350uai.2
+        for <git@vger.kernel.org>; Tue, 15 Aug 2017 10:59:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=e4iGtl6/i8j563U0p10oYKqMI6yQJL7Ixx1y7AK7pcg=;
-        b=uLrZ2kpHhFmpVIUlDq1bq13xD5BWCUO4x39ctQVbSmunI/XIVLEEWcBM2c7Lu/1uDh
-         MDWpusNX6GJqHST/EjA20LUpCep9mxmKi7DhkkOhDAQMTq2x+M5Mz0kMMEyZaTcM79M+
-         jFpr6WbOOOJ+OPuJJrxk3xJrcS+zdpiiAng43K/xfeKJiHq5TrmhbuZJiX/DCMReBq2a
-         kEjaCvhHEeskGJ7RdyE80LGG2rELx95x5UFlaxOhbF97cZWLrnp4gllNE5BaE81K3rXU
-         A44WBmno41JjGvsRVtVUQkC8gu9zQSxGUN9uaJw43AeemxDf3/o8PXICbqXQ+a4rwS7P
-         fupQ==
+        bh=ANtXrjhQyy6qjBEAK4lY0OaLyOrkyy1ZEVHqoBP1v34=;
+        b=EdQ48r0EiuadUvRuvNRVKXrXOlVRmRTdxgjIB99Em8VCy3l9WQjXNnigwXRSxMt48P
+         uak5BJ5QOxxipvplQ9S+Mg8X5vFQVaJfJ1h8unN2GTyCdrxlata68pWYb3Zceq2q7Iv+
+         hX7VxcbBKFSnVYYBgvgRktBe20Q/SOLm6HAWPsLamNqmqOwyX7oqqrEoZrNAYZvUQ1fq
+         JlFWWr0A/CRAh6D4HfHhp8rDqnCsv9ggqnqpW9Ckh4iBWpDWZwQ/3ryijsJeo/vf2adc
+         W3c3u3llet/MYkeiN3/lx+Q0KDpTl5y3Dthd/+UQeLwaprmydM+fb7NS0GKWo/ry7lWR
+         0ozA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=e4iGtl6/i8j563U0p10oYKqMI6yQJL7Ixx1y7AK7pcg=;
-        b=GHqT5ryRl37K6QUBw1/6B7s8xtSqydgV9GnqmZDa90khfGUQYLe7BbV2BmDsNapOJd
-         Eb+sRvEie4nPLJYBIFDq5Q79jM3YqmkjnJRJySSDXY0fUQJoeTp8s3NMNIDs92208fSZ
-         BBjMZ+g3Cq+56dZhATFQ2i2sB/rx8LmahRhE81/hhWHfIRR8hjC6t+292VOSm4h8FqmC
-         DjIcdneV/yK6U/tkucD7mWUhKqn8soSxkEvAzT8ErbPZKEaztFRd7JzESVhv4QmqJ0wF
-         8fzyctgZnTQ/e9OTv7RF3tnJz2Nd0U4v6tT6NyMSVK28OIoypep5ZqKr5rX6TPsrF9Em
-         /dBA==
-X-Gm-Message-State: AHYfb5gnDzAi+uoKMlA9F1Qy2mM5id59Kblq98308MVImFuZBCOMVyjC
-        ILO7EUpA9y2mv0B0utD+bPb7dtoCfs08zCI=
-X-Received: by 10.13.229.3 with SMTP id o3mr23183829ywe.137.1502818918103;
- Tue, 15 Aug 2017 10:41:58 -0700 (PDT)
+        bh=ANtXrjhQyy6qjBEAK4lY0OaLyOrkyy1ZEVHqoBP1v34=;
+        b=CvACNtYJPNB6NZo6K7XdqxFSywYysqgBTkBdHv0N5viuieI09yfnCSzrchkv1g6GXk
+         BnpF77MCZDDnHjla+54U2PKx40EzEvpwkXFcAaFAghpGekdhRVxpyW7p07/mnW4EyEHd
+         b0zKzWGO5USO8EvVg0BIEmeeFDEPkG0HxnmIMkTB9biW5ds16KB7c5pidST6qT2k+R2M
+         eAYhN26jjidkfoi8KYQEND5eznB9cf8F2fDJV/RaeG4Gr7y41cMm/RpcDwd7KDn+RIlT
+         WnBfH8ieilkdPJ7x9TgTRZVokoPC+jQ+93gHwz87o9MCeUfJWr8ZRsvn9s5muDqcaUYh
+         asBw==
+X-Gm-Message-State: AHYfb5hY13CcMP2hh61vxF2jg8C7ZyKrexkQia4LVt2PlkjNCe3UKx2C
+        28uFLCu2N6LrrC1hDICGwQbB2fcswQ==
+X-Received: by 10.159.53.33 with SMTP id o30mr18583001uao.43.1502819939388;
+ Tue, 15 Aug 2017 10:58:59 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.37.56.142 with HTTP; Tue, 15 Aug 2017 10:41:57 -0700 (PDT)
-In-Reply-To: <20170815173445.GA21874@google.com>
-References: <20170808012554.186051-1-bmwill@google.com> <20170814213046.107576-1-bmwill@google.com>
- <20170814213046.107576-2-bmwill@google.com> <9c9a9b98-9308-95d6-a912-85a49bd3e21d@gmail.com>
- <20170815173445.GA21874@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 15 Aug 2017 10:41:57 -0700
-Message-ID: <CAGZ79kZc_Mh8i7kMmP_BNGWBAp8rGiiVdCYgTHtfHhsJ6YfGSA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] clang-format: outline the git project's coding style
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Ben Peart <peartben@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Received: by 10.103.148.92 with HTTP; Tue, 15 Aug 2017 10:58:38 -0700 (PDT)
+In-Reply-To: <bad7dafc-247c-bf5e-8cfd-5445badeef1c@gmail.com>
+References: <CAKNmmv3_K4gB6FbcmAjXyviMbU2Ts7Rh7txkOof+-36rF_1+Gw@mail.gmail.com>
+ <bad7dafc-247c-bf5e-8cfd-5445badeef1c@gmail.com>
+From:   Jason Karns <jason.karns@gmail.com>
+Date:   Tue, 15 Aug 2017 13:58:38 -0400
+Message-ID: <CAKNmmv3_rFNDDFVEeShAb3mEMOBL4z=oZXP8Df72D44stB_7BA@mail.gmail.com>
+Subject: Re: Bug: `git remote show <remote>` reports different HEAD branch
+ than refs/remotes/<remote>/HEAD
+To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
+Cc:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 15, 2017 at 10:34 AM, Brandon Williams <bmwill@google.com> wrote:
-> On 08/15, Ben Peart wrote:
+On Tue, Aug 15, 2017 at 1:09 PM, Igor Djordjevic
+<igor.d.djordjevic@gmail.com> wrote:
+> Hi Jason,
+>
+> On 15/08/2017 16:26, Jason Karns wrote:
+>> I have a git repo that shows a different branch in
+>> `.git/refs/remotes/origin/HEAD` than is reported by `git remote show
+>> origin`.
+>>
+>> The branch is `github-rename` in refs/remotes/origin/HEAD, but shows
+>> `master` in output of git-remote-show
+>>
+>> ```
+>> $ cat .git/refs/remotes/origin/HEAD
+>> ref: refs/remotes/origin/github-rename
+>>
+>> $ git remote show origin
+>> * remote origin
+>>   Fetch URL: git@XXXX.git
+>>   Push  URL: git@XXXX.git
+>>   HEAD branch: master
+>>   Remote branches:
+>>     github-rename     tracked
+>>     master            tracked
+>>     qa                tracked
+>>     refactor-test     tracked
+>>   Local branches configured for 'git pull':
+>>     github-rename merges with remote github-rename
+>>     master        merges with remote master
+>>   Local refs configured for 'git push':
+>>     github-rename pushes to github-rename (up to date)
+>>     master        pushes to master        (up to date)
+>> ```
+>>
+>> git version 2.14.1
 >>
 >>
->> On 8/14/2017 5:30 PM, Brandon Williams wrote:
->> >Add a '.clang-format' file which outlines the git project's coding
->> >style.  This can be used with clang-format to auto-format .c and .h
->> >files to conform with git's style.
->> >
->> >Signed-off-by: Brandon Williams <bmwill@google.com>
->> >---
->> >  .clang-format | 165 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
->> >  1 file changed, 165 insertions(+)
->> >  create mode 100644 .clang-format
->> >
+>> Background:
 >>
->> I applied this and then ran:
->>     clang-format -i -style file *.c *.h builtin/*.c
+>> Prior to my repo being cloned, the default branch was configured to be
+>> `some-random-branch` on github. My repo was cloned and the HEAD branch
+>> was set to `some-random-branch` correctly (in `refs/`). However,
+>> git-remote-show reported `master` as the HEAD branch.
 >>
->> The modified files generate lots of line ending warnings.
->> Apparently clang-format isn't respecting the git settings for line
->> endings as it converted CRLF to LF in all the files it edited.
+>> Later, `some-random-branch` was deleted from the remote. It _remained_
+>> as the HEAD branch locally according to `refs/`.
 >>
->> $ git add .
->> warning: LF will be replaced by CRLF in alloc.c.
->> The file will have its original line endings in your working directory.
->> warning: LF will be replaced by CRLF in base85.c.
->> The file will have its original line endings in your working directory.
->> warning: LF will be replaced by CRLF in bisect.h.
->> [...]
->>
+>> In order to test the remote-show command, I changed the HEAD branch to
+>> a branch that actually existed by running `git remote set-head origin
+>> github-rename`. It changed the HEAD branch in `refs/` but remote-show
+>> continues to report `master` as the remote's HEAD.
+>
+> I am no expert here, but reading the docs, it seems like you may have
+> wrong expectations.
+>
+> Documentation for "git remote set-head"[1] explains that this command
+> is used to set default remote branch (locally), where later you can
+> use remote name only to specify that specific (remote) branch instead.
+>
+> Example shows that for remote named "origin", if you set default
+> branch name to "master" (actually being "origin/master" locally),
+> then whenever you want to type "origin/master", you can type "origin"
+> only instead (set default branch name is implied).
+>
+> For the given example, that is what you can see inside
+> "refs/remotes/origin/HEAD", being set to "refs/remotes/origin/master".
+>
+> So it is something _you_ set _locally_ to aid you in working with the
+> remote repository.
 
-This sounds as if core.safecrlf is set to "warn" (by default?),
-you could set it to false to not have these warnings. However
-that is side stepping the problem of clang-format producing
-non-crlf line endings.
 
-Maybe the workflow can be setup such that this side stepping
-is ok, and no harm is done by the LF line endings by the formatting
-(If the formatting was a pre-commit hook, then Git would convert
-LF/CRLF and there would be no impact to your workflow I'd imagine).
+Cool, this is all to my expectations.
+
+>
+> On the other hand, what "git remote show" outputs for HEAD is a name
+> of actually checked-out branch inside that remote repository - it`s
+> what`s stored inside HEAD file of the remote repository root.
+>
+> So it is something set on the _remote_ end, you can`t influence it
+> from your local repository.
+
+
+So _this_ is not what I expected. Thanks for clarifying.
+
+Considering that a fresh clone replicates the remote's default branch
+as the local default for that remote, I wager (in the majority of
+cases) that these two are the same. It would seem that what I would
+like in this case is a feature change to git-remote-show to show both
+the locally-configured and remote-configured defaults for the given
+remote (similar in spirit to how git-remote-show already shows local
+vs remote information: branches and their configurations for
+push/pull).
+
+Such a feature would be the "read" side of the remote set-head
+command, and also be useful for highlighting cases where the local and
+remote defaults do not match.
+
+If I might suggest adding "Local default branch: xxx" to the
+remote-show output, following the HEAD branch output. (Perhaps,
+printing "(not set)" if the default isn't configured locally.)
+
+````
+$ git remote show origin | head
+* remote origin
+  Fetch URL: git@XXXX
+  Push  URL: git@XXXX
+  HEAD branch: develop
+  Local default branch: foo
+  Remote branches:
+```
+
+Or perhaps adding a line at the bottom with the other local refs. That
+would allow additional notices when/if the local and remote defaults
+differ.
+
+>
+> What you _could_ do in your specific case, as you mention using
+> GitHub, is following their help page for "setting the default
+> branch"[2] for your GitHub repository (which you track locally as
+> "origin") to "github-rename".
+>
+> (in general, non-GitHub repository case, one could usually run there
+> either `git checkout github-rename`, if it`s not a bare repository,
+> or `git symbolic-ref HEAD refs/heads/github-rename`, if it`s a bare
+> repository)
+>
+> Afterwards, running `git remote show origin` inside your local
+> repository should output "github-rename" as HEAD value, as desired.
+>
+
+In my case, the github configuration is correct, and the set-head
+command was only used to test the output of git-remote-show. The crux
+of my misunderstanding is that I thought git-remote-show should be
+reporting the contents of `refs/remotes/origin/HEAD`. Having that
+information reported somehow (preferably through git-remote-show)
+would have clarified this for me.
+
+
+> p.s. To set your default remote branch locally to checked-out branch
+> on the remote end automatically, you can use `git remote set-head
+> origin --auto`, as documented[1]. It will inspect what`s inside
+> "HEAD" of the remote named "origin", and update your local
+> "refs/remotes/origin/HEAD" accordingly.
+>
+> [1] https://git-scm.com/docs/git-remote#git-remote-emset-headem
+> [2] https://help.github.com/articles/setting-the-default-branch/
+>
+> Regards,
+> Buga
+
+Thanks for clarifying. Having this information surfaced a bit would be
+a nice improvement, IMO.
+
+Jason
