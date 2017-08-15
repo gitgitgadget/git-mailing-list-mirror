@@ -2,158 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD,UNPARSEABLE_RELAY shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EFBF0208CD
-	for <e@80x24.org>; Tue, 15 Aug 2017 20:46:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE893208CD
+	for <e@80x24.org>; Tue, 15 Aug 2017 20:49:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752678AbdHOUqZ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Aug 2017 16:46:25 -0400
-Received: from siwi.pair.com ([209.68.5.199]:55805 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752661AbdHOUqY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Aug 2017 16:46:24 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 8C3A6844ED;
-        Tue, 15 Aug 2017 16:46:22 -0400 (EDT)
-Received: from [10.160.98.77] (unknown [167.220.148.86])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 8CB67844EC;
-        Tue, 15 Aug 2017 16:46:22 -0400 (EDT)
-Subject: Re: tsan: t3008: hashmap_add touches size from multiple threads
-To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        Stefan Beller <sbeller@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <cover.1502780343.git.martin.agren@gmail.com>
- <adb37b70139fd1e2bac18bfd22c8b96683ae18eb.1502780344.git.martin.agren@gmail.com>
- <cff383c2-ca57-caba-5a46-7dec4abc25a4@jeffhostetler.com>
- <CAGZ79kbf52Uu-Th9W20QZV204A81kOAPTj2x6JkEP1rN=GTYtw@mail.gmail.com>
- <CAN0heSoXysu=6E_ScfWQVLOk805V=j7AYJi=z62SmNkP5U=A9Q@mail.gmail.com>
- <CAGZ79kb-1S9F4Pp0dzkDX488uiZ8Zu_1m2U=hQ1CcsgSu314rQ@mail.gmail.com>
- <CAN0heSr-OcLJU54acTdXWx8NAo=nPD=9+DfexWZ0F7NRgRB9Dg@mail.gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <217f3160-f4cb-581a-b7f3-8b654c74d080@jeffhostetler.com>
-Date:   Tue, 15 Aug 2017 16:46:21 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
-MIME-Version: 1.0
-In-Reply-To: <CAN0heSr-OcLJU54acTdXWx8NAo=nPD=9+DfexWZ0F7NRgRB9Dg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+        id S1752796AbdHOUs6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Aug 2017 16:48:58 -0400
+Received: from planetterror.mr.itd.umich.edu ([141.211.125.114]:52462 "EHLO
+        planetterror.mr.itd.umich.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752154AbdHOUs5 (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 15 Aug 2017 16:48:57 -0400
+X-Greylist: delayed 790 seconds by postgrey-1.27 at vger.kernel.org; Tue, 15 Aug 2017 16:48:57 EDT
+Received: FROM maleficent.mr.itd.umich.edu (smtp.mail.umich.edu [141.211.125.12])
+        By planetterror.mr.itd.umich.edu ID 59935B23.C1F64.12881;
+        Tue, 15 Aug 2017 16:35:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=umich.edu;
+        s=relay-2016-05-12; t=1502829346;
+        bh=uLLO87wH+63Z4Z9X5hLNLtl+Tl25M04EnnCuL0VUmkY=;
+        h=From:To:Cc:Subject:Date;
+        b=L3ZkjSMfQve9z9NHrlokCIGZT57sXqB1iujOuebtEKmiuVMZboF7HgyfI685YNdcO
+         266e7lp6H2Ma1GEqB15jkP20Hh15J28UxLDBDjfA3D/su/7nG0A28EymVGKh9JU1m/
+         vLLe4OwOt9Nr56GVIQTkFZiyoCgyRuuTVlai+ZydFWcdR9SncMrW3zHY1b83Vc1ogT
+         mvO3xAPEZycj05edeApGOW4zvUq9WjoHS2Hzn9+l+la3cPwNn1rRb8MCGeTsIcg3YR
+         otK4fw2WFwkiYeMJK3mjbQH0xCaYwn14NgIOrrcNS4fZA79mCGU7pKiKs2sJkGC46C
+         KSRJ9lYhszbHQ==
+Authentication-Results: maleficent.mr.itd.umich.edu;
+        iprev=pass policy.iprev=99.231.24.59 (CPEe03f496bc050-CM1cabc0a3e3c0.cpe.net.cable.rogers.com);
+        auth=pass smtp.auth=asottile
+Received: FROM localhost.localdomain (CPEe03f496bc050-CM1cabc0a3e3c0.cpe.net.cable.rogers.com [99.231.24.59])
+        By maleficent.mr.itd.umich.edu ID 59935B21.CBD13.20669;
+        Authuser asottile;
+        Tue, 15 Aug 2017 16:35:45 -0400
+From:   Anthony Sottile <asottile@umich.edu>
+To:     git@vger.kernel.org
+Cc:     Anthony Sottile <asottile@umich.edu>
+Subject: [PATCH/RFC] git-grep: correct exit code with --quiet and -L
+Date:   Tue, 15 Aug 2017 13:35:03 -0700
+Message-Id: <20170815203503.12299-1-asottile@umich.edu>
+X-Mailer: git-send-email 2.14.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The handling of `status_only` no longer interferes with the handling of
+`unmatch_name_only`.  `--quiet` no longer affects the exit code when using
+`-L`/`--files-without-match`.
 
+Signed-off-by: Anthony Sottile <asottile@umich.edu>
+---
+ grep.c          | 9 +++++----
+ t/t7810-grep.sh | 5 +++++
+ 2 files changed, 10 insertions(+), 4 deletions(-)
 
-On 8/15/2017 3:21 PM, Martin Ågren wrote:
-> On 15 August 2017 at 20:48, Stefan Beller <sbeller@google.com> wrote:
->>>>>          /* total number of entries (0 means the hashmap is empty) */
->>>>> -       unsigned int size;
->>>>> +       /* -1 means size is unknown for threading reasons */
->>>>> +       int size;
->>>>
->>>> This double-encodes the state of disallow_rehash (i.e. if we had
->>>> signed size, then the invariant disallow_rehash === (size < 0)
->>>> is true, such that we could omit either the flag and just check for
->>>> size < 0 or we do not need the negative size as any user would
->>>> need to check disallow_rehash first. Not sure which API is harder
->>>> to misuse. I'd think just having the size and getting rid of
->>>> disallow_rehash might be hard to to reused.
->>>
->>> (Do you mean "might be hard to be misused"?)
->>
->> yes, I do.
->>
->>> One good thing about turning off the size-tracking with threading is
->>> that someone who later wants to know the size in a threaded application
->>> will not introduce any subtle bugs by misusing size, but will be forced
->>> to provide and use some sort of InterlockedIncrement().
->>
->> agreed.
->>
->>> When/if that
->>> change happens, it would be nice if no-one relied on the value of size
->>> to say anything about threading. So it might make sense to have an
->>> implementation-independent way of accessing disallow_rehash a.k.a.
->>> (size < 0).
->>
->> Yes, and my point was whether we want to keep disallow_rehash around,
->> as when a patch as this is applied, we'd have it encoded twice,
->> both size < 0 as well as disallow_rehash set indicate the rehashing
->> disabled.
->>
->> If we were to reduce it to one, we would not have "invalid" state possible
->> such as size < 0 and disallow_rehash = 0.
-> 
-> Agreed.
-> 
->> In the future we may have more options that make size impossible to
->> compute efficiently, such that in that case we'd want to know which
->> condition lead to it. In that case we'd want to have the flags around.
-> 
-> Good point.
+diff --git a/grep.c b/grep.c
+index 2efec0e..a893d09 100644
+--- a/grep.c
++++ b/grep.c
+@@ -1755,7 +1755,7 @@ static int grep_source_1(struct grep_opt *opt, struct grep_source *gs, int colle
+ 		}
+ 		if (hit) {
+ 			count++;
+-			if (opt->status_only)
++			if (!opt->unmatch_name_only && opt->status_only)
+ 				return 1;
+ 			if (opt->name_only) {
+ 				show_name(opt, gs->name);
+@@ -1820,13 +1820,14 @@ static int grep_source_1(struct grep_opt *opt, struct grep_source *gs, int colle
+ 	if (collect_hits)
+ 		return 0;
+ 
+-	if (opt->status_only)
+-		return 0;
+ 	if (opt->unmatch_name_only) {
+ 		/* We did not see any hit, so we want to show this */
+-		show_name(opt, gs->name);
++		if (!opt->status_only)
++			show_name(opt, gs->name);
+ 		return 1;
+ 	}
++	if (opt->status_only)
++		return 0;
+ 
+ 	xdiff_clear_find_func(&xecfg);
+ 	opt->priv = NULL;
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index f106387..2a6679c 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -374,6 +374,11 @@ test_expect_success 'grep -L -C' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'grep --files-without-match --quiet' '
++	git grep --files-without-match --quiet nonexistent_string >actual &&
++	test_cmp /dev/null actual
++'
++
+ cat >expected <<EOF
+ file:foo mmap bar_mmap
+ EOF
+-- 
+2.14.GIT
 
-I feel like we're trying to push hashmaps a little beyond
-their capability.  I mean the core hashmap code is NOT thread
-safe.  The caller is responsible for carefully controlling how
-the hashmap is used and whatever locking strategy it wants --
-whether it is a single lock on the entire hashmap -- or a set
-of partition-specific locks like I created here.  Whatever the
-strategy, it is outside of hashmap.[ch].
-
-Perhaps it would be best to just define things as:
-* let (size < 0) mean we choose not to compute/track it (without
-   saying why).
-* keep "disallow_rehash = 1" to mean we do not want automatic
-   resizing (without saying why).
-
-Thread-aware callers will set both.
-
-Thread-aware callers (when finished with threaded operations)
-can themselves choose whether to compute the correct size and
-re-allow rehashing.  And we can add a method to hashmap.c to
-re-calculate the size if we want.
-
-
-In my lazy_init_name_hash() I set "disallow", do the threaded
-code, and then unset "disallow" -- mainly to keep the usage
-consistent with the non-threaded case.  I could just as easily
-set "disallow" and leave it that way -- the question is whether
-we care if the hashmap automatically resizes later.  (I don't.)
-
-
->>> For example a function hashmap_disallow_rehash(), except that's
->>> obviously taken. :-) Maybe the existing function would then be
->>> hashmap_set_disallow_rehash(). Oh well..
->>
->> Not sure I understand this one.
-> 
-> Sorry. What I meant was, if we drop the disallow_rehash-field, someone
-> might be tempted to use size < 0 (or size == -1) to answer the question
-> "is rehashing disallowed?". (Or "am I threaded?" which already is a
-> question which the hashmap as it is today doesn't know about.)
-> 
-> So instead of looking at "disallow_rehash" one should perhaps be calling
-> "hashmap_is_disallow_rehash()" or "hashmap_get_disallow_rehash()", which
-> would be implemented as "return disallow_rehash", or possibly "return
-> size == -1".
-> 
-> Except such names are, to the best of my understanding, not the Git-way,
-> so it should be, e.g., "hashmap_disallow_rehash()".
-> 
-> Except ... that name is taken.... So to free that name up, the existing
-> function should perhaps be renamed "hashmap_set_disallow_rehash()",
-> again assuming I've picked up the right conventions in my recent
-> browsing of the Git-code.
-> 
-> The final "Oh well" was a short form of "it began with an observation
-> which currently has no practical effect, and is slowly turning into a
-> chain of ideas on how to rebuild the interface".
-> 
