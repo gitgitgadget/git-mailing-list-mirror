@@ -6,130 +6,95 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A88A420899
-	for <e@80x24.org>; Tue, 15 Aug 2017 03:38:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F0CC820899
+	for <e@80x24.org>; Tue, 15 Aug 2017 03:54:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753115AbdHODif (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Aug 2017 23:38:35 -0400
-Received: from cloud.peff.net ([104.130.231.41]:39002 "HELO cloud.peff.net"
+        id S1753145AbdHODyg (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Aug 2017 23:54:36 -0400
+Received: from cloud.peff.net ([104.130.231.41]:39018 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752946AbdHODie (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Aug 2017 23:38:34 -0400
-Received: (qmail 11680 invoked by uid 109); 15 Aug 2017 03:38:35 -0000
+        id S1753070AbdHODyf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Aug 2017 23:54:35 -0400
+Received: (qmail 12485 invoked by uid 109); 15 Aug 2017 03:54:35 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 15 Aug 2017 03:38:35 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 15 Aug 2017 03:54:35 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8224 invoked by uid 111); 15 Aug 2017 03:38:59 -0000
+Received: (qmail 8270 invoked by uid 111); 15 Aug 2017 03:54:59 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Mon, 14 Aug 2017 23:38:59 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Mon, 14 Aug 2017 23:54:59 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Aug 2017 23:38:32 -0400
-Date:   Mon, 14 Aug 2017 23:38:32 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Aug 2017 23:54:33 -0400
+Date:   Mon, 14 Aug 2017 23:54:33 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Brandon Williams <bmwill@google.com>,
+To:     David Turner <David.Turner@twosigma.com>
+Cc:     'Howard Chu' <hyc@symas.com>,
+        "spearce@spearce.org" <spearce@spearce.org>,
+        "avarab@gmail.com" <avarab@gmail.com>,
+        "ben.alex@acegi.com.au" <ben.alex@acegi.com.au>,
+        "dborowitz@google.com" <dborowitz@google.com>,
         "git@vger.kernel.org" <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Ben Peart <peartben@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v2 0/2] clang-format
-Message-ID: <20170815033832.m6fdfvnyf5kvwzkw@sigill.intra.peff.net>
-References: <20170808012554.186051-1-bmwill@google.com>
- <20170814213046.107576-1-bmwill@google.com>
- <20170814230657.bmn7exoqmqw3tlyh@sigill.intra.peff.net>
- <CAGZ79kZgRTzWiufZUE02YYOJpH66x_hShBfcv=4RWDn-qR2LUg@mail.gmail.com>
- <20170815014704.thmpoz5xteuhqh3d@sigill.intra.peff.net>
- <xmqqmv71sfbc.fsf@gitster.mtv.corp.google.com>
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "mhagger@alum.mit.edu" <mhagger@alum.mit.edu>,
+        "sbeller@google.com" <sbeller@google.com>,
+        "stoffe@gmail.com" <stoffe@gmail.com>
+Subject: Re: reftable [v5]: new ref storage format
+Message-ID: <20170815035432.kyrrqoagoxouwyln@sigill.intra.peff.net>
+References: <CAJo=hJsEaKH40WnhxqvkASpiXnV8ipc+b1zrZ9VEjqRjpJ17Qg@mail.gmail.com>
+ <ee8f70bd-6f9e-3fb6-67be-ba26b6d5bf16@symas.com>
+ <576a2361-1a3d-4bb2-1d31-f095f9e3c708@symas.com>
+ <4c1c1fc9904f4678823b6c3054c02b4d@exmbdft7.ad.twosigma.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqmv71sfbc.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <4c1c1fc9904f4678823b6c3054c02b4d@exmbdft7.ad.twosigma.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 14, 2017 at 08:03:19PM -0700, Junio C Hamano wrote:
+On Mon, Aug 14, 2017 at 04:05:05PM +0000, David Turner wrote:
 
-> > I'm tempted to say that "config --list" should normalize this case into:
-> >
-> >   mysection.mykey=true
-> >
-> > Normally we avoid coercing values without knowing the context in which
-> > they'll be used. But the syntax in the original file means the user is
-> > telling us it's a boolean and they expect it to be treated that way.
-> >
-> > The only downside is if the user is wrong, it might be coerced into
-> > the string "true" instead of throwing an error. That seems like a minor
-> > drawback for eliminating a potentially confusing corner case from the
-> > plumbing output.
+> > All that aside, we could simply add an EXCLUSIVE open-flag to LMDB, and
+> > prevent multiple processes from using the DB concurrently. In that case,
+> > maintaining coherence with other NFS clients is a non-issue. It strikes me that git
+> > doesn't require concurrent multi-process access anyway, and any particular
+> > process would only use the DB for a short time before closing it and going away.
 > 
-> Because we cannot sensibly always normalize a variable set to 'yes',
-> 'on', etc. to all "true", the degree it can help the reading scripts
-> is quite limited, as they need to be prepared to see other
-> representation of the truth values anyway.  Even though I too found
-> the approach somewhat tempting, because there is no ambiguity in
-> "[section] var" that it means a boolean "true", I doubt it would
-> help very much.
-
-Good point. This is the only case that is _syntactically_ a problem at
-the key/value level, which is why we noticed it (the reader barfed on
-the unknown input). But that same reader could be interpreting values
-incorrectly and we'd have no idea. And that applies to types beyond
-booleans (you showed numbers like "2k" below, but there are others, like
---path or --get-color).
-
-The one nice thing about fixing this syntactic issue is that the current
-behavior affected this reader even though it didn't care about
-particular config key in question. I.e., in this output:
-
-  my.boolVal
-  my.intVal=2k
-  my.valueWeCareAbout=some string
-
-if we don't care about the meaning of boolVal or intVal, we could still
-parse this output fine if not for the syntactic irregularity of
-my.boolVal.
-
-That's what might tempt me to fix this independent of the deeper
-problem. But I really think we should try to address that deeper
-problem.
-
-> The way they pass "non_string_options" dict to the loader is quite
-> sensible for that purpose, as it allows the reader to say "I care
-> about this and that variables, and I know I want them interpreted as
-> int (e.g. 1M) and bool (e.g. 'on') and returned in a normalized
-> form".
+> Git, in general, does require concurrent multi-process access, depending on what 
+> that means.
 > 
-> I do not mind adding "git config --list --autotype" option, though,
-> with which the reading script tells us that it accepts the chance of
-> false conversion, so that
-> [...]
+> For example, a post-receive hook might call some git command which opens the 
+> ref database.  This means that git receive-pack would have to close and 
+> re-open the ref database.  More generally, a fair number of git commands are
+> implemented in terms of other git commands, and might need the same treatment.
+> We could, in general, close and re-open the database around fork/exec, but I am
+> not sure that this solves the general problem -- by mere happenstance, one might
+> be e.g. pushing in one terminal while running git checkout in another.  This is 
+> especially true with git worktrees, which share one ref database across multiple
+> working directories.
 
-I think an "--autotype" is always going to have false positives.
-Integers and booleans we can make guesses at. But "--path" or "--color"
-are much tougher.
+Yeah, I'd agree that git's multi-process way of working would probably
+cause some headaches if there were a broad lock.
 
-The right answer is to make it easier for that non_string_options
-information to make it to git-config so it can do the interpretation for
-the caller. The way that happens now is:
+I had the impression that Howard meant we would lock for _read_
+operations, too. If so, I think that's probably going to cause a
+noticeable performance problem for servers.  A repository which is
+serving fetches to a lot of clients (even if some of those are noops)
+has to send the current ref state out to each client. I don't think we'd
+want to add a serial bottleneck to that portion of each process, which
+can otherwise happen totally in parallel.
 
-  git config --int my.intVal
-  git config --bool my.boolVal
-  git config --path my.pathVal
-
-and so on. But I think one reason people turn to --list is that it
-requires only a single process invocation, rather than repeatedly
-calling git-config for each variable which might be of interest.  I know
-that diff-highlight's startup is measurably slower due to the six "git
-config --get-color" calls it must make, and I've been looking for a way
-to do it with a single invocation.
-
-I suspect we need a "--get-stdin" which can accept (key,type) tuples and
-return the result over stdout. And in some cases it's more than just a
-pair; for example, colors need an extra "parse this default" argument).
+Serializing writes is probably not so big a deal as long as it is kept
+to the portion where the process is actively writing out values. And as
+long as there's a reasonable backoff/retry protocol; right now we don't
+generally bother retrying ref locks because they're taken individually,
+so racing on a lock almost certainly[1] means that you've lost the
+sha1-lease and need to restart the larger operation.
 
 -Peff
+
+[1] Actually, we've found this isn't always true. Things like ref
+    packing require taking locks for correctness, which means they can
+    interfere with actual ref updates. That's yet another thing it would
+    be nice to get rid of when moving away from the loose/packed
+    storage.
