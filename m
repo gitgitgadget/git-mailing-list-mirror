@@ -2,100 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 81E64208CD
-	for <e@80x24.org>; Tue, 15 Aug 2017 19:50:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 76010208CD
+	for <e@80x24.org>; Tue, 15 Aug 2017 19:54:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753051AbdHOTub (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Aug 2017 15:50:31 -0400
-Received: from bsmtp8.bon.at ([213.33.87.20]:32103 "EHLO bsmtp8.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752757AbdHOTua (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Aug 2017 15:50:30 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp8.bon.at (Postfix) with ESMTPSA id 3xX3450kfGz5tlC;
-        Tue, 15 Aug 2017 21:50:28 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 982D7135;
-        Tue, 15 Aug 2017 21:50:28 +0200 (CEST)
-Subject: Re: [PATCH 2/5] pack-objects: take lock before accessing `remaining`
-To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>
-References: <cover.1502780343.git.martin.agren@gmail.com>
- <5815ea4f27226b604751961c8b70355a8925f0c5.1502780344.git.martin.agren@gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Cc:     git@vger.kernel.org
-Message-ID: <88ddf942-d7e4-ef1c-3f9c-9816d0571502@kdbg.org>
-Date:   Tue, 15 Aug 2017 21:50:28 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        id S1751624AbdHOTyc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Aug 2017 15:54:32 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62275 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751068AbdHOTyb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Aug 2017 15:54:31 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1C55E9DFA2;
+        Tue, 15 Aug 2017 15:54:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=nll3JTL4FKLpWad2yNaBFB5s9AM=; b=mG/gtE
+        2lZT6ZWsbMkH7wZCgs+RWPBkPEkPwn5KKyQet1Bq6KM5h7g5sKdH55HhmGV2pEUU
+        bb19nCPI5Xu60liD2ZNyEbtvX3OuTCh15m/GsnjTZjPRdr4xOpnNN95jWp79IhqM
+        K3ZBEb9BNvbWUscsDoPDY0McUGYFhuqpWeCug=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=tOSVCGoxqUg3vinjow66gxDebadXl1g3
+        39ZeoymKzzZ7X3jsWiTw/qtupvLIhsNkyBIrJYJa8Xa/8uygKP2FmX5Eta/YRzCB
+        fB3nWntAhlMHGhPs2zeseNWJdR8LLGYataeU44B6t7FqTfHvjxxuig2PAl0RsEi/
+        C8zUj3CwuVE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1505B9DFA1;
+        Tue, 15 Aug 2017 15:54:24 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 794F59DF9F;
+        Tue, 15 Aug 2017 15:54:23 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com
+Subject: Re: [PATCH v3 3/3] diff: define block by number of non-space chars
+References: <cover.1502754962.git.jonathantanmy@google.com>
+        <cover.1502491372.git.jonathantanmy@google.com>
+        <cover.1502754962.git.jonathantanmy@google.com>
+        <41a7ff674072559415f98b81ffde798d94aed2fc.1502754962.git.jonathantanmy@google.com>
+Date:   Tue, 15 Aug 2017 12:54:22 -0700
+In-Reply-To: <41a7ff674072559415f98b81ffde798d94aed2fc.1502754962.git.jonathantanmy@google.com>
+        (Jonathan Tan's message of "Mon, 14 Aug 2017 16:57:43 -0700")
+Message-ID: <xmqqy3qkppxt.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <5815ea4f27226b604751961c8b70355a8925f0c5.1502780344.git.martin.agren@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8917034E-81F3-11E7-BB65-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 15.08.2017 um 14:53 schrieb Martin Ågren:
-> When checking the conditional of "while (me->remaining)", we did not
-> hold the lock. Calling find_deltas would still be safe, since it checks
-> "remaining" (after taking the lock) and is able to handle all values. In
-> fact, this could (currently) not trigger any bug: a bug could happen if
-> `remaining` transitioning from zero to non-zero races with the evaluation
-> of the while-condition, but these are always separated by the
-> data_ready-mechanism.
-> 
-> Make sure we have the lock when we read `remaining`. This does mean we
-> release it just so that find_deltas can take it immediately again. We
-> could tweak the contract so that the lock should be taken before calling
-> find_deltas, but let's defer that until someone can actually show that
-> "unlock+lock" has a measurable negative impact.
-> 
-> Signed-off-by: Martin Ågren <martin.agren@gmail.com>
-> ---
-> I don't think this corrects any real error. The benefits of this patch
-> would be "future-proofs things slightly" and "silences tsan, so that
-> other errors don't drown in noise". Feel free to tell me those benefits
-> are negligible and that this change actually hurts.
-> 
->   builtin/pack-objects.c | 6 ++++++
->   1 file changed, 6 insertions(+)
-> 
-> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> index c753e9237..bd391e97a 100644
-> --- a/builtin/pack-objects.c
-> +++ b/builtin/pack-objects.c
-> @@ -2170,7 +2170,10 @@ static void *threaded_find_deltas(void *arg)
->   {
->   	struct thread_params *me = arg;
->   
-> +	progress_lock();
->   	while (me->remaining) {
-> +		progress_unlock();
-> +
->   		find_deltas(me->list, &me->remaining,
->   			    me->window, me->depth, me->processed);
->   
-> @@ -2192,7 +2195,10 @@ static void *threaded_find_deltas(void *arg)
->   			pthread_cond_wait(&me->cond, &me->mutex);
->   		me->data_ready = 0;
->   		pthread_mutex_unlock(&me->mutex);
-> +
-> +		progress_lock();
->   	}
-> +	progress_unlock();
->   	/* leave ->working 1 so that this doesn't get more work assigned */
->   	return NULL;
->   }
-> 
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-It is correct that this access of me->remaining requires a lock. It 
-could be solved in the way you did. I tried to do it differently, but 
-all cleaner solutions that I can think of are overkill...
+> The existing behavior of diff --color-moved=zebra does not define the
+> minimum size of a block at all, instead relying on a heuristic applied
+> later to filter out sets of adjacent moved lines that are shorter than 3
+> lines long. This can be confusing, because a block could thus be colored
+> as moved at the source but not at the destination (or vice versa),
+> depending on its neighbors.
+>
+> Instead, teach diff that the minimum size of a block is 10
+> non-whitespace characters. This allows diff to still exclude
+> uninteresting lines appearing on their own (such as those solely
+> consisting of one or a few closing braces), as was the intention of the
+> adjacent-moved-line heuristic.
 
--- Hannes
+I recall that there is a logic backed by a similar rationale in
+blame.c::blame_entry_score() but over there we count alnum, not
+!isspace, to judge if a block has been split into too small a piece
+to be significant.  I do not know which one is better, but if there
+is no strong reason, perhaps we want to unify the two, so that we
+can improve both heuristics at the same time?
