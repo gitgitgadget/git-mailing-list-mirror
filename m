@@ -2,103 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 407DE208B8
-	for <e@80x24.org>; Tue, 15 Aug 2017 14:28:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9A806208B8
+	for <e@80x24.org>; Tue, 15 Aug 2017 14:29:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751949AbdHOO2p (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Aug 2017 10:28:45 -0400
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:38045 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751765AbdHOO2o (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Aug 2017 10:28:44 -0400
-Received: by mail-qt0-f195.google.com with SMTP id p3so859506qtg.5
-        for <git@vger.kernel.org>; Tue, 15 Aug 2017 07:28:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=sCXTOtBy1Nw6Xy4LvCVwajIlqIJoXmvBHj4LEcgA3UI=;
-        b=AcUKrROdHDXFstQa8utJXYMM5nmh8Lyfq01OtQ5aTDPlMtfRGV+aUnke7mMhsIlkyY
-         kkNPkLm87tYEvt2Qoq1skMK5UBoJYBeLneRnwF6JMKZQ7r0hmuj6vGae1ynYslC4uNcn
-         DkZYVQ+GxYz1n5teKwhUnzM+4fKWfSs0GJk6zZAshufTxyLDxAJMnFPGhq9zRYZA5kjN
-         HAyu3KO5MdqzMv2bZfkhcoWG7Nwduhqjl/zXjXNLJxvU0sgjsouk11JS2eBh3FXqs8mt
-         xXJpBB8+XCVQ7qQoed71oQoWXkq4oTw2cCGCECgzSbKsjx2O4HgyfE46R5Gf98c1VyTQ
-         ukBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=sCXTOtBy1Nw6Xy4LvCVwajIlqIJoXmvBHj4LEcgA3UI=;
-        b=X5mtfJUcStNjbwDFhxYNbWnmuUrAaVJ///RK55+Ch5diccbwUHrQv4bCx5z4O33EH1
-         Vu/kD+BXekp0r6gFeoR4TfN/GJjoFyvVLcpb+mWbpC1I0I8AtWx3r/b5etj7i+YYjxBd
-         +nGT5cObmuTdFAV9KjY07CuVzoPpfAni6o00SOp7bpyLFGy4QtPqeeCvc+XJyz/1eIae
-         u70c1cHWTRu2t5CA5Mzhz5H+UhFVv+Mx1+h26iS02AZuUeVeyc4DYY5HUHCzGtWg0Vuu
-         0Bje9/zM+h5/QuPlFlY4coitZOJ0x54KR//VGmYWtOP0CcjF3Chx1o4b+x4AND7QO+Ht
-         zJ7w==
-X-Gm-Message-State: AHYfb5jJcqUqBVoMpqPwkS/4nlVQGIye3884paurEuxZjzQbJr8K/FGJ
-        Ye1KO8IrcX7dnw==
-X-Received: by 10.200.53.113 with SMTP id z46mr39864348qtb.184.1502807323727;
-        Tue, 15 Aug 2017 07:28:43 -0700 (PDT)
-Received: from [192.168.1.13] ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id s11sm7076447qtj.54.2017.08.15.07.28.41
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 15 Aug 2017 07:28:42 -0700 (PDT)
-Subject: Re: [PATCH v2 1/2] clang-format: outline the git project's coding
- style
-To:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org
-Cc:     sbeller@google.com, gitster@pobox.com, Johannes.Schindelin@gmx.de,
-        jrnieder@gmail.com, ramsay@ramsayjones.plus.com, peff@peff.net,
-        avarab@gmail.com
-References: <20170808012554.186051-1-bmwill@google.com>
- <20170814213046.107576-1-bmwill@google.com>
- <20170814213046.107576-2-bmwill@google.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <9c9a9b98-9308-95d6-a912-85a49bd3e21d@gmail.com>
-Date:   Tue, 15 Aug 2017 10:28:40 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        id S1752048AbdHOO3Z (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Aug 2017 10:29:25 -0400
+Received: from mout.web.de ([212.227.15.14]:55414 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751765AbdHOO3Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Aug 2017 10:29:25 -0400
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MKwFs-1dhcqR0iYK-0005V7; Tue, 15
+ Aug 2017 16:29:23 +0200
+Date:   Tue, 15 Aug 2017 16:29:22 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/5] convert: initialize attr_action in convert_attrs
+Message-ID: <20170815142922.GB4916@tor.lan>
+References: <cover.1502780343.git.martin.agren@gmail.com>
+ <0fd7f3184d285df8867ea44dd1adf418ebfc5ef3.1502780344.git.martin.agren@gmail.com>
+ <20170815141734.GA4916@tor.lan>
 MIME-Version: 1.0
-In-Reply-To: <20170814213046.107576-2-bmwill@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170815141734.GA4916@tor.lan>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K0:iLHIwQW7bzFY8b1D6CwzNoT50XKrxcSzI09jUpQbfXiareSvTl6
+ 5ommtjMRwUGTrBcHZOxonLss7pyDkVXZ8OdecA24chAmlcAkZkwcsK/HCx4ISllt2BEMLyN
+ C88aeuKKXWUrsI0jtbRM2ZryX9LRjT0dmrlerP6TQokMKJ6Tbkm60kPKI+lqF3mG0LvpGAc
+ 2W+yORNLOnF+g+PII0VEw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ZrWF4Rz4Ze0=:Os/BAyzExTJDE8dnh1YWBT
+ D2M7GcMgo3VyWAZz4zcmOVP8ZT33t7v5+/k+SyPzpT3EmFyB88eET/p1FqRiVxprfC/rj6kMc
+ ILSzq7jbt9aXZ5TbC6aSRvob8ozrvAzDwku8Zt8WOerycnCDtab4kGHqyMeCMBCnkeX4goPtY
+ 0UijdhXCv2XWSXkvPa5zAEn6Fk4qmz3EHTe89xmCWnFNMIaxvcdHeZtONg7VO5cr2WyRzRSg9
+ sHI4UW4vLiQzeXrLlNDdyi0A/49D2IStjCBpw+HYvL1q9BYvZv73/801ovhx9lY9lToQ0+etS
+ mtlVeyca47bfemJ71ZCNL8jQZhTX5TsfpWc2bQrSesarIBrUaz1YprqjIn0H7qELx8ykN42Ym
+ OkckFXhTQm+ROyfxp7D0ELP3LPGfxsmsaIDjXQRukKOS8GA/8XlWYPM1NhqK6I5tXGmn9zYJw
+ EKaRKwiDUCrDLfFjQhCZuWVTJYR+Bq7rErNNXtR7AmoC6rDK+4L6t4sG5d50qOtWCd4ekHLZU
+ 3wwkrHtnY6kpibFI0Ez7/gnk6qWMmcPxCfRvAqeU4jsldGCrLgL8otb4JG1RER/7GHWdp+tKQ
+ fc4HQqWwlVKdv4ycMcu5gy8l7s4N2dWU+O1ZMvqjQPZVv92cIMydtD0tGI6qlHcLu3t9QOy+2
+ HzAn3KmILpPhu2fLXIL9pJRmAmq7Q0M1Yn7qFmhuXdx5bGonopvFMSSLGzhPz+2RSmYlJpkhI
+ kxMzrhwcP1xriOhhG3uNzKmvxkDvZYvc96rqeg/sDarwIv/avq2RMCLCs5E3yv/4I2BDnQxHs
+ v+NYtpQfVbE74v6NZFKoLlC1Gj1dA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-
-On 8/14/2017 5:30 PM, Brandon Williams wrote:
-> Add a '.clang-format' file which outlines the git project's coding
-> style.  This can be used with clang-format to auto-format .c and .h
-> files to conform with git's style.
+> > diff --git a/convert.c b/convert.c
+> > index 1012462e3..943d957b4 100644
+> > --- a/convert.c
+> > +++ b/convert.c
+> > @@ -1040,7 +1040,6 @@ static void convert_attrs(struct conv_attrs *ca, const char *path)
+> >  		ca->crlf_action = git_path_check_crlf(ccheck + 4);
+> >  		if (ca->crlf_action == CRLF_UNDEFINED)
+> >  			ca->crlf_action = git_path_check_crlf(ccheck + 0);
+> > -		ca->attr_action = ca->crlf_action;
 > 
-> Signed-off-by: Brandon Williams <bmwill@google.com>
-> ---
->   .clang-format | 165 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 165 insertions(+)
->   create mode 100644 .clang-format
-> 
+> I don't think the removal of that line is correct.
 
-I applied this and then ran:
-     clang-format -i -style file *.c *.h builtin/*.c
-
-The modified files generate lots of line ending warnings.  Apparently 
-clang-format isn't respecting the git settings for line endings as it 
-converted CRLF to LF in all the files it edited.
-
-$ git add .
-warning: LF will be replaced by CRLF in alloc.c.
-The file will have its original line endings in your working directory.
-warning: LF will be replaced by CRLF in base85.c.
-The file will have its original line endings in your working directory.
-warning: LF will be replaced by CRLF in bisect.h.
-[...]
+Sorry, that went wrong, should have been:
+ I think that the line can be removed here.
 
