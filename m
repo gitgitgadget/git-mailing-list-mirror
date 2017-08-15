@@ -2,149 +2,200 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3784C20899
-	for <e@80x24.org>; Tue, 15 Aug 2017 01:53:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4069420899
+	for <e@80x24.org>; Tue, 15 Aug 2017 02:29:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753434AbdHOBxA (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Aug 2017 21:53:00 -0400
-Received: from cloud.peff.net ([104.130.231.41]:38920 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1753286AbdHOBw7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Aug 2017 21:52:59 -0400
-Received: (qmail 6505 invoked by uid 109); 15 Aug 2017 01:52:59 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 15 Aug 2017 01:52:59 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7763 invoked by uid 111); 15 Aug 2017 01:53:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Mon, 14 Aug 2017 21:53:23 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Aug 2017 21:52:57 -0400
-Date:   Mon, 14 Aug 2017 21:52:57 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Ben Peart <peartben@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v2 2/2] Makefile: add style build rule
-Message-ID: <20170815015256.c423wjwrq7crghu4@sigill.intra.peff.net>
-References: <20170808012554.186051-1-bmwill@google.com>
- <20170814213046.107576-1-bmwill@google.com>
- <20170814213046.107576-3-bmwill@google.com>
- <xmqqd17xu6qg.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kbAp0p8-y-UpamU0J65A2P0B9r7KEWM0ZCBv=x4E77sGw@mail.gmail.com>
- <20170814225716.p5airw6j5o6dszbn@sigill.intra.peff.net>
- <xmqqzib1sp6z.fsf@gitster.mtv.corp.google.com>
- <xmqqvalpsoda.fsf@gitster.mtv.corp.google.com>
+        id S1753235AbdHOC3V (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Aug 2017 22:29:21 -0400
+Received: from mail-yw0-f170.google.com ([209.85.161.170]:33840 "EHLO
+        mail-yw0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753194AbdHOC3U (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Aug 2017 22:29:20 -0400
+Received: by mail-yw0-f170.google.com with SMTP id s143so65333760ywg.1
+        for <git@vger.kernel.org>; Mon, 14 Aug 2017 19:29:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=z/cUyAIFGvNa0n2gts9/ZYcHs0nWxLQEa+ZKL3gM6JY=;
+        b=C+mqa0VjS7rE6kDxjXti5cd8Expw7SavnmPZ2E1oFGYQsZOIOxvqS+EeKtK0IEmljq
+         YlA4lDjcO04ecQNtuyFidb2Bd7oyjxYjamO59G/V4CaUT6I13AjB4K9znt2Wyq6m4zMW
+         +47YcwLV+KTszWrxMMkcsPrXCjFc5Rh9fVm0X2HAb4xp24yKTYCacEdZ+GNNhJOMRUA/
+         NzfMGuFgXukfJRJUOV6IOUp6HRJ0sWZLR1XFAshKZb95hR+SazD3mwgG4Uncl5bV5Npx
+         dLQT88vT1NWvvNl1ayLMs+tGXhOci4OQGwvSFyjNNRg8ed6Lxty2V73b9QcGZG+wUdV5
+         9qDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=z/cUyAIFGvNa0n2gts9/ZYcHs0nWxLQEa+ZKL3gM6JY=;
+        b=KqLNZMZgjTVSAa23bSr86fNYJGOH2l30bZ1wJf9PbDqyPwRgwr3yIpoZMr7GUNE2Ja
+         2CRVivjCByoamZPYwlQJmRdu6uowqyBirNZGkox95MZJDH9oEp+i2/u10jYJ7Z3M2oHs
+         zwoi+TPKtNBN2rOF5xB3ZAtW3isAYU8cTWp+kRCEcTl/vwhfiussN2Wy6vNytuFeefUN
+         J2y0jG0Sq0AqLje64ZqT+7KJ1BcjoeIYHG07ZeBG4YdDHcuKV3yNNDXjYRSFfms2I+xU
+         MbtPMlZZNlw0f3JLo9JGA8a5AdaROQQZAGX0Wo2jvGXX4qkwxXc4E/M4p5OSk6hCeGNl
+         Zy0Q==
+X-Gm-Message-State: AHYfb5g7w23rZqk7cn879zZ3KWCLqsa2lLXbxqoTZzh7iEUOMAp2jmN1
+        vqnEGHsJQklxce/HF1sHYHxe0UCu5wlg
+X-Received: by 10.129.120.4 with SMTP id t4mr21694743ywc.422.1502764159871;
+ Mon, 14 Aug 2017 19:29:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqvalpsoda.fsf@gitster.mtv.corp.google.com>
+Received: by 10.37.56.142 with HTTP; Mon, 14 Aug 2017 19:29:19 -0700 (PDT)
+In-Reply-To: <41a7ff674072559415f98b81ffde798d94aed2fc.1502754962.git.jonathantanmy@google.com>
+References: <cover.1502491372.git.jonathantanmy@google.com>
+ <cover.1502754962.git.jonathantanmy@google.com> <41a7ff674072559415f98b81ffde798d94aed2fc.1502754962.git.jonathantanmy@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 14 Aug 2017 19:29:19 -0700
+Message-ID: <CAGZ79kbtscZ_OrXH1iDmiRNhNQkU-636351kaKxVYOYEBtBoeQ@mail.gmail.com>
+Subject: Re: [PATCH v3 3/3] diff: define block by number of non-space chars
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 14, 2017 at 04:47:45PM -0700, Junio C Hamano wrote:
+On Mon, Aug 14, 2017 at 4:57 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
+> The existing behavior of diff --color-moved=zebra does not define the
+> minimum size of a block at all, instead relying on a heuristic applied
+> later to filter out sets of adjacent moved lines that are shorter than 3
+> lines long. This can be confusing, because a block could thus be colored
+> as moved at the source but not at the destination (or vice versa),
+> depending on its neighbors.
+>
+> Instead, teach diff that the minimum size of a block is 10
+> non-whitespace characters. This allows diff to still exclude
+> uninteresting lines appearing on their own (such as those solely
+> consisting of one or a few closing braces), as was the intention of the
+> adjacent-moved-line heuristic.
 
-> > By the way, I do not know which vintage of /usr/bin/git-clang-format
-> > I happen to have on my box, but I needed a crude workaround patch
-> > (attached at the end) ...
-> 
-> I guess you hit the same thing while our messages crossing ;-)
+After some thought, I really like this heuristic, however allow me
+a moment to bikeshed 10 as a number here.
 
-Yep. Our solutions were at opposite ends of the spectrum, though. :)
+One could think that 10 equals roughly 3 lines a 3 characters and
+in C based languages the shortest meaningful lines have more than
+3 characters ("i++;", "a();", "int i;" have 4 or 5 each), but I would still
+think that 10 is too much, as we'd want to detect the closing braces
+in their own lines.
 
-> > As to what it does, the first example I tried may not have been a
-> > great one.  I got this:
-> >
-> >         git clang-format --style file --diff --extensions c,h
-> >         diff --git a/cache.h b/cache.h
-> >         index 73e0085186..6462fe25bc 100644
-> >         --- a/cache.h
-> >         +++ b/cache.h
-> >         @@ -1498,11 +1498,8 @@ struct checkout {
-> >                 const char *base_dir;
-> >                 int base_dir_len;
-> >                 struct delayed_checkout *delayed_checkout;
-> >         -	unsigned force:1,
-> >         -		 quiet:1,
-> >         -		 not_new:1,
-> >         -		a_new_field:1,
-> >         -		 refresh_cache:1;
-> >         +	unsigned force : 1, quiet : 1, not_new : 1, a_new_field : 1,
-> >         +		refresh_cache : 1;
-> >          };
-> >          #define CHECKOUT_INIT { NULL, "" }
-> >  
-> > which is not wrong per-se, but I have a mixed feelings.  I do not
-> > want it to complain if the original tried to fit many items on a
-> > single line, but if the original wanted to have one item per line,
-> > I'd rather see it kept as-is.
-> 
-> To clarify, the above is after I added a_new_field that is one-bit
-> wide without doing anything else.  I do not mind the checker
-> complaining the existing force, quiet, etc. whose widths are all
-> spelled without SP around ':', because they appear near-by, as a
-> collateral damage.  My only gripe is that the result got squished
-> into a single line.
+>  dimmed_zebra::
+>         Similar to 'zebra', but additional dimming of uninteresting parts
+>         of moved code is performed. The bordering lines of two adjacent
+> diff --git a/diff.c b/diff.c
+> index f598d8a3a..305ce4126 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -864,19 +864,28 @@ static int shrink_potential_moved_blocks(struct moved_entry **pmb,
+>  /*
+>   * If o->color_moved is COLOR_MOVED_PLAIN, this function does nothing.
+>   *
+> - * Otherwise, if the last block has fewer lines than
+> - * COLOR_MOVED_MIN_BLOCK_LENGTH, unset DIFF_SYMBOL_MOVED_LINE on all lines in
+> - * that block.
+> + * Otherwise, if the last block has fewer non-space characters than
+> + * COLOR_MOVED_MIN_NON_SPACE_COUNT, unset DIFF_SYMBOL_MOVED_LINE on all lines
+> + * in that block.
+>   *
+>   * The last block consists of the (n - block_length)'th line up to but not
+>   * including the nth line.
+>   */
+>  static void adjust_last_block(struct diff_options *o, int n, int block_length)
+>  {
+> -       int i;
+> -       if (block_length >= COLOR_MOVED_MIN_BLOCK_LENGTH ||
+> -           o->color_moved == COLOR_MOVED_PLAIN)
+> +       int i, non_space_count = 0;
+> +       if (o->color_moved == COLOR_MOVED_PLAIN)
+>                 return;
+> +       for (i = 1; i < block_length + 1; i++) {
+> +               const char *c = o->emitted_symbols->buf[n - i].line;
+> +               for (; *c; c++) {
+> +                       if (isspace(*c))
+> +                               continue;
+> +                       non_space_count++;
+> +                       if (non_space_count >= COLOR_MOVED_MIN_NON_SPACE_COUNT)
+> +                               return;
 
-Yes, agreed. My personal rule with a list like this is often "once you
-have to start breaking across multiple lines, you should put one per
-line". I don't know if there's a way to codify that in clang-format,
-though.
+When we do this counting, we could count the lines ourselves here as well.
+`n-block_count` should be equal to the line that has a different
+(flags & (DIFF_SYMBOL_MOVED_LINE | DIFF_SYMBOL_MOVED_LINE_ALT))
+pattern than those before. (although we'd also have to check for i > 0, too)
+Your choice.
 
-The case I fed it (which is just nonsense I made up that does not fit
-our style) also left me a bit confused at first, but I think it was
-because the .clang-format parser was bailing as soon as it found an
-unrecognized entry, but then formatting according to bogus rules. With
-the original file from Brandon I got:
+> +               }
+> +       }
+>         for (i = 1; i < block_length + 1; i++)
+>                 o->emitted_symbols->buf[n - i].flags &= ~DIFF_SYMBOL_MOVED_LINE;
+>  }
+> @@ -923,7 +932,6 @@ static void mark_color_as_moved(struct diff_options *o,
+>                 }
+>
+>                 l->flags |= DIFF_SYMBOL_MOVED_LINE;
+> -               block_length++;
+>
+>                 if (o->color_moved == COLOR_MOVED_PLAIN)
+>                         continue;
+> @@ -953,8 +961,13 @@ static void mark_color_as_moved(struct diff_options *o,
+>                         }
+>
+>                         flipped_block = (flipped_block + 1) % 2;
+> +
+> +                       adjust_last_block(o, n, block_length);
+> +                       block_length = 0;
+>                 }
+>
+> +               block_length++;
+> +
+>                 if (flipped_block)
+>                         l->flags |= DIFF_SYMBOL_MOVED_LINE_ALT;
+>         }
+> diff --git a/diff.h b/diff.h
+> index 5755f465d..9e2fece5b 100644
+> --- a/diff.h
+> +++ b/diff.h
+> @@ -195,7 +195,7 @@ struct diff_options {
+>                 COLOR_MOVED_ZEBRA_DIM = 3,
+>         } color_moved;
+>         #define COLOR_MOVED_DEFAULT COLOR_MOVED_ZEBRA
+> -       #define COLOR_MOVED_MIN_BLOCK_LENGTH 3
+> +       #define COLOR_MOVED_MIN_NON_SPACE_COUNT 10
+>  };
+>
+>  void diff_emit_submodule_del(struct diff_options *o, const char *line);
+> diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
+> index 6f7758e5c..d8e7b77b9 100755
+> --- a/t/t4015-diff-whitespace.sh
+> +++ b/t/t4015-diff-whitespace.sh
+> @@ -1101,9 +1101,9 @@ test_expect_success 'detect malicious moved code, inside file' '
+>         <BRED>-{<RESET>
+>         <BLUE>-if (!u->is_allowed_foo)<RESET>
+>         <BLUE>-return;<RESET>
+> -       <BRED>-foo(u);<RESET>
+> -       <BLUE>-}<RESET>
+> -       <BLUE>-<RESET>
+> +       <RED>-foo(u);<RESET>
+> +       <RED>-}<RESET>
+> +       <RED>-<RESET>
 
-diff --git a/builtin/merge-file.c b/builtin/merge-file.c
-index 7e8371670b..8994450e0c 100644
---- a/builtin/merge-file.c
-+++ b/builtin/merge-file.c
-@@ -21,10 +21,7 @@ static int label_cb(const struct option *opt, const char *arg, int unset)
- 	return 0;
- }
- 
--static
--int foo(void* bar,int baz) {
--	/* nothing */
--}
-+static int foo(void *bar, int baz) { /* nothing */ }
- 
- int cmd_merge_file(int argc, const char **argv, const char *prefix)
- {
+Here we have 2 blocks, the first has 7 character,
+which we may want to detect, the second has only 1 char.
 
-which is clearly not our style. And then after removing the entries I
-mentioned elsewhere, I get:
+The longest "uninteresting" line in C like languages might
+be "\t } else {" which has 6 non-ws characters.
 
-diff --git a/builtin/merge-file.c b/builtin/merge-file.c
-index 7e8371670b..574ba6d86f 100644
---- a/builtin/merge-file.c
-+++ b/builtin/merge-file.c
-@@ -21,8 +21,8 @@ static int label_cb(const struct option *opt, const char *arg, int unset)
- 	return 0;
- }
- 
--static
--int foo(void* bar,int baz) {
-+static int foo(void *bar, int baz)
-+{
- 	/* nothing */
- }
+Thinking of other languages (shell "fi" is uninteresting, others are
+interesting,
+Latex \"custom" all bets are off), I think we may want to go lower and have
+COLOR_MOVED_MIN_NON_SPACE_COUNT to be about 6
+(~ 2 characters on a 3 line block).
 
-which looks right. So you might want to double-check that it was
-respecting our settings, and there were no warnings to stderr.
+That said this is all bikeshedding, feel free to ignore.
 
--Peff
+Acked-by: Stefan Beller <sbeller@google.com>
