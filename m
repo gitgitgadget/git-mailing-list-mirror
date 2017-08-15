@@ -2,142 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 07A131F667
-	for <e@80x24.org>; Tue, 15 Aug 2017 10:23:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E6B51F667
+	for <e@80x24.org>; Tue, 15 Aug 2017 10:23:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753683AbdHOKXN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Aug 2017 06:23:13 -0400
-Received: from mail-pg0-f44.google.com ([74.125.83.44]:34709 "EHLO
-        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753585AbdHOKXM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Aug 2017 06:23:12 -0400
-Received: by mail-pg0-f44.google.com with SMTP id u185so3547598pgb.1
-        for <git@vger.kernel.org>; Tue, 15 Aug 2017 03:23:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=ZftCYRm1mJNOPSk26IeUkPs5kwLsnfdWiM8zHCtUgIE=;
-        b=mViPwev7mkauDEerDN05ySgILoq0z62KpZU3Mj1UIZG0NNWcru2O+CAbWtc2inieSo
-         6vD05yynSDz5Ufa1NUgSdplXNLNhUXtG+54MaRyhj2DY15XfpRAlIF/x2T8LESnFoWKI
-         IrXpwzqmf+5LqMUjwV7n4ZY4n0/0STIqLKN8duOAmIb6t8tmzXd6cI957D4TEZm54LSk
-         lMfpugwIlnrHnfIuLUMxeegyKERwXQv606WCuJqk1rtBiPXj05IEs1vG+TaYM8/oB6tb
-         DYF/YjKDTRdOxfnXV860tNUycwmRbjhehi8S4c81mdG21nygyuJCrzbJGZHAtbXLFMcR
-         GghA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=ZftCYRm1mJNOPSk26IeUkPs5kwLsnfdWiM8zHCtUgIE=;
-        b=cfZI2obUWCoGgW8drBJm6TcfwxzCbZ/75EGjvs1N+0zR0xPVvYjCO3qwuW257Rav2C
-         t2fc6AUE/ywDRwTXjBczuvw3GAbppn2GIfp0ASoEfWVuDqtjY9VTZFTo9M6M+L8Ronuv
-         hzsSLmr+fwvQimRdo4JNPnmAiiA6xlyu3hW5JFRkdc57I0SiNYYZtwqr/lC8GIvBUgga
-         44woekADZojvNJv+pMNeUQ8f/r0cH5FOVedzbWkCqmqxgSa0aDhrS5jEvJcRGFJr16xF
-         +kUkO/25S79BGx02bgS99I5/rvilPTbSf21gZ1RkHuJeWHwGcjlkxTaRE1PRWVrmsCgu
-         ZAuA==
-X-Gm-Message-State: AHYfb5j+CTqanYPek1CCX3I45fBiOyn5pQHzOzZTLWF7RGXuX9f90kd9
-        harRqmJp9E07uqzVFww=
-X-Received: by 10.98.216.70 with SMTP id e67mr27831558pfg.299.1502792591504;
-        Tue, 15 Aug 2017 03:23:11 -0700 (PDT)
-Received: from ?IPv6:2405:204:700b:d138:d4f3:b513:ec16:b5d5? ([2405:204:700b:d138:d4f3:b513:ec16:b5d5])
-        by smtp.gmail.com with ESMTPSA id 133sm16310629pge.29.2017.08.15.03.23.09
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 15 Aug 2017 03:23:10 -0700 (PDT)
-Subject: Re: [PATCH v3 1/2 / RFC] builtin/branch: stop supporting the use of
- --set-upstream option
-To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-References: <20170808171136.31168-1-kaarticsivaraam91196@gmail.com>
- <20170814085442.31174-1-kaarticsivaraam91196@gmail.com>
- <CAN0heSr1FjayzX-SnNVcgQuh+Cc-f=AjY8H=pGG6uvf8rrJM=A@mail.gmail.com>
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Message-ID: <b12f73f0-b4de-e96e-f102-2ec919ca8db5@gmail.com>
-Date:   Tue, 15 Aug 2017 15:53:57 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
+        id S1753702AbdHOKXU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Aug 2017 06:23:20 -0400
+Received: from cloud.peff.net ([104.130.231.41]:39252 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1753690AbdHOKXT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Aug 2017 06:23:19 -0400
+Received: (qmail 31461 invoked by uid 109); 15 Aug 2017 10:23:19 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 15 Aug 2017 10:23:19 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9744 invoked by uid 111); 15 Aug 2017 10:23:44 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Tue, 15 Aug 2017 06:23:44 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Aug 2017 06:23:17 -0400
+Date:   Tue, 15 Aug 2017 06:23:17 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Cc:     Jacob Keller <jacob.keller@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH v4 1/8] trailer: put process_trailers() options into a struct
+Message-ID: <20170815102317.wrdnj2tlg3pqg7ze@sigill.intra.peff.net>
+References: <20170815102254.knccmhgralfijwli@sigill.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <CAN0heSr1FjayzX-SnNVcgQuh+Cc-f=AjY8H=pGG6uvf8rrJM=A@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170815102254.knccmhgralfijwli@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tuesday 15 August 2017 12:44 AM, Martin Ågren wrote:
->>   --set-upstream::
->> -       If specified branch does not exist yet or if `--force` has been
->> -       given, acts exactly like `--track`. Otherwise sets up configuration
->> -       like `--track` would when creating the branch, except that where
->> -       branch points to is not changed.
->> +       As this option has confusing syntax it's no longer supported. Please use
-> "has" or "had"? (I guess when someone reads this, it "has" no syntax at
-> all. ;) )
-Got it.
->> diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
->> index dd37ac47c..249be4b1a 100755
->> --- a/t/t3200-branch.sh
->> +++ b/t/t3200-branch.sh
->> @@ -561,7 +561,8 @@ test_expect_success 'use --set-upstream-to modify a particular branch' '
->>          git branch my13 &&
->>          git branch --set-upstream-to master my13 &&
->>          test "$(git config branch.my13.remote)" = "." &&
->> -       test "$(git config branch.my13.merge)" = "refs/heads/master"
->> +       test "$(git config branch.my13.merge)" = "refs/heads/master" &&
->> +       git branch --unset-upstream my13
-> I think it would be safer to use test_when_finished like on line 625.
-> Out of curiosity: are you adding this out of caution, or did some later
-> test fail without this?
-One test seems to fail without this. I guess it's better to keep this 
-change as a separate
-commit.
+We already have two options and are about to add a few more.
+To avoid having a huge number of boolean arguments, let's
+convert to an options struct which can be passed in.
 
->> diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
->> index 97a07655a..4b522f456 100755
->> --- a/t/t6040-tracking-info.sh
->> +++ b/t/t6040-tracking-info.sh
->> @@ -188,35 +188,35 @@ test_expect_success 'fail to track annotated tags' '
->>          test_must_fail git checkout heavytrack
->>   '
->>
->> -test_expect_success 'setup tracking with branch --set-upstream on existing branch' '
->> +test_expect_success 'setup tracking with branch --set-upstream-to on existing branch' '
->>          git branch from-master master &&
->>          test_must_fail git config branch.from-master.merge > actual &&
->> -       git branch --set-upstream from-master master &&
->> +       git branch --set-upstream-to master from-master &&
->>          git config branch.from-master.merge > actual &&
->>          grep -q "^refs/heads/master$" actual
->>   '
->>
->> -test_expect_success '--set-upstream does not change branch' '
->> +test_expect_success '--set-upstream-to does not change branch' '
->>          git branch from-master2 master &&
->>          test_must_fail git config branch.from-master2.merge > actual &&
->>          git rev-list from-master2 &&
->>          git update-ref refs/heads/from-master2 from-master2^ &&
->>          git rev-parse from-master2 >expect2 &&
->> -       git branch --set-upstream from-master2 master &&
->> +       git branch --set-upstream-to master from-master2 &&
->>          git config branch.from-master.merge > actual &&
->>          git rev-parse from-master2 >actual2 &&
->>          grep -q "^refs/heads/master$" actual &&
->>          cmp expect2 actual2
->>   '
-> The two tests above were added when --set-upstream was originally added.
-> Now that you're converting them to use --set-upstream-to, to what extent
-> do they just test the same thing as the tests in t3200?
-The first seems useless, I'll remove it. Regarding the second one, as 
-far as I could see
-there's no test in t3200 that does something similar so I guess it could 
-be kept back.
-
+Signed-off-by: Jeff King <peff@peff.net>
 ---
-Kaartic
+ builtin/interpret-trailers.c | 13 ++++++-------
+ trailer.c                    | 10 ++++++----
+ trailer.h                    | 10 +++++++++-
+ 3 files changed, 21 insertions(+), 12 deletions(-)
+
+diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
+index 175f14797b..bb0d7b937a 100644
+--- a/builtin/interpret-trailers.c
++++ b/builtin/interpret-trailers.c
+@@ -18,13 +18,12 @@ static const char * const git_interpret_trailers_usage[] = {
+ 
+ int cmd_interpret_trailers(int argc, const char **argv, const char *prefix)
+ {
+-	int in_place = 0;
+-	int trim_empty = 0;
++	struct process_trailer_options opts = PROCESS_TRAILER_OPTIONS_INIT;
+ 	struct string_list trailers = STRING_LIST_INIT_NODUP;
+ 
+ 	struct option options[] = {
+-		OPT_BOOL(0, "in-place", &in_place, N_("edit files in place")),
+-		OPT_BOOL(0, "trim-empty", &trim_empty, N_("trim empty trailers")),
++		OPT_BOOL(0, "in-place", &opts.in_place, N_("edit files in place")),
++		OPT_BOOL(0, "trim-empty", &opts.trim_empty, N_("trim empty trailers")),
+ 		OPT_STRING_LIST(0, "trailer", &trailers, N_("trailer"),
+ 				N_("trailer(s) to add")),
+ 		OPT_END()
+@@ -36,11 +35,11 @@ int cmd_interpret_trailers(int argc, const char **argv, const char *prefix)
+ 	if (argc) {
+ 		int i;
+ 		for (i = 0; i < argc; i++)
+-			process_trailers(argv[i], in_place, trim_empty, &trailers);
++			process_trailers(argv[i], &opts, &trailers);
+ 	} else {
+-		if (in_place)
++		if (opts.in_place)
+ 			die(_("no input file given for in-place editing"));
+-		process_trailers(NULL, in_place, trim_empty, &trailers);
++		process_trailers(NULL, &opts, &trailers);
+ 	}
+ 
+ 	string_list_clear(&trailers, 0);
+diff --git a/trailer.c b/trailer.c
+index 751b56c009..e21a0d1629 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -968,7 +968,9 @@ static FILE *create_in_place_tempfile(const char *file)
+ 	return outfile;
+ }
+ 
+-void process_trailers(const char *file, int in_place, int trim_empty, struct string_list *trailers)
++void process_trailers(const char *file,
++		      const struct process_trailer_options *opts,
++		      struct string_list *trailers)
+ {
+ 	LIST_HEAD(head);
+ 	LIST_HEAD(arg_head);
+@@ -980,7 +982,7 @@ void process_trailers(const char *file, int in_place, int trim_empty, struct str
+ 
+ 	read_input_file(&sb, file);
+ 
+-	if (in_place)
++	if (opts->in_place)
+ 		outfile = create_in_place_tempfile(file);
+ 
+ 	/* Print the lines before the trailers */
+@@ -990,14 +992,14 @@ void process_trailers(const char *file, int in_place, int trim_empty, struct str
+ 
+ 	process_trailers_lists(&head, &arg_head);
+ 
+-	print_all(outfile, &head, trim_empty);
++	print_all(outfile, &head, opts->trim_empty);
+ 
+ 	free_all(&head);
+ 
+ 	/* Print the lines after the trailers as is */
+ 	fwrite(sb.buf + trailer_end, 1, sb.len - trailer_end, outfile);
+ 
+-	if (in_place)
++	if (opts->in_place)
+ 		if (rename_tempfile(&trailers_tempfile, file))
+ 			die_errno(_("could not rename temporary file to %s"), file);
+ 
+diff --git a/trailer.h b/trailer.h
+index 65cc5d79c6..9da00bedec 100644
+--- a/trailer.h
++++ b/trailer.h
+@@ -22,7 +22,15 @@ struct trailer_info {
+ 	size_t trailer_nr;
+ };
+ 
+-void process_trailers(const char *file, int in_place, int trim_empty,
++struct process_trailer_options {
++	int in_place;
++	int trim_empty;
++};
++
++#define PROCESS_TRAILER_OPTIONS_INIT {0}
++
++void process_trailers(const char *file,
++		      const struct process_trailer_options *opts,
+ 		      struct string_list *trailers);
+ 
+ void trailer_info_get(struct trailer_info *info, const char *str);
+-- 
+2.14.1.352.ge5efb0d3f3
+
