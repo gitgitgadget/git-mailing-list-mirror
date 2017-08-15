@@ -2,123 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 38CE51F667
-	for <e@80x24.org>; Tue, 15 Aug 2017 10:23:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 07A131F667
+	for <e@80x24.org>; Tue, 15 Aug 2017 10:23:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753673AbdHOKW6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Aug 2017 06:22:58 -0400
-Received: from cloud.peff.net ([104.130.231.41]:39240 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1753667AbdHOKW5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Aug 2017 06:22:57 -0400
-Received: (qmail 31408 invoked by uid 109); 15 Aug 2017 10:22:56 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 15 Aug 2017 10:22:56 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9714 invoked by uid 111); 15 Aug 2017 10:23:21 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Tue, 15 Aug 2017 06:23:21 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Aug 2017 06:22:54 -0400
-Date:   Tue, 15 Aug 2017 06:22:54 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v4 0/8] trailer parsing via interpret-trailers and %(trailers)
-Message-ID: <20170815102254.knccmhgralfijwli@sigill.intra.peff.net>
-References: <20170809122147.g44nwaitzctbadzm@sigill.intra.peff.net>
- <20170810080246.njjd5zkphytzmlda@sigill.intra.peff.net>
- <20170810180326.4kkmawywvdbuzwnp@sigill.intra.peff.net>
+        id S1753683AbdHOKXN (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Aug 2017 06:23:13 -0400
+Received: from mail-pg0-f44.google.com ([74.125.83.44]:34709 "EHLO
+        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753585AbdHOKXM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Aug 2017 06:23:12 -0400
+Received: by mail-pg0-f44.google.com with SMTP id u185so3547598pgb.1
+        for <git@vger.kernel.org>; Tue, 15 Aug 2017 03:23:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=ZftCYRm1mJNOPSk26IeUkPs5kwLsnfdWiM8zHCtUgIE=;
+        b=mViPwev7mkauDEerDN05ySgILoq0z62KpZU3Mj1UIZG0NNWcru2O+CAbWtc2inieSo
+         6vD05yynSDz5Ufa1NUgSdplXNLNhUXtG+54MaRyhj2DY15XfpRAlIF/x2T8LESnFoWKI
+         IrXpwzqmf+5LqMUjwV7n4ZY4n0/0STIqLKN8duOAmIb6t8tmzXd6cI957D4TEZm54LSk
+         lMfpugwIlnrHnfIuLUMxeegyKERwXQv606WCuJqk1rtBiPXj05IEs1vG+TaYM8/oB6tb
+         DYF/YjKDTRdOxfnXV860tNUycwmRbjhehi8S4c81mdG21nygyuJCrzbJGZHAtbXLFMcR
+         GghA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=ZftCYRm1mJNOPSk26IeUkPs5kwLsnfdWiM8zHCtUgIE=;
+        b=cfZI2obUWCoGgW8drBJm6TcfwxzCbZ/75EGjvs1N+0zR0xPVvYjCO3qwuW257Rav2C
+         t2fc6AUE/ywDRwTXjBczuvw3GAbppn2GIfp0ASoEfWVuDqtjY9VTZFTo9M6M+L8Ronuv
+         hzsSLmr+fwvQimRdo4JNPnmAiiA6xlyu3hW5JFRkdc57I0SiNYYZtwqr/lC8GIvBUgga
+         44woekADZojvNJv+pMNeUQ8f/r0cH5FOVedzbWkCqmqxgSa0aDhrS5jEvJcRGFJr16xF
+         +kUkO/25S79BGx02bgS99I5/rvilPTbSf21gZ1RkHuJeWHwGcjlkxTaRE1PRWVrmsCgu
+         ZAuA==
+X-Gm-Message-State: AHYfb5j+CTqanYPek1CCX3I45fBiOyn5pQHzOzZTLWF7RGXuX9f90kd9
+        harRqmJp9E07uqzVFww=
+X-Received: by 10.98.216.70 with SMTP id e67mr27831558pfg.299.1502792591504;
+        Tue, 15 Aug 2017 03:23:11 -0700 (PDT)
+Received: from ?IPv6:2405:204:700b:d138:d4f3:b513:ec16:b5d5? ([2405:204:700b:d138:d4f3:b513:ec16:b5d5])
+        by smtp.gmail.com with ESMTPSA id 133sm16310629pge.29.2017.08.15.03.23.09
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 15 Aug 2017 03:23:10 -0700 (PDT)
+Subject: Re: [PATCH v3 1/2 / RFC] builtin/branch: stop supporting the use of
+ --set-upstream option
+To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+References: <20170808171136.31168-1-kaarticsivaraam91196@gmail.com>
+ <20170814085442.31174-1-kaarticsivaraam91196@gmail.com>
+ <CAN0heSr1FjayzX-SnNVcgQuh+Cc-f=AjY8H=pGG6uvf8rrJM=A@mail.gmail.com>
+From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+Message-ID: <b12f73f0-b4de-e96e-f102-2ec919ca8db5@gmail.com>
+Date:   Tue, 15 Aug 2017 15:53:57 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170810180326.4kkmawywvdbuzwnp@sigill.intra.peff.net>
+In-Reply-To: <CAN0heSr1FjayzX-SnNVcgQuh+Cc-f=AjY8H=pGG6uvf8rrJM=A@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Here's a fourth version of my series to make the output of
-interpret-trailers useful for callers who just want to parse existing
-trailers.
+On Tuesday 15 August 2017 12:44 AM, Martin Ågren wrote:
+>>   --set-upstream::
+>> -       If specified branch does not exist yet or if `--force` has been
+>> -       given, acts exactly like `--track`. Otherwise sets up configuration
+>> -       like `--track` would when creating the branch, except that where
+>> -       branch points to is not changed.
+>> +       As this option has confusing syntax it's no longer supported. Please use
+> "has" or "had"? (I guess when someone reads this, it "has" no syntax at
+> all. ;) )
+Got it.
+>> diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+>> index dd37ac47c..249be4b1a 100755
+>> --- a/t/t3200-branch.sh
+>> +++ b/t/t3200-branch.sh
+>> @@ -561,7 +561,8 @@ test_expect_success 'use --set-upstream-to modify a particular branch' '
+>>          git branch my13 &&
+>>          git branch --set-upstream-to master my13 &&
+>>          test "$(git config branch.my13.remote)" = "." &&
+>> -       test "$(git config branch.my13.merge)" = "refs/heads/master"
+>> +       test "$(git config branch.my13.merge)" = "refs/heads/master" &&
+>> +       git branch --unset-upstream my13
+> I think it would be safer to use test_when_finished like on line 625.
+> Out of curiosity: are you adding this out of caution, or did some later
+> test fail without this?
+One test seems to fail without this. I guess it's better to keep this 
+change as a separate
+commit.
 
-The big change here is that I added similar features to pretty.c's
-"%(trailers)", meaning you can now efficiently get the same output for
-multiple commits with a single invocation. Like:
+>> diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
+>> index 97a07655a..4b522f456 100755
+>> --- a/t/t6040-tracking-info.sh
+>> +++ b/t/t6040-tracking-info.sh
+>> @@ -188,35 +188,35 @@ test_expect_success 'fail to track annotated tags' '
+>>          test_must_fail git checkout heavytrack
+>>   '
+>>
+>> -test_expect_success 'setup tracking with branch --set-upstream on existing branch' '
+>> +test_expect_success 'setup tracking with branch --set-upstream-to on existing branch' '
+>>          git branch from-master master &&
+>>          test_must_fail git config branch.from-master.merge > actual &&
+>> -       git branch --set-upstream from-master master &&
+>> +       git branch --set-upstream-to master from-master &&
+>>          git config branch.from-master.merge > actual &&
+>>          grep -q "^refs/heads/master$" actual
+>>   '
+>>
+>> -test_expect_success '--set-upstream does not change branch' '
+>> +test_expect_success '--set-upstream-to does not change branch' '
+>>          git branch from-master2 master &&
+>>          test_must_fail git config branch.from-master2.merge > actual &&
+>>          git rev-list from-master2 &&
+>>          git update-ref refs/heads/from-master2 from-master2^ &&
+>>          git rev-parse from-master2 >expect2 &&
+>> -       git branch --set-upstream from-master2 master &&
+>> +       git branch --set-upstream-to master from-master2 &&
+>>          git config branch.from-master.merge > actual &&
+>>          git rev-parse from-master2 >actual2 &&
+>>          grep -q "^refs/heads/master$" actual &&
+>>          cmp expect2 actual2
+>>   '
+> The two tests above were added when --set-upstream was originally added.
+> Now that you're converting them to use --set-upstream-to, to what extent
+> do they just test the same thing as the tests in t3200?
+The first seems useless, I'll remove it. Regarding the second one, as 
+far as I could see
+there's no test in t3200 that does something similar so I guess it could 
+be kept back.
 
-  $ git rev-list --no-walk --format='%(trailers:only:unfold)' \
-    3ac53e0d13fa7483cce90eb6a1cfcdcbda5b8e35
-  commit 3ac53e0d13fa7483cce90eb6a1cfcdcbda5b8e35
-  Signed-off-by: H. Peter Anvin <hpa@zytor.com>
-  Signed-off-by: Junio C Hamano <junkio@cox.net>
-
-That doesn't look very exciting, but with just "%(trailers)" you would
-see that the block also contains a "cherry-picked from" line. There
-aren't good examples of unfolding in git.git because we don't tend to
-fold. Nor does linux.git (though they do have a lot of non-trailer lines
-in square brackets). The tests show off some samples of both.
-
-I left %(trailers) exactly as it is: it shows the trailer block
-verbatim, including funny syntax, etc. As soon as you use one of :only
-or :unfold, we have to parse further, and as a side effect we normalize
-a few bits (like whitespace around separators), because we round-trip
-through the parser. I think that's fine and what callers would want. But
-it did make me wonder if I should just have a single "parse" option that
-does all that normalizing. Or alternatively, have %(trailers) always do
-that round-trip normalizing. That's how interpret-trailers behaves,
-after all(since it always parses and reconstructs the trailer block). I
-felt better taking the conservative route, though, and leaving
-%(trailers) alone.
-
-There are a few other changes from v3:
-
-  - the --normalize option is now --unfold (and I matched it with
-    ":unfold" for the placeholder)
-
-  - the process_input_file function now takes the
-    process_trailer_options to check "only_trailers" instead of taking a
-    hint from a NULL outfile. This is hopefully a bit more obvious.
-
-  - when only_trailers is set, I don't even bother adding non-trailers
-    from the middle of the trailer-block to the list (we know we'd never
-    output them, and they can't affect the trailer rules). This is just
-    a micro-optimization I noticed while writing the %(trailers) helper.
-
-  - Similarly, we no longer unfold non-trailers. So if you have:
-
-      key: value
-        more value
-      this is not a trailer
-        this is also not a trailer
-
-    we would unfold "key: value more value", but not the other two
-    lines. Because without a separator, that's not really folding. I'm
-    not sure it actually matters. It's hard to have non-trailers in the
-    block in the first place. But I think the new behavior is the right
-    thing if it ever does come up.
-
-  [1/8]: trailer: put process_trailers() options into a struct
-  [2/8]: interpret-trailers: add an option to show only the trailers
-  [3/8]: interpret-trailers: add an option to show only existing trailers
-  [4/8]: interpret-trailers: add an option to unfold values
-  [5/8]: interpret-trailers: add --parse convenience option
-  [6/8]: pretty: move trailer formatting to trailer.c
-  [7/8]: t4205: refactor %(trailer) tests
-  [8/8]: pretty: support normalization options for %(trailers)
-
- Documentation/git-interpret-trailers.txt |  33 +++++++--
- Documentation/pretty-formats.txt         |   5 +-
- builtin/interpret-trailers.c             |  34 +++++++--
- pretty.c                                 |  26 +++----
- t/t4205-log-pretty-formats.sh            |  51 ++++++++++++--
- t/t7513-interpret-trailers.sh            |  76 ++++++++++++++++++++
- trailer.c                                | 115 ++++++++++++++++++++++++++-----
- trailer.h                                |  27 +++++++-
- 8 files changed, 315 insertions(+), 52 deletions(-)
-
--Peff
+---
+Kaartic
