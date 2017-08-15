@@ -2,76 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 414A3208CD
-	for <e@80x24.org>; Tue, 15 Aug 2017 23:14:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE06A208CD
+	for <e@80x24.org>; Tue, 15 Aug 2017 23:23:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752623AbdHOXOT (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Aug 2017 19:14:19 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:37914 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751095AbdHOXOS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Aug 2017 19:14:18 -0400
-Received: by mail-pg0-f65.google.com with SMTP id 123so3483255pga.5
-        for <git@vger.kernel.org>; Tue, 15 Aug 2017 16:14:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=5KI2tYgDmmT4K9h8AxKZulSm+1+KWbUQiclgfltBlFM=;
-        b=SAPH8WvUM5Ux/UnnPT+24LsRtG1ZZkZWzQGClUdccQkPKowSMWG+YPLN23/8ImvliH
-         u7i8eLdHQWOvPbHtEYvtWcM6ghae57geQokzbfHs0tXbZvlHg+fk8PGss1KeCA+vAxFn
-         jk3+zhf+8yh8livMHSdnbERKmk1MvG8rSqcJke/J7aLlLVG0upwuFEbceRu6GmGgYgDF
-         I0AySFuUsx85SDutnlq8LQusnQw4hWP/zWL37HNOTdZLF5XqeNWMxuqxEjMfz2ZjeDcD
-         ie3H+Rd0ZlbB7O4H8Gx1QU0DYks5Pef490cRKjzWqoDHBciDsUyWn14q+XK6f0etST7B
-         TOKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=5KI2tYgDmmT4K9h8AxKZulSm+1+KWbUQiclgfltBlFM=;
-        b=TJyEbWDRaYz/+pKyrMCkLBtjSnBCtrUX5wPpcJybK6Cbww65CrQ8XPcLGu6z3FxVCF
-         8Vk/P2HJSGtFzsUvlLoDCZrjFWyDszM4zDUqT5vlO95072nC1z3QeoK5A8Bof6Jy+dRf
-         jTjB4qO6cN8PaWnKxdOKQN+M5ubOCdWlv4JXDPFkMcaD16p2uit0JlxbK6bujrQ1NBiH
-         VgxXCqmMgfLOpx3Tz6dBXsPWdnXyJuFR6h040GGKb3VcwcScdpAwLc173ayGrCCxA9Dl
-         H/OrKPr/02YTq0VHa5qsnqmeZypV7XzmEOEMMvM7xJLY90EbsqeZW79Aw7yubc0U2x6s
-         sozQ==
-X-Gm-Message-State: AHYfb5i1k8j3yKeLZ3xxBzlAyhLiByayhSvI27GaRVkJHKxtsMMZSd2p
-        CkJwkE8aAjP6Cw==
-X-Received: by 10.84.128.8 with SMTP id 8mr33023799pla.391.1502838857504;
-        Tue, 15 Aug 2017 16:14:17 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:5181:69ef:a50:cd47])
-        by smtp.gmail.com with ESMTPSA id d4sm20523203pfj.59.2017.08.15.16.14.16
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 15 Aug 2017 16:14:16 -0700 (PDT)
-Date:   Tue, 15 Aug 2017 16:14:14 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
+        id S1752744AbdHOXXx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Aug 2017 19:23:53 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57867 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752694AbdHOXXx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Aug 2017 19:23:53 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 84D0AB0185;
+        Tue, 15 Aug 2017 19:23:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=XfnVOrYzhULoSL840okmrKT61pw=; b=fMr4cw
+        24yzKWXbNOcPaQMbXhAmBcpWcO8RYu7w+NClr93w00TAFsoJQJibz/w2xxaBvpGX
+        4a3Jc7ZO0vo16/2Io8EBkEV/XQ3+OPuyt7AX4H3RVUSrRp8u0XOu7RCOtr7oJoua
+        2yspW+atUc6/oybPYzVCQpwhhbt6ExRwVfScA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=DcpCA+MpnHEnAv+Kl/fnU1425usZ61zj
+        gsLWyQByOHfF08ZsTz93NIANmphxMgh9cWKg2jtBeAFzWbTEIuzuNxUP8o0DnQXD
+        B5HYt+UCef3P77+z4eczSyRSuFpmokDN0xWRD1VzIxpCewmscMKGBfZynQTkTQiL
+        ZmhuI7E6hZI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7CF07B0184;
+        Tue, 15 Aug 2017 19:23:52 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DA492B0183;
+        Tue, 15 Aug 2017 19:23:51 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH] push: do not add submodule odb as an alternate when
- recursing on demand
-Message-ID: <20170815231414.GF13924@aiede.mtv.corp.google.com>
+Cc:     git@vger.kernel.org, jrnieder@gmail.com
+Subject: Re: [PATCH] push: do not add submodule odb as an alternate when recursing on demand
 References: <CAGZ79kZouNBxOKr7X8j6wqebp3Wh3cDqhYR-t_PxaF7AwQ0Wzg@mail.gmail.com>
- <20170815224332.22730-1-sbeller@google.com>
+        <20170815224332.22730-1-sbeller@google.com>
+Date:   Tue, 15 Aug 2017 16:23:50 -0700
+In-Reply-To: <20170815224332.22730-1-sbeller@google.com> (Stefan Beller's
+        message of "Tue, 15 Aug 2017 15:43:32 -0700")
+Message-ID: <xmqqh8x8pg8p.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170815224332.22730-1-sbeller@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: CC70D67A-8210-11E7-8AA7-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller wrote:
+Stefan Beller <sbeller@google.com> writes:
 
+> "git push --recurse-submodules=on-demand" adds each submodule as an
+> alternate with add_submodule_odb before checking whether the
+> submodule has anything to push and pushing it if so.
+>
+> However, it never accesses any objects from the submodule.
+> ...
 > Use is_submodule_populated_gently instead, which is simpler and
 > cheaper.
-[...]
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>
+>  Originally I intended to send this out as part of a larger series,
+>  but the series is getting too large series, sending all things in smaller
+>  units!
+
+This vaguely reminds me that you sent something imilar perhaps for a
+different codepath.
+
+Is "is it populated" a good thing to check here, though?  IIRC,
+add-submodule-odb allows you to add the object database of an
+inactivated submodule, so this seems to change the behaviour.  I do
+not know if the behaviour change is a good thing (i.e. bugfix) or
+not (i.e. regression) offhand, though.
+
+Thanks.
+
+> diff --git a/submodule.c b/submodule.c
+> index 111a3007fc..e20216bc0f 100644
 > --- a/submodule.c
 > +++ b/submodule.c
 > @@ -966,7 +966,9 @@ static int push_submodule(const char *path,
@@ -83,18 +99,5 @@ Stefan Beller wrote:
 > +
 > +	if (!is_submodule_populated_gently(path, &code))
 >  		return 1;
-
-Ah, I forgot about this detail.  I don't think it should block this
-patch (so my Reviewed-by still stands), but I wonder why this needs to
-be gentle.  add_submodule_odb is gentle so that is the conservative
-thing to do, but that doesn't mean it is the *right* thing to do.
-
-If this passed NULL instead of &code as the second argument, would
-anything break?
-
-Could there be a comment explaining what kind of error we are
-expecting and why it is okay to continue when that error is
-encountered without any error handling?
-
-Thanks,
-Jonathan
+>  
+>  	if (for_each_remote_ref_submodule(path, has_remote, NULL) > 0) {
