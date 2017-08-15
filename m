@@ -2,112 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00B0B1F667
-	for <e@80x24.org>; Tue, 15 Aug 2017 06:27:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 010CA1F667
+	for <e@80x24.org>; Tue, 15 Aug 2017 09:30:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753394AbdHOG1l (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Aug 2017 02:27:41 -0400
-Received: from bsmtp8.bon.at ([213.33.87.20]:9545 "EHLO bsmtp8.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753366AbdHOG1j (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Aug 2017 02:27:39 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp8.bon.at (Postfix) with ESMTPSA id 3xWjFh28dnz5tlD;
-        Tue, 15 Aug 2017 08:27:36 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id D15A9274;
-        Tue, 15 Aug 2017 08:27:35 +0200 (CEST)
-Subject: Re: [PATCH] t1002: stop using sum(1)
-To:     Jonathan Nieder <jrnieder@gmail.com>,
-        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>, Benoit Lecocq <benoit@openbsd.org>,
-        Junio C Hamano <gitster@pobox.com>
-References: <9f6e13d3-07ff-1eaa-9453-05ca26a3c1ff@web.de>
- <20170815004546.GA78174@aiede.mtv.corp.google.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <53a9a3cd-f814-47a3-cc9b-977f9107614c@kdbg.org>
-Date:   Tue, 15 Aug 2017 08:27:35 +0200
+        id S1753348AbdHOJa3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Aug 2017 05:30:29 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:33961 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751468AbdHOJa2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Aug 2017 05:30:28 -0400
+Received: by mail-pg0-f68.google.com with SMTP id y192so780794pgd.1
+        for <git@vger.kernel.org>; Tue, 15 Aug 2017 02:30:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=U3bwELEtNDHi8I3ktcfMyD09+LJ9wLCbsACZvLYonls=;
+        b=FU8IrPtNX/l4h40QjX6Y1ozTl4a8BYqDWkNpPB1vemouEOvwuXoj3C3ZgIMrqXEfB5
+         0y6u5IfeGEYDeK4o/V21Ntc4MropCbJtZyhCsThNvgpvVxBhExBnr8NvQ/M1bEdH9oMu
+         K4WpNkTV7ch1zcu510PQQmMbbgnU9Ib0YCsw/JjNmc+XhWMw9WjOb6Z0+YsZF4ihGWn/
+         Cz1umjjjOvxLE5rfUGae2D7XmaNSrSZSIvZmcBkKczGAzI6nmaxq7UjWkA9eDzEVZ9NH
+         F3OZ7w5765ZQlG+Ck+s7KwLgor5y3fGe53lHqHe300yXkOGpEDCpj80L0CLemJ+MkpL+
+         GIFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=U3bwELEtNDHi8I3ktcfMyD09+LJ9wLCbsACZvLYonls=;
+        b=hvCEyl21bDAqGSQ63wtSUZKhRv5c6H+Qh3tJfmVUcpuLE30zii5ElYqc0iFjPZzgni
+         9SfckVaFKylN4kxd4cEbTicUOiH+bpxJkA+5lBnbg5qNFNalQgfeV1F7pnVG77CV0NKk
+         M1QufXqYWwcNpsr2Dn/+I2Mwe22JDL7ZBxn5cvvxijDraiWXKZsDq+ZmV8+ljb3WyOP7
+         wrOYoL9JYCbBGUYtUjx4tSve4eAeajq5JdqWpHSr6ave8H3uv0bXGYJ6oTmRiT8yx92v
+         OrNRT+QeP3BbsNrE5lZ5LVa8cwxQN4MOUor0H6Tuc1nF1KVpAGOHMCKYXIdyJqIQImAX
+         kSrQ==
+X-Gm-Message-State: AHYfb5hz7YOuZTzCbZKxLYzFvy64IKYWwMSZUOoeKwOPQuxKoX8GANPY
+        yQRiU/OR2u7ewg==
+X-Received: by 10.84.224.7 with SMTP id r7mr31380424plj.332.1502789427885;
+        Tue, 15 Aug 2017 02:30:27 -0700 (PDT)
+Received: from ?IPv6:2405:204:700b:d138:d4f3:b513:ec16:b5d5? ([2405:204:700b:d138:d4f3:b513:ec16:b5d5])
+        by smtp.gmail.com with ESMTPSA id a63sm16375608pfc.165.2017.08.15.02.30.24
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 15 Aug 2017 02:30:27 -0700 (PDT)
+Subject: Re: [PATCH] hook: use correct logical variable
+To:     sbeller@google.com
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+References: <20170711141111.7538-3-kaarticsivaraam91196@gmail.com>
+ <20170814084646.30781-1-kaarticsivaraam91196@gmail.com>
+ <xmqqwp66ui5h.fsf@gitster.mtv.corp.google.com>
+From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+Message-ID: <4e2c5bd8-48c9-fc8c-2c2c-ede3951019fc@gmail.com>
+Date:   Tue, 15 Aug 2017 15:01:14 +0530
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+ Thunderbird/52.1.1
 MIME-Version: 1.0
-In-Reply-To: <20170815004546.GA78174@aiede.mtv.corp.google.com>
+In-Reply-To: <xmqqwp66ui5h.fsf@gitster.mtv.corp.google.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 15.08.2017 um 02:46 schrieb Jonathan Nieder:
-> Hi,
-> 
-> René Scharfe wrote:
-> 
->> sum(1) is a command for calculating checksums of the contents of files.
->> It was part of early editions of Unix ("Research Unix", 1972/1973, [1]).
->> cksum(1) appeared in 4.4BSD (1993) as a replacement [2], and became part
->> of POSIX.1-2008 [3].  OpenBSD 5.6 (2014) removed sum(1).
+On Monday 14 August 2017 11:24 PM, Stefan Beller wrote:
+
+> On Mon, Aug 14, 2017 at 1:46 AM, Kaartic Sivaraam
+> <kaarticsivaraam91196@gmail.com> wrote:
+>> Sign-off added should be that of the "committer" not that of the
+>> "commit's author".
 >>
->> We only use sum(1) in t1002 to check for changes in three files.  On
->> MinGW we use md5sum(1) instead.  We could switch to the standard command
->> cksum(1) for all platforms; MinGW comes with GNU coreutils now, which
->> provides sum(1), cksum(1) and md5sum(1).  Use our standard method for
->> checking for file changes instead: test_cmp.
+>> Use the correct logical variable that identifies the committer.
 >>
->> It's more convenient because it shows differences nicely, it's faster on
->> MinGW because we have a special implementation there based only on
->> shell-internal commands, it's simpler as it allows us to avoid stripping
->> out unnecessary entries from the checksum file using grep(1), and it's
->> more consistent with the rest of the test suite.
->>
->> We already compare changed files with their expected new contents using
->> diff(1), so we don't need to check with "test_must_fail test_cmp" if
->> they differ from their original state.  A later patch could convert the
->> direct diff(1) calls to test_cmp as well.
->>
->> With all sum(1) calls gone, remove the MinGW-specific implementation
->> from test-lib.sh as well.
->>
->> [1] http://minnie.tuhs.org/cgi-bin/utree.pl?file=V3/man/man1/sum.1
->> [2] http://minnie.tuhs.org/cgi-bin/utree.pl?file=4.4BSD/usr/share/man/cat1/cksum.0
->> [3] http://pubs.opengroup.org/onlinepubs/9699919799/utilities/cksum.html
+>> Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
 >> ---
->>   t/t1002-read-tree-m-u-2way.sh | 67 ++++++++++++++++++++++---------------------
->>   t/test-lib.sh                 |  3 --
->>   2 files changed, 35 insertions(+), 35 deletions(-)
-> 
-> Nicely analyzed.  May we forge your sign-off?
-> 
-> [...]
->> --- a/t/t1002-read-tree-m-u-2way.sh
->> +++ b/t/t1002-read-tree-m-u-2way.sh
-> [...]
->> @@ -132,8 +138,8 @@ test_expect_success \
->>        git ls-files --stage >7.out &&
->>        test_cmp M.out 7.out &&
->>        check_cache_at frotz dirty &&
->> -     sum bozbar frotz nitfol >actual7.sum &&
->> -     if cmp M.sum actual7.sum; then false; else :; fi &&
->> +     test_cmp bozbar.M bozbar &&
->> +     test_cmp nitfol.M nitfol &&
-> 
-> This one is strange.  What is that '! cmp' trying to check for?
-> Does the replacement capture the same thing?
-> 
-> E.g., does it need a '! test_cmp frotz.M frotz &&' line?
+>>   This fixes a small issue when trying to do the following with the script enabled,
+>>
+>>      $ git commit --amend -s
+>>
+>>   If the commit being amended was signed off by the commit's author then the above command
+>>   would *append* the sign-off of the committer followed by that of the commit's author.
+>>   That' because the script is invoked only after the sign-off is added by the '-s' option AND
+>>   the default of 'trailer.ifexists' for interpret-trailers currently defaults to the 'addIfDifferentNeighbor'
+>>   thus interpret-trailer fails to identify the existing sign-off of the commit's author and adds it.
+> The background knowledge provided up to here seems like
+> a valuable information that we'd want to preserve in the commit
+> history, i.e. make it part of the commit message?
+I didn't do that previously expecting a few people would get confused by 
+this (it did turn out
+to be true). I could have made it more clearer but didn't attempt as I 
+thought it wasn't worth
+the effort. Yeah, it sometimes takes time to *simplify* things.
 
-In the context that you stripped a 'diff frotz frotz1' occurs, i.e., a 
-check for the expected content of the file whose content changes. 
-Together with the new test_cmp lines, the new text is a stricter check 
-than we have in the old text.
+I guess Junio's suggestion found below seems concise enough although it 
+doesn't
+capture the reason I did the change.
 
-The patch looks good.
+         Sign-off added should be that of the "committer", not that of
+         the "commit's author"; that is how the rest of Git adds sign-off
+         using sequencer.c::append_signoff().
 
-Reviewed-by: Johannes Sixt <j6t@kdbg.org>
 
--- Hannes
+---
+Kaartic
