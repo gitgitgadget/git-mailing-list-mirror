@@ -2,164 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 29284208B8
-	for <e@80x24.org>; Tue, 15 Aug 2017 14:40:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7EF2E208B8
+	for <e@80x24.org>; Tue, 15 Aug 2017 14:44:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752147AbdHOOks (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Aug 2017 10:40:48 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:36075 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751603AbdHOOks (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Aug 2017 10:40:48 -0400
-Received: by mail-pg0-f68.google.com with SMTP id y129so1768903pgy.3
-        for <git@vger.kernel.org>; Tue, 15 Aug 2017 07:40:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=GyWJKxscYhjkZP1b4ARJUGABW5pyzPWu45iSPzBjrN8=;
-        b=q5w/GNMNLYUPYgDc2/SyjsWz5KfNcij0cUGQnnUHY13XxIWuKc62UGz26aFBYZz5ij
-         Fh6kzoDAwyBNhTpGk++JgKWL8aNU7gNqkL3gKHpUf5l91jAAn69E+lLJ2eUfwEgROZHG
-         QFrD3xYDpI4lIBeK3YKoMx3W21P7zhuEM3LOh+Xdkm725L973Jj2kgl9S37ZowTg0vEv
-         IoSJtCUN4GB8BDtiOUrvSYOQjOhU7Qo8axY9Y/33ED4dffSDH0yPUUemVg0OqXhcxR3s
-         GpJTJ/RGiKe5V79+Xp3TXzI+cCt1N8Dl8UyQMasiPHvGdYXAdFa6MZ5WVRZhEupR1Uns
-         z1UQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=GyWJKxscYhjkZP1b4ARJUGABW5pyzPWu45iSPzBjrN8=;
-        b=U4HSORWMrhkTqxuD3MF76LxTxyBN4E5uoEGnNl8nl+4tq36HLzzg3Ai69TQGFRVZax
-         8mLA+zfFO7b2/t9ihldLg/b1WPeQ5N30a3zJn6z5Ccj0OYMBuFgdj+UiLU5OI37oCggU
-         YmpKSeuzqKcCBcOK8P41qqi9zKK2YqfDkjBwkm8i/meZI+NGgf526Tcpid82rTmaLnWx
-         UVJxc4NaRYOcpsehWgjtD/F1qcI4mNXSAfFodNFuvycX5LSUUY57KFCSfXVUzDi12PWl
-         MuHC/mz7md41+Mj2k2jZ5iW3mZI94KGsbuS7sU5XRQbjpQI+Ultd9yD6BY3WGNVykuYO
-         A0HA==
-X-Gm-Message-State: AHYfb5h5jc/cZGQFYmcE6RXX8S3cdBoaxiwO8TYeIOusWdFqha9ORoLv
-        OP2kxYy60YSLhEetULQ+AbS5Nzgvt15m
-X-Received: by 10.98.2.146 with SMTP id 140mr16307281pfc.207.1502808047591;
- Tue, 15 Aug 2017 07:40:47 -0700 (PDT)
+        id S1752297AbdHOOoB (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Aug 2017 10:44:01 -0400
+Received: from mout.web.de ([212.227.15.3]:52867 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751847AbdHOOoA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Aug 2017 10:44:00 -0400
+Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MK2JZ-1diSYG1yXV-001UsZ; Tue, 15
+ Aug 2017 16:43:53 +0200
+Subject: Re: [PATCH] t1002: stop using sum(1)
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
+        Benoit Lecocq <benoit@openbsd.org>,
+        Junio C Hamano <gitster@pobox.com>
+References: <9f6e13d3-07ff-1eaa-9453-05ca26a3c1ff@web.de>
+ <20170815004546.GA78174@aiede.mtv.corp.google.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <5c9752cb-3c47-19f0-42b2-591bd29134f9@web.de>
+Date:   Tue, 15 Aug 2017 16:43:51 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Received: by 10.100.162.37 with HTTP; Tue, 15 Aug 2017 07:40:46 -0700 (PDT)
-In-Reply-To: <20170815141734.GA4916@tor.lan>
-References: <cover.1502780343.git.martin.agren@gmail.com> <0fd7f3184d285df8867ea44dd1adf418ebfc5ef3.1502780344.git.martin.agren@gmail.com>
- <20170815141734.GA4916@tor.lan>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Tue, 15 Aug 2017 16:40:46 +0200
-Message-ID: <CAN0heSpF5OszFabkFC7Rp8XykUYdFc0PXWzOmVJEHcuFxJPxyg@mail.gmail.com>
-Subject: Re: [PATCH 1/5] convert: initialize attr_action in convert_attrs
-To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20170815004546.GA78174@aiede.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:luHgwlNU74nLdLX2o56UDnu08L23VZUDkpMXtZXsdL+AbpOpuT4
+ HcXH7bAHM4QOhYR1hHmrjSnwdrc4mgI4FWYFuOSa3Wq2ORhV2VOL8WzZoVzShpUXBZ8m5Fd
+ vzCaLAPzclMeYnMl6+cRKNCYednfoVIJZ64QOU937JUZ/fN5VdwDpLImwbdDUDzpK/ye3v5
+ 16IOhJIrVqT0ODy74qgCw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:yTrN9KGXCbo=:xg6i5+sA3lWfW8ZnIpWwjo
+ 2H2f6MW56K1l6C3Qr/jhfiMLNZml/I9QWcQSmRVIkJXXG0Reis8OKnmmNpXc5HGe4ybZsvz+N
+ gjg9ZCZY+8ABmftf/tVnosBEh40YIByhPy2x/cTsGCxsCXXXUxh3y1tb+O6XcpMmSF04yb73T
+ eIl75nXAP5Iccd5jqpitRUjZ/dQtq8+Qs6D0bAa7xhmmSBF6OjxflJUKZEUC08IbDetr2m1rZ
+ S4sq3d8rvvpNB603uKp0jkNYYZcOCkNVahYcdoCquYiOSt7lHvNTE8wHNf7IwVCSfv5Of1tiY
+ 08NfoiyVVyo0neyqF9Pahc52rYaCSADc4lLhUEChqGqdxsgbiauinEVosWGo7+eJjBnZOl298
+ pmpPT+jQ69xv74S+jBbpLa9OOQ/YlaSr3vp3uJ6lpLCr5BXufh27X6oYJM0bwPEHWHTqTJn42
+ 7Y82jwJJEZvKUZvwFrrFLS/8RSvCHlMRwH052W4krFOfKOH38vRvUxEBj/W1JRjoU4e07gdBy
+ UUOnjQ6sB+F7PCpHDPrgzIACKzjqnp0VTD13Q8eyN3BArkeLKOPYQRWnGt7Tmnw7c+7Fd511H
+ 4HzY/QzU+NWFEKhZ08lOE9kV5HstEZtdMrH61h0yykApVzTAAk3jKf5JQvDY0Leot5fX9J6Ph
+ HFHGT+D/mLFYCchLVyuDnx4g22cA0R1FIYUF6Rj8MD5pZoo/8ZjwRmpHbiNtSlcjsO0n3W8/J
+ V71xrwLrkr/7Mv45gYNIpPD48omtGXigmkn6oTZ2i1NqGVh42bPiTnvP3KD9LiNikULbITNMn
+ VCmlrkfTZy8AvSx/XQdRLamhk1dAldQgD+1LXKOZLbDOZkJ6bk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 15 August 2017 at 16:17, Torsten B=C3=B6gershausen <tboegi@web.de> wrote=
-:
-> On Tue, Aug 15, 2017 at 02:53:01PM +0200, Martin =C3=85gren wrote:
->> convert_attrs populates a struct conv_attrs. The field attr_action is
->> not set in all code paths, but still one caller unconditionally reads
->> it. Since git_check_attr always returns the same value, we'll always end
->> up in the same code path and there is no problem right now. But
->> convert_attrs is obviously trying not to rely on such an
->> implementation-detail of another component.
->>
->> Initialize attr_action to CRLF_UNDEFINED in the dead code path.
->>
->> Actually, in the code path that /is/ taken, the variable is assigned to
->> twice and the first assignment has no effect. That's not wrong, but
->> let's remove that first assignment while we're here.
->>
->> Signed-off-by: Martin =C3=85gren <martin.agren@gmail.com>
->> ---
->> I hit a warning about attr_action possibly being uninitialized when
->> building with SANITIZE=3Dthread. I guess it's some random interaction
->> between code added by tsan, the optimizer (-O3) and the warning
->> machinery. (This was with gcc 5.4.0.)
->>
->>  convert.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/convert.c b/convert.c
->> index 1012462e3..943d957b4 100644
->> --- a/convert.c
->> +++ b/convert.c
->> @@ -1040,7 +1040,6 @@ static void convert_attrs(struct conv_attrs *ca, c=
-onst char *path)
->>               ca->crlf_action =3D git_path_check_crlf(ccheck + 4);
->>               if (ca->crlf_action =3D=3D CRLF_UNDEFINED)
->>                       ca->crlf_action =3D git_path_check_crlf(ccheck + 0=
-);
->> -             ca->attr_action =3D ca->crlf_action;
->
-> I don't think the removal of that line is correct.
+Am 15.08.2017 um 02:46 schrieb Jonathan Nieder:
+> Hi,
+> 
+> René Scharfe wrote:
 
-(Thanks for confirming in a follow-up mail that you meant that you /do/
-think the removal is correct.)
+>> We already compare changed files with their expected new contents using
+>> diff(1), so we don't need to check with "test_must_fail test_cmp" if
+>> they differ from their original state.  A later patch could convert the
+>> direct diff(1) calls to test_cmp as well.
 
->
->>               ca->ident =3D git_path_check_ident(ccheck + 1);
->>               ca->drv =3D git_path_check_convert(ccheck + 2);
->>               if (ca->crlf_action !=3D CRLF_BINARY) {
->> @@ -1058,6 +1057,7 @@ static void convert_attrs(struct conv_attrs *ca, c=
-onst char *path)
->>       } else {
->>               ca->drv =3D NULL;
->>               ca->crlf_action =3D CRLF_UNDEFINED;
->> +             ca->attr_action =3D CRLF_UNDEFINED;
->
-> But this one can be avoided, when the line
-> ca->attr_action =3D ca->crlf_action;
-> would move completely out of the "if/else" block.
->
->>               ca->ident =3D 0;
->>       }
->>       if (ca->crlf_action =3D=3D CRLF_TEXT)
->> --
->> 2.14.1.151.gdfeca7a7e
->>
->
-> Thanks for spotting my mess.
-> What do you think about the following:
->
->
-> diff --git a/convert.c b/convert.c
-> index 1012462e3c..fd91b91ada 100644
-> --- a/convert.c
-> +++ b/convert.c
-> @@ -1040,7 +1040,6 @@ static void convert_attrs(struct conv_attrs *ca, co=
-nst char *path)
->                 ca->crlf_action =3D git_path_check_crlf(ccheck + 4);
->                 if (ca->crlf_action =3D=3D CRLF_UNDEFINED)
->                         ca->crlf_action =3D git_path_check_crlf(ccheck + =
-0);
-> -               ca->attr_action =3D ca->crlf_action;
->                 ca->ident =3D git_path_check_ident(ccheck + 1);
->                 ca->drv =3D git_path_check_convert(ccheck + 2);
->                 if (ca->crlf_action !=3D CRLF_BINARY) {
-> @@ -1060,6 +1059,8 @@ static void convert_attrs(struct conv_attrs *ca, co=
-nst char *path)
->                 ca->crlf_action =3D CRLF_UNDEFINED;
->                 ca->ident =3D 0;
->         }
-> +       /* Save attr and make a decision for action */
-> +       ca->attr_action =3D ca->crlf_action;
->         if (ca->crlf_action =3D=3D CRLF_TEXT)
->                 ca->crlf_action =3D text_eol_is_crlf() ? CRLF_TEXT_CRLF :=
- CRLF_TEXT_INPUT;
->         if (ca->crlf_action =3D=3D CRLF_UNDEFINED && auto_crlf =3D=3D AUT=
-O_CRLF_FALSE)
+Let's call that paragraph "A".
 
-Yeah, makes lots of sense. Then we could also remove the second
-assignment to attr_action. That is, this function would set attr_action
-at one place, always. I'll do this in a v2.
+> Nicely analyzed.  May we forge your sign-off?
 
-Thanks.
+Oops, yes, thanks for reminding me, handed it in late now.
+
+> 
+> [...]
+>> --- a/t/t1002-read-tree-m-u-2way.sh
+>> +++ b/t/t1002-read-tree-m-u-2way.sh
+> [...]
+>> @@ -132,8 +138,8 @@ test_expect_success \
+>>        git ls-files --stage >7.out &&
+>>        test_cmp M.out 7.out &&
+>>        check_cache_at frotz dirty &&
+>> -     sum bozbar frotz nitfol >actual7.sum &&
+>> -     if cmp M.sum actual7.sum; then false; else :; fi &&
+>> +     test_cmp bozbar.M bozbar &&
+>> +     test_cmp nitfol.M nitfol &&
+> 
+> This one is strange.  What is that '! cmp' trying to check for?
+> Does the replacement capture the same thing?
+> 
+> E.g., does it need a '! test_cmp frotz.M frotz &&' line?
+> 
+> I haven't looked at the context closely --- another option could be a
+> note in the commit message about how that '! cmp' line was not testing
+> anything useful in the first place.
+
+That's what paragraph A refers to.  And as Johannes mentioned: We
+already check for equality in the lines following the context you
+cited (it's in my original email), so there is no need to check
+for inequality as well.  That's true for all the cases you spotted.
+
+René
