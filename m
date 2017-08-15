@@ -2,266 +2,164 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 94DF5208C4
-	for <e@80x24.org>; Tue, 15 Aug 2017 14:37:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 29284208B8
+	for <e@80x24.org>; Tue, 15 Aug 2017 14:40:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751202AbdHOOhv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Aug 2017 10:37:51 -0400
-Received: from mout.web.de ([212.227.15.4]:52871 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750989AbdHOOhu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Aug 2017 10:37:50 -0400
-Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MCIUL-1dqBXn1llB-0099us; Tue, 15
- Aug 2017 16:37:30 +0200
-Subject: Re: [PATCH] t1002: stop using sum(1)
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-To:     Git List <git@vger.kernel.org>
-Cc:     Johannes Sixt <j6t@kdbg.org>, Benoit Lecocq <benoit@openbsd.org>,
-        Junio C Hamano <gitster@pobox.com>
-References: <9f6e13d3-07ff-1eaa-9453-05ca26a3c1ff@web.de>
-Message-ID: <12431963-18b4-73f8-4801-37c8cd2e7268@web.de>
-Date:   Tue, 15 Aug 2017 16:37:28 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        id S1752147AbdHOOks (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Aug 2017 10:40:48 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:36075 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751603AbdHOOks (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Aug 2017 10:40:48 -0400
+Received: by mail-pg0-f68.google.com with SMTP id y129so1768903pgy.3
+        for <git@vger.kernel.org>; Tue, 15 Aug 2017 07:40:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=GyWJKxscYhjkZP1b4ARJUGABW5pyzPWu45iSPzBjrN8=;
+        b=q5w/GNMNLYUPYgDc2/SyjsWz5KfNcij0cUGQnnUHY13XxIWuKc62UGz26aFBYZz5ij
+         Fh6kzoDAwyBNhTpGk++JgKWL8aNU7gNqkL3gKHpUf5l91jAAn69E+lLJ2eUfwEgROZHG
+         QFrD3xYDpI4lIBeK3YKoMx3W21P7zhuEM3LOh+Xdkm725L973Jj2kgl9S37ZowTg0vEv
+         IoSJtCUN4GB8BDtiOUrvSYOQjOhU7Qo8axY9Y/33ED4dffSDH0yPUUemVg0OqXhcxR3s
+         GpJTJ/RGiKe5V79+Xp3TXzI+cCt1N8Dl8UyQMasiPHvGdYXAdFa6MZ5WVRZhEupR1Uns
+         z1UQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=GyWJKxscYhjkZP1b4ARJUGABW5pyzPWu45iSPzBjrN8=;
+        b=U4HSORWMrhkTqxuD3MF76LxTxyBN4E5uoEGnNl8nl+4tq36HLzzg3Ai69TQGFRVZax
+         8mLA+zfFO7b2/t9ihldLg/b1WPeQ5N30a3zJn6z5Ccj0OYMBuFgdj+UiLU5OI37oCggU
+         YmpKSeuzqKcCBcOK8P41qqi9zKK2YqfDkjBwkm8i/meZI+NGgf526Tcpid82rTmaLnWx
+         UVJxc4NaRYOcpsehWgjtD/F1qcI4mNXSAfFodNFuvycX5LSUUY57KFCSfXVUzDi12PWl
+         MuHC/mz7md41+Mj2k2jZ5iW3mZI94KGsbuS7sU5XRQbjpQI+Ultd9yD6BY3WGNVykuYO
+         A0HA==
+X-Gm-Message-State: AHYfb5h5jc/cZGQFYmcE6RXX8S3cdBoaxiwO8TYeIOusWdFqha9ORoLv
+        OP2kxYy60YSLhEetULQ+AbS5Nzgvt15m
+X-Received: by 10.98.2.146 with SMTP id 140mr16307281pfc.207.1502808047591;
+ Tue, 15 Aug 2017 07:40:47 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <9f6e13d3-07ff-1eaa-9453-05ca26a3c1ff@web.de>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:p4syN4FsBiUf2nMlg53emVo/bNzFVFFm6zViREIRgWGEiWb6f+3
- fUOWqu2by6h4W9aGjmaBSwX+bA/vE0UGL+vEu9hAURJVGBDuU8NLYqnpbBIDhGiBLSwYJ3F
- 7bWaVeuxnBgI4LTtkLI78ft/wW/A//JrpeNUBga/SQNLSvmFVioZFR8mvSgzK4ofMxSZdxX
- HqY8/QUeB70oCxL1d0vhw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ctpA7mYm3S0=:iRVw2CbThVH20bKHwdRDVG
- TL1UuKlNQuFF4A7gGuMH3ahmdabTo4B913gFPm8ng+iJ72ItSWCDVUWBk2xWbfAjv/WyKRMc2
- yRTqHfINA/t6VJ+SxuUY25EnehIYfhaGBDwcCV8fSUUCSb30zOKoiLVuOL7pVTQqcfQqLbY4H
- Onvqifdzk3j15yt5Aas78nxu+exR4ikHUxeUYgbru2VGqWe7e7UlSsPhZtHI8bR8UpXRag79u
- oBobrmLjALF8TOWeE4NNS4HG9BnOTBJn3Sx2siAI7WgKoemLcamwumUBzjHCQlr3WEQ02bHGQ
- Xtx0bA2JPFCn5e46CFL99Wcrsv0NdsC9WdypbyeeAdpQO6c+Vpd6jxEyP8YzxShwRBp4Zs7he
- mm1tZAVMxLxIfudIMrE5altkCxygVrSrhkm7GEmpHizaVIVPEl95+reuHXC+mSmSeMgQHV+5U
- /uB6wNuDP6jVwG7ptzVnEsT/pzYRY4i76tMCAhfSA+qZCWfoEd2ebnlmbRhA9yyyHRaIC5b2i
- kn80539hHLDsVKTqNG+Mj49XR3JAMpFhoDFqCDe/IvbGtWpVHelJ2Nr42K/GKFghUyLPTz24V
- CyUu9CXvvNXR9ASpejFJH8QA+4ytkaRltQuN5zadtm4AV4adhSHr/ufE96Jqt5z5PTqckv0co
- 2KRkctuh2zKSlAZVVfzr+gooZmb+xb1R3ovXOUvqO/YJaLaPcEZunsQQxYuTfFSQ0bjHjBeXq
- 9cj7Yk/V+kwdZolWsBofZTuzmIjyzImZxSFWPBcYYLG592dCyLvj9MCBW3EVzDnqMrDLnPcJF
- GM/UY1mgOy/5X7RZN5R4ss5vJerNIPFeKEU2YAnqydfh0j6y9s=
+Received: by 10.100.162.37 with HTTP; Tue, 15 Aug 2017 07:40:46 -0700 (PDT)
+In-Reply-To: <20170815141734.GA4916@tor.lan>
+References: <cover.1502780343.git.martin.agren@gmail.com> <0fd7f3184d285df8867ea44dd1adf418ebfc5ef3.1502780344.git.martin.agren@gmail.com>
+ <20170815141734.GA4916@tor.lan>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Tue, 15 Aug 2017 16:40:46 +0200
+Message-ID: <CAN0heSpF5OszFabkFC7Rp8XykUYdFc0PXWzOmVJEHcuFxJPxyg@mail.gmail.com>
+Subject: Re: [PATCH 1/5] convert: initialize attr_action in convert_attrs
+To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 14.08.2017 um 22:16 schrieb René Scharfe:
-> sum(1) is a command for calculating checksums of the contents of files.
-> It was part of early editions of Unix ("Research Unix", 1972/1973, [1]).
-> cksum(1) appeared in 4.4BSD (1993) as a replacement [2], and became part
-> of POSIX.1-2008 [3].  OpenBSD 5.6 (2014) removed sum(1).
-> 
-> We only use sum(1) in t1002 to check for changes in three files.  On
-> MinGW we use md5sum(1) instead.  We could switch to the standard command
-> cksum(1) for all platforms; MinGW comes with GNU coreutils now, which
-> provides sum(1), cksum(1) and md5sum(1).  Use our standard method for
-> checking for file changes instead: test_cmp.
-> 
-> It's more convenient because it shows differences nicely, it's faster on
-> MinGW because we have a special implementation there based only on
-> shell-internal commands, it's simpler as it allows us to avoid stripping
-> out unnecessary entries from the checksum file using grep(1), and it's
-> more consistent with the rest of the test suite.
-> 
-> We already compare changed files with their expected new contents using
-> diff(1), so we don't need to check with "test_must_fail test_cmp" if
-> they differ from their original state.  A later patch could convert the
-> direct diff(1) calls to test_cmp as well.
-> 
-> With all sum(1) calls gone, remove the MinGW-specific implementation
-> from test-lib.sh as well.
-> 
-> [1] http://minnie.tuhs.org/cgi-bin/utree.pl?file=V3/man/man1/sum.1
-> [2] http://minnie.tuhs.org/cgi-bin/utree.pl?file=4.4BSD/usr/share/man/cat1/cksum.0
-> [3] http://pubs.opengroup.org/onlinepubs/9699919799/utilities/cksum.html
+On 15 August 2017 at 16:17, Torsten B=C3=B6gershausen <tboegi@web.de> wrote=
+:
+> On Tue, Aug 15, 2017 at 02:53:01PM +0200, Martin =C3=85gren wrote:
+>> convert_attrs populates a struct conv_attrs. The field attr_action is
+>> not set in all code paths, but still one caller unconditionally reads
+>> it. Since git_check_attr always returns the same value, we'll always end
+>> up in the same code path and there is no problem right now. But
+>> convert_attrs is obviously trying not to rely on such an
+>> implementation-detail of another component.
+>>
+>> Initialize attr_action to CRLF_UNDEFINED in the dead code path.
+>>
+>> Actually, in the code path that /is/ taken, the variable is assigned to
+>> twice and the first assignment has no effect. That's not wrong, but
+>> let's remove that first assignment while we're here.
+>>
+>> Signed-off-by: Martin =C3=85gren <martin.agren@gmail.com>
+>> ---
+>> I hit a warning about attr_action possibly being uninitialized when
+>> building with SANITIZE=3Dthread. I guess it's some random interaction
+>> between code added by tsan, the optimizer (-O3) and the warning
+>> machinery. (This was with gcc 5.4.0.)
+>>
+>>  convert.c | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/convert.c b/convert.c
+>> index 1012462e3..943d957b4 100644
+>> --- a/convert.c
+>> +++ b/convert.c
+>> @@ -1040,7 +1040,6 @@ static void convert_attrs(struct conv_attrs *ca, c=
+onst char *path)
+>>               ca->crlf_action =3D git_path_check_crlf(ccheck + 4);
+>>               if (ca->crlf_action =3D=3D CRLF_UNDEFINED)
+>>                       ca->crlf_action =3D git_path_check_crlf(ccheck + 0=
+);
+>> -             ca->attr_action =3D ca->crlf_action;
+>
+> I don't think the removal of that line is correct.
 
-Forgot this (intentional full-quote ahead):
+(Thanks for confirming in a follow-up mail that you meant that you /do/
+think the removal is correct.)
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
+>
+>>               ca->ident =3D git_path_check_ident(ccheck + 1);
+>>               ca->drv =3D git_path_check_convert(ccheck + 2);
+>>               if (ca->crlf_action !=3D CRLF_BINARY) {
+>> @@ -1058,6 +1057,7 @@ static void convert_attrs(struct conv_attrs *ca, c=
+onst char *path)
+>>       } else {
+>>               ca->drv =3D NULL;
+>>               ca->crlf_action =3D CRLF_UNDEFINED;
+>> +             ca->attr_action =3D CRLF_UNDEFINED;
+>
+> But this one can be avoided, when the line
+> ca->attr_action =3D ca->crlf_action;
+> would move completely out of the "if/else" block.
+>
+>>               ca->ident =3D 0;
+>>       }
+>>       if (ca->crlf_action =3D=3D CRLF_TEXT)
+>> --
+>> 2.14.1.151.gdfeca7a7e
+>>
+>
+> Thanks for spotting my mess.
+> What do you think about the following:
+>
+>
+> diff --git a/convert.c b/convert.c
+> index 1012462e3c..fd91b91ada 100644
+> --- a/convert.c
+> +++ b/convert.c
+> @@ -1040,7 +1040,6 @@ static void convert_attrs(struct conv_attrs *ca, co=
+nst char *path)
+>                 ca->crlf_action =3D git_path_check_crlf(ccheck + 4);
+>                 if (ca->crlf_action =3D=3D CRLF_UNDEFINED)
+>                         ca->crlf_action =3D git_path_check_crlf(ccheck + =
+0);
+> -               ca->attr_action =3D ca->crlf_action;
+>                 ca->ident =3D git_path_check_ident(ccheck + 1);
+>                 ca->drv =3D git_path_check_convert(ccheck + 2);
+>                 if (ca->crlf_action !=3D CRLF_BINARY) {
+> @@ -1060,6 +1059,8 @@ static void convert_attrs(struct conv_attrs *ca, co=
+nst char *path)
+>                 ca->crlf_action =3D CRLF_UNDEFINED;
+>                 ca->ident =3D 0;
+>         }
+> +       /* Save attr and make a decision for action */
+> +       ca->attr_action =3D ca->crlf_action;
+>         if (ca->crlf_action =3D=3D CRLF_TEXT)
+>                 ca->crlf_action =3D text_eol_is_crlf() ? CRLF_TEXT_CRLF :=
+ CRLF_TEXT_INPUT;
+>         if (ca->crlf_action =3D=3D CRLF_UNDEFINED && auto_crlf =3D=3D AUT=
+O_CRLF_FALSE)
 
-> ---
->   t/t1002-read-tree-m-u-2way.sh | 67 ++++++++++++++++++++++---------------------
->   t/test-lib.sh                 |  3 --
->   2 files changed, 35 insertions(+), 35 deletions(-)
-> 
-> diff --git a/t/t1002-read-tree-m-u-2way.sh b/t/t1002-read-tree-m-u-2way.sh
-> index e3bf821694..7ca2e65d10 100755
-> --- a/t/t1002-read-tree-m-u-2way.sh
-> +++ b/t/t1002-read-tree-m-u-2way.sh
-> @@ -51,7 +51,9 @@ test_expect_success \
->        treeM=$(git write-tree) &&
->        echo treeM $treeM &&
->        git ls-tree $treeM &&
-> -     sum bozbar frotz nitfol >M.sum &&
-> +     cp bozbar bozbar.M &&
-> +     cp frotz frotz.M &&
-> +     cp nitfol nitfol.M &&
->        git diff-tree $treeH $treeM'
->   
->   test_expect_success \
-> @@ -61,8 +63,9 @@ test_expect_success \
->        read_tree_u_must_succeed -m -u $treeH $treeM &&
->        git ls-files --stage >1-3.out &&
->        cmp M.out 1-3.out &&
-> -     sum bozbar frotz nitfol >actual3.sum &&
-> -     cmp M.sum actual3.sum &&
-> +     test_cmp bozbar.M bozbar &&
-> +     test_cmp frotz.M frotz &&
-> +     test_cmp nitfol.M nitfol &&
->        check_cache_at bozbar clean &&
->        check_cache_at frotz clean &&
->        check_cache_at nitfol clean'
-> @@ -79,8 +82,9 @@ test_expect_success \
->        test_might_fail git diff -U0 --no-index M.out 4.out >4diff.out &&
->        compare_change 4diff.out expected &&
->        check_cache_at yomin clean &&
-> -     sum bozbar frotz nitfol >actual4.sum &&
-> -     cmp M.sum actual4.sum &&
-> +     test_cmp bozbar.M bozbar &&
-> +     test_cmp frotz.M frotz &&
-> +     test_cmp nitfol.M nitfol &&
->        echo yomin >yomin1 &&
->        diff yomin yomin1 &&
->        rm -f yomin1'
-> @@ -98,8 +102,9 @@ test_expect_success \
->        test_might_fail git diff -U0 --no-index M.out 5.out >5diff.out &&
->        compare_change 5diff.out expected &&
->        check_cache_at yomin dirty &&
-> -     sum bozbar frotz nitfol >actual5.sum &&
-> -     cmp M.sum actual5.sum &&
-> +     test_cmp bozbar.M bozbar &&
-> +     test_cmp frotz.M frotz &&
-> +     test_cmp nitfol.M nitfol &&
->        : dirty index should have prevented -u from checking it out. &&
->        echo yomin yomin >yomin1 &&
->        diff yomin yomin1 &&
-> @@ -115,8 +120,9 @@ test_expect_success \
->        git ls-files --stage >6.out &&
->        test_cmp M.out 6.out &&
->        check_cache_at frotz clean &&
-> -     sum bozbar frotz nitfol >actual3.sum &&
-> -     cmp M.sum actual3.sum &&
-> +     test_cmp bozbar.M bozbar &&
-> +     test_cmp frotz.M frotz &&
-> +     test_cmp nitfol.M nitfol &&
->        echo frotz >frotz1 &&
->        diff frotz frotz1 &&
->        rm -f frotz1'
-> @@ -132,8 +138,8 @@ test_expect_success \
->        git ls-files --stage >7.out &&
->        test_cmp M.out 7.out &&
->        check_cache_at frotz dirty &&
-> -     sum bozbar frotz nitfol >actual7.sum &&
-> -     if cmp M.sum actual7.sum; then false; else :; fi &&
-> +     test_cmp bozbar.M bozbar &&
-> +     test_cmp nitfol.M nitfol &&
->        : dirty index should have prevented -u from checking it out. &&
->        echo frotz frotz >frotz1 &&
->        diff frotz frotz1 &&
-> @@ -165,8 +171,10 @@ test_expect_success \
->        read_tree_u_must_succeed -m -u $treeH $treeM &&
->        git ls-files --stage >10.out &&
->        cmp M.out 10.out &&
-> -     sum bozbar frotz nitfol >actual10.sum &&
-> -     cmp M.sum actual10.sum'
-> +     test_cmp bozbar.M bozbar &&
-> +     test_cmp frotz.M frotz &&
-> +     test_cmp nitfol.M nitfol
-> +'
->   
->   test_expect_success \
->       '11 - dirty path removed.' \
-> @@ -209,11 +217,8 @@ test_expect_success \
->        git ls-files --stage >14.out &&
->        test_must_fail git diff -U0 --no-index M.out 14.out >14diff.out &&
->        compare_change 14diff.out expected &&
-> -     sum bozbar frotz >actual14.sum &&
-> -     grep -v nitfol M.sum > expected14.sum &&
-> -     cmp expected14.sum actual14.sum &&
-> -     sum bozbar frotz nitfol >actual14a.sum &&
-> -     if cmp M.sum actual14a.sum; then false; else :; fi &&
-> +     test_cmp bozbar.M bozbar &&
-> +     test_cmp frotz.M frotz &&
->        check_cache_at nitfol clean &&
->        echo nitfol nitfol >nitfol1 &&
->        diff nitfol nitfol1 &&
-> @@ -231,11 +236,8 @@ test_expect_success \
->        test_must_fail git diff -U0 --no-index M.out 15.out >15diff.out &&
->        compare_change 15diff.out expected &&
->        check_cache_at nitfol dirty &&
-> -     sum bozbar frotz >actual15.sum &&
-> -     grep -v nitfol M.sum > expected15.sum &&
-> -     cmp expected15.sum actual15.sum &&
-> -     sum bozbar frotz nitfol >actual15a.sum &&
-> -     if cmp M.sum actual15a.sum; then false; else :; fi &&
-> +     test_cmp bozbar.M bozbar &&
-> +     test_cmp frotz.M frotz &&
->        echo nitfol nitfol nitfol >nitfol1 &&
->        diff nitfol nitfol1 &&
->        rm -f nitfol1'
-> @@ -267,8 +269,10 @@ test_expect_success \
->        git ls-files --stage >18.out &&
->        test_cmp M.out 18.out &&
->        check_cache_at bozbar clean &&
-> -     sum bozbar frotz nitfol >actual18.sum &&
-> -     cmp M.sum actual18.sum'
-> +     test_cmp bozbar.M bozbar &&
-> +     test_cmp frotz.M frotz &&
-> +     test_cmp nitfol.M nitfol
-> +'
->   
->   test_expect_success \
->       '19 - local change already having a good result, further modified.' \
-> @@ -281,11 +285,8 @@ test_expect_success \
->        git ls-files --stage >19.out &&
->        test_cmp M.out 19.out &&
->        check_cache_at bozbar dirty &&
-> -     sum frotz nitfol >actual19.sum &&
-> -     grep -v bozbar  M.sum > expected19.sum &&
-> -     cmp expected19.sum actual19.sum &&
-> -     sum bozbar frotz nitfol >actual19a.sum &&
-> -     if cmp M.sum actual19a.sum; then false; else :; fi &&
-> +     test_cmp frotz.M frotz &&
-> +     test_cmp nitfol.M nitfol &&
->        echo gnusto gnusto >bozbar1 &&
->        diff bozbar bozbar1 &&
->        rm -f bozbar1'
-> @@ -300,8 +301,10 @@ test_expect_success \
->        git ls-files --stage >20.out &&
->        test_cmp M.out 20.out &&
->        check_cache_at bozbar clean &&
-> -     sum bozbar frotz nitfol >actual20.sum &&
-> -     cmp M.sum actual20.sum'
-> +     test_cmp bozbar.M bozbar &&
-> +     test_cmp frotz.M frotz &&
-> +     test_cmp nitfol.M nitfol
-> +'
->   
->   test_expect_success \
->       '21 - no local change, dirty cache.' \
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index 1b6e53f78a..51f52dcd4e 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -991,9 +991,6 @@ case $uname_s in
->   	find () {
->   		/usr/bin/find "$@"
->   	}
-> -	sum () {
-> -		md5sum "$@"
-> -	}
->   	# git sees Windows-style pwd
->   	pwd () {
->   		builtin pwd -W
-> 
+Yeah, makes lots of sense. Then we could also remove the second
+assignment to attr_action. That is, this function would set attr_action
+at one place, always. I'll do this in a v2.
+
+Thanks.
