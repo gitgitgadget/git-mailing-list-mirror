@@ -2,62 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 010CA1F667
-	for <e@80x24.org>; Tue, 15 Aug 2017 09:30:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D6E631F667
+	for <e@80x24.org>; Tue, 15 Aug 2017 09:31:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753348AbdHOJa3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Aug 2017 05:30:29 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:33961 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751468AbdHOJa2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Aug 2017 05:30:28 -0400
-Received: by mail-pg0-f68.google.com with SMTP id y192so780794pgd.1
-        for <git@vger.kernel.org>; Tue, 15 Aug 2017 02:30:28 -0700 (PDT)
+        id S1753023AbdHOJbT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Aug 2017 05:31:19 -0400
+Received: from mail-pg0-f42.google.com ([74.125.83.42]:37285 "EHLO
+        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752497AbdHOJbS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Aug 2017 05:31:18 -0400
+Received: by mail-pg0-f42.google.com with SMTP id y129so2842113pgy.4
+        for <git@vger.kernel.org>; Tue, 15 Aug 2017 02:31:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=U3bwELEtNDHi8I3ktcfMyD09+LJ9wLCbsACZvLYonls=;
-        b=FU8IrPtNX/l4h40QjX6Y1ozTl4a8BYqDWkNpPB1vemouEOvwuXoj3C3ZgIMrqXEfB5
-         0y6u5IfeGEYDeK4o/V21Ntc4MropCbJtZyhCsThNvgpvVxBhExBnr8NvQ/M1bEdH9oMu
-         K4WpNkTV7ch1zcu510PQQmMbbgnU9Ib0YCsw/JjNmc+XhWMw9WjOb6Z0+YsZF4ihGWn/
-         Cz1umjjjOvxLE5rfUGae2D7XmaNSrSZSIvZmcBkKczGAzI6nmaxq7UjWkA9eDzEVZ9NH
-         F3OZ7w5765ZQlG+Ck+s7KwLgor5y3fGe53lHqHe300yXkOGpEDCpj80L0CLemJ+MkpL+
-         GIFQ==
+        bh=/Y/hFK3pFBNWAlp1LfmrJ0UCWO2Jm3G8wv3UY7BSVWs=;
+        b=DLX1VLBCwGGFXZzLF769DetXs1jYIoj7LQa/tcsSu5f2cpGR6M9PjWXKtbDqgZiQTA
+         0gSjtn7DsQ5A11m/ncnoMff8ocdQvXJT8NBViHpCOToRMZIDhtPxYsKVg5475IJQN/30
+         Gchbahp4a6b4y41WxsWbEAUoGxtJR79vMKSVWAFLBcQIBslY/rQb5WIf0G9NO/TLeUuG
+         Ij6d8BpIF2JTGAzYjNtwEG+fsNw0ZNz0Y8rr5l+RLcB8XqPWoTKh3uPVjvk1o8jhHEaI
+         LwjLuIvvqN8nZHjeqXwlZTtkGgS0Z/lPdJD4423OOVcefO9Ztgws3egW5Fm11U9WB28r
+         Rmtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-transfer-encoding
          :content-language;
-        bh=U3bwELEtNDHi8I3ktcfMyD09+LJ9wLCbsACZvLYonls=;
-        b=hvCEyl21bDAqGSQ63wtSUZKhRv5c6H+Qh3tJfmVUcpuLE30zii5ElYqc0iFjPZzgni
-         9SfckVaFKylN4kxd4cEbTicUOiH+bpxJkA+5lBnbg5qNFNalQgfeV1F7pnVG77CV0NKk
-         M1QufXqYWwcNpsr2Dn/+I2Mwe22JDL7ZBxn5cvvxijDraiWXKZsDq+ZmV8+ljb3WyOP7
-         wrOYoL9JYCbBGUYtUjx4tSve4eAeajq5JdqWpHSr6ave8H3uv0bXGYJ6oTmRiT8yx92v
-         OrNRT+QeP3BbsNrE5lZ5LVa8cwxQN4MOUor0H6Tuc1nF1KVpAGOHMCKYXIdyJqIQImAX
-         kSrQ==
-X-Gm-Message-State: AHYfb5hz7YOuZTzCbZKxLYzFvy64IKYWwMSZUOoeKwOPQuxKoX8GANPY
-        yQRiU/OR2u7ewg==
-X-Received: by 10.84.224.7 with SMTP id r7mr31380424plj.332.1502789427885;
-        Tue, 15 Aug 2017 02:30:27 -0700 (PDT)
+        bh=/Y/hFK3pFBNWAlp1LfmrJ0UCWO2Jm3G8wv3UY7BSVWs=;
+        b=r01RSYLR9ef0YSOjuroI7FpuDu89udxNeyx5JSpI/dNYO4TsgQ0H74fRwEHxltEK1+
+         8ngKGeEnqa3SChbypxSHBe3zHzKwgCpwAfIAOFdl3Anctq50GllNWAa+pdpSSuOpPHXN
+         /qwlIsxDhsBAFfqQcmKolQ9J71fAJDKJkWRRaPQRsghogcjSlWmm0y4LBljc/AvPU+c5
+         jM3IfE981qxRQNOquMHN9lDS/R8AB0nx8KMYh8hx5DiZNZicFqEaB+XdUYnLUVvsd1Ll
+         J9pprgnv3DEgM1DYv1KsGRb9Pg+Cn6VcbfQhWM3mFzGUzoy3fh+b12wpZC10SlRl+d7H
+         S3KQ==
+X-Gm-Message-State: AHYfb5itxZ5UsYug5RjjUEowGOwe345WTMqo3CVzXzrK8gr/cfB9cOP0
+        T7TF+O4X8N4qQ/BKRGY=
+X-Received: by 10.84.130.9 with SMTP id 9mr30545431plc.388.1502789478290;
+        Tue, 15 Aug 2017 02:31:18 -0700 (PDT)
 Received: from ?IPv6:2405:204:700b:d138:d4f3:b513:ec16:b5d5? ([2405:204:700b:d138:d4f3:b513:ec16:b5d5])
-        by smtp.gmail.com with ESMTPSA id a63sm16375608pfc.165.2017.08.15.02.30.24
+        by smtp.gmail.com with ESMTPSA id d3sm15921056pgf.75.2017.08.15.02.31.15
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 15 Aug 2017 02:30:27 -0700 (PDT)
+        Tue, 15 Aug 2017 02:31:17 -0700 (PDT)
 Subject: Re: [PATCH] hook: use correct logical variable
-To:     sbeller@google.com
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
 References: <20170711141111.7538-3-kaarticsivaraam91196@gmail.com>
  <20170814084646.30781-1-kaarticsivaraam91196@gmail.com>
  <xmqqwp66ui5h.fsf@gitster.mtv.corp.google.com>
 From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Message-ID: <4e2c5bd8-48c9-fc8c-2c2c-ede3951019fc@gmail.com>
-Date:   Tue, 15 Aug 2017 15:01:14 +0530
+Message-ID: <d8f05833-43e3-cfd2-8463-4dd6f7bad5d7@gmail.com>
+Date:   Tue, 15 Aug 2017 15:02:04 +0530
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.1.1
 MIME-Version: 1.0
@@ -70,43 +70,14 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Monday 14 August 2017 11:24 PM, Stefan Beller wrote:
-
-> On Mon, Aug 14, 2017 at 1:46 AM, Kaartic Sivaraam
-> <kaarticsivaraam91196@gmail.com> wrote:
->> Sign-off added should be that of the "committer" not that of the
->> "commit's author".
->>
->> Use the correct logical variable that identifies the committer.
->>
->> Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
->> ---
->>   This fixes a small issue when trying to do the following with the script enabled,
->>
->>      $ git commit --amend -s
->>
->>   If the commit being amended was signed off by the commit's author then the above command
->>   would *append* the sign-off of the committer followed by that of the commit's author.
->>   That' because the script is invoked only after the sign-off is added by the '-s' option AND
->>   the default of 'trailer.ifexists' for interpret-trailers currently defaults to the 'addIfDifferentNeighbor'
->>   thus interpret-trailer fails to identify the existing sign-off of the commit's author and adds it.
-> The background knowledge provided up to here seems like
-> a valuable information that we'd want to preserve in the commit
-> history, i.e. make it part of the commit message?
-I didn't do that previously expecting a few people would get confused by 
-this (it did turn out
-to be true). I could have made it more clearer but didn't attempt as I 
-thought it wasn't worth
-the effort. Yeah, it sometimes takes time to *simplify* things.
-
-I guess Junio's suggestion found below seems concise enough although it 
-doesn't
-capture the reason I did the change.
-
-         Sign-off added should be that of the "committer", not that of
-         the "commit's author"; that is how the rest of Git adds sign-off
-         using sequencer.c::append_signoff().
-
+On Monday 14 August 2017 11:49 PM, Junio C Hamano wrote:
+> I tend to agree with "Anyways" above ;-) simply because I found the
+> long paragraph more confusing than enlightening, leaving me wonder
+> "why is the user using different settings for author and committer
+> name" at the end, which _is_ an irrelevant point in the issue being
+> addressed.
+This is typically the reason I didn't add the big paragraph to the log 
+message.
 
 ---
 Kaartic
