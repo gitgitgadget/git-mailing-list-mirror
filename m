@@ -2,72 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EDB0120899
-	for <e@80x24.org>; Tue, 15 Aug 2017 04:53:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00B0B1F667
+	for <e@80x24.org>; Tue, 15 Aug 2017 06:27:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751573AbdHOExQ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Aug 2017 00:53:16 -0400
-Received: from cloud.peff.net ([104.130.231.41]:39078 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750924AbdHOExQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Aug 2017 00:53:16 -0400
-Received: (qmail 15389 invoked by uid 109); 15 Aug 2017 04:53:16 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 15 Aug 2017 04:53:16 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8562 invoked by uid 111); 15 Aug 2017 04:53:40 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Tue, 15 Aug 2017 00:53:40 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Aug 2017 00:53:14 -0400
-Date:   Tue, 15 Aug 2017 00:53:14 -0400
-From:   Jeff King <peff@peff.net>
-To:     Kevin Willford <kewillf@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster@pobox.com" <gitster@pobox.com>
-Subject: Re: [PATCH v2] commit: skip discarding the index if there is no
- pre-commit hook
-Message-ID: <20170815045313.njpq5wf7iuredhoe@sigill.intra.peff.net>
-References: <20170810185416.8224-1-kewillf@microsoft.com>
- <20170814215425.23784-1-kewillf@microsoft.com>
- <20170814221309.tg7wizmvx3gtzfc7@sigill.intra.peff.net>
- <DM2PR21MB004160EA994A445A89BD50F7B78D0@DM2PR21MB0041.namprd21.prod.outlook.com>
+        id S1753394AbdHOG1l (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Aug 2017 02:27:41 -0400
+Received: from bsmtp8.bon.at ([213.33.87.20]:9545 "EHLO bsmtp8.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753366AbdHOG1j (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Aug 2017 02:27:39 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp8.bon.at (Postfix) with ESMTPSA id 3xWjFh28dnz5tlD;
+        Tue, 15 Aug 2017 08:27:36 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id D15A9274;
+        Tue, 15 Aug 2017 08:27:35 +0200 (CEST)
+Subject: Re: [PATCH] t1002: stop using sum(1)
+To:     Jonathan Nieder <jrnieder@gmail.com>,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>, Benoit Lecocq <benoit@openbsd.org>,
+        Junio C Hamano <gitster@pobox.com>
+References: <9f6e13d3-07ff-1eaa-9453-05ca26a3c1ff@web.de>
+ <20170815004546.GA78174@aiede.mtv.corp.google.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <53a9a3cd-f814-47a3-cc9b-977f9107614c@kdbg.org>
+Date:   Tue, 15 Aug 2017 08:27:35 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <DM2PR21MB004160EA994A445A89BD50F7B78D0@DM2PR21MB0041.namprd21.prod.outlook.com>
+In-Reply-To: <20170815004546.GA78174@aiede.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 15, 2017 at 04:23:50AM +0000, Kevin Willford wrote:
-
-> > This read_cache_from() should be a noop, right, because it immediately
-> > sees istate->initialized is set? So it shouldn't matter that it is not
-> > in the conditional with discard_cache(). Though if its only purpose is
-> > to re-read the just-discarded contents, perhaps it makes sense to put it
-> > there for readability.
+Am 15.08.2017 um 02:46 schrieb Jonathan Nieder:
+> Hi,
 > 
-> I thought about that and didn't know if there were cases when this would be called
-> and the cache has not been loaded.  It didn't look like it since it is only called from 
-> cmd_commit and prepare_index is called before it.  Also if in the future this call would
-> be made when it had not read the index yet so thought it was safest just to leave
-> this as always being called since it is basically a noop if the istate->initialized is set.
+> René Scharfe wrote:
+> 
+>> sum(1) is a command for calculating checksums of the contents of files.
+>> It was part of early editions of Unix ("Research Unix", 1972/1973, [1]).
+>> cksum(1) appeared in 4.4BSD (1993) as a replacement [2], and became part
+>> of POSIX.1-2008 [3].  OpenBSD 5.6 (2014) removed sum(1).
+>>
+>> We only use sum(1) in t1002 to check for changes in three files.  On
+>> MinGW we use md5sum(1) instead.  We could switch to the standard command
+>> cksum(1) for all platforms; MinGW comes with GNU coreutils now, which
+>> provides sum(1), cksum(1) and md5sum(1).  Use our standard method for
+>> checking for file changes instead: test_cmp.
+>>
+>> It's more convenient because it shows differences nicely, it's faster on
+>> MinGW because we have a special implementation there based only on
+>> shell-internal commands, it's simpler as it allows us to avoid stripping
+>> out unnecessary entries from the checksum file using grep(1), and it's
+>> more consistent with the rest of the test suite.
+>>
+>> We already compare changed files with their expected new contents using
+>> diff(1), so we don't need to check with "test_must_fail test_cmp" if
+>> they differ from their original state.  A later patch could convert the
+>> direct diff(1) calls to test_cmp as well.
+>>
+>> With all sum(1) calls gone, remove the MinGW-specific implementation
+>> from test-lib.sh as well.
+>>
+>> [1] http://minnie.tuhs.org/cgi-bin/utree.pl?file=V3/man/man1/sum.1
+>> [2] http://minnie.tuhs.org/cgi-bin/utree.pl?file=4.4BSD/usr/share/man/cat1/cksum.0
+>> [3] http://pubs.opengroup.org/onlinepubs/9699919799/utilities/cksum.html
+>> ---
+>>   t/t1002-read-tree-m-u-2way.sh | 67 ++++++++++++++++++++++---------------------
+>>   t/test-lib.sh                 |  3 --
+>>   2 files changed, 35 insertions(+), 35 deletions(-)
+> 
+> Nicely analyzed.  May we forge your sign-off?
+> 
+> [...]
+>> --- a/t/t1002-read-tree-m-u-2way.sh
+>> +++ b/t/t1002-read-tree-m-u-2way.sh
+> [...]
+>> @@ -132,8 +138,8 @@ test_expect_success \
+>>        git ls-files --stage >7.out &&
+>>        test_cmp M.out 7.out &&
+>>        check_cache_at frotz dirty &&
+>> -     sum bozbar frotz nitfol >actual7.sum &&
+>> -     if cmp M.sum actual7.sum; then false; else :; fi &&
+>> +     test_cmp bozbar.M bozbar &&
+>> +     test_cmp nitfol.M nitfol &&
+> 
+> This one is strange.  What is that '! cmp' trying to check for?
+> Does the replacement capture the same thing?
+> 
+> E.g., does it need a '! test_cmp frotz.M frotz &&' line?
 
-Yeah, I agree it might be safer as you have it. And hopefully the
-comment above the discard would point anybody in the right direction.
+In the context that you stripped a 'diff frotz frotz1' occurs, i.e., a 
+check for the expected content of the file whose content changes. 
+Together with the new test_cmp lines, the new text is a stricter check 
+than we have in the old text.
 
-> Also based on this commit
-> https://github.com/git/git/commit/2888605c649ccd423232161186d72c0e6c458a48
-> it looked like the discard_cache was added independent of the read_cache_from call,
-> which made me think that the two were not tied together.
+The patch looks good.
 
-Yeah, I tried to dig in the history and figure it out, but it was not
-nearly as clear as I would have liked. :)
+Reviewed-by: Johannes Sixt <j6t@kdbg.org>
 
--Peff
+-- Hannes
