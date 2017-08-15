@@ -7,109 +7,107 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E0751208CD
-	for <e@80x24.org>; Tue, 15 Aug 2017 23:04:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3CA44208CD
+	for <e@80x24.org>; Tue, 15 Aug 2017 23:10:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752991AbdHOXEX (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Aug 2017 19:04:23 -0400
-Received: from mail-it0-f46.google.com ([209.85.214.46]:36236 "EHLO
-        mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752972AbdHOXEW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Aug 2017 19:04:22 -0400
-Received: by mail-it0-f46.google.com with SMTP id 77so10817253itj.1
-        for <git@vger.kernel.org>; Tue, 15 Aug 2017 16:04:22 -0700 (PDT)
+        id S1752339AbdHOXKn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Aug 2017 19:10:43 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:32937 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751580AbdHOXKm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Aug 2017 19:10:42 -0400
+Received: by mail-pg0-f67.google.com with SMTP id u185so3521388pgb.0
+        for <git@vger.kernel.org>; Tue, 15 Aug 2017 16:10:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=Payzl/lKegCFYRsvIMU1v/dIQPuFxQbiVRyz3ZZOLbI=;
-        b=pdklKRSpgvI7dKtFmVGSTKsmB6R8aTDgVsABPk7+SX7hYZja+fjHLufUNDjHffFysc
-         Y76vvOP73MkUE6DoYJrvlzjgFZ1ZOAwbbEJX3WSzZvtWAcgS1SKS+L7BFOlVhM5z8e19
-         POq45bDfeUw2FNU9E7lqN2SW+Bhuqdi5RaJvVY1UzTC9fGZ1Vn7IMH5VcWpy1Vviu5nw
-         8Eaa1nLCnQQPH7wrFi9+j9yxEpbtvWanXp39csHvWr3x13IAuSYVX7v4dK60ID1y5nhx
-         5u6BlGHYErczMOHdiA5x+qsYSVFRl2Q4GZKThUGfis8oyO3oWMmjsSVoPXpHg6aKQqKC
-         0+zg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=YqAIasw8EiUeNRkcNkpqKb1BMuWgBo5lBU2s+5p38Y0=;
+        b=cH2XLWV5GW3KYJ61DMh4aTi2YsNpCf2stv+7RUD2XSCeR7LdliOaiVj29UnZBnj7NR
+         qH33WAGzMNzBLmhqxCyA8Wmf4PbhFWQDFqDcGYa4qN0iNTyQAFB/UkTYo5OwOOT/caD7
+         7Bh8B3JaPoj5gERHFaNVOwM8doAKUuSTSb1FZ0Hjd1xOemJZ2wBZ5UcLIZItxb5BhP4R
+         JLuqpSqJr0+dc5WEYzILbomurnFRUjhPJ+KOWml5LA7gg3rIM2kAblytuxRvG4JEhCxg
+         9FxZoWdcFxQri3s+2ytDYhVklT4fcnckLy9Qs2fGiddKpbvqBXq4hlnlboLauHEcvOsq
+         9Elw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=Payzl/lKegCFYRsvIMU1v/dIQPuFxQbiVRyz3ZZOLbI=;
-        b=anMsEtCGxNMiYHqGpHGyzsdToLtHLOx0uxQwYV/ByzZaHeHiUMvsNEU09PwDELWVha
-         rapi9WR1AUS73+e9DMWgmr6Je9jlyBG2qrmUFxHdmZTUx13YRLRn4GEMittLUkxx9xg6
-         zVrxbTHg/n0+F4TvZwY9Izcv4zl+R2IJTrG6VmmaI/rMhs6dmTyx8XMU76ckCLE2Al2j
-         1eQDqVa6GFeK7YiLxWCToaffuQPJEKnHvO9k1JVPyf5Gek8wyW9/ivBq4piC43ewTfN6
-         KNZIyW/xC5ikk7+IDXxb6bTFSDZb4W2zpjnmo0Qj/K3fazkWrY27+39lUmQuaInhxulf
-         tcZw==
-X-Gm-Message-State: AHYfb5hAFy+GvbXFoqYz2yY5mq0Gn5EeRfpo9id868SnS6EYOjpbbxty
-        mgMmWPw/6U2Iaq5OTbL0GSBUfre+BxxO
-X-Received: by 10.36.26.200 with SMTP id 191mr177238iti.7.1502838261827; Tue,
- 15 Aug 2017 16:04:21 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=YqAIasw8EiUeNRkcNkpqKb1BMuWgBo5lBU2s+5p38Y0=;
+        b=bzX28k2cQwofnlVMZPcuth3jFJz9uV8T3pouBHK4zuQQ3hkLxMvGnX6Hf7mupcQMJx
+         rCQIpiSWBO4Er0qIdL4QArK0isCzMPtDVcVc7u7I8yxNT2ZxHMsmgNowGrT8Dcl97hhc
+         pRsiUaT+xaigPXwzRCqTJhfLzm+dH4OX7w4CESN7F9cbo0CvZ1XF00EjzgMkotq2RaY2
+         F8Up5Zh3JDf/O68al2GLuKH1pmSOlSjlRL/96OjFUr4CEB3SFtKNDbIDkg4BjRJ7Ok5C
+         TCxxqSyw8yZ8JVJPPL/3V8Wkh2v0hxfHz/ozj3/fTluPoTXDqRMu/w+PVY20iFvMvPbw
+         nUeg==
+X-Gm-Message-State: AHYfb5gRiBWeDuGsET+ukH+Zvsao3xj2wrw1p4D+Q5yqCjw2w5JZPhor
+        LGJmFrh+4dF77A==
+X-Received: by 10.99.140.15 with SMTP id m15mr47554pgd.239.1502838641440;
+        Tue, 15 Aug 2017 16:10:41 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:5181:69ef:a50:cd47])
+        by smtp.gmail.com with ESMTPSA id p67sm17248363pga.79.2017.08.15.16.10.40
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 15 Aug 2017 16:10:40 -0700 (PDT)
+Date:   Tue, 15 Aug 2017 16:10:38 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH] push: do not add submodule odb as an alternate when
+ recursing on demand
+Message-ID: <20170815231038.GE13924@aiede.mtv.corp.google.com>
+References: <CAGZ79kZouNBxOKr7X8j6wqebp3Wh3cDqhYR-t_PxaF7AwQ0Wzg@mail.gmail.com>
+ <20170815224332.22730-1-sbeller@google.com>
 MIME-Version: 1.0
-Received: by 10.79.149.134 with HTTP; Tue, 15 Aug 2017 16:04:21 -0700 (PDT)
-From:   Prathamesh Chavan <pc44800@gmail.com>
-Date:   Wed, 16 Aug 2017 04:34:21 +0530
-Message-ID: <CAME+mvUCrMwqXTzCZM42ns6fffOJ+CkskRj=fBDUbjCrUn4dJA@mail.gmail.com>
-Subject: [GSoC] Update: Week-13
-To:     git <git@vger.kernel.org>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170815224332.22730-1-sbeller@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SUMMARY OF MY PROJECT:
+Stefan Beller wrote:
 
-Git submodule subcommands are currently implemented by using shell script
-'git-submodule.sh'. There are several reasons why we'll prefer not to
-use the shell script. My project intends to convert the subcommands into
-C code, thus making them builtins. This will increase Git's portability
-and hence the efficiency of working with the git-submodule commands.
-Link to the complete proposal: [1]
+> "git push --recurse-submodules=on-demand" adds each submodule as an
+> alternate with add_submodule_odb before checking whether the
+> submodule has anything to push and pushing it if so.
+>
+> However, it never accesses any objects from the submodule.  In the
+> parent process it uses the submodule's ref database to see if there
+> is anything to push.  The actual push (which does rely on objects)
+> occurs in a child process.
+>
+> The same was true when this call was originally added in
+> v1.7.11-rc0~111^2 (push: teach --recurse-submodules the on-demand
+> option, 2012-03-29).  Most likely it was added by analogy with
+> fetch --recurse-submodules=on-demand, which did use the submodule's
+> object database.
+>
+> Use is_submodule_populated_gently instead, which is simpler and
+> cheaper.
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  submodule.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 
-Mentors:
-Stefan Beller <sbeller@google.com>
-Christian Couder <christian.couder@gmail.com>
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-UPDATES:
+Thanks for picking up this loose end.
 
-Following are the updates about my ongoing project:
-
-* add: most of the time of the week was spent in debugging the
-  ported submodule subcommand functions. But, even after so,
-  currently the ported functions fail in total 15 tests from
-  the test suit. The WIP patches have been updated regularly,
-  and currently the patch is under discussion with the mentors
-  as well. The current status of the patch is pushed on github as
-  well, and can be viewed at:[2]
-
-Since the rest of the patches were almost the same as that in the
-previous update(except for the 'summary' patch, which was last
-updated after Christian's review), the haven't been uploaded
-again to avoid unnecessary floating patches.
-The previous updated series is available at: [3]
-But given that, next week I plan to float a separate patch
-series, containing the initial patches from the subcommand porting
-series (till deinit), which IMO, are ready for maintainer's
-review.
-
-Also, this week's update was one-day late, since I was traveling
-on the previous day. But a prior idea about this was given to the
-mentors.
-
-PLAN FOR WEEK-14 (15 August 2017 to 21 August 2017):
-
-* patches: Float a separate series, till deinit, and ask the maintainer
-  for its review.
-
-* add: The main aim of the next week is to resolve the issues with
-  the current patch, and get all the tests pass.
-
-* update: it is the last remaining subcommand to be ported. I aim to
-  atleast start with this in the following week.
-
-The work till week-13 is pushed on Github and is available at: [4].
-
-[1]: https://docs.google.com/document/d/1krxVLooWl--75Pot3dazhfygR3wCUUWZWzTXtK1L-xU/
-[2]: https://github.com/pratham-pc/git/commits/sub-add
-[3]: https://public-inbox.org/git/20170807211900.15001-1-pc44800@gmail.com/
-[4]: https://github.com/pratham-pc/git/commits/week-13
+> diff --git a/submodule.c b/submodule.c
+> index 111a3007fc..e20216bc0f 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -966,7 +966,9 @@ static int push_submodule(const char *path,
+>  			  const struct string_list *push_options,
+>  			  int dry_run)
+>  {
+> -	if (add_submodule_odb(path))
+> +	int code;
+> +
+> +	if (!is_submodule_populated_gently(path, &code))
+>  		return 1;
+>  
+>  	if (for_each_remote_ref_submodule(path, has_remote, NULL) > 0) {
