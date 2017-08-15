@@ -6,31 +6,31 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A52471F667
-	for <e@80x24.org>; Tue, 15 Aug 2017 10:24:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD4C71F667
+	for <e@80x24.org>; Tue, 15 Aug 2017 10:24:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753498AbdHOKX6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Aug 2017 06:23:58 -0400
-Received: from cloud.peff.net ([104.130.231.41]:39304 "HELO cloud.peff.net"
+        id S1753527AbdHOKYl (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Aug 2017 06:24:41 -0400
+Received: from cloud.peff.net ([104.130.231.41]:39314 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1753389AbdHOKX6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Aug 2017 06:23:58 -0400
-Received: (qmail 31538 invoked by uid 109); 15 Aug 2017 10:23:57 -0000
+        id S1753389AbdHOKYl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Aug 2017 06:24:41 -0400
+Received: (qmail 31582 invoked by uid 109); 15 Aug 2017 10:24:41 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 15 Aug 2017 10:23:57 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 15 Aug 2017 10:24:41 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9847 invoked by uid 111); 15 Aug 2017 10:24:22 -0000
+Received: (qmail 9876 invoked by uid 111); 15 Aug 2017 10:25:06 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Tue, 15 Aug 2017 06:24:22 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Tue, 15 Aug 2017 06:25:06 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Aug 2017 06:23:56 -0400
-Date:   Tue, 15 Aug 2017 06:23:56 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Aug 2017 06:24:39 -0400
+Date:   Tue, 15 Aug 2017 06:24:39 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Jacob Keller <jacob.keller@gmail.com>,
         Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v4 6/8] pretty: move trailer formatting to trailer.c
-Message-ID: <20170815102355.zf4lvkntbwxacgca@sigill.intra.peff.net>
+Subject: [PATCH v4 7/8] t4205: refactor %(trailers) tests
+Message-ID: <20170815102439.gillxuv56pcn3p6z@sigill.intra.peff.net>
 References: <20170815102254.knccmhgralfijwli@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -41,106 +41,69 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The next commit will add many features to the %(trailer)
-placeholder in pretty.c. We'll need to access some internal
-functions of trailer.c for that, so our options are either:
+We currently have one test for %(trailers). In preparation
+for more, let's refactor a few bits:
 
-  1. expose those functions publicly
+  - move the commit creation to its own setup step so it can
+    be reused by multiple tests
 
-or
+  - add a trailer with whitespace continuation (to confirm
+    that it is left untouched)
 
-  2. make an entry point into trailer.c to do the formatting
+  - fix the sample text which claims the placeholder is %bT.
+    This was switched long ago to %(trailers)
 
-Doing (2) ends up exposing less surface area, though do note
-that caveats in the docstring of the new function.
+  - replace one "cat" with an "echo" when generating the
+    expected output. This saves a process (and sets a better
+    pattern for future tests to follow).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- pretty.c  | 13 ++-----------
- trailer.c | 18 ++++++++++++++++++
- trailer.h | 14 ++++++++++++++
- 3 files changed, 34 insertions(+), 11 deletions(-)
+ t/t4205-log-pretty-formats.sh | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/pretty.c b/pretty.c
-index 39cad5112b..99b309bb15 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -871,16 +871,6 @@ const char *format_subject(struct strbuf *sb, const char *msg,
- 	return msg;
- }
+diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
+index 18aa1b5889..83ea85eb45 100755
+--- a/t/t4205-log-pretty-formats.sh
++++ b/t/t4205-log-pretty-formats.sh
+@@ -539,25 +539,29 @@ cat >trailers <<EOF
+ Signed-off-by: A U Thor <author@example.com>
+ Acked-by: A U Thor <author@example.com>
+ [ v2 updated patch description ]
+-Signed-off-by: A U Thor <author@example.com>
++Signed-off-by: A U Thor
++  <author@example.com>
+ EOF
  
--static void format_trailers(struct strbuf *sb, const char *msg)
--{
--	struct trailer_info info;
--
--	trailer_info_get(&info, msg);
--	strbuf_add(sb, info.trailer_start,
--		   info.trailer_end - info.trailer_start);
--	trailer_info_release(&info);
--}
--
- static void parse_commit_message(struct format_commit_context *c)
- {
- 	const char *msg = c->message + c->message_off;
-@@ -1293,7 +1283,8 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
- 	}
+-test_expect_success 'pretty format %(trailers) shows trailers' '
++test_expect_success 'set up trailer tests' '
+ 	echo "Some contents" >trailerfile &&
+ 	git add trailerfile &&
+-	git commit -F - <<-EOF &&
++	git commit -F - <<-EOF
+ 	trailers: this commit message has trailers
  
- 	if (starts_with(placeholder, "(trailers)")) {
--		format_trailers(sb, msg + c->subject_off);
-+		struct process_trailer_options opts = PROCESS_TRAILER_OPTIONS_INIT;
-+		format_trailers_from_commit(sb, msg + c->subject_off, &opts);
- 		return strlen("(trailers)");
- 	}
+ 	This commit is a test commit with trailers at the end. We parse this
+-	message and display the trailers using %bT
++	message and display the trailers using %(trailers).
  
-diff --git a/trailer.c b/trailer.c
-index ed4fedc087..2d2b997ccc 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -1091,3 +1091,21 @@ void trailer_info_release(struct trailer_info *info)
- 		free(info->trailers[i]);
- 	free(info->trailers);
- }
-+
-+static void format_trailer_info(struct strbuf *out,
-+				const struct trailer_info *info,
-+				const struct process_trailer_options *opts)
-+{
-+	strbuf_add(out, info->trailer_start,
-+		   info->trailer_end - info->trailer_start);
-+}
-+
-+void format_trailers_from_commit(struct strbuf *out, const char *msg,
-+				 const struct process_trailer_options *opts)
-+{
-+	struct trailer_info info;
-+
-+	trailer_info_get(&info, msg);
-+	format_trailer_info(out, &info, opts);
-+	trailer_info_release(&info);
-+}
-diff --git a/trailer.h b/trailer.h
-index 194f85a102..a172811022 100644
---- a/trailer.h
-+++ b/trailer.h
-@@ -40,4 +40,18 @@ void trailer_info_get(struct trailer_info *info, const char *str);
+ 	$(cat trailers)
+ 	EOF
+-	git log --no-walk --pretty="%(trailers)" >actual &&
+-	cat >expect <<-EOF &&
+-	$(cat trailers)
++'
  
- void trailer_info_release(struct trailer_info *info);
+-	EOF
++test_expect_success 'pretty format %(trailers) shows trailers' '
++	git log --no-walk --pretty="%(trailers)" >actual &&
++	{
++		cat trailers &&
++		echo
++	} >expect &&
+ 	test_cmp expect actual
+ '
  
-+/*
-+ * Format the trailers from the commit msg "msg" into the strbuf "out".
-+ * Note two caveats about "opts":
-+ *
-+ *   - this is primarily a helper for pretty.c, and not
-+ *     all of the flags are supported.
-+ *
-+ *   - this differs from process_trailers slightly in that we always format
-+ *     only the trailer block itself, even if the "only_trailers" option is not
-+ *     set.
-+ */
-+void format_trailers_from_commit(struct strbuf *out, const char *msg,
-+				 const struct process_trailer_options *opts);
-+
- #endif /* TRAILER_H */
 -- 
 2.14.1.352.ge5efb0d3f3
 
