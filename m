@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8CD9E208B8
-	for <e@80x24.org>; Tue, 15 Aug 2017 12:53:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A41F208B8
+	for <e@80x24.org>; Tue, 15 Aug 2017 12:53:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752938AbdHOMxg (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Aug 2017 08:53:36 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:37267 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752928AbdHOMxf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Aug 2017 08:53:35 -0400
-Received: by mail-wm0-f67.google.com with SMTP id t138so1357498wmt.4
-        for <git@vger.kernel.org>; Tue, 15 Aug 2017 05:53:34 -0700 (PDT)
+        id S1753001AbdHOMxt (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Aug 2017 08:53:49 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:33711 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752993AbdHOMxp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Aug 2017 08:53:45 -0400
+Received: by mail-wm0-f66.google.com with SMTP id q189so1380272wmd.0
+        for <git@vger.kernel.org>; Tue, 15 Aug 2017 05:53:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=LqBoG0gV1/8b3vJBqgJWJP+m8VwTNiPAMK99M3JFrvc=;
-        b=baoeghzmdbHjup6FSy5lOyv+V1XsJ+OEsmYspG11jeAMN1QJmo0ZSV0p1iI9O3hXn1
-         dXuP3GFcFGD3oYRPB8Ef85Xag98Tel2aPtb5TKutSIF4YcHEIU09M3PXqivXLfZsihjQ
-         rtHtRowp1aatoCQbEiKiPKz3Duv7aZBgXlLME31dutKCo+ftudtj5JLDWtpo/zt556RK
-         4WYihHCwvGdkTC7ANRxuTI54mkmZSNQcGIAfkLdx84Gc6d137cJOyT2QmviDWCfoDPcw
-         o+aYZJs6XrHEb1QmBHP/UoalJhLqFXMU0ZjsLwvH+8WSjhmkT2vetgXTt5ay+VhydNi7
-         EACg==
+        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
+         :content-transfer-encoding;
+        bh=AzUowRaJ1wbvbLTWs7DnizgHCoRtyJHh7BuibNMi6vg=;
+        b=Lz6g0S5LirPT/Cj3bNaPTIsXOUi7C6Eu3BCi3cn4fIOjgu8KeDF34gKT++xoamDbc1
+         2ehO5iTjueVC2K1ptW+/NThamO/zDBGypQ0wM1riKQMfupMFwpxkJULZG9mo9KfN10jh
+         HmutOAmVk+cYDYaSVCdknoEDieys1Ht6fVFeWrBDN0IuRgO9kqruZWLp6+Y8qLG2kNe0
+         xoXkBK468lAuSrf49qhGGtEhIGDsgp0/B7FQv3Cxid66uhIHMCJErLdJalNC2uUxr0JT
+         3lxdBzsT00ea3RdwJ88BiqqgJdctQAh8Mftb9DIRIrNDY0KoMFtuqT1lNP5hPT2QXiB+
+         k+Tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=LqBoG0gV1/8b3vJBqgJWJP+m8VwTNiPAMK99M3JFrvc=;
-        b=cLDs162yj00DmYC6e0ohrVP2O9QoScbQusX0YjuIFzGYK88c0M+lKPWfeCrdu4/GRX
-         D0pWZnQ6gYZzztj+N8RCXG1rJDemZGqGWIGO202CWQ5kKlWh1AxvfO3zJUrT5RDK5Akl
-         bnKeMIwU1HnNZsYODSsLiuohE3yegHCfsOItCYN9ZJaKOpeqluD+KzDb/ajMD6YOI+nK
-         gp1xj/bNHhKYmYXiRjMFLWWaz1TvzNA/FCtq9oKzvkSX7bRgVYaW3Vqa0tO7Bf+/nY2C
-         z7UA0ePifN7F0o6dGnhvGyORHcfj6wyVMLBxKSxWatEIlkKfSgwXetE5DOZaAnbQTKU0
-         xUwg==
-X-Gm-Message-State: AHYfb5gkTWq+mnnGX/Ua6m17abaMuLsOm9e6L/Ny8BvFT7kb5s0amSn0
-        Ke7lfEBdkEAH0xKQ
-X-Received: by 10.28.107.144 with SMTP id a16mr1180079wmi.178.1502801613780;
-        Tue, 15 Aug 2017 05:53:33 -0700 (PDT)
+        bh=AzUowRaJ1wbvbLTWs7DnizgHCoRtyJHh7BuibNMi6vg=;
+        b=iIdIWZmxeOwVFfvBS6VKiezMw5AgyWvKUVgVQ4L7WhP3Ri6YUfyaRSJ7whb72nGyc0
+         nPyuh25jeKRPQLHJdVUZdS7uxMCtepDYOJBgm80u83yYz6b8VHHo52HN7SrruHLbg3M2
+         VX6Sn7FffdmBSUQLKnQj8QLUITkUeNNRfnbPXg22zqVzo5glBYwbBndukIHVGwHSQED2
+         1+HBgQ6oCZ3HTMTIy9Ss0tnLhpSIR0y7n5BVUC9SS32/cAw8h+877rs6a6v4QZ2fuIPB
+         rYQVdVNc9v+PbTA3RZLuhz8FS5wTeWP22D8Wnju9eGyhPSAQeqnqpwKEn7wYok2OcYUH
+         DGqg==
+X-Gm-Message-State: AHYfb5jRdBu2xbn7cc56CrO7lHyWONRgYREgF695akQ2swsLXc936P/k
+        qP1wnGawTarJvtuM
+X-Received: by 10.28.175.8 with SMTP id y8mr1238279wme.42.1502801623995;
+        Tue, 15 Aug 2017 05:53:43 -0700 (PDT)
 Received: from localhost.localdomain ([2a02:aa16:5782:c100:1208:b1ff:fee6:d811])
-        by smtp.gmail.com with ESMTPSA id k14sm4006617wrg.11.2017.08.15.05.53.32
+        by smtp.gmail.com with ESMTPSA id k14sm4006617wrg.11.2017.08.15.05.53.43
+        for <git@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 15 Aug 2017 05:53:33 -0700 (PDT)
+        Tue, 15 Aug 2017 05:53:43 -0700 (PDT)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH 2/5] pack-objects: take lock before accessing `remaining`
-Date:   Tue, 15 Aug 2017 14:53:02 +0200
-Message-Id: <5815ea4f27226b604751961c8b70355a8925f0c5.1502780344.git.martin.agren@gmail.com>
+Subject: [PATCH 5/5] ThreadSanitizer: add suppressions
+Date:   Tue, 15 Aug 2017 14:53:05 +0200
+Message-Id: <51dfd9e8ac7ec1d9019342bda89466c8fe133106.1502780344.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.14.1.151.gdfeca7a7e
 In-Reply-To: <cover.1502780343.git.martin.agren@gmail.com>
 References: <cover.1502780343.git.martin.agren@gmail.com>
@@ -65,56 +65,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When checking the conditional of "while (me->remaining)", we did not
-hold the lock. Calling find_deltas would still be safe, since it checks
-"remaining" (after taking the lock) and is able to handle all values. In
-fact, this could (currently) not trigger any bug: a bug could happen if
-`remaining` transitioning from zero to non-zero races with the evaluation
-of the while-condition, but these are always separated by the
-data_ready-mechanism.
+Add .tsan-suppressions for want_color() and transfer_debug(). Both of
+these use the pattern
 
-Make sure we have the lock when we read `remaining`. This does mean we
-release it just so that find_deltas can take it immediately again. We
-could tweak the contract so that the lock should be taken before calling
-find_deltas, but let's defer that until someone can actually show that
-"unlock+lock" has a measurable negative impact.
+	static int foo = -1;
+	if (foo == -1)
+		foo = func();
+
+where func always returns the same value. This can cause ThreadSanitizer
+to diagnose a race when foo is written from two threads, although it
+doesn't matter in practice since it's always the same value that is
+written.
+
+The suppressions-file is used by setting the environment variable
+TSAN_OPTIONS to, e.g., "suppressions=$(pwd)/.tsan-suppressions". Observe
+that relative paths such as ".tsan-suppressions" might not work.
 
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
-I don't think this corrects any real error. The benefits of this patch
-would be "future-proofs things slightly" and "silences tsan, so that
-other errors don't drown in noise". Feel free to tell me those benefits
-are negligible and that this change actually hurts.
+I am no memory-model expert. Maybe (aligned) stores and loads of int are
+not actually atomic on all the various hardware that Git wants to run
+on. Or maybe the compiler is allowed to compile them into 4 1-byte
+accesses anyway...
 
- builtin/pack-objects.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ .tsan-suppressions | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+ create mode 100644 .tsan-suppressions
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index c753e9237..bd391e97a 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -2170,7 +2170,10 @@ static void *threaded_find_deltas(void *arg)
- {
- 	struct thread_params *me = arg;
- 
-+	progress_lock();
- 	while (me->remaining) {
-+		progress_unlock();
+diff --git a/.tsan-suppressions b/.tsan-suppressions
+new file mode 100644
+index 000000000..910c02e59
+--- /dev/null
++++ b/.tsan-suppressions
+@@ -0,0 +1,12 @@
++# Suppressions for ThreadSanitizer (tsan).
++#
++# This file is used by setting the environment variable TSAN_OPTIONS to, e.g.,
++# "suppressions=$(pwd)/.tsan-suppressions". Observe that relative paths such as
++# ".tsan-suppressions" might not work.
++#
++# These suppressions can be, e.g., that a static variable is written to and it
++# is always the same value being written, so it doesn't really matter that two
++# or more such writes race.
 +
- 		find_deltas(me->list, &me->remaining,
- 			    me->window, me->depth, me->processed);
- 
-@@ -2192,7 +2195,10 @@ static void *threaded_find_deltas(void *arg)
- 			pthread_cond_wait(&me->cond, &me->mutex);
- 		me->data_ready = 0;
- 		pthread_mutex_unlock(&me->mutex);
-+
-+		progress_lock();
- 	}
-+	progress_unlock();
- 	/* leave ->working 1 so that this doesn't get more work assigned */
- 	return NULL;
- }
++race:^want_color$
++race:^transfer_debug$
 -- 
 2.14.1.151.gdfeca7a7e
 
