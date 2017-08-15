@@ -2,125 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB704208B8
-	for <e@80x24.org>; Tue, 15 Aug 2017 17:04:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A4EC9208B8
+	for <e@80x24.org>; Tue, 15 Aug 2017 17:07:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752772AbdHORE2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Aug 2017 13:04:28 -0400
-Received: from mail-yw0-f179.google.com ([209.85.161.179]:35430 "EHLO
-        mail-yw0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752487AbdHORE1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Aug 2017 13:04:27 -0400
-Received: by mail-yw0-f179.google.com with SMTP id l82so8261814ywc.2
-        for <git@vger.kernel.org>; Tue, 15 Aug 2017 10:04:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=m/SJ5l4QBM3+b8udlx9dxElXBGTDUQpiP1M3He5x/Gw=;
-        b=ssP3xUQHqMevQvsTwkTgtv6qmWyy4kZ/Ra9UWx29eOjeD2/slPRIf98iLoEUrH8hg/
-         AkQYqCPW5bfNuq6TskI7JTmwHxE5VNRySc0EGlKuQNNxkaiY7cPZ0fsZGnZVuVTLRXkG
-         owtR+syWp55aswf9VItjy05reK2bXaQKFf/V5cGBSB+WvkvDgVdG0XYtpnDgw/jRpk36
-         0Y3lWYu5ADf19f33pAY4CRwH+nZSLnSmc6u/qKWRBJzVMJkkvEDmuwHgOwjQgTfDIjb1
-         ycajMOLywk/iN7OyDp8phvnV/5eTAdb1Adh2a3IH69z6ICzQznLh0F/43KIdqLFFinJm
-         Lc4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=m/SJ5l4QBM3+b8udlx9dxElXBGTDUQpiP1M3He5x/Gw=;
-        b=TdIB0p5M+6hX2z1QeBCoc26G1QwhWp1iYiK1TqBCoKAOIjMX3p/Avolp01rcfDt+bh
-         Q2t6LXY1syr9Qb66dH4k+1c9ILus7lvJ3NAUyRTnRPbFqeL3QFOYZTq8WGLUy21fHyAj
-         kOOKbRQKBRdCaR8B+w5Um9eN7Df/pGruHLRAg5GwJ7ojpo7T+EjxXG9zUDdhJsvsaN+h
-         wc6fh7jDoL5eMlSELPs00I2uDCJFQNqUpP9fcxMhI5mytPnaw0hKSGotGBAq3xMzA39e
-         E9uKD5aM3RjD1uGpDZtJSTvEQ7Ps/UQdK3BAgK1A892RaKFvDXPVCxYO/UCKYFnXpW7n
-         gaMw==
-X-Gm-Message-State: AHYfb5g6aMbTFoMcptVlDM04gu9J9D1lniQ0g6qzuogdHqe0syeQzLOb
-        VQt8NYPoXftVtCtNx5c8fDqHX+QDINed
-X-Received: by 10.37.98.71 with SMTP id w68mr22723279ybb.14.1502816666700;
- Tue, 15 Aug 2017 10:04:26 -0700 (PDT)
+        id S1751767AbdHORHW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Aug 2017 13:07:22 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52294 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751482AbdHORHV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Aug 2017 13:07:21 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D6EEA97DBD;
+        Tue, 15 Aug 2017 13:07:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=iOsXY/uBSSiNrQNgTc1+De9ARLA=; b=RU+muJ
+        bP2b65kfFiyK4cp36FIhN7hTStn+WDSKyz5GFKpp3FhjbY4CI56J1AsWm7lbpex7
+        70r9NqqS1h+ON8ipe5EfVw9R81b+NKEdbxLqXfs49zFGsHPa+W4bDRrCHrNqIIOV
+        ze0rYQoIMD7qklMUBUdg2mn6RlE+lk3aMyfJo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=qbJhohlb0IJn7f+subQ7rQhKGpWj7dhx
+        TcAAGzw9WggbgYJNKOklmI1SEPsy76+pR8+mCeb3LY/oiEjLpBcTB9brpealjkOX
+        k2A29LB2FvTO47IHaCCwwXGb4f9BxX+ai9luYKjNXED8DA5AqWHNuxNjlaEvmInG
+        PQOtKjepPQA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CE7B797DBC;
+        Tue, 15 Aug 2017 13:07:13 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 37D6697DB9;
+        Tue, 15 Aug 2017 13:07:13 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [RFC PATCH 0/3] Fixes to "diff --color-moved" MIN_BLOCK_LENGTH handling
+References: <cover.1502491372.git.jonathantanmy@google.com>
+        <xmqqk229y5zd.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kadqx3PcchM6h_U5U6nsMVf3wHSUHt1XpD_XWxYdoYudg@mail.gmail.com>
+        <xmqqbmniuei9.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kYHW3bpexhiDnoNfyp=etBJ6nPhyLYR09+4jMpw25hR_A@mail.gmail.com>
+Date:   Tue, 15 Aug 2017 10:07:11 -0700
+In-Reply-To: <CAGZ79kYHW3bpexhiDnoNfyp=etBJ6nPhyLYR09+4jMpw25hR_A@mail.gmail.com>
+        (Stefan Beller's message of "Mon, 14 Aug 2017 12:51:56 -0700")
+Message-ID: <xmqqinhosqtc.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.37.56.142 with HTTP; Tue, 15 Aug 2017 10:04:26 -0700 (PDT)
-In-Reply-To: <945cc94bedab645885f9025cee51efd8205a69a4.1502796628.git.patryk.obara@gmail.com>
-References: <cover.1502796628.git.patryk.obara@gmail.com> <945cc94bedab645885f9025cee51efd8205a69a4.1502796628.git.patryk.obara@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 15 Aug 2017 10:04:26 -0700
-Message-ID: <CAGZ79kbT7MZcWnWiQOWt_SkFMpK-u5K2=9ktXK6FaaHypt7+Nw@mail.gmail.com>
-Subject: Re: [PATCH 4/5] commit: implement free_commit_graft
-To:     Patryk Obara <patryk.obara@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2E95B256-81DC-11E7-AD87-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 15, 2017 at 4:49 AM, Patryk Obara <patryk.obara@gmail.com> wrote:
+Stefan Beller <sbeller@google.com> writes:
 
-Here is a good place to explain why this is a good patch,
-(which is not immediately obvious to me at least).
+>> I see what I wrote can be misread, especially due to its lack of
+>> ",instead", that I want to keep the broken one as-is, with neither
+>> reroll nor fixup.  That is not what I meant.
+>>
+>>  - If you choose to squash so that the resulting history after the
+>>    series graduates to 'master' will be simpler to read (due to lack
+>>    of "oops, that was a mistake"), I do not mind a reroll.
+>>
+>>  - On the other hand, as the topic has been in 'next' for some time
+>>    and presumably people tried it in their real daily work when
+>>    needed, keeping what is queued as-is has a value---we have a
+>>    fixed reference point that we can go back to to compare the code
+>>    with and without the fix.
+>>
+>> I do not have a strong preference, but if I were asked to choose,
+>> I'd choose the latter.
+>
+> We'll go with the latter then. Thanks!
+>
+> Other reasons for the latter that I want to add:
 
-> Signed-off-by: Patryk Obara <patryk.obara@gmail.com>
-> ---
->  commit.c | 11 ++++++++---
->  commit.h |  1 +
->  2 files changed, 9 insertions(+), 3 deletions(-)
->
-> diff --git a/commit.c b/commit.c
-> index 499fb14..6a145f1 100644
-> --- a/commit.c
-> +++ b/commit.c
-> @@ -109,15 +109,20 @@ static int commit_graft_pos(const unsigned char *sha1)
->                         commit_graft_sha1_access);
->  }
->
-> +void free_commit_graft(struct commit_graft *graft)
-> +{
-> +       free(graft);
-> +}
-> +
->  int register_commit_graft(struct commit_graft *graft, int ignore_dups)
->  {
->         int pos = commit_graft_pos(graft->oid.hash);
->
->         if (0 <= pos) {
->                 if (ignore_dups)
-> -                       free(graft);
-> +                       free_commit_graft(graft);
->                 else {
-> -                       free(commit_graft[pos]);
-> +                       free_commit_graft(commit_graft[pos]);
->                         commit_graft[pos] = graft;
->                 }
->                 return 1;
-> @@ -163,7 +168,7 @@ struct commit_graft *read_graft_line(struct strbuf *line)
->
->  bad_graft_data:
->         error("bad graft data: %s", buf);
-> -       free(graft);
-> +       free_commit_graft(graft);
->         return NULL;
->  }
->
-> diff --git a/commit.h b/commit.h
-> index baecc0a..c1b319f 100644
-> --- a/commit.h
-> +++ b/commit.h
-> @@ -247,6 +247,7 @@ struct commit_graft {
->  };
->  typedef int (*each_commit_graft_fn)(const struct commit_graft *, void *);
->
-> +void free_commit_graft(struct commit_graft *);
->  struct commit_graft *read_graft_line(struct strbuf *line);
->  int register_commit_graft(struct commit_graft *, int);
->  struct commit_graft *lookup_commit_graft(const struct object_id *oid);
-> --
-> 2.9.5
->
+Yup, we are on the same page.  You articulated what I meant in the
+"On the other hand" bullet point in a better way.
+
+Even though we generally do not tolerate stupid mistakes and design
+errors to clutter the history if they are found early in the review
+process while the patches are still in flight, code that have been
+"in" for extended period of time and then found it has room for
+improvement is a different matter.  There is a reason why we thought
+it was good enough initially, and there is a reason why we later
+found it needing improvement.  Doing the latter as an incremental
+fix-up is a good way to leave records for both in our history.  
+
+And to make that kind of incremental refinement useful, it helps to
+keep the history clean from an initial attempt riddled with trivial
+issues that are found early in the review is also important.
