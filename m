@@ -2,138 +2,182 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E9B920899
-	for <e@80x24.org>; Tue, 15 Aug 2017 00:41:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6FB1520899
+	for <e@80x24.org>; Tue, 15 Aug 2017 00:46:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752851AbdHOAks (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Aug 2017 20:40:48 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:53028 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751851AbdHOAkq (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 14 Aug 2017 20:40:46 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 945BC280AD;
-        Tue, 15 Aug 2017 00:40:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1502757645;
-        bh=5Pk4C/7FK2HB5BPktIRwcwRGjBgcKt4e8LNvS+0uGA0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Bsz31GDskKok2lrwI6GiulLyMf7mgdMqRIAiICPSBZ2T6MFKFCaWxaSXQswCw6YMi
-         sZuljcov2kbdL0s5eYM4IQHHZztHOJb/bpSyiOZbNpm/jEfZvB2rO/yJwk9fxQ1goI
-         /wfVvcUxh49L0seNGY0sxPWUX7enNiEl15ifx1Ag01eBxJiLil89QzUS1l8joQpQNJ
-         fXZsL1l8+Pcgz/DtLUV+hZaxW894JFcciJD9YgdLMXaU4zdJn0V5kWjXqXmWU4GTts
-         g0CjuI6Eo8saBiWyKpYQqIpKnEzRzLH47eOAnYgpxNcOHOSFbLfiAi8g0xhZ3qR8NI
-         QOsQuzEUkXt2vvmta1HqYkovH+ib53ciBlZoC5m49oZU4EbdIioSdGz2ttP3WTs9zd
-         ZMo8/0QPAs+gTJZNdv27qgo9lq35jLMhnw1983gVGSUrO7yCPhrj6u8YYnEFGxoh76
-         Uft49Q8Jtplfd9f6R2ZxWnVNPgTClvbbC8K1DFHevbri28gmkGA
-Date:   Tue, 15 Aug 2017 00:40:36 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     Stefan Beller <sbeller@google.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [RFC] clang-format: outline the git project's coding style
-Message-ID: <20170815004036.m5ejio6gdyvu6e6a@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-References: <CAGZ79kZRhTNez1jJq+DcCyERufd_YfWK7L+ujPjRCivzHz7LBw@mail.gmail.com>
- <CAGZ79kYEyebHxFO++u5RkPBj16xx5nMcahBPxra4xWUfMrXydA@mail.gmail.com>
- <20170809231900.3535ja3zqdvyerv4@sigill.intra.peff.net>
+        id S1752836AbdHOAql (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Aug 2017 20:46:41 -0400
+Received: from mail-pg0-f54.google.com ([74.125.83.54]:36579 "EHLO
+        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752740AbdHOAqk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Aug 2017 20:46:40 -0400
+Received: by mail-pg0-f54.google.com with SMTP id i12so6502482pgr.3
+        for <git@vger.kernel.org>; Mon, 14 Aug 2017 17:46:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=XN+PlKGzuYOzHrdMUPnwnf2SR4OpIC0QpSGET4LB/Vg=;
+        b=dCctpic7G+Bh6n5KXfb54vk/viM5QKRNa2M1qvtXsm/Z9mjDtjZCfGRgQi11Ibehsn
+         m7Kn/og7gRc9QHW2iHpewa6g9IRqHpF4yE4MvrdcJD2NOj9i1H0Di6+fetjXRxuJqOrG
+         YqxoaW/gIXsptiCQAXMDD7xG5iZIa4lqG4lXectYTep40rRK/lsNxabXR26Kzk0DSjUt
+         bh0+HcmwhuLnEsDYY9sCDNUgT3nOqP+Wj6+ALeAEEaudxFKGfWJFGqwiYTESt++9vvpg
+         MIs9g2XinJCcYpwniSkryiDrVfBO7DiD2T992dvoZopDQBQhyt7OS8eEqEzjmylTCu5C
+         /Mqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=XN+PlKGzuYOzHrdMUPnwnf2SR4OpIC0QpSGET4LB/Vg=;
+        b=cqHzY1oLwul/g/43AyGKw0GmxJ8a+ENtvYvAbNxK0epy3egCG/XQOQd0bo8BGBkHR9
+         A0tpzwkV7rQ3suWi7W31wtX3w2B4BNAt51q99HlOaFePUWBOOOBjFYIbgxl81LCXMvk9
+         sOy3w6ZTWWw2V/o+vGn1ZXn7gN9sAcQnX1llmC10t9N/DUR8wZ+901fZlv+jTHL12loA
+         EU2E6NNXjetjmJucW7Vgg6vI8IXIk+068rUPMFHjAlpXsLs4m8lzffPPaEdgkHEHiEcH
+         Okf6ymUqrQaX57HvCsICtaKYmQsSfYgUmt4q3/JN7AWggvDtVnROEYQp4svUVuZTUi2k
+         kdJA==
+X-Gm-Message-State: AHYfb5jwVrm8iVzAMJbgFFo5Z9XxjaR7YhozCpgjJtiwMOGLCg6lrtXO
+        uXdBCYfyt1TWzw==
+X-Received: by 10.84.167.2 with SMTP id c2mr29965741plb.369.1502757999736;
+        Mon, 14 Aug 2017 17:46:39 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:5181:69ef:a50:cd47])
+        by smtp.gmail.com with ESMTPSA id e198sm14859559pfh.36.2017.08.14.17.46.38
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 14 Aug 2017 17:46:38 -0700 (PDT)
+Date:   Mon, 14 Aug 2017 17:46:35 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
+        Benoit Lecocq <benoit@openbsd.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t1002: stop using sum(1)
+Message-ID: <20170815004546.GA78174@aiede.mtv.corp.google.com>
+References: <9f6e13d3-07ff-1eaa-9453-05ca26a3c1ff@web.de>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="hiblgfrahprlt2uy"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170809231900.3535ja3zqdvyerv4@sigill.intra.peff.net>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.11.0-2-amd64)
-User-Agent: NeoMutt/20170609 (1.8.3)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <9f6e13d3-07ff-1eaa-9453-05ca26a3c1ff@web.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
---hiblgfrahprlt2uy
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+René Scharfe wrote:
 
-On Wed, Aug 09, 2017 at 07:19:00PM -0400, Jeff King wrote:
-> On Wed, Aug 09, 2017 at 03:53:17PM -0700, Stefan Beller wrote:
->=20
-> > >> Right, the reason I stopped pursuing it was that I couldn't find a w=
-ay
-> > >> to have it make suggestions for new code without nagging about exist=
-ing
-> > >> code. If we were to aggressively reformat to match the tool for exis=
-ting
-> > >> code, that would help. But I'm a bit worried that there would always=
- be
-> > >> suggestions from the tool that we don't agree with (i.e., where the
-> > >> guiding principle is "do what is readable").
-> >=20
-> > We may have different opinions on what is readable/beautiful code.
-> > If we were to follow a mutual agreed style that is produced by a tool,
-> > we could use clean/smudge filters with different settings each.
->=20
-> I'm less worried about a difference of opinion between humans. My
-> concern is that there are cases that the tool's formatting makes _worse_
-> than what any human would write. And either we accept ugly code because
-> the tool sucks, or we spend a bunch of time fighting with the tool to
-> try to make its output look good.
+> sum(1) is a command for calculating checksums of the contents of files.
+> It was part of early editions of Unix ("Research Unix", 1972/1973, [1]).
+> cksum(1) appeared in 4.4BSD (1993) as a replacement [2], and became part
+> of POSIX.1-2008 [3].  OpenBSD 5.6 (2014) removed sum(1).
+>
+> We only use sum(1) in t1002 to check for changes in three files.  On
+> MinGW we use md5sum(1) instead.  We could switch to the standard command
+> cksum(1) for all platforms; MinGW comes with GNU coreutils now, which
+> provides sum(1), cksum(1) and md5sum(1).  Use our standard method for
+> checking for file changes instead: test_cmp.
+>
+> It's more convenient because it shows differences nicely, it's faster on
+> MinGW because we have a special implementation there based only on
+> shell-internal commands, it's simpler as it allows us to avoid stripping
+> out unnecessary entries from the checksum file using grep(1), and it's
+> more consistent with the rest of the test suite.
+>
+> We already compare changed files with their expected new contents using
+> diff(1), so we don't need to check with "test_must_fail test_cmp" if
+> they differ from their original state.  A later patch could convert the
+> direct diff(1) calls to test_cmp as well.
+>
+> With all sum(1) calls gone, remove the MinGW-specific implementation
+> from test-lib.sh as well.
+>
+> [1] http://minnie.tuhs.org/cgi-bin/utree.pl?file=V3/man/man1/sum.1
+> [2] http://minnie.tuhs.org/cgi-bin/utree.pl?file=4.4BSD/usr/share/man/cat1/cksum.0
+> [3] http://pubs.opengroup.org/onlinepubs/9699919799/utilities/cksum.html
+> ---
+>  t/t1002-read-tree-m-u-2way.sh | 67 ++++++++++++++++++++++---------------------
+>  t/test-lib.sh                 |  3 --
+>  2 files changed, 35 insertions(+), 35 deletions(-)
 
-This has been my issue with clang-format in the past.  I have an SHA-256
-implementation with an array of 64 32-bit hex integers.  These fit six
-to a line, but for neatness and consistency reasons, I'd like them four
-to a line (4 divides 64, but 6 does not).  Last I checked, clang-format
-didn't allow me that option: it reordered them because it could fit six
-on a line.  This is not the only issue I discovered, just the most
-memorable.
+Nicely analyzed.  May we forge your sign-off?
 
-Other tools, such as perltidy, have traditionally honored existing line
-breaks better (although not perfectly), which lets humans optimize for
-readability.
+[...]
+> --- a/t/t1002-read-tree-m-u-2way.sh
+> +++ b/t/t1002-read-tree-m-u-2way.sh
+[...]
+> @@ -132,8 +138,8 @@ test_expect_success \
+>       git ls-files --stage >7.out &&
+>       test_cmp M.out 7.out &&
+>       check_cache_at frotz dirty &&
+> -     sum bozbar frotz nitfol >actual7.sum &&
+> -     if cmp M.sum actual7.sum; then false; else :; fi &&
+> +     test_cmp bozbar.M bozbar &&
+> +     test_cmp nitfol.M nitfol &&
 
-Of course, clang-format could have dramatically improved since I last
-looked (which was around clang 3.4 or 3.6, I think).
+This one is strange.  What is that '! cmp' trying to check for?
+Does the replacement capture the same thing?
 
-Overall, I do like the idea of using tidy tools, because it does reduce
-quibbling over style quite a bit.  I just like the tools to be more
-responsive to the whitespace they're given on input.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
+E.g., does it need a '! test_cmp frotz.M frotz &&' line?
 
---hiblgfrahprlt2uy
-Content-Type: application/pgp-signature; name="signature.asc"
+I haven't looked at the context closely --- another option could be a
+note in the commit message about how that '! cmp' line was not testing
+anything useful in the first place.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.22 (GNU/Linux)
+[...]
+> @@ -209,11 +217,8 @@ test_expect_success \
+>       git ls-files --stage >14.out &&
+>       test_must_fail git diff -U0 --no-index M.out 14.out >14diff.out &&
+>       compare_change 14diff.out expected &&
+> -     sum bozbar frotz >actual14.sum &&
+> -     grep -v nitfol M.sum > expected14.sum &&
+> -     cmp expected14.sum actual14.sum &&
+> -     sum bozbar frotz nitfol >actual14a.sum &&
+> -     if cmp M.sum actual14a.sum; then false; else :; fi &&
+> +     test_cmp bozbar.M bozbar &&
+> +     test_cmp frotz.M frotz &&
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlmSQwQACgkQv1NdgR9S
-9oseaRAAk2rwyfadzaMurgAEqK/gUICiL/UA31c8ELzhoBScqfHmh06CfGfDlPhI
-CNPcXoCXdJnYcLhwvKhzAKGjM458qpZq1WDEJW3C5w/qA2em+wrbgLZwF5TcLyAI
-eM8iG5UCY9l4cvYn5IyGeVIDOwqxPJHfiE2fW5jisZWtNGz/GBJU0RhXZDZizu2i
-kdrPoGDn5XAmnVtCD4GhCQmLoCV+0oTgP4NHxPCV1IpIR/WfDpSoZBRxj3RqzavL
-heig5SwoRgh2gp1NQKX50PRkN7mBrY/c5gcdL2aRamaScJMXBqMLmQ1/kn5ChlE8
-Dgd7BnhaZMYGNgYys8hksmdjx3RtC9IC7q6pk9woWQgzbgKDI1pZV8wY4mGXL7RL
-Lq0tPmtfN6yQVvqIqmA69Lzq36+AbG9AKh4XmFTLRT1OzC7kpB8WKZpcgE8e+BJ8
-Q+LGfa4U9fwE9fxUwHaowPaunr+ZAaCdeuZxbWaLm7UeULorjIB7J9tB5azokw6x
-QokqYnSaB9tvjF7+F6xSWHcdTVWIvm7fNlPy7uBRYviVz6JxPZTfvm+FVr9qd/Od
-Xx74YV5EHjwHyXkEkux7zIGSHxCvrVd2pb8iZUSU0ZJPU4SRuPjXlBQff94HvR/B
-0d1AdmFTxzrMOYKCwqtUjZ8BXka2NWu9s5U47ssK1dN1pFy/4Yc=
-=twBD
------END PGP SIGNATURE-----
+Same question here: the preimage seems to be a stricter test than the
+postimage.
 
---hiblgfrahprlt2uy--
+[...]
+> @@ -231,11 +236,8 @@ test_expect_success \
+>       test_must_fail git diff -U0 --no-index M.out 15.out >15diff.out &&
+>       compare_change 15diff.out expected &&
+>       check_cache_at nitfol dirty &&
+> -     sum bozbar frotz >actual15.sum &&
+> -     grep -v nitfol M.sum > expected15.sum &&
+> -     cmp expected15.sum actual15.sum &&
+> -     sum bozbar frotz nitfol >actual15a.sum &&
+> -     if cmp M.sum actual15a.sum; then false; else :; fi &&
+> +     test_cmp bozbar.M bozbar &&
+> +     test_cmp frotz.M frotz &&
+
+Likewise.
+
+[...]
+> @@ -281,11 +285,8 @@ test_expect_success \
+>       git ls-files --stage >19.out &&
+>       test_cmp M.out 19.out &&
+>       check_cache_at bozbar dirty &&
+> -     sum frotz nitfol >actual19.sum &&
+> -     grep -v bozbar  M.sum > expected19.sum &&
+> -     cmp expected19.sum actual19.sum &&
+> -     sum bozbar frotz nitfol >actual19a.sum &&
+> -     if cmp M.sum actual19a.sum; then false; else :; fi &&
+> +     test_cmp frotz.M frotz &&
+> +     test_cmp nitfol.M nitfol &&
+
+Likewise.
+
+The rest looks good.
+
+Thanks,
+Jonathan
