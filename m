@@ -2,105 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A4159208CD
-	for <e@80x24.org>; Tue, 15 Aug 2017 20:06:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B577208CD
+	for <e@80x24.org>; Tue, 15 Aug 2017 20:13:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753593AbdHOUG4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Aug 2017 16:06:56 -0400
-Received: from mail-yw0-f182.google.com ([209.85.161.182]:34294 "EHLO
-        mail-yw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752983AbdHOUGu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Aug 2017 16:06:50 -0400
-Received: by mail-yw0-f182.google.com with SMTP id s143so11122781ywg.1
-        for <git@vger.kernel.org>; Tue, 15 Aug 2017 13:06:50 -0700 (PDT)
+        id S1751224AbdHOUNa (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Aug 2017 16:13:30 -0400
+Received: from mail-pg0-f45.google.com ([74.125.83.45]:33799 "EHLO
+        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751119AbdHOUN3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Aug 2017 16:13:29 -0400
+Received: by mail-pg0-f45.google.com with SMTP id u185so12003220pgb.1
+        for <git@vger.kernel.org>; Tue, 15 Aug 2017 13:13:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=MUOtfII6+jSHcBfBJbJvtkMYJ/8Cf0B3WdDA4kbg51o=;
-        b=OlOBGuoizIWjNUTwybeY36fXem8uANU2Lk8Q6AhbPjQMq40ZtbYuZCwB5w3YUXwR1Y
-         OzdmdKIV4cO+qIR29JNdUtI1giMeT8hgW2+RvuCvZD9Tf84Iq9ycefKV/hGf8EPQH4eb
-         nGJ7HndB5Q9BCK4KSbADTXOIxYR6KuRHLjJe9lAxckuXayUS396Utba0DXV1FkqT8rKF
-         pR8JiP0cV+08bTPC+sd4thnwlY3xuXks0azODqauESxTmV1zeYoCa0qbwdr59PGq8ahE
-         Q7v3sU0pWPrVwoQp52YuKa7jBYRQkLTZSbcbigyQ4ASMCWA9hP4IHGqcaGZDWgEa8m2x
-         dIPw==
+        h=from:to:cc:subject:date:message-id;
+        bh=yXwGDM+yP2Rpb6Zt/q8Usddb+Clsr3ujQTiH7toqmDM=;
+        b=cSjO07/QVZcFCkl5GGvAzBiieptEXKLtevfHzmozJ5zv4oVfdDf+obOmQNZahtAN+8
+         FVhbY2VLPjd+zf//dn8oRk9j5hCYEeDMDGe7inOyNOPV3pxK/HdYRlSz/7+lZTsxzhjU
+         VoxvNiF/gZ7a2/gMA0TiGWRE2SBLfSYhIbhCYuPA9yJEdiFzCSleeMAcnME3BKSrrdF/
+         MRMvIp4SBVQ0N0vLPOC9JTDTM2iPOs8PA4moo/sVnoPkj3C4COeHa4pHNRTI9/teEIFA
+         fQ7CulZw4ww5dyh8qFO5QdYhZuAAV06ZBYrtGehD+Xpp307nR9DPKF4rTImcNId3MiNM
+         YT+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=MUOtfII6+jSHcBfBJbJvtkMYJ/8Cf0B3WdDA4kbg51o=;
-        b=moIKrShhzEftRp8YAg2oo8QgkVLXdS3UWDXAy0yJxJgmts0FVrTeBhvSEk97q3dEp3
-         ImvRS2G2AxDefM2w95R+W0XryBZfO4S7E3QEV3WXiC/o78Z8l2xbGSqo6S/2y8z1LhW9
-         znrYJpDjiVA/vMbkwv3AsEekxDiQzLm1dwsACsY21gEHrKoQ4AitAUw99/AJ65B2/A58
-         CO5gXObDBksDp+kpIE9f0+PS+Ncr5gh1HrgnV+6ObmVTY+/+PReDgpYtIlo8cb54K52F
-         8Tvs86JNfdDQ2N6bJMRQqHXWnEBdQPsBA74QpbMLLwripBqscTDwFfge9dyN5YK1wNkQ
-         JpuQ==
-X-Gm-Message-State: AHYfb5gj2FpsDtoAu8tXC7EPB2d5Rj8kGug/PdYmzO9lUNeP3LlxhDpp
-        +kQeAdOjitBicQC/f4HSdu5UUnYfHW4HRBYe/A==
-X-Received: by 10.37.208.81 with SMTP id h78mr23366211ybg.151.1502827609967;
- Tue, 15 Aug 2017 13:06:49 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.37.56.142 with HTTP; Tue, 15 Aug 2017 13:06:49 -0700 (PDT)
-In-Reply-To: <xmqqy3qkppxt.fsf@gitster.mtv.corp.google.com>
-References: <cover.1502491372.git.jonathantanmy@google.com>
- <cover.1502754962.git.jonathantanmy@google.com> <41a7ff674072559415f98b81ffde798d94aed2fc.1502754962.git.jonathantanmy@google.com>
- <xmqqy3qkppxt.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=yXwGDM+yP2Rpb6Zt/q8Usddb+Clsr3ujQTiH7toqmDM=;
+        b=dFf9Ynj4KHoKOlHUba+Y+XatbpyZJ8YTe1BYJtiuo89Ok+Q71Iq9AFhlUqlgQkzb0/
+         9pVzp9xEtFmAlUmD0ZD3txLLs7khZhOPZrIn3SFhC4iYfK1ukSSgyM2fow/SjasZCzrv
+         qdTOomsKAlA3x2i/lZVJ6enH6TV+PHudjhyfxIjHG35UBQkLKQeE5cLq6E4q1AoxOuKO
+         lFsOvej7WvcyUONwbyDwbYrDUolksm94592hwG0vFP26LWjVTmotD8VJRw34x+0LPB5e
+         C4p3j3VHm/jBAE8mGpOybMAU8UkE7ROujVHM2QjFflgeV70y8GGbCvRz4frE3ug53oDd
+         JRqQ==
+X-Gm-Message-State: AHYfb5gnZrVw/mhw1Z0Cb5SykfRddjqiXX9E2TKTjVYVhdGYrRqTDId0
+        eSdky9PiviiYS2K/
+X-Received: by 10.98.202.214 with SMTP id y83mr30089740pfk.2.1502828009392;
+        Tue, 15 Aug 2017 13:13:29 -0700 (PDT)
+Received: from localhost ([2620:0:100e:422:f954:a93e:8e20:9fe8])
+        by smtp.gmail.com with ESMTPSA id v11sm19361231pfi.52.2017.08.15.13.13.28
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 15 Aug 2017 13:13:28 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 15 Aug 2017 13:06:49 -0700
-Message-ID: <CAGZ79kahg7q2CSg7OiaLNvHKzCUgTtq2-n=Km0N+eGRuNZ=yJw@mail.gmail.com>
-Subject: Re: [PATCH v3 3/3] diff: define block by number of non-space chars
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+To:     jonathantanmy@google.com
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+Subject: [PATCH] sha1_file: make read_info_alternates static
+Date:   Tue, 15 Aug 2017 13:13:19 -0700
+Message-Id: <20170815201319.32395-1-sbeller@google.com>
+X-Mailer: git-send-email 2.14.0.rc0.3.g6c2e499285
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 15, 2017 at 12:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jonathan Tan <jonathantanmy@google.com> writes:
->
->> The existing behavior of diff --color-moved=zebra does not define the
->> minimum size of a block at all, instead relying on a heuristic applied
->> later to filter out sets of adjacent moved lines that are shorter than 3
->> lines long. This can be confusing, because a block could thus be colored
->> as moved at the source but not at the destination (or vice versa),
->> depending on its neighbors.
->>
->> Instead, teach diff that the minimum size of a block is 10
->> non-whitespace characters. This allows diff to still exclude
->> uninteresting lines appearing on their own (such as those solely
->> consisting of one or a few closing braces), as was the intention of the
->> adjacent-moved-line heuristic.
->
-> I recall that there is a logic backed by a similar rationale in
-> blame.c::blame_entry_score() but over there we count alnum, not
-> !isspace, to judge if a block has been split into too small a piece
-> to be significant.  I do not know which one is better, but if there
-> is no strong reason, perhaps we want to unify the two, so that we
-> can improve both heuristics at the same time?
+read_info_alternates is not used from outside, so let's make it static.
 
-In an ideal world we would use entropy of the diffed characters as
-that is a best approximation on how much "interesting" things are
-going on in that particular diff.
+We have to declare the function before link_alt_odb_entry instead of
+moving the code around, link_alt_odb_entry calls read_info_alternates,
+which in turn calls link_alt_odb_entry.
 
-Computing the entropy is cumbersome, but maybe ok for this
-purpose (we're most likely IO bound anyway, specifically when
-including the human understanding as the last part of IO).
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
 
-Reasons that may influence the choice
-* Non latin/ASCII characters should also work.
-* Do we care about the whitespace esoteric
-  programming language?
+  This helps in a later refactoring (moving the object
+  store to the_repository struct), too.
+  
+  Thanks,
+  Stefan
 
-The function blame_entry_score is documented to approach
-this exact problem that we are trying to solve here, so I agree
-we should have a common heuristic.
+ cache.h     | 1 -
+ sha1_file.c | 3 ++-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-Stefan
+diff --git a/cache.h b/cache.h
+index 1c69d2a05a..4109efcf24 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1551,7 +1551,6 @@ extern struct alternate_object_database {
+ 	char path[FLEX_ARRAY];
+ } *alt_odb_list;
+ extern void prepare_alt_odb(void);
+-extern void read_info_alternates(const char * relative_base, int depth);
+ extern char *compute_alternate_path(const char *path, struct strbuf *err);
+ typedef int alt_odb_fn(struct alternate_object_database *, void *);
+ extern int foreach_alt_odb(alt_odb_fn, void*);
+diff --git a/sha1_file.c b/sha1_file.c
+index b60ae15f70..9186e2c6c7 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -347,6 +347,7 @@ static int alt_odb_usable(struct strbuf *path, const char *normalized_objdir)
+  * SHA1, an extra slash for the first level indirection, and the
+  * terminating NUL.
+  */
++static void read_info_alternates(const char * relative_base, int depth);
+ static int link_alt_odb_entry(const char *entry, const char *relative_base,
+ 	int depth, const char *normalized_objdir)
+ {
+@@ -448,7 +449,7 @@ static void link_alt_odb_entries(const char *alt, int len, int sep,
+ 	strbuf_release(&objdirbuf);
+ }
+ 
+-void read_info_alternates(const char * relative_base, int depth)
++static void read_info_alternates(const char * relative_base, int depth)
+ {
+ 	char *map;
+ 	size_t mapsz;
+-- 
+2.14.0.rc0.3.g6c2e499285
+
