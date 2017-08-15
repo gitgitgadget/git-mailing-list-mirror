@@ -2,125 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1221720899
-	for <e@80x24.org>; Tue, 15 Aug 2017 01:04:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4980420899
+	for <e@80x24.org>; Tue, 15 Aug 2017 01:47:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752825AbdHOBD6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Aug 2017 21:03:58 -0400
-Received: from mail-pg0-f51.google.com ([74.125.83.51]:38882 "EHLO
-        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752740AbdHOBD6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Aug 2017 21:03:58 -0400
-Received: by mail-pg0-f51.google.com with SMTP id l64so57381652pge.5
-        for <git@vger.kernel.org>; Mon, 14 Aug 2017 18:03:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=jaYkL7J0J3FsQ9r0AfTQ36k7gzYe4DrRzOKnqARk0RQ=;
-        b=mRpZvezVBLwnczHzDWe00URx2IQLP65Jr/dj1etdYkTnwPuO6KHLWhPstuBnYTvER1
-         S+EzJa9Iq6FY606oNGgSDF7fopab1o3Mh2qEYeofQwcAQWkmhpH5p3Ogdp0MEo1ll7Oc
-         A2HOa0ggf2AHWAstI8ivmG1ixL6R4BJ+hYpdKkAIDPvS5DTV585pYirmpKe3I87wJoxA
-         hz/OUL8MLS4wKtBFx7HCaZeg3+mn+1cMsgOEeawACFD0jybu2JQ4BP0dBUMnWeuDIpCL
-         7PX47bkpBIkgvvWacVdhMC3GmFWRtSaRXUtPsLexvYujdfZgQvG+u/+o8OdVFE/bKbfQ
-         cwQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=jaYkL7J0J3FsQ9r0AfTQ36k7gzYe4DrRzOKnqARk0RQ=;
-        b=KYsr8VOa5WItTFF3DwyIJYkPrdcSxcg5JE8KICcc718xHxpVyYBXz+7f1zmEU7Ki89
-         KELqjoR7o/Rkv7z1mtfj/iDWRXxTA4Q6UeRNzojHl0N1M73yrREZRBmrYZ/gxLUAzQzP
-         ng2TM4CO0aP91mWMveKrUc9oMqHiACwhY0cB4dz5KIglORHuY7Y0tmUWQKD2JtlTcTyx
-         R/aV0+c2Y5kjzglMoNsaj0SyXAFlz85t0DjtYbCj3VuvW96nxxWfzYuqffgqM8tacl5O
-         fyuufIsyqNC+H2Iyc/Md//kjVFkm1o3KoANutvwsPQYOHjJyW92N/CGF+U3A3DXbxUYD
-         2nUA==
-X-Gm-Message-State: AHYfb5hPaAxPNKpPQ0Rhkwq38mZDfbQSImpoi/+5DK6RWGooAJS0b+rw
-        ESbW4mf6IyVY8g==
-X-Received: by 10.99.127.21 with SMTP id a21mr25244005pgd.379.1502759037464;
-        Mon, 14 Aug 2017 18:03:57 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:5181:69ef:a50:cd47])
-        by smtp.gmail.com with ESMTPSA id 133sm14937579pge.29.2017.08.14.18.03.55
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 14 Aug 2017 18:03:56 -0700 (PDT)
-Date:   Mon, 14 Aug 2017 18:03:54 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [RFC] clang-format: outline the git project's coding style
-Message-ID: <20170815010354.GB78174@aiede.mtv.corp.google.com>
-References: <CAGZ79kZRhTNez1jJq+DcCyERufd_YfWK7L+ujPjRCivzHz7LBw@mail.gmail.com>
- <CAGZ79kYEyebHxFO++u5RkPBj16xx5nMcahBPxra4xWUfMrXydA@mail.gmail.com>
- <20170809231900.3535ja3zqdvyerv4@sigill.intra.peff.net>
- <20170815004036.m5ejio6gdyvu6e6a@genre.crustytoothpaste.net>
+        id S1753418AbdHOBrK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Aug 2017 21:47:10 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38894 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752986AbdHOBrH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Aug 2017 21:47:07 -0400
+Received: (qmail 6184 invoked by uid 109); 15 Aug 2017 01:47:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 15 Aug 2017 01:47:07 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 7729 invoked by uid 111); 15 Aug 2017 01:47:31 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Mon, 14 Aug 2017 21:47:31 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Aug 2017 21:47:05 -0400
+Date:   Mon, 14 Aug 2017 21:47:05 -0400
+From:   Jeff King <peff@peff.net>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     llvm-dev@lists.llvm.org, Brandon Williams <bmwill@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Ben Peart <peartben@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v2 0/2] clang-format
+Message-ID: <20170815014704.thmpoz5xteuhqh3d@sigill.intra.peff.net>
+References: <20170808012554.186051-1-bmwill@google.com>
+ <20170814213046.107576-1-bmwill@google.com>
+ <20170814230657.bmn7exoqmqw3tlyh@sigill.intra.peff.net>
+ <CAGZ79kZgRTzWiufZUE02YYOJpH66x_hShBfcv=4RWDn-qR2LUg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170815004036.m5ejio6gdyvu6e6a@genre.crustytoothpaste.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <CAGZ79kZgRTzWiufZUE02YYOJpH66x_hShBfcv=4RWDn-qR2LUg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Mon, Aug 14, 2017 at 04:15:40PM -0700, Stefan Beller wrote:
 
-brian m. carlson wrote:
->> On Wed, Aug 09, 2017 at 03:53:17PM -0700, Stefan Beller wrote:
+> + llvm-dev@lists.llvm.org
+> 
+> The Git community is currently discussing adopting a coding style
+> defined by clang-format, here is a bug report:
 
->>> We may have different opinions on what is readable/beautiful code.
->>> If we were to follow a mutual agreed style that is produced by a tool,
->>> we could use clean/smudge filters with different settings each.
+Since we've added a cc, let me try to give a little more context.
 
-I think this is a long way away --- long enough away that by the time
-such a change could be a serious possibility, a lot may have changed
-and the project is likely to know a lot more.  In other words, I don't
-see speculating about that future as being likely to produce useful
-results today.
+> > One more oddity I found while playing with this that Git folks might run
+> > into:
+> >
+> >   $ git init tmp && cd tmp
+> >   $ git commit --allow-empty -m foo
+> >   $ echo "[mysection]mykey" >>.git/config
+> >   $ git clang-format-5.0
+> >   Traceback (most recent call last):
+> >     File "/usr/bin/git-clang-format-5.0", line 579, in <module>
+> >       main()
+> >     File "/usr/bin/git-clang-format-5.0", line 62, in main
+> >       config = load_git_config()
+> >     File "/usr/bin/git-clang-format-5.0", line 194, in load_git_config
+> >       name, value = entry.split('\n', 1)
+> >   ValueError: need more than 1 value to unpack
+> >
+> >   $ sed -i 's/mykey/&=true/' .git/config
+> >   $ git clang-format-5.0
+> >   no modified files to format
+> >
+> > So it looks like they do their own config parsing and it's not quite
+> > compatible. :(
 
-It would be a different story if we were writing a new codebase from
-scratch.  In that case, I would be all for the gofmt approach. :)
+In Git's config files, doing this:
 
-> On Wed, Aug 09, 2017 at 07:19:00PM -0400, Jeff King wrote:
+  [mysection]
+  mykey
 
->> I'm less worried about a difference of opinion between humans. My
->> concern is that there are cases that the tool's formatting makes _worse_
->> than what any human would write. And either we accept ugly code because
->> the tool sucks, or we spend a bunch of time fighting with the tool to
->> try to make its output look good.
->
-> This has been my issue with clang-format in the past.  I have an SHA-256
-> implementation with an array of 64 32-bit hex integers.  These fit six
-> to a line, but for neatness and consistency reasons, I'd like them four
-> to a line (4 divides 64, but 6 does not).  Last I checked, clang-format
-> didn't allow me that option: it reordered them because it could fit six
-> on a line.  This is not the only issue I discovered, just the most
-> memorable.
+is a shorthand for setting mysection.mkykey to "true". And the output
+from "git config --list" will show just the keyname without a value,
+like:
 
-In case it comes up again for you in a project that has adopted the
-gofmt approach: you can signify that your line breaks are intentional
-by putting line comments at the end of each line and clang-format will
-respect them.
+  mysection.mykey
 
-The clang-format documentation also mentions[1] that you can do
+instead of:
 
-  /* clang-format off */
-  const double kIdentityMatrix[] = {
-    1, 0, 0,
-    0, 1, 0,
-    0, 0, 1,
-  };
-  /* clang-format on */
+  some.key=this one has a value
 
-Thanks,
-Jonathan
+There's a possible patch elsewhere in the thread:
 
-[1] http://clang.llvm.org/docs/ClangFormatStyleOptions.html#disabling-formatting-on-a-piece-of-code
+  https://public-inbox.org/git/xmqqzib1sp6z.fsf@gitster.mtv.corp.google.com/
+
+I'm happy to see it is running "git config --list", which means it's
+responding to syntactic funny-ness in the output of that command, not in
+the original config (and other features like includes should Just Work
+without the script caring).
+
+I'm tempted to say that "config --list" should normalize this case into:
+
+  mysection.mykey=true
+
+Normally we avoid coercing values without knowing the context in which
+they'll be used. But the syntax in the original file means the user is
+telling us it's a boolean and they expect it to be treated that way.
+
+The only downside is if the user is wrong, it might be coerced into
+the string "true" instead of throwing an error. That seems like a minor
+drawback for eliminating a potentially confusing corner case from the
+plumbing output.
+
+-Peff
