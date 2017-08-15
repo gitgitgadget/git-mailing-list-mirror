@@ -2,217 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7ED4A208B8
-	for <e@80x24.org>; Tue, 15 Aug 2017 17:59:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1232E208B8
+	for <e@80x24.org>; Tue, 15 Aug 2017 17:59:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753031AbdHOR7B (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Aug 2017 13:59:01 -0400
-Received: from mail-ua0-f174.google.com ([209.85.217.174]:35377 "EHLO
-        mail-ua0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752305AbdHOR7A (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Aug 2017 13:59:00 -0400
-Received: by mail-ua0-f174.google.com with SMTP id d29so5648350uai.2
-        for <git@vger.kernel.org>; Tue, 15 Aug 2017 10:59:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ANtXrjhQyy6qjBEAK4lY0OaLyOrkyy1ZEVHqoBP1v34=;
-        b=EdQ48r0EiuadUvRuvNRVKXrXOlVRmRTdxgjIB99Em8VCy3l9WQjXNnigwXRSxMt48P
-         uak5BJ5QOxxipvplQ9S+Mg8X5vFQVaJfJ1h8unN2GTyCdrxlata68pWYb3Zceq2q7Iv+
-         hX7VxcbBKFSnVYYBgvgRktBe20Q/SOLm6HAWPsLamNqmqOwyX7oqqrEoZrNAYZvUQ1fq
-         JlFWWr0A/CRAh6D4HfHhp8rDqnCsv9ggqnqpW9Ckh4iBWpDWZwQ/3ryijsJeo/vf2adc
-         W3c3u3llet/MYkeiN3/lx+Q0KDpTl5y3Dthd/+UQeLwaprmydM+fb7NS0GKWo/ry7lWR
-         0ozA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ANtXrjhQyy6qjBEAK4lY0OaLyOrkyy1ZEVHqoBP1v34=;
-        b=CvACNtYJPNB6NZo6K7XdqxFSywYysqgBTkBdHv0N5viuieI09yfnCSzrchkv1g6GXk
-         BnpF77MCZDDnHjla+54U2PKx40EzEvpwkXFcAaFAghpGekdhRVxpyW7p07/mnW4EyEHd
-         b0zKzWGO5USO8EvVg0BIEmeeFDEPkG0HxnmIMkTB9biW5ds16KB7c5pidST6qT2k+R2M
-         eAYhN26jjidkfoi8KYQEND5eznB9cf8F2fDJV/RaeG4Gr7y41cMm/RpcDwd7KDn+RIlT
-         WnBfH8ieilkdPJ7x9TgTRZVokoPC+jQ+93gHwz87o9MCeUfJWr8ZRsvn9s5muDqcaUYh
-         asBw==
-X-Gm-Message-State: AHYfb5hY13CcMP2hh61vxF2jg8C7ZyKrexkQia4LVt2PlkjNCe3UKx2C
-        28uFLCu2N6LrrC1hDICGwQbB2fcswQ==
-X-Received: by 10.159.53.33 with SMTP id o30mr18583001uao.43.1502819939388;
- Tue, 15 Aug 2017 10:58:59 -0700 (PDT)
+        id S1753327AbdHOR7R (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Aug 2017 13:59:17 -0400
+Received: from 6.mo176.mail-out.ovh.net ([46.105.44.204]:46124 "EHLO
+        6.mo176.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753109AbdHOR7Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Aug 2017 13:59:16 -0400
+Received: from ex2.mail.ovh.net (gw1.ex2.mail.ovh.net [164.132.80.186])
+        by mo176.mail-out.ovh.net (Postfix) with ESMTPS id 8D9D475B7A
+        for <git@vger.kernel.org>; Tue, 15 Aug 2017 19:49:31 +0200 (CEST)
+Received: from [10.0.2.127] (86.200.136.234) by EX7.indiv2.local (172.16.2.7)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Tue, 15
+ Aug 2017 19:49:31 +0200
+Subject: Re: [RFC 0/3] imap-send curl tunnelling support
+From:   Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
+To:     <git@vger.kernel.org>
+References: <ab866314-608b-eaca-b335-12cffe165526@morey-chaisemartin.com>
+Message-ID: <5c46f1e4-825e-8e10-e323-e637e170f315@morey-chaisemartin.com>
+Date:   Tue, 15 Aug 2017 19:49:30 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101
+ Thunderbird/56.0
 MIME-Version: 1.0
-Received: by 10.103.148.92 with HTTP; Tue, 15 Aug 2017 10:58:38 -0700 (PDT)
-In-Reply-To: <bad7dafc-247c-bf5e-8cfd-5445badeef1c@gmail.com>
-References: <CAKNmmv3_K4gB6FbcmAjXyviMbU2Ts7Rh7txkOof+-36rF_1+Gw@mail.gmail.com>
- <bad7dafc-247c-bf5e-8cfd-5445badeef1c@gmail.com>
-From:   Jason Karns <jason.karns@gmail.com>
-Date:   Tue, 15 Aug 2017 13:58:38 -0400
-Message-ID: <CAKNmmv3_rFNDDFVEeShAb3mEMOBL4z=oZXP8Df72D44stB_7BA@mail.gmail.com>
-Subject: Re: Bug: `git remote show <remote>` reports different HEAD branch
- than refs/remotes/<remote>/HEAD
-To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <ab866314-608b-eaca-b335-12cffe165526@morey-chaisemartin.com>
+Content-Type: text/plain; charset="windows-1252"
+Content-Transfer-Encoding: 8bit
+Content-Language: fr-xx-classique+reforme1990
+X-Originating-IP: [86.200.136.234]
+X-ClientProxiedBy: CAS3.indiv2.local (172.16.1.3) To EX7.indiv2.local
+ (172.16.2.7)
+X-Ovh-Tracer-Id: 3759098317251143645
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeelkedrleejgdduudegucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecufedttdenuc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 15, 2017 at 1:09 PM, Igor Djordjevic
-<igor.d.djordjevic@gmail.com> wrote:
-> Hi Jason,
->
-> On 15/08/2017 16:26, Jason Karns wrote:
->> I have a git repo that shows a different branch in
->> `.git/refs/remotes/origin/HEAD` than is reported by `git remote show
->> origin`.
->>
->> The branch is `github-rename` in refs/remotes/origin/HEAD, but shows
->> `master` in output of git-remote-show
->>
->> ```
->> $ cat .git/refs/remotes/origin/HEAD
->> ref: refs/remotes/origin/github-rename
->>
->> $ git remote show origin
->> * remote origin
->>   Fetch URL: git@XXXX.git
->>   Push  URL: git@XXXX.git
->>   HEAD branch: master
->>   Remote branches:
->>     github-rename     tracked
->>     master            tracked
->>     qa                tracked
->>     refactor-test     tracked
->>   Local branches configured for 'git pull':
->>     github-rename merges with remote github-rename
->>     master        merges with remote master
->>   Local refs configured for 'git push':
->>     github-rename pushes to github-rename (up to date)
->>     master        pushes to master        (up to date)
->> ```
->>
->> git version 2.14.1
->>
->>
->> Background:
->>
->> Prior to my repo being cloned, the default branch was configured to be
->> `some-random-branch` on github. My repo was cloned and the HEAD branch
->> was set to `some-random-branch` correctly (in `refs/`). However,
->> git-remote-show reported `master` as the HEAD branch.
->>
->> Later, `some-random-branch` was deleted from the remote. It _remained_
->> as the HEAD branch locally according to `refs/`.
->>
->> In order to test the remote-show command, I changed the HEAD branch to
->> a branch that actually existed by running `git remote set-head origin
->> github-rename`. It changed the HEAD branch in `refs/` but remote-show
->> continues to report `master` as the remote's HEAD.
->
-> I am no expert here, but reading the docs, it seems like you may have
-> wrong expectations.
->
-> Documentation for "git remote set-head"[1] explains that this command
-> is used to set default remote branch (locally), where later you can
-> use remote name only to specify that specific (remote) branch instead.
->
-> Example shows that for remote named "origin", if you set default
-> branch name to "master" (actually being "origin/master" locally),
-> then whenever you want to type "origin/master", you can type "origin"
-> only instead (set default branch name is implied).
->
-> For the given example, that is what you can see inside
-> "refs/remotes/origin/HEAD", being set to "refs/remotes/origin/master".
->
-> So it is something _you_ set _locally_ to aid you in working with the
-> remote repository.
+Ping.
 
+I'd like to get feedback from Windows developer on patch #2
+Patch#3 will probably need some updates as I expected Jeff old curl drop patches to make it in.
+As it seems to be going another way a few more ifdefs will be required
 
-Cool, this is all to my expectations.
+Nicolas
 
+Le 09/08/2017 à 16:43, Nicolas Morey-Chaisemartin a écrit :
+> From 7.21.5, curl can be tricked into using an open fd.
+> This series uses this to allow using curl over a tunnel.
 >
-> On the other hand, what "git remote show" outputs for HEAD is a name
-> of actually checked-out branch inside that remote repository - it`s
-> what`s stored inside HEAD file of the remote repository root.
+> I have a few doubt on patch #2:
+> - is socketpair working on all git supported system (windows ?)
+> - should socketpair always be used or limited to the curl over tunnel case ?
+>   I don't think there is too much different between an unname pipe and a socketpair but I'm not sure either :)
 >
-> So it is something set on the _remote_ end, you can`t influence it
-> from your local repository.
-
-
-So _this_ is not what I expected. Thanks for clarifying.
-
-Considering that a fresh clone replicates the remote's default branch
-as the local default for that remote, I wager (in the majority of
-cases) that these two are the same. It would seem that what I would
-like in this case is a feature change to git-remote-show to show both
-the locally-configured and remote-configured defaults for the given
-remote (similar in spirit to how git-remote-show already shows local
-vs remote information: branches and their configurations for
-push/pull).
-
-Such a feature would be the "read" side of the remote set-head
-command, and also be useful for highlighting cases where the local and
-remote defaults do not match.
-
-If I might suggest adding "Local default branch: xxx" to the
-remote-show output, following the HEAD branch output. (Perhaps,
-printing "(not set)" if the default isn't configured locally.)
-
-````
-$ git remote show origin | head
-* remote origin
-  Fetch URL: git@XXXX
-  Push  URL: git@XXXX
-  HEAD branch: develop
-  Local default branch: foo
-  Remote branches:
-```
-
-Or perhaps adding a line at the bottom with the other local refs. That
-would allow additional notices when/if the local and remote defaults
-differ.
-
+> This series also shows a "bug" in curl.
+> When trying out the tunnel example fro imap-send documentation, this happends:
+> Starting tunnel 'ssh -q -C localhost /usr/sbin/imapd ./Maildir'... ok
+> sending 3 messages
+> 16:38:54.055221 http.c:639              == Info: Hostname was NOT found in DNS cache
+> 16:38:54.059505 http.c:639              == Info:   Trying ::1...
+> 16:38:54.059545 http.c:639              == Info: Connected to localhost () port 143 (#0)
+> 16:38:54.354379 http.c:586              <= Recv header, 0000000332 bytes (0x0000014c)
+> 16:38:54.354405 http.c:598              <= Recv header: * PREAUTH [CAPABILITY IMAP4REV1 I18NLEVEL=1 LITERAL+ IDLE UIDPLUS NAMESPACE CHILDREN MAILBOX-REFERRALS BINARY UNSELECT ESEARCH WITHIN SCAN SORT THREAD=REFERENCES THREAD=ORDEREDSUBJECT MULTIAPPEND] Pre-authenticated user nmorey portia.home.nicolas.morey-chaisemartin.com IMAP4rev1 2007e.404 at Wed, 9 Aug 2017 16:38:54 +0200 (CEST)
+> 16:38:54.354425 http.c:639              == Info: Bad tagged response
+> 16:38:54.354448 http.c:639              == Info: Closing connection 0
+> curl_easy_perform() failed: FTP: weird server reply
 >
-> What you _could_ do in your specific case, as you mention using
-> GitHub, is following their help page for "setting the default
-> branch"[2] for your GitHub repository (which you track locally as
-> "origin") to "github-rename".
+> It appears curl do not support the PREAUTH tag.
 >
-> (in general, non-GitHub repository case, one could usually run there
-> either `git checkout github-rename`, if it`s not a bare repository,
-> or `git symbolic-ref HEAD refs/heads/github-rename`, if it`s a bare
-> repository)
+> However a test with "nc imap.server.ext 143" is working fine.
 >
-> Afterwards, running `git remote show origin` inside your local
-> repository should output "github-rename" as HEAD value, as desired.
+> Nicolas Morey-Chaisemartin (3):
+>   imap-send: move tunnel setup to its own function
+>   imap-send: use a socketpair instead of pipe to communicate with the
+>     tunnel
+>   imap_send: add support for curl over tunnel
+>
+>  Documentation/git-imap-send.txt |  4 +-
+>  imap-send.c                     | 91 +++++++++++++++++++++++++++++++----------
+>  2 files changed, 72 insertions(+), 23 deletions(-)
 >
 
-In my case, the github configuration is correct, and the set-head
-command was only used to test the output of git-remote-show. The crux
-of my misunderstanding is that I thought git-remote-show should be
-reporting the contents of `refs/remotes/origin/HEAD`. Having that
-information reported somehow (preferably through git-remote-show)
-would have clarified this for me.
-
-
-> p.s. To set your default remote branch locally to checked-out branch
-> on the remote end automatically, you can use `git remote set-head
-> origin --auto`, as documented[1]. It will inspect what`s inside
-> "HEAD" of the remote named "origin", and update your local
-> "refs/remotes/origin/HEAD" accordingly.
->
-> [1] https://git-scm.com/docs/git-remote#git-remote-emset-headem
-> [2] https://help.github.com/articles/setting-the-default-branch/
->
-> Regards,
-> Buga
-
-Thanks for clarifying. Having this information surfaced a bit would be
-a nice improvement, IMO.
-
-Jason
