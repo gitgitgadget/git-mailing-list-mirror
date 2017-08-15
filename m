@@ -2,143 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA5591F667
-	for <e@80x24.org>; Tue, 15 Aug 2017 10:55:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A306B1F667
+	for <e@80x24.org>; Tue, 15 Aug 2017 11:27:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753595AbdHOKzq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Aug 2017 06:55:46 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:37433 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753542AbdHOKzp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Aug 2017 06:55:45 -0400
-Received: by mail-pg0-f66.google.com with SMTP id 83so1008017pgb.4
-        for <git@vger.kernel.org>; Tue, 15 Aug 2017 03:55:45 -0700 (PDT)
+        id S1751772AbdHOL05 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Aug 2017 07:26:57 -0400
+Received: from mail-pg0-f52.google.com ([74.125.83.52]:37336 "EHLO
+        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751703AbdHOL0y (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Aug 2017 07:26:54 -0400
+Received: by mail-pg0-f52.google.com with SMTP id y129so4149083pgy.4
+        for <git@vger.kernel.org>; Tue, 15 Aug 2017 04:26:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=AXuMwAXM0VJLH3rNX2+YmfRsk4uuB/dnP32442RYPig=;
-        b=NnSMRFPoWrUQ+W/CS63Izg4KtwO6/r38iAKamnFmaWLjHNkMMHIzr5P0h9iHOtS11K
-         DzyRTWjMjqtxEqFJLouY7BEgpemoGpINoIuRY34kZu0DaDz7g8o5uY+i+7v0FM+auvk/
-         OduI86dEK104tgAey56DcVl0yTFcrF8i2BoN5uWf7viSPwn9FAx6jT5eItQ+VkjKyPq9
-         QGlB8t7lDpO6giU3ay/5GSb1jcfBJQs8Ej0bgM0cV5JoXVIsPJlvyWdgWwMVgQVSF9hh
-         lv7BgjklcIAiSQPEvXTM1lN1dIi1nfyczpp6PNqjj8FM+Rr8elxol33N6OF1N9fq0VKq
-         DxBA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=i814jOycviSAyIvX/cvSBwj4XMKOtaVgIQ6tqmDUjUo=;
+        b=S3EXEIHzOJmQ/iFo9jXaBc6YcCfZAS50AYITaaoHWab3Z6ttEQHqtFwQ4u4czZafVY
+         q0t2WEda5SVhSwfXj9YCVuFMgqAaXPyGGjlXm2JoBc83uZwed7kAHccePi2ksS/ho6aw
+         lI6nLboMIAR2Lx5E7rtibaUELJoJrOLPKTKiJI8f4FGuj7Llfo1g0pWXegYrMYTt8hl6
+         txgDAs2whkbBzXrS/NZ6hZYRJuPkDwEE7bKhlHEtnhRBV7y3HfHckNUUFSxZrhNRqIB9
+         o+c5AqtwhbN/QXR7FQPe4ypaBq5vWfcHy42GrLIQhM+KE96mV/Cp2FYKhu7fFFDdERU5
+         Va4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=AXuMwAXM0VJLH3rNX2+YmfRsk4uuB/dnP32442RYPig=;
-        b=fgBhe128X0UWVDxsuByi2t+txtS/IDDzMggHGz3hbL9+EESDmwMsnKX7YOe2cpxb8U
-         ZjIJ4vTUL6wjQwZ1RqRnTgpM29kjgBrdy+UHMef6Mx4gy1vvZ2Ni95GVrEhpGTs6efsl
-         36Dd3wegSF1J+sjcF5WWh1Mz/JL+M0QZzp4Dp9CD0g3+GT3kK+VJG4q/oPJNaZnTo41+
-         yUyvI4XFprlirvJdx7Taj3rwmVc2xRx4b0efmnQshV7nFUBoQmQPTjWXF0GyiXbxQ38d
-         ogdpSVqmqGQzkoTy5yunwvAUFLvgho++uhd6eNol1X7iuWW1ozQIYttDNWOGYoCcyTNV
-         TZRQ==
-X-Gm-Message-State: AHYfb5iyQkMzKPs1h9YkqAOK5Ch+DnKBf/3vjGhvDjTEinOyN5coaQHP
-        f0mobrD4wYHf6w==
-X-Received: by 10.99.6.87 with SMTP id 84mr26533449pgg.426.1502794544532;
-        Tue, 15 Aug 2017 03:55:44 -0700 (PDT)
-Received: from ?IPv6:2405:204:700b:d138:d4f3:b513:ec16:b5d5? ([2405:204:700b:d138:d4f3:b513:ec16:b5d5])
-        by smtp.gmail.com with ESMTPSA id k81sm18462727pfb.152.2017.08.15.03.55.41
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 15 Aug 2017 03:55:43 -0700 (PDT)
-Subject: Re: [PATCH v3 1/2 / RFC] builtin/branch: stop supporting the use of
- --set-upstream option
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, martin.agren@gmail.com
-References: <20170808171136.31168-1-kaarticsivaraam91196@gmail.com>
- <20170814085442.31174-1-kaarticsivaraam91196@gmail.com>
- <xmqqy3qluck4.fsf@gitster.mtv.corp.google.com>
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Message-ID: <772aaebf-81ea-ac22-9d2f-35d0778f502f@gmail.com>
-Date:   Tue, 15 Aug 2017 16:26:29 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=i814jOycviSAyIvX/cvSBwj4XMKOtaVgIQ6tqmDUjUo=;
+        b=jaNa08thX7e4Lx1gRVqJ+ZTyB+hUwneq1Uxd0UDumo2Yq5FB9CZr7xzBHvlPJn6vT1
+         yVUbddeV64moHXJihNMIVcv9ScK8MHUupT1DsXRebct3mlTGKXmiM2ypq7A6ir8vJcRI
+         1SvDw5UnStsjabAUzJDNQPGk++o2dcWMbscGsqoWvt/jNwFUo30aztiWDdH6td+eme62
+         57t3JpLJERpxGq47pMScE7k9W74cQ32KBEaJ3yR8geZUnuAJ2xHKLz4Sk0ZCMK1wd7yY
+         txQORRYrVNBxeMgrbQZHvqK62Qpgx6zuWcUYrTYOZvyfQtWQlgBQDsM5qK2zsxw/xibW
+         093w==
+X-Gm-Message-State: AHYfb5gl0YFPlTgKsd0cjLmQYrgB5eX0l20oy2NmdSmaNCWb7+l6ZqWz
+        O9hJf86RF38v7f4TgUje0BjDfJgd+A==
+X-Received: by 10.84.129.6 with SMTP id 6mr31821470plb.289.1502796414099; Tue,
+ 15 Aug 2017 04:26:54 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqqy3qluck4.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Received: by 10.100.162.37 with HTTP; Tue, 15 Aug 2017 04:26:53 -0700 (PDT)
+In-Reply-To: <20170815102334.qc4w7akl44bti44x@sigill.intra.peff.net>
+References: <20170815102254.knccmhgralfijwli@sigill.intra.peff.net> <20170815102334.qc4w7akl44bti44x@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Tue, 15 Aug 2017 13:26:53 +0200
+Message-ID: <CAN0heSrUz2jU2ijeSjYRhvyXA8qpw=JoOhaK-4Fuyv4_1L6Gtw@mail.gmail.com>
+Subject: Re: [PATCH v4 5/8] interpret-trailers: add --parse convenience option
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tuesday 15 August 2017 01:49 AM, Junio C Hamano wrote:
-> I wonder if these two lines add any value here. Those who know the
-> reason would not be helped, and those who don't know have to view
-> "git show b347d06bf" anyway.
-That's right.
-
+On 15 August 2017 at 12:23, Jeff King <peff@peff.net> wrote:
+>  SYNOPSIS
+>  --------
+>  [verse]
+> -'git interpret-trailers' [--in-place] [--trim-empty] [(--trailer <token>[(=|:)<value>])...] [<file>...]
+> +'git interpret-trailers' [options] [(--trailer <token>[(=|:)<value>])...] [<file>...]
+> +'git interpret-trailers' [options] [--parse] [<file>...]
 >
-> I somehow think the above wastes bits a bit too much.  Wouldn't it
-> be sufficient to say
+>  DESCRIPTION
+>  -----------
+> -Help adding 'trailers' lines, that look similar to RFC 822 e-mail
+> +Help parsing or adding 'trailers' lines, that look similar to RFC 822 e-mail
+>  headers, at the end of the otherwise free-form part of a commit
+>  message.
 >
->      In order to prevent "--set-upstream" on a command line from
->      being taken as an abbreviated form of "--set-upstream-to",
->      explicitly catch "--set-upstream" option and die, instead of
->      just removing it from the list of options.
-Thanks for the shorter version. I'll use this :)
+>  This command reads some patches or commit messages from either the
+> -<file> arguments or the standard input if no <file> is specified. Then
+> -this command applies the arguments passed using the `--trailer`
+> -option, if any, to the commit message part of each input file. The
+> -result is emitted on the standard output.
+> +<file> arguments or the standard input if no <file> is specified. If
+> +`--parse` is specified, the output consists of the parsed trailers.
+> +
+> +Otherwise, the this command applies the arguments passed using the
+> +`--trailer` option, if any, to the commit message part of each input
+> +file. The result is emitted on the standard output.
 
-> Because from the end-user's point of view, it has already been
-> removed, I'd phrase it more like
->
-> 	The --set-upstream option has been removed.  Use --track or ...
-I thought I changed it. It seems to have gone missing. Thanks for 
-noticing this.
+"the this"
 
-> and make sure we do not list "--set-upstream" in the list of
-> supported options in
->
-> 	git branch -h
->
-> output.
-I guess the instructions given below are enough. They do seem to be 
-doing hiding it
-from 'git branch -h'
+I think I get why you use --parse above (and in the synopsis), although
+it kind of feels like it should be --only-input or perhaps "--only-input
+(or --parse)".
 
-> Here we would want to use something like
-> 	{ OPTION_SET_INT, 0, "set-upstream", &track, NULL, N_("do not use"),
-> 	  PARSE_OPT_NOARG | PARSE_OPT_HIDDEN, NULL, BRANCH_TRACK_OVERRIDE },
->
-> in order to hide the option from "git branch -h" output.
->
-> All review comments from Martin were also good ones, and I won't
-> repeat them here.
->
+--only-input is sort of not covered by the "--parse"-part above, and it
+is sort of not covered in the "Otherwise", since --only-input and
+--trailer are incompatible. So it is sort of lost. :-) Probably doesn't
+matter much. (I'm just thinking out loud without constructive ideas.)
+Those who care about such details can continue reading..
 
->>   A query,
->>
->>      I see the following code in the code path a little above the die statement
->>      added in this change,
->>
->>              if (!strcmp(argv[0], "HEAD"))
->>      		    	die(_("it does not make sense to create 'HEAD' manually"));
->>
->>      It does seem to be doing quite a nice job of avoiding an ambiguity that could
->>      have bad consequences but it's still possible to create a branch named 'HEAD'
->>      using the '-b' option of 'checkout'. Should 'git checkout -b HEAD' actually
->>      fail(it does not currently) for the same reason 'git branch HEAD' fails?
->>
->>      My guess is that people would use 'git checkout -b <new_branch_name> <starting_point>'
->>      more than it's 'git branch' counterpart.
-> Thanks for noticing.  I offhand see no reason not to do what you
-> suggest above.
-There are two ways in which this could be done.
-
-1. Duplicate the check done in 'builtin/branch.c' in 
-'builtin/checkout.c'. This doesn't
-     sound good to me.
-
-2. Do the check in 'branch.c::validate_new_branchname' to ensure there's 
-no way to
-     create a branch with the name of 'HEAD'.
-
-Which one is preferred?
+Martin
