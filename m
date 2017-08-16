@@ -2,93 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A7C4D1F667
-	for <e@80x24.org>; Wed, 16 Aug 2017 12:11:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6DEC91F667
+	for <e@80x24.org>; Wed, 16 Aug 2017 12:19:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752115AbdHPMLx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Aug 2017 08:11:53 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:34454 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751624AbdHPMLv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Aug 2017 08:11:51 -0400
-Received: by mail-wr0-f193.google.com with SMTP id x43so2725219wrb.1
-        for <git@vger.kernel.org>; Wed, 16 Aug 2017 05:11:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=jJoQ87iv0tA5AZ/1q22IVwI7mLIzvbj/rluYm8YxI6Q=;
-        b=h+JyIfAEYwS3eYrKwn/HZC4GSbYIwqe3PSOc+JB1HQcj33fuJsTvdU3gFrP3G49YMR
-         IoWmTqlLKO4fpXN6xedgJ6DVgUDMAu0qxWFJsgriFM6pTnPfHQnRHccs/G0hexu5ESqy
-         D1CEnUTe0G2ENP/gHRfmK2jWXrOE6mkXqsR71lGq5qwS12TjqlJ3Lof/ULZlHEHYFWdP
-         7t3L2vXeHqidnKyXZPtlQ946Geq77AXR57cZfqG/oTSZVYyPLADH3djOd0lEqAd1iWkq
-         RuNDGuDxg0kyyHnw/h3VWE2xLmr9x0mVewfuNneo3AY9vvMvEiinCcQxhx7sYy8hYoap
-         e2/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=jJoQ87iv0tA5AZ/1q22IVwI7mLIzvbj/rluYm8YxI6Q=;
-        b=RwP10y4spnq6d7k2OJMXX+EZJsRCVm9aFVGOCgvFn62rBHzy4kBoapL/CWHUm3k4HH
-         0H7K5eokwK6RHBNLFxzovT1dnYdXjTNu1EYaKMfTU3mlH4ew8siFxz7seqMc6FdcF7To
-         07X7RuS3oMp4xJv18E1acG37cV8pAcNh4dOyzgVhSC5wxwbmA7nFMY02ntDBMKWEsBEy
-         fH5gLYvj9KK6HjNpBV3z9dStTWVFPW+1aDwGe3AH/hkjZNEVzNCDr+Q8w56cTQ6vXwVS
-         AVHOXt2lkBfyIe5Wc3r2j3oTq3CAubMKaL/PY4h7IdWJxtyx3f2HTLl2+VPPG7QuZUQN
-         BvAg==
-X-Gm-Message-State: AHYfb5jxyd/9CQumHeDej2N4rUU91eCjHsy8WzUFM1C1l3U7tHDTGJGT
-        sbZAW152ia3ijnGqdtZ4dKoidL+0cg==
-X-Received: by 10.223.174.232 with SMTP id y95mr1213068wrc.56.1502885510330;
- Wed, 16 Aug 2017 05:11:50 -0700 (PDT)
+        id S1751756AbdHPMTG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Aug 2017 08:19:06 -0400
+Received: from mout.gmx.net ([212.227.15.15]:62916 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751592AbdHPMTF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Aug 2017 08:19:05 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LkfdE-1d7neW2UPE-00aT21; Wed, 16
+ Aug 2017 14:18:48 +0200
+Date:   Wed, 16 Aug 2017 14:18:46 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Jeff King <peff@peff.net>
+cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
+        sbeller@google.com, gitster@pobox.com, jrnieder@gmail.com,
+        ramsay@ramsayjones.plus.com, peartben@gmail.com, avarab@gmail.com
+Subject: Re: [PATCH v2 1/2] clang-format: outline the git project's coding
+ style
+In-Reply-To: <20170814230108.wucznh66vfblrsys@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.21.1.1708161414120.19382@virtualbox>
+References: <20170808012554.186051-1-bmwill@google.com> <20170814213046.107576-1-bmwill@google.com> <20170814213046.107576-2-bmwill@google.com> <20170814224831.qhs7b44bg7v7tryx@sigill.intra.peff.net> <20170814225108.qoq6noojqznp4be6@sigill.intra.peff.net>
+ <20170814225430.GB95777@google.com> <20170814230108.wucznh66vfblrsys@sigill.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.28.24.130 with HTTP; Wed, 16 Aug 2017 05:11:19 -0700 (PDT)
-In-Reply-To: <xmqqbmngr6wq.fsf@gitster.mtv.corp.google.com>
-References: <cover.1502796628.git.patryk.obara@gmail.com> <a21088f049390828cdee957f88503e8466e1d34e.1502796628.git.patryk.obara@gmail.com>
- <xmqq1socsnay.fsf@gitster.mtv.corp.google.com> <CAGZ79kaCA29j6ON4KSsB=EH8FPfZGE56hVGSAAepcPiH952v6g@mail.gmail.com>
- <xmqqbmngr6wq.fsf@gitster.mtv.corp.google.com>
-From:   Patryk Obara <patryk.obara@gmail.com>
-Date:   Wed, 16 Aug 2017 14:11:19 +0200
-X-Google-Sender-Auth: QD2iOXyhjw6guQKjXvvuUkrbNsw
-Message-ID: <CAJfL8+R6SK3RGEGXcr5N-btKKjHCUcT95r7oOOsWgY1RXwEEtA@mail.gmail.com>
-Subject: Re: [PATCH 2/5] sha1_file: fix hardcoded size in null_sha1
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:xCxHL5roUfQzkgzTBx1LZ57lH/L99L+NsGWuBlbUBtOct26eIxp
+ 6QeVAEQF0z4AZSKF3wAoJNoFwFTRdfWjT3BRYKQGpfZMLBLtJiFInfSvi02jGjcHy6Lymy5
+ fSQOTvaYDWyD7NRwWQuibhCBxuPaLesRwoSQEMLKgw3+iVf4e6QtFaBykYIUqXAI0sluR/j
+ /5d5+eZA1bmqD7TKqBgWQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:lqjEneTJb8g=:7ZYOQgydBCuQdnLvhJfk6v
+ 1asUaqxVDEqpV5AzhSxrBB84lyXg0igwuScBBoZ/BWcE9mJ+CgRa/Vi54+gZMBtD7PJ5VdW2g
+ onjSJ04Yw0LbrElJGljQLbBxPL09zcqi1pw+X8auUg3QAP2Ttwo0+Yp0xhkxf0td1jEPwzyPx
+ 25vbWGfGHTk3t6zuB3ATe+OBfGZLvyhU9FxZVOZAtO2VdaFzzzuZudNwtfoKqJP/ckzdze1xT
+ GwAcSsTcYN0t/5hZmAnJsIMhj8z7WsQJ+DEXuqoJgdNpgJ6wB8WH4Gt4DOdh4sq/SS5SiqMeC
+ lcAG1xwZ8D8kjcRxRdEkq1ziN58+fqRryx5cZptUBggTYs1iZI7OBKBjDJ7qzOYtjGXR951Km
+ Fw+HsjIGO5kRyu9Oln8lbULAE25hxbbT7qTb/hk9r82NUVk44usUv6mwrtAxixdoKfhi1/6js
+ nWpJFXtFOtyo26HN4AL71x7s9MjAbsiYVBf5B+AVA1ag9CtFp3Gc3FCAVVyf4cIezRgqp7+qv
+ kHiA1NbfXN+i/0BHl732iHL0Z0mekhokXKcOvOxxan7alDDChwhERC0p7o8B+vxrkKuSPyqib
+ GRWvvEOEyWYkf0XjGaxlLNgxOSeRKTir99Vaa4nhNRT5+tEf96b3wUGZANvAlIgBA+Hh9ki+1
+ 6EBnvP/TEoNA3BoIZIeiQnh4ccV/zXdzZS9frhRV+R6oq87C4Y2EkErD2oFjj8+048khQzrX7
+ dZw2h47T/jGiwMeroKsNSTgsGj3oyx+I96VoXfSDH1F2Isj/VsPuZz8ie3arjkR/V5KuKVwKb
+ wx1A/OBJF5oyKfgSilxh9heS3Rk8/q7YJkW0n3k0mVXkqtLUGc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> wrote:
+Hi Peff,
 
-> I said this is OK for "null" because we assume we will use ^\0{len}$
-> for any hash function we choose as the "impossible" value, and for
-> that particular use pattern, we do not need such a union.  Just
-> letting the caller peek at an appropriate number of bytes at the
-> beginning of that NUL buffer for hash the caller wants to use is
-> sufficient.
+On Mon, 14 Aug 2017, Jeff King wrote:
 
-Do you think I should record this explanation as either commit message
-or comment in sha1_file.c?
+> On Mon, Aug 14, 2017 at 03:54:30PM -0700, Brandon Williams wrote:
+> 
+> > > And removing that gives me a clean output. I have no idea why my clang
+> > > doesn't like these (but presumably yours does). It's clang-format-5.0 in
+> > > Debian unstable (and clang-format-3.8, etc).
+> > 
+> > Those must be features in version 6 (which is what I seem to have
+> > installed on my machine).
+> 
+> OK, that makes sense. The most recent one package for Debian unstable is
+> 5.0. AFAICT 5.0 is actually in release freeze for another week or two,
+> and 6 is just bleeding-edge that moved on after the release freeze a few
+> weeks ago.
+> 
+> I'm not sure which version it makes sense to target as a minimum, but
+> probably not 6 yet. :)
 
-> MAX is inevitable only if we envision that we have to handle objects
-> named using two or more hashing schemes at the same time, with the
-> same binary and during the same run inside a single process.
+I agree.
 
-I think this will be the case if "transition one local repository at
-a time" from Jonathan Nieder's transition plan will be followed.
-This plan assumes object_id translation happening e.g. during fetch
-operation.
+There is most likely a middle path between too old and too new, and with
+the current pace of the review 5.0 will probably be good enough by the
+time this patch series can possibly hit `master`. So I'd guess 5.0 would
+be a good version to aim for.
 
---=20
-| =E2=86=90 Ceci n'est pas une pipe
-Patryk Obara
+Besides, it may not matter *all* that much which version we target: As I
+mentioned elsewhere, the contributor experience would most likely be
+vastly improved if this was a bot, say, monitoring GitHub Pull Requests.
+It could use filter-branch to apply clang-format to each commit's diff and
+report back to the Pull Request either by saying that the style is okay,
+or by linking to another repository where the fixed commits live (combined
+with instructions how to update the local branch).
+
+Ciao,
+Dscho
