@@ -2,97 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 91CC2208CD
-	for <e@80x24.org>; Wed, 16 Aug 2017 01:27:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1CE48208CD
+	for <e@80x24.org>; Wed, 16 Aug 2017 01:27:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752930AbdHPB1o (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Aug 2017 21:27:44 -0400
-Received: from mail-pg0-f41.google.com ([74.125.83.41]:36224 "EHLO
-        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752130AbdHPB1n (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Aug 2017 21:27:43 -0400
-Received: by mail-pg0-f41.google.com with SMTP id i12so16069261pgr.3
-        for <git@vger.kernel.org>; Tue, 15 Aug 2017 18:27:42 -0700 (PDT)
+        id S1752937AbdHPB1r (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Aug 2017 21:27:47 -0400
+Received: from mail-pg0-f52.google.com ([74.125.83.52]:33424 "EHLO
+        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752378AbdHPB1p (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Aug 2017 21:27:45 -0400
+Received: by mail-pg0-f52.google.com with SMTP id u5so16132687pgn.0
+        for <git@vger.kernel.org>; Tue, 15 Aug 2017 18:27:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=oNXr+jcXAoEzIErEwDdbSs+ZyVVfj+A3+QhQrh7Qt8A=;
-        b=TIsBlaEiOkClIkJHgDxjl2q/iIhLRWGn9Kj5j1cL+bdXoh4+30okIf6iB4wDQfvUCM
-         6iWLWH5Pt66XUmCiNQ1JOc+v3zyB+CCVgZy3k1VxMvMd97bJn4XBcec5fZhSTrLTqwz3
-         kBI6I9jSl0AUOTfyPvmz/gdhCcSPuta0iDKbCQ8egPmj6zBGtEEFx6yT9Asgtit1r3i4
-         cwqT15Y4fXlq2iwLhxWaKdoydZaXI94cUkhq88ycX1cCWnpIuYxtn6rs74/gceoHruqW
-         wH0PcZJ051yNBvbN9QUsLE7/SOaPhIftStTHXj3kYQYX1dodPLUkU19I8trTEMDpcaht
-         wcgw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :in-reply-to:references;
+        bh=VSxurodUKrct9oajmcrb/ADgbGkXeTEq4j6YCSVl7IM=;
+        b=l5FzkglpZHQ00zQr0RMXZdJ6SQ7/iwXhviIZLbpgLFR7sWc+CXgcvn7xScxiBvgsFA
+         fWcBf5BqWTvTDIw2z1Xp6cs/3X/uJx004qgwCV805sB0hP+PvcjBPj4GjCN6fspv0rXg
+         tbaKQpSaEFm7xwmN0qY09PA+fJhGbCVC0cvKKkFx4/gMFnb0bKO6pvYJ2SCQr1evFiOl
+         d5nXA0PLF01yUK64ItD5pO1WxggwbdA3/iXgfvE3MIrC6sfVJaFIJ1u/XAOiBjMS2aan
+         Uz9igrE1npTwGGb3OiPieRJglK8Puqj1vJFmLNx07wZTP3bYIf0KYyUMuT630bHF8LrE
+         uPRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=oNXr+jcXAoEzIErEwDdbSs+ZyVVfj+A3+QhQrh7Qt8A=;
-        b=Plf2VXy/1qVWTNSwln385/SPnRSQLmR9ggppqK3cAnWi4IWyQy4GUU8Ld+OAnqkISb
-         nDXS8AETmYIE2rWPTuNlFlyZ0qEQcfsuE6D/nk5g/DsR2UV1+H32kZS/3mK6tZMrJDsw
-         pfobEgQh8+0TeywMMPLmfznXGkR3AzlOZkmiNNKlyEWHpvVSobm6r9b3t+abgKtKcLnC
-         vUcjHI2POIQVb5HtvvaK50KCrm5pG0k5vMGfgIQweemRWFGl4EujP1Zz9fwoulzfanV3
-         5J2CzARvXMRl0OoocXoEA3rwPJpTj/QLr+UTB2HlMjf5UjFcNmPA6AUImjd5o8yXpgwe
-         BhyQ==
-X-Gm-Message-State: AHYfb5jUYYgCZ24Pnlac7yg+ahNHvosU0Z1qjii6RvAC6rGNeO5JoIOc
-        oyeFQjHgY1GIgFJfi45tpw==
-X-Received: by 10.84.128.46 with SMTP id 43mr79170pla.113.1502846862236;
-        Tue, 15 Aug 2017 18:27:42 -0700 (PDT)
+         :references:in-reply-to:references;
+        bh=VSxurodUKrct9oajmcrb/ADgbGkXeTEq4j6YCSVl7IM=;
+        b=nuDDwP/c623uarxN4/k8Vxy2LKAVIP517t6NGaKLO0PWLmsVKju/dPF0GyaHaLADft
+         6iZpGa/lxe9nSEL97EZDX+Z6ePI7GsTkSARObZa62zImYndtL6lVLDHfjDsPd4ykh3hM
+         AZPV+1JoqX66L6kduCyzgBSkN/p/qKdnyBGC2nV+3we3e/CctM7XJHzebz+NlYs9aHs/
+         welpCTkWhs6oXVRPXmJIWf0oM2uzgDel6MCSwWGYLIFdAxQ+sqEDzx5KJf6MYdX4ce8L
+         Q2/GA+oUMZUsmM+v75S1EzW8lkbW+I43k5Kxvxt30CBhH2jMotux7YNiAkK0BjikDxSZ
+         FJcw==
+X-Gm-Message-State: AHYfb5gyruirh7cp2Yg1UERuEEqDgqicbdQWNJTGJr2mAqNZnITULRcI
+        L9+MAC3Oj4jUyRAMVSe6iA==
+X-Received: by 10.84.229.130 with SMTP id c2mr69044plk.215.1502846864090;
+        Tue, 15 Aug 2017 18:27:44 -0700 (PDT)
 Received: from twelve2.svl.corp.google.com ([100.96.218.24])
-        by smtp.gmail.com with ESMTPSA id k8sm621845pgf.33.2017.08.15.18.27.41
+        by smtp.gmail.com with ESMTPSA id k8sm621845pgf.33.2017.08.15.18.27.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 15 Aug 2017 18:27:41 -0700 (PDT)
+        Tue, 15 Aug 2017 18:27:42 -0700 (PDT)
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, sbeller@google.com,
         gitster@pobox.com
-Subject: [PATCH v4 0/3] "diff --color-moved" with yet another heuristic
-Date:   Tue, 15 Aug 2017 18:27:36 -0700
-Message-Id: <cover.1502846454.git.jonathantanmy@google.com>
+Subject: [PATCH v4 1/3] diff: avoid redundantly clearing a flag
+Date:   Tue, 15 Aug 2017 18:27:37 -0700
+Message-Id: <d199b62322a29e55a8ae21636aa7076231352ad7.1502846454.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.14.1.480.gb18f417b89-goog
-In-Reply-To: <cover.1502491372.git.jonathantanmy@google.com>
-References: <cover.1502491372.git.jonathantanmy@google.com>
+In-Reply-To: <cover.1502846454.git.jonathantanmy@google.com>
+References: <cover.1502846454.git.jonathantanmy@google.com>
+In-Reply-To: <cover.1502846454.git.jonathantanmy@google.com>
+References: <cover.1502491372.git.jonathantanmy@google.com> <cover.1502846454.git.jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-These patches are on sb/diff-color-move.
+No code in diff.c sets DIFF_SYMBOL_MOVED_LINE except in
+mark_color_as_moved(), so it is redundant to clear it for the current
+line. Therefore, clear it only for previous lines.
 
-Patches 1 and 2 are unchanged, except for some line wrapping in a test
-in patch 2.
+This makes a refactoring in a subsequent patch easier.
 
-This has been updated to use the same alphanumeric heuristic as blame
-(20 alnum characters). I tried it out and I thought the results were
-reasonable in a patch set that I'm working on (the pack-related function
-refactoring one).
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+ diff.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-As for refactoring blame.c and this file, I'm not sure where best to put
-the new function, so I've added a NEEDSWORK for now.
-
-As for detecting block boundaries in adjust_last_block(), I've left it
-as-is for now. I think it's clearer if the parent function provides that
-information, since it already tracks that. In addition, we avoid corner
-cases such as what happens if the block is at the start of the diff
-output (we must ensure that we don't read off the beginning edge, for
-example).
-
-Jonathan Tan (3):
-  diff: avoid redundantly clearing a flag
-  diff: respect MIN_BLOCK_LENGTH for last block
-  diff: define block by number of alphanumeric chars
-
- Documentation/diff-options.txt |   8 +-
- diff.c                         |  47 ++++++--
- diff.h                         |   2 +-
- t/t4015-diff-whitespace.sh     | 261 ++++++++++++++++++++++++++++++-----------
- 4 files changed, 236 insertions(+), 82 deletions(-)
-
+diff --git a/diff.c b/diff.c
+index 4af73a7e0..23311f9c0 100644
+--- a/diff.c
++++ b/diff.c
+@@ -898,7 +898,7 @@ static void mark_color_as_moved(struct diff_options *o,
+ 		if (!match) {
+ 			if (block_length < COLOR_MOVED_MIN_BLOCK_LENGTH &&
+ 			    o->color_moved != COLOR_MOVED_PLAIN) {
+-				for (i = 0; i < block_length + 1; i++) {
++				for (i = 1; i < block_length + 1; i++) {
+ 					l = &o->emitted_symbols->buf[n - i];
+ 					l->flags &= ~DIFF_SYMBOL_MOVED_LINE;
+ 				}
 -- 
 2.14.1.480.gb18f417b89-goog
 
