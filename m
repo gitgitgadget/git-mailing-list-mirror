@@ -2,107 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A55A01F667
-	for <e@80x24.org>; Wed, 16 Aug 2017 15:58:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62772208D0
+	for <e@80x24.org>; Wed, 16 Aug 2017 16:36:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752298AbdHPP6P (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Aug 2017 11:58:15 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55094 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752113AbdHPP6O (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Aug 2017 11:58:14 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0A014A0621;
-        Wed, 16 Aug 2017 11:58:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=BOGvnQTzC0lUssywesw5klJUInI=; b=Qqt41y
-        cv1iEJD4OrOK7PojRPE3pQzu0RkUdV9k8hqgwdBy8nW6mBV54lxrY60FnNM6+n2X
-        f17AdKJsMnJUONm23uLyYukcFklVoM78tkjxnRBOsqWdyY5772f1fraCkBVx0nzb
-        VW784jlM3JlRZQR/XgSD7ZzbMv6v0VTOqE6NU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=sdK3Ev7LgBj9lPPoy1bISlY0XpFst9S1
-        MkRjIxVNkwFYuW+esV7fmwNxCCXDRMc0XJHglaoh7DFqXyKYcrA05rLv/eumqHfb
-        g7Zfx6E9BIRHZWzWX8JvUdM9MyfXxfs0zws5noX8Rru0IWs8vBZ5JPAS2OOmYyJI
-        7cmoY7z8Bq4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 01FB5A0620;
-        Wed, 16 Aug 2017 11:58:14 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 59F45A061F;
-        Wed, 16 Aug 2017 11:58:13 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        id S1752115AbdHPQgA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Aug 2017 12:36:00 -0400
+Received: from smtprelay03.ispgateway.de ([80.67.31.30]:14029 "EHLO
+        smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751841AbdHPQf7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Aug 2017 12:35:59 -0400
+Received: from [84.46.92.130] (helo=book.hvoigt.net)
+        by smtprelay03.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89)
+        (envelope-from <hvoigt@hvoigt.net>)
+        id 1di1IS-0002v4-8c; Wed, 16 Aug 2017 18:35:56 +0200
+Date:   Wed, 16 Aug 2017 18:35:54 +0200
+From:   Heiko Voigt <hvoigt@hvoigt.net>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
         Jonathan Tan <jonathantanmy@google.com>,
-        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] sub-process: print the cmd when a capability is unsupported
-References: <20170815173611.2267-1-chriscool@tuxfamily.org>
-        <20170815111725.5d009b66@twelve2.svl.corp.google.com>
-        <20170816002257.GG13924@aiede.mtv.corp.google.com>
-        <CAP8UFD2jLdR7HTi-T6J_xWvxKyoQf_6pUTX1CWsd9v3TXh9FXw@mail.gmail.com>
-Date:   Wed, 16 Aug 2017 08:58:12 -0700
-In-Reply-To: <CAP8UFD2jLdR7HTi-T6J_xWvxKyoQf_6pUTX1CWsd9v3TXh9FXw@mail.gmail.com>
-        (Christian Couder's message of "Wed, 16 Aug 2017 14:37:01 +0200")
-Message-ID: <xmqq8tijpkrv.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] push: do not add submodule odb as an alternate when
+ recursing on demand
+Message-ID: <20170816163554.GA4683@book.hvoigt.net>
+References: <CAGZ79kZouNBxOKr7X8j6wqebp3Wh3cDqhYR-t_PxaF7AwQ0Wzg@mail.gmail.com>
+ <20170815224332.22730-1-sbeller@google.com>
+ <xmqqh8x8pg8p.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kag+U94tzJ14mB4VZjSZ2MtUJ4vu4MXKLKkpkLw=2K_NA@mail.gmail.com>
+ <xmqqd17wpe14.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kZAkdiKHUweQK6U4dqAakfzReDMfiHKDmzsKGuAH3BgyA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B57C68FE-829B-11E7-B435-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kZAkdiKHUweQK6U4dqAakfzReDMfiHKDmzsKGuAH3BgyA@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+Hi,
 
->>> I am still wondering if protocol errors should be fatal,
->>
->> Yes, please.
->
-> Unfortunately I think it would prevent new filters or new
-> sub-processes to work with older versions of Git.
->
-> For example if filters are upgraded company wide to support the new
-> "delay" capability, that would force everyone using the filters to
-> upgrade Git.
+was about to write that we are maybe overly cautious here. Because the
+current way a submodule ends up in the list to be pushed is through:
 
-I must say that your filter is broken in that case, and it is much
-more prudent to die than continuing.  Why is that upgraded filter
-asking for "delay" to an older Git that does not yet know it in the
-first place?
+    find_unpushed_submodules()
 
-I just re-read the subprocess_handshake() codepath, and here is my
-understand.  The handshake_capabilities() function first advertises
-the set of capabilities it supports, so that the other side can pick
-and choose which ones to use and ask us to enable in its response.
+that itself collects all changed submodules when submodule_needs_pushing() is
+true. In there we have this:
 
-The code under discussion in this thread comes after that, where we
-read the response that tells us what choice the other side made.  If
-we saw something that we never advertised, that indicates one of two
-things.  The other side, i.e. the "upgraded" filter, is not paying
-attention of the capabilities advertisement, and asking something
-its correct operation relies on, but we are not capable of giving
-that unknown feature and operate without it, so after that point the
-exchange of data is a garbage-in-garbage-out.  Or the other side
-wanted to ask for one of the capabilities we advertised, but the
-code has typo and their wish to enable a capability that its correct
-operation relies on is not understood on this end.  The result is
-the same garbage-in-garbage-out.
+    if (!submodule_has_commits(path, commits))
+        /*
+         * NOTE: We do consider it safe to return "no" here. The
+         * correct answer would be "We do not know" instead of
+         * "No push needed", but it is quite hard to change
+         * the submodule pointer without having the submodule
+         * around. If a user did however change the submodules
+         * without having the submodule around, this indicates
+         * an expert who knows what they are doing or a
+         * maintainer integrating work from other people. In
+         * both cases it should be safe to skip this check.
+         */
+        return 0;
 
-So "program X asked capability C, which we cannot handle" is a good
-diagnosis to give and it is a good change to spell out the name of
-the offending program that needs to be fixed, but at the same time,
-I do not think it is safe to continue without the other side knowing
-that one of the capabilities they need to correctly operate cannot
-be turned on.
+So if the check, whether a submodule has commits, fails for any reason it will
+not end up in the list to be pushed.
+
+As a side note: inside submodule_has_commits() there is an add_submodule_odb()
+followed by a process to really make sure that the commits are in the
+submodule.
+
+So IMO at this point we can be sure that the *database* exists and this extra
+check could be dropped if we said that a caller to push_submodule() should make
+sure that the submodule exists. The current ones are doing it already (if I did
+not miss anything).
+
+On Tue, Aug 15, 2017 at 06:05:25PM -0700, Stefan Beller wrote:
+> On Tue, Aug 15, 2017 at 5:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> > Stefan Beller <sbeller@google.com> writes:
+> >
+> >>> Is "is it populated" a good thing to check here, though?  IIRC,
+> >>> add-submodule-odb allows you to add the object database of an
+> >>> inactivated submodule, so this seems to change the behaviour.  I do
+> >>> not know if the behaviour change is a good thing (i.e. bugfix) or
+> >>> not (i.e. regression) offhand, though.
+> >>
+> >> Good point, we should be able to push non-populated, even inactive(?)
+> >> submodules. For that we strictly need add_submodule_odb here
+> >> (or the repo object of the submodule, eventually).
+> >>
+> >> So let's retract this patch for now.
+> >
+> > Not so fast.
+> 
+> Ok, I took another look at the code.
+> 
+> While we may desire that un-populated submodules can be pushed
+> (due to checking out another revision where the submodule
+> doesn't exist, before pushing), this is not supported currently, because
+> the call to run the push in the submodule assumes there is a
+> "<path>/.git" on which the child process can operate.
+> So for now we HAVE to have the submodule populated.
+
+That is a good point though. In the current form of push_submodule() we need to
+have a populated submodule. So IMO to check whether the submodule is actually
+*populated* instead of adding the odb is correct and a possible bug fix.
+
+Cheers Heiko
