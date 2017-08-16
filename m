@@ -6,129 +6,181 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8DA621F667
-	for <e@80x24.org>; Wed, 16 Aug 2017 18:29:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A66B71F667
+	for <e@80x24.org>; Wed, 16 Aug 2017 18:30:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752262AbdHPS3j (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Aug 2017 14:29:39 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51931 "EHLO
+        id S1752263AbdHPSaI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Aug 2017 14:30:08 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:65170 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751765AbdHPS3i (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Aug 2017 14:29:38 -0400
+        with ESMTP id S1751611AbdHPSaH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Aug 2017 14:30:07 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3F5E7AEA62;
-        Wed, 16 Aug 2017 14:29:38 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6338EA3E46;
+        Wed, 16 Aug 2017 14:30:07 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=+bKUPyIo6ZXfyMwV7HIMBHFgFRg=; b=FOsi5dQtft6rFJ283YaT
-        fkc7548/e4V1m9njn2/lsLF+jIZdEHoHN/5+ELY5rohMq1szz/VJKD3Zc/jxZoW7
-        SQq8UMN0Fr4SwrHOh4uOe9in2hCmNHVZ20a4VYAmLR3dS1KUpPf9aP+Ur3f1+fdg
-        O7ZflIqr2BrdbtLd7k+iYjE=
+         s=sasl; bh=mok8wGoiDVCPGP0BZLN12sLW7Ho=; b=q6hMkzlj70JKYL6GiT17
+        cg6x2/i9iWtw++F4u5J7QzXACoYEbcTPGwn+XlXzEXTYQNY8pgLoTwcrH7Xz6JOI
+        3m0w+QsQjVgEKBSJQupg2q5OrvzcbAFLt+uuntMWKJnEq38usMpTO3WehiLB8/Tg
+        Q8oPbZ49yPUpcBrTi6RyaNo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:message-id:mime-version:content-type;
-         q=dns; s=sasl; b=HLBjP9e8/qV3MeD17jx88S9g5J9PAiuA+kjAtdGXqtaJwI
-        AJUXCZs1ZbTqm30sy5nU5cE8OUdOrrb9Z7wsTro7FVWB8tmhMw9wXFxnwQ4jmXpP
-        eyZCBwWZPHeQG0P2InENEAchqhVkEY/05Pj5TeZF4u90m1iJ0Jrbg9Kc5bEkk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 37A93AEA61;
-        Wed, 16 Aug 2017 14:29:38 -0400 (EDT)
+         q=dns; s=sasl; b=Crx2GVnwKS8v7IQ0FiLL6AshgbTdItlWp4PZAfylxUHE0F
+        jJMbhW/J1r+08+r7hJngRnRWwHidNE3BEakEmT8eXhVDL1O0uJVygMewfsQk4ZsC
+        2DqDR5IbTXU5GS1jsWdUq16PzgvdhUUMa4YbkGEVACZ+7qVaB2Jg1nUcM6Me8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5C2F5A3E45;
+        Wed, 16 Aug 2017 14:30:07 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 92C73AEA5E;
-        Wed, 16 Aug 2017 14:29:37 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 833B4A3E42;
+        Wed, 16 Aug 2017 14:30:05 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     tboegi@web.de
 Cc:     git@vger.kernel.org, asottile@umich.edu
-Subject: [PATCH/FIXUP 4/2] apply: only pay attention to CRLF in the preimage
+Subject: [PATCH/FIXUP 5/2] apply: localize the CRLF business to read_old_data()
 References: <xmqq4ltpsn42.fsf@gitster.mtv.corp.google.com>
         <20170813085106.1731-1-tboegi@web.de>
-Date:   Wed, 16 Aug 2017 11:29:36 -0700
-Message-ID: <xmqqpobvl627.fsf@gitster.mtv.corp.google.com>
+Date:   Wed, 16 Aug 2017 11:30:03 -0700
+Message-ID: <xmqqinhnl61g.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: DC131E30-82B0-11E7-AEEC-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: ECB9C0EA-82B0-11E7-B352-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The newly added "patch.has_crlf" member wants to indicate if the
-incoming patch expects any CRLF line in the patch target, and
-parse_fragment() implements that logic for "git apply".
+Previous changes passed a new APPLY_FLAGS_CR_AT_EOL option down from
+load_preimage() to read_old_data(), because the last function in
+that callchain needs to decide how its call to convert_to_git()
+function is made on the data read from the working tree.
 
-Rename the member to "patch.crlf_in_old" to clarify what it means,
-and fix the logic in parse_fragment() so that it also works correctly
-when running "git apply -R", where '+' lines correspond to the patch
-target.
+The load_preimage() function and its direct callees, however, are
+not limited to the case where the patch is applied to the data in
+the working tree (i.e. "git apply" that is working as a better
+"patch -p1"), unlike read_old_data(), which deals only with the
+patch target in the working tree.  They are also responsible for
+driving "git apply --cached" and "git apply --index", both of which
+take the current index contents into account and do not need the new
+special-casing of CRLF.  Exposing APPLY_FLAGS_CR_AT_EOL bit to them
+is misleading.
+
+Instead, just pass the "struct patch" down the same callchain, and
+have read_old_data() look at its crlf_in_old member to make the
+necessary decision.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
 
- There also is an obvious style fix for comment, but I didn't bother
- splitting it out to a separate step.
+ This is what I care about the most in these fix-ups.
 
- apply.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ apply.c | 30 ++++++++++++++----------------
+ 1 file changed, 14 insertions(+), 16 deletions(-)
 
 diff --git a/apply.c b/apply.c
-index 7663e63df7..995973da3d 100644
+index 995973da3d..c06f7014a2 100644
 --- a/apply.c
 +++ b/apply.c
-@@ -220,7 +220,7 @@ struct patch {
- 	unsigned int recount:1;
- 	unsigned int conflicted_threeway:1;
- 	unsigned int direct_to_threeway:1;
--	unsigned int has_crlf:1;
-+	unsigned int crlf_in_old:1;
- 	struct fragment *fragments;
- 	char *result;
- 	size_t resultsize;
-@@ -1663,13 +1663,15 @@ static void check_whitespace(struct apply_state *state,
- 	record_ws_error(state, result, line + 1, len - 2, state->linenr);
+@@ -2287,12 +2287,12 @@ static void show_stats(struct apply_state *state, struct patch *patch)
+ 		add, pluses, del, minuses);
  }
  
--/* Check if the patch has context lines with CRLF or
--   the patch wants to remove lines with CRLF */
-+/*
-+ * Check if the patch has context lines with CRLF or
-+ * the patch wants to remove lines with CRLF.
-+ */
- static void check_old_for_crlf(struct patch *patch, const char *line, int len)
+-#define APPLY_FLAGS_CR_AT_EOL   (1<<0)
+-
+-static int read_old_data(struct stat *st, const char *path, struct strbuf *buf, int flags)
++static int read_old_data(struct stat *st, const char *path, struct strbuf *buf,
++			 struct patch *patch)
  {
- 	if (len >= 2 && line[len-1] == '\n' && line[len-2] == '\r') {
- 		patch->ws_rule |= WS_CR_AT_EOL;
--		patch->has_crlf = 1;
-+		patch->crlf_in_old = 1;
+-	enum safe_crlf safe_crlf = flags & APPLY_FLAGS_CR_AT_EOL ?
+-		SAFE_CRLF_KEEP_CRLF : SAFE_CRLF_FALSE;
++	enum safe_crlf safe_crlf = (patch->crlf_in_old
++				    ? SAFE_CRLF_KEEP_CRLF : SAFE_CRLF_FALSE);
++
+ 	switch (st->st_mode & S_IFMT) {
+ 	case S_IFLNK:
+ 		if (strbuf_readlink(buf, path, st->st_size) < 0)
+@@ -3407,9 +3407,9 @@ static int load_patch_target(struct apply_state *state,
+ 			     struct strbuf *buf,
+ 			     const struct cache_entry *ce,
+ 			     struct stat *st,
++			     struct patch *patch,
+ 			     const char *name,
+-			     unsigned expected_mode,
+-			     int flags)
++			     unsigned expected_mode)
+ {
+ 	if (state->cached || state->check_index) {
+ 		if (read_file_or_gitlink(ce, buf))
+@@ -3423,7 +3423,7 @@ static int load_patch_target(struct apply_state *state,
+ 		} else if (has_symlink_leading_path(name, strlen(name))) {
+ 			return error(_("reading from '%s' beyond a symbolic link"), name);
+ 		} else {
+-			if (read_old_data(st, name, buf, flags))
++			if (read_old_data(st, name, buf, patch))
+ 				return error(_("failed to read %s"), name);
+ 		}
  	}
- }
- 
-@@ -1730,7 +1732,8 @@ static int parse_fragment(struct apply_state *state,
- 				check_whitespace(state, line, len, patch->ws_rule);
- 			break;
- 		case '-':
--			check_old_for_crlf(patch, line, len);
-+			if (!state->apply_in_reverse)
-+				check_old_for_crlf(patch, line, len);
- 			if (state->apply_in_reverse &&
- 			    state->ws_error_action != nowarn_ws_error)
- 				check_whitespace(state, line, len, patch->ws_rule);
-@@ -1739,6 +1742,8 @@ static int parse_fragment(struct apply_state *state,
- 			trailing = 0;
- 			break;
- 		case '+':
-+			if (state->apply_in_reverse)
-+				check_old_for_crlf(patch, line, len);
- 			if (!state->apply_in_reverse &&
- 			    state->ws_error_action != nowarn_ws_error)
- 				check_whitespace(state, line, len, patch->ws_rule);
-@@ -3442,7 +3447,7 @@ static int load_preimage(struct apply_state *state,
+@@ -3447,7 +3447,6 @@ static int load_preimage(struct apply_state *state,
  	char *img;
  	struct patch *previous;
  	int status;
--	int flags = patch->has_crlf ? APPLY_FLAGS_CR_AT_EOL : 0;
-+	int flags = patch->crlf_in_old ? APPLY_FLAGS_CR_AT_EOL : 0;
+-	int flags = patch->crlf_in_old ? APPLY_FLAGS_CR_AT_EOL : 0;
  
  	previous = previous_patch(state, patch, &status);
  	if (status)
+@@ -3457,8 +3456,8 @@ static int load_preimage(struct apply_state *state,
+ 		/* We have a patched copy in memory; use that. */
+ 		strbuf_add(&buf, previous->result, previous->resultsize);
+ 	} else {
+-		status = load_patch_target(state, &buf, ce, st,
+-					   patch->old_name, patch->old_mode, flags);
++		status = load_patch_target(state, &buf, ce, st, patch,
++					   patch->old_name, patch->old_mode);
+ 		if (status < 0)
+ 			return status;
+ 		else if (status == SUBMODULE_PATCH_WITHOUT_INDEX) {
+@@ -3518,8 +3517,7 @@ static int three_way_merge(struct image *image,
+  */
+ static int load_current(struct apply_state *state,
+ 			struct image *image,
+-			struct patch *patch,
+-			int flags)
++			struct patch *patch)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+ 	int status, pos;
+@@ -3546,7 +3544,7 @@ static int load_current(struct apply_state *state,
+ 	if (verify_index_match(ce, &st))
+ 		return error(_("%s: does not match index"), name);
+ 
+-	status = load_patch_target(state, &buf, ce, &st, name, mode, flags);
++	status = load_patch_target(state, &buf, ce, &st, patch, name, mode);
+ 	if (status < 0)
+ 		return status;
+ 	else if (status)
+@@ -3597,8 +3595,7 @@ static int try_threeway(struct apply_state *state,
+ 
+ 	/* our_oid is ours */
+ 	if (patch->is_new) {
+-		int flags = 0;
+-		if (load_current(state, &tmp_image, patch, flags))
++		if (load_current(state, &tmp_image, patch))
+ 			return error(_("cannot read the current contents of '%s'"),
+ 				     patch->new_name);
+ 	} else {
+@@ -3644,6 +3641,7 @@ static int apply_data(struct apply_state *state, struct patch *patch,
+ 		      struct stat *st, const struct cache_entry *ce)
+ {
+ 	struct image image;
++
+ 	if (load_preimage(state, &image, patch, st, ce) < 0)
+ 		return -1;
+ 
+-- 
+2.14.1-331-g7631d96230
+
+
