@@ -6,32 +6,32 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 398621F667
-	for <e@80x24.org>; Wed, 16 Aug 2017 20:17:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C0771F667
+	for <e@80x24.org>; Wed, 16 Aug 2017 20:17:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752614AbdHPUQ7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Aug 2017 16:16:59 -0400
-Received: from vie01a-dmta-pe04-1.mx.upcmail.net ([62.179.121.163]:38772 "EHLO
+        id S1752605AbdHPUQy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Aug 2017 16:16:54 -0400
+Received: from vie01a-dmta-pe04-1.mx.upcmail.net ([62.179.121.163]:62440 "EHLO
         vie01a-dmta-pe04-1.mx.upcmail.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752266AbdHPUQz (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 16 Aug 2017 16:16:55 -0400
+        by vger.kernel.org with ESMTP id S1752545AbdHPUQu (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 16 Aug 2017 16:16:50 -0400
 Received: from [172.31.216.44] (helo=vie01a-pemc-psmtp-pe02)
         by vie01a-dmta-pe04.mx.upcmail.net with esmtp (Exim 4.88)
         (envelope-from <martin.koegler@chello.at>)
-        id 1di4kI-0005Ls-GR
-        for git@vger.kernel.org; Wed, 16 Aug 2017 22:16:54 +0200
+        id 1di4kD-0005Qt-6l
+        for git@vger.kernel.org; Wed, 16 Aug 2017 22:16:49 +0200
 Received: from master.zuhause ([80.108.242.240])
         by vie01a-pemc-psmtp-pe02 with SMTP @ mailcloud.upcmail.net
-        id xwGk1v00h5BuuEg01wGlME; Wed, 16 Aug 2017 22:16:45 +0200
+        id xwGn1v0095BuuEg01wGoNB; Wed, 16 Aug 2017 22:16:48 +0200
 X-SourceIP: 80.108.242.240
 Received: by master.zuhause (Postfix, from userid 1006)
-        id 5CA0645D4621; Wed, 16 Aug 2017 22:16:44 +0200 (CEST)
+        id 10DDC45D4621; Wed, 16 Aug 2017 22:16:47 +0200 (CEST)
 From:   Martin Koegler <martin.koegler@chello.at>
 To:     git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de
 Cc:     Martin Koegler <martin.koegler@chello.at>
-Subject: [Patch size_t V3 12/19] Convert pack-objects to size_t
-Date:   Wed, 16 Aug 2017 22:16:24 +0200
-Message-Id: <1502914591-26215-13-git-send-email-martin@mail.zuhause>
+Subject: [Patch size_t V3 19/19] Convert xdiff-interface to size_t
+Date:   Wed, 16 Aug 2017 22:16:31 +0200
+Message-Id: <1502914591-26215-20-git-send-email-martin@mail.zuhause>
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <1502914591-26215-1-git-send-email-martin@mail.zuhause>
 References: <1502914591-26215-1-git-send-email-martin@mail.zuhause>
@@ -44,210 +44,231 @@ From: Martin Koegler <martin.koegler@chello.at>
 
 Signed-off-by: Martin Koegler <martin.koegler@chello.at>
 ---
- Documentation/technical/api-parse-options.txt |  2 +-
- builtin/pack-objects.c                        | 46 +++++++++++++--------------
- parse-options.c                               |  6 ++--
- 3 files changed, 27 insertions(+), 27 deletions(-)
+ combine-diff.c     |  2 +-
+ diff.c             | 28 ++++++++++++++--------------
+ diffcore-pickaxe.c |  4 ++--
+ xdiff-interface.c  |  8 ++++----
+ xdiff-interface.h  |  6 +++---
+ 5 files changed, 24 insertions(+), 24 deletions(-)
 
-diff --git a/Documentation/technical/api-parse-options.txt b/Documentation/technical/api-parse-options.txt
-index 829b558..22b788e 100644
---- a/Documentation/technical/api-parse-options.txt
-+++ b/Documentation/technical/api-parse-options.txt
-@@ -181,7 +181,7 @@ There are some macros to easily define options:
- 	Introduce an option with a size argument. The argument must be a
- 	non-negative integer and may include a suffix of 'k', 'm' or 'g' to
- 	scale the provided value by 1024, 1024^2 or 1024^3 respectively.
--	The scaled value is put into `unsigned_long_var`.
-+	The scaled value is put into `size_t`.
- 
- `OPT_DATE(short, long, &timestamp_t_var, description)`::
- 	Introduce an option with date argument, see `approxidate()`.
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index fbb07a8..12457ae 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -56,7 +56,7 @@ static struct pack_idx_option pack_idx_opts;
- static const char *base_name;
- static int progress = 1;
- static int window = 10;
--static unsigned long pack_size_limit;
-+static size_t pack_size_limit;
- static int depth = 50;
- static int delta_search_threads;
- static int pack_to_stdout;
-@@ -72,11 +72,11 @@ static int use_bitmap_index = -1;
- static int write_bitmap_index;
- static uint16_t write_bitmap_options;
- 
--static unsigned long delta_cache_size = 0;
--static unsigned long max_delta_cache_size = 256 * 1024 * 1024;
--static unsigned long cache_max_small_delta_size = 1000;
-+static size_t delta_cache_size = 0;
-+static size_t max_delta_cache_size = 256 * 1024 * 1024;
-+static size_t cache_max_small_delta_size = 1000;
- 
--static unsigned long window_memory_limit = 0;
-+static size_t window_memory_limit = 0;
- 
- /*
-  * stats
-@@ -124,11 +124,11 @@ static void *get_delta(struct object_entry *entry)
- 	return delta_buf;
- }
- 
--static unsigned long do_compress(void **pptr, unsigned long size)
-+static size_t do_compress(void **pptr, size_t size)
- {
- 	git_zstream stream;
- 	void *in, *out;
--	unsigned long maxsize;
-+	size_t maxsize;
- 
- 	git_deflate_init(&stream, pack_compression_level);
- 	maxsize = git_deflate_bound(&stream, size);
-@@ -149,13 +149,13 @@ static unsigned long do_compress(void **pptr, unsigned long size)
- 	return stream.total_out;
- }
- 
--static unsigned long write_large_blob_data(struct git_istream *st, struct sha1file *f,
-+static size_t write_large_blob_data(struct git_istream *st, struct sha1file *f,
- 					   const unsigned char *sha1)
- {
- 	git_zstream stream;
- 	unsigned char ibuf[1024 * 16];
- 	unsigned char obuf[1024 * 16];
--	unsigned long olen = 0;
-+	size_t olen = 0;
- 
- 	git_deflate_init(&stream, pack_compression_level);
- 
-@@ -196,7 +196,7 @@ static int check_pack_inflate(struct packed_git *p,
- 		struct pack_window **w_curs,
- 		off_t offset,
- 		off_t len,
--		unsigned long expect)
-+		size_t expect)
- {
- 	git_zstream stream;
- 	unsigned char fakebuf[4096], *in;
-@@ -238,13 +238,13 @@ static void copy_pack_data(struct sha1file *f,
- }
- 
- /* Return 0 if we will bust the pack-size limit */
--static unsigned long write_no_reuse_object(struct sha1file *f, struct object_entry *entry,
--					   unsigned long limit, int usable_delta)
-+static size_t write_no_reuse_object(struct sha1file *f, struct object_entry *entry,
-+				    size_t limit, int usable_delta)
- {
- 	size_t size, datalen;
- 	unsigned char header[MAX_PACK_OBJECT_HEADER],
- 		      dheader[MAX_PACK_OBJECT_HEADER];
--	unsigned hdrlen;
-+	size_t hdrlen;
- 	enum object_type type;
- 	void *buf;
- 	struct git_istream *st = NULL;
-@@ -350,7 +350,7 @@ static unsigned long write_no_reuse_object(struct sha1file *f, struct object_ent
- 
- /* Return 0 if we will bust the pack-size limit */
- static off_t write_reuse_object(struct sha1file *f, struct object_entry *entry,
--				unsigned long limit, int usable_delta)
-+				size_t limit, int usable_delta)
- {
- 	struct packed_git *p = entry->in_pack;
- 	struct pack_window *w_curs = NULL;
-@@ -360,7 +360,7 @@ static off_t write_reuse_object(struct sha1file *f, struct object_entry *entry,
- 	off_t datalen;
- 	unsigned char header[MAX_PACK_OBJECT_HEADER],
- 		      dheader[MAX_PACK_OBJECT_HEADER];
--	unsigned hdrlen;
-+	size_t hdrlen;
- 
- 	if (entry->delta)
- 		type = (allow_ofs_delta && entry->delta->idx.offset) ?
-@@ -431,7 +431,7 @@ static off_t write_object(struct sha1file *f,
- 			  struct object_entry *entry,
- 			  off_t write_offset)
- {
--	unsigned long limit;
-+	size_t limit;
- 	off_t len;
- 	int usable_delta, to_reuse;
- 
-@@ -1120,7 +1120,7 @@ struct pbase_tree_cache {
- 	int ref;
- 	int temporary;
- 	void *tree_data;
--	unsigned long tree_size;
-+	size_t tree_size;
+diff --git a/combine-diff.c b/combine-diff.c
+index acf39ec..ad5d177 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -343,7 +343,7 @@ struct combine_diff_state {
+ 	struct sline *lost_bucket;
  };
  
- static struct pbase_tree_cache *(pbase_tree_cache[256]);
-@@ -1759,8 +1759,8 @@ struct unpacked {
- 	unsigned depth;
- };
- 
--static int delta_cacheable(unsigned long src_size, unsigned long trg_size,
--			   unsigned long delta_size)
-+static int delta_cacheable(size_t src_size, size_t trg_size,
-+			   size_t delta_size)
+-static void consume_line(void *state_, char *line, unsigned long len)
++static void consume_line(void *state_, char *line, size_t len)
  {
- 	if (max_delta_cache_size && delta_cache_size + delta_size > max_delta_cache_size)
+ 	struct combine_diff_state *state = state_;
+ 	if (5 < len && !memcmp("@@ -", line, 4)) {
+diff --git a/diff.c b/diff.c
+index c12d062..f665f8d 100644
+--- a/diff.c
++++ b/diff.c
+@@ -406,7 +406,7 @@ static struct diff_tempfile {
+ 	struct tempfile tempfile;
+ } diff_temp[2];
+ 
+-typedef unsigned long (*sane_truncate_fn)(char *line, unsigned long len);
++typedef size_t (*sane_truncate_fn)(char *line, size_t len);
+ 
+ struct emit_callback {
+ 	int color_diff;
+@@ -461,7 +461,7 @@ static int fill_mmfile(mmfile_t *mf, struct diff_filespec *one)
+ }
+ 
+ /* like fill_mmfile, but only for size, so we can avoid retrieving blob */
+-static unsigned long diff_filespec_size(struct diff_filespec *one)
++static size_t diff_filespec_size(struct diff_filespec *one)
+ {
+ 	if (!DIFF_FILE_VALID(one))
  		return 0;
-@@ -1801,7 +1801,7 @@ static pthread_mutex_t progress_mutex;
- #endif
+@@ -832,7 +832,7 @@ struct diff_words_buffer {
+ 	int orig_nr, orig_alloc;
+ };
  
- static int try_delta(struct unpacked *trg, struct unpacked *src,
--		     unsigned max_depth, unsigned long *mem_usage)
-+		     unsigned max_depth, size_t *mem_usage)
+-static void diff_words_append(char *line, unsigned long len,
++static void diff_words_append(char *line, size_t len,
+ 		struct diff_words_buffer *buffer)
  {
- 	struct object_entry *trg_entry = trg->entry;
- 	struct object_entry *src_entry = src->entry;
-@@ -1962,9 +1962,9 @@ static unsigned int check_delta_limit(struct object_entry *me, unsigned int n)
- 	return m;
+ 	ALLOC_GROW(buffer->text.ptr, buffer->text.size + len, buffer->alloc);
+@@ -949,7 +949,7 @@ static int color_words_output_graph_prefix(struct diff_words_data *diff_words)
+ 	}
  }
  
--static unsigned long free_unpacked(struct unpacked *n)
-+static size_t free_unpacked(struct unpacked *n)
+-static void fn_out_diff_words_aux(void *priv, char *line, unsigned long len)
++static void fn_out_diff_words_aux(void *priv, char *line, size_t len)
  {
--	unsigned long freed_mem = sizeof_delta_index(n->index);
-+	size_t freed_mem = sizeof_delta_index(n->index);
- 	free_delta_index(n->index);
- 	n->index = NULL;
- 	if (n->data) {
-@@ -1981,7 +1981,7 @@ static void find_deltas(struct object_entry **list, unsigned *list_size,
+ 	struct diff_words_data *diff_words = priv;
+ 	struct diff_words_style *style = diff_words->style;
+@@ -1237,10 +1237,10 @@ const char *diff_line_prefix(struct diff_options *opt)
+ 	return msgbuf->buf;
+ }
+ 
+-static unsigned long sane_truncate_line(struct emit_callback *ecb, char *line, unsigned long len)
++static size_t sane_truncate_line(struct emit_callback *ecb, char *line, size_t len)
  {
- 	uint32_t i, idx = 0, count = 0;
- 	struct unpacked *array;
--	unsigned long mem_usage = 0;
-+	size_t mem_usage = 0;
+ 	const char *cp;
+-	unsigned long allot;
++	size_t allot;
+ 	size_t l = len;
  
- 	array = xcalloc(window, sizeof(struct unpacked));
+ 	if (ecb->truncate)
+@@ -1270,7 +1270,7 @@ static void find_lno(const char *line, struct emit_callback *ecbdata)
+ 	ecbdata->lno_in_postimage = strtol(p + 1, NULL, 10);
+ }
  
-diff --git a/parse-options.c b/parse-options.c
-index 0dd9fc6..3e7c514 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -181,16 +181,16 @@ static int get_value(struct parse_opt_ctx_t *p,
+-static void fn_out_consume(void *priv, char *line, unsigned long len)
++static void fn_out_consume(void *priv, char *line, size_t len)
+ {
+ 	struct emit_callback *ecbdata = priv;
+ 	const char *meta = diff_get_color(ecbdata->color_diff, DIFF_METAINFO);
+@@ -1492,7 +1492,7 @@ static struct diffstat_file *diffstat_add(struct diffstat_t *diffstat,
+ 	return x;
+ }
  
- 	case OPTION_MAGNITUDE:
- 		if (unset) {
--			*(unsigned long *)opt->value = 0;
-+			*(size_t *)opt->value = 0;
- 			return 0;
- 		}
- 		if (opt->flags & PARSE_OPT_OPTARG && !p->opt) {
--			*(unsigned long *)opt->value = opt->defval;
-+			*(size_t *)opt->value = opt->defval;
- 			return 0;
- 		}
- 		if (get_arg(p, opt, flags, &arg))
- 			return -1;
--		if (!git_parse_ulong(arg, opt->value))
-+		if (!git_parse_size_t(arg, opt->value))
- 			return opterror(opt,
- 				"expects a non-negative integer value with an optional k/m/g suffix",
- 				flags);
+-static void diffstat_consume(void *priv, char *line, unsigned long len)
++static void diffstat_consume(void *priv, char *line, size_t len)
+ {
+ 	struct diffstat_t *diffstat = priv;
+ 	struct diffstat_file *x = diffstat->files[diffstat->nr - 1];
+@@ -2132,7 +2132,7 @@ struct checkdiff_t {
+ 	unsigned status;
+ };
+ 
+-static int is_conflict_marker(const char *line, int marker_size, unsigned long len)
++static int is_conflict_marker(const char *line, int marker_size, size_t len)
+ {
+ 	char firstchar;
+ 	int cnt;
+@@ -2155,7 +2155,7 @@ static int is_conflict_marker(const char *line, int marker_size, unsigned long l
+ 	return 1;
+ }
+ 
+-static void checkdiff_consume(void *priv, char *line, unsigned long len)
++static void checkdiff_consume(void *priv, char *line, size_t len)
+ {
+ 	struct checkdiff_t *data = priv;
+ 	int marker_size = data->conflict_marker_size;
+@@ -2953,7 +2953,7 @@ void diff_free_filespec_data(struct diff_filespec *s)
+ 
+ static void prep_temp_blob(const char *path, struct diff_tempfile *temp,
+ 			   void *blob,
+-			   unsigned long size,
++			   size_t size,
+ 			   const struct object_id *oid,
+ 			   int mode)
+ {
+@@ -4536,7 +4536,7 @@ struct patch_id_t {
+ 	int patchlen;
+ };
+ 
+-static int remove_space(char *line, int len)
++static size_t remove_space(char *line, size_t len)
+ {
+ 	int i;
+ 	char *dst = line;
+@@ -4549,10 +4549,10 @@ static int remove_space(char *line, int len)
+ 	return dst - line;
+ }
+ 
+-static void patch_id_consume(void *priv, char *line, unsigned long len)
++static void patch_id_consume(void *priv, char *line, size_t len)
+ {
+ 	struct patch_id_t *data = priv;
+-	int new_len;
++	size_t new_len;
+ 
+ 	/* Ignore line numbers when computing the SHA1 of the patch */
+ 	if (starts_with(line, "@@ -"))
+diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
+index 341529b..db73cb4 100644
+--- a/diffcore-pickaxe.c
++++ b/diffcore-pickaxe.c
+@@ -19,7 +19,7 @@ struct diffgrep_cb {
+ 	int hit;
+ };
+ 
+-static void diffgrep_consume(void *priv, char *line, unsigned long len)
++static void diffgrep_consume(void *priv, char *line, size_t len)
+ {
+ 	struct diffgrep_cb *data = priv;
+ 	regmatch_t regmatch;
+@@ -70,7 +70,7 @@ static int diff_grep(mmfile_t *one, mmfile_t *two,
+ static unsigned int contains(mmfile_t *mf, regex_t *regexp, kwset_t kws)
+ {
+ 	unsigned int cnt;
+-	unsigned long sz;
++	size_t sz;
+ 	const char *data;
+ 
+ 	sz = mf->size;
+diff --git a/xdiff-interface.c b/xdiff-interface.c
+index d82cd4a..f12285d 100644
+--- a/xdiff-interface.c
++++ b/xdiff-interface.c
+@@ -26,7 +26,7 @@ static int parse_num(char **cp_p, int *num_p)
+ 	return 0;
+ }
+ 
+-int parse_hunk_header(char *line, int len,
++int parse_hunk_header(char *line, size_t len,
+ 		      int *ob, int *on,
+ 		      int *nb, int *nn)
+ {
+@@ -57,12 +57,12 @@ int parse_hunk_header(char *line, int len,
+ 	return -!!memcmp(cp, " @@", 3);
+ }
+ 
+-static void consume_one(void *priv_, char *s, unsigned long size)
++static void consume_one(void *priv_, char *s, size_t size)
+ {
+ 	struct xdiff_emit_state *priv = priv_;
+ 	char *ep;
+ 	while (size) {
+-		unsigned long this_size;
++		size_t this_size;
+ 		ep = memchr(s, '\n', size);
+ 		this_size = (ep == NULL) ? size : (ep - s + 1);
+ 		priv->consume(priv->consume_callback_data, s, this_size);
+@@ -197,7 +197,7 @@ void read_mmblob(mmfile_t *ptr, const struct object_id *oid)
+ }
+ 
+ #define FIRST_FEW_BYTES 8000
+-int buffer_is_binary(const char *ptr, unsigned long size)
++int buffer_is_binary(const char *ptr, size_t size)
+ {
+ 	if (FIRST_FEW_BYTES < size)
+ 		size = FIRST_FEW_BYTES;
+diff --git a/xdiff-interface.h b/xdiff-interface.h
+index 6f6ba90..7eb58ad 100644
+--- a/xdiff-interface.h
++++ b/xdiff-interface.h
+@@ -11,18 +11,18 @@
+  */
+ #define MAX_XDIFF_SIZE (1024UL * 1024 * 1023)
+ 
+-typedef void (*xdiff_emit_consume_fn)(void *, char *, unsigned long);
++typedef void (*xdiff_emit_consume_fn)(void *, char *, size_t);
+ 
+ int xdi_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp, xdemitconf_t const *xecfg, xdemitcb_t *ecb);
+ int xdi_diff_outf(mmfile_t *mf1, mmfile_t *mf2,
+ 		  xdiff_emit_consume_fn fn, void *consume_callback_data,
+ 		  xpparam_t const *xpp, xdemitconf_t const *xecfg);
+-int parse_hunk_header(char *line, int len,
++int parse_hunk_header(char *line, size_t len,
+ 		      int *ob, int *on,
+ 		      int *nb, int *nn);
+ int read_mmfile(mmfile_t *ptr, const char *filename);
+ void read_mmblob(mmfile_t *ptr, const struct object_id *oid);
+-int buffer_is_binary(const char *ptr, unsigned long size);
++int buffer_is_binary(const char *ptr, size_t size);
+ 
+ extern void xdiff_set_find_func(xdemitconf_t *xecfg, const char *line, int cflags);
+ extern void xdiff_clear_find_func(xdemitconf_t *xecfg);
 -- 
 2.1.4
 
