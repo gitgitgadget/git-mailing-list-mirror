@@ -7,123 +7,172 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D057208CD
-	for <e@80x24.org>; Wed, 16 Aug 2017 01:05:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D1BFC208CD
+	for <e@80x24.org>; Wed, 16 Aug 2017 01:12:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752593AbdHPBF1 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Aug 2017 21:05:27 -0400
-Received: from mail-yw0-f173.google.com ([209.85.161.173]:36809 "EHLO
-        mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752382AbdHPBF0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Aug 2017 21:05:26 -0400
-Received: by mail-yw0-f173.google.com with SMTP id u207so14337504ywc.3
-        for <git@vger.kernel.org>; Tue, 15 Aug 2017 18:05:26 -0700 (PDT)
+        id S1752609AbdHPBM1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Aug 2017 21:12:27 -0400
+Received: from mail-yw0-f176.google.com ([209.85.161.176]:33059 "EHLO
+        mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752066AbdHPBM0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Aug 2017 21:12:26 -0400
+Received: by mail-yw0-f176.google.com with SMTP id p68so14465820ywg.0
+        for <git@vger.kernel.org>; Tue, 15 Aug 2017 18:12:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=Lwr6DTuPNizn1TA0lZvrk52ueEjyt7XFaB/7N8EHI2I=;
-        b=YXE/TarCqjaeVxnhSOyfdJASozQ4Ll/w9clWbuUpu7DILDSC7Tz1RTB/uo30IOjKJB
-         +Wh1tCmxP7ckB1M/J1LW5RrKEUvqGUfA6EGGxoJttCMNnXG4KaY+ZV8OkH30rSu2nY10
-         QwV/ykl1v6wv/VflBmWu5ebruwuUG/SnoJlPgtw6aeQznkAQ8uehLtVjhXtimCLlpqQZ
-         wwUngvZuqtGiC8RV/f+V/PWb4CNZYvURGCM7yJ3kwvWkXrYXd7g4Fkog8qoa7wgWKW5f
-         klJidBgUXdD1JeW2SfBx+ud3Y/WyWM6urJXCCQanYInHiwTF6Yc63TNz6nG1dbyWqN5D
-         u26A==
+        bh=nU2O63RbODXD8YW+vloKbZAZ0JQ5FBitYuXgRRIhLtA=;
+        b=i2eZ9BPBCO3fpi/MFPGMQ6zwZKV8Cq1g+pDcjyWbYSimL2rKWuO8wGKL+O/ODDRCjJ
+         cjoZ8SydZW7NUtD2nG909SFNtOXdbkQwqnEOej7LXNfq1iq1AgeFFplSMFgH59KUhvsH
+         TfU2P+zZzbAv1j6XbMYhq7zqg8zZqFNMw8Ulu/46c1PhOfX4XpsOg2xNdLQhYwchxk1x
+         jWHqjHQGZvg/plktenTe5G0hS8H56mxQ6zfOSPUceUB4QJ17TcZREFjs0Y8x7m0BPf9R
+         H+CS/iEOStnLTOW6iQQzbGvoqh4UjIGE02GDGyE62Bbyn2BZQMnkA5wmKxxZ2JA10Vqm
+         oLOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=Lwr6DTuPNizn1TA0lZvrk52ueEjyt7XFaB/7N8EHI2I=;
-        b=NnfISnnryHs+UcETVWzZS8xi1GMyS8vsrm5RiuRffUTf25aj7t7sRWMyQXrT1aGkBC
-         +z71MgQ5GkX7J9B4bBAVhhy4+jcdjI8aniUnzU5IHI9UFt7ftpB5xg23SQcyyui6x/lv
-         veX8eM+D9MURIwguMVe5r7LLPgdDzMyNfOaprT1+qGukVA8/JFVrAYeT/jD8mhhVGbBP
-         qGsoBBucQ6d8UhG0QZH1Nu8A8zI4b640gJg5WTYJS3PU37BZc6aSRxhJ33O0snEjgywz
-         xeY73vt9fMh4UQljlrJD/Lh4DRYwOg7zSTYfewkOC90w1sFPeKxl6lUZqONo0dRk09N8
-         EDOg==
-X-Gm-Message-State: AHYfb5g2+dyH3G4/hf3CGVRCKP9j29H06PKYDGYv8wVwLDLgNbG6xZiF
-        tIyxtHymSJZOazAtHjgb8Kz25Ju7WzLrT0E=
-X-Received: by 10.13.212.3 with SMTP id w3mr51289ywd.4.1502845525585; Tue, 15
- Aug 2017 18:05:25 -0700 (PDT)
+        bh=nU2O63RbODXD8YW+vloKbZAZ0JQ5FBitYuXgRRIhLtA=;
+        b=lXuM8b2G4CLS1hilZ2H56WqEbrhq0fiscsAe6xpFC5PliwU/UunDy+TSDi3utD5iUP
+         hoQgADCGLFfKY//8F2J1VNkV1Kl6XTXlsdisaaX3rX7wjkeusLHuDRWH8GN1WTyMKNiQ
+         l96pPzRCeC9vZAeviQP54iWR7/YniryidLLEV+XxbGhudA6K/ldMTS9mS+FI5kDTDHYw
+         KuMoVA9qj2ONYdCaXovHnPSH3WKhgFqfqmwZ6NbGGKc7w8wXrXyZvAZGqMS0W774uoms
+         Lv/hvCdKst8RSqoEX8DkhDmO8NmHpDt8VMyZSNaf3or+l+e2OzLV+goKyVpvnAf2rup7
+         IOQA==
+X-Gm-Message-State: AHYfb5jEOr3UuLkS8fFSBLtp/bRKnucHrweXUfgFv1f0Q+a1gQ97DZDI
+        CWQ23GkmnXruX+bV79xmt2h1fpXbX5pd
+X-Received: by 10.37.115.78 with SMTP id o75mr47984ybc.244.1502845946084; Tue,
+ 15 Aug 2017 18:12:26 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.37.56.142 with HTTP; Tue, 15 Aug 2017 18:05:25 -0700 (PDT)
-In-Reply-To: <xmqqd17wpe14.fsf@gitster.mtv.corp.google.com>
-References: <CAGZ79kZouNBxOKr7X8j6wqebp3Wh3cDqhYR-t_PxaF7AwQ0Wzg@mail.gmail.com>
- <20170815224332.22730-1-sbeller@google.com> <xmqqh8x8pg8p.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kag+U94tzJ14mB4VZjSZ2MtUJ4vu4MXKLKkpkLw=2K_NA@mail.gmail.com> <xmqqd17wpe14.fsf@gitster.mtv.corp.google.com>
+Received: by 10.37.56.142 with HTTP; Tue, 15 Aug 2017 18:12:25 -0700 (PDT)
+In-Reply-To: <20170816010432.GD21874@google.com>
+References: <20170816004558.6706-1-sbeller@google.com> <20170816010432.GD21874@google.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 15 Aug 2017 18:05:25 -0700
-Message-ID: <CAGZ79kZAkdiKHUweQK6U4dqAakfzReDMfiHKDmzsKGuAH3BgyA@mail.gmail.com>
-Subject: Re: [PATCH] push: do not add submodule odb as an alternate when
- recursing on demand
-To:     Junio C Hamano <gitster@pobox.com>,
+Date:   Tue, 15 Aug 2017 18:12:25 -0700
+Message-ID: <CAGZ79kYacubf_8qF=3heuwzEEa93KLV8_LsJo5hemhpKVbujfg@mail.gmail.com>
+Subject: Re: [PATCH] convert add_to_alternates_file to use repository struct
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
         Jonathan Tan <jonathantanmy@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 15, 2017 at 5:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->>> Is "is it populated" a good thing to check here, though?  IIRC,
->>> add-submodule-odb allows you to add the object database of an
->>> inactivated submodule, so this seems to change the behaviour.  I do
->>> not know if the behaviour change is a good thing (i.e. bugfix) or
->>> not (i.e. regression) offhand, though.
+On Tue, Aug 15, 2017 at 6:04 PM, Brandon Williams <bmwill@google.com> wrote:
+> On 08/15, Stefan Beller wrote:
+>> The long term plan is to move most functionality to be included via
+>> the repository struct, starting somewhere, convert add_to_alternates_file
+>> in this patch, which has link_alt_odb_entries, which is converted, too.
+>> Any caller outside add_to_alternates_file, just uses `the_repository`
+>> as the repository argument to keep the functionality the same.
 >>
->> Good point, we should be able to push non-populated, even inactive(?)
->> submodules. For that we strictly need add_submodule_odb here
->> (or the repo object of the submodule, eventually).
+>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>> ---
 >>
->> So let's retract this patch for now.
+>>   For the series "object store is embedded in the repository object",
+>>   I realized we have to convert sha1_file first as that is the foundation
+>>   of all the object loading and writing. However there are currently other
+>>   series in flight, such that I do not want to change all of sha1_file
+>>   as it would yield serious conflicts.
+>>
+>>   This goes on top of origin/sb/sha1-file-cleanup and is one of the
+>>   minimum viable things to get started with converting sha1_file to
+>>   use the repository object.
+>>
+>>   Thanks,
+>>   Stefan
+>>
+>>  builtin/clone.c |  9 +++++----
+>>  cache.h         |  2 +-
+>>  sha1_file.c     | 23 +++++++++++++++--------
+>>  3 files changed, 21 insertions(+), 13 deletions(-)
+>>
+>> diff --git a/builtin/clone.c b/builtin/clone.c
+>> index 08b5cc433c..b8d170d055 100644
+>> --- a/builtin/clone.c
+>> +++ b/builtin/clone.c
+>> @@ -25,6 +25,7 @@
+>>  #include "remote.h"
+>>  #include "run-command.h"
+>>  #include "connected.h"
+>> +#include "repository.h"
+>>
+>>  /*
+>>   * Overall FIXMEs:
+>> @@ -327,7 +328,7 @@ static int add_one_reference(struct string_list_item *item, void *cb_data)
+>>       } else {
+>>               struct strbuf sb = STRBUF_INIT;
+>>               strbuf_addf(&sb, "%s/objects", ref_git);
+>> -             add_to_alternates_file(sb.buf);
+>> +             add_to_alternates_file(the_repository, sb.buf);
+>>               strbuf_release(&sb);
+>>       }
+>>
+>> @@ -369,12 +370,12 @@ static void copy_alternates(struct strbuf *src, struct strbuf *dst,
+>>               if (!line.len || line.buf[0] == '#')
+>>                       continue;
+>>               if (is_absolute_path(line.buf)) {
+>> -                     add_to_alternates_file(line.buf);
+>> +                     add_to_alternates_file(the_repository, line.buf);
+>>                       continue;
+>>               }
+>>               abs_path = mkpathdup("%s/objects/%s", src_repo, line.buf);
+>>               if (!normalize_path_copy(abs_path, abs_path))
+>> -                     add_to_alternates_file(abs_path);
+>> +                     add_to_alternates_file(the_repository, abs_path);
+>>               else
+>>                       warning("skipping invalid relative alternate: %s/%s",
+>>                               src_repo, line.buf);
+>> @@ -452,7 +453,7 @@ static void clone_local(const char *src_repo, const char *dest_repo)
+>>       if (option_shared) {
+>>               struct strbuf alt = STRBUF_INIT;
+>>               strbuf_addf(&alt, "%s/objects", src_repo);
+>> -             add_to_alternates_file(alt.buf);
+>> +             add_to_alternates_file(the_repository, alt.buf);
+>>               strbuf_release(&alt);
+>>       } else {
+>>               struct strbuf src = STRBUF_INIT;
+>> diff --git a/cache.h b/cache.h
+>> index 4109efcf24..fe1f1bc66a 100644
+>> --- a/cache.h
+>> +++ b/cache.h
+>> @@ -1565,7 +1565,7 @@ struct alternate_object_database *alloc_alt_odb(const char *dir);
+>>   * Add the directory to the on-disk alternates file; the new entry will also
+>>   * take effect in the current process.
+>>   */
+>> -extern void add_to_alternates_file(const char *dir);
+>> +extern void add_to_alternates_file(struct repository *r, const char *dir);
+>>
+>>  /*
+>>   * Add the directory to the in-memory list of alternates (along with any
+>> diff --git a/sha1_file.c b/sha1_file.c
+>> index 9186e2c6c7..298185f550 100644
+>> --- a/sha1_file.c
+>> +++ b/sha1_file.c
+>> @@ -22,6 +22,7 @@
+>>  #include "pack-revindex.h"
+>>  #include "sha1-lookup.h"
+>>  #include "bulk-checkin.h"
+>> +#include "repository.h"
+>>  #include "streaming.h"
+>>  #include "dir.h"
+>>  #include "mru.h"
+>> @@ -422,8 +423,9 @@ static const char *parse_alt_odb_entry(const char *string,
+>>       return end;
+>>  }
+>>
+>> -static void link_alt_odb_entries(const char *alt, int len, int sep,
+>> -                              const char *relative_base, int depth)
+>> +static void link_alt_odb_entries(const struct repository *r, const char *alt,
+>> +                              int len, int sep, const char *relative_base,
+>> +                              int depth)
 >
-> Not so fast.
-
-Ok, I took another look at the code.
-
-While we may desire that un-populated submodules can be pushed
-(due to checking out another revision where the submodule
-doesn't exist, before pushing), this is not supported currently, because
-the call to run the push in the submodule assumes there is a
-"<path>/.git" on which the child process can operate.
-So for now we HAVE to have the submodule populated.
-
-  In the future we may have the a lighter version just checking the
-  object store of the submodule. Maybe this use case in the submodule
-  can be covered by the .remote/.imported mechanism as well, such
-  that we'd know if we have any local objects.
-
-> I am not convinced "push --recursive" should touch a submodule that
-> was once cloned from the upstream and then deactivated, so using
-> add-submodule-odb to decide if the push should go through may be a
-> bug that we may want to fix, in which case the diff of the patch in
-> question may be good as-is.  We need to sell it as a bugfix to the
-> users, who may complain about behaviour change (if there is one).
-
-correct. Coupled with the observation above, we want really need
-both "is active and populated" (your paragraph suggest not-active
-submodules don't need pushing, the populated bit comes from the
-observation above)
-
-> On the other hand, even if it were desirable for such a deactivated
-> submodule to be pushed, as your log message explained, there is no
-> reason to contaminate the in-core object hash by calling the
-> add-submodule-odb helper, when the only thing we care about is "do
-> we have the refs and object store for this submodule? we do not care
-> if it is activated or not".  Perhaps there is a more appropriate
-> helper in submodule.c that answers that question that we should be
-> using instead of add-submodule-odb, and if there is not yet such a
-> helper, perhaps this indicates that we need to add such a helper,
-> which essentially is the early half of what add-submodule-odb does,
-> i.e. ask git_path_submodule() for the object store and check if that
-> directory exists.
-
-I think due to the constraint of also needing a worktree the is_populated
-helper is the correct choice here.
-
-
+> Looks like the passed in repository 'r' isn't used in this function.  Is this intentional?
 >
-> Thanks.
+
+Doh. I missed that part in the implementation, I need to pipe it through to
+link_alt_odb_entry.
