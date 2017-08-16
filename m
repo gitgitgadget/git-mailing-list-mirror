@@ -2,109 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8ED131F667
-	for <e@80x24.org>; Wed, 16 Aug 2017 12:40:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5AFEF1F667
+	for <e@80x24.org>; Wed, 16 Aug 2017 12:55:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751620AbdHPMks (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Aug 2017 08:40:48 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:32777 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751370AbdHPMkr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Aug 2017 08:40:47 -0400
-Received: by mail-wr0-f194.google.com with SMTP id n88so2859430wrb.0
-        for <git@vger.kernel.org>; Wed, 16 Aug 2017 05:40:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=ojDVNK0H+/Srw2fKuwvgcZhuPSb2M74Je9xJwY3SGdc=;
-        b=NJ8TfT4qhpuPQRXAIheW37/MNOlzZjGmUiBmvn6mF+AzHUIQprYZlmqGb6x6GTa83r
-         SMUizOWjLrhHFTFDZAf4WvB6wOSCxRiALpEbCZLI3GyZKvbIwKPmcWeooCpKnjHLOmQ8
-         V8Yn3YhF32MPCoFq8enL38UwUbBpKJ3IKpzKt/5/mZqmfVbgcXtzbqNRAkktz25SS/Qw
-         RJllHQo6CicZr0PmIuPrCZU99v5fuhJHv/ijQEBU1zhXlQgIpks1exgSzTOrfCpNAW/s
-         hAld/1Hzj/nL1Ghog6WQXXwvLfasaKKz9cAzEC0f1d6/D3DmvpYJZzCpWKj0uu8d01+1
-         UVlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=ojDVNK0H+/Srw2fKuwvgcZhuPSb2M74Je9xJwY3SGdc=;
-        b=KbWl2zFefSlf1fQ3t3+CmPRZexkZiTe+SITRKYTmUinH+/F3kOQrxrLwI9eNO/d5lH
-         9hUnSCwWN91Vp2mvfabOzpJMIRxkJNwCYSz6ascWtfI/6F1zU//QeLd19ShQBgjRsTXD
-         m17H6e/YZbgbd0FXXCpU3OdLBWTXmWSUz2DGSqnqj6RceAMbGk9fyFhNUVRqTZmxe2yw
-         ypTnnGH6Koo39xLPd+lqqMqYBkhGPQFuhA2apblcXkRwZanlK7phGIPibu+T0EQ0tX73
-         bdW5OuPXxN0aEmPBbPH5URMW1HJDUXdudND49Z7UQZeNJwG09ZEcsCNpYVW7Z/UZh5ig
-         4MMQ==
-X-Gm-Message-State: AHYfb5jjdZGANegQoaS2c1R1DnRlQ6KVEASxaa3AMxe/jfb7ssT2LzN3
-        ywvuXeMqtCgibqqv
-X-Received: by 10.80.222.66 with SMTP id a2mr1892058edl.249.1502887246103;
-        Wed, 16 Aug 2017 05:40:46 -0700 (PDT)
-Received: from christian-Latitude-E6330.booking.pcln.com ([185.24.142.26])
-        by smtp.gmail.com with ESMTPSA id o54sm564984edo.82.2017.08.16.05.40.43
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 16 Aug 2017 05:40:44 -0700 (PDT)
-From:   Christian Couder <christian.couder@gmail.com>
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2] sub-process: print the cmd when a capability is unsupported
-Date:   Wed, 16 Aug 2017 14:40:36 +0200
-Message-Id: <20170816124036.25236-1-chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.14.1.146.g7de11f915a
+        id S1751620AbdHPMzO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Aug 2017 08:55:14 -0400
+Received: from mout.web.de ([212.227.15.4]:50321 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751287AbdHPMzO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Aug 2017 08:55:14 -0400
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MfYXz-1dy9I52PT1-00P4Nl; Wed, 16
+ Aug 2017 14:55:10 +0200
+Date:   Wed, 16 Aug 2017 14:55:10 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     CHEVALLIER Yves <Yves.CHEVALLIER@csem.ch>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Bug with ignorecase on Git and Cygwin
+Message-ID: <20170816125510.GA26384@tor.lan>
+References: <078108E7D0BA58498F61BC8C1ED2D10933E86F@srvne111.csem.local>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <078108E7D0BA58498F61BC8C1ED2D10933E86F@srvne111.csem.local>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K0:xUG9HPACH+ArMoZgj51j9dQbGBXPhcST7H1H3TmTA2acV4NIscj
+ tRoeRjzfrxH8Up2gMDsZowUZFtF1gF8TZQi2BPgOXIAR2e6mNeFaL7Iq4P5GO1Fbr3vYNjh
+ 410M9nOi/3jq5j/OZtEZy5ka5vp7DAOQRBsoBjjfjHonolGWvgHXoe0mQhGbwjW7FQkdPZx
+ 8PrLu/bloa9TVNv56eEJA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:/0EOX4OJNzs=:Ngesado4Hn0ynrpjPUqpDa
+ jQRDkFMTSHlE+7oArfEOUg3BkfnlHJ+Fm6LrKlqk/Kw/Fd9E9tYbk7aRmzPClk8LevU7h7Zp7
+ XaVbhFGAfC9Y8WKaXBJwA96ldaDAf2e1uVSAJyac5cHMSs+URVfOSZqKPBXq0rHkKiiABkWE/
+ bRrFbnsZuhdi9gRDJ87el2d5Zx/7dw8qvfwG7rgum4rfbDJU7beiVzL3VQOxX1VO4GmYSRywf
+ cCHeVR6ZHU1lq/9ZmUVL3nFtbBTU32MoKke60xS9g0t6UdCaVhsqwWCSAqfVqGQ58KYqPjYHw
+ brGDKoW534MT3fY6xNuCjO4StVb7VCQrIN5qyJGUL2/SlV13TVfOYGpJBIQok6JJJm7zBKIqW
+ kZXi0Xs6wh9Xs7EvOhy83ORc/IRx5Z93VOcIXyC24CWUGacBYogoByjx3xrsKMyuhpoOuzlOh
+ iskUqqQ0pZ3Hk1I8raXZRHuBC6cHSFIoINq60urHe+VU3PWVARDdu1si7QRs/9JhCwtjPcMKB
+ XlwEWuQR+e8XjnXsTQXx0sGpxM6r7AA/oH8S0GtpQgmXwGiY7bN03s7o8ZJ9R7gFxW/FycGP7
+ xLvXFMk+lkcYgwvDpj6Z9+yy2odbxsuSONpiPiysif4CX9+XxIpNquPWLTx1WYdTQxNfRjcsb
+ KTAwShcjUsZ+xZjX5GGbK3PQFowcD01paOVrBSGKAq5yw/K7BWSsMkimPZ11DaJygg7QZJVGD
+ nnxsD+MymHiocGvuiC1Mp5nattXoYXhhf5KRpRj+5lO4Gh26+bms1RP3BCd45+lTyFF45SbVt
+ qQ1MlWC/6VhFJ1FoQTTirPDqOb1fQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In handshake_capabilities() we use warning() when a capability
-is not supported, so the exit code of the function is 0 and no
-further error is shown. This is a problem because the warning
-message doesn't tell us which subprocess cmd failed.
+On Wed, Aug 16, 2017 at 11:50:47AM +0000, CHEVALLIER Yves wrote:
+> Hi, 
+> 
+> On Cygwin, the config value `ignorecase` is set to `true` during `git init` and it is not possible to change the default value using templates. 
+> 
+> The issue was discovered while I was tracking a bunch of source files of a SDK. To track the changes I simply rm all the working directory, unzip the new SDK, then git add . and git commit -am "new sdk". In this process an issue with an assembly file with preprocessing was incorrectly named .s instead of .S. In the next version the correction was made, but Git was unable to detect it. 
+> 
+> That said I've tried to manually change ignorecase from true to false and I still have the issue. Git on Cygwin cannot detect files renamed with a case change. 
+> 
+> Is it a bug?
+> 
 
-On the contrary if we cannot write a packet from this function,
-we use error() and then subprocess_start() outputs:
+The thing is that the underlying file system (under cygwin, Windows in general, or MacOs)  treats a.s the same as a.S
+So Git can not do better than the file system.
+What you can do:
 
-    initialization for subprocess '<cmd>' failed
+git mv a.S a.s
+git commit
 
-so we can know which subprocess cmd failed.
+(This can be done by a script)
 
-Let's improve the warning() message, so that we can know which
-subprocess cmd failed.
-
-Helped-by: Lars Schneider <larsxschneider@gmail.com>
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
-Change since previous version:
-
-  - Use process->argv[0] instead of adding a new parameter to
-    handshake_capabilities(), thanks to Lars.
-
- sub-process.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/sub-process.c b/sub-process.c
-index 6edb97c1c6..6ccfaaba99 100644
---- a/sub-process.c
-+++ b/sub-process.c
-@@ -184,8 +184,8 @@ static int handshake_capabilities(struct child_process *process,
- 			if (supported_capabilities)
- 				*supported_capabilities |= capabilities[i].flag;
- 		} else {
--			warning("external filter requested unsupported filter capability '%s'",
--				p);
-+			warning("subprocess '%s' requested unsupported capability '%s'",
-+				process->argv[0], p);
- 		}
- 	}
- 
--- 
-2.14.1.146.g7de11f915a
-
+> # It works on Ubuntu
+[]
