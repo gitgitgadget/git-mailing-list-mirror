@@ -2,169 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7329A1F667
-	for <e@80x24.org>; Wed, 16 Aug 2017 21:35:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E6FD1F667
+	for <e@80x24.org>; Wed, 16 Aug 2017 21:43:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752457AbdHPVfW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Aug 2017 17:35:22 -0400
-Received: from mail-pg0-f42.google.com ([74.125.83.42]:37910 "EHLO
-        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752168AbdHPVfV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Aug 2017 17:35:21 -0400
-Received: by mail-pg0-f42.google.com with SMTP id t80so1520957pgb.5
-        for <git@vger.kernel.org>; Wed, 16 Aug 2017 14:35:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=uRYWvl0f4U1sJ8WbrERgOYYEo1kFM0fVA58ToymeVwI=;
-        b=VbFg0+dDUy0oDXUuGdckOThjRhUfZ0ZSY4IMqlsPtRE39prlaFVB3M5b5zkAJwtqMh
-         mm6oJWrmq5QsjvG5oPpI+tBKzPFe8WeP6GdrsR9GzxeHvkxvpxE1PgA5lBqE8W/E/3z+
-         /q9F8M3EcBonurjr+QxovsZyDxUBINhpjDb6aNQOfeI1j/8uPK/9Xnm8tJXxn9e1aH9D
-         qiYNHZ87HRMqMRZEHcVh2R71cHmlkPep9JwxO2I5sqkaDWABsn0uigNUGH3a82adEsES
-         TiC+RK9Q3ofgSmSRuNDTGirnjvlEDJITQs6n7PuMbMsfm7mrHoZ2JLdvIW654m4RglvZ
-         2pJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=uRYWvl0f4U1sJ8WbrERgOYYEo1kFM0fVA58ToymeVwI=;
-        b=Lfjk58rIjse43kDBiTcpPKFM+ihUtxPKLoueFBbtxOTeO0DZhLa0XJH4m3FnYXAnv6
-         dLRXf3l/vdTBVdJ2VH/Z3L/7aMV5R/ZdXRGiYz/tQpxMvdIueDOAhiETFgl0/fA+9ktS
-         2urTVHah5FU604HN3Ttnn3fMxKmpHhkReesuSmkGe/xS/BjWm7tNWXy57RDUvrE1qjS2
-         XdYokLnzhpbDjHn8BQxdwosTHPuj5xB4jsp0YAuwSsqo/k/KbhP2ivqodN3eedOoP6H/
-         E7K0PbZSxs+CTviVq8FzQwyt3TFlpsDrPkdgP0w8myC6kEqCKCsZxeocGQzugd9zzBrP
-         uaLA==
-X-Gm-Message-State: AHYfb5hbzaYlj2nHTxl5hEo8+Bxbd6L63UqVUQSvIy6hVvtkUHBixQsd
-        a4KLjQq68TTEtwB7FOpGOQ==
-X-Received: by 10.99.96.149 with SMTP id u143mr2349931pgb.348.1502919320988;
-        Wed, 16 Aug 2017 14:35:20 -0700 (PDT)
-Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:5897:a569:433e:2b7b])
-        by smtp.gmail.com with ESMTPSA id i133sm3180088pgc.0.2017.08.16.14.35.18
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 16 Aug 2017 14:35:19 -0700 (PDT)
-Date:   Wed, 16 Aug 2017 14:35:15 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com, peartben@gmail.com
-Subject: Re: [RFC PATCH] Updated "imported object" design
-Message-ID: <20170816143515.0a74f959@twelve2.svl.corp.google.com>
-In-Reply-To: <xmqqa82zjlt4.fsf@gitster.mtv.corp.google.com>
-References: <20170804145113.5ceafafa@twelve2.svl.corp.google.com>
-        <20170816003200.19992-1-jonathantanmy@google.com>
-        <xmqqa82zjlt4.fsf@gitster.mtv.corp.google.com>
-X-Mailer: Claws Mail 3.9.3 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+        id S1752313AbdHPVnA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Aug 2017 17:43:00 -0400
+Received: from avasout06.plus.net ([212.159.14.18]:50874 "EHLO
+        avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752233AbdHPVnA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Aug 2017 17:43:00 -0400
+Received: from [10.0.2.15] ([143.159.212.52])
+        by avasout06 with smtp
+        id xxix1v00118PUFB01xiyUo; Wed, 16 Aug 2017 22:42:58 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=GetnpUfL c=1 sm=1 tr=0
+ a=CKmocqUIrzA4K3l9YJ19NQ==:117 a=CKmocqUIrzA4K3l9YJ19NQ==:17
+ a=IkcTkHD0fZMA:10 a=FQcsDvbEE3GYX54BhYsA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [Patch size_t V3 13/19] Convert index-pack to size_t
+To:     Martin Koegler <martin.koegler@chello.at>, git@vger.kernel.org,
+        gitster@pobox.com, Johannes.Schindelin@gmx.de
+References: <1502914591-26215-1-git-send-email-martin@mail.zuhause>
+ <1502914591-26215-14-git-send-email-martin@mail.zuhause>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <743056f2-da7b-5fe1-f0d7-2ee040479c69@ramsayjones.plus.com>
+Date:   Wed, 16 Aug 2017 22:42:57 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+In-Reply-To: <1502914591-26215-14-git-send-email-martin@mail.zuhause>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 16 Aug 2017 13:32:23 -0700
-Junio C Hamano <gitster@pobox.com> wrote:
 
-> Jonathan Tan <jonathantanmy@google.com> writes:
+
+On 16/08/17 21:16, Martin Koegler wrote:
+> From: Martin Koegler <martin.koegler@chello.at>
 > 
-> > Also, let me know if there's a better way to send out these patches for
-> > review. Some of the code here has been reviewed before, for example.
-> >
-> > [1] https://public-inbox.org/git/cover.1502241234.git.jonathantanmy@google.com/
-> >
-> > [2] https://public-inbox.org/git/ffb734d277132802bcc25baa13e8ede3490af62a.1501532294.git.jonathantanmy@google.com/
-> >
-> > [3] https://public-inbox.org/git/20170807161031.7c4eae50@twelve2.svl.corp.google.com/
+> Signed-off-by: Martin Koegler <martin.koegler@chello.at>
+> ---
+>  builtin/index-pack.c | 26 +++++++++++++-------------
+>  1 file changed, 13 insertions(+), 13 deletions(-)
 > 
-> ... and some of the code exists only in the list archive, so we
-> don't know which other topic if any we may want to eject tentatively
-> if we wanted to give precedence to move this topic forward over
-> others.  I'll worry about it later but help from others is also
-> appreciated.
+> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+> index 7f3ccd0..bf2d728 100644
+> --- a/builtin/index-pack.c
+> +++ b/builtin/index-pack.c
+> @@ -435,7 +435,7 @@ static int is_delta_type(enum object_type type)
+>  	return (type == OBJ_REF_DELTA || type == OBJ_OFS_DELTA);
+>  }
+>  
+> -static void *unpack_entry_data(off_t offset, unsigned long size,
+> +static void *unpack_entry_data(off_t offset, size_t size,
+>  			       enum object_type type, unsigned char *sha1)
+>  {
+>  	static char fixed_buf[8192];
+> @@ -444,10 +444,10 @@ static void *unpack_entry_data(off_t offset, unsigned long size,
+>  	void *buf;
+>  	git_SHA_CTX c;
+>  	char hdr[32];
+> -	int hdrlen;
+> +	size_t hdrlen;
+>  
+>  	if (!is_delta_type(type)) {
+> -		hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %lu", typename(type), size) + 1;
+> +		hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %" PRIuMAX, typename(type), (uintmax_t)size) + 1;
+>  		git_SHA1_Init(&c);
+>  		git_SHA1_Update(&c, hdr, hdrlen);
+>  	} else
+> @@ -489,7 +489,7 @@ static void *unpack_raw_entry(struct object_entry *obj,
+>  			      unsigned char *sha1)
+>  {
+>  	unsigned char *p;
+> -	unsigned long size, c;
+> +	size_t size, c;
+>  	off_t base_offset;
+>  	unsigned shift;
+>  	void *data;
+> @@ -551,11 +551,11 @@ static void *unpack_raw_entry(struct object_entry *obj,
+>  }
+>  
+>  static void *unpack_data(struct object_entry *obj,
+> -			 int (*consume)(const unsigned char *, unsigned long, void *),
+> +			 int (*consume)(const unsigned char *, size_t, void *),
+>  			 void *cb_data)
+>  {
+>  	off_t from = obj[0].idx.offset + obj[0].hdr_size;
+> -	off_t len = obj[1].idx.offset - from;
+> +	size_t len = obj[1].idx.offset - from;
 
-Thanks - I can help take a look when it is time to move the code in.
+off_t -> size_t.
 
-I think the issue here is whether we want to move this topic forward or
-not, that is, if this (special ".imported" objects) is the best way to
-solve (at least partially) the connectivity check part of tolerating
-missing objects. I hope that we can continue to talk about it.
+ATB,
+Ramsay Jones
 
-> This collects names of the objects that are _directly_ referred to
-> by imported objects.  An imported pack may have a commit, whose
-> top-level tree may or may not appear in the same pack, or the tree
-> may exist locally but not in the same pack.  Or the tree may not be
-> locally available at all.  In any of these four cases, the top-level
-> tree is listed in the "promises" set.  Same for trees and tags.
-> 
-> I wonder if all of the calls to oidset_insert() in this function
-> want to be guarded by "mark it as promised only when the referrent
-> is *not* locally available" to keep the promises set minimally
-> populated.  The only change needed to fsck in order to make it
-> refrain from treating a missing but promised object as an error
-> would be:
-> 
->         -       if (object is missing)
->         +       if (object is missing && object is not promised)
->                         error("that object must be there but missing");
-> 
-> so there is no point in throwing something that we know we locally
-> have in this oidset, right?
-> 
-> On the other hand, cost of such additional checks in this function
-> may outweigh the savings of both memory pressure and look-up cost,
-> so I do not know how the tradeoff would turn out.
-
-I also don't know how the tradeoff would turn out, so I leaned towards
-the slightly simpler solution of not doing the check. In the future,
-maybe a t/perf test can be done to decide between the two.
-
-> > +static int is_promise(const struct object_id *oid)
-> > +{
-> > +	if (!promises_prepared) {
-> > +		if (repository_format_lazy_object)
-> > +			for_each_packed_object(add_promise, NULL,
-> > +					       FOR_EACH_OBJECT_IMPORTED_ONLY);
-> > +		promises_prepared = 1;
-> > +	}
-> > +	return oidset_contains(&promises, oid);
-> > +}
-> 
-> Somehow I'm tempted to call this function "is_promised()" but that
-> is a minor naming issue.
-
-I was trying to be consistent in using the name "promise" instead of
-"promised object/tag/commit/tree/blob" everywhere, but we can switch if
-need be (for example, if we don't want to limit the generic name
-"promise" to merely objects).
-
-> >  static const char *describe_object(struct object *obj)
-> >  {
-> >  	static struct strbuf buf = STRBUF_INIT;
-> > @@ -410,7 +472,7 @@ static void fsck_handle_reflog_oid(const char *refname, struct object_id *oid,
-> >  					xstrfmt("%s@{%"PRItime"}", refname, timestamp));
-> >  			obj->used = 1;
-> >  			mark_object_reachable(obj);
-> > -		} else {
-> > +		} else if (!is_promise(oid)) {
-> >  			error("%s: invalid reflog entry %s", refname, oid_to_hex(oid));
-> >  			errors_found |= ERROR_REACHABLE;
-> >  		}
-> 
-> This is about certainly is one place we want to check if the missing
-> object is OK, but I'm a bit surprised if this were the only place.
-> 
-> Don't we need "while trying to follow all the outgoing links from
-> this tree object, and we found this object is not available locally;
-> normally we would mark it as an error but it turns out that the
-> missing one is in the promised set of objects, so it is OK" for the
-> normal connectivity traversal codepaths, for example?
-
-That's right. The places to make this change are the same as those in
-some earlier patches I sent (patches 2-4 in [1]).
-
-[1] https://public-inbox.org/git/cover.1501532294.git.jonathantanmy@google.com/
