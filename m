@@ -2,94 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B2211F667
-	for <e@80x24.org>; Wed, 16 Aug 2017 21:57:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E1E091F667
+	for <e@80x24.org>; Wed, 16 Aug 2017 22:50:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752346AbdHPV5b (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Aug 2017 17:57:31 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55003 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752262AbdHPV5a (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Aug 2017 17:57:30 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id F2DB58D14D;
-        Wed, 16 Aug 2017 17:57:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=IyZHnu/Nrs3KVrPvhaUKWTS0aic=; b=bf3f3o
-        Rbd7GX3kAYq9IFxcLHTPGTx2deTaZCX2I6GA0pUZsJw06g9Q7N4Ld3oc9Xs/jZlR
-        0wkGnHdBanX46De+/XkPLsXzRgJCcYRba/3JkpZNoVEk5CmDCTrPWYTPymQ076Ai
-        BM8xCzjyn71EMHXm2XJVxqT4lbmvcl1R2+Mj4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=U6p5n67+rts31KIQ33oxTLSaJqUbsgTv
-        4K6Oh/KziWagsMsqKE2L7NF0G6nfvp5wvO5BwUUgNJbqgwYiqPpBpHrhGdOviJFf
-        VcYuJSdJ30dWVXVGzAhCU1GmR5LtGfFKBWqdSDJ1rvkqwyFeOjCKgPxgap2C5ILU
-        dmpPRbpvqIo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E9DE88D14C;
-        Wed, 16 Aug 2017 17:57:22 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5EA518D14B;
-        Wed, 16 Aug 2017 17:57:22 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Andreas Heiduk <asheiduk@gmail.com>
-Cc:     ryenus <ryenus@gmail.com>, Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH] fix revisions doc about quoting for ':/' notation
-References: <CAKkAvazj28RR1nHEWNNeZeyE6mpkb3opk6kvrxP6Lau6tcCbJQ@mail.gmail.com>
-        <956ccc83-c291-4217-795c-fcef33fac35b@gmail.com>
-Date:   Wed, 16 Aug 2017 14:57:21 -0700
-In-Reply-To: <956ccc83-c291-4217-795c-fcef33fac35b@gmail.com> (Andreas
-        Heiduk's message of "Wed, 16 Aug 2017 23:15:47 +0200")
-Message-ID: <xmqqo9rfi3b2.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E1A9F6BC-82CD-11E7-8888-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+        id S1752426AbdHPWus (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Aug 2017 18:50:48 -0400
+Received: from mail-pg0-f54.google.com ([74.125.83.54]:37368 "EHLO
+        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752382AbdHPWur (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Aug 2017 18:50:47 -0400
+Received: by mail-pg0-f54.google.com with SMTP id y129so30059812pgy.4
+        for <git@vger.kernel.org>; Wed, 16 Aug 2017 15:50:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=gOGA6x5+NsBFeIA8sjeIOfp0yl/9AK4NuiN5Pp87LQI=;
+        b=Ep5WAdJ8IimMOoBZhaniY687T3XZa89ogL6rtySs2LmpAanYHKxuia3Ab1pT0AdYjh
+         QbCQKJvRwnnZW0uS13YLROB/0kwuHj++3PFMMwG+cLPWcw/LcPpej5zBeo2xgE8duHZj
+         5Jm+fnjrE2DHbR7D7A0FMUzw5CrcnCl22+44M6ZGK17eC2XREpCLq1IczxYZkC3Jdb0b
+         Z1eP4E+v7cUWYBaZNoKYxyEefgstXOMZVJNiELnfgzhMlFm6cGgqT0r1lNried6A+bp5
+         Tv+VXdGHYT2Avr7pDvVrcNM6+XEy8CApQgxGe4fMS3wEY3VjzqNySceB6Q6iE33RU7Ob
+         wd+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=gOGA6x5+NsBFeIA8sjeIOfp0yl/9AK4NuiN5Pp87LQI=;
+        b=Xib6z8mQzQKQJ5JRg28EO9+mymT3+yw4SYllDoxEeF+jFvaWlpc+hNm5h6pGhVrIfN
+         mh9C9GTh2PJwyfw4HGGdSGaGfzPzNHK8K0ojh0EnvRwQ02j7/nc2VjzkpLKEo5xZ2TNO
+         ZhzBGIzyJFnGKbIEeKIHV0nPyCQKiCA1NR5Wu+p7RAaSfN/rD9d7IsmiULsSvUxz9G7q
+         ESfb/Ukxm5GcxwTjMJYeqJ3MhhkqbCBmDFG36rbVkGV1nQJEPH3BLKCPmhuB22ljw348
+         bMJJb+72O0CFbUq/f1dmkF4yNtqiF27N6dqtGr1IcpQtK0PJd2UmYs4hp9mkUr/zMSbF
+         l1AA==
+X-Gm-Message-State: AHYfb5g3peQ6fb0f3ktp3qA9BGorBTH8rj60dejhK8aZSdqFKuJxGdJ8
+        O4EuFvE5V42xGX4N
+X-Received: by 10.98.100.20 with SMTP id y20mr3140443pfb.11.1502923846579;
+        Wed, 16 Aug 2017 15:50:46 -0700 (PDT)
+Received: from localhost ([2620:0:100e:422:116d:67f0:85cb:53be])
+        by smtp.gmail.com with ESMTPSA id x124sm3510437pfx.65.2017.08.16.15.50.45
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 16 Aug 2017 15:50:45 -0700 (PDT)
+From:   Stefan Beller <sbeller@google.com>
+To:     jrnieder@gmail.com
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+Subject: [PATCH] submodule.sh: remove unused variable
+Date:   Wed, 16 Aug 2017 15:50:42 -0700
+Message-Id: <20170816225042.32765-1-sbeller@google.com>
+X-Mailer: git-send-email 2.14.0.rc0.3.g6c2e499285
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Andreas Heiduk <asheiduk@gmail.com> writes:
+This could have been part of 48308681b0 (git submodule update: have a
+dedicated helper for cloning, 2016-02-29).
 
-> Am 16.08.2017 um 05:21 schrieb ryenus:
->> To make sure the `<text>` in `:/<text>` is seen as one search string,
->> one should quote/escape `<text>` properly.
->> 
->> Especially, the example given in the manual `:/fix nasty bug` does not
->> work because of missing quotes. The examples are now corrected, and a
->> note about quoting/escaping is added as well.
->
-> Right now the documentation describes the syntax as git sees the
-> parameters. This is agnostic of the shell or other UI with their
-> different quoting rules.  For example users of fish must quote
-> `rev@{2}`. A GUI might require no quoting at all. In that case `:/"fix
-> nasty bugs"` would be given to git verbatim and hence not find the revision.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ git-submodule.sh | 1 -
+ 1 file changed, 1 deletion(-)
 
-These are all good points that I didn't consider when responding.
+diff --git a/git-submodule.sh b/git-submodule.sh
+index e131760eec..9dcec7b356 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -611,7 +611,6 @@ cmd_update()
+ 		die_if_unmatched "$mode" "$sha1"
+ 
+ 		name=$(git submodule--helper name "$sm_path") || exit
+-		url=$(git config submodule."$name".url)
+ 		if ! test -z "$update"
+ 		then
+ 			update_module=$update
+-- 
+2.14.0.rc0.3.g6c2e499285
 
-> Also: Other examples like `HEAD@{5 minutes ago}` need the same quoting.
->
-> So my suggestion is to not use quoting in the examples and provide only
-> a hint in the text. Example:
->
->  <rev>{caret}{/<text>}', e.g. 'HEAD^{/fix nasty bug}'::
->     A suffix '{caret}' to a revision parameter, followed by a brace
->     pair that contains a text led by a slash,
->     is the same as the ':/fix nasty bug' syntax below except that
->     it returns the youngest matching commit which is reachable from
->     the '<rev>' before '{caret}'.
-> +   Depending on the given text the shell's word splitting rules
-> +   might require additional quoting.
-
-That sounds like a very safe change to adopt, regardless of what we
-decide to do to the other part of the proposed change.
-
-Thanks.
