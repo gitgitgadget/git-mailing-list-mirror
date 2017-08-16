@@ -2,126 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C8D091F667
-	for <e@80x24.org>; Wed, 16 Aug 2017 22:59:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 99A2C1F667
+	for <e@80x24.org>; Wed, 16 Aug 2017 22:59:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752426AbdHPW7H (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Aug 2017 18:59:07 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:54322 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752339AbdHPW7G (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 16 Aug 2017 18:59:06 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id D498C280AD;
-        Wed, 16 Aug 2017 22:59:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1502924345;
-        bh=IWXdG/eYCN25u/R8k1YXz1DTr0JI6nSh2e6/8LcHot4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=l4hieuXdhJu0PZ22Ic+fyrQfG+7nGmokI5vJcsUTj5wFChvi4iSLKWoli0M7xYtyT
-         ab5qOrq1nrM1P05vujbTW1KnJ4dZNmMAtoCng93qD8jI7TQ/xvHm3pTOaWO0fQfaH9
-         +cvu3BzC3Pl6kYAv/P0lihbF9gF+IUIGw4HhAZRuZlMmlluNMiZyX5nGdnEL9pQ/LA
-         crMHZWdN2v08ueLnYV/dpFYC/luxRHqSP3d6Qf20R0G+FMc9KD2zGOB4heuAm8LX9p
-         2CSnW3dfCCH41C7r9xbDjaA+IF9Y/PHqxmg0VhwzNPCKbADUvUE6LprjlZzGjuBhXp
-         uSv6qvd7CgjdFCkGrhieSH/2PrGGi304xLyCmRCtMOhOX/P1EeuD17LRq0otjWIUwY
-         2xfSJTefx/XQozotYAPMed92kUcXgfxHeiuNX9nh6PWRGz8X9MFGiEL8vQDgn2+XLo
-         m/QOlZwQ9pt14yukgCNv1T2xwQku5NP4hPHB+vf8hpgK8WmSY0i
-Date:   Wed, 16 Aug 2017 22:59:02 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Patryk Obara <patryk.obara@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/5] commit: replace the raw buffer with strbuf in
- read_graft_line
-Message-ID: <20170816225901.dbpzvsie2zgetunu@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Patryk Obara <patryk.obara@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-References: <cover.1502796628.git.patryk.obara@gmail.com>
- <b5633a5425c623f3d2204325e99332b5bb511582.1502796628.git.patryk.obara@gmail.com>
- <CAGZ79kaCtbuDEUJqJ+nVUW78ksLMyHZ2xhnbunUqzjkGRuYg+A@mail.gmail.com>
- <CAJfL8+QreNvRqVZ0t1Sw=+o4nFK6WuvuOWix_C0MNFik6Cc+rA@mail.gmail.com>
+        id S1752597AbdHPW7Y (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Aug 2017 18:59:24 -0400
+Received: from mail-pg0-f51.google.com ([74.125.83.51]:37644 "EHLO
+        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752420AbdHPW7Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Aug 2017 18:59:24 -0400
+Received: by mail-pg0-f51.google.com with SMTP id y129so30167208pgy.4
+        for <git@vger.kernel.org>; Wed, 16 Aug 2017 15:59:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=/Tyu0atv80sGdzYqd0yLkW8HoUNFnllKLml/yEnM83Q=;
+        b=UrkhZZYMQgEGOGIdoltRHnkmhiJ8AgohtzrauUYYawerWxXe/q3QzKEnwwkzB9GDiT
+         7Pv8mGQoH16Q9CWbeC+Irgp0LatbNYmQYfQMl6qZBU1b4QDk0FMT39utHQpNUVjHCjQi
+         Se9JIeyQbXgJEN/mfXFNMic6dRHEkSShg7GSyw0XNSILMxtIiV0m6peDEpJneIn5HgAt
+         ZVHBKfzopbnUsIuVMFCDVmIQ16DIktCTSe2voduPXZm2v+3jZvcGXiHiu9P0GoUK81Ls
+         cXdLrUGXhg/ukvaieXe/sD9nAeJ8MfwuVG5DmtJ3ea0UKdtu+vOgDWltDnR9/4iTY/WZ
+         Qw2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=/Tyu0atv80sGdzYqd0yLkW8HoUNFnllKLml/yEnM83Q=;
+        b=sOh/wMUBnN/HiJEw1+mFou81B2iket58dY6UZyWtxtV2cYJcUWQXmaGh4u8iJf8OXz
+         nFGMJJ0RIbkwLPO+s4T9BzdhPWvrnihfdLUgpKGcTj3JvRxc3PuymKy3tYqDfC0gcFjm
+         ZFXKFm8ZSOOnfuIbKfTQIP4HuSWIjBPmrbYAtt2Mh9Dg49OrLwqqnN0CoEvxDGqZRkG8
+         t7Q5FixnTgomy08MR5yGiqj89CGRuD8aYJp1eOklgsyJnDTKu5omjbf0Ai4DPRQdhsfz
+         9d5LXwg4PXVYClYtob1mo2pxdNLgOyEWxId9zWeCtePdmgpQF8YA57EvZKbmx2rVQrL/
+         Ik7A==
+X-Gm-Message-State: AHYfb5h//57fQM+dzTovniVWJIH7KFQ7PG96qNlYAgQj1wbWC6s1cs/c
+        tkYLV7c4vDfjYA==
+X-Received: by 10.99.101.131 with SMTP id z125mr3005912pgb.297.1502924363450;
+        Wed, 16 Aug 2017 15:59:23 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:3932:90a0:1342:ce37])
+        by smtp.gmail.com with ESMTPSA id j26sm4752486pfj.69.2017.08.16.15.59.22
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 16 Aug 2017 15:59:22 -0700 (PDT)
+Date:   Wed, 16 Aug 2017 15:59:20 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] submodule.sh: remove unused variable
+Message-ID: <20170816225920.GJ13924@aiede.mtv.corp.google.com>
+References: <20170816225042.32765-1-sbeller@google.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="mp5g4xz6mhnsqghs"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAJfL8+QreNvRqVZ0t1Sw=+o4nFK6WuvuOWix_C0MNFik6Cc+rA@mail.gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.11.0-2-amd64)
-User-Agent: NeoMutt/20170609 (1.8.3)
+In-Reply-To: <20170816225042.32765-1-sbeller@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Stefan Beller wrote:
 
---mp5g4xz6mhnsqghs
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> This could have been part of 48308681b0 (git submodule update: have a
+> dedicated helper for cloning, 2016-02-29).
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  git-submodule.sh | 1 -
+>  1 file changed, 1 deletion(-)
 
-On Wed, Aug 16, 2017 at 02:24:27PM +0200, Patryk Obara wrote:
-> On Tue, Aug 15, 2017 at 7:02 PM, Stefan Beller <sbeller@google.com> wrote:
-> >>         const int entry_size =3D GIT_SHA1_HEXSZ + 1;
-> >
-> > outside the scope of this patch:
-> > Is GIT_SHA1_HEXSZ or GIT_MAX_HEXSZ the right call here?
->=20
-> I think neither one. In my opinion, this code should not be so closely
-> coupled to hash parsing code - it should be tasked with parsing
-> whitespace separated list of commit ids without relying on specific
-> commit id length or format.
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-What I had intended, although maybe I have not explained this well, was
-that we would have one binary that set up hash functionality as part of
-early setup.  GIT_SHA1_RAWSZ and GIT_SHA1_HEXSZ would turn into
-something like current_hash->rawsz and current_hash->hexsz at that
-point.  The reason I introduced the GIT_MAX constants was to allocate
-memory suitable for whatever hash we picked.
+Thanks for cleaning up.
 
-However, this is only what I had considered for design, and others might
-have different views going forward.  I have, however, based my patches
-on that assumption, and responded to others' comments with those
-statements.
-
-I agree that ideally we should make as much of the code as possible
-ignorant of the hash size, because that will generally result in more
-robust, less brittle code.  I've noticed in this series the use of
-parse_oid_hex, and I agree that's one tool we can use to accomplish that
-goal.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
-
---mp5g4xz6mhnsqghs
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.23 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlmUzjUACgkQv1NdgR9S
-9osumRAAlfsf03ORWRHm5fzX1qQpSnhkE8N62SC/26hLFjNXZeEG1Rms2dD5e+S6
-LrTXM0ODJhfpYMQU+n6ZZSm2SjvsYoOPbG6kujEzOYdy/xiuYvVE9al3efMPDTD2
-jlJy8vWZORhVjaqKizQB7mp4WxY/vaRQL+qwQ08LzXB3/6rRGAubGzMGY92dR65R
-FqzybTGpG1PLTjEHFOjOnffhMh6HprNhE3MrlyLwWxrk1ZTdtoVv+I6q6lglaeQo
-14+CWSI0eHQhPp5yLwpGF4FQno5UCjjHzGz/5sL2PTPdalZ5Kz7RxXZ7BVs44hSR
-X7G2+BZU5qh418mS8wsdxuyXYAUl52g7rv6HGQUpxHKILUoRyzVsNfn5wwQfB4tc
-R628LG98pRiSBoWwGZ95ouTHfa/jtf+9zcSKPPfohdhoaPM2jY1Opw/ChVZm98aa
-fgxhRsDsosQBJBUngr0cwsQMhQHNIBHZTLg03e50ypvCm23ygR9CFH/iGbfEUZj3
-ntpinbQtwxvJDlNVBnE/FXYIEmnqtzIrdhsMX2h73HMlISqlWidtw/gc+jKpa/hJ
-R/67NlmZL60mFOghdO1Kx85z/xeu7d533ec8CS6Hq9VGxUUrSq1U1BtBmqLLoRrw
-/qHZkGjXtp9VxAUwVfS2sRyKmNCR8nXaD15iBp6BFM8YG4CcWTo=
-=9nCU
------END PGP SIGNATURE-----
-
---mp5g4xz6mhnsqghs--
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index e131760eec..9dcec7b356 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -611,7 +611,6 @@ cmd_update()
+>  		die_if_unmatched "$mode" "$sha1"
+>  
+>  		name=$(git submodule--helper name "$sm_path") || exit
+> -		url=$(git config submodule."$name".url)
+>  		if ! test -z "$update"
+>  		then
+>  			update_module=$update
+> -- 
+> 2.14.0.rc0.3.g6c2e499285
+> 
