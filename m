@@ -6,78 +6,83 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B6DB1F667
-	for <e@80x24.org>; Wed, 16 Aug 2017 21:47:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 545181F667
+	for <e@80x24.org>; Wed, 16 Aug 2017 21:55:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752450AbdHPVrO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Aug 2017 17:47:14 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55568 "EHLO
+        id S1752493AbdHPVzo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Aug 2017 17:55:44 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59110 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752439AbdHPVrN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Aug 2017 17:47:13 -0400
+        with ESMTP id S1752605AbdHPVzm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Aug 2017 17:55:42 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 49EC68CC0E;
-        Wed, 16 Aug 2017 17:47:12 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6534AA9709;
+        Wed, 16 Aug 2017 17:55:42 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=jbYKmerHegEP
-        YPC7wJHhSsLn7mQ=; b=rggjCwv8k9WdDXz4lAjneOQ0LagJr7aIS3UKPubEBwRR
-        aJwkhuwvk9+jxJlIEzMQdr4DLPGIEybd83b003/+HZulu8+HIgi3TX78kdojzHgf
-        8Uvj22bNtmQHUVJ9bwPfh/F+u3GJ711VB80hZkONwebPLmAIXfnnpc768+Izvf0=
+        :content-type; s=sasl; bh=NS1Pp67X36N8Lk9E/sFtlM6Atkc=; b=DRIOtL
+        TD2VQOUisc4+OPB4VLwC8pyWvmuNbKnCbLCPLnXFKF4OJRoKJR43AhOh/CbKBiON
+        KvHvDd0AfbnVEBYXCvsc2+nCyquvdre+JfyUWfyQ7SSrHEXjtQD9oKHcUlnOXFBc
+        YLNjI/B9YK6RtbyHyCQNv0qi2dLCZ1e9yvMOM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=s8Tnav
-        mQWMnnebnPaOZnbtzMGebvQlDW1jrS5294DPBHLBTegZnU5ZxgLweSKfGaVt/gJ6
-        JpEjKBXBp2sDS1KzWQoITLn6HOovYjH+VGodhTgm6Knf6UGr0ggpFmP5WbYzSL61
-        kxDj7RK02RRNV7RR403+E9pvzJQTzuQYmKB7Y=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 409CE8CC0C;
-        Wed, 16 Aug 2017 17:47:12 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=YvtuAoorvm0aENzYIJTFqlp7NFvl7uip
+        VDA013nCZO0v21Ac0ndZ1RW5PJZTyXuwE4pa4WiIzQA+lb6tBVuzWi3fhVPmgwBT
+        wooJLYVJp40enIjgqhGpIblBnozcyrZ9TcsiLsOiRya9M0dsBfBX08oSvILzs331
+        HschKuPIOyQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 507CCA9708;
+        Wed, 16 Aug 2017 17:55:42 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AA75B8CC07;
-        Wed, 16 Aug 2017 17:47:11 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7B684A9706;
+        Wed, 16 Aug 2017 17:55:41 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Takashi Iwai <tiwai@suse.de>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Andreas Stieger <astieger@suse.com>
-Subject: Re: [PATCH v2 0/2] Allow building with the external sha1dc library
-References: <20170815120417.31616-1-tiwai@suse.de>
-Date:   Wed, 16 Aug 2017 14:47:10 -0700
-In-Reply-To: <20170815120417.31616-1-tiwai@suse.de> (Takashi Iwai's message of
-        "Tue, 15 Aug 2017 14:04:15 +0200")
-Message-ID: <xmqqwp63i3s1.fsf@gitster.mtv.corp.google.com>
+To:     Ben Peart <peartben@gmail.com>
+Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>, Ben Peart <Ben.Peart@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2] sub-process: print the cmd when a capability is unsupported
+References: <20170816124036.25236-1-chriscool@tuxfamily.org>
+        <758d36a7-8066-7e1a-30d0-62baf2796520@gmail.com>
+        <xmqq4lt7pir9.fsf@gitster.mtv.corp.google.com>
+Date:   Wed, 16 Aug 2017 14:55:40 -0700
+In-Reply-To: <xmqq4lt7pir9.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Wed, 16 Aug 2017 09:41:46 -0700")
+Message-ID: <xmqqshgri3dv.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 75AA6204-82CC-11E7-A620-FE4B1A68708C-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: A592AC14-82CD-11E7-9DB0-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Takashi Iwai <tiwai@suse.de> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> this is the second attempt to allow linking with the external sha1dc
-> shlib.  Now I split to two patches: one for cleaning up of sha1dc
-> plumbing codes, and another for adding the option to link with the
-> external sha1dc lib.
+> Ben Peart <peartben@gmail.com> writes:
 >
-> Other changes from v1:
-> - Plumbing codes for external lib are also merged commonly in
->   sha1dc_git.[ch]
-> - Check the conflict of extlib vs submodule
-> - Drop DC_SHA1_LINK, hoping that everyone is well-mannered
-> - Minor rephrasing / corrections of texts
+>>> -			warning("external filter requested unsupported filter capability '%s'",
+>>> -				p);
+>>> +			warning("subprocess '%s' requested unsupported capability '%s'",
+>>> +				process->argv[0], p);
+>>>   		}
+>>>   	}
+>>>   
+>>>
+>>
+>> This one is even cleaner.  Thanks Lars for pointing out the fact we
+>> already had the cmd name.  Looks good.
 >
->
-> thanks,
+> Thanks, all.  Will queue.
 
-Thank you for an update. =20
-
-I think this round addresses the concerns =C3=86var had with the previous
-round.  Let's wait to hear from him just to be sure.
+I still think we would want to turn warning() to die(), but it
+probably is better to do so in a separate follow-up patch.  That
+will give us a good place to record the reason why the current "just
+call a warning() and pretend as if nothing bad happend" is wrong.
 
