@@ -2,80 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D634820899
-	for <e@80x24.org>; Wed, 16 Aug 2017 10:32:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F05E1F667
+	for <e@80x24.org>; Wed, 16 Aug 2017 12:05:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751666AbdHPKcQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Aug 2017 06:32:16 -0400
-Received: from mail-it0-f66.google.com ([209.85.214.66]:33905 "EHLO
-        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751628AbdHPKcP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Aug 2017 06:32:15 -0400
-Received: by mail-it0-f66.google.com with SMTP id s132so2157512ita.1
-        for <git@vger.kernel.org>; Wed, 16 Aug 2017 03:32:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=crH4Vg2+IWlhOv0jyni8bWI6w2XbCGRx7lM3VoQEWa0=;
-        b=itgNJtbrOU116lcereyq6hdZ/z3mfWNdZo3M5SQss7PmS0JqUaKDq4cEZ8Rz7pP9Yf
-         utILlaBVS2IcBzbIBY/OEjqMgN+zmVDz/TCiFZRRAvLfCBbSFQBdEpJafMatkLFEnPj0
-         XPp+cABhVuNfAa/S4PGFIqS7wU37gYm6Yz+rJmQyKgRpn422noCeacfQxRPhgSb3bA37
-         ptynNaP1klYV2QrIDno+cdsC80NW4yYX96iRLpqGUOmKjoDS1UmD/R/MThJK9sjZi3dq
-         yUoWOwzEpshlmo9n1hs7jINEPn9mEVUINPYPBueqmtUZS0faLqlw+YJ+ZuyXkbcDlJTb
-         zXlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=crH4Vg2+IWlhOv0jyni8bWI6w2XbCGRx7lM3VoQEWa0=;
-        b=qNvGiP5WpcqjT5pW0RgQbmkzV/ZrOIPRpOtgQWUxcaiRUKwOivubDd16QKvfM6Hk6t
-         L8He1pQruXW7lMQoL0WuJ5/w8boGTekJtGVBaGwkdDHIbUF9mLLoCS6QV3EiecaSbApp
-         3n1tTjfasZgoR0bz/Ct7o8hdgNwgQWj7+1EQ/9frDosx3zsZngsyHjpAYk+eJ6LrGpgK
-         s0f6RvMX9klccTowGt2zBpP8x90vp4TSpchlup+UrA1BVdmhmypqSqAvefw+235jsk+B
-         yH3X5eWCvL2UFdAk7QcgOAocNrXtiwpqOeluc0ldJVENSyufvi+7Z10xErE7Xpyjrqaj
-         o+WQ==
-X-Gm-Message-State: AHYfb5hqT72kDZ+jSuBF7LPn3ZiCd8rcWBpn+Hz6Dx0eIXXPXKFpgdJ+
-        lKGEtmh8ogXWOPPs6pwinwJmOgN5nFvY
-X-Received: by 10.36.141.199 with SMTP id w190mr1302596itd.143.1502879534557;
- Wed, 16 Aug 2017 03:32:14 -0700 (PDT)
+        id S1752298AbdHPMF5 convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 16 Aug 2017 08:05:57 -0400
+Received: from smtpgw01.csem.ch ([138.131.145.33]:51823 "EHLO smtpgw01.csem.ch"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752270AbdHPMFy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Aug 2017 08:05:54 -0400
+X-Greylist: delayed 901 seconds by postgrey-1.27 at vger.kernel.org; Wed, 16 Aug 2017 08:05:53 EDT
+X-AuditID: 8a839121-339ff70000002f46-d1-5994319b10aa
+Received: from smtpgw02in.csem.local ( [138.131.145.16])
+        (using TLS with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (Client did not present a certificate)
+        by smtpgw01.csem.ch (Symantec Messaging Gateway) with SMTP id F9.BC.12102.B9134995; Wed, 16 Aug 2017 13:50:51 +0200 (CEST)
+Received: from srvne115.csem.local ([138.131.150.115]:47562)
+        by smtpgw02in.csem.local with esmtp (Exim 4.82_1-5b7a7c0-XX)
+        (envelope-from <Yves.CHEVALLIER@csem.ch>)
+        id 1dhwqW-0006kV-2b
+        for git@vger.kernel.org; Wed, 16 Aug 2017 13:50:48 +0200
+Received: from webmail.csem.ch ([138.131.150.110])
+  by srvne115.csem.local (PGP Universal service);
+  Wed, 16 Aug 2017 13:50:44 +0200
+X-PGP-Universal: processed;
+        by srvne115.csem.local on Wed, 16 Aug 2017 13:50:44 +0200
+Received: from SRVNE111.csem.local ([138.131.150.111]) by srvne110.csem.local
+ ([138.131.150.110]) with mapi id 14.03.0351.000; Wed, 16 Aug 2017 13:50:49
+ +0200
+From:   CHEVALLIER Yves <Yves.CHEVALLIER@csem.ch>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Bug with ignorecase on Git and Cygwin
+Thread-Topic: Bug with ignorecase on Git and Cygwin
+Thread-Index: AdMWg/2uM1GvfhErTCOAl3lHX5ohTw==
+Date:   Wed, 16 Aug 2017 11:50:47 +0000
+Message-ID: <078108E7D0BA58498F61BC8C1ED2D10933E86F@srvne111.csem.local>
+Accept-Language: fr-CH, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [138.131.173.118]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-Received: by 10.79.127.85 with HTTP; Wed, 16 Aug 2017 03:32:14 -0700 (PDT)
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 16 Aug 2017 12:32:14 +0200
-Message-ID: <CAP8UFD1Jc0YdeNOgWh8OYrc_xPHhc9yY9R0D0YkQ47A_6h7rhA@mail.gmail.com>
-Subject: [ANNOUNCE] Git Rev News edition 30
-To:     git <git@vger.kernel.org>
-Cc:     lwn@lwn.net, Junio C Hamano <gitster@pobox.com>,
-        Thomas Ferris Nicolaisen <tfnico@gmail.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        "Shawn O. Pierce" <spearce@spearce.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Dave Borowitz <dborowitz@google.com>,
-        Howard Chu <hyc@symas.com>,
-        David Turner <David.Turner@twosigma.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Johannes Sixt <j6t@kdbg.org>, Eric Wong <e@80x24.org>
-Content-Type: text/plain; charset="UTF-8"
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrALMWRmVeSWpSXmKPExsXS1TxRQHe24ZRIg77FbBZdV7qZHBg9Pm+S
+        C2CM4rJJSc3JLEst0rdL4Mo4su0aS8EcvooX/xtZGxi/cnUxcnJICJhInLh0k72LkYtDSGAx
+        k0Tbr1MsIAkhgR+MEnOnOUEkOhglbuzrZYboCJfYdOAQG0RiEVCidx1YB5uAvsThWd1Aozg4
+        RIDsvguiIGFhAT2Jv3u2gpWICBhL/Nn1HMrWk5i/ZQ0riM0ioCpx4s8MRhCbV8BDYt/xZWA1
+        jAKyEvPezGMDsZkFxCVuPZnPBHGDgMSSPeeh7hGVePn4HyuErSyx9dMmRoh6HYkFuz9B9WpL
+        LFv4mhlivqDEyZlPWCYwis5CMnYWkpZZSFpmIWlZwMiyilG4OLekIL3cwFAvuTg1Vy8nPzkx
+        ZxMjJB4UdzBOX2h5iFGAg1GJh/eHxeRIIdbEsuLK3EOMEhzMSiK8u/WnRArxpiRWVqUW5ccX
+        leakFh9ilOZgURLn3dd/PkJIID2xJDU7NbUgtQgmy8TBKdXAGCD8Tsllgdunu2LXDncZKc21
+        8N+wYK/yx8Tvd5cVy5/5d672XvHFM9dWNnAfMZOe8fb2JnmpJWyrTldpL/PPPKU56frsdNbb
+        T+IbW2eVtP17nXKh7UKp8gM5tQIr8c65Zd3+PFHJu3hrDqqaC9x7U3zbr8p1VsTraSKzZJak
+        T2xM+F2RymGeqsRSnJFoqMVcVJwIADw+zLyDAgAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
+Hi, 
 
-The 30th edition of Git Rev News is now published:
+On Cygwin, the config value `ignorecase` is set to `true` during `git init` and it is not possible to change the default value using templates. 
 
-  https://git.github.io/rev_news/2017/08/16/edition-30/
+The issue was discovered while I was tracking a bunch of source files of a SDK. To track the changes I simply rm all the working directory, unzip the new SDK, then git add . and git commit -am "new sdk". In this process an issue with an assembly file with preprocessing was incorrectly named .s instead of .S. In the next version the correction was made, but Git was unable to detect it. 
 
-Thanks a lot to all the contributors and helpers!
+That said I've tried to manually change ignorecase from true to false and I still have the issue. Git on Cygwin cannot detect files renamed with a case change. 
 
-Enjoy,
-Christian, Thomas, Jakub and Markus.
+Is it a bug?
+
+# It works on Ubuntu
+
+	$ git --version
+	git version 1.8.3.1
+    $ # To be sure 
+    $ git config --global init.templateDir /usr/share/git-core/templates
+	$ cat /usr/share/git-core/templates
+	# Patched config 
+	[core] 
+	    dummyvar = true 
+		ignorecase = false
+		
+	$ git init dummy 
+	$ cat dummy/.git/config
+	# Patched config
+	[core]
+		ignorecase = false
+		dummyvar = true
+		repositoryformatversion = 0
+		filemode = true
+		bare = false
+		logallrefupdates = true
+
+# It doesn't work on Cygwin:
+
+	$ git --version
+	git version 2.13.2
+	$ which git
+	/usr/bin/git
+    $ # To be sure 
+    $ git config --global init.templateDir /usr/share/git-core/templates
+	$ cat /usr/share/git-core/templates
+	# Patched config 
+	[core] 
+	    dummyvar = true 
+		ignorecase = false		
+	$ git init dummy 
+	$ cat dummy/.git/config
+	# Patched config
+	[core]
+		ignorecase = true
+		dummyvar = false
+		repositoryformatversion = 0
+		filemode = true
+		bare = false
+		logallrefupdates = true
