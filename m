@@ -2,71 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 703111F667
-	for <e@80x24.org>; Wed, 16 Aug 2017 18:53:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D19221F667
+	for <e@80x24.org>; Wed, 16 Aug 2017 19:09:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752120AbdHPSxz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Aug 2017 14:53:55 -0400
-Received: from mail-yw0-f172.google.com ([209.85.161.172]:34272 "EHLO
-        mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751765AbdHPSxy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Aug 2017 14:53:54 -0400
-Received: by mail-yw0-f172.google.com with SMTP id s143so28203595ywg.1
-        for <git@vger.kernel.org>; Wed, 16 Aug 2017 11:53:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=d8+WZ5LHR3QeYuIumYVi+2nP3++mizmE2TN0Zn7o1mA=;
-        b=YbaXXYfv4JCgcs702izST+cc4zR1fZGfJg/CsHIevXutY1wjJOZoJ0xeFhKPefscR9
-         DQI+VYiddPwYv9bc/w7XcZzY4SpDOAdTqAJhJ8mxjYRL+6Fn8gbqCb4VJD9SYs3fFrJo
-         WJJ3GfZiclL4JhMzSh96LuwkPfI5O1Q2psLHxIcp92CLJBQoDRj/RA/8NecMHYrhD+EE
-         8p8aHtHMci3TW1hmlUPmP+G9tj4zzBWrzIZ8TDgTtAcQy8r/zX5djwsVDpD4jIIGOESv
-         w7xFEtRDtr2vIIL8a9QHL/aUW5jYTqSU0vg5zETC7vOjASTVcCHhNNMZTxYPIP8liBJi
-         RXHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=d8+WZ5LHR3QeYuIumYVi+2nP3++mizmE2TN0Zn7o1mA=;
-        b=Kx0GyZNciurxG0oCp4mBjM4tFrARyrPDUqrUW+4GYrLjqFrW0LYi93S13YaVUW5WOl
-         ggBS06aINf5ajcz5RuMqw25hj9vtcgB97wSC+hBS5ntt9KEfc/mh7Dw35zKBEBtps0+G
-         Vns9DRwsKe7Or2zRLkUrF7zYQWVfe4D+a7uL8mRRCK9umjO3Zz1eqwrEv2RLtvKQqaHm
-         Dxvli3cm5Hyw8YCKBgA5YoWUI9CIkdWin7B4dYHNZUmTCPl84i4xS7zhDEW7ZsBm4I1M
-         wJtLw6l0eOsM98TJIrp6HBKDSZHLhv3rdTLVJheQh234QA2De5qr/cunu/3WWCCwuLou
-         41kA==
-X-Gm-Message-State: AHYfb5j+po/sKbQXqoCn0yLK6GM8R3zvAaymZfBmWeFRDXdZHhKiv90k
-        bM+5Jfp1cJ9RttVTygkM9KwEgV54i/n6
-X-Received: by 10.37.55.79 with SMTP id e76mr2224621yba.215.1502909631553;
- Wed, 16 Aug 2017 11:53:51 -0700 (PDT)
+        id S1752499AbdHPTJt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Aug 2017 15:09:49 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51643 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752175AbdHPTJs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Aug 2017 15:09:48 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CB3C0A4DC2;
+        Wed, 16 Aug 2017 15:09:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ZrLXSv99Tds+0Ieff/Oj3WHlSIc=; b=E7KnIg
+        lEvdPozOUGDjPCUwcYZpDjPoG0PNnD40Tdr9ZPV/HIh6l6V8jHg3A8k6iiouH60K
+        eK9xh+FCmRB9f2eUJl7db/rKTJbzEalApOJLWIL5NSzAdsg+2sMBGBE/ZTXL9FBa
+        v62ZXG7WueMOTdUpHug8Y8EipOpvCwJfI4uU4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=m/gdUWG6vhKxFbG962Ya0q4MOWXZgQwx
+        4zGrdkCyrULUHLfMORXldtcbw1TdYUN9Wo8OYQyUOU66qcqGYoVC5g1N1kJ/18ia
+        mXlfAqaSF43UZEN3o3dCkQXmEEH/tQWLFWa7kvC2eUtKKGamL/UgiCgoYeWEfxxp
+        zRX/OX0gwew=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C2E3FA4DC1;
+        Wed, 16 Aug 2017 15:09:47 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 346A2A4DBE;
+        Wed, 16 Aug 2017 15:09:47 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+Cc:     git@vger.kernel.org, martin.agren@gmail.com
+Subject: Re: [PATCH v3 1/2 / RFC] builtin/branch: stop supporting the use of --set-upstream option
+References: <20170808171136.31168-1-kaarticsivaraam91196@gmail.com>
+        <20170814085442.31174-1-kaarticsivaraam91196@gmail.com>
+        <xmqqy3qluck4.fsf@gitster.mtv.corp.google.com>
+        <772aaebf-81ea-ac22-9d2f-35d0778f502f@gmail.com>
+        <xmqqfucsr73w.fsf@gitster.mtv.corp.google.com>
+        <09ce545a-31ff-aa9f-d03c-3cb68ed26230@gmail.com>
+Date:   Wed, 16 Aug 2017 12:09:46 -0700
+In-Reply-To: <09ce545a-31ff-aa9f-d03c-3cb68ed26230@gmail.com> (Kaartic
+        Sivaraam's message of "Wed, 16 Aug 2017 23:43:09 +0530")
+Message-ID: <xmqq378rl479.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.37.56.142 with HTTP; Wed, 16 Aug 2017 11:53:51 -0700 (PDT)
-In-Reply-To: <CAGZ79kajWhEOtqZLrYSAVhM_ZLDiQd9DP9GeL+J=tqach5V65A@mail.gmail.com>
-References: <4283F0B0-BC1C-4ED1-8126-7E512D84484B@gmail.com> <CAGZ79kajWhEOtqZLrYSAVhM_ZLDiQd9DP9GeL+J=tqach5V65A@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 16 Aug 2017 11:53:51 -0700
-Message-ID: <CAGZ79kadSk46v_a1JBr5Rr=Gikfbp95rPXSWaj=gk6_ZKF_HFw@mail.gmail.com>
-Subject: Re: Submodule regression in 2.14?
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7850E61A-82B6-11E7-80C3-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 16, 2017 at 11:51 AM, Stefan Beller <sbeller@google.com> wrote:
+Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
 
-> Any chance the "did not happen with 2.13" was not
-> freshly cloned but tested on an existing repo? If so a hot
-> candidate for suspicion is a93dcb0a56 (Merge branch
-> 'bw/submodule-is-active', 2017-03-30), IMHO, just
-> gut feeling, though.
+> On Wednesday 16 August 2017 12:28 AM, Junio C Hamano wrote:
+>> Some refactoring to make it easier to reuse it from the new caller
+>> would be necessary. 
+> Sorry but I think I don't get that correctly. What's the "new caller"
+> being referred to here?
+> What should be refactored?
 
-which makes it a feature, I should add.
+You said that "checkout" does not do a necessary check that is done
+in "branch", so presumably "branch" already has a code to do so that
+is not called by the current "checkout", right?  Then you would add
+a new caller in "checkout" to trigger the same check that is already
+done in "branch", but the code "branch" uses _might_ be too specific
+to the kind of data the current implementation of "branch" uses and
+it _may_ not be easy to call it directly from "checkout" (I didn't
+check if that is the case).  If so, then the check implemented in
+the current "branch" may need to be refactored before it can easily
+be called from the new caller you would be adding to "checkout".
+
+
