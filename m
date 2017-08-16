@@ -2,122 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F05E1F667
-	for <e@80x24.org>; Wed, 16 Aug 2017 12:05:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A7C4D1F667
+	for <e@80x24.org>; Wed, 16 Aug 2017 12:11:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752298AbdHPMF5 convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Wed, 16 Aug 2017 08:05:57 -0400
-Received: from smtpgw01.csem.ch ([138.131.145.33]:51823 "EHLO smtpgw01.csem.ch"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752270AbdHPMFy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Aug 2017 08:05:54 -0400
-X-Greylist: delayed 901 seconds by postgrey-1.27 at vger.kernel.org; Wed, 16 Aug 2017 08:05:53 EDT
-X-AuditID: 8a839121-339ff70000002f46-d1-5994319b10aa
-Received: from smtpgw02in.csem.local ( [138.131.145.16])
-        (using TLS with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (Client did not present a certificate)
-        by smtpgw01.csem.ch (Symantec Messaging Gateway) with SMTP id F9.BC.12102.B9134995; Wed, 16 Aug 2017 13:50:51 +0200 (CEST)
-Received: from srvne115.csem.local ([138.131.150.115]:47562)
-        by smtpgw02in.csem.local with esmtp (Exim 4.82_1-5b7a7c0-XX)
-        (envelope-from <Yves.CHEVALLIER@csem.ch>)
-        id 1dhwqW-0006kV-2b
-        for git@vger.kernel.org; Wed, 16 Aug 2017 13:50:48 +0200
-Received: from webmail.csem.ch ([138.131.150.110])
-  by srvne115.csem.local (PGP Universal service);
-  Wed, 16 Aug 2017 13:50:44 +0200
-X-PGP-Universal: processed;
-        by srvne115.csem.local on Wed, 16 Aug 2017 13:50:44 +0200
-Received: from SRVNE111.csem.local ([138.131.150.111]) by srvne110.csem.local
- ([138.131.150.110]) with mapi id 14.03.0351.000; Wed, 16 Aug 2017 13:50:49
- +0200
-From:   CHEVALLIER Yves <Yves.CHEVALLIER@csem.ch>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Bug with ignorecase on Git and Cygwin
-Thread-Topic: Bug with ignorecase on Git and Cygwin
-Thread-Index: AdMWg/2uM1GvfhErTCOAl3lHX5ohTw==
-Date:   Wed, 16 Aug 2017 11:50:47 +0000
-Message-ID: <078108E7D0BA58498F61BC8C1ED2D10933E86F@srvne111.csem.local>
-Accept-Language: fr-CH, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [138.131.173.118]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
+        id S1752115AbdHPMLx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Aug 2017 08:11:53 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:34454 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751624AbdHPMLv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Aug 2017 08:11:51 -0400
+Received: by mail-wr0-f193.google.com with SMTP id x43so2725219wrb.1
+        for <git@vger.kernel.org>; Wed, 16 Aug 2017 05:11:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=jJoQ87iv0tA5AZ/1q22IVwI7mLIzvbj/rluYm8YxI6Q=;
+        b=h+JyIfAEYwS3eYrKwn/HZC4GSbYIwqe3PSOc+JB1HQcj33fuJsTvdU3gFrP3G49YMR
+         IoWmTqlLKO4fpXN6xedgJ6DVgUDMAu0qxWFJsgriFM6pTnPfHQnRHccs/G0hexu5ESqy
+         D1CEnUTe0G2ENP/gHRfmK2jWXrOE6mkXqsR71lGq5qwS12TjqlJ3Lof/ULZlHEHYFWdP
+         7t3L2vXeHqidnKyXZPtlQ946Geq77AXR57cZfqG/oTSZVYyPLADH3djOd0lEqAd1iWkq
+         RuNDGuDxg0kyyHnw/h3VWE2xLmr9x0mVewfuNneo3AY9vvMvEiinCcQxhx7sYy8hYoap
+         e2/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=jJoQ87iv0tA5AZ/1q22IVwI7mLIzvbj/rluYm8YxI6Q=;
+        b=RwP10y4spnq6d7k2OJMXX+EZJsRCVm9aFVGOCgvFn62rBHzy4kBoapL/CWHUm3k4HH
+         0H7K5eokwK6RHBNLFxzovT1dnYdXjTNu1EYaKMfTU3mlH4ew8siFxz7seqMc6FdcF7To
+         07X7RuS3oMp4xJv18E1acG37cV8pAcNh4dOyzgVhSC5wxwbmA7nFMY02ntDBMKWEsBEy
+         fH5gLYvj9KK6HjNpBV3z9dStTWVFPW+1aDwGe3AH/hkjZNEVzNCDr+Q8w56cTQ6vXwVS
+         AVHOXt2lkBfyIe5Wc3r2j3oTq3CAubMKaL/PY4h7IdWJxtyx3f2HTLl2+VPPG7QuZUQN
+         BvAg==
+X-Gm-Message-State: AHYfb5jxyd/9CQumHeDej2N4rUU91eCjHsy8WzUFM1C1l3U7tHDTGJGT
+        sbZAW152ia3ijnGqdtZ4dKoidL+0cg==
+X-Received: by 10.223.174.232 with SMTP id y95mr1213068wrc.56.1502885510330;
+ Wed, 16 Aug 2017 05:11:50 -0700 (PDT)
 MIME-Version: 1.0
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrALMWRmVeSWpSXmKPExsXS1TxRQHe24ZRIg77FbBZdV7qZHBg9Pm+S
-        C2CM4rJJSc3JLEst0rdL4Mo4su0aS8EcvooX/xtZGxi/cnUxcnJICJhInLh0k72LkYtDSGAx
-        k0Tbr1MsIAkhgR+MEnOnOUEkOhglbuzrZYboCJfYdOAQG0RiEVCidx1YB5uAvsThWd1Aozg4
-        RIDsvguiIGFhAT2Jv3u2gpWICBhL/Nn1HMrWk5i/ZQ0riM0ioCpx4s8MRhCbV8BDYt/xZWA1
-        jAKyEvPezGMDsZkFxCVuPZnPBHGDgMSSPeeh7hGVePn4HyuErSyx9dMmRoh6HYkFuz9B9WpL
-        LFv4mhlivqDEyZlPWCYwis5CMnYWkpZZSFpmIWlZwMiyilG4OLekIL3cwFAvuTg1Vy8nPzkx
-        ZxMjJB4UdzBOX2h5iFGAg1GJh/eHxeRIIdbEsuLK3EOMEhzMSiK8u/WnRArxpiRWVqUW5ccX
-        leakFh9ilOZgURLn3dd/PkJIID2xJDU7NbUgtQgmy8TBKdXAGCD8Tsllgdunu2LXDncZKc21
-        8N+wYK/yx8Tvd5cVy5/5d672XvHFM9dWNnAfMZOe8fb2JnmpJWyrTldpL/PPPKU56frsdNbb
-        T+IbW2eVtP17nXKh7UKp8gM5tQIr8c65Zd3+PFHJu3hrDqqaC9x7U3zbr8p1VsTraSKzZJak
-        T2xM+F2RymGeqsRSnJFoqMVcVJwIADw+zLyDAgAA
+Received: by 10.28.24.130 with HTTP; Wed, 16 Aug 2017 05:11:19 -0700 (PDT)
+In-Reply-To: <xmqqbmngr6wq.fsf@gitster.mtv.corp.google.com>
+References: <cover.1502796628.git.patryk.obara@gmail.com> <a21088f049390828cdee957f88503e8466e1d34e.1502796628.git.patryk.obara@gmail.com>
+ <xmqq1socsnay.fsf@gitster.mtv.corp.google.com> <CAGZ79kaCA29j6ON4KSsB=EH8FPfZGE56hVGSAAepcPiH952v6g@mail.gmail.com>
+ <xmqqbmngr6wq.fsf@gitster.mtv.corp.google.com>
+From:   Patryk Obara <patryk.obara@gmail.com>
+Date:   Wed, 16 Aug 2017 14:11:19 +0200
+X-Google-Sender-Auth: QD2iOXyhjw6guQKjXvvuUkrbNsw
+Message-ID: <CAJfL8+R6SK3RGEGXcr5N-btKKjHCUcT95r7oOOsWgY1RXwEEtA@mail.gmail.com>
+Subject: Re: [PATCH 2/5] sha1_file: fix hardcoded size in null_sha1
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, 
+Junio C Hamano <gitster@pobox.com> wrote:
 
-On Cygwin, the config value `ignorecase` is set to `true` during `git init` and it is not possible to change the default value using templates. 
+> I said this is OK for "null" because we assume we will use ^\0{len}$
+> for any hash function we choose as the "impossible" value, and for
+> that particular use pattern, we do not need such a union.  Just
+> letting the caller peek at an appropriate number of bytes at the
+> beginning of that NUL buffer for hash the caller wants to use is
+> sufficient.
 
-The issue was discovered while I was tracking a bunch of source files of a SDK. To track the changes I simply rm all the working directory, unzip the new SDK, then git add . and git commit -am "new sdk". In this process an issue with an assembly file with preprocessing was incorrectly named .s instead of .S. In the next version the correction was made, but Git was unable to detect it. 
+Do you think I should record this explanation as either commit message
+or comment in sha1_file.c?
 
-That said I've tried to manually change ignorecase from true to false and I still have the issue. Git on Cygwin cannot detect files renamed with a case change. 
+> MAX is inevitable only if we envision that we have to handle objects
+> named using two or more hashing schemes at the same time, with the
+> same binary and during the same run inside a single process.
 
-Is it a bug?
+I think this will be the case if "transition one local repository at
+a time" from Jonathan Nieder's transition plan will be followed.
+This plan assumes object_id translation happening e.g. during fetch
+operation.
 
-# It works on Ubuntu
-
-	$ git --version
-	git version 1.8.3.1
-    $ # To be sure 
-    $ git config --global init.templateDir /usr/share/git-core/templates
-	$ cat /usr/share/git-core/templates
-	# Patched config 
-	[core] 
-	    dummyvar = true 
-		ignorecase = false
-		
-	$ git init dummy 
-	$ cat dummy/.git/config
-	# Patched config
-	[core]
-		ignorecase = false
-		dummyvar = true
-		repositoryformatversion = 0
-		filemode = true
-		bare = false
-		logallrefupdates = true
-
-# It doesn't work on Cygwin:
-
-	$ git --version
-	git version 2.13.2
-	$ which git
-	/usr/bin/git
-    $ # To be sure 
-    $ git config --global init.templateDir /usr/share/git-core/templates
-	$ cat /usr/share/git-core/templates
-	# Patched config 
-	[core] 
-	    dummyvar = true 
-		ignorecase = false		
-	$ git init dummy 
-	$ cat dummy/.git/config
-	# Patched config
-	[core]
-		ignorecase = true
-		dummyvar = false
-		repositoryformatversion = 0
-		filemode = true
-		bare = false
-		logallrefupdates = true
+--=20
+| =E2=86=90 Ceci n'est pas une pipe
+Patryk Obara
