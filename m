@@ -6,32 +6,32 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 33D171F667
-	for <e@80x24.org>; Wed, 16 Aug 2017 20:17:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 74A691F667
+	for <e@80x24.org>; Wed, 16 Aug 2017 20:17:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752592AbdHPUQw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Aug 2017 16:16:52 -0400
-Received: from vie01a-dmta-pe04-1.mx.upcmail.net ([62.179.121.163]:19175 "EHLO
+        id S1752632AbdHPURW (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Aug 2017 16:17:22 -0400
+Received: from vie01a-dmta-pe04-1.mx.upcmail.net ([62.179.121.163]:49374 "EHLO
         vie01a-dmta-pe04-1.mx.upcmail.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752567AbdHPUQu (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 16 Aug 2017 16:16:50 -0400
+        by vger.kernel.org with ESMTP id S1752586AbdHPUQw (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 16 Aug 2017 16:16:52 -0400
 Received: from [172.31.216.44] (helo=vie01a-pemc-psmtp-pe02)
         by vie01a-dmta-pe04.mx.upcmail.net with esmtp (Exim 4.88)
         (envelope-from <martin.koegler@chello.at>)
-        id 1di4kD-0005Qt-GT
-        for git@vger.kernel.org; Wed, 16 Aug 2017 22:16:49 +0200
+        id 1di4kF-0005Ls-0K
+        for git@vger.kernel.org; Wed, 16 Aug 2017 22:16:51 +0200
 Received: from master.zuhause ([80.108.242.240])
         by vie01a-pemc-psmtp-pe02 with SMTP @ mailcloud.upcmail.net
-        id xwGm1v00t5BuuEg01wGnMo; Wed, 16 Aug 2017 22:16:47 +0200
+        id xwGl1v01c5BuuEg01wGmMi; Wed, 16 Aug 2017 22:16:47 +0200
 X-SourceIP: 80.108.242.240
 Received: by master.zuhause (Postfix, from userid 1006)
-        id 698C045D4621; Wed, 16 Aug 2017 22:16:46 +0200 (CEST)
+        id D918445D4512; Wed, 16 Aug 2017 22:16:45 +0200 (CEST)
 From:   Martin Koegler <martin.koegler@chello.at>
 To:     git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de
 Cc:     Martin Koegler <martin.koegler@chello.at>
-Subject: [Patch size_t V3 16/19] Convert various things to size_t
-Date:   Wed, 16 Aug 2017 22:16:28 +0200
-Message-Id: <1502914591-26215-17-git-send-email-martin@mail.zuhause>
+Subject: [Patch size_t V3 15/19] Convert archive functions to size_t
+Date:   Wed, 16 Aug 2017 22:16:27 +0200
+Message-Id: <1502914591-26215-16-git-send-email-martin@mail.zuhause>
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <1502914591-26215-1-git-send-email-martin@mail.zuhause>
 References: <1502914591-26215-1-git-send-email-martin@mail.zuhause>
@@ -44,101 +44,135 @@ From: Martin Koegler <martin.koegler@chello.at>
 
 Signed-off-by: Martin Koegler <martin.koegler@chello.at>
 ---
- bisect.c                | 2 +-
- blame.c                 | 2 +-
- builtin/fmt-merge-msg.c | 2 +-
- builtin/mktag.c         | 2 +-
- dir.c                   | 4 ++--
- dir.h                   | 2 +-
- 6 files changed, 7 insertions(+), 7 deletions(-)
+ archive-tar.c | 16 ++++++++--------
+ archive-zip.c | 22 +++++++++++-----------
+ 2 files changed, 19 insertions(+), 19 deletions(-)
 
-diff --git a/bisect.c b/bisect.c
-index 2549eaf..0580c82 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -131,7 +131,7 @@ static void show_list(const char *debug, int counted, int nr,
- 		struct commit *commit = p->item;
- 		unsigned flags = commit->object.flags;
- 		enum object_type type;
--		unsigned long size;
-+		size_t size;
- 		char *buf = read_sha1_file(commit->object.sha1, &type, &size);
- 		const char *subject_start;
- 		int subject_len;
-diff --git a/blame.c b/blame.c
-index 739a280..f628b42 100644
---- a/blame.c
-+++ b/blame.c
-@@ -1621,7 +1621,7 @@ static const char *get_next_line(const char *start, const char *end)
- static int prepare_lines(struct blame_scoreboard *sb)
- {
- 	const char *buf = sb->final_buf;
--	unsigned long len = sb->final_buf_size;
-+	size_t len = sb->final_buf_size;
- 	const char *end = buf + len;
- 	const char *p;
- 	int *lineno;
-diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
-index 61ab796..3faf100 100644
---- a/builtin/fmt-merge-msg.c
-+++ b/builtin/fmt-merge-msg.c
-@@ -464,7 +464,7 @@ static void fmt_merge_msg_title(struct strbuf *out,
- static void fmt_tag_signature(struct strbuf *tagbuf,
- 			      struct strbuf *sig,
- 			      const char *buf,
--			      unsigned long len)
-+			      size_t len)
- {
- 	const char *tag_body = strstr(buf, "\n\n");
- 	if (tag_body) {
-diff --git a/builtin/mktag.c b/builtin/mktag.c
-index 0663106..ff919a7 100644
---- a/builtin/mktag.c
-+++ b/builtin/mktag.c
-@@ -34,7 +34,7 @@ static int verify_object(const unsigned char *sha1, const char *expected_type)
- 	return ret;
- }
+diff --git a/archive-tar.c b/archive-tar.c
+index 719673d..ee56b2b 100644
+--- a/archive-tar.c
++++ b/archive-tar.c
+@@ -12,7 +12,7 @@
+ #define BLOCKSIZE	(RECORDSIZE * 20)
  
--static int verify_tag(char *buffer, unsigned long size)
-+static int verify_tag(char *buffer, size_t size)
- {
- 	int typelen;
- 	char type[20];
-diff --git a/dir.c b/dir.c
-index f161c26..0c7c767 100644
---- a/dir.c
-+++ b/dir.c
-@@ -180,7 +180,7 @@ static size_t common_prefix_len(const struct pathspec *pathspec)
+ static char block[BLOCKSIZE];
+-static unsigned long offset;
++static size_t offset;
+ 
+ static int tar_umask = 002;
+ 
+@@ -50,12 +50,12 @@ static void write_if_needed(void)
+  * queues up writes, so that all our write(2) calls write exactly one
+  * full block; pads writes to RECORDSIZE
   */
- char *common_prefix(const struct pathspec *pathspec)
+-static void do_write_blocked(const void *data, unsigned long size)
++static void do_write_blocked(const void *data, size_t size)
  {
--	unsigned long len = common_prefix_len(pathspec);
-+	size_t len = common_prefix_len(pathspec);
+ 	const char *buf = data;
  
- 	return len ? xmemdupz(pathspec->items[0].match, len) : NULL;
- }
-@@ -2673,7 +2673,7 @@ static void load_sha1_stat(struct sha1_stat *sha1_stat,
- 	sha1_stat->valid = 1;
- }
+ 	if (offset) {
+-		unsigned long chunk = BLOCKSIZE - offset;
++		size_t chunk = BLOCKSIZE - offset;
+ 		if (size < chunk)
+ 			chunk = size;
+ 		memcpy(block + offset, buf, chunk);
+@@ -77,7 +77,7 @@ static void do_write_blocked(const void *data, unsigned long size)
  
--struct untracked_cache *read_untracked_extension(const void *data, unsigned long sz)
-+struct untracked_cache *read_untracked_extension(const void *data, size_t sz)
+ static void finish_record(void)
  {
- 	struct untracked_cache *uc;
- 	struct read_data rd;
-diff --git a/dir.h b/dir.h
-index e371705..709c72c 100644
---- a/dir.h
-+++ b/dir.h
-@@ -349,7 +349,7 @@ void untracked_cache_remove_from_index(struct index_state *, const char *);
- void untracked_cache_add_to_index(struct index_state *, const char *);
+-	unsigned long tail;
++	size_t tail;
+ 	tail = offset % RECORDSIZE;
+ 	if (tail)  {
+ 		memset(block + offset, 0, RECORDSIZE - tail);
+@@ -86,7 +86,7 @@ static void finish_record(void)
+ 	write_if_needed();
+ }
  
- void free_untracked_cache(struct untracked_cache *);
--struct untracked_cache *read_untracked_extension(const void *data, unsigned long sz);
-+struct untracked_cache *read_untracked_extension(const void *data, size_t sz);
- void write_untracked_extension(struct strbuf *out, struct untracked_cache *untracked);
- void add_untracked_cache(struct index_state *istate);
- void remove_untracked_cache(struct index_state *istate);
+-static void write_blocked(const void *data, unsigned long size)
++static void write_blocked(const void *data, size_t size)
+ {
+ 	do_write_blocked(data, size);
+ 	finish_record();
+@@ -198,10 +198,10 @@ static size_t get_path_prefix(const char *path, size_t pathlen, size_t maxlen)
+ 
+ static void prepare_header(struct archiver_args *args,
+ 			   struct ustar_header *header,
+-			   unsigned int mode, unsigned long size)
++			   unsigned int mode, size_t size)
+ {
+ 	xsnprintf(header->mode, sizeof(header->mode), "%07o", mode & 07777);
+-	xsnprintf(header->size, sizeof(header->size), "%011lo", S_ISREG(mode) ? size : 0);
++	xsnprintf(header->size, sizeof(header->size), "%011lo", S_ISREG(mode) ? (unsigned long)size : 0);
+ 	xsnprintf(header->mtime, sizeof(header->mtime), "%011lo", (unsigned long) args->time);
+ 
+ 	xsnprintf(header->uid, sizeof(header->uid), "%07o", 0);
+@@ -219,7 +219,7 @@ static void prepare_header(struct archiver_args *args,
+ 
+ static void write_extended_header(struct archiver_args *args,
+ 				  const unsigned char *sha1,
+-				  const void *buffer, unsigned long size)
++				  const void *buffer, size_t size)
+ {
+ 	struct ustar_header header;
+ 	unsigned int mode;
+diff --git a/archive-zip.c b/archive-zip.c
+index 4492d64..3a54d80 100644
+--- a/archive-zip.c
++++ b/archive-zip.c
+@@ -186,12 +186,12 @@ static uint32_t clamp32(uintmax_t n)
+ 	return (n < max) ? n : max;
+ }
+ 
+-static void *zlib_deflate_raw(void *data, unsigned long size,
++static void *zlib_deflate_raw(void *data, size_t size,
+ 			      int compression_level,
+-			      unsigned long *compressed_size)
++			      size_t *compressed_size)
+ {
+ 	git_zstream stream;
+-	unsigned long maxsize;
++	size_t maxsize;
+ 	void *buffer;
+ 	int result;
+ 
+@@ -219,9 +219,9 @@ static void *zlib_deflate_raw(void *data, unsigned long size,
+ 	return buffer;
+ }
+ 
+-static void write_zip_data_desc(unsigned long size,
+-				unsigned long compressed_size,
+-				unsigned long crc)
++static void write_zip_data_desc(size_t size,
++				size_t compressed_size,
++				uint32_t crc)
+ {
+ 	if (size >= 0xffffffff || compressed_size >= 0xffffffff) {
+ 		struct zip64_data_desc trailer;
+@@ -243,9 +243,9 @@ static void write_zip_data_desc(unsigned long size,
+ }
+ 
+ static void set_zip_header_data_desc(struct zip_local_header *header,
+-				     unsigned long size,
+-				     unsigned long compressed_size,
+-				     unsigned long crc)
++				     size_t size,
++				     size_t compressed_size,
++				     uint32_t crc)
+ {
+ 	copy_le32(header->crc32, crc);
+ 	copy_le32(header->compressed_size, compressed_size);
+@@ -287,8 +287,8 @@ static int write_zip_entry(struct archiver_args *args,
+ 	size_t header_extra_size = ZIP_EXTRA_MTIME_SIZE;
+ 	int need_zip64_extra = 0;
+ 	unsigned long attr2;
+-	unsigned long compressed_size;
+-	unsigned long crc;
++	size_t compressed_size;
++	uint32_t crc;
+ 	int method;
+ 	unsigned char *out;
+ 	void *deflated = NULL;
 -- 
 2.1.4
 
