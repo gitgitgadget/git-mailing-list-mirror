@@ -2,115 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C79841F667
-	for <e@80x24.org>; Wed, 16 Aug 2017 18:49:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 82D9A1F667
+	for <e@80x24.org>; Wed, 16 Aug 2017 18:51:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752377AbdHPStd (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Aug 2017 14:49:33 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60637 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751893AbdHPStc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Aug 2017 14:49:32 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1C563AF31F;
-        Wed, 16 Aug 2017 14:49:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=gt6GaNYK+S4qhuMX1VcskcEWJGU=; b=nGWA5z
-        UVZpnc8UVTL1VMcVroAScRi80zXiuQ9P8CMTAlUtwF4xkUmaUJQ7QBbhcJn/hK2T
-        1lBDVsw/pVZFs/JEYj+9mpjmeOfbYcIHle+iDk+k1mSl8iJMv8uvn/CiYFDZ+d9R
-        uIlNvJeGmySZpOeuVU1/57Fm4wVFzhv8ZR274=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=lzUVuDXIfhvmNL0MajVhn4DA0IPjjLhs
-        5v4DPfMrUm5S8q7JiYJRrWmf5fVgtr4wLmB6vCoJVYXxypq8LC3HhLGGSV/jMfA5
-        9+emytQx9nQ1xtJLq86EXoGBe493Y3zkf0Ia7D7K7RbXIv73XY3m/R8qxC1bv074
-        3VKiDX7lj2o=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1590DAF31E;
-        Wed, 16 Aug 2017 14:49:32 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7C8B6AF31D;
-        Wed, 16 Aug 2017 14:49:31 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     ryenus <ryenus@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH] fix revisions doc about quoting for ':/' notation
-References: <CAKkAvazj28RR1nHEWNNeZeyE6mpkb3opk6kvrxP6Lau6tcCbJQ@mail.gmail.com>
-Date:   Wed, 16 Aug 2017 11:49:30 -0700
-In-Reply-To: <CAKkAvazj28RR1nHEWNNeZeyE6mpkb3opk6kvrxP6Lau6tcCbJQ@mail.gmail.com>
-        (ryenus@gmail.com's message of "Wed, 16 Aug 2017 11:21:10 +0800")
-Message-ID: <xmqq7ey3l551.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1752358AbdHPSvd (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Aug 2017 14:51:33 -0400
+Received: from mail-yw0-f171.google.com ([209.85.161.171]:35644 "EHLO
+        mail-yw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751943AbdHPSvc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Aug 2017 14:51:32 -0400
+Received: by mail-yw0-f171.google.com with SMTP id n83so316467ywn.2
+        for <git@vger.kernel.org>; Wed, 16 Aug 2017 11:51:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=R8NTFx7Q243S3cgG5ri8T6ALo+5ZCYQ3hE9G1mt5lis=;
+        b=X2lODkbTKDDTSTSxJD46JkSP2Q6Yr4xROKzfbwO0SgaNfAogFhEwIPx0b2Cjbkd318
+         WuT2uXDXadgraCp6S9dM/e27ldhmMCttDThgz6aPsFaKS6xRkJHeDnC9y73SU2llyvd2
+         rVqziW7wLXPHdo5XVac3wYagRkH1oWPigii2WTxVjWSICwxLFvLDt52Td8bk/hyDpyXj
+         8LeDvTC7Cyl3nChPw1T9eXst7jrwPNv42q4KgGOu5btN5nsyjzNnr5YCRWer6mgthFIP
+         lxfPmPjarbNvMRCMw59bF5b5cOMAu/qGUNWCtNHza3o0nM5VJexQi76Etaq7bZ0wjdK3
+         C1+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=R8NTFx7Q243S3cgG5ri8T6ALo+5ZCYQ3hE9G1mt5lis=;
+        b=sy9WJu2VMu/E5opYx3JLQkosU1oNMETAA/fb5sn31CWSyMK4TnDxkVxVTlTW7y+j0v
+         rTjhGFtNLe6lANnpyuUCbYN6sI2vlgGWGairH+gb5NTcioyUQBkJlyE5Ph+5hRLXxIQ4
+         CM+oWIyVtQWLdVyJaY3f/x58N5jvMAgYi4dQmclFe6uCYGyfY3V4sg/DnihLRXuh1lgl
+         ehcoB49ph2siIdtoQOPuxtFDRLTWkPju88dWU3R0X6WJAUc9pPwYmwATaJB3J4OACqaE
+         KY0Ff7xm5wyhqQad+BW8vIvqhNC96+g8mpS6BpB7TdPEUT+NwM/PZBmY3AuhbVNXlNEa
+         hgGw==
+X-Gm-Message-State: AHYfb5gZtyLzVdmdK9gWRWJfOND0L02f/xAM4OLfqFbHXzM+gikw25M+
+        onPDN3qGoj3RE8ai623bR7LeJ3n1PUss6Dxiwg==
+X-Received: by 10.13.206.132 with SMTP id q126mr2076675ywd.337.1502909491238;
+ Wed, 16 Aug 2017 11:51:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A3B2F580-82B3-11E7-9F78-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Received: by 10.37.56.142 with HTTP; Wed, 16 Aug 2017 11:51:30 -0700 (PDT)
+In-Reply-To: <4283F0B0-BC1C-4ED1-8126-7E512D84484B@gmail.com>
+References: <4283F0B0-BC1C-4ED1-8126-7E512D84484B@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 16 Aug 2017 11:51:30 -0700
+Message-ID: <CAGZ79kajWhEOtqZLrYSAVhM_ZLDiQd9DP9GeL+J=tqach5V65A@mail.gmail.com>
+Subject: Re: Submodule regression in 2.14?
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-ryenus <ryenus@gmail.com> writes:
-
-> To make sure the `<text>` in `:/<text>` is seen as one search string,
-> one should quote/escape `<text>` properly.
+On Wed, Aug 16, 2017 at 11:35 AM, Lars Schneider
+<larsxschneider@gmail.com> wrote:
+> Hi,
 >
-> Especially, the example given in the manual `:/fix nasty bug` does not
-> work because of missing quotes. The examples are now corrected, and a
-> note about quoting/escaping is added as well.
-> ---
->  Documentation/revisions.txt | 7 ++++---
->  1 file changed, 4 insertions(+), 3 deletions(-)
+> I think we discovered a regression in Git 2.14.1 today.
+> It looks like as if "git submodule update --init --recursive" removes
+> the "skip submodules" config.
 >
-> diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-> index 61277469c..fdfdde0ad 100644
-> --- a/Documentation/revisions.txt
-> +++ b/Documentation/revisions.txt
-> @@ -169,14 +169,14 @@ existing tag object.
->    and dereference the tag recursively until a non-tag object is
->    found.
+> Consider the following steps:
 >
-> -'<rev>{caret}{/<text>}', e.g. 'HEAD^{/fix nasty bug}'::
-> +'<rev>{caret}{/<text>}', e.g. 'HEAD^{/"fix nasty bug"}'::
-
-This made me scratch my head, as I rarely read the formatted result
-but look at the documentation in the source form.  The original
-meant to quote the whole thing inside a single quote, but AsciiDoc
-of course will strip that and instead makes the whole thing typeset
-in monospace.
-
-What you did is not wrong per-se, but I think quoting the whole
-thing, instead of quoting just what is inside the braces, i.e.
-'"HEAD^{/fix nasty bug}"' (or if you can manage it, using single
-quote instead of double quote) would read better.
-
->    A suffix '{caret}' to a revision parameter, followed by a brace
->    pair that contains a text led by a slash,
->    is the same as the ':/fix nasty bug' syntax below except that
->    it returns the youngest matching commit which is reachable from
->    the '<rev>' before '{caret}'.
+>     git clone https://server/repo.git
+>     cd repo
+>     git config --local submodule.some/other/repo.update none
+>     git submodule update --init --recursive
+>     git pull --recurse-submodules
 >
-> -':/<text>', e.g. ':/fix nasty bug'::
-> +':/<text>', e.g. ':/"fix nasty bug"'::
+> With Git 2.14 the last "git pull" will clone the "some/other/repo"
+> submodule. This did not happen with Git 2.13.
+>
+> Bug or feature? I don't have anymore time for Git today. I am happy to
+> provide a proper test case tomorrow, though.
 
-Likewise.
+$ git log --oneline v2.13.0..v2.14.1 -- git-submodule.sh
+532139940c add: warn when adding an embedded repository
+(I am confident this is not the suspect, let's keep searching.
+Not a lot happened in submodule land apparently)
 
-> @@ -185,7 +185,8 @@ existing tag object.
->    e.g. ':/^foo'. The special sequence ':/!' is reserved for modifiers to what
->    is matched. ':/!-foo' performs a negative match, while ':/!!foo' matches a
->    literal '!' character, followed by 'foo'. Any other sequence beginning with
-> -  ':/!' is reserved for now.
-> +  ':/!' is reserved for now. And make sure to quote/escape for the text to be
-> +  seen as one search string.
+Looking through all commits v2.13..v2.14 doesn't have me
+suspect any of them.
 
-Good.
+Any chance the "did not happen with 2.13" was not
+freshly cloned but tested on an existing repo? If so a hot
+candidate for suspicion is a93dcb0a56 (Merge branch
+'bw/submodule-is-active', 2017-03-30), IMHO, just
+gut feeling, though.
 
-Please sign-off your work (cf. Documentation/SubmittingPatches).
+Oh, wait.
+$ git log --oneline v2.13.0..v2.14.1 -- builtin/pull.c
+c9c63ee558 Merge branch 'sb/pull-rebase-submodule'
+a6d7eb2c7a pull: optionally rebase submodules (remote submodule changes only)
+could also be a culprit. Do you have pull.rebase set?
 
-Thanks.
+>
+> Cheers,
+> Lars
