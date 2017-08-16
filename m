@@ -2,459 +2,226 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E051208CD
-	for <e@80x24.org>; Wed, 16 Aug 2017 00:32:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC02E208CD
+	for <e@80x24.org>; Wed, 16 Aug 2017 00:46:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752856AbdHPAcH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Aug 2017 20:32:07 -0400
-Received: from mail-pg0-f52.google.com ([74.125.83.52]:33967 "EHLO
-        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752718AbdHPAcF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Aug 2017 20:32:05 -0400
-Received: by mail-pg0-f52.google.com with SMTP id u185so15379468pgb.1
-        for <git@vger.kernel.org>; Tue, 15 Aug 2017 17:32:05 -0700 (PDT)
+        id S1753151AbdHPAqK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Aug 2017 20:46:10 -0400
+Received: from mail-pg0-f53.google.com ([74.125.83.53]:37342 "EHLO
+        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752913AbdHPAqJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Aug 2017 20:46:09 -0400
+Received: by mail-pg0-f53.google.com with SMTP id y129so15479008pgy.4
+        for <git@vger.kernel.org>; Tue, 15 Aug 2017 17:46:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=OyIuYe1L/Pb+MPqMHApRBiZLQFrPo3I8TcFQYz8XJpM=;
-        b=QjQRdbYbMDm/fifWJ26F3wu4f3gVHVzQtxH9RPKsr3jed2wK6tOia6ULor8RvR0PnR
-         vt0ixaK2qll21ofMlW71IFandz0UzZmSiNosZQ5mr6N9AZKhU9TNgnpMzblxkt9Ud/UC
-         Jao3YUquye8n459ph6V9llPLWEE07swga60zBobepL6P/FUpCmaJDFIco7yba2qAS7tP
-         nH7/bYcDxcM7fKTkTtAO+I0iuD+PgYBvl9GcFYKTVo9dyj3H/duPYmjFF7jUWNKKV87Q
-         5WO2h2aykm/dWta0SVDZ9xv5/yJeFs/Eu8wBhCH8osHjcytJS8Wi6hZlSvm56UdHjBkN
-         gHRg==
+        h=from:to:cc:subject:date:message-id;
+        bh=0xtm6BB1MI4Kws1qiW6uY1hvoZUkWmVxSsIwhyL6xHs=;
+        b=djUFyOQ7P0RL+5uAC24aLSi3fLQWQ4GePo29Su6x+jqtm4V+V8uCbhZTMF7MMEDA7j
+         AKr5P9yxNfyXDKc43O0LZzs2GTFYBdCEMv9G5E6iPArjmdTFanV16laejV9S8eNEC/cQ
+         m4j5HId5Drku7Q7xJt8OwMycnRRYpar6IgrvLV+5YUnD+GT5lrV3gdxtOePd6CmSiGgt
+         K0ofx6rV0i221jRkwkEs2bMHS8e4oHOnzBFF56hQWEO0sIFuQ7+6Gro9bEa3tGGhcYAH
+         emc3ZCNnszejNMD4e3Ljt5Wx2RtOEfPrpj70cVQc32PPh0yzG3EWbHJ+JQz2zXgYAI5A
+         X+Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=OyIuYe1L/Pb+MPqMHApRBiZLQFrPo3I8TcFQYz8XJpM=;
-        b=MZebWoPUUPgCPpD4etOChq7+mXpHIH7cHixDsJrM+oVZSNLfjVQH6wcKfUrgu06chq
-         2AwhiLmFjR8+zcMKDMqlZO704+muxDS9dkeYqKvRaqWA/L0N9KTmtkGwHW96wgVJiYqZ
-         oTh/OHIXtzQykxZrMWpglRXgY/AhNe1MfT+BpkmjFItf51NmmY2bldxjnLURJxjGkS6C
-         Jnnju8rt/Ug0CCa66kdWH2Ycok+/VsaekQYUlkJ7ghsRdshJHNgDOMO/jZVzZ7cEf+tQ
-         Q2INbsriTkuFxDYajIVtOVmkN03zARWtNdVvEk82f3nqe54u8sZ7nFH5QdbGnoPtE9cu
-         7HRQ==
-X-Gm-Message-State: AHYfb5jDFiIahxe9nN1aICoXNYGWqorOLjbXotc2SxEA56hBR63HOxNf
-        ZrIpUOHzFLT6QasDrdmZ8w==
-X-Received: by 10.99.55.27 with SMTP id e27mr402052pga.70.1502843524479;
-        Tue, 15 Aug 2017 17:32:04 -0700 (PDT)
-Received: from twelve2.svl.corp.google.com ([100.96.218.24])
-        by smtp.gmail.com with ESMTPSA id x7sm19516543pfa.98.2017.08.15.17.32.03
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 15 Aug 2017 17:32:03 -0700 (PDT)
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, jrnieder@gmail.com,
-        peartben@gmail.com, gitster@pobox.com
-Subject: [RFC PATCH] Updated "imported object" design
-Date:   Tue, 15 Aug 2017 17:32:00 -0700
-Message-Id: <20170816003200.19992-1-jonathantanmy@google.com>
-X-Mailer: git-send-email 2.14.1.480.gb18f417b89-goog
-In-Reply-To: <20170804145113.5ceafafa@twelve2.svl.corp.google.com>
-References: <20170804145113.5ceafafa@twelve2.svl.corp.google.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=0xtm6BB1MI4Kws1qiW6uY1hvoZUkWmVxSsIwhyL6xHs=;
+        b=uWduR85i7WbiNC/Vz8j00XVCUteENHS/UrCU20beASopCijF12A+rZh+SS4jtFU8t7
+         q2Lz+PrxZXL+lieDndTSRgq8X17xxdu2MFNDME04/kXDZgiuugTftKA0mnm/CCKnuggI
+         8n50RLCyyvv9IV1AfuMhrM/zfPwOlLEmCYCmavLiUJOicIca6sbUTHcfqUS8bBjNHdSA
+         5Sy6Jioyd9ZBCe3K0SPIB/jdwMIVZZAzZcU76gsjBiL4fzRrYlvY0P0X7D5L6RO7mTBp
+         N033UqmHy6b1Sd3Z4bc2+TTvhWTwGnMRxxz+hplFyA8Df66h6YOEV+tL2yQmQsoUP+Pf
+         llQg==
+X-Gm-Message-State: AHYfb5iqV/7eDzU6ZUVNfpsU6kEBv5xM1rp4INlm+DvVnC04JO/t6CHh
+        +d4oFk3YDt59VhI8
+X-Received: by 10.98.10.206 with SMTP id 75mr5509pfk.132.1502844368635;
+        Tue, 15 Aug 2017 17:46:08 -0700 (PDT)
+Received: from localhost ([2620:0:100e:422:f954:a93e:8e20:9fe8])
+        by smtp.gmail.com with ESMTPSA id z8sm3293784pgs.25.2017.08.15.17.46.07
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 15 Aug 2017 17:46:07 -0700 (PDT)
+From:   Stefan Beller <sbeller@google.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, jonathantanmy@google.com,
+        Stefan Beller <sbeller@google.com>
+Subject: [PATCH] convert add_to_alternates_file to use repository struct
+Date:   Tue, 15 Aug 2017 17:45:58 -0700
+Message-Id: <20170816004558.6706-1-sbeller@google.com>
+X-Mailer: git-send-email 2.14.0.rc0.3.g6c2e499285
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch is based on an updated version of my refactoring of
-pack-related functions [1].
+The long term plan is to move most functionality to be included via
+the repository struct, starting somewhere, convert add_to_alternates_file
+in this patch, which has link_alt_odb_entries, which is converted, too.
+Any caller outside add_to_alternates_file, just uses `the_repository`
+as the repository argument to keep the functionality the same.
 
-This corresponds to patch 1 of my previous series [2]. I'm sending this
-patch out (before I update the rest) for 2 reasons:
- * to provide a demonstration of how the feature could be implemented,
-   in the hope of restarting the discussion
- * to obtain comments about this patch to see if I'm heading in the
-   right direction
-
-In an earlier e-mail [3], I suggested that loose objects can also be
-marked as ".imported" (formerly ".remote" - after looking at the code, I
-decided to use "imported" throughout, since "remote" can be easily
-confused as the opposite of "local", used to represent objects in the
-local store as opposed to an alternate store).
-
-However, I have only implemented the imported packed objects part -
-imported loose objects can be added later.
-
-It still remains to be discussed whether we should mark the imported
-objects or the non-imported objects as the source of promises, but I
-still think that we should mark the imported objects. In this way, the
-new properties (the provision of promises and the mark) coincide on the
-same object, and the same things (locally created objects, fetches from
-non-lazy-object-serving remotes) behave in the same way regardless of
-whether extensions.lazyObject is set (allowing, for example, a repo to
-be converted into a promise-enabled one solely through modifying the
-configuration).
-
-Also, let me know if there's a better way to send out these patches for
-review. Some of the code here has been reviewed before, for example.
-
-[1] https://public-inbox.org/git/cover.1502241234.git.jonathantanmy@google.com/
-
-[2] https://public-inbox.org/git/ffb734d277132802bcc25baa13e8ede3490af62a.1501532294.git.jonathantanmy@google.com/
-
-[3] https://public-inbox.org/git/20170807161031.7c4eae50@twelve2.svl.corp.google.com/
--- 8< --
-environment, fsck: introduce lazyobject extension
-
-Currently, Git does not support repos with very large numbers of objects
-or repos that wish to minimize manipulation of certain blobs (for
-example, because they are very large) very well, even if the user
-operates mostly on part of the repo, because Git is designed on the
-assumption that every referenced object is available somewhere in the
-repo storage. In such an arrangement, the full set of objects is usually
-available in remote storage, ready to be lazily downloaded.
-
-Introduce the concept of promises, objects believed by the local repo to
-be downloadable from remote storage. An object is a promise if it is
-referred to by an object in a specially marked packfile. Any such
-promise can be validly referred to, even if the object itself is not in
-the local repo.
-
-This functionality is guarded behind a new repository extension option
-`extensions.lazyObject`. The value of `extensions.lazyObject` must be a
-string. The meaning of this string will be defined in a subsequent
-commit.
-
-Teach fsck about the new state of affairs. In this commit, teach fsck
-that promises referenced from the reflog are not an error case; in
-future commits, fsck will be taught about other cases.
-
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- Documentation/technical/repository-version.txt |  8 +++
- builtin/fsck.c                                 | 64 +++++++++++++++++++-
- cache.h                                        |  5 +-
- environment.c                                  |  1 +
- pack.h                                         |  1 +
- packfile.c                                     | 13 +++-
- setup.c                                        |  7 ++-
- t/t0410-lazy-object.sh                         | 84 ++++++++++++++++++++++++++
- 8 files changed, 177 insertions(+), 6 deletions(-)
- create mode 100755 t/t0410-lazy-object.sh
 
-diff --git a/Documentation/technical/repository-version.txt b/Documentation/technical/repository-version.txt
-index 00ad37986..71cb3bfee 100644
---- a/Documentation/technical/repository-version.txt
-+++ b/Documentation/technical/repository-version.txt
-@@ -86,3 +86,11 @@ for testing format-1 compatibility.
- When the config key `extensions.preciousObjects` is set to `true`,
- objects in the repository MUST NOT be deleted (e.g., by `git-prune` or
- `git repack -d`).
-+
-+`lazyObject`
-+~~~~~~~~~~~~~~~~~
-+
-+When the config key `extensions.lazyObject` is set, Git does not treat
-+missing objects as errors. The value of `extensions.lazyObject` must be
-+a string. NEEDSWORK: define what this string contains when the
-+appropriate functionality is implemented.
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 99dea7adf..25265b1fe 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -15,6 +15,7 @@
- #include "progress.h"
- #include "streaming.h"
- #include "decorate.h"
-+#include "oidset.h"
+  For the series "object store is embedded in the repository object",
+  I realized we have to convert sha1_file first as that is the foundation
+  of all the object loading and writing. However there are currently other
+  series in flight, such that I do not want to change all of sha1_file
+  as it would yield serious conflicts. 
+
+  This goes on top of origin/sb/sha1-file-cleanup and is one of the
+  minimum viable things to get started with converting sha1_file to
+  use the repository object.
+  
+  Thanks,
+  Stefan
+
+ builtin/clone.c |  9 +++++----
+ cache.h         |  2 +-
+ sha1_file.c     | 23 +++++++++++++++--------
+ 3 files changed, 21 insertions(+), 13 deletions(-)
+
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 08b5cc433c..b8d170d055 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -25,6 +25,7 @@
+ #include "remote.h"
+ #include "run-command.h"
+ #include "connected.h"
++#include "repository.h"
  
- #define REACHABLE 0x0001
- #define SEEN      0x0002
-@@ -43,6 +44,67 @@ static int name_objects;
- #define ERROR_PACK 04
- #define ERROR_REFS 010
- 
-+/*
-+ * Objects that are believed to be loadable by the lazy loader, because
-+ * they are referred to by an imported object. If an object that we have
-+ * refers to such an object even though we don't have that object, it is
-+ * not an error.
-+ */
-+static struct oidset promises;
-+static int promises_prepared;
-+
-+static int add_promise(const struct object_id *oid, struct packed_git *pack,
-+		       uint32_t pos, void *data)
-+{
-+	struct object *obj = parse_object(oid);
-+	if (!obj)
-+		/*
-+		 * Error messages are given when packs are verified, so
-+		 * do not print any here.
-+		 */
-+		return 0;
-+	
-+	/*
-+	 * If this is a tree, commit, or tag, the objects it refers
-+	 * to are promises. (Blobs refer to no objects.)
-+	 */
-+	if (obj->type == OBJ_TREE) {
-+		struct tree *tree = (struct tree *) obj;
-+		struct tree_desc desc;
-+		struct name_entry entry;
-+		if (init_tree_desc_gently(&desc, tree->buffer, tree->size))
-+			/*
-+			 * Error messages are given when packs are
-+			 * verified, so do not print any here.
-+			 */
-+			return 0;
-+		while (tree_entry_gently(&desc, &entry))
-+			oidset_insert(&promises, entry.oid);
-+	} else if (obj->type == OBJ_COMMIT) {
-+		struct commit *commit = (struct commit *) obj;
-+		struct commit_list *parents = commit->parents;
-+
-+		oidset_insert(&promises, &commit->tree->object.oid);
-+		for (; parents; parents = parents->next)
-+			oidset_insert(&promises, &parents->item->object.oid);
-+	} else if (obj->type == OBJ_TAG) {
-+		struct tag *tag = (struct tag *) obj;
-+		oidset_insert(&promises, &tag->tagged->oid);
-+	}
-+	return 0;
-+}
-+
-+static int is_promise(const struct object_id *oid)
-+{
-+	if (!promises_prepared) {
-+		if (repository_format_lazy_object)
-+			for_each_packed_object(add_promise, NULL,
-+					       FOR_EACH_OBJECT_IMPORTED_ONLY);
-+		promises_prepared = 1;
-+	}
-+	return oidset_contains(&promises, oid);
-+}
-+
- static const char *describe_object(struct object *obj)
- {
- 	static struct strbuf buf = STRBUF_INIT;
-@@ -410,7 +472,7 @@ static void fsck_handle_reflog_oid(const char *refname, struct object_id *oid,
- 					xstrfmt("%s@{%"PRItime"}", refname, timestamp));
- 			obj->used = 1;
- 			mark_object_reachable(obj);
--		} else {
-+		} else if (!is_promise(oid)) {
- 			error("%s: invalid reflog entry %s", refname, oid_to_hex(oid));
- 			errors_found |= ERROR_REACHABLE;
- 		}
-diff --git a/cache.h b/cache.h
-index b15645672..f529096c8 100644
---- a/cache.h
-+++ b/cache.h
-@@ -853,10 +853,12 @@ extern int grafts_replace_parents;
- #define GIT_REPO_VERSION 0
- #define GIT_REPO_VERSION_READ 1
- extern int repository_format_precious_objects;
-+extern char *repository_format_lazy_object;
- 
- struct repository_format {
- 	int version;
- 	int precious_objects;
-+	char *lazy_object;
- 	int is_bare;
- 	char *work_tree;
- 	struct string_list unknown_extensions;
-@@ -1584,7 +1586,8 @@ extern struct packed_git {
- 	unsigned pack_local:1,
- 		 pack_keep:1,
- 		 freshened:1,
--		 do_not_close:1;
-+		 do_not_close:1,
-+		 pack_imported:1;
- 	unsigned char sha1[20];
- 	struct revindex_entry *revindex;
- 	/* something like ".git/objects/pack/xxxxx.pack" */
-diff --git a/environment.c b/environment.c
-index 3fd4b1084..cd8ef2897 100644
---- a/environment.c
-+++ b/environment.c
-@@ -27,6 +27,7 @@ int warn_ambiguous_refs = 1;
- int warn_on_object_refname_ambiguity = 1;
- int ref_paranoia = -1;
- int repository_format_precious_objects;
-+char *repository_format_lazy_object;
- const char *git_commit_encoding;
- const char *git_log_output_encoding;
- const char *apply_default_whitespace;
-diff --git a/pack.h b/pack.h
-index 6aae1a7c3..7c196c6cd 100644
---- a/pack.h
-+++ b/pack.h
-@@ -229,6 +229,7 @@ extern int has_pack_index(const unsigned char *sha1);
-  * repository and any alternates repositories (unless the
-  * FOR_EACH_OBJECT_LOCAL_ONLY flag, defined in cache.h, is set).
-  */
-+#define FOR_EACH_OBJECT_IMPORTED_ONLY 2
- typedef int each_packed_object_fn(const struct object_id *oid,
- 				  struct packed_git *pack,
- 				  uint32_t pos,
-diff --git a/packfile.c b/packfile.c
-index 2f008ede7..90028f9af 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -637,10 +637,10 @@ struct packed_git *add_packed_git(const char *path, size_t path_len, int local)
- 		return NULL;
- 
- 	/*
--	 * ".pack" is long enough to hold any suffix we're adding (and
-+	 * ".imported" is long enough to hold any suffix we're adding (and
- 	 * the use xsnprintf double-checks that)
- 	 */
--	alloc = st_add3(path_len, strlen(".pack"), 1);
-+	alloc = st_add3(path_len, strlen(".imported"), 1);
- 	p = alloc_packed_git(alloc);
- 	memcpy(p->pack_name, path, path_len);
- 
-@@ -648,6 +648,10 @@ struct packed_git *add_packed_git(const char *path, size_t path_len, int local)
- 	if (!access(p->pack_name, F_OK))
- 		p->pack_keep = 1;
- 
-+	xsnprintf(p->pack_name + path_len, alloc - path_len, ".imported");
-+	if (!access(p->pack_name, F_OK))
-+		p->pack_imported = 1;
-+
- 	xsnprintf(p->pack_name + path_len, alloc - path_len, ".pack");
- 	if (stat(p->pack_name, &st) || !S_ISREG(st.st_mode)) {
- 		free(p);
-@@ -775,7 +779,8 @@ static void prepare_packed_git_one(char *objdir, int local)
- 		if (ends_with(de->d_name, ".idx") ||
- 		    ends_with(de->d_name, ".pack") ||
- 		    ends_with(de->d_name, ".bitmap") ||
--		    ends_with(de->d_name, ".keep"))
-+		    ends_with(de->d_name, ".keep") ||
-+		    ends_with(de->d_name, ".imported"))
- 			string_list_append(&garbage, path.buf);
- 		else
- 			report_garbage(PACKDIR_FILE_GARBAGE, path.buf);
-@@ -1893,6 +1898,8 @@ int for_each_packed_object(each_packed_object_fn cb, void *data, unsigned flags)
- 	for (p = packed_git; p; p = p->next) {
- 		if ((flags & FOR_EACH_OBJECT_LOCAL_ONLY) && !p->pack_local)
- 			continue;
-+		if ((flags & FOR_EACH_OBJECT_IMPORTED_ONLY) && !p->pack_imported)
-+			continue;
- 		if (open_pack_index(p)) {
- 			pack_errors = 1;
- 			continue;
-diff --git a/setup.c b/setup.c
-index 860507e1f..94cfde3cc 100644
---- a/setup.c
-+++ b/setup.c
-@@ -425,7 +425,11 @@ static int check_repo_format(const char *var, const char *value, void *vdata)
- 			;
- 		else if (!strcmp(ext, "preciousobjects"))
- 			data->precious_objects = git_config_bool(var, value);
--		else
-+		else if (!strcmp(ext, "lazyobject")) {
-+			if (!value)
-+				return config_error_nonbool(var);
-+			data->lazy_object = xstrdup(value);
-+		} else
- 			string_list_append(&data->unknown_extensions, ext);
- 	} else if (strcmp(var, "core.bare") == 0) {
- 		data->is_bare = git_config_bool(var, value);
-@@ -468,6 +472,7 @@ static int check_repository_format_gently(const char *gitdir, int *nongit_ok)
+ /*
+  * Overall FIXMEs:
+@@ -327,7 +328,7 @@ static int add_one_reference(struct string_list_item *item, void *cb_data)
+ 	} else {
+ 		struct strbuf sb = STRBUF_INIT;
+ 		strbuf_addf(&sb, "%s/objects", ref_git);
+-		add_to_alternates_file(sb.buf);
++		add_to_alternates_file(the_repository, sb.buf);
+ 		strbuf_release(&sb);
  	}
  
- 	repository_format_precious_objects = candidate.precious_objects;
-+	repository_format_lazy_object = candidate.lazy_object;
- 	string_list_clear(&candidate.unknown_extensions, 0);
- 	if (!has_common) {
- 		if (candidate.is_bare != -1) {
-diff --git a/t/t0410-lazy-object.sh b/t/t0410-lazy-object.sh
-new file mode 100755
-index 000000000..2368150d4
---- /dev/null
-+++ b/t/t0410-lazy-object.sh
-@@ -0,0 +1,84 @@
-+#!/bin/sh
+@@ -369,12 +370,12 @@ static void copy_alternates(struct strbuf *src, struct strbuf *dst,
+ 		if (!line.len || line.buf[0] == '#')
+ 			continue;
+ 		if (is_absolute_path(line.buf)) {
+-			add_to_alternates_file(line.buf);
++			add_to_alternates_file(the_repository, line.buf);
+ 			continue;
+ 		}
+ 		abs_path = mkpathdup("%s/objects/%s", src_repo, line.buf);
+ 		if (!normalize_path_copy(abs_path, abs_path))
+-			add_to_alternates_file(abs_path);
++			add_to_alternates_file(the_repository, abs_path);
+ 		else
+ 			warning("skipping invalid relative alternate: %s/%s",
+ 				src_repo, line.buf);
+@@ -452,7 +453,7 @@ static void clone_local(const char *src_repo, const char *dest_repo)
+ 	if (option_shared) {
+ 		struct strbuf alt = STRBUF_INIT;
+ 		strbuf_addf(&alt, "%s/objects", src_repo);
+-		add_to_alternates_file(alt.buf);
++		add_to_alternates_file(the_repository, alt.buf);
+ 		strbuf_release(&alt);
+ 	} else {
+ 		struct strbuf src = STRBUF_INIT;
+diff --git a/cache.h b/cache.h
+index 4109efcf24..fe1f1bc66a 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1565,7 +1565,7 @@ struct alternate_object_database *alloc_alt_odb(const char *dir);
+  * Add the directory to the on-disk alternates file; the new entry will also
+  * take effect in the current process.
+  */
+-extern void add_to_alternates_file(const char *dir);
++extern void add_to_alternates_file(struct repository *r, const char *dir);
+ 
+ /*
+  * Add the directory to the in-memory list of alternates (along with any
+diff --git a/sha1_file.c b/sha1_file.c
+index 9186e2c6c7..298185f550 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -22,6 +22,7 @@
+ #include "pack-revindex.h"
+ #include "sha1-lookup.h"
+ #include "bulk-checkin.h"
++#include "repository.h"
+ #include "streaming.h"
+ #include "dir.h"
+ #include "mru.h"
+@@ -422,8 +423,9 @@ static const char *parse_alt_odb_entry(const char *string,
+ 	return end;
+ }
+ 
+-static void link_alt_odb_entries(const char *alt, int len, int sep,
+-				 const char *relative_base, int depth)
++static void link_alt_odb_entries(const struct repository *r, const char *alt,
++				 int len, int sep, const char *relative_base,
++				 int depth)
+ {
+ 	struct strbuf objdirbuf = STRBUF_INIT;
+ 	struct strbuf entry = STRBUF_INIT;
+@@ -470,7 +472,8 @@ static void read_info_alternates(const char * relative_base, int depth)
+ 	map = xmmap(NULL, mapsz, PROT_READ, MAP_PRIVATE, fd, 0);
+ 	close(fd);
+ 
+-	link_alt_odb_entries(map, mapsz, '\n', relative_base, depth);
++	link_alt_odb_entries(the_repository, map, mapsz, '\n',
++			     relative_base, depth);
+ 
+ 	munmap(map, mapsz);
+ }
+@@ -487,10 +490,11 @@ struct alternate_object_database *alloc_alt_odb(const char *dir)
+ 	return ent;
+ }
+ 
+-void add_to_alternates_file(const char *reference)
++void add_to_alternates_file(struct repository *r, const char *reference)
+ {
+ 	struct lock_file *lock = xcalloc(1, sizeof(struct lock_file));
+-	char *alts = git_pathdup("objects/info/alternates");
++	char *alts = repo_git_path(r, "objects/info/alternates");
 +
-+test_description='lazy object'
-+
-+. ./test-lib.sh
-+
-+delete_object () {
-+	rm $1/.git/objects/$(echo $2 | cut -c1-2)/$(echo $2 | cut -c3-40)
-+}
-+
-+pack_imported_object() {
-+	printf "%s" "$1" | git -C repo pack-objects .git/objects/pack/pack &&
-+	(
-+		cd repo/.git/objects/pack &&
-+		>$(basename --suffix=.pack *.pack).imported
-+	)
-+}
-+
-+test_expect_success 'missing reflog object referred to by imported commit passes fsck' '
-+	test_create_repo repo &&
-+	test_commit -C repo my_commit &&
-+
-+	A=$(git -C repo commit-tree -m a HEAD^{tree}) &&
-+	C=$(git -C repo commit-tree -m c -p $A HEAD^{tree}) &&
-+
-+	# Reference $A only from reflog, and delete it
-+	git -C repo branch my_branch "$A" &&
-+	git -C repo branch -f my_branch my_commit &&
-+	delete_object repo "$A" &&
-+
-+	# Designate $C, which refers to $A, as an imported object
-+	pack_imported_object "$C\n" &&
-+
-+	# Normally, it fails
-+	test_must_fail git -C repo fsck &&
-+
-+	# But with the extension, it succeeds
-+	git -C repo config core.repositoryformatversion 1 &&
-+	git -C repo config extensions.lazyobject "arbitrary string" &&
-+	git -C repo fsck
-+'
-+
-+test_expect_success 'missing reflog object referred to by imported tag passes fsck' '
-+	rm -rf repo &&
-+	test_create_repo repo &&
-+	test_commit -C repo my_commit &&
-+
-+	A=$(git -C repo commit-tree -m a HEAD^{tree}) &&
-+	git -C repo tag -a -m d my_tag_name $A &&
-+	T=$(git -C repo rev-parse my_tag_name) &&
-+	git -C repo tag -d my_tag_name &&
-+
-+	# Reference $A only from reflog, and delete it
-+	git -C repo branch my_branch "$A" &&
-+	git -C repo branch -f my_branch my_commit &&
-+	delete_object repo "$A" &&
-+
-+	# Designate $T, which refers to $A, as an imported object
-+	pack_imported_object "$T\n" &&
-+
-+	git -C repo config core.repositoryformatversion 1 &&
-+	git -C repo config extensions.lazyobject "arbitrary string" &&
-+	git -C repo fsck
-+'
-+
-+test_expect_success 'missing reflog object alone fails fsck, even with extension set' '
-+	rm -rf repo &&
-+	test_create_repo repo &&
-+	test_commit -C repo my_commit &&
-+
-+	A=$(git -C repo commit-tree -m a HEAD^{tree}) &&
-+	B=$(git -C repo commit-tree -m b HEAD^{tree}) &&
-+
-+	# Reference $A only from reflog, and delete it
-+	git -C repo branch my_branch "$A" &&
-+	git -C repo branch -f my_branch my_commit &&
-+	delete_object repo "$A" &&
-+
-+	git -C repo config core.repositoryformatversion 1 &&
-+	git -C repo config extensions.lazyobject "arbitrary string" &&
-+	test_must_fail git -C repo fsck
-+'
-+
-+test_done
+ 	FILE *in, *out;
+ 
+ 	hold_lock_file_for_update(lock, alts, LOCK_DIE_ON_ERROR);
+@@ -527,7 +531,8 @@ void add_to_alternates_file(const char *reference)
+ 		if (commit_lock_file(lock))
+ 			die_errno("unable to move new alternates file into place");
+ 		if (alt_odb_tail)
+-			link_alt_odb_entries(reference, strlen(reference), '\n', NULL, 0);
++			link_alt_odb_entries(r, reference, strlen(reference),
++					     '\n', NULL, 0);
+ 	}
+ 	free(alts);
+ }
+@@ -540,7 +545,8 @@ void add_to_alternates_memory(const char *reference)
+ 	 */
+ 	prepare_alt_odb();
+ 
+-	link_alt_odb_entries(reference, strlen(reference), '\n', NULL, 0);
++	link_alt_odb_entries(the_repository, reference, strlen(reference),
++			     '\n', NULL, 0);
+ }
+ 
+ /*
+@@ -643,7 +649,8 @@ void prepare_alt_odb(void)
+ 	if (!alt) alt = "";
+ 
+ 	alt_odb_tail = &alt_odb_list;
+-	link_alt_odb_entries(alt, strlen(alt), PATH_SEP, NULL, 0);
++	link_alt_odb_entries(the_repository, alt, strlen(alt),
++			     PATH_SEP, NULL, 0);
+ 
+ 	read_info_alternates(get_object_directory(), 0);
+ }
 -- 
-2.14.1.480.gb18f417b89-goog
+2.14.0.rc0.3.g6c2e499285
 
