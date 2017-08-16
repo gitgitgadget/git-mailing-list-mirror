@@ -2,36 +2,37 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-1.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F8361F667
-	for <e@80x24.org>; Wed, 16 Aug 2017 20:17:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1AAD31F667
+	for <e@80x24.org>; Wed, 16 Aug 2017 20:17:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752374AbdHPUR3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Aug 2017 16:17:29 -0400
-Received: from vie01a-dmta-pe04-1.mx.upcmail.net ([62.179.121.163]:22125 "EHLO
-        vie01a-dmta-pe04-1.mx.upcmail.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752573AbdHPUQv (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 16 Aug 2017 16:16:51 -0400
+        id S1752561AbdHPUQt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Aug 2017 16:16:49 -0400
+Received: from vie01a-dmta-pe05-1.mx.upcmail.net ([84.116.36.11]:48958 "EHLO
+        vie01a-dmta-pe05-1.mx.upcmail.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752547AbdHPUQs (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 16 Aug 2017 16:16:48 -0400
 Received: from [172.31.216.44] (helo=vie01a-pemc-psmtp-pe02)
-        by vie01a-dmta-pe04.mx.upcmail.net with esmtp (Exim 4.88)
+        by vie01a-dmta-pe05.mx.upcmail.net with esmtp (Exim 4.88)
         (envelope-from <martin.koegler@chello.at>)
-        id 1di4kE-0005Qt-GT
-        for git@vger.kernel.org; Wed, 16 Aug 2017 22:16:50 +0200
+        id 1di4kA-0008NP-TO
+        for git@vger.kernel.org; Wed, 16 Aug 2017 22:16:46 +0200
 Received: from master.zuhause ([80.108.242.240])
         by vie01a-pemc-psmtp-pe02 with SMTP @ mailcloud.upcmail.net
-        id xwGk1v0095BuuEg01wGlMH; Wed, 16 Aug 2017 22:16:45 +0200
+        id xwGk1v01C5BuuEg01wGlMZ; Wed, 16 Aug 2017 22:16:45 +0200
 X-SourceIP: 80.108.242.240
 Received: by master.zuhause (Postfix, from userid 1006)
-        id 5ECCA45D4512; Wed, 16 Aug 2017 22:16:45 +0200 (CEST)
+        id C681845D4622; Wed, 16 Aug 2017 22:16:44 +0200 (CEST)
 From:   Martin Koegler <martin.koegler@chello.at>
 To:     git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de
 Cc:     Martin Koegler <martin.koegler@chello.at>
-Subject: [Patch size_t V3 14/19] Convert unpack-objects to size_t
-Date:   Wed, 16 Aug 2017 22:16:26 +0200
-Message-Id: <1502914591-26215-15-git-send-email-martin@mail.zuhause>
+Subject: [Patch size_t V3 13/19] Convert index-pack to size_t
+Date:   Wed, 16 Aug 2017 22:16:25 +0200
+Message-Id: <1502914591-26215-14-git-send-email-martin@mail.zuhause>
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <1502914591-26215-1-git-send-email-martin@mail.zuhause>
 References: <1502914591-26215-1-git-send-email-martin@mail.zuhause>
@@ -44,103 +45,107 @@ From: Martin Koegler <martin.koegler@chello.at>
 
 Signed-off-by: Martin Koegler <martin.koegler@chello.at>
 ---
- builtin/unpack-objects.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ builtin/index-pack.c | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-index 001dd4b..0d8b6b3 100644
---- a/builtin/unpack-objects.c
-+++ b/builtin/unpack-objects.c
-@@ -31,7 +31,7 @@ static struct fsck_options fsck_options = FSCK_OPTIONS_STRICT;
-  */
- struct obj_buffer {
- 	char *buffer;
--	unsigned long size;
-+	size_t size;
- };
- 
- static struct decoration obj_decorate;
-@@ -41,7 +41,7 @@ static struct obj_buffer *lookup_object_buffer(struct object *base)
- 	return lookup_decoration(&obj_decorate, base);
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 7f3ccd0..bf2d728 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -435,7 +435,7 @@ static int is_delta_type(enum object_type type)
+ 	return (type == OBJ_REF_DELTA || type == OBJ_OFS_DELTA);
  }
  
--static void add_object_buffer(struct object *object, char *buffer, unsigned long size)
-+static void add_object_buffer(struct object *object, char *buffer, size_t size)
+-static void *unpack_entry_data(off_t offset, unsigned long size,
++static void *unpack_entry_data(off_t offset, size_t size,
+ 			       enum object_type type, unsigned char *sha1)
  {
- 	struct obj_buffer *obj;
- 	obj = xcalloc(1, sizeof(struct obj_buffer));
-@@ -93,7 +93,7 @@ static void use(int bytes)
- 		die(_("pack exceeds maximum allowed size"));
- }
+ 	static char fixed_buf[8192];
+@@ -444,10 +444,10 @@ static void *unpack_entry_data(off_t offset, unsigned long size,
+ 	void *buf;
+ 	git_SHA_CTX c;
+ 	char hdr[32];
+-	int hdrlen;
++	size_t hdrlen;
  
--static void *get_data(unsigned long size)
-+static void *get_data(size_t size)
+ 	if (!is_delta_type(type)) {
+-		hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %lu", typename(type), size) + 1;
++		hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %" PRIuMAX, typename(type), (uintmax_t)size) + 1;
+ 		git_SHA1_Init(&c);
+ 		git_SHA1_Update(&c, hdr, hdrlen);
+ 	} else
+@@ -489,7 +489,7 @@ static void *unpack_raw_entry(struct object_entry *obj,
+ 			      unsigned char *sha1)
  {
- 	git_zstream stream;
- 	void *buf = xmallocz(size);
-@@ -130,7 +130,7 @@ struct delta_info {
- 	struct object_id base_oid;
- 	unsigned nr;
- 	off_t base_offset;
--	unsigned long size;
-+	size_t size;
- 	void *delta;
- 	struct delta_info *next;
- };
-@@ -139,7 +139,7 @@ static struct delta_info *delta_list;
- 
- static void add_delta_to_list(unsigned nr, const struct object_id *base_oid,
- 			      off_t base_offset,
--			      void *delta, unsigned long size)
-+			      void *delta, size_t size)
- {
- 	struct delta_info *info = xmalloc(sizeof(*info));
- 
-@@ -226,7 +226,7 @@ static void write_rest(void)
- }
- 
- static void added_object(unsigned nr, enum object_type type,
--			 void *data, unsigned long size);
-+			 void *data, size_t size);
- 
- /*
-  * Write out nr-th object from the list, now we know the contents
-@@ -234,7 +234,7 @@ static void added_object(unsigned nr, enum object_type type,
-  * to be checked at the end.
-  */
- static void write_object(unsigned nr, enum object_type type,
--			 void *buf, unsigned long size)
-+			 void *buf, size_t size)
- {
- 	if (!strict) {
- 		if (write_sha1_file(buf, size, typename(type), obj_list[nr].oid.hash) < 0)
-@@ -291,7 +291,7 @@ static void resolve_delta(unsigned nr, enum object_type type,
-  * resolve all the deltified objects that are based on it.
-  */
- static void added_object(unsigned nr, enum object_type type,
--			 void *data, unsigned long size)
-+			 void *data, size_t size)
- {
- 	struct delta_info **p = &delta_list;
- 	struct delta_info *info;
-@@ -310,7 +310,7 @@ static void added_object(unsigned nr, enum object_type type,
- 	}
- }
- 
--static void unpack_non_delta_entry(enum object_type type, unsigned long size,
-+static void unpack_non_delta_entry(enum object_type type, size_t size,
- 				   unsigned nr)
- {
- 	void *buf = get_data(size);
-@@ -436,7 +436,7 @@ static void unpack_one(unsigned nr)
- {
- 	unsigned shift;
- 	unsigned char *pack;
+ 	unsigned char *p;
 -	unsigned long size, c;
 +	size_t size, c;
- 	enum object_type type;
+ 	off_t base_offset;
+ 	unsigned shift;
+ 	void *data;
+@@ -551,11 +551,11 @@ static void *unpack_raw_entry(struct object_entry *obj,
+ }
  
- 	obj_list[nr].offset = consumed_bytes;
+ static void *unpack_data(struct object_entry *obj,
+-			 int (*consume)(const unsigned char *, unsigned long, void *),
++			 int (*consume)(const unsigned char *, size_t, void *),
+ 			 void *cb_data)
+ {
+ 	off_t from = obj[0].idx.offset + obj[0].hdr_size;
+-	off_t len = obj[1].idx.offset - from;
++	size_t len = obj[1].idx.offset - from;
+ 	unsigned char *data, *inbuf;
+ 	git_zstream stream;
+ 	int status;
+@@ -728,10 +728,10 @@ struct compare_data {
+ 	struct object_entry *entry;
+ 	struct git_istream *st;
+ 	unsigned char *buf;
+-	unsigned long buf_size;
++	size_t buf_size;
+ };
+ 
+-static int compare_objects(const unsigned char *buf, unsigned long size,
++static int compare_objects(const unsigned char *buf, size_t size,
+ 			   void *cb_data)
+ {
+ 	struct compare_data *data = cb_data;
+@@ -783,7 +783,7 @@ static int check_collison(struct object_entry *entry)
+ }
+ 
+ static void sha1_object(const void *data, struct object_entry *obj_entry,
+-			unsigned long size, enum object_type type,
++			size_t size, enum object_type type,
+ 			const struct object_id *oid)
+ {
+ 	void *new_data = NULL;
+@@ -1311,11 +1311,11 @@ static int write_compressed(struct sha1file *f, void *in, unsigned int size)
+ 
+ static struct object_entry *append_obj_to_pack(struct sha1file *f,
+ 			       const unsigned char *sha1, void *buf,
+-			       unsigned long size, enum object_type type)
++			       size_t size, enum object_type type)
+ {
+ 	struct object_entry *obj = &objects[nr_objects++];
+ 	unsigned char header[10];
+-	unsigned long s = size;
++	size_t s = size;
+ 	int n = 0;
+ 	unsigned char c = (type << 4) | (s & 15);
+ 	s >>= 4;
+@@ -1585,10 +1585,10 @@ static void show_pack_info(int stat_only)
+ 			chain_histogram[obj_stat[i].delta_depth - 1]++;
+ 		if (stat_only)
+ 			continue;
+-		printf("%s %-6s %" PRIuMAX " %lu %" PRIuMAX,
++		printf("%s %-6s %" PRIuMAX " %" PRIuMAX " %" PRIuMAX,
+ 		       oid_to_hex(&obj->idx.oid),
+ 		       typename(obj->real_type), (uintmax_t)obj->size,
+-		       (unsigned long)(obj[1].idx.offset - obj->idx.offset),
++		       (uintmax_t)(obj[1].idx.offset - obj->idx.offset),
+ 		       (uintmax_t)obj->idx.offset);
+ 		if (is_delta_type(obj->type)) {
+ 			struct object_entry *bobj = &objects[obj_stat[i].base_object_no];
 -- 
 2.1.4
 
