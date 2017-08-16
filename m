@@ -6,181 +6,104 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A66B71F667
-	for <e@80x24.org>; Wed, 16 Aug 2017 18:30:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 671401F667
+	for <e@80x24.org>; Wed, 16 Aug 2017 18:34:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752263AbdHPSaI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Aug 2017 14:30:08 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:65170 "EHLO
+        id S1752529AbdHPSes (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Aug 2017 14:34:48 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57200 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751611AbdHPSaH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Aug 2017 14:30:07 -0400
+        with ESMTP id S1752450AbdHPSer (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Aug 2017 14:34:47 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6338EA3E46;
-        Wed, 16 Aug 2017 14:30:07 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D5613AEC9E;
+        Wed, 16 Aug 2017 14:34:46 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=mok8wGoiDVCPGP0BZLN12sLW7Ho=; b=q6hMkzlj70JKYL6GiT17
-        cg6x2/i9iWtw++F4u5J7QzXACoYEbcTPGwn+XlXzEXTYQNY8pgLoTwcrH7Xz6JOI
-        3m0w+QsQjVgEKBSJQupg2q5OrvzcbAFLt+uuntMWKJnEq38usMpTO3WehiLB8/Tg
-        Q8oPbZ49yPUpcBrTi6RyaNo=
+         s=sasl; bh=OioDtqdOvKHwfduKOlNwsNO+Qh8=; b=ngCLk1p3kEEeFap9Yznb
+        PUp7U/Gi3+oVsxUwNvct2loYDqj8ze4S5AilZatFwthrgouBuSDK7JBvu4pKQoqO
+        X27Db95b5EBERimOjlj1uKzjT63nZo1vWxuL2ql6IHeCYjErwYxniDP00LrmU9R5
+        PjhoWymTk0EACvZct2EaWfY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:message-id:mime-version:content-type;
-         q=dns; s=sasl; b=Crx2GVnwKS8v7IQ0FiLL6AshgbTdItlWp4PZAfylxUHE0F
-        jJMbhW/J1r+08+r7hJngRnRWwHidNE3BEakEmT8eXhVDL1O0uJVygMewfsQk4ZsC
-        2DqDR5IbTXU5GS1jsWdUq16PzgvdhUUMa4YbkGEVACZ+7qVaB2Jg1nUcM6Me8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5C2F5A3E45;
-        Wed, 16 Aug 2017 14:30:07 -0400 (EDT)
+         q=dns; s=sasl; b=DaYm4ifDUCwH/RHV3iJ/xZqWrpwK2uy8vSv1HqdBUb4ize
+        EhMOHBWm9qslT8Z8DimQAA+7D9RRQaCnXtCcAxpEEwAIgVWMlvaXx+k1tX2/Vwbv
+        dXFakeJnnPHh1oHD4DsF4qdDbZwzzGmklRcKqpxL3wPlwUHadRrWbng2QCB0Y=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CC56FAEC9D;
+        Wed, 16 Aug 2017 14:34:46 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 833B4A3E42;
-        Wed, 16 Aug 2017 14:30:05 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3BE62AEC9B;
+        Wed, 16 Aug 2017 14:34:46 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     tboegi@web.de
 Cc:     git@vger.kernel.org, asottile@umich.edu
-Subject: [PATCH/FIXUP 5/2] apply: localize the CRLF business to read_old_data()
+Subject: [PATCH/FIXUP 6/2] apply: clarify read_old_data() is about no-index case
 References: <xmqq4ltpsn42.fsf@gitster.mtv.corp.google.com>
         <20170813085106.1731-1-tboegi@web.de>
-Date:   Wed, 16 Aug 2017 11:30:03 -0700
-Message-ID: <xmqqinhnl61g.fsf@gitster.mtv.corp.google.com>
+Date:   Wed, 16 Aug 2017 11:34:45 -0700
+Message-ID: <xmqqbmnfl5tm.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: ECB9C0EA-82B0-11E7-B352-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 940A9B94-82B1-11E7-B0E9-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Previous changes passed a new APPLY_FLAGS_CR_AT_EOL option down from
-load_preimage() to read_old_data(), because the last function in
-that callchain needs to decide how its call to convert_to_git()
-function is made on the data read from the working tree.
+With the previous fixes to CRLF handling in place, read_old_data()
+knows what it wants convert_to_git() to do with respect to CRLF.  In
+fact, this codepath is about applying a patch to a file in the
+filesystem, which may not exist in the index, or may exist but may
+not match what is recorded in the index, or in the extreme case, we
+may not even be in a Git repository.  If convert_to_git() peeked at
+the index while doing its work, it *would* be a bug.
 
-The load_preimage() function and its direct callees, however, are
-not limited to the case where the patch is applied to the data in
-the working tree (i.e. "git apply" that is working as a better
-"patch -p1"), unlike read_old_data(), which deals only with the
-patch target in the working tree.  They are also responsible for
-driving "git apply --cached" and "git apply --index", both of which
-take the current index contents into account and do not need the new
-special-casing of CRLF.  Exposing APPLY_FLAGS_CR_AT_EOL bit to them
-is misleading.
-
-Instead, just pass the "struct patch" down the same callchain, and
-have read_old_data() look at its crlf_in_old member to make the
-necessary decision.
+Pass NULL instead of &the_index to the function to make sure we
+catch future bugs to clarify this.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
 
- This is what I care about the most in these fix-ups.
+ * NOTE NOTE NOTE: This is not a part of the "squashed diff" I sent
+   earlier, and with this applied, you will see failure in t0020.
 
- apply.c | 30 ++++++++++++++----------------
- 1 file changed, 14 insertions(+), 16 deletions(-)
+   The breakage is because convert_to_git(), with your [PATCH 1/2],
+   is not yet prepared to be told "there is no need for safe-crlf
+   processing, so do not even look at the index".  You either need
+   to invent yet another flag similar to SAFE_CRLF_KEEP_CRLF that is
+   different from SAFE_CRLF_FALSE to tell the machinery never to
+   look at the index, or fix SAFE_CRLF_FALSE itself so that the
+   index is not checked when the caller knows safe-crlf processing
+   is not needed.
+
+ apply.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/apply.c b/apply.c
-index 995973da3d..c06f7014a2 100644
+index c06f7014a2..ad58cd1c77 100644
 --- a/apply.c
 +++ b/apply.c
-@@ -2287,12 +2287,12 @@ static void show_stats(struct apply_state *state, struct patch *patch)
- 		add, pluses, del, minuses);
- }
- 
--#define APPLY_FLAGS_CR_AT_EOL   (1<<0)
--
--static int read_old_data(struct stat *st, const char *path, struct strbuf *buf, int flags)
-+static int read_old_data(struct stat *st, const char *path, struct strbuf *buf,
-+			 struct patch *patch)
- {
--	enum safe_crlf safe_crlf = flags & APPLY_FLAGS_CR_AT_EOL ?
--		SAFE_CRLF_KEEP_CRLF : SAFE_CRLF_FALSE;
-+	enum safe_crlf safe_crlf = (patch->crlf_in_old
-+				    ? SAFE_CRLF_KEEP_CRLF : SAFE_CRLF_FALSE);
-+
- 	switch (st->st_mode & S_IFMT) {
- 	case S_IFLNK:
- 		if (strbuf_readlink(buf, path, st->st_size) < 0)
-@@ -3407,9 +3407,9 @@ static int load_patch_target(struct apply_state *state,
- 			     struct strbuf *buf,
- 			     const struct cache_entry *ce,
- 			     struct stat *st,
-+			     struct patch *patch,
- 			     const char *name,
--			     unsigned expected_mode,
--			     int flags)
-+			     unsigned expected_mode)
- {
- 	if (state->cached || state->check_index) {
- 		if (read_file_or_gitlink(ce, buf))
-@@ -3423,7 +3423,7 @@ static int load_patch_target(struct apply_state *state,
- 		} else if (has_symlink_leading_path(name, strlen(name))) {
- 			return error(_("reading from '%s' beyond a symbolic link"), name);
- 		} else {
--			if (read_old_data(st, name, buf, flags))
-+			if (read_old_data(st, name, buf, patch))
- 				return error(_("failed to read %s"), name);
- 		}
- 	}
-@@ -3447,7 +3447,6 @@ static int load_preimage(struct apply_state *state,
- 	char *img;
- 	struct patch *previous;
- 	int status;
--	int flags = patch->crlf_in_old ? APPLY_FLAGS_CR_AT_EOL : 0;
- 
- 	previous = previous_patch(state, patch, &status);
- 	if (status)
-@@ -3457,8 +3456,8 @@ static int load_preimage(struct apply_state *state,
- 		/* We have a patched copy in memory; use that. */
- 		strbuf_add(&buf, previous->result, previous->resultsize);
- 	} else {
--		status = load_patch_target(state, &buf, ce, st,
--					   patch->old_name, patch->old_mode, flags);
-+		status = load_patch_target(state, &buf, ce, st, patch,
-+					   patch->old_name, patch->old_mode);
- 		if (status < 0)
- 			return status;
- 		else if (status == SUBMODULE_PATCH_WITHOUT_INDEX) {
-@@ -3518,8 +3517,7 @@ static int three_way_merge(struct image *image,
-  */
- static int load_current(struct apply_state *state,
- 			struct image *image,
--			struct patch *patch,
--			int flags)
-+			struct patch *patch)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	int status, pos;
-@@ -3546,7 +3544,7 @@ static int load_current(struct apply_state *state,
- 	if (verify_index_match(ce, &st))
- 		return error(_("%s: does not match index"), name);
- 
--	status = load_patch_target(state, &buf, ce, &st, name, mode, flags);
-+	status = load_patch_target(state, &buf, ce, &st, patch, name, mode);
- 	if (status < 0)
- 		return status;
- 	else if (status)
-@@ -3597,8 +3595,7 @@ static int try_threeway(struct apply_state *state,
- 
- 	/* our_oid is ours */
- 	if (patch->is_new) {
--		int flags = 0;
--		if (load_current(state, &tmp_image, patch, flags))
-+		if (load_current(state, &tmp_image, patch))
- 			return error(_("cannot read the current contents of '%s'"),
- 				     patch->new_name);
- 	} else {
-@@ -3644,6 +3641,7 @@ static int apply_data(struct apply_state *state, struct patch *patch,
- 		      struct stat *st, const struct cache_entry *ce)
- {
- 	struct image image;
-+
- 	if (load_preimage(state, &image, patch, st, ce) < 0)
+@@ -2301,7 +2301,15 @@ static int read_old_data(struct stat *st, const char *path, struct strbuf *buf,
+ 	case S_IFREG:
+ 		if (strbuf_read_file(buf, path, st->st_size) != st->st_size)
+ 			return error(_("unable to open or read %s"), path);
+-		convert_to_git(&the_index, path, buf->buf, buf->len, buf, safe_crlf);
++		/*
++		 * "git apply" without "--index/--cached" should never look
++		 * at the index; the target file may not have been added to
++		 * the index yet, and we may not even be in any Git repository.
++		 * Pass NULL to convert_to_git() to stress this; the function
++		 * should never look at the index when explicit crlf option
++		 * is given.
++		 */
++		convert_to_git(NULL, path, buf->buf, buf->len, buf, safe_crlf);
+ 		return 0;
+ 	default:
  		return -1;
- 
 -- 
 2.14.1-331-g7631d96230
-
 
