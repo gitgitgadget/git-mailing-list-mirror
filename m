@@ -2,89 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 316A8208CD
-	for <e@80x24.org>; Thu, 17 Aug 2017 08:07:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E5911208CD
+	for <e@80x24.org>; Thu, 17 Aug 2017 08:24:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751609AbdHQIHF (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Aug 2017 04:07:05 -0400
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:56361 "EHLO
-        alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751305AbdHQIG5 (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 17 Aug 2017 04:06:57 -0400
-X-AuditID: 1207440f-343ff70000000b50-f4-59954ea05ec4
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id EA.15.02896.0AE45995; Thu, 17 Aug 2017 04:06:56 -0400 (EDT)
-Received: from mail-it0-f47.google.com (mail-it0-f47.google.com [209.85.214.47])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v7H86tF9010430
-        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT)
-        for <git@vger.kernel.org>; Thu, 17 Aug 2017 04:06:56 -0400
-Received: by mail-it0-f47.google.com with SMTP id 77so27945427itj.1
-        for <git@vger.kernel.org>; Thu, 17 Aug 2017 01:06:55 -0700 (PDT)
-X-Gm-Message-State: AHYfb5jB/kRr1jzCVHFhOajC/kNirOMUnE3DsGxYzMLXHGiRrXnY9ZC4
-        k5BBfUGUpjoPlf59dK6urmYTxeH1zA==
-X-Received: by 10.36.40.147 with SMTP id h141mr968127ith.85.1502957215205;
- Thu, 17 Aug 2017 01:06:55 -0700 (PDT)
-MIME-Version: 1.0
-Reply-To: mhagger@alum.mit.edu
-Received: by 10.107.129.91 with HTTP; Thu, 17 Aug 2017 01:06:54 -0700 (PDT)
-In-Reply-To: <xmqq60dnjka0.fsf@gitster.mtv.corp.google.com>
-References: <CAJo=hJsZcAM9sipdVr7TMD-FD2V2W6_pvMQ791EGCDsDkQ033w@mail.gmail.com>
- <xmqq60dnjka0.fsf@gitster.mtv.corp.google.com>
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Date:   Thu, 17 Aug 2017 10:06:54 +0200
-X-Gmail-Original-Message-ID: <CAMy9T_GuU68mQTAvmPkaa6jPiNnoDAKCqA8y76rf3UrmMeyfTA@mail.gmail.com>
-Message-ID: <CAMy9T_GuU68mQTAvmPkaa6jPiNnoDAKCqA8y76rf3UrmMeyfTA@mail.gmail.com>
-Subject: Re: reftable [v7]: new ref storage format
+        id S1751687AbdHQIYv (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Aug 2017 04:24:51 -0400
+Received: from mout.web.de ([212.227.15.14]:50031 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751015AbdHQIYt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Aug 2017 04:24:49 -0400
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MOlTq-1ddIIM1Gek-0067W8; Thu, 17
+ Aug 2017 10:24:36 +0200
+Date:   Thu, 17 Aug 2017 10:24:35 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>,
-        David Borowitz <dborowitz@google.com>,
-        Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuphleLIzCtJLcpLzFFi42IRYndR1F3gNzXS4OwlM4uuK91MDowenzfJ
-        BTBGcdmkpOZklqUW6dslcGU0r80peMpRcfm7UQPjZPYuRk4OCQETiYc3W1m6GLk4hAR2MEl8
-        avrEDuE8YpI4sPk+lNPLKLHtwQZmiJZ8iX0PTrNA2EUSX9f3gdm8AoISJ2c+AbOFBOQkXm24
-        wQhhe0t0Pf8J1sspYC3RtuIGE8TQRkaJ3fO6wBJsAroSi3qamUBsFgFViZtfNwBt5gBakChx
-        fr8PxPwAifnLP4OdLSxgJDHnTzcriC0ioCYxse0Q2AvMAjsZJe5P2AOWYBbQlGjd/pt9AqPw
-        LCT3zUKSWsDItIpRLjGnNFc3NzEzpzg1Wbc4OTEvL7VI10QvN7NELzWldBMjJIj5dzB2rZc5
-        xCjAwajEwxuRNyVSiDWxrLgy9xCjJAeTkijv71lAIb6k/JTKjMTijPii0pzU4kOMEhzMSiK8
-        F72nRgrxpiRWVqUW5cOkpDlYlMR51Zeo+wkJpCeWpGanphakFsFkZTg4lCR4VXyBGgWLUtNT
-        K9Iyc0oQ0kwcnCDDeYCGl4PU8BYXJOYWZ6ZD5E8xGnNcubLuCxPHlAPbvzAJseTl56VKifNG
-        gJQKgJRmlObBTYMloleM4kDPCfPOAaniASYxuHmvgFYxAa260j4JZFVJIkJKqoHR6OP68r/X
-        kjQ1r02u04w/dOk+3/3D34v+CR7zLbwn7bJ+ep+3cqfLvWkrn2zUCuqbVmy+9YHBNGHu1pet
-        EhxWeTUhPPKTuDdplzxdXe3H/C1HrsD+T3qxZcCFltMd/f075XwlXs4skGYREZsVOcHs8mrt
-        N2sXq6kb36lsEdFrKYvpVpef/EiJpTgj0VCLuag4EQCaF8XoHwMAAA==
+Cc:     git@vger.kernel.org, asottile@umich.edu
+Subject: Re: [PATCH/FIXUP 6/2] apply: clarify read_old_data() is about
+ no-index case
+Message-ID: <20170817082435.GA7508@tor.lan>
+References: <xmqq4ltpsn42.fsf@gitster.mtv.corp.google.com>
+ <20170813085106.1731-1-tboegi@web.de>
+ <xmqqbmnfl5tm.fsf@gitster.mtv.corp.google.com>
+ <20170817062450.GA28592@tor.lan>
+ <xmqqbmneis63.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqbmneis63.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K0:mQmqcAg3IuQXpDsIILCstz1A5A1LOOFHxq9CZBfaXKSiarh7uPo
+ h6Y5rpArOzKAmumXucaKnYOaiM5In5pxewSqXdQBiSNZs3ILYgI3NT/Dk7oXIT0G9sjqV4b
+ GusG27lfZhYSlMRnusiHxn8znM1WrvLk/koCdjhcK7b8QmfiIO3U2DEHl9JYcOrO/yFGEW1
+ CnrQAAbBWrcuFqV1AapYQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:KbiQvc3K5jY=:PBY35LQoJGLCtjFDzQf1OQ
+ /CzvNp09imZOlBKxBG4HVbnhgYF4H2ktD8sR/6oQtALX+KqGUIzhgPU0omy0+LMkj8NUfv7K/
+ BV6KADi9lDLImD9tF35ouldJKWzAwS7cgGDa/B0l9GvkjmChY6gmbThUF8GFJg2buA9BdOS6t
+ QeAAYoxWp2vytR5Y4Vb3L4rvJ1HWbtFmKQnihy3nT/QRORmYaUzhX8on9FATIh7En4WHZWhI6
+ sva9UUi2m9E0MqDvLnVYQjJPG55ISQM9Zti9Qmd3vYlkIW0VrocV2VwB5W4U7UQslWskrzU2C
+ UAUv9FWWISGCfoM93LQGNV7tsEfqM5d4L6fIntFi6Jse815Y8HnZa74VWFDRI+s0YYWEGQt+8
+ oVtzHsRBi4cjLKXlReigLQG2CGd33zBcsW8RAaNIcg2Nmdg+ACvLsQ7WAhoQcT/Aq3gAuFpcr
+ 8YYyU+1FTDK7zlno/q+wpw1uMyK3WtgTDuraqC8+iriabSimcZ5xKsQXiwhWPdKfDa8MkHXgN
+ KXo0vgTcHm1ldkrWLFHTgVfvorUJE5vV6mAcncaSi6mziCggMSV07Ueztz6vUUJzu2BwoaHXU
+ LDXWiAKPIoyYLzwVicX6+9p3MzjAu/zFwrjGOd9409hWH6PQ9E/dqpw2Frxg1oraXsyXdjgil
+ rh9ffhoQmp4kkJk7c4Gjp96k4CNfApJGVsF77d+zpO9XKH5swVJex2ce1o6vblgIu7muilWmu
+ M8LbKu42w/dkYRZwIyvVeOcEzvevvm3ywV/C4H88474pVsTw34j+oaESJii4Vw9aYJ2LkL+xs
+ PyjqDK3kcMHq/RsVA0iDuXT0o1GfA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 16, 2017 at 11:05 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> I found it a slightly odd that we do not insist that update_indices
-> that appear in a single reftable file are consecutive, yet we
-> require that min_update_index of a reftable file must be one greater
-> than the max_update_index of a previous one.  That is not a new
-> issue in v7, though.
+On Thu, Aug 17, 2017 at 12:12:36AM -0700, Junio C Hamano wrote:
+> Torsten Bögershausen <tboegi@web.de> writes:
+> 
+> > Unless we re-define the meaning of "NULL" into "don't do CRLF conversions,
+> > like SAFE_CRLF_KEEP_CRLF does.
+> 
+> My preference is not to use NULL as any hint.  Instead, the "flag"
+> parameter we already pass to convert_to_git(), just like the updated
+> read_old_data() uses SAFE_CRLF_KEEP_CRLF to tell it that it should
+> not disturb existing CRLF without looking at the istate, should be
+> used to tell convert_to_git() to do the opposite, but do so without
+> looking at the istate.
+> 
+> Perhaps SAFE_CRLF_FALSE should be such a flag.  Or perhaps we need
+> to invent another flag.  I dunno.
 
-I think of `update_index` like a pseudo-time, and the
-`min_update_index` and `max_update_index` to be stating that "this
-reftable covers the time interval specified". So it's reasonable to
-say that the reftable files, together, should cover all time.
-
-But it might be that there are values of `update_index` for which no
-events survived within a reftable file that covers that time interval.
-This can happen if reference update records have been compacted away
-because later reference updates overwrote their effects, and either
-
-* reflogs were turned off for those updates, or
-* the corresponding reflogs have been compacted into a separate file, or
-* the corresponding reflog entries for those updates have been expired.
-
-Michael
+OK, message taken, in short:
+I will come up with a new series in a couple of days - 
+thanks for the input.
