@@ -2,332 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 03AAC208CD
-	for <e@80x24.org>; Thu, 17 Aug 2017 10:53:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E83C8208CD
+	for <e@80x24.org>; Thu, 17 Aug 2017 10:57:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751572AbdHQKxz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Aug 2017 06:53:55 -0400
-Received: from smtprelay03.ispgateway.de ([80.67.18.15]:38443 "EHLO
-        smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751090AbdHQKxz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Aug 2017 06:53:55 -0400
-Received: from [84.46.92.130] (helo=book.hvoigt.net)
-        by smtprelay03.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89)
-        (envelope-from <hvoigt@hvoigt.net>)
-        id 1diIQx-0004OH-NB; Thu, 17 Aug 2017 12:53:51 +0200
-Date:   Thu, 17 Aug 2017 12:53:49 +0200
-From:   Heiko Voigt <hvoigt@hvoigt.net>
-To:     git@vger.kernel.org
-Cc:     sbeller@google.com, jrnieder@gmail.com, Jens.Lehmann@web.de,
-        Brandon Williams <bmwill@google.com>
-Subject: [RFC PATCH 1/2] implement fetching of moved submodules
-Message-ID: <20170817105349.GC52233@book.hvoigt.net>
+        id S1752185AbdHQK5G (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Aug 2017 06:57:06 -0400
+Received: from cloud.peff.net ([104.130.231.41]:41570 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1750959AbdHQK5E (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Aug 2017 06:57:04 -0400
+Received: (qmail 9412 invoked by uid 109); 17 Aug 2017 10:57:04 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 17 Aug 2017 10:57:04 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26272 invoked by uid 111); 17 Aug 2017 10:57:29 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Thu, 17 Aug 2017 06:57:29 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 17 Aug 2017 06:57:02 -0400
+Date:   Thu, 17 Aug 2017 06:57:02 -0400
+From:   Jeff King <peff@peff.net>
+To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: tsan: t5400: set_try_to_free_routine
+Message-ID: <20170817105702.ma7la3xfhs7dkmy4@sigill.intra.peff.net>
+References: <cover.1502780343.git.martin.agren@gmail.com>
+ <939b37f809dd9e1526593c02154fae14b369c73a.1502780344.git.martin.agren@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <939b37f809dd9e1526593c02154fae14b369c73a.1502780344.git.martin.agren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We store the changed submodules paths to calculate which submodule needs
-fetching. This does not work for moved submodules since their paths do
-not stay the same in case of a moved submodules. In case of new
-submodules we do not have a path in the current checkout, since they
-just appeared in this fetch.
+On Tue, Aug 15, 2017 at 02:53:07PM +0200, Martin Ågren wrote:
 
-It is more general to collect the submodule names for changes instead of
-their paths to include the above cases.
+> Using SANITIZE=thread made t5400-send-pack.sh hit the potential race
+> below.
+> 
+> This is set_try_to_free_routine in wrapper.c. The race relates to the
+> reading of the "old" value. The caller doesn't care about the "old"
+> value, so this should be harmless right now. But it seems that using
+> this mechanism from multiple threads and restoring the earlier value
+> will probably not work out every time. (Not necessarily because of the
+> race in set_try_to_free_routine, but, e.g., because callers might not
+> restore the function pointer in the reverse order of how they
+> originally set it.)
+> 
+> Properly "fixing" this for thread-safety would probably require some
+> redesigning, which at the time might not be warranted. I'm just posting
+> this for completeness.
+> 
+> Martin
+> 
+> WARNING: ThreadSanitizer: data race (pid=21382)
+>   Read of size 8 at 0x000000979970 by thread T1:
+>     #0 set_try_to_free_routine wrapper.c:35 (git+0x0000006cde1c)
+>     #1 prepare_trace_line trace.c:105 (git+0x0000006a3bf0)
+>     #2 trace_strbuf_fl trace.c:185 (git+0x0000006a3bf0)
+>     #3 packet_trace pkt-line.c:80 (git+0x0000005f9f43)
+>     #4 packet_read pkt-line.c:309 (git+0x0000005fbe10)
+>     #5 recv_sideband sideband.c:37 (git+0x000000684c5e)
+>     #6 sideband_demux send-pack.c:216 (git+0x00000065a38c)
+>     #7 run_thread run-command.c:933 (git+0x000000655a93)
+>     #8 <null> <null> (libtsan.so.0+0x0000000230d9)
 
-With the change described above we implement 'on-demand' fetching of
-changes in moved submodules.
+I was curious why the trace code would care about the free routine in
+the first place. Digging in the mailing list, I didn't find a lot of
+discussion. But I think the problem is basically that the trace
+infrastructure wants to be thread-safe, but the default free-pack-memory
+callback isn't.
 
-Note: This does only work when repositories have a .gitmodules file. In
-other words: It breaks if we do not get a name for a repository.
-IIRC, consensus was that this is a requirement to get nice submodule
-handling these days?
+It's ironic that we fix the thread-unsafety of the free-pack-memory
+function by using the also-thread-unsafe set_try_to_free_routine.
 
-Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
----
+Further irony: the trace routines aren't thread-safe in the first place,
+as they do lazy initialization of key->fd using an "initialized" field.
+In practice it probably means double-writing key->fd and leaking a
+descriptor (though there are no synchronizing operations there, so it's
+entirely possible a compiler could reorder the assignments to key->fd
+and key->initialized and a simultaneous reader could read a garbage
+key->fd value).  We also call getenv(), which isn't thread-safe with
+other calls to getenv() or setenv().
 
-I updated the leftover code from my series implementing recursive fetch
-for moved submodules[1] to the current master.
+I can think of a few possible directions:
 
-This breaks t5531 and t5545 because they do not use a .gitmodules file.
+  1. Make set_try_to_free_routine() skip the write if it would be a
+     noop. This is racy if threads are actually changing the value, but
+     in practice they aren't (the first trace of any kind will set it to
+     NULL, and it will remain there).
 
-I also have some code leftover that does fallback on paths in case no
-submodule names can be found. But I do not really like it. The question
-here is how far do we support not using .gitmodules. Is it e.g.
-reasonable to say: "For --recurse-submodules=on-demand you need a
-.gitmodules file?"
+  2. Make the free-packed routine thread-safe by taking a lock. It
+     should hardly ever be called, so performance wouldn't matter. The
+     big question is: _which_ lock.  pack-objects, which uses threads
+     already, has a version which does this. But it knows to take the
+     big program-wide "I'm accessing unsafe parts of Git" lock that the
+     rest of the program uses during its multi-threaded parts.
+     There's no notion in the rest of Git for "now we're going into a
+     multi-threaded part, so most calls will need to take a big global
+     lock before doing anything interesting".
 
-[1] https://public-inbox.org/git/f5baa2acc09531a16f4f693eebbe60706bb8ed1e.1361751905.git.hvoigt@hvoigt.net/
+     For parts of Git that are explicitly multi-threaded (like the
+     pack-objects delta search, or index-pack's delta resolution) that's
+     not so bad. But the example above is just using a sideband demuxer.
+     It would be unfortunate if the entire rest of send-pack had to
+     start caring about taking that lock.
 
- submodule.c                 | 92 +++++++++++++++++++++++++--------------------
- t/t5526-fetch-submodules.sh | 35 +++++++++++++++++
- 2 files changed, 86 insertions(+), 41 deletions(-)
+  3. Is the free-pack-memory thing actually accomplishing much these
+     days? It comes from 97bfeb34df (Release pack windows before
+     reporting out of memory., 2006-12-24), and the primary issue is not
+     actual allocated memory, but mmap'd packs clogging up the address
+     space so that malloc can't find a suitable block.
 
-diff --git a/submodule.c b/submodule.c
-index 27de65a..3ed78ac 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -23,7 +23,7 @@
- static int config_fetch_recurse_submodules = RECURSE_SUBMODULES_ON_DEMAND;
- static int config_update_recurse_submodules = RECURSE_SUBMODULES_OFF;
- static int parallel_jobs = 1;
--static struct string_list changed_submodule_paths = STRING_LIST_INIT_DUP;
-+static struct string_list changed_submodule_names = STRING_LIST_INIT_DUP;
- static int initialized_fetch_ref_tips;
- static struct oid_array ref_tips_before_fetch;
- static struct oid_array ref_tips_after_fetch;
-@@ -742,11 +742,11 @@ const struct submodule *submodule_from_ce(const struct cache_entry *ce)
- }
- 
- static struct oid_array *submodule_commits(struct string_list *submodules,
--					   const char *path)
-+					   const char *name)
- {
- 	struct string_list_item *item;
- 
--	item = string_list_insert(submodules, path);
-+	item = string_list_insert(submodules, name);
- 	if (item->util)
- 		return (struct oid_array *) item->util;
- 
-@@ -755,39 +755,34 @@ static struct oid_array *submodule_commits(struct string_list *submodules,
- 	return (struct oid_array *) item->util;
- }
- 
-+struct collect_changed_submodules_cb_data {
-+	struct string_list *changed;
-+	const struct object_id *commit_oid;
-+};
-+
- static void collect_changed_submodules_cb(struct diff_queue_struct *q,
- 					  struct diff_options *options,
- 					  void *data)
- {
-+	struct collect_changed_submodules_cb_data *me = data;
-+	struct string_list *changed = me->changed;
-+	const struct object_id *commit_oid = me->commit_oid;
- 	int i;
--	struct string_list *changed = data;
- 
- 	for (i = 0; i < q->nr; i++) {
- 		struct diff_filepair *p = q->queue[i];
- 		struct oid_array *commits;
-+		const struct submodule *submodule;
-+
- 		if (!S_ISGITLINK(p->two->mode))
- 			continue;
- 
--		if (S_ISGITLINK(p->one->mode)) {
--			/*
--			 * NEEDSWORK: We should honor the name configured in
--			 * the .gitmodules file of the commit we are examining
--			 * here to be able to correctly follow submodules
--			 * being moved around.
--			 */
--			commits = submodule_commits(changed, p->two->path);
--			oid_array_append(commits, &p->two->oid);
--		} else {
--			/* Submodule is new or was moved here */
--			/*
--			 * NEEDSWORK: When the .git directories of submodules
--			 * live inside the superprojects .git directory some
--			 * day we should fetch new submodules directly into
--			 * that location too when config or options request
--			 * that so they can be checked out from there.
--			 */
-+		submodule = submodule_from_path(commit_oid, p->two->path);
-+		if (!submodule)
- 			continue;
--		}
-+
-+		commits = submodule_commits(changed, submodule->name);
-+		oid_array_append(commits, &p->two->oid);
- 	}
- }
- 
-@@ -810,11 +805,14 @@ static void collect_changed_submodules(struct string_list *changed,
- 
- 	while ((commit = get_revision(&rev))) {
- 		struct rev_info diff_rev;
-+		struct collect_changed_submodules_cb_data data;
-+		data.changed = changed;
-+		data.commit_oid = &commit->object.oid;
- 
- 		init_revisions(&diff_rev, NULL);
- 		diff_rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
- 		diff_rev.diffopt.format_callback = collect_changed_submodules_cb;
--		diff_rev.diffopt.format_callback_data = changed;
-+		diff_rev.diffopt.format_callback_data = &data;
- 		diff_tree_combined_merge(commit, 1, &diff_rev);
- 	}
- 
-@@ -871,6 +869,7 @@ static int submodule_has_commits(const char *path, struct oid_array *commits)
- 	oid_array_for_each_unique(commits, check_has_commit, &has_commit);
- 
- 	if (has_commit) {
-+
- 		/*
- 		 * Even if the submodule is checked out and the commit is
- 		 * present, make sure it exists in the submodule's object store
-@@ -945,7 +944,7 @@ int find_unpushed_submodules(struct oid_array *commits,
- 		const char *remotes_name, struct string_list *needs_pushing)
- {
- 	struct string_list submodules = STRING_LIST_INIT_DUP;
--	struct string_list_item *submodule;
-+	struct string_list_item *name;
- 	struct argv_array argv = ARGV_ARRAY_INIT;
- 
- 	/* argv.argv[0] will be ignored by setup_revisions */
-@@ -956,12 +955,16 @@ int find_unpushed_submodules(struct oid_array *commits,
- 
- 	collect_changed_submodules(&submodules, &argv);
- 
--	for_each_string_list_item(submodule, &submodules) {
--		struct oid_array *commits = submodule->util;
--		const char *path = submodule->string;
-+	for_each_string_list_item(name, &submodules) {
-+		struct oid_array *commits = name->util;
-+		const struct submodule *submodule;
-+
-+		submodule = submodule_from_name(&null_oid, name->string);
-+		if (!submodule)
-+			continue;
- 
--		if (submodule_needs_pushing(path, commits))
--			string_list_insert(needs_pushing, path);
-+		if (submodule_needs_pushing(submodule->path, commits))
-+			string_list_insert(needs_pushing, submodule->path);
- 	}
- 
- 	free_submodules_oids(&submodules);
-@@ -1104,7 +1107,7 @@ static void calculate_changed_submodule_paths(void)
- {
- 	struct argv_array argv = ARGV_ARRAY_INIT;
- 	struct string_list changed_submodules = STRING_LIST_INIT_DUP;
--	const struct string_list_item *item;
-+	const struct string_list_item *name;
- 
- 	/* No need to check if there are no submodules configured */
- 	if (!submodule_from_path(NULL, NULL))
-@@ -1119,16 +1122,20 @@ static void calculate_changed_submodule_paths(void)
- 
- 	/*
- 	 * Collect all submodules (whether checked out or not) for which new
--	 * commits have been recorded upstream in "changed_submodule_paths".
-+	 * commits have been recorded upstream in "changed_submodule_names".
- 	 */
- 	collect_changed_submodules(&changed_submodules, &argv);
- 
--	for_each_string_list_item(item, &changed_submodules) {
--		struct oid_array *commits = item->util;
--		const char *path = item->string;
-+	for_each_string_list_item(name, &changed_submodules) {
-+		struct oid_array *commits = name->util;
-+		const struct submodule *submodule;
-+
-+		submodule = submodule_from_name(&null_oid, name->string);
-+		if (!submodule)
-+			continue;
- 
--		if (!submodule_has_commits(path, commits))
--			string_list_append(&changed_submodule_paths, path);
-+		if (!submodule_has_commits(submodule->path, commits))
-+			string_list_append(&changed_submodule_names, name->string);
- 	}
- 
- 	free_submodules_oids(&changed_submodules);
-@@ -1206,7 +1213,8 @@ static int get_next_submodule(struct child_process *cp,
- 					continue;
- 				if (submodule->fetch_recurse ==
- 						RECURSE_SUBMODULES_ON_DEMAND) {
--					if (!unsorted_string_list_lookup(&changed_submodule_paths, ce->name))
-+					if (!unsorted_string_list_lookup(&changed_submodule_names,
-+									 submodule->name))
- 						continue;
- 					default_argv = "on-demand";
- 				}
-@@ -1215,13 +1223,15 @@ static int get_next_submodule(struct child_process *cp,
- 				    gitmodules_is_unmerged)
- 					continue;
- 				if (config_fetch_recurse_submodules == RECURSE_SUBMODULES_ON_DEMAND) {
--					if (!unsorted_string_list_lookup(&changed_submodule_paths, ce->name))
-+					if (!unsorted_string_list_lookup(&changed_submodule_names,
-+									 submodule->name))
- 						continue;
- 					default_argv = "on-demand";
- 				}
- 			}
- 		} else if (spf->command_line_option == RECURSE_SUBMODULES_ON_DEMAND) {
--			if (!unsorted_string_list_lookup(&changed_submodule_paths, ce->name))
-+			if (!unsorted_string_list_lookup(&changed_submodule_names,
-+							 submodule->name))
- 				continue;
- 			default_argv = "on-demand";
- 		}
-@@ -1315,7 +1325,7 @@ int fetch_populated_submodules(const struct argv_array *options,
- 
- 	argv_array_clear(&spf.args);
- out:
--	string_list_clear(&changed_submodule_paths, 1);
-+	string_list_clear(&changed_submodule_names, 1);
- 	return spf.result;
- }
- 
-diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
-index 162baf1..ce788e9 100755
---- a/t/t5526-fetch-submodules.sh
-+++ b/t/t5526-fetch-submodules.sh
-@@ -530,4 +530,39 @@ test_expect_success 'fetching submodule into a broken repository' '
- 	test_must_fail git -C dst fetch --recurse-submodules
- '
- 
-+test_expect_success "fetch new commits when submodule got renamed" '
-+	git clone . downstream_rename &&
-+	(
-+		cd downstream_rename &&
-+		git submodule update --init &&
-+# NEEDSWORK: we omitted --recursive for the submodule update here since
-+# that does not work. See test 7001 for mv "moving nested submodules"
-+# for details. Once that is fixed we should add the --recursive option
-+# here.
-+		git checkout -b rename &&
-+		git mv submodule submodule_renamed &&
-+		(
-+			cd submodule_renamed &&
-+			git checkout -b rename_sub &&
-+			echo a >a &&
-+			git add a &&
-+			git commit -ma &&
-+			git push origin rename_sub &&
-+			git rev-parse HEAD >../../expect
-+		) &&
-+		git add submodule_renamed &&
-+		git commit -m "update renamed submodule" &&
-+		git push origin rename
-+	) &&
-+	(
-+		cd downstream &&
-+		git fetch --recurse-submodules=on-demand &&
-+		(
-+			cd submodule &&
-+			git rev-parse origin/rename_sub >../../actual
-+		)
-+	) &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.0.0.274.g6b2cd91
+     On 64-bit systems this is likely doing nothing. We have tons of
+     address space. But even on 32-bit systems, the default
+     core.packedGitLimit is only 256MiB (which was set around the same
+     time). You can certainly come up with a corner case where freeing
+     up that address space could matter. But I'd be surprised if this
+     has actually helped much in practice over the years. And if you
+     have a repo which is running so close to the address space limits
+     of your system, the right answer is probably: upgrade to a 64-bit
+     system. Even if the try-to-free thing helped in one run, it's
+     likely that similar runs are not going to be so lucky, and even
+     with it you're going to see sporadic out-of-memory failures.
 
+-Peff
