@@ -2,297 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6996720899
-	for <e@80x24.org>; Thu, 17 Aug 2017 21:43:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A95E420899
+	for <e@80x24.org>; Thu, 17 Aug 2017 21:49:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753607AbdHQVnT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Aug 2017 17:43:19 -0400
-Received: from mout.web.de ([212.227.17.12]:52429 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753271AbdHQVnR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Aug 2017 17:43:17 -0400
-Received: from tor.lan ([195.198.252.176]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MHGaV-1dmdYr2Uqp-00E6zg; Thu, 17
- Aug 2017 23:43:10 +0200
-From:   tboegi@web.de
-To:     git@vger.kernel.org, asottile@umich.edu
-Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH v3 2/2] File commited with CRLF should roundtrip diff and apply
-Date:   Thu, 17 Aug 2017 23:43:08 +0200
-Message-Id: <20170817214308.10727-1-tboegi@web.de>
-X-Mailer: git-send-email 2.14.1.145.gb3622a4ee9
-In-Reply-To: <xmqqa832vymw.fsf@gitster.mtv.corp.google.com>
-References: <xmqqa832vymw.fsf@gitster.mtv.corp.google.com>
+        id S1753297AbdHQVtn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Aug 2017 17:49:43 -0400
+Received: from mail-pg0-f44.google.com ([74.125.83.44]:36942 "EHLO
+        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753147AbdHQVtm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Aug 2017 17:49:42 -0400
+Received: by mail-pg0-f44.google.com with SMTP id y129so50998818pgy.4
+        for <git@vger.kernel.org>; Thu, 17 Aug 2017 14:49:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=3dE/1l7X5EG0Gps9+zPcFJ8cmqyBrL6Op8+VMpBoJRU=;
+        b=O4uM0kXrJSY25yBSEjhD/dUDX/lhOqX059EaCPxheUHW9LrFMok8HqqXZDi5bx9f9C
+         E7Dt2ZzGb56jearNU1qEIpXJr8bKqxoVNXmBm2FfIq9cW6tsY/OSepdHbKGA/cnVLQz3
+         1w4mDrKQDUmpm9iaPcykaq4vMrEi8Rbtb3+p/2VvR1j/4XMWg73uLOb1vuTkisRbqg7Z
+         CODMe3AWNYba/zjijmYhUB4Syj40aqw/HWjfig46QBmqH/YloWe+QrbrcGX9Jjo7K9eC
+         juZQWrcFeO99bQ4697+rA68Y0U79EQaC2xBnuz9FfiA0a9ZPMBNKVEZ3SPUJwJXpOAcR
+         TOqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=3dE/1l7X5EG0Gps9+zPcFJ8cmqyBrL6Op8+VMpBoJRU=;
+        b=TIkWV6bTk0DjYIttR1rf0A5VWnlOyDVC0DAtjjf186zrr5zjZBdXvxeI7fJloGlEY9
+         JgnKdlgvnnrIbGB+yoOyWs21woZ7zg/x/Eqe8u94w4QycTbx09CxNRGJaivrxr4hL22Y
+         Rapo9TxyjE+Mb/49Xk9yOPzNnhH66AeE9hZRW34wH1cjZoQbhVYs5Ug29ITE1AxnH2ml
+         4QC8S3jePkYvYe1RjWC0kMMczTXAttYuDopiC927bYwx6NvcFtSJjm/6pBUJGjbxWYuk
+         KrDeuYiSCbgzyaxlzhtTD+G47lxajWbmd/3xMTYUXGUF5XOgSLI4zV9dHoi54ojBzrC4
+         j4+g==
+X-Gm-Message-State: AHYfb5igAurIA9XrZhv36EvjnMI8XnQI+FsJfrFGCzL2HC8CFrOtMchF
+        w+auNPT1Pkpw/Cth
+X-Received: by 10.99.142.74 with SMTP id k71mr3043652pge.86.1503006581730;
+        Thu, 17 Aug 2017 14:49:41 -0700 (PDT)
+Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:75a4:d37d:bb23:58d2])
+        by smtp.gmail.com with ESMTPSA id j65sm8004771pgc.36.2017.08.17.14.49.41
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 17 Aug 2017 14:49:41 -0700 (PDT)
+Date:   Thu, 17 Aug 2017 14:49:39 -0700
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] sub-process: print the cmd when a capability is
+ unsupported
+Message-ID: <20170817144939.72fcd998@twelve2.svl.corp.google.com>
+In-Reply-To: <25BB25E4-DD3F-46A5-8CD5-D784CBAB6F52@gmail.com>
+References: <20170815173611.2267-1-chriscool@tuxfamily.org>
+        <20170815111725.5d009b66@twelve2.svl.corp.google.com>
+        <20170816002257.GG13924@aiede.mtv.corp.google.com>
+        <CAP8UFD2jLdR7HTi-T6J_xWvxKyoQf_6pUTX1CWsd9v3TXh9FXw@mail.gmail.com>
+        <xmqq8tijpkrv.fsf@gitster.mtv.corp.google.com>
+        <CAP8UFD1H4Pb5e2_pioQ5neROc+64e55RfvRhiyz5Df5AwJg-FQ@mail.gmail.com>
+        <xmqqbmndgb8w.fsf@gitster.mtv.corp.google.com>
+        <25BB25E4-DD3F-46A5-8CD5-D784CBAB6F52@gmail.com>
+X-Mailer: Claws Mail 3.9.3 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:X6ZjBKJ3e2Po6biBc+a8W5Mdk9TbCBki2mQjuv/9RC8dPjMDvRe
- m6puHxbOMBd2cSLkfWRAItjvVDV1jJ+nKDi7GpOCBNO04B/twQSqY8WZY4cS8/GGN1LU9H7
- f/MG8UxauU8ClRho6GngHCdT21tPrpQmlTyTCcpM+ll/iCV014OKY4FLYLW9HqBCndJOg6U
- IzBUNBKDo08HmADNm5pUA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:E8NmlKLkUns=:l5nsNnNgRa+45+Khq25KwB
- A3vnm7cu+n50fQbVyrYj6G2t6AIW+2unb4XntVCGlLOuZ95xMaXEkOk20SRX9EoMgApFcK1+f
- dRH1ntmQ5Y/oXKd89sFmkCVLnn75VHQ50zxsLVCchW9JRMC7GuMSVLbwS6rdzijobwTv7/qtB
- eRMFfGsNCQoj4x17g/6k+GADxEoEJid0g9mEH05Zz4W3RdPJHuErhhbxeE3FLB+ImtxNUEMKQ
- Y592WSZtVVJ3scHuHui9iYSOoV79co4UWahKd/NsXPHVpEjx6C51BkS3owtgyGBYLB0WM3zvj
- 1XNWroW3JpCU5aB5GJ5na90m95qiGW1pI6ZBFvVL5dPwAiOK5AxgYFNkHH3YGLtrEmNwRCEbI
- qLJ9YDOuIXkHg/sFk/AfG721n7EmscgI21qoHGWYnpD9+LbOu1eMOj0xCUP7n4YK3gnfBXnnt
- rHe3Jl1om+jGnzK/++qaMRk4x1eprfRwdoivOzj4l5RBdSbGPfhrzN8172A7G6UT/l6yUg38n
- lRNc7OjQu/iB2J4+Gnw+0oiHN5wiD2Kl0LVXo0ItUQhqWW092zqRzoIl4r3BK2g9e15t0ZyGT
- BYXVdlwYEoFnZxs0Ro3f8kYK4DrHwSVqaPXa3k4WXsgNcXy+OEus+Yc1xP8nZ1d1EgCFS7OaV
- Shz2nV0XpBAOva+EOgbbI2pJ9O1UMcC2+157FBMvY7kyNmMMh9FFlN98fvOX2awB4oHj00S3e
- tqav//jdseCvSsqkh1m0j4eWioJ0hhrhWyDkWQaAegdg3VGQcpMpTVZQMEGv4UdgVLpt6pA7Q
- pyGmGZOctfnJG/BxzgDSSrWxI6dCwETVWCqkOOQ3yA2i6MaMBA=
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Torsten Bögershausen <tboegi@web.de>
+On Thu, 17 Aug 2017 23:34:33 +0200
+Lars Schneider <larsxschneider@gmail.com> wrote:
 
-When a file had been commited with CRLF but now .gitattributes say
-"* text=auto" (or core.autocrlf is true),
-the following does not roundtrip, `git apply` fails:
+> 
+> > On 17 Aug 2017, at 23:01, Junio C Hamano <gitster@pobox.com> wrote:
+> > 
+> > Christian Couder <christian.couder@gmail.com> writes:
+> > 
+> >> ... but I think we should then emphasize more in our test
+> >> scripts (maybe by giving a good example) and perhaps also in the doc
+> >> that the filters/sub-processes should really pay attention and not
+> >> output any capability that are not supported by Git.
+> > 
+> > Oh, absolutely.  If you know there is such a breakage in our test
+> > script, please do fix it.
+> > 
+> > Thanks.
+> 
+> Junio's reasoning [1] is spot on from my point of view.
 
-printf "Added line\r\n" >>file &&
-git diff >patch &&
-git checkout -- . &&
-git apply patch
+Agreed.
 
-Before applying the patch, the file from working tree is converted into the
-index format (clean filter, CRLF conversion, ...)
-Here, when commited with CRLF, the line endings should not be converted.
+> 
+> I intentionally did not add the negotiation to the test code to keep
+> the test as simple as possible.
 
-Note that `git apply --index` or `git apply --cache` doesn't call
-convert_to_git() because the source material is already in index format.
+I think this is the correct approach - the test was testing Git's
+behavior, not the filter's behavior. (Although, if someone wanted to add
+a test for a misbehaving filter, that would be great, although such a
+test would have hardcoded output from the filter anyway.)
 
-Analyze the patch if there is a) any context line with CRLF,
-or b) if any line with CRLF is to be removed.
-In this case the patch file `patch` has mixed line endings, for a)
-it looks like this (ignore the * at the begin of the line):
+> However, I wrote this in the
+> gitattributes docs [2]:
+> 
+>   After the version negotiation Git sends a list of all capabilities that
+>   it supports and a flush packet. Git expects to read a list of desired
+>   capabilities, which must be a subset of the supported capabilities list,
+>   and a flush packet as response:
+> 
+> Maybe we should revive "Documentation/technical/api-sub-process.txt" [3]
+> after all to explain these kind of things?
 
-* diff --git a/one b/one
-* index 533790e..c30dea8 100644
-* --- a/one
-* +++ b/one
-* @@ -1 +1,2 @@
-*  a\r
-* +b\r
+As for reviving that specific file, I saw you wrote a similar comment
+but I didn't reply to it - sorry.  The commit in question is 7e2e1bb
+("Documentation: migrate sub-process docs to header", 2017-07-26), and
+in that commit, everything in api-sub-process.txt was migrated. I think
+it's better for such documentation to be in a .h file, rather than a
+.txt file.
 
-And for b) it looks like this:
+As for describing the Long Running Process Protocol in a
+Documentation/.../txt file, my plan was to create a new file
+specifically for that, as you can see in an e-mail I sent [4]. I'm OK
+with putting it in a different place, but it probably shouldn't be named
+"api", because those are for internal Git APIs.
 
-* diff --git a/one b/one
-* index 533790e..485540d 100644
-* --- a/one
-* +++ b/one
-* @@ -1 +1 @@
-* -a\r
-* +b\r
+[4] https://public-inbox.org/git/eadce97b6a1e80345a2621e71ce187e9e6bc05bf.1501532294.git.jonathantanmy@google.com/
 
-If `git apply` detects that the patch itself has CRLF, (look at the line
-" a\r" or "-a\r" above), the new flag crlf_in_old is set in "struct patch"
-and two things will happen:
-- read_old_data() will not convert CRLF into LF by calling
-  convert_to_git(..., SAFE_CRLF_KEEP_CRLF);
-- The WS_CR_AT_EOL bit is set in the "white space rule",
-  CRLF are no longer treated as white space.
-
-Thanks to Junio C Hamano, his input became the base for the changes in t4124.
-One test case is split up into 3:
-- Detect the " a\r" line in the patch
-- Detect the "-a\r" line in the patch
-- Use LF in repo and CLRF in the worktree.
-
-Reported-by: Anthony Sottile <asottile@umich.edu>
-Signed-off-by: Torsten Bögershausen <tboegi@web.de>
----
-Changes since v2:
-- Manually integrated all code changes from Junio
-  (Thanks, I hope that I didn't miss something)
-- Having examples of "git diff" in the commit message confuses "git apply",
-  so that all examples for git diff have a '*' at the beginnig of the line
-  (V2 used '$' which is typically an example for a shell script)
-- The official version to apply the CRLF-rules without having an index is
-  SAFE_CRLF_RENORMALIZE, that is already working today.
-- Now we have convert_to_git(NULL, ..., safe_crlf) with
-  enum safe_crlf safe_crlf = patch->crlf_in_old ?
-          SAFE_CRLF_KEEP_CRLF : SAFE_CRLF_RENORMALIZE;
-
-apply.c                  | 40 +++++++++++++++++++++++++++++++++++-----
- t/t4124-apply-ws-rule.sh | 33 +++++++++++++++++++++++++++------
- 2 files changed, 62 insertions(+), 11 deletions(-)
-
-diff --git a/apply.c b/apply.c
-index f2d599141d..691f47c783 100644
---- a/apply.c
-+++ b/apply.c
-@@ -220,6 +220,7 @@ struct patch {
- 	unsigned int recount:1;
- 	unsigned int conflicted_threeway:1;
- 	unsigned int direct_to_threeway:1;
-+	unsigned int crlf_in_old:1;
- 	struct fragment *fragments;
- 	char *result;
- 	size_t resultsize;
-@@ -1662,6 +1663,19 @@ static void check_whitespace(struct apply_state *state,
- 	record_ws_error(state, result, line + 1, len - 2, state->linenr);
- }
- 
-+/*
-+ * Check if the patch has context lines with CRLF or
-+ * the patch wants to remove lines with CRLF.
-+ */
-+static void check_old_for_crlf(struct patch *patch, const char *line, int len)
-+{
-+	if (len >= 2 && line[len-1] == '\n' && line[len-2] == '\r') {
-+		patch->ws_rule |= WS_CR_AT_EOL;
-+		patch->crlf_in_old = 1;
-+	}
-+}
-+
-+
- /*
-  * Parse a unified diff. Note that this really needs to parse each
-  * fragment separately, since the only way to know the difference
-@@ -1712,11 +1726,15 @@ static int parse_fragment(struct apply_state *state,
- 			if (!deleted && !added)
- 				leading++;
- 			trailing++;
-+			if (!state->apply_in_reverse)
-+				check_old_for_crlf(patch, line, len);
- 			if (!state->apply_in_reverse &&
- 			    state->ws_error_action == correct_ws_error)
- 				check_whitespace(state, line, len, patch->ws_rule);
- 			break;
- 		case '-':
-+			if (!state->apply_in_reverse)
-+				check_old_for_crlf(patch, line, len);
- 			if (state->apply_in_reverse &&
- 			    state->ws_error_action != nowarn_ws_error)
- 				check_whitespace(state, line, len, patch->ws_rule);
-@@ -2268,8 +2286,11 @@ static void show_stats(struct apply_state *state, struct patch *patch)
- 		add, pluses, del, minuses);
- }
- 
--static int read_old_data(struct stat *st, const char *path, struct strbuf *buf)
-+static int read_old_data(struct stat *st, struct patch *patch,
-+			 const char *path, struct strbuf *buf)
- {
-+	enum safe_crlf safe_crlf = patch->crlf_in_old ?
-+		SAFE_CRLF_KEEP_CRLF : SAFE_CRLF_RENORMALIZE;
- 	switch (st->st_mode & S_IFMT) {
- 	case S_IFLNK:
- 		if (strbuf_readlink(buf, path, st->st_size) < 0)
-@@ -2278,7 +2299,15 @@ static int read_old_data(struct stat *st, const char *path, struct strbuf *buf)
- 	case S_IFREG:
- 		if (strbuf_read_file(buf, path, st->st_size) != st->st_size)
- 			return error(_("unable to open or read %s"), path);
--		convert_to_git(&the_index, path, buf->buf, buf->len, buf, 0);
-+	       /*
-+		* "git apply" without "--index/--cached" should never look
-+		* at the index; the target file may not have been added to
-+		* the index yet, and we may not even be in any Git repository.
-+		* Pass NULL to convert_to_git() to stress this; the function
-+		* should never look at the index when explicit crlf option
-+		* is given.
-+		*/
-+		convert_to_git(NULL, path, buf->buf, buf->len, buf, safe_crlf);
- 		return 0;
- 	default:
- 		return -1;
-@@ -3384,6 +3413,7 @@ static int load_patch_target(struct apply_state *state,
- 			     struct strbuf *buf,
- 			     const struct cache_entry *ce,
- 			     struct stat *st,
-+			     struct patch *patch,
- 			     const char *name,
- 			     unsigned expected_mode)
- {
-@@ -3399,7 +3429,7 @@ static int load_patch_target(struct apply_state *state,
- 		} else if (has_symlink_leading_path(name, strlen(name))) {
- 			return error(_("reading from '%s' beyond a symbolic link"), name);
- 		} else {
--			if (read_old_data(st, name, buf))
-+			if (read_old_data(st, patch, name, buf))
- 				return error(_("failed to read %s"), name);
- 		}
- 	}
-@@ -3432,7 +3462,7 @@ static int load_preimage(struct apply_state *state,
- 		/* We have a patched copy in memory; use that. */
- 		strbuf_add(&buf, previous->result, previous->resultsize);
- 	} else {
--		status = load_patch_target(state, &buf, ce, st,
-+		status = load_patch_target(state, &buf, ce, st, patch,
- 					   patch->old_name, patch->old_mode);
- 		if (status < 0)
- 			return status;
-@@ -3520,7 +3550,7 @@ static int load_current(struct apply_state *state,
- 	if (verify_index_match(ce, &st))
- 		return error(_("%s: does not match index"), name);
- 
--	status = load_patch_target(state, &buf, ce, &st, name, mode);
-+	status = load_patch_target(state, &buf, ce, &st, patch, name, mode);
- 	if (status < 0)
- 		return status;
- 	else if (status)
-diff --git a/t/t4124-apply-ws-rule.sh b/t/t4124-apply-ws-rule.sh
-index d350065f25..4fc27c51f7 100755
---- a/t/t4124-apply-ws-rule.sh
-+++ b/t/t4124-apply-ws-rule.sh
-@@ -467,21 +467,42 @@ test_expect_success 'same, but with CR-LF line endings && cr-at-eol set' '
- 	test_cmp one expect
- '
- 
--test_expect_success 'same, but with CR-LF line endings && cr-at-eol unset' '
-+test_expect_success 'CR-LF line endings && add line && text=auto' '
- 	git config --unset core.whitespace &&
- 	printf "a\r\n" >one &&
-+	cp one save-one &&
-+	git add one &&
- 	printf "b\r\n" >>one &&
--	printf "c\r\n" >>one &&
-+	cp one expect &&
-+	git diff -- one >patch &&
-+	mv save-one one &&
-+	echo "one text=auto" >.gitattributes &&
-+	git apply patch &&
-+	test_cmp one expect
-+'
-+
-+test_expect_success 'CR-LF line endings && change line && text=auto' '
-+	printf "a\r\n" >one &&
- 	cp one save-one &&
--	printf "                 \r\n" >>one &&
- 	git add one &&
-+	printf "b\r\n" >one &&
- 	cp one expect &&
--	printf "d\r\n" >>one &&
- 	git diff -- one >patch &&
- 	mv save-one one &&
--	echo d >>expect &&
-+	echo "one text=auto" >.gitattributes &&
-+	git apply patch &&
-+	test_cmp one expect
-+'
- 
--	git apply --ignore-space-change --whitespace=fix patch &&
-+test_expect_success 'LF in repo, CRLF in worktree && change line && text=auto' '
-+	printf "a\n" >one &&
-+	git add one &&
-+	printf "b\r\n" >one &&
-+	git diff -- one >patch &&
-+	printf "a\r\n" >one &&
-+	echo "one text=auto" >.gitattributes &&
-+	git -c core.eol=CRLF apply patch &&
-+	printf "b\r\n" >expect &&
- 	test_cmp one expect
- '
- 
--- 
-2.14.1.145.gb3622a4ee9
-
+> [1] https://public-inbox.org/git/xmqq8tijpkrv.fsf@gitster.mtv.corp.google.com/
+> [2] https://github.com/git/git/blob/b3622a4ee94e4916cd05e6d96e41eeb36b941182/Documentation/gitattributes.txt#L408-L411
+> [3] https://public-inbox.org/git/20170807102136.30b23023@twelve2.svl.corp.google.com/
