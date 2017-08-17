@@ -2,78 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2070520899
-	for <e@80x24.org>; Thu, 17 Aug 2017 20:23:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 83A2820899
+	for <e@80x24.org>; Thu, 17 Aug 2017 20:28:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753147AbdHQUXp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Aug 2017 16:23:45 -0400
-Received: from ikke.info ([178.21.113.177]:56090 "EHLO vps892.directvps.nl"
+        id S1753165AbdHQU25 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Aug 2017 16:28:57 -0400
+Received: from mout.web.de ([212.227.17.11]:60653 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752632AbdHQUXp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Aug 2017 16:23:45 -0400
-Received: by vps892.directvps.nl (Postfix, from userid 1008)
-        id B2DE0440119; Thu, 17 Aug 2017 22:22:57 +0200 (CEST)
-Date:   Thu, 17 Aug 2017 22:22:57 +0200
-From:   Kevin Daudt <me@ikke.info>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>,
-        "Carlsson, Magnus" <Magnus.Carlsson@arris.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: git fetch with refspec does not include tags?
-Message-ID: <20170817202257.GC3839@alpha.vpn.ikke.info>
-References: <1502960406180.9006@arris.com>
- <1502960572292.1402@arris.com>
- <20170817092853.hteuzni5lxia4ejf@sigill.intra.peff.net>
- <xmqq1soagf1p.fsf@gitster.mtv.corp.google.com>
+        id S1752632AbdHQU24 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Aug 2017 16:28:56 -0400
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0Mg75d-1duAxc1fRl-00NUTG; Thu, 17
+ Aug 2017 22:28:45 +0200
+Date:   Thu, 17 Aug 2017 22:28:44 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Martin Koegler <martin.koegler@chello.at>
+Cc:     git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de
+Subject: Re: [Patch size_t V3 01/19] delta: fix enconding size larger than an
+ "uint" can hold
+Message-ID: <20170817202844.GA31284@tor.lan>
+References: <1502914591-26215-1-git-send-email-martin@mail.zuhause>
+ <1502914591-26215-2-git-send-email-martin@mail.zuhause>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqq1soagf1p.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.8.3 (2017-05-23)
+In-Reply-To: <1502914591-26215-2-git-send-email-martin@mail.zuhause>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K0:YNrF+ocuA44c5YbhG7QALQ67h13fwv0GlENbQq5bPCUUW35Y6b3
+ clId5gwsrBkAIv0F8yXDWpiL6xyJBTEixT6t4LhhuUoDra97T0uiprDvqkqvpBNYEoajv19
+ +R3QVMhH+BUN3OZZoXonU9Z6x/oF5Uaj95xqGd6tovBYGnGoVsIXRpzyNtliPd6kk3swzM6
+ uET3q0v2SrpNnzbFkhAxw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:oKiBu3cmnr8=:mdyjKZe84L1Ix6tKQAfvgh
+ FUAnx/PiYXOvA5fQaxXPy13VNjWCqQAtorTKO8FxdjB2T1ite9E5dGabN3PyZgFYOfK1L1YLq
+ 8MtyZhC3KQrMOD0e73W7jqQyieuylo6dt3CRqIMhDdef/Tcn8JG7/CloSAFn/1Yhy5HM4grRM
+ N3sjS0ErcWfyU3BLzwO2m4LpEXseNGFjXYcxNv8l9km+nEacT10ed+iHn1AWilmo7iICt7fTi
+ JJsvhPaLXM3vt181ReIg8cnYX9JwLanuenMfgOtr5yPvzjCJOaX3CRsmtN4oVDbw+it1V2q45
+ 2zozAcv16AU0ngJlNWxfb+0H52lypR6JBpOVDJuAOnvC9GHRZ4cW0aNAGro5cFq6vRp4H/Kwo
+ 2R5x1VLuSFoPnhENYIUXjMkrSkPlMNBKFFbU1Ir4GHhABZUzAEPIxhzW6H/r7A4is5YDQgwFf
+ 0ZO5i13G1EbevH78X9W0mfIN9GC8gyIrszPJ+huxyhNAq5CSplY0Ksk2uFHmAU10QiTZmE85D
+ k8uZYI1p54J8nEKto44/PJVvqRLEGbVgo4AT+r+QqZLmz7Mljo/GsArXPVdh64gU7E38J1qFZ
+ xVDl+9AaGIPg7md5/E8ndCTfkqJWK6NRC4DTMiPbvYbq+kqyLqUPPm2dLxpfmMxDEFUhzDQG4
+ Qmx2BCFFkwMD4+tY0bQmscOyY/5sWLdwZJsXbU4v2JqDysI624mtCbvrnrDHlm+wfGT4F0Stq
+ TmgXs51ue0urV48AD3EE2ePInBLTa+s4HmKU+PjF6wpEsZKkJb9h4ekOK4Am2/kinuvEY3gEN
+ 819Yg7KD6XoEDB5oDg/951boFLsgg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 17, 2017 at 12:38:58PM -0700, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
+On Wed, Aug 16, 2017 at 10:16:13PM +0200, Martin Koegler wrote:
+> From: Martin Koegler <martin.koegler@chello.at>
 > 
-> >   # no tags, we just populate FETCH_HEAD because of the bare URL
-> >   git fetch ../parent
-> >
-> >   # this does fetch tags, because we're storing the result according to
-> >   # the configured refspec ("refs/heads/*:refs/remotes/origin/*").
-> >   git fetch origin
-> 
-> The above two look good.
-> 
-> >   # this doesn't fetch tags, as the main command is "just" populating
-> >   # FETCH_HEAD. But then our logic for "hey, we fetched the ref for
-> >   # refs/remotes/origin/master, so let's update it on the side" kicks
-> >   # in. And we end up updating FETCH_HEAD _and_ the tracking branch, but
-> >   # not the tags. Weird.
-> >   git fetch origin master
-> 
-> Yes, it looks weird, but I suspect that it is probably more correct
-> not to fetch tags in this case.  I wonder if it would be a solution
-> not to do the "on the side" thing---after all the user didn't tell
-> us to update refs/remotes/origin/master with this command line.
+> The current delta code produces incorrect pack objects for files > 4GB.
 
-Isn't that how git fetch used to behave, or am I misunderstanding what
-you mean? It used to be that git fetch <remote> <branch> would not
-update any remote tracking branches.
+This may need a little bit more info (E.g. it does not fix anything on
+a 32 bit Linux)
 
-From the 1.8.4 release notes:
-
-> "git fetch origin master" unlike "git fetch origin" or "git fetch"
-> did not update "refs/remotes/origin/master"; this was an early
-> design decision to keep the update of remote tracking branches
-> predictable, but in practice it turns out that people find it more
-> convenient to opportunistically update them whenever we have a
-> chance, and we have been updating them when we run "git push" which
-> already breaks the original "predictability" anyway.
+How about this:
+The current delta code produces incorrect pack objects for files > 4GB
+when "unsigned long" has 32 bits and size_t 64 bits.
 
