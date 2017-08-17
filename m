@@ -6,38 +6,38 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4EB4820899
-	for <e@80x24.org>; Thu, 17 Aug 2017 19:39:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8899720899
+	for <e@80x24.org>; Thu, 17 Aug 2017 19:41:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753195AbdHQTjJ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Aug 2017 15:39:09 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63084 "EHLO
+        id S1753299AbdHQTlT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Aug 2017 15:41:19 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59647 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752632AbdHQTjI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Aug 2017 15:39:08 -0400
+        with ESMTP id S1752632AbdHQTlS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Aug 2017 15:41:18 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7AACEAA78B;
-        Thu, 17 Aug 2017 15:39:00 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 521538D74A;
+        Thu, 17 Aug 2017 15:41:11 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=xZPXTG15j8vOzytZJezbdICWb+0=; b=o8nTst
-        HOMojd9vT7gLD7JNisi7XLzsUYomXwjWBKdjwxFNe5EqXOOe2g/+xUlYw1DB2Kpt
-        h5NXggpNiXtJu+zpfdudKQnuV7JDXRG8uIviVxBSPyTfFjQSJvOtSlL24ibt6utZ
-        h611ELHliNSKigFl15m+y+OL6gUNtFdHuW8OE=
+        :content-type; s=sasl; bh=1nA1WjJU8FBb1Whjx8vgjP+7TPM=; b=JYjcJ9
+        UP9xWOUvVfLXJvwxXWrCfv3BDC6b5LNTJY5XyQTEsQV760OvtKs9VQ2FaUOtG9C4
+        KijNfH3I/zTq576qO3LiZQVLePwX45OW0365rsMQmZUWkzyn08LnOML0erFcv8Ko
+        X5C3baLBKX8K+geaV7HIiNJ5Q2ilANGrvu0S8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=hl/UcCTF/YpVq5F9OLEAH1/0ZsG6BM0g
-        N7zyTRbhLZ3rSJLoGSoQ90luMOcZ+3HCc6NK1bm/tH6QnGRNoiJRF2sWsPnfDFyL
-        Z3xwFEk/hgV7gQNqphzEazi0E+G1YPbxcXkB1eZ1I4FVuiKLQlSE6FXqZXoRcYXW
-        YDtpQHhRtHk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 67FC4AA78A;
-        Thu, 17 Aug 2017 15:39:00 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=Q6S+kExtNotxGE48lin+s6VCQcIx05yM
+        VC0UIdhVbtepnPdKiRxzcOZ8PiKOyL+jPcSuk8t7voodq6dAJGqb45bewfqlnxVv
+        qIP0o5LcJSK2T9J4A4upgJ5qJ5ZcTm6A7fqUlIsI8dEhU2+82NY1IHcrqf9URgOk
+        SMijY44l/7Q=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4929E8D749;
+        Thu, 17 Aug 2017 15:41:11 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B3A98AA786;
-        Thu, 17 Aug 2017 15:38:59 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A6D2C8D747;
+        Thu, 17 Aug 2017 15:41:10 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
 Cc:     "Carlsson\, Magnus" <Magnus.Carlsson@arris.com>,
@@ -45,14 +45,16 @@ Cc:     "Carlsson\, Magnus" <Magnus.Carlsson@arris.com>,
 Subject: Re: git fetch with refspec does not include tags?
 References: <1502960406180.9006@arris.com> <1502960572292.1402@arris.com>
         <20170817092853.hteuzni5lxia4ejf@sigill.intra.peff.net>
-Date:   Thu, 17 Aug 2017 12:38:58 -0700
-In-Reply-To: <20170817092853.hteuzni5lxia4ejf@sigill.intra.peff.net> (Jeff
-        King's message of "Thu, 17 Aug 2017 05:28:54 -0400")
-Message-ID: <xmqq1soagf1p.fsf@gitster.mtv.corp.google.com>
+        <1502969387926.66865@arris.com>
+        <20170817142233.v2c534zh6wv7ttei@sigill.intra.peff.net>
+Date:   Thu, 17 Aug 2017 12:41:09 -0700
+In-Reply-To: <20170817142233.v2c534zh6wv7ttei@sigill.intra.peff.net> (Jeff
+        King's message of "Thu, 17 Aug 2017 10:22:33 -0400")
+Message-ID: <xmqqwp62f0dm.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: B74FB5C6-8383-11E7-820F-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 055CEB9E-8384-11E7-8063-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -60,44 +62,19 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
->   # no tags, we just populate FETCH_HEAD because of the bare URL
->   git fetch ../parent
+> I think it's a bit more complex because "git pull" uses "git fetch"
+> under the hood. In fact, your "git fetch origin master" is exactly what
+> gets run when you do:
 >
->   # this does fetch tags, because we're storing the result according to
->   # the configured refspec ("refs/heads/*:refs/remotes/origin/*").
->   git fetch origin
-
-The above two look good.
-
->   # this doesn't fetch tags, as the main command is "just" populating
->   # FETCH_HEAD. But then our logic for "hey, we fetched the ref for
->   # refs/remotes/origin/master, so let's update it on the side" kicks
->   # in. And we end up updating FETCH_HEAD _and_ the tracking branch, but
->   # not the tags. Weird.
->   git fetch origin master
-
-Yes, it looks weird, but I suspect that it is probably more correct
-not to fetch tags in this case.  I wonder if it would be a solution
-not to do the "on the side" thing---after all the user didn't tell
-us to update refs/remotes/origin/master with this command line.
-
-Then not following tags will be in line with all of the above
-reasoning above.
-
->   # and this one does fetch tags, because we have a real destination.
->   git fetch origin master:foo
-
-Yup, that is expected.
-
-> So what I'd say is:
+>   git pull origin master
 >
->   1. Definitely these defaults are under-documented. I couldn't find
->      them anywhere in git-fetch(1).
+> That's maybe OK. But I think one-off pulls like:
+>
+>   git pull https://example.com/repo.git master
+>
+> probably wouldn't want it. I'd have to give it some thought.
 
-Yup.
-
->   2. If we continue to follow the "are we storing any refs" rule for the
->      default, possibly it should expand to "did we store anything,
->      including opportunistic tracking-ref updates".
-
-That also is a workable way to make things consistent.
+I agree with both.  If you have named remote, you presumably are
+keeping copies of their branches as remote-tracking branches, and it
+may be fine to follow tags.  An explicit URL used for one-off should
+not grab anything but the named thing, I would think.
