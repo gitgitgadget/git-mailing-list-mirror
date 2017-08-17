@@ -2,68 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1409220899
-	for <e@80x24.org>; Thu, 17 Aug 2017 18:04:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2182A20899
+	for <e@80x24.org>; Thu, 17 Aug 2017 18:19:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753424AbdHQSEb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Aug 2017 14:04:31 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51015 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753283AbdHQSEa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Aug 2017 14:04:30 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0021CA7B53;
-        Thu, 17 Aug 2017 14:04:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=FaRsgJjD8nQxgjWbbXbKvZEGK9Y=; b=K5a0WB
-        yx4lCAnH0Ia9TxUPQB/VX0GNPwqEA9E/UPlO6rEtLHApcyipqYhEwVKBvzdO+7S6
-        Jfx2Sv/ZHliCLy8MVLttHdk29ctQDmbhP3K9kAD3I0EeBwWUfZj3kiBdI8ObaH+k
-        LiuK3qz6KETJm3zA5aoOpFhyd4QgDol8qMwbQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=AtQJMzTv69OlZddMPirgISvOskzX61bE
-        7VyyNQBKiLViGqzWurKQb+a4FOHSFnPxa6CrIbpqXMlvAFywzyfHi3CVw/3flTC0
-        /db132tBmL4jdnRroTDSfpDDzpSmN6dq4QSbeVjxjJiQ3Ot67+q1pLj2p9dLN2U7
-        M+8ggQAMpak=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id EB690A7B51;
-        Thu, 17 Aug 2017 14:04:22 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 510E4A7B50;
-        Thu, 17 Aug 2017 14:04:22 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin Koegler <martin.koegler@chello.at>
-Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de
-Subject: Re: [Patch size_t V3 17/19] Convert ref-filter to size_t
-References: <1502914591-26215-1-git-send-email-martin@mail.zuhause>
-        <1502914591-26215-18-git-send-email-martin@mail.zuhause>
-        <xmqqmv6ygjha.fsf@gitster.mtv.corp.google.com>
-Date:   Thu, 17 Aug 2017 11:04:21 -0700
-In-Reply-To: <xmqqmv6ygjha.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Thu, 17 Aug 2017 11:03:13 -0700")
-Message-ID: <xmqqinhmgjfe.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1752747AbdHQSTl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Aug 2017 14:19:41 -0400
+Received: from mail-pg0-f52.google.com ([74.125.83.52]:33651 "EHLO
+        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751665AbdHQSTk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Aug 2017 14:19:40 -0400
+Received: by mail-pg0-f52.google.com with SMTP id t3so19907535pgt.0
+        for <git@vger.kernel.org>; Thu, 17 Aug 2017 11:19:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=bADVi4w5vZ9w+sx/bjOUZtuWYhOt0Z4dt+VlhiS0RCQ=;
+        b=YWGTIY0JEknx6jrfL/jSohOQbi8zlWfoO4ZrwCNPaGvNF6DrkVBA67eSAHm3kQrhUl
+         8ebdssc1mbHLaqcD3nRKJU4l6bMzsYQZnJKHaYthmuMhpqmiDkNOufi1haVjSwzbiCvt
+         Z8Oeu11J9/CB6sPWyhEvFMQJ5cmSDVZy1VSS0My+VZGIKaDCnxmAN8azTu6YyiyGInZ6
+         120UmSitXLsCqnhRa79V/XbV8CG7ymQcKXVwLCTgVfFbNNfiTZx7nDJnAHe1zcGb+j8I
+         mndV+9Aw5ULloseEIwR8EhIGXzaR+Q+v1HnqbwMSEa+mVYDl/GWSzxLXSGBJuCVsoo3z
+         xl+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=bADVi4w5vZ9w+sx/bjOUZtuWYhOt0Z4dt+VlhiS0RCQ=;
+        b=ackeJqbmP9hQSyWF2GFBcN6sgpYEH2i4rRCbVUQ4h6osr1W3wy4f34yrKgoBCmRnlx
+         G8nk6YIl7CbdHb6389JXIug65OvzFLH9D2RrCSUnX+CBjo2iBGGCuw2i9xMEFkfkAFus
+         RVmbzSxgBvhfAHqdj+/ZwOFzt55Ygpvc+a+nL42pO8NP+EL8SLxpZBeBc86lGVUELZDU
+         pKWHbSM0r30mdxDRnIJdE3IAg0U7iM83bEZyEfrK1Exsu5WR54egQ2+pGtxkKDC/YCiv
+         pEgwiFCRrfWRL+TVAy+0J9G05j42uqcqdMXJ5BZxLyJMN+T0A41UBVIK6YbofPWw2bbd
+         SdJA==
+X-Gm-Message-State: AHYfb5gL4NP986TTbbbHjVcUe596LtbYxI0lURlBSxUYJisaNaTiE7qO
+        MovfcQxZwShsy6Axf7+GXbLS/nO7DQ==
+X-Received: by 10.98.74.199 with SMTP id c68mr6164768pfj.242.1502993979613;
+ Thu, 17 Aug 2017 11:19:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7F50E0BC-8376-11E7-9105-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Received: by 10.100.162.37 with HTTP; Thu, 17 Aug 2017 11:19:39 -0700 (PDT)
+In-Reply-To: <20170816082022.5use3im2bq27wik4@sigill.intra.peff.net>
+References: <20170815102254.knccmhgralfijwli@sigill.intra.peff.net>
+ <20170815102334.qc4w7akl44bti44x@sigill.intra.peff.net> <CAN0heSrUz2jU2ijeSjYRhvyXA8qpw=JoOhaK-4Fuyv4_1L6Gtw@mail.gmail.com>
+ <20170816082022.5use3im2bq27wik4@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Thu, 17 Aug 2017 20:19:39 +0200
+Message-ID: <CAN0heSqTu9F6Coi7qydO6OKd_ojiriHMuvqjj3C9ag6M_48YOQ@mail.gmail.com>
+Subject: Re: [PATCH v4 5/8] interpret-trailers: add --parse convenience option
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> I did not see anything fishy in the remaining parts I did not
-> comment on.
+On 16 August 2017 at 10:20, Jeff King <peff@peff.net> wrote:
+> On Tue, Aug 15, 2017 at 01:26:53PM +0200, Martin =C3=85gren wrote:
+>
+>> >  This command reads some patches or commit messages from either the
+>> > -<file> arguments or the standard input if no <file> is specified. The=
+n
+>> > -this command applies the arguments passed using the `--trailer`
+>> > -option, if any, to the commit message part of each input file. The
+>> > -result is emitted on the standard output.
+>> > +<file> arguments or the standard input if no <file> is specified. If
+>> > +`--parse` is specified, the output consists of the parsed trailers.
+>> > +
+>> > +Otherwise, the this command applies the arguments passed using the
+>> > +`--trailer` option, if any, to the commit message part of each input
+>> > +file. The result is emitted on the standard output.
+>>
+>> "the this"
 >
 > Thanks.
+>
+>> I think I get why you use --parse above (and in the synopsis), although
+>> it kind of feels like it should be --only-input or perhaps "--only-input
+>> (or --parse)".
+>
+> I really wanted to point people to --parse as the go-to option for the
+> parsing mode for the sake of simplicity (in fact I initially considered
+> not even exposing them at all). And I hoped that if they jumped to the
+> definition of --parse, that would lead them to the other options.
+>
+> I dunno. I agree it is does not read particularly well. Probably the
+> whole description section could be rewritten to cover the newly dual
+> nature of the command a bit better. But I didn't want to disrupt the
+> existing flow too much.
 
-What I meant was "remainder of this patch 17/19".  I am not claiming
-that I read all other patches; I haven't, not yet anyway.
+Certainly. It's not like I can offer a "better" way. After thinking
+about this some more, I think this is a good example of "less is more".
+It's possibly less precise or complete in some sense, but it's probably
+much more useful and readable.
