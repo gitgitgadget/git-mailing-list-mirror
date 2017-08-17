@@ -2,430 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,URIBL_RED shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CDEA320899
-	for <e@80x24.org>; Thu, 17 Aug 2017 17:28:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 96B7320899
+	for <e@80x24.org>; Thu, 17 Aug 2017 17:33:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753189AbdHQR2E (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Aug 2017 13:28:04 -0400
-Received: from mail-pg0-f42.google.com ([74.125.83.42]:34248 "EHLO
-        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752270AbdHQR2E (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Aug 2017 13:28:04 -0400
-Received: by mail-pg0-f42.google.com with SMTP id u185so47005731pgb.1
-        for <git@vger.kernel.org>; Thu, 17 Aug 2017 10:28:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=netskope.com; s=google;
-        h=from:content-transfer-encoding:subject:message-id:date:to
-         :mime-version;
-        bh=lC1BAme63UFoZohD78tgU6ocv24D1MoqOnforzfgFg4=;
-        b=A1uoR/U/8WTCOm7yIpOfDAmYhQnY2y4f25gQSjrX968xDDGbb5lkWGAmd9TnK7N/+X
-         yl9ptG6GLbJYiFTfwFbZHEmjam3nWWso2Ms1oMGpnh2A7oNPjZR7EsIpFf/7usH6r6t2
-         t/xt8jkl+cQryP6bkS4OBUukwhrI71GG1u3I0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:subject
-         :message-id:date:to:mime-version;
-        bh=lC1BAme63UFoZohD78tgU6ocv24D1MoqOnforzfgFg4=;
-        b=FTGKm2G5tSj/hQxzhmIWucRpmeSW79TyL5wXsLJgQmdw7n/1JDMd1iOkmB2qh/bHnz
-         XV9Ex95KOTnXzUTJoH/QBCWQbO3xU+97KwdD+Xx1xY5xsxkz4UQ0DhQbs0O3w7OY/7z/
-         ZkhMwjXp0B5Wx6g6UbLZ9rjO5WRy7WV06vOFiTj9j1y86OfSsnePH3mVPQAZ5hBd4pnh
-         yTmZP4BO3Sz+3RvR7zT+M5+9MLeAbRFAcboB2C/z0MpkCVz8+Dm+b8DzXuxDt0e62OMU
-         +gFT2onVqoNA1jioE3FcoOneJSSazoRDNDZQFoOWMs3IpUjV4csbKLYeZBFeVC1PpNjx
-         vQew==
-X-Gm-Message-State: AHYfb5iUZfFxnqUViFVks4LK+bxNBSSQxtg5k/ynacnJcFp9D8jWO8hq
-        I/pMbJ8gD0H6GomcoaiLMA==
-X-Received: by 10.99.51.200 with SMTP id z191mr5773975pgz.329.1502990882705;
-        Thu, 17 Aug 2017 10:28:02 -0700 (PDT)
-Received: from [192.168.65.161] ([216.38.152.90])
-        by smtp.gmail.com with ESMTPSA id g1sm7076476pgo.52.2017.08.17.10.28.01
-        for <git@vger.kernel.org>
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 17 Aug 2017 10:28:02 -0700 (PDT)
-From:   Kai Zhang <kai@netskope.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Subject: Question about git gc on large text files
-Message-Id: <60A624DB-CFD1-4A62-A58B-80176F96BA30@netskope.com>
-Date:   Thu, 17 Aug 2017 10:28:00 -0700
-To:     git@vger.kernel.org
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-X-Mailer: Apple Mail (2.3124)
+        id S1753367AbdHQRdR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Aug 2017 13:33:17 -0400
+Received: from cloud.peff.net ([104.130.231.41]:41784 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752270AbdHQRdR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Aug 2017 13:33:17 -0400
+Received: (qmail 2311 invoked by uid 109); 17 Aug 2017 17:33:16 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 17 Aug 2017 17:33:16 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 28292 invoked by uid 111); 17 Aug 2017 17:33:42 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Thu, 17 Aug 2017 13:33:42 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 17 Aug 2017 13:33:14 -0400
+Date:   Thu, 17 Aug 2017 13:33:14 -0400
+From:   Jeff King <peff@peff.net>
+To:     Kai Zhang <kai@netskope.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Question about git gc on large text files
+Message-ID: <20170817173314.qjzii4e4rybqqn34@sigill.intra.peff.net>
+References: <60A624DB-CFD1-4A62-A58B-80176F96BA30@netskope.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <60A624DB-CFD1-4A62-A58B-80176F96BA30@netskope.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi
+On Thu, Aug 17, 2017 at 10:28:00AM -0700, Kai Zhang wrote:
 
-I have a git repository maintaining one large json file (along with =
-several other small files). With commits for large json file, the =
-repository become bigger and bigger, so I tried to run command "git gc =
---prune=3Dnow --aggressive" to reduce disk usage, then I found .git =
-folder size did not change. I had wonderful experience with git gc =
-against files around 10M to 20M, and I am wondering if there is any =
-configuration need to tweak for large text files?
+> I have a git repository maintaining one large json file (along with
+> several other small files). With commits for large json file, the
+> repository become bigger and bigger, so I tried to run command "git gc
+> --prune=now --aggressive" to reduce disk usage, then I found .git
+> folder size did not change. I had wonderful experience with git gc
+> against files around 10M to 20M, and I am wondering if there is any
+> configuration need to tweak for large text files?
+> 
+> Here I have more details:
+> 1. Json file size: 1G
 
-Here I have more details:
-1. Json file size: 1G
-2. .git folder size before gc: 2G, after gc: 2G
-3. Pack folder content before gc:
-pack$ du -sh *
-1.5K	pack-087e186e44b4f3dfdbb9479c457f3f4e6cef1c58.idx
-146M	pack-087e186e44b4f3dfdbb9479c457f3f4e6cef1c58.pack
-1.5K	pack-26c3bc5ee1aee6ab5355cda205a7a071bd464950.idx
-146M	pack-26c3bc5ee1aee6ab5355cda205a7a071bd464950.pack
-1.5K	pack-2ce66eb23ee42a9ac080fc31d1d476c2f27a8ee7.idx
-146M	pack-2ce66eb23ee42a9ac080fc31d1d476c2f27a8ee7.pack
-1.5K	pack-523304e1b27f476d1ec8c92356af38762880077c.idx
-146M	pack-523304e1b27f476d1ec8c92356af38762880077c.pack
-1.5K	pack-53a474a44e2bbc5406c6ac9e2deabdd77fd7c129.idx
-146M	pack-53a474a44e2bbc5406c6ac9e2deabdd77fd7c129.pack
-1.5K	pack-5b4cc71e4a675cdf72e837d1928af6ae2a7b8d44.idx
-146M	pack-5b4cc71e4a675cdf72e837d1928af6ae2a7b8d44.pack
-1.5K	pack-84d95c86aca367915fb26a227b32ea08f03a48d5.idx
-146M	pack-84d95c86aca367915fb26a227b32ea08f03a48d5.pack
-1.5K	pack-85f1f587416cbbe7613496a7efcd0cd01ad262c5.idx
-146M	pack-85f1f587416cbbe7613496a7efcd0cd01ad262c5.pack
-1.5K	pack-9522c7ced56ec8a379fa79ab8209cc6e8052a75c.idx
-146M	pack-9522c7ced56ec8a379fa79ab8209cc6e8052a75c.pack
-1.5K	pack-d7e517de6a72557cb68a7a406f1b526698b8f5d9.idx
-146M	pack-d7e517de6a72557cb68a7a406f1b526698b8f5d9.pack
-1.5K	pack-dd87e41420828d24edaf886ba2a11a49c76fbc4c.idx
-146M	pack-dd87e41420828d24edaf886ba2a11a49c76fbc4c.pack
-1.5K	pack-e0b47f03d74919a5ca6f8c40b04d49886e2a767a.idx
-146M	pack-e0b47f03d74919a5ca6f8c40b04d49886e2a767a.pack
-1.5K	pack-ee5deaeb15ae6d713d99059a7361fa51ae21a173.idx
-146M	pack-ee5deaeb15ae6d713d99059a7361fa51ae21a173.pack
-1.5K	pack-f727952b8f8928a875e35f34549d3f9ebe5f0740.idx
-146M	pack-f727952b8f8928a875e35f34549d3f9ebe5f0740.pack
+Git won't try to delta-compress anything over 500MB by default. Try:
 
-4. Pack folder content after gc:
-du -sh *
-6.0K	pack-2a8326dbe94de5c62c51b617397ef80729fde92f.idx
-2.0G	pack-2a8326dbe94de5c62c51b617397ef80729fde92f.pack
+  git config core.bigfilethreshold 2G
+  git gc --aggressive
 
-5. Output for git verify-pack after gc:
-git verify-pack -v =
-repo/.git/objects/pack/pack-2a8326dbe94de5c62c51b617397ef80729fde92f.idx
-z73c2ff9093fb1daf96364d49c8d2d025b1da6cf5 commit 245 147 12
-eca81268167f362e69136df4f098e83bd49f7c3b commit 83 87 159 1 =
-73c2ff9093fb1daf96364d49c8d2d025b1da6cf5
-b9546502b6a77dc75bb25fc249606880285a1082 commit 80 89 246 1 =
-73c2ff9093fb1daf96364d49c8d2d025b1da6cf5
-dd500e7a39df13dd08eee1ab45d537a14764046c commit 82 90 335 1 =
-73c2ff9093fb1daf96364d49c8d2d025b1da6cf5
-018c0ebbbcd53fa1575b923cfc953a9bf0c6b9e6 commit 245 147 425
-a44facd2fa2bc820c7ad0d9ce0a7cf5c9e0bb4ee commit 84 90 572 1 =
-018c0ebbbcd53fa1575b923cfc953a9bf0c6b9e6
-064d040a4baf19469b8d0ffbac8b7b61dc570ef6 commit 79 86 662 2 =
-a44facd2fa2bc820c7ad0d9ce0a7cf5c9e0bb4ee
-965b259ebee154290d59c3bd10b44465521deb17 commit 81 89 748 2 =
-a44facd2fa2bc820c7ad0d9ce0a7cf5c9e0bb4ee
-0bcee651e5575e87d8a2b0c6f4b9058f2b11629d commit 245 148 837
-e9362deba68746c1667b9d238e0b0fde3d5a4ec9 commit 82 90 985 1 =
-0bcee651e5575e87d8a2b0c6f4b9058f2b11629d
-684c356682afdf5273e9dba3c8272d330174a464 commit 80 89 1075 2 =
-e9362deba68746c1667b9d238e0b0fde3d5a4ec9
-45cd004175c238d27f1af9d340c3fa5867f6c9e3 commit 80 88 1164 1 =
-0bcee651e5575e87d8a2b0c6f4b9058f2b11629d
-e876b6dde0c407855cd8fa4f25cff13b44c78489 commit 245 148 1252
-831a50b8338b2b211b35d29a4210179155022179 commit 84 90 1400 1 =
-e876b6dde0c407855cd8fa4f25cff13b44c78489
-6eaebe76669a4a16d74d53aec605dee3c0427527 commit 86 91 1490 1 =
-e876b6dde0c407855cd8fa4f25cff13b44c78489
-3cccb7d0a997a0dbc887cd47b8b8e9c46fabc66a commit 81 89 1581 2 =
-6eaebe76669a4a16d74d53aec605dee3c0427527
-136592f9618d17712a818f0f84bed9ffd5655c0a commit 80 87 1670 3 =
-3cccb7d0a997a0dbc887cd47b8b8e9c46fabc66a
-9c7cf0528e49f16118afb514709fd392d917769c commit 245 150 1757
-c564ffd73eb621349aa8d601acb035990c159103 commit 80 90 1907 1 =
-9c7cf0528e49f16118afb514709fd392d917769c
-db804ffd8b7e3106b2a30c593866549eabbffda8 commit 81 89 1997 1 =
-9c7cf0528e49f16118afb514709fd392d917769c
-6c18d72d3308b3c0a5ab412fe05ce0b01acc5b8b commit 245 149 2086
-f3f6d9b9cb798f818a34addc500972e28149c579 commit 82 89 2235 1 =
-6c18d72d3308b3c0a5ab412fe05ce0b01acc5b8b
-c737d0af7fa8fca38c7c8478d6755fbfbf94e947 commit 80 89 2324 2 =
-f3f6d9b9cb798f818a34addc500972e28149c579
-12630d4e5f25a06e95636f773adbad42768587d7 commit 79 89 2413 3 =
-c737d0af7fa8fca38c7c8478d6755fbfbf94e947
-66386f99e1f3c6c1d4fa2a64d3171757ded84a35 commit 82 91 2502 2 =
-f3f6d9b9cb798f818a34addc500972e28149c579
-0f57e9c185de68585feaa46fc88c1031afb0dd73 commit 245 150 2593
-f66dc5d75d72474ca84bd23bf40f90b37b6b2d10 commit 83 88 2743 1 =
-0f57e9c185de68585feaa46fc88c1031afb0dd73
-977fcdd5605974083eea8d1962568a825db05990 commit 83 90 2831 1 =
-0f57e9c185de68585feaa46fc88c1031afb0dd73
-cd9fc1c85546e034c2bcde318db6438086c67ab9 commit 81 88 2921 2 =
-977fcdd5605974083eea8d1962568a825db05990
-a0c2e98428066f3b0246c678f2120aff949a59ba commit 245 148 3009
-50f5467a073f12ddf8cea16848ac833cb19a12f8 commit 83 89 3157 1 =
-a0c2e98428066f3b0246c678f2120aff949a59ba
-56cd72560093bbe5d8a94ed4d765e1607fda4f09 commit 77 87 3246 1 =
-a0c2e98428066f3b0246c678f2120aff949a59ba
-22c35014110bf021d997c3123fa228c0af8319ec commit 82 90 3333 1 =
-a0c2e98428066f3b0246c678f2120aff949a59ba
-41a8b3fff07b8abcc5a33ef0cc80dd2f5f3e8c61 commit 79 89 3423 2 =
-56cd72560093bbe5d8a94ed4d765e1607fda4f09
-75d05dd5e9feb6044dfcbc8358cfd14d95f7fe1a commit 245 148 3512
-2bdf3f6be472635054132b0ff985d3ce9c3eaad1 commit 80 89 3660 1 =
-75d05dd5e9feb6044dfcbc8358cfd14d95f7fe1a
-cf83e4fd88e57f906d41805f79219f367231dc27 commit 245 147 3749
-93bfae4c74d7b61c4cfba650ef1e860e97c41f13 commit 82 90 3896 1 =
-cf83e4fd88e57f906d41805f79219f367231dc27
-08ceb0df1c46b927ca5df0111bf83f0baeebe246 commit 85 91 3986 1 =
-cf83e4fd88e57f906d41805f79219f367231dc27
-f4648d8647778e342c0472dc9e1a459dce3526ae commit 79 89 4077 2 =
-08ceb0df1c46b927ca5df0111bf83f0baeebe246
-a109ef01c9c1ad4250d2267391e28b6d598ab915 commit 82 90 4166 2 =
-08ceb0df1c46b927ca5df0111bf83f0baeebe246
-d6300163cf705352f0f04962e70def35e5932a6f commit 245 147 4256
-b5fe21b376e55de3047962793a914afd722a00a0 commit 83 90 4403 1 =
-d6300163cf705352f0f04962e70def35e5932a6f
-180de68f6efd2e2c532524e73927bde89be3fda9 commit 82 88 4493 2 =
-b5fe21b376e55de3047962793a914afd722a00a0
-45944e32eb70a04f3aa08be6865500ed6e00effb commit 82 90 4581 2 =
-b5fe21b376e55de3047962793a914afd722a00a0
-c419bd2397bbce53c04e23b350318e22cd0e3e0a commit 78 86 4671 3 =
-45944e32eb70a04f3aa08be6865500ed6e00effb
-ca2ac7fe0410ec49d6dd236dc3c9d11291a8911a commit 245 148 4757
-bef87b128c7993135631dab9e89ec5ff57b766d1 commit 82 88 4905 1 =
-ca2ac7fe0410ec49d6dd236dc3c9d11291a8911a
-2e3bbe6c0004621293da03b2c52f43809402db67 commit 77 87 4993 2 =
-bef87b128c7993135631dab9e89ec5ff57b766d1
-a0159422664f753e1fa14793a00eaa74333c12a1 commit 81 89 5080 2 =
-bef87b128c7993135631dab9e89ec5ff57b766d1
-b379c1d858ac367d1830820cc6a6ef47e3017e60 commit 245 148 5169
-6bcb395c78439791f1a744215fea37507d6cd163 commit 245 148 5317
-9eed8cd622bf65cf5769764bf5b2b9a879f9cd87 commit 80 90 5465 1 =
-6bcb395c78439791f1a744215fea37507d6cd163
-cfc110e2a6c6eddd4c8924fb28e1ec05ad91ca77 commit 245 146 5555
-243f317358409e86e74219fe3289a7ecbf9edda2 commit 83 89 5701 1 =
-cfc110e2a6c6eddd4c8924fb28e1ec05ad91ca77
-33e25e446e03c3e8fc2ee3f31cee7368a00d7a0d commit 86 91 5790 1 =
-cfc110e2a6c6eddd4c8924fb28e1ec05ad91ca77
-c0d7a7281468c73cda144bf47b53cfa2ce681597 commit 84 88 5881 2 =
-33e25e446e03c3e8fc2ee3f31cee7368a00d7a0d
-12d76269504764640d10fae4bdcacc695cc47c49 commit 84 90 5969 2 =
-33e25e446e03c3e8fc2ee3f31cee7368a00d7a0d
-4ec75ac2c4fff6e775e33ddf00dc21fad6b7b635 commit 84 90 6059 2 =
-33e25e446e03c3e8fc2ee3f31cee7368a00d7a0d
-5bb4e84fca4795d9aa2b35dd8248a2ec0bd93594 commit 245 147 6149
-955daf083951f750d0870ede5fd335f6bb557828 commit 80 89 6296 1 =
-5bb4e84fca4795d9aa2b35dd8248a2ec0bd93594
-56b53b89ec0bfb3807c1d75693cd14b0463d1fbb commit 245 149 6385
-7cebba6b2898115c3c4e5d628951afbb99732a12 commit 86 91 6534 1 =
-56b53b89ec0bfb3807c1d75693cd14b0463d1fbb
-e8d57037fff665a32f64c7747e394ac973689f83 commit 86 91 6625 1 =
-56b53b89ec0bfb3807c1d75693cd14b0463d1fbb
-3d98cd75abffe5d916bfc973e7ac21db1a9abbb6 commit 196 118 6716
-30601303700713c3502731615f5f8833ea7109da blob   92014 4174 6834
-c7a0caef9155bfbc05524a04ce7f33b14d8e7e59 blob   19724 2841 11008 1 =
-30601303700713c3502731615f5f8833ea7109da
-6fe339229774b753f93ee714392d33b2d6f512bc blob   146 143 13849 2 =
-c7a0caef9155bfbc05524a04ce7f33b14d8e7e59
-216bbcb1b342c512f0ee6e0ddb0447600996fa55 blob   370 121 13992
-974251debd2aa7e140d88f145c4014dfe7019a05 blob   9788 1116 14113
-faf04a871d8d0861eba6a5960da1ab461e408fdf blob   20424 2639 15229
-6f5db584e651ffa89da238539f5f3510034c9d69 blob   6081276 512298 17868
-a23fa80df183544b64b15c1735f1a3df81e2a177 blob   3509 2532 530166
-0b9ecfc0637a547b907dfd7d337720720ec63bc7 blob   1214 973 532698 1 =
-a23fa80df183544b64b15c1735f1a3df81e2a177
-1f38a683b6eae34a51d64b67f8205545422ee876 blob   1679 1301 533671
-83e761d05730dae26afe7148beb910567eda1fb9 blob   1298 934 534972
-b5ea91c01251150f8cee4f515d55f1e709f8d9cb blob   365 178 535906
-0451f0e0ab0866a94cfedfc42715938f99bb9666 blob   3043 1072 536084
-c2f34df69749b0af81456f67b16d5bc5203e9768 blob   77 85 537156 1 =
-0451f0e0ab0866a94cfedfc42715938f99bb9666
-85a171cb76dce63387813fe9e6b1fec1bbe98df3 blob   27 39 537241 2 =
-c2f34df69749b0af81456f67b16d5bc5203e9768
-ca0273b055d8e6aefa09d34167ff2ec7e443b602 blob   56 69 537280 1 =
-0451f0e0ab0866a94cfedfc42715938f99bb9666
-f7e988f5138c248e47919ef808a9c9e60cef658f blob   14 25 537349 2 =
-c2f34df69749b0af81456f67b16d5bc5203e9768
-400b2e6f6f2c1d38709e3a903f27aecede6f5a3a blob   29364 4395 537374
-56c4f3b96c08dff84e20aab194504a952dba898b blob   3942 1848 541769 1 =
-400b2e6f6f2c1d38709e3a903f27aecede6f5a3a
-096c1b5dbf13bb5ef8ac9359859dbc63509bde57 blob   62 77 543617 2 =
-56c4f3b96c08dff84e20aab194504a952dba898b
-c7f8a09a1fe076c5a89e914c92559f387eecb8b4 blob   53 67 543694 3 =
-096c1b5dbf13bb5ef8ac9359859dbc63509bde57
-168b77136fb15ce4521e8d6e6c8c84195770243a blob   67 82 543761 2 =
-56c4f3b96c08dff84e20aab194504a952dba898b
-447d0297dd7b9c1e6742b3b9e1c56e6d196eff6e blob   39 52 543843 2 =
-56c4f3b96c08dff84e20aab194504a952dba898b
-14798355d76ffdb7c00b488026eb3fa4643af530 blob   17 29 543895 2 =
-56c4f3b96c08dff84e20aab194504a952dba898b
-5f6a914d8c6450042d2ec815560d29ca3d7ea510 blob   26 34 543924
-35edf31082c89035c784c98f9b56e42220389344 blob   1009916 14626 543958
-76cba3d5e7f4aa37c530f79d5aafa87f2ae713c1 blob   412822 8453 558584 1 =
-35edf31082c89035c784c98f9b56e42220389344
-369310d604fd0f426d5a9739522c173d3e2d3bd8 blob   108032 6655 567037
-42f632a0cc6cfb2157da7c8776ab6c5f4a1e58a2 blob   4615 1311 573692
-da5904c600986242a84e8e99de00729e276f9dac blob   60 68 575003
-e8696f56740bcd450823910f41fae547f1d6d2af blob   148251 4559 575071
-e8fa753d7bb4ce3aebf0ea82eb26753812e3cea7 blob   9771 1913 579630 1 =
-e8696f56740bcd450823910f41fae547f1d6d2af
-dc88be97d72a3c9dce1c0b64506f81f834061655 blob   442 269 581543 1 =
-974251debd2aa7e140d88f145c4014dfe7019a05
-46b5c5a0613f0a7509ae29769d3a8944ff2d904e blob   880 194 581812
-6328ccb7c62bb96f9296a41ec70e67f4952aa729 blob   429 183 582006
-cd96a2cf4718cc3b26142adac9163637eeb11c03 blob   120 119 582189 1 =
-30601303700713c3502731615f5f8833ea7109da
-6cf6098e8974f357b9b9ac8bc65e28116aebdc9b blob   236 192 582308 1 =
-974251debd2aa7e140d88f145c4014dfe7019a05
-c2ca7c638da17012858b4cc7ee2f7048f8ce1eb8 blob   140632 13043 582500
-997fc605a037ca08cd10baa2cec1467d1c9ce7b2 blob   170 89 595543
-fc9a84914df7c41b3ef96fc52645c161e0a3a1c8 blob   253 147 595632
-e02aabc53417c0e761ac879e2d941af0589b6438 blob   3536045 443170 595779
-1430c3d1220e8344984d3f3618f8e2e0a850784c blob   494 410 1038949 1 =
-e02aabc53417c0e761ac879e2d941af0589b6438
-032bfe6c5eec63e37a472adb430430543072d343 blob   92 73 1039359
-2f60c1c75d1b97de99eb1488edbffff0a2f38312 blob   642 194 1039432
-41b32de4b468cb79636cc703c18e28028739f291 blob   71 64 1039626
-b343bb38461e921465d07d97a73bd7f62457d300 blob   362 151 1039690
-1d769f29b257675578a32dd6a700ca180e8e777d blob   44783 6644 1039841 1 =
-30601303700713c3502731615f5f8833ea7109da
-531122d7fe3f8aac39970dc3028ee64aae4a16dd blob   1493 789 1046485 2 =
-1d769f29b257675578a32dd6a700ca180e8e777d
-dc88381b4a8293d5c4237152f90b1ad14938d3fa blob   209 107 1047274
-7d01b7a084cecf68ab983e15bc96a7af982f4678 blob   3562 1162 1047381
-957b31aeae2d77a1b6f3c04585752df4b6151372 blob   6397 1777 1048543 1 =
-974251debd2aa7e140d88f145c4014dfe7019a05
-5ead7e5628296039dcc534cad0b0934c509d8dac blob   57 55 1050320
-edcbc88455928e2fd4f522c94e362c3da4fec137 blob   33 41 1050375
-36cb7332d3f0ef58c741a97883e72bac70a1a805 blob   1140 361 1050416
-7ac80792bf2c3af94ae08e93499d5ebe65ecef28 blob   192 102 1050777
-e4e18b48c61719f60db3034a936c7e9f0a6604ca blob   1598 1023 1050879
-3014dc7398c3c8dd89fc59c005d5434b616fe8bf blob   1675 1293 1051902
-7101a86a4b05fec75eba5b79b8ac40ff00839b2a blob   38 46 1053195
-2dae0a056e7f1edb340039c0d3d4b185e48bb179 blob   22760 2553 1053241
-0d57bce52c70788079acd30a7054a6f3965eff4e blob   34 44 1055794
-6712cabb531da636aa7809765ff8a8731ec1c439 blob   1042286294 152155786 =
-1055838
-ef9d32388a3411eb756d3061a297496a17ea8a7a blob   687 308 153211624
-e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 blob   0 9 153211932
-460fd315efaa6919b548395e67f8fd3b21e329cf blob   15017 10579 153211941
-0975b2896e684699a5a4b96ac0f35cf8573f49f2 blob   940 599 153222520 1 =
-460fd315efaa6919b548395e67f8fd3b21e329cf
-48400134e36e704625205e76b9d85f3bee45d8b6 blob   86 98 153223119 1 =
-460fd315efaa6919b548395e67f8fd3b21e329cf
-c123cc5cf7db27264de3b54832b65edbb011228b blob   100151 73805 153223217
-84b875192d3b572a926a360dc623a00e3a6a374f blob   93919 69860 153297022
-4220c8041aa6b56333beca22e1df5b60f6e72cbc blob   187 181 153366882 1 =
-84b875192d3b572a926a360dc623a00e3a6a374f
-71b700fb8ea645605c9e3dbc619811ea7b2c6971 blob   21419 16061 153367063
-850a87246c6cbc23054647527988478fa85ed03a blob   318 250 153383124 1 =
-71b700fb8ea645605c9e3dbc619811ea7b2c6971
-fd3e74984ac1fad73e56ff2ec9d6f39de20e3780 blob   32397 24381 153383374
-1452c0bab16a2104e0938b5a20bb2ca3d3393972 blob   307 242 153407755 1 =
-fd3e74984ac1fad73e56ff2ec9d6f39de20e3780
-8ceeb548aefa091460d002c9e17b4e161eee643d tree   2165 1567 153407997
-51b3d925333cd26da5473a68389b78c2be85283c tree   84 81 153409564
-54a985cc880896c1d33897b9bb57fc55379984e0 tree   976 454 153409645
-05b02cccae07994b53be08540ae08f5d110f8352 tree   30 40 153410099
-8dcfdf38bfe41143c430eaf0da1aedba036f8de4 tree   95 91 153410139
-89f3225577bf7cce1ce274fdef1db2b06d1401fd tree   60 71 153410230
-78f05bd13b10b30fa3cd969d2ce09c23275ebd14 tree   387 313 153410301
-da6b9232c516e81377bfe5d1c8c2627bbdaa7e74 tree   32 47 153410614 1 =
-8ceeb548aefa091460d002c9e17b4e161eee643d
-8e7dcd76b271d5c0e2775e7f0538b66b07c973e5 blob   1042250467 152150223 =
-153410661
-824f9989aacd9fe7ca49ee9e3a305b12789e0800 tree   32 49 305560884 1 =
-8ceeb548aefa091460d002c9e17b4e161eee643d
-dec07bf2ed72bbb3590a9838996632472cb862a4 blob   1042248439 152149967 =
-305560933
-4a13651444b567dc6a326492b10535a3e0451949 tree   32 50 457710900 1 =
-8ceeb548aefa091460d002c9e17b4e161eee643d
-497295fd3c279fdd6a12b954832632e77ed916e8 blob   1042232714 152146572 =
-457710950
-b62860b022e52eddde5ae3f7bd61a8c3609690bd tree   32 48 609857522 1 =
-8ceeb548aefa091460d002c9e17b4e161eee643d
-0a410e522cf44ca2d933723ffa4c61fd4bc9bd3e blob   1042219138 152143853 =
-609857570
-e0f4ad740e53be1763b18dd46346a6c6be2349ea tree   32 50 762001423 1 =
-8ceeb548aefa091460d002c9e17b4e161eee643d
-10f1d7f42c58d4a5c103f75fa319017b2794f43b blob   1042106158 152124224 =
-762001473
-48251240109383097ff86e2344d35c15eb814222 tree   32 48 914125697 1 =
-8ceeb548aefa091460d002c9e17b4e161eee643d
-228733a6531fdb5f92e941d553240abba9815705 blob   1042002814 152104734 =
-914125745
-83278d736270dc60b603f12b6eea7bbfce65ed15 tree   32 48 1066230479 1 =
-8ceeb548aefa091460d002c9e17b4e161eee643d
-6e4d360971234ae4b8dbc51ccd49742456e505eb blob   1042002454 152104669 =
-1066230527
-70055940a6bd768d83fe31f55bb806edd5b65174 tree   33 48 1218335196 2 =
-83278d736270dc60b603f12b6eea7bbfce65ed15
-ac66231d6e3e19e3279d288e590378cae2c68e00 tree   32 44 1218335244 3 =
-70055940a6bd768d83fe31f55bb806edd5b65174
-8ead0d07e08b2b0a19907f0bf34b2fce99332c35 blob   1042013370 152106982 =
-1218335288
-634bf529959252da47db234d6a1862fa679cfc9c tree   32 49 1370442270 3 =
-70055940a6bd768d83fe31f55bb806edd5b65174
-c45ac3ab83079e13cd378551797247edcad79ede blob   1041968005 152099325 =
-1370442319
-2a2d3908fd9c720dbd2031ddf53683e54d68f465 tree   32 48 1522541644 3 =
-70055940a6bd768d83fe31f55bb806edd5b65174
-49cd9331298d2bccfc3b1cf1560884d7d9152700 blob   1042008045 152102866 =
-1522541692
-a625fd44f300ef5dbacd5b05d1985984f554e199 tree   32 50 1674644558 3 =
-70055940a6bd768d83fe31f55bb806edd5b65174
-0b30543fcf94b7cec5c519610248e8aad08a7a20 blob   1042007929 152102864 =
-1674644608
-bc5613f547d55128ba3009654586f3d840de16a9 tree   33 48 1826747472 4 =
-a625fd44f300ef5dbacd5b05d1985984f554e199
-69b3db42c1ba1c44a7530fd77747866f0ba1f68c blob   1008 910 1826747520 1 =
-e02aabc53417c0e761ac879e2d941af0589b6438
-6f34ad3cbd0a6a57df25d301f4c01efac6d555eb tree   32 45 1826748430 5 =
-bc5613f547d55128ba3009654586f3d840de16a9
-04852030e8651f8a4fbb9551a97678845e274e7d blob   1042110127 152114836 =
-1826748475
-31c158079040711775d45f54cd1e9bde76b30cfb tree   33 48 1978863311 6 =
-6f34ad3cbd0a6a57df25d301f4c01efac6d555eb
-0baf8907f8839dbc428091cb6f9484de531e6e38 blob   230 167 1978863359 2 =
-69b3db42c1ba1c44a7530fd77747866f0ba1f68c
-5f41453e72335f81d335b7b1af00d2e3b7e899ec tree   32 47 1978863526 7 =
-31c158079040711775d45f54cd1e9bde76b30cfb
-9e62415b4f46d3e3a5b5362499a6bb7c52994a78 blob   1042125372 152116867 =
-1978863573
-d1d15cec6277ff35558d535db4714a5c7cbae2b5 tree   22 37 2130980440 8 =
-5f41453e72335f81d335b7b1af00d2e3b7e899ec
-non delta: 84 objects
-chain length =3D 1: 53 objects
-chain length =3D 2: 27 objects
-chain length =3D 3: 8 objects
-chain length =3D 4: 1 object
-chain length =3D 5: 1 object
-chain length =3D 6: 1 object
-chain length =3D 7: 1 object
-chain length =3D 8: 1 object
-.git/objects/pack/pack-2a8326dbe94de5c62c51b617397ef80729fde92f.pack: ok
-
-6. configs
-[core]
-	repositoryformatversion =3D 0
-	filemode =3D true
-	bare =3D false
-	logallrefupdates =3D true
-	sharedrepository =3D 1
-[receive]
-	denyNonFastforwards =3D true
-[user]
-	name =3D configservice
-	email =3D configservice@netskope.com
-[gc]
-	auto =3D 0
-[pack]
-	threads =3D 2
-
-Thank you so much for your attention.
-
-Best Regards,
-Kai
-
+-Peff
