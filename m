@@ -2,79 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8899720899
-	for <e@80x24.org>; Thu, 17 Aug 2017 19:41:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A65F20899
+	for <e@80x24.org>; Thu, 17 Aug 2017 19:55:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753299AbdHQTlT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Aug 2017 15:41:19 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59647 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752632AbdHQTlS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Aug 2017 15:41:18 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 521538D74A;
-        Thu, 17 Aug 2017 15:41:11 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=1nA1WjJU8FBb1Whjx8vgjP+7TPM=; b=JYjcJ9
-        UP9xWOUvVfLXJvwxXWrCfv3BDC6b5LNTJY5XyQTEsQV760OvtKs9VQ2FaUOtG9C4
-        KijNfH3I/zTq576qO3LiZQVLePwX45OW0365rsMQmZUWkzyn08LnOML0erFcv8Ko
-        X5C3baLBKX8K+geaV7HIiNJ5Q2ilANGrvu0S8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Q6S+kExtNotxGE48lin+s6VCQcIx05yM
-        VC0UIdhVbtepnPdKiRxzcOZ8PiKOyL+jPcSuk8t7voodq6dAJGqb45bewfqlnxVv
-        qIP0o5LcJSK2T9J4A4upgJ5qJ5ZcTm6A7fqUlIsI8dEhU2+82NY1IHcrqf9URgOk
-        SMijY44l/7Q=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4929E8D749;
-        Thu, 17 Aug 2017 15:41:11 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A6D2C8D747;
-        Thu, 17 Aug 2017 15:41:10 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     "Carlsson\, Magnus" <Magnus.Carlsson@arris.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: git fetch with refspec does not include tags?
-References: <1502960406180.9006@arris.com> <1502960572292.1402@arris.com>
-        <20170817092853.hteuzni5lxia4ejf@sigill.intra.peff.net>
-        <1502969387926.66865@arris.com>
-        <20170817142233.v2c534zh6wv7ttei@sigill.intra.peff.net>
-Date:   Thu, 17 Aug 2017 12:41:09 -0700
-In-Reply-To: <20170817142233.v2c534zh6wv7ttei@sigill.intra.peff.net> (Jeff
-        King's message of "Thu, 17 Aug 2017 10:22:33 -0400")
-Message-ID: <xmqqwp62f0dm.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 055CEB9E-8384-11E7-8063-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+        id S1753212AbdHQTzf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Aug 2017 15:55:35 -0400
+Received: from continuum.iocl.org ([217.140.74.2]:45165 "EHLO
+        continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752820AbdHQTze (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Aug 2017 15:55:34 -0400
+X-Greylist: delayed 1844 seconds by postgrey-1.27 at vger.kernel.org; Thu, 17 Aug 2017 15:55:33 EDT
+Received: (from krey@localhost)
+        by continuum.iocl.org (8.11.3/8.9.3) id v7HJOaw05216;
+        Thu, 17 Aug 2017 21:24:36 +0200
+Date:   Thu, 17 Aug 2017 21:24:36 +0200
+From:   Andreas Krey <a.krey@gmx.de>
+To:     git@vger.kernel.org
+Subject: ignoring extra bitmap file?
+Message-ID: <20170817192436.GA4782@inner.h.apk.li>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.1i
+X-message-flag: What did you expect to see here?
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Hi everyone,
 
-> I think it's a bit more complex because "git pull" uses "git fetch"
-> under the hood. In fact, your "git fetch origin master" is exactly what
-> gets run when you do:
->
->   git pull origin master
->
-> That's maybe OK. But I think one-off pulls like:
->
->   git pull https://example.com/repo.git master
->
-> probably wouldn't want it. I'd have to give it some thought.
+I'm seeing the message
 
-I agree with both.  If you have named remote, you presumably are
-keeping copies of their branches as remote-tracking branches, and it
-may be fine to follow tags.  An explicit URL used for one-off should
-not grab anything but the named thing, I would think.
+   remote: warning: ignoring extra bitmap file: ./objects/pack/pack-2943dc24....pack
+
+and indeed, there is such a thing (two, actually):
+
+   171736188 Aug 17 08:20 pack-2943dc2477026f87b280ebcefa93fe28412688df.idx
+    12662268 Aug 17 08:24 pack-2943dc2477026f87b280ebcefa93fe28412688df.bitmap
+ 12927989355 Aug 17 08:27 pack-2943dc2477026f87b280ebcefa93fe28412688df.pack
+   164857412 Aug 17 08:33 pack-8b4a42ca7aa2aca6f354292007910de1110117b2.idx
+    13164932 Aug 17 08:49 pack-8b4a42ca7aa2aca6f354292007910de1110117b2.bitmap
+      281872 Aug 17 09:40 pack-bddb40f984124ba8c2a4e5c55b0d1b2804fd5817.pack
+       13280 Aug 17 09:40 pack-bddb40f984124ba8c2a4e5c55b0d1b2804fd5817.idx
+        7904 Aug 17 15:51 pack-0f8b1478e17174c562d9a52cf577e0e050bdb7c5.idx
+     2373948 Aug 17 16:09 pack-23253e17510cacaae3bb38fb5429073b3bc59480.pack
+        6980 Aug 17 16:09 pack-23253e17510cacaae3bb38fb5429073b3bc59480.idx
+      144158 Aug 17 17:03 pack-0f8b1478e17174c562d9a52cf577e0e050bdb7c5.pack
+ 12927996484 Aug 17 19:19 pack-8b4a42ca7aa2aca6f354292007910de1110117b2.pack
+      153332 Aug 17 20:17 pack-65ff13a10c29a6c1604017c50dc9a320044ee605.pack
+       14036 Aug 17 20:17 pack-65ff13a10c29a6c1604017c50dc9a320044ee605.idx
+
+But it looks like something went wrong in that repack cycle (that
+pack-2943dc247702 is the full repo), and it won't get removed later
+in the next repack in the evening.
+
+Question: Can I safely remove the .bitmap file, and repack will then
+clean up the .pack and .idx files as will?
+
+(This is still that repo in bitbucket (latest 4.x) server
+with git 2.6.2, now with cg.auto=0.)
+
+- Andreas
+
+-- 
+"Totally trivial. Famous last words."
+From: Linus Torvalds <torvalds@*.org>
+Date: Fri, 22 Jan 2010 07:29:21 -0800
