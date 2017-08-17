@@ -2,129 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D76720899
-	for <e@80x24.org>; Thu, 17 Aug 2017 17:56:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 021BC20899
+	for <e@80x24.org>; Thu, 17 Aug 2017 18:03:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753367AbdHQR44 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Aug 2017 13:56:56 -0400
-Received: from mail-pg0-f50.google.com ([74.125.83.50]:33821 "EHLO
-        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753283AbdHQR4z (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Aug 2017 13:56:55 -0400
-Received: by mail-pg0-f50.google.com with SMTP id u185so47448567pgb.1
-        for <git@vger.kernel.org>; Thu, 17 Aug 2017 10:56:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=YKJ193IGyAaUWK9frPDO0SxqpakOUlJfSeg6qOY7I48=;
-        b=YqRcgl2MTn2EMyQPQO3z3CuA9CqWsOzXCrYEBsI4Kx7bnZM1DnoGWzhJU47xbomSWy
-         atBwAZJjxHvlVrh5CsOAFf8854GTh8THjI/89DF4M+vYE2ch4vU2CuhPynmAbiVtiJ+a
-         VwPQWk0CN96ECKO+jYpTV28mdMpEmQLN+vNBbEU1FN/U0T9oK/fJdzKrc+6cIU76McxC
-         AJu4UF7GJCLC0HuCyIsTUy6AEClZ9amGHZqIzknAeLi3LNmWEyn2F8UHk+gm9p6H8QtW
-         ZaxlZtCe5JKcqtLY2ZDTL8U61tcyA2gxne94iEODsQcr6sjTK8i4VhejZSG5X6Ei1ejs
-         MiNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=YKJ193IGyAaUWK9frPDO0SxqpakOUlJfSeg6qOY7I48=;
-        b=RXrMNcZ8jizIKx1vMLOfNnib+zLSk6LE3puhsGk1FFCf5eO5HhvqJiY1aYWOdcmtwC
-         YF57aYJTNhyZQhkQ3PMcbgZ24e1jRj2yxBAoyqYtoUdfhLdVwIEkPHgWV7q9n/iXBq3O
-         VdHyJKIwjInw+xL9ouqF6aHcMA0pxa6xo/l5mVNtyvdKFC7wUJFVMQa30IHgBvmw1YH6
-         sW/7CA7veW2gJIb2gTDf5SyLxmwKgg+d9jg9JzMnDDWC8WKBY6psnIqvkeu8vR85Zbe2
-         O0Y6RA+i+ivjHep40dKtpnjPmnboBIFm+6THqJwtU0gil+eE7a/hrvQYGkteic3bGErm
-         M4pg==
-X-Gm-Message-State: AHYfb5jcDrBWvLlEU7jvHJMke1LIQp4U6rZ6gyWEv55xRiyewl3EWXa9
-        qIYckZBjVhZFepsv
-X-Received: by 10.99.177.15 with SMTP id r15mr6057076pgf.106.1502992614664;
-        Thu, 17 Aug 2017 10:56:54 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:dc1f:8c2d:b088:2ecf])
-        by smtp.gmail.com with ESMTPSA id x2sm8465237pfe.129.2017.08.17.10.56.53
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 17 Aug 2017 10:56:53 -0700 (PDT)
-Date:   Thu, 17 Aug 2017 10:56:52 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
-        Junio C Hamano <gitster@pobox.com>, s@kazlauskas.me,
-        git@vger.kernel.org
-Subject: Re: [PATCH] files-backend: cheapen refname_available check when
- locking refs
-Message-ID: <20170817175652.GB109680@google.com>
-References: <20170709112932.njac5m6jmgmjywoz@sigill.intra.peff.net>
- <4e81f1ecf190082d3415d96650014841cd4c5b19.1502982012.git.mhagger@alum.mit.edu>
- <20170817152240.coioktoqfkcvxldj@sigill.intra.peff.net>
+        id S1753431AbdHQSDX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Aug 2017 14:03:23 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57155 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753283AbdHQSDX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Aug 2017 14:03:23 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9BDC2AFE8A;
+        Thu, 17 Aug 2017 14:03:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=hjGIdMSB9lBTG5f+wA8pJzv++ZU=; b=pwwXfP
+        ODHeCkFY266uKKgTtAQpQ3GTlK97YRyud8a3ERRmYUw/Tlixc8ibPrj2aImfwi9e
+        NF/tY/EpvzGk7//HS3gR5xzAefbjbuqOjIxNlhrmQlxyeJttRsAJG1yQNbgcoyN7
+        JtqMczoCWRgJQqz0dEwa/8epau1o6yNDprQ2Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Ncc+buvglZ+dB/GeAfNoZtR/elskvXU6
+        Pw7oEdg6JlTU6ltNDp+TU/dTRcFR/BwrpaB6eJA9Ex6WizSKBqBoQLAeHjAoNjfk
+        Thtd1s+ST7lrJIFXmCIkwHvyGhI4RvDu17gxeHVJHeLwMOdhLvo0QChbpkcW94KK
+        iMBy5qdYZcc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 937C5AFE89;
+        Thu, 17 Aug 2017 14:03:15 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E2BA6AFE87;
+        Thu, 17 Aug 2017 14:03:14 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Martin Koegler <martin.koegler@chello.at>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de
+Subject: Re: [Patch size_t V3 17/19] Convert ref-filter to size_t
+References: <1502914591-26215-1-git-send-email-martin@mail.zuhause>
+        <1502914591-26215-18-git-send-email-martin@mail.zuhause>
+Date:   Thu, 17 Aug 2017 11:03:13 -0700
+In-Reply-To: <1502914591-26215-18-git-send-email-martin@mail.zuhause> (Martin
+        Koegler's message of "Wed, 16 Aug 2017 22:16:29 +0200")
+Message-ID: <xmqqmv6ygjha.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170817152240.coioktoqfkcvxldj@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5724312A-8376-11E7-B72C-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08/17, Jeff King wrote:
-> On Thu, Aug 17, 2017 at 05:12:50PM +0200, Michael Haggerty wrote:
-> 
-> > I was testing this using the reporter's recipe (but fetching from a
-> > local clone), and found the following surprising timing numbers:
-> > 
-> > b05855b5bc (before the slowdown): 22.7 s
-> > 524a9fdb51 (immediately after the slowdown): 13 minutes
-> > 4e81f1ecf1 (after this fix): 14.5 s
-> > 
-> > The fact that the fetch is now significantly *faster* than before the
-> > slowdown seems not to have anything to do with the reference code.
-> 
-> I bisected this (with some hackery, since the commits in the middle all
-> take 13 minutes to run). The other speedup is indeed unrelated, and is
-> due to Brandon's aacc5c1a81 (submodule: refactor logic to determine
-> changed submodules, 2017-05-01).
-> 
-> The commit message doesn't mention performance (it's mostly about code
-> reduction). I think the speedup comes from using
-> diff_tree_combined_merge() instead of manually diffing each commit
-> against its parents. But I didn't do further timings to verify that (I'm
-> reporting it here mostly as an interesting curiosity for submodule
-> folks).
+Martin Koegler <martin.koegler@chello.at> writes:
 
-Haha always great to see an unintended improvement in performance!  Yeah
-that commit was mostly about removing duplicate code but I'm glad that
-it ended up being a benefit to perf too.
+> -static char *copy_subject(const char *buf, unsigned long len)
+> +static char *copy_subject(const char *buf, size_t len)
+>  {
+>  	char *r = xmemdupz(buf, len);
+>  	int i;
 
-> 
-> > diff --git a/refs/files-backend.c b/refs/files-backend.c
-> > index e9b95592b6..f2a420c611 100644
-> > --- a/refs/files-backend.c
-> > +++ b/refs/files-backend.c
-> > @@ -631,11 +631,11 @@ static int lock_raw_ref(struct files_ref_store *refs,
-> >  
-> >  		/*
-> >  		 * If the ref did not exist and we are creating it,
-> > -		 * make sure there is no existing ref that conflicts
-> > -		 * with refname:
-> > +		 * make sure there is no existing packed ref that
-> > +		 * conflicts with refname:
-> >  		 */
-> >  		if (refs_verify_refname_available(
-> > -				    &refs->base, refname,
-> > +				    refs->packed_ref_store, refname,
-> >  				    extras, skip, err))
-> >  			goto error_return;
-> >  	}
-> 
-> This seems too easy to be true. :) But I think it matches what we were
-> doing before 524a9fdb51 (so it's correct), and the performance numbers
-> don't lie.
-> 
-> -Peff
+This has the same "we are still iterating with 'int i' over an array
+that can be 'size_t len' long" issue as I pointed out in 19/19.  The
+remedy is similar, i.e.
 
--- 
-Brandon Williams
+	static char *copy_subject(const char *buf, size_t len)
+	{
+		char *ret = xmemdupz(buf, len);
+		char *cp;
+
+		for (cp = ret; cp < ret + len; cp++)
+			if (*cp == '\n')
+				*cp = ' ';
+		return ret;
+	}
+
+which should come either before the whole series or after the series
+settles, not inside this series.
+
+I do also wonder if we want to do more for other control characters
+(e.g. CR, HT, etc.) in this function, though.  That is totally outside
+the scope of this series and should be done independently.
+
+> @@ -898,7 +898,7 @@ static void grab_date(const char *buf, struct atom_value *v, const char *atomnam
+>  }
+>  
+>  /* See grab_values */
+> -static void grab_person(const char *who, struct atom_value *val, int deref, struct object *obj, void *buf, unsigned long sz)
+> +static void grab_person(const char *who, struct atom_value *val, int deref, struct object *obj, void *buf, size_t sz)
+>  {
+>  	int i;
+>  	int wholen = strlen(who);
+
+Shouldn't this also become size_t, I wonder?
+
+I did not see anything fishy in the remaining parts I did not
+comment on.
+
+Thanks.
