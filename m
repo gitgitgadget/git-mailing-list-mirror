@@ -2,105 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 48F7320899
-	for <e@80x24.org>; Thu, 17 Aug 2017 19:06:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 036A220899
+	for <e@80x24.org>; Thu, 17 Aug 2017 19:08:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753442AbdHQTF7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Aug 2017 15:05:59 -0400
-Received: from mail-yw0-f169.google.com ([209.85.161.169]:36692 "EHLO
-        mail-yw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753407AbdHQTF6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Aug 2017 15:05:58 -0400
-Received: by mail-yw0-f169.google.com with SMTP id u207so46732101ywc.3
-        for <git@vger.kernel.org>; Thu, 17 Aug 2017 12:05:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=/J+xBHcgHahfvYS1oJvfkmp1mjcs1/Eec9YWxBDgQCc=;
-        b=J8vYp+LWorAJjLs5s/P+GKPqtx1ECOhHmGjvlQJ5WmxYLeM+1Y9ki/GVbQ9Q3MEY4U
-         vt815IixRJhilJWRXHSj0/tykrF2Cz2r3czRmtebqZK8YI7WkhWasFn8XQEP7qJNBQL4
-         3eW3Yf9WrXugioJoNmRUwpO54TGgIggcuYQsfSaAAuet6oQcdK1KhVg3mrmDriZzpOmB
-         6EnyODd8L+XZUboIqbfK0pXH97gFiIINJG8msAjuVislqAgnjWtowQp93psXUI9LKwdH
-         mPlpbTpxGAnYQjYBNPeuH61lWtX2QLt6BNe5tFKlqsdRU0r/KrQ4J9mYg76VJeMaPFDF
-         SJwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=/J+xBHcgHahfvYS1oJvfkmp1mjcs1/Eec9YWxBDgQCc=;
-        b=XUKMmfZiTrKrvyWimCejvLUTfDCQLA2V/XaUPe2ozH1kkD2gWkBCaY92UkAI2NdlZa
-         px0c7W+/E2K40pgga0ad/wri68JCymS6qL7liGTVmzOJ2PaMGjDcpW6cpFSGGtp15Vsf
-         vr53Uy7F09mzSb/earb3eUGLZG28CH/G/SkHZaQxt4rtWPujb7R0WuN+VrYwKY8WVNmP
-         2tn+QNrgekIpj1ndzk2z3DzicEtXCZjurDTZCwsTtoMGH0HkF6+zR+RU2zrvzLXJSogZ
-         CD7k7XV/kJJ0qI6iEhbsLs8otfSD/2YXIsAAKo8d7O8pVPWYu4AXsPlipg6kjk05aMzB
-         ANDA==
-X-Gm-Message-State: AHYfb5g5ztbXCxms5I1qHTPIymf/7lqRTrYLhAieocKqBAy8Cn/4WAnH
-        BeuLlIhIOoh6MVH6+0UELqyJm0yxIwoP
-X-Received: by 10.37.123.129 with SMTP id w123mr5519218ybc.305.1502996757203;
- Thu, 17 Aug 2017 12:05:57 -0700 (PDT)
+        id S1753932AbdHQTId (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Aug 2017 15:08:33 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57134 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753929AbdHQTIc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Aug 2017 15:08:32 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id ACF92A9779;
+        Thu, 17 Aug 2017 15:08:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=GVR6beRRMJqXrAUlsGc5SPm3FK0=; b=kEm4cV
+        p2WqvuPfKK7zHfXOaq0Zxlfa10Z/KVa2sreXyRo87YjN1FNnEtPOoEiNQ/X41UZg
+        iZS0XV9R9XNDFugCxfOaZ53+TmWXhpRCrpS2hfR7TuTJDbvIaZp3O8mdFje01mKY
+        0MZIfkYTb5liZHGs7Q/ei0Ug1Kz5l115WcGKU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=JY0vvgBKEjaCMM1CNH1045ohtrxVZ0tT
+        kQP3HgOOFoSjICnlpsm2/QlwR+3XiYujaTYPrC2Hm5jRDsNWGAoRAO1U/uzKwvel
+        HP7bPjALU/xffQQdg2O2Vvk0H3GoSe1wsxodJbxlh5QzUs0UKAoN/fUUNcv4d8si
+        nH58d/uqiS0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A3B59A9778;
+        Thu, 17 Aug 2017 15:08:24 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F1499A9775;
+        Thu, 17 Aug 2017 15:08:23 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Simon Ruderich <simon@ruderich.org>, git@vger.kernel.org
+Subject: Re: git add -p breaks after split on change at the top of the file
+References: <20170816202442.aumzwa443spqgyul@ruderich.org>
+        <20170817084109.ba7g2hnymtwqeclw@sigill.intra.peff.net>
+Date:   Thu, 17 Aug 2017 12:08:22 -0700
+In-Reply-To: <20170817084109.ba7g2hnymtwqeclw@sigill.intra.peff.net> (Jeff
+        King's message of "Thu, 17 Aug 2017 04:41:09 -0400")
+Message-ID: <xmqqa82ygggp.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.37.56.142 with HTTP; Thu, 17 Aug 2017 12:05:56 -0700 (PDT)
-In-Reply-To: <20170817103413.GA52233@book.hvoigt.net>
-References: <20170817103413.GA52233@book.hvoigt.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 17 Aug 2017 12:05:56 -0700
-Message-ID: <CAGZ79kZhUO95oSEzARqXi3+dm5Ow5Jwm-O1adowh0nkbqHdhMw@mail.gmail.com>
-Subject: Re: [PATCH] add test for bug in git-mv with nested submodules
-To:     Heiko Voigt <hvoigt@hvoigt.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 711EF962-837F-11E7-867B-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 17, 2017 at 3:34 AM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
-> When using git-mv with a submodule it will detect that and update the
-> paths for its configurations (.gitmodules, worktree and gitfile). This
-> does not work for nested submodules where a user renames the root
-> submodule.
->
-> We discovered this fact when working on on-demand fetch for renamed
-> submodules. Lets add a test to document.
->
-> Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
-> ---
->  t/t7001-mv.sh | 9 +++++++++
->  1 file changed, 9 insertions(+)
->
-> diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
-> index e365d1f..39f8aed 100755
-> --- a/t/t7001-mv.sh
-> +++ b/t/t7001-mv.sh
-> @@ -491,4 +491,13 @@ test_expect_success 'moving a submodule in nested directories' '
->         test_cmp actual expect
->  '
->
-> +test_expect_failure 'moving nested submodules' '
-> +       git commit -am "cleanup commit" &&
-> +       git submodule add ./. sub_nested &&
+Jeff King <peff@peff.net> writes:
 
-If possible, I would avoid adding the repo itself
-as a submodule as it is unrealistic in the wild.
+> [+cc Junio, as this gets deep into git-apply innards]
 
-While it may be ok for the test here, later down the road
-other tests making use of it it may become an issue with
-the URL of the submodule.
+I've written off --recount and --allow-overlap as ugly workaround
+that happens to work some of the time but cannot be trusted long
+time ago.
 
-> +       git commit -m "add sub_nested" &&
-> +       git submodule update --init --recursive &&
-> +       git mv sub_nested sub_nested_moved &&
-> +       git status
-> +'
-> +
->  test_done
-> --
-> 2.0.0.274.g6b2cd91
->
+IIRC, before the "(e)dit" thing was added to "add -p", we counted
+the line numbers correctly and merged the adjacent hunks before
+applying and neither of these two kluge was necessary.
+
+These threads may give us a bit more background:
+
+  https://public-inbox.org/git/7viqk1ndlk.fsf@alter.siamese.dyndns.org/
+  https://public-inbox.org/git/1304117373-592-1-git-send-email-gitster@pobox.com/
+
+The original that introduced the "(e)dit" thing was in this thread:
+
+  https://public-inbox.org/git/200805232221.45406.trast@student.ethz.ch/
+
+As you can see, I was very much against it, as it cannot
+fundamentally sanely implemented (which I think is the same
+conclusion you reached at the end of the current thread).
+
+I think there should be a better failure mode, though.
