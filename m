@@ -2,79 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E5911208CD
-	for <e@80x24.org>; Thu, 17 Aug 2017 08:24:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E0891208CD
+	for <e@80x24.org>; Thu, 17 Aug 2017 08:41:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751687AbdHQIYv (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Aug 2017 04:24:51 -0400
-Received: from mout.web.de ([212.227.15.14]:50031 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751015AbdHQIYt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Aug 2017 04:24:49 -0400
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MOlTq-1ddIIM1Gek-0067W8; Thu, 17
- Aug 2017 10:24:36 +0200
-Date:   Thu, 17 Aug 2017 10:24:35 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, asottile@umich.edu
-Subject: Re: [PATCH/FIXUP 6/2] apply: clarify read_old_data() is about
- no-index case
-Message-ID: <20170817082435.GA7508@tor.lan>
-References: <xmqq4ltpsn42.fsf@gitster.mtv.corp.google.com>
- <20170813085106.1731-1-tboegi@web.de>
- <xmqqbmnfl5tm.fsf@gitster.mtv.corp.google.com>
- <20170817062450.GA28592@tor.lan>
- <xmqqbmneis63.fsf@gitster.mtv.corp.google.com>
+        id S1751730AbdHQIlO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Aug 2017 04:41:14 -0400
+Received: from cloud.peff.net ([104.130.231.41]:41468 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751687AbdHQIlM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Aug 2017 04:41:12 -0400
+Received: (qmail 2111 invoked by uid 109); 17 Aug 2017 08:41:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 17 Aug 2017 08:41:11 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25308 invoked by uid 111); 17 Aug 2017 08:41:37 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Thu, 17 Aug 2017 04:41:37 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 17 Aug 2017 04:41:09 -0400
+Date:   Thu, 17 Aug 2017 04:41:09 -0400
+From:   Jeff King <peff@peff.net>
+To:     Simon Ruderich <simon@ruderich.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: git add -p breaks after split on change at the top of the file
+Message-ID: <20170817084109.ba7g2hnymtwqeclw@sigill.intra.peff.net>
+References: <20170816202442.aumzwa443spqgyul@ruderich.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqbmneis63.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Provags-ID: V03:K0:mQmqcAg3IuQXpDsIILCstz1A5A1LOOFHxq9CZBfaXKSiarh7uPo
- h6Y5rpArOzKAmumXucaKnYOaiM5In5pxewSqXdQBiSNZs3ILYgI3NT/Dk7oXIT0G9sjqV4b
- GusG27lfZhYSlMRnusiHxn8znM1WrvLk/koCdjhcK7b8QmfiIO3U2DEHl9JYcOrO/yFGEW1
- CnrQAAbBWrcuFqV1AapYQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:KbiQvc3K5jY=:PBY35LQoJGLCtjFDzQf1OQ
- /CzvNp09imZOlBKxBG4HVbnhgYF4H2ktD8sR/6oQtALX+KqGUIzhgPU0omy0+LMkj8NUfv7K/
- BV6KADi9lDLImD9tF35ouldJKWzAwS7cgGDa/B0l9GvkjmChY6gmbThUF8GFJg2buA9BdOS6t
- QeAAYoxWp2vytR5Y4Vb3L4rvJ1HWbtFmKQnihy3nT/QRORmYaUzhX8on9FATIh7En4WHZWhI6
- sva9UUi2m9E0MqDvLnVYQjJPG55ISQM9Zti9Qmd3vYlkIW0VrocV2VwB5W4U7UQslWskrzU2C
- UAUv9FWWISGCfoM93LQGNV7tsEfqM5d4L6fIntFi6Jse815Y8HnZa74VWFDRI+s0YYWEGQt+8
- oVtzHsRBi4cjLKXlReigLQG2CGd33zBcsW8RAaNIcg2Nmdg+ACvLsQ7WAhoQcT/Aq3gAuFpcr
- 8YYyU+1FTDK7zlno/q+wpw1uMyK3WtgTDuraqC8+iriabSimcZ5xKsQXiwhWPdKfDa8MkHXgN
- KXo0vgTcHm1ldkrWLFHTgVfvorUJE5vV6mAcncaSi6mziCggMSV07Ueztz6vUUJzu2BwoaHXU
- LDXWiAKPIoyYLzwVicX6+9p3MzjAu/zFwrjGOd9409hWH6PQ9E/dqpw2Frxg1oraXsyXdjgil
- rh9ffhoQmp4kkJk7c4Gjp96k4CNfApJGVsF77d+zpO9XKH5swVJex2ce1o6vblgIu7muilWmu
- M8LbKu42w/dkYRZwIyvVeOcEzvevvm3ywV/C4H88474pVsTw34j+oaESJii4Vw9aYJ2LkL+xs
- PyjqDK3kcMHq/RsVA0iDuXT0o1GfA==
+In-Reply-To: <20170816202442.aumzwa443spqgyul@ruderich.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 17, 2017 at 12:12:36AM -0700, Junio C Hamano wrote:
-> Torsten Bögershausen <tboegi@web.de> writes:
-> 
-> > Unless we re-define the meaning of "NULL" into "don't do CRLF conversions,
-> > like SAFE_CRLF_KEEP_CRLF does.
-> 
-> My preference is not to use NULL as any hint.  Instead, the "flag"
-> parameter we already pass to convert_to_git(), just like the updated
-> read_old_data() uses SAFE_CRLF_KEEP_CRLF to tell it that it should
-> not disturb existing CRLF without looking at the istate, should be
-> used to tell convert_to_git() to do the opposite, but do so without
-> looking at the istate.
-> 
-> Perhaps SAFE_CRLF_FALSE should be such a flag.  Or perhaps we need
-> to invent another flag.  I dunno.
+[+cc Junio, as this gets deep into git-apply innards]
 
-OK, message taken, in short:
-I will come up with a new series in a couple of days - 
-thanks for the input.
+On Wed, Aug 16, 2017 at 10:25:04PM +0200, Simon Ruderich wrote:
+
+>     $ git add -p
+>     diff --git a/file b/file
+>     index 587be6b..74a69a0 100644
+>     --- a/file
+>     +++ b/file
+>     @@ -1 +1,4 @@
+>     +a
+>     +b
+>      x
+>     +c
+>     Stage this hunk [y,n,q,a,d,/,s,e,?]? <-- press s
+>     Split into 2 hunks.
+>     @@ -1 +1,3 @@
+>     +a
+>     +b
+>      x
+>     Stage this hunk [y,n,q,a,d,/,j,J,g,e,?]? <-- press e
+> 
+>     Now delete the line "+a" in your editor and save.
+> 
+>     error: patch failed: file:1
+>     error: file: patch does not apply
+> 
+> I expected git add -p to stage this change without error. It
+> works fine without splitting the hunk (by deleting the first and
+> last + line in the diff).
+
+Interesting case. The problem isn't in add--interactive itself (I don't
+think), but in git-apply. This is the diff we end up feeding to "git
+apply --cached --check --recount --allow-overlap" to see if it applies:
+
+  diff --git a/file b/file
+  index 587be6b..74a69a0 100644
+  --- a/file
+  +++ b/file
+  @@ -1 +1,3 @@
+  +b
+   x
+  @@ -1 +3,2 @@
+   x
+  +c
+
+The first hunk (that we edited) applies fine. But the second one does
+not. Its hunk header says that it starts at line "1", so we expect to
+find it at the beginning of the file. But of course it _isn't_ at the
+beginning of the file anymore, because the first hunk added a line
+before there.
+
+So this diff is somewhat bogus; it has two hunks which start at the same
+spot. But I think that's exactly the sort of thing that
+"--allow-overlap" should handle. Doing this makes your case work for me:
+
+diff --git a/apply.c b/apply.c
+index 41ee63e1db..606db58218 100644
+--- a/apply.c
++++ b/apply.c
+@@ -2966,8 +2966,9 @@ static int apply_one_fragment(struct apply_state *state,
+ 	 * In other words, a hunk that is (frag->oldpos <= 1) with or
+ 	 * without leading context must match at the beginning.
+ 	 */
+-	match_beginning = (!frag->oldpos ||
+-			   (frag->oldpos == 1 && !state->unidiff_zero));
++	match_beginning = (nth_fragment == 1 &&
++			   (!frag->oldpos ||
++			    (frag->oldpos == 1 && !state->unidiff_zero)));
+ 
+ 	/*
+ 	 * A hunk without trailing lines must match at the end.
+
+
+But I'm not quite sure if that's right. The rest of the overlap code
+seems to mark patched lines with a flag. Meaning that instead of giving
+up and saying "well, this is the second line so we can't ever try
+matching the beginning", we should be redefining "beginning" in that
+case to allow 0 or more PATCHED lines starting from the beginning of the
+file.
+
+-Peff
