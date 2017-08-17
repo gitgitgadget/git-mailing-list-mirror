@@ -6,38 +6,38 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E059208CD
-	for <e@80x24.org>; Thu, 17 Aug 2017 07:07:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 125E9208CD
+	for <e@80x24.org>; Thu, 17 Aug 2017 07:12:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751949AbdHQHHH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Aug 2017 03:07:07 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63342 "EHLO
+        id S1750775AbdHQHMj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Aug 2017 03:12:39 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54682 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752018AbdHQHHH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Aug 2017 03:07:07 -0400
+        with ESMTP id S1750741AbdHQHMj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Aug 2017 03:12:39 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 753949F71A;
-        Thu, 17 Aug 2017 03:07:01 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5139197448;
+        Thu, 17 Aug 2017 03:12:38 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=YtDwTYsx9Fq7
-        33zt4mg7y219h+g=; b=ru0sbPEOc4S9aQGBOhhGOLgb/jskSC9XRrApI2TvGVXL
-        Dyf7vIQCxbIuYyeV9jiUszLJmBYO6Ze4N9fVBahQxv6OsJ7cvpabp2xeQi0GSWhw
-        FH2h1gDwnbJeLfPYBhAs2HDvzOnnF/RxE13qHpLUeeDvzDJ9qFqmMTY4G4Ivegc=
+        :content-type:content-transfer-encoding; s=sasl; bh=4F+UvCRDTqLU
+        6ZZs8fV/e06MPHk=; b=Qe8IxagF2YYgxsndIacuuwcr701pWfaaxKRL59jricTw
+        5FTI5WuyShsN0sHRWqSzYldXAnhwlb8uOIHNmisLxuwmeLULzGPfwmhe3fqZuJCd
+        ue77MWPGD0aWSxrll7Xlg7aaJq3VhTvgZowz2I2aE++gqKYCxyy/ZtBpotpe+XE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=IUeGjq
-        Urq5yjN8LMMQMrcwd4Y2Znsb6hFSKUzQI1yURE+IrAeqqgZx5PpUHU1ClvT+Aiq/
-        PJdjDA5E5BVG/AL1YOgtH4E6FIlUbVs/ZT8iGSwhkrOPWGgbr5siNn3NzY+2bcCT
-        RKTBxDP41EpTrFK9L+5Np/tY7iMmLrTsmJirQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 59C869F719;
-        Thu, 17 Aug 2017 03:07:01 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=QiET6i
+        R1Zt7rMBBNpb215/g0SBaI07ESFFeHF9FWEkg0rSs1bTsRzFSiZQc5Mjkf7sI2Gx
+        AjumNcj5awXdt8tmnvpDdDSvrDxqnH2GawIzDjBae8Gq+8uqnWyr25rNKDdr0XZy
+        7iv6sM6P9uw7EIcLpQl8+UX/rDW73XE3X5wb8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4A2AA97447;
+        Thu, 17 Aug 2017 03:12:38 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6A7A99F717;
-        Thu, 17 Aug 2017 03:07:00 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AC36E97446;
+        Thu, 17 Aug 2017 03:12:37 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
 Cc:     git@vger.kernel.org, asottile@umich.edu
@@ -46,15 +46,15 @@ References: <xmqq4ltpsn42.fsf@gitster.mtv.corp.google.com>
         <20170813085106.1731-1-tboegi@web.de>
         <xmqqbmnfl5tm.fsf@gitster.mtv.corp.google.com>
         <20170817062450.GA28592@tor.lan>
-Date:   Thu, 17 Aug 2017 00:06:59 -0700
+Date:   Thu, 17 Aug 2017 00:12:36 -0700
 In-Reply-To: <20170817062450.GA28592@tor.lan> ("Torsten =?utf-8?Q?B=C3=B6g?=
  =?utf-8?Q?ershausen=22's?=
         message of "Thu, 17 Aug 2017 08:24:50 +0200")
-Message-ID: <xmqqfucqisfg.fsf@gitster.mtv.corp.google.com>
+Message-ID: <xmqqbmneis63.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: AA1DA96C-831A-11E7-9918-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 7324013A-831B-11E7-971B-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -63,11 +63,16 @@ X-Mailing-List: git@vger.kernel.org
 
 Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-> I don't have time to look at this today or tomorrow,
-> please give a hint if you are working further.
+> Unless we re-define the meaning of "NULL" into "don't do CRLF conversio=
+ns,
+> like SAFE_CRLF_KEEP_CRLF does.
 
-It is past my bedtime, and generally I prefer not to touch topics
-that I know other people are willing to look into, especially when
-I know those "other people" are well informed and capable.
+My preference is not to use NULL as any hint.  Instead, the "flag"
+parameter we already pass to convert_to_git(), just like the updated
+read_old_data() uses SAFE_CRLF_KEEP_CRLF to tell it that it should
+not disturb existing CRLF without looking at the istate, should be
+used to tell convert_to_git() to do the opposite, but do so without
+looking at the istate.
 
-Thanks.
+Perhaps SAFE_CRLF_FALSE should be such a flag.  Or perhaps we need
+to invent another flag.  I dunno.
