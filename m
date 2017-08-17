@@ -2,139 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A95E420899
-	for <e@80x24.org>; Thu, 17 Aug 2017 21:49:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9055720899
+	for <e@80x24.org>; Thu, 17 Aug 2017 21:55:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753297AbdHQVtn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Aug 2017 17:49:43 -0400
-Received: from mail-pg0-f44.google.com ([74.125.83.44]:36942 "EHLO
-        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753147AbdHQVtm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Aug 2017 17:49:42 -0400
-Received: by mail-pg0-f44.google.com with SMTP id y129so50998818pgy.4
-        for <git@vger.kernel.org>; Thu, 17 Aug 2017 14:49:42 -0700 (PDT)
+        id S1753480AbdHQVza (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Aug 2017 17:55:30 -0400
+Received: from mail-yw0-f170.google.com ([209.85.161.170]:35483 "EHLO
+        mail-yw0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753470AbdHQVz3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Aug 2017 17:55:29 -0400
+Received: by mail-yw0-f170.google.com with SMTP id n83so21278997ywn.2
+        for <git@vger.kernel.org>; Thu, 17 Aug 2017 14:55:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=3dE/1l7X5EG0Gps9+zPcFJ8cmqyBrL6Op8+VMpBoJRU=;
-        b=O4uM0kXrJSY25yBSEjhD/dUDX/lhOqX059EaCPxheUHW9LrFMok8HqqXZDi5bx9f9C
-         E7Dt2ZzGb56jearNU1qEIpXJr8bKqxoVNXmBm2FfIq9cW6tsY/OSepdHbKGA/cnVLQz3
-         1w4mDrKQDUmpm9iaPcykaq4vMrEi8Rbtb3+p/2VvR1j/4XMWg73uLOb1vuTkisRbqg7Z
-         CODMe3AWNYba/zjijmYhUB4Syj40aqw/HWjfig46QBmqH/YloWe+QrbrcGX9Jjo7K9eC
-         juZQWrcFeO99bQ4697+rA68Y0U79EQaC2xBnuz9FfiA0a9ZPMBNKVEZ3SPUJwJXpOAcR
-         TOqg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=PR78wPXpyyDPx/M7REy0S6I25n+3gZHUbgJ7uldZaws=;
+        b=q8MApmpjAV1+7aCtxCsc3DbMvEpQifvEti9Gd55jMqb9eqFlWILBGm6SrdJal67Syk
+         qxhP9yXlD574S3xAj5Me1gYfy3yGx8IO7nq+kyMPU7Kq9X1AAcvo1QAw7vt58yDW0TrU
+         p1mg/sqYR7dusOHWD3ED1inNr/mBLIpXArsKj5uwJFWwFW7vu8Vth5VCido8NMKQP8zi
+         F2SKxjufZwYx7oqY2jlt0/zX/7EVzeyMiWTcnhxcCYABkLdw0ALK6DCAEm+XXyxIQYbI
+         PUuX2x5ZGnljupFUB/lEOBjNcWmYfPc8OCkdwpERadZ3nCb1Jg+Bx9/1CbWwiNct4s9O
+         +/LA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=3dE/1l7X5EG0Gps9+zPcFJ8cmqyBrL6Op8+VMpBoJRU=;
-        b=TIkWV6bTk0DjYIttR1rf0A5VWnlOyDVC0DAtjjf186zrr5zjZBdXvxeI7fJloGlEY9
-         JgnKdlgvnnrIbGB+yoOyWs21woZ7zg/x/Eqe8u94w4QycTbx09CxNRGJaivrxr4hL22Y
-         Rapo9TxyjE+Mb/49Xk9yOPzNnhH66AeE9hZRW34wH1cjZoQbhVYs5Ug29ITE1AxnH2ml
-         4QC8S3jePkYvYe1RjWC0kMMczTXAttYuDopiC927bYwx6NvcFtSJjm/6pBUJGjbxWYuk
-         KrDeuYiSCbgzyaxlzhtTD+G47lxajWbmd/3xMTYUXGUF5XOgSLI4zV9dHoi54ojBzrC4
-         j4+g==
-X-Gm-Message-State: AHYfb5igAurIA9XrZhv36EvjnMI8XnQI+FsJfrFGCzL2HC8CFrOtMchF
-        w+auNPT1Pkpw/Cth
-X-Received: by 10.99.142.74 with SMTP id k71mr3043652pge.86.1503006581730;
-        Thu, 17 Aug 2017 14:49:41 -0700 (PDT)
-Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:75a4:d37d:bb23:58d2])
-        by smtp.gmail.com with ESMTPSA id j65sm8004771pgc.36.2017.08.17.14.49.41
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 17 Aug 2017 14:49:41 -0700 (PDT)
-Date:   Thu, 17 Aug 2017 14:49:39 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] sub-process: print the cmd when a capability is
- unsupported
-Message-ID: <20170817144939.72fcd998@twelve2.svl.corp.google.com>
-In-Reply-To: <25BB25E4-DD3F-46A5-8CD5-D784CBAB6F52@gmail.com>
-References: <20170815173611.2267-1-chriscool@tuxfamily.org>
-        <20170815111725.5d009b66@twelve2.svl.corp.google.com>
-        <20170816002257.GG13924@aiede.mtv.corp.google.com>
-        <CAP8UFD2jLdR7HTi-T6J_xWvxKyoQf_6pUTX1CWsd9v3TXh9FXw@mail.gmail.com>
-        <xmqq8tijpkrv.fsf@gitster.mtv.corp.google.com>
-        <CAP8UFD1H4Pb5e2_pioQ5neROc+64e55RfvRhiyz5Df5AwJg-FQ@mail.gmail.com>
-        <xmqqbmndgb8w.fsf@gitster.mtv.corp.google.com>
-        <25BB25E4-DD3F-46A5-8CD5-D784CBAB6F52@gmail.com>
-X-Mailer: Claws Mail 3.9.3 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=PR78wPXpyyDPx/M7REy0S6I25n+3gZHUbgJ7uldZaws=;
+        b=YTSD9EH4bDdF1kuhLm0WpF/TiAPK5N/IwLpMIIsaiWo7DyHRuxl14KDus5493SQJq/
+         Pfn3MeoQ+vc9pBnmgFfAYh+niJD0hy64wxnwAxwLeA38DRdL1tupZMAKzhIYvZ2Ona+f
+         sOVRPYaMlhNbalt7OoG0NBzBKRQTev69fNi8stuSqfEl9Ptq5Hu4d3XmnVBscCdl1JRl
+         fTbCgoWeRLV0eX1CdZDJyLR9TbbXMpPFh2cYEUPATLyfMdxgO5dXZrNkv+D0K5zAUGF7
+         yJK9C6Wf2wyi+RaZ5nmCkvOBWHDoBsgR13Hw4QQK8aKWZRg8Art0WasyxIJmclxGuPol
+         atXQ==
+X-Gm-Message-State: AHYfb5jYSRU0WAQwPkU4LMs+Y/YeZVyc5vNnAAnP4T4Zw5oLhnFWO53m
+        OgTWi+yXy6TKgMign4iK8rtFb9WoEGFG
+X-Received: by 10.129.93.194 with SMTP id r185mr5448245ywb.33.1503006927900;
+ Thu, 17 Aug 2017 14:55:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Received: by 10.37.56.142 with HTTP; Thu, 17 Aug 2017 14:55:27 -0700 (PDT)
+In-Reply-To: <FCB6097F-9F8D-4FDD-A8CE-D936C9CE62E7@gmail.com>
+References: <4283F0B0-BC1C-4ED1-8126-7E512D84484B@gmail.com>
+ <CAGZ79kajWhEOtqZLrYSAVhM_ZLDiQd9DP9GeL+J=tqach5V65A@mail.gmail.com> <FCB6097F-9F8D-4FDD-A8CE-D936C9CE62E7@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 17 Aug 2017 14:55:27 -0700
+Message-ID: <CAGZ79kb-ReME6qbDy-Q12-d=B=f6odUW_D1bAmegP4AY2AyntQ@mail.gmail.com>
+Subject: Re: Submodule regression in 2.14?
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 17 Aug 2017 23:34:33 +0200
-Lars Schneider <larsxschneider@gmail.com> wrote:
+On Thu, Aug 17, 2017 at 2:21 PM, Lars Schneider
+<larsxschneider@gmail.com> wrote:
+>
+>> Oh, wait.
+>> $ git log --oneline v2.13.0..v2.14.1 -- builtin/pull.c
+>> c9c63ee558 Merge branch 'sb/pull-rebase-submodule'
+>> a6d7eb2c7a pull: optionally rebase submodules (remote submodule changes only)
+>> could also be a culprit. Do you have pull.rebase set?
+>
+> I bisected the problem today and "a6d7eb2c7a pull: optionally rebase submodules
+> (remote submodule changes only)" is indeed the culprit.
+>
+> The commit seems to break the following test case.
+>
+> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+> index dcac364c5f..24f9729015 100755
+> --- a/t/t7400-submodule-basic.sh
+> +++ b/t/t7400-submodule-basic.sh
+> @@ -1289,4 +1289,19 @@ test_expect_success 'init properly sets the config' '
+>         test_must_fail git -C multisuper_clone config --get submodule.sub1.active
+>  '
+>
+> +test_expect_success 'submodule update and git pull with disabled submodule' '
+> +       test_when_finished "rm -rf multisuper_clone" &&
+> +       pwd=$(pwd) &&
+> +       git clone file://"$pwd"/multisuper multisuper_clone &&
+> +       (
+> +               cd multisuper_clone &&
+> +               git config --local submodule.sub0.update none &&
+> +               git submodule update --init --recursive &&
+> +               git pull --recurse-submodules &&
+> +               git submodule status | cut -c 1,43- >actual
+> +       ) &&
+> +       ls &&
+> +       test_cmp expect multisuper_clone/actual
+> +'
 
-> 
-> > On 17 Aug 2017, at 23:01, Junio C Hamano <gitster@pobox.com> wrote:
-> > 
-> > Christian Couder <christian.couder@gmail.com> writes:
-> > 
-> >> ... but I think we should then emphasize more in our test
-> >> scripts (maybe by giving a good example) and perhaps also in the doc
-> >> that the filters/sub-processes should really pay attention and not
-> >> output any capability that are not supported by Git.
-> > 
-> > Oh, absolutely.  If you know there is such a breakage in our test
-> > script, please do fix it.
-> > 
-> > Thanks.
-> 
-> Junio's reasoning [1] is spot on from my point of view.
+Thanks for providing this test.
 
-Agreed.
+cd trash directory.t7400-submodule-basic/multisuper_clone
+cat .git/config
+[submodule "sub0"]
+  update = none
+  active = true
+  url = file:///.../t/trash directory.t7400-submodule-basic/sub1
 
-> 
-> I intentionally did not add the negotiation to the test code to keep
-> the test as simple as possible.
 
-I think this is the correct approach - the test was testing Git's
-behavior, not the filter's behavior. (Although, if someone wanted to add
-a test for a misbehaving filter, that would be great, although such a
-test would have hardcoded output from the filter anyway.)
+submodule.<name>.update
+    The default update procedure for a submodule.
+    This variable is populated by git submodule init
+    from the gitmodules(5) file. See description of
+    update command in git-submodule(1).
 
-> However, I wrote this in the
-> gitattributes docs [2]:
-> 
->   After the version negotiation Git sends a list of all capabilities that
->   it supports and a flush packet. Git expects to read a list of desired
->   capabilities, which must be a subset of the supported capabilities list,
->   and a flush packet as response:
-> 
-> Maybe we should revive "Documentation/technical/api-sub-process.txt" [3]
-> after all to explain these kind of things?
+The first sentence of .update is misleading IMHO as the
+these settings should strictly apply to the "submodule update"
+command. So "pull --recurse-submodules" ought to ignore it,
+instead the pull can do whatever it wants, namely treat the
+submodule roughly like a tree and either merge/rebase
+inside the submodule as well. The user *asked* for recursive
+pull after all.
 
-As for reviving that specific file, I saw you wrote a similar comment
-but I didn't reply to it - sorry.  The commit in question is 7e2e1bb
-("Documentation: migrate sub-process docs to header", 2017-07-26), and
-in that commit, everything in api-sub-process.txt was migrated. I think
-it's better for such documentation to be in a .h file, rather than a
-.txt file.
+Are you saying this might be a design mistake and
+the .update ought to be respected by all the other
+commands? For example
+    git reset --recurse-submodules
+should ignore the .update= none?
 
-As for describing the Long Running Process Protocol in a
-Documentation/.../txt file, my plan was to create a new file
-specifically for that, as you can see in an e-mail I sent [4]. I'm OK
-with putting it in a different place, but it probably shouldn't be named
-"api", because those are for internal Git APIs.
+When designing these new recursive submodule functionality
+outside the "submodule" command, I'd want submodules
+to behave as much as possible like trees.
 
-[4] https://public-inbox.org/git/eadce97b6a1e80345a2621e71ce187e9e6bc05bf.1501532294.git.jonathantanmy@google.com/
+ideas?
 
-> [1] https://public-inbox.org/git/xmqq8tijpkrv.fsf@gitster.mtv.corp.google.com/
-> [2] https://github.com/git/git/blob/b3622a4ee94e4916cd05e6d96e41eeb36b941182/Documentation/gitattributes.txt#L408-L411
-> [3] https://public-inbox.org/git/20170807102136.30b23023@twelve2.svl.corp.google.com/
+Thanks,
+Stefan
+
+> +
+>  test_done
+>
+>
+> I am not familiar with the code. Does anyone see the problem
+> right away?
+>
+> Thanks,
+> Lars
+>
+>
