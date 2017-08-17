@@ -2,111 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 521831F667
-	for <e@80x24.org>; Thu, 17 Aug 2017 02:53:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E15791F667
+	for <e@80x24.org>; Thu, 17 Aug 2017 05:34:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751695AbdHQCxt (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Aug 2017 22:53:49 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:38736 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751621AbdHQCxs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Aug 2017 22:53:48 -0400
-Received: by mail-pg0-f68.google.com with SMTP id 123so7434200pga.5
-        for <git@vger.kernel.org>; Wed, 16 Aug 2017 19:53:48 -0700 (PDT)
+        id S1751620AbdHQFev (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Aug 2017 01:34:51 -0400
+Received: from mail-it0-f51.google.com ([209.85.214.51]:36519 "EHLO
+        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750926AbdHQFeu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Aug 2017 01:34:50 -0400
+Received: by mail-it0-f51.google.com with SMTP id 77so26810313itj.1
+        for <git@vger.kernel.org>; Wed, 16 Aug 2017 22:34:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=rsv679v+wX4cMHSUEVpx1IXEuphX/h0QMkZ7Zh0OL80=;
-        b=Tf5xHc98M/u132FNtAveZCganolYg0W7/hpVGDL8QmrMvQYfyJggrlk9EfhtotSv+t
-         q+Lpyp6FmnxStt0cRfSv0SuSE+YbIRn6ZL1i8JUoTk8JS9/GcqvAZ/GaOonFwdVmbwzc
-         tJi0AwN1chV2c0gKf6ByOjo6vt3Hrm01bHZdlIIgrHKuKSfkwrJQQiUEf5n1ZVETJyvp
-         13biAGvDkTKeJIldXvAEGqBv/sZYodw/nSwqNL1dflAFHvYt8A4ihIl6eHJWfHv/9CKs
-         DaMSK05OoplKui9ePM6z/QK2FvsfNrBY+kptW0V6k2zGTuuowfasmVjZaMoGOcEWBmtL
-         o13Q==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=/smeS8jVH5UP52GZyxIZPOZWPMQ+/eOjQnnIeYXfdQU=;
+        b=qU2sm1Bpy4xH9jOBy616yzOb2Mn+9QF/QIdD4GKUmITMhowkggicLEeNAU7EsBP2Iy
+         aoOl6nS0C4WmEwuFmqbi6RPatRUbkp+eNjYYEjHdFf5Nl/s8XVMebvnzd6RVHLragAGo
+         oKAZgIvaxIYR+Wyx9cV9Myh73UfoymoXOpBsK3VX6Waf167SaB72Mty069zioi+LxDCv
+         eX944BcMVx6pdhuxl9aLIW/tFtyaQ8921UkI9qjUGXoSrlwaPBveuAyTttG/HH/pUA3D
+         23FuVvL8b7IVh2oU5sAfPKxZN9/JBFAo+EhSL/B/FRMHCOLdYxYQL/Lc642+wn4lps6w
+         WbiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=rsv679v+wX4cMHSUEVpx1IXEuphX/h0QMkZ7Zh0OL80=;
-        b=s28RuJkwlrna0Kx/6amaiV+vX5lx7JhGP5VKFjXHVnUxJFVd2OiX6MF/g7w5nn6bNF
-         IwnP6upVmdGu2PEgJPtEVnBBbr7Ns3oGQgmpvgmfeVrcWHrvDn8gY0Sfl5voJj21EVwu
-         fajPqYlRyYeHxz02X1T6tg2d+yw4u7ovNd6z6gBXw8F87snimh7KAXUOnCFpoTOgsTQO
-         0KzvXyX6GNt7XgHK79SxbEcWrRQyyJRBvNW/kzl2xVpkhDEJtbP/jvKVr2++c0FaQsOz
-         MgVryOvC1gGTV8nEsl0P3aYxlDjGwT2uxKOlVzNm/EDEysE8mh35O25hFkmJC692dMhB
-         YVhw==
-X-Gm-Message-State: AHYfb5ip2YvxDvqzJyRP1b+UxIJ5zZpipL+iaE9cZOa3yuVjVnT+l+xo
-        VjhoEDs6LjpRHA==
-X-Received: by 10.98.8.198 with SMTP id 67mr831988pfi.87.1502938428158;
-        Wed, 16 Aug 2017 19:53:48 -0700 (PDT)
-Received: from localhost.localdomain ([157.50.14.209])
-        by smtp.gmail.com with ESMTPSA id 66sm4373696pfq.20.2017.08.16.19.53.46
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 16 Aug 2017 19:53:47 -0700 (PDT)
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     gitster@pobox.com, martin.agren@gmail.com
-Cc:     git@vger.kernel.org
-Subject: [PATCH v4 3/3] branch: quote branch/ref names to improve readability
-Date:   Thu, 17 Aug 2017 08:24:25 +0530
-Message-Id: <20170817025425.6647-3-kaarticsivaraam91196@gmail.com>
-X-Mailer: git-send-email 2.14.0.rc1.434.g6eded367a
-In-Reply-To: <20170817025425.6647-1-kaarticsivaraam91196@gmail.com>
-References: <xmqqy3qluck4.fsf@gitster.mtv.corp.google.com>
- <20170817025425.6647-1-kaarticsivaraam91196@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=/smeS8jVH5UP52GZyxIZPOZWPMQ+/eOjQnnIeYXfdQU=;
+        b=dRKi7faUHZEhZjBsX/ih3OO0jcmlw1Y3BOPc/OelQi6BYe0sSRXEDmtumr+Gbo6Fip
+         hVla+/gIjo8/ClQ/fACuBVwO1pJ+9C4FEdDMDIpWVvrKoOmsx7Jxw611em+fIs1c3JaP
+         N9+ySfkSGYC301gp/3uC5oLMY2xMGwbDihrEjx9NNesrHk5XGn1X/gVluUUimpyUSqAS
+         dY+vwR6Tyk8l+QfMx4ACDx35KSJfCE4aTrz+hAhqTGwVqVG98Zdui6raPlhi1UDaCpY0
+         48jifYMU01MPxAGgpCDLanr4j3CuOXqThMxpQ2dvHF7+RDw7fc+zXWkiI5Q2FSjBwB1p
+         Dy2w==
+X-Gm-Message-State: AHYfb5g9sNeEl9vGYgkQGRrhYiUajJE28wb6TxfThXOc374enX02CvWA
+        WHfGAtf7Dn+mjri+wa1HHv/mMz9OjA==
+X-Received: by 10.36.123.23 with SMTP id q23mr669542itc.69.1502948089881; Wed,
+ 16 Aug 2017 22:34:49 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.79.127.85 with HTTP; Wed, 16 Aug 2017 22:34:49 -0700 (PDT)
+In-Reply-To: <xmqq8tijpkrv.fsf@gitster.mtv.corp.google.com>
+References: <20170815173611.2267-1-chriscool@tuxfamily.org>
+ <20170815111725.5d009b66@twelve2.svl.corp.google.com> <20170816002257.GG13924@aiede.mtv.corp.google.com>
+ <CAP8UFD2jLdR7HTi-T6J_xWvxKyoQf_6pUTX1CWsd9v3TXh9FXw@mail.gmail.com> <xmqq8tijpkrv.fsf@gitster.mtv.corp.google.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 17 Aug 2017 07:34:49 +0200
+Message-ID: <CAP8UFD1H4Pb5e2_pioQ5neROc+64e55RfvRhiyz5Df5AwJg-FQ@mail.gmail.com>
+Subject: Re: [PATCH] sub-process: print the cmd when a capability is unsupported
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
----
- No changes in this one. Sending this just because of the change in the total number
- of commits.
+On Wed, Aug 16, 2017 at 5:58 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+>>>> I am still wondering if protocol errors should be fatal,
+>>>
+>>> Yes, please.
+>>
+>> Unfortunately I think it would prevent new filters or new
+>> sub-processes to work with older versions of Git.
+>>
+>> For example if filters are upgraded company wide to support the new
+>> "delay" capability, that would force everyone using the filters to
+>> upgrade Git.
+>
+> I must say that your filter is broken in that case,
 
- branch.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+Perhaps it is just sloppily written.
 
-diff --git a/branch.c b/branch.c
-index ad5a2299b..a40721f3c 100644
---- a/branch.c
-+++ b/branch.c
-@@ -90,24 +90,24 @@ int install_branch_config(int flag, const char *local, const char *origin, const
- 		if (shortname) {
- 			if (origin)
- 				printf_ln(rebasing ?
--					  _("Branch %s set up to track remote branch %s from %s by rebasing.") :
--					  _("Branch %s set up to track remote branch %s from %s."),
-+					  _("Branch '%s' set up to track remote branch '%s' from '%s' by rebasing.") :
-+					  _("Branch '%s' set up to track remote branch '%s' from '%s'."),
- 					  local, shortname, origin);
- 			else
- 				printf_ln(rebasing ?
--					  _("Branch %s set up to track local branch %s by rebasing.") :
--					  _("Branch %s set up to track local branch %s."),
-+					  _("Branch '%s' set up to track local branch '%s' by rebasing.") :
-+					  _("Branch '%s' set up to track local branch '%s'."),
- 					  local, shortname);
- 		} else {
- 			if (origin)
- 				printf_ln(rebasing ?
--					  _("Branch %s set up to track remote ref %s by rebasing.") :
--					  _("Branch %s set up to track remote ref %s."),
-+					  _("Branch '%s' set up to track remote ref '%s' by rebasing.") :
-+					  _("Branch '%s' set up to track remote ref '%s'."),
- 					  local, remote);
- 			else
- 				printf_ln(rebasing ?
--					  _("Branch %s set up to track local ref %s by rebasing.") :
--					  _("Branch %s set up to track local ref %s."),
-+					  _("Branch '%s' set up to track local ref '%s' by rebasing.") :
-+					  _("Branch '%s' set up to track local ref '%s'."),
- 					  local, remote);
- 		}
- 	}
--- 
-2.14.1.534.g641031ecb
+> and it is much
+> more prudent to die than continuing.  Why is that upgraded filter
+> asking for "delay" to an older Git that does not yet know it in the
+> first place?
 
+Maybe because in our tests (like in t/t0021/rot13-filter.pl) the
+filter just outputs all its capabilities, so the filter writer thought
+it should be ok to do the same.
+
+> I just re-read the subprocess_handshake() codepath, and here is my
+> understand.  The handshake_capabilities() function first advertises
+> the set of capabilities it supports, so that the other side can pick
+> and choose which ones to use and ask us to enable in its response.
+
+Yeah, that sounds like the right thing the filter should do. Though I
+think that if we really want the filters/subprocesses to always do
+this, we have some work on our plate...
+
+> The code under discussion in this thread comes after that, where we
+> read the response that tells us what choice the other side made.  If
+> we saw something that we never advertised, that indicates one of two
+> things.  The other side, i.e. the "upgraded" filter, is not paying
+> attention of the capabilities advertisement, and asking something
+> its correct operation relies on, but we are not capable of giving
+> that unknown feature and operate without it, so after that point the
+> exchange of data is a garbage-in-garbage-out.
+
+Maybe it is not paying attention and just following the bad example of
+giving all the capabilities it supports even if it can work if some of
+them are not supported.
+
+In this case if we error out, we prevent everything to work even if it
+could work if we just also "ignored" (though printing a warning is not
+exactly ignoring and is the right and the least thing to do) what the
+filter told us.
+
+Anyway I don't really mind being very strict and just erroring out in
+this case, but I think we should then emphasize more in our test
+scripts (maybe by giving a good example) and perhaps also in the doc
+that the filters/sub-processes should really pay attention and not
+output any capability that are not supported by Git.
