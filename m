@@ -2,75 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A65F20899
-	for <e@80x24.org>; Thu, 17 Aug 2017 19:55:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D60E320899
+	for <e@80x24.org>; Thu, 17 Aug 2017 19:56:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753212AbdHQTzf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Aug 2017 15:55:35 -0400
-Received: from continuum.iocl.org ([217.140.74.2]:45165 "EHLO
-        continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752820AbdHQTze (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Aug 2017 15:55:34 -0400
-X-Greylist: delayed 1844 seconds by postgrey-1.27 at vger.kernel.org; Thu, 17 Aug 2017 15:55:33 EDT
-Received: (from krey@localhost)
-        by continuum.iocl.org (8.11.3/8.9.3) id v7HJOaw05216;
-        Thu, 17 Aug 2017 21:24:36 +0200
-Date:   Thu, 17 Aug 2017 21:24:36 +0200
-From:   Andreas Krey <a.krey@gmx.de>
-To:     git@vger.kernel.org
-Subject: ignoring extra bitmap file?
-Message-ID: <20170817192436.GA4782@inner.h.apk.li>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.1i
-X-message-flag: What did you expect to see here?
+        id S1753342AbdHQT4D (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Aug 2017 15:56:03 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53402 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753310AbdHQT4C (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Aug 2017 15:56:02 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 64957AAF4D;
+        Thu, 17 Aug 2017 15:56:01 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=tsE/YHi0BU47
+        1OjmqyjLYKl1J98=; b=pGY5qzBjmvKawuihDJYhTveDrJ5uhhi/Pt/sLDNpVbuQ
+        WXeCXoonZtT2Gz9ZA8651w9ew5iisEdEAEZHascRAsv2rACYr8Ncv7Dl6h/q3IVR
+        WHHVMSU49jk/5kam5B18cdzrqcgg/I/LKeNvWXPKLKpL8KjTbZsS6J8mvSkua4k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Fqeh+c
+        uXXliuWG1sPzhnuPZci/66kwBZdyi2DPCc27TQJ9hWGUQ/4ATLFX6+faLV1L0bKG
+        j9sOBgsWhyM5lTm7ipxW7GQ3o4rQYC+5o4aIuVjLwcs+rqo0Np1eIrx8H7nXNXq4
+        OSmIY4zT1zsG/DP5kv9sZ3qk+yvLioDonJ7Ug=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id EF779AAF4B;
+        Thu, 17 Aug 2017 15:56:00 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 23D94AAF4A;
+        Thu, 17 Aug 2017 15:56:00 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
+Cc:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v4 2/3] builtin/branch: stop supporting the use of --set-upstream option
+References: <xmqqy3qluck4.fsf@gitster.mtv.corp.google.com>
+        <20170817025425.6647-1-kaarticsivaraam91196@gmail.com>
+        <20170817025425.6647-2-kaarticsivaraam91196@gmail.com>
+        <CAN0heSquaXk421sR6Ry59C+er8n26nC93=3KG1wD0xNXZkuiGw@mail.gmail.com>
+Date:   Thu, 17 Aug 2017 12:55:58 -0700
+In-Reply-To: <CAN0heSquaXk421sR6Ry59C+er8n26nC93=3KG1wD0xNXZkuiGw@mail.gmail.com>
+        ("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Thu, 17 Aug 2017 20:21:26
+ +0200")
+Message-ID: <xmqqshgqezox.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 1785DE00-8386-11E7-962A-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
+Martin =C3=85gren <martin.agren@gmail.com> writes:
 
-I'm seeing the message
+> On 17 August 2017 at 04:54, Kaartic Sivaraam
+> <kaarticsivaraam91196@gmail.com> wrote:
+>> Helped-by: Martin =C3=85gren <martin.agren@gmail.com>,  Junio C Hamano=
+ <gitster@pobox.com>
+>> Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+>
+> I didn't expect a "Helped-by", all I did was to give some random
+> comments. :-) I'm not so sure about the comma-separation, that seems to
+> be a first in the project.
 
-   remote: warning: ignoring extra bitmap file: ./objects/pack/pack-2943dc24....pack
+I didn't either ;-)=20
 
-and indeed, there is such a thing (two, actually):
+The line looks odd so I'll remove it while queuing.
 
-   171736188 Aug 17 08:20 pack-2943dc2477026f87b280ebcefa93fe28412688df.idx
-    12662268 Aug 17 08:24 pack-2943dc2477026f87b280ebcefa93fe28412688df.bitmap
- 12927989355 Aug 17 08:27 pack-2943dc2477026f87b280ebcefa93fe28412688df.pack
-   164857412 Aug 17 08:33 pack-8b4a42ca7aa2aca6f354292007910de1110117b2.idx
-    13164932 Aug 17 08:49 pack-8b4a42ca7aa2aca6f354292007910de1110117b2.bitmap
-      281872 Aug 17 09:40 pack-bddb40f984124ba8c2a4e5c55b0d1b2804fd5817.pack
-       13280 Aug 17 09:40 pack-bddb40f984124ba8c2a4e5c55b0d1b2804fd5817.idx
-        7904 Aug 17 15:51 pack-0f8b1478e17174c562d9a52cf577e0e050bdb7c5.idx
-     2373948 Aug 17 16:09 pack-23253e17510cacaae3bb38fb5429073b3bc59480.pack
-        6980 Aug 17 16:09 pack-23253e17510cacaae3bb38fb5429073b3bc59480.idx
-      144158 Aug 17 17:03 pack-0f8b1478e17174c562d9a52cf577e0e050bdb7c5.pack
- 12927996484 Aug 17 19:19 pack-8b4a42ca7aa2aca6f354292007910de1110117b2.pack
-      153332 Aug 17 20:17 pack-65ff13a10c29a6c1604017c50dc9a320044ee605.pack
-       14036 Aug 17 20:17 pack-65ff13a10c29a6c1604017c50dc9a320044ee605.idx
-
-But it looks like something went wrong in that repack cycle (that
-pack-2943dc247702 is the full repo), and it won't get removed later
-in the next repack in the evening.
-
-Question: Can I safely remove the .bitmap file, and repack will then
-clean up the .pack and .idx files as will?
-
-(This is still that repo in bitbucket (latest 4.x) server
-with git 2.6.2, now with cg.auto=0.)
-
-- Andreas
-
--- 
-"Totally trivial. Famous last words."
-From: Linus Torvalds <torvalds@*.org>
-Date: Fri, 22 Jan 2010 07:29:21 -0800
+Thanks for noticing.
