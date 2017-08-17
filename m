@@ -2,99 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB77B208D0
-	for <e@80x24.org>; Thu, 17 Aug 2017 18:21:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A605E20899
+	for <e@80x24.org>; Thu, 17 Aug 2017 18:22:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753459AbdHQSV3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Aug 2017 14:21:29 -0400
-Received: from mail-pg0-f44.google.com ([74.125.83.44]:38833 "EHLO
-        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753327AbdHQSV1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Aug 2017 14:21:27 -0400
-Received: by mail-pg0-f44.google.com with SMTP id t80so20391597pgb.5
-        for <git@vger.kernel.org>; Thu, 17 Aug 2017 11:21:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=7P0TnElR/2FXoWtW6/9Fe1ZfZ9DPK3SAt0C2LfvaUmQ=;
-        b=iwZNBSamSZ6T3BCrTP5GXiYS1ROEwzpJUNdIeq1eyEj+zOLFq+mGRMlG/xoLVFRqZ6
-         uV3h+FzAN7uO/ykYF12JeRTJLAD4+oi4Ldmp5jscZI5+pGYzFnv/XqZ9f5qIKrzIZ8Z0
-         VKW0cAKNG4KhsgSjyAYPRZh8SA6kp3v7kZXlDrkIS0dakeIWTvGfdZpdz7cL1UPoQver
-         L+SrFAFyXA3bgYI4fpQnVnkSBrQHEOdMW2x0YBQfKB5VrhBGx314qsOdEUD7gm1pGzqH
-         Cd0cYuDrujhCAlaQeHle4IRc0PKvKWhg7LxRbDVnU4B0TIeF8WI30nH1Rcq4825Tn5WN
-         U9Jg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=7P0TnElR/2FXoWtW6/9Fe1ZfZ9DPK3SAt0C2LfvaUmQ=;
-        b=gWXm1q4YFp3kRWI/bIXxfp4tSKmT+CkY0IRzBN68J8jdleaJCwAe0Q0VrHTjKdL7zf
-         kKr/t0CtwVtcDL6NRCYnEXD0Sl740JRGUJIzrnQvhyAxLtVAzsNFHJBejSAvFuPMnyy6
-         NEUTbMBN+vX67PI+/vk+AjW2ZMqWIEedmHeyUcr4UKW4MmsbrbiYoGXzGviLCVBxUIO/
-         Z+uA0B7O3KPFpifXQ18DZTJx5edna8X/UBf+3oe2W120MUedkvAvxHtr1Uv5lva4IaTf
-         Dj0qcbCQb6YzrVDXnUPCdTLsg96qIzvdxTKZwymzwmB13wntSOhqYrdLzm5kqdt2zRm0
-         yUnQ==
-X-Gm-Message-State: AHYfb5jgKiH/v7Fz2epHQb7ahlrkq14SSpL49CX1uZj5E9rxFckCa9uc
-        PaT78A76EX/n+sYWLzQDxaix/mQzRg==
-X-Received: by 10.98.89.140 with SMTP id k12mr6225182pfj.71.1502994086594;
- Thu, 17 Aug 2017 11:21:26 -0700 (PDT)
+        id S1753285AbdHQSWm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Aug 2017 14:22:42 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59575 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752236AbdHQSWl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Aug 2017 14:22:41 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D1D68A828C;
+        Thu, 17 Aug 2017 14:22:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=f6JPytJ21gAo/uuXXQFrthC0vGI=; b=pWTXYA
+        hsyslllFpTeBqwUgbr3fM2Oh7VYhrEKAzWM5YoabKQ4ap9fAkrEhoWj8Bn9OUq6l
+        nkSAQdv9/fg2x0WWEm26AmIvn/znd+HRt7KfL7qW/XS+6lt8jakqBupwfdoTtSSY
+        u3XwJ2APhJ37Cmw1l7QJskbRQeIdqZTrvAAhQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=gT8HldHivwHFh6sTAanKxI+xIMfWHhSA
+        1dtqgeXQH4+YIlJDga1c2+vBDFJAlp87e1lye2y67zC/yWFrWb1UBIjjyUtIEsov
+        z2J+Czl57B80eMkKXme7vQNSK6ffjVPLdYCYLrdBuVxINA5px91VT2U7W5IYUjup
+        zmLoR/Jp9tA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C964BA828B;
+        Thu, 17 Aug 2017 14:22:40 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 25567A8288;
+        Thu, 17 Aug 2017 14:22:40 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>,
+        David Borowitz <dborowitz@google.com>,
+        Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>
+Subject: Re: reftable [v7]: new ref storage format
+References: <CAJo=hJsZcAM9sipdVr7TMD-FD2V2W6_pvMQ791EGCDsDkQ033w@mail.gmail.com>
+        <xmqq60dnjka0.fsf@gitster.mtv.corp.google.com>
+        <CAMy9T_GuU68mQTAvmPkaa6jPiNnoDAKCqA8y76rf3UrmMeyfTA@mail.gmail.com>
+Date:   Thu, 17 Aug 2017 11:22:38 -0700
+In-Reply-To: <CAMy9T_GuU68mQTAvmPkaa6jPiNnoDAKCqA8y76rf3UrmMeyfTA@mail.gmail.com>
+        (Michael Haggerty's message of "Thu, 17 Aug 2017 10:06:54 +0200")
+Message-ID: <xmqqefsagikx.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.100.162.37 with HTTP; Thu, 17 Aug 2017 11:21:26 -0700 (PDT)
-In-Reply-To: <20170817025425.6647-2-kaarticsivaraam91196@gmail.com>
-References: <xmqqy3qluck4.fsf@gitster.mtv.corp.google.com> <20170817025425.6647-1-kaarticsivaraam91196@gmail.com>
- <20170817025425.6647-2-kaarticsivaraam91196@gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Thu, 17 Aug 2017 20:21:26 +0200
-Message-ID: <CAN0heSquaXk421sR6Ry59C+er8n26nC93=3KG1wD0xNXZkuiGw@mail.gmail.com>
-Subject: Re: [PATCH v4 2/3] builtin/branch: stop supporting the use of
- --set-upstream option
-To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0DB4AFBC-8379-11E7-B4AE-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 17 August 2017 at 04:54, Kaartic Sivaraam
-<kaarticsivaraam91196@gmail.com> wrote:
-> Helped-by: Martin =C3=85gren <martin.agren@gmail.com>,  Junio C Hamano <g=
-itster@pobox.com>
-> Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-I didn't expect a "Helped-by", all I did was to give some random
-comments. :-) I'm not so sure about the comma-separation, that seems to
-be a first in the project.
-
->     *  The option has not yet been removed from the synopsis of the docum=
-entation and I think
->        we can't remove it from the 'Synopsis' porion of the documentation=
- as it doesn't make
->        sense (at least to me) to give a description of an option not list=
-ed in the synopsis.
-
-The "git interpret-trailers --parse" thread nearby is adding some
-options without mentioning them in the synopsis [1], and those options
-can actually be useful, whereas "--set-upstream" only results in a fatal
-error. So I don't know.
-
->        Moreover, we have to state the reason for not supporting it in som=
-e place.
+> On Wed, Aug 16, 2017 at 11:05 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> I found it a slightly odd that we do not insist that update_indices
+>> that appear in a single reftable file are consecutive, yet we
+>> require that min_update_index of a reftable file must be one greater
+>> than the max_update_index of a previous one.  That is not a new
+>> issue in v7, though.
 >
->  I guess the phrase 'no longer supported' is equally communicative. Let m=
-e know if that was not
->  a right decision.
+> I think of `update_index` like a pseudo-time, and the
+> `min_update_index` and `max_update_index` to be stating that "this
+> reftable covers the time interval specified". So it's reasonable to
+> say that the reftable files, together, should cover all time.
+>
+> But it might be that there are values of `update_index` for which no
+> events survived within a reftable file that covers that time interval.
+> This can happen if reference update records have been compacted away
+> because later reference updates overwrote their effects, and either
+>
+> * reflogs were turned off for those updates, or
+> * the corresponding reflogs have been compacted into a separate file, or
+> * the corresponding reflog entries for those updates have been expired.
 
-I think it's ok. Of course, I know exactly what you want to say, and
-why, so I'm biased. :-)
+Yeah, and I think it is reasonable that the specification does not
+dictate that indices within a single reftable must be consecutive.
 
-[1] https://public-inbox.org/git/20170815102334.qc4w7akl44bti44x@sigill.int=
-ra.peff.net/
+And if update_indices within a single reftable are allowed to be
+sparse, e.g. recording three transactions with indices 1 3 and 5, it
+is not immediately obvious to me why the transactions that are
+recorded in the next reftable cannot be with indices 7 8 and 10,
+leaving a gap between the max in the first table (i.e. 5) and the
+min in the second table (i.e. 7).  That is what I found slightly
+odd.
+
+
+
