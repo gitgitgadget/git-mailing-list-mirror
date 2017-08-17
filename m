@@ -2,151 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9055720899
-	for <e@80x24.org>; Thu, 17 Aug 2017 21:55:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5380F20899
+	for <e@80x24.org>; Thu, 17 Aug 2017 22:30:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753480AbdHQVza (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Aug 2017 17:55:30 -0400
-Received: from mail-yw0-f170.google.com ([209.85.161.170]:35483 "EHLO
-        mail-yw0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753470AbdHQVz3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Aug 2017 17:55:29 -0400
-Received: by mail-yw0-f170.google.com with SMTP id n83so21278997ywn.2
-        for <git@vger.kernel.org>; Thu, 17 Aug 2017 14:55:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=PR78wPXpyyDPx/M7REy0S6I25n+3gZHUbgJ7uldZaws=;
-        b=q8MApmpjAV1+7aCtxCsc3DbMvEpQifvEti9Gd55jMqb9eqFlWILBGm6SrdJal67Syk
-         qxhP9yXlD574S3xAj5Me1gYfy3yGx8IO7nq+kyMPU7Kq9X1AAcvo1QAw7vt58yDW0TrU
-         p1mg/sqYR7dusOHWD3ED1inNr/mBLIpXArsKj5uwJFWwFW7vu8Vth5VCido8NMKQP8zi
-         F2SKxjufZwYx7oqY2jlt0/zX/7EVzeyMiWTcnhxcCYABkLdw0ALK6DCAEm+XXyxIQYbI
-         PUuX2x5ZGnljupFUB/lEOBjNcWmYfPc8OCkdwpERadZ3nCb1Jg+Bx9/1CbWwiNct4s9O
-         +/LA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=PR78wPXpyyDPx/M7REy0S6I25n+3gZHUbgJ7uldZaws=;
-        b=YTSD9EH4bDdF1kuhLm0WpF/TiAPK5N/IwLpMIIsaiWo7DyHRuxl14KDus5493SQJq/
-         Pfn3MeoQ+vc9pBnmgFfAYh+niJD0hy64wxnwAxwLeA38DRdL1tupZMAKzhIYvZ2Ona+f
-         sOVRPYaMlhNbalt7OoG0NBzBKRQTev69fNi8stuSqfEl9Ptq5Hu4d3XmnVBscCdl1JRl
-         fTbCgoWeRLV0eX1CdZDJyLR9TbbXMpPFh2cYEUPATLyfMdxgO5dXZrNkv+D0K5zAUGF7
-         yJK9C6Wf2wyi+RaZ5nmCkvOBWHDoBsgR13Hw4QQK8aKWZRg8Art0WasyxIJmclxGuPol
-         atXQ==
-X-Gm-Message-State: AHYfb5jYSRU0WAQwPkU4LMs+Y/YeZVyc5vNnAAnP4T4Zw5oLhnFWO53m
-        OgTWi+yXy6TKgMign4iK8rtFb9WoEGFG
-X-Received: by 10.129.93.194 with SMTP id r185mr5448245ywb.33.1503006927900;
- Thu, 17 Aug 2017 14:55:27 -0700 (PDT)
+        id S1753342AbdHQWaG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Aug 2017 18:30:06 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51912 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753271AbdHQWaF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Aug 2017 18:30:05 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 33A26AFB16;
+        Thu, 17 Aug 2017 18:29:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=4dDVDQA+tjugFP+aSQTOIWwBV0A=; b=g8rBXz
+        57pP7mAFOuSrRpwBPw53lSIx6+JZsQMnuEuhncZBVt2NYtctIhOrybjYhd3xMa0d
+        SrHlidoDfk41ojK7ZfxWaBAekTOxSvTpjoUA3g+jcwUmHMX1CVGPVi9CTnGMOjx0
+        PgDgZzpA2N9KmaDFMSm9+0ZI92rY2yl8jCVzo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=QJC4LVTo3qv8DsjECXA7Ov16TDDAlx91
+        7bf3S+JBssnqca3TlsE/boEPPCVm+niU4ZiTQPcBFTuW/XkltsPt9GSqZJuqWWNo
+        XowbQkLwKdwKAeEKdOiRuMOc4pyma1aGuRve3cKhsWQ79DdqFh7ndVWQ/czyJHa7
+        +58by6wQ6lg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2C1E6AFB15;
+        Thu, 17 Aug 2017 18:29:57 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7CD87AFB13;
+        Thu, 17 Aug 2017 18:29:56 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     tboegi@web.de
+Cc:     git@vger.kernel.org, asottile@umich.edu
+Subject: Re: [PATCH v3 2/2] File commited with CRLF should roundtrip diff and apply
+References: <xmqqa832vymw.fsf@gitster.mtv.corp.google.com>
+        <20170817214308.10727-1-tboegi@web.de>
+Date:   Thu, 17 Aug 2017 15:29:55 -0700
+In-Reply-To: <20170817214308.10727-1-tboegi@web.de> (tboegi@web.de's message
+        of "Thu, 17 Aug 2017 23:43:08 +0200")
+Message-ID: <xmqqlgmheskc.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.37.56.142 with HTTP; Thu, 17 Aug 2017 14:55:27 -0700 (PDT)
-In-Reply-To: <FCB6097F-9F8D-4FDD-A8CE-D936C9CE62E7@gmail.com>
-References: <4283F0B0-BC1C-4ED1-8126-7E512D84484B@gmail.com>
- <CAGZ79kajWhEOtqZLrYSAVhM_ZLDiQd9DP9GeL+J=tqach5V65A@mail.gmail.com> <FCB6097F-9F8D-4FDD-A8CE-D936C9CE62E7@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 17 Aug 2017 14:55:27 -0700
-Message-ID: <CAGZ79kb-ReME6qbDy-Q12-d=B=f6odUW_D1bAmegP4AY2AyntQ@mail.gmail.com>
-Subject: Re: Submodule regression in 2.14?
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 98D41516-839B-11E7-999A-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 17, 2017 at 2:21 PM, Lars Schneider
-<larsxschneider@gmail.com> wrote:
->
->> Oh, wait.
->> $ git log --oneline v2.13.0..v2.14.1 -- builtin/pull.c
->> c9c63ee558 Merge branch 'sb/pull-rebase-submodule'
->> a6d7eb2c7a pull: optionally rebase submodules (remote submodule changes only)
->> could also be a culprit. Do you have pull.rebase set?
->
-> I bisected the problem today and "a6d7eb2c7a pull: optionally rebase submodules
-> (remote submodule changes only)" is indeed the culprit.
->
-> The commit seems to break the following test case.
->
-> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-> index dcac364c5f..24f9729015 100755
-> --- a/t/t7400-submodule-basic.sh
-> +++ b/t/t7400-submodule-basic.sh
-> @@ -1289,4 +1289,19 @@ test_expect_success 'init properly sets the config' '
->         test_must_fail git -C multisuper_clone config --get submodule.sub1.active
->  '
->
-> +test_expect_success 'submodule update and git pull with disabled submodule' '
-> +       test_when_finished "rm -rf multisuper_clone" &&
-> +       pwd=$(pwd) &&
-> +       git clone file://"$pwd"/multisuper multisuper_clone &&
-> +       (
-> +               cd multisuper_clone &&
-> +               git config --local submodule.sub0.update none &&
-> +               git submodule update --init --recursive &&
-> +               git pull --recurse-submodules &&
-> +               git submodule status | cut -c 1,43- >actual
-> +       ) &&
-> +       ls &&
-> +       test_cmp expect multisuper_clone/actual
-> +'
+tboegi@web.de writes:
 
-Thanks for providing this test.
+> Changes since v2:
+> - Manually integrated all code changes from Junio
+>   (Thanks, I hope that I didn't miss something)
 
-cd trash directory.t7400-submodule-basic/multisuper_clone
-cat .git/config
-[submodule "sub0"]
-  update = none
-  active = true
-  url = file:///.../t/trash directory.t7400-submodule-basic/sub1
+I suspect that "apply -R makes '+' preimage" change is not here.
 
+> - Having examples of "git diff" in the commit message confuses "git apply",
+>   so that all examples for git diff have a '*' at the beginnig of the line
+>   (V2 used '$' which is typically an example for a shell script)
 
-submodule.<name>.update
-    The default update procedure for a submodule.
-    This variable is populated by git submodule init
-    from the gitmodules(5) file. See description of
-    update command in git-submodule(1).
+Just FYI we tend to just indent them further, just like any
+displayed material in the proposed log message.
 
-The first sentence of .update is misleading IMHO as the
-these settings should strictly apply to the "submodule update"
-command. So "pull --recurse-submodules" ought to ignore it,
-instead the pull can do whatever it wants, namely treat the
-submodule roughly like a tree and either merge/rebase
-inside the submodule as well. The user *asked* for recursive
-pull after all.
+> - The official version to apply the CRLF-rules without having an index is
+>   SAFE_CRLF_RENORMALIZE, that is already working today.
 
-Are you saying this might be a design mistake and
-the .update ought to be respected by all the other
-commands? For example
-    git reset --recurse-submodules
-should ignore the .update= none?
+Ah, good find.  I forgot about that thing you added some time ago.
 
-When designing these new recursive submodule functionality
-outside the "submodule" command, I'd want submodules
-to behave as much as possible like trees.
-
-ideas?
-
-Thanks,
-Stefan
-
-> +
->  test_done
->
->
-> I am not familiar with the code. Does anyone see the problem
-> right away?
->
-> Thanks,
-> Lars
->
->
