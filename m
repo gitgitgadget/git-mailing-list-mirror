@@ -2,87 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 459DE208CD
-	for <e@80x24.org>; Thu, 17 Aug 2017 07:01:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1E059208CD
+	for <e@80x24.org>; Thu, 17 Aug 2017 07:07:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751644AbdHQHB2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Aug 2017 03:01:28 -0400
-Received: from mail-ua0-f180.google.com ([209.85.217.180]:38797 "EHLO
-        mail-ua0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751613AbdHQHB1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Aug 2017 03:01:27 -0400
-Received: by mail-ua0-f180.google.com with SMTP id y36so21942956uac.5
-        for <git@vger.kernel.org>; Thu, 17 Aug 2017 00:01:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Xkf+rG86/0r5BsMUX48WZyFCn6+tH0b/n2wtRdwU1vA=;
-        b=FslSvscSjC4kKuL2/z7EG3iYcrzfO/+03n2CzR5uVqtnkR2oOFGUP2434ADTvkF37q
-         R7ZDIE1WLnsd3c67HACSQy1IMIR9jJ7s7JWSOnfKkjM2or87B7nIhsVRJq2ZrbwJNCRi
-         63Uu2w3aZqil316Vo8kD0wrHCnlfVUfGu1CviI4oK0ygP1zoCLc/RQPvDK+JwIUk6xIM
-         j1VPaF3BZ+6VshRcrNOdB1qu+1wtqSluNfpfda5b8KpU/VUBu6V4Gi98hpH7cQdhRSJY
-         A4NEroh+HiFZO4OHXS9njzckrPgaujVnSb0L4Ce+FZpZEQ7ur1wPgOJQLEJreCI+0JRi
-         Kv6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Xkf+rG86/0r5BsMUX48WZyFCn6+tH0b/n2wtRdwU1vA=;
-        b=ba4pjAKSPRfpHHRukWleBDbAquKnymCLUTYdY4NpSFtpb9VbKsF+Inw7elVA2p2IV7
-         56YkIEse5IGuVzVJB3c3XP1o8JzZ16OUo+hVdMVqatdC451wKM+lnhpKcIihtpywXwbJ
-         0M7sx664AVvAll7KlziyNc4sAlyRzjr8oAfnMshDC5uCXUz+2YwEIyUomzTdB5j7S/ce
-         rG9pQ3VrHmdlFTz535RqABho0UYyKa5BDIv3AlY3K9s0VNR7gGq4DNtBN5VTJL5jZpio
-         6hFcXFtoN5LWqlqQ+Ra61+XSVJbt0zlHeadOoGUjEk7Bd1drrGvSv0Kb2MIqnUDK4EN4
-         q3Zg==
-X-Gm-Message-State: AHYfb5i9+I14Tvo2lsUl6G0srXp5JatB3adoFsSYamzhbFU4a3WAS4y5
-        TA+8RNKlmkTmTJEnsHm0WPSuBM7G+sOF
-X-Received: by 10.176.71.17 with SMTP id h17mr2445440uac.138.1502953287091;
- Thu, 17 Aug 2017 00:01:27 -0700 (PDT)
+        id S1751949AbdHQHHH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Aug 2017 03:07:07 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63342 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752018AbdHQHHH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Aug 2017 03:07:07 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 753949F71A;
+        Thu, 17 Aug 2017 03:07:01 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=YtDwTYsx9Fq7
+        33zt4mg7y219h+g=; b=ru0sbPEOc4S9aQGBOhhGOLgb/jskSC9XRrApI2TvGVXL
+        Dyf7vIQCxbIuYyeV9jiUszLJmBYO6Ze4N9fVBahQxv6OsJ7cvpabp2xeQi0GSWhw
+        FH2h1gDwnbJeLfPYBhAs2HDvzOnnF/RxE13qHpLUeeDvzDJ9qFqmMTY4G4Ivegc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=IUeGjq
+        Urq5yjN8LMMQMrcwd4Y2Znsb6hFSKUzQI1yURE+IrAeqqgZx5PpUHU1ClvT+Aiq/
+        PJdjDA5E5BVG/AL1YOgtH4E6FIlUbVs/ZT8iGSwhkrOPWGgbr5siNn3NzY+2bcCT
+        RKTBxDP41EpTrFK9L+5Np/tY7iMmLrTsmJirQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 59C869F719;
+        Thu, 17 Aug 2017 03:07:01 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6A7A99F717;
+        Thu, 17 Aug 2017 03:07:00 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     git@vger.kernel.org, asottile@umich.edu
+Subject: Re: [PATCH/FIXUP 6/2] apply: clarify read_old_data() is about no-index case
+References: <xmqq4ltpsn42.fsf@gitster.mtv.corp.google.com>
+        <20170813085106.1731-1-tboegi@web.de>
+        <xmqqbmnfl5tm.fsf@gitster.mtv.corp.google.com>
+        <20170817062450.GA28592@tor.lan>
+Date:   Thu, 17 Aug 2017 00:06:59 -0700
+In-Reply-To: <20170817062450.GA28592@tor.lan> ("Torsten =?utf-8?Q?B=C3=B6g?=
+ =?utf-8?Q?ershausen=22's?=
+        message of "Thu, 17 Aug 2017 08:24:50 +0200")
+Message-ID: <xmqqfucqisfg.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.176.2.114 with HTTP; Thu, 17 Aug 2017 00:01:06 -0700 (PDT)
-In-Reply-To: <xmqqo9rfi3b2.fsf@gitster.mtv.corp.google.com>
-References: <CAKkAvazj28RR1nHEWNNeZeyE6mpkb3opk6kvrxP6Lau6tcCbJQ@mail.gmail.com>
- <956ccc83-c291-4217-795c-fcef33fac35b@gmail.com> <xmqqo9rfi3b2.fsf@gitster.mtv.corp.google.com>
-From:   ryenus <ryenus@gmail.com>
-Date:   Thu, 17 Aug 2017 15:01:06 +0800
-Message-ID: <CAKkAvay1gJTLJrGLb3aFMJmnyQjPhSD9cx0DRAAN3Mh5NAhfiQ@mail.gmail.com>
-Subject: Re: [PATCH] fix revisions doc about quoting for ':/' notation
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Andreas Heiduk <asheiduk@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: AA1DA96C-831A-11E7-9918-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 17 August 2017 at 05:57, Junio C Hamano <gitster@pobox.com> wrote:
-> Andreas Heiduk <asheiduk@gmail.com> writes:
->
->> Am 16.08.2017 um 05:21 schrieb ryenus:
->>> To make sure the `<text>` in `:/<text>` is seen as one search string,
->>> one should quote/escape `<text>` properly.
->>>
->>> Especially, the example given in the manual `:/fix nasty bug` does not
->>> work because of missing quotes. The examples are now corrected, and a
->>> note about quoting/escaping is added as well.
->>
->> Right now the documentation describes the syntax as git sees the
->> parameters. This is agnostic of the shell or other UI with their
->> different quoting rules.  For example users of fish must quote
->> `rev@{2}`. A GUI might require no quoting at all. In that case `:/"fix
->> nasty bugs"` would be given to git verbatim and hence not find the revision.
->
-> These are all good points that I didn't consider when responding.
->
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-Makes sense for me, too. I've just sent a v2 patch, which leaves the original
-example as-is, meanwhile added a example inside the explanation.
+> I don't have time to look at this today or tomorrow,
+> please give a hint if you are working further.
 
-Thanks!
+It is past my bedtime, and generally I prefer not to touch topics
+that I know other people are willing to look into, especially when
+I know those "other people" are well informed and capable.
+
+Thanks.
