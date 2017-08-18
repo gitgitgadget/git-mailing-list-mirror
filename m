@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E5821F667
-	for <e@80x24.org>; Fri, 18 Aug 2017 10:13:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BBE82208D0
+	for <e@80x24.org>; Fri, 18 Aug 2017 11:30:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750953AbdHRKNK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Aug 2017 06:13:10 -0400
-Received: from mail-wr0-f172.google.com ([209.85.128.172]:36905 "EHLO
-        mail-wr0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750877AbdHRKNJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Aug 2017 06:13:09 -0400
-Received: by mail-wr0-f172.google.com with SMTP id z91so57899606wrc.4
-        for <git@vger.kernel.org>; Fri, 18 Aug 2017 03:13:08 -0700 (PDT)
+        id S1750929AbdHRLa4 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Aug 2017 07:30:56 -0400
+Received: from mail-wr0-f174.google.com ([209.85.128.174]:38056 "EHLO
+        mail-wr0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750808AbdHRLaz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Aug 2017 07:30:55 -0400
+Received: by mail-wr0-f174.google.com with SMTP id 5so44055695wrz.5
+        for <git@vger.kernel.org>; Fri, 18 Aug 2017 04:30:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-transfer-encoding;
-        bh=7ubh/7duDzNKZ3PwK3DbcUGTNiJgbeZhfkliZY7QP/g=;
-        b=V40zAnKJWb/jAcT5YguX5zKhe5eJK9VBRaCFqvs0CCJ1N3bfKNRyQ7ODNqJr6rW0sl
-         hokktXrlSjGl6hQvazVMDvA9gE6WpQOpeAqkttiLYNlsj5N3inazx9NyCoJEtGU0LOql
-         kNSiumx0Z2t8ttIXSNvTQtpYbGQ87Z1nsSyTx43UuBfiCWelm2GdMScyhO+gCNcOu0ND
-         1hE3tGeGBu4Wg79bcwTSYyUkHWW4GIhHKDLE6Wk21wlTvoKezPiy1cP+gtdHhTaYiZ57
-         EVVIHa/BGMleq8h93JUE2uGaC1HbquWCLFAYbZIA7EEuanE0OqYBp0kWTaii7tVdgFih
-         yzlw==
+        bh=+TpsZDMVS+k8KsEPOR0kjiEr3JLpWdz1TAbCkIOrpkA=;
+        b=JK2j4eyQ2QwumnasblTt3Wn8kI6TETiMVqP/tjIa4ZX/BPK1yqUTYYD0JUM7Fgccpc
+         1Jpsw0tITF++pJs47n8pZC5pGkskVFU9alW/OuWkLR0zU59INz8RDvM4Q6v32MGS1qYu
+         WthckFOL6JpWZqfs5qJMuK4xOHkkpD3qiPKFyjtLLgnKNo3ZzmJjg59h8vevtKj3oaEJ
+         qG6LGeOHRChLTX/ZQo0lBRisYpqnBTfKVLlQXZShFKidNSVZwxrnhNoL+FkFF/mgXb/q
+         dqoRCbhfkTkSzVlMZG/vX8gBcOOKmeYh0fKg5JUP5tomtRc4yMuMclXxBiehqd0J2koW
+         0rJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=7ubh/7duDzNKZ3PwK3DbcUGTNiJgbeZhfkliZY7QP/g=;
-        b=o4QWD7zoqBFcRsVn7/HcZ1iLpT0kTWulFdT2zNaupkZ42L4XSxUw5tVWNH/vn74kPI
-         OWFfYsaiE3KHKKEn4XL3gGU7QClLzWvNojBZ48XBXZ1N4mlJpAwSqNakxuy9W3uVpszV
-         kblSlIl9rMWvSxcC80V/F5J2xN5blAu4lryhfwAloY9aNWs80q3B+EpfA2PSaY07Q/Ql
-         /yPeDG2C9nIcHABPo+9rTq5wHlfm86BAuCg9ZG9548m7IMmmNFLqdVKVAGiR8S30dHqM
-         cSg1iZ8sWY/KIwQy8lhrOGPFJXcN1W6Yy10kO40BGWhTUKw3R07Tot7fE17iT6t0MT74
-         515g==
-X-Gm-Message-State: AHYfb5gwVF+NZH01ka39kTv9edW2s1zYE4KGiw9nca0906GvgG4L5cis
-        ETZEnoedTDS0OuP6z+3zYdqFHsc3RQ==
-X-Received: by 10.28.46.197 with SMTP id u188mr1082752wmu.26.1503051188007;
- Fri, 18 Aug 2017 03:13:08 -0700 (PDT)
+        bh=+TpsZDMVS+k8KsEPOR0kjiEr3JLpWdz1TAbCkIOrpkA=;
+        b=klksCXJo4sGGfp/uu704+fpRMfK9AUQmNYSHEaD6vtnGiUDtir6F3fqF8S81nvJX/f
+         MeG2riml8CszS8sgXJ2Gji1o2FBsEgoItgQtu9mmrZQZKHk6kLPnt0XFazXN6yFucaoq
+         AM/258CRdc0LkcKOTX1jcUWAiqKBJf8gN45fVqD3w4YQwv5vBf1u/MbOer/DAUs1RZB3
+         qreX5AETaSsCklj9jZFzT/zWXW3O8s8lOKyynHK+UlYXUQmpIrJWvJIcwNG+OdNu908y
+         +ebnibGul/w4ZS6khsgJTLomF5rJ0f0I/XrNFyP0klWlS0GfCTOIivmHCR1UZd1HJteN
+         VLAg==
+X-Gm-Message-State: AHYfb5hkw46BtFW7zkkgNWtGRg2HFgv+aHThyzREWpOiFn7ls0fuQMk3
+        QdwiLQIFiP/LIUcJLKKcXZ0p9SoXbVrkD0g=
+X-Received: by 10.28.46.197 with SMTP id u188mr1222715wmu.26.1503055853787;
+ Fri, 18 Aug 2017 04:30:53 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.28.24.130 with HTTP; Fri, 18 Aug 2017 03:12:37 -0700 (PDT)
-In-Reply-To: <20170818062929.f4zitbtaeii4xiko@sigill.intra.peff.net>
-References: <cover.1503020338.git.patryk.obara@gmail.com> <65f84c5eb94e8b6f5cbce31f56810fdb71a58bf9.1503020338.git.patryk.obara@gmail.com>
- <20170818062929.f4zitbtaeii4xiko@sigill.intra.peff.net>
+Received: by 10.28.24.130 with HTTP; Fri, 18 Aug 2017 04:30:23 -0700 (PDT)
+In-Reply-To: <xmqqziaxcobp.fsf@gitster.mtv.corp.google.com>
+References: <cover.1503020338.git.patryk.obara@gmail.com> <cb98970b3f6c175321f52efb65deb48f9cfeabae.1503020338.git.patryk.obara@gmail.com>
+ <20170818064335.h5sr5iz7mh64axji@sigill.intra.peff.net> <xmqqziaxcobp.fsf@gitster.mtv.corp.google.com>
 From:   Patryk Obara <patryk.obara@gmail.com>
-Date:   Fri, 18 Aug 2017 12:12:37 +0200
-X-Google-Sender-Auth: 3hcVWD1rwx8_V69Xs6-fzzEeUdU
-Message-ID: <CAJfL8+TRZQrfF9Y9PdBZTptEf_O9u9irVRzb0bBVAnTRga2xmw@mail.gmail.com>
-Subject: Re: [PATCH v3 2/4] commit: replace the raw buffer with strbuf in read_graft_line
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+Date:   Fri, 18 Aug 2017 13:30:23 +0200
+X-Google-Sender-Auth: 5jOPGS5w8OVIqbekmdlI1IqmLpY
+Message-ID: <CAJfL8+SHSAhgrMY6ONVHLMWEHcT0mhm4oKMmq6D=89SErDKiMA@mail.gmail.com>
+Subject: Re: [PATCH v3 4/4] commit: rewrite read_graft_line
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
         Stefan Beller <sbeller@google.com>,
         "brian m. carlson" <sandals@crustytoothpaste.net>
 Content-Type: text/plain; charset="UTF-8"
@@ -67,31 +67,62 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> wrote:
-
-> AFAICT this is only here to avoid having to s/buf/line->buf/ in the rest
-> of the function. But I think we should just make that change (you
-> already did in some of the spots). And IMHO we should do the same for
-> line->len. When there are two names for the same value, it increases the
-> chances of a bug where the two end up diverging.
-
-My motivation was rather to keep patch(es) as small as possible because eve=
-ry
-line using buf will be replaced in a later patch in series. But it will mak=
-e
-commit better (it will stand on its own), so why not to do it? :)
-
-> (=E2=80=A6) I think short-circuiting like:
 >
->   if (!line->len || line->buf[0] =3D=3D '#')
+> So we're probably fine. The two parsing passes are right next to each
+> other and are sufficiently simple and strict that we don't have to
+> worry about them diverging.
+
+That was my conclusion as well. I added comment before the first pass and
+avoided any "cleverness" to make it perfectly clear to a reader.
+
+> We'd reject such an input totally (though as an interesting side effect,
+> you can convince the parser to allocate 20x as much RAM as you send it;
+> one oid for each space).
+
+Grafts are not populated during clone operation, so it really would be user
+making his life miserable. I could allocate FLEXI_ARRAY of size
+min(n, line->len / (GIT_*MIN*_HEXSZ+1)) instead=E2=80=A6 but I think it's n=
+ot even
+worth the cost of making the code more complicated (and I don't want
+to reintroduce these size macros in here.
+
+We _could_ put an artificial limit on graft parents, though (e.g. 10) and
+display an error message urging the user to stop using grafts?
+
+> The single-pass alternative would probably be to read into a dynamic
+> structure like an oid_array, and then copy the result into the flex
+> structure.
+
+Before sending v3 I tried two other alternative implementations (perhaps I
+should've listed them in the v3 cover letter):
+
+  1. Using string_list_split_in_place. I resigned from this approach as soo=
+n
+     as I noticed, that line->buf needs to be preserved for possible
+     error message. string_list_split would have no benefits over using
+     oid_array.
+
+  2. Parsing into temporary oid_array and then copying memory to FLEXI_ARRA=
+Y.
+     Throw-away oid_array still needs to be cleaned, which means we have
+     new/different return path (one before xmalloc and one after xmalloc),
+     which means "bad_graft_data" label needs to be changed into "cleanup"
+     label (or removed), which means error description needs be conditional=
+ly
+     put in earlier code=E2=80=A6 and at this point, I decided these change=
+s are not
+     making code cleaner nor more readable at all :)
+
+Junio C Hamano <gitster@pobox.com> wrote:
 >
-> is better (I also think "!" instead of "=3D=3D 0" is our usual style, but
-> that's much less important).
+> If I were doing the two-pass thing, I'd probably write a for loop
+> that runs exactly twice, where the first iteration parses into a
+> single throw-away oid struct only to count, and the second iteration
+> parses the same input into the allocated array of oid struct.  That
+> way, you do not have to worry about two phrases going out of sync.
 
-Ah, I only replaced comparison to NULL terminator with length check because
-I thought it better shows intention of the code and I didn't notice, that
-reversing order will result in better code overall.
-
-I will include both changes in v4.
+Two passes would still differ in error handling due to xmalloc between them=
+=E2=80=A6
 
 --=20
 | =E2=86=90 Ceci n'est pas une pipe
