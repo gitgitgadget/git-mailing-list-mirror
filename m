@@ -2,101 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5271B20899
-	for <e@80x24.org>; Fri, 18 Aug 2017 02:22:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A85520899
+	for <e@80x24.org>; Fri, 18 Aug 2017 02:38:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753891AbdHRCWR (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Aug 2017 22:22:17 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63953 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753857AbdHRCWQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Aug 2017 22:22:16 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3C3E49C341;
-        Thu, 17 Aug 2017 22:22:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Rs4BqLS20vnpuJJ9+BIgTn2KmrU=; b=XhZz+E
-        72HLPX5YyIxC4q4zJDE4GF2jgZPcwEZkS2P3ecsZrsMqA7qHErDzxcbhBUHENFjZ
-        luI9g0xdk10bnuM8xSNwlGrDMVGW+nRRBPLjYanvGSsJPCvp6TLpMtfquzgyH0Iq
-        qJOGtGLqLAwj0dozQqC76a6V6i2laASErUWs4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=gXnL1evob4wGEVHbZvLQ7QaOaL+awP/5
-        6aZ51QdH9SIHt3jScQneh+vkpFVrItjzsbLLW8bHkYL1h0Sfyk6AcEeR7s8FSOw5
-        0LaqsOZitlbcPTh20sB6ZQrswqgIG+z0X3/LCiJlsqdaCpcKu3jOewmsa3qoIKKm
-        7Jdgrum5aPA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 343AE9C340;
-        Thu, 17 Aug 2017 22:22:09 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 98A8B9C33B;
-        Thu, 17 Aug 2017 22:22:08 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Anthony Sottile <asottile@umich.edu>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH/RFC] git-grep: correct exit code with --quiet and -L
-References: <20170818013851.16753-1-asottile@umich.edu>
-Date:   Thu, 17 Aug 2017 19:22:07 -0700
-In-Reply-To: <20170818013851.16753-1-asottile@umich.edu> (Anthony Sottile's
-        message of "Thu, 17 Aug 2017 18:38:51 -0700")
-Message-ID: <xmqq4lt5ehtc.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1753909AbdHRCiz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Aug 2017 22:38:55 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:36970 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753858AbdHRCiy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Aug 2017 22:38:54 -0400
+Received: by mail-pg0-f66.google.com with SMTP id 83so12647675pgb.4
+        for <git@vger.kernel.org>; Thu, 17 Aug 2017 19:38:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=3zkL5oTo4hadPqXuTaWHU3QPZzbgOZ5n+dY/ybbg+5o=;
+        b=PCoo1uhjnOoxQEM6F1P+tLqJXvoKeyLtlXo4c5EUngQGRWEmXD3/zNr5M0Yc5T0izg
+         T0Y6hDYBGoKh6s2dLgsdOR55u7W2c0xcKJ1wcK3MOtPnty4SyruWfrTp5BzDe4IJIdl5
+         LLfxFq21+Bvlvq6RMAD2ogmVDKuHviUwzFV4Mj8+IHa4ATvvJMSTyroL/jLHok+1+ipD
+         tExb5HQ1ZcZBkh6VVY6EmayNgbQBT/g2jYsm93Ze74YtQ/diSB8UY7RWSW8mWzAaYYOf
+         48TG9qhBfMuRNoIRIzBY2dU/WBL+q7xx/+Dd3YeIMocNI09kKLw1Jprr9Mis3hbwmMPV
+         Q/gw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=3zkL5oTo4hadPqXuTaWHU3QPZzbgOZ5n+dY/ybbg+5o=;
+        b=YLq3xUQNB+FVyNcLPZyyKuipUzb9LDZjB+c45ncM9Qh8qMH6v0r5hW6M8X+CE1LVCa
+         GzSEuxUxVfwcCnlTULbvE1XrQibGqVuxxXzg+mXs/pEittOA8KFMDUt6okm17UIRrGMa
+         fFeBwqPBnxULWHdobpt+DbPkmuj44EuncdvK3aFY4psphJM74YKjqlmhnLiJAmmnOVDj
+         POzteWBWM0hUld4hFFtHlzBlg0W6MS71GNWHFS6HKuCMw2/C4hSS+VXfOXEbJzFa2rwD
+         UK8CyTN5d/Wd6WF85XS47r2B4rnnOl2+OEj6VWizc8CJNApQPMyjMOu19acTSKtvOAn1
+         7h8g==
+X-Gm-Message-State: AHYfb5jwezTFH2oOANm/MXj1hmsj1o3IJJPfxC6gWxu41e1Pz1qPV3aY
+        hDtTNdgYSFCKdCtso0s=
+X-Received: by 10.84.131.15 with SMTP id 15mr7988995pld.156.1503023933732;
+        Thu, 17 Aug 2017 19:38:53 -0700 (PDT)
+Received: from [10.4.2.238] ([218.248.21.162])
+        by smtp.gmail.com with ESMTPSA id d88sm8531072pfl.158.2017.08.17.19.38.50
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 17 Aug 2017 19:38:53 -0700 (PDT)
+Subject: Re: [PATCH v4 2/3] builtin/branch: stop supporting the use of
+ --set-upstream option
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     martin.agren@gmail.com, git@vger.kernel.org
+References: <xmqqy3qluck4.fsf@gitster.mtv.corp.google.com>
+ <20170817025425.6647-1-kaarticsivaraam91196@gmail.com>
+ <20170817025425.6647-2-kaarticsivaraam91196@gmail.com>
+ <xmqqo9reezjx.fsf@gitster.mtv.corp.google.com>
+From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+Message-ID: <69172c47-0af4-4c74-a20b-82da537ad9ee@gmail.com>
+Date:   Fri, 18 Aug 2017 08:09:44 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 09031B50-83BC-11E7-8AC0-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+In-Reply-To: <xmqqo9reezjx.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-Cyberoam-smtpxy-version: 1.0.6.3
+X-Cyberoam-AV-Policy: default
+X-CTCH-Error: Unable to connect local ctasd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Anthony Sottile <asottile@umich.edu> writes:
-
-> The handling of `status_only` no longer interferes with the handling of
-> `unmatch_name_only`.  `--quiet` no longer affects the exit code when using
-> `-L`/`--files-without-match`.
+On Friday 18 August 2017 01:28 AM, Junio C Hamano wrote:
+> Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
 >
-> Signed-off-by: Anthony Sottile <asottile@umich.edu>
-> ---
+>> diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+>> index 81bd0a7b7..948d9c9ef 100644
+>> --- a/Documentation/git-branch.txt
+>> +++ b/Documentation/git-branch.txt
+>> @@ -195,10 +195,10 @@ start-point is either a local or remote-tracking branch.
+>>   	branch.autoSetupMerge configuration variable is true.
+>>   
+>>   --set-upstream::
+>> -	If specified branch does not exist yet or if `--force` has been
+>> -	given, acts exactly like `--track`. Otherwise sets up configuration
+>> -	like `--track` would when creating the branch, except that where
+>> -	branch points to is not changed.
+>> +	As this option had confusing syntax it's no longer supported. Please use
+>> +	--track or --set-upstream-to instead.
+>> ++
+>> +Note: This could possibly become an alias of --set-upstream-to in the future.
+> I'll tweak `--track` and `--set-upstream-to` in the updated text
+> and remove the 'Note:' thing that does not give any useful
+> information to the end users while queuing (no need to resend).
+I thought I explained the reason for adding the note in one of the 
+previous mails.
+Here's the portion of the mail,
 
-Thanks, Will queue.
+On Monday 14 August 2017 02:20 PM, Kaartic Sivaraam wrote:
+ >
+ > On Wednesday 09 August 2017 12:03 AM, Martin Ågren wrote:
+ >>
+ >> Maybe the final note could be removed? Someone who is looking up
+ >> --set-upstream because Git just "crashed" on them will only want to know
+ >> what they should do instead. Our thoughts about the future are perhaps
+ >> not that interesting.
+ >
+ > I thought it's better to document it to avoid people from getting 
+surprised
+ > when the options *starts working* again.
+ >
 
->  grep.c          | 2 +-
->  t/t7810-grep.sh | 5 +++++
->  2 files changed, 6 insertions(+), 1 deletion(-)
->
-> diff --git a/grep.c b/grep.c
-> index 2efec0e..c9e7cc7 100644
-> --- a/grep.c
-> +++ b/grep.c
-> @@ -1821,7 +1821,7 @@ static int grep_source_1(struct grep_opt *opt, struct grep_source *gs, int colle
->  		return 0;
->  
->  	if (opt->status_only)
-> -		return 0;
-> +		return opt->unmatch_name_only;
->  	if (opt->unmatch_name_only) {
->  		/* We did not see any hit, so we want to show this */
->  		show_name(opt, gs->name);
-> diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-> index f106387..2a6679c 100755
-> --- a/t/t7810-grep.sh
-> +++ b/t/t7810-grep.sh
-> @@ -374,6 +374,11 @@ test_expect_success 'grep -L -C' '
->  	test_cmp expected actual
->  '
->  
-> +test_expect_success 'grep --files-without-match --quiet' '
-> +	git grep --files-without-match --quiet nonexistent_string >actual &&
-> +	test_cmp /dev/null actual
-> +'
-> +
->  cat >expected <<EOF
->  file:foo mmap bar_mmap
->  EOF
+I hope that explains the reason.
+
+---
+Kaartic
