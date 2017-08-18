@@ -2,96 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A193E208CD
-	for <e@80x24.org>; Fri, 18 Aug 2017 16:53:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0EAFB208CD
+	for <e@80x24.org>; Fri, 18 Aug 2017 16:57:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752499AbdHRQxq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Aug 2017 12:53:46 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64213 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752392AbdHRQxp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Aug 2017 12:53:45 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 82517940B8;
-        Fri, 18 Aug 2017 12:53:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=bFMqCUuB0cWBOHhU6Da7sDDHSGg=; b=JyepLO
-        uDJMOk1+R/fFHcg+1vDobBBFjTuIe7OACTUX+B+KzsU6q/vF//jJlU8M5FOdMCkH
-        s03i6AfqaKUvSGtjeJOrX8uC9E1UZHDm3HTO9gx9tHPPi3ONBSnt8+ac6JBzc4ZY
-        uYmQ/z4Oyhc83aCTIjMPHg3mry445wv6tSpqU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=YrN1P82bUHluo6vd5S8RNjFeWGVs2lZm
-        cEkde4jGNcHw9b2LoEgt8lXL+SPcuRL/d6Lkq2dLSP7pZdtbevQUkWB7d33imNtg
-        usjLJe1zDxVM0cyjqEJ6rmnVgFOcyu75YEitpIYdSrd2dVtOsHQ+uylhKvCMtbAF
-        N5XLCxsLPXw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 78ABF940B6;
-        Fri, 18 Aug 2017 12:53:44 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CEB7A940B4;
-        Fri, 18 Aug 2017 12:53:43 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael J Gruber <git@grubix.eu>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/2] Documentation/git-for-each-ref: clarify peeling of tags for --format
-References: <35df94bc16d9b1436d2110f5d5c54732e5d9a619.1503067851.git.git@grubix.eu>
-        <45e7986107a8e8b2f87891c729be8e13043670f3.1503067851.git.git@grubix.eu>
-Date:   Fri, 18 Aug 2017 09:53:42 -0700
-In-Reply-To: <45e7986107a8e8b2f87891c729be8e13043670f3.1503067851.git.git@grubix.eu>
-        (Michael J. Gruber's message of "Fri, 18 Aug 2017 16:51:23 +0200")
-Message-ID: <xmqq378oddgp.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1752297AbdHRQ5L (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Aug 2017 12:57:11 -0400
+Received: from mail-pg0-f45.google.com ([74.125.83.45]:36874 "EHLO
+        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752114AbdHRQ5J (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Aug 2017 12:57:09 -0400
+Received: by mail-pg0-f45.google.com with SMTP id y129so67849296pgy.4
+        for <git@vger.kernel.org>; Fri, 18 Aug 2017 09:57:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=f4aPr+l0O6Iwy67C1ZV0dGOcMqk2Go09NvtAVo2mr6g=;
+        b=PGHqOsxNJE6vzCjh8mONRSWs0ARRMc60rnlfTGC4rT0n0OjublewYVNanQ9r3Q2Xkg
+         hM3XdfnQPp+EG/ZxQOURvN5a5YM8hbUrZxlpWYhl8FV6cajEnLblnoFi8A5F74CZ0uBf
+         IuCLAIhdTXluSYEnRIx4WSUD6QIewIfsHDmq7w8QnpigK9KgLJ/3rLj8qB3SMsYXXV/u
+         HqvBYHFcVYZCgygKsaHF2g2BJWf/q5nyynR5Fc4QGY2FVnviS8oBzh6zsFAOFXmv2vdu
+         G4f29JPQBXbtvhX2udBO9X/feLXTW95jqRaCs4cn7zXT8/r9I9ZIH2x8RD0fxr7nQ55R
+         gXVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=f4aPr+l0O6Iwy67C1ZV0dGOcMqk2Go09NvtAVo2mr6g=;
+        b=krAAJBI2SDuHHK/sagiSfPGXVjg1uMkyLdxdK4etjfo8WIPgMrG5mFbYNKjvlu7RkE
+         +T49v6/4KzHiVdwBsE5zvFiyPkV2jAEPajh+gkjCYVpEW2KOFsGRFTwdqPJSONPitU+x
+         i9IM8p0r80OwyJnv2WCxrsF6JA590S9W7njq+mEc4DvPDGRgo3CycMEMN+69piChE/MP
+         mSTbK7LWTJiRdCh/oIFtktzC6FhItr5Ec2M1oYYwzYFpCKMdqDyp8X27siE74jV0sr/h
+         UVcPuLYFlEwOV8HK7oov3bv2NTZXP6Ghe+yJEXkU3sfnHayiEuO962CpyeC1cETjbBVR
+         gqNQ==
+X-Gm-Message-State: AHYfb5jAvHMCajRJvRzKBXiIOq4CdYZOW2N5exC+ropD9Pr8Q2vsoBCJ
+        lXXai9ul1QaQoAx/FaIPxL6qfGqSxw==
+X-Received: by 10.99.105.8 with SMTP id e8mr5139834pgc.165.1503075428537; Fri,
+ 18 Aug 2017 09:57:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CB64F988-8435-11E7-B24C-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Received: by 10.100.162.37 with HTTP; Fri, 18 Aug 2017 09:57:07 -0700 (PDT)
+In-Reply-To: <xmqqr2w8dej6.fsf@gitster.mtv.corp.google.com>
+References: <xmqqy3qluck4.fsf@gitster.mtv.corp.google.com> <20170817025425.6647-1-kaarticsivaraam91196@gmail.com>
+ <20170817025425.6647-2-kaarticsivaraam91196@gmail.com> <CAN0heSquaXk421sR6Ry59C+er8n26nC93=3KG1wD0xNXZkuiGw@mail.gmail.com>
+ <xmqqshgqezox.fsf@gitster.mtv.corp.google.com> <42219b51-8232-e1ee-9c48-f67ccdcbb4c8@gmail.com>
+ <xmqqr2w8dej6.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Fri, 18 Aug 2017 18:57:07 +0200
+Message-ID: <CAN0heSrU-TQnFRYiSF4ubcYXviwVmkxHY7Sf_U7=9i2vzdYp3Q@mail.gmail.com>
+Subject: Re: [PATCH v4 2/3] builtin/branch: stop supporting the use of
+ --set-upstream option
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael J Gruber <git@grubix.eu> writes:
-
-> `*` in format strings means peeling of tag objects so that object field
-> names refer to the object that the tag object points at, instead of the
-> tag object itself.
+On 18 August 2017 at 18:30, Junio C Hamano <gitster@pobox.com> wrote:
+> Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
 >
-> Currently, this is documented using grammar that is clearly inspired by
-> classical latin, though missing more than an article in order to be
-> classical english.
-
-;-)
-
-Thanks, both patches look good to me.
-
+>> On Friday 18 August 2017 01:25 AM, Junio C Hamano wrote:
+>>> Martin =C3=85gren <martin.agren@gmail.com> writes:
+>>>
+>>>> On 17 August 2017 at 04:54, Kaartic Sivaraam
+>>>> <kaarticsivaraam91196@gmail.com> wrote:
+>>>>> Helped-by: Martin =C3=85gren <martin.agren@gmail.com>,  Junio C Haman=
+o <gitster@pobox.com>
+>>>>> Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+>>>> I didn't expect a "Helped-by", all I did was to give some random
+>>>> comments. :-) I'm not so sure about the comma-separation, that seems t=
+o
+>>>> be a first in the project.
+>>> I didn't either ;-)
+>>>
+>>> The line looks odd so I'll remove it while queuing.
+>>>
+>>> Thanks for noticing.
+>> I should have been better with my wordings :) How about converting that
+>> line into two 'Suggestions-by:' or 'Reviewed-by:' ?
 >
-> Try and straighten that explanation out a bit.
+> I personally do not think either is needed for those small things we
+> saw in the discussion.
 >
-> Signed-off-by: Michael J Gruber <git@grubix.eu>
-> ---
->  Documentation/git-for-each-ref.txt | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
->
-> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-> index dac9138fab..bb370c9c7b 100644
-> --- a/Documentation/git-for-each-ref.txt
-> +++ b/Documentation/git-for-each-ref.txt
-> @@ -41,8 +41,9 @@ OPTIONS
->  	A string that interpolates `%(fieldname)` from a ref being shown
->  	and the object it points at.  If `fieldname`
->  	is prefixed with an asterisk (`*`) and the ref points
-> -	at a tag object, the value for the field in the object
-> -	tag refers is used.  When unspecified, defaults to
-> +	at a tag object, use the value for the field in the object
-> +	which the tag object refers to (instead of the field in the tag object).
-> +	When unspecified, `<format>` defaults to
->  	`%(objectname) SPC %(objecttype) TAB %(refname)`.
->  	It also interpolates `%%` to `%`, and `%xx` where `xx`
->  	are hex digits interpolates to character with hex code
+> Unless Martin feels strongly about it, that is.
+
+No, no strong feelings. Thanks.
