@@ -2,91 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 063DC208CD
-	for <e@80x24.org>; Fri, 18 Aug 2017 22:36:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A3E5208CD
+	for <e@80x24.org>; Fri, 18 Aug 2017 23:33:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751684AbdHRWge (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Aug 2017 18:36:34 -0400
-Received: from mail-yw0-f169.google.com ([209.85.161.169]:33020 "EHLO
-        mail-yw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751243AbdHRWge (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Aug 2017 18:36:34 -0400
-Received: by mail-yw0-f169.google.com with SMTP id p68so66753569ywg.0
-        for <git@vger.kernel.org>; Fri, 18 Aug 2017 15:36:33 -0700 (PDT)
+        id S1751561AbdHRXdQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Aug 2017 19:33:16 -0400
+Received: from mail-pg0-f47.google.com ([74.125.83.47]:34214 "EHLO
+        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751107AbdHRXdP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Aug 2017 19:33:15 -0400
+Received: by mail-pg0-f47.google.com with SMTP id n4so9291776pgn.1
+        for <git@vger.kernel.org>; Fri, 18 Aug 2017 16:33:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=FcB/c6EVWIPCnatUNKk0ztedzH6H1nFGWjeZ9kD5wsc=;
-        b=omvaa1DHiwm4nhtNMNCH3kYDiU3IExLDwswrs2b4+6sg4Q+kWC7rTIy7eXxNK2zF6g
-         wfA8LoTIPaglyW9fjSpK1yA7FrqZF7Arz+PWE0yA9paLPBseiR1ApdhzB3ngU9sdcINa
-         x7HVxh4YMvI7F8e7r3EA6qtcXs9f/yn6dfBXQia+Q4Oyv2KVY81kT7QipLC+3UfX+Pfe
-         Aoo9LwVgLnlz2rTmGHpHoiphbMh6XpMGW7HnuZA5sqr7Wgxo6bX4q0viVaNjLc/t0I8l
-         0bQQ/Cim5R1WNVrVEsKhpp7GHIfYXHUq6HpN674YRhM8FtDftmZbY5iZz4uxjKdrTSlm
-         wSvQ==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=J5sRjvVb9Va4E8vBvjcqzh31dt00TumKt4L0rUOyJvU=;
+        b=HeZ9nelHjKAxt7iBU88mJJT9PZIliYtyzp2u95aB4Jnb8q8m46zi2irYcw2g2Ki7dI
+         FZvZ1vK/1Z98J4eUWBrZDXeXOMCO2xzy9LV2PRapksVd0wpHJVYlPKZIL2y9jokL1vI/
+         IzdssD4TXkZ352tn6eQzd/RYiBPwD8JYSskrxX2zfkOnu0vjyMHgNvEgW2gjE1QzodRI
+         Y6DI2XGCFEndSNmYFJxBlMiuHzI4Y1sef/pi5SrLKlJQViZyIK2RJdfxPoy2HsciKOxY
+         L6p8nQnJtlIobtLIYwEN01t/FTVcUhVjKkAJCU24adu64OrWogI43ylsvha6dFoRcKiq
+         OxCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=FcB/c6EVWIPCnatUNKk0ztedzH6H1nFGWjeZ9kD5wsc=;
-        b=A+QHBFTe9xillUzLCRjgFlJSGtM5CVhRBah9KiLCy9fH5DI9aIgsNsom/wkdSVtlW7
-         8Aqd6Ucy0x2mGSz4hfz+XSGWzFQaBC9Tkh+2suCqeBKlm/KXgmHTnprMRarjfrLyWGlr
-         MKqWClsflb7jfLiH6JJkafTvRKh3Gud8OxbmHOAEdwRMmLwQByyLLTspX1mqP+8W/cSI
-         rVnfrcoCzoluMzOgt9Zw+oyyauPjBi9OHeeHcyQnYMbO1GR8zuavUxBCkKP6q2L2Se0l
-         zOmmPWy9I7lxb3dKIZHfo2cBMoNoFm+nQfcqkSMVEZKXf0wO/fcVPKQ3z3HzNIsldCyK
-         +9zA==
-X-Gm-Message-State: AHYfb5gGaO/PhKZgvDcW18AFFZCdg+9wd5NZvFuU/q789FBwEKgxss/8
-        tceT6eREhz+08lyiXmm7ZDGtzyOhlPMBdyI=
-X-Received: by 10.37.32.139 with SMTP id g133mr9036946ybg.181.1503095793271;
- Fri, 18 Aug 2017 15:36:33 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=J5sRjvVb9Va4E8vBvjcqzh31dt00TumKt4L0rUOyJvU=;
+        b=nkon0hMAc5UjpWpiQkRhhr6iVs6iPv70rnnODprd7FI0oy42NRHmHWYw1Iy/LeofT9
+         E0nmvF12OAYNI1/TKtsFsRVXImnZv60qNbSypQMXH6wi6AXqbz2m8ibfpJQUdv1glybT
+         WjuXAqos8WwggGdmr3Y9egovrQwCmFYgaPeuIqVgfOsK40hddS156bOK/5p/7gv1h7Sl
+         vke3atOw02jRuxMdCpS5k2TqGiUKJnsIlbCBAvzuS71abR6zWPE544gHO3Ynie8PhBuO
+         BYy4JQmaBiIbZpPXHJWPjvmZMspN6yY+pw6X3XH01G3yR7CZvxIwiTdsr6E5psZk5LeI
+         elww==
+X-Gm-Message-State: AHYfb5jKOzeMx6MKIvZj37vgqhI9RNBxsCD2ukb5v0vaZpoo/LxPzYuO
+        2pckUc9Ragq0tkMc
+X-Received: by 10.99.178.73 with SMTP id t9mr9884860pgo.34.1503099194482;
+        Fri, 18 Aug 2017 16:33:14 -0700 (PDT)
+Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:ecbe:10b8:47b2:41c3])
+        by smtp.gmail.com with ESMTPSA id 17sm13672143pfp.157.2017.08.18.16.33.13
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 18 Aug 2017 16:33:14 -0700 (PDT)
+Date:   Fri, 18 Aug 2017 16:33:11 -0700
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Ben Peart <peartben@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        jrnieder@gmail.com
+Subject: Re: [RFC PATCH] Updated "imported object" design
+Message-ID: <20170818163311.3bef1da7@twelve2.svl.corp.google.com>
+In-Reply-To: <78139f5c-a044-9c00-11ff-eb91a70b6ab9@gmail.com>
+References: <20170804145113.5ceafafa@twelve2.svl.corp.google.com>
+        <20170816003200.19992-1-jonathantanmy@google.com>
+        <xmqqa82zjlt4.fsf@gitster.mtv.corp.google.com>
+        <20170816143515.0a74f959@twelve2.svl.corp.google.com>
+        <c6787a0b-ba7c-106a-66bd-5c2d38752ccb@gmail.com>
+        <20170817143905.2ef872e6@twelve2.svl.corp.google.com>
+        <78139f5c-a044-9c00-11ff-eb91a70b6ab9@gmail.com>
+X-Mailer: Claws Mail 3.9.3 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Received: by 10.37.40.4 with HTTP; Fri, 18 Aug 2017 15:35:52 -0700 (PDT)
-From:   hIpPy <hippy2981@gmail.com>
-Date:   Fri, 18 Aug 2017 15:35:52 -0700
-Message-ID: <CAM_JFCzZWfyUiFVrYOztdJD8iSYvYUavbzKOX2bxDV0_hMz7Eg@mail.gmail.com>
-Subject: Git makes a merge commit but as a normal (non-merge) commit
-To:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While merging if I do certain actions then the merge commit is made
-with the merge message but as a normal (non-merge) commit.
+On Fri, 18 Aug 2017 10:18:37 -0400
+Ben Peart <peartben@gmail.com> wrote:
 
-Repro steps:
-- Set GIT_MERGE_AUTOEDIT=yes (set other than "no") in .bashrc
-- Make a merge commit with no conflicts.
-  (external text editor shows the generated merge message)
-- Focus on Git Bash and Ctrl-C.
-- Commit (git commit).
+> > But if there was a good way to refer to the "anti-projection" in a
+> > virtualized system (that is, the "real" thing or "object" behind the
+> > "virtual" thing or "image"), then maybe the "virtualized" language is
+> > the best. (And I would gladly change - I'm having a hard time coming up
+> > with a name for the "anti-projection" in the "lazy" language.)
+> > 
+> 
+> The most common "anti-virtual" language I'm familiar with is "physical." 
+>   Virtual machine <-> physical machine. Virtual world <-> physical 
+> world. Virtual repo, commit, tree, blob - physical repo, commit, tree, 
+> blob. I'm not thrilled but I think it works...
 
-Actual behavior:
-Git makes a normal (non-merge) commit (squash merge) but with the
-merge commit message.
+I was thinking more along the lines of the "entity that projects the
+virtualization", not the opposite of a "virtualization" - "physical"
+might work for the latter but probably not the former.
 
-It looks like a bug to me. This is very confusing later on as the repo
-topology would show that the branch is not merged in and there is not
-an easy way to find out when the merge was made.
+After some in-office discussion, if we stick to the "promise" concept,
+maybe we have something like this:
 
-Expected behavior:
-Git should stay in a MERGING state. The user can choose to either
-abort the merge or continue the merge (git merge --continue OR git
-commit).
+  In a partial clone, the origin acts as a promisor of objects. Every
+  object obtained from the promisor also acts as a promise that any
+  object directly or indirectly referenced from that object is fetchable
+  from the promisor.
 
-This does not happen in case of conflicts (at least I'm not able to
-repro). I get a (master|MERGING) prompt till I resolve the conflicts
-and commit, which goes through correctly as a merge commit.
+> > This is not true if you're fetching from another repo 
+> 
+> This isn't a case we've explicitly dealt with (multiple remotes into a 
+> virtualized repo).  Our behavior today would be that once you set the 
+> "virtual repo" flag on the repo (this happens at clone for us), all 
+> remotes are treated as virtual as well (ie we don't differentiate 
+> behavior based on which remote was used).  Our "custom fetcher" always 
+> uses "origin" and some custom settings for a cache-server saved in the 
+> .git/config file when asked to fetch missing objects.
+> 
+> This is probably a good model to stick with at least initially as trying 
+> to solve multiple possible "virtual" remotes as well as mingling 
+> virtualized and non-virtualized remotes and all the mixed cases that can 
+> come up makes my head hurt.  We should probably address that in a 
+> different thread. :)
 
-Environment:
-$ git version
-git version 2.14.0.windows.2
-$ bash --version
-GNU bash, version 4.4.12(1)-release (x86_64-pc-msys)
+OK, let's stick to the current model first then, whether our opinion on
+other remotes is (1) "we won't have any other remotes so we don't care",
+(2) "we have other remotes but it's fine to make sure that they don't
+introduce any new missing objects", or (3) "we need other remotes to
+introduce missing objects, but we can build that after this foundation
+is laid".
 
-Thanks,
-RM
+> > or if you're using
+> > receive-pack, but (1) I think these are not used as much in such a
+> > situation, and (2) if you do use them, the slowness only "kicks in" if
+> > you do not have the objects referred to (whether non-"imported" or
+> > "imported") and thus have to check the references in all "imported"
+> > objects.
+> > 
+> 
+> Is there any case where receive-pack is used on the client side?  I'm 
+> only aware of it being used on the server side to receive packs pushed 
+> from the client.  If it is not used in a virtualized client, then we 
+> would not need to do anything different for receive-pack.
+
+This happens if another repo decides to push to the virtualized client,
+which (as I wrote) I don't expect to happen often. My intention is to
+ensure that receive-pack will still work.
+
+> That is another good point.  Given the discussion above about not 
+> needing to do the connectivity test for fetch/clone - the potential perf 
+> hit of loading/parsing all the various objects to build up the oidset is 
+> much less of an issue.
+
+Agreed.
