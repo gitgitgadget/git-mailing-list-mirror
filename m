@@ -2,95 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0527220899
-	for <e@80x24.org>; Fri, 18 Aug 2017 01:59:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D124120899
+	for <e@80x24.org>; Fri, 18 Aug 2017 02:13:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753926AbdHRB7v (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Aug 2017 21:59:51 -0400
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:35213 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753895AbdHRB7p (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Aug 2017 21:59:45 -0400
-Received: by mail-lf0-f65.google.com with SMTP id w199so5386019lff.2
-        for <git@vger.kernel.org>; Thu, 17 Aug 2017 18:59:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references;
-        bh=M+B+IDXEu9vpJ+6KtyeelBTohNFX4RGTL+7LaaR2NV8=;
-        b=knlCeq2XImcTRRiExfhy6ic+coyWxDq2pTMBxIJTp8HCxMQyyBnj6FwKDdorbDzgAz
-         CTEF6YDGL1XIUmwlWEVN9SPjyla0Ij0TJGbxkW+5ErDbhT8a/xHbAZX3Ea6pftJclBYL
-         5EkDPZGdEIcLZzbcR0n4cOI0k58/zKQwwjvUXLWnNlPrbO58ZxGMDDNoIQBV8LID33Vd
-         Lk+fC8OHXz6jeQd30kl1UYn0qKhvTUjcMLgQCGDv32pXrsvh2xnU5ue8nuBMiHNYCN9R
-         c0XR0YfBKAxz4OHUzObOcmrRiVTlLz8aPMMtupKJYOrZLxthFsM2HBHkZThNd4VAv/q1
-         d2ZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :in-reply-to:references:in-reply-to:references;
-        bh=M+B+IDXEu9vpJ+6KtyeelBTohNFX4RGTL+7LaaR2NV8=;
-        b=jGsYvL8ObgtCZfHlsOFZ80PyRjz68dN/k/V+zTRgQbe8+t/LckzrVK4Bg3xi8Ae9FM
-         /CI+x+fwcPL+D8PyJ0dDtiRPUPPWXhFxq2vwOY/zfjrBdbmltcBpNDfodQaWSxneu8+l
-         8Mf+ZLDDCDvwmR/y3P//o+U9tBWWyQ0TgyPF8s2k21Ep5YO6aIny8xPpmV2srqbfWyjl
-         42LQTrGGCfdKxSWYLs1VTCDjxgvJK/aPjkOJH3Fh/5fFdwdpnsmphlWbMKTRPZij+T16
-         88anZJ03dq1XCsrovNpB4z+0rJTZGGeUBzwl+LE98dQpc58amyD88zOIqsY+I1ZRtqY1
-         vDcw==
-X-Gm-Message-State: AHYfb5hdTYCsF82fM3mRWaCN98qWL/TW0AhwvurGpjvpBfb6EXojxOLT
-        LxGSqgb3KcE0WuCVqh8=
-X-Received: by 10.25.163.9 with SMTP id m9mr2543936lfe.77.1503021584530;
-        Thu, 17 Aug 2017 18:59:44 -0700 (PDT)
-Received: from localhost.localdomain ([188.121.16.104])
-        by smtp.gmail.com with ESMTPSA id c23sm363156lfh.79.2017.08.17.18.59.43
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 17 Aug 2017 18:59:43 -0700 (PDT)
-From:   Patryk Obara <patryk.obara@gmail.com>
-To:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>
-Subject: [PATCH v3 3/4] commit: allocate array using object_id size
-Date:   Fri, 18 Aug 2017 03:59:37 +0200
-Message-Id: <26cb2ccae6c5b66e55dc3868e47b2f1473acae07.1503020338.git.patryk.obara@gmail.com>
-X-Mailer: git-send-email 2.9.5
-In-Reply-To: <cover.1503020338.git.patryk.obara@gmail.com>
-References: <cover.1502905085.git.patryk.obara@gmail.com>
- <cover.1503020338.git.patryk.obara@gmail.com>
-In-Reply-To: <cover.1503020338.git.patryk.obara@gmail.com>
-References: <cover.1503020338.git.patryk.obara@gmail.com>
+        id S932116AbdHRCNm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Aug 2017 22:13:42 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58176 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S932092AbdHRCNm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Aug 2017 22:13:42 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 104ED93FBA;
+        Thu, 17 Aug 2017 22:13:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=K0HbjgITLYiTnpOpBKjeVJf7378=; b=bZLCFa
+        3j2qoGAS5qzNPnmEBA9wNuF0fIod5bKqAnrcODmVyo1Fv1MtzCGQBxQIa7gu/Yje
+        jAJONvj56BZ1YC+si1cDw1FuqVMAr1pHE0u63qkSQXgMo+sge5w02Dp9tBLn3Z9W
+        C3Rmm0Vha9eiNm5OcgI4ASKiBj3QevtaR63Oc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=cR3VYEyyEr/yakqps/8FhuIgOJv394FP
+        n/COUhDFcEVHV5fHYrNzxM3o7S0NvqJNljCjARPF0nuM9we4mwJH+FbVOsV/pKPo
+        UaRRpqQ7AqMVBCHzBRucZnnKgCtrGL9ot3pc4fLEeiZY4adcSCosy2ShJOM7QZ06
+        aSsk+yq3Sac=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 00E2E93FB8;
+        Thu, 17 Aug 2017 22:13:35 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5C05A93FB7;
+        Thu, 17 Aug 2017 22:13:34 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Submodule regression in 2.14?
+References: <4283F0B0-BC1C-4ED1-8126-7E512D84484B@gmail.com>
+        <CAGZ79kajWhEOtqZLrYSAVhM_ZLDiQd9DP9GeL+J=tqach5V65A@mail.gmail.com>
+        <FCB6097F-9F8D-4FDD-A8CE-D936C9CE62E7@gmail.com>
+        <CAGZ79kb-ReME6qbDy-Q12-d=B=f6odUW_D1bAmegP4AY2AyntQ@mail.gmail.com>
+Date:   Thu, 17 Aug 2017 19:13:33 -0700
+In-Reply-To: <CAGZ79kb-ReME6qbDy-Q12-d=B=f6odUW_D1bAmegP4AY2AyntQ@mail.gmail.com>
+        (Stefan Beller's message of "Thu, 17 Aug 2017 14:55:27 -0700")
+Message-ID: <xmqqd17tei7m.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: D67FC95E-83BA-11E7-9378-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-struct commit_graft aggregates an array of object_id's, which have
-size >= GIT_MAX_RAWSZ bytes. This change prevents memory allocation
-error when size of object_id is larger than GIT_SHA1_RAWSZ.
+Stefan Beller <sbeller@google.com> writes:
 
-Signed-off-by: Patryk Obara <patryk.obara@gmail.com>
----
- commit.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+> Are you saying this might be a design mistake and
+> the .update ought to be respected by all the other
+> commands? For example
+>     git reset --recurse-submodules
+> should ignore the .update= none?
 
-diff --git a/commit.c b/commit.c
-index 019e733..61528a5 100644
---- a/commit.c
-+++ b/commit.c
-@@ -149,7 +149,8 @@ struct commit_graft *read_graft_line(struct strbuf *line)
- 	if ((len + 1) % entry_size)
- 		goto bad_graft_data;
- 	i = (len + 1) / entry_size - 1;
--	graft = xmalloc(st_add(sizeof(*graft), st_mult(GIT_SHA1_RAWSZ, i)));
-+	graft = xmalloc(st_add(sizeof(*graft),
-+	                       st_mult(sizeof(struct object_id), i)));
- 	graft->nr_parent = i;
- 	if (get_oid_hex(buf, &graft->oid))
- 		goto bad_graft_data;
--- 
-2.9.5
+I have been under the impression that that has been the traditional
+desire of what .update ought to mean.  I personally do not have a
+strong opinion---at least not yet.
 
+> When designing these new recursive submodule functionality
+> outside the "submodule" command, I'd want submodules
+> to behave as much as possible like trees.
+
+I think that is sensible as long as the user does not explicitly say
+"this and that submodule behave differently" by giving configuration
+variables.  Perhaps .update is one of those that should countermand
+the default behaviour of "--recurse-submodules"?
