@@ -2,84 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 99907208CD
-	for <e@80x24.org>; Fri, 18 Aug 2017 19:09:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B915208CD
+	for <e@80x24.org>; Fri, 18 Aug 2017 19:10:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752441AbdHRTJ4 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Aug 2017 15:09:56 -0400
-Received: from mail-yw0-f177.google.com ([209.85.161.177]:36760 "EHLO
-        mail-yw0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752270AbdHRTJz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Aug 2017 15:09:55 -0400
-Received: by mail-yw0-f177.google.com with SMTP id u207so64320047ywc.3
-        for <git@vger.kernel.org>; Fri, 18 Aug 2017 12:09:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=6FrBUYVZXlXgCMdxenrFamIKZ6SndtJEZ7qummZ0FI4=;
-        b=py0aA+zrvBVO40Pd+x7qvF0wlpZwSn6Ay6r/cRCSdw4KTSaHVX49yBwU6HLsqTXsuJ
-         4hHokw38uEhWorNvuDsk1AMxGQeMkMKV06bI12frYrL13oEoSoscsNp1Mp24wLWb4zYZ
-         sCLm3WrejdM7GM1vFSlzn5usGCdopNbz6lvrw1VIjsQdWBjRI1RfwaKkfFk+MlJcsaA0
-         B3c6mhJyFbh2G/mJYBkrurNw+ZkkDMA1nxZHLxpx13Fg7ZMnAksCkD7Uu3lIkQMTVD79
-         ZsvhteBL6QZ85p+HZHQXPTMBaQwSJG56NbT3MvxvA4KwYf6n2tiLUaOzRWJ2p8wLGkFu
-         JEzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=6FrBUYVZXlXgCMdxenrFamIKZ6SndtJEZ7qummZ0FI4=;
-        b=NcAkhD6jn/zzmSYQFhqn6NjsloJ0DgTBeJ8H0afhul5RkkTgYNjMByPs8x6P7T6xvu
-         kMnhyZJwo57bn+OFuvsbUa6AJINd1UGO9AUVKcYV7OqIzmHJCEOaPg4BhDLDNBopXahr
-         GVTkSK3oPe5L7Ea4wcnCSVKzTTu0BuGC1a2koqOFIsNlSg2ppJhQ4QUGz1j9TYVNcZ0/
-         cj0ZcXGmuv02sUJBM9HAkLRIzUoyHQNR8lBqfNqoaHQYI6CHqL/0law0hD771GWOQE1c
-         yFmyLTXix6mrUHsXXfXHuI2n5DG2RS6LOAKpsfoVT3d/gMfMvXrRkriiltWKOPWDEzsL
-         zD6A==
-X-Gm-Message-State: AHYfb5jWlSDULg+tG3HNFkVnV0jfAlaSYbd0qOqIJIK7hmDp6HB1Sad+
-        ufQdotTc/fhb5C8aBEsXboFi21zjir5Z
-X-Received: by 10.13.229.3 with SMTP id o3mr8058724ywe.137.1503083394580; Fri,
- 18 Aug 2017 12:09:54 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.37.56.142 with HTTP; Fri, 18 Aug 2017 12:09:53 -0700 (PDT)
-In-Reply-To: <xmqq7ey0ddlk.fsf@gitster.mtv.corp.google.com>
-References: <4283F0B0-BC1C-4ED1-8126-7E512D84484B@gmail.com>
- <CAGZ79kajWhEOtqZLrYSAVhM_ZLDiQd9DP9GeL+J=tqach5V65A@mail.gmail.com>
- <FCB6097F-9F8D-4FDD-A8CE-D936C9CE62E7@gmail.com> <CAGZ79kb-ReME6qbDy-Q12-d=B=f6odUW_D1bAmegP4AY2AyntQ@mail.gmail.com>
- <xmqqd17tei7m.fsf@gitster.mtv.corp.google.com> <CAGZ79kZdnJ+bATTxKBhsJnKaJWGqcBu3MOQ9eK7m4j3dJPNbTw@mail.gmail.com>
- <xmqq7ey0ddlk.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 18 Aug 2017 12:09:53 -0700
-Message-ID: <CAGZ79kap-4k7n48dvBAv2pJjNy2s_LPHS-NdfQD0A-BbWqh4aQ@mail.gmail.com>
-Subject: Re: Submodule regression in 2.14?
-To:     Junio C Hamano <gitster@pobox.com>
+        id S1751609AbdHRTKl (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Aug 2017 15:10:41 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53639 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750984AbdHRTKk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Aug 2017 15:10:40 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0087D97A68;
+        Fri, 18 Aug 2017 15:10:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=OYwXhHHq63BwrUEN2L1w+NH6beE=; b=WTKNSF
+        k8S6HXF57Ptx2sWErEqT8OxzKwWlSlyD0hE6MUalnaK+q2EZmCr2vOtvuwr7rgHY
+        rMlqSDwAPLVzjX2cOyBkGEK0D3Zrc05Ii/7pIR7Aoseq7YL9Gk0WwQAjv9IrLFwS
+        5s1VB6tlasi96na8va8z+3FVjIVqHoB3Ohazc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=bSm4nn/TnVamRzyMBILBbPuCaO2qzr+q
+        TngVjHBdQ+/ZGxf5WgFArM5uRGoobQxbGtqIP9WbfODD9rBKH+ykQln6q/70P6p/
+        Tg3llacxQEVePT2G3hMcT6BdKV1pXq6+vT3gvA0t8jw/EKhFrC1M3gglEwts6KZe
+        azoMuBG2Tmg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EB6BE97A67;
+        Fri, 18 Aug 2017 15:10:39 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5FA8697A65;
+        Fri, 18 Aug 2017 15:10:39 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
 Cc:     Lars Schneider <larsxschneider@gmail.com>,
         Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Submodule regression in 2.14?
+References: <4283F0B0-BC1C-4ED1-8126-7E512D84484B@gmail.com>
+        <CAGZ79kajWhEOtqZLrYSAVhM_ZLDiQd9DP9GeL+J=tqach5V65A@mail.gmail.com>
+        <FCB6097F-9F8D-4FDD-A8CE-D936C9CE62E7@gmail.com>
+        <CAGZ79kb-ReME6qbDy-Q12-d=B=f6odUW_D1bAmegP4AY2AyntQ@mail.gmail.com>
+        <D784E926-9FC7-4508-9632-225138679CDF@gmail.com>
+        <CAGZ79kaC-rtfp-AMdpkpCycgk568eU2y-JDGwdoSK_E=oUJo-w@mail.gmail.com>
+Date:   Fri, 18 Aug 2017 12:10:38 -0700
+In-Reply-To: <CAGZ79kaC-rtfp-AMdpkpCycgk568eU2y-JDGwdoSK_E=oUJo-w@mail.gmail.com>
+        (Stefan Beller's message of "Fri, 18 Aug 2017 10:16:14 -0700")
+Message-ID: <xmqqpobsbsk1.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: EC3DF6E2-8448-11E7-BA1D-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 18, 2017 at 9:50 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> I am not sure if I follow.  Submodules are not trees and one of the
-> reasons people may want to separate things into different modules is
-> so that they can treat them differently.  If submodules allow you
-> a richer set of operations than a tree that is part of a monolithic
-> project, is that necessarily a bad thing?
+Stefan Beller <sbeller@google.com> writes:
 
-It is not a bad thing on its own, but we have to consider which
-additional actions are useful.
+>> In the past "submodule.<name>.update=none" was an easy way
+>> to selectively disable certain Submodules.
+>>
+>> How would I do this with Git 2.14?
+>
+>     submodule.<name>.active = false
+>
+>> My gut feeling is that all commands should respect the
+>> "submodule.<name>.update=none" setting.
+>
+> Well my gut feeling was that the "update" part of the name
+> reponds to the subcommand, not the generic action.
+>
+> For example when you set update=none, git-status,
+> recursive git-diff still reported the submodule.
 
-Jonathan brought up the following very long term vision:
-Eventually the everyday git commands do not treat submodules
-any special than trees, even the submodules git directory
-may be non existent (everything is absorbed into the superproject);
-so it really feels like a monorepo.
-When you want to work on a submodule individually, you have to
-make a new working tree.
+Both status and diff are read-only operations, so this smells like a
+bit bogus argument made by comparing apples and oranges.
+
+I think Lars is more interested in operations that actually affects
+the state of submodules by updating them---"submodule update" may be
+a prime example as it goes down to run fetch, pull and/or checkout.
+It may have been the only thing that affected the state of
+submodules before the "--recurse-submodules" option was added to
+commands that affect the state of the (super)project, but I would
+think that it is not so wrong to expect that these state-affecting
+operations running in the "recurse into submodules" mode to honor
+"do not update this submodule" that used to be honored only by
+"submodule update".
