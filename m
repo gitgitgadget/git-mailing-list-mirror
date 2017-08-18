@@ -2,87 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 50D121F667
-	for <e@80x24.org>; Fri, 18 Aug 2017 06:56:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE08A1F667
+	for <e@80x24.org>; Fri, 18 Aug 2017 07:08:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751644AbdHRG4P (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Aug 2017 02:56:15 -0400
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:58804 "EHLO
-        glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751622AbdHRG4O (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Aug 2017 02:56:14 -0400
-Received: from glandium by mitsuha.glandium.org with local (Exim 4.89)
-        (envelope-from <mh@glandium.org>)
-        id 1diayu-0005Wy-OH
-        for git@vger.kernel.org; Fri, 18 Aug 2017 15:42:08 +0900
-Date:   Fri, 18 Aug 2017 15:42:08 +0900
-From:   Mike Hommey <mh@glandium.org>
-To:     git@vger.kernel.org
-Subject: Revision resolution for remote-helpers?
-Message-ID: <20170818064208.plkppke7efpucuwm@glandium.org>
+        id S1750926AbdHRHIj (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Aug 2017 03:08:39 -0400
+Received: from vie01a-dmta-pe08-1.mx.upcmail.net ([84.116.36.20]:32883 "EHLO
+        vie01a-dmta-pe05-1.mx.upcmail.net" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1750773AbdHRHIi (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 18 Aug 2017 03:08:38 -0400
+Received: from [172.31.216.44] (helo=vie01a-pemc-psmtp-pe02)
+        by vie01a-dmta-pe08.mx.upcmail.net with esmtp (Exim 4.88)
+        (envelope-from <martin.koegler@chello.at>)
+        id 1dibOW-0003mL-6t
+        for git@vger.kernel.org; Fri, 18 Aug 2017 09:08:36 +0200
+Received: from master.zuhause ([80.108.242.240])
+        by vie01a-pemc-psmtp-pe02 with SMTP @ mailcloud.upcmail.net
+        id yX8S1v0135BuuEg01X8TpZ; Fri, 18 Aug 2017 09:08:28 +0200
+X-SourceIP: 80.108.242.240
+Received: by master.zuhause (Postfix, from userid 1006)
+        id EA24A45D7A18; Fri, 18 Aug 2017 09:08:25 +0200 (CEST)
+Date:   Fri, 18 Aug 2017 09:08:25 +0200
+From:   Martin Koegler <martin.koegler@chello.at>
+To:     Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+Cc:     Martin Koegler <martin.koegler@chello.at>, git@vger.kernel.org,
+        gitster@pobox.com, Johannes.Schindelin@gmx.de
+Subject: Re: [Patch size_t V3 00/19] use size_t
+Message-ID: <20170818070824.GA3401@mail.zuhause>
+References: <1502914591-26215-1-git-send-email-martin@mail.zuhause>
+ <20170817203554.GB31284@tor.lan>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: NeoMutt/20170609 (1.8.3)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20170817203554.GB31284@tor.lan>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Thu, Aug 17, 2017 at 10:35:54PM +0200, Torsten Bögershausen wrote:
+> On Wed, Aug 16, 2017 at 10:16:12PM +0200, Martin Koegler wrote:
+> > From: Martin Koegler <martin.koegler@chello.at>
+> > 
+> > This patchset is for next [24db08a6e8fed761d3bace7f2d5997806e20b9f7].
+> 
+> I applied it succesfully, and run the test suite on a 32 bit system.
+> The Laptop reported one brekage in t0040:
+> t0040-parse-options.sh   not ok 19 - OPT_MAGNITUDE() 3giga
 
-As you might remember, I'm maintaining a remote helper that allows to
-talk directly to mercurial servers with git: git-cinnabar.
+I missed test-parse-options.c - I'll post an updated versions considering all comments.
 
-When dealing with "foreign (non-git) repositories", it is often
-necessary to refer to revisions with their native name. With mercurial,
-that's a sha1, with svn it's a revision number, etc.
+parse-options takes the variable as void* - so the compilers also fails to recognize the usage
+of incompatible types.
+ 
+> Beside some t5561-http-backend.sh (which are most probably not caused
+> by this patch.
+> 
+> The raspi had 2 deadlocks, like "git push --signed dst noop ff +noff"
+> or
+> trash directory.t5541-http-push-smart/gpghome --sign -u committer@example.com
+> Even this most probably not caused by the patch. (and the test is still running)
+> 
+> Well done, and on which platforms did you test ?
 
-Git-cinnabar does provide a helper command that gives back the git
-commit from the mercurial revision (and vice versa), but that's
-cumbersome to use in commands.
+Linux 64. 
 
-I was thinking it could be useful to have a special syntax for revisions
-that would query a helper program. The helper program could use a
-similar protocol to that of the remote helpers.
-
-My thought is that a string like <helper>::<revision> could be used
-wherever a committish is expected. That would call some helper
-and request to resolve revision, and the helper would provide a git
-commit as a response.
-
-The reason for the <helper>:: prefix is that it matches the <helper>::
-prefix used for remote helpers.
-
-Now, there are a few caveats:
-- <revision>, for e.g. svn, pretty much would depend on the remote.
-  OTOH, in mercurial, it doesn't. I think it would be fair for the
-  helper to have to deal with making what appears after :: relevant
-  to find the right revision, by possibly including a remote name.
-- msys likes to completely fuck up command lines when they contain ::.
-  For remote helpers, the alternative that works is
-  <helper>://<host>/etc.
-
-Which leads me to think some "virtual" ref namespace could be a solution
-to the problem. So instead of <helper>::, the prefix would be <helper>/.
-For e.g. svn, svn/$remote/$rev would be a natural way to specify the
-revision for a given remote. For mercurial, hg/$sha1.
-
-Potentially, this could be a sort of pluggable ref stores, which could
-be used for extensions such as the currently discussed reftable.
-
-On the opposite end of the problem, I'm also thinking about git log
---decorate=<helper> displaying the mercurial revisions where branch
-decorations would normally go.
-
-I have no patch to show for it. Those are ideas that I first want to
-discuss before implementing anything.
-
-Thoughts?
-
-Mike
+Regards,
+Martin
