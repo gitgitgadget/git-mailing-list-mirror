@@ -6,57 +6,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 16A2B208CD
-	for <e@80x24.org>; Fri, 18 Aug 2017 16:30:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E217F208CD
+	for <e@80x24.org>; Fri, 18 Aug 2017 16:31:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752159AbdHRQal (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Aug 2017 12:30:41 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63607 "EHLO
+        id S1752294AbdHRQbg (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Aug 2017 12:31:36 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58920 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751614AbdHRQak (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Aug 2017 12:30:40 -0400
+        with ESMTP id S1750984AbdHRQbf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Aug 2017 12:31:35 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4F0A193473;
-        Fri, 18 Aug 2017 12:30:39 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8D617ABFD6;
+        Fri, 18 Aug 2017 12:31:29 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=f/f54Qdet7Mg
-        b5xj5HcvM/8pB0Y=; b=WZei95KaI0KQ2ujKQsBqvMxVZjKRauKOr1fyIa5DnClH
-        4ECC+uwENi276Qv4Maxkgomnrbt2rJr5ogG0uYPAYJaq5XeX5lvmHEGKwNoffYdS
-        DuDS6roimH2iCOLMITtuUz7gytogE7GGan6Hsw1ECPXjZy355Dwmu/cJcIIO6Co=
+        :content-type:content-transfer-encoding; s=sasl; bh=sgqXFBSAvhS2
+        cjsKXbH8Jah9RCE=; b=DsuwLE0TNRM7/eaQg3GCGlQeLYjwRJ7XoVroKPCt4aAS
+        3UbaPJMMufS84zJPeG689B/LaPOuVhJq6BoowR3ikmoJNif0Ro/SPhL5huMpcNWV
+        mWQK9PfwPcQu5LHKspvk7vtJfVfCigWMB1rDrqr+ZTkxsjbMwR1zAgqSJ1bU35s=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=NHC5Eg
-        FPhH+yeEM8s5gobcaZCX4iNLoe7eTEV02i87iSfMmYBSByOGnT6ZPdvtKiTfq90A
-        lwRCNVzuSikmFzWBx31OTJfA/KsCHXT29Qlh6oquePCm1PeJ9Fw5vACeNTNe2wNg
-        drybDerPZzK7dlNvh8HgG2Z9ndfUKtBwCQIyA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 38AB993471;
-        Fri, 18 Aug 2017 12:30:39 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Duh6IW
+        SQti/k84AgnJppLyn3B2b9SYWc+EaD2dDhOJYtaDxXcn4bWoHnHNhvabwntPiD4V
+        7jFV6Pm9x3BBR12jTK3aqYqj6epUFakfOBMUrfFO2l80j9MMkrJbo7vtdhdzcfD4
+        FGf+5wL0H9Tf37+xMnfniZGAyR6dhQgdcYTvY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 86149ABFD4;
+        Fri, 18 Aug 2017 12:31:29 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 81B7E9346E;
-        Fri, 18 Aug 2017 12:30:38 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E964DABFD2;
+        Fri, 18 Aug 2017 12:31:28 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Cc:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
+Cc:     martin.agren@gmail.com, git@vger.kernel.org
 Subject: Re: [PATCH v4 2/3] builtin/branch: stop supporting the use of --set-upstream option
 References: <xmqqy3qluck4.fsf@gitster.mtv.corp.google.com>
         <20170817025425.6647-1-kaarticsivaraam91196@gmail.com>
         <20170817025425.6647-2-kaarticsivaraam91196@gmail.com>
-        <CAN0heSquaXk421sR6Ry59C+er8n26nC93=3KG1wD0xNXZkuiGw@mail.gmail.com>
-        <xmqqshgqezox.fsf@gitster.mtv.corp.google.com>
-        <42219b51-8232-e1ee-9c48-f67ccdcbb4c8@gmail.com>
-Date:   Fri, 18 Aug 2017 09:30:37 -0700
-In-Reply-To: <42219b51-8232-e1ee-9c48-f67ccdcbb4c8@gmail.com> (Kaartic
-        Sivaraam's message of "Fri, 18 Aug 2017 08:11:37 +0530")
-Message-ID: <xmqqr2w8dej6.fsf@gitster.mtv.corp.google.com>
+        <xmqqo9reezjx.fsf@gitster.mtv.corp.google.com>
+        <69172c47-0af4-4c74-a20b-82da537ad9ee@gmail.com>
+Date:   Fri, 18 Aug 2017 09:31:27 -0700
+In-Reply-To: <69172c47-0af4-4c74-a20b-82da537ad9ee@gmail.com> (Kaartic
+        Sivaraam's message of "Fri, 18 Aug 2017 08:09:44 +0530")
+Message-ID: <xmqqmv6wdehs.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 91AE4A30-8432-11E7-976D-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: AFBC9BB2-8432-11E7-9023-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -65,29 +63,22 @@ X-Mailing-List: git@vger.kernel.org
 
 Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
 
-> On Friday 18 August 2017 01:25 AM, Junio C Hamano wrote:
->> Martin =C3=85gren <martin.agren@gmail.com> writes:
+> On Monday 14 August 2017 02:20 PM, Kaartic Sivaraam wrote:
 >>
->>> On 17 August 2017 at 04:54, Kaartic Sivaraam
->>> <kaarticsivaraam91196@gmail.com> wrote:
->>>> Helped-by: Martin =C3=85gren <martin.agren@gmail.com>,  Junio C Hama=
-no <gitster@pobox.com>
->>>> Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
->>> I didn't expect a "Helped-by", all I did was to give some random
->>> comments. :-) I'm not so sure about the comma-separation, that seems =
-to
->>> be a first in the project.
->> I didn't either ;-)
+>> On Wednesday 09 August 2017 12:03 AM, Martin =C3=85gren wrote:
+>>>
+>>> Maybe the final note could be removed? Someone who is looking up
+>>> --set-upstream because Git just "crashed" on them will only want to k=
+now
+>>> what they should do instead. Our thoughts about the future are perhap=
+s
+>>> not that interesting.
 >>
->> The line looks odd so I'll remove it while queuing.
->>
->> Thanks for noticing.
-> I should have been better with my wordings :) How about converting that
-> line into two 'Suggestions-by:' or 'Reviewed-by:' ?
+>> I thought it's better to document it to avoid people from getting=20
+> surprised
+>> when the options *starts working* again.
+>
+> I hope that explains the reason.
 
-I personally do not think either is needed for those small things we
-saw in the discussion.
-
-Unless Martin feels strongly about it, that is.
-
-Thanks.
+That is something we can say we _actually_ repurpose the option.
+Until then, it is merely noise that distracts the users.
