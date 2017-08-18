@@ -2,93 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B335F208CD
-	for <e@80x24.org>; Fri, 18 Aug 2017 19:47:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A5091208D0
+	for <e@80x24.org>; Fri, 18 Aug 2017 20:39:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752275AbdHRTrF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Aug 2017 15:47:05 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60802 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751935AbdHRTrD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Aug 2017 15:47:03 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 69DE7B0CF2;
-        Fri, 18 Aug 2017 15:47:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=w+xjgSQaqCrlFPUFnJeRIkKY2l8=; b=adle90
-        eEs83V6HxteSYb++t1wENQH725keI0xcTb+FH0G1N21CLmF+46JUnLWUmEOu2Hyr
-        vK3FmBcW16KGF05iCk9jvj1B8hsvONuQ0ymt4FdVe7wrnvB2rwIx4PqDmapilRC6
-        /quourf3CKkP/EybX3xmrbEMZqxhquEs22oYk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ZBHMiPJMwyRj/yB2OSLZdAWr3aoEBao/
-        3OEozsw9fIPlWOrgAb8Gno07MIhmkfUaJjG/HExPyJPy1IyVVzF2oEgYxt3s27/n
-        6CLRAlakgEoM5zAYsk0j8m2o0SrB6rtA32ClK565cYyyccaqrsSE+GPoQSKUqXB7
-        gR3tY7ZyUNY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 62D23B0CF1;
-        Fri, 18 Aug 2017 15:47:02 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B538FB0CEF;
-        Fri, 18 Aug 2017 15:47:01 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Patryk Obara <patryk.obara@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        "brian m . carlson" <sandals@crustytoothpaste.ath.cx>,
-        Stefan Beller <stefanbeller@gmail.com>
-Subject: Re: [PATCH v4 4/4] commit: rewrite read_graft_line
-References: <cover.1503020338.git.patryk.obara@gmail.com>
-        <cover.1503079879.git.patryk.obara@gmail.com>
-        <9a4548f1d0832d036cad152771339d853b5885f3.1503079879.git.patryk.obara@gmail.com>
-        <CAJfL8+T3vqnmFJmx19H-v8yGiY4Se78SM+ax_q07_PF4VHDv3Q@mail.gmail.com>
-Date:   Fri, 18 Aug 2017 12:47:00 -0700
-In-Reply-To: <CAJfL8+T3vqnmFJmx19H-v8yGiY4Se78SM+ax_q07_PF4VHDv3Q@mail.gmail.com>
-        (Patryk Obara's message of "Fri, 18 Aug 2017 20:38:25 +0200")
-Message-ID: <xmqqefs8bqvf.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1752220AbdHRUjC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Aug 2017 16:39:02 -0400
+Received: from mail-pg0-f48.google.com ([74.125.83.48]:38198 "EHLO
+        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751965AbdHRUjB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Aug 2017 16:39:01 -0400
+Received: by mail-pg0-f48.google.com with SMTP id t80so43350285pgb.5
+        for <git@vger.kernel.org>; Fri, 18 Aug 2017 13:39:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=iXEo/WydKfJ9S8Bh46tZmavZzjQDY5a6IZscnD6+kg8=;
+        b=SrL4W2yweEQoCOkPtPpcs4otw6YIzUjW6rlffvLzWrLnV9bKcuqvRbDaxNq1coyY3z
+         sb2fxA5SkYjJ+yVFyhQZVEcRXoP6bPYZl+5834oSbuMG5qvu6Bzam0fYm09G1i9qCyuo
+         doeyhveDNPjsryWTRE69KansuOXrMMNbS0dfZbJgOmtJwbEjRLd9jCOgzKo+be1cYQ5M
+         X+AbUHgkxzB0K2xg6okQO/YEsrn41t3xf+r6C5XwUz9OxRbIEDNfu9dH//nmvpPgUhV7
+         1rRzTBA1BPII6I8nZWtYHHDbO3UmVw5lCJerOl1g6tfj/u99ZtGrxMF3G5q28vl5lzoi
+         JvWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=iXEo/WydKfJ9S8Bh46tZmavZzjQDY5a6IZscnD6+kg8=;
+        b=M9m6bCJbD9kgxtMH6d5OA1dY7mMbWGaEo94C4L/PC0lDNc0JoMe9hDtPQvTW+M1/8s
+         7KVoM5YAcYu/2oNZBhBonsbtd+Jj1jyLZNqrYEvidtpXulLo4qQx1KUxUrJSxASZmxng
+         wfKZmQJUHjdOgn7La27yVW/OzaZ44O55/rhuZaDLS1XDWsXIVGWqDZgjs48ljZUKOeeV
+         00JV6vWmmlAyx/3snZ7QALuZLDV2lw9bTnl+t/p4xRB4OsZ6lnrlRHccBOU1w5eOPknu
+         cTEUl0DiLQz3ivlAkY/Vrw7ctWww5MvMW3R6Dnhais0JkuyhNMlAYlznLWw9SCMKffWV
+         6B4Q==
+X-Gm-Message-State: AHYfb5gBhzD3BWzl5QjYwykibNVOT2Adobo+Qkhhm/2fSphSF1b9bjo4
+        T5gM55P5+NBS+g==
+X-Received: by 10.84.216.30 with SMTP id m30mr8486011pli.385.1503088740755;
+        Fri, 18 Aug 2017 13:39:00 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:70fd:e2e5:b6ce:5065])
+        by smtp.gmail.com with ESMTPSA id j73sm15370026pfa.117.2017.08.18.13.38.59
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 18 Aug 2017 13:39:00 -0700 (PDT)
+Date:   Fri, 18 Aug 2017 13:38:58 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     R0b0t1 <r030t1@gmail.com>
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+Subject: Re: [bug] Git submodule command interprets switch as argument and
+ switch
+Message-ID: <20170818203858.GK13924@aiede.mtv.corp.google.com>
+References: <CAAD4mYi24dHNhG1MFkPaeVv9P-9UN_FxSvZmX6XFHrfA7K0hoQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 010FCDFC-844E-11E7-9B36-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAAD4mYi24dHNhG1MFkPaeVv9P-9UN_FxSvZmX6XFHrfA7K0hoQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patryk Obara <patryk.obara@gmail.com> writes:
+Hi,
 
-> Actually, I don't think I needed to remove free(graft) line, but I don't
-> know if freeing NULL is considered ok in git code. Let me know if I
-> should bring it back, please.
+R0b0t1 wrote:
 
-Either free(graft) or assert(!graft) is fine, but we should have one
-of them there.  I'll add assert(!graft) there while queuing, at
-least for now.
+> The issue is as follows:
+>
+> R0b0t1@host:~/devel/project$ git submodule add
+> https://github.com/user/project -f
+> Cloning into '/home/R0b0t1/devel/project/-f'...
 
-In the current code, when the control reaches the bad_graft_data
-label, 'graft' must be NULL, or there is a bug in our code.  Because
-we are parsing exactly the same input using the same helper routines
-in both passes, we should see failure during the first pass before
-'graft' points to an allocated piece of memory.  So it may be a good
-idea to have assert(!graft) there than free(graft); the latter would
-sweep a potential bug under the carpet.
+Thanks for reporting.  Confusingly, I think this is intended behavior.
+"git help submodule" explains:
 
-If this were a part of the system whose design is still fluid (it is
-not), it is not implausible that we would later want to add new test
-that jumps to the bad_graft_data label.  For example, after the
-"runs exactly twice" loop, we may add a new test that iterates over
-the graft->parents[] to ensure that there is no duplicate and jumps
-to bad_graft_data when we find one.
+	add [-b <branch>] [-f|--force] [--name <name>]
+		[--reference <repository>] [--depth <depth>] [--]
+		<repository> [<path>]
 
-If we add assert(!graft) there today, and if such an enhancement
-forgets to replace it with free(graft), the assert() will catch the
-mistake.  If we have neither, it makes it more likely that such an
-enhancement leaves a possible memory leak in its error codepath.
+		Add the given repository as a submodule at the given
+		path [etc]
 
-Thanks.
+Since the -f comes after <repository>, it is a <path>.
+
+That said, there are a few related things wrong here.
+
+The usage string above says I can put "--" before the <repository> to
+make things extra unambiguous.  But when I try that, I get the following
+result:
+
+	$ git submodule add -- https://gerrit.googlesource.com/gerrit -f
+	Cloning into '/tmp/t/test/-f'...
+[...]
+	Resolving deltas: 100% (215796/215796), done.
+	/usr/lib/git-core/git-submodule: line 261: cd: -f: invalid option
+	cd: usage: cd [-L|[-P [-e]] [-@]] [dir]
+	Unable to checkout submodule '-f'
+
+If I try to put the "--" between <repository> and <path>, I get another
+confusing result:
+
+	$ git submodule add https://gerrit.googlesource.com/gerrit -- -f
+	'--' already exists in the index
+
+"git help cli" is supposed to give advice about this kind of thing as
+well --- e.g., it gives some sound advice about what form of flags
+scripts should use (e.g., to always use the 'stuck' form --name=<name>
+instead of --name name).  But it doesn't mention this issue of flags
+belonging before other arguments.
+
+Thoughts?
+
+Thanks,
+Jonathan
