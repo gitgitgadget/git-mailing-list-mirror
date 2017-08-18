@@ -2,99 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F16AC20899
-	for <e@80x24.org>; Fri, 18 Aug 2017 02:40:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 188DA20899
+	for <e@80x24.org>; Fri, 18 Aug 2017 04:02:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753908AbdHRCks (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Aug 2017 22:40:48 -0400
-Received: from mail-pg0-f54.google.com ([74.125.83.54]:36058 "EHLO
-        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753345AbdHRCkr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Aug 2017 22:40:47 -0400
-Received: by mail-pg0-f54.google.com with SMTP id i12so54787322pgr.3
-        for <git@vger.kernel.org>; Thu, 17 Aug 2017 19:40:47 -0700 (PDT)
+        id S1750729AbdHRECR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Aug 2017 00:02:17 -0400
+Received: from mail-yw0-f174.google.com ([209.85.161.174]:35658 "EHLO
+        mail-yw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750705AbdHRECQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Aug 2017 00:02:16 -0400
+Received: by mail-yw0-f174.google.com with SMTP id n83so24573878ywn.2
+        for <git@vger.kernel.org>; Thu, 17 Aug 2017 21:02:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=4e2DnUhQhcK6/efv4RzXDGNofXSGrokO+CPSJKERzyY=;
-        b=D+nKcw4R9VOEZsqPRHMZHyGvdOHdT6ASRkJ9rg3duvNEw0RdZbIwOMrWUYxANLrqfd
-         HmztNXDcC9OGJyHks1p209OwdhWV9D3c9xgsVgWBIrJJOwmb+rzH0OR/8N6r1Aw3Ul5N
-         joIlAGIm0kAFpuvarLDLd/i6zVDqt39fNi6/F1aN9jGD/9Lg7VuzQdRO/QS1riWpNfTf
-         F7aAer8jlNeZHt35tw4TZfFlzWVLJhowaLVdRGkK8tGuydyX0o3RrNl9toeMHrRJ22v/
-         BMAmEUUXGgt9rcW5ijCtr863KCu9pQq0NRPfMKBlhxRiSKxRaVOXyAZqoRbMy3lCIabw
-         KXgQ==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ZUj4tGgp0YirPwN5lPROrQNQgycP+2tuCdP24VF7y5M=;
+        b=nqBFwGhce4j5YOqtgTTAazM6KBths7Mm+zw2QBPFXSXv/PIxBVkCtwuIXNQgIJ/uG6
+         X6s9r+nK82o1fElpAqsVEvYW5uTDM8ON43a44eoLXVavP0Pe9plopU3w3j1vSQmaW0Uf
+         XxhYAv6nqCHqDdXytVU14/LbH40NUUnx2rNVcvIv+3E1BYnntA7tFQKSoCI7LGtQElJR
+         412YSqzJan+JC26KIfRk2nFvy6vBZ8mqE6PmyP/zenR4XpRLTK/de5ILWryF2WdVd+rD
+         CW4SUVsfagMjmBxkQihWkyRZn/aUu4Z+lHU/FhT6h+cD/wkywJJJqh3dGRvWDNDzj3CD
+         HbdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=4e2DnUhQhcK6/efv4RzXDGNofXSGrokO+CPSJKERzyY=;
-        b=N4t7UhFKtOec2v0m345dVidMi3pxSo/vCYwQ7fc8gO3b/CDMOQwAKrIgQLYhRxoiXT
-         H4Td765rrAKr1PD51G6gjZw8lGJTOly8lO9A+qjCdfzTB2mjO6kahaQwrozHM9OfSWKO
-         fPbCstNk3hRtVrk41v3QQkUeBy8Sy16HeCv69WaWnkEEj3HxWYw60wABDJQzBXmxZZNS
-         lQDyBM3xINiHOlXNXZ7Dwe3cTBGDb77PDuNqte/Q394ptNYdq0LJ4CNsT1Rz4bgvxQdP
-         TVaz6GiD2A52nZgEbua018oV0b10AC85O27CSP+BzZbTJAw5mrAVPwOZnXfYXhs7guq4
-         xkgA==
-X-Gm-Message-State: AHYfb5jaIZ/3+2vnAvKe3eXzeaXrxJVWvN+WehLvvJ5MnFBe8JefbqXN
-        zru/ic7dxM2o16GYK8M=
-X-Received: by 10.98.30.7 with SMTP id e7mr7322522pfe.329.1503024046598;
-        Thu, 17 Aug 2017 19:40:46 -0700 (PDT)
-Received: from [10.4.2.238] ([14.102.72.146])
-        by smtp.gmail.com with ESMTPSA id l8sm7378504pgu.63.2017.08.17.19.40.43
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 17 Aug 2017 19:40:46 -0700 (PDT)
-Subject: Re: [PATCH v4 2/3] builtin/branch: stop supporting the use of
- --set-upstream option
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-References: <xmqqy3qluck4.fsf@gitster.mtv.corp.google.com>
- <20170817025425.6647-1-kaarticsivaraam91196@gmail.com>
- <20170817025425.6647-2-kaarticsivaraam91196@gmail.com>
- <CAN0heSquaXk421sR6Ry59C+er8n26nC93=3KG1wD0xNXZkuiGw@mail.gmail.com>
- <xmqqshgqezox.fsf@gitster.mtv.corp.google.com>
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Message-ID: <42219b51-8232-e1ee-9c48-f67ccdcbb4c8@gmail.com>
-Date:   Fri, 18 Aug 2017 08:11:37 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ZUj4tGgp0YirPwN5lPROrQNQgycP+2tuCdP24VF7y5M=;
+        b=T9tLo5Z41B+iKfSr/tFFWVZTUMqXOE6l5yPWdoSEuY7N97uMtoEbhRK/qnbJ5Y9TeF
+         qBw+hGIsZRPwCxY/tRU3ShsyZ2pUXqLQ8Wm+1Wu55S+ZgPpTuq1x6GT8sLX7ymRufhb0
+         Q96nXXe5rnUY0hodotv89/WHtMMqG/YRnrOo9OWWvKlbAmT/S7nJrXRwYkWXMmjTlw1v
+         hJ81KXJ0j/KyX1OVUAFnuOO4w4G0hpYtak6SfEIO9DhXXFtcfnJRVT3J/sJIcDs+9NUR
+         XU3KhooVJC80O8VT57UP1KMbsa1MqlSvSVW1ie7e7X/cOx+QnOgzycWRU4szGv2rHMwR
+         4zGA==
+X-Gm-Message-State: AHYfb5jhvZqp7DOtWX2eCKcl5FBIdZ+MF6azeZKX1O2xCClJRs2TUf96
+        CW3Hx80lEhvhe/MERfjaEbNnDxWHgxqdOc1ZWQ==
+X-Received: by 10.13.218.129 with SMTP id c123mr5898831ywe.175.1503028935887;
+ Thu, 17 Aug 2017 21:02:15 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqqshgqezox.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-Cyberoam-smtpxy-version: 1.0.6.3
-X-Cyberoam-AV-Policy: default
-X-CTCH-Error: Unable to connect local ctasd
+Received: by 10.37.56.142 with HTTP; Thu, 17 Aug 2017 21:02:15 -0700 (PDT)
+In-Reply-To: <xmqqd17tei7m.fsf@gitster.mtv.corp.google.com>
+References: <4283F0B0-BC1C-4ED1-8126-7E512D84484B@gmail.com>
+ <CAGZ79kajWhEOtqZLrYSAVhM_ZLDiQd9DP9GeL+J=tqach5V65A@mail.gmail.com>
+ <FCB6097F-9F8D-4FDD-A8CE-D936C9CE62E7@gmail.com> <CAGZ79kb-ReME6qbDy-Q12-d=B=f6odUW_D1bAmegP4AY2AyntQ@mail.gmail.com>
+ <xmqqd17tei7m.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 17 Aug 2017 21:02:15 -0700
+Message-ID: <CAGZ79kZdnJ+bATTxKBhsJnKaJWGqcBu3MOQ9eK7m4j3dJPNbTw@mail.gmail.com>
+Subject: Re: Submodule regression in 2.14?
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Friday 18 August 2017 01:25 AM, Junio C Hamano wrote:
-> Martin Ågren <martin.agren@gmail.com> writes:
+On Thu, Aug 17, 2017 at 7:13 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
->> On 17 August 2017 at 04:54, Kaartic Sivaraam
->> <kaarticsivaraam91196@gmail.com> wrote:
->>> Helped-by: Martin Ågren <martin.agren@gmail.com>,  Junio C Hamano <gitster@pobox.com>
->>> Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
->> I didn't expect a "Helped-by", all I did was to give some random
->> comments. :-) I'm not so sure about the comma-separation, that seems to
->> be a first in the project.
-> I didn't either ;-)
+>> Are you saying this might be a design mistake and
+>> the .update ought to be respected by all the other
+>> commands? For example
+>>     git reset --recurse-submodules
+>> should ignore the .update= none?
 >
-> The line looks odd so I'll remove it while queuing.
->
-> Thanks for noticing.
-I should have been better with my wordings :) How about converting that
-line into two 'Suggestions-by:' or 'Reviewed-by:' ?
+> I have been under the impression that that has been the traditional
+> desire of what .update ought to mean.  I personally do not have a
+> strong opinion---at least not yet.
 
+In this context note v2.14.0-rc1-34-g7463e2ec3
+(bw/submodule-config-cleanup~7, "unpack-trees:
+don't respect submodule.update") that is going opposite of
+your impression.
 
----
-Kaartic
+>> When designing these new recursive submodule functionality
+>> outside the "submodule" command, I'd want submodules
+>> to behave as much as possible like trees.
+>
+> I think that is sensible as long as the user does not explicitly say
+> "this and that submodule behave differently" by giving configuration
+> variables.  Perhaps .update is one of those that should countermand
+> the default behaviour of "--recurse-submodules"?
+
+Maybe, I'll think about it. However there is no such
+equivalent for trees (and AFAICT never came up) to
+treat a specific directory other than the rest in worktree
+operations.
+
+The problem with the issue in question is however:
+git-pull is a combination of two other high level commands
+(fetch/merge), the fetch component already had
+a recursive behavior, and that commit in question
+added a bit for the merge component, so the UX
+is hard to get right for both of them:
+
+    git pull --recurse=fetch-only
+    git pull --recurse=merge-respects-update-strategy
+
+is what I'd want to avoid.
+
+So maybe we can just respect the update strategy
+before starting the local part.
+
+Stefan
