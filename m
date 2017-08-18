@@ -2,135 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D7780208CD
-	for <e@80x24.org>; Fri, 18 Aug 2017 21:35:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F42B208CD
+	for <e@80x24.org>; Fri, 18 Aug 2017 21:57:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752335AbdHRVfg (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Aug 2017 17:35:36 -0400
-Received: from mail-yw0-f179.google.com ([209.85.161.179]:36422 "EHLO
-        mail-yw0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752066AbdHRVfg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Aug 2017 17:35:36 -0400
-Received: by mail-yw0-f179.google.com with SMTP id u207so66188364ywc.3
-        for <git@vger.kernel.org>; Fri, 18 Aug 2017 14:35:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=wJjaxOLkof3u9uq5SAZaPiWq2KsjzYMSId2Iy3oPPQM=;
-        b=mvLXnMnKcET7kIaJeC2SvA4GqPH5m3d40Bz8LmmIqChdftMwtISCtWPotTODO4JiJH
-         piCpDf1kpcKhXIKYfGPUdukX6TegP6GkUVqDiQREXkgJnzbKL5I/HgC49uqIXv1x4qIw
-         rWuLffCB4m/Zl8jhWaSAdlpHx55zp9awnrvBAR8KHGOngvz6+kLYaJ1fxdruSOaJjB5D
-         h7kKOFxpJf+gfRFRsODEcGugFJcqiQhxIAoQ5EpuYiV5cLRPPODR7RduOML/BR4sEtUU
-         mK9xuq9rpWECGuTAlaTfZgjN0/rq2qxocQ7QERVHVAtDhuC4DuXGHgy5W98uClWU/Hdl
-         bdnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=wJjaxOLkof3u9uq5SAZaPiWq2KsjzYMSId2Iy3oPPQM=;
-        b=ppTeSFYo0t+b4j0hDoR0L9P1eY77E/gHKHIb88IjNpPWuQtlATkkLQ0vN4bgP8K7P3
-         IDdUqOySIqrs8WDAVpBijPO4GeCvCqKcRk2+0eutczRUf4PeS+Dy9t2bFDIRKvAV9ic8
-         3pEv9WcnZIwRjgyxyVOiIQSoJy8VurFsWnasMvN5Rd5iz/0TTHCGc2DvdbTzMzNTndGA
-         KqljvG1hhD0skdBVWt5fdY3PAwwkeJ5yvl5RPbhzYLymBqi/Ar7vGsJ4IIZYdtrhq2gv
-         4Or71kvvOex1Ie7C1Lsd5xqZZOvGdWV/q8jMui1fQCLYO6/2lyBPQjAsQd5wb4sAmbte
-         djog==
-X-Gm-Message-State: AHYfb5iXNxUwdM20wF5PYEzfxsBdI3rTf7vVSngw8rPpz7MjTs3x9swc
-        32iq5olCGB39+72rXqNRgH1t2Qbpng==
-X-Received: by 10.129.206.5 with SMTP id t5mr3017264ywi.385.1503092135244;
- Fri, 18 Aug 2017 14:35:35 -0700 (PDT)
+        id S1751807AbdHRV5H (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Aug 2017 17:57:07 -0400
+Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:38290 "EHLO
+        glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751350AbdHRV5H (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Aug 2017 17:57:07 -0400
+Received: from glandium by mitsuha.glandium.org with local (Exim 4.89)
+        (envelope-from <mh@glandium.org>)
+        id 1dipGI-0000Az-VA; Sat, 19 Aug 2017 06:57:02 +0900
+Date:   Sat, 19 Aug 2017 06:57:02 +0900
+From:   Mike Hommey <mh@glandium.org>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: Revision resolution for remote-helpers?
+Message-ID: <20170818215702.6pjrcsl7yxepqhyp@glandium.org>
+References: <20170818064208.plkppke7efpucuwm@glandium.org>
+ <20170818121509.fjsmzkdaokyjuaya@sigill.intra.peff.net>
 MIME-Version: 1.0
-Received: by 10.129.211.10 with HTTP; Fri, 18 Aug 2017 14:35:34 -0700 (PDT)
-In-Reply-To: <20170818203858.GK13924@aiede.mtv.corp.google.com>
-References: <CAAD4mYi24dHNhG1MFkPaeVv9P-9UN_FxSvZmX6XFHrfA7K0hoQ@mail.gmail.com>
- <20170818203858.GK13924@aiede.mtv.corp.google.com>
-From:   R0b0t1 <r030t1@gmail.com>
-Date:   Fri, 18 Aug 2017 16:35:34 -0500
-Message-ID: <CAAD4mYhYWa=gB3ZG=Mepx2C+GO_ku7m2Zn6rL2paQBsVK6ya6A@mail.gmail.com>
-Subject: Re: [bug] Git submodule command interprets switch as argument and switch
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170818121509.fjsmzkdaokyjuaya@sigill.intra.peff.net>
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+User-Agent: NeoMutt/20170609 (1.8.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 18, 2017 at 3:38 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Hi,
->
-> R0b0t1 wrote:
->
->> The issue is as follows:
->>
->> R0b0t1@host:~/devel/project$ git submodule add
->> https://github.com/user/project -f
->> Cloning into '/home/R0b0t1/devel/project/-f'...
->
-> Thanks for reporting.  Confusingly, I think this is intended behavior.
-> "git help submodule" explains:
->
->         add [-b <branch>] [-f|--force] [--name <name>]
->                 [--reference <repository>] [--depth <depth>] [--]
->                 <repository> [<path>]
->
->                 Add the given repository as a submodule at the given
->                 path [etc]
->
-> Since the -f comes after <repository>, it is a <path>.
->
+On Fri, Aug 18, 2017 at 08:15:09AM -0400, Jeff King wrote:
+> On Fri, Aug 18, 2017 at 03:42:08PM +0900, Mike Hommey wrote:
+> 
+> > I was thinking it could be useful to have a special syntax for revisions
+> > that would query a helper program. The helper program could use a
+> > similar protocol to that of the remote helpers.
+> 
+> That sounds like a reasonable thing to want.
+> 
+> > My thought is that a string like <helper>::<revision> could be used
+> > wherever a committish is expected. That would call some helper
+> > and request to resolve revision, and the helper would provide a git
+> > commit as a response.
+> 
+> So I'm guessing this would look something like:
+> 
+>   git log svn::12345
+> 
+> I think even without Git support, you could do something like:
+> 
+>   git log $(git svn map 12345)
 
-Not to comment on every response to this bug, but I understand. What
-is confusing is that the command was failing without being forced, and
-without thinking I added "-f" at the end. The command succeeded as if
-I supplied the force flag, but per my experience with other tools, and
-with other Git commands, "-f" should not be a flag. It should be a
-path, as you say. However it appears to be both.
+That's what I do, but subshells and all is extra cumbersome.
 
-To reproduce my situation exactly, add "*" to your .gitignore. The
-directory "gerrit" should then be ignored, and Git will warn you that
-the submodule will not be tracked (I may have another issue to report
-related to this, but I'm still trying to figure out what is going on).
-However, if you name the directory something else, like "-f", it will
-still be matched by the .gitignore rule and should not succeed. This
-is why I think the path is also being interpreted as a flag.
+> which is similarly complex in terms of concepts, and not too many more
+> characters. That would be a little more awkward outside of a shell,
+> though.
+> 
+> But it did get me wondering if we could do _better_ with something built
+> into Git. For example, could we have an external resolution helper that
+> resolves names to object ids as a fallback after internal resolution has
+> failed. And then you could do:
+> 
+>  git log 12345
+> 
+> and it would just work. Efficiency shouldn't be a big problem, because
+> we'd hit the helper only in the error case.
+> 
+> I'd be more concerned about awkward ambiguities, though. If mercurial is
+> also using sha1s, then there's nothing syntactic to differentiate the
+> two. For that matter, 12345 has the same problem, since it could be a
+> partial sha1.
 
-Something else may be happening, but either way the behavior does not
-seem to be expected nor consistent with other parts of Git.
+For something as short, the likelihood of hitting an actual existing
+abbreviated sha1 is quite high, too.
 
-> That said, there are a few related things wrong here.
->
-> The usage string above says I can put "--" before the <repository> to
-> make things extra unambiguous.  But when I try that, I get the following
-> result:
->
->         $ git submodule add -- https://gerrit.googlesource.com/gerrit -f
->         Cloning into '/tmp/t/test/-f'...
-> [...]
->         Resolving deltas: 100% (215796/215796), done.
->         /usr/lib/git-core/git-submodule: line 261: cd: -f: invalid option
->         cd: usage: cd [-L|[-P [-e]] [-@]] [dir]
->         Unable to checkout submodule '-f'
->
-> If I try to put the "--" between <repository> and <path>, I get another
-> confusing result:
->
->         $ git submodule add https://gerrit.googlesource.com/gerrit -- -f
->         '--' already exists in the index
->
-> "git help cli" is supposed to give advice about this kind of thing as
-> well --- e.g., it gives some sound advice about what form of flags
-> scripts should use (e.g., to always use the 'stuck' form --name=<name>
-> instead of --name name).  But it doesn't mention this issue of flags
-> belonging before other arguments.
->
-> Thoughts?
->
+> It might work to actually check if we have the object and then bail
+> to the remote resolver only if we don't. But that's actually conflating
+> name resolution with object lookup, which our internals typically keep
+> separate.
+> 
+> So maybe this is a bad direction to go in. I'm mostly just thinking out
+> loud here.
+> 
+> > Which leads me to think some "virtual" ref namespace could be a solution
+> > to the problem. So instead of <helper>::, the prefix would be <helper>/.
+> > For e.g. svn, svn/$remote/$rev would be a natural way to specify the
+> > revision for a given remote. For mercurial, hg/$sha1.
+> 
+> Interesting. I do like the general idea of having external helpers to
+> fill in bits of the virtual namespace. But it may also open many cans of
+> worms. :)
+> 
+> > Potentially, this could be a sort of pluggable ref stores, which could
+> > be used for extensions such as the currently discussed reftable.
+> 
+> The current pluggable code is definitely geared for build-time
+> pluggability, not runtime. But I think you could have a builtin
+> pluggable store that does the overlay, and then chains to another
+> backend. I.e., configure something like:
+> 
+>   [extensions]
+>   refBackend = externalOverlay
+> 
+>   [externalOverlay "svn"]
+>   namespace = refs/svn
+>   command = my-svn-mapper
+> 
+>   [externalOverlay]
+>   chain = reftable
+> 
+> That would allow the externalOverlay thing to develop independent of the
+> core of Git's refs code.
 
-I have experienced issues with -- before. It has been long enough I
-have forgotten. Sorry for not being able to provide anything concrete.
+That's a lot of configuration, but it's definitely an interesting
+proposition.
+
+> > On the opposite end of the problem, I'm also thinking about git log
+> > --decorate=<helper> displaying the mercurial revisions where branch
+> > decorations would normally go.
+> 
+> Interesting thought. I'm not sure if that would be a good thing or a bad
+> thing. But one of the virtual methods for pluggable backends is
+> "enumerate all refs". If you're mapping every mercurial revision, that's
+> going to be a lot of refs (and potentially a lot of overhead for certain
+> operations).
+> 
+> I think the decorate code just looks at a few parts of the refs
+> namespace right now (so a "refs/svn" would probably get ignored by
+> default).
+
+I think decorate would need its own special entry to the "ref query" API
+to answer the question "what ref points to <sha1>" instead of scanning
+the whole namespace.
+
+Mike
