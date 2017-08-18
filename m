@@ -2,58 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 16097208CD
-	for <e@80x24.org>; Fri, 18 Aug 2017 22:21:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD39B208CD
+	for <e@80x24.org>; Fri, 18 Aug 2017 22:21:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751844AbdHRWVL (ORCPT <rfc822;e@80x24.org>);
+        id S1751851AbdHRWVN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Aug 2017 18:21:13 -0400
+Received: from mail-pg0-f44.google.com ([74.125.83.44]:38330 "EHLO
+        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751626AbdHRWVL (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 18 Aug 2017 18:21:11 -0400
-Received: from mail-pg0-f51.google.com ([74.125.83.51]:33958 "EHLO
-        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751684AbdHRWVE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Aug 2017 18:21:04 -0400
-Received: by mail-pg0-f51.google.com with SMTP id n4so8535585pgn.1
-        for <git@vger.kernel.org>; Fri, 18 Aug 2017 15:21:04 -0700 (PDT)
+Received: by mail-pg0-f44.google.com with SMTP id t80so44561465pgb.5
+        for <git@vger.kernel.org>; Fri, 18 Aug 2017 15:21:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=n0HNGSGdUYszsLu66WSP/NPM1OFbP7th6DyJW+qAQTE=;
-        b=fMw43B9DbmV8++phEKj1N6MS/k5v46cj8K/wnLa38RB6QXl5WydjCVysiUnu2Wky55
-         Bmp0sWvKL7/K+OorxTQPbl/xpYGQrc9fRRKPAIr/EaoXw5YHLjhFnsBs9AgxJZsFCKuQ
-         gaQCY9DsR5vH9xbllsMiIlLaqzQs5YOHgluBC4L6d6EYe3MSSXZeq1XGzjAXkRpkDKEB
-         kTKhRqiKp6uzsp+DUEoETf8RmK7XTEM5OqQGVUWdpTsom7UR3Rf+xz57xHXZo4OsvHdg
-         TZQ4YTrM3fsM7ZS/Z754cbtQHifs/0yATV2I66r114TLq8kZIccPRzt17C1hYN1wqyjy
-         4hdg==
+        bh=p6dR+9wWagAxWx2tRicGAhRriw28l8zCG5rujv1nnC8=;
+        b=v/PtMhJLVccX0fsvzIBJ9LxURLnju+lKE81LcidwkbE0PL4baZDmTAdS8pW0Vy7zfH
+         ZwsoNEtv7aA8CDf8y31ujKHoVOot8dFAAE/lnOp005VCRGkg3ty2vGkq2qeoPKT2v3Jh
+         BT5uUiRffyHHLPGdyQdfI+TXCjuEDiQbhSNPUEjzz8kA/oVgDJUvnGG+VueD9BQNFDF4
+         dI1uqiItRTXX/cVkPhvEboKxoSzrAfdbGxvWomuT5/hIXXQlYwoyAMhMtQXbQmZWHpPa
+         lcUdBx5wWF4H1pXsT2tRMEVx9tgNKf0fx+jQCap8tV43wrrm+DIQKWCy6Liu+8aTR69X
+         4rOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=n0HNGSGdUYszsLu66WSP/NPM1OFbP7th6DyJW+qAQTE=;
-        b=kICflbCV5ocPqMJHsusvE08hpUQNswjbwV8dXOqCYnQDB5qWJy2EAT8PH/ZDf1ghJX
-         1bFZPREmvIpopG6nYavJHvWiVMqgq/jF5p2ZQI/B2CaDLwUWLQHvGZzPmfrqMXPBiSN2
-         J856mss3oUKUWHqp/0q0PlJOzKv6yF1EakuHE4pg+XhGYd3mkGF0HLXb0XzTnl9ONL5j
-         wlO0P4ZpMa4x//Bu2KzLALc6Y+UfUe1OJ7blftfBzsU4/wNR4hUbvXjeCgNd/nsC1iPa
-         Tzv+RhDvc6OYs7CLLB4vNBBX6VW/viYizMOpOU6VsSTETTIN28iaHMifdY6pTjcAQ1+X
-         mK7A==
-X-Gm-Message-State: AHYfb5j7Bd61EJJyqrKLZcVY2KuXiyqtbST/IymsdrB30AwC3wKG00Sg
-        KoLi3WbR/vvXETY++/e/Xg==
-X-Received: by 10.99.96.211 with SMTP id u202mr6161238pgb.347.1503094863667;
-        Fri, 18 Aug 2017 15:21:03 -0700 (PDT)
+        bh=p6dR+9wWagAxWx2tRicGAhRriw28l8zCG5rujv1nnC8=;
+        b=DZghfhoyk3O6Cb2tX6Cpy01Qo+dfIKcQi6TJal9F75IWGrlyj+jfVDt0x/1BCdze20
+         S/Iob7vwdBbwoz5UtJ2hupSm+iE/FFqOdjUzeqfADhLhuQDHBl1IImcQxig+X/7p4OhZ
+         1G6rhuhIBwsVNF3htrPVQoDtc93OVBdwPp0Xj06suIzci7l2jhwhFnRcrLlwNofBYoyE
+         xas1/EB7ehwaXwsc3Flm+C7Yzq0tfxqzmuS9vZDu93s155jvlhQE5ByfsTLeXXLL5NVu
+         LMnHwyNymIZZYX5p0GEFdeflqKXGimW3T14XmAmv9b72z+Z3cWKiZC710xZ6sEI45e7g
+         ZkLQ==
+X-Gm-Message-State: AHYfb5gvqD7r64MidebCAok0vQFDlyEIMu9T6Rcv3VkS7yfoE7vLrNp+
+        dHRq84g6V7qZAOjyqk0Scw==
+X-Received: by 10.98.149.215 with SMTP id c84mr10106974pfk.95.1503094870744;
+        Fri, 18 Aug 2017 15:21:10 -0700 (PDT)
 Received: from twelve2.svl.corp.google.com ([100.96.218.24])
-        by smtp.gmail.com with ESMTPSA id w123sm12544006pfb.60.2017.08.18.15.21.02
+        by smtp.gmail.com with ESMTPSA id w123sm12544006pfb.60.2017.08.18.15.21.09
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 18 Aug 2017 15:21:03 -0700 (PDT)
+        Fri, 18 Aug 2017 15:21:10 -0700 (PDT)
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com
-Subject: [PATCH v3 17/23] pack: move check_pack_index_ptr(), nth_packed_object_offset()
-Date:   Fri, 18 Aug 2017 15:20:32 -0700
-Message-Id: <5f95065362e9eef27eb9738cb5a676e80b80b791.1503094448.git.jonathantanmy@google.com>
+Subject: [PATCH v3 23/23] pack: move for_each_packed_object()
+Date:   Fri, 18 Aug 2017 15:20:38 -0700
+Message-Id: <6c007cc77fc1a8ba5ebbf3b349571fb5c8ebda1e.1503094448.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.14.1.480.gb18f417b89-goog
 In-Reply-To: <cover.1503094448.git.jonathantanmy@google.com>
 References: <cover.1503094448.git.jonathantanmy@google.com>
@@ -66,163 +65,180 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- cache.h     | 16 ----------------
- packfile.c  | 33 +++++++++++++++++++++++++++++++++
- packfile.h  | 16 ++++++++++++++++
- sha1_file.c | 33 ---------------------------------
- 4 files changed, 49 insertions(+), 49 deletions(-)
+ builtin/cat-file.c |  1 +
+ cache.h            |  7 +------
+ packfile.c         | 40 ++++++++++++++++++++++++++++++++++++++++
+ packfile.h         | 11 +++++++++++
+ reachable.c        |  1 +
+ sha1_file.c        | 40 ----------------------------------------
+ 6 files changed, 54 insertions(+), 46 deletions(-)
 
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 96b786e48..be5936017 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -12,6 +12,7 @@
+ #include "streaming.h"
+ #include "tree-walk.h"
+ #include "sha1-array.h"
++#include "packfile.h"
+ 
+ struct batch_options {
+ 	int enabled;
 diff --git a/cache.h b/cache.h
-index 83aa3cc62..ee75a4949 100644
+index dcbe37a3f..2eeb21b02 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -1626,22 +1626,6 @@ extern int odb_mkstemp(struct strbuf *template, const char *pattern);
-  */
- extern int odb_pack_keep(const char *name);
+@@ -1668,17 +1668,12 @@ int for_each_loose_file_in_objdir_buf(struct strbuf *path,
+ 				      void *data);
  
--/*
-- * Make sure that a pointer access into an mmap'd index file is within bounds,
-- * and can provide at least 8 bytes of data.
-- *
-- * Note that this is only necessary for variable-length segments of the file
-- * (like the 64-bit extended offset table), as we compare the size to the
-- * fixed-length parts when we open the file.
-- */
--extern void check_pack_index_ptr(const struct packed_git *p, const void *ptr);
--
--/*
-- * Return the offset of the nth object within the specified packfile.
-- * The index must already be opened.
-- */
--extern off_t nth_packed_object_offset(const struct packed_git *, uint32_t n);
--
  /*
-  * If the object named sha1 is present in the specified packfile,
-  * return its offset within the packfile; otherwise, return 0.
+- * Iterate over loose and packed objects in both the local
++ * Iterate over loose objects in both the local
+  * repository and any alternates repositories (unless the
+  * LOCAL_ONLY flag is set).
+  */
+ #define FOR_EACH_OBJECT_LOCAL_ONLY 0x1
+-typedef int each_packed_object_fn(const struct object_id *oid,
+-				  struct packed_git *pack,
+-				  uint32_t pos,
+-				  void *data);
+ extern int for_each_loose_object(each_loose_object_fn, void *, unsigned flags);
+-extern int for_each_packed_object(each_packed_object_fn, void *, unsigned flags);
+ 
+ struct object_info {
+ 	/* Request */
 diff --git a/packfile.c b/packfile.c
-index e9b16da94..e914422e9 100644
+index 7e293761b..1f11ef5b8 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -1667,3 +1667,36 @@ const struct object_id *nth_packed_object_oid(struct object_id *oid,
- 	hashcpy(oid->hash, hash);
- 	return oid;
+@@ -1854,3 +1854,43 @@ int has_pack_index(const unsigned char *sha1)
+ 		return 0;
+ 	return 1;
  }
 +
-+void check_pack_index_ptr(const struct packed_git *p, const void *vptr)
++static int for_each_object_in_pack(struct packed_git *p, each_packed_object_fn cb, void *data)
 +{
-+	const unsigned char *ptr = vptr;
-+	const unsigned char *start = p->index_data;
-+	const unsigned char *end = start + p->index_size;
-+	if (ptr < start)
-+		die(_("offset before start of pack index for %s (corrupt index?)"),
-+		    p->pack_name);
-+	/* No need to check for underflow; .idx files must be at least 8 bytes */
-+	if (ptr >= end - 8)
-+		die(_("offset beyond end of pack index for %s (truncated index?)"),
-+		    p->pack_name);
++	uint32_t i;
++	int r = 0;
++
++	for (i = 0; i < p->num_objects; i++) {
++		struct object_id oid;
++
++		if (!nth_packed_object_oid(&oid, p, i))
++			return error("unable to get sha1 of object %u in %s",
++				     i, p->pack_name);
++
++		r = cb(&oid, p, i, data);
++		if (r)
++			break;
++	}
++	return r;
 +}
 +
-+off_t nth_packed_object_offset(const struct packed_git *p, uint32_t n)
++int for_each_packed_object(each_packed_object_fn cb, void *data, unsigned flags)
 +{
-+	const unsigned char *index = p->index_data;
-+	index += 4 * 256;
-+	if (p->index_version == 1) {
-+		return ntohl(*((uint32_t *)(index + 24 * n)));
-+	} else {
-+		uint32_t off;
-+		index += 8 + p->num_objects * (20 + 4);
-+		off = ntohl(*((uint32_t *)(index + 4 * n)));
-+		if (!(off & 0x80000000))
-+			return off;
-+		index += p->num_objects * 4 + (off & 0x7fffffff) * 8;
-+		check_pack_index_ptr(p, index);
-+		return (((uint64_t)ntohl(*((uint32_t *)(index + 0)))) << 32) |
-+				   ntohl(*((uint32_t *)(index + 4)));
++	struct packed_git *p;
++	int r = 0;
++	int pack_errors = 0;
++
++	prepare_packed_git();
++	for (p = packed_git; p; p = p->next) {
++		if ((flags & FOR_EACH_OBJECT_LOCAL_ONLY) && !p->pack_local)
++			continue;
++		if (open_pack_index(p)) {
++			pack_errors = 1;
++			continue;
++		}
++		r = for_each_object_in_pack(p, cb, data);
++		if (r)
++			break;
 +	}
++	return r ? r : pack_errors;
 +}
 diff --git a/packfile.h b/packfile.h
-index 56d70caa0..8deb84bd1 100644
+index 1b6ea832c..ca4cc3b97 100644
 --- a/packfile.h
 +++ b/packfile.h
-@@ -63,6 +63,16 @@ extern void unuse_pack(struct pack_window **);
- extern void clear_delta_base_cache(void);
- extern struct packed_git *add_packed_git(const char *path, size_t path_len, int local);
+@@ -124,4 +124,15 @@ extern int has_sha1_pack(const unsigned char *sha1);
+ 
+ extern int has_pack_index(const unsigned char *sha1);
  
 +/*
-+ * Make sure that a pointer access into an mmap'd index file is within bounds,
-+ * and can provide at least 8 bytes of data.
-+ *
-+ * Note that this is only necessary for variable-length segments of the file
-+ * (like the 64-bit extended offset table), as we compare the size to the
-+ * fixed-length parts when we open the file.
++ * Iterate over packed objects in both the local
++ * repository and any alternates repositories (unless the
++ * FOR_EACH_OBJECT_LOCAL_ONLY flag, defined in cache.h, is set).
 + */
-+extern void check_pack_index_ptr(const struct packed_git *p, const void *ptr);
-+
- /*
-  * Return the SHA-1 of the nth object within the specified packfile.
-  * Open the index if it is not already open.  The return value points
-@@ -77,6 +87,11 @@ extern const unsigned char *nth_packed_object_sha1(struct packed_git *, uint32_t
-  */
- extern const struct object_id *nth_packed_object_oid(struct object_id *, struct packed_git *, uint32_t n);
- 
-+/*
-+ * Return the offset of the nth object within the specified packfile.
-+ * The index must already be opened.
-+ */
-+extern off_t nth_packed_object_offset(const struct packed_git *, uint32_t n);
- 
- extern void *unpack_entry(struct packed_git *, off_t, enum object_type *, unsigned long *);
- extern unsigned long unpack_object_header_buffer(const unsigned char *buf, unsigned long len, enum object_type *type, unsigned long *sizep);
-@@ -94,4 +109,5 @@ extern int packed_object_info(struct packed_git *pack, off_t offset, struct obje
- 
- extern void mark_bad_packed_object(struct packed_git *p, const unsigned char *sha1);
- extern const struct packed_git *has_packed_and_bad(const unsigned char *sha1);
++typedef int each_packed_object_fn(const struct object_id *oid,
++				  struct packed_git *pack,
++				  uint32_t pos,
++				  void *data);
++extern int for_each_packed_object(each_packed_object_fn, void *, unsigned flags);
 +
  #endif
+diff --git a/reachable.c b/reachable.c
+index c62efbfd4..d1ac5d97e 100644
+--- a/reachable.c
++++ b/reachable.c
+@@ -9,6 +9,7 @@
+ #include "cache-tree.h"
+ #include "progress.h"
+ #include "list-objects.h"
++#include "packfile.h"
+ 
+ struct connectivity_progress {
+ 	struct progress *progress;
 diff --git a/sha1_file.c b/sha1_file.c
-index 34fbe8e51..2d22bc228 100644
+index fa422435f..0bb2343f8 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -1074,39 +1074,6 @@ int parse_sha1_header(const char *hdr, unsigned long *sizep)
- 	return parse_sha1_header_extended(hdr, &oi, 0);
+@@ -2014,46 +2014,6 @@ int for_each_loose_object(each_loose_object_fn cb, void *data, unsigned flags)
+ 	return foreach_alt_odb(loose_from_alt_odb, &alt);
  }
  
--void check_pack_index_ptr(const struct packed_git *p, const void *vptr)
+-static int for_each_object_in_pack(struct packed_git *p, each_packed_object_fn cb, void *data)
 -{
--	const unsigned char *ptr = vptr;
--	const unsigned char *start = p->index_data;
--	const unsigned char *end = start + p->index_size;
--	if (ptr < start)
--		die(_("offset before start of pack index for %s (corrupt index?)"),
--		    p->pack_name);
--	/* No need to check for underflow; .idx files must be at least 8 bytes */
--	if (ptr >= end - 8)
--		die(_("offset beyond end of pack index for %s (truncated index?)"),
--		    p->pack_name);
--}
+-	uint32_t i;
+-	int r = 0;
 -
--off_t nth_packed_object_offset(const struct packed_git *p, uint32_t n)
--{
--	const unsigned char *index = p->index_data;
--	index += 4 * 256;
--	if (p->index_version == 1) {
--		return ntohl(*((uint32_t *)(index + 24 * n)));
--	} else {
--		uint32_t off;
--		index += 8 + p->num_objects * (20 + 4);
--		off = ntohl(*((uint32_t *)(index + 4 * n)));
--		if (!(off & 0x80000000))
--			return off;
--		index += p->num_objects * 4 + (off & 0x7fffffff) * 8;
--		check_pack_index_ptr(p, index);
--		return (((uint64_t)ntohl(*((uint32_t *)(index + 0)))) << 32) |
--				   ntohl(*((uint32_t *)(index + 4)));
+-	for (i = 0; i < p->num_objects; i++) {
+-		struct object_id oid;
+-
+-		if (!nth_packed_object_oid(&oid, p, i))
+-			return error("unable to get sha1 of object %u in %s",
+-				     i, p->pack_name);
+-
+-		r = cb(&oid, p, i, data);
+-		if (r)
+-			break;
 -	}
+-	return r;
 -}
 -
- off_t find_pack_entry_one(const unsigned char *sha1,
- 				  struct packed_git *p)
- {
+-int for_each_packed_object(each_packed_object_fn cb, void *data, unsigned flags)
+-{
+-	struct packed_git *p;
+-	int r = 0;
+-	int pack_errors = 0;
+-
+-	prepare_packed_git();
+-	for (p = packed_git; p; p = p->next) {
+-		if ((flags & FOR_EACH_OBJECT_LOCAL_ONLY) && !p->pack_local)
+-			continue;
+-		if (open_pack_index(p)) {
+-			pack_errors = 1;
+-			continue;
+-		}
+-		r = for_each_object_in_pack(p, cb, data);
+-		if (r)
+-			break;
+-	}
+-	return r ? r : pack_errors;
+-}
+-
+ static int check_stream_sha1(git_zstream *stream,
+ 			     const char *hdr,
+ 			     unsigned long size,
 -- 
 2.14.1.480.gb18f417b89-goog
 
