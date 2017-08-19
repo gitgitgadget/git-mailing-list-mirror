@@ -6,67 +6,83 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 08D4A1F667
-	for <e@80x24.org>; Sat, 19 Aug 2017 20:55:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F3EA91F667
+	for <e@80x24.org>; Sat, 19 Aug 2017 20:59:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751981AbdHSUzp (ORCPT <rfc822;e@80x24.org>);
-        Sat, 19 Aug 2017 16:55:45 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64393 "EHLO
+        id S1752021AbdHSU67 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 19 Aug 2017 16:58:59 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58035 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751684AbdHSUzp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Aug 2017 16:55:45 -0400
+        with ESMTP id S1751822AbdHSU66 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Aug 2017 16:58:58 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C30D08F271;
-        Sat, 19 Aug 2017 16:55:37 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C51AAABFE9;
+        Sat, 19 Aug 2017 16:58:50 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=gjSEAj+Md59zdhnekvyjBvl2qBs=; b=TsJQkw
-        TrJ3oSjeG6oBm4h1Jrg6pSSbkM6vcepLuS4h8vzx6D49zASr9J3cIQ5l6hF/qeIT
-        kmpJ3IKwOSrxMysMnfxs98qQfMBoi4E5HHaiRJXRtXPpSp/W6U0UcGonKBDkDdlA
-        sDPpmIrfs60Amc6V31TCOeo4GRfd7H0MoF4Vs=
+        :content-type; s=sasl; bh=4MA03qfCvqf51IERbwZ/9uJaoMY=; b=QQ0pk0
+        GYuYUlacfsi7ShU1WURycTWR0Iqbwg1kTvfB8NieoRWQmDkjYpci+y37bdqYim51
+        FTvGWlfDsHuNQ29FGzkF17Q4uLnXplGWLwgqMczBlz+uMD+a4Ad/gM/q1s4rWM0I
+        WhiiunDBwkQ6GRPPGyElp6pkvv0VvoIezl9HE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=p7mvKfd0cVI2peamPpMmdA9TQ0r/OOrg
-        1/hJuoDoED47qmssXNOSrzZq+Db+Kp8i+2ZjYcEKuJ785JdhM+TKIDx71ZiUr1Cm
-        VaN3Kfw5E0wTu0YVucjUMiuo4of98nMTVZZroqj/jawwzBzuYalOSePHLp/Aymf+
-        VnMv3r5bm1w=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AF5248F270;
-        Sat, 19 Aug 2017 16:55:37 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=G5P9PoEKy2EcXvOM2rxRhbfhZi/PG9XV
+        2y+tSl3CkCFEaFnVJvwoPzshFHzu1guxZ9TMMkxZP7HM5nxlguDMFHnhQxu4f/rV
+        +BpsrWwUXyCAVTDTQ+D1rapEEXwl6bZOHwqzwP66WDYtLxSrccCvwWsq5oCAhGHE
+        LvkwzNera7o=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BDC6DABFE8;
+        Sat, 19 Aug 2017 16:58:50 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 21E5E8F26F;
-        Sat, 19 Aug 2017 16:55:37 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1D541ABFE7;
+        Sat, 19 Aug 2017 16:58:50 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Joel Teichroeb <joel@teichroeb.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/3] stash: add test for stash create with no files
-References: <20170819201326.6872-1-joel@teichroeb.net>
-Date:   Sat, 19 Aug 2017 13:55:35 -0700
-In-Reply-To: <20170819201326.6872-1-joel@teichroeb.net> (Joel Teichroeb's
-        message of "Sat, 19 Aug 2017 13:13:24 -0700")
-Message-ID: <xmqqpobr8ego.fsf@gitster.mtv.corp.google.com>
+To:     git@vger.kernel.org
+Cc:     Philip Oakley <philipoakley@iee.org>,
+        Kevin Willford <kcwillford@gmail.com>,
+        Kevin Willford <kewillf@microsoft.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH] progress: simplify "delayed" progress API
+References: <20170531150427.7820-1-kewillf@microsoft.com>
+        <20170810183256.12668-2-kewillf@microsoft.com>
+        <20170810232033.46ujnozvnodkguog@sigill.intra.peff.net>
+        <xmqqwp69ycim.fsf@gitster.mtv.corp.google.com>
+        <EA124B72FA7542DBA1C31213235F1B94@PhilipOakley>
+        <20170813043940.muj7z3dvl3nh4k6a@sigill.intra.peff.net>
+        <xmqqpobyw11t.fsf@gitster.mtv.corp.google.com>
+        <xmqqshguuhe2.fsf@gitster.mtv.corp.google.com>
+        <20170814222947.edvuz7b2hxuwcsqj@sigill.intra.peff.net>
+        <xmqqy3qf8nj6.fsf_-_@gitster.mtv.corp.google.com>
+Date:   Sat, 19 Aug 2017 13:58:48 -0700
+In-Reply-To: <xmqqy3qf8nj6.fsf_-_@gitster.mtv.corp.google.com> (Junio
+        C. Hamano's message of "Sat, 19 Aug 2017 10:39:41 -0700")
+Message-ID: <xmqqlgmf8ebb.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: C0675152-8520-11E7-97E7-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 3377F4A8-8521-11E7-AC4A-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I see three patches that add tests, but it is hard to judge them
-without any explanation on what the point of them are.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Are you documenting an existing breakage?  Are you extending test
-coverage for some breakage we recently fixed without adding tests to
-ensure that the fix will stay unbroken?  Are you planning to touch
-the implementation (perhaps to add yet another feature that uses
-some existing code) and adding new tests in advance to avoid breaking
-the existing code?  Some other motivation?
+> We used to expose the full power of the delayed progress API to the
+> callers, so that they can specify, not just the message to show and
+> expected total amount of work that is used to compute the percentage
+> of work performed so far, the percent-threshold parameter P and the
+> delay-seconds parameter N.  The progress meter starts to show at N
+> seconds into the operation only if the amount of work completed
+> exceeds P.
 
-These would have made fine material to write in the cover letter for
-this series.
+Oops, we inspect the doneness at N seconds and show only if we have
+not yet completed P percent of the total work.
 
-Thanks.
+Perhaps
+
+	... at N seconds into the operation only if we have not
+	completed P per-cent of the total work.
+
