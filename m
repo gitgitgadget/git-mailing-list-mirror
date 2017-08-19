@@ -2,102 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA6321F667
-	for <e@80x24.org>; Sat, 19 Aug 2017 12:45:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2CA941F667
+	for <e@80x24.org>; Sat, 19 Aug 2017 13:00:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751496AbdHSMpq (ORCPT <rfc822;e@80x24.org>);
-        Sat, 19 Aug 2017 08:45:46 -0400
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:38770 "EHLO
-        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751035AbdHSMpp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Aug 2017 08:45:45 -0400
-Received: by mail-wm0-f50.google.com with SMTP id l19so17446779wmi.1
-        for <git@vger.kernel.org>; Sat, 19 Aug 2017 05:45:45 -0700 (PDT)
+        id S1751102AbdHSNAP (ORCPT <rfc822;e@80x24.org>);
+        Sat, 19 Aug 2017 09:00:15 -0400
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:36048 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751038AbdHSNAO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Aug 2017 09:00:14 -0400
+Received: by mail-pf0-f181.google.com with SMTP id c28so12798474pfe.3
+        for <git@vger.kernel.org>; Sat, 19 Aug 2017 06:00:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:content-transfer-encoding:mime-version:subject:message-id:date
-         :to;
-        bh=Pj6zrzAvb6uGfSBEPQh7x81dwOhu1tMka2+v74nfLKQ=;
-        b=axmHHLtM2OCJSQHfOvSoD5aV7Z210q3VHYVOxvti7fBTptI50ugB0ZehGoRk2ZavX7
-         16u/tKWXavg2iox4irfgf5rItq6Ew45BuOwUzQegG2i5cXSPQ/S9CAUwbr4o0VldaHR0
-         +oU4MkF76fH6giQGbSC+g0ETNG/9Cy2ON0lkpDnXewE+MD2edf7nQ+06Y9VIWfLVQC1U
-         3QS/n/lJCwC389GQLKuOD3P1CGyupqKjeZdQt1S6Te+3DxX6Ja7enMZA47c+C8mhrchf
-         kkss0dAedBj0QyBUlj0hdLw1EVH5DUXUD5kyLNVgiGJpQXZpHQC+pOdcTuJWer1zeRlW
-         6Lug==
+        d=therightstuff.de; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=rRgXgCywiaIFj8hM6Y1khtIQLTs5bEIl5hb+powi3jM=;
+        b=h83Pgb36vYKUUZZWWdslXc2PhYIT6XyyG4xYxGf/mr//XqMTFPkYC4/XV0ZjBrekHO
+         6Da7CDzv7bmBwRftS/2ukkKOLkwOHRp3OhCUbO2UeSg6VSIlLaMmYBoWOQZjXIU+zYLb
+         YysaGnjQKzIqjM1GGApjqHlO9fwinJsNsnLc8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version
-         :subject:message-id:date:to;
-        bh=Pj6zrzAvb6uGfSBEPQh7x81dwOhu1tMka2+v74nfLKQ=;
-        b=DRM3zULsKtdEgI3Gi/x8jLx7QRVa5D/zL2GNUoxpMkNcc1tFjuv4HB2XiMe9VOgSYp
-         38DmTawmCaK06UXBpbf5acZSWXcxRPDK+A77TMOAxsAGKRl+DCN3MYQgHMzOS9Y6oASr
-         aT5EWVblGESK7H/l62w/ZKIekU/rwRB1B6pkiGUIk9DFtdxGEd8gy3hlhmCT0qVYAi5F
-         Y3FV6V0GwcaJyPqPlAQOdTqWTQ2Gx89lWTAMuCSTk1SMl/X4/I0PaWCaAEpaSa3vwtX5
-         H9SEyoea124/zoBFsystkgxPkLnAYzD8lXYHyOcD+xe5a2k9lqJMYREXwdf2A4rfTzC5
-         HztQ==
-X-Gm-Message-State: AHYfb5hX2uEpsZq7kptlCBMk2iNQ6KnpO8l8IkmM3ZF4NbwfUpYUhr/b
-        Z5x7G4m2/7rB09mg5Pw=
-X-Received: by 10.28.109.217 with SMTP id b86mr3040866wmi.34.1503146744248;
-        Sat, 19 Aug 2017 05:45:44 -0700 (PDT)
-Received: from [192.168.2.105] (p5091C6EE.dip0.t-ipconnect.de. [80.145.198.238])
-        by smtp.gmail.com with ESMTPSA id t135sm3610871wmt.26.2017.08.19.05.45.42
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 19 Aug 2017 05:45:43 -0700 (PDT)
-From:   Jan Teske <jan.teske@gmail.com>
-Content-Type: text/plain; charset=utf-8
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=rRgXgCywiaIFj8hM6Y1khtIQLTs5bEIl5hb+powi3jM=;
+        b=K0727CaFffPfvMKPGeRUjPuKVqzo4xJ0+1oUVTQTvrdWzFapikuq1imoXahIxNVBd9
+         PLuDW1bFeS5RpEsZK1dln1/+Y2LE098aR0i+JIsDoir6vEHBjIYIBi+Nvqckkk4Z+2Mn
+         e84Y46bv22Wlj3NHJGZNdlbyLqJPf+WVh1MPffnwuxCdEwlJWf7c8gorNCafLQCj2jAk
+         lW6+OiQJspenE2PUejMpfJOuJs8aH4RMUhCVeDv0Q6W2UkaSAw8vA09Z59XLaoAk1+s2
+         VnOGLYGBu7+gdGwMN9XfJb3h8991h5mCxupql1HtkFE1zpRteR7xuMIK3aFzi8inGGat
+         DWZg==
+X-Gm-Message-State: AHYfb5hBRMEQ3+fxA48OHQsNZsWn0GlHALzOEk24LPuGI/fx1f1MAzEz
+        RHw7RI91NWp7LXbL3xdFa5KRkuPD39ht
+X-Received: by 10.84.236.6 with SMTP id q6mr12867967plk.341.1503147613871;
+ Sat, 19 Aug 2017 06:00:13 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.100.149.7 with HTTP; Sat, 19 Aug 2017 05:59:53 -0700 (PDT)
+X-Originating-IP: [84.165.122.243]
+In-Reply-To: <165f5000-df53-0b62-6b06-d628a09d3076@gmail.com>
+References: <CACcHa=NYgir8HDeR1ES9mKsqTQYk=90Z38csTgK-vfD=fQmHLg@mail.gmail.com>
+ <165f5000-df53-0b62-6b06-d628a09d3076@gmail.com>
+From:   =?UTF-8?Q?Alexander_Gro=C3=9F?= <agross@therightstuff.de>
+Date:   Sat, 19 Aug 2017 14:59:53 +0200
+Message-ID: <CACcHa=M_9xaP83=gha3Z4KNd12MfC+C1hE3hOMv-qjQBtMt0Ww@mail.gmail.com>
+Subject: Re: git svn show-externals output format
+To:     Andreas Heiduk <asheiduk@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
-Subject: git-svn: Handling of branches created from subfolders
-Message-Id: <1ED00C5D-177C-4F95-8261-BFB7345B7C08@gmail.com>
-Date:   Sat, 19 Aug 2017 14:45:58 +0200
-To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3273)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+> My practical solution was to skip the man in the middle and ask the SVN
+> server directly for the property values
 
-I=E2=80=99m trying to do a one-time conversion of a large SVN repository =
-to git using git-svn. Unfortunately, this SVN repo contains a =
-substantial amount of non-standard branches created from a subfolder of =
-trunk/. Users that only need to work on part of the code inside the repo =
-usually create such branches to avoid having to download unneeded files.
+Thanks, that helped a lot!
 
-A toy example showing what I=E2=80=99m talking about:
+Alex
+Beste Gr=C3=BC=C3=9Fe,
 
-trunk/
-    - subfolder1/
-        - =E2=80=A6
-    - subfolder2/
-        - =E2=80=A6
-branches/
-    - branch1/ (initially cp=E2=80=99ed from trunk/subfolder1)
-        - =E2=80=A6
-    - branch2/ (initially cp=E2=80=99ed from trunk/subfolder2)
-        - =E2=80=A6
-    - branch3/ (initially cp=E2=80=99ed from trunk)
-        - =E2=80=A6
+Alex
+--=20
+Alexander Gro=C3=9F
+http://therightstuff.de/
 
-While in my experience, git-svn is able to correctly handle =
-branches/branch3, it fails on branch1 and branch2. By "fails" I mean =
-that it still performs the conversion, but any relationship to the trunk =
-is completely missing. Instead, in the resulting git repository it looks =
-like those branches have a completely separate history, starting from =
-nothing.
 
-Is there any way to fix such branches from subfolders in a way that they =
-integrate correctly with the converted git repository, without losing =
-any (or at least too much) history? If this is not possible with git-svn =
-directly, maybe I could prepare the SVN repo or post-process the =
-converted git repository somehow?
-
-Thanks!
-   =20=
+On Sat, Aug 19, 2017 at 12:14 PM, Andreas Heiduk <asheiduk@gmail.com> wrote=
+:
+> Am 19.08.2017 um 10:24 schrieb Alexander Gro=C3=9F:
+>
+>> $ git svn show-externals
+>>
+>> # /trunk/
+>> /trunk/https://svn.code.sf.net/p/gc-webdav/svn webdav
+>> /trunk/https://svn.code.sf.net/p/gc-webdav/svn@1 webdav-at-revision
+>
+> This is the (bugged) output of `git svn show-externals` for "new
+> style" svn:externals.
+>
+>>
+>> # /trunk/sub directory/
+>> /trunk/sub directory/https://svn.code.sf.net/p/gc-webdav/svn 'webdav in =
+subdir'
+>>
+>> An earlier version contains just one external:
+>>
+>> $ git svn show-externals --revision 8
+>>
+>> # /trunk/
+>> /trunk/webdav https://svn.code.sf.net/p/gc-webdav/svn/
+>
+> And that the proper output for "old style" svn:externals.
+>
+>> It seems like the output is inconsistent. [...]
+>
+> SVN changed/extended the svn:externals format in version 1.5.
+> (See [1] for details). One thing is - they switched the
+> order of the arguments. `git svn` dit not pick up these changes
+> and hence interprets the new format incorrectly. See [2] for
+> a similar discussion - it is from 2012!
+>
+>> This makes consuming the output of git svn show-externals in HEAD
+>> difficult because the parts are not clearly separated by space and
+>> sometimes the path is the first element, sometimes it's a combination
+>> of first and last elements.
+>
+> My practical solution was to skip the man in the middle and ask the SVN
+> server directly for the property values with something like that:
+>
+>     svn propget svn:externals -r 42 http://my-repo-url/path/to/ext/dir
+>
+> I used the output to hardcode the values during the conversion.
+>
+>
+>
+> [1] http://svnbook.red-bean.com/en/1.8/svn.advanced.externals.html
+> [2] https://public-inbox.org/git/E59CCE45-6F92-4748-9B6E-2A562647904B@nik=
+olaus-demmel.de/
