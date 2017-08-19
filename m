@@ -2,126 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D306C20899
-	for <e@80x24.org>; Sat, 19 Aug 2017 07:33:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9036A20899
+	for <e@80x24.org>; Sat, 19 Aug 2017 08:12:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751004AbdHSHdO (ORCPT <rfc822;e@80x24.org>);
-        Sat, 19 Aug 2017 03:33:14 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60085 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750852AbdHSHdO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Aug 2017 03:33:14 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0A8AAA837D;
-        Sat, 19 Aug 2017 03:33:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=/pWcKElyuY1CztRLTRwGq+BMx44=; b=r+beA3
-        Ux/GBKoTV9b1pjwqGu0+GDXJx1E4GEz6WOH0cQ9bSTIxZTNVhUHO+Ol0KqsmeQ6X
-        7HREZYHFu4VPs2CeMunDLVo24HsunFs97AhPYnBxCfWm2s5g2x4RsAhYl1+mPorK
-        9bA5mwHQk1ulAsuEzoMmYwGZT66I27uQvp34I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=V6AnjwWB5PLfc2VOj9ZEfQiH63WvcaUd
-        jJDp2IHqpZqlYbdeGJDfK2Kt+tplqM9npbP8v21QZruzMDKKQtK1lo/hbCH3yXu6
-        bqRIKU6AP5I2nHgpjsZTyrnBVghXHhewAJguQMJe9/j9+B3q+x/yLEDvtgy0Tn0L
-        ZZP9xaZr3p8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 03652A837C;
-        Sat, 19 Aug 2017 03:33:06 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 65CC6A8379;
-        Sat, 19 Aug 2017 03:33:05 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, Martin Koegler <mkoegler@auto.tuwien.ac.at>
-Subject: Re: [PATCH v3 00/23] Move exported packfile funcs to its own file
-References: <cover.1502220307.git.jonathantanmy@google.com>
-        <cover.1503094448.git.jonathantanmy@google.com>
-Date:   Sat, 19 Aug 2017 00:33:03 -0700
-In-Reply-To: <cover.1503094448.git.jonathantanmy@google.com> (Jonathan Tan's
-        message of "Fri, 18 Aug 2017 15:20:15 -0700")
-Message-ID: <xmqqk2209fm8.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751163AbdHSIMz (ORCPT <rfc822;e@80x24.org>);
+        Sat, 19 Aug 2017 04:12:55 -0400
+Received: from mout.web.de ([217.72.192.78]:57885 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750999AbdHSIMy (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Aug 2017 04:12:54 -0400
+Received: from [192.168.178.36] ([91.20.52.82]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0Lu52Q-1dYII21CiM-011U9Y; Sat, 19
+ Aug 2017 10:12:48 +0200
+X-Mozilla-News-Host: news://news.public-inbox.org:119
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] commit: remove unused inline function single_parent()
+Message-ID: <0993ee6c-712b-505e-9cfc-364d7ab71261@web.de>
+Date:   Sat, 19 Aug 2017 10:12:45 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A3BD6B9C-84B0-11E7-BAD7-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:Z0xvtPulOsmJp29PN0vR7outOm/fEJ+jt9PV+hXh8DIjnpsF8Zf
+ NBRaZYYJKiFGyCsxKnH4xpUyCX+57Ggrnnzp7sqUMuuryYaxs9xryJT0UwmQc5O6ywCJmiD
+ vmx6yi9f2708+u1DaNID6kXqxH3XNAFJD/83rlho1uxpg3S161I0m1/kJAKoRnOwVctaqU8
+ A5XNrBfr3BeDKKERHkrbw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:PpuqxHIgO5U=:SLrGQgi1XpA0aeIc4gRz3t
+ uec8UXweYAMGQBtGGYqgvBV76s1tjP5Bq319oU3R3HzcaYPArAkpCUU/hG81osOPiYR9eMRRp
+ l4bxRaYKjzzi7M/VIoFWnjwFWoikoFnmAhhcFUXQCc/1lzCOWXoY33hFbtHEM2XgsUEFLYc4d
+ ntB8/sKnfn817OS1a+9gPiV2K08MsTOoiS6YpFYg/oBpGXYHqMNQNaQNBcxjlw1Q0fLKpOETe
+ Oh1Q6qWblvgD/2P+DgtvrdtaMfrdJcs2HVYqZ08fiR2V3pzx5tskpCHLL8P967eQSrJGgTQrh
+ yOYj0GMYwLTjXcIY+RZ3m8KZx4xcK+f7FlAJfRnN804x8jW2z3qFtSNUCj18u66CU1eP9hQrN
+ MsxC42a8bIGO4A4x+uFH7AnMkoBhkDFmdFt1tRPb+MzVjJ1LIT+gpGk0LUpnH0euEfkOWNmcB
+ CHspwp+2Vo+InfS1fKQrGOi+omN9P4nBASPuvM8mcY97svkiTj1frzkwrHok1dtcGe4vw3sTC
+ XeDzKWqs26x9GDhbI2HKgYhxcFCH2d2/vf7ESSJ4tHdXegyKaUtO2XmXSuTcuZvD+TXa9QPjH
+ WA9j/QC9Oc5PxSyd0pb8NhKIqrqt36TKofAQ/LttOxQWD6aAeeijoVkhz6YCuaEjboTFVQRto
+ 8xe8daSVaS6iYZ+wBw55x01AwiA6kaDLYudV4vXWQS37tgnGzfaJs0xvVKXqqtZmDK6XGoIW7
+ yRmeqP+f5RRuaH/dQjIJhcDwl0rGUH9yHyweIhrrBETT8q+sk/rW/Uwie+icKoF0ZLGCJ3y1b
+ KRs+YmPVtx0Z7vZGQ5m6/UAkDM86535Tvb56lnA2oIHQ+VMjpo=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+53b2c823f6 (revision walker: mini clean-up) added the function in 2007,
+but it was never used, so we should be able to get rid of it now.
 
->> You'd need to double check, but I think the topics that cause
->> trouble are rs/find-apck-entry-bisection and jk/drop-sha1-entry-pos;
->> you can start from v2.14.1 and merge these topics on top and then
->> build your change on top.  That would allow you to start cooking
->> before both of them graduate to 'master', as I expect they are both
->> quick-to-next material.  There might be other topics that interfere
->> with what you are doing, but you can easily find out what they are
->> if you do a trial merge to 'next' and 'pu' yourself.
->
-> OK - in addition to the 2 you mentioned, I have found some others
-> (likely added after you wrote that). The complete list is:
->  - rs/find-pack-entry-bisection
->  - jk/drop-sha1-entry-pos
->  - jt/sha1-file-cleanup (formerly part of this set)
->  - mk/use-size-t-in-zlib
->  - rs/unpack-entry-leakfix
->
-> I have merged all of these and rebased my patches on top.
->
-> Other changes:
->  - Used packfile.h instead of pack.h (following most people's
->    preference)
->  - Ensured that I added functions to packfile.h retaining the order they
->    were originally in, so that if you run "git diff <base> --color-moved
->    --patience", there are much fewer zebra stripes
->
-> The merge base commit can be accessed online [1], if you need it.
->
-> [1] https://github.com/jonathantanmy/git/commits/packmigrate
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ commit.h | 5 -----
+ 1 file changed, 5 deletions(-)
 
-Thanks.
-
-I have to say that this was a painful topic to integrate.
-
-As you may know, the mk/use-size-t-in-zlib topic is being retracted
-and getting rerolled as a larger size_t series, most of which still
-needs help in reviewing.
-
-The jt/sha1-file-cleanup topic is the only one among the other four
-that are still not in 'next', and I think that topic, as well as the
-other three, are all good and serve as a good base to build on top.
-So I first rebuilt your patches on top of these four topics.  This
-took some time but it wasn't all that painful.
-
-The result cleanly merged to 'pu', I think, but it resulted in a
-rather noisy conflict when I attempted to merge it to 'next'.  I
-want to see both of a merge to 'next' and a merge to 'pu' to be
-reasonably clean for any topic to be viable [*1*].  Otherwise,
-"initially queue in 'pu', then cook in 'next', and eventually
-graduate to 'master'" workflow would not work well.
-
-Anyway, I _think_ I finally got the conflict resolutions right for
-merges of the topic to 'next', 'jch' and 'pu', so I will push the
-result of merging to 'pu' out.  This unfortunately makes Martin's
-ongoing size_t topic unmergeable to any of the integration branches
-as-is, but let's make sure that topic is reviewed properly first (I
-haven't seen people comment much on the individual patches other
-than just selected few).
-
-
-[Footnote]
-
-*1* There is an intermediate point between 'master' and 'pu' called
-    'jch', and I try to make sure any new topic to merge cleanly to
-    that branch, too, when accepting it.  That is the branch I use
-    for everyday work as an early guinea-pig.
+diff --git a/commit.h b/commit.h
+index 6d857f06c1..1283d2a51f 100644
+--- a/commit.h
++++ b/commit.h
+@@ -313,11 +313,6 @@ extern int interactive_add(int argc, const char **argv, const char *prefix, int
+ extern int run_add_interactive(const char *revision, const char *patch_mode,
+ 			       const struct pathspec *pathspec);
+ 
+-static inline int single_parent(struct commit *commit)
+-{
+-	return commit->parents && !commit->parents->next;
+-}
+-
+ struct commit_list *reduce_heads(struct commit_list *heads);
+ 
+ struct commit_extra_header {
+-- 
+2.14.1
