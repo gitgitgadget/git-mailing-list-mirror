@@ -7,20 +7,19 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D25FC208CD
-	for <e@80x24.org>; Sat, 19 Aug 2017 05:30:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5CDDA208CD
+	for <e@80x24.org>; Sat, 19 Aug 2017 05:35:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751056AbdHSF36 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 19 Aug 2017 01:29:58 -0400
-Received: from mout.web.de ([217.72.192.78]:64579 "EHLO mout.web.de"
+        id S1750853AbdHSFeI (ORCPT <rfc822;e@80x24.org>);
+        Sat, 19 Aug 2017 01:34:08 -0400
+Received: from mout.web.de ([217.72.192.78]:60467 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751029AbdHSF35 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Aug 2017 01:29:57 -0400
+        id S1750788AbdHSFeH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Aug 2017 01:34:07 -0400
 Received: from [192.168.178.36] ([91.20.52.82]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LlneG-1d9bVh2OsS-00ZOGQ; Sat, 19
- Aug 2017 07:29:45 +0200
-Subject: [PATCH 2/4] archive: factor out helper functions for handling
- attributes
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LxfKp-1dWxCM3epP-017Ec7; Sat, 19
+ Aug 2017 07:33:53 +0200
+Subject: [PATCH 4/4] archive: queue directories for all types of pathspecs
 To:     git@vger.kernel.org
 Cc:     David Adam <zanchey@ucc.gu.uwa.edu.au>,
         Duy Nguyen <pclouds@gmail.com>,
@@ -29,8 +28,8 @@ References: <alpine.DEB.2.11.1708131240360.15538@motsugo.ucc.gu.uwa.edu.au>
  <ae893c19-652d-1c8f-50ba-1242b95be84e@web.de>
  <887652a4-3f03-e2dd-2c68-cff4f7194898@web.de>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <aaf9c857-76b9-5766-59ce-cffc1b65015f@web.de>
-Date:   Sat, 19 Aug 2017 07:29:43 +0200
+Message-ID: <0432c7cc-a2a5-12bd-bf65-a16186313d5b@web.de>
+Date:   Sat, 19 Aug 2017 07:33:50 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.2.1
 MIME-Version: 1.0
@@ -38,89 +37,70 @@ In-Reply-To: <887652a4-3f03-e2dd-2c68-cff4f7194898@web.de>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:mxisagbSPZObecWXSSV3BPye7d/qULX/27hOW5YyxMHQ9zokWF5
- aVwN1q5VzFWxGBb2aNgPda3UEzxzjUUY6xzifnSUzKMHfZrb8mSfnhHaNNfCC6P4Vx3ErLD
- sQL9QW3tiAMmFLj54aLTvJx8PCDIDymoCMw974eqHcAh8QcuYWy3XbMVXYVeSPTBAf0yiMV
- PVAym1fxAjDlVLvca/urA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:lYxBolcfD5w=:gSHwRKB495Z37dvm91mgYF
- M8OSM8RSUTbIXwB3H733LxmOTynKLiud5AbBJqr72LK05+7uOmKvHmJ2PMNfytlfSXEdw/jAy
- El6ZwRot4texVa1tBZzFvRwc4yqAd195yoQ7JC6fBKfXI5YPBATQ9RTF7aHFUbadOmYrmBoIY
- gaNDQJyY6CKmXKGae/4HSCjqFe0LNiKc3bSSzsz3V5XRUog87aUL35WOUO3ivKGe0tjXiKyFD
- t3OWrKbb5UqAKYkEVOGJP1vtRJpLH+iGioakoXA2P26sGQr7mcXiDIawdR+7p/Ab86jS1DbRt
- Tr0y5NtvLrRuKn+GZc3p5R3r3bda6GSUdg7jg/u4xsZqKqQsiaEwzS8asJas0pXyJpWRkisbm
- 19r8swB3t54VDHVfVHbX8GOo7m5ayFS99APgr2oxLinVkndQIsjfbR2oXuCLiEN291keiLrQa
- ouE6ixR8waeEpu1RCvLP8P+jDuPMtPXTn6ZzZTbqx405hO4zvo/R/naLqOG0TZuTzitSBx/lw
- 70xdWAa8K8OMcjR4o85Mo18WtxjP2tReP5qWWTJ9mncILUiQn+9no/cRvqmJi5XwXQ8rO/gG4
- Xq5GJJGzsezOP2QyTEeT9B7CZbcI50Dsiw/8G2u7A92X52/HXdZwuagAXpbyTs+pMYIDsvdNd
- kS0WHuF6FYPwsQS0hsNCwYHzuAt29gGxbEtuJPARdIXm6DdHVt4lK3zqs7zs1IjMU2LxkuXR0
- 34cagifB4BLef3Z9wpg68+9Y3s+0bmPpL6vQ6RBpcTnUXkX17owzauHs9v6NlqQEjj/O45A1G
- /GkQrzEBRalzfnBgON6hBqfaz30+qsdZgix0AuCxZkwsp7BNtw=
+X-Provags-ID: V03:K0:DZ6fyCyolup69rDNaVnN/mmd3X4vMvDT7AZ2MIjZsmPKu8J4GHQ
+ CndH43na0wx4NG+u1ZWM6KgTWra5JAql4AnUIGFVZA/BDXgOfXyg141KoAe2ca+yROs/ohk
+ 5zyJwYioVE/ms4ulI5l4YwC+k5N7e+ivGLKMWmT+6ETXCBLJ/lfhZ1DRyqVftovxN9s5B41
+ Lo8KN2eiYiQqGd89+WnMA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ftyytblu0Oo=:NeAPJEmiS+nJ+2tLKpIhs9
+ aVbBmxawsRyUVaOa7W36KC3/ODEIwONegaHc43GbKgzmKKQ3sLEeJ3y/AOU68onJN5booGD55
+ KyA+6ZfNwM7uDsubR4ItF9KFa2eLLqpiF7p3oV727UoJP+LY7/lmB8qhu35LnllH52U2Qe6Nq
+ dQYaWt/cD937JOfAqrgs0g4BiE+kje6H0giA5Y+WXN+fAznJZzMl0/MGG1rWwNqc5OvIqn0Ar
+ DdaSzv4c5woDkixQbGcUKLCTp8tcq0lGZk1VIWySC0XMnuSzTwkl2k3meijzwPSzFyiWtnBel
+ kK2jy6tmcEzH9T33JUvSIpsl4dGwdsHLospgz+pXVwbG6bIOS5Nu8w8ec2rMitvRF6oTLC7cX
+ u9zmhapkQBjnARU6xpJYrA0nP0yoi8O9vDh5cI0nW/Tj8W8mGtW1mYCgGn0k5dwjunQVvILOa
+ mypaTLjVwJWC8lUndMptD5E2824mxRltcMJuwNfOntovNeY87jjo2zaZuZezr2efMegFqD5sx
+ nY6pQyODe/CR4stoR/13IBHBR3vm6uKLHYwRmItdEQF03ErXKR8mQ84jJmA6uV3cW5U6+1cMh
+ on0HwUJLJrL453hpOcpWQXYCT37dijORgB1c3aHV7MTgZ2yJ4a0RcUw0QuhtGylS85t7caTXf
+ tKv4MbwofhIRz8JBdqTrsa4QwvzOrORj5bhCWOgMJQFI6mjP7R5jJL13omxjXKO7NvKk30ygx
+ 6jm1WTEn7gegYKTrtJkJuGS3yyhs+C9ghhebE4zotdiuLnKp5//Cjka96A9oFjhLlHpe0mc7Y
+ CxuqW8nhjUm9o6PEqSfr0Jf4XVokAVkapsv3E0KN2g++vR28RA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add helpers for accessing attributes that encapsulate the details of how
-to retrieve their values.
+When read_tree_recursive() encounters a directory excluded by a pathspec
+then it enters it anyway because it might contain included entries.  It
+calls the callback function before it is able to decide if the directory
+is actually needed.
+
+For that reason git archive adds directories to a queue and writes
+entries for them only when it encounters the first child item -- but
+only if pathspecs with wildcards are used.  Do the same for literal
+pathspecs as well, as the reasoning above applies to them, too.  This
+prevents git archive from writing entries for excluded directories.
 
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- archive.c | 31 +++++++++++++++++++++++--------
- 1 file changed, 23 insertions(+), 8 deletions(-)
+ archive.c               | 2 +-
+ t/t5001-archive-attr.sh | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/archive.c b/archive.c
-index 557dd2db85..8e5f632912 100644
+index 1ab8d3a1d7..174c0555b6 100644
 --- a/archive.c
 +++ b/archive.c
-@@ -103,12 +103,30 @@ struct archiver_context {
- 	struct directory *bottom;
- };
+@@ -123,7 +123,7 @@ static int check_attr_export_subst(const struct attr_check *check)
  
-+static const struct attr_check *get_archive_attrs(const char *path)
-+{
-+	static struct attr_check *check;
-+	if (!check)
-+		check = attr_check_initl("export-ignore", "export-subst", NULL);
-+	return git_check_attr(path, check) ? NULL : check;
-+}
-+
-+static int check_attr_export_ignore(const struct attr_check *check)
-+{
-+	return check && ATTR_TRUE(check->items[0].value);
-+}
-+
-+static int check_attr_export_subst(const struct attr_check *check)
-+{
-+	return check && ATTR_TRUE(check->items[1].value);
-+}
-+
- static int write_archive_entry(const unsigned char *sha1, const char *base,
- 		int baselen, const char *filename, unsigned mode, int stage,
- 		void *context)
+ static int should_queue_directories(const struct archiver_args *args)
  {
- 	static struct strbuf path = STRBUF_INIT;
--	static struct attr_check *check;
-+	const struct attr_check *check;
- 	struct archiver_context *c = context;
- 	struct archiver_args *args = c->args;
- 	write_archive_entry_fn_t write_entry = c->write_entry;
-@@ -125,13 +143,10 @@ static int write_archive_entry(const unsigned char *sha1, const char *base,
- 		strbuf_addch(&path, '/');
- 	path_without_prefix = path.buf + args->baselen;
+-	return args->pathspec.has_wildcard;
++	return args->pathspec.nr;
+ }
  
--	if (!check)
--		check = attr_check_initl("export-ignore", "export-subst", NULL);
--	if (!git_check_attr(path_without_prefix, check)) {
--		if (ATTR_TRUE(check->items[0].value))
--			return 0;
--		args->convert = ATTR_TRUE(check->items[1].value);
--	}
-+	check = get_archive_attrs(path_without_prefix);
-+	if (check_attr_export_ignore(check))
-+		return 0;
-+	args->convert = check_attr_export_subst(check);
+ static int write_archive_entry(const unsigned char *sha1, const char *base,
+diff --git a/t/t5001-archive-attr.sh b/t/t5001-archive-attr.sh
+index 897f6f06d5..e9aa97117a 100755
+--- a/t/t5001-archive-attr.sh
++++ b/t/t5001-archive-attr.sh
+@@ -73,7 +73,7 @@ test_expect_missing	archive-pathspec/ignored-by-tree
+ test_expect_missing	archive-pathspec/ignored-by-tree.d
+ test_expect_missing	archive-pathspec/ignored-by-tree.d/file
+ test_expect_exists	archive-pathspec/ignored-by-worktree
+-test_expect_missing	archive-pathspec/excluded-by-pathspec.d failure
++test_expect_missing	archive-pathspec/excluded-by-pathspec.d
+ test_expect_missing	archive-pathspec/excluded-by-pathspec.d/file
  
- 	if (S_ISDIR(mode) || S_ISGITLINK(mode)) {
- 		if (args->verbose)
+ test_expect_success 'git archive with wildcard pathspec' '
 -- 
 2.14.1
