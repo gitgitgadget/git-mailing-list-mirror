@@ -2,106 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F3FFE20899
-	for <e@80x24.org>; Sat, 19 Aug 2017 08:25:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 479F220899
+	for <e@80x24.org>; Sat, 19 Aug 2017 10:14:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752466AbdHSIZU (ORCPT <rfc822;e@80x24.org>);
-        Sat, 19 Aug 2017 04:25:20 -0400
-Received: from mail-pg0-f42.google.com ([74.125.83.42]:38426 "EHLO
-        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752405AbdHSIZS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Aug 2017 04:25:18 -0400
-Received: by mail-pg0-f42.google.com with SMTP id t80so48732915pgb.5
-        for <git@vger.kernel.org>; Sat, 19 Aug 2017 01:25:18 -0700 (PDT)
+        id S1751546AbdHSKOm (ORCPT <rfc822;e@80x24.org>);
+        Sat, 19 Aug 2017 06:14:42 -0400
+Received: from mail-wr0-f179.google.com ([209.85.128.179]:37398 "EHLO
+        mail-wr0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750854AbdHSKOl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Aug 2017 06:14:41 -0400
+Received: by mail-wr0-f179.google.com with SMTP id z91so69200926wrc.4
+        for <git@vger.kernel.org>; Sat, 19 Aug 2017 03:14:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=therightstuff.de; s=google;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=YAo8HSOO/UoPDg7s4RKQuZXWEKatCI5lAjr9syVnwAM=;
-        b=mOAyq9qRCodcClIHoI9O17uxR7F9DFOrp5g/7s+TUaaM5uJyFWg9gJgiwG7WsrUfuj
-         KatHbbYBbsiPBPAADjZ6Uvr3lNs8baOUuJz0yKR8yV0JXUDMOv3b3GzQZf17OZegN+PE
-         2I+5FnaFTP1JLSHOO9PX4hLUdMR5QCR9s0P1Y=
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=y+/+0KIVifFOJOVaGY8ZGwXf7a++nw1OMaWJNSSOIww=;
+        b=BgVXuCWc7LaVsohgos/DugqLIFwBHXRQPuNJY3+V2SfA5fROaMBwSbpoyHiWevH3to
+         KOK9vCikki4ok9YdS9KMXReGhSZJQK3XYlbOLaL6SIlNjPi4+GWrrVoF/xqY57q4cjX8
+         6trrUxvWNKSVLJmMIFGwEPRU4CopnxsbIbM2liHhrYCrD9hiTqzi/rstn7yeYiK4kaTx
+         zZVPzOBRLhnFViIA2wG6g6/JYyv5HJge6WgrNIBvt3uTregCTv6SbQ+CUqZRj37sAOW2
+         MyEoS+2vUhGxeNy3xva/5Mg+yKWPrKrnTfX7sCJM2XePPNWU7tWcol1fgsLjXHst20/X
+         49Fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=YAo8HSOO/UoPDg7s4RKQuZXWEKatCI5lAjr9syVnwAM=;
-        b=oLHyBUBCH4HhEIvxry9x21v0I1clldYkgDjWAvWDDCOr3D2hrau0eVwrd8nb4+W2Dg
-         NfR2x5Dd/olUyl9CdDIB5BlUnxzNMqJ3wLjndYFLdJ4RacrfQfGCaaOsWmhxTyQudQaz
-         MvhD0FLW46th3YfvUoSnZvLW13T+lipphhDIA5nd3Q/vv+sLAmD2IKpDHl+mgIZOYCd6
-         FOifEMEMUMmiqvEaZSJ2CukppkQeT/qu8HCN+O7Rco5BOCDcXOU7xFbhSiyU4dLHTS0T
-         xpS6oilxE5G8UXkp19lTbe6UmO+oF8RVrB9fdq6ZVNzXm9StalIfFMFPSQJeehbJ5KSp
-         snHA==
-X-Gm-Message-State: AHYfb5gwo+hodSue/A2hJbKcQ/9fxKDaUXzmTjwqfzMJwPmM0hKLCK7N
-        Inckce6ocbvo1D5Ko+DWl/hMAOFM4NKoMXkHig==
-X-Received: by 10.84.236.6 with SMTP id q6mr12208279plk.341.1503131117677;
- Sat, 19 Aug 2017 01:25:17 -0700 (PDT)
+        bh=y+/+0KIVifFOJOVaGY8ZGwXf7a++nw1OMaWJNSSOIww=;
+        b=JHtPInn/lxqqwBbFT+/HAo/P36P51B625zwIASIhjb6ATdE6FTPhIdWB95blDRVbvV
+         6+W5iPvZovAXOv5P30RpPy0Cv+dK+8sJFrQ+i/TbS7EEbfWnA+9BgkzwqUGHIZtbIxws
+         PE6tC1aqKK3OJZOrRPhM/7EVHAdlhaSwToC3H2Xfwc0infkxQcYh55tEG+k/5i3GUzW2
+         Ae5LAb0CSMBv1+TvqzY8RFCmLBZyK6pVSMA8Ja8BOyyUdcvfmMV13InhCt+J9DC7uRKe
+         gFsL36EqbKXNp5RJdrgm76fGNu9CnXXMBpbbFRpHfXz8SUVjO4hhQ9HZHP/KaQ/lYwnH
+         grcA==
+X-Gm-Message-State: AHYfb5iR8nxeNozU6IVkvkbCFRwJQx0x7hKclGqKzuvvokzQH77fYURd
+        oiBtAJGoHLL436WB
+X-Received: by 10.223.162.139 with SMTP id s11mr5930677wra.25.1503137679663;
+        Sat, 19 Aug 2017 03:14:39 -0700 (PDT)
+Received: from ?IPv6:2001:a61:340e:100:2ca5:215f:d828:4970? ([2001:a61:340e:100:2ca5:215f:d828:4970])
+        by smtp.googlemail.com with ESMTPSA id q16sm7326765wrg.44.2017.08.19.03.14.38
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 19 Aug 2017 03:14:38 -0700 (PDT)
+Subject: Re: git svn show-externals output format
+To:     =?UTF-8?Q?Alexander_Gro=c3=9f?= <agross@therightstuff.de>,
+        git@vger.kernel.org
+References: <CACcHa=NYgir8HDeR1ES9mKsqTQYk=90Z38csTgK-vfD=fQmHLg@mail.gmail.com>
+From:   Andreas Heiduk <asheiduk@gmail.com>
+Message-ID: <165f5000-df53-0b62-6b06-d628a09d3076@gmail.com>
+Date:   Sat, 19 Aug 2017 12:14:37 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Received: by 10.100.149.7 with HTTP; Sat, 19 Aug 2017 01:24:57 -0700 (PDT)
-X-Originating-IP: [2001:470:1f0b:c9a:a974:46a2:b306:7a10]
-From:   =?UTF-8?Q?Alexander_Gro=C3=9F?= <agross@therightstuff.de>
-Date:   Sat, 19 Aug 2017 10:24:57 +0200
-Message-ID: <CACcHa=NYgir8HDeR1ES9mKsqTQYk=90Z38csTgK-vfD=fQmHLg@mail.gmail.com>
-Subject: git svn show-externals output format
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CACcHa=NYgir8HDeR1ES9mKsqTQYk=90Z38csTgK-vfD=fQmHLg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: de-BE
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+Am 19.08.2017 um 10:24 schrieb Alexander Groß:
 
-I am playing with svn-to-git conversion and wanted to have a look at
-the svn:externals of a test SVN repository.
+> $ git svn show-externals
+> 
+> # /trunk/
+> /trunk/https://svn.code.sf.net/p/gc-webdav/svn webdav
+> /trunk/https://svn.code.sf.net/p/gc-webdav/svn@1 webdav-at-revision
 
-$ git svn clone svn://svn.code.sf.net/p/svn-to-git/code/ svn-to-git-code
+This is the (bugged) output of `git svn show-externals` for "new
+style" svn:externals.
 
-The SVN repo in HEAD revision contains three externals:
+> 
+> # /trunk/sub directory/
+> /trunk/sub directory/https://svn.code.sf.net/p/gc-webdav/svn 'webdav in subdir'
+> 
+> An earlier version contains just one external:
+> 
+> $ git svn show-externals --revision 8
+> 
+> # /trunk/
+> /trunk/webdav https://svn.code.sf.net/p/gc-webdav/svn/
 
-$ cd svn-to-git-code
-$ git svn show-externals
+And that the proper output for "old style" svn:externals.
 
-# /trunk/
-/trunk/https://svn.code.sf.net/p/gc-webdav/svn webdav
-/trunk/https://svn.code.sf.net/p/gc-webdav/svn@1 webdav-at-revision
+> It seems like the output is inconsistent. [...]
 
-# /trunk/sub directory/
-/trunk/sub directory/https://svn.code.sf.net/p/gc-webdav/svn 'webdav in sub=
-dir'
+SVN changed/extended the svn:externals format in version 1.5.
+(See [1] for details). One thing is - they switched the
+order of the arguments. `git svn` dit not pick up these changes
+and hence interprets the new format incorrectly. See [2] for 
+a similar discussion - it is from 2012!
 
-An earlier version contains just one external:
+> This makes consuming the output of git svn show-externals in HEAD
+> difficult because the parts are not clearly separated by space and
+> sometimes the path is the first element, sometimes it's a combination
+> of first and last elements.
 
-$ git svn show-externals --revision 8
+My practical solution was to skip the man in the middle and ask the SVN
+server directly for the property values with something like that:
 
-# /trunk/
-/trunk/webdav https://svn.code.sf.net/p/gc-webdav/svn/
+    svn propget svn:externals -r 42 http://my-repo-url/path/to/ext/dir
 
-It seems like the output is inconsistent. In SVN revision 8 the output
-looks like it's formatted like
-<path> <URL>
-
-In the HEAD revision it looks mangled
-<path prefix><URL> <path suffix>
-
-This makes consuming the output of git svn show-externals in HEAD
-difficult because the parts are not clearly separated by space and
-sometimes the path is the first element, sometimes it's a combination
-of first and last elements.
-
-I am able to checkout both revisions including externals using native svn.
-
-Am I doing something wrong?
-
-Thanks!
+I used the output to hardcode the values during the conversion.
 
 
-Alex
---=20
-Alexander Gro=C3=9F
-http://therightstuff.de/
+
+[1] http://svnbook.red-bean.com/en/1.8/svn.advanced.externals.html
+[2] https://public-inbox.org/git/E59CCE45-6F92-4748-9B6E-2A562647904B@nikolaus-demmel.de/
