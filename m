@@ -2,74 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C5F8E1F667
-	for <e@80x24.org>; Sat, 19 Aug 2017 19:17:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4745B1F667
+	for <e@80x24.org>; Sat, 19 Aug 2017 20:13:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751626AbdHSTRu (ORCPT <rfc822;e@80x24.org>);
-        Sat, 19 Aug 2017 15:17:50 -0400
-Received: from mail-wm0-f43.google.com ([74.125.82.43]:35469 "EHLO
-        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751533AbdHSTRt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Aug 2017 15:17:49 -0400
-Received: by mail-wm0-f43.google.com with SMTP id m85so21686374wma.0
-        for <git@vger.kernel.org>; Sat, 19 Aug 2017 12:17:49 -0700 (PDT)
+        id S1751614AbdHSUNk (ORCPT <rfc822;e@80x24.org>);
+        Sat, 19 Aug 2017 16:13:40 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:34961 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751533AbdHSUNj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Aug 2017 16:13:39 -0400
+Received: by mail-pf0-f193.google.com with SMTP id j68so3416179pfc.2
+        for <git@vger.kernel.org>; Sat, 19 Aug 2017 13:13:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=iFDeNsAsEASjqrKTnXQapkTDt+UeMxw0lvlVJe5BQUg=;
-        b=TgRlScYZGLSeJHQXpYirPnibIkt9eEsNUAFaWeXXOZO3eogBYuTrAlhIhAPRPW2J5I
-         gGfYr6/vtdAUAX6IkHufAkWzFyYQw50embLcR3Oz+9rtk5FkI7kB6nXX22WLReF7CvkQ
-         5HGljsWHiVUxx3AZ1pGpH4KEx6duk4+LekFjnMokmlFjaRHhyTnwxfFlHOGtPcM1C4Gk
-         c10JoV52X2hP+rmX8f0eFPUkU0ni8H7pgmMyKQIER5oSiJ61L5XvS0G2y38zhkk2n87C
-         6rvUXzSrxonkygPEcWdPjS74WZXwItU28pH9GcAka9TB09sIu+5tGnzqlS8m6yfzQ2AA
-         kwdw==
+        d=teichroeb-net.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id;
+        bh=I51EJi9d5nHym2pf+yQhriI/ssWGTKlubGlYoK3Jdek=;
+        b=McStmhMfxuQUB3HnqUJ7C2UBIFVkSuFO3qrYELhkSYHxqBzZhwZZkvT4RhQ9pdcn/k
+         QWz1s9t0GGuG/iGiWCEZejD6DXt3PnJhBpAl8dNfuwaYUMik4bL9BPxRtnMow2+tqL8w
+         rbtLT1gtObMQUL1sDG50FpPlaDIESvVIyDNODqwa43BbW1zK3ylu1/vWsUZ75BJaZfIg
+         Y8ReQp9v5c+tGJ9tcVNi7fqYajRa0PkIsg+pOwa/9UnLsSBxfvaeianflhpbr2BiA8pA
+         c+UHhpSmpj14t1EX/VZdou09Iz4c+0g0WS45XLm3bMwUGkDWqourmwTEQ5QlVUsK98w+
+         Rd2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=iFDeNsAsEASjqrKTnXQapkTDt+UeMxw0lvlVJe5BQUg=;
-        b=QRv4SNPMTpBVK1RZzJk+EIisrpVaiANKVc89qOUwgRTOk0/C0d6I0scPPsT1Fcrbh+
-         EZ+reLrbg6PaHdP1kS8lW4HyI/EJxdP696lgaAJX8ImiDwU2KmCPwUlGIVj7CP8LJkQH
-         89IUhp/Cq7av0d47TzG2HAcOyHD5XVhQTvBhShcnKeNUT+622swdtxkm8LFGnbNGnY4+
-         XndWpzqPM2gGl40u1zOsr3caxhst7p5a9fqVk1sBVeGMp/oIDWQQMhHADeP6c9+2lGpK
-         j6Ggy1gEFbwEvxvtZ0bGc7uIj8fL7lbO7JcgjmniRyhV0MNqWGpoAgqDriTOqFvurtiP
-         xFiQ==
-X-Gm-Message-State: AHYfb5iTEwRT+kx7eWYIVp4Agf8mX6m9F4L4/Cgrk2kQbP0tP0P95BFV
-        Z54iD7ewUE3INAn9aZTnEKaAeEHtPA==
-X-Received: by 10.28.30.77 with SMTP id e74mr3593254wme.172.1503170268458;
- Sat, 19 Aug 2017 12:17:48 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.28.24.130 with HTTP; Sat, 19 Aug 2017 12:17:18 -0700 (PDT)
-In-Reply-To: <CAH8yC8mpPRN2y1k07_Jk9QP88=gpLKNWfV3W0QQwXTWxyL5STQ@mail.gmail.com>
-References: <CAH8yC8=i33rtopVt=sgg0k+P4JQO+1EVpPJ+u5CPGEXKvZ+PBA@mail.gmail.com>
- <xmqqbmnba50e.fsf@gitster.mtv.corp.google.com> <CAH8yC8mpPRN2y1k07_Jk9QP88=gpLKNWfV3W0QQwXTWxyL5STQ@mail.gmail.com>
-From:   Patryk Obara <patryk.obara@gmail.com>
-Date:   Sat, 19 Aug 2017 21:17:18 +0200
-X-Google-Sender-Auth: nZIcOlP6mmRcoDVMURWBblnS_fI
-Message-ID: <CAJfL8+QbMPutRLjKMkNaEmvb1pr+8S3-wR-xhk1Y=LgXsW0DLg@mail.gmail.com>
-Subject: Re: Please fix the useless email prompts
-To:     noloader@gmail.com
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=I51EJi9d5nHym2pf+yQhriI/ssWGTKlubGlYoK3Jdek=;
+        b=tkkAOHhlWgB5Zt+v8aBLKk4bLUzf1n9qZWn9WA/Rm20hZFxuBh8yQI17bDYcFgMl2x
+         +PhR+MODndk3Y9IIfUMn/C9qpXdXmQPWeNDrXOHF/zDS+PdxAqpOvUDY75b2cGazu4Gj
+         FJt/XtMUVL7kBRG/BHL40v3ZgCWgas+qflnW2Xecta+0WP+HDthCAZybLgeZ82xSNlTl
+         TzjYXmMWHq3+BRMqaOf4oGij6NhNz91I53RwLHy3wQnjHZ+kHmpeZlOUFAqeUpV3Z8rF
+         x1WT9g0oL+kee4LeuB0+Tt0MFGxXqBMBuvLItBGCB2/AHjCSr/saAB6C3N2hh2R5p3b/
+         9c/g==
+X-Gm-Message-State: AHYfb5hBdIEDuuKVhfWDdEqmvA5jW7VZ3MT0PJmVFiRszElXm1Wej8us
+        UBNtdPCNM7ytwX1hC10=
+X-Received: by 10.84.141.129 with SMTP id 1mr8552330plv.375.1503173618919;
+        Sat, 19 Aug 2017 13:13:38 -0700 (PDT)
+Received: from localhost.localdomain (S01066c3b6b1953d0.vc.shawcable.net. [24.80.205.243])
+        by smtp.gmail.com with ESMTPSA id l15sm14172681pgs.58.2017.08.19.13.13.38
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 19 Aug 2017 13:13:38 -0700 (PDT)
+From:   Joel Teichroeb <joel@teichroeb.net>
+To:     git@vger.kernel.org
+Cc:     Joel Teichroeb <joel@teichroeb.net>
+Subject: [PATCH 1/3] stash: add test for stash create with no files
+Date:   Sat, 19 Aug 2017 13:13:24 -0700
+Message-Id: <20170819201326.6872-1-joel@teichroeb.net>
+X-Mailer: git-send-email 2.14.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Why you can't just set username as name and username@hostname as mail?
-You'll do it once and it will be preserved for future. If you use
-various accounts for testing, use --system flag for config to store
-the values in /etc. If you don't want to modify the environment, use
---local (or no flag) to preserve name in your cloned repository only.
+Ensure the command suceeds and outputs nothing
 
---=20
-| =E2=86=90 Ceci n'est pas une pipe
-Patryk Obara
+Signed-off-by: Joel Teichroeb <joel@teichroeb.net>
+---
+ t/t3903-stash.sh | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index 4046817d70..f0708ced27 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -444,6 +444,14 @@ test_expect_failure 'stash file to directory' '
+ 	test foo = "$(cat file/file)"
+ '
+ 
++test_expect_success 'stash create - no changes' '
++	git stash clear &&
++	test_when_finished "git reset --hard HEAD" &&
++	git reset --hard &&
++	git stash create >actual &&
++	test_must_be_empty actual
++'
++
+ test_expect_success 'stash branch - no stashes on stack, stash-like argument' '
+ 	git stash clear &&
+ 	test_when_finished "git reset --hard HEAD" &&
+-- 
+2.14.1
+
