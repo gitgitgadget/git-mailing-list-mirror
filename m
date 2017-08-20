@@ -6,71 +6,72 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A246E208CD
-	for <e@80x24.org>; Sun, 20 Aug 2017 09:18:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19F49208CD
+	for <e@80x24.org>; Sun, 20 Aug 2017 09:29:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752836AbdHTJSK (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 Aug 2017 05:18:10 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43946 "HELO cloud.peff.net"
+        id S1751648AbdHTJ3k (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 Aug 2017 05:29:40 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43960 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752696AbdHTJSJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Aug 2017 05:18:09 -0400
-Received: (qmail 25801 invoked by uid 109); 20 Aug 2017 09:18:09 -0000
+        id S1751019AbdHTJ3k (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Aug 2017 05:29:40 -0400
+Received: (qmail 26572 invoked by uid 109); 20 Aug 2017 09:29:39 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 20 Aug 2017 09:18:09 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 20 Aug 2017 09:29:39 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12854 invoked by uid 111); 20 Aug 2017 09:18:36 -0000
+Received: (qmail 12913 invoked by uid 111); 20 Aug 2017 09:30:06 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Sun, 20 Aug 2017 05:18:36 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Sun, 20 Aug 2017 05:30:06 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 20 Aug 2017 05:18:07 -0400
-Date:   Sun, 20 Aug 2017 05:18:07 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 20 Aug 2017 05:29:38 -0400
+Date:   Sun, 20 Aug 2017 05:29:38 -0400
 From:   Jeff King <peff@peff.net>
-To:     Jeffrey Walton <noloader@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-Subject: Re: Please fix the useless email prompts
-Message-ID: <20170820091807.l23h44gnjajfv5bn@sigill.intra.peff.net>
-References: <CAH8yC8=i33rtopVt=sgg0k+P4JQO+1EVpPJ+u5CPGEXKvZ+PBA@mail.gmail.com>
- <xmqqbmnba50e.fsf@gitster.mtv.corp.google.com>
- <CAH8yC8mpPRN2y1k07_Jk9QP88=gpLKNWfV3W0QQwXTWxyL5STQ@mail.gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Aug 2017, #04; Fri, 18)
+Message-ID: <20170820092937.7u3wshb44bai6kka@sigill.intra.peff.net>
+References: <xmqq60dkbma1.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAH8yC8mpPRN2y1k07_Jk9QP88=gpLKNWfV3W0QQwXTWxyL5STQ@mail.gmail.com>
+In-Reply-To: <xmqq60dkbma1.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Aug 19, 2017 at 02:02:09PM -0400, Jeffrey Walton wrote:
+On Fri, Aug 18, 2017 at 02:26:14PM -0700, Junio C Hamano wrote:
 
-> > Hasn't this been asked and answered already?
-> >
-> >     https://public-inbox.org/git/CACBZZX4vEOD-4a-eK-uBxmFrb1GLSvJKxHW51whCSbCZdh7amQ@mail.gmail.com/
+> * jk/drop-ancient-curl (2017-08-09) 5 commits
+>  - http: #error on too-old curl
+>  - curl: remove ifdef'd code never used with curl >=7.19.4
+>  - http: drop support for curl < 7.19.4
+>  - http: drop support for curl < 7.16.0
+>  - http: drop support for curl < 7.11.1
 > 
-> Its 2017. I'd like the tools to work for me instead of me working for the tools.
+>  Some code in http.c that has bitrot is being removed.
+> 
+>  What is the status of the discussion around this area????
 
-Ironically, Git used to behave as you requested in 2005. After being
-bombarded with complaints about how Git was too lax in creating commits
-with bogus ident information, we changed it in 2012. So I don't think
-"it's 2017" carries any weight as an argument.
+This definitely should not be merged to 'next'; there were a few minor
+issues people pointed out. I haven't re-rolled because I was trying to
+figure out if we were interested in moving forward with this or not.
 
-There are numerous discussions in the archive on this. But my
-recollection is that the conclusion is:
+I'm still inclined in that direction, though I agree the information
+from Tom (and his series) does weaken my argument somewhat.
 
-  - stricter ident checking on balance saves more headaches than it
-    causes, just in terms of numbers
+> * tc/curl-with-backports (2017-08-11) 2 commits
+>  - http: use a feature check to enable GSSAPI delegation control
+>  - http: fix handling of missing CURLPROTO_*
+> 
+>  Updates to the HTTP layer we made recently unconditionally used
+>  features of libCurl without checking the existence of them, causing
+>  compilation errors, which has been fixed.  Also migrate the code to
+>  check feature macros, not version numbers, to cope better with
+>  libCurl that vendor ships with backported features.
+> 
+>  What is the doneness of this topic????
 
-  - the headaches solved by stricter checking are hard to fix (because
-    you unknowingly bake cruft into commit objects, and fixing that
-    requires a history rewrite)
-
-  - the headaches caused by stricter checking are easy to fix (they're
-    obvious when they happen, and "git -c" lets you provide a dummy
-    value to override).
-
-We can revisit any of those conclusions, but I'd want to see a
-thoughtful discussion of the tradeoffs raised in past rounds, not just
-"the current behavior is inconvenient for me".
+These look OK to me, and I just dropped a few comments in the thread.
 
 -Peff
