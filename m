@@ -2,86 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9227120899
-	for <e@80x24.org>; Sun, 20 Aug 2017 12:40:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C1BA20899
+	for <e@80x24.org>; Sun, 20 Aug 2017 15:47:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752852AbdHTMkr (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 Aug 2017 08:40:47 -0400
-Received: from mail-qt0-f170.google.com ([209.85.216.170]:33418 "EHLO
-        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752839AbdHTMkq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Aug 2017 08:40:46 -0400
-Received: by mail-qt0-f170.google.com with SMTP id d15so2187976qta.0
-        for <git@vger.kernel.org>; Sun, 20 Aug 2017 05:40:45 -0700 (PDT)
+        id S1753100AbdHTPrb (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 Aug 2017 11:47:31 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:33255 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753086AbdHTPra (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Aug 2017 11:47:30 -0400
+Received: by mail-wr0-f196.google.com with SMTP id 30so1547243wrk.0
+        for <git@vger.kernel.org>; Sun, 20 Aug 2017 08:47:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=1791saCgiT/SFT4xiy7LFw8g+JLxe5JoF0lbMzushcg=;
-        b=gC0SR3nNmsL/LFU56SdKlWfcMqFj15L5y5gYD0MbGxlaHUsGb4vCKeZtlHmIXls9yg
-         9B7ps2Ji+Mz/jG6fXHHJGX96FxXTBySyL3UNqypb9EdxIgvmy+mU7HBmiHxptAtmw+rn
-         mUkWyNZ8Q4fUfUrZEVQZwBC70RAQi7nicPgylJ5JSI19Bk+hAPBO4bii9yba7UCZd+mr
-         6InbLfq5p3jENzlyezDOWFl/UqQN/CabNEpygwfq0RRMnDz8oQ+LWB2QHRoFIdyzT0tt
-         hEGItm4WB9E43+KRUGRknvGlOr2lXk7bc8YTj7SLSuVBplEpytb+gzf8GDvkyLwgBjbj
-         aXvg==
+        h=from:to:cc:subject:date:message-id;
+        bh=n0QQtbxK7BJ7wEjLDdikEfLCgJhH/RkmVqXisZD1Pl8=;
+        b=QnF+GCMJsbPyuhGjsa5U7i9vM8fMXIuxMx6sT/yzyxJkOpU00cSnj41/RCGes6u13P
+         7U1RUdr3DXa6ncEogcund1wE9R85qzFcHe/yVP8xQwfuWj96ZL7sPFkrl97+3a/DzjsW
+         g6+FC7Q9q8ssaYURgkWU2cDdjnIBTEaGHhirZzhMy2MOzNXYpp4nFY2tlxv2k4MK1QU4
+         BuIs+ql22FmmHx6lUkF75FCJiDO6eS9PwfHKxZb9DDxDM38qU1+lPLymf4+andGp4kmw
+         aC7k2vREKPJ0fGXLtYechlZxeGRpeky0DGQCzY/Z+YGoup16FQP/izqyrw4/ALwrpqLz
+         eQeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=1791saCgiT/SFT4xiy7LFw8g+JLxe5JoF0lbMzushcg=;
-        b=RU9JUI5xR2OuPvhGkXpKFLNAlA8ouukpBFKmI/xQ7FzGBUZajAwMp9R7hzz50Y5dSt
-         QnuRtFTHg8WJMm997SPe3LTsNktX0Mqx90rVHYfCS+RqBrmoLAXcU2GKOb13IWeO67S4
-         PC6MU8svU2lgvYwa65T3BlTNBGi9tDO0oNk7cssqpGyemPk5IF9EP7oUACzhQOS0IdEu
-         By4DF+8w8EmXS5q9IMxMcMNks5wGKiPtQhT74rXpbx0MP8SrN14UTPlUsHM+15QJLLcM
-         9ZwGBX/sa6rlxVZC0QXlZR+iFrkrH82R8c9pJjBi7/y3hnNOsvUI7JyzsjKJ+hHDtWxT
-         gnKQ==
-X-Gm-Message-State: AHYfb5gWuLs6oLm7mHyuG7iocneDz0os1bnyRRyTUHHqDaPFdS8U71Kn
-        QRAczWzgVlhuN0FyXsGLz7zvKk8DOw==
-X-Received: by 10.200.33.188 with SMTP id 57mr19623156qty.101.1503232845362;
- Sun, 20 Aug 2017 05:40:45 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.237.39.151 with HTTP; Sun, 20 Aug 2017 05:40:04 -0700 (PDT)
-In-Reply-To: <20170820091807.l23h44gnjajfv5bn@sigill.intra.peff.net>
-References: <CAH8yC8=i33rtopVt=sgg0k+P4JQO+1EVpPJ+u5CPGEXKvZ+PBA@mail.gmail.com>
- <xmqqbmnba50e.fsf@gitster.mtv.corp.google.com> <CAH8yC8mpPRN2y1k07_Jk9QP88=gpLKNWfV3W0QQwXTWxyL5STQ@mail.gmail.com>
- <20170820091807.l23h44gnjajfv5bn@sigill.intra.peff.net>
-From:   Andrew Ardill <andrew.ardill@gmail.com>
-Date:   Sun, 20 Aug 2017 22:40:04 +1000
-Message-ID: <CAH5451m58n8mYvt=BC_t2=EAv0HOOdAWrCHCNEPQ3NVjT174nQ@mail.gmail.com>
-Subject: Re: Please fix the useless email prompts
-To:     Jeff King <peff@peff.net>
-Cc:     Jeffrey Walton <noloader@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=n0QQtbxK7BJ7wEjLDdikEfLCgJhH/RkmVqXisZD1Pl8=;
+        b=cyZ/sgIXwUYfr9wymYhVrJaUw8aB4hKfk19u4paZKl6cs2NpXSQ1ynMYOSfIKAGK1I
+         +MdRhUew98vFIBeFlm5Eqc2TJp74RzZUsccDA9zeP5sXjeg+f46g+2C9F/h5AERkYXfK
+         U7ilPPE80GUk5dk1zt6YolMjzOXzzb5scVpbuyBAKfbPa2z9pHWKIRIq8GxU/jApWyBU
+         p8q3KPvXP/92/1xb4eaz9+VDlbLPsG0dM6BkpHSk2s8ye/iXfEKXwi3K+fl7IbuwJBb9
+         ANyTgX07uD3JT+fhrikNOB3nB0J89oMmxN00CYl5YF5OjubDS2M9nzajEmpOmVsgjJcm
+         iJLw==
+X-Gm-Message-State: AHYfb5hFHBqIdElbpB9WK3L4ujakUOP3z97yGkuHun60OCc1jG2S4A3z
+        i8zPnlzgcXJe+A9h
+X-Received: by 10.28.11.131 with SMTP id 125mr4764396wml.82.1503244048600;
+        Sun, 20 Aug 2017 08:47:28 -0700 (PDT)
+Received: from localhost.localdomain (adsknateur.autodesk.com. [132.188.32.100])
+        by smtp.gmail.com with ESMTPSA id b15sm5960702wrb.95.2017.08.20.08.47.26
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Sun, 20 Aug 2017 08:47:27 -0700 (PDT)
+From:   Lars Schneider <larsxschneider@gmail.com>
+To:     git@vger.kernel.org
+Cc:     me@ttaylorr.com, gitster@pobox.com
+Subject: [PATCH v1] convert: display progress for filtered objects that have been delayed
+Date:   Sun, 20 Aug 2017 17:47:20 +0200
+Message-Id: <20170820154720.32259-1-larsxschneider@gmail.com>
+X-Mailer: git-send-email 2.14.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 20 August 2017 at 19:18, Jeff King <peff@peff.net> wrote:
-> On Sat, Aug 19, 2017 at 02:02:09PM -0400, Jeffrey Walton wrote:
->
->> > Hasn't this been asked and answered already?
->> >
->> >     https://public-inbox.org/git/CACBZZX4vEOD-4a-eK-uBxmFrb1GLSvJKxHW51whCSbCZdh7amQ@mail.gmail.com/
->>
->> Its 2017. I'd like the tools to work for me instead of me working for the tools.
->
-> Ironically, Git used to behave as you requested in 2005. After being
-> bombarded with complaints about how Git was too lax in creating commits
-> with bogus ident information, we changed it in 2012.
+In 2841e8f ("convert: add "status=delayed" to filter process protocol",
+2017-06-30) we taught the filter process protocol to delayed responses.
+These responses are processed after the "Checking out files" phase.
+If the processing takes noticeable time, then the user might think Git
+is stuck.
 
-Maybe I am missing something obvious, but if that's the case then
-can't we just do the identity check when trying to make new commits,
-in which case you should be able to pull without setting your
-identity?
+Display the progress of the delayed responses to let the user know that
+Git is still processing objects. This works very well for objects that
+can be filtered quickly. If filtering of an individual object takes
+noticeable time, then the user might still think that Git is stuck.
+However, in that case the user would at least know what Git is doing.
 
-Regards,
+It would be technical more correct to display "Checking out files whose
+content filtering has been delayed". For brevity we only print
+"Filtering content".
 
-Andrew Ardill
+The finish_delayed_checkout() call was moved below the stop_progress()
+call in unpack-trees.c to ensure that the "Checking out files" progress
+is properly stopped before the "Filtering content" progress starts in
+finish_delayed_checkout().
+
+Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+Suggested-by: Taylor Blau <me@ttaylorr.com>
+---
+
+Notes:
+    Base Ref: master
+    Web-Diff: https://github.com/larsxschneider/git/commit/8c3f433083
+    Checkout: git fetch https://github.com/larsxschneider/git filter-process/progress-v1 && git checkout 8c3f433083
+
+ entry.c        | 16 +++++++++++++++-
+ unpack-trees.c |  2 +-
+ 2 files changed, 16 insertions(+), 2 deletions(-)
+
+diff --git a/entry.c b/entry.c
+index 65458f07a4..1d1a09f47e 100644
+--- a/entry.c
++++ b/entry.c
+@@ -3,6 +3,7 @@
+ #include "dir.h"
+ #include "streaming.h"
+ #include "submodule.h"
++#include "progress.h"
+ 
+ static void create_directories(const char *path, int path_len,
+ 			       const struct checkout *state)
+@@ -161,16 +162,23 @@ static int remove_available_paths(struct string_list_item *item, void *cb_data)
+ int finish_delayed_checkout(struct checkout *state)
+ {
+ 	int errs = 0;
++	unsigned delayed_object_count;
++	off_t filtered_bytes = 0;
+ 	struct string_list_item *filter, *path;
++	struct progress *progress;
+ 	struct delayed_checkout *dco = state->delayed_checkout;
+ 
+ 	if (!state->delayed_checkout)
+ 		return errs;
+ 
+ 	dco->state = CE_RETRY;
++	delayed_object_count = dco->paths.nr;
++	progress = start_progress_delay(
++		_("Filtering content"), delayed_object_count, 50, 1);
+ 	while (dco->filters.nr > 0) {
+ 		for_each_string_list_item(filter, &dco->filters) {
+ 			struct string_list available_paths = STRING_LIST_INIT_NODUP;
++			display_progress(progress, delayed_object_count - dco->paths.nr);
+ 
+ 			if (!async_query_available_blobs(filter->string, &available_paths)) {
+ 				/* Filter reported an error */
+@@ -216,11 +224,17 @@ int finish_delayed_checkout(struct checkout *state)
+ 				}
+ 				ce = index_file_exists(state->istate, path->string,
+ 						       strlen(path->string), 0);
+-				errs |= (ce ? checkout_entry(ce, state, NULL) : 1);
++				if (ce) {
++					errs |= checkout_entry(ce, state, NULL);
++					filtered_bytes += ce->ce_stat_data.sd_size;
++					display_throughput(progress, filtered_bytes);
++				} else
++					errs = 1;
+ 			}
+ 		}
+ 		string_list_remove_empty_items(&dco->filters, 0);
+ 	}
++	stop_progress(&progress);
+ 	string_list_clear(&dco->filters, 0);
+ 
+ 	/* At this point we should not have any delayed paths anymore. */
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 862cfce661..90fb270d77 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -395,8 +395,8 @@ static int check_updates(struct unpack_trees_options *o)
+ 			}
+ 		}
+ 	}
+-	errs |= finish_delayed_checkout(&state);
+ 	stop_progress(&progress);
++	errs |= finish_delayed_checkout(&state);
+ 	if (o->update)
+ 		git_attr_set_direction(GIT_ATTR_CHECKIN, NULL);
+ 	return errs != 0;
+
+base-commit: b3622a4ee94e4916cd05e6d96e41eeb36b941182
+-- 
+2.14.1
+
