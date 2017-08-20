@@ -2,58 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 028F420899
-	for <e@80x24.org>; Sun, 20 Aug 2017 20:09:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 266CC20899
+	for <e@80x24.org>; Sun, 20 Aug 2017 20:09:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753274AbdHTUJm (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 Aug 2017 16:09:42 -0400
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:34810 "EHLO
+        id S1753286AbdHTUJs (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 Aug 2017 16:09:48 -0400
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:38279 "EHLO
         mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753243AbdHTUJl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Aug 2017 16:09:41 -0400
-Received: by mail-lf0-f65.google.com with SMTP id t20so731318lfe.1
-        for <git@vger.kernel.org>; Sun, 20 Aug 2017 13:09:40 -0700 (PDT)
+        with ESMTP id S1753243AbdHTUJn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Aug 2017 16:09:43 -0400
+Received: by mail-lf0-f65.google.com with SMTP id y15so9171802lfd.5
+        for <git@vger.kernel.org>; Sun, 20 Aug 2017 13:09:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=yS7tJi7UvVb5CUs7p3S3Eqe9E4bkifZ2V0HqmIlZxb0=;
-        b=SsGcVDgpTcBmO2ownPYYy+NynHG3orEDuz28+WpdT4r+SxoHYZXFd2Ge2Sm3OL3Sdo
-         5H4J4BfkA8Aaxnz5yplSvCmiY6dEkjKHjwh2zCLbO+iNVRvoCXvW25evvCL7kHccymr8
-         cz6kcjIdH0baCWtFciV9WgKymVktNZBncNgvwg7zocwl6/sbfb4RCmzrnTcu8PJop5CF
-         9LlQfIkIOuHsLPAKy46fFzIlQr/mTIrJzjdSRmzaQ60zI2gwnH584/5msvbPrOIs7uPA
-         GKePQH8vPeZWiUcGVJHO/GptS7BMKUTJ3SkpBqvZ9gCpRFtE7XmK3yM4Is4M0L+D86zQ
-         Rs9Q==
+        bh=YW8Gpzj5YgjiHTSprqh1umhBJ3x3IT2YrXgAEGvCTgA=;
+        b=C45T35gv5RV3X0XeUh/HaQLAkFKM9ciJ7A2vlHYLFqCG2RmamDsekK3syUbigYGsy3
+         1XCZmxr1PLk+htQ6+iUVtCLbel4VjlR5d+vjT15C0dQ36FLdIHLHhFUIf7/cuZaoTQSz
+         ggrhO8qPn8Wy2e/DHdPjmTVtWKN6JxV3/AEjYBwJpox7pZNhn73n6nPudjpLrC/shM7B
+         chy6Ji7R28YyWyXFcwDq7l//h5e9Od0wKz40aFmTU7uFZfWsKtZeSY9t1uGF+6YPRzS8
+         9J4JSyqwwAwVpzXP9OIZpc8+X7yxzPC232uJHYomP7Dgbwxz9nFs5/BggdwVLSuTNMYk
+         AAAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:subject:date:message-id
          :in-reply-to:references:in-reply-to:references;
-        bh=yS7tJi7UvVb5CUs7p3S3Eqe9E4bkifZ2V0HqmIlZxb0=;
-        b=begwwryk72fGej5/zYIn+XSiGt86CqPhyoh+A80sP8hST/kGNtttKyaF1LsZhpAkfO
-         l6fVuaEJnL1+0O76y88Fnu0eP1ymV42K3sNbP8vkYXtnD7f5khSiKs1IMd5WrpIm9GyP
-         yLa3U7jLE/0t69yIWb4c5huA+dqyaJctSK8SfSpo6fJTYyyQkbjR0KVeljXYh9hFlrJu
-         UUjhzlikhfPTF/Hyxw0yWpUxKzHImhQ1bmerd/SEr3joL5AvK1ubk/6baSbBintx8b6P
-         cVlVp0lZPqHG77M3bgOrsNeq0d1xnvrK2q8bTPlgj0iHfv19xK3RY400rmA5OOCKR0oc
-         CBBQ==
-X-Gm-Message-State: AHYfb5iTe+52OftPJkCA8oM6eqXK06nhSwybmFj9pOA/oih3QyjL8s3n
-        TXaT1DUmhF3DZLpy8HA=
-X-Received: by 10.46.20.14 with SMTP id u14mr5001130ljd.105.1503259779205;
-        Sun, 20 Aug 2017 13:09:39 -0700 (PDT)
+        bh=YW8Gpzj5YgjiHTSprqh1umhBJ3x3IT2YrXgAEGvCTgA=;
+        b=RxLkNdeSpO15nxHa3jPczPVQEl2mbua9sAB+QUrfhl+wLLrKeTvJBRgS8nMwFxCIJK
+         ERcLnbLj1MUeUC9pyDEJiAYrTUCuvXJhhUdX0YfLTvZlH0M5f3kal91JJe+K6n/AXR2t
+         WsM8coMFHPQVFp+BpMWH4BrX3nb/SPHQvnrii4FK+N0D1BmX3+YZXPkJAqY5AxMNHdiW
+         zoSROZKkK927ynpq0G37lPrJAU0wwHbEYXbVq/Eq89Pbh6+GfMfABPtjzHVZ5pP16ALF
+         a5+wCLf2WMKrFNXIwZeVmMld7pu35HTAe2jpFm0MPhaqzzpMP1fZWKrlf2eJxaOWUWpW
+         xdDg==
+X-Gm-Message-State: AHYfb5igdSKkUV+sKTMmBqHBL7767foaOcSVT/QApbO5gyVOdGlm5tJN
+        /9klSsJ0pedMmjFtsVw=
+X-Received: by 10.46.9.16 with SMTP id 16mr5988591ljj.155.1503259782283;
+        Sun, 20 Aug 2017 13:09:42 -0700 (PDT)
 Received: from localhost.localdomain ([188.121.16.104])
-        by smtp.gmail.com with ESMTPSA id a64sm928869lfl.36.2017.08.20.13.09.38
+        by smtp.gmail.com with ESMTPSA id a64sm928869lfl.36.2017.08.20.13.09.41
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 20 Aug 2017 13:09:38 -0700 (PDT)
+        Sun, 20 Aug 2017 13:09:41 -0700 (PDT)
 From:   Patryk Obara <patryk.obara@gmail.com>
 To:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH 3/6] sha1_file: convert index_path to struct object_id
-Date:   Sun, 20 Aug 2017 22:09:28 +0200
-Message-Id: <e54161375fa3ff3e292b2bd7bacc6c99a71c88b1.1503258223.git.patryk.obara@gmail.com>
+Subject: [PATCH 6/6] sha1_file: convert index_stream to struct object_id
+Date:   Sun, 20 Aug 2017 22:09:31 +0200
+Message-Id: <e15140dfb7b19a1bcaee23889d62bf05ad6e89be.1503258223.git.patryk.obara@gmail.com>
 X-Mailer: git-send-email 2.9.5
 In-Reply-To: <cover.1503258223.git.patryk.obara@gmail.com>
 References: <cover.1503258223.git.patryk.obara@gmail.com>
@@ -64,123 +64,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert all remaining callers as well.
-
 Signed-off-by: Patryk Obara <patryk.obara@gmail.com>
 ---
- builtin/update-index.c |  2 +-
- cache.h                |  2 +-
- diff.c                 |  2 +-
- notes-merge.c          |  2 +-
- read-cache.c           |  2 +-
- sha1_file.c            | 10 +++++-----
- 6 files changed, 10 insertions(+), 10 deletions(-)
+ sha1_file.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index 56721cf..d562f2e 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -280,7 +280,7 @@ static int add_one_path(const struct cache_entry *old, const char *path, int len
- 	fill_stat_cache_info(ce, st);
- 	ce->ce_mode = ce_mode_from_stat(old, st->st_mode);
- 
--	if (index_path(ce->oid.hash, path, st,
-+	if (index_path(&ce->oid, path, st,
- 		       info_only ? 0 : HASH_WRITE_OBJECT)) {
- 		free(ce);
- 		return -1;
-diff --git a/cache.h b/cache.h
-index 1c69d2a..380868d 100644
---- a/cache.h
-+++ b/cache.h
-@@ -685,7 +685,7 @@ extern int ie_modified(const struct index_state *, const struct cache_entry *, s
- #define HASH_WRITE_OBJECT 1
- #define HASH_FORMAT_CHECK 2
- extern int index_fd(unsigned char *sha1, int fd, struct stat *st, enum object_type type, const char *path, unsigned flags);
--extern int index_path(unsigned char *sha1, const char *path, struct stat *st, unsigned flags);
-+extern int index_path(struct object_id *oid, const char *path, struct stat *st, unsigned flags);
- 
- /*
-  * Record to sd the data from st that we use to check whether a file
-diff --git a/diff.c b/diff.c
-index 9c38258..65f8d13 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3246,7 +3246,7 @@ static void diff_fill_oid_info(struct diff_filespec *one)
- 			}
- 			if (lstat(one->path, &st) < 0)
- 				die_errno("stat '%s'", one->path);
--			if (index_path(one->oid.hash, one->path, &st, 0))
-+			if (index_path(&one->oid, one->path, &st, 0))
- 				die("cannot hash %s", one->path);
- 		}
- 	}
-diff --git a/notes-merge.c b/notes-merge.c
-index c12b354..744c685 100644
---- a/notes-merge.c
-+++ b/notes-merge.c
-@@ -709,7 +709,7 @@ int notes_merge_commit(struct notes_merge_options *o,
- 		/* write file as blob, and add to partial_tree */
- 		if (stat(path.buf, &st))
- 			die_errno("Failed to stat '%s'", path.buf);
--		if (index_path(blob_oid.hash, path.buf, &st, HASH_WRITE_OBJECT))
-+		if (index_path(&blob_oid, path.buf, &st, HASH_WRITE_OBJECT))
- 			die("Failed to write blob object from '%s'", path.buf);
- 		if (add_note(partial_tree, &obj_oid, &blob_oid, NULL))
- 			die("Failed to add resolved note '%s' to notes tree",
-diff --git a/read-cache.c b/read-cache.c
-index 7285608..17f19a1 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -689,7 +689,7 @@ int add_to_index(struct index_state *istate, const char *path, struct stat *st,
- 		return 0;
- 	}
- 	if (!intent_only) {
--		if (index_path(ce->oid.hash, path, st, HASH_WRITE_OBJECT)) {
-+		if (index_path(&ce->oid, path, st, HASH_WRITE_OBJECT)) {
- 			free(ce);
- 			return error("unable to index file %s", path);
- 		}
 diff --git a/sha1_file.c b/sha1_file.c
-index b60ae15..6a2a48b 100644
+index 3e2ef4e..8d6960a 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -3686,7 +3686,7 @@ int index_fd(unsigned char *sha1, int fd, struct stat *st,
- 	return ret;
+@@ -3655,11 +3655,11 @@ static int index_core(unsigned char *sha1, int fd, size_t size,
+  * binary blobs, they generally do not want to get any conversion, and
+  * callers should avoid this code path when filters are requested.
+  */
+-static int index_stream(unsigned char *sha1, int fd, size_t size,
++static int index_stream(struct object_id *oid, int fd, size_t size,
+ 			enum object_type type, const char *path,
+ 			unsigned flags)
+ {
+-	return index_bulk_checkin(sha1, fd, size, type, path, flags);
++	return index_bulk_checkin(oid->hash, fd, size, type, path, flags);
  }
  
--int index_path(unsigned char *sha1, const char *path, struct stat *st, unsigned flags)
-+int index_path(struct object_id *oid, const char *path, struct stat *st, unsigned flags)
- {
- 	int fd;
- 	struct strbuf sb = STRBUF_INIT;
-@@ -3696,7 +3696,7 @@ int index_path(unsigned char *sha1, const char *path, struct stat *st, unsigned
- 		fd = open(path, O_RDONLY);
- 		if (fd < 0)
- 			return error_errno("open(\"%s\")", path);
--		if (index_fd(sha1, fd, st, OBJ_BLOB, path, flags) < 0)
-+		if (index_fd(oid->hash, fd, st, OBJ_BLOB, path, flags) < 0)
- 			return error("%s: failed to insert into database",
- 				     path);
- 		break;
-@@ -3704,14 +3704,14 @@ int index_path(unsigned char *sha1, const char *path, struct stat *st, unsigned
- 		if (strbuf_readlink(&sb, path, st->st_size))
- 			return error_errno("readlink(\"%s\")", path);
- 		if (!(flags & HASH_WRITE_OBJECT))
--			hash_sha1_file(sb.buf, sb.len, blob_type, sha1);
--		else if (write_sha1_file(sb.buf, sb.len, blob_type, sha1))
-+			hash_sha1_file(sb.buf, sb.len, blob_type, oid->hash);
-+		else if (write_sha1_file(sb.buf, sb.len, blob_type, oid->hash))
- 			return error("%s: failed to insert into database",
- 				     path);
- 		strbuf_release(&sb);
- 		break;
- 	case S_IFDIR:
--		return resolve_gitlink_ref(path, "HEAD", sha1);
-+		return resolve_gitlink_ref(path, "HEAD", oid->hash);
- 	default:
- 		return error("%s: unsupported file type", path);
- 	}
+ int index_fd(struct object_id *oid, int fd, struct stat *st,
+@@ -3680,7 +3680,7 @@ int index_fd(struct object_id *oid, int fd, struct stat *st,
+ 		ret = index_core(oid->hash, fd, xsize_t(st->st_size), type, path,
+ 				 flags);
+ 	else
+-		ret = index_stream(oid->hash, fd, xsize_t(st->st_size), type, path,
++		ret = index_stream(oid, fd, xsize_t(st->st_size), type, path,
+ 				   flags);
+ 	close(fd);
+ 	return ret;
 -- 
 2.9.5
 
