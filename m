@@ -2,155 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 441F220899
-	for <e@80x24.org>; Sun, 20 Aug 2017 17:04:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DFD1420899
+	for <e@80x24.org>; Sun, 20 Aug 2017 17:42:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753159AbdHTREu (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 Aug 2017 13:04:50 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55580 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753122AbdHTREt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Aug 2017 13:04:49 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AB9DDA2FA8;
-        Sun, 20 Aug 2017 13:04:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=cipFHyyarVtHkUf6fSE5VXk6x9c=; b=gzAWFw
-        qjXs2wGH0FITAmnkewXWXVuRj6QjE0af8WMQYiSul3oTQXA9okGBRdx+HBdJxR//
-        R5UYzM8x7Hv6O59k7k5d2bJkqm5kELH2ivRWg2mpf4vsZGXA8wviYsEswVj4PSY0
-        iRUGaD9oWoR4i113qydvgSfFbGxmBj0YY5m0Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=WDee2/fU+ozNzwplyi1dKTH1Jh+8esOQ
-        phK6taWGG+yXj+g9i7ZqdkfiVciXML8dpA+69RnbEfIjG8QOdaYNwk1A3Onpdig8
-        RUM1jA7bAZqtWO99XoPwrnuRdIoot3HjlTRmsCm+tSB974SZv/S+gyMmkT2gDuU0
-        uaWu7DDigFg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A4227A2FA7;
-        Sun, 20 Aug 2017 13:04:41 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id ECC9DA2FA6;
-        Sun, 20 Aug 2017 13:04:40 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Aug 2017, #04; Fri, 18)
-References: <xmqq60dkbma1.fsf@gitster.mtv.corp.google.com>
-        <20170820094009.z23wclpku35txflg@sigill.intra.peff.net>
-Date:   Sun, 20 Aug 2017 10:04:39 -0700
-In-Reply-To: <20170820094009.z23wclpku35txflg@sigill.intra.peff.net> (Jeff
-        King's message of "Sun, 20 Aug 2017 05:40:09 -0400")
-Message-ID: <xmqqmv6u6uhk.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A7E589A6-85C9-11E7-8465-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+        id S1753231AbdHTRmQ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 Aug 2017 13:42:16 -0400
+Received: from mail-wr0-f176.google.com ([209.85.128.176]:34861 "EHLO
+        mail-wr0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753072AbdHTRmP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Aug 2017 13:42:15 -0400
+Received: by mail-wr0-f176.google.com with SMTP id k46so6135033wre.2
+        for <git@vger.kernel.org>; Sun, 20 Aug 2017 10:42:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=pWlpkpZF9rbXDDHXUjN3gPON8/tVZBN7bQLTiy+J3tw=;
+        b=SLVCSkgdELR3SludpQCz6qjaxSB1oOKVM/bA3rl6ErI2wb1W5cz8MYlhnlv7hMnbzx
+         ZLeNa4Lcs0aeQD/l9B3BC9/T8Blj8fxqlwyJHk+vd5f/ug5jlEyg0yvyF5sT2kmAmcIn
+         U4bVyTwsHKgSbj6JGsc2JOkg4GqVsXIBZD7/CTwNjoAichW3VBGjfRjz5OSGdEYFjuRl
+         EbyJY7HbSXB5Lx3A1LH8lpEAntJNY+GjQpOK5rcfI5sVN8zOpG/673FR6AxAAgekThPT
+         PB5ZdRLQnoOyeC2pSUvTDCjv6gF9cscy6qwwYuVD7cpUpn/9kCMGpFYUmgTlNcu07jr7
+         803Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=pWlpkpZF9rbXDDHXUjN3gPON8/tVZBN7bQLTiy+J3tw=;
+        b=m5ksEc3K+yrESCqJEVkf0H55UDnKjp0Vz86hT9w+mbwHkfn+v+r+Oge8oDjOMHoGpc
+         LtXmscVAuW+xxIqumGh/toiOeHJKgsb5OvOm8oap65k8Anavl/dw4nTF3nTEHA4gX+Xj
+         QOaO8nXWm9VByc8TDYNST9scJc5gsGxqMMmaCuLHRbh/YoIh1+sNVdozEDHsB5iSau2g
+         Ud9/+ARDDaO3ThY3l5Rpty4B43k369sq5Gs66IMOcMgN2sYcHCNqvDYTPK0c8jksmVW1
+         am4EENYAjhqTuvnwypT9LpWqANldwakuDfY2JuipM0abZasbUm7giiK/j8ZqEPQqYmuW
+         k6vQ==
+X-Gm-Message-State: AHYfb5jBxk6vncsRhAleWLANDrkndThQisFmLUrp+Cva1C/jUta/MaBa
+        pIyVjHTUin65qg==
+X-Received: by 10.28.64.197 with SMTP id n188mr1474946wma.135.1503250934246;
+        Sun, 20 Aug 2017 10:42:14 -0700 (PDT)
+Received: from p2003004d2c4cd6c7a02f4fdc39678fd0.dip0.t-ipconnect.de (p2003004D2C4CD6C7A02F4FDC39678FD0.dip0.t-ipconnect.de. [2003:4d:2c4c:d6c7:a02f:4fdc:3967:8fd0])
+        by smtp.gmail.com with ESMTPSA id s86sm6991448wma.10.2017.08.20.10.42.12
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 20 Aug 2017 10:42:13 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
+Subject: Re: git-svn: Handling of branches created from subfolders
+From:   Jan Teske <jan.teske@gmail.com>
+In-Reply-To: <8c910a5b-ed96-41d4-d157-f138af51011f@gmail.com>
+Date:   Sun, 20 Aug 2017 19:42:11 +0200
+Cc:     git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <74EA70E5-0B8A-4D34-B5EA-8C97A10F3D0F@gmail.com>
+References: <1ED00C5D-177C-4F95-8261-BFB7345B7C08@gmail.com>
+ <8c910a5b-ed96-41d4-d157-f138af51011f@gmail.com>
+To:     Andreas Heiduk <asheiduk@gmail.com>
+X-Mailer: Apple Mail (2.3273)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
 
-> On Fri, Aug 18, 2017 at 02:26:14PM -0700, Junio C Hamano wrote:
->
->> * jk/trailers-parse (2017-08-15) 8 commits
->>  - pretty: support normalization options for %(trailers)
->>  - t4205: refactor %(trailers) tests
->>  - pretty: move trailer formatting to trailer.c
->>  - interpret-trailers: add --parse convenience option
->>  - interpret-trailers: add an option to unfold values
->>  - interpret-trailers: add an option to show only existing trailers
->>  - interpret-trailers: add an option to show only the trailers
->>  - trailer: put process_trailers() options into a struct
->> 
->>  "git interpret-trailers" has been taught a "--parse" and a few
->>  other options to make it easier for scripts to grab existing
->>  trailer lines from a commit log message.
->> 
->>  Will merge to 'next'.
->
-> I saw that this was merged and ended up with a few conflicts related to
-> the other interpret-trailers series (sorry). Your resolution looks good
-> to me.
+> On 20. Aug 2017, at 12:27 , Andreas Heiduk <asheiduk@gmail.com> wrote:
+>=20
+> Am 19.08.2017 um 14:45 schrieb Jan Teske:
+>> Is there any way to fix such branches from subfolders in a way that =
+they integrate correctly with the converted git repository, without =
+losing any (or at least too much) history? If this is not possible with =
+git-svn directly, maybe I could prepare the SVN repo or post-process the =
+converted git repository somehow?
+>=20
+> You can use `git replace --graft` to connect the first commit of the
+> loose branches with their source. After all connections are in place =
+you
+> can use `git filter-branch` to make the replacements permanent.
+>=20
+> This will not change the content or directory structure of branch1 or
+> branch2 but the diff with their parent commits will show up as a huge
+> delete/rename operation. So merging/Cherry-picking between trunk and
+> branch1/branch2 will be ... challenging.
 
-Thanks for double checking.  This was an easy conflict--the only
-remotely tricky part was "list.nr -> !list_empty(&list)".
+That=E2=80=99s really helpful, thanks!
 
-> There are a few leftover bits I think we could do on top:
->
->   - we disallow "--trailer" with "--only-input", because the former is
->     quietly ignored. After the two series are merged, I think "--where",
->     etc should probably get the same treatment (the behavior without it
->     isn't horrible, but it's nice to warn the user that what they asked
->     for is bogus).
+I even solved the problem of the challenging merging between the =
+converted branches and trunk by using another filter-branch to rewrite =
+all the commits in branch1/branch2 to make all their modifications in =
+the respective subfolders (effectively fixing the directory structure to =
+fit trunk). This answer was helpful for how to do this: =
+https://unix.stackexchange.com/a/280229
 
-Sounds good.  I didn't think about that case.
+So, for future reference, the following post-processing seems to work:
 
-The implementation would have to add another variable whose sole
-purpose is to keep track of "have we ever seen any of these
-options?" and flip it in the callbacks that implement these options,
-as there is no way to tell between WHERE_DEFAULT that is set from
-the command line, from the configuration, or left as-is without
-either.
+1. Use filter-branch to move all the commits the the correct subfolder.
+2. Use `git replace --graft` to connect the first commit of the branch =
+to its correct parent commit.
+3. Use `git replace --graft` to add the missing parents of any merge =
+commits the branch was part of.
+4. Use filter-branch again to make the replacements permanent.
 
->   - Martin pointed out a typo in the new documentation
->
->   - I just noticed that ref-filter understands "%(trailer)", too
->     (courtesy of Jacob's original series from last year; I didn't think
->     to even check for it). It probably should learn to support the
->     additional options, too. I didn't look, but it probably could just
->     reuse the new trailer.c formatting function I added.
->
-> There's a patch for the second one below.
->
-> None for the other two right now, as I'm just trying to clear out
-> backlog before going offline for a few days (but I'd be happy if anybody
-> wanted to take a crack at them in the meantime).
 
-Thanks.  Have a good time (I am assuming you'd be having fun, as
-opposed to having to become offline to tend to unpleasant duties).
-
-We probably want some convention to mark the messages with these
-"leftover bits that are relatively low hanging fruits", so that
-archive search can find them easily.  #leftoverbits perhaps?
-
-That way, hopefully people can look for messages with such mark that
-came from those list participants with known-good taste.  That would
-be far easier than a general bug tracker anybody can throw garbage
-at, and requires constant attention to winnow only good ones out of
-chaff.
-
-> -- >8 --
-> From: =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-> Subject: [PATCH] doc/interpret-trailers: fix "the this" typo
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> I put Martin as the author since he noticed the bug, but I think we are
-> OK without a signoff for this trivial change (normally I'd have just
-> squashed, but the topic is in 'next' now).
->
->  Documentation/git-interpret-trailers.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
-> index 1df8aabf51..2e22210734 100644
-> --- a/Documentation/git-interpret-trailers.txt
-> +++ b/Documentation/git-interpret-trailers.txt
-> @@ -21,7 +21,7 @@ This command reads some patches or commit messages from either the
->  <file> arguments or the standard input if no <file> is specified. If
->  `--parse` is specified, the output consists of the parsed trailers.
->  
-> -Otherwise, the this command applies the arguments passed using the
-> +Otherwise, this command applies the arguments passed using the
->  `--trailer` option, if any, to the commit message part of each input
->  file. The result is emitted on the standard output.
