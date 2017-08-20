@@ -2,100 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4AB8420899
-	for <e@80x24.org>; Sun, 20 Aug 2017 18:45:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51A3620899
+	for <e@80x24.org>; Sun, 20 Aug 2017 20:09:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753339AbdHTSpF (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 Aug 2017 14:45:05 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:37981 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753304AbdHTSpF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Aug 2017 14:45:05 -0400
-Received: by mail-pg0-f67.google.com with SMTP id t3so119985pgt.5
-        for <git@vger.kernel.org>; Sun, 20 Aug 2017 11:45:05 -0700 (PDT)
+        id S1753231AbdHTUJi (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 Aug 2017 16:09:38 -0400
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:35058 "EHLO
+        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753191AbdHTUJh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Aug 2017 16:09:37 -0400
+Received: by mail-lf0-f67.google.com with SMTP id h89so2450360lfi.2
+        for <git@vger.kernel.org>; Sun, 20 Aug 2017 13:09:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:date:mime-version
-         :content-transfer-encoding;
-        bh=MPm/D3wJp6z3hkM1fJSeX1OWNa0y3d3rjo6H95W5Gnk=;
-        b=BNqgonY3NhxoDsDKhPeJpeZhxpmTHiYgckkx3pQTiMe27TIWt8jgDrqcWVvHEk4KMy
-         07oC/Va08qh86QiGNMbt6ZAerqxE64ySO4S1PjxGFgL9/tT10wbw1o5KOq1n2gqrjegi
-         QQs/r10l+dqQfQD69hRUfQDXrf225yWHyUlFYOSaSSZDLbwjYxPOhsruQ+cY/bIp5lCT
-         ocSvg7dAuUy090fC6febRJtJfAXPGHFG48+e2XhHURlifCpCHu7wze7S/ngY6e/GOeLj
-         hWufMvBXgLc8C05m50ZpqLxjhaSrTssZcuhyp2xn9D7rbGNlby9I98pJyIUj1T+WATjI
-         /sWg==
+        h=sender:from:to:subject:date:message-id;
+        bh=SyJcP8P2ot8wuo44hMW8q6Xia/W9YA7WLhlA3xF3XAY=;
+        b=llhy76POR4fT7arStmE79GgOILaJWT44Z3+/1rI27lTN/JOlTPTHpy8rJ5TrasWaGv
+         BVzYXAzTFAwBxtoolKi2jMsMXBdGSm5VqcdgoFLKOXv6ezl9K5eZgJLc4zUFTVD5gdVQ
+         wm4dUV/qOlm4FoqU+dk8cwo2Awj3jo3DY2eX4JT2mUbAhSReqLYLTSwKI076YVtOJNq9
+         IjjN/K/BJxX6QU4UyjYBNEEXZTuVPv/U4DhcjjlCSoyj/k7NI/P+mx2wiv9dYdfmhoz5
+         HtpnTALv/vIadaD4l/0xpJSvdrXKCMrwjK9e3oO0Ur1jfMoiuyXDYl2+rS4G9GJKmgzh
+         8PHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:date:mime-version
-         :content-transfer-encoding;
-        bh=MPm/D3wJp6z3hkM1fJSeX1OWNa0y3d3rjo6H95W5Gnk=;
-        b=iGmM0sfzcX5cXfBhbEkpsNGi2KwQflSWAz0yuKc/nX4KFfla2SEnBXJLtUGaBgqPNR
-         f2xsPrLFDjIq+1r/xy83QTnSQqGodZLf9nX37QM1X4uwdqUdsL1NC8ncyttaNRT//7fy
-         eEaJjpwla59dXsvX/1mp99XGrg8tqSid+S61OiP2RW3SAxsyvjFRWS/V4ydFIz8LiRAU
-         4FMgrO1LrvbtN3MSlqIAPpxhpwLMikw7B8QE/H904zek/DxUzp39zLoBKiWAcb6O/Ukg
-         VAsiAUJOcWjc7sTYTAZR7F+p5CPsNQMuG6DAlyp8lS+42K7GzuMQ0hgEhzcnMjfSjeGG
-         wdEg==
-X-Gm-Message-State: AHYfb5g5j8Y5+i5Z07UUzqq86lxYpvIKmZsF5L2vatAZPQlbSw0I5jng
-        cqgbGiESyLv47ZkcbUY=
-X-Received: by 10.98.194.8 with SMTP id l8mr3398726pfg.293.1503254704526;
-        Sun, 20 Aug 2017 11:45:04 -0700 (PDT)
-Received: from unique-pc ([218.248.21.162])
-        by smtp.googlemail.com with ESMTPSA id 184sm2623585pfg.2.2017.08.20.11.45.02
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 20 Aug 2017 11:45:03 -0700 (PDT)
-Message-ID: <1503254759.3881.9.camel@gmail.com>
-Subject: What does 'git blame --before <rev> -- <file>' supposed to mean?
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="ISO-8859-15"
-Date:   Mon, 21 Aug 2017 00:15:59 +0530
-Mime-Version: 1.0
-X-Mailer: Evolution 3.22.6-1 
-Content-Transfer-Encoding: 8bit
-X-Cyberoam-smtpxy-version: 1.0.6.3
-X-Cyberoam-AV-Policy: default
-X-CTCH-Error: Unable to connect local ctasd
+        h=x-gm-message-state:sender:from:to:subject:date:message-id;
+        bh=SyJcP8P2ot8wuo44hMW8q6Xia/W9YA7WLhlA3xF3XAY=;
+        b=XeU1IJgMNhwqSorgsAvNagmJ/jy8KcwpvhkjKRbGV3uttD1cIi6qdqMzDeA2CVd0W0
+         +2lNjp69ylg+GZj4CuvGKo+dVs+IZMoiiHdL9YyeEbDVjn/N6KOq/IaM1XisYiGzmGY9
+         k1FwLu5ZFyMZiWPzzh/Hco1Hev4CkAWcHhGMNFMLzXgQlbe201xkZsoC0HG+gNmAhC/e
+         a1votfmzUSWomJfLyVgZcJkFv3+XCPi2osEUYgFlG7NKU4vU//WjRZ9lhYb4t/nwX8pi
+         HFMidADYVME3QAjmGCW8WMv5ZwM0drSlKDiaynBCi9wFy917M69r+fDsxEDu9dXHvxSl
+         /cBw==
+X-Gm-Message-State: AHYfb5jZDVn0/q+SRps5WaluspjV9AWguUrJkIZbvH6je2+3/iMKzwel
+        cB1Z6x4tNI1UHjE7HmY=
+X-Received: by 10.25.15.207 with SMTP id 76mr14551lfp.7.1503259775970;
+        Sun, 20 Aug 2017 13:09:35 -0700 (PDT)
+Received: from localhost.localdomain ([188.121.16.104])
+        by smtp.gmail.com with ESMTPSA id a64sm928869lfl.36.2017.08.20.13.09.33
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 20 Aug 2017 13:09:34 -0700 (PDT)
+From:   Patryk Obara <patryk.obara@gmail.com>
+To:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+Subject: [PATCH 0/6] Convert hash-object to struct object_id
+Date:   Sun, 20 Aug 2017 22:09:25 +0200
+Message-Id: <cover.1503258223.git.patryk.obara@gmail.com>
+X-Mailer: git-send-email 2.9.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello all,
+This enabled conversion of few functions in sha1_file, which
+had almost all callers converted already.
 
-I tried to do a 'git blame' on a file and wanted to see the blame
-before a particular revision of that file. I initially didn't know that
-you could achieve that with,
+I hope I'm not stepping on anyone's toes with this patch series.
+If I do - is there some email thread or document in which I can
+coordinate with other developers, regarding which code regions
+are being converted to struct object_id next?
 
-    $ git blame <rev> <file>
+I focused on this builtin in particular because it's probably
+the smallest functionality, that can be converted to different
+hashing algorithm, at least partly.
 
-I thought I need to pass the revision as a parameter so I tried (before
-looking into the documentation) the command found in the subject. It
-worked but to my surprise it had the same result as,
+Patryk Obara (6):
+  builtin/hash-object: convert to struct object_id
+  read-cache: convert to struct object_id
+  sha1_file: convert index_path to struct object_id
+  sha1_file: convert index_fd to struct object_id
+  sha1_file: convert hash_sha1_file_literally to struct object_id
+  sha1_file: convert index_stream to struct object_id
 
-    $ git blame -- <file>
+ builtin/difftool.c     |  2 +-
+ builtin/hash-object.c  | 12 ++++++------
+ builtin/replace.c      |  2 +-
+ builtin/update-index.c |  2 +-
+ cache.h                |  6 +++---
+ diff.c                 |  2 +-
+ notes-merge.c          |  2 +-
+ read-cache.c           |  8 ++++----
+ sha1_file.c            | 34 +++++++++++++++++-----------------
+ 9 files changed, 35 insertions(+), 35 deletions(-)
 
-I was confused and came to know from the documentation that blame
-doesn't have any '--before' option. That was even more surprising. Why
-does blame accept an option which it doesn't identify? Shouldn't it
-have warned that it doesn't accept the '--before' option? I guess it
-should not accept it because it confuses the user a lot as the could
-make it hard time for him to identify the issue.
+-- 
+2.9.5
 
-'git blame' doesn't seem to be the only command that accepts options
-not specified in the documentation there's 'git show' for it's company,
-
-    $ git show --grep 'regex'
-
-But the good thing with the above command is it behaves as expected. I
-suspect this should be documented, anyway.
-
-Thoughts ?
-
--- 
-Kaartic
