@@ -2,106 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DFD1420899
-	for <e@80x24.org>; Sun, 20 Aug 2017 17:42:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B66E820899
+	for <e@80x24.org>; Sun, 20 Aug 2017 18:03:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753231AbdHTRmQ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 Aug 2017 13:42:16 -0400
-Received: from mail-wr0-f176.google.com ([209.85.128.176]:34861 "EHLO
-        mail-wr0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753072AbdHTRmP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Aug 2017 13:42:15 -0400
-Received: by mail-wr0-f176.google.com with SMTP id k46so6135033wre.2
-        for <git@vger.kernel.org>; Sun, 20 Aug 2017 10:42:15 -0700 (PDT)
+        id S1753298AbdHTSDg (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 Aug 2017 14:03:36 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:37341 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753258AbdHTSDf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Aug 2017 14:03:35 -0400
+Received: by mail-wr0-f194.google.com with SMTP id z91so14364855wrc.4
+        for <git@vger.kernel.org>; Sun, 20 Aug 2017 11:03:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=pWlpkpZF9rbXDDHXUjN3gPON8/tVZBN7bQLTiy+J3tw=;
-        b=SLVCSkgdELR3SludpQCz6qjaxSB1oOKVM/bA3rl6ErI2wb1W5cz8MYlhnlv7hMnbzx
-         ZLeNa4Lcs0aeQD/l9B3BC9/T8Blj8fxqlwyJHk+vd5f/ug5jlEyg0yvyF5sT2kmAmcIn
-         U4bVyTwsHKgSbj6JGsc2JOkg4GqVsXIBZD7/CTwNjoAichW3VBGjfRjz5OSGdEYFjuRl
-         EbyJY7HbSXB5Lx3A1LH8lpEAntJNY+GjQpOK5rcfI5sVN8zOpG/673FR6AxAAgekThPT
-         PB5ZdRLQnoOyeC2pSUvTDCjv6gF9cscy6qwwYuVD7cpUpn/9kCMGpFYUmgTlNcu07jr7
-         803Q==
+        d=instituut-net.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=2OfDCjy/iU0BDlfJdfhKKeEfQ91SAzJStviL/mWGYgg=;
+        b=Eb1qDaz+cSQqMq5U2hwA48ngT9bCRErmlczFwGk6cKPpxVO6ld0YaOOSPM8t3cfRcn
+         TaqRfy5cTupV70NvO5Jsz77BMNWT+mhlOiwFERlXQCKM8b6+9GS26wEwaMfwcxDugNRU
+         sAtv/N0SDglbu0VuyZp1Ps9KeCV/N4jsKUIka0WLXntcZV/4T6fCj8+Fgv8goLZwCwIH
+         qjS33Gx8+dFxbq94gcwEbRMY8r4vqyPKw3OS9g3XyIp+YpKMKe/zxlr1dlcR4i2a7An0
+         l8U6ljiC05z759biEIvZ2cpYSSldOdKhjUcAyxoop+qWnUff2SYRleW/nufAzldXp8It
+         FhgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=pWlpkpZF9rbXDDHXUjN3gPON8/tVZBN7bQLTiy+J3tw=;
-        b=m5ksEc3K+yrESCqJEVkf0H55UDnKjp0Vz86hT9w+mbwHkfn+v+r+Oge8oDjOMHoGpc
-         LtXmscVAuW+xxIqumGh/toiOeHJKgsb5OvOm8oap65k8Anavl/dw4nTF3nTEHA4gX+Xj
-         QOaO8nXWm9VByc8TDYNST9scJc5gsGxqMMmaCuLHRbh/YoIh1+sNVdozEDHsB5iSau2g
-         Ud9/+ARDDaO3ThY3l5Rpty4B43k369sq5Gs66IMOcMgN2sYcHCNqvDYTPK0c8jksmVW1
-         am4EENYAjhqTuvnwypT9LpWqANldwakuDfY2JuipM0abZasbUm7giiK/j8ZqEPQqYmuW
-         k6vQ==
-X-Gm-Message-State: AHYfb5jBxk6vncsRhAleWLANDrkndThQisFmLUrp+Cva1C/jUta/MaBa
-        pIyVjHTUin65qg==
-X-Received: by 10.28.64.197 with SMTP id n188mr1474946wma.135.1503250934246;
-        Sun, 20 Aug 2017 10:42:14 -0700 (PDT)
-Received: from p2003004d2c4cd6c7a02f4fdc39678fd0.dip0.t-ipconnect.de (p2003004D2C4CD6C7A02F4FDC39678FD0.dip0.t-ipconnect.de. [2003:4d:2c4c:d6c7:a02f:4fdc:3967:8fd0])
-        by smtp.gmail.com with ESMTPSA id s86sm6991448wma.10.2017.08.20.10.42.12
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=2OfDCjy/iU0BDlfJdfhKKeEfQ91SAzJStviL/mWGYgg=;
+        b=Eo2NjpMdA4Hfw5ugy5XrWNRKi7vOpwJ6hICv9U+qGQeN2GsYmGGGzn7gygRaZIzPjB
+         iYo2crUD+zuBbDPnRKa9Hm/0I2WRzu420lcL3AOz2KHNUKnXryCoFCBf9ajFZDT7lPxJ
+         8sc2qavS0zAcfturms0sz+NQVq83jBDAXOxqIjnKB4w3lkGUnAIsGkg1kP9qBBrpwIkZ
+         6yrDZgHkXhajUpZu8sI0E/6KAcIV8iGXjFJU20DQqgOEWtqbjZtKRXMTsnovkduPFE2r
+         acKZnSrg+c9vcNMUALAUS1moM6mJdXxoDRSymldPGJUv8RLcA+X3Q8yN9VkJZ01Mpl4C
+         hBSQ==
+X-Gm-Message-State: AHYfb5i2gdyTDeh6a2IN5sbI8i+rYV4Z2OEXs7ySML2PontZXZGHvXWE
+        4FY5MWA7NqcgjC8IYwnSgQ==
+X-Received: by 10.80.157.198 with SMTP id l6mr10428495edk.252.1503252214183;
+        Sun, 20 Aug 2017 11:03:34 -0700 (PDT)
+Received: from localhost ([2001:67c:208c:10:953f:533f:272b:889b])
+        by smtp.gmail.com with ESMTPSA id 3sm1866942edv.52.2017.08.20.11.03.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 20 Aug 2017 10:42:13 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
-Subject: Re: git-svn: Handling of branches created from subfolders
-From:   Jan Teske <jan.teske@gmail.com>
-In-Reply-To: <8c910a5b-ed96-41d4-d157-f138af51011f@gmail.com>
-Date:   Sun, 20 Aug 2017 19:42:11 +0200
-Cc:     git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <74EA70E5-0B8A-4D34-B5EA-8C97A10F3D0F@gmail.com>
-References: <1ED00C5D-177C-4F95-8261-BFB7345B7C08@gmail.com>
- <8c910a5b-ed96-41d4-d157-f138af51011f@gmail.com>
-To:     Andreas Heiduk <asheiduk@gmail.com>
-X-Mailer: Apple Mail (2.3273)
+        Sun, 20 Aug 2017 11:03:33 -0700 (PDT)
+Date:   Sun, 20 Aug 2017 20:03:32 +0200
+From:   Job Snijders <job@instituut.net>
+To:     git@vger.kernel.org
+Cc:     avarab@gmail.com, yashi@atmark-techno.com,
+        giuseppe.bilotta@gmail.com, jnareb@gmail.com
+Subject: Re: [PATCH] Add 'raw' blob_plain link in history overview
+Message-ID: <20170820180332.GC39363@Vurt.local>
+References: <20170802185901.GA27243@Vurt.local>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170802185901.GA27243@Vurt.local>
+X-Clacks-Overhead: GNU Terry Pratchett
+User-Agent: Mutt/1.8.3 (2017-05-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+bump? 
 
-> On 20. Aug 2017, at 12:27 , Andreas Heiduk <asheiduk@gmail.com> wrote:
->=20
-> Am 19.08.2017 um 14:45 schrieb Jan Teske:
->> Is there any way to fix such branches from subfolders in a way that =
-they integrate correctly with the converted git repository, without =
-losing any (or at least too much) history? If this is not possible with =
-git-svn directly, maybe I could prepare the SVN repo or post-process the =
-converted git repository somehow?
->=20
-> You can use `git replace --graft` to connect the first commit of the
-> loose branches with their source. After all connections are in place =
-you
-> can use `git filter-branch` to make the replacements permanent.
->=20
-> This will not change the content or directory structure of branch1 or
-> branch2 but the diff with their parent commits will show up as a huge
-> delete/rename operation. So merging/Cherry-picking between trunk and
-> branch1/branch2 will be ... challenging.
-
-That=E2=80=99s really helpful, thanks!
-
-I even solved the problem of the challenging merging between the =
-converted branches and trunk by using another filter-branch to rewrite =
-all the commits in branch1/branch2 to make all their modifications in =
-the respective subfolders (effectively fixing the directory structure to =
-fit trunk). This answer was helpful for how to do this: =
-https://unix.stackexchange.com/a/280229
-
-So, for future reference, the following post-processing seems to work:
-
-1. Use filter-branch to move all the commits the the correct subfolder.
-2. Use `git replace --graft` to connect the first commit of the branch =
-to its correct parent commit.
-3. Use `git replace --graft` to add the missing parents of any merge =
-commits the branch was part of.
-4. Use filter-branch again to make the replacements permanent.
-
-
+On Wed, Aug 02, 2017 at 08:59:01PM +0200, Job Snijders wrote:
+> We often work with very large plain text files in our repositories and
+> found it friendlier to the users if we can click directly to the raw
+> version of such files.
+> 
+> This patch adds a 'raw' blob_plain link in history overview.
+> 
+> Signed-off-by: Job Snijders <job@instituut.net>
+> ---
+>  gitweb/gitweb.perl | 7 +++++--
+>  1 file changed, 5 insertions(+), 2 deletions(-)
+> 
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 3d4a8ee27..ad79c518e 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -5961,8 +5961,11 @@ sub git_history_body {
+>  		                          href(action=>"commit", hash=>$commit), $ref);
+>  		print "</td>\n" .
+>  		      "<td class=\"link\">" .
+> -		      $cgi->a({-href => href(action=>$ftype, hash_base=>$commit, file_name=>$file_name)}, $ftype) . " | " .
+> -		      $cgi->a({-href => href(action=>"commitdiff", hash=>$commit)}, "commitdiff");
+> +		      $cgi->a({-href => href(action=>$ftype, hash_base=>$commit, file_name=>$file_name)}, $ftype) . " | ";
+> +		if ($ftype eq 'blob') {
+> +			print $cgi->a({-href => href(action=>"blob_plain", hash_base=>$commit, file_name=>$file_name)}, "raw") . " | ";
+> +		}
+> +		print $cgi->a({-href => href(action=>"commitdiff", hash=>$commit)}, "commitdiff");
+>  
+>  		if ($ftype eq 'blob') {
+>  			my $blob_current = $file_hash;
