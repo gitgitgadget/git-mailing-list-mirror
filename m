@@ -2,151 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 235DA208CD
-	for <e@80x24.org>; Sun, 20 Aug 2017 08:19:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B884D208CD
+	for <e@80x24.org>; Sun, 20 Aug 2017 08:20:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752696AbdHTITk (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 Aug 2017 04:19:40 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43880 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752687AbdHTITj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Aug 2017 04:19:39 -0400
-Received: (qmail 22656 invoked by uid 109); 20 Aug 2017 08:19:38 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 20 Aug 2017 08:19:38 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12656 invoked by uid 111); 20 Aug 2017 08:20:05 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Sun, 20 Aug 2017 04:20:05 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 20 Aug 2017 04:19:37 -0400
-Date:   Sun, 20 Aug 2017 04:19:37 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Simon Ruderich <simon@ruderich.org>, git@vger.kernel.org
-Subject: Re: git add -p breaks after split on change at the top of the file
-Message-ID: <20170820081936.i2e2rdvxl5wmpepd@sigill.intra.peff.net>
-References: <20170816202442.aumzwa443spqgyul@ruderich.org>
- <20170817084109.ba7g2hnymtwqeclw@sigill.intra.peff.net>
- <20170817090308.yh3jnztgfmkwtqpr@sigill.intra.peff.net>
- <20170817091503.vsd4lncogphy5gxx@sigill.intra.peff.net>
- <xmqq60dmgftg.fsf@gitster.mtv.corp.google.com>
+        id S1752706AbdHTIUv (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 Aug 2017 04:20:51 -0400
+Received: from bsmtp8.bon.at ([213.33.87.20]:56283 "EHLO bsmtp8.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751264AbdHTIUv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Aug 2017 04:20:51 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp8.bon.at (Postfix) with ESMTPSA id 3xZqX06r7Qz5tlC;
+        Sun, 20 Aug 2017 10:20:48 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id C9B2B1AFC;
+        Sun, 20 Aug 2017 10:20:47 +0200 (CEST)
+Subject: Re: Git *accepts* a branch name, it can't identity in the future?
+To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>,
+        git@vger.kernel.org
+Newsgroups: gmane.comp.version-control.git
+References: <1503215489.5824.4.camel@gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <829ac9ed-857d-84bf-2374-6a36b1d0aff1@kdbg.org>
+Date:   Sun, 20 Aug 2017 10:20:47 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq60dmgftg.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <1503215489.5824.4.camel@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 17, 2017 at 12:22:19PM -0700, Junio C Hamano wrote:
-
-> Jeff King <peff@peff.net> writes:
+Am 20.08.2017 um 09:51 schrieb Kaartic Sivaraam:
+> I made a small assumption in the script which turned out to be false. I
+> thought the unicode prefixes I used corresponded to only two bytes.
+> This lead to the issue. The unicode character '✓' corresponds to three
+> characters and as a result instead of removing it, my script replaced
+> it with the unknown character '�'. So, the branch named '✓doc-fix'
+> became 'done/�doc-fix'. Here's the issue. I couldn't use
 > 
-> > Of course this is a pretty ridiculous input in the first place. In
-> > theory it _could_ be figured out, but overlapping hunks like this are
-> > always going to cause problems (in this case, context from the second
-> > hunk became a removal, and the second hunk no longer applies).
+>      $ git branch -m done/�doc-fix done/dic-fix
 > 
-> To be honest, I do not think it could be figured out by "git apply",
-> but "git add -p" _should_ be able to.  I've said already this
-> earlier in the discussion:
+> to rename the branch. Nor could I refer to it in anyway. Git simply
+> says,
 > 
->   https://public-inbox.org/git/7vab5cn7wr.fsf@alter.siamese.dyndns.org/
+>      error: pathspec 'done/�doc-fix' did not match any file(s) known to git.
 > 
-> "add -p" knows how the hunk _before_ it gave the user to edit looked
-> like, and it knows how the hunk after the user edited looks like, so
-> it may have enough information to figure it out.  But the "(e)dit"
-> feature was done in a way to discard that information and forced an
-> impossible "guess what the correct shape of the patch would be, out
-> of this broken patch input" with --recount and --allow-overlap.
+> It's not a big issue as I haven't lost anything out of it. The branches
+> have been merged into 'master'.
 > 
-> If we want to make "add -p/(e)dit" work in the corner cases and make
-> it trustworthy, "apply" is a wrong tree to back at.  A major part of
-> the effort to fix would go to "add -p", not to "apply".
+> I just wanted to know why git accepted a branch name which it can't
+> identify later?
+> 
+> If it had rejected that name in the first place it would have been
+> better. In case you would like to know how I got that weird name,
+> here's a way to get that
+> 
+>      $ echo '✓doc-fix' | cut -c3-100
+> 
 
-In theory "add -p" could give all the information it has to git-apply in
-some form, and it could figure it out. That may sound crazy, but I just
-wonder if it makes things easier because git-apply already knows quite a
-lot about how to parse and interpret diffs. Whereas "add -p" is largely
-stupid and just parroting back lines.
+See, these two are different:
 
-But I certainly wouldn't make such a decision until figuring out the
-actual algorithm, which should then make it obvious where is the best
-place to implement it. :)
+$ echo '✓doc-fix' | cut -c3-100 | od -t x1
+0000000 93 64 6f 63 2d 66 69 78 0a
+0000011
+$ echo '�doc-fix' | od -t x1
+0000000 64 6f bd 64 6f 63 2d 66 69 78 0a
+0000013
 
-So just thinking about this particular situation. We have two hunks
-after the split:
+It is not Git's fault that your terminal converts an invalid UTF-8 
+sequence (that your script produces) to �. Nor is it when you paste that 
+character onto the command line, that it is passed as a (correct) UTF-8 
+character.
 
-  @@ -1, +1,3 @@
-  +a
-  +b
-   x
+Perhaps this helps (untested):
 
-and
+$ git branch -m done/$(printf '\x93')doc-fix done/dic-fix
 
-  @@ -1, +3,2 @@
-   x
-  +c
+In Git's database, branch names are just sequences of bytes. It is 
+outside the scope to verify that all input is encoded correctly.
 
-The root of the issue, I think, is that the hunk header for the second
-one is bogus. It claims to start at the beginning, but of course if the
-other hunk is applied first, it doesn't. The right header in that case
-would be (assuming we do not copy the extra context):
-
-  @@ -3, +3,2 @@
-   x
-  +c
-
-One point of interest is that without an (e)dit, we get this case right,
-despite the bogus hunk header. I'm not quite sure why that is. After the
-failing edit we would end up with:
-
-  @@ -1, +1,3 @@
-  +b
-   x
-
-  @@ -1, +3,2 @@
-   x
-  +c
-
-Clearly the count in the first one is now wrong, but we fix that with
---recount. But it seems to me that the second hunk is equally wrong as
-it would be in the non-edit case. I guess in addition to the "-1" being
-a "-2", the "+3" should now also be a "+2". But I didn't think that
-would impact us finding the preimage side.
-
-So that's one question I'm puzzled by: why does it work without an edit,
-but fail with one.
-
-My second question is how "add -p" could generate the corrected hunk
-headers.
-
-In the non-edit case, we know that our second hunk's leading context
-must always match the first hunk's trailing context (since that's how we
-do a split). So we'd know that the preimage "-pos" field of the second
-hunk header should be offset by the net sum of the added/changed lines
-for any previous split hunks.
-
-In the original case we had net two added lines in the first hunk. So if
-it's selected, that's how our "-1" becomes "-3". And after the edit, we
-should be able to apply the same, I think? We have a single added line,
-so it becomes "-2". That doesn't require knowing what was in the hunk
-before the user edited at all. We just need to know which other hunks
-it's split from, so we know which overlapping hunks we need to take into
-account when recomputing.
-
-"add -p" certainly has that information. I _think_ git-apply also has
-that information if it bothers to find out. Right now --allow-overlap is
-just "do not complain of overlap". But it could actively recount the
-offsets when it detects overlap.
-
-I'm assuming here that the edit process isn't changing the hunk headers,
-introducing new hunks, etc. I feel like all bets are off, then.
-
--Peff
+-- Hannes
