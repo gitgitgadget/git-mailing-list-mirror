@@ -2,79 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 45DAF208CD
-	for <e@80x24.org>; Sun, 20 Aug 2017 10:28:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 90AC0208CD
+	for <e@80x24.org>; Sun, 20 Aug 2017 10:45:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752575AbdHTK2E (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 Aug 2017 06:28:04 -0400
-Received: from mail-wr0-f180.google.com ([209.85.128.180]:38755 "EHLO
-        mail-wr0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752417AbdHTK2D (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Aug 2017 06:28:03 -0400
-Received: by mail-wr0-f180.google.com with SMTP id p8so11554251wrf.5
-        for <git@vger.kernel.org>; Sun, 20 Aug 2017 03:28:02 -0700 (PDT)
+        id S1752542AbdHTKpa (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 Aug 2017 06:45:30 -0400
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:34769 "EHLO
+        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751634AbdHTKp3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Aug 2017 06:45:29 -0400
+Received: by mail-pf0-f179.google.com with SMTP id h75so3003488pfh.1
+        for <git@vger.kernel.org>; Sun, 20 Aug 2017 03:45:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=2thk+JJQcXEpZAcr6zBHudC6MJOGR7fa3OLyg88LN6k=;
-        b=SseXUx1Iy8lA2MjXHc/TxPKFmBPHjh2iGyN9YC0IhEuVdzTO4/K5alBN3a9kzjT6Ak
-         Zf0T+m6/pwX/xv2CsygoZDtwfc8oY+LSWHAWK6qUb5gNGsoI0YMR0K9YJUR99RWgTspH
-         AHgU53IPBBo5L01CV9MMStleD3KsgCePz1+wcASSGAHXe0hYH0Zqjzf+jEYD8w3q5wbp
-         st30IvvPKxAuUpx5PfZKTMJCM3m+RPZWMSU6hycH8crAL4PcmOpuNrfEKAdwHns7gLRn
-         yYJvDAY3+PmF9+KVWctNho5LZlH+KYTf7p43Nf8H6dCR8njR2XNeMOjke7HxYblDM0Wv
-         +HsA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=nslwppvR3J2GucsqwDLA/eQFxEemGsUUaBsh8eoocK8=;
+        b=aayGpLNdbCSAI9j4EB25XD4vkO2IgAB7Re8jQ/6yfn24U0hhxfKZ9GXTCPFws7hODr
+         ivbpUctYPuaBxDDgKGgcmdyH5rrlESjcboQw9zYiKEPkQZRSpb+i4uv5/ne1Q7mJ3Vz5
+         +K2EoQWWbrzQst+jecr6QTDyOsY6g58NKQDjl5iyf8T4goGavVUZNLqSn9XssJHXJXE1
+         uOcVKDBTR2TOygO3lFp/ZeeAMG2xu9j4Vz7nhMnhqoVr5quS5xRs+XP0j0EhOGgYAhkS
+         3BnwM1tqnFHITR3WL5AYUo5oDknrGjpl5hFff5r93R8A/7AotJWePP3/idy2Yz0GTZXy
+         vNuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=2thk+JJQcXEpZAcr6zBHudC6MJOGR7fa3OLyg88LN6k=;
-        b=BG64p5bHmYal7DySPYVMtdw7BYNiHKnEHGmmxsKyydYgebwi8gmJ9vZMfn5YrXGH71
-         QwKBbDALx//iyHC071rIC5B5sl2dJoIWFmd3i97PUEI4GtM+eUWfghZ/gbG+0ZRDu+J5
-         gljHbJQZ0ZC/5YvcnaHkHE8FBUqwF+1dCTg6tEjsi1aV6Gveu0DUKPL0MTYpjrAECZ8S
-         l7N7Bj1yb8uy+Ys4pRRZnyE1RupW72IlOQl9m1PSBIx11Rz3LiRR25lT7QRE2enW+F2p
-         gE8T0awG/4QHGF9H3+i0tuC3JcQwcqij1G5mk5FEHLN+rcRcu97v/ylHh4SWpOrd2f1q
-         lOhw==
-X-Gm-Message-State: AHYfb5h825iZgAX0yPsAEjCPJfSMhUTeULyD61IJh/nmlLrJQXnXl+au
-        8XgLdowmOdApvr7/
-X-Received: by 10.223.198.198 with SMTP id c6mr10283276wrh.148.1503224881455;
-        Sun, 20 Aug 2017 03:28:01 -0700 (PDT)
-Received: from ?IPv6:2001:a61:1095:9b01:f9a8:a32:94cd:946a? ([2001:a61:1095:9b01:f9a8:a32:94cd:946a])
-        by smtp.googlemail.com with ESMTPSA id b133sm2399144wmh.21.2017.08.20.03.28.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 20 Aug 2017 03:28:00 -0700 (PDT)
-Subject: Re: git-svn: Handling of branches created from subfolders
-To:     Jan Teske <jan.teske@gmail.com>, git@vger.kernel.org
-References: <1ED00C5D-177C-4F95-8261-BFB7345B7C08@gmail.com>
-From:   Andreas Heiduk <asheiduk@gmail.com>
-Message-ID: <8c910a5b-ed96-41d4-d157-f138af51011f@gmail.com>
-Date:   Sun, 20 Aug 2017 12:27:59 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=nslwppvR3J2GucsqwDLA/eQFxEemGsUUaBsh8eoocK8=;
+        b=S1Wja7g4BrE5Mk+aga2Nnu9uBKqCfDlR0z6I0aJGbMOjbR8iNxu1j3Cwrmqt8KN7nf
+         OqFqAkNs+tVeCMc+AXQude4NDvQlRww0YLkM1BOiNfnpi73omZwFDa4Q9tVLqso40dzm
+         J25n3XClZNTLDhBfvCQ3KKJ2ZgaBqcBdZzmFJ8jE/w4lHzeBDKTDppunJGdnvE++RVKa
+         zHEd2aq1xmKxA62sCxQ1QciHMRKsAHOnWndEJcHgZZz9MHQVZ6/22dOxNDir6fxL/Fq7
+         JZjK+t94L/HmOZlizjMa/B6Xa6ItEMoes+A0j9ZtvGFXUwYQV1NOYXNDJT4C3Nycden9
+         IDrQ==
+X-Gm-Message-State: AHYfb5hJJezGkw311rg1GN0EW0t7umLYSkDhIQNVbA5RnDliQgtXFHY9
+        iH+Rdb7r/dc/YzPEyqb5EgTUYAvwTg==
+X-Received: by 10.84.231.131 with SMTP id g3mr15390892plk.283.1503225928817;
+ Sun, 20 Aug 2017 03:45:28 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <1ED00C5D-177C-4F95-8261-BFB7345B7C08@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Received: by 10.100.162.37 with HTTP; Sun, 20 Aug 2017 03:45:27 -0700 (PDT)
+In-Reply-To: <20170820100633.ehn2sc7gwmm6lftd@sigill.intra.peff.net>
+References: <cover.1502780343.git.martin.agren@gmail.com> <20170820100633.ehn2sc7gwmm6lftd@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Sun, 20 Aug 2017 12:45:27 +0200
+Message-ID: <CAN0heSpdi7wNqj50ZeAStvf=pY-HRy=6Zx5t_Wo7tTnGjws-ag@mail.gmail.com>
+Subject: Re: [PATCH/RFC 0/5] Some ThreadSanitizer-results
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 19.08.2017 um 14:45 schrieb Jan Teske:
-> Is there any way to fix such branches from subfolders in a way that they integrate correctly with the converted git repository, without losing any (or at least too much) history? If this is not possible with git-svn directly, maybe I could prepare the SVN repo or post-process the converted git repository somehow?
+On 20 August 2017 at 12:06, Jeff King <peff@peff.net> wrote:
+> On Tue, Aug 15, 2017 at 02:53:00PM +0200, Martin =C3=85gren wrote:
+>
+>> I tried running the test suite on Git compiled with ThreadSanitizer
+>> (SANITIZE=3Dthread). Maybe this series could be useful for someone else
+>> trying to do the same. I needed the first patch to avoid warnings when
+>> compiling, although it actually has nothing to do with threads.
+>>
+>> The last four patches are about avoiding some issues where
+>> ThreadSanitizer complains for reasonable reasons, but which to the best
+>> of my understanding are not real problems. These patches could be useful
+>> to make "actual" problems stand out more. Of course, if no-one ever runs
+>> ThreadSanitizer, they are of little to no (or even negative) value...
+>
+> I think it's a chicken-and-egg. I'd love to run the test suite with tsan
+> from time to time, but there's no point if it turns up a bunch of false
+> positives.
+>
+> The general direction here looks good to me (and I agree with the
+> comments made so far, especially that we should stop writing to
+> strbuf_slopbuf entirely).
+>
+>>   ThreadSanitizer: add suppressions
+>
+> This one is the most interesting because it really is just papering over
+> the issues. I "solved" the transfer_debug one with actual code in:
+>
+>   https://public-inbox.org/git/20170710133040.yom65mjol3nmf2it@sigill.int=
+ra.peff.net/
 
-You can use `git replace --graft` to connect the first commit of the
-loose branches with their source. After all connections are in place you
-can use `git filter-branch` to make the replacements permanent.
+Hmm, I did search for related posts, but obviously not good enough.
+Sorry that I missed this.
 
-This will not change the content or directory structure of branch1 or
-branch2 but the diff with their parent commits will show up as a huge
-delete/rename operation. So merging/Cherry-picking between trunk and
-branch1/branch2 will be ... challenging.
+> but it just feels really dirty. I'd be inclined to go with suppressions
+> for now until somebody can demonstrate or argue for an actual breakage
+> (just because it makes the tool more useful for finding _real_
+> problems).
+
+I actually had a more intrusive version of my patch, but which I didn't
+send, where I extracted transport_debug_enabled() exactly like that,
+except I did it in order to minimize the scope of the suppression. In
+the end, I figured the scope was already small enough.
+
+The obvious risk of introducing any kind of "temporary" suppression is
+that it remains forever... :-) I think I'll add a couple of NEEDSWORK in
+the code to make it a bit more likely that someone stumbles over the
+problem and addresses it.
+
+Thanks.
