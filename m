@@ -2,134 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 30B6F1F667
-	for <e@80x24.org>; Sun, 20 Aug 2017 04:55:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 26A7E208CD
+	for <e@80x24.org>; Sun, 20 Aug 2017 06:40:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751182AbdHTEzH (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 Aug 2017 00:55:07 -0400
-Received: from mail-qt0-f179.google.com ([209.85.216.179]:35562 "EHLO
-        mail-qt0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751105AbdHTEzH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Aug 2017 00:55:07 -0400
-Received: by mail-qt0-f179.google.com with SMTP id x36so2014848qtx.2
-        for <git@vger.kernel.org>; Sat, 19 Aug 2017 21:55:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:subject:to:message-id:date:user-agent:mime-version
-         :content-language:content-transfer-encoding;
-        bh=qUQyTzkZvJ1ONIOjrNffrWHKPqNCsvo624kp6j5xJCI=;
-        b=s9RWazjgqgTZ7Js+ZFurXowHRzxeQkwqeP02SXL/CM297hhS38ZZtS78bxiDiSWkPk
-         kGLMfWb3q7Asj9AuJYj/FeqL+Go7RKteAIo2v+3SgVtGdUw7p8iQweDF4JTTo3YY4yDw
-         J4TQUlAcLMRCnETXc49A8mDSh02y/BcscpHVL55q31qNWfRIJBoxK210cv4ouTOhg4x7
-         f4OhKfiUjS/WIgTpbw9oPxtql5RYO30l67y93WjTHNt8Fn0i5gU2xQ6HXu1wthAN5SY8
-         RJakEE3iEX6neJ//blhumnQHukIPyJaCmaEscCUHB4fHTbWhQWNbMn/n6IjHTIsUjXMv
-         oLbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:subject:to:message-id:date:user-agent
-         :mime-version:content-language:content-transfer-encoding;
-        bh=qUQyTzkZvJ1ONIOjrNffrWHKPqNCsvo624kp6j5xJCI=;
-        b=ZPzjpildxDKqUdU6ReYvtAKK8MBPIyTKZXFqF1pMfEMSVxo/VVogaDA8wuZRLHOfUH
-         ilR/LvGI4Bf8JLV6YOrks+bZd093IH4ryebsEtoYWfw83noiljSld73x8ggWVFCNVZAN
-         Xrp5sCaHCe4rhDYH3bpPvoE2ll1gCdcQnxYq+ojKzleyX/YDiGYnxatapDG1cDIc6aKQ
-         vCBN7qNByX/k55hr8QoWRsPt0ps3X0uWcJ97f3hGmS8rwGse910JTDrYHHnn0XgImzTR
-         HIVwehz/+BugIjVrkIx+kOeVe5UQnqzXysW8oK0QAxzU6rsp5fmU81IPjQQxF1E/idWk
-         i3aA==
-X-Gm-Message-State: AHYfb5hWnsYGdmxCtT7nvSlOUo6Pfik5CxGm3RSCXCaifMh9vckO20mK
-        G/QHhrExcqbBMQ==
-X-Received: by 10.200.9.108 with SMTP id z41mr6209571qth.234.1503204906271;
-        Sat, 19 Aug 2017 21:55:06 -0700 (PDT)
-Received: from ?IPv6:2604:6000:b40b:7800::4? ([2604:6000:b40b:7800::4])
-        by smtp.gmail.com with ESMTPSA id p1sm5890785qke.16.2017.08.19.21.55.05
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 19 Aug 2017 21:55:05 -0700 (PDT)
-From:   Sonny Michaud <michaud.sonny@gmail.com>
-Subject: [PATCH 0/1] Add stash entry count summary to short status output
-To:     git@vger.kernel.org, gitster@pobox.com
-Message-ID: <c3ac0335-4f41-40d9-00ee-2a4e115bcf7a@gmail.com>
-Date:   Sun, 20 Aug 2017 00:53:04 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        id S1752706AbdHTGko (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 Aug 2017 02:40:44 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51480 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751607AbdHTGkn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Aug 2017 02:40:43 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AEF0D99470;
+        Sun, 20 Aug 2017 02:40:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=t4urxoMbKob6703CXNDZFNmhuhA=; b=JNoT6Y
+        zc7BjdryyGDhGsvJOfpmhp9gC/16w0MtaWxITJkgtmlcVdp6bepdQDCsdAQFt0jp
+        3hvO1kvu76OlPWa8AYpxe2kT1DCQzxVs0gMAidYUlFucZZNjVgg0/Mkt0OCgeEIZ
+        WIes9ZrCSv3K8vtqdrGFTUY730baF9jXFd96c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=MO50Gz3rrf8ZX5RXQ/L0sp1aEpgS4qiX
+        INS7Q+nIlvUhXTwiaye1UNj5OS5JxgRgtO+up4A1wN2dNStSRTHFejSaN76+HFsO
+        Kh3IbEiGi5TPwbxP15E5FXBDOV6xGpkaf7ddCS9clFKBgyjFeL3bUM7OjjjeADvW
+        dqhl1LQ3kvM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A55839946F;
+        Sun, 20 Aug 2017 02:40:35 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 156359946D;
+        Sun, 20 Aug 2017 02:40:35 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, Martin Koegler <mkoegler@auto.tuwien.ac.at>
+Subject: Re: [PATCH v3 00/23] Move exported packfile funcs to its own file
+References: <cover.1502220307.git.jonathantanmy@google.com>
+        <cover.1503094448.git.jonathantanmy@google.com>
+        <xmqqk2209fm8.fsf@gitster.mtv.corp.google.com>
+Date:   Sat, 19 Aug 2017 23:40:33 -0700
+In-Reply-To: <xmqqk2209fm8.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Sat, 19 Aug 2017 00:33:03 -0700")
+Message-ID: <xmqqd17q91y6.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 786945FC-8572-11E7-BBF0-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-this patch adds a header in the same style as the one provided by the --branch option when the user supplies both --show-stash and --short.  My attempt at creating a new test is broken[1], and I assume my changes could (and, likely need to) be improved.  Any assistance would be greatly appreciated; I just wanted to get started by hacking first and asking questions later!                         
-                                                                               
-Thanks,                                                                        
-Sonny                                                                          
-                                                                               
-1. https://travis-ci.org/sonnym/git/builds/266428128
+Junio C Hamano <gitster@pobox.com> writes:
 
---
-From 9e9ffca5c4ed7dda34cad416c3eb68dc94a78b7e Mon Sep 17 00:00:00 2001         
-From: Sonny Michaud <michaud.sonny@gmail.com>                                  
-Date: Sat, 19 Aug 2017 23:46:15 -0400                                          
-Subject: [PATCH 1/1] status: learn to show stash in short output               
+> I have to say that this was a painful topic to integrate.
+>
+> As you may know, the mk/use-size-t-in-zlib topic is being retracted
+> and getting rerolled as a larger size_t series, most of which still
+> needs help in reviewing.
+>
+> The jt/sha1-file-cleanup topic is the only one among the other four
+> that are still not in 'next', and I think that topic, as well as the
+> other three, are all good and serve as a good base to build on top.
+> So I first rebuilt your patches on top of these four topics.  This
+> took some time but it wasn't all that painful.
 
-This patch extends the functionality of the recently introduced                
---show-stash option to the status command, providing a header similar to       
-the one displayed when using the --branch option.                              
----                                                                            
- t/t7508-status.sh |  5 +++++                                                  
- wt-status.c       | 12 ++++++++++++                                           
- 2 files changed, 17 insertions(+)                                             
+... but it turns out that I screwed it up in at least one place,
+making Linux32 build fail (Thanks Lars and folks who pushed hard to
+arrange Travis to build all my pushes to 'pu').  I'm pushing out my
+second attempt.  Let's see how it goes.
 
-diff --git a/t/t7508-status.sh b/t/t7508-status.sh                             
-index 43d19a9b2..734001bc6 100755                                              
---- a/t/t7508-status.sh                                                        
-+++ b/t/t7508-status.sh                                                        
-@@ -1619,6 +1619,11 @@ test_expect_success 'show stash info with "--show-stash"' '                                                                             
-        test_i18ngrep "^Your stash currently has 1 entry$" expected_with_stash 
- '                                                                             
-                                                                               
-+test_expect_success 'show stash info with "--show-stash" and "--short"' '     
-+       git status --show-stash --short >expected_with_stash &&                
-+       test_i18ngrep "Stash entries: 2" expected_with_stash                   
-+'                                                                             
-+                                                                              
- test_expect_success 'no stash info with "--show-stash --no-show-stash"' '     
-        git status --show-stash --no-show-stash >expected_without_stash &&     
-        test_cmp expected_default expected_without_stash                       
-diff --git a/wt-status.c b/wt-status.c                                         
-index 77c27c511..651bb01f0 100644                                              
---- a/wt-status.c                                                              
-+++ b/wt-status.c                                                              
-@@ -1827,6 +1827,15 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)                                                                          
-        fputc(s->null_termination ? '\0' : '\n', s->fp);                       
- }                                                                             
-                                                                               
-+static void wt_shortstatus_print_stash_summary(struct wt_status *s)           
-+{                                                                             
-+       int stash_count = 0;                                                   
-+                                                                              
-+       for_each_reflog_ent("refs/stash", stash_count_refs, &stash_count);     
-+       if (stash_count > 0)                                                   
-+    color_fprintf(s->fp, color(WT_STATUS_HEADER, s), "## Stash entries: %d", stash_count);                                                                    
-+}                                                                             
-+                                                                              
- static void wt_shortstatus_print(struct wt_status *s)                         
- {                                                                             
-        struct string_list_item *it;                                           
-@@ -1834,6 +1843,9 @@ static void wt_shortstatus_print(struct wt_status *s)    
-        if (s->show_branch)                                                    
-                wt_shortstatus_print_tracking(s);                              
-                                                                               
-+       if (s->show_stash)                                                     
-+               wt_shortstatus_print_stash_summary(s);                         
-+                                                                              
-        for_each_string_list_item(it, &s->change) {                            
-                struct wt_status_change_data *d = it->util;                    
-                                                                               
---                                                                             
-2.14.0
+A change like this that only moves code around without changing
+anything is painful to everybody to keep around, as nobody can
+safely touch the affected code while it is in flight.  On the other
+hand, as long as it is only moving code around, such a change is
+reasonably safe, and it is relatively easy to ensure that there is
+no change other than code movement is involved.  So let's 
+
+ (1) make sure that the topics this depends on are sound by
+     re-reading them once again, and merge them quickly down to
+     'master';
+
+ (2) merge this topic to 'next', optionally after rebasing it on
+     'master', after (1) happens; and
+
+ (3) quickly merge it to 'master', to get it over with.
+
+In the meantime we'd need to refrain from taking code that touch
+things that are moved by this series.
+
+I plan to be offline for a week or so near the end of this month, so
+I am hoping that we can do all of the above before that. That may
+make us break our usual "tip of the 'master' is more stable and
+robust than any released version" promise by potentially leaving it
+broken for a while, but nobody can build on top of a fluid codebase
+that is in the process of moving things around in a big way, so it
+might not be such a bad idea to make it coincide with the period
+when the tree must become quiescent due to my being offline.  We'll
+see.
+
+Thanks.
