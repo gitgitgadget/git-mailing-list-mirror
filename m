@@ -2,120 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D449A208CD
-	for <e@80x24.org>; Sun, 20 Aug 2017 10:00:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C2ADF208CD
+	for <e@80x24.org>; Sun, 20 Aug 2017 10:06:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752775AbdHTKAF (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 Aug 2017 06:00:05 -0400
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:33977 "EHLO
-        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752752AbdHTKAE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Aug 2017 06:00:04 -0400
-Received: by mail-pf0-f176.google.com with SMTP id h75so2863168pfh.1
-        for <git@vger.kernel.org>; Sun, 20 Aug 2017 03:00:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:in-reply-to:references:date
-         :mime-version:content-transfer-encoding;
-        bh=fciOoRVAILEJVcfKQA9KVvaBI3QLw7xIXjXy8gHJuvw=;
-        b=VfrvhYvotKmywcX1F0WPN9e8Tl1aXqj5G4r/werctjwBlfUyARCgq3nNFPsef1FkQR
-         44sAsvK2XCsf8BXNl3gBZ3l+mum48ybyPl1DLGiQxPwxP6k0JqcNAWQM+DrYrUA33N0f
-         yOgGV+N6K/Jv3cmmoOuZVpcFXvA4gd/M2bvL13DsfAmbjfC4K6uPvpkqDwnFOkNx2Fiw
-         xuqapilNqo9d/j9/mbHz3ktNi72n7qUVFaPdtlSRujW7np185HWYHdVLkPWRPFkAp/Ma
-         k5mkDWgSoAsmylwOfVXj4SHdmcw7rHs32q7lGwqmlZjhRJ7mOVXbui4U90UoKmNwnKpL
-         kVOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:in-reply-to
-         :references:date:mime-version:content-transfer-encoding;
-        bh=fciOoRVAILEJVcfKQA9KVvaBI3QLw7xIXjXy8gHJuvw=;
-        b=Y4wRywvDPf+OZjM8NrZ7KhSIrEFrul+hLJ4BEl8KSIh63QLEhXN/hzrEltCJYAf1MP
-         gZdxAdyYS5PejOI8swEvpi6JSRBmEDgZYvtDUftl9Q8zk+XX3J/mxJllycLkLIbvTMgS
-         KA8WBtLEWXbJeayuyqVh66fOEZVjxRsdduSdLalbqqvRcwKa7zJ/5PIiqCdG2zmw9R80
-         DDywKYzV02sju5Y/CNIlRJdLcdJRnjFiLWolenYQWpij/4Wl+dKOYl3z3WXv3AVQEgMc
-         FqddnAVHDckqU+jNwsfUMyR9laoW9h1mNxJuhsIjiqQjTMhNFmomMO6yrg3RPPjzSH4Y
-         j2zA==
-X-Gm-Message-State: AHYfb5g1KwSvGUh4hPmzKzpLhT/HO8TQBFSOOAgovxZQLNGuUTR9hPP1
-        /rr1Ky/izFJQJw==
-X-Received: by 10.84.136.1 with SMTP id 1mr13556941plk.165.1503223203581;
-        Sun, 20 Aug 2017 03:00:03 -0700 (PDT)
-Received: from unique-pc ([218.248.21.162])
-        by smtp.googlemail.com with ESMTPSA id t11sm18427373pfa.143.2017.08.20.03.00.01
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 20 Aug 2017 03:00:03 -0700 (PDT)
-Message-ID: <1503223257.2116.2.camel@gmail.com>
-Subject: Re: Git *accepts* a branch name, it can't identity in the future?
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     Jeff King <peff@peff.net>
+        id S1751726AbdHTKGg (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 Aug 2017 06:06:36 -0400
+Received: from cloud.peff.net ([104.130.231.41]:44002 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751088AbdHTKGg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Aug 2017 06:06:36 -0400
+Received: (qmail 29067 invoked by uid 109); 20 Aug 2017 10:06:35 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 20 Aug 2017 10:06:35 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13429 invoked by uid 111); 20 Aug 2017 10:07:02 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Sun, 20 Aug 2017 06:07:02 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 20 Aug 2017 06:06:34 -0400
+Date:   Sun, 20 Aug 2017 06:06:34 -0400
+From:   Jeff King <peff@peff.net>
+To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
 Cc:     git@vger.kernel.org
-In-Reply-To: <20170820083347.mi3bmczkpvy6qwys@sigill.intra.peff.net>
-References: <1503215489.5824.4.camel@gmail.com>
-         <20170820083347.mi3bmczkpvy6qwys@sigill.intra.peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Date:   Sun, 20 Aug 2017 15:30:57 +0530
-Mime-Version: 1.0
-X-Mailer: Evolution 3.22.6-1 
+Subject: Re: [PATCH/RFC 0/5] Some ThreadSanitizer-results
+Message-ID: <20170820100633.ehn2sc7gwmm6lftd@sigill.intra.peff.net>
+References: <cover.1502780343.git.martin.agren@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Cyberoam-smtpxy-version: 1.0.6.3
-X-Cyberoam-AV-Policy: default
-X-CTCH-Error: Unable to connect local ctasd
+In-Reply-To: <cover.1502780343.git.martin.agren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks, but Johannes has already found the issue and given a solution.
-Regardless, replying to the questions just for the note.
+On Tue, Aug 15, 2017 at 02:53:00PM +0200, Martin Ågren wrote:
 
-On Sun, 2017-08-20 at 04:33 -0400, Jeff King wrote:
-> What does "git for-each-ref" say about which branches you _do_ have?
+> I tried running the test suite on Git compiled with ThreadSanitizer
+> (SANITIZE=thread). Maybe this series could be useful for someone else
+> trying to do the same. I needed the first patch to avoid warnings when
+> compiling, although it actually has nothing to do with threads.
 > 
-> Also, what platform are you on?
-> 
+> The last four patches are about avoiding some issues where
+> ThreadSanitizer complains for reasonable reasons, but which to the best
+> of my understanding are not real problems. These patches could be useful
+> to make "actual" problems stand out more. Of course, if no-one ever runs
+> ThreadSanitizer, they are of little to no (or even negative) value...
 
-I use a "Debian GNU/Linux buster/sid 64-bit"
+I think it's a chicken-and-egg. I'd love to run the test suite with tsan
+from time to time, but there's no point if it turns up a bunch of false
+positives.
 
-> I'm wondering specifically if you have a filesystem (like HFS+ on MacOS)
-> that silently rewrites invalid unicode in filenames we create. That
-> would mean your branches are still there, but probably with some funny
-> filename like "done/%xxdoc-fix". Git wouldn't know that name because the
-> filesystem rewriting happened behinds its back (though I'd think that a
-> further open() call would find the same file, so maybe this is barking
-> up the wrong tree).
-> 
+The general direction here looks good to me (and I agree with the
+comments made so far, especially that we should stop writing to
+strbuf_slopbuf entirely).
 
-That sounds dangerous!
+>   ThreadSanitizer: add suppressions
 
+This one is the most interesting because it really is just papering over
+the issues. I "solved" the transfer_debug one with actual code in:
 
-> Another line of thinking: are you sure the � you are writing on the
-> command line is identical to the one generated by the corruption (and if
-> you cut and paste, is perhaps a generic glyph placed in the buffer by
-> your terminal to replace an invalid codepoint, rather than the actual
-> bytes)?
-> 
+  https://public-inbox.org/git/20170710133040.yom65mjol3nmf2it@sigill.intra.peff.net/
 
-This was the issue. I wasn't providing git with the actual bytes that
-resulted as a consequence of the sloppy script.
+but it just feels really dirty. I'd be inclined to go with suppressions
+for now until somebody can demonstrate or argue for an actual breakage
+(just because it makes the tool more useful for finding _real_
+problems).
 
-
->   [you didn't say how your script works, so let's use git to rename]
-
-I know of no other way to rename a branch, so I didn't mention it :)
-
-
->   $ broken=$(printf '\223')
-> 
->   [and we can rename it using that knowledge]
->   $ git branch ${broken}doc-fix doc-fix
-> 
-
-Johannes has already given a solution, this one works too.
-
-
--- 
-Kaartic
+-Peff
