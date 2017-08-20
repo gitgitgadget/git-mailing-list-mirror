@@ -2,175 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A72B20899
-	for <e@80x24.org>; Sun, 20 Aug 2017 21:45:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B53120899
+	for <e@80x24.org>; Sun, 20 Aug 2017 21:50:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753340AbdHTVpY (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 Aug 2017 17:45:24 -0400
-Received: from avasout06.plus.net ([212.159.14.18]:52677 "EHLO
-        avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753300AbdHTVpX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Aug 2017 17:45:23 -0400
-Received: from [10.0.2.15] ([143.159.212.52])
-        by avasout06 with smtp
-        id zZlM1v00118PUFB01ZlN2K; Sun, 20 Aug 2017 22:45:22 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=GetnpUfL c=1 sm=1 tr=0
- a=CKmocqUIrzA4K3l9YJ19NQ==:117 a=CKmocqUIrzA4K3l9YJ19NQ==:17
- a=IkcTkHD0fZMA:10 a=ybZZDoGAAAAA:8 a=NfZXjSg7wBXkDsQh-pgA:9 a=QEXdDO2ut3YA:10
- a=0RhZnL1DYvcuLYC8JZ5M:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH 2/2] rerere: allow approxidate in
- gc.rerereResolved/gc.rerereUnresolved
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Cc:     Uwe Hausbrand <uwe.hausbrand@gmx.de>
-References: <xmqqfudpj1vo.fsf@gitster.mtv.corp.google.com>
- <20170819203013.3053-1-gitster@pobox.com>
- <20170819203013.3053-3-gitster@pobox.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <d1ce349c-a6ca-796d-7ac1-8c720e48e02f@ramsayjones.plus.com>
-Date:   Sun, 20 Aug 2017 22:45:20 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        id S1753344AbdHTVuW (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 Aug 2017 17:50:22 -0400
+Received: from mail-oi0-f47.google.com ([209.85.218.47]:36295 "EHLO
+        mail-oi0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753300AbdHTVuV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Aug 2017 17:50:21 -0400
+Received: by mail-oi0-f47.google.com with SMTP id g131so138361333oic.3
+        for <git@vger.kernel.org>; Sun, 20 Aug 2017 14:50:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=Yrr4ETJYZrA6FDhKDNfOIb5nY6K2MyESaGRivVPUFHw=;
+        b=f1DICNq53MLPy0KUD+U079N13fpQfKONWYOSI+O/g/7H2UcjqKk63rl4bnMGc2DmNn
+         rZwyAjMUSqVAr3osXAZNxmvo/6sbypthqumCKlpttrrq+rZc56KMCd7dE8XsfdYHuBPZ
+         /nKqvGycvv8c56YC1t3MZ+RwO0YocRvf80osZAG1hSmMc4WpxUEMmlocyLTfSjYIkssH
+         dtMELDCc+seqGU/61gn0+lbq9PZQQAKpQTm8OaOb+SABkHzpybYIqyb00qb95ef87Rfd
+         FXqXavz0mfFFCtatz4c2AtKqilq2KBrYUzDBg11nEjQM4Shbn3KmL3khSkB4uJvrCy0p
+         CMNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=Yrr4ETJYZrA6FDhKDNfOIb5nY6K2MyESaGRivVPUFHw=;
+        b=dJp1WfPK+Kd/IFNCuPBrjUao5ftT+2Xw2MpbZHNnMOHrxSIY2ufJheXhg2zquD4ME2
+         JglsWdjDhbN+j15FYaiKSuOJKg0RrDZIeZ1QTSf3WTy42DIv1xlFXadasK3v8yNGrgu1
+         nVH1PxxDPhK4gXmnZiUa2pPQ+6vynp/DXdgbV7LSpvanh0kPf9vebKEdUYGyPKUauc9k
+         ZeDC5XAFz4MOisq8xAwIfk7CtT6qMTTCh+y0ZEdH1+wGciy9YgtKjHOKp48NRFKhGNks
+         HfslBWYrXzSEJaEar4Db0tD9ytAeBJZB4fE8L8D00bXecYVgb2s0o8CxRDF6lh2xbgmO
+         oXwg==
+X-Gm-Message-State: AHYfb5jmE6Bz7YnhwCyx4Dtq7npUCNN/mAGt/7CoQuCMglxvfXTRoya8
+        +zRCVZZrlrrki49+OcOLIFtEr/uBmQ==
+X-Received: by 10.202.170.73 with SMTP id t70mr9804946oie.78.1503265821032;
+ Sun, 20 Aug 2017 14:50:21 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20170819203013.3053-3-gitster@pobox.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Received: by 10.182.5.107 with HTTP; Sun, 20 Aug 2017 14:50:00 -0700 (PDT)
+In-Reply-To: <CAH8yC8=i33rtopVt=sgg0k+P4JQO+1EVpPJ+u5CPGEXKvZ+PBA@mail.gmail.com>
+References: <CAH8yC8=i33rtopVt=sgg0k+P4JQO+1EVpPJ+u5CPGEXKvZ+PBA@mail.gmail.com>
+From:   Anatolii Borodin <anatoly.borodin@gmail.com>
+Date:   Sun, 20 Aug 2017 23:50:00 +0200
+X-Google-Sender-Auth: jYpFsAdRBKNHT8j-hjbB3rap_xE
+Message-ID: <CACNzp2k+QM8WZtQ5ROe_e9E-HVQa1znjO1HSY-g8nOVst-Bnng@mail.gmail.com>
+Subject: Re: Please fix the useless email prompts
+To:     noloader@gmail.com
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Jeffrey,
 
 
-On 19/08/17 21:30, Junio C Hamano wrote:
-> These two configuration variables are described in the documentation
-> to take an expiry period expressed in the number of days:
-> 
->     gc.rerereResolved::
-> 	    Records of conflicted merge you resolved earlier are
-> 	    kept for this many days when 'git rerere gc' is run.
-> 	    The default is 60 days.
-> 
->     gc.rerereUnresolved::
-> 	    Records of conflicted merge you have not resolved are
-> 	    kept for this many days when 'git rerere gc' is run.
-> 	    The default is 15 days.
-> 
-> There is no strong reason not to allow a more general "approxidate"
-> expiry specification, e.g. "5.days.ago", or "never".
-> 
-> Tweak the config_get_expiry() helper introduced in the previous step
-> to use date.c::parse_expiry_date() to do so.
-> 
-> In the future, we may find other variables that only allow an
-> integer that specifies "this many days" (or other unit of time) and
-> allow them to also do the same, and at that point we probably would
-> want to move the helper to a place that is not specific to the
-> rerere machinery.  Perhaps config.c would be such a good neutral
-> place, as it will allow git_parse_signed() to go back to static to
-> the file.
+On Sat, Aug 19, 2017 at 5:10 PM, Jeffrey Walton <noloader@gmail.com> wrote:
+> *** Please tell me who you are.
 
-You make git_parse_unsigned() external in this patch, in addition
-to git_parse_signed(), but don't actually call it. Was that intended?
+Which version of git do you use? Do you have user.useConfigOnly set to
+true anywhere in the config files?
 
-ATB,
-Ramsay Jones
-
-> 
-> But this will do for now.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  Documentation/config.txt |  2 ++
->  config.c                 |  4 ++--
->  config.h                 |  3 +++
->  rerere.c                 | 14 ++++++++++++--
->  4 files changed, 19 insertions(+), 4 deletions(-)
-> 
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index d5c9c4cab6..ac95f5f954 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -1553,11 +1553,13 @@ gc.<pattern>.reflogExpireUnreachable::
->  gc.rerereResolved::
->  	Records of conflicted merge you resolved earlier are
->  	kept for this many days when 'git rerere gc' is run.
-> +	You can also use more human-readable "1.month.ago", etc.
->  	The default is 60 days.  See linkgit:git-rerere[1].
->  
->  gc.rerereUnresolved::
->  	Records of conflicted merge you have not resolved are
->  	kept for this many days when 'git rerere gc' is run.
-> +	You can also use more human-readable "1.month.ago", etc.
->  	The default is 15 days.  See linkgit:git-rerere[1].
->  
->  gitcvs.commitMsgAnnotation::
-> diff --git a/config.c b/config.c
-> index 231f9a750b..ac9071c5cf 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -769,7 +769,7 @@ static int parse_unit_factor(const char *end, uintmax_t *val)
->  	return 0;
->  }
->  
-> -static int git_parse_signed(const char *value, intmax_t *ret, intmax_t max)
-> +int git_parse_signed(const char *value, intmax_t *ret, intmax_t max)
->  {
->  	if (value && *value) {
->  		char *end;
-> @@ -799,7 +799,7 @@ static int git_parse_signed(const char *value, intmax_t *ret, intmax_t max)
->  	return 0;
->  }
->  
-> -static int git_parse_unsigned(const char *value, uintmax_t *ret, uintmax_t max)
-> +int git_parse_unsigned(const char *value, uintmax_t *ret, uintmax_t max)
->  {
->  	if (value && *value) {
->  		char *end;
-> diff --git a/config.h b/config.h
-> index 0352da117b..039a9295de 100644
-> --- a/config.h
-> +++ b/config.h
-> @@ -215,4 +215,7 @@ struct key_value_info {
->  extern NORETURN void git_die_config(const char *key, const char *err, ...) __attribute__((format(printf, 2, 3)));
->  extern NORETURN void git_die_config_linenr(const char *key, const char *filename, int linenr);
->  
-> +int git_parse_unsigned(const char *value, uintmax_t *ret, uintmax_t max);
-> +int git_parse_signed(const char *value, intmax_t *ret, intmax_t max);
-> +
->  #endif /* CONFIG_H */
-> diff --git a/rerere.c b/rerere.c
-> index f0b4bce881..8bbdfe8569 100644
-> --- a/rerere.c
-> +++ b/rerere.c
-> @@ -1178,11 +1178,21 @@ static void prune_one(struct rerere_id *id,
->  
->  static void config_get_expiry(const char *key, timestamp_t *cutoff, timestamp_t now)
->  {
-> -	int days;
-> +	char *expiry_string;
-> +	intmax_t days;
-> +	timestamp_t when;
->  
-> -	if (!git_config_get_int(key, &days)) {
-> +	if (git_config_get_string(key, &expiry_string))
-> +		return;
-> +
-> +	if (git_parse_signed(expiry_string, &days, maximum_signed_value_of_type(int))) {
->  		const int scale = 86400;
->  		*cutoff = now - days * scale;
-> +		return;
-> +	}
-> +
-> +	if (!parse_expiry_date(expiry_string, &when)) {
-> +		*cutoff = when;
->  	}
->  }
->  
-> 
+--=20
+Mit freundlichen Gr=C3=BC=C3=9Fen,
+Anatolii Borodin
