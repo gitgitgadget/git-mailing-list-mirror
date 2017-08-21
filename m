@@ -2,109 +2,209 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B46C6208CD
-	for <e@80x24.org>; Mon, 21 Aug 2017 20:48:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3741C208CD
+	for <e@80x24.org>; Mon, 21 Aug 2017 21:08:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753610AbdHUUsu (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Aug 2017 16:48:50 -0400
-Received: from mail-it0-f53.google.com ([209.85.214.53]:36818 "EHLO
-        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753041AbdHUUsu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Aug 2017 16:48:50 -0400
-Received: by mail-it0-f53.google.com with SMTP id 77so36621460itj.1
-        for <git@vger.kernel.org>; Mon, 21 Aug 2017 13:48:49 -0700 (PDT)
+        id S1754311AbdHUVIo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Aug 2017 17:08:44 -0400
+Received: from mail-yw0-f176.google.com ([209.85.161.176]:35258 "EHLO
+        mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753850AbdHUVIl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Aug 2017 17:08:41 -0400
+Received: by mail-yw0-f176.google.com with SMTP id s187so12845216ywf.2
+        for <git@vger.kernel.org>; Mon, 21 Aug 2017 14:08:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=8Y/TbUtgGwIDRzML33/02wHq7qm0jwEFXIW4Q4w7A9c=;
-        b=eZctHAVNyOqqCHCPXAnc+HsCVhiviIhX/gh4sjagdG6FoVAmY473Q0BiR4Pd4motOs
-         fB9KMsgT+645bh9IZ9KyB9MzX5xJJddaaqxcSS+EWozJRkRTrfn8cwGryx0TmCRoCQ3X
-         xJAXhVPAnbSy/GGrDJJbL3ND4QCLSGlA3xD2QlNhcBANS8rer0lD44GNlPwi/Gx2TFLd
-         BuFRBdWxzVtylq3X9hRVzT72L3bSdqERXt0jxuZnQAKv1Hy9ozQ7mwJgyJjrH64jIkI2
-         YoKDQ/KiASGdMhDHWxMQo6vry9McWIE9VOrmRWORcIT4qPxZ8nEyVg/kbX84I0NXGNz/
-         6nng==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=0pM8yXbJqOP+i/S5LaJ9dSXjs/gzlzccfs1aqRhlnZQ=;
+        b=dhv+J/+jHnxWTlBOMpFpqOwb2xixJPzeHE4XzKQJHWBpvR+IWM4t28pV1woFOrxgoN
+         O8Zs0J3gXaxj1KXpl2HZ3+yEAWtz3oF/LQFtDmTk26KUFOQiG5UO9kiz07D/DLs91WWU
+         hSSjrHyEMbQvq32z+R4tW9ejoLI0mjYSBVSm0oe65SObLc5fM/Xuyupt9BERvQMDaV0h
+         mPBOCCCWMeOlrN4ypQBGOYQQ3PeTeMcKjyRB75EolN3dHMPNjQr3k6zbzh5exUTymLNK
+         gb/p8udgqiYnMvqcALttKK0WaTN6EU7ze6JqBujJoV55frgMMh7aLKltBjeDNzEj7JD9
+         qsOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=8Y/TbUtgGwIDRzML33/02wHq7qm0jwEFXIW4Q4w7A9c=;
-        b=P8qLVe0B7LXJpN+PQRupL9uu1olnzbJp+XrrPesnsNG2OuSu0hyTrSksAPYaGrHJDI
-         45VB3FoNQpdx50U8aQlFjYVzruIEfv008ZsN1rpRDe2D05xIVIQuFaco+hpFjj1G0H1T
-         BoByR3HNQGEkx3qO7hxddqt9DM2nPkMUFZALW5I9PVL89wXS7I4IDx3m8iWcZ3QjujeR
-         bNM2IW7w5MJSoke3GCD0bBSgu4Lq4izawra7CQTvu4yqWw9vKk7vh75tBSpuvHcy8R9V
-         TAfFt+i5/IJt2XD7tzuc3MzUAvuVRu1T9blNVVY/KBQt5d7/aAncvIBwPvuDjathi6wn
-         uDdQ==
-X-Gm-Message-State: AHYfb5j4hTNMb5InSUVLH/LrUBsuiqA97A+cgahUvxhSYX2C+lx8AHN6
-        3gpFptnTlBbnpKDc1pBdDUp1SToX/eUh
-X-Received: by 10.36.228.10 with SMTP id o10mr1538405ith.149.1503348529149;
- Mon, 21 Aug 2017 13:48:49 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=0pM8yXbJqOP+i/S5LaJ9dSXjs/gzlzccfs1aqRhlnZQ=;
+        b=LyxgiRhXoK2IuDSI2IsTZJZ54vtE7pAOS5vG68TI9zWC6TgHsArLaNd4WSakd0lxKW
+         MI21HdX0/SeShjG0Qw2VgUX6/bH2FJ6r9lrXmMARuWEndJMiJyqw7l+vysd7VHSKLb4y
+         PYAYMYHIt6p6+boQukTW3JRqPhRlXIStbm0x+Usm1RQ9Nzh+hOAECq4n0JkEZXaxucya
+         e/9FTakmqLJIAbkiVt52PeGx67g6iEt8cQJf72NWXIgbU58ZrodqaN/rj87lrkXIgGJB
+         0PdUwY/8rqxZQ5TUgEP0IBJL3qRxaGkTviUOvQxeWzOhOmSRZuSq8TuHaOXw2KOW8WLt
+         ia1Q==
+X-Gm-Message-State: AHYfb5hgpqWATQMnucniSir50jXIua2lOlNR3xA9/scQ4qlR681pVlM6
+        cVBV6PICACWpYn+1Mf83S+UR69EJUyho
+X-Received: by 10.13.218.129 with SMTP id c123mr14646651ywe.175.1503349720622;
+ Mon, 21 Aug 2017 14:08:40 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.79.149.134 with HTTP; Mon, 21 Aug 2017 13:48:48 -0700 (PDT)
-From:   Prathamesh Chavan <pc44800@gmail.com>
-Date:   Tue, 22 Aug 2017 02:18:48 +0530
-Message-ID: <CAME+mvWq2tMfBVwJQyXsn2E2KJ3QFLuTkG+s_vbkYvO2Fy0ZYw@mail.gmail.com>
-Subject: [GSoC] Update: Week 14
-To:     git <git@vger.kernel.org>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Christian Couder <christian.couder@gmail.com>
+Received: by 10.37.56.142 with HTTP; Mon, 21 Aug 2017 14:08:40 -0700 (PDT)
+In-Reply-To: <20170821000022.26729-5-sandals@crustytoothpaste.net>
+References: <20170821000022.26729-1-sandals@crustytoothpaste.net> <20170821000022.26729-5-sandals@crustytoothpaste.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 21 Aug 2017 14:08:40 -0700
+Message-ID: <CAGZ79ka1X5zJwEzH8Pe2vNX8FaKSP_3m6D0Fva4cpO=QUEaeRw@mail.gmail.com>
+Subject: Re: [RFC PATCH 4/6] Add structure representing hash algorithm
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SUMMARY OF MY PROJECT:
+On Sun, Aug 20, 2017 at 5:00 PM, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> Since in the future we want to support an additional hash algorithm, add
+> a structure that represents a hash algorithm and all the data that must
+> go along with it.  Add a constant to allow easy enumeration of hash
+> algorithms.  Implement function typedefs to create an abstract API that
+> can be used by any hash algorithm, and wrappers for the existing SHA1
+> functions that conform to this API.
+>
+> Don't include an entry in the hash algorithm structure for the null
+> object ID.  As this value is all zeros, any suitably sized all-zero
+> object ID can be used, and there's no need to store a given one on a
+> per-hash basis.
+>
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>  cache.h     | 36 ++++++++++++++++++++++++++++++++++++
+>  sha1_file.c | 29 +++++++++++++++++++++++++++++
+>  2 files changed, 65 insertions(+)
+>
+> diff --git a/cache.h b/cache.h
+> index 1c69d2a05a..375a7fb15e 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -76,6 +76,42 @@ struct object_id {
+>         unsigned char hash[GIT_MAX_RAWSZ];
+>  };
+>
+> +#define GIT_HASH_SHA1 0
+> +
+> +typedef void (*git_hash_init_fn)(void *ctx);
+> +typedef void (*git_hash_update_fn)(void *ctx, const void *in, size_t len);
+> +typedef void (*git_hash_final_fn)(unsigned char *hash, void *ctx);
+> +
+> +struct git_hash_algo {
+> +       /* The name of the algorithm, as appears in the config file. */
+> +       const char *name;
 
-Git submodule subcommands are currently implemented by using shell script
-'git-submodule.sh'. There are several reasons why we'll prefer not to
-use the shell script. My project intends to convert the subcommands into
-C code, thus making them builtins. This will increase Git's portability
-and hence the efficiency of working with the git-submodule commands.
-Link to the complete proposal: [1]
+and potentially in error messages?
 
-Mentors:
-Stefan Beller <sbeller@google.com>
-Christian Couder <christian.couder@gmail.com>
+> +
+> +       /* The size of a hash context (e.g. git_SHA_CTX). */
+> +       size_t ctxsz;
+> +
+> +       /* The length of the hash in bytes. */
+> +       size_t rawsz;
 
-UPDATES:
+[in binary, as opposed to the next entry]
 
-Following are the updates about my ongoing project:
+> +
+> +       /* The length of the hash in hex characters. */
+> +       size_t hexsz;
 
-* add: Although much time was spent by me on trying to debug the
-  patch, the attempts made were unsuccessful or were
-  rather partially successful (since while fixing one issue,
-  they invoked a different one). After getting   suggestions and
-  help from mentors for the remaining tests, now there are only
-  two tests which the patch is currently failing at.
-  The current status of the patch can be viewed at [2].
+By having two entries for binary and hex size, we current
+choice of needing twice as much choice for the human
+representation (as is inherent from the binary <-> hex
+conversion, one char stores 8 or 4 bit); so this is good to
+have. But is it misnamed? (This abstraction only makes
+sense if we ever plan to have human readable representation
+not factor 2, e.g. base64 for the non-binary representation.
+But then the comment is wrong!)
 
-* update: porting this subcommand is already underway, and
-  porting of the functions is_tip_reachable() and
-  fetch_in_submodule() as completed.
+Maybe s/hex characters/string representation suited for humans/ ?
+(Bad naming proposal, but still)
 
-* patches: a smaller patch series is floated on the mailing list
-  for the maintainer's review.
+> +       /* The hash initialization function. */
+> +       git_hash_init_fn init_fn;
+> +
+> +       /* The hash update function. */
+> +       git_hash_update_fn update_fn;
+> +
+> +       /* The hash finalization function. */
+> +       git_hash_final_fn final_fn;
 
-The small patch series which recently was floated is pushed on Github
-and is available at [3].
+I shortly wondered if we want to have just one
+pointer to a struct that contains these 3 functions,
+but that seems overly complex.
 
-PLAN FOR WEEK-15 (22 August 2017 to 28 August 2017):
+> +       /* The OID of the empty tree. */
+> +       const struct object_id *empty_tree;
+> +
+> +       /* The OID of the empty blob. */
+> +       const struct object_id *empty_blob;
 
-* add: One of the main aims of the next week is to resolve the
-  the two tests which the current patch fails at.
+In a more object oriented world, this would
+not be as micro-optimized(?), but rather be:
 
-* patches: will be working on getting the smaller series merged, and
-  once its done, will prepare and float the next patch for the
-  same purpose. Till then, I aim to stay more active on the mailing
-  list as well for responding to the reviews.
+    object o = new object()
+    o.getHash()
 
-Since I am a bit busier the following week (due to college academics),
-I will resume porting submodule subcommand 'update' in the following week.
+or such, but we tend to access empty_{blob,tree}
+quite often in the code base. So it seems like a good
+idea to keep this shortcut around.
 
-[1]: https://docs.google.com/document/d/1krxVLooWl--75Pot3dazhfygR3wCUUWZWzTXtK1L-xU/
-[2]: https://github.com/pratham-pc/git/commits/sub-add
-[3]: https://github.com/pratham-pc/git/commits/week-14-1
+
+> +};
+> +extern const struct git_hash_algo hash_algos[1];
+> +
+>  #if defined(DT_UNKNOWN) && !defined(NO_D_TYPE_IN_DIRENT)
+>  #define DTYPE(de)      ((de)->d_type)
+>  #else
+> diff --git a/sha1_file.c b/sha1_file.c
+> index b60ae15f70..bd9ff02802 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -41,6 +41,35 @@ const struct object_id empty_blob_oid = {
+>         EMPTY_BLOB_SHA1_BIN_LITERAL
+>  };
+>
+> +static inline void git_hash_sha1_init(void *ctx)
+> +{
+> +       git_SHA1_Init((git_SHA_CTX *)ctx);
+> +}
+> +
+> +static inline void git_hash_sha1_update(void *ctx, const void *data, size_t len)
+> +{
+> +       git_SHA1_Update((git_SHA_CTX *)ctx, data, len);
+> +}
+> +
+> +static inline void git_hash_sha1_final(unsigned char *hash, void *ctx)
+> +{
+> +       git_SHA1_Final(hash, (git_SHA_CTX *)ctx);
+> +}
+> +
+> +const struct git_hash_algo hash_algos[1] = {
+> +       [GIT_HASH_SHA1] = {
+> +               .name = "sha-1",
+> +               .ctxsz = sizeof(git_SHA_CTX),
+> +               .rawsz = GIT_SHA1_RAWSZ,
+> +               .hexsz = GIT_SHA1_HEXSZ,
+> +               .init_fn = git_hash_sha1_init,
+> +               .update_fn = git_hash_sha1_update,
+> +               .final_fn = git_hash_sha1_final,
+> +               .empty_tree = &empty_tree_oid,
+> +               .empty_blob = &empty_blob_oid,
+> +       },
+> +};
+
+This is the same new pattern as in 512f41cfac (clean.c: use
+designated initializer, 2017-07-14)
+
+Maybe we want to keep just one test balloon and not mix
+this one in there, too?
+
+> +
+>  /*
+>   * This is meant to hold a *small* number of objects that you would
+>   * want read_sha1_file() to be able to return, but yet you do not want
