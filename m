@@ -6,78 +6,86 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E33A208D0
-	for <e@80x24.org>; Mon, 21 Aug 2017 00:20:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB11620899
+	for <e@80x24.org>; Mon, 21 Aug 2017 05:00:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753427AbdHUAUx (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 Aug 2017 20:20:53 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53144 "EHLO
+        id S1751019AbdHUFAE (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Aug 2017 01:00:04 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59088 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753408AbdHUAUw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Aug 2017 20:20:52 -0400
+        with ESMTP id S1751050AbdHUFAE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Aug 2017 01:00:04 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E7654A9D78;
-        Sun, 20 Aug 2017 20:20:51 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9C742A5931;
+        Mon, 21 Aug 2017 01:00:02 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=YXSCgk6RO2fc4QTLA4vNXF/7HuU=; b=JuUQ8l
-        zFDh2pvZP+ixDO4rz8rC2gqVzXbTpd+YTsPH6hA5iFuwCthEIrv4SkKP5Bje0J/J
-        O5X0c5xOiFHzkhB4+9A0MdpGS+KHGaTe4rkMJJNmHPUZ/Elikhh2F2cAB+TOb/or
-        6QLeeCIf4UBfHEVtZ0hgW3eU/nysbm8emlkGQ=
+        :content-type; s=sasl; bh=6JpTnYzR7kljk2nAPscSg2/Mxqo=; b=o9owoq
+        zU9dXCb66oVjEsdQPvntGPN7AgAhbf5Ne4XCsEcmQMkRnQ5fxlMQ6Bscypg5KNLj
+        tqaw5sN7x+M5agEKlqH783N5I7LmdNDFJDAv5p2avO3YKXgZckva7galMIvlVY9k
+        zXs7xqqFyVdcX7zUHQaQt9pBE2YR81MG+6E10=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=YYwQijzwVgdkZamUqmqJrQIZSJnFSbyg
-        wVJqmd+/kRVtHhqrisuEY1X0g6xN9ZrPx/2YMZncf56P+CIa7ZxDhSfS3WDyfEpK
-        Y+OsXare0Y90h960z8MVvA62wGfFd1lawplpGGTowDLb1qTxIkVZm/dT+ENSNg0P
-        PxKncOH7nZE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DE6C7A9D77;
-        Sun, 20 Aug 2017 20:20:51 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=P42LpxycniHZpnQVH9fXx6O9VDupvJhn
+        z1I97roQW6mxOhmOLfqHzOCY9pbK1CeZw2ube8JkoB9Na4epeovGe7sn9iHUJnah
+        ZCRtC1MIo0wdMloEiTMst/1Ipc+3XgBTlYqjnMtnY0jwBpeNoUw7iVNWPO1c/cCZ
+        hUdCqlV5+6o=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0A84CA592E;
+        Mon, 21 Aug 2017 01:00:01 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 55D3BA9D76;
-        Sun, 20 Aug 2017 20:20:51 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7C3C2A591E;
+        Mon, 21 Aug 2017 00:59:59 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     git@vger.kernel.org, Uwe Hausbrand <uwe.hausbrand@gmx.de>
-Subject: Re: [PATCH 2/2] rerere: allow approxidate in gc.rerereResolved/gc.rerereUnresolved
-References: <xmqqfudpj1vo.fsf@gitster.mtv.corp.google.com>
-        <20170819203013.3053-1-gitster@pobox.com>
-        <20170819203013.3053-3-gitster@pobox.com>
-        <d1ce349c-a6ca-796d-7ac1-8c720e48e02f@ramsayjones.plus.com>
-Date:   Sun, 20 Aug 2017 17:20:50 -0700
-In-Reply-To: <d1ce349c-a6ca-796d-7ac1-8c720e48e02f@ramsayjones.plus.com>
-        (Ramsay Jones's message of "Sun, 20 Aug 2017 22:45:20 +0100")
-Message-ID: <xmqqa82t7ov1.fsf@gitster.mtv.corp.google.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Patryk Obara <patryk.obara@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 0/6] Convert hash-object to struct object_id
+References: <cover.1503258223.git.patryk.obara@gmail.com>
+        <20170820202511.m23njssyika5ufa6@genre.crustytoothpaste.net>
+Date:   Sun, 20 Aug 2017 21:59:58 -0700
+In-Reply-To: <20170820202511.m23njssyika5ufa6@genre.crustytoothpaste.net>
+        (brian m. carlson's message of "Sun, 20 Aug 2017 20:25:11 +0000")
+Message-ID: <xmqq60dh7bxt.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 96A8E36C-8606-11E7-ACFD-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 9556953C-862D-11E7-AE28-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> On 19/08/17 21:30, Junio C Hamano wrote:
+> On Sun, Aug 20, 2017 at 10:09:25PM +0200, Patryk Obara wrote:
+>> This enabled conversion of few functions in sha1_file, which
+>> had almost all callers converted already.
+>> 
+>> I hope I'm not stepping on anyone's toes with this patch series.
+>> If I do - is there some email thread or document in which I can
+>> coordinate with other developers, regarding which code regions
+>> are being converted to struct object_id next?
 >
->> In the future, we may find other variables that only allow an
->> integer that specifies "this many days" (or other unit of time) and
->> allow them to also do the same, and at that point we probably would
->> want to move the helper to a place that is not specific to the
->> rerere machinery.  Perhaps config.c would be such a good neutral
->> place, as it will allow git_parse_signed() to go back to static to
->> the file.
+> We don't have a coordinated thread at the moment.  You can see what I'm
+> working on at https://github.com/bk2204/git.git in the object-id-part10
+> and object-id-part11 branches (based on an older next).
 >
-> You make git_parse_unsigned() external in this patch, in addition
-> to git_parse_signed(), but don't actually call it. Was that intended?
+> However, having said that, I don't mind if you or others pick up various
+> parts of the codebase.  At worst, I drop a few patches for things others
+> have already converted.
 
-Yes, it was done on purpose for symmetry and was done before I had
-that "perhaps this can be moved to config.c" vision.
+Thanks for working well together ;-)
 
-Perhaps I should follow up the topic with [PATCH 3/2] to really move
-it to config.c to clean it up.  But not today.
+I've scanned these patches and they looked OK.  There still are
+places that dereferences oid->hash when making a call instead of
+passing a pointer to the whole oid, but that is not making things
+worse.
 
-Thanks.
+As to the naming (your comments on 5/6), I agree that we would need
+to switch s/sha1/oid/ in the names in the endgame.  It may be OK to
+leave it to later rounds when we do use something like your hash
+algorithm abstraction throughout the codebase.
+
+
