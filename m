@@ -2,112 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE68E1F667
-	for <e@80x24.org>; Mon, 21 Aug 2017 10:20:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 98E341F667
+	for <e@80x24.org>; Mon, 21 Aug 2017 10:32:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752866AbdHUKUA (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Aug 2017 06:20:00 -0400
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:34218 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752787AbdHUKT7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Aug 2017 06:19:59 -0400
-Received: by mail-qt0-f196.google.com with SMTP id p13so1910765qtp.1
-        for <git@vger.kernel.org>; Mon, 21 Aug 2017 03:19:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=CH0z3IcaSnuFgTx7ujG0hPd16mi7sVvnxwI9RCjab0M=;
-        b=kuGLtKxYT/3Ql5phiHqgHRpfBQ3gGlb1I25bNwGHFV6L1NDY5GwhUiDrATKMv/ZEE+
-         Mxa6PTjOQJtiYEDl1ojHEGCbvvbgO35Jqzd3CcZKk4ArHxSMQqJm5QC4M4+gh5XQ1XL4
-         LM6mUP2ug3k8oFFC5QGBl0d0wnlagIyFS63wM/f8ufmFXrI9YiPViay7PTBA6ZAEFEtQ
-         XyXrhTE+xpccxoWIfSfY01fQW6liZaumuVGauMX2XSyDlFpmscDj5DJwSFbsf2tG9nKq
-         /d9vbzACjjmHUjvNs5096vdAsEnNAJmIZMPzPHyAJWlDQ/xkA4GISC8z/8L7KU3Hf0as
-         5gMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=CH0z3IcaSnuFgTx7ujG0hPd16mi7sVvnxwI9RCjab0M=;
-        b=bkQ5RzvNsyg5jd+gG4qObX3vkYkNpfVGJ4yhqEu70CUMvVR52PguKUB6HleZ+eoh3A
-         Evz1M7Jy3aIIQDCPHhsgKSDp/QyvbUOQ4i+Q4Js7n2SLBKGMFrGeXCPVWv/Nv9g6b+02
-         NWW4nYbTAbv34W5W4c3A692ooVP8RzBFe9V+kiuec6hhQilHANiRH7bFaDciera0XyeR
-         MdbHQwBtG1athbwMGyq8l2ZcMxcdV+JYYYD1ZQTpXd5Y2o6eTQ2/xexl4R4VieCXKN7V
-         paS8ZI/HeRDJe4aDEA1C9JebCIPWyWQ9MTI9Tib0PbPk9SwN+zcoLB4oNv8DahL8yuLV
-         eHJQ==
-X-Gm-Message-State: AHYfb5jJVfRC2Fo8YZfti9oyYx6DawvmZKokX+4JABIlKQ/RSY2D3/4v
-        SupHUYwbnLT+00R8xkmj3cz/7czDcA==
-X-Received: by 10.200.33.232 with SMTP id 37mr25121906qtz.11.1503310798930;
- Mon, 21 Aug 2017 03:19:58 -0700 (PDT)
+        id S1753343AbdHUKcw (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Aug 2017 06:32:52 -0400
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:22397 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753095AbdHUKcv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Aug 2017 06:32:51 -0400
+Received: from [192.168.2.201] ([92.22.15.146])
+        by smtp.talktalk.net with SMTP
+        id jk0mdOU5C3CyHjk0mdyQi2; Mon, 21 Aug 2017 11:32:49 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
+        t=1503311569; bh=0urOlnKpealASeBx5RscrzBVPfyE1wrt9lcU5CQLG28=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=Qr4r/8AMemz+JyrY/KPnVgRRNYv7f+XFRqslDOOEkg5veehIqQrBDeWwHmY2TTk4b
+         6ov5kT9xxA6Iarm5evzjUvwqAFqfT7y0vQTjiDafv7sS8irmUZiIVWvVCFVBIH2i+g
+         Qd0lrjZ892vE1aesO8VG/p3xJSDvmQrl4UQT5BSs=
+X-Originating-IP: [92.22.15.146]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=Zo+dE5zG c=1 sm=1 tr=0 a=PRKyDR6jJsLBrgZYJ8A23w==:117
+ a=PRKyDR6jJsLBrgZYJ8A23w==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
+ a=tUlwUKWfvoB4Jb2F0MAA:9 a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [RFC PATCH 0/5] Add option to autostage changes when continuing a
+ rebase
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Philip Oakley <philipoakley@iee.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <20170726102720.15274-1-phillip.wood@talktalk.net>
+ <xmqqa83rrrdu.fsf@gitster.mtv.corp.google.com>
+ <xmqqa83qq2uf.fsf@gitster.mtv.corp.google.com>
+ <xmqq60eeq24l.fsf@gitster.mtv.corp.google.com>
+ <8cdda835-0b4f-6ffb-31bf-6192999818be@talktalk.net>
+ <6a71f802-b20c-f6bc-7bb5-8d81db3353d8@talktalk.net>
+ <xmqqpocloqcp.fsf@gitster.mtv.corp.google.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <a3b7af29-8b3a-5253-21da-957920212a6e@talktalk.net>
+Date:   Mon, 21 Aug 2017 11:32:48 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Received: by 10.140.16.242 with HTTP; Mon, 21 Aug 2017 03:19:38 -0700 (PDT)
-In-Reply-To: <20170820180332.GC39363@Vurt.local>
-References: <20170802185901.GA27243@Vurt.local> <20170820180332.GC39363@Vurt.local>
-From:   Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Date:   Mon, 21 Aug 2017 12:19:38 +0200
-Message-ID: <CAOxFTcxOt878uDYj1Y0QMDNe8mNkfX3ZaZayOH3Njp9RWCJo0Q@mail.gmail.com>
-Subject: Re: [PATCH] Add 'raw' blob_plain link in history overview
-To:     Job Snijders <job@instituut.net>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        yashi@atmark-techno.com, Jakub Narebski <jnareb@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <xmqqpocloqcp.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfFBDNBioGeaxeCvkPpbJs80L1iUXCh1zXkoh3WT3sg/hbz6ZnlsnJr2WlovgYCEjnJ8KSYQj0Dvl9/m4o/48d41GeFlXj3BdUt7FWlWEp1Add5OUf4ma
+ apiBPYGXWJD2bg3s/ZhyKsVn+CPhDAfKC002vv1BUxTzQori9eKnTXUCqmC4ZFgC2jmbMgmH7SjP0tY0PZ8t5WMtqSABnDJwub6Abqcc2WsZde9CXX5Txsfj
+ hlghnGo09kBOc3Xj4T3ibTl7UVjPayM3YTxSAdHzF2o=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+On 27/07/17 16:24, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood@talktalk.net> writes:
+> 
+>>> On 26/07/17 23:12, Junio C Hamano wrote:
+>>>> I think
+>>>> you are already 80% there without adding a yet another option,...
+>>> ...
+>>> I'm interested in the 20% as it's about 100% of my rebase conflicts.
+> 
+> OK, then at least a fixed --rerere-autoupdate would hopefully limit
+> the scope of the additional 20%; I'd suspect that a new option would
+> also internally turn on --rerere-autoupdate, so that the remaining
+> changes you would see upon --continue would be limited to what the
+> user had to manually resolve (and edit without having textual conflict,
+> aka evil merge to resolve semantic conflicts).
 
-On Sun, Aug 20, 2017 at 8:03 PM, Job Snijders <job@instituut.net> wrote:
-> bump?
+I can see the logic in that but I was imagining (and the patches
+implement) that the --autostage option would be passed to 'rebase
+--continue' not when the rebase was started by which time it is too late
+to turn on --rerere-autoupdate for the current conflicts. I prefer
+having to pass --autostage with --continue so that it is a concious
+decision by the user to stage unstaged changes when they continue rather
+than rebase just doing it each time it continues.
 
-(As a side note, I have also noticed that gitweb patches tend to go
-unreviewed for long)
+> I am *not* opposed to an option to tell the command to blindly take
+> such remaining changes, as long as it stays optional---the use of
+> the option can then be taken as a strong signal that the user is OK
+> with the local changes in the working tree, even if the user may not
+> have marked them as resolved with "git add".
 
-> On Wed, Aug 02, 2017 at 08:59:01PM +0200, Job Snijders wrote:
->> We often work with very large plain text files in our repositories and
->> found it friendlier to the users if we can click directly to the raw
->> version of such files.
+I agree it definitely needs to be optional (possibly with a config
+option to have it on by default but I'm not wedded to that as it is easy
+to set up a git or shell alias)
+
+What is the best way forward on this? The patches I posted add a
+'--autostage' option to be passed with '--continue' which means that
+staging all the unstaged changes remains optional but does not allow
+--rerere-autoupdate to be automatically enabled. I'm not sure about the
+check for merge markers, as it is implemented it also checks for
+whitespace errors which is really the domain of the pre-commit hook. If
+we go for an explicit --autostage without the config key to make it on
+by default then maybe it is OK to drop the check, but it keeping it
+could be a useful safety measure. I don't think it would be too much
+work the change diff to allow '--check=merge-markers' as internally the
+whitespace and marker checks are implemented separately.
+
+Best Wishes
+
+Phillip
+
+>>>> And from the
+>>>> workflow point of view, encouraging them to "git add" their manual
+>>>> resolution after they are satisified with their changes by not doing
+>>>> "git add" blindly for all changes, like your --autostage" does, is
+>>>> probably a good thing.
 >>
->> This patch adds a 'raw' blob_plain link in history overview.
->>
->> Signed-off-by: Job Snijders <job@instituut.net>
->> ---
->>  gitweb/gitweb.perl | 7 +++++--
->>  1 file changed, 5 insertions(+), 2 deletions(-)
->>
->> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
->> index 3d4a8ee27..ad79c518e 100755
->> --- a/gitweb/gitweb.perl
->> +++ b/gitweb/gitweb.perl
->> @@ -5961,8 +5961,11 @@ sub git_history_body {
->>                                         href(action=>"commit", hash=>$commit), $ref);
->>               print "</td>\n" .
->>                     "<td class=\"link\">" .
->> -                   $cgi->a({-href => href(action=>$ftype, hash_base=>$commit, file_name=>$file_name)}, $ftype) . " | " .
->> -                   $cgi->a({-href => href(action=>"commitdiff", hash=>$commit)}, "commitdiff");
->> +                   $cgi->a({-href => href(action=>$ftype, hash_base=>$commit, file_name=>$file_name)}, $ftype) . " | ";
->> +             if ($ftype eq 'blob') {
->> +                     print $cgi->a({-href => href(action=>"blob_plain", hash_base=>$commit, file_name=>$file_name)}, "raw") . " | ";
->> +             }
->> +             print $cgi->a({-href => href(action=>"commitdiff", hash=>$commit)}, "commitdiff");
->>
->>               if ($ftype eq 'blob') {
->>                       my $blob_current = $file_hash;
+>> Git allows 'git commit -a' to complete a conflicted merge which I
+>> think is much the same thing as I'm proposing....
+> 
+> "-a" is a strong enough sign that the user is OK with all the paths;
+> "git commit" without an option does not.  So it is OK for a new
+> option (perhaps "--all-autoupdate", which does more than the
+> existing "--rerere-autoupdate") to become the signal that the user
+> is OK with all the local changes.
+> 
+> This is a tangent, but concluding a merge with "commit -a" (or "add
+> -u && commit -a") has always been discouraged among Git expert
+> users, and it will stay to be so.  If you search the list archive,
+> you would find a good explanation by Linus on this, but a short
+> version is that this is because it is normal to start a merge in a
+> dirty working tree where the user has local changes that the user
+> knows will not interfere with the merge.  
+> 
+> Because "rebase" refuses to work in a dirty working tree, the
+> analogy with "merge" does not quite hold.  Doing "add -u" before
+> telling it to "--continue" would be much safer.
+> 
+> Thanks.
+> 
+> 
+> 
 
-Arguably, the addition of the 'raw' link should be done in the same
-conditional that also adds the 'diff to current' link, before the diff
-to current link.
-This would be more consistent with the tree view (which puts the raw
-link last), while still preserving the alignment of the link position
-independently of the existence of the 'diff to current' link. (Bonus
-extra: smaller patch)
-
--- 
-Giuseppe "Oblomov" Bilotta
