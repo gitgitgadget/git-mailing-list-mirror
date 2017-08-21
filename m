@@ -2,94 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D7D51F667
-	for <e@80x24.org>; Mon, 21 Aug 2017 07:33:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F57E1F667
+	for <e@80x24.org>; Mon, 21 Aug 2017 07:34:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751182AbdHUHdZ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Aug 2017 03:33:25 -0400
-Received: from 6.mo176.mail-out.ovh.net ([46.105.44.204]:47226 "EHLO
-        6.mo176.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751131AbdHUHdY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Aug 2017 03:33:24 -0400
-Received: from ex2.mail.ovh.net (gw1.ex2.mail.ovh.net [164.132.80.186])
-        by mo176.mail-out.ovh.net (Postfix) with ESMTPS id 2A2FB82177;
-        Mon, 21 Aug 2017 09:27:04 +0200 (CEST)
-Received: from [10.0.2.127] (86.200.136.234) by EX7.indiv2.local (172.16.2.7)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Mon, 21
- Aug 2017 09:27:03 +0200
+        id S1751164AbdHUHeW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Aug 2017 03:34:22 -0400
+Received: from mx2.suse.de ([195.135.220.15]:38906 "EHLO mx1.suse.de"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1751131AbdHUHeW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Aug 2017 03:34:22 -0400
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay1.suse.de (charybdis-ext.suse.de [195.135.220.254])
+        by mx1.suse.de (Postfix) with ESMTP id 92D18AB9B;
+        Mon, 21 Aug 2017 07:34:20 +0000 (UTC)
 Subject: Re: [RFC 0/3] imap-send curl tunnelling support
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Stefan Beller <sbeller@google.com>
-CC:     Johannes Sixt <j6t@kdbg.org>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
+To:     Jeff King <peff@peff.net>,
+        Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
+Cc:     git@vger.kernel.org
 References: <ab866314-608b-eaca-b335-12cffe165526@morey-chaisemartin.com>
- <5c46f1e4-825e-8e10-e323-e637e170f315@morey-chaisemartin.com>
- <CAGZ79kbgYqo=6FvRNwB0AOKT8mioPTu2CearVttA30nZ8wBMHQ@mail.gmail.com>
- <alpine.DEB.2.21.1.1708161429510.19382@virtualbox>
-From:   Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
+ <20170816083432.rgurgckch6phcul3@sigill.intra.peff.net>
+From:   Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.de>
 Openpgp: preference=signencrypt
-Message-ID: <4a5f9d64-0709-b6b0-c398-6887f1f7f4c0@morey-chaisemartin.com>
-Date:   Mon, 21 Aug 2017 09:27:03 +0200
+Message-ID: <0beb0a6c-acb3-ae24-5c52-95747f74c07f@suse.de>
+Date:   Mon, 21 Aug 2017 09:34:19 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101
  Thunderbird/56.0
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.21.1.1708161429510.19382@virtualbox>
+In-Reply-To: <20170816083432.rgurgckch6phcul3@sigill.intra.peff.net>
 Content-Type: multipart/mixed;
-        boundary="------------55EF14D5DF1BB53A803D9C41"
+ boundary="------------9972AB0D35A1D979B14C4D01"
 Content-Language: fr-xx-classique+reforme1990
-X-Originating-IP: [86.200.136.234]
-X-ClientProxiedBy: CAS2.indiv2.local (172.16.1.2) To EX7.indiv2.local
- (172.16.2.7)
-X-Ovh-Tracer-Id: 10036271772640667613
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeelkedruddtkedgjeelucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddm
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---------------55EF14D5DF1BB53A803D9C41
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+This is a multi-part message in MIME format.
+--------------9972AB0D35A1D979B14C4D01
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-(Sent a reply from my phone while out of town but couldn't find it so here it is again)
 
-It's available on my github:
-https://github.com/nmorey/git/tree/dev/curl-tunnel
 
-The series had been stlighly changed since the patch were posted, mostly to add the proper ifdefs to handle older curl versions.
+Le 16/08/2017 =C3=A0 10:34, Jeff King a =C3=A9crit=C2=A0:
+> On Wed, Aug 09, 2017 at 04:43:26PM +0200, Nicolas Morey-Chaisemartin wr=
+ote:
+>
+>> I have a few doubt on patch #2:
+>> - is socketpair working on all git supported system (windows ?)
+> I'm pretty sure the answer is no, after searching a bit for mingw and
+> socketpair. The big question is whether we could come up with a suitabl=
+e
+> replacement. And that would depend on how libcurl works on Windows, I
+> think (because it's going to feed whatever we give it to other syscall
+> wrappers).
+
+That's what I feared.
+I'm not sure there is a portable "anonymous socket" API out there that'll=
+ work...
+
+>> - should socketpair always be used or limited to the curl over tunnel =
+case ?
+>>   I don't think there is too much different between an unname pipe and=
+ a socketpair but I'm not sure either :)
+> There's not much difference in practice. The obvious one is that
+> half-duplex shutdowns require shutdown() on a socket and just close() o=
+n
+> the write half of a pipe. I don't know if we do that or not.
+>
+> I'd be inclined to leave the existing code alone, though, just because
+> of the risk of regression (and because I don't think the curl and
+> non-curl versions actually share that much code). But I haven't looked
+> deeply, so I may be wrong.
+>
+It's easy enough to keep the legacy working without socketpair.
+
+>> It appears curl do not support the PREAUTH tag.
+> Too bad. IMHO preauth is the main reason to use a tunnel in the first
+> place.
+
+It shouldn't be too hard to add support for this in curl.
+If it's the main usecase, it'll simply means the curl tunnelling should b=
+e disabled by default for older curl (in this case, meaning every version=
+ until it gets supported) versions.
 
 Nicolas
 
-Le 16/08/2017 à 14:30, Johannes Schindelin a écrit :
-> Hi,
->
-> On Tue, 15 Aug 2017, Stefan Beller wrote:
->
->> On Tue, Aug 15, 2017 at 10:49 AM, Nicolas Morey-Chaisemartin
->> <nicolas@morey-chaisemartin.com> wrote:
->>> Ping.
->>>
->>> I'd like to get feedback from Windows developer on patch #2
->>> Patch#3 will probably need some updates as I expected Jeff old curl drop patches to make it in.
->>> As it seems to be going another way a few more ifdefs will be required
->> +cc Windows devs
-> I can has easy-to-pull branch, please?
->
-> Thanks,
-> Dscho
-
-
---------------55EF14D5DF1BB53A803D9C41
-Content-Type: application/pgp-keys; name="0x801BDDB825988F64.asc"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment; filename="0x801BDDB825988F64.asc"
+--------------9972AB0D35A1D979B14C4D01
+Content-Type: application/pgp-keys;
+ name="0x801BDDB825988F64.asc"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: attachment;
+ filename="0x801BDDB825988F64.asc"
 
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 Version: GnuPG v2
@@ -150,8 +158,8 @@ S/DpjUKGyZagy7+F7sBrF7Xx0cXF2f5Bo42XNNiQDE5P/VLwvgn962AJ3q0dp4O7
 oQI8UgNmdsocQhNaBHHCoOabLGrgNobDTaLBeb9zaOZqz8CBuAiZ0bVABEpg50hD
 EYTHp4jCgWpadhAsp/eCgm93Tc+Y+e1fqtE3FmoOLxyhFa6evhn0Q1iX0kCasMZw
 lzsezqLZjTM1Koqn6+UIHXE3QaULyFKD1GDhisXxyolOB6P2TXsyfvitYdIZ3CCt
-I7PVDxzmX2XkkvEz9bMtStoMpse9qAsmHQ==
-=ndjX
+I7PVDxzmX2XkkvEz9bMtStoMpse9qAsmHQ=3D=3D
+=3DndjX
 -----END PGP PUBLIC KEY BLOCK-----
 
---------------55EF14D5DF1BB53A803D9C41--
+--------------9972AB0D35A1D979B14C4D01--
