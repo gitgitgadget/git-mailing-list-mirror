@@ -6,86 +6,94 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B932F208CD
-	for <e@80x24.org>; Mon, 21 Aug 2017 22:46:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E7F6208CD
+	for <e@80x24.org>; Mon, 21 Aug 2017 22:52:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753869AbdHUWqG (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Aug 2017 18:46:06 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59646 "EHLO
+        id S1754077AbdHUWwM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Aug 2017 18:52:12 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62105 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751575AbdHUWqF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Aug 2017 18:46:05 -0400
+        with ESMTP id S1753600AbdHUWwL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Aug 2017 18:52:11 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4F0ED92E7A;
-        Mon, 21 Aug 2017 18:45:57 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 141339F0C2;
+        Mon, 21 Aug 2017 18:52:11 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Nn9PycDOsaKVaXmwD8D6axbMDvk=; b=dsHlUb
-        206ARHxDNzshLG1FLReQqKcHHDJa1FL/cEARGiscKKeTKox3LQrZROuadGh4ZhJg
-        xHDAbZs95dfCC5wWZeDXcfeEs/pWp0BGb3sWXqf22uZkBCHAbudmopHekjOOaUfa
-        HATLZME115lUQR2TIOv2ApBgahOCtaHt3MU2E=
+        :content-type; s=sasl; bh=wFgk7uJwnDaO9YoeW3s4NVekbBg=; b=ktFC7q
+        nfJwwTDHIjZ3ykiFrPiZ2vIrBQ2N2L41kHOCVtyTSQ4Rrqc0lMDEHfXoPB16/Xgk
+        g4tfn32/rdCdnYYEKqb0JTyXMF7oImH4eh8H5tsHRwnanrx7oKCmpZUxYiEJWyaJ
+        cctTVmQUlVmLKLpVLPGj3CkYQC5plx08ewQ74=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=JtU2J5UbFwFDwhxUmIUDguocqjq9d+XV
-        OpHCZBLJWy2+PdLaC9gFeRDr2VTIo1WEk7fOChiIqh+8UX3v+7seJLy8Ambj8+XA
-        m9o29riyupjIdJXx90GpDKjaPs24nzi8v/Knsfsd5E9b4SCGaABzOKpOtSe424pY
-        8tUC0Jyxw/Y=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 478D692E79;
-        Mon, 21 Aug 2017 18:45:57 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=FW6nLq/S0W5BTfO64xoqMHFvuDrCIvxX
+        AhRnCPizuacxuiOivMqgEarOWhcd/BCCV36OfkPtYvGvQ0Z8XZfneWHZdss7s40S
+        O3eCb8or9KfnSfXwuzzF9UPerNUTVQHLHJd1UXG9gLcxNoMpVKnsVTRsEt6RaJbh
+        FS9BKc4Vc/s=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0D7A39F0C1;
+        Mon, 21 Aug 2017 18:52:11 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A807892E77;
-        Mon, 21 Aug 2017 18:45:56 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 66AB09F0C0;
+        Mon, 21 Aug 2017 18:52:10 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Heiko Voigt <hvoigt@hvoigt.net>,
         "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Submodule regression in 2.14?
-References: <4283F0B0-BC1C-4ED1-8126-7E512D84484B@gmail.com>
-        <CAGZ79kajWhEOtqZLrYSAVhM_ZLDiQd9DP9GeL+J=tqach5V65A@mail.gmail.com>
-        <FCB6097F-9F8D-4FDD-A8CE-D936C9CE62E7@gmail.com>
-        <CAGZ79kb-ReME6qbDy-Q12-d=B=f6odUW_D1bAmegP4AY2AyntQ@mail.gmail.com>
-        <xmqqd17tei7m.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kZdnJ+bATTxKBhsJnKaJWGqcBu3MOQ9eK7m4j3dJPNbTw@mail.gmail.com>
-        <xmqq7ey0ddlk.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kap-4k7n48dvBAv2pJjNy2s_LPHS-NdfQD0A-BbWqh4aQ@mail.gmail.com>
-        <xmqqpobs9hjy.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kYaBGDyScWihJ7gRdbiJfMPOnNo8LfkB58+WAcOtXyibQ@mail.gmail.com>
-Date:   Mon, 21 Aug 2017 15:45:55 -0700
-In-Reply-To: <CAGZ79kYaBGDyScWihJ7gRdbiJfMPOnNo8LfkB58+WAcOtXyibQ@mail.gmail.com>
-        (Stefan Beller's message of "Mon, 21 Aug 2017 09:46:23 -0700")
-Message-ID: <xmqqefs45yl8.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH] pull: respect submodule update configuration
+References: <xmqqpobsbsk1.fsf@gitster.mtv.corp.google.com>
+        <20170818220431.22157-1-sbeller@google.com>
+        <xmqqvalk9is0.fsf@gitster.mtv.corp.google.com>
+        <20170821162056.GB1618@book.hvoigt.net>
+        <CAGZ79ka1jyxmATQbrjPHAv3227UJNcN0nw9AY-RZXnNahepoGQ@mail.gmail.com>
+        <85ED93BC-1E27-4B8D-856D-090C6860BAB0@gmail.com>
+        <CAGZ79kZMjGNOn0FnJGtO5gRY3rF0Eiow8n0uppTZsCUAHY+m3A@mail.gmail.com>
+        <20170821182110.GA156514@google.com>
+Date:   Mon, 21 Aug 2017 15:52:09 -0700
+In-Reply-To: <20170821182110.GA156514@google.com> (Brandon Williams's message
+        of "Mon, 21 Aug 2017 11:21:10 -0700")
+Message-ID: <xmqqa82s5yau.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 7EC9C786-86C2-11E7-A56F-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 5D8D7792-86C3-11E7-8476-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Brandon Williams <bmwill@google.com> writes:
 
-> On Fri, Aug 18, 2017 at 11:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
->> As long as we are talking about idealized future world (well, at
->> least an idea of somebody's "ideal", not necessarily shared by
->> everybody), I wonder if there is even any need to have commits in
->> submodules in such a world.  To realize such a "monorepo" world, you
->> might be better off allowing a gitlink in the superproject to
->> directly point at a tree object in a submodule repository (making
->> them physically a single repository is an optional implementation
->> detail I choose to ignore in this discussion).
->
-> Then the sharing between superprojects (e.g. send an Android's linux
-> patch upstream or to another distro that also uses a superproject),
-> becomes cumbersome as the commit messages are missing and
-> potentially not specific to that subtree.
+>> > I tried to make it work here:
+>> > https://public-inbox.org/git/89AB8AA3-8E19-46BA-B169-D1EA4CF4ABE7@gmail.com/
+>> 
+>> (A) you need to set expect there as well, to have sub{2,4,5} be expected
+>> there as well.
+>> 
+>> (B) That may hint at another (UX) bug.
+>> 
+>> The test case there uses "git submodule update --init".
+>> The init flag will set all submodules to active.
+>> 
+>> Maybe you want
+>> 
+>>     git config submodule.active ":(exclude)sub0"
+>>     git config --add submodule.active ":(exclude)sub2"
+>>     git config --add submodule.active "."
+>>     # Read: anything except sub0 and sub2 are interesting
+>> 
+>>     git submodule update
+>>     # no init flag, needed even for new submodules IIUC
 
-Indeed.  That is a problem "git commit --recurse-submodules" has.
-Socratic method seem to have worked well to convince you that it is
-not necessarily a good idea to make submodules "just like a tree".
+Sounds like a good solution.  I do think what Stefan said about
+"reset --hard --recurse-submodules" makes tons of sense, and we
+should do a hard reset in submodules as long as they are marked
+as active, regardless of what the .update option says.  I have
+not thought deeply enough about other operations like "pull" in
+his message to be able to comment, though.
 
+Thanks.
