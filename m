@@ -6,94 +6,110 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E7F6208CD
-	for <e@80x24.org>; Mon, 21 Aug 2017 22:52:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD8AE208CD
+	for <e@80x24.org>; Mon, 21 Aug 2017 22:55:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754077AbdHUWwM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Aug 2017 18:52:12 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62105 "EHLO
+        id S1754190AbdHUWzY (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Aug 2017 18:55:24 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63453 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753600AbdHUWwL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Aug 2017 18:52:11 -0400
+        with ESMTP id S1754158AbdHUWzV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Aug 2017 18:55:21 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 141339F0C2;
-        Mon, 21 Aug 2017 18:52:11 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B06B69315D;
+        Mon, 21 Aug 2017 18:55:13 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=wFgk7uJwnDaO9YoeW3s4NVekbBg=; b=ktFC7q
-        nfJwwTDHIjZ3ykiFrPiZ2vIrBQ2N2L41kHOCVtyTSQ4Rrqc0lMDEHfXoPB16/Xgk
-        g4tfn32/rdCdnYYEKqb0JTyXMF7oImH4eh8H5tsHRwnanrx7oKCmpZUxYiEJWyaJ
-        cctTVmQUlVmLKLpVLPGj3CkYQC5plx08ewQ74=
+        :content-type; s=sasl; bh=LZizN8YBpwjW+AuWd9b/Erd6UxM=; b=dXSJ5+
+        ZT2p5s2FJOiVcy/zyd+Szo18qgBgA3bw65DlbVNUC/FxLGOhKjcFHzu6kYY0wje5
+        9s+PvWPkTvnxExpD7CURR0r+47j7oznl4KGw33/2CPOdX1TZSIbiBxSw59fS85r3
+        VpQFEd3kAMnsLhZ5TV4Xrb3M3AtvWIgMUVfr8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=FW6nLq/S0W5BTfO64xoqMHFvuDrCIvxX
-        AhRnCPizuacxuiOivMqgEarOWhcd/BCCV36OfkPtYvGvQ0Z8XZfneWHZdss7s40S
-        O3eCb8or9KfnSfXwuzzF9UPerNUTVQHLHJd1UXG9gLcxNoMpVKnsVTRsEt6RaJbh
-        FS9BKc4Vc/s=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0D7A39F0C1;
-        Mon, 21 Aug 2017 18:52:11 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=CnBswcssgqKb/bXtVoTNYp7ZMnVK5OWT
+        cfydkKrU0ZzoxBHYAZT9Ge13SphhHCFjpx0SiWYjxQ0PtXr7HFQtrAdCToNVoo1F
+        +bHYsYGVr5ChVvwC6Xsa7/721jmrABSVEagukU7XG3duVaWKIu7R+vEqzczHArWv
+        MAhfXAPOl6s=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A7CC89315C;
+        Mon, 21 Aug 2017 18:55:13 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 66AB09F0C0;
-        Mon, 21 Aug 2017 18:52:10 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DE05393159;
+        Mon, 21 Aug 2017 18:55:12 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Heiko Voigt <hvoigt@hvoigt.net>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH] pull: respect submodule update configuration
-References: <xmqqpobsbsk1.fsf@gitster.mtv.corp.google.com>
-        <20170818220431.22157-1-sbeller@google.com>
-        <xmqqvalk9is0.fsf@gitster.mtv.corp.google.com>
-        <20170821162056.GB1618@book.hvoigt.net>
-        <CAGZ79ka1jyxmATQbrjPHAv3227UJNcN0nw9AY-RZXnNahepoGQ@mail.gmail.com>
-        <85ED93BC-1E27-4B8D-856D-090C6860BAB0@gmail.com>
-        <CAGZ79kZMjGNOn0FnJGtO5gRY3rF0Eiow8n0uppTZsCUAHY+m3A@mail.gmail.com>
-        <20170821182110.GA156514@google.com>
-Date:   Mon, 21 Aug 2017 15:52:09 -0700
-In-Reply-To: <20170821182110.GA156514@google.com> (Brandon Williams's message
-        of "Mon, 21 Aug 2017 11:21:10 -0700")
-Message-ID: <xmqqa82s5yau.fsf@gitster.mtv.corp.google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, Martin Koegler <mkoegler@auto.tuwien.ac.at>
+Subject: Re: [PATCH v3 00/23] Move exported packfile funcs to its own file
+References: <cover.1502220307.git.jonathantanmy@google.com>
+        <cover.1503094448.git.jonathantanmy@google.com>
+        <xmqqk2209fm8.fsf@gitster.mtv.corp.google.com>
+        <xmqqd17q91y6.fsf@gitster.mtv.corp.google.com>
+        <20170821114015.30e1ab23@twelve2.svl.corp.google.com>
+Date:   Mon, 21 Aug 2017 15:55:11 -0700
+In-Reply-To: <20170821114015.30e1ab23@twelve2.svl.corp.google.com> (Jonathan
+        Tan's message of "Mon, 21 Aug 2017 11:40:15 -0700")
+Message-ID: <xmqq60dg5y5s.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 5D8D7792-86C3-11E7-8476-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: CA5242AE-86C3-11E7-B22D-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
->> > I tried to make it work here:
->> > https://public-inbox.org/git/89AB8AA3-8E19-46BA-B169-D1EA4CF4ABE7@gmail.com/
+> On Sat, 19 Aug 2017 23:40:33 -0700
+> Junio C Hamano <gitster@pobox.com> wrote:
+>
+>> Junio C Hamano <gitster@pobox.com> writes:
 >> 
->> (A) you need to set expect there as well, to have sub{2,4,5} be expected
->> there as well.
+>> > I have to say that this was a painful topic to integrate.
+>> >
+>> > As you may know, the mk/use-size-t-in-zlib topic is being retracted
+>> > and getting rerolled as a larger size_t series, most of which still
+>> > needs help in reviewing.
+>> >
+>> > The jt/sha1-file-cleanup topic is the only one among the other four
+>> > that are still not in 'next', and I think that topic, as well as the
+>> > other three, are all good and serve as a good base to build on top.
+>> > So I first rebuilt your patches on top of these four topics.  This
+>> > took some time but it wasn't all that painful.
 >> 
->> (B) That may hint at another (UX) bug.
->> 
->> The test case there uses "git submodule update --init".
->> The init flag will set all submodules to active.
->> 
->> Maybe you want
->> 
->>     git config submodule.active ":(exclude)sub0"
->>     git config --add submodule.active ":(exclude)sub2"
->>     git config --add submodule.active "."
->>     # Read: anything except sub0 and sub2 are interesting
->> 
->>     git submodule update
->>     # no init flag, needed even for new submodules IIUC
+>> ... but it turns out that I screwed it up in at least one place,
+>> making Linux32 build fail (Thanks Lars and folks who pushed hard to
+>> arrange Travis to build all my pushes to 'pu').  I'm pushing out my
+>> second attempt.  Let's see how it goes.
+>
+> Thanks.
 
-Sounds like a good solution.  I do think what Stefan said about
-"reset --hard --recurse-submodules" makes tons of sense, and we
-should do a hard reset in submodules as long as they are marked
-as active, regardless of what the .update option says.  I have
-not thought deeply enough about other operations like "pull" in
-his message to be able to comment, though.
+It seems like a later pushout late Sunday night that had the second
+attempt made it pass on Linux32 ;-)  Whew.
+
+>>  (1) make sure that the topics this depends on are sound by
+>>      re-reading them once again, and merge them quickly down to
+>>      'master';
+>
+> I took a look and they look sound.
+>
+>  - rs/find-pack-entry-bisection resolves an issue first introduced in
+>    commit 1f68855 ("[PATCH] Teach read_sha1_file() and friends about
+>    packed git object store.", 2005-06-27), which already had that issue.
+>  - jk/drop-sha1-entry-pos is some code deletion.
+>  - rs/unpack-entry-leakfix ensures that delta_stack is freed. This
+>    function does not (for example) expose the destination of delta_stack
+>    to its caller, so it is correct that delta_stack should be freed
+>    unless it points to the local buffer, just like in the success case.
+>  - jt/sha1-file-cleanup (my patches) still looks OK to me.
+>
+> In your latest "What's cooking" (Aug 2017, #04; Fri, 18), you mentioned
+> that the first 3 will be merged to master, and the 4th will be merged to
+> next.
+
+Yup, thanks for double checking.  I'll be merging them down
+soon-ish.
 
 Thanks.
