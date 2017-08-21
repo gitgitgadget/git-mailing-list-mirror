@@ -2,150 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 09BB4208CD
-	for <e@80x24.org>; Mon, 21 Aug 2017 17:44:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 92B9E208CD
+	for <e@80x24.org>; Mon, 21 Aug 2017 17:48:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754124AbdHURoM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Aug 2017 13:44:12 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:37025 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754072AbdHURoK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Aug 2017 13:44:10 -0400
-Received: by mail-wr0-f195.google.com with SMTP id z91so19038386wrc.4
-        for <git@vger.kernel.org>; Mon, 21 Aug 2017 10:44:10 -0700 (PDT)
+        id S1754071AbdHURsM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Aug 2017 13:48:12 -0400
+Received: from mail-yw0-f176.google.com ([209.85.161.176]:35309 "EHLO
+        mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753926AbdHURsL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Aug 2017 13:48:11 -0400
+Received: by mail-yw0-f176.google.com with SMTP id s187so10162750ywf.2
+        for <git@vger.kernel.org>; Mon, 21 Aug 2017 10:48:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=wte96Em+LgCDcuaDtCwj3k8Mcaec1GlxI6Ay8w25L3M=;
-        b=j08y68U+L7emvnbFLKMVX+UMH3TCXh0nuh90G8BDfvMmyTehsU8RKQsRywFOSTCy5M
-         74LSRxcLUzGy3/oSQJFlXb55Jum9NeCSruuXMLXJWMUZRIBXgdPn10m6QNmgNAI8/sSq
-         LcU46iHtxIkUCEghs0MFMfQUyC4baqH2OV9GnukXBmzlQcmvEfBsFeDYN0vMueV3vRXM
-         4I4HA8pz9q5rT1c2QOmAxsJJr0eX6SKQMTQVuDWmlOE+YQ9vr5PEPib5Sh09gcTa6/+3
-         a/F9CgC5FYG/pxzLquPXLpjGtTQD0N1Enzx+ZUluTuGkH9iSAoe/Ljq1dsKfS3sQ/EQ5
-         RuCQ==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ph+1qdgOTt+fBEfEMlU2Oet+unwPfc//6i9sKum7+eY=;
+        b=QLW9aZTMYHQWOTMqlOIWvN9bi1ZJmGeJXvQJrk89d5tCOtRrn5zwmy01EpOQk0q0Nf
+         fLDco7Tbx2OyFuBAK9hsP4qs/AXy046o7rQhZ65hVgML2ho2f096Q4+2jUgeZjJlkh+6
+         1WKc5bVS52dGQrcBUDHjEQPQgFUNVOM2sUjXMfzDGsGM50Ekk5HBUtIhi9zd7/HYCghz
+         Ok6M1TMmE53g4EE6GHtayaWBIspSStHkbs9JhGBpIIhBfvwqvKT+1aZqULyYxRzvt/y8
+         Tm2JU/qG1wjkwEzWeuHjsVVxUbqpaz6pdYmecri48KnZ9ZHMp3jKxS5MZnrM7xSWC0Dw
+         H/1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=wte96Em+LgCDcuaDtCwj3k8Mcaec1GlxI6Ay8w25L3M=;
-        b=FsT4bFWk9/OnqZk99d8pQLE0KbhgxMFa6aW2do0i0gfQDzoZFYA0lgEQ0yNGU5JPt3
-         cBrpSopQFE5gspRTgz4TGMqIFUQGA4NgePZWBswspDua7qse9ZjoY7K2p4uLhHhkIRR3
-         SoIp6I1S2m9b+pC1mRGq/ydvVedYOgpE/+12ypw1tS4cBrdgoIsU93TTRWOuOGg5E/DN
-         vbj+LdLvS9UXrrah3DhdkASb1Hlo32OpeqUNO0mF70utodknR9jU0AEv+hJvPo7aCtQj
-         rERawndlToOOUTJSCXTi2A3pgcb192ivb5qNUgnqGryxABOQP0j0MUo3MpFrbxLLu489
-         1sKA==
-X-Gm-Message-State: AHYfb5hF1b/KVpq+/ev01mC0UJ3vBfpGQ61C/L9Ob4hTAnPkpW0JjqVn
-        SOOdTFTLIZszoVS3
-X-Received: by 10.28.40.69 with SMTP id o66mr6201025wmo.164.1503337449519;
-        Mon, 21 Aug 2017 10:44:09 -0700 (PDT)
-Received: from localhost.localdomain ([2a02:aa16:5782:c100:1208:b1ff:fee6:d811])
-        by smtp.gmail.com with ESMTPSA id y8sm5942458wmg.12.2017.08.21.10.44.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 21 Aug 2017 10:44:08 -0700 (PDT)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: [PATCH v2 4/4] ThreadSanitizer: add suppressions
-Date:   Mon, 21 Aug 2017 19:43:48 +0200
-Message-Id: <09bbbcd1429a28774ea2d8c67ef6106ab558c296.1503323391.git.martin.agren@gmail.com>
-X-Mailer: git-send-email 2.14.1.151.gdfeca7a7e
-In-Reply-To: <cover.1503323390.git.martin.agren@gmail.com>
-References: <cover.1502780343.git.martin.agren@gmail.com> <cover.1503323390.git.martin.agren@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ph+1qdgOTt+fBEfEMlU2Oet+unwPfc//6i9sKum7+eY=;
+        b=bFUE17Xl6MwukC920YbGQp/65zoulr9/MmcYW75rwAr4MySwEL2E0X2hwIA6+69L3N
+         cGMPhIPTp47rvrXu27xMCLUdriFhmvOUwmAJ4yqnOXXI5/QQmtAY1PFS5OAf8KlX7YnX
+         BiBv9GiSAeqOVtiadPrN5DMl7sZb0Z7KFDHAhXDY6KM+smrWescWttjFjwtz59iJYTU+
+         9WQCegVrRjS5avFN8wSbpPFf1+k5MdlWG19ireqTVLKSrSrb0bbuXry3pgcZFHh+FeaR
+         f4mjII2JE4BuqKdKFwnwVTrH8FefIB/Smu7jHu7wc+/KbG2X7u118C9gOw4LN6wbpQ2P
+         v/LQ==
+X-Gm-Message-State: AHYfb5jIKj4sCqPRjpnlh9230W2r218p3SfrI0oGejufTxHAfZFEb8EV
+        hibSeaNTyxUEoCCyBUlmZtLKU0kozFDA
+X-Received: by 10.37.123.129 with SMTP id w123mr15739363ybc.305.1503337690840;
+ Mon, 21 Aug 2017 10:48:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To:     unlisted-recipients:; (no To-header on input)
+Received: by 10.37.56.142 with HTTP; Mon, 21 Aug 2017 10:48:10 -0700 (PDT)
+In-Reply-To: <85ED93BC-1E27-4B8D-856D-090C6860BAB0@gmail.com>
+References: <xmqqpobsbsk1.fsf@gitster.mtv.corp.google.com> <20170818220431.22157-1-sbeller@google.com>
+ <xmqqvalk9is0.fsf@gitster.mtv.corp.google.com> <20170821162056.GB1618@book.hvoigt.net>
+ <CAGZ79ka1jyxmATQbrjPHAv3227UJNcN0nw9AY-RZXnNahepoGQ@mail.gmail.com> <85ED93BC-1E27-4B8D-856D-090C6860BAB0@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 21 Aug 2017 10:48:10 -0700
+Message-ID: <CAGZ79kZMjGNOn0FnJGtO5gRY3rF0Eiow8n0uppTZsCUAHY+m3A@mail.gmail.com>
+Subject: Re: [PATCH] pull: respect submodule update configuration
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Heiko Voigt <hvoigt@hvoigt.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Brandon Williams <bmwill@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a file .tsan-suppressions and list two functions in it: want_color()
-and transfer_debug(). Both of these use the pattern
+On Mon, Aug 21, 2017 at 10:20 AM, Lars Schneider
+<larsxschneider@gmail.com> wrote:
+>
+>> On 21 Aug 2017, at 18:55, Stefan Beller <sbeller@google.com> wrote:
+>>
+>> On Mon, Aug 21, 2017 at 9:20 AM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
+>>
+>>>> So I am a bit curious to learn which part of this change you dislike
+>>>> and why.
+>>>
+>>> I am also curious. Isn't this the same strategy we are using in other
+>>> places?
+>>>
+>>
+>> I dislike it because the UX feels crude.  When reading the documentation,
+>> it seems to me as if submodule.<name> can be one of the following
+>>
+>>    (none, checkout, rebase, merge, !<custom-command>)
+>>
+>> This is perfect for "submodule-update", whose primary goal is
+>> to update submodules *somehow*. However other commands
+>>
+>>    git rebase --recurse
+>>    git merge --recurse
+>>    git checkout --recurse
+>>
+>> have a different primary mode of operation (note how their name
+>> is one of the modes from the set above), so it may get confusing
+>> for a user.
+>>
+>> 'none'  and '!<custom-command>' seem like they would be okay
+>> for any of the commands above but then:
+>>
+>>    git config submodule.<name>.update "!..."
+>>    git reset --hard --recurse
+>>    git status
+>>    # submodule is reported, because "!..." did not 'reset'.
+>>
+>> Anyway. That dislike is just a minor gut feeling about the UX/UI
+>> being horrible. I wrote the patch to keep the conversation going,
+>> and if it fixes Lars problem, let's take it for now.
+>
+> Well, I need just a way to disable certain Submodules completely.
+> If you show me how "git config --local submodule.sub.active false"
+> works then I don't need this patch.
+>
+> I tried to make it work here:
+> https://public-inbox.org/git/89AB8AA3-8E19-46BA-B169-D1EA4CF4ABE7@gmail.com/
 
-	static int foo = -1;
-	if (foo < 0)
-		foo = bar();
+(A) you need to set expect there as well, to have sub{2,4,5} be expected
+there as well.
 
-where bar always returns the same non-negative value. This can cause
-ThreadSanitizer to diagnose a race when foo is written from two threads.
-That is indeed a race, although it arguably doesn't matter in practice
-since it's always the same value that is written.
+(B) That may hint at another (UX) bug.
 
-Add NEEDSWORK-comments to the functions so that this problem is not
-forever swept way under the carpet.
+The test case there uses "git submodule update --init".
+The init flag will set all submodules to active.
 
-The suppressions-file is used by setting the environment variable
-TSAN_OPTIONS to, e.g., "suppressions=$(pwd)/.tsan-suppressions". Observe
-that relative paths such as ".tsan-suppressions" might not work.
+Maybe you want
 
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
----
-v2: added NEEDSWORK; reworded the comments in the new file
- color.c            |  7 +++++++
- transport-helper.c |  7 +++++++
- .tsan-suppressions | 10 ++++++++++
- 3 files changed, 24 insertions(+)
- create mode 100644 .tsan-suppressions
+    git config submodule.active ":(exclude)sub0"
+    git config --add submodule.active ":(exclude)sub2"
+    git config --add submodule.active "."
+    # Read: anything except sub0 and sub2 are interesting
 
-diff --git a/color.c b/color.c
-index 7aa8b076f..9ccd954d6 100644
---- a/color.c
-+++ b/color.c
-@@ -338,6 +338,13 @@ static int check_auto_color(void)
- 
- int want_color(int var)
- {
-+	/*
-+	 * NEEDSWORK: This function is sometimes used from multiple threads, and
-+	 * we end up using want_auto racily. That "should not matter" since
-+	 * we always write the same value, but it's still wrong. This function
-+	 * is listed in .tsan-suppressions for the time being.
-+	 */
-+
- 	static int want_auto = -1;
- 
- 	if (var < 0)
-diff --git a/transport-helper.c b/transport-helper.c
-index 8f68d69a8..f50b34df2 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -1117,6 +1117,13 @@ int transport_helper_init(struct transport *transport, const char *name)
- __attribute__((format (printf, 1, 2)))
- static void transfer_debug(const char *fmt, ...)
- {
-+	/*
-+	 * NEEDSWORK: This function is sometimes used from multiple threads, and
-+	 * we end up using debug_enabled racily. That "should not matter" since
-+	 * we always write the same value, but it's still wrong. This function
-+	 * is listed in .tsan-suppressions for the time being.
-+	 */
-+
- 	va_list args;
- 	char msgbuf[PBUFFERSIZE];
- 	static int debug_enabled = -1;
-diff --git a/.tsan-suppressions b/.tsan-suppressions
-new file mode 100644
-index 000000000..8c85014a0
---- /dev/null
-+++ b/.tsan-suppressions
-@@ -0,0 +1,10 @@
-+# Suppressions for ThreadSanitizer (tsan).
-+#
-+# This file is used by setting the environment variable TSAN_OPTIONS to, e.g.,
-+# "suppressions=$(pwd)/.tsan-suppressions". Observe that relative paths such as
-+# ".tsan-suppressions" might not work.
-+
-+# A static variable is written to racily, but we always write the same value, so
-+# in practice it (hopefully!) doesn't matter.
-+race:^want_color$
-+race:^transfer_debug$
--- 
-2.14.1.151.gdfeca7a7e
-
+    git submodule update
+    # no init flag, needed even for new submodules IIUC
