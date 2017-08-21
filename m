@@ -7,91 +7,191 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5DBD8208CD
-	for <e@80x24.org>; Mon, 21 Aug 2017 18:52:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B2CBC208CD
+	for <e@80x24.org>; Mon, 21 Aug 2017 20:48:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753548AbdHUSwR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Aug 2017 14:52:17 -0400
-Received: from mail-yw0-f171.google.com ([209.85.161.171]:35213 "EHLO
-        mail-yw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753479AbdHUSwQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Aug 2017 14:52:16 -0400
-Received: by mail-yw0-f171.google.com with SMTP id s187so11010275ywf.2
-        for <git@vger.kernel.org>; Mon, 21 Aug 2017 11:52:15 -0700 (PDT)
+        id S1753555AbdHUUsI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Aug 2017 16:48:08 -0400
+Received: from mail-yw0-f181.google.com ([209.85.161.181]:33546 "EHLO
+        mail-yw0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751575AbdHUUsH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Aug 2017 16:48:07 -0400
+Received: by mail-yw0-f181.google.com with SMTP id h127so29426522ywf.0
+        for <git@vger.kernel.org>; Mon, 21 Aug 2017 13:48:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=qMpW2KB9sfuNhbr5sbvsU/d5lZ7QP+csIxHRFUClb2M=;
-        b=rKbSbpJkrCpPk2NbigFJbfbDAf+Pyvwnb4lcfFGA6HmUtrqYM05ai/9QLOKWsxZRxM
-         x7Krid8Uv6Hc/lRM2De6lRiQZUjQ0D8HFUw3rTfdJh6podH1M9Q6vhDNjxIbvbKbZ+0O
-         OmBoDJuRP6qoro2GG3yPQPQ5tqVm0uK2NF73ommEkEcM3Tb6N2Ss6JEsTDOa7dLKGuvZ
-         SXF2Rj+KYh6MlhN7rCwddng0s7nRuSNZ53TbqrLRqMM5Z/3R2tduN2LiBMs/ooMt2l7T
-         VZQAYkLhVrlub0qdDH4bhNZROaNTZApewZreApVXB2yYN2PICnwvlSXNPIb8CUn/nmY5
-         5QgQ==
+         :cc;
+        bh=LRjYncyWacqUI6MvZ7gPDrm5uVLMNPS82qED/6pdVic=;
+        b=P4GVNnnccmsogEm7SwvqWK6GhpgTwVPLbjEysLpaA/sA+oRVZZuU70WYhBma+tbWM+
+         /ooXhcCmC211uNdcjZ4arqa/RG/Iblugrpbxy2wCfs2yo148gPPnD6O03k8EB782hD24
+         ci1yo2KZ0gsiTXJPOi+Ok2+PqwZwkJiFklEDR1uJ0LObHfgtFQRpA9jU1+LTrqmbit1+
+         Bl8GBwQ6lvJnMTEZPCT2IonKrHt/e+GDqAOjxAsRKbLPGxmeB+AH2Z8rvh+1ftXF+Q8N
+         ++766ndnShjb+LaOJHejeRdPU2fwR3+xIum6dUEqAWkgvmHIvaWSz+TUynBGrJuDO82J
+         KvEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=qMpW2KB9sfuNhbr5sbvsU/d5lZ7QP+csIxHRFUClb2M=;
-        b=btRh9WI798P/5ssBSN4/QEPH9wGMDIyjJGe9eLy5bUzz3jrrT/VfGZNXdfrWZvnK3F
-         TVzVVhvkKEh1cQ9Z3m0G3EqAulXIMpqytjBjMSfslM75kIuVhX2tL9ZPh0KuTvLaHNgZ
-         BVtXSUF5uZYrqR9gBbwbFYds61N/mmrpQP0OxbMADPNUCqv01LdXdJRukGjoYTUoB/6P
-         C/WNIQ2brxmc0z1vvhNDWA6v6tgChg3E0yRuwAPQwdZb6XMUv0Gor9yw7oUt4ScELa0w
-         5qAZx5LnPJcbfM3TM6z5glanAsUzn/p1ex2oJF4Wg7uPBiDp435VqDO2jNsG3Sn79xYm
-         ptPA==
-X-Gm-Message-State: AHYfb5jhcQTie3NXkyYz3qXASbqHjBG3TCq5UlS/x3JmBvnYVKD2G9Sj
-        f76Z+RgRtby+i7HnUefb7FZe/dMM0U4u
-X-Received: by 10.13.229.3 with SMTP id o3mr14909415ywe.137.1503341533474;
- Mon, 21 Aug 2017 11:52:13 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=LRjYncyWacqUI6MvZ7gPDrm5uVLMNPS82qED/6pdVic=;
+        b=BZuZtg0wDE0tzapEwzBygauEuhv8A9NSw16P+3jOKXCdMyImuoiPN6aJBgdC4dyczG
+         Gn9RSIuMUn9ODy3FXTJfJrePaJDHiy7Le0B7kqxi5vH5haN+1eF95QCl3AL+NrAmCD0h
+         kvPjzd0skF5rgH6x7iVFZV4b3zGWI+j84poi2wPDoMAX4bIUQOLzKv0GIFBnkO7fa/VL
+         FHCu9yRRjxFN9fox2pm73JAjicOSrmhcFuhap55cFYyIFzAh/1Vv1uTmqfd/TuIMnEWk
+         Vwf0QiKG29+1yZ5/3S9Jl9H9NPeBpVHK0DlA0ScHH2Q4VDeiNr68bxLi+nWW9aJLsBY9
+         B4Hw==
+X-Gm-Message-State: AHYfb5g1Fsz4eyRhFjbMVqDU7ItGh3yH69til+xj0VcpBlbB/pgI1GQZ
+        DyUE8nSQwrR/EOf0M2Yy81jg/U4DfFhB
+X-Received: by 10.13.212.149 with SMTP id w143mr2815583ywd.4.1503348486373;
+ Mon, 21 Aug 2017 13:48:06 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.37.56.142 with HTTP; Mon, 21 Aug 2017 11:52:12 -0700 (PDT)
-In-Reply-To: <20170821115313.11879-1-l.stelmach@samsung.com>
-References: <CGME20170821115329eucas1p1c550891b502863669ca351de028f2b80@eucas1p1.samsung.com>
- <20170821115313.11879-1-l.stelmach@samsung.com>
+Received: by 10.37.56.142 with HTTP; Mon, 21 Aug 2017 13:48:05 -0700 (PDT)
+In-Reply-To: <20170821000022.26729-1-sandals@crustytoothpaste.net>
+References: <20170821000022.26729-1-sandals@crustytoothpaste.net>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 21 Aug 2017 11:52:12 -0700
-Message-ID: <CAGZ79kZ7s8Y0M=5g8skhcONo=r9Y+MiHp3=+E1JTL4zNE_4v+g@mail.gmail.com>
-Subject: Re: [PATCH] git-gui: Prevent double UTF-8 conversion
-To:     =?UTF-8?Q?=C5=81ukasz_Stelmach?= <l.stelmach@samsung.com>,
-        Pat Thoyts <patthoyts@users.sourceforge.net>
+Date:   Mon, 21 Aug 2017 13:48:05 -0700
+Message-ID: <CAGZ79kZ1CTza=PEqP=3gTT=81HRAAUfPWQyWKxNXKf5G0e+nNg@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/6] Hash Abstraction
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-+cc git gui maintainer
+On Sun, Aug 20, 2017 at 5:00 PM, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> = Overview
+>
+> This is an RFC series proposing a basic abstraction for hash functions.
+>
+> As we get closer to converting the remainder of the codebase to use
+> struct object_id, we should think about the design we want our hash
+> function abstraction to take.  This series is a proposal for one idea to
+> start discussion.  Input on any aspect of this proposal is welcome.
+>
+> This series exposes a struct git_hash_algo that contains basic
+> information about a given hash algorithm that distinguishes it from
+> other algorithms: name, lengths, implementing functions, and empty tree
+> and blob constants.  It also exposes an array of hash algorithms, and a
+> constant for indexing them.
+>
+> The series also demonstrates a simple conversion using the abstraction
+> over empty blob and tree values.
+>
+> In order to avoid conflicting with the struct repository work and with
+> the goal of avoiding global variables as much as possible, I've pushed
+> the hash algorithm into struct repository and exposed it via a #define.
+> This necessitiates pulling repository.h into cache.h, which I don't
+> think is fatal.  Doing that, in turn, necessitated some work on the
+> Subversion code to avoid conflicts.
+>
+> It should be fine for Junio to pick up the first two patches from this
+> series, as they're relatively independent and valuable without the rest
+> of the series.  The rest should not be applied immediately, although
+> they do pass the testsuite.
+>
+> I proposed this series now as it will inform the way we go about
+> converting other parts of the codebase, especially some of the pack
+> algorithms.  Because we share some hash computation code between pack
+> checksums and object hashing, we need to decide whether to expose pack
+> checksums as struct object_id, even though they are technically not
+> object IDs.  Furthermore, if we end up needing to stuff an algorithm
+> value into struct object_id, we'll no longer be able to directly
+> reference object IDs in a pack without a copy.
 
-On Mon, Aug 21, 2017 at 4:53 AM, =C5=81ukasz Stelmach <l.stelmach@samsung.c=
-om> wrote:
-> With encoding on the file descriptor set to "binary" Tcl (8.6 in my case)
-> does double conversion which breaks e.g. author name in amended commits.
+Note that the checksum hash could be different from actual object ids,
+so it may be easiest to introduce a "new pack format", which is just
+s/sha1/<new hash>/g for any object ids, though I guess the work needed
+is just the same for converting checksums to the new hash, too.
+
+
+> This series is available from the usual places as branch hash-struct,
+> based against master.
 >
-> For example "\305\201ukasz" (as written by git cat-file) becomes
-> "\303\205\302\201ukasz".
+> = Naming
 >
-> Signed-off-by: =C5=81ukasz Stelmach <l.stelmach@samsung.com>
-> ---
->  git-gui/lib/commit.tcl | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> The length names are similar to the current constant names
+> intentionally.  I've used the "hash_algo" name for both the integer
+> constant and the pointer to struct, although we could change the latter
+> to "hash_impl" or such as people like.
 >
-> diff --git a/git-gui/lib/commit.tcl b/git-gui/lib/commit.tcl
-> index 83620b7cb..bcb6499a0 100644
-> --- a/git-gui/lib/commit.tcl
-> +++ b/git-gui/lib/commit.tcl
-> @@ -26,7 +26,7 @@ You are currently in the middle of a merge that has not=
- been fully completed.  Y
->         set parents [list]
->         if {[catch {
->                         set fd [git_read cat-file commit $curHEAD]
-> -                       fconfigure $fd -encoding binary -translation lf
-> +                       fconfigure $fd -encoding utf-8 -translation lf
->                         # By default commits are assumed to be in utf-8
->                         set enc utf-8
->                         while {[gets $fd line] > 0} {
-> --
-> 2.11.0
+> I chose to name the define "current_hash" and expose no other defines.
+> The name is relatively short since we're going to be typing it a lot.
+> However, if people like, we can capitalize it or expose other defines
+> (say, a GIT_HASH_RAWSZ or GIT_HASH_HEXSZ) instead of or in addition to
+> current_hash, which would make this name less interesting.
+>
+> Feel free to propose alternatives to the naming of anything in this
+> series.
+>
+> = Open Issues
+>
+> I originally decided to convert hex.c as an example, but quickly found
+> out that this caused segfaults.  As part of setup, we call
+> is_git_directory, which calls validate_headref, which ends up calling
+> get_sha1_hex.  Obviously, we don't have a repository, so the hash
+> algorithm isn't set up yet.  This is an area we'll need to consider
+> making hash function agnostic, and we may also need to consider
+> inserting a hash constant integer into struct object_id if we're going
+> to do that.  Alternatively, we could just paper over this issue as a
+> special case.
+
+We could introduce new files .sha1 or .sha256 in the config dir, whose
+existence can be checked prior to validating the HEAD.
+
+Maybe the HEAD validation can be non-strict and could check
+if we'd have at least 'n' hex chars and at most 'm' hex chars. 'n' and 'm'
+depend on the hash functions supported of that version of git. (Maybe
+we'd validate later again to have the correct hash function length,
+or we could also allow abbreviated hash names for HEAD)
+
+> Clearly we're going to want to expose some sort of lookup functionality
+> for hash algorithms.  We'll need to expose lookup by name (for the
+> .git/config file and any command-line options), but we may want other
+> functions as well.  What functions should those be?  Should we expose
+> the structure or the constant for those lookup functions?  If the
+> structure, we'll probably need to expose the constant in the structure
+> as well for easy use.
+>
+> Should we avoid exposing the array of structure altogether and wrap this
+> in a function?
+>
+> We could expose a union of hash context structures and take that as the
+> pointer type for the API calls.  That would probably obviate the need
+> for ctxsz.
+>
+> We could expose hex versions of the blob constants if desired.  This
+> might make converting the remaining pieces of code that use them easier.
+>
+> There are probably dozens of other things I haven't thought of yet as
+> well.
+>
+> brian m. carlson (6):
+>   vcs-svn: remove unused prototypes
+>   vcs-svn: rename repo functions to "svn_repo"
+>   setup: expose enumerated repo info
+>   Add structure representing hash algorithm
+>   Integrate hash algorithm support with repo setup
+>   Switch empty tree and blob lookups to use hash abstraction
+>
+>  builtin/am.c        |  2 +-
+>  builtin/checkout.c  |  2 +-
+>  builtin/diff.c      |  2 +-
+>  builtin/pull.c      |  2 +-
+>  cache.h             | 48 ++++++++++++++++++++++++++++++++++++++++++++----
+>  diff-lib.c          |  2 +-
+>  merge-recursive.c   |  2 +-
+>  notes-merge.c       |  2 +-
+>  repository.c        |  7 +++++++
+>  repository.h        |  5 +++++
+>  sequencer.c         |  6 +++---
+>  setup.c             | 48 +++++++++++++++++++++++++++---------------------
+>  sha1_file.c         | 29 +++++++++++++++++++++++++++++
+>  submodule.c         |  2 +-
+>  vcs-svn/repo_tree.c |  6 +++---
+>  vcs-svn/repo_tree.h | 13 +++----------
+>  vcs-svn/svndump.c   |  8 ++++----
+>  17 files changed, 133 insertions(+), 53 deletions(-)
 >
