@@ -2,98 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D6411F667
-	for <e@80x24.org>; Mon, 21 Aug 2017 09:37:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E43E1F667
+	for <e@80x24.org>; Mon, 21 Aug 2017 10:04:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751941AbdHUJhl (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Aug 2017 05:37:41 -0400
-Received: from mail-pg0-f52.google.com ([74.125.83.52]:33279 "EHLO
-        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751814AbdHUJhk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Aug 2017 05:37:40 -0400
-Received: by mail-pg0-f52.google.com with SMTP id t3so68858864pgt.0
-        for <git@vger.kernel.org>; Mon, 21 Aug 2017 02:37:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=PTwbbhU21yHN/e6USW/uwMWJOzXnHqA5AMrU9LGgnjI=;
-        b=Y+A+SnJREzaTQCqUEt5UAn6YDrBaCJaRXRAYZJDxVFGwW9x6+/M8IYYF3aQ7bYL7Sd
-         mGiRGXYvvm8E8g1SBH/L62BxL8h9Myt1jboWnebVNBe1RRpeslBv6NwOFslxFRwi4K9i
-         dYR2DdOirrWCTZgIiiNdHVITL2ERMKXtOjNvyEPk62ESGkilN645XhmWk7Er8CJW8yzm
-         mEb7sIGsjWH28GTo4h9miK0Q6UlEbrq2pwlGePIJLalGSGIfxs5ufEtD1JzTYEwtcLOa
-         CF8l89fkZ8s2Ul7ZSSkPGHoUO+bKThX77HwDdzhc+f0PSM7tMidLFyPdxNEfcFeSMQBh
-         DFXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=PTwbbhU21yHN/e6USW/uwMWJOzXnHqA5AMrU9LGgnjI=;
-        b=D6GVdzf41DOEJqfNA5Gga6ss04B0Vc3tnUukvhdKJ447a3wdI8S8Jf2VPt8HaVgRR1
-         tNdkG5sLYYhzb/xorFFnCtJOtdKpsliN7jP8YapqbRbCUNJOQh1MUkm5HJofsSM2ftA6
-         JNqmRBkocdGBsm8grcrD0te46pF+WcDab4HC3FZlYtAQuY41ubN6DLsSMaUBaW2KO8Ej
-         MuXeO8INEywBbnzep4HVDA/wntaJJeEdtT6CuVUd6VPxqtn6kufBFW8HgjO0y8XX0747
-         zSbVAeDnWjG8tpdawTqdTE0nZA+fJC4D+jea741n5IFPW6kLRWOr7dxytmt2MZ98tx/m
-         3Hzw==
-X-Gm-Message-State: AHYfb5hi3IGoofC5OXDXLw4p9H54fr9FV1nzYAbXq6tB+HY0g4z72fyb
-        PPJdXJfQEgDxnQsaMqqmUCy0IMxdrA==
-X-Received: by 10.84.129.6 with SMTP id 6mr18992265plb.289.1503308260250; Mon,
- 21 Aug 2017 02:37:40 -0700 (PDT)
+        id S1753147AbdHUKDu (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Aug 2017 06:03:50 -0400
+Received: from mout.kundenserver.de ([212.227.17.10]:53929 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752939AbdHUKDs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Aug 2017 06:03:48 -0400
+Received: from skimbleshanks.math.uni-hannover.de ([130.75.46.4]) by
+ mrelayeu.kundenserver.de (mreue101 [212.227.15.183]) with ESMTPSA (Nemesis)
+ id 0MduSz-1dwAqV0Uiz-00PfMk; Mon, 21 Aug 2017 12:03:46 +0200
+Subject: Re: Git makes a merge commit but as a normal (non-merge) commit
+To:     hIpPy <hippy2981@gmail.com>, Git Mailing List <git@vger.kernel.org>
+References: <CAM_JFCzZWfyUiFVrYOztdJD8iSYvYUavbzKOX2bxDV0_hMz7Eg@mail.gmail.com>
+From:   Michael J Gruber <git@grubix.eu>
+Message-ID: <d5bc0c8b-900f-456b-55a9-35408187d06c@grubix.eu>
+Date:   Mon, 21 Aug 2017 12:03:37 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Received: by 10.100.162.37 with HTTP; Mon, 21 Aug 2017 02:37:39 -0700 (PDT)
-In-Reply-To: <CAJXxHvVzTrhJk6pFsOzUKBuU2VcW41-tMk5A7s+rxXsacXpppw@mail.gmail.com>
-References: <CAJXxHvVzTrhJk6pFsOzUKBuU2VcW41-tMk5A7s+rxXsacXpppw@mail.gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Mon, 21 Aug 2017 11:37:39 +0200
-Message-ID: <CAN0heSrh_+J=LQnGZtngxQbcHAjFhX9vPKKDa7_ORz4iDpXf=g@mail.gmail.com>
-Subject: Re: "Your branch is up-to-date ..." is incorrect English grammar
-To:     STEVEN WHITE <stevencharleswhitevoices@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAM_JFCzZWfyUiFVrYOztdJD8iSYvYUavbzKOX2bxDV0_hMz7Eg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: de-DE
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:mJn2c2uMG4YJnHpNBEy5E6zQhoLlD7w34V6EH+TeI9dx5ARI6yl
+ Vzk64yS1jg2WDxyVJRSzjIEGkYP41DAy8875960Q8uQi9tBJqtY5Fn8Gf9jCPL8G1wHzsa5
+ Th/vFX4RqHxMX3O8uX9XlBHLjh7oepjGZpRjs543tHLqn0dmgTohxfF/16//IVjIApaG3q3
+ ciWfXpeCFQQzaUSgN0IUA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:5cC78r7aAW8=:WQ/16m8xKBpzuwCZ2zGP4Z
+ /uYFN+5GA/CyxPfUbGlVtsbwQj4omtlmmY7x4xSprOcY4nMkYdkVIF0tePXGti8DCZRmgR9nP
+ X4BjUkETlzLjioTUQc+6YE+wreGQ/I4HcTLDD93wf5zEf7fKFLILTDA9AEblP2r6rwUwsmijf
+ djxDdBO9lPD7MqwwXTY7mzOs579hKcJoX0y9Qeu5I3ssrSRQa0W6bcdE7ozX5lAYGvXZyaeKE
+ NLtfSHIA+0D5sBehYmawkRveLsOEEHuUjyt+SHEXBcOz+xmp5muCDSE5C6yOCRBjGved11ieF
+ GbK714iPT/qBvQugMPk0jp5bK8ybKT+DnOFYc1WPSF01N88V2RpswzpKDk5mm+hY6H7aYX+Cy
+ 4spHn05JUKjLUjRy/jDNLGTm5JwIQnzk7kYOTCHzAb+HtNtje+eGpM24CGgwxAuoL52AS/R1r
+ bgxTNu9B32CP5MPdYyTfQY1Xl7Vn7K/mk2BGFiLc3Tz6hWqGgbeh5+uQpVXFbJYjlNj1Ml20u
+ i2ChGU3jQBRpIO6ifr1O8vqClRvdQm9TIX7eGn5FAdKq3Z6aQbLNRYe80KB/wXoda4kPfRTCT
+ cxd49lGx0Bh0aVumfeVTxhG8HHZQTK8dfD+DWgOvyBxaoJlLRSyuRtkXLLkCfg8OrO/ZbLED1
+ ZssligsaZNEoe2kGsguCiY9v82lqaLsx6VR3+jq09YGHG2C5mzVT5cNUEOWzxDG4pVaqMrQ8u
+ xP2saWkXQMoV3usP4xG/5uOx53cDYGccwiC6KDJCpA2s9ga2R2Gdi/FWAtc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The code base contains a few instances of "up-to-date" and "up to date".
-A tree wide sweep could be made to update user-visible strings in the
-code and in the documentation. Fixing source code comments seems like
-overkill. Could I count on you to review any changes I'd propose? (With
-respect to the English, that is.)On 21 August 2017 at 10:21, STEVEN
-WHITE <stevencharleswhitevoices@gmail.com> wrote:
-> Either of these two options is CORRECT:
->
-> =E2=80=9CYour branch is up to date =E2=80=A6=E2=80=9D
->
-> =E2=80=9CYou have an up-to-date branch =E2=80=A6=E2=80=9D
->
-> But =E2=80=9Cyour branch is up-to-date=E2=80=9D is INCORRECT. And, becaus=
-e it=E2=80=99s
-> incorrect, it conveys an odd and unsettling experience to native
-> English speakers whenever they read it.
->
-> If you=E2=80=99re curious, you can find plenty of discussion of this poin=
-t of
-> grammar. Here=E2=80=99s just one example:
-> https://english.stackexchange.com/questions/180611/do-i-keep-myself-up-to=
--date-or-up-to-date-on-something.
+hIpPy venit, vidit, dixit 19.08.2017 00:35:
+> While merging if I do certain actions then the merge commit is made
+> with the merge message but as a normal (non-merge) commit.
+> 
+> Repro steps:
+> - Set GIT_MERGE_AUTOEDIT=yes (set other than "no") in .bashrc
+> - Make a merge commit with no conflicts.
+>   (external text editor shows the generated merge message)
+> - Focus on Git Bash and Ctrl-C.
+> - Commit (git commit).
+> 
+> Actual behavior:
+> Git makes a normal (non-merge) commit (squash merge) but with the
+> merge commit message.
+> 
+> It looks like a bug to me. This is very confusing later on as the repo
+> topology would show that the branch is not merged in and there is not
+> an easy way to find out when the merge was made.
+> 
+> Expected behavior:
+> Git should stay in a MERGING state. The user can choose to either
+> abort the merge or continue the merge (git merge --continue OR git
+> commit).
+> 
+> This does not happen in case of conflicts (at least I'm not able to
+> repro). I get a (master|MERGING) prompt till I resolve the conflicts
+> and commit, which goes through correctly as a merge commit.
+> 
+> Environment:
+> $ git version
+> git version 2.14.0.windows.2
+> $ bash --version
+> GNU bash, version 4.4.12(1)-release (x86_64-pc-msys)
 
-There is also some previous discussion on this very list:
-https://public-inbox.org/git/CALFtnmeRxgetuCVbO8ZmVkCR302vQ2s4hTPoHxAe5NEfm=
-jtXEg@mail.gmail.com/T/#u
+Thanks for the detailed info!
 
-The code base contains a few instances of "up-to-date" and "up to date".
-A tree wide sweep could be made to update user-visible strings in the
-code and in the documentation. Fixing source code comments seems like
-overkill. Could I count on you to review any patches I'd propose? (With
-respect to the English, that is.)
+It turns out that his is not Windows specific. The recipe is:
+- make "git merge" call and wait for an editor
+- kill "git merge" while it waits for the editor
 
-Obviously, if you'd like to attempt a patch, that's fine by me. :)
+The effect is that prepare_to_commit() has no chance to call
+abort_commit() any more (which would call write_merge_state())..
 
-Martin
+Now, I'm not sure why we only do half of write_merge_state() (write out
+the merge_msg, but not merge_head) before launching the editor.
+
+In any case, the following patch solves the problem and passes the
+existing tests. But I'll wait for more comments (and think about a test
+meanwhile).
+
+Michael
+
