@@ -6,75 +6,110 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4BEE3208CD
-	for <e@80x24.org>; Mon, 21 Aug 2017 12:53:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B74EF208CD
+	for <e@80x24.org>; Mon, 21 Aug 2017 12:53:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753310AbdHUMxU (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Aug 2017 08:53:20 -0400
-Received: from mout.kundenserver.de ([212.227.126.130]:55655 "EHLO
+        id S1753387AbdHUMxY (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Aug 2017 08:53:24 -0400
+Received: from mout.kundenserver.de ([212.227.126.187]:60572 "EHLO
         mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752804AbdHUMxT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Aug 2017 08:53:19 -0400
-Received: from localhost ([130.75.46.4]) by mrelayeu.kundenserver.de (mreue003
- [212.227.15.167]) with ESMTPSA (Nemesis) id 0Lg4uF-1dCO7403yd-00pazb; Mon, 21
+        with ESMTP id S1752234AbdHUMxV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Aug 2017 08:53:21 -0400
+Received: from localhost ([130.75.46.4]) by mrelayeu.kundenserver.de (mreue004
+ [212.227.15.167]) with ESMTPSA (Nemesis) id 0MHtgv-1dixFo3Udx-003dAp; Mon, 21
  Aug 2017 14:53:17 +0200
 From:   Michael J Gruber <git@grubix.eu>
 To:     git@vger.kernel.org
 Cc:     hIpPy <hippy2981@gmail.com>
-Subject: [PATCH v2 1/3] Documentation/git-merge: explain --continue
-Date:   Mon, 21 Aug 2017 14:53:14 +0200
-Message-Id: <ddd9c06813f8e2e9d8160f2ed965e728190bc573.1503319519.git.git@grubix.eu>
+Subject: [PATCH v2 3/3] merge: save merge state earlier
+Date:   Mon, 21 Aug 2017 14:53:16 +0200
+Message-Id: <407f205e2b824d56c652411256eea3c0047576ef.1503319519.git.git@grubix.eu>
 X-Mailer: git-send-email 2.14.1.364.ge466dba5f7
 In-Reply-To: <fe681e447791ded6db52ccd84e64e3637c08ffe5.1503309751.git.git@grubix.eu>
 References: <fe681e447791ded6db52ccd84e64e3637c08ffe5.1503309751.git.git@grubix.eu>
 In-Reply-To: <cover.1503319519.git.git@grubix.eu>
 References: <cover.1503319519.git.git@grubix.eu>
-X-Provags-ID: V03:K0:D6Pw0Tp0m884FoQElGAOtxL0MuHavR/k3tDd1Tb8VPrRUpDd4/M
- LvW5sAMe1fX+9Zu+RGebHq4xnNQfb9dr19H6Co9qulehf6muqXdOSmNkzGN6UjQkfdqM4XE
- a0mjb27GyT2eWZAQtdMkP29VNfMGGEEmpus+SVZ5h+kiOe67eWjaToel7olK+jno4wPjbm1
- XeQT0Hvv62583i4UwZQ+w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:B1dYEi8D5kE=:yAf8eCFeIh2unWFuCAvAXv
- +HdOmMLqYq0lAUlH0PjaYOBFnBAqBU2cYmqAZuD/UMWhd857XIsRcqSOhDz1aHhzFFnfaHi1P
- ySv3DUQlPOXXO7nQaOi1KbkynVZJfHpp7x51q4qic77ewq79BwLAlb+RK0FaOfSgM6xgnVULE
- xmyXoGCiANkQsliQmdrfblDMN31xjYAVkfKnnTQ9NQ1qUe4DNiZm4AfuZOo4OAtOY/XtQiA/E
- BOwOBTOz86ewoW6kehcQ2AycLug2KoFeSj6s4xfgtxZcW1GBz/RhD44nmjSV08Qo39JrZu+6Y
- 3mrT6J4fuDZDNVVkslwVfOalCIcRsyacwRCoPBE+06D5uUTl7wmnbiHlr0IWHPpJo9mRjuHmd
- P/3unQLhMHjQER6i1iQrSFP40UkEGsOgaz8Cm3EvdnQasfhKSykDNjhOuu1PTA9D3KBcvY2El
- 56DEDKnf5apu8FKpdEH6/YX7/E097XlBxH5i9h3zQTy9HnKx/VQ0bWN6KF5wANOWjE+6QyMss
- MzgKsYsncLdIePYRqcco7uvivkGWgGyJJZfKCqakHf5XK1HkQZ+9wAPys6jKu9xK84rkhRdzQ
- y2HuLRl9wONkNWztai8peEdEBr8D0BJlU7YRh8ZqJexnVX2xWl90ZrNEr08uerZipqTPxfBE1
- +A76aHflD1QkngdMzW7lPeHB/Y+VrSPtm7UnerCeBnJC9YcqPWxHA4HulSMS5a2iA4aR6e+M9
- SPJthlrxftvyzxIWz7HPA5wAc3Ooh3p66wR4Cg==
+X-Provags-ID: V03:K0:u6BCZR4ZayG+y1eA7Uho5hZKdngSj8QW+F+x1Tw+A7OhsYxE6e3
+ rAVdr4Y+sFVmxJgYhvFK+9yCbGBO+MYOOaXnNIogiQEauSJCc2jHCB4qJzvHK+BM4WE8e3z
+ 9tRkGyWkFOciPU+nat3eGIvbx6DSg8deOsW4rcSSlTH/1qkV3yQ1OXcj1pKgjrgE60oFibe
+ WbptnlLGvwsKLxqRuQq1A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:gRj97A19k8Q=:Ea1RxYXcfw9QEfioCLX7st
+ /e4Abpyo0Elq7mBckg+M6woKJ23rttUWyOEtFEO5hzi5k4dEjQtrGuGEPj0+Ptdz5MchV8vMa
+ YlY519nlptq7KanPcACjbv7ZIM5D/H0zjChqj4xIZSPOeOf8Le4n8dG/UJCN242ElW2FF/bZ6
+ HKUeaghxovhOFyv4kuAh66gk5anbXwj5clw1OmO9zHm0ZaN/yjq86kiziXLU9iGYo/RgYMr+I
+ svhkBQ2XjpjEOTdeHrRNBEHhdSkPjPa8jefR6386uw/BVIjNOdWsAgCmEZngXLhkXBat06UbE
+ qKXzBo/HCKE8G0Ffqp91JUh4U5KD/QclgPOvp9rxgIjX588YgGqGmA/s3h7YQ/L+afYPBqwUA
+ nPCPI93xYNROid/PaRa3tLDG7pTsSsCmRedsPlsXQkeNDGi7vccUQXIlux6ESh5I+OMOXzOo9
+ HD+Oef6awpv6nYG8PEg8aU6GiczOrniPdSDAmxhq/WkhpO9zOyr+On7HS3/lzt1sBx/ORYMT1
+ aIeI14PV+ROrAKnfTMajKH8Z9TsoTVbic/NgiWVduskUj+K1hEDaXXM8lf7sioWUOVvXlz+z5
+ 8YSZI5BGITMFr2roXIN5QIpiRknIo72ZdXb8+Z0/M4QxYM+HW2mytFqd7uuJFVcZYkzfR5/z7
+ +we70HIju+6VrLuxl3Axg6mywDA2JnkuANHA8VVtVl3yvQqTpA2quLfxv3T3S+1rAhq3E8Siv
+ CEcaAgMoUeWjiI9mbC8BlOsj6lb8o57SbAZOJg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, 'git merge --continue' is mentioned but not explained.
+If the `git merge` process is killed while waiting for the editor to
+finish, the merge state is lost but the prepared merge msg and tree is kept.
+So, a subsequent `git commit` creates a squashed merge even when the
+user asked for proper merge commit originally.
 
-Explain it.
+Save the merge state earlier (in the non-squash case) so that it does
+not get lost.
 
+Reported-by: hIpPy <hippy2981@gmail.com>
 Signed-off-by: Michael J Gruber <git@grubix.eu>
 ---
- Documentation/git-merge.txt | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ builtin/merge.c  |  3 +++
+ t/t7600-merge.sh | 15 +++++++++++++++
+ 2 files changed, 18 insertions(+)
 
-diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-index 6b308ab6d0..615e6bacde 100644
---- a/Documentation/git-merge.txt
-+++ b/Documentation/git-merge.txt
-@@ -288,7 +288,10 @@ After seeing a conflict, you can do two things:
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 86f0adde3b..5379b08824 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -758,6 +758,7 @@ N_("Please enter a commit message to explain why this merge is necessary,\n"
+    "Lines starting with '%c' will be ignored, and an empty message aborts\n"
+    "the commit.\n");
  
-  * Resolve the conflicts.  Git will mark the conflicts in
-    the working tree.  Edit the files into shape and
--   'git add' them to the index.  Use 'git commit' to seal the deal.
-+   'git add' them to the index.  Use 'git commit' or
-+   'git merge --continue' to seal the deal. The latter command
-+   checks whether there is a (interrupted) merge in progress
-+   before calling 'git commit'.
++static void write_merge_heads(struct commit_list *);
+ static void prepare_to_commit(struct commit_list *remoteheads)
+ {
+ 	struct strbuf msg = STRBUF_INIT;
+@@ -767,6 +768,8 @@ static void prepare_to_commit(struct commit_list *remoteheads)
+ 		strbuf_commented_addf(&msg, _(merge_editor_comment), comment_line_char);
+ 	if (signoff)
+ 		append_signoff(&msg, ignore_non_trailer(msg.buf, msg.len), 0);
++	if (!squash)
++		write_merge_heads(remoteheads);
+ 	write_file_buf(git_path_merge_msg(), msg.buf, msg.len);
+ 	if (run_commit_hook(0 < option_edit, get_index_file(), "prepare-commit-msg",
+ 			    git_path_merge_msg(), "merge", NULL))
+diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+index 2ebda509ac..80194b79f9 100755
+--- a/t/t7600-merge.sh
++++ b/t/t7600-merge.sh
+@@ -774,4 +774,19 @@ test_expect_success 'merge can be completed with --continue' '
+ 	verify_parents $c0 $c1
+ '
  
- You can work through the conflict with a number of tools:
- 
++write_script .git/FAKE_EDITOR <<EOF
++# kill -TERM command added below.
++EOF
++
++test_expect_success EXECKEEPSPID 'killed merge can be completed with --continue' '
++	git reset --hard c0 &&
++	! "$SHELL_PATH" -c '\''
++	  echo kill -TERM $$ >> .git/FAKE_EDITOR
++	  GIT_EDITOR=.git/FAKE_EDITOR
++	  export GIT_EDITOR
++	  exec git merge --no-ff --edit c1'\'' &&
++	git merge --continue &&
++	verify_parents $c0 $c1
++'
++
+ test_done
 -- 
 2.14.1.364.ge466dba5f7
 
