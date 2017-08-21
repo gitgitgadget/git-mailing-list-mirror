@@ -7,52 +7,53 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3741C208CD
-	for <e@80x24.org>; Mon, 21 Aug 2017 21:08:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 28830208CD
+	for <e@80x24.org>; Mon, 21 Aug 2017 21:16:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754311AbdHUVIo (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Aug 2017 17:08:44 -0400
-Received: from mail-yw0-f176.google.com ([209.85.161.176]:35258 "EHLO
-        mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753850AbdHUVIl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Aug 2017 17:08:41 -0400
-Received: by mail-yw0-f176.google.com with SMTP id s187so12845216ywf.2
-        for <git@vger.kernel.org>; Mon, 21 Aug 2017 14:08:41 -0700 (PDT)
+        id S1754085AbdHUVQb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Aug 2017 17:16:31 -0400
+Received: from mail-yw0-f174.google.com ([209.85.161.174]:36804 "EHLO
+        mail-yw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753695AbdHUVQa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Aug 2017 17:16:30 -0400
+Received: by mail-yw0-f174.google.com with SMTP id y64so13586445ywf.3
+        for <git@vger.kernel.org>; Mon, 21 Aug 2017 14:16:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=0pM8yXbJqOP+i/S5LaJ9dSXjs/gzlzccfs1aqRhlnZQ=;
-        b=dhv+J/+jHnxWTlBOMpFpqOwb2xixJPzeHE4XzKQJHWBpvR+IWM4t28pV1woFOrxgoN
-         O8Zs0J3gXaxj1KXpl2HZ3+yEAWtz3oF/LQFtDmTk26KUFOQiG5UO9kiz07D/DLs91WWU
-         hSSjrHyEMbQvq32z+R4tW9ejoLI0mjYSBVSm0oe65SObLc5fM/Xuyupt9BERvQMDaV0h
-         mPBOCCCWMeOlrN4ypQBGOYQQ3PeTeMcKjyRB75EolN3dHMPNjQr3k6zbzh5exUTymLNK
-         gb/p8udgqiYnMvqcALttKK0WaTN6EU7ze6JqBujJoV55frgMMh7aLKltBjeDNzEj7JD9
-         qsOA==
+        bh=eQNwZk4qbuz8Mp8P2CniVr48GnnJgzlr45zxjfXDY1Q=;
+        b=p1pB2HmAyen4oLMy21ItT4Ygpz5QkLUg9qzx1fFBvZS6g94q5NEdzzAYZaT6QAxZI+
+         0VkZ0HCrM0BcfaYQCcLLAkahyC88MxcKUIcvwp+fyMoc9j+yZuhG2X4yKtreIVgQg7pl
+         QnUM5rAUbUe7Y6Hg+qctYMNPtlR+Urja4hrohehvJI4cNnREcHTsG9OUVCU2zokbL1CW
+         /HUOifwsH2pUEBaXfCCUB8SmEG/3KoTlOSHCxSyLDEPfm0y1hb3r5QG2nw70NYqdac1O
+         DDrknXgv4uJzUtWtpXmtQRPuCLVeceKIWYf1Ho2NLOtJv2vFnvPyXsHMC0WNJDXS2Ybf
+         h9pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=0pM8yXbJqOP+i/S5LaJ9dSXjs/gzlzccfs1aqRhlnZQ=;
-        b=LyxgiRhXoK2IuDSI2IsTZJZ54vtE7pAOS5vG68TI9zWC6TgHsArLaNd4WSakd0lxKW
-         MI21HdX0/SeShjG0Qw2VgUX6/bH2FJ6r9lrXmMARuWEndJMiJyqw7l+vysd7VHSKLb4y
-         PYAYMYHIt6p6+boQukTW3JRqPhRlXIStbm0x+Usm1RQ9Nzh+hOAECq4n0JkEZXaxucya
-         e/9FTakmqLJIAbkiVt52PeGx67g6iEt8cQJf72NWXIgbU58ZrodqaN/rj87lrkXIgGJB
-         0PdUwY/8rqxZQ5TUgEP0IBJL3qRxaGkTviUOvQxeWzOhOmSRZuSq8TuHaOXw2KOW8WLt
-         ia1Q==
-X-Gm-Message-State: AHYfb5hgpqWATQMnucniSir50jXIua2lOlNR3xA9/scQ4qlR681pVlM6
-        cVBV6PICACWpYn+1Mf83S+UR69EJUyho
-X-Received: by 10.13.218.129 with SMTP id c123mr14646651ywe.175.1503349720622;
- Mon, 21 Aug 2017 14:08:40 -0700 (PDT)
+        bh=eQNwZk4qbuz8Mp8P2CniVr48GnnJgzlr45zxjfXDY1Q=;
+        b=clhyVqXmbXe5uBb7l3MNLaXXu3OWkSXNLq6YuIrfSRmRbdbTSJaDCOZ+tkvRftsjvj
+         bfJyejCZL55xPh2qyPPWeeJ2LnFmRvqFXAGCVSLvaKIIGctuo2Bsk6hu+8jyQKycG/dj
+         o+HtRBfLyWNZc7UcLCSKdUnBiTAn0SSnIWku3jTbjx95o/fPGUnH/XvGRo8Fw/6keOE8
+         YG/IY20sQzJFRbDB8kboaEStU3md7DQTVq+ax+T/QKRxvL5x4hl9YtfF0ZWa11FZAMFo
+         zFftIGEPzE4EAuU+S6+Bv1P1088oOoMiSRY85G4eYB1+9xg2Ya8fuk6LK/Tkq67zd9pt
+         XyKQ==
+X-Gm-Message-State: AHYfb5iOUPWcV05urjX14VWkw/XbvqEKLCawuDc/IKiu9ThEvrskGyPI
+        PWn0yZPxR5rjS+9CcviKeHohqEC6ON5q
+X-Received: by 10.37.183.130 with SMTP id n2mr15320248ybh.353.1503350189663;
+ Mon, 21 Aug 2017 14:16:29 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.37.56.142 with HTTP; Mon, 21 Aug 2017 14:08:40 -0700 (PDT)
-In-Reply-To: <20170821000022.26729-5-sandals@crustytoothpaste.net>
-References: <20170821000022.26729-1-sandals@crustytoothpaste.net> <20170821000022.26729-5-sandals@crustytoothpaste.net>
+Received: by 10.37.56.142 with HTTP; Mon, 21 Aug 2017 14:16:29 -0700 (PDT)
+In-Reply-To: <20170821000022.26729-6-sandals@crustytoothpaste.net>
+References: <20170821000022.26729-1-sandals@crustytoothpaste.net> <20170821000022.26729-6-sandals@crustytoothpaste.net>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 21 Aug 2017 14:08:40 -0700
-Message-ID: <CAGZ79ka1X5zJwEzH8Pe2vNX8FaKSP_3m6D0Fva4cpO=QUEaeRw@mail.gmail.com>
-Subject: Re: [RFC PATCH 4/6] Add structure representing hash algorithm
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Date:   Mon, 21 Aug 2017 14:16:29 -0700
+Message-ID: <CAGZ79kZrFDNfZYK_CL_rwn6pqB8no3+SFM_4H+RjURRz=R+Fag@mail.gmail.com>
+Subject: Re: [RFC PATCH 5/6] Integrate hash algorithm support with repo setup
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Brandon Williams <bmwill@google.com>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
@@ -62,149 +63,132 @@ X-Mailing-List: git@vger.kernel.org
 
 On Sun, Aug 20, 2017 at 5:00 PM, brian m. carlson
 <sandals@crustytoothpaste.net> wrote:
-> Since in the future we want to support an additional hash algorithm, add
-> a structure that represents a hash algorithm and all the data that must
-> go along with it.  Add a constant to allow easy enumeration of hash
-> algorithms.  Implement function typedefs to create an abstract API that
-> can be used by any hash algorithm, and wrappers for the existing SHA1
-> functions that conform to this API.
+> In future versions of Git, we plan to support an additional hash
+> algorithm.  Integrate the enumeration of hash algorithms with repository
+> setup, and store a pointer to the enumerated data in struct repository.
+> Of course, we currently only support SHA-1, so hard-code this value in
+> read_repository_format.  In the future, we'll enumerate this value from
+> the configuration.
 >
-> Don't include an entry in the hash algorithm structure for the null
-> object ID.  As this value is all zeros, any suitably sized all-zero
-> object ID can be used, and there's no need to store a given one on a
-> per-hash basis.
+> Add a constant, current_hash, which points to the hash_algo structure
+> pointer in the repository global.  Include repository.h in cache.h since
+> we now need to have access to these struct and variable definitions.
 >
 > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+
+The new code seems to fit in nicely with the repository struct.
+
+In another series I also included repository.h in cache.h
+(not yet sent out), so I think that is a good idea.
+
 > ---
->  cache.h     | 36 ++++++++++++++++++++++++++++++++++++
->  sha1_file.c | 29 +++++++++++++++++++++++++++++
->  2 files changed, 65 insertions(+)
+>  cache.h      | 4 ++++
+>  repository.c | 7 +++++++
+>  repository.h | 5 +++++
+>  setup.c      | 2 ++
+>  4 files changed, 18 insertions(+)
 >
 > diff --git a/cache.h b/cache.h
-> index 1c69d2a05a..375a7fb15e 100644
+> index 375a7fb15e..d759824803 100644
 > --- a/cache.h
 > +++ b/cache.h
-> @@ -76,6 +76,42 @@ struct object_id {
->         unsigned char hash[GIT_MAX_RAWSZ];
->  };
+> @@ -13,6 +13,7 @@
+>  #include "hash.h"
+>  #include "path.h"
+>  #include "sha1-array.h"
+> +#include "repository.h"
 >
-> +#define GIT_HASH_SHA1 0
-> +
-> +typedef void (*git_hash_init_fn)(void *ctx);
-> +typedef void (*git_hash_update_fn)(void *ctx, const void *in, size_t len);
-> +typedef void (*git_hash_final_fn)(unsigned char *hash, void *ctx);
-> +
-> +struct git_hash_algo {
-> +       /* The name of the algorithm, as appears in the config file. */
-> +       const char *name;
-
-and potentially in error messages?
-
-> +
-> +       /* The size of a hash context (e.g. git_SHA_CTX). */
-> +       size_t ctxsz;
-> +
-> +       /* The length of the hash in bytes. */
-> +       size_t rawsz;
-
-[in binary, as opposed to the next entry]
-
-> +
-> +       /* The length of the hash in hex characters. */
-> +       size_t hexsz;
-
-By having two entries for binary and hex size, we current
-choice of needing twice as much choice for the human
-representation (as is inherent from the binary <-> hex
-conversion, one char stores 8 or 4 bit); so this is good to
-have. But is it misnamed? (This abstraction only makes
-sense if we ever plan to have human readable representation
-not factor 2, e.g. base64 for the non-binary representation.
-But then the comment is wrong!)
-
-Maybe s/hex characters/string representation suited for humans/ ?
-(Bad naming proposal, but still)
-
-> +       /* The hash initialization function. */
-> +       git_hash_init_fn init_fn;
-> +
-> +       /* The hash update function. */
-> +       git_hash_update_fn update_fn;
-> +
-> +       /* The hash finalization function. */
-> +       git_hash_final_fn final_fn;
-
-I shortly wondered if we want to have just one
-pointer to a struct that contains these 3 functions,
-but that seems overly complex.
-
-> +       /* The OID of the empty tree. */
-> +       const struct object_id *empty_tree;
-> +
-> +       /* The OID of the empty blob. */
-> +       const struct object_id *empty_blob;
-
-In a more object oriented world, this would
-not be as micro-optimized(?), but rather be:
-
-    object o = new object()
-    o.getHash()
-
-or such, but we tend to access empty_{blob,tree}
-quite often in the code base. So it seems like a good
-idea to keep this shortcut around.
-
-
-> +};
-> +extern const struct git_hash_algo hash_algos[1];
+>  #ifndef platform_SHA_CTX
+>  /*
+> @@ -112,6 +113,8 @@ struct git_hash_algo {
+>  };
+>  extern const struct git_hash_algo hash_algos[1];
+>
+> +#define current_hash the_repository->hash_algo
 > +
 >  #if defined(DT_UNKNOWN) && !defined(NO_D_TYPE_IN_DIRENT)
 >  #define DTYPE(de)      ((de)->d_type)
 >  #else
-> diff --git a/sha1_file.c b/sha1_file.c
-> index b60ae15f70..bd9ff02802 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -41,6 +41,35 @@ const struct object_id empty_blob_oid = {
->         EMPTY_BLOB_SHA1_BIN_LITERAL
+> @@ -894,6 +897,7 @@ struct repository_format {
+>         int version;
+>         int precious_objects;
+>         int is_bare;
+> +       int hash_algo;
+>         char *work_tree;
+>         struct string_list unknown_extensions;
 >  };
+> diff --git a/repository.c b/repository.c
+> index 1617467568..37764f627a 100644
+> --- a/repository.c
+> +++ b/repository.c
+> @@ -62,6 +62,11 @@ void repo_set_gitdir(struct repository *repo, const char *path)
+>         repo_setup_env(repo);
+>  }
 >
-> +static inline void git_hash_sha1_init(void *ctx)
+> +void repo_set_hash_algo(struct repository *repo, int hash_algo)
 > +{
-> +       git_SHA1_Init((git_SHA_CTX *)ctx);
+> +       repo->hash_algo = &hash_algos[hash_algo];
 > +}
-> +
-> +static inline void git_hash_sha1_update(void *ctx, const void *data, size_t len)
-> +{
-> +       git_SHA1_Update((git_SHA_CTX *)ctx, data, len);
-> +}
-> +
-> +static inline void git_hash_sha1_final(unsigned char *hash, void *ctx)
-> +{
-> +       git_SHA1_Final(hash, (git_SHA_CTX *)ctx);
-> +}
-> +
-> +const struct git_hash_algo hash_algos[1] = {
-> +       [GIT_HASH_SHA1] = {
-> +               .name = "sha-1",
-> +               .ctxsz = sizeof(git_SHA_CTX),
-> +               .rawsz = GIT_SHA1_RAWSZ,
-> +               .hexsz = GIT_SHA1_HEXSZ,
-> +               .init_fn = git_hash_sha1_init,
-> +               .update_fn = git_hash_sha1_update,
-> +               .final_fn = git_hash_sha1_final,
-> +               .empty_tree = &empty_tree_oid,
-> +               .empty_blob = &empty_blob_oid,
-> +       },
-> +};
-
-This is the same new pattern as in 512f41cfac (clean.c: use
-designated initializer, 2017-07-14)
-
-Maybe we want to keep just one test balloon and not mix
-this one in there, too?
-
 > +
 >  /*
->   * This is meant to hold a *small* number of objects that you would
->   * want read_sha1_file() to be able to return, but yet you do not want
+>   * Attempt to resolve and set the provided 'gitdir' for repository 'repo'.
+>   * Return 0 upon success and a non-zero value upon failure.
+> @@ -134,6 +139,8 @@ int repo_init(struct repository *repo, const char *gitdir, const char *worktree)
+>         if (read_and_verify_repository_format(&format, repo->commondir))
+>                 goto error;
+>
+> +       repo->hash_algo = &hash_algos[format.hash_algo];
+> +
+>         if (worktree)
+>                 repo_set_worktree(repo, worktree);
+>
+> diff --git a/repository.h b/repository.h
+> index 417787f3ef..f171172150 100644
+> --- a/repository.h
+> +++ b/repository.h
+> @@ -4,6 +4,7 @@
+>  struct config_set;
+>  struct index_state;
+>  struct submodule_cache;
+> +struct git_hash_algo;
+>
+>  struct repository {
+>         /* Environment */
+> @@ -67,6 +68,9 @@ struct repository {
+>          */
+>         struct index_state *index;
+>
+> +       /* Repository's current hash algorithm. */
+> +       const struct git_hash_algo *hash_algo;
+> +
+>         /* Configurations */
+>         /*
+>          * Bit used during initialization to indicate if repository state (like
+> @@ -86,6 +90,7 @@ extern struct repository *the_repository;
+>
+>  extern void repo_set_gitdir(struct repository *repo, const char *path);
+>  extern void repo_set_worktree(struct repository *repo, const char *path);
+> +extern void repo_set_hash_algo(struct repository *repo, int algo);
+>  extern int repo_init(struct repository *repo, const char *gitdir, const char *worktree);
+>  extern int repo_submodule_init(struct repository *submodule,
+>                                struct repository *superproject,
+> diff --git a/setup.c b/setup.c
+> index 115e70a4e8..289e24811c 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -491,6 +491,7 @@ int read_repository_format(struct repository_format *format, const char *path)
+>         memset(format, 0, sizeof(*format));
+>         format->version = -1;
+>         format->is_bare = -1;
+> +       format->hash_algo = GIT_HASH_SHA1;
+>         string_list_init(&format->unknown_extensions, 1);
+>         git_config_from_file(check_repo_format, path, format);
+>         return format->version;
+> @@ -1125,6 +1126,7 @@ const char *setup_git_directory_gently(int *nongit_ok)
+>                         repo_set_gitdir(the_repository, gitdir);
+>                         setup_git_env();
+>                 }
+> +               repo_set_hash_algo(the_repository, repo_fmt.hash_algo);
+>         }
+>
+>         strbuf_release(&dir);
