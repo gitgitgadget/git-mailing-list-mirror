@@ -7,127 +7,88 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 92B9E208CD
-	for <e@80x24.org>; Mon, 21 Aug 2017 17:48:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 16D76208D0
+	for <e@80x24.org>; Mon, 21 Aug 2017 18:17:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754071AbdHURsM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Aug 2017 13:48:12 -0400
-Received: from mail-yw0-f176.google.com ([209.85.161.176]:35309 "EHLO
-        mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753926AbdHURsL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Aug 2017 13:48:11 -0400
-Received: by mail-yw0-f176.google.com with SMTP id s187so10162750ywf.2
-        for <git@vger.kernel.org>; Mon, 21 Aug 2017 10:48:11 -0700 (PDT)
+        id S1753446AbdHUSRL (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Aug 2017 14:17:11 -0400
+Received: from mail-yw0-f169.google.com ([209.85.161.169]:35054 "EHLO
+        mail-yw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753152AbdHUSRK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Aug 2017 14:17:10 -0400
+Received: by mail-yw0-f169.google.com with SMTP id s187so10560406ywf.2
+        for <git@vger.kernel.org>; Mon, 21 Aug 2017 11:17:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ph+1qdgOTt+fBEfEMlU2Oet+unwPfc//6i9sKum7+eY=;
-        b=QLW9aZTMYHQWOTMqlOIWvN9bi1ZJmGeJXvQJrk89d5tCOtRrn5zwmy01EpOQk0q0Nf
-         fLDco7Tbx2OyFuBAK9hsP4qs/AXy046o7rQhZ65hVgML2ho2f096Q4+2jUgeZjJlkh+6
-         1WKc5bVS52dGQrcBUDHjEQPQgFUNVOM2sUjXMfzDGsGM50Ekk5HBUtIhi9zd7/HYCghz
-         Ok6M1TMmE53g4EE6GHtayaWBIspSStHkbs9JhGBpIIhBfvwqvKT+1aZqULyYxRzvt/y8
-         Tm2JU/qG1wjkwEzWeuHjsVVxUbqpaz6pdYmecri48KnZ9ZHMp3jKxS5MZnrM7xSWC0Dw
-         H/1A==
+         :cc:content-transfer-encoding;
+        bh=Vtudn45p5y5QpCfn0iVeoj5nTqpr494T5JGsCYeTMn0=;
+        b=Mwf3gp13Ib5FTLblfVwPwMOua7IpDfCoIOaZ3N2meg9Rxik3XPP7IL5vrYsyp0DbUi
+         8eVFjR8nIT/opHvgYQwgKHxbVE+B8Q0iNAFSIaYDdtyWz0TJHyuXkwOOcrBUsLvnnRyR
+         gt1x7jNuvazKDFg3DJ7Rd+nyD8xKr0EV0YX2/Cwf9MjUeGrUGkBalYSADrt550+w9eic
+         FE2FdoI3OqnT7DT9Gdx2WkmKnd2F1sMN05jCfdNIAP0g2aJBld1ybwH8hj+GPy8xeCmd
+         P1EtGlclFgxyUiOKOc4C5jw1Y/hymvZvcuN1I19hCG5NkUgpV+NGNK111ZWD3PK/mv9b
+         L/+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ph+1qdgOTt+fBEfEMlU2Oet+unwPfc//6i9sKum7+eY=;
-        b=bFUE17Xl6MwukC920YbGQp/65zoulr9/MmcYW75rwAr4MySwEL2E0X2hwIA6+69L3N
-         cGMPhIPTp47rvrXu27xMCLUdriFhmvOUwmAJ4yqnOXXI5/QQmtAY1PFS5OAf8KlX7YnX
-         BiBv9GiSAeqOVtiadPrN5DMl7sZb0Z7KFDHAhXDY6KM+smrWescWttjFjwtz59iJYTU+
-         9WQCegVrRjS5avFN8wSbpPFf1+k5MdlWG19ireqTVLKSrSrb0bbuXry3pgcZFHh+FeaR
-         f4mjII2JE4BuqKdKFwnwVTrH8FefIB/Smu7jHu7wc+/KbG2X7u118C9gOw4LN6wbpQ2P
-         v/LQ==
-X-Gm-Message-State: AHYfb5jIKj4sCqPRjpnlh9230W2r218p3SfrI0oGejufTxHAfZFEb8EV
-        hibSeaNTyxUEoCCyBUlmZtLKU0kozFDA
-X-Received: by 10.37.123.129 with SMTP id w123mr15739363ybc.305.1503337690840;
- Mon, 21 Aug 2017 10:48:10 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Vtudn45p5y5QpCfn0iVeoj5nTqpr494T5JGsCYeTMn0=;
+        b=H+Rjgv3pNeNBgB1OhcpWSXktuJDwCltzXed+EORKyS+BTfyyMSbkyjqbPUIbtVveUk
+         MAcyecBe/v635IVvG8y9i4rAlxDl2ME6aeJ1L/mV/fLgIhWI6BFbrV08MDtReTIINvWM
+         9Gp2UqrhX6dWoJc0XkSFIVXdYA2X7qdbnoXE2f5DxbfjTaV35b/PC92n0aBB1rdOWqj/
+         2nKuz2Det1/syuRlpxhCsIl1l/ctqaHwy0CnnsqM+4Fn0QPYuRlufVGPUi6Ah03utzEJ
+         pz50U+iU679sdcnC4dyc4LRqTbYuRCPUHuYCHmb1lTR0Jx0I9PuMgVSsKs0KqY5hv0d9
+         cWjA==
+X-Gm-Message-State: AHYfb5imMAxcUFv/HiwVlDPyd0kC4IBVWeSyyC5qvbin8d4wB8R2dSg4
+        3andQnA1KbGVM3KNfHHjcymRZEStS6f3PkLblg==
+X-Received: by 10.13.206.132 with SMTP id q126mr14933415ywd.337.1503339429594;
+ Mon, 21 Aug 2017 11:17:09 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.37.56.142 with HTTP; Mon, 21 Aug 2017 10:48:10 -0700 (PDT)
-In-Reply-To: <85ED93BC-1E27-4B8D-856D-090C6860BAB0@gmail.com>
-References: <xmqqpobsbsk1.fsf@gitster.mtv.corp.google.com> <20170818220431.22157-1-sbeller@google.com>
- <xmqqvalk9is0.fsf@gitster.mtv.corp.google.com> <20170821162056.GB1618@book.hvoigt.net>
- <CAGZ79ka1jyxmATQbrjPHAv3227UJNcN0nw9AY-RZXnNahepoGQ@mail.gmail.com> <85ED93BC-1E27-4B8D-856D-090C6860BAB0@gmail.com>
+Received: by 10.37.56.142 with HTTP; Mon, 21 Aug 2017 11:17:09 -0700 (PDT)
+In-Reply-To: <33fa4f08-8f06-5a98-e492-3f05cc742555@web.de>
+References: <alpine.DEB.2.11.1708131240360.15538@motsugo.ucc.gu.uwa.edu.au>
+ <ae893c19-652d-1c8f-50ba-1242b95be84e@web.de> <887652a4-3f03-e2dd-2c68-cff4f7194898@web.de>
+ <0432c7cc-a2a5-12bd-bf65-a16186313d5b@web.de> <33fa4f08-8f06-5a98-e492-3f05cc742555@web.de>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 21 Aug 2017 10:48:10 -0700
-Message-ID: <CAGZ79kZMjGNOn0FnJGtO5gRY3rF0Eiow8n0uppTZsCUAHY+m3A@mail.gmail.com>
-Subject: Re: [PATCH] pull: respect submodule update configuration
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Heiko Voigt <hvoigt@hvoigt.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
+Date:   Mon, 21 Aug 2017 11:17:09 -0700
+Message-ID: <CAGZ79kZm31jYZs5BXh8pwV2sLnhsy0AcQzoBWv1UZKtDFfYhkw@mail.gmail.com>
+Subject: Re: [PATCH 4/4] archive: queue directories for all types of pathspecs
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        David Adam <zanchey@ucc.gu.uwa.edu.au>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 21, 2017 at 10:20 AM, Lars Schneider
-<larsxschneider@gmail.com> wrote:
+On Sat, Aug 19, 2017 at 9:53 AM, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+> Am 19.08.2017 um 07:33 schrieb Ren=C3=A9 Scharfe:
+>> When read_tree_recursive() encounters a directory excluded by a pathspec
+>> then it enters it anyway because it might contain included entries.  It
+>> calls the callback function before it is able to decide if the directory
+>> is actually needed.
+>>
+>> For that reason git archive adds directories to a queue and writes
+>> entries for them only when it encounters the first child item -- but
+>> only if pathspecs with wildcards are used.  Do the same for literal
+>> pathspecs as well, as the reasoning above applies to them, too.  This
+>> prevents git archive from writing entries for excluded directories.
 >
->> On 21 Aug 2017, at 18:55, Stefan Beller <sbeller@google.com> wrote:
->>
->> On Mon, Aug 21, 2017 at 9:20 AM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
->>
->>>> So I am a bit curious to learn which part of this change you dislike
->>>> and why.
->>>
->>> I am also curious. Isn't this the same strategy we are using in other
->>> places?
->>>
->>
->> I dislike it because the UX feels crude.  When reading the documentation,
->> it seems to me as if submodule.<name> can be one of the following
->>
->>    (none, checkout, rebase, merge, !<custom-command>)
->>
->> This is perfect for "submodule-update", whose primary goal is
->> to update submodules *somehow*. However other commands
->>
->>    git rebase --recurse
->>    git merge --recurse
->>    git checkout --recurse
->>
->> have a different primary mode of operation (note how their name
->> is one of the modes from the set above), so it may get confusing
->> for a user.
->>
->> 'none'  and '!<custom-command>' seem like they would be okay
->> for any of the commands above but then:
->>
->>    git config submodule.<name>.update "!..."
->>    git reset --hard --recurse
->>    git status
->>    # submodule is reported, because "!..." did not 'reset'.
->>
->> Anyway. That dislike is just a minor gut feeling about the UX/UI
->> being horrible. I wrote the patch to keep the conversation going,
->> and if it fixes Lars problem, let's take it for now.
+> This breaks the test "archive empty subtree with no pathspec" in t5004 by
+> omitting the empty directory from the archive.  Sorry for missing that!
 >
-> Well, I need just a way to disable certain Submodules completely.
-> If you show me how "git config --local submodule.sub.active false"
-> works then I don't need this patch.
->
-> I tried to make it work here:
-> https://public-inbox.org/git/89AB8AA3-8E19-46BA-B169-D1EA4CF4ABE7@gmail.com/
+> This is kind of a bonus patch, so please discard it for now; the first
+> three are OK IMHO.
 
-(A) you need to set expect there as well, to have sub{2,4,5} be expected
-there as well.
+I thought so up to reading this patch. I found the naming and
+content of should_queue_directories not obvious at first read.
+This patch confused me even more for that name to be chosen.
+I have no alternative to propose, though.
 
-(B) That may hint at another (UX) bug.
-
-The test case there uses "git submodule update --init".
-The init flag will set all submodules to active.
-
-Maybe you want
-
-    git config submodule.active ":(exclude)sub0"
-    git config --add submodule.active ":(exclude)sub2"
-    git config --add submodule.active "."
-    # Read: anything except sub0 and sub2 are interesting
-
-    git submodule update
-    # no init flag, needed even for new submodules IIUC
+Thanks,
+Stefan
