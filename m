@@ -2,205 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C00FE1F667
-	for <e@80x24.org>; Mon, 21 Aug 2017 11:51:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6804B1F667
+	for <e@80x24.org>; Mon, 21 Aug 2017 11:53:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753383AbdHULvo (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Aug 2017 07:51:44 -0400
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:51130 "EHLO
-        alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750967AbdHULvn (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 21 Aug 2017 07:51:43 -0400
-X-AuditID: 12074414-555ff70000000ac3-99-599ac94e83c6
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 5F.6D.02755.E49CA995; Mon, 21 Aug 2017 07:51:42 -0400 (EDT)
-Received: from bagpipes.fritz.box (p57BCC004.dip0.t-ipconnect.de [87.188.192.4])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v7LBpdtH020930
-        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Mon, 21 Aug 2017 07:51:41 -0400
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH] Retry acquiring reference locks for 100ms
-Date:   Mon, 21 Aug 2017 13:51:34 +0200
-Message-Id: <030b6bb22973df429ddbb64a079b9cdc1fbcb1b7.1503313472.git.mhagger@alum.mit.edu>
+        id S1753021AbdHULxe (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Aug 2017 07:53:34 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:50869 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752234AbdHULxd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Aug 2017 07:53:33 -0400
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20170821115331euoutp02d37413dbc9ff80da2e9331497a191cc2~c2k_rwzca1181311813euoutp02L
+        for <git@vger.kernel.org>; Mon, 21 Aug 2017 11:53:31 +0000 (GMT)
+Received: from eusmges1.samsung.com (unknown [203.254.199.239]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20170821115330eucas1p2a0a390086c6193f4b2b22894a490c296~c2k99rknq1568115681eucas1p2U;
+        Mon, 21 Aug 2017 11:53:30 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges1.samsung.com  (EUCPMTA) with SMTP id 63.1A.12576.AB9CA995; Mon, 21
+        Aug 2017 12:53:30 +0100 (BST)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20170821115329eucas1p1c550891b502863669ca351de028f2b80~c2k9Q_2VX0485604856eucas1p1q;
+        Mon, 21 Aug 2017 11:53:29 +0000 (GMT)
+X-AuditID: cbfec7ef-f79ee6d000003120-b0-599ac9ba264a
+Received: from eusync4.samsung.com ( [203.254.199.214]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id E8.A8.20118.9B9CA995; Mon, 21
+        Aug 2017 12:53:29 +0100 (BST)
+MIME-version: 1.0
+Content-transfer-encoding: 8BIT
+Content-type: text/plain; charset="UTF-8"
+Received: from localhost ([106.116.147.110]) by eusync4.samsung.com (Oracle
+        Communications Messaging Server 7.0.5.31.0 64bit (built May  5 2014)) with
+        ESMTPA id <0OV100932AD59800@eusync4.samsung.com>; Mon, 21 Aug 2017 12:53:29
+        +0100 (BST)
+From:   =?UTF-8?q?=C5=81ukasz=20Stelmach?= <l.stelmach@samsung.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?=C5=81ukasz=20Stelmach?= <l.stelmach@samsung.com>
+Subject: [PATCH] git-gui: Prevent double UTF-8 conversion
+Date:   Mon, 21 Aug 2017 13:53:13 +0200
+Message-id: <20170821115313.11879-1-l.stelmach@samsung.com>
 X-Mailer: git-send-email 2.11.0
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprEIsWRmVeSWpSXmKPExsUixO6iqOt3clakwatDGhZdV7qZLBp6rzBb
-        3F4xn9niR0sPswOLx9/3H5g8nvXuYfS4eEnZ4/MmuQCWKC6blNSczLLUIn27BK6Mb509LAX/
-        tCsWf5zC2sB4XrmLkYNDQsBE4v4E7S5GLg4hgR1MEvO3TGSGcE4wSWz7MJWpi5GTg01AV2JR
-        TzOYLSKgJjGx7RALiM0skCLR8bybEcQWFrCSePlxEiuIzSKgKnF75luwGl6BKIndeyeC1UgI
-        yEvsarvIOoGRawEjwypGucSc0lzd3MTMnOLUZN3i5MS8vNQiXQu93MwSvdSU0k2MEK+L7GA8
-        clLuEKMAB6MSD69B0axIIdbEsuLK3EOMkhxMSqK8G1KBQnxJ+SmVGYnFGfFFpTmpxYcYJTiY
-        lUR4D+4ByvGmJFZWpRblw6SkOViUxHm/LVb3ExJITyxJzU5NLUgtgsnKcHAoSfAePgHUKFiU
-        mp5akZaZU4KQZuLgBBnOAzS8HaSGt7ggMbc4Mx0if4pRUUqcl+s4UEIAJJFRmgfXC4vKV4zi
-        QK8I87qBtPMAIxqu+xXQYCagwYat00AGlyQipKQaGLmMRZuymW3W6l6135GRJZZ4IP4Yn0OA
-        9PrQSVaFDv2u2zec2FLYsuXzIhfPh7qLi6ctdeGJ63htK1Oz9ZbehJV7rHlOvG09JHL//tId
-        cce8ha+zGS5b+rLudeXECywPE/WT/8zjn9mU6q+iPT1p23OG+dYbCgKllJ35TlwPmyeyabfr
-        5jJRHyWW4oxEQy3mouJEAPGCDvelAgAA
+Organization: Samsung R&D Institute Poland
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrKIsWRmVeSWpSXmKPExsWy7djPc7q7Ts6KNNj4WNii60o3k8XNQysY
+        HZg8+rasYvT4vEkugCmKyyYlNSezLLVI3y6BK+P0+5ksBQfYK5bMucTewNjM1sXIySEhYCKx
+        9vxlRghbTOLCvfVAcS4OIYFljBIrJr1ignA+M0r0f57DDNPReOwlK1zV8fb/7CAJXgFBiR+T
+        77F0MXJwMAvISxy5lA0SZhbQlNi6ez1YiZDAF0aJvutgm9kEHCX6l55gBbFFBMQl3h6fyQ5R
+        by8xcdZ/sBphAUuJk5e3g9ksAqoSa28vZYRYZS2xcV071NXyErvaLoLN4RfQkljTdJ0F5DYJ
+        getsEo03f7KC3CMhICux6QDU/S4SZ/dNgvpeWOLV8S3sELaMxOXJ3VC9/YwSh+d/h0pMYZRY
+        vNABwraW+LNqIhvEoXwSk7ZNZ4aYzyvR0SYEUeIh0bmhE2qXo8TnWcfAQSIkECsxu41pAqP8
+        LKTAmoUIrFlIgbWAkXkVo0hqaXFuemqxoV5xYm5xaV66XnJ+7iZGYOSf/nf8/Q7Gp80hhxgF
+        OBiVeHhv5M+KFGJNLCuuzD3EKMHBrCTCe3APUIg3JbGyKrUoP76oNCe1+BCjNAeLkjivbVRb
+        pJBAemJJanZqakFqEUyWiYNTqoHRWM/yZUH2HNGi7V1FTxf5qjrrBV+d8urAppBXnlU5/lHf
+        u9TMezdzCTQpB1X2uwkyCF71bDW/lLQvPHB1d+lXhrRiTZNvb74/7r2zbMmsDz+WNVrwxB5+
+        sovtwc3mC/+Exe1Ytkost1QTfSc2d9rip0aeOvfF+pfOK1nks7ZIVsZDZR/jfWslluKMREMt
+        5qLiRABm7X2l+AIAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrNLMWRmVeSWpSXmKPExsVy+t/xa7o7T86KNNh/39Ci60o3k8XNQysY
+        HZg8+rasYvT4vEkugCnKzSYjNTEltUghNS85PyUzL91WKTTETddCSSEvMTfVVilC1zckSEmh
+        LDGnFMgzMkADDs4B7sFK+nYJbhmn389kKTjAXrFkziX2BsZmti5GTg4JAROJxmMvWSFsMYkL
+        99YDxbk4hASWMEp0310NVsQrICjxY/I9li5GDg5mAXmJI5eyQcLMAuoSk+YtYoao/8Yosf13
+        G1g9m4CjRP/SE2BDRQTEJd4en8kO0WAvMXHWf7AaYQFLiZOXt4PZLAKqEmtvL2WE2GUtsXFd
+        OyPEQfISu9ougs3hF9CSWNN0nWUCI/8sJCfNQjhpFpKTFjAyr2IUSS0tzk3PLTbSK07MLS7N
+        S9dLzs/dxAgM+G3Hfm7Zwdj1LvgQowAHoxIP7438WZFCrIllxZW5hxglOJiVRHgP7gEK8aYk
+        VlalFuXHF5XmpBYfYjQFunUis5Rocj4wGvNK4g1NDM0tDY2MLSzMjYyUxHnVLzdFCgmkJ5ak
+        ZqemFqQWwfQxcXBKNTBeY/zU5e/lkHTRbspjiamp3L1/L0fanWxTNC+Z9EMy8ERRSrfnDJkU
+        sf5Pl9ib/63eatv/juOn2/e1rrEtzaad8rM0OGRa/nutejR5rkR94IF9i+w3FZ9nj2rezR1z
+        IFTuiqOQQkjA3E7Fzy3iL95FvLcyaQ6L2j7PsHD+WtnsrphVt7UCuZRYijMSDbWYi4oTAWN/
+        a3SOAgAA
+X-MTR:  20000000000000000@CPGS
+X-CMS-MailID: 20170821115329eucas1p1c550891b502863669ca351de028f2b80
+X-Msg-Generator: CA
+X-Sender-IP: 182.198.249.180
+X-Local-Sender: =?UTF-8?B?THVrYXN6IFN0ZWxtYWNoG1NSUE9MLVN5c3RlbSAoVFApGw==?=
+        =?UTF-8?B?7IK87ISx7KCE7J6QG1NlbmlvciBTb2Z0d2FyZSBFbmdpbmVlcg==?=
+X-Global-Sender: =?UTF-8?B?THVrYXN6IFN0ZWxtYWNoG1NSUE9MLVN5c3RlbSAoVFApG1Nh?=
+        =?UTF-8?B?bXN1bmcgRWxlY3Ryb25pY3MbU2VuaW9yIFNvZnR3YXJlIEVuZ2luZWVy?=
+X-Sender-Code: =?UTF-8?B?QzEwG0VIURtDMTBDRDAyQ0QwMjczOTY=?=
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20170821115329eucas1p1c550891b502863669ca351de028f2b80
+X-RootMTR: 20170821115329eucas1p1c550891b502863669ca351de028f2b80
+References: <CGME20170821115329eucas1p1c550891b502863669ca351de028f2b80@eucas1p1.samsung.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The philosophy of reference locking has been, "if another process is
-changing a reference, then whatever I'm trying to do to it will
-probably fail anyway because my old-SHA-1 value is probably no longer
-current". But this argument falls down if the other process has locked
-the reference to do something that doesn't actually change the value
-of the reference, such as `pack-refs` or `reflog expire`. There
-actually *is* a decent chance that a planned reference update will
-still be able to go through after the other process has released the
-lock.
+With encoding on the file descriptor set to "binary" Tcl (8.6 in my case)
+does double conversion which breaks e.g. author name in amended commits.
 
-So when trying to lock an individual reference (e.g., when creating
-"refs/heads/master.lock"), if it is already locked, then retry the
-lock acquisition for approximately 100 ms before giving up. This
-should eliminate some unnecessary lock conflicts without wasting a lot
-of time.
+For example "\305\201ukasz" (as written by git cat-file) becomes
+"\303\205\302\201ukasz".
 
-Add a configuration setting, `core.filesRefLockTimeout`, to allow this
-setting to be tweaked.
-
-Note: the function `get_files_ref_lock_timeout_ms()` cannot be private
-to the files backend because it is also used by `write_pseudoref()`
-and `delete_pseudoref()`, which are defined in `refs.c` so that they
-can be used by other reference backends.
-
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+Signed-off-by: Łukasz Stelmach <l.stelmach@samsung.com>
 ---
+ git-gui/lib/commit.tcl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-This patch applies to master, but (perhaps surprisingly) doesn't
-conflict with the mh/packed-ref-store changes. It can also be obtained
-from my Git fork [1] as branch "ref-lock-retry".
-
-Michael
-
-[1] https://github.com/mhagger/git
-
- Documentation/config.txt |  6 ++++++
- refs.c                   | 24 +++++++++++++++++++++---
- refs/files-backend.c     |  8 ++++++--
- refs/refs-internal.h     |  6 ++++++
- 4 files changed, 39 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index d5c9c4cab6..2c04b9dfb4 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -776,6 +776,12 @@ core.commentChar::
- If set to "auto", `git-commit` would select a character that is not
- the beginning character of any line in existing commit messages.
- 
-+core.filesRefLockTimeout::
-+	The length of time, in milliseconds, to retry when trying to
-+	lock an individual reference. Value 0 means not to retry at
-+	all; -1 means to try indefinitely. Default is 100 (i.e.,
-+	retry for 100ms).
-+
- core.packedRefsTimeout::
- 	The length of time, in milliseconds, to retry when trying to
- 	lock the `packed-refs` file. Value 0 means not to retry at
-diff --git a/refs.c b/refs.c
-index fe4c59aa8b..29dbb9b610 100644
---- a/refs.c
-+++ b/refs.c
-@@ -561,6 +561,21 @@ enum ref_type ref_type(const char *refname)
-        return REF_TYPE_NORMAL;
- }
- 
-+long get_files_ref_lock_timeout_ms(void)
-+{
-+	static int configured = 0;
-+
-+	/* The default timeout is 100 ms: */
-+	static int timeout_ms = 100;
-+
-+	if (!configured) {
-+		git_config_get_int("core.filesreflocktimeout", &timeout_ms);
-+		configured = 1;
-+	}
-+
-+	return timeout_ms;
-+}
-+
- static int write_pseudoref(const char *pseudoref, const unsigned char *sha1,
- 			   const unsigned char *old_sha1, struct strbuf *err)
- {
-@@ -573,7 +588,9 @@ static int write_pseudoref(const char *pseudoref, const unsigned char *sha1,
- 	strbuf_addf(&buf, "%s\n", sha1_to_hex(sha1));
- 
- 	filename = git_path("%s", pseudoref);
--	fd = hold_lock_file_for_update(&lock, filename, LOCK_DIE_ON_ERROR);
-+	fd = hold_lock_file_for_update_timeout(&lock, filename,
-+					       LOCK_DIE_ON_ERROR,
-+					       get_files_ref_lock_timeout_ms());
- 	if (fd < 0) {
- 		strbuf_addf(err, "could not open '%s' for writing: %s",
- 			    filename, strerror(errno));
-@@ -616,8 +633,9 @@ static int delete_pseudoref(const char *pseudoref, const unsigned char *old_sha1
- 		int fd;
- 		unsigned char actual_old_sha1[20];
- 
--		fd = hold_lock_file_for_update(&lock, filename,
--					       LOCK_DIE_ON_ERROR);
-+		fd = hold_lock_file_for_update_timeout(
-+				&lock, filename, LOCK_DIE_ON_ERROR,
-+				get_files_ref_lock_timeout_ms());
- 		if (fd < 0)
- 			die_errno(_("Could not open '%s' for writing"), filename);
- 		if (read_ref(pseudoref, actual_old_sha1))
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 0404f2c233..d611e0f7d7 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -855,7 +855,9 @@ static int lock_raw_ref(struct files_ref_store *refs,
- 	if (!lock->lk)
- 		lock->lk = xcalloc(1, sizeof(struct lock_file));
- 
--	if (hold_lock_file_for_update(lock->lk, ref_file.buf, LOCK_NO_DEREF) < 0) {
-+	if (hold_lock_file_for_update_timeout(
-+			    lock->lk, ref_file.buf, LOCK_NO_DEREF,
-+			    get_files_ref_lock_timeout_ms()) < 0) {
- 		if (errno == ENOENT && --attempts_remaining > 0) {
- 			/*
- 			 * Maybe somebody just deleted one of the
-@@ -1181,7 +1183,9 @@ static int create_reflock(const char *path, void *cb)
- {
- 	struct lock_file *lk = cb;
- 
--	return hold_lock_file_for_update(lk, path, LOCK_NO_DEREF) < 0 ? -1 : 0;
-+	return hold_lock_file_for_update_timeout(
-+			lk, path, LOCK_NO_DEREF,
-+			get_files_ref_lock_timeout_ms()) < 0 ? -1 : 0;
- }
- 
- /*
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 192f9f85c9..9977fea98b 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -61,6 +61,12 @@
-  */
- #define REF_DELETED_LOOSE 0x200
- 
-+/*
-+ * Return the length of time to retry acquiring a loose reference lock
-+ * before giving up, in milliseconds:
-+ */
-+long get_files_ref_lock_timeout_ms(void);
-+
- /*
-  * Return true iff refname is minimally safe. "Safe" here means that
-  * deleting a loose reference by this name will not do any damage, for
+diff --git a/git-gui/lib/commit.tcl b/git-gui/lib/commit.tcl
+index 83620b7cb..bcb6499a0 100644
+--- a/git-gui/lib/commit.tcl
++++ b/git-gui/lib/commit.tcl
+@@ -26,7 +26,7 @@ You are currently in the middle of a merge that has not been fully completed.  Y
+ 	set parents [list]
+ 	if {[catch {
+ 			set fd [git_read cat-file commit $curHEAD]
+-			fconfigure $fd -encoding binary -translation lf
++			fconfigure $fd -encoding utf-8 -translation lf
+ 			# By default commits are assumed to be in utf-8
+ 			set enc utf-8
+ 			while {[gets $fd line] > 0} {
 -- 
 2.11.0
 
