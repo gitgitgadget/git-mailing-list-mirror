@@ -2,112 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,WEIRD_PORT shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00A7B20899
-	for <e@80x24.org>; Tue, 22 Aug 2017 10:54:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B2D681F667
+	for <e@80x24.org>; Tue, 22 Aug 2017 14:44:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932449AbdHVKys (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Aug 2017 06:54:48 -0400
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:22210 "EHLO
-        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932350AbdHVKyr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Aug 2017 06:54:47 -0400
-Received: from [192.168.2.201] ([92.22.15.146])
-        by smtp.talktalk.net with SMTP
-        id k6pYdGWxFAp17k6pZdWLSZ; Tue, 22 Aug 2017 11:54:45 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
-        t=1503399285; bh=6HmfcR48Dx0UJiStj26dW4XCw49IzC1wcFv6IBqAeiU=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=arxxFy/9ojo5k9qNuQA7vOl+NLjdKP3tdmHCsNh0TPtAf/OZDrGHDyS0LhDDTGBwr
-         0TtZn3EJz10g2oAlOVVVZJpattVvMlgCU8GZrOKnjHQvN1O33gQWbC6OP1uqTnWkWF
-         kCU9egpCJZMnODpIJC2vg5Fy1ydpfr5l8ihyPXmo=
-X-Originating-IP: [92.22.15.146]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=EsGilWUA c=1 sm=1 tr=0 a=PRKyDR6jJsLBrgZYJ8A23w==:117
- a=PRKyDR6jJsLBrgZYJ8A23w==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
- a=KofD4PeGWZFy2NQTSzkA:9 a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [RFC PATCH 0/5] Add option to autostage changes when continuing a
- rebase
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Philip Oakley <philipoakley@iee.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <20170726102720.15274-1-phillip.wood@talktalk.net>
- <xmqqa83rrrdu.fsf@gitster.mtv.corp.google.com>
- <xmqqa83qq2uf.fsf@gitster.mtv.corp.google.com>
- <xmqq60eeq24l.fsf@gitster.mtv.corp.google.com>
- <8cdda835-0b4f-6ffb-31bf-6192999818be@talktalk.net>
- <6a71f802-b20c-f6bc-7bb5-8d81db3353d8@talktalk.net>
- <xmqqpocloqcp.fsf@gitster.mtv.corp.google.com>
- <a3b7af29-8b3a-5253-21da-957920212a6e@talktalk.net>
- <xmqqinhg5ysf.fsf@gitster.mtv.corp.google.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <d1eaed1c-5e62-0a93-f65d-06be43812617@talktalk.net>
-Date:   Tue, 22 Aug 2017 11:54:44 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        id S933109AbdHVOoS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Aug 2017 10:44:18 -0400
+Received: from mout.web.de ([212.227.15.4]:59788 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S933004AbdHVOoF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Aug 2017 10:44:05 -0400
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0M3gLx-1dSuZb33ib-00rELj; Tue, 22
+ Aug 2017 16:43:58 +0200
+Date:   Tue, 22 Aug 2017 16:43:57 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Santiago Torres <santiago@nyu.edu>
+Cc:     git@vger.kernel.org
+Subject: Re: t5551 hangs ?
+Message-ID: <20170822144357.GA5304@tor.lan>
+References: <20170822051059.GA26331@tor.lan>
+ <20170822052625.wzlhckjm6gwr2q6f@LykOS.localdomain>
 MIME-Version: 1.0
-In-Reply-To: <xmqqinhg5ysf.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfKpzGxhkuBvFX6qg2dUY2wftdmbYzqfAaQL2jqFRjRrgfYEvKKdpxoZszApua1u8Zg4AAq/hRQ+r+nyzxMHJuHGfcSlpKQTFabvQ1R0/5j8qq+/Ee07G
- T8j+N1FTso3XtTS62MHR9N4QhTj5/FVQVKU+OARkPuFof2+wmIWKvYXzkyshCfFF81TbvOaZlpg2LVmjwU4c1GHT5i27uiBLZ7yO4VnePPmDqLQLpjVCDRg3
- xwG1Osx2bO+FjWEVyGpk/TfceKYNrhmysFRlKYv2BW4=
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20170822052625.wzlhckjm6gwr2q6f@LykOS.localdomain>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K0:HuemmmReQo9seoZiDeqapcCKhiw9hRF3O4RGTCzlFZqhMnmMsAt
+ Dv4hpfLj2snEyJP7W0DdsQl6ZpL7C6atGrXvD6qtQk3nOoZ5ruaxndIfZZMX3PkDWYhpQpa
+ mES0TbpvtI2Q5+NrBbtwE43XgDiB2mqzJDmbsxjuh+h41yXxmGn7zYrGX+JDe4A8X1O12Ol
+ 3IkOaZzy+IVRrx+OFxBPw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:tUvqJ+6BBgM=:9lX+EbtXPm6w6xRsMZVWeI
+ C3GlAcE8PfXocU/OcPrHSQ01EjXacWFSluZN2oNe2BAbYjU0/0oU3f/10pDMbZ1GJM18LL3bc
+ 49rM16NPYSP2eW9gxFRR09FwW2DNJm/BbwDqXpQd10rUYYCBx9na3X4XInJfHCVlxIssF6XBl
+ S62CgPqow02vj+EbulZchorRm0bUhvTPlg3kRY5JmNQB2gIcnzFG+hdTB+dn8WjcEp2Y2sXZ0
+ 09X2RLuMNK7Hh48tSYy/BFryx7yFk3wVaPg/sbdTJGwxTbiAQUUAgaQrZGBqQHXjaLc+K7mBQ
+ B8Wp8CpisoTsgbcr34in/rNJJuysuDc3kCf/1CqwWQb3yspFNR6MamLcm5o/rfEbR3TTRMKy7
+ iPPuaXwRyb0cBIIIxyglFEpf85eso0DAn4696ecZqZVsiluPf/WDo0v+jGW2mpGTWnmHZKZyG
+ 5iGpHEIHe3fDhLntZAl+I6Wju0wfqExR9rNqlQhLL9pQZJvj8N/SvEG59yGFUE+1apj55pr3N
+ IwFnprdj7R5FA38+5tR3qWdk4C4cKfzV2QknVw/LxxT3Z1yo+urcYZUdu1lGU7hhONPLsbqlB
+ yOnhn3A+AC4wmzPTIrN/+xl6Z5RaofJV4/tLD8K5r9aGkRziaVZHBD5bkKyrsEdEhOvxrJt4O
+ Mniu7zSdYAyLdcPvWYKwQdpHneyfN7HCi+/YwkLKQRtdMx/B1JWnmLtqTrGlcG9RGhUIZMrRF
+ /a01syw9vJePAewhdgpUr8Bdko9vlJ4DCqFDWg/O/an0Q1bSNUwLzKodR4UsvgKfUzZHg/Qe5
+ qZOCj+TuMi0IgRT+bBOWd3TY6cEpg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 21/08/17 23:41, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood@talktalk.net> writes:
+On Tue, Aug 22, 2017 at 01:26:25AM -0400, Santiago Torres wrote:
+> Hello, Torsten. 
 > 
->> ... I prefer
->> having to pass --autostage with --continue so that it is a concious
->> decision by the user to stage unstaged changes when they continue rather
->> than rebase just doing it each time it continues.
+> On Tue, Aug 22, 2017 at 07:10:59AM +0200, Torsten Bögershausen wrote:
+> > Hej,
+> > I found 2 threads about hanging t5551, one in 2016, and one question
+> > from Junio somewhen in 2017.
+> > I have it reproducable here:
+> > - Debian 8, 64 bit
+> > - SSD
+> > - Half-modern processor ;-)
 > 
-> In other words, instead of
+> I don't think the SSD/regular disk have anything to do with it. 
 > 
-> 	git add -u && git rebase --continue
+> - Are you running tests concurrently? (e.g., with -j x)
+> - What happens if you run the test individually (i.e., cd t and
+>   ./t5551...)
+
+No concurrency.
+That's what I do: ./t5551-http-fetch-smart.sh
+
+> - You probably want to see the version of apache this is running/etc.
+
+The one that comes with Debian -
+I am not an expert here, what is it that is interesting ?
+
+> - What happens if you kill the apache processes? 
+
+I am left with these processes:
+/home/blabla/pu/git -C too-many-refs fetch -q --tags
+/home/blabla/pu/git-remote-http origin http://127.0.0.1:5551/smart/repo.git
+
 > 
-> you would want a quicker way to say
+> I can't reproduce on my side, but let me see if I can dig a little into
+> it.
+
+Thanks, more tips or things I can do are welcome.
+t5551 seems to be flaky - from time to time.
+It seems that I have it reproducable unstable, so if someone has more
+ideas, please.
+
 > 
-> 	git rebase --continue $something_here 
-
-Exactly
-
-> If that is the case, that is understandable to me.  Is the "-u" (I
-> think "git add -u" is short for "--update" but I didn't check) taken
-> as a valid option to "git rebase"?  If not, that $something_here could
-> be "-u".
-
-At the moment $something_else is -a/--autostage but -u/--update (I've
-checked the add man page and you're right) could be good as well.
-
-rebase --continue -a
-
-behaves like commit -a in that it commits all updated tracked files and
-does not take pathspecs, if we go for -u then there is a difference with
-'git add -u' as that can take an optional pathspec.
-
-
-Did you have any further thoughts on what checks if any this new option
-should make to avoid staging obviously unresolved files?
-
-> Thanks for pinging the thread; otherwise I would have forgotten,
-> especially because not many other people were involved in the
-> discussion to begin with.
-
-Yes it would be interesting to hear if this would be useful for others too.
-
-Best Wishes
-
-Phillip
-
+> Cheers!
+> -Santiago.
 
 
