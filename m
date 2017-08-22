@@ -2,78 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7BB4E1F667
-	for <e@80x24.org>; Tue, 22 Aug 2017 19:34:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 541BF1F667
+	for <e@80x24.org>; Tue, 22 Aug 2017 19:35:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752769AbdHVTeu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Aug 2017 15:34:50 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64396 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752393AbdHVTes (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Aug 2017 15:34:48 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DC2BD8D0CA;
-        Tue, 22 Aug 2017 15:34:47 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=endFLE5dBtx9kWCZHYpt7yNT8Ag=; b=wfU4iR
-        v2ebqoOSEs9gVZfmL+iFZfmyA7x1n85frcSm775Jqh468avbCbYGe7bvYggN8TtF
-        odFdLhlO7CvvIYykQLs/vyRMRCkryHEBvw7wKclYzoRFQMjuiahRloFHiqySJfmd
-        L0saoNpioAA9Wb37246AAfObKdvsMls0c7ZjE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=KpbN26StxF0ge9YHst/JQ3ZMZreBP8XN
-        SeFpjVzsIomRcT4brWZ6bHBdKMpGLKzFuOSsgyTDHSgo972MzvmnDQmNF2tMxXsc
-        mPAP7zlUvG1W+qmdY0q7N+NxOJ1zfP9ishuXLNwMiZNCUud2ZSpp+Cs6l6jVfOg0
-        5pSBmcR4dCM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D383C8D0C9;
-        Tue, 22 Aug 2017 15:34:47 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4825E8D0C8;
-        Tue, 22 Aug 2017 15:34:47 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Sebastian Schuberth <sschuberth@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Best way to check whether working tree matches a commit's tree
-References: <onhres$g9$1@blaine.gmane.org>
-Date:   Tue, 22 Aug 2017 12:34:46 -0700
-In-Reply-To: <onhres$g9$1@blaine.gmane.org> (Sebastian Schuberth's message of
-        "Tue, 22 Aug 2017 20:00:01 +0200")
-Message-ID: <xmqqfucj2y7d.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1753166AbdHVTf0 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Aug 2017 15:35:26 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:38322 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753114AbdHVTfX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Aug 2017 15:35:23 -0400
+Received: by mail-wm0-f65.google.com with SMTP id y206so92851wmd.5
+        for <git@vger.kernel.org>; Tue, 22 Aug 2017 12:35:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=instituut-net.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=rO+r1VCjgPQxS/UnIdBjZcMqKAVi9ASYQZUUjoFW/Eg=;
+        b=C3fqaIISRAwVMkqtmxr3y39247d7UwKE4TE8QW+SLt7mNq4jt0dSKwa+PJYFPQKLv9
+         f5AmQJLZddcjD+J9AKT2FwFPuBRyL+ePbsMfDwhaXsT/PQXuB+ec6L6pXmg5HHigkuXQ
+         laKa7CtXJqvBoIYeYdJZlcLxupTxqzCYFFgt0KiA2lTWykDvu4CcRLnz2M1wrLG0DMWB
+         IGQCqFTXtbztbIVTGQb/fqqiNfF5OIEOpo3P8vNM/VcUqF+CKXJQsJyuzcaw//7i/P6e
+         n7fJnLHqfe4Ds2EwMCJL/XawZ9H23mpsFqZLp0lJaM0KqSqRf8B/+PmCN0Y0Ix4mP1pN
+         hINg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=rO+r1VCjgPQxS/UnIdBjZcMqKAVi9ASYQZUUjoFW/Eg=;
+        b=kFxRon5Hwz7PBIYfFdw/R8eFJcCZqlkQa2k/3uwxmX3oinIBa1gCEVuoknLDIOrNMW
+         MnxqjIFSMvAbA7kEwTWECzxO7p/QcCHWBxRCwuFj57qUg72D7wUFt192SFF8aJ4D4zLW
+         6+XT/FcSUX5L9qIws9CB9s9TGz4sY4cKfoVkWL5DMoOlPMFdsZxIvjYppSngMUmlaGsS
+         CfI66Ox2ZLRoT+yaHOpsHp4RV0HWQ+gz+UCme99fDd0LzPSQ0lMNr9QepnCGgW3Ihkpg
+         KOrghFCgEg8Vjnku7qwa+JmjGDLvd/5YRLbd9OFpPjkR2BetgAdHW3Qee7jm6IiPiWEr
+         0ucA==
+X-Gm-Message-State: AHYfb5gGRlO5JLo72YNtZ6T01s7O3P49Aqk7tAmrLTPobbrzur1eht3a
+        H/JD0ofshCdcAdLO
+X-Received: by 10.80.206.73 with SMTP id k9mr1035542edj.20.1503430521804;
+        Tue, 22 Aug 2017 12:35:21 -0700 (PDT)
+Received: from localhost ([2001:67c:208c:10:105e:203f:f35f:c921])
+        by smtp.gmail.com with ESMTPSA id o36sm33736edc.39.2017.08.22.12.35.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 22 Aug 2017 12:35:21 -0700 (PDT)
+Date:   Tue, 22 Aug 2017 21:35:20 +0200
+From:   Job Snijders <job@instituut.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        yashi@atmark-techno.com, Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Add 'raw' blob_plain link in history overview
+Message-ID: <20170822193520.GJ39363@Vurt.local>
+References: <20170802185901.GA27243@Vurt.local>
+ <20170820180332.GC39363@Vurt.local>
+ <CAOxFTcxOt878uDYj1Y0QMDNe8mNkfX3ZaZayOH3Njp9RWCJo0Q@mail.gmail.com>
+ <20170821104425.geetdgi7q2uqycyt@hanna.meerval.net>
+ <CAOxFTcxaxRjdsd0OSQX9E9ncEnO4XFLoa-0puXm2AByv6dZUow@mail.gmail.com>
+ <20170821141306.wnlfn5a4hmgnj3yn@hanna.meerval.net>
+ <xmqqo9r72yrg.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F4E94ED8-8770-11E7-BE62-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqo9r72yrg.fsf@gitster.mtv.corp.google.com>
+X-Clacks-Overhead: GNU Terry Pratchett
+User-Agent: Mutt/1.8.3 (2017-05-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sebastian Schuberth <sschuberth@gmail.com> writes:
+On Tue, Aug 22, 2017 at 12:22:43PM -0700, Junio C Hamano wrote:
+> Job Snijders <job@instituut.net> writes:
+> > Add 'raw' blob_plain link in history overview
+> >
+> > Reviewed-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+> > Signed-off-by: Job Snijders <job@instituut.net>
+> >
+> > ---
+> 
+> Thanks; I somehow thought that your earlier one not just said what
+> it does (twice---that is not needed) but why this change is useful,
+> but that is lost in the patch description?
 
-> Hi,
->
-> I'd like to check whether my working tree exactly matches the tree of a given commit. That is, there should not be any untracked, staged or modified files (including ignored files).
->
-> Currently, I'm doing this in two steps:
->
-> - check for success and empty output of "git status --ignored --porcelain"
-> - check that the output of "git rev-parse HEAD" matches the given commit
->
-> While this works, it feels sub-optimal. Is there a better / smarter way?
+We often work with very large plain text files in our repositories and
+found it friendlier to the users if we can click directly to the raw
+version of such files.
 
-I do not think so; you want three things to match and you have a way
-to compare two things at a time.
+Without this patch the workflow is to go to the history of a file, click
+the 'blob' link, and then click the 'raw' link. If the file is large
+(multiple megabytes) - rendering the html enveloppe to the blob can take
+quite some time in the browser DOM rendering. 
 
-By the way, I think your second check should compare
+This patch adds a 'raw' blob_plain link in history overview so you can
+immediately click to the 'raw' version, saving time and improving
+workflow.
 
-	rev-parse HEAD^{tree} $that_commit^{tree}
+Here is a screenshot of a gitweb instance with this patch applied:
 
-as you are checking if the tree exactly matches.
+    http://instituut.net/~job/screenshots/b0f30e21eb64d5dda75ddabd.png
+
+Kind regards,
+
+Job
