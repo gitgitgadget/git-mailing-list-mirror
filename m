@@ -2,104 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 69EAA1F667
-	for <e@80x24.org>; Tue, 22 Aug 2017 17:36:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D70C31F667
+	for <e@80x24.org>; Tue, 22 Aug 2017 17:49:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751745AbdHVRgR (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Aug 2017 13:36:17 -0400
-Received: from mout.web.de ([212.227.15.4]:51606 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751622AbdHVRgQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Aug 2017 13:36:16 -0400
-Received: from [192.168.178.36] ([91.20.52.82]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LkPW7-1d9lLn3iOZ-00cU27; Tue, 22
- Aug 2017 19:36:00 +0200
-Subject: Re: [PATCH] repository: fix a sparse 'using integer a NULL pointer'
- warning
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-References: <91150cfc-3271-16b0-33d3-9a4e149dc9fe@ramsayjones.plus.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <9e45674c-bdc2-003e-daa4-79a3903dde8f@web.de>
-Date:   Tue, 22 Aug 2017 19:35:58 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        id S1751831AbdHVRtV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Aug 2017 13:49:21 -0400
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:34449 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751660AbdHVRtU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Aug 2017 13:49:20 -0400
+Received: by mail-qt0-f194.google.com with SMTP id p13so5310264qtp.1
+        for <git@vger.kernel.org>; Tue, 22 Aug 2017 10:49:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:subject:message-id:reply-to:mime-version
+         :content-disposition:user-agent;
+        bh=xMH6i9bjCIezRrNHXm9TTo7RuVLji1W3OkESn1Qx8V4=;
+        b=C7g+Qa7tWe9FtFkhurQF9q10SP6cRQ30YMuhez+veZ1FjSZoln99h+AYPTGoaXKnq5
+         cR9SvN4bJYkQF7q6Dmfb/2j6six698LPmKEICwlpv5zE2aiF/sTcTeuUnHhOpU2VomJP
+         fxlOY9Bb2JdcyWnG0qoJ0yDiADXFl+V/kI+pqRdqhODRM0eYtpidPYvkgmZIXRI23Kjp
+         CnSTGo23j0T2PqihLbI3st65sLQqju4nohWM5WUb5GMskx9xxj1n17Oz1Xzk7Kb64h28
+         8iUzLW6AqMnVy22TIGcVoEkgJpxW0wwfroeb9Xl185tIZ/M6MwPzd4D3/vr+GZFG+kqW
+         S95Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:reply-to
+         :mime-version:content-disposition:user-agent;
+        bh=xMH6i9bjCIezRrNHXm9TTo7RuVLji1W3OkESn1Qx8V4=;
+        b=edy2tIrbX82UTnmt9xbze36USr2oU8+tXmEscfFAOWPl3gWX0d1BvK1ZqMNDIOgdd9
+         dG7QEY2ObMIOU0s13D4UDk9fEy+WO3hUp7M6/wqaP9vq52wZiMWd91rV9/dNGWhCOrMT
+         m6tqY2SwlOtvSwBpmxfTrc/9McxKvfcOISLm41/ZBTtTblABeK4gUzYUwOJ77V2fmijf
+         ie7N1p1zCH5HJMYG5wSlbstgMcEyzufr9D8b848CRWtWxnUvkkY0msukE/yJRnN7cU2Y
+         XkupD/OVpL00T1J9R996PfRnR/OenLkbqJY5765h/mvfon0KocNEMne0dsI/e8sNzEkp
+         5bsA==
+X-Gm-Message-State: AHYfb5i63tMrdFN/KmWnl1s/CsFIwpYY/pHPWUqO5VoaMxGNKKZxREaC
+        nuRd2B4c/W1Fs4igL1s=
+X-Received: by 10.237.40.6 with SMTP id r6mr2112132qtd.140.1503424159788;
+        Tue, 22 Aug 2017 10:49:19 -0700 (PDT)
+Received: from localhost (tripoint.kitware.com. [66.194.253.20])
+        by smtp.gmail.com with ESMTPSA id h21sm10402965qta.58.2017.08.22.10.49.19
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 22 Aug 2017 10:49:19 -0700 (PDT)
+Date:   Tue, 22 Aug 2017 13:49:18 -0400
+From:   Ben Boeckel <mathstuf@gmail.com>
+To:     git@vger.kernel.org
+Subject: Cannot checkout after setting the eol attribute
+Message-ID: <20170822174918.GA1005@megas.kitware.com>
+Reply-To: mathstuf@gmail.com
 MIME-Version: 1.0
-In-Reply-To: <91150cfc-3271-16b0-33d3-9a4e149dc9fe@ramsayjones.plus.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:oeaRPn2ngci+7Mug9gpKtqij/A7rBRvtHUkSOFJCGBITLz8XZGq
- NbV4z80nYKROhQMt2HJm+fo2XyBE9lihO9vberVAuDxjO8o9bQWXvxWXZCT/ifFnYecL3z7
- jDf3ae0bWi7HV3Ew7QInj/ItppuHoF7nPeR1mqWRSyAtic680hxl0PiCs9igOzEuhfFEwSe
- iERVpkInC4xsmTzfkonhA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:MBrLfbcPqB4=:TVMKvySjrFzjj5g2UAHqqz
- rMUvoVTDtJ7cFszOodGeOuywt3LepU65MOE+1c2JMHEsdF582OWeiLGAqCM/bJtDCaRRAb+m1
- s6aiqLG0o0rq2GzQ7mvtlSCn0Ag96GWoPqAkwQ7+lUiAU0S6LDVBH5EXnMPmWL+fUqpSIekNy
- fHq0stv5ZLsmJHkFY/I+yR8S7tilNNgbNbCCXyk/bk5Nico9tz5zXqzKekku8xph99R92PbeV
- y44JB8hhyUIhKTKYNzs0KObj8qP0JRfLPS+T5i70Id40p/qHqeNYFkMkGcEmEk0tmlhPySZty
- qC94thWLjdF9eLztiVNQHKEq9QF9BA3Kb7/Jl+IbFS3s5ktciIa/18wNmx8U/R6SLuWNFZfz7
- H3efBXyu0EviWoxnyabAnzMPxypK6yTnOAHd61JRquyLqrWeL3ClMBtEQvsZbnjxUrgplzgSM
- BdMjjWPOlCkivOmUNDcjaw2kENnAK1a7SEMYhNWXynX+GPw0Vdk3wbCz3Ncf/mx/wgo0dlqsS
- +x5is+kQPV9KTlxKGDNOMqjqxrRXrG52dHChjUs1vAf1wfUcdxqrtTd7PjNLGGEdCXZw1f1YL
- iWzhSYpdkVCy2tibMkLVkhxUAq2FGE4+K4Oxhx+0/MUuLT51IeYZQZ1s1xVSEcGVGUqj5qT9N
- V0OHdYOxSMoLpImlLpHkKjNTEdlWPHA+pXrwgc5Xz1uwyC6tqGygeb0qAK+OonU5ZtXZO6U9P
- c1SV/HnZUPPGyzRr75zd5HybKOzSSDhDeM6OYyMeT8d5qJeL8dbfjCsrN7h8fDMqKIq4gJxLM
- gNq0AYjoC6FsxRm2+qwEOmaYYVzHkPwNnua/DJ0Uqd+U17MoP8=
+Content-Disposition: inline
+User-Agent: Mutt/1.8.3 (2017-05-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 21.08.2017 um 17:48 schrieb Ramsay Jones:
-> 
-> Commit 67a9dfcc00 ("hash-algo: integrate hash algorithm support with
-> repo setup", 21-08-2017) added a 'const struct git_hash_algo *hash_algo'
-> field to the repository structure, without modifying the initializer
-> of the 'the_repo' variable. This does not actually introduce a bug,
-> since the '0' initializer for the 'ignore_env:1' bit-field is
-> interpreted as a NULL pointer (hence the warning), and the final field
-> (now with no initializer) receives a default '0'.
-> 
-> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
-> ---
-> 
-> Hi Brian,
-> 
-> If you need to re-roll your 'bc/hash-algo' branch, could you please
-> squash this into the relevant patch.
-> 
-> Thanks!
-> 
-> ATB,
-> Ramsay Jones
-> 
->   repository.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/repository.c b/repository.c
-> index 01af20dee..ceef73614 100644
-> --- a/repository.c
-> +++ b/repository.c
-> @@ -5,7 +5,7 @@
->   
->   /* The main repository */
->   static struct repository the_repo = {
-> -	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, &the_index, 0, 0
-> +	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, &the_index, NULL, 0, 0
+Hi,
 
-This line yells out "designated initializer" to me:
+I specified the `eol` attribute on some files recently and the behavior
+of Git is very strange.
 
-+	.index = &the_index
+Here is the set of commands to set up the repository used for the
+discussion:
 
->   };
->   struct repository *the_repository = &the_repo;
->   
-> 
+    git init
+    echo $'dos\r' > dos
+    git add dos
+    git commit -m "dos newlines"
+    echo "dos -crlf" > .gitattributes
+    git add .gitattributes
+    git commit -m "add attributes"
+    echo "dos eol=crlf" > .gitattributes
+    git add .gitattributes
+    git commit -m "set eol attribute instead"
+
+The following behaviors are observed:
+
+  - `git reset --hard` does not make the working directory clean; and
+  - `git rebase` gets *very* confused about the diffs in the working
+    tree because `git stash` can't reset the working tree;
+
+There are probably other oddities lingering about as well. If I commit
+what Git thinks is the difference, the diff (with invisibles made
+visible) is:
+
+    % git diff | cat -A
+    diff --git a/dos b/dos$
+    index fde2310..4723a1b 100644$
+    --- a/dos$
+    +++ b/dos$
+    @@ -1 +1 @@$
+    -dos^M$
+    +dos$
+
+Seen in 2.9.5 and 2.14.0.rc1.
+
+--Ben
