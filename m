@@ -2,102 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,WEIRD_PORT shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B2D681F667
-	for <e@80x24.org>; Tue, 22 Aug 2017 14:44:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C0361F667
+	for <e@80x24.org>; Tue, 22 Aug 2017 14:50:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933109AbdHVOoS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Aug 2017 10:44:18 -0400
-Received: from mout.web.de ([212.227.15.4]:59788 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933004AbdHVOoF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Aug 2017 10:44:05 -0400
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M3gLx-1dSuZb33ib-00rELj; Tue, 22
- Aug 2017 16:43:58 +0200
-Date:   Tue, 22 Aug 2017 16:43:57 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Santiago Torres <santiago@nyu.edu>
-Cc:     git@vger.kernel.org
-Subject: Re: t5551 hangs ?
-Message-ID: <20170822144357.GA5304@tor.lan>
-References: <20170822051059.GA26331@tor.lan>
- <20170822052625.wzlhckjm6gwr2q6f@LykOS.localdomain>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20170822052625.wzlhckjm6gwr2q6f@LykOS.localdomain>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Provags-ID: V03:K0:HuemmmReQo9seoZiDeqapcCKhiw9hRF3O4RGTCzlFZqhMnmMsAt
- Dv4hpfLj2snEyJP7W0DdsQl6ZpL7C6atGrXvD6qtQk3nOoZ5ruaxndIfZZMX3PkDWYhpQpa
- mES0TbpvtI2Q5+NrBbtwE43XgDiB2mqzJDmbsxjuh+h41yXxmGn7zYrGX+JDe4A8X1O12Ol
- 3IkOaZzy+IVRrx+OFxBPw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:tUvqJ+6BBgM=:9lX+EbtXPm6w6xRsMZVWeI
- C3GlAcE8PfXocU/OcPrHSQ01EjXacWFSluZN2oNe2BAbYjU0/0oU3f/10pDMbZ1GJM18LL3bc
- 49rM16NPYSP2eW9gxFRR09FwW2DNJm/BbwDqXpQd10rUYYCBx9na3X4XInJfHCVlxIssF6XBl
- S62CgPqow02vj+EbulZchorRm0bUhvTPlg3kRY5JmNQB2gIcnzFG+hdTB+dn8WjcEp2Y2sXZ0
- 09X2RLuMNK7Hh48tSYy/BFryx7yFk3wVaPg/sbdTJGwxTbiAQUUAgaQrZGBqQHXjaLc+K7mBQ
- B8Wp8CpisoTsgbcr34in/rNJJuysuDc3kCf/1CqwWQb3yspFNR6MamLcm5o/rfEbR3TTRMKy7
- iPPuaXwRyb0cBIIIxyglFEpf85eso0DAn4696ecZqZVsiluPf/WDo0v+jGW2mpGTWnmHZKZyG
- 5iGpHEIHe3fDhLntZAl+I6Wju0wfqExR9rNqlQhLL9pQZJvj8N/SvEG59yGFUE+1apj55pr3N
- IwFnprdj7R5FA38+5tR3qWdk4C4cKfzV2QknVw/LxxT3Z1yo+urcYZUdu1lGU7hhONPLsbqlB
- yOnhn3A+AC4wmzPTIrN/+xl6Z5RaofJV4/tLD8K5r9aGkRziaVZHBD5bkKyrsEdEhOvxrJt4O
- Mniu7zSdYAyLdcPvWYKwQdpHneyfN7HCi+/YwkLKQRtdMx/B1JWnmLtqTrGlcG9RGhUIZMrRF
- /a01syw9vJePAewhdgpUr8Bdko9vlJ4DCqFDWg/O/an0Q1bSNUwLzKodR4UsvgKfUzZHg/Qe5
- qZOCj+TuMi0IgRT+bBOWd3TY6cEpg==
+        id S933080AbdHVOuL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Aug 2017 10:50:11 -0400
+Received: from mail-wr0-f179.google.com ([209.85.128.179]:37601 "EHLO
+        mail-wr0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932523AbdHVOuJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Aug 2017 10:50:09 -0400
+Received: by mail-wr0-f179.google.com with SMTP id z91so125868098wrc.4
+        for <git@vger.kernel.org>; Tue, 22 Aug 2017 07:50:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=hLmS9gtV9yLUykcx+zMoZ22sm9dKZnkgJLZ5ZTwb76s=;
+        b=qc+y5knvN4sDvb5ceMQSEA/FFCfjA2xW6iIpyWuc83bQ8d0ifD8RZqVF0EX9loFcHg
+         DBuO4JbuKBa0ljulP7OS94+fk6V10tfoPMq4HINoFLbtR4pDeKxTc3a5PO+rKcj+p5P+
+         d9kCySiK8LUOJ+juPsmjwRf7ngg2xT813azzW/orCp9wErW8ckjRAIi/4srSye+m7HDy
+         yI1wO4mLzs6ge2GupB+n+gZUndl6dq7uWtMkjLyEpCLGayJS50k6BIxr6KfoZtxtc5xr
+         8z8RJI/orPJzb4TpMwBBBLbh8BsCNDUTUB84+LT+23iKlWiOW+FuxCfPid2DWGkZvqEF
+         vSUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=hLmS9gtV9yLUykcx+zMoZ22sm9dKZnkgJLZ5ZTwb76s=;
+        b=Md63rANKHaYBPEZi23zbVPoSnlbVxu81zHtVQV/haemGsfnejzAnIFkz2f4wEz0b76
+         qjvrZH5e8IMCihyxLPv5o5SquUrqPF5V4AYGeTglDyma0/RSRQumjACu7c3+G2qvQx+f
+         8D1m6vIExGQ9IAG/fwmLF20iiBFhNneT3QIUK2MHbI39k++1HHMVxAMEsEIajIibrjj+
+         EnaViq19l14ac9kmsxp86U8P2diHumE1NvDn+h6MrzVIyYgBXLWeRDIa/ZJ0FhD/Y8GP
+         nKHIRV9Ap26bvXJG9pf/+AT7MVa7MuuV0ESNN2+McxScrGrnVAAmlOY7GEMGXHF/sOtY
+         b7og==
+X-Gm-Message-State: AHYfb5j9jB2obttRlfXWgQpWbvvGuLJ9NuBJOpMbtIOe5kQAiRgwicVJ
+        OtdMysVj0e12qQ7Djv4=
+X-Received: by 10.28.127.210 with SMTP id a201mr259464wmd.91.1503413407733;
+        Tue, 22 Aug 2017 07:50:07 -0700 (PDT)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id g26sm13816040wrb.21.2017.08.22.07.50.06
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 22 Aug 2017 07:50:07 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH] pull: respect submodule update configuration
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <20170821182110.GA156514@google.com>
+Date:   Tue, 22 Aug 2017 16:50:06 +0200
+Cc:     Stefan Beller <sbeller@google.com>,
+        Heiko Voigt <hvoigt@hvoigt.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <D44F6340-9011-4D41-B103-4A61E7248806@gmail.com>
+References: <xmqqpobsbsk1.fsf@gitster.mtv.corp.google.com> <20170818220431.22157-1-sbeller@google.com> <xmqqvalk9is0.fsf@gitster.mtv.corp.google.com> <20170821162056.GB1618@book.hvoigt.net> <CAGZ79ka1jyxmATQbrjPHAv3227UJNcN0nw9AY-RZXnNahepoGQ@mail.gmail.com> <85ED93BC-1E27-4B8D-856D-090C6860BAB0@gmail.com> <CAGZ79kZMjGNOn0FnJGtO5gRY3rF0Eiow8n0uppTZsCUAHY+m3A@mail.gmail.com> <20170821182110.GA156514@google.com>
+To:     Brandon Williams <bmwill@google.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 22, 2017 at 01:26:25AM -0400, Santiago Torres wrote:
-> Hello, Torsten. 
-> 
-> On Tue, Aug 22, 2017 at 07:10:59AM +0200, Torsten Bögershausen wrote:
-> > Hej,
-> > I found 2 threads about hanging t5551, one in 2016, and one question
-> > from Junio somewhen in 2017.
-> > I have it reproducable here:
-> > - Debian 8, 64 bit
-> > - SSD
-> > - Half-modern processor ;-)
-> 
-> I don't think the SSD/regular disk have anything to do with it. 
-> 
-> - Are you running tests concurrently? (e.g., with -j x)
-> - What happens if you run the test individually (i.e., cd t and
->   ./t5551...)
 
-No concurrency.
-That's what I do: ./t5551-http-fetch-smart.sh
+> On 21 Aug 2017, at 20:21, Brandon Williams <bmwill@google.com> wrote:
+>=20
+> On 08/21, Stefan Beller wrote:
+>> On Mon, Aug 21, 2017 at 10:20 AM, Lars Schneider
+>> <larsxschneider@gmail.com> wrote:
+>>>=20
+>>>> On 21 Aug 2017, at 18:55, Stefan Beller <sbeller@google.com> wrote:
+>>>>=20
+>>>> On Mon, Aug 21, 2017 at 9:20 AM, Heiko Voigt <hvoigt@hvoigt.net> =
+wrote:
+>>>>=20
+>>>>>> So I am a bit curious to learn which part of this change you =
+dislike
+>>>>>> and why.
+>>>>>=20
+>>>>> I am also curious. Isn't this the same strategy we are using in =
+other
+>>>>> places?
+>>>>>=20
+>>>>=20
+>>>> I dislike it because the UX feels crude.  When reading the =
+documentation,
+>>>> it seems to me as if submodule.<name> can be one of the following
+>>>>=20
+>>>>   (none, checkout, rebase, merge, !<custom-command>)
+>>>>=20
+>>>> This is perfect for "submodule-update", whose primary goal is
+>>>> to update submodules *somehow*. However other commands
+>>>>=20
+>>>>   git rebase --recurse
+>>>>   git merge --recurse
+>>>>   git checkout --recurse
+>>>>=20
+>>>> have a different primary mode of operation (note how their name
+>>>> is one of the modes from the set above), so it may get confusing
+>>>> for a user.
+>>>>=20
+>>>> 'none'  and '!<custom-command>' seem like they would be okay
+>>>> for any of the commands above but then:
+>>>>=20
+>>>>   git config submodule.<name>.update "!..."
+>>>>   git reset --hard --recurse
+>>>>   git status
+>>>>   # submodule is reported, because "!..." did not 'reset'.
+>>>>=20
+>>>> Anyway. That dislike is just a minor gut feeling about the UX/UI
+>>>> being horrible. I wrote the patch to keep the conversation going,
+>>>> and if it fixes Lars problem, let's take it for now.
+>>>=20
+>>> Well, I need just a way to disable certain Submodules completely.
+>>> If you show me how "git config --local submodule.sub.active false"
+>>> works then I don't need this patch.
+>=20
+> Yeah if you want to completely disable a submodule (as in not even =
+check
+> it out) then setting .active to false would do that.  But as stefan
+> pointed out and IIRC 'submodule update --init' with no pathspec sets =
+all
+> submodules to be active.  Perhaps it should only init submodules who
+> don't already have an explicit active flag set.
 
-> - You probably want to see the version of apache this is running/etc.
+OK. I change my scripts to use ".active" and it seems to work nicely.
 
-The one that comes with Debian -
-I am not an expert here, what is it that is interesting ?
+I noticed one oddity, though:
 
-> - What happens if you kill the apache processes? 
+If I clone a repo using `git clone --recursive <url>` then the local
+Git config of the repo gets the following entry:
 
-I am left with these processes:
-/home/blabla/pu/git -C too-many-refs fetch -q --tags
-/home/blabla/pu/git-remote-http origin http://127.0.0.1:5551/smart/repo.git
+[submodule]
+	active =3D .
 
-> 
-> I can't reproduce on my side, but let me see if I can dig a little into
-> it.
+Is this intentional? Something in the git/git test harness seems to =
+prevent
+that. I was not able to write a test to replicate the issue.
 
-Thanks, more tips or things I can do are welcome.
-t5551 seems to be flaky - from time to time.
-It seems that I have it reproducable unstable, so if someone has more
-ideas, please.
+Any idea?
 
-> 
-> Cheers!
-> -Santiago.
-
-
+Thanks,
+Lars=
