@@ -2,119 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 818AB20899
-	for <e@80x24.org>; Tue, 22 Aug 2017 10:06:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00A7B20899
+	for <e@80x24.org>; Tue, 22 Aug 2017 10:54:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932438AbdHVKGn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Aug 2017 06:06:43 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:33470 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932306AbdHVKGm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Aug 2017 06:06:42 -0400
-Received: by mail-pg0-f66.google.com with SMTP id u191so2110890pgc.0
-        for <git@vger.kernel.org>; Tue, 22 Aug 2017 03:06:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=nWHICKLKpcLTQcl6D4qwSyPgYWK0M7XCiKlChMLxkYY=;
-        b=dmjooi41Ueeo3MhitKOmlx2CzJVq3sECno5L9vR+JO/2vMuae0GAcntxWg79l9vZK5
-         ImoccATHRxv8205x7JPIKhA9NO2GLuzVaabGEk7FNa0EZN4DXVNRs5rBqmmVQFCIDh+9
-         KBFnssdzItASG4u0QTRoTORd4CBznJNxPrVAlPgvtfob2tWQABJDgp4hWuX29or/4o+n
-         PZax6f3LBvoRJ9TIIEQtqgq0ku9tLgbIOK7YHHH95s554gucwwSbmHJS4qRYOMan56qT
-         klWG8/ero0W7OP0U2IhEtx2lAoiWFC/MxBp+1ERJzgHHhPEjLPEzvHd9RHMAS9tsaLd2
-         fdkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=nWHICKLKpcLTQcl6D4qwSyPgYWK0M7XCiKlChMLxkYY=;
-        b=c7tMibf2qPa0WziQ8VOSvWvgYkJCkhO/39LidnvzEUfDV+7TSc7PEX6NxXmet5KUm7
-         40Bs6SUuPYAcGYznnkaCf+gp4Icxqaw5oeIpbSSZVAmFwtWCNypvJF+4mP55A9wg035M
-         d+CNW8GXbd6AKH8d5yfLqFiTq9oMnK2jcMJJcHcthh7quDo/2ATENG9MqKAeoeLJSnSu
-         YIc58ft7XJwxHwgJJtFgFHCsFllXRbatrP2Dt9Gdap90SgyHK9d1JK3vTYXzswmQ8Psc
-         OfdAsaghtoazmtlKCQ87kBSKjKksWPlORbVWfjNoMmvqxBudR4/03AP3ISuT0Xpu/MUf
-         vcEg==
-X-Gm-Message-State: AHYfb5jFDqBwAijNZ9/nXcFMTi3OJsRS6thUlcc6gqY3aJ56a61AUK/V
-        GHy+wbqm8hvUGNWJoc89sM7bmXCfJOCP
-X-Received: by 10.99.38.135 with SMTP id m129mr96323pgm.393.1503396401688;
- Tue, 22 Aug 2017 03:06:41 -0700 (PDT)
+        id S932449AbdHVKys (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Aug 2017 06:54:48 -0400
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:22210 "EHLO
+        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932350AbdHVKyr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Aug 2017 06:54:47 -0400
+Received: from [192.168.2.201] ([92.22.15.146])
+        by smtp.talktalk.net with SMTP
+        id k6pYdGWxFAp17k6pZdWLSZ; Tue, 22 Aug 2017 11:54:45 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
+        t=1503399285; bh=6HmfcR48Dx0UJiStj26dW4XCw49IzC1wcFv6IBqAeiU=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=arxxFy/9ojo5k9qNuQA7vOl+NLjdKP3tdmHCsNh0TPtAf/OZDrGHDyS0LhDDTGBwr
+         0TtZn3EJz10g2oAlOVVVZJpattVvMlgCU8GZrOKnjHQvN1O33gQWbC6OP1uqTnWkWF
+         kCU9egpCJZMnODpIJC2vg5Fy1ydpfr5l8ihyPXmo=
+X-Originating-IP: [92.22.15.146]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=EsGilWUA c=1 sm=1 tr=0 a=PRKyDR6jJsLBrgZYJ8A23w==:117
+ a=PRKyDR6jJsLBrgZYJ8A23w==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
+ a=KofD4PeGWZFy2NQTSzkA:9 a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [RFC PATCH 0/5] Add option to autostage changes when continuing a
+ rebase
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Philip Oakley <philipoakley@iee.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <20170726102720.15274-1-phillip.wood@talktalk.net>
+ <xmqqa83rrrdu.fsf@gitster.mtv.corp.google.com>
+ <xmqqa83qq2uf.fsf@gitster.mtv.corp.google.com>
+ <xmqq60eeq24l.fsf@gitster.mtv.corp.google.com>
+ <8cdda835-0b4f-6ffb-31bf-6192999818be@talktalk.net>
+ <6a71f802-b20c-f6bc-7bb5-8d81db3353d8@talktalk.net>
+ <xmqqpocloqcp.fsf@gitster.mtv.corp.google.com>
+ <a3b7af29-8b3a-5253-21da-957920212a6e@talktalk.net>
+ <xmqqinhg5ysf.fsf@gitster.mtv.corp.google.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <d1eaed1c-5e62-0a93-f65d-06be43812617@talktalk.net>
+Date:   Tue, 22 Aug 2017 11:54:44 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Received: by 10.100.162.37 with HTTP; Tue, 22 Aug 2017 03:06:41 -0700 (PDT)
-In-Reply-To: <8e8c8cdc-cad8-550d-9669-3f078f0d77d1@grubix.eu>
-References: <cover.1503319519.git.git@grubix.eu> <fe681e447791ded6db52ccd84e64e3637c08ffe5.1503309751.git.git@grubix.eu>
- <ddd9c06813f8e2e9d8160f2ed965e728190bc573.1503319519.git.git@grubix.eu>
- <CAN0heSrG7ackEW1BMpadNnPKSUCXATbxfUykcpppC6-Y2OCWJQ@mail.gmail.com> <8e8c8cdc-cad8-550d-9669-3f078f0d77d1@grubix.eu>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Tue, 22 Aug 2017 12:06:41 +0200
-Message-ID: <CAN0heSq0t=Jkaq-dgt_T4K9an4Peat0jArRQgE6JgsWwu53FPw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] Documentation/git-merge: explain --continue
-To:     Michael J Gruber <git@grubix.eu>
-Cc:     Git Mailing List <git@vger.kernel.org>, hIpPy <hippy2981@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqqinhg5ysf.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfKpzGxhkuBvFX6qg2dUY2wftdmbYzqfAaQL2jqFRjRrgfYEvKKdpxoZszApua1u8Zg4AAq/hRQ+r+nyzxMHJuHGfcSlpKQTFabvQ1R0/5j8qq+/Ee07G
+ T8j+N1FTso3XtTS62MHR9N4QhTj5/FVQVKU+OARkPuFof2+wmIWKvYXzkyshCfFF81TbvOaZlpg2LVmjwU4c1GHT5i27uiBLZ7yO4VnePPmDqLQLpjVCDRg3
+ xwG1Osx2bO+FjWEVyGpk/TfceKYNrhmysFRlKYv2BW4=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 22 August 2017 at 11:26, Michael J Gruber <git@grubix.eu> wrote:
-> Martin =C3=85gren venit, vidit, dixit 21.08.2017 18:43:
->> On 21 August 2017 at 14:53, Michael J Gruber <git@grubix.eu> wrote:
->>> Currently, 'git merge --continue' is mentioned but not explained.
->>>
->>> Explain it.
->>>
->>> Signed-off-by: Michael J Gruber <git@grubix.eu>
->>> ---
->>>  Documentation/git-merge.txt | 5 ++++-
->>>  1 file changed, 4 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
->>> index 6b308ab6d0..615e6bacde 100644
->>> --- a/Documentation/git-merge.txt
->>> +++ b/Documentation/git-merge.txt
->>> @@ -288,7 +288,10 @@ After seeing a conflict, you can do two things:
->>>
->>>   * Resolve the conflicts.  Git will mark the conflicts in
->>>     the working tree.  Edit the files into shape and
->>> -   'git add' them to the index.  Use 'git commit' to seal the deal.
->>> +   'git add' them to the index.  Use 'git commit' or
->>> +   'git merge --continue' to seal the deal. The latter command
->>> +   checks whether there is a (interrupted) merge in progress
->>> +   before calling 'git commit'.
->>>
->>>  You can work through the conflict with a number of tools:
->>
->> There are actually two things going on here. First, this mentions git
->> merge --continue. Second, it explains what that command does. But the
->> latter is done earlier (not exactly like here, but still).
->
-> I didn't see that explained in the man page at all - on the contrary, I
-> only saw a forward reference (see section...), but then only an
-> explanation of what "resolving" means (including the "git commit"-step).
-> It is unclear to me from the man page which steps of "resolving" the
-> command "git merge --continue" does - you could think it does "git
-> commit -a", for example.
+On 21/08/17 23:41, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood@talktalk.net> writes:
+> 
+>> ... I prefer
+>> having to pass --autostage with --continue so that it is a concious
+>> decision by the user to stage unstaged changes when they continue rather
+>> than rebase just doing it each time it continues.
+> 
+> In other words, instead of
+> 
+> 	git add -u && git rebase --continue
+> 
+> you would want a quicker way to say
+> 
+> 	git rebase --continue $something_here 
 
-That's very true, and your change helps immensely. I thought that once
-git merge --continue was mentioned, e.g.,
+Exactly
 
-        Use 'git commit' or 'git merge --continue' to seal the deal.
+> If that is the case, that is understandable to me.  Is the "-u" (I
+> think "git add -u" is short for "--update" but I didn't check) taken
+> as a valid option to "git rebase"?  If not, that $something_here could
+> be "-u".
 
-or
+At the moment $something_else is -a/--autostage but -u/--update (I've
+checked the add man page and you're right) could be good as well.
 
-        Use 'git commit' to conclude (you can also say 'git merge
-        --continue').
+rebase --continue -a
 
-then things are in some sense "complete". But you might be right that
-further stressing that the latter is basically an alias helps avoid some
-confusion. "Oh, great, so now I have two commands to choose from -- which
-one should I be using?" :-)
+behaves like commit -a in that it commits all updated tracked files and
+does not take pathspecs, if we go for -u then there is a difference with
+'git add -u' as that can take an optional pathspec.
 
-Martin
+
+Did you have any further thoughts on what checks if any this new option
+should make to avoid staging obviously unresolved files?
+
+> Thanks for pinging the thread; otherwise I would have forgotten,
+> especially because not many other people were involved in the
+> discussion to begin with.
+
+Yes it would be interesting to hear if this would be useful for others too.
+
+Best Wishes
+
+Phillip
+
+
+
