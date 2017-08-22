@@ -2,95 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE11B1F667
-	for <e@80x24.org>; Tue, 22 Aug 2017 23:36:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C1A0B208D0
+	for <e@80x24.org>; Tue, 22 Aug 2017 23:37:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752623AbdHVXg4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Aug 2017 19:36:56 -0400
-Received: from mail-yw0-f178.google.com ([209.85.161.178]:35700 "EHLO
-        mail-yw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752452AbdHVXgz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Aug 2017 19:36:55 -0400
-Received: by mail-yw0-f178.google.com with SMTP id s187so1047870ywf.2
-        for <git@vger.kernel.org>; Tue, 22 Aug 2017 16:36:55 -0700 (PDT)
+        id S1752810AbdHVXhg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Aug 2017 19:37:36 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:35413 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752376AbdHVXhf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Aug 2017 19:37:35 -0400
+Received: by mail-pf0-f195.google.com with SMTP id k3so149400pfc.2
+        for <git@vger.kernel.org>; Tue, 22 Aug 2017 16:37:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=LFcz3JaBMB3jeo5XkpIjuAC+CbQN+fXZiwdb1Kt8z88=;
-        b=YluEWXJyjRetT/ZPvwxrNaP1CfmO9lkbSFz3WmjrLLtCkPsavlFUCqT+EK//srhCBQ
-         iyf/dlwQ/+omVA/MqsT/8OQpqgNbjy9HrnIfWTIOSsaKuqUSsDdyXyAApghO9RmCFErm
-         sYsckNAUUhEBQOOnknPlxJNrBjsW27jo9Y1yf0pH+EyUTKk0oKUS3m/P7vO9BAsSnThF
-         d/Omc6C6hrYwZB2YVNeBpOel2rnAoCuyFma3eS9BFO+GXafggFdSMf7DBrOVHO9i/Ob/
-         ZZcLzk1jy5LATEEWD6kXn1YemCIrAyqqbCR7+P/EiyX263lBwmvBuXH3fboW/ecPbdZB
-         jUzg==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=SECbTRns1U3EZ2KHcZ+cEHHE0mbmpT4xoZZPpOOIPhE=;
+        b=XishfWAzifJ2Yiecb6bPHSbKiBQuPx2HsxTTGJKxA9MXa/QLO+ufv0/5udehw8PLVI
+         jjnx6QZiYK/z2ZHn/ImCNp/RO9h1ZQDQ1bKqimFNWN9XhObWELI/ixJCAJbAbIOpR5Ir
+         8KCnS1gzSJFNYK9ufr4TOnoMuq9UfclIzNucVAMo1BTQm8w9egFcdAVabIRKKjwBQ547
+         3fbUKvOa0OTTo6ENgxaBFxyrF9E8Ipfkb6M9ud5skwnn+hPfsX8EbeVBF+9te1qmlSXy
+         cyKutd2ypMVZUjxMhvCKZuzfrUvf3j+Qtpin2IUNmW1zlisIPFL5hjKZvBKu3B1aWazA
+         lILQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=LFcz3JaBMB3jeo5XkpIjuAC+CbQN+fXZiwdb1Kt8z88=;
-        b=Le1TIJwCnKe7HnT5PZ2OIN8bHwWkyiFYX1wYoO0B/gLoocYLwGcgJoOOUe5tCkEbwf
-         4VNHWQjSpT05hGt8QQ5Mz7zI8c56cN3AXYf7kH+HVzlOQS4gIRMpgVp7Uew39HHHUbce
-         01rfB8wQm0K8mRv0bc4HQCUZ65/Lr+pt/Epg0dx2+eHCg6uwL3cWB7De/2c4pa+Dg028
-         Vhsnx54DSJYviwKq5XSMBeaQ3elLBujjPFT9JIwa2IXN0aSw2DAcmXFVBQmOxX68FTKr
-         hsnF9AoxbBpZpF/1PcTgTPo5VfiB2gPS8lLOq2vqD2tttcNa9mJniDrIZOdAUlI8fYIC
-         zGUw==
-X-Gm-Message-State: AHYfb5ggF/taqe0NVE0ww/BgUlQcRL7t8n9wzfrHiFJZJNMtu+YDrwZ+
-        juytQQ/0eboZbm9TBy5Ok1zZDCoJSJJBFQ4=
-X-Received: by 10.129.93.194 with SMTP id r185mr635166ywb.33.1503445014852;
- Tue, 22 Aug 2017 16:36:54 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=SECbTRns1U3EZ2KHcZ+cEHHE0mbmpT4xoZZPpOOIPhE=;
+        b=CLhABblfgW/HE52RQkRmmXZttYB9ndJKmL219ZBr0UnIDq1WFACHM58A12K51RtqhI
+         hPfaJb/u9Cuo0vLWI5MzhX4ZOrIoB09LklhFlmoEUriivuC/BbZQHlBdnDBlhg5XvF5Q
+         6L6C22ehbGzlBY6rRQsNQzxxlf/CzLRbp39l9uALM1oYAmsJBnlHMrvPhNnRf+8eVSZM
+         4HdkYAKYta8CoEzfRR8Xz1Jy2RJlUpLgHoEcI/Cdv5SgndVL/yxlv+zhW/xvr3aXxZpb
+         1rvT78+dkZ6ZRRjyqGzy4l38E+qH4OGIUzIJPp6/dOBqX8nkItzVCy+qaKCEGjXnC+Ny
+         l+iw==
+X-Gm-Message-State: AHYfb5gQHyvW18ZRa8KGJz1Eq9lo/52y/twEIPOcdSMVT5QrMQi6nub8
+        3G9Ytl3B1uHWYfTq7LU=
+X-Received: by 10.84.171.132 with SMTP id l4mr834798plb.183.1503445054603;
+        Tue, 22 Aug 2017 16:37:34 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:dc68:f470:52d1:2c63])
+        by smtp.gmail.com with ESMTPSA id v78sm146588pfd.121.2017.08.22.16.37.33
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 22 Aug 2017 16:37:34 -0700 (PDT)
+Date:   Tue, 22 Aug 2017 16:37:32 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     git@vger.kernel.org
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/4] vcs-svn: remove repo_tree library
+Message-ID: <20170822233732.GX13924@aiede.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.37.170.41 with HTTP; Tue, 22 Aug 2017 16:36:54 -0700 (PDT)
-In-Reply-To: <CA+P7+xpCJ8jwBQp9Ze=J955CaxnbVPc69ThXht2e=6TUMBq_UQ@mail.gmail.com>
-References: <CA+P7+xrtZYUjPcVMkA+x8B57w+LxjjU8YSKcE77DrWne7449rg@mail.gmail.com>
- <CAGZ79kZW_+GEKyP4+8agZ7nyjGEZ9p5d3N99W6sC3GTY_4Cm-g@mail.gmail.com> <CA+P7+xpCJ8jwBQp9Ze=J955CaxnbVPc69ThXht2e=6TUMBq_UQ@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 22 Aug 2017 16:36:54 -0700
-Message-ID: <CAGZ79kbYWJmru_o48+8iH4_MVEtODFuicRY=23+BM+_q2ZJsaw@mail.gmail.com>
-Subject: Re: git send-email Cc with cruft not working as expected
-To:     Jacob Keller <jacob.keller@gmail.com>, johan@kernel.org,
-        Matthieu Moy <Matthieu.Moy@imag.fr>
-Cc:     Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-+cc people from that thread
+Hi,
 
-On Tue, Aug 22, 2017 at 4:30 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
-> On Tue, Aug 22, 2017 at 4:18 PM, Stefan Beller <sbeller@google.com> wrote:
->> On Tue, Aug 22, 2017 at 4:15 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
->>> Hi,
->>>
->>> I recently found an issue with git-send-email where it does not
->>> properly remove the cruft of an email address when sending using a Cc:
->>> line.
->>>
->>> The specific example is with a commit containing the following Cc line,
->>>
->>> Cc: stable@vger.kernel.org # 4.10+
->>
->> Please see and discuss at
->> https://public-inbox.org/git/20170216174924.GB2625@localhost/
->
-> I read that thread, and it addressed the problem of
->
-> Cc: <stable@vger.kernel.org> # 4.10+
->
-> but did not fix this case without the <> around the email address.
->
-> Additionally I just discovered that the behavior here changes pretty
-> drastically if you have Email::Validate installed, now it splits the
-> address into multiple things:
->
-> stable@vger.kernel.org, #, 4.10+
->
-> Thanks,
-> Jake
+Stefan noticed that repo_init from vcs-svn/repo_tree.h conflicts with
+repository.h[1].  Earlier brian m. carlson noticed the same thing[2].
+
+Originally repo_tree.h was used to manage an in-memory representation
+of the state of the svn tree being imported.  When that in-memory
+representation was retired, we were lazy and left some utility
+functions there.  Here is a patch series to finish cleaning up and
+remove vcs-svn/repo_tree.h completely.
+
+This is an alternative to bc/vcs-svn-cleanup from 'next'.  Those
+patches weren't cc-ed to me and I missed them --- sorry about that.  I
+can rebase on top of them if that is more convenient.
+
+Thoughts of all kinds welcome, as always.
+
+Thanks,
+Jonathan
+
+Jonathan Nieder (4):
+  vcs-svn: remove prototypes for missing functions
+  vcs-svn: remove custom mode constants
+  vcs-svn: remove repo_delete wrapper function
+  vcs-svn: move remaining repo_tree functions to fast_export.h
+
+ Makefile              |  1 -
+ vcs-svn/fast_export.c | 41 +++++++++++++++++++++++++++++++++++++----
+ vcs-svn/fast_export.h |  3 +++
+ vcs-svn/repo_tree.c   | 48 ------------------------------------------------
+ vcs-svn/repo_tree.h   | 23 -----------------------
+ vcs-svn/svndump.c     | 33 ++++++++++++++++-----------------
+ 6 files changed, 56 insertions(+), 93 deletions(-)
+ delete mode 100644 vcs-svn/repo_tree.c
+ delete mode 100644 vcs-svn/repo_tree.h
+
+[1] https://public-inbox.org/git/20170822213501.5928-1-sbeller@google.com
+[2] https://public-inbox.org/git/20170821000022.26729-3-sandals@crustytoothpaste.net
