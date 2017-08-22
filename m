@@ -2,111 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3533B1F667
-	for <e@80x24.org>; Tue, 22 Aug 2017 23:44:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF8011F667
+	for <e@80x24.org>; Tue, 22 Aug 2017 23:45:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752622AbdHVXos (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Aug 2017 19:44:48 -0400
-Received: from mail-yw0-f170.google.com ([209.85.161.170]:33900 "EHLO
-        mail-yw0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752452AbdHVXor (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Aug 2017 19:44:47 -0400
-Received: by mail-yw0-f170.google.com with SMTP id s143so1134010ywg.1
-        for <git@vger.kernel.org>; Tue, 22 Aug 2017 16:44:47 -0700 (PDT)
+        id S1752640AbdHVXp4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Aug 2017 19:45:56 -0400
+Received: from mail-pf0-f175.google.com ([209.85.192.175]:35146 "EHLO
+        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752452AbdHVXp4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Aug 2017 19:45:56 -0400
+Received: by mail-pf0-f175.google.com with SMTP id x137so745169pfd.2
+        for <git@vger.kernel.org>; Tue, 22 Aug 2017 16:45:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=hVzewrYLEVBp6lrRDR+P/3+p3AyHSSPBHdR819vo8L4=;
-        b=YDpTSH8pm8mlb4CR3raARIip7+1sfCeZyeyIGYsZ6AiyPh/xA31XWKijs8UzmofkJU
-         rJVmw94C1Ywr4JdQ2XYpsaepyHUfWd2/7CpAHnoqGg84rriNmfXAvBG/e6FuzQosVf8A
-         Oe7rQO0F4odvSNsATV3ERLhBQlSmEQdPhD5VOmvCv01Zjyo9u0tbAK5crcANge0Ebiu0
-         xKmZnfEs/o04dBauxvAWSTXl6XBiey1jSIM9WD/T2rBPPC2P0KHOhiPY0nTgiyCGkQ6O
-         8JwQzjqQ5/laAgauolTxn88AHlteRMlzjaepHwtmZjdHoQSBC/ggiWqZ2eRqhCtKOWWx
-         EZLg==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=QUxuMDG7AU/oUd5hoNfgU++cARx/n1tXWXZwJ71vakk=;
+        b=dS3q7BrrguZsIvndycOMd98awMEFh/js6o4tC8mVaxEIKzCq1pybyPckMYhp8mn6UA
+         KIWcXh/uRDxkE0yzedmU6iXlUuqyxudz1DDD4jYtszkIZA0OUpwnyM1v3/Ejmgc9IfkR
+         0/V05RUvGQ25aM7MThHWAxYWWC4cL2DHBRZ8UcxYPzkkisnYOpy8L0MFO67Pdb91EZOz
+         HsB4V26X9q50NSYIr4ntfQ6/HGeIZYbwTDtIkZiJ5hQGzsgjtoWoDKx2OqIvf8KgipTM
+         pX6E6pPjWRWtmK8ux7ac2z0S4AvsG8cigqe16uhkqfPSJnoeKFmfHzZtdWVvA34nmX6a
+         j+pQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=hVzewrYLEVBp6lrRDR+P/3+p3AyHSSPBHdR819vo8L4=;
-        b=RZU/n8JVUJ8MBE/o+LmIhkdWYKc8nnHwmmSjrKI8f6kwDgLQwxrIkNK9am1dc3dyJH
-         a+7AEMB0jqrjNm5ReYYFym2rhgdfwh0hHNq4yHvJIU+o33+hONuXteOZJXGHY0g3YAOl
-         6MpueIe3q5ZrSTIgC6/4CEQXLqRKB9xCu6HGFlfo1AWBkh5MrWgpJbefhNlzWL+QAd6u
-         +wmsmE061R25IxuQ4NnjK8oSacDRwfRJYIsBRn54qBGvl9SRTR/t6yjGBhuYNV0Najkt
-         3PLnqabjO8jT+DaiLWB/pWjA6BssWZlibOpTaLxOXiUS8AF+9H05m9ZYB25pVHvZxWGt
-         4YRA==
-X-Gm-Message-State: AHYfb5iqoGEL97+PiX3Ujq6beyCjyqiORTCd5tEP1cDbGoB/y6eN4oZL
-        oWCcFWOlnujnA7kOhcTsbIlWBtGuKy+3
-X-Received: by 10.13.229.3 with SMTP id o3mr656429ywe.137.1503445486453; Tue,
- 22 Aug 2017 16:44:46 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=QUxuMDG7AU/oUd5hoNfgU++cARx/n1tXWXZwJ71vakk=;
+        b=lEqXgzA5c/FALSiOVq0M8PMfb6WJH+rshbyUptwrbzPwDbwj6CtM56eMQxvxOuDJSV
+         gNUL4mICLIPjQfGe9WHz9XiG+eeGP7rnH9ANqJ0pkzkOJ2Qjpyl25w0VSwY1cLJ2motF
+         5LNpkn9d+iFyZvyYxh+324lTg9RHDW+Tbg4KGUK9wjH4jAp6TW+LkhYc9Iu/Lk74eEKw
+         3nMERgs68UJ/AaK3RDpallQpmlJ0AkahKcECELc6WkgCjz7YzhOlpYvdffJvKeWV7XSg
+         7VS8GVYBWsGshvxtp6WYse5rnXqMJKV7eWjYENMgeqMwF7ZcRl8rMPiFNv9z1QIifxo0
+         XIXQ==
+X-Gm-Message-State: AHYfb5gnqQJU9iShfBJEWUJnFRdkN3xJGbRBEyCc1NB+unmqFpoeBtgd
+        cfhhE8WgRpNJiSs/DxU=
+X-Received: by 10.84.209.193 with SMTP id y59mr843776plh.459.1503445555637;
+        Tue, 22 Aug 2017 16:45:55 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:dc68:f470:52d1:2c63])
+        by smtp.gmail.com with ESMTPSA id v31sm164408pgn.7.2017.08.22.16.45.54
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 22 Aug 2017 16:45:55 -0700 (PDT)
+Date:   Tue, 22 Aug 2017 16:45:53 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH] vcs-svn/repo_tree.h: remove repo_init declaration
+Message-ID: <20170822234553.GC13924@aiede.mtv.corp.google.com>
+References: <20170822213501.5928-1-sbeller@google.com>
+ <xmqqmv6r1c26.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.37.170.41 with HTTP; Tue, 22 Aug 2017 16:44:45 -0700 (PDT)
-In-Reply-To: <20170822233732.GX13924@aiede.mtv.corp.google.com>
-References: <20170822233732.GX13924@aiede.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 22 Aug 2017 16:44:45 -0700
-Message-ID: <CAGZ79kbkLyYTrvkUfsfHsUJstq-7Mj=c8vz2aZVojcXsy1fhog@mail.gmail.com>
-Subject: Re: [PATCH 0/4] vcs-svn: remove repo_tree library
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqmv6r1c26.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 22, 2017 at 4:37 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Hi,
->
-> Stefan noticed that repo_init from vcs-svn/repo_tree.h conflicts with
-> repository.h[1].  Earlier brian m. carlson noticed the same thing[2].
->
-> Originally repo_tree.h was used to manage an in-memory representation
-> of the state of the svn tree being imported.  When that in-memory
-> representation was retired, we were lazy and left some utility
-> functions there.  Here is a patch series to finish cleaning up and
-> remove vcs-svn/repo_tree.h completely.
->
-> This is an alternative to bc/vcs-svn-cleanup from 'next'.  Those
-> patches weren't cc-ed to me and I missed them --- sorry about that.  I
-> can rebase on top of them if that is more convenient.
+Junio C Hamano wrote:
+> Stefan Beller <sbeller@google.com> writes:
 
-A rebased version would be easier IIUC Junios reply to
-the one-off that I sent.
+>> The svn specific declaration of repo_init was not used since 723b7a2789
+>> (vcs-svn: eliminate repo_tree structure, 2010-12-10).
+>>
+>> This was noticed when including repository.h via cache.h as that has the
+>> same function with a different signature.
+>>
+>> Helped-by: Jonathan Nieder <jrnieder@gmail.com>
+>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>> ---
+>
+> It looks to me that this is a reduced duplicate of what brian posted
+> yesterday.  The first two patches in the 6-patch series that you
+> commented on, I think, covers what this change wants to achieve and
+> probably a lot more.  I've merged those two already to 'next' and
+> was about to push the result out.
 
-The patches look good.
+I just sent
+https://public-inbox.org/git/20170822233732.GX13924@aiede.mtv.corp.google.com/
+to fix this more thoroughly.  I can rebase on top of bc/vcs-svn-cleanup
+if that is helpful --- just say the word.
 
 Thanks,
-Stefan
-
->
-> Thoughts of all kinds welcome, as always.
->
-> Thanks,
-> Jonathan
->
-> Jonathan Nieder (4):
->   vcs-svn: remove prototypes for missing functions
->   vcs-svn: remove custom mode constants
->   vcs-svn: remove repo_delete wrapper function
->   vcs-svn: move remaining repo_tree functions to fast_export.h
->
->  Makefile              |  1 -
->  vcs-svn/fast_export.c | 41 +++++++++++++++++++++++++++++++++++++----
->  vcs-svn/fast_export.h |  3 +++
->  vcs-svn/repo_tree.c   | 48 ------------------------------------------------
->  vcs-svn/repo_tree.h   | 23 -----------------------
->  vcs-svn/svndump.c     | 33 ++++++++++++++++-----------------
->  6 files changed, 56 insertions(+), 93 deletions(-)
->  delete mode 100644 vcs-svn/repo_tree.c
->  delete mode 100644 vcs-svn/repo_tree.h
->
-> [1] https://public-inbox.org/git/20170822213501.5928-1-sbeller@google.com
-> [2] https://public-inbox.org/git/20170821000022.26729-3-sandals@crustytoothpaste.net
+Jonathan
