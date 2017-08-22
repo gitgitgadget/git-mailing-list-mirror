@@ -6,32 +6,39 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 77B0C1F667
-	for <e@80x24.org>; Tue, 22 Aug 2017 17:06:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C24D1F667
+	for <e@80x24.org>; Tue, 22 Aug 2017 17:10:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751629AbdHVRG2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Aug 2017 13:06:28 -0400
-Received: from bsmtp8.bon.at ([213.33.87.20]:21685 "EHLO bsmtp8.bon.at"
+        id S1751547AbdHVRKR (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Aug 2017 13:10:17 -0400
+Received: from bsmtp8.bon.at ([213.33.87.20]:24520 "EHLO bsmtp8.bon.at"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751292AbdHVRG1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Aug 2017 13:06:27 -0400
+        id S1751290AbdHVRKQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Aug 2017 13:10:16 -0400
 Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp8.bon.at (Postfix) with ESMTPSA id 3xcH5Y2tZZz5tlV;
-        Tue, 22 Aug 2017 19:06:25 +0200 (CEST)
+        by bsmtp8.bon.at (Postfix) with ESMTPSA id 3xcH9z0kzJz5tlT;
+        Tue, 22 Aug 2017 19:10:15 +0200 (CEST)
 Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id D1052271;
-        Tue, 22 Aug 2017 19:06:24 +0200 (CEST)
-To:     Martin Koegler <martin.koegler@chello.at>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
+        by dx.site (Postfix) with ESMTP id B3B95271;
+        Tue, 22 Aug 2017 19:10:14 +0200 (CEST)
+Subject: Re: [RFC 0/3] imap-send curl tunnelling support
+To:     Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Stefan Beller <sbeller@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <ab866314-608b-eaca-b335-12cffe165526@morey-chaisemartin.com>
+ <5c46f1e4-825e-8e10-e323-e637e170f315@morey-chaisemartin.com>
+ <CAGZ79kbgYqo=6FvRNwB0AOKT8mioPTu2CearVttA30nZ8wBMHQ@mail.gmail.com>
+ <alpine.DEB.2.21.1.1708161429510.19382@virtualbox>
+ <4a5f9d64-0709-b6b0-c398-6887f1f7f4c0@morey-chaisemartin.com>
 From:   Johannes Sixt <j6t@kdbg.org>
-Subject: mk-dontmerge/size-t-on-next test failure
-Message-ID: <fcddd218-e104-0f96-71e6-4522564555f1@kdbg.org>
-Date:   Tue, 22 Aug 2017 19:06:24 +0200
+Message-ID: <63e3ebea-ad4e-14d7-1170-594390af8e06@kdbg.org>
+Date:   Tue, 22 Aug 2017 19:10:14 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <4a5f9d64-0709-b6b0-c398-6887f1f7f4c0@morey-chaisemartin.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
@@ -39,61 +46,16 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I observe the test failure below in t0040-parse-options.sh. It bisects
-to 1a7909b25eb4ab3071ce4290115618e2582eadaa "Convert pack-objects to
-size_t". It looks like git_parse_size_t() needs a fix. This is on
-Windows, 32 bit. size_t, int and long are all 32 bits wide.
+Am 21.08.2017 um 09:27 schrieb Nicolas Morey-Chaisemartin:
+> (Sent a reply from my phone while out of town but couldn't find it so here it is again)
+> 
+> It's available on my github:
+> https://github.com/nmorey/git/tree/dev/curl-tunnel
+> 
+> The series had been stlighly changed since the patch were posted, mostly to add the proper ifdefs to handle older curl versions.
 
-expecting success:
-        check magnitude: 1073741824 -m 1g
+This does not build for me on Windows due to a missing socketpair() 
+function. But I am working in an old environment, so I do not know 
+whether this statement has much value.
 
-ok 18 - OPT_MAGNITUDE() giga
-
-expecting success:
-        check magnitude: 3221225472 -m 3g
-
-error: switch `m' expects a non-negative integer value with an optional
-k/m/g suffix
-usage: test-parse-options <options>
-
-    --yes                 get a boolean
-    -D, --no-doubt        begins with 'no-'
-    -B, --no-fear         be brave
-    -b, --boolean         increment by one
-    -4, --or4             bitwise-or boolean with ...0100
-    --neg-or4             same as --no-or4
-
-    -i, --integer <n>     get a integer
-    -j <n>                get a integer, too
-    -m, --magnitude <n>   get a magnitude
-    --set23               set integer to 23
-    -t <time>             get timestamp of <time>
-    -L, --length <str>    get length of <str>
-    -F, --file <file>     set file to <file>
-
-String options
-    -s, --string <string>
-                          get a string
-    --string2 <str>       get another string
-    --st <st>             get another string (pervert ordering)
-    -o <str>              get another string
-    --list <str>          add str to list
-
-Magic arguments
-    --quux                means --quux
-    -NUM                  set integer to NUM
-    +                     same as -b
-    --ambiguous           positive ambiguity
-    --no-ambiguous        negative ambiguity
-
-Standard options
-    --abbrev[=<n>]        use <n> digits to display SHA-1s
-    -v, --verbose         be verbose
-    -n, --dry-run         dry run
-    -q, --quiet           be quiet
-    --expect <string>     expected output in the variable dump
-
-not ok 19 - OPT_MAGNITUDE() 3giga
-#
-#               check magnitude: 3221225472 -m 3g
-#
+-- Hannes
