@@ -2,133 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AEB7320899
-	for <e@80x24.org>; Tue, 22 Aug 2017 09:36:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 818AB20899
+	for <e@80x24.org>; Tue, 22 Aug 2017 10:06:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932368AbdHVJgT (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Aug 2017 05:36:19 -0400
-Received: from mout.kundenserver.de ([217.72.192.74]:57680 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932322AbdHVJgS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Aug 2017 05:36:18 -0400
-Received: from skimbleshanks.math.uni-hannover.de ([130.75.46.4]) by
- mrelayeu.kundenserver.de (mreue103 [212.227.15.183]) with ESMTPSA (Nemesis)
- id 0LsNui-1dYqFp3PAm-011yIs; Tue, 22 Aug 2017 11:36:13 +0200
-Subject: Re: [PATCH v2 3/3] merge: save merge state earlier
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, hIpPy <hippy2981@gmail.com>
-References: <fe681e447791ded6db52ccd84e64e3637c08ffe5.1503309751.git.git@grubix.eu>
- <cover.1503319519.git.git@grubix.eu>
- <407f205e2b824d56c652411256eea3c0047576ef.1503319519.git.git@grubix.eu>
- <xmqqk21w4et2.fsf@gitster.mtv.corp.google.com>
-From:   Michael J Gruber <michael@grubix.eu>
-Message-ID: <36bea69b-010a-9542-ec87-38b00d2bb009@grubix.eu>
-Date:   Tue, 22 Aug 2017 11:36:13 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        id S932438AbdHVKGn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Aug 2017 06:06:43 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:33470 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932306AbdHVKGm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Aug 2017 06:06:42 -0400
+Received: by mail-pg0-f66.google.com with SMTP id u191so2110890pgc.0
+        for <git@vger.kernel.org>; Tue, 22 Aug 2017 03:06:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=nWHICKLKpcLTQcl6D4qwSyPgYWK0M7XCiKlChMLxkYY=;
+        b=dmjooi41Ueeo3MhitKOmlx2CzJVq3sECno5L9vR+JO/2vMuae0GAcntxWg79l9vZK5
+         ImoccATHRxv8205x7JPIKhA9NO2GLuzVaabGEk7FNa0EZN4DXVNRs5rBqmmVQFCIDh+9
+         KBFnssdzItASG4u0QTRoTORd4CBznJNxPrVAlPgvtfob2tWQABJDgp4hWuX29or/4o+n
+         PZax6f3LBvoRJ9TIIEQtqgq0ku9tLgbIOK7YHHH95s554gucwwSbmHJS4qRYOMan56qT
+         klWG8/ero0W7OP0U2IhEtx2lAoiWFC/MxBp+1ERJzgHHhPEjLPEzvHd9RHMAS9tsaLd2
+         fdkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=nWHICKLKpcLTQcl6D4qwSyPgYWK0M7XCiKlChMLxkYY=;
+        b=c7tMibf2qPa0WziQ8VOSvWvgYkJCkhO/39LidnvzEUfDV+7TSc7PEX6NxXmet5KUm7
+         40Bs6SUuPYAcGYznnkaCf+gp4Icxqaw5oeIpbSSZVAmFwtWCNypvJF+4mP55A9wg035M
+         d+CNW8GXbd6AKH8d5yfLqFiTq9oMnK2jcMJJcHcthh7quDo/2ATENG9MqKAeoeLJSnSu
+         YIc58ft7XJwxHwgJJtFgFHCsFllXRbatrP2Dt9Gdap90SgyHK9d1JK3vTYXzswmQ8Psc
+         OfdAsaghtoazmtlKCQ87kBSKjKksWPlORbVWfjNoMmvqxBudR4/03AP3ISuT0Xpu/MUf
+         vcEg==
+X-Gm-Message-State: AHYfb5jFDqBwAijNZ9/nXcFMTi3OJsRS6thUlcc6gqY3aJ56a61AUK/V
+        GHy+wbqm8hvUGNWJoc89sM7bmXCfJOCP
+X-Received: by 10.99.38.135 with SMTP id m129mr96323pgm.393.1503396401688;
+ Tue, 22 Aug 2017 03:06:41 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqqk21w4et2.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: de-DE
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:ZU25f07QsB7fnHrEscstM5ecvQPrQsxidP2teAQh8POlDYsHrCO
- 0xa2ErFBGmRLZmJwUPad4KqqGgXH/dmfQGyO5gsC32yLfUZfgjORjqO6qvO9r0HArlZNjgB
- L+hCONlI9gvPTETbimY85yBQlUqgiAe39XYA0FSqgdjk2gc8pcXpmQrozpqrzmxAT6HKXqK
- qA3R6oiLwWUHsGVy73bEw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:e5WzFBR9BjA=:vpiUAHmiRy3LgD2OpdmY2m
- OW8xveiD29/qgZXUEkxZ/T/0u+O9Z9OTiqwZoAJogYCKNWj+r2wOpJIB/TATc5Ab5JpUwayvX
- ClS2i0u78LdFNlWtB1MuZ/QdLBu5blQ74rtnq2OupFbPlON8NtQs0sdBu055smxhQgiAojRyr
- C1OaiEvL+7+T0NbPLdvRVJct/RBiEnY3ijqO3rgF1EF52eAfT5NSkqwIDKEQ8X4FKiVS+uXBd
- mwzVBRXstNWT8wHmqRf9g/JCREQtN72PwEpIcxhMEMpSokzKqRPQa0yMu9NbcZAcbbk5DKLmZ
- g2eSmQE4/A/MBp1u2XXkVOmYt7urv8ChYqeMbFng8Sp1kqc3KX3V1x+BX5TUrYuiZadnnfL8D
- 4hKWhHYJXN17E8dvpxbgR0VqMAi3mZOPYsj7wf9phN9mK660dDu+mUyWDK8mNGBaFeBBxffCW
- RXAfNFlA6v5bjkGUwsq1Vzsbk7dC8uiIZHEOZ4dgoGcLw2HUWdWPpb9HjlZ08pU86en+Vd6Zf
- sIb361ABBbcOE345iIV6dhOto2DOMmXGVS/VOtw8/Hjp5i+V72XzAc/3iqiyOpJPl/cv3K4/z
- tUSDX3lUZHGN36rhKqg07mCkPNx5CxzCqyleLj+qo/CaRaF5FujYGBkrdDnh0YOazDmVZE3wY
- EdzpEq3Mc7ygBPfcgdYmKYGNQbaVbAFUZDKRolmAzojoIhpvh9WhXKEoJa7AphSK+fIOLe0t3
- 1Vt+9YGfVu2IggJtbfMIQ0ykVS4BQPNGKo+xzRTFd3PiCHRRvfIu6AYT2ps=
+Received: by 10.100.162.37 with HTTP; Tue, 22 Aug 2017 03:06:41 -0700 (PDT)
+In-Reply-To: <8e8c8cdc-cad8-550d-9669-3f078f0d77d1@grubix.eu>
+References: <cover.1503319519.git.git@grubix.eu> <fe681e447791ded6db52ccd84e64e3637c08ffe5.1503309751.git.git@grubix.eu>
+ <ddd9c06813f8e2e9d8160f2ed965e728190bc573.1503319519.git.git@grubix.eu>
+ <CAN0heSrG7ackEW1BMpadNnPKSUCXATbxfUykcpppC6-Y2OCWJQ@mail.gmail.com> <8e8c8cdc-cad8-550d-9669-3f078f0d77d1@grubix.eu>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Tue, 22 Aug 2017 12:06:41 +0200
+Message-ID: <CAN0heSq0t=Jkaq-dgt_T4K9an4Peat0jArRQgE6JgsWwu53FPw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] Documentation/git-merge: explain --continue
+To:     Michael J Gruber <git@grubix.eu>
+Cc:     Git Mailing List <git@vger.kernel.org>, hIpPy <hippy2981@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano venit, vidit, dixit 22.08.2017 02:38:
-> Michael J Gruber <git@grubix.eu> writes:
-> 
->>  static void prepare_to_commit(struct commit_list *remoteheads)
->>  {
->>  	struct strbuf msg = STRBUF_INIT;
->> @@ -767,6 +768,8 @@ static void prepare_to_commit(struct commit_list *remoteheads)
->>  		strbuf_commented_addf(&msg, _(merge_editor_comment), comment_line_char);
->>  	if (signoff)
->>  		append_signoff(&msg, ignore_non_trailer(msg.buf, msg.len), 0);
->> +	if (!squash)
->> +		write_merge_heads(remoteheads);
->>  	write_file_buf(git_path_merge_msg(), msg.buf, msg.len);
->>  	if (run_commit_hook(0 < option_edit, get_index_file(), "prepare-commit-msg",
->>  			    git_path_merge_msg(), "merge", NULL))
-> 
-> I can understand that you would never want to write out MERGE_HEAD
-> while squashing, but I somehow think it would be a bug in the caller
-> to call prepare_to_commit(), whose point is to prepare the merge
-> message to be recorded in the resulting merge commit, when the user
-> gave us the "--squash" option, which is an explicit instruction that
-> the user does not want the merge commit the message is used.
+On 22 August 2017 at 11:26, Michael J Gruber <git@grubix.eu> wrote:
+> Martin =C3=85gren venit, vidit, dixit 21.08.2017 18:43:
+>> On 21 August 2017 at 14:53, Michael J Gruber <git@grubix.eu> wrote:
+>>> Currently, 'git merge --continue' is mentioned but not explained.
+>>>
+>>> Explain it.
+>>>
+>>> Signed-off-by: Michael J Gruber <git@grubix.eu>
+>>> ---
+>>>  Documentation/git-merge.txt | 5 ++++-
+>>>  1 file changed, 4 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+>>> index 6b308ab6d0..615e6bacde 100644
+>>> --- a/Documentation/git-merge.txt
+>>> +++ b/Documentation/git-merge.txt
+>>> @@ -288,7 +288,10 @@ After seeing a conflict, you can do two things:
+>>>
+>>>   * Resolve the conflicts.  Git will mark the conflicts in
+>>>     the working tree.  Edit the files into shape and
+>>> -   'git add' them to the index.  Use 'git commit' to seal the deal.
+>>> +   'git add' them to the index.  Use 'git commit' or
+>>> +   'git merge --continue' to seal the deal. The latter command
+>>> +   checks whether there is a (interrupted) merge in progress
+>>> +   before calling 'git commit'.
+>>>
+>>>  You can work through the conflict with a number of tools:
+>>
+>> There are actually two things going on here. First, this mentions git
+>> merge --continue. Second, it explains what that command does. But the
+>> latter is done earlier (not exactly like here, but still).
+>
+> I didn't see that explained in the man page at all - on the contrary, I
+> only saw a forward reference (see section...), but then only an
+> explanation of what "resolving" means (including the "git commit"-step).
+> It is unclear to me from the man page which steps of "resolving" the
+> command "git merge --continue" does - you could think it does "git
+> commit -a", for example.
 
-That sounds reasonable. I vaguely remember a failing test for an earlier
-version that I tried, but that was before the "split".
+That's very true, and your change helps immensely. I thought that once
+git merge --continue was mentioned, e.g.,
 
-> Can squash ever be true in this function?
-> 
-> This function has two callsites: merge_trivial() and
-> finish_automerge().
-> 
-> I think merge_trivial() will not be called under "--squash", which
-> turns option_commit off and the only callsite of it is inside an
-> else-if clause that requres option_commit to be true.  You can do a
-> similar deduction around the "automerge_was_ok" variable to see if
-> finish_automerge() can be called when "--squash" is given; I suspect
-> the answer may be no.
+        Use 'git commit' or 'git merge --continue' to seal the deal.
 
-I'll go without the if, after more testing.
+or
 
->> diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
->> index 2ebda509ac..80194b79f9 100755
->> --- a/t/t7600-merge.sh
->> +++ b/t/t7600-merge.sh
->> @@ -774,4 +774,19 @@ test_expect_success 'merge can be completed with --continue' '
->>  	verify_parents $c0 $c1
->>  '
->>  
->> +write_script .git/FAKE_EDITOR <<EOF
->> +# kill -TERM command added below.
->> +EOF
->> +
->> +test_expect_success EXECKEEPSPID 'killed merge can be completed with --continue' '
->> +	git reset --hard c0 &&
->> +	! "$SHELL_PATH" -c '\''
->> +	  echo kill -TERM $$ >> .git/FAKE_EDITOR
->> +	  GIT_EDITOR=.git/FAKE_EDITOR
->> +	  export GIT_EDITOR
->> +	  exec git merge --no-ff --edit c1'\'' &&
-> 
-> This is a tricky construct.  You "reserve" a process ID by using a
-> shell, arrange it to be killed and then using "exec" to make it the
-> "git merge" program to be killed.  I kind of like the convolutedness.
+        Use 'git commit' to conclude (you can also say 'git merge
+        --continue').
 
-That is from t7502. Sorry for hiding that note in the cover letter, I
-should put it into 3/3's message or a test comment.
+then things are in some sense "complete". But you might be right that
+further stressing that the latter is basically an alias helps avoid some
+confusion. "Oh, great, so now I have two commands to choose from -- which
+one should I be using?" :-)
 
-When testing, I simply used "git merge... &" and "ps" or "jobs" to know
-which process to kill. Apparantly, the above is the most portable way to
-script that. t7502 went through a few iterations to ensure this.
-
->> +	git merge --continue &&
->> +	verify_parents $c0 $c1
->> +'
->> +
->>  test_done
+Martin
