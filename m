@@ -2,115 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 52AFD1F667
-	for <e@80x24.org>; Tue, 22 Aug 2017 15:56:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3A7601F667
+	for <e@80x24.org>; Tue, 22 Aug 2017 15:58:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751158AbdHVP4b (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Aug 2017 11:56:31 -0400
-Received: from 1.mo176.mail-out.ovh.net ([178.33.254.253]:52934 "EHLO
-        1.mo176.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751050AbdHVP4a (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Aug 2017 11:56:30 -0400
-Received: from ex2.mail.ovh.net (gw1.ex2.mail.ovh.net [164.132.80.186])
-        by mo176.mail-out.ovh.net (Postfix) with ESMTPS id 565E880FAB;
-        Tue, 22 Aug 2017 17:56:29 +0200 (CEST)
-Received: from [10.0.2.127] (86.200.136.234) by EX7.indiv2.local (172.16.2.7)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Tue, 22
- Aug 2017 17:56:28 +0200
-From:   Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
-Subject: [PATCH v3 3/4] imap_send: setup_curl: retreive credentials if not set
- in config file
-To:     <git@vger.kernel.org>
-CC:     <peff@peff.net>
-References: <087f5907-6558-ce32-2f5c-2e418522c030@morey-chaisemartin.com>
-Openpgp: preference=signencrypt
-Message-ID: <60becdb6-6b08-e3db-a217-62933f924eae@morey-chaisemartin.com>
-Date:   Tue, 22 Aug 2017 17:56:28 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101
- Thunderbird/56.0
+        id S1751069AbdHVP6T (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Aug 2017 11:58:19 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61976 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751010AbdHVP6S (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Aug 2017 11:58:18 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 17E5BA496E;
+        Tue, 22 Aug 2017 11:58:18 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Ae7X7xkpJvpTxeMfO0+IVE6GRGI=; b=bbx5FV
+        A+slekVdXpdV3ejwZIuqJjFnliIJM2HvOp4tBMCAX3exvgNwaoGx9AB+LdZALWLm
+        39i98hZ2U5plwjShQzw/La7Z66kjiWcQLsU3h8DnhLjYqUOLPwTwFZ43HPzCLnQ+
+        3xg5YqkMvKxWOap3z1Z0D/k0FPlJCS1HTDY1o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=hiJO69j/GKnR46YJ6J+ITR9k30A80I/z
+        Vh+EzxtdZBrEvCuIfgd2Am788/QnGvl4Q90iejtKtgXeYs6Moq1Noz9A9kirE+Ex
+        HsMfo9NtScvnjOTSfwmccXF0O+Qz/OHXg2l5eNtFbxmToVQ7wjqUWr34dzjWgHcE
+        Vc19MyyqoFM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 103AAA496D;
+        Tue, 22 Aug 2017 11:58:18 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 72424A496C;
+        Tue, 22 Aug 2017 11:58:17 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Aug 2017, #04; Fri, 18)
+References: <xmqq60dkbma1.fsf@gitster.mtv.corp.google.com>
+        <CACsJy8AM+dr_in_hW3y6APUo-cKsg+3sAZg9-7+02ZspSZcf=g@mail.gmail.com>
+Date:   Tue, 22 Aug 2017 08:58:16 -0700
+In-Reply-To: <CACsJy8AM+dr_in_hW3y6APUo-cKsg+3sAZg9-7+02ZspSZcf=g@mail.gmail.com>
+        (Duy Nguyen's message of "Tue, 22 Aug 2017 15:49:12 +0700")
+Message-ID: <xmqqa82r4msn.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <087f5907-6558-ce32-2f5c-2e418522c030@morey-chaisemartin.com>
-Content-Type: text/plain; charset="windows-1252"
-Content-Language: fr-xx-classique+reforme1990
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [86.200.136.234]
-X-ClientProxiedBy: CAS1.indiv2.local (172.16.1.1) To EX7.indiv2.local
- (172.16.2.7)
-X-Ovh-Tracer-Id: 6065504274079803383
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeelledrtddtgdejkecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemuceftddtnecu
+Content-Type: text/plain
+X-Pobox-Relay-ID: B65EF492-8752-11E7-83D6-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Up to this point, the curl mode only supported getting the username
-and password from the gitconfig file while the legacy mode could also
-fetch them using the credential API.
+Duy Nguyen <pclouds@gmail.com> writes:
 
-Signed-off-by: Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
----
- imap-send.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+> On Sat, Aug 19, 2017 at 4:26 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> [Discarded]
+>>
+>> * nd/prune-in-worktree (2017-04-24) 12 commits
+>>  . rev-list: expose and document --single-worktree
+>>  . revision.c: --reflog add HEAD reflog from all worktrees
+>>  . files-backend: make reflog iterator go through per-worktree reflog
+>>  . revision.c: --all adds HEAD from all worktrees
+>>  . refs: remove dead for_each_*_submodule()
+>>  . revision.c: use refs_for_each*() instead of for_each_*_submodule()
+>>  . refs: add refs_head_ref()
+>>  . refs: move submodule slash stripping code to get_submodule_ref_store
+>>  . refs.c: refactor get_submodule_ref_store(), share common free block
+>>  . revision.c: --indexed-objects add objects from all worktrees
+>>  . revision.c: refactor add_index_objects_to_pending()
+>>  . revision.h: new flag in struct rev_info wrt. worktree-related refs
+>>
+>>  "git gc" and friends when multiple worktrees are used off of a
+>>  single repository did not consider the index and per-worktree refs
+>>  of other worktrees as the root for reachability traversal, making
+>>  objects that are in use only in other worktrees to be subject to
+>>  garbage collection.
+>
+> I'm back and will try to continue this. Is it discarded because of
+> lack of progress, or because the problem is already fixed some other
+> way? A quick "git log --oneline" on important files has not revealed
+> anything.
 
-diff --git a/imap-send.c b/imap-send.c
-index 448a4a0b3..a74d011a9 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -1398,7 +1398,7 @@ static int append_msgs_to_imap(struct imap_server_conf *server,
- }
- 
- #ifdef USE_CURL_FOR_IMAP_SEND
--static CURL *setup_curl(struct imap_server_conf *srvc)
-+static CURL *setup_curl(struct imap_server_conf *srvc, struct credential *cred)
- {
- 	CURL *curl;
- 	struct strbuf path = STRBUF_INIT;
-@@ -1411,6 +1411,7 @@ static CURL *setup_curl(struct imap_server_conf *srvc)
- 	if (!curl)
- 		die("curl_easy_init failed");
- 
-+	server_fill_credential(&server, cred);
- 	curl_easy_setopt(curl, CURLOPT_USERNAME, server.user);
- 	curl_easy_setopt(curl, CURLOPT_PASSWORD, server.pass);
- 
-@@ -1460,8 +1461,9 @@ static int curl_append_msgs_to_imap(struct imap_server_conf *server,
- 	struct buffer msgbuf = { STRBUF_INIT, 0 };
- 	CURL *curl;
- 	CURLcode res = CURLE_OK;
-+	struct credential cred = CREDENTIAL_INIT;
- 
--	curl = setup_curl(server);
-+	curl = setup_curl(server, &cred);
- 	curl_easy_setopt(curl, CURLOPT_READDATA, &msgbuf);
- 
- 	fprintf(stderr, "sending %d message%s\n", total, (total != 1) ? "s" : "");
-@@ -1496,6 +1498,18 @@ static int curl_append_msgs_to_imap(struct imap_server_conf *server,
- 	curl_easy_cleanup(curl);
- 	curl_global_cleanup();
- 
-+	if (cred.username)
-+		if (res == CURLE_OK)
-+			credential_approve(&cred);
-+#if LIBCURL_VERSION_NUM >= 0x070d01
-+		else if (res == CURLE_LOGIN_DENIED)
-+#else
-+		else
-+#endif
-+			credential_reject(&cred);
-+
-+	credential_clear(&cred);
-+
- 	return res == CURLE_OK;
- }
- #endif
--- 
-2.14.0.1.gd9597ce13
+Welcome back. 
+
+I ejected it out of 'pu' due to inactivity and possibly because I
+saw some conflicts with topics that were making progress back then.
+I do not offhand know if the old one still merges cleanly to 'pu',
+but it certainly wasn't because the topic was deemed unnecessary.
+
+Thanks.
 
 
