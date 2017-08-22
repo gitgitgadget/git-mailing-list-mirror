@@ -2,103 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A5EB1F667
-	for <e@80x24.org>; Tue, 22 Aug 2017 22:26:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2481C1F667
+	for <e@80x24.org>; Tue, 22 Aug 2017 22:29:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751687AbdHVW0S (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Aug 2017 18:26:18 -0400
-Received: from mail-oi0-f45.google.com ([209.85.218.45]:35245 "EHLO
-        mail-oi0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751641AbdHVW0S (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Aug 2017 18:26:18 -0400
-Received: by mail-oi0-f45.google.com with SMTP id r200so798838oie.2
-        for <git@vger.kernel.org>; Tue, 22 Aug 2017 15:26:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=bnVUjGwfd7FlOgNM31+0S/Tw+xRyp5edB/uLHqD4gbQ=;
-        b=YWX5gqd04ZAxISDATM6JlPae+f3wrXzF0g8pPcqwYCK1ZyIujxfnhgiJImVshLdE1w
-         lj/X23Ic5qc0rpAj//5AJR8tHKSL5/NuBNot2BKB6yB33BJvAapfQuCyJOv5V6FdQTOB
-         lU55F6E0PIdzPxvpBlG5jkA23TeTWZyWH9LjZYMxoUZg1ANqrdlb2XeNNpV9nWtlSuM/
-         HqJr1V2iTszupOxiV93r08AstznREn1NK7slc7T/qR87/11Zf92cjVm4yRD8/Vg6R10B
-         qUfVUsPWIBDGobh3GH5gBOsfd2XDFiwfJytOeXADv218N0umZemjDzY9l2L+JW0gMrDt
-         V3Bw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:in-reply-to:references
-         :from:date:message-id:subject:to:cc;
-        bh=bnVUjGwfd7FlOgNM31+0S/Tw+xRyp5edB/uLHqD4gbQ=;
-        b=mg0itrqBLKoZB8fDo0EReLqVliUNr1HKrrq+pzrBUj4xQDK73I2sdGzF1rBREPc8P5
-         cA87LAXxDcaAnXE654KLKrxvV8WPHeXOhu2QqiRZ7+xKYev6kFFjZcUb2KpdkARWk6ef
-         EpWdj4ln9qiMSLkzxJ6/r9rYB/snubD5Yh58Ct5KDpS2K5cn+Rhd85aPBDSObmUNu6b8
-         uSD/ju3E7FcXH1wMKvoI+PKDKcl/xXgTEOyEqQcftcy53iKU3KIfeqHDlgNwjarIhCqa
-         aMgaG7yh+3Eiif2479SH3lwyT6E4vnGowyevqcChpDbwm71Ap14W+pvwr6z23uxbIFDw
-         uXng==
-X-Gm-Message-State: AHYfb5j6uBFnZfun9hCUyMQGalZuM3GCuTAHNWQoV9yIxT3aQKO9PW6u
-        fMspRD3o1vJTPsZYwMMxl1qzZbe2QQ==
-X-Received: by 10.202.182.10 with SMTP id g10mr920070oif.173.1503440777609;
- Tue, 22 Aug 2017 15:26:17 -0700 (PDT)
+        id S1752755AbdHVW3o (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Aug 2017 18:29:44 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56166 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752684AbdHVW3n (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Aug 2017 18:29:43 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 78D7C9111C;
+        Tue, 22 Aug 2017 18:29:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=zGKUpzXvZ72ADihR5a5AWH3gXh8=; b=BNhHg0
+        stbYTNH7hf1wwvl7Efio8rJ7hUqdYqzyUyfpnV3BhhkzIZz6XnrDv7qT6ZN0mIEb
+        iwBZtG48rmafz8a6NlZ1oIZP8wnwiYc3jO0a0vFLN+lxDU8GEf5z0n/dRGi9JR+V
+        hTbDJ70COrtdjFydLB+j1S3awB4y5Jt8KF3NU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=N1dGkop/54CeKv2c8wlWR/GbYT0MX7kN
+        nkukUvhM4SUwCN/MYETvvagjiBfR/usq74C4oA4W6MDATDFLvrUoqX6gOTLntaky
+        f3g8Q8MRwfI93LEv1f8E9kCe4ctsm7A+paYuJy//+h+AzUJYh0DT1VOm1aeL2HIW
+        8DJe6aAvfMI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 714559111A;
+        Tue, 22 Aug 2017 18:29:42 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D221B91117;
+        Tue, 22 Aug 2017 18:29:41 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Prathamesh Chavan <pc44800@gmail.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, christian.couder@gmail.com
+Subject: Re: [GSoC][PATCH 1/4] submodule--helper: introduce get_submodule_displaypath()
+References: <20170821161515.23775-1-pc44800@gmail.com>
+Date:   Tue, 22 Aug 2017 15:29:40 -0700
+In-Reply-To: <20170821161515.23775-1-pc44800@gmail.com> (Prathamesh Chavan's
+        message of "Mon, 21 Aug 2017 21:45:12 +0530")
+Message-ID: <xmqqinhf1bjf.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.74.98.28 with HTTP; Tue, 22 Aug 2017 15:26:17 -0700 (PDT)
-Reply-To: noloader@gmail.com
-In-Reply-To: <CAH8yC8nHnbWTG4hxD+mEHKPS6eWcBb7yMsgN886=aTWaBRhE5A@mail.gmail.com>
-References: <CAH8yC8=A0-geqduTNNJw0yb1BREqsB75_bKSp+06Rb5fY6oiuQ@mail.gmail.com>
- <CAGZ79kYyO4zvmTvMpxpFyBEs4f=xoy_-UeSbmi9W-OCFz0kCwQ@mail.gmail.com>
- <CAH8yC8nu7zDmkQMZ99SpePXL1WpvvcOdQDAtwdo4WXiPiR3tOQ@mail.gmail.com> <CAH8yC8nHnbWTG4hxD+mEHKPS6eWcBb7yMsgN886=aTWaBRhE5A@mail.gmail.com>
-From:   Jeffrey Walton <noloader@gmail.com>
-Date:   Tue, 22 Aug 2017 18:26:17 -0400
-Message-ID: <CAH8yC8=HuAZ0tJbRGnp83-Th5OkQ0-cdSOBrMU23y6NyB0Ax3g@mail.gmail.com>
-Subject: Re: How to force a push to succeed?
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6429195A-8789-11E7-BB7D-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->>>> Commit seems to be the wrong command as Git appears to be trying to do
->>>> something I don't want.
->>>>
->>>> How do I force the push to succeed?
->>>>
->>>> Thanks in advance.
->>>
->>> Checkout the --force[-with-lease] argument.
->
-> Thanks again Stefan,
->
-> From another testing machine, it looks like the changes have not been
-> backed out. The previous operation un-did the ADX gear because it was
-> an evolutionary dead-end.
->
-> via$ git pull
-> From https://github.com/noloader/cryptopp
->  + 66654dd...559fc3b master     -> origin/master  (forced update)
-> Already up-to-date.
-> via:$ cat integer.cpp | grep ADX
-> #if defined(CRYPTOPP_ADX_AVAILABLE)
-> # define CRYPTOPP_INTEGER_ADX 1
-> #if CRYPTOPP_INTEGER_SSE2 || CRYPTOPP_INTEGER_ADX
-> #if CRYPTOPP_INTEGER_ADX
-> extern int CRYPTOPP_FASTCALL ADX_Add(size_t N, word *C, const word *A,
-> const word *B);
-> #if CRYPTOPP_INTEGER_ADX
->         if (HasADX())
->                 s_pAdd = &ADX_Add;
-> #if CRYPTOPP_INTEGER_SSE2 || CRYPTOPP_INTEGER_ADX
->
-> Above, there should be no references to ADX. Looking at the GitHub the
-> changes have been applied.
->
-> Any ideas?
+Prathamesh Chavan <pc44800@gmail.com> writes:
 
-You know, I look at how fucked up yet another simple workflow is, and
-all I can do is wonder. It is absolutely amazing. Its like the project
-goes out of its way to make simple tasks difficult.
+> Introduce function get_submodule_displaypath() to replace the code
+> occurring in submodule_init() for generating displaypath of the
+> submodule with a call to it.
+
+Looks like a quite straight-forward refactoring.
+
+> +static char *get_submodule_displaypath(const char *path, const char *prefix)
+> +{
+> +	const char *super_prefix = get_super_prefix();
+> +
+> +	if (prefix && super_prefix) {
+> +		BUG("cannot have prefix '%s' and superprefix '%s'",
+> +		    prefix, super_prefix);
+> +	} else if (prefix) {
+> +		struct strbuf sb = STRBUF_INIT;
+> +		char *displaypath = xstrdup(relative_path(path, prefix, &sb));
+> +		strbuf_release(&sb);
+> +		return displaypath;
+
+Use of xstrdup() would waste one extra allocation and copy, no?  In
+other words, wouldn't this do the same thing?
+
+	... {
+		struct strbuf sb = STRBUF_INIT;
+
+		relative_path(path, prefix, &sb);
+	        return strbuf_detach(&sb, NULL);
+
+> @@ -363,7 +375,6 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
+>  	 * Set active flag for the submodule being initialized
+>  	 */
+>  	if (!is_submodule_active(the_repository, path)) {
+> -		strbuf_reset(&sb);
+>  		strbuf_addf(&sb, "submodule.%s.active", sub->name);
+>  		git_config_set_gently(sb.buf, "true");
+>  	}
+
+This is because sb will stay untouched with the use of the new
+helper.  With the way this single strbuf is reused throughout this
+function, I cannot help wondering if the prevailing pattern of
+resetting and then using is a mistake.  If the strbuf is mostly used
+as a scratchpad, wouldn't it make more sense to use it and then
+clean up when you are done with it?
+
+I.e. something along this line that shows only two uses...
+
+ builtin/submodule--helper.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 0ff9dd0b85..84ded4b2e9 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -363,9 +363,9 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
+ 	 * Set active flag for the submodule being initialized
+ 	 */
+ 	if (!is_submodule_active(the_repository, path)) {
+-		strbuf_reset(&sb);
+ 		strbuf_addf(&sb, "submodule.%s.active", sub->name);
+ 		git_config_set_gently(sb.buf, "true");
++		strbuf_reset(&sb);
+ 	}
+ 
+ 	/*
+@@ -373,7 +373,6 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
+ 	 * To look up the url in .git/config, we must not fall back to
+ 	 * .gitmodules, so look it up directly.
+ 	 */
+-	strbuf_reset(&sb);
+ 	strbuf_addf(&sb, "submodule.%s.url", sub->name);
+ 	if (git_config_get_string(sb.buf, &url)) {
+ 		if (!sub->url)
+@@ -410,9 +409,9 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
+ 				_("Submodule '%s' (%s) registered for path '%s'\n"),
+ 				sub->name, url, displaypath);
+ 	}
++	strbuf_reset(&sb);
+ 
+ 	/* Copy "update" setting when it is not set yet */
+-	strbuf_reset(&sb);
+ 	strbuf_addf(&sb, "submodule.%s.update", sub->name);
+ 	if (git_config_get_string(sb.buf, &upd) &&
+ 	    sub->update_strategy.type != SM_UPDATE_UNSPECIFIED) {
+
+
