@@ -2,90 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A01120899
-	for <e@80x24.org>; Tue, 22 Aug 2017 08:49:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F0CA120899
+	for <e@80x24.org>; Tue, 22 Aug 2017 09:27:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932230AbdHVItp (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Aug 2017 04:49:45 -0400
-Received: from mail-oi0-f52.google.com ([209.85.218.52]:33058 "EHLO
-        mail-oi0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932205AbdHVItn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Aug 2017 04:49:43 -0400
-Received: by mail-oi0-f52.google.com with SMTP id f11so179131106oic.0
-        for <git@vger.kernel.org>; Tue, 22 Aug 2017 01:49:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=N+YeXt6YNmQTHceSi0rmRFvCnvPyez2XGkHipb+vj6Q=;
-        b=lwNCUbjUE5BP6vmzdSQLt5V5whvU5Z4MrV2XkNexsU6esQZvIkHv6ZgMKwyW+0liYC
-         Bn69YL9QKk+XLQDRGqL9INBOqb/CAAAZoEf8JxiUzi0BhjVZC5uFNwFLsQ24EJaVbMgk
-         O+QHUa/Px9dMfOKJyh6kyzBIDgBMscR+2ASHbh5351E0NLH/JNZg91o7jZovIjVCkMat
-         pmpI1+sonNgt1mhgGzOcRElgvC6pGE0n2uW6QQaoAiNgduQhTJwQ3z7xqBDL9l8MHIKr
-         FUAt0mSZbSI54g8yf/pwR51kI8iFbc4j0Ky5cmdDZe1Pe1Gorarmf9dp8w7w4Vhl/uVX
-         l6nQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=N+YeXt6YNmQTHceSi0rmRFvCnvPyez2XGkHipb+vj6Q=;
-        b=ea7xx8JAC9VQYTxH1Z29qCcVhel668hZowKRgm/P1znEe3f4ly5EItQ7B+xcvjW0K/
-         JEYYbQBigpmMbAlu5hdp5TP+8WuiibMethtCSU7GDRM+tAAGSATpCAOI1Rmt9ZABdI70
-         xfF6JkqOAWqfzquyk6e7Ky/Xcn2N519DzCK8Fizjhjmh+cZGb1gt+Uyslf3W26NRddhG
-         YZpvf0OmjWroqe4mniKJ1IRXpMAD2MI1lSQXeReux1vJKAD8xhji3RlWbPNiu9BJfrfn
-         LWTZxBzIitOM8LY9WT7RhO+UD/1uDycgXtkMil5eV9xAbX89TTduImwSJ57OUcOw3mmd
-         W1pg==
-X-Gm-Message-State: AHYfb5gYrExiSqz9fu55ukJ0aOdSGq2MfAra2P5mO4a7Ug0sn121A3Cq
-        4LRCJLvqIzB80h09zuMUW+kciw4OsA==
-X-Received: by 10.202.168.7 with SMTP id r7mr27045909oie.256.1503391782778;
- Tue, 22 Aug 2017 01:49:42 -0700 (PDT)
+        id S932429AbdHVJ07 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Aug 2017 05:26:59 -0400
+Received: from mout.kundenserver.de ([212.227.17.24]:53505 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932205AbdHVJ06 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Aug 2017 05:26:58 -0400
+Received: from skimbleshanks.math.uni-hannover.de ([130.75.46.4]) by
+ mrelayeu.kundenserver.de (mreue104 [212.227.15.183]) with ESMTPSA (Nemesis)
+ id 0MG9cl-1doiYy1vM7-00F9JJ; Tue, 22 Aug 2017 11:26:55 +0200
+Subject: Re: [PATCH v2 1/3] Documentation/git-merge: explain --continue
+To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, hIpPy <hippy2981@gmail.com>
+References: <cover.1503319519.git.git@grubix.eu>
+ <fe681e447791ded6db52ccd84e64e3637c08ffe5.1503309751.git.git@grubix.eu>
+ <ddd9c06813f8e2e9d8160f2ed965e728190bc573.1503319519.git.git@grubix.eu>
+ <CAN0heSrG7ackEW1BMpadNnPKSUCXATbxfUykcpppC6-Y2OCWJQ@mail.gmail.com>
+From:   Michael J Gruber <git@grubix.eu>
+Message-ID: <8e8c8cdc-cad8-550d-9669-3f078f0d77d1@grubix.eu>
+Date:   Tue, 22 Aug 2017 11:26:55 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Received: by 10.74.176.69 with HTTP; Tue, 22 Aug 2017 01:49:12 -0700 (PDT)
-In-Reply-To: <xmqq60dkbma1.fsf@gitster.mtv.corp.google.com>
-References: <xmqq60dkbma1.fsf@gitster.mtv.corp.google.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 22 Aug 2017 15:49:12 +0700
-Message-ID: <CACsJy8AM+dr_in_hW3y6APUo-cKsg+3sAZg9-7+02ZspSZcf=g@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Aug 2017, #04; Fri, 18)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAN0heSrG7ackEW1BMpadNnPKSUCXATbxfUykcpppC6-Y2OCWJQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: de-DE
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:pXhCSq0yUI/2Rpsu48awp2Ab7GaJ4Vso+INS41NanylMW7ISN6k
+ BWCh1pd22p3rE9Qp+lBEIlXhRdzmxcP0dCbmtKOxIXZJ2WLGFeQcNsIuVb7y6GpNeHH0dFl
+ jvT0HC1W+XPXFQmb+AGuML+OHWA9npGGQrPLOV9wOlPFx0RLuIvEKARUGMWUzXN4J7fKDwb
+ Tjssh07bx6cUw1rqjcatQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:UK5anDAirpQ=:kWE7xuV09HlBBwTnUELqNq
+ PfrIw/eq/QeXm6CJ9nY/svG6uiv7i6AhAwZviWyxnUaZGhoVjMOmMH0ZpD6PmV9oaalGS0FM3
+ ZpT9SPjQXw8UrHDTGq2uU+3VrBSU2SZJQXuVEx6v5CeCVd41ntyuv9/nK7Gb1Dlq+x9+76P8r
+ 7K5YGibpTAHoNzdHeINpNzNL30d0HjbuezpNUCTvPGvJBBlT9Ubn5/2SzeB27tz2F/bEIXrCm
+ pvOGde+3PXJNBPsp76EdqbYfmzhlWDYBajgrj0b0KoI9DHCU3E8v4xXaCpJsrXUB+KYNqIwJK
+ WQeP4hG2lOZ2ols6eOxF3lRT6QO/nqbnh2cfqMrl3nlvrBPOZDfDDr2NaopaJpaR8cwgH1enm
+ qeHeg3t6CYnXbFzCmlJgURFnLNqIB9ILdhLGgtAkzgk+qVPVQ+8HviUYylguz4Kga7hQ1FIq3
+ EAiHRCwCgg5DE1efJ3CHHCjfLsW4peoFeqxCpAtpSYsmMKKR6Sxqh+aqOOWmL77+JKsQwAG6Z
+ nZRTZ8Te9d0sBY/dqFRHEjs45iUPgrBSotr7c9VMk+EBzNIhELy+DyRfJSfau+fg7l0Sp/yKg
+ qtk/HNj2RteOilWOQa/w8A/JXldrKwXdb4lgiz44zguzJKsjEhSTQhYJ0NebjuO1ZrTOmF68/
+ kSlKVtQ3xwSyCroqdr9/qo4MryLgmRYynpPGoGY+zJex6IGYEDGjBoSZVs9kg5FrX/L4XPgCO
+ msoAR3htS4D2LhDO+zRRyac5Mu+9HNBvub4TrBgeJxTipsmM363PfwA4h5U=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Aug 19, 2017 at 4:26 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> [Discarded]
->
-> * nd/prune-in-worktree (2017-04-24) 12 commits
->  . rev-list: expose and document --single-worktree
->  . revision.c: --reflog add HEAD reflog from all worktrees
->  . files-backend: make reflog iterator go through per-worktree reflog
->  . revision.c: --all adds HEAD from all worktrees
->  . refs: remove dead for_each_*_submodule()
->  . revision.c: use refs_for_each*() instead of for_each_*_submodule()
->  . refs: add refs_head_ref()
->  . refs: move submodule slash stripping code to get_submodule_ref_store
->  . refs.c: refactor get_submodule_ref_store(), share common free block
->  . revision.c: --indexed-objects add objects from all worktrees
->  . revision.c: refactor add_index_objects_to_pending()
->  . revision.h: new flag in struct rev_info wrt. worktree-related refs
->
->  "git gc" and friends when multiple worktrees are used off of a
->  single repository did not consider the index and per-worktree refs
->  of other worktrees as the root for reachability traversal, making
->  objects that are in use only in other worktrees to be subject to
->  garbage collection.
+Martin Ågren venit, vidit, dixit 21.08.2017 18:43:
+> On 21 August 2017 at 14:53, Michael J Gruber <git@grubix.eu> wrote:
+>> Currently, 'git merge --continue' is mentioned but not explained.
+>>
+>> Explain it.
+>>
+>> Signed-off-by: Michael J Gruber <git@grubix.eu>
+>> ---
+>>  Documentation/git-merge.txt | 5 ++++-
+>>  1 file changed, 4 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+>> index 6b308ab6d0..615e6bacde 100644
+>> --- a/Documentation/git-merge.txt
+>> +++ b/Documentation/git-merge.txt
+>> @@ -288,7 +288,10 @@ After seeing a conflict, you can do two things:
+>>
+>>   * Resolve the conflicts.  Git will mark the conflicts in
+>>     the working tree.  Edit the files into shape and
+>> -   'git add' them to the index.  Use 'git commit' to seal the deal.
+>> +   'git add' them to the index.  Use 'git commit' or
+>> +   'git merge --continue' to seal the deal. The latter command
+>> +   checks whether there is a (interrupted) merge in progress
+>> +   before calling 'git commit'.
+>>
+>>  You can work through the conflict with a number of tools:
+> 
+> There are actually two things going on here. First, this mentions git
+> merge --continue. Second, it explains what that command does. But the
+> latter is done earlier (not exactly like here, but still).
 
-I'm back and will try to continue this. Is it discarded because of
-lack of progress, or because the problem is already fixed some other
-way? A quick "git log --oneline" on important files has not revealed
-anything.
--- 
-Duy
+I didn't see that explained in the man page at all - on the contrary, I
+only saw a forward reference (see section...), but then only an
+explanation of what "resolving" means (including the "git commit"-step).
+It is unclear to me from the man page which steps of "resolving" the
+command "git merge --continue" does - you could think it does "git
+commit -a", for example.
+
+> When git merge --continue originally appeared, this part of the docs was
+> discussed briefly. Maybe interesting:
+> 
+> https://public-inbox.org/git/xmqq60mn671x.fsf@gitster.mtv.corp.google.com/
+> 
+> Martin
+> 
