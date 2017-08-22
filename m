@@ -2,108 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DEFBF1F667
-	for <e@80x24.org>; Tue, 22 Aug 2017 19:44:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DFE731F667
+	for <e@80x24.org>; Tue, 22 Aug 2017 19:56:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752306AbdHVTon (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Aug 2017 15:44:43 -0400
-Received: from mail-qt0-f173.google.com ([209.85.216.173]:34957 "EHLO
-        mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751753AbdHVTom (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Aug 2017 15:44:42 -0400
-Received: by mail-qt0-f173.google.com with SMTP id x36so33523168qtx.2
-        for <git@vger.kernel.org>; Tue, 22 Aug 2017 12:44:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=PkQrqI/jCTi9wwZdmJqNmcoOUtgb3LTJ6Fjga5czUEA=;
-        b=XjWkju6BWw3HPeRVEJn7+8qPH6fWlBkiPGBo1c/n6ip/e6AeajBdPH1chg19fDJL4C
-         nf9n6lUsYEHbT00pU9QSmjFFkqDlntHaMBMGi7qFJolHueW0V/vrgGaogrns27Jf+AGd
-         7TDPncFaVGwYlIGGfsZ0trXUGLM9AxHWbiUbu2/S5F9H1nA6yCNI8jkFi31aPkhWnrEW
-         K2xBf36R5P3U/gE+SInipThAB0387O3zX65lYmnEpDQBFI1vM+l93PwgTANt3lAT9icx
-         BGkzC6CDgJwyvD99lYj9/ET9/FI86Uqe4W51AsIHLxprW636z0Kx0SwPJMEZvx0CFDoV
-         ryPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
-         :references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=PkQrqI/jCTi9wwZdmJqNmcoOUtgb3LTJ6Fjga5czUEA=;
-        b=Q2Q9AF98oTGtAXWEKyBoq50KvY/1xmlhBYm3oTDw6S0A36yVDoofvVH+KYTFtI380b
-         ztOSrUUzkCytv3LDYkxG3YP44rFxSukKIvqrVNjAYK9VS3kEBILi6qK5lLjNmbpfJgUZ
-         5CQmpsw7SHf6edigaP5w9d+rp6UJGzhkxOVJN31UZXmFJkt9JRFjUnuy8l5zQsET7jfR
-         oHqk5lYFd2nod/fb5tKrfanmKtovShefqZ+IFMD4ByxGOi4psUr9iOot9fCGjIB7UTyl
-         4d/76ILRUWxvrF9byzKgi2cZV1JKYCr1ItQJ75qdlewj0cg/i+6FH/mHQPetECETfgZ9
-         ghJQ==
-X-Gm-Message-State: AHYfb5gn/iBe8t85H8UYTLGbWXT5XkLYKqAl2VCawczHisIqZAlRFf/a
-        Md5DNPGNNECtKQ==
-X-Received: by 10.237.56.170 with SMTP id k39mr350739qte.199.1503431082246;
-        Tue, 22 Aug 2017 12:44:42 -0700 (PDT)
-Received: from localhost (tripoint.kitware.com. [66.194.253.20])
-        by smtp.gmail.com with ESMTPSA id m15sm10753945qtc.48.2017.08.22.12.44.41
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 22 Aug 2017 12:44:41 -0700 (PDT)
-Date:   Tue, 22 Aug 2017 15:44:41 -0400
-From:   Ben Boeckel <mathstuf@gmail.com>
-To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+        id S1752560AbdHVT43 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Aug 2017 15:56:29 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51403 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752451AbdHVT42 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Aug 2017 15:56:28 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D2FEC8D873;
+        Tue, 22 Aug 2017 15:56:27 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ImyP90BlmGLEZk9140fLTShNmvI=; b=t9CJok
+        L8v+90NF+okGzFKLgmcWa8RXUiEWeoRQwjNXOv+O2h47PESHh1rvZM7duDCV4BYU
+        +7aoj3mpsdzxGv3OH/v3ZJ28jAfOFSWGBnY78haPPoLamMdv8x5Kmd39tiLFiHzL
+        vVzTmeop0n5AsbmFVPpvT9fEhOWWKds8ozWj8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=j/PLjXb0NRkwkErkFznoINp5o3L/zU5J
+        TPZyVnqne1FYiv/H2LbWrlztDIyf/Gi+5+ZJnZpp5OO/kWiDxblUy4EdHDaOrJxc
+        xqZpFzGJ16n8rYhEz6SYrF6lg2w/DFp+VeQCu2HiQjoXWC8LGpxnr5TLNHHJmsH7
+        aJIrzDFtskM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CB2F88D872;
+        Tue, 22 Aug 2017 15:56:27 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2C1F78D871;
+        Tue, 22 Aug 2017 15:56:27 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
 Cc:     git@vger.kernel.org
-Subject: Re: Cannot checkout after setting the eol attribute
-Message-ID: <20170822194441.GA25093@megas.kitware.com>
-Reply-To: mathstuf@gmail.com
-References: <20170822174918.GA1005@megas.kitware.com>
- <20170822191318.GA22118@tor.lan>
+Subject: Re: [PATCH] Doc: clarify that pack-objects makes packs, plural
+References: <20170822182242.20862-1-jonathantanmy@google.com>
+Date:   Tue, 22 Aug 2017 12:56:25 -0700
+In-Reply-To: <20170822182242.20862-1-jonathantanmy@google.com> (Jonathan Tan's
+        message of "Tue, 22 Aug 2017 11:22:42 -0700")
+Message-ID: <xmqqbmn72x7a.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20170822191318.GA22118@tor.lan>
-User-Agent: Mutt/1.8.3 (2017-05-23)
+Content-Type: text/plain
+X-Pobox-Relay-ID: FBB42776-8773-11E7-BD34-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 22, 2017 at 21:13:18 +0200, Torsten Bögershausen wrote:
-> When you set the text attribute (in your case "eol=crlf" implies text)
-> then the file(s) -must- be nomalized and commited so that they have LF
-> in the repo (technically speaking the index)
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-This seems like a special case that Git could detect and message about
-somehow.
+> The documentation for pack-objects describes that it creates "a packed
+> archive of objects", which is confusing because it may create multiple
+> packs if --max-pack-size is set. Update the documentation to clarify
+> this.
+>
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+> It took me quite some time before I realized that pack-objects actually
+> may write multiple packs, the opening lines of the doc confusing me.
+> Here's a doc update.
+> ---
 
-> This is what is written about the "eol=crlf" attribute:
-> 	This setting forces Git to normalize line endings for this
-> 	file on checkin and convert them to CRLF when the file is
-> 	checked out.
-> And this is what is implemented in Git.
+I have a mixed feeling about this one.  
 
-Yeah, I read the docs, but the oddities of reset not doing its job
-wasn't clear from this sentence :) .
+Yes, the command _can_ be told to split a packfile into multiple
+with an option, but the actual benefit of doing so is rather
+dubious.  On boxes with smaller address space, I thought windowed
+mmap access into large packfiles work just fine.  I also think the
+motivation behind the "max-size" thing was to split into smaller
+pieces so that sneaker-netting on multiple CD-ROMs becomes easier or
+something (silly) like that---there should be a more suitable tool
+that is not specific to Git for such usecase, I would imagine.
 
-> Long story short:
-> 
-> The following would solve your problem:
->    git init
->    echo $'dos\r' > dos
->    git add dos
->    git commit -m "dos newlines"
->    echo "dos -crlf" > .gitattributes
->    git add .gitattributes
->    git commit -m "add attributes"
->    echo "dos eol=crlf" > .gitattributes
->    git read-tree --empty   # Clean index, force re-scan of working directory
+So I am OK with "and writes either one or more" in the description,
+but I'd prefer to see that "--max-pack-size" thing gets described as
+an aberration, not a norm.
 
-The fact that plumbing is necessary to dig yourself out of a hole of the
-`eol` attribute changes points to something needing to be changed, even
-if it's only documentation. Could Git detect this and message about it
-somehow when `git reset` cannot fix the working tree? Or maybe it could
-at least exit with failure instead of success?
+IOW,
 
---Ben
+ - I think the "NAME" part that gives a single line summary of what
+   the command is about can and should stay as before.  A single
+   archive is the norm, and we do not particularly recommend people
+   to think it is a good idea to produce multiple packfiles.
+
+ - The change in this patch for description part, which should give
+   a fairly complete view of what it can do, is good.
+
+ - The change for 'base-name' documentation that stresses that
+   .pack/.idx come in pairs and share the same <SHA-1> is good.
+
+ - There should be an update to say max-pack-size is not something
+   normal users would ever want.
+
+For the last one, perhaps something like this:
+
+
+ Documentation/git-pack-objects.txt | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
+index 8973510a41..3aa6234501 100644
+--- a/Documentation/git-pack-objects.txt
++++ b/Documentation/git-pack-objects.txt
+@@ -108,9 +108,13 @@ base-name::
+ 	is taken from the `pack.windowMemory` configuration variable.
+ 
+ --max-pack-size=<n>::
+-	Maximum size of each output pack file. The size can be suffixed with
++	In unusual scenarios, you may not be able to create files
++	larger than certain size on your filesystem, and this option
++	can be used to tell the command to split the output packfile
++	into multiple independent packfiles and what the maximum
++	size of each packfile is. The size can be suffixed with
+ 	"k", "m", or "g". The minimum size allowed is limited to 1 MiB.
+-	If specified, multiple packfiles may be created, which also
++	This option
+ 	prevents the creation of a bitmap index.
+ 	The default is unlimited, unless the config variable
+ 	`pack.packSizeLimit` is set.
