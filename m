@@ -2,94 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C56691F667
-	for <e@80x24.org>; Tue, 22 Aug 2017 23:08:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 60DB51F667
+	for <e@80x24.org>; Tue, 22 Aug 2017 23:16:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752377AbdHVXIt (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Aug 2017 19:08:49 -0400
-Received: from mail-yw0-f176.google.com ([209.85.161.176]:35791 "EHLO
-        mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751687AbdHVXIs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Aug 2017 19:08:48 -0400
-Received: by mail-yw0-f176.google.com with SMTP id s187so804998ywf.2
-        for <git@vger.kernel.org>; Tue, 22 Aug 2017 16:08:48 -0700 (PDT)
+        id S1752533AbdHVXQR (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Aug 2017 19:16:17 -0400
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:38876 "EHLO
+        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751687AbdHVXQQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Aug 2017 19:16:16 -0400
+Received: by mail-wm0-f45.google.com with SMTP id l19so3934694wmi.1
+        for <git@vger.kernel.org>; Tue, 22 Aug 2017 16:16:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:from:date:message-id:subject:to;
-        bh=SEvdQyku3lmGG5s2GCh56+bTv3TktQylCZg9Kee9+FU=;
-        b=b+fmd1XY9TPVGDWHpZFa+s0vaNJU8ZH45mX2TqZYwZEVBY2+x0TUQI9iMxLKMJK3hQ
-         UMGK+gIj0IaIaDFVL5m6YaItPKt0JadcwD5M7u0x+vT5PBaGSIPj5oiRB+iwln8KOPpN
-         CyV1ABEx4ub5ohflaMGubDCG1xjlTOXR5LB0jPMBZ2+cw63cvWHKdN9fFR58p0a5ZMfF
-         9Jd2NBb9IPK/TfcsiSHU3Y1uD7+0YhWvxN1dSSI+rF4zzIfcrIm7LkEjo2lT7IL7qREx
-         TclxA4tdVne/esKRlUY72QiOaqH1ny+uKUehCLSPRgpMFUTcuFtqbO72YFzegVCcjgdV
-         wErQ==
+        bh=HfK8tdkZcL4pG+prJI7xgqGgAsNMHeajvSG4ps31XOg=;
+        b=nu+wrRApVj7IVLGFt3WfOrHORLlMVw0LHJDOroJLG9WFV7fdj2eQZGP9NgJM5pR4PB
+         oSdjFVavNTCBp2yljEvRGUs7Nc5jU9SoGwF5oJcLEcPhHVlhzariVlj480tFBLsPAJG7
+         VXanIlOYQYjk6IBBAyFxg+0USL2ZObXd1NMk62wyXWZuwwcuB1mI9a66zGe3kN7gaO2v
+         Hd+5Enl5Yvjvs8gvL8YOFhWqDfJlnJOevaZWGS5PaIijwYWWCO6kaLSvlrCraS/bJUmY
+         TKMFe9YbAM6gaEDDgiokY7O6PmTE6EXAQA5wxC1OuX0hUkJjoizMt5xRG2xyxqQl0Hze
+         5fyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=SEvdQyku3lmGG5s2GCh56+bTv3TktQylCZg9Kee9+FU=;
-        b=RwCDE9dvVpNZiR2nYrQnPnmKsPG+65D5CUIQazjQYENzykNUlH9BfHxMMIH9XX3wSR
-         3GgXsSHhpGWp9TX4ARopQs6kzO5HmzT/j1Do0J/hDEP9x7CyqO2JQf9Phopw3ILGAtVb
-         4xSUdS1fxrpPS7L0IiVQLTB22S84UhT62FNpYyjKU3Zw+zF87pji9kfagO3lGVgLcK1U
-         A6D4VBWcJini/bAnK/cUPd0D20mDNAvQC8JlCX47atW1PHJ4mko31Wmzv3GU48vK5sxd
-         lPhVb1pkBn5zLbYiFYlvP2h+eC/yTy0M/EPJQp36NFqMebL+2DyLiyh8K9nkNUzV6w74
-         oU8w==
-X-Gm-Message-State: AHYfb5gNwOkHGNtToLqo7SjHB3DuFyiTQwHeKlgROHYANfTO+YRIw7vm
-        TwBA+HFuWz1bbRKV5Hf1g+9jtZ7XLkX/0Z/Dmw==
-X-Received: by 10.13.212.149 with SMTP id w143mr656663ywd.4.1503443327442;
- Tue, 22 Aug 2017 16:08:47 -0700 (PDT)
+        bh=HfK8tdkZcL4pG+prJI7xgqGgAsNMHeajvSG4ps31XOg=;
+        b=pkgh9kU9kaHh5hv/xR+1ocEGwRJHAtgjGxhXoK4bh+8GIpYJxnAtf289w9udnPNeI9
+         zrfSrTAsNePwxL3ayY/wLnGUE8fr/gbQsQe1mj+am9Bnie7C8lC8rYixgDvApY2cTJkD
+         fvKXxVCsr92JYS1oAyNoVtXtJuI1NG6KixiQTt6qgXfDo5/LJQRG8KtvJ0GFT0GOGChF
+         dr9btaLt9jG/F3CxRsRWEm9599IZQTE5EKcVSVk+k+RQ5j9jt2DS6mJvVRuiOcbEOF28
+         VtCU/uU8GCDVpJbISz7GTAF8aYKIyJq6E6HUdNytG2ACnd+AMg0RgxTUAU/kDcKeYTJk
+         C7lw==
+X-Gm-Message-State: AHYfb5hk4xyowTG9sUR0xthPxt6KOomy26tuPEZSflzmLa1ECUvKvsRG
+        G51drQj/cb0245OVHDCVV4BQIcIv2bBz
+X-Received: by 10.80.219.133 with SMTP id p5mr1429153edk.104.1503443775147;
+ Tue, 22 Aug 2017 16:16:15 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.37.170.41 with HTTP; Tue, 22 Aug 2017 16:08:46 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 22 Aug 2017 16:08:46 -0700
-Message-ID: <CAGZ79kYinci-OWXV2VfScLPcUDCHyhSb=7TxTWUWHPnKV5PuDA@mail.gmail.com>
-Subject: [BUG] rebase -i with empty commits + exec
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Received: by 10.80.182.5 with HTTP; Tue, 22 Aug 2017 16:15:54 -0700 (PDT)
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Tue, 22 Aug 2017 16:15:54 -0700
+Message-ID: <CA+P7+xrtZYUjPcVMkA+x8B57w+LxjjU8YSKcE77DrWne7449rg@mail.gmail.com>
+Subject: git send-email Cc with cruft not working as expected
+To:     Git mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently I am working on a longer series, for which I decided
-to keep track of progress in an empty commit. This empty commit
-is in the middle of the series (to divide the commits into two sets,
-the foundation that I consider stable and the later parts that are not
-as stable for my development, they contain things that may be useful)
+Hi,
 
-Then I invoked "git rebase -i <base> -x make" to see
-in which shape the series is.
+I recently found an issue with git-send-email where it does not
+properly remove the cruft of an email address when sending using a Cc:
+line.
 
-The editor opened proposing the following instruction sheet,
-which in my opinion is buggy:
+The specific example is with a commit containing the following Cc line,
 
-    pick 1234 some commit
-    exec make
-    pick 2345 another commit
-    exec make
-    pick 3456 third commit
-    # pick 4567 empty commit
-    exec make
-    pick 5678  yet another commit
-    exec make
+Cc: stable@vger.kernel.org # 4.10+
 
-I think the lines of the empty commit and the following exec should
-be swapped, because that exec should work on the third commit.
-Maybe we'd want to see another commented exec:
+which is the standard way Linux upstream expects the stable Ccs to be,
+and I saw several examples of this in the past.
 
-    pick 1234 some commit
-    exec make
-    pick 2345 another commit
-    exec make
-    pick 3456 third commit
-    exec make
-    # pick 4567 empty commit
-    # exec make <- unsure about this line
-    pick 5678  yet another commit
-    exec make
+However, this gets converted into a cc of
+"stable@vger.kernel.org#4.10+" which isn't a valid address obviously.
 
-Thoughts?
+This does work as expected if you remember to
+
+Cc: <stable@vger.kernel.org> # 4.10+
+
+I would have assumed that validate_address would kick in and let me
+know that the address I'd given isn't valid, or something along those
+lines.
+
+I tried to come up with a test for this, but modifying t9001 seemed to
+cause other failures and I couldn't detangle exactly how the tests fit
+together.
+
+Is this simply expected behavior and I need to remember to use <>
+around the address?
+
+Thanks,
+Jake
