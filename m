@@ -2,78 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B35621F667
-	for <e@80x24.org>; Tue, 22 Aug 2017 18:23:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E35C31F667
+	for <e@80x24.org>; Tue, 22 Aug 2017 18:55:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751916AbdHVSXA (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Aug 2017 14:23:00 -0400
-Received: from 9.mo176.mail-out.ovh.net ([46.105.78.81]:56506 "EHLO
-        9.mo176.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751909AbdHVSXA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Aug 2017 14:23:00 -0400
-X-Greylist: delayed 125753 seconds by postgrey-1.27 at vger.kernel.org; Tue, 22 Aug 2017 14:23:00 EDT
-Received: from ex2.mail.ovh.net (gw1.ex2.mail.ovh.net [164.132.80.186])
-        by mo176.mail-out.ovh.net (Postfix) with ESMTPS id B9022825AD;
-        Tue, 22 Aug 2017 20:22:57 +0200 (CEST)
-Received: from [10.0.2.127] (86.200.136.234) by EX7.indiv2.local (172.16.2.7)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Tue, 22
- Aug 2017 20:22:55 +0200
-Subject: Re: [RFC 0/3] imap-send curl tunnelling support
-To:     Johannes Sixt <j6t@kdbg.org>
-CC:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Stefan Beller <sbeller@google.com>,
+        id S1752549AbdHVSzr (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Aug 2017 14:55:47 -0400
+Received: from mail-pg0-f41.google.com ([74.125.83.41]:33556 "EHLO
+        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752517AbdHVSzq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Aug 2017 14:55:46 -0400
+Received: by mail-pg0-f41.google.com with SMTP id t3so90284805pgt.0
+        for <git@vger.kernel.org>; Tue, 22 Aug 2017 11:55:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=2MUPlC01gBJp3xy+hTYiEo0HIM598kyPMllrJm+10U0=;
+        b=lUstYGmEWJKqZ49vt6cB1zuZuPLoxS839tVu8CG45J5Uh+4tuY+uyhDXVh0aPDp/pC
+         TedwTIwfFMH9GY+zi7nW77Q+RQLSdijHBAM1nIkscIbgpD8NIeNtlZR+WAONc+P917xn
+         v0kUgBBO+tPf+yzkOsT3DGnnaO+DAc9UES0JOa4rwu8vzFvGv8J5UfgM/NkxgBuK6qUb
+         3k2I+iXSnFatH64N+1gyTIb7MdyI5RpEt5BG2/itYflcoynWIuihmWng8N3jWDsdLfng
+         hdzRbh+EScaqNlFyM9pUJLoM0Wf8G1KyyNyZ9PppS4O9RjKrejgTi7tinet0DGpk5496
+         QgdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=2MUPlC01gBJp3xy+hTYiEo0HIM598kyPMllrJm+10U0=;
+        b=H1vRFZL3l18FgK6fYJ/5rCzz/qzq9u6pxbpmK3AkGp3M4sVPLhcftrM8QalP/hirq+
+         3AaTJH8Qwr69sMUyaqnV2n7Z9B2RNEMDKKQaLPsepkVakeMNTISP19EGI61LlWI2sokN
+         OZrzVqUntfWdhWxVOPyF6XsEIxPlEaCTbHrCdGAmqo3j1+8TYOAlv1wG2/oBYSIkzUOY
+         2H7qYy+u8FEIibFVMJzd/bJTH1s9wwOYI0COpXMf2/NYsKr086LrZhwUxJ8pIGvzBcWp
+         RrFVG/y4Jvuqjb2Ahgska4vFlyyf9t/rD0sfjkSVy6XI3om+8w82BYNw3EMaklEC7yX2
+         N93A==
+X-Gm-Message-State: AHYfb5hrZWP8JUl0/HimUOVXqdgJ8zKHwnmXPU/Xug8N5jgZJnsKoEPM
+        +qM7qrwzgZ04QDW7
+X-Received: by 10.84.140.3 with SMTP id 3mr155324pls.374.1503428145432;
+        Tue, 22 Aug 2017 11:55:45 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:6828:9c55:c66a:8e44])
+        by smtp.gmail.com with ESMTPSA id a86sm31184468pfe.181.2017.08.22.11.55.44
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 22 Aug 2017 11:55:44 -0700 (PDT)
+Date:   Tue, 22 Aug 2017 11:55:43 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        Heiko Voigt <hvoigt@hvoigt.net>,
+        Junio C Hamano <gitster@pobox.com>,
         "git@vger.kernel.org" <git@vger.kernel.org>
-References: <ab866314-608b-eaca-b335-12cffe165526@morey-chaisemartin.com>
- <5c46f1e4-825e-8e10-e323-e637e170f315@morey-chaisemartin.com>
- <CAGZ79kbgYqo=6FvRNwB0AOKT8mioPTu2CearVttA30nZ8wBMHQ@mail.gmail.com>
- <alpine.DEB.2.21.1.1708161429510.19382@virtualbox>
- <4a5f9d64-0709-b6b0-c398-6887f1f7f4c0@morey-chaisemartin.com>
- <63e3ebea-ad4e-14d7-1170-594390af8e06@kdbg.org>
-From:   Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
-Openpgp: preference=signencrypt
-Message-ID: <0851413b-b83a-7290-76d4-249a49eb30c9@morey-chaisemartin.com>
-Date:   Tue, 22 Aug 2017 20:22:52 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101
- Thunderbird/56.0
+Subject: Re: [PATCH] pull: respect submodule update configuration
+Message-ID: <20170822185543.GA114773@google.com>
+References: <xmqqpobsbsk1.fsf@gitster.mtv.corp.google.com>
+ <20170818220431.22157-1-sbeller@google.com>
+ <xmqqvalk9is0.fsf@gitster.mtv.corp.google.com>
+ <20170821162056.GB1618@book.hvoigt.net>
+ <CAGZ79ka1jyxmATQbrjPHAv3227UJNcN0nw9AY-RZXnNahepoGQ@mail.gmail.com>
+ <85ED93BC-1E27-4B8D-856D-090C6860BAB0@gmail.com>
+ <CAGZ79kZMjGNOn0FnJGtO5gRY3rF0Eiow8n0uppTZsCUAHY+m3A@mail.gmail.com>
+ <20170821182110.GA156514@google.com>
+ <D44F6340-9011-4D41-B103-4A61E7248806@gmail.com>
+ <CAGZ79kbpf-a_ZinPLuPh2Vq629=cQknuLVF-QVwOeae1ZGS2Cw@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <63e3ebea-ad4e-14d7-1170-594390af8e06@kdbg.org>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Content-Language: fr-xx-classique+reforme1990
-X-Originating-IP: [86.200.136.234]
-X-ClientProxiedBy: CAS2.indiv2.local (172.16.1.2) To EX7.indiv2.local
- (172.16.2.7)
-X-Ovh-Tracer-Id: 8539387845739472861
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeelledrtddtgddutdekucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddm
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kbpf-a_ZinPLuPh2Vq629=cQknuLVF-QVwOeae1ZGS2Cw@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This was sadly kind of expected...
-I need to look for another way to handle this on Windows.
+On 08/22, Stefan Beller wrote:
+> On Tue, Aug 22, 2017 at 7:50 AM, Lars Schneider
+> <larsxschneider@gmail.com> wrote:
+> >
+> > OK. I change my scripts to use ".active" and it seems to work nicely.
+> >
+> > I noticed one oddity, though:
+> >
+> > If I clone a repo using `git clone --recursive <url>` then the local
+> > Git config of the repo gets the following entry:
+> >
+> > [submodule]
+> >         active = .
+> 
+> bb62e0a99f (clone: teach --recurse-submodules to optionally take a
+> pathspec, 2017-03-17) makes it clear that this is intentional for
+> --recurse-submodules, but doesn't exactly state that --recurse will
+> behave the same. The idea here is that at clone time you can already
+> give
+> 
+>     git clone --recurse=:(exclude)sub0 <url> <path>
+> 
+> and have your desired set of submodules there.
+> Combined with the changes in the attr system, b0db704652
+> (pathspec: allow querying for attributes, 2017-03-13)
+> you could make up things like this:
+> 
+>   $ cat .gitattributes
+>   /sub0 label0
+>   /sub1
+>   /sub2 label1 label2
+>   /sub3 label1
+>   /platform-specifc-subs/* label1 label2
+> 
+> and then get a clone via
+> 
+>     git clone --recurse=:(attr:label2). <url> <path>
+> 
+> for example. The labeling via the attributes allows for
+> complex patterns, but a relatively easy command line, that you
+> can share with coworkers.
+> 
+> > Is this intentional? Something in the git/git test harness seems to prevent
+> > that. I was not able to write a test to replicate the issue.
+> >
+> > Any idea?
+> 
+> I do not seem to understand the perceived bug?
+> The setting of submodule.active=<pathspec> seems intentional to me,
+> but how would you not reproduce it? Maybe Brandon has an idea.
+> 
 
-Thanks for the test
+When adding '.active' we wanted it to be as flexible as possible.  So
+you can either use a pathspec with 'submodule.active' to catch multiple
+submodules as being active or you can turn on/off individual submodules
+with 'submodule.<name>.active' (this has precedent over the more general
+'submodule.active' config).
 
-Nicolas
+The intent was if a user supplies --recurse-submodules (I believe i
+removed the docs for --recursive in order to make the CLI more consistent
+with other commands, so --recursive is just a synonym for
+--recurse-submodules) then they clearly wanted all the submodules cloned
+and checked out.  With the '.active' config the way to specify this
+is to make 'submodule.active = .'.  In the old world every submodule
+would need to have its URL copied into the config.  This way the config
+is kept cleaner as it only has a single entry added.
 
-Le 22/08/2017 à 19:10, Johannes Sixt a écrit :
-> Am 21.08.2017 um 09:27 schrieb Nicolas Morey-Chaisemartin:
->> (Sent a reply from my phone while out of town but couldn't find it so here it is again)
->>
->> It's available on my github:
->> https://github.com/nmorey/git/tree/dev/curl-tunnel
->>
->> The series had been stlighly changed since the patch were posted, mostly to add the proper ifdefs to handle older curl versions.
->
-> This does not build for me on Windows due to a missing socketpair() function. But I am working in an old environment, so I do not know whether this statement has much value.
->
-> -- Hannes
+As stefan mentioned you can specify a value for 'submodule.active' to
+take as an arg to --recurse-submodules (the default being '.' or all
+submodules) so you can do clever things like group submodules using
+attributes, you can even repeat the flag to provided a more complex
+pathspec.
 
+Hopefully that answers your question :D
+
+-- 
+Brandon Williams
