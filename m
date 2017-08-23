@@ -2,101 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC3DE1F4DD
-	for <e@80x24.org>; Wed, 23 Aug 2017 21:38:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 414841F4DD
+	for <e@80x24.org>; Wed, 23 Aug 2017 21:43:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751003AbdHWViL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Aug 2017 17:38:11 -0400
-Received: from mail-wr0-f172.google.com ([209.85.128.172]:36277 "EHLO
-        mail-wr0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750715AbdHWViK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Aug 2017 17:38:10 -0400
-Received: by mail-wr0-f172.google.com with SMTP id f8so4285648wrf.3
-        for <git@vger.kernel.org>; Wed, 23 Aug 2017 14:38:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=qJPEi9gik/0yWOttuq5hnoHkQ13PGahdBqjAUWQB7t0=;
-        b=sE1uC7weakBhmoeojjikRzaofNbIcpHShENFNyPxktzTAJqEFZ5SR1KsGkON7eFTjI
-         zeH9Gla2wKK7Jhb5qoIJCnXdqd49djuGt0zSkceG9uGAd8hCXF+pNnXRMbluIbZzIPnj
-         nhY00Ze7dKhPMp6xaBZ3kOoGJXL8Jb9mTKu/r8rOXCdpZcE0ZmGPO/WSdNOseYlH2/Hx
-         hOz2RyBK1IBP5GmHeVPdrbZjvTrux7B/MdUaa779DzOwBgdzWT+kviF3VPKo0eF2Kku6
-         +Py/6XTBmxdpwxXOpk/5QnsRTW89jL4oK0s7N3Qaa2NLEt2WlBfxaTFd7w/aKXIdpmf/
-         E70A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=qJPEi9gik/0yWOttuq5hnoHkQ13PGahdBqjAUWQB7t0=;
-        b=MkMplflFEF5xxVrMZZB8qBEFjRoz9J8u6uKFMd5+dGk5HNOow1UimSkzEQWwgdwFF8
-         +Gb8KXKv1Krn+fSOJFvEdgBSQf3dHwp7s9rDBO5yDpkhWpt5dfesHSag/5z+6Iua0jWQ
-         8Z8tzTYLf8zIJDzuB3WvzFEHQNJ1W8pbCZ7zlRYepJiDd5FYX04vzjJq2AWUX5davN8X
-         EuI2d9s/bq5hfNCNJXYaUpNNwyy83zVCjMZAFEnbL4CA5oNdgt1x2XPaceqhuOJpgzJN
-         17weXnKr0Bo9V6x6NN5j0lyPZtjlUkCKuqcrwuEeeN6t23+P5Ho6UfQP6BtZCHPSuRrZ
-         KMhA==
-X-Gm-Message-State: AHYfb5gm4xxId8I0oOyxwHKdQkww8OnGGHIbOg/1zT07K1pI0VvIbEwT
-        AxE8Qe/cEXiWgiX6
-X-Received: by 10.223.177.25 with SMTP id l25mr2189153wra.14.1503524289271;
-        Wed, 23 Aug 2017 14:38:09 -0700 (PDT)
-Received: from slxbook3.fritz.box (p5DDB54ED.dip0.t-ipconnect.de. [93.219.84.237])
-        by smtp.gmail.com with ESMTPSA id l131sm3655657wmb.5.2017.08.23.14.38.07
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 23 Aug 2017 14:38:07 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Subject: Re: What's cooking in git.git (Aug 2017, #05; Tue, 22)
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqq4lsz2x6r.fsf@gitster.mtv.corp.google.com>
-Date:   Wed, 23 Aug 2017 23:38:06 +0200
-Cc:     git@vger.kernel.org
-Content-Transfer-Encoding: 7bit
-Message-Id: <7D99B245-4D22-4C9C-9C43-C8B8656F8E6D@gmail.com>
-References: <xmqq4lsz2x6r.fsf@gitster.mtv.corp.google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.1878.6)
+        id S1751197AbdHWVnx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Aug 2017 17:43:53 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47322 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751104AbdHWVnw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Aug 2017 17:43:52 -0400
+Received: (qmail 30443 invoked by uid 109); 23 Aug 2017 21:43:52 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 23 Aug 2017 21:43:52 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5086 invoked by uid 111); 23 Aug 2017 21:44:20 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
+ by peff.net (qpsmtpd/0.94) with SMTP; Wed, 23 Aug 2017 17:44:20 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 Aug 2017 17:43:49 -0400
+Date:   Wed, 23 Aug 2017 17:43:49 -0400
+From:   Jeff King <peff@peff.net>
+To:     Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.de>
+Cc:     Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>,
+        git@vger.kernel.org
+Subject: Re: [RFC 0/3] imap-send curl tunnelling support
+Message-ID: <20170823214349.k4ayl2urqepch7p4@sigill.intra.peff.net>
+References: <ab866314-608b-eaca-b335-12cffe165526@morey-chaisemartin.com>
+ <20170816083432.rgurgckch6phcul3@sigill.intra.peff.net>
+ <0beb0a6c-acb3-ae24-5c52-95747f74c07f@suse.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <0beb0a6c-acb3-ae24-5c52-95747f74c07f@suse.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Aug 21, 2017 at 09:34:19AM +0200, Nicolas Morey-Chaisemartin wrote:
 
-On 22 Aug 2017, at 21:56, Junio C Hamano <gitster@pobox.com> wrote:
+> >> It appears curl do not support the PREAUTH tag.
+> > Too bad. IMHO preauth is the main reason to use a tunnel in the first
+> > place.
+> 
+> It shouldn't be too hard to add support for this in curl.
+> If it's the main usecase, it'll simply means the curl tunnelling
+> should be disabled by default for older curl (in this case, meaning
+> every version until it gets supported) versions.
 
-> Here are the topics that have been cooking.  Commits prefixed with
-> '-' are only in 'pu' (proposed updates) while commits prefixed with
-> '+' are in 'next'.  The ones marked with '.' do not appear in any of
-> the integration branches, but I am still holding onto them.
-> 
-> The second batch of topics are in.  This cycle is going a bit slower
-> than the previous one (as of mid-week #3 of this cycle, we have
-> about 200 patches on 'master' since v2.14, compared to about 300
-> patches in the cycle towards v2.14 at a similar point in the cycle),
-> but hopefully we can catch up eventually.  
-> 
-> I am planning to be offline most of the next week, by the way.
-> 
-> You can find the changes described here in the integration branches
-> of the repositories listed at
-> 
->    http://git-blame.blogspot.com/p/git-public-repositories.html
-> 
-> --------------------------------------------------
-> [Graduated to "master"]
-> 
+Yes, I agree. I was hoping when we started this discussion that we were
+more ready to switch to curl-by-default. But sadly, that isn't close to
+being the case. But hopefully we can at least end up with logic that
+lets us use it in the easy cases (no tunneling) and falls back in the
+harder ones.
 
-Hi Junio,
-
-just in case this got lost: I posted a patch with an improvement to 
-2841e8f ("convert: add "status=delayed" to filter process protocol", 
-2017-06-30) which was merged to master in the beginning of 2.15.
-
-https://public-inbox.org/git/20170820154720.32259-1-larsxschneider@gmail.com/
-
-Thanks,
-Lars
+-Peff
