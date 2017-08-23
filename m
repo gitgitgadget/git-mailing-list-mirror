@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3AC7920899
-	for <e@80x24.org>; Wed, 23 Aug 2017 12:38:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 25C0420899
+	for <e@80x24.org>; Wed, 23 Aug 2017 12:38:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754054AbdHWMie (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Aug 2017 08:38:34 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:37686 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753834AbdHWMid (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Aug 2017 08:38:33 -0400
-Received: by mail-pf0-f196.google.com with SMTP id r62so1346829pfj.4
-        for <git@vger.kernel.org>; Wed, 23 Aug 2017 05:38:33 -0700 (PDT)
+        id S1754057AbdHWMik (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Aug 2017 08:38:40 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:33842 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753834AbdHWMij (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Aug 2017 08:38:39 -0400
+Received: by mail-pf0-f193.google.com with SMTP id m6so1358222pfm.1
+        for <git@vger.kernel.org>; Wed, 23 Aug 2017 05:38:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=SwVBZ2gUtylFmulhT4TbR6rkHUgyCiOcUYIcbAwUVdo=;
-        b=iZbD+DO8gDmHaML5tA4/N3bWbald76mRHTyVY1qt9Gksk/Ay79REikNoly8JkF2LOL
-         V9Nm52K3f4TxNQIBHPOqrM+K4fBP3tgIRZeRBdSWq5aW+ytXIzrSdDaGLF60wbKEgzPu
-         n0/D1LgS4EWfxgMZVZr0FPFXLEMmyq5qk4Zf19Tqb7zKi3pg11qLbuZlQOof2OykIQUB
-         Sr+ohBF1g5FmCdvm5b+/rscoFg87NZgn516I0cfgqUCZ8abjxYnlvxL9OM/s8kFgeQhE
-         SBxoPkK/ySTYhX9F4+Fn/EB7JqX7FQoJPsnstqr3DoE0Ge+x6rlvRbvE6glttTSH475l
-         5kCw==
+        bh=Tazi3CeH2ilymkXOw3TMhgZ/ElWfql+ffVLS+UFX82U=;
+        b=arlBzTWP6KILjZtbRrzIQ/kWy3+4BiN1kWIZDQPCSk0gLxZLre2ybYxqht3e/MErRx
+         jadoRRFD7HKPBJ7iX6wApfFPIVM/CzGLtpk0bmJ6PrsZI7m6a6KIyh7iqB0qkGFMpgva
+         udmZPIsIQwVrkxT/+u2xwbSq+TU1y9YE5+GSAqdib80edC1E9Ps4Q783nCwGLTEcmeQh
+         gP074nmUk/2NLv2pT22XZk7Gra8YOkNqantb6xoVCGMrEvrG8YjYW/kV/jlt819YRFUU
+         dZHFnb0oiNTEOQid9TAY8pXIJqj+VM4q+Mvk2wOnEsj15wU66lzlZN6JQqdPTvRPZ7iC
+         aczQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=SwVBZ2gUtylFmulhT4TbR6rkHUgyCiOcUYIcbAwUVdo=;
-        b=cOPEoU3zXff5yWP1GIwKuTq6EILreJOfTsmI+LAAEp5kcru8j41TEC8DqEmo0GmnJ+
-         stTdRUy2yceg515QPGo53sYdASFWiXvKrc56HO4ZrHsr+AutCIASN4dhKwJ3He3wyWp8
-         eezvls3P2Bmfv4EhEn+cwnHhXXxG4MGe4A/YfsY4E5i9Vt6TzJttsm545AAbcVzi3Dan
-         /Bp+4KdPN7ex3w1xUJF079a315xBOp8ATdOdGqX86jzSHkIlg+k4i+vvu9GSCyAv1VGT
-         4TXyCCgkEuYXZXvhVj6RQfqtEB1urdrcZutGod6Win9LDwXQeiVh+ePHLm/sjLnl6W2X
-         vMlQ==
-X-Gm-Message-State: AHYfb5jXEHv6VEqxfcOfo/6L0dlIcU9ERFV1qW/kGZ0YXw9BVsKYXuML
-        mmGdTIkMHB/GupwF
-X-Received: by 10.98.86.154 with SMTP id h26mr2600337pfj.250.1503491912642;
-        Wed, 23 Aug 2017 05:38:32 -0700 (PDT)
+        bh=Tazi3CeH2ilymkXOw3TMhgZ/ElWfql+ffVLS+UFX82U=;
+        b=MiETPQfUVsPo7EV2afBQKHwt9LsmuhnhGZ2NNrDMHQNTQX41uuvnJElohzt+Q4nw/o
+         Q/T65Sm6vJQ+KdB0dfHtHQlWRq5y3/E+KxsM02ZbeHWXNXjJXtCD9fSZsBoAYQCAM0si
+         7hrIMHMEuIcgUuroZeDXSHiqyObPZYu0fB+CSc/ER+FMP1cfTa3tTjbk6darxPQMocJZ
+         J/n2azdkKc3mHMyuMuLdqWmsCaY6DlZm6ZU4FIjGWiH+kdDMB7eHX3083GDiAg6YJ69O
+         twtfyCKuIbm5JvFGGymUOapfGMTRuQsSfxoLimK29ZvaPTfBuuL21WhAqsJELZJ9vrmB
+         dfTg==
+X-Gm-Message-State: AHYfb5hcDrQ0uvstpKzXWg6cHDT1cnfi8xGVgNnjLX6rTQtzKy/TH0pt
+        xoc8KbDh+QKJ3PJO
+X-Received: by 10.84.237.2 with SMTP id s2mr2890735plk.70.1503491918773;
+        Wed, 23 Aug 2017 05:38:38 -0700 (PDT)
 Received: from ash ([115.72.183.215])
-        by smtp.gmail.com with ESMTPSA id l24sm3031350pgu.91.2017.08.23.05.38.29
+        by smtp.gmail.com with ESMTPSA id w63sm2956490pfw.28.2017.08.23.05.38.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 23 Aug 2017 05:38:31 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Wed, 23 Aug 2017 19:38:27 +0700
+        Wed, 23 Aug 2017 05:38:37 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Wed, 23 Aug 2017 19:38:33 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v4 12/16] files-backend: make reflog iterator go through per-worktree reflog
-Date:   Wed, 23 Aug 2017 19:37:00 +0700
-Message-Id: <20170823123704.16518-13-pclouds@gmail.com>
+Subject: [PATCH v4 13/16] revision.c: --reflog add HEAD reflog from all worktrees
+Date:   Wed, 23 Aug 2017 19:37:01 +0700
+Message-Id: <20170823123704.16518-14-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
 In-Reply-To: <20170823123704.16518-1-pclouds@gmail.com>
 References: <20170823123704.16518-1-pclouds@gmail.com>
@@ -71,147 +71,108 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-refs/bisect is unfortunately per-worktree, so we need to look in
-per-worktree logs/refs/bisect in addition to per-repo logs/refs. The
-current iterator only goes through per-repo logs/refs.
+Note that add_other_reflogs_to_pending() is a bit inefficient, since
+it scans reflog for all refs of each worktree, including shared refs,
+so the shared ref's reflog is scanned over and over again.
 
-Use merge iterator to walk two ref stores at the same time and pick
-per-worktree refs from the right iterator.
+We could update refs API to pass "per-worktree only" flag to avoid
+that. But long term we should be able to obtain a "per-worktree only"
+ref store and would need to revert the changes in reflog iteration
+API. So let's just wait until then.
 
-PS. Note the unsorted order of for_each_reflog in the test. This is
-supposed to be OK, for now. If we enforce order on for_each_reflog()
-then some more work will be required.
+add_reflogs_to_pending() is called by reachable.c so by default "git
+prune" will examine reflog from all worktrees.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- refs/files-backend.c          | 59 +++++++++++++++++++++++++++++++++----------
- t/t1407-worktree-ref-store.sh | 30 ++++++++++++++++++++++
- 2 files changed, 75 insertions(+), 14 deletions(-)
+ revision.c       | 28 +++++++++++++++++++++++++++-
+ t/t5304-prune.sh | 16 ++++++++++++++++
+ 2 files changed, 43 insertions(+), 1 deletion(-)
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 5cca55510b..d4d22882ef 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -106,15 +106,6 @@ static void files_reflog_path(struct files_ref_store *refs,
- 			      struct strbuf *sb,
- 			      const char *refname)
- {
--	if (!refname) {
--		/*
--		 * FIXME: of course this is wrong in multi worktree
--		 * setting. To be fixed real soon.
--		 */
--		strbuf_addf(sb, "%s/logs", refs->gitcommondir);
--		return;
--	}
--
- 	switch (ref_type(refname)) {
- 	case REF_TYPE_PER_WORKTREE:
- 	case REF_TYPE_PSEUDOREF:
-@@ -2055,23 +2046,63 @@ static struct ref_iterator_vtable files_reflog_iterator_vtable = {
- 	files_reflog_iterator_abort
+diff --git a/revision.c b/revision.c
+index 0e98444857..d100b3a3be 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1132,6 +1132,7 @@ struct all_refs_cb {
+ 	int warned_bad_reflog;
+ 	struct rev_info *all_revs;
+ 	const char *name_for_errormsg;
++	struct ref_store *refs;
  };
  
--static struct ref_iterator *files_reflog_iterator_begin(struct ref_store *ref_store)
-+static struct ref_iterator *reflog_iterator_begin(struct ref_store *ref_store,
-+						  const char *gitdir)
- {
--	struct files_ref_store *refs =
--		files_downcast(ref_store, REF_STORE_READ,
--			       "reflog_iterator_begin");
- 	struct files_reflog_iterator *iter = xcalloc(1, sizeof(*iter));
- 	struct ref_iterator *ref_iterator = &iter->base;
- 	struct strbuf sb = STRBUF_INIT;
- 
- 	base_ref_iterator_init(ref_iterator, &files_reflog_iterator_vtable);
--	files_reflog_path(refs, &sb, NULL);
-+	strbuf_addf(&sb, "%s/logs", gitdir);
- 	iter->dir_iterator = dir_iterator_begin(sb.buf);
- 	iter->ref_store = ref_store;
- 	strbuf_release(&sb);
-+
- 	return ref_iterator;
+ int ref_excluded(struct string_list *ref_excludes, const char *path)
+@@ -1168,6 +1169,7 @@ static void init_all_refs_cb(struct all_refs_cb *cb, struct rev_info *revs,
+ 	cb->all_revs = revs;
+ 	cb->all_flags = flags;
+ 	revs->rev_input_given = 1;
++	cb->refs = NULL;
  }
  
-+static enum iterator_selection reflog_iterator_select(
-+	struct ref_iterator *iter_worktree,
-+	struct ref_iterator *iter_common,
-+	void *cb_data)
+ void clear_ref_exclusion(struct string_list **ref_excludes_p)
+@@ -1236,17 +1238,41 @@ static int handle_one_reflog(const char *path, const struct object_id *oid,
+ 	struct all_refs_cb *cb = cb_data;
+ 	cb->warned_bad_reflog = 0;
+ 	cb->name_for_errormsg = path;
+-	for_each_reflog_ent(path, handle_one_reflog_ent, cb_data);
++	refs_for_each_reflog_ent(cb->refs, path,
++				 handle_one_reflog_ent, cb_data);
+ 	return 0;
+ }
+ 
++static void add_other_reflogs_to_pending(struct all_refs_cb *cb)
 +{
-+	if (iter_worktree) {
-+		/*
-+		 * We're a bit loose here. We probably should ignore
-+		 * common refs if they are accidentally added as
-+		 * per-worktree refs.
-+		 */
-+		return ITER_SELECT_0;
-+	} else if (iter_common) {
-+		if (ref_type(iter_common->refname) == REF_TYPE_NORMAL)
-+			return ITER_SELECT_1;
++	struct worktree **worktrees, **p;
 +
-+		/*
-+		 * The main ref store may contain main worktree's
-+		 * per-worktree refs, which should be ignored
-+		 */
-+		return ITER_SKIP_1;
-+	} else
-+		return ITER_DONE;
-+}
++	worktrees = get_worktrees(0);
++	for (p = worktrees; *p; p++) {
++		struct worktree *wt = *p;
 +
-+static struct ref_iterator *files_reflog_iterator_begin(struct ref_store *ref_store)
-+{
-+	struct files_ref_store *refs =
-+		files_downcast(ref_store, REF_STORE_READ,
-+			       "reflog_iterator_begin");
++		if (wt->is_current)
++			continue;
 +
-+	if (!strcmp(refs->gitdir, refs->gitcommondir)) {
-+		return reflog_iterator_begin(ref_store, refs->gitcommondir);
-+	} else {
-+		return merge_ref_iterator_begin(
-+			reflog_iterator_begin(ref_store, refs->gitdir),
-+			reflog_iterator_begin(ref_store, refs->gitcommondir),
-+			reflog_iterator_select, refs);
++		cb->refs = get_worktree_ref_store(wt);
++		refs_for_each_reflog(cb->refs,
++				     handle_one_reflog,
++				     cb);
 +	}
++	free_worktrees(worktrees);
 +}
 +
- /*
-  * If update is a direct update of head_ref (the reference pointed to
-  * by HEAD), then add an extra REF_LOG_ONLY update for HEAD.
-diff --git a/t/t1407-worktree-ref-store.sh b/t/t1407-worktree-ref-store.sh
-index 5df06f3556..8842d0329f 100755
---- a/t/t1407-worktree-ref-store.sh
-+++ b/t/t1407-worktree-ref-store.sh
-@@ -49,4 +49,34 @@ test_expect_success 'create_symref(FOO, refs/heads/master)' '
- 	test_cmp expected actual
+ void add_reflogs_to_pending(struct rev_info *revs, unsigned flags)
+ {
+ 	struct all_refs_cb cb;
+ 
+ 	cb.all_revs = revs;
+ 	cb.all_flags = flags;
++	cb.refs = get_main_ref_store();
+ 	for_each_reflog(handle_one_reflog, &cb);
++
++	if (!revs->single_worktree)
++		add_other_reflogs_to_pending(&cb);
+ }
+ 
+ static void add_cache_tree(struct cache_tree *it, struct rev_info *revs,
+diff --git a/t/t5304-prune.sh b/t/t5304-prune.sh
+index 683bdb031c..6694c19a1e 100755
+--- a/t/t5304-prune.sh
++++ b/t/t5304-prune.sh
+@@ -304,4 +304,20 @@ test_expect_success 'prune: handle HEAD in multiple worktrees' '
+ 	test_cmp third-worktree/blob actual
  '
  
-+test_expect_success 'for_each_reflog()' '
-+	echo $_z40 > .git/logs/PSEUDO-MAIN &&
-+	mkdir -p     .git/logs/refs/bisect &&
-+	echo $_z40 > .git/logs/refs/bisect/random &&
-+
-+	echo $_z40 > .git/worktrees/wt/logs/PSEUDO-WT &&
-+	mkdir -p     .git/worktrees/wt/logs/refs/bisect &&
-+	echo $_z40 > .git/worktrees/wt/logs/refs/bisect/wt-random &&
-+
-+	$RWT for-each-reflog | cut -c 42- | sort >actual &&
-+	cat >expected <<-\EOF &&
-+	HEAD 0x1
-+	PSEUDO-WT 0x0
-+	refs/bisect/wt-random 0x0
-+	refs/heads/master 0x0
-+	refs/heads/wt-master 0x0
-+	EOF
-+	test_cmp expected actual &&
-+
-+	$RMAIN for-each-reflog | cut -c 42- | sort >actual &&
-+	cat >expected <<-\EOF &&
-+	HEAD 0x1
-+	PSEUDO-MAIN 0x0
-+	refs/bisect/random 0x0
-+	refs/heads/master 0x0
-+	refs/heads/wt-master 0x0
-+	EOF
++test_expect_success 'prune: handle HEAD reflog in multiple worktrees' '
++	git config core.logAllRefUpdates true &&
++	echo "lost blob for third-worktree" >expected &&
++	(
++		cd third-worktree &&
++		cat ../expected >blob &&
++		git add blob &&
++		git commit -m "second commit in third" &&
++		git reset --hard HEAD^
++	) &&
++	git prune --expire=now &&
++	SHA1=`git hash-object expected` &&
++	git -C third-worktree show "$SHA1" >actual &&
 +	test_cmp expected actual
 +'
 +
