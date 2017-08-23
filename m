@@ -2,94 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 069321F4DD
-	for <e@80x24.org>; Wed, 23 Aug 2017 22:39:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D02011F4DD
+	for <e@80x24.org>; Wed, 23 Aug 2017 22:42:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751020AbdHWWj1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Aug 2017 18:39:27 -0400
-Received: from mail-yw0-f171.google.com ([209.85.161.171]:35957 "EHLO
-        mail-yw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750715AbdHWWj0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Aug 2017 18:39:26 -0400
-Received: by mail-yw0-f171.google.com with SMTP id y64so8953888ywf.3
-        for <git@vger.kernel.org>; Wed, 23 Aug 2017 15:39:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=kjVjH6lEQ45XCIJS7v6sEAmpJFogPezofhb1sCUJfDQ=;
-        b=eoy5or0XCGqc0uJecHLl3tjs6lJBhWItGCzWCICT4baXhgybpWIgNl8CvvqSQLBvaj
-         W5DOGHBWI5Hqe4bx5eUMgd7ojxTEpu2Bfh9qzmxR4sWHy+jhnKeIRuHU1lgScR9QXN7X
-         VD/4S8zfMLLrndtVAfmB6B/p5BAcs3B4uyX8ugPNFEgyVOBmA8tUU1uYmrCud0sZ5So3
-         k6y3obgmXl2RhpZ8ImREN1FMSFcEVZl3fcMofJz1WL/vdqd8PzIRFROsVqt7ZxtacfTT
-         +ErNU3KdsAT5devuNefunrV4LTBDEBQ9QxtcXc4YgI/GCDDZczUEDfKsPeC+BUv2uhB8
-         yJ8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=kjVjH6lEQ45XCIJS7v6sEAmpJFogPezofhb1sCUJfDQ=;
-        b=kK0EDGehjg1Ar+YXwAnHEmbQ/vkj1DstKUE9qNZOGJdzWnvTVpOaxL01IdBLsf/EDK
-         M2aZN+bGgswFune/CLg9qhfdNrThCYURXrjheT3QptGPpY+1lMvgxoBsLM7DXdfHXV2I
-         wCtwb32GJIxkThs5kvxkRtY56D+el9COft/KdJaQQdwGgYgXzu83W6ipWB5rV2dsGuzu
-         Y+h/yUpIRdE+njSTZg09nvvfw0q1TYaVBy1/K9KW3tkkFoU1UKNQ1FZ00NSnSil3b5VZ
-         Oc+64465VUnEJnEKJWDIMnBgq6YuEWdquFZQQ2Lk5yfgQCSqxvzN8tEeRCCXPENkVfMv
-         EyTg==
-X-Gm-Message-State: AHYfb5jHZxkhi4EyrrjA3Pr0UnTYVFiPxLoIXA79GARbVxKKU5oMF528
-        W9AWv1Ou8os2vpGq732BflfwVTGjRQ==
-X-Received: by 10.37.188.13 with SMTP id i13mr3632982ybh.103.1503527966039;
- Wed, 23 Aug 2017 15:39:26 -0700 (PDT)
+        id S1751026AbdHWWm5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Aug 2017 18:42:57 -0400
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:47899 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750715AbdHWWm4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Aug 2017 18:42:56 -0400
+Received: from PhilipOakley ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id keMQd8pASlmqOkeMQdZ4k1; Wed, 23 Aug 2017 23:42:55 +0100
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=H+Sr+6Qi c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=8nJEP1OIZ-IA:10 a=cJvsqIBe4VOkT2rzYjgA:9
+ a=wPNLvfGTeEIA:10
+Message-ID: <D0634C4264E4400492C9424041D7AF02@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+        "Stephan Beyer" <s-beyer@gmx.net>
+Cc:     "Git" <git@vger.kernel.org>
+References: <CAGZ79kYinci-OWXV2VfScLPcUDCHyhSb=7TxTWUWHPnKV5PuDA@mail.gmail.com> <36e9c381-81b0-ae71-153a-0bcabc59856c@gmx.net> <alpine.DEB.2.21.1.1708231639470.19382@virtualbox>
+Subject: Re: [BUG] rebase -i with only empty commits
+Date:   Wed, 23 Aug 2017 23:42:55 +0100
+Organization: OPDS
 MIME-Version: 1.0
-Received: by 10.129.153.133 with HTTP; Wed, 23 Aug 2017 15:39:25 -0700 (PDT)
-In-Reply-To: <xmqq378hylbd.fsf@gitster.mtv.corp.google.com>
-References: <cover.1502780343.git.martin.agren@gmail.com> <cover.1503323390.git.martin.agren@gmail.com>
- <dccd3e75fcd1b2de93263e8373a3b4cd5da0dd32.1503323391.git.martin.agren@gmail.com>
- <CA+sFfMdXv+nqpXmwfLTHtkRLuGkAEAwWXZCvOryVZ=aLb_UmbA@mail.gmail.com>
- <xmqqh8wyxag1.fsf@gitster.mtv.corp.google.com> <CA+sFfMe56itAMDXOJybf0yHj+BqU1Ai1aU7inoTG3FJtdtZxyw@mail.gmail.com>
- <xmqq378hylbd.fsf@gitster.mtv.corp.google.com>
-From:   Brandon Casey <drafnel@gmail.com>
-Date:   Wed, 23 Aug 2017 15:39:25 -0700
-Message-ID: <CA+sFfMdvOcXd_ePyqyiCXL9O6xpYxxn+iKw6NRJCYsiCFK_ADA@mail.gmail.com>
-Subject: Re: [PATCH v2 3/4] strbuf_setlen: don't write to strbuf_slopbuf
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Antivirus: AVG (VPS 170823-12, 23/08/2017), Outbound message
+X-Antivirus-Status: Clean
+X-CMAE-Envelope: MS4wfDFD9U2SYV/auJ9ihY/70JUw0CsbrCu/zKatOLf/hRa+x3Xk1PKPCXUTGUx1aoAS6id2LMPVWpAQvfzqF/GlX4+eonz8K+Cd0Pclfq9rZnZIS7R+sD4t
+ eXwsUtKjtxZjKKnETKy2o2ixamYv4ESrPwWEExM6mg0SZMFWdprSeVvcRaDsgfIQn02AbATF8EDsFiHo16jGMuUyBGQygvafdifPgExUPfwFNRUpwRny4PLA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 23, 2017 at 3:24 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Brandon Casey <drafnel@gmail.com> writes:
->
->> On Wed, Aug 23, 2017 at 2:04 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Brandon Casey <drafnel@gmail.com> writes:
->>>
->>>> So is there any reason why didn't do something like the following in
->>>> the first place?
->>>
->>> My guess is that we didn't bother; if we cared, we would have used a
->>> single instance of const char in a read-only segment, instead of
->>> such a macro.
+From: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+<snip>
+
+>> So the problem seems to be that rebase -i (like rebase without -i)
+>> considers "empty commits" as commits to be ignored. However, when using
+>> rebase -i one expects that you can include the empty commit...
 >>
->> I think you mean something like this:
+>> Also, the behavior is odd. When I only have empty commits, a "git rebase
+>> master" works as expected like a "git reset --hard master" but "git
+>> rebase -i" does nothing.
 >>
->>    const char * const strbuf_slopbuf = "";
+>> The expected behavior would be that the editor shows up with a
+>> git-rebase-todo like:
+>> # pick 3d0f6c49 empty commit
+>> # pick bbbc5941 another empty commit
+>> noop
 >
-> Rather, more like "const char slopbuf[1];"
+> These days, I reflexively type `rebase -ki` instead of `rebase -i`. Maybe
+> you want to do that, too?
+>
+> Ciao,
+> Dscho
 
-You'd think that would be sufficient right?  Apparently gcc and clang
-will only place a variable marked as const in the read-only section if
-you initialize it with a constant too.  (gcc 4.9.2, clang 3.8.1 on
-linux, clang 8.1.0 on osx)
+Is the -k option actually documented? I couldn't see it in the man pages. 
+I'm guessing it's the same as `--keep-empty`.
+--
+Philip 
 
-I might have to adjust my stance on initializing global variables
-moving forward :-)
-
--Brandon
