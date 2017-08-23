@@ -2,116 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3760620899
-	for <e@80x24.org>; Wed, 23 Aug 2017 19:52:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 03E5620899
+	for <e@80x24.org>; Wed, 23 Aug 2017 19:54:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932572AbdHWTwo (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Aug 2017 15:52:44 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50494 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932531AbdHWTwn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Aug 2017 15:52:43 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 93C7CA8492;
-        Wed, 23 Aug 2017 15:52:42 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=OBOYZvNueQiEF6ddP2Yly/3mvk8=; b=m61EgY
-        n8j4hRIBi8i7quY/8VgpHLObuUgDsb54NvkzMgkN6+xZrPxOhvCfAIb01jSsSfZk
-        KAZVwlxfByG5Crq873zl6zs85pvOPLdqaA7trcS/Q9CzA74XRRGAU6XpoS3bq5VY
-        V9iIKnh5cN6TPa+s96/upHSH5sK6IqRIUs2Cw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=TqI4reN6tn9IsaT7h4Kgk122PJBI0CNv
-        V+FPXBar0e/cULFIZ9YldVHbC5wnIwbutCwTAy2n9hkGksshzo0J+kV/HExhYxI3
-        EKTuE3SVcj3ULvlGfCUvgd2D59Ouva7QTTTPZCx2dwgy8H54ROCdlHIAPXUz6rnS
-        +zctfPI+A80=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 89E08A8490;
-        Wed, 23 Aug 2017 15:52:42 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F3E26A848E;
-        Wed, 23 Aug 2017 15:52:41 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Prathamesh Chavan <pc44800@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [GSoC][PATCH v2 2/4] submodule--helper: introduce for_each_submodule()
-References: <xmqqinhf1bjf.fsf@gitster.mtv.corp.google.com>
-        <20170823181506.8557-1-pc44800@gmail.com>
-        <20170823181506.8557-3-pc44800@gmail.com>
-        <xmqqbmn6yu5u.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kbTHkcK8-rwpJbwy-v3NcfvVq=TbvVRG189bq4S9w14GA@mail.gmail.com>
-Date:   Wed, 23 Aug 2017 12:52:40 -0700
-In-Reply-To: <CAGZ79kbTHkcK8-rwpJbwy-v3NcfvVq=TbvVRG189bq4S9w14GA@mail.gmail.com>
-        (Stefan Beller's message of "Wed, 23 Aug 2017 12:31:13 -0700")
-Message-ID: <xmqq7exuysc7.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S932649AbdHWTyk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Aug 2017 15:54:40 -0400
+Received: from mail-yw0-f178.google.com ([209.85.161.178]:36771 "EHLO
+        mail-yw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932539AbdHWTyj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Aug 2017 15:54:39 -0400
+Received: by mail-yw0-f178.google.com with SMTP id y64so6929981ywf.3
+        for <git@vger.kernel.org>; Wed, 23 Aug 2017 12:54:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Nd6YZ5ah6lkK3JdSj2/Kc03wy+0t70/ggkubxGbluAU=;
+        b=nCtte8cz2smKPjuGvYNdRNFJ0sKF3XyQ0n2+zYFa7YcNve0z55yRp3+QErhPVEk2EX
+         GcEh5MGWaDD4koPsTQxer6fmYQC1Kc54IuZf2aQzHatCH/TyVcCf2fEC17N1JEW7XwF6
+         SXqX966CQOz0lk907AEE9Pxt1q4rfL0VeZE09iGIqxO4C5sZz07J7PGWNUQmYqSAzFOr
+         yZCZohLoeXcdR5m/DVcVr+k0MprLByuMHxZPesMg2nSzOINFIPmxHbvuqmhjCFj4rv+6
+         zqrvdwr+iu3ulSm5yFhzMa3VVXUSjF6e3gZRogpxh0pEumCtfMXsLy6LPEGo6ZXZ2kmv
+         dhqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Nd6YZ5ah6lkK3JdSj2/Kc03wy+0t70/ggkubxGbluAU=;
+        b=q32uykrYTNyGnMVFmSQrEjOhWW+LguTlKfSmh2eSPwg9jUFP7wvkYfOIbXrwtleyMG
+         6seQ2an3bQ90Z5NgYU0bEDvDIeQknAwtMNQltUoMEfLh9S47t+Yx+b8IclfN6WXgX3Gg
+         E3umHAcyo35TfTX5Z33YgWQL6/6GcizlNgJEGXAIbFiti3dhtS2/sVXdWMzwUibMeq4R
+         oUDB5ZlI1Ks376jS4PA4OLnxpqU4n1XCyTaA2ipZ0yiKrWLQRLOkmq8Go3TimbiF1p0F
+         03hCSqpUBU7RoY2Xoafd+spaYgh+Z4Oa1qXTa6NH1gHzZnl2HAZPtXaUdyAK2NS3a2jt
+         CtMg==
+X-Gm-Message-State: AHYfb5hLppyKUR9mWfm/spi3DOHscqPuhkyT21MK/cOqEgWetDeJXVh3
+        ekbZ4JFKM+Up+dsz9R/IN7EeCdhjoLBO
+X-Google-Smtp-Source: ADKCNb6ASW0oENakT82E7WSuW9xks9/nQ+dZ5jPO0lLCbyBh2ZZWE5YAp8b5X12KNMSZEDUz4xt2bWufFL22hnybhAQ=
+X-Received: by 10.13.229.3 with SMTP id o3mr3032731ywe.137.1503518079213; Wed,
+ 23 Aug 2017 12:54:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9FE64D74-883C-11E7-855A-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Received: by 10.37.214.133 with HTTP; Wed, 23 Aug 2017 12:54:38 -0700 (PDT)
+In-Reply-To: <20170823123704.16518-12-pclouds@gmail.com>
+References: <20170823123704.16518-1-pclouds@gmail.com> <20170823123704.16518-12-pclouds@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 23 Aug 2017 12:54:38 -0700
+Message-ID: <CAGZ79kY8cW+6+60bgSAhS69nBWZbn1LA7gT3t4Ddii+MB2V_cA@mail.gmail.com>
+Subject: Re: [PATCH v4 11/16] revision.c: --all adds HEAD from all worktrees
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+> +int other_head_refs(each_ref_fn fn, void *cb_data)
+> +{
+> +       struct worktree **worktrees, **p;
+> +       int ret = 0;
+> +
+> +       worktrees = get_worktrees(0);
+> +       for (p = worktrees; *p; p++) {
+> +               struct worktree *wt = *p;
+> +               struct ref_store *refs;
+> +
+> +               if (wt->is_current)
+> +                       continue;
 
-> On Wed, Aug 23, 2017 at 12:13 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Prathamesh Chavan <pc44800@gmail.com> writes:
->>
->>> +typedef void (*submodule_list_func_t)(const struct cache_entry *list_item,
->>> +                                   void *cb_data);
->>> +
->>>  static char *get_default_remote(void)
->>>  {
->>>       char *dest = NULL, *ret;
->>> @@ -353,17 +356,30 @@ static int module_list(int argc, const char **argv, const char *prefix)
->>>       return 0;
->>>  }
->>>
->>> -static void init_submodule(const char *path, const char *prefix, int quiet)
->>> +static void for_each_submodule(const struct module_list *list,
->>> +                            submodule_list_func_t fn, void *cb_data)
->>
->> In the output from
->>
->>         $ git grep for_each \*.h
->>
->> we find that the convention is that an interator over a group of X
->> is for_each_X,
->
-> ... which this is...
->
->> the callback function that is given to for_each_X is
->> of type each_X_fn.
->
-> So you suggest s/submodule_list_func_t/each_submodule_fn/
+As said in an earlier patch (and now this pattern
+coming up twice in this patch series alone), the lines
+of this function up to here, could become
+part of a worktree iterator function?
 
-It's not _I_ suggest---the remainder of the codebase screams that
-the above name is wrong ;-).  Didn't it for the mentors while they
-were reading this code?
+> +               refs = get_worktree_ref_store(wt);
+> +               ret = refs_head_ref(refs, fn, cb_data);
+> +               if (ret)
+> +                       break;
 
->> An interator over a subset of group of X that
->> has trait Y, for_each_Y_X() iterates and calls back a function of
->> type each_X_fn (e.g. for_each_tag_ref() still calls each_ref_fn).
->
-> This reads as a suggestion for for_each_listed_submodule
-> as the name.
+with these 4 lines in the callback function.
 
-If you need to have two ways to iterate over them, i.e. (1) over all
-submodules and (2) over only the listed ones (whatever that means),
-then yes, for_each_listed_submodule() would be a good name for the
-latter which would be a complement to for_each_submodule() that is
-the former.
+> +/*
+> + * Similar to head_ref() for all HEADs _except_ one from the current
+> + * worktree, which is covered by head_ref().
+> + */
+> +int other_head_refs(each_ref_fn fn, void *cb_data);
 
->
->> I do not offhand think of a reason why the above code need to
->> deviate from that pattern.
+This is already such an iterator function, just at another
+abstraction level.
