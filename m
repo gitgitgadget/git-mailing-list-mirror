@@ -2,81 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D02011F4DD
-	for <e@80x24.org>; Wed, 23 Aug 2017 22:42:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 14A1D1F4DD
+	for <e@80x24.org>; Wed, 23 Aug 2017 22:49:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751026AbdHWWm5 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Aug 2017 18:42:57 -0400
-Received: from smtp-out-3.talktalk.net ([62.24.135.67]:47899 "EHLO
-        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750715AbdHWWm4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Aug 2017 18:42:56 -0400
-Received: from PhilipOakley ([92.31.218.76])
-        by smtp.talktalk.net with SMTP
-        id keMQd8pASlmqOkeMQdZ4k1; Wed, 23 Aug 2017 23:42:55 +0100
-X-Originating-IP: [92.31.218.76]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=H+Sr+6Qi c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
- a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=8nJEP1OIZ-IA:10 a=cJvsqIBe4VOkT2rzYjgA:9
- a=wPNLvfGTeEIA:10
-Message-ID: <D0634C4264E4400492C9424041D7AF02@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-        "Stephan Beyer" <s-beyer@gmx.net>
-Cc:     "Git" <git@vger.kernel.org>
-References: <CAGZ79kYinci-OWXV2VfScLPcUDCHyhSb=7TxTWUWHPnKV5PuDA@mail.gmail.com> <36e9c381-81b0-ae71-153a-0bcabc59856c@gmx.net> <alpine.DEB.2.21.1.1708231639470.19382@virtualbox>
-Subject: Re: [BUG] rebase -i with only empty commits
-Date:   Wed, 23 Aug 2017 23:42:55 +0100
-Organization: OPDS
+        id S1751050AbdHWWte (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Aug 2017 18:49:34 -0400
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:37450 "EHLO
+        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750812AbdHWWte (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Aug 2017 18:49:34 -0400
+Received: by mail-wm0-f48.google.com with SMTP id b189so8748873wmd.0
+        for <git@vger.kernel.org>; Wed, 23 Aug 2017 15:49:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=nUx+aSWRVG4E4sAT8ojVn4kHpd9d4GVdNrc8ZHRCIII=;
+        b=USH2WWSjtsETIvCTrYJOOz8SvCI0D5MCY4IEq+zxaLEULPDlYQz9AyV+z9mlJtnbpO
+         7YOmjAMzqWo5zm1NgV9Of93r3V2tCdOJZWxe3ZHmX0l2mZZcXNxfCpQZnhZj4Dgxgj57
+         31v7G6ufXoMlyDgKgo1/2RH38gXgh7hNc49oDvIVwsGc0soILsV3tsyi5Cd+KL7oOH5D
+         e5rHaCwG4WywmQ8Kp18BDMmm0JEtZS3Mz1mCSfr+IBHEiXihQssmBd6n+ubxOQ5cbs+v
+         UHCyayfqaxxWymid3CimXIGYhkUvv5WMclG1GMZRSbar47CNDwIcrSbOoBQoJwPOrY9Y
+         rt+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=nUx+aSWRVG4E4sAT8ojVn4kHpd9d4GVdNrc8ZHRCIII=;
+        b=Y8gT0DpoUQ7UytU/EAVxO+f36t/tHbDa+PVPon9GxPR47GNN7aOKS77mIQsBqNB3t7
+         Vx/bHCtFJ2J+YUerToWD1zCuG6eOMaBG7puEKN74HUQJGSVTYPKG/hCG8jD8axMZSTWa
+         PSQqBW+27AxUpfGQfxcWuLXmXpa/HdpcH4JxTwpDgvSvJ6w30/wjdVthzE+BzFGIh+FC
+         iSy3Ztmg/tCBMUfoEjAWzBUswgpf/WIFVukBNeNOxrV1DuO7bV3DbpCQZIFgcSX9I5Mo
+         WNMf3SDaiEHhCQUCvyyQcRpWIZS0uqWPItORrYrPjtXHO94CL9hb+PjBTgT7IwVV7IZd
+         wnTA==
+X-Gm-Message-State: AHYfb5h06P3RWtkjiJT/qVGqzF/rXVaQQoU/eCdoYpcsmQpZ2HUGSVhi
+        Hdxg1CVeXd+vG2u6Ixig0ugXKoH18Q==
+X-Received: by 10.80.219.133 with SMTP id p5mr4610934edk.104.1503528572962;
+ Wed, 23 Aug 2017 15:49:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="iso-8859-1";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Antivirus: AVG (VPS 170823-12, 23/08/2017), Outbound message
-X-Antivirus-Status: Clean
-X-CMAE-Envelope: MS4wfDFD9U2SYV/auJ9ihY/70JUw0CsbrCu/zKatOLf/hRa+x3Xk1PKPCXUTGUx1aoAS6id2LMPVWpAQvfzqF/GlX4+eonz8K+Cd0Pclfq9rZnZIS7R+sD4t
- eXwsUtKjtxZjKKnETKy2o2ixamYv4ESrPwWEExM6mg0SZMFWdprSeVvcRaDsgfIQn02AbATF8EDsFiHo16jGMuUyBGQygvafdifPgExUPfwFNRUpwRny4PLA
+Received: by 10.80.182.5 with HTTP; Wed, 23 Aug 2017 15:49:12 -0700 (PDT)
+In-Reply-To: <vpqo9r6lhzq.fsf@anie.imag.fr>
+References: <CA+P7+xrtZYUjPcVMkA+x8B57w+LxjjU8YSKcE77DrWne7449rg@mail.gmail.com>
+ <CAGZ79kZW_+GEKyP4+8agZ7nyjGEZ9p5d3N99W6sC3GTY_4Cm-g@mail.gmail.com>
+ <CA+P7+xpCJ8jwBQp9Ze=J955CaxnbVPc69ThXht2e=6TUMBq_UQ@mail.gmail.com>
+ <CAGZ79kbYWJmru_o48+8iH4_MVEtODFuicRY=23+BM+_q2ZJsaw@mail.gmail.com> <vpqo9r6lhzq.fsf@anie.imag.fr>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Wed, 23 Aug 2017 15:49:12 -0700
+Message-ID: <CA+P7+xp7Gr_zvsreXpLLkn7GsR2fh-0W-20ov4QonQ7c292utA@mail.gmail.com>
+Subject: Re: git send-email Cc with cruft not working as expected
+To:     Matthieu Moy <git@matthieu-moy.fr>
+Cc:     Stefan Beller <sbeller@google.com>, johan@kernel.org,
+        Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-<snip>
-
->> So the problem seems to be that rebase -i (like rebase without -i)
->> considers "empty commits" as commits to be ignored. However, when using
->> rebase -i one expects that you can include the empty commit...
->>
->> Also, the behavior is odd. When I only have empty commits, a "git rebase
->> master" works as expected like a "git reset --hard master" but "git
->> rebase -i" does nothing.
->>
->> The expected behavior would be that the editor shows up with a
->> git-rebase-todo like:
->> # pick 3d0f6c49 empty commit
->> # pick bbbc5941 another empty commit
->> noop
+On Wed, Aug 23, 2017 at 3:02 AM, Matthieu Moy <git@matthieu-moy.fr> wrote:
+>> On Tue, Aug 22, 2017 at 4:30 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
+>>> Additionally I just discovered that the behavior here changes pretty
+>>> drastically if you have Email::Validate installed, now it splits the
+>>> address into multiple things:
 >
-> These days, I reflexively type `rebase -ki` instead of `rebase -i`. Maybe
-> you want to do that, too?
+> (I'm assuming you mean Email::Address, there's also Email::Valid but I
+> don't think it would modify the behavior)
 >
-> Ciao,
-> Dscho
 
-Is the -k option actually documented? I couldn't see it in the man pages. 
-I'm guessing it's the same as `--keep-empty`.
---
-Philip 
+No I actually definitely meant Email::Valid. I already had
+Mail::Address installed, and I then installed Email::Valid, and it
+changed behavior to split the cruft into multiple addresses.
 
+I don't actually know why or how it did this, but I'm certain it was
+presence of Email::Valid that did it.
+
+However, your first patch addresses the issue since you remove the
+cruft well before passing it into Email::Valid anyways.
+
+> Hmm, I think we reached the point where we should just stop using
+> Email::Address.
+
+I do agree, I don't think we should use Mail::Address.
+
+>
+> Patch series follows and should address both points.
+>
+> --
+> Matthieu Moy
+> http://matthieu-moy.fr
