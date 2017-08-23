@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD47920899
-	for <e@80x24.org>; Wed, 23 Aug 2017 12:38:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 82CDB20899
+	for <e@80x24.org>; Wed, 23 Aug 2017 12:38:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754000AbdHWMiq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Aug 2017 08:38:46 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:36656 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753955AbdHWMip (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Aug 2017 08:38:45 -0400
-Received: by mail-pf0-f193.google.com with SMTP id c15so1354376pfm.3
-        for <git@vger.kernel.org>; Wed, 23 Aug 2017 05:38:45 -0700 (PDT)
+        id S1753994AbdHWMiw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Aug 2017 08:38:52 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:33908 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753915AbdHWMiv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Aug 2017 08:38:51 -0400
+Received: by mail-pf0-f194.google.com with SMTP id m6so1358670pfm.1
+        for <git@vger.kernel.org>; Wed, 23 Aug 2017 05:38:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=wV9c+9OYYU29Azr7RmWPnKaBV/oUt9xO6oJnJ1gVikk=;
-        b=uR2c52YMKIrzySf1og9fy/oWddzo3Nr+/YqNfHMUcqqENdBCDglytvEXXTd7s1uFJi
-         ZRFXElImIpdf6MgCfdGuZMyHVuDjGTrQBflB69dBGlCviC+Cqz/mzYL3NfbSKaZa4MX+
-         r8sCPfhT1J9RHwWjjxEAOQdqoaYA1nR8JbID5RobszVnYZBakKP7PyAIpEOrhHxXCkQz
-         TZLBh01+Q2O6zWmbFWcDxIqSZoNGPjQG6nbafjwa6AxmOYu+8UGh9yj4ztwc3rlEUMw9
-         grkmHXo26jC+mYxV/14uRh39KSflCvoy+HxI2pYlgjIsvI/csSFU2UN26VjP4yfCATe+
-         yxxA==
+        bh=28rKnlXYs6kYHBnlm++mrR55QXgMpBoLmUv45KoF/QM=;
+        b=NjnlHwTAhdLNCJImAZrzMuE7RHuqM/WEkdZcNKvBVG1RPnZ+zSbNfe6+vUt4F5gTGq
+         NCQimAhcKzD8gghcxvU81FHcVifip70UYqD1UAkidGgVoDExDAsMYEflJ400A1jFPlDU
+         SIyy6PESRES2PCorSUJO/+isnGzQAZ3z7Zb9lW6t9JiB5YAw38Fej/p4RIidTchoOf07
+         7LQtyRJAHr8VofxSZ1Kk30HIWwTLJEDIutfFWkDD6/jxa07vfDDmQWDXb1DCNhC6MlaY
+         USsyxnAMtIErf1zGM/wRMKD+fOavyg0Lw8zJVLGobww/OSf+PehgdkmXYCWRM6qU3+JX
+         6C/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=wV9c+9OYYU29Azr7RmWPnKaBV/oUt9xO6oJnJ1gVikk=;
-        b=sy/EkwwUAc3EeiFWIViG+zfJyfMGDRUE1AUpX9R8w7U5ZZcaoBArn/usZSGFsm6KfD
-         VqTe3anMFWsHrCIM8OgDW3TTgOl3xCCTJZ27ayZlWdOivhLRXFKSBMSHQjGlvotQa7yZ
-         P69jNvCxY6KDFfjQyuxuCLh7JRRLCmeBhF04dQ59Omw9nVGTgCRPnSvWaj8hOHYAc3Xd
-         x/wKjqq4uBg7GWuDDXVbYlO9kXnqy1zUqwToFFIDEshG2zoDhYLI3YjHASVN+OMMH7qF
-         3h6Kv4HCYZ6nGGx8IXa9pe3KJhKG9fhsj3fFNLuMGIi2zg6Wca3DbX8mGwnY6FO9Lgvy
-         ua0g==
-X-Gm-Message-State: AHYfb5g815BJMeb7PI0BGKxZarvZKsR589uz52HesCnUd3TwlhDJYnfh
-        qiEvT8Hof4XYqF6V
-X-Received: by 10.99.47.66 with SMTP id v63mr2679754pgv.4.1503491925315;
-        Wed, 23 Aug 2017 05:38:45 -0700 (PDT)
+        bh=28rKnlXYs6kYHBnlm++mrR55QXgMpBoLmUv45KoF/QM=;
+        b=QZUV1dkp3asjCQm2DDAClXSaMq3oncenCkCs0kgtxlY1KP9CA+1G5dUhhHLeJ95dg7
+         5DD9xHy9iDZyx5QoTDF4UxEDXfAXI2HswL88zF9q3xPV/aSPAAR9iRr006vnkPHVKr/X
+         /RdrlnfkLtQkWX9DPV5VIFJCtsbPk6rr1D/CyUcSPXqspBCBwEMio60dedXZZl9hw/CH
+         /aSqRktlWJHfapv/COHknF30WcbouJDDlSoGxgbrHlOhGddws584CdU2nbDGFASBVH9h
+         G5rK3uhZJJcQz4AN1T/PSXniDRGBhx5VuzbMx1wZhAYIwyvIjW/tBcz6Cv7z8ZzkVoR3
+         Fzbw==
+X-Gm-Message-State: AHYfb5iqJMaCVwivC8DTHuSHiE2XPkfIeL5EuUZnckLTrJL4kyUwT6L7
+        dEH910UD0p/x3xmo
+X-Received: by 10.99.106.193 with SMTP id f184mr2552237pgc.290.1503491931192;
+        Wed, 23 Aug 2017 05:38:51 -0700 (PDT)
 Received: from ash ([115.72.183.215])
-        by smtp.gmail.com with ESMTPSA id b1sm2791355pgn.1.2017.08.23.05.38.41
+        by smtp.gmail.com with ESMTPSA id q133sm2944109pfq.31.2017.08.23.05.38.48
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 23 Aug 2017 05:38:44 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Wed, 23 Aug 2017 19:38:39 +0700
+        Wed, 23 Aug 2017 05:38:50 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Wed, 23 Aug 2017 19:38:45 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v4 14/16] rev-list: expose and document --single-worktree
-Date:   Wed, 23 Aug 2017 19:37:02 +0700
-Message-Id: <20170823123704.16518-15-pclouds@gmail.com>
+Subject: [PATCH v4 15/16] refs.c: remove fallback-to-main-store code get_submodule_ref_store()
+Date:   Wed, 23 Aug 2017 19:37:03 +0700
+Message-Id: <20170823123704.16518-16-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
 In-Reply-To: <20170823123704.16518-1-pclouds@gmail.com>
 References: <20170823123704.16518-1-pclouds@gmail.com>
@@ -71,44 +71,61 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+At this state, there are three get_submodule_ref_store() callers:
+
+ - for_each_remote_ref_submodule()
+ - handle_revision_pseudo_opt()
+ - resolve_gitlink_ref()
+
+The first two deal explicitly with submodules (and we should never fall
+back to the main ref store as a result). They are only called from
+submodule.c:
+
+ - find_first_merges()
+ - submodule_needs_pushing()
+ - push_submodule()
+
+The last one, as its name implies, deals only with submodules too, and
+the "submodule" (path) argument must be a non-NULL, non-empty string.
+
+So, this "if NULL or empty string" code block should never ever
+trigger. And it's wrong to fall back to the main ref store
+anyway. Delete it.
+
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/rev-list-options.txt | 8 ++++++++
- revision.c                         | 2 ++
- 2 files changed, 10 insertions(+)
+ refs.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index a6cf9eb380..7d860bfca1 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -184,6 +184,14 @@ explicitly.
- 	Pretend as if all objects mentioned by reflogs are listed on the
- 	command line as `<commit>`.
+diff --git a/refs.c b/refs.c
+index 8c989ffec7..a0c5078901 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1587,6 +1587,9 @@ struct ref_store *get_submodule_ref_store(const char *submodule)
+ 	char *to_free = NULL;
+ 	size_t len;
  
-+--single-worktree::
-+	By default, all working trees will be examined by the
-+	following options when there are more than one (see
-+	linkgit:git-worktree[1]): `--all`, `--reflog` and
-+	`--indexed-objects`.
-+	This option forces them to examine the current working tree
-+	only.
++	if (!submodule)
++		return NULL;
 +
- --ignore-missing::
- 	Upon seeing an invalid object name in the input, pretend as if
- 	the bad input was not given.
-diff --git a/revision.c b/revision.c
-index d100b3a3be..6eba4131b4 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2251,6 +2251,8 @@ static int handle_revision_pseudo_opt(const char *submodule,
- 			return error("invalid argument to --no-walk");
- 	} else if (!strcmp(arg, "--do-walk")) {
- 		revs->no_walk = 0;
-+	} else if (!strcmp(arg, "--single-worktree")) {
-+		revs->single_worktree = 1;
- 	} else {
- 		return 0;
+ 	if (submodule) {
+ 		len = strlen(submodule);
+ 		while (len && is_dir_sep(submodule[len - 1]))
+@@ -1595,14 +1598,6 @@ struct ref_store *get_submodule_ref_store(const char *submodule)
+ 			return NULL;
  	}
+ 
+-	if (!submodule || !*submodule) {
+-		/*
+-		 * FIXME: This case is ideally not allowed. But that
+-		 * can't happen until we clean up all the callers.
+-		 */
+-		return get_main_ref_store();
+-	}
+-
+ 	if (submodule[len])
+ 		/* We need to strip off one or more trailing slashes */
+ 		submodule = to_free = xmemdupz(submodule, len);
 -- 
 2.11.0.157.gd943d85
 
