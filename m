@@ -2,85 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BF8F820899
-	for <e@80x24.org>; Wed, 23 Aug 2017 12:11:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D17AC20899
+	for <e@80x24.org>; Wed, 23 Aug 2017 12:11:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754031AbdHWMLB (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Aug 2017 08:11:01 -0400
-Received: from mout.kundenserver.de ([212.227.126.135]:50864 "EHLO
+        id S1753996AbdHWMLA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Aug 2017 08:11:00 -0400
+Received: from mout.kundenserver.de ([212.227.17.10]:63928 "EHLO
         mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753932AbdHWMKy (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1753943AbdHWMKy (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 23 Aug 2017 08:10:54 -0400
-Received: from localhost ([130.75.46.4]) by mrelayeu.kundenserver.de (mreue003
- [212.227.15.167]) with ESMTPSA (Nemesis) id 0LpzzH-1d6CCa3LHz-00ffix; Wed, 23
- Aug 2017 14:10:51 +0200
+Received: from localhost ([130.75.46.4]) by mrelayeu.kundenserver.de (mreue103
+ [212.227.15.183]) with ESMTPSA (Nemesis) id 0MFzpm-1doIOY0q9u-00Ez03; Wed, 23
+ Aug 2017 14:10:52 +0200
 From:   Michael J Gruber <git@grubix.eu>
 To:     git@vger.kernel.org
 Cc:     hIpPy <hippy2981@gmail.com>
-Subject: [PATCH v3 2/4] merge: clarify call chain
-Date:   Wed, 23 Aug 2017 14:10:43 +0200
-Message-Id: <28682d03456d49b10b91c0c63de0f4119bcae7cf.1503489842.git.git@grubix.eu>
+Subject: [PATCH v3 3/4] merge: split write_merge_state in two
+Date:   Wed, 23 Aug 2017 14:10:44 +0200
+Message-Id: <5e23092c21b834424f7a9bb0a0fc01c0a729293d.1503489842.git.git@grubix.eu>
 X-Mailer: git-send-email 2.14.1.426.g4352aa77a5
 In-Reply-To: <xmqq1so34m6d.fsf@gitster.mtv.corp.google.com>
 References: <xmqq1so34m6d.fsf@gitster.mtv.corp.google.com>
 In-Reply-To: <cover.1503489842.git.git@grubix.eu>
 References: <cover.1503489842.git.git@grubix.eu>
-X-Provags-ID: V03:K0:CFpme7k8V8ki8WrGT0DjLMaZMZ9CvgNZc0cLQGh8iN9t+HdDmCw
- dzXGcAqWN75s4NbbVF/nanLy7pmJDfyeO/ZGgKews5z1JQnNS3LFQ5tqaLcBuNQR6XSGCz4
- no+IPHOHdgLkmcGhdhA14NqjkRYVVbxp5Y5gC0qrFmcC0MV31F9l2y10hPI3+IPlh59ZeBH
- ITKZv8FWjQMiJJTam2mgQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:0FbJItuvygE=:BZXdaJGXz3FLhu28BY2CHt
- g0J7njnpSttbbPiFpKIbsuwGNuXOyLcC0xE9+YcPnn6JO7zM+957imi5mwGQFG1mIJeLyx3Qb
- kga0OV7T5h7v/YgM7vqXHtWNsUTc0VDemFnOg8cfe6dPrjTOqmeK24TEFOWNyPu28Cqqyb8lK
- jgfGjeUypjJmwVqPjyHyg/dELwhn7l2pdDp3F1oMwWM5Pbluc8wfNlhmzyETRCpR5Vz5yDP3J
- hK5NWA9+Ie+gsMmQPFHBMLCWTNvUWcLUYBG8WIu21HbKD++AaHtqqk4XanvsM5JxYLBnhcUZe
- 7hSoG6jD5bIweZdRRsbpLvbk/vzHFaGhf9m0nQKEK+oHDNNeVSJBBeAazlre5/2jA1LrkfZpF
- /Jq6Vpl01PXYzeza+lLybo9+4h5VDQl1FQS+HVWtX/dRYaLGUgsiphvEsBRowCn39zNOzV7Ew
- GXJb9/JwMyZeQE9WFZPmrflcHAhzf33bAFd8fPt9dBbL2t9uu64zMhm0gvqi7QV3hM7tvECL0
- 9amAcsgnP6FGCHKU5BqzyDDlmAB0RGKMnxyh1g42nRcwfejlEFXFtzymN3Jt6KpNrNeNTbcTg
- PDjAnpr5gNvMpZciaJecAituu71sND2+prcFFg84l0FP3qJcVLICSrFv9z9NU7m3kOhJKnkP0
- ByfLMkI+OEkNF/2dCQOcrlLVlMWlPIFiC0OL1ewaOrwu3Kn0ps6hjrhAHfAGMG1OZ0ULLO+oQ
- VX49iPalpuCay4S9bDwO+BhMrVVy1ymJU+1L/A==
+X-Provags-ID: V03:K0:tjK6fIz1o2r+TJLRjoBPk4seX1X6h4JdoZxUjxqh2vIgYCVnzLO
+ h9dNYjvqP16C/Q4QZXoJrs1FDCk9lxwkBEG8TuO27y8aUcl/oQpGimIRUgnI1r651IDHQLr
+ bNBhcWodWc+a6wg5Povo/G8f3fZMp9zP98KX5g8fEZudhquRFb0wCo2Pu0Y2uepxU4L+s0t
+ XGqQWhxKR5wd3d9NiNy3g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:pEboQwI32X4=:1s68Lr2dW0qciVTcJiZL5x
+ eDY5cNsCB9Zy5na+LIoKuYGfEUg3Qg87j3ZwyWVHnoUGMklxOygGXWGYej8bPK2qfxORI/ul8
+ kVt69ie2KOfTthC2mHC3lcE7AgCFgyBiBBHYNCsXGTAmtn1KF+5+FnayaGnWNCj686/f88bZh
+ jLlcRcRT5xtGeHoc+9NJ+SBZlfi6rJrlJaB2dzbOPYSEklYoMyuFEiO8aiauDw83EMo8lM3m1
+ PCMvvt63/hBrc/t9dpy/fkG6EquPR5Tft1NkzI1SwHErArdHSzY3JKXQPviVVwGATpjPpVTiq
+ ys+JPXK0NubDeaF69suMKNmvT/Q67+HPxlHBIkZt0PZzJLc/DsYwleHeoj8tHzPrlWP1GnEjH
+ eBldgSYjTKGSvoYlZYn08W0Lh6kLKQEQBXWKJKYsIKRi4YKxtlEVyA9JmhG9j8TwHaRV8pcXm
+ vMsnT/FwhzUxxQHQGAf9VC1FB8yjp0yTOyiORM0R1qh+XlO3+xjT+2gKkZTaI3Q2BU6bUkFNI
+ EZHiHXBqusg0OTrBriFVOas04ESZzs3KHzQqq+oUe7l1zWENq05EIOJpZ7aXgZjxi4xawkSGi
+ knJKBPDh1wbiYpK5sY0GmDJqeryX97BXqT9HT1sL6HMo/pXCCjs7pJsKWowwldGgOgGz1cN8l
+ 30iZeHkQWa0ywBTBkxoiUfV9zmzK9Bn30Dsh+MeduceHl0WaVGgMi6iW/lqISG1NteHKGN/PL
+ jIXA+ejsI8NJmzPh85VQv08/497MxT9ZFeQN6g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-prepare_to_commit() cannot be reached in the non-squash case:
-It is called by merge_trivial() and finish_automerge() only, but the
-calls to the latter are somewhat hard to track:
+write_merge_state() writes out the merge heads, mode, and msg. But we
+may want to write out heads, mode without the msg. So, split out heads
+(+mode) into a separate function write_merge_heads() that is called by
+write_merge_state().
 
-If option_commit is not set, the code in cmd_merge() uses a fake
-conflict return code (ret=1) to avoid writing the tree, which also
-avoids setting automerge_was_ok (just as in the proper ret==1 case), so
-that finish_automerge() is not called.
+No funtional change so far, except when these non-atomic writes are
+interrupted: we write heads-mode-msg now when we used to write
+heads-msg-mode.
 
-To ensure that no code change breaks that assumption, safe-guard
-prepare_to_commit() by a BUG() statement.
-
-Suggested-by: junio
 Signed-off-by: Michael J Gruber <git@grubix.eu>
 ---
- builtin/merge.c | 2 ++
- 1 file changed, 2 insertions(+)
+ builtin/merge.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/merge.c b/builtin/merge.c
-index cc57052993..dafec80fa9 100644
+index dafec80fa9..db3335b3bf 100644
 --- a/builtin/merge.c
 +++ b/builtin/merge.c
-@@ -763,6 +763,8 @@ static void prepare_to_commit(struct commit_list *remoteheads)
- 	struct strbuf msg = STRBUF_INIT;
- 	strbuf_addbuf(&msg, &merge_msg);
- 	strbuf_addch(&msg, '\n');
-+	if (squash)
-+		BUG("the control must not reach here under --squash");
- 	if (0 < option_edit)
- 		strbuf_commented_addf(&msg, _(merge_editor_comment), comment_line_char);
- 	if (signoff)
+@@ -910,7 +910,7 @@ static int setup_with_upstream(const char ***argv)
+ 	return i;
+ }
+ 
+-static void write_merge_state(struct commit_list *remoteheads)
++static void write_merge_heads(struct commit_list *remoteheads)
+ {
+ 	struct commit_list *j;
+ 	struct strbuf buf = STRBUF_INIT;
+@@ -926,8 +926,6 @@ static void write_merge_state(struct commit_list *remoteheads)
+ 		strbuf_addf(&buf, "%s\n", oid_to_hex(oid));
+ 	}
+ 	write_file_buf(git_path_merge_head(), buf.buf, buf.len);
+-	strbuf_addch(&merge_msg, '\n');
+-	write_file_buf(git_path_merge_msg(), merge_msg.buf, merge_msg.len);
+ 
+ 	strbuf_reset(&buf);
+ 	if (fast_forward == FF_NO)
+@@ -935,6 +933,13 @@ static void write_merge_state(struct commit_list *remoteheads)
+ 	write_file_buf(git_path_merge_mode(), buf.buf, buf.len);
+ }
+ 
++static void write_merge_state(struct commit_list *remoteheads)
++{
++	write_merge_heads(remoteheads);
++	strbuf_addch(&merge_msg, '\n');
++	write_file_buf(git_path_merge_msg(), merge_msg.buf, merge_msg.len);
++}
++
+ static int default_edit_option(void)
+ {
+ 	static const char name[] = "GIT_MERGE_AUTOEDIT";
 -- 
 2.14.1.426.g4352aa77a5
 
