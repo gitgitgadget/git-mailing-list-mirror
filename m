@@ -2,98 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 872861F4DD
-	for <e@80x24.org>; Wed, 23 Aug 2017 21:55:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A97B1F4DD
+	for <e@80x24.org>; Wed, 23 Aug 2017 21:55:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751038AbdHWVy7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Aug 2017 17:54:59 -0400
-Received: from mail-yw0-f179.google.com ([209.85.161.179]:36707 "EHLO
-        mail-yw0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751005AbdHWVy6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Aug 2017 17:54:58 -0400
-Received: by mail-yw0-f179.google.com with SMTP id y64so8494087ywf.3
-        for <git@vger.kernel.org>; Wed, 23 Aug 2017 14:54:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Nx5BC2biyRzG9ajP/CHIr9iAgh3X+x6yBYkiOUBtyxQ=;
-        b=R5Euf9CK1YJ/K2BVA6N+Ala7rdJtRRNt599namrO3u6jA0GLWSfLJp6gOeWtyicbS/
-         iN7lPUILV9PYP4x3ysycQu5aho1hcmVVTF3JpfV5TUAHbKbEZXWAtTL4xFCSVlh16x+C
-         r0sea2cExp0yv9RuM197Btc8XLkSeJp4HjhsCKOd0G+B8P+syh/pjodc+fJ28M/5Y0MD
-         /AyjiK1U8M+WSM9droBaXED5444tVqqsgWf2+PaofQIOdFjcNhPIWEmb1kFuoti8T4XZ
-         69F998ddqpZo7VCw+yG5m1e9I/7ADMZLRHzwUnzd063gxqQCJ0nQ2rPHklD7PmtODk2L
-         fwVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Nx5BC2biyRzG9ajP/CHIr9iAgh3X+x6yBYkiOUBtyxQ=;
-        b=ofI6x5xJ7YZ7z8ZQ4NQZdN9g3ZFQf4p8yOE7kZ+T8uGrAtA4yOb/Gl43D8oE5ve4DV
-         nOeQRNGYi5qiwxtTR1Rt+lN5aNx1Eo7ZpHwHS3689uTA3DUKPdt97dghhbWQJz37HHJQ
-         jRUt1DLqYtCK6+OYGTKTPhjHju59t98Kz/d3EKc4/UDO0J04eaZHbUDnb3X2TFZqFM2e
-         JXITnYzdLIrCAQbmieQ1j6dbSlo3CQQqNqVEWZTbwXAapsiUfMS+jJuWNC77QORwf4ms
-         nkrz86s5K7AgycmvB2ybyiljS93dsjoAvJ1ockSwiDxQ8CLi1J4SITfq0AcfaAmVv61D
-         SKHA==
-X-Gm-Message-State: AHYfb5hm8uuPvOxDc8KR4WR49vQryfde54yE005p487gU4lcQY3WzP8K
-        fanlAJ2SXYlqv0aPn1BtTOxW5AXdLQ==
-X-Received: by 10.129.104.130 with SMTP id d124mr3546222ywc.207.1503525297463;
- Wed, 23 Aug 2017 14:54:57 -0700 (PDT)
+        id S1751102AbdHWVzy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Aug 2017 17:55:54 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:65325 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751003AbdHWVzx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Aug 2017 17:55:53 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A11F3ABC31;
+        Wed, 23 Aug 2017 17:55:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=hJ2pzh8QKfu/zYo7FMK0vr0KqWw=; b=LbcH74
+        JAy4HtMSR/Y0PgWCNAKu2/9rQFjkmIo+zT+gxiM2z3vFUzzvLUul+KE+sbJLwkyH
+        vHe26wLMgabkX8o9X+X0tvE0q7lOiiQzwY8WGLZcK+Bf7nudjRlJDI99mIXTkX8w
+        n7CT947KH0KlJLVSqtgUKi9LVOmghx5j2eRPk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=RRRwg+WC5t2eW630S4jEam4tPNiDzRX7
+        k0xIQwnKDe+kkEFC/Qxta70Ie2mE05BY/bgGVBhtowvl/RxWwZy01PTi2EYDDsF3
+        GeFj4RiSxq5lERdo1gKD9k0NqQi0xtjXb253L+DkBOSS5h/OGfRtDFViSii0qkhK
+        3t4OvbcZKwQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 900CFABC30;
+        Wed, 23 Aug 2017 17:55:52 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E9FF0ABC2F;
+        Wed, 23 Aug 2017 17:55:51 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH] Retry acquiring reference locks for 100ms
+References: <030b6bb22973df429ddbb64a079b9cdc1fbcb1b7.1503313472.git.mhagger@alum.mit.edu>
+Date:   Wed, 23 Aug 2017 14:55:50 -0700
+In-Reply-To: <030b6bb22973df429ddbb64a079b9cdc1fbcb1b7.1503313472.git.mhagger@alum.mit.edu>
+        (Michael Haggerty's message of "Mon, 21 Aug 2017 13:51:34 +0200")
+Message-ID: <xmqqd17mx82h.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.129.153.133 with HTTP; Wed, 23 Aug 2017 14:54:56 -0700 (PDT)
-In-Reply-To: <CA+sFfMe56itAMDXOJybf0yHj+BqU1Ai1aU7inoTG3FJtdtZxyw@mail.gmail.com>
-References: <cover.1502780343.git.martin.agren@gmail.com> <cover.1503323390.git.martin.agren@gmail.com>
- <dccd3e75fcd1b2de93263e8373a3b4cd5da0dd32.1503323391.git.martin.agren@gmail.com>
- <CA+sFfMdXv+nqpXmwfLTHtkRLuGkAEAwWXZCvOryVZ=aLb_UmbA@mail.gmail.com>
- <xmqqh8wyxag1.fsf@gitster.mtv.corp.google.com> <CA+sFfMe56itAMDXOJybf0yHj+BqU1Ai1aU7inoTG3FJtdtZxyw@mail.gmail.com>
-From:   Brandon Casey <drafnel@gmail.com>
-Date:   Wed, 23 Aug 2017 14:54:56 -0700
-Message-ID: <CA+sFfMdMgrGBhECegBe09c38nRM+Zt5JK4gJaZ96DO-9zC-8qA@mail.gmail.com>
-Subject: Re: [PATCH v2 3/4] strbuf_setlen: don't write to strbuf_slopbuf
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: D4A86B62-884D-11E7-B25A-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 23, 2017 at 2:20 PM, Brandon Casey <drafnel@gmail.com> wrote:
-> On Wed, Aug 23, 2017 at 2:04 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Brandon Casey <drafnel@gmail.com> writes:
->>
->>> So is there any reason why didn't do something like the following in
->>> the first place?
->>
->> My guess is that we didn't bother; if we cared, we would have used a
->> single instance of const char in a read-only segment, instead of
->> such a macro.
+Michael Haggerty <mhagger@alum.mit.edu> writes:
+
+> The philosophy of reference locking has been, "if another process is
+> changing a reference, then whatever I'm trying to do to it will
+> probably fail anyway because my old-SHA-1 value is probably no longer
+> current". But this argument falls down if the other process has locked
+> the reference to do something that doesn't actually change the value
+> of the reference, such as `pack-refs` or `reflog expire`. There
+> actually *is* a decent chance that a planned reference update will
+> still be able to go through after the other process has released the
+> lock.
+
+The reason why these 'read-only' operations take locks is because
+they want to ensure that other people will not mess with the
+anchoring points of the history they base their operation on while
+they do their work, right?
+
+> So when trying to lock an individual reference (e.g., when creating
+> "refs/heads/master.lock"), if it is already locked, then retry the
+> lock acquisition for approximately 100 ms before giving up. This
+> should eliminate some unnecessary lock conflicts without wasting a lot
+> of time.
 >
-> I think you mean something like this:
->
->    const char * const strbuf_slopbuf = "";
+> Add a configuration setting, `core.filesRefLockTimeout`, to allow this
+> setting to be tweaked.
 
-Ah, you probably meant something like this:
+I suspect that this came from real-life needs of a server operator.
+What numbers should I be asking to justify this change? ;-) 
 
-   const char strbuf_slopbuf = '\0';
+"Without this change, 0.4% of pushes used to fail due to losing the
+race against periodic GC, but with this, the rate went down to 0.2%,
+which is 50% improvement!" or something like that?
 
-which gcc will apparently place in the read-only segment.  I did not know that.
 
-And assignment and initialization would look like:
 
-   sb->buf = (char*) &strbuf_slopbuf;
-
-and
-
-   #define STRBUF_INIT  { .alloc = 0, .len = 0, .buf = (char*) &strbuf_slopbuf }
-
-respectively.  Yeah, that's definitely preferable to a macro.
-Something similar could be done in object.c.
-
--Brandon
