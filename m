@@ -2,106 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A643420899
-	for <e@80x24.org>; Wed, 23 Aug 2017 12:38:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65F0020899
+	for <e@80x24.org>; Wed, 23 Aug 2017 13:46:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753996AbdHWMi5 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Aug 2017 08:38:57 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:36718 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753915AbdHWMi4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Aug 2017 08:38:56 -0400
-Received: by mail-pf0-f196.google.com with SMTP id c15so1354844pfm.3
-        for <git@vger.kernel.org>; Wed, 23 Aug 2017 05:38:56 -0700 (PDT)
+        id S1754082AbdHWNqd (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Aug 2017 09:46:33 -0400
+Received: from mail-oi0-f54.google.com ([209.85.218.54]:36474 "EHLO
+        mail-oi0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754001AbdHWNqb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Aug 2017 09:46:31 -0400
+Received: by mail-oi0-f54.google.com with SMTP id g131so1441169oic.3
+        for <git@vger.kernel.org>; Wed, 23 Aug 2017 06:46:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Q4yQu8yJiILyUvwR401o3+0gOXEhIvqSJfr7kUuSAgY=;
-        b=s4D3LRxuLM3v0K/niECZGixhvfomQc74vjY9gN0lyzNXoy6ni9YnIqfflRIk1MvJWs
-         zI5D+Z2nQF60kqNa//vwsZNsGi3z6q4+wrPRatR7ze8lFKcPNmxLfRYYZk4DUIdt61MU
-         J1SikhHxHsXDacNE7GrHinHTWOLxZYPwpj0fopOkbFU1mQ7RqYSTEqBGlDyuj8hLjskF
-         Cp/bEzBgTbK93xCSRhBBM6zmPBSAk3Lhx2qaXT8i2R8S8m1OX7UhzOpc+TgzSqu2lV8t
-         BzB72j5DzRz6Fm2Y5MC04aoXOVFPYIOuaL3HsptR1iYsrVlmI4+4N8yuGOYvwPTKXdrI
-         +Xkw==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=GXV7s8uP+9/xxuLQ36ZxnNrv84H7N+/KmEKVObAuxOg=;
+        b=BeCoBlRIO/7badq+HU2cAMrJAzbVx+a4FtAVxb2zb+0MkS20RhqP+KYw8UkQWKM0l6
+         qYziZAcqQOk3gk7DkenHljeevvbx7GaQe25QjtnGYWmVZBzZ/ujEcN6LWD6wbp/5EYYs
+         ethA61fXFU8T1q390gMskiSjSOBV0T3MRFcgRhJYwdTPQH8+0HS/ZXRtbFfCWjJZXKUF
+         EJ23xw8PVLeMzI2rkGB/jIHp26g28xMgqDs+XmtoCnRtGSngRKvZ34wzRksQ5ddXDxvz
+         TLeyh/rNl1sZNXxLyPk73ffu7dYmBqv/0s6a4//AKNGvSUcsg9Qo0sr3wEaPmk2+oioy
+         N4Xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Q4yQu8yJiILyUvwR401o3+0gOXEhIvqSJfr7kUuSAgY=;
-        b=JANFzxu/bJlnft2SALekzZDpIgJraGM+UeyhfUaSVeSlQTSndNFxsGDR0l+OU2KNjc
-         HgQacRD0qmmvwt2SgZTfx1Oe4Xw1OHJGLLPhgokeCq09q7mVXmuVkiw8Ln6WrmGd37BC
-         yz5QBut/6VZPHVGAhYY28igNCOsVS7oZKHeOhPSbXTjusx/D5WjUQoF4oZ/Nwyq9ffZA
-         qxnCslwtUOsFqTVWcyUe8APtGb1UmUWClbxzIhVdxxo2AVO20XCz5h/kBpYJoUtb3GDI
-         /cKDQkEsE5/4+hx29KxGc7otiqYzqQirqfWE4mCvtEgoRs37YXfpT2q5Sv6Yty8J+Jp5
-         Pn8A==
-X-Gm-Message-State: AHYfb5jblP9ZaVFAwzgllk9vm4G2120f1zl+b9q92yREhchIeBdkAvvO
-        u4+XCKI4I5Sb1723
-X-Received: by 10.84.241.142 with SMTP id b14mr2866137pll.270.1503491936366;
-        Wed, 23 Aug 2017 05:38:56 -0700 (PDT)
-Received: from ash ([115.72.183.215])
-        by smtp.gmail.com with ESMTPSA id e16sm3427233pfb.182.2017.08.23.05.38.53
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 23 Aug 2017 05:38:55 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Wed, 23 Aug 2017 19:38:51 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Stefan Beller <sbeller@google.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH v4 16/16] refs.c: reindent get_submodule_ref_store()
-Date:   Wed, 23 Aug 2017 19:37:04 +0700
-Message-Id: <20170823123704.16518-17-pclouds@gmail.com>
-X-Mailer: git-send-email 2.11.0.157.gd943d85
-In-Reply-To: <20170823123704.16518-1-pclouds@gmail.com>
-References: <20170823123704.16518-1-pclouds@gmail.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=GXV7s8uP+9/xxuLQ36ZxnNrv84H7N+/KmEKVObAuxOg=;
+        b=kYUWYT+RfBNzH7uwJiaL36ms7XU/waZLOrxxTKv0jWVV1ecWTRo/RvHTMKakNw7hGH
+         Lf1dOcyEWWriHCZNiAD1sgbh2IZBixLHnA1mkBTjU+XIdsEcnO8cC2lfwl2p8afXZq1K
+         9mJFMQw9u2kq0fkLni9y+iG4NVE2mkm73d+wToX7dm+VjPpexDM0hCXqEXf+6ri5WSBH
+         kWLB3bVZkvtmEtPa87tfW/tXnDEYc7RGinG5k5d1FeQF/OFx5GNSPeMe9fgLA4KF+jwB
+         A5Zv7E2U2ayzvs928PVs+cOc2c+crLzzunZsJlJ6EVVRG7rvYvYdAgSJIwdcg5NOdOlJ
+         +V3A==
+X-Gm-Message-State: AHYfb5ibezG6ctpbZSIepXEp529ebLadomBZ6MwMwKWQQT8MTRdvHGNG
+        p9w9WEWC24SjeVyuro6q1fGdx31VBg==
+X-Received: by 10.202.104.160 with SMTP id o32mr3556131oik.66.1503495991063;
+ Wed, 23 Aug 2017 06:46:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.157.7.74 with HTTP; Wed, 23 Aug 2017 06:46:30 -0700 (PDT)
+In-Reply-To: <CAOkDyE9phgZ4ToWTWa2GYgfVkDknCqWr+KEyqVoHg0RVrVVk9A@mail.gmail.com>
+References: <CAOkDyE8KxFvM4CJhC4U=Jb95D6HQ-4qQBtKAgBMyHH15UOhvqg@mail.gmail.com>
+ <CAM9Z-n=ypt_fyFcPjYD28NNoxnJ2ZSovd1TbERdA8RJY1Va=kA@mail.gmail.com> <CAOkDyE9phgZ4ToWTWa2GYgfVkDknCqWr+KEyqVoHg0RVrVVk9A@mail.gmail.com>
+From:   Adam Spiers <git@adamspiers.org>
+Date:   Wed, 23 Aug 2017 14:46:30 +0100
+X-Google-Sender-Auth: _EtlOnCGvMLQqm_7tqkBzT7clBk
+Message-ID: <CAOkDyE_VhGUzn=PmAVsbaTe1ZeBwBVGpF4Muz5MBckMAB6cf=g@mail.gmail.com>
+Subject: Re: splitting off shell test framework
+To:     Drew Northup <n1xim.email@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        "Jason J Pyeron CTR (US)" <jason.j.pyeron.ctr@mail.mil>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-With the new "if (!submodule) return NULL;" code added in the previous
-commit, we don't need to check if submodule is not NULL anymore.
+I got a helpful response to the following question almost 5 years ago:
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- refs.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+On 12 November 2012 at 23:09, Adam Spiers <git@adamspiers.org> wrote:
+> On Mon, Nov 12, 2012 at 6:18 PM, Drew Northup <n1xim.email@gmail.com> wrote:
+>> On Mon, Nov 12, 2012 at 11:37 AM, Adam Spiers <git@adamspiers.org> wrote:
+>>> As it turned out to be fairly easy, I was wondering if there would be
+>>> any interest in doing this more formally, i.e. splitting off the
+>>> framework so that it could be used and improved outside the scope of
+>>> git development?  Of course this would pose the question how git would
+>>> consume this new project without any risk of destabilisation.  I'm
+>>> guessing that simply using a git submodule would solve the problem,
+>>> but ICBW ...
+>>>
+>>> Just an idea.  Interesting, or terrible? :)
+>>
+>> Done at least once already:
+>>
+>> http://comments.gmane.org/gmane.comp.version-control.git/201591
+>
+> Nice!  So hopefully someone will submit patches to build a two-way bridge
+> via git subtree.  Having them diverge would be sad.
 
-diff --git a/refs.c b/refs.c
-index a0c5078901..206af61d62 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1590,13 +1590,11 @@ struct ref_store *get_submodule_ref_store(const char *submodule)
- 	if (!submodule)
- 		return NULL;
- 
--	if (submodule) {
--		len = strlen(submodule);
--		while (len && is_dir_sep(submodule[len - 1]))
--			len--;
--		if (!len)
--			return NULL;
--	}
-+	len = strlen(submodule);
-+	while (len && is_dir_sep(submodule[len - 1]))
-+		len--;
-+	if (!len)
-+		return NULL;
- 
- 	if (submodule[len])
- 		/* We need to strip off one or more trailing slashes */
--- 
-2.11.0.157.gd943d85
+but sadly since then gmane has shuffled off its mortal coil and I can't
+remember / find what this URL referred to.  Please could someone
+point me at a working link?
 
+Many thanks!
+Adam
