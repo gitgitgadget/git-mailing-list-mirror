@@ -2,82 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 887C2208DB
-	for <e@80x24.org>; Wed, 23 Aug 2017 01:10:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D9B34208DB
+	for <e@80x24.org>; Wed, 23 Aug 2017 03:55:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753046AbdHWBKM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Aug 2017 21:10:12 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60513 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752628AbdHWBKL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Aug 2017 21:10:11 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 82A7D949E1;
-        Tue, 22 Aug 2017 21:10:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=qIObbs5/7LPD9D2VrbjIBB63UZQ=; b=YpXtwX
-        x6TFfNKLfSJAVO6NyqlhkSPv4oxEuqUDCI0W6AfB/Dwt+cZgEjhYJzn0vkTP/N+a
-        sNOhw6gTbsKl3eAof6fTdA7V1gYkz9W/9+vsoNlDNi2Th4FdeUs/3ygX0evR03GC
-        NcGYcpSmhx7KeqGUQaOkyrQmx2UaDUP3sl/98=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=QLaB08gNyMn5OtIX3rhMvWAk7k4aqIbe
-        ZWv9HyYqGpYiPYIDVZI6+m2LvQCr9zsbKnSB3nwPUjpDkHYdwPxHn9bnPNvzx2vi
-        LlR3NxksTU6OsmOmXzca86hqf6RfTRfOSmmoIjzx/5LV4MR8xs/QCUk0wKnv8Skg
-        ZyXJfLcq+Iw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 733DD949E0;
-        Tue, 22 Aug 2017 21:10:08 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C300B949DB;
-        Tue, 22 Aug 2017 21:10:07 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH] vcs-svn/repo_tree.h: remove repo_init declaration
-References: <20170822213501.5928-1-sbeller@google.com>
-        <xmqqmv6r1c26.fsf@gitster.mtv.corp.google.com>
-        <20170822234553.GC13924@aiede.mtv.corp.google.com>
-Date:   Tue, 22 Aug 2017 18:10:06 -0700
-In-Reply-To: <20170822234553.GC13924@aiede.mtv.corp.google.com> (Jonathan
-        Nieder's message of "Tue, 22 Aug 2017 16:45:53 -0700")
-Message-ID: <xmqqa82r1441.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1753236AbdHWDz0 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Aug 2017 23:55:26 -0400
+Received: from mail-ua0-f178.google.com ([209.85.217.178]:34468 "EHLO
+        mail-ua0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753142AbdHWDzZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Aug 2017 23:55:25 -0400
+Received: by mail-ua0-f178.google.com with SMTP id d12so1884267uag.1
+        for <git@vger.kernel.org>; Tue, 22 Aug 2017 20:55:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=H0e4q+MOgB0+XwYj5VfwCSg/3nwHUL8ouiD3LHBJzuE=;
+        b=YoBq3D7DmJJiqKRwbLcV5YUvuRR5kOurqGapRm8k49iBn8iKlbqM+7BN56NJtpslte
+         inMpd/HMEjkVj93d5QVJdkdY/C5bBj7vvlUatvcK3JIHIhibcpqCjGWsWe2UsU8pLYSI
+         kAnj4bckwWCvBY1gYOpoUMNvyw75Vi+iTtpVN76wsI0pyD6jpQpY4J1vCL94QQ0Kw2D2
+         2sE4HJ5wv7BHteUcwyeJi7G7QkCIl46TP1QagNw8iPkQ8/zOlc1CaItA3x4ncouUVXZX
+         MR5CKPEYtXu3dp3Z88HHlx5KC5couGG1UB6LPVq63AiOCnhjZ3O9vb1UlGrj2wHxoA/E
+         TOww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=H0e4q+MOgB0+XwYj5VfwCSg/3nwHUL8ouiD3LHBJzuE=;
+        b=bsN190i9v/8Sz2g4m6F6nWTILaI7vUq/EYZ6+TS7ybirckcfPa+zJJsoe0R5h+s/Tt
+         iO2eVTch+5nQ8Zh9cfmH087CizwhgB02hUJMybiS1nlllHyNBApFDQ3Pn+1aWZ1E8Fkz
+         +/VyZYxM7G1+wP9gFrUEzCP/MILFnjIJZglQ5pj0uz/sYaMVXzMRp7svCNbYIHk/WzwW
+         M519UhxH84K9Cdt5N1K6lmXkCgpPIO744tys76ECGUtI6np6SLmS3zbrPOT/xa8JENG8
+         WHBaK52afz7StlEvmoqPpqii6EDk/+sveKIk0/iuU9md0LFIOXpxCZzwW0ayyHDrvqxn
+         qZRw==
+X-Gm-Message-State: AHYfb5jlrlOz9x8213DoLqIwuiB6CHEB00t67BWMU1CVK+yLEYhg9EdA
+        WKOyVA9LeIlEtxkyW4l72BcPKMArBQ==
+X-Received: by 10.176.65.193 with SMTP id 59mr946064uap.83.1503460524792; Tue,
+ 22 Aug 2017 20:55:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CDAA6DBE-879F-11E7-9CCA-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Received: by 10.103.111.68 with HTTP; Tue, 22 Aug 2017 20:55:24 -0700 (PDT)
+In-Reply-To: <xmqqmv6s5yzn.fsf@gitster.mtv.corp.google.com>
+References: <CAJXxHvVzTrhJk6pFsOzUKBuU2VcW41-tMk5A7s+rxXsacXpppw@mail.gmail.com>
+ <CAN0heSrh_+J=LQnGZtngxQbcHAjFhX9vPKKDa7_ORz4iDpXf=g@mail.gmail.com> <xmqqmv6s5yzn.fsf@gitster.mtv.corp.google.com>
+From:   STEVEN WHITE <stevencharleswhitevoices@gmail.com>
+Date:   Tue, 22 Aug 2017 20:55:24 -0700
+Message-ID: <CAJXxHvVSXkQ4SYA5=ZtnWZCBbVk51oWY1OqM_XbGNoruyAGBrA@mail.gmail.com>
+Subject: Re: "Your branch is up-to-date ..." is incorrect English grammar
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Thank you, Martin and Junio. I'd be happy to review any patches. Thank
+you both for your help! :)
 
-> Junio C Hamano wrote:
-> ...
->> It looks to me that this is a reduced duplicate of what brian posted
->> yesterday.  The first two patches in the 6-patch series that you
->> commented on, I think, covers what this change wants to achieve and
->> probably a lot more.  I've merged those two already to 'next' and
->> was about to push the result out.
+(incidentally, I've had a devil of a time sending my two emails on
+this topic--a total of 5 bounced mails for various reasons: didn't
+like my email format, didn't like my email address, mail client, I've
+had 2 syntax errors! I've only had success by sending via Gmail,
+plain-text, in a browser; and God only knows whether I'm wasting my
+time typing this. I'm not used to this world, so the bar is
+sufficiently high and irritating that I'm very disinclined to dip my
+toe into these waters again, which is a shame).
+
+On Mon, Aug 21, 2017 at 3:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Martin =C3=85gren <martin.agren@gmail.com> writes:
 >
-> I just sent
-> https://public-inbox.org/git/20170822233732.GX13924@aiede.mtv.corp.google.com/
-> to fix this more thoroughly.  I can rebase on top of bc/vcs-svn-cleanup
-> if that is helpful --- just say the word.
-
-Yup, as I merged those two preliminary clean-up separately to 'next'
-already, it would be more efficient to build on top.  I do not know
-what you are planning with the other patches (I only saw Stefan's
-one, not your series) so do not yet have suggestion on how to work
-well with Brian's series that builds on his two clean-up patches.
-Hopefully they are orthogonal?
-
-Thanks.
+>>> But =E2=80=9Cyour branch is up-to-date=E2=80=9D is INCORRECT. And, beca=
+use it=E2=80=99s
+>>> incorrect, it conveys an odd and unsettling experience to native
+>>> English speakers whenever they read it.
+>>>
+>>> If you=E2=80=99re curious, you can find plenty of discussion of this po=
+int of
+>>> grammar. Here=E2=80=99s just one example:
+>>> https://english.stackexchange.com/questions/180611/do-i-keep-myself-up-=
+to-date-or-up-to-date-on-something.
+>>
+>> There is also some previous discussion on this very list:
+>> https://public-inbox.org/git/CALFtnmeRxgetuCVbO8ZmVkCR302vQ2s4hTPoHxAe5N=
+EfmjtXEg@mail.gmail.com/T/#u
+>>
+>> The code base contains a few instances of "up-to-date" and "up to date".
+>> A tree wide sweep could be made to update user-visible strings in the
+>> code and in the documentation. Fixing source code comments seems like
+>> overkill.
+>
+> It should be safe to update any message that is meant for human
+> consumption (i.e. those inside the _("... message ...")) i18n
+> marker).  As the use of "up-to-date" dates back to the days when
+> Linus was still doing much code for our project, I suspect there may
+> be some plumbing message that contains the phrase that scripts
+> expect to stay spelled that way, and it is not OK to "fix" them.
+>
+> Thanks.
