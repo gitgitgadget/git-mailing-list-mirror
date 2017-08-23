@@ -2,87 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 40D7320899
-	for <e@80x24.org>; Wed, 23 Aug 2017 19:39:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6676420899
+	for <e@80x24.org>; Wed, 23 Aug 2017 19:43:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932629AbdHWTj1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Aug 2017 15:39:27 -0400
-Received: from mail-qk0-f175.google.com ([209.85.220.175]:38613 "EHLO
-        mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932567AbdHWTjZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Aug 2017 15:39:25 -0400
-Received: by mail-qk0-f175.google.com with SMTP id k126so6063243qkb.5
-        for <git@vger.kernel.org>; Wed, 23 Aug 2017 12:39:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=giUsKIU0A1GD8X/+qB2x0QwZnZh0ruEdd1x1+mHkviw=;
-        b=EmDGt2asATxUKlSTYsOIAVSfAWUbHOgVJxxDFNrgDL1UKAHdSMcBU6jM2tZtQuWCSj
-         3UX6RbeE3wLERMEsJWliRveNICmCpvMLgT5IfYPA+ZYqg39ym9NXr/MDkCaBTfrV/FqE
-         N7qVAPiwFsnywn49UtE2wZGn5x5oLh3HFQSsZCqX8AhQD8XvnniXj1TVM9jrZiPzuVK8
-         KYol6sutf7VCirU0vcvNR1+QnkPrBH0zn5xJK9wiNCJNx0xeqYj5SPbNT9Gs59m7hOYS
-         xRw5jGqRT5/b7kxU7gOUPvsap9vyVxXVfqqwLv1hylDAPGQupOkpaH8wEFye83T9Xgd/
-         ArPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=giUsKIU0A1GD8X/+qB2x0QwZnZh0ruEdd1x1+mHkviw=;
-        b=NQF91a9o6IfgMy6D5ncsIHYrW34TSXXb/nprafHvbAIL1JmG4BQJ9WHa0jXEDuyPPe
-         dD+lX7Pu+KF5gDM5HetF6bRgxuu1kK4ft/kQIf8v1r1QTAWo70KcggYND3eYG6s+j+q0
-         i/k/av09xiNNXLXIEwtB/XcSkeWfjO8N999Epgintp2xE4ADyosbPRrYMFMq1Qip46VP
-         iz99RxRrdADfDQHEMKjehSEyKiPC+3LcmFucsc+hEHzbUm0GGZNrUEfc76sJ4+foYKJM
-         CPG1QAdlS+uujgxreNfE53nLP1+qLotRUlSs/px5VqUe13ZqN/9WByLygfTA25tBsVtg
-         rtjA==
-X-Gm-Message-State: AHYfb5hYW3OvoOZgs2vj2SKblwm+67cgFrZflfaWQWcxOlJ4hh6Bdi9W
-        pr8oiY+E+kDFyswna/HWKPWyq6KMLsFK
-X-Received: by 10.55.151.67 with SMTP id z64mr5108520qkd.5.1503517164385; Wed,
- 23 Aug 2017 12:39:24 -0700 (PDT)
+        id S932601AbdHWTnT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Aug 2017 15:43:19 -0400
+Received: from mout.web.de ([212.227.15.3]:60794 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932407AbdHWTnS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Aug 2017 15:43:18 -0400
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MAvFE-1dsLKa0BGO-00A2Gu; Wed, 23
+ Aug 2017 21:43:16 +0200
+Date:   Wed, 23 Aug 2017 21:43:15 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Ben Boeckel <mathstuf@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Cannot checkout after setting the eol attribute
+Message-ID: <20170823194315.GA29237@tor.lan>
+References: <20170822174918.GA1005@megas.kitware.com>
+ <20170822191318.GA22118@tor.lan>
+ <20170822194441.GA25093@megas.kitware.com>
 MIME-Version: 1.0
-Received: by 10.12.129.34 with HTTP; Wed, 23 Aug 2017 12:39:04 -0700 (PDT)
-From:   Martin Langhoff <martin.langhoff@gmail.com>
-Date:   Wed, 23 Aug 2017 15:39:04 -0400
-Message-ID: <CACPiFCJH7RSb_rz6M6ADuGi0q+oeWYhE1fNMQC0EUcCn_kCJwg@mail.gmail.com>
-Subject: Should rerere auto-update a merge resolution?
-To:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20170822194441.GA25093@megas.kitware.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K0:GilPnscy1vmbSNwQC+QwIDYAK4VgbmyzDMqH1dr56mZBuTi1oKL
+ bg3qdniiW5liPtuLgCpYjyY8Gp8MChcTyjkiGfUWbSbC4B6167GT8IiwmUsoIT+Q694bACA
+ Y4c775BovNLMmoIQaFdW0uXQi/RV4JXSyMFId0e1ZVJcz0b51fxo6rwrZVQQzkOj3igp4tE
+ 9DgpgHhUBljvZs3vjad6A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:EwHyqhYJNLs=:kzKhfZ3EcISiTJDmIeMcT6
+ gBUjRbq4bFXbZsb2sBZTa9j4VdXUzmHEbTJEa8gUBOmZR1Iaie3TnG2MuvTtBOU0EsCCwjFE2
+ PReHixhl6Q3/z34dG5PW2hS5A8BWhExm7Xyot1sg26a/QWook0XCqBBdPC290wCHjNRWi42Vg
+ DpLNaLR5q8w7tCJdgOLG39Zsv3bPjNHhcc5UhmqI1DsK3d6/TZaRsglCyHjJ5+MdERhTdNBat
+ xirjLHshQHFvCfKtRrybCL1iIV1LBeEir2XLTKKznu9FqCnhPBRXKNRxGPT56+iiPuj5SqRSm
+ TmImidCXD0ZMnc73XNfosPn5ew+DSnEMvoKWjvWtVo/O8KN89DZminCtF7GgFPek669RP10nP
+ XYbOTBML4El+zrsSBC5p0OauHx32d1rmXsOHvpgYZmdHzb84LlpYi4Wol4QVFRh/WsBlbvga2
+ 5MZn0gBvThVvypJdjZPb8zuEvhb+GbftrlOGiX/LfnYmlrQk7mFXeWXbspPg7SBsj8fDKM6X6
+ o2jhGRouAS/ptCKfzaj4mNM3aJyvyn2S5iJDEr1e/PZznTr+xGd/YNoP/OY1bkg+KFYTBOvdq
+ 5y+UfGsgHP2FYWVmxKr7itJdYM4K3IvDV+RPbhwT3arBW9xNn1K3fwJB+kxiR9TyrUSwgnlN0
+ /5AvNmOLCMjbEtlz303kReZXcBh1HDdi+EUK7LEPNHEgwtEVHevWDl4L2d/s319/L7xl+uS5o
+ BxCIYrQkgpW7+viga/S6Gg9LoDBGKscdfL7wfZw8i7hvDzS12MxJPOZuNUQXFBT3dAIXt0yxT
+ 6Cdz3R+aorvpgW334Kr/SzYOEU9Tw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi List!
+On Tue, Aug 22, 2017 at 03:44:41PM -0400, Ben Boeckel wrote:
+> On Tue, Aug 22, 2017 at 21:13:18 +0200, Torsten Bögershausen wrote:
+> > When you set the text attribute (in your case "eol=crlf" implies text)
+> > then the file(s) -must- be nomalized and commited so that they have LF
+> > in the repo (technically speaking the index)
+> 
+> This seems like a special case that Git could detect and message about
+> somehow.
+> 
+> > This is what is written about the "eol=crlf" attribute:
+> > 	This setting forces Git to normalize line endings for this
+> > 	file on checkin and convert them to CRLF when the file is
+> > 	checked out.
+> > And this is what is implemented in Git.
+> 
+> Yeah, I read the docs, but the oddities of reset not doing its job
+> wasn't clear from this sentence :) .
 
-Let's say...
- - git v2.9.4
- - rerere is enabled.
- - I merge maint into master, resolve erroneously, commit
- - I publish my merge in a temp branch, a reviewer points out my mistake
- - I reset hard, retry the merge, using --no-commit, rerere  applies
-what it knows
- - I fix things up, then commit
+git reset does it's job - please see below.
 
-So far so good.
+The problem is that we need a "git commit" here.
+After applying .gitattributes, it may be neccessary to "normalize" the
+files. If there is something in the documentation, that can be
+improved, please let us know.
 
-Oops! One of the branches has moved forward in the meantime, so
+> 
+> > Long story short:
+> > 
+> > The following would solve your problem:
+> >    git init
+> >    echo $'dos\r' > dos
+> >    git add dos
+> >    git commit -m "dos newlines"
+> >    echo "dos -crlf" > .gitattributes
+> >    git add .gitattributes
+> >    git commit -m "add attributes"
+> >    echo "dos eol=crlf" > .gitattributes
+> >    git read-tree --empty   # Clean index, force re-scan of working directory
+> 
+> The fact that plumbing is necessary to dig yourself out of a hole of the
+> `eol` attribute changes points to something needing to be changed, even
+> if it's only documentation. Could Git detect this and message about it
+> somehow when `git reset` cannot fix the working tree?
 
- - git fetch
- - git reset --hard master
- - git merge maint
-... rerere applies the first (incorrect) resolution...
+The thing is, that the working tree is "in a good state":
+We want "dos" with CRLF, and that is what we have.
+There is nothing that can be improved in the working tree.
+What needs to be fixed, is the index. And that needs to be done with
+"git add" "git commit."
+As Junio pointed out, the read-tree is not ideal
+(to fix a single file in a possible dirty working tree)
 
-Am I doing it wrong? {C,Sh}ould rerere have done better?
+In your case it looks like this:
 
-cheers,
+    echo "dos eol=crlf" > .gitattributes
+    git add .gitattributes &&
+    git rm --cached dos && git add dos &&
+    git commit
 
 
-m
--- 
- martin.langhoff@gmail.com
- - ask interesting questions  ~  http://linkedin.com/in/martinlanghoff
- - don't be distracted        ~  http://github.com/martin-langhoff
-   by shiny stuff
+> Or maybe it could at least exit with failure instead of success?
+
+I don't know.
+It -may- be possible to add a warning in "git reset".
+I can have a look at that...
+
