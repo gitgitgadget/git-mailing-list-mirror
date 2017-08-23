@@ -6,116 +6,88 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A469B20899
-	for <e@80x24.org>; Wed, 23 Aug 2017 20:29:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9AA9920899
+	for <e@80x24.org>; Wed, 23 Aug 2017 20:34:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932665AbdHWU3B (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Aug 2017 16:29:01 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59184 "EHLO
+        id S932668AbdHWUeW (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Aug 2017 16:34:22 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60751 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932407AbdHWU3A (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Aug 2017 16:29:00 -0400
+        with ESMTP id S932407AbdHWUeV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Aug 2017 16:34:21 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E05279ED5E;
-        Wed, 23 Aug 2017 16:28:59 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2C879A96BC;
+        Wed, 23 Aug 2017 16:34:21 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=926Lf8NIqpfAKPLd0iv+SK959J0=; b=iyFpSs
-        Ca7IKJF12I5vqEIHRY1R66vXEIvltnkX1gUUvdtLIaYO72zjAaVAzieNrHYevSCv
-        xuS+sj8/6IcjThItrFX382lQ/C75Pslvbep+SyytkgaHSLwA6BJL6e8qZdnXU90v
-        OlrEabY0HzIst2xyyifNdLDq9sc71fhfhms9A=
+        :content-type; s=sasl; bh=MFLoRyTIAUoSesEJHpnipjgCz1k=; b=fwryRY
+        RWPQwQNOl4wU5VqI3gAYAQaTpb9OI7nQVDvcqQkBw0hYGo00TB3Oono1W71F9Qz8
+        1xuphh2sogOtFNMSOrJxc4YHVgw9NPxbBDTd5tKNF0hRrLU5sDffD6YZ955a+p3z
+        nreJMHRFV8jMhI0DLjPZLAJ6fo9HoHZOg4uCA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=RZkpjwJtWDfjzNtKS0e+w50ZM7b7f/x6
-        Y8aDeFQIA/dOmVQB6HEdcd1QAAiAnelsE9E8z9tdnraLxRJ1BHng8VYYgGTpHAie
-        OskvCs6EIlHLKIxxdTlT0JY/auUOm6VIY670m69JdOKZAqUP90HCeuGYC3NKZJMN
-        mXIEYKGOI1s=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D87ED9ED5C;
-        Wed, 23 Aug 2017 16:28:59 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=Rvuth6I+2Q6p3AS+J0Qr3Lc2MQCVPqBk
+        f1eauF1L1v5xV+JhDGxv6CX+e+4YriGvEyYf0nYbTvLzBmloHJ6yONqQUsMHFFvJ
+        Q+aFhoovNtPujSFlBPt50JD73q/9XTOjqwpf3X6xTCzacwFOYP+7w9c2knnfxIb/
+        FQXwW02Vlvc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 229DCA96BB;
+        Wed, 23 Aug 2017 16:34:21 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 45E5F9ED5B;
-        Wed, 23 Aug 2017 16:28:59 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 793C4A96B9;
+        Wed, 23 Aug 2017 16:34:20 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
-Cc:     <git@vger.kernel.org>, <peff@peff.net>
-Subject: Re: [PATCH v3 4/4] imap-send: use curl by default
-References: <087f5907-6558-ce32-2f5c-2e418522c030@morey-chaisemartin.com>
-        <bb94cace-6bc5-2009-7c9d-a6965e3b84c6@morey-chaisemartin.com>
-Date:   Wed, 23 Aug 2017 13:28:57 -0700
-In-Reply-To: <bb94cace-6bc5-2009-7c9d-a6965e3b84c6@morey-chaisemartin.com>
-        (Nicolas Morey-Chaisemartin's message of "Tue, 22 Aug 2017 17:56:32
-        +0200")
-Message-ID: <xmqqpobmxc3a.fsf@gitster.mtv.corp.google.com>
+To:     Martin Langhoff <martin.langhoff@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: Should rerere auto-update a merge resolution?
+References: <CACPiFCJH7RSb_rz6M6ADuGi0q+oeWYhE1fNMQC0EUcCn_kCJwg@mail.gmail.com>
+Date:   Wed, 23 Aug 2017 13:34:19 -0700
+In-Reply-To: <CACPiFCJH7RSb_rz6M6ADuGi0q+oeWYhE1fNMQC0EUcCn_kCJwg@mail.gmail.com>
+        (Martin Langhoff's message of "Wed, 23 Aug 2017 15:39:04 -0400")
+Message-ID: <xmqqlgmaxbuc.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: B1A93F6C-8841-11E7-90D1-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 711DF342-8842-11E7-B9CE-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com> writes:
+Martin Langhoff <martin.langhoff@gmail.com> writes:
 
-> Now that curl is enable by default,
-
-s/enable/&d/; 
-
-But it is unclear what the above really means.  You certainly do not
-mean that [PATCH 1-3/4] somewhere tweaked our Makefile to always use
-libcurl and makes Git fail to build without it, but the above sounds
-as if that were the case.
-
-> use the curl implementation
-> for imap too.
-
-The Makefile for a long time by default set USE_CURL_FOR_IMAP_SEND
-to YesPlease when the version of cURL we have is recent enough, I
-think.  So I am not sure what you want to add with this change.
-
-> The goal is to validate feature parity between the legacy and
-> the curl implementation, deprecate thee legacy implementation
-
-s/thee/the/;
-
-> later on and in the long term, hopefully drop it altogether.
+> Hi List!
 >
-> Signed-off-by: Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
-> ---
->  imap-send.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+> Let's say...
+>  - git v2.9.4
+>  - rerere is enabled.
+>  - I merge maint into master, resolve erroneously, commit
+>  - I publish my merge in a temp branch, a reviewer points out my mistake
+>  - I reset hard, retry the merge, using --no-commit, rerere  applies
+> what it knows
+>  - I fix things up, then commit
+>
+> So far so good.
+>
+> Oops! One of the branches has moved forward in the meantime, so
+>
+>  - git fetch
+>  - git reset --hard master
+>  - git merge maint
+> ... rerere applies the first (incorrect) resolution...
+>
+> Am I doing it wrong? {C,Sh}ould rerere have done better?
 
-Hmph, the patch itself is also confusing.
+Between these two steps:
 
-> diff --git a/imap-send.c b/imap-send.c
-> index a74d011a9..58c191704 100644
-> --- a/imap-send.c
-> +++ b/imap-send.c
-> @@ -35,11 +35,11 @@ typedef void *SSL;
->  #include "http.h"
->  #endif
->  
-> -#if defined(USE_CURL_FOR_IMAP_SEND) && defined(NO_OPENSSL)
-> -/* only available option */
-> +#if defined(USE_CURL_FOR_IMAP_SEND)
-> +/* Always default to curl if it's available. */
->  #define USE_CURL_DEFAULT 1
+>  - I reset hard, retry the merge, using --no-commit, rerere applies what it knows
+>  - I fix things up, then commit
 
-The original says "we want to use CURL, if Makefile tells us to
-*AND* if Makefile tells us not to use OpenSSL", which does not make
-much sense to me.  I wonder if the original is buggy and should have
-been using "|| defined(NO_OPENSSL)" there instead.  
-
-Perhaps that is the bug you are fixing with this patch, and all the
-talk about curl is default we saw above is a red herring?  If that
-is the case, then instead of removing, turning "&&" into "||" may be
-a better fix.  I dunno.
-
->  #else
-> -/* strictly opt in */
-> +/* We don't have curl, so continue to use the historical implementation */
->  #define USE_CURL_DEFAULT 0
->  #endif
+You'd tell rerere to forget what it knows because it is wrong.  Then
+after these two (eh, now "three" because there is the "forget"
+step), "rerere" notices that an updated resolution needs to be
+recorded, so it remembers it.  Later re-resolution will replay the
+corrected one, simply because the old incorrect one is forgotten and
+replaced by the updated correct one.
