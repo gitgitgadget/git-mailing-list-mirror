@@ -2,91 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0292220899
-	for <e@80x24.org>; Wed, 23 Aug 2017 18:06:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3532120899
+	for <e@80x24.org>; Wed, 23 Aug 2017 18:19:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932593AbdHWSGS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Aug 2017 14:06:18 -0400
-Received: from mout.gmx.net ([212.227.17.21]:53747 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932536AbdHWSGS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Aug 2017 14:06:18 -0400
-Received: from [192.168.178.43] ([188.108.200.6]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MQvDO-1e8CXh2pmI-00UHfX; Wed, 23
- Aug 2017 20:06:15 +0200
-Subject: Re: [BUG] rebase -i with only empty commits
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git <git@vger.kernel.org>
-References: <CAGZ79kYinci-OWXV2VfScLPcUDCHyhSb=7TxTWUWHPnKV5PuDA@mail.gmail.com>
- <36e9c381-81b0-ae71-153a-0bcabc59856c@gmx.net>
- <alpine.DEB.2.21.1.1708231639470.19382@virtualbox>
- <ece1018b-98b1-e9b7-546a-d7c68dacfbb7@gmx.net>
- <CAGZ79ka-SS8ZyZkp6d=0iNtTtQgh2cAhzJSt4m22F88vb1rbhw@mail.gmail.com>
-From:   Stephan Beyer <s-beyer@gmx.net>
-Message-ID: <565221dd-b66f-8b88-1bdd-8d0d55c4dc96@gmx.net>
-Date:   Wed, 23 Aug 2017 20:06:15 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
-MIME-Version: 1.0
-In-Reply-To: <CAGZ79ka-SS8ZyZkp6d=0iNtTtQgh2cAhzJSt4m22F88vb1rbhw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:pJDwIJssTQYnJMMRmvaMDPFq87lRAQ/0CW6E+d8VjgUV3ePPQVE
- dZ04LK0OV2gf9ImYnD53G3GtOeSk5U5TRJZjTCm8mIdnE3AvDdAeNVFclI1NMRuTXgwc/Ia
- MyKOU/8OmnaytVo5+9IOat1paNa4ycALcMJjSbpe8bOxjc8Wxu1N/6G8TedoWFo46S6MsKt
- S9WDt7ZHxlM9aoKcDtJ6g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Q5/J/RNdtRY=:/u0ZeRwCk29HsUnA39m76O
- 4b7LYnvyZ4ssYUVktI9eNylb8TiUZ5TJf4zCPqaqfFdcoVeT9JzhKi7/3S18Ql1aqR2guaLhi
- hA1frdPLBcoCg7n4mMUdBWaL94mYI6/kDibdpI34p+V1Z3e1J6lpO6do454NVMN0ny815dSss
- xm5l9J4SPRJSlloxFK/BUOBqN4YSRY+Mug8ziPtGqsCcKI3C72fIm867AwvzufEhubpeWPpXY
- v0Cdm2UkVvMdZ9k8miI/hsmkx/T2V5V+tvaXogek60v3AUXunCm5rrL+wZ0VjnTeirsq9AQDX
- fZmcrbcVIHDd611VpC3l8ce4kBq1xWWt7VpCUVuiyJawEacmXnO8bH1yTDUFetw2/VRQBz+ra
- ekclsS0x+D4T5b3TF96JtMIEiQEcFogLV1CniKAALkIxJqakrTVFqGAvf9VmdM1vsi+AlZmLb
- 5cZ8okjE64Uf2M0U92h8zrWfGUhGzc29BcIdn9wiC9kA/pR1U7DDw/ktIO0Axn00ntEP7bKoG
- Jz8u4UWjS8hcHw9qndnqY5uSXQg3bGTCoudbUyKI72gXXRX+TufMAkXXT7tjyllBFQSy0AdHd
- 02ueqL1nF4Cg753rMrpF+4UFLatR3j7IugPu+AHSvOFawpyS+imRuev6G1VH/kikGpgjF1AQs
- 6ocuKgnHvSuF+UiGgBWsL4+i6EkhGXoW3Rp2vNtWIRHiRmM7UcMMFDbvyJx9VZWjXS78M1UJw
- O2UCHayH0RfrheaqKRF/SAxEGcxmbm6KVK7nMNmmfuGyFym1Us5TbAwYwdTfJhT6WSCtV5i+A
- lmgmTJZhjju7cXr1rXQREcQwjoFCeajaATUCIqBcs99Cn14t2w=
+        id S932449AbdHWSTS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Aug 2017 14:19:18 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:37247 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932111AbdHWSTR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Aug 2017 14:19:17 -0400
+Received: by mail-pg0-f67.google.com with SMTP id w27so219373pge.4
+        for <git@vger.kernel.org>; Wed, 23 Aug 2017 11:19:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=ZpmUXEDffhMJaLzJyOBnPg1X2LuhDEzz6WHVJvPnj9I=;
+        b=QaHPjfFmhz1tZCOdS0adBHKz0p4ix4gUz6CbcS3pX58SkTQV+3vbXWLfN/7iir4KpE
+         f7oiA6UiKTkP23j2Lub8mU2QHXU8WzOaCcwg2bZgV5th29FGDcTEfuwR8FoLOBchgckD
+         vOSj/rFkyYsYMaS3lE+0CKVwDXI23EKU24QRF+2Hqw39GwKeAySvxai8hGRNRL1kkRge
+         4upPQj38a+5JUh6uP5/t9IKdmiFnqvUvB6ZsDsFmYl9UUP7evws1+4/4pqaGpz53Lhhb
+         WnXZ895+StbEZCBHTmK6GJKCtAu3tR+ol0aHZHPeobYIc43li60B6uxVZBXRQ3THWZCG
+         LT7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=ZpmUXEDffhMJaLzJyOBnPg1X2LuhDEzz6WHVJvPnj9I=;
+        b=HypDRDmMyjsYljjEeIecUshrqTcUS4rvWvrX0TX/mqSWL2BwgtNSPYqhB38yUPTr/w
+         0aft9m01DSQZoXnS31lGXQaRvq36Bt10l4lM5y/H/cwwxLGPe196KqFRrj3JHP/CC38y
+         HZE6RotEdG5CO5ugbuAthSzb50S4iErD+s/5ljw2YrwnLaw+NFfycWVqWnL+f3hLzDhy
+         IhguYIZ6MuNi0ADd8w30PKJQW3t1Qy5JCb8zLa05sPOLPPufg3k3Zlh1pwNe8BT7XFWg
+         ZUaWDooBnxIXpv2l1oZXnZoEc5rD4/Zi6o/GLVOEjt4iBXfNDSy/ks4aRjrvzOFJ8c1A
+         kj1A==
+X-Gm-Message-State: AHYfb5hiHjjSOF3lD7QuGni0MDjL5gM1Zqc0Q1dTzkZHYqYI30eDiY6J
+        eE6fEOinNQAt5g==
+X-Received: by 10.99.47.1 with SMTP id v1mr3570913pgv.306.1503512357238;
+        Wed, 23 Aug 2017 11:19:17 -0700 (PDT)
+Received: from localhost.localdomain ([27.63.165.170])
+        by smtp.gmail.com with ESMTPSA id 74sm5007812pfk.58.2017.08.23.11.19.06
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 23 Aug 2017 11:19:16 -0700 (PDT)
+From:   Prathamesh Chavan <pc44800@gmail.com>
+To:     gitster@pobox.com
+Cc:     christian.couder@gmail.com, git@vger.kernel.org, pc44800@gmail.com,
+        sbeller@google.com
+Subject: [GSoC][PATCH v2 0/4] submodule: Incremental rewrite of git-submodules
+Date:   Wed, 23 Aug 2017 23:45:02 +0530
+Message-Id: <20170823181506.8557-1-pc44800@gmail.com>
+X-Mailer: git-send-email 2.13.0
+In-Reply-To: <xmqqinhf1bjf.fsf@gitster.mtv.corp.google.com>
+References: <xmqqinhf1bjf.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08/23/2017 07:29 PM, Stefan Beller wrote:
-> On Wed, Aug 23, 2017 at 8:19 AM, Stephan Beyer <s-beyer@gmx.net> wrote:
->> On 08/23/2017 04:40 PM, Johannes Schindelin wrote:
->>> These days, I reflexively type `rebase -ki` instead of `rebase -i`. Maybe
->>> you want to do that, too?
->>
->> That's a very valuable hint, thank you very much!
-> 
-> While -k side steps the original problem, it seems like it would
-> have helped me, too.
-> 
-> Is there any value in discussing turning it on by default?
+Changes in v2:
 
-I also wondered why empty commits are "discriminated" in such a way.
-I first thought that if you rebase branch A onto B but branch A and B
-contain commits with the same changes, then these commits would become
-new empty commits instead of simply being ignored. But I just checked
-this theory and it is now falsified :)
+* In the function get_submodule_displaypath(), I tried avoiding the extra
+  memory allocation, but it rather invoked test 5 from
+  t7406-submodule-update. The details of the test failiure can be seen
+  in the build report as well. (Build #162)
+  This failure occured as even though the function relative_path(),
+  returned the value correctly, NULL was stored in sb.buf
+  Hence currently the function is still using the old way of
+  allocating extra memory and releasing the strbuf first, and return
+  the extra allocated memory.
+* It was observed that strbuf_reset was being done just before the strbuf
+  was being reused. It made more sense to reset them just after their use 
+  instead. Hence, these function calls of strbuf_reset() were moved
+  accordingly.
+  (The above change was limited to the function init_submodule() only,
+   since already there was a deletion of one such funciton call,
+   and IMO, it won't be suitable to carryout the operation for the complete
+   file in the same commit.)
+* The function name for_each_submodule_list() was changed to
+  for_each_submodule().
+* Instead of passing the complete list to the function for_each_submodule(),
+  only its pointer is passed to avoid the compiler from making copy of the
+  list, and to make the code more efficient.
+* The function names of print_name_rev() and get_name_rev() were changed
+  to get_rev_name() and compute_rev_name(). Now the function get_rev_name()
+  acts as the front end of the subcommand and calls the function
+  compute_rev_name() for generating and receiving the value of revision name.
+* The above change was also accompanied by the change in names of some
+  variables used internally in the functions.
 
-It seems empty commits occur *only* if the user wants them to occur
-(--allow-empty). If they occur unintentionally (for example, by
-importing some SVN), one can eliminate them using filter-branch or
-rebase (by commenting out these picks).
-So it is still unclear to me, why empty commits are handled in such a
-special way.
+As before you can find this series at: 
+https://github.com/pratham-pc/git/commits/week-14-1
 
-Best
-Stephan
+And the build report is available at: 
+https://travis-ci.org/pratham-pc/git/builds/
+Branch: week-14-1
+Build #163
 
-PS: Although -k helps, the original behavior of rebase -i is still a bug.
+Prathamesh Chavan (4):
+  submodule--helper: introduce get_submodule_displaypath()
+  submodule--helper: introduce for_each_submodule()
+  submodule: port set_name_rev() from shell to C
+  submodule: port submodule subcommand 'status' from shell to C
+
+ builtin/submodule--helper.c | 294 ++++++++++++++++++++++++++++++++++++++++----
+ git-submodule.sh            |  61 +--------
+ 2 files changed, 273 insertions(+), 82 deletions(-)
+
+-- 
+2.13.0
+
