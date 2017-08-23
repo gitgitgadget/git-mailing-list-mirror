@@ -2,118 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E111120899
-	for <e@80x24.org>; Wed, 23 Aug 2017 21:09:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6093220899
+	for <e@80x24.org>; Wed, 23 Aug 2017 21:12:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754167AbdHWVJr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Aug 2017 17:09:47 -0400
-Received: from mail-qk0-f169.google.com ([209.85.220.169]:35793 "EHLO
-        mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751728AbdHWVJq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Aug 2017 17:09:46 -0400
-Received: by mail-qk0-f169.google.com with SMTP id 130so7415858qkg.2
-        for <git@vger.kernel.org>; Wed, 23 Aug 2017 14:09:45 -0700 (PDT)
+        id S1754170AbdHWVM0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Aug 2017 17:12:26 -0400
+Received: from mail-qt0-f180.google.com ([209.85.216.180]:34372 "EHLO
+        mail-qt0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751728AbdHWVMZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Aug 2017 17:12:25 -0400
+Received: by mail-qt0-f180.google.com with SMTP id p10so7090989qte.1
+        for <git@vger.kernel.org>; Wed, 23 Aug 2017 14:12:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=WljYQMaJ2tMxJnTBsGIbwccvHnwWw8KUYoQ7Lb9MK5w=;
-        b=hGU4Nu7+5KDUYjyDkPLUOyNReyOqRe8nofQREoUfcVyDW2gqwjEIZeVJtjoZW2Aiq1
-         V3IPPUmx0sd5ZKLGeNg+pXYcD7js0p4gEhsRPCVFDNCs02Xfi4YYrxBRliiFirHxw/lF
-         okvcLhbxMvtgpAjgwKHLddo/MTeQI4QCdOulnHfFb9XYBP+LDq7p2OOWdIam+A26OtIU
-         bhfhG8F71qZp7WGkRpsRUSi6GDl8RUXbRQzQ9EK9lYEAmUWQUvK3Fprn7jNHTb198u0e
-         IzRilij1UxCVuELn5F6/jjgIUeZvMHdKl8qci59QSRchG1kdKm9S58+4rFtEsEesTjNS
-         u5IA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=LKwVu0AyrunSuXArjaPM2W3wROZFobAlgRKCAcNdyrk=;
+        b=ZL/WAZDWEaFfaUCmq7TTKsSkhbQ4fU9P24taKCwdcaxuULOJOwdm7HR1BOdpm6Mrmb
+         YsB7NL91Kc0yLrnjSzGt+XlbI/FfLntAPEfWqRpKl9uSmhFBTBHd/bCgPH8aFsZznx7K
+         IUleXExlQVaSDc6f2411Eg3L4RTTjt4TVhsi6V3lF3Nt26G8KYHBN0yVLkqthL1w8Md1
+         j3p9TU5Z0KdoUr5eUc4IKWTGvBu+DKW2K0/lMGfiwId6TeqMY5EyzCpoeDTHYG+pEJed
+         tZtJbMj8/XvfSfeORSxZaI3WIzr8ODYUK4U02UFPGQhjRbUbAeS+hmUAUuH0h5iYJ7Jh
+         NbUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
-         :references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=WljYQMaJ2tMxJnTBsGIbwccvHnwWw8KUYoQ7Lb9MK5w=;
-        b=TY/nh6n6AtEL+OZHkbODJc7HJDiLyqin3dCFbXHVQGguKbd8dErKje8wfJd8kfS/oi
-         MNNU3Lobx7n+uCPHVkbjKpseS1LBHaFHesQV7HJ/q1X+6bRFkfGLo6toZljE8B5FVoBQ
-         AlC8BhnMc0kQy2GO1EGYOtj5Hqr3E1uZONSa2qO6SD32JgJTQSlxHHdINmlne6NVrjKj
-         DdWDLBuhxl3r+q0CVeG3uGoRrLjkJZcTfXIDD41lziXASD6vNAHiy9dxHDBkF8/H7n/9
-         EAmYd9W0RvuSs5f1IfdcxNrqHi/lBYnDMMrrSctHZrX7gfQCYoS4deY/SJuKEEcBm67u
-         EqsQ==
-X-Gm-Message-State: AHYfb5hR3jZdQ4LTaRKNes0nubcto19MhKR4nvW4DAgRw/5ObhQYASYP
-        9tYia1foIzBVox/FIvk=
-X-Received: by 10.55.70.84 with SMTP id t81mr5199277qka.189.1503522585419;
-        Wed, 23 Aug 2017 14:09:45 -0700 (PDT)
-Received: from localhost (tripoint.kitware.com. [66.194.253.20])
-        by smtp.gmail.com with ESMTPSA id w63sm1450217qkb.67.2017.08.23.14.09.44
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 23 Aug 2017 14:09:45 -0700 (PDT)
-Date:   Wed, 23 Aug 2017 17:09:44 -0400
-From:   Ben Boeckel <mathstuf@gmail.com>
-To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     git@vger.kernel.org
-Subject: Re: Cannot checkout after setting the eol attribute
-Message-ID: <20170823210944.GA32462@megas.kitware.com>
-Reply-To: mathstuf@gmail.com
-References: <20170822174918.GA1005@megas.kitware.com>
- <20170822191318.GA22118@tor.lan>
- <20170822194441.GA25093@megas.kitware.com>
- <20170823194315.GA29237@tor.lan>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=LKwVu0AyrunSuXArjaPM2W3wROZFobAlgRKCAcNdyrk=;
+        b=PpZkf3cD0aJbVMM3YPjoYC+HgsVMw96Y6BiZ9gsQwDkkgIwQ9+yPYizjHPmi3dYfbj
+         f0zU8QhIdBKRZVDFRO/vBV2oM4K0hml7AqY1VMsoYk5/x/p7jtruNN88PBnBeob06oHF
+         Q7Izdq1HOq/NNvrlHsk8hBwW7FNP5Pk7774w5D1ZJZjZRXkEGX4lceXvhiWAWImeCiIG
+         TqGIAOXw4JeO4PhVWB/SM2e6sB+l2REcoWfMUubSjaUUWxZQgnG2sjyxNc91011veSm4
+         Tuy/VnHjoUWc1VqvtLxefNDYXZazT2pD2OCQfAFkEwYxGOr2RLofigby8JwmsFYMQjXY
+         Nr/g==
+X-Gm-Message-State: AHYfb5hQrqkoQfhz+D0h6/5x+aSxMY3AuSfZOarx3uPrlitQOY1vs2OL
+        qj9js4DEkpH3aE485HfGFKKmnz3fxw==
+X-Received: by 10.200.38.212 with SMTP id 20mr5701604qtp.112.1503522745128;
+ Wed, 23 Aug 2017 14:12:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20170823194315.GA29237@tor.lan>
-User-Agent: Mutt/1.8.3 (2017-05-23)
+Received: by 10.12.129.34 with HTTP; Wed, 23 Aug 2017 14:12:04 -0700 (PDT)
+In-Reply-To: <xmqqlgmaxbuc.fsf@gitster.mtv.corp.google.com>
+References: <CACPiFCJH7RSb_rz6M6ADuGi0q+oeWYhE1fNMQC0EUcCn_kCJwg@mail.gmail.com>
+ <xmqqlgmaxbuc.fsf@gitster.mtv.corp.google.com>
+From:   Martin Langhoff <martin.langhoff@gmail.com>
+Date:   Wed, 23 Aug 2017 17:12:04 -0400
+Message-ID: <CACPiFCJCgKtTbKX8jCSC3QgMKZ7Usu2ojqXe5w_QAHwk7T4M-A@mail.gmail.com>
+Subject: Re: Should rerere auto-update a merge resolution?
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 23, 2017 at 21:43:15 +0200, Torsten Bögershausen wrote:
-> git reset does it's job - please see below.
-> 
-> The problem is that we need a "git commit" here.
-> After applying .gitattributes, it may be neccessary to "normalize" the
-> files. If there is something in the documentation, that can be
-> improved, please let us know.
+On Wed, Aug 23, 2017 at 4:34 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Between these two steps:
+>
+>>  - I reset hard, retry the merge, using --no-commit, rerere applies what it knows
+>>  - I fix things up, then commit
+>
+> You'd tell rerere to forget what it knows because it is wrong.
 
-I'll have a patch up shortly.
+Hi Junio!
 
-> On Tue, Aug 22, 2017 at 03:44:41PM -0400, Ben Boeckel wrote:
-> > The fact that plumbing is necessary to dig yourself out of a hole of the
-> > `eol` attribute changes points to something needing to be changed, even
-> > if it's only documentation. Could Git detect this and message about it
-> > somehow when `git reset` cannot fix the working tree?
-> 
-> The thing is, that the working tree is "in a good state":
-> We want "dos" with CRLF, and that is what we have.
-> There is nothing that can be improved in the working tree.
-> What needs to be fixed, is the index. And that needs to be done with
-> "git add" "git commit."
-> As Junio pointed out, the read-tree is not ideal
-> (to fix a single file in a possible dirty working tree)
-> 
-> In your case it looks like this:
-> 
->     echo "dos eol=crlf" > .gitattributes
->     git add .gitattributes &&
->     git rm --cached dos && git add dos &&
->     git commit
+thanks for the quick response.
 
-In this case, just adding the file should work: the file is on-disk as
-intended and adding the file should normalize the line endings when
-adding it into the index (basically, just `git add dos` should be
-required to make the index look like it should).
+Questions
 
-> > Or maybe it could at least exit with failure instead of success?
-> 
-> I don't know.
-> It -may- be possible to add a warning in "git reset".
-> I can have a look at that...
+ - when I tell it to forget, won't it forget the pre-resolution state?
+my read of the rerere docs imply that it gets called during the merge
+to record the conflicted state.
 
-Thanks.
+ - would it be a feature if it updated its resolution db
+automagically? rerere is plenty automagic already...
 
---Ben
+cheers,
+
+
+
+m
+-- 
+ martin.langhoff@gmail.com
+ - ask interesting questions  ~  http://linkedin.com/in/martinlanghoff
+ - don't be distracted        ~  http://github.com/martin-langhoff
+   by shiny stuff
