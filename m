@@ -2,92 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9AA9920899
-	for <e@80x24.org>; Wed, 23 Aug 2017 20:34:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 59F2220899
+	for <e@80x24.org>; Wed, 23 Aug 2017 20:37:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932668AbdHWUeW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Aug 2017 16:34:22 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60751 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932407AbdHWUeV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Aug 2017 16:34:21 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2C879A96BC;
-        Wed, 23 Aug 2017 16:34:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=MFLoRyTIAUoSesEJHpnipjgCz1k=; b=fwryRY
-        RWPQwQNOl4wU5VqI3gAYAQaTpb9OI7nQVDvcqQkBw0hYGo00TB3Oono1W71F9Qz8
-        1xuphh2sogOtFNMSOrJxc4YHVgw9NPxbBDTd5tKNF0hRrLU5sDffD6YZ955a+p3z
-        nreJMHRFV8jMhI0DLjPZLAJ6fo9HoHZOg4uCA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Rvuth6I+2Q6p3AS+J0Qr3Lc2MQCVPqBk
-        f1eauF1L1v5xV+JhDGxv6CX+e+4YriGvEyYf0nYbTvLzBmloHJ6yONqQUsMHFFvJ
-        Q+aFhoovNtPujSFlBPt50JD73q/9XTOjqwpf3X6xTCzacwFOYP+7w9c2knnfxIb/
-        FQXwW02Vlvc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 229DCA96BB;
-        Wed, 23 Aug 2017 16:34:21 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 793C4A96B9;
-        Wed, 23 Aug 2017 16:34:20 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin Langhoff <martin.langhoff@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: Should rerere auto-update a merge resolution?
-References: <CACPiFCJH7RSb_rz6M6ADuGi0q+oeWYhE1fNMQC0EUcCn_kCJwg@mail.gmail.com>
-Date:   Wed, 23 Aug 2017 13:34:19 -0700
-In-Reply-To: <CACPiFCJH7RSb_rz6M6ADuGi0q+oeWYhE1fNMQC0EUcCn_kCJwg@mail.gmail.com>
-        (Martin Langhoff's message of "Wed, 23 Aug 2017 15:39:04 -0400")
-Message-ID: <xmqqlgmaxbuc.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1754170AbdHWUhR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Aug 2017 16:37:17 -0400
+Received: from mail-yw0-f178.google.com ([209.85.161.178]:33650 "EHLO
+        mail-yw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932674AbdHWUhO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Aug 2017 16:37:14 -0400
+Received: by mail-yw0-f178.google.com with SMTP id h127so7683811ywf.0
+        for <git@vger.kernel.org>; Wed, 23 Aug 2017 13:37:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=IF5/OH9ynkHsGLyx97m3OHwlNqn0qmj3f/kpEyUh7aU=;
+        b=GTVOktyUQ9n1bQkKyryrsfzIkrtyyYHfUVeviE3SiQseNNyF6yS854z+95QAQJzeoh
+         bbfqqqdc22EZpH3wajfskEADZPkditCrlhrfBKxJ4LRYElukNoI8Ojv1P41y/GChfsnS
+         0AUn38p5UX8DHg4syfyzvF2uDZ3qwMznJaAk3VfC9FIV2z2DUTzdeyE3zzrChj8BLsLO
+         JfN0dLbdxv25gVfF9q0K8LZBiRIvQkpm28zXpbWXEWezC2JsHrrEwwD2YCR8mUOaPZB6
+         u9OyTd02h856hx5bx+lQM/yW+3KFv3rhv+D2ZvdxP22YlPVf+2qKULzchBlRtKcHSvNq
+         WP9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=IF5/OH9ynkHsGLyx97m3OHwlNqn0qmj3f/kpEyUh7aU=;
+        b=X5TYYULo6TKcdG6ynoqv2ZrI/D1CINOLBdtcH82NPk1rs9wNyDxVZB2J1MzbfGRjwY
+         YieWphmJYu8KWnJ8lz7FOPyyv3T+tii4YjxHOd/x9WmDaGWsE/5/WDukMjhdVec+EItR
+         wA03+Y+3uZ5hYfcm7gkmbDa6ysT7hL0xI5ZXvMflcuzOcq0c49cOt4MC9Sr3K/wMfLzD
+         FIDxRo0KJqdOdoTWexEQgkUP//fUjcIPa2zYHAHgUcOKojvqX46vXiNr51EUg8RXw5I1
+         hcSkHcF+mmNVqMV5zilmOYcMRgr4T6FtBIHIKChEeFr51VIZWC+a1+ennsEQ65kT6a6h
+         +FjQ==
+X-Gm-Message-State: AHYfb5iPESbSujDLiS1py71uH/X7RQcpARJUPYfl7F6TPM5hCdfRKg9H
+        JorM1JIJfONUzdD2E/85ouXJIjRQrnhlsmY=
+X-Received: by 10.13.233.198 with SMTP id s189mr3126802ywe.32.1503520633429;
+ Wed, 23 Aug 2017 13:37:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 711DF342-8842-11E7-B9CE-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Received: by 10.129.153.133 with HTTP; Wed, 23 Aug 2017 13:37:12 -0700 (PDT)
+In-Reply-To: <dccd3e75fcd1b2de93263e8373a3b4cd5da0dd32.1503323391.git.martin.agren@gmail.com>
+References: <cover.1502780343.git.martin.agren@gmail.com> <cover.1503323390.git.martin.agren@gmail.com>
+ <dccd3e75fcd1b2de93263e8373a3b4cd5da0dd32.1503323391.git.martin.agren@gmail.com>
+From:   Brandon Casey <drafnel@gmail.com>
+Date:   Wed, 23 Aug 2017 13:37:12 -0700
+Message-ID: <CA+sFfMdXv+nqpXmwfLTHtkRLuGkAEAwWXZCvOryVZ=aLb_UmbA@mail.gmail.com>
+Subject: Re: [PATCH v2 3/4] strbuf_setlen: don't write to strbuf_slopbuf
+To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin Langhoff <martin.langhoff@gmail.com> writes:
+On Mon, Aug 21, 2017 at 10:43 AM, Martin =C3=85gren <martin.agren@gmail.com=
+> wrote:
+> strbuf_setlen(., 0) writes '\0' to sb.buf[0], where buf is either
+> allocated and unique to sb, or the global slopbuf. The slopbuf is meant
+> to provide a guarantee that buf is not NULL and that a freshly
+> initialized buffer contains the empty string, but it is not supposed to
+> be written to. That strbuf_setlen writes to slopbuf has at least two
+> implications:
+<snip very well written commit message>
 
-> Hi List!
+> diff --git a/strbuf.h b/strbuf.h
+> index e705b94db..7496cb8ec 100644
+> --- a/strbuf.h
+> +++ b/strbuf.h
+> @@ -147,7 +147,10 @@ static inline void strbuf_setlen(struct strbuf *sb, =
+size_t len)
+>         if (len > (sb->alloc ? sb->alloc - 1 : 0))
+>                 die("BUG: strbuf_setlen() beyond buffer");
+>         sb->len =3D len;
+> -       sb->buf[len] =3D '\0';
+> +       if (sb->buf !=3D strbuf_slopbuf)
+> +               sb->buf[len] =3D '\0';
+> +       else
+> +               assert(!strbuf_slopbuf[0]);
+>  }
 >
-> Let's say...
->  - git v2.9.4
->  - rerere is enabled.
->  - I merge maint into master, resolve erroneously, commit
->  - I publish my merge in a temp branch, a reviewer points out my mistake
->  - I reset hard, retry the merge, using --no-commit, rerere  applies
-> what it knows
->  - I fix things up, then commit
+>  /**
+> --
+> 2.14.1.151.gdfeca7a7e
 >
-> So far so good.
->
-> Oops! One of the branches has moved forward in the meantime, so
->
->  - git fetch
->  - git reset --hard master
->  - git merge maint
-> ... rerere applies the first (incorrect) resolution...
->
-> Am I doing it wrong? {C,Sh}ould rerere have done better?
 
-Between these two steps:
+I know this must have been discussed before and/or I'm having a neuron
+misfire, but is there any reason why we didn't just make slopbuf a
+macro for ""?
 
->  - I reset hard, retry the merge, using --no-commit, rerere applies what it knows
->  - I fix things up, then commit
+i.e.
 
-You'd tell rerere to forget what it knows because it is wrong.  Then
-after these two (eh, now "three" because there is the "forget"
-step), "rerere" notices that an updated resolution needs to be
-recorded, so it remembers it.  Later re-resolution will replay the
-corrected one, simply because the old incorrect one is forgotten and
-replaced by the updated correct one.
+   #define strbuf_slopbuf ""
+
+That way it should point to readonly memory and any attempt to assign
+to it should produce a crash.
+
+One benefit that I can think of for making strbuf_slopbuf be a real
+variable is that we can then compare the pointer stored in the strbuf
+to the strbuf_slopbuf address to detect whether the strbuf held the
+slopbuf.  With the static string macro, each execution unit may get
+it's own instance of the empty string.  But, before this patch, we
+don't actually seem to be doing that anywhere and instead rely on the
+value of alloc being accurate to determine whether the strbuf contains
+the slopbuf or not.
+
+So is there any reason why didn't do something like the following in
+the first place?
+
+diff --git a/strbuf.h b/strbuf.h
+index e705b94..fcca618 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -67,7 +67,7 @@ struct strbuf {
+        char *buf;
+ };
+
+-extern char strbuf_slopbuf[];
++#define strbuf_slopbuf ""
+ #define STRBUF_INIT  { .alloc =3D 0, .len =3D 0, .buf =3D strbuf_slopbuf }
+
+ /**
+@@ -147,7 +147,9 @@ static inline void strbuf_setlen(struct strbuf
+*sb, size_t len)
+        if (len > (sb->alloc ? sb->alloc - 1 : 0))
+                die("BUG: strbuf_setlen() beyond buffer");
+        sb->len =3D len;
+-       sb->buf[len] =3D '\0';
++       if (sb->alloc) {
++               sb->buf[len] =3D '\0';
++       }
+ }
+
+-Brandon
