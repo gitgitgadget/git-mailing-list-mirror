@@ -2,89 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 537F420899
-	for <e@80x24.org>; Wed, 23 Aug 2017 19:13:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED82D20899
+	for <e@80x24.org>; Wed, 23 Aug 2017 19:14:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932600AbdHWTNV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Aug 2017 15:13:21 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54532 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932458AbdHWTNT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Aug 2017 15:13:19 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0305F9CAD2;
-        Wed, 23 Aug 2017 15:13:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=H6T7YdwTssb2anT2aIcGzIW4sGw=; b=eFNCXq
-        0o/mjkOZQQRircTftRAySKlXCx7btU5ahybRuxHejZr65N/aXLtbZbN+z3C49BIJ
-        hlnrlSXbgtYti9OJEWDpI1HTxVmLB/9sNYNt7JZRAHGxGii2W1dH9En6Rkt9Yqmn
-        H4Eg8UdHzrNTZR35zavvOfKK2hELI7y29E/K4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ezmXHkyXNkQtXtK+gLiE045elEGd3eTL
-        zbiAaE8ondcgelWX3dpH1n2bbbxukk80adbOOiKAYWPcoM+zrX13J2IvE/snziDO
-        VLq/5wi4BnlfNTaaF2ouoaMfKKpmwGvrIHPF79YieA7Fwde5VWY9gSS0QrsfsqNe
-        dYsZnZ7Onho=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id EF7BB9CAD1;
-        Wed, 23 Aug 2017 15:13:18 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 63AAA9CACD;
-        Wed, 23 Aug 2017 15:13:18 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Prathamesh Chavan <pc44800@gmail.com>
-Cc:     christian.couder@gmail.com, git@vger.kernel.org, sbeller@google.com
-Subject: Re: [GSoC][PATCH v2 2/4] submodule--helper: introduce for_each_submodule()
-References: <xmqqinhf1bjf.fsf@gitster.mtv.corp.google.com>
-        <20170823181506.8557-1-pc44800@gmail.com>
-        <20170823181506.8557-3-pc44800@gmail.com>
-Date:   Wed, 23 Aug 2017 12:13:17 -0700
-In-Reply-To: <20170823181506.8557-3-pc44800@gmail.com> (Prathamesh Chavan's
-        message of "Wed, 23 Aug 2017 23:45:04 +0530")
-Message-ID: <xmqqbmn6yu5u.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S932552AbdHWTOS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Aug 2017 15:14:18 -0400
+Received: from mail-yw0-f178.google.com ([209.85.161.178]:35905 "EHLO
+        mail-yw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932458AbdHWTOR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Aug 2017 15:14:17 -0400
+Received: by mail-yw0-f178.google.com with SMTP id y64so6338708ywf.3
+        for <git@vger.kernel.org>; Wed, 23 Aug 2017 12:14:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=krY+2gy/QQFDDkSUUuY/IwL0iSMR1lvMjHDJYNa6uYE=;
+        b=g7wjRA2FpeVSS4M10Oikk3LmMbJPGNsQpLZEKOmGKgdjuWpe4HfBHQSHTCHk+LAl1E
+         OuhvkKubtfeBFWgElUrXZCPK9qjRi1pDoVQ7u8/CmD5PQ2Fb0rgDxohJbQ0O+k7I+SBU
+         NYg+0jbbXPMxCvvuUdPLU/gqlbNAtisRY1kz4i0FJ6Fo8u5yOJHKzGD20xHSQUuLjt0I
+         hcnLrKbd+DFrPygSzDQRQV7HNDRVugqxumv0jLlL77ynnWFNTdQVKOmyUnpVGB47PPw+
+         A43h5vz65PU3ml+nSXEWyD3hOXrxrDYwHdB29Kxq3sL+LU8forwSD1QqPwYurf20T4YM
+         x7Pg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=krY+2gy/QQFDDkSUUuY/IwL0iSMR1lvMjHDJYNa6uYE=;
+        b=Y0SgbH8XEBIwlwLW15038xIPSn49A9oxUuFZqFJP2LdGLWNsR+Z2zVTjuIP1XBloVb
+         vxLoFPToLaIE7Cr8oAYvIxpsUpW+QDaeKQNxkHCAuf+jyjTdL/F+rDIH/csm0hoLfypK
+         Lz2fr/8ytcizEutel8i/UM5suKj38D+zrBGcFq0gTO6M0qaLi74lR1o3J6KA7AVXaMd7
+         /IyaRRF0Wk016IufLU4LMWf4Dqv8mEo5XlYpJmlQBLoAW1dMeEbN70PWiazxJarm47S5
+         pxiPXEVeaBcBUUon26GqxQYFGXxBDFSLY/PYXanlRfFHRdlFtul6csrHNyFvq84PFJFz
+         9oaQ==
+X-Gm-Message-State: AHYfb5jx9QK6KX3ucY/kKXnbQg99PZvc52+pVd9qFjB8YXvH6boJKZvu
+        UnNxDcewcTg/le+1Eq5vH0WoMst4z/lZ
+X-Google-Smtp-Source: ADKCNb4RkhOQoAzaI/mH/nhV/fUqYxxqsB2sRb9Z1XOdN5x0tWfzXjq71IRDiP+jH6sgwp0sDkLND7KM5M0sdEZce6Q=
+X-Received: by 10.129.93.194 with SMTP id r185mr2886492ywb.33.1503515656432;
+ Wed, 23 Aug 2017 12:14:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1F15CCBA-8837-11E7-A2A5-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Received: by 10.37.214.133 with HTTP; Wed, 23 Aug 2017 12:14:15 -0700 (PDT)
+In-Reply-To: <20170823123704.16518-3-pclouds@gmail.com>
+References: <20170823123704.16518-1-pclouds@gmail.com> <20170823123704.16518-3-pclouds@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 23 Aug 2017 12:14:15 -0700
+Message-ID: <CAGZ79kbvKZXGy80RCU3zkdm0S3M-tGB=LAJYiY=o+YwUB9RNHA@mail.gmail.com>
+Subject: Re: [PATCH v4 02/16] refs.c: use is_dir_sep() in resolve_gitlink_ref()
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Prathamesh Chavan <pc44800@gmail.com> writes:
+On Wed, Aug 23, 2017 at 5:36 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
+<pclouds@gmail.com> wrote:
+> The "submodule" argument in this function is a path, which can have
+> either '/' or '\\' as a separator. Use is_dir_sep() to support both.
+>
+> Noticed-by: Johannes Sixt <j6t@kdbg.org>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
+om>
 
-> +typedef void (*submodule_list_func_t)(const struct cache_entry *list_item,
-> +				      void *cb_data);
-> +
->  static char *get_default_remote(void)
->  {
->  	char *dest = NULL, *ret;
-> @@ -353,17 +356,30 @@ static int module_list(int argc, const char **argv, const char *prefix)
->  	return 0;
->  }
->  
-> -static void init_submodule(const char *path, const char *prefix, int quiet)
-> +static void for_each_submodule(const struct module_list *list,
-> +			       submodule_list_func_t fn, void *cb_data)
+Immediate questions that come to mind:
+* Could this go in as an independent bug fix?
+  -> If so do we have any test that fails or stops failing on Windows?
+  -> If not, do we need one?
+* Assuming this is not an independent bug fix:
+  Why do we need this patch in this series here?
+  (I thought this is about worktrees, not submodules.
+  So does this fix a potential bug that will be exposed
+  later in this series, but was harmless up to now?)
 
-In the output from
+I'll read the next patches to see if I will be enlightened.
 
-	$ git grep for_each \*.h
+Thanks,
+Stefan
 
-we find that the convention is that an interator over a group of X
-is for_each_X, the callback function that is given to for_each_X is
-of type each_X_fn.  An interator over a subset of group of X that
-has trait Y, for_each_Y_X() iterates and calls back a function of
-type each_X_fn (e.g. for_each_tag_ref() still calls each_ref_fn).
-
-I do not offhand think of a reason why the above code need to
-deviate from that pattern.
-
-
+> ---
+>  refs.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/refs.c b/refs.c
+> index 3d549a8970..dec899a57a 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -1507,7 +1507,7 @@ int resolve_gitlink_ref(const char *submodule, cons=
+t char *refname,
+>         struct ref_store *refs;
+>         int flags;
+>
+> -       while (len && submodule[len - 1] =3D=3D '/')
+> +       while (len && is_dir_sep(submodule[len - 1]))
+>                 len--;
+>
+>         if (!len)
+> --
+> 2.11.0.157.gd943d85
+>
