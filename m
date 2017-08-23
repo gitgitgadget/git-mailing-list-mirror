@@ -2,80 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5CFF51F4DD
-	for <e@80x24.org>; Wed, 23 Aug 2017 22:24:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC3C31F4DD
+	for <e@80x24.org>; Wed, 23 Aug 2017 22:36:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751026AbdHWWY0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Aug 2017 18:24:26 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61223 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750715AbdHWWYZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Aug 2017 18:24:25 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C7D1EA1FDB;
-        Wed, 23 Aug 2017 18:24:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ifoItpzjcjdNWaJ6NB0RrEQtD9M=; b=evonAB
-        2kWpd45jmpxAa9rG1OMqwZpQlq7ERlNIzBOZvxj0gECpIUR1fkQTldjK0uD/ks1X
-        ke8DvF3h0VLjx91i5MzkP4FcItVohs+kOj2Xu7YMfDq8E7Ox4L6yJUUNnmifNowC
-        TNeM2Bg53Ca1Xn/9Ii4LZh0/wA3/veGATVyqI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=cxeGQB+edlmNKuJEw/6eRC+zufHwy2/e
-        2AI/JI879WS8VmVw4e7c0LFl/spGop0cVPfMgfMIPQsi24aupFhKSdjrU8Qe1z0c
-        cBLPA6pqKaA9amTmVqJMyXXGgGxUQdjhKEOEdX3K6odocQ+OQzozccBD26M6mXms
-        q/kKEGFGumw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C0CD4A1FDA;
-        Wed, 23 Aug 2017 18:24:24 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2E537A1FD9;
-        Wed, 23 Aug 2017 18:24:24 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Casey <drafnel@gmail.com>
-Cc:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH v2 3/4] strbuf_setlen: don't write to strbuf_slopbuf
-References: <cover.1502780343.git.martin.agren@gmail.com>
-        <cover.1503323390.git.martin.agren@gmail.com>
-        <dccd3e75fcd1b2de93263e8373a3b4cd5da0dd32.1503323391.git.martin.agren@gmail.com>
-        <CA+sFfMdXv+nqpXmwfLTHtkRLuGkAEAwWXZCvOryVZ=aLb_UmbA@mail.gmail.com>
-        <xmqqh8wyxag1.fsf@gitster.mtv.corp.google.com>
-        <CA+sFfMe56itAMDXOJybf0yHj+BqU1Ai1aU7inoTG3FJtdtZxyw@mail.gmail.com>
-Date:   Wed, 23 Aug 2017 15:24:22 -0700
-In-Reply-To: <CA+sFfMe56itAMDXOJybf0yHj+BqU1Ai1aU7inoTG3FJtdtZxyw@mail.gmail.com>
-        (Brandon Casey's message of "Wed, 23 Aug 2017 14:20:23 -0700")
-Message-ID: <xmqq378hylbd.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751162AbdHWWgE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Aug 2017 18:36:04 -0400
+Received: from mout.gmx.net ([212.227.17.20]:50539 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751066AbdHWWgD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Aug 2017 18:36:03 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MBaDy-1drpnQ2QaM-00AYbO; Thu, 24
+ Aug 2017 00:35:54 +0200
+Date:   Thu, 24 Aug 2017 00:35:53 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Johannes Sixt <j6t@kdbg.org>
+cc:     Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>,
+        Stefan Beller <sbeller@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [RFC 0/3] imap-send curl tunnelling support
+In-Reply-To: <63e3ebea-ad4e-14d7-1170-594390af8e06@kdbg.org>
+Message-ID: <alpine.DEB.2.21.1.1708240033440.19382@virtualbox>
+References: <ab866314-608b-eaca-b335-12cffe165526@morey-chaisemartin.com> <5c46f1e4-825e-8e10-e323-e637e170f315@morey-chaisemartin.com> <CAGZ79kbgYqo=6FvRNwB0AOKT8mioPTu2CearVttA30nZ8wBMHQ@mail.gmail.com> <alpine.DEB.2.21.1.1708161429510.19382@virtualbox>
+ <4a5f9d64-0709-b6b0-c398-6887f1f7f4c0@morey-chaisemartin.com> <63e3ebea-ad4e-14d7-1170-594390af8e06@kdbg.org>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D139D12E-8851-11E7-B26F-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:Kdy/ka93DxWthxt0oYGgiF89wC9HkR8gXSGPIarJRtKVOZvgSky
+ EQkfbTNIb0ScJdC0mySAzSmyOLIaKgyvd5kLlUn3UVP7KVYC1M7cmMCX3JDNe9jQX7rwtKG
+ A5+TBekDcFYsOqKZ+Eo827DSl6vUUTJJEipxgv9atvGKAmF5mU/Wc6Bro99QNr0cBnXRMmB
+ UWp0UjFejWunuCUk5m37A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:eY8Lbv/uEU8=:il/k5SuFJ8WW0xOpPo9ko/
+ oDYjteSG5RiclIUgIZVujMF+rjwzkWJ+wJobK4j6DFhTRLI9fORSEakFuuiAW9KUGoLLPystH
+ LvyOpLgp1+pSsoCcFVcoEbZjdoNjxPglbBOKUBvOfYtm4S4zg9fEgOE822mqH7KnJfKQ345ni
+ iBolddC0uiZQleaIM0VyY6o84gILObuW3RBPxrkVkNF8ysIMI2gvCY10rqRUO4Sao9uQ1UbGl
+ Oxg2ngPX4G0jF+Zd3l7z5CXFuWtCOQhbICo5DDculouEY9k9H7HoTPTuabJqRZ49tZ/VWHp4H
+ 5uI5iXcCsUUjHw3mzN9eChYKaafbVDrwWECo7g/JVJH2bry8bZoOHrcw8zWx0TgmI1NmJYbRx
+ MySu+V7YtvsJOYswnPasOaxKB8qn0kxZ4nIS2D8NhpCztvsonqpJdYP/+m0N4anwM9k3A1pNC
+ IZgatFwnLSHpA6vqqkfgBQJDt1ifL9YO7+UgOrDwHMOb8DKwDjjTqHydbYvdAxsovLDfdTx/7
+ riQyTvjvW+m/ICbNpBCxaGqzkl55N67izD4eJDgQL+mu0tPcA+rFDgt6+m5PH/bSR6RHId7fc
+ M6Mlzgmbn0fa8W97vLxoHSq+7qDyxfugqY0uX9uiv34F90pjtSqTKnmTwuaH9rIokKd9asbTC
+ LReB5ece52CXqXskLbrAB/HSNlc3Pkc56vWOBm3LyG7ju1ByXaqkhWJxWmqww0RjH21cWWhNI
+ E4mjBJJObF+VqO0rN74GIqx3akYybOKIUMwAswOszLRblXcabG0qJxVzgqtsUbcZAOn0iD3QC
+ ppRK7S1qOh6qLlGR4jph4JVqJa7ffEhOkB0FshIfLzuLxQGgp8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Casey <drafnel@gmail.com> writes:
+Hi Hannes,
 
-> On Wed, Aug 23, 2017 at 2:04 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Brandon Casey <drafnel@gmail.com> writes:
->>
->>> So is there any reason why didn't do something like the following in
->>> the first place?
->>
->> My guess is that we didn't bother; if we cared, we would have used a
->> single instance of const char in a read-only segment, instead of
->> such a macro.
->
-> I think you mean something like this:
->
->    const char * const strbuf_slopbuf = "";
+On Tue, 22 Aug 2017, Johannes Sixt wrote:
 
-Rather, more like "const char slopbuf[1];"
+> Am 21.08.2017 um 09:27 schrieb Nicolas Morey-Chaisemartin:
+> > (Sent a reply from my phone while out of town but couldn't find it so here
+> > it is again)
+> > 
+> > It's available on my github:
+> > https://github.com/nmorey/git/tree/dev/curl-tunnel
+> > 
+> > The series had been stlighly changed since the patch were posted, mostly to
+> > add the proper ifdefs to handle older curl versions.
+> 
+> This does not build for me on Windows due to a missing socketpair() function.
+> But I am working in an old environment, so I do not know whether this
+> statement has much value.
+
+Same problem in Git for Windows' SDK:
+
+imap-send.c: In function 'setup_tunnel':
+imap-send.c:936:6: error: implicit declaration of function 'socketpair'; did you
+ mean 'socket'? [-Werror=implicit-function-declaration]
+  if (socketpair(AF_UNIX, SOCK_STREAM, 0, sock_fds))
+      ^~~~~~~~~~
+      socket
+imap-send.c: In function 'curl_tunnel_socket':
+imap-send.c:1416:9: error: cast from pointer to integer of different size [-Werror=pointer-to-int-cast]
+  return (unsigned long)clientp;
+         ^
+
