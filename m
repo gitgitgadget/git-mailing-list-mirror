@@ -6,56 +6,54 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 285B920899
-	for <e@80x24.org>; Wed, 23 Aug 2017 18:30:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF55520899
+	for <e@80x24.org>; Wed, 23 Aug 2017 19:02:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932459AbdHWSaR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Aug 2017 14:30:17 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51805 "EHLO
+        id S932533AbdHWTCL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Aug 2017 15:02:11 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51144 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932396AbdHWSaQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Aug 2017 14:30:16 -0400
+        with ESMTP id S932485AbdHWTCK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Aug 2017 15:02:10 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DB889A6146;
-        Wed, 23 Aug 2017 14:30:15 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6002A9C6FC;
+        Wed, 23 Aug 2017 15:02:09 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=fxI4oWCz/Ibs
-        Z67eAvIaetUCaog=; b=oIYE1Wwq4ZsF/inYBXev+YD9/znKgTj1yz7uQhxUoRBl
-        9ldty5WVOIG4J3lr2bbOOSz1ksRCZz8lwozaJR6+Sm9tKpXx2qgqE1sa2vGz43SS
-        a75qMZNlPTs6ZBh/VK3sIeQLoqyrPf2oTPsotjm3tgPzSyPDR+68Oj/q2G6e/Ck=
+        :content-type:content-transfer-encoding; s=sasl; bh=5pK9HM6YJuJN
+        mDKQkQiHQOlQo1E=; b=HGdXnfj0AKT2AUKdHEUuFszFg4UrOADkZtOwF27pZiir
+        vXbHX+fzKphKvrHWFu1yfbBuFCFGeuPjfg65FbXKph0DvNRDha4AgNhnV8HF66wH
+        xSamoTt4UY3n4fjQ2cBePkJkKv9eh/U06ZhpvRkCIJ2Hm5eHCAWsBMAfZxWY3R0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=qD22Yg
-        /Ldbir1N9j73yjWEbH2gomIxxMsuI/KIfHmlhzqt1xHH4Zl0pRGJFNN50VFd3mAt
-        NMDAFjZMzQYrX0xhKplTfsfb6QFbKwAxaTNCFYrdUWqi9bZWT/aZWSt78cl3pUMJ
-        7zKgfHNkMlOa44s49buzZ6/gGHQ8NJ+8Ocxhk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C3181A6145;
-        Wed, 23 Aug 2017 14:30:15 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=tuvMGR
+        F9k0rKbZ0yaEVvRU8j+gYnLm3HAqDeroxTB+F5o/3Uqzl11QN5FNm9826BvhjWZu
+        cxCssJkeNcbrIxfi5F27iLReLpPt5akzfnUxIv9VoD6ces/IwcH/3SWy3kvdWHeM
+        PNfDOewNpwbZHe6Zg4qiVPdghZh3Xo/P1vow8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5944D9C6FA;
+        Wed, 23 Aug 2017 15:02:09 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 35996A6144;
-        Wed, 23 Aug 2017 14:30:15 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B6A579C6F9;
+        Wed, 23 Aug 2017 15:02:08 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v2 3/4] strbuf_setlen: don't write to strbuf_slopbuf
-References: <cover.1502780343.git.martin.agren@gmail.com>
-        <cover.1503323390.git.martin.agren@gmail.com>
-        <dccd3e75fcd1b2de93263e8373a3b4cd5da0dd32.1503323391.git.martin.agren@gmail.com>
-        <xmqq378i19ku.fsf@gitster.mtv.corp.google.com>
-        <CAN0heSoqnEx=vPVZ5-OfqMkzL_JKKoa+iyP=G5h-cnqOwjPPYg@mail.gmail.com>
-Date:   Wed, 23 Aug 2017 11:30:13 -0700
-In-Reply-To: <CAN0heSoqnEx=vPVZ5-OfqMkzL_JKKoa+iyP=G5h-cnqOwjPPYg@mail.gmail.com>
-        ("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Wed, 23 Aug 2017 19:43:01
+Cc:     git@vger.kernel.org,
+        STEVEN WHITE <stevencharleswhitevoices@gmail.com>
+Subject: Re: [PATCH 1/2] Documentation/user-manual: update outdated example output
+References: <CAJXxHvVSXkQ4SYA5=ZtnWZCBbVk51oWY1OqM_XbGNoruyAGBrA@mail.gmail.com>
+        <731cc618366d4835762d330e2398cf1a754ff11d.1503494617.git.martin.agren@gmail.com>
+Date:   Wed, 23 Aug 2017 12:02:07 -0700
+In-Reply-To: <731cc618366d4835762d330e2398cf1a754ff11d.1503494617.git.martin.agren@gmail.com>
+        ("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Wed, 23 Aug 2017 19:49:34
  +0200")
-Message-ID: <xmqqk21uyw5m.fsf@gitster.mtv.corp.google.com>
+Message-ID: <xmqqfuciyuog.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 1B63109C-8831-11E7-8890-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 8FEFFF98-8835-11E7-8471-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -64,44 +62,53 @@ X-Mailing-List: git@vger.kernel.org
 
 Martin =C3=85gren <martin.agren@gmail.com> writes:
 
-> On 23 August 2017 at 19:24, Junio C Hamano <gitster@pobox.com> wrote:
->> Martin =C3=85gren <martin.agren@gmail.com> writes:
->>
->>> strbuf_setlen(., 0) writes '\0' to sb.buf[0], where buf is either
->>> allocated and unique to sb, or the global slopbuf. The slopbuf is mea=
-nt
->>> to provide a guarantee that buf is not NULL and that a freshly
->>> initialized buffer contains the empty string, but it is not supposed =
-to
->>> be written to. That strbuf_setlen writes to slopbuf has at least two
->>> implications:
->>>
->>> First, it's wrong in principle. Second, it might be hiding misuses wh=
-ich
->>> are just waiting to wreak havoc. Third, ThreadSanitizer detects a rac=
-e
->>> when multiple threads write to slopbuf at roughly the same time, thus
->>> potentially making any more critical races harder to spot.
->>
->> There are two hard things in computer science ;-).
+> Since commit f7673490 ("more terse push output", 2007-11-05), git push
+> has a completely different output format than the one shown in the user
+> manual for a non-fast-forward push.
 >
-> Indeed. :-)
->
->>> Suggested-by: Junio C Hamano <gitster@pobox.com>
->>> Signed-off-by: Martin =C3=85gren <martin.agren@gmail.com>
->>> ---
->>> v2: no "ifdef TSAN"; moved check from strbuf_reset into strbuf_setlen
->>
->> Looks much better.  I have a mild objection to "suggested-by",
->> though.  It makes it sound as if this were my itch, but it is not.
->>
->> All the credit for being motivate to fix the issue should go to you.
->> For what I did during the review of the previous one to lead to this
->> simpler version, if you want to document it, "helped-by" would be
->> more appropriate.
->
-> Ok, so that's two things to tweak in the commit message. I'll hold off
-> on v3 in case I get some more feedback the coming days. Thanks.
+> Signed-off-by: Martin =C3=85gren <martin.agren@gmail.com>
+> ---
+> I'd say it's "not very many read this and immediately tried it out" and
+> not "nobody read this for the last ten years".
 
-Well, this one is good enough and your "at least two" is technically
-fine ;-)  Let's not reroll this any further.
+Thanks for spotting, and I tend to agree that the above is very
+close to a fair assessment. =20
+
+When the software was young, those who adopted early were much more
+highly motivated to not just follow documentation and examples but
+also to improve them, compared to the more recent crop of new users
+who can take it granted that "other people" work on supplying tools
+and learning material for free.  And that is not a bad thing---it is
+progress.
+
+So it may even be "many may have read, tried and found it different
+from reality, but did not bother trying to fix or even report".
+
+>  Documentation/user-manual.txt | 10 ++++++----
+>  1 file changed, 6 insertions(+), 4 deletions(-)
+>
+> diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.=
+txt
+> index bc2929867..d3c53b513 100644
+> --- a/Documentation/user-manual.txt
+> +++ b/Documentation/user-manual.txt
+> @@ -2044,10 +2044,12 @@ If a push would not result in a <<fast-forwards=
+,fast-forward>> of the
+>  remote branch, then it will fail with an error like:
+> =20
+>  -------------------------------------------------
+> -error: remote 'refs/heads/master' is not an ancestor of
+> - local  'refs/heads/master'.
+> - Maybe you are not up-to-date and need to pull first?
+> -error: failed to push to 'ssh://yourserver.com/~you/proj.git'
+> + ! [rejected]        master -> master (non-fast-forward)
+> +error: failed to push some refs to '...'
+> +hint: Updates were rejected because the tip of your current branch is =
+behind
+> +hint: its remote counterpart. Integrate the remote changes (e.g.
+> +hint: 'git pull ...') before pushing again.
+> +hint: See the 'Note about fast-forwards' in 'git push --help' for deta=
+ils.
+>  -------------------------------------------------
+> =20
+>  This can happen, for example, if you:
