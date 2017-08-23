@@ -2,98 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9AC01208DB
-	for <e@80x24.org>; Wed, 23 Aug 2017 05:13:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A001C208CD
+	for <e@80x24.org>; Wed, 23 Aug 2017 08:06:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751220AbdHWFN5 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Aug 2017 01:13:57 -0400
-Received: from mail-io0-f176.google.com ([209.85.223.176]:38804 "EHLO
-        mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751140AbdHWFN4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Aug 2017 01:13:56 -0400
-Received: by mail-io0-f176.google.com with SMTP id g71so3691122ioe.5
-        for <git@vger.kernel.org>; Tue, 22 Aug 2017 22:13:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ZnMYV8jczFZJ2WNeteR7Lo8ADNR7Sl5ql/ahFNuMQJ4=;
-        b=IYqNfBDG/NnK1gUgL+58m0Ggb5kdf84pjDfUObRDPo0/OIxDZ0u32EqFxDyFj9CsI4
-         f7URg9ESjumzcgNtCogNtI0cfcoWIIa9E9CTWEg6+ZkvZw8d952J8HX3FdXpGns++F9x
-         Gy4BMJs6slA2H2YAf8YAdbSwmo3xwAaKDyGmiFWulRnxAiDxf0vNCbxoejmksswiuBbD
-         kw+3RIemPkgrGWjG0R02IqMajcyWS+Wp5wfiNkwfhDMw2xtQeW+V0bE/+cVSR+UiwHB2
-         IfOlsmgq6eJ85ZUyV6RJ12ij656R9sud/QldLE+Yl7CrcytTHVjheqDr2d4OlieQtlXg
-         h6rQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ZnMYV8jczFZJ2WNeteR7Lo8ADNR7Sl5ql/ahFNuMQJ4=;
-        b=quGEUGKYUkmLnrNMIDmwaqHEjn+DY+FZ9na7drhsen0E88HlRcN7TP/3xcrTAOVDqj
-         5eSwekTeLfsZA3zTYnW1WiTwsrgWO8zBe7ZivrdvSyzv6QHTMDtgbrpJTzYoU3JfiuBU
-         Adtrdm/ro2DbOz7Md5xsBXH+Z++enAsf+ZJdveVMaDRxUwnahSe9Lt4+HB3awDZBO5TE
-         0QJYIuX+i3X4PcLZFOr2v8eOpFh5Iy/pPQyDc7w0HjyZUN2ZkCYVzAuatbqUoJBfIVt2
-         1/w5A60kli+Fa9pT3WGFQsYLy+fjYXMmWR83GMW//tyQgCBcIryQ3X1FupQQr4IFl3ev
-         xcmw==
-X-Gm-Message-State: AHYfb5hrYrB9wyHjjN8jKsJ5MzERlspedRuNg9CbNJFfnh7NEKfDgMFW
-        OT6w0kB4rJJbURk1JGfeuX2pAd+wS5tW
-X-Received: by 10.107.57.135 with SMTP id g129mr976874ioa.73.1503465235795;
- Tue, 22 Aug 2017 22:13:55 -0700 (PDT)
+        id S1753438AbdHWIG1 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Aug 2017 04:06:27 -0400
+Received: from ikke.info ([178.21.113.177]:33896 "EHLO vps892.directvps.nl"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753386AbdHWIGY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Aug 2017 04:06:24 -0400
+Received: by vps892.directvps.nl (Postfix, from userid 1008)
+        id E8270440133; Wed, 23 Aug 2017 10:03:28 +0200 (CEST)
+Date:   Wed, 23 Aug 2017 10:03:28 +0200
+From:   Kevin Daudt <me@ikke.info>
+To:     Jeffrey Walton <noloader@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: How to force a push to succeed?
+Message-ID: <20170823080328.GE3839@alpha.vpn.ikke.info>
+References: <CAH8yC8=A0-geqduTNNJw0yb1BREqsB75_bKSp+06Rb5fY6oiuQ@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.79.127.85 with HTTP; Tue, 22 Aug 2017 22:13:55 -0700 (PDT)
-In-Reply-To: <87o9r7z7jp.fsf@local.lan>
-References: <87o9r7z7jp.fsf@local.lan>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 23 Aug 2017 07:13:55 +0200
-Message-ID: <CAP8UFD32=67Cfq6ke0_7SFBEL20TqpFVtq8LXou9WuKOti59ag@mail.gmail.com>
-Subject: Re: Advice needed for basic setup for home user
-To:     Harry Putnam <reader@newsguy.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAH8yC8=A0-geqduTNNJw0yb1BREqsB75_bKSp+06Rb5fY6oiuQ@mail.gmail.com>
+User-Agent: Mutt/1.8.3 (2017-05-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 22, 2017 at 10:11 PM, Harry Putnam <reader@newsguy.com> wrote:
->
-> I run 5-10 vbox vms' on this host with various OS's involved.
-> With each host, I've kept a local repo of some key OS rc files.
-> and a couple of hundred home made scripts.
->
-> They all follow the same pattern of setup, but over time each repo
-> becomes different from its cousins.
->
-> I've never taken the step of centralizing the assorted local git repos
-> into a central repo that keeps a branch or directory or whatever it
-> would be called of each local repo.
+On Tue, Aug 22, 2017 at 05:55:25PM -0400, Jeffrey Walton wrote:
+> I tested some changes that lead to a dead end. The changes need to be
+> removed. The changes were added in 7 commits.
+> 
+> I went back in time to the point before the changes:
+> 
+>     $ git reset --hard HEAD~7
+>     HEAD is now at 559fc3b Fix benchmark selection code (GH #464)
+> 
+> When I attempted to push:
+> 
+>     $ git push
+>     Username for 'https://github.com': noloader
+>     To https://github.com/noloader/cryptopp.git
+>      ! [rejected]        master -> master (non-fast-forward)
+> 
+> I tried to commit, but Git claims there's nothing to add:
+> 
+>     $ git commit
+>     On branch master
+>     Your branch is behind 'origin/master' by 7 commits, and can be
+> fast-forwarded.
+> 
+> Commit seems to be the wrong command as Git appears to be trying to do
+> something I don't want.
+> 
+> How do I force the push to succeed?
+> 
+> Thanks in advance.
 
-You should probably decide first how you want the local git repos to be merged.
-The result would be quite different if you have a branch or if you
-have a directory for each local repo.
+By actually doing a force push:
 
-Maybe tutorials or books can help you get more familiar with Git so
-that you can decide based on what would be best for your use case.
+    git push --force-with-lease origin master
 
-My wild guess would be that a branch in the central repo for each of
-the "master" branches of the local repos would be the way to go. But I
-don't know your use case much and cannot suggest you to do that based
-on a wild guess.
+But note that this can interfere with others working on the same
+repository, so be carefull when you use a force push.
 
-> So that all the local repos would become a checked out module from the
-> central git repo.
+Additionally, I can recommend using separate branches for things that
+might turn up as dead ends (or even for every development). That way,
+you can just throw away the branch if you want to discard it.
 
-Git doesn't know about "modules". It has "submodules" but this is yet
-another different thing and I am not sure at all that it would help in
-your case.
+Hope this helps, Kevin.
 
-> Or at any rate, something along that line... not even sure how I would
-> set that up with git, but would like some overall advice about how to
-> do that. A step thru or an outline would be very useful.
 
-As it is not clear what end result you want, it is difficult to help you.
