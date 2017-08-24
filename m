@@ -2,76 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 469E5208DB
-	for <e@80x24.org>; Thu, 24 Aug 2017 09:48:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A4F9208DB
+	for <e@80x24.org>; Thu, 24 Aug 2017 09:49:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752835AbdHXJsG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Aug 2017 05:48:06 -0400
-Received: from mail-pg0-f46.google.com ([74.125.83.46]:34024 "EHLO
-        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751582AbdHXJsD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Aug 2017 05:48:03 -0400
-Received: by mail-pg0-f46.google.com with SMTP id q10so715717pge.1
-        for <git@vger.kernel.org>; Thu, 24 Aug 2017 02:48:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=dnF1IRb2670geNeduMhkuqCpx3eK+FczxQ4a80MHbJc=;
-        b=NlR2cY4xzvwnEVGBf963U0W5L6wpjp6R3sc5oYqt+SgHSYuVfgv4SccEDXPW/W8k+o
-         qilW3K3vB9eh7RJE0gnU3b4ThYQTeaME37x5Efj8bpdCnPB+eE20JT+6P1oz/w9HFe3A
-         h8P5dQB7qampi7oRP7kJP+uL3q4FBxerP8dtuQCqgZJneaeyaerS/BOvuwWGyEkMUJnl
-         O96WhPv/FgSB7j/GzQpWpLb5CngYgNtnkqC7ORRPREPrHeWH8elCO/N+nOZdHME3ar2Z
-         E+yDw4buZXPIqghY/v6mdaodTFGn9tE5VM1zHpfTmQSmJD0Er5zGokL9P02aqZSHjXiK
-         fCUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=dnF1IRb2670geNeduMhkuqCpx3eK+FczxQ4a80MHbJc=;
-        b=oGQ+g4I4CuxqSGDLo/BtlU/AZAV3VfUsWCsEtKA33vxx5t4OSBzkKtv/rwo3xGC1W6
-         lXoAEuwNXjc9Ojlx8XJYRBnY/k5iB2N3F5FI+2SbdVEfrCXda1bVO1N6n8xJ9FX76ovN
-         PJ1j0lagJyUDYTbXHKjvnjTKRrYmmbNxa1+dlhjb/tyyC6X1VAI1Agz+1mr1/D6zJ/pg
-         6XN8TfhaZJjI4ynRtEBOb0bvpuBmZNHCAM9PgugcDA4UmUXMaKdiJfO4VI5pmSP0GZ45
-         +oXEqJgMh5c7XMZZN7WHTI3e7+N5cH58gJf86efVHGQgA7bUvs0iZ4//TY8oBhPf8txu
-         gNeQ==
-X-Gm-Message-State: AHYfb5iBCQi6JaNuBENJrIOMGX9Z60CRYcfZXaKjlgDF4K9WkXUTA+OM
-        FnR8eev2ZXk2qRph/dnYnHC4iZ6yEg==
-X-Received: by 10.99.98.65 with SMTP id w62mr5955977pgb.362.1503568082986;
- Thu, 24 Aug 2017 02:48:02 -0700 (PDT)
+        id S1751854AbdHXJtJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Aug 2017 05:49:09 -0400
+Received: from zm-mta-out-1.u-ga.fr ([152.77.200.56]:44688 "EHLO
+        zm-mta-out-1.u-ga.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751307AbdHXJtH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Aug 2017 05:49:07 -0400
+X-Greylist: delayed 325 seconds by postgrey-1.27 at vger.kernel.org; Thu, 24 Aug 2017 05:49:06 EDT
+Received: from zm-mta-out.u-ga.fr (zm-mta-out.u-ga.fr [152.77.200.58])
+        by zm-mta-out-1.u-ga.fr (Postfix) with ESMTP id 8249AA0482;
+        Thu, 24 Aug 2017 11:43:38 +0200 (CEST)
+Received: from smtps.univ-grenoble-alpes.fr (smtps1.u-ga.fr [152.77.1.30])
+        by zm-mta-out.u-ga.fr (Postfix) with ESMTP id 27D7BE0097;
+        Thu, 24 Aug 2017 11:43:41 +0200 (CEST)
+Received: from anie (anie.imag.fr [129.88.42.32])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: moym@univ-grenoble-alpes.fr)
+        by smtps.univ-grenoble-alpes.fr (Postfix) with ESMTPSA id 76BB1125EB4;
+        Thu, 24 Aug 2017 11:43:39 +0200 (CEST)
+From:   Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: sequencer status
+References: <8e25c42f-80f2-e0d4-38e4-b4fe9c8074e0@morey-chaisemartin.com>
+        <CAP8UFD035niTUQTe73RSTE+3u6WX11UpxoqCSrfVP1Qs-fF0gg@mail.gmail.com>
+Date:   Thu, 24 Aug 2017 11:43:39 +0200
+In-Reply-To: <CAP8UFD035niTUQTe73RSTE+3u6WX11UpxoqCSrfVP1Qs-fF0gg@mail.gmail.com>
+        (Christian Couder's message of "Wed, 23 Aug 2017 18:40:31 +0200")
+Message-ID: <vpq4lsxl2r8.fsf@anie.imag.fr>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.100.162.37 with HTTP; Thu, 24 Aug 2017 02:48:02 -0700 (PDT)
-In-Reply-To: <CAJXxHvXqbwdyW0U=KQ_iRoZg1zVpKr1vchXp7+8eR8ZE2qUGdw@mail.gmail.com>
-References: <CAJXxHvVSXkQ4SYA5=ZtnWZCBbVk51oWY1OqM_XbGNoruyAGBrA@mail.gmail.com>
- <78619186c5d587de768f3c5ff033dfeb97bab645.1503494617.git.martin.agren@gmail.com>
- <CAJXxHvXqbwdyW0U=KQ_iRoZg1zVpKr1vchXp7+8eR8ZE2qUGdw@mail.gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Thu, 24 Aug 2017 11:48:02 +0200
-Message-ID: <CAN0heSoNvGqH35KZhFft=oOECw+6MMBJKVW0BjF4Z1S5TR9HWg@mail.gmail.com>
-Subject: Re: [PATCH 2/2] treewide: correct several "up-to-date" to "up to date"
-To:     STEVEN WHITE <stevencharleswhitevoices@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Greylist: Whitelist-UJF SMTP Authentifie (moym@univ-grenoble-alpes.fr) via submission-587 ACL (111)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 24 August 2017 at 05:51, STEVEN WHITE
-<stevencharleswhitevoices@gmail.com> wrote:
-> On Wed, Aug 23, 2017 at 10:49 AM, Martin =C3=85gren <martin.agren@gmail.c=
-om> wrote:
->> Follow the Oxford style, which says to use "up-to-date" before the noun,
->> but "up to date" after it. Don't change plumbing (specifically
->> send-pack.c, but transport.c (git push) also has the same string).
+Christian Couder <christian.couder@gmail.com> writes:
 
-> These corrections all look great (English-language-wise). :)
+> It is displaying the steps that have already been performed, right?
+> I wonder if people might want more about the current step (but maybe
+> that belongs to `git status`) or perhaps the not yet performed states
+> (and maybe even a way to edit the todo list?)
 
-Great. Thanks for checking.
+Note that 'git status' is already doing this, but shows only 2 items of
+each:
+
+$ git status
+interactive rebase in progress; onto 3772427
+Last commands done (2 commands done):
+   pick a48812c some commit title
+   exec false
+Next commands to do (2 remaining commands):
+   pick 9d7835d some other commit
+   pick c0e0fa8 one more subject
+  (use "git rebase --edit-todo" to view and edit)
+You are currently editing a commit while rebasing branch 'master' on '3772427'.
+...
+
+The idea was that 2 lines of context is often sufficient, and doesn't
+eat too much screen space so it makes sense to show it by default.
+
+I think it makes sense to have another command that shows the whole
+sequence, but perhaps it could also be just an option for "git status".
+
+Cheers,
+
+-- 
+Matthieu Moy
+https://matthieu-moy.fr/
