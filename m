@@ -2,96 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B9C5C208DB
-	for <e@80x24.org>; Thu, 24 Aug 2017 09:10:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 469E5208DB
+	for <e@80x24.org>; Thu, 24 Aug 2017 09:48:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751319AbdHXJKS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Aug 2017 05:10:18 -0400
-Received: from rrzmta2.uni-regensburg.de ([194.94.155.52]:51277 "EHLO
-        rrzmta2.uni-regensburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751268AbdHXJKR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Aug 2017 05:10:17 -0400
-X-Greylist: delayed 495 seconds by postgrey-1.27 at vger.kernel.org; Thu, 24 Aug 2017 05:10:17 EDT
-Received: from rrzmta2.uni-regensburg.de (localhost [127.0.0.1])
-        by localhost (Postfix) with SMTP id 223A978E7A
-        for <git@vger.kernel.org>; Thu, 24 Aug 2017 11:02:01 +0200 (CEST)
-Received: from gwsmtp1.uni-regensburg.de (gwsmtp1.uni-regensburg.de [132.199.5.51])
-        by rrzmta2.uni-regensburg.de (Postfix) with ESMTP id 0937578D1D
-        for <git@vger.kernel.org>; Thu, 24 Aug 2017 11:02:00 +0200 (CEST)
-Received: from uni-regensburg-smtp1-MTA by gwsmtp1.uni-regensburg.de
-        with Novell_GroupWise; Thu, 24 Aug 2017 11:02:00 +0200
-Message-Id: <599E9607020000A100027965@gwsmtp1.uni-regensburg.de>
-X-Mailer: Novell GroupWise Internet Agent 14.2.2 
-Date:   Thu, 24 Aug 2017 11:01:59 +0200
-From:   "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de>
-To:     <git@vger.kernel.org>
-Subject: Problems in Default merge message
-References: <599E9607020000A100027965@gwsmtp1.uni-regensburg.de>
-Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="=__Part2E16E417.0__="
+        id S1752835AbdHXJsG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Aug 2017 05:48:06 -0400
+Received: from mail-pg0-f46.google.com ([74.125.83.46]:34024 "EHLO
+        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751582AbdHXJsD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Aug 2017 05:48:03 -0400
+Received: by mail-pg0-f46.google.com with SMTP id q10so715717pge.1
+        for <git@vger.kernel.org>; Thu, 24 Aug 2017 02:48:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=dnF1IRb2670geNeduMhkuqCpx3eK+FczxQ4a80MHbJc=;
+        b=NlR2cY4xzvwnEVGBf963U0W5L6wpjp6R3sc5oYqt+SgHSYuVfgv4SccEDXPW/W8k+o
+         qilW3K3vB9eh7RJE0gnU3b4ThYQTeaME37x5Efj8bpdCnPB+eE20JT+6P1oz/w9HFe3A
+         h8P5dQB7qampi7oRP7kJP+uL3q4FBxerP8dtuQCqgZJneaeyaerS/BOvuwWGyEkMUJnl
+         O96WhPv/FgSB7j/GzQpWpLb5CngYgNtnkqC7ORRPREPrHeWH8elCO/N+nOZdHME3ar2Z
+         E+yDw4buZXPIqghY/v6mdaodTFGn9tE5VM1zHpfTmQSmJD0Er5zGokL9P02aqZSHjXiK
+         fCUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=dnF1IRb2670geNeduMhkuqCpx3eK+FczxQ4a80MHbJc=;
+        b=oGQ+g4I4CuxqSGDLo/BtlU/AZAV3VfUsWCsEtKA33vxx5t4OSBzkKtv/rwo3xGC1W6
+         lXoAEuwNXjc9Ojlx8XJYRBnY/k5iB2N3F5FI+2SbdVEfrCXda1bVO1N6n8xJ9FX76ovN
+         PJ1j0lagJyUDYTbXHKjvnjTKRrYmmbNxa1+dlhjb/tyyC6X1VAI1Agz+1mr1/D6zJ/pg
+         6XN8TfhaZJjI4ynRtEBOb0bvpuBmZNHCAM9PgugcDA4UmUXMaKdiJfO4VI5pmSP0GZ45
+         +oXEqJgMh5c7XMZZN7WHTI3e7+N5cH58gJf86efVHGQgA7bUvs0iZ4//TY8oBhPf8txu
+         gNeQ==
+X-Gm-Message-State: AHYfb5iBCQi6JaNuBENJrIOMGX9Z60CRYcfZXaKjlgDF4K9WkXUTA+OM
+        FnR8eev2ZXk2qRph/dnYnHC4iZ6yEg==
+X-Received: by 10.99.98.65 with SMTP id w62mr5955977pgb.362.1503568082986;
+ Thu, 24 Aug 2017 02:48:02 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.100.162.37 with HTTP; Thu, 24 Aug 2017 02:48:02 -0700 (PDT)
+In-Reply-To: <CAJXxHvXqbwdyW0U=KQ_iRoZg1zVpKr1vchXp7+8eR8ZE2qUGdw@mail.gmail.com>
+References: <CAJXxHvVSXkQ4SYA5=ZtnWZCBbVk51oWY1OqM_XbGNoruyAGBrA@mail.gmail.com>
+ <78619186c5d587de768f3c5ff033dfeb97bab645.1503494617.git.martin.agren@gmail.com>
+ <CAJXxHvXqbwdyW0U=KQ_iRoZg1zVpKr1vchXp7+8eR8ZE2qUGdw@mail.gmail.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Thu, 24 Aug 2017 11:48:02 +0200
+Message-ID: <CAN0heSoNvGqH35KZhFft=oOECw+6MMBJKVW0BjF4Z1S5TR9HWg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] treewide: correct several "up-to-date" to "up to date"
+To:     STEVEN WHITE <stevencharleswhitevoices@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a MIME message. If you are reading this text, you may want to 
-consider changing to a mail reader or gateway that understands how to 
-properly handle MIME multipart messages.
+On 24 August 2017 at 05:51, STEVEN WHITE
+<stevencharleswhitevoices@gmail.com> wrote:
+> On Wed, Aug 23, 2017 at 10:49 AM, Martin =C3=85gren <martin.agren@gmail.c=
+om> wrote:
+>> Follow the Oxford style, which says to use "up-to-date" before the noun,
+>> but "up to date" after it. Don't change plumbing (specifically
+>> send-pack.c, but transport.c (git push) also has the same string).
 
---=__Part2E16E417.0__=
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+> These corrections all look great (English-language-wise). :)
 
-Hi!
-
-I'd like to report an old-time bug in git, regarding the default message =
-visible for a "git merge --no-commit" (at the later commit, of course):
-
-* When merging a branch, the first name is put in single quotes, while the =
-second is not.
-
-* There is no blank line after the first one
-
-* there are two blank lines further down
-
-I'll attach a sample default merge file as found in the editor.
-
-I suggest to put both branches in single quotes, and to either remove the =
-two blank lines, or make them comment lines (for visual separation)
-
-Regards,
-Ulrich
-
-
-
-
---=__Part2E16E417.0__=
-Content-Type: application/octet-stream; name="merge-message"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="merge-message"
-
-TWVyZ2UgYnJhbmNoICdmLU5UUC10aW1lc3RhbXBzJyBpbnRvIGYtTlRQLW1vZGU2CiMKIyBJdCBs
-b29rcyBsaWtlIHlvdSBtYXkgYmUgY29tbWl0dGluZyBhIG1lcmdlLgojIElmIHRoaXMgaXMgbm90
-IGNvcnJlY3QsIHBsZWFzZSByZW1vdmUgdGhlIGZpbGUKIwkuZ2l0L01FUkdFX0hFQUQKIyBhbmQg
-dHJ5IGFnYWluLgoKCiMgUGxlYXNlIGVudGVyIHRoZSBjb21taXQgbWVzc2FnZSBmb3IgeW91ciBj
-aGFuZ2VzLiBMaW5lcyBzdGFydGluZwojIHdpdGggJyMnIHdpbGwgYmUgaWdub3JlZCwgYW5kIGFu
-IGVtcHR5IG1lc3NhZ2UgYWJvcnRzIHRoZSBjb21taXQuCiMgT24gYnJhbmNoIGYtTlRQLW1vZGU2
-CiMgWW91ciBicmFuY2ggaXMgYWhlYWQgb2YgJ29yaWdpbi9mLU5UUC1tb2RlNicgYnkgMiBjb21t
-aXRzLgojICAgKHVzZSAiZ2l0IHB1c2giIHRvIHB1Ymxpc2ggeW91ciBsb2NhbCBjb21taXRzKQoj
-CiMgQWxsIGNvbmZsaWN0cyBmaXhlZCBidXQgeW91IGFyZSBzdGlsbCBtZXJnaW5nLgojCiMgQ2hh
-bmdlcyB0byBiZSBjb21taXR0ZWQ6CiMJbW9kaWZpZWQ6ICAgcHJpbnQtbnRwLmMKIwltb2RpZmll
-ZDogICB0ZXN0cy9udHAtdGltZS5vdXQKIwojIFVudHJhY2tlZCBmaWxlczoKIwkwMDAxLUltcHJv
-dmUtY29tbWVudC1mb3ItdG9rMnN0ci1pbi11dGlsLXByaW50LmMucGF0Y2gKIwkwMDAyLXByaW50
-LW50cC5jLUFkZC1hbmQtdXNlLVZFUlNJT05TSElGVC5wYXRjaAojCTAwMDMtUHJlcGFyZS1wcmlu
-dC1udHAuYy1mb3ItTlRQLUNvbnRyb2wtTWVzc2FnZXMucGF0Y2gKIwkwMDA0LXByaW50LW50cC5j
-LUhhbmRsZS1OVFAtQ29udHJvbC1NZXNzYWdlcy5wYXRjaAojCTAwMDUtcHJpbnQtbnRwLmMtT3V0
-cHV0LWEtbm9uLXByaW1hcnktUmVmZXJlbmNlLUlELnBhdGNoCiMJMDAwNi10ZXN0cy1URVNUTElT
-VC1BZGQtdGVzdHMtbnRwLWNvbnRyb2wtYW5kLW50cC10aW1lLnBhdGNoCiMJcGF0Y2hlcy1lMzhh
-NjhkNC50YXIuZ3oKIwlwcHAKIwl4eHgKIwo=
-
---=__Part2E16E417.0__=--
+Great. Thanks for checking.
