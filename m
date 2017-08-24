@@ -2,187 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 57D9420285
-	for <e@80x24.org>; Thu, 24 Aug 2017 16:17:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A794320285
+	for <e@80x24.org>; Thu, 24 Aug 2017 16:35:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752973AbdHXQRM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Aug 2017 12:17:12 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:60180 "EHLO
-        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751895AbdHXQRK (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 24 Aug 2017 12:17:10 -0400
-X-AuditID: 12074413-3a3ff70000007929-19-599efc05b393
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 85.15.31017.50CFE995; Thu, 24 Aug 2017 12:17:09 -0400 (EDT)
-Received: from mail-io0-f172.google.com (mail-io0-f172.google.com [209.85.223.172])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v7OGH8Y0019037
-        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT)
-        for <git@vger.kernel.org>; Thu, 24 Aug 2017 12:17:09 -0400
-Received: by mail-io0-f172.google.com with SMTP id o68so3811909iod.4
-        for <git@vger.kernel.org>; Thu, 24 Aug 2017 09:17:09 -0700 (PDT)
-X-Gm-Message-State: AHYfb5heODJPw4Uu5shVh2Ubb6urjSbD2uhT95YOSJ71szyvY86QqdOO
-        upyrSo2OznUkvXQ+ahYqA/2GO6nOIg==
-X-Received: by 10.107.142.66 with SMTP id q63mr5471751iod.77.1503591428410;
- Thu, 24 Aug 2017 09:17:08 -0700 (PDT)
+        id S1751615AbdHXQfI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Aug 2017 12:35:08 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50385 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752751AbdHXQfH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Aug 2017 12:35:07 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 13C3998754;
+        Thu, 24 Aug 2017 12:35:06 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=bHr2Cw4jwejO0ZEt8qYpysz1tBk=; b=uvRWMD
+        +f10B8iv0cbjQqnxQpbKrDZhGg6SyRtyTnTn27/b5QSV/7WMJ/dpHfz97GyAbW3M
+        0RKiIc3woL6tnlbtKQ3BQhUKYM81NSzqmGRUlek+fv+SJ1ylmWpUcly/DAb5l15D
+        zoSM2lXdedlBCSJmK+4oUn6i3AAAXMyPNQIwo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Ozt8RWpzZnvgpj9Mp90NTNWyiIFOr+NI
+        0YyxTdzKNZ6O+57kXPFcmMTIrJ3e4reO4b3C6PShaq7vjU6X2qVMd13Bq1dfTzHy
+        s72/B9fG2h08C0TMuHsnssUpWbAtYutuw/SdfAtKWg+GOhO4rnTq/thLUJoGnnqu
+        tr11BZuVFpI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0BB0F98753;
+        Thu, 24 Aug 2017 12:35:06 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1FDE49874F;
+        Thu, 24 Aug 2017 12:35:05 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kevin Daudt <me@ikke.info>
+Cc:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: What does 'git blame --before <rev> -- <file>' supposed to mean?
+References: <1503254759.3881.9.camel@gmail.com>
+        <20170824075848.GG3839@alpha.vpn.ikke.info>
+Date:   Thu, 24 Aug 2017 09:35:03 -0700
+In-Reply-To: <20170824075848.GG3839@alpha.vpn.ikke.info> (Kevin Daudt's
+        message of "Thu, 24 Aug 2017 09:58:48 +0200")
+Message-ID: <xmqqy3q8x6tk.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Reply-To: mhagger@alum.mit.edu
-Received: by 10.107.15.204 with HTTP; Thu, 24 Aug 2017 09:17:07 -0700 (PDT)
-In-Reply-To: <20170813193611.4233-1-richard.maw@gmail.com>
-References: <20170813193611.4233-1-richard.maw@gmail.com>
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Date:   Thu, 24 Aug 2017 18:17:07 +0200
-X-Gmail-Original-Message-ID: <CAMy9T_HNGEv+HX7Zyj+g9i=vmrB+hTx7NJdd=FVatZRUv1b-yQ@mail.gmail.com>
-Message-ID: <CAMy9T_HNGEv+HX7Zyj+g9i=vmrB+hTx7NJdd=FVatZRUv1b-yQ@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/7] Implement ref namespaces as a ref storage backend
-To:     Richard Maw <richard.maw@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupmleLIzCtJLcpLzFFi42IRYndR1GX9My/S4PI/NYuuK91MDowenzfJ
-        BTBGcdmkpOZklqUW6dslcGUsXfuIsWC1ZsWKji7mBsZOxS5GTg4JAROJjXtPMnUxcnEICexg
-        ktj65xorhPOUSaL39mNmCKePUWLTvB5miJZ8iUW/JjBB2MUS9zc+B7N5BQQlTs58wgJiCwnI
-        SbzacIOxi5EDyPaW+L1XHyTMKWAlcfThJ1aIEkuJUwfXgo1kE9CVWNTTDDaGRUBVYufXdywQ
-        4xMlFm/azQoyhlcgQOL6z2CQsLCAn8T1N1PBSkQE1CWOvFkANpJZQEti889v7BC2pkTr9t/s
-        ExiFZyE5bhaS1AJGplWMcok5pbm6uYmZOcWpybrFyYl5ealFuuZ6uZkleqkppZsYISEsvINx
-        10m5Q4wCHIxKPLwNl+ZFCrEmlhVX5h5ilORgUhLlXf4CKMSXlJ9SmZFYnBFfVJqTWnyIUYKD
-        WUmEd9sDoBxvSmJlVWpRPkxKmoNFSZxXbYm6n5BAemJJanZqakFqEUxWhoNDSYI36hdQo2BR
-        anpqRVpmTglCmomDE2Q4D9BwXZAa3uKCxNzizHSI/ClGY44rV9Z9YeKYcmD7FyYhlrz8vFQp
-        cd4+kFIBkNKM0jy4abA09IpRHOg5Yd4DIFU8wBQGN+8V0ComoFWTTswBWVWSiJCSamDcql/6
-        5lX3rwcZcfdduLdHnJG4bLPud1XNnbp9ZW9ubo5u+XosS/ZYJPt7gyOWPyPcOvR1JWvZhPed
-        lnmd/0V10p9Xx0r22W2brtg9k0E5ZsbeudbS+iUdh0RWXp9w/Gbq/p5lprrzjNOkVCZZaLwS
-        urUvb9/sdJf/Yvdv2d55vXMOu+/mr07+SizFGYmGWsxFxYkAI6atZh4DAAA=
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2F116260-88EA-11E7-B92A-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Aug 13, 2017 at 9:36 PM, Richard Maw <richard.maw@gmail.com> wrote:
-> Forewarning: I don't consider this work complete
-> and am unlikely to find time to finish it any time soon.
-> I've mostly sent this because it may include valuable feedback
-> on how well the ref storage backends works
-> from trying to use it to change how git namespaces work.
+Kevin Daudt <me@ikke.info> writes:
+
+> Git blame takes options that are fed to git rev-list, to limit the
+> commits being taken into account for blaming.
 >
-> Introduction
-> ============
+> The man page shows "[--since=<date>]", which is one such option, but
+> before is valid as well.
 >
-> I work on a git server called Gitano,
-> and I'd like to add support for git namespaces to: [...]
-
-Thanks so much for your efforts and your description of the problems
-that you faced. That will be really valuable for whomever might follow
-up on your work (even if it is you :-) ).
-
-> Unfortunately namespace handling was never implemented for any other part of git
-> and at least gitolite makes use of namespaces,
-> and will have to work around it not being implemented fully,
-> but implementing it more fully will break work-arounds.
-
-I agree that the current namespace feature is not a great foundation
-for future work.
-
-> [...]
-> Fortunately the pluggable ref backends work provided an easier starting point.
-
-:-) I'm glad my years-long obsession is finally yielding fruit.
-
-First a general comment about the approach...
-
-I've always thought that a workable "Git with namespaces" would
-probably look more like git worktrees:
-
-* One main repository holding all of the objects and all of the
-non-pseudo references.
-
-* One lightweight directory per namespace-view, holding the
-"core.namespace" config and the pseudorefs. HEAD should probably be
-stored in the main repository (?). Both the main repository and the
-namespace-view directories would probably be bare, though perhaps
-somebody can think of an application for allowing non-bare
-repositories.
-
-Even though this scheme implies the need for extra directories, I
-think that it would make it easier to fix a lot of your problems:
-
-* Each namespace-view could define its own namespace,
-quasi-permanently. You wouldn't have to pass it via the environment.
-(You might even want to *forbid* changing the namespace via the
-environment or command line!) So fetches and pushes from one namespace
-to another would work correctly.
-
-* There would be one place for each namespace-view's pseudorefs. You
-wouldn't have to squeeze them into a single reference tree.
-
-* The main repository would know all of the references of all of the
-namespace views, so maintenance tools like `git gc` would work without
-changes.
-
-* The namespace-view directories wouldn't be mistakable for full
-repositories, so tools like `git gc` would refuse to run in them. I
-think this would also make it a little bit harder for reference values
-to "leak" from one namespace-view to another.
-
-* Remote access could use different paths for different
-namespace-views. The externally-visible path need not, of course, be
-the same as the path of the namespace-view's directory.
-
-By the way, there are certainly still places in the code that don't go
-through the refs API (e.g., the one that Junio found). That's because
-the refs API has still not been used for anything very interesting, so
-the bugs haven't been flushed out. I see you've found some more.
-That's because you're doing something interesting :-)
-
-> [...]
-> Bugs
-> ----
+> git blame -h shows:
 >
-> Most boil down to how special refs like HEAD are handled.
+>     <rev-opts> are documented in git-rev-list(1) 
 >
-> 1.  Logged messages display the namespaced path,
->     which a human may deal with but confuses the test suite.
-
-I think it's clear that the logged messages should reflect the shorter
-reference names, and it is the test suite that needs to be fixed.
-
-> 2.  Reflogs for namespaced HEAD are not updated.
+> and man git-blame shows under specifying ranges (emphasis mine): 
 >
->     This is because resolving HEAD to split the transaction's updates
->     to add a log only update to HEAD works by transaction_prepare resolving HEAD
->     using its own ref store rather than the main one,
->     so the namespace translation isn't performed.
->     See split_head_update.
+>      When you are not interested in changes older than version v2.6.18,
+>      or changes older than 3 weeks, *you can use revision range
+>      specifiers similar to git rev-list*:
 >
->     The fix for this may be to move the transaction mangling out of the backend,
->     unless it should be implied that every backend implementation
->     must be responsible for symbolic ref reflog updates implicitly.
+> So these options are not documented under git blame, but git rev-list.
+>
+> Perhaps the synopsis of man git-blame could be expanded so that that
+> it's clear it accepts rev-list options.
 
-It probably makes sense for the namespace layer to do this step.
+While nothing in what you said is incorrect per-se, many options
+that rev-list takes are parsed but then ignored by blame, simply
+because they do not make much sense in the context of the command,
+and "--before" is one of them.  
 
-I think there is a similar problem with `split_symref_update()`. Here
-the problem is trickier, because you don't know how to split the
-update until you have locked the symref, but the locking necessarily
-has to happen in the main-repo backend. So I think there will be
-places where the main-repo backend needs to call back to the namespace
-layer for some things, like deciding what reference names to use in
-error messages and things.
+It is interesting to realize that "--since" (and its synonym
+"--after") does make sense, unlike "--before" (and its synonym
+"--until") which does not.
 
-You'd also want to prevent actions in a namespace-view from affecting
-references outside of that namespace. For example, you shouldn't be
-able to follow a symref from a namespace-view ref to another reference
-in a different namespace. This also implies some cooperation between
-the file-level backend and the namespace layer.
+Let's imagine a history like this (time flows from left to right):
 
-I guess it is also clear that symrefs on disk have to contain the full
-reference names of their targets, but when they are read via a
-namespace-view, the caller should see the short name as the target.
+     --c1--c2--c4--c6--c8--c9
+             \         /
+             c3--c5--c7
 
-[...]
+where the tip of the history is at commit "c9", and the number in
+the name of each commit denotes its timestamp.
 
-Michael
+ - "git rev-list c9" starts from "c9", and follows the chain of
+   parents and would produce c9, c8, c7, c6, ..., c1, ....
+
+ - If you add "--after 2", i.e. "git rev-list --after 2 c9" does
+   exactly the same traversal as the above, but stops following the
+   chain of parents for commits that is earlier than the specified
+   time.
+
+ - If you add "--before 6", i.e. "git rev-list --before 6 c9" does
+   exactly the same traversal as the first one, but does not show
+   the commit whose timestamp is later than the specified time.  It
+   would be like saying "git rev-list c5 c6" in the above topology;
+   the traversal from c9 down to c5 and c6 is done only to find c5
+   and c6 to start the "real" traversal from. 
+
+Now, "--after 2" will still show "c9", the tip you start your
+traversal from, and this is important in the context of "blame".
+
+Unlike "git rev-list" (and "git log" family of commands), which can
+take more than one positive endpoints in the history (e.g. it is
+perfectly sensible to ask "git log -p ^c1 c5 c6 -- myfile" in the
+example topology above), "git blame" must be given exactly one
+positive endpoint, as "git blame ^c1 c5 c6 -- myfile" would not make
+any sense (ask: "do we want to know about myfile in c5?  or myfile
+in c6?").
+
+I think we also ignore "-n 4" in "blame -n 4 c9 -- myfile" (I didn't
+check), but that is not because the operation fundamentally does not
+make sense (like "--until") but because whoever wrote "blame" did
+not think of the need to support it---in other words, if somebody
+wants to add support for that option, I offhand do not see a
+fundamental reason to reject it.
+
+I do think appearing to take and understand and then silently
+ignoring an option is bad, and it will help users if we tighten the
+error checking while parsing the command line.
+
