@@ -2,91 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A273D208DB
-	for <e@80x24.org>; Thu, 24 Aug 2017 10:12:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 36182208DB
+	for <e@80x24.org>; Thu, 24 Aug 2017 10:22:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751331AbdHXKM4 convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 24 Aug 2017 06:12:56 -0400
-Received: from 1.mo64.mail-out.ovh.net ([178.33.109.67]:59118 "EHLO
-        1.mo64.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751264AbdHXKMz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Aug 2017 06:12:55 -0400
-Received: from ex2.mail.ovh.net (gw1.ex2.mail.ovh.net [164.132.80.186])
-        by mo64.mail-out.ovh.net (Postfix) with ESMTPS id B2D8E88C1A;
-        Thu, 24 Aug 2017 12:12:53 +0200 (CEST)
-Received: from [10.0.2.127] (86.200.152.136) by EX7.indiv2.local (172.16.2.7)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Thu, 24
- Aug 2017 12:12:49 +0200
-Subject: Re: sequencer status
-To:     Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-        Christian Couder <christian.couder@gmail.com>
-CC:     Git Mailing List <git@vger.kernel.org>
-References: <8e25c42f-80f2-e0d4-38e4-b4fe9c8074e0@morey-chaisemartin.com>
- <CAP8UFD035niTUQTe73RSTE+3u6WX11UpxoqCSrfVP1Qs-fF0gg@mail.gmail.com>
- <vpq4lsxl2r8.fsf@anie.imag.fr>
-From:   Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
-Openpgp: preference=signencrypt
-Message-ID: <851c3796-aee5-4b3f-92a8-308d71356107@morey-chaisemartin.com>
-Date:   Thu, 24 Aug 2017 12:12:49 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101
- Thunderbird/56.0
+        id S1751812AbdHXKWI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Aug 2017 06:22:08 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:33497 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751102AbdHXKWH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Aug 2017 06:22:07 -0400
+Received: by mail-wm0-f68.google.com with SMTP id b79so2294932wmf.0
+        for <git@vger.kernel.org>; Thu, 24 Aug 2017 03:22:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=uaLhJBOvF1NZv7RKz9yZBVp+JLmkPYyVEOJ+rARVCKM=;
+        b=NadqwqRGg++tgKug4nLKVt8NdbPx7euhogewvragw5Pho9qrV/h7/XWpai8u+K8Xml
+         ZaBXbZPegjNYgqCdusGFjmUJDnqLXoMJQD6kgmMcGOq4GD297N9Vk7/H8XBA99ipWpJW
+         xDAcgOX6Ic2ew8y2bwtbxp4ROK3COABRvjOG/KpCnFrHq13x5mCqxspURfmhzGnlgJFB
+         I4xoFDTocCJBDQv0v2/Pj+kA9RdUVKCFJTrmrb78dHWK99th0fzeEj1HUsAOR1ux3TQy
+         yUZOY5YiQ8Q7a5ShnSIU0jSkigoQ1unVMPN919TPBgtOxkOrRsPmdfS2mo1o+gro+kPa
+         ofrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=uaLhJBOvF1NZv7RKz9yZBVp+JLmkPYyVEOJ+rARVCKM=;
+        b=nILj0hXGoMivI3EhF1vSftVfQzuempCRUfcM3BR2XjVbYZy1W011NECyFWAh5xJGjw
+         sAtjt820f7kG8PK5z/b0OeEJCLIwFJnMOlyb5Omz414Kd8aMYHXAoHwpOPYRuYR1R3NP
+         NZnGEtsOv0NhHg6v6wSwiGhDGyNwl5eekXJQRP+Xdx61rNWSHjo0GoXYGSeytsvynpcc
+         7IOiskXQLrRyS7CI12OxLVJKHtdWkW8gNQNe8Md7AFOOZRy46etzHLXvM86RyNivP1Cq
+         Qp4tP0wnP5PDk2aAOJCZbkbrqbVcg53Aljav3YYicXZm8a8PtXVWv2GPOLhEdwfzTejN
+         0CRA==
+X-Gm-Message-State: AHYfb5h/HFj6bylz9Js0/BT/7Q3+o8o3XGrpCwLdO3WRqWmAEVsUbMoL
+        NGNvRBrTqeyLDhg0
+X-Received: by 10.28.183.212 with SMTP id h203mr3147950wmf.140.1503570126059;
+        Thu, 24 Aug 2017 03:22:06 -0700 (PDT)
+Received: from mimir ([167.98.27.226])
+        by smtp.gmail.com with ESMTPSA id s4sm4061442wrc.13.2017.08.24.03.22.04
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 24 Aug 2017 03:22:05 -0700 (PDT)
+Date:   Thu, 24 Aug 2017 11:20:16 +0100
+From:   Richard Maw <richard.maw@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [RFC PATCH 0/7] Implement ref namespaces as a ref storage backend
+Message-ID: <20170824102016.GA2021@mimir>
+References: <20170813193611.4233-1-richard.maw@gmail.com>
+ <xmqqefscsqj1.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-In-Reply-To: <vpq4lsxl2r8.fsf@anie.imag.fr>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-Content-Language: fr-xx-classique+reforme1990
-X-Originating-IP: [86.200.152.136]
-X-ClientProxiedBy: CAS2.indiv2.local (172.16.1.2) To EX7.indiv2.local
- (172.16.2.7)
-X-Ovh-Tracer-Id: 12008003984440289245
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeelledrtdeggddviecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqefscsqj1.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Aug 15, 2017 at 10:13:22AM -0700, Junio C Hamano wrote:
+> Richard Maw <richard.maw@gmail.com> writes:
+> 
+> > This is not my first attempt to improve the git namespace handling in git.
+> > I tried last year, but it took me so long that all the ref handling code changed
+> > and I would have had to start from scratch.
+> >
+> > Fortunately the pluggable ref backends work provided an easier starting point.
+> 
+> Yeah, I also made an ultra-brief foray into ref backends a few weeks
+> ago, and found that Michael did an excellent job identifying the
+> building blocks backends may want to implement differently and
+> abstracting out major parts of the ref processing.  I also hit some
+> of the same issues you mention, e.g. "HEAD" and other funny refs.
+> 
+> I do suspect that the current GIT_NAMESPACE thing may have outlived
+> its usefulness and with the pluggable ref backend thing in place, we
+> may want to redesign how support for multiple views into the same
+> repository is done.  I do not have a need for such a thing myself,
+> but I am glad somebody is looking into it ;-)
 
+It was great to be able to get something mostly working this time around,
+which would not have been possible without the pluggable ref backends.
 
-Le 24/08/2017 à 11:43, Matthieu Moy a écrit :
-> Christian Couder <christian.couder@gmail.com> writes:
->
->> It is displaying the steps that have already been performed, right?
->> I wonder if people might want more about the current step (but maybe
->> that belongs to `git status`) or perhaps the not yet performed states
->> (and maybe even a way to edit the todo list?)
-> Note that 'git status' is already doing this, but shows only 2 items of
-> each:
->
-> $ git status
-> interactive rebase in progress; onto 3772427
-> Last commands done (2 commands done):
->    pick a48812c some commit title
->    exec false
-> Next commands to do (2 remaining commands):
->    pick 9d7835d some other commit
->    pick c0e0fa8 one more subject
->   (use "git rebase --edit-todo" to view and edit)
-> You are currently editing a commit while rebasing branch 'master' on '3772427'.
-> ...
->
-> The idea was that 2 lines of context is often sufficient, and doesn't
-> eat too much screen space so it makes sense to show it by default.
->
-> I think it makes sense to have another command that shows the whole
-> sequence, but perhaps it could also be just an option for "git status".
->
-> Cheers,
->
+I've no intention of giving up just yet,
+though it'll be a while before I can devote significant time to it.
 
-But this is only for interactive rebase.
-It might be worth adding a parameter for this, but I'd also like to see this feature for all rebase/cp/revert
-
-Nicolas
-
+I'll be keeping an eye on the refdb backend.
+If it in the process fixes the issues I'd been having that'd be so much better
+since I've not got the time or community standing to champion big changes.
