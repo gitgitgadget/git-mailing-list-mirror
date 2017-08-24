@@ -2,160 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F611208DC
-	for <e@80x24.org>; Thu, 24 Aug 2017 19:16:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7C8D920285
+	for <e@80x24.org>; Thu, 24 Aug 2017 19:29:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753210AbdHXTQG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Aug 2017 15:16:06 -0400
-Received: from mail-pg0-f53.google.com ([74.125.83.53]:37720 "EHLO
-        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752774AbdHXTQB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Aug 2017 15:16:01 -0400
-Received: by mail-pg0-f53.google.com with SMTP id 83so2035539pgb.4
-        for <git@vger.kernel.org>; Thu, 24 Aug 2017 12:16:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=DjaAT9qLNR/9jRhu10J4qhQyg0nMVAj3rSfoYkPMEvo=;
-        b=X1hyzoAnqAqMNkOOWGOSnnLK+jsYd7G6CiaGTzUZVaiN/RjjbSEBfffJuJa6rDdmhi
-         H5fpX/YTMblAtTsPChKna2mtKlxkxqFK07S5Ovd8T5LPviOvnrkxSBqA5/sg1SR3Psrm
-         KLIuPcVDpXwd5AvijcZKFN0vDM36av7iBZ7ob06K/nUTWCPg7T9A+a3OWSbPss7qbIqa
-         SH0xvKkCSDwDlqiMZcKAysNwcLATFBKYlmzSX6m/Ix4QSAqeUdVTD38wSxCiIJWAB13D
-         vDVDvV+KAGiEd4VrGIEdyQyE5eKk4KEXDK+lcZy94VfHoIO18uK9Spd+Lh+je05I6YFe
-         +5Vg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=DjaAT9qLNR/9jRhu10J4qhQyg0nMVAj3rSfoYkPMEvo=;
-        b=SC56LyccmdTVg+GIC5WG7X1bh8cjTlHELTmQzTYieEqfFDDJUMrH32hQni5o0pUYwE
-         FhA+/C4R91hLZHmbGv8/00CMf4gH2qccb5MC1mlmxilwplcH1yrHe6zLkJLI1BOnR+RQ
-         6e9gQy70cpNjRPpcBd2hSycnA6YPgZtxsyGOUOPIK4BQEi+vu/Hq4y+sYpNnLPnaXPU5
-         gGNtlp/rjThF0kIjuSG9aOYM8FMgcne+0zMzBbOSUzPyWmXY21ArnpFXi2cVT0VYGpFr
-         OV49ZXd/ntU1MNtDMUI+j4YRWqwXTww1kLtrThXlHjI0BlftjPdaxzy6yNJ+vAPTgIYR
-         qXNA==
-X-Gm-Message-State: AHYfb5hD8foD5CLiXs9c7ZWYNGyPa57+0c8n26iZz6uOGNcZEwjTczwW
-        sAwqz1jcxqrzhLqVNqC9jm3VIAPQc/Ul
-X-Received: by 10.98.12.78 with SMTP id u75mr7397693pfi.18.1503602161043; Thu,
- 24 Aug 2017 12:16:01 -0700 (PDT)
+        id S1752855AbdHXT34 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Aug 2017 15:29:56 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51832 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752751AbdHXT3z (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Aug 2017 15:29:55 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 956E29CE8B;
+        Thu, 24 Aug 2017 15:29:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=cAGRu5AKUpF8a4wtlAc4I1VKdjQ=; b=WtZt+V
+        wdfhwzKDg3XVrJvqHFAyyBemp1+8+djJ0imJij9hUy9AX3U2NrDPNBQ7th1JwC53
+        NS/J7AwjWTXS8z8TWtvI+WiIcr4iv9tTY3EaMgzE7INvYKVBuEB2Bj5gDmhdUaQC
+        lBCZe5NnBbs6S+QptbrqESvKiPxt8f7/y+Z8o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=QQQf1PaE0gxMbXDTmui3+YKgJnFT0Y+n
+        LpwbsK/etitz2nViqXA7HnlkN2JJchLGH3CO7cHKymNGDhr7m0rpxwnu+S4iW2Kb
+        TfQTh0uncO/Nd+1E1/Y6l6G8A2CpbRzxN0AUHfD6Sjbp3fSu31jlCGsUk+nnbClT
+        kn2bLtvBbtg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8E5319CE8A;
+        Thu, 24 Aug 2017 15:29:54 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E99899CE89;
+        Thu, 24 Aug 2017 15:29:53 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Sonny Michaud <michaud.sonny@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/1] Add stash entry count summary to short status output
+References: <c3ac0335-4f41-40d9-00ee-2a4e115bcf7a@gmail.com>
+        <cd00912b-5b66-f299-87bf-52aa19d90270@gmail.com>
+        <45c23aab-bf20-d234-1e08-e6f0358f1779@gmail.com>
+Date:   Thu, 24 Aug 2017 12:29:52 -0700
+In-Reply-To: <45c23aab-bf20-d234-1e08-e6f0358f1779@gmail.com> (Sonny Michaud's
+        message of "Thu, 24 Aug 2017 11:29:50 -0400")
+Message-ID: <xmqq8ti8wyq7.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.100.162.37 with HTTP; Thu, 24 Aug 2017 12:16:00 -0700 (PDT)
-In-Reply-To: <CA+sFfMdYXDt2mgnWq-HQQyBsCqYZ+689BCKEOw7siGjQoUysjg@mail.gmail.com>
-References: <cover.1502780343.git.martin.agren@gmail.com> <cover.1503323390.git.martin.agren@gmail.com>
- <dccd3e75fcd1b2de93263e8373a3b4cd5da0dd32.1503323391.git.martin.agren@gmail.com>
- <CA+sFfMdXv+nqpXmwfLTHtkRLuGkAEAwWXZCvOryVZ=aLb_UmbA@mail.gmail.com>
- <xmqqh8wyxag1.fsf@gitster.mtv.corp.google.com> <CA+sFfMe56itAMDXOJybf0yHj+BqU1Ai1aU7inoTG3FJtdtZxyw@mail.gmail.com>
- <CA+sFfMdMgrGBhECegBe09c38nRM+Zt5JK4gJaZ96DO-9zC-8qA@mail.gmail.com>
- <xmqqpobkx610.fsf@gitster.mtv.corp.google.com> <CA+sFfMdYXDt2mgnWq-HQQyBsCqYZ+689BCKEOw7siGjQoUysjg@mail.gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Thu, 24 Aug 2017 21:16:00 +0200
-Message-ID: <CAN0heSqaRvS2N=iJDCTGe=LT+y5eUQJskOCOZ8MPJ6znWKJifA@mail.gmail.com>
-Subject: Re: [PATCH v2 3/4] strbuf_setlen: don't write to strbuf_slopbuf
-To:     Brandon Casey <drafnel@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9AE514B0-8902-11E7-BDDD-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 24 August 2017 at 20:29, Brandon Casey <drafnel@gmail.com> wrote:
-> On Thu, Aug 24, 2017 at 9:52 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Brandon Casey <drafnel@gmail.com> writes:
+Sonny Michaud <michaud.sonny@gmail.com> writes:
+
+> On 08/22/2017 11:25 AM, Sonny Michaud wrote:
+>> I am just bumping this thread; I presume there is something amiss
+>> with my submissions, so if someone can let me know how to fix any
+>> issues, I will gladly re-submit the patch.
 >>
->>> Ah, you probably meant something like this:
->>>
->>>    const char strbuf_slopbuf = '\0';
->>>
->>> which gcc will apparently place in the read-only segment.  I did not know that.
+>> Thanks!
 >>
->> Yes but I highly suspect that it would be very compiler dependent
->> and not something the language lawyers would recommend us to rely
->> on.
+>> - Sonny
 >
-> I think compilers may have the option of placing variables that are
-> explicitly initialized to zero in the bss segment too, in addition to
-> those that are not explicitly initialized.  So I agree that no one
-> should write code that depends on their variables being placed in one
-> segment or the other, but I could see someone using this behavior as
-> an additional safety check; kind of a free assert, aside from the
-> additional space in the .rodata segment.
->
->> My response was primarily to answer "why?" with "because we did not
->> bother".  The above is a mere tangent, i.e. "multiple copies of
->> empty strings is a horrible implementation (and there would be a way
->> to do it with a single instance)".
->
-> Merely adding const to our current strbuf_slopbuf declaration does not
-> buy us anything since it will be allocated in r/w memory.  i.e. it
-> would still be possible to modify it via the buf member of strbuf.  So
-> you can't just do this:
->
->    const char strbuf_slopbuf[1];
->
-> That's pretty much equivalent to what we currently have since it only
-> restricts modifying the contents of strbuf_slopbuf directly through
-> the strbuf_slopbuf variable, but it does not restrict modifying it
-> through a pointer to that object.
->
-> Until yesterday, I was under the impression that the only way to
-> access data in the rodata segment was through a constant literal.  So
-> my initial thought was that we could do something like:
->
->    const char * const strbuf_slopbuf = "";
->
-> ..but that variable cannot be used in a static assignment like:
->
->    struct strbuf foo = {0, 0, (char*) strbuf_slopbuf};
->
-> So it seemed like our only option was to use a literal "" everywhere
-> instead of a slopbuf variable _if_ we wanted to have the guarantee
-> that our "slopbuf" could not be modified.
->
-> But what I learned yesterday, is that at least gcc/clang will place
-> the entire variable in the rodata segment if the variable is both
-> marked const _and_ initialized.
->
-> i.e. this will be allocated in the .rodata segment:
->
->    const char strbuf_slopbuf[1] = "";
->
->>>    #define STRBUF_INIT  { .alloc = 0, .len = 0, .buf = (char*) &strbuf_slopbuf }
->>>
->>> respectively.  Yeah, that's definitely preferable to a macro.
->>> Something similar could be done in object.c.
->>
->> What is the main objective for doing this change?  The "make sure we
->> do not write into that slopbuf" assert() bothers you and you want to
->> replace it with an address in the read-only segment?
->
-> Actually nothing about the patch bothers me.  The point of that patch
-> is to make sure we don't accidentally modify the slopbuf.  I was just
-> looking for a way for the compiler to help out and wondering if there
-> was a reason we didn't attempt to do so in the first place.
->
-> I think the main takeaway here is that I learned something yesterday
-> :-)  I didn't actually intend to submit a patch for any of this, but
-> if anything useful came out of the discussion I thought Martin may
-> incorporate it into his patch if he wanted to.
+> Bumping again for visibility.
 
-Thanks for interesting information. I also learned something new. :-)
+It's probably not due to "something amiss" but nobody was interested
+in what the patch tries to achieve and had nothing useful to say on
+it (hence everybody was quiet).
 
-My first thought was, well, maybe someone writes '\0' to sb.buf[len].
-That should intuitively be a no-op and "ok", but the documentation
-actually only says that it's safe to write to positions 0 .. len-1, so
-sb.buf[len] is supposedly not safe (no-op or not). Maybe a degenerate
-and rarely tested case of otherwise sane code could end up writing '\0'
-to slopbuf[0]. (Arguably strbuf_setlen should have been used instead.)
+Some other people may have skipped seeing only [0/1] without [1/1],
+as reading only the cover letter without an accompanying patch will
+be waste of their time for busy reviewers---by the time [1/1] comes
+it is likely they forgot what [0/1] said and they need to go back
+and read it again, so they would likely have said "I'll read both
+when [1/1] appears on the list", moved on, and then have forgotten
+about it.  I am in that camp.
 
-I can see the value of placing the slopbuf in read-only memory, but I
-think that would be a follow-up patch with its own pros and cons.
-
-Martin
