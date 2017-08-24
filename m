@@ -2,74 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B69020285
-	for <e@80x24.org>; Thu, 24 Aug 2017 21:23:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2067B20285
+	for <e@80x24.org>; Thu, 24 Aug 2017 21:52:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753495AbdHXVXK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Aug 2017 17:23:10 -0400
-Received: from giant.haxx.se ([80.67.6.50]:46067 "EHLO giant.haxx.se"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753217AbdHXVXJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Aug 2017 17:23:09 -0400
-Received: from giant.haxx.se (giant.haxx.se [80.67.6.50])
-        by giant.haxx.se (8.15.2/8.15.2/Debian-4) with ESMTPS id v7OLMtXg010062
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 24 Aug 2017 23:22:55 +0200
-Received: from localhost (dast@localhost)
-        by giant.haxx.se (8.15.2/8.15.2/Submit) with ESMTP id v7OLMtlZ010057;
-        Thu, 24 Aug 2017 23:22:55 +0200
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-Date:   Thu, 24 Aug 2017 23:22:55 +0200 (CEST)
-From:   Daniel Stenberg <daniel@haxx.se>
-X-X-Sender: dast@giant.haxx.se
-To:     Jeff King <peff@peff.net>
-cc:     Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>,
-        git@vger.kernel.org
-Subject: Re: [RFC 0/3] imap-send curl tunnelling support
-In-Reply-To: <20170824143044.tu375seveoktinlm@sigill.intra.peff.net>
-Message-ID: <alpine.DEB.2.20.1708242302210.24274@tvnag.unkk.fr>
-References: <ab866314-608b-eaca-b335-12cffe165526@morey-chaisemartin.com> <20170816083432.rgurgckch6phcul3@sigill.intra.peff.net> <0beb0a6c-acb3-ae24-5c52-95747f74c07f@suse.de> <20170823214349.k4ayl2urqepch7p4@sigill.intra.peff.net>
- <e11d4449-8377-dbd7-3ad5-441baf7446b6@morey-chaisemartin.com> <20170824135331.27wtwicjuoiyremx@sigill.intra.peff.net> <alpine.DEB.2.20.1708241554520.5192@tvnag.unkk.fr> <20170824143044.tu375seveoktinlm@sigill.intra.peff.net>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-fromdanielhimself: yes
+        id S1753556AbdHXVw1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Aug 2017 17:52:27 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63875 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753335AbdHXVw0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Aug 2017 17:52:26 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A99E1AD45B;
+        Thu, 24 Aug 2017 17:52:25 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=qR+fetUMboFo
+        PIQxaAeA7yQq2gw=; b=MMGDYaC+U+dusEH3Nul1FTvMWVjVrw+VW24Qt8VMGpHm
+        kDJUINpEPHtKqX2RjXIZpRNU7nyJ5QVwXvIylpEMAnFWMPMeSuLAW7+Kq+WPV39r
+        Kb9EAqsNCGgcKpxomTz0BUk1yG+OQXn3/5k3/DJLVXzccIKCSX2s7xyhkd95YmA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=NZhj0S
+        TFfKGbI4RkjgPMRllzHzyHzzfomHpbeEwFCZUvXATP0GefOLDC0fowdnsc8mLkr3
+        cBjchxVAae02BPQXdBrs8HI7eLIeHSljHmO8oTakvQabifqPcfgesCuUZHXPtN8v
+        LNg/SE+Z317U3m8Hx+UIr23QybWPnyPwcznD4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 97657AD45A;
+        Thu, 24 Aug 2017 17:52:25 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0F8EAAD457;
+        Thu, 24 Aug 2017 17:52:24 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v4 07/16] refs: add refs_head_ref()
+References: <20170823123704.16518-1-pclouds@gmail.com>
+        <20170823123704.16518-8-pclouds@gmail.com>
+Date:   Thu, 24 Aug 2017 14:52:23 -0700
+In-Reply-To: <20170823123704.16518-8-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Wed, 23 Aug 2017 19:36:55 +0700")
+Message-ID: <xmqqfucgvdk8.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 83BFC7B2-8916-11E7-B378-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 24 Aug 2017, Jeff King wrote:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> Oh good. While I have you here, have you given any thought to a curl handle 
-> that has two half-duplex file descriptors, rather than a single full-duplex 
-> socket? That would let us tunnel over pipes rather than worrying about the 
-> portability of socketpair().
->
-> I suspect it would be quite complicated, because I imagine that lots of 
-> internal bits of curl assume there's a single descriptor.
+... which does what?
 
-Yeah, it would take quite some surgery deep down in the heart of curl to 
-implement something like that. It wouldn't call it impossible but it would 
-take a certain level of determination and amount of time. I presume the 
-descriptor-pair would be passed in via an API so it wouldn't affect the 
-connect phase. We also have decent test coverage, making an overhaul like this 
-a less scary thought - as if the existing tests say OK we can be fairly 
-certain there aren't any major regressions...
+    Unlike refs_for_each_ref() and friends, this does not iterate.
+    It just uses the same function signature to make a single call
+    of fn on the "HEAD" ref.
 
-(I may also have forgotten some tiny detail for the moment that makes it very 
-hard.)
+Did I capture what it does right?
 
->>  / daniel.haxx.se (who landed the IMAP PREAUTH fix in curl)
->
-> Don't you land most of the fixes in curl? :)
-
-I do, but I don't expect readers of the git list to know that!
-
--- 
-
-  / daniel.haxx.se
+Thanks.
