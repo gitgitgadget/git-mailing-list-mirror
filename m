@@ -6,80 +6,85 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E2B120285
-	for <e@80x24.org>; Thu, 24 Aug 2017 16:46:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 24171208DC
+	for <e@80x24.org>; Thu, 24 Aug 2017 16:52:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753839AbdHXQqN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Aug 2017 12:46:13 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52423 "EHLO
+        id S1753658AbdHXQwP (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Aug 2017 12:52:15 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61727 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753802AbdHXQqM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Aug 2017 12:46:12 -0400
+        with ESMTP id S1753500AbdHXQwN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Aug 2017 12:52:13 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5038CA5BD2;
-        Thu, 24 Aug 2017 12:46:12 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E435598F34;
+        Thu, 24 Aug 2017 12:52:12 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=QbimHiNrXv/6BRUXMiZeciGAfic=; b=fzxVyw
-        +F2Xdunh8RknQkeyOXao1v7zobl7l31mt6Hcr9JlcesbLQ49zMMF4M+qwhLPMOnb
-        8dfvEIolD7rOhg6ufKgJ6owZXkNtgn0efyrWCXSlGSIxNYMBEVIs0xXvvDdxh/5m
-        7Behc6s26O9pgOVwXn4SkryzCXCVf+jZIKWGo=
+        :content-type; s=sasl; bh=nWAdCrUlms3bcXXTIdVcsFosXDc=; b=BVAn1z
+        xhOJGM7uYgSYwggnFjIsWoP1WXIgShz8+Q/OqfcOZpMCQbusZVVuZq+oRudRxa1g
+        ODQvHn+SlHF+stMD63gDvyzTXnLm8U1BXYWHLOZFzjYP1zDFM+4BclBtJ9fr2VOz
+        NWiupYxEJizFGNlK6dm7L2EyGqCux1j60JOBo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=bHT3vk3n36JMk3WLwFU67PlnXQZNB0cn
-        N0NPX0Y74Hl82ho9eYxt1cWi3Ri7dqIgpl54uy++kzhGUfXot2vMuV6gcBcRq37C
-        Q9BGcuwzkxqlXW+HFAYS2yXu9HWESRLqk/+KOuHe11LkdAPwr21PB6NgGcRJtIR1
-        c1/uDeJxSwE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4837EA5BD1;
-        Thu, 24 Aug 2017 12:46:12 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=M/1WQJEfRyWFiDHSfqKRYaybZOdOIWsW
+        kOZQqpeT95CsZ1GIctD388J7T+6qCHSvVFOLbNot27IyJwyXivKJjPOMjMIva+Pl
+        PB3AsGnLgDjR6FAqZv3SV984eswxlsGmHYPUXf6IP6IRi7gT3Aik0j55Vvo11HUn
+        xh/ZYvvkpBQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DD18A98F33;
+        Thu, 24 Aug 2017 12:52:12 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6A4F0A5BCE;
-        Thu, 24 Aug 2017 12:46:11 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 514F498F31;
+        Thu, 24 Aug 2017 12:52:12 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood@talktalk.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Philip Oakley <philipoakley@iee.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [RFC PATCH 0/5] Add option to autostage changes when continuing a rebase
-References: <20170726102720.15274-1-phillip.wood@talktalk.net>
-        <xmqqa83rrrdu.fsf@gitster.mtv.corp.google.com>
-        <xmqqa83qq2uf.fsf@gitster.mtv.corp.google.com>
-        <xmqq60eeq24l.fsf@gitster.mtv.corp.google.com>
-        <8cdda835-0b4f-6ffb-31bf-6192999818be@talktalk.net>
-        <6a71f802-b20c-f6bc-7bb5-8d81db3353d8@talktalk.net>
-        <xmqqpocloqcp.fsf@gitster.mtv.corp.google.com>
-        <a3b7af29-8b3a-5253-21da-957920212a6e@talktalk.net>
-        <xmqqinhg5ysf.fsf@gitster.mtv.corp.google.com>
-        <d1eaed1c-5e62-0a93-f65d-06be43812617@talktalk.net>
-        <xmqqefs34mz4.fsf@gitster.mtv.corp.google.com>
-        <5dcd588d-b6ce-713d-dc28-25853d5bb4b3@talktalk.net>
-Date:   Thu, 24 Aug 2017 09:46:10 -0700
-In-Reply-To: <5dcd588d-b6ce-713d-dc28-25853d5bb4b3@talktalk.net> (Phillip
-        Wood's message of "Thu, 24 Aug 2017 14:25:05 +0100")
-Message-ID: <xmqqtw0wx6b1.fsf@gitster.mtv.corp.google.com>
+To:     Brandon Casey <drafnel@gmail.com>
+Cc:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH v2 3/4] strbuf_setlen: don't write to strbuf_slopbuf
+References: <cover.1502780343.git.martin.agren@gmail.com>
+        <cover.1503323390.git.martin.agren@gmail.com>
+        <dccd3e75fcd1b2de93263e8373a3b4cd5da0dd32.1503323391.git.martin.agren@gmail.com>
+        <CA+sFfMdXv+nqpXmwfLTHtkRLuGkAEAwWXZCvOryVZ=aLb_UmbA@mail.gmail.com>
+        <xmqqh8wyxag1.fsf@gitster.mtv.corp.google.com>
+        <CA+sFfMe56itAMDXOJybf0yHj+BqU1Ai1aU7inoTG3FJtdtZxyw@mail.gmail.com>
+        <CA+sFfMdMgrGBhECegBe09c38nRM+Zt5JK4gJaZ96DO-9zC-8qA@mail.gmail.com>
+Date:   Thu, 24 Aug 2017 09:52:11 -0700
+In-Reply-To: <CA+sFfMdMgrGBhECegBe09c38nRM+Zt5JK4gJaZ96DO-9zC-8qA@mail.gmail.com>
+        (Brandon Casey's message of "Wed, 23 Aug 2017 14:54:56 -0700")
+Message-ID: <xmqqpobkx610.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: BC420E86-88EB-11E7-AC11-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 9353900C-88EC-11E7-B3F9-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood@talktalk.net> writes:
+Brandon Casey <drafnel@gmail.com> writes:
 
-> It could be expensive to check that the local modifications will not
-> interfere with the rebase - wouldn't it have to look at all the files
-> touched by each commit before starting? What do cherry-pick and am do
-> here when picking several commits?
+> Ah, you probably meant something like this:
+>
+>    const char strbuf_slopbuf = '\0';
+>
+> which gcc will apparently place in the read-only segment.  I did not know that.
 
-Yes, so?
+Yes but I highly suspect that it would be very compiler dependent
+and not something the language lawyers would recommend us to rely
+on.
 
-"I do not think of a way to implement it cheaply, so we forbid
-anybody from finding a clever optimization to implement it cheaply
-by adding a feature that will not work well with it when it
-happens?"
+My response was primarily to answer "why?" with "because we did not
+bother".  The above is a mere tangent, i.e. "multiple copies of
+empty strings is a horrible implementation (and there would be a way
+to do it with a single instance)".
 
+>    #define STRBUF_INIT  { .alloc = 0, .len = 0, .buf = (char*) &strbuf_slopbuf }
+>
+> respectively.  Yeah, that's definitely preferable to a macro.
+> Something similar could be done in object.c.
+
+What is the main objective for doing this change?  The "make sure we
+do not write into that slopbuf" assert() bothers you and you want to
+replace it with an address in the read-only segment?
