@@ -2,116 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 683D3208DB
-	for <e@80x24.org>; Thu, 24 Aug 2017 08:14:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7BAEC208DB
+	for <e@80x24.org>; Thu, 24 Aug 2017 08:24:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751507AbdHXINv convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 24 Aug 2017 04:13:51 -0400
-Received: from 9.mo176.mail-out.ovh.net ([46.105.78.81]:46869 "EHLO
-        9.mo176.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751259AbdHXINg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Aug 2017 04:13:36 -0400
-Received: from ex2.mail.ovh.net (gw1.ex2.mail.ovh.net [164.132.80.186])
-        by mo176.mail-out.ovh.net (Postfix) with ESMTPS id 58DD7830FE;
-        Thu, 24 Aug 2017 10:07:02 +0200 (CEST)
-Received: from [10.0.2.127] (86.200.152.136) by EX7.indiv2.local (172.16.2.7)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Thu, 24
- Aug 2017 10:07:01 +0200
-Subject: Re: sequencer status
-To:     Christian Couder <christian.couder@gmail.com>
-CC:     Git Mailing List <git@vger.kernel.org>
-References: <8e25c42f-80f2-e0d4-38e4-b4fe9c8074e0@morey-chaisemartin.com>
- <CAP8UFD035niTUQTe73RSTE+3u6WX11UpxoqCSrfVP1Qs-fF0gg@mail.gmail.com>
-From:   Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
-Openpgp: preference=signencrypt
-Message-ID: <98dc75b0-8822-638a-16fa-3adc12e3c55e@morey-chaisemartin.com>
-Date:   Thu, 24 Aug 2017 10:07:00 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101
- Thunderbird/56.0
+        id S1752358AbdHXIYj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Aug 2017 04:24:39 -0400
+Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:57574 "EHLO
+        glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752148AbdHXIYB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Aug 2017 04:24:01 -0400
+Received: from glandium by mitsuha.glandium.org with local (Exim 4.89)
+        (envelope-from <mh@glandium.org>)
+        id 1dknQc-0001fL-At; Thu, 24 Aug 2017 17:23:50 +0900
+Date:   Thu, 24 Aug 2017 17:23:50 +0900
+From:   Mike Hommey <mh@glandium.org>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+        git-for-windows@googlegroups.com
+Subject: Re: [git-for-windows] Re: Revision resolution for remote-helpers?
+Message-ID: <20170824082350.6ed6jqkn6aeylvnv@glandium.org>
+References: <20170818064208.plkppke7efpucuwm@glandium.org>
+ <20170818220637.GN13924@aiede.mtv.corp.google.com>
+ <20170818221754.3rbh35aewj5xnu4z@glandium.org>
+ <20170818223323.GO13924@aiede.mtv.corp.google.com>
+ <alpine.DEB.2.21.1.1708222212320.19382@virtualbox>
 MIME-Version: 1.0
-In-Reply-To: <CAP8UFD035niTUQTe73RSTE+3u6WX11UpxoqCSrfVP1Qs-fF0gg@mail.gmail.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-Content-Language: fr-xx-classique+reforme1990
-X-Originating-IP: [86.200.152.136]
-X-ClientProxiedBy: CAS2.indiv2.local (172.16.1.2) To EX7.indiv2.local
- (172.16.2.7)
-X-Ovh-Tracer-Id: 9882586434994235357
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeelledrtdeggddtudcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.21.1.1708222212320.19382@virtualbox>
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+User-Agent: NeoMutt/20170609 (1.8.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-Le 23/08/2017 à 18:40, Christian Couder a écrit :
+On Tue, Aug 22, 2017 at 10:15:20PM +0200, Johannes Schindelin wrote:
 > Hi,
->
-> On Wed, Aug 23, 2017 at 10:10 AM, Nicolas Morey-Chaisemartin
-> <nicolas@morey-chaisemartin.com> wrote:
->> Hi,
->>
->> I've created a small tool to display the current sequencer status.
->> It mimics what Magit does to display what was done and what is left to do.
->>
->> As someone who often rebase large series of patches (also works with am, revert, cherry-pick), I really needed the feature and use this daily.
-> Yeah, many people use the interactive rebase a lot so I think it could
-> be very interesting.
->
->> It's available here:
->> https://github.com/nmorey/git-sequencer-status
->> SUSE and Fedora packages are available here:
->> https://build.opensuse.org/package/show/home:NMoreyChaisemartin:git-tools/git-sequencer-status
->>
->> It's not necessary very robust yet. Most of the time I use simple rebase so there are a lot of untested corner cases.
->>
->> Here is an example output:
->> $ sequencer-status
->> # Interactive rebase: master onto rebase_conflict
->> exec    true
->> pick    e54d993 Fourth commit
->> exec    true
->> *pick   b064629 Third commit
->> exec    true
->> pick    174c933 Second commit
->> onto    773cb23 Alternate second
-> It is displaying the steps that have already been performed, right?
-> I wonder if people might want more about the current step (but maybe
-> that belongs to `git status`) or perhaps the not yet performed states
-> (and maybe even a way to edit the todo list?)
+> 
+> On Fri, 18 Aug 2017, Jonathan Nieder wrote:
+> 
+> > Mike Hommey wrote[1]:
+> > > On Fri, Aug 18, 2017 at 03:06:37PM -0700, Jonathan Nieder wrote:
+> > >> Mike Hommey wrote:
+> > 
+> > >>> The reason for the <helper>:: prefix is that it matches the <helper>::
+> > >>> prefix used for remote helpers.
+> > >>>
+> > >>> Now, there are a few caveats:
+> > [...]
+> > >>> - msys likes to completely fuck up command lines when they contain ::.
+> > >>>   For remote helpers, the alternative that works is
+> > >>>   <helper>://<host>/etc.
+> > >>
+> > >> Hm --- is there a bug already open about this (e.g. in the Git for
+> > >> Windows project or in msys) where I can read more?
+> > >
+> > > It's entirely an msys problem. Msys has weird rules to translate between
+> > > unix paths and windows paths on the command line, and botches everything
+> > > as a consequence. That's by "design".
+> > >
+> > > http://www.mingw.org/wiki/Posix_path_conversion
+> > >
+> > > (Particularly, see the last two entries)
+> > >
+> > > That only happens when calling native Windows programs from a msys
+> > > shell.
+> > 
+> > Cc-ing the Git for Windows mailing list as an FYI.
+> > 
+> > I have faint memories that some developers on that project have had to
+> > delve deep into Msys path modification rules.  It's possible they can
+> > give us advice (e.g. about <helper>::<url> having been a bad choice of
+> > syntax in the first place :)).
+> 
+> I think it is safe to assume that :: is not part of any Unix-y path. That
+> is why the MSYS2 runtime does not try to play games with it by converting
+> it to a Windows path.
+> 
+> (And indeed, I just tested this, an argument of the form
+> "a::file://b/x/y/z" is not converted to a "Windows path")
 
-Yes it is displaying all steps.
-The line beginning by '*' is the current step.
+Note that there are people out there using msys, *and* git for windows,
+although I don't know if such people exist outside Mozilla.
 
-Trying to "guess" what is happening on the current step is quite hard. Between conflict, empty commits, stopped for amending and other, it's a lot of cases to handle.
-I'd rather have git-status deal with it (and you get your standard log/error fro your rebase/cp/am/revert command too).
-The idea here is really to find out where you are in your operation sequence.
-
-I've had a 700 patch series to reapply on a different subtree. Took me 3 days. This script was quite handy. (Also depressing as you can see how much work left there is).
-
-Also if you feel it's missing something you need, I'm accepting PR on github ;)
-
->> Two questions:
->> - Could this be a candidate for contrib/ ?
-> It seems to me that these days we don't often add new tools to contrib/.
->
->> - Would it be interesting to add the relevant code to sequencer.c so that all sequencer based commands could have a --status option ?
-> Yeah, it's probably better if it's integrated in git, either as a
-> --status option in some commands, or perhaps as an option of `git
-> status`.
-
-I'll have a look at what can be done.
-
-Thanks
-
-Nicolas
-
-
+Mike
