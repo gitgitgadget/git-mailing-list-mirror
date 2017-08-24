@@ -2,175 +2,187 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4268C208DB
-	for <e@80x24.org>; Thu, 24 Aug 2017 10:41:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 77CC720285
+	for <e@80x24.org>; Thu, 24 Aug 2017 13:25:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752634AbdHXKlt (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Aug 2017 06:41:49 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:36101 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751342AbdHXKls (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Aug 2017 06:41:48 -0400
-Received: by mail-pg0-f68.google.com with SMTP id m7so3342939pga.3
-        for <git@vger.kernel.org>; Thu, 24 Aug 2017 03:41:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=5RiGcSHTS9q5A3QRYBY4AoBPuUNcUlxUjRiBfNK+FJg=;
-        b=XsmPK6beIn8Aoxikb79W7aXKafaRO/HHfeg5vgSXmvPFTb30vU2JYtQj/ui/M4qAoF
-         pLlW17T5ZTt0mtZbQ1Y7OJoVw/EPL1E4gT0dmNd5aK5Qer8SRAyNNnEVccZjGqIWAqeS
-         X85daLiAokusKMwmJYnKg32ebUBL5epq19AoGcMKDDNHekBadyv5OIEwHnxYPjD91JNF
-         enHK29Hy/Alz2Or0U0UY1wR86/4Cl0YbSfdSEJpammUmc6a8pJEhEebl3AKCKYn1vsGU
-         iaBsxgYhnxT7Xg7Q4a02XYwYk3rsv3PG0mSIE3M6Q653+7sIYVYyviwlPWcReoq1mso9
-         dskQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=5RiGcSHTS9q5A3QRYBY4AoBPuUNcUlxUjRiBfNK+FJg=;
-        b=pL54kpK4DYIRR84ypXYd8IOJTrs1WKdsvcB7LuHS/Np/F07TcBLTuthWW29Es8R2vn
-         Rm8isi7tCER2P/a0W+nlA4dyUEiMB9TAf9K26eWq+DQxXBmTphASsDNKLJ104EDLrU0H
-         nZHlPuywR/tSL9BBcNjFXV3jBQaLKs7WGQk//VpKWzSWkA9pQlLm/MapMjvFCiwiZp8K
-         yZkCyC41pSQfbBHs5cM0h9MP2MWsKthVNy+77q0F4oJhWWIppQD4l8uhRMqtYAA+bCfh
-         6o4LQ5u9WSR92opismu4WDuQaqEFlnjNvdyaQpkFckItoNkuIZsdCEs/YC+Qy2YN733u
-         DYiQ==
-X-Gm-Message-State: AHYfb5g/R3+sAtw7JweWX8zR39bkk99wXd9rXQA8D8T0lhtmJia8bDdo
-        XtUcxsKu1mTOjQb5
-X-Received: by 10.84.217.211 with SMTP id d19mr6497708plj.121.1503571307420;
-        Thu, 24 Aug 2017 03:41:47 -0700 (PDT)
-Received: from ash ([115.72.183.215])
-        by smtp.gmail.com with ESMTPSA id 66sm5785564pgh.32.2017.08.24.03.41.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 24 Aug 2017 03:41:46 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Thu, 24 Aug 2017 17:41:37 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, nish.aravamudan@canonical.com,
-        me@ikke.info,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH] Fix branch renaming not updating HEADs correctly
-Date:   Thu, 24 Aug 2017 17:41:24 +0700
-Message-Id: <20170824104124.6263-1-pclouds@gmail.com>
-X-Mailer: git-send-email 2.11.0.157.gd943d85
-In-Reply-To: <20170823201334.bz42s6t5ti4jdaqm@pitfall>
-References: <20170823201334.bz42s6t5ti4jdaqm@pitfall>
+        id S1753133AbdHXNZM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Aug 2017 09:25:12 -0400
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:63632 "EHLO
+        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753058AbdHXNZJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Aug 2017 09:25:09 -0400
+Received: from [192.168.2.201] ([92.22.15.39])
+        by smtp.talktalk.net with SMTP
+        id ks8AdLYx1Ap17ks8AdYR51; Thu, 24 Aug 2017 14:25:07 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
+        t=1503581107; bh=7edGyQbrBXI9uJ6+uCUfh0epdRTf8kWIo1gZgLuwNac=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=NSB+UoM+DNWQkm1Hhw9SFf7yn1mHX3PnbAw8dU7yTHxkZieFTn0oco2b/WjOWiTFc
+         8ohuOrwVNjW1W/ye2v2Ae4kS0XdyqAKQ3Uggg4yU8HmwCARhnCb635rsrgL0lte3DT
+         NxdYWqeNOkEvWhcPbtF0KCS1fZlLV5mtwNiGs2IA=
+X-Originating-IP: [92.22.15.39]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=EsGilWUA c=1 sm=1 tr=0 a=3EVUng5azuUHeJ78rNzxRg==:117
+ a=3EVUng5azuUHeJ78rNzxRg==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
+ a=Mdh7YchmD2lePnj318EA:9 a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [RFC PATCH 0/5] Add option to autostage changes when continuing a
+ rebase
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Philip Oakley <philipoakley@iee.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <20170726102720.15274-1-phillip.wood@talktalk.net>
+ <xmqqa83rrrdu.fsf@gitster.mtv.corp.google.com>
+ <xmqqa83qq2uf.fsf@gitster.mtv.corp.google.com>
+ <xmqq60eeq24l.fsf@gitster.mtv.corp.google.com>
+ <8cdda835-0b4f-6ffb-31bf-6192999818be@talktalk.net>
+ <6a71f802-b20c-f6bc-7bb5-8d81db3353d8@talktalk.net>
+ <xmqqpocloqcp.fsf@gitster.mtv.corp.google.com>
+ <a3b7af29-8b3a-5253-21da-957920212a6e@talktalk.net>
+ <xmqqinhg5ysf.fsf@gitster.mtv.corp.google.com>
+ <d1eaed1c-5e62-0a93-f65d-06be43812617@talktalk.net>
+ <xmqqefs34mz4.fsf@gitster.mtv.corp.google.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <5dcd588d-b6ce-713d-dc28-25853d5bb4b3@talktalk.net>
+Date:   Thu, 24 Aug 2017 14:25:05 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqefs34mz4.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfPjOv/cBpMg9DsuSVKE4Y3Ks50iCmgpgmQWdmOKFILynR2jSTCQWnsns0jWRrdCf9f4qFGLEstUuJE3dp0wWWeyBPnBCsILGyh8niCUS9ZJXgGPD2jFl
+ yxD90KQAVY378qGbN7egrLLRg6X+XL0Z1EVr4RgwK2ZrzRm5g6CPaAWJLl8Os9dMns35COtb8yFbQ7p5inj45BBLfkObcCGN8fkou4DxE+nOcMgcErUFKpSZ
+ /lJaYxkI0ck3GTop2+HhJRghlN9skmyb0lvg0+CDNbk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There are two bugs that sort of work together and cause problems. Let's
-start with one in replace_each_worktree_head_symref.
+On 22/08/17 16:54, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood@talktalk.net> writes:
+> 
+>>> In other words, instead of
+>>>
+>>> 	git add -u && git rebase --continue
+>>>
+>>> you would want a quicker way to say
+>>>
+>>> 	git rebase --continue $something_here 
+>>
+>> Exactly
+>> ...
+>> rebase --continue -a
+>>
+>> behaves like commit -a in that it commits all updated tracked files and
+>> does not take pathspecs.
+> 
+> Hmph, but what 'a' in "commit -a" wants to convey is "all", and in
+> the context of "rebase" we want to avoid saying "all".  A user can
+> be confused into thinking "all" refers to "all subsequent commits" 
+> not "all paths conflicted".
+> 
+> Besides, with the $something_here option, the user is explicitly
+> telling us that the user finisished the resolution of conflicts left
+> in the working tree.  There is nothing "auto" about it.
+> 
+>> Did you have any further thoughts on what checks if any this new option
+>> should make to avoid staging obviously unresolved files?
+> 
+> The more I think about this, the more I am convinced that it is a
+> very bad idea to give such a $something_here option only to "rebase".
+> 
+> The standard flow for any operation that could stop in the middle
+> because the command needs help from the user with conflicts that
+> cannot be mechanically resolved is
+> 
+>  (1) write out conflicted state in the working tree, and mark these
+>      paths in the index by leaving them in higher stages
+>      (i.e. "ls-files -u" would list them);
+> 
+>  (2) the user edits them and marks the ones that are now resolved;
+> 
+>  (3) the user tells us to "continue".
+> 
+> and this is not limited to "rebase".  "cherry-pick", "am", and
+> "revert" all share the above, and even "merge" (which is a single
+> commit operation to which "continue" in its original meaning---to
+> tell us the user is done with this step and wants us to go on
+> processing further commits or patches---does not quite apply) does.
+> 
+> And "rebase" is an oddball in that it is the only command that we
+> could deduce which files in the working tree should be "add"ed, i.e.
+> "all the files that are different from HEAD".  All others allow
+> users to begin in a dirty working tree (they only require the index
+> to be clean), 
 
-Before fa099d2322 (worktree.c: kill parse_ref() in favor of
-refs_resolve_ref_unsafe() - 2017-04-24), this code looks like this:
+Are you sure about that, the second sentence of the cherry-pick man page
+is "This requires your working tree to be clean (no modifications from
+the HEAD commit).". If you pass '--no-commit' then this is relaxed so
+that the index can differ from HEAD but it is not clear from the man
+page if the working tree can differ from the index (potentially that
+could give different conflicts in the index and working tree). I'm not
+sure what a rebase that does not commit changes would look like.
 
-    if (strcmp(oldref, worktrees[i]->head_ref))
-            continue;
-    set_worktree_head_symref(...);
+> so your 
+> 
+> 	git [cherry-pick|am|revert] --continue $something_here
+> 
+> cannot be "git add -u && git [that command] --continue".  Blindly
+> taking any and all files that have modifications from HEAD will
+> produce a wrong result.
+> 
+> You cannot even sanely solve that by first recording the paths that
+> are conflicted before giving control back to the user and limit the
+> "add" to them, i.e. doing "git add" only for paths that appear in
+> "git ls-files -u" output would not catch additional changes the was
+> needed in files that did not initially conflict (i.e. "evil merge"
+> will have to modify a file that was not involved in the mechanical
+> part of the conflict), because out of the files that are dirty in
+> the working tree, some are evil merge resolutions and others are
+> ones that were dirty from the beginning.
 
-After fa099d2322, it is possible that head_ref can be NULL. However, the
-updated code takes the wrong exit. In the error case (NULL head_ref), we
-should "continue;" to the next worktree. The updated code makes us
-_skip_ "continue;" and update HEAD anyway.
+I wonder if git could record the state of the working tree in a
+temporary index just before it exits with conflicts. Then when the user
+has resolved the conflicts
 
-The NULL head_ref is triggered by the second bug in add_head_info (in
-the same commit). With the flag RESOLVE_REF_READING, resolve_ref_unsafe()
-will abort if it cannot resolve the target ref. For orphan checkouts,
-HEAD always points to an unborned branch, resolving target ref will
-always fail. Now we have NULL head_ref. Now we always update HEAD.
+git [cherry-pick|am|revert] --continue $something_here
 
-Correct the logic in replace_ function so that we don't accidentally
-update HEAD on error. As it turns out, correcting the logic bug above
-breaks branch renaming completely, thanks to the second bug.
+could do something like
 
-"git branch -[Mm]" does two steps (on a normal checkout, no orphan!):
+{ GIT_INDEX_FILE=$TMP_INDEX git diff-files --name-only &&
+    git ls-files -u } | git update-index --remove --stdin
 
-- rename the branch on disk (e.g. refs/heads/abc to refs/heads/def)
-- update HEAD if it points to the branch being renamed.
+to stage the files that the user has edited. This would not catch the
+case where a new untracked file has been created that should be added to
+the conflict resolution, but I think it is reasonable to expect the user
+to manually add new files in this case. It would also not add an
+unchanged file whose changes should be part of the conflict resolution
+but I can't think of a sensible case where the user might want that at
+the moment.
 
-At the second step, since the branch pointed to by HEAD (e.g. "abc") no
-longer exists on disk, we run into a temporary orphan checkout situation
-that has been just corrected to _not_ update HEAD. But we need to update
-HEAD since it's not actually an orphan checkout. We need to update HEAD
-to move out of that orphan state.
+> 
+> The only reason "git rebase" can get away without having to worry
+> about all of the above is because it insists that the working tree
+> is clean before it begins.  In the ideal world, however, we would
+> want to lift that and allow it to start in a working tree that has
+> an unfinished local modification that does not interfere with the
+> rebase, just like all other operations that could stop upon a
+> conflict. 
 
-Correct add_head_info(), remove RESOLVE_REF_READING flag. With the flag
-gone, we should always return good "head_ref" in orphan checkouts (either
-temporary or permanent). With good head_ref, things start to work again.
+It could be expensive to check that the local modifications will not
+interfere with the rebase - wouldn't it have to look at all the files
+touched by each commit before starting? What do cherry-pick and am do
+here when picking several commits?
 
-Noticed-by: Nish Aravamudan <nish.aravamudan@canonical.com>
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- branch.c          |  5 +++--
- t/t3200-branch.sh | 13 +++++++++++++
- worktree.c        |  2 +-
- 3 files changed, 17 insertions(+), 3 deletions(-)
-
-diff --git a/branch.c b/branch.c
-index 36541d05cd..86360d36b3 100644
---- a/branch.c
-+++ b/branch.c
-@@ -357,8 +357,9 @@ int replace_each_worktree_head_symref(const char *oldref, const char *newref,
- 
- 		if (worktrees[i]->is_detached)
- 			continue;
--		if (worktrees[i]->head_ref &&
--		    strcmp(oldref, worktrees[i]->head_ref))
-+		if (!worktrees[i]->head_ref)
-+			continue;
-+		if (strcmp(oldref, worktrees[i]->head_ref))
- 			continue;
- 
- 		refs = get_worktree_ref_store(worktrees[i]);
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index dd37ac47c5..902cb87ea8 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -162,6 +162,19 @@ test_expect_success 'git branch -M baz bam should add entries to .git/logs/HEAD'
- 	grep "^0\{40\}.*$msg$" .git/logs/HEAD
- '
- 
-+test_expect_success 'git branch -M should leave orphaned HEAD alone' '
-+	git init orphan &&
-+	(
-+		cd orphan &&
-+		test_commit initial &&
-+		git checkout --orphan lonely &&
-+		grep lonely .git/HEAD &&
-+		test_path_is_missing .git/refs/head/lonely &&
-+		git branch -M master mistress &&
-+		grep lonely .git/HEAD
-+	)
-+'
-+
- test_expect_success 'resulting reflog can be shown by log -g' '
- 	oid=$(git rev-parse HEAD) &&
- 	cat >expect <<-EOF &&
-diff --git a/worktree.c b/worktree.c
-index e28ffbeb09..c0c5a2b373 100644
---- a/worktree.c
-+++ b/worktree.c
-@@ -30,7 +30,7 @@ static void add_head_info(struct worktree *wt)
- 
- 	target = refs_resolve_ref_unsafe(get_worktree_ref_store(wt),
- 					 "HEAD",
--					 RESOLVE_REF_READING,
-+					 0,
- 					 wt->head_sha1, &flags);
- 	if (!target)
- 		return;
--- 
-2.11.0.157.gd943d85
+ And when that happens, your $something_here option to
+> "git rebase --continue" will have to worry about it, too.
+> So...
+> 
 
