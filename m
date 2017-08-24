@@ -2,133 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B58C3208DB
-	for <e@80x24.org>; Thu, 24 Aug 2017 07:24:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4EECB208DB
+	for <e@80x24.org>; Thu, 24 Aug 2017 07:28:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752359AbdHXHYT convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 24 Aug 2017 03:24:19 -0400
-Received: from 4.mo64.mail-out.ovh.net ([46.105.45.191]:52334 "EHLO
-        4.mo64.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752328AbdHXHYR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Aug 2017 03:24:17 -0400
-Received: from ex2.mail.ovh.net (gw1.ex2.mail.ovh.net [164.132.80.186])
-        by mo64.mail-out.ovh.net (Postfix) with ESMTPS id 4C4AD84A66;
-        Thu, 24 Aug 2017 09:24:16 +0200 (CEST)
-Received: from [10.0.2.127] (86.200.152.136) by EX7.indiv2.local (172.16.2.7)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Thu, 24
- Aug 2017 09:24:15 +0200
-Subject: Re: [PATCH v3 4/4] imap-send: use curl by default
-To:     Junio C Hamano <gitster@pobox.com>
-CC:     <git@vger.kernel.org>, <peff@peff.net>
-References: <087f5907-6558-ce32-2f5c-2e418522c030@morey-chaisemartin.com>
- <bb94cace-6bc5-2009-7c9d-a6965e3b84c6@morey-chaisemartin.com>
- <xmqqpobmxc3a.fsf@gitster.mtv.corp.google.com>
-From:   Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
-Openpgp: preference=signencrypt
-Message-ID: <6c1481b3-5025-a911-bbaf-aaa88343d859@morey-chaisemartin.com>
-Date:   Thu, 24 Aug 2017 09:24:15 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101
- Thunderbird/56.0
+        id S1751249AbdHXH2O (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Aug 2017 03:28:14 -0400
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:38631 "EHLO
+        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751135AbdHXH2O (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Aug 2017 03:28:14 -0400
+Received: by mail-wm0-f52.google.com with SMTP id l19so14198341wmi.1
+        for <git@vger.kernel.org>; Thu, 24 Aug 2017 00:28:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=l8RjZYQ//PdypsAQIYY5fpDUqeJEZiBCuagfuAUYtvQ=;
+        b=B6yalXGYZX3De+YCLl0aL2AANTp3tPgfVXAmtdF8auiBlWcnDiD9tmFA1pDf5xrUwL
+         jtOVH0GUa/w0FuQlxcr9fh0nm+0jpWKKgW6ASVyZDlvVyakmQ+NwycYN/eCY3mHhfvOM
+         dluAKkLUVx//x+QAbN0pswBo8BaSaypEAmJLLbWkmWNp7xIEDtDLd+dXNHJf7jyhUck/
+         EqqDhQ3bGX/e8dd9qauTsNKi2idKiVV6Ap6HrqH8JojeKm4Q52m26p3Blc49n53nr8iO
+         ZhntiSoMhdblwOYLU24xhynwtaXbgdhWW2osyoE0uWN5op9epXHiJKhofEmpdBfRetVJ
+         XWEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=l8RjZYQ//PdypsAQIYY5fpDUqeJEZiBCuagfuAUYtvQ=;
+        b=JZV79MtdBfBTklP3OqFwh91Mz4zMBY8zdLprVqhFQMgmycpO971ttSQmYabaHpoLEr
+         DdFF5SIzNMOQJWb5KWSCH1QhQ6+Fzol8uHn71cGp0BTqGBFQ2dAx+QIfvVcYgxUdIWQV
+         DIllFvZtMXhPm5lL6JDL3mrDK+HDhqONBRdKw0jTHz/RaAPcd+WOI5CT3dwzdmllg5c7
+         248sHLGQ3gutKsPKvVaItDCi9SCebN9JneFaO9MPymVh0uxSXhLcfCPntWB6UIxxtNTA
+         ZwO0hJfZNm59shVNEg2mXGRV+0MN0fLfSBLFpRtLfqjOourt6ott5kop4743qNmbWqi7
+         /uhA==
+X-Gm-Message-State: AHYfb5hl9JHbwiq7twowfzYmbNodMejTeK6TBPwsPUgx5Z2LZlN54P49
+        +qUjcdMeA1wuNWaXdHobgeMcUOmtNQ==
+X-Received: by 10.80.153.99 with SMTP id l32mr2543358edb.293.1503559692853;
+ Thu, 24 Aug 2017 00:28:12 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqqpobmxc3a.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-Content-Language: fr-xx-classique+reforme1990
-X-Originating-IP: [86.200.152.136]
-X-ClientProxiedBy: CAS4.indiv2.local (172.16.1.4) To EX7.indiv2.local
- (172.16.2.7)
-X-Ovh-Tracer-Id: 9160321642694961143
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeelledrtdefgdduvdejucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecufedttdenuc
+Received: by 10.80.182.5 with HTTP; Thu, 24 Aug 2017 00:27:52 -0700 (PDT)
+In-Reply-To: <20170823212251.li5fs4kypeveydbm@sigill.intra.peff.net>
+References: <20170822182242.20862-1-jonathantanmy@google.com>
+ <xmqqbmn72x7a.fsf@gitster.mtv.corp.google.com> <20170823212251.li5fs4kypeveydbm@sigill.intra.peff.net>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Thu, 24 Aug 2017 00:27:52 -0700
+Message-ID: <CA+P7+xoPscnzCGLHSK-gk80GcZLZ5T4e7E29ztVX7qbjMcGbnw@mail.gmail.com>
+Subject: Re: [PATCH] Doc: clarify that pack-objects makes packs, plural
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-Le 23/08/2017 à 22:28, Junio C Hamano a écrit :
-> Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com> writes:
+On Wed, Aug 23, 2017 at 2:22 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, Aug 22, 2017 at 12:56:25PM -0700, Junio C Hamano wrote:
 >
->> Now that curl is enable by default,
-> s/enable/&d/; 
+>>  - There should be an update to say max-pack-size is not something
+>>    normal users would ever want.
 >
-> But it is unclear what the above really means.  You certainly do not
-> mean that [PATCH 1-3/4] somewhere tweaked our Makefile to always use
-> libcurl and makes Git fail to build without it, but the above sounds
-> as if that were the case.
+> Agreed.
 >
->> use the curl implementation
->> for imap too.
-> The Makefile for a long time by default set USE_CURL_FOR_IMAP_SEND
-> to YesPlease when the version of cURL we have is recent enough, I
-> think.  So I am not sure what you want to add with this change.
-It did but apart from allowing the compilation of the code and enabling the --curl option to do something, it had no impact on the default runtime.
->> The goal is to validate feature parity between the legacy and
->> the curl implementation, deprecate thee legacy implementation
-> s/thee/the/;
-
-Yes this is confusing.
-In the current state, even if build against a curl version supporting imap, curl is not used by default at runtime (unless OpenSSL was not available).
-This patch changes this behavior.
-
->
->> later on and in the long term, hopefully drop it altogether.
+>> diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
+>> index 8973510a41..3aa6234501 100644
+>> --- a/Documentation/git-pack-objects.txt
+>> +++ b/Documentation/git-pack-objects.txt
+>> @@ -108,9 +108,13 @@ base-name::
+>>       is taken from the `pack.windowMemory` configuration variable.
 >>
->> Signed-off-by: Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
->> ---
->>  imap-send.c | 6 +++---
->>  1 file changed, 3 insertions(+), 3 deletions(-)
-> Hmph, the patch itself is also confusing.
+>>  --max-pack-size=<n>::
+>> -     Maximum size of each output pack file. The size can be suffixed with
+>> +     In unusual scenarios, you may not be able to create files
+>> +     larger than certain size on your filesystem, and this option
+>> +     can be used to tell the command to split the output packfile
+>> +     into multiple independent packfiles and what the maximum
+>> +     size of each packfile is. The size can be suffixed with
+>>       "k", "m", or "g". The minimum size allowed is limited to 1 MiB.
+>> -     If specified, multiple packfiles may be created, which also
+>> +     This option
+>>       prevents the creation of a bitmap index.
+>>       The default is unlimited, unless the config variable
+>>       `pack.packSizeLimit` is set.
 >
->> diff --git a/imap-send.c b/imap-send.c
->> index a74d011a9..58c191704 100644
->> --- a/imap-send.c
->> +++ b/imap-send.c
->> @@ -35,11 +35,11 @@ typedef void *SSL;
->>  #include "http.h"
->>  #endif
->>  
->> -#if defined(USE_CURL_FOR_IMAP_SEND) && defined(NO_OPENSSL)
->> -/* only available option */
->> +#if defined(USE_CURL_FOR_IMAP_SEND)
->> +/* Always default to curl if it's available. */
->>  #define USE_CURL_DEFAULT 1
-> The original says "we want to use CURL, if Makefile tells us to
-> *AND* if Makefile tells us not to use OpenSSL", which does not make
-> much sense to me.  I wonder if the original is buggy and should have
-> been using "|| defined(NO_OPENSSL)" there instead.  
-I think the idea for this was that curl should be used when curl is available and OpenSSL is not (curl being the only solution for secured authentication in this case)
-
+> I wonder if it is worth mentioning the other downside: that the sum of
+> the split packfiles may be substantially larger than a single packfile
+> would be (due to lost delta opportunities between the split packs).
 >
-> Perhaps that is the bug you are fixing with this patch, and all the
-> talk about curl is default we saw above is a red herring?  If that
-> is the case, then instead of removing, turning "&&" into "||" may be
-> a better fix.  I dunno.
+> For the sneaker-net case, you are much better off generating a single
+> pack and then using "split" and "cat" to reconstruct it on the other end
+> Not that I think we should go into such detail in the manpage, but I
+> have to wonder if --max-pack-size has outlived its usefulness. The only
+> use case I can think of is a filesystem that cannot hold files larger
+> than N bytes.
+>
+> -Peff
 
-As said before, the goal of this patch is to enable curl by default at runtime when it has been "enabled" at compile time.
-I'll reword
+Is it possible to detect on the file system that we can't store files
+that large, and remove the option, while enabling it only when we
+detect the filesystem is unable to store large files?
 
-Is something like this clearer ?
-Author: Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
-Date:   Sun Aug 6 21:30:15 2017 +0200
-
-    imap-send: use curl by default when possible
-   
-    Set curl as the runtime default when it is available.
-    When linked against older curl versions (< 7_34_0) or without curl,
-    use the legacy imap implementation.
-   
-    The goal is to validate feature parity between the legacy and
-    the curl implementation, deprecate the legacy implementation
-    later on and in the long term, hopefully drop it altogether.
-   
-    Signed-off-by: Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
-
-
+Thanks,
+Jake
