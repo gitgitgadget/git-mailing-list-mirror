@@ -2,177 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97FA520285
-	for <e@80x24.org>; Thu, 24 Aug 2017 19:40:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 082FC20285
+	for <e@80x24.org>; Thu, 24 Aug 2017 19:51:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753142AbdHXTk4 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Aug 2017 15:40:56 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53768 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752751AbdHXTkz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Aug 2017 15:40:55 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E3618AA10C;
-        Thu, 24 Aug 2017 15:40:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=9kmer8qt3M3ta6OzIlzRw5XveoU=; b=fhWpg5
-        opAht7CqUQ0GsjMVyLxsT319m8qEYvn8rZ6qV3Hzq4Q+bImxdmUGhOpXO8S8owWv
-        8WiQ/KI8g/DGwOKF6G7Y+koMiUSzYu+ab93VL3L04CpEc7o2Z2qNDZjS+kBsBb90
-        fO33umrnTDw3dfcl4njeJqc5XQySxO+bURWk0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=D4NnNwgCX58JvT6AvVIP9Ji9kXXyh/zL
-        J9hIyhCvA5V4dHR6H23TmyekcM7ZI6uEJH8eBfm7PhSMjmwm6mQBgNpFoTPafwBk
-        6F0+WgS8e43JeRdw1GBoJ1lWrWiu0pDXcBilEQsItWtDFwBo1HCZ+PQrf3YVuPbE
-        yTIflrVBjBg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D4841AA10B;
-        Thu, 24 Aug 2017 15:40:54 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 304E3AA10A;
-        Thu, 24 Aug 2017 15:40:54 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     git@vger.kernel.org, me@ttaylorr.com
-Subject: Re: [PATCH v1] convert: display progress for filtered objects that have been delayed
-References: <20170820154720.32259-1-larsxschneider@gmail.com>
-Date:   Thu, 24 Aug 2017 12:40:53 -0700
-In-Reply-To: <20170820154720.32259-1-larsxschneider@gmail.com> (Lars
-        Schneider's message of "Sun, 20 Aug 2017 17:47:20 +0200")
-Message-ID: <xmqqwp5svjne.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 246DEE90-8904-11E7-A85F-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+        id S1753246AbdHXTvW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Aug 2017 15:51:22 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:38370 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753025AbdHXTvV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Aug 2017 15:51:21 -0400
+Received: by mail-pg0-f66.google.com with SMTP id t3so634270pgt.5
+        for <git@vger.kernel.org>; Thu, 24 Aug 2017 12:51:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=1Dj95X4Iq7i7bvLvujv91yfVciPF0QpurVMpclW1kmg=;
+        b=dGaKvrp+CfE9KQQEywcE49OFwGXl7y6B31t8EKsH0HGYbSeLL4vKy5WCeJ7wtvm/tA
+         4zgcfO8F8v0M21iyp4VzoaxTUzT9dlcsSdrKDUWgnLhjx/a491/8jLQ/xorQwEdhuBwN
+         2M3UU/GHl0zvC4XhNet1R2BEULwhUQ0mmmEJsM7bRUy8Gkbx2Cv3+fpC2nP5CUHt0Ih5
+         I7H4WNIwfc2A9vkoKShElqHExkSW9EcNL++aflXA0dPLaFQrUIGxBo2uw2Ewt/rsX6lF
+         OcMaqgJms89ENU8pO8/x2gxWi2GZ1wObXPaqzC+rpy2ROxaijHN8qc1+ooi+mQOIuoAk
+         Q9kQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=1Dj95X4Iq7i7bvLvujv91yfVciPF0QpurVMpclW1kmg=;
+        b=d2PjRdAZnNyYud4va33lWTs34wk6Pao7mEFTLAW+76YkqOwI3voiVARx8WTnXMs9zv
+         9OaRJpQb/oM+BxVJg7egcTM9UMmn3+OwrpF4OsqIe/9MD18bbK5oPm2f0W4O6IdZCb1Y
+         HYTBNPvsVGe9A5Cy9XJvGzU3JowcP9V3K+RaDqwis0nl1iJDFkko+tBtOGBXGcoUd/Es
+         wcC0d+KYSKGhydcvZ0iCU+jydihjchHbJx3LLbUKgsPSJwnN6evkNDtRZgacgJI1pTQz
+         BUVzOyXYabnwbhIRmhkkXrke7Bg16qc43eNDU+XSMcRGuIwPS0HcEDnNQVzIRLm/XYwI
+         Laiw==
+X-Gm-Message-State: AHYfb5jdUv9+IbQ1JVgft4yUT5I6rLzXTQp8W01hNYysdbQ/pgBaf5vA
+        xf63Mvw3zwd9Mg==
+X-Received: by 10.99.147.8 with SMTP id b8mr7203569pge.384.1503604280817;
+        Thu, 24 Aug 2017 12:51:20 -0700 (PDT)
+Received: from localhost.localdomain ([27.63.191.1])
+        by smtp.gmail.com with ESMTPSA id v2sm9074270pfl.21.2017.08.24.12.51.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 24 Aug 2017 12:51:20 -0700 (PDT)
+From:   Prathamesh Chavan <pc44800@gmail.com>
+To:     gitster@pobox.com
+Cc:     christian.couder@gmail.com, git@vger.kernel.org, pc44800@gmail.com,
+        sbeller@google.com
+Subject: [GSoC][PATCH v3 0/4] Incremental rewrite of git-submodules
+Date:   Fri, 25 Aug 2017 01:20:47 +0530
+Message-Id: <20170824195051.30900-1-pc44800@gmail.com>
+X-Mailer: git-send-email 2.13.0
+In-Reply-To: <xmqq7exuysc7.fsf@gitster.mtv.corp.google.com>
+References: <xmqq7exuysc7.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Lars Schneider <larsxschneider@gmail.com> writes:
+Changes in v3:
 
-> In 2841e8f ("convert: add "status=delayed" to filter process protocol",
-> 2017-06-30) we taught the filter process protocol to delayed responses.
-> These responses are processed after the "Checking out files" phase.
-> If the processing takes noticeable time, then the user might think Git
-> is stuck.
->
-> Display the progress of the delayed responses to let the user know that
-> Git is still processing objects. This works very well for objects that
-> can be filtered quickly. If filtering of an individual object takes
-> noticeable time, then the user might still think that Git is stuck.
-> However, in that case the user would at least know what Git is doing.
->
-> It would be technical more correct to display "Checking out files whose
-> content filtering has been delayed". For brevity we only print
-> "Filtering content".
->
-> The finish_delayed_checkout() call was moved below the stop_progress()
-> call in unpack-trees.c to ensure that the "Checking out files" progress
-> is properly stopped before the "Filtering content" progress starts in
-> finish_delayed_checkout().
->
-> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
-> Suggested-by: Taylor Blau <me@ttaylorr.com>
-> ---
+* The name of the iterator function for_each_submodule() was changed
+  to the for_each_listed_submodule(), as the function fits the naming
+  pattern for_each_Y_X(), as here we iterate over group of listed
+  submodules (X) which are listed (Y) by the function module_list_compute()
+* The name of the call back function type for the above pattern
+  for_each_Y_X() is each_X_fn. Hence, this pattern was followed and
+  the name of the call back function type for for_each_listed_submodule()
+  was changed from submodule_list_func_t to each_submodule_fn.
 
-Makes sense.  The only thing that made me wonder was if we want the
-change in unpack-trees.c in this patch.  After all, the procedure to
-finish up the delayed checkout _is_ a part of the work need to be
-done to populate the working tree files, so stopping the progress
-before feels somewhat wrong at the phylosophical level.
+As before you can find this series at: 
+https://github.com/pratham-pc/git/commits/week-14-1
 
-I think our output cannot express nested progress bars, and I think
-that is the reason why this patch tweaks unpack-trees.c; so I am
-fine with the end result (and that is why I said "made me wonder
-was", not "makes me wonder", the latter would imply "this we might
-want fix before applying", but I do not think we want to change
-anything this patch does to unpack-trees.c in this case).
+And its build report is available at: 
+https://travis-ci.org/pratham-pc/git/builds/
+Branch: week-14-1
+Build #164
 
-The delayed progress API is being simplified so I'll probably do a
-bit of evil merge while merging this to 'pu'.
+Prathamesh Chavan (4):
+  submodule--helper: introduce get_submodule_displaypath()
+  submodule--helper: introduce for_each_listed_submodule()
+  submodule: port set_name_rev() from shell to C
+  submodule: port submodule subcommand 'status' from shell to C
 
-Thanks.
+ builtin/submodule--helper.c | 294 ++++++++++++++++++++++++++++++++++++++++----
+ git-submodule.sh            |  61 +--------
+ 2 files changed, 273 insertions(+), 82 deletions(-)
 
->  entry.c        | 16 +++++++++++++++-
->  unpack-trees.c |  2 +-
->  2 files changed, 16 insertions(+), 2 deletions(-)
->
-> diff --git a/entry.c b/entry.c
-> index 65458f07a4..1d1a09f47e 100644
-> --- a/entry.c
-> +++ b/entry.c
-> @@ -3,6 +3,7 @@
->  #include "dir.h"
->  #include "streaming.h"
->  #include "submodule.h"
-> +#include "progress.h"
->  
->  static void create_directories(const char *path, int path_len,
->  			       const struct checkout *state)
-> @@ -161,16 +162,23 @@ static int remove_available_paths(struct string_list_item *item, void *cb_data)
->  int finish_delayed_checkout(struct checkout *state)
->  {
->  	int errs = 0;
-> +	unsigned delayed_object_count;
-> +	off_t filtered_bytes = 0;
->  	struct string_list_item *filter, *path;
-> +	struct progress *progress;
->  	struct delayed_checkout *dco = state->delayed_checkout;
->  
->  	if (!state->delayed_checkout)
->  		return errs;
->  
->  	dco->state = CE_RETRY;
-> +	delayed_object_count = dco->paths.nr;
-> +	progress = start_progress_delay(
-> +		_("Filtering content"), delayed_object_count, 50, 1);
->  	while (dco->filters.nr > 0) {
->  		for_each_string_list_item(filter, &dco->filters) {
->  			struct string_list available_paths = STRING_LIST_INIT_NODUP;
-> +			display_progress(progress, delayed_object_count - dco->paths.nr);
->  
->  			if (!async_query_available_blobs(filter->string, &available_paths)) {
->  				/* Filter reported an error */
-> @@ -216,11 +224,17 @@ int finish_delayed_checkout(struct checkout *state)
->  				}
->  				ce = index_file_exists(state->istate, path->string,
->  						       strlen(path->string), 0);
-> -				errs |= (ce ? checkout_entry(ce, state, NULL) : 1);
-> +				if (ce) {
-> +					errs |= checkout_entry(ce, state, NULL);
-> +					filtered_bytes += ce->ce_stat_data.sd_size;
-> +					display_throughput(progress, filtered_bytes);
-> +				} else
-> +					errs = 1;
->  			}
->  		}
->  		string_list_remove_empty_items(&dco->filters, 0);
->  	}
-> +	stop_progress(&progress);
->  	string_list_clear(&dco->filters, 0);
->  
->  	/* At this point we should not have any delayed paths anymore. */
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index 862cfce661..90fb270d77 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -395,8 +395,8 @@ static int check_updates(struct unpack_trees_options *o)
->  			}
->  		}
->  	}
-> -	errs |= finish_delayed_checkout(&state);
->  	stop_progress(&progress);
-> +	errs |= finish_delayed_checkout(&state);
->  	if (o->update)
->  		git_attr_set_direction(GIT_ATTR_CHECKIN, NULL);
->  	return errs != 0;
->
-> base-commit: b3622a4ee94e4916cd05e6d96e41eeb36b941182
+-- 
+2.13.0
+
