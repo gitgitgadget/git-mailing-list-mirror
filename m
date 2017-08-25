@@ -2,94 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 777211F4DD
-	for <e@80x24.org>; Fri, 25 Aug 2017 09:12:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D96E11F4DD
+	for <e@80x24.org>; Fri, 25 Aug 2017 10:20:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754648AbdHYJMZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Aug 2017 05:12:25 -0400
-Received: from zm-mta-out-1.u-ga.fr ([152.77.200.56]:58672 "EHLO
-        zm-mta-out-1.u-ga.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754607AbdHYJMY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Aug 2017 05:12:24 -0400
-Received: from zm-mta-out.u-ga.fr (zm-mta-out.u-ga.fr [152.77.200.58])
-        by zm-mta-out-1.u-ga.fr (Postfix) with ESMTP id 82DD7A02D5;
-        Fri, 25 Aug 2017 11:12:22 +0200 (CEST)
-Received: from smtps.univ-grenoble-alpes.fr (smtps.univ-grenoble-alpes.fr [195.83.24.202])
-        by zm-mta-out.u-ga.fr (Postfix) with ESMTP id 6DFE7E0099;
-        Fri, 25 Aug 2017 11:12:25 +0200 (CEST)
-Received: from anie (anie.imag.fr [129.88.42.32])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by smtps.univ-grenoble-alpes.fr (Postfix) with ESMTPS id A7C5A6036A;
-        Fri, 25 Aug 2017 11:12:23 +0200 (CEST)
-Received: from moy by anie with local (Exim 4.84_2)
-        (envelope-from <moy@imag.fr>)
-        id 1dlAf9-0003XM-IU; Fri, 25 Aug 2017 11:12:23 +0200
-From:   Matthieu Moy <git@matthieu-moy.fr>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Matthieu Moy <git@matthieu-moy.fr>
-Subject: [PATCH v2 2/2] send-email: don't use Mail::Address, even if available
-Date:   Fri, 25 Aug 2017 11:12:00 +0200
-Message-Id: <20170825091200.13358-2-git@matthieu-moy.fr>
-X-Mailer: git-send-email 2.14.0.rc0.dirty
-In-Reply-To: <20170825091200.13358-1-git@matthieu-moy.fr>
-References: <vpq378g107m.fsf@anie.imag.fr>
- <20170825091200.13358-1-git@matthieu-moy.fr>
-X-Greylist: Whitelist-UJF SMTP non authentifie - depuis 129.88.42.32
+        id S1754569AbdHYKUD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Aug 2017 06:20:03 -0400
+Received: from mout.gmx.net ([212.227.17.22]:59646 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754286AbdHYKUC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Aug 2017 06:20:02 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MI9n0-1dhKtf10P8-003vVj; Fri, 25
+ Aug 2017 12:19:57 +0200
+Date:   Fri, 25 Aug 2017 12:19:56 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Martin Langhoff <martin.langhoff@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Should rerere auto-update a merge resolution?
+In-Reply-To: <CACPiFCJCgKtTbKX8jCSC3QgMKZ7Usu2ojqXe5w_QAHwk7T4M-A@mail.gmail.com>
+Message-ID: <alpine.DEB.2.21.1.1708251218460.7424@virtualbox>
+References: <CACPiFCJH7RSb_rz6M6ADuGi0q+oeWYhE1fNMQC0EUcCn_kCJwg@mail.gmail.com> <xmqqlgmaxbuc.fsf@gitster.mtv.corp.google.com> <CACPiFCJCgKtTbKX8jCSC3QgMKZ7Usu2ojqXe5w_QAHwk7T4M-A@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:ySXm/vGCZXp1N7M1e8dVyFPFe6AHXvCKVeOWls88HuFz0w3kGHN
+ b72WHpQuFP4mmYS63lTzKA2+HLySGd38itTyhDskHNLlcllTzpnHDrls/QuyfDA3w+2WHKr
+ nbHkdo4uJz6Zpfsut0JTsC3MZysJWqEplCgRzQ3MHbC8fAVohnGbtqUvSnsqs0YIZwDo9Dr
+ QKVVxndGxMMvF48aTa56Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:nB52TGhnCwc=:nPEpyvHHOW7zdZpQDIX2K9
+ 6R6l0d6oUg3fFA2JTqvqQyljT4h9itytH8ywJms+LdiLIfLRsmhThg8QqN4CjGsyx+Mg8KeRf
+ GxEtl6ahV0mdFvJ6wpG75+h6E+9C5SHkzqBVw8j4wT6GnldAswNuiE20C3b3UoUKmrX0ctSts
+ fQPaj04z1LAXlvM31iP661Vnsy6pXFQprpN/EKzmA+VORkCBMm0aJHE4lwqhw0GtDsqFmwi92
+ yznnaQN/Lr9LpYOgBptdC+NC4VTTXcGOf/KVLl1MKOtPwMTEIF7LwL5h1GdxVFa89iKjZTnJk
+ YYXSDAISUg8zAdi+1/opYcAHSzFsUozB9G/s3IZ6130cQDyOxXkKcxqmh+KJuFH7L7FycK0sH
+ dkwr9e76C1k/R32yKkgAPkF5yjtqDb5cxSgiV58X3IXGhn8bYU7o0qSmbsu3/kLyKtNVDOTVz
+ kBIfDVYgjtT7V+3YKlg4+EJjz5EXzdOz4EjElw2FpaQcLkD5zFTPToGstMFa4eER9vKT4BWIz
+ XIqoFYAa3wmPCxhub9p6J3x2ktgz2WdqL2MwwSK0Hj5vJhpwqNN5O8K8abuORgkaRUmKSI91m
+ qiignuJ4zlxw50amlJHuwCGaxEf45OOB1Yup539IKcXva04gX3ZNj9HtBTD8j/QBTgObU6AzK
+ 2PUHZRpSoDBYlQZdlHpejChU+ffBAYcpjJ4PiOjHRo+jQpiyElIz2J2JhuX51KO/ws8hoeOBj
+ /FgXzXdHfRDU5nrv8Or5YX/ncjS9YsVb5+srmGbP3Zc41LJgsXDiV1wtuKylpnr0kRgh70Bi5
+ Up4YP1VNejCE62mBq4KhiMlLirta4Yynt+yGiH3lYt7PNV09Zw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Using Mail::Address made sense when we didn't have a proper parser. We
-now have a reasonable address parser, and using Mail::Address
-_if available_ causes much more trouble than it gives benefits:
+Hi Martin,
 
-* Developers typically test one version, not both.
+On Wed, 23 Aug 2017, Martin Langhoff wrote:
 
-* Users may not be aware that installing Mail::Address will change the
-  behavior. They may complain about the behavior in one case without
-  knowing that Mail::Address is involved.
+> On Wed, Aug 23, 2017 at 4:34 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> > Between these two steps:
+> >
+> >>  - I reset hard, retry the merge, using --no-commit, rerere applies what it knows
+> >>  - I fix things up, then commit
+> >
+> > You'd tell rerere to forget what it knows because it is wrong.
+> 
+> Questions
+> 
+>  - when I tell it to forget, won't it forget the pre-resolution state?
+> my read of the rerere docs imply that it gets called during the merge
+> to record the conflicted state.
 
-* Having this optional Mail::Address makes it tempting to anwser "please
-  install Mail::Address" to users instead of fixing our own code. We've
-  reached the stage where bugs in our parser should be fixed, not worked
-  around.
+In my hands, I need to tell rerere to forget, *and then recreate the merge
+conflict* before I can resolve it again and let rerere learn the new
+resolution.
 
-Signed-off-by: Matthieu Moy <git@matthieu-moy.fr>
----
- git-send-email.perl | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+>  - would it be a feature if it updated its resolution db
+> automagically? rerere is plenty automagic already...
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index dfd646ac5b..0061dbfab9 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -155,7 +155,6 @@ sub format_2822_time {
- }
- 
- my $have_email_valid = eval { require Email::Valid; 1 };
--my $have_mail_address = eval { require Mail::Address; 1 };
- my $smtp;
- my $auth;
- my $num_sent = 0;
-@@ -490,11 +489,7 @@ my ($repoauthor, $repocommitter);
- ($repocommitter) = Git::ident_person(@repo, 'committer');
- 
- sub parse_address_line {
--	if ($have_mail_address) {
--		return map { $_->format } Mail::Address->parse($_[0]);
--	} else {
--		return Git::parse_mailboxes($_[0]);
--	}
-+	return Git::parse_mailboxes($_[0]);
- }
- 
- sub split_addrs {
--- 
-2.14.0.rc0.dirty
+That would most likely be a very welcome feature here.
 
+Thanks,
+Johannes
