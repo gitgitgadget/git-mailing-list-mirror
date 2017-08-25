@@ -2,139 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AAB60208DB
-	for <e@80x24.org>; Fri, 25 Aug 2017 21:48:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B252D208DB
+	for <e@80x24.org>; Fri, 25 Aug 2017 22:11:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758775AbdHYVsn (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Aug 2017 17:48:43 -0400
-Received: from chiark.greenend.org.uk ([212.13.197.229]:37059 "EHLO
-        chiark.greenend.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756702AbdHYVsm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Aug 2017 17:48:42 -0400
-X-Greylist: delayed 1448 seconds by postgrey-1.27 at vger.kernel.org; Fri, 25 Aug 2017 17:48:41 EDT
-Received: by chiark.greenend.org.uk (Debian Exim 4.84_2 #1) with local
-        (return-path ijackson@chiark.greenend.org.uk)
-        id 1dlM5g-0005zO-8Z
-        for git@vger.kernel.org; Fri, 25 Aug 2017 22:24:32 +0100
-From:   Ian Jackson <ijackson@chiark.greenend.org.uk>
+        id S933811AbdHYWLN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Aug 2017 18:11:13 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57340 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S932833AbdHYWLM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Aug 2017 18:11:12 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CF5999E055;
+        Fri, 25 Aug 2017 18:11:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=EBZj9XNsOoKTMyIwTePlLY2VX9k=; b=PxQ95r
+        UA77FXFLh/ZAnUpBgCIowTysAqeJtg0KVW2o4xYa8WXBwG7pkWLd2DQYcPig//Vz
+        4bPZIdeFdex2q+3/u0pNNsY0f2EnE/HgetAZmtse/cFFpLNsLsc4b+rjGQZOcJW8
+        D+jFj3UAGu+XiYJp0hffJqJWJLaCA9SReEqys=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ZeTGN52J5SBcy6OCg7ujWBAketPMg51X
+        BqSXvuGSFLN+ayu53mIj9oQZOTXrzrWk3ibjktavo4JFSaVB/8Sn0UXtwXMbABok
+        JaVvq9FL2LjAvvvSMSVE3IIOoRrfvuWkA9nxJvVo6U9t4jWZY6/qvLJB5XKJeM1D
+        ZnHo6vVt3Uw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C87CC9E054;
+        Fri, 25 Aug 2017 18:11:11 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 34F589E053;
+        Fri, 25 Aug 2017 18:11:11 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ian Jackson <ijackson@chiark.greenend.org.uk>
+Cc:     git@vger.kernel.org
+Subject: Re: git signed push server-side
+References: <22944.38288.91698.811743@chiark.greenend.org.uk>
+Date:   Fri, 25 Aug 2017 15:11:09 -0700
+In-Reply-To: <22944.38288.91698.811743@chiark.greenend.org.uk> (Ian Jackson's
+        message of "Fri, 25 Aug 2017 22:24:32 +0100")
+Message-ID: <xmqqzianqow2.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Message-ID: <22944.38288.91698.811743@chiark.greenend.org.uk>
-Date:   Fri, 25 Aug 2017 22:24:32 +0100
-To:     git@vger.kernel.org
-Subject: git signed push server-side
-X-Mailer: VM 8.2.0b under 24.4.1 (i586-pc-linux-gnu)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4D6708CA-89E2-11E7-A32E-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I have been investigating git signed pushes.  I found a number of
-infelicities in the server side implementation which make using this
-in practice rather difficult.  I'm emailing here (before writing
-patches) to see what people think of my proposed changes.
+Ian Jackson <ijackson@chiark.greenend.org.uk> writes:
+
+> I have been investigating git signed pushes.  I found a number of
+> infelicities in the server side implementation which make using this
+> in practice rather difficult.  I'm emailing here (before writing
+> patches) to see what people think of my proposed changes.
+> ...
+> If I send patches like the above, would they be welcomed (subject to
+> detailed review, of course) ?
+
+When I did the signed push, the primary focus was to get the
+protocol extension right, and what the server end does with the
+received certificate was left as something that can be refined later
+by those who are really into it.  
+
+So I do find it a welcome development that you are looking into it
+(but remember, I do not represent "people"---I am merely one of them).
+
+I and others may or may not have objections and may or may not offer
+better ideas over what you are going to write in your design docs
+and patches---I cannot promise anything before seeing them.
 
 
-1. PUSH_CERT_KEY has truncated keyid (Debian #852647)
 
-I see this:
-  GIT_PUSH_CERT_KEY=A3DBCBC039B13D8A
-
-There is almost no purpose for which this 64-bit keyid can be safely
-used.  The full key fingerprint should be provided instead.
-
-Proposed change: provide the full fingerprint instead.  Do this
-for every caller of gpg-interface.c.
-
-
-2. git-receive-pack calls gpg (Debian #852684)
-
-It would be better if it called gpgv.  gpg does all sorts of
-complicated things, including automatically starting or connecting to
-a gpg-agent, which are not appropriate for use in a daemon on a
-server.
-
-Additionally, I find that passing -c gpg.program=/usr/bin/gpgv
-to git receive-pack is not effective, and there seems to be no
-sensible way to specify the keyrings to use (although that could be
-done by setting GNUPGHOME perhaps).
-
-Proposed change: call gpgv instead (and make any needed changes to
-adapt to gpgv).  Do this only when we are in git-receive-pack; other
-call sites of gpg-interface.c will continue to use gpg.
-
-
-3. No way to specify keyring (Debian #852684, side note)
-
-There should be a way to specify the keyring used by
-git-receive-pack's gpgv invocation.  This should probably be done with
-a config option, receive.certKeyring perhaps.
-
-
-4. Trouble with the nonce (Debian #852688 part 2)
-
-To use the signed push feature it is necessary to provide a nonce seed
-to git-receive-pack.
-
-The docs say the seed must be secret but there is no documented way to
-pass this seed to git that does not either write it to a git
-configuration file somewhere, or pass it on a command line.  The git
-configuration system is unsuited to keeping secrets.  Command lines
-can be seen in ps etc.
-
-Additionally, the seed should be changed occasionally (since
-unchangeable secrets are a bad idea).  Ideally this should be done
-automatically.
-
-Analysis: the seed is used to allow the server to mostly-statelessly
-verify the freshness of a client's nonce.  (This is necessary only in
-connectionless transport protocols, "stateless_rpc" as
-builtin/receive-pack.c has it.)
-
-Proposed fix (in two parts):
-
-(i) Provide a new config option receive.certNonceSeedsFile.  It
-contains seeds, one per line.  When stateless_rpc, we send a nonce
-computed from the first seed.  We accept nonces computed from any of
-the listed seeds.  The documentation will say that the file should
-normally contain two seeds; rollover is achieved by mving into place a
-new seed at the top, and dropping one from the bottom.  An example
-script will be provided.
-
-(ii) At some later point, the following enhancement: When
-!stateless_rpc, certNonceSeedsFile is ignored except that if neither
-it nor the old certNonceSeed is set, the signed push feature is
-disabled.  In this state we always get a fresh nonce (from a suitable
-system random source).  Nontrivial because current git doesn't seem to
-have a "get suitable random number" function, and the mess that is the
-semantics of /dev/*random* files means that providing one is going to
-be controversial.
-
-
-5. There are no docs on how to use this feature properly
-   (Debian #852695, #852688 part 1)
-
-Using the signed push feature requires careful programming on the
-server side.  There should be a doc explaining how to do this.
-
-Proposed fix: provide a .txt file containing much the same contents as
-seen here:
-  https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=852695
-
-
-If I send patches like the above, would they be welcomed (subject to
-detailed review, of course) ?
-
-Thanks,
-Ian.
-
--- 
-Ian Jackson <ijackson@chiark.greenend.org.uk>   These opinions are my own.
-
-If I emailed you from an address @fyvzl.net or @evade.org.uk, that is
-a private address which bypasses my fierce spamfilter.
