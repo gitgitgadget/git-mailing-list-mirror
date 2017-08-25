@@ -7,130 +7,103 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA6DC208DC
-	for <e@80x24.org>; Fri, 25 Aug 2017 19:05:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A5598208DB
+	for <e@80x24.org>; Fri, 25 Aug 2017 19:06:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756539AbdHYTFB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Aug 2017 15:05:01 -0400
-Received: from mout.web.de ([212.227.17.12]:62438 "EHLO mout.web.de"
+        id S1758131AbdHYTGf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Aug 2017 15:06:35 -0400
+Received: from mout.web.de ([217.72.192.78]:50979 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754446AbdHYTFA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Aug 2017 15:05:00 -0400
+        id S1755040AbdHYTGe (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Aug 2017 15:06:34 -0400
 Received: from [192.168.178.36] ([91.20.52.82]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MOilO-1drLmo1ybu-0065Da; Fri, 25
- Aug 2017 21:04:56 +0200
-X-Mozilla-News-Host: news://news.public-inbox.org:119
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MKrPw-1dlJw62ctc-0003dO; Fri, 25
+ Aug 2017 21:06:30 +0200
+Subject: [PATCH 2/2] apply: remove epoch date from regex
 To:     Git List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>
+References: <205339f5-bad8-62a3-8ccc-d3b0dd1d6736@web.de>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH 1/2] apply: check date of potential epoch timestamps first
-Message-ID: <205339f5-bad8-62a3-8ccc-d3b0dd1d6736@web.de>
-Date:   Fri, 25 Aug 2017 21:04:54 +0200
+Message-ID: <5dd40b51-ac5b-6885-b7b0-f2a33045c386@web.de>
+Date:   Fri, 25 Aug 2017 21:06:28 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.3.0
 MIME-Version: 1.0
+In-Reply-To: <205339f5-bad8-62a3-8ccc-d3b0dd1d6736@web.de>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:wQ/YaaA7/OcPhG8XCq7IdpIuDFm5UCSuqpnd26XoNzcLqgR3E6U
- UIPUeaxzjIxPVCda60qTjJVUq1wCVlgKwpTpcu+KPvH3skIbA2uNcb+CgJRQxspcv1ZI6fz
- KnMcDLb8H1Lnolz16ajGCKDAdynvLL5AoCLgYnrCohmggAnQ+AZkdEovu50okHCZp1mQQze
- FqmdtKgA9M3lfjuYZFrEQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:7wrgNfPEBQc=:AjmHrl6E4PL4U1l4re+z49
- ZF6akPDngSU2Xiu+J0qNpwm96e7aR0wn5XcRKQSuXfMIfp4pV6m8kBKM8qfcV2idwxp/sXAvG
- AcUlQd0uoIObAtnpn9cjCjBHV2j7bQnkA/7qBU0gT69u5/tAxg00bUh3B/a99o3qNyQD8ih7W
- 6PDatMBxL2RBf3XmBi0pCL/0ScDXoHwSZV5iLBuVPepw+ow9YI/NgxCPtrq7FsXeF7XcHerdY
- utuiTYsFx1gQ30HbHYk582/tKNmZ5LSyB4tm43o55/9dP3n1TtSzC9jYddd9HAizyj+E9KVmU
- Ce+KYo1Y8qhmlBUWDQReY7oDDwC6XlgRqmUqmc3OuEzZtwo3K+YuLjAun0Moxha/jpflgUR0M
- nTvvlG/ywvbJrzZ8yU+E7/VCX4ufALgUOSgp8cIr0Yrj7VF9TDeWUsNCIpfnUkeHSf8hXCejo
- V/eovJAE1QILjjRVLe++OLiG3oMRodDMYUT5ogD6Ti6+xacXXyRSukJKUP4z9nbm6ToGLoCN+
- MAltgX6czmbnD9kWaYTjg52w8Q9Eev9UC8QPdkgVd4zZJcQM0zmKcr5omuGUg1isMH5WOjrPP
- iO/JQH2HZashgvgmTpd9uEVJtEgFOgTfkkhWDdvFVTsUym+96kYcAvYKxgXwwQ9uUU5EBe8TV
- oR9P6GLWGSayBs9u1JMWvyWQglAfMaNPLkuZ4VqTZfn6qTo3Ax+cH8ggY04SPQdFW5Q6RK0Qt
- 30ryhT/xqaZhXXy2UPNRpWWrmhm+ZBqwZZJJP1MqNhpJcL4f7VrJPbQTUSfH1DaiIMOL+rPbQ
- EbmL2Wt8EaXBrcV1OCx3M4QdI/DNC5HeQdxnUYOwUrEgLZMD2Y=
+X-Provags-ID: V03:K0:nbbs24KbiRlRYN9xw/vyLyKGQQ89MnskB2LDGJqc6A7hdN5tZoG
+ tc89UvMsSZDnbUdmInOiQ8OyH7xlPM2J0xif9l83lsVhqpTbkcmUgZGTx3uetsGOQ6Qd5V/
+ iNeg0hdsqrA6/N+3bHnl55+lf1xioO266Rt+IeZknYiAMFn3XixPMD6UCAwpHKEC/p7BQ3z
+ Lrg8s/7mBkWaGkg/B/1RA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:zfG0DiZv4Fg=:CGqzDxwdCpfVw+dHGK9mVj
+ 89bKDe2dGdh3AxAQdtv6l+xZTGXRTAn4tLZD/XhO5+O2MC236NQGHQuoJ1JzWJFGTD62yzP9Q
+ qM76XeaflFf46KnltFIEPTXtequ+5FeumBJFBS/IvwCjETDwbUc508K/3KgRh63ctAcGufRDo
+ wN472gK7chTslsUbbn0KVrAZyp/68voebQxVdiH3x9c4mgCTk08F8TdJI+zcbvf8EKZMh1d8s
+ ztU14YAPqfpHJb8TONSyV9iZsPY+svsMoekdIlynTRj7Ew3n9mTuFoqRpu1YlaonSj8/DXH0u
+ MgORDn/otVforX8wwTzSVwlPwFvmSgxZXOhdMgHVkD/34FXllHSz+TPzoz+GhwxvwFhLEGjyt
+ w6u3IJ95T386ojVqTHmjdfb4mJHog3PSibumZWNU2SiDKzU4iitn9wKq4gqvFu2Dx4UmMu+ii
+ Zm3dcNvUsgRylC1rzZCDtOqTiPUd8VctJGvGThIVj68Sz3Eak4qWef4oHuDnRcCtc0fsvFQFE
+ yq5jJSgCiz0BipAsQQMehhV9P2MGRuH3dKAGLiv5WbHuKQlLVQilRhJk3VA1VgN2bKYf4n8hF
+ OB+QqLC0C1p8oJvZyNrAia5S4oaf2/z8pl2d9LuePKwfvgvE7gOG6A/xdTRjVOZPl/0WkcfTO
+ 63VpHbUFmQN7fr7yVSivzm3GMyCFFynFEwXbCBWZBT5iQUlN6rntqj32Av6vGOtR0fb95n9zx
+ IoG7o7dAUduslYjqqQLiFP9RI33z//uoNSa6TEo18Fb5Gqf0L04vFigzP8H2PCfeMx4kdNULD
+ CY57WsTQEy3Uyt0eeoa+0H1bEivS0CQ7OCWT3WAszncFdkQhUU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-has_epoch_timestamp() looks for time stamps that amount to either
-1969-12-31 24:00 or 1970-01-01 00:00 after applying the time zone
-offset.  Move the check for these two dates up, set the expected hour
-based on which one is found, or exit early if none of them are present,
-thus avoiding to engage the regex machinery for newer dates.
-
-This also gets rid of two magic string length constants.
+We check the date of epoch timestamp candidates already with
+starts_with().  Move beyond that part using skip_prefix() instead of
+checking it again using a regular expression.  Also group the minutes
+part, so that we can access them using a substring match instead of
+using a magic number.
 
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- apply.c | 33 +++++++++++++++++----------------
- 1 file changed, 17 insertions(+), 16 deletions(-)
+ apply.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
 diff --git a/apply.c b/apply.c
-index 956f56a927..e14077eaee 100644
+index e14077eaee..9c70b4040a 100644
 --- a/apply.c
 +++ b/apply.c
-@@ -819,8 +819,7 @@ static int has_epoch_timestamp(const char *nameline)
+@@ -811,9 +811,7 @@ static int has_epoch_timestamp(const char *nameline)
+ 	 * 1970-01-01, and the seconds part must be "00".
+ 	 */
+ 	const char stamp_regexp[] =
+-		"^(1969-12-31|1970-01-01)"
+-		" "
+-		"[0-2][0-9]:[0-5][0-9]:00(\\.0+)?"
++		"^[0-2][0-9]:([0-5][0-9]):00(\\.0+)?"
+ 		" "
+ 		"([-+][0-2][0-9]:?[0-5][0-9])\n";
  	const char *timestamp = NULL, *cp, *colon;
- 	static regex_t *stamp;
- 	regmatch_t m[10];
--	int zoneoffset;
--	int hourminute;
-+	int zoneoffset, epoch_hour, hour, minute;
- 	int status;
- 
- 	for (cp = nameline; *cp != '\n'; cp++) {
-@@ -829,6 +828,18 @@ static int has_epoch_timestamp(const char *nameline)
- 	}
- 	if (!timestamp)
+@@ -833,9 +831,9 @@ static int has_epoch_timestamp(const char *nameline)
+ 	 * YYYY-MM-DD hh:mm:ss must be from either 1969-12-31
+ 	 * (west of GMT) or 1970-01-01 (east of GMT)
+ 	 */
+-	if (starts_with(timestamp, "1969-12-31"))
++	if (skip_prefix(timestamp, "1969-12-31 ", &timestamp))
+ 		epoch_hour = 24;
+-	else if (starts_with(timestamp, "1970-01-01"))
++	else if (skip_prefix(timestamp, "1970-01-01 ", &timestamp))
+ 		epoch_hour = 0;
+ 	else
  		return 0;
-+
-+	/*
-+	 * YYYY-MM-DD hh:mm:ss must be from either 1969-12-31
-+	 * (west of GMT) or 1970-01-01 (east of GMT)
-+	 */
-+	if (starts_with(timestamp, "1969-12-31"))
-+		epoch_hour = 24;
-+	else if (starts_with(timestamp, "1970-01-01"))
-+		epoch_hour = 0;
-+	else
-+		return 0;
-+
- 	if (!stamp) {
- 		stamp = xmalloc(sizeof(*stamp));
- 		if (regcomp(stamp, stamp_regexp, REG_EXTENDED)) {
-@@ -846,6 +857,9 @@ static int has_epoch_timestamp(const char *nameline)
+@@ -857,8 +855,8 @@ static int has_epoch_timestamp(const char *nameline)
  		return 0;
  	}
  
-+	hour = strtol(timestamp + 11, NULL, 10);
-+	minute = strtol(timestamp + 14, NULL, 10);
-+
+-	hour = strtol(timestamp + 11, NULL, 10);
+-	minute = strtol(timestamp + 14, NULL, 10);
++	hour = strtol(timestamp, NULL, 10);
++	minute = strtol(timestamp + m[1].rm_so, NULL, 10);
+ 
  	zoneoffset = strtol(timestamp + m[3].rm_so + 1, (char **) &colon, 10);
  	if (*colon == ':')
- 		zoneoffset = zoneoffset * 60 + strtol(colon + 1, NULL, 10);
-@@ -854,20 +868,7 @@ static int has_epoch_timestamp(const char *nameline)
- 	if (timestamp[m[3].rm_so] == '-')
- 		zoneoffset = -zoneoffset;
- 
--	/*
--	 * YYYY-MM-DD hh:mm:ss must be from either 1969-12-31
--	 * (west of GMT) or 1970-01-01 (east of GMT)
--	 */
--	if ((zoneoffset < 0 && memcmp(timestamp, "1969-12-31", 10)) ||
--	    (0 <= zoneoffset && memcmp(timestamp, "1970-01-01", 10)))
--		return 0;
--
--	hourminute = (strtol(timestamp + 11, NULL, 10) * 60 +
--		      strtol(timestamp + 14, NULL, 10) -
--		      zoneoffset);
--
--	return ((zoneoffset < 0 && hourminute == 1440) ||
--		(0 <= zoneoffset && !hourminute));
-+	return hour * 60 + minute - zoneoffset == epoch_hour * 60;
- }
- 
- /*
 -- 
 2.14.1
+
