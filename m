@@ -2,96 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A1CF6208DB
-	for <e@80x24.org>; Fri, 25 Aug 2017 18:55:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA6DC208DC
+	for <e@80x24.org>; Fri, 25 Aug 2017 19:05:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755492AbdHYSzJ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Aug 2017 14:55:09 -0400
-Received: from mail-pg0-f50.google.com ([74.125.83.50]:33819 "EHLO
-        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754717AbdHYSzI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Aug 2017 14:55:08 -0400
-Received: by mail-pg0-f50.google.com with SMTP id a7so3470511pgn.1
-        for <git@vger.kernel.org>; Fri, 25 Aug 2017 11:55:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=PGFVk1niufUX0AOHaGBNfo/loLnY8Er3JL1iATIGSyc=;
-        b=t8x1d7DFORwU2WoMDCCLDoaZ4xiK17A7csDG5rlr1+QYr2tXIN8CCLgzWZqH+qC2jO
-         3ZZmajcumkjg5NBrG2Dii8zjKMy3vq+nnazXEqRBunw5d3CFBxqdvrVKxSKPlnirs5cw
-         2f+c2PeZ7XZU77QoQ+01G7CtwOG3aIbOlRXWuCTDmcLjwwM3YvzB7NORyIh+/UHRud1V
-         506jvS6eZuJTfrwENHIXrD49UZz+b7VBdBt6yngAfVgJzIyMrw8A4COHqYiC+raUH7UN
-         K1ASbx6QIzX8wvipKhm+mRhL7b02G5GYsmWeVBPhaVOwVjMyvNvum4ORrNDQOBOS+4ui
-         RmBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=PGFVk1niufUX0AOHaGBNfo/loLnY8Er3JL1iATIGSyc=;
-        b=G7SxY+M/zZR8tL+woVGAsw4DOolznk6DkrNmH6wjIc+W63gx6UHOKLHsmxKkP3AVLv
-         SKm08BOznW3y1TDEVFw5t+ToGaCYvUXadbJ75WaBD/Hdyj3jyMwXVrpfpRXHU+Cob3EL
-         u89hGLA3u1WHDTyysKjfRS/BH40RWckCIg+bP1dKgP6Wux5qq96WzKobdd+WaUfB59h7
-         eZ+Wj3BtTdXWp9DEvSisRr8993XUiDGveVyPRlh0cpe89VJVQEaDaL+zyhf4XaNnGlcW
-         ReNvxwENC4uuZ6SCVjtgxig8/Fg68mRhCMiu5OpSikhidxsZQLUdSebUpxt9MQ/2WxkE
-         KE7w==
-X-Gm-Message-State: AHYfb5gPV0ej2wrCfOXxeVKlu7xoxZdrzLpoY+nhbkd2SaSEbPjQYWds
-        FB5t+0ZbN2wL6cyi
-X-Google-Smtp-Source: ADKCNb4O2B7TwmH8rNQwzYnslRgE59byeBLhb2wsTxnKBu7AaFlKlWr+PnJwAyK7XM29OpSJ34yjwA==
-X-Received: by 10.84.229.136 with SMTP id c8mr11758710plk.27.1503687308307;
-        Fri, 25 Aug 2017 11:55:08 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:f5e9:c606:d78a:b54a])
-        by smtp.gmail.com with ESMTPSA id q185sm11978338pfb.119.2017.08.25.11.55.06
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 25 Aug 2017 11:55:07 -0700 (PDT)
-Date:   Fri, 25 Aug 2017 11:55:06 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, peff@peff.net, jrnieder@gmail.com,
-        sbeller@google.com, jonathantanmy@google.com
-Subject: Re: [RFC 3/7] protocol: tell server that the client understands v2
-Message-ID: <20170825185506.GC103659@google.com>
-References: <20170824225328.8174-1-bmwill@google.com>
- <20170824225328.8174-4-bmwill@google.com>
- <xmqqtw0vsfrz.fsf@gitster.mtv.corp.google.com>
- <20170825185321.GB103659@google.com>
+        id S1756539AbdHYTFB (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Aug 2017 15:05:01 -0400
+Received: from mout.web.de ([212.227.17.12]:62438 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754446AbdHYTFA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Aug 2017 15:05:00 -0400
+Received: from [192.168.178.36] ([91.20.52.82]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MOilO-1drLmo1ybu-0065Da; Fri, 25
+ Aug 2017 21:04:56 +0200
+X-Mozilla-News-Host: news://news.public-inbox.org:119
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH 1/2] apply: check date of potential epoch timestamps first
+Message-ID: <205339f5-bad8-62a3-8ccc-d3b0dd1d6736@web.de>
+Date:   Fri, 25 Aug 2017 21:04:54 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170825185321.GB103659@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:wQ/YaaA7/OcPhG8XCq7IdpIuDFm5UCSuqpnd26XoNzcLqgR3E6U
+ UIPUeaxzjIxPVCda60qTjJVUq1wCVlgKwpTpcu+KPvH3skIbA2uNcb+CgJRQxspcv1ZI6fz
+ KnMcDLb8H1Lnolz16ajGCKDAdynvLL5AoCLgYnrCohmggAnQ+AZkdEovu50okHCZp1mQQze
+ FqmdtKgA9M3lfjuYZFrEQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:7wrgNfPEBQc=:AjmHrl6E4PL4U1l4re+z49
+ ZF6akPDngSU2Xiu+J0qNpwm96e7aR0wn5XcRKQSuXfMIfp4pV6m8kBKM8qfcV2idwxp/sXAvG
+ AcUlQd0uoIObAtnpn9cjCjBHV2j7bQnkA/7qBU0gT69u5/tAxg00bUh3B/a99o3qNyQD8ih7W
+ 6PDatMBxL2RBf3XmBi0pCL/0ScDXoHwSZV5iLBuVPepw+ow9YI/NgxCPtrq7FsXeF7XcHerdY
+ utuiTYsFx1gQ30HbHYk582/tKNmZ5LSyB4tm43o55/9dP3n1TtSzC9jYddd9HAizyj+E9KVmU
+ Ce+KYo1Y8qhmlBUWDQReY7oDDwC6XlgRqmUqmc3OuEzZtwo3K+YuLjAun0Moxha/jpflgUR0M
+ nTvvlG/ywvbJrzZ8yU+E7/VCX4ufALgUOSgp8cIr0Yrj7VF9TDeWUsNCIpfnUkeHSf8hXCejo
+ V/eovJAE1QILjjRVLe++OLiG3oMRodDMYUT5ogD6Ti6+xacXXyRSukJKUP4z9nbm6ToGLoCN+
+ MAltgX6czmbnD9kWaYTjg52w8Q9Eev9UC8QPdkgVd4zZJcQM0zmKcr5omuGUg1isMH5WOjrPP
+ iO/JQH2HZashgvgmTpd9uEVJtEgFOgTfkkhWDdvFVTsUym+96kYcAvYKxgXwwQ9uUU5EBe8TV
+ oR9P6GLWGSayBs9u1JMWvyWQglAfMaNPLkuZ4VqTZfn6qTo3Ax+cH8ggY04SPQdFW5Q6RK0Qt
+ 30ryhT/xqaZhXXy2UPNRpWWrmhm+ZBqwZZJJP1MqNhpJcL4f7VrJPbQTUSfH1DaiIMOL+rPbQ
+ EbmL2Wt8EaXBrcV1OCx3M4QdI/DNC5HeQdxnUYOwUrEgLZMD2Y=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08/25, Brandon Williams wrote:
-> On 08/25, Junio C Hamano wrote:
-> > Brandon Williams <bmwill@google.com> writes:
-> > 
-> > > +		/* If using a new version put that stuff here after a second null byte */
-> > > +		strbuf_addch(&request, '\0');
-> > > +		strbuf_addf(&request, "version=%d%c", 2, '\0');
-> > > +		/* subsequent supported versions can also be added */
-> > > +		strbuf_addf(&request, "version=%d%c", 3, '\0');
-> > 
-> > Isn't this last one meant only as a comment?
-> 
-> Sorry since this was structured as an RFC I didn't go back through the
-> code with a fine tooth comb to ensure I removed or commented out any
-> debugging statements.  Stefan also pointed out to me that I left in an
-> if (0) statement somewhere haha.
+has_epoch_timestamp() looks for time stamps that amount to either
+1969-12-31 24:00 or 1970-01-01 00:00 after applying the time zone
+offset.  Move the check for these two dates up, set the expected hour
+based on which one is found, or exit early if none of them are present,
+thus avoiding to engage the regex machinery for newer dates.
 
-Oh one more thing about this line.  I added it to show (and check) that
-git-daemon would be able to cope with more than one field being added as
-I wanted to avoid the issue we had when adding the 'host' field where
-additional fields aren't allowed as they aren't gracefully ignored by
-the server.
+This also gets rid of two magic string length constants.
 
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ apply.c | 33 +++++++++++++++++----------------
+ 1 file changed, 17 insertions(+), 16 deletions(-)
+
+diff --git a/apply.c b/apply.c
+index 956f56a927..e14077eaee 100644
+--- a/apply.c
++++ b/apply.c
+@@ -819,8 +819,7 @@ static int has_epoch_timestamp(const char *nameline)
+ 	const char *timestamp = NULL, *cp, *colon;
+ 	static regex_t *stamp;
+ 	regmatch_t m[10];
+-	int zoneoffset;
+-	int hourminute;
++	int zoneoffset, epoch_hour, hour, minute;
+ 	int status;
+ 
+ 	for (cp = nameline; *cp != '\n'; cp++) {
+@@ -829,6 +828,18 @@ static int has_epoch_timestamp(const char *nameline)
+ 	}
+ 	if (!timestamp)
+ 		return 0;
++
++	/*
++	 * YYYY-MM-DD hh:mm:ss must be from either 1969-12-31
++	 * (west of GMT) or 1970-01-01 (east of GMT)
++	 */
++	if (starts_with(timestamp, "1969-12-31"))
++		epoch_hour = 24;
++	else if (starts_with(timestamp, "1970-01-01"))
++		epoch_hour = 0;
++	else
++		return 0;
++
+ 	if (!stamp) {
+ 		stamp = xmalloc(sizeof(*stamp));
+ 		if (regcomp(stamp, stamp_regexp, REG_EXTENDED)) {
+@@ -846,6 +857,9 @@ static int has_epoch_timestamp(const char *nameline)
+ 		return 0;
+ 	}
+ 
++	hour = strtol(timestamp + 11, NULL, 10);
++	minute = strtol(timestamp + 14, NULL, 10);
++
+ 	zoneoffset = strtol(timestamp + m[3].rm_so + 1, (char **) &colon, 10);
+ 	if (*colon == ':')
+ 		zoneoffset = zoneoffset * 60 + strtol(colon + 1, NULL, 10);
+@@ -854,20 +868,7 @@ static int has_epoch_timestamp(const char *nameline)
+ 	if (timestamp[m[3].rm_so] == '-')
+ 		zoneoffset = -zoneoffset;
+ 
+-	/*
+-	 * YYYY-MM-DD hh:mm:ss must be from either 1969-12-31
+-	 * (west of GMT) or 1970-01-01 (east of GMT)
+-	 */
+-	if ((zoneoffset < 0 && memcmp(timestamp, "1969-12-31", 10)) ||
+-	    (0 <= zoneoffset && memcmp(timestamp, "1970-01-01", 10)))
+-		return 0;
+-
+-	hourminute = (strtol(timestamp + 11, NULL, 10) * 60 +
+-		      strtol(timestamp + 14, NULL, 10) -
+-		      zoneoffset);
+-
+-	return ((zoneoffset < 0 && hourminute == 1440) ||
+-		(0 <= zoneoffset && !hourminute));
++	return hour * 60 + minute - zoneoffset == epoch_hour * 60;
+ }
+ 
+ /*
 -- 
-Brandon Williams
+2.14.1
