@@ -2,132 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8FB05208DB
-	for <e@80x24.org>; Fri, 25 Aug 2017 17:29:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 10B74208DB
+	for <e@80x24.org>; Fri, 25 Aug 2017 17:31:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757257AbdHYR3G (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Aug 2017 13:29:06 -0400
-Received: from cloud.peff.net ([104.130.231.41]:49296 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1754737AbdHYR3F (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Aug 2017 13:29:05 -0400
-Received: (qmail 846 invoked by uid 109); 25 Aug 2017 17:29:05 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 25 Aug 2017 17:29:05 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20038 invoked by uid 111); 25 Aug 2017 17:29:33 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
- by peff.net (qpsmtpd/0.94) with SMTP; Fri, 25 Aug 2017 13:29:33 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Aug 2017 10:29:02 -0700
-Date:   Fri, 25 Aug 2017 10:29:02 -0700
-From:   Jeff King <peff@peff.net>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com, sbeller@google.com,
-        gitster@pobox.com, jonathantanmy@google.com
-Subject: Re: [RFC 0/7] transitioning to protocol v2
-Message-ID: <20170825172901.kvquxafudhelxqq3@sigill.intra.peff.net>
-References: <20170824225328.8174-1-bmwill@google.com>
+        id S1757371AbdHYRbw (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Aug 2017 13:31:52 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54507 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1755114AbdHYRbv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Aug 2017 13:31:51 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3A350957EE;
+        Fri, 25 Aug 2017 13:31:51 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=jNIXM86XAoH1ZLbLg/08C0xpzUU=; b=ain2qb
+        aXON4ASl0964IdOd9qGyZMaOoBbs+liC1zVOlneV0Hpzu/KIC11MkX+w1HX1DJbz
+        4SOk9tBDiIafx+YGFd8sGM4xzHTcxtpPGceLkfgHlbedCMCdsW1YwfaEvHfJev4s
+        FJdlc9MjTo9dD9ckqqMfA3YkanhweWM22dZ84=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=qeeuqzykBBTEba29s36KXvp4ZSq8U1bE
+        dgzKhZMxqpZw/dr8u//kA2k5cCXr/USVvP14HQRp0xJxcAscv+GgBG2pbU/brJuX
+        7J/BXFPUb3ed1Na7Nz5E/RwMoEqeyAuNEJ79+dx1cYT02SN8zYMqWnec/4PkgJIt
+        oLahpK4iLxM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 32E27957ED;
+        Fri, 25 Aug 2017 13:31:51 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 73B9B957EA;
+        Fri, 25 Aug 2017 13:31:50 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] usage_with_options: omit double new line on empty option list
+References: <20170825164837.30118-1-sbeller@google.com>
+Date:   Fri, 25 Aug 2017 10:31:49 -0700
+In-Reply-To: <20170825164837.30118-1-sbeller@google.com> (Stefan Beller's
+        message of "Fri, 25 Aug 2017 09:48:37 -0700")
+Message-ID: <xmqqy3q7sge2.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170824225328.8174-1-bmwill@google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 47395B6E-89BB-11E7-9E7C-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 24, 2017 at 03:53:21PM -0700, Brandon Williams wrote:
+Stefan Beller <sbeller@google.com> writes:
 
-> Another version of Git's wire protocol is a topic that has been discussed and
-> attempted by many in the community over the years.  The biggest challenge, as
-> far as I understand, has been coming up with a transition plan to using the new
-> server without breaking existing clients and servers.  As such this RFC is
-> really only concerned with solidifying a transition plan.  Once it has been
-> decided how we can transition to a new protocol we can get into decided what
-> this new protocol would look like (though it would obviously eliminate the ref
-> advertisement ;).
+> Currently the worktree command gives its usage, when no subcommand is
+> given. However there are no general options, all options are related to
+> the subcommands itself, such that:
+>
+>     $ git worktree
+>     usage: git worktree add [<options>] <path> [<branch>]
+>        or: git worktree list [<options>]
+>        or: git worktree lock [<options>] <path>
+>        or: git worktree prune [<options>]
+>        or: git worktree unlock <path>
+>
+>
+>     $
+>
+> Note the two empty lines at the end of the usage string. This is because
+> the toplevel usage is printed with an empty options list.
 
-Sadly, while splitting these things apart makes the protocol
-conceptually cleaner, I'm not sure if we can consider them separately
-and avoid adding an extra round-trip to the protocol.
+I have this feeling that this patch may not be sufficient.  
 
-For instance, let's say as a client that I've communicated "I would like
-to speak v2" to the server. I don't immediately know if it was received
-and respected, so I have to wait for the server to say "OK, I know v2"
-before sending any more data (like my list of capabilities that I'd like
-the server to know before doing the ref advertisement).
+The reason for the first blank line is because we unconditionally
+emit one, expecting that we would have a list of options to show and
+want to separate the usage from that list, and the fix in this patch
+is correct---it is the right way to suppress it.
 
-So what was perhaps:
+But why do we need the second blank line in this case?  There is a
+similar unconditional LF near the end of this function.  Is somebody
+else (other than usage_with_options() which will exit immeidately)
+calls this function and expects to say something more after what
+this function said, and is this extra blank line at the end is to
+prepare for that caller?
 
-  C: please run upload-pack
-  S: advertisement + caps
-  C: caps + wants
-  C+S: async have negotiation
-  S: packfile
-
-becomes:
-
-  C: please run upload-pack (v2 if you support it)
-  S: yes, I speak v2
-  C: caps (including that I'm interested only in refs/heads/foo)
-  S: advertise refs/heads/foo + caps
-  C+S async have negotiation
-  S: packfile
-
-That extra round-trip is probably tolerable for stateful connections
-like git:// or ssh. But what about http? We have to add a whole
-request/response pair just to find out if v2 is supported.
-
-But what if we instead think of it not as "protocol v2" but as "can I
-give the server some hints that it may end up ignoring", then we end up
-with something more like:
-
-  C: please run upload-pack (btw, I'm only interested in refs/heads/foo)
-  S: advertisement + caps (hopefully limited to foo, but client is prepared to receive all)
-  ... etc, as before ...
-
-It's a subtle distinction, but the question becomes not "can we sneak in
-an extra bit of information" but "can we sneak in a reasonable number of
-arbitrary key/value pairs".
-
-Given the techniques you've used here, I suspect the answer may be
-"yes". We could stick arbitrary data in each of those methods (though I
-suspect our length may be limited to about 1024 bytes if we want
-compatibility with very old git servers).
-
-> The biggest question I'm trying to answer is if these are reasonable ways with
-> which to communicate a request to a server to use a newer protocol, without
-> breaking current servers/clients.  As far as I've tested, with patches 1-5
-> applied I can still communicate with current servers without causing any
-> problems.
-
-Current git.git servers, I assume?. How much do we want to care about
-alternate implementations? I would not be surprised if other git://
-implementations are more picky about cruft after the virtual-host field
-(though I double-checked GitHub's implementation at least, and it is
-fine).
-
-I don't think libgit2 implements the server side. That leaves probably
-JGit, Microsoft's VSTS (which I think is custom), and whatever Atlassian
-and GitLab use.
-
-There's not really a spec here.  I'm not entirely opposed to saying "if
-your server does not behave like the git.git one it is wrong". But this
-is awfully quirky behavior to be relying on, and if it behaves badly
-with those implementations it will create headaches for users. The
-centralized services I'm not too worried about; they'll upgrade
-promptly. But any deployments of those systems may hang around for
-years.
-
-I dunno. Maybe it would be enough to have a config to switch off this
-feature, which would give people using those systems an escape hatch
-(until they upgrade). Or alternatively, I guess make this optional to
-start with, and let early adopters turn it on and complain to their server
-vendors for a while before flipping the default to on.
-
--Peff
+> Only print one new line after the usage string if the option list is empty.
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  parse-options.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/parse-options.c b/parse-options.c
+> index 0dd9fc6a0d..1307c82861 100644
+> --- a/parse-options.c
+> +++ b/parse-options.c
+> @@ -603,7 +603,7 @@ static int usage_with_options_internal(struct parse_opt_ctx_t *ctx,
+>  		usagestr++;
+>  	}
+>  
+> -	if (opts->type != OPTION_GROUP)
+> +	if (opts->type != OPTION_GROUP && opts->type != OPTION_END)
+>  		fputc('\n', outfile);
+>  
+>  	for (; opts->type != OPTION_END; opts++) {
