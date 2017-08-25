@@ -2,110 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 10B74208DB
-	for <e@80x24.org>; Fri, 25 Aug 2017 17:31:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62CD6208DE
+	for <e@80x24.org>; Fri, 25 Aug 2017 17:35:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757371AbdHYRbw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Aug 2017 13:31:52 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54507 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1755114AbdHYRbv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Aug 2017 13:31:51 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3A350957EE;
-        Fri, 25 Aug 2017 13:31:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=jNIXM86XAoH1ZLbLg/08C0xpzUU=; b=ain2qb
-        aXON4ASl0964IdOd9qGyZMaOoBbs+liC1zVOlneV0Hpzu/KIC11MkX+w1HX1DJbz
-        4SOk9tBDiIafx+YGFd8sGM4xzHTcxtpPGceLkfgHlbedCMCdsW1YwfaEvHfJev4s
-        FJdlc9MjTo9dD9ckqqMfA3YkanhweWM22dZ84=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=qeeuqzykBBTEba29s36KXvp4ZSq8U1bE
-        dgzKhZMxqpZw/dr8u//kA2k5cCXr/USVvP14HQRp0xJxcAscv+GgBG2pbU/brJuX
-        7J/BXFPUb3ed1Na7Nz5E/RwMoEqeyAuNEJ79+dx1cYT02SN8zYMqWnec/4PkgJIt
-        oLahpK4iLxM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 32E27957ED;
-        Fri, 25 Aug 2017 13:31:51 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 73B9B957EA;
-        Fri, 25 Aug 2017 13:31:50 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] usage_with_options: omit double new line on empty option list
-References: <20170825164837.30118-1-sbeller@google.com>
-Date:   Fri, 25 Aug 2017 10:31:49 -0700
-In-Reply-To: <20170825164837.30118-1-sbeller@google.com> (Stefan Beller's
-        message of "Fri, 25 Aug 2017 09:48:37 -0700")
-Message-ID: <xmqqy3q7sge2.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1757382AbdHYRf4 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Aug 2017 13:35:56 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:33427 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755568AbdHYRfz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Aug 2017 13:35:55 -0400
+Received: by mail-pg0-f67.google.com with SMTP id q16so641626pgc.0
+        for <git@vger.kernel.org>; Fri, 25 Aug 2017 10:35:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ih1bU58GLGr2t+6zDW6gTc+HzfWayr/92pCA4zE8UNA=;
+        b=pVhMul7/biYlE+N/ikc+DZuQx3Lh8kA817yXCwpa5AWVFTpzl+p3sVF+ewhnhvD1jf
+         /fmPl1QZADIpOEX+xinI1PmMgIBFuy028NqFPmlSa3+aaSMICk808K/Nxt1mwBn+ck1s
+         mGC4t+/aHFJYXyT355+eyqTaldmfRxas+V48TWNqROo1hcntfZnxn2R0bawa0+goUh4Y
+         CSKxjZ3fEQaZnqdisW1YCRcMex5i92GNA2oQV7I0ZW7ghfkrkalOqIj4Y71CbvG+j4Zk
+         z2ojBwVOrJEzWZJLumvT7NnOzYpkFJ/4U9MHtYuL1Bt9gLCIeJ4UNgx6qAlpGkNfRKgH
+         VTGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ih1bU58GLGr2t+6zDW6gTc+HzfWayr/92pCA4zE8UNA=;
+        b=uj5v8Ib7Lv0sC3Zjd87g7McWhFdH24eVIV2YynxjocrEQC9aPlDJ+6tPX+64oAZWyi
+         n013O8GI9iT2ft5Doa40NbXB3O+C6RXRClWVuo5Hd/A97B7TmL2wNqmuNHkzE5XSm/sO
+         r3elcY6GK24znzRuPQiqkSpIcihJxZL69PMyvI7MA8iZ7Bx8plONvn2NyxnZybHmoXQY
+         QXjgY3DjziVg2zTaBHM63TaAST4aX+eHUkrK9jWtxRZMnVFmQGDw5Hpfay+9KhgX32Sb
+         gsQidEB8a+gqQR0QyIWERP7ZJ2sWZBASyh9RtncI+/2JtElpbjSBtMIaoQXyHNApvj20
+         2Zng==
+X-Gm-Message-State: AHYfb5j4r2rcZg5NyRYYaoILnBs6TLpRwmNb0UM2EdiM8/IQUbqtoOaa
+        AbOLKQ6uw5dpLA==
+X-Received: by 10.84.217.217 with SMTP id d25mr11664085plj.245.1503682554185;
+        Fri, 25 Aug 2017 10:35:54 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:b90d:e357:f4fe:7194])
+        by smtp.gmail.com with ESMTPSA id p80sm13485631pfa.19.2017.08.25.10.35.52
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 25 Aug 2017 10:35:53 -0700 (PDT)
+Date:   Fri, 25 Aug 2017 10:35:50 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
+        sbeller@google.com, gitster@pobox.com, jonathantanmy@google.com
+Subject: Re: [RFC 0/7] transitioning to protocol v2
+Message-ID: <20170825173550.GJ13924@aiede.mtv.corp.google.com>
+References: <20170824225328.8174-1-bmwill@google.com>
+ <20170825172901.kvquxafudhelxqq3@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 47395B6E-89BB-11E7-9E7C-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170825172901.kvquxafudhelxqq3@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Hi,
 
-> Currently the worktree command gives its usage, when no subcommand is
-> given. However there are no general options, all options are related to
-> the subcommands itself, such that:
->
->     $ git worktree
->     usage: git worktree add [<options>] <path> [<branch>]
->        or: git worktree list [<options>]
->        or: git worktree lock [<options>] <path>
->        or: git worktree prune [<options>]
->        or: git worktree unlock <path>
->
->
->     $
->
-> Note the two empty lines at the end of the usage string. This is because
-> the toplevel usage is printed with an empty options list.
+Jeff King wrote:
+> On Thu, Aug 24, 2017 at 03:53:21PM -0700, Brandon Williams wrote:
 
-I have this feeling that this patch may not be sufficient.  
-
-The reason for the first blank line is because we unconditionally
-emit one, expecting that we would have a list of options to show and
-want to separate the usage from that list, and the fix in this patch
-is correct---it is the right way to suppress it.
-
-But why do we need the second blank line in this case?  There is a
-similar unconditional LF near the end of this function.  Is somebody
-else (other than usage_with_options() which will exit immeidately)
-calls this function and expects to say something more after what
-this function said, and is this extra blank line at the end is to
-prepare for that caller?
-
-> Only print one new line after the usage string if the option list is empty.
+>> Another version of Git's wire protocol is a topic that has been discussed and
+>> attempted by many in the community over the years.  The biggest challenge, as
+>> far as I understand, has been coming up with a transition plan to using the new
+>> server without breaking existing clients and servers.  As such this RFC is
+>> really only concerned with solidifying a transition plan.  Once it has been
+>> decided how we can transition to a new protocol we can get into decided what
+>> this new protocol would look like (though it would obviously eliminate the ref
+>> advertisement ;).
 >
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  parse-options.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> Sadly, while splitting these things apart makes the protocol
+> conceptually cleaner, I'm not sure if we can consider them separately
+> and avoid adding an extra round-trip to the protocol.
+
+How about the idea of using this mechanism to implement a protocol
+"v1"?
+
+The reply would be the same as today, except that it has a "protocol
+v1" pkt-line at the beginning.  So this doesn't change the number of
+round-trips --- it just validates the protocol migration approach.
+
+I agree with you that an actual protocol v2 needs to change how the
+capability exchange etc work.  bmwill@ has mentioned some thoughts about
+this privately.  Probably he can say more here too.
+
+[...]
+> Given the techniques you've used here, I suspect the answer may be
+> "yes". We could stick arbitrary data in each of those methods (though I
+> suspect our length may be limited to about 1024 bytes if we want
+> compatibility with very old git servers).
+
+Yes, including arbitrary data to be able to include some kinds of
+requests inline in the initial request is one of the design goals.
+
+>> The biggest question I'm trying to answer is if these are reasonable ways with
+>> which to communicate a request to a server to use a newer protocol, without
+>> breaking current servers/clients.  As far as I've tested, with patches 1-5
+>> applied I can still communicate with current servers without causing any
+>> problems.
 >
-> diff --git a/parse-options.c b/parse-options.c
-> index 0dd9fc6a0d..1307c82861 100644
-> --- a/parse-options.c
-> +++ b/parse-options.c
-> @@ -603,7 +603,7 @@ static int usage_with_options_internal(struct parse_opt_ctx_t *ctx,
->  		usagestr++;
->  	}
->  
-> -	if (opts->type != OPTION_GROUP)
-> +	if (opts->type != OPTION_GROUP && opts->type != OPTION_END)
->  		fputc('\n', outfile);
->  
->  	for (; opts->type != OPTION_END; opts++) {
+> Current git.git servers, I assume?. How much do we want to care about
+> alternate implementations? I would not be surprised if other git://
+> implementations are more picky about cruft after the virtual-host field
+> (though I double-checked GitHub's implementation at least, and it is
+> fine).
+
+FWIW JGit copes fine with this.
+
+> I don't think libgit2 implements the server side. That leaves probably
+> JGit, Microsoft's VSTS (which I think is custom), and whatever Atlassian
+> and GitLab use.
+
+I'd be happy if someone tests the patches against those. :)
+
+> There's not really a spec here.
+
+Technically pack-protocol is a spec, just not a very clear one.
+
+It does say this kind of client request is invalid.  The idea of this
+series is to change the spec. :)
+
+[...]
+> I dunno. Maybe it would be enough to have a config to switch off this
+> feature, which would give people using those systems an escape hatch
+> (until they upgrade).
+
+I'd rather not.  That means there's less motivation for people to
+report compatibility problems so we can fix them.
+
+It might be necessary as a temporary escape hatch, though.
+
+>                        Or alternatively, I guess make this optional to
+> start with, and let early adopters turn it on and complain to their server
+> vendors for a while before flipping the default to on.
+
+Can we do that by making it a patch / letting it cook for a while in
+'next'? :)
+
+Thanks,
+Jonathan
