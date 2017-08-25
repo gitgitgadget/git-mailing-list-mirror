@@ -2,150 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BABF520285
-	for <e@80x24.org>; Thu, 24 Aug 2017 22:54:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F3D5720285
+	for <e@80x24.org>; Fri, 25 Aug 2017 01:19:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754056AbdHXWyP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Aug 2017 18:54:15 -0400
-Received: from mail-pg0-f51.google.com ([74.125.83.51]:35939 "EHLO
-        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753998AbdHXWyC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Aug 2017 18:54:02 -0400
-Received: by mail-pg0-f51.google.com with SMTP id r133so4709541pgr.3
-        for <git@vger.kernel.org>; Thu, 24 Aug 2017 15:54:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=xedp72fGq9Y7oru8ZUtjndUhAF1KJ56mcCQxBQfpYRw=;
-        b=qZIQjl0C2duKZVf7Gt+OzeHDEtpgyaM5ZOBLVHpScdUtyPHK/zCOEKUTXHsrbGQ/GX
-         Au6pzEUwHbIfHHJzx88+0udpIHKl9A4UzOJ/TSUoLdJLTgf3jP1N31qMF3SnV42M/gn0
-         cYes282zmMtqH+wloJfGGFx5nrcaNMGGKO94fmaKDG9pShNOPOkhdJZbL5xXkGniJAro
-         NqzvmflcsfbMe/6ELLhhJ0GASgkyhSzmwUqj7dIfWkubgDJntWkHYV65Ro2h4R2l5i5O
-         ivFvshEEqkK01MJlTlfhCB7ICRb449ucrappXDNsskvSLAURmSzYVQtZ+UOa8hDTLAff
-         QLPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=xedp72fGq9Y7oru8ZUtjndUhAF1KJ56mcCQxBQfpYRw=;
-        b=RWHpbq1aGC/UGyG+XMyRJGhPxFxlVHhngpN32NNGbIHtG8AZkjHbpf3LzA8BNQBwpD
-         O2lXvdJzf4TLgjCIb6xVfmR7btCqg5EQRDh9+mENWuoJVeA++/XPwcLRdTTMJnTtc/si
-         qm1Dz287BXIs9tZLri2OIE/ude4Hmvk00/aUuRm4QIx7KmMmsq/Y3rLmutioCQF2Rev5
-         KWMgLjrsUsj8teufambPEQRjv7yfqXePJOfOea+Y73FJguMGEELE31kIkNGKIGAdM8Wh
-         4jlqRDz4CUx55Wqqy1q0wE4pM+HFt71Q/afoRxVLh8FUdEeM5CPEPDrdHjhghbV3i8z2
-         EGAg==
-X-Gm-Message-State: AHYfb5ivBYOQwzZoACAbiyZ++LURPgWjoupcSP/OEV9VGkmIxt4kuUqQ
-        u6Co/dHhzWcnMNZPadHFBw==
-X-Google-Smtp-Source: ADKCNb7Dl5MKGssxCS3HEzTiIIZs2vexwc4lrjkq0CQXYAt5vhWmfP9T3r0CEdF0HG84j85O+VFyUw==
-X-Received: by 10.99.4.143 with SMTP id 137mr7688222pge.62.1503615240497;
-        Thu, 24 Aug 2017 15:54:00 -0700 (PDT)
-Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id x8sm9402667pfi.174.2017.08.24.15.53.59
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 24 Aug 2017 15:53:59 -0700 (PDT)
-From:   Brandon Williams <bmwill@google.com>
-To:     git@vger.kernel.org
-Cc:     peff@peff.net, jrnieder@gmail.com, sbeller@google.com,
-        gitster@pobox.com, jonathantanmy@google.com,
-        Brandon Williams <bmwill@google.com>
-Subject: [RFC 4/7] t: fix ssh tests to cope with using '-o SendEnv=GIT_PROTOCOL'
-Date:   Thu, 24 Aug 2017 15:53:25 -0700
-Message-Id: <20170824225328.8174-5-bmwill@google.com>
-X-Mailer: git-send-email 2.14.1.342.g6490525c54-goog
-In-Reply-To: <20170824225328.8174-1-bmwill@google.com>
+        id S1754252AbdHYBTt (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Aug 2017 21:19:49 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56939 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754250AbdHYBTp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Aug 2017 21:19:45 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 671EBA51E3;
+        Thu, 24 Aug 2017 21:19:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=UYeQHYW4t+UL0lHqQ1OX5d8UWhY=; b=gNYhzA
+        oti6JxL6OV7pQTLc+7qSZgRIZI7x3gzB6rFc2uexcgjFwxwIu4ItuSajOKMW3yFA
+        CwPm4shQQll60rPiC2dsE2pNd3ubL9fbf+C5cbNTmJt/jLoRC7zt/x8wAF3Bqbhy
+        Pdceg8grXWmM7ch+rH05IVi6dxN1HhK9cvAm8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=XvCekNUozsHJeH6cWjMHQX8H/oumB8Xz
+        Mny+jqtlZhCBVET16r2DxO8Kx6OQpEfxjiMNYWj8UAkJ0yHBhcRPnuvm7r6c7qcZ
+        OufIjGVQ7XvhRac8p+ALfdNc7jK8WGfEri/GhkMaZbxaW9x4UQZ/l8MQ4BD5Vbmq
+        rb4ha+qOopU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5E83FA51E2;
+        Thu, 24 Aug 2017 21:19:39 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BF4A5A51E0;
+        Thu, 24 Aug 2017 21:19:38 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net, jrnieder@gmail.com,
+        sbeller@google.com, jonathantanmy@google.com
+Subject: Re: [RFC 0/7] transitioning to protocol v2
 References: <20170824225328.8174-1-bmwill@google.com>
+Date:   Thu, 24 Aug 2017 18:19:37 -0700
+In-Reply-To: <20170824225328.8174-1-bmwill@google.com> (Brandon Williams's
+        message of "Thu, 24 Aug 2017 15:53:21 -0700")
+Message-ID: <xmqq7exsv3yu.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 76D3AAD8-8933-11E7-AB18-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Update some of our tests to cope with ssh being launched with the option
-to send the protocol version.
+Brandon Williams <bmwill@google.com> writes:
 
-Signed-off-by: Brandon Williams <bmwill@google.com>
----
- t/lib-proto-disable.sh       |  1 +
- t/t5601-clone.sh             | 10 +++++-----
- t/t5602-clone-remote-exec.sh |  4 ++--
- 3 files changed, 8 insertions(+), 7 deletions(-)
+> The best way to preserve functionality with old servers and clients would be to
+> communicate using the same end point but have the client send a bit of extra
+> information with its initial request.  This extra information would need to be
+> sent in such a way that old servers ignore it and operate normally (using
+> protocol v1).  The client would then need to be able to look at a server's
+> response to determine whether the server understands and is speaking v2 or has
+> ignored the clients request to use a newer protocol and is speaking v1.
 
-diff --git a/t/lib-proto-disable.sh b/t/lib-proto-disable.sh
-index 83babe57d..d19c88f96 100644
---- a/t/lib-proto-disable.sh
-+++ b/t/lib-proto-disable.sh
-@@ -194,6 +194,7 @@ setup_ssh_wrapper () {
- 	test_expect_success 'setup ssh wrapper' '
- 		write_script ssh-wrapper <<-\EOF &&
- 		echo >&2 "ssh: $*"
-+		shift; shift
- 		host=$1; shift
- 		cd "$TRASH_DIRECTORY/$host" &&
- 		eval "$*"
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 9c56f771b..7e65013c5 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -332,13 +332,13 @@ expect_ssh () {
- 		1)
- 			;;
- 		2)
--			echo "ssh: $1 git-upload-pack '$2'"
-+			echo "ssh: -o SendEnv=GIT_PROTOCOL $1 git-upload-pack '$2'"
- 			;;
- 		3)
--			echo "ssh: $1 $2 git-upload-pack '$3'"
-+			echo "ssh: -o SendEnv=GIT_PROTOCOL $1 $2 git-upload-pack '$3'"
- 			;;
- 		*)
--			echo "ssh: $1 $2 git-upload-pack '$3' $4"
-+			echo "ssh: $1 -o SendEnv=GIT_PROTOCOL $2 $3 git-upload-pack '$4'"
- 		esac
- 	} >"$TRASH_DIRECTORY/ssh-expect" &&
- 	(cd "$TRASH_DIRECTORY" && test_cmp ssh-expect ssh-output)
-@@ -390,7 +390,7 @@ test_expect_success 'double quoted plink.exe in GIT_SSH_COMMAND' '
- 	copy_ssh_wrapper_as "$TRASH_DIRECTORY/plink.exe" &&
- 	GIT_SSH_COMMAND="\"$TRASH_DIRECTORY/plink.exe\" -v" \
- 		git clone "[myhost:123]:src" ssh-bracket-clone-plink-3 &&
--	expect_ssh "-v -P 123" myhost src
-+	expect_ssh "-v" "-P 123" myhost src
- '
- 
- SQ="'"
-@@ -398,7 +398,7 @@ test_expect_success 'single quoted plink.exe in GIT_SSH_COMMAND' '
- 	copy_ssh_wrapper_as "$TRASH_DIRECTORY/plink.exe" &&
- 	GIT_SSH_COMMAND="$SQ$TRASH_DIRECTORY/plink.exe$SQ -v" \
- 		git clone "[myhost:123]:src" ssh-bracket-clone-plink-4 &&
--	expect_ssh "-v -P 123" myhost src
-+	expect_ssh "-v" "-P 123" myhost src
- '
- 
- test_expect_success 'GIT_SSH_VARIANT overrides plink detection' '
-diff --git a/t/t5602-clone-remote-exec.sh b/t/t5602-clone-remote-exec.sh
-index cbcceab9d..b0d80cadd 100755
---- a/t/t5602-clone-remote-exec.sh
-+++ b/t/t5602-clone-remote-exec.sh
-@@ -13,14 +13,14 @@ test_expect_success setup '
- 
- test_expect_success 'clone calls git upload-pack unqualified with no -u option' '
- 	test_must_fail env GIT_SSH=./not_ssh git clone localhost:/path/to/repo junk &&
--	echo "localhost git-upload-pack '\''/path/to/repo'\''" >expected &&
-+	echo "-o SendEnv=GIT_PROTOCOL localhost git-upload-pack '\''/path/to/repo'\''" >expected &&
- 	test_cmp expected not_ssh_output
- '
- 
- test_expect_success 'clone calls specified git upload-pack with -u option' '
- 	test_must_fail env GIT_SSH=./not_ssh \
- 		git clone -u ./something/bin/git-upload-pack localhost:/path/to/repo junk &&
--	echo "localhost ./something/bin/git-upload-pack '\''/path/to/repo'\''" >expected &&
-+	echo "-o SendEnv=GIT_PROTOCOL localhost ./something/bin/git-upload-pack '\''/path/to/repo'\''" >expected &&
- 	test_cmp expected not_ssh_output
- '
- 
--- 
-2.14.1.342.g6490525c54-goog
+Good. I think the idle talk last round was for the server to tell
+the v1 client "we are still doing the slow ls-remote comes first
+protocol with this exchange, but just for future reference, you can
+use the v2 endpoint with me", which was way less desirable (even
+though it may be safer).
 
+> Patches 1-5 enable a client to unconditionally send this back-channel
+> information to a server.  This is done by sending a version number after a
+> second NUL byte in git://, in the envvar GIT_PROTOCOL in file:// and ssh://,
+> and in an http header in http://, https://.  Patches 6-7 teach a client and
+> upload-pack to send and recognize a request to use protocol v2.
+
+All sounds sensible.
+
+ - for git://, if you say you found a hole in the protocol to stuff
+   this information, I simply believe you ;-)  Good job.
+
+ - http:// and https:// should be a no-brainer as the HTTP headers
+   give ample room to send information from the initiator side.
+
+ - For ssh://, I do not think it is sane to assume that we can
+   convince server operators to allow passing any random environment
+   variable.  If the use of this specific variable turns out to be
+   popular enough, however, and its benefit outweighs administrative
+   burden, perhaps it is not impossible to convince them to allow
+   AcceptEnv on this single variable.
+
+Thanks.
