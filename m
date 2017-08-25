@@ -2,98 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A1FE208DB
-	for <e@80x24.org>; Fri, 25 Aug 2017 17:41:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 59B80208DB
+	for <e@80x24.org>; Fri, 25 Aug 2017 17:45:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757473AbdHYRlv (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Aug 2017 13:41:51 -0400
-Received: from cloud.peff.net ([104.130.231.41]:49348 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1757454AbdHYRlu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Aug 2017 13:41:50 -0400
-Received: (qmail 1636 invoked by uid 109); 25 Aug 2017 17:41:50 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 25 Aug 2017 17:41:50 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20206 invoked by uid 111); 25 Aug 2017 17:42:18 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
- by peff.net (qpsmtpd/0.94) with SMTP; Fri, 25 Aug 2017 13:42:18 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Aug 2017 10:41:46 -0700
-Date:   Fri, 25 Aug 2017 10:41:46 -0700
-From:   Jeff King <peff@peff.net>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
-        sbeller@google.com, gitster@pobox.com, jonathantanmy@google.com
-Subject: Re: [RFC 0/7] transitioning to protocol v2
-Message-ID: <20170825174145.x6oa7btkpy5yii54@sigill.intra.peff.net>
+        id S1756382AbdHYRpH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Aug 2017 13:45:07 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54926 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1756115AbdHYRpG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Aug 2017 13:45:06 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E122295E68;
+        Fri, 25 Aug 2017 13:45:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=whFvQIdpEza0YiKdrli9pkA9+o4=; b=noNVwY
+        jmHfhWA5HTDpA5nVWshNedU+KJModBTlQu/8gjL0/GU0oHEV3Va7kLW1+07tBkA2
+        qCYBpjOaSE4gYUnSWiVfUbr7XsyXIlzTLF5VXuh9bQIU0H4l5gdZDrvUlGAgycWx
+        uu06vaIfUis7EKhidiLHT923/3Y+d7Bj/LV/o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=DYveDmmiaNu069rgLCRNrY4Q2NhAnhoi
+        oSYx1lU8FzrSfPrJk/JWL5El8jrzjEUjW4nppSimyrjwcdkUt0VSoCTsMFE1b2fE
+        DJaKf8bZF/rJ5xa/lCKc+vpJRuRd8uwba6jkWLM0h0U0ZsFVCNawygBqM7qQURmU
+        jLVafYDi5uE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D623195E66;
+        Fri, 25 Aug 2017 13:45:05 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3BC8295E65;
+        Fri, 25 Aug 2017 13:45:05 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net, jrnieder@gmail.com,
+        sbeller@google.com, jonathantanmy@google.com
+Subject: Re: [RFC 3/7] protocol: tell server that the client understands v2
 References: <20170824225328.8174-1-bmwill@google.com>
- <20170825172901.kvquxafudhelxqq3@sigill.intra.peff.net>
- <20170825173550.GJ13924@aiede.mtv.corp.google.com>
+        <20170824225328.8174-4-bmwill@google.com>
+Date:   Fri, 25 Aug 2017 10:45:04 -0700
+In-Reply-To: <20170824225328.8174-4-bmwill@google.com> (Brandon Williams's
+        message of "Thu, 24 Aug 2017 15:53:24 -0700")
+Message-ID: <xmqqtw0vsfrz.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170825173550.GJ13924@aiede.mtv.corp.google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 20F1B116-89BD-11E7-80CB-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 25, 2017 at 10:35:50AM -0700, Jonathan Nieder wrote:
+Brandon Williams <bmwill@google.com> writes:
 
-> > Sadly, while splitting these things apart makes the protocol
-> > conceptually cleaner, I'm not sure if we can consider them separately
-> > and avoid adding an extra round-trip to the protocol.
-> 
-> How about the idea of using this mechanism to implement a protocol
-> "v1"?
-> 
-> The reply would be the same as today, except that it has a "protocol
-> v1" pkt-line at the beginning.  So this doesn't change the number of
-> round-trips --- it just validates the protocol migration approach.
+> +		/* If using a new version put that stuff here after a second null byte */
+> +		strbuf_addch(&request, '\0');
+> +		strbuf_addf(&request, "version=%d%c", 2, '\0');
+> +		/* subsequent supported versions can also be added */
+> +		strbuf_addf(&request, "version=%d%c", 3, '\0');
 
-I'm not that worried about validating the ideas here to shoe-horn a
-version field. I'm worried about what "step 2" is going to look like,
-and whether "we shoe-horned a version field" can be extended to "we
-shoe-horned arbitrary data".
-
-Maybe those are the same thing, and validating the first validates the
-second. But I don't think it's a foregone conclusion.
-
-> > Current git.git servers, I assume?. How much do we want to care about
-> > alternate implementations? I would not be surprised if other git://
-> > implementations are more picky about cruft after the virtual-host field
-> > (though I double-checked GitHub's implementation at least, and it is
-> > fine).
-> 
-> FWIW JGit copes fine with this.
-
-Thanks for checking.
-
-> > I don't think libgit2 implements the server side. That leaves probably
-> > JGit, Microsoft's VSTS (which I think is custom), and whatever Atlassian
-> > and GitLab use.
-> 
-> I'd be happy if someone tests the patches against those. :)
-
-Me too. I don't have an easy setup for the last 3.
-
-> >                        Or alternatively, I guess make this optional to
-> > start with, and let early adopters turn it on and complain to their server
-> > vendors for a while before flipping the default to on.
-> 
-> Can we do that by making it a patch / letting it cook for a while in
-> 'next'? :)
-
-If people actually ran 'next', that would help. I was hoping that we
-could get it out to the masses behind a feature flag, and dangle it in
-front of them with "this will improve fetch performance if you turn it
-on". But that carrot implies going all the way through the follow-on
-steps of designing the performance-improving v2 extensions and getting
-them implemented on the server side.
-
--Peff
+Isn't this last one meant only as a comment?
