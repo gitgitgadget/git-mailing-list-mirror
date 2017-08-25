@@ -2,117 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 80908208DB
-	for <e@80x24.org>; Fri, 25 Aug 2017 12:02:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE2BB208DB
+	for <e@80x24.org>; Fri, 25 Aug 2017 14:03:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755388AbdHYMCr (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Aug 2017 08:02:47 -0400
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:38092 "EHLO
-        glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754614AbdHYMCq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Aug 2017 08:02:46 -0400
-Received: from glandium by mitsuha.glandium.org with local (Exim 4.89)
-        (envelope-from <mh@glandium.org>)
-        id 1dlDJs-00022x-Tk; Fri, 25 Aug 2017 21:02:36 +0900
-Date:   Fri, 25 Aug 2017 21:02:36 +0900
-From:   Mike Hommey <mh@glandium.org>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-        git-for-windows@googlegroups.com
-Subject: Re: [git-for-windows] Re: Revision resolution for remote-helpers?
-Message-ID: <20170825120236.orf6wubxf6qlvouy@glandium.org>
-References: <20170818064208.plkppke7efpucuwm@glandium.org>
- <20170818220637.GN13924@aiede.mtv.corp.google.com>
- <20170818221754.3rbh35aewj5xnu4z@glandium.org>
- <20170818223323.GO13924@aiede.mtv.corp.google.com>
- <alpine.DEB.2.21.1.1708222212320.19382@virtualbox>
- <20170824082350.6ed6jqkn6aeylvnv@glandium.org>
- <alpine.DEB.2.21.1.1708251258080.7424@virtualbox>
+        id S932901AbdHYODb (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Aug 2017 10:03:31 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49036 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S933028AbdHYODa (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Aug 2017 10:03:30 -0400
+Received: (qmail 22417 invoked by uid 109); 25 Aug 2017 14:03:30 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 25 Aug 2017 14:03:30 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 18540 invoked by uid 111); 25 Aug 2017 14:03:58 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
+ by peff.net (qpsmtpd/0.94) with SMTP; Fri, 25 Aug 2017 10:03:58 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Aug 2017 07:03:27 -0700
+Date:   Fri, 25 Aug 2017 07:03:27 -0700
+From:   Jeff King <peff@peff.net>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] sha1-lookup: remove sha1_entry_pos() from header file
+Message-ID: <20170825140326.lkjqkdevaaelwyyg@sigill.intra.peff.net>
+References: <20170825073613.13853-1-chriscool@tuxfamily.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.21.1.1708251258080.7424@virtualbox>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: NeoMutt/20170609 (1.8.3)
+In-Reply-To: <20170825073613.13853-1-chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 25, 2017 at 12:58:52PM +0200, Johannes Schindelin wrote:
-> Hi Mike,
-> 
-> On Thu, 24 Aug 2017, Mike Hommey wrote:
-> 
-> > On Tue, Aug 22, 2017 at 10:15:20PM +0200, Johannes Schindelin wrote:
-> > > 
-> > > On Fri, 18 Aug 2017, Jonathan Nieder wrote:
-> > > 
-> > > > Mike Hommey wrote[1]:
-> > > > > On Fri, Aug 18, 2017 at 03:06:37PM -0700, Jonathan Nieder wrote:
-> > > > >> Mike Hommey wrote:
-> > > > 
-> > > > >>> The reason for the <helper>:: prefix is that it matches the <helper>::
-> > > > >>> prefix used for remote helpers.
-> > > > >>>
-> > > > >>> Now, there are a few caveats:
-> > > > [...]
-> > > > >>> - msys likes to completely fuck up command lines when they contain ::.
-> > > > >>>   For remote helpers, the alternative that works is
-> > > > >>>   <helper>://<host>/etc.
-> > > > >>
-> > > > >> Hm --- is there a bug already open about this (e.g. in the Git for
-> > > > >> Windows project or in msys) where I can read more?
-> > > > >
-> > > > > It's entirely an msys problem. Msys has weird rules to translate between
-> > > > > unix paths and windows paths on the command line, and botches everything
-> > > > > as a consequence. That's by "design".
-> > > > >
-> > > > > http://www.mingw.org/wiki/Posix_path_conversion
-> > > > >
-> > > > > (Particularly, see the last two entries)
-> > > > >
-> > > > > That only happens when calling native Windows programs from a msys
-> > > > > shell.
-> > > > 
-> > > > Cc-ing the Git for Windows mailing list as an FYI.
-> > > > 
-> > > > I have faint memories that some developers on that project have had to
-> > > > delve deep into Msys path modification rules.  It's possible they can
-> > > > give us advice (e.g. about <helper>::<url> having been a bad choice of
-> > > > syntax in the first place :)).
-> > > 
-> > > I think it is safe to assume that :: is not part of any Unix-y path. That
-> > > is why the MSYS2 runtime does not try to play games with it by converting
-> > > it to a Windows path.
-> > > 
-> > > (And indeed, I just tested this, an argument of the form
-> > > "a::file://b/x/y/z" is not converted to a "Windows path")
-> > 
-> > Note that there are people out there using msys, *and* git for windows,
-> > although I don't know if such people exist outside Mozilla.
-> 
-> Note that I am maintainer of Git for Windows, not of any setup that uses
-> MSys. Please do not even try to put more stuff on my plate.
+On Fri, Aug 25, 2017 at 09:36:13AM +0200, Christian Couder wrote:
 
-I'm not trying to do that. I'm just saying that there are setups where
-the current way of using remote helpers doesn't work out, and it's
-completely independent of git or git for windows, and there's not much
-git for windows can do about it except maybe unmangling what msys does,
-but it's about as horrible as not doing anything.
+> Since f1068efefe (sha1_file: drop experimental GIT_USE_LOOKUP search, 2017-08-09)
+> the definition of sha1_entry_pos() has been removed from "sha1-lookup.c", so
+> there is no need anymore for its declaration in "sha1-lookup.h".
 
-This does bring the question, though, whether there should be an
-alternative syntax, which there actually is, but it doesn't really allow
-to convey things with a protocol after the double colons (e.g.
-you can't really distinguish between hg::http://... and hg::http://...
-with the hg:// form ; git-cinnabar allows the protocol to appear as part
-of the port number, e.g. hg://host:http/... and hg:// defaults to https)
+Doh, thanks for catching.
 
-And this brings the question whether :: would be the right "trigger" for
-the feature that opened this thread originally.
+Patch is obviously good.
 
-Mike
+-Peff
