@@ -2,212 +2,192 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1EAEA208DB
-	for <e@80x24.org>; Fri, 25 Aug 2017 19:37:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49098208DB
+	for <e@80x24.org>; Fri, 25 Aug 2017 20:27:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758391AbdHYThs (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Aug 2017 15:37:48 -0400
-Received: from mail-pg0-f46.google.com ([74.125.83.46]:35443 "EHLO
-        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1758384AbdHYThq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Aug 2017 15:37:46 -0400
-Received: by mail-pg0-f46.google.com with SMTP id 63so3935308pgc.2
-        for <git@vger.kernel.org>; Fri, 25 Aug 2017 12:37:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=0/FP0Kpn3wjS33KkAKbT86+D+mPOYMk5x29lH5K4WK4=;
-        b=UUenAyeks8IRqpISFMBeRDQFccrsz7B+IK7XxR6ZyGTcA1Yzyw6pDW0qOkh1H3Exdb
-         UQmR6tX7HUEaHUwBW/jDcmeJSOuDJMkPg/SPp/pU5birU1w7icXptf8TDt9wUgViM7wT
-         jlIg6PXe8V+RoacrSJgWA5rseHqfDiYi5T2qdNKzNOKPayW6P1ApI0PRWdLyzEnE2omA
-         6h1ngVBinEWf5pdtIB6VUM48uCIeit82jgOUmQolputguJqSFXLx2cF2nPQMaOmRRl+k
-         NU2FqwR+oQEr2h0rQtUnO8m1A80QYln8vgO7Xz1iBsKPRLwI8mmefuo8E85tkwk+WT9k
-         w42Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=0/FP0Kpn3wjS33KkAKbT86+D+mPOYMk5x29lH5K4WK4=;
-        b=ki8/0qT3RrIesDjFMDUaqmlIqnj8FDy6BsAo08jpMXFZ3ccA9Wg3bq2r/i+QW/oswW
-         p3VSAtKLNq0YbW6uQMv49NpkIgUSWruHULe4nE4Fzyt1Ee20stdVUOuRWGFvVVUkOSlw
-         fW9fYTZvucxtDSfcoV2O+Vrw0+1+wjvUxCWN5jqXMiMStCNFzYF2v5Fwfx3iWVMtsN3U
-         6x2SYxkAIwpF0btxmSR9Q2EDOU3m5D4909PyEOLGQp4tMWlQYCvSEH9WgbkBF5ZT885q
-         Y1G97D3pxx26RsuFM4EvhUgbRak44BhedljcM8NPuGV+x/MgDVxnBtmv2G/Ln67/kfE8
-         wh4Q==
-X-Gm-Message-State: AHYfb5iT0MpkXe6+tb6C8E+hYzHs6+Wh3zD58qHFfZDbEZNy2f7Uy/3i
-        W6lRuCI1Yv5TyBFL7YhzFw==
-X-Google-Smtp-Source: ADKCNb5ltXFmy4PRWTyh34CJWfs37Tabn541OFlZqEYKeYOjQOzuER7I6km3Vn+STpsbAUW/TvXl5Q==
-X-Received: by 10.84.130.104 with SMTP id 95mr11566653plc.411.1503689865838;
-        Fri, 25 Aug 2017 12:37:45 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:f5e9:c606:d78a:b54a])
-        by smtp.gmail.com with ESMTPSA id 3sm13883214pfj.92.2017.08.25.12.37.44
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 25 Aug 2017 12:37:44 -0700 (PDT)
-Date:   Fri, 25 Aug 2017 12:37:43 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Ivan Vyshnevskyi <sainaen@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH/RFC] push: anonymize URL in error output
-Message-ID: <20170825193743.GD103659@google.com>
-References: <20170823094929.13541-1-sainaen@gmail.com>
- <20170823155826.m4s5y55x2esfoass@sigill.intra.peff.net>
- <82741094-19a6-e071-227d-f92b3b077a69@gmail.com>
+        id S1756360AbdHYU1a (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Aug 2017 16:27:30 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52107 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1756119AbdHYU12 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Aug 2017 16:27:28 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 23CD8A4FA7;
+        Fri, 25 Aug 2017 16:27:28 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=1k126g7FU1aT
+        3h4kWkmY4yj8RQo=; b=racTyOBkxUVYTXDf84bJnPEl4krLjzJCJCuqnM5yMf1a
+        iRS4c+klItuKlnTHkQ1P376dQMEvKC0iR/IUtsUiYTeu5fe+l/jTdhf8yAPSSooh
+        8fwhXZeBzqCjnR4JVahGb251522CyI+sZwGIH9TlGKjCmOHmmdf0sB9SA/tsxsQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Mwelkq
+        vpWRVNUUNfbpLlVR045LAWfheJuTuc16Kb0BbEp3S/zyRB84PuNW8Trs1zKtJJW4
+        yv5+9xOCrhpAYplHNE2FXbKUzfNOFZ9+ABL7HGFJzm4Bnkx431YiTfiDviIR4KgT
+        9d06fUyaM748bGdFQZwbJEln9s+cvllf5X+Xo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 14A74A4FA5;
+        Fri, 25 Aug 2017 16:27:28 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 69B29A4FA3;
+        Fri, 25 Aug 2017 16:27:27 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] usage_with_options: omit double new line on empty option list
+References: <xmqqy3q7sge2.fsf@gitster.mtv.corp.google.com/>
+        <20170825192813.15697-1-sbeller@google.com>
+Date:   Fri, 25 Aug 2017 13:27:25 -0700
+In-Reply-To: <20170825192813.15697-1-sbeller@google.com> (Stefan Beller's
+        message of "Fri, 25 Aug 2017 12:28:13 -0700")
+Message-ID: <xmqqh8wvs89e.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <82741094-19a6-e071-227d-f92b3b077a69@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: CFBD3696-89D3-11E7-BDFA-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08/24, Ivan Vyshnevskyi wrote:
-> On 23/08/17 18:58, Jeff King wrote:
-> > On Wed, Aug 23, 2017 at 12:49:29PM +0300, Ivan Vyshnevskyi wrote:
-> > 
-> >> Commits 47abd85 (fetch: Strip usernames from url's before storing them,
-> >> 2009-04-17) and later 882d49c (push: anonymize URL in status output,
-> >> 2016-07-14) made fetch and push strip the authentication part of the
-> >> remote URLs when used in the merge-commit messages or status outputs.
-> >> The URLs that are part of the error messages were not anonymized.
-> >>
-> >> A commonly used pattern for storing artifacts from a build server in a
-> >> remote repository utilizes a "secure" environment variable with
-> >> credentials to embed them in the URL and execute a push. Given enough
-> >> runs, an intermittent network failure will cause a push to fail, leaving
-> >> a non-anonymized URL in the build log.
-> >>
-> >> To prevent that, reuse the same anonymizing function to scrub
-> >> credentials from URL in the push error output.
-> > 
-> > This makes sense. I suspect that most errors we output should be using
-> > the anonymized URL. Did you poke around for other calls?
-> Yes, I tried to check and unfortunately there are couple of places with
-> possible leaks:
-> * 'discover_refs()' in remote-curl.c when there's a HTTP error (see a
-> real-life scenario with an authz error in my response to Lars) -- is it
-> ok to include transport.h just to use one function or is there a cleaner
-> way?
-> * 'setup_push_upstream()' in push.c when a command doesn't have a branch
-> names (haven't saw problems with this in the wild, but could occur
-> during the CI setup) -- for this one, probably anonymization should
-> happen when the 'remote->name' field is set in the 'make_remote()'; same
-> question though, is it ok to include transport.h here?
-> 
-> Also there's an case of verbose output: I'm not sure I should change it,
-> but it does print out the non-anonymized URLs at least during push.
-> > 
-> > The general structure of the patch looks good, but I have a few minor
-> > comments below.
-> > 
-> >> Not sure how much of the background should be included in the commit message.
-> >> The "commonly used pattern" I mention could be found in the myriad of
-> >> online tutorials and looks something like this:
-> > 
-> > My knee-jerk reaction is if it's worth writing after the dashes, it's
-> > worth putting in the commit message.
-> > 
-> > However, in the case I think it is OK as-is (the motivation of "we
-> > already avoid leaking auth info to stdout, so we should do the same for
-> > error messages" seems self-contained and reasonable)
-> Well, I tend to be wordy, and most of the commit messages I saw were
-> rather short, so decided to split. Wonder, if maybe example command
-> should be included without the rest of it. Would it be useful?
+Stefan Beller <sbeller@google.com> writes:
 
-I'm guilty of writing short commit messages (something I need to work
-on) but when looking through logs I much prefer to see longer messages
-explaining rationals and trade-offs.
+> Currently the worktree command gives its usage, when no subcommand is
+> given. However there are no general options, all options are related to
+> the subcommands itself, such that:
+>
+>  #    $ git worktree
+>  #    usage: git worktree add [<options>] <path> [<branch>]
+>  #       or: git worktree list [<options>]
+>  #       or: git worktree lock [<options>] <path>
+>  #       or: git worktree prune [<options>]
+>  #       or: git worktree unlock <path>
+>  #
+>  #
+>  #    $
+>
+> Note the two empty lines at the end of the usage string. This is becaus=
+e
+> the toplevel usage is printed with an empty options list.
+>
+> Only print a new line after the option list if it is not empty.
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>
+>> I have this feeling that this patch may not be sufficient.
+>>
+>> The reason for the first blank line is because we unconditionally
+>> emit one, expecting that we would have a list of options to show and
+>> want to separate the usage from that list, and the fix in this patch
+>> is correct---it is the right way to suppress it.
+>>
+>> But why do we need the second blank line in this case? =C2=A0There is =
+a
+>> similar unconditional LF near the end of this function. =C2=A0Is someb=
+ody
+>> else (other than usage_with_options() which will exit immeidately)
+>> calls this function and expects to say something more after what
+>> this function said, and is this extra blank line at the end is to
+>> prepare for that caller?
+>
+> Good point, parse_options[_step] also makes use of the=20
+> usage_with_options_internal, such that the regular options
+> need=C2=A0to work, with a potentially interesting arrangement of OPTION=
+_GROUPs.
+>
+> I think this one is cleaner, as it omits the correct LF.
 
-> > 
-> >> diff --git a/builtin/push.c b/builtin/push.c
-> >> index 03846e837..59f3bc975 100644
-> >> --- a/builtin/push.c
-> >> +++ b/builtin/push.c
-> >> @@ -336,7 +336,7 @@ static int push_with_options(struct transport *transport, int flags)
-> >>  	err = transport_push(transport, refspec_nr, refspec, flags,
-> >>  			     &reject_reasons);
-> >>  	if (err != 0)
-> >> -		error(_("failed to push some refs to '%s'"), transport->url);
-> >> +		error(_("failed to push some refs to '%s'"), transport_anonymize_url(transport->url));
-> > 
-> > This leaks the return value. That's probably not a _huge_ deal since the
-> > program is likely to exit, but it's a bad pattern. I wonder if we should
-> > be setting up transport->anonymous_url preemptively, and just let its
-> > memory belong to the transport struct.
-> Ah. Thanks! I knew I'd fail in the memory management even with the
-> one-line patch. :)
-> 
-> About 'transport->anonymous_url': not sure if it's worth it. There are
-> four calls to 'transport_anonymize_url' right now and it looks like the
-> new one in my patch is the first that has a transport struct instance
-> near by. The next likely candidate for update 'discover_refs()' also
-> gets the url as an argument.
-> > 
-> >> diff --git a/t/t5541-http-push-smart.sh b/t/t5541-http-push-smart.sh
-> >> index d38bf3247..0b6fb6252 100755
-> >> --- a/t/t5541-http-push-smart.sh
-> >> +++ b/t/t5541-http-push-smart.sh
-> >> @@ -377,5 +377,23 @@ test_expect_success 'push status output scrubs password' '
-> >>  	grep "^To $HTTPD_URL/smart/test_repo.git" status
-> >>  '
-> >>  
-> >> +cat >"$HTTPD_DOCUMENT_ROOT_PATH/test_repo.git/hooks/update" <<EOF
-> >> +#!/bin/sh
-> >> +exit 1
-> >> +EOF
-> >> +chmod a+x "$HTTPD_DOCUMENT_ROOT_PATH/test_repo.git/hooks/update"
-> >> +
-> >> +cat >exp <<EOF
-> >> +error: failed to push some refs to '$HTTPD_URL/smart/test_repo.git'
-> >> +EOF
-> > 
-> > I know the t5541 script, which is old and messy, led you into these bad
-> > constructs. But usually in modern tests we:
-> > 
-> >  1. Try to keep all commands inside test_expect blocks to catch
-> >     unexpected failures or unwanted output.
-> > 
-> >  2. Use write_script for writing scripts, like:
-> > 
-> >       write_script "$HTTPD_DOCUMENT_ROOT_PATH/test_repo.git/hooks/update" <<-\EOF
-> >       exit 1
-> >       EOF
-> > 
-> >  3. Backslash our here-doc delimiter to suppress interpolation.
-> > 
-> >> +test_expect_success 'failed push status output scrubs password' '
-> >> +	cd "$ROOT_PATH"/test_repo_clone &&
-> >> +	test_must_fail git push "$HTTPD_URL_USER_PASS/smart/test_repo.git" +HEAD:scrub_err 2>stderr &&
-> >> +	grep "^error: failed to push some refs" stderr >act &&
-> >> +	test_i18ncmp exp act
-> >> +'
-> >> +rm -f "$HTTPD_DOCUMENT_ROOT_PATH/test_repo.git/hooks/update"
-> > 
-> > Similarly, this "rm" should probably be a test_when_finished in the
-> > block with the write_script (unless you really need to carry it over
-> > several test_expect blocks, in which case there should be an explicit
-> > test_expect cleaning it up).
-> Thanks! You're right. I just followed examples in the file.
-> Updated [1], will send with the next patch version.
-> 
-> > 
-> > Instead of grepping for the exact error, should we instead grep for the
-> > password to make sure it is not present on _any_ line?
-> > 
-> > -Peff
-> > 
-> One possible issue I see is that this will make it overlap with the
-> 'push status output scrubs password' case above. But if it's not a
-> problem, I can replace last two lines with just a 'test_i18ngrep !'
-> 
-> [1]:
-> https://github.com/sainaen/git/blob/af17713/t/t5541-http-push-smart.sh#L380-L392
+Sorry, but now I am utterly confused, as I do not think I've made a
+"good point", and I do not see how your "this one is cleaner than
+the previous" can follow from what I said.
 
--- 
-Brandon Williams
+The first fputc('\n', outfile) touched in the previous version but
+not this one is shown after the usage string.  I think the intention
+of that is "We have finished giving the usage; now we are going to
+list options, and we need a separator blank line in between", and
+the reason why it is not conditional on "do we even have any option
+in the list?" is probably those who helped parse-options evolve
+never saw a user of parse-options API that actually does not have
+any option.  So from that point of view, it is understandable why we
+didn't check with OPTION_END and checking OPTION_END there and
+omitting the blank makes sense---I understand what the previous
+patch did, in other words, and agree with what it did.
+
+By the way, it checked OPTION_GROUP and that is also
+understandable.  In the loop, there will be a blank berfore each
+option group to visually separate things across groups; if we know
+the first entry in the options list is such an entry, then we do not
+want a blank, as the blank (meant as a separator between usage and
+option list) will be followed by another blank (meant as a separator
+between groups) and we waste one blank line.
+
+The other fputc('\n', outfile) that this version of the patch
+touches is what I had trouble with, and I still do.  There must be a
+similar rationale like the previous one, i.e. "We have finished
+giving the usage, and we have finished showing all the options.  Now
+we are about to further show X, so let's have a blank line here so
+that what we have wrote will be separated from it", but I cannot
+tell what that X is.
+
+In other words, what I suspect the _right_ solution is, is to have
+the previous patch that omits the first LF when the type of the
+first element in the options array is either END or GROUP, plus
+unconditional removal of the second LF.  If some caller of this
+helper function has "now we are going to also show X and we want a
+separator", I think that code should be showing the LF as needed.
+usage_with_options(), the caller you showed its behaviour in your
+proposed log message, does *not* want either of these two LFs, I
+would think.
+
+
+
+> Thanks,
+> Stefan
+>
+>  parse-options.c | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
+>
+> diff --git a/parse-options.c b/parse-options.c
+> index 0dd9fc6a0d..2829c16b01 100644
+> --- a/parse-options.c
+> +++ b/parse-options.c
+> @@ -580,6 +580,7 @@ static int usage_with_options_internal(struct parse=
+_opt_ctx_t *ctx,
+>  				       const char * const *usagestr,
+>  				       const struct option *opts, int full, int err)
+>  {
+> +	int new_line_after_opts;
+>  	FILE *outfile =3D err ? stderr : stdout;
+> =20
+>  	if (!usagestr)
+> @@ -606,6 +607,8 @@ static int usage_with_options_internal(struct parse=
+_opt_ctx_t *ctx,
+>  	if (opts->type !=3D OPTION_GROUP)
+>  		fputc('\n', outfile);
+> =20
+> +	new_line_after_opts =3D (opts->type !=3D OPTION_END);
+> +
+>  	for (; opts->type !=3D OPTION_END; opts++) {
+>  		size_t pos;
+>  		int pad;
+> @@ -645,7 +648,9 @@ static int usage_with_options_internal(struct parse=
+_opt_ctx_t *ctx,
+>  		}
+>  		fprintf(outfile, "%*s%s\n", pad + USAGE_GAP, "", _(opts->help));
+>  	}
+> -	fputc('\n', outfile);
+> +
+> +	if (new_line_after_opts)
+> +		fputc('\n', outfile);
+> =20
+>  	if (!err && ctx && ctx->flags & PARSE_OPT_SHELL_EVAL)
+>  		fputs("EOF\n", outfile);
