@@ -2,108 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A5598208DB
-	for <e@80x24.org>; Fri, 25 Aug 2017 19:06:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 294A4208DB
+	for <e@80x24.org>; Fri, 25 Aug 2017 19:15:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758131AbdHYTGf (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Aug 2017 15:06:35 -0400
-Received: from mout.web.de ([217.72.192.78]:50979 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755040AbdHYTGe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Aug 2017 15:06:34 -0400
-Received: from [192.168.178.36] ([91.20.52.82]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MKrPw-1dlJw62ctc-0003dO; Fri, 25
- Aug 2017 21:06:30 +0200
-Subject: [PATCH 2/2] apply: remove epoch date from regex
-To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
-References: <205339f5-bad8-62a3-8ccc-d3b0dd1d6736@web.de>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <5dd40b51-ac5b-6885-b7b0-f2a33045c386@web.de>
-Date:   Fri, 25 Aug 2017 21:06:28 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        id S1755197AbdHYTP1 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Aug 2017 15:15:27 -0400
+Received: from mail-yw0-f172.google.com ([209.85.161.172]:32935 "EHLO
+        mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754535AbdHYTP0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Aug 2017 15:15:26 -0400
+Received: by mail-yw0-f172.google.com with SMTP id s143so4085422ywg.0
+        for <git@vger.kernel.org>; Fri, 25 Aug 2017 12:15:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=orEBxNTginVIjJTnMYWcwvQwR7rwCOugbPjfesz3WZg=;
+        b=ixSulL1qpoB56wHlthO9JLOlrAUCUZPtp5hAJ2B1rdus+2NwqTv3G30jJCg3iSN3qA
+         va9ox6eMdDJQ6r5reP+wRjenT7l6R/t/djuA83tMxtGpQkKSyD65bY9JoewFCrS7y1UG
+         Vk9li38ZR7daOKRvaks19CA6awAbWnx33ml0VQjWl676dYpHk6aJogSxRDIl1AC/8sc2
+         DT1Ve9F7nUuZFWGJFf6KQRVLmQd3N8IgFYez8I8l6woKDfBtzvQx/zs0wa3Vi+KBrtIl
+         iarQxcnIMfDxr+Pwwv1hUfzcQGFRKBd7Khvq/8qMsg+nJECpjajEmlnxuS5kj7JuZyMK
+         IBnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=orEBxNTginVIjJTnMYWcwvQwR7rwCOugbPjfesz3WZg=;
+        b=ojoJZH0RJAk4IyvVnamK/g9XfIg9zBSir2hOJvX3y/valObEdHETjUwajmZyUzkfPi
+         ctOVakwySURitwvHHPQkWoYPF+omNNNwTBpkdremVtFoIltDWQKgeg15Juv5yUvLzwma
+         tMFN0fwW9y/tEHQ3fALw6Rsm+f8oqj8+WE+zGD0JdC7SpEtPPt5D99bMWBWhb2twh5XJ
+         qUI+XmW13A/STOtB/EaKOrP5a8TS3lypsh25zPAWJ74NPKIZkZBbzAFaA8UtOpUfJN+7
+         S86yg+kYFhHDMd29ta2aXHKvwb5pBEV5X4P0YvtjACLJAAih+SM+VGirtt+YxDTI0kqP
+         2q1Q==
+X-Gm-Message-State: AHYfb5ie+3F9WT5t8yyAY7vWw5ZNUfegK4BY/jHG+lck/GcSDbx7e6Nw
+        QI+gPdP0gjcVIIcl7GYXojd1lJ3ahpj0
+X-Google-Smtp-Source: ADKCNb7xin8XyCBfiAb5lusNIoBSudkzp9fksX9gcqhi2ZiWz9oVkWG+q3u58mTUzxDFxneBZCQNRYIcNausihSjFiU=
+X-Received: by 10.37.47.84 with SMTP id v81mr726883ybv.145.1503688525210; Fri,
+ 25 Aug 2017 12:15:25 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <205339f5-bad8-62a3-8ccc-d3b0dd1d6736@web.de>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:nbbs24KbiRlRYN9xw/vyLyKGQQ89MnskB2LDGJqc6A7hdN5tZoG
- tc89UvMsSZDnbUdmInOiQ8OyH7xlPM2J0xif9l83lsVhqpTbkcmUgZGTx3uetsGOQ6Qd5V/
- iNeg0hdsqrA6/N+3bHnl55+lf1xioO266Rt+IeZknYiAMFn3XixPMD6UCAwpHKEC/p7BQ3z
- Lrg8s/7mBkWaGkg/B/1RA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:zfG0DiZv4Fg=:CGqzDxwdCpfVw+dHGK9mVj
- 89bKDe2dGdh3AxAQdtv6l+xZTGXRTAn4tLZD/XhO5+O2MC236NQGHQuoJ1JzWJFGTD62yzP9Q
- qM76XeaflFf46KnltFIEPTXtequ+5FeumBJFBS/IvwCjETDwbUc508K/3KgRh63ctAcGufRDo
- wN472gK7chTslsUbbn0KVrAZyp/68voebQxVdiH3x9c4mgCTk08F8TdJI+zcbvf8EKZMh1d8s
- ztU14YAPqfpHJb8TONSyV9iZsPY+svsMoekdIlynTRj7Ew3n9mTuFoqRpu1YlaonSj8/DXH0u
- MgORDn/otVforX8wwTzSVwlPwFvmSgxZXOhdMgHVkD/34FXllHSz+TPzoz+GhwxvwFhLEGjyt
- w6u3IJ95T386ojVqTHmjdfb4mJHog3PSibumZWNU2SiDKzU4iitn9wKq4gqvFu2Dx4UmMu+ii
- Zm3dcNvUsgRylC1rzZCDtOqTiPUd8VctJGvGThIVj68Sz3Eak4qWef4oHuDnRcCtc0fsvFQFE
- yq5jJSgCiz0BipAsQQMehhV9P2MGRuH3dKAGLiv5WbHuKQlLVQilRhJk3VA1VgN2bKYf4n8hF
- OB+QqLC0C1p8oJvZyNrAia5S4oaf2/z8pl2d9LuePKwfvgvE7gOG6A/xdTRjVOZPl/0WkcfTO
- 63VpHbUFmQN7fr7yVSivzm3GMyCFFynFEwXbCBWZBT5iQUlN6rntqj32Av6vGOtR0fb95n9zx
- IoG7o7dAUduslYjqqQLiFP9RI33z//uoNSa6TEo18Fb5Gqf0L04vFigzP8H2PCfeMx4kdNULD
- CY57WsTQEy3Uyt0eeoa+0H1bEivS0CQ7OCWT3WAszncFdkQhUU=
+Received: by 10.37.248.26 with HTTP; Fri, 25 Aug 2017 12:15:24 -0700 (PDT)
+In-Reply-To: <xmqqlgm7scpm.fsf@gitster.mtv.corp.google.com>
+References: <xmqq7exuysc7.fsf@gitster.mtv.corp.google.com> <20170824195051.30900-1-pc44800@gmail.com>
+ <xmqqlgm7scpm.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 25 Aug 2017 12:15:24 -0700
+Message-ID: <CAGZ79kZwpu9YXr5gSXWQBmqhXFB7+2rFWh6zVtRoiyQORkUsdg@mail.gmail.com>
+Subject: Re: [GSoC][PATCH v3 0/4] Incremental rewrite of git-submodules
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Prathamesh Chavan <pc44800@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We check the date of epoch timestamp candidates already with
-starts_with().  Move beyond that part using skip_prefix() instead of
-checking it again using a regular expression.  Also group the minutes
-part, so that we can access them using a substring match instead of
-using a magic number.
+On Fri, Aug 25, 2017 at 11:51 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Thanks.  I'll try to queue these before I'll go offline.
+>
+> Mentors may want to help the student further in adjusting the patch
+> series to the more recent codebase; unfortunately the area the GSoC
+> project touches is a bit fluid these days.  I resolved the conflicts
+> with nd/pune-in-worktree and bw/submodule-config-cleanup topics so
+> that the result would compile, but I am not sure if the resolution
+> is correct (e.g. there may be a new leak I introduced while doing
+> so).
+>
+> Thanks.
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- apply.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+Ok, noted.
 
-diff --git a/apply.c b/apply.c
-index e14077eaee..9c70b4040a 100644
---- a/apply.c
-+++ b/apply.c
-@@ -811,9 +811,7 @@ static int has_epoch_timestamp(const char *nameline)
- 	 * 1970-01-01, and the seconds part must be "00".
- 	 */
- 	const char stamp_regexp[] =
--		"^(1969-12-31|1970-01-01)"
--		" "
--		"[0-2][0-9]:[0-5][0-9]:00(\\.0+)?"
-+		"^[0-2][0-9]:([0-5][0-9]):00(\\.0+)?"
- 		" "
- 		"([-+][0-2][0-9]:?[0-5][0-9])\n";
- 	const char *timestamp = NULL, *cp, *colon;
-@@ -833,9 +831,9 @@ static int has_epoch_timestamp(const char *nameline)
- 	 * YYYY-MM-DD hh:mm:ss must be from either 1969-12-31
- 	 * (west of GMT) or 1970-01-01 (east of GMT)
- 	 */
--	if (starts_with(timestamp, "1969-12-31"))
-+	if (skip_prefix(timestamp, "1969-12-31 ", &timestamp))
- 		epoch_hour = 24;
--	else if (starts_with(timestamp, "1970-01-01"))
-+	else if (skip_prefix(timestamp, "1970-01-01 ", &timestamp))
- 		epoch_hour = 0;
- 	else
- 		return 0;
-@@ -857,8 +855,8 @@ static int has_epoch_timestamp(const char *nameline)
- 		return 0;
- 	}
- 
--	hour = strtol(timestamp + 11, NULL, 10);
--	minute = strtol(timestamp + 14, NULL, 10);
-+	hour = strtol(timestamp, NULL, 10);
-+	minute = strtol(timestamp + m[1].rm_so, NULL, 10);
- 
- 	zoneoffset = strtol(timestamp + m[3].rm_so + 1, (char **) &colon, 10);
- 	if (*colon == ':')
--- 
-2.14.1
-
+Presumably I'll review your dirty merge then for this series?
+(And later parts might go on top of the new dirty merge)
