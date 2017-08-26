@@ -2,122 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA892208DB
-	for <e@80x24.org>; Sat, 26 Aug 2017 01:00:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2A67208DB
+	for <e@80x24.org>; Sat, 26 Aug 2017 01:01:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751508AbdHZBAX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Aug 2017 21:00:23 -0400
-Received: from avasout07.plus.net ([84.93.230.235]:33813 "EHLO
-        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751453AbdHZBAW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Aug 2017 21:00:22 -0400
-Received: from [10.0.2.15] ([147.147.86.16])
-        by avasout07 with smtp
-        id 1cxK1w0020M91Ur01cxLWr; Sat, 26 Aug 2017 01:57:20 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=CrLPSjwD c=1 sm=1 tr=0
- a=dubYQqM3tRRTmV8xSh8cXQ==:117 a=dubYQqM3tRRTmV8xSh8cXQ==:17
- a=IkcTkHD0fZMA:10 a=5rxgeBVgAAAA:8 a=EBOSESyhAAAA:8 a=BbSOwUQuxqhCuBP-v9YA:9
- a=QEXdDO2ut3YA:10 a=PwKx63F5tFurRwaNxrlG:22 a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: cat-file timing window on Cygwin
-To:     Jeff King <peff@peff.net>, Adam Dinwoodie <adam@dinwoodie.org>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <20170825112529.GA10378@dinwoodie.org>
- <20170825150819.agxvbjytom7ao6n6@sigill.intra.peff.net>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <253bf111-4e8a-54b7-6e39-2908270aa357@ramsayjones.plus.com>
-Date:   Sat, 26 Aug 2017 01:57:18 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        id S1754684AbdHZBB1 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Aug 2017 21:01:27 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59945 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754250AbdHZBBW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Aug 2017 21:01:22 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E266DA2A71;
+        Fri, 25 Aug 2017 21:01:21 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=lcPRbSn+CNAz22gXWuWLjV7PT6A=; b=k0ZTEK
+        DM93WPmiB1qxNYn9fhtoOxulR8luvLV6hoJ7pT2P0lg35ig0BsSTJy5M+YlE7u7f
+        hXznogoA/qRua71jeABeG+LOQe6wMZ0dOT6D+FrwBJ6kv3ccPzkSL3TD8Krmv/7a
+        UuQVH5izu6SBAeI6KGKzCVFNp8oSO0xYeK73A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=c+vEFXjrw9sCRPSQVvvQwK6VIC/BZFaV
+        zw7BRoV67R5ziZKgdtuDkpVge8U8Ua5a02ILMJzy5IqpUZYcqBqDI6I0ek7CscZz
+        14cj1nPti/ZcVSwSS3M+1icPX/3tiYEIz0zY6YfoXfdoZsioHWc1kb8babKiX9wk
+        60asuyZR8Rs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DAD86A2A70;
+        Fri, 25 Aug 2017 21:01:21 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 43C5FA2A6E;
+        Fri, 25 Aug 2017 21:01:21 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Ian Jackson <ijackson@chiark.greenend.org.uk>, git@vger.kernel.org,
+        Dave Borowitz <dborowitz@google.com>
+Subject: Re: git signed push server-side
+References: <22944.38288.91698.811743@chiark.greenend.org.uk>
+        <20170826003229.GL13924@aiede.mtv.corp.google.com>
+Date:   Fri, 25 Aug 2017 18:01:19 -0700
+In-Reply-To: <20170826003229.GL13924@aiede.mtv.corp.google.com> (Jonathan
+        Nieder's message of "Fri, 25 Aug 2017 17:32:29 -0700")
+Message-ID: <xmqqshgfqh0g.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20170825150819.agxvbjytom7ao6n6@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1312FC52-89FA-11E7-A325-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
+> +Dave Borowitz, who implemented push cert handling in JGit and Gerrit
+> Hi Ian,
+>
+> Ian Jackson wrote[1]:
+>
+>> I have been investigating git signed pushes.  I found a number of
+>> infelicities in the server side implementation which make using this
+>> in practice rather difficult.  I'm emailing here (before writing
+>> patches) to see what people think of my proposed changes.
+>>
+>> 1. PUSH_CERT_KEY has truncated keyid (Debian #852647)
+>>
+>> I see this:
+>>   GIT_PUSH_CERT_KEY=A3DBCBC039B13D8A
+>>
+>> There is almost no purpose for which this 64-bit keyid can be safely
+>> used.  The full key fingerprint should be provided instead.
+>>
+>> Proposed change: provide the full fingerprint instead.  Do this
+>> for every caller of gpg-interface.c.
+>
+> Sounds sane.
 
-On 25/08/17 16:08, Jeff King wrote:
-> On Fri, Aug 25, 2017 at 12:25:29PM +0100, Adam Dinwoodie wrote:
-> 
->> As of v2.10.0-rc1-4-g321459439 ("cat-file: support --textconv/--filters
->> in batch mode"), t8010-cat-file-filters.sh has been failing on Cygwin.
->> Digging into this, the test looks to expose a timing window: it appears
->> that if `git cat-file --textconv --batch` receives input on stdin too
->> quickly, it fails to parse some of that input.
+I probably should react a bit stronger against that "instead", as
+Ian will not be writing the world's first server side hook that uses
+this interface.  A different variable that lets you read the full
+length "in addition" I wouldn't have a problem with, as existing
+scripts will continue working the same way if you did so.
 
-This has not been failing since the above commit (when this
-feature was first introduced), but (for me) when testing the
-v2.13.0-rc0 build. Please refer to my original email:
+But on the other hand, the value of this environment is not meant to
+be used to make decision by the hook anyway, so it perhaps is OK to
+change it in a backward incompatible way to break those who have
+been using the value for any serious purpose.
 
-https://public-inbox.org/git/bf7db655-d90f-e711-afc8-6565b71373d2@ramsayjones.plus.com/
-
-... where I was reasonably sure this was caused by a change in
-the cygwin dll while upgrading from 2.7.0-1 -> 2.8.0-1.
-
-> Hmm. That commit doesn't seem to actually touch the stdin loop. That
-> happens via strbuf_getline(), which should be pretty robust to timing.
-> But here are a few random thoughts:
-> 
->   1. Do you build with HAVE_GETDELIM? Does toggling it have any effect?
-
-If Adam builds using the configure script, then yes, else no. ;-)
-I never use configure, so I don't have HAVE_GETDELIM set.
-
->   2. Does the problem happen only with --textconv?
-> 
->      If so, I wonder if spawning the child process is somehow draining
->      stdin. I don't see how the child would accidentally read from our
->      stdin; we replace its stdin with a pipe so it shouldn't get a
->      chance to see our descriptor at all.
-
-As I said in my previous email, "the loop in batch_objects()
-(builtin/cat-file.c lines #489-505) only reads one line from
-stdin, then gets EOF on the stream."
-
->      If we accidentally called fflush(stdin) that would discard buffered
->      input and give the results you're seeing. We don't do that
->      directly, of course, but we do call fflush(NULL) in run-command
->      before spawning the child. That _should_ just flush output handles,
->      but it's possible that there's a cygwin bug, I guess.
-
-I suspect so, see previous email ...
-
-> I can't reproduce here on Linux. But does the patch below have any
-> impact?
-> 
-> diff --git a/run-command.c b/run-command.c
-> index 98621faca8..064ebd1995 100644
-> --- a/run-command.c
-> +++ b/run-command.c
-> @@ -641,7 +641,6 @@ int start_command(struct child_process *cmd)
->  	}
->  
->  	trace_argv_printf(cmd->argv, "trace: run_command:");
-> -	fflush(NULL);
->  
->  #ifndef GIT_WINDOWS_NATIVE
->  {
-
-I suspect not, but I can give it a try ...
-
-... oh, wow, that works! Ahem. (Hmm, so it's flushing stdin?!)
-
-Also, t5526-fetch-submodules.sh still works as well (see commit
-13af8cbd6a "start_command: flush buffers in the WIN32 code path
-as well", 04-02-2011).
-
-ATB,
-Ramsay Jones
-
-
+The purpose of the signed push is not to replace authentication and
+authorization.  The primary goal behind the signed push mechanism is
+to allow server side hook to implement a way to store these certs in
+the order it receives without losing them, and that gives a way for
+the server operators to protect against claims that they are showing
+what the pusher did not intend to publish.  They can say "the tip of
+these branches are at this commit, because, see this, a signed cert
+by the pusher asking us to put these commits at these branches" with
+such a mechanism---as opposed to "we authenticated the user and here
+is our server log that says that user pushed to update these refs",
+which is much weaker claim that they can make without the signed
+push mechanism.
