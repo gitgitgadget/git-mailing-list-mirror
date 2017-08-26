@@ -6,112 +6,133 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7245C20285
-	for <e@80x24.org>; Sat, 26 Aug 2017 08:28:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB0B620285
+	for <e@80x24.org>; Sat, 26 Aug 2017 08:28:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754547AbdHZI2k (ORCPT <rfc822;e@80x24.org>);
-        Sat, 26 Aug 2017 04:28:40 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:48904 "EHLO
-        alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754316AbdHZI2g (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 26 Aug 2017 04:28:36 -0400
-X-AuditID: 1207440d-86bff70000000f42-88-59a1313343f3
+        id S1754561AbdHZI2o (ORCPT <rfc822;e@80x24.org>);
+        Sat, 26 Aug 2017 04:28:44 -0400
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:49712 "EHLO
+        alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1754535AbdHZI2k (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 26 Aug 2017 04:28:40 -0400
+X-AuditID: 1207440f-a5bff70000007960-10-59a13137ccf1
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 4C.8D.03906.33131A95; Sat, 26 Aug 2017 04:28:35 -0400 (EDT)
+        by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 9C.8D.31072.73131A95; Sat, 26 Aug 2017 04:28:39 -0400 (EDT)
 Received: from bagpipes.fritz.box (p57BCC5EB.dip0.t-ipconnect.de [87.188.197.235])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v7Q8SHio004049
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v7Q8SHiq004049
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Sat, 26 Aug 2017 04:28:34 -0400
+        Sat, 26 Aug 2017 04:28:37 -0400
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Johan Herland <johan@herland.net>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 08/12] get_oid_hex_segment(): return 0 on success
-Date:   Sat, 26 Aug 2017 10:28:08 +0200
-Message-Id: <1a421226c8f7cb3cb7609cb4bd06ed009430a543.1503734566.git.mhagger@alum.mit.edu>
+Subject: [PATCH 10/12] get_oid_hex_segment(): don't pad the rest of `oid`
+Date:   Sat, 26 Aug 2017 10:28:10 +0200
+Message-Id: <ba5c439f990752a7768ed82c04a387aabd75558a.1503734566.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <cover.1503734566.git.mhagger@alum.mit.edu>
 References: <cover.1503734566.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrCIsWRmVeSWpSXmKPExsUixO6iqGtsuDDS4PYhTYuuK91MFg29V5gt
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrCIsWRmVeSWpSXmKPExsUixO6iqGtuuDDS4O0+CYuuK91MFg29V5gt
         5t3dxWTRv7yLzeL2ivnMDqwef99/YPL48DHO49LL72weFy8pe3zeJBfAGsVlk5Kak1mWWqRv
-        l8CV0bL4NUvBYeGKhj0yDYzT+LsYOTkkBEwkjkw4xdTFyMUhJLCDSWLl0z2MEM4pJonbH/6z
-        g1SxCehKLOppZgKxRQTUJCa2HWIBKWIWWM4o0fH2PFhCWMBRYubL26wgNouAqsTkbX1gNq9A
-        lMT3s+dZINbJS+xquwgW5xSwkLix9TMbiC0kYC7R93MRywRGngWMDKsY5RJzSnN1cxMzc4pT
-        k3WLkxPz8lKLdI30cjNL9FJTSjcxQgKHdwfj/3UyhxgFOBiVeHg3FC+IFGJNLCuuzD3EKMnB
-        pCTK66CxMFKILyk/pTIjsTgjvqg0J7X4EKMEB7OSCO8KJaAcb0piZVVqUT5MSpqDRUmcV22J
-        up+QQHpiSWp2ampBahFMVoaDQ0mC948+UKNgUWp6akVaZk4JQpqJgxNkOA/Q8AyQGt7igsTc
-        4sx0iPwpRkUpcd5ZBkAJAZBERmkeXC8ssl8xigO9IswrB1LFA0wKcN2vgAYzAQ1WFAQbXJKI
-        kJJqYEyddqHjSHH6ZJNfjGzGG5q2x25fuC/oe1aWu9LLXywSc6ycj+2QPc7l1nR3aZJA/PUp
-        POpnrd5VuM3UYp8ouXFFgtWpKVv2GtlUqvC67QqX+XeSTVRngeTXwztWS51fMK90T/K7xZ+Z
-        sw5xMabYiHitNli0Zt0io3ZPU3XOipfxa59G6XT4+ymxFGckGmoxFxUnAgC9GsLCxwIAAA==
+        l8CVcefvd5aC86IVxzefZm1gXC7QxcjJISFgInHg2jf2LkYuDiGBHUwSm/bNZIZwTgE5jc0s
+        IFVsAroSi3qamUBsEQE1iYlth1hAipgFljNKdLw9D5YQFvCU2DxtFlA3BweLgKrEw50KIGFe
+        gSiJfXOOsUBsk5fY1XaRFcTmFLCQuLH1MxuILSRgLtH3cxHLBEaeBYwMqxjlEnNKc3VzEzNz
+        ilOTdYuTE/PyUot0TfRyM0v0UlNKNzFCAod/B2PXeplDjAIcjEo8vBGFCyKFWBPLiitzDzFK
+        cjApifI6aCyMFOJLyk+pzEgszogvKs1JLT7EKMHBrCTCu0IJKMebklhZlVqUD5OS5mBREudV
+        X6LuJySQnliSmp2aWpBaBJOV4eBQkuDt0AdqFCxKTU+tSMvMKUFIM3FwggznARqeAVLDW1yQ
+        mFucmQ6RP8WoKCXO6wCSEABJZJTmwfXCIvsVozjQK8K8UQZAVTzApADX/QpoMBPQYEVBsMEl
+        iQgpqQZGz/KUr2vOss46GGUk3NUTY7H16px0jTfXxHTe/RSqSGTM4+XOfvPK46nTxNXC+Wm+
+        rE8yX2x6xB8/QV1EPyxk/iflkIezhQJDzn2bnfmwX8a3VUgqmZ9L+03Cw1+B/6u/JB1gaDD5
+        asIo9amWW2amevjdWUXbGxdy8zh1/a9n3/fI+YOt/gclluKMREMt5qLiRAB0gzfnxwIAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nobody cares about the return value of get_oid_hex_segment() except to
-check whether it failed. So just return 0 on success.
+Remove the feature of `get_oid_hex_segment()` that it pads the rest of
+the `oid` argument with zeros. Instead, do this at the caller who
+needs it.
 
-And while we're updating its docstring, update it for some argument
-renaming that happened a while ago.
+This makes the functionality of this function more coherent and
+removes the need for its `oid_len` argument.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- notes.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ notes.c | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
 diff --git a/notes.c b/notes.c
-index 46ab15b83a..6ce71bfedb 100644
+index 534fda007e..ce9ba36179 100644
 --- a/notes.c
 +++ b/notes.c
-@@ -338,11 +338,10 @@ static void note_tree_free(struct int_node *tree)
-  * Convert a partial SHA1 hex string to the corresponding partial SHA1 value.
+@@ -339,15 +339,14 @@ static void note_tree_free(struct int_node *tree)
   * - hex      - Partial SHA1 segment in ASCII hex format
   * - hex_len  - Length of above segment. Must be multiple of 2 between 0 and 40
-- * - sha1     - Partial SHA1 value is written here
-- * - sha1_len - Max #bytes to store in sha1, Must be >= hex_len / 2, and < 20
-- * Returns -1 on error (invalid arguments or invalid SHA1 (not in hex format)).
-- * Otherwise, returns number of bytes written to sha1 (i.e. hex_len / 2).
-- * Pads sha1 with NULs up to sha1_len (not included in returned length).
-+ * - oid      - Partial SHA1 value is written here
-+ * - oid_len  - Max #bytes to store in sha1, Must be >= hex_len / 2, and < 20
-+ * Return 0 on success or -1 on error (invalid arguments or input not
-+ * in hex format). Pad oid with NULs up to oid_len.
+  * - oid      - Partial SHA1 value is written here
+- * - oid_len  - Max #bytes to store in sha1, Must be >= hex_len / 2, and < 20
+  * Return 0 on success or -1 on error (invalid arguments or input not
+- * in hex format). Pad oid with NULs up to oid_len.
++ * in hex format).
   */
  static int get_oid_hex_segment(const char *hex, unsigned int hex_len,
- 		unsigned char *oid, unsigned int oid_len)
-@@ -359,7 +358,7 @@ static int get_oid_hex_segment(const char *hex, unsigned int hex_len,
+-		unsigned char *oid, unsigned int oid_len)
++		unsigned char *oid)
+ {
+ 	unsigned int i, len = hex_len >> 1;
+-	if (hex_len % 2 != 0 || len > oid_len)
++	if (hex_len % 2 != 0)
+ 		return -1;
+ 	for (i = 0; i < len; i++) {
+ 		unsigned int val = (hexval(hex[0]) << 4) | hexval(hex[1]);
+@@ -356,8 +355,6 @@ static int get_oid_hex_segment(const char *hex, unsigned int hex_len,
+ 		*oid++ = val;
+ 		hex += 2;
  	}
- 	for (; i < oid_len; i++)
- 		*oid++ = 0;
--	return len;
-+	return 0;
+-	for (; i < oid_len; i++)
+-		*oid++ = 0;
+ 	return 0;
  }
  
- static int non_note_cmp(const struct non_note *a, const struct non_note *b)
-@@ -444,7 +443,7 @@ static void load_subtree(struct notes_tree *t, struct leaf_node *subtree,
+@@ -442,24 +439,29 @@ static void load_subtree(struct notes_tree *t, struct leaf_node *subtree,
+ 				goto handle_non_note;
  
  			if (get_oid_hex_segment(entry.path, path_len,
- 						object_oid.hash + prefix_len,
--						GIT_SHA1_RAWSZ - prefix_len) < 0)
-+						GIT_SHA1_RAWSZ - prefix_len))
+-						object_oid.hash + prefix_len,
+-						GIT_SHA1_RAWSZ - prefix_len))
++						object_oid.hash + prefix_len))
  				goto handle_non_note; /* entry.path is not a SHA1 */
  
  			type = PTR_TYPE_NOTE;
-@@ -461,7 +460,7 @@ static void load_subtree(struct notes_tree *t, struct leaf_node *subtree,
+ 		} else if (path_len == 2) {
+ 			/* This is potentially an internal node */
++			size_t len = prefix_len;
+ 
+ 			if (!S_ISDIR(entry.mode))
+ 				/* internal nodes must be trees */
+ 				goto handle_non_note;
  
  			if (get_oid_hex_segment(entry.path, 2,
- 						object_oid.hash + prefix_len,
--						GIT_SHA1_RAWSZ - prefix_len) < 0)
-+						GIT_SHA1_RAWSZ - prefix_len))
+-						object_oid.hash + prefix_len,
+-						GIT_SHA1_RAWSZ - prefix_len))
++						object_oid.hash + len++))
  				goto handle_non_note; /* entry.path is not a SHA1 */
  
+-			object_oid.hash[KEY_INDEX] = (unsigned char) (prefix_len + 1);
++			/*
++			 * Pad the rest of the SHA-1 with zeros,
++			 * except for the last byte, where we write
++			 * the length:
++			 */
++			memset(object_oid.hash + len, 0, GIT_SHA1_RAWSZ - len - 1);
++			object_oid.hash[KEY_INDEX] = (unsigned char)len;
+ 
  			type = PTR_TYPE_SUBTREE;
+ 		} else {
 -- 
 2.11.0
 
