@@ -2,73 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 55C4D1F4DD
-	for <e@80x24.org>; Sat, 26 Aug 2017 19:01:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B09771F4DD
+	for <e@80x24.org>; Sat, 26 Aug 2017 21:11:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751116AbdHZTBA (ORCPT <rfc822;e@80x24.org>);
-        Sat, 26 Aug 2017 15:01:00 -0400
-Received: from cloud.peff.net ([104.130.231.41]:50062 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751063AbdHZTA7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Aug 2017 15:00:59 -0400
-Received: (qmail 25447 invoked by uid 109); 26 Aug 2017 19:00:59 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 26 Aug 2017 19:00:59 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24753 invoked by uid 111); 26 Aug 2017 19:01:28 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
- by peff.net (qpsmtpd/0.94) with SMTP; Sat, 26 Aug 2017 15:01:28 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 26 Aug 2017 12:00:57 -0700
-Date:   Sat, 26 Aug 2017 12:00:57 -0700
-From:   Jeff King <peff@peff.net>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Ivan Vyshnevskyi <sainaen@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH/RFC] push: anonymize URL in error output
-Message-ID: <20170826190056.f53htagkoz6ydboe@sigill.intra.peff.net>
-References: <20170823094929.13541-1-sainaen@gmail.com>
- <20170823155826.m4s5y55x2esfoass@sigill.intra.peff.net>
- <82741094-19a6-e071-227d-f92b3b077a69@gmail.com>
- <20170825193743.GD103659@google.com>
+        id S1751143AbdHZVLJ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 26 Aug 2017 17:11:09 -0400
+Received: from mail-wr0-f171.google.com ([209.85.128.171]:33967 "EHLO
+        mail-wr0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751083AbdHZVLI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Aug 2017 17:11:08 -0400
+Received: by mail-wr0-f171.google.com with SMTP id z91so8256262wrc.1
+        for <git@vger.kernel.org>; Sat, 26 Aug 2017 14:11:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dinwoodie.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=VfIX914uE9NOEZQc7C55htLw4kqtQn3+k5N1zoLJ8qE=;
+        b=L+yZmHe0KBAIP2vAAFsJPVTkKrjSmqj0Qg7S1XE5XPpmwJAaYLRW0tFO9OfsZCu/d4
+         k19dZ0kVxT849ydu8VKR/FuO9wrUqba0B8QyZlE7rUKbw+KpD2kR9SGqjZ2/RAQ6gxue
+         oqPdhqUdOqROnty+JM7vf6HSd91hXjjRtwaCw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=VfIX914uE9NOEZQc7C55htLw4kqtQn3+k5N1zoLJ8qE=;
+        b=PrWMtHkDwHZGHGBPCYlaJIAwZ/GcEOOUZwQF7ElQtiCWdsyO8R49sc9v7dKuZMzouM
+         VWVv/hmvN43dEF/XtWn8N1feC8Wof9L1vmKFJR8g72MucNdBBwyEUEn8smPLWWugzPaK
+         t4yJ6lm8JOw1j632WcsSrgu26kT4AqCGYKudQhrRBp2fDKtMLKC6yNFK+yV323QGVZa6
+         tNtkKZQdg7YNRfMFiDeWkEXc2Dm2+6jnIO/CbfUc6v/OOa7mHX6AWg9ykeYflqGfTD1j
+         K1Ml6Z3ih1Q24OmXooKV4t8LK39etcnNJEij4BG+oe2OoX+v/Bek9pQ/STuw5uzySMvv
+         L40A==
+X-Gm-Message-State: AHYfb5g6Ki+dEq5yJqOh7RnGYn9YJChdoK9E7a6erp6QhpbeXdUH0gn6
+        xlcXkwhAigldB8TA
+X-Received: by 10.223.136.59 with SMTP id d56mr125340wrd.136.1503781867536;
+        Sat, 26 Aug 2017 14:11:07 -0700 (PDT)
+Received: from dinwoodie.org ([2001:ba8:0:1c0::9:1])
+        by smtp.gmail.com with ESMTPSA id a53sm5060052wra.76.2017.08.26.14.11.05
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 26 Aug 2017 14:11:05 -0700 (PDT)
+Date:   Sat, 26 Aug 2017 22:11:04 +0100
+From:   Adam Dinwoodie <adam@dinwoodie.org>
+To:     Jeff King <peff@peff.net>
+Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: cat-file timing window on Cygwin
+Message-ID: <20170826211104.GC10378@dinwoodie.org>
+References: <20170825112529.GA10378@dinwoodie.org>
+ <20170825150819.agxvbjytom7ao6n6@sigill.intra.peff.net>
+ <253bf111-4e8a-54b7-6e39-2908270aa357@ramsayjones.plus.com>
+ <20170826185337.hrcswjuunon54kgj@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20170825193743.GD103659@google.com>
+In-Reply-To: <20170826185337.hrcswjuunon54kgj@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 25, 2017 at 12:37:43PM -0700, Brandon Williams wrote:
-
-> > > My knee-jerk reaction is if it's worth writing after the dashes, it's
-> > > worth putting in the commit message.
-> > > 
-> > > However, in the case I think it is OK as-is (the motivation of "we
-> > > already avoid leaking auth info to stdout, so we should do the same for
-> > > error messages" seems self-contained and reasonable)
-> > Well, I tend to be wordy, and most of the commit messages I saw were
-> > rather short, so decided to split. Wonder, if maybe example command
-> > should be included without the rest of it. Would it be useful?
+On Sat, Aug 26, 2017 at 11:53:37AM -0700, Jeff King wrote:
+> On Sat, Aug 26, 2017 at 01:57:18AM +0100, Ramsay Jones wrote:
 > 
-> I'm guilty of writing short commit messages (something I need to work
-> on) but when looking through logs I much prefer to see longer messages
-> explaining rationals and trade-offs.
+> > > diff --git a/run-command.c b/run-command.c
+> > > index 98621faca8..064ebd1995 100644
+> > > --- a/run-command.c
+> > > +++ b/run-command.c
+> > > @@ -641,7 +641,6 @@ int start_command(struct child_process *cmd)
+> > >  	}
+> > >  
+> > >  	trace_argv_printf(cmd->argv, "trace: run_command:");
+> > > -	fflush(NULL);
+> > >  
+> > >  #ifndef GIT_WINDOWS_NATIVE
+> > >  {
+> > 
+> > I suspect not, but I can give it a try ...
+> > 
+> > ... oh, wow, that works! Ahem. (Hmm, so it's flushing stdin?!)
+> 
+> Interesting. I find it a little hard to believe there's so obvious a bug
+> as "fflush(NULL) flushes stdin", but well...that's what it seems like.
+> 
+> If that's truly what it is, this is the minimal reproduction I came up
+> with:
+> 
+> -- >8 --
+> #include <stdio.h>
+> 
+> int main(void)
+> {
+> 	char buf[256];
+> 	while (fgets(buf, sizeof(buf), stdin)) {
+> 		fprintf(stdout, "got: %s", buf);
+> 		fflush(NULL);
+> 	}
+> 	return 0;
+> }
+> -- 8< --
+> 
+> If this really is the bug, then doing something like "seq 10 | ./a.out"
+> would drop some of the input lines.
 
-I think as with all writing, there is both "too short" and "too long".
-I like having those extra bits in the commit message, too, but you have
-to make sure they don't drown out the main points.
+...yep.  It does.  Specifically, I consistently only get the firsts
+line:
 
-I find that when a message gets long, it often benefits from revising
-and re-ordering. E.g., having an intro paragraph that explains the
-motivation and solution in one sentence, and _then_ go into the details
-for people who are really digging into the details. Good organization
-lets readers get just the level they need and skip the rest.
+    $ seq 10 | ./a.exe
+    got: 1
+    
+    $ 
 
-Easier said than done, of course. :)
+If I introduce a delay between the lines of stdin (which I tested by
+just typing stdin from the keyboard), it works as expected.
 
--Peff
+Looks like this one will need to go to the Cygwin mailing list; I'll
+take it there shortly.  Thank you all for your help getting this far!
