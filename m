@@ -2,105 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 368BA208DC
-	for <e@80x24.org>; Sat, 26 Aug 2017 10:16:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 07C8B1F4DD
+	for <e@80x24.org>; Sat, 26 Aug 2017 14:47:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752080AbdHZKQq (ORCPT <rfc822;e@80x24.org>);
-        Sat, 26 Aug 2017 06:16:46 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:35430 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751973AbdHZKQp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Aug 2017 06:16:45 -0400
-Received: by mail-pg0-f67.google.com with SMTP id r133so2558370pgr.2
-        for <git@vger.kernel.org>; Sat, 26 Aug 2017 03:16:45 -0700 (PDT)
+        id S1752595AbdHZOrf (ORCPT <rfc822;e@80x24.org>);
+        Sat, 26 Aug 2017 10:47:35 -0400
+Received: from mail-qt0-f172.google.com ([209.85.216.172]:37315 "EHLO
+        mail-qt0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752258AbdHZOre (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Aug 2017 10:47:34 -0400
+Received: by mail-qt0-f172.google.com with SMTP id d15so10155038qta.4
+        for <git@vger.kernel.org>; Sat, 26 Aug 2017 07:47:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=CdbxYFYmq+4JoQZn2EZSYeHxz0JQIWxik+6a25uiomc=;
-        b=N3Qv49COvcBVRk0HY01/ykrn/It13smpFR2c6Vso7tzn2sTrSxlP+wLR0RkOUKs8m9
-         OBz04+KPp0WxsCFM4sHWP1Hc1Vb7ox/jCzhnkSzqE6m1dSU3BEGuRFUUrxu+Ys7LBlL5
-         jfRG6mwjwteIHsgmjfnDt7NdN352qs/5eG/QW09g/sXOSxpGQeOhSjuzaLMlNZwW84Ec
-         AKie8lxVOsyTsgXWRYsZcJjOOrrIzdEE2rY4jY8J+iXEUYjSiVIOuZj+hQ+Tf6IvW2CD
-         stQfD5lG6SlJGlJaY0xm1wmarC3ugMX2JjvMsPe20OrsYzb7kYPHCq8WeG3sAuYqsF7I
-         PoeQ==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=4onfwn3CKwHnzETUDrvpSRYf1ar074kuew+QwBfaryc=;
+        b=X8m1O66FwNiS1znakRdnnNjtjpZvxUuRHIodxCxmaPxrfvSBjmg9I6TRUJ3dN7lpEr
+         CXCNbv2Cu6xEcl0kN1bY6JeE0thFdcJI2iTbfFNlYslpXf7nCvxXHomO8KkVouBE+t9K
+         wxCl7gQSulvK4D1bWBa5Akm/NMUpStXvLngBWJAUuyNTIyhaVGklctGAGyMc2GGfhUdE
+         Vwi1l8TAMjU4d7jnn/1mKhowCPeqZTLHR40CvofICX7GX3L0D+jRAt2QTB2Tfb9jkvd9
+         f4ky/4FZgIE0UNElDuFlf3nudO56+aRacMUP4v7fi40QOiVdpZFCo6vrztjyG6Q5sfFk
+         AmNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=CdbxYFYmq+4JoQZn2EZSYeHxz0JQIWxik+6a25uiomc=;
-        b=AKl/jqKRF7RWdVhLe5fcgvkHWIbToi3E3SHpY5+SGovIHvLoJL4EsiM6lVf2jN5YUH
-         NR3Ag2ukLoUj8+bU8mjYe859cmJk4EuSzJnvHE/xwyflzEXDVGIOArNQ975l4d6tYLxY
-         +EgOdFdVmW+IbB7dbiykvVtqq+ntlAEYlwCMWAfgFQ9UmM0a6SUdRrgsvp3ikkaxDmBj
-         is2d4JWHzIJq2WzNvb681Gz2UI6bHSdJwSFr84SgD69YovHV7Bn1+LUCYZ/ZRQdy3TT/
-         xMpGKZTslrH2XnFgbN6v4D1IqZiiUqhzXmMaYcUG6SD/mcr4xS4gDlirgbimdBsWYqzo
-         8sjw==
-X-Gm-Message-State: AHYfb5h9ijMs4zoMTpIepLuJC78qCqV23b+NBvmEPspY5No2yTDJ2IN3
-        vKUFPUEKHOaf8ndy64CZgm0nKlgqjuB0
-X-Received: by 10.84.215.216 with SMTP id g24mr1471449plj.273.1503742604981;
- Sat, 26 Aug 2017 03:16:44 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=4onfwn3CKwHnzETUDrvpSRYf1ar074kuew+QwBfaryc=;
+        b=rVJpnGTdV7NNNlncnWwv1Vf5/+vQWzE/6TA00+LRFwQb+lx3Zvjs89GIQ/opep1bew
+         Ugwq7LiAFMd9MC0T8FbfqeLbKs0o/jjJCPi5rjD4/66bZfNRcNL/NPp2smJ1PSRUfmEU
+         /ofvDeLt73nr+XroPpKZ9tLMHVzpDpeSPIFg50bp85MQyWCHXrmJXu27FJ42gtStcKwF
+         im7cDxP6jpHwN7EUlS71sEE+9/gQD0X1Gb6YfTdWx7bcwqDICjkuqvtr0X0bXFcBO9xj
+         WTJKBWHazuMZhnmE/3qwaNDdhYiLhBm+RRvhJZS1XdMe5sOFdgm8Zx6on7LoCc1/GOzH
+         pBCw==
+X-Gm-Message-State: AHYfb5i/tS3oVhz8c6xY1sAHTUj0Y6z9SyC8egkaDl7RyQX6hfdvYK/Z
+        5+u9Eafs7l/1CqSnj5NQl6JJfRk58Y32SrI=
+X-Received: by 10.237.57.106 with SMTP id l97mr2604553qte.128.1503758853213;
+ Sat, 26 Aug 2017 07:47:33 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.100.162.37 with HTTP; Sat, 26 Aug 2017 03:16:44 -0700 (PDT)
-In-Reply-To: <xmqq8ti7s6ph.fsf@gitster.mtv.corp.google.com>
-References: <40c5e954dd84ff42552bccfea00144eecdbd1c7e.1503496797.git.martin.agren@gmail.com>
- <xmqq8ti7s6ph.fsf@gitster.mtv.corp.google.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sat, 26 Aug 2017 12:16:44 +0200
-Message-ID: <CAN0heSq8RdH5vWFgq1UvJOfWerMJSZwhV4FMCjvA=XUqu2OQQQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] refs/files-backend: duplicate strings added to affected_refnames
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Michael Haggerty <mhagger@alum.mit.edu>
+Received: by 10.200.45.117 with HTTP; Sat, 26 Aug 2017 07:47:17 -0700 (PDT)
+From:   =?UTF-8?Q?K=C3=A9vin_Le_Gouguec?= <kevin.legouguec@gmail.com>
+Date:   Sat, 26 Aug 2017 16:47:17 +0200
+Message-ID: <CAOAAw7WsiwzQYhiU9xxcoteaEWgaXRQkiVb0Xa2WckR4=m-bFw@mail.gmail.com>
+Subject: git describe and "the smallest number of commits possible"
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 25 August 2017 at 23:00, Junio C Hamano <gitster@pobox.com> wrote:
-> Martin =C3=85gren <martin.agren@gmail.com> writes:
->
->> files_transaction_prepare() and the functions it calls add strings to a
->> string list without duplicating them, i.e., we keep the original raw
->> pointers we were given. That is "ok", since we keep them only for a
->> short-enough time, but we end up leaking some of them.
->
-> Sorry, but I do not understand this statement.  If affected_refnames
-> string list borrows strings from other structures who own them, and
-> none of these strings are freed by clearing affected_refnames list,
-> that is not "leaking"---we didn't acquire the ownership, so it is
-> not our job to free them in the first place.  Among the original
-> owners of strings we borrow from, some may not properly free, in
-> which case that is a leak.
->
-> What problem are you solving?
+Hi,
 
-Sorry. Maybe this explains my intentions better:
+I've asked this question on the git-users Google Groups list[1], and
+while the answers there were interesting, I still cannot figure
+whether my problem comes from an actual bug, a misleading manpage, my
+inability to understand the code and/or the manpage, or a combination
+of the three.
 
-    In lock_ref_for_update(), we populate a strbuf "referent" through
-    lock_raw_ref(). If we don't have a symref, we don't use "referent"
-    for anything (and it won't have allocated any memory). Otherwise, we
-    hand over referent.buf to someone who uses it immediately
-    (refs_read_ref_full) or to someone who holds on to the pointer
-    (split_symref_update ends up adding it to a string list). Therefore,
-    at the end of lock_ref_for_update() we can't unconditionally release
-    the strbuf, so we end up leaking it.
+I noticed this problem on 2.1.4 (Debian oldstable); I can reproduce it
+on next (7ef03bb281b2220d0f2414365e4949beb2337042). Quoting
+git-describe(1)'s SEARCH STRATEGY section:
 
-    We could release the strbuf when we know that it's safe (possibly
-    also only when we know that it's needed). Instead, in preparation
-    for the next patch, make the string list not hold on to the raw
-    pointers, i.e., make it duplicate the strings on insertion and
-    manage its own resources.
+> If multiple tags were found during the walk then the tag which has
+> the fewest commits different from the input commit-ish will be
+> selected and output. Here fewest commits different is defined as the
+> number of commits which would be shown by `git log tag..input` will
+> be the smallest number of commits possible.
 
-Of course, the pointer-keeping and free-avoidance might be by design
-and/or wanted, e.g., to avoid excessive mallocing and freeing. I admit
-to not knowing what is a realistic number of iterations in the loop that
-calls lock_ref_for_update, i.e., how severe this leak might be. Maybe
-the "backend" nature of this code does not necessarily imply "this could
-be called any number of times throughout the process' lifetime".
+To put it shortly, after cloning GNU Emacs's repository[2]:
+
+    $ git describe --tags
+    emacs-25.1-129847-gdcc3ef3ee7
+    $ git log --oneline emacs-25.1.. | wc -l
+    5126
+    $ git log --oneline emacs-25.2.. | wc -l
+    4793
+
+If I am reading it correctly, the manpage suggests that emacs-25.2
+should be picked in this situation ("log emacs-25.2.." shows fewer
+commits than "log emacs-25.1..").
+
+Once more with --debug:
+
+    $ git describe --debug --tags
+    searching to describe HEAD
+     lightweight   129847 emacs-25.1
+     lightweight     4086 emacs-25.1-rc2
+     lightweight     4126 emacs-25.1-rc1
+     annotated       4185 emacs-25.2
+     annotated       4220 emacs-25.2-rc2
+     lightweight     4226 emacs-25.0.95
+     annotated       4236 emacs-25.2-rc1
+     annotated       4280 emacs-25.1.91
+     lightweight     4305 emacs-25.0.94
+     lightweight     4329 emacs-25.1.90
+    traversed 130257 commits
+    more than 10 tags found; listed 10 most recent
+    gave up search at 5c587fdff164e8b90beb47f6da64b4884290e40a
+    emacs-25.1-129847-gdcc3ef3ee7
+
+I tried to get a sense of what builtin/describe.c is doing (see [1]
+for some debug printfs); to summarize what I figured:
+
+- When QSORT() is called in describe(), emacs-25.1's depth is smaller
+  than emacs-25.2's.
+
+- finish_depth_computation() updates the best candidate's depth; AFAIU
+  this update's only purpose is to make the displayed suffix more
+  accurate.
+
+That is all I have right now. I apologize for failing to come up with
+a simpler test case (I tried to make toy repositories with a similar
+topology to reproduce the issue, to no avail). To conclude, as far as
+I can tell, one of the following holds:
+
+- something about this repository[3] causes git-describe(1) to not
+  work as advertised;
+
+- I fail at reading manuals.
+
+
+
+[1]: https://groups.google.com/forum/?fromgroups#!topic/git-users/tSnX-O-3aNI
+
+[2]: https://git.savannah.gnu.org/git/emacs.git
+
+[3]: The project's workflow sounds straightforward:
+
+- development happens mainly on the master branch;
+- the emacs-25 branch receives maintenance fixes and release tags; it
+  is periodically merged back into master;
+- experimental work can happen on scratch branches; these may
+  eventually be merged back into master.
+
+There are some complications (e.g. pull-induced merges) but if
+I --simplify-by-decoration I find that the repository's topology
+matches this description.
