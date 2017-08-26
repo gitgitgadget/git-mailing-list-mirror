@@ -2,99 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B286208DB
-	for <e@80x24.org>; Sat, 26 Aug 2017 01:16:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5938220285
+	for <e@80x24.org>; Sat, 26 Aug 2017 08:28:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754079AbdHZBQz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Aug 2017 21:16:55 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55850 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754048AbdHZBQy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Aug 2017 21:16:54 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D4A5EACF21;
-        Fri, 25 Aug 2017 21:16:53 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=qiaJYJM/h29kwAU6+y9NEaH7QxA=; b=dZsd2/
-        GNGmViFbExk+rDgmH14LEyTvOWAs7uXBvYKgWLOV+ZGkmAbKkxvKianoHbr2L/g4
-        UupRHA+FGj0ncy4vqBjvgNqvqXwPK++7ZdOxmdAAGYjVGCXBotgUb09c9xg9ZA7n
-        iPf1Syt5UIn3CVBVekyIAhLsmg1Tm956RJxhM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=O8lX+Ld6kWB+U/JSPuFDFHjGYkn0IwDF
-        zcxCM0aHuO6EVauIITxjZzsAZTC4KO65Q12MGIcEz+ZKCcsGCnhvL6nHpNm25m46
-        /nYj9QGoOFOVFvweoCihnEHCTOxcr332AU6PDqauZbxlAjaEhv1sMcbFgXJg2Psw
-        EzvGo1xuoFw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CBDD5ACF20;
-        Fri, 25 Aug 2017 21:16:53 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 36CC0ACF1F;
-        Fri, 25 Aug 2017 21:16:53 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Ian Jackson <ijackson@chiark.greenend.org.uk>, git@vger.kernel.org,
-        Dave Borowitz <dborowitz@google.com>
-Subject: Re: git signed push server-side
-References: <22944.38288.91698.811743@chiark.greenend.org.uk>
-        <20170826003229.GL13924@aiede.mtv.corp.google.com>
-Date:   Fri, 25 Aug 2017 18:16:51 -0700
-In-Reply-To: <20170826003229.GL13924@aiede.mtv.corp.google.com> (Jonathan
-        Nieder's message of "Fri, 25 Aug 2017 17:32:29 -0700")
-Message-ID: <xmqqo9r3qgak.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3E8E9826-89FC-11E7-82D8-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+        id S1751931AbdHZI2Z (ORCPT <rfc822;e@80x24.org>);
+        Sat, 26 Aug 2017 04:28:25 -0400
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:49707 "EHLO
+        alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751868AbdHZI2Y (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 26 Aug 2017 04:28:24 -0400
+X-AuditID: 1207440f-a43ff70000007960-00-59a1312723e0
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 2B.8D.31072.72131A95; Sat, 26 Aug 2017 04:28:23 -0400 (EDT)
+Received: from bagpipes.fritz.box (p57BCC5EB.dip0.t-ipconnect.de [87.188.197.235])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v7Q8SHig004049
+        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+        Sat, 26 Aug 2017 04:28:19 -0400
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johan Herland <johan@herland.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH 00/12] Clean up notes-related code around `load_subtree()`
+Date:   Sat, 26 Aug 2017 10:28:00 +0200
+Message-Id: <cover.1503734566.git.mhagger@alum.mit.edu>
+X-Mailer: git-send-email 2.11.0
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprDIsWRmVeSWpSXmKPExsUixO6iqKtuuDDS4MlSGYuuK91MFg29V5gt
+        5t3dxWTRv7yLzeL2ivnMDqwef99/YPL48DHO49LL72weFy8pe3zeJBfAGsVlk5Kak1mWWqRv
+        l8CVce3cUpaCdcIVSxdvZWtg/M/XxcjBISFgIrFtqkQXIxeHkMAOJok/3/cxQTinmCTOzjjB
+        0sXIycEmoCuxqKeZCcQWEVCTmNh2iAWkiFlgOaNEx9vzYAlhAS+JDy03WEFsFgFVia8v3oM1
+        8wqYS/w8eYgdxJYQkJfY1XaRdQIj1wJGhlWMcok5pbm6uYmZOcWpybrFyYl5ealFuiZ6uZkl
+        eqkppZsYIYHAv4Oxa73MIUYBDkYlHt6IwgWRQqyJZcWVuYcYJTmYlER5HTQWRgrxJeWnVGYk
+        FmfEF5XmpBYfYpTgYFYS4V2hBJTjTUmsrEotyodJSXOwKInzqi9R9xMSSE8sSc1OTS1ILYLJ
+        ynBwKEnwdugDNQoWpaanVqRl5pQgpJk4OEGG8wANzwCp4S0uSMwtzkyHyJ9iVJQS53UASQiA
+        JDJK8+B6YZH6ilEc6BVh3igDoCoeYJTDdb8CGswENFhREGxwSSJCSqqBcYZiqbRnz+X7EUkR
+        l9o4gu/wqH1xrH47q2eN2oKs/VtNymOXe+hssT24yOqq8VS9gJrlci8Nlm2IlYrY8Nz+E9dy
+        i869ntlR33YVNin/nnDs3+bb6gkrEvm+S/vqOGwV9D+9NTtFJCF804710Qnb1ULimyOWx/19
+        csKkbbrmjuD2tOff/vRMUmIpzkg01GIuKk4EAEwTDoOvAgAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+While putzing around in the notes code quite some time ago, I found
+this comment:
 
-> I think respecting gpg.program would be nicer.  Is there a reason not
-> to do that?
->
-> I suspect receive-pack just forgot to call git_gpg_config.
+    /*
+     * Determine full path for this non-note entry:
+     * The filename is already found in entry.path, but the
+     * directory part of the path must be deduced from the subtree
+     * containing this entry. We assume here that the overall notes
+     * tree follows a strict byte-based progressive fanout
+     * structure (i.e. using 2/38, 2/2/36, etc. fanouts, and not
+     * e.g. 4/36 fanout). This means that if a non-note is found at
+     * path "dead/beef", the following code will register it as
+     * being found on "de/ad/beef".
+     * On the other hand, if you use such non-obvious non-note
+     * paths in the middle of a notes tree, you deserve what's
+     * coming to you ;). Note that for non-notes that are not
+     * SHA1-like at the top level, there will be no problems.
+     *
+     * To conclude, it is strongly advised to make sure non-notes
+     * have at least one non-hex character in the top-level path
+     * component.
+     */
 
-That would be a good change.
+This was enough of a nerd snipe to get me to dig into the code.
 
-> How is the keyring configured for other commands that use GPG, like
-> "git tag -v"?  (Forgive my laziness in not looking it up.)
+It turns out that the comment is incorrect, but there was nevertheless
+plenty that could be cleaned up in the area:
 
-AFAIR we never do anything special, so you should be able to point
-GNUPGHOME to wherever you like to use the desired configuration.
+* Make macro `GIT_NIBBLE` safer by adding some parentheses
+* Remove some dead code
+* Fix some memory leaks
+* Fix some obsolete and incorrect comments
+* Reject "notes" that are not blobs
 
-> I also wonder why you say the git configuration system is unsuited to
-> keeping secrets.  E.g. passing an include.path setting with -c or
-> GIT_CONFIG_PARAMETERS should avoid the kinds of trouble you described.
-> Is there a change we could make to make it work better?  That said, I
-> think being able to name a file is a good idea.
+I hope the result is also easier to understand.
 
-I also wonder that too.  The configuration file that has the
-filename could be made just as secret and unreadable from public as
-the new file that stores the seed with the same mechanism, I would
-imagine.
+This branch is also available from my Git fork [1] as branch
+`load-subtree-cleanup`.
 
->> 5. There are no docs on how to use this feature properly
->>    (Debian #852695, #852688 part 1)
->>
->> Using the signed push feature requires careful programming on the
->> server side.  There should be a doc explaining how to do this.
+Michael
 
-This was rather deliberately left underspecified, hoping that the
-BCP would emerge after people gain experience.  As Ian is looking
-into this and hopefully gain real-world experience, we can have a
-good BCP description after he is done with his project ;-)
+[1] https://github.com/mhagger/git
 
-> Yes, that sounds like a very welcome kind of thing to add.
+Michael Haggerty (12):
+  notes: make GET_NIBBLE macro more robust
+  load_subtree(): remove unnecessary conditional
+  load_subtree(): reduce the scope of some local variables
+  load_subtree(): fix incorrect comment
+  load_subtree(): separate logic for internal vs. terminal entries
+  load_subtree(): check earlier whether an internal node is a tree entry
+  load_subtree(): only consider blobs to be potential notes
+  get_oid_hex_segment(): return 0 on success
+  load_subtree(): combine some common code
+  get_oid_hex_segment(): don't pad the rest of `oid`
+  hex_to_bytes(): simpler replacement for `get_oid_hex_segment()`
+  load_subtree(): declare some variables to be `size_t`
 
-Indeed.
+ notes.c | 136 +++++++++++++++++++++++++++++++---------------------------------
+ 1 file changed, 66 insertions(+), 70 deletions(-)
+
+-- 
+2.11.0
+
