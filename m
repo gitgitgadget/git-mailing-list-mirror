@@ -2,62 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4ABA1F4DD
-	for <e@80x24.org>; Sun, 27 Aug 2017 05:39:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 69FD3208DB
+	for <e@80x24.org>; Sun, 27 Aug 2017 06:37:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750866AbdH0Fjm (ORCPT <rfc822;e@80x24.org>);
-        Sun, 27 Aug 2017 01:39:42 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55212 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750750AbdH0Fjl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Aug 2017 01:39:41 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5754FA3D42;
-        Sun, 27 Aug 2017 01:39:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=KpgSv8r3S8go2IzOhfz6v9VRB8o=; b=B+tDnu
-        /KWtgWYpCUwm6ZDpXgx5f1m/CYmZieNTQJXtQsHO4GytN+Q6WLHtUjxtgVzlLtNN
-        llVs5B9Xvyty4MfNnBc16UyaeKCm+WNnTGUExO+qs3/8jJbi35wqGfGxOataIMp8
-        X/nlfLC41f+5qmwDsVDCIGX0dZW/sIh9amW1k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=IXL1GQ6noIVYHomzBEnJWeKXe0TLXaIE
-        EPOvgdzst4TlHaiN9sS2UVNm+t5EZprngL20D7wpTCmtIao6lW/JUhtkCgNwTZyl
-        s8UaCGPvGH2r1R0fgMDwztBQqjK0wCXiUS3iyjY1pk4SyprxtfDMIDxB7qj/y4/C
-        1sF/LZ5thpw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 505F8A3D41;
-        Sun, 27 Aug 2017 01:39:38 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B28EFA3D40;
-        Sun, 27 Aug 2017 01:39:37 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, nish.aravamudan@canonical.com, me@ikke.info
-Subject: Re: [PATCH] Fix branch renaming not updating HEADs correctly
-References: <20170823201334.bz42s6t5ti4jdaqm@pitfall>
-        <20170824104124.6263-1-pclouds@gmail.com>
-Date:   Sat, 26 Aug 2017 22:39:36 -0700
-In-Reply-To: <20170824104124.6263-1-pclouds@gmail.com> (=?utf-8?B?Ik5ndXk=?=
- =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?=
-        Duy"'s message of "Thu, 24 Aug 2017 17:41:24 +0700")
-Message-ID: <xmqqd17hr2lj.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1750838AbdH0Ghw (ORCPT <rfc822;e@80x24.org>);
+        Sun, 27 Aug 2017 02:37:52 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:61756 "EHLO
+        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750797AbdH0Ghv (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 27 Aug 2017 02:37:51 -0400
+X-AuditID: 12074413-3a3ff70000007929-6c-59a268bd3de9
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id B0.B8.31017.DB862A95; Sun, 27 Aug 2017 02:37:50 -0400 (EDT)
+Received: from mail-it0-f42.google.com (mail-it0-f42.google.com [209.85.214.42])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v7R6bmpI029486
+        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT)
+        for <git@vger.kernel.org>; Sun, 27 Aug 2017 02:37:49 -0400
+Received: by mail-it0-f42.google.com with SMTP id o132so8296996itc.1
+        for <git@vger.kernel.org>; Sat, 26 Aug 2017 23:37:49 -0700 (PDT)
+X-Gm-Message-State: AHYfb5h82hreeGzzKhmAKnS/LVzWBAvs9cZdx8VwXRK52oWkgKAlc+jq
+        1d3lQUdpTwJyk21p/eGwyl/Faw2v3g==
+X-Received: by 10.36.167.1 with SMTP id a1mr3202542itf.102.1503815868797; Sat,
+ 26 Aug 2017 23:37:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1D5914C6-8AEA-11E7-9E3E-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Reply-To: mhagger@alum.mit.edu
+Received: by 10.107.15.204 with HTTP; Sat, 26 Aug 2017 23:37:47 -0700 (PDT)
+In-Reply-To: <xmqqh8wuqo6e.fsf@gitster.mtv.corp.google.com>
+References: <cover.1503734566.git.mhagger@alum.mit.edu> <c21bedbee9487792f4a336a417aa9874578aaac2.1503734566.git.mhagger@alum.mit.edu>
+ <xmqqh8wuqo6e.fsf@gitster.mtv.corp.google.com>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Date:   Sun, 27 Aug 2017 08:37:47 +0200
+X-Gmail-Original-Message-ID: <CAMy9T_HYV9=HvrAnAxHgzRvUy__3o99PxQSOe2iCE_swtk_8VQ@mail.gmail.com>
+Message-ID: <CAMy9T_HYV9=HvrAnAxHgzRvUy__3o99PxQSOe2iCE_swtk_8VQ@mail.gmail.com>
+Subject: Re: [PATCH 02/12] load_subtree(): remove unnecessary conditional
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johan Herland <johan@herland.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprCKsWRmVeSWpSXmKPExsUixO6iqLsvY1GkQcNleYuuK91MDowenzfJ
+        BTBGcdmkpOZklqUW6dslcGXsXrqNtWAza8WsY4tYGhhXs3QxcnJICJhIHN14jq2LkYtDSGAH
+        k8Spmw8ZIZxHTBKv7rZBOX2MEjOO/mKFaMmX+L1oK5RdKHGv9RcTiM0rIChxcuYTsLFCAnIS
+        rzbcYISwvSXap8wAi3MKWEvs6mxlg4hvZ5R4eJ0fxGYT0JVY1NMMNodFQFViy555TBDzEyWm
+        75nBDjE/QOLAumtgc4QFPCUeNa8BmyMioCYxse0QC8ihzAITGSUaOveBNTMLaEq0bv/NPoFR
+        eBaS+2YhSS1gZFrFKJeYU5qrm5uYmVOcmqxbnJyYl5dapGuul5tZopeaUrqJERLIwjsYd52U
+        O8QowMGoxMNrcHRhpBBrYllxZe4hRkkOJiVRXgcNoBBfUn5KZUZicUZ8UWlOavEhRgkOZiUR
+        3pPGiyKFeFMSK6tSi/JhUtIcLErivGpL1P2EBNITS1KzU1MLUotgsjIcHEoSvJ7AiBUSLEpN
+        T61Iy8wpQUgzcXCCDOcBGm4HUsNbXJCYW5yZDpE/xWjJceXKui9MHE0ftgDJKQe2f2ESYsnL
+        z0uVEuetTQdqEABpyCjNg5sJS0yvGMWBXhTmPQRSxQNManBTXwEtZAJaqCi4EGRhSSJCSqqB
+        USzmt7u46oEsZ6YOVnHDB80bO3jzFE0WKVV//FVRutlg6STjUxpHLrJV597btZ73p+2JSR0G
+        HrpWCycfXHPDMmjDzKUXlPYdvq/TVjavQNRR/eeDO0X7nhyaEDf5xYbaqPi6bRcD/er5jT2j
+        sx0u7tn34Uxc8UZOrzvqakYqJ17Kahd9CWQ4rMRSnJFoqMVcVJwIANcTkMsnAwAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks.  I'll merge this down to at least 'next' before I go
-offline for a week.
+On Sat, Aug 26, 2017 at 6:38 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+>
+>> At this point in the code, len is *always* <= 20.
+>
+> This is the kind of log message that makes me unconfortable, as it
+> lacks "because", and the readers would need to find out themselves
+> by following the same codepath the patch author already followed.
+> [...]
 
+That's a valid complaint. I've adjusted the patch series to add the
+assertion and explain the reasoning better in the commit message. I've
+pushed the revised series to GitHub, but I'll wait a couple of days to
+see if there's more feedback before resubmitting.
+
+Thanks,
+Michael
