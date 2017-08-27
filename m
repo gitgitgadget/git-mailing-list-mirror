@@ -2,120 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A22F820285
-	for <e@80x24.org>; Sun, 27 Aug 2017 15:47:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 26E2320285
+	for <e@80x24.org>; Sun, 27 Aug 2017 18:21:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751209AbdH0Prs (ORCPT <rfc822;e@80x24.org>);
-        Sun, 27 Aug 2017 11:47:48 -0400
-Received: from avasout07.plus.net ([84.93.230.235]:34726 "EHLO
-        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751182AbdH0Prr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Aug 2017 11:47:47 -0400
-Received: from [10.0.2.15] ([147.147.86.16])
-        by avasout07 with smtp
-        id 2Fnl1w0010M91Ur01Fnmm2; Sun, 27 Aug 2017 16:47:46 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=CrLPSjwD c=1 sm=1 tr=0
- a=dubYQqM3tRRTmV8xSh8cXQ==:117 a=dubYQqM3tRRTmV8xSh8cXQ==:17
- a=IkcTkHD0fZMA:10 a=ZTg09mnBD_C4ZXrySNoA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: cat-file timing window on Cygwin
-To:     Adam Dinwoodie <adam@dinwoodie.org>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <20170825112529.GA10378@dinwoodie.org>
- <20170825150819.agxvbjytom7ao6n6@sigill.intra.peff.net>
- <253bf111-4e8a-54b7-6e39-2908270aa357@ramsayjones.plus.com>
- <20170826185337.hrcswjuunon54kgj@sigill.intra.peff.net>
- <20170826211104.GC10378@dinwoodie.org>
- <c5f3fe2d-6d76-7c08-2a50-fb10c66adc48@ramsayjones.plus.com>
- <20170827113358.GF10378@dinwoodie.org>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <0822303f-63b1-13e2-be43-8e2e4dab478e@ramsayjones.plus.com>
-Date:   Sun, 27 Aug 2017 16:47:45 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
-MIME-Version: 1.0
-In-Reply-To: <20170827113358.GF10378@dinwoodie.org>
+        id S1751263AbdH0SV4 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 27 Aug 2017 14:21:56 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:37618 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751252AbdH0SVz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Aug 2017 14:21:55 -0400
+Received: by mail-wr0-f195.google.com with SMTP id p14so2907847wrg.4
+        for <git@vger.kernel.org>; Sun, 27 Aug 2017 11:21:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=8g8s2yDK/IVlO/c5SMjIzLl75p91cPlpl6Ge+3u89yI=;
+        b=LdvO1SK2rlcUxXHtKnNCggq9js5nUg8id+utb0gV3RSxRO5Lh7hz15LCJBdf8ZAAIv
+         /stSE6cvIBHOhOvG2VC2SmFPeXki4t4slOzgFslP92SVuBA5ot8liQ6pGXw++1pj54Z0
+         8UWk1BeTeHwjR8dXJqboLm193k8pSHHZ8o+s6AuhRw4ijIpsHEqCTdeWUfMrCHTU1dL1
+         v3sadJlBTjKnPP2lnXpWlz0i2ptHjnYsaeDuGQW2r3L6PiR8k/vANpPNgmAtNJMfXgTp
+         8UoQ6IUAxvnqTZmrk2PM5MzwDJotazqsR9EWg35YnaluhYjZUCUJNHQJOKDoM0Y+zBkf
+         4Ijw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=8g8s2yDK/IVlO/c5SMjIzLl75p91cPlpl6Ge+3u89yI=;
+        b=EfhcRKdCqyG7j1DtMusrJzKsUR95iMGgFly40VBGG1WYEbLjN61c9ZGZMMvSIDuLTl
+         DxHA+DMOesNKK/970JbxSs1Q8z+cKnresyA91E6bcabHHoB2UzG4qdwddavlP2BrkkFl
+         9/HyEd6hEViMLAmzUyJ9slBaK4nuBMlnasL4zl7NV0gL5gRpNJ6t+9BpTx2QUmmWRJnA
+         C2EONaQ28j+i3U3aEr4w0Yq90eQGwfu9KAAZqjjtPxx+/nRdYBVjLnX59RuC0ebU1nI2
+         LIiWMEyeQff8eJxNrqjU/v1KsBXb3Ycf+llnAR6+ZBtlUjdVVORkzr95MrI94e4+H3am
+         0Q3g==
+X-Gm-Message-State: AHYfb5jfQOk8mUbQwYOhtnxLE8qNUoHEaxGEZlAMDQjsKJwumF/U+IIb
+        uaF4E8Q+lMaQWg==
+X-Received: by 10.223.139.90 with SMTP id v26mr1475785wra.208.1503858114686;
+        Sun, 27 Aug 2017 11:21:54 -0700 (PDT)
+Received: from [10.32.248.91] (adsknateur.autodesk.com. [132.188.32.100])
+        by smtp.gmail.com with ESMTPSA id l4sm10993164wrb.70.2017.08.27.11.21.52
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 27 Aug 2017 11:21:53 -0700 (PDT)
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH] pkt-line: re-'static'-ify buffer in packet_write_fmt_1()
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <20170827073732.546-1-martin.agren@gmail.com>
+Date:   Sun, 27 Aug 2017 20:21:54 +0200
+Cc:     Git Users <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <9E4606AF-8814-42DE-8D3A-3A15C1B1723C@gmail.com>
+References: <20170827073732.546-1-martin.agren@gmail.com>
+To:     =?utf-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
+> On 27 Aug 2017, at 09:37, Martin =C3=85gren <martin.agren@gmail.com> =
+wrote:
+>=20
+> The static-ness was silently dropped in commit 70428d1a5 ("pkt-line: =
+add
+> packet_write_fmt_gently()", 2016-10-16). As a result, for each call to
+> packet_write_fmt_1, we allocate and leak a buffer.
 
-On 27/08/17 12:33, Adam Dinwoodie wrote:
-> On Sun, Aug 27, 2017 at 03:06:31AM +0100, Ramsay Jones wrote:
->> On 26/08/17 22:11, Adam Dinwoodie wrote:
->>> On Sat, Aug 26, 2017 at 11:53:37AM -0700, Jeff King wrote:
->>>> Interesting. I find it a little hard to believe there's so obvious a bug
->>>> as "fflush(NULL) flushes stdin", but well...that's what it seems like.
->>>>
->>>> If that's truly what it is, this is the minimal reproduction I came up
->>>> with:
->>>>
->>>> -- >8 --
->>>> #include <stdio.h>
->>>>
->>>> int main(void)
->>>> {
->>>> 	char buf[256];
->>>> 	while (fgets(buf, sizeof(buf), stdin)) {
->>>> 		fprintf(stdout, "got: %s", buf);
->>>> 		fflush(NULL);
->>>> 	}
->>>> 	return 0;
->>>> }
->>>> -- 8< --
->>>>
->>>> If this really is the bug, then doing something like "seq 10 | ./a.out"
->>>> would drop some of the input lines.
->>>
->>> ...yep.  It does.  Specifically, I consistently only get the firsts
->>> line:
->>>
->>>     $ seq 10 | ./a.exe
->>>     got: 1
->>>     
->>>     $ 
->>>
->>> If I introduce a delay between the lines of stdin (which I tested by
->>> just typing stdin from the keyboard), it works as expected.
->>>
->>> Looks like this one will need to go to the Cygwin mailing list; I'll
->>> take it there shortly.  Thank you all for your help getting this far!
->>
->> This is apparently fixed in cygwin v2.8.3 [see commit 78ade082fe,
->> ('Revert "errno: Stop using _impure_ptr->_errno completely"', 19-07-2017),
->> commit 9cc89b0438 ("cygwin: Use errno instead of _impure_ptr->_errno", 19-07-2017), commit a674199fc9 ("cygwin: Bump DLL version to 2.8.3",
->> 19-07-2017) and commit d2ae2f00b8 ("cygwin: add fflush fix to release
->> notes", 19-07-2017)].
->>
->> I haven't had a chance to try v2.8.3 yet (it's 3am and I'm about to
->> go get some sleep).
-> 
-> Cygwin 2.8.3 hasn't been released yet, 
+Oh :-( Thanks for detecting and fixing the leak.
 
-Heh, yes, I found that out myself this afternoon. ;-)
-
->                                         but I've just tested the latest
-> development snapshot with Jeff's simple test case, and it works as
-> expected, so I'm going to assume the Git test will start passing once
-> that version of the Cygwin DLL is released too.
-
-Hmm, I'm not keen on installing "snapshot"(s), so I think I will
-wait for the release to test it. (However, as a matter of interest,
-how would I obtain/install/test this snapshot release - is it a
-'low-risk' exercise?)
-
-ATB,
-Ramsay Jones
+How did you actually find it? Reading the code or did you use some
+tool?
 
 
+> We could keep the strbuf non-static and instead make sure we always
+> release it before returning (but not before we die, so that we don't
+> touch errno). That would also prepare us for threaded use. But until
+> that needs to happen, let's just restore the static-ness so that we =
+get
+> back to a situation where we (eventually) do not continuosly keep
+> allocating memory.
+>=20
+> Signed-off-by: Martin =C3=85gren <martin.agren@gmail.com>
+> ---
+> I waffled between "fixing the memory leak" by releasing the buffer and
+> "fixing the static-ness" as in this patch. I can see arguments both =
+ways
+> and don't have any strong opinion.
+>=20
+> pkt-line.c | 3 ++-
+> 1 file changed, 2 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/pkt-line.c b/pkt-line.c
+> index 7db911957..f364944b9 100644
+> --- a/pkt-line.c
+> +++ b/pkt-line.c
+> @@ -136,9 +136,10 @@ static void format_packet(struct strbuf *out, =
+const char *fmt, va_list args)
+> static int packet_write_fmt_1(int fd, int gently,
+> 			      const char *fmt, va_list args)
+> {
+> -	struct strbuf buf =3D STRBUF_INIT;
+> +	static struct strbuf buf =3D STRBUF_INIT;
+> 	ssize_t count;
+>=20
+> +	strbuf_reset(&buf);
+> 	format_packet(&buf, fmt, args);
+> 	count =3D write_in_full(fd, buf.buf, buf.len);
+> 	if (count =3D=3D buf.len)
+> --=20
+> 2.14.1.151.g45c1275a3.dirty
+
+Looks good to me!
+
+- Lars=
