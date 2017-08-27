@@ -2,121 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D9911F4DD
-	for <e@80x24.org>; Sun, 27 Aug 2017 02:06:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B4ABA1F4DD
+	for <e@80x24.org>; Sun, 27 Aug 2017 05:39:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751190AbdH0CGf (ORCPT <rfc822;e@80x24.org>);
-        Sat, 26 Aug 2017 22:06:35 -0400
-Received: from avasout07.plus.net ([84.93.230.235]:60859 "EHLO
-        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751128AbdH0CGe (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Aug 2017 22:06:34 -0400
-Received: from [10.0.2.15] ([147.147.86.16])
-        by avasout07 with smtp
-        id 226X1w0090M91Ur0126ZGE; Sun, 27 Aug 2017 03:06:33 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=CrLPSjwD c=1 sm=1 tr=0
- a=dubYQqM3tRRTmV8xSh8cXQ==:117 a=dubYQqM3tRRTmV8xSh8cXQ==:17
- a=IkcTkHD0fZMA:10 a=IasFUMneo_ByyoNf3xIA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: cat-file timing window on Cygwin
-To:     Adam Dinwoodie <adam@dinwoodie.org>, Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <20170825112529.GA10378@dinwoodie.org>
- <20170825150819.agxvbjytom7ao6n6@sigill.intra.peff.net>
- <253bf111-4e8a-54b7-6e39-2908270aa357@ramsayjones.plus.com>
- <20170826185337.hrcswjuunon54kgj@sigill.intra.peff.net>
- <20170826211104.GC10378@dinwoodie.org>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <c5f3fe2d-6d76-7c08-2a50-fb10c66adc48@ramsayjones.plus.com>
-Date:   Sun, 27 Aug 2017 03:06:31 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        id S1750866AbdH0Fjm (ORCPT <rfc822;e@80x24.org>);
+        Sun, 27 Aug 2017 01:39:42 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55212 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750750AbdH0Fjl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Aug 2017 01:39:41 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5754FA3D42;
+        Sun, 27 Aug 2017 01:39:38 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=KpgSv8r3S8go2IzOhfz6v9VRB8o=; b=B+tDnu
+        /KWtgWYpCUwm6ZDpXgx5f1m/CYmZieNTQJXtQsHO4GytN+Q6WLHtUjxtgVzlLtNN
+        llVs5B9Xvyty4MfNnBc16UyaeKCm+WNnTGUExO+qs3/8jJbi35wqGfGxOataIMp8
+        X/nlfLC41f+5qmwDsVDCIGX0dZW/sIh9amW1k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=IXL1GQ6noIVYHomzBEnJWeKXe0TLXaIE
+        EPOvgdzst4TlHaiN9sS2UVNm+t5EZprngL20D7wpTCmtIao6lW/JUhtkCgNwTZyl
+        s8UaCGPvGH2r1R0fgMDwztBQqjK0wCXiUS3iyjY1pk4SyprxtfDMIDxB7qj/y4/C
+        1sF/LZ5thpw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 505F8A3D41;
+        Sun, 27 Aug 2017 01:39:38 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B28EFA3D40;
+        Sun, 27 Aug 2017 01:39:37 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, nish.aravamudan@canonical.com, me@ikke.info
+Subject: Re: [PATCH] Fix branch renaming not updating HEADs correctly
+References: <20170823201334.bz42s6t5ti4jdaqm@pitfall>
+        <20170824104124.6263-1-pclouds@gmail.com>
+Date:   Sat, 26 Aug 2017 22:39:36 -0700
+In-Reply-To: <20170824104124.6263-1-pclouds@gmail.com> (=?utf-8?B?Ik5ndXk=?=
+ =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?=
+        Duy"'s message of "Thu, 24 Aug 2017 17:41:24 +0700")
+Message-ID: <xmqqd17hr2lj.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20170826211104.GC10378@dinwoodie.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1D5914C6-8AEA-11E7-9E3E-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 26/08/17 22:11, Adam Dinwoodie wrote:
-> On Sat, Aug 26, 2017 at 11:53:37AM -0700, Jeff King wrote:
->> On Sat, Aug 26, 2017 at 01:57:18AM +0100, Ramsay Jones wrote:
->>
->>>> diff --git a/run-command.c b/run-command.c
->>>> index 98621faca8..064ebd1995 100644
->>>> --- a/run-command.c
->>>> +++ b/run-command.c
->>>> @@ -641,7 +641,6 @@ int start_command(struct child_process *cmd)
->>>>  	}
->>>>  
->>>>  	trace_argv_printf(cmd->argv, "trace: run_command:");
->>>> -	fflush(NULL);
->>>>  
->>>>  #ifndef GIT_WINDOWS_NATIVE
->>>>  {
->>>
->>> I suspect not, but I can give it a try ...
->>>
->>> ... oh, wow, that works! Ahem. (Hmm, so it's flushing stdin?!)
->>
->> Interesting. I find it a little hard to believe there's so obvious a bug
->> as "fflush(NULL) flushes stdin", but well...that's what it seems like.
->>
->> If that's truly what it is, this is the minimal reproduction I came up
->> with:
->>
->> -- >8 --
->> #include <stdio.h>
->>
->> int main(void)
->> {
->> 	char buf[256];
->> 	while (fgets(buf, sizeof(buf), stdin)) {
->> 		fprintf(stdout, "got: %s", buf);
->> 		fflush(NULL);
->> 	}
->> 	return 0;
->> }
->> -- 8< --
->>
->> If this really is the bug, then doing something like "seq 10 | ./a.out"
->> would drop some of the input lines.
-> 
-> ...yep.  It does.  Specifically, I consistently only get the firsts
-> line:
-> 
->     $ seq 10 | ./a.exe
->     got: 1
->     
->     $ 
-> 
-> If I introduce a delay between the lines of stdin (which I tested by
-> just typing stdin from the keyboard), it works as expected.
-> 
-> Looks like this one will need to go to the Cygwin mailing list; I'll
-> take it there shortly.  Thank you all for your help getting this far!
-
-This is apparently fixed in cygwin v2.8.3 [see commit 78ade082fe,
-('Revert "errno: Stop using _impure_ptr->_errno completely"', 19-07-2017),
-commit 9cc89b0438 ("cygwin: Use errno instead of _impure_ptr->_errno", 19-07-2017), commit a674199fc9 ("cygwin: Bump DLL version to 2.8.3",
-19-07-2017) and commit d2ae2f00b8 ("cygwin: add fflush fix to release
-notes", 19-07-2017)].
-
-I haven't had a chance to try v2.8.3 yet (it's 3am and I'm about to
-go get some sleep).
-
-ATB,
-Ramsay Jones
-
+Thanks.  I'll merge this down to at least 'next' before I go
+offline for a week.
 
