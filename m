@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 06B35208DB
-	for <e@80x24.org>; Mon, 28 Aug 2017 20:32:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 05F2F208DB
+	for <e@80x24.org>; Mon, 28 Aug 2017 20:33:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751329AbdH1Ucu (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Aug 2017 16:32:50 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:33534 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751207AbdH1Uct (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Aug 2017 16:32:49 -0400
-Received: by mail-wr0-f193.google.com with SMTP id k94so1044900wrc.0
-        for <git@vger.kernel.org>; Mon, 28 Aug 2017 13:32:49 -0700 (PDT)
+        id S1751333AbdH1Uc6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Aug 2017 16:32:58 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:33110 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751207AbdH1Uc5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Aug 2017 16:32:57 -0400
+Received: by mail-wm0-f67.google.com with SMTP id e67so1735179wmd.0
+        for <git@vger.kernel.org>; Mon, 28 Aug 2017 13:32:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=KS23vGfekyglB+NKsogmgAflnOkD5ZBIYhGaN21gCqY=;
-        b=VsLzfzIqnv6GF2gVibjTqB6QR7TsFGzVwqh7P8PJ29vHaQs7BWbxedggvqwARyPGoc
-         9jUqoy76daar4bYkIUa2j0imcPweaUB4ykRZtOIa7uSQQhtGa+FsQmkF6eQIoEJKP2y8
-         +BBYxfV93zOPBmTrQgzNRjfVgHAQgJoT8cXSyrIPOoUsVmW6K3uUrHHqMLZOf/Ikt2iG
-         oReFiLdsYsX6zasnDkUyHoN8/6vtahKuTdgZOw9/jk/uI10xTejHnc+WOBba0j5sgEBq
-         NifHQuSdKd5HQswtCh5jB9tmIl/rsKm/aeLJw88iVj4H3Hpl75/oK3aPuezOneeQV8GN
-         hoCA==
+        bh=ZKsltzDksuvSrbQniE6zgYSmhxSk2wxMV8fGj3li97I=;
+        b=MPR08rhSRf0ZRDYQq19nAxeeWP100/wqk9jI6gp1ogFQqzWAu2zmKTeQfNHASDgPk5
+         y090tcLHYiyQaw/rf+zttYpYMsZqoHTOrtMTdRlz+VdjZV8XNcLDsCUMjQMfEiuBy8mV
+         /lFvcRMWagEW+ytcbbH/016MaYbFCfQQazKQrEh4Fo8A/tLfyP5DIazocDTfgMoiCgPz
+         +ixhGR4EK2eZB5EWkPqsarogbEByS3DaivlCgq1s2CbuEOcKcVgxwBlO4Cf3mvSpgEh4
+         Pi4bFNY8Ss7yf9LE/yc3aB5FisGUfgYKtgwTN4C41yErKIbej9y77Hqul1/UVErGEuyp
+         ScJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=KS23vGfekyglB+NKsogmgAflnOkD5ZBIYhGaN21gCqY=;
-        b=nF2W6Z9FRV/smO/QVx68KuNfZT5OlBWAbvys1VelqdZFhp7aycBzCHOWdq9qicLIfy
-         piXsqbe1ojeNPUHtkj98G59HsiWmeKBktheTY8rn7gfTa5FKvg7EhCloE+l3DHi/xLL8
-         uJE4cxIqf+MhQ+FHgAKFE+D5xJ2T1cyD5pf+xvnKkHHZa7nD94bPLEJQrMxs1+pO1Yc3
-         Rs/Vu0r20dIV+Rb1g8qzsG+Lf2xr7S4gaI8aMnGYsjAfjh1I9lzo9ovvriMHPcznprhA
-         fILvRu2aZuo7d8vhIwu2xmM6J0YHXzaAtVcn15vLomvaFrtgnwY/LCMIFt/qIVqpkoQ/
-         MiTA==
-X-Gm-Message-State: AHYfb5huiryt0VsvNEgQXH4kdC+dyYl2papVksoNrK+kBnw9rLPa+gIk
-        86sBpMCaL8b3cZWChMg=
-X-Received: by 10.223.173.103 with SMTP id p94mr1216906wrc.37.1503952368209;
-        Mon, 28 Aug 2017 13:32:48 -0700 (PDT)
+        bh=ZKsltzDksuvSrbQniE6zgYSmhxSk2wxMV8fGj3li97I=;
+        b=aCQt25c5ziifhxflFACiRM6G3rzZMLWFAOuzPJxdD3eAfpIF4Sd6whtrj4PQTFX/UC
+         eYY0oTwu7zzg4iBiY0b7z56qM8aiYUbhbPngYxa80y6Fla24czVSVMk0hG72O8Ah4GEN
+         gVG+UzolbeIioIxtPM9f/BLzqURIWYHjw5o9ULOs/wu2C4kxIKYDlHMCsQSwNKgCN6DX
+         +MJVojTejetU4Q0CkYX/LSN6Fmq23Tc5KFRZ6cKx5XNOe8rgfqR4lmKm+3ZVChcAqk2A
+         QEKmSe5QLBipTCz/ivDBiWBQAHfaEm/HJnGUyk/J8ekt1WjY9CndxCooIfkrqN4EKBJv
+         GF6g==
+X-Gm-Message-State: AHYfb5iiNg+4Oa8DrLFsEJy5fknA9yY++0PpOPdO0PLMwikAP+/FR25h
+        M4u3DJIWLsTHZCdaeS8=
+X-Received: by 10.28.182.7 with SMTP id g7mr25878wmf.66.1503952375686;
+        Mon, 28 Aug 2017 13:32:55 -0700 (PDT)
 Received: from localhost.localdomain ([2a02:aa16:5782:c100:1208:b1ff:fee6:d811])
-        by smtp.gmail.com with ESMTPSA id 13sm1232043wms.22.2017.08.28.13.32.46
+        by smtp.gmail.com with ESMTPSA id 13sm1232043wms.22.2017.08.28.13.32.54
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 28 Aug 2017 13:32:47 -0700 (PDT)
+        Mon, 28 Aug 2017 13:32:54 -0700 (PDT)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 1/2] refs/files-backend: add longer-scoped copy of string to list
-Date:   Mon, 28 Aug 2017 22:32:24 +0200
-Message-Id: <7f6617d2f1df9ee6746e4cbc41dc84bdb7788574.1503951733.git.martin.agren@gmail.com>
+Subject: [PATCH v2 2/2] refs/files-backend: fix memory leak in lock_ref_for_update
+Date:   Mon, 28 Aug 2017 22:32:25 +0200
+Message-Id: <fe842671061cea7972b0c8695a4b7f82f854453a.1503951733.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.14.1.151.g45c1275a3.dirty
 In-Reply-To: <CAN0heSrkYL6OqVHHnDtA1DqE-FVqjB59bG2MsgxmJyxW33k9JA@mail.gmail.com>
 References: <CAN0heSrkYL6OqVHHnDtA1DqE-FVqjB59bG2MsgxmJyxW33k9JA@mail.gmail.com>
@@ -66,79 +66,107 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-split_symref_update() receives a string-pointer `referent` and adds it
-to the list of `affected_refnames`. The list simply holds on to the
-pointers it is given, it does not copy the strings and it never frees
-them. The `referent` string in split_symref_update() belongs to a string
-buffer in the caller. After we return, the string will be leaked.
+After the previous patch, none of the functions we call hold on to
+`referent.buf`, so we can safely release the string buffer before
+returning.
 
-In the next patch, we want to properly release the string buffer in the
-caller, but we can't safely do so until we've made sure that
-`affected_refnames` will not be holding on to a pointer to the string.
-We could configure the list to handle its own resources, but it would
-mean some alloc/free-churning. The list is already handling other
-strings (through other code paths) which we do not need to worry about,
-and we'd be memory-churning those strings too, completely unnecessary.
-
-Observe that split_symref_update() creates a `new_update`-object and
-that `new_update->refname` is then a copy of `referent`. The difference
-is, this copy will be freed, and it will be freed *after*
-`affected_refnames` has been cleared.
-
-Rearrange the handling of `referent`, so that we don't add it directly
-to `affected_refnames`. Instead, first just check whether `referent`
-exists in the string list, and later add `new_update->refname`.
-
-Helped-by: Michael Haggerty <mhagger@alum.mit.edu>
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
-Thanks Junio and Michael for your comments on the first version. This
-first patch is now completely different and much much better (thanks
-Michael!). The commit message should also be better (sorry Junio...).
-The second one has a new commit message, but the diff is the same.
-
-Martin
-
- refs/files-backend.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ refs/files-backend.c | 31 ++++++++++++++++++++-----------
+ 1 file changed, 20 insertions(+), 11 deletions(-)
 
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 5cca55510..bdb0e22e5 100644
+index bdb0e22e5..15f34b10e 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -2140,13 +2140,12 @@ static int split_symref_update(struct files_ref_store *refs,
+@@ -2260,7 +2260,7 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+ 	struct strbuf referent = STRBUF_INIT;
+ 	int mustexist = (update->flags & REF_HAVE_OLD) &&
+ 		!is_null_oid(&update->old_oid);
+-	int ret;
++	int ret = 0;
+ 	struct ref_lock *lock;
  
- 	/*
- 	 * First make sure that referent is not already in the
--	 * transaction. This insertion is O(N) in the transaction
-+	 * transaction. This check is O(N) in the transaction
- 	 * size, but it happens at most once per symref in a
- 	 * transaction.
- 	 */
--	item = string_list_insert(affected_refnames, referent);
--	if (item->util) {
--		/* An entry already existed */
-+	if (string_list_has_string(affected_refnames, referent)) {
-+		/* An entry already exists */
- 		strbuf_addf(err,
- 			    "multiple updates for '%s' (including one "
- 			    "via symref '%s') are not allowed",
-@@ -2181,6 +2180,15 @@ static int split_symref_update(struct files_ref_store *refs,
- 	update->flags |= REF_LOG_ONLY | REF_NODEREF;
- 	update->flags &= ~REF_HAVE_OLD;
+ 	files_assert_main_repository(refs, "lock_ref_for_update");
+@@ -2272,7 +2272,7 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+ 		ret = split_head_update(update, transaction, head_ref,
+ 					affected_refnames, err);
+ 		if (ret)
+-			return ret;
++			goto out;
+ 	}
  
-+	/*
-+	 * Add the referent. This insertion is O(N) in the transaction
-+	 * size, but it happens at most once per symref in a
-+	 * transaction. Make sure to add new_update->refname, which will
-+	 * be valid as long as affected_refnames is in use, and NOT
-+	 * referent, which might soon be freed by our caller.
-+	 */
-+	item = string_list_insert(affected_refnames, new_update->refname);
-+	assert(!item->util);
- 	item->util = new_update;
+ 	ret = lock_raw_ref(refs, update->refname, mustexist,
+@@ -2286,7 +2286,7 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+ 		strbuf_addf(err, "cannot lock ref '%s': %s",
+ 			    original_update_refname(update), reason);
+ 		free(reason);
+-		return ret;
++		goto out;
+ 	}
  
- 	return 0;
+ 	update->backend_data = lock;
+@@ -2305,10 +2305,12 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+ 					strbuf_addf(err, "cannot lock ref '%s': "
+ 						    "error reading reference",
+ 						    original_update_refname(update));
+-					return -1;
++					ret = -1;
++					goto out;
+ 				}
+ 			} else if (check_old_oid(update, &lock->old_oid, err)) {
+-				return TRANSACTION_GENERIC_ERROR;
++				ret = TRANSACTION_GENERIC_ERROR;
++				goto out;
+ 			}
+ 		} else {
+ 			/*
+@@ -2322,13 +2324,15 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+ 						  referent.buf, transaction,
+ 						  affected_refnames, err);
+ 			if (ret)
+-				return ret;
++				goto out;
+ 		}
+ 	} else {
+ 		struct ref_update *parent_update;
+ 
+-		if (check_old_oid(update, &lock->old_oid, err))
+-			return TRANSACTION_GENERIC_ERROR;
++		if (check_old_oid(update, &lock->old_oid, err)) {
++			ret = TRANSACTION_GENERIC_ERROR;
++			goto out;
++		}
+ 
+ 		/*
+ 		 * If this update is happening indirectly because of a
+@@ -2365,7 +2369,8 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+ 				    "cannot update ref '%s': %s",
+ 				    update->refname, write_err);
+ 			free(write_err);
+-			return TRANSACTION_GENERIC_ERROR;
++			ret = TRANSACTION_GENERIC_ERROR;
++			goto out;
+ 		} else {
+ 			update->flags |= REF_NEEDS_COMMIT;
+ 		}
+@@ -2379,10 +2384,14 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+ 		if (close_ref(lock)) {
+ 			strbuf_addf(err, "couldn't close '%s.lock'",
+ 				    update->refname);
+-			return TRANSACTION_GENERIC_ERROR;
++			ret = TRANSACTION_GENERIC_ERROR;
++			goto out;
+ 		}
+ 	}
+-	return 0;
++
++out:
++	strbuf_release(&referent);
++	return ret;
+ }
+ 
+ /*
 -- 
 2.14.1.151.g45c1275a3.dirty
 
