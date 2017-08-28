@@ -2,114 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C0E4C20285
-	for <e@80x24.org>; Mon, 28 Aug 2017 04:23:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D63401F4DD
+	for <e@80x24.org>; Mon, 28 Aug 2017 06:55:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750820AbdH1EX1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Aug 2017 00:23:27 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1]:49984 "EHLO
-        mx0a-001b2d01.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750735AbdH1EX0 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 28 Aug 2017 00:23:26 -0400
-Received: from pps.filterd (m0098393.ppops.net [127.0.0.1])
-        by mx0a-001b2d01.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id v7S4J12B110919
-        for <git@vger.kernel.org>; Mon, 28 Aug 2017 00:23:26 -0400
-Received: from e23smtp04.au.ibm.com (e23smtp04.au.ibm.com [202.81.31.146])
-        by mx0a-001b2d01.pphosted.com with ESMTP id 2cm3ueyss1-1
-        (version=TLSv1.2 cipher=AES256-SHA bits=256 verify=NOT)
-        for <git@vger.kernel.org>; Mon, 28 Aug 2017 00:23:26 -0400
-Received: from localhost
-        by e23smtp04.au.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted
-        for <git@vger.kernel.org> from <sam.bobroff@au1.ibm.com>;
-        Mon, 28 Aug 2017 14:23:23 +1000
-Received: from d23relay06.au.ibm.com (202.81.31.225)
-        by e23smtp04.au.ibm.com (202.81.31.210) with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted;
-        Mon, 28 Aug 2017 14:23:22 +1000
-Received: from d23av02.au.ibm.com (d23av02.au.ibm.com [9.190.235.138])
-        by d23relay06.au.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id v7S4NL7139518342
-        for <git@vger.kernel.org>; Mon, 28 Aug 2017 14:23:21 +1000
-Received: from d23av02.au.ibm.com (localhost [127.0.0.1])
-        by d23av02.au.ibm.com (8.14.4/8.14.4/NCO v10.0 AVout) with ESMTP id v7S4NC9J017660
-        for <git@vger.kernel.org>; Mon, 28 Aug 2017 14:23:12 +1000
-Received: from ozlabs.au.ibm.com (ozlabs.au.ibm.com [9.192.253.14])
-        by d23av02.au.ibm.com (8.14.4/8.14.4/NCO v10.0 AVin) with ESMTP id v7S4NCK8017648
-        for <git@vger.kernel.org>; Mon, 28 Aug 2017 14:23:12 +1000
-Received: from tungsten.ozlabs.ibm.com (haven.au.ibm.com [9.192.254.114])
-        (using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ozlabs.au.ibm.com (Postfix) with ESMTPSA id 57285A01C4
-        for <git@vger.kernel.org>; Mon, 28 Aug 2017 14:23:21 +1000 (AEST)
-Date:   Mon, 28 Aug 2017 14:23:20 +1000
-From:   Sam Bobroff <sam.bobroff@au1.ibm.com>
-To:     git@vger.kernel.org
-Subject: [PATCH] format-patch: use raw format for notes
+        id S1751887AbdH1Gzq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Aug 2017 02:55:46 -0400
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:64593 "EHLO
+        alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751525AbdH1Gzo (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 28 Aug 2017 02:55:44 -0400
+X-AuditID: 12074411-f95ff70000007f0a-4e-59a3be6dd2a5
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 00.F5.32522.D6EB3A95; Mon, 28 Aug 2017 02:55:43 -0400 (EDT)
+Received: from mail-it0-f42.google.com (mail-it0-f42.google.com [209.85.214.42])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v7S6telr023575
+        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT)
+        for <git@vger.kernel.org>; Mon, 28 Aug 2017 02:55:41 -0400
+Received: by mail-it0-f42.google.com with SMTP id o132so13161363itc.1
+        for <git@vger.kernel.org>; Sun, 27 Aug 2017 23:55:41 -0700 (PDT)
+X-Gm-Message-State: AHYfb5hhK8/cQDB9fvKU8ANJtF8KM7X/3fQGi8kPxM1YhzDrPagAcJ2T
+        fA53YlqO3eu5S0w5eE84NDG4j93S5Q==
+X-Received: by 10.36.181.13 with SMTP id v13mr1692353ite.35.1503903340478;
+ Sun, 27 Aug 2017 23:55:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-TM-AS-MML: disable
-x-cbid: 17082804-0012-0000-0000-0000025A8DE2
-X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
-x-cbparentid: 17082804-0013-0000-0000-000007765473
-Message-Id: <334a7be4f61c02db24008181eb1d6c80c95772f7.1503894009.git.sam.bobroff@au1.ibm.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2017-08-28_01:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=1
- malwarescore=0 phishscore=0 adultscore=0 bulkscore=0 classifier=spam
- adjust=0 reason=mlx scancount=1 engine=8.0.1-1707230000
- definitions=main-1708280068
+Reply-To: mhagger@alum.mit.edu
+Received: by 10.79.15.14 with HTTP; Sun, 27 Aug 2017 23:55:39 -0700 (PDT)
+In-Reply-To: <CAMy9T_HYV9=HvrAnAxHgzRvUy__3o99PxQSOe2iCE_swtk_8VQ@mail.gmail.com>
+References: <cover.1503734566.git.mhagger@alum.mit.edu> <c21bedbee9487792f4a336a417aa9874578aaac2.1503734566.git.mhagger@alum.mit.edu>
+ <xmqqh8wuqo6e.fsf@gitster.mtv.corp.google.com> <CAMy9T_HYV9=HvrAnAxHgzRvUy__3o99PxQSOe2iCE_swtk_8VQ@mail.gmail.com>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Date:   Mon, 28 Aug 2017 08:55:39 +0200
+X-Gmail-Original-Message-ID: <CAMy9T_Gt=p==jHmx5nf8GeZBULACkjqC2zZqU+F31yx1xVaPBw@mail.gmail.com>
+Message-ID: <CAMy9T_Gt=p==jHmx5nf8GeZBULACkjqC2zZqU+F31yx1xVaPBw@mail.gmail.com>
+Subject: Re: [PATCH 02/12] load_subtree(): remove unnecessary conditional
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johan Herland <johan@herland.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprKKsWRmVeSWpSXmKPExsUixO6iqJu/b3Gkwc+trBZdV7qZHBg9Pm+S
+        C2CM4rJJSc3JLEst0rdL4Mq4emIZY8E/5or+WZuZGxhnMncxcnJICJhIrDnYxNbFyMUhJLCD
+        SWLuvCdQziMmiV2H17BCOP2MEienv2SEaMmX2LuwEaq9SGJ6+z4mEJtXQFDi5MwnLCC2kICc
+        xKsNNxghbE+Js5dXg9VzCgRKbNx+HmroH0aJx7M2gjWwCehKLOppBhvEIqAqMWH2eqhliRK/
+        tk5ih1gQILHx2xEwWxho6KPmNWwgtoiAmsTEtkMsIEOZBSYySjR0QlzELKAp0br9N/sERuFZ
+        SA6chSS1gJFpFaNcYk5prm5uYmZOcWqybnFyYl5eapGuqV5uZoleakrpJkZIKAvuYJxxUu4Q
+        owAHoxIPb4P54kgh1sSy4srcQ4ySHExKorw7K4BCfEn5KZUZicUZ8UWlOanFhxglOJiVRHg7
+        dgHleFMSK6tSi/JhUtIcLErivHxL1P2EBNITS1KzU1MLUotgsjIcHEoSvMF7gRoFi1LTUyvS
+        MnNKENJMHJwgw3mAhluD1PAWFyTmFmemQ+RPMVpyXLmy7gsTR9OHLUByyoHtX5iEWPLy81Kl
+        xHm/7AFqEABpyCjNg5sJS02vGMWBXhTmXQkylgeY1uCmvgJayAS0UFFwIcjCkkSElFQDo+On
+        R5OXLiizlL3d03l1JpMT29u7bGqbXrsklBy/wmd57t/p+2t7b/YL7smq0joTubHRruHTsZwV
+        F/tmJn36doprapVXxhWLNt0NJrc1+5R2c8xsWMjxW03eYlfP/sctVjfsZfZkLluhvDM5v/zQ
+        keKNt9az1Gp4Litymak9WU04r/NTUurXp0osxRmJhlrMRcWJAM9c40IoAwAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If "--notes=..." is used with "git format-patch", the notes are
-prefixed with the ref's local name and indented, which looks odd and
-exposes the path of the ref.
+Junio, I'm surprised that you have merged the `mh/notes-cleanup`
+branch into `next` already. Was that intentional? Aside from the fact
+that the topic has had very little cooking time, there's the issue of
+the assertion that you asked for. I have implemented the assertion in
+a new version of the branch that I pushed to GitHub but haven't yet
+submitted to the list.
 
-Extend the test that suppresses this behaviour so that it also catches
-this case, causing the notes to be included without additional
-processing.
+How would you like to proceed? Do you want me to submit a patch
+(adding the assertion) that applies on top of this branch?
 
-Signed-off-by: Sam Bobroff <sam.bobroff@au1.ibm.com>
----
-
-Notes (foo):
-    Hi,
-    
-    I've noticed what appears to be a small cosmetic bug in git format-patch, as
-    I've described in the commit message.
-    
-    I'm not sure if this patch is the right way to fix it (or perhaps it's not even
-    a bug), but it should at least help to explain what I'm talking about.
-    
-    I've used "git format-patch --notes=foo" to prepare this email so that it is an
-    example of the issue :-)
-    
-    Cheers,
-    Sam.
-
- log-tree.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/log-tree.c b/log-tree.c
-index 410ab4f02..26bc21ad3 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -655,7 +655,8 @@ void show_log(struct rev_info *opt)
- 		int raw;
- 		struct strbuf notebuf = STRBUF_INIT;
- 
--		raw = (opt->commit_format == CMIT_FMT_USERFORMAT);
-+		raw = (opt->commit_format == CMIT_FMT_USERFORMAT) ||
-+		      (opt->commit_format == CMIT_FMT_EMAIL);
- 		format_display_notes(&commit->object.oid, &notebuf,
- 				     get_log_output_encoding(), raw);
- 		ctx.notes_message = notebuf.len
--- 
-2.11.0
-
+Michael
