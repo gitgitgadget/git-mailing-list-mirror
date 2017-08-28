@@ -2,83 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC7DC208DB
-	for <e@80x24.org>; Mon, 28 Aug 2017 17:59:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B59C7208DB
+	for <e@80x24.org>; Mon, 28 Aug 2017 18:24:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751272AbdH1R66 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Aug 2017 13:58:58 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51094 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751198AbdH1R66 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Aug 2017 13:58:58 -0400
-Received: (qmail 27833 invoked by uid 109); 28 Aug 2017 17:58:58 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 28 Aug 2017 17:58:58 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3493 invoked by uid 111); 28 Aug 2017 17:59:27 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Mon, 28 Aug 2017 13:59:27 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 Aug 2017 13:58:56 -0400
-Date:   Mon, 28 Aug 2017 13:58:56 -0400
-From:   Jeff King <peff@peff.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Git Users <git@vger.kernel.org>
-Subject: Re: [PATCH] pkt-line: re-'static'-ify buffer in packet_write_fmt_1()
-Message-ID: <20170828175855.vs2s7lpxxhwlfhdi@sigill.intra.peff.net>
-References: <20170827073732.546-1-martin.agren@gmail.com>
- <9E4606AF-8814-42DE-8D3A-3A15C1B1723C@gmail.com>
- <CAN0heSraJFbbog7FKpAtmob9W6_5-AS1StZFVW6xUwMDWfMYgg@mail.gmail.com>
- <179AC8FB-5991-4200-9AAC-2F8D0914D5F9@gmail.com>
- <20170827232338.hm5t7t7c2xaa3zyl@sigill.intra.peff.net>
- <CAN0heSoUqcOqVspZkbPahWQdtVpSdtSZoCFWu0ZQJfN3F0mD2g@mail.gmail.com>
- <CAGZ79ka3+T+TgakKDcHSmoc83mOdSDgoN=S=P5PtaYygo0nGWA@mail.gmail.com>
+        id S1751380AbdH1SYV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Aug 2017 14:24:21 -0400
+Received: from mail-yw0-f180.google.com ([209.85.161.180]:34572 "EHLO
+        mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751190AbdH1SYU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Aug 2017 14:24:20 -0400
+Received: by mail-yw0-f180.google.com with SMTP id t188so6573266ywb.1
+        for <git@vger.kernel.org>; Mon, 28 Aug 2017 11:24:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=4NDFM0RTmZbb5IGxrBJyh+ChK4xOneJsmHTydlYl6wA=;
+        b=e7sohahSKuUrMa9Ds8ejmjSQx4/BV+cjJvk5Fu6UTd/6uZddh2UO4g+Oksl0szr4uT
+         9ni9hhfyyDI2n49fPvRl3oQBAR5MyZSPUveriF1ZRWP6cxfxhmejRZ3B5SqvBwo8GfO/
+         +hnq7P0/RbjxIGGcxrvcF7Uj39NE+WaMRrx9aKYlwrdkGE0p7c68uAk+CCuSwP3SBzzf
+         PENJ8pfDq/lyY8XZt6bAwwoOj0zeANsMXAIiZwFFGQv0an4RcvClRe57d5N53RWlBlvz
+         KgcX3c82ebTHHIvw4WLSvjrgLjQdpfXhwMtWFHdGu+K/RjTpsDhirriO0rOpyTPBxYtP
+         GR1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=4NDFM0RTmZbb5IGxrBJyh+ChK4xOneJsmHTydlYl6wA=;
+        b=B6hDgGixfrcuwg8yNaqqhSoicFHs2Vc7tGsS9H/jd7UCqeyK2NA13QOzYN20QrVjlQ
+         JJAK3WH2f5R1P0lvr/q23AyHVse662cwT6RsZIW7XM9ShSHRpXclah8xL6by3IzkX59y
+         IyeAAfK6ummNLKRiGSSBfVvefgJasqL8YXqofZbdeBFGupKdvOBHteWJWhQmC2QPUycR
+         Qc5FD4BUcDBKVEZGN6+ou/5+fXMpNCXr3mcmu8DPl1fj0Gc1FMEH48+15idFT5hdSav+
+         x9SlK8eECySHt3aDp3q0Cvy2NLVpgMSZtQbF8dU3hvNPztWOpez35yWAYXiu+QHlDtcG
+         rxDg==
+X-Gm-Message-State: AHYfb5hxHqKqXCQDjEaT2olAEmPBaW5XJOF1+bbNcZsKmvC45EphuKNl
+        Yjd7kqifc5t8Y2EfPiVn6HTDe7uGvJjakjqAdw==
+X-Google-Smtp-Source: ADKCNb4HtaZoQIVzvbGybApx6/MkujJiRGBS6dyusvZfDVN5SnOHSITAGmzhsU3mpb4C6XdvpSIze4CnsvgtCiUoggg=
+X-Received: by 10.13.225.71 with SMTP id k68mr1264228ywe.33.1503944659628;
+ Mon, 28 Aug 2017 11:24:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGZ79ka3+T+TgakKDcHSmoc83mOdSDgoN=S=P5PtaYygo0nGWA@mail.gmail.com>
+Received: by 10.37.248.26 with HTTP; Mon, 28 Aug 2017 11:24:19 -0700 (PDT)
+In-Reply-To: <CAOAAw7WsiwzQYhiU9xxcoteaEWgaXRQkiVb0Xa2WckR4=m-bFw@mail.gmail.com>
+References: <CAOAAw7WsiwzQYhiU9xxcoteaEWgaXRQkiVb0Xa2WckR4=m-bFw@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 28 Aug 2017 11:24:19 -0700
+Message-ID: <CAGZ79kZSmJBnfcU=WWmq3VEHJBJLQJzzri07hSU-uA-VgT0t3Q@mail.gmail.com>
+Subject: Re: git describe and "the smallest number of commits possible"
+To:     =?UTF-8?Q?K=C3=A9vin_Le_Gouguec?= <kevin.legouguec@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 28, 2017 at 10:52:51AM -0700, Stefan Beller wrote:
+On Sat, Aug 26, 2017 at 7:47 AM, K=C3=A9vin Le Gouguec
+<kevin.legouguec@gmail.com> wrote:
+> Hi,
+>
+> I've asked this question on the git-users Google Groups list[1], and
+> while the answers there were interesting, I still cannot figure
+> whether my problem comes from an actual bug, a misleading manpage, my
+> inability to understand the code and/or the manpage, or a combination
+> of the three.
+>
+> I noticed this problem on 2.1.4 (Debian oldstable); I can reproduce it
+> on next (7ef03bb281b2220d0f2414365e4949beb2337042). Quoting
+> git-describe(1)'s SEARCH STRATEGY section:
+>
+>> If multiple tags were found during the walk then the tag which has
+>> the fewest commits different from the input commit-ish will be
+>> selected and output. Here fewest commits different is defined as the
+>> number of commits which would be shown by `git log tag..input` will
+>> be the smallest number of commits possible.
 
-> >> I'm curious, too. I don't think the valgrind setup in our test suite is
-> >> great for finding leaks right now.
-> 
-> This discussion comes up every once in a while,
-> the last time I was involved in this discussion I proposed
-> to have an "optional_free(void *)", which only frees memory
-> in e.g. the developer build/debug build.
-> 
-> That way we can have a strict "no leaks in developer build"
-> policy (as it is easy to detect!), but it doesn't slow down the
-> widely distributed version of Git.
-
-Personally I am not that worried about slowing down program-exit with
-some free() calls (though I would reserve judgement to see how slow it
-actually is).
-
-It is that I do not want to deal with the complexity and maintenance
-headache of dropping values which are program-lifetime caches. If we
-introduce a free-all-object-structs function, now everybody needs to
-remember to call it (even if they didn't realize they were allocating
-object structs in the first place, as it may have happened under the
-hood of a sub-function). And we have to wonder what might happen when
-somebody calls that function _not_ at program exit.
-
-If we can declare "reachable things are not leaks" (and certainly
-valgrind is aware of that distinction), then all of that goes away. And
-you're just left with local variables in main() (or our cmd_*
-equivalents) that appear as leaks. And then we can solve that either by
-freeing them, or just calling them program-lifetime and telling the
-compiler that it's so by declaring them "static".
-
--Peff
+Maybe relevant
+https://public-inbox.org/git/20160421113004.GA3140@aepfle.de/
+(specifically the discussion after this patch, it sheds light on the
+heuristics used, though your case here doesn't use these heuristics)
