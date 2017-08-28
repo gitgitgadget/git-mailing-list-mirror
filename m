@@ -2,132 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4317F20285
-	for <e@80x24.org>; Mon, 28 Aug 2017 04:11:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C0E4C20285
+	for <e@80x24.org>; Mon, 28 Aug 2017 04:23:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750873AbdH1ELf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Aug 2017 00:11:35 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:37920 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750708AbdH1ELe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Aug 2017 00:11:34 -0400
-Received: by mail-pg0-f66.google.com with SMTP id t3so5404309pgt.5
-        for <git@vger.kernel.org>; Sun, 27 Aug 2017 21:11:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=h7gPktY3pcaef1A3hak/hmLeHxHakq7MXmJD6YTNRrY=;
-        b=ryDdeFLdHdJ/g+UINzy+Wm9MkjGZ1eFztP0csvbyy2+F5SHxEASMPUO8If8POAmdEs
-         uDTS3C+ciE1QE3DN8DRU10bYan0TMlJaIv6FhQKj4bDEynDH3YYn8hjFa3WhGKN6e7aV
-         3vw3hw03EYr8fdEeZdlzl+ivG77JEcyi+uLwNKW5YcGnTw3Z90kJjLjJThxFFM2IcYsJ
-         meKOCXJLc0QtZyb80D7DJON93HqM3mdFKzP/ik8LzekuVm4XZuX0PnUwp8ixKyNXMF5v
-         V4R2qp6aeDeTKPtr+4NzyyPEozKv4oJhvL9QyI7zs4N1drMnGtIFxC+MuHUDlYUEMqfS
-         WC8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=h7gPktY3pcaef1A3hak/hmLeHxHakq7MXmJD6YTNRrY=;
-        b=a0veMDZxdsP+c/67ZqoXZoawNmm9DTMilF9mvguCBhqIK38pgNU9ki1kR4Q3+5vipp
-         D9PgbWt6Fu6oZt/09dHczHxh2aY0bVIHV2oCvd/9A4ShoJP9vZuIH9T15k72PHkEiMBX
-         HtwS7WtibI7Af6ESljlVJnu38KsW5yKthPxJLKhP7aWFXteUMZzznaAc34BuELZGT7ev
-         lzKrcmK+W5f58q8TXmIgIYCEzLC/v/2eqAphB5vFn2hFuY56ZjvjP32PhTQjE21EyLQp
-         vyiXw/b5GkjU1lnWbCxf7dfS389xNQBboAoesmYZdk4/2CD/kEB7njpDn9fCFsyMdvK6
-         vcuQ==
-X-Gm-Message-State: AHYfb5izv41FU7ySlpsKddyRqiSAQlJ0s5voY6t58AONMEMz5z3IrKTs
-        t8l2i5Q0lJI3YRtoFnq8FXVv2IY/mA==
-X-Received: by 10.99.114.73 with SMTP id c9mr5999702pgn.267.1503893494269;
- Sun, 27 Aug 2017 21:11:34 -0700 (PDT)
+        id S1750820AbdH1EX1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Aug 2017 00:23:27 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1]:49984 "EHLO
+        mx0a-001b2d01.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750735AbdH1EX0 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 28 Aug 2017 00:23:26 -0400
+Received: from pps.filterd (m0098393.ppops.net [127.0.0.1])
+        by mx0a-001b2d01.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id v7S4J12B110919
+        for <git@vger.kernel.org>; Mon, 28 Aug 2017 00:23:26 -0400
+Received: from e23smtp04.au.ibm.com (e23smtp04.au.ibm.com [202.81.31.146])
+        by mx0a-001b2d01.pphosted.com with ESMTP id 2cm3ueyss1-1
+        (version=TLSv1.2 cipher=AES256-SHA bits=256 verify=NOT)
+        for <git@vger.kernel.org>; Mon, 28 Aug 2017 00:23:26 -0400
+Received: from localhost
+        by e23smtp04.au.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted
+        for <git@vger.kernel.org> from <sam.bobroff@au1.ibm.com>;
+        Mon, 28 Aug 2017 14:23:23 +1000
+Received: from d23relay06.au.ibm.com (202.81.31.225)
+        by e23smtp04.au.ibm.com (202.81.31.210) with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted;
+        Mon, 28 Aug 2017 14:23:22 +1000
+Received: from d23av02.au.ibm.com (d23av02.au.ibm.com [9.190.235.138])
+        by d23relay06.au.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id v7S4NL7139518342
+        for <git@vger.kernel.org>; Mon, 28 Aug 2017 14:23:21 +1000
+Received: from d23av02.au.ibm.com (localhost [127.0.0.1])
+        by d23av02.au.ibm.com (8.14.4/8.14.4/NCO v10.0 AVout) with ESMTP id v7S4NC9J017660
+        for <git@vger.kernel.org>; Mon, 28 Aug 2017 14:23:12 +1000
+Received: from ozlabs.au.ibm.com (ozlabs.au.ibm.com [9.192.253.14])
+        by d23av02.au.ibm.com (8.14.4/8.14.4/NCO v10.0 AVin) with ESMTP id v7S4NCK8017648
+        for <git@vger.kernel.org>; Mon, 28 Aug 2017 14:23:12 +1000
+Received: from tungsten.ozlabs.ibm.com (haven.au.ibm.com [9.192.254.114])
+        (using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ozlabs.au.ibm.com (Postfix) with ESMTPSA id 57285A01C4
+        for <git@vger.kernel.org>; Mon, 28 Aug 2017 14:23:21 +1000 (AEST)
+Date:   Mon, 28 Aug 2017 14:23:20 +1000
+From:   Sam Bobroff <sam.bobroff@au1.ibm.com>
+To:     git@vger.kernel.org
+Subject: [PATCH] format-patch: use raw format for notes
 MIME-Version: 1.0
-Received: by 10.100.162.37 with HTTP; Sun, 27 Aug 2017 21:11:33 -0700 (PDT)
-In-Reply-To: <20170827232338.hm5t7t7c2xaa3zyl@sigill.intra.peff.net>
-References: <20170827073732.546-1-martin.agren@gmail.com> <9E4606AF-8814-42DE-8D3A-3A15C1B1723C@gmail.com>
- <CAN0heSraJFbbog7FKpAtmob9W6_5-AS1StZFVW6xUwMDWfMYgg@mail.gmail.com>
- <179AC8FB-5991-4200-9AAC-2F8D0914D5F9@gmail.com> <20170827232338.hm5t7t7c2xaa3zyl@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Mon, 28 Aug 2017 06:11:33 +0200
-Message-ID: <CAN0heSoUqcOqVspZkbPahWQdtVpSdtSZoCFWu0ZQJfN3F0mD2g@mail.gmail.com>
-Subject: Re: [PATCH] pkt-line: re-'static'-ify buffer in packet_write_fmt_1()
-To:     Jeff King <peff@peff.net>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-TM-AS-MML: disable
+x-cbid: 17082804-0012-0000-0000-0000025A8DE2
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 17082804-0013-0000-0000-000007765473
+Message-Id: <334a7be4f61c02db24008181eb1d6c80c95772f7.1503894009.git.sam.bobroff@au1.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2017-08-28_01:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=1
+ malwarescore=0 phishscore=0 adultscore=0 bulkscore=0 classifier=spam
+ adjust=0 reason=mlx scancount=1 engine=8.0.1-1707230000
+ definitions=main-1708280068
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 28 August 2017 at 01:23, Jeff King <peff@peff.net> wrote:
-> On Sun, Aug 27, 2017 at 10:04:55PM +0200, Lars Schneider wrote:
->
->> I did run all tests under valgrind using "make valgrind" and I found
->> the following files with potential issues:
->>
->> cat valgrind.out | perl -nE 'say /^==.+\((.+)\:.+\)$/' | sort | uniq -c
->> 7102
->>    2 clone.c
->>   33 common-main.c
->>    6 connect.c
->>   64 git.c
->>    4 ls-remote.c
->>  126 run-command.c
->>   12 transport.c
->>    7 worktree.c
->
-> I'm not sure where valgrind.out comes from. The individual
-> test-results/*.out files may have valgrind output, but I don't think
-> they usually contain leak output.
->
-> Doing "valgrind ./git-upload-pack . </dev/null >/dev/null" mentions
-> leaked memory but not the locations. Adding --leak-check=full shows that
-> most of it comes from format_packet().
->
-> And applying Martin's patch drops the "definitely lost" category down to
-> 0 bytes (there's still 550k in "still reachable", but those are in the
-> "exit will free them for us" category).
->
->> No mention of "pkt-line.c". Did you run Git with valgrind on one of
->> your repositories to find it?
->
-> I'm curious, too. I don't think the valgrind setup in our test suite is
-> great for finding leaks right now.
+If "--notes=..." is used with "git format-patch", the notes are
+prefixed with the ref's local name and indented, which looks odd and
+exposes the path of the ref.
 
-Sorry for being brief. I've patched t/valgrind/valgrind.sh to say
-"--leak-check=yes". Then I run "./t0000 --valgrind", simply because
-running the complete suite gives more reports than I could possibly
-process.
+Extend the test that suppresses this behaviour so that it also catches
+this case, causing the notes to be included without additional
+processing.
 
-Then I check the first few leaks, verify that they're "ok" and add
-them to a suppressions-list. Lather, rinse, repeat. A couple of very
-targeted and well-motivated suppressions in git.git could perhaps be
-motivated, but there are many many reported leaks. My suppressions-list
-is getting gross.
+Signed-off-by: Sam Bobroff <sam.bobroff@au1.ibm.com>
+---
 
-I started with t0000 and t0001 because I figure, once I have those basic
-suppressions in place (or leaks fixed), I can run some other more
-interesting tests. Of course, the concept of "this leak is ok" is a bit
-subjective. For example, we might do "return !!create_object(...);"
-(function name invented on the fly), which is a leak, and unreachable.
-But if this is only done once in builtin/foo.c and the object created is
-small, then this could be deemed "ok", since in practice this leak will
-never bring anyone over the cliff. If clean-ups in such code would not
-just be code churn, then I can of course adjust my definition of "ok"
-accordingly.
+Notes (foo):
+    Hi,
+    
+    I've noticed what appears to be a small cosmetic bug in git format-patch, as
+    I've described in the commit message.
+    
+    I'm not sure if this patch is the right way to fix it (or perhaps it's not even
+    a bug), but it should at least help to explain what I'm talking about.
+    
+    I've used "git format-patch --notes=foo" to prepare this email so that it is an
+    example of the issue :-)
+    
+    Cheers,
+    Sam.
 
-This is not an attempt to find and fix a huge number of leaks, it's more
-to have a good reason to go through call-stacks, convince myself I know
-what the code wants to do and how it does it.
+ log-tree.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Looking at only "unreachable" leaks seems like it should be an
-improvement for finding the interesting cases. I'll have less time for
-Git this week, but can try it out as time permits.
+diff --git a/log-tree.c b/log-tree.c
+index 410ab4f02..26bc21ad3 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -655,7 +655,8 @@ void show_log(struct rev_info *opt)
+ 		int raw;
+ 		struct strbuf notebuf = STRBUF_INIT;
+ 
+-		raw = (opt->commit_format == CMIT_FMT_USERFORMAT);
++		raw = (opt->commit_format == CMIT_FMT_USERFORMAT) ||
++		      (opt->commit_format == CMIT_FMT_EMAIL);
+ 		format_display_notes(&commit->object.oid, &notebuf,
+ 				     get_log_output_encoding(), raw);
+ 		ctx.notes_message = notebuf.len
+-- 
+2.11.0
 
-Thanks for your feedback, both of you.
-
-Martin
