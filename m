@@ -2,90 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C17A208DB
-	for <e@80x24.org>; Mon, 28 Aug 2017 17:32:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A5DC9208DB
+	for <e@80x24.org>; Mon, 28 Aug 2017 17:52:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751537AbdH1Rcm (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Aug 2017 13:32:42 -0400
-Received: from mail-yw0-f176.google.com ([209.85.161.176]:33702 "EHLO
-        mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751213AbdH1Rci (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Aug 2017 13:32:38 -0400
-Received: by mail-yw0-f176.google.com with SMTP id s143so5909401ywg.0
-        for <git@vger.kernel.org>; Mon, 28 Aug 2017 10:32:38 -0700 (PDT)
+        id S1751324AbdH1Rwx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Aug 2017 13:52:53 -0400
+Received: from mail-yw0-f179.google.com ([209.85.161.179]:35846 "EHLO
+        mail-yw0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751232AbdH1Rww (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Aug 2017 13:52:52 -0400
+Received: by mail-yw0-f179.google.com with SMTP id h127so6099783ywf.3
+        for <git@vger.kernel.org>; Mon, 28 Aug 2017 10:52:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=1KeztFa1gYSrfFvRUm8AzqO+oa9ASBWX+8UaVfEqc9k=;
-        b=ZeJeRxpgLuxtxccmcbn44jeg9HVTEg30whkoeGSDbdXC9JQFnovQ8eIvgetV8e29qE
-         pXFe+tZ1UjNUYkustqQwhcdgp0saX+Zfu21Xe4Lx8amn+zHIlUQYSWBdS+13Wr8CMQWx
-         CtdVOp9+hf1aA23OaSqSfoVf081arGE4ZGh5pYj4aRv/UmIyWKB+EL1GxKEhVOFAx5eF
-         8lvLmF+LTwgsdLUzifQQcUCNT9T8LXKioyzbUW/e8diCZg5wKDDmgY2sLYuEdqUwSida
-         mgsUCAXWb/pnRDGwkODnSRNnRG4OTfCEFIFYEAlMAGcwrfXARsz1bRbSpll/Y7OrzG7h
-         Xwew==
+        bh=/dkjbDHe4OgF1gPXnsOEb1R3TFKSQD5DNIvyuPjaax8=;
+        b=nh5Oyluyx6Y2mIP5exEwMVk98/HWq4Pg3NLVH/lM85MCtbvGmOMHISxnXqKcXiUp4/
+         n2l5bmCC3fSsi2BXHv4PRupjClW2kJIT6aNxh6dCKStt263G005H63Tfdk9T2KgAv8TL
+         8qio4r6z7qWrHUJqKo8DQQFN45fUu4v12A3jIMkk9NyIeeeC3HMQ+4hkPd00oLRvcP45
+         JDXg4ZXIAOpmFN7H2L4mJrvZe7PwF9ifRpUqp78Btk86s90P/CoBNcd68hMEgzGS8Mq+
+         LdLgK+rVbVb0kznZAZoc5F8ixcYII7xQ686+B9B+ljS0RdhPLQqBhZuDfQ5nU7cT6cfH
+         I7pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=1KeztFa1gYSrfFvRUm8AzqO+oa9ASBWX+8UaVfEqc9k=;
-        b=ZkZ5ocualVCQr1tgmsTaYSi+kBTHjl7JW523pNkziH5Hli+fPiPZmbdDGmD2zP1HJ2
-         2qSAHKGz2hNmVy0o8UKww+QVgrBzxytTOS7v04s8OWII7UUYTYd0XF8bX1oPxMRId2XC
-         IonSYpfqR4UOSX06uaUmN0evWdYO47fHXPxPlKLCyicibFyU2/NR4Jt6z+yzkfb+B+AR
-         oNlilJ4FtMTbTQGS1IbpxkOGzVhXgsVbpp55oWaMb19sxHDNjwMG/92Agl33baGuKmQB
-         B2yeka8jQtR1WkiuOB0YX2avHhSo8HiyzKPvJdtjGHi9LF5QhoxGjpn0COAocWHdy6V/
-         gpow==
-X-Gm-Message-State: AHYfb5gxcgW5YO+LmJDxLn/1+iCRswrfiMTZvtQbyFKB8BCeaB5lYnYa
-        BnvuH7jSPLTvbKjcbfNf6Hio/45F2Hwg
-X-Google-Smtp-Source: ADKCNb62F/ibg2vJ5SZ2ob50Xp6/lmeIJ1jqlZVdK9xv4M2i8jBcjjsboXNbsWW92vOB2lAKcMK8frWZIMOYcIOuVG8=
-X-Received: by 10.129.79.196 with SMTP id d187mr1147116ywb.29.1503941557948;
- Mon, 28 Aug 2017 10:32:37 -0700 (PDT)
+        bh=/dkjbDHe4OgF1gPXnsOEb1R3TFKSQD5DNIvyuPjaax8=;
+        b=pywALjNJtUkK3FaBeVK8/dPrILemHN7JRi/BKSRnSImCIAaGVTCg+6bMC/a9lAYz2m
+         W/NM/2K+kW/5CQ6Gx6a0xSoiKS3sQrOncrv8IXND3uN5oHZJILSq74+2VsufKkTQjMCt
+         TFKwo8pupORI6tir2Bl9wnaQNryJf+Una2JmlzRhnbB+p3d6KOyaTvt2SJ/jkL9bls1M
+         EiiJjwKe68VVpOBSfJiOtUl3dILW3qOw41HQjvCR0CN3Jx86cXUtiJVB9AWECT5Yb3mV
+         OgoH3/GyW1SaoDBxSodeXKSzbJR4u51ExZWSDzkwQ6D8yp0UUgUJAZtLPl2/pGxyxPTW
+         hkKA==
+X-Gm-Message-State: AHYfb5gaDZ0oyZlDbuNjYU8KSp8BB24eMRVcmU9JXlulicBYbWM/anen
+        M4MFiszJwvcyv/St68/qki0AYG2t7qNB
+X-Google-Smtp-Source: ADKCNb5GsGAiHbboUvPdbzc0mNlFBSJS6x8w23AwfNTkFmxCTyZ2RZl9vG8BZNbVztVAdyxb7NfHctc8h2GUPyXblj4=
+X-Received: by 10.129.109.214 with SMTP id i205mr1209646ywc.4.1503942771741;
+ Mon, 28 Aug 2017 10:52:51 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.37.248.26 with HTTP; Mon, 28 Aug 2017 10:32:37 -0700 (PDT)
-In-Reply-To: <8AF4A868-628B-42AE-B75E-4DF19F7C7A89@gmail.com>
-References: <8AF4A868-628B-42AE-B75E-4DF19F7C7A89@gmail.com>
+Received: by 10.37.248.26 with HTTP; Mon, 28 Aug 2017 10:52:51 -0700 (PDT)
+In-Reply-To: <CAN0heSoUqcOqVspZkbPahWQdtVpSdtSZoCFWu0ZQJfN3F0mD2g@mail.gmail.com>
+References: <20170827073732.546-1-martin.agren@gmail.com> <9E4606AF-8814-42DE-8D3A-3A15C1B1723C@gmail.com>
+ <CAN0heSraJFbbog7FKpAtmob9W6_5-AS1StZFVW6xUwMDWfMYgg@mail.gmail.com>
+ <179AC8FB-5991-4200-9AAC-2F8D0914D5F9@gmail.com> <20170827232338.hm5t7t7c2xaa3zyl@sigill.intra.peff.net>
+ <CAN0heSoUqcOqVspZkbPahWQdtVpSdtSZoCFWu0ZQJfN3F0mD2g@mail.gmail.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 28 Aug 2017 10:32:37 -0700
-Message-ID: <CAGZ79kYKJo4hcBY=nEi6z2gSH=W322W_h3_68bb0ZzF+L8JUig@mail.gmail.com>
-Subject: Re: Automatically delete branches containing accepted patches?
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Git Users <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Date:   Mon, 28 Aug 2017 10:52:51 -0700
+Message-ID: <CAGZ79ka3+T+TgakKDcHSmoc83mOdSDgoN=S=P5PtaYygo0nGWA@mail.gmail.com>
+Subject: Re: [PATCH] pkt-line: re-'static'-ify buffer in packet_write_fmt_1()
+To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Cc:     Jeff King <peff@peff.net>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Git Users <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Aug 27, 2017 at 11:44 AM, Lars Schneider
-<larsxschneider@gmail.com> wrote:
-> Hi,
+>>> No mention of "pkt-line.c". Did you run Git with valgrind on one of
+>>> your repositories to find it?
+>>
+>> I'm curious, too. I don't think the valgrind setup in our test suite is
+>> great for finding leaks right now.
 >
-> I have lots of git/git branches and once in a while some patches make it
-> into git/git master. If this happens I would like to delete my branch
-> with the patch automatically. That's not easily possible as the hashes
-> on my branches are, of course, not the same as the hashes on git/git.
->
-> How do you deal with this situation? Do you manually delete your
-> branches or do you have some clever script to share?
 
-As soon as my patches are picked up, I rename my internal branch to
-be the same as its remote counter part. Usually I rebase my local
-branches on these remote branches, such that directly after queuing
-they are identical.
+This discussion comes up every once in a while,
+the last time I was involved in this discussion I proposed
+to have an "optional_free(void *)", which only frees memory
+in e.g. the developer build/debug build.
 
-Usually I delete (local) branches as soon as I am either confident
-they go in as is or they are not very interesting to me.
-(e.g. a one off typo fix is developed on detached HEAD, sent out
-and I forget about it. In case a discussion ensues, I have to either
-take my patch or redo it. There is no local reminder of these things
-in the form of a branch)
+That way we can have a strict "no leaks in developer build"
+policy (as it is easy to detect!), but it doesn't slow down the
+widely distributed version of Git.
+
+IIRC, then the discussion focused on "what if we misuse
+optional_free and the real free", such that the widely distributed
+version just leaks large amounts of memory and the developers
+do not notice, but quite the opposite(!) the developers would feel
+safe to ignore any memory complaints, because the developer build
+is clean.
 
 Stefan
-
-> Thanks,
-> Lars
