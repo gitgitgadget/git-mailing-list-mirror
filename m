@@ -6,26 +6,26 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2CEB420285
-	for <e@80x24.org>; Tue, 29 Aug 2017 08:21:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1863220285
+	for <e@80x24.org>; Tue, 29 Aug 2017 08:21:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751341AbdH2IU4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Aug 2017 04:20:56 -0400
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:48297 "EHLO
-        alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751236AbdH2IUw (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 29 Aug 2017 04:20:52 -0400
-X-AuditID: 12074412-1fdff7000000748d-c4-59a523e346f4
+        id S1751345AbdH2IU5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Aug 2017 04:20:57 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:57706 "EHLO
+        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751066AbdH2IUv (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 29 Aug 2017 04:20:51 -0400
+X-AuditID: 12074413-38bff70000007929-89-59a523e16e7e
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 75.5D.29837.3E325A95; Tue, 29 Aug 2017 04:20:51 -0400 (EDT)
+        by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id AF.B2.31017.1E325A95; Tue, 29 Aug 2017 04:20:49 -0400 (EDT)
 Received: from bagpipes.fritz.box (p57BCC836.dip0.t-ipconnect.de [87.188.200.54])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v7T8KcRx002808
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v7T8KcRw002808
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Tue, 29 Aug 2017 04:20:50 -0400
+        Tue, 29 Aug 2017 04:20:48 -0400
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -34,93 +34,110 @@ Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Brandon Williams <bmwill@google.com>,
         git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 05/10] files_pack_refs(): use a reference transaction to write packed refs
-Date:   Tue, 29 Aug 2017 10:20:29 +0200
-Message-Id: <2280d995f8516f296859ee583da112790e764b98.1503993268.git.mhagger@alum.mit.edu>
+Subject: [PATCH 04/10] packed_delete_refs(): implement method
+Date:   Tue, 29 Aug 2017 10:20:28 +0200
+Message-Id: <7c61f04574e32d6172062a6a8ffa8ade5c90bb1d.1503993268.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.14.1
 In-Reply-To: <cover.1503993268.git.mhagger@alum.mit.edu>
 References: <cover.1503993268.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrBIsWRmVeSWpSXmKPExsUixO6iqPtYeWmkwY69FhZrn91hsni+/gS7
-        RdeVbiaLht4rzBa3V8xntuie8pbR4kdLD7PF5s3tLA4cHn/ff2Dy2DnrLrvHgk2lHs969zB6
-        XLyk7PF5k1wAWxSXTUpqTmZZapG+XQJXxudjN1gLtghX/O+7wdjA+I2/i5GTQ0LAROJE2xTm
-        LkYuDiGBHUwST9cfYQRJCAmcZJL4MMEFxGYT0JVY1NPMBGKLCKhJTGw7xALSwCzwlEli58m7
-        rCAJYYEoiUt3X7CB2CwCqhK73v5mB7F5geL9+04wQmyTlzj34DYziM0pYCFx6fMjqGXmEqc7
-        HzBPYORZwMiwilEuMac0Vzc3MTOnODVZtzg5MS8vtUjXTC83s0QvNaV0EyMkwIR2MK4/KXeI
-        UYCDUYmHd4X1kkgh1sSy4srcQ4ySHExKorwZCksjhfiS8lMqMxKLM+KLSnNSiw8xSnAwK4nw
-        BrMD5XhTEiurUovyYVLSHCxK4rw/F6v7CQmkJ5akZqemFqQWwWRlODiUJHi5gJEkJFiUmp5a
-        kZaZU4KQZuLgBBnOAzTcCaSGt7ggMbc4Mx0if4pRUUqcd4IiUEIAJJFRmgfXC0sArxjFgV4R
-        5o1QAqriASYPuO5XQIOZgAYrCi4EGVySiJCSamCsKb1ffm+NYFHJ33mtW06Xrnx/dM7i5tlJ
-        7uuyq8QNvmzeqel94LD341NHH24PeV++6v1yrYj8yqnhU++cnbc8+Pa+zTMXTV3JldQuYKGg
-        bPipaJZp3aID0wI8Duv1nZb2kmZiFzrmocv9LWgps5+11FneyWuXXJ99/ZjHdQ/NgCjVyE8p
-        D04HKbEUZyQaajEXFScCADLtCArbAgAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrOIsWRmVeSWpSXmKPExsUixO6iqPtIeWmkwRwVi7XP7jBZPF9/gt2i
+        60o3k0VD7xVmi9sr5jNbdE95y2jxo6WH2WLz5nYWBw6Pv+8/MHnsnHWX3WPBplKPZ717GD0u
+        XlL2+LxJLoAtissmJTUnsyy1SN8ugStj7e3XLAVXRSt+bj7M0sD4W7CLkYNDQsBEYt/7wC5G
+        Lg4hgR1MEndevWaEcE4ySXTdecrexcjJwSagK7Gop5kJxBYRUJOY2HaIBaSIWeApk8TOk3dZ
+        QRLCArYS7z+1sIHYLAKqEpd3HAFr5hWIktj08R9YjYSAvMS5B7eZQWxOAQuJS58fMYLYQgLm
+        Eqc7HzBPYORZwMiwilEuMac0Vzc3MTOnODVZtzg5MS8vtUjXXC83s0QvNaV0EyMkvIR3MO46
+        KXeIUYCDUYmHd4X1kkgh1sSy4srcQ4ySHExKorwZCksjhfiS8lMqMxKLM+KLSnNSiw8xSnAw
+        K4nwBrMD5XhTEiurUovyYVLSHCxK4rxqS9T9hATSE0tSs1NTC1KLYLIyHBxKErw5SkCNgkWp
+        6akVaZk5JQhpJg5OkOE8QMOFQWp4iwsSc4sz0yHypxgVpcR5JygCJQRAEhmleXC9sPh/xSgO
+        9Iow73eQdh5g6oDrfgU0mAlosKLgQpDBJYkIKakGRu0Wt9s6XifS339orIiR/SskfnjXlt1b
+        ivpZPc1vHBUSmhcnNm2e0dz5n8TeaPkt43+/+IbY7rezTD/+25ThWH5mZU+gBRuHYFao+L0m
+        y8CO6d3zpd3lZGYdP7KS/c6LGXv79j6bvPHtH+9LXZuUnc+ELduy/PUFoYKOsrUS7bf0ZIoz
+        fhdszFBiKc5INNRiLipOBABgh3hU2gIAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Now that the packed reference store supports transactions, we can use
-a transaction to write the packed versions of references that we want
-to pack. This decreases the coupling between `files_ref_store` and
-`packed_ref_store`.
+Implement `packed_delete_refs()` using a reference transaction. This
+means that `files_delete_refs()` can use `refs_delete_refs()` instead
+of `repack_without_refs()` to delete any packed references, decreasing
+the coupling between the classes.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs/files-backend.c | 24 +++++++++++++++++-------
- 1 file changed, 17 insertions(+), 7 deletions(-)
+ refs/files-backend.c  |  2 +-
+ refs/packed-backend.c | 45 ++++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 45 insertions(+), 2 deletions(-)
 
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 2c78f63494..0fc44eaca5 100644
+index fccbc24ac4..2c78f63494 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -1100,9 +1100,14 @@ static int files_pack_refs(struct ref_store *ref_store, unsigned int flags)
- 	int ok;
- 	struct ref_to_prune *refs_to_prune = NULL;
- 	struct strbuf err = STRBUF_INIT;
+@@ -1157,7 +1157,7 @@ static int files_delete_refs(struct ref_store *ref_store, const char *msg,
+ 	if (packed_refs_lock(refs->packed_ref_store, 0, &err))
+ 		goto error;
+ 
+-	if (repack_without_refs(refs->packed_ref_store, refnames, &err)) {
++	if (refs_delete_refs(refs->packed_ref_store, msg, refnames, flags)) {
+ 		packed_refs_unlock(refs->packed_ref_store);
+ 		goto error;
+ 	}
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index d19b3bfba5..83a088118f 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -1082,7 +1082,50 @@ static int packed_initial_transaction_commit(struct ref_store *ref_store,
+ static int packed_delete_refs(struct ref_store *ref_store, const char *msg,
+ 			     struct string_list *refnames, unsigned int flags)
+ {
+-	die("BUG: not implemented yet");
++	struct packed_ref_store *refs =
++		packed_downcast(ref_store, REF_STORE_WRITE, "delete_refs");
++	struct strbuf err = STRBUF_INIT;
 +	struct ref_transaction *transaction;
- 
- 	packed_refs_lock(refs->packed_ref_store, LOCK_DIE_ON_ERROR, &err);
- 
-+	transaction = ref_store_transaction_begin(refs->packed_ref_store, &err);
++	struct string_list_item *item;
++	int ret;
++
++	(void)refs; /* We need the check above, but don't use the variable */
++
++	if (!refnames->nr)
++		return 0;
++
++	/*
++	 * Since we don't check the references' old_oids, the
++	 * individual updates can't fail, so we can pack all of the
++	 * updates into a single transaction.
++	 */
++
++	transaction = ref_store_transaction_begin(ref_store, &err);
 +	if (!transaction)
 +		return -1;
 +
- 	iter = cache_ref_iterator_begin(get_loose_ref_cache(refs), NULL, 0);
- 	while ((ok = ref_iterator_advance(iter)) == ITER_OK) {
- 		/*
-@@ -1115,12 +1120,14 @@ static int files_pack_refs(struct ref_store *ref_store, unsigned int flags)
- 			continue;
- 
- 		/*
--		 * Create an entry in the packed-refs cache equivalent
--		 * to the one from the loose ref cache, except that
--		 * we don't copy the peeled status, because we want it
--		 * to be re-peeled.
-+		 * Add a reference creation for this reference to the
-+		 * packed-refs transaction:
- 		 */
--		add_packed_ref(refs->packed_ref_store, iter->refname, iter->oid);
-+		if (ref_transaction_update(transaction, iter->refname,
-+					   iter->oid->hash, NULL,
-+					   REF_NODEREF, NULL, &err))
-+			die("failure preparing to create packed reference %s: %s",
-+			    iter->refname, err.buf);
- 
- 		/* Schedule the loose reference for pruning if requested. */
- 		if ((flags & PACK_REFS_PRUNE)) {
-@@ -1134,8 +1141,11 @@ static int files_pack_refs(struct ref_store *ref_store, unsigned int flags)
- 	if (ok != ITER_DONE)
- 		die("error while iterating over references");
- 
--	if (commit_packed_refs(refs->packed_ref_store, &err))
--		die("unable to overwrite old ref-pack file: %s", err.buf);
-+	if (ref_transaction_commit(transaction, &err))
-+		die("unable to write new packed-refs: %s", err.buf);
++	for_each_string_list_item(item, refnames) {
++		if (ref_transaction_delete(transaction, item->string, NULL,
++					   flags, msg, &err)) {
++			warning(_("could not delete reference %s: %s"),
++				item->string, err.buf);
++			strbuf_reset(&err);
++		}
++	}
++
++	ret = ref_transaction_commit(transaction, &err);
++
++	if (ret) {
++		if (refnames->nr == 1)
++			error(_("could not delete reference %s: %s"),
++			      refnames->items[0].string, err.buf);
++		else
++			error(_("could not delete references: %s"), err.buf);
++	}
 +
 +	ref_transaction_free(transaction);
-+
- 	packed_refs_unlock(refs->packed_ref_store);
++	strbuf_release(&err);
++	return ret;
+ }
  
- 	prune_refs(refs, refs_to_prune);
+ static int packed_pack_refs(struct ref_store *ref_store, unsigned int flags)
 -- 
 2.14.1
 
