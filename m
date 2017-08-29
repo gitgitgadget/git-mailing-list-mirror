@@ -2,117 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 862C11F4DD
-	for <e@80x24.org>; Tue, 29 Aug 2017 21:10:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6BD5C1F4DD
+	for <e@80x24.org>; Tue, 29 Aug 2017 21:48:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751272AbdH2VKL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Aug 2017 17:10:11 -0400
-Received: from mail-pf0-f170.google.com ([209.85.192.170]:35991 "EHLO
-        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751249AbdH2VKK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Aug 2017 17:10:10 -0400
-Received: by mail-pf0-f170.google.com with SMTP id z87so13530184pfi.3
-        for <git@vger.kernel.org>; Tue, 29 Aug 2017 14:10:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=DtCeQbrMFCsl6HR6bwf9A3wYgv1DjlAPDgk9jDFXit4=;
-        b=Y3AdQlcoiVJYLRgbxE7TJQebXvsfAmZRVD56wNJTSMVBKLRjeVpgcxRoGnAf01DWQo
-         3MkiEttCUd6TnICHbkAdTeQQwLjWg5740Tj4XPupUhrNQbWFuTvQITcXTizweFAHID/a
-         RVo7Oel4KhZvC/IHY/iMOc3ISyxAmPLOV/Fl25iq4hfjSEratho/+P6XX3e1AMNkecZK
-         AWrXg2HXOsFofTTFl2noQOttA4lRm+I66AwHEG+nDH5EW7MBA6uhNU3V9aYDI5Xw/zoY
-         y7uSFayLr22CovECZO47KZn5vIQTNCsSOK/p0W+187HQNL7t+CKsS1bqFXZUE5AjwiCw
-         XeYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=DtCeQbrMFCsl6HR6bwf9A3wYgv1DjlAPDgk9jDFXit4=;
-        b=aunFvwnyC7lHhDx3tv8umYm/SA8omoJirnJo/qYUC2rCfoGS2YE/Ss1kxb1epXy7FZ
-         CwNvOqaP2T/IbPDEtg4Sql0d/mKKA+kL8YdMRDruOCTqGYHCRff9M9GY2j5THEQCD6iC
-         FMc+TNZea7MTSz/DtERToGbJcF174rAFlyAoZD19ninHmB3pJRMtbGhZrRovoFUCJ7Z2
-         TCqD62gCgC19GGEJcMREatOc6zb1bgeJ2GaZPhug9j7K6soBfdNvStW5p9lIfsuY9GY0
-         0qLDRkF4ziD+FLZFQvbFsilDKhUaI9vPmQNXjXckeye6Pb1Hl9QTYjGETcB9Bctjad0H
-         n6nw==
-X-Gm-Message-State: AHYfb5jeQUY3lD+vInpg9YHW7EaCfQY4Pr3cMYqhBcbPi/UmDxUycZCU
-        nIZFQibNTzqbBb7k
-X-Google-Smtp-Source: ADKCNb6RMnu5z3meqj+cqQ3+oulQX5o4cmHP6nNU35waH11dRdC+wOQ/qNRNUvX7xkTKZ0Z5FBmmRw==
-X-Received: by 10.98.50.130 with SMTP id y124mr1674780pfy.277.1504041009505;
-        Tue, 29 Aug 2017 14:10:09 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:c55:9408:3387:8e7e])
-        by smtp.gmail.com with ESMTPSA id 73sm7259527pfu.3.2017.08.29.14.10.08
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 29 Aug 2017 14:10:08 -0700 (PDT)
-Date:   Tue, 29 Aug 2017 14:10:07 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
-        git@vger.kernel.org, sbeller@google.com, gitster@pobox.com,
-        jonathantanmy@google.com
-Subject: Re: [RFC 0/7] transitioning to protocol v2
-Message-ID: <20170829211007.GF131745@google.com>
-References: <20170824225328.8174-1-bmwill@google.com>
- <20170825172901.kvquxafudhelxqq3@sigill.intra.peff.net>
- <20170825173550.GJ13924@aiede.mtv.corp.google.com>
- <2ff0ead4-e13a-220e-f858-36ab206c1485@jeffhostetler.com>
+        id S1751514AbdH2VsM (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Aug 2017 17:48:12 -0400
+Received: from cloud.peff.net ([104.130.231.41]:52386 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751440AbdH2VsL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Aug 2017 17:48:11 -0400
+Received: (qmail 10330 invoked by uid 109); 29 Aug 2017 21:48:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 29 Aug 2017 21:48:11 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14383 invoked by uid 111); 29 Aug 2017 21:48:41 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Tue, 29 Aug 2017 17:48:41 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Aug 2017 17:48:09 -0400
+Date:   Tue, 29 Aug 2017 17:48:09 -0400
+From:   Jeff King <peff@peff.net>
+To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        Git Users <git@vger.kernel.org>
+Subject: Re: [PATCH] pkt-line: re-'static'-ify buffer in packet_write_fmt_1()
+Message-ID: <20170829214809.xxpsp76eqhd4hupo@sigill.intra.peff.net>
+References: <20170827073732.546-1-martin.agren@gmail.com>
+ <9E4606AF-8814-42DE-8D3A-3A15C1B1723C@gmail.com>
+ <CAN0heSraJFbbog7FKpAtmob9W6_5-AS1StZFVW6xUwMDWfMYgg@mail.gmail.com>
+ <179AC8FB-5991-4200-9AAC-2F8D0914D5F9@gmail.com>
+ <20170827232338.hm5t7t7c2xaa3zyl@sigill.intra.peff.net>
+ <CAN0heSoUqcOqVspZkbPahWQdtVpSdtSZoCFWu0ZQJfN3F0mD2g@mail.gmail.com>
+ <B1E291F2-86FF-4982-A092-92FAED65385C@gmail.com>
+ <20170829185341.s3xlsx4uym7lcluc@sigill.intra.peff.net>
+ <CAN0heSomjqiSStq3eqGgCe21b0Pr0gbAQLL-2EEB6Zfnjj+Mjg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <2ff0ead4-e13a-220e-f858-36ab206c1485@jeffhostetler.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAN0heSomjqiSStq3eqGgCe21b0Pr0gbAQLL-2EEB6Zfnjj+Mjg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08/29, Jeff Hostetler wrote:
-> 
-> 
-> On 8/25/2017 1:35 PM, Jonathan Nieder wrote:
-> >Hi,
-> >
-> >Jeff King wrote:
-> >>On Thu, Aug 24, 2017 at 03:53:21PM -0700, Brandon Williams wrote:
-> >
-> >>>Another version of Git's wire protocol is a topic that has been discussed and
-> >>>attempted by many in the community over the years.  The biggest challenge, as
-> >>>far as I understand, has been coming up with a transition plan to using the new
-> >>>server without breaking existing clients and servers.  As such this RFC is
-> >>>really only concerned with solidifying a transition plan.  Once it has been
-> >>>decided how we can transition to a new protocol we can get into decided what
-> >>>this new protocol would look like (though it would obviously eliminate the ref
-> >>>advertisement ;).
-> >>
-> >
-> >>I don't think libgit2 implements the server side. That leaves probably
-> >>JGit, Microsoft's VSTS (which I think is custom), and whatever Atlassian
-> >>and GitLab use.
-> >
-> >I'd be happy if someone tests the patches against those. :)
-> 
-> I just wanted to jump in here and say I've done some initial
-> testing of this against VSTS and so far it seems fine.  And yes,
-> we have a custom git server.
-> 
-> VSTS doesn't support the "git://" protocol, so the double-null trick
-> isn't an issue for us.  But "https://" worked just fine.  I'm still
-> asking around internally whether we support passing SSH environment
-> variables.
-> 
-> Jeff
-> 
+On Tue, Aug 29, 2017 at 09:22:08PM +0200, Martin Ågren wrote:
 
-Thanks for checking on this, I really appreciate it.  Please let me know
-if anything I haven't thought of becomes an issue.
+> One take-away for me from this thread is that memory-leak-plugging seems
+> to be appreciated, i.e., it's not just an academic problem. I think I'll
+> look into it some more, i.e., slowly pursue option 2. :-) That might help
+> give some insights on how to identify interesting leaks.
 
-I'm currently working on getting these patches into a more polished
-state to be used (as discussed elsewhere on this thread) as a precursor
-to an actual v2.
+Yes, I think if it's tractable that's the best path forward. It's not
+clear to me how many of the things valgrind reports are false positives
+(and in what way). Certainly the lock_file patch I just posted seems
+like something worth addressing, even if we _tend_ to only leak a small
+number of such structs per program invocation. It's not a problem now,
+but it's a sign of a bad pattern.
 
--- 
-Brandon Williams
+-Peff
