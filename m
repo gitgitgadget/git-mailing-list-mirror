@@ -6,26 +6,26 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 50F2320285
-	for <e@80x24.org>; Tue, 29 Aug 2017 08:21:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3BAC20285
+	for <e@80x24.org>; Tue, 29 Aug 2017 08:21:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751349AbdH2IVF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Aug 2017 04:21:05 -0400
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:48302 "EHLO
-        alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751180AbdH2IVB (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 29 Aug 2017 04:21:01 -0400
-X-AuditID: 12074412-1fdff7000000748d-d0-59a523ebaf0a
+        id S1751348AbdH2IVE (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Aug 2017 04:21:04 -0400
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:52717 "EHLO
+        alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751066AbdH2IU7 (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 29 Aug 2017 04:20:59 -0400
+X-AuditID: 1207440d-853ff70000000f42-54-59a523e9ab10
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id A6.5D.29837.BE325A95; Tue, 29 Aug 2017 04:20:59 -0400 (EDT)
+        by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id A3.61.03906.9E325A95; Tue, 29 Aug 2017 04:20:57 -0400 (EDT)
 Received: from bagpipes.fritz.box (p57BCC836.dip0.t-ipconnect.de [87.188.200.54])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v7T8KcS3002808
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v7T8KcS2002808
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Tue, 29 Aug 2017 04:20:58 -0400
+        Tue, 29 Aug 2017 04:20:56 -0400
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -34,276 +34,331 @@ Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Brandon Williams <bmwill@google.com>,
         git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 09/10] packed-backend: rip out some now-unused code
-Date:   Tue, 29 Aug 2017 10:20:33 +0200
-Message-Id: <824ad441f8531f1bbcc8800a14fe71466721066d.1503993268.git.mhagger@alum.mit.edu>
+Subject: [PATCH 08/10] files_ref_store: use a transaction to update packed refs
+Date:   Tue, 29 Aug 2017 10:20:32 +0200
+Message-Id: <25b38730abe97c29d04116b4b2c6067934dfca14.1503993268.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.14.1
 In-Reply-To: <cover.1503993268.git.mhagger@alum.mit.edu>
 References: <cover.1503993268.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrKIsWRmVeSWpSXmKPExsUixO6iqPtaeWmkwcSfhhZrn91hsni+/gS7
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrBIsWRmVeSWpSXmKPExsUixO6iqPtKeWmkwdPvLBZrn91hsni+/gS7
         RdeVbiaLht4rzBa3V8xntuie8pbR4kdLD7PF5s3tLA4cHn/ff2Dy2DnrLrvHgk2lHs969zB6
-        XLyk7PF5k1wAWxSXTUpqTmZZapG+XQJXxrXGjUwFP+wq1k65zdTAuMy4i5GTQ0LARGLbzMUs
-        XYxcHEICO5gkrneuYoVwTjJJTL//jQmkik1AV2JRTzOYLSKgJjGx7RBYB7PAUyaJnSfvsoIk
-        hAWcJY527GQGsVkEVCXaX3aBxXkFoiT2Lj/HBLFOXuLcg9tgNZwCFhKXPj9iBLGFBMwlTnc+
-        YJ7AyLOAkWEVo1xiTmmubm5iZk5xarJucXJiXl5qka6ZXm5miV5qSukmRkiICe1gXH9S7hCj
-        AAejEg/vCuslkUKsiWXFlbmHGCU5mJREeTMUlkYK8SXlp1RmJBZnxBeV5qQWH2KU4GBWEuEN
-        ZgfK8aYkVlalFuXDpKQ5WJTEeX8uVvcTEkhPLEnNTk0tSC2CycpwcChJ8HIBY0lIsCg1PbUi
-        LTOnBCHNxMEJMpwHaLgTSA1vcUFibnFmOkT+FKMux4q3u74wCbHk5eelSonzTlAEKhIAKcoo
-        zYObA0sNrxjFgd4S5o1QAqriAaYVuEmvgJYwAS1RFFwIsqQkESEl1cCY9Kxux2RNdT3BY7da
-        J742so0XqDevCPlWk5hxz2DBcgHvoGrfL/zpm+ZqiaeFaveELpb5uNby2PaGwFV/OTu5OSuO
-        /p5qPGGe1MMjv5fHp945kcgsX/r/8vH1F56L7Gl4UadSckvqBntZ9+OsyscKn2PSPE787TtZ
-        E3Zsjth/J5ZL8n6ym5WVWIozEg21mIuKEwHh03yU6AIAAA==
+        XLyk7PF5k1wAWxSXTUpqTmZZapG+XQJXxsf709gLWoMrDi67wtbA+M65i5GTQ0LAROJw/3f2
+        LkYuDiGBHUwSbU+3s0E4J5kkTq04xg5SxSagK7Gop5kJxBYRUJOY2HaIBaSIWeApk8TOk3dZ
+        QRLCAv4Sk99PYO5i5OBgEVCVmLhDFSTMKxAlMfnLSkaIbfIS5x7cZgaxOQUsJC59fgQWFxIw
+        lzjd+YB5AiPPAkaGVYxyiTmlubq5iZk5xanJusXJiXl5qUW6Rnq5mSV6qSmlmxghAca7g/H/
+        OplDjAIcjEo8vCusl0QKsSaWFVfmHmKU5GBSEuXNUFgaKcSXlJ9SmZFYnBFfVJqTWnyIUYKD
+        WUmEN5gdKMebklhZlVqUD5OS5mBREudVW6LuJySQnliSmp2aWpBaBJOV4eBQkuDlAkaSkGBR
+        anpqRVpmTglCmomDE2Q4D9BwJ5Aa3uKCxNzizHSI/ClGRSlx3gmKQAkBkERGaR5cLywBvGIU
+        B3pFmNcXpJ0HmDzgul8BDWYCGqwouBBkcEkiQkqqgXGScH3R4rlOkV6nrGrZf0+Zahjr9OtY
+        wa9DsQdON1n5zvqpkbDdYc8GARu1Ykt1Xl/j7DgLht71bVvUTc67aj5IPbJv8re7B4NzNya2
+        LJjl3iL8pVwjtjP8oUFWi0bBpS3eT9qOaLebLQoS43h0zGJfuJnos8Yff+ed013f8PDRa4GZ
+        sx4yT1ZiKc5INNRiLipOBABzxtmK2wIAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Now the outside world interacts with the packed ref store only via the
-generic refs API plus a few lock-related functions. This allows us to
-delete some functions that are no longer used, thereby completing the
-encapsulation of the packed ref store.
+When processing a `files_ref_store` transaction, it is sometimes
+necessary to delete some references from the "packed-refs" file. Do
+that using a reference transaction conducted against the
+`packed_ref_store`.
+
+This change further decouples `files_ref_store` from
+`packed_ref_store`. It also fixes multiple problems, including the two
+revealed by test cases added in the previous commit.
+
+First, the old code didn't obtain the `packed-refs` lock until
+`files_transaction_finish()`. This means that a failure to acquire the
+`packed-refs` lock (e.g., due to contention with another process)
+wasn't detected until it was too late (problems like this are supposed
+to be detected in the "prepare" phase). The new code acquires the
+`packed-refs` lock in `files_transaction_prepare()`, the same stage of
+the processing when the loose reference locks are being acquired,
+removing another reason why the "prepare" phase might succeed and the
+"finish" phase might nevertheless fail.
+
+Second, the old code deleted the loose version of a reference before
+deleting any packed version of the same reference. This left a moment
+when another process might think that the packed version of the
+reference is current, which is incorrect. (Even worse, the packed
+version of the reference can be arbitrarily old, and might even point
+at an object that has since been garbage-collected.)
+
+Third, if a reference deletion fails to acquire the `packed-refs` lock
+altogether, then the old code might leave the repository in the
+incorrect state (possibly corrupt) described in the previous
+paragraph.
+
+Now we activate the new "packed-refs" file (sans any references that
+are being deleted) *before* deleting the corresponding loose
+references. But we hold the "packed-refs" lock until after the loose
+references have been finalized, thus preventing a simultaneous
+"pack-refs" process from packing the loose version of the reference in
+the time gap, which would otherwise defeat our attempt to delete it.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs/packed-backend.c | 193 --------------------------------------------------
- refs/packed-backend.h |   8 ---
- 2 files changed, 201 deletions(-)
+ refs/files-backend.c         | 132 +++++++++++++++++++++++++++++++++----------
+ t/t1404-update-ref-errors.sh |   4 +-
+ 2 files changed, 103 insertions(+), 33 deletions(-)
 
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 83a088118f..90f44c1fbb 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -91,19 +91,6 @@ struct ref_store *packed_ref_store_create(const char *path,
- 	return ref_store;
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 29c7c78602..4f4c47b9db 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -2391,13 +2391,22 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+ 	return 0;
  }
  
--/*
-- * Die if refs is not the main ref store. caller is used in any
-- * necessary error messages.
-- */
--static void packed_assert_main_repository(struct packed_ref_store *refs,
--					  const char *caller)
--{
--	if (refs->store_flags & REF_STORE_MAIN)
--		return;
--
--	die("BUG: operation %s only allowed for main ref store", caller);
--}
--
++struct files_transaction_backend_data {
++	struct ref_transaction *packed_transaction;
++	int packed_refs_locked;
++};
++
  /*
-  * Downcast `ref_store` to `packed_ref_store`. Die if `ref_store` is
-  * not a `packed_ref_store`. Also die if `packed_ref_store` doesn't
-@@ -321,40 +308,6 @@ static struct ref_dir *get_packed_refs(struct packed_ref_store *refs)
- 	return get_packed_ref_dir(get_packed_ref_cache(refs));
- }
- 
--/*
-- * Add or overwrite a reference in the in-memory packed reference
-- * cache. This may only be called while the packed-refs file is locked
-- * (see packed_refs_lock()). To actually write the packed-refs file,
-- * call commit_packed_refs().
-- */
--void add_packed_ref(struct ref_store *ref_store,
--		    const char *refname, const struct object_id *oid)
--{
--	struct packed_ref_store *refs =
--		packed_downcast(ref_store, REF_STORE_WRITE,
--				"add_packed_ref");
--	struct ref_dir *packed_refs;
--	struct ref_entry *packed_entry;
--
--	if (!is_lock_file_locked(&refs->lock))
--		die("BUG: packed refs not locked");
--
--	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL))
--		die("Reference has invalid format: '%s'", refname);
--
--	packed_refs = get_packed_refs(refs);
--	packed_entry = find_ref_entry(packed_refs, refname);
--	if (packed_entry) {
--		/* Overwrite the existing entry: */
--		oidcpy(&packed_entry->u.value.oid, oid);
--		packed_entry->flag = REF_ISPACKED;
--		oidclr(&packed_entry->u.value.peeled);
--	} else {
--		packed_entry = create_ref_entry(refname, oid, REF_ISPACKED);
--		add_ref_entry(packed_refs, packed_entry);
--	}
--}
--
- /*
-  * Return the ref_entry for the given refname from the packed
-  * references.  If it does not exist, return NULL.
-@@ -592,152 +545,6 @@ int packed_refs_is_locked(struct ref_store *ref_store)
- static const char PACKED_REFS_HEADER[] =
- 	"# pack-refs with: peeled fully-peeled \n";
- 
--/*
-- * Write the current version of the packed refs cache from memory to
-- * disk. The packed-refs file must already be locked for writing (see
-- * packed_refs_lock()). Return zero on success. On errors, rollback
-- * the lockfile, write an error message to `err`, and return a nonzero
-- * value.
-- */
--int commit_packed_refs(struct ref_store *ref_store, struct strbuf *err)
--{
--	struct packed_ref_store *refs =
--		packed_downcast(ref_store, REF_STORE_WRITE | REF_STORE_MAIN,
--				"commit_packed_refs");
--	struct packed_ref_cache *packed_ref_cache =
--		get_packed_ref_cache(refs);
--	int ok;
--	int ret = -1;
--	struct strbuf sb = STRBUF_INIT;
--	FILE *out;
--	struct ref_iterator *iter;
--	char *packed_refs_path;
--
--	if (!is_lock_file_locked(&refs->lock))
--		die("BUG: commit_packed_refs() called when unlocked");
--
--	/*
--	 * If packed-refs is a symlink, we want to overwrite the
--	 * symlinked-to file, not the symlink itself. Also, put the
--	 * staging file next to it:
--	 */
--	packed_refs_path = get_locked_file_path(&refs->lock);
--	strbuf_addf(&sb, "%s.new", packed_refs_path);
--	if (create_tempfile(&refs->tempfile, sb.buf) < 0) {
--		strbuf_addf(err, "unable to create file %s: %s",
--			    sb.buf, strerror(errno));
--		strbuf_release(&sb);
--		goto out;
--	}
--	strbuf_release(&sb);
--
--	out = fdopen_tempfile(&refs->tempfile, "w");
--	if (!out) {
--		strbuf_addf(err, "unable to fdopen packed-refs tempfile: %s",
--			    strerror(errno));
--		goto error;
--	}
--
--	if (fprintf(out, "%s", PACKED_REFS_HEADER) < 0) {
--		strbuf_addf(err, "error writing to %s: %s",
--			    get_tempfile_path(&refs->tempfile), strerror(errno));
--		goto error;
--	}
--
--	iter = cache_ref_iterator_begin(packed_ref_cache->cache, NULL, 0);
--	while ((ok = ref_iterator_advance(iter)) == ITER_OK) {
--		struct object_id peeled;
--		int peel_error = ref_iterator_peel(iter, &peeled);
--
--		if (write_packed_entry(out, iter->refname, iter->oid->hash,
--				       peel_error ? NULL : peeled.hash)) {
--			strbuf_addf(err, "error writing to %s: %s",
--				    get_tempfile_path(&refs->tempfile),
--				    strerror(errno));
--			ref_iterator_abort(iter);
--			goto error;
--		}
--	}
--
--	if (ok != ITER_DONE) {
--		strbuf_addf(err, "unable to rewrite packed-refs file: "
--			    "error iterating over old contents");
--		goto error;
--	}
--
--	if (rename_tempfile(&refs->tempfile, packed_refs_path)) {
--		strbuf_addf(err, "error replacing %s: %s",
--			    refs->path, strerror(errno));
--		goto out;
--	}
--
--	ret = 0;
--	goto out;
--
--error:
--	delete_tempfile(&refs->tempfile);
--
--out:
--	free(packed_refs_path);
--	return ret;
--}
--
--/*
-- * Rewrite the packed-refs file, omitting any refs listed in
-- * 'refnames'. On error, leave packed-refs unchanged, write an error
-- * message to 'err', and return a nonzero value. The packed refs lock
-- * must be held when calling this function; it will still be held when
-- * the function returns.
-- *
-- * The refs in 'refnames' needn't be sorted. `err` must not be NULL.
-- */
--int repack_without_refs(struct ref_store *ref_store,
--			struct string_list *refnames, struct strbuf *err)
--{
--	struct packed_ref_store *refs =
--		packed_downcast(ref_store, REF_STORE_WRITE | REF_STORE_MAIN,
--				"repack_without_refs");
--	struct ref_dir *packed;
--	struct string_list_item *refname;
--	int needs_repacking = 0, removed = 0;
--
--	packed_assert_main_repository(refs, "repack_without_refs");
--	assert(err);
--
--	if (!is_lock_file_locked(&refs->lock))
--		die("BUG: repack_without_refs called without holding lock");
--
--	/* Look for a packed ref */
--	for_each_string_list_item(refname, refnames) {
--		if (get_packed_ref(refs, refname->string)) {
--			needs_repacking = 1;
--			break;
--		}
--	}
--
--	/* Avoid locking if we have nothing to do */
--	if (!needs_repacking)
--		return 0; /* no refname exists in packed refs */
--
--	packed = get_packed_refs(refs);
--
--	/* Remove refnames from the cache */
--	for_each_string_list_item(refname, refnames)
--		if (remove_entry_from_dir(packed, refname->string) != -1)
--			removed = 1;
--	if (!removed) {
--		/*
--		 * All packed entries disappeared while we were
--		 * acquiring the lock.
--		 */
--		clear_packed_ref_cache(refs);
--		return 0;
--	}
--
--	/* Write what remains */
--	return commit_packed_refs(&refs->base, err);
--}
--
- static int packed_init_db(struct ref_store *ref_store, struct strbuf *err)
+  * Unlock any references in `transaction` that are still locked, and
+  * mark the transaction closed.
+  */
+-static void files_transaction_cleanup(struct ref_transaction *transaction)
++static void files_transaction_cleanup(struct files_ref_store *refs,
++				      struct ref_transaction *transaction)
  {
- 	/* Nothing to do. */
-diff --git a/refs/packed-backend.h b/refs/packed-backend.h
-index 7af2897757..61687e408a 100644
---- a/refs/packed-backend.h
-+++ b/refs/packed-backend.h
-@@ -23,12 +23,4 @@ int packed_refs_lock(struct ref_store *ref_store, int flags, struct strbuf *err)
- void packed_refs_unlock(struct ref_store *ref_store);
- int packed_refs_is_locked(struct ref_store *ref_store);
+ 	size_t i;
++	struct files_transaction_backend_data *backend_data =
++		transaction->backend_data;
++	struct strbuf err = STRBUF_INIT;
  
--void add_packed_ref(struct ref_store *ref_store,
--		    const char *refname, const struct object_id *oid);
+ 	for (i = 0; i < transaction->nr; i++) {
+ 		struct ref_update *update = transaction->updates[i];
+@@ -2409,6 +2418,17 @@ static void files_transaction_cleanup(struct ref_transaction *transaction)
+ 		}
+ 	}
+ 
++	if (backend_data->packed_transaction &&
++	    ref_transaction_abort(backend_data->packed_transaction, &err)) {
++		error("error aborting transaction: %s", err.buf);
++		strbuf_release(&err);
++	}
++
++	if (backend_data->packed_refs_locked)
++		packed_refs_unlock(refs->packed_ref_store);
++
++	free(backend_data);
++
+ 	transaction->state = REF_TRANSACTION_CLOSED;
+ }
+ 
+@@ -2425,12 +2445,17 @@ static int files_transaction_prepare(struct ref_store *ref_store,
+ 	char *head_ref = NULL;
+ 	int head_type;
+ 	struct object_id head_oid;
++	struct files_transaction_backend_data *backend_data;
++	struct ref_transaction *packed_transaction = NULL;
+ 
+ 	assert(err);
+ 
+ 	if (!transaction->nr)
+ 		goto cleanup;
+ 
++	backend_data = xcalloc(1, sizeof(*backend_data));
++	transaction->backend_data = backend_data;
++
+ 	/*
+ 	 * Fail if a refname appears more than once in the
+ 	 * transaction. (If we end up splitting up any updates using
+@@ -2497,6 +2522,41 @@ static int files_transaction_prepare(struct ref_store *ref_store,
+ 					  head_ref, &affected_refnames, err);
+ 		if (ret)
+ 			break;
++
++		if (update->flags & REF_DELETING &&
++		    !(update->flags & REF_LOG_ONLY) &&
++		    !(update->flags & REF_ISPRUNING)) {
++			/*
++			 * This reference has to be deleted from
++			 * packed-refs if it exists there.
++			 */
++			if (!packed_transaction) {
++				packed_transaction = ref_store_transaction_begin(
++						refs->packed_ref_store, err);
++				if (!packed_transaction) {
++					ret = TRANSACTION_GENERIC_ERROR;
++					goto cleanup;
++				}
++
++				backend_data->packed_transaction =
++					packed_transaction;
++			}
++
++			ref_transaction_add_update(
++					packed_transaction, update->refname,
++					update->flags & ~REF_HAVE_OLD,
++					update->new_oid.hash, update->old_oid.hash,
++					NULL);
++		}
++	}
++
++	if (packed_transaction) {
++		if (packed_refs_lock(refs->packed_ref_store, 0, err)) {
++			ret = TRANSACTION_GENERIC_ERROR;
++			goto cleanup;
++		}
++		backend_data->packed_refs_locked = 1;
++		ret = ref_transaction_prepare(packed_transaction, err);
+ 	}
+ 
+ cleanup:
+@@ -2504,7 +2564,7 @@ static int files_transaction_prepare(struct ref_store *ref_store,
+ 	string_list_clear(&affected_refnames, 0);
+ 
+ 	if (ret)
+-		files_transaction_cleanup(transaction);
++		files_transaction_cleanup(refs, transaction);
+ 	else
+ 		transaction->state = REF_TRANSACTION_PREPARED;
+ 
+@@ -2519,9 +2579,10 @@ static int files_transaction_finish(struct ref_store *ref_store,
+ 		files_downcast(ref_store, 0, "ref_transaction_finish");
+ 	size_t i;
+ 	int ret = 0;
+-	struct string_list refs_to_delete = STRING_LIST_INIT_NODUP;
+-	struct string_list_item *ref_to_delete;
+ 	struct strbuf sb = STRBUF_INIT;
++	struct files_transaction_backend_data *backend_data;
++	struct ref_transaction *packed_transaction;
++
+ 
+ 	assert(err);
+ 
+@@ -2530,6 +2591,9 @@ static int files_transaction_finish(struct ref_store *ref_store,
+ 		return 0;
+ 	}
+ 
++	backend_data = transaction->backend_data;
++	packed_transaction = backend_data->packed_transaction;
++
+ 	/* Perform updates first so live commits remain referenced */
+ 	for (i = 0; i < transaction->nr; i++) {
+ 		struct ref_update *update = transaction->updates[i];
+@@ -2565,7 +2629,23 @@ static int files_transaction_finish(struct ref_store *ref_store,
+ 			}
+ 		}
+ 	}
+-	/* Perform deletes now that updates are safely completed */
++
++	/*
++	 * Perform deletes now that updates are safely completed.
++	 *
++	 * First delete any packed versions of the references, while
++	 * retaining the packed-refs lock:
++	 */
++	if (packed_transaction) {
++		ret = ref_transaction_commit(packed_transaction, err);
++		ref_transaction_free(packed_transaction);
++		packed_transaction = NULL;
++		backend_data->packed_transaction = NULL;
++		if (ret)
++			goto cleanup;
++	}
++
++	/* Now delete the loose versions of the references: */
+ 	for (i = 0; i < transaction->nr; i++) {
+ 		struct ref_update *update = transaction->updates[i];
+ 		struct ref_lock *lock = update->backend_data;
+@@ -2583,39 +2663,27 @@ static int files_transaction_finish(struct ref_store *ref_store,
+ 				}
+ 				update->flags |= REF_DELETED_LOOSE;
+ 			}
 -
--int commit_packed_refs(struct ref_store *ref_store, struct strbuf *err);
+-			if (!(update->flags & REF_ISPRUNING))
+-				string_list_append(&refs_to_delete,
+-						   lock->ref_name);
+ 		}
+ 	}
+ 
+-	if (packed_refs_lock(refs->packed_ref_store, 0, err)) {
+-		ret = TRANSACTION_GENERIC_ERROR;
+-		goto cleanup;
+-	}
 -
--int repack_without_refs(struct ref_store *ref_store,
--			struct string_list *refnames, struct strbuf *err);
+-	if (repack_without_refs(refs->packed_ref_store, &refs_to_delete, err)) {
+-		ret = TRANSACTION_GENERIC_ERROR;
+-		packed_refs_unlock(refs->packed_ref_store);
+-		goto cleanup;
+-	}
 -
- #endif /* REFS_PACKED_BACKEND_H */
+-	packed_refs_unlock(refs->packed_ref_store);
+-
+ 	/* Delete the reflogs of any references that were deleted: */
+-	for_each_string_list_item(ref_to_delete, &refs_to_delete) {
+-		strbuf_reset(&sb);
+-		files_reflog_path(refs, &sb, ref_to_delete->string);
+-		if (!unlink_or_warn(sb.buf))
+-			try_remove_empty_parents(refs, ref_to_delete->string,
+-						 REMOVE_EMPTY_PARENTS_REFLOG);
++	for (i = 0; i < transaction->nr; i++) {
++		struct ref_update *update = transaction->updates[i];
++		if (update->flags & REF_DELETING &&
++		    !(update->flags & REF_LOG_ONLY) &&
++		    !(update->flags & REF_ISPRUNING)) {
++			strbuf_reset(&sb);
++			files_reflog_path(refs, &sb, update->refname);
++			if (!unlink_or_warn(sb.buf))
++				try_remove_empty_parents(refs, update->refname,
++							 REMOVE_EMPTY_PARENTS_REFLOG);
++		}
+ 	}
+ 
+ 	clear_loose_ref_cache(refs);
+ 
+ cleanup:
+-	files_transaction_cleanup(transaction);
++	files_transaction_cleanup(refs, transaction);
+ 
+ 	for (i = 0; i < transaction->nr; i++) {
+ 		struct ref_update *update = transaction->updates[i];
+@@ -2633,7 +2701,6 @@ static int files_transaction_finish(struct ref_store *ref_store,
+ 	}
+ 
+ 	strbuf_release(&sb);
+-	string_list_clear(&refs_to_delete, 0);
+ 	return ret;
+ }
+ 
+@@ -2641,7 +2708,10 @@ static int files_transaction_abort(struct ref_store *ref_store,
+ 				   struct ref_transaction *transaction,
+ 				   struct strbuf *err)
+ {
+-	files_transaction_cleanup(transaction);
++	struct files_ref_store *refs =
++		files_downcast(ref_store, 0, "ref_transaction_abort");
++
++	files_transaction_cleanup(refs, transaction);
+ 	return 0;
+ }
+ 
+diff --git a/t/t1404-update-ref-errors.sh b/t/t1404-update-ref-errors.sh
+index 752f83c377..26e5ff6843 100755
+--- a/t/t1404-update-ref-errors.sh
++++ b/t/t1404-update-ref-errors.sh
+@@ -404,7 +404,7 @@ test_expect_success 'broken reference blocks indirect create' '
+ 	test_cmp expected output.err
+ '
+ 
+-test_expect_failure 'no bogus intermediate values during delete' '
++test_expect_success 'no bogus intermediate values during delete' '
+ 	prefix=refs/slow-transaction &&
+ 	# Set up a reference with differing loose and packed versions:
+ 	git update-ref $prefix/foo $C &&
+@@ -459,7 +459,7 @@ test_expect_failure 'no bogus intermediate values during delete' '
+ 	test_must_fail git rev-parse --verify --quiet $prefix/foo
+ '
+ 
+-test_expect_failure 'delete fails cleanly if packed-refs file is locked' '
++test_expect_success 'delete fails cleanly if packed-refs file is locked' '
+ 	prefix=refs/locked-packed-refs &&
+ 	# Set up a reference with differing loose and packed versions:
+ 	git update-ref $prefix/foo $C &&
 -- 
 2.14.1
 
