@@ -2,111 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D5AF20285
-	for <e@80x24.org>; Tue, 29 Aug 2017 10:41:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 84CA920285
+	for <e@80x24.org>; Tue, 29 Aug 2017 11:26:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751301AbdH2Klv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Aug 2017 06:41:51 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:37903 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751243AbdH2Klu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Aug 2017 06:41:50 -0400
-Received: by mail-pg0-f65.google.com with SMTP id t3so2432386pgt.5
-        for <git@vger.kernel.org>; Tue, 29 Aug 2017 03:41:49 -0700 (PDT)
+        id S1753131AbdH2L0K (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Aug 2017 07:26:10 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:37375 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752836AbdH2LXs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Aug 2017 07:23:48 -0400
+Received: by mail-wr0-f194.google.com with SMTP id n37so2061796wrf.4
+        for <git@vger.kernel.org>; Tue, 29 Aug 2017 04:23:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Q+oEOHfeuUBNeC8OsCg10nQYoKvo7bdhaqRu3akD0JE=;
-        b=eLM79w4IEykBvzzfiXXz+JEKiq9hJvwSowT3kWQBRZYGZW9hzTq2DVs56Ne/RGF/KP
-         txOVVyTeQGoSAntQ3SVZ8nou7S3h1+dHVg5m+5Uuh+gZcQoDYku93w0NMwH8gC/n3BYg
-         p2kOGOev0ZwGeO1o7iv4A2g5Qf3Busarr8mfEmjxDX8vEgAPbeGuq5bozqjrawIMyokD
-         73bwIbXlAbtacX5pd/EADKtD+KR5jzerkEIRNjxFgHV1bORFv8GBKKaEhXDYa0KpysYv
-         VR75J+FybtrbeRql1jhapNn3gJY7vjeGZRo2g5uOyOTLyn9Z1i9kgqc6qndkwG4kuyfP
-         HvYg==
+        d=daniel-watkins-co-uk.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id;
+        bh=dO2Xo8t7zaboLzApaqReSbvyP5QpsAA0zvBLOINYEmE=;
+        b=zj6cXnYjqxRCaR6Kwu3LgeZXv5KiQ0omwwsuEnTMMqH70IMwo0vZGZKCGbltwfgc2Y
+         4ZtNF0eJmiyHFIf1/0WN998Obdbj8qbYY5xu26Qsmo4QBgn0fjz/ZepTbmn2sJFlmGbE
+         2JJk2Y5poktaIksMwEt6fHjwMqjlb6iEkC97663HveqdTjPUUDGSAnEil5ZRQl/G9YAO
+         obW1g3UUIt/DJfX37ppOMSIAeOPvuhoBIy6e2to2XfP6+x4J/hyKq1Z4tsdpeqQbeCAo
+         TN+RY6h4NXtNKfUJg/GcMPycR3SPKlAwK17EioGuebSltk7KitT+iBGWYzE5lUWEbVcz
+         X6Lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Q+oEOHfeuUBNeC8OsCg10nQYoKvo7bdhaqRu3akD0JE=;
-        b=rb+9qM2UOGZk5vpGNPfGjVyizZnMfr2BAeTb2JGuUvAd+ImLAEncSo4D6ADTU1sm9f
-         OPLRWLMFqERfUdo3Pl70rpLOHmNZd+cc4HY7Zp+p1Ou0ph5K+0uvQdOixkvefRCV7Idl
-         tQfNT57yq2ItmffLbgEv2boPLvAzlbpnlybfPQuDYEZ6aJLCzMRzto+44SNT0hxARfy1
-         pADLBnucF9Prsodv+TDZtyKO6QE0Y79tvsXGkNbvgGuxi0IS0LhFPpfe+2D9li0dor7n
-         L5IP6fHYHFuE/KUPfTO2CoQKvJbTgWVyirCMFHKUtxW2hXratltd1vEinMfQoOSH0Uu9
-         U7ZA==
-X-Gm-Message-State: AHYfb5iMnyuSyiPk84gP9uDCpbtwvdIixx9L5luH4ozO/bmVeUeyf9B6
-        MIOonfrBBZNFt3CQcGxHKCtxkdPHFcdIeGc=
-X-Received: by 10.84.224.7 with SMTP id r7mr535845plj.273.1504003309542; Tue,
- 29 Aug 2017 03:41:49 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.100.162.37 with HTTP; Tue, 29 Aug 2017 03:41:49 -0700 (PDT)
-In-Reply-To: <425e16e7-188e-ecff-3a09-228ef1dcf319@alum.mit.edu>
-References: <CAN0heSrkYL6OqVHHnDtA1DqE-FVqjB59bG2MsgxmJyxW33k9JA@mail.gmail.com>
- <fe842671061cea7972b0c8695a4b7f82f854453a.1503951733.git.martin.agren@gmail.com>
- <425e16e7-188e-ecff-3a09-228ef1dcf319@alum.mit.edu>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Tue, 29 Aug 2017 12:41:49 +0200
-Message-ID: <CAN0heSqn59sFF3A-eQ593G+ZDWnO9pKM5F=sgiSQk+prUr-nSQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] refs/files-backend: fix memory leak in lock_ref_for_update
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=dO2Xo8t7zaboLzApaqReSbvyP5QpsAA0zvBLOINYEmE=;
+        b=oJuhOlaSa8SZSEOZUA2r5t2jlon6/z2NQtLE/WC/n05voRAK8VI8mavBFyMe23Gmoa
+         7NH0Juh8smwawVFHKYXbFGQUToORlQzVzJYiaoBR9kB8QSjMii7+4PIQLDvlOufcChyk
+         HlQ7CqclexBDqxFhqVl+KyPMTPJ2HdDtC3QvsvodGWfEaxiV6PgJZtIrtfJwXfZplAig
+         ybd8SEnIdFqKJiNI6nFoPRzqzNqO7vKoQ/8/p8h62aPdPRpUx81bS6E62nNQsR+ZDMrq
+         F99BYY06Mt7iQd3lzBT5P8Hw8DftWOZ5gcjDSTMc2BQamUwqhI8UPROn1qF6o2xqsRxo
+         7H9w==
+X-Gm-Message-State: AHYfb5jatRlWwIztv5LQIob8rqG8/+lvy6L9h2t+AMyI71xIbbq4FiFy
+        ZEX232+0xlgWKXoOOc1+vQ==
+X-Received: by 10.223.173.23 with SMTP id p23mr2176632wrc.27.1504005827365;
+        Tue, 29 Aug 2017 04:23:47 -0700 (PDT)
+Received: from localhost.localdomain (cpc112317-pete13-2-0-cust280.4-4.cable.virginm.net. [86.9.193.25])
+        by smtp.gmail.com with ESMTPSA id l64sm2434884wmb.12.2017.08.29.04.23.46
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 29 Aug 2017 04:23:46 -0700 (PDT)
+From:   Daniel Watkins <daniel@daniel-watkins.co.uk>
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, Daniel Watkins <daniel@daniel-watkins.co.uk>
+Subject: [PATCH] diff-highlight: Add clean target to Makefile
+Date:   Tue, 29 Aug 2017 12:23:11 +0100
+Message-Id: <20170829112311.16432-1-daniel@daniel-watkins.co.uk>
+X-Mailer: git-send-email 2.14.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 29 August 2017 at 10:39, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> On 08/28/2017 10:32 PM, Martin =C3=85gren wrote:
->> After the previous patch, none of the functions we call hold on to
->> `referent.buf`, so we can safely release the string buffer before
->> returning.
->
-> This patch looks good to me, but I did notice a pre-existing problem in
-> the area...
->
->> ---
->>  refs/files-backend.c | 31 ++++++++++++++++++++-----------
->>  1 file changed, 20 insertions(+), 11 deletions(-)
->>
->> diff --git a/refs/files-backend.c b/refs/files-backend.c
->> index bdb0e22e5..15f34b10e 100644
->> --- a/refs/files-backend.c
->> +++ b/refs/files-backend.c
->> [...]
->> @@ -2305,10 +2305,12 @@ static int lock_ref_for_update(struct files_ref_=
-store *refs,
->>                                       strbuf_addf(err, "cannot lock ref =
-'%s': "
->>                                                   "error reading referen=
-ce",
->>                                                   original_update_refnam=
-e(update));
->> -                                     return -1;
->> +                                     ret =3D -1;
->> +                                     goto out;
->
-> It is incorrect to return -1 here. First of all, stylistically, the
-> return value should be a symbolic constant. But in fact, it should be
-> returning `TRANSACTION_GENERIC_ERROR` here, whereas -1 is
-> `TRANSACTION_NAME_CONFLICT`. So the code is not just stylistically
-> wrong; it is functionally wrong.
->
-> I know that this is not your mistake, but would you like to add another
-> patch to your series to fix this up? I'd do it myself, but it's a little
-> bit awkward because the fix will conflict with your patch.
+Now that `make` produces a file, we should have a clean target to remove
+it.
 
-Sure. I'll send out a v3 later today. I'll fix this in a third patch,
-and I'll also address your comments on the first patch.
+Signed-off-by: Daniel Watkins <daniel@daniel-watkins.co.uk>
+---
+ contrib/diff-highlight/Makefile | 3 +++
+ 1 file changed, 3 insertions(+)
 
-Thanks a lot.
+diff --git a/contrib/diff-highlight/Makefile b/contrib/diff-highlight/Makefile
+index fbf5c5824..f2be7cc92 100644
+--- a/contrib/diff-highlight/Makefile
++++ b/contrib/diff-highlight/Makefile
+@@ -17,4 +17,7 @@ shebang.perl: FORCE
+ test: all
+ 	$(MAKE) -C t
+ 
++clean:
++	$(RM) diff-highlight
++
+ .PHONY: FORCE
+-- 
+2.14.1
 
-Martin
