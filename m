@@ -2,130 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D7E441F4DD
-	for <e@80x24.org>; Tue, 29 Aug 2017 15:43:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA5C5208DB
+	for <e@80x24.org>; Tue, 29 Aug 2017 15:58:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752435AbdH2Pn3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Aug 2017 11:43:29 -0400
-Received: from mail-io0-f196.google.com ([209.85.223.196]:34817 "EHLO
-        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751641AbdH2Pn2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Aug 2017 11:43:28 -0400
-Received: by mail-io0-f196.google.com with SMTP id c18so4099641ioj.2
-        for <git@vger.kernel.org>; Tue, 29 Aug 2017 08:43:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=SKjaht2ydaLU01gTfoaZJxutCPtZFvzZhJnoLuyCshQ=;
-        b=FaPiDtyscEfRGsm9HnTveFWtC9bxxrZhDmaycprvvUhwCuXHfBmIbtlMIahY0tzrcz
-         i9pt4t148H7snU+oiYkYWwNK03/YtgWt10HsvIBAAU0hojtc7CZs3jSZGbzMS91uXVtW
-         LXVwcw32FZ6Ao1ml1gUvwu1RcLiTKSmRdLJ5Dtv/EaHfROoRGj1szLnUEPdBMKVsshrf
-         AgQkBcSRh/YILRcddbTujepr9B9iykZEva0CpFEfzOzws7LRDTP8ZLVmMuxxPm/Yowtm
-         Wy7tBC7b6i+l2kkmlKIZhfWZK+Clg14GRVFUS8AzOJ7YvHKSj5SYo1bVFSlt5c02sA1a
-         APBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=SKjaht2ydaLU01gTfoaZJxutCPtZFvzZhJnoLuyCshQ=;
-        b=lyV7aohFBd6lK53atVJsj0dm+xp6nDvnXY93jqfJU2oCc0CTh0vVVYUJPGnOXl3lsy
-         kUDwu/lTvz1xvaSh+M72u28yLyelf2XBMjJoTu2FQrIcTJ3xxGoL/tD1dPPph+RVUe+J
-         JVFWcqJfBG0PKvwBuM8J2huUId6dN2GkTgMDi1NtWPLuHqYF878Vn2h1+nwqoUAGf2Km
-         7N/ioEYKAgTk9hsBq89kDfm+YOwKB9Jjqd2cAIFs5RcAoH3QPGG6e9VT7KVF3eeRx270
-         wXmRfUk/kjqq4lt915kzC4doYFU8ybrGjk6Lp1ZmKyUe90g82wjcz80eAfOXbIw7V5gE
-         ySJg==
-X-Gm-Message-State: AHYfb5jBLT8J9+hYgJp+ZpW6f17TWHk/sZsVNpxdkEhcUkHv9hL6xb52
-        AEyu7dM5Bkq7q7w6s67t7obwYkYAvA==
-X-Google-Smtp-Source: ADKCNb7NA4p3+FyhQqnDQ4ILCb+GofxdepvXJhzkxQ2RyzcW5t7v9FGI5pKmM5tXBT+yZUxMczUmzWUOXxk4JI9Ha/A=
-X-Received: by 10.36.253.194 with SMTP id m185mr4545977ith.136.1504021407951;
- Tue, 29 Aug 2017 08:43:27 -0700 (PDT)
+        id S1752561AbdH2P6D (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Aug 2017 11:58:03 -0400
+Received: from mail-sn1nam01on0131.outbound.protection.outlook.com ([104.47.32.131]:60544
+        "EHLO NAM01-SN1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1752195AbdH2P6C (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Aug 2017 11:58:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=g/vY5VB7V/mDWtOSnDL9ceuNwkBuUx3zPwW673OIJPE=;
+ b=nVDz1wjYic/289JZqD4GZQT6HTlwJnE6ZKyX0aRjBC5a6Cip+tZ7+REWssF0fXY4nwNjEu2qcbFGsGGsYPgtgVu9nyO/RzRkuyW/Tzo5p0+ygR2aZB1t9I7DRRLOmJg0HcVwtftoFHdZ1Nmh8kfLuSxWJiLCICvT4C77e3LFN4c=
+Received: from DM2PR21MB0041.namprd21.prod.outlook.com (10.161.140.19) by
+ DM2PR21MB0041.namprd21.prod.outlook.com (10.161.140.19) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id
+ 15.20.13.0; Tue, 29 Aug 2017 15:58:00 +0000
+Received: from DM2PR21MB0041.namprd21.prod.outlook.com
+ ([fe80::bcf3:638e:5a6c:7b71]) by DM2PR21MB0041.namprd21.prod.outlook.com
+ ([fe80::bcf3:638e:5a6c:7b71%14]) with mapi id 15.20.0013.006; Tue, 29 Aug
+ 2017 15:58:00 +0000
+From:   Kevin Willford <kewillf@microsoft.com>
+To:     Jeff King <peff@peff.net>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "gitster@pobox.com" <gitster@pobox.com>
+Subject: RE: [PATCH 2/3] merge-recursive: remove return value from
+ get_files_dirs
+Thread-Topic: [PATCH 2/3] merge-recursive: remove return value from
+ get_files_dirs
+Thread-Index: AQHTIDxhRhSD3SDfDEuSwdUmXi5caqKa/iUAgAB3dZA=
+Date:   Tue, 29 Aug 2017 15:58:00 +0000
+Message-ID: <DM2PR21MB0041575B6D9EE53A07C7D3EDB79F0@DM2PR21MB0041.namprd21.prod.outlook.com>
+References: <20170828202829.3056-1-kewillf@microsoft.com>
+ <20170828202829.3056-3-kewillf@microsoft.com>
+ <20170829081752.nq5r776rjyf2amzh@sigill.intra.peff.net>
+In-Reply-To: <20170829081752.nq5r776rjyf2amzh@sigill.intra.peff.net>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=True;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Ref=https://api.informationprotection.azure.com/api/72f988bf-86f1-41af-91ab-2d7cd011db47;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Owner=kewillf@microsoft.com;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2017-08-29T09:57:58.5672277-06:00;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=General;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Application=Microsoft Azure
+ Information Protection;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Extended_MSFT_Method=Automatic;
+ Sensitivity=General
+x-originating-ip: [174.126.250.66]
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;DM2PR21MB0041;6:bbIqCCh1qlM+YtbeAnU1Q5kqP7Z92ua5nLp9OC3obRXk43nIAa3j6uOmQlxPgAXNytCF3bDLBNIfPvZXXcEk9ry54pg0uVY9M1mcpDR+P1qK0OuwBPYzaISvYIxdtz820MIupXXkBJhZ8ssbYoX9rjZ+KDqAJQFe0oHkL+GDqRyGGrCazmkoB9bRQL7Dpd1m+b7PxKDd5qu6vsZKYDmDeSYFBbHTatSiSjTR34GqycGm7M8XjLZPCarYKhFmUrpouOTR/CSr6hLWWN2jBYPBGXmC4YIyXIVu0sCFyslyljnv+VdixgYurL/K73ROfcN8zXLlWnAvS9Cezb52/APOEA==;5:sXxFCcY4/1bmNcHckQn9FrMOyclfPDD+DkEF8dYMDvDO2T8Uumogyd0y1pcDzt7bpodKV9eQR5xPE/0+oSbejySVgsSj/3YC0j9bCm8Gx2TaP0+Kk9Vgl4JW7JV9C7hWH7Il2uNxEELCjqd2SlcmuQ==;24:1uyXaQyCmtq8Gcf8hPrAYvTDGkw58y7zVFHiNKsa5uMXswS/qVq39cqwxTrpZlimWPYBW20+ptbX2qd1CnL6lxvlNJvIII6WFdvuKV1eOG4=;7:BNzRdS1v1iH9ZCAK6KJf2hBnpYjdicIrLchXdf4EIrapJxYfJJl7FdQpi+57ge1d4ymPe2Z4w1yP04/TrCOJwl3q1YutpZwGvzTWPgs1NSbZrJDJDyJgkAAS7hcEbCYQ7wCg/OXd3dc4n4jbzQRaKM9wWo/yxUU2cQYuTYWvfmSwIOZ1nd82Yc75TjMAt6v0jElpChv+vCmZ/A+EGoteFQh+VwGtLgTDcOzkeI4u5xI=
+x-ms-exchange-antispam-srfa-diagnostics: SSOS;
+x-ms-office365-filtering-correlation-id: 462d6267-1bf1-4297-e892-08d4eef6b970
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(300000500095)(300135000095)(300000501095)(300135300095)(22001)(300000502095)(300135100095)(2017030254152)(48565401081)(300000503095)(300135400095)(2017052603199)(201703131423075)(201703031133081)(201702281549075)(300000504095)(300135200095)(300000505095)(300135600095)(300000506095)(300135500095);SRVR:DM2PR21MB0041;
+x-ms-traffictypediagnostic: DM2PR21MB0041:
+x-exchange-antispam-report-test: UriScan:;
+x-microsoft-antispam-prvs: <DM2PR21MB0041CAD0AB6B2B702C4F7D15B79F0@DM2PR21MB0041.namprd21.prod.outlook.com>
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(100000700101)(100105000095)(100000701101)(100105300095)(100000702101)(100105100095)(61425038)(6040450)(601004)(2401047)(5005006)(8121501046)(93006095)(93001095)(3002001)(10201501046)(100000703101)(100105400095)(6055026)(61426038)(61427038)(6041248)(20161123560025)(201703131423075)(201702281528075)(201703061421075)(201703061406153)(20161123555025)(20161123562025)(20161123558100)(20161123564025)(6072148)(201708071742011)(100000704101)(100105200095)(100000705101)(100105500095);SRVR:DM2PR21MB0041;BCL:0;PCL:0;RULEID:(100000800101)(100110000095)(100000801101)(100110300095)(100000802101)(100110100095)(100000803101)(100110400095)(100000804101)(100110200095)(100000805101)(100110500095);SRVR:DM2PR21MB0041;
+x-forefront-prvs: 0414DF926F
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(6009001)(39860400002)(47760400005)(189002)(199003)(24454002)(99286003)(76176999)(68736007)(7696004)(53936002)(8936002)(3660700001)(110136004)(2906002)(81166006)(8676002)(81156014)(5250100002)(50986999)(54356999)(305945005)(7736002)(3280700002)(33656002)(101416001)(5005710100001)(6246003)(8990500004)(5660300001)(8656003)(54906002)(55016002)(14454004)(6436002)(478600001)(6506006)(97736004)(4326008)(10290500003)(66066001)(25786009)(102836003)(3846002)(6116002)(189998001)(74316002)(106356001)(105586002)(86362001)(9686003)(229853002)(86612001)(2900100001)(2950100002)(6916009)(10090500001);DIR:OUT;SFP:1102;SCL:1;SRVR:DM2PR21MB0041;H:DM2PR21MB0041.namprd21.prod.outlook.com;FPR:;SPF:None;PTR:InfoNoRecords;MX:1;A:1;LANG:en;
+received-spf: None (protection.outlook.com: microsoft.com does not designate
+ permitted sender hosts)
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=kewillf@microsoft.com; 
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Received: by 10.79.115.202 with HTTP; Tue, 29 Aug 2017 08:43:27 -0700 (PDT)
-In-Reply-To: <e15513eb-aed9-8bd3-794d-009a91c1d20e@gmail.com>
-References: <20170803091926.1755-1-chriscool@tuxfamily.org>
- <20170803091926.1755-36-chriscool@tuxfamily.org> <e15513eb-aed9-8bd3-794d-009a91c1d20e@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Tue, 29 Aug 2017 17:43:27 +0200
-Message-ID: <CAP8UFD2VFsJWyP1TWLS15wYz2vQxHd4hG5Bdbo9-B45Q-onG2w@mail.gmail.com>
-Subject: Re: [PATCH v5 35/40] Add Documentation/technical/external-odb.txt
-To:     Ben Peart <peartben@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Ben Peart <Ben.Peart@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Aug 2017 15:58:00.5070
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM2PR21MB0041
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 28, 2017 at 8:59 PM, Ben Peart <peartben@gmail.com> wrote:
->
-> On 8/3/2017 5:19 AM, Christian Couder wrote:
->>
->> +Helpers
->> +=======
->> +
->> +ODB helpers are commands that have to be registered using either the
->> +"odb.<odbname>.subprocessCommand" or the "odb.<odbname>.scriptCommand"
->> +config variables.
->> +
->> +Registering such a command tells Git that an external odb called
->> +<odbname> exists and that the registered command should be used to
->> +communicate with it.
->
-> What order are the odb handlers called? Are they called before or after the
-> regular object store code for loose, pack and alternates?  Is the order
-> configurable?
-
-For get_*_object instructions the regular code is called before the odb helpers.
-(So the odb helper code is at the end of stat_sha1_file() and of
-open_sha1_file() in sha1_file.c.)
-
-For put_*_object instructions the regular code is called after the odb helpers.
-(So the odb helper code is at the beginning of write_sha1_file() in
-sha1_file.c.)
-
-And no this order is not configurable, but of course it could be made
-configurable.
-
->> + - 'get_direct <sha1>'
->> +
->> +This instruction is similar as the other 'get_*' instructions except
->> +that no object should be sent from the helper to Git. Instead the
->> +helper should directly write the requested object into a loose object
->> +file in the ".git/objects" directory.
->> +
->> +After the helper has sent the "status=success" packet and the
->> +following flush packet in process mode, or after it has exited in the
->> +script mode, Git should lookup again for a loose object file with the
->> +requested sha1.
->
-> When will git call get_direct vs one of the other get_* functions?
-
-It is called just before exiting when git cannot find an object.
-It is not exactly at the same place as other get_* instructions as I
-tried to reuse your code and as it looks like it makes it easier to
-retry the regular code after the odb helper code.
-
-> Could the
-> functionality of enabling a helper to populate objects into the regular
-> object store be provided by having a ODB helper that returned the object
-> data as requested by get_git_obj or get_raw_obj but also stored it in the
-> regular object store as a loose object (or pack file) for future calls?
-
-I am not sure I understand what you mean.
-If a helper returns the object data as requested by get_git_obj or
-get_raw_obj, then currently Git will itself store the object locally
-in its regular object store, so it is redundant for the helper to also
-store or try to store the object in the regular object store.
+PiANCj4gT24gTW9uLCBBdWcgMjgsIDIwMTcgYXQgMDI6Mjg6MjhQTSAtMDYwMCwgS2V2aW4gV2ls
+bGZvcmQgd3JvdGU6DQo+IA0KPiA+IFRoZSByZXR1cm4gdmFsdWUgb2YgdGhlIGdldF9maWxlc19k
+aXJzIGNhbGwgaXMgbmV2ZXIgYmVpbmcgdXNlZC4NCj4gPiBMb29raW5nIGF0IHRoZSBoaXN0b3J5
+IG9mIHRoZSBmaWxlIGFuZCBpdCB3YXMgb3JpZ2luYWxseSBvbmx5DQo+ID4gYmVpbmcgdXNlZCBm
+b3IgZGVidWcgb3V0cHV0IHN0YXRlbWVudHMuICBBbHNvIHdoZW4NCj4gPiByZWFkX3RyZWVfcmVj
+dXJzaXZlIHJldHVybiB2YWx1ZSBpcyBub24gemVybyBpdCBpcyBjaGFuZ2VkIHRvDQo+ID4gemVy
+by4gIFRoaXMgbGVhZHMgbWUgdG8gYmVsaWV2ZSB0aGF0IGl0IGRvZXNuJ3QgbWF0dGVyIGlmDQo+
+ID4gcmVhZF90cmVlX3JlY3Vyc2l2ZSBnZXRzIGFuIGVycm9yLg0KPiANCj4gT3IgdGhhdCB0aGUg
+ZnVuY3Rpb24gaXMgYnVnZ3kuIDopDQoNClRoYXQgd2FzIG9uZSBvZiBteSBxdWVzdGlvbnMgYXMg
+d2VsbC4gIFNob3VsZCByZWFkX3RyZWVfcmVjdXJzaXZlDQpiZSBwcm9wYWdhdGluZyBhIC0xIGFu
+ZCBtZXJnZV90cmVlcyBiZSBjaGVja2luZyBmb3IgdGhhdCBhbmQgYmFpbA0Kd2hlbiB0aGUgY2Fs
+bCB0byBnZXRfZmlsZXNfZGlycyByZXR1cm4gaXMgPCAwPyAgSSBtYWRlIGEgY29tbWl0IHdpdGgN
+CnRoaXMgY2hhbmdlIGFuZCByYW4gdGhlIHRlc3RzIGFuZCB0aGV5IGFsbCBzdGlsbCBwYXNzZWQg
+c28gZWl0aGVyIHRoaXMNCnJldHVybiByZWFsbHkgZG9lc24ndCBtYXR0ZXIgb3IgdGhlcmUgYXJl
+IG5vdCBzdWZmaWNpZW50IHRlc3RzIGNvdmVyaW5nDQppdC4NCg0KSSB3ZW50IHdpdGggdGhpcyBj
+aGFuZ2UgYmVjYXVzZSBpdCB3YXMgbm90IGNoYW5naW5nIGFueSBvZiB0aGUNCmN1cnJlbnQgZnVu
+Y3Rpb25hbGl0eSBhbmQgaWYgd2UgZmluZCBhIGNhc2Ugd2hlcmUgaXQgbWF0dGVycyB0aGF0DQpy
+ZWFkX3RyZWVfcmVjdXJzaXZlIGZhaWxzIGR1ZSB0byBiYWQgdHJlZSBvciBzb21ldGhpbmcgZWxz
+ZSB3ZQ0KY2FuIGFkZHJlc3MgaXQgdGhlbi4NCg0KPiANCj4gSSdtIHRlbXB0ZWQgdG8gc2F5IHRo
+YXQgd2Ugc2hvdWxkIHByb2JhYmx5IGRpZSgpIHdoZW4NCj4gcmVhZF90cmVlX3JlY3Vyc2l2ZSBm
+YWlscy4gVGhpcyBzaG91bGQgb25seSBoYXBwZW4gaWYgd2UgZmFpbCB0byBwYXJzZQ0KPiB0aGUg
+dHJlZSwgb3IgaWYgb3VyIGNhbGxiYWNrIChzYXZlX2ZpbGVzX2RpcnMgaGVyZSkgcmV0dXJucyBm
+YWlsdXJlLCBhbmQNCj4gdGhlIGxhdHRlciBsb29rcyBsaWtlIGl0IG5ldmVyIGhhcHBlbnMuDQo+
+IA0KPiA+IFNpbmNlIHRoZSBkZWJ1ZyBvdXRwdXQgaGFzIGJlZW4gcmVtb3ZlZCBhbmQgdGhlIGNh
+bGxlciBpc24ndA0KPiA+IGNoZWNraW5nIHRoZSByZXR1cm4gdmFsdWUgdGhlcmUgaXMgbm8gcmVh
+c29uIHRvIGtlZXAgY2FsdWxhdGluZw0KPiA+IGFuZCByZXR1cm5pbmcgYSB2YWx1ZS4NCj4gDQo+
+IEFncmVlZCwgYW5kIEknbSBoYXBweSB0byBzZWUgZGVhZCBjb2RlIGdvLg0KPiANCj4gTWlub3Ig
+bml0OiBzL2NhbHVsYXRpbmcvY2FsY3VsYXRpbmcvIGluIHlvdXIgY29tbWl0IG1lc3NhZ2UuDQoN
+CldoZW4gd2lsbCB0aGF0IHNwZWxsIGNoZWNrZXIgZm9yIGdpdCBtZXNzYWdlcyBiZSByZWFkeT8g
+OykNCg0KPiANCj4gLVBlZmYNCg==
