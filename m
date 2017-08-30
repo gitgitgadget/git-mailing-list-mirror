@@ -2,94 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5FAA620285
-	for <e@80x24.org>; Wed, 30 Aug 2017 20:11:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 789A720285
+	for <e@80x24.org>; Wed, 30 Aug 2017 20:23:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751336AbdH3ULf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Aug 2017 16:11:35 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53590 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750998AbdH3ULf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Aug 2017 16:11:35 -0400
-Received: (qmail 20906 invoked by uid 109); 30 Aug 2017 20:11:35 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 30 Aug 2017 20:11:35 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23202 invoked by uid 111); 30 Aug 2017 20:12:05 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Wed, 30 Aug 2017 16:12:05 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 Aug 2017 16:11:32 -0400
-Date:   Wed, 30 Aug 2017 16:11:32 -0400
-From:   Jeff King <peff@peff.net>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Git Users <git@vger.kernel.org>
-Subject: Re: [PATCH] config: use a static lock_file struct
-Message-ID: <20170830201132.kmtp5mfu6qotn5s7@sigill.intra.peff.net>
-References: <20170829185341.s3xlsx4uym7lcluc@sigill.intra.peff.net>
- <20170829185850.tfmjoa5u5sfuwpgi@sigill.intra.peff.net>
- <20170829190928.GD131745@google.com>
- <20170829191217.dt65wazf7qh5qs3k@sigill.intra.peff.net>
- <01375356-5d39-99af-9e91-35083ed03f42@alum.mit.edu>
- <20170830043147.culn63luzdsbpuuw@sigill.intra.peff.net>
- <20170830045555.27xczwo3ql7q4bg3@sigill.intra.peff.net>
- <3e632fd3-7db9-4c38-c524-b56a06cfaa87@alum.mit.edu>
- <20170830195320.27w5mhnrcd2uosvz@sigill.intra.peff.net>
- <20170830195731.GB50018@google.com>
+        id S1751583AbdH3UXb (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Aug 2017 16:23:31 -0400
+Received: from mout.gmx.net ([212.227.17.22]:52381 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751562AbdH3UX2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Aug 2017 16:23:28 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mhdex-1e8NQX3z63-00MqFD; Wed, 30
+ Aug 2017 22:23:23 +0200
+Date:   Wed, 30 Aug 2017 22:23:21 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Michael J Gruber <git@grubix.eu>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] name-rev: change ULONG_MAX to TIME_MAX
+In-Reply-To: <ef9aebb63227c36b8b72a65240a416a0271cc618.1504086318.git.git@grubix.eu>
+Message-ID: <alpine.DEB.2.21.1.1708302223020.7424@virtualbox>
+References: <ef9aebb63227c36b8b72a65240a416a0271cc618.1504086318.git.git@grubix.eu>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170830195731.GB50018@google.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:iBour1WkmnOsx5kMbHTbLouRbBPSHY1fvpV+B1lTIq+cDoyG0jt
+ +/TXpdsV/FeLaD/4YOBurBnNY/3uxWZTNmKu58BXWV9KTdBOdQKZMVs98UNTBTVuA2ME5f2
+ qxRCzMpy/yYXeE9lSEnE76w46q7ufHXCcgDkfycpxs0jAHPZI/TcvBRktJ0YoPiDBdLbAzp
+ v138liVy3iIfn5I+aDjyA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:00VZz2etzxc=:XAsNBVQli3Fj3D5wajn3sk
+ DT5++wMbXJ/CaDzfouKWXJir8gb7RfYrMBHStLf5JH40N/R62hBPEvEOg7jweAVD42/nfcbHh
+ k+eItHTY8XdSVRs/NAYTpswUs84I6oaGQC2Iu+SFMZAodVd17JPKKTmXIs1bNMFTyxPm1RR5U
+ ODhiqfBmnxIVwELvuVzTgI+8wWcsOYuFsL8klFRcJQ08rneP2t0X5M+dGHA0V0ToJL+bWyGjs
+ Qg8J4xAlWGqqUegwO2utsh7ZLdJu+TO3BebLSuIFCwTaRilJHvSZb5o5osW+d1IMNqpWY4Z31
+ rDeA5kXhTjiv+J+Pf5b37hU3u7MrsW9cuW5tMt4tT3dySMfNu1beVPfX3Axc+0Xk5rY2EZQRE
+ MUQUoCL/UjzDj4Tj4v3CpDHPot4GuOjdefWr/8JzblTN/0Wh5GyA7nq7w1fT9eyP89V8Ar8ps
+ SShifxbjNTbfzWdiHqOJ9VlRyfiexiUEl/57GE4kVT7Ls9lpSAVVEUNpkxXvaPwwms+tmGEwu
+ kb28yevcqrIPnq1QM9Fp3xRcIOqMZ1G30btvua8Al+0tsVWfwOEmnsFhSA7nmTv5AzDnd29ya
+ Itqf0mBwsm/YIg2FjqfAo24F69mFKD85cQYKhtPclV1bXbnHu9dNbFA8mPk6CsOD3K50ZO8M8
+ Uvn89v9UQmkrDOoRuBnLQ3zgJbq6qF+JUj25qawMWa69SyJsg0YT4HYFG5C/Hc6lvVfXn/3r1
+ AbC3Q/bOvgCP0S5k956IJ3t7yzEtIJr/rxNBh262XZeOeP9Skx8GWfiy2nm4F99Cp1KrE3KkU
+ IKYn0S3EkcaVUdKuzhd5wE1wpf5KE1r9yk5F48yUyd1zjaihwU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 30, 2017 at 12:57:31PM -0700, Brandon Williams wrote:
+Hi Michael,
 
-> > And I think we're fine there even with a doubly-linked list. It's still
-> > the single update of the "next" pointer that controls that second
-> > traversal.
+On Wed, 30 Aug 2017, Michael J Gruber wrote:
+
+> Earlier, dddbad728c ("timestamp_t: a new data type for timestamps",
+> 2017-04-26) changed several types to timestamp_t.
 > 
-> I know it was mentioned earlier but if this is a critical section, and
-> it would be bad if it was interrupted, then couldn't we turn off
-> interrupts before attempting to remove an item from the list?
+> 5589e87fd8 ("name-rev: change a "long" variable to timestamp_t",
+> 2017-05-20) cleaned up a missed variable, but both missed a _MAX
+> constant.
+> 
+> Change the remaining constant to the one appropriate for the current
+> type
+> 
+> Signed-off-by: Michael J Gruber <git@grubix.eu>
 
-If we have to, that's an option. I mostly didn't want to get into the
-portability headaches of signal-handling if we can avoid it.
+Good catch!
 
-Right now sigchain uses plain old signal(). We do use sigaction() in a
-few places, but in a vanilla way. So the portability questions are:
-
-  - can we rely on using more interesting bits of sigaction like
-    sa_mask?  Probably.
-
-  - which flags should we be setting in sa_flags to get the same
-    behavior we've been getting with signal()? Or alternatively, which
-    behavior do we want?
-
-On Linux and BSD systems, at least, signal() defers repeat instances of
-the handled signal. So getting two quick SIGTERMs will not interrupt the
-handler to deliver the second. But getting SIGTERM followed by SIGINT would.
-
-We could extend that protection by having sigchain_push_common() set
-sa_mask to cover all of the related signals. On Linux and BSD the
-current code using signal() also implies SA_RESTART. We could add that
-to our flags, though I suspect in practice it doesn't matter. Whenever
-we establish a handler like this our intent is to never return from it.
-
-That just protects us from calling the _same_ handler from itself. But
-that's probably enough in practice, and means handlers don't have to
-worry about "critical sections". The other alternative is sigprocmask()
-to block signals entirely during a section. I'm not sure if there are
-portability questions there (it looks like we have a mingw wrapper
-there, but it's a complete noop).
-
--Peff
+ACK,
+Dscho
