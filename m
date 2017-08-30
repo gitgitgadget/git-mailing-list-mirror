@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C5A2C208DB
-	for <e@80x24.org>; Wed, 30 Aug 2017 17:50:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B004208DB
+	for <e@80x24.org>; Wed, 30 Aug 2017 17:50:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752255AbdH3Ruc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Aug 2017 13:50:32 -0400
-Received: from mout.web.de ([217.72.192.78]:65030 "EHLO mout.web.de"
+        id S1752245AbdH3Rub (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Aug 2017 13:50:31 -0400
+Received: from mout.web.de ([212.227.17.11]:57708 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752016AbdH3RuI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Aug 2017 13:50:08 -0400
+        id S1752024AbdH3RuJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Aug 2017 13:50:09 -0400
 Received: from debian.fritz.box ([91.20.59.6]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LyDph-1dQ2NW1XMb-015ZtE for
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MddFQ-1eA7cp29oi-00PPSP for
  <git@vger.kernel.org>; Wed, 30 Aug 2017 19:50:07 +0200
 From:   Rene Scharfe <l.s.r@web.de>
 To:     git@vger.kernel.org
-Subject: [PATCH 14/34] help: release strbuf on error return in exec_man_man()
-Date:   Wed, 30 Aug 2017 19:49:45 +0200
-Message-Id: <20170830175005.20756-15-l.s.r@web.de>
+Subject: [PATCH 15/34] help: release strbuf on error return in exec_woman_emacs()
+Date:   Wed, 30 Aug 2017 19:49:46 +0200
+Message-Id: <20170830175005.20756-16-l.s.r@web.de>
 X-Mailer: git-send-email 2.14.1
 In-Reply-To: <20170830175005.20756-1-l.s.r@web.de>
 References: <20170830175005.20756-1-l.s.r@web.de>
-X-Provags-ID: V03:K0:ND57ZE1gw0yq/hPrdV1W6rKgwVcDR5118/vTbKFcH2gCtLV6rwg
- jz0OUOOmcSWEAabdDqd6LrAtr/g/BZ6UmgdvzCndYeRGiLlR/WaIBFjNljZgoU3jJM9bZTu
- MOB/MYiQry1CobpH4UtLYj5K7DsKic8ILEDyCGpTTZ8uOsnyBBdBwuGKc39LlgCS4rAWvGk
- 7x66acBKFxK0rbzoZlcQA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:YM4G8091ZXY=:ZY4EJiNsU5F4eAfEod23JK
- 4IcGfn/ItS7akZ0IGwNIkjUhcloKFrDpcGGK+DX08kJUblGBN8yj0nj3dNfB1fmGGVI2/x6EI
- 2TRjlWrft+6Gz+/HsOQAL8ueLvv44YHWD/LR8OfCTxOZi/SjCi2gjft1adkDhlBr7BxCiutAy
- wRqn3H1TeBpO6t9wioTeamgbVUJxoomBntNpCihVVQxNV519I2K+OxM6fTxTBZKRd270mX9tM
- xBcdbjFP/var72wulIvPeVqNnzDLPVKe9Bd3EV/87e3xxyU5ho8l9KgJNz/f29pjGcu3l5eHC
- iVxyCSJvgybrLt9wNZt5c1qib2cO2Qi4NJyESew6Txy3UcPZ8iSeepQjJUzb0E/iZGZC8Qrev
- 0Ai6ys8hCptO5cclySz9ANC+PlEjOdnzJdzZLd7ClTIipjwMMf4rV5oAB/rfcQ1iDfeHny4/I
- 4BKc7JEAufA+hSkAUNjZIUicq+iXS2op6pjaGWxLkyDaBpGYPo2rp1fDQ9GFTKDl/O4j2ZUeB
- zkQTZB2fAv/MTA64OZqhhE5d0P1kPDP/k5EQDerUV7rp8y5EShdTcPK4XwiIlIYusAELlvq38
- wsxVsZm2EzZuJJQpIYQigdN+IOE8IP7l23EwBCbgNDBqI1rKkllQrN4Yz02zdxT2XA1FxJEXg
- C5FkWXIbaL7h/s76K+f6xPkJ5ZUx2lFDQ8UPrG2CHj9dhX9ajhWDX7aOpq70gpRFj6PreNYXk
- NJjQUfCqUWiDIt7c5+SUo2lxPMEsVl2OLj4p8s2As5NZ2VBeU+2AH4BdmnfZ+0oatSJh3hI8a
- 635zjMbo2+FrZeYFtvJ8nTiHhe5JA==
+X-Provags-ID: V03:K0:Ea0+eTwTyiCniIEbhsdUVyvyFjeND1FErx60T4ldRl+cwuo3Iq5
+ k4J3sMQSO+di8B31/zSAdIKhR2evEiZPDsCipj2yA7bPNeq5CZN4sLrt2eZ8Te6O0dVeZMw
+ Wiyq05DlvBm+ylnx6Vn/+dqPXhXUk2arUSFMo1vu88yQW4UJd+gs7fUNYyfZOkndYVgjKyr
+ 2XFc6Xf83KGn0ic654h/Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ZdPYJ816czY=:OQ4nlFxNx90Yt1g2u5o/+E
+ IYUCteKwpSK2KuhkoduK8mfjUNvYmpsWBNfeLoSegow+og62myx7TN1x4twssgShtMhWPij0Q
+ lw+lgTIs+kbdrQQ5giHs22hZuaUgm48WUQ1P24hguvU9ZJw602Sr3gXvLD7rTdQIk4+p/SN5g
+ msE82c/uS9mrdVe43tn97uw/FeH7TmiWC9Ps7YRAhgKKCEZkMpQcXyFojZLptlAYidOBJ3ACe
+ r92ShO5/HHOzTYroRkbKduOaAEKh1YrU9XhGlU1VYLEBoLElQk+A0ioEG1R3l+MMBqlTfme+p
+ p2kDOTkY+KGopvJzeIckrda8jvYKfoT+fVe8CM5PRQqt28+64Hx0CGxbhNR45dapGCEwD9ewN
+ RNIOSvO85zPhwGHieGb2adp43CVrNatAZATfGJ91D0njMEy5/ilDxLI9M1HzvVfCeORh+cRbS
+ j06Xf6BOccEMNGoBWWaZTMFF/z/zA8U9U+Ilgb+VbnkFZRozi6adMrkN+LWqKWtl1HC4WClSV
+ D6xjmsSps+No68gXfs4QKVOaBjcOd3zK7UCJV99hJsibla2Bo62JjpTouyOqL8hdgVsSkWTay
+ /DKVDZ9KH5lTuTYlFod8TwVA1YXDPLGPcH4YtwoA2vh/27RReERhhDb3dH/4dfMbYKTqIF0ti
+ NdtpQD1e3QXWvRm+4F5HC38BkAefVwUbLBA+/89/bp7NRXueraOIS5LUqrdj8rkHVvE+t/K+/
+ 5OU/pk5nh1fs9gUQ6NDq7N1bLQiGjJdCXcsyvEM+VXAApRgx3esIIEof1TrUj7r+/YyMp7KZV
+ jqAiV+rhCQnDkvbUbugSOMSSPv5Kg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -55,20 +55,25 @@ Signed-off-by: Rene Scharfe <l.s.r@web.de>
  1 file changed, 1 insertion(+)
 
 diff --git a/builtin/help.c b/builtin/help.c
-index 991a8bb16c..12fb48933e 100644
+index 12fb48933e..b3f60a8f30 100644
 --- a/builtin/help.c
 +++ b/builtin/help.c
-@@ -167,9 +167,10 @@ static void exec_man_man(const char *path, const char *page)
- static void exec_man_cmd(const char *cmd, const char *page)
+@@ -123,14 +123,15 @@ static int check_emacsclient_version(void)
+ static void exec_woman_emacs(const char *path, const char *page)
  {
- 	struct strbuf shell_cmd = STRBUF_INIT;
- 	strbuf_addf(&shell_cmd, "%s %s", cmd, page);
- 	execl(SHELL_PATH, SHELL_PATH, "-c", shell_cmd.buf, (char *)NULL);
- 	warning(_("failed to exec '%s'"), cmd);
-+	strbuf_release(&shell_cmd);
+ 	if (!check_emacsclient_version()) {
+ 		/* This works only with emacsclient version >= 22. */
+ 		struct strbuf man_page = STRBUF_INIT;
+ 
+ 		if (!path)
+ 			path = "emacsclient";
+ 		strbuf_addf(&man_page, "(woman \"%s\")", page);
+ 		execlp(path, "emacsclient", "-e", man_page.buf, (char *)NULL);
+ 		warning_errno(_("failed to exec '%s'"), path);
++		strbuf_release(&man_page);
+ 	}
  }
  
- static void add_man_viewer(const char *name)
 -- 
 2.14.1
 
