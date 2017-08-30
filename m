@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6082D20285
-	for <e@80x24.org>; Wed, 30 Aug 2017 17:50:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC77B20285
+	for <e@80x24.org>; Wed, 30 Aug 2017 17:50:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752172AbdH3Ru3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Aug 2017 13:50:29 -0400
-Received: from mout.web.de ([212.227.17.11]:58259 "EHLO mout.web.de"
+        id S1752290AbdH3Ruu (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Aug 2017 13:50:50 -0400
+Received: from mout.web.de ([212.227.17.11]:57985 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752033AbdH3RuJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Aug 2017 13:50:09 -0400
+        id S1752005AbdH3RuI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Aug 2017 13:50:08 -0400
 Received: from debian.fritz.box ([91.20.59.6]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MLxs8-1dsam338w8-007k33 for
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LfiqM-1dAxy110iQ-00pIap for
  <git@vger.kernel.org>; Wed, 30 Aug 2017 19:50:07 +0200
 From:   Rene Scharfe <l.s.r@web.de>
 To:     git@vger.kernel.org
-Subject: [PATCH 17/34] mailinfo: release strbuf on error return in handle_boundary()
-Date:   Wed, 30 Aug 2017 19:49:48 +0200
-Message-Id: <20170830175005.20756-18-l.s.r@web.de>
+Subject: [PATCH 13/34] help: release strbuf on error return in exec_man_konqueror()
+Date:   Wed, 30 Aug 2017 19:49:44 +0200
+Message-Id: <20170830175005.20756-14-l.s.r@web.de>
 X-Mailer: git-send-email 2.14.1
 In-Reply-To: <20170830175005.20756-1-l.s.r@web.de>
 References: <20170830175005.20756-1-l.s.r@web.de>
-X-Provags-ID: V03:K0:li0rOYF/tzZ5XWbiY5CU7VOLKEE2VrzKyclDFXbuCzITIWO3jhX
- N4ZdUSRqvza2vKSVOTaZvv5CV0jngbzJNw0+VgH4MWh1QApWuImwGMseTadd6fxDRDivRCn
- tGr9b1bsYstSVGoSeqDPlSQUpCkeUWdmQu25IHNrtBu3paJsr7aCmdwnkUgK/xT817iWMtH
- brQQfXOB6msDAygLPAycg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:z1HIhPu864c=:2zto3tZvns3syeLrrZVjRu
- jLYOqlauORzWgmlgAlOBzQ9eNoXt5V2GIvszE0Q4pMVRd5raXh7sC0gP0gYC4JdXPnzmRltsr
- 9P780KmfZ2dc30Hxt3+pLkI6+pa7iENJ8RQb7P4BpL1l/J1QhFMHUR6iw0WgndFHhjqG+UZcM
- 2Z3brUVpwvqtD+HSw4ia6IxkKIr89g5PUqswpsFH67QLXH3FwJoR8FIGxDNvYOHM4rHmXmUN9
- Qvxn3H/+1INJQEyk6skA6q2bngp5PMz+u75kJWL1Aw041agwnPBa4CUGMuglyqN3aCQY9cyWr
- TxrxE7tPTZQ+05bNpXgBNFCBe/AqgTUJKE7d1PUQ4lXv4B5g7RK/DiCYxYbT7zzKJDr33WVjN
- hbPSMQUIaLJnSg5AV7/OP0itXpghbFGqWEVZufVG+idHZe4lPGJ85wFKWVdYa/6NPSQj4hsSe
- QgP3i6osmhNFwxNnfveI0HrrMqoef19JhaHpTr+JuSwTz4UxQLM7h2G0nT+sHW67tqKrDeVHR
- 0FVu5J14Sm8/qpY6yiQz4ubh3H6x1+uZmL1WrIjEDrefZJfrsxj5PI7raZk/SrFAwTlfyuyRu
- 6aN+PJcqu/mxcpSaPAJWlEuHScKWSsivKPbeD2s/cu1A1XQ+5eTujzlH5L/6QRJs0hkABbq1b
- IzCbpv4Hc+XbDcpyIhOHVw/7I0smsF3QcotYEvXvMC+ceWHOK2tAKjVaCcKRXib7UyQgTflZW
- 2n3IdIkfIMU4s6iCVWZVMunKDHbGU7jo6gkbh0i57ceIh7NyB6kLMF/xskF9f81PWCbmS/oeo
- 93XbeSvXitaXFRcm9qTbe2olDHqEQ==
+X-Provags-ID: V03:K0:VeFL8q8rmdDajZNcogysGVcuGZbwyciUAFs6hzJ2tNpwJd85aLK
+ knZ4S4SJwWTpFxarQpoA6Y045bJPvY0+UG3zaYVHnebUFQMrF6AQ9I9jx5kllRJg4z46NIF
+ CYEOlCmuY5Lg0k4Mrz4gvLrM5kVknXhjyizzspmALetRSK0w4awoFbvEZtdtpkrEAMnnuRH
+ sR/futppUWGQqV++yRAIA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:9aIgpeh5WNA=:C97sGX5Kl1/L1JSxAwZ+QW
+ y3ls/OP7PjsUBvzL5JZ9NBN7rg8fs33gQCf9AqzSyO3qP98Z7oP4oCbZSk6DBt5E/iHG9ZECs
+ 6VKGurJv3l2PA7ompJauCi4tYLuXeC/0WHRNtKwdDUbHVUBCLaFut+hAJRm5BxEvgIpMeOUAr
+ 0cjStJIjFtsBP1Pimg4yWSw6Tsb5sy4UqOHjcmKRwO3oLKEy0b4ZdDl3xqo2mE6+clxyABz1L
+ 1MQkPpswmorv0zx2KKnDjXtlumRy6+T09rXz42IL59AcLQAODufFoejRKupsqb8tLBIoo/ogo
+ lbzuLWYo3xbwMuNIdRVDRYiRFG7j9EOYkk6vYVW86QDyXVyClJAP9ymI3UTxAMOCHcPdRL11G
+ KFj+Oq6eAfZUv1sUyHxRPGkEk7ZkMMIRgpLG1oge4UExn+5U27uYrVVfa+K+AuvvizTbT54jA
+ nXwVT2cJKGwIlu2uWpQd2vZyXuOGzYbuTAE4DJAXrr46UVRpaPxAKCJ1ZT0RvrwJ5F9mAN+Ia
+ 4VO8k0yfrLPgg8JJfGu1DVqE63KV763kvtlBuYQqhxYRMK40dp/h2SA5QrvQdoqqO9T03Oap5
+ GADn4xOS1SE0RZlPJdzzpI06Lahnhrv3M4EcKpVXrIf438HPA+ySKXxYn/yL5XxHaI5lhySt8
+ UHgxFNeiMfmRZWjCiyfif1Jzm+LZmTdXCX9/CUeuXPaVF5n6YnMGjgO/ptAW4vMZbV6RbgeVo
+ VsFwkzCbE8tPXJbUyky2JXmwyJRMENZ69NaC0TAUp0TterMWoU9SrJyDyQFtm0rla87WXog+E
+ hSUbzzfhvwsw6MwcOqhRso5Hb2/WA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -51,63 +51,36 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- mailinfo.c | 1 +
+ builtin/help.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/mailinfo.c b/mailinfo.c
-index b1f5159546..f2387a3267 100644
---- a/mailinfo.c
-+++ b/mailinfo.c
-@@ -911,48 +911,49 @@ static int find_boundary(struct mailinfo *mi, struct strbuf *line)
- static int handle_boundary(struct mailinfo *mi, struct strbuf *line)
+diff --git a/builtin/help.c b/builtin/help.c
+index 334a8494ab..991a8bb16c 100644
+--- a/builtin/help.c
++++ b/builtin/help.c
+@@ -137,21 +137,22 @@ static void exec_woman_emacs(const char *path, const char *page)
+ static void exec_man_konqueror(const char *path, const char *page)
  {
- 	struct strbuf newline = STRBUF_INIT;
+ 	const char *display = getenv("DISPLAY");
+ 	if (display && *display) {
+ 		struct strbuf man_page = STRBUF_INIT;
+ 		const char *filename = "kfmclient";
  
- 	strbuf_addch(&newline, '\n');
- again:
- 	if (line->len >= (*(mi->content_top))->len + 2 &&
- 	    !memcmp(line->buf + (*(mi->content_top))->len, "--", 2)) {
- 		/* we hit an end boundary */
- 		/* pop the current boundary off the stack */
- 		strbuf_release(*(mi->content_top));
- 		FREE_AND_NULL(*(mi->content_top));
- 
- 		/* technically won't happen as is_multipart_boundary()
- 		   will fail first.  But just in case..
- 		 */
- 		if (--mi->content_top < mi->content) {
- 			error("Detected mismatched boundaries, can't recover");
- 			mi->input_error = -1;
- 			mi->content_top = mi->content;
-+			strbuf_release(&newline);
- 			return 0;
- 		}
- 		handle_filter(mi, &newline);
- 		strbuf_release(&newline);
- 		if (mi->input_error)
- 			return 0;
- 
- 		/* skip to the next boundary */
- 		if (!find_boundary(mi, line))
- 			return 0;
- 		goto again;
+ 		/* It's simpler to launch konqueror using kfmclient. */
+ 		if (path) {
+ 			size_t len;
+ 			if (strip_suffix(path, "/konqueror", &len))
+ 				path = xstrfmt("%.*s/kfmclient", (int)len, path);
+ 			filename = basename((char *)path);
+ 		} else
+ 			path = "kfmclient";
+ 		strbuf_addf(&man_page, "man:%s(1)", page);
+ 		execlp(path, filename, "newTab", man_page.buf, (char *)NULL);
+ 		warning_errno(_("failed to exec '%s'"), path);
++		strbuf_release(&man_page);
  	}
- 
- 	/* set some defaults */
- 	mi->transfer_encoding = TE_DONTCARE;
- 	strbuf_reset(&mi->charset);
- 
- 	/* slurp in this section's info */
- 	while (read_one_header_line(line, mi->input))
- 		check_header(mi, line, mi->p_hdr_data, 0);
- 
- 	strbuf_release(&newline);
- 	/* replenish line */
- 	if (strbuf_getline_lf(line, mi->input))
- 		return 0;
- 	strbuf_addch(line, '\n');
- 	return 1;
  }
+ 
 -- 
 2.14.1
 
