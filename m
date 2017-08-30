@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 21554208CD
-	for <e@80x24.org>; Wed, 30 Aug 2017 07:00:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F009208CD
+	for <e@80x24.org>; Wed, 30 Aug 2017 07:00:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751205AbdH3G77 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Aug 2017 02:59:59 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:34475 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750839AbdH3G76 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Aug 2017 02:59:58 -0400
-Received: by mail-pg0-f68.google.com with SMTP id 63so4474062pgc.1
-        for <git@vger.kernel.org>; Tue, 29 Aug 2017 23:59:58 -0700 (PDT)
+        id S1751227AbdH3HAd (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Aug 2017 03:00:33 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:33538 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750758AbdH3HAc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Aug 2017 03:00:32 -0400
+Received: by mail-pf0-f194.google.com with SMTP id r62so1050959pfj.0
+        for <git@vger.kernel.org>; Wed, 30 Aug 2017 00:00:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=EVX2rdDC3T9Ue6/nJucqB8nJtm91Yfy0c7WTsYKg3Zc=;
-        b=enOnTmbXmTiwswoL0qn3GHyo47FhETaCJwf+6orDW6gqOiOFnlDOyudcxpxqwC5jGv
-         U7QAtw4knuaNHOpiGu9izjMYPi8+oVyPwUbhZxROW8s6I07EIVG6VmG0kK2yaZPtJMKU
-         ISMNgOMcttsp76X0X1A2S/raluI9NAOKAvKCmwL0EkLuwLG+B2lXx/jdZ6PTUce7Rjqc
-         VVg3wEZmxtD3HmAJsKWPb9s2Nyxh6IRMPziqj6xhyRd+IVxEIQ8g97tXJs2mN5bSvuZL
-         1rL5RAiOo21pud0IqP+uSC7hTo8jdZwqClsrIex9SFDA9EB2IVdyxg09JAcFiI7o1b0r
-         T8+g==
+        bh=gwo+96eA3JpMRa168pj/T80ZWzZ8DsJxvAZ2tUlfyeU=;
+        b=uuTIaErh2u8ik3WDkO8PKjCo5Xj9PpnIHpGzToDCUGeI48zS9Q2YD3iqk2DBe+O+gs
+         mPbP8RlEBTYriJyatsvzsPAJgLtdTgBZjx+vuWWFC7VCZvDsODGKptqTRFzF6xuCzEAS
+         SpHrqOYDRQLpId3+yeZnN+OPPzuZ4zYKJqFbNMZYpbqQzn5cFRNodXiId4smrjbHQ6Ci
+         0fE+Gq3B4GVyV3JCKtcyaYbUCe8ka1QEjJykkgzXoL7Jln8P67hsps7peap0mVeJmUSa
+         M9z85cWlhpGeNDNR5512oU6rp2UkFyWBSBBqtGj0+qf1zmDSJfVMRBe4+XqWra+yqVJv
+         bS9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=EVX2rdDC3T9Ue6/nJucqB8nJtm91Yfy0c7WTsYKg3Zc=;
-        b=R+LYbv3BeUQnv0TOsUU/vr9+hmJx8EaU2VxjFq63RLz6NuL7XTBe0/OShyc+9KRBb5
-         Fswg/aAFuNUm+WyGhj4gSDRU2gtSMtEBf7YsIlflsJgO9wv6kbX9hAAPH7dWgWS29k1+
-         uv94n48CMFO8DtvSCGvdzWS3QUjiJQS5o0hWrNxhB5ZfZe/MlOXA4R5nDZ37kfAGEk2/
-         jSlH3uLhjtXkIozIc6wD7w8oUx46SoRNei5fOVbj/9zouSY7Vk2TEvMyABEpZAedoHx5
-         WFF6lp8YzRvdU813DRNByc5S1nE/q+Isg7ogrJWl+Pyt91ajDRu1TVUclDDbKUssvnBo
-         Y5hw==
-X-Gm-Message-State: AHYfb5gk3I4eelQTK+be9YUC7eJG7cRj5OxeILg3x5ZR8XUfn4X0LQCW
-        Ob+uJXFie+ij3OOXAQE=
-X-Received: by 10.98.6.69 with SMTP id 66mr592485pfg.279.1504076397848;
-        Tue, 29 Aug 2017 23:59:57 -0700 (PDT)
+        bh=gwo+96eA3JpMRa168pj/T80ZWzZ8DsJxvAZ2tUlfyeU=;
+        b=VrGEEQLZphdWjJxasBm5k1eD5DUFxIwcOQMI8z8AGmigUahvuVTSQBLDTHepg0RVbG
+         zmonOTSp93vABT5rjQHe6VhOJGAEVc4bilylhGxN9BPwfbo+GXkvUvI1qEPc/+c+fJ3T
+         FFKhtiYPWKQXAfAt+Fgsn9hRk4DwTpcpkBtr5IJKri46srb/SdeDwH+VnvmObRHFBs/5
+         9eDCPmDWCR6x2B4oJrlWAiSUUq7IP34FipV9s5RjG5nUKLyDENBmYMXVgzk8M0UUKGzd
+         +9mGycCgQlWjcwgNp8IWteEUnTYfyNGNS+gLLAoUuVpEXPkYn2Pmk8GqnIoai0ulRmHC
+         uVrg==
+X-Gm-Message-State: AHYfb5jBui0THG4VLQXtEnzuizPZFvSAK0D82iLxfVBz3P6Qr0uadnWo
+        b7hf/rnUfNigDnksZI8=
+X-Received: by 10.98.202.91 with SMTP id n88mr611039pfg.73.1504076431640;
+        Wed, 30 Aug 2017 00:00:31 -0700 (PDT)
 Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:5042:50b1:56af:6f3d])
-        by smtp.gmail.com with ESMTPSA id o10sm7522295pgq.68.2017.08.29.23.59.56
+        by smtp.gmail.com with ESMTPSA id r86sm7443941pfi.161.2017.08.30.00.00.30
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 29 Aug 2017 23:59:57 -0700 (PDT)
-Date:   Tue, 29 Aug 2017 23:59:55 -0700
+        Wed, 30 Aug 2017 00:00:31 -0700 (PDT)
+Date:   Wed, 30 Aug 2017 00:00:29 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>,
         "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH 12/39] sha1_file: add repository argument to open_sha1_file
-Message-ID: <20170830065955.GM153983@aiede.mtv.corp.google.com>
+Subject: [PATCH 13/39] sha1_file: add repository argument to map_sha1_file_1
+Message-ID: <20170830070029.GN153983@aiede.mtv.corp.google.com>
 References: <20170830064634.GA153983@aiede.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -68,7 +68,7 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Stefan Beller <sbeller@google.com>
 
-Add a repository argument to allow the open_sha1_file caller to be
+Add a repository argument to allow the map_sha1_file_1 caller to be
 more specific about which repository to act on. This is a small
 mechanical change; it doesn't change the implementation to handle
 repositories other than the_repository yet.
@@ -79,33 +79,45 @@ repository other than the_repository at compile time.
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- sha1_file.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sha1_file.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
 diff --git a/sha1_file.c b/sha1_file.c
-index d3573cec62..893e37afec 100644
+index 893e37afec..3adae104c6 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -840,7 +840,9 @@ static int stat_sha1_file_the_repository(const unsigned char *sha1,
-  * Like stat_sha1_file(), but actually open the object and return the
-  * descriptor. See the caveats on the "path" parameter above.
+@@ -871,9 +871,10 @@ static int open_sha1_file_the_repository(const unsigned char *sha1,
+  * Map the loose object at "path" if it is not NULL, or the path found by
+  * searching for a loose object named "sha1".
   */
--static int open_sha1_file(const unsigned char *sha1, const char **path)
-+#define open_sha1_file(r, s, p) open_sha1_file_##r(s, p)
-+static int open_sha1_file_the_repository(const unsigned char *sha1,
-+					 const char **path)
+-static void *map_sha1_file_1(const char *path,
+-			     const unsigned char *sha1,
+-			     unsigned long *size)
++#define map_sha1_file_1(r, p, s, si) map_sha1_file_1_##r(p, s, si)
++static void *map_sha1_file_1_the_repository(const char *path,
++					    const unsigned char *sha1,
++					    unsigned long *size)
  {
+ 	void *map;
  	int fd;
- 	struct alternate_object_database *alt;
-@@ -879,7 +881,7 @@ static void *map_sha1_file_1(const char *path,
- 	if (path)
- 		fd = git_open(path);
- 	else
--		fd = open_sha1_file(sha1, &path);
-+		fd = open_sha1_file(the_repository, sha1, &path);
- 	map = NULL;
- 	if (fd >= 0) {
- 		struct stat st;
+@@ -902,7 +903,7 @@ static void *map_sha1_file_1(const char *path,
+ 
+ void *map_sha1_file(const unsigned char *sha1, unsigned long *size)
+ {
+-	return map_sha1_file_1(NULL, sha1, size);
++	return map_sha1_file_1(the_repository, NULL, sha1, size);
+ }
+ 
+ static int unpack_sha1_short_header(git_zstream *stream,
+@@ -2102,7 +2103,7 @@ int read_loose_object(const char *path,
+ 
+ 	*contents = NULL;
+ 
+-	map = map_sha1_file_1(path, NULL, &mapsize);
++	map = map_sha1_file_1(the_repository, path, NULL, &mapsize);
+ 	if (!map) {
+ 		error_errno("unable to mmap %s", path);
+ 		goto out;
 -- 
 2.14.1.581.gf28d330327
 
