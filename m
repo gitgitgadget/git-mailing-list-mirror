@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D65B20285
-	for <e@80x24.org>; Wed, 30 Aug 2017 18:20:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A26520285
+	for <e@80x24.org>; Wed, 30 Aug 2017 18:21:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752711AbdH3SUu (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Aug 2017 14:20:50 -0400
-Received: from mout.web.de ([212.227.15.3]:53497 "EHLO mout.web.de"
+        id S1752690AbdH3SUt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Aug 2017 14:20:49 -0400
+Received: from mout.web.de ([212.227.15.14]:57617 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752549AbdH3SUR (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1752671AbdH3SUR (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 30 Aug 2017 14:20:17 -0400
-Received: from debian.fritz.box ([91.20.59.6]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MVtqS-1e2eJT1rNQ-00X1Pn for
- <git@vger.kernel.org>; Wed, 30 Aug 2017 20:20:15 +0200
+Received: from debian.fritz.box ([91.20.59.6]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LrHMi-1dO4lA0Q28-0136Gh for
+ <git@vger.kernel.org>; Wed, 30 Aug 2017 20:20:16 +0200
 From:   Rene Scharfe <l.s.r@web.de>
 To:     git@vger.kernel.org
-Subject: [PATCH 29/34] transport-helper: release strbuf after use in process_connect_service()
+Subject: [PATCH 30/34] userdiff: release strbuf after use in userdiff_get_textconv()
 Date:   Wed, 30 Aug 2017 20:20:15 +0200
-Message-Id: <20170830182015.21188-1-l.s.r@web.de>
+Message-Id: <20170830182015.21228-1-l.s.r@web.de>
 X-Mailer: git-send-email 2.14.1
 In-Reply-To: <20170830175005.20756-1-l.s.r@web.de>
 References: <20170830175005.20756-1-l.s.r@web.de>
-X-Provags-ID: V03:K0:eDBn5K/1oHA+xADWI9R59YwEZnkt8dyOgM6u73LoCqvNoYsM2WO
- FjRb+al8dUL/H2+jYiqBrXBaVNfJLyCdwRWXs3diMelEWPGo8jVginVdp91nw5QkDyyZr1y
- /fx3v6Kr56VOw5J4MhxTRL+MEUjwr0iZJbw+Z9MUZJatTHrNZcH2/1kEyIX4UZgGKFPyP9D
- hrBtLlRO1fxTkMDY86i1g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:BM0qKnA0jw0=:5ArQHfDns/uklJi/pfB4h4
- 18uhDct0SwqjW+6SV1C/OyLgIJtEoAtmZ+KSjUnQ7PYBtXANUbeeutiAl04+eOvZL3Y9A54u3
- Fndcp7Bhf+YCH17Pj1tzXlPVnk9pFDkscKnVzmOVJPJkWwlrdSiopoZrZeRT6QbQFKLd9OnYt
- XzWgqsBDlylU5SKDL2aVD3MPqKBsOM1JOrbEZXZlmRgfP/YRXFic40xslfYYXYHjAWyPF59Zf
- yaOuVwSn8+lSUC28xDUrX5zF8xxxzpiEGh+fYOSuNIuHdQFOkBW0/pjXWoUErzdQ7WC9GW7iA
- fmc7qb+vYlmDOOND7BCsZO4F0SEQ8GCBYBVFRPN4kQkAZmiiFU6JhtCc9Lhj1AhrCSc100HUw
- 1p3NLUpNsFDmFqev8MNRA9tQJVc+/PZymXLN+fkh+T8GaKKNbXZF0VNSJxw8FF/x1ohTZnllJ
- G2ysdBBvlfVnAXWth3QmlU6OFow26EpzVTceYShds3ESLhmypsyyq+1iJwUF/IHS4VP6TBeOw
- 41rbQqjQuJOFMl22AXOv/A2fSBEDwtKkFIcGuJUAM1i6zvYF+tO201+X9wdu2X0Q78wUd/jiX
- 8aBk3Y+2BURZG/LC11yKr+rO/oeiBo5uasdnhwHVaQh36qrQYG3asdk/Oqc52CW3bCLQimNuK
- 8O9vM1HWfi0E5USXHdlBPBYiFC74A0o0m3RLA0G1eRsXp5SvqBstF1x92wiVj4gIK8iVO1iS+
- KjViZkwJJO2vIL+md7lQMreA69KcgGclm6Q782ZH5ARyKOpAjgAzJZjV3bJC431uPQbQAiukW
- 1Uqx1q/OX4NhYp0WlEo9R6X+ZuiGg==
+X-Provags-ID: V03:K0:wP7QUmLWFrKP66PNTzZZmaeuIv7peDJZdbUrxES11Qrdjfc7ymO
+ h5P1syD64+xEk71l/KL6mMx+TYmwmU5Jh2gbZ6RsHsrf2GH5vdtPnHD2aN4lyfQ+s8ha7iR
+ zVfYFnhdgARNB4JhK4vppkMSR7cWl8tE8zGlSTIwPVZNL0KMjAQBaF4uZwXZQaa+rOjyetz
+ ev+bmG9SYTfR4unAwHWsw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:q/ZFggDVe8w=:CyuVvu2rs/+FHlGEwASq6h
+ ssO4y8LQRDt0RNOg/9XHyfj4e1K3DWpDLrudDB+lma7bbfFq7ewU2fTUBPRaa15cBzjrb9UoE
+ GRni9tN2TVSbeeAZcnb8uh0hg082RIB+kri7VqV1P6CSSGrwgeF/hhy2y8KkajBLQVrTPhPmE
+ V9SQ7OyzCvIy9VQW1zUKeQ1BWg/pgBfAmhIVwV8i8vmXwKo7UMR8/AbFNRZuE2JyjOfjwdROF
+ p97FDIgmTTXa2RspIZEeEpMuab7N7x6zqH03AWO02VMfibpznc5QllpnOtSUcFPaHSaBEJR5e
+ 3IJgiw5fsGC7I0uy1Yl7ahOrMW2D1H6hnfD8BRMxwIvn8D38lmOWbk+O6urP+y1mt71VEQI4R
+ 5dajN1JqtTAEHEOmBSzEVUCGWIEeDcbpw/91PM4AFurh2YpsWN3YrnFI1uruxYEYJxh9W5VT+
+ TPu/wWmVaK9ghP1N8R2+xIQf4zcUYugete/pGddFZ8/uIq0slzK9ciUJrwQjfa5M1ClQkJ3GR
+ /74fPCuxwENg2iQF5oR3By9LizGl/wXcJbOiLaH/lvAZo4yusC7Z2XzYOQ445LGPYEKHZYtQ1
+ yaYp9/dBURnUKiy2B5XeGDQNDtLBJ/1A/L+jcnFGvJe9kwtKJHudnH/tM3CwhkKSrJv6SkEt8
+ zrhczk5hNtP+2nd8Xyux8xWE8xJRa6t63vim/4niRyNtCmUWFioSmWUGhzt5LFVNK9YJbs2pM
+ 2hIrHmsMkUuJsefFsMd4/Iw9hakSZ3KHhDpSGWxnGB5F8FBvYJ1ifMYauZHMsY5bAoflQsFTr
+ KlPWhwgb2vQcdU+J2aJUeV8bPqb9A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -51,76 +51,30 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- transport-helper.c | 1 +
+ userdiff.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/transport-helper.c b/transport-helper.c
-index 8f68d69a86..519a244583 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -548,62 +548,63 @@ static int fetch_with_import(struct transport *transport,
- static int process_connect_service(struct transport *transport,
- 				   const char *name, const char *exec)
+diff --git a/userdiff.c b/userdiff.c
+index 2c1502f719..6321103ce2 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -284,16 +284,17 @@ struct userdiff_driver *userdiff_find_by_path(const char *path)
+ struct userdiff_driver *userdiff_get_textconv(struct userdiff_driver *driver)
  {
- 	struct helper_data *data = transport->data;
- 	struct strbuf cmdbuf = STRBUF_INIT;
- 	struct child_process *helper;
- 	int r, duped, ret = 0;
- 	FILE *input;
+ 	if (!driver->textconv)
+ 		return NULL;
  
- 	helper = get_helper(transport);
+ 	if (driver->textconv_want_cache && !driver->textconv_cache) {
+ 		struct notes_cache *c = xmalloc(sizeof(*c));
+ 		struct strbuf name = STRBUF_INIT;
  
- 	/*
- 	 * Yes, dup the pipe another time, as we need unbuffered version
- 	 * of input pipe as FILE*. fclose() closes the underlying fd and
- 	 * stream buffering only can be changed before first I/O operation
- 	 * on it.
- 	 */
- 	duped = dup(helper->out);
- 	if (duped < 0)
- 		die_errno("Can't dup helper output fd");
- 	input = xfdopen(duped, "r");
- 	setvbuf(input, NULL, _IONBF, 0);
- 
- 	/*
- 	 * Handle --upload-pack and friends. This is fire and forget...
- 	 * just warn if it fails.
- 	 */
- 	if (strcmp(name, exec)) {
- 		r = set_helper_option(transport, "servpath", exec);
- 		if (r > 0)
- 			warning("Setting remote service path not supported by protocol.");
- 		else if (r < 0)
- 			warning("Invalid remote service path.");
+ 		strbuf_addf(&name, "textconv/%s", driver->name);
+ 		notes_cache_init(c, name.buf, driver->textconv);
+ 		driver->textconv_cache = c;
++		strbuf_release(&name);
  	}
  
- 	if (data->connect)
- 		strbuf_addf(&cmdbuf, "connect %s\n", name);
- 	else
- 		goto exit;
- 
- 	sendline(data, &cmdbuf);
- 	if (recvline_fh(input, &cmdbuf, name))
- 		exit(128);
- 
- 	if (!strcmp(cmdbuf.buf, "")) {
- 		data->no_disconnect_req = 1;
- 		if (debug)
- 			fprintf(stderr, "Debug: Smart transport connection "
- 				"ready.\n");
- 		ret = 1;
- 	} else if (!strcmp(cmdbuf.buf, "fallback")) {
- 		if (debug)
- 			fprintf(stderr, "Debug: Falling back to dumb "
- 				"transport.\n");
- 	} else
- 		die("Unknown response to connect: %s",
- 			cmdbuf.buf);
- 
- exit:
-+	strbuf_release(&cmdbuf);
- 	fclose(input);
- 	return ret;
+ 	return driver;
  }
 -- 
 2.14.1
