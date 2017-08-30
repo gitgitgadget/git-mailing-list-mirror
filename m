@@ -7,152 +7,112 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 030BD208DB
-	for <e@80x24.org>; Wed, 30 Aug 2017 17:50:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6084B208DB
+	for <e@80x24.org>; Wed, 30 Aug 2017 17:50:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752144AbdH3RuR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Aug 2017 13:50:17 -0400
-Received: from mout.web.de ([217.72.192.78]:51523 "EHLO mout.web.de"
+        id S1752131AbdH3RuQ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Aug 2017 13:50:16 -0400
+Received: from mout.web.de ([212.227.17.12]:60040 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751687AbdH3RuH (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1751679AbdH3RuH (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 30 Aug 2017 13:50:07 -0400
 Received: from debian.fritz.box ([91.20.59.6]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MbhRh-1e3pA83yYn-00J5vQ for
- <git@vger.kernel.org>; Wed, 30 Aug 2017 19:50:06 +0200
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MCqoJ-1de0K630Tr-009eF8 for
+ <git@vger.kernel.org>; Wed, 30 Aug 2017 19:50:05 +0200
 From:   Rene Scharfe <l.s.r@web.de>
 To:     git@vger.kernel.org
-Subject: [PATCH 02/34] am: release strbuf on error return in hg_patch_to_mail()
-Date:   Wed, 30 Aug 2017 19:49:33 +0200
-Message-Id: <20170830175005.20756-3-l.s.r@web.de>
+Subject: [PATCH 00/34] plug strbuf memory leaks
+Date:   Wed, 30 Aug 2017 19:49:31 +0200
+Message-Id: <20170830175005.20756-1-l.s.r@web.de>
 X-Mailer: git-send-email 2.14.1
-In-Reply-To: <20170830175005.20756-1-l.s.r@web.de>
-References: <20170830175005.20756-1-l.s.r@web.de>
-X-Provags-ID: V03:K0:kruqC3T814ePwmp7nCivZOHj3Fy//bfZJGwJzwoIzadMU6WcfId
- pcMrYrlUsmCgT8EixeMNYHy6cHkUr3baQEBjUzC3qCahv0BMVybHD8ULgmU4zVN2irHcKbE
- 9KsPQKTZB0YVgiptMp5zQlfT9x0I0MXvXMTGEpNtj28jkADY8hd8w9CRwDPR0geB6pHrtkk
- NRGeOMlUmRoh9oHAw3mow==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:dcJpwKgBpWE=:TSnNHFFH0oie9oBPaA1Bmk
- rT50lkLn+t7GcNhpbB76lKeQjwp4vd5RJN1hnihdOFGST32fgpyW61VxBLtadttctyFZGHo0C
- zEseN3iIlQTXWodduvPoQktnXKwlqLk1NmD29WMHGZX8Lw8S+oBcVu+/od0PfW1B62JV5iDn6
- VW7s5kUcEfr8OF40rm0sBQ8IMAhCymI7dOYvNsCYsPOrhNgAoqeHQaFsiZzqPTTBGQr6dkBut
- sFzZwOflOIpFDkUakkJlk4gMepLkLol8QBD1KEGim2SwKwSCg4ttveuSHk25holV6sfUhFuWz
- KdD6D79ara3XCW6iUWnZ2CGL05z3b+8PdXWZp+ePRrjEev+T/YV0RXiFb1yOXDS3bEp/ShuIW
- ypbjz6RL8sek9tugfTFg5IpyPfSGGlQAxS22VAIQnYSpOGZdnpzaAEcy+ciT2hl+B+gEjbHFj
- /2KRTZqgHFHww6mhTRwzSF6C8XvcsM9h9B27NuD8k1lD6vnNCuOY8ZayfAerswJu3MoSjWuad
- PECKgyg8DImjh414OrWN4J2zdIHvxqR9Wb5DPVhedtVyiwNeCTJZuk83uUAGXim8T+5nnrb55
- WElsJuhNH+iPayf4jJiDvXsnQjaZSLBdNe5F3vbYbkTMFrGvnpLuPo6qq44mJpE5Xyg8d46ra
- FKkB0b0Jh5sJyU0+SNscIb04Fu+JSyNuSMSviuqX2HUiviYno/LOo0D/5bpmp783ciFIH6Xqw
- 2+54XaJqNbRfx7q4Uz+6wqBgcJAmS28qhRRDlxx9iqstjNz8hSKmJDEBMUR1P+ZdLHsSNPw2R
- RFdWXyiV8eEqBv8NZ63Qnxq7WhP7g==
+X-Provags-ID: V03:K0:LYSLhZ43B+7wDnZ2olnffDfRI3KuLPSbqDPiisfgjZzC6DH1EeS
+ 11t/AcICpCG46UPuFNwFoOQuiXcEgRWBTx2qXnPBiaizqPbqjCh+dOwiDsLOIvHn+XtWyPg
+ BXZteKwNl2v8UmcJ6u5lwLOWqfILplVyDtAbetRjBDGUTyVA2j5t+sPaGykAIN/Kza+qD0L
+ +Jiuq+blRa9GBoBdwfDUg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:PTMBrbAD0vY=:D9vgeIBnrsZSmgOv7ZLLW7
+ I3G4UZ7yl1FitK9z5ahK1hXFZeH/aVX3gOdBlrjILta5n8c9/asJ9cyelOIViNYcOxEPxeVDb
+ ISQxFzIKP289f/wkVbqGqqktOGxk5Q0iN47qKffpznrPAc8MVu4N1HNZpsXGoO0RnmI/oSda6
+ 1ZcFUCdPmD3jxljZ2zgPl4gsp5YdRxCTGJRU1DSvvq8ro2MBoZ2JOHZwoGc1MM4DPm499g1n3
+ JX0+6/qDvVWCAmN2RCVAYWicdmADl7dsUk2e1itf0MvC1TtLyAbr7v0cARgV2QOoQ3dW5kiw8
+ xCBr3ayYolhlNpjXOypVn8oKMRyVjjs3NqWYbGq824ragFJKGLr/CzfOPJjkBVdrUvmKxWcgr
+ aRpp/OGxl9vNqrl105/WKhjwRGYKrZCUlXbNmzdHeNzzHdjMNd0/oGwvfv2ZjEFH/etql4+Jx
+ jKFJa5pm1oxgXnzcAE7prOQGS9BqPAjY+mBRR5IkN3EX0wp63xrqB9zbUeXEVMFlHTiLXlfsN
+ yhOJPitBrvo+tiDTfHqmeMeQMaoX9JpVf5fOfxj6FIvYJZ/akdqAdxwICQ+ZoWIPo00l9JnYx
+ NPC5Msd0FpT7B8OAMVWXGZjqIHqC/rmemL1l28hGnOMBTRMh0vDXrHVP3umkz1GF4cGh0/sEu
+ 4Y5tdlt/q92stDalAjZyw74NQ1FUP42DqWfP4gg+q/qETuUMX+9lb5RpmDxXqFaGnIarBGKg+
+ D0eq5ryxzpwydXIM2Kjntlpq7F7S6r+o4tKmoTf3RCjkA2T90xYQweZsDujYRouE9HrWr8oB4
+ TxWiyrPhxa7eyCflmvNS98dsj1XvA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- builtin/am.c | 29 +++++++++++++++++++----------
- 1 file changed, 19 insertions(+), 10 deletions(-)
+Release allocated strbufs in functions that are at least potentionally
+library-like; cmd_*() functions are out of scope because the process
+ends with them and the OS cleans up for us anyway.  The patches are
+split by function and were generated with --function-context for easier
+reviewing.
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 3c50b03faa..3d38b3fe9f 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -881,75 +881,84 @@ static int split_mail_stgit_series(struct am_state *state, const char **paths,
- static int hg_patch_to_mail(FILE *out, FILE *in, int keep_cr)
- {
- 	struct strbuf sb = STRBUF_INIT;
-+	int rc = 0;
- 
- 	while (!strbuf_getline_lf(&sb, in)) {
- 		const char *str;
- 
- 		if (skip_prefix(sb.buf, "# User ", &str))
- 			fprintf(out, "From: %s\n", str);
- 		else if (skip_prefix(sb.buf, "# Date ", &str)) {
- 			timestamp_t timestamp;
- 			long tz, tz2;
- 			char *end;
- 
- 			errno = 0;
- 			timestamp = parse_timestamp(str, &end, 10);
--			if (errno)
--				return error(_("invalid timestamp"));
-+			if (errno) {
-+				rc = error(_("invalid timestamp"));
-+				goto exit;
-+			}
- 
--			if (!skip_prefix(end, " ", &str))
--				return error(_("invalid Date line"));
-+			if (!skip_prefix(end, " ", &str)) {
-+				rc = error(_("invalid Date line"));
-+				goto exit;
-+			}
- 
- 			errno = 0;
- 			tz = strtol(str, &end, 10);
--			if (errno)
--				return error(_("invalid timezone offset"));
-+			if (errno) {
-+				rc = error(_("invalid timezone offset"));
-+				goto exit;
-+			}
- 
--			if (*end)
--				return error(_("invalid Date line"));
-+			if (*end) {
-+				rc = error(_("invalid Date line"));
-+				goto exit;
-+			}
- 
- 			/*
- 			 * mercurial's timezone is in seconds west of UTC,
- 			 * however git's timezone is in hours + minutes east of
- 			 * UTC. Convert it.
- 			 */
- 			tz2 = labs(tz) / 3600 * 100 + labs(tz) % 3600 / 60;
- 			if (tz > 0)
- 				tz2 = -tz2;
- 
- 			fprintf(out, "Date: %s\n", show_date(timestamp, tz2, DATE_MODE(RFC2822)));
- 		} else if (starts_with(sb.buf, "# ")) {
- 			continue;
- 		} else {
- 			fprintf(out, "\n%s\n", sb.buf);
- 			break;
- 		}
- 	}
- 
- 	strbuf_reset(&sb);
- 	while (strbuf_fread(&sb, 8192, in) > 0) {
- 		fwrite(sb.buf, 1, sb.len, out);
- 		strbuf_reset(&sb);
- 	}
--
-+exit:
- 	strbuf_release(&sb);
--	return 0;
-+	return rc;
- }
- 
- /**
-  * Splits a list of files/directories into individual email patches. Each path
-  * in `paths` must be a file/directory that is formatted according to
-  * `patch_format`.
-  *
-  * Once split out, the individual email patches will be stored in the state
-  * directory, with each patch's filename being its index, padded to state->prec
-  * digits.
-  *
-  * state->cur will be set to the index of the first mail, and state->last will
-  * be set to the index of the last mail.
-  *
-  * Set keep_cr to 0 to convert all lines ending with \r\n to end with \n, 1
-  * to disable this behavior, -1 to use the default configured setting.
-  *
-  * Returns 0 on success, -1 on failure.
-  */
+  am: release strbufs after use in detect_patch_format()
+  am: release strbuf on error return in hg_patch_to_mail()
+  am: release strbuf after use in safe_to_abort()
+  check-ref-format: release strbuf after use in check_ref_format_branch()
+  clean: release strbuf after use in remove_dirs()
+  clone: release strbuf after use in remove_junk()
+  commit: release strbuf on error return in commit_tree_extended()
+  connect: release strbuf on error return in git_connect()
+  convert: release strbuf on error return in filter_buffer_or_fd()
+  diff: release strbuf after use in diff_summary()
+  diff: release strbuf after use in show_rename_copy()
+  diff: release strbuf after use in show_stats()
+  help: release strbuf on error return in exec_man_konqueror()
+  help: release strbuf on error return in exec_man_man()
+  help: release strbuf on error return in exec_woman_emacs()
+  mailinfo: release strbuf after use in handle_from()
+  mailinfo: release strbuf on error return in handle_boundary()
+  merge: release strbuf after use in save_state()
+  merge: release strbuf after use in write_merge_heads()
+  notes: release strbuf after use in notes_copy_from_stdin()
+  refs: release strbuf on error return in write_pseudoref()
+  remote: release strbuf after use in read_remote_branches()
+  remote: release strbuf after use in migrate_file()
+  remote: release strbuf after use in set_url()
+  send-pack: release strbuf on error return in send_pack()
+  sha1_file: release strbuf on error return in index_path()
+  shortlog: release strbuf after use in insert_one_record()
+  sequencer: release strbuf after use in save_head()
+  transport-helper: release strbuf after use in process_connect_service()
+  userdiff: release strbuf after use in userdiff_get_textconv()
+  utf8: release strbuf on error return in strbuf_utf8_replace()
+  vcs-svn: release strbuf after use in end_revision()
+  wt-status: release strbuf after use in read_rebase_todolist()
+  wt-status: release strbuf after use in wt_longstatus_print_tracking()
+
+ builtin/am.c               | 34 ++++++++++++++++++++++------------
+ builtin/check-ref-format.c |  1 +
+ builtin/clean.c            |  7 +++++--
+ builtin/clone.c            |  2 +-
+ builtin/help.c             |  3 +++
+ builtin/merge.c            |  9 +++++++--
+ builtin/notes.c            |  1 +
+ builtin/remote.c           |  8 +++++---
+ builtin/shortlog.c         |  1 +
+ commit.c                   |  7 +++++--
+ connect.c                  |  4 +++-
+ convert.c                  |  4 +++-
+ diff.c                     |  3 +++
+ mailinfo.c                 | 10 +++++-----
+ refs.c                     |  2 +-
+ send-pack.c                |  5 ++++-
+ sequencer.c                |  5 ++++-
+ sha1_file.c                |  6 +++---
+ transport-helper.c         |  1 +
+ userdiff.c                 |  1 +
+ utf8.c                     |  3 ++-
+ vcs-svn/svndump.c          |  1 +
+ wt-status.c                |  2 ++
+ 23 files changed, 84 insertions(+), 36 deletions(-)
+
 -- 
 2.14.1
 
