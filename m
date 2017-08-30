@@ -7,43 +7,44 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 73FFB20285
-	for <e@80x24.org>; Wed, 30 Aug 2017 17:58:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8495F20285
+	for <e@80x24.org>; Wed, 30 Aug 2017 17:58:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751761AbdH3R61 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Aug 2017 13:58:27 -0400
-Received: from mout.web.de ([212.227.17.12]:59259 "EHLO mout.web.de"
+        id S1751956AbdH3R6f (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Aug 2017 13:58:35 -0400
+Received: from mout.web.de ([217.72.192.78]:63344 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751388AbdH3R61 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1751549AbdH3R61 (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 30 Aug 2017 13:58:27 -0400
 Received: from debian.fritz.box ([91.20.59.6]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LmLoU-1dDETT2iag-00Zwe2 for
- <git@vger.kernel.org>; Wed, 30 Aug 2017 19:58:25 +0200
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MOzwh-1dq7fR0Shz-006N7v for
+ <git@vger.kernel.org>; Wed, 30 Aug 2017 19:58:26 +0200
 From:   Rene Scharfe <l.s.r@web.de>
 To:     git@vger.kernel.org
-Subject: [PATCH 02/34] am: release strbuf on error return in hg_patch_to_mail()
-Date:   Wed, 30 Aug 2017 19:58:05 +0200
-Message-Id: <20170830175825.20905-1-l.s.r@web.de>
+Subject: [PATCH 09/34] convert: release strbuf on error return in filter_buffer_or_fd()
+Date:   Wed, 30 Aug 2017 19:58:09 +0200
+Message-Id: <20170830175825.20905-5-l.s.r@web.de>
 X-Mailer: git-send-email 2.14.1
-In-Reply-To: <20170830175005.20756-1-l.s.r@web.de>
+In-Reply-To: <20170830175825.20905-1-l.s.r@web.de>
 References: <20170830175005.20756-1-l.s.r@web.de>
-X-Provags-ID: V03:K0:TNWnLWtEqAflJgisHXgcm426mkwrHJehwiFQVtwkwqSBa3UYu5n
- RHzOSMRRd2ih0WcuARAVltbdmAgSHEwCiYCKOrjoH9FZY8ad1gjIkHFM98czJli5qiS5dnp
- PAXm5kobkKOitwFQND708krpZIEJJ+9Wswx4h0BzQVm30r2ZF9a9qRTiucS/hWryz3nQFwJ
- k9QyRTMqR/BZB8EBzHvIg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:TpPI5RfkVXw=:PJ79QOac+xWWnZk6OPmxpr
- 4gnu476Vzwn9z0LG7Jueblb4ctC6yu4rHKeEG4/9pN6xQ67YoYHmkLFruSBGLSN7kEgeGUV20
- AS1u6YvYie2IbIXN1EK7kBnUD//s0A7PQsZf48GicOGFwHVJcupQGDDusBj7WHsnv8hEYx0BS
- gUv/5s81ow3A3sJZgX129SyHaBLxtsgNngWaQu1a4+aOB+GaXVvXMkgi7Ou1BLYNpkLTqc5pT
- qNmkVg6H3kQcW1fVT76F1kQo8BevI31dfgUlvVKpGYRhD4uNENArV6Z3HVhUxnstCqpIt0qaP
- GVag4mCeEfSJwGWSupnuPARS/V/GUuT13OBLp97luScps26a7tkLbilJBfxkxJmYVc61y48Eq
- 33zQ+IaTPdaJTzCpzZFhnsuQziyIrug8kJmvF/RlkqlXjGEuyGBLLeQO319U3KXrI6nvPhGKU
- s4PIiA+FbXvKrI34ai34iZ5YtKvnQ06GZy0eop7eTlPQ9RZ1sRlTAIcaVQLhwM/+BoYQAqJSe
- DsaYArygjlxIAT8MhMRUkS1X5U97/nLGnFEAbLWOsbCDh0P17MzF96s64dVl0Glc3JIuVmJKr
- 8C2EfNEQ1TJD9ifP+wgxyr4B32QwagHIhtdTr7IXFDPbI3cw4IEzkqQ9XB5ey1V1e37krjs9n
- PxxSBYs9Dx3RX77ZyCman6JjhpCiowowv/lU2zF0p+7jO+W2cJx9NLwXqmqThDmwfazbrqrWp
- x0GS+vVcGQll8E5rapqcME8FpxLO6AouTyDjyMlWoTGCczOMNG2VOX2W+TjPQB9dIrXCNvRVy
- kKTVaOEwa0eR9TLlA8M2vU7kLZT8A==
+ <20170830175825.20905-1-l.s.r@web.de>
+X-Provags-ID: V03:K0:9DEYjY4aCMOvXO86Xt43+jrOY3zhFCHMwYyHTXzPX3mp79WEGCX
+ K+1AGZZPQ0930tTdLKvJBuusFw1GBXgMZx5BCVj91/X33NxI7Tb+fCPy6XKMwSWAS+bSNXb
+ PBo1aL/wMA5WkeAzgIBvZOahAUmCE3UkrWDjpKZI4ttGATSepFH+cYD+FqIUBusAlyiHknK
+ ggpb4zeihfaOjkUxNRTHQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:N4ibegkCgWY=:U+qY1cL9LLZkMl8cN57Qtm
+ HW/wSVQC2enUKtSyMTHi4BlU+IPZ3FVQiDVDpak4PQfpm66j65+Uwka5/lU6LEQc3gnuc/8zI
+ 29dGpg4JvgtUK/oREEB6aLJp3X0rbXrSGM92f/Hg1FZy6tAO8Y4bBu1MHNQPHtABUpxbzjtcC
+ jhH6KwHiGqaALkZTZnrh2SOu/Xl6Abw9KbYgviQBr+j96l6RgSpFDaDNhuyHD5Q3yCoCF1mjJ
+ 6vhsWiTqfHjv38alAcsdFC8eqLrRfuJM0KtUE3mBADLnelMXRNr+Ytgp9oAieEJ/GnXLKPBJi
+ jE4CNuUYXLzAemkZc99y4QgNyOimFHLvrgO5GYR4E89uViCo3cQHjTh8O2d2Idpo117XuxcEc
+ 4U+d4x4Dr0mU9HG3k4oBI5BHdqjL4f90dlzG8iEu8tMRLIUvR8qYKjeKJrXsDh/zRqLzRg2tV
+ 2Ff0Lw18WflF2qpeTfjNV80giHcc5ICEnszGeigaSjDl6B9IlZ0MibJJTkXta0JbOnVV38/fR
+ FxWTgmnl8d9E5ZJINqLjmPz6gavxkueLa/zbfrSQDyC6PR/ijnAQpB4D+u5uuvJ1TD5PlZMS3
+ Ztzys/J47U2WcJJ18lOqzlcxYuRop9SrpR220z/e5s1gt2BqmELoIgmEjmTruHXa6QsrFGYkM
+ nC5naRA23XLViRUNsGqdSaLep+5uSsKXi48VIkXxdc7pkIwfNjARhiYoWbhTTHcNF/T+ylFd7
+ yW1FfVLxKSf5F8Tp4igGUpFIaDZZ5kdKh2wmTVRIfWeHklnBTqoGf9GBJt4f+VEAjNtxeLJb+
+ EoHoBJSPgX2L3hkA9gF1A5MozK3Fg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -51,108 +52,80 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- builtin/am.c | 29 +++++++++++++++++++----------
- 1 file changed, 19 insertions(+), 10 deletions(-)
+ convert.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 3c50b03faa..3d38b3fe9f 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -881,75 +881,84 @@ static int split_mail_stgit_series(struct am_state *state, const char **paths,
- static int hg_patch_to_mail(FILE *out, FILE *in, int keep_cr)
+diff --git a/convert.c b/convert.c
+index c5f0b21037..4a0ed8d3cb 100644
+--- a/convert.c
++++ b/convert.c
+@@ -393,63 +393,65 @@ struct filter_params {
+ static int filter_buffer_or_fd(int in, int out, void *data)
  {
- 	struct strbuf sb = STRBUF_INIT;
-+	int rc = 0;
+ 	/*
+ 	 * Spawn cmd and feed the buffer contents through its stdin.
+ 	 */
+ 	struct child_process child_process = CHILD_PROCESS_INIT;
+ 	struct filter_params *params = (struct filter_params *)data;
+ 	int write_err, status;
+ 	const char *argv[] = { NULL, NULL };
  
- 	while (!strbuf_getline_lf(&sb, in)) {
- 		const char *str;
+ 	/* apply % substitution to cmd */
+ 	struct strbuf cmd = STRBUF_INIT;
+ 	struct strbuf path = STRBUF_INIT;
+ 	struct strbuf_expand_dict_entry dict[] = {
+ 		{ "f", NULL, },
+ 		{ NULL, NULL, },
+ 	};
  
- 		if (skip_prefix(sb.buf, "# User ", &str))
- 			fprintf(out, "From: %s\n", str);
- 		else if (skip_prefix(sb.buf, "# Date ", &str)) {
- 			timestamp_t timestamp;
- 			long tz, tz2;
- 			char *end;
+ 	/* quote the path to preserve spaces, etc. */
+ 	sq_quote_buf(&path, params->path);
+ 	dict[0].value = path.buf;
  
- 			errno = 0;
- 			timestamp = parse_timestamp(str, &end, 10);
--			if (errno)
--				return error(_("invalid timestamp"));
-+			if (errno) {
-+				rc = error(_("invalid timestamp"));
-+				goto exit;
-+			}
+ 	/* expand all %f with the quoted path */
+ 	strbuf_expand(&cmd, params->cmd, strbuf_expand_dict_cb, &dict);
+ 	strbuf_release(&path);
  
--			if (!skip_prefix(end, " ", &str))
--				return error(_("invalid Date line"));
-+			if (!skip_prefix(end, " ", &str)) {
-+				rc = error(_("invalid Date line"));
-+				goto exit;
-+			}
+ 	argv[0] = cmd.buf;
  
- 			errno = 0;
- 			tz = strtol(str, &end, 10);
--			if (errno)
--				return error(_("invalid timezone offset"));
-+			if (errno) {
-+				rc = error(_("invalid timezone offset"));
-+				goto exit;
-+			}
+ 	child_process.argv = argv;
+ 	child_process.use_shell = 1;
+ 	child_process.in = -1;
+ 	child_process.out = out;
  
--			if (*end)
--				return error(_("invalid Date line"));
-+			if (*end) {
-+				rc = error(_("invalid Date line"));
-+				goto exit;
-+			}
+-	if (start_command(&child_process))
++	if (start_command(&child_process)) {
++		strbuf_release(&cmd);
+ 		return error("cannot fork to run external filter '%s'", params->cmd);
++	}
  
- 			/*
- 			 * mercurial's timezone is in seconds west of UTC,
- 			 * however git's timezone is in hours + minutes east of
- 			 * UTC. Convert it.
- 			 */
- 			tz2 = labs(tz) / 3600 * 100 + labs(tz) % 3600 / 60;
- 			if (tz > 0)
- 				tz2 = -tz2;
+ 	sigchain_push(SIGPIPE, SIG_IGN);
  
- 			fprintf(out, "Date: %s\n", show_date(timestamp, tz2, DATE_MODE(RFC2822)));
- 		} else if (starts_with(sb.buf, "# ")) {
- 			continue;
- 		} else {
- 			fprintf(out, "\n%s\n", sb.buf);
- 			break;
- 		}
+ 	if (params->src) {
+ 		write_err = (write_in_full(child_process.in,
+ 					   params->src, params->size) < 0);
+ 		if (errno == EPIPE)
+ 			write_err = 0;
+ 	} else {
+ 		write_err = copy_fd(params->fd, child_process.in);
+ 		if (write_err == COPY_WRITE_ERROR && errno == EPIPE)
+ 			write_err = 0;
  	}
  
- 	strbuf_reset(&sb);
- 	while (strbuf_fread(&sb, 8192, in) > 0) {
- 		fwrite(sb.buf, 1, sb.len, out);
- 		strbuf_reset(&sb);
- 	}
--
-+exit:
- 	strbuf_release(&sb);
--	return 0;
-+	return rc;
+ 	if (close(child_process.in))
+ 		write_err = 1;
+ 	if (write_err)
+ 		error("cannot feed the input to external filter '%s'", params->cmd);
+ 
+ 	sigchain_pop(SIGPIPE);
+ 
+ 	status = finish_command(&child_process);
+ 	if (status)
+ 		error("external filter '%s' failed %d", params->cmd, status);
+ 
+ 	strbuf_release(&cmd);
+ 	return (write_err || status);
  }
- 
- /**
-  * Splits a list of files/directories into individual email patches. Each path
-  * in `paths` must be a file/directory that is formatted according to
-  * `patch_format`.
-  *
-  * Once split out, the individual email patches will be stored in the state
-  * directory, with each patch's filename being its index, padded to state->prec
-  * digits.
-  *
-  * state->cur will be set to the index of the first mail, and state->last will
-  * be set to the index of the last mail.
-  *
-  * Set keep_cr to 0 to convert all lines ending with \r\n to end with \n, 1
-  * to disable this behavior, -1 to use the default configured setting.
-  *
-  * Returns 0 on success, -1 on failure.
-  */
 -- 
 2.14.1
 
