@@ -7,44 +7,44 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8495F20285
-	for <e@80x24.org>; Wed, 30 Aug 2017 17:58:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 03C0820285
+	for <e@80x24.org>; Wed, 30 Aug 2017 17:58:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751956AbdH3R6f (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Aug 2017 13:58:35 -0400
-Received: from mout.web.de ([217.72.192.78]:63344 "EHLO mout.web.de"
+        id S1751948AbdH3R6e (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Aug 2017 13:58:34 -0400
+Received: from mout.web.de ([217.72.192.78]:50050 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751549AbdH3R61 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1751595AbdH3R61 (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 30 Aug 2017 13:58:27 -0400
 Received: from debian.fritz.box ([91.20.59.6]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MOzwh-1dq7fR0Shz-006N7v for
- <git@vger.kernel.org>; Wed, 30 Aug 2017 19:58:26 +0200
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0Lw0ht-1dSDq03hxV-017mgv for
+ <git@vger.kernel.org>; Wed, 30 Aug 2017 19:58:25 +0200
 From:   Rene Scharfe <l.s.r@web.de>
 To:     git@vger.kernel.org
-Subject: [PATCH 09/34] convert: release strbuf on error return in filter_buffer_or_fd()
-Date:   Wed, 30 Aug 2017 19:58:09 +0200
-Message-Id: <20170830175825.20905-5-l.s.r@web.de>
+Subject: [PATCH 04/34] check-ref-format: release strbuf after use in check_ref_format_branch()
+Date:   Wed, 30 Aug 2017 19:58:07 +0200
+Message-Id: <20170830175825.20905-3-l.s.r@web.de>
 X-Mailer: git-send-email 2.14.1
 In-Reply-To: <20170830175825.20905-1-l.s.r@web.de>
 References: <20170830175005.20756-1-l.s.r@web.de>
  <20170830175825.20905-1-l.s.r@web.de>
-X-Provags-ID: V03:K0:9DEYjY4aCMOvXO86Xt43+jrOY3zhFCHMwYyHTXzPX3mp79WEGCX
- K+1AGZZPQ0930tTdLKvJBuusFw1GBXgMZx5BCVj91/X33NxI7Tb+fCPy6XKMwSWAS+bSNXb
- PBo1aL/wMA5WkeAzgIBvZOahAUmCE3UkrWDjpKZI4ttGATSepFH+cYD+FqIUBusAlyiHknK
- ggpb4zeihfaOjkUxNRTHQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:N4ibegkCgWY=:U+qY1cL9LLZkMl8cN57Qtm
- HW/wSVQC2enUKtSyMTHi4BlU+IPZ3FVQiDVDpak4PQfpm66j65+Uwka5/lU6LEQc3gnuc/8zI
- 29dGpg4JvgtUK/oREEB6aLJp3X0rbXrSGM92f/Hg1FZy6tAO8Y4bBu1MHNQPHtABUpxbzjtcC
- jhH6KwHiGqaALkZTZnrh2SOu/Xl6Abw9KbYgviQBr+j96l6RgSpFDaDNhuyHD5Q3yCoCF1mjJ
- 6vhsWiTqfHjv38alAcsdFC8eqLrRfuJM0KtUE3mBADLnelMXRNr+Ytgp9oAieEJ/GnXLKPBJi
- jE4CNuUYXLzAemkZc99y4QgNyOimFHLvrgO5GYR4E89uViCo3cQHjTh8O2d2Idpo117XuxcEc
- 4U+d4x4Dr0mU9HG3k4oBI5BHdqjL4f90dlzG8iEu8tMRLIUvR8qYKjeKJrXsDh/zRqLzRg2tV
- 2Ff0Lw18WflF2qpeTfjNV80giHcc5ICEnszGeigaSjDl6B9IlZ0MibJJTkXta0JbOnVV38/fR
- FxWTgmnl8d9E5ZJINqLjmPz6gavxkueLa/zbfrSQDyC6PR/ijnAQpB4D+u5uuvJ1TD5PlZMS3
- Ztzys/J47U2WcJJ18lOqzlcxYuRop9SrpR220z/e5s1gt2BqmELoIgmEjmTruHXa6QsrFGYkM
- nC5naRA23XLViRUNsGqdSaLep+5uSsKXi48VIkXxdc7pkIwfNjARhiYoWbhTTHcNF/T+ylFd7
- yW1FfVLxKSf5F8Tp4igGUpFIaDZZ5kdKh2wmTVRIfWeHklnBTqoGf9GBJt4f+VEAjNtxeLJb+
- EoHoBJSPgX2L3hkA9gF1A5MozK3Fg==
+X-Provags-ID: V03:K0:3jIPJG4KbLBPexmdmBIHIV476cH0jHQ/qBN+pCM15Y+HDbT9Nnj
+ dZgefYUA3ZYeINk4J6/bKWd6K1QP3apBBHyJvU1KEjjd67w+DKvx4jSEnW+oh0UV+ghctw9
+ Az4lpnPBw5TO4H2AWxZwoZyKtvi1NLq5QbpS/VMhnX14GDQFO/Qj8Dhx+MSyzAo/u9iJXUi
+ FgMZlkcgLC0ngYRBIEeMA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:kvk7IFQeWCM=:NOlcHhTKfyoYU7NnrNT7T+
+ 0L8/5uOcrxty/LuNx69QIgFmPXZd4BTj/BFO5vC4XR+mmRzlbDoAZUmlx7yKK8SaiYi/j6RDG
+ 3fpJdXZXY/aIcXS0rqvx72BEfG1YDDNMJ1/rwHQZCx5SPiL8W0OFIrbTn2AzsrjM3y9Yh7wbx
+ xapjmenyoxrIdW/JHZpPgy7Pm59PBZPZBdnINoRVE2Cf2kN8X2c9FjjlHL7yA1cA9bV855F2V
+ 45P/XM7jIwAD0MXyLFFLTvVEtohXtptWVT1YacJ1Lgou20U+1oTxtsob3/Q4UCoGbYreO1un7
+ 0W/PDCQDH+pgb4QViwGKCUl87dhq256qggtHAoELpya17rB/JVFDGVZ16YGio3Y4B4QQHT4bU
+ D3am7nz9Z6SK7QZ7n50ldw3JochyJN/FyqcLx+Fc0dDyks8cOkoUXazyHJifizjcpd8hDWN6p
+ llP531ijBY4gO7GLe1Mj1Gunn+eTSo8cwt73q3FsF+TrOmw8iW/25ixAVz59j+xDDRrAE9I0q
+ /BYc2m9SMVX72YUjshJGX9wBE0NIjbDVHYqGNNvhPiShfBoSQ2JGLBttt0cv7GpVJoIJsC5Xa
+ YNpo2Mf4nRuFSQGrMARK3yqltdhCeqRWUKq/h1TbY7QGW588J1RRud7mudHNZ5xKo3dXefku2
+ CbKxjiHj98LmM5Yuphw7K8nvNkbTLguVMhHjrCn/84c79JqLswNWF2uaZQL+5w6Av9OMwJ8sp
+ zvbSHHZpresmPr9L5MMcIb3rlMBEydVILzdPfMN9Hn660QgOkKY1Jnjs8Xpfevckg9k05CMkT
+ XRUY+DODn56cUhyGP21fVTmM1crvg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -52,80 +52,27 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- convert.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ builtin/check-ref-format.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/convert.c b/convert.c
-index c5f0b21037..4a0ed8d3cb 100644
---- a/convert.c
-+++ b/convert.c
-@@ -393,63 +393,65 @@ struct filter_params {
- static int filter_buffer_or_fd(int in, int out, void *data)
+diff --git a/builtin/check-ref-format.c b/builtin/check-ref-format.c
+index eac499450f..6c40ff110b 100644
+--- a/builtin/check-ref-format.c
++++ b/builtin/check-ref-format.c
+@@ -39,12 +39,13 @@ static char *collapse_slashes(const char *refname)
+ static int check_ref_format_branch(const char *arg)
  {
- 	/*
- 	 * Spawn cmd and feed the buffer contents through its stdin.
- 	 */
- 	struct child_process child_process = CHILD_PROCESS_INIT;
- 	struct filter_params *params = (struct filter_params *)data;
- 	int write_err, status;
- 	const char *argv[] = { NULL, NULL };
+ 	struct strbuf sb = STRBUF_INIT;
+ 	int nongit;
  
- 	/* apply % substitution to cmd */
- 	struct strbuf cmd = STRBUF_INIT;
- 	struct strbuf path = STRBUF_INIT;
- 	struct strbuf_expand_dict_entry dict[] = {
- 		{ "f", NULL, },
- 		{ NULL, NULL, },
- 	};
- 
- 	/* quote the path to preserve spaces, etc. */
- 	sq_quote_buf(&path, params->path);
- 	dict[0].value = path.buf;
- 
- 	/* expand all %f with the quoted path */
- 	strbuf_expand(&cmd, params->cmd, strbuf_expand_dict_cb, &dict);
- 	strbuf_release(&path);
- 
- 	argv[0] = cmd.buf;
- 
- 	child_process.argv = argv;
- 	child_process.use_shell = 1;
- 	child_process.in = -1;
- 	child_process.out = out;
- 
--	if (start_command(&child_process))
-+	if (start_command(&child_process)) {
-+		strbuf_release(&cmd);
- 		return error("cannot fork to run external filter '%s'", params->cmd);
-+	}
- 
- 	sigchain_push(SIGPIPE, SIG_IGN);
- 
- 	if (params->src) {
- 		write_err = (write_in_full(child_process.in,
- 					   params->src, params->size) < 0);
- 		if (errno == EPIPE)
- 			write_err = 0;
- 	} else {
- 		write_err = copy_fd(params->fd, child_process.in);
- 		if (write_err == COPY_WRITE_ERROR && errno == EPIPE)
- 			write_err = 0;
- 	}
- 
- 	if (close(child_process.in))
- 		write_err = 1;
- 	if (write_err)
- 		error("cannot feed the input to external filter '%s'", params->cmd);
- 
- 	sigchain_pop(SIGPIPE);
- 
- 	status = finish_command(&child_process);
- 	if (status)
- 		error("external filter '%s' failed %d", params->cmd, status);
- 
- 	strbuf_release(&cmd);
- 	return (write_err || status);
+ 	setup_git_directory_gently(&nongit);
+ 	if (strbuf_check_branch_ref(&sb, arg))
+ 		die("'%s' is not a valid branch name", arg);
+ 	printf("%s\n", sb.buf + 11);
++	strbuf_release(&sb);
+ 	return 0;
  }
+ 
 -- 
 2.14.1
 
