@@ -2,49 +2,49 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-1.6 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,UNWANTED_LANGUAGE_BODY shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12D8920285
-	for <e@80x24.org>; Wed, 30 Aug 2017 18:01:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE17220285
+	for <e@80x24.org>; Wed, 30 Aug 2017 18:01:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752576AbdH3SAy (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Aug 2017 14:00:54 -0400
-Received: from mout.web.de ([212.227.17.12]:51170 "EHLO mout.web.de"
+        id S1752029AbdH3SAx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Aug 2017 14:00:53 -0400
+Received: from mout.web.de ([217.72.192.78]:54248 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751849AbdH3SAj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Aug 2017 14:00:39 -0400
+        id S1752575AbdH3SAk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Aug 2017 14:00:40 -0400
 Received: from debian.fritz.box ([91.20.59.6]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0Mg7I1-1e8CNn1dmX-00NTxh for
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0M7KN0-1dY2gS38Ny-00x5lK for
  <git@vger.kernel.org>; Wed, 30 Aug 2017 20:00:38 +0200
 From:   Rene Scharfe <l.s.r@web.de>
 To:     git@vger.kernel.org
-Subject: [PATCH 24/34] remote: release strbuf after use in set_url()
-Date:   Wed, 30 Aug 2017 20:00:27 +0200
-Message-Id: <20170830180037.20950-5-l.s.r@web.de>
+Subject: [PATCH 27/34] shortlog: release strbuf after use in insert_one_record()
+Date:   Wed, 30 Aug 2017 20:00:30 +0200
+Message-Id: <20170830180037.20950-8-l.s.r@web.de>
 X-Mailer: git-send-email 2.14.1
 In-Reply-To: <20170830180037.20950-1-l.s.r@web.de>
 References: <20170830175005.20756-1-l.s.r@web.de>
  <20170830180037.20950-1-l.s.r@web.de>
-X-Provags-ID: V03:K0:CLy0x/ZtebUBbPFTDMpWv8GLrKqAdLbn1uBcYSMtZX2BtDARZ5c
- yQ/r4m1uD8zg/PaG09jvR0Q8+MzJeETPiYk6SDkT1OkgMTUeL/egbEE0hOIhAijieBtLgFK
- gLcN5BK9CLcDjBekXOJgGMl/gyfb3UkqnKnZoMzXxxAw5xIi5zwEPJj1IdPAIlfEFaDIubG
- J2WZ2udJCsenFNZJHnySQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:5FAhfi9WYOU=:U5MeX/9VxN/87l7x95QDoQ
- KEYf98EDvbCwrrqof23slTJKLeeqz0EifgTWRbF7DCKMc2MiDbqLOgi3+zKjP9rUTxAX1Gsj8
- sYakgJu11q8eLGGnkblhAwvk5D2xULlEu4CYnhBxNM+/zAlNd63pmIGmsmUWcYEoqDbeU5YOI
- tTiTfS95hcyNeMuL576cb8Pux4S02EJH+QfqscDzW2ks32+O5G9+tU+rqjKdWkxws9JTmuI5e
- YiM+vGpQoorZRAvTLz8xhNxnxstIAVn9pw/vLqz8b9g21iOOUtSzLUBiKnBaBkYHKfWIrF4A9
- 1oC2ZELJ6TKpVxtCV+3f/XT8NEOs9GrScsHQih4XL/hzHaj9b/PpQ0Nl2+0LhMo7ygDJxqDlo
- he1cpCDDLO1Yu1Pev6+Ae6JGA2pUkTDJnRjo+FI7qLYxTW4YogRlfYzzYMFLQ6tOuJ6K7CTKQ
- ZziH7p5xJ9In+n/XeQtD1EyXTrBu7KNICaUoXV4sSfpSFZvTfhpaVfzyFiw/P9KLQ9v9yaAmx
- oen/K6D4i4e1K7QNZwK4bZhmaH+N1MnQ5xLkuLEkGJV/ZEuiCDQOggx1Kof2OkYXsvLUYg3kt
- gvvClDLmcQo32LOG1FCs2Lytf2zSAjXpEkLNfkVu6oTXzbSKt0phdX3lkzsV+pzhctY2icbEM
- AIFtSGlKg5r248aORngV73FwYXEefrVmhap9GmQ2QNtuqw9amqcPwfLqvB7yqJcKyVkFktC5K
- An5DUG5mAPOo2093v2ah6IZbQvUm7xdHhOuJdTtn/Yi4Td0/IrXSuNQhoG7TcIMcKU8G8YsNC
- +cGCZS98c3wHmXFH4bvnSqf+U2qJQ==
+X-Provags-ID: V03:K0:P7TMhIRnyAYUaIu7jgfyktMONjFbedYkfn7F+z1nCMmx1Yu1fNn
+ L84d+6LywtLsNQA+fMfTr7jLUp3FA6tNBvvHB0tyd1h39T+oMyRVZA6eUvwjfldQ6MHWV3v
+ 260jNQ9rsOItr6m1UPO/4ZvG3VdSkQ8D/YhQR4dFnXRdU+PjpOUHT6M1iZLKB/Dug50ths5
+ wCLH9Ahd3LAnTR8qjW88w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:iZUQKLhEONE=:2O+X56vcoPVKY1WypGdXXk
+ QaFxaYTaCCZdgek9WZ31ApCei5dKZCDl/O+jco1PQe12DKGy6t7mt4Bms4Bf1/m+k/ZeJdwmb
+ IMUJPeAQPUocdAw+HSddenL9AJKDFGR1dpsFj6u2SUGuAjm+Br+n/vOrPF361tPU38P9e8a1v
+ dcsE2WMo5ewNgg3gs/RdOi91YGrQ6VLP0izfa1GmyI5zVJejTKzROzSoLIXrhwwpP0EBAQUCV
+ x4JuuSC7Dehe3wYqiFtqcvurWVtCo3MH3hGxMPRFHF/EAMHvcCL9atfWY9S5zHr7n1dHx9omo
+ BpHLPx2JGOX5ltRlF3f0ISg6X6cxnOm161MVSCBVGMIdQSiDg8xXzzDUPkcuTMypVDB/52+1V
+ NqRS52mJVCvXuQ01pn31tPzCDNj3wV6YU8YyXO0cEWuc97V1NzEULuUqzuUN/5yk9J5CMAGGu
+ foL9D28Pgc1uaR3KVtDhjAGPdzRNuC7DOQ91FceiAcm1u3FJ1CvqRmbCe13I+qkD9X1iHGsWE
+ zGx1BXU+eYb9RxvnVa8M9rYn7VVopwBYBDNy5WHX2QcQZtKW9K9R68rWneA70DBzcEpcNh5AF
+ dZXfyMey7yXxN7jLH6uTcUG5k6k2TEhyiHk/IXd8cREtlj3kTghSbtnByhnir89qRSQ5JVlJW
+ k+VrCCsh/lQKBlKLz88070IddeQ+yQptn6AAzQVdPlvynlKmHQVN0ZBkqmUzAJRDE4APvFy1I
+ IYFCiHxLeId6OZMbbgG4eP/G2f2rxjYpdHK9dx4n2jcGbVuPWeyoYvWC7vUK9b9Bi7OrubukR
+ znVKv1vLCLm2udkS8bP1ajKSC9syQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -52,104 +52,81 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- builtin/remote.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ builtin/shortlog.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 0a56d7da66..33ba739332 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -1509,87 +1509,87 @@ static int get_url(int argc, const char **argv)
- static int set_url(int argc, const char **argv)
+diff --git a/builtin/shortlog.c b/builtin/shortlog.c
+index 43c4799ea9..48af16c681 100644
+--- a/builtin/shortlog.c
++++ b/builtin/shortlog.c
+@@ -50,66 +50,67 @@ static int compare_by_list(const void *a1, const void *a2)
+ static void insert_one_record(struct shortlog *log,
+ 			      const char *author,
+ 			      const char *oneline)
  {
- 	int i, push_mode = 0, add_mode = 0, delete_mode = 0;
- 	int matches = 0, negative_matches = 0;
- 	const char *remotename = NULL;
- 	const char *newurl = NULL;
- 	const char *oldurl = NULL;
- 	struct remote *remote;
- 	regex_t old_regex;
- 	const char **urlset;
- 	int urlset_nr;
- 	struct strbuf name_buf = STRBUF_INIT;
- 	struct option options[] = {
- 		OPT_BOOL('\0', "push", &push_mode,
- 			 N_("manipulate push URLs")),
- 		OPT_BOOL('\0', "add", &add_mode,
- 			 N_("add URL")),
- 		OPT_BOOL('\0', "delete", &delete_mode,
- 			    N_("delete URLs")),
- 		OPT_END()
- 	};
- 	argc = parse_options(argc, argv, NULL, options, builtin_remote_seturl_usage,
- 			     PARSE_OPT_KEEP_ARGV0);
+ 	struct string_list_item *item;
+ 	const char *mailbuf, *namebuf;
+ 	size_t namelen, maillen;
+ 	struct strbuf namemailbuf = STRBUF_INIT;
+ 	struct ident_split ident;
  
- 	if (add_mode && delete_mode)
- 		die(_("--add --delete doesn't make sense"));
+ 	if (split_ident_line(&ident, author, strlen(author)))
+ 		return;
  
- 	if (argc < 3 || argc > 4 || ((add_mode || delete_mode) && argc != 3))
- 		usage_with_options(builtin_remote_seturl_usage, options);
+ 	namebuf = ident.name_begin;
+ 	mailbuf = ident.mail_begin;
+ 	namelen = ident.name_end - ident.name_begin;
+ 	maillen = ident.mail_end - ident.mail_begin;
  
- 	remotename = argv[1];
- 	newurl = argv[2];
- 	if (argc > 3)
- 		oldurl = argv[3];
+ 	map_user(&log->mailmap, &mailbuf, &maillen, &namebuf, &namelen);
+ 	strbuf_add(&namemailbuf, namebuf, namelen);
  
- 	if (delete_mode)
- 		oldurl = newurl;
+ 	if (log->email)
+ 		strbuf_addf(&namemailbuf, " <%.*s>", (int)maillen, mailbuf);
  
- 	remote = remote_get(remotename);
- 	if (!remote_is_configured(remote, 1))
- 		die(_("No such remote '%s'"), remotename);
+ 	item = string_list_insert(&log->list, namemailbuf.buf);
++	strbuf_release(&namemailbuf);
  
- 	if (push_mode) {
- 		strbuf_addf(&name_buf, "remote.%s.pushurl", remotename);
- 		urlset = remote->pushurl;
- 		urlset_nr = remote->pushurl_nr;
- 	} else {
- 		strbuf_addf(&name_buf, "remote.%s.url", remotename);
- 		urlset = remote->url;
- 		urlset_nr = remote->url_nr;
+ 	if (log->summary)
+ 		item->util = (void *)(UTIL_TO_INT(item) + 1);
+ 	else {
+ 		const char *dot3 = log->common_repo_prefix;
+ 		char *buffer, *p;
+ 		struct strbuf subject = STRBUF_INIT;
+ 		const char *eol;
+ 
+ 		/* Skip any leading whitespace, including any blank lines. */
+ 		while (*oneline && isspace(*oneline))
+ 			oneline++;
+ 		eol = strchr(oneline, '\n');
+ 		if (!eol)
+ 			eol = oneline + strlen(oneline);
+ 		if (starts_with(oneline, "[PATCH")) {
+ 			char *eob = strchr(oneline, ']');
+ 			if (eob && (!eol || eob < eol))
+ 				oneline = eob + 1;
+ 		}
+ 		while (*oneline && isspace(*oneline) && *oneline != '\n')
+ 			oneline++;
+ 		format_subject(&subject, oneline, " ");
+ 		buffer = strbuf_detach(&subject, NULL);
+ 
+ 		if (dot3) {
+ 			int dot3len = strlen(dot3);
+ 			if (dot3len > 5) {
+ 				while ((p = strstr(buffer, dot3)) != NULL) {
+ 					int taillen = strlen(p) - dot3len;
+ 					memcpy(p, "/.../", 5);
+ 					memmove(p + 5, p + dot3len, taillen + 1);
+ 				}
+ 			}
+ 		}
+ 
+ 		if (item->util == NULL)
+ 			item->util = xcalloc(1, sizeof(struct string_list));
+ 		string_list_append(item->util, buffer);
  	}
- 
- 	/* Special cases that add new entry. */
- 	if ((!oldurl && !delete_mode) || add_mode) {
- 		if (add_mode)
- 			git_config_set_multivar(name_buf.buf, newurl,
- 						       "^$", 0);
- 		else
- 			git_config_set(name_buf.buf, newurl);
--		strbuf_release(&name_buf);
--
--		return 0;
-+		goto out;
- 	}
- 
- 	/* Old URL specified. Demand that one matches. */
- 	if (regcomp(&old_regex, oldurl, REG_EXTENDED))
- 		die(_("Invalid old URL pattern: %s"), oldurl);
- 
- 	for (i = 0; i < urlset_nr; i++)
- 		if (!regexec(&old_regex, urlset[i], 0, NULL, 0))
- 			matches++;
- 		else
- 			negative_matches++;
- 	if (!delete_mode && !matches)
- 		die(_("No such URL found: %s"), oldurl);
- 	if (delete_mode && !negative_matches && !push_mode)
- 		die(_("Will not delete all non-push URLs"));
- 
- 	regfree(&old_regex);
- 
- 	if (!delete_mode)
- 		git_config_set_multivar(name_buf.buf, newurl, oldurl, 0);
- 	else
- 		git_config_set_multivar(name_buf.buf, NULL, oldurl, 1);
-+out:
-+	strbuf_release(&name_buf);
- 	return 0;
  }
- 
 -- 
 2.14.1
 
