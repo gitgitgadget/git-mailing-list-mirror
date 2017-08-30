@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F319208CD
-	for <e@80x24.org>; Wed, 30 Aug 2017 07:12:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 58283208CD
+	for <e@80x24.org>; Wed, 30 Aug 2017 07:13:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750980AbdH3HMv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Aug 2017 03:12:51 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:38460 "EHLO
+        id S1751276AbdH3HNR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Aug 2017 03:13:17 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:33747 "EHLO
         mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750824AbdH3HMu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Aug 2017 03:12:50 -0400
-Received: by mail-pg0-f65.google.com with SMTP id t3so4476742pgt.5
-        for <git@vger.kernel.org>; Wed, 30 Aug 2017 00:12:50 -0700 (PDT)
+        with ESMTP id S1750983AbdH3HNQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Aug 2017 03:13:16 -0400
+Received: by mail-pg0-f65.google.com with SMTP id m15so4507213pgc.0
+        for <git@vger.kernel.org>; Wed, 30 Aug 2017 00:13:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=vdE+rac4m6ZQO+S7iXo5aPUP63IvJsyQsAcCj7mGm7c=;
-        b=rxYktuFYp2OTivZCN1mIqmEcbVgceN8MXv5jxjLmTorV7Vhbw8jUqh04WiV1UpzARs
-         u3arm13dkG2G7kVlY5rk+ndtmbYGBSniuFazUeoGDO5syAtO+Xi9JLSvkDlTrcDQ6aTi
-         tIgrJQe3dqX0fqHcVT+7sY76Gi7LIoaPzSGJ3i3S4LrlnnzZYyOMjAjuSA1OFIPBI6ho
-         tvbWbwHmNgjMdSxVMRH1e6ubKxCB/gz76D90NZsoBwvelLbAL0p7ijDYqHh3e6uA+4Cg
-         KYfeOpL9X6r2QYTNkPG4CopuEKmytmaQErIidmqAaq+xwkc38FhJtvUSEKkdV7JVhRlc
-         NjLg==
+        bh=cvB3q6Ge3cPH2KWVmcXD2MwItILl8sxocp9czilQmHs=;
+        b=qXOK2JoZZrqYchV0y/8BEdMYsuTjZT0qBtCf9IrzAsMROR52IeL68h0mzJCu2toDHL
+         YJOS60VtEL/IwLOSCOcTgJWdfRZQbsoEztx+tpX+okzCxjqbTv2Kt88pu95AMNBstB0S
+         2xL0nWTCiOVLKdPhnuVqu4uteF16OgwkidejnFLR0NtvM+t6/opU/a9y7WaSkwKiyIpe
+         C9H74Yzm1bGCzpUz/uCCpO6XSXVAfF8K5aUv9AIIFrvTMG0LzoxpIvgAJ4aoMfXob0Xv
+         UyMVQzNXXQvyNBO445TlqXRfvseAbUTxl7TFIeqYTxfBAdl0xjWRp1RkKpEvNV7kzL/T
+         V1/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=vdE+rac4m6ZQO+S7iXo5aPUP63IvJsyQsAcCj7mGm7c=;
-        b=C3pPm1EUi3B3BDsFsREckookA3RKjMjfI4gUw5a/WAQnNDau6d+pdrbGkewWO4OAIM
-         hfpfWHvflQCgC8f36QfxXUoqo3vCmL6VN5YYCikLRJON3SOdySVBS3fsHG9Oczgj46J6
-         vfCqTUSQ4aXX3Chmwobpy2GpzyXpfXaKy5vumCCqvLLtW2mrTLGwo9lVq7yanSDKRPuK
-         TTZ64zRvO6YIoSG67fGYDW34gex8m3Xi/hXbD73b70C6PiTU7hvpTniQHPX+rOt0rBvA
-         kRrTNy7cNkS8tCDPDlQd/2IlvEDyyz38JecB7gsegU62unS+EIMtIOJm4qZx3J+KXigO
-         95rA==
-X-Gm-Message-State: AHYfb5hSFKxI4ISossWS+5/ezz+W79CQgNj4HWjYBYHM48x3+lRt3GBd
-        tJFYV77RqDY709Onzhw=
-X-Received: by 10.98.224.132 with SMTP id d4mr667864pfm.200.1504077169771;
-        Wed, 30 Aug 2017 00:12:49 -0700 (PDT)
+        bh=cvB3q6Ge3cPH2KWVmcXD2MwItILl8sxocp9czilQmHs=;
+        b=oJ6g4KkTXDhTRDOfptAvjUFhnQOQj57n6QKL/p8mkGTDPykSS+yAdQy7+I9JtF+dgg
+         01+gHXPWVwqAzjnYsh66pAEE2twDgo5EnGg1n6/hI7fINUCMtm8zTALXzI8wGaGy/KQW
+         46azG1j/UemufWg4las5nJhkRRUQ6Hxoi6zGohOdKhcPlUj0fntw8f7pWp81awCpmOwE
+         Wht0AeLMdqK/Rd58CnkxGit2cKCvxrCClVVtO+J2aS2nSztDWBjI29R6BH+bw/b3zw6r
+         0WKJnXoQegkQRrzc3hKFVzPtJYKOKcMFoevExOsuW0WdbPE5NJxcuDQllhB5yjLQfj4a
+         103g==
+X-Gm-Message-State: AHYfb5glvVjP0edk5bzBdG0C2uLrNXMgxzGiKyFe1vPKEdCTeHPKR6l6
+        GiPIKlE+d+4YdqVcEMU=
+X-Received: by 10.98.236.155 with SMTP id e27mr648367pfm.163.1504077195992;
+        Wed, 30 Aug 2017 00:13:15 -0700 (PDT)
 Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:5042:50b1:56af:6f3d])
-        by smtp.gmail.com with ESMTPSA id u29sm8371224pfa.72.2017.08.30.00.12.49
+        by smtp.gmail.com with ESMTPSA id d69sm6988063pgc.82.2017.08.30.00.13.15
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 30 Aug 2017 00:12:49 -0700 (PDT)
-Date:   Wed, 30 Aug 2017 00:12:47 -0700
+        Wed, 30 Aug 2017 00:13:15 -0700 (PDT)
+Date:   Wed, 30 Aug 2017 00:13:13 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>,
         "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH 30/39] pack: allow prepare_packed_git_mru to handle arbitrary
+Subject: [PATCH 31/39] pack: allow prepare_packed_git_one to handle arbitrary
  repositories
-Message-ID: <20170830071247.GE153983@aiede.mtv.corp.google.com>
+Message-ID: <20170830071313.GF153983@aiede.mtv.corp.google.com>
 References: <20170830064634.GA153983@aiede.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -74,28 +74,39 @@ Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
  1 file changed, 4 insertions(+), 5 deletions(-)
 
 diff --git a/packfile.c b/packfile.c
-index 977e714d9a..9bb93ce256 100644
+index 9bb93ce256..4652be0b6e 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -857,14 +857,13 @@ static void rearrange_packed_git(struct repository *r)
- 		set_next_packed_git, sort_pack);
+@@ -719,8 +719,8 @@ static void report_pack_garbage(struct string_list *list)
+ 	report_helper(list, seen_bits, first, list->nr);
  }
  
--#define prepare_packed_git_mru(r) prepare_packed_git_mru_##r()
--static void prepare_packed_git_mru_the_repository(void)
-+static void prepare_packed_git_mru(struct repository *r)
+-#define prepare_packed_git_one(r, o, l) prepare_packed_git_one_##r(o, l)
+-static void prepare_packed_git_one_the_repository(char *objdir, int local)
++static void prepare_packed_git_one(struct repository *r,
++				   char *objdir, int local)
  {
- 	struct packed_git *p;
+ 	struct strbuf path = STRBUF_INIT;
+ 	size_t dirnamelen;
+@@ -753,8 +753,7 @@ static void prepare_packed_git_one_the_repository(char *objdir, int local)
+ 		base_len = path.len;
+ 		if (strip_suffix_mem(path.buf, &base_len, ".idx")) {
+ 			/* Don't reopen a pack we already have. */
+-			for (p = the_repository->objects.packed_git; p;
+-			     p = p->next) {
++			for (p = r->objects.packed_git; p; p = p->next) {
+ 				size_t len;
+ 				if (strip_suffix(p->pack_name, ".pack", &len) &&
+ 				    len == base_len &&
+@@ -767,7 +766,7 @@ static void prepare_packed_git_one_the_repository(char *objdir, int local)
+ 			     * corresponding .pack file that we can map.
+ 			     */
+ 			    (p = add_packed_git(path.buf, path.len, local)) != NULL)
+-				install_packed_git(the_repository, p);
++				install_packed_git(r, p);
+ 		}
  
--	mru_clear(&the_repository->objects.packed_git_mru);
--	for (p = the_repository->objects.packed_git; p; p = p->next)
--		mru_append(&the_repository->objects.packed_git_mru, p);
-+	mru_clear(&r->objects.packed_git_mru);
-+	for (p = r->objects.packed_git; p; p = p->next)
-+		mru_append(&r->objects.packed_git_mru, p);
- }
- 
- void prepare_packed_git_the_repository(void)
+ 		if (!report_garbage)
 -- 
 2.14.1.581.gf28d330327
 
