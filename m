@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 02367208DE
-	for <e@80x24.org>; Wed, 30 Aug 2017 17:50:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A4C320285
+	for <e@80x24.org>; Wed, 30 Aug 2017 17:50:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752122AbdH3RuP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Aug 2017 13:50:15 -0400
-Received: from mout.web.de ([217.72.192.78]:65183 "EHLO mout.web.de"
+        id S1752119AbdH3RuO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Aug 2017 13:50:14 -0400
+Received: from mout.web.de ([212.227.17.12]:49814 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751740AbdH3RuH (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1751742AbdH3RuH (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 30 Aug 2017 13:50:07 -0400
 Received: from debian.fritz.box ([91.20.59.6]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0Lrruc-1dN1AO1Hyg-013gD9 for
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MHY1o-1doD3K1psq-003MKL for
  <git@vger.kernel.org>; Wed, 30 Aug 2017 19:50:06 +0200
 From:   Rene Scharfe <l.s.r@web.de>
 To:     git@vger.kernel.org
-Subject: [PATCH 05/34] clean: release strbuf after use in remove_dirs()
-Date:   Wed, 30 Aug 2017 19:49:36 +0200
-Message-Id: <20170830175005.20756-6-l.s.r@web.de>
+Subject: [PATCH 06/34] clone: release strbuf after use in remove_junk()
+Date:   Wed, 30 Aug 2017 19:49:37 +0200
+Message-Id: <20170830175005.20756-7-l.s.r@web.de>
 X-Mailer: git-send-email 2.14.1
 In-Reply-To: <20170830175005.20756-1-l.s.r@web.de>
 References: <20170830175005.20756-1-l.s.r@web.de>
-X-Provags-ID: V03:K0:nd5J0258HfvWshImfvv4Z+9rlYD9oUYnNxNMObyYmiypvOu+nzI
- 7doY5F7rU4Uqo+jw2Uh4KVLPE8XPQujxj2aH48fVDyvu42lL/OmMhcK5GEfVnoq2y1/NxaX
- o0oCsXgV6cuFUGowV1DjCP2A0gRgQWwrm6cCjN2h2HTW8W9trT4yQiG8adNdjnwVfcS4Sjx
- bE7LMTgBiyFqcMxZif0Dg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:BI6fa2CtuD8=:JzZtek1G7s2O8hVimjzyhF
- TKOD3UNxw3ol1ay7ErdLLof1XRH8dXRWDMDN/QPuq5GpUsUSdVRBk+dTh7v7mHFFNtCXKuR2U
- vK/o5nxcVEzeX/7pBdbaDsKC35N28xglIKBnB2+6mvXxZyGGwSEQ/yPKsKaunm/PN+s7HjukV
- o7UwTHZ5hS4kYrGyqUmTT8MnEdWb9D+3IRKeJG04bJzdj2Kk46SLz8k6BUg0llYbgjMKlmNrO
- NtJGhPdE6gyD456opPTiX4bLMKty7W1ovowQDqhTNn0vWi+bi5Nadj+d4iLju5QzBGRiEGQrp
- 9qZrBBXFoWIRLwvVTar7kMKoKohSYl/umeo+a68tAZFw/DT/rVQmtOPuk7e6zKQPdg7LzSgmW
- AXKggGsnn7Tzy0UYkJblMlYBZkNFkcodnJOwDzNYkRarDNpJ2Z0ByvvmrUfP4rLmpO28ItHfJ
- 6vTVw0a4sIe10Jq+C0PlS0+sWu+rBtgANi1umAfDLkBTKUTfoaLSXXspBdw4K/ymueqn7yz2d
- 3BHcduk3ign3aVFX8jLfDvztYk5CsTqiaNjgceksLK26GsDG2DVClXBc4T/7tdL9BYICCO9EZ
- Mef73f0+u3XCSag7l3grnnpU0NICl05fhhoi2CxSxzgRQCrhaBhgCdJ/zd/rhd1ej8zutosPv
- N5MgUpjw5p/FL9zRL07lE01KFazefjQOCZRitcxYKAAtnDS+4sW1Z+rY2W8SQibS+NpzzjDn5
- Q6xVYdhQH/ga1sgKi136XOP8IGmSpxOzE6ant+837NA/2UPcI9aYVa0L+Ow2EttyE7qTjhtfD
- /xAhSpWyce1roDtPcTVUN1eQWhYuw==
+X-Provags-ID: V03:K0:WTqDkS/UrizodzPDluW5db6sMc8s+EWH2UjYxLtcqqylkYnbBoX
+ jSp617YwRbZ2IqqWcSDoxmoKytZ5ft16SXW6AZWGZMxF5wpTf/Eq+Jepx8HDxC9wVjhj5VV
+ IYSW6udwFxAOFtEY7GBW6tXFySCya1ObOBFpBW68S9ghbFuvPyvIOy1QIGux6eQur7UI/0l
+ O4ss5b4Lcqgc3ER4x5BGw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:zc3wwPFc48Y=:isdkEAigE5g78n4w+ycxae
+ idmGbe6Z8yZYFPxKKiubB1NdhKVWwwNfIa/g4/1Asks+bVRS6f57kfdMUGu/PbvucL2gyXmUn
+ qa6KEByFSXDhx2UjxO/sC0rKR6Xc3PaEyX9dtwvAjH458Bu39QGOQ4otL7ckl/TmDcf0orl+V
+ aEF7zeW/YG+sYH6NbdnLBogqNJl3NBvK0RGKwlAPAY5hJz4aD33KvnFdgTj1ckgii01pQfSYo
+ Ya0jNkBgKj7aZCl1DiEXWI66vMIsWCgOo4CpXeNPpPvlg0RnzbuLrt14Kp3VOLCY/EO83+1Ol
+ n6RGXxxj42EHTKf4aQEVM1rXpoLb/T/soMMpHpEhbzIvUeMwRvrDR0FF71hAeQfWB/hTov3DT
+ n2Uo11N3h8EhMIJMOhXq6q4BNI5IrssYeNXVXtcxBJS8bVCnI7ZpYa+7FRzY3uqf5cgUUPG68
+ ykYDLThMXMPlVkkX5y+L94YkIqj7MVJhT0blkD4aU1TUhsTV/fGhc9CpL+tf6bdKqpUAGDWTQ
+ tMb+GGwHsWlgPPUZ4p4eV5U4xQLFoZqCqTloTa9IWs8Pau/DuWHO+19Mf8eeyWNoZrCQqeqH+
+ 18vl9klqyZIzBVJNE3RSiFeEiswgvY4lt5k7gkH+ltQyLGD796kazxfzb1uHgbabfvq6zf6s/
+ dB0QbhPVr2vtV/aJiOvtvNDIzYrGc8g8p330A00yax8yohJu7k7eLVV4xztf42yut9RgrRWwg
+ qmZYvrUGqVEBsDKX2/pLTYSQEw/dHrtTA2AhPDb5OsEY+xrWmjs4CI168rlyYbj/qNq3N49In
+ ThPT+oL6Sop8x9Rbl594bqvNc61VQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -51,123 +51,43 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- builtin/clean.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ builtin/clone.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin/clean.c b/builtin/clean.c
-index 21a7a32994..733b6d3745 100644
---- a/builtin/clean.c
-+++ b/builtin/clean.c
-@@ -151,104 +151,107 @@ static int exclude_cb(const struct option *opt, const char *arg, int unset)
- static int remove_dirs(struct strbuf *path, const char *prefix, int force_flag,
- 		int dry_run, int quiet, int *dir_gone)
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 8d11b570a1..dbddd98f80 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -487,28 +487,28 @@ N_("Clone succeeded, but checkout failed.\n"
+ static void remove_junk(void)
  {
- 	DIR *dir;
- 	struct strbuf quoted = STRBUF_INIT;
- 	struct dirent *e;
- 	int res = 0, ret = 0, gone = 1, original_len = path->len, len;
- 	struct string_list dels = STRING_LIST_INIT_DUP;
+ 	struct strbuf sb = STRBUF_INIT;
  
- 	*dir_gone = 1;
- 
- 	if ((force_flag & REMOVE_DIR_KEEP_NESTED_GIT) && is_nonbare_repository_dir(path)) {
- 		if (!quiet) {
- 			quote_path_relative(path->buf, prefix, &quoted);
- 			printf(dry_run ?  _(msg_would_skip_git_dir) : _(msg_skip_git_dir),
- 					quoted.buf);
- 		}
- 
- 		*dir_gone = 0;
--		return 0;
-+		goto out;
- 	}
- 
- 	dir = opendir(path->buf);
- 	if (!dir) {
- 		/* an empty dir could be removed even if it is unreadble */
- 		res = dry_run ? 0 : rmdir(path->buf);
- 		if (res) {
- 			int saved_errno = errno;
- 			quote_path_relative(path->buf, prefix, &quoted);
- 			errno = saved_errno;
- 			warning_errno(_(msg_warn_remove_failed), quoted.buf);
- 			*dir_gone = 0;
- 		}
--		return res;
-+		ret = res;
-+		goto out;
- 	}
- 
- 	strbuf_complete(path, '/');
- 
- 	len = path->len;
- 	while ((e = readdir(dir)) != NULL) {
- 		struct stat st;
- 		if (is_dot_or_dotdot(e->d_name))
- 			continue;
- 
- 		strbuf_setlen(path, len);
- 		strbuf_addstr(path, e->d_name);
- 		if (lstat(path->buf, &st))
- 			; /* fall thru */
- 		else if (S_ISDIR(st.st_mode)) {
- 			if (remove_dirs(path, prefix, force_flag, dry_run, quiet, &gone))
- 				ret = 1;
- 			if (gone) {
- 				quote_path_relative(path->buf, prefix, &quoted);
- 				string_list_append(&dels, quoted.buf);
- 			} else
- 				*dir_gone = 0;
- 			continue;
- 		} else {
- 			res = dry_run ? 0 : unlink(path->buf);
- 			if (!res) {
- 				quote_path_relative(path->buf, prefix, &quoted);
- 				string_list_append(&dels, quoted.buf);
- 			} else {
- 				int saved_errno = errno;
- 				quote_path_relative(path->buf, prefix, &quoted);
- 				errno = saved_errno;
- 				warning_errno(_(msg_warn_remove_failed), quoted.buf);
- 				*dir_gone = 0;
- 				ret = 1;
- 			}
- 			continue;
- 		}
- 
- 		/* path too long, stat fails, or non-directory still exists */
- 		*dir_gone = 0;
- 		ret = 1;
+ 	switch (junk_mode) {
+ 	case JUNK_LEAVE_REPO:
+ 		warning("%s", _(junk_leave_repo_msg));
+ 		/* fall-through */
+ 	case JUNK_LEAVE_ALL:
+ 		return;
+ 	default:
+ 		/* proceed to removal */
  		break;
  	}
- 	closedir(dir);
  
- 	strbuf_setlen(path, original_len);
- 
- 	if (*dir_gone) {
- 		res = dry_run ? 0 : rmdir(path->buf);
- 		if (!res)
- 			*dir_gone = 1;
- 		else {
- 			int saved_errno = errno;
- 			quote_path_relative(path->buf, prefix, &quoted);
- 			errno = saved_errno;
- 			warning_errno(_(msg_warn_remove_failed), quoted.buf);
- 			*dir_gone = 0;
- 			ret = 1;
- 		}
+ 	if (junk_git_dir) {
+ 		strbuf_addstr(&sb, junk_git_dir);
+ 		remove_dir_recursively(&sb, 0);
+ 		strbuf_reset(&sb);
  	}
- 
- 	if (!*dir_gone && !quiet) {
- 		int i;
- 		for (i = 0; i < dels.nr; i++)
- 			printf(dry_run ?  _(msg_would_remove) : _(msg_remove), dels.items[i].string);
+ 	if (junk_work_tree) {
+ 		strbuf_addstr(&sb, junk_work_tree);
+ 		remove_dir_recursively(&sb, 0);
+-		strbuf_reset(&sb);
  	}
-+out:
-+	strbuf_release(&quoted);
- 	string_list_clear(&dels, 0);
- 	return ret;
++	strbuf_release(&sb);
  }
+ 
+ static void remove_junk_on_signal(int signo)
 -- 
 2.14.1
 
