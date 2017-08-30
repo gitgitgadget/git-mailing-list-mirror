@@ -2,98 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B339220285
-	for <e@80x24.org>; Wed, 30 Aug 2017 18:23:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF3CA20285
+	for <e@80x24.org>; Wed, 30 Aug 2017 18:59:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752677AbdH3SX0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Aug 2017 14:23:26 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:33630 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751463AbdH3SXZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Aug 2017 14:23:25 -0400
-Received: by mail-pf0-f193.google.com with SMTP id r62so2032315pfj.0
-        for <git@vger.kernel.org>; Wed, 30 Aug 2017 11:23:25 -0700 (PDT)
+        id S1750774AbdH3S7g (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Aug 2017 14:59:36 -0400
+Received: from mail-io0-f182.google.com ([209.85.223.182]:36162 "EHLO
+        mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750756AbdH3S7f (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Aug 2017 14:59:35 -0400
+Received: by mail-io0-f182.google.com with SMTP id f99so1345467ioi.3
+        for <git@vger.kernel.org>; Wed, 30 Aug 2017 11:59:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=2p3clySs3sauZuDjACEgLlcmSFJOCFP+oQ4+P1aX0XA=;
-        b=aTnC3/dfPxcVIY3+nX2DT4oAtcjZgwGov0TBiz6OGp+QaFThEniZb24/0UBv5K6ggd
-         CX7HKIDgQknCPsbd5Al9oIaxscLy4eE5rE1Tsbf0bxk2lvj2QciwuFDzsClsD1Mgwp6S
-         2zaEHNK1Cm8Hp3+akxt9VZagm2+/DqFyTB97bwfFCrPywwbkG4GUs/F3qnMhS1vQax8g
-         kk9HPLlrkNv/867/yUQrMXooPSoqC2OUFVhGXAHyVBLQ46fTdPEvjBKRytaEXNzjjBxF
-         7Q3Ln06uP5/4ShhbBb8oYP3HdCgXZ6/hbzLTex7E8BxTbO+PoMx+J/1GrmNIN4hLlSvE
-         YjoQ==
+         :cc:content-transfer-encoding;
+        bh=cYsoudrMkzPg7FxU5KY5y00NLRQlUBgKuAGss1f/Nd4=;
+        b=XcwfsvdhAff0tUSWdxi4QFGusrtl7INPnQsZ1/JN55GfTc/9Mh3CNx6YtoEswPRUVw
+         QNe8duyk8B0pWW8Ps39MoyxpoKz+SsDF/DXBQhLJFiSWDXflvXta2dBT2Zh690/qUW3B
+         g/5i22E42+tcyCtVmDVDyBrWlBAb/p3TwiBMmStukGj3FvELU4IVn09GkkTOCHWnlPxm
+         JiBFXHLFXQyaiwQQcvIwFAYISV0qNJeqD72y5CR5ZllR16w0bD2S6r5p7DL8cLmctHJQ
+         cBw8N879eC0pdzKm3iUFFfM2jz634nzoUWGk6kzLsGupEK5iBNM6hMRRc5LKJoW2wZNQ
+         6nAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=2p3clySs3sauZuDjACEgLlcmSFJOCFP+oQ4+P1aX0XA=;
-        b=GTMMEEdM+YiVKliawv1PNYRuXS+wwaA4Mc6TyxAwp+NCclGzkc7okgBs8wV/Fcn/mN
-         xRX0R/rSuka62ySZI7Smt7Ev5lInHS0yQNjX5Cd5eNPky6GsP0CHF2gAGVYOutbW1JXm
-         ecUi14we769Ubm/YK9M9xzOO4YozeiEW3a0ae54p+WC6y4tEKq8KG7HDQRhVm2ssehHN
-         EhalngXGrcGHi23sy7uMxLf144Q7VJOCOZCzoSPrRqXc4wQ6MRk/CcEUcy7WvufbGa64
-         oSaQ0b76sW6zAQ792DjdKsmUjJ0QzPhjk1RdbAwxAn9hG+mSw5SfzQivj0xPeqNYOvRy
-         hRCw==
-X-Gm-Message-State: AHYfb5h39tADfVETW0IPZJikqXQp9gEX6Atvz46jSJW3z9PJgk+bXA3+
-        +iWJ7SKZvjbisx9J0uhaXTrxVPO3Zw==
-X-Received: by 10.99.112.20 with SMTP id l20mr2419336pgc.362.1504117405193;
- Wed, 30 Aug 2017 11:23:25 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=cYsoudrMkzPg7FxU5KY5y00NLRQlUBgKuAGss1f/Nd4=;
+        b=c6ucRzMHEs0neM/zIbTfD2vxZMm7lX/H4+OZcMQvCoElI85muF7N/nRFvbCAmc0HF8
+         Tn9lz0z+G6ZNK371RQwzbfs3ut7PAo0zCOD/O03StXjgMWMEj4NyIuH1kQxkWvGeP7h4
+         SBAOudT1XJB077elrB2Lis31hOKHhmSg4DgfWpPyrUmByNdoSssz/B1W/acnDl99phcO
+         AfP/7HHCJgLT/4R5NgiygtdNjc/OZL6LQFzRkSx2ctWxUsdXYFChfGv4+5lUqJmpHgbP
+         2+6mdYkB2eu5Q7u5mVhpb/0afpI6zThsCsxIG/6QCc8vmdq8PiQauojBEKdq8flMzeAQ
+         xJvQ==
+X-Gm-Message-State: AHYfb5hX4wmNgZkx+SiC3Ft/d/Pgvat2fyO9Nq5geJeVoj1/cZppvzEB
+        1lHs0/ao+dO2SMQzuxSDcp204Mx5qw==
+X-Received: by 10.36.185.90 with SMTP id k26mr2721145iti.129.1504119575183;
+ Wed, 30 Aug 2017 11:59:35 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.100.182.197 with HTTP; Wed, 30 Aug 2017 11:23:24 -0700 (PDT)
-In-Reply-To: <20170830175005.20756-18-l.s.r@web.de>
-References: <20170830175005.20756-1-l.s.r@web.de> <20170830175005.20756-18-l.s.r@web.de>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Wed, 30 Aug 2017 20:23:24 +0200
-Message-ID: <CAN0heSopzQdkO373_eTHM8=z9fAWJFhyo6a5tVPWW-j8p0V2xA@mail.gmail.com>
-Subject: Re: [PATCH 17/34] mailinfo: release strbuf on error return in handle_boundary()
-To:     Rene Scharfe <l.s.r@web.de>
+Received: by 10.79.34.23 with HTTP; Wed, 30 Aug 2017 11:59:34 -0700 (PDT)
+In-Reply-To: <CAN0heSqGfxrFTwuaxgppZTx+3U=g_Qs4PyaCBF6ddV_PbvdpTQ@mail.gmail.com>
+References: <oo62vr$pvq$1@blaine.gmane.org> <CAN0heSqGfxrFTwuaxgppZTx+3U=g_Qs4PyaCBF6ddV_PbvdpTQ@mail.gmail.com>
+From:   Sebastian Schuberth <sschuberth@gmail.com>
+Date:   Wed, 30 Aug 2017 20:59:34 +0200
+Message-ID: <CAHGBnuMC_10krsdZe2KiQ4jjiL43kogn--dWjPgca_p2xgmQMA@mail.gmail.com>
+Subject: Re: Commit dropped when swapping commits with rebase -i -p
+To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 30 August 2017 at 19:49, Rene Scharfe <l.s.r@web.de> wrote:
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
-> ---
->  mailinfo.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/mailinfo.c b/mailinfo.c
-> index b1f5159546..f2387a3267 100644
-> --- a/mailinfo.c
-> +++ b/mailinfo.c
-> @@ -911,48 +911,49 @@ static int find_boundary(struct mailinfo *mi, struct strbuf *line)
->  static int handle_boundary(struct mailinfo *mi, struct strbuf *line)
->  {
->         struct strbuf newline = STRBUF_INIT;
->
->         strbuf_addch(&newline, '\n');
->  again:
->         if (line->len >= (*(mi->content_top))->len + 2 &&
->             !memcmp(line->buf + (*(mi->content_top))->len, "--", 2)) {
->                 /* we hit an end boundary */
->                 /* pop the current boundary off the stack */
->                 strbuf_release(*(mi->content_top));
->                 FREE_AND_NULL(*(mi->content_top));
->
->                 /* technically won't happen as is_multipart_boundary()
->                    will fail first.  But just in case..
->                  */
->                 if (--mi->content_top < mi->content) {
->                         error("Detected mismatched boundaries, can't recover");
->                         mi->input_error = -1;
->                         mi->content_top = mi->content;
-> +                       strbuf_release(&newline);
->                         return 0;
->                 }
+On Wed, Aug 30, 2017 at 8:07 PM, Martin =C3=85gren <martin.agren@gmail.com>=
+ wrote:
 
-Since this code path can't be taken (or so it says): How did you find
-this and the others? Static analysis? Grepping around?
+> The man-page for git rebase says that combining -p with -i is "generally
+> not a good idea unless you know what you are doing (see BUGS below)".
+
+Thanks for pointing this out again. I remember to have read this some
+time ago, but as I general consider myself to know what I'm doing, I
+forgot about it :-)
+
+Anyway, this should really more explicitly say *what* you need to know
+about, that is, reordering commits does not work.
+
+> So if you agree that a "dropped commit" is a "counterintuitive result",
+> this is known and documented. Maybe the warning could be harsher, but it
+> does say "unless you know what you are doing".
+
+I'd say it's worse than counterintuitive, as counterintuitive might
+still be correct, while in my case it clearly is not. So yes, the
+warning must be harsher in my opinion. Maybe we should even abort
+rebase -i-p if reordering of commits is detected.
+
+--=20
+Sebastian Schuberth
