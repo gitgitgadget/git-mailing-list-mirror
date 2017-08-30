@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F5DD208CD
-	for <e@80x24.org>; Wed, 30 Aug 2017 07:02:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 22D25208CD
+	for <e@80x24.org>; Wed, 30 Aug 2017 07:03:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751219AbdH3HCx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Aug 2017 03:02:53 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:36921 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751033AbdH3HCw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Aug 2017 03:02:52 -0400
-Received: by mail-pg0-f68.google.com with SMTP id t193so4476229pgc.4
-        for <git@vger.kernel.org>; Wed, 30 Aug 2017 00:02:52 -0700 (PDT)
+        id S1751110AbdH3HDd (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Aug 2017 03:03:33 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:36599 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750757AbdH3HDc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Aug 2017 03:03:32 -0400
+Received: by mail-pf0-f195.google.com with SMTP id k3so3805284pfc.3
+        for <git@vger.kernel.org>; Wed, 30 Aug 2017 00:03:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=NuuJUSpUgxfdl/1yC0hkonP7t6OfyFoXwa33gGGA5Xc=;
-        b=kK694bKRwwn33CNRwbgZsHjZhGfK30F33B4uikGLo/p2ysMlPJI9OZwxa/Qj33Q4+H
-         YmnkSssPO5c5RVQhAK4d+C/rJIdYCJHELUSBtcpK5g1w6nhO9aigj9XoG/AA7upK5wkN
-         4/7sjyXDEz+/lnlicmgrUx4XTUeEC5zyEO3Iff+8NnA5epBDCpu3+oS5bLwM4GQ/oQHd
-         9XUMQi1D5IX7yd+jjbUNCb53a8N3dgWgrsYDerM9xS1EqOvs6Z20I0d+WllHVWgs1PUl
-         OG5gz2rM5aBsgSN1Q227Yg4HhT5GqN5uc0uZcFo6mIvwH2eQayUdLak/fBGzM4jHOVkw
-         MDtA==
+        bh=V5GZdjuo4nUmdMTlWgXWv3TobnFkQPrGgc3Cc5SsCp4=;
+        b=IWEzw8d25ZhgIwq03hu+a0gpMHUiQebA7/vcM93A2ntAATXgnP4mwrh5Un5lgu+kiC
+         aBWsnXq5Wza8Xh31XSfb1e7cYEfkA2Qt/1qhiiRbBWqcIzFWSn6eiY1glcc0XqwMRwCb
+         r6cBaeH8T9OBM/uDHJKRGD2wAdMX9sVDtCQ7LaI0KOcsjiKRHBn5Bq5qn6Y+qwqXySag
+         o56qRCIgjmGqawzasb8cQQNho/QU6WZ+TnTTExOmxB+QuVJ/OetsAKiOGj3Y1JK8DxUs
+         fGT+CGrfiB7Q8Yv0bLmdJm/8DRBTi1GGNSfxX70MMUyyf3SSRcBfr+OYxMr9dZD5Mhak
+         0miw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=NuuJUSpUgxfdl/1yC0hkonP7t6OfyFoXwa33gGGA5Xc=;
-        b=tVdEKHE8JlZcXnyWUwfF9UjiOnafVjXkBoRkLSeZjEKrVj2K705uE522YnvJiDs1vV
-         4/hNhj8E+GrqrnnrytbXTEI7jLuekMdychvi6jkvu42mHzQ6eZmi+xzwfNpTKbRu95Pc
-         y3IV28Dz9iTII+ix3W6Ra9aueFEkNVKnp4kJnhcHlcYDfKCWDWl0fSwt7ZcPS5LbXeOS
-         7BpPVUl2M/cFFnyJWjxaMmR+BoyrjlSHavFZiC4F6jNnMByEkIKbKWNd4w6SxIvwyfdI
-         S14ece98cAiJAJSX0HmiZXDHtRDlATTv876bDinQLLCER4nKmfSRA/bJv3G9esyqbVTl
-         IbbQ==
-X-Gm-Message-State: AHYfb5jgMdCo6lGHVOcDfIUXUVuG2qaGUUlxYeUfdSnhbI1H6QkYGqXy
-        /SsgoghYPKUCT78TXM0=
-X-Received: by 10.98.152.157 with SMTP id d29mr618353pfk.139.1504076572170;
-        Wed, 30 Aug 2017 00:02:52 -0700 (PDT)
+        bh=V5GZdjuo4nUmdMTlWgXWv3TobnFkQPrGgc3Cc5SsCp4=;
+        b=Xca1m58mKoROb65q82scS0aRLl18VrkpFmBWIPj1/JYnvxH/NgwXeA1UPLbG6cv4cm
+         DaXlWT86+SyQzZbYfILn2PpV76HIgOzH4qb0m36GjAVr5NAtHyKgJpGlnIAXAoLPsEeU
+         9ZNwatVSRbUz9e7wb6FDcaj0rXRenJBx54h9QtObWNnnV7TloUyyGXbgsFfpcAB9WnfL
+         twl7+IBvn3/guQskGSw0jfvISzKfYVLEhZqVvP3YIkxh15TfX8ou5wz3J5ss0AwtCf9B
+         71i6U+QQGB06as2eEVUZc81WuV8WkFwpCWbYOjb3RRXK/EwKUqI60Q2lf9Rl++6xFMdt
+         QnGg==
+X-Gm-Message-State: AHYfb5hEdsQRhMbJwbfWKV8pjh/etqx9YBOprBC+RULF6t/3Toijatg1
+        kSsS5w1G1rOBUydbSlc=
+X-Received: by 10.98.57.135 with SMTP id u7mr632509pfj.220.1504076611477;
+        Wed, 30 Aug 2017 00:03:31 -0700 (PDT)
 Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:5042:50b1:56af:6f3d])
-        by smtp.gmail.com with ESMTPSA id l14sm7933314pgu.46.2017.08.30.00.02.51
+        by smtp.gmail.com with ESMTPSA id l30sm7828566pgc.61.2017.08.30.00.03.30
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 30 Aug 2017 00:02:51 -0700 (PDT)
-Date:   Wed, 30 Aug 2017 00:02:50 -0700
+        Wed, 30 Aug 2017 00:03:31 -0700 (PDT)
+Date:   Wed, 30 Aug 2017 00:03:29 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>,
         "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH 17/39] pack: add repository argument to install_packed_git
-Message-ID: <20170830070250.GR153983@aiede.mtv.corp.google.com>
+Subject: [PATCH 18/39] pack: add repository argument to prepare_packed_git_one
+Message-ID: <20170830070329.GS153983@aiede.mtv.corp.google.com>
 References: <20170830064634.GA153983@aiede.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -66,8 +66,8 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a repository argument to allow install_packed_git callers to be
-more specific about which repository to handle. This is a small
+Add a repository argument to allow the prepare_packed_git_one caller
+to be more specific about which repository to handle. This is a small
 mechanical change; it doesn't change the implementation to handle
 repositories other than the_repository yet.
 
@@ -77,81 +77,36 @@ repository other than the_repository at compile time.
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- fast-import.c | 2 +-
- http.c        | 3 ++-
- packfile.c    | 4 ++--
- packfile.h    | 3 ++-
- 4 files changed, 7 insertions(+), 5 deletions(-)
+ packfile.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/fast-import.c b/fast-import.c
-index 9a725ebf4f..4c3b3d9df6 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -1038,7 +1038,7 @@ static void end_packfile(void)
- 		if (!new_p)
- 			die("core git rejected index %s", idx_name);
- 		all_packs[pack_id] = new_p;
--		install_packed_git(new_p);
-+		install_packed_git(the_repository, new_p);
- 		free(idx_name);
- 
- 		/* Print the boundary */
-diff --git a/http.c b/http.c
-index 3186de107b..0979053272 100644
---- a/http.c
-+++ b/http.c
-@@ -1,5 +1,6 @@
- #include "git-compat-util.h"
- #include "http.h"
-+#include "repository.h"
- #include "config.h"
- #include "object-store.h"
- #include "pack.h"
-@@ -2049,7 +2050,7 @@ int finish_http_pack_request(struct http_pack_request *preq)
- 		return -1;
- 	}
- 
--	install_packed_git(p);
-+	install_packed_git(the_repository, p);
- 	free(tmp_idx);
- 	return 0;
- }
 diff --git a/packfile.c b/packfile.c
-index 2cd61b32a3..cea3698af5 100644
+index cea3698af5..3a841c0f69 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -664,7 +664,7 @@ struct packed_git *add_packed_git(const char *path, size_t path_len, int local)
- 	return p;
+@@ -719,7 +719,8 @@ static void report_pack_garbage(struct string_list *list)
+ 	report_helper(list, seen_bits, first, list->nr);
  }
  
--void install_packed_git(struct packed_git *pack)
-+void install_packed_git_the_repository(struct packed_git *pack)
+-static void prepare_packed_git_one(char *objdir, int local)
++#define prepare_packed_git_one(r, o, l) prepare_packed_git_one_##r(o, l)
++static void prepare_packed_git_one_the_repository(char *objdir, int local)
  {
- 	if (pack->pack_fd != -1)
- 		pack_open_fds++;
-@@ -766,7 +766,7 @@ static void prepare_packed_git_one(char *objdir, int local)
- 			     * corresponding .pack file that we can map.
- 			     */
- 			    (p = add_packed_git(path.buf, path.len, local)) != NULL)
--				install_packed_git(p);
-+				install_packed_git(the_repository, p);
- 		}
+ 	struct strbuf path = STRBUF_INIT;
+ 	size_t dirnamelen;
+@@ -871,10 +872,10 @@ void prepare_packed_git(void)
  
- 		if (!report_garbage)
-diff --git a/packfile.h b/packfile.h
-index 0cdeb54dcd..7e6959d440 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -34,7 +34,8 @@ extern void (*report_garbage)(unsigned seen_bits, const char *path);
- 
- extern void prepare_packed_git(void);
- extern void reprepare_packed_git(void);
--extern void install_packed_git(struct packed_git *pack);
-+#define install_packed_git(r, p) install_packed_git_##r(p)
-+extern void install_packed_git_the_repository(struct packed_git *pack);
- 
- /*
-  * Give a rough count of objects in the repository. This sacrifices accuracy
+ 	if (the_repository->objects.packed_git_initialized)
+ 		return;
+-	prepare_packed_git_one(get_object_directory(), 1);
++	prepare_packed_git_one(the_repository, get_object_directory(), 1);
+ 	prepare_alt_odb(the_repository);
+ 	for (alt = the_repository->objects.alt_odb_list; alt; alt = alt->next)
+-		prepare_packed_git_one(alt->path, 0);
++		prepare_packed_git_one(the_repository, alt->path, 0);
+ 	rearrange_packed_git();
+ 	prepare_packed_git_mru();
+ 	the_repository->objects.packed_git_initialized = 1;
 -- 
 2.14.1.581.gf28d330327
 
