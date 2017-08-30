@@ -7,81 +7,95 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4FD5E20285
-	for <e@80x24.org>; Wed, 30 Aug 2017 13:51:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 816B920285
+	for <e@80x24.org>; Wed, 30 Aug 2017 13:59:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751412AbdH3Nur (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Aug 2017 09:50:47 -0400
-Received: from mail-qt0-f176.google.com ([209.85.216.176]:37297 "EHLO
-        mail-qt0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751332AbdH3NuB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Aug 2017 09:50:01 -0400
-Received: by mail-qt0-f176.google.com with SMTP id h15so12142969qta.4
-        for <git@vger.kernel.org>; Wed, 30 Aug 2017 06:50:01 -0700 (PDT)
+        id S1751739AbdH3N7i (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Aug 2017 09:59:38 -0400
+Received: from mail-qt0-f193.google.com ([209.85.216.193]:35350 "EHLO
+        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751410AbdH3N7g (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Aug 2017 09:59:36 -0400
+Received: by mail-qt0-f193.google.com with SMTP id u11so5187866qtu.2
+        for <git@vger.kernel.org>; Wed, 30 Aug 2017 06:59:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=KpXBE9DGZge1IIKiB26XubvKMEmGWJ52XI9gzydTtuE=;
-        b=uFD0f9urL1SgSM/KXewic47Q779oD+G/yS8L2W7/aoedlKa4NYQK+qY8F7LuwxOa8/
-         cEmCN+PxWOhmSTLSrTqLjqaGhBtVGNJ51havDFkU1fdk6pcuwuT1vFSiFimmSnHj+g/O
-         P8+fgYfVLMDcUCQx4HKztKpvq/RFdHr4QPIL84lznrHXOQrdaPzxD/Yt0xufwvLRJVXQ
-         r5xBiSsw+rFYUvkAjkTuaVmrtXtNkE3z05dcpLgailyIO+bfsqSck6VWIwn2DfBc3agZ
-         Rw43R/uXECpKz2RD+E4EmlzXuw1QAJPJPx1Gw5GActAsxj+VEOMiXhcf1f6xbBWDGy67
-         jyHw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :in-reply-to:references:mime-version:content-transfer-encoding;
+        bh=lHTd/er/RiCgJOPu51F3vYe30iajzgX8+Nbfo85S47w=;
+        b=W5lxOQ3lRYzDgfeO2k0JOKbZiRjwShoghJz3CJKF+yNRXTcq0xBOu3bzE0gcHnTRPa
+         MZkeAp20GXcqIpU+myfUWmpvQ6x4TvZn0tZsk3Be6TyL9eJa9uHlV0HjPA1hA56bBzTC
+         hZU2kdkO4+cJ7Xlj7+qh2GUUxWdKDiHfSpx7xiJm3JMtloe1WJ/KRGtaXT8hiV5QKtPI
+         3zOdej5LfwQdDH6dNKF9Lfc9RYLrSLXLw5JQCxx4jrxahDFkfZMSr8tVkP+Qv4fZygCY
+         bJkmdKni0gsVDandNvrPBHhluPB+2pyLVICE/qMNpYzC4oy1g8d/aROD1pzXg2spByeh
+         eTDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
-         :references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=KpXBE9DGZge1IIKiB26XubvKMEmGWJ52XI9gzydTtuE=;
-        b=auU5torEMvT13nqbnBnkGXEnsKHT3C0+HqrDTZZ/W+el+ALa4KENFZuScKoEwO4A7u
-         /ViMqOhSZwYSGPgkK0FmXU7ZTHhwAUhkFGPEa4fi2dVPJiREGjAnnGr6TmVBcuCdksHP
-         2KNGi4X4j6drWXZJD7sKGtEW/Y5OvMahizu1O6T7zIyY5OfVTbE8fl/lpccO6zwIeyo6
-         DiiNbJ9MlnT/AJdRe2L5wg2f3kAziJV0OyEBZPwuZxD6tcklcy8BinioTaV+1cAeQzDv
-         zZ1JhmeaiGfmpTsffMQLAt2XUDy8RZnesc5B5pz3dYOEdqLFlzTksIepbmvTvohVjGCt
-         toQw==
-X-Gm-Message-State: AHYfb5hFcp8p7QvukGUk92djw6uJWCt0oNw1WvRUUo5ilkNltY/RFTti
-        DffwMrFA/SnPrg==
-X-Received: by 10.200.8.169 with SMTP id v38mr2126014qth.85.1504101000873;
-        Wed, 30 Aug 2017 06:50:00 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:in-reply-to:references:mime-version
+         :content-transfer-encoding;
+        bh=lHTd/er/RiCgJOPu51F3vYe30iajzgX8+Nbfo85S47w=;
+        b=LalDMnwMR7gRnymHy1SEOm3mBbkVe1JQNhpISFDFZyNm+YtjZoL5YzKP+HQE7Shd4w
+         L34a1jEbCuvluXh7EF3bTN49iRwCP4zqAgbfZb1sMzw0T3mABjeLBNle5ljg5yxnhQ2J
+         Pxz0dSbu8Cybp0eFZ3vRMQ0kRhGrlN4hj3gdW05UuCOIra6VUX917FKt1lq19M1RmmtU
+         SDF8JrecConDMSHJvfZdiYWTot5NB8LpJm1trzUp0qDnPC9nrTK7Dt1Wd2MDGIcWUqrU
+         WoR/XIB6eAr5pHCpLd28vMerLP//6MtO9QX0ldQhJPOYMcc1l7EZ1khsaNPu/0onULUK
+         I1gg==
+X-Gm-Message-State: AHYfb5jcP907v//yMSrCNs0DIs4FTQ1fXcxQuUVqfFBhswHdbsFSHk/T
+        5JMzzonuSKmwVA==
+X-Received: by 10.200.28.123 with SMTP id j56mr2212370qtk.305.1504101575598;
+        Wed, 30 Aug 2017 06:59:35 -0700 (PDT)
 Received: from localhost (tripoint.kitware.com. [66.194.253.20])
-        by smtp.gmail.com with ESMTPSA id l68sm3580693qkc.42.2017.08.30.06.49.59
+        by smtp.gmail.com with ESMTPSA id o67sm3577486qte.71.2017.08.30.06.59.34
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 30 Aug 2017 06:49:59 -0700 (PDT)
-Date:   Wed, 30 Aug 2017 09:49:59 -0400
+        Wed, 30 Aug 2017 06:59:34 -0700 (PDT)
 From:   Ben Boeckel <mathstuf@gmail.com>
-To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     gitster@pobox.com, git@vger.kernel.org
-Subject: Re: [PATCH] Documentation: mention that `eol` can change the dirty
- status of paths
-Message-ID: <20170830134959.GA28282@megas.kitware.com>
-Reply-To: mathstuf@gmail.com
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org,
+        =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
+        Ben Boeckel <mathstuf@gmail.com>
+Subject: [PATCH v2] Documentation: mention that `eol` can change the dirty status of paths
+Date:   Wed, 30 Aug 2017 09:59:32 -0400
+Message-Id: <20170830135932.1738-1-mathstuf@gmail.com>
+X-Mailer: git-send-email 2.9.5
+In-Reply-To: <20170822174918.GA1005@megas.kitware.com>
 References: <20170822174918.GA1005@megas.kitware.com>
- <20170823211741.9633-1-mathstuf@gmail.com>
- <20170824055054.GA32617@tor.lan>
+In-Reply-To: <20170822174918.GA1005@megas.kitware.com>
+References: <20170822174918.GA1005@megas.kitware.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20170824055054.GA32617@tor.lan>
-User-Agent: Mutt/1.8.3 (2017-05-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 24, 2017 at 07:50:54 +0200, Torsten Bögershausen wrote:
->   This attribute sets a specific line-ending style to be used in the
->   working directory.  It enables end-of-line conversion without any
->  -content checks, effectively setting the `text` attribute.
->  +content checks, effectively setting the `text` attribute.  Note that
->  +setting this attribute on paths which are in the index with CRLF
->  +line endings makes the paths to be considered dirty.
->  +Adding the path to the index again will normalize the line
->  +endings in the index.
+When setting the `eol` attribute, paths can change their dirty status
+without any change in the working directory. This can cause confusion
+and should at least be mentioned with a remedy.
 
-Yes, that sounds better. Will resubmit the patch.
+Reviewed-by: Torsten Bögershausen <tboegi@web.de>
+Signed-off-by: Ben Boeckel <mathstuf@gmail.com>
+---
+ Documentation/gitattributes.txt | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---Ben
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index c4f2be2..b940d37 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -151,7 +151,10 @@ unspecified.
+ 
+ This attribute sets a specific line-ending style to be used in the
+ working directory.  It enables end-of-line conversion without any
+-content checks, effectively setting the `text` attribute.
++content checks, effectively setting the `text` attribute.  Note that
++setting this attribute on paths which are in the index with CRLF line
++endings makes the paths to be considered dirty.  Adding the path to the
++index again will normalize the line endings in the index.
+ 
+ Set to string value "crlf"::
+ 
+-- 
+2.9.5
+
