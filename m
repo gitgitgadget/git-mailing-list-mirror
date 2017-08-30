@@ -2,103 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B174F20285
-	for <e@80x24.org>; Wed, 30 Aug 2017 18:01:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0187620285
+	for <e@80x24.org>; Wed, 30 Aug 2017 18:02:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751804AbdH3SAw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Aug 2017 14:00:52 -0400
-Received: from mout.web.de ([217.72.192.78]:65082 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752576AbdH3SAk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Aug 2017 14:00:40 -0400
-Received: from debian.fritz.box ([91.20.59.6]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MBkLb-1dcu9p2fAd-00AkFv for
- <git@vger.kernel.org>; Wed, 30 Aug 2017 20:00:38 +0200
-From:   Rene Scharfe <l.s.r@web.de>
-To:     git@vger.kernel.org
-Subject: [PATCH 26/34] sha1_file: release strbuf on error return in index_path()
-Date:   Wed, 30 Aug 2017 20:00:29 +0200
-Message-Id: <20170830180037.20950-7-l.s.r@web.de>
-X-Mailer: git-send-email 2.14.1
-In-Reply-To: <20170830180037.20950-1-l.s.r@web.de>
-References: <20170830175005.20756-1-l.s.r@web.de>
- <20170830180037.20950-1-l.s.r@web.de>
-X-Provags-ID: V03:K0:eKVsWnMp5kDzErfDyKh+vBFc/xxX82jDa4//1xtz4+otuE0B57w
- yBgQjAqBfum2QYfmHz/lGYUrRArpSsRD9o/LnuPeGN0XCJQ6rgVxUyYHzQsCZ/xaGfUj60p
- itveJrwoumh5ssUbDHr+RXAdZvQ8jOPiyEnA6BdTwBlL0jDeCJvCyKS6OjoEcVF9j7JIHs4
- S9TSiY8eEvT4SL8tOg9lw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:6PszexAjvys=:EjwEF0mZkK65c0nB/yXujk
- MN21WMyjvqDIESIKLC3LjwIoC7IqaP2iBKmSrInYxne9X3/TeQpmy3u3KEPHQ9QuL7JALJH8j
- wWUnPiHyEbkmQRSchYxjHUTOUvt6ndyxZkO1K6Evf0WnHtvig5MXeFNShqP7fvOnXBgHQt4OA
- u9u8JDlpajLGnuFLKPVjrPZzmE+ZzuyeaGaQshxdwe6DlY4tcOjD7KMT63QuBYf+YIL3wb83a
- nKy9bvC7WaqHsRR24FDuJCB354J1AEsZDI7DkOgQeRoyEb6x501Gtx+7ZEgpMyxa8l19jt4iX
- 9Ki1ihKj2eJq8akO2wNCV7YwPnaLkAlZP0+yISt9kznBvT3b9FPt3L8/AzA6ztCRh87hIKQV8
- +ySXyw+uY2eW//8nMGSHDXcvW4sPIcW6ZzbcQKvbxq6JfgkkzDY58TW1WtmmgqfZHvryj3eaO
- ukN4NTBjUiDovG8fook+tf+nC1+MTTpQ4/t+zdbpqgLe0rQY0owd6QQ/kq8ZYUFU27aS0vnkP
- VRRUrlFUjxWYT4CG4L26VPxWT03QgvyM9D7lkJDIuSVUYzopknztHtM+zVGo4RZS408PvHLVy
- vhHJHGIg0MCFskXkgjuCqwOKQcN2qLe3qZ9Ybi3cgmInrEbWnZk37AaWhShjrDAJKYK2tmNjB
- 4wGGnwhbfm1DAu4I6ymfg8oJ5Rbbz57Wh9yQ0zU/Dz9R7x4Ni4M11uPimcl5YWRjW0h0jWcDn
- yfcA9L/WBpOuZua0SdWzLV8U6Wwy3Id58bC93QXegS0tdAW1okZ2o3BETyXFoip4rlCcQaAUW
- 6GJg9sUAqJ9P7AIDgbWHFC25SwFGA==
+        id S1751693AbdH3SCq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Aug 2017 14:02:46 -0400
+Received: from mail-pg0-f47.google.com ([74.125.83.47]:34980 "EHLO
+        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751549AbdH3SCq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Aug 2017 14:02:46 -0400
+Received: by mail-pg0-f47.google.com with SMTP id 63so21870199pgc.2
+        for <git@vger.kernel.org>; Wed, 30 Aug 2017 11:02:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=CcvAOQO7BwL/QLerVoiyqFttP2gn7eEPKkCR6BFnmhM=;
+        b=AbBNw3HJxa00ztbE3MG1p59wI5sfMmKfMz0P5o11POI+QG8Ccwx5kzxbapCYyDQqFG
+         8j8JiUni9fXNEyxJOK290NWbWX007hQ8s6WT1mJvIm/x/3tml+XGSxPMUmQ41Mj93xow
+         OX3ljnk/aAEj+Bt2WY01IbBlHHcYM2MqrI4wAsBFTg4v2D7MSjeIhomv/ELYWhQLtOhw
+         kstnNTN9HHtr0+90FfeWQhxwGMElAH7e6FIySYm5AJW4pkPcdrfka+YSSO6lNC7xFnek
+         qaNr43UsDhasxx8a/C8fJuiyPku8zUwOGL9fa5nCtC2Lla/0xyODEjaoEEhbzLsd0YtC
+         IUJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=CcvAOQO7BwL/QLerVoiyqFttP2gn7eEPKkCR6BFnmhM=;
+        b=Jngcn5TcLrWZM+wVO0dPX6fgs6twPHRPZfDnIuwV+cTOa0nf33hsTNzvKrYZy3NM7N
+         plQF7Y64t4YxzBf1MMlLhm2UeW3nBcursUf8feNZA2orI0x3IqiK4Vnxe6RMJp7CTUIl
+         8ZevNfvtmzXAnRJUZYL6lE+pLTcMT+fl64BGgCOKCWNxvpEWXwUix0EzRHZ9VokCjyYp
+         NAic2eZHnLN47KduQ6ogzOCisEPU8vOedS/dEhZkqUvZ2lMGG3aVlLIH8r+0ttI75Tou
+         n+Jouv23ZmVflS76z3WFMcpIhzf1IsaJhclVwv5IodBBlRad7Pl6Hok8lDrfVEXQF8f6
+         i+wA==
+X-Gm-Message-State: AHYfb5j2TJxD6TG3ag0xZdsmetEMu2qvJAyFsuckG4ZysWGgAZUSlrjI
+        LtZXAdpLSHXZmHx80i9DgCHReOefxw==
+X-Received: by 10.98.111.136 with SMTP id k130mr2423529pfc.122.1504116165461;
+ Wed, 30 Aug 2017 11:02:45 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.100.182.197 with HTTP; Wed, 30 Aug 2017 11:02:44 -0700 (PDT)
+In-Reply-To: <91e365b5-6a5d-1e1c-ab7a-579efa7c1ae8@alum.mit.edu>
+References: <CAN0heSqn59sFF3A-eQ593G+ZDWnO9pKM5F=sgiSQk+prUr-nSQ@mail.gmail.com>
+ <4b4c0d178ad2216eecbc49fb6f54dd8a1d1ac119.1504024261.git.martin.agren@gmail.com>
+ <91e365b5-6a5d-1e1c-ab7a-579efa7c1ae8@alum.mit.edu>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Wed, 30 Aug 2017 20:02:44 +0200
+Message-ID: <CAN0heSqa8OnPnkd1xbyZ=QN9qg_8OaxBYnwzOZDDA3g+uGE71g@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] refs/files-backend: add longer-scoped copy of
+ string to list
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-strbuf_readlink() already frees the buffer for us on error.  Clean up
-if write_sha1_file() fails as well instead of returning early.
+On 30 August 2017 at 04:52, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> v3 looks good to me. Thanks!
+>
+> Reviewed-by: Michael Haggerty <mhagger@alum.mit.edu>
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- sha1_file.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Thank _you_ for very helpful feedback on the earlier versions.
 
-diff --git a/sha1_file.c b/sha1_file.c
-index f56bb5cae7..7d9c9aed2f 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1819,33 +1819,33 @@ int index_fd(struct object_id *oid, int fd, struct stat *st,
- int index_path(struct object_id *oid, const char *path, struct stat *st, unsigned flags)
- {
- 	int fd;
- 	struct strbuf sb = STRBUF_INIT;
-+	int rc = 0;
- 
- 	switch (st->st_mode & S_IFMT) {
- 	case S_IFREG:
- 		fd = open(path, O_RDONLY);
- 		if (fd < 0)
- 			return error_errno("open(\"%s\")", path);
- 		if (index_fd(oid, fd, st, OBJ_BLOB, path, flags) < 0)
- 			return error("%s: failed to insert into database",
- 				     path);
- 		break;
- 	case S_IFLNK:
- 		if (strbuf_readlink(&sb, path, st->st_size))
- 			return error_errno("readlink(\"%s\")", path);
- 		if (!(flags & HASH_WRITE_OBJECT))
- 			hash_sha1_file(sb.buf, sb.len, blob_type, oid->hash);
- 		else if (write_sha1_file(sb.buf, sb.len, blob_type, oid->hash))
--			return error("%s: failed to insert into database",
--				     path);
-+			rc = error("%s: failed to insert into database", path);
- 		strbuf_release(&sb);
- 		break;
- 	case S_IFDIR:
- 		return resolve_gitlink_ref(path, "HEAD", oid->hash);
- 	default:
- 		return error("%s: unsupported file type", path);
- 	}
--	return 0;
-+	return rc;
- }
- 
- int read_pack_header(int fd, struct pack_header *header)
--- 
-2.14.1
-
+Martin
