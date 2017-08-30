@@ -2,290 +2,226 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E6031F4DD
-	for <e@80x24.org>; Wed, 30 Aug 2017 05:55:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5047E208CD
+	for <e@80x24.org>; Wed, 30 Aug 2017 06:47:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750802AbdH3Fzm (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Aug 2017 01:55:42 -0400
-Received: from cloud.peff.net ([104.130.231.41]:52594 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750758AbdH3Fzl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Aug 2017 01:55:41 -0400
-Received: (qmail 2351 invoked by uid 109); 30 Aug 2017 05:55:42 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 30 Aug 2017 05:55:42 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16063 invoked by uid 111); 30 Aug 2017 05:56:11 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Wed, 30 Aug 2017 01:56:11 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 Aug 2017 01:55:39 -0400
-Date:   Wed, 30 Aug 2017 01:55:39 -0400
-From:   Jeff King <peff@peff.net>
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     Brandon Williams <bmwill@google.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Git Users <git@vger.kernel.org>
-Subject: Re: [PATCH] config: use a static lock_file struct
-Message-ID: <20170830055539.xpgxeu3flmxs55av@sigill.intra.peff.net>
-References: <20170827232338.hm5t7t7c2xaa3zyl@sigill.intra.peff.net>
- <CAN0heSoUqcOqVspZkbPahWQdtVpSdtSZoCFWu0ZQJfN3F0mD2g@mail.gmail.com>
- <B1E291F2-86FF-4982-A092-92FAED65385C@gmail.com>
- <20170829185341.s3xlsx4uym7lcluc@sigill.intra.peff.net>
- <20170829185850.tfmjoa5u5sfuwpgi@sigill.intra.peff.net>
- <20170829190928.GD131745@google.com>
- <20170829191217.dt65wazf7qh5qs3k@sigill.intra.peff.net>
- <01375356-5d39-99af-9e91-35083ed03f42@alum.mit.edu>
- <20170830043147.culn63luzdsbpuuw@sigill.intra.peff.net>
- <20170830045555.27xczwo3ql7q4bg3@sigill.intra.peff.net>
+        id S1750848AbdH3GrI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Aug 2017 02:47:08 -0400
+Received: from mail-pg0-f54.google.com ([74.125.83.54]:35010 "EHLO
+        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750762AbdH3GrG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Aug 2017 02:47:06 -0400
+Received: by mail-pg0-f54.google.com with SMTP id 63so17492188pgc.2
+        for <git@vger.kernel.org>; Tue, 29 Aug 2017 23:47:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=TIJlz/gNPNyw82lrEZ6da3PMwj5nxzEf/cYM939gLZM=;
+        b=Y53mj/dufi5sJtpA5WuwxGECuIIMdwMSL0xQu9QPaGOLZ2kfibPH7AOMdtDnJO6kvi
+         PCLrq4N8dTTs2pJDze9qb3SDUwS3HV2zVK3KSWWV9oWjNry7mXiBfpDlu29d1RRdLAJt
+         pdem+b5fy7C0ynnrAjhRTHE5vL5r1/Vsz2SBX2vfd8i1ehIxD7lfPBlWJ6qvg/Jn5O0I
+         svNFOCWWme3UR2ndlEg7zNbdiIl5y0RqOhLWCfDsaoCRYcWWbKmj5TglvAkPekiz5pYa
+         1Gz/2D3v7chSJOfPjejbiP8Yvz2RvPNZSzQavwjKtO47+mjh3f8jMwON48bgIqGF/jG4
+         yR/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=TIJlz/gNPNyw82lrEZ6da3PMwj5nxzEf/cYM939gLZM=;
+        b=GZQFS0F0N1daw490zIsoxVtgPmZG5sqAf+xhOa74qtj7N0HFcyU8zoBV0RthDeHIuU
+         5XMRnLFcebTB5hntb3OesRVsHRD+ixI/Fa9l82ZthB4D3kzdQcNLZ5I0KWGQf57rmK3C
+         HPVxQfFnEQAQGRH3erbOWssP/P0RPQCN1l6iVrSE8OU0y0gn0UnFlFY6qUpthlv4vGo3
+         1eGQw9XQscfdvBGPn6f6f7xwZ2glapoyoYmQIva0DWIwVwCGp3I6CT9ZgkT3YCNiJ7jD
+         MONXQXIC+dUSK7/6DmcarsocPBUvoMWVssU1GJR0RLpCmN9pHKqRDXKMffS6xbBBvRgY
+         rscg==
+X-Gm-Message-State: AHYfb5hB16lYxb1mcphHi0gQp0oBPp9uQqZm1KcR1GihP8h1Xx71XHzt
+        Xz6M4g6WlmeY7rU+b0I=
+X-Received: by 10.99.120.194 with SMTP id t185mr609194pgc.246.1504075626013;
+        Tue, 29 Aug 2017 23:47:06 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:5042:50b1:56af:6f3d])
+        by smtp.gmail.com with ESMTPSA id 62sm7269178pfw.34.2017.08.29.23.47.04
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 29 Aug 2017 23:47:05 -0700 (PDT)
+Date:   Tue, 29 Aug 2017 23:46:34 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Stefan Beller <sbeller@google.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: [PATCH 00/39] per-repository object store, part 1
+Message-ID: <20170830064634.GA153983@aiede.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20170830045555.27xczwo3ql7q4bg3@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 30, 2017 at 12:55:55AM -0400, Jeff King wrote:
+Hi,
 
-> > I feel like right now we meet (1) and not (2). But I think if we keep to
-> > that lower bar of (1), it might not be that bad. We're assuming now that
-> > there's no race on the tempfile->active flag, for instance. We could
-> > probably make a similar assumption about putting items onto or taking
-> > them off of a linked list (it's not really atomic, but a single pointer
-> > assignment is probably "atomic enough" for our purposes).
-> 
-> Something like this, which AFAICT is about as safe as the existing code
-> in its list manipulation. It retains the "active" flag as an additional
-> check which I think isn't strictly necessary, but potentially catches
-> some logic errors.
+Most of the credit for this series should go to Stefan Beller.  I just
+decided to pull the trigger on sending out what we have so far.
 
-The patch below demonstrates how this could be used to turn some
-"xcalloc" lock_files into stack variables that are allowed to go out of
-scope after we commit or rollback. This solves the three lock-related
-leaks reported by valgrind when running t0000.
+This series is about API.  It makes no functional change yet.
 
-_But_ it also demonstrates an interesting downside of this approach.
-Some functions are lazy in their error paths. For instance, look at
-write_index_as_tree(). We take the lock early in the function, but may
-return before a commit or rollback if we hit an error.  With the current
-code this "leaks" the tempfile, which is wrong. But nobody notices
-because in practice the program exits soon after and we clean up the
-tempfile then.
+Today, when a git command wants to operate on some objects from another
+repository (e.g., a submodule), it has two choices:
 
-But with a stack variable lock_file, that minor problem becomes a major
-one: our stack variable got added to a global linked list and the
-atexit() handler will try to read it. But now of course it will contain
-garbage, since the variable went out of scope.
+ A. Use run_command to operate on that repository in a separate process.
 
-So it's probably safer to just let tempfile.c handle the whole lifetime,
-and have it put all live tempfiles on the heap, and free them when
-they're deactivated. That means our creation signature becomes more
-like:
+ B. Use add_to_alternates_memory to pretend the repository is an
+    alternate.  This has a number of downsides.  Aside from aesthetics,
+    one particularly painful consequence is that as alternates
+    accumulate, the number of packs git has to check for objects
+    increases, which can cause significant slowdowns.
 
-  struct tempfile *create_tempfile(const char *path);
+Brandon Williams's recent work to introduce "struct repository" points
+to a better way.  Encapsulating object access in struct repository
+would mean:
 
-and delete_tempfile() actually calls free() on it (though we'd probably
-want to skip the free() from a signal handler for the usual reasons).
+  i. The API for accessing objects in another repository becomes more
+     simple and familiar (instead of using the CLI or abusing alternates).
 
-I don't have a patch for that, but just food for thought while exploring
-the implications of my earlier suggestion.
+  ii. Operations on one repository do not interfere with another,
+      neither in semantics (e.g. replace objects do not work correctly
+      with the approach (B) above) nor performance (already described
+      above).
 
----
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index d955cd56b3..bf7420b808 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -917,7 +917,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 	struct refresh_params refresh_args = {0, &has_errors};
- 	int lock_error = 0;
- 	int split_index = -1;
--	struct lock_file *lock_file;
-+	struct lock_file lock_file = LOCK_INIT;
- 	struct parse_opt_ctx_t ctx;
- 	strbuf_getline_fn getline_fn;
- 	int parseopt_state = PARSE_OPT_UNKNOWN;
-@@ -1016,11 +1016,8 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 
- 	git_config(git_default_config, NULL);
- 
--	/* We can't free this memory, it becomes part of a linked list parsed atexit() */
--	lock_file = xcalloc(1, sizeof(struct lock_file));
--
- 	/* we will diagnose later if it turns out that we need to update it */
--	newfd = hold_locked_index(lock_file, 0);
-+	newfd = hold_locked_index(&lock_file, 0);
- 	if (newfd < 0)
- 		lock_error = errno;
- 
-@@ -1155,11 +1152,11 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 				exit(128);
- 			unable_to_lock_die(get_index_file(), lock_error);
- 		}
--		if (write_locked_index(&the_index, lock_file, COMMIT_LOCK))
-+		if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
- 			die("Unable to write new index file");
- 	}
- 
--	rollback_lock_file(lock_file);
-+	rollback_lock_file(&lock_file);
- 
- 	return has_errors ? 1 : 0;
- }
-diff --git a/cache-tree.c b/cache-tree.c
-index 2440d1dc89..440f92aeca 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -603,19 +603,15 @@ static struct cache_tree *cache_tree_find(struct cache_tree *it, const char *pat
- int write_index_as_tree(unsigned char *sha1, struct index_state *index_state, const char *index_path, int flags, const char *prefix)
- {
- 	int entries, was_valid, newfd;
--	struct lock_file *lock_file;
-+	struct lock_file lock_file = LOCK_INIT;
- 
--	/*
--	 * We can't free this memory, it becomes part of a linked list
--	 * parsed atexit()
--	 */
--	lock_file = xcalloc(1, sizeof(struct lock_file));
--
--	newfd = hold_lock_file_for_update(lock_file, index_path, LOCK_DIE_ON_ERROR);
-+	newfd = hold_lock_file_for_update(&lock_file, index_path, LOCK_DIE_ON_ERROR);
- 
- 	entries = read_index_from(index_state, index_path);
--	if (entries < 0)
-+	if (entries < 0) {
-+		rollback_lock_file(&lock_file);
- 		return WRITE_TREE_UNREADABLE_INDEX;
-+	}
- 	if (flags & WRITE_TREE_IGNORE_CACHE_TREE)
- 		cache_tree_free(&index_state->cache_tree);
- 
-@@ -624,10 +620,12 @@ int write_index_as_tree(unsigned char *sha1, struct index_state *index_state, co
- 
- 	was_valid = cache_tree_fully_valid(index_state->cache_tree);
- 	if (!was_valid) {
--		if (cache_tree_update(index_state, flags) < 0)
-+		if (cache_tree_update(index_state, flags) < 0) {
-+			rollback_lock_file(&lock_file);
- 			return WRITE_TREE_UNMERGED_INDEX;
-+		}
- 		if (0 <= newfd) {
--			if (!write_locked_index(index_state, lock_file, COMMIT_LOCK))
-+			if (!write_locked_index(index_state, &lock_file, COMMIT_LOCK))
- 				newfd = -1;
- 		}
- 		/* Not being able to write is fine -- we are only interested
-@@ -641,15 +639,17 @@ int write_index_as_tree(unsigned char *sha1, struct index_state *index_state, co
- 	if (prefix) {
- 		struct cache_tree *subtree;
- 		subtree = cache_tree_find(index_state->cache_tree, prefix);
--		if (!subtree)
-+		if (!subtree) {
-+			rollback_lock_file(&lock_file);
- 			return WRITE_TREE_PREFIX_ERROR;
-+		}
- 		hashcpy(sha1, subtree->oid.hash);
- 	}
- 	else
- 		hashcpy(sha1, index_state->cache_tree->oid.hash);
- 
- 	if (0 <= newfd)
--		rollback_lock_file(lock_file);
-+		rollback_lock_file(&lock_file);
- 
- 	return 0;
- }
-diff --git a/config.c b/config.c
-index d0d8ce823a..7931182a54 100644
---- a/config.c
-+++ b/config.c
-@@ -2450,7 +2450,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- {
- 	int fd = -1, in_fd = -1;
- 	int ret;
--	struct lock_file *lock = NULL;
-+	struct lock_file lock = LOCK_INIT;
- 	char *filename_buf = NULL;
- 	char *contents = NULL;
- 	size_t contents_sz;
-@@ -2469,8 +2469,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 	 * The lock serves a purpose in addition to locking: the new
- 	 * contents of .git/config will be written into it.
- 	 */
--	lock = xcalloc(1, sizeof(struct lock_file));
--	fd = hold_lock_file_for_update(lock, config_filename, 0);
-+	fd = hold_lock_file_for_update(&lock, config_filename, 0);
- 	if (fd < 0) {
- 		error_errno("could not lock config file %s", config_filename);
- 		free(store.key);
-@@ -2583,8 +2582,8 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 		close(in_fd);
- 		in_fd = -1;
- 
--		if (chmod(get_lock_file_path(lock), st.st_mode & 07777) < 0) {
--			error_errno("chmod on %s failed", get_lock_file_path(lock));
-+		if (chmod(get_lock_file_path(&lock), st.st_mode & 07777) < 0) {
-+			error_errno("chmod on %s failed", get_lock_file_path(&lock));
- 			ret = CONFIG_NO_WRITE;
- 			goto out_free;
- 		}
-@@ -2639,28 +2638,19 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 		contents = NULL;
- 	}
- 
--	if (commit_lock_file(lock) < 0) {
-+	if (commit_lock_file(&lock) < 0) {
- 		error_errno("could not write config file %s", config_filename);
- 		ret = CONFIG_NO_WRITE;
--		lock = NULL;
- 		goto out_free;
- 	}
- 
--	/*
--	 * lock is committed, so don't try to roll it back below.
--	 * NOTE: Since lockfile.c keeps a linked list of all created
--	 * lock_file structures, it isn't safe to free(lock).  It's
--	 * better to just leave it hanging around.
--	 */
--	lock = NULL;
- 	ret = 0;
- 
- 	/* Invalidate the config cache */
- 	git_config_clear();
- 
- out_free:
--	if (lock)
--		rollback_lock_file(lock);
-+	rollback_lock_file(&lock);
- 	free(filename_buf);
- 	if (contents)
- 		munmap(contents, contents_sz);
-@@ -2669,7 +2659,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 	return ret;
- 
- write_err_out:
--	ret = write_error(get_lock_file_path(lock));
-+	ret = write_error(get_lock_file_path(&lock));
- 	goto out_free;
- 
- }
-diff --git a/lockfile.h b/lockfile.h
-index 572064939c..a7ba42bdf2 100644
---- a/lockfile.h
-+++ b/lockfile.h
-@@ -114,6 +114,8 @@ struct lock_file {
- 	struct tempfile tempfile;
- };
- 
-+#define LOCK_INIT { { NULL } }
-+
- /* String appended to a filename to derive the lockfile name: */
- #define LOCK_SUFFIX ".lock"
- #define LOCK_SUFFIX_LEN 5
+ iii. Resources associated with access to a repository could be freed
+      when done with that repo.
+
+  iv. Thread-safe multiple readers to a single repository also become
+      straightforward, by using multiple repository objects for the same
+      repo.
+
+This series is a small step in that direction.
+
+At the end of this series, sha1_loose_object_info takes a repository
+argument and can be independently called for multiple repositories.
+Not incredibly useful on its own, but a future series will do the same
+for sha1_object_info, which will be enough to migrate a caller in
+submodule.c (which uses the object store for commit existence checks).
+
+This series has a few phases:
+
+ 1. Patch 1 is a cleanup that made some of the later patches easier.
+
+ 2. Patches 2-6 create a struct object_store field inside struct
+    repository and move some globals to it.
+
+ 3. Patches 7-24 are mechanical changes that update some functions to
+    accept a repository argument. The only goal is to make the later
+    patches that teach these functions to actual handle a repository
+    other than the_repository easier to review.  The patches enforce
+    at compile time that no caller passes a repository other than
+    the_repository --- see patch 7 in particular for details on how
+    that works.
+
+ 4. Patches 25-39 update the implementations of those functions to
+    handle a repository other than the_repository.  This means the
+    safety check introduced in phase 3 goes away completely --- all
+    functions that gained a repository argument are safe to use with
+    a repository argument other than the_repository.
+
+Patches 2-6 and 25-39 should be the most interesting to review.  I'd
+particularly appreciate if people can look over 25-39 carefully.  We
+were careful not to leave any calls to functions that assume they are
+operating on the_repository, but a triple-check is always welcome.
+
+Thanks as well to brian m. carlson, who showed us how such a long and
+potentially tedius series can be made bearable for reviewers.
+
+Thoughts of all kinds welcome, as always.
+
+Thanks,
+Jonathan Nieder (24):
+  pack: make packed_git_mru global a value instead of a pointer
+  object-store: move packed_git and packed_git_mru to object store
+    struct
+  pack: move prepare_packed_git_run_once to object store struct
+  pack: move approximate object count to object store struct
+  pack: add repository argument to install_packed_git
+  pack: add repository argument to prepare_packed_git_one
+  pack: add repository argument to rearrange_packed_git
+  pack: add repository argument to prepare_packed_git_mru
+  pack: add repository argument to prepare_packed_git
+  pack: add repository argument to reprepare_packed_git
+  pack: add repository argument to sha1_file_name
+  pack: add repository argument to map_sha1_file
+  pack: allow install_packed_git to handle arbitrary repositories
+  pack: allow rearrange_packed_git to handle arbitrary repositories
+  pack: allow prepare_packed_git_mru to handle arbitrary repositories
+  pack: allow prepare_packed_git_one to handle arbitrary repositories
+  pack: allow prepare_packed_git to handle arbitrary repositories
+  pack: allow reprepare_packed_git to handle arbitrary repositories
+  pack: allow sha1_file_name to handle arbitrary repositories
+  pack: allow stat_sha1_file to handle arbitrary repositories
+  pack: allow open_sha1_file to handle arbitrary repositories
+  pack: allow map_sha1_file_1 to handle arbitrary repositories
+  pack: allow map_sha1_file to handle arbitrary repositories
+  pack: allow sha1_loose_object_info to handle arbitrary repositories
+
+Stefan Beller (15):
+  repository: introduce object store field
+  object-store: move alt_odb_list and alt_odb_tail to object store
+    struct
+  sha1_file: add repository argument to alt_odb_usable
+  sha1_file: add repository argument to link_alt_odb_entry
+  sha1_file: add repository argument to read_info_alternates
+  sha1_file: add repository argument to link_alt_odb_entries
+  sha1_file: add repository argument to stat_sha1_file
+  sha1_file: add repository argument to open_sha1_file
+  sha1_file: add repository argument to map_sha1_file_1
+  sha1_file: add repository argument to sha1_loose_object_info
+  object-store: add repository argument to prepare_alt_odb
+  object-store: add repository argument to foreach_alt_odb
+  sha1_file: allow alt_odb_usable to handle arbitrary repositories
+  object-store: allow prepare_alt_odb to handle arbitrary repositories
+  object-store: allow foreach_alt_odb to handle arbitrary repositories
+
+ builtin/count-objects.c             |  10 ++-
+ builtin/fsck.c                      |  15 ++--
+ builtin/gc.c                        |   8 +-
+ builtin/index-pack.c                |   1 +
+ builtin/pack-objects.c              |  23 +++--
+ builtin/pack-redundant.c            |   8 +-
+ builtin/receive-pack.c              |   4 +-
+ builtin/submodule--helper.c         |   4 +-
+ bulk-checkin.c                      |   3 +-
+ cache.h                             |  50 ++---------
+ contrib/coccinelle/packed_git.cocci |  15 ++++
+ fast-import.c                       |  10 ++-
+ fetch-pack.c                        |   3 +-
+ http-backend.c                      |   8 +-
+ http-push.c                         |   1 +
+ http-walker.c                       |   4 +-
+ http.c                              |   9 +-
+ mru.h                               |   1 +
+ object-store.h                      |  71 ++++++++++++++++
+ pack-bitmap.c                       |   6 +-
+ pack-check.c                        |   1 +
+ pack-revindex.c                     |   1 +
+ packfile.c                          |  94 ++++++++++----------
+ packfile.h                          |   6 +-
+ reachable.c                         |   1 +
+ repository.c                        |   4 +-
+ repository.h                        |   7 ++
+ server-info.c                       |   8 +-
+ sha1_file.c                         | 165 ++++++++++++++++++++----------------
+ sha1_name.c                         |  11 ++-
+ streaming.c                         |   5 +-
+ transport.c                         |   4 +-
+ 32 files changed, 344 insertions(+), 217 deletions(-)
+ create mode 100644 contrib/coccinelle/packed_git.cocci
+ create mode 100644 object-store.h
+
+-- 
+2.14.1.581.gf28d330327
+
