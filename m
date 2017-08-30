@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B426D20285
-	for <e@80x24.org>; Wed, 30 Aug 2017 18:20:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6FBC820285
+	for <e@80x24.org>; Wed, 30 Aug 2017 18:20:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752683AbdH3SUS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Aug 2017 14:20:18 -0400
-Received: from mout.web.de ([212.227.15.14]:58095 "EHLO mout.web.de"
+        id S1752686AbdH3SUU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Aug 2017 14:20:20 -0400
+Received: from mout.web.de ([212.227.15.14]:55082 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752098AbdH3SUQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Aug 2017 14:20:16 -0400
-Received: from debian.fritz.box ([91.20.59.6]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MV4hR-1e1HGd3Hx7-00YPfr for
- <git@vger.kernel.org>; Wed, 30 Aug 2017 20:20:14 +0200
+        id S1752679AbdH3SUS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Aug 2017 14:20:18 -0400
+Received: from debian.fritz.box ([91.20.59.6]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lu1Be-1dLJrz1hLi-011RHq for
+ <git@vger.kernel.org>; Wed, 30 Aug 2017 20:20:17 +0200
 From:   Rene Scharfe <l.s.r@web.de>
 To:     git@vger.kernel.org
-Subject: [PATCH 28/34] sequencer: release strbuf after use in save_head()
-Date:   Wed, 30 Aug 2017 20:20:14 +0200
-Message-Id: <20170830182014.21147-1-l.s.r@web.de>
+Subject: [PATCH 32/34] vcs-svn: release strbuf after use in end_revision()
+Date:   Wed, 30 Aug 2017 20:20:17 +0200
+Message-Id: <20170830182017.21309-1-l.s.r@web.de>
 X-Mailer: git-send-email 2.14.1
 In-Reply-To: <20170830175005.20756-1-l.s.r@web.de>
 References: <20170830175005.20756-1-l.s.r@web.de>
-X-Provags-ID: V03:K0:zKOkyOcMQ87KwNRgci0/Q/uyscKd4PV2ekOxjnuI4fGJotWPr73
- 4/lM6yGvRsMbNkvimIg93MfO3e92Ng3jpO30k2wVaqdOLGkMYEnL47h1M5t6AqSfPeSxhPZ
- uLaHTKYIbARcNmdPQP+kiP4ghlr/CYDNtw8nfMWgahF2C9CDRCMvaouGJFWQ2+r/AY+0tJW
- jzGfKzwz0+5+GYJ/pYV0g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:PhxZ9ntM4Hg=:IydrhIlGOGw5mUbmznT7S5
- irRZI7kJ47wfYUCMcPf56sgCgN76m/iecLvJFOBWTKVlyC7zFB/wLjM28qPDglSSHnxapDw94
- MABCGUvhbmH4Q2lPMup9lN7pOlDqbLU+hVC+DoJNbw9cUpGxjxj5z2c0f7FhxWkoUyKexMwKC
- odEpdgcvtDTx5V0NwKc91kkHmSMwgWHG3sFzeRu0n1+cQOLatKCKLT/iWMiBRx0fjldnJvGWI
- 77JoqRDaGeRoaN2xH/R+/EvPXpCEdGV4PPb1ZpXU0sU+MOLncXygEzR8S20ZrsFBDi+FyISjg
- v0Iwr+kurmMu4hA+afGlcOPNSnF/eifTNECIAkj7Xoj52Vo6LlMDmbBCILkSn/amxyovlqaVf
- HK1tv3n6DiKzIdujsNCg5EVNYwIxtrR1NstvtmMJBSvdWsvGHkCAAVhxnCpFU+ihsN0Jbef5d
- tmLpfX7XfvHI6aR+HIKRr1+ICZqzMm0swKaZ5E3VP6NUXKhTJVrr4D03UwXW+E6MSqqBEy4fA
- X6XSrYsQCRn1rhmVpZARaWwvFZ211Nh8E9otzfPdDJk5xAgLUrusDYNCPgxfzthZgrSuX/uBj
- iciAYw78lHETRpDPi2TGMQdY0J+/ahPZPUFSSHnUJJB7FSVr/NL5RuM1YO7JO5xwphvpU2TVA
- 1WFzE7reigLPtYW7RssnXY1Yr+kZex2wMdK5rA/q4Rysp9zz6Pul5+owW0Cj54Wg5FeuuKtzN
- 7KU+BgQ3HuGKfqbslSRM7/7DWyA8AO/3a0q4cW2/EWNXpDVuuVB3JaeAZP7dVyk8b0mGpC/Lj
- 8MVYfwUdtwHk1LxrTP0PmYK4XXKMQ==
+X-Provags-ID: V03:K0:plhR5ma2B9NQgKMxmlI5f7FXkWRqcpvtniVMwK95Ut6dTEVubbc
+ oSScggaLLfUcrvWs99pyuM4nUYik6bd7dameKT3BVv8Bh99vSPGUXyoDv5VKhSTScMdIbkk
+ r3/c8PGM7Js8zTT8AD0PijWR861BdYXGTu7GMIiJYqbEX4B0d/rptFJ5dL2eMe+0BkUguzD
+ OtSQdZWUEvpZDKvtA/13g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:f8rgqI0S4Qk=:6crV7Ty9JiGHtr1J2joje2
+ 1jJHw0r9X9uFdiPyZytIPXLonITJ7urTfr1e4ZKedtFz5VK4UGUmV8rLaO9jqu64oQrP6Y9XZ
+ EJysSMv2ABUhUssHSSoY0vVzYhXPwPWUhJfwXL5tusfuJcUdIgeNOiPaMoFUPWqLowVd1Gen0
+ sPpS8pRi5/Z0fKCdpWZCbqklvO6kcq8iPhFbXQW6YIXwvQ1gKjNb6pDL28IKHtJyLQSXaiwCK
+ rVN/XOrbMYanWtQFya788TTUUpMh59/vX2ah3XT8ehulu0l+Zz3shFRoYWv5hWRogArFqCsAZ
+ RVJ60IanwPyGHhjTGlsU7bQtgf12vckoaVnAp3oHcfswAG4httntPd0SQVfh96skp0BP46nNn
+ omfowqK5cpDyhsLcvRFKsD3uWdeKm40fvLYzp+dfazg1+jqjyIma863bfn0kFuOjRkN8fGbsX
+ jrD1KwnmnMngDHMh5IytnTcALDjVn101nhHLztdWKQNRwL+RL1pZIPhIYBR8/V9HsGphUhFrl
+ +g0D704fZotaB+r6VBxG42VF1P+330DCGNUaDb6G76F6FS0LkQ/EfGd2HzAhMzCXZbdL19us8
+ wxY9I+UTbAovePkw8ZFZPrTc/MUp2jAEDO87x75j2PTCmpLqagiTTSiQu4+BDoCxtYakuO45V
+ NHmyVlAyhUfC5QS2Jld6VqWH19nJy30mL0uYmZA225+zB5tWmECe5GEvAFp2/eYx1/n259B1J
+ FMI7dNVsyy0C1KewhLK7Yq+bBoyDOAa0/7MExSGAmnuIBycGdocCd9Lh1W3xP6zYlPFCn1Qn8
+ V+hsvcJnv6Hz3yWXEw8hKIsoZzPrw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -51,41 +51,28 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- sequencer.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ vcs-svn/svndump.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sequencer.c b/sequencer.c
-index fcceabb80f..60636ce54b 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1563,23 +1563,26 @@ static int create_seq_dir(void)
- static int save_head(const char *head)
+diff --git a/vcs-svn/svndump.c b/vcs-svn/svndump.c
+index ec6b350611..08d136b8cc 100644
+--- a/vcs-svn/svndump.c
++++ b/vcs-svn/svndump.c
+@@ -311,13 +311,14 @@ static void begin_revision(const char *remote_ref)
+ static void end_revision(const char *note_ref)
  {
- 	static struct lock_file head_lock;
- 	struct strbuf buf = STRBUF_INIT;
- 	int fd;
-+	ssize_t written;
- 
- 	fd = hold_lock_file_for_update(&head_lock, git_path_head_file(), 0);
- 	if (fd < 0) {
- 		rollback_lock_file(&head_lock);
- 		return error_errno(_("could not lock HEAD"));
+ 	struct strbuf mark = STRBUF_INIT;
+ 	if (rev_ctx.revision) {
+ 		fast_export_end_commit(rev_ctx.revision);
+ 		fast_export_begin_note(rev_ctx.revision, "remote-svn",
+ 				"Note created by remote-svn.", rev_ctx.timestamp, note_ref);
+ 		strbuf_addf(&mark, ":%"PRIu32, rev_ctx.revision);
+ 		fast_export_note(mark.buf, "inline");
+ 		fast_export_buf_to_data(&rev_ctx.note);
++		strbuf_release(&mark);
  	}
- 	strbuf_addf(&buf, "%s\n", head);
--	if (write_in_full(fd, buf.buf, buf.len) < 0) {
-+	written = write_in_full(fd, buf.buf, buf.len);
-+	strbuf_release(&buf);
-+	if (written < 0) {
- 		rollback_lock_file(&head_lock);
- 		return error_errno(_("could not write to '%s'"),
- 				   git_path_head_file());
- 	}
- 	if (commit_lock_file(&head_lock) < 0) {
- 		rollback_lock_file(&head_lock);
- 		return error(_("failed to finalize '%s'."), git_path_head_file());
- 	}
- 	return 0;
  }
+ 
 -- 
 2.14.1
 
