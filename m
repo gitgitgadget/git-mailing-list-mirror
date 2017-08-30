@@ -2,71 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 285E420285
-	for <e@80x24.org>; Wed, 30 Aug 2017 20:28:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F0EF520285
+	for <e@80x24.org>; Wed, 30 Aug 2017 20:38:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751349AbdH3U2X (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Aug 2017 16:28:23 -0400
-Received: from mout.gmx.net ([212.227.17.21]:55543 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750998AbdH3U2W (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Aug 2017 16:28:22 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M20Jj-1dX7iZ0MlH-00ty2E; Wed, 30
- Aug 2017 22:28:20 +0200
-Date:   Wed, 30 Aug 2017 22:28:19 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Sebastian Schuberth <sschuberth@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: Commit dropped when swapping commits with rebase -i -p
-In-Reply-To: <oo62vr$pvq$1@blaine.gmane.org>
-Message-ID: <alpine.DEB.2.21.1.1708302223510.7424@virtualbox>
-References: <oo62vr$pvq$1@blaine.gmane.org>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751440AbdH3Uim (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Aug 2017 16:38:42 -0400
+Received: from mail-ua0-f182.google.com ([209.85.217.182]:38451 "EHLO
+        mail-ua0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751425AbdH3Uik (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Aug 2017 16:38:40 -0400
+Received: by mail-ua0-f182.google.com with SMTP id j46so22287098uag.5
+        for <git@vger.kernel.org>; Wed, 30 Aug 2017 13:38:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=2K+wqhtdnbga4//IyrEnNRZ/dYjmjZ+b5Szr/SaJHUg=;
+        b=lV7l+EJfkdpy2BYVl+GyGwS2BVfn0WpNjeifLUgX2Ad/e2fP+L/lCaimkLyCGHtZEA
+         vqjO9vZgX96HI/iZ0BoSPNO4Bhe5TlQwfeAbJNdQB6Ib1oQI66FlSgioVtiQUA+TY0zd
+         PGE87q6YSBJpYC3X7RkUsUZJtNDtJIDOT+iwlHBdcahUmbHA9vhxrSovw39IuIYTA7T2
+         3X6dF/TMiLAfwT8t6uTR2UhZWMEzay+uv0trnVWwQLwlCqgEU3jGlKQikJrnyrmNwKgg
+         oxZoQ7GuBycprXrKWZ++UmP2D/fUUbSNUfLhy9kcBCrY8+8AT1iSGloW4laVSMWjmmx6
+         y3Ww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=2K+wqhtdnbga4//IyrEnNRZ/dYjmjZ+b5Szr/SaJHUg=;
+        b=SHgvXAGSEFi5VGUJ7IxTIRdlQach8T0Pixne1wt41WDNmXfVmICXNPpMQOvzs8B3sM
+         UIw1xXS5t/txlH7R3H1MyxhAMTUlIbQbzkcgYR71fMD0oXDA+wrM7wfUY4FGO4mASLZx
+         ummdru2F6ZNSFJDc4vCr7Sm6TB9T+RjtEPHNUdbmKNfaJgtYmPNfURxH2m8pPJeX7lYN
+         9q1a6CyriI1Y2TVD0Ys2xkayulhb49u4R2uAil8QvaSMksZF/K5Dln3iMrrUlI8H8SBO
+         HsHuT97qorZorVuPGf/OMfkY5UaEkINwEM1Or27cRtdGs3K1mn1F8atGmirSQ3D1tCcA
+         TfMA==
+X-Gm-Message-State: AHYfb5jJPA5RARZV5htqyW34bVhtDWj8cDtN7vZYLPgiR6lAf0iiEvP0
+        q6YXoLitXOqn9CXb9pmyVmDn0KD1wBlf
+X-Received: by 10.176.92.138 with SMTP id s10mr304000uaf.50.1504125519964;
+ Wed, 30 Aug 2017 13:38:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:g/59SjK+egfLHtjvXhs6Ij0jSnkvIjX839BZatxS1RKENAV4d84
- 4xA6YXNU8lKJRWT+JOnHszmyydOyE+gQB58TNKiEfH+FC0abVICRGmuzk+N7XMXEjieCsLP
- r3n7Hqp86mFlPYK+6s89+rjXchiJvTmt/UryU7CTAI3UlAl448t9Bn7cFjAF2SrljKb84Q9
- OMaKYc+aeK7pOpFySUypg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:OUFymTfv/Zo=:iGe/qk6NofY2TbSyJnbihi
- OXsBxvGr84lOk+0npNjWuMKpb8k9DF4JF04fbCtNlC53B5O9GXzWRDsDqBPiGDJjw6psL2zZr
- s14NKDPvaGSdtsU+g1Pv+EiG40cTheZulEPfnOd1rQg4i9IbBDsE2yTU/0KWqDQtuywfSmdoO
- F4imu8t2CRg7uLiJdjpRuhvlwPAneP2NvOZuz9ppVcHp0PRkLtwa7fbLeovNlFPdfMauRTtfL
- rds6AtouYAkZxslDIUYiDvE+HsByAxojuRDPHkkpJeA0l20VH7WbzIC8QqH7tvZPjCnM0+h1p
- eIeBGaIE5p+dABIvHYnRlnM05PkJDzOHr7CGW8I3r+GMGH4GQDDbAEMVr6qMNNe57oBJWrNP0
- 1hotO6dz/WN8r6e7tZ6dnD8KbTcHUDj6mOkPApOaGOFzDG3Dk2E+Ec5UwgoVBwrL0/stwX1bk
- EYoQWLOpcBsLIG48Kbdf4L2vYCeP5G7KcZ50uFTJGDXsMRs8OHyIF+RPrw4bVj/VT3FRHnYfv
- ghDHClbplIKKIJ8t1G+5ASdutG6PofYYZq8UZn1hwM9QzsMeVfkLx3X+vVH6UbklQ7AmzE0Oi
- lFGthSbDOEGSg4J3wOTbGGeZOvDQIHVC/I7zJykkzzQGE27vvcFC2WcaxIvg0a66J2xDy+0OC
- wQg7C3FtSfGVmixWofYWRC5WP9aG97neAj0dQUukT+2LC14bWcatlG56VZFNgFWZVO3ivDQSs
- /JeKY04Trz6yZ9VOS2m8JVWpCY2Uu6iH/apLgLWw4v6ZW6WjeapmbPjrKKcfstp92CZw4wO4q
- QNYhlm/lPWqODVYKTF4VTZ2Etm6mFyWRVRTqmmgdoHRb+IHa2Q=
+Received: by 10.176.92.212 with HTTP; Wed, 30 Aug 2017 13:38:39 -0700 (PDT)
+In-Reply-To: <20170825172901.kvquxafudhelxqq3@sigill.intra.peff.net>
+References: <20170824225328.8174-1-bmwill@google.com> <20170825172901.kvquxafudhelxqq3@sigill.intra.peff.net>
+From:   Bryan Turner <bturner@atlassian.com>
+Date:   Wed, 30 Aug 2017 13:38:39 -0700
+Message-ID: <CAGyf7-HTuM2kBRYDP8i9B8pUgqFw02pqBdYCVnp9s7v4bDAM0w@mail.gmail.com>
+Subject: Re: [RFC 0/7] transitioning to protocol v2
+To:     Jeff King <peff@peff.net>
+Cc:     Brandon Williams <bmwill@google.com>,
+        Git Users <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>, sbeller@google.com,
+        Junio C Hamano <gitster@pobox.com>, jonathantanmy@google.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Sebastian,
+On Fri, Aug 25, 2017 at 10:29 AM, Jeff King <peff@peff.net> wrote:
+> On Thu, Aug 24, 2017 at 03:53:21PM -0700, Brandon Williams wrote:
+>
+>> The biggest question I'm trying to answer is if these are reasonable ways with
+>> which to communicate a request to a server to use a newer protocol, without
+>> breaking current servers/clients.  As far as I've tested, with patches 1-5
+>> applied I can still communicate with current servers without causing any
+>> problems.
+>
+> Current git.git servers, I assume?. How much do we want to care about
+> alternate implementations? I would not be surprised if other git://
+> implementations are more picky about cruft after the virtual-host field
+> (though I double-checked GitHub's implementation at least, and it is
+> fine).
+>
+> I don't think libgit2 implements the server side. That leaves probably
+> JGit, Microsoft's VSTS (which I think is custom), and whatever Atlassian
+> and GitLab use.
 
-On Wed, 30 Aug 2017, Sebastian Schuberth wrote:
+Before I manually apply the patches to test how they work with
+Bitbucket Server, are they applied on a branch somewhere where I can
+just fetch them? If not, I'll apply them manually and verify.
 
-> I believe stumbled upon a nasty bug in Git: It looks like a commits gets
-> dropped during interactive rebase when asking to preserve merges.
+Just based on the description, though, I expect no issues. We don't
+currently support the git:// protocol. Our HTTP handling passes
+headers through to the receive-pack and upload-pack processes as
+environment variables (with a little massaging), but doesn't consider
+them itself; it only considers the URL and "service" query parameter
+to decide what command to run and to detect "dumb" requests. Our SSH
+handling ignores any environment variables provided and does not
+forward them to the git process, similar to VSTS.
 
-Please see 'exchange two commits with -p' in t3404. This is a known
-breakage, and due to the fact that -p and -i are fundamentally
-incompatible with one another (even if -p's implementation was based on
--i's). I never had in mind for -p to be allowed together with -i, and was
-against allowing it because of the design.
+I'll confirm explicitly, to be certain, but just based on reading the
+overview and knowing our code I think the described approaches should
+work fine.
 
-Short version: do not use -p with -i.
-
-Ciao,
-Johannes
+Best regards,
+Bryan Turner
