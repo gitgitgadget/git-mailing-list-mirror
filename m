@@ -7,54 +7,55 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 555EF208CD
-	for <e@80x24.org>; Wed, 30 Aug 2017 06:56:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD8D6208CD
+	for <e@80x24.org>; Wed, 30 Aug 2017 06:57:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751086AbdH3G4f (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Aug 2017 02:56:35 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:35287 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750998AbdH3G4e (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Aug 2017 02:56:34 -0400
-Received: by mail-pf0-f195.google.com with SMTP id g13so3805521pfm.2
-        for <git@vger.kernel.org>; Tue, 29 Aug 2017 23:56:34 -0700 (PDT)
+        id S1750844AbdH3G5V (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Aug 2017 02:57:21 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:33982 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750756AbdH3G5V (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Aug 2017 02:57:21 -0400
+Received: by mail-pg0-f65.google.com with SMTP id 63so4470406pgc.1
+        for <git@vger.kernel.org>; Tue, 29 Aug 2017 23:57:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=S+/OFMQJWtzIP+EaC70m1Bg7TYM7P0DNaH8Hb+yV4fA=;
-        b=ncxUPeaoC79wYfwYwYWkTnFgYvIGG4A6D0ZEHntITr0n7S1U91sx2gl9J97EsY5+GK
-         Xf5cFzxYRkjZwtduAxavdK144oljFqDBatnzZh2j9eYD4vDaPZa3ttY1wSBmPmkMEPYt
-         82oXEgnRNvJOr4YGN57kmHzvf5YbuuN473gwgSSiwVxV8bGGWticiqxyWkXtjBe00EcZ
-         QCtJ4MZZotRwy6UFllcA6nUWupfkQVTvfCluUgpN2xYP0xUJ4P05kRyAf7a2WZE2pPac
-         ZpTWvPqBD8r/qRKYtRZdK7y5SizFQEskceEN0PCQyD1QuTyuBNoKb2SKZG4DYYKpx1vd
-         aR1A==
+        bh=gFT1J/TnbfAMYVsITKbtFpLr6giGUWZZZ4Zjqke3wPM=;
+        b=L9ua8pGyAniF7UBGcGPeQN4lL7sD3NrzczqHFRB9qIL9bkUUXRKmSj2mMoRgLVMD+m
+         Yhl3fyUdIBvk9lxFQKncr/QU3olEyI7dic+khhhIAUnBnt0L/Ry5i6WSJIU9zcku3lWh
+         u/BtA7zkgF/75/j+pikCin1s6XUjqQr1nNfdyfthBFrGpa7lT3t5lk7MyOmiUr2FRhV4
+         rYrJpeDlDBZMt8fPcIaPFe5cRetgc4DEjfN7Kb0XEZfzMaWi+kHBD/KhF/G0H/7oK4uZ
+         9GeLk8PIl3jMN+6i4t94jClsTT7TIeTz+SXMmU5W05ATkzoJWdV1T12OEHaOCMAHhct2
+         YssQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=S+/OFMQJWtzIP+EaC70m1Bg7TYM7P0DNaH8Hb+yV4fA=;
-        b=HazG5vWSvyxmCGTKBuyxBeRS/qF6/lPeAkl32eU2yupqVtORFHYAkntcsOPfdRqLdV
-         jkHGrLhSf7QGrf1XyhqvuhRNffOjmVTEplG6YuXl3iZNu5jjr0GxJgr9s376WDpOhVLf
-         uIOh9ea6QD+HUdg2Lyzw4cABHHlNdtfNXBOXlBANmjW/oF2gkNMqL2vRsjfpp+7fl+x0
-         kkq1l8bF9BBo2Y4HWZJ00kUKVaiBNHcR7WC+8nrgwVbWxJho8BxHhOM0KmlQ91OLkUeh
-         nqkr8vkYmAzELojBDokmfP6EWBTwBv3LQ9gpNZsB9b/Ald0wID2WTEsEQCUNIduaB0gz
-         po4Q==
-X-Gm-Message-State: AHYfb5j753sxkbVi5WWJt2Q8D8uPcDzIdmlRmologPbSKrdWbyWDuH1T
-        3iEY9aEYYt3zykgYtUs=
-X-Received: by 10.84.229.13 with SMTP id b13mr697151plk.251.1504076194041;
-        Tue, 29 Aug 2017 23:56:34 -0700 (PDT)
+        bh=gFT1J/TnbfAMYVsITKbtFpLr6giGUWZZZ4Zjqke3wPM=;
+        b=pVpocx45iOGhyZZZ4Wla4Vow0/OtjFi9T2EksZfzOCXIWELO06KWaYQcFRYrTmLW/e
+         N29ZnYdJh/s945H5fXKji7Kd6TDBs9MtmDa0UPa/cd20L8sA1Xi3Uyf4buWDOfk3tE16
+         6pPvSnLxu7iYodDOEzgWpTeMldi02kYWTJhMKFYpaKFSEA9Y9gCenwwusjeAuKxaSqDy
+         xHco9iaMvrBDAIQlx5pW3do8Zi6yswd9qSK9zuagSI33GYnzutPF2NZhjGIMyy5yrqTG
+         VoaoVrHvnHNumaUIXhfx/SoQPXh6JYhajQCIaSZIaWdww+urTavnyZoY8cRaMzucW6/c
+         Xo1A==
+X-Gm-Message-State: AHYfb5hiuMdqCDRjvEuHYNWcpDYl8U8kmZY4stWNrQMl4Fa0HuOM6uDG
+        UdxjFH+g1/JRZmXXLu4=
+X-Received: by 10.84.210.143 with SMTP id a15mr778170pli.20.1504076240261;
+        Tue, 29 Aug 2017 23:57:20 -0700 (PDT)
 Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:5042:50b1:56af:6f3d])
-        by smtp.gmail.com with ESMTPSA id v68sm2170550pfv.111.2017.08.29.23.56.33
+        by smtp.gmail.com with ESMTPSA id u21sm9045205pfg.121.2017.08.29.23.57.19
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 29 Aug 2017 23:56:33 -0700 (PDT)
-Date:   Tue, 29 Aug 2017 23:56:31 -0700
+        Tue, 29 Aug 2017 23:57:19 -0700 (PDT)
+Date:   Tue, 29 Aug 2017 23:57:17 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>,
         "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH 07/39] sha1_file: add repository argument to alt_odb_usable
-Message-ID: <20170830065631.GH153983@aiede.mtv.corp.google.com>
+Subject: [PATCH 08/39] sha1_file: add repository argument to
+ link_alt_odb_entry
+Message-ID: <20170830065717.GI153983@aiede.mtv.corp.google.com>
 References: <20170830064634.GA153983@aiede.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -68,49 +69,46 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Stefan Beller <sbeller@google.com>
 
-Add a repository argument to allow the alt_odb_usable caller to be
+Add a repository argument to allow the link_alt_odb_entry caller to be
 more specific about which repository to act on. This is a small
 mechanical change; it doesn't change the implementation to handle
 repositories other than the_repository yet.
 
-Since the implementation does not yet work with other repositories,
-use a wrapper macro to enforce that the caller passes in
-the_repository as the first argument. It would be more appealing to
-use BUILD_ASSERT_OR_ZERO to enforce this, but that doesn't work
-because it requires a compile-time constant and common compilers like
-gcc 4.8.4 do not consider "r == the_repository" a compile-time
-constant.
+As with the previous commit, use a macro to catch callers passing a
+repository other than the_repository at compile time.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- sha1_file.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sha1_file.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/sha1_file.c b/sha1_file.c
-index 7c6ffd205a..1c757b44a3 100644
+index 1c757b44a3..c63b52f6fa 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -280,7 +280,9 @@ static const char *alt_sha1_path(struct alternate_object_database *alt,
- /*
-  * Return non-zero iff the path is usable as an alternate object database.
+@@ -324,8 +324,9 @@ static int alt_odb_usable_the_repository(struct strbuf *path,
+  * terminating NUL.
   */
--static int alt_odb_usable(struct strbuf *path, const char *normalized_objdir)
-+#define alt_odb_usable(r, p, n) alt_odb_usable_##r(p, n)
-+static int alt_odb_usable_the_repository(struct strbuf *path,
-+					 const char *normalized_objdir)
+ static void read_info_alternates(const char * relative_base, int depth);
+-static int link_alt_odb_entry(const char *entry, const char *relative_base,
+-	int depth, const char *normalized_objdir)
++#define link_alt_odb_entry(r, e, rb, d, n) link_alt_odb_entry_##r(e, rb, d, n)
++static int link_alt_odb_entry_the_repository(const char *entry,
++	const char *relative_base, int depth, const char *normalized_objdir)
  {
- 	struct alternate_object_database *alt;
- 
-@@ -348,7 +350,7 @@ static int link_alt_odb_entry(const char *entry, const char *relative_base,
- 	while (pathbuf.len && pathbuf.buf[pathbuf.len - 1] == '/')
- 		strbuf_setlen(&pathbuf, pathbuf.len - 1);
- 
--	if (!alt_odb_usable(&pathbuf, normalized_objdir)) {
-+	if (!alt_odb_usable(the_repository, &pathbuf, normalized_objdir)) {
- 		strbuf_release(&pathbuf);
- 		return -1;
+ 	struct alternate_object_database *ent;
+ 	struct strbuf pathbuf = STRBUF_INIT;
+@@ -419,7 +420,8 @@ static void link_alt_odb_entries(const char *alt, int len, int sep,
+ 		alt = parse_alt_odb_entry(alt, sep, &entry);
+ 		if (!entry.len)
+ 			continue;
+-		link_alt_odb_entry(entry.buf, relative_base, depth, objdirbuf.buf);
++		link_alt_odb_entry(the_repository, entry.buf,
++				   relative_base, depth, objdirbuf.buf);
  	}
+ 	strbuf_release(&entry);
+ 	strbuf_release(&objdirbuf);
 -- 
 2.14.1.581.gf28d330327
 
