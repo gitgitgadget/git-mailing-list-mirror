@@ -2,111 +2,192 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B390120285
-	for <e@80x24.org>; Wed, 30 Aug 2017 16:54:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5EBC820285
+	for <e@80x24.org>; Wed, 30 Aug 2017 17:21:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751844AbdH3Qyt (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Aug 2017 12:54:49 -0400
-Received: from mail-pg0-f47.google.com ([74.125.83.47]:38803 "EHLO
-        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751333AbdH3Qys (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Aug 2017 12:54:48 -0400
-Received: by mail-pg0-f47.google.com with SMTP id b8so21457486pgn.5
-        for <git@vger.kernel.org>; Wed, 30 Aug 2017 09:54:48 -0700 (PDT)
+        id S1752011AbdH3RVR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Aug 2017 13:21:17 -0400
+Received: from mail-yw0-f173.google.com ([209.85.161.173]:34888 "EHLO
+        mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751416AbdH3RVQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Aug 2017 13:21:16 -0400
+Received: by mail-yw0-f173.google.com with SMTP id s187so34409829ywf.2
+        for <git@vger.kernel.org>; Wed, 30 Aug 2017 10:21:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=HJmblSLEcZx8OjMS8hLivPk+bV15FOdwim8NboywHlQ=;
-        b=o8e6HkDakYcwYI+y/BYgMizIgsR2AheWsS5YRpXHZ8VI0Is7WRCd8EJhiSuXq6/l3n
-         QlJDhEwQacoyfh2e6ki8B5J/PpCqMlm9FdXJcCyjqU/wFKKcVVXDlKMkp7/FKCaQuHhU
-         f2qixbZnQzQNM8425vfB47XRTpSo8ecbj6JzWZnj0bLCy3vM4XGLxZ+Wtts360uS5MQy
-         fkYpCY33rFJVCVQelQIQqM4Y52++1r/wQtwA3HHXoKWHg96QRom0AL7Avhkr0rV8gwve
-         eRFg/ZaXvib7edQ2q5qYXR6ZdO1atJspkPts5sea4XaVFw20BoUw8A2800nVHLjxilF5
-         GnxQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=8dSa4adqzZgOuc14LTE6Gb/w1m3TMSavz5c0Waz1dKI=;
+        b=BMrItJURKHoVWBgS7+DhUmPxUA6/zG8l9kL1mNIWPYx7Lt+bqLBMgRlQWqper0sTRs
+         wi1tqEBunsntr0VBEiGBGLsveyP6Mu33Npz5IVnDuDvRk1m/18TKS+JxA4Efl2sjM2ZP
+         XyJ6MNMkONHPW/MHRUSxYvYVZFDTylpGqJa2RZXDdT0cZ5BMNEx1ipH84GkhOH7zaQHH
+         d2HtwtCPlXwU4bcbD100g2yisMMUlGutCTWm8gBBaq4iCK6/RcxG4pMIf3WcZiqvhHYS
+         dH604Q8d6wi0OzJoLs/HGwjOlMlPBk1CrnWaNkors2K+f8jfFCZ5ROG41h29DzzeHBiW
+         PkTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=HJmblSLEcZx8OjMS8hLivPk+bV15FOdwim8NboywHlQ=;
-        b=Lo3DT0L/fs7xi7smgtNe1dh1nSlALtURI+7LLCMGiuZ9qk+fRiJPTLwoit/Xf47OT2
-         oRtulw1qmXEHRVc+AXzsogHMhrlJBFewnkCHYbby6z4/DDuH40mg5I0FIlIs5SrjFFkc
-         Q/BRZAM5PflIQuvS8qnU4bKEOmLH5W/J2aLkFT45Hj9IIy/6IT9Z+GdXQJtFiyf8AzHc
-         gIQD4fqu0awc25/LFX04mUWY5NJYG7rePW8Xz3kEP5HwQFkkYKsOnCOIRAbyR3P/QboQ
-         YhBobZq1/FM6wGMmb4SYKLUL03GsQGSIqRV7bhZbmKXihAb4nx3hHi0Hdod+0r83WncL
-         vQJw==
-X-Gm-Message-State: AHYfb5ic5HJFQkvGniPVKvUUI3TLq0OKhVLzBDpqu9Gbr05+2+SW+i9T
-        tn2vA4wiDUcsV/h4
-X-Google-Smtp-Source: ADKCNb5s/C4hXLPlN+krm7CfB3v0H2TKjJuGStumyY1/sZXySHVLdYhkqoFA7xuUQWBtiSd0EjviEA==
-X-Received: by 10.84.215.154 with SMTP id l26mr2778034pli.314.1504112087684;
-        Wed, 30 Aug 2017 09:54:47 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:c55:9408:3387:8e7e])
-        by smtp.gmail.com with ESMTPSA id i187sm11493668pfe.67.2017.08.30.09.54.46
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 30 Aug 2017 09:54:46 -0700 (PDT)
-Date:   Wed, 30 Aug 2017 09:54:45 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
-        git@vger.kernel.org, sbeller@google.com, gitster@pobox.com,
-        jonathantanmy@google.com
-Subject: Re: [RFC 0/7] transitioning to protocol v2
-Message-ID: <20170830165445.GA50018@google.com>
-References: <20170824225328.8174-1-bmwill@google.com>
- <20170825172901.kvquxafudhelxqq3@sigill.intra.peff.net>
- <20170825173550.GJ13924@aiede.mtv.corp.google.com>
- <2ff0ead4-e13a-220e-f858-36ab206c1485@jeffhostetler.com>
- <20170830030612.qjss3ygouardxi6k@sigill.intra.peff.net>
- <3a2694ca-b5e6-7258-de01-c9898cfa60a2@jeffhostetler.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=8dSa4adqzZgOuc14LTE6Gb/w1m3TMSavz5c0Waz1dKI=;
+        b=ByKHuFj62+cCszpyBbrJ+quF5L9xmnJjbgd9mMNDfB31jH4O0sbCFMpjd1wtSlLzSo
+         cLWFpR8x16uOrwGwpeiNdVpfb38jYxIzggkomHmtOUJ0BvAaMZgybSTgItV/P4cTxdSq
+         p5dZd5pV2ejpgv7h2jqz7MdL3Cq2RnocrEIOIaSOKRW79QSsKNr+fyyidmfl5JV7kfIF
+         8ZEdGhAsBW+jIt0mhhUSMrXFLTMohVnOvWm9dbidKGAD5aOzRR4eEYRmdisL55nHwuYU
+         Gd6M+f1ylmQqJ3p9DCKlDpGf2Kkv2lmKNxDUf2dwkHBgwJZridiVHbDlzYcsJtzY9iO8
+         w3pA==
+X-Gm-Message-State: AHYfb5jHIfuEl1T6S9wyX9ub5mCfwuG2xQ8p3IehTJ19hOqjhVzoXyiQ
+        vpdWWkvVyLUWL9Vc4iOD6jgmK5c1uXqT
+X-Google-Smtp-Source: ADKCNb4I4YXCGBTEutEf6XLu3yl8PrTwTD4Ju4gsskhjFG+y0oe2QErtnsIOMnaC5CmwbFS8Dr1ILoVSz16nlGvwMp4=
+X-Received: by 10.129.79.196 with SMTP id d187mr1831951ywb.29.1504113675225;
+ Wed, 30 Aug 2017 10:21:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3a2694ca-b5e6-7258-de01-c9898cfa60a2@jeffhostetler.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.37.248.26 with HTTP; Wed, 30 Aug 2017 10:21:14 -0700 (PDT)
+In-Reply-To: <caaa44126f18869158872e5473e53478db780ba9.1503993268.git.mhagger@alum.mit.edu>
+References: <cover.1503993268.git.mhagger@alum.mit.edu> <caaa44126f18869158872e5473e53478db780ba9.1503993268.git.mhagger@alum.mit.edu>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 30 Aug 2017 10:21:14 -0700
+Message-ID: <CAGZ79ka+uaBD_1xk6sx9J83KuP4A_mUWVqtyniNusbDeQiUZyQ@mail.gmail.com>
+Subject: Re: [PATCH 07/10] t1404: demonstrate two problems with reference transactions
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08/30, Jeff Hostetler wrote:
-> 
-> 
-> On 8/29/2017 11:06 PM, Jeff King wrote:
-> >On Tue, Aug 29, 2017 at 04:08:25PM -0400, Jeff Hostetler wrote:
-> >
-> >>I just wanted to jump in here and say I've done some initial
-> >>testing of this against VSTS and so far it seems fine.  And yes,
-> >>we have a custom git server.
-> >
-> >Great, thank you for checking.
-> >
-> >>VSTS doesn't support the "git://" protocol, so the double-null trick
-> >>isn't an issue for us.  But "https://" worked just fine.  I'm still
-> >>asking around internally whether we support passing SSH environment
-> >>variables.
-> >
-> >The key thing for ssh is not whether you support passing environment
-> >variables. It's whether you quietly ignore unknown variables rather than
-> >cutting off the connection.
-> >
-> >To support the v2 protocol you'd need to pass the new variables, but
-> >you'd also need to modify your server to actually do something useful
-> >with them anyway. At this point we're mostly concerned with whether we
-> >can safely pass the variables to current implementations unconditionally
-> >and get a reasonable outcome.
-> 
-> Right.  I just spoke with our server folks and, currently, our SSH
-> support quietly eats ALL variables.   So we're safe :-)
-> 
-> I'm starting a conversation with them to pass them thru so we can
-> be ready for this.  (Assuming we choose to go this way.)
+On Tue, Aug 29, 2017 at 1:20 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> Currently, a loose reference is deleted even before locking the
+> `packed-refs` file, let alone deleting any packed version of the
+> reference. This leads to two problems, demonstrated by two new tests:
+>
+> * While a reference is being deleted, other processes might see the
+>   old, packed value of the reference for a moment before the packed
+>   version is deleted. Normally this would be hard to observe, but we
+>   can prolong the window by locking the `packed-refs` file externally
+>   before running `update-ref`, then unlocking it before `update-ref`'s
+>   attempt to acquire the lock times out.
+>
+> * If the `packed-refs` file is locked so long that `update-ref` fails
+>   to lock it, then the reference can be left permanently in the
+>   incorrect state described in the previous point.
+>
+> In a moment, both problems will be fixed.
+>
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
+> The first of the new tests is rather involved; it uses two background
+> processes plus a foreground process that polls the value of a
+> reference. But despite sensitivity to timing, I think it should be
+> robust even in this broken state. Once the functionality being tested
+> is fixed, this test should never produce false positives, though
+> really bad timing (e.g., if it takes more than a second for
+> `update-ref` to get going) could still lead to false negatives.
+>
+> Each of the new tests takes about a second to run because they
+> simulate lock contention.
+>
+> If anybody has suggestions for better ways to test these things,
+> please speak up :-)
+>
+>  t/t1404-update-ref-errors.sh | 71 ++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 71 insertions(+)
+>
+> diff --git a/t/t1404-update-ref-errors.sh b/t/t1404-update-ref-errors.sh
+> index c34ece48f5..752f83c377 100755
+> --- a/t/t1404-update-ref-errors.sh
+> +++ b/t/t1404-update-ref-errors.sh
+> @@ -404,4 +404,75 @@ test_expect_success 'broken reference blocks indirect create' '
+>         test_cmp expected output.err
+>  '
+>
+> +test_expect_failure 'no bogus intermediate values during delete' '
+> +       prefix=refs/slow-transaction &&
+> +       # Set up a reference with differing loose and packed versions:
+> +       git update-ref $prefix/foo $C &&
+> +       git pack-refs --all &&
+> +       git update-ref $prefix/foo $D &&
+> +       git for-each-ref $prefix >unchanged &&
+> +       # Now try to update the reference, but hold the `packed-refs` lock
+> +       # for a while to see what happens while the process is blocked:
+> +       : >.git/packed-refs.lock &&
+> +       test_when_finished "rm -f .git/packed-refs.lock" &&
+> +       {
+> +               sleep 1 &&
+> +               rm -f .git/packed-refs.lock &
+> +       } &&
+> +       pid1=$! &&
+> +       {
+> +               # Note: the following command is intentionally run in the
+> +               # background. We extend the timeout so that `update-ref`
+> +               # tries to acquire the `packed-refs` lock longer than it
+> +               # takes the background process above to delete it:
+> +               git -c core.packedrefstimeout=2000 update-ref -d $prefix/foo &
+> +       } &&
+> +       pid2=$! &&
+> +       ok=true &&
+> +       while kill -0 $pid2 2>/dev/null
 
-Perfect! Thanks again.
+    If sig is 0, then no signal is sent, but error checking is still
+    performed; this can be used to check for the existence of a
+    process ID or process group ID.
 
--- 
-Brandon Williams
+So the kill -0 is the idiomatic form of "while $pid2 is still alive"?
+ignoring errors due to the dev/null redirection?
+
+And due to the nature of this test we have to have a busy
+loop, we cannot rate limit the cpu usage inside the loop
+via some shorter sleeps, as ideally we want to observe
+the ref at any time.
+
+    In an ideal world this test would instruct the kernel to interrupt
+    the executing program (update-ref) at certain events such as
+    touching/writing/deleting files and in each interrupt we could
+    inspect the file system in a read only fashion.
+
+
+> +       do
+> +               sha1=$(git rev-parse --verify --quiet $prefix/foo || echo undefined) &&
+> +               case "$sha1" in
+> +               $D)
+> +                       # This is OK; it just means that nothing has happened yet.
+> +                       : ;;
+> +               undefined)
+> +                       # This is OK; it means the deletion was successful.
+> +                       : ;;
+> +               $C)
+> +                       # This value should never be seen. Probably the loose
+> +                       # reference has been deleted but the packed reference
+> +                       # is still there:
+> +                       echo "$prefix/foo incorrectly observed to be C" &&
+> +                       break
+> +                       ;;
+> +               *)
+> +                       # WTF?
+> +                       echo "$prefix/foo unexpected value observed: $sha1" &&
+> +                       break
+> +                       ;;
+> +               esac
+> +       done >out &&
+> +       wait $pid1 &&
+> +       wait $pid2 &&
+
+oh, you use explicit pids here to check each exit code.
+
+> If anybody has suggestions for better ways to test these things,
+> please speak up :-)
+
+I don't think I'd have a satisfactory answer to that, as the timing is inherent
+to the things we test. In other software projects that are less low level, I
+would have suggested to use a time/clock mock, which can be stopped
+and then inspection can be performed at defined states.
