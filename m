@@ -7,44 +7,43 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9754720285
-	for <e@80x24.org>; Wed, 30 Aug 2017 17:58:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 73FFB20285
+	for <e@80x24.org>; Wed, 30 Aug 2017 17:58:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751790AbdH3R62 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Aug 2017 13:58:28 -0400
-Received: from mout.web.de ([212.227.17.12]:65496 "EHLO mout.web.de"
+        id S1751761AbdH3R61 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Aug 2017 13:58:27 -0400
+Received: from mout.web.de ([212.227.17.12]:59259 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751514AbdH3R61 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1751388AbdH3R61 (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 30 Aug 2017 13:58:27 -0400
 Received: from debian.fritz.box ([91.20.59.6]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MDxKd-1djTqA3Djz-00HKQh for
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LmLoU-1dDETT2iag-00Zwe2 for
  <git@vger.kernel.org>; Wed, 30 Aug 2017 19:58:25 +0200
 From:   Rene Scharfe <l.s.r@web.de>
 To:     git@vger.kernel.org
-Subject: [PATCH 03/34] am: release strbuf after use in safe_to_abort()
-Date:   Wed, 30 Aug 2017 19:58:06 +0200
-Message-Id: <20170830175825.20905-2-l.s.r@web.de>
+Subject: [PATCH 02/34] am: release strbuf on error return in hg_patch_to_mail()
+Date:   Wed, 30 Aug 2017 19:58:05 +0200
+Message-Id: <20170830175825.20905-1-l.s.r@web.de>
 X-Mailer: git-send-email 2.14.1
-In-Reply-To: <20170830175825.20905-1-l.s.r@web.de>
+In-Reply-To: <20170830175005.20756-1-l.s.r@web.de>
 References: <20170830175005.20756-1-l.s.r@web.de>
- <20170830175825.20905-1-l.s.r@web.de>
-X-Provags-ID: V03:K0:Bs3Ej1JLIGx2sbktm1mRcUkl1bm4oYR8HOkutvDyisrHTizjpCV
- lIeksM61Ihnol32Q8KU04q4OIxWOHxf12twzjHSLrY/fMXPmqBqsedSicVnGp7/J4PjAy5M
- sDUQXJZ1GvW/0SYGyhC2B9QYvvlnMLsC6po+3Be1Voozh4E1Q2IKBpJwDGoYFy528SKmZEk
- uL9E+Kg2PYY7cA+3uEiiQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:hLaRfrPQ1/g=:whjg9yanKTNGnaeRHhiQHp
- FVGDvsLcQpLx7Df508M8vAP0Zt7d1wiGyR3qhNz/dJj/fRtIGCOwQaqX8OSNLP39Zl9R/tODU
- 05D0alWH1C1VsRZeML1ulT3D5apL2i+HIyhpr8bYqiyxV30arb2n99XZS+k5acrMSqZwA0Lh0
- 5xN8U2Yls59y34l/spp0XQ8sawotpNoImaVu4POYi8JiiJ3KPsE1EkGAlgXy92MyX+Wec82Xm
- geuORUIVrwjhJO67xwkW4NaNcQlYVVMZdkGmZeqdEquSeNwbkM1O9HVGwLDSmtzcLAXExBCdG
- H1Ff+6lKYQ/ZjvxUgDZFVwLb+3eomFmoi/zCfCrNUEBtvo1AFXtd4a7uW5jNXDCiBYqoGvIaL
- 1zu+S4IKuZ6PzGlGaP4pUvMq3Av7VudC2N6LHh7rHVdm/iN+zbR+VWhpXlfmFi+xc/g/mhvR+
- LdJl3AI/HvrMfWaZ7qJ5S5xMGIfrOyFetNnM/QWLeaCqBVVpQYoDENOqDBu7cVfh2XmUsnloj
- cb82bAsaBCJbUWf0WbH9mcsCs2ETHM53h78WUIq26mDlS2lcSuixTW7cC3WiEA8Q+xLNliixs
- 7tSvqFE5usbbH0+Se6bOq87PQ+RnBDFvKw1FM0EJzWmNvKIAluq+PTs0dRs9eDeN2ZCK9wJek
- e+WBAOFpM2q5N4Mcyt8GJqpL6HbU7oWYtzk9POIJ5jZDF5kZqA/t1bZB14Yk+qYFa6QngaKTF
- UiXhKeH7acFDY44rSH+g0UDn95rhOOkw57U7mSPUk5FsTmxnVbRFW4LmWkpmsQbZl1sV3qAeM
- Rhe76fHCl7soqLXB27dV4NVJDD3jw==
+X-Provags-ID: V03:K0:TNWnLWtEqAflJgisHXgcm426mkwrHJehwiFQVtwkwqSBa3UYu5n
+ RHzOSMRRd2ih0WcuARAVltbdmAgSHEwCiYCKOrjoH9FZY8ad1gjIkHFM98czJli5qiS5dnp
+ PAXm5kobkKOitwFQND708krpZIEJJ+9Wswx4h0BzQVm30r2ZF9a9qRTiucS/hWryz3nQFwJ
+ k9QyRTMqR/BZB8EBzHvIg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:TpPI5RfkVXw=:PJ79QOac+xWWnZk6OPmxpr
+ 4gnu476Vzwn9z0LG7Jueblb4ctC6yu4rHKeEG4/9pN6xQ67YoYHmkLFruSBGLSN7kEgeGUV20
+ AS1u6YvYie2IbIXN1EK7kBnUD//s0A7PQsZf48GicOGFwHVJcupQGDDusBj7WHsnv8hEYx0BS
+ gUv/5s81ow3A3sJZgX129SyHaBLxtsgNngWaQu1a4+aOB+GaXVvXMkgi7Ou1BLYNpkLTqc5pT
+ qNmkVg6H3kQcW1fVT76F1kQo8BevI31dfgUlvVKpGYRhD4uNENArV6Z3HVhUxnstCqpIt0qaP
+ GVag4mCeEfSJwGWSupnuPARS/V/GUuT13OBLp97luScps26a7tkLbilJBfxkxJmYVc61y48Eq
+ 33zQ+IaTPdaJTzCpzZFhnsuQziyIrug8kJmvF/RlkqlXjGEuyGBLLeQO319U3KXrI6nvPhGKU
+ s4PIiA+FbXvKrI34ai34iZ5YtKvnQ06GZy0eop7eTlPQ9RZ1sRlTAIcaVQLhwM/+BoYQAqJSe
+ DsaYArygjlxIAT8MhMRUkS1X5U97/nLGnFEAbLWOsbCDh0P17MzF96s64dVl0Glc3JIuVmJKr
+ 8C2EfNEQ1TJD9ifP+wgxyr4B32QwagHIhtdTr7IXFDPbI3cw4IEzkqQ9XB5ey1V1e37krjs9n
+ PxxSBYs9Dx3RX77ZyCman6JjhpCiowowv/lU2zF0p+7jO+W2cJx9NLwXqmqThDmwfazbrqrWp
+ x0GS+vVcGQll8E5rapqcME8FpxLO6AouTyDjyMlWoTGCczOMNG2VOX2W+TjPQB9dIrXCNvRVy
+ kKTVaOEwa0eR9TLlA8M2vU7kLZT8A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -52,43 +51,107 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- builtin/am.c | 1 +
- 1 file changed, 1 insertion(+)
+ builtin/am.c | 29 +++++++++++++++++++----------
+ 1 file changed, 19 insertions(+), 10 deletions(-)
 
 diff --git a/builtin/am.c b/builtin/am.c
-index 3d38b3fe9f..d7513f5375 100644
+index 3c50b03faa..3d38b3fe9f 100644
 --- a/builtin/am.c
 +++ b/builtin/am.c
-@@ -2095,29 +2095,30 @@ static void am_skip(struct am_state *state)
- static int safe_to_abort(const struct am_state *state)
+@@ -881,75 +881,84 @@ static int split_mail_stgit_series(struct am_state *state, const char **paths,
+ static int hg_patch_to_mail(FILE *out, FILE *in, int keep_cr)
  {
  	struct strbuf sb = STRBUF_INIT;
- 	struct object_id abort_safety, head;
++	int rc = 0;
  
- 	if (file_exists(am_path(state, "dirtyindex")))
- 		return 0;
+ 	while (!strbuf_getline_lf(&sb, in)) {
+ 		const char *str;
  
- 	if (read_state_file(&sb, state, "abort-safety", 1) > 0) {
- 		if (get_oid_hex(sb.buf, &abort_safety))
- 			die(_("could not parse %s"), am_path(state, "abort-safety"));
- 	} else
- 		oidclr(&abort_safety);
-+	strbuf_release(&sb);
+ 		if (skip_prefix(sb.buf, "# User ", &str))
+ 			fprintf(out, "From: %s\n", str);
+ 		else if (skip_prefix(sb.buf, "# Date ", &str)) {
+ 			timestamp_t timestamp;
+ 			long tz, tz2;
+ 			char *end;
  
- 	if (get_oid("HEAD", &head))
- 		oidclr(&head);
+ 			errno = 0;
+ 			timestamp = parse_timestamp(str, &end, 10);
+-			if (errno)
+-				return error(_("invalid timestamp"));
++			if (errno) {
++				rc = error(_("invalid timestamp"));
++				goto exit;
++			}
  
- 	if (!oidcmp(&head, &abort_safety))
- 		return 1;
+-			if (!skip_prefix(end, " ", &str))
+-				return error(_("invalid Date line"));
++			if (!skip_prefix(end, " ", &str)) {
++				rc = error(_("invalid Date line"));
++				goto exit;
++			}
  
- 	warning(_("You seem to have moved HEAD since the last 'am' failure.\n"
- 		"Not rewinding to ORIG_HEAD"));
+ 			errno = 0;
+ 			tz = strtol(str, &end, 10);
+-			if (errno)
+-				return error(_("invalid timezone offset"));
++			if (errno) {
++				rc = error(_("invalid timezone offset"));
++				goto exit;
++			}
  
- 	return 0;
+-			if (*end)
+-				return error(_("invalid Date line"));
++			if (*end) {
++				rc = error(_("invalid Date line"));
++				goto exit;
++			}
+ 
+ 			/*
+ 			 * mercurial's timezone is in seconds west of UTC,
+ 			 * however git's timezone is in hours + minutes east of
+ 			 * UTC. Convert it.
+ 			 */
+ 			tz2 = labs(tz) / 3600 * 100 + labs(tz) % 3600 / 60;
+ 			if (tz > 0)
+ 				tz2 = -tz2;
+ 
+ 			fprintf(out, "Date: %s\n", show_date(timestamp, tz2, DATE_MODE(RFC2822)));
+ 		} else if (starts_with(sb.buf, "# ")) {
+ 			continue;
+ 		} else {
+ 			fprintf(out, "\n%s\n", sb.buf);
+ 			break;
+ 		}
+ 	}
+ 
+ 	strbuf_reset(&sb);
+ 	while (strbuf_fread(&sb, 8192, in) > 0) {
+ 		fwrite(sb.buf, 1, sb.len, out);
+ 		strbuf_reset(&sb);
+ 	}
+-
++exit:
+ 	strbuf_release(&sb);
+-	return 0;
++	return rc;
  }
  
  /**
-  * Aborts the current am session if it is safe to do so.
+  * Splits a list of files/directories into individual email patches. Each path
+  * in `paths` must be a file/directory that is formatted according to
+  * `patch_format`.
+  *
+  * Once split out, the individual email patches will be stored in the state
+  * directory, with each patch's filename being its index, padded to state->prec
+  * digits.
+  *
+  * state->cur will be set to the index of the first mail, and state->last will
+  * be set to the index of the last mail.
+  *
+  * Set keep_cr to 0 to convert all lines ending with \r\n to end with \n, 1
+  * to disable this behavior, -1 to use the default configured setting.
+  *
+  * Returns 0 on success, -1 on failure.
   */
 -- 
 2.14.1
