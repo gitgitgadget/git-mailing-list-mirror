@@ -7,135 +7,151 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 659CA208DB
-	for <e@80x24.org>; Wed, 30 Aug 2017 17:50:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 030BD208DB
+	for <e@80x24.org>; Wed, 30 Aug 2017 17:50:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752071AbdH3RuJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Aug 2017 13:50:09 -0400
-Received: from mout.web.de ([217.72.192.78]:60140 "EHLO mout.web.de"
+        id S1752144AbdH3RuR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Aug 2017 13:50:17 -0400
+Received: from mout.web.de ([217.72.192.78]:51523 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751439AbdH3RuH (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1751687AbdH3RuH (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 30 Aug 2017 13:50:07 -0400
 Received: from debian.fritz.box ([91.20.59.6]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0M7srs-1dZgsf3UpM-00vRQ1 for
- <git@vger.kernel.org>; Wed, 30 Aug 2017 19:50:05 +0200
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MbhRh-1e3pA83yYn-00J5vQ for
+ <git@vger.kernel.org>; Wed, 30 Aug 2017 19:50:06 +0200
 From:   Rene Scharfe <l.s.r@web.de>
 To:     git@vger.kernel.org
-Subject: [PATCH 01/34] am: release strbufs after use in detect_patch_format()
-Date:   Wed, 30 Aug 2017 19:49:32 +0200
-Message-Id: <20170830175005.20756-2-l.s.r@web.de>
+Subject: [PATCH 02/34] am: release strbuf on error return in hg_patch_to_mail()
+Date:   Wed, 30 Aug 2017 19:49:33 +0200
+Message-Id: <20170830175005.20756-3-l.s.r@web.de>
 X-Mailer: git-send-email 2.14.1
 In-Reply-To: <20170830175005.20756-1-l.s.r@web.de>
 References: <20170830175005.20756-1-l.s.r@web.de>
-X-Provags-ID: V03:K0:tJth6cJJrhE+4ZhKQT31DFh1xzmqe+IfVOdyZ8k1rt3DcW2U43U
- hgtZjEjotHVu4K4zCM3Rk+MbcCiwWoPJNANCIGjXFQMkf3HDyN38PSb7orvhLUdJQG8QoQ7
- BJc3FF5ZPV+myd9mWRuHpIx7ZoSaXQVZJEe5Kmzva3TzGqEx1PsTtK9GLTJ4Pm/BXVnaIHi
- Ehv+jm7QWoBeAKzKwmI7w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:8sqqVYHvRvM=:zGxJ7GMn/2gLcESLbqewAi
- v516kfJiQWKu7FXl+pFWNc0uj9Q+s2R7ulpVHlQOeToQ8Ennu6oqcHLwPASJp6G6hq1zH3NHx
- wkRn5JtnQIemJEACl7GYGZdqcmuHFwemW+cFjnLIKNJRrRSQt5JJm6dTUnNI8cAQrmm2Q1g7+
- iAR/8W8BG36kM4Aj7Af4MK2vP44SjuEo1VfP0gqChr3EIdS4VnQctyVXxBVvx7o9Q0yTNEZtN
- Q4w4gBPxoXraeo2ooZawiVxesOupcfYd7DSvjbDs8lwqhRjEYmJFxw1lNXtl1llbSGaUI5syJ
- YYuuH2QEEQwkA8XRcc8Z/1lpx/jzGUN2Wr50wfHRkKHQPgLw0+BzVbbN29I4jgZeOEfHZqwd8
- 03IbyjLOpjjcCxTIAvVf8XnCPMADBZBbSx8s5mydcuSAO8BGhW920ZQYyP5DgT6EE5hweR1VC
- Y5mdvKdLqG1QD66KXmHkf+K33XlC/PAQXJIOFi+ZnGJL3TkaT0U8FvGEC7na7ia3djzIUZ2rp
- OTmWNoDz8L2JGu5ZXl9/Mo43y8Nv546aNhn8qSlovDZCLOR9HTVnXsGzn2vQzZUJj9ZJZLH+9
- PctzGxk9hvzep50OrOl2VEXLCp55SXREjH1Uyl6NoD02C2BkuepvLf0K/0Z6AEr9Pwa2QKfSk
- dyZn0B6U4G4mXhN0Efu5BLnoA/QqcSSL8h2/EWcQpHjeTFy7dHOp+Pjz0YVYd9V4LWowgLrHV
- h7jaNaK6kYn1DX46bpkdP2ypE1Tyi0kgEo1zX+xKwT9o6NzRGYjWojlM2aIklCfflxspWxltV
- F0i+paMC7P45CDdfdYFYu2Soo1CHA==
+X-Provags-ID: V03:K0:kruqC3T814ePwmp7nCivZOHj3Fy//bfZJGwJzwoIzadMU6WcfId
+ pcMrYrlUsmCgT8EixeMNYHy6cHkUr3baQEBjUzC3qCahv0BMVybHD8ULgmU4zVN2irHcKbE
+ 9KsPQKTZB0YVgiptMp5zQlfT9x0I0MXvXMTGEpNtj28jkADY8hd8w9CRwDPR0geB6pHrtkk
+ NRGeOMlUmRoh9oHAw3mow==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:dcJpwKgBpWE=:TSnNHFFH0oie9oBPaA1Bmk
+ rT50lkLn+t7GcNhpbB76lKeQjwp4vd5RJN1hnihdOFGST32fgpyW61VxBLtadttctyFZGHo0C
+ zEseN3iIlQTXWodduvPoQktnXKwlqLk1NmD29WMHGZX8Lw8S+oBcVu+/od0PfW1B62JV5iDn6
+ VW7s5kUcEfr8OF40rm0sBQ8IMAhCymI7dOYvNsCYsPOrhNgAoqeHQaFsiZzqPTTBGQr6dkBut
+ sFzZwOflOIpFDkUakkJlk4gMepLkLol8QBD1KEGim2SwKwSCg4ttveuSHk25holV6sfUhFuWz
+ KdD6D79ara3XCW6iUWnZ2CGL05z3b+8PdXWZp+ePRrjEev+T/YV0RXiFb1yOXDS3bEp/ShuIW
+ ypbjz6RL8sek9tugfTFg5IpyPfSGGlQAxS22VAIQnYSpOGZdnpzaAEcy+ciT2hl+B+gEjbHFj
+ /2KRTZqgHFHww6mhTRwzSF6C8XvcsM9h9B27NuD8k1lD6vnNCuOY8ZayfAerswJu3MoSjWuad
+ PECKgyg8DImjh414OrWN4J2zdIHvxqR9Wb5DPVhedtVyiwNeCTJZuk83uUAGXim8T+5nnrb55
+ WElsJuhNH+iPayf4jJiDvXsnQjaZSLBdNe5F3vbYbkTMFrGvnpLuPo6qq44mJpE5Xyg8d46ra
+ FKkB0b0Jh5sJyU0+SNscIb04Fu+JSyNuSMSviuqX2HUiviYno/LOo0D/5bpmp783ciFIH6Xqw
+ 2+54XaJqNbRfx7q4Uz+6wqBgcJAmS28qhRRDlxx9iqstjNz8hSKmJDEBMUR1P+ZdLHsSNPw2R
+ RFdWXyiV8eEqBv8NZ63Qnxq7WhP7g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Don't reset the strbufs l2 and l3 before use as if they were static, but
-release them at the end instead.
-
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- builtin/am.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ builtin/am.c | 29 +++++++++++++++++++----------
+ 1 file changed, 19 insertions(+), 10 deletions(-)
 
 diff --git a/builtin/am.c b/builtin/am.c
-index c369dd1dce..3c50b03faa 100644
+index 3c50b03faa..3d38b3fe9f 100644
 --- a/builtin/am.c
 +++ b/builtin/am.c
-@@ -633,73 +633,73 @@ static int is_mail(FILE *fp)
- static int detect_patch_format(const char **paths)
+@@ -881,75 +881,84 @@ static int split_mail_stgit_series(struct am_state *state, const char **paths,
+ static int hg_patch_to_mail(FILE *out, FILE *in, int keep_cr)
  {
- 	enum patch_format ret = PATCH_FORMAT_UNKNOWN;
- 	struct strbuf l1 = STRBUF_INIT;
- 	struct strbuf l2 = STRBUF_INIT;
- 	struct strbuf l3 = STRBUF_INIT;
- 	FILE *fp;
+ 	struct strbuf sb = STRBUF_INIT;
++	int rc = 0;
  
- 	/*
- 	 * We default to mbox format if input is from stdin and for directories
- 	 */
- 	if (!*paths || !strcmp(*paths, "-") || is_directory(*paths))
- 		return PATCH_FORMAT_MBOX;
+ 	while (!strbuf_getline_lf(&sb, in)) {
+ 		const char *str;
  
- 	/*
- 	 * Otherwise, check the first few lines of the first patch, starting
- 	 * from the first non-blank line, to try to detect its format.
- 	 */
+ 		if (skip_prefix(sb.buf, "# User ", &str))
+ 			fprintf(out, "From: %s\n", str);
+ 		else if (skip_prefix(sb.buf, "# Date ", &str)) {
+ 			timestamp_t timestamp;
+ 			long tz, tz2;
+ 			char *end;
  
- 	fp = xfopen(*paths, "r");
+ 			errno = 0;
+ 			timestamp = parse_timestamp(str, &end, 10);
+-			if (errno)
+-				return error(_("invalid timestamp"));
++			if (errno) {
++				rc = error(_("invalid timestamp"));
++				goto exit;
++			}
  
- 	while (!strbuf_getline(&l1, fp)) {
- 		if (l1.len)
+-			if (!skip_prefix(end, " ", &str))
+-				return error(_("invalid Date line"));
++			if (!skip_prefix(end, " ", &str)) {
++				rc = error(_("invalid Date line"));
++				goto exit;
++			}
+ 
+ 			errno = 0;
+ 			tz = strtol(str, &end, 10);
+-			if (errno)
+-				return error(_("invalid timezone offset"));
++			if (errno) {
++				rc = error(_("invalid timezone offset"));
++				goto exit;
++			}
+ 
+-			if (*end)
+-				return error(_("invalid Date line"));
++			if (*end) {
++				rc = error(_("invalid Date line"));
++				goto exit;
++			}
+ 
+ 			/*
+ 			 * mercurial's timezone is in seconds west of UTC,
+ 			 * however git's timezone is in hours + minutes east of
+ 			 * UTC. Convert it.
+ 			 */
+ 			tz2 = labs(tz) / 3600 * 100 + labs(tz) % 3600 / 60;
+ 			if (tz > 0)
+ 				tz2 = -tz2;
+ 
+ 			fprintf(out, "Date: %s\n", show_date(timestamp, tz2, DATE_MODE(RFC2822)));
+ 		} else if (starts_with(sb.buf, "# ")) {
+ 			continue;
+ 		} else {
+ 			fprintf(out, "\n%s\n", sb.buf);
  			break;
+ 		}
  	}
  
- 	if (starts_with(l1.buf, "From ") || starts_with(l1.buf, "From: ")) {
- 		ret = PATCH_FORMAT_MBOX;
- 		goto done;
+ 	strbuf_reset(&sb);
+ 	while (strbuf_fread(&sb, 8192, in) > 0) {
+ 		fwrite(sb.buf, 1, sb.len, out);
+ 		strbuf_reset(&sb);
  	}
- 
- 	if (starts_with(l1.buf, "# This series applies on GIT commit")) {
- 		ret = PATCH_FORMAT_STGIT_SERIES;
- 		goto done;
- 	}
- 
- 	if (!strcmp(l1.buf, "# HG changeset patch")) {
- 		ret = PATCH_FORMAT_HG;
- 		goto done;
- 	}
- 
--	strbuf_reset(&l2);
- 	strbuf_getline(&l2, fp);
--	strbuf_reset(&l3);
- 	strbuf_getline(&l3, fp);
- 
- 	/*
- 	 * If the second line is empty and the third is a From, Author or Date
- 	 * entry, this is likely an StGit patch.
- 	 */
- 	if (l1.len && !l2.len &&
- 		(starts_with(l3.buf, "From:") ||
- 		 starts_with(l3.buf, "Author:") ||
- 		 starts_with(l3.buf, "Date:"))) {
- 		ret = PATCH_FORMAT_STGIT;
- 		goto done;
- 	}
- 
- 	if (l1.len && is_mail(fp)) {
- 		ret = PATCH_FORMAT_MBOX;
- 		goto done;
- 	}
- 
- done:
- 	fclose(fp);
- 	strbuf_release(&l1);
-+	strbuf_release(&l2);
-+	strbuf_release(&l3);
- 	return ret;
+-
++exit:
+ 	strbuf_release(&sb);
+-	return 0;
++	return rc;
  }
  
  /**
-  * Splits out individual email patches from `paths`, where each path is either
-  * a mbox file or a Maildir. Returns 0 on success, -1 on failure.
+  * Splits a list of files/directories into individual email patches. Each path
+  * in `paths` must be a file/directory that is formatted according to
+  * `patch_format`.
+  *
+  * Once split out, the individual email patches will be stored in the state
+  * directory, with each patch's filename being its index, padded to state->prec
+  * digits.
+  *
+  * state->cur will be set to the index of the first mail, and state->last will
+  * be set to the index of the last mail.
+  *
+  * Set keep_cr to 0 to convert all lines ending with \r\n to end with \n, 1
+  * to disable this behavior, -1 to use the default configured setting.
+  *
+  * Returns 0 on success, -1 on failure.
   */
 -- 
 2.14.1
