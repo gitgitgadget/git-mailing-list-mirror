@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4D2B20285
-	for <e@80x24.org>; Wed, 30 Aug 2017 18:20:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A795920285
+	for <e@80x24.org>; Wed, 30 Aug 2017 18:20:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752697AbdH3SU3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Aug 2017 14:20:29 -0400
-Received: from mout.web.de ([212.227.15.14]:62416 "EHLO mout.web.de"
+        id S1752692AbdH3SU2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Aug 2017 14:20:28 -0400
+Received: from mout.web.de ([212.227.15.3]:55483 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752674AbdH3SUS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Aug 2017 14:20:18 -0400
-Received: from debian.fritz.box ([91.20.59.6]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M09z2-1dWqCa3GAu-00uIWj for
- <git@vger.kernel.org>; Wed, 30 Aug 2017 20:20:16 +0200
+        id S1752681AbdH3SUT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Aug 2017 14:20:19 -0400
+Received: from debian.fritz.box ([91.20.59.6]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MfTx5-1eAafh0ADD-00P2TR for
+ <git@vger.kernel.org>; Wed, 30 Aug 2017 20:20:18 +0200
 From:   Rene Scharfe <l.s.r@web.de>
 To:     git@vger.kernel.org
-Subject: [PATCH 31/34] utf8: release strbuf on error return in strbuf_utf8_replace()
-Date:   Wed, 30 Aug 2017 20:20:16 +0200
-Message-Id: <20170830182016.21269-1-l.s.r@web.de>
+Subject: [PATCH 33/34] wt-status: release strbuf after use in read_rebase_todolist()
+Date:   Wed, 30 Aug 2017 20:20:17 +0200
+Message-Id: <20170830182017.21350-1-l.s.r@web.de>
 X-Mailer: git-send-email 2.14.1
 In-Reply-To: <20170830175005.20756-1-l.s.r@web.de>
 References: <20170830175005.20756-1-l.s.r@web.de>
-X-Provags-ID: V03:K0:BBjQIE3w1021CV0caC5ywIuB3v+YtrBeTJR+X706lWtu0My7JcH
- XKMxfAb5CdKD2NXfoIVS1Z6NXwMUMcujRRBNyWhGR4m27qun0tTJBcLwNLvLThucjpKPf7g
- 3I43tLfhCqJD+XQVtPZ4DEFqNsxDmyfBqcC8uFb7lDT/2kTy6atkhysWwi/tXleqwPDuwGg
- 8eHbmm779x2WIxBxYUIVw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:PWuHNR1iuko=:nRWAoB9rv1zmXd3dzliHNa
- J+v49IFFwxbcX5p5h4cxYG/mRpATud6or5ZhYY7l1IVvPk4ePQKuiip7xKbEA8TOeaB1wb734
- GrQF0X8T9zoVlLWfbmyxCwQByOF0LwtrfPubrri31Iz7iGfvTfqM8K7+RGBrfC6WjG+EHHF1o
- tscRm8qrRh8mfa9d4MSBUtV0X7m0rzmncOKwPfYZcQJ3IEN5/om2FlTxTnOTNdfzal1hM2Y3B
- qr2NW6bbiH0ViiGTNAEXAKy2ziZXfVwyIeAqqxGyhU8cgH7RXBfylpAmj7mNuqkiSl9gjk0ta
- rl/x0CxF3oXwcHi3VV0F5qSWdlM6Z+Fb2C6SvrUPXYb3tTja/f8ofTyrNrSSlKJ4M3ugRuz+U
- q+ec8NoSkTGTEsJjyzbsGwRknIvZRD/foGE5VRyjRyIDh9Bq3MWWtj0LIzkh+v9BjizpboXHX
- JNdW6S87BKcAhqMcXiwXSZyCYCaqZNRUuWuum/KzldKEK+SUNQHKwUUu6WxT8jdfVewGl1Ult
- 1u/P3uH/Ne8rZWPMMa8X7+XNgZSthL5WSwF6HGVJ8r3Lp+PDP9xAySkIavSsD7Eq0hTB3rCJT
- ggOuahJxenZlO3w+l0AFrlEdypJzYaDwq7+JY4grfcYyerfmSWwMWBPg+AzFXAnGzoOY600J4
- chIICgZPAPX0dKwuzZfDe0FjJCXVKP7rigH+VOPLZuZ8x8fefxhumUDhl5R+AP3DTEDTXbyhj
- fX4rTl758ddV3F83/ju4+3v/B9kdApyFRgdLSDoQWZYv0SHuPWCUPp38xopovFktiPLQ2mWUI
- CfBk/xGbyycPssBtooY1xoWfegMSQ==
+X-Provags-ID: V03:K0:N6xx09O5DVAJL4PmfWTJ3Elmth7uMLVGwbgD2sTEyeJC9pslQuf
+ ak3SGC6HgC7g+pXLiIafm8E8Dggky9lHCmo6NckyecDsOlB3HUTagXl3yjn+o0H89Oa2Lcd
+ iZRgemrXVQDZG4Rb4HLl6Y57c67Y7wbbu/B/z7Pu0Hrubu9V1/U8uOuZboH84J94P/8Li0s
+ TRGjA53LR5Yjh0x8pwE1g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:W8/wx+krKmQ=:D2+NtOflQMazFQ/vy25fUE
+ QOcnAg2erMyfW7mlShEQcvryRSnMAjRf8LSjE+BZqtBmn5nb9r8WvUWwSjexvEm9kE44NFFRT
+ /RbshNuyMSVVaoicdeMPP4JGKgO37IVDO82At+bqbyk85Qej6u0QjTuZQrU3r55sL+oj9q5by
+ n93RmPKu1G6x2/oWoRgF63YglfRAhUzqx3TDmjTkb1KIzwJmXy0ABbai6PGnh/Amm2Xfycrrt
+ xkNWF+yMQBf/j3Q6B3bKxrIKmufBwOZktjLx5FDbUEJY400mSYM6hhvP27A5rx+5lg7Q+o/XC
+ GPyIgN2hNtAXViLXUjTL23EIkU3BSLXyKxqEhlfYdH0sKrWA/3y9ENTLPZrdD8yEnpZRkfrCo
+ rBBNFunnLKyrT6Uta6alf170jFZY7s8U+yiwYR/NKjbGj2FBhXutCKFRVasbmKQd2PZG/Q6Vm
+ n4xuv7411txkFUB+NDjJrkCFMIAKwxemgkQ5nqNKubDaW4874gpodKeTvjiXSza4pPTEE0PR2
+ lt5X+8spjtalgcZ25fyMqd+XueRJedc01+vNkAPJLARD8RWHI6ahs2um00knjmkG3qkQvqc9j
+ NVNAbtXh1Zs14QGlX88uaHCaGs0JMB4Hc62qVKwl2I27VGrB8Rtg7Ho+qUYZjvtbGo8I9w1nF
+ LxUnO2w/+n9G0jLmb8PKy681+p4sHEpR9eWT5f0YQnbk41r/i5pjEGlh5ADM9jRf0V5+j+zBn
+ SpmVcMnA1vmLynEV/vsf9LIxpmdRum+iAgvGUhmAcwK6epquefWhhzdlY9qmMJluC65VoRuSC
+ G10FVJpHZVu5xl80OdEdKHxLO0h/A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -51,63 +51,37 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- utf8.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ wt-status.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/utf8.c b/utf8.c
-index 0c8e011a58..47a42047c8 100644
---- a/utf8.c
-+++ b/utf8.c
-@@ -354,49 +354,50 @@ void strbuf_add_wrapped_bytes(struct strbuf *buf, const char *data, int len,
- void strbuf_utf8_replace(struct strbuf *sb_src, int pos, int width,
- 			 const char *subst)
+diff --git a/wt-status.c b/wt-status.c
+index 77c27c5113..cafafb5ecd 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1175,24 +1175,25 @@ static void abbrev_sha1_in_line(struct strbuf *line)
+ static int read_rebase_todolist(const char *fname, struct string_list *lines)
  {
- 	struct strbuf sb_dst = STRBUF_INIT;
- 	char *src = sb_src->buf;
- 	char *end = src + sb_src->len;
- 	char *dst;
- 	int w = 0, subst_len = 0;
+ 	struct strbuf line = STRBUF_INIT;
+ 	FILE *f = fopen(git_path("%s", fname), "r");
  
- 	if (subst)
- 		subst_len = strlen(subst);
- 	strbuf_grow(&sb_dst, sb_src->len + subst_len);
- 	dst = sb_dst.buf;
- 
- 	while (src < end) {
- 		char *old;
- 		size_t n;
- 
- 		while ((n = display_mode_esc_sequence_len(src))) {
- 			memcpy(dst, src, n);
- 			src += n;
- 			dst += n;
- 		}
- 
- 		if (src >= end)
- 			break;
- 
- 		old = src;
- 		n = utf8_width((const char**)&src, NULL);
- 		if (!src) 	/* broken utf-8, do nothing */
--			return;
-+			goto out;
- 		if (n && w >= pos && w < pos + width) {
- 			if (subst) {
- 				memcpy(dst, subst, subst_len);
- 				dst += subst_len;
- 				subst = NULL;
- 			}
- 			w += n;
- 			continue;
- 		}
- 		memcpy(dst, old, src - old);
- 		dst += src - old;
- 		w += n;
+ 	if (!f) {
+ 		if (errno == ENOENT)
+ 			return -1;
+ 		die_errno("Could not open file %s for reading",
+ 			  git_path("%s", fname));
  	}
- 	strbuf_setlen(&sb_dst, dst - sb_dst.buf);
- 	strbuf_swap(sb_src, &sb_dst);
-+out:
- 	strbuf_release(&sb_dst);
+ 	while (!strbuf_getline_lf(&line, f)) {
+ 		if (line.len && line.buf[0] == comment_line_char)
+ 			continue;
+ 		strbuf_trim(&line);
+ 		if (!line.len)
+ 			continue;
+ 		abbrev_sha1_in_line(&line);
+ 		string_list_append(lines, line.buf);
+ 	}
+ 	fclose(f);
++	strbuf_release(&line);
+ 	return 0;
  }
  
 -- 
