@@ -2,97 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D8845208DB
-	for <e@80x24.org>; Wed, 30 Aug 2017 18:07:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B426D20285
+	for <e@80x24.org>; Wed, 30 Aug 2017 18:20:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752217AbdH3SHl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Aug 2017 14:07:41 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:34288 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751775AbdH3SHk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Aug 2017 14:07:40 -0400
-Received: by mail-pf0-f173.google.com with SMTP id l87so11549641pfj.1
-        for <git@vger.kernel.org>; Wed, 30 Aug 2017 11:07:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=3sPu3AJ6U5rXD+nEiSbDKj8KxPoG65Ulltshw5gihQg=;
-        b=X62Zh1ZDyo5h4koTIeGHhSanNnxIy8e793DFvNQc7mxI7xJFfkL8E5XBz99GpdTXTl
-         xvt/gutRkbYCEVGtklJMd6s1hljpYIW7EbOXTSyZIx80cmpBrMY1FWtFxjddBTAGIlyA
-         hi/k5TVOhd7ltE/wC/svjqAABYC+iVjHPHnQeFHZb07mvT3yQIhqkjmZ5qWfikdOG1gg
-         mRWbXxDPHcb6OKqo+mcihgOGPUMT25+EWt5+Wecw02OW8cYLibEatkFlXPGdf3JeqEXn
-         f7dvwzosTs0VyEvqkB5pOwwZQi9OhEdwYPYMCZV+YaGoimZgTlV4Aw9S1O8oXx3ODRYK
-         R9BA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=3sPu3AJ6U5rXD+nEiSbDKj8KxPoG65Ulltshw5gihQg=;
-        b=mXYbog2xSp5h4+1MNlCZ0AXlbaI1h9YV6eHwZvcCUnHyc07IxAPL0Ck0yl549VoAGJ
-         umBZb3S8Lb8+sWJrhMbVji2sBjtLUp7BVLzRJcz0Hypx1jkTTQzmc2P59P0CyrMj5yAk
-         +JJk15jhCiwfUS4S2nqF2cOd+JzDwfID/bGLa0TrqoG9DeKP32nR7tQr1r9Bj0AhJhX4
-         89wQzvOxyf2AvzeZhlbpcnZL8WYGU9EpuDYBGpM5afMVrdnmL3oXYF8mae5derzMGYpg
-         abpU9+P5MWk3LjxZXPG868kfeMdcCiVqDPlF2ZIk34a+y5SMQSWW/mLgmsKQYpPH73Yi
-         LDKg==
-X-Gm-Message-State: AHYfb5gMvurJzIvIWFvlmA/b9ebU4lRKxKpFEY1ig5bi3oqUatH0ds6Z
-        Y2lC1gaMEETdeDu3Oo0O7nL/gT/8IA==
-X-Received: by 10.98.111.136 with SMTP id k130mr2438352pfc.122.1504116459788;
- Wed, 30 Aug 2017 11:07:39 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.100.182.197 with HTTP; Wed, 30 Aug 2017 11:07:39 -0700 (PDT)
-In-Reply-To: <oo62vr$pvq$1@blaine.gmane.org>
-References: <oo62vr$pvq$1@blaine.gmane.org>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Wed, 30 Aug 2017 20:07:39 +0200
-Message-ID: <CAN0heSqGfxrFTwuaxgppZTx+3U=g_Qs4PyaCBF6ddV_PbvdpTQ@mail.gmail.com>
-Subject: Re: Commit dropped when swapping commits with rebase -i -p
-To:     Sebastian Schuberth <sschuberth@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        id S1752683AbdH3SUS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Aug 2017 14:20:18 -0400
+Received: from mout.web.de ([212.227.15.14]:58095 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752098AbdH3SUQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Aug 2017 14:20:16 -0400
+Received: from debian.fritz.box ([91.20.59.6]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MV4hR-1e1HGd3Hx7-00YPfr for
+ <git@vger.kernel.org>; Wed, 30 Aug 2017 20:20:14 +0200
+From:   Rene Scharfe <l.s.r@web.de>
+To:     git@vger.kernel.org
+Subject: [PATCH 28/34] sequencer: release strbuf after use in save_head()
+Date:   Wed, 30 Aug 2017 20:20:14 +0200
+Message-Id: <20170830182014.21147-1-l.s.r@web.de>
+X-Mailer: git-send-email 2.14.1
+In-Reply-To: <20170830175005.20756-1-l.s.r@web.de>
+References: <20170830175005.20756-1-l.s.r@web.de>
+X-Provags-ID: V03:K0:zKOkyOcMQ87KwNRgci0/Q/uyscKd4PV2ekOxjnuI4fGJotWPr73
+ 4/lM6yGvRsMbNkvimIg93MfO3e92Ng3jpO30k2wVaqdOLGkMYEnL47h1M5t6AqSfPeSxhPZ
+ uLaHTKYIbARcNmdPQP+kiP4ghlr/CYDNtw8nfMWgahF2C9CDRCMvaouGJFWQ2+r/AY+0tJW
+ jzGfKzwz0+5+GYJ/pYV0g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:PhxZ9ntM4Hg=:IydrhIlGOGw5mUbmznT7S5
+ irRZI7kJ47wfYUCMcPf56sgCgN76m/iecLvJFOBWTKVlyC7zFB/wLjM28qPDglSSHnxapDw94
+ MABCGUvhbmH4Q2lPMup9lN7pOlDqbLU+hVC+DoJNbw9cUpGxjxj5z2c0f7FhxWkoUyKexMwKC
+ odEpdgcvtDTx5V0NwKc91kkHmSMwgWHG3sFzeRu0n1+cQOLatKCKLT/iWMiBRx0fjldnJvGWI
+ 77JoqRDaGeRoaN2xH/R+/EvPXpCEdGV4PPb1ZpXU0sU+MOLncXygEzR8S20ZrsFBDi+FyISjg
+ v0Iwr+kurmMu4hA+afGlcOPNSnF/eifTNECIAkj7Xoj52Vo6LlMDmbBCILkSn/amxyovlqaVf
+ HK1tv3n6DiKzIdujsNCg5EVNYwIxtrR1NstvtmMJBSvdWsvGHkCAAVhxnCpFU+ihsN0Jbef5d
+ tmLpfX7XfvHI6aR+HIKRr1+ICZqzMm0swKaZ5E3VP6NUXKhTJVrr4D03UwXW+E6MSqqBEy4fA
+ X6XSrYsQCRn1rhmVpZARaWwvFZ211Nh8E9otzfPdDJk5xAgLUrusDYNCPgxfzthZgrSuX/uBj
+ iciAYw78lHETRpDPi2TGMQdY0J+/ahPZPUFSSHnUJJB7FSVr/NL5RuM1YO7JO5xwphvpU2TVA
+ 1WFzE7reigLPtYW7RssnXY1Yr+kZex2wMdK5rA/q4Rysp9zz6Pul5+owW0Cj54Wg5FeuuKtzN
+ 7KU+BgQ3HuGKfqbslSRM7/7DWyA8AO/3a0q4cW2/EWNXpDVuuVB3JaeAZP7dVyk8b0mGpC/Lj
+ 8MVYfwUdtwHk1LxrTP0PmYK4XXKMQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 30 August 2017 at 12:11, Sebastian Schuberth <sschuberth@gmail.com> wrot=
-e:
-> Hi,
->
-> I believe stumbled upon a nasty bug in Git: It looks like a commits gets =
-dropped during interactive rebase when asking to preserve merges. Steps:
->
-> $ git clone -b git-bug --single-branch https://github.com/heremaps/scanco=
-de-toolkit.git
-> $ git rebase -i -p HEAD~2
-> # In the editor, swap the order of the two (non-merge) commits.
-> $ git diff origin/git-bug
->
-> The last command will show a non-empty diff which looks as if the "Do not=
- shadow the os package with a variable name" commit has been dropped, and i=
-ndeed "git log" confirms this. The commit should not get dropped, and it do=
-es not if just using "git rebase -i -p HEAD~2" (without "-p").
->
-> I'm observing this with Git 2.14.1 on Linux.
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ sequencer.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-The man-page for git rebase says that combining -p with -i is "generally
-not a good idea unless you know what you are doing (see BUGS below)".
+diff --git a/sequencer.c b/sequencer.c
+index fcceabb80f..60636ce54b 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -1563,23 +1563,26 @@ static int create_seq_dir(void)
+ static int save_head(const char *head)
+ {
+ 	static struct lock_file head_lock;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	int fd;
++	ssize_t written;
+ 
+ 	fd = hold_lock_file_for_update(&head_lock, git_path_head_file(), 0);
+ 	if (fd < 0) {
+ 		rollback_lock_file(&head_lock);
+ 		return error_errno(_("could not lock HEAD"));
+ 	}
+ 	strbuf_addf(&buf, "%s\n", head);
+-	if (write_in_full(fd, buf.buf, buf.len) < 0) {
++	written = write_in_full(fd, buf.buf, buf.len);
++	strbuf_release(&buf);
++	if (written < 0) {
+ 		rollback_lock_file(&head_lock);
+ 		return error_errno(_("could not write to '%s'"),
+ 				   git_path_head_file());
+ 	}
+ 	if (commit_lock_file(&head_lock) < 0) {
+ 		rollback_lock_file(&head_lock);
+ 		return error(_("failed to finalize '%s'."), git_path_head_file());
+ 	}
+ 	return 0;
+ }
+-- 
+2.14.1
 
-Under BUGS, it says
-
-"The todo list presented by --preserve-merges --interactive does not
-represent the topology of the revision graph. Editing commits and
-rewording their commit messages should work fine, but attempts to
-reorder commits tend to produce counterintuitive results."
-
-So if you agree that a "dropped commit" is a "counterintuitive result",
-this is known and documented. Maybe the warning could be harsher, but it
-does say "unless you know what you are doing".
-
-Martin
