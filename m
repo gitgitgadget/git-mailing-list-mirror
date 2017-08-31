@@ -2,102 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C9D0208CD
-	for <e@80x24.org>; Thu, 31 Aug 2017 13:19:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C275B208CD
+	for <e@80x24.org>; Thu, 31 Aug 2017 13:35:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751086AbdHaNTl (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 Aug 2017 09:19:41 -0400
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:35420 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750911AbdHaNTk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Aug 2017 09:19:40 -0400
-Received: by mail-qt0-f194.google.com with SMTP id u11so477579qtu.2
-        for <git@vger.kernel.org>; Thu, 31 Aug 2017 06:19:40 -0700 (PDT)
+        id S1751545AbdHaNfX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 Aug 2017 09:35:23 -0400
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:34489 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750968AbdHaNfW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Aug 2017 09:35:22 -0400
+Received: by mail-pf0-f181.google.com with SMTP id l87so2018961pfj.1
+        for <git@vger.kernel.org>; Thu, 31 Aug 2017 06:35:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=I2YkMiqihTxNlYr5OlKQFsIXKq/V0UJX43S6DfJZdKw=;
-        b=YATTEfBk5+zIENsoCp5loU9zIi4aP4wbPlWrgiD8rSA540AT9cgV5AaIPdjhBuPP43
-         CMDHCbXzCN/eZaKk6e1wIkmLnf3Z+p8AroHCq2tACrUGfujSXI9SieWz01nbCzsRpjmn
-         6ZO+K6jwchSVIBksZFtXjqV6Tgf/AKDkkqp4bICJcdY6G44DyTqN2cjPo/SStW+Z7EhS
-         j6vbk7sF8BL+9Y9Szm09iUaAXRzvBNS+5xJ4VgvRqDSLHPHUESoj708oEh56A8CLkfYv
-         ocJEEZLcC42iKiuzwB8BnH7FgBqUOJ4SQI97cYDtWZjq0/aqdDE5VIvjIx48uIf6FTP5
-         379A==
+        h=message-id:subject:from:to:cc:in-reply-to:references:date
+         :mime-version:content-transfer-encoding;
+        bh=epJQugluPqEKGW3z+U/+DhFBntnJhjNTo8LU6Ye8iuQ=;
+        b=G41HdElQ8EqCC/5MJmBaEPAItJ/FUWT+ftw+N+nzk7DUtqhLllq3aVzwvcq0P4i8aI
+         e+FcdyQAYP6tKhsnxvA1kRSwNPR6z4FJRCefYb3UEGeKO5k07P6LE57NnvAjk1uQvt7f
+         zq0DteUmr707y+mwg22FacDcl5Wz62GKTXItGKNVZPpuc+ZwbV93W/PDogVuQQOwxqry
+         Xn/Jdvo1nYy+u4WLAbQ9Ol8LylDqLKpYSIfOVpHk5APMXkiNtqA+mt0wUfrOjxTLajYd
+         LkBL1l1AUfBpSY7/u9XwDf3scZpY3pW1H/1AnPjOpnnjmx0CqRHoY1tc6IxPrbzo3Vum
+         3xLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=I2YkMiqihTxNlYr5OlKQFsIXKq/V0UJX43S6DfJZdKw=;
-        b=fZz8oSr1Rw1SrFJpll8gbT1xKBzGn6rEg3dl+xS8vmkLg9aAAWJQGsXIflXobeh2QN
-         X+wDYLOQdmM+isl0CJguuhYyMxg2dTulcXj9exIrQgBkzD4OMYv3CD16TsNsD+WD6cRJ
-         zzXE+BFuxD6C+py5tDAIPwWA8E/FU3S8rfaWu2ocUSzUQmC3JA0zE/x5u8/b5nfqyFvd
-         DjBVjjUbhqozByixWKV8os4QS3wICju47xjn3DFMrTyfr27PVW6MTdmts7a0qFdMzw3G
-         90XMLlTWvivAEBic0wPo5hEX7N92Jk8z4T6UdW9YGISbdUclqbl/RO+BBeo3nJbVYh0l
-         5ejg==
-X-Gm-Message-State: AHYfb5iyHaPmvz8IdlQt1lqV5PhruaeOW+EU1URLAhy+PXon7ZWNN3Dk
-        xEoTVqNfqoo9/vk5R/0=
-X-Google-Smtp-Source: ADKCNb7cgaIWJXYztvhMxYlzF58Y7ohXR0SIz5So+ckhUWWkqJRsniUtYAqSwGYdEauD9BLSEfaZfQ==
-X-Received: by 10.237.60.168 with SMTP id d37mr7399585qtf.9.1504185579595;
-        Thu, 31 Aug 2017 06:19:39 -0700 (PDT)
-Received: from localhost (tripoint.kitware.com. [66.194.253.20])
-        by smtp.gmail.com with ESMTPSA id o17sm5373854qkl.52.2017.08.31.06.19.38
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 31 Aug 2017 06:19:39 -0700 (PDT)
-From:   Ben Boeckel <mathstuf@gmail.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org,
-        =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
-        Ben Boeckel <mathstuf@gmail.com>
-Subject: [PATCH v3] Documentation: mention that `eol` can change the dirty status of paths
-Date:   Thu, 31 Aug 2017 09:19:36 -0400
-Message-Id: <20170831131936.26226-1-mathstuf@gmail.com>
-X-Mailer: git-send-email 2.9.5
-In-Reply-To: <20170822174918.GA1005@megas.kitware.com>
-References: <20170822174918.GA1005@megas.kitware.com>
-In-Reply-To: <20170822174918.GA1005@megas.kitware.com>
-References: <20170822174918.GA1005@megas.kitware.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:message-id:subject:from:to:cc:in-reply-to
+         :references:date:mime-version:content-transfer-encoding;
+        bh=epJQugluPqEKGW3z+U/+DhFBntnJhjNTo8LU6Ye8iuQ=;
+        b=gUirsPAT4OuQFeEfNga25w7Y5+0+9AoWLDh3gGtzC6KFUEod4uonNChYveXQn9/k4k
+         HeS1jRub5cu01OB3UIKJgGNC5ZcR7yrETqWSwA4P7PWIsmPxELA5XOpbpG7E5ijPHyHw
+         128Buid5V5s8Tq8dMwdJM4fChKWgo1nl+KRNgcU7PwnfRuw2WhB6hvj/yoWMMitdi+7h
+         zEWcE1kKm+VoQeFfL8MgDSqwxilTN7RL/7KO/TL6QOtfsuR0wrWh5JyjV3HXrtuYLAy6
+         +2CjMRRoxZgiUZOBduvfIGrmBi1SUGkO/36/fUe/bDBXuyyvItPOT95SLE64uatwrGIq
+         voKQ==
+X-Gm-Message-State: AHYfb5jHaPJwEd/oW+XDBvYgmNextvlJhRBj3qnugWSwjJRCHNzywubW
+        SgUdEnzhokUQrw==
+X-Google-Smtp-Source: ADKCNb57hdfD4j4ddbsZOZuy+F0VbLsYTRTxif9o3kfyaCnPD/hYJUV0H6Err2lieLUy08mwVYt4iw==
+X-Received: by 10.98.59.11 with SMTP id i11mr2276396pfa.237.1504186521826;
+        Thu, 31 Aug 2017 06:35:21 -0700 (PDT)
+Received: from unique-pc ([218.248.21.162])
+        by smtp.googlemail.com with ESMTPSA id u31sm3372949pgn.72.2017.08.31.06.35.18
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 31 Aug 2017 06:35:21 -0700 (PDT)
+Message-ID: <1504186577.1826.9.camel@gmail.com>
+Subject: Re: [PATCH v2/RFC] commit: change the meaning of an empty commit
+ message
+From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+In-Reply-To: <xmqqo9r4vhv0.fsf@gitster.mtv.corp.google.com>
+References: <1500107583.1850.4.camel@gmail.com>
+         <20170821140528.7212-1-kaarticsivaraam91196@gmail.com>
+         <xmqqo9r4vhv0.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset="ISO-8859-15"
+Date:   Thu, 31 Aug 2017 19:06:17 +0530
+Mime-Version: 1.0
+X-Mailer: Evolution 3.22.6-1 
+Content-Transfer-Encoding: 7bit
+X-Cyberoam-smtpxy-version: 1.0.6.3
+X-Cyberoam-AV-Policy: default
+X-CTCH-Error: Unable to connect local ctasd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When setting the `eol` attribute, paths can change their dirty status
-without any change in the working directory. This can cause confusion
-and should at least be mentioned with a remedy.
+On Thu, 2017-08-24 at 13:19 -0700, Junio C Hamano wrote:
+> 
+> The latter is easier for me as we do not have to worry about 
+> breaking people's scripts and tools used in
+> their established workflows at all.
+> 
 
-Reviewed-by: Torsten Bögershausen <tboegi@web.de>
-Reviewed-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Ben Boeckel <mathstuf@gmail.com>
----
- Documentation/gitattributes.txt | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+In that case, how about doing something similar to what was done to
+'set-upstream' option of branch? We could print a warning notice when
+the commit message is found to be empty due to the presence of a sign-
+off line. As usual we could stop warning and stop identifying log
+messages consisting only signed-off lines as empty after a few years of
+doing that.
 
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index c4f2be2..4c68bc1 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -151,7 +151,10 @@ unspecified.
- 
- This attribute sets a specific line-ending style to be used in the
- working directory.  It enables end-of-line conversion without any
--content checks, effectively setting the `text` attribute.
-+content checks, effectively setting the `text` attribute.  Note that
-+setting this attribute on paths which are in the index with CRLF line
-+endings may make the paths to be considered dirty.  Adding the path to
-+the index again will normalize the line endings in the index.
- 
- Set to string value "crlf"::
- 
+Note: I have no idea how good an idea this is. Let me know if it's a
+bad one.
+
 -- 
-2.9.5
-
+Kaartic
