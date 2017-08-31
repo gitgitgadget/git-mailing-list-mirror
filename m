@@ -2,76 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 72AD8208CD
-	for <e@80x24.org>; Thu, 31 Aug 2017 14:33:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 81F89208CD
+	for <e@80x24.org>; Thu, 31 Aug 2017 14:56:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751457AbdHaOdW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 Aug 2017 10:33:22 -0400
-Received: from mout.web.de ([212.227.15.3]:64972 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751382AbdHaOdV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Aug 2017 10:33:21 -0400
-Received: from macce.local ([195.198.252.176]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MPY1p-1ds5Mo1AnJ-004oLk; Thu, 31
- Aug 2017 16:33:15 +0200
-Subject: Re: [PATCH v3] Documentation: mention that `eol` can change the dirty
- status of paths
-To:     Ben Boeckel <mathstuf@gmail.com>, gitster@pobox.com
+        id S1751622AbdHaO4G (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 Aug 2017 10:56:06 -0400
+Received: from infnt2.nsinfo.co.rs ([94.247.200.3]:33865 "EHLO
+        infnt2.nsinfo.co.rs" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751011AbdHaO4F (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Aug 2017 10:56:05 -0400
+Received: from localhost ([127.0.0.1])
+        by infnt2.nsinfo.co.rs with esmtp (Exim 4.63)
+        (envelope-from <pavic.aleksandar@nsinfo.co.rs>)
+        id 1dnQt0-0004ni-AR; Thu, 31 Aug 2017 16:56:02 +0200
+X-Virus-Scanned: amavisd-new at nsinfo.co.yu
+Received: from [10.20.3.229]
+        by infnt2.nsinfo.co.rs with esmtp (Exim 4.63)
+        (envelope-from <pavic.aleksandar@nsinfo.co.rs>)
+        id 1dnQso-0004nU-CO; Thu, 31 Aug 2017 16:55:50 +0200
+Subject: Re: Bug report
+To:     Dov Grobgeld <dov.grobgeld@gmail.com>, Kevin Daudt <me@ikke.info>
 Cc:     git@vger.kernel.org
-References: <20170822174918.GA1005@megas.kitware.com>
- <20170831131936.26226-1-mathstuf@gmail.com>
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <78c1a85a-70c1-ff35-466e-f6c363a0c632@web.de>
-Date:   Thu, 31 Aug 2017 16:33:14 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:52.0)
- Gecko/20100101 Thunderbird/52.3.0
+References: <db0580dc-3ce0-47ba-b82a-b1e50b9d0a3a@nsinfo.co.rs>
+ <20170831063614.GI3839@alpha.vpn.ikke.info>
+ <CA++fsGHFwoLvwO121aDEgi1dZbwwfogdWbxxRx+ci7T1RDCAnw@mail.gmail.com>
+From:   Aleksandar Pavic <pavic.aleksandar@nsinfo.co.rs>
+Message-ID: <e334fd40-0bf2-21d8-e647-ef1195911e04@nsinfo.co.rs>
+Date:   Thu, 31 Aug 2017 16:55:50 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-In-Reply-To: <20170831131936.26226-1-mathstuf@gmail.com>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <CA++fsGHFwoLvwO121aDEgi1dZbwwfogdWbxxRx+ci7T1RDCAnw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:qANXO/wQG9JZXZ+I7af0HHE5r/lmT9k+77snEcy9TSvb3OE9alA
- 0DR3Ch2MR2q+w01IqrmUotJRKk5vhtBCWe7KppsitwoPYEBthpMo0IdiFJ9zr04RlumXPmf
- YjBCo/mIdeR/FjPg/f03L7ucsfcfjov6xadzCMovkv8ZGbBaqGffBM29Z4t743WhjR/yGEp
- sWUu+XyKLgAwu2mvudMbQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:X6saWJSjghk=:7n1EUsaqE7M4mwxEEZaRVE
- ebTNmIBxxSy8eAebVaJcj2dMgjiRIm/NRjgFf9r0Vke2sp+Pwiibu4Wqbekh2wWnMero329Gq
- 1sJKsO4CnxQmeBKl5XMqgAlgY3Cl81+YtwQYyL7ARIAbnVVF4ixYWLaFkETQYTnUhO3SXag7H
- LuDJkMCZZc9xA4u+gKoHQPEWNKe4AjuPQ+snPQ8nUXFN8WqguyLAcuf6vEGHxLN87QncINQYa
- +1dzEcVEl6Y7ND6uILB+vF8GYrFHohZGiUZQOcFElRmc4565DTGNm0nrYmshZ5Acy7gK0EfIj
- y3CTRio1FR9sMuo3Ihv5W+oVPileK+UKI9eK5YjGRLtJA6bcWz33ImoSCv7hL6SpgTkPNm/ij
- Z6MC64zYZQzc2xvfD8UWtaj8nvdGlSjFe4ekD38BqSen2DTDGHjTKc6IKWaAZRTpIz9y9+XP4
- KB118pH3KUqVN8tW6aaqaKSL1nBmKCXRyzs80lHdIHzUJFdos5qY/ShUqElYD0JQKtED7dGQE
- +BVnBezvBkip+5AhTTwACUPoIw71Lktgik82hf3XJjQ1KDdLXrEd0X7JV+ZqsLO2UJ4/ccXxL
- exFoctUNxCnstLh2LJppOhi3CdCsABHgLG3WL/q7jkmaoPDHWJ+j3QewBzaeFPC77F9Onoa5K
- QSx4hNbIuXDckM4I0KZup3B6BCQviKk+OsifELedvaKvQZqtt6g4tvqoSx0rKm/KlO+7CXxBj
- 3ll9ZMN9bsWGXDIRfXp4wpAwiHeilihBIopAkIuKf6iPHW7kGpPDGgss+Bi6Mw/Gn/6lExJNe
- UV2YcnkZcmwP8UI2rL+xm+XAGbg+ZOp2yU/yJjcSHmG6GRcTjw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2017-08-31 15:19, Ben Boeckel wrote:
+Hm, thanks, but the link was not helpful, there are no merge commits to 
+master branch.
 
->  This attribute sets a specific line-ending style to be used in the
->  working directory.  It enables end-of-line conversion without any
-> -content checks, effectively setting the `text` attribute.
-> +content checks, effectively setting the `text` attribute.  Note that
-> +setting this attribute on paths which are in the index with CRLF line
-> +endings may make the paths to be considered dirty.  Adding the path to
+Those changes should have not been undone, that's how we caught it, 
+because 1 line peace of code introduced new feature (+-10% tolerance on 
+credit card verification  amount).
 
-OK - and this leads to another question:
+So most likeley they were undone, but our tree is pretty simple, we have 
+master and production branches.
 
-Would it make sense if we allow files with "text eol=CRLF" to continue
-to be stored with CRLF in the index?
 
-Skip the normalization for existing files, since the user asked
-for CRLF in the working tree (and the internal storage is less interesting)
 
-Should I consider a patch ?
+On 31.08.2017. 16:19, Dov Grobgeld wrote:
+> The following answer that I got back in 2015 from Jeff King might be
+> relevant to your problem:
+>
+> https://marc.info/?l=git&m=144178948506788&w=2
+>
+> Regards,
+> Dov
+>
+> On Thu, Aug 31, 2017 at 9:36 AM, Kevin Daudt <me@ikke.info> wrote:
+>> On Wed, Aug 30, 2017 at 11:25:00PM +0200, Aleksandar Pavic wrote:
+>>>   I have a file
+>>>
+>>>   app/Controller/CustomerCardVerificationController.php
+>>>
+>>> And when I take a look at changes log, I get this (no matter which tool I
+>>> use):
+>>>
+>>> 2017-07-31 19:41 dule             o membership renew payment email
+>>> 2017-06-07 08:59 Dusan Tatic      o cc refund clean
+>>> 2017-04-15 00:16 Miodrag Dragić   o refound admin payment
+>>> 2017-03-20 12:02 Dusan Tatic      o CardVerification card connect
+>>> 2017-03-16 15:59 Aleksandar Pavic o paypal
+>>> 2017-03-10 13:34 Aleksandar Pavic o Production branch
+>>> 2017-03-10 13:01 Aleksandar Pavic I Migrating dev
+>>>
+>>> However if I manually browse thru revisions and open revision from
+>>> 03/27/2017 07:05 PM
+>>>
+>>> I can see the change in that file which is unlisted above, at revision
+>>> ff9f4946e109bd234d438e4db1d319b1f6cb6580
+>>>
+>>> And I'm at master branch all the time...
+>>>
+>>> We wouldn't have noticed that if it weren't one important feature...
+>>>
+>> What does git branch --contains ff9f4946e109bd234d438e4db1d319b1f6cb6580
+>> return?
+>>
+>> Where did you find this commit?
+
