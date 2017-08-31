@@ -2,92 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C275B208CD
-	for <e@80x24.org>; Thu, 31 Aug 2017 13:35:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C2149208CD
+	for <e@80x24.org>; Thu, 31 Aug 2017 14:19:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751545AbdHaNfX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 Aug 2017 09:35:23 -0400
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:34489 "EHLO
-        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750968AbdHaNfW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Aug 2017 09:35:22 -0400
-Received: by mail-pf0-f181.google.com with SMTP id l87so2018961pfj.1
-        for <git@vger.kernel.org>; Thu, 31 Aug 2017 06:35:22 -0700 (PDT)
+        id S1751415AbdHaOTS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 Aug 2017 10:19:18 -0400
+Received: from mail-wm0-f44.google.com ([74.125.82.44]:33548 "EHLO
+        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751392AbdHaOTR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Aug 2017 10:19:17 -0400
+Received: by mail-wm0-f44.google.com with SMTP id r202so8872398wmd.0
+        for <git@vger.kernel.org>; Thu, 31 Aug 2017 07:19:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:in-reply-to:references:date
-         :mime-version:content-transfer-encoding;
-        bh=epJQugluPqEKGW3z+U/+DhFBntnJhjNTo8LU6Ye8iuQ=;
-        b=G41HdElQ8EqCC/5MJmBaEPAItJ/FUWT+ftw+N+nzk7DUtqhLllq3aVzwvcq0P4i8aI
-         e+FcdyQAYP6tKhsnxvA1kRSwNPR6z4FJRCefYb3UEGeKO5k07P6LE57NnvAjk1uQvt7f
-         zq0DteUmr707y+mwg22FacDcl5Wz62GKTXItGKNVZPpuc+ZwbV93W/PDogVuQQOwxqry
-         Xn/Jdvo1nYy+u4WLAbQ9Ol8LylDqLKpYSIfOVpHk5APMXkiNtqA+mt0wUfrOjxTLajYd
-         LkBL1l1AUfBpSY7/u9XwDf3scZpY3pW1H/1AnPjOpnnjmx0CqRHoY1tc6IxPrbzo3Vum
-         3xLw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=699q2KtLDpGCweoWa1VYXRcIAFmlzbTTodrQ8ddr2/U=;
+        b=ITptpJRU/woZ58rMYFBEJyBHIy8/SAOOyHIIF4zz18wFcug105lDwqNjGdHagfIkY0
+         aGBX2r10EAvR4K53qMIQd5by5OggYybi+/ryX8Ko5PvvwJfRZwZw0EGToWY/ppEmFzjB
+         dLSCyiN4ZTGK3FstUmjoCp/JiI+eSLC4yjmKRuzQjlpHPYyY1LwW+9s3sYpSUazqKoUO
+         +Vj2qw0KTIQem7QWyZDtG6gVGliUjLKrLTc5LtaWJMn2E/CDxo3mLIW7H56sjoOkcd1V
+         KS+Z7Jnx00bXLDMVmhMLkNRew31zfFws7ClEVo6J10ydztax+5CHoS47UQ8ENuFtKBlc
+         LQFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:in-reply-to
-         :references:date:mime-version:content-transfer-encoding;
-        bh=epJQugluPqEKGW3z+U/+DhFBntnJhjNTo8LU6Ye8iuQ=;
-        b=gUirsPAT4OuQFeEfNga25w7Y5+0+9AoWLDh3gGtzC6KFUEod4uonNChYveXQn9/k4k
-         HeS1jRub5cu01OB3UIKJgGNC5ZcR7yrETqWSwA4P7PWIsmPxELA5XOpbpG7E5ijPHyHw
-         128Buid5V5s8Tq8dMwdJM4fChKWgo1nl+KRNgcU7PwnfRuw2WhB6hvj/yoWMMitdi+7h
-         zEWcE1kKm+VoQeFfL8MgDSqwxilTN7RL/7KO/TL6QOtfsuR0wrWh5JyjV3HXrtuYLAy6
-         +2CjMRRoxZgiUZOBduvfIGrmBi1SUGkO/36/fUe/bDBXuyyvItPOT95SLE64uatwrGIq
-         voKQ==
-X-Gm-Message-State: AHYfb5jHaPJwEd/oW+XDBvYgmNextvlJhRBj3qnugWSwjJRCHNzywubW
-        SgUdEnzhokUQrw==
-X-Google-Smtp-Source: ADKCNb57hdfD4j4ddbsZOZuy+F0VbLsYTRTxif9o3kfyaCnPD/hYJUV0H6Err2lieLUy08mwVYt4iw==
-X-Received: by 10.98.59.11 with SMTP id i11mr2276396pfa.237.1504186521826;
-        Thu, 31 Aug 2017 06:35:21 -0700 (PDT)
-Received: from unique-pc ([218.248.21.162])
-        by smtp.googlemail.com with ESMTPSA id u31sm3372949pgn.72.2017.08.31.06.35.18
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 31 Aug 2017 06:35:21 -0700 (PDT)
-Message-ID: <1504186577.1826.9.camel@gmail.com>
-Subject: Re: [PATCH v2/RFC] commit: change the meaning of an empty commit
- message
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-In-Reply-To: <xmqqo9r4vhv0.fsf@gitster.mtv.corp.google.com>
-References: <1500107583.1850.4.camel@gmail.com>
-         <20170821140528.7212-1-kaarticsivaraam91196@gmail.com>
-         <xmqqo9r4vhv0.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset="ISO-8859-15"
-Date:   Thu, 31 Aug 2017 19:06:17 +0530
-Mime-Version: 1.0
-X-Mailer: Evolution 3.22.6-1 
-Content-Transfer-Encoding: 7bit
-X-Cyberoam-smtpxy-version: 1.0.6.3
-X-Cyberoam-AV-Policy: default
-X-CTCH-Error: Unable to connect local ctasd
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=699q2KtLDpGCweoWa1VYXRcIAFmlzbTTodrQ8ddr2/U=;
+        b=tOoEoLOcUeZk6wo8rp2ohf9z59gphHuyGKyj8rPINuegIXJ9j/uHaTI/uYD+ZpP+Mb
+         Xc5J2cptkinoBYhnKpwauzxOwVeiA/LLxeG7c7emCpxkrRxyd8ecAv0FQapHG9r6NXAT
+         sNpTzCM98InAthok1On0Gi68fP1H+cBCLYaN+hySohB0OpxSrYXJMUJiewDLdPdGGA9C
+         dBgVMVqqFJaXNNzhw70HRoI0jdlRgm5gy5A3puBSSY2fL+TkdbKCbpRTIRJeqdSwkI97
+         jBGgITQf5ZwyQa9wm00kyNu23zUv3ZISOL3d37JSfe6EoDAbJbHHpvvMUIfKo9PpIxhH
+         3nhA==
+X-Gm-Message-State: AHYfb5i8C3vQ4+siRphmV+kEvfh1x+ucRc4BU+LeAUc8EUU6wVoqJhv5
+        pjBrGYK1AAFW7u8bWHd85Y53xeqadQ==
+X-Google-Smtp-Source: ADKCNb5c82wgL2RSFwePhkeSuyyI9avW9s7On+Th3HA79zsUEpD0cQL6Z6UsGoe+CZVbUqQE2Si1g+YkD6lODhOGD6E=
+X-Received: by 10.80.151.152 with SMTP id e24mr1601420edb.266.1504189156684;
+ Thu, 31 Aug 2017 07:19:16 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.80.137.42 with HTTP; Thu, 31 Aug 2017 07:19:16 -0700 (PDT)
+In-Reply-To: <20170831063614.GI3839@alpha.vpn.ikke.info>
+References: <db0580dc-3ce0-47ba-b82a-b1e50b9d0a3a@nsinfo.co.rs> <20170831063614.GI3839@alpha.vpn.ikke.info>
+From:   Dov Grobgeld <dov.grobgeld@gmail.com>
+Date:   Thu, 31 Aug 2017 17:19:16 +0300
+Message-ID: <CA++fsGHFwoLvwO121aDEgi1dZbwwfogdWbxxRx+ci7T1RDCAnw@mail.gmail.com>
+Subject: Re: Bug report
+To:     Kevin Daudt <me@ikke.info>
+Cc:     Aleksandar Pavic <pavic.aleksandar@nsinfo.co.rs>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 2017-08-24 at 13:19 -0700, Junio C Hamano wrote:
-> 
-> The latter is easier for me as we do not have to worry about 
-> breaking people's scripts and tools used in
-> their established workflows at all.
-> 
+The following answer that I got back in 2015 from Jeff King might be
+relevant to your problem:
 
-In that case, how about doing something similar to what was done to
-'set-upstream' option of branch? We could print a warning notice when
-the commit message is found to be empty due to the presence of a sign-
-off line. As usual we could stop warning and stop identifying log
-messages consisting only signed-off lines as empty after a few years of
-doing that.
+https://marc.info/?l=3Dgit&m=3D144178948506788&w=3D2
 
-Note: I have no idea how good an idea this is. Let me know if it's a
-bad one.
+Regards,
+Dov
 
--- 
-Kaartic
+On Thu, Aug 31, 2017 at 9:36 AM, Kevin Daudt <me@ikke.info> wrote:
+> On Wed, Aug 30, 2017 at 11:25:00PM +0200, Aleksandar Pavic wrote:
+>>  I have a file
+>>
+>>  app/Controller/CustomerCardVerificationController.php
+>>
+>> And when I take a look at changes log, I get this (no matter which tool =
+I
+>> use):
+>>
+>> 2017-07-31 19:41 dule             o membership renew payment email
+>> 2017-06-07 08:59 Dusan Tatic      o cc refund clean
+>> 2017-04-15 00:16 Miodrag Dragi=C4=87   o refound admin payment
+>> 2017-03-20 12:02 Dusan Tatic      o CardVerification card connect
+>> 2017-03-16 15:59 Aleksandar Pavic o paypal
+>> 2017-03-10 13:34 Aleksandar Pavic o Production branch
+>> 2017-03-10 13:01 Aleksandar Pavic I Migrating dev
+>>
+>> However if I manually browse thru revisions and open revision from
+>> 03/27/2017 07:05 PM
+>>
+>> I can see the change in that file which is unlisted above, at revision
+>> ff9f4946e109bd234d438e4db1d319b1f6cb6580
+>>
+>> And I'm at master branch all the time...
+>>
+>> We wouldn't have noticed that if it weren't one important feature...
+>>
+>
+> What does git branch --contains ff9f4946e109bd234d438e4db1d319b1f6cb6580
+> return?
+>
+> Where did you find this commit?
