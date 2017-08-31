@@ -2,92 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E6844208CD
-	for <e@80x24.org>; Thu, 31 Aug 2017 16:23:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E4162208E4
+	for <e@80x24.org>; Thu, 31 Aug 2017 17:22:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751754AbdHaQXN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 Aug 2017 12:23:13 -0400
-Received: from mout.gmx.net ([212.227.17.22]:50280 "EHLO mout.gmx.net"
+        id S1751901AbdHaRWL (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 Aug 2017 13:22:11 -0400
+Received: from mout.web.de ([212.227.15.4]:55154 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751623AbdHaQXM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Aug 2017 12:23:12 -0400
-Received: from [192.168.178.43] ([88.70.152.153]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MDFB2-1dhuKW0w5U-00GbLW; Thu, 31
- Aug 2017 18:23:08 +0200
-Subject: Re: Bug report
-To:     Kevin Daudt <me@ikke.info>,
-        Aleksandar Pavic <pavic.aleksandar@nsinfo.co.rs>
-Cc:     git@vger.kernel.org
-References: <db0580dc-3ce0-47ba-b82a-b1e50b9d0a3a@nsinfo.co.rs>
- <20170831063614.GI3839@alpha.vpn.ikke.info>
-From:   Stephan Beyer <s-beyer@gmx.net>
-Message-ID: <be66e3d8-3673-fe5e-c65d-2dc9a7202315@gmx.net>
-Date:   Thu, 31 Aug 2017 18:23:06 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        id S1751367AbdHaRVQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Aug 2017 13:21:16 -0400
+Received: from [192.168.178.36] ([91.20.59.6]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lu57G-1dOp0H0FF8-011P6U; Thu, 31
+ Aug 2017 19:21:15 +0200
+Subject: Re: [PATCH 17/34] mailinfo: release strbuf on error return in
+ handle_boundary()
+To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+References: <20170830175005.20756-1-l.s.r@web.de>
+ <20170830175005.20756-18-l.s.r@web.de>
+ <CAN0heSopzQdkO373_eTHM8=z9fAWJFhyo6a5tVPWW-j8p0V2xA@mail.gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <fe9a4b1a-14e0-04af-15aa-d687118f34b5@web.de>
+Date:   Thu, 31 Aug 2017 19:21:10 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-In-Reply-To: <20170831063614.GI3839@alpha.vpn.ikke.info>
+In-Reply-To: <CAN0heSopzQdkO373_eTHM8=z9fAWJFhyo6a5tVPWW-j8p0V2xA@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:v97TUstsY83AWGpkWYXUssqLRXJPQOHm+D0pP1rlUvluqiTKmXg
- K4qeHS0dPWZrjagyg86GUdpZiI6CNWDp7eWmXCMm6BXYwrLQZOXTURSsfPKC3yLfJllN8FY
- Peg59DmqUgdpp/S8XiCFwAiuz7Uk57ys1Y6DjTeWaQ8dDvAFkZgYi+pmrd7EoYbzYCVFw6+
- ZHQV53mYJd0258SpB5E8w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:YeoBt9Cip5s=:Y9Z+rPzqw8LcEypxjzfWzj
- bcAd97kCAMTUPlYy4W5YnnAvJMwtZwOU4zSF0ppJ3rj7MB7morvff637EjzyDuxsr/YemkFWL
- IzRbPps5YvDa+vI2GEBC6saD0anKnzcZ7HQ9JhjhktYPolydi5g/R30pgERQMYl/4fBB+djit
- Q1vIKUGsdHbOJRwPdAIvOoeeQy6/JIHT/HcwKfYwP1ipVJ+z3MUMv+vdygbtin/oQ8xevHaNs
- OUQB/5TCwVPGFa4i6elcXcTGj6q34g3QvyAbeXFQ6cnM8YomqVTPrGoBlCV4dWlGdFDJOoC+C
- suDZXhSmEzf4DyGT6+niae81OoI0ihghTqlLsuFefUeRQeCFY5ueMI2q2nfzqaDeEvBQNBz5w
- P7+867eZI7pNAHySVVLkfF/CcZBw1qYmAcU+dHJcr2friK8+pxDDE1C611cjO66UVwzSkIdwv
- lnFOagDOBBRGjMFdiMfaDFCdFArbcbImG9sXLkya4VTBBmu5ffg8fZV4SrB88j/ikqm2P3uDJ
- 1WmGBRe3eRK5c3K4l8v7SRmC8zREeVYqUzjLj/jazr18QJI6rD/9sUl9Ffw6PbdUAi1h0J3aU
- lZ7utX97u/zei6zryKhDIjbpfqMd5S2SdQTs3rTkh/D3IeTBEngQVv/ToioW31HKqcMOYwr72
- 2G6vqOb+0+PPgh0DVrFT6eOoxHPABHs9K7FPMaUWLn2rzSpnuCvHhk4S5I//az6csZ5kPrO2b
- JCO3ktuQ8aDUQ2hKei8Ei6S05/um8PGfBKGjYh+617KBU2NiTQmzBUz/9Ap7VXSFiJA8yuo1y
- CCgtIKQBew+tFA27VnqOPrLO5qapbtJinZs6h1vMY8A59S9aM8=
+X-Provags-ID: V03:K0:u5V+G0e8NlWEaQNix2VQKhPQTjYj3xvHgd2bGZG8cPFPKXgNdCp
+ ET+g2FC5mtnZQa7GdCA7mSLwBj+zyhIWyXwOxa138mZGnDqeJ8q1YxeiwKmnHn4+i/oMM2W
+ MZPtjismzfDHweBrdYTj1lp6a2Dnh/FdREzr6gvjI/NT46ATeaNhy9LRVgACw8b8Wbgu7Ij
+ QLnex6LCLCV5DOZ7L0olQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:xubzAZtwAGg=:/++y2Zz+G0FTRuYOCDpK5S
+ ETWWZwdy1X780dnO/+m0JIZ7Pua0iq8kN5zVrZhNGIgg2+PN9cstMyB2jcXlLvO3hWbch3/gk
+ 9oMpW4++BhF02Y5EKH33j5gIilSvEjYLKXX+aixDkuYTwcah2B1Me+Hbo1Taa6LcAi2Wa7Fct
+ v3zIs10JDUR5X02TyGN6zD7RfsI7uiTzBwsDT8hJkosnFUgJ7R2UrVXnH04oAiXAOsq3bJyUh
+ NpkEWnzmzoouYVXNcAbcC6JFo2ILVklHnDwvNGh479+uFvlHoo2Kyn/S3H5jbGD1lOAN12Bd1
+ K9CVbRumSKMWxp9b9SZNXzouzO1qyToboEQ7EPJ38POfbqySPaNtT6gOQy2RK3CP45T1O62wl
+ iiT9KGc71jta3sUmZGCFXddjMSP6alYPv+fizhAZB2R+hgHLk9+IRbIjtMcv+jJXpHb75dacy
+ J5JsRErQP13txPCJhGuWo9miUDDv119sPmEl9ilaG97nZtrKveOr8P0qW6MpfklkgPZyk4kXx
+ uRGIHeyxHhHr/qto3W5cOaNvd/a+8QcIaRVTFpjXEptO0uHE+qdqsoKaS1ExBjg+KXl9Yh716
+ ls71yUtIMDhf2Br833BPPHgJcpOk5ffvPagXPTpmoE+2ocPh4+bn7a8iGqHvNNayGf0NJ8WIi
+ swYhEofr9RvihvwK5tA/cz41iQQIU/ytRVeEmgGAn4dIyTi8OUmqIvleLMXYrsbyGRRcTadv2
+ ooPX21IYGebZPaYd9tG22Di+yyxp0Hvn5LDeTYRckkGwRIuOcXzTGkoJmNHGNgFHM9AABdNl0
+ 8maDbYSoLhPCVb/IEGCvaeOC7YQODcW6AvDJRrg7sK17uxP0Qs=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08/31/2017 08:36 AM, Kevin Daudt wrote:
-> On Wed, Aug 30, 2017 at 11:25:00PM +0200, Aleksandar Pavic wrote:
->>  I have a file
+Am 30.08.2017 um 20:23 schrieb Martin Ågren:
+> On 30 August 2017 at 19:49, Rene Scharfe <l.s.r@web.de> wrote:
+>> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+>> ---
+>>   mailinfo.c | 1 +
+>>   1 file changed, 1 insertion(+)
 >>
->>  app/Controller/CustomerCardVerificationController.php
+>> diff --git a/mailinfo.c b/mailinfo.c
+>> index b1f5159546..f2387a3267 100644
+>> --- a/mailinfo.c
+>> +++ b/mailinfo.c
+>> @@ -911,48 +911,49 @@ static int find_boundary(struct mailinfo *mi, struct strbuf *line)
+>>   static int handle_boundary(struct mailinfo *mi, struct strbuf *line)
+>>   {
+>>          struct strbuf newline = STRBUF_INIT;
 >>
->> And when I take a look at changes log, I get this (no matter which tool I
->> use):
+>>          strbuf_addch(&newline, '\n');
+>>   again:
+>>          if (line->len >= (*(mi->content_top))->len + 2 &&
+>>              !memcmp(line->buf + (*(mi->content_top))->len, "--", 2)) {
+>>                  /* we hit an end boundary */
+>>                  /* pop the current boundary off the stack */
+>>                  strbuf_release(*(mi->content_top));
+>>                  FREE_AND_NULL(*(mi->content_top));
 >>
->> 2017-07-31 19:41 dule             o membership renew payment email
->> 2017-06-07 08:59 Dusan Tatic      o cc refund clean
->> 2017-04-15 00:16 Miodrag Dragić   o refound admin payment
->> 2017-03-20 12:02 Dusan Tatic      o CardVerification card connect
->> 2017-03-16 15:59 Aleksandar Pavic o paypal
->> 2017-03-10 13:34 Aleksandar Pavic o Production branch
->> 2017-03-10 13:01 Aleksandar Pavic I Migrating dev
->>
->> However if I manually browse thru revisions and open revision from
->> 03/27/2017 07:05 PM
->>
->> I can see the change in that file which is unlisted above, at revision
->> ff9f4946e109bd234d438e4db1d319b1f6cb6580
+>>                  /* technically won't happen as is_multipart_boundary()
+>>                     will fail first.  But just in case..
+>>                   */
+>>                  if (--mi->content_top < mi->content) {
+>>                          error("Detected mismatched boundaries, can't recover");
+>>                          mi->input_error = -1;
+>>                          mi->content_top = mi->content;
+>> +                       strbuf_release(&newline);
+>>                          return 0;
+>>                  }
+> 
+> Since this code path can't be taken (or so it says): How did you find
+> this and the others? Static analysis? Grepping around?
 
-I am not sure if I fully understand but I guess your commit ff9f4946e1
-has been commited at detached HEAD.
+Code inspection: I looked for functions with STRBUF_INIT that return
+without calling strbuf_release() with "git grep -W STRBUF_INIT" and
+searching for return in less(1).
 
-You could do
-	git log --oneline --graph master ff9f4946e1
-to see where the "missing" commit lies.
-And probably a
-	git cherry-pick ff9f4946e1
-might pick your missing feature.
-
-Stephan
+René
