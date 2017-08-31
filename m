@@ -2,103 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E4162208E4
-	for <e@80x24.org>; Thu, 31 Aug 2017 17:22:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 31620208CD
+	for <e@80x24.org>; Thu, 31 Aug 2017 17:32:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751901AbdHaRWL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 Aug 2017 13:22:11 -0400
-Received: from mout.web.de ([212.227.15.4]:55154 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751367AbdHaRVQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Aug 2017 13:21:16 -0400
-Received: from [192.168.178.36] ([91.20.59.6]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lu57G-1dOp0H0FF8-011P6U; Thu, 31
- Aug 2017 19:21:15 +0200
-Subject: Re: [PATCH 17/34] mailinfo: release strbuf on error return in
- handle_boundary()
-To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-References: <20170830175005.20756-1-l.s.r@web.de>
- <20170830175005.20756-18-l.s.r@web.de>
- <CAN0heSopzQdkO373_eTHM8=z9fAWJFhyo6a5tVPWW-j8p0V2xA@mail.gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <fe9a4b1a-14e0-04af-15aa-d687118f34b5@web.de>
-Date:   Thu, 31 Aug 2017 19:21:10 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        id S1751908AbdHaRb6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 Aug 2017 13:31:58 -0400
+Received: from mail-oi0-f49.google.com ([209.85.218.49]:35360 "EHLO
+        mail-oi0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751622AbdHaRb6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Aug 2017 13:31:58 -0400
+Received: by mail-oi0-f49.google.com with SMTP id k77so2579673oib.2
+        for <git@vger.kernel.org>; Thu, 31 Aug 2017 10:31:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=1dFhv+Wq3RvAbZ8e0Bicxrhk6wLPLZQhqjmQqKE8Vyc=;
+        b=SfUruXEDLTI/3imgaH57aRE/Mhe40sSx8dzS6bNxCvFsZ+Qmawu1zYjguB8+RTzS6E
+         Tz02etp8U1YX5tiQf9pYd2h6AKRe7JLf3yrHmTnzJVcvnr0bHjdnptIl9ftcu6g/Svsp
+         B4hWTEl0blnmDeUwRBTwx0FoSf48Kg5JlWgc3nyvdXrI6t/CXPdCnM1wNiuhcX1jMELk
+         O8heqcdoriRGy4sR32M5E6L5njpkvBNvBICWE9ZrBgIS64+LH8Y+Fx5oyL+6Nb6nYbcN
+         TBS7KZG9SKufkcucYfMXU6RT4q5RCz3KQQDp92yhUGCH0x69VqvL674PO1j3TUVP10Tv
+         f8Yg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=1dFhv+Wq3RvAbZ8e0Bicxrhk6wLPLZQhqjmQqKE8Vyc=;
+        b=c+nLXNRRWWLbX4EL6AJIJosgHSD0mhuGMTpifKRTGGcv1Hox5CHtxJC36wtEm0lokn
+         Aj1d+OKKLTsKdstXSwLFNkUqS2Rws1bK+VGJQkuCfj30Mb5pcXXFqyZKaokkdXiknU7G
+         uWhnzoDqjljDVYzXfQDh4/KFQhDvuZHPCkloF2s4KpvSQgZC8v1u5Pgb3VPHnOdtQsGO
+         yBx/kJBOsNNWbezOf9PtUPPINDZ0a30wOduTL1NgeTgSBqT/s2iD5TX2HN7jb6N7ORH1
+         3cEJlPKD/fge5huUgdrcLcJ1aGLVUQDb9I8adnU12fwjfbfZzfkd9JBiIMQlBdqPB2Fu
+         jFmg==
+X-Gm-Message-State: AHYfb5jgtdXUECALXkQiRsXUn/v74iFT3bwvCcHX/6jhuJO/HGRj//NW
+        YdddhmQGwVbIUBns5JjqZ4ZXR0ARC5hy
+X-Google-Smtp-Source: ADKCNb75LhS1pXyfSoHihKe3odWo4oSqpJvREiaAsdb4Qjj+eJLA4+t+kdIujJsQTHsojpJ9Q7yi9gY3uJ4MgNX8Aeo=
+X-Received: by 10.202.117.129 with SMTP id q123mr5951028oic.0.1504200717241;
+ Thu, 31 Aug 2017 10:31:57 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAN0heSopzQdkO373_eTHM8=z9fAWJFhyo6a5tVPWW-j8p0V2xA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:u5V+G0e8NlWEaQNix2VQKhPQTjYj3xvHgd2bGZG8cPFPKXgNdCp
- ET+g2FC5mtnZQa7GdCA7mSLwBj+zyhIWyXwOxa138mZGnDqeJ8q1YxeiwKmnHn4+i/oMM2W
- MZPtjismzfDHweBrdYTj1lp6a2Dnh/FdREzr6gvjI/NT46ATeaNhy9LRVgACw8b8Wbgu7Ij
- QLnex6LCLCV5DOZ7L0olQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:xubzAZtwAGg=:/++y2Zz+G0FTRuYOCDpK5S
- ETWWZwdy1X780dnO/+m0JIZ7Pua0iq8kN5zVrZhNGIgg2+PN9cstMyB2jcXlLvO3hWbch3/gk
- 9oMpW4++BhF02Y5EKH33j5gIilSvEjYLKXX+aixDkuYTwcah2B1Me+Hbo1Taa6LcAi2Wa7Fct
- v3zIs10JDUR5X02TyGN6zD7RfsI7uiTzBwsDT8hJkosnFUgJ7R2UrVXnH04oAiXAOsq3bJyUh
- NpkEWnzmzoouYVXNcAbcC6JFo2ILVklHnDwvNGh479+uFvlHoo2Kyn/S3H5jbGD1lOAN12Bd1
- K9CVbRumSKMWxp9b9SZNXzouzO1qyToboEQ7EPJ38POfbqySPaNtT6gOQy2RK3CP45T1O62wl
- iiT9KGc71jta3sUmZGCFXddjMSP6alYPv+fizhAZB2R+hgHLk9+IRbIjtMcv+jJXpHb75dacy
- J5JsRErQP13txPCJhGuWo9miUDDv119sPmEl9ilaG97nZtrKveOr8P0qW6MpfklkgPZyk4kXx
- uRGIHeyxHhHr/qto3W5cOaNvd/a+8QcIaRVTFpjXEptO0uHE+qdqsoKaS1ExBjg+KXl9Yh716
- ls71yUtIMDhf2Br833BPPHgJcpOk5ffvPagXPTpmoE+2ocPh4+bn7a8iGqHvNNayGf0NJ8WIi
- swYhEofr9RvihvwK5tA/cz41iQQIU/ytRVeEmgGAn4dIyTi8OUmqIvleLMXYrsbyGRRcTadv2
- ooPX21IYGebZPaYd9tG22Di+yyxp0Hvn5LDeTYRckkGwRIuOcXzTGkoJmNHGNgFHM9AABdNl0
- 8maDbYSoLhPCVb/IEGCvaeOC7YQODcW6AvDJRrg7sK17uxP0Qs=
+Received: by 10.157.14.141 with HTTP; Thu, 31 Aug 2017 10:31:56 -0700 (PDT)
+In-Reply-To: <20170830175005.20756-2-l.s.r@web.de>
+References: <20170830175005.20756-1-l.s.r@web.de> <20170830175005.20756-2-l.s.r@web.de>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 31 Aug 2017 10:31:56 -0700
+Message-ID: <CAGZ79kb4H7Ztm4tFhRNKaR4L1RM+eY30dtnTRm25xMPNWWZo2Q@mail.gmail.com>
+Subject: Re: [PATCH 01/34] am: release strbufs after use in detect_patch_format()
+To:     Rene Scharfe <l.s.r@web.de>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 30.08.2017 um 20:23 schrieb Martin Ågren:
-> On 30 August 2017 at 19:49, Rene Scharfe <l.s.r@web.de> wrote:
->> Signed-off-by: Rene Scharfe <l.s.r@web.de>
->> ---
->>   mailinfo.c | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/mailinfo.c b/mailinfo.c
->> index b1f5159546..f2387a3267 100644
->> --- a/mailinfo.c
->> +++ b/mailinfo.c
->> @@ -911,48 +911,49 @@ static int find_boundary(struct mailinfo *mi, struct strbuf *line)
->>   static int handle_boundary(struct mailinfo *mi, struct strbuf *line)
->>   {
->>          struct strbuf newline = STRBUF_INIT;
->>
->>          strbuf_addch(&newline, '\n');
->>   again:
->>          if (line->len >= (*(mi->content_top))->len + 2 &&
->>              !memcmp(line->buf + (*(mi->content_top))->len, "--", 2)) {
->>                  /* we hit an end boundary */
->>                  /* pop the current boundary off the stack */
->>                  strbuf_release(*(mi->content_top));
->>                  FREE_AND_NULL(*(mi->content_top));
->>
->>                  /* technically won't happen as is_multipart_boundary()
->>                     will fail first.  But just in case..
->>                   */
->>                  if (--mi->content_top < mi->content) {
->>                          error("Detected mismatched boundaries, can't recover");
->>                          mi->input_error = -1;
->>                          mi->content_top = mi->content;
->> +                       strbuf_release(&newline);
->>                          return 0;
->>                  }
-> 
-> Since this code path can't be taken (or so it says): How did you find
-> this and the others? Static analysis? Grepping around?
+On Wed, Aug 30, 2017 at 10:49 AM, Rene Scharfe <l.s.r@web.de> wrote:
+> Don't reset the strbufs l2 and l3 before use as if they were static, but
+> release them at the end instead.
+>
+> Signed-off-by: Rene Scharfe <l.s.r@web.de>
 
-Code inspection: I looked for functions with STRBUF_INIT that return
-without calling strbuf_release() with "git grep -W STRBUF_INIT" and
-searching for return in less(1).
+This was introduced with 5ae41c79b8 (builtin-am: support and
+auto-detect StGit patches, 2015-08-04), trying to sift through old emails
+I did not find a discussion if that was static in an earlier round of the
+patches.
 
-René
+Thanks and
+Reviewed-by: Stefan Beller <sbeller@google.com>
