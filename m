@@ -2,105 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C2149208CD
-	for <e@80x24.org>; Thu, 31 Aug 2017 14:19:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 72AD8208CD
+	for <e@80x24.org>; Thu, 31 Aug 2017 14:33:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751415AbdHaOTS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 Aug 2017 10:19:18 -0400
-Received: from mail-wm0-f44.google.com ([74.125.82.44]:33548 "EHLO
-        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751392AbdHaOTR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Aug 2017 10:19:17 -0400
-Received: by mail-wm0-f44.google.com with SMTP id r202so8872398wmd.0
-        for <git@vger.kernel.org>; Thu, 31 Aug 2017 07:19:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=699q2KtLDpGCweoWa1VYXRcIAFmlzbTTodrQ8ddr2/U=;
-        b=ITptpJRU/woZ58rMYFBEJyBHIy8/SAOOyHIIF4zz18wFcug105lDwqNjGdHagfIkY0
-         aGBX2r10EAvR4K53qMIQd5by5OggYybi+/ryX8Ko5PvvwJfRZwZw0EGToWY/ppEmFzjB
-         dLSCyiN4ZTGK3FstUmjoCp/JiI+eSLC4yjmKRuzQjlpHPYyY1LwW+9s3sYpSUazqKoUO
-         +Vj2qw0KTIQem7QWyZDtG6gVGliUjLKrLTc5LtaWJMn2E/CDxo3mLIW7H56sjoOkcd1V
-         KS+Z7Jnx00bXLDMVmhMLkNRew31zfFws7ClEVo6J10ydztax+5CHoS47UQ8ENuFtKBlc
-         LQFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=699q2KtLDpGCweoWa1VYXRcIAFmlzbTTodrQ8ddr2/U=;
-        b=tOoEoLOcUeZk6wo8rp2ohf9z59gphHuyGKyj8rPINuegIXJ9j/uHaTI/uYD+ZpP+Mb
-         Xc5J2cptkinoBYhnKpwauzxOwVeiA/LLxeG7c7emCpxkrRxyd8ecAv0FQapHG9r6NXAT
-         sNpTzCM98InAthok1On0Gi68fP1H+cBCLYaN+hySohB0OpxSrYXJMUJiewDLdPdGGA9C
-         dBgVMVqqFJaXNNzhw70HRoI0jdlRgm5gy5A3puBSSY2fL+TkdbKCbpRTIRJeqdSwkI97
-         jBGgITQf5ZwyQa9wm00kyNu23zUv3ZISOL3d37JSfe6EoDAbJbHHpvvMUIfKo9PpIxhH
-         3nhA==
-X-Gm-Message-State: AHYfb5i8C3vQ4+siRphmV+kEvfh1x+ucRc4BU+LeAUc8EUU6wVoqJhv5
-        pjBrGYK1AAFW7u8bWHd85Y53xeqadQ==
-X-Google-Smtp-Source: ADKCNb5c82wgL2RSFwePhkeSuyyI9avW9s7On+Th3HA79zsUEpD0cQL6Z6UsGoe+CZVbUqQE2Si1g+YkD6lODhOGD6E=
-X-Received: by 10.80.151.152 with SMTP id e24mr1601420edb.266.1504189156684;
- Thu, 31 Aug 2017 07:19:16 -0700 (PDT)
+        id S1751457AbdHaOdW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 Aug 2017 10:33:22 -0400
+Received: from mout.web.de ([212.227.15.3]:64972 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751382AbdHaOdV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Aug 2017 10:33:21 -0400
+Received: from macce.local ([195.198.252.176]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MPY1p-1ds5Mo1AnJ-004oLk; Thu, 31
+ Aug 2017 16:33:15 +0200
+Subject: Re: [PATCH v3] Documentation: mention that `eol` can change the dirty
+ status of paths
+To:     Ben Boeckel <mathstuf@gmail.com>, gitster@pobox.com
+Cc:     git@vger.kernel.org
+References: <20170822174918.GA1005@megas.kitware.com>
+ <20170831131936.26226-1-mathstuf@gmail.com>
+From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Message-ID: <78c1a85a-70c1-ff35-466e-f6c363a0c632@web.de>
+Date:   Thu, 31 Aug 2017 16:33:14 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:52.0)
+ Gecko/20100101 Thunderbird/52.3.0
 MIME-Version: 1.0
-Received: by 10.80.137.42 with HTTP; Thu, 31 Aug 2017 07:19:16 -0700 (PDT)
-In-Reply-To: <20170831063614.GI3839@alpha.vpn.ikke.info>
-References: <db0580dc-3ce0-47ba-b82a-b1e50b9d0a3a@nsinfo.co.rs> <20170831063614.GI3839@alpha.vpn.ikke.info>
-From:   Dov Grobgeld <dov.grobgeld@gmail.com>
-Date:   Thu, 31 Aug 2017 17:19:16 +0300
-Message-ID: <CA++fsGHFwoLvwO121aDEgi1dZbwwfogdWbxxRx+ci7T1RDCAnw@mail.gmail.com>
-Subject: Re: Bug report
-To:     Kevin Daudt <me@ikke.info>
-Cc:     Aleksandar Pavic <pavic.aleksandar@nsinfo.co.rs>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20170831131936.26226-1-mathstuf@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:qANXO/wQG9JZXZ+I7af0HHE5r/lmT9k+77snEcy9TSvb3OE9alA
+ 0DR3Ch2MR2q+w01IqrmUotJRKk5vhtBCWe7KppsitwoPYEBthpMo0IdiFJ9zr04RlumXPmf
+ YjBCo/mIdeR/FjPg/f03L7ucsfcfjov6xadzCMovkv8ZGbBaqGffBM29Z4t743WhjR/yGEp
+ sWUu+XyKLgAwu2mvudMbQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:X6saWJSjghk=:7n1EUsaqE7M4mwxEEZaRVE
+ ebTNmIBxxSy8eAebVaJcj2dMgjiRIm/NRjgFf9r0Vke2sp+Pwiibu4Wqbekh2wWnMero329Gq
+ 1sJKsO4CnxQmeBKl5XMqgAlgY3Cl81+YtwQYyL7ARIAbnVVF4ixYWLaFkETQYTnUhO3SXag7H
+ LuDJkMCZZc9xA4u+gKoHQPEWNKe4AjuPQ+snPQ8nUXFN8WqguyLAcuf6vEGHxLN87QncINQYa
+ +1dzEcVEl6Y7ND6uILB+vF8GYrFHohZGiUZQOcFElRmc4565DTGNm0nrYmshZ5Acy7gK0EfIj
+ y3CTRio1FR9sMuo3Ihv5W+oVPileK+UKI9eK5YjGRLtJA6bcWz33ImoSCv7hL6SpgTkPNm/ij
+ Z6MC64zYZQzc2xvfD8UWtaj8nvdGlSjFe4ekD38BqSen2DTDGHjTKc6IKWaAZRTpIz9y9+XP4
+ KB118pH3KUqVN8tW6aaqaKSL1nBmKCXRyzs80lHdIHzUJFdos5qY/ShUqElYD0JQKtED7dGQE
+ +BVnBezvBkip+5AhTTwACUPoIw71Lktgik82hf3XJjQ1KDdLXrEd0X7JV+ZqsLO2UJ4/ccXxL
+ exFoctUNxCnstLh2LJppOhi3CdCsABHgLG3WL/q7jkmaoPDHWJ+j3QewBzaeFPC77F9Onoa5K
+ QSx4hNbIuXDckM4I0KZup3B6BCQviKk+OsifELedvaKvQZqtt6g4tvqoSx0rKm/KlO+7CXxBj
+ 3ll9ZMN9bsWGXDIRfXp4wpAwiHeilihBIopAkIuKf6iPHW7kGpPDGgss+Bi6Mw/Gn/6lExJNe
+ UV2YcnkZcmwP8UI2rL+xm+XAGbg+ZOp2yU/yJjcSHmG6GRcTjw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The following answer that I got back in 2015 from Jeff King might be
-relevant to your problem:
+On 2017-08-31 15:19, Ben Boeckel wrote:
 
-https://marc.info/?l=3Dgit&m=3D144178948506788&w=3D2
+>  This attribute sets a specific line-ending style to be used in the
+>  working directory.  It enables end-of-line conversion without any
+> -content checks, effectively setting the `text` attribute.
+> +content checks, effectively setting the `text` attribute.  Note that
+> +setting this attribute on paths which are in the index with CRLF line
+> +endings may make the paths to be considered dirty.  Adding the path to
 
-Regards,
-Dov
+OK - and this leads to another question:
 
-On Thu, Aug 31, 2017 at 9:36 AM, Kevin Daudt <me@ikke.info> wrote:
-> On Wed, Aug 30, 2017 at 11:25:00PM +0200, Aleksandar Pavic wrote:
->>  I have a file
->>
->>  app/Controller/CustomerCardVerificationController.php
->>
->> And when I take a look at changes log, I get this (no matter which tool =
-I
->> use):
->>
->> 2017-07-31 19:41 dule             o membership renew payment email
->> 2017-06-07 08:59 Dusan Tatic      o cc refund clean
->> 2017-04-15 00:16 Miodrag Dragi=C4=87   o refound admin payment
->> 2017-03-20 12:02 Dusan Tatic      o CardVerification card connect
->> 2017-03-16 15:59 Aleksandar Pavic o paypal
->> 2017-03-10 13:34 Aleksandar Pavic o Production branch
->> 2017-03-10 13:01 Aleksandar Pavic I Migrating dev
->>
->> However if I manually browse thru revisions and open revision from
->> 03/27/2017 07:05 PM
->>
->> I can see the change in that file which is unlisted above, at revision
->> ff9f4946e109bd234d438e4db1d319b1f6cb6580
->>
->> And I'm at master branch all the time...
->>
->> We wouldn't have noticed that if it weren't one important feature...
->>
->
-> What does git branch --contains ff9f4946e109bd234d438e4db1d319b1f6cb6580
-> return?
->
-> Where did you find this commit?
+Would it make sense if we allow files with "text eol=CRLF" to continue
+to be stored with CRLF in the index?
+
+Skip the normalization for existing files, since the user asked
+for CRLF in the working tree (and the internal storage is less interesting)
+
+Should I consider a patch ?
