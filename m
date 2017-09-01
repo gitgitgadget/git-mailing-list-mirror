@@ -2,70 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 22BB91F4DD
-	for <e@80x24.org>; Fri,  1 Sep 2017 23:03:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6981F1F4DD
+	for <e@80x24.org>; Fri,  1 Sep 2017 23:07:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752594AbdIAXDP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Sep 2017 19:03:15 -0400
-Received: from mout.gmx.net ([212.227.15.15]:63963 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752537AbdIAXDO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Sep 2017 19:03:14 -0400
-Received: from virtualbox ([37.201.193.79]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LuOYx-1dOeAi28Fr-011nAM; Sat, 02
- Sep 2017 01:03:11 +0200
-Date:   Sat, 2 Sep 2017 01:03:10 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Kevin Daudt <me@ikke.info>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH] doc/for-each-ref: explicitly specify option names
-In-Reply-To: <20170901144931.26114-1-me@ikke.info>
-Message-ID: <alpine.DEB.2.21.1.1709020102490.4132@virtualbox>
-References: <20170901144931.26114-1-me@ikke.info>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1752575AbdIAXG6 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Sep 2017 19:06:58 -0400
+Received: from mail-vk0-f50.google.com ([209.85.213.50]:36630 "EHLO
+        mail-vk0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752537AbdIAXG5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Sep 2017 19:06:57 -0400
+Received: by mail-vk0-f50.google.com with SMTP id d124so4231746vkf.3
+        for <git@vger.kernel.org>; Fri, 01 Sep 2017 16:06:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=dmaoMUH9w7s3Z3C5gy/pW2xQeZ3lfHA8OOTru8itL9E=;
+        b=o133CK4ypZBaEmOJqE2+a+VapetKGLpnKZEinijn7qz9BC+8C+G92+1BlOb3t+mSDe
+         vU3kekFCHh/1VSHfIrEe0CjlPK9v/hJE4WPJmryRjhaDGlA7xyU41UdBWnMZhW19a3U+
+         T+ZjSf2d+2OhLrqea0Law/Uk6Icx00GpdfHRn+yHR3dtTT+4TSyVhf2QTqQk7KdPCqUw
+         oHtad735BK73W11EYm0naOsY9ay8SQIGmmandwa83/Nvva3aj+AX+eYJp7gOnUHHcA7a
+         0PxZ7MVmBalomEBy4vNl9Kjg/B7OzPijhVxWFcRolA+tZ7QmqDkgs5d4f0IfXR7EUSgM
+         Y/kw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=dmaoMUH9w7s3Z3C5gy/pW2xQeZ3lfHA8OOTru8itL9E=;
+        b=JdnmON3iEGsN7FK7GLuS74XHWAaX3fjXyD68/XDZiZPntbbBS+dbfwdiWvGTUHyQfd
+         CMW1/vyOLReI0FCExH523rjC463zHdoknEHLv3u4iYWWrnDKeWM4WhMuXwCZtxXIvrVi
+         6j11Ii80Flp0dkmQ1BnL51hfxavUXenJOMNzdabutcK/KlRkoxjdMyVNJSqF1A7NkEU6
+         3XYKbr55If08AQ2QJsPjZpSjLXZOFvnoiaVFTOC6JB9a4XrvVMLAVjd/NA2PVRzWV9nd
+         GdpCbk0BjcVnBDUEE/owexGJNcMJq5aMXK/ZCCrTB3cEaUpE+b76yUcxP1+wxd+BI3d4
+         M0Eg==
+X-Gm-Message-State: AHPjjUiSWxMVc8RiuIT3TSF3Fh2Q/L/Cy2qrKUpSafXa7ztflq2bBLF6
+        MMXDJKW7ycZ/feG0HOTmUAKQdSOM6oGo
+X-Google-Smtp-Source: ADKCNb54zUTLwaoWscO3KjkH4TEbdgqpSn/h9RSkqlGDJpzs89JwfTTgxcWR8Taewwn9vHFk5cTE5imz1OX29dOXCI0=
+X-Received: by 10.31.120.206 with SMTP id t197mr2197218vkc.21.1504307216443;
+ Fri, 01 Sep 2017 16:06:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:3LFwPrLpWcc2X3axANrHoy5pIIwGsehA6EgbZ+LD+qsJbNHKuOX
- veI16wGZlWiavyTmzOoxB0RTU7yev07oecpmcW4OMJ0B7qZR5Wq4EqY68ZrJg4bC7liLBny
- h6WPaBj6efceXdtRqiaczbUcxlfUywWPjZopMXUPYD5W8YsMIrz7vQmVK2mmIks8uIGSXj1
- Uo9DyfhoQEI+e1RgOsfCA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:bY174997IFk=:6uCw55yz/0qs7s5I8FWKPo
- 99l3wU0qG0yWtUp4f9pEiMTz62VeIEp8lQw1OqI84cKoohcK+avgbN839TkrWRK7tCEv48yTV
- j5XWaFr4eqkSO//9blYJAXwJZySjD3aXlM66ZPoDKjHWJ3ckqmh1SgsF1CJi8U+rkShVOYr+C
- oPfDYTmcZ31xWPG7l80JqYUS1VELiyXvBhftPg8Ha4hyP+dGwdoC80X+G9KnLccmE8+L/376h
- OVDqCetxSW1ytoDJOGEU5m3beIUISZgV7Oc5Uybe2tp+ojQ8WUT50HjXRsak1rc2cfP9e3QLB
- WfQG11aLJaZZ08gvzUT8+p0OaOH12xm7uJfLElmsQ6GsHZgj1G1JbT8AyDyxdRqzxyApoTckJ
- a9EAyKWfyOKX/57T/VR3OH1UlT6lrVPbXXw68a9FeMbDfFdp7FkGHLmFc6xrUvcnVvUfJAMVN
- RLKG47YQvUjhs4E7FFzD2vHpfb18PRYLtjgpaYNlIgoHVqZO+sfWvXa7kgGwv2NlDQ+jjCj3n
- EimrTnOVZ64IMDWrWNGV/3U4vC2KJUMLM70gkWkTBzOHVyfgZlJFNZnNkK3PcPRQPd8LcwWxe
- WV7p0Zhw5ocDcnJ61ICDg5zDQlcGwrqFokc8pYcBdrujadlasO/JszbIsyLNiX+MQ44CmJU61
- +ihW2CRhB+M+ZdLsn4q4CKaxEVu3Fg5oxpxprD6EoujcG9nZ8Hj0Fbzccag3JhHDlekZn5yA9
- Vx7S6VoEG7ZUw8WrZg533pWls/cgwmAUnb+XUV42Y3wQm+HM87J+HcB8kMp830azM09CijfIi
- fSFU4vD/A6anCgAOd2jy1HPhWmBq091QOb8VFxt7lkySonMwoKLapqRIAnMtnVtrgIrsFRz
+Received: by 10.176.92.212 with HTTP; Fri, 1 Sep 2017 16:06:55 -0700 (PDT)
+In-Reply-To: <20170830211245.GD50018@google.com>
+References: <20170824225328.8174-1-bmwill@google.com> <20170825172901.kvquxafudhelxqq3@sigill.intra.peff.net>
+ <CAGyf7-HTuM2kBRYDP8i9B8pUgqFw02pqBdYCVnp9s7v4bDAM0w@mail.gmail.com> <20170830211245.GD50018@google.com>
+From:   Bryan Turner <bturner@atlassian.com>
+Date:   Fri, 1 Sep 2017 16:06:55 -0700
+Message-ID: <CAGyf7-H9MdSzuU51opj+cA9ZAFSEnt-rvQcLuwY_j7qfn=kNsg@mail.gmail.com>
+Subject: Re: [RFC 0/7] transitioning to protocol v2
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Jeff King <peff@peff.net>, Git Users <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Kevin,
+On Wed, Aug 30, 2017 at 2:12 PM, Brandon Williams <bmwill@google.com> wrote:
+> On 08/30, Bryan Turner wrote:
+>> On Fri, Aug 25, 2017 at 10:29 AM, Jeff King <peff@peff.net> wrote:
+>> > On Thu, Aug 24, 2017 at 03:53:21PM -0700, Brandon Williams wrote:
+>> >
+>> >> The biggest question I'm trying to answer is if these are reasonable ways with
+>> >> which to communicate a request to a server to use a newer protocol, without
+>> >> breaking current servers/clients.  As far as I've tested, with patches 1-5
+>> >> applied I can still communicate with current servers without causing any
+>> >> problems.
+>> >
+>> > Current git.git servers, I assume?. How much do we want to care about
+>> > alternate implementations? I would not be surprised if other git://
+>> > implementations are more picky about cruft after the virtual-host field
+>> > (though I double-checked GitHub's implementation at least, and it is
+>> > fine).
+>> >
+>> > I don't think libgit2 implements the server side. That leaves probably
+>> > JGit, Microsoft's VSTS (which I think is custom), and whatever Atlassian
+>> > and GitLab use.
+>>
+>> Before I manually apply the patches to test how they work with
+>> Bitbucket Server, are they applied on a branch somewhere where I can
+>> just fetch them? If not, I'll apply them manually and verify.
+>
+> I just pushed this set of patches up to: https://github.com/bmwill/git/tree/protocol-v2
+> so you should be able to fetch them from there (saves you from having to
+> manually applying the patches).
 
-On Fri, 1 Sep 2017, Kevin Daudt wrote:
+Thanks for that! It made testing a lot simpler.
 
-> For count, sort and format, only the argument names were listed under
-> OPTIONS, not the option names.
-> 
-> Add the option names to make it clear the options exist
-> 
-> Signed-off-by: Kevin Daudt <me@ikke.info>
-> ---
+>
+>> Just based on the description, though, I expect no issues. We don't
+>> currently support the git:// protocol. Our HTTP handling passes
+>> headers through to the receive-pack and upload-pack processes as
+>> environment variables (with a little massaging), but doesn't consider
+>> them itself; it only considers the URL and "service" query parameter
+>> to decide what command to run and to detect "dumb" requests. Our SSH
+>> handling ignores any environment variables provided and does not
+>> forward them to the git process, similar to VSTS.
+>>
+>> I'll confirm explicitly, to be certain, but just based on reading the
+>> overview and knowing our code I think the described approaches should
+>> work fine.
+>
+> Perfect!  Thanks for taking the time to verify that this will work.
 
-This patch makes sense to me.
+With 2 small tweaks on top of "protocol-v2", I was able to run our
+full command and hosting (HTTP and SSH) test suites without issues.
 
-Thanks,
-Johannes
+diff --git a/transport.c b/transport.c
+index c05e167..37b5d83 100644
+--- a/transport.c
++++ b/transport.c
+@@ -222,7 +222,8 @@ static struct ref *get_refs_via_connect(struct
+transport *transport, int for_pus
+        switch(determine_version(data->fd[0], &buf)) {
+        case 2:
+                /* The server understands Protocol v2 */
+-               fprintf(stderr, "Server understands Protocol v2!\n");
++               if (transport->verbose >= 0)
++                       fprintf(stderr, "Server understands Protocol v2!\n");
+                break;
+        case 1:
+                /* Server is speaking Protocol v1 and sent a ref so
+process it */
+diff --git a/upload-pack.c b/upload-pack.c
+index 0f85315..7c59495 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -1075,7 +1075,7 @@ int cmd_main(int argc, const char **argv)
+        git_config(upload_pack_config, NULL);
+
+        version = getenv("GIT_PROTOCOL");
+-       if (!strcmp(version, "2"))
++       if (version && !strcmp(version, "2"))
+                upload_pack_v2();
+
+        upload_pack();
+
+I'd imagine the "Server understands Protocol v2!" message won't
+actually *ship* in Git, so it's likely making that honor "--quiet"
+doesn't actually matter; I only adjusted it because we have a test
+that verifies "git clone --quiet" is quiet. The "if (version" change I
+commented on separately in the 7/7 patch that introduced the check.
+
+Thanks again for publishing this, and for letting me test it!
+
+>
+> --
+> Brandon Williams
