@@ -2,125 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C2BC1F4DD
-	for <e@80x24.org>; Sat,  2 Sep 2017 00:05:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6811B1F4DD
+	for <e@80x24.org>; Sat,  2 Sep 2017 02:03:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752206AbdIBAEW (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Sep 2017 20:04:22 -0400
-Received: from mail-pg0-f54.google.com ([74.125.83.54]:34507 "EHLO
-        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750955AbdIBAEV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Sep 2017 20:04:21 -0400
-Received: by mail-pg0-f54.google.com with SMTP id t193so4526445pgc.1
-        for <git@vger.kernel.org>; Fri, 01 Sep 2017 17:04:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=9i50Y+l2yvFq5vz/zwcl3ybYK5IGOW/bXh6rFVbXaPU=;
-        b=Qfw13Ve7W2dovb4iBTaNoymzF7EGi6cyRWggYIQQucUnrf6Tmytvs1heTRSmMfzvKR
-         X3r1Ce795DuJG8rPwvZ3TDrhPe2CNEavf0TAApuZOIfve/R4RMc7NeNkBOL5M7VtFios
-         QuL5gFVaFzr+vYYNr3McBCruEB1iS0sa+pWhcO2+7afVzdd/Te6TcV02VjCUsopsZ5ZA
-         HbQX4igBpUsSi5Y0yevxXfG15qFWPnEhqDXlYGkXn3DW/nWWzGhRmuw1gxg/StmjkvD2
-         IxAO7ItJYFfjuqcz3aJToPs4q+dKbjuEsdoUnMNIVJEIH50ws3rAA+MP+u5LvMjQT2Aq
-         uEaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=9i50Y+l2yvFq5vz/zwcl3ybYK5IGOW/bXh6rFVbXaPU=;
-        b=lMXIJcUkDkpAHzlfXe1XrYsEx+i88FfVepp+iZyVgTARrfq/Cx3TVov4aScvoI8+RN
-         aKMxUW3Z46V0z0jXSIdrSYH127NoLTapnN/A06mA6kBkZe0IPd89BNyVmqwDZPZHrl44
-         9II0av6uQfv3MJmVpfJ3MGsF0PLDh783fwN3J3KrbCVuzXdL7H7OLCh1spsyhrQGwXB7
-         lomBTF8VGkINbwjAUoKwnJ74OibnLnfQo5Jrpc36tcsObhoGkhI6Bkvl2LTcr1TQUU07
-         75SlRsLF0vNjOWL0Z41UrWxAHz7IqGtlHGY9jZPWQcQut/USaXn7UMMwyRMG540qY+tc
-         qEag==
-X-Gm-Message-State: AHPjjUgcOO7QvhrwDpYn31AsZPJuLGaArVBVXjkE97kRx7Q6AgL2NE4n
-        9SP3n/ApYVYHaA==
-X-Google-Smtp-Source: ADKCNb5Sn1CLeSlyUJu20D9cZc+CxO/cnLnSRnPUp3R14E6/W1IPsPvwIIT3RBQ3T0vWn+JDkzHKaw==
-X-Received: by 10.99.108.66 with SMTP id h63mr3865980pgc.336.1504310660307;
-        Fri, 01 Sep 2017 17:04:20 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:c8a:d1f4:a5bc:2c5f])
-        by smtp.gmail.com with ESMTPSA id 21sm1499622pfb.146.2017.09.01.17.04.19
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 01 Sep 2017 17:04:19 -0700 (PDT)
-Date:   Fri, 1 Sep 2017 17:04:17 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Sebastian Schuberth <sschuberth@gmail.com>
-Cc:     Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: Commit dropped when swapping commits with rebase -i -p
-Message-ID: <20170902000417.GE143138@aiede.mtv.corp.google.com>
-References: <oo62vr$pvq$1@blaine.gmane.org>
- <CAN0heSqGfxrFTwuaxgppZTx+3U=g_Qs4PyaCBF6ddV_PbvdpTQ@mail.gmail.com>
- <CAHGBnuMC_10krsdZe2KiQ4jjiL43kogn--dWjPgca_p2xgmQMA@mail.gmail.com>
+        id S1751579AbdIBCDX (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Sep 2017 22:03:23 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54247 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750930AbdIBCDW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Sep 2017 22:03:22 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D2AF0A1722;
+        Fri,  1 Sep 2017 22:03:21 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=2c2htyyaic5R16gupPo0TwsyNRE=; b=FyLAOjyAeQDAO1duPOdx
+        EKAqz6w47ujTyWKfjtR5ce720e6QKJPoPRQ4QOb90AJkydMEtdzPi4mD6gZ66iLk
+        lvlUJQzRwk7eBvjcSGQBzmsFqLybj8jI2eh0NuP38GKfD6JH4+HdTjPG5PXaPwM7
+        pxjcEXYOw/IaJJd47Fzu/qo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=G3+PngUyzw/RMYpPEkTnEw2RaqvJh2YY/PY46WIX8lbW7v
+        Zo/YMaSacaQMDYBL9nGJDLCo7L69uF8OtJtAUuFTd/ff8wCc7vB8W6rWKPmcUfR1
+        UDTRQl+zrLGTS9UEYJbAiK/nKHOh8Yr4lGHJ+TW2Q7dO404GmZUgqrWqYWDU8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C9208A1721;
+        Fri,  1 Sep 2017 22:03:21 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 37D3CA1720;
+        Fri,  1 Sep 2017 22:03:21 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kevin Daudt <me@ikke.info>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] doc/for-each-ref: explicitly specify option names
+References: <20170901144931.26114-1-me@ikke.info>
+Date:   Sat, 02 Sep 2017 11:03:19 +0900
+Message-ID: <xmqqk21hj1qw.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAHGBnuMC_10krsdZe2KiQ4jjiL43kogn--dWjPgca_p2xgmQMA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: E53A4C52-8F82-11E7-AE60-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Kevin Daudt <me@ikke.info> writes:
 
-Sebastian Schuberth wrote:
-> On Wed, Aug 30, 2017 at 8:07 PM, Martin Ågren <martin.agren@gmail.com> wrote:
-
->> The man-page for git rebase says that combining -p with -i is "generally
->> not a good idea unless you know what you are doing (see BUGS below)".
+> For count, sort and format, only the argument names were listed under
+> OPTIONS, not the option names.
 >
-> Thanks for pointing this out again. I remember to have read this some
-> time ago, but as I general consider myself to know what I'm doing, I
-> forgot about it :-)
-
-Heh.
-
-> Anyway, this should really more explicitly say *what* you need to know
-> about, that is, reordering commits does not work.
-
-It tries to explain that, even with an example.  If you have ideas for
-improving the wording, that would be welcome.
-
-That said, ...
-
->> So if you agree that a "dropped commit" is a "counterintuitive result",
->> this is known and documented. Maybe the warning could be harsher, but it
->> does say "unless you know what you are doing".
+> Add the option names to make it clear the options exist
 >
-> I'd say it's worse than counterintuitive, as counterintuitive might
-> still be correct, while in my case it clearly is not. So yes, the
-> warning must be harsher in my opinion. Maybe we should even abort
-> rebase -i-p if reordering of commits is detected.
+> Signed-off-by: Kevin Daudt <me@ikke.info>
+> ---
+>  Documentation/git-for-each-ref.txt | 18 +++++++++---------
+>  1 file changed, 9 insertions(+), 9 deletions(-)
 
-This sounds like a more promising approach.  If you can detect when
-the rebase -i -p is going to cause trouble, then I would be all for
-aborting.  If you want to be extra nice to people, you can provide a
---force escape valve to let them experience the broken behavior, but I
-don't think that is necessary.
+Sounds sensible.  First I thought this was done deliberately because
+these placeholder can apply to more than one option and we wanted to
+explain each thing only once (e.g. "<object>" appears in 5 places,
+and having to repeat something like "you can spell <object> by the
+unique prefix of the object name, or the name of a ref that points
+at it, or ..." in each option would be awkward), but that is not the
+case here.
 
-I also think a loud warning when -i -p is used even when it is not
-going to cause trouble would be a valuable change.  E.g. maybe the
-template that opens in the editor could say something about reordering
-commits not being advisable?
+While we are at it, I just noticed that the SYNOPSIS section makes
+it look as if <pattern>... must come before points-at, merged, and
+their friends, but I do not think that should be the case.  I also
+notice that unlike --sort/--format/... the last four/five options
+are spelled with "--option <value>" syntax; we should consistently
+use "--option=<value>" instead there.
 
-E.g. I could imagine the todo list including some instructions in the
-spirit of
+But these two are separate issues that can be fixed in a patch
+separate from this one I am responding to.
 
-	# git rebase --preserve-merges does not support reordering commits.
-	# To attempt reordering anyway, add a line with the text "reorder".
-	# It is not likely to behave as you expect.  You have been
-	# warned.
-
-Thanks,
-Jonathan
+p.s.  I am still mostly offline and won't be doing any reviews or
+queuing that requires me to look at anything beyond the patch
+context.  Please do not get disappointed if you do not see your
+patch in my tree until later next week.
