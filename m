@@ -2,176 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 60997208CD
-	for <e@80x24.org>; Mon,  4 Sep 2017 13:01:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1ED18208CD
+	for <e@80x24.org>; Mon,  4 Sep 2017 16:00:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753606AbdIDNBK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Sep 2017 09:01:10 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:38351 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753598AbdIDNBJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Sep 2017 09:01:09 -0400
-Received: by mail-it0-f67.google.com with SMTP id z81so130328itb.5
-        for <git@vger.kernel.org>; Mon, 04 Sep 2017 06:01:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=fSuaph+aMXTCoeRm3A9TgPWvQyMOeKgESKnkShpht1A=;
-        b=g6/Jdf+kiWoz/bqgoFbzqXbILRiLckIPp/RC5t3kmQ78F2xEByIVZqk/NJ8S4WbdYS
-         u/evf9X7SL1cjmP2cTaECSgunkJGpgj0uNIsupYmZyemND7bkK64KKezafDOwdq+Aed5
-         8wq4CnSjGHKINXGsDIrBwpSoLNWSM9C2CLekrkNMXZC1VO+LnmNoX/A9NJXHbDfdVl2v
-         7DFOr+ALci7w3MTFsK8M4YuCRNHeSSClSkXljDnTuIl23rt11w1m5sW/m+0OvVw+2GxD
-         meHjzGEZuJ0omf0SPRsPYz34Gw/lNc8GKioSFWpS3DZQeXx4zn5ynVHdAps0rgBBLmeV
-         giNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=fSuaph+aMXTCoeRm3A9TgPWvQyMOeKgESKnkShpht1A=;
-        b=jg8kvOSrmFXEUktzqZbxfmVcPg+9J9FWN6iVc7+WyB0ipaMuC/Z2jF1CuDoFjKvHLK
-         UJovEgZAqIBgKhvZv9Z0cRQaInJnpWjC+wbJuiVxlN+wDe9gE7A/vpCoGTV9h5ySXvLq
-         OtH63j6D+cKT36J+4XupwDdbc7fZ+ZNRNJV/Nj8n+H/y79eM3+0QhZ8/ATnNjnT0Tpvq
-         EphgVfQlS0aWJ7f+koaRhGWahe13V5qOceB6ipj7mIxYM6refMPygL6JA5vXtl2RnyTk
-         Xpg+ySy0TgfXVQkdYuWfBR6wN2pvHNNs/vLaQPyw244jLazl6q0tk0X2gx5+pAcb6ZRs
-         zzXQ==
-X-Gm-Message-State: AHPjjUiSSIGHKYhnH4KakvUFRDmiGbULp7Xodk/1WwWs7wbmg/r03du6
-        I/fxpBYk4nVD3otjKO6CQWFKxNCGZg==
-X-Google-Smtp-Source: ADKCNb4j59Eb/LGOFmQw7Fg2h54us8zgSzWRSemKTpTetcuBw1gw19GZ4bJ8yIn6o4zO2GTWcZTIw+0W1YApkFxHQpI=
-X-Received: by 10.36.69.104 with SMTP id y101mr349428ita.37.1504530068804;
- Mon, 04 Sep 2017 06:01:08 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.79.165.25 with HTTP; Mon, 4 Sep 2017 06:01:08 -0700 (PDT)
-In-Reply-To: <20170901212620.w4ml5umoydbtuspw@sigill.intra.peff.net>
-References: <CAC-YKd1sTQLMUZ6k+-4K09=NOa_HaOf1gp8H51VNZjziUrxOfA@mail.gmail.com>
- <20170901212620.w4ml5umoydbtuspw@sigill.intra.peff.net>
-From:   "josephpattara ." <josephpattara@gmail.com>
-Date:   Mon, 4 Sep 2017 14:01:08 +0100
-Message-ID: <CAC-YKd0dDDJ_YkT=+Euqc=AMuTYobV-dWdKHkA5SgKJVKwMeug@mail.gmail.com>
-Subject: Re: HP-UX (git-2.14.0) Depot File / Source Code Build throws SHA1 Error
+        id S1753861AbdIDQAG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Sep 2017 12:00:06 -0400
+Received: from mout.gmx.net ([212.227.15.18]:49320 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753764AbdIDQAF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Sep 2017 12:00:05 -0400
+Received: from virtualbox ([37.201.193.79]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MPUZ7-1dt0WB1gtV-004gWN; Mon, 04
+ Sep 2017 17:59:46 +0200
+Date:   Mon, 4 Sep 2017 17:59:43 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
 To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+cc:     Jeff Hostetler <git@jeffhostetler.com>, martin.agren@gmail.com,
+        git@vger.kernel.org, jeffhost@microsoft.com, gitster@pobox.com
+Subject: Re: [PATCH] hashmap: add API to disable item counting when
+ threaded
+In-Reply-To: <20170902081747.lca2kkzpniykdxy2@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.21.1.1709041758350.4132@virtualbox>
+References: <adb37b70139fd1e2bac18bfd22c8b96683ae18eb.1502780344.git.martin.agren@gmail.com> <20170830185922.10107-1-git@jeffhostetler.com> <20170830185922.10107-2-git@jeffhostetler.com> <alpine.DEB.2.21.1.1709020109520.4132@virtualbox>
+ <20170902081747.lca2kkzpniykdxy2@sigill.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:WZfKHCRP/QIbmk1brkI9lWcOTsTJNF6kPsb/HOt9Ctro1mSYWi1
+ J31xsu+ZczcRBBhQloVTWEabHaG6qqnVmjtFnZdcXVj4G34oC6UDGWp6i71TvOdb7xQpFvw
+ 2lmIDb9zc1hN5Zlf2b0QPlgNXcDaC2+PSudSuSs19N480WCW8i4OUNEDsWRLxnvPOJBzL7f
+ cgp18B1bpyjZkn5wQDGYw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:JuKCp5/BQ4I=:Yi7p91MXF/sXD2r7kPQvAr
+ pVAcxqVRvOLTM/yh1KbzQC/W9zcXdr9qVfZ05joyVDOiUlO32Rj+JjlOM6AG02HIWu3jgp3Z+
+ nlWvsudosyAI240eue/LLZ8rTeRR5pD2xJ7Bh98upIBayuQFm1Y6a/f5bgjbrafhMCb1NB8Q3
+ QFyXklxaBCjgTxV7Z7R+TNswNxFkCafUjDuQbXWNuh5nRJMy899+5K4VLL1zk752Bdz0SsRdz
+ Jv0Yh4KqZhhZM3eMRmPFzOE8fzemrHfIIQWTk0uogGie2jOADt49RFzJzLcKGAYTh4Yrq6NHO
+ FSGd75m7iC3/s73BiEemyFtpcpkKiSRVOFiY/rh2XqyiH4WnRTSSEHEStiHHpyNinH20k47JH
+ cGfMmJQKLQ224dQOfYKhPey7riNPD+guuDybu4bTVVp6penNHV4ErLUp1R2LwM1eTNhQERGID
+ I4+djSJP5/m+bVPUgZ3I/Arw3BznPyYrSft1K+vYOPejxEacPAm3teXzuJgzmJ3oziBEE0zaC
+ QF5yzv2fJ6zDrb1YZR5/ZArLf6El59lb+R68O03i4VpBY38q+GJYj8vd3dJjnjyE9/gnz5snH
+ 5o+spSLqip4/lJQDLprgwUs6ErZ5vbKOI+Bs7hJKsD/ITLlFKqvzCG/M6OZx07awAz0aKGKz+
+ 87VIAKg/ZhiEmSaejWWqrr9DkufHJOFMKOZ6CsaZQzKyor39X9X0/ShaDVf+8hESvvVyCkxOL
+ WxQO4leYRPMeJBdon6ODg8GG0A/8Q76QOfjFUAYajSpSOylEbUkZwghSHE+aOHy4K3c4HeeF8
+ upP35RUT7jUtDkn/QPA95UQNQJ8S05h1it9K7skETlA2zG8Q4U=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Jeff,
+Hi Peff,
 
-Your information was very useful.
+On Sat, 2 Sep 2017, Jeff King wrote:
 
-Firstly, I could see the SHA1 hash was definitely wrong.
--bash-4.3$ echo foo | ./git hash-object --stdin
-408935f8873a5ef17ef10cf2a316e51937e90f0b
+> On Sat, Sep 02, 2017 at 01:31:19AM +0200, Johannes Schindelin wrote:
+> 
+> > > https://public-inbox.org/git/adb37b70139fd1e2bac18bfd22c8b96683ae18eb.1502780344.git.martin.agren@gmail.com/
+> > [...]
+> > > +static inline void hashmap_enable_item_counting(struct hashmap *map)
+> > > +{
+> > > +	void *item;
+> > > +	unsigned int n = 0;
+> > > +	struct hashmap_iter iter;
+> > > +
+> > > +	hashmap_iter_init(map, &iter);
+> > > +	while ((item = hashmap_iter_next(&iter)))
+> > > +		n++;
+> > > +
+> > > +	map->do_count_items = 1;
+> > > +	map->private_size = n;
+> > > +}
+> > 
+> > BTW this made me think that we may have a problem in our code since
+> > switching from my original hashmap implementation to the bucket one
+> > added in 6a364ced497 (add a hashtable implementation that supports
+> > O(1) removal, 2013-11-14): while it is not expected that there are
+> > many collisions, the "grow_at" logic still essentially assumes the
+> > number of buckets to be equal to the number of hashmap entries.
+> 
+> I'm confused about what the problem is. If I am reading the code
+> correctly, "size" is always the number of elements and "grow_at" is the
+> table size times a load factor. Those are the same numbers you'd use to
+> decide to grow in an open-address table.
+> 
+> It's true that this does not take into account the actual number of
+> collisions we see (or the average per bucket, or however you want to
+> count it). But generally nor do open-address schemes (and certainly our
+> other hash tables just use load factor to decide when to grow).
 
-I attempted to build the code with OPENSSL_SHA1=Yes and the build is
-working and I am able to do a git clone from my HP-UX machine. I still
-used the adapted source code HPUX connect website.
-I am wondering whether the package which was committed to the HPUX
-site (http://hpux.connect.org.uk/) did ever worked for any one as it
-was the same SHA1 error I was getting when I installed that depot
-file. My HPUX architecture is below:
+In the worst case, there is only one bucket when the table is grown
+already, is all I tried to point out.
 
-HP-UX hepscott B.11.31 U ia64 2256017764 unlimited-user license
-
-But I can confirm with the adapated source code from HPUX connect and
-using the  OPENSSL_SHA1=Yes I am able to build a working git locally.
-
-
-Thanks a lot.
-Kind Regards,
-Joseph
-
-On Fri, Sep 1, 2017 at 10:26 PM, Jeff King <peff@peff.net> wrote:
-> On Fri, Sep 01, 2017 at 03:04:36PM +0100, josephpattara . wrote:
->
->> Dear HP-UX Git Maintainers,
->>
->> Sending this email as I was trying to use the HP-UX depot file which
->> was recently committed to the
->> http://hpux.connectinternetsolutions.com/hppd/hpux/Development/Tools/git-2.14.0/.
->> I tried to use the depot file and also attempted to build the code
->> from the adapted source code (using native HP-UX compiler as mentioned
->> in Installation Note) from the website.
->
-> I don't know anything about HP-UX, but I can tell you a few things from
-> the Git side...
->
->> But unfortunately both of them failed with an error:
->>
->> Cloning into xxxx...
->> remote: Counting objects: 19813, done.
->> remote: Compressing objects: 100% (9124/9124), done.
->> remote: Total 19813 (delta 10340), reused 16358 (delta 8293)
->> Receiving objects: 100% (19813/19813), 6.07 MiB | 9.72 MiB/s, done.
->> fatal: pack is corrupted (SHA1 mismatch)
->> fatal: index-pack failed
->
-> Assuming there's no corruption happening on the network, it looks like
-> there's a bug in the SHA-1 routines of your build. One very basic check
-> would be to run:
->
->   echo foo | git hash-object --stdin
->
-> which should produce:
->
->   257cc5642cb1a054f08cc83f2d943e56fd3ebe99
->
-> (If it does that's not a guarantee that there aren't problems with more
-> complex inputs, but if it produces a different sha1 that's a clear sign
-> of a sha1 issue).
->
->> Looking at the dynamic link I can see the below:
->>
->> _HP_DLDOPTS="-ldd" /usr/bin/git
->>   /usr/lib/hpux32/libpthread.so =>        /usr/lib/hpux32/libpthread.so
->>   libpthread.so.1 =>      /usr/lib/hpux32/libpthread.so.1
->>   libz.so =>      /usr/local/lib/hpux32/libz.so
->>   libiconv.so =>  /usr/local/lib/hpux32/libiconv.so
->>   libintl.so =>   /usr/local/lib/hpux32/libintl.so
->>   libc.so.1 =>    /usr/lib/hpux32/libc.so.1
->>   libdl.so.1 =>   /usr/lib/hpux32/libdl.so.1
->>
->>   Until recently we were using the older GIT version for HP-UX 1.8.5.3
->> and I can see the older GIT had a dynamic link for libcrypto.so.
->
-> Git can build against several SHA-1 implementations. In v2.13 and up,
-> the default is the collision-detecting version publicized as part of the
-> SHAttered attacks earlier this year. We have had a few problems with it
-> misbehaving on uncommon platforms or compilers, so it seems a likely
-> candidate here.
->
-> You can try building with "make OPENSSL_SHA1=Yes" to use openssl instead
-> of the collision-detecting version. You can also try "make BLK_SHA1=Yes"
-> if you have trouble building against openssl for whatever reason.
->
->> The clarification I have is
->> 1. Is the version 2.14.0 from HPUX connect is it really usable (depot
->> file and also the source code)
->
-> That I don't know. I took a peek at the diff between their source and a
-> pristine v2.14.0 tarball, and I don't see anything too exotic. So you
-> could try the upstream code from:
->
->   https://www.kernel.org/pub/software/scm/git/git-2.14.1.tar.gz
->
-> but I suspect the problem would still exist.
->
->> 2. Was it deliberate to remove the openssl linkage from the new GIT or
->> am I really missing any special configure or build flags to enable the
->> libcrypto.so linkage.
->
-> Yes, the default flipped but you can still change it. See above.
->
->> 3. Is the SHA1 error which I get is it really to do with the missing
->> libcrypto.so or I am on a wrong inference track?
->
-> I think it's likely that you're on the right track.
->
-> -Peff
+Ciao,
+Dscho
