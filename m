@@ -2,170 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B77001F4DD
-	for <e@80x24.org>; Sun,  3 Sep 2017 18:20:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 616E6208E3
+	for <e@80x24.org>; Mon,  4 Sep 2017 06:31:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751454AbdICSUY (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Sep 2017 14:20:24 -0400
-Received: from mail-qk0-f170.google.com ([209.85.220.170]:34067 "EHLO
-        mail-qk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751287AbdICSUX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Sep 2017 14:20:23 -0400
-Received: by mail-qk0-f170.google.com with SMTP id z143so3069997qkb.1
-        for <git@vger.kernel.org>; Sun, 03 Sep 2017 11:20:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=7NExJEtloBvCvShSG9HgMHftifDkiDLANLUxAQ6no2s=;
-        b=WvImXF+Ch47V9b7h0EKeWKxfKdNqMLz29KDqzlu8pwlIrkN0LI4fYjLcpepPVNYNtG
-         M1BM6GJLwVhYbodVFlMtJHKU3I+hc2doA6+CJaCUFGDqE/Wb0DWC1t/Imf6jLYQFxaay
-         sADrNWP1yzdVkMpX6EJ3b6X5+gjQaj7TObPNh/DN9bgWDp5XFlfSoYLrPuO5gJ/jtlSx
-         ZRKoLr2EqPQZr3kP6I0bk4pwLa/oRQOXePNk2IBe5pBGBxAIhWVQaunSQTrZnDLCVZWz
-         NcLFPdCeXU29/rwAsPqvaxKV6kQo7AkQKEuc2a5+5HfV81lqvV4ZqB6XPRc00nlzPAov
-         0uNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=7NExJEtloBvCvShSG9HgMHftifDkiDLANLUxAQ6no2s=;
-        b=P7YzxnWgvJnibjIQigl1OXoiUqnQInCW+AwSDtDmD+dWWQyIQEyuy/HfemLVzL+QSw
-         Od97F2QrqSG1YQNiEOMscs78r9DHU28IgL5t1AYvT9XloZ5bN6Wygxj412gZ0x+Gsw9O
-         ZWxfQ6u4rorTmoTnEeZVCn7qdFGZaiVNYysM1KwuPJ/G8rFC47FyLvLRKHIpcKDlJusO
-         UbxiQ74DyZwUdgcluYcFFi9BngsFEOVIDceY/o+yIaYMpubYSb15nGmkap14vLJQesEE
-         Gybw1uWSCk04FI68MuF54UtqsLkfQxMSZH9fQ6ke9ydLoa1pMM6M/eGXQlCeHPo8PzT0
-         acyg==
-X-Gm-Message-State: AHPjjUgPd8hXoaKITuMt6qmIIpXHs8dJc0gjOG3kZNCgtlaeLr3WAboa
-        U52H0a9UB1EdHYls
-X-Google-Smtp-Source: ADKCNb5NM6NezxiOMQJbdOiSQQnQJPYRLbyX++w5q2EAHWIJj2uCrLDdyg96cl2np/T/edgGwGSUcQ==
-X-Received: by 10.233.237.16 with SMTP id c16mr2634381qkg.304.1504462822443;
-        Sun, 03 Sep 2017 11:20:22 -0700 (PDT)
-Received: from LykOS.localdomain ([2604:2000:8209:6800:c238:96ff:fe6c:25f])
-        by smtp.gmail.com with ESMTPSA id j126sm336576qka.97.2017.09.03.11.20.21
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 03 Sep 2017 11:20:21 -0700 (PDT)
-Date:   Sun, 3 Sep 2017 14:20:54 -0400
-From:   Santiago Torres <santiago@nyu.edu>
-To:     shawn wilson <ag4ve.us@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: signing commits using gpg2
-Message-ID: <20170903182053.fnyxly5537zjkktc@LykOS.localdomain>
-References: <CAH_OBieqSY8To9okRTL-z5dnjW=_NLzA+n5-7=eou=Lx33hBdQ@mail.gmail.com>
+        id S1753248AbdIDGbq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Sep 2017 02:31:46 -0400
+Received: from 6.mo64.mail-out.ovh.net ([46.105.48.16]:47153 "EHLO
+        6.mo64.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752665AbdIDGbq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Sep 2017 02:31:46 -0400
+Received: from ex2.mail.ovh.net (gw1.ex2.mail.ovh.net [164.132.80.186])
+        by mo64.mail-out.ovh.net (Postfix) with ESMTPS id 2E09190811
+        for <git@vger.kernel.org>; Mon,  4 Sep 2017 08:31:44 +0200 (CEST)
+Received: from [10.0.2.127] (86.200.152.136) by EX7.indiv2.local (172.16.2.7)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Mon, 4 Sep
+ 2017 08:31:42 +0200
+From:   Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
+Subject: [PATCHv2] pull: honor submodule.recurse config option
+To:     <git@vger.kernel.org>
+Openpgp: preference=signencrypt
+Message-ID: <40ecf559-0348-b838-72f7-0ad7746a7072@morey-chaisemartin.com>
+Date:   Mon, 4 Sep 2017 08:31:41 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101
+ Thunderbird/56.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="jq54jfr4nh4gip2i"
-Content-Disposition: inline
-In-Reply-To: <CAH_OBieqSY8To9okRTL-z5dnjW=_NLzA+n5-7=eou=Lx33hBdQ@mail.gmail.com>
+Content-Type: text/plain; charset="windows-1252"
+Content-Language: fr-xx-classique+reforme1990
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [86.200.152.136]
+X-ClientProxiedBy: CAS1.indiv2.local (172.16.1.1) To EX7.indiv2.local
+ (172.16.2.7)
+X-Ovh-Tracer-Id: 17532513349687109597
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeelledrvdehgdeiiecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemuceftddtnecu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"git pull" supports a --recurse-submodules option but does not parse the
+submodule.recurse configuration item to set the default for that option.
+Meanwhile "git fetch" does support submodule.recurse, producing
+confusing behavior: when submodule.recurse is enabled, "git pull"
+recursively fetches submodules but does not update them after fetch.
 
---jq54jfr4nh4gip2i
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Handle submodule.recurse in "git pull" to fix this.
 
-On Sat, Sep 02, 2017 at 05:11:50PM -0400, shawn wilson wrote:
-> tl;dr - how do I get git to use gpg2 to sign things?
->=20
-> I'm using gpg2 (so no agent options are configured but an agent is
-> running) which is configured w/ a Nitrokey (Pro if it matters):
->=20
->  % git commit -m "Initial."
->=20
->                                  gits/bash-libs (master =E2=9A=A1) localh=
-ost
-> gpg: detected reader `Nitrokey Nitrokey Pro (000034670000000000000000) 00=
- 00'
-> gpg: pcsc_connect failed: sharing violation (0x8010000b)
-> gpg: apdu_send_simple(0) failed: locking failed
-> Please insert the card and hit return or enter 'c' to cancel:
-> gpg: pcsc_connect failed: sharing violation (0x8010000b)
-> gpg: pcsc_connect failed: sharing violation (0x8010000b)
-> gpg: apdu_send_simple(0) failed: locking failed
-> Please insert the card and hit return or enter 'c' to cancel: c
-> gpg: selecting openpgp failed: general error
-> gpg: signing failed: general error
-> gpg: signing failed: general error
-> error: gpg failed to sign the data
-> fatal: failed to write commit object
+Reported-by: Magnus Homann <magnus@homann.se>
+Signed-off-by: Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
+---
 
-This seems to be an issue with your gpg agent configuration (even if
-there is none).=20
+Changes since v1:
+ * Cleanup commit message
+ * Add test
+ * Remove extra var in code and fallthrough to git_default_config
 
-I can't seem to reproduce, although I don't have a nitrokey, so this is
-most likely an issue with either:
+ builtin/pull.c            |  4 ++++
+ t/t5572-pull-submodule.sh | 10 ++++++++++
+ 2 files changed, 14 insertions(+)
 
-- the PIV/CCID interface of the nitrokey using gpg2. I"m not familiar
-  enough with nitrokeys to debug this, but keys are usually super
-  paranoid when signing arbitrary buffers.
-- the fork call within git on gpg2.=20
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 7fe281414..ce8ccb15b 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -325,6 +325,10 @@ static int git_pull_config(const char *var, const char *value, void *cb)
+ 	if (!strcmp(var, "rebase.autostash")) {
+ 		config_autostash = git_config_bool(var, value);
+ 		return 0;
++	} else if (!strcmp(var, "submodule.recurse")) {
++		recurse_submodules = git_config_bool(var, value) ?
++			RECURSE_SUBMODULES_ON : RECURSE_SUBMODULES_OFF;
++		return 0;
+ 	}
+ 	return git_default_config(var, value, cb);
+ }
+diff --git a/t/t5572-pull-submodule.sh b/t/t5572-pull-submodule.sh
+index 077eb07e1..1b3a3f445 100755
+--- a/t/t5572-pull-submodule.sh
++++ b/t/t5572-pull-submodule.sh
+@@ -65,6 +65,16 @@ test_expect_success 'recursive pull updates working tree' '
+ 	test_path_is_file super/sub/merge_strategy.t
+ '
+ 
++test_expect_success "submodule.recurse option triggers recursive pull" '
++	test_commit -C child merge_strategy_2 &&
++	git -C parent submodule update --remote &&
++	git -C parent add sub &&
++	git -C parent commit -m "update submodule" &&
++
++	git -C super -c submodule.recurse pull --no-rebase &&
++	test_path_is_file super/sub/merge_strategy_2.t
++'
++
+ test_expect_success 'recursive rebasing pull' '
+ 	# change upstream
+ 	test_commit -C child rebase_strategy &&
+-- 
+2.14.1.460.g695108176
 
-I think the second one is rather unlikely, but it's worth giving it a
-try...
-
-                                                          ~ localhost
-> -----BEGIN PGP MESSAGE-----
-> Version: GnuPG v2
-> [SNIPPED]
-> -----END PGP MESSAGE-----
->=20
-
-I noticed you didn't try gpg2 -d foo.gpg? Am I missing something?
-
-> However, if I try this w/ the old gpg:
->=20
->  % gpg -ae -o foo.gpg foo
->=20
->                                                          ~ localhost
->  % gpg -d foo.gpg
->=20
->                                                          ~ localhost
-> gpg: detected reader `Nitrokey Nitrokey Pro (000034670000000000000000) 00=
- 00'
-> gpg: pcsc_connect failed: sharing violation (0x8010000b)
-> gpg: apdu_send_simple(0) failed: locking failed
-> Please insert the card and hit return or enter 'c' to cancel: c
-> gpg: selecting openpgp failed: general error
-> gpg: encrypted with 3072-bit RSA key, ID 41826CFB, created 2017-03-13
->       "Shawn Wilson <ag4ve.us@gmail.com>"
-> gpg: public key decryption failed: general error
-> gpg: decryption failed: secret key not available
-
-This feels like an issue with the interface to the key itself. Can you
-start a non-detached agent with --verbose to see exactly where it blows up?
-
-We probably want to continue this offlist as this seems more of a gpg
-issue rather than git. We can always come back if we figure out this is
-something git related :)
-
-Cheers!
--Santiago.
-
---jq54jfr4nh4gip2i
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEkDurc2QOttZVM+/zRo8SLOgWIpUFAlmsSAIACgkQRo8SLOgW
-IpUL6w//U9YnJMrhxdo1ALqhvoC4jjteDvv+dK7VCndrpFbDpkXtDWVFiYFFPgin
-nrh7kpiNkUTVY6FiPRQ4EUrxqql8wgADe02gyDaUTsLl6eKKNjvitENeHqtUW7oO
-APwNrFpGV2JolrattqQKMZKyg2CTcYjLFlho1kb9BF4Qu9S5Xfi1xPoVBLpL1c+B
-bNKZfvJXKTMaVdPcQICn1WbPJk+wmyakkok4KoxT/AJNb5Q2TlLgMlGJz7JE+uE8
-rbvsxPYtcsbUJbgHDr6q4p1IhstVHkO/xIj6zl59hCCh89uH8R91HTToUr5GOZhO
-AtKGUWy6T0ORe5hV0mc7vhRSanIcV+B9Pp/nzxmse1U5R4pO7Yz6Z0yFBGcwKFdl
-kahj9GGf2CZx0ZuWsjkBbSwiTt28d7/XK4Mx0C4jKtKcz+chS9lFcKFVaPMHV1wo
-YCGyDUtjdWAsl+K4UQXCsYjUn49tqiL1fyqPSvm/jN3KHYNbE0WZ7An1kdZ4uG9D
-7oWfP2LPu6d3sSWcDtIMAtBFAHHp2HZsIW8wVKKSdOj0TOvZ43nfD10QkNU0bpS/
-VBRzpRyFs4qMFTFGeQ2dUEOeGYniW0V7WIwsUSC+g63cE4P0XKjgoC/Lc0V2WTHo
-NS7tdJdzN361uqahB2hw0PHMTxg/gj2v9DA+xB6NefFvQvUF/8Q=
-=nWI+
------END PGP SIGNATURE-----
-
---jq54jfr4nh4gip2i--
