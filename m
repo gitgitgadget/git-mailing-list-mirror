@@ -7,119 +7,109 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D590208CD
-	for <e@80x24.org>; Mon,  4 Sep 2017 20:04:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 339B4208CD
+	for <e@80x24.org>; Mon,  4 Sep 2017 22:57:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754011AbdIDUEn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Sep 2017 16:04:43 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:38090 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753953AbdIDUEm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Sep 2017 16:04:42 -0400
-Received: by mail-wr0-f193.google.com with SMTP id p14so445661wrg.5
-        for <git@vger.kernel.org>; Mon, 04 Sep 2017 13:04:41 -0700 (PDT)
+        id S1754014AbdIDW5r (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Sep 2017 18:57:47 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:34492 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753997AbdIDW5q (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Sep 2017 18:57:46 -0400
+Received: by mail-wm0-f67.google.com with SMTP id r75so1503333wmf.1
+        for <git@vger.kernel.org>; Mon, 04 Sep 2017 15:57:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Nh4Xgzz7rdB8u1shQOipzczc7/Cn23maJIye7q1yWZ0=;
-        b=i3pUfUlDu5xfRfUoPOtlZPeIdTK9/6jnqMAnFLdMEB2P3A0UpkUbPesMVpjrSGTsRS
-         vLi8VwVJ8K0UWsm6sQDfHFsSBYNesfGpKddjG58fwx23DrCg74RB9CCFay5MZggmmDBT
-         PpYBt8zpjYzLtx0ublkd5UZ0OZdo+SQo8pHcvZUqQui04dtAY8q1h8bbgU/6vt7t78ra
-         Up/UXbSYbJnlw6t26//MuOd/UCZ6lIQGauT2XtDTdOpi5kN1RlHpy+0cZgA5tDwK6OzU
-         3wF+CwtAiWOM0hNw6QiTuCHYEUpQcWI4Oi+hg4mIOvJ2zgpY4AcRRrC6Zt1EGH8bc5VN
-         Visg==
+        h=from:to:cc:subject:date:message-id;
+        bh=UlTey3xFowMCg4HNeAu+x4HSrZzSggNHlFKG4MOARJk=;
+        b=KOKnZD+poMJ2NMJ3+iulBfTDuVdXHEoOKzzCbXLLJQwl1Ir14EefM5/rLHJ1TDbr+z
+         2cDjSNXTeoR3KFWIZBdeprEBM7cdzvwQ51fq9TdayLmrrer5q0rTAKFqyo+hd+mdUST2
+         t/nGPbt8zrHu0HZF6N3yQOi0T1RcNJ1UNaOS024X9RXg/kdYTxgi3QV/Bb9CeZ2BTYIR
+         DwXo4vqKODgZxl2McCzNrCwpwKHMsObKqflB5SfZTB1gbJiLbreok4v5q2vM5NWwO7Mq
+         yiBNb+lQ/Q7vds8folXHDpnJ/Ynkuo+gSTEYkiobIgsxCId8IasNYr2tTzcopD6hqCc+
+         xH/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Nh4Xgzz7rdB8u1shQOipzczc7/Cn23maJIye7q1yWZ0=;
-        b=GhiNLkJoDf4LF8i22NU6he4mmjNuQb+f1Jn+z5TvysIeaH9wo/uRjvLqKZWKeOSAbr
-         FoPza/72tlGf66NUufN4aWWhlLQL3SRKF47QEZ2nPjNfwiDbfK+3gxtIqWCRjchyFnHt
-         rwJKgfMhgos/bc3Gj7Es56OeHg0d7aithv/65A0gU3XJEMCk0a+WvoB6Y0l82QI5nze2
-         bFK3aTbHlhpQqBx+YqQv18hAbEg7vv9a79cVI6D1iOlBI51ZutskvflFFYTH9rhN2w4+
-         X1v+9t5SmCbckDe/TIa6eU4FBct5Wmv3gIUcyDuUBoFCpUg84ZLDOc+MiLnYn0DxzyXP
-         1uBg==
-X-Gm-Message-State: AHPjjUgGwSZc9Vzv/RXn/85MUqsbXwaX3FlOYuqnZobyyXEjEeEjb4nu
-        nixfz5+rML1ijkts99E=
-X-Google-Smtp-Source: ADKCNb4fCZ00GqkHfwXAN6CM6EH5bKPFN5xf67f8DT8Vx7EpaXkmA4mH6QpX1aTgMeqNAFpPQbqdCw==
-X-Received: by 10.223.135.141 with SMTP id b13mr888405wrb.6.1504555481092;
-        Mon, 04 Sep 2017 13:04:41 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=UlTey3xFowMCg4HNeAu+x4HSrZzSggNHlFKG4MOARJk=;
+        b=GXWx6VXSsLapYQU5fzu2yJ0sc3JYd0G5JYMzdwUnqDvMKFzIERhSE5UFNDeD0onjos
+         jpAGiLbN7Kroy4EbQPAP1db6IHlJ7tt0RFGspFT8jAIJlaQ9ZGNFih/rPPLIljUXw2S4
+         o1DhW/PCC7yHmmCFQwE7rl/+omLtD8DqO4Vz67VXK9ohT7Tgww0uPer84H7sTI/bY5QW
+         lfI+flYjxhCvwf6MRUhxo9MonAm955OdEvt9evuOWeZHItsneLOuj/F+++t/q2nEXVj7
+         ZjY9objenBumtMtmvakmhr8CmThhPC+0qM0m+oCFznei9a2/hdPH3bnUusrkFv4kAjbL
+         rAvw==
+X-Gm-Message-State: AHPjjUg1q0fT3xV/1YOe2Ca0D02FoM+HoBivjUjhO7Uwo2z3AhWAgake
+        fAQaPUuDLpTJgwlrXFw=
+X-Google-Smtp-Source: ADKCNb6yH0Eto12D3PjYsrjTXdfC09TkjVDiBdGbKZjPaEDE1rh4DDtJPkcfX+CKkHubwvUYEq0zNQ==
+X-Received: by 10.28.62.65 with SMTP id l62mr1531332wma.47.1504565865374;
+        Mon, 04 Sep 2017 15:57:45 -0700 (PDT)
 Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
-        by smtp.gmail.com with ESMTPSA id o2sm2000317wrb.78.2017.09.04.13.04.39
+        by smtp.gmail.com with ESMTPSA id p65sm1950834wmg.44.2017.09.04.15.57.43
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 04 Sep 2017 13:04:39 -0700 (PDT)
+        Mon, 04 Sep 2017 15:57:44 -0700 (PDT)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        "brian m. carlson" <sandals@crustytoothpaste.ath.cx>
-Subject: [PATCH] refs: make sure we never pass NULL to hashcpy
-Date:   Mon,  4 Sep 2017 21:05:03 +0100
-Message-Id: <20170904200504.15249-1-t.gummerer@gmail.com>
+        Kevin Willford <kewillf@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] read-cache: fix index corruption with index v4
+Date:   Mon,  4 Sep 2017 23:58:06 +0100
+Message-Id: <20170904225807.22139-1-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.14.1.480.gb18f417b89
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-gcc on arch linux (version 7.1.1) warns that a NULL argument is passed
-as the second parameter of memcpy.
+ce012deb98 ("read-cache: avoid allocating every ondisk entry when
+writing", 2017-08-21) changed the way cache entries are written to the
+index file.  While previously it wrote the name to an struct that was
+allocated using xcalloc(), it now uses ce_write() directly.  Previously
+ce_namelen - common bytes were written to the cache entry, which would
+automatically make it nul terminated, as it was allocated using calloc.
 
-In file included from refs.c:5:0:
-refs.c: In function ‘ref_transaction_verify’:
-cache.h:948:2: error: argument 2 null where non-null expected [-Werror=nonnull]
-  memcpy(sha_dst, sha_src, GIT_SHA1_RAWSZ);
-  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-In file included from git-compat-util.h:165:0,
-                 from cache.h:4,
-                 from refs.c:5:
-/usr/include/string.h:43:14: note: in a call to function ‘memcpy’ declared here
- extern void *memcpy (void *__restrict __dest, const void *__restrict __src,
-              ^~~~~~
+Now we are writing ce_namelen - common + 1 bytes directly from the
+ce->name to the index.  As ce->name is however not nul terminated, and
+index-v4 needs the nul terminator to split between one index entry and
+the next, this would end up in a corrupted index.
 
-Tracking this error down, we can track it back to
-ref_transaction_add_update.  where the call to hashcpy is however
-protected by the flags that are passed in.
+Fix that by only writing ce_namelen - common bytes directly from
+ce->name to the index, and adding the nul terminator in an extra call to
+ce_write.
 
-To make sure there's no code path where the wrong flags are passed in,
-and to help the compiler realize that no NULL parameter is passed as
-second argument to hashcpy, add asserts that this is indeed the case.
+This bug was turned up by setting TEST_GIT_INDEX_VERSION = 4 in
+config.mak and running the test suite (t1700 specifically broke).
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
 
-This is based on top of ma/ts-cleanups, as that fixes another compiler
-warning with gcc 7.1.1.
+I unfortunately didn't have more time to dig so
 
- refs.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+> As ce->name is however not nul terminated
 
-diff --git a/refs.c b/refs.c
-index ba22f4acef..d8c12a9c44 100644
---- a/refs.c
-+++ b/refs.c
-@@ -896,10 +896,14 @@ struct ref_update *ref_transaction_add_update(
+just comes from my memory and from the patch below actually fixing the
+corruption, so it's really the most likely cause.  Would be great if
+someone who can remember more about the index could confirm that this
+is indeed the case.
+
+ read-cache.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/read-cache.c b/read-cache.c
+index 40da87ea71..80830ddcfc 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -2103,7 +2103,9 @@ static int ce_write_entry(git_SHA_CTX *c, int fd, struct cache_entry *ce,
+ 		if (!result)
+ 			result = ce_write(c, fd, to_remove_vi, prefix_size);
+ 		if (!result)
+-			result = ce_write(c, fd, ce->name + common, ce_namelen(ce) - common + 1);
++			result = ce_write(c, fd, ce->name + common, ce_namelen(ce) - common);
++		if (!result)
++			result = ce_write(c, fd, "\0", 1);
  
- 	update->flags = flags;
- 
--	if (flags & REF_HAVE_NEW)
-+	if (flags & REF_HAVE_NEW) {
-+		assert(new_sha1);
- 		hashcpy(update->new_oid.hash, new_sha1);
--	if (flags & REF_HAVE_OLD)
-+	}
-+	if (flags & REF_HAVE_OLD) {
-+		assert(old_sha1);
- 		hashcpy(update->old_oid.hash, old_sha1);
-+	}
- 	update->msg = xstrdup_or_null(msg);
- 	return update;
- }
+ 		strbuf_splice(previous_name, common, to_remove,
+ 			      ce->name + common, ce_namelen(ce) - common);
 -- 
 2.14.1.480.gb18f417b89
 
