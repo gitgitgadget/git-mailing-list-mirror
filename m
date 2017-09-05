@@ -7,113 +7,121 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C52B9208E4
-	for <e@80x24.org>; Tue,  5 Sep 2017 17:13:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7CE83208E4
+	for <e@80x24.org>; Tue,  5 Sep 2017 17:24:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752284AbdIERNI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Sep 2017 13:13:08 -0400
-Received: from mail-pg0-f44.google.com ([74.125.83.44]:37544 "EHLO
-        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752157AbdIERNH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Sep 2017 13:13:07 -0400
-Received: by mail-pg0-f44.google.com with SMTP id d8so10504273pgt.4
-        for <git@vger.kernel.org>; Tue, 05 Sep 2017 10:13:07 -0700 (PDT)
+        id S1752263AbdIERYU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Sep 2017 13:24:20 -0400
+Received: from mail-pg0-f49.google.com ([74.125.83.49]:36305 "EHLO
+        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751774AbdIERYT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Sep 2017 13:24:19 -0400
+Received: by mail-pg0-f49.google.com with SMTP id m9so10615496pgd.3
+        for <git@vger.kernel.org>; Tue, 05 Sep 2017 10:24:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=g0KtNibH6a4ORfI2f1FtNkijXEMZDfIvGEbzpep2Ag8=;
-        b=iIq4gRDIWRjxghiYFMlsP9+pQZwX/InSOrY8yFUTTF7n7XzW5S8wSKQWe5doWYdqg6
-         kn9J8H9ZaStaRUXIwz97kQMNS3z0lYVhYkXNYIPbAh4IpieFqo/U+GH12zlOD17dNuIt
-         vyLIaTDTZbvwscc1ppuqhDKxbIP+zBr67EWJ06NW0dVzhiE0RiVCVYyYJJVA/GmhwnQo
-         PSVmzhAk0C85MbGLxpIQc0hYy5+/k7frzpvhkcSCu/nrYIBkM0evuS3msAfP4N5q5let
-         WdaVZ/3RnLBNp1fzWWvIHgeZsVAKKJ2jwa6Za20edmS8QGbTOg+I9evjDc840FHiUPhe
-         RWOw==
+         :cc:content-transfer-encoding;
+        bh=6A57qGYYMNNcGyBK3/H1fAKLNSHxq4w8ht7dZi2dkmU=;
+        b=OVfNrog1VMwazAD0HfJSCpKvXWNkWY9WXwoYfmKWcStPMN0MymGqu3o8I3wLbAkznZ
+         K13yrIp9g2s9zsSzsK+r6T8wET8hlDzqbkhlBz1KuaecLBbhM5GxFn6+vGfqMU1fAwd8
+         Z5qSx2V0XAbgU63GXxDu+ECkk7X9oZfQACBEBcKRvNoowbIU7vhdzO48WGoImP1EvwMj
+         TZx/DET2iEQAAggSelZ9/rbzhk+Wz+Z2MAAlmRFh2GCPhWbX4dlBtXgmajIoS/j7wS1f
+         +dZTXlFHrJYwiOk9m1EZuUTOcVTBuMMRpxr1XGltiSmwGgQKl4JRa6yMDNqy8r3kbV6q
+         bWAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=g0KtNibH6a4ORfI2f1FtNkijXEMZDfIvGEbzpep2Ag8=;
-        b=HyJlC5GKhw6v79/DPCMknThli34+cWcQSAPtGjWzN1WsnnIFDj9Ae1X+7p8DX+T0AK
-         +ebOhSJKArI0nU+VJ/r4K1IdjrpoECZIwqXY4XGArl6afuVvXmuixbX49PEvbFfk7LEI
-         SBFGCRso5j0catwJb/6s/EZsD521VdMbVJS3InaHsASfOmRZq15UaBi7qhLwZKdgSJro
-         pQiYNwOYA0+dcq5tpg0UzPzHRugHWeo+zEliB+wgbM+CNFh+CNX743v+j9lWpDYg9XX4
-         IDrujoL5h/T23pYALB0slfesW/9+ikP3Tsbdl3Zv8kupSVxiXjcr2AZFtrXiDvUfVCVq
-         U7hg==
-X-Gm-Message-State: AHPjjUgohEYRQhp93ZcqSddVXOtYHGK7/ZxjpkDcVHQ1RS9Dbk/OemKM
-        MfWdsdl/LY+rgSQQ2qZ7CiVmr7gWMQ==
-X-Google-Smtp-Source: ADKCNb7yrbqEQzhZIDwjPhkxnRk2PY4k8VjV5l/0d57NwHHPdQLy3nfmaWiAYA9xtQMs+SNEMDaa1N4DlJwjMJLTHG0=
-X-Received: by 10.98.157.201 with SMTP id a70mr4403536pfk.122.1504631586646;
- Tue, 05 Sep 2017 10:13:06 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=6A57qGYYMNNcGyBK3/H1fAKLNSHxq4w8ht7dZi2dkmU=;
+        b=OxpA6fJtphMJlt6KwTOzz/tTcDjO6r17qOXg2m8yEu4Cm/K7sa7j1f+3K3bJDn+5fc
+         XqRBkiec71Uq1YHaoeM5U3PPwkTwyMbq9Ek/bbbj1LjH1C32LWTnAC1Ehmjuwtzj2DOQ
+         vGcBHP0tOFzX0uoYohg6VBM/fb0GF0Z7cFEtWUsEEvlBPWiDtJP9H3ioJAKArlzA853I
+         SozTvPRU9hXawOlSO89YfKjZtvgr483MjqMAzXzoA4rLYelPbM6NG/KigSjhuHztKV/4
+         Tepz3TVQfCcGEE+cdAO0NzMTovdxBA42vfmWkrJUxS8Va6f8rSAKSKWTYAIMBTrtx1ae
+         +TDg==
+X-Gm-Message-State: AHPjjUhtDUqHYZ5ANb1CNX6H/j/ZS4dVfssvC5TK2fx7R6JY3IXaqeqt
+        DEPYCH2qOHyAUHDWEuKXpC9Jhhh0Yg==
+X-Google-Smtp-Source: ADKCNb671zuek5ZYdN0HqOAC3n/HGLlZutMuYv+6wRm9xBtEs68dAaqPmR8jiNmO8Fq1W+il26UbabtXRJ1HWXEPU8g=
+X-Received: by 10.101.80.140 with SMTP id r12mr4629500pgp.267.1504632258734;
+ Tue, 05 Sep 2017 10:24:18 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.100.142.73 with HTTP; Tue, 5 Sep 2017 10:13:05 -0700 (PDT)
-In-Reply-To: <06c552de-80a0-9cd0-d016-07a4ab0afaf0@jeffhostetler.com>
-References: <adb37b70139fd1e2bac18bfd22c8b96683ae18eb.1502780344.git.martin.agren@gmail.com>
- <20170830185922.10107-1-git@jeffhostetler.com> <20170830185922.10107-2-git@jeffhostetler.com>
- <alpine.DEB.2.21.1.1709020109520.4132@virtualbox> <20170901235030.GD143138@aiede.mtv.corp.google.com>
- <06c552de-80a0-9cd0-d016-07a4ab0afaf0@jeffhostetler.com>
+Received: by 10.100.142.73 with HTTP; Tue, 5 Sep 2017 10:24:18 -0700 (PDT)
+In-Reply-To: <xmqq60cxcvjk.fsf@gitster.mtv.corp.google.com>
+References: <CAN0heSqn59sFF3A-eQ593G+ZDWnO9pKM5F=sgiSQk+prUr-nSQ@mail.gmail.com>
+ <4b4c0d178ad2216eecbc49fb6f54dd8a1d1ac119.1504024261.git.martin.agren@gmail.com>
+ <91e365b5-6a5d-1e1c-ab7a-579efa7c1ae8@alum.mit.edu> <CAN0heSqa8OnPnkd1xbyZ=QN9qg_8OaxBYnwzOZDDA3g+uGE71g@mail.gmail.com>
+ <xmqq60cxcvjk.fsf@gitster.mtv.corp.google.com>
 From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Tue, 5 Sep 2017 19:13:05 +0200
-Message-ID: <CAN0heSoJDL9pWELD6ciLTmWf-a=oyxe4EXXOmCKvsG5MSuzxsA@mail.gmail.com>
-Subject: Re: [PATCH] hashmap: add API to disable item counting when threaded
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Date:   Tue, 5 Sep 2017 19:24:18 +0200
+Message-ID: <CAN0heSqnrPUEgP-BgvuHuVrDG2ifuHHDOPPmxiXJ73u4-PrOng@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] refs/files-backend: add longer-scoped copy of
+ string to list
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5 September 2017 at 18:39, Jeff Hostetler <git@jeffhostetler.com> wrote:
+On 5 September 2017 at 12:02, Junio C Hamano <gitster@pobox.com> wrote:
+> Martin =C3=85gren <martin.agren@gmail.com> writes:
 >
->
-> On 9/1/2017 7:50 PM, Jonathan Nieder wrote:
->>
->> Hi,
->>
->> Johannes Schindelin wrote:
+>> On 30 August 2017 at 04:52, Michael Haggerty <mhagger@alum.mit.edu> wrot=
+e:
+>>> v3 looks good to me. Thanks!
 >>>
->>> On Wed, 30 Aug 2017, Jeff Hostetler wrote:
+>>> Reviewed-by: Michael Haggerty <mhagger@alum.mit.edu>
 >>
+>> Thank _you_ for very helpful feedback on the earlier versions.
 >>
->>>> This is to address concerns raised by ThreadSanitizer on the mailing
->>>> list about threaded unprotected R/W access to map.size with my previous
->>>> "disallow rehash" change (0607e10009ee4e37cb49b4cec8d28a9dda1656a4).
->>
->>
->> Nice!
->>
->> What does the message from TSan look like?  (The full message doesn't
->> need to go in the commit message, but a snippet can help.)  How can I
->> reproduce it?
+>> Martin
 >
+> Yes, the earlier attempt was sort-of barking up a wrong tree.
 >
-> I'll let Martin common on how to run TSan; I'm just going on
-> what he reported in the "tsan: t3008..." message from the URL
-> I quoted.  I didn't think to copy that text into the commit
-> message because it is just stack traces and too long, but I
-> could include a snippet.
+> Once we step back and observe other users of affected_refnames and
+> realize that the list is meant to to point at a refname field of an
+> existing instance of another structure by borrowing, the blame
+> shifts from files_transaction_prepare() to the real culprit.
+> Michael's review gave us a very good "let's step back a bit" that
+> made the huge improvement between v1 and v2/v3.
+>
+> I wonder if we should be tightening the use of affected_refnames
+> even further, though.
+>
+> It is may be sufficient to make sure that we do not throw anything
+> that we would need to free as part of destroying affected_refnames
+> into the string list, purely from the "leak prevention" perspective.
+>
+> But stepping back a bit, the reason why the string list exists in
+> the first place is to make sure we do not touch the same ref twice
+> in a single transaction, the set of all possible updates in the
+> single transaction exists somewhere, and each of these updates know
+> what ref it wants to update.
+>
+> And that is recorded in transaction->updates[]->refname no?
+>
+> So it seems to me that logically any and all string that is
+> registered in affected_refnames list must be the refname field of
+> a ref_update structure in the transaction.
 
-I ran the test suite with ThreadSanitizer:
+I'm with you up to here.
 
-$ make SANITIZE=thread test
+> And from that point of view, doesn't split_head_update() wants a
+> similar fix?  It attempts to insert "HEAD", makes sure it hasn't
+> been inserted and then hangs a new update transaction as its util.
+> It is not wrong per-se from purely leak-prevention point of view,
+> as that "HEAD" is a literal string we woudn't even want to free,
+> but from logical/"what each data means" point of view, it still
+> feels wrong.
 
-Any failures were then inspected:
-
-$ cd t
-$ ./t3008-ls-files-lazy-init-name-hash.sh --verbose
-
-That can be done with or without ma/ts-cleanups. That series adds a file
-.tsan-suppressions, which can be used by defining the environment
-variable
-
-TSAN_OPTIONS="suppressions=/some/absolute/path/.tsan-suppressions"
-
-in order to suppress some findings which are indeed races, but which are
-"not a problem in practice".
+There is a "Special hack" comment related to this, and I don't feel
+particularly confident that I could make any meaningful contribution in
+this area. To be honest, I don't immediately see in which direction your
+suggestion/idea/thought is going, which tells me I should not be making
+a mess out of it. :-)
 
 Martin
