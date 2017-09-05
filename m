@@ -3,73 +3,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 863A8209AB
-	for <e@80x24.org>; Tue,  5 Sep 2017 22:13:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D6111208E3
+	for <e@80x24.org>; Tue,  5 Sep 2017 23:08:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753598AbdIEWNn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Sep 2017 18:13:43 -0400
-Received: from mail-io0-f169.google.com ([209.85.223.169]:38686 "EHLO
-        mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753474AbdIEWNn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Sep 2017 18:13:43 -0400
-Received: by mail-io0-f169.google.com with SMTP id q64so20381815iod.5
-        for <git@vger.kernel.org>; Tue, 05 Sep 2017 15:13:42 -0700 (PDT)
+        id S1752902AbdIEXIu (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Sep 2017 19:08:50 -0400
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:34887 "EHLO
+        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752840AbdIEXIt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Sep 2017 19:08:49 -0400
+Received: by mail-pf0-f170.google.com with SMTP id g13so10047074pfm.2
+        for <git@vger.kernel.org>; Tue, 05 Sep 2017 16:08:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=X87Vp0Njbi7dc0tW90Dh3GB+e4V3mzRS2sL/+DuCwZA=;
-        b=mWhJJ1wXHJRARKyrCQzbw/OVhN016+jBfzwMv8qxAeT/QHjlot3N0X+Q9i9JN7nMsc
-         /Lb/Y9mm7dm3FLj39YuLzd+I3pVMJOqVtQzrrSC/IkwgX6sEa7eu4AcWLAJo2O1mbDjC
-         DqSJ0RCy1KBShWbcD8bzdxqbGjxAwZF1IZt/AdP2FJ76zyX2y82VskDKWqSx8vg58pzX
-         SDHYALftmY5xgJY6T3bddCBS5eot2RS31sH0nzRk+acIh+I311qXF8MARlj9F+6se3+R
-         LZOcOsXjKsAEtGEspveuE0h1Pcyj6FOw+K0ndvBFUbP+FFe9U6d2Ojv4km7y6UWHgwAj
-         +t4A==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=a/ubOZc9VaWfuivCUahzxv9YASbzKe81TJdr0dbt098=;
+        b=ZBD+nQW3sHNpaBkh7moP6C6rLA4mk6pOCpq6xiUwX8up2GMw5/aajrZqdxkrWpmO9/
+         mdtG8tqxdFet+LwlECbpFwuFc7pLhGubTF6lueRshAxM9raZRY0V6tZtRcMb97sNMmd3
+         NL4ndpwTvtI5SM3nj9trBsKi42ZZ11QvK6HPgdKeWTxVDqTKpytnmhiEoqVr4xnBJW8X
+         G86ltja4e0ZRpeks9ALwEaSsSgP1KvuqS83vMmZiKq/DjG2wGnamBre1+tJ758UlVitS
+         gN2x6LJVaGOL8p/45Q+UMAZwBz7XZOj9EZx6u2zQT5zjSEh7AqcfwD/Lrw6e6e2zojL3
+         txqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=X87Vp0Njbi7dc0tW90Dh3GB+e4V3mzRS2sL/+DuCwZA=;
-        b=hq/2ILn/sbaTS9EQd6ZJINJpE4qBEkgDsZVDrquhks1XC4P5GwvzutKinoIvAgeK4L
-         a+EyFuR+ANM/tGGSXVPwmr909hJ4CQfyv/M8JvHMdAHX5sAIiowtC/MoBvIaDhvFJM0+
-         JMCbdpDuC1ViHSCutb4LRf89ByTob7z5HRAyasiSN9dSvaUy/q2xAnyVO12qM/tFd4Un
-         dlAG6dY3RDLptSvMIHxGm/mmKRKUa65yBKDxOxZVrtvibMQH4ry9CVkSVXejCd2I9HHi
-         aO1bSbDVYaFDBdLtYm/zEuKI6nzH1Kzp7CwRYR/9uqgCiA14DnSjBprrKQPs7rQyQsns
-         8ikg==
-X-Gm-Message-State: AHPjjUitBYld07vPRNBkkoJced3QxB69pohwaLKwr1Gi5zFFeqTV9Lv4
-        tj3bTFuKGRtdfEd8JxCek4P224a9kw==
-X-Google-Smtp-Source: AOwi7QBaD8W8RuOPkUssNXBvpg4RG97yVNyP+tGnoD9uzKOVswcP9K1YBFiY/DLrHnRMWIkUbnbcG8h6qkt7RodCZfg=
-X-Received: by 10.107.138.101 with SMTP id m98mr628367iod.248.1504649622388;
- Tue, 05 Sep 2017 15:13:42 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.107.15.151 with HTTP; Tue, 5 Sep 2017 15:13:41 -0700 (PDT)
-In-Reply-To: <20170905220300.isxbt5y5fd2scd6b@sigill.intra.peff.net>
-References: <CA+55aFxW3qcETiMrNk5SqZU+_jtM2Rxeb3mhF=J=c0ChdGm1tg@mail.gmail.com>
- <20170905215056.4wihyd6hrtvk52yd@sigill.intra.peff.net> <CA+55aFywhyELmbhAorgTjJZeuNxE-+j2qSP=3d3vqQXNM6p54A@mail.gmail.com>
- <20170905220300.isxbt5y5fd2scd6b@sigill.intra.peff.net>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Tue, 5 Sep 2017 15:13:41 -0700
-X-Google-Sender-Auth: -YkCg4xOj21BntOcciKkv2NpEsk
-Message-ID: <CA+55aFw==7bqv0dH=cQruXbGjMw-WNrRMreMsYy_4NcrbiWSEA@mail.gmail.com>
-Subject: Re: BUG: attempt to trim too many characters
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=a/ubOZc9VaWfuivCUahzxv9YASbzKe81TJdr0dbt098=;
+        b=LrLbSl4erhQgqZplsXiIyN5nRyCwPfJy/lHtLZHMgb5Q88vUpmuhQE5vFlTLHDn8Y3
+         iBDE8yTavkusoeZqbczEDD2LLKQKCOwTALau1iDNGXMDzO7RRoHAZ92xzJF1/I+pKPta
+         XlVX1AjHLhZqSOfK9QvoIzR8h6+RWASs9yAdWIrrdyaJ3HSHqLtYZPNDnCjVKw2yRL9Y
+         9kjQ+FZxqNRyI5KucaOBUXBSyzFRAJqbNd3E6H0UyVj4q7y9JUHrcavcKPG8TZxS4g9B
+         kBoUprrymNCiVBSLiSRJ7ZPirSmEln0O413BWwCgJZ9jubhcv9tLcNvC3m653kRDR8Lh
+         8fQA==
+X-Gm-Message-State: AHPjjUgB7hxd0s8CDujHNQdgjNtxRuipJDZHe/RT4SJWYR93etD/4GgU
+        RApTPq4KQLn/LHS+
+X-Google-Smtp-Source: ADKCNb6IQN/hGX43z8zxtiUA49mV/YirMCJaI2nahZwKSPH3k4IZCC83YsZgZl+9DMiM/Z6kdv6h9Q==
+X-Received: by 10.98.200.72 with SMTP id z69mr5481154pff.304.1504652928744;
+        Tue, 05 Sep 2017 16:08:48 -0700 (PDT)
+Received: from localhost ([2620:0:100e:422:68f1:5dd3:a20b:9946])
+        by smtp.gmail.com with ESMTPSA id e19sm50460pfl.146.2017.09.05.16.08.48
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 05 Sep 2017 16:08:48 -0700 (PDT)
+From:   Stefan Beller <sbeller@google.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, sbeller@google.com
+Subject: [PATCH] parse-options: warn developers on negated options
+Date:   Tue,  5 Sep 2017 16:08:45 -0700
+Message-Id: <20170905230845.17108-1-sbeller@google.com>
+X-Mailer: git-send-email 2.14.0.rc0.3.g6c2e499285
+In-Reply-To: <xmqqd174bzco.fsf@gitster.mtv.corp.google.com>
+References: <xmqqd174bzco.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 5, 2017 at 3:03 PM, Jeff King <peff@peff.net> wrote:
->
-> This probably fixes it:
+When compiling with -DDEVELOPER set (enabled via the Makefile DEVELOPER
+switch), inspect options if they are negated and warn about them.
 
-Yup. Thanks.
+ 1. Negated options are usually are problem down the maintenance road:
+    When a new negated option ("--no-foo") is introduced, then the option
+    can be negated at run time("--no-no-foo"), which is usually confusing
+    for boolean options.
+ 2. The handling of negated values (specifically double negations), usually
+    require more brain power to get it right. In code that we own, we
+    should strive to avoid double negatives ("!no_foo").
 
-           Linus
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+
+  #leftoverbits
+  
+  I was wondering if such a patch may be of value eventually (after all
+  occurrences of "no-" options are fixed).
+  This patch disallows all no- options, but we could be more open and allow
+  --no-options that have the NO_NEG bit set.
+
+ Makefile        | 3 ++-
+ parse-options.c | 6 ++++++
+ parse-options.h | 7 +++++--
+ 3 files changed, 13 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index aba0f5a0f9..9b87093f99 100644
+--- a/Makefile
++++ b/Makefile
+@@ -433,7 +433,8 @@ DEVELOPER_CFLAGS = -Werror \
+ 	-Wpointer-arith \
+ 	-Wstrict-prototypes \
+ 	-Wunused \
+-	-Wvla
++	-Wvla \
++	-DDEVELOPER
+ LDFLAGS =
+ ALL_CFLAGS = $(CPPFLAGS) $(CFLAGS)
+ ALL_LDFLAGS = $(LDFLAGS)
+diff --git a/parse-options.c b/parse-options.c
+index 0dd9fc6a0d..08db926adf 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -403,6 +403,12 @@ static void parse_options_check(const struct option *opts)
+ 		if (opts->argh &&
+ 		    strcspn(opts->argh, " _") != strlen(opts->argh))
+ 			err |= optbug(opts, "multi-word argh should use dash to separate words");
++#if DEVELOPER
++		if ((opts->flags & PARSE_OPT_ERR_NEGATED) &&
++		    !strcmp("no-", opts->long_name))
++			BUG("Get %s fixed! double negation possible",
++			    opts->long_name);
++#endif
+ 	}
+ 	if (err)
+ 		exit(128);
+diff --git a/parse-options.h b/parse-options.h
+index af711227ae..9dc07fd9bb 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -38,7 +38,8 @@ enum parse_opt_option_flags {
+ 	PARSE_OPT_LASTARG_DEFAULT = 16,
+ 	PARSE_OPT_NODASH = 32,
+ 	PARSE_OPT_LITERAL_ARGHELP = 64,
+-	PARSE_OPT_SHELL_EVAL = 256
++	PARSE_OPT_SHELL_EVAL = 256,
++	PARSE_OPT_ERR_NEGATED = 512
+ };
+ 
+ struct option;
+@@ -124,7 +125,9 @@ struct option {
+ 				      (h), PARSE_OPT_NOARG }
+ #define OPT_SET_INT(s, l, v, h, i)  { OPTION_SET_INT, (s), (l), (v), NULL, \
+ 				      (h), PARSE_OPT_NOARG, NULL, (i) }
+-#define OPT_BOOL(s, l, v, h)        OPT_SET_INT(s, l, v, h, 1)
++#define OPT_BOOL(s, l, v, h)        { OPTION_SET_INT, (s), (l), (v), NULL, \
++				      (h), PARSE_OPT_NOARG|PARSE_OPT_ERR_NEGATED, \
++				      NULL, 1 }
+ #define OPT_HIDDEN_BOOL(s, l, v, h) { OPTION_SET_INT, (s), (l), (v), NULL, \
+ 				      (h), PARSE_OPT_NOARG | PARSE_OPT_HIDDEN, NULL, 1}
+ #define OPT_CMDMODE(s, l, v, h, i)  { OPTION_CMDMODE, (s), (l), (v), NULL, \
+-- 
+2.14.0.rc0.3.g6c2e499285
+
