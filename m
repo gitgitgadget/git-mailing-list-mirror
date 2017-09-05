@@ -2,364 +2,162 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC410208E3
-	for <e@80x24.org>; Tue,  5 Sep 2017 13:05:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8E1A208E3
+	for <e@80x24.org>; Tue,  5 Sep 2017 13:40:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751498AbdIENFK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Sep 2017 09:05:10 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57340 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750955AbdIENFI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Sep 2017 09:05:08 -0400
-Received: (qmail 2168 invoked by uid 109); 5 Sep 2017 13:05:08 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 05 Sep 2017 13:05:08 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12869 invoked by uid 111); 5 Sep 2017 13:05:40 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Tue, 05 Sep 2017 09:05:40 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Sep 2017 09:05:06 -0400
-Date:   Tue, 5 Sep 2017 09:05:06 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Subject: [PATCH 10/10] add UNLEAK annotation for reducing leak false positives
-Message-ID: <20170905130505.him3p4jhxp64r2vy@sigill.intra.peff.net>
-References: <20170905130149.agc3zp3s6i6e5aki@sigill.intra.peff.net>
+        id S1751417AbdIENko (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Sep 2017 09:40:44 -0400
+Received: from mout.kundenserver.de ([212.227.126.133]:51767 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751031AbdIENkn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Sep 2017 09:40:43 -0400
+Received: from skimbleshanks.math.uni-hannover.de ([130.75.46.4]) by
+ mrelayeu.kundenserver.de (mreue002 [212.227.15.167]) with ESMTPSA (Nemesis)
+ id 0MIDV8-1dlNH41r9K-003ycm; Tue, 05 Sep 2017 15:40:40 +0200
+Subject: Re: signing commits using gpg2
+To:     shawn wilson <ag4ve.us@gmail.com>, Git List <git@vger.kernel.org>
+References: <CAH_OBieqSY8To9okRTL-z5dnjW=_NLzA+n5-7=eou=Lx33hBdQ@mail.gmail.com>
+From:   Michael J Gruber <git@grubix.eu>
+Message-ID: <0e626914-05b1-651c-9c61-b1ef0b6c190a@grubix.eu>
+Date:   Tue, 5 Sep 2017 15:40:39 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
+In-Reply-To: <CAH_OBieqSY8To9okRTL-z5dnjW=_NLzA+n5-7=eou=Lx33hBdQ@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170905130149.agc3zp3s6i6e5aki@sigill.intra.peff.net>
+Content-Language: de-DE
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:sVOvKCQEt2ysyWFGphOwyf4Iv+De2yoFnUJSM8gif/zdzRjLGXU
+ aLT5Gj/x43gEmGsOtGOBSZpbeVyL5sTBpgBjWNXvvr6FqiTPiVXmNpRlxrlB0UPVa+QfnwQ
+ XtGASthL2SGWkmLEeZH6o7TaucJUgGHMc4tw4vf/bO1pqS2VW5gn/qzX9pVxRM3Ts0w0DdK
+ zHFLdkndZZFmiOvw8HEHw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:4ulShjkONn4=:qEqc/r+eTOp+1Wi6te+uIb
+ Ml0mYdaA6s1ywMOeVAFboskXYutLbrBETO1b1HREifOwrbvZdirNaR1PUf9volNpVg7tEW7Pe
+ Ef8AQ33yfcwAs/HDTOWJMpmc2htRA5hjcj82G0bymH0osLW3teQ2mfFiamw+n/14c8mhGGCbG
+ gc3BL8uXd04MjMuZDWQiOctRH/IJGuYoPjKzUdnd5l87tKvAsVk5ALcCQK/73Z65R6ppF1+jn
+ f/bxuaZYJKOD7zfJDqBTQo0u31m0nGB3n32HYO4gNePrj/il2x1skK4hTqwBJKirCyXp5oAKp
+ CeA9pUId2uoYZicLsavn2Gv4AlIff9UudxqXwbJsqUExDHaN180nHNijobw8q9+/zJXiTFAI1
+ do95WjwpTLiIIpmiiJezEgvwaOh7vKwVbAc6VzX4REsRrESxVFjd6WSDziXDrjJrcb9RVTUMO
+ 46pjM/DmbBaL95q1h2CEoauSKbz4pRCr7fRIeE0AYght/nbebZ55xc6cPixdT/51Y94I48+rD
+ MdmzMrhyyAzuxINtoQB80VOnX7qVE4/TlDSiSb9HdHug3S4SS21FO1KDNd74s390rKRj4XmHS
+ 4KlXdolTsvRUXbssTA2dKsIh0gbYpDCxq01qUiIyBCGxBbygd3R9zPZtownc9YK7CkMB6DzXq
+ aK1nWsDuTcAflJEVa1pYarqMIaYeQXtkRXr6k0Ne+Kh0+WUSIg4oyo5fTx4tNQryj34YS1hlQ
+ oVCbb+ucdnZR6ZDnMq5Vb43PCOwMkz2O0G0wDTGlaziGLmx4rfz16y+uggk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It's a common pattern in git commands to allocate some
-memory that should last for the lifetime of the program and
-then not bother to free it, relying on the OS to throw it
-away.
+shawn wilson venit, vidit, dixit 02.09.2017 23:11:
+> tl;dr - how do I get git to use gpg2 to sign things?
+> 
+> I'm using gpg2 (so no agent options are configured but an agent is
+> running) which is configured w/ a Nitrokey (Pro if it matters):
+> 
+>  % git commit -m "Initial."
+> 
+>                                  gits/bash-libs (master ⚡) localhost
+> gpg: detected reader `Nitrokey Nitrokey Pro (000034670000000000000000) 00 00'
+> gpg: pcsc_connect failed: sharing violation (0x8010000b)
+> gpg: apdu_send_simple(0) failed: locking failed
+> Please insert the card and hit return or enter 'c' to cancel:
+> gpg: pcsc_connect failed: sharing violation (0x8010000b)
+> gpg: pcsc_connect failed: sharing violation (0x8010000b)
+> gpg: apdu_send_simple(0) failed: locking failed
+> Please insert the card and hit return or enter 'c' to cancel: c
+> gpg: selecting openpgp failed: general error
+> gpg: signing failed: general error
+> gpg: signing failed: general error
+> error: gpg failed to sign the data
+> fatal: failed to write commit object
+> 
+> This works with gpg and ssh:
 
-This keeps the code simple, and it's fast (we don't waste
-time traversing structures or calling free at the end of the
-program). But it also triggers warnings from memory-leak
-checkers like valgrind or LSAN. They know that the memory
-was still allocated at program exit, but they don't know
-_when_ the leaked memory stopped being useful. If it was
-early in the program, then it's probably a real and
-important leak. But if it was used right up until program
-exit, it's not an interesting leak and we'd like to suppress
-it so that we can see the real leaks.
+Not really...
 
-This patch introduces an UNLEAK() macro that lets us do so.
-To understand its design, let's first look at some of the
-alternatives.
+>  % touch foo
+> 
+>                                                          ~ localhost
+>  % gpg2 --sign foo
 
-Unfortunately the suppression systems offered by
-leak-checking tools don't quite do what we want. A
-leak-checker basically knows two things:
+... because you're using gpg2, not gpg.
 
-  1. Which blocks were allocated via malloc, and the
-     callstack during the allocation.
+> 
+>                                                          ~ localhost
+> gpg: using "846FF490" as default secret key for signing
+>  % cat foo*
+> 
+>                                                          ~ localhost
+> -----BEGIN PGP MESSAGE-----
+> Version: GnuPG v2
+> 
+> owEBuQFG/pANAwAKAYwdY7SEb/SQAcsJYgNmb29ZqxfviQGcBAABCgAGBQJZqxfv
+> AAoJEIwdY7SEb/SQAcEL/jonw+HymnlmfebtEwlvfx2Gl1Sbuw0xWWPpQ2Dtjljz
+> HtpD+LWczjpOSMTHFNK9xPR2kcs1WNY+mO8M45QI7iDgFkKRzaxEqeNUJkoyF/+I
+> 81VMmXDQMXFs4+8jy00b+UxTdvwdXaHMsOtu+6YCtmCR5Bzohg07ADsnXnGGn3Sd
+> WTjVMzV6Dlh8LRF+coGJ8JuErBsRAI6vdNgJRVHYBULGNXci4uF/4a+58uiTL4/U
+> PvC4ruXCNxCKi89nMERhwlnOvglseX3TDR5ldrc4Hzb+pLsj/l6N4sBW0Zmb8UcE
+> 9BG3WjOs4eZvnLmk5XHrwisD2CXuHvyWMl0yH7LTrg+m4Itj0PJ4Px4H9E5t/zfs
+> C1vcB/okcigeIyXnO06um02a5oZAYOKadB+6NRnBjULz5GvP2yxj/AO1VPmZprpt
+> budMuHZcA0zNE3uBmcnQY5+1tdkyTrlTxsL58lQrn/U3wvgah3AXMEvjRGqbYWHj
+> jDikQVJ7ESoevNqlfLPj8Q==
+> =hV6v
+> -----END PGP MESSAGE-----
+> 
+> However, if I try this w/ the old gpg:
+> 
+>  % gpg -ae -o foo.gpg foo
+> 
+>                                                          ~ localhost
+>  % gpg -d foo.gpg
+> 
+>                                                          ~ localhost
+> gpg: detected reader `Nitrokey Nitrokey Pro (000034670000000000000000) 00 00'
+> gpg: pcsc_connect failed: sharing violation (0x8010000b)
+> gpg: apdu_send_simple(0) failed: locking failed
+> Please insert the card and hit return or enter 'c' to cancel: c
+> gpg: selecting openpgp failed: general error
+> gpg: encrypted with 3072-bit RSA key, ID 41826CFB, created 2017-03-13
+>       "Shawn Wilson <ag4ve.us@gmail.com>"
+> gpg: public key decryption failed: general error
+> gpg: decryption failed: secret key not available
+>  % gpg2 -d foo.gpg
+> 
+>                                                          ~ localhost
+> gpg: encrypted with 3072-bit RSA key, ID E27FA0B841826CFB, created 2017-03-13
+>       "Shawn Wilson <ag4ve.us@gmail.com>"
+> foo
+> 
+> (yeah I added data to the file)
+> 
+> And just to prove basic competency checking:
+> 
+>  % git config --global -l | grep sign
+> 
+>                                                          ~ localhost
+> user.signingkey=846FF490
+> filter.gitconfig-rmuser.clean=sed -e "s/^\( *email =\).*/\1 <email
+> address>/" -e "s/^\( *name =\).*/\1 <real name>/" -e "s/^\(
+> *signingkey =\).*/\1 <gpg key>/"
+> filter.gitconfig-rmuser.smudge=egrep "^ *(email|name|signingkey) = "
+> commit.gpgsign=true
+> 
 
-  2. Which blocks were left un-freed at the end of the
-     program (and which are unreachable, but more on that
-     later).
+So, gpg2 works and gpg does not. This is typical for the way in which
+the gpg upgrade path is broken, and your distro installs gpg because it
+still relies on it.
 
-Their suppressions work by mentioning the function or
-callstack of a particular allocation, and marking it as OK
-to leak.  So imagine you have code like this:
+git sees two executables gpg and gpg2 and uses the first, so as to not
+migrate your secrete key store inadvertently.
 
-  int main(void)
-  {
-	/* this allocates some memory */
-	char *p = some_function();
-	printf("%s", p);
-	return 0;
-  }
+Short answer: Use
 
-You can say "ignore allocations from some_function(),
-they're not leaks". But that's not right. That function may
-be called elsewhere, too, and we would potentially want to
-know about those leaks.
+git config --global gpg.program gpg2
 
-So you can say "ignore the callstack when main calls
-some_function".  That works, but your annotations are
-brittle. In this case it's only two functions, but you can
-imagine that the actual allocation is much deeper. If any of
-the intermediate code changes, you have to update the
-suppression.
+to make git use gpg2 which apparantly is your working gnupg setup.
 
-What we _really_ want to say is that "the value assigned to
-p at the end of the function is not a real leak". But
-leak-checkers can't understand that; they don't know about
-"p" in the first place.
-
-However, we can do something a little bit tricky if we make
-some assumptions about how leak-checkers work. They
-generally don't just report all un-freed blocks. That would
-report even globals which are still accessible when the
-leak-check is run.  Instead they take some set of memory
-(like BSS) as a root and mark it as "reachable". Then they
-scan the reachable blocks for anything that looks like a
-pointer to a malloc'd block, and consider that block
-reachable. And then they scan those blocks, and so on,
-transitively marking anything reachable from a global as
-"not leaked" (or at least leaked in a different category).
-
-So we can mark the value of "p" as reachable by putting it
-into a variable with program lifetime. One way to do that is
-to just mark "p" as static. But that actually affects the
-run-time behavior if the function is called twice (you
-aren't likely to call main() twice, but some of our cmd_*()
-functions are called from other commands).
-
-Instead, we can trick the leak-checker by putting the value
-into _any_ reachable bytes. This patch keeps a global
-linked-list of bytes copied from "unleaked" variables. That
-list is reachable even at program exit, which confers
-recursive reachability on whatever values we unleak.
-
-In other words, you can do:
-
-  int main(void)
-  {
-	char *p = some_function();
-	printf("%s", p);
-	UNLEAK(p);
-	return 0;
-  }
-
-to annotate "p" and suppress the leak report.
-
-But wait, couldn't we just say "free(p)"? In this toy
-example, yes. But using UNLEAK() has several advantages over
-actually freeing the memory:
-
-  1. It can be compiled conditionally. There's no need in
-     normal runs to do this free(), and it just wastes time.
-     By using a macro, we can get the benefit for leak-check
-     builds with zero cost for normal builds (this patch
-     uses a compile-time check, though we could clearly also
-     make it a run-time check at very low cost).
-
-     Of course one could also hide free() behind a macro, so
-     this is really just arguing for having UNLEAK(), not
-     for its particular implementation.
-
-  2. It's recursive across structures. In many cases our "p"
-     is not just a pointer, but a complex struct whose
-     fields may have been allocated by a sub-function. And
-     in some cases (e.g., dir_struct) we don't even have a
-     function which knows how to free all of the struct
-     members.
-
-     By marking the struct itself as reachable, that confers
-     reachability on any pointers it contains (including those
-     found in embedded structs, or reachable by walking
-     heap blocks recursively.
-
-  3. It works on cases where we're not sure if the value is
-     allocated or not. For example:
-
-       char *p = argc > 1 ? argv[1] : some_function();
-
-     It's safe to use UNLEAK(p) here, because it's not
-     freeing any memory. In the case that we're pointing to
-     argv here, the reachability checker will just ignore
-     our bytes.
-
-  4. Because it's not actually freeing memory, you can
-     UNLEAK() before we are finished accessing the variable.
-     This is helpful in cases like this:
-
-       char *p = some_function();
-       return another_function(p);
-
-     Writing this with free() requires:
-
-       int ret;
-       char *p = some_function();
-       ret = another_function(p);
-       free(p);
-       return ret;
-
-     But with unleak we can just write:
-
-       char *p = some_function();
-       UNLEAK(p);
-       return another_function(p);
-
-This patch adds the UNLEAK() macro and enables it
-automatically when Git is compiled with SANITIZE=leak.
-It adds some UNLEAK() annotations to show off how the
-feature works. On top of other recent leak fixes, these are
-enough to get t0000 and t0001 to pass when compiled with
-LSAN.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- Makefile           |  3 +++
- builtin/add.c      |  2 ++
- builtin/commit.c   |  1 +
- builtin/config.c   |  4 ++++
- builtin/init-db.c  |  2 ++
- builtin/ls-files.c |  1 +
- builtin/worktree.c |  2 ++
- git-compat-util.h  |  7 +++++++
- usage.c            | 13 +++++++++++++
- 9 files changed, 35 insertions(+)
-
-diff --git a/Makefile b/Makefile
-index f2bb7f2f63..c052f09bba 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1036,6 +1036,9 @@ BASIC_CFLAGS += -fno-omit-frame-pointer
- ifneq ($(filter undefined,$(SANITIZERS)),)
- BASIC_CFLAGS += -DNO_UNALIGNED_LOADS
- endif
-+ifneq ($(filter leak,$(SANITIZERS)),)
-+BASIC_CFLAGS += -DSUPPRESS_ANNOTATED_LEAKS
-+endif
- endif
- 
- ifndef sysconfdir
-diff --git a/builtin/add.c b/builtin/add.c
-index ef625e3fb8..a648cf4c56 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -515,5 +515,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 			die(_("Unable to write new index file"));
- 	}
- 
-+	UNLEAK(pathspec);
-+	UNLEAK(dir);
- 	return exit_status;
- }
-diff --git a/builtin/commit.c b/builtin/commit.c
-index b3b04f5dd3..de775d906c 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1819,5 +1819,6 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 		print_summary(prefix, &oid, !current_head);
- 
- 	strbuf_release(&err);
-+	UNLEAK(sb);
- 	return 0;
- }
-diff --git a/builtin/config.c b/builtin/config.c
-index 52a4606243..d13daeeb55 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -631,6 +631,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		check_write();
- 		check_argc(argc, 2, 2);
- 		value = normalize_value(argv[0], argv[1]);
-+		UNLEAK(value);
- 		ret = git_config_set_in_file_gently(given_config_source.file, argv[0], value);
- 		if (ret == CONFIG_NOTHING_SET)
- 			error(_("cannot overwrite multiple values with a single value\n"
-@@ -641,6 +642,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		check_write();
- 		check_argc(argc, 2, 3);
- 		value = normalize_value(argv[0], argv[1]);
-+		UNLEAK(value);
- 		return git_config_set_multivar_in_file_gently(given_config_source.file,
- 							      argv[0], value, argv[2], 0);
- 	}
-@@ -648,6 +650,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		check_write();
- 		check_argc(argc, 2, 2);
- 		value = normalize_value(argv[0], argv[1]);
-+		UNLEAK(value);
- 		return git_config_set_multivar_in_file_gently(given_config_source.file,
- 							      argv[0], value,
- 							      CONFIG_REGEX_NONE, 0);
-@@ -656,6 +659,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		check_write();
- 		check_argc(argc, 2, 3);
- 		value = normalize_value(argv[0], argv[1]);
-+		UNLEAK(value);
- 		return git_config_set_multivar_in_file_gently(given_config_source.file,
- 							      argv[0], value, argv[2], 1);
- 	}
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 47823f9aa4..c9b7946bad 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -579,6 +579,8 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
- 			set_git_work_tree(work_tree);
- 	}
- 
-+	UNLEAK(real_git_dir);
-+
- 	flags |= INIT_DB_EXIST_OK;
- 	return init_db(git_dir, real_git_dir, template_dir, flags);
- }
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index e1339e6d17..8c713c47ac 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -673,5 +673,6 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- 		return bad ? 1 : 0;
- 	}
- 
-+	UNLEAK(dir);
- 	return 0;
- }
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index c98e2ce5f5..de26849f55 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -381,6 +381,8 @@ static int add(int ac, const char **av, const char *prefix)
- 		branch = opts.new_branch;
- 	}
- 
-+	UNLEAK(path);
-+	UNLEAK(opts);
- 	return add_worktree(path, branch, &opts);
- }
- 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 6678b488cc..01cde2e375 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -1169,4 +1169,11 @@ static inline int is_missing_file_error(int errno_)
- 
- extern int cmd_main(int, const char **);
- 
-+#ifdef SUPPRESS_ANNOTATED_LEAKS
-+extern void unleak_memory(const void *ptr, size_t len);
-+#define UNLEAK(var) unleak_memory(&(var), sizeof(var));
-+#else
-+#define UNLEAK(var)
-+#endif
-+
- #endif
-diff --git a/usage.c b/usage.c
-index 1ea7df9a20..780ed73be6 100644
---- a/usage.c
-+++ b/usage.c
-@@ -241,3 +241,16 @@ NORETURN void BUG(const char *fmt, ...)
- 	va_end(ap);
- }
- #endif
-+
-+void unleak_memory(const void *ptr, size_t len)
-+{
-+	static struct suppressed_leak_root {
-+		struct suppressed_leak_root *next;
-+		char data[FLEX_ARRAY];
-+	} *suppressed_leaks;
-+	struct suppressed_leak_root *root;
-+
-+	FLEX_ALLOC_MEM(root, data, ptr, len);
-+	root->next = suppressed_leaks;
-+	suppressed_leaks = root;
-+}
--- 
-2.14.1.721.gc5bc1565f1
+Michael
