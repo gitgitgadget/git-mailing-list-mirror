@@ -2,70 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A082208E3
-	for <e@80x24.org>; Tue,  5 Sep 2017 17:03:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32AD9208E3
+	for <e@80x24.org>; Tue,  5 Sep 2017 17:07:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752052AbdIERDP (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Sep 2017 13:03:15 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57590 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751934AbdIERDO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Sep 2017 13:03:14 -0400
-Received: (qmail 19248 invoked by uid 109); 5 Sep 2017 17:03:14 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 05 Sep 2017 17:03:14 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15118 invoked by uid 111); 5 Sep 2017 17:03:46 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Tue, 05 Sep 2017 13:03:46 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Sep 2017 13:03:12 -0400
-Date:   Tue, 5 Sep 2017 13:03:12 -0400
-From:   Jeff King <peff@peff.net>
-To:     Ross Kabus <rkabus@aerotech.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [Bug] commit-tree shouldn't append an extra newline to commit
- messages
-Message-ID: <20170905170311.yhcksrw2bxevd3hk@sigill.intra.peff.net>
-References: <CAEVs+za9do_wXC12SSRznF9v9oGw3_Grq2EFDVf8nH1CRgM-Qw@mail.gmail.com>
- <20170902083319.lcugfpkkk5lahieb@sigill.intra.peff.net>
- <CAEVs+zbbWQuM-=5d04bkpTu38Mr4PyczskNhni5K1u_nzh-2Qw@mail.gmail.com>
- <20170905153636.tsmlq3wv7ztpc67z@sigill.intra.peff.net>
- <CAEVs+zbCj0Zv0t4_WG6y2jcLoXwHy-Mu-LH31c_QgFaE9i3HtQ@mail.gmail.com>
+        id S1752175AbdIERHe (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Sep 2017 13:07:34 -0400
+Received: from siwi.pair.com ([209.68.5.199]:29669 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751480AbdIERHe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Sep 2017 13:07:34 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id CDCC9845CC;
+        Tue,  5 Sep 2017 13:07:33 -0400 (EDT)
+Received: from [10.160.98.77] (unknown [167.220.148.86])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 88B16845CA;
+        Tue,  5 Sep 2017 13:07:33 -0400 (EDT)
+Subject: Re: [PATCH] hashmap: add API to disable item counting when threaded
+To:     Jeff King <peff@peff.net>
+Cc:     martin.agren@gmail.com, git@vger.kernel.org,
+        jeffhost@microsoft.com, gitster@pobox.com
+References: <adb37b70139fd1e2bac18bfd22c8b96683ae18eb.1502780344.git.martin.agren@gmail.com>
+ <20170830185922.10107-1-git@jeffhostetler.com>
+ <20170830185922.10107-2-git@jeffhostetler.com>
+ <20170902080535.j7dommmxowpbk2no@sigill.intra.peff.net>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <77c206f8-43f6-4468-3289-096e37b9fead@jeffhostetler.com>
+Date:   Tue, 5 Sep 2017 13:07:33 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAEVs+zbCj0Zv0t4_WG6y2jcLoXwHy-Mu-LH31c_QgFaE9i3HtQ@mail.gmail.com>
+In-Reply-To: <20170902080535.j7dommmxowpbk2no@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 05, 2017 at 12:57:21PM -0400, Ross Kabus wrote:
 
-> On Tue, Sep 5, 2017 at 11:36 AM, Jeff King <peff@peff.net> wrote:
+
+On 9/2/2017 4:05 AM, Jeff King wrote:
+> On Wed, Aug 30, 2017 at 06:59:22PM +0000, Jeff Hostetler wrote:
 > 
-> > So I'd argue that "git commit -F" is doing a reasonable
-> > thing, and "commit-tree -F" should probably change to match it (because
-> > it's inconsistent, and because if anything the plumbing commit-tree
-> > should err more on the side of not touching its input than the porcelain
-> > commit command).
+>> From: Jeff Hostetler <jeffhost@microsoft.com>
+>>
+>> This is to address concerns raised by ThreadSanitizer on the
+>> mailing list about threaded unprotected R/W access to map.size with my previous
+>> "disallow rehash" change (0607e10009ee4e37cb49b4cec8d28a9dda1656a4).  See:
+>> https://public-inbox.org/git/adb37b70139fd1e2bac18bfd22c8b96683ae18eb.1502780344.git.martin.agren@gmail.com/
+>>
+>> Add API to hashmap to disable item counting and to disable automatic rehashing.
+>> Also include APIs to re-enable item counting and automatica rehashing.
 > 
-> I would agree that "commit-tree -F" should change to match the behavior of
-> "git commit -F --cleanup=verbatim". I feel pretty strongly that this type of
-> cleanup logic shouldn't be done in a plumbing command, though I'm not sure
-> it is a big enough deal to change behavior/compatibility for everyone.
+> It may be worth summarizing the discussion at that thread here.
+> 
+> At first glance, it looks like this is woefully inadequate for allowing
+> multi-threaded access. But after digging, the issue is that we're really
+> trying to accommodate one specific callers which is doing its own
+> per-bucket locking, and which needs the internals of the hashmap to be
+> truly read-only.
+> 
+> I suspect the code might be easier to follow if that pattern were pushed
+> into its own threaded_hashmap that disabled the size and handled the
+> mod-n locking, but I don't insist on that as a blocker to this fix.
 
-OK. Do you want to try your hand at a patch?
+Agreed.  It would be better and easier to understand to produce
+a thread-safe version of the hashmap code -- there are other uses
+of the code that are currently doing their own locking that might
+benefit, but I'm not looking to gratuitously refactor things.
 
-> Yup, confusion #2. I was using "-F -" which I see now is a different code
-> path. Reading via stdin without "-F -" _is_ the verbatim option. This
-> difference burned someone else on the mailing list as well. See:
+The other issue was that we are multi-threaded during the
+lazy-init phase, but the main status-or-whatever code that then
+uses the hashmap is not.  So we only pay for the locking during
+the multi-threaded usage.
 
-Ah, OK, your confusion makes more sense now.
-
--Peff
+Thanks,
+Jeff
