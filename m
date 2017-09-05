@@ -2,111 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 487D1208E3
-	for <e@80x24.org>; Tue,  5 Sep 2017 20:41:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C149C208E3
+	for <e@80x24.org>; Tue,  5 Sep 2017 20:58:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752670AbdIEUlx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Sep 2017 16:41:53 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:38544 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752584AbdIEUlw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Sep 2017 16:41:52 -0400
-Received: by mail-pf0-f195.google.com with SMTP id q76so2132912pfq.5
-        for <git@vger.kernel.org>; Tue, 05 Sep 2017 13:41:52 -0700 (PDT)
+        id S1753216AbdIEU6G (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Sep 2017 16:58:06 -0400
+Received: from mail-qt0-f180.google.com ([209.85.216.180]:35573 "EHLO
+        mail-qt0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752146AbdIEU6F (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Sep 2017 16:58:05 -0400
+Received: by mail-qt0-f180.google.com with SMTP id k2so15315486qte.2
+        for <git@vger.kernel.org>; Tue, 05 Sep 2017 13:58:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=aerotech.com; s=google;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=iozasi3f9DFHGkyeT5i8HkWyMdxWvEL3pmT1c0sjx58=;
-        b=W2H5ar8hvXqCqjCvhmyoxY2Ujf7Pc8bzXXPiz+3vW/qsHIRZ9hHpOsSE4phaYZFS6p
-         sW8Qbd8vOK1R1Pzqp39ruik3iv0vJpufACKx7+71WOQeGsrLY04Y4OB1qOqJkoC5V7IG
-         O8UuPQH++OHELxljb79PIW4BpQpE/XhMA5A6mu9FLbUUInOmFyELb6B6mFQtUZAlSS6i
-         v1v4V8SPHhjqZmCJoA0sOKDvI7xV5bv6ZolARMJ2DfRucMTMZ+VhiRCwAt3UlDqWlKD3
-         MgRDTE7EO50i0/grYIWRjBooSbVhesuCzl0JwoIsNSE74Jk2G106UWwRrLBRVze/CO7h
-         BIQA==
+         :cc;
+        bh=dMKoYGkKySLIW/6AqK8bQe8GvsfZVGvdGI6+aOCnLdY=;
+        b=GCO3EYqPaUXOXYMTY9GOjEoAs6FedyGYx9l1oSl6Dl5BFwy33F9i3DXWFwgsFJryo/
+         Z/qYXTLRymNReCADbGZPvv0MVscThIFubB1WVUCsWjNrW593g0+WN+nuQi3mry9g3KxX
+         bL4gPfT+YVStkqDytnZFJfMwyd21rbarXZehw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=iozasi3f9DFHGkyeT5i8HkWyMdxWvEL3pmT1c0sjx58=;
-        b=AkgbqZhTT9eabLOKmETZ7DdVnVGtYwpqnw0E0e8jkM7ebJZQ2a5jIM4oxLf1Hwblps
-         TlkMSY7wT55o6lOVfSdhCcqnjfPjjJS0zqGlbEffAIhJrb5/Hx0/6x4iIbqgj2hQIkwQ
-         eUGjYJzNTd+ceMfRKljnxq9kZcVRVwoNYsLLfGJkqkkxYDFaH/6aWkK+ml0OvzL/WV9o
-         V83uRLwjFZNXvtU7D6OFUuaVEr0nrpoU446uGlDN+ms55gRsnjFeOTLPkPhYEKuk5qGA
-         RRI6QvVCfvPeOoc8X+e4OmgBzlGme/Fi5fLFuYuhozKkX2HOIJo/15wDpmyDLYw4mML+
-         MrEQ==
-X-Gm-Message-State: AHPjjUh1biwWh074ZfrRoubkZV4y9s6q7mYwdPxB22X6ipHDfYiO38EK
-        XLm0WLNs9hqFvEx6RiBJT5QMOCkFCQ==
-X-Google-Smtp-Source: ADKCNb70sf6Gm5wxIbBmxCKqJuvyp4QHMqImF6qYRIjPQqFXLAkK4DblEj58Xb9ZttoSm1DLvSFo9G/3L2XPzObHHv4=
-X-Received: by 10.99.126.84 with SMTP id o20mr5262542pgn.201.1504644111903;
- Tue, 05 Sep 2017 13:41:51 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=dMKoYGkKySLIW/6AqK8bQe8GvsfZVGvdGI6+aOCnLdY=;
+        b=hm3+b2NJAF/H+S9HYWnzlOKQdTNQ6K5G64PEEEY6xP+rpXRUKjLmlyNHuDriOK5HJI
+         BlevYZEX2gAKNw/0SzpOdbz3Pm+NMRTMf95lwVuchupMS7+tn6uU13tsgQWZToTBeduu
+         cTG3tB/mWKXgz+9DD8eBZ5ks1wuXT+6yRxXYCHgij+owONon8D2jBqPirfwDja1VsLDX
+         cP83+dsxkSWvbvyP1n5m2hDhVz6eBDk3V701bxPaqPt2ywAW6OfNA61bYyweKITPpmzI
+         sKRFkToZC10p+V9Fxa9+aHZ5oF7GY0vqET1joT6IenjJk4/AtN7KSHemfeI2nIiUzv/C
+         i9gQ==
+X-Gm-Message-State: AHPjjUiBL765coK2tWHCjcvKQem8gSk+BvZfwxjo0kf4p6VqvL3mdTOv
+        yUVRSKMgkfMjSaUdUc4RYzLmgi79KW8s
+X-Google-Smtp-Source: ADKCNb5e1G2G1B8ok/B+D9NdEP1QJGwhc0uQjiioszI7aRAEkkxIsjKmMpxajZff5cq15Z7lB/Y5id+o3SEB4guWy7w=
+X-Received: by 10.237.47.230 with SMTP id m93mr514655qtd.277.1504645084767;
+ Tue, 05 Sep 2017 13:58:04 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.100.142.73 with HTTP; Tue, 5 Sep 2017 13:41:51 -0700 (PDT)
-In-Reply-To: <20170905190212.4xx4xukx2bbtudij@sigill.intra.peff.net>
-References: <20170905130149.agc3zp3s6i6e5aki@sigill.intra.peff.net>
- <CAN0heSrVzRPc+iVqU02qzk=DB0WT6Fscn6X-hZPFkM1TikMPVQ@mail.gmail.com> <20170905190212.4xx4xukx2bbtudij@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Tue, 5 Sep 2017 22:41:51 +0200
-Message-ID: <CAN0heSrz=tVHj13X+yHJpAR=5o7j8EqbBdw8hvrhcnhbA04QAA@mail.gmail.com>
-Subject: Re: [PATCH 0/10] towards clean leak-checker output
+Received: by 10.12.130.35 with HTTP; Tue, 5 Sep 2017 13:57:24 -0700 (PDT)
+In-Reply-To: <20170905170311.yhcksrw2bxevd3hk@sigill.intra.peff.net>
+References: <CAEVs+za9do_wXC12SSRznF9v9oGw3_Grq2EFDVf8nH1CRgM-Qw@mail.gmail.com>
+ <20170902083319.lcugfpkkk5lahieb@sigill.intra.peff.net> <CAEVs+zbbWQuM-=5d04bkpTu38Mr4PyczskNhni5K1u_nzh-2Qw@mail.gmail.com>
+ <20170905153636.tsmlq3wv7ztpc67z@sigill.intra.peff.net> <CAEVs+zbCj0Zv0t4_WG6y2jcLoXwHy-Mu-LH31c_QgFaE9i3HtQ@mail.gmail.com>
+ <20170905170311.yhcksrw2bxevd3hk@sigill.intra.peff.net>
+From:   Ross Kabus <rkabus@aerotech.com>
+Date:   Tue, 5 Sep 2017 16:57:24 -0400
+Message-ID: <CAEVs+zZRw3kW0C56NcJNXieCSTOa=uMxg6tDPjU2u+WDzhTLfw@mail.gmail.com>
+Subject: Re: [Bug] commit-tree shouldn't append an extra newline to commit messages
 To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Cc:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5 September 2017 at 21:02, Jeff King <peff@peff.net> wrote:
-> On Tue, Sep 05, 2017 at 07:50:10PM +0200, Martin =C3=85gren wrote:
->
->> >     That line is the setting of argv0_path, which is a global (and thu=
-s
->> >     shouldn't be marked as leaking). Interestingly, it only happens wi=
-th
->> >     -O2. Compiling with -O0 works fine. I'm not sure if it's a bug or
->> >     what.
->> >
->> >     I did most of my testing with clang-6.0, which gets this case righ=
-t.
->>
->> Hmmm, I got the same wrong results (IMHO) from Valgrind, which
->> classified this as "definitely lost". Like you I found that -O0 helped.
->> And yes, that was with gcc. Maybe gcc with optimization somehow manages
->> to hide the pointers from these tools. I know too little about the
->> technical details to have any real ideas, though. My searches did not
->> bring up anything useful. (gcc 5.4.0)
->
-> Yeah, I think it is just optimizing out the variable entirely. If
-> RUNTIME_PREFIX isn't defined (and it's not for non-Windows platforms)
-> then we never look at the variable at all, and it's a dead assignment.
-> And the compiler can see that easily because it's got static linkage. So
-> it drops the variable completely, but it can't drop the call to
-> xstrdup() with the information in exec_cmd.c. It has to call the
-> function and throw away the result, resulting in the leak.
+From: Ross Kabus <rkabus@aerotech.com>
+Date: Tue, 5 Sep 2017 13:54:52 -0400
+Subject: [PATCH] commit-tree: don't append a newline with -F
 
-I see. Yeah, that makes sense.
+This change makes it such that commit-tree -F never appends a newline
+character to the supplied commit message (either from file or stdin).
 
-FWIW, this series (combined with the other series you mentioned) makes
-t0000 and t0001 pass for me with gcc/clang. There are actually some
-leaks in t0000, they're just silently being reported to stderr, since
-the exit statuses from git are hidden by pipes. Maybe you're already
-aware of it. Depending on your definition of "running clean" it might be
-out of scope for this series, which is of course still very interesting
-and enlightening as it stands.
+Previously, commit-tree -F would always append a newline character to
+the text brought in from file or stdin. This has caused confusion in a
+number of ways:
+  - This is a plumbing command and it is generally expected not to do
+    text cleanup or other niceties.
+  - stdin piping with "-F -" appends a newline but stdin piping without
+    -F does not append a newline (inconsistent).
+  - git-commit has the --cleanup=verbatim option that prevents appending
+    a newline with its -F argument. There is no verbatim counterpart to
+    commit-tree -F (inconsistent).
+---
+ builtin/commit-tree.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-One is in cmd_show (you did mention git show) where we leak data in rev.
-The other is some use of strdup. I can't immediately figure out how to
-get a useful stacktrace (you mentioned this as well) and it's past
-bed-time here. I'll try to play more with this tomorrow.
+diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
+index 19e898fa4..2177251e2 100644
+--- a/builtin/commit-tree.c
++++ b/builtin/commit-tree.c
+@@ -102,7 +102,6 @@ int cmd_commit_tree(int argc, const char **argv,
+const char *prefix)
+  if (fd && close(fd))
+  die_errno("git commit-tree: failed to close '%s'",
+   argv[i]);
+- strbuf_complete_line(&buffer);
+  continue;
+  }
 
-Note for self: getting rid of all pipes would probably also help flush
-out a few leaks (or "introduce" them, depending on your viewpoint).
-
-Martin
+-- 
+2.13.1.windows.2
