@@ -2,98 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D0FE7208E3
-	for <e@80x24.org>; Tue,  5 Sep 2017 20:36:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 487D1208E3
+	for <e@80x24.org>; Tue,  5 Sep 2017 20:41:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753156AbdIEUg1 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Sep 2017 16:36:27 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57808 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1753168AbdIEUgZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Sep 2017 16:36:25 -0400
-Received: (qmail 1843 invoked by uid 109); 5 Sep 2017 20:36:25 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 05 Sep 2017 20:36:25 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16633 invoked by uid 111); 5 Sep 2017 20:36:57 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Tue, 05 Sep 2017 16:36:57 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Sep 2017 16:36:23 -0400
-Date:   Tue, 5 Sep 2017 16:36:23 -0400
-From:   Jeff King <peff@peff.net>
-To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v3 1/3] refs/files-backend: add longer-scoped copy of
- string to list
-Message-ID: <20170905203622.6fs3hr7zfa7mwpqn@sigill.intra.peff.net>
-References: <CAN0heSqn59sFF3A-eQ593G+ZDWnO9pKM5F=sgiSQk+prUr-nSQ@mail.gmail.com>
- <4b4c0d178ad2216eecbc49fb6f54dd8a1d1ac119.1504024261.git.martin.agren@gmail.com>
- <91e365b5-6a5d-1e1c-ab7a-579efa7c1ae8@alum.mit.edu>
- <CAN0heSqa8OnPnkd1xbyZ=QN9qg_8OaxBYnwzOZDDA3g+uGE71g@mail.gmail.com>
- <xmqq60cxcvjk.fsf@gitster.mtv.corp.google.com>
- <CAN0heSqnrPUEgP-BgvuHuVrDG2ifuHHDOPPmxiXJ73u4-PrOng@mail.gmail.com>
+        id S1752670AbdIEUlx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Sep 2017 16:41:53 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:38544 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752584AbdIEUlw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Sep 2017 16:41:52 -0400
+Received: by mail-pf0-f195.google.com with SMTP id q76so2132912pfq.5
+        for <git@vger.kernel.org>; Tue, 05 Sep 2017 13:41:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=iozasi3f9DFHGkyeT5i8HkWyMdxWvEL3pmT1c0sjx58=;
+        b=W2H5ar8hvXqCqjCvhmyoxY2Ujf7Pc8bzXXPiz+3vW/qsHIRZ9hHpOsSE4phaYZFS6p
+         sW8Qbd8vOK1R1Pzqp39ruik3iv0vJpufACKx7+71WOQeGsrLY04Y4OB1qOqJkoC5V7IG
+         O8UuPQH++OHELxljb79PIW4BpQpE/XhMA5A6mu9FLbUUInOmFyELb6B6mFQtUZAlSS6i
+         v1v4V8SPHhjqZmCJoA0sOKDvI7xV5bv6ZolARMJ2DfRucMTMZ+VhiRCwAt3UlDqWlKD3
+         MgRDTE7EO50i0/grYIWRjBooSbVhesuCzl0JwoIsNSE74Jk2G106UWwRrLBRVze/CO7h
+         BIQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=iozasi3f9DFHGkyeT5i8HkWyMdxWvEL3pmT1c0sjx58=;
+        b=AkgbqZhTT9eabLOKmETZ7DdVnVGtYwpqnw0E0e8jkM7ebJZQ2a5jIM4oxLf1Hwblps
+         TlkMSY7wT55o6lOVfSdhCcqnjfPjjJS0zqGlbEffAIhJrb5/Hx0/6x4iIbqgj2hQIkwQ
+         eUGjYJzNTd+ceMfRKljnxq9kZcVRVwoNYsLLfGJkqkkxYDFaH/6aWkK+ml0OvzL/WV9o
+         V83uRLwjFZNXvtU7D6OFUuaVEr0nrpoU446uGlDN+ms55gRsnjFeOTLPkPhYEKuk5qGA
+         RRI6QvVCfvPeOoc8X+e4OmgBzlGme/Fi5fLFuYuhozKkX2HOIJo/15wDpmyDLYw4mML+
+         MrEQ==
+X-Gm-Message-State: AHPjjUh1biwWh074ZfrRoubkZV4y9s6q7mYwdPxB22X6ipHDfYiO38EK
+        XLm0WLNs9hqFvEx6RiBJT5QMOCkFCQ==
+X-Google-Smtp-Source: ADKCNb70sf6Gm5wxIbBmxCKqJuvyp4QHMqImF6qYRIjPQqFXLAkK4DblEj58Xb9ZttoSm1DLvSFo9G/3L2XPzObHHv4=
+X-Received: by 10.99.126.84 with SMTP id o20mr5262542pgn.201.1504644111903;
+ Tue, 05 Sep 2017 13:41:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAN0heSqnrPUEgP-BgvuHuVrDG2ifuHHDOPPmxiXJ73u4-PrOng@mail.gmail.com>
+Received: by 10.100.142.73 with HTTP; Tue, 5 Sep 2017 13:41:51 -0700 (PDT)
+In-Reply-To: <20170905190212.4xx4xukx2bbtudij@sigill.intra.peff.net>
+References: <20170905130149.agc3zp3s6i6e5aki@sigill.intra.peff.net>
+ <CAN0heSrVzRPc+iVqU02qzk=DB0WT6Fscn6X-hZPFkM1TikMPVQ@mail.gmail.com> <20170905190212.4xx4xukx2bbtudij@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Tue, 5 Sep 2017 22:41:51 +0200
+Message-ID: <CAN0heSrz=tVHj13X+yHJpAR=5o7j8EqbBdw8hvrhcnhbA04QAA@mail.gmail.com>
+Subject: Re: [PATCH 0/10] towards clean leak-checker output
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 05, 2017 at 07:24:18PM +0200, Martin Ågren wrote:
+On 5 September 2017 at 21:02, Jeff King <peff@peff.net> wrote:
+> On Tue, Sep 05, 2017 at 07:50:10PM +0200, Martin =C3=85gren wrote:
+>
+>> >     That line is the setting of argv0_path, which is a global (and thu=
+s
+>> >     shouldn't be marked as leaking). Interestingly, it only happens wi=
+th
+>> >     -O2. Compiling with -O0 works fine. I'm not sure if it's a bug or
+>> >     what.
+>> >
+>> >     I did most of my testing with clang-6.0, which gets this case righ=
+t.
+>>
+>> Hmmm, I got the same wrong results (IMHO) from Valgrind, which
+>> classified this as "definitely lost". Like you I found that -O0 helped.
+>> And yes, that was with gcc. Maybe gcc with optimization somehow manages
+>> to hide the pointers from these tools. I know too little about the
+>> technical details to have any real ideas, though. My searches did not
+>> bring up anything useful. (gcc 5.4.0)
+>
+> Yeah, I think it is just optimizing out the variable entirely. If
+> RUNTIME_PREFIX isn't defined (and it's not for non-Windows platforms)
+> then we never look at the variable at all, and it's a dead assignment.
+> And the compiler can see that easily because it's got static linkage. So
+> it drops the variable completely, but it can't drop the call to
+> xstrdup() with the information in exec_cmd.c. It has to call the
+> function and throw away the result, resulting in the leak.
 
-> > And from that point of view, doesn't split_head_update() wants a
-> > similar fix?  It attempts to insert "HEAD", makes sure it hasn't
-> > been inserted and then hangs a new update transaction as its util.
-> > It is not wrong per-se from purely leak-prevention point of view,
-> > as that "HEAD" is a literal string we woudn't even want to free,
-> > but from logical/"what each data means" point of view, it still
-> > feels wrong.
-> 
-> There is a "Special hack" comment related to this, and I don't feel
-> particularly confident that I could make any meaningful contribution in
-> this area. To be honest, I don't immediately see in which direction your
-> suggestion/idea/thought is going, which tells me I should not be making
-> a mess out of it. :-)
+I see. Yeah, that makes sense.
 
-I noticed the HEAD funniness, too, when looking at this earlier. I agree
-with Junio that it's not quite consistent with the general rule of
-"string list items point to their refnames", but I don't think it
-matters in practice.
+FWIW, this series (combined with the other series you mentioned) makes
+t0000 and t0001 pass for me with gcc/clang. There are actually some
+leaks in t0000, they're just silently being reported to stderr, since
+the exit statuses from git are hidden by pipes. Maybe you're already
+aware of it. Depending on your definition of "running clean" it might be
+out of scope for this series, which is of course still very interesting
+and enlightening as it stands.
 
-I think the fix, if we wanted to do one, would be similar to what you
-did in split_symref_update(). Like:
+One is in cmd_show (you did mention git show) where we leak data in rev.
+The other is some use of strdup. I can't immediately figure out how to
+get a useful stacktrace (you mentioned this as well) and it's past
+bed-time here. I'll try to play more with this tomorrow.
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index f3455609d6..3f9deff902 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -2095,8 +2095,7 @@ static int split_head_update(struct ref_update *update,
- 	 * transaction. This insertion is O(N) in the transaction
- 	 * size, but it happens at most once per transaction.
- 	 */
--	item = string_list_insert(affected_refnames, "HEAD");
--	if (item->util) {
-+	if (string_list_has_string(affected_refnames, "HEAD")) {
- 		/* An entry already existed */
- 		strbuf_addf(err,
- 			    "multiple updates for 'HEAD' (including one "
-@@ -2111,6 +2110,7 @@ static int split_head_update(struct ref_update *update,
- 			update->new_oid.hash, update->old_oid.hash,
- 			update->msg);
- 
-+	item = string_list_insert(affected_refnames, new_update->refname);
- 	item->util = new_update;
- 
- 	return 0;
+Note for self: getting rid of all pipes would probably also help flush
+out a few leaks (or "introduce" them, depending on your viewpoint).
 
--Peff
+Martin
