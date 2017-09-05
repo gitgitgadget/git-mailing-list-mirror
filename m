@@ -6,102 +6,124 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 435B7208E3
-	for <e@80x24.org>; Tue,  5 Sep 2017 21:27:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD6F8208E3
+	for <e@80x24.org>; Tue,  5 Sep 2017 21:38:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753537AbdIEV1F (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Sep 2017 17:27:05 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57907 "EHLO
+        id S1753216AbdIEViS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Sep 2017 17:38:18 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63984 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753513AbdIEV1A (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Sep 2017 17:27:00 -0400
+        with ESMTP id S1752803AbdIEViR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Sep 2017 17:38:17 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BE3F19208C;
-        Tue,  5 Sep 2017 17:26:58 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 504579238D;
+        Tue,  5 Sep 2017 17:38:17 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=rBDvCWfwroIsIaHgJceBibBzX4Y=; b=Y4D0gM
-        QWYSXRmU2/X67w5jSbPxAyKOoLeqwO0ff+Za7Ce/hWimG13CR31jfjwuBWtPd4iw
-        RN0BuwdY65rsv+B14bG3Ijes/I8QUNZlNbHXuEdmJUAl1RSZ6yGjbUn6fC5Tsu3p
-        CWadyzK3397kdMO0fZiqi+QjHd0iNLBYD2SaA=
+        :content-type; s=sasl; bh=yz7ycUwqqEKOMT5FO+xMRkLNUPo=; b=j22DwL
+        V+92dFqy10a5xAgoBhMS1ris/6XKn6J6MCsPIrvu+/vKQYpyOBE7ayPqihMT59n7
+        ZRSLw53sBygqZtTHFt22afqLAULvP0edYanlMD30SPai4fw97oWEjA/oTiVa6lXJ
+        TBhSjCwBeEzGLaAUoIzjwIWWRNe8z3M7VNK0U=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=AMofXTmHTnjAAOr576H2IeCwEfAyH1tQ
-        U0EN+WDDJdq1AkXFfb5epsU74LhmIpRS3pSJuUGK4sAYH/O86teJK9QnZCHWeqB7
-        R2/2/+FokHM5DztDlTtYAVKRKvE1iwWV0aT9jSJP/tdvhnw54MDQ513pW9pHMU3p
-        BHnM0aKlTiY=
+        :content-type; q=dns; s=sasl; b=Rend8rZQReBwKSOfzRTn+c/Y2Jb+SLhX
+        WHJdsHFlqbxpIUAkjDNrnZ3bAM/LQzIVf+o2dnR5KUwcrl5XC7tdMO+kVahp6fQ5
+        +/LsrzvmsYZ8pkwrhohvZy2gt2nSuXmBylK8TjcniS6tG8n7ZJaWlTyx5nLiq5X/
+        jF7/SQmVbJQ=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B5F549208B;
-        Tue,  5 Sep 2017 17:26:58 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 468429238C;
+        Tue,  5 Sep 2017 17:38:17 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 253409208A;
-        Tue,  5 Sep 2017 17:26:58 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A12D39238B;
+        Tue,  5 Sep 2017 17:38:16 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v3 1/3] refs/files-backend: add longer-scoped copy of string to list
-References: <CAN0heSqn59sFF3A-eQ593G+ZDWnO9pKM5F=sgiSQk+prUr-nSQ@mail.gmail.com>
-        <4b4c0d178ad2216eecbc49fb6f54dd8a1d1ac119.1504024261.git.martin.agren@gmail.com>
-        <91e365b5-6a5d-1e1c-ab7a-579efa7c1ae8@alum.mit.edu>
-        <CAN0heSqa8OnPnkd1xbyZ=QN9qg_8OaxBYnwzOZDDA3g+uGE71g@mail.gmail.com>
-        <xmqq60cxcvjk.fsf@gitster.mtv.corp.google.com>
-        <CAN0heSqnrPUEgP-BgvuHuVrDG2ifuHHDOPPmxiXJ73u4-PrOng@mail.gmail.com>
-        <20170905203622.6fs3hr7zfa7mwpqn@sigill.intra.peff.net>
-Date:   Wed, 06 Sep 2017 06:26:56 +0900
-In-Reply-To: <20170905203622.6fs3hr7zfa7mwpqn@sigill.intra.peff.net> (Jeff
-        King's message of "Tue, 5 Sep 2017 16:36:23 -0400")
-Message-ID: <xmqqmv68bzvj.fsf@gitster.mtv.corp.google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] builtin/merge: honor commit-msg hook for merges
+References: <20170905210116.26343-1-sbeller@google.com>
+Date:   Wed, 06 Sep 2017 06:38:15 +0900
+In-Reply-To: <20170905210116.26343-1-sbeller@google.com> (Stefan Beller's
+        message of "Tue, 5 Sep 2017 14:01:16 -0700")
+Message-ID: <xmqqd174bzco.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: F29926B0-9280-11E7-B2E0-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 87052C4E-9282-11E7-B17B-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> I noticed the HEAD funniness, too, when looking at this earlier. I agree
-> with Junio that it's not quite consistent with the general rule of
-> "string list items point to their refnames", but I don't think it
-> matters in practice.
+> Similar to 65969d43d1 (merge: honor prepare-commit-msg hook, 2011-02-14)
+> merge should also honor the commit-msg hook; the reason is the same as
+> in that commit: When a merge is stopped due to conflicts or --no-commit,
+> the subsequent commit calls the commit-msg hook.  However, it is not
+> called after a clean merge. Fix this inconsistency by invoking the hook
+> after clean merges as well.
 
-Yup, we are on the same page; the "fix" I was alluding to would look
-exactly like what you wrote below, but I agree the distinction does
-not matter in practice.  IOW, I do not think the code after Martin's
-fix is wrong per-se.
+The above reads better without "; the reason is the same as in that
+commit"---"Similar to", combined with the clean and concise
+explanation after the colon you have, sufficiently justifies why
+this is a good change.  
 
-Thanks.
+Excellent job spotting the precedent and making it consistent ;-).
 
-> I think the fix, if we wanted to do one, would be similar to what you
-> did in split_symref_update(). Like:
+> This change is motivated by Gerrits commit-msg hook to install a change-id
+
+s/Gerrits/Gerrit's/ perhaps?
+
+> trailer into the commit message. Without such a change id, Gerrit refuses
+
+I do not live in Gerrit land and I do not know which one is the more
+preferred one, but be consistent between "change-id" and "change
+id".
+
+> to accept (merge) commits by default, such that the inconsistency of
+> (not) running commit-msg hook between commit and merge leads to confusion
+> and might block people from getting their work done.
+
+Yup.  Nicely explained.
+
+I didn't check how "merge --continue" is implemented, but we need to
+behave exactly the same way over there, too.  Making sure that it is
+a case in t7504 may be a good idea, in addition to the test you
+added.
+
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  builtin/merge.c            |  8 ++++++++
+>  t/t7504-commit-msg-hook.sh | 45 +++++++++++++++++++++++++++++++++++++++++----
+>  2 files changed, 49 insertions(+), 4 deletions(-)
 >
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index f3455609d6..3f9deff902 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -2095,8 +2095,7 @@ static int split_head_update(struct ref_update *update,
->  	 * transaction. This insertion is O(N) in the transaction
->  	 * size, but it happens at most once per transaction.
->  	 */
-> -	item = string_list_insert(affected_refnames, "HEAD");
-> -	if (item->util) {
-> +	if (string_list_has_string(affected_refnames, "HEAD")) {
->  		/* An entry already existed */
->  		strbuf_addf(err,
->  			    "multiple updates for 'HEAD' (including one "
-> @@ -2111,6 +2110,7 @@ static int split_head_update(struct ref_update *update,
->  			update->new_oid.hash, update->old_oid.hash,
->  			update->msg);
+> diff --git a/builtin/merge.c b/builtin/merge.c
+> index 7df3fe3927..087efd560d 100644
+> --- a/builtin/merge.c
+> +++ b/builtin/merge.c
+> @@ -73,6 +73,7 @@ static int show_progress = -1;
+>  static int default_to_upstream = 1;
+>  static int signoff;
+>  static const char *sign_commit;
+> +static int no_verify;
 >  
-> +	item = string_list_insert(affected_refnames, new_update->refname);
->  	item->util = new_update;
->  
->  	return 0;
->
-> -Peff
+>  static struct strategy all_strategy[] = {
+>  	{ "recursive",  DEFAULT_TWOHEAD | NO_TRIVIAL },
+> @@ -236,6 +237,7 @@ static struct option builtin_merge_options[] = {
+>  	  N_("GPG sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
+>  	OPT_BOOL(0, "overwrite-ignore", &overwrite_ignore, N_("update ignored files (default)")),
+>  	OPT_BOOL(0, "signoff", &signoff, N_("add Signed-off-by:")),
+> +	OPT_BOOL(0, "no-verify", &no_verify, N_("bypass pre-commit and commit-msg hooks")),
+
+This allows "--no-no-verify", which may want to be eventually
+addressed (either by changing the code not to accept, or declaring
+that it is an intended behaviour); I do not offhand know for sure but I
+strong suspect "commit" shares the same issue, in which case this
+patch is perfectly fine and addressing "--no-no-verify" should be
+done for both of them in a separate follow-up topic.  #leftoverbits
+
+Thanks.  I'll be online starting today, but please expect slow
+responses for a few days as there is significant backlog.
+
