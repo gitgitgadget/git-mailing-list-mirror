@@ -2,186 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67579208E3
-	for <e@80x24.org>; Tue,  5 Sep 2017 18:35:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B792208E3
+	for <e@80x24.org>; Tue,  5 Sep 2017 18:40:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753369AbdIESf2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Sep 2017 14:35:28 -0400
-Received: from mail-ua0-f179.google.com ([209.85.217.179]:37787 "EHLO
-        mail-ua0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753323AbdIESfN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Sep 2017 14:35:13 -0400
-Received: by mail-ua0-f179.google.com with SMTP id k23so9946479uaf.4
-        for <git@vger.kernel.org>; Tue, 05 Sep 2017 11:35:13 -0700 (PDT)
+        id S1754530AbdIESkS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Sep 2017 14:40:18 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:34478 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754132AbdIESkM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Sep 2017 14:40:12 -0400
+Received: by mail-wm0-f66.google.com with SMTP id l19so638679wmi.1
+        for <git@vger.kernel.org>; Tue, 05 Sep 2017 11:40:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=G72Nmk3YGyhadY7CgbqvkWI7Xrdq5f3bmqKCYd+IiRE=;
-        b=ozIuoBCbYJ0dpm3oVlLtpJSuVejYpOyTb0AW+YdOcmNEUk1GRGNaB3ejsTM+gc6il3
-         GIfwAbASYz5de2/IdTsFgBlbtfC+zdglWtYr1c+Yb6avz6ruIn+UhckRJSlzIjlDMKas
-         718AJNTv13x5en7DJAhtB23DAoAHlLPtxFznt7FaK8RbDOumaU7a9kXKqfW3YXkoN4PQ
-         /5qmXYf6zbhj8KZa2S2nyMGf+QvWb8bPzwy4Eisdhs2/vaT9raWaYdcTXFkomkoA6QUQ
-         Cit1P6CIo5IN2aUJ/yAIQQMm9OlGcjxDXKZt+sOWXmbLde7/LnQTVgeZjY6YVa58QKfU
-         Dw2g==
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=vZMbvD9y4ccaoNcV92QAEYJs/tJb/hPYfgF7Q7FvIq0=;
+        b=StSa1v8cfMFXMciwtg/JpmAWzYJqnI3wmhElHMk0y3mtuhKZ5ybP+6lw0JOJDBSfUH
+         5UT6QMG55Mbv5YIeYJvTARRDPevI+qR3G2joDX8rUvpygXKyTFNKO762vgh4vtliaNty
+         sMQYZhFRX5iGUQ9PaoH9mooyH5CZGleesh5KG52XCJ0b+1GS0eg/0/fji5JAgf3HkP6Z
+         ofGTmbkBsMBh0YRET4Sa1wLmbk/+QUa1dDxOlWqYPp9oM9ajo4VeOn+ICcIYZGyn4QLG
+         ErTuAH+fgt1mUM1z36GcHnWsUnwAQjK5pPh8PCwjaw1p9/0FdM2Yw8A3wl9YkkD/eMrb
+         ZEwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=G72Nmk3YGyhadY7CgbqvkWI7Xrdq5f3bmqKCYd+IiRE=;
-        b=Lbrk/+bPX1BXI4Gbqb2PAHU8Y3u5uP6GEggKZ1BDGA7VVZr2Hx33nMUFgJ0Euy0jUP
-         hZfsBXoiVaap3uBuELgLPWUkEujUBt/w0gl0Z3AX3PVoB1oenqx3dNCFr3J+HJfw/GEx
-         GOk+SuAf6JjeOQCp2u0AoEOglXM+sbbr0PabisXMbCtKAqg7vI1fqaxh3XkS9XWmOjXd
-         jzm9LLNPO3wXOzTCHwK/iP9N/4Sdf1635qVJACpqwRczIZo9Ky2BPkXoYj0KOIVbs+ZB
-         frfLbtJglRdRVeAcgqpWpZ6in29gdzn2xiDoXgPH+kip5E7CgJHYpoEwOjCB5UQ+2mta
-         Fkww==
-X-Gm-Message-State: AHPjjUg0W5H3rlqwmZBCoF40ljO6TxoMFCNvU3vXMnQ5VbMZMdzbTbyh
-        LQ5q7WB5CacLwKeB98Cyxb0lG45AtjAyymk=
-X-Google-Smtp-Source: ADKCNb5vdGh0cGbFdQDhfwfAQhMdDDLDaf7vV/+pcMt1NsL2PFLBl9sptG0oH6AdZQJCnNU9tNWR9sSjaSNuXtMyudY=
-X-Received: by 10.176.77.195 with SMTP id b3mr14166uah.118.1504636512498; Tue,
- 05 Sep 2017 11:35:12 -0700 (PDT)
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=vZMbvD9y4ccaoNcV92QAEYJs/tJb/hPYfgF7Q7FvIq0=;
+        b=FqK8x3fKeMZcKjwegdKeLJre01WHXPlYBCkhd+To9IyXWC803cP8ThPjc1Ko/Ljmfy
+         Fa8R7RyNpSecWWGaMW+sVNyE/eJUddNR7fJoKYOp7PDKv7r/QwmL6felrCCme+ycdnBf
+         IXRw5hqYzWoe9N9laOhTxXrnBU4E+kcKGi9POeZ/keSFFUR28mzKwzK0+B+SMc4igeij
+         95dawmxhDdv+gddiVu4ljYossKWtkTxg7KFW2Yq8XHosHDV0In9TviefuQGs/z/SSfGs
+         0jS+2tFsJh8fISJZH7jh/rWo7tUCVd9dvYZ+Bh6vK+7XxpRznwLZgg+RxW2285j/GNEX
+         drXw==
+X-Gm-Message-State: AHPjjUjxiGuIVehjM1mryv1ZnJ97cYl3j0CCMLsG5Ibn2ccQxKJXb2ij
+        teeJx6ltkeVVsJbS
+X-Google-Smtp-Source: ADKCNb4215VfJwPbER/JllD8y7sOnHnMCHsAuLHoHzplcWfJJ94cFkUMeA6wqBt2/ug6mcP9YKFOZg==
+X-Received: by 10.28.174.80 with SMTP id x77mr556wme.83.1504636810973;
+        Tue, 05 Sep 2017 11:40:10 -0700 (PDT)
+Received: from localhost.localdomain ([2a02:aa16:5782:c100:1208:b1ff:fee6:d811])
+        by smtp.gmail.com with ESMTPSA id 4sm1456856wrl.60.2017.09.05.11.40.09
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 05 Sep 2017 11:40:10 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     git@vger.kernel.org
+Subject: [PATCH] config: remove git_config_maybe_bool
+Date:   Tue,  5 Sep 2017 20:39:59 +0200
+Message-Id: <20170905183959.22454-1-martin.agren@gmail.com>
+X-Mailer: git-send-email 2.14.1.460.g848a19d64
 MIME-Version: 1.0
-Received: by 10.176.89.35 with HTTP; Tue, 5 Sep 2017 11:34:52 -0700 (PDT)
-In-Reply-To: <0e626914-05b1-651c-9c61-b1ef0b6c190a@grubix.eu>
-References: <CAH_OBieqSY8To9okRTL-z5dnjW=_NLzA+n5-7=eou=Lx33hBdQ@mail.gmail.com>
- <0e626914-05b1-651c-9c61-b1ef0b6c190a@grubix.eu>
-From:   shawn wilson <ag4ve.us@gmail.com>
-Date:   Tue, 5 Sep 2017 14:34:52 -0400
-Message-ID: <CAH_OBickeYBWE-ygQY=pjh33_mFMXYqcwvVieRTA2cuCwzXcHA@mail.gmail.com>
-Subject: Re: signing commits using gpg2
-To:     Michael J Gruber <git@grubix.eu>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Apparently you need to set the GPG_TTY for git to work (I also set the
-gpg.program so I know it shouldn't /need/ that variable set)
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D840687#10
+The function was deprecated in commit 89576613 ("treewide: deprecate
+git_config_maybe_bool, use git_parse_maybe_bool", 2017-08-07) and has no
+users.
 
-I'm not sure if there's anything that has or can be done upstream to
-make this easier (I feel this was a bigger PITA than it needed to be),
-I'm on git 2.7.5 from Fedira.
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+ma/parse-maybe-bool has been in master for some time and I cannot find
+any inflight topics which rely on git_config_maybe_bool (neither in pu,
+nor on the list). Indeed, it would have been easier to kill this
+function immediately instead of deprecating it.
 
-On Tue, Sep 5, 2017 at 9:40 AM, Michael J Gruber <git@grubix.eu> wrote:
-> shawn wilson venit, vidit, dixit 02.09.2017 23:11:
->> tl;dr - how do I get git to use gpg2 to sign things?
->>
->> I'm using gpg2 (so no agent options are configured but an agent is
->> running) which is configured w/ a Nitrokey (Pro if it matters):
->>
->>  % git commit -m "Initial."
->>
->>                                  gits/bash-libs (master =E2=9A=A1) local=
-host
->> gpg: detected reader `Nitrokey Nitrokey Pro (000034670000000000000000) 0=
-0 00'
->> gpg: pcsc_connect failed: sharing violation (0x8010000b)
->> gpg: apdu_send_simple(0) failed: locking failed
->> Please insert the card and hit return or enter 'c' to cancel:
->> gpg: pcsc_connect failed: sharing violation (0x8010000b)
->> gpg: pcsc_connect failed: sharing violation (0x8010000b)
->> gpg: apdu_send_simple(0) failed: locking failed
->> Please insert the card and hit return or enter 'c' to cancel: c
->> gpg: selecting openpgp failed: general error
->> gpg: signing failed: general error
->> gpg: signing failed: general error
->> error: gpg failed to sign the data
->> fatal: failed to write commit object
->>
->> This works with gpg and ssh:
->
-> Not really...
->
->>  % touch foo
->>
->>                                                          ~ localhost
->>  % gpg2 --sign foo
->
-> ... because you're using gpg2, not gpg.
->
->>
->>                                                          ~ localhost
->> gpg: using "846FF490" as default secret key for signing
->>  % cat foo*
->>
->>                                                          ~ localhost
->> -----BEGIN PGP MESSAGE-----
->> Version: GnuPG v2
->>
->> owEBuQFG/pANAwAKAYwdY7SEb/SQAcsJYgNmb29ZqxfviQGcBAABCgAGBQJZqxfv
->> AAoJEIwdY7SEb/SQAcEL/jonw+HymnlmfebtEwlvfx2Gl1Sbuw0xWWPpQ2Dtjljz
->> HtpD+LWczjpOSMTHFNK9xPR2kcs1WNY+mO8M45QI7iDgFkKRzaxEqeNUJkoyF/+I
->> 81VMmXDQMXFs4+8jy00b+UxTdvwdXaHMsOtu+6YCtmCR5Bzohg07ADsnXnGGn3Sd
->> WTjVMzV6Dlh8LRF+coGJ8JuErBsRAI6vdNgJRVHYBULGNXci4uF/4a+58uiTL4/U
->> PvC4ruXCNxCKi89nMERhwlnOvglseX3TDR5ldrc4Hzb+pLsj/l6N4sBW0Zmb8UcE
->> 9BG3WjOs4eZvnLmk5XHrwisD2CXuHvyWMl0yH7LTrg+m4Itj0PJ4Px4H9E5t/zfs
->> C1vcB/okcigeIyXnO06um02a5oZAYOKadB+6NRnBjULz5GvP2yxj/AO1VPmZprpt
->> budMuHZcA0zNE3uBmcnQY5+1tdkyTrlTxsL58lQrn/U3wvgah3AXMEvjRGqbYWHj
->> jDikQVJ7ESoevNqlfLPj8Q=3D=3D
->> =3DhV6v
->> -----END PGP MESSAGE-----
->>
->> However, if I try this w/ the old gpg:
->>
->>  % gpg -ae -o foo.gpg foo
->>
->>                                                          ~ localhost
->>  % gpg -d foo.gpg
->>
->>                                                          ~ localhost
->> gpg: detected reader `Nitrokey Nitrokey Pro (000034670000000000000000) 0=
-0 00'
->> gpg: pcsc_connect failed: sharing violation (0x8010000b)
->> gpg: apdu_send_simple(0) failed: locking failed
->> Please insert the card and hit return or enter 'c' to cancel: c
->> gpg: selecting openpgp failed: general error
->> gpg: encrypted with 3072-bit RSA key, ID 41826CFB, created 2017-03-13
->>       "Shawn Wilson <ag4ve.us@gmail.com>"
->> gpg: public key decryption failed: general error
->> gpg: decryption failed: secret key not available
->>  % gpg2 -d foo.gpg
->>
->>                                                          ~ localhost
->> gpg: encrypted with 3072-bit RSA key, ID E27FA0B841826CFB, created 2017-=
-03-13
->>       "Shawn Wilson <ag4ve.us@gmail.com>"
->> foo
->>
->> (yeah I added data to the file)
->>
->> And just to prove basic competency checking:
->>
->>  % git config --global -l | grep sign
->>
->>                                                          ~ localhost
->> user.signingkey=3D846FF490
->> filter.gitconfig-rmuser.clean=3Dsed -e "s/^\( *email =3D\).*/\1 <email
->> address>/" -e "s/^\( *name =3D\).*/\1 <real name>/" -e "s/^\(
->> *signingkey =3D\).*/\1 <gpg key>/"
->> filter.gitconfig-rmuser.smudge=3Degrep "^ *(email|name|signingkey) =3D "
->> commit.gpgsign=3Dtrue
->>
->
-> So, gpg2 works and gpg does not. This is typical for the way in which
-> the gpg upgrade path is broken, and your distro installs gpg because it
-> still relies on it.
->
-> git sees two executables gpg and gpg2 and uses the first, so as to not
-> migrate your secrete key store inadvertently.
->
-> Short answer: Use
->
-> git config --global gpg.program gpg2
->
-> to make git use gpg2 which apparantly is your working gnupg setup.
->
-> Michael
+ Documentation/technical/api-config.txt | 4 ----
+ config.h                               | 1 -
+ config.c                               | 5 -----
+ 3 files changed, 10 deletions(-)
+
+diff --git a/Documentation/technical/api-config.txt b/Documentation/technical/api-config.txt
+index 7a83a3a6e..9a778b0ca 100644
+--- a/Documentation/technical/api-config.txt
++++ b/Documentation/technical/api-config.txt
+@@ -186,10 +186,6 @@ parsing is successful, the return value is the result.
+ Same as `git_config_bool`, except that integers are returned as-is, and
+ an `is_bool` flag is unset.
+ 
+-`git_config_maybe_bool`::
+-Deprecated. Use `git_parse_maybe_bool` instead. They are exactly the
+-same, except this function takes an unused argument `name`.
+-
+ `git_parse_maybe_bool`::
+ Same as `git_config_bool`, except that it returns -1 on error rather
+ than dying.
+diff --git a/config.h b/config.h
+index 97471b887..456b3d134 100644
+--- a/config.h
++++ b/config.h
+@@ -56,7 +56,6 @@ extern unsigned long git_config_ulong(const char *, const char *);
+ extern ssize_t git_config_ssize_t(const char *, const char *);
+ extern int git_config_bool_or_int(const char *, const char *, int *);
+ extern int git_config_bool(const char *, const char *);
+-extern int git_config_maybe_bool(const char *, const char *);
+ extern int git_config_string(const char **, const char *, const char *);
+ extern int git_config_pathname(const char **, const char *, const char *);
+ extern int git_config_set_in_file_gently(const char *, const char *, const char *);
+diff --git a/config.c b/config.c
+index d0d8ce823..f627657cf 100644
+--- a/config.c
++++ b/config.c
+@@ -956,11 +956,6 @@ int git_parse_maybe_bool(const char *value)
+ 	return -1;
+ }
+ 
+-int git_config_maybe_bool(const char *name, const char *value)
+-{
+-	return git_parse_maybe_bool(value);
+-}
+-
+ int git_config_bool_or_int(const char *name, const char *value, int *is_bool)
+ {
+ 	int v = git_parse_maybe_bool_text(value);
+-- 
+2.14.1.460.g848a19d64
+
