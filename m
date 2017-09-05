@@ -6,232 +6,148 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A199208E3
-	for <e@80x24.org>; Tue,  5 Sep 2017 12:15:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 47F46208E3
+	for <e@80x24.org>; Tue,  5 Sep 2017 13:01:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751479AbdIEMPE (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Sep 2017 08:15:04 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57200 "HELO cloud.peff.net"
+        id S1751036AbdIENBx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Sep 2017 09:01:53 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57280 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750932AbdIEMPC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Sep 2017 08:15:02 -0400
-Received: (qmail 31386 invoked by uid 109); 5 Sep 2017 12:15:02 -0000
+        id S1750932AbdIENBw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Sep 2017 09:01:52 -0400
+Received: (qmail 1884 invoked by uid 109); 5 Sep 2017 13:01:52 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 05 Sep 2017 12:15:02 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 05 Sep 2017 13:01:52 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12370 invoked by uid 111); 5 Sep 2017 12:15:34 -0000
+Received: (qmail 12697 invoked by uid 111); 5 Sep 2017 13:02:24 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Tue, 05 Sep 2017 08:15:34 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Tue, 05 Sep 2017 09:02:24 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Sep 2017 08:15:00 -0400
-Date:   Tue, 5 Sep 2017 08:15:00 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Sep 2017 09:01:50 -0400
+Date:   Tue, 5 Sep 2017 09:01:50 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 15/20] tempfile: use list.h for linked list
-Message-ID: <20170905121500.sl5vvgnguux4mtn5@sigill.intra.peff.net>
-References: <20170905121353.62zg3mtextmq5zrs@sigill.intra.peff.net>
+Subject: [PATCH 0/10] towards clean leak-checker output
+Message-ID: <20170905130149.agc3zp3s6i6e5aki@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170905121353.62zg3mtextmq5zrs@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The tempfile API keeps to-be-cleaned tempfiles in a
-singly-linked list and never removes items from the list.  A
-future patch would like to start removing items, but removal
-from a singly linked list is O(n), as we have to walk the
-list to find the predecessor element. This means that a
-process which takes "n" simultaneous lockfiles (for example,
-an atomic transaction on "n" refs) may end up quadratic in
-"n".
+Using leak-checking tools like valgrind or LSAN is usually not all that
+productive with Git, because the output is far from clean. And _most_ of
+these are just not interesting, as they're either:
 
-Before we start allowing items to be removed, it would be
-nice to have a way to cover this case in linear time.
+  1. Real leaks, but ones that only be triggered a small, set number of
+     times per program.
 
-The simplest solution is to make an assumption about the
-order in which tempfiles are added and removed from the
-list. If both operations iterate over the tempfiles in the
-same order, then by putting new items at the end of the list
-our removal search will always find its items at the
-beginning of the list. And indeed, that would work for the
-case of refs. But it creates a hidden dependency between
-unrelated parts of the code. If anybody changes the ref code
-(or if we add a new caller that opens multiple simultaneous
-tempfiles) they may unknowingly introduce a performance
-regression.
+  2. Intentional leaks of variables as the main cmd_* functions go out
+     of scope (as opposed to manually cleaning).
 
-Another solution is to use a better data structure. A
-doubly-linked list works fine, and we already have an
-implementation in list.h. But there's one snag: the elements
-of "struct tempfile" are all marked as "volatile", since a
-signal handler may interrupt us and iterate over the list at
-any moment (even if we were in the middle of adding a new
-entry).
+I focused here on getting t0000 and t0001 to run clean against a
+leak-checking tool. That's a fraction of the total test suite, but my
+goal was have a tractable sample which could let us see if the path
+seems sane.
 
-We can declare a "volatile struct list_head", but we can't
-actually use it with the normal list functions. The compiler
-complains about passing a pointer-to-volatile via a regular
-pointer argument. And rightfully so, as the sub-function
-would potentially need different code to deal with the
-volatile case.
+I feel positive overall about the approach this series takes. The
+suppressions aren't too terrible to write, and I found some real (albeit
+minor) leaks in these few tests. I hope it can serve as a base for an
+ongoing effort to get the whole test suite clean.
 
-That leaves us with a few options:
+A few things to note:
 
-  1. Drop the "volatile" modifier for the list items.
+  - I switched from valgrind to ASAN/LSAN early on. It's just way
+    faster, which makes the compile-test-fix cycle a lot more pleasant.
+    With these patches, you should be able to do:
 
-     This is probably a bad idea. I checked the assembly
-     output from "gcc -O2", and the "volatile" really does
-     impact the order in which it updates memory.
+      make SANITIZE=leak && (cd t && ./t1234-* -v -i)
 
-  2. Use macros instead of inline functions. The irony here
-     is that list.h is entirely implemented as trivial
-     inline functions. So we basically are already
-     generating custom code for each call. But sadly there's no
-     way in C to declare the inline function to take a more
-     generic type.
+    and get a leak report for a single script dumped to stderr.
 
-     We could do so by switching the inline functions to
-     macros, but it does make the end result harder to read.
-     And it doesn't fully solve the problem (for instance,
-     the declaration of list_head needs to change so that
-     its "prev" and "next" pointers point to other volatile
-     structs).
+    If you want to try it with t0000, you'll need the lock-file series I
+    just posted at:
 
-  3. Don't use list.h, and just make our own ad-hoc
-     doubly-linked list. It's not that much code to
-     implement the basics that we need here. But if we're
-     going to do so, why not add the few extra lines
-     required to model it after the actual list.h interface?
-     We can even reuse a few of the macro helpers.
+      https://public-inbox.org/git/20170905121353.62zg3mtextmq5zrs@sigill.intra.peff.net/
 
-So this patch takes option 3, but actually implements a
-parallel "volatile list" interface in list.h, where it could
-potentially be reused by other code. This implements just
-enough for tempfile.c's use, though we could easily port
-other functions later if need be.
+    and the fix from Martin at:
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- list.h     | 38 ++++++++++++++++++++++++++++++++++++++
- tempfile.c | 13 +++++++------
- tempfile.h |  4 +++-
- 3 files changed, 48 insertions(+), 7 deletions(-)
+      https://public-inbox.org/git/CAN0heSqn59sFF3A-eQ593G+ZDWnO9pKM5F=sgiSQk+prUr-nSQ@mail.gmail.com/
 
-diff --git a/list.h b/list.h
-index a226a870dc..eb601192f4 100644
---- a/list.h
-+++ b/list.h
-@@ -163,4 +163,42 @@ static inline void list_replace_init(struct list_head *old,
- 	INIT_LIST_HEAD(old);
- }
- 
-+/*
-+ * This is exactly the same as a normal list_head, except that it can be
-+ * declared volatile (e.g., if you have a list that may be accessed from signal
-+ * handlers).
-+ */
-+struct volatile_list_head {
-+	volatile struct volatile_list_head *next, *prev;
-+};
-+
-+#define VOLATILE_LIST_HEAD(name) \
-+	volatile struct volatile_list_head name = { &(name), &(name) }
-+
-+static inline void __volatile_list_del(volatile struct volatile_list_head *prev,
-+				       volatile struct volatile_list_head *next)
-+{
-+	next->prev = prev;
-+	prev->next = next;
-+}
-+
-+static inline void volatile_list_del(volatile struct volatile_list_head *elem)
-+{
-+	__volatile_list_del(elem->prev, elem->next);
-+}
-+
-+static inline int volatile_list_empty(volatile struct volatile_list_head *head)
-+{
-+	return head == head->next;
-+}
-+
-+static inline void volatile_list_add(volatile struct volatile_list_head *newp,
-+				     volatile struct volatile_list_head *head)
-+{
-+	head->next->prev = newp;
-+	newp->next = head->next;
-+	newp->prev = head;
-+	head->next = newp;
-+}
-+
- #endif /* LIST_H */
-diff --git a/tempfile.c b/tempfile.c
-index e655e28477..11bda824cf 100644
---- a/tempfile.c
-+++ b/tempfile.c
-@@ -55,14 +55,16 @@
- #include "tempfile.h"
- #include "sigchain.h"
- 
--static struct tempfile *volatile tempfile_list;
-+static VOLATILE_LIST_HEAD(tempfile_list);
- 
- static void remove_tempfiles(int in_signal_handler)
- {
- 	pid_t me = getpid();
--	struct tempfile *volatile p;
-+	volatile struct volatile_list_head *pos;
-+
-+	list_for_each(pos, &tempfile_list) {
-+		struct tempfile *p = list_entry(pos, struct tempfile, list);
- 
--	for (p = tempfile_list; p; p = p->next) {
- 		if (!is_tempfile_active(p) || p->owner != me)
- 			continue;
- 
-@@ -95,7 +97,7 @@ static void remove_tempfiles_on_signal(int signo)
-  */
- static void prepare_tempfile_object(struct tempfile *tempfile)
- {
--	if (!tempfile_list) {
-+	if (volatile_list_empty(&tempfile_list)) {
- 		/* One-time initialization */
- 		sigchain_push_common(remove_tempfiles_on_signal);
- 		atexit(remove_tempfiles_on_exit);
-@@ -110,8 +112,7 @@ static void prepare_tempfile_object(struct tempfile *tempfile)
- 		tempfile->active = 0;
- 		tempfile->owner = 0;
- 		strbuf_init(&tempfile->filename, 0);
--		tempfile->next = tempfile_list;
--		tempfile_list = tempfile;
-+		volatile_list_add(&tempfile->list, &tempfile_list);
- 		tempfile->on_list = 1;
- 	} else if (tempfile->filename.len) {
- 		/* This shouldn't happen, but better safe than sorry. */
-diff --git a/tempfile.h b/tempfile.h
-index d30663182d..2ee24f4380 100644
---- a/tempfile.h
-+++ b/tempfile.h
-@@ -1,6 +1,8 @@
- #ifndef TEMPFILE_H
- #define TEMPFILE_H
- 
-+#include "list.h"
-+
- /*
-  * Handle temporary files.
-  *
-@@ -81,7 +83,7 @@
-  */
- 
- struct tempfile {
--	struct tempfile *volatile next;
-+	volatile struct volatile_list_head list;
- 	volatile sig_atomic_t active;
- 	volatile int fd;
- 	FILE *volatile fp;
--- 
-2.14.1.721.gc5bc1565f1
+    to get a clean run.
 
+  - I'm using LSAN instead of the full-on ASAN because it's faster. The
+    docs warn that it's a bit experimental, and I did notice a few funny
+    behaviors (like truncated backtraces), but overall it seems fine.
+    You can also do:
+
+      make SANITIZE=address &&
+        (cd t && ASAN_OPTIONS=abort_on_error=1 ./t1234-* -v -i)
+
+    to do a full ASAN run (the extra environment setting is necessary to
+    override test-lib's defaults).
+
+  - gcc's leak-checker doesn't seem to handle reachability correctly (or
+    maybe I'm holding it wrong). As a simple case, building with ASAN
+    and running git-init complains:
+
+      $ make SANITIZE=address && ./git init foo
+      ...
+      Direct leak of 2 byte(s) in 1 object(s) allocated from:
+          #0 0x7f011dc699e0 in malloc (/usr/lib/x86_64-linux-gnu/libasan.so.4+0xd99e0)
+          #1 0x558eeedbdab5 in do_xmalloc /home/peff/compile/git/wrapper.c:60
+          #2 0x558eeedbdbab in do_xmallocz /home/peff/compile/git/wrapper.c:100
+          #3 0x558eeedbdd0d in xmallocz /home/peff/compile/git/wrapper.c:108
+          #4 0x558eeedbdd0d in xmemdupz /home/peff/compile/git/wrapper.c:124
+          #5 0x558eeedbdd0d in xstrndup /home/peff/compile/git/wrapper.c:130
+          #6 0x558eeea0507a in main /home/peff/compile/git/common-main.c:39
+          #7 0x7f011cf612e0 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x202e0)
+
+    That line is the setting of argv0_path, which is a global (and thus
+    shouldn't be marked as leaking). Interestingly, it only happens with
+    -O2. Compiling with -O0 works fine. I'm not sure if it's a bug or
+    what.
+
+    I did most of my testing with clang-6.0, which gets this case right.
+
+  - I have no idea who close or far this is to covering the whole suite.
+    Only 98 test scripts complete with no leaks. But many of those
+    failures will be hitting the same leaks over and over. It looks like
+    running "git show' hits a few, which is going to affect a lot of
+    scripts. But bear in mind when reading the patches that this might
+    be the first step on a successful road, or it could be a dead end. :)
+
+Most of this is actual leak fixes. The interesting part, I think, is the
+UNLEAK annotation in patch 10.
+
+  [01/10]: test-lib: --valgrind should not override --verbose-log
+  [02/10]: test-lib: set LSAN_OPTIONS to abort by default
+  [03/10]: add: free leaked pathspec after add_files_to_cache()
+  [04/10]: update-index: fix cache entry leak in add_one_file()
+  [05/10]: config: plug user_config leak
+  [06/10]: reset: make tree counting less confusing
+  [07/10]: reset: free allocated tree buffers
+  [08/10]: repository: free fields before overwriting them
+  [09/10]: set_git_dir: handle feeding gitdir to itself
+  [10/10]: add UNLEAK annotation for reducing leak false positives
+
+ Makefile               |  3 +++
+ builtin/add.c          |  3 +++
+ builtin/commit.c       |  1 +
+ builtin/config.c       | 11 +++++++++--
+ builtin/init-db.c      |  2 ++
+ builtin/ls-files.c     |  1 +
+ builtin/reset.c        | 24 +++++++++++++++++-------
+ builtin/update-index.c |  4 +++-
+ builtin/worktree.c     |  2 ++
+ environment.c          |  4 +++-
+ git-compat-util.h      |  7 +++++++
+ repository.c           | 14 +++++++-------
+ setup.c                |  5 -----
+ t/test-lib.sh          |  7 ++++++-
+ usage.c                | 13 +++++++++++++
+ 15 files changed, 77 insertions(+), 24 deletions(-)
+
+-Peff
