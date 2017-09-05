@@ -2,128 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD6F8208E3
-	for <e@80x24.org>; Tue,  5 Sep 2017 21:38:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 611A0208E3
+	for <e@80x24.org>; Tue,  5 Sep 2017 21:39:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753216AbdIEViS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Sep 2017 17:38:18 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63984 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752803AbdIEViR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Sep 2017 17:38:17 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 504579238D;
-        Tue,  5 Sep 2017 17:38:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=yz7ycUwqqEKOMT5FO+xMRkLNUPo=; b=j22DwL
-        V+92dFqy10a5xAgoBhMS1ris/6XKn6J6MCsPIrvu+/vKQYpyOBE7ayPqihMT59n7
-        ZRSLw53sBygqZtTHFt22afqLAULvP0edYanlMD30SPai4fw97oWEjA/oTiVa6lXJ
-        TBhSjCwBeEzGLaAUoIzjwIWWRNe8z3M7VNK0U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Rend8rZQReBwKSOfzRTn+c/Y2Jb+SLhX
-        WHJdsHFlqbxpIUAkjDNrnZ3bAM/LQzIVf+o2dnR5KUwcrl5XC7tdMO+kVahp6fQ5
-        +/LsrzvmsYZ8pkwrhohvZy2gt2nSuXmBylK8TjcniS6tG8n7ZJaWlTyx5nLiq5X/
-        jF7/SQmVbJQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 468429238C;
-        Tue,  5 Sep 2017 17:38:17 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A12D39238B;
-        Tue,  5 Sep 2017 17:38:16 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] builtin/merge: honor commit-msg hook for merges
-References: <20170905210116.26343-1-sbeller@google.com>
-Date:   Wed, 06 Sep 2017 06:38:15 +0900
-In-Reply-To: <20170905210116.26343-1-sbeller@google.com> (Stefan Beller's
-        message of "Tue, 5 Sep 2017 14:01:16 -0700")
-Message-ID: <xmqqd174bzco.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1753168AbdIEVjH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Sep 2017 17:39:07 -0400
+Received: from mail-io0-f175.google.com ([209.85.223.175]:33545 "EHLO
+        mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752312AbdIEVjG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Sep 2017 17:39:06 -0400
+Received: by mail-io0-f175.google.com with SMTP id y123so20209748iod.0
+        for <git@vger.kernel.org>; Tue, 05 Sep 2017 14:39:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:from:date:message-id:subject:to:cc;
+        bh=ayIT4HGWPWSNeTj8i/ulhmLpiKB8KvK9kVRjXaqqrVY=;
+        b=iONdgiV280sXFzOK+HvPp0S9NZCzQadFMCvkrOqwqlGdlXAsPupqWNO3Y05Vg2wIzw
+         D0IUfa+PqkUt3ITJBqh0a179tZQyKB3g+Cs5S/Toh+vAvZ6dCAp/L56am7/ql2VH/j+k
+         4gojbPWxcskNMbvP5HZz/D1YrN1/d/xi6H7dWHWJgQ1I+/SrbI1ot1OIn8dBCPaVjnUW
+         uQnY/Xn4wPrePtXV8fqpmBSxJVJfGjqheomfka6762cPIk4xGIqaYp7siEbW0907lJZc
+         8qIITzGgX7+o/crphoibuUDqsZhogBauoasatwXKFTBhVSuvzMBZraypi42FTgj6nt/X
+         /RYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to:cc;
+        bh=ayIT4HGWPWSNeTj8i/ulhmLpiKB8KvK9kVRjXaqqrVY=;
+        b=psOZisI/ZscZUhiRtyca6HJ+k8XOQJAYvFO7B1ESetRh7uQ22hyOHjJhl9ACv8DePQ
+         0ybNTDeF9qLP8biMEnpW9ae23ClAK9GYSrrq5RUeldA8/wBLDWoIWwMZUTLV+gtIR2H0
+         EAZVmtiixbZ4rSc5N32Fukkgz1DuD9r26U/28qODgtr/S9lES6WzSDeiIxxEbeNfVvyO
+         FhJXtuhkHe3Fu6GIwd5OnA1ipxDiw1OcsfJMwIZr5ypkmYluK0D4owH6r0m1yEs+b4H0
+         lumMC6v55l5fSGcQCplYqXKe3TUIT41905Hcu3DrjiSprS/Sb7yhS15ZJeyI6BmzV3Y8
+         soSg==
+X-Gm-Message-State: AHPjjUhLz6iNEvwoO0fFZlT4SufwvgWCtB2e/l485KUt4lUCuCFOLklW
+        jObOsk/tC9I3fLfWmobYoZJqG+uBjA==
+X-Google-Smtp-Source: AOwi7QASXim3CJOHi5+TZfmno92l9G29AhoK6WANyliG7XvrW8tTYHwLvIRPG7zzFHMTw4a8k6vBiqly9q5JiipJLjg=
+X-Received: by 10.107.183.23 with SMTP id h23mr571636iof.246.1504647545561;
+ Tue, 05 Sep 2017 14:39:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 87052C4E-9282-11E7-B17B-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Received: by 10.107.15.151 with HTTP; Tue, 5 Sep 2017 14:39:05 -0700 (PDT)
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Tue, 5 Sep 2017 14:39:05 -0700
+X-Google-Sender-Auth: EERB5l3bSawJsDb3I9jt3USXD1M
+Message-ID: <CA+55aFxW3qcETiMrNk5SqZU+_jtM2Rxeb3mhF=J=c0ChdGm1tg@mail.gmail.com>
+Subject: BUG: attempt to trim too many characters
+To:     Junio C Hamano <gitster@pobox.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+I just got this with
 
-> Similar to 65969d43d1 (merge: honor prepare-commit-msg hook, 2011-02-14)
-> merge should also honor the commit-msg hook; the reason is the same as
-> in that commit: When a merge is stopped due to conflicts or --no-commit,
-> the subsequent commit calls the commit-msg hook.  However, it is not
-> called after a clean merge. Fix this inconsistency by invoking the hook
-> after clean merges as well.
+   gitk --bisect
 
-The above reads better without "; the reason is the same as in that
-commit"---"Similar to", combined with the clean and concise
-explanation after the colon you have, sufficiently justifies why
-this is a good change.  
+while doing some bisection on my current kernel.
 
-Excellent job spotting the precedent and making it consistent ;-).
+It happens with "git rev-parse --bisect" too, but interestingly, "git
+log --bisect" works fine.
 
-> This change is motivated by Gerrits commit-msg hook to install a change-id
+I have not tried to figure out anything further, except that it was
+introduced by commit b9c8e7f2f ("prefix_ref_iterator: don't trim too
+much") and it happens with
 
-s/Gerrits/Gerrit's/ perhaps?
+   iter->iter0->refname = "refs/bisect/bad"
+   iter->trim = 15
 
-> trailer into the commit message. Without such a change id, Gerrit refuses
+(where 15 is also the same as the length of that refname).
 
-I do not live in Gerrit land and I do not know which one is the more
-preferred one, but be consistent between "change-id" and "change
-id".
+Not having time to chase this down any more, since I'm busy with the
+merge window (and that annoying bisect)
 
-> to accept (merge) commits by default, such that the inconsistency of
-> (not) running commit-msg hook between commit and merge leads to confusion
-> and might block people from getting their work done.
-
-Yup.  Nicely explained.
-
-I didn't check how "merge --continue" is implemented, but we need to
-behave exactly the same way over there, too.  Making sure that it is
-a case in t7504 may be a good idea, in addition to the test you
-added.
-
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  builtin/merge.c            |  8 ++++++++
->  t/t7504-commit-msg-hook.sh | 45 +++++++++++++++++++++++++++++++++++++++++----
->  2 files changed, 49 insertions(+), 4 deletions(-)
->
-> diff --git a/builtin/merge.c b/builtin/merge.c
-> index 7df3fe3927..087efd560d 100644
-> --- a/builtin/merge.c
-> +++ b/builtin/merge.c
-> @@ -73,6 +73,7 @@ static int show_progress = -1;
->  static int default_to_upstream = 1;
->  static int signoff;
->  static const char *sign_commit;
-> +static int no_verify;
->  
->  static struct strategy all_strategy[] = {
->  	{ "recursive",  DEFAULT_TWOHEAD | NO_TRIVIAL },
-> @@ -236,6 +237,7 @@ static struct option builtin_merge_options[] = {
->  	  N_("GPG sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
->  	OPT_BOOL(0, "overwrite-ignore", &overwrite_ignore, N_("update ignored files (default)")),
->  	OPT_BOOL(0, "signoff", &signoff, N_("add Signed-off-by:")),
-> +	OPT_BOOL(0, "no-verify", &no_verify, N_("bypass pre-commit and commit-msg hooks")),
-
-This allows "--no-no-verify", which may want to be eventually
-addressed (either by changing the code not to accept, or declaring
-that it is an intended behaviour); I do not offhand know for sure but I
-strong suspect "commit" shares the same issue, in which case this
-patch is perfectly fine and addressing "--no-no-verify" should be
-done for both of them in a separate follow-up topic.  #leftoverbits
-
-Thanks.  I'll be online starting today, but please expect slow
-responses for a few days as there is significant backlog.
-
+              Linus
