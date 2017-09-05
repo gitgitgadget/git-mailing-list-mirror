@@ -2,72 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65265208CD
-	for <e@80x24.org>; Tue,  5 Sep 2017 02:20:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 759021F4DD
+	for <e@80x24.org>; Tue,  5 Sep 2017 08:45:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753773AbdIECUR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Sep 2017 22:20:17 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56693 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753724AbdIECUQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Sep 2017 22:20:16 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5D34C9E90F;
-        Mon,  4 Sep 2017 22:20:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=qwwUHJ7mLwgg7Zde4nPadtGlOX4=; b=hUkk9C93glcZ4G5hRPgn
-        6CPTIlwqg7dp94wcXK0jPah7JmzQCm9v4m5cU+v9Mqm0pjvxUWGPPHrQ8stZ9xgQ
-        86FpS2nxhMKUf5XPWbQYJ8YDHv3dX+WEXVXSYW+IZ9iSTkcSFlq5SiUIT7AP/PGJ
-        xScTxn6fHfDZxonGRGLIScE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         q=dns; s=sasl; b=kyCheHhnvYKGF2n54lO1f9he66x1eozJ/1L8FcaJnc2eq9
-        rojsRxSq44b4B2ZfMMAfjluKyk5kxmetFnB+D+OdVkCFtejUgUretx9yny6CV+GT
-        ukGVBbzAxQTMnb+LWsQWsNcX79Nv51l4icT02aG6cvQ1rXRSYiNgh8vWsdmWw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 561379E90E;
-        Mon,  4 Sep 2017 22:20:16 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BAF609E90D;
-        Mon,  4 Sep 2017 22:20:15 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "josephpattara ." <josephpattara@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: HP-UX (git-2.14.0) Depot File / Source Code Build throws SHA1 Error
-References: <CAC-YKd1sTQLMUZ6k+-4K09=NOa_HaOf1gp8H51VNZjziUrxOfA@mail.gmail.com>
-        <20170901212620.w4ml5umoydbtuspw@sigill.intra.peff.net>
-        <CAC-YKd0dDDJ_YkT=+Euqc=AMuTYobV-dWdKHkA5SgKJVKwMeug@mail.gmail.com>
-Date:   Tue, 05 Sep 2017 11:20:14 +0900
-Message-ID: <xmqqd175dgyp.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1750944AbdIEIpU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Sep 2017 04:45:20 -0400
+Received: from cloud.peff.net ([104.130.231.41]:56984 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1750891AbdIEIpO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Sep 2017 04:45:14 -0400
+Received: (qmail 17808 invoked by uid 109); 5 Sep 2017 08:45:09 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 05 Sep 2017 08:45:09 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6873 invoked by uid 111); 5 Sep 2017 08:45:41 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Tue, 05 Sep 2017 04:45:41 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Sep 2017 04:45:07 -0400
+Date:   Tue, 5 Sep 2017 04:45:07 -0400
+From:   Jeff King <peff@peff.net>
+To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
+Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v3 1/3] refs/files-backend: add longer-scoped copy of
+ string to list
+Message-ID: <20170905084507.wntm3bfzfezgimcz@sigill.intra.peff.net>
+References: <CAN0heSqn59sFF3A-eQ593G+ZDWnO9pKM5F=sgiSQk+prUr-nSQ@mail.gmail.com>
+ <4b4c0d178ad2216eecbc49fb6f54dd8a1d1ac119.1504024261.git.martin.agren@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C12DB8AC-91E0-11E7-BCA7-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <4b4c0d178ad2216eecbc49fb6f54dd8a1d1ac119.1504024261.git.martin.agren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"josephpattara ." <josephpattara@gmail.com> writes:
+On Tue, Aug 29, 2017 at 07:18:22PM +0200, Martin Ågren wrote:
 
-> Firstly, I could see the SHA1 hash was definitely wrong.
-> -bash-4.3$ echo foo | ./git hash-object --stdin
-> 408935f8873a5ef17ef10cf2a316e51937e90f0b
-> ...
-> But I can confirm with the adapated source code from HPUX connect and
-> using the  OPENSSL_SHA1=Yes I am able to build a working git locally.
+> Observe that split_symref_update() creates a `new_update`-object through
+> ref_transaction_add_update(), after which `new_update->refname` is a
+> copy of `referent`. The difference is, this copy will be freed, and it
+> will be freed *after* `affected_refnames` has been cleared.
+> 
+> Rearrange the handling of `referent`, so that we don't add it directly
+> to `affected_refnames`. Instead, first just check whether `referent`
+> exists in the string list, and later add `new_update->refname`.
 
-I do not know if your HP-UX on Itanium is big/little endian (IIRC it
-is selectable at the CPU level), but my blind guess is that this
-might help before building without OPENSSL_SHA1=YesPlease?
+Coincidentally[1] I came across this same leak, and my solution ended up
+slightly different. I'll share it here in case it's of interest.
 
-        cat >>config.mak <<-\EOF
-        BASIC_CFLAGS += -DSHA1DC_FORCE_BIGENDIAN=1
-        EOF
+In your solution we end up searching the string list twice: once to see
+if we have the item, and then again to insert it. Whereas in the
+original we did both with a single search.
+
+But we can observe that either:
+
+  1. The item already existed, in which case our insert was a noop, and
+     we're good.
+
+or
+
+  2. We inserted it, in which case we proceed with creating new_update.
+
+     We can then in O(1) replace the pointer in the string list item
+     with the storage in new_update. We know we're not violating any
+     string_list invariants because the strings contain the same bytes.
+
+I.e.:
+
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 9266f5ab9d..1d16c1b33e 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -2178,6 +2178,11 @@ static int split_symref_update(struct files_ref_store *refs,
+ 	update->flags |= REF_LOG_ONLY | REF_NODEREF;
+ 	update->flags &= ~REF_HAVE_OLD;
+ 
++	/*
++	 * Re-point at the storage provided by our ref_update, which we know
++	 * will last as long as the affected_refnames list.
++	 */
++	item->string = new_update->refname;
+ 	item->util = new_update;
+ 
+ 	return 0;
+
+It feels pretty dirty, though. It would certainly be a bug if we ever
+decided to switch affected_refnames to duplicate its strings.
+
+So given that your solution is only a constant-time factor worse in
+efficiency, we should probably prefer it as the more maintainable
+option.
+
+-Peff
+
+[1] It's not really a coincidence, of course. All the recent leak
+    discussion has got both of us prodding at Git with various tools. :)
