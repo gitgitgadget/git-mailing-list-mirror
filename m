@@ -6,29 +6,29 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 48FDD208E3
-	for <e@80x24.org>; Tue,  5 Sep 2017 12:15:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A199208E3
+	for <e@80x24.org>; Tue,  5 Sep 2017 12:15:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751580AbdIEMP1 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Sep 2017 08:15:27 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57218 "HELO cloud.peff.net"
+        id S1751479AbdIEMPE (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Sep 2017 08:15:04 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57200 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751604AbdIEMPX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Sep 2017 08:15:23 -0400
-Received: (qmail 31419 invoked by uid 109); 5 Sep 2017 12:15:23 -0000
+        id S1750932AbdIEMPC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Sep 2017 08:15:02 -0400
+Received: (qmail 31386 invoked by uid 109); 5 Sep 2017 12:15:02 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 05 Sep 2017 12:15:23 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 05 Sep 2017 12:15:02 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12411 invoked by uid 111); 5 Sep 2017 12:15:55 -0000
+Received: (qmail 12370 invoked by uid 111); 5 Sep 2017 12:15:34 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Tue, 05 Sep 2017 08:15:55 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Tue, 05 Sep 2017 08:15:34 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Sep 2017 08:15:21 -0400
-Date:   Tue, 5 Sep 2017 08:15:21 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Sep 2017 08:15:00 -0400
+Date:   Tue, 5 Sep 2017 08:15:00 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 20/20] stop leaking lock structs in some simple cases
-Message-ID: <20170905121521.67kehubcat5klvix@sigill.intra.peff.net>
+Subject: [PATCH 15/20] tempfile: use list.h for linked list
+Message-ID: <20170905121500.sl5vvgnguux4mtn5@sigill.intra.peff.net>
 References: <20170905121353.62zg3mtextmq5zrs@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -39,211 +39,199 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Now that it's safe to declare a "struct lock_file" on the
-stack, we can do so (and avoid an intentional leak). These
-leaks were found by running t0000 and t0001 under valgrind
-(though certainly other similar leaks exist and just don't
-happen to be exercised by those tests).
+The tempfile API keeps to-be-cleaned tempfiles in a
+singly-linked list and never removes items from the list.  A
+future patch would like to start removing items, but removal
+from a singly linked list is O(n), as we have to walk the
+list to find the predecessor element. This means that a
+process which takes "n" simultaneous lockfiles (for example,
+an atomic transaction on "n" refs) may end up quadratic in
+"n".
 
-Initializing the lock_file's inner tempfile with NULL is not
-strictly necessary in these cases, but it's a good practice
-to model.  It means that if we were to call a function like
-rollback_lock_file() on a lock that was never taken in the
-first place, it becomes a quiet noop (rather than undefined
-behavior).
+Before we start allowing items to be removed, it would be
+nice to have a way to cover this case in linear time.
 
-Likewise, it's always safe to rollback_lock_file() on a file
-that has already been committed or deleted, since that
-operation is a noop on an inactive lockfile (and that's why
-the case in config.c can drop the "if (lock)" check as we
-move away from using a pointer).
+The simplest solution is to make an assumption about the
+order in which tempfiles are added and removed from the
+list. If both operations iterate over the tempfiles in the
+same order, then by putting new items at the end of the list
+our removal search will always find its items at the
+beginning of the list. And indeed, that would work for the
+case of refs. But it creates a hidden dependency between
+unrelated parts of the code. If anybody changes the ref code
+(or if we add a new caller that opens multiple simultaneous
+tempfiles) they may unknowingly introduce a performance
+regression.
+
+Another solution is to use a better data structure. A
+doubly-linked list works fine, and we already have an
+implementation in list.h. But there's one snag: the elements
+of "struct tempfile" are all marked as "volatile", since a
+signal handler may interrupt us and iterate over the list at
+any moment (even if we were in the middle of adding a new
+entry).
+
+We can declare a "volatile struct list_head", but we can't
+actually use it with the normal list functions. The compiler
+complains about passing a pointer-to-volatile via a regular
+pointer argument. And rightfully so, as the sub-function
+would potentially need different code to deal with the
+volatile case.
+
+That leaves us with a few options:
+
+  1. Drop the "volatile" modifier for the list items.
+
+     This is probably a bad idea. I checked the assembly
+     output from "gcc -O2", and the "volatile" really does
+     impact the order in which it updates memory.
+
+  2. Use macros instead of inline functions. The irony here
+     is that list.h is entirely implemented as trivial
+     inline functions. So we basically are already
+     generating custom code for each call. But sadly there's no
+     way in C to declare the inline function to take a more
+     generic type.
+
+     We could do so by switching the inline functions to
+     macros, but it does make the end result harder to read.
+     And it doesn't fully solve the problem (for instance,
+     the declaration of list_head needs to change so that
+     its "prev" and "next" pointers point to other volatile
+     structs).
+
+  3. Don't use list.h, and just make our own ad-hoc
+     doubly-linked list. It's not that much code to
+     implement the basics that we need here. But if we're
+     going to do so, why not add the few extra lines
+     required to model it after the actual list.h interface?
+     We can even reuse a few of the macro helpers.
+
+So this patch takes option 3, but actually implements a
+parallel "volatile list" interface in list.h, where it could
+potentially be reused by other code. This implements just
+enough for tempfile.c's use, though we could easily port
+other functions later if need be.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/reset.c        |  6 +++---
- builtin/update-index.c | 11 ++++-------
- cache-tree.c           | 14 ++++----------
- config.c               | 24 +++++++-----------------
- 4 files changed, 18 insertions(+), 37 deletions(-)
+ list.h     | 38 ++++++++++++++++++++++++++++++++++++++
+ tempfile.c | 13 +++++++------
+ tempfile.h |  4 +++-
+ 3 files changed, 48 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/reset.c b/builtin/reset.c
-index d72c7d1c96..f1af9345e4 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -367,8 +367,8 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 		die_if_unmerged_cache(reset_type);
- 
- 	if (reset_type != SOFT) {
--		struct lock_file *lock = xcalloc(1, sizeof(*lock));
--		hold_locked_index(lock, LOCK_DIE_ON_ERROR);
-+		struct lock_file lock = LOCK_INIT;
-+		hold_locked_index(&lock, LOCK_DIE_ON_ERROR);
- 		if (reset_type == MIXED) {
- 			int flags = quiet ? REFRESH_QUIET : REFRESH_IN_PORCELAIN;
- 			if (read_from_tree(&pathspec, &oid, intent_to_add))
-@@ -384,7 +384,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 				die(_("Could not reset index file to revision '%s'."), rev);
- 		}
- 
--		if (write_locked_index(&the_index, lock, COMMIT_LOCK))
-+		if (write_locked_index(&the_index, &lock, COMMIT_LOCK))
- 			die(_("Could not write new index file."));
- 	}
- 
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index d562f2ec69..655e6d60d3 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -915,7 +915,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 	struct refresh_params refresh_args = {0, &has_errors};
- 	int lock_error = 0;
- 	int split_index = -1;
--	struct lock_file *lock_file;
-+	struct lock_file lock_file = LOCK_INIT;
- 	struct parse_opt_ctx_t ctx;
- 	strbuf_getline_fn getline_fn;
- 	int parseopt_state = PARSE_OPT_UNKNOWN;
-@@ -1014,11 +1014,8 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 
- 	git_config(git_default_config, NULL);
- 
--	/* We can't free this memory, it becomes part of a linked list parsed atexit() */
--	lock_file = xcalloc(1, sizeof(struct lock_file));
--
- 	/* we will diagnose later if it turns out that we need to update it */
--	newfd = hold_locked_index(lock_file, 0);
-+	newfd = hold_locked_index(&lock_file, 0);
- 	if (newfd < 0)
- 		lock_error = errno;
- 
-@@ -1153,11 +1150,11 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 				exit(128);
- 			unable_to_lock_die(get_index_file(), lock_error);
- 		}
--		if (write_locked_index(&the_index, lock_file, COMMIT_LOCK))
-+		if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
- 			die("Unable to write new index file");
- 	}
- 
--	rollback_lock_file(lock_file);
-+	rollback_lock_file(&lock_file);
- 
- 	return has_errors ? 1 : 0;
+diff --git a/list.h b/list.h
+index a226a870dc..eb601192f4 100644
+--- a/list.h
++++ b/list.h
+@@ -163,4 +163,42 @@ static inline void list_replace_init(struct list_head *old,
+ 	INIT_LIST_HEAD(old);
  }
-diff --git a/cache-tree.c b/cache-tree.c
-index 2690113a6a..71d092ed51 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -603,16 +603,10 @@ static struct cache_tree *cache_tree_find(struct cache_tree *it, const char *pat
- int write_index_as_tree(unsigned char *sha1, struct index_state *index_state, const char *index_path, int flags, const char *prefix)
+ 
++/*
++ * This is exactly the same as a normal list_head, except that it can be
++ * declared volatile (e.g., if you have a list that may be accessed from signal
++ * handlers).
++ */
++struct volatile_list_head {
++	volatile struct volatile_list_head *next, *prev;
++};
++
++#define VOLATILE_LIST_HEAD(name) \
++	volatile struct volatile_list_head name = { &(name), &(name) }
++
++static inline void __volatile_list_del(volatile struct volatile_list_head *prev,
++				       volatile struct volatile_list_head *next)
++{
++	next->prev = prev;
++	prev->next = next;
++}
++
++static inline void volatile_list_del(volatile struct volatile_list_head *elem)
++{
++	__volatile_list_del(elem->prev, elem->next);
++}
++
++static inline int volatile_list_empty(volatile struct volatile_list_head *head)
++{
++	return head == head->next;
++}
++
++static inline void volatile_list_add(volatile struct volatile_list_head *newp,
++				     volatile struct volatile_list_head *head)
++{
++	head->next->prev = newp;
++	newp->next = head->next;
++	newp->prev = head;
++	head->next = newp;
++}
++
+ #endif /* LIST_H */
+diff --git a/tempfile.c b/tempfile.c
+index e655e28477..11bda824cf 100644
+--- a/tempfile.c
++++ b/tempfile.c
+@@ -55,14 +55,16 @@
+ #include "tempfile.h"
+ #include "sigchain.h"
+ 
+-static struct tempfile *volatile tempfile_list;
++static VOLATILE_LIST_HEAD(tempfile_list);
+ 
+ static void remove_tempfiles(int in_signal_handler)
  {
- 	int entries, was_valid, newfd;
--	struct lock_file *lock_file;
-+	struct lock_file lock_file = LOCK_INIT;
- 	int ret = 0;
+ 	pid_t me = getpid();
+-	struct tempfile *volatile p;
++	volatile struct volatile_list_head *pos;
++
++	list_for_each(pos, &tempfile_list) {
++		struct tempfile *p = list_entry(pos, struct tempfile, list);
  
--	/*
--	 * We can't free this memory, it becomes part of a linked list
--	 * parsed atexit()
--	 */
--	lock_file = xcalloc(1, sizeof(struct lock_file));
--
--	newfd = hold_lock_file_for_update(lock_file, index_path, LOCK_DIE_ON_ERROR);
-+	newfd = hold_lock_file_for_update(&lock_file, index_path, LOCK_DIE_ON_ERROR);
+-	for (p = tempfile_list; p; p = p->next) {
+ 		if (!is_tempfile_active(p) || p->owner != me)
+ 			continue;
  
- 	entries = read_index_from(index_state, index_path);
- 	if (entries < 0) {
-@@ -632,7 +626,7 @@ int write_index_as_tree(unsigned char *sha1, struct index_state *index_state, co
- 			goto out;
- 		}
- 		if (0 <= newfd) {
--			if (!write_locked_index(index_state, lock_file, COMMIT_LOCK))
-+			if (!write_locked_index(index_state, &lock_file, COMMIT_LOCK))
- 				newfd = -1;
- 		}
- 		/* Not being able to write is fine -- we are only interested
-@@ -657,7 +651,7 @@ int write_index_as_tree(unsigned char *sha1, struct index_state *index_state, co
- 
- out:
- 	if (0 <= newfd)
--		rollback_lock_file(lock_file);
-+		rollback_lock_file(&lock_file);
- 	return ret;
- }
- 
-diff --git a/config.c b/config.c
-index d0d8ce823a..7931182a54 100644
---- a/config.c
-+++ b/config.c
-@@ -2450,7 +2450,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
+@@ -95,7 +97,7 @@ static void remove_tempfiles_on_signal(int signo)
+  */
+ static void prepare_tempfile_object(struct tempfile *tempfile)
  {
- 	int fd = -1, in_fd = -1;
- 	int ret;
--	struct lock_file *lock = NULL;
-+	struct lock_file lock = LOCK_INIT;
- 	char *filename_buf = NULL;
- 	char *contents = NULL;
- 	size_t contents_sz;
-@@ -2469,8 +2469,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 	 * The lock serves a purpose in addition to locking: the new
- 	 * contents of .git/config will be written into it.
- 	 */
--	lock = xcalloc(1, sizeof(struct lock_file));
--	fd = hold_lock_file_for_update(lock, config_filename, 0);
-+	fd = hold_lock_file_for_update(&lock, config_filename, 0);
- 	if (fd < 0) {
- 		error_errno("could not lock config file %s", config_filename);
- 		free(store.key);
-@@ -2583,8 +2582,8 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 		close(in_fd);
- 		in_fd = -1;
+-	if (!tempfile_list) {
++	if (volatile_list_empty(&tempfile_list)) {
+ 		/* One-time initialization */
+ 		sigchain_push_common(remove_tempfiles_on_signal);
+ 		atexit(remove_tempfiles_on_exit);
+@@ -110,8 +112,7 @@ static void prepare_tempfile_object(struct tempfile *tempfile)
+ 		tempfile->active = 0;
+ 		tempfile->owner = 0;
+ 		strbuf_init(&tempfile->filename, 0);
+-		tempfile->next = tempfile_list;
+-		tempfile_list = tempfile;
++		volatile_list_add(&tempfile->list, &tempfile_list);
+ 		tempfile->on_list = 1;
+ 	} else if (tempfile->filename.len) {
+ 		/* This shouldn't happen, but better safe than sorry. */
+diff --git a/tempfile.h b/tempfile.h
+index d30663182d..2ee24f4380 100644
+--- a/tempfile.h
++++ b/tempfile.h
+@@ -1,6 +1,8 @@
+ #ifndef TEMPFILE_H
+ #define TEMPFILE_H
  
--		if (chmod(get_lock_file_path(lock), st.st_mode & 07777) < 0) {
--			error_errno("chmod on %s failed", get_lock_file_path(lock));
-+		if (chmod(get_lock_file_path(&lock), st.st_mode & 07777) < 0) {
-+			error_errno("chmod on %s failed", get_lock_file_path(&lock));
- 			ret = CONFIG_NO_WRITE;
- 			goto out_free;
- 		}
-@@ -2639,28 +2638,19 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 		contents = NULL;
- 	}
++#include "list.h"
++
+ /*
+  * Handle temporary files.
+  *
+@@ -81,7 +83,7 @@
+  */
  
--	if (commit_lock_file(lock) < 0) {
-+	if (commit_lock_file(&lock) < 0) {
- 		error_errno("could not write config file %s", config_filename);
- 		ret = CONFIG_NO_WRITE;
--		lock = NULL;
- 		goto out_free;
- 	}
- 
--	/*
--	 * lock is committed, so don't try to roll it back below.
--	 * NOTE: Since lockfile.c keeps a linked list of all created
--	 * lock_file structures, it isn't safe to free(lock).  It's
--	 * better to just leave it hanging around.
--	 */
--	lock = NULL;
- 	ret = 0;
- 
- 	/* Invalidate the config cache */
- 	git_config_clear();
- 
- out_free:
--	if (lock)
--		rollback_lock_file(lock);
-+	rollback_lock_file(&lock);
- 	free(filename_buf);
- 	if (contents)
- 		munmap(contents, contents_sz);
-@@ -2669,7 +2659,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 	return ret;
- 
- write_err_out:
--	ret = write_error(get_lock_file_path(lock));
-+	ret = write_error(get_lock_file_path(&lock));
- 	goto out_free;
- 
- }
+ struct tempfile {
+-	struct tempfile *volatile next;
++	volatile struct volatile_list_head list;
+ 	volatile sig_atomic_t active;
+ 	volatile int fd;
+ 	FILE *volatile fp;
 -- 
 2.14.1.721.gc5bc1565f1
+
