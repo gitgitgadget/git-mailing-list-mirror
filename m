@@ -2,114 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,PI_IMPORTANCE_HIGH,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 339B4208CD
-	for <e@80x24.org>; Mon,  4 Sep 2017 22:57:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5567A208CD
+	for <e@80x24.org>; Tue,  5 Sep 2017 02:20:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754014AbdIDW5r (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Sep 2017 18:57:47 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:34492 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753997AbdIDW5q (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Sep 2017 18:57:46 -0400
-Received: by mail-wm0-f67.google.com with SMTP id r75so1503333wmf.1
-        for <git@vger.kernel.org>; Mon, 04 Sep 2017 15:57:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=UlTey3xFowMCg4HNeAu+x4HSrZzSggNHlFKG4MOARJk=;
-        b=KOKnZD+poMJ2NMJ3+iulBfTDuVdXHEoOKzzCbXLLJQwl1Ir14EefM5/rLHJ1TDbr+z
-         2cDjSNXTeoR3KFWIZBdeprEBM7cdzvwQ51fq9TdayLmrrer5q0rTAKFqyo+hd+mdUST2
-         t/nGPbt8zrHu0HZF6N3yQOi0T1RcNJ1UNaOS024X9RXg/kdYTxgi3QV/Bb9CeZ2BTYIR
-         DwXo4vqKODgZxl2McCzNrCwpwKHMsObKqflB5SfZTB1gbJiLbreok4v5q2vM5NWwO7Mq
-         yiBNb+lQ/Q7vds8folXHDpnJ/Ynkuo+gSTEYkiobIgsxCId8IasNYr2tTzcopD6hqCc+
-         xH/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=UlTey3xFowMCg4HNeAu+x4HSrZzSggNHlFKG4MOARJk=;
-        b=GXWx6VXSsLapYQU5fzu2yJ0sc3JYd0G5JYMzdwUnqDvMKFzIERhSE5UFNDeD0onjos
-         jpAGiLbN7Kroy4EbQPAP1db6IHlJ7tt0RFGspFT8jAIJlaQ9ZGNFih/rPPLIljUXw2S4
-         o1DhW/PCC7yHmmCFQwE7rl/+omLtD8DqO4Vz67VXK9ohT7Tgww0uPer84H7sTI/bY5QW
-         lfI+flYjxhCvwf6MRUhxo9MonAm955OdEvt9evuOWeZHItsneLOuj/F+++t/q2nEXVj7
-         ZjY9objenBumtMtmvakmhr8CmThhPC+0qM0m+oCFznei9a2/hdPH3bnUusrkFv4kAjbL
-         rAvw==
-X-Gm-Message-State: AHPjjUg1q0fT3xV/1YOe2Ca0D02FoM+HoBivjUjhO7Uwo2z3AhWAgake
-        fAQaPUuDLpTJgwlrXFw=
-X-Google-Smtp-Source: ADKCNb6yH0Eto12D3PjYsrjTXdfC09TkjVDiBdGbKZjPaEDE1rh4DDtJPkcfX+CKkHubwvUYEq0zNQ==
-X-Received: by 10.28.62.65 with SMTP id l62mr1531332wma.47.1504565865374;
-        Mon, 04 Sep 2017 15:57:45 -0700 (PDT)
-Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
-        by smtp.gmail.com with ESMTPSA id p65sm1950834wmg.44.2017.09.04.15.57.43
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 04 Sep 2017 15:57:44 -0700 (PDT)
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
-        Kevin Willford <kewillf@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] read-cache: fix index corruption with index v4
-Date:   Mon,  4 Sep 2017 23:58:06 +0100
-Message-Id: <20170904225807.22139-1-t.gummerer@gmail.com>
-X-Mailer: git-send-email 2.14.1.480.gb18f417b89
+        id S1753639AbdIECUC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Sep 2017 22:20:02 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58069 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753511AbdIECUB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Sep 2017 22:20:01 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AA408A65D8;
+        Mon,  4 Sep 2017 22:19:58 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=tNFffVW4K6qNpNyZpoasE81Tru4=; b=s7+Yiefzkq95y2f9Bd6a
+        y/drBkF7Kj9yyZT+PMZhtRVds2H7fHoSFfW6zS0ezIV54N4P+MUB3uUEVlaSHSIf
+        Lobtx6O+xFqZ5+PQT35JTSprbb4gZwenLabrHX7qaJkCFepeKB40+n7XYcGDsufW
+        VA75P0j4Qj1LZjDOMgZK2SE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=d/ZVWr0lUH0jy1IUivCaCFlE6zSBoY4c1IOvEEuIq1rGiB
+        XLGfbbNf9cXKon0/pdl821KGRPgOt4ft4meMVVtmCu5ittGBTm6jH26LXcLsz5Ot
+        Aw2PYo49Um4nbZ7Qabu8sCdZDyV1U7qwPlfxKqcQFQQu/EXI0MdAGqqDf15pY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A22D4A65D7;
+        Mon,  4 Sep 2017 22:19:58 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F1933A65D6;
+        Mon,  4 Sep 2017 22:19:57 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: Git in Outreachy round 15?
+References: <20170901223059.xsbcpqff45mnblnj@sigill.intra.peff.net>
+Importance: high
+Date:   Tue, 05 Sep 2017 11:19:56 +0900
+Message-ID: <xmqqk21ddgz7.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: B6961790-91E0-11E7-BA78-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-ce012deb98 ("read-cache: avoid allocating every ondisk entry when
-writing", 2017-08-21) changed the way cache entries are written to the
-index file.  While previously it wrote the name to an struct that was
-allocated using xcalloc(), it now uses ce_write() directly.  Previously
-ce_namelen - common bytes were written to the cache entry, which would
-automatically make it nul terminated, as it was allocated using calloc.
+Jeff King <peff@peff.net> writes:
 
-Now we are writing ce_namelen - common + 1 bytes directly from the
-ce->name to the index.  As ce->name is however not nul terminated, and
-index-v4 needs the nul terminator to split between one index entry and
-the next, this would end up in a corrupted index.
+>   2. Do we have the money (and want to spend it on this)?
+>
+>      The Git project does have money to cover at least one intern.
+>
+>      I'm looking into securing outside funding, so that we don't have to
+>      use project funds. If for whatever reason that doesn't happen, is
+>      this something we want to spend project money on?
+>
+>      (My opinion is yes, but I'd like to hear what others in the
+>      community think).
 
-Fix that by only writing ce_namelen - common bytes directly from
-ce->name to the index, and adding the nul terminator in an extra call to
-ce_write.
+$6,500 is a bargain if we could guide an intern and help set the
+course to become a competent open source person.  It would be nice
+if the intern stays in our community, but I do not even mind if the
+investment follows the intern elsewhere and enrich other open source
+projects.
 
-This bug was turned up by setting TEST_GIT_INDEX_VERSION = 4 in
-config.mak and running the test suite (t1700 specifically broke).
+It is a different matter if our mentor pool is rich enough to give
+sufficient support and training to the intern, but if you are
+volunteering to mentor, I wouldn't have any worries.  I do agree
+with you that it would be a good idea to polish the project-ideas
+page.
 
-Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
----
-
-I unfortunately didn't have more time to dig so
-
-> As ce->name is however not nul terminated
-
-just comes from my memory and from the patch below actually fixing the
-corruption, so it's really the most likely cause.  Would be great if
-someone who can remember more about the index could confirm that this
-is indeed the case.
-
- read-cache.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/read-cache.c b/read-cache.c
-index 40da87ea71..80830ddcfc 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -2103,7 +2103,9 @@ static int ce_write_entry(git_SHA_CTX *c, int fd, struct cache_entry *ce,
- 		if (!result)
- 			result = ce_write(c, fd, to_remove_vi, prefix_size);
- 		if (!result)
--			result = ce_write(c, fd, ce->name + common, ce_namelen(ce) - common + 1);
-+			result = ce_write(c, fd, ce->name + common, ce_namelen(ce) - common);
-+		if (!result)
-+			result = ce_write(c, fd, "\0", 1);
- 
- 		strbuf_splice(previous_name, common, to_remove,
- 			      ce->name + common, ce_namelen(ce) - common);
--- 
-2.14.1.480.gb18f417b89
-
+Thanks.
