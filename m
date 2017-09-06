@@ -6,87 +6,105 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7AC15209AB
-	for <e@80x24.org>; Wed,  6 Sep 2017 19:52:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A64451F4DD
+	for <e@80x24.org>; Wed,  6 Sep 2017 19:58:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752408AbdIFTwJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Sep 2017 15:52:09 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59661 "EHLO
+        id S1752350AbdIFT6y (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Sep 2017 15:58:54 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55542 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752306AbdIFTwI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Sep 2017 15:52:08 -0400
+        with ESMTP id S1752306AbdIFT6x (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Sep 2017 15:58:53 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6819B98A02;
-        Wed,  6 Sep 2017 15:52:08 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4B102A31B2;
+        Wed,  6 Sep 2017 15:58:53 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=03zUyexOTFoTxxfU4RFENNQ7t
-        QU=; b=NJk5c6KS9UyjiMqoXDQ2jywaPsg5TRsvRlleVaLfY7rEI1OqDZQp/a8G5
-        SspJb+4UZQ5gNnJs1IqwwCuqci/tCYbLxwGkEE5qTVP5YrYMJbHCChrywo72hTZi
-        QPXHsur9IeRVoslUFvj+o377FiV/aZT562yuDBpTk+4y36lAWI=
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=AAr5v6XHSCIhryYwxDCeRl/1MNg=; b=PLePd8mRXPoqAGCkG6E2
+        yKDM6Fp5CSOdhuQUedog1UdgYnO1Pm1zLSSIZNKHlzxB/l1+/qxMmNw2HVsf4p9k
+        KbOighsRkJB4nn8gIMLqsyN2tBeEaKAEtUEvuuot+DOYS7bxF35pQ2LfbhNoUeXM
+        paPO/1kZvazkBnH2mptlcBc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; q=dns; s=sasl; b=fAPJ86Ij36PzfHIEcdE
-        fiu46zaV4BcvSj+Obvs6h0KxEYuSOw6CYfSZ5vg5EzmawGpyFqWLqIJmhyT+RdNl
-        zQ96k3Cu5CYUlARyzRG+ux8FhQwFt/t+7LSGvdmUaQocE30OEVnsi2CtXctDelqk
-        EAiT9OLjyF9IW88vXfaJSJNM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5EFA598A01;
-        Wed,  6 Sep 2017 15:52:08 -0400 (EDT)
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=XXZJqFPj2ZEno6Ic2hokHXMsoS1gjLlMC/VxP4dTeCKobN
+        tUt+iQo1l4mM0fZMHkuaKqNWDa+NIRtW89Hs0d9o2MWYziaPd4VMzdvnGcMk62i9
+        N606g9CjeRMBy7L5ZXUoqwwmfmp9nEfNMoGHNtxPFphBOCeD2frWq9gAxpNBQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 43460A31B1;
+        Wed,  6 Sep 2017 15:58:53 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B4FE798A00;
-        Wed,  6 Sep 2017 15:52:07 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B1970A31B0;
+        Wed,  6 Sep 2017 15:58:52 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v3 1/3] refs/files-backend: add longer-scoped copy of string to list
-References: <CAN0heSqn59sFF3A-eQ593G+ZDWnO9pKM5F=sgiSQk+prUr-nSQ@mail.gmail.com>
-        <4b4c0d178ad2216eecbc49fb6f54dd8a1d1ac119.1504024261.git.martin.agren@gmail.com>
-        <91e365b5-6a5d-1e1c-ab7a-579efa7c1ae8@alum.mit.edu>
-        <CAN0heSqa8OnPnkd1xbyZ=QN9qg_8OaxBYnwzOZDDA3g+uGE71g@mail.gmail.com>
-        <xmqq60cxcvjk.fsf@gitster.mtv.corp.google.com>
-        <CAN0heSqnrPUEgP-BgvuHuVrDG2ifuHHDOPPmxiXJ73u4-PrOng@mail.gmail.com>
-        <20170905203622.6fs3hr7zfa7mwpqn@sigill.intra.peff.net>
-        <xmqqmv68bzvj.fsf@gitster.mtv.corp.google.com>
-        <CAN0heSr0AWj-QwchX2DPzkZs9cx1gsfUTevN4JD1Ze=2t-YZiQ@mail.gmail.com>
-Date:   Thu, 07 Sep 2017 04:52:06 +0900
-Message-ID: <xmqqtw0f4nbt.fsf@gitster.mtv.corp.google.com>
+To:     Robert Dailey <rcdailey.lists@gmail.com>
+Cc:     Git <git@vger.kernel.org>
+Subject: Re: gitmodules below root directory
+References: <CAHd499AuoZ-89mpnVkMhxaDT44SRNT2xWE7sykcaP8n5xTRd-g@mail.gmail.com>
+Date:   Thu, 07 Sep 2017 04:58:51 +0900
+Message-ID: <xmqqk21b4n0k.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: DD434856-933C-11E7-9ECF-9D2B0D78B957-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: CEA6C222-933D-11E7-92C1-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin =C3=85gren <martin.agren@gmail.com> writes:
+Robert Dailey <rcdailey.lists@gmail.com> writes:
 
-> Junio: The topic is in pu as ma/split-symref-update-fix. Re-roll or new
-> topic or as a separate "patch 4/3" for you to place on top, any
-> preference?
+> The gitmodules documentation[1] states that the .gitmodules file is at
+> the root. However, it would be nice if this could be supported in any
+> directory similar to how .gitignore works.
 
-Until a topic hits 'next', you solely own it and it is mostly up to
-you how to go about improving it.  My preference would be much less
-relevant than what the end result would require, i.e....
+I have a mild suspicion that there would be a huge impedance
+mismatch between what gitmodules file is meant to do and the way
+ignore/attribute setting is done.
 
-> If we re-roll, would you prefer Peff's much smaller take on patch 2
-> (strbuf_release where it matters, instead of sprinkling "goto out" all
-> over)? I think me and him agreed that we'd be fine either way. I'd reus=
-e
-> my commit message, if I get his sign-off and "From:".
+When the mechanism is primarily about expressing a few generic
+traits that are shared by things that can be grouped by paths
+(e.g. "all paths whose pathnames match '*.py' pattern contain text",
+"all paths in sub/ directory are ignored"), it may make sense to
+spread the information across multiple .gitignore files and make the
+closest one take precedence over the further ones.  Even though
+allowing multiple sources of information spread over the tree leads
+to end-user confusion (e.g. "why is this path ignored?", which
+triggered the debugging aid "git check-ignore"), such a grouping by
+pattern matching on paths (which is what makes "closest file take
+precedence" meaningful) to assign generic traits (e.g. "it's text")
+makes it worthwhile by allowing to express the rules more concisely.
 
-... if we take Peff's approach, then rerolling the whole thing would
-be the only approach that makes sense---incremental update would
-make the resulting history less readable.  Between two approaches I
-do not have a strong preference either way---it's a choice that can
-be made between you and Peff.
+Compared to that, what .gitmodules file expresses is more specific
+to each submodule---no two submodules in your single superproject
+would share the same URL, unless you are doing something quite
+unusual, for example.  Having a single file also means that updating
+is much simpler---"git submodule add" and other things do not have
+to choose among .gitmodules, a/.gitmodules and a/b/.gitmodules when
+they update an entry for the submodule at path "a/b/c".
 
-> Obviously, if Michael or anyone else has any input, I'm open to that as
-> well..
+Having said that, I do not think the current ".gitmodules must be at
+the top and nothing else matters" is ideal.  A possible change that
+I suspect may make more sense is to get rid of .gitmodules file,
+instead of spreading more of them all over the tree.
 
-Sure.
+The current gitlink implementation records only the "what commit
+from the subproject history is to be checked out at this path?" and
+nothing else, by storing a single SHA-1 that happens to be the name
+of the commit object (but the superproject does not even care the
+fact that it is a commit or a random string).  We could substitute
+that with the name of a blob object that belongs to the superproject
+history and records the information about the submodule at the path
+(e.g. "which repository the upstream project recommends to clone the
+subproject from?", "what commit object is to be checked out").  
+
+When you see a single tree of a superproject, you need to see what
+commit is to be checked out from the tree object and everything else
+needs to be read from the .gitmodules file in that tree in the
+current system, but it does not have to be that way.
+
+
+
+
+
