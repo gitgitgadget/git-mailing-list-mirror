@@ -6,59 +6,69 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 698531F4DD
-	for <e@80x24.org>; Wed,  6 Sep 2017 19:51:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA9361F4DD
+	for <e@80x24.org>; Wed,  6 Sep 2017 19:51:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752734AbdIFTv1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Sep 2017 15:51:27 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53518 "EHLO
+        id S1752719AbdIFTve (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Sep 2017 15:51:34 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63677 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752306AbdIFTv0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Sep 2017 15:51:26 -0400
+        with ESMTP id S1752306AbdIFTve (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Sep 2017 15:51:34 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D643C9890F;
-        Wed,  6 Sep 2017 15:51:20 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A4D56A2FBA;
+        Wed,  6 Sep 2017 15:51:33 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=01pcp1r1irLof9hMc9JpXhtOju0=; b=vzOudiH46mR1gDQHTYo4
-        kb7nuJ6kQy/R+CbumoZhSBibSWPfuC6zldb9k9DdkpEDEjKu80nMZkgkW7vPHuSH
-        m5JF8vYoGwBJcZ+tROy0RSBtPux2pGbaVfMxf1dYHrEj7S9O/GrPtLLmc9QCsr9K
-        eKH9ceUc1k1VSs+Cnlq2Ga0=
+         s=sasl; bh=2XK5T5xMpPzOz50cyzVTqIZs4sU=; b=yXckXezaHFROUG5SPa9T
+        ADKUuYzbCRrt30JdvJTghyVa7M3+MkwSbZSSkQwT5/snBsnh/jizXg6SpV0CpoVV
+        iFa+pU1Mh0ToNMTuYkLJqRNJbC8arvVDIKsd+JbSkfFCVABmPO/OOzsbvZChhuCz
+        mlbGi0BzCKpqDpJRuD2XJv4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:message-id:mime-version:content-type;
-         q=dns; s=sasl; b=kR32sYmWWyFEopwdjVOz+GQJh38eYLeBuS1Y1LBBkbDdEv
-        9X70Zdb9IGbORxEiPBCVTaWfOGgXBuyXZXAw26M/NEW7WxfZ098Yn7hnx+eiCw9j
-        FZddbzohOyRhnb+SmSISJb4OM7XiD12zztCyuSeSRekk9bDKPe7lskVw5mK08=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CF08F9890E;
-        Wed,  6 Sep 2017 15:51:20 -0400 (EDT)
+         q=dns; s=sasl; b=lCnNuaM9/eOBH4RcBEff4EWpRCttlsBoLSJbYN6OL5brGq
+        BP6Y1rRqMH/9/pn76S3vjNHrJ4q+cnlxqYDoschJhAjAVIJESNhZuIkxM9yECseN
+        gUG5OrbXyFChNaxKzhq13KH9CbhP3xhNF0AZO+T0yfL08Y0S5gv4AmSDgMTlI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9CDA0A2FB9;
+        Wed,  6 Sep 2017 15:51:33 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3266A9890D;
-        Wed,  6 Sep 2017 15:51:20 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F2F6EA2FB8;
+        Wed,  6 Sep 2017 15:51:32 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Rene Scharfe <l.s.r@web.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 34/34] wt-status: release strbuf after use in wt_longstatus_print_tracking()
-References: <20170830175005.20756-1-l.s.r@web.de>
-        <20170830182018.21390-1-l.s.r@web.de>
-Date:   Thu, 07 Sep 2017 04:51:19 +0900
-Message-ID: <xmqqmv6761xk.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+        Stefan Beller <sbeller@google.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH 01/39] pack: make packed_git_mru global a value instead of a pointer
+References: <20170830064634.GA153983@aiede.mtv.corp.google.com>
+        <20170830064827.GB153983@aiede.mtv.corp.google.com>
+        <20170830194448.u653vadhgzmkru3y@sigill.intra.peff.net>
+Date:   Thu, 07 Sep 2017 04:51:31 +0900
+Message-ID: <xmqqfubz61x8.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: C0ED9C9C-933C-11E7-A022-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: C88D193C-933C-11E7-8B5A-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rene Scharfe <l.s.r@web.de> writes:
+Jeff King <peff@peff.net> writes:
 
-> If format_tracking_info() returns 0 only if it didn't touch its strbuf
-> parameter, so it's OK to exit early in that case.  Clean up sb in the
-> other case.
+> As an aside, the mru code could probably be simplified a bit by reusing
+> the list implementation from list.h (both were added around the same
+> time, and it wasn't worth creating a dependency then, but I think list.h
+> is useful and here to stay at this point).
+>
+> It's definitely not critical to put that into this already-large series,
+> though.  Maybe we can use Junio's #leftoverbits tag. :)
 
-These two "if"s confuse me; perhaps the first one is not needed?
+I had the same reaction while reading it; perhaps I should read the
+responses from trusted reviewers first before reading the patches
+myself ;-)
 
+Thanks.
