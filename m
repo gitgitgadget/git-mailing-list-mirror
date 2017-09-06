@@ -2,110 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B44B6209AB
-	for <e@80x24.org>; Wed,  6 Sep 2017 06:28:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D090209AB
+	for <e@80x24.org>; Wed,  6 Sep 2017 06:47:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750917AbdIFG20 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Sep 2017 02:28:26 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54153 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750819AbdIFG20 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Sep 2017 02:28:26 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E223A98D18;
-        Wed,  6 Sep 2017 02:28:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=CPNtQNs1vaJ2N+pKw7RqOO2kDbM=; b=SL8fIE
-        FHNEvivBe3FlxW6/26kSSUN1O27eYQw2CH/azxW/NKctNfr+ekfx5fYq2ohTigsB
-        EHB4qPhePu/LticN7G2q5wH6ehb8ShuBNYF80rYXpj8Bt/1ok0SzJCLLY+YouGPT
-        dB4uYCU2qU7q1FCrqT1D9zeOw6mu/eppjsxRc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=rhqyRzOgLTXvTdkbf8/Crp5rtYgVQwgV
-        e6Pz6I74OCwZhUUyojZC4+pkenXDqwtT6S7zfx/uZAc412ynFF7McO83KI5iwL/r
-        dQ0tBgkzRjisdEcFudKKxVYFWY+L/S7Yt/XKhAcfB4tis7POhQ+wiz2d3xpFlBV/
-        KVx8m80Zjqg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D705098D17;
-        Wed,  6 Sep 2017 02:28:24 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 377E098D15;
-        Wed,  6 Sep 2017 02:28:24 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>, bmwill@google.com,
-        jonathantanmy@google.com, Jeff King <peff@peff.net>,
-        David Lang <david@lang.hm>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: RFC v3: Another proposed hash function transition plan
-References: <20170304011251.GA26789@aiede.mtv.corp.google.com>
-        <CA+55aFz+gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com>
-        <20170307001709.GC26789@aiede.mtv.corp.google.com>
-Date:   Wed, 06 Sep 2017 15:28:23 +0900
-In-Reply-To: <20170307001709.GC26789@aiede.mtv.corp.google.com> (Jonathan
-        Nieder's message of "Mon, 6 Mar 2017 16:17:09 -0800")
-Message-ID: <xmqqa828733s.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1750880AbdIFGq7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Sep 2017 02:46:59 -0400
+Received: from 9.mo176.mail-out.ovh.net ([46.105.78.81]:39693 "EHLO
+        9.mo176.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750752AbdIFGq7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Sep 2017 02:46:59 -0400
+Received: from ex2.mail.ovh.net (gw1.ex2.mail.ovh.net [164.132.80.186])
+        by mo176.mail-out.ovh.net (Postfix) with ESMTPS id 328BE8A043
+        for <git@vger.kernel.org>; Wed,  6 Sep 2017 08:46:57 +0200 (CEST)
+Received: from [10.0.2.127] (86.200.152.136) by EX7.indiv2.local (172.16.2.7)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Wed, 6 Sep
+ 2017 08:46:56 +0200
+From:   Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
+Subject: [PATCHv3 0/2] fix recurse.submodule config for git pull
+To:     <git@vger.kernel.org>
+Openpgp: preference=signencrypt
+Message-ID: <884cd3b0-7eeb-b711-2c7f-f93a57a009ee@morey-chaisemartin.com>
+Date:   Wed, 6 Sep 2017 08:46:56 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101
+ Thunderbird/56.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 95D92B86-92CC-11E7-A022-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset="windows-1252"
+Content-Language: fr-xx-classique+reforme1990
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [86.200.152.136]
+X-ClientProxiedBy: CAS1.indiv2.local (172.16.1.1) To EX7.indiv2.local
+ (172.16.2.7)
+X-Ovh-Tracer-Id: 11088143758281795549
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeelledrvdelgdduudejucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecufedttdenuc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Changes since v2:
+- Add a patch that fixes the option parsing order (parse config before cli, not the other way around)
+- Enhance the tests to check --recurse-submodule and submodule.recurse combinations
 
-> Linus Torvalds wrote:
->> On Fri, Mar 3, 2017 at 5:12 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
->
->>> This document is still in flux but I thought it best to send it out
->>> early to start getting feedback.
->>
->> This actually looks very reasonable if you can implement it cleanly
->> enough.
->
-> Thanks for the kind words on what had quite a few flaws still.  Here's
-> a new draft.  I think the next version will be a patch against
-> Documentation/technical/.
+Nicolas Morey-Chaisemartin (2):
+  pull: fix cli and config option parsing order
+  pull: honor submodule.recurse config option
 
-Can we reboot the discussion and advance this to v4 state?
+ builtin/pull.c            |  8 ++++++--
+ t/t5572-pull-submodule.sh | 32 ++++++++++++++++++++++++++++++++
+ 2 files changed, 38 insertions(+), 2 deletions(-)
 
-> As before, comments welcome, both here and inline at
->
->   https://goo.gl/gh2Mzc
-
-I think what you have over there looks pretty-much ready as the
-final outline.
-
-One thing I still do not know how I feel about after re-reading the
-thread, and I didn't find the above doc, is Linus's suggestion to
-use the objects themselves as NewHash-to-SHA-1 mapper [*1*].  
-
-It does not help the reverse mapping that is needed while pushing
-things out (the SHA-1 receiver tells us what they have in terms of
-SHA-1 names; we need to figure out where we stop sending based on
-that).  While it does help maintaining itself (while constructing
-SHA3-content, we'd be required to find out its SHA1 name but the
-SHA3 objects that we refer to all know their SHA-1 names), if it is
-not useful otherwise, then that does not count as a plus.  Also
-having to bake corresponding SHA-1 name in the object would mean
-mistakes can easily propagate and cannot be corrected without
-rewriting the history, which would be a huge downside.  So perhaps
-we are better off without it, I guess.
-
-
-[Reference]
-
-*1* <CA+55aFxj7Vtwac64RfAz_u=U4tob4Xg+2pDBDFNpJdmgaTCmxA@mail.gmail.com>
-
+-- 
+2.14.1.461.g503560879
 
