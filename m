@@ -7,117 +7,190 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9A56F1F4DD
-	for <e@80x24.org>; Wed,  6 Sep 2017 21:36:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D1E31F4DD
+	for <e@80x24.org>; Wed,  6 Sep 2017 22:00:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752693AbdIFVgC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Sep 2017 17:36:02 -0400
-Received: from mail-yw0-f177.google.com ([209.85.161.177]:33970 "EHLO
-        mail-yw0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752513AbdIFVgB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Sep 2017 17:36:01 -0400
-Received: by mail-yw0-f177.google.com with SMTP id r85so10372179ywg.1
-        for <git@vger.kernel.org>; Wed, 06 Sep 2017 14:36:01 -0700 (PDT)
+        id S1753167AbdIFWAB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Sep 2017 18:00:01 -0400
+Received: from mail-yw0-f180.google.com ([209.85.161.180]:34294 "EHLO
+        mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752609AbdIFWAA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Sep 2017 18:00:00 -0400
+Received: by mail-yw0-f180.google.com with SMTP id r85so10503758ywg.1
+        for <git@vger.kernel.org>; Wed, 06 Sep 2017 14:59:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=ktWihnyK+m5JEmkq1ULzs/GRuvHh8RcWDcg8WMeM1VM=;
-        b=tX3jk+U6npEsEyOUegxksoyBwldThGaY5ZmR359QZaaaQ6CNvvG3jT6lLThJLcQc9w
-         6cuOuvovRdPlC/2TZLr54o7gRAi8GX5/VQTzH6GuP8hes6GJz/I+3TAc50P+tlCL3+O+
-         3whwYVUHjp7n6MwMTD0Sy1NxmwS0z0C85f3H3JO4wtkGa4jidEAlfT1MeH5u/zO2K/Sq
-         jglqPIrBbEoUJ5udjU16l7ticFiWPrUgrym8XOUR+4vMPJYtV7qD6ZvKvV1ZGj2UGmwd
-         5qT/8cB0friXd/CK6FAyRoDWQCTTpK1NaoYg7xoHGGeT0gwrRK7kXTqC73bz55NWICVE
-         TxXw==
+         :cc;
+        bh=5GT0H1O+bE/t5slIPcirIksV7Hl0I75zZzD2E8qw/gg=;
+        b=vssygeG3ZpRnDxaSG3zcNzJUIr3hXceLF2osv7+7Nv9dzWT1vu5lqCw5675nCW/BZK
+         c2IdUbbZ7lUhFeLcNdsLdfUVgc6wN/n8rp+wV+B0rt2D4FCswCZ9bD3FnKR9retQ+OsF
+         /OEfStgT29Qh7UYGa/sA4a3NHNUuBphTv/MF1rnLkkQkxwxl6etmK9FpkrsfnuXy4xIZ
+         SjylyWTdqcZhAq3ZxAhW3GVwbbomLOoQwQVMlJljlcWDRUFvPfulxnFKjTgsh/eHmo9+
+         EgYmDAIkK07AifO3XAseUaT6Qs96Xd0a8B7qzONOGYkUb5oJ7WGZtjf80YUuh8Y82IOh
+         WcwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ktWihnyK+m5JEmkq1ULzs/GRuvHh8RcWDcg8WMeM1VM=;
-        b=Vzc/hfJnXRQG4lJtldE+d6jcTZBRiUd+Y24BLz4q+tFHP1n5eILNv7RpVK6zuYxDPK
-         rIqgYP82EQvfoLsNVqmNWShA6sR4/0E61Dbj2U15WbTnzlNdkILN/Z9LuGLxInrNlztC
-         jCu1b3AMeApgeLlaqyqdlyOfkj0dPTUflmn96OuymIaVb6FDSaqK/7UwzBkja0tkJuQO
-         IGI6SoRuNcFv1eXEqPlb2i9TXc9g/eOf4ZwGc4z9R0YJX7mb9LtNdVU0iavjb5LQepBL
-         Rp+KmLtkcR5m8ffry6DZX8iIsupGBEaK9at+qsoPmRNTmAPaoBol5RZeJ1Ct1/qHxvdT
-         O7Lw==
-X-Gm-Message-State: AHPjjUgr8gY7r21bsEqXJiPLGT5I5zCnuUrN7A+Ti/5lT7poB99VVRUa
-        MsedI0CXhCqBothgBQXrWgFeBPc/Z0CfMEY=
-X-Google-Smtp-Source: ADKCNb6A5NIVNWKZExk593hxuZOHdoXeZGyYNDrihndaGVZjyib1FMdsGUx7gkmT1xVBFVLBG+L2R04xPixds6+y3S8=
-X-Received: by 10.37.160.66 with SMTP id x60mr458203ybh.305.1504733760592;
- Wed, 06 Sep 2017 14:36:00 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=5GT0H1O+bE/t5slIPcirIksV7Hl0I75zZzD2E8qw/gg=;
+        b=UmTb1JFvIujbvx+JirjUjU0tca5EJfvO5GHJo1cVyqsvB8dyn/RQ3xxJ5bp8l/Fwbn
+         RMAYBHgdMUezNoSKkujr7yFuNqKZ6OYP1JTqN+p7qDVaUN5qjUb7e5i7GAk7Ks8OXjgc
+         f7NDo08MWWKlcXQYnB65W6VaTcnHHGs/3nGJsuJJNeH/g16ha7ehMkB/gqispqTr44c2
+         OzjCWtwF5OWzGoa7RHiVoIR4gSvlBLmVpWerlxDqrdqygZLEd2CguZ50AMRKSDAvH4rh
+         I7wJKBl74sBjfri8uyaQp1PtpTt99kNg/vSbexqy52SYy/baBaZly/xETOYrnS8TjlMM
+         2LPg==
+X-Gm-Message-State: AHPjjUj17ntdJG+q/ST58n9+a6QRzgTEcVd89TQKlC9PQS2JMVQkNV0r
+        ddGM1eb9VmZNrFbWXmlIv27tou7k/5sx
+X-Google-Smtp-Source: ADKCNb5hxxozUNMAEi2fKRbZnCg3yH4PRZxb0Zza2KjQfyDRjzWrpNhIBEyeovuzVpEioh13JYSRgZcSidcn7fX1ie0=
+X-Received: by 10.129.69.34 with SMTP id s34mr479099ywa.29.1504735199219; Wed,
+ 06 Sep 2017 14:59:59 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.37.116.7 with HTTP; Wed, 6 Sep 2017 14:36:00 -0700 (PDT)
-In-Reply-To: <xmqqzia88qkj.fsf@gitster.mtv.corp.google.com>
-References: <xmqqd174bzco.fsf@gitster.mtv.corp.google.com> <20170905230845.17108-1-sbeller@google.com>
- <xmqq8thsa901.fsf@gitster.mtv.corp.google.com> <xmqqzia88qkj.fsf@gitster.mtv.corp.google.com>
+Received: by 10.37.116.7 with HTTP; Wed, 6 Sep 2017 14:59:58 -0700 (PDT)
+In-Reply-To: <xmqqd1734mvg.fsf@gitster.mtv.corp.google.com>
+References: <20170830064634.GA153983@aiede.mtv.corp.google.com>
+ <20170830070812.GZ153983@aiede.mtv.corp.google.com> <xmqqd1734mvg.fsf@gitster.mtv.corp.google.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 6 Sep 2017 14:36:00 -0700
-Message-ID: <CAGZ79kaHHXdFMeEMfidWj7=FurR3L8VMysLrCLG3OyMtZPCgDQ@mail.gmail.com>
-Subject: Re: [PATCH] parse-options: warn developers on negated options
+Date:   Wed, 6 Sep 2017 14:59:58 -0700
+Message-ID: <CAGZ79kb+GDvh8+HZ6Hu8ydj6BUNY4YckvyXtvZbsxaME9zyWYQ@mail.gmail.com>
+Subject: Re: [PATCH 25/39] sha1_file: allow alt_odb_usable to handle arbitrary repositories
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 5, 2017 at 8:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Sep 6, 2017 at 1:01 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 >
->> Stefan Beller <sbeller@google.com> writes:
+>> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>> ---
+>>  sha1_file.c | 16 +++++++++-------
+>>  1 file changed, 9 insertions(+), 7 deletions(-)
 >>
->>>   This patch disallows all no- options, but we could be more open and a=
-llow
->>>   --no-options that have the NO_NEG bit set.
->>
->> "--no-foo" that does not take "--foo" is perhaps OK so should not
->> trigger an error.
->>
->> A ("--no-foo", "--foo") pair is better spelled as ("--foo",
->> "--no-foo") pair whose default is "--foo", but making it an error is
->> probably a bit too much.
->>
->> Compared to that, ("--no-foo", "--no-no-foo") pair feels nonsense.
+>> diff --git a/sha1_file.c b/sha1_file.c
+>> index e7c86e5363..b854cad970 100644
+>> --- a/sha1_file.c
+>> +++ b/sha1_file.c
+>> @@ -25,6 +25,7 @@
+>>  #include "repository.h"
+>>  #include "object-store.h"
+>>  #include "streaming.h"
+>> +#include "path.h"
+>>  #include "dir.h"
+>>  #include "mru.h"
+>>  #include "list.h"
+>> @@ -281,17 +282,18 @@ static const char *alt_sha1_path(struct alternate_object_database *alt,
+>>  /*
+>>   * Return non-zero iff the path is usable as an alternate object database.
+>>   */
+>> -#define alt_odb_usable(r, p, n) alt_odb_usable_##r(p, n)
+>> -static int alt_odb_usable_the_repository(struct strbuf *path,
+>> -                                      const char *normalized_objdir)
+>> +static int alt_odb_usable(struct repository *r, struct strbuf *path,
+>> +                       const char *normalized_objdir)
 >
-> Ahh, I was an idiot (call it vacation-induced-brain-disfunction).  I
-> forgot about 0f1930c5 ("parse-options: allow positivation of options
-> starting, with no-", 2012-02-25), which may have already made your
-> new use of "--no-verify" in builtin/merge.c and existing one in
-> commit.c OK long time ago.  A quick check to see how your version of
+> These token-pasting macros introduced in 07-24/39 were certainly
+> cute but they may be rather misleading and useless.  e.g. a natural
+> expectaion would be
 >
->         git merge --verify
->         git merge --no-verify
+>         struct repository *r = &the_repository;
+>         prepare_alt_odb(r);
 >
-> behaves with respect to the commit-msg hook is veriy much
-> appreciated, as my tree is in no shape to apply and try a patch
-> while trying to absorb the patches sent to the list the past week.
->
-> Thanks, and sorry for a possible false alarm.
->
->> Having said that, because the existing parse_options_check() is all
->> about catching the programming mistake (the end user cannot fix an
->> error from it by tweaking the command line option s/he gives to the
->> program), I do not think a conditional compilation like you added
->> mixes well.  Either make the whole thing, not just your new test,
->> conditional to -DDEVELOPER (which would make it possible for you to
->> build and ship a binary with broken options[] array to the end-users
->> that does not die in this function), which is undesirable, or add a
->> new test that catches a definite error unconditionally.
->
-> This part still is valid.  If Ren=C3=A9's work 2 years ago is sufficient
-> to address "--no-foo" thing, then there is nothing we need to add to
-> this test, but if we later need to add new sanity check, we should
-> add it without -DDEVELOPER, or we should make the whole thing inside
-> it.
+> to work, but obviously it wouldn't.  And this step and later in
+> 25-39/39 corrects them one by one.
 
-As far as the code is concerned it is only inside the -DDEVELOPER ?
-The intent of this patch is to have a developers aid to remind them
-that too many negations might be a sign of trouble.
+Yes. The intent was to deliver patches that are easiest to review as
+that is usually the crux with long series. To do that we came up with this
+way:
+* patches  07-24 can be reviewed easily by only looking at
+   the textual replacement, no need to think about implications.
+   It should be boring(in a good way) to review these.
+* patches 25-39, that allow arbitrary repositories to be handled
+   only need to be reviewed inside its function bounds, because
+   each function call that takes a repository argument will be verified
+   by the compiler, precisely because the above won't work!
+   That way the reviewer can rely on the compile output
+   that the conversion was done in the correct order and no
+   small function was missed. All review attention can go into
+   just looking at the one function that is converted in such a
+   patch. no need to double check with other parts of the code.
+   We discussed we'd send the patches 25-39 with --function-context.
+   The follow ups will do so.
 
-Thanks,
+> I suspect that you used the token-pasting cuteness because you
+> thought that the callsite would not have to change in the later step
+> like 25/39 that removes the trick.
+
+No. We did these two different phases to ease review specifically.
+
+Note how the call site is the function itself, ( --function-context would
+have been really neat here)
+
+
+>  I also suspect that you thought
+> that it may be a good thing that prepare_alt_odb(r) does not work
+> immediately after 07/39, as the callee is not prepared.  But both of
+> these are misguided.
+>
+> If you have two functions, A and B, that we want to update to
+> eventually take a "struct repository *" argument, and if A uses B in
+> its implementation, the endgame would be
+>
+>         A(struct repository *r, ...)
+>         {
+>                 ...
+>                 B(r, ...);
+>                 ...
+>         }
+>
+> but with the ##r approach, the call to B in A in the initial
+> token-pasting phase would say B(the_repository, ...) so the call
+> will need to be changed in the step you update A's implementation to
+> take a caller-supplied respotory object anyway.  And the fact that a
+> function's first parameter is not the_repository (i.e. leaving B()'s
+> signature unchanged while it is not ready to take a repository) is
+> sufficient to mark that a function is not yet prepared to take a
+> caller-supplied repository object.
+
+The absence of a repository argument is not sufficient that a function
+(or any function called by it) does not rely on some global state, which
+needs to be put into the repository struct.
+
+So when converting function A (above), the careful reviewer needs to
+inspect B, C, D... if they touch global state. Using the current approach,
+most functions (maybe just B and C here) would take a repository struct
+already, and the compiler would yell if these were not ready for anything
+except the_repository. So the reviewer only has to worry about D.
+
+> I found that this aspect of the structure of the series was somewhat
+> irritating in that (1) combining the earlier ##r thing with its fix
+> would have made the code that needs to be reviewed much cleaner,
+
+agreed.
+
+> (2) it wouldn't have made the patch that longer,
+
+but more complicated to review (and write actually; as it was easy
+to reason about functions to be ready for conversion, not using
+global state)
+
+> and most importantly
+> (3) it is unclear why 24-7 != 39-25, i.e. it is hard to answer "is
+> there any ##r hack still remaining after this series?  if so why?"
+
+Jonathan is currently OOO, but last week we continued developing this
+series and ended up with ca. 90 patches in the series.
+
+> The end-result of the whole series makes me think that it is going
+> in the right direction, though.
+
+We'll revisit if we can squash commits before sending out.
+
+Thanks for the feedback,
 Stefan
-
->
-> Thanks.
