@@ -2,95 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF562208E3
-	for <e@80x24.org>; Wed,  6 Sep 2017 00:54:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D048208E3
+	for <e@80x24.org>; Wed,  6 Sep 2017 01:17:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753351AbdIFAyD (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Sep 2017 20:54:03 -0400
-Received: from mail-pg0-f44.google.com ([74.125.83.44]:37678 "EHLO
-        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753115AbdIFAyC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Sep 2017 20:54:02 -0400
-Received: by mail-pg0-f44.google.com with SMTP id d8so12361161pgt.4
-        for <git@vger.kernel.org>; Tue, 05 Sep 2017 17:54:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:content-transfer-encoding:mime-version:subject:message-id
-         :references:to:date;
-        bh=hDcp2hdxOBNQqn98H0G3rQY7I4ckQw1ZKDKT4+bN2kc=;
-        b=kJjMWB6/LZ5i2UYpufk9x4hXSTu9Ny9I4p5luedCDYDgeySJy0Mkalk4vm4A6akO39
-         ueBtMVIKUp2riCV+9qKyKlo5796i/jsYtmLPENFVc/6e1wgKxQI7w3Mc5zwVjTTdb/Z4
-         JcYU1iEPGGU7xCx2+mNIGJaSiSX+DWpABIFT2P9aY6jsTZ9AjKjTX/i3YnqsnoeyAbxh
-         w4Rld4HF9lB/83XI+mdUDDvLFJDi8TRQD0ly77enNxABV5h3i7q+XonKQgn/JxvZG6iv
-         yX9H38414JjGPHl0sDR+ljnhhkfwfDYM2vTnAextzohAKNhZvo5j1cw44c6KWP9v1yBd
-         z8Lw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version
-         :subject:message-id:references:to:date;
-        bh=hDcp2hdxOBNQqn98H0G3rQY7I4ckQw1ZKDKT4+bN2kc=;
-        b=hBu8L1Hoza2Zl+lzXGDzr6n6pGC4E6sy6CU0lB7juaziBxHzI8VjjLHYzcpCIqy+Vr
-         +xr/krgjvhru0boj1a5u1C0dfe2s1n1I9ru/3cMdt4J9i1HBMcelFhbpNvNcBEX00DJg
-         me7QpULGwt7uYww88d+zaKBChnSA+uJgvNOX7r+IdfTKi3mOa2tbPZttn/br7yXlmEx5
-         IlK5l+12UmEdfyq8n10JycI1CCM1YYNpR5zDxYTPKM9aXaSB+tJZD76Mb4Eei+7LSBo1
-         InmgeBgBr+tyXpZ7PLy7Q4VTRW/9lmRW3fM5F0Y6OkZrVtKVlpxs/Pdp6oK4qirsKtB8
-         5YTQ==
-X-Gm-Message-State: AHPjjUiRDhUsRQ4oHQWoyyDLvkOI/kdpB+U6zdq5axqm1a0AjhShgc5F
-        A/tiAOOrR9P92VXScVhRVA==
-X-Google-Smtp-Source: ADKCNb5x6tCrstP8827Hdbb6svSHq2+l41mKiejMyInUUTUOEedQW1UxTFqxj/QIZ5LY01yo5bWnow==
-X-Received: by 10.99.117.81 with SMTP id f17mr5730724pgn.181.1504659241675;
-        Tue, 05 Sep 2017 17:54:01 -0700 (PDT)
-Received: from [192.168.1.244] (c-73-189-131-80.hsd1.ca.comcast.net. [73.189.131.80])
-        by smtp.gmail.com with ESMTPSA id t63sm210199pfd.140.2017.09.05.17.54.00
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 05 Sep 2017 17:54:00 -0700 (PDT)
-From:   Daniel Biran <dbiran@google.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
-Subject: git merge algorithm question
-Message-Id: <92605DF3-9274-45A6-88B7-6281D192203F@google.com>
-References: <202EE2E2-1D0B-4772-85F7-7C7804905297@google.com>
-To:     git@vger.kernel.org
-Date:   Tue, 5 Sep 2017 17:53:59 -0700
-X-Mailer: Apple Mail (2.3273)
+        id S1752609AbdIFBRY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Sep 2017 21:17:24 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56019 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750968AbdIFBRY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Sep 2017 21:17:24 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B1AFCAF399;
+        Tue,  5 Sep 2017 21:17:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=wst/+Z2UHUw44aAKG8P4lxX0q7M=; b=F/NORHzQ7xwLJe7iOoj6
+        nJJ+vnViAQMo7Vi7vppIU/OT5aUW16trP4Cwu3xn8o5NEsehl0NMdSV+/HVCg435
+        P3Iaj7fzoBSyqToJnn8yc4JIwSpGgskZUjAe+6gRgrsG4UY4vSs30PRQRIyMk3Kk
+        yG0pP4HNdwQdCInr07OD7xk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=wZNUCegPnTpFSZ0l4683szgBBzaa/H/yvQMHBob8SnHhlm
+        7p5V9/zz2xt0Xoj2EI3M4L1bYkgZuXaTHcsjyvdiusKB7oHQcWS8Y+FuAC7UXsCp
+        Uxg1OxYmIfkPFeZQyoO8L8yuuNMcsBUYcV9aOEbGsKjoveSvzzkAFIj4uk3Pw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A8411AF398;
+        Tue,  5 Sep 2017 21:17:23 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 157DEAF397;
+        Tue,  5 Sep 2017 21:17:23 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
+Cc:     <git@vger.kernel.org>
+Subject: Re: [PATCHv2] pull: honor submodule.recurse config option
+References: <40ecf559-0348-b838-72f7-0ad7746a7072@morey-chaisemartin.com>
+Date:   Wed, 06 Sep 2017 10:17:21 +0900
+Message-ID: <xmqqvakwaan2.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 22E71802-92A1-11E7-8DD0-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com> writes:
 
->> I'm trying to better understand one of the merge algorithms as I had =
-some triumphs and tribulations with using a set of commands during a =
-merge. tldr: can a git merge -s recursive -X patience; // result in a =
-fast-forward merge? will --no-ff stop it
->>=20
->> So, the scenario is this:
->> 	- Merging a master branch into a feature branch that is 2+ years =
-old
->> 	- We found this command was more beneficial when merging a large =
-20k line text file:=20
->> 		- git merge -s recursive -X patience master
->> 	- In a recent merge using this approach the reflog shows that =
-the merge was performed using a fast-forward from the feature branch's =
-head
->> 		- 082517-1, feature/branch) HEAD@{23}: merge =
-feature/branch: Fast-forward
->>=20
->>=20
->> My question is, is it possible for that command to use a fast-forward =
-like this? (or did something else go horribly wrong? possibly an =
-atlassian git GUI tool corrupting the work):
->> 	- If it is possible for the command to fast-forward the merge =
-when making the commit does --no-ff force the command to never use =
-fast-forward in this case
->>=20
->> Thanks for the help,
->> Daniel
->=20
+> "git pull" supports a --recurse-submodules option but does not parse the
+> submodule.recurse configuration item to set the default for that option.
+> Meanwhile "git fetch" does support submodule.recurse, producing
+> confusing behavior: when submodule.recurse is enabled, "git pull"
+> recursively fetches submodules but does not update them after fetch.
+>
+> Handle submodule.recurse in "git pull" to fix this.
+>
+> Reported-by: Magnus Homann <magnus@homann.se>
+> Signed-off-by: Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
+> ---
+>
+> Changes since v1:
+>  * Cleanup commit message
+>  * Add test
+>  * Remove extra var in code and fallthrough to git_default_config
+>
+>  builtin/pull.c            |  4 ++++
+>  t/t5572-pull-submodule.sh | 10 ++++++++++
+>  2 files changed, 14 insertions(+)
+>
+> diff --git a/builtin/pull.c b/builtin/pull.c
+> index 7fe281414..ce8ccb15b 100644
+> --- a/builtin/pull.c
+> +++ b/builtin/pull.c
+> @@ -325,6 +325,10 @@ static int git_pull_config(const char *var, const char *value, void *cb)
+>  	if (!strcmp(var, "rebase.autostash")) {
+>  		config_autostash = git_config_bool(var, value);
+>  		return 0;
+> +	} else if (!strcmp(var, "submodule.recurse")) {
+> +		recurse_submodules = git_config_bool(var, value) ?
+> +			RECURSE_SUBMODULES_ON : RECURSE_SUBMODULES_OFF;
+> +		return 0;
+>  	}
+>  	return git_default_config(var, value, cb);
+>  }
 
+If I am reading the existing code correctly, things happen in
+cmd_pull() in this order:
+
+ - recurse_submodules is a file-scope static that is initialized to
+   RECURSE_SUBMODULES_DEFAULT
+
+ - pull_options[] is given to parse_options() so that
+   submodule-config.c::option_fetch_parse_recurse_submodules() can
+   read "--recurse-submodules=<value>" from the command line to
+   update recurse_submodules.
+
+ - git_pull_config() is given to git_config() so that settings in
+   the configuration files are read.
+
+Care must be taken to make sure that values given from the command
+line is never overriden by the default value specified in the
+configuration system because the order of the second and third items
+in the above are backwards from the usual flow.  This patch does not
+seem to have any such provision.
+
+Existing handling of "--autostash" vs "rebase.autostash" solves this
+issue by having opt_autostash and config_autostash as two separate
+variables, so I suspect that something similar to it must be there,
+at least, for this new configuration.
+
+If we want to keep the current code structure, that is.  I do not
+recall if we did not notice the fact that the order of options and
+config parsing is backwards and unknowingly worked it around with
+two variables when we added the rebase.autostash thing, or we knew
+the order was unusual but there was a good reason to keep that
+unusual order (iow, if we simply swapped the order of
+parse_options() and git_config() calls, there are things that will
+break).  
+
+If it is not the latter, perhaps we may want to flip the order of
+config parsing and option parsing around?  That will allow us to fix
+the handling of autostash thing to use only one variable, and also
+fix your patch to do the right thing.
+
+> diff --git a/t/t5572-pull-submodule.sh b/t/t5572-pull-submodule.sh
+> index 077eb07e1..1b3a3f445 100755
+> --- a/t/t5572-pull-submodule.sh
+> +++ b/t/t5572-pull-submodule.sh
+> @@ -65,6 +65,16 @@ test_expect_success 'recursive pull updates working tree' '
+>  	test_path_is_file super/sub/merge_strategy.t
+>  '
+>  
+> +test_expect_success "submodule.recurse option triggers recursive pull" '
+> +	test_commit -C child merge_strategy_2 &&
+> +	git -C parent submodule update --remote &&
+> +	git -C parent add sub &&
+> +	git -C parent commit -m "update submodule" &&
+> +
+> +	git -C super -c submodule.recurse pull --no-rebase &&
+> +	test_path_is_file super/sub/merge_strategy_2.t
+> +'
+
+This new test does not test interactions with submodule.recurse
+configuration and --recurse-submodules=<value> from the command
+line.  It would be necessary to add tests to cover the permutations
+in addition to the basic test we see above.
+
+Thanks.
