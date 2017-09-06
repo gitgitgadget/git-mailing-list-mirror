@@ -7,121 +7,108 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D31A209AB
-	for <e@80x24.org>; Wed,  6 Sep 2017 10:53:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C41E208CD
+	for <e@80x24.org>; Wed,  6 Sep 2017 11:09:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753192AbdIFKxj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Sep 2017 06:53:39 -0400
-Received: from mail-oi0-f44.google.com ([209.85.218.44]:36340 "EHLO
-        mail-oi0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752666AbdIFKxg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Sep 2017 06:53:36 -0400
-Received: by mail-oi0-f44.google.com with SMTP id x190so23773939oix.3
-        for <git@vger.kernel.org>; Wed, 06 Sep 2017 03:53:36 -0700 (PDT)
+        id S1752994AbdIFLI7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Sep 2017 07:08:59 -0400
+Received: from mail-oi0-f41.google.com ([209.85.218.41]:36749 "EHLO
+        mail-oi0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752712AbdIFLI6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Sep 2017 07:08:58 -0400
+Received: by mail-oi0-f41.google.com with SMTP id x190so23949638oix.3
+        for <git@vger.kernel.org>; Wed, 06 Sep 2017 04:08:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Kj+7CxRfGso4BVexF0oRRUaevT37yA+lXY5TteEY6Fw=;
-        b=JAJ1ZMBGgKz8ehNMwqOdCm/QCUlj/1oRn78v4URbN3rMjtoB4pEwqEC8cttYECVou1
-         o+QBFMuGHnfkHtSAOrIVTPPKQN+CW4nEksyZZbsVTDXGbIL49QQl873LpnUtrAsPCYK1
-         27X8fwsuhHLLUNu4L5Md6t0xCNoFD2M2FOU1LvxvLTzaS23y9UoQFGH8jYqoxdQ2k/ds
-         0y9HA2+OaYbyOr3mXkZVWTG6iwV1wsS2PCn3VEstwDIrhddQqqceG5EVApBJit/fuQJL
-         3w01DTXfcG8uqark8faBKQZuzdCA7e+3gfUUTd6DO7zFwYXt8QSLqb9m3Hbg/03s7Zhq
-         13Gw==
+         :cc:content-transfer-encoding;
+        bh=mGCMRVEH3eA7K7SMqxUkewzw/6sSsEdxLDdSaDmomqw=;
+        b=TcmHEXIYhlOdXISRnoiecI7765NdUhFM2ifJ/Im1VFInvzpcRVhbuw8nRB8fSkWvQT
+         AhoqWLErc7tjvtMoRTcof3UEfngujiOayr7DxXAGU66+UAtLBe0+Cypm3dCBYzrlpwdH
+         Hwlh0sOcRY0K0WzHSBqf9T/fAKOB6ffXZUqnV9vx87YBFkELPnHl/G3wlrUofjQs+uy4
+         oaMGWVXr4+FkjGkptcCaUMZ3qWI6mZTXup1PsNNpzZtotLPVYf/X4rlkjrdmxq/jJwuP
+         iw1fTR8VfRHzeRbzKsCvm7yYEB0HZkZz34BIP+X8dvQc0RvlbOpBborgpSh84CBCBb7K
+         CqtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Kj+7CxRfGso4BVexF0oRRUaevT37yA+lXY5TteEY6Fw=;
-        b=mldqVCOS3xgEAthQLYMwU8hExayQ+taZjGioppqvUhP9PM13w1LO+9vXF7EZnLLwXj
-         MiH0eVKSLo/Pk21ZzqPHIh1V8TV7X4MrhhVi5qRb4KSdYBbzy05l1ZF335ZMQcZnxQ+7
-         gkGbGev43g9YGax6QdRxn8c0g1ziozJ1AbHkrBWuhi+eo40IByCck6URiZBfeqOIFTGk
-         LkdP5b5hCER8r8yGAivYWf+mL5rjm0g1hd/q7x1QpNo8rDekjIAuW9XjWFeK/sIs9kUK
-         nMNCmAIJRVf1ErnAgl9unswxp3pd2kxVnOqIV0DQzOokiTBSTSmh7nt53txrYmlRmEy0
-         IrzQ==
-X-Gm-Message-State: AHPjjUhJaXWWLtNHEtib2CkOsGA+mh0UDCfIG/jvbk4GuT+RAUlj9k82
-        o/kpxlA2XOK6dQJPWepBQORNskMgpA==
-X-Google-Smtp-Source: ADKCNb6PUjbD8JVInGn0wRvirZ0sJyWr8/rfzOX9BHG7EcdB6HvwLC5Xl+9B6ATQDoEXih4iK1WCoPUvYU0os2i14tA=
-X-Received: by 10.202.173.11 with SMTP id w11mr1965513oie.239.1504695215959;
- Wed, 06 Sep 2017 03:53:35 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=mGCMRVEH3eA7K7SMqxUkewzw/6sSsEdxLDdSaDmomqw=;
+        b=izXxtaUz9A3wnrwOEHU+K+rKqUcljpxMt0yh0VtyiATJK2LjJpbrd13MZeaogwpwTf
+         STNEu6r5SaWMj9PgpesbKVV/HJ71lU0xOqQOBRtFJhIA+INLED42elWoJ222W7Ivt0Y2
+         6Xpk8qeof5u+Ya3qVS4Z7YSVywKkXfqimYvooDizG5eNpUaXz5qxKOqn9ITH/pqX4eNT
+         JVFdCY2f2IbZaTRFJrFdEIc1Ljrt5ge8VDSmRy1+l4R//G3kbRwZNvSpA7gK/R1LSRTE
+         DcTkCORYCOdFebaZE40WiNMCkNdl0Q3s+e/jDzJ5TY2y1/RwIUdIE8HRTgxfJUGt/ZbB
+         Io+g==
+X-Gm-Message-State: AHPjjUi+ykjwzG54gnej4XLQDYH69muZc51oqhtzLU7OXzmLYMiYZvWj
+        zYxAcOzTlD3chiMGsy2/SggeeIbhgw==
+X-Google-Smtp-Source: ADKCNb6YbYTct2fNhlDLK7XNs3leDE+YOW6mihc8mRwbAATvdkvE8J8YaHOsqXz9uEYNDFZnaiK7BCtlhO7rocWSkYg=
+X-Received: by 10.202.8.129 with SMTP id 123mr2727871oii.40.1504696137735;
+ Wed, 06 Sep 2017 04:08:57 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.74.176.69 with HTTP; Wed, 6 Sep 2017 03:53:05 -0700 (PDT)
-In-Reply-To: <6b67875c-847c-8d5f-14bb-c3fb7004ebdc@grubix.eu>
-References: <20170823123704.16518-1-pclouds@gmail.com> <6b67875c-847c-8d5f-14bb-c3fb7004ebdc@grubix.eu>
+Received: by 10.74.176.69 with HTTP; Wed, 6 Sep 2017 04:08:27 -0700 (PDT)
+In-Reply-To: <CAGZ79kbvKZXGy80RCU3zkdm0S3M-tGB=LAJYiY=o+YwUB9RNHA@mail.gmail.com>
+References: <20170823123704.16518-1-pclouds@gmail.com> <20170823123704.16518-3-pclouds@gmail.com>
+ <CAGZ79kbvKZXGy80RCU3zkdm0S3M-tGB=LAJYiY=o+YwUB9RNHA@mail.gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 6 Sep 2017 17:53:05 +0700
-Message-ID: <CACsJy8Cd20iPo4uv5+sq0SiuPT3Y6sxEtJqDsox+3tVRsgg9UA@mail.gmail.com>
-Subject: Re: [PATCH v4 00/16] Fix git-gc losing objects in multi worktree
-To:     Michael J Gruber <git@grubix.eu>
-Cc:     Git Mailing List <git@vger.kernel.org>,
+Date:   Wed, 6 Sep 2017 18:08:27 +0700
+Message-ID: <CACsJy8A0x-PJsO+uhv8=mdfeKLEBPfT3sq3_Fi2_HffeexDeAw@mail.gmail.com>
+Subject: Re: [PATCH v4 02/16] refs.c: use is_dir_sep() in resolve_gitlink_ref()
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Stefan Beller <sbeller@google.com>
+        Michael Haggerty <mhagger@alum.mit.edu>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 25, 2017 at 6:21 PM, Michael J Gruber <git@grubix.eu> wrote:
-> I suggest we think about the UI exposure a bit when it
-> comes to including all heads or naming options, though:
+On Thu, Aug 24, 2017 at 2:14 AM, Stefan Beller <sbeller@google.com> wrote:
+> On Wed, Aug 23, 2017 at 5:36 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Du=
+y <pclouds@gmail.com> wrote:
+>> The "submodule" argument in this function is a path, which can have
+>> either '/' or '\\' as a separator. Use is_dir_sep() to support both.
+>>
+>> Noticed-by: Johannes Sixt <j6t@kdbg.org>
+>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.=
+com>
 >
-> * HEAD is "the current head"
-> * refs/heads is where all local branch heads are
->
-> * --branches is the rev-list/log option for refs/heads/*
-> * --all is the rev-list/log option for refs/* plus HEAD
-> * HEAD is the rev-list/log argument for HEAD
+> Immediate questions that come to mind:
+> * Could this go in as an independent bug fix?
 
-It also covers object references from the index file aka --indexed-objects
+It probably could. But it may depend on other submodule changes in this ser=
+ies.
 
-> * --heads is the show-ref option limiting to refs/heads/*
-> * --head is the show-ref option which adds HEAD
->
-> * refs/heads is the for-each-ref-pattern for refs/heads/*
-> * HEAD is not the for-each-ref-pattern for HEAD
-> [I'll suggest a patch to change the latter, shortly.]
->
-> I would hope that the result of this series and other efforts will be:
->
-> * consistent way to specify "all local branch heads"
-> * consistent way to specify "the head" aka HEAD
-> * consistent way to specify "all linked worktree heads"
-> [* maybe something for submodules...]
+>   -> If so do we have any test that fails or stops failing on Windows?
 
-Hmm.. I admit that I completely overlooked 'git show-ref'.
+It was spotted during the review [1] so I guess no test fails on
+Windows (not that I would know because I can't run tests on Windows)
 
-> This may require changing the misnamed show-ref option, but also
-> thinking twice before changing the meaning of "--all" for the
-> rev-list/log family: it's easy to say "--all --linked" or "--all
-> --heads" to get everything plus all linked worktree heads when "--all"
-> == "--branches --tags HEAD", but it's more cumbersome with a changed
-> --all that is "really everything". I gues my suggestion would be:
->
-> --all as it is now (refs/* plus HEAD)
->
-> --head alternative way to say HEAD (as it is now for show-ref)
->
-> --heads HEAD for all linked worktrees (incompatible change for show-ref)
->
-> And all of them should work the same for the rev-list/log family as well
-> as for-each-ref/show-ref.
+>   -> If not, do we need one?
 
-How about: show-ref learns a new option to let it list HEAD (and other
-per-worktree refs) of one/current worktree, or all worktrees. This is
-what the --single-worktree option is for, which is added by this
-series (but I need to make sure if's exposed in show-ref as well). For
-showing refs as viewed by another worktree, we could have the global
-option similar to --git-dir to select that worktree, e.g. "git
---work-tree-id=XXX show-ref ..."?
+Since I don't use Windows, I don't particularly care. And I can't add
+one anyway because I can't run it.
 
-Since this seems a good thing to do, but not necessary to fix the
-"prune" bug, I'll do it separately instead of adding in this series. I
-may need to look at "git for-each-ref" too for that matter.
+[1] https://public-inbox.org/git/%3Ca74cf309-fb16-2f45-8189-d1d0c655dea4@kd=
+bg.org%3E/
 
-> I thinking that changing show-ref (porcelain, not quite as commonly
-> used) should do the least harm compared to all other options.
--- 
+> * Assuming this is not an independent bug fix:
+>   Why do we need this patch in this series here?
+>   (I thought this is about worktrees, not submodules.
+>   So does this fix a potential bug that will be exposed
+>   later in this series, but was harmless up to now?)
+
+The series could probably be split in two. The first part is about
+using the new refs_* API in revision.c. This helps clean up refs API a
+bit, all *_submodule() functions will be one. Not strictly needed to
+be part of this, it's just a continuation of my previous series that
+introduces *_refs. Since submodule code is touched, this is found.
+
+The second part is actually fixing the prune bug.
+
+Should I split the series in two? I think I separated two parts in the
+past (maybe I misremember) at least in the description...
+--=20
 Duy
