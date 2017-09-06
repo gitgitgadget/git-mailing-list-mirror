@@ -2,130 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97CF7208E3
-	for <e@80x24.org>; Wed,  6 Sep 2017 01:43:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EAD72208E3
+	for <e@80x24.org>; Wed,  6 Sep 2017 01:52:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753953AbdIFBnn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Sep 2017 21:43:43 -0400
-Received: from mail-ua0-f169.google.com ([209.85.217.169]:34926 "EHLO
-        mail-ua0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753525AbdIFBnm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Sep 2017 21:43:42 -0400
-Received: by mail-ua0-f169.google.com with SMTP id c27so11458546uah.2
-        for <git@vger.kernel.org>; Tue, 05 Sep 2017 18:43:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=HK5++7FKbETcIsQtvPZoDF29oQ8hwBKPb52DCerDxEw=;
-        b=zktpf+lOHMuTkpSv5e668nQhTT0Vk5IipObUfJ1YWXdoUCo14LpXYt/7ZQ3UuT6aO2
-         TUZvCmhfWe1zyF7SALSk/wI+mXlo1t1Sr7wsQw2qtYvASaSxv952TVaHJ8RIuyXSLrm6
-         v0TM3OtylUFDTlV53vS98VypmwHOpiANF5EsuZgkx06CD2vEE40bpVkSsIP157DAO5xX
-         iCpTtopyDqIlZgVdxhzl2X/yo2m6/VdjNcazYes8RUu9EG+2nSnoejnLkBYC/KtFepK6
-         UDikOTFzVY+vrrFHeTuYuodEAbhxcqlWUJC9jL+UBukHWUYabobh12RX2kCB9aSaiyiY
-         n/Og==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=HK5++7FKbETcIsQtvPZoDF29oQ8hwBKPb52DCerDxEw=;
-        b=aU9URF31icXh1YXHgX9TBb07PGPTmMZwXUtkda9IQGLKtR2b8qtolJf9AYFVgxPMyq
-         lrdmb80Pu//NjlBKaK9G5c+yNMVbgKYW6viK8gypFbVDLd2MTBy8lUq0bcRIVGUA+PzR
-         FmQ0VyRmtq7/+V4L8oA6zT3vUAnVmp7oHx7FzNnfzR1ZtF0K7X4gAvqOaYgRVbgLPUxM
-         NfkWIYNDQ2V897rAzHC5yHe+oYu4jmcQO38A+80woOYkr5N1+xSJKKs0SAmiTR0gNL0x
-         /DVSa6E0aVgIpFxlacnnASSasa/aulWawWtN773jetTp5L0sVhm5Xyv+6eNOIVJMsnIo
-         JtMQ==
-X-Gm-Message-State: AHPjjUhFvU7Pee8edkM36OXZ9991MjB9B0igCYVGBK3oIrPp9Pf1tPXz
-        9KwI2Lz4kJzFz8RYhib8ofNJejKzCFta
-X-Google-Smtp-Source: ADKCNb5kebYpj9FatHShnGbXesIl4U7EWgdsNt12CXtK0q97aOTdgWEvT09TzGvBEYYsh2qh0OsVMaysOG+WRvMFnIQ=
-X-Received: by 10.176.7.3 with SMTP id h3mr758460uah.66.1504662221848; Tue, 05
- Sep 2017 18:43:41 -0700 (PDT)
+        id S1753837AbdIFBwt (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Sep 2017 21:52:49 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60229 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753361AbdIFBws (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Sep 2017 21:52:48 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 244E7AF98D;
+        Tue,  5 Sep 2017 21:52:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=+GxHum8aox5jZHB/IMmZ2DkJZpI=; b=dKR7kp
+        pL6oUH39clueA3bu1C+FiHc3QMUaNfOM8htcjEpA+GrVjzH5MM5dwaQiwnVJOZGo
+        G0aXxyiWS3aJhaFG3qVqcwD9C3K81sTMwincZyT7vDK0tCgwSIC8i4OgYXd9tB0T
+        5ePa3Wpar2Smhg9UElQpk+PSZydE22CI8Xtek=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=f5MPPz7p4oDfuz81LgGnwrFSbFdkYGdk
+        II3PHmafYI0gPybqRSljKvY7vLQe59I24VFFpZ9QHXrWm79cOh5HAtkRMeiAY1a/
+        f60P38+rbxoGskZBX5cU7E8goOCk1kAAuZMOhvlHDRXG+fM52HWqKLHJot9EcKOb
+        g617VfQXI/I=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1CC00AF98C;
+        Tue,  5 Sep 2017 21:52:48 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 82067AF98B;
+        Tue,  5 Sep 2017 21:52:47 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] parse-options: warn developers on negated options
+References: <xmqqd174bzco.fsf@gitster.mtv.corp.google.com>
+        <20170905230845.17108-1-sbeller@google.com>
+Date:   Wed, 06 Sep 2017 10:52:46 +0900
+In-Reply-To: <20170905230845.17108-1-sbeller@google.com> (Stefan Beller's
+        message of "Tue, 5 Sep 2017 16:08:45 -0700")
+Message-ID: <xmqq8thsa901.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.176.72.226 with HTTP; Tue, 5 Sep 2017 18:43:41 -0700 (PDT)
-In-Reply-To: <92605DF3-9274-45A6-88B7-6281D192203F@google.com>
-References: <202EE2E2-1D0B-4772-85F7-7C7804905297@google.com> <92605DF3-9274-45A6-88B7-6281D192203F@google.com>
-From:   Bryan Turner <bturner@atlassian.com>
-Date:   Tue, 5 Sep 2017 18:43:41 -0700
-Message-ID: <CAGyf7-EVoqV8VCvnpmGivvuQ7MHN2X2mPG7ioAWouGEtAh-ibA@mail.gmail.com>
-Subject: Re: git merge algorithm question
-To:     Daniel Biran <dbiran@google.com>
-Cc:     Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 152B71EA-92A6-11E7-98A2-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 5, 2017 at 5:53 PM, Daniel Biran <dbiran@google.com> wrote:
->
->>> I'm trying to better understand one of the merge algorithms as I had some triumphs and tribulations with using a set of commands during a merge. tldr: can a git merge -s recursive -X patience; // result in a fast-forward merge? will --no-ff stop it
->>>
->>> So, the scenario is this:
->>>      - Merging a master branch into a feature branch that is 2+ years old
->>>      - We found this command was more beneficial when merging a large 20k line text file:
->>>              - git merge -s recursive -X patience master
->>>      - In a recent merge using this approach the reflog shows that the merge was performed using a fast-forward from the feature branch's head
->>>              - 082517-1, feature/branch) HEAD@{23}: merge feature/branch: Fast-forward
->>>
->>>
->>> My question is, is it possible for that command to use a fast-forward like this? (or did something else go horribly wrong? possibly an atlassian git GUI tool corrupting the work):
->>>      - If it is possible for the command to fast-forward the merge when making the commit does --no-ff force the command to never use fast-forward in this case
+Stefan Beller <sbeller@google.com> writes:
 
-Unless you specify --no-ff, git merge is always free to create a
-fast-forward "merge", even when you request the recursive strategy
-explicitly:
+>   This patch disallows all no- options, but we could be more open and allow
+>   --no-options that have the NO_NEG bit set.
 
-$ git init recursive-merge
-Initialized empty Git repository in C:/Temp/recursive-merge/.git/
+"--no-foo" that does not take "--foo" is perhaps OK so should not
+trigger an error.
 
-$ cd recursive-merge/
+A ("--no-foo", "--foo") pair is better spelled as ("--foo",
+"--no-foo") pair whose default is "--foo", but making it an error is
+probably a bit too much.
 
-$ echo "Test" > file.txt
+Compared to that, ("--no-foo", "--no-no-foo") pair feels nonsense.
 
-$ git add file.txt
+Having said that, because the existing parse_options_check() is all
+about catching the programming mistake (the end user cannot fix an
+error from it by tweaking the command line option s/he gives to the
+program), I do not think a conditional compilation like you added
+mixes well.  Either make the whole thing, not just your new test,
+conditional to -DDEVELOPER (which would make it possible for you to
+build and ship a binary with broken options[] array to the end-users
+that does not die in this function), which is undesirable, or add a
+new test that catches a definite error unconditionally.
 
-$ git commit -m "Initial commit"
-[master (root-commit) ad48617] Initial commit
- 1 file changed, 1 insertion(+)
- create mode 100644 file.txt
-
-$ git checkout -b feature-branch
-Switched to a new branch 'feature-branch'
-
-$ echo "Edit" >> file.txt
-
-$ git commit -am "Feature branch change"
-[feature-branch b226557] Feature branch change
- 1 file changed, 1 insertion(+)
-
-$ git checkout master
-Switched to branch 'master'
-
-$ git merge -s recursive -X patience feature-branch
-Updating ad48617..b226557
-Fast-forward
- file.txt | 1 +
- 1 file changed, 1 insertion(+)
-
-With --no-ff:
-
-$ git reset --hard ad48617
-HEAD is now at ad48617 Initial commit
-
-$ git merge --no-ff -s recursive -X patience feature-branch
-Merge made by the 'recursive' strategy.
- file.txt | 1 +
- 1 file changed, 1 insertion(+)
-
-With fast-forwarding disabled, you can see the recursive strategy is
-used as requested.
-
->>>
->>> Thanks for the help,
->>> Daniel
->>
->
