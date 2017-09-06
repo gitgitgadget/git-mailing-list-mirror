@@ -2,157 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C37AF209AB
-	for <e@80x24.org>; Wed,  6 Sep 2017 06:25:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B44B6209AB
+	for <e@80x24.org>; Wed,  6 Sep 2017 06:28:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750947AbdIFGZJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Sep 2017 02:25:09 -0400
-Received: from mx2.suse.de ([195.135.220.15]:42121 "EHLO mx1.suse.de"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1750858AbdIFGZI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Sep 2017 02:25:08 -0400
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (charybdis-ext.suse.de [195.135.220.254])
-        by mx1.suse.de (Postfix) with ESMTP id AF833AD1A;
-        Wed,  6 Sep 2017 06:25:07 +0000 (UTC)
-Subject: Re: [PATCHv2] pull: honor submodule.recurse config option
-To:     Junio C Hamano <gitster@pobox.com>,
-        Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
-Cc:     git@vger.kernel.org
-References: <40ecf559-0348-b838-72f7-0ad7746a7072@morey-chaisemartin.com>
- <xmqqvakwaan2.fsf@gitster.mtv.corp.google.com>
-From:   Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.de>
-Openpgp: preference=signencrypt
-Message-ID: <c3842980-22ef-5a8c-2895-90c48a97ed71@suse.de>
-Date:   Wed, 6 Sep 2017 08:25:06 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101
- Thunderbird/56.0
+        id S1750917AbdIFG20 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Sep 2017 02:28:26 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54153 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750819AbdIFG20 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Sep 2017 02:28:26 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E223A98D18;
+        Wed,  6 Sep 2017 02:28:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=CPNtQNs1vaJ2N+pKw7RqOO2kDbM=; b=SL8fIE
+        FHNEvivBe3FlxW6/26kSSUN1O27eYQw2CH/azxW/NKctNfr+ekfx5fYq2ohTigsB
+        EHB4qPhePu/LticN7G2q5wH6ehb8ShuBNYF80rYXpj8Bt/1ok0SzJCLLY+YouGPT
+        dB4uYCU2qU7q1FCrqT1D9zeOw6mu/eppjsxRc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=rhqyRzOgLTXvTdkbf8/Crp5rtYgVQwgV
+        e6Pz6I74OCwZhUUyojZC4+pkenXDqwtT6S7zfx/uZAc412ynFF7McO83KI5iwL/r
+        dQ0tBgkzRjisdEcFudKKxVYFWY+L/S7Yt/XKhAcfB4tis7POhQ+wiz2d3xpFlBV/
+        KVx8m80Zjqg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D705098D17;
+        Wed,  6 Sep 2017 02:28:24 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 377E098D15;
+        Wed,  6 Sep 2017 02:28:24 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>, bmwill@google.com,
+        jonathantanmy@google.com, Jeff King <peff@peff.net>,
+        David Lang <david@lang.hm>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: RFC v3: Another proposed hash function transition plan
+References: <20170304011251.GA26789@aiede.mtv.corp.google.com>
+        <CA+55aFz+gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com>
+        <20170307001709.GC26789@aiede.mtv.corp.google.com>
+Date:   Wed, 06 Sep 2017 15:28:23 +0900
+In-Reply-To: <20170307001709.GC26789@aiede.mtv.corp.google.com> (Jonathan
+        Nieder's message of "Mon, 6 Mar 2017 16:17:09 -0800")
+Message-ID: <xmqqa828733s.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqvakwaan2.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Content-Language: fr-xx-classique+reforme1990
+Content-Type: text/plain
+X-Pobox-Relay-ID: 95D92B86-92CC-11E7-A022-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-
-Le 06/09/2017 à 03:17, Junio C Hamano a écrit :
-> Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com> writes:
+> Linus Torvalds wrote:
+>> On Fri, Mar 3, 2017 at 5:12 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
 >
->> "git pull" supports a --recurse-submodules option but does not parse the
->> submodule.recurse configuration item to set the default for that option.
->> Meanwhile "git fetch" does support submodule.recurse, producing
->> confusing behavior: when submodule.recurse is enabled, "git pull"
->> recursively fetches submodules but does not update them after fetch.
+>>> This document is still in flux but I thought it best to send it out
+>>> early to start getting feedback.
 >>
->> Handle submodule.recurse in "git pull" to fix this.
->>
->> Reported-by: Magnus Homann <magnus@homann.se>
->> Signed-off-by: Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
->> ---
->>
->> Changes since v1:
->>  * Cleanup commit message
->>  * Add test
->>  * Remove extra var in code and fallthrough to git_default_config
->>
->>  builtin/pull.c            |  4 ++++
->>  t/t5572-pull-submodule.sh | 10 ++++++++++
->>  2 files changed, 14 insertions(+)
->>
->> diff --git a/builtin/pull.c b/builtin/pull.c
->> index 7fe281414..ce8ccb15b 100644
->> --- a/builtin/pull.c
->> +++ b/builtin/pull.c
->> @@ -325,6 +325,10 @@ static int git_pull_config(const char *var, const char *value, void *cb)
->>  	if (!strcmp(var, "rebase.autostash")) {
->>  		config_autostash = git_config_bool(var, value);
->>  		return 0;
->> +	} else if (!strcmp(var, "submodule.recurse")) {
->> +		recurse_submodules = git_config_bool(var, value) ?
->> +			RECURSE_SUBMODULES_ON : RECURSE_SUBMODULES_OFF;
->> +		return 0;
->>  	}
->>  	return git_default_config(var, value, cb);
->>  }
-> If I am reading the existing code correctly, things happen in
-> cmd_pull() in this order:
+>> This actually looks very reasonable if you can implement it cleanly
+>> enough.
 >
->  - recurse_submodules is a file-scope static that is initialized to
->    RECURSE_SUBMODULES_DEFAULT
+> Thanks for the kind words on what had quite a few flaws still.  Here's
+> a new draft.  I think the next version will be a patch against
+> Documentation/technical/.
+
+Can we reboot the discussion and advance this to v4 state?
+
+> As before, comments welcome, both here and inline at
 >
->  - pull_options[] is given to parse_options() so that
->    submodule-config.c::option_fetch_parse_recurse_submodules() can
->    read "--recurse-submodules=<value>" from the command line to
->    update recurse_submodules.
->
->  - git_pull_config() is given to git_config() so that settings in
->    the configuration files are read.
->
-> Care must be taken to make sure that values given from the command
-> line is never overriden by the default value specified in the
-> configuration system because the order of the second and third items
-> in the above are backwards from the usual flow.  This patch does not
-> seem to have any such provision.
->
-> Existing handling of "--autostash" vs "rebase.autostash" solves this
-> issue by having opt_autostash and config_autostash as two separate
-> variables, so I suspect that something similar to it must be there,
-> at least, for this new configuration.
->
-> If we want to keep the current code structure, that is.  I do not
-> recall if we did not notice the fact that the order of options and
-> config parsing is backwards and unknowingly worked it around with
-> two variables when we added the rebase.autostash thing, or we knew
-> the order was unusual but there was a good reason to keep that
-> unusual order (iow, if we simply swapped the order of
-> parse_options() and git_config() calls, there are things that will
-> break).  
->
-> If it is not the latter, perhaps we may want to flip the order of
-> config parsing and option parsing around?  That will allow us to fix
-> the handling of autostash thing to use only one variable, and also
-> fix your patch to do the right thing.
+>   https://goo.gl/gh2Mzc
 
-I see what you mean.
-It looks like switching the code around works but I think there still needs to be 2variables for autstash for this piece of code:
+I think what you have over there looks pretty-much ready as the
+final outline.
 
-    if (!opt_rebase && opt_autostash != -1)
-        die(_("--[no-]autostash option is only valid with --rebase."));
+One thing I still do not know how I feel about after re-reading the
+thread, and I didn't find the above doc, is Linus's suggestion to
+use the objects themselves as NewHash-to-SHA-1 mapper [*1*].  
 
-The config option should not cause git pull to die when not using --rebase, the CLI option should.
+It does not help the reverse mapping that is needed while pushing
+things out (the SHA-1 receiver tells us what they have in terms of
+SHA-1 names; we need to figure out where we stop sending based on
+that).  While it does help maintaining itself (while constructing
+SHA3-content, we'd be required to find out its SHA1 name but the
+SHA3 objects that we refer to all know their SHA-1 names), if it is
+not useful otherwise, then that does not count as a plus.  Also
+having to bake corresponding SHA-1 name in the object would mean
+mistakes can easily propagate and cannot be corrected without
+rewriting the history, which would be a huge downside.  So perhaps
+we are better off without it, I guess.
 
->> diff --git a/t/t5572-pull-submodule.sh b/t/t5572-pull-submodule.sh
->> index 077eb07e1..1b3a3f445 100755
->> --- a/t/t5572-pull-submodule.sh
->> +++ b/t/t5572-pull-submodule.sh
->> @@ -65,6 +65,16 @@ test_expect_success 'recursive pull updates working tree' '
->>  	test_path_is_file super/sub/merge_strategy.t
->>  '
->>  
->> +test_expect_success "submodule.recurse option triggers recursive pull" '
->> +	test_commit -C child merge_strategy_2 &&
->> +	git -C parent submodule update --remote &&
->> +	git -C parent add sub &&
->> +	git -C parent commit -m "update submodule" &&
->> +
->> +	git -C super -c submodule.recurse pull --no-rebase &&
->> +	test_path_is_file super/sub/merge_strategy_2.t
->> +'
-> This new test does not test interactions with submodule.recurse
-> configuration and --recurse-submodules=<value> from the command
-> line.  It would be necessary to add tests to cover the permutations
-> in addition to the basic test we see above.
 
-Will fix
+[Reference]
 
-Thanks
+*1* <CA+55aFxj7Vtwac64RfAz_u=U4tob4Xg+2pDBDFNpJdmgaTCmxA@mail.gmail.com>
 
-Nicolas
+
