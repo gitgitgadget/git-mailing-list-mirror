@@ -6,113 +6,127 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C6B22209AB
-	for <e@80x24.org>; Wed,  6 Sep 2017 01:24:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 53F15208E3
+	for <e@80x24.org>; Wed,  6 Sep 2017 01:26:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753649AbdIFBYl (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Sep 2017 21:24:41 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50917 "EHLO
+        id S1753658AbdIFB0e (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Sep 2017 21:26:34 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54678 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753574AbdIFBYe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Sep 2017 21:24:34 -0400
+        with ESMTP id S1752609AbdIFB0d (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Sep 2017 21:26:33 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3EDA6AF477;
-        Tue,  5 Sep 2017 21:24:34 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 25EAE95515;
+        Tue,  5 Sep 2017 21:26:33 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=XeqG5b4PMK2Hp6VWiwLZfg9PmLw=; b=dHjqSCxm7hRQdPZ5nObW
-        KtDnaHoVm3av97RDsmtxUV90FMwlwYoQfk2yZJ3PwTh982G3ZbfIpj86u7uiz06r
-        ktCLwpt6DomzvHpt/MhkhODIZX1py6qF6BYkjn2DxcmYyh0j7UDeg4JxqUAHrJJs
-        q+BEcgkfzileI7/WbZ5862o=
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=uxUAx5PSI8pzg5VZBeXfycpJG
+        fE=; b=XDPdicPzCyaoak28OF+kFyeTQ13bAxWrPl034du9Qumk2oROPbz4ZGNst
+        Ur05SWDVZogXbPIZeA555TFJtfh/GXmkt3XscZUE5yZSMWW2WlvEX07K3HQVxoAh
+        nL1UmAxCl2KfDw7voWISEmgVpxUyV0pe7YBcpqAZQxhrDm1URA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         q=dns; s=sasl; b=TVTvda7CQPy83JFvB6+yYHOUFIKl/nVEKUUS2OZNPFceIb
-        FQMgUpSLnLBVVlpjDqUSDUy2NR5rfpGYNz7wkRdzjv3CJmCGFsBeNgCss//nrmDp
-        BulhIDtqbLhEJCM6R3BTtRxlyd6zFryj2xFbp2ZyGZvwE9tcv/4LcAaQK6M6U=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 34DC7AF476;
-        Tue,  5 Sep 2017 21:24:34 -0400 (EDT)
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; q=dns; s=sasl; b=rRBhtWn7B17Mm0sV69D
+        zoXp9bygCxqyXTY3yTKGVextu0EPZoGag0D0vU95mwuUG6Yt6eLELPzGqLjVeMmn
+        Z02mKIQMnMIDohacDM599YmdhBkL18EQ4t7zJthk8AtE0mIo5ChBryLK8GzaD/4C
+        jVu0PhbpPrky/+BQRryutUQc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1B9E395514;
+        Tue,  5 Sep 2017 21:26:33 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 90941AF475;
-        Tue,  5 Sep 2017 21:24:33 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7A19095513;
+        Tue,  5 Sep 2017 21:26:32 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     martin.agren@gmail.com, git@vger.kernel.org,
-        jeffhost@microsoft.com, peff@peff.net
-Subject: Re: [PATCH] hashmap: add API to disable item counting when threaded
-References: <adb37b70139fd1e2bac18bfd22c8b96683ae18eb.1502780344.git.martin.agren@gmail.com>
-        <20170830185922.10107-1-git@jeffhostetler.com>
-        <20170830185922.10107-2-git@jeffhostetler.com>
-Date:   Wed, 06 Sep 2017 10:24:31 +0900
-Message-ID: <xmqqo9qoaab4.fsf@gitster.mtv.corp.google.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
+        "brian m. carlson" <sandals@crustytoothpaste.ath.cx>
+Subject: Re: [PATCH] refs: make sure we never pass NULL to hashcpy
+References: <20170904200504.15249-1-t.gummerer@gmail.com>
+Date:   Wed, 06 Sep 2017 10:26:31 +0900
+Message-ID: <xmqqh8wgaa7s.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 23807FC8-92A2-11E7-929B-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 6A613C8E-92A2-11E7-AFF6-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff Hostetler <git@jeffhostetler.com> writes:
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-> From: Jeff Hostetler <jeffhost@microsoft.com>
+> gcc on arch linux (version 7.1.1) warns that a NULL argument is passed
+> as the second parameter of memcpy.
 >
-> This is to address concerns raised by ThreadSanitizer on the
-> mailing list about threaded unprotected R/W access to map.size with my previous
-> "disallow rehash" change (0607e10009ee4e37cb49b4cec8d28a9dda1656a4).  See:
-> https://public-inbox.org/git/adb37b70139fd1e2bac18bfd22c8b96683ae18eb.1502780344.git.martin.agren@gmail.com/
->
-> Add API to hashmap to disable item counting and to disable automatic rehashing.  
-> Also include APIs to re-enable item counting and automatica rehashing.
->
-> When item counting is disabled, the map.size field is invalid.  So to
-> prevent accidents, the field has been renamed and an accessor function
-> hashmap_get_size() has been added.  All direct references to this
-> field have been been updated.  And the name of the field changed
-> to map.private_size to communicate thie.
->
-> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-> ---
->  attr.c                  | 14 ++++---
->  builtin/describe.c      |  2 +-
->  hashmap.c               | 31 +++++++++++-----
->  hashmap.h               | 98 ++++++++++++++++++++++++++++++++++++++-----------
->  name-hash.c             |  6 ++-
->  t/helper/test-hashmap.c |  2 +-
->  6 files changed, 113 insertions(+), 40 deletions(-)
+> In file included from refs.c:5:0:
+> refs.c: In function =E2=80=98ref_transaction_verify=E2=80=99:
+> cache.h:948:2: error: argument 2 null where non-null expected [-Werror=3D=
+nonnull]
+>   memcpy(sha_dst, sha_src, GIT_SHA1_RAWSZ);
+>   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> In file included from git-compat-util.h:165:0,
+>                  from cache.h:4,
+>                  from refs.c:5:
+> /usr/include/string.h:43:14: note: in a call to function =E2=80=98memcp=
+y=E2=80=99 declared here
+>  extern void *memcpy (void *__restrict __dest, const void *__restrict _=
+_src,
+>               ^~~~~~
+> ...
+> diff --git a/refs.c b/refs.c
+> index ba22f4acef..d8c12a9c44 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -896,10 +896,14 @@ struct ref_update *ref_transaction_add_update(
+> =20
+>  	update->flags =3D flags;
+> =20
+> -	if (flags & REF_HAVE_NEW)
+> +	if (flags & REF_HAVE_NEW) {
+> +		assert(new_sha1);
+>  		hashcpy(update->new_oid.hash, new_sha1);
+> -	if (flags & REF_HAVE_OLD)
+> +	}
+> +	if (flags & REF_HAVE_OLD) {
+> +		assert(old_sha1);
+>  		hashcpy(update->old_oid.hash, old_sha1);
+> +	}
 
-I feel somewhat stupid to say this, especially after seeing many
-people applaud this patch, but I do not seem to be able to even
-build Git with this patch.  I am getting:
+It is hugely annoying to see a halfway-intelligent compiler forces
+you to add such pointless asserts.
 
-    common-main.o: In function `hashmap_get_size':
-    /home/gitster/w/git.git/hashmap.h:260: multiple definition of `hashmap_get_size'
-    fast-import.o:/home/gitster/w/git.git/hashmap.h:260: first defined here
-    libgit.a(argv-array.o): In function `hashmap_get_size':
-    /home/gitster/w/git.git/hashmap.h:260: multiple definition of `hashmap_get_size'
-    fast-import.o:/home/gitster/w/git.git/hashmap.h:260: first defined here
-    libgit.a(attr.o): In function `hashmap_get_size':
-    ...
+The only way the compiler could error on this is by inferring the
+fact that new_sha1/old_sha1 could be NULL by looking at the callsite
+in ref_transaction_update() where these are used as conditionals to
+set HAVE_NEW/HAVE_OLD that are passed.  Even if the compiler were
+doing the whole-program analysis, the other two callsites of the
+function pass the address of oid.hash[] in an oid structure so it
+should know these won't be NULL.
 
-and wonder if others are building with different options or something..
+Or is the compiler being really dumb and triggering an error for
+every use of
 
-> diff --git a/hashmap.h b/hashmap.h
-> index 7a8fa7f..7b8e6f4 100644
-> --- a/hashmap.h
-> +++ b/hashmap.h
-> @@ -253,6 +253,19 @@ static inline void hashmap_entry_init(void *entry, unsigned int hash)
+	memcpy(dst, src, size);
+
+that must now be written as
+
+	assert(src);
+	memcpy(dst, src, size);
+
+???  That would be doubly annoying.
+
+I wonder if REF_HAVE_NEW/REF_HAVE_OLD are really needed in these
+codepaths, though.  Perhaps we can instead declare !!new_sha1 means
+we have the new side and rewrite the above part to
+
+	if (new_sha1)
+		hashcpy(update->new_oid.hash, new_sha1);
+
+without an extra and totally pointless assert()?
+
+>  	update->msg =3D xstrdup_or_null(msg);
+>  	return update;
 >  }
->  
->  /*
-> + * Return the number of items in the map.
-> + */
-> +inline unsigned int hashmap_get_size(struct hashmap *map)
-
-I think this must become static inline like everybody else in this
-file, at least.
-
-I also wonder if this header is excessively inlining too many
-functions without measuring first, but that is a different story.
