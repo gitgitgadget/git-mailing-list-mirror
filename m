@@ -1,108 +1,89 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: **
+X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SBL_CSS,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 15D732082D
-	for <e@80x24.org>; Thu,  7 Sep 2017 08:55:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C04872082D
+	for <e@80x24.org>; Thu,  7 Sep 2017 09:00:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754349AbdIGIzS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Sep 2017 04:55:18 -0400
-Received: from sender-of-o52.zoho.com ([135.84.80.217]:21420 "EHLO
-        sender-of-o52.zoho.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754073AbdIGIzS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Sep 2017 04:55:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1504774515;
-        s=zoho; d=shikherverma.com; i=root@shikherverma.com;
-        h=Date:From:To:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To;
-        l=3228; bh=jJKoaZYSviVU4HZDf1iV1At2TrVe8HpBD47Qn+ZwTF8=;
-        b=KZLYvqK6dE5laCcCfDW+29Wg3Ix8Ty056tJrBDonOQCv1j+6+KY2/E/XdgzEsuJ8
-        23ak9KEKYmNgotlhl1Bwd/EPhivuez+zi7HZVTEhHVTTWFITE0PgHNarq/8ClyFfVlQ
-        NcqpGpPGCS6NJ2CKuE7MLTJDvxeajD7CO3qirrrg=
-Received: from weakknees.security.iitk.ac.in (125.17.242.34 [125.17.242.34]) by mx.zohomail.com
-        with SMTPS id 1504774515802292.0278255527164; Thu, 7 Sep 2017 01:55:15 -0700 (PDT)
-Date:   Thu, 7 Sep 2017 14:25:11 +0530
-From:   Shikher Verma <root@shikherverma.com>
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [RFC PATCH 0/2] Add named reference to latest push cert
-Message-ID: <20170907085511.bpgtm4gqem6eukji@weakknees.security.iitk.ac.in>
-References: <20170906093913.21485-1-root@shikherverma.com>
- <CAGZ79kbxDh11KxrKCk_VjmN06kzp7x4iVO6XTV=a-qBmm39K5A@mail.gmail.com>
- <xmqq4lsf2upu.fsf@gitster.mtv.corp.google.com>
+        id S1754894AbdIGJAW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Sep 2017 05:00:22 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59440 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1753826AbdIGJAV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Sep 2017 05:00:21 -0400
+Received: (qmail 10558 invoked by uid 109); 7 Sep 2017 09:00:20 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 07 Sep 2017 09:00:20 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 29646 invoked by uid 111); 7 Sep 2017 09:00:53 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Thu, 07 Sep 2017 05:00:53 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 07 Sep 2017 05:00:18 -0400
+Date:   Thu, 7 Sep 2017 05:00:18 -0400
+From:   Jeff King <peff@peff.net>
+To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 10/10] add UNLEAK annotation for reducing leak false
+ positives
+Message-ID: <20170907090018.t6ogu2vufdfhz3n6@sigill.intra.peff.net>
+References: <20170905130149.agc3zp3s6i6e5aki@sigill.intra.peff.net>
+ <20170905130505.him3p4jhxp64r2vy@sigill.intra.peff.net>
+ <CAN0heSpYZT7cm=XNpfgcsGFa9FOR6SdaF=vXJ+M7NNaA6Mnb3g@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq4lsf2upu.fsf@gitster.mtv.corp.google.com>
-X-ZohoMailClient: External
-X-ZohoMail: Z_65354923 SPT_1 Z_50090816 SPT_1 SLF_D
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAN0heSpYZT7cm=XNpfgcsGFa9FOR6SdaF=vXJ+M7NNaA6Mnb3g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 07, 2017 at 09:55:25AM +0900, Junio C Hamano wrote:
-> Stefan Beller <sbeller@google.com> writes:
+On Wed, Sep 06, 2017 at 07:16:00PM +0200, Martin Ågren wrote:
+
+> > diff --git a/builtin/commit.c b/builtin/commit.c
+> > index b3b04f5dd3..de775d906c 100644
+> > --- a/builtin/commit.c
+> > +++ b/builtin/commit.c
+> > @@ -1819,5 +1819,6 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+> >                 print_summary(prefix, &oid, !current_head);
+> >
+> >         strbuf_release(&err);
+> > +       UNLEAK(sb);
+> >         return 0;
+> >  }
 > 
-> > On the ref to store the push certs:
-> > (a) Currently the ref points at the blob, I wonder if we'd rather want to
-> >     point at a commit? (Then we can build up a history of
-> >     push certs, instead of relying on the reflog to show all
-> >     push certs. Also the gc issue might be easier to solve using this)
-> > (b) When going with (a), we might want to change the name. Most
-> >     refs are 3 directories deep:
-> >       refs/heads/<branch name>
-> >       refs/pr/<pull request nr> # at github IIUC
-> >       refs/changes/<id> # Gerrit
-> >       refs/meta/config # Gerrit to e.g. configure ACLs of the repo
-> >     "refs" indicates it is a ref, whereas the second part can be seen
-> >     as a "namespace". Currently Git only uses the "heads" and "tags"
-> >     namespace, "meta" is used by more than just Gerrit, so maybe it is
-> >     not wise to use "refs/meta/push_cert", but go with refs/gitmeta/pushcert
-> >     instead?
+> These are both strbufs, so this ends up being a bit inconsistent. What
+> would be the ideal end state for these two and all other such
+> structures? My guess is "always UNLEAK", as opposed to carefully judging
+> whether foo_release() would/could add any significant overhead.
 > 
-> You also need to worry about concurrent pushes.  The resulting
-> "history" may not have to be sequencial, but two pushes that affect
-> the same ref must be serialized in the resulting push-cert store.
+> In other words, it would be ok/wanted with changes such as "let's UNLEAK
+> bar, because ..., and while at it, convert the existing foo_release to
+> UNLEAK for consistency" (or per policy, for smaller binary, whatever).
+> Or "if it ain't broken, don't fix it"? Did you think about this, or was
+> it more a random choice?
 
-Oh I see. I guess concurrency would be an issue. How does recieve-pack
-handle concurrent pushes? Is there a lock that I could use to decide 
-if named push cert ref has to be updated or not?
+To be honest, I didn't really think that deeply about it. I had a hammer
+in my hand, and LSAN kept showing me nails to pound.
 
-> The original design deliberately punts all the complexity to hook
-> exactly because we do not want to have a half-baked "built-in"
-> implementation that would only get in the way of those who wants to
-> do high-performance servers.  It is very likely that they want to
-> have a long-running daemon that listens to a port or a named pipe,
-> where the only thing the hook would do is to write the value of
-> GIT_PUSH_CERT to that daemon process, which acts as a serialization
-> point, can read from the object store that is used as a short-term
-> temporary area, and write the push cert to a more permanent store.
-> 
-> Having said all that, I am sympathetic to a wish to have an
-> easy-to-enable-without-thinking example that is not so involved
-> (e.g. no portability concern, does not have to perform very well but
-> must be correct).  If Shikher wants to add one, I think the right
-> approach to do so would be to add and ship a sample hook.
-> 
+I agree that these two strbufs should probably be treated the same.
 
-This patch would only add one more object to write per push so I 
-think the performance penalty is not that high. We can have a config
-to turn it off so that it does not get in the way of those who want 
-to do high-performance servers.
+In general, I think I prefer using UNLEAK() because it's hard to get it
+wrong (i.e., you don't have to care about double-frees or uninitialized
+pointers). For strbufs, though, that's less of an issue because they are
+always maintained in a consistent state.
 
-People can use the recieve hook for advance use cases but I think git
-should provide a builtin solution for the simple case. The reason I
-favour a named ref over a sample hook is because decouping push
-certificate from hook opens up more possibilities like we could store
-a map of refs to the latest push cert which updated the ref. And 
-serve the corresponding push cert whenever someone does 
-`git pull --signed important-ref`. Effectively removing trust from 
-the server by preventing tampering with refs. This could really help 
-the Github generation developers like me. What do you think?
+As an aside, I'm pretty sure that "err" can never have been allocated
+here, and this release is always a noop. It's filled in only when we get
+an error from the ref update, which also causes us to die(). But in
+general I'd prefer the code that causes readers to think the least
+(i.e., just calling free or UNLEAK here rather than forcing the reader
+to figure out whether it's possible to leak).
 
-> Thanks.
-
+-Peff
