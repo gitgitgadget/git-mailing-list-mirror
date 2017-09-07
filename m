@@ -1,105 +1,100 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: 
+X-Spam-Level: **
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SBL_CSS,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D43620281
-	for <e@80x24.org>; Thu,  7 Sep 2017 05:57:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6FA0F2082D
+	for <e@80x24.org>; Thu,  7 Sep 2017 07:08:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752200AbdIGF5D (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Sep 2017 01:57:03 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59340 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750742AbdIGF5D (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Sep 2017 01:57:03 -0400
-Received: (qmail 30668 invoked by uid 109); 7 Sep 2017 05:57:03 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 07 Sep 2017 05:57:03 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28706 invoked by uid 111); 7 Sep 2017 05:57:35 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Thu, 07 Sep 2017 01:57:35 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 07 Sep 2017 01:57:01 -0400
-Date:   Thu, 7 Sep 2017 01:57:01 -0400
-From:   Jeff King <peff@peff.net>
-To:     Ross Kabus <rkabus@aerotech.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [Bug] commit-tree shouldn't append an extra newline to commit
- messages
-Message-ID: <20170907055701.ujibki2jwmzhhycm@sigill.intra.peff.net>
-References: <CAEVs+za9do_wXC12SSRznF9v9oGw3_Grq2EFDVf8nH1CRgM-Qw@mail.gmail.com>
- <20170902083319.lcugfpkkk5lahieb@sigill.intra.peff.net>
- <CAEVs+zbbWQuM-=5d04bkpTu38Mr4PyczskNhni5K1u_nzh-2Qw@mail.gmail.com>
- <20170905153636.tsmlq3wv7ztpc67z@sigill.intra.peff.net>
- <CAEVs+zbCj0Zv0t4_WG6y2jcLoXwHy-Mu-LH31c_QgFaE9i3HtQ@mail.gmail.com>
- <20170905170311.yhcksrw2bxevd3hk@sigill.intra.peff.net>
- <CAEVs+zZRw3kW0C56NcJNXieCSTOa=uMxg6tDPjU2u+WDzhTLfw@mail.gmail.com>
+        id S1753908AbdIGHIf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Sep 2017 03:08:35 -0400
+Received: from sender-of-o52.zoho.com ([135.84.80.217]:21314 "EHLO
+        sender-of-o52.zoho.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750742AbdIGHIe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Sep 2017 03:08:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1504768111;
+        s=zoho; d=shikherverma.com; i=root@shikherverma.com;
+        h=Date:From:To:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To;
+        l=2162; bh=l7OnanDG7/g37WLVrFrQBMV+rKDOM+RIbPjw1nHmKQo=;
+        b=Aq2WP25F3RA1TesHlQ/4qphLNSEC0KKEQwkqrOAMB6nAOjpYluvPXK/2iG7XnfSJ
+        xeU9LApNMw2YviOtHv4dwfV1fyALtBLbX1QTQtD0p2kdw6a2qrfp1JPZmbiPmADVISR
+        JPHeQ1sNUulTi/YP/IzQdiKA1UsbimiL19xJMyIM=
+Received: from weakknees.security.iitk.ac.in (125.17.242.34 [125.17.242.34]) by mx.zohomail.com
+        with SMTPS id 1504768111738944.2313052896537; Thu, 7 Sep 2017 00:08:31 -0700 (PDT)
+Date:   Thu, 7 Sep 2017 12:38:27 +0530
+From:   Shikher Verma <root@shikherverma.com>
+To:     git@vger.kernel.org
+Subject: Re: [RFC PATCH 0/2] Add named reference to latest push cert
+Message-ID: <20170907070827.sysqmszdwduruwis@weakknees.security.iitk.ac.in>
+References: <20170906093913.21485-1-root@shikherverma.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAEVs+zZRw3kW0C56NcJNXieCSTOa=uMxg6tDPjU2u+WDzhTLfw@mail.gmail.com>
+In-Reply-To: <20170906093913.21485-1-root@shikherverma.com>
+X-ZohoMailClient: External
+X-ZohoMail: Z_65354923 SPT_1 Z_50090816 SPT_1 SLF_D
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for following up. A few minor comments:
+Hey everyone,
 
-On Tue, Sep 05, 2017 at 04:57:24PM -0400, Ross Kabus wrote:
+I felt like I should introduce myself since this is my first patch on
+the git mailing list (or any mailing list actually) :D
 
-> From: Ross Kabus <rkabus@aerotech.com>
-> Date: Tue, 5 Sep 2017 13:54:52 -0400
-> Subject: [PATCH] commit-tree: don't append a newline with -F
+I am Shikher[1], currently in my 4th year undergrad at IIT Kanpur.
+This summer I was lucky enough to intern at NYU Secure Systems Lab[2]
+mentored by Santiago. We looked into how signed pushes work and how 
+we can use them to increase the security of git. We encountered a
+strange error in tests which resulted in a patch[3] and I wrote a
+python script to verify push certificates[4]. I was pretty surprised 
+to not find any push certificate on the remote repo after I did a 
+signed push, hence this RFC.
 
-Usually you'd just omit these in favor of the email headers (and replace
-the email subject with this one).
+Anyway this is my first time trying to contribute to a large OSS so 
+forgive me if I make any noob mistakes.
 
-> This change makes it such that commit-tree -F never appends a newline
-> character to the supplied commit message (either from file or stdin).
+Thanks
+Shikher Verma
+
+[1]http://shikherverma.com/
+[2]https://ssl.engineering.nyu.edu/
+[3]https://public-inbox.org/git/20170707220159.12752-1-santiago@nyu.edu/
+[4]https://gist.github.com/ShikherVerma/9204060b545c00597e7ad9b694cfeb9c
+
+On Wed, Sep 06, 2017 at 03:09:11PM +0530, Shikher Verma wrote:
+> Currently, git only stores push certificates if there is a receive hook 
+> present. This may violate the principle of least surprise (e.g., I 
+> pushed with --signed, and I don't see anything in upstream). 
+> Additionally, push certificates could be more versatile if they are not 
+> tightly bound to git hooks. Finally, it would be useful to verify the 
+> signed pushes at later points of time with ease.
 > 
-> Previously, commit-tree -F would always append a newline character to
-> the text brought in from file or stdin. This has caused confusion in a
-> number of ways:
->   - This is a plumbing command and it is generally expected not to do
->     text cleanup or other niceties.
->   - stdin piping with "-F -" appends a newline but stdin piping without
->     -F does not append a newline (inconsistent).
->   - git-commit has the --cleanup=verbatim option that prevents appending
->     a newline with its -F argument. There is no verbatim counterpart to
->     commit-tree -F (inconsistent).
+> A named ref is added for ease of access/tooling around push 
+> certificates. If the last push was signed, ref/PUSH_CERT stores the 
+> ref of the latest push cert otherwise it is empty.
+>  
+> Sending patches as RFC since the documentation would have to be 
+> updated and git gc might have to be patched to not garbage collect 
+> the latest push certificate.
+> 
+> This patch applies on master (3ec7d702a) 
+> 
+> Shikher Verma (2):
+>   Always write push cert to disk
+>   Store latest push cert ref in PUSH_CERT
+> 
+>  builtin/receive-pack.c | 25 ++++++++++++++++++++-----
+>  path.c                 |  1 +
+>  path.h                 |  1 +
+>  3 files changed, 22 insertions(+), 5 deletions(-)
+> 
+> -- 
+> 2.14.1
+> 
 
-This explanation all makes sense to me except for the last bit, which is
-a bit subtle. I'd have said it more like:
-
-  - git-commit does not specifically append a newline to the "-F"
-    input. The issue is somewhat muddled by the fact that git-commit
-    does pass the message through its --cleanup option, which may add
-    such a newline. But for commit-tree to match "commit --cleanup=verbatim",
-    we should not do so here.
-
-> ---
->  builtin/commit-tree.c | 1 -
->  1 file changed, 1 deletion(-)
-
-Your patch needs to be signed-off; see the Developer's Certificate of
-Origin section in Documentation/SubmittingPatches.
-
-> diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
-> index 19e898fa4..2177251e2 100644
-> --- a/builtin/commit-tree.c
-> +++ b/builtin/commit-tree.c
-> @@ -102,7 +102,6 @@ int cmd_commit_tree(int argc, const char **argv,
-> const char *prefix)
->   if (fd && close(fd))
->   die_errno("git commit-tree: failed to close '%s'",
->    argv[i]);
-> - strbuf_complete_line(&buffer);
->   continue;
-
-Aside from the whitespace damage, the patch itself looks good.
-
--Peff
