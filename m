@@ -2,94 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6DD5E20281
-	for <e@80x24.org>; Thu,  7 Sep 2017 01:26:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0604B20281
+	for <e@80x24.org>; Thu,  7 Sep 2017 03:27:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751538AbdIGB0Q (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Sep 2017 21:26:16 -0400
-Received: from mail-wm0-f43.google.com ([74.125.82.43]:35179 "EHLO
-        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751267AbdIGB0P (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Sep 2017 21:26:15 -0400
-Received: by mail-wm0-f43.google.com with SMTP id f199so1104957wme.0
-        for <git@vger.kernel.org>; Wed, 06 Sep 2017 18:26:15 -0700 (PDT)
+        id S1752315AbdIGD1j (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Sep 2017 23:27:39 -0400
+Received: from mail-qk0-f171.google.com ([209.85.220.171]:34357 "EHLO
+        mail-qk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751538AbdIGD1j (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Sep 2017 23:27:39 -0400
+Received: by mail-qk0-f171.google.com with SMTP id b23so24253102qkg.1
+        for <git@vger.kernel.org>; Wed, 06 Sep 2017 20:27:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=diS5eipbyMZ/WYAWqafi+CSfqhBMKRbWM0T2r/NGObk=;
-        b=ijrurIzv6v5oU2Fnua/sFDWnxVkNkydxIlagkobp+/sjKpMll68rmHXauGfA427CPH
-         Yyje2/U5MI9NgcgxJDuhWL+6xQYFc+ZspK2iMLS5Y/S5X2OAYVI/pRYk7KZo/eNEEc9g
-         8WsMRVbv3Yf5U2OhTHjTg11eTfYTXDOGWdsgSWOnIa5YKWjjl4p5UL3BUv/JBtahi9ru
-         Y+pjBBeLPbtuHqOU2x81J8MzJ8/0/OTJBsMj9O4UPb7UAHruv1APAaKejdVmbu8uqq7r
-         9hPEmXv3QTRmZzLHzFo0a9e2LtMuWf6BcAl1EAjwlxWedDidf31Vpp2IzHsRmKjfvBGl
-         Q5UA==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=conNkXfuJZdyBdkaeFT+NgvempFUM1lmuK/uqftt0zw=;
+        b=W3e0p96Dcns9jue1SWUGP34XlVTEbZv1wK6bqxjK9mJ/ISrGhJPPk2aK35Rz3hieTs
+         wkAvPlmmR5ghEc9B8bVMRP8M1uT3dbLdboITRgGIHMZZKx610AVCUDSUijB8TymFrF1o
+         Sbc9jKAwh62ptWqV8FEHtu9bndU08WqRfyHmyFExjKqDPCif7fZmQ9LT9QsB1I04+Kgt
+         xr5CZS36aOaF0145HgiGDBuBzgy9tyZJcX70WmB3lmVYEFS8igqn6tS3+PsKDOPETyem
+         Lg0TEmFZODDRc+t5B6yz//JYtvu9aUCZxBAHGYVVJPMuzQkSv7QDJZ9I61P8oEzNqUdh
+         pgEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=diS5eipbyMZ/WYAWqafi+CSfqhBMKRbWM0T2r/NGObk=;
-        b=OOicYIqoI/a2WRSCDML2sFjDuoo61TI4dmOmVnxTHPMGwxkHeg18opkp1+wSeqOeo4
-         V/qGuSbLZhom1QbEtSoLk1pmCKMqPuZaXXMaHkP60Pm0QspJ5iLO2TiLA8CLYgO4TILn
-         U3RLTl+Dn5EWYr2yIiPKR+hyaxWjf2yhjyGnFHcOHV8yRhvcFtaohN2UC/eOCW/WOVi0
-         V6v7tqNgqkMVHl21p2G/zb7YLi4j1Chrl+YkFnHv59k9XTGGOtNuYZoRbn//Iz229gd1
-         bX2h4nQXFeFG9yLQor+i/YycBtSxwjewm0Fe/JlQo2oXgg6ejklPD/PGvp388XpdiWoX
-         KB6w==
-X-Gm-Message-State: AHPjjUh7IkkgYJ5VpK2zM6o9EqGH9a1nF9r7JIlO/TPlqtac41hPmsW0
-        gD3sSb9Zb+bEhhjvdT25dtshFmzECw==
-X-Google-Smtp-Source: ADKCNb4AQ9rMGSQPtrcAmNy/HLdDUSOQE6gl7/XhMK1qwFvafYZDg8dHv+ZBbbiazDYKlTYbuf3q9vWg+WcO20w5ETY=
-X-Received: by 10.80.169.43 with SMTP id l40mr1160966edc.187.1504747574155;
- Wed, 06 Sep 2017 18:26:14 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=conNkXfuJZdyBdkaeFT+NgvempFUM1lmuK/uqftt0zw=;
+        b=LPNcoMi1AsNcouFElIeCPIkS7BcY+zp5VApRqichSGuw7bqZq8AP9TIgftfwwzZuqd
+         E2vk9aiNKnGExjMJJEpPtNaQ9wbIrG84bMfz5m2kslQ0rs4Hitk/KyQhBlYtXBKNAg0E
+         r4RFJOMsA8K3a2fp4ufjIE2ZZGrJct+lFQJ5qtTC+7xRz7lbMd/xihxjfFzUGTGhRbHN
+         Y1mGxXKUhPAaSm4b+1N0rbS1//+oe+ifExP+qJpf9hU1bcaG6hZcesjLnuTHjweH4pdI
+         Pcsj2Pgdy1VvfRnLXByePmn+rXs0PjGtjEWpf7BmEdPQh1wZdV6O19FTe3iIXqSTDxz+
+         RKpw==
+X-Gm-Message-State: AHPjjUiG8I5YMvz9uruUIMef9tUGpR2zHV/ylBztJRCZA+5s4L0+Rg6q
+        2/5sS+jdvBevP/rxB65UOSYde81Htg==
+X-Google-Smtp-Source: AOwi7QASr8GvnhtMwbgirWvTQ9F1O7eDUX8k2pSEK38QUxBv11bKvamTDeWzChtewf4pjnry7ndNWUQ49xKTeAj2sSY=
+X-Received: by 10.55.116.134 with SMTP id p128mr1728729qkc.50.1504754858102;
+ Wed, 06 Sep 2017 20:27:38 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.80.180.199 with HTTP; Wed, 6 Sep 2017 18:25:53 -0700 (PDT)
-In-Reply-To: <xmqqk21b4n0k.fsf@gitster.mtv.corp.google.com>
-References: <CAHd499AuoZ-89mpnVkMhxaDT44SRNT2xWE7sykcaP8n5xTRd-g@mail.gmail.com>
- <xmqqk21b4n0k.fsf@gitster.mtv.corp.google.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Wed, 6 Sep 2017 18:25:53 -0700
-Message-ID: <CA+P7+xrbmx7JaCfxKLwKqCTXVBMd4mSg8zpxDLqRoxVAJDwhtw@mail.gmail.com>
-Subject: Re: gitmodules below root directory
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Robert Dailey <rcdailey.lists@gmail.com>, Git <git@vger.kernel.org>
+Received: by 10.200.46.59 with HTTP; Wed, 6 Sep 2017 20:27:37 -0700 (PDT)
+From:   =?UTF-8?B?5aSP5aSn6Zuo?= <xia.jason23@gmail.com>
+Date:   Thu, 7 Sep 2017 11:27:37 +0800
+Message-ID: <CA+zMtjmhrE54=ke6vVDGOcrbHkdPuE-Gf5cwQEp8LL2h+xen0g@mail.gmail.com>
+Subject: Branch name support & character
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 6, 2017 at 12:58 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> The current gitlink implementation records only the "what commit
-> from the subproject history is to be checked out at this path?" and
-> nothing else, by storing a single SHA-1 that happens to be the name
-> of the commit object (but the superproject does not even care the
-> fact that it is a commit or a random string).  We could substitute
-> that with the name of a blob object that belongs to the superproject
-> history and records the information about the submodule at the path
-> (e.g. "which repository the upstream project recommends to clone the
-> subproject from?", "what commit object is to be checked out").
->
-> When you see a single tree of a superproject, you need to see what
-> commit is to be checked out from the tree object and everything else
-> needs to be read from the .gitmodules file in that tree in the
-> current system, but it does not have to be that way.
->
->
-
-IMO, this approach described here, (point the gitlink at a blob which
-describes the full contents, URL, etc) would make more sense. The
-trickiest parts I think are (a) it really requires tooling to change
-the git module vs just editing a file, and (b) we'd need to prevent
-the blobs from getting garbage collected.
-
-I think it makes each individual submodule a bit more robust, since
-the actual submodule pointer always points directly to the full data
-about that submodule (it's recommended URL, it's path, etc), and
-changes to those things *are* changes to the submodule pointer.
-
-Thanks,
-Jake
+I want to merge branch a to branch b so I rename branch b to a&b, but
+when I push a&b to remote repo, '&' is took as & operator for shell,
+and git push fails. So it would be better that branch name support &
+character for me.
