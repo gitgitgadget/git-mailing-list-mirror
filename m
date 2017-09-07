@@ -2,75 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6BC7C208CD
-	for <e@80x24.org>; Thu,  7 Sep 2017 14:02:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6646B208CD
+	for <e@80x24.org>; Thu,  7 Sep 2017 14:02:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932113AbdIGOCs (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Sep 2017 10:02:48 -0400
-Received: from mout.kundenserver.de ([217.72.192.74]:64071 "EHLO
+        id S932079AbdIGOCr (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Sep 2017 10:02:47 -0400
+Received: from mout.kundenserver.de ([212.227.126.135]:64742 "EHLO
         mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755396AbdIGOCl (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1755397AbdIGOCl (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 7 Sep 2017 10:02:41 -0400
-Received: from localhost ([130.75.46.4]) by mrelayeu.kundenserver.de (mreue103
- [212.227.15.183]) with ESMTPSA (Nemesis) id 0MI8Ug-1dtp0L2vXy-003vXX; Thu, 07
- Sep 2017 16:02:31 +0200
+Received: from localhost ([130.75.46.4]) by mrelayeu.kundenserver.de (mreue002
+ [212.227.15.167]) with ESMTPSA (Nemesis) id 0MUhql-1dyzuY1RX1-00RFMi; Thu, 07
+ Sep 2017 16:02:29 +0200
 From:   Michael J Gruber <git@grubix.eu>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/4] t6120: clean up state after breaking repo
-Date:   Thu,  7 Sep 2017 16:02:22 +0200
-Message-Id: <3c51bd03dd26a495845887b1213aca2af2fce8c0.1504792601.git.git@grubix.eu>
+Subject: [PATCH 0/4] Test name-rev with small stack
+Date:   Thu,  7 Sep 2017 16:02:19 +0200
+Message-Id: <cover.1504792601.git.git@grubix.eu>
 X-Mailer: git-send-email 2.14.1.603.gf58147c36e
 In-Reply-To: <c1cb526d-a567-b598-d980-5dbe695b7d6a@grubix.eu>
 References: <c1cb526d-a567-b598-d980-5dbe695b7d6a@grubix.eu>
-In-Reply-To: <cover.1504792601.git.git@grubix.eu>
-References: <cover.1504792601.git.git@grubix.eu>
-X-Provags-ID: V03:K0:RH8F3sBM/UBgoyYbJvoBKWZQrBWuEr4Nl8JmkWIjrf21tWiL4gw
- pvKmTLuB8Txr/zx1KrBLjDs0njqqOgp/souXOQgBff1hBxPClD/pmSXIGRF6mdPG7/WJ9HP
- m1zyPTLyT/0NGatS26pdMYivQSn12NPpPlPY7n30mtKTS3BACEI5uc8H30fZg4S3hRXg0UE
- gHVuYrtIYnk3+P/1hOv3w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:V+a1yITRu/4=:ehmWJVAN00K29Q6qpGJRF9
- Ilo/1NEcco/zyBUjlnvOp9MqLWogt6f278VxcdF2pfXXfAW5mgDBn6d9+uBVOwIFzLQoHHzZe
- 2OKqFU2CzMuLMW70Z7sL97t2UkDtEwkwS5Mn4Xiwrlg4EqCr+l4cnGjc3li690w/IlvolXlzl
- IdQpQb4zdZTpJqIfRlbXX62lHCWVMOVboEs/CuWkTmLSdJf5vVvzKRvCfwwwMwHuN0SCQrvnP
- etXxSr8vAAN8nLOKhkrWwBc+svbz139KM7+4WB2yIoc5Co5SK8AnzqJko4WivpOJdKaAGoS37
- 6nB+vmQto9W1QoukRaJ1xS1lVMpY6FHkGuR4J5MJx2qZNzywCE6/xYusPGaejsTY5kcUxfC9e
- rA+Ti0f/crL2yNJnHfE7tvBgRUtofWT+PEMUYime2Gjsdf1d0zVZkmFoYM86YXVGCUD8/8slf
- wBqYDC8U7T3yX2IO6XOFLUkiPurGrrkimBt9LWyjXDLC+gcPY/ahtTQcKOKUstAtv13/sBqga
- SGErGWCq6cDHfra3RMFmvE0jVDAE57C8BaBLNBnrmsCGQsVpq3gOk3fQg1WGK42iFVFLBJSgk
- plBxTc1lMwWJVHZZyEcl7a+IGzlWuYXr8WKProWLgiH5Oyi0R5qY+hIREz/7dVcOJ6OgUVvmv
- gt7eZ1w3sK+dm7VF6lysVyndb7CnPLI1gfIJ/lLJmBiRjkVslA0gOYbXkZn0L4OeRqEbn2VOj
- qfx4OU/Prq0X/bEK2844QhOc2UNQ6GjOHemehQ==
+X-Provags-ID: V03:K0:PxYUyAh5/SwD8EFCLBFBOM0buOg0x6CZJOPSd+1MCd4aTf53UFd
+ ubGZLoXjIOZdDyhPmMVVwkOrPTThUjBPjB6PQzbovn9aPf3PyId5xf6StWJXLGN43CW9zQA
+ 6LKMtG5QGQ50TH+Wogo/Ft5UXLwUPkAhfoiAVbgmXRKORlqXd9ffAISD7lO+rkdfeLs+tC+
+ 1G15RVOooi3OpKCdektsg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:YNiV7swpLcs=:zeINozAPXuR6rRyBstwh7l
+ W9CCm2oirTXL7etOPa7TdYIsZHsAdOSWPGdVruGI+RkKGngCww7mJskko1cfnrxzGdbQAmooD
+ 4BnKjJin2q2Zr6V8FGh1hPi/khTVkjisedJCUZS6bgScbCkXdN5HhxthOeo2nqvK2CcGi6jAV
+ bO+MaI3V9rIdizw5WePfTwqAqc0xZRqCcifRMsG7BCmPFS4WGTH1aq8KTifBTVJG/xb3745Ie
+ rQNsPvZL2ivSGtjPiQ1OzbuC4R4h4T2W37L5yrOAixaIGTMNP4PKBbzbYdFR6c9TXmqTUcs4K
+ UXP3euRIGD4v04uZ+lak5AZWkkpFk/MukTzOHnff+ywGfG4GVdgA8Fema2RvNUgsyjONlRS7d
+ LitlaQtdcYNsaKKDG2lSYdVukU5jYQ7DbUozCbWWidExtuDj4eSS3FPylGj2yTNXYFkfQ/oC1
+ Ivhv2p+S5u8JMHs0g/CV4Bo3j30wWIyqgKjYk2pPIcYkFL+vTd30USG0xSyzotwbxNH6yCOK8
+ YZ6CI1+IgOuqIi37omh1uIKZufRcuVTaQh5o+08M7f0Gdxjz7I/4DHvX8hU1yaNseDbIAsybD
+ UlPt0I99/GTV843f8UdMIFRxNutJBFqWLDCeKn/2ItDN6plXiqAijk4SnHRUe5/WVn5j389hf
+ YSpLyAAfTU7bhYvp7CD42qrw2EnaCrAluX4wq5AS9n43Bla7uQwGQD191ADIDuCe8BDRYRSHF
+ cHLwibHIjHegE/y2VXx743xrIfoKx8KKOc10lQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-t6120 breaks the repo state intentionally in the last tests.
+name-rev segfaults for me in emacs.git with the typical 8102 stack size.
+The reason is the recursive walk that name-rev uses.
 
-Clean up the breakage afterwards (and before adding more tests).
+This series adds a test to mark this as known failure, after some
+clean-ups.
 
-Signed-off-by: Michael J Gruber <git@grubix.eu>
----
- t/t6120-describe.sh | 1 +
- 1 file changed, 1 insertion(+)
+Michael J Gruber (4):
+  t7004: move limited stack prereq to test-lib
+  t6120: test name-rev --all and --stdin
+  t6120: clean up state after breaking repo
+  t6120: test describe and name-rev with deep repos
 
-diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-index 7c5728ebd5..1997ccde56 100755
---- a/t/t6120-describe.sh
-+++ b/t/t6120-describe.sh
-@@ -275,6 +275,7 @@ test_expect_success 'describe chokes on severely broken submodules' '
- '
- test_expect_success 'describe ignoring a borken submodule' '
- 	git describe --broken >out &&
-+	test_when_finished "mv .git/modules/sub_moved .git/modules/sub1" &&
- 	grep broken out
- '
- 
+ t/t6120-describe.sh | 57 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ t/t7004-tag.sh      |  6 ------
+ t/test-lib.sh       |  6 ++++++
+ 3 files changed, 63 insertions(+), 6 deletions(-)
+
 -- 
 2.14.1.603.gf58147c36e
 
