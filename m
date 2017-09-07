@@ -2,66 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 30C23208CD
-	for <e@80x24.org>; Thu,  7 Sep 2017 14:54:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 81D64209AB
+	for <e@80x24.org>; Thu,  7 Sep 2017 16:00:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932218AbdIGOya (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Sep 2017 10:54:30 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59770 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1755421AbdIGOyZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Sep 2017 10:54:25 -0400
-Received: (qmail 945 invoked by uid 109); 7 Sep 2017 14:54:25 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 07 Sep 2017 14:54:25 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 502 invoked by uid 111); 7 Sep 2017 14:54:58 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Thu, 07 Sep 2017 10:54:58 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 07 Sep 2017 10:54:23 -0400
-Date:   Thu, 7 Sep 2017 10:54:23 -0400
-From:   Jeff King <peff@peff.net>
-To:     Michael J Gruber <git@grubix.eu>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/4] Test name-rev with small stack
-Message-ID: <20170907145423.wz3iqxxz2yvxq5lm@sigill.intra.peff.net>
-References: <c1cb526d-a567-b598-d980-5dbe695b7d6a@grubix.eu>
- <cover.1504792601.git.git@grubix.eu>
+        id S1755173AbdIGQA2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Sep 2017 12:00:28 -0400
+Received: from mail.pdinc.us ([67.90.184.27]:50100 "EHLO mail1.pdinc.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754518AbdIGQA1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Sep 2017 12:00:27 -0400
+Received: from blackfat (nsa1.pdinc.us [67.90.184.2])
+        (authenticated bits=0)
+        by mail1.pdinc.us (8.14.4/8.14.4) with ESMTP id v87G0QOw005621
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
+        for <git@vger.kernel.org>; Thu, 7 Sep 2017 12:00:26 -0400
+Reply-To: <git@vger.kernel.org>
+From:   "Jason Pyeron" <jpyeron@pdinc.us>
+To:     <git@vger.kernel.org>
+Subject: Git diff --no-index and file descriptor inputs
+Date:   Thu, 7 Sep 2017 12:00:26 -0400
+Organization: PD Inc
+Message-ID: <DF5E912A0E6343DF8C3E984A165490EF@blackfat>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1504792601.git.git@grubix.eu>
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Office Outlook 11
+Thread-Index: AdMn8mtJkDkE/RHQSvuI+/UIwnQDWQ==
+X-MimeOLE: Produced By Microsoft MimeOLE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 07, 2017 at 04:02:19PM +0200, Michael J Gruber wrote:
 
-> name-rev segfaults for me in emacs.git with the typical 8102 stack size.
-> The reason is the recursive walk that name-rev uses.
-> 
-> This series adds a test to mark this as known failure, after some
-> clean-ups.
+I was hoping to leverage --word-diff-regex, but the --no-index option does
+not seem to work with <(...) notation.
 
-These all look reasonable to me. The size of the test case in the final
-one is presumably arbitrary and just copied from t7004. I don't know if
-it's worth trying to shrink it. It could shorten a rather expensive
-test. OTOH, if we shorten it too much then we might get a false pass
-(e.g., if the algorithm remains recursive but has a smaller stack
-footprint).
+I am I doing something wrong or is this a bug?
 
-> Michael J Gruber (4):
->   t7004: move limited stack prereq to test-lib
->   t6120: test name-rev --all and --stdin
->   t6120: clean up state after breaking repo
->   t6120: test describe and name-rev with deep repos
+-Jason (reply to list please)
 
-Now comes the hard part: rewriting the C code. :)
+root@blackfat /projects
+$ git diff --no-index -- <(xmllint --format
+HRUniversalServices/pairs/src/esb/wsdl/pairs-american-dependents.wsdl)
+<(xmllint --format
+/projects/HRUniversalServices.368879ef/modules/pairs/src/esb/wsdl/pairs-amer
+ican-employees.wsdl)
 
--Peff
+root@blackfat /projects
+$ echo git diff --no-index -- <(xmllint --format
+HRUniversalServices/pairs/src/esb/wsdl/pairs-american-dependents.wsdl)
+<(xmllint --format
+/projects/HRUniversalServices.368879ef/modules/pairs/src/esb/wsdl/pairs-amer
+ican-employees.wsdl)
+git diff --no-index -- /dev/fd/63 /dev/fd/62
+
+root@blackfat /projects
+$ git diff --no-index --
+HRUniversalServices/pairs/src/esb/wsdl/pairs-american-dependents.wsdl
+/projects/HRUniversalServices.368879ef/modules/pairs/src/esb/wsdl/pairs-amer
+ican-employees.wsdl | wc -l
+92
+
+root@blackfat /projects
+$ diff -u <(xmllint --format
+HRUniversalServices/pairs/src/esb/wsdl/pairs-american-dependents.wsdl)
+<(xmllint --format
+/projects/HRUniversalServices.368879ef/modules/pairs/src/esb/wsdl/pairs-amer
+ican-employees.wsdl) | wc -l
+82
+
+root@blackfat /projects
+$ git --version
+git version 2.13.2
+
+root@blackfat /projects
+$ uname -a
+CYGWIN_NT-10.0 blackfat 2.8.1(0.312/5/3) 2017-07-03 14:11 x86_64 Cygwin
+
+--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-                                                               -
+- Jason Pyeron                      PD Inc. http://www.pdinc.us -
+- Principal Consultant              10 West 24th Street #100    -
+- +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
+-                                                               -
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
