@@ -6,59 +6,71 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6B83208CD
-	for <e@80x24.org>; Thu,  7 Sep 2017 10:11:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C9352082D
+	for <e@80x24.org>; Thu,  7 Sep 2017 11:35:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755117AbdIGKL3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Sep 2017 06:11:29 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59542 "HELO cloud.peff.net"
+        id S1754796AbdIGLf2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Sep 2017 07:35:28 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59576 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1755104AbdIGKL2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Sep 2017 06:11:28 -0400
-Received: (qmail 15337 invoked by uid 109); 7 Sep 2017 10:11:27 -0000
+        id S1754219AbdIGLf1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Sep 2017 07:35:27 -0400
+Received: (qmail 20598 invoked by uid 109); 7 Sep 2017 11:35:27 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 07 Sep 2017 10:11:27 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 07 Sep 2017 11:35:27 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30244 invoked by uid 111); 7 Sep 2017 10:12:01 -0000
+Received: (qmail 31117 invoked by uid 111); 7 Sep 2017 11:36:00 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Thu, 07 Sep 2017 06:12:01 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Thu, 07 Sep 2017 07:36:00 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 07 Sep 2017 06:11:26 -0400
-Date:   Thu, 7 Sep 2017 06:11:26 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 07 Sep 2017 07:35:25 -0400
+Date:   Thu, 7 Sep 2017 07:35:25 -0400
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UGF3ZcWC?= Marczewski <pwmarcz@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Strange behavior of git rev-list
-Message-ID: <20170907101126.u574pr7l5odff6zo@sigill.intra.peff.net>
-References: <CACNsYJ-UeEONZ+mDgg6x5Bi+D3VmS=5eGCYq1gEPHVsMEJGojA@mail.gmail.com>
- <20170907094718.b6kuzp2uhvkmwcso@sigill.intra.peff.net>
- <CACNsYJ8rRSf5gNtnPS05CnYCYGmoBymbgH7UumuOuBz1jp6RBA@mail.gmail.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: Git in Outreachy round 15?
+Message-ID: <20170907113525.py4m4kndslrlyepq@sigill.intra.peff.net>
+References: <20170901223059.xsbcpqff45mnblnj@sigill.intra.peff.net>
+ <CAP8UFD16Sg9q1TDku7gJZUCYB03GaBx0mNXjvE6A4W6zTxY6Lw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACNsYJ8rRSf5gNtnPS05CnYCYGmoBymbgH7UumuOuBz1jp6RBA@mail.gmail.com>
+In-Reply-To: <CAP8UFD16Sg9q1TDku7gJZUCYB03GaBx0mNXjvE6A4W6zTxY6Lw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 07, 2017 at 11:50:25AM +0200, Paweł Marczewski wrote:
+On Tue, Sep 05, 2017 at 11:06:34PM +0200, Christian Couder wrote:
 
-> Thanks. Any plans to fix that? Or is there a way to turn off this heuristic?
+> On Sat, Sep 2, 2017 at 12:30 AM, Jeff King <peff@peff.net> wrote:
+> >
+> > The big questions on whether we can make this happen are:
+> >
+> >   1. Do we have mentor interest?
+> >
+> >      I'm willing to mentor, but I'd like to hear whether other people
+> >      are interested, as well. Either way I can take responsibility for
+> >      the administrative bits.
+> 
+> I am willing to co-mentor, but I prefer not to take care of administrative bits.
 
-I don't think there's a way to turn it off for `rev-list`. Merge-base
-computations are more careful, so you could determine the correct
-endpoints that way. But when you fed them to `rev-list`, it would hit
-the same run of skewed commits.
+Thanks. I've listed you as a mentor on the landing page at:
 
-We've discussed storing true generation numbers in the past, which would
-make this optimization more robust, as well as allow us to speed up many
-other traversals (e.g., the "tag --contains"). It's something I'd like
-to revisit, but it's not at the top of the pile.
+  https://git.github.io/Outreachy-15/
 
-In the meantime, it would probably be possible to write a patch that
-conditionally disables the optimization. But it would mean all of your
-rev-lists run a _lot_ slower.
+The instructions for mentors can be found at:
+
+  https://www.outreachy.org/mentor/
+
+I've put a few projects on the landing page, but feel free to modify it
+as you see fit.
+
+> Is there something like the GSoC Mentor Summit? I think this is an
+> interesting part of the GSoC and it could help motivate mentors if
+> there was something like that.
+
+No, I don't think that there is (though I'm pretty sure that there are
+some sessions about Outreachy at the Mentor Summit).
 
 -Peff
