@@ -2,95 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C7CF4208CD
-	for <e@80x24.org>; Thu,  7 Sep 2017 12:17:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6AFCD20286
+	for <e@80x24.org>; Thu,  7 Sep 2017 13:51:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755286AbdIGMR0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Sep 2017 08:17:26 -0400
-Received: from mout.kundenserver.de ([212.227.17.13]:64668 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754219AbdIGMRZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Sep 2017 08:17:25 -0400
-Received: from skimbleshanks.math.uni-hannover.de ([130.75.46.4]) by
- mrelayeu.kundenserver.de (mreue102 [212.227.15.183]) with ESMTPSA (Nemesis)
- id 0MIv6n-1drqcM25fN-002Xp5; Thu, 07 Sep 2017 14:17:15 +0200
-Subject: Re: [PATCH] name-rev: change ULONG_MAX to TIME_MAX
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <ef9aebb63227c36b8b72a65240a416a0271cc618.1504086318.git.git@grubix.eu>
- <xmqqbmmo8pp6.fsf@gitster.mtv.corp.google.com>
- <6a4cbbee-ffc6-739b-d649-079ba01439ca@grubix.eu>
- <20170906133519.amlc5yunx4yfl5u3@sigill.intra.peff.net>
-From:   Michael J Gruber <git@grubix.eu>
-Message-ID: <c1cb526d-a567-b598-d980-5dbe695b7d6a@grubix.eu>
-Date:   Thu, 7 Sep 2017 14:17:13 +0200
+        id S1755372AbdIGNvk (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Sep 2017 09:51:40 -0400
+Received: from mail-lf0-f48.google.com ([209.85.215.48]:36347 "EHLO
+        mail-lf0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754393AbdIGNvj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Sep 2017 09:51:39 -0400
+Received: by mail-lf0-f48.google.com with SMTP id m199so24672698lfe.3
+        for <git@vger.kernel.org>; Thu, 07 Sep 2017 06:51:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=fI8QBfxvYkOm5m7i4x5bOAE/DX15bsB0FBXihQnw6cw=;
+        b=I9qy2O/H5Hm79lQ4IPRd1uK8S8gJ+uwniidAp8w4b88t2XkATkF4o0Qdw8bWb3PLzW
+         Uenisj4rak6eeI+hqQv+fcvTUAb8OYu7VrZsdip5haClwkBDDJY7gI/zfMlp9VuC4pa5
+         ETxsqI42NNAG4eqIj23gYNPi9Vic7A+1mi2FBo1gYYoeRGHp24JXgtocpdMjLWN8qq20
+         6ikcNEaAvHim5kMUBNvKROZHiHZ3BUUNoJsKkENggZZEYb2LKgH1011f2YJWv2boqHhg
+         IHnND3gzicFU3qSdERTaOq6/gw8PZGF8r/FxI2WoCIUk0FcmX1yVDJrFN2g1OXWtSYdv
+         Mt+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=fI8QBfxvYkOm5m7i4x5bOAE/DX15bsB0FBXihQnw6cw=;
+        b=oZA3Fm4JaQ2L+xF9mrK59KyvtDis4L2VFzSh0gRhINdTG5vNZDSh2qGEcZsivGarUf
+         sfavZ66MvB1rWTIYmo4X3prZ97qWqWDZoTGuVM+BDo2hqo7GUP5yig/etHji6H5dt6k+
+         TgzJnnSv59OPyJP/JFxuCfuInCLNrN9MukA9OPnO0pVzuMYsc+2T0jqqcq1FyE8AhNRi
+         9fha0qise9lEYRu13qJHLUhqprPFllYWuksTojDM1uNRpRrB2dDsB1npeaXoVQVt0Vu0
+         ADI+m7PmWhEi/hkNGOjj8WPOAfo9zIskloIyJj2B4tugh31WU4hFWls9BD4XjgrJr29v
+         zyqQ==
+X-Gm-Message-State: AHPjjUib7lcJa2C7yrizYgwijYDXxHOa3hKC1xTohC/CEPnwbAxY3Vm+
+        WxZgmbP4+7vy5FXW1Kg=
+X-Google-Smtp-Source: ADKCNb5qXmZrH35wCclTz839X6uk8dUHgRn6CQx6COvVvRTbT2JtNsJzD9ja99LRoOHb9kg3PuAP0A==
+X-Received: by 10.46.69.67 with SMTP id s64mr1231207lja.149.1504792297773;
+        Thu, 07 Sep 2017 06:51:37 -0700 (PDT)
+Received: from [10.2.14.166] ([95.67.107.166])
+        by smtp.gmail.com with ESMTPSA id h83sm202345lfi.16.2017.09.07.06.51.36
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 07 Sep 2017 06:51:37 -0700 (PDT)
+To:     git@vger.kernel.org
+From:   Aleksandr Makarov <aleksandr.o.makarov@gmail.com>
+Subject: [PATCH] match_name_as_path: Pass WM_CASEFOLD to wildmatch
+Message-ID: <79c946a2-532e-1c9b-7bf2-1f1ccbff721e@gmail.com>
+Date:   Thu, 7 Sep 2017 16:51:36 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-In-Reply-To: <20170906133519.amlc5yunx4yfl5u3@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: de-DE
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:9QwA5SKaosGHnP2A0uNvmC54AS0HBe4IPC50jmy3LiJ/vzkExYl
- 8y5p4fAcCVZV7beobpdwpte/OpglwhpDSQNg8x5Yxz83tWFtE+TwJYASiCbR4ynuBB5XldO
- lgsPmX1823qV8GCDj0h0vcu8O3DqkTJ33aCRQb7e1KVi6HKv6E4V6RHlLlezP89Qav8EYY8
- 7sJys5scJRso0+lc/Do7g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:BEHM2o95/Bs=:ryMu8rBVTKrzreGSOuY+Ba
- JWjvZrXEdLLJttGSZ9hYx57JQl3HdfCbdTBzCK6TjNDQMbOHSfWgtUU0q8Tpuba8vGQRiNpyn
- D2Kmd/1zN90AlBuDkH/+HpfDjsCumcc8Kxk1RR9v0G4FF2d0D95hRd9FR01WQU56ZnNCqG+VN
- yuXGgwUbHhE+m3FaAKYnJUOWtEC9ANW/LFe4hzZ9zhLvHv7opEaNgYxcRbLU47hF4BrpGl0Tv
- IqSq59EeAbQvf9VpvHV72KsPDgbFgZzzENl3/BfoDawC62N0l0TUYST0Ao7g3ZqP7C4qGGYiF
- TgGsNJ/xWmDgby8W+ObitzXn5o5mj4A3XVwlHoqjiAfkxiuW+OEVlE1cynKdDRXSYpAs3XcW/
- 6Mt0h+SejxFpgBH2ZPvRGyfjAsL10aeuUiz74pd3OaUT9f2NFIDnYlSCsvevnVG4C5wzyUh9i
- kryta92cnX6GBjm2mHygtSYpwQStqESWfJWwQJSlHCS+jjePiG/Fif9gJrmf3C4605OH3RTSA
- uDcCxRGCXlHQnNZyuaNYrHmZbO6DiiNrUaOlwrjfe3+Urde/r/+/JEOGpvtnnhcLGzKGUs962
- KWRpwN7imjiAIygFypxfOeph3sMMmqCy9a7qnV/fLObIxhVwr86RrEjxFAud08FVagZIE2Za0
- hMoPar8sR3WIyHmKrK437YH+Py9V9d4+OO69xd31QtAahCb7AXgVLJuE5MX0YcBWDAPydw9CV
- hPi7/E+FAWt5DC6BwZsqkWNDdzhuVRO8kuFubpb9cTTrRsLyIBpX1Rb6XNQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King venit, vidit, dixit 06.09.2017 15:35:
-> On Wed, Sep 06, 2017 at 01:59:31PM +0200, Michael J Gruber wrote:
-> 
->> BTW, there's more fallout from those name-rev changes: In connection
->> with that other thread about surprising describe results for emacs.git I
->> noticed that I can easily get "git name-rev --stdin" to segfault there.
->> As easy as
->>
->> echo bc5d96a0b2a1dccf7eeeec459e40d21b54c977f4 | git name-rev --stdin
->>
->> for example.
->>
->> That's unfortunate for the use-case of name-rev to amend git log output.
->>
->> The reason seems to be that with "--stdin" or "--all", "name-rev" walks
->> and names all commits before beginning to use that those names for even
->> a single commit as above.
->>
->> That segfault bisects to the logic changing commit in
->> jc/name-rev-lw-tag, but I think the changed logic simply leads to more
->> xmallocs() the segfault sooner now. Or something that I dind't spot even
->> after a few hours.
-> 
-> The segfault seems to be due to running out of stack space. The problem
-> is that name_rev() is recursive over the history graph.  That topic
-> added a parameter to the function, which increased the memory used for
-> each level of the recursion. But the fundamental problem has always been
-> there. The right solution is to switch to iteration (with our own stack
-> structure if necessary).
-> 
-> We had similar problems with the recursive --contains traversal in tag,
-> and ended up with cbc60b6720 (git tag --contains: avoid stack overflow,
-> 2014-04-24).
+---
+  ref-filter.c | 2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Cool, thanks for the pointer. ulimit -s is a great way to test this.
+diff --git a/ref-filter.c b/ref-filter.c
+index bc591f4..3746628 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1663,7 +1663,7 @@ static int match_name_as_path(const struct ref_filter *filter, const char *refna
+  		     refname[plen] == '/' ||
+  		     p[plen-1] == '/'))
+  			return 1;
+-		if (!wildmatch(p, refname, WM_PATHNAME))
++		if (!wildmatch(p, refname, flags))
+  			return 1;
+  	}
+  	return 0;
+-- 
+2.7.4
 
-Michael
