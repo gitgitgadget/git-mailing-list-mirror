@@ -6,73 +6,92 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0745A20286
-	for <e@80x24.org>; Fri,  8 Sep 2017 01:18:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9C60C208E3
+	for <e@80x24.org>; Fri,  8 Sep 2017 01:26:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751985AbdIHBS2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Sep 2017 21:18:28 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56591 "EHLO
+        id S1753648AbdIHB0t (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Sep 2017 21:26:49 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56138 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750966AbdIHBS1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Sep 2017 21:18:27 -0400
+        with ESMTP id S1753535AbdIHB0s (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Sep 2017 21:26:48 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5DEA5AE7DF;
-        Thu,  7 Sep 2017 21:18:27 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EC36693B13;
+        Thu,  7 Sep 2017 21:26:47 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=BsgE8Y8PIcVZCt/sfZ1QZZwFi/g=; b=c7zksE
-        Km+yVhoam2gf+gky+IXwu1GGOxLgKTtwTxehJX4bgVn89KvqmH4hxmkghtBcmEBd
-        LcSr1fYpBNKBgCozNAeyTX57CwEx3e+owAwNc0EGEINILQGgLgKw3wkqCONPGLHx
-        OEdNKiUC1jXGVCF/ZS0NmxsOHOJ83GmKv+T4w=
+        :content-type; s=sasl; bh=F7RhtQa6Je1gNcyRguoSe48pPDg=; b=v6yppV
+        dupC9n2+6Dhq+yCguCzr2zEq62hx9kHu1IbcX4al2UXw9sN4dd/JJXih7ps5LRba
+        P9uwMZuIcmLZaIGc1kVwIKdCG5nyNbj5dcYwerKa/ZUx6ypBYCNoVy9bsUqXW8AK
+        zZk/D/tCscbYLxEa8syQSDVv4K9r5RSxX+/GU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=rfO/UdQumJsISNhHCN3swuwKB/ME2NBq
-        Qb7ubCmTmgIT4LwQfI/n5Z+W6JEAhwA2SzAu1zJtTkgRe14b5T4ygRpydLrDVzzE
-        +a8t7rnvs/1La06GMDH+xBtxuAeATKaYDFJeD+LK6uh2RlNqDwLOKyUbSnZtBHGp
-        uTHPKggCs88=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 543B2AE7DE;
-        Thu,  7 Sep 2017 21:18:27 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=Xw1DIRuPRCc86zfqawLZ1i+WA97ui18Q
+        WFPhsukSS0IUskmUbO/zUk2j3syMCQ/N0oIWeFUD7+3i/RHTipWD7fZYSTnvtQfq
+        tEyux3d9vvto5baCxgTXT3pnW/Wal9z7YoYPglWpBGDw+q3POdGT8NbSLNdVM2AZ
+        SByBJkh+GmM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E412993B12;
+        Thu,  7 Sep 2017 21:26:47 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AF2EFAE7DD;
-        Thu,  7 Sep 2017 21:18:26 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 507CF93B11;
+        Thu,  7 Sep 2017 21:26:47 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Andrew Ardill <andrew.ardill@gmail.com>
-Cc:     =?utf-8?B?5aSP5aSn6Zuo?= <xia.jason23@gmail.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Branch name support & character
-References: <CA+zMtjmhrE54=ke6vVDGOcrbHkdPuE-Gf5cwQEp8LL2h+xen0g@mail.gmail.com>
-        <CAH5451m9asxzaOEzQ2Jjk9Ly97GVnb7DV0uZS=96B=yHCYLWCw@mail.gmail.com>
-Date:   Fri, 08 Sep 2017 10:18:25 +0900
-In-Reply-To: <CAH5451m9asxzaOEzQ2Jjk9Ly97GVnb7DV0uZS=96B=yHCYLWCw@mail.gmail.com>
-        (Andrew Ardill's message of "Thu, 7 Sep 2017 15:31:33 +1000")
-Message-ID: <xmqqk21a0yzi.fsf@gitster.mtv.corp.google.com>
+To:     Olaf Klischat <olaf.klischat@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: git diff <commit> doesn't quite work as documented?
+References: <0696f94d-28c2-1f4b-03ee-16553d97f318@gmail.com>
+Date:   Fri, 08 Sep 2017 10:26:46 +0900
+In-Reply-To: <0696f94d-28c2-1f4b-03ee-16553d97f318@gmail.com> (Olaf Klischat's
+        message of "Thu, 7 Sep 2017 18:31:58 +0200")
+Message-ID: <xmqqfuby0yll.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 9DA759B0-9433-11E7-9FC3-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: C80B089A-9434-11E7-A72E-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Andrew Ardill <andrew.ardill@gmail.com> writes:
+Olaf Klischat <olaf.klischat@gmail.com> writes:
 
-> Using git checkout -b 'my&branch' works for me (single quotes around
-> the branch name).
+> `git diff --help' says:
 >
-> Pushing to a local remote also works: git push --set-upstream
-> ../git-test-2 'my&branch'
+> git diff [--options] <commit> [--] [<path>...]
+>            This form is to view the changes you have in your
+>            working tree relative to the named <commit>.
 
-Thanks for sanity-checking.  I was wondering if we have codepaths
-that botch quoting (we shouldn't, and if there is, we should fix
-it).
+That help text is poorly phrased.  
 
+When "git diff" talks about files in your working tree, it always
+looks them _through_ the index.  As far as the command is concerned,
+a cruft left in your working tree that is not in the index does
+*not* exist.
+
+So when your index does not have bar.txt, even if you have an
+untracked bar.txt in your directory, i.e.
+
+> oklischat@oklischat:/tmp/gittest$ git status
+> On branch master
+> Untracked files:
+>   (use "git add <file>..." to include in what will be committed)
 >
-> That being said, I would advise not using & in branch names,
-> specifically because it is a special character in shells.
+> 	bar.txt
 
-Good advice.
+and you have a commit that _has_ that file, then the command thinks
+<commit> has the path, and your working tree does *not*.  IOW, this
+is...
 
+> oklischat@oklischat:/tmp/gittest$ git diff bar-added
+> diff --git a/bar.txt b/bar.txt
+> deleted file mode 100644
+
+... totally expected and intended output.
+
+Hope the above explanation clarifies.  A documentation update might
+be helpful to new users.
+
+Thanks.
