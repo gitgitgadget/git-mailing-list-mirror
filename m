@@ -6,80 +6,91 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 387C6202A4
-	for <e@80x24.org>; Fri,  8 Sep 2017 10:06:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C9212082D
+	for <e@80x24.org>; Fri,  8 Sep 2017 12:33:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752892AbdIHKGa (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Sep 2017 06:06:30 -0400
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:53406 "EHLO
-        alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751894AbdIHKG3 (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 8 Sep 2017 06:06:29 -0400
-X-AuditID: 12074412-1e5ff7000000748d-e8-59b26ba40415
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id DE.94.29837.4AB62B95; Fri,  8 Sep 2017 06:06:28 -0400 (EDT)
-Received: from [192.168.69.190] (p54AAEECC.dip0.t-ipconnect.de [84.170.238.204])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v88A6Pud024610
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Fri, 8 Sep 2017 06:06:26 -0400
-Subject: Re: [PATCH 07/10] t1404: demonstrate two problems with reference
- transactions
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Brandon Williams <bmwill@google.com>, git@vger.kernel.org
-References: <cover.1503993268.git.mhagger@alum.mit.edu>
- <caaa44126f18869158872e5473e53478db780ba9.1503993268.git.mhagger@alum.mit.edu>
- <xmqqshfxztn5.fsf@gitster.mtv.corp.google.com>
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <c5ff9b3d-6526-44d5-f539-39cac3b05657@alum.mit.edu>
-Date:   Fri, 8 Sep 2017 12:06:25 +0200
+        id S1755811AbdIHMdq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Sep 2017 08:33:46 -0400
+Received: from mout.kundenserver.de ([212.227.126.134]:62901 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755804AbdIHMdo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Sep 2017 08:33:44 -0400
+Received: from skimbleshanks.math.uni-hannover.de ([130.75.46.4]) by
+ mrelayeu.kundenserver.de (mreue001 [212.227.15.167]) with ESMTPSA (Nemesis)
+ id 0Lg9rw-1d4uV33JhM-00nkub; Fri, 08 Sep 2017 14:33:37 +0200
+Subject: Re: [PATCH 0/4] Test name-rev with small stack
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+References: <c1cb526d-a567-b598-d980-5dbe695b7d6a@grubix.eu>
+ <cover.1504792601.git.git@grubix.eu>
+ <20170907145423.wz3iqxxz2yvxq5lm@sigill.intra.peff.net>
+From:   Michael J Gruber <git@grubix.eu>
+Message-ID: <9b3275a2-7b47-9ed8-6f1f-dac999c3b46a@grubix.eu>
+Date:   Fri, 8 Sep 2017 14:33:35 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqshfxztn5.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <20170907145423.wz3iqxxz2yvxq5lm@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+Content-Language: de-DE
 Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrNKsWRmVeSWpSXmKPExsUixO6iqLske1OkwavDchZrn91hsni+/gS7
-        RdeVbiaLht4rzBbdU94yWvxo6WG22Ly5ncWB3WPnrLvsHgs2lXo8693D6HHxkrLH501yAaxR
-        XDYpqTmZZalF+nYJXBlLNk1iLHjIXLF5yz/mBsafTF2MnBwSAiYSE85MY+li5OIQEtjBJLF0
-        8jxmCOc8k8TeDRdYQaqEBSIkGnuvsIDYIgJqEhPbDoHZzAKLmCROXg6HaNjJKPFs0X92kASb
-        gK7Eop5msBW8AvYSf2YcBmtgEVCRmHr3BRuILQo0tO/tZXaIGkGJkzOfgNVwClhL/Fy7gAli
-        gbrEn3mXmCFscYlbT+ZDxeUltr+dwzyBUWAWkvZZSFpmIWmZhaRlASPLKka5xJzSXN3cxMyc
-        4tRk3eLkxLy81CJdM73czBK91JTSTYyQeBDawbj+pNwhRgEORiUe3hXemyKFWBPLiitzDzFK
-        cjApifI2zNgYKcSXlJ9SmZFYnBFfVJqTWnyIUYKDWUmE96IfUDlvSmJlVWpRPkxKmoNFSZz3
-        52J1PyGB9MSS1OzU1ILUIpisDAeHkgTvhCygRsGi1PTUirTMnBKENBMHJ8hwHqDhCiA1vMUF
-        ibnFmekQ+VOMuhw3Hl7/wyTEkpeflyolzlsGUiQAUpRRmgc3B5bGXjGKA70lzNsPUsUDTIFw
-        k14BLWECWlLyfAPIkpJEhJRUA2N7qVxonuBtnqbZyr+3aU7gifKy/MFgNGP53E4J1+LH2btq
-        TskFu67sS/5dLvLnqr5aSnX8fjb2o6LTFv41u10mFrDe5+KvaVY9tgnGGW1hyve3OOrcPdQ3
-        xeBC7e4rYjp6T3dm/Hq54d/thwJMcYuNxJ+2cz+dvMouSXdT1A2BC8kxNXs371ViKc5INNRi
-        LipOBAD8P2v2PgMAAA==
+X-Provags-ID: V03:K0:sIM3KMGcRaI2Tk+q7/a9/ZS0Hg0rkjOotvkisoaCazLUjxFDyhL
+ VKQix/oJO1cS5JY3eUwnpysvy6A1kC9zqEunPWO7jPeRT9n2ygDoQCxREYaZoFk0ZLNFssd
+ fclH5mML9GF9iExBOHyxLxLfoYabhyaV8DWBtzMRYZ2gbxjzgBQkfrQ0OTudnkL+f3k+/cv
+ oUkFgwf8aV2Ji5ZvU7Mjg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:v7++341uPIU=:vI85Pu+jsXbGI8bZKnKMAc
+ +M/4sVRRxcR5rsD7vqI1zbhs+t4upsal6JH7Ybdvr8NmhWYDQb9gm97LxoLq7h3IGqgSzVh2W
+ /+diIwk4wfgl3vN3G0xCHLKh4q2ohpa1GKb88WAb75cMGpOutTFssl0s2H8d2pqM9c7dw+6FA
+ kB8dSoLMk/oqmuSMiOg5l/5yQ06XIKDJbxmMOebtc4EmJ8DAuM6KBfDV1ptKVzMqHPhWF7Qof
+ 7UMp3+y4Ec6pf+VjKVf/B5mq2QmmEOFvgiEIYg5KHPYE/OzuGgT/J1/SiNr3LUTjC+k+fW0u3
+ 40YeH85wWLMi/s0F2ax7n7enwxXEmxM6fgqB3tU8d2V9p1uuZ4Y4pTR2rmnzfg4gn51/DISSj
+ i4vwjjowHz79t1DqyfWcppxkubI1wXbbRR74dDXfFJeWLYLFDPgmHHVP0Y3cbqPuRYCv2ylOV
+ Cys3g5FBQ6FGCVmKGSYg0szyYZwe91ij/LZqZ/EfktC0Y7Uo0dZNOBQr3aWEni/zu23XWEP/L
+ cYYInSBW1JwdeQ2lY9B+ov3M6sOiR5o5KgYXcP+vvjHV6o3pcmcuCrgUahazYArLtKAmnUj+f
+ lk9Mahn13o9q2TCcE4Al/DPXkyyuECnJKWOacYUFdIAYEDk/M7h5HMnJjm7eUZDsQmUoplest
+ Oa3aY1jzVXcEQD7xz13Fr2UGPePy0MqSetev7m7Seq4s3F6hOJIQ9UYR+5h0o/NGN5zVR1fpY
+ yhA6veSMuRnKIdj6BMRQwvFhq9vehZ4hrxaqDradIj38Y9Fach4zY5ZNGv8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/08/2017 06:44 AM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
+Jeff King venit, vidit, dixit 07.09.2017 16:54:
+> On Thu, Sep 07, 2017 at 04:02:19PM +0200, Michael J Gruber wrote:
 > 
->> +	git for-each-ref $prefix >actual &&
->> +	grep "Unable to create $Q.*packed-refs.lock$Q: File exists" err &&
+>> name-rev segfaults for me in emacs.git with the typical 8102 stack size.
+>> The reason is the recursive walk that name-rev uses.
+>>
+>> This series adds a test to mark this as known failure, after some
+>> clean-ups.
 > 
-> I added a squash for doing s/grep/test_i18n&/ here
+> These all look reasonable to me. The size of the test case in the final
+> one is presumably arbitrary and just copied from t7004. I don't know if
+> it's worth trying to shrink it. It could shorten a rather expensive
+> test. OTOH, if we shorten it too much then we might get a false pass
+> (e.g., if the algorithm remains recursive but has a smaller stack
+> footprint).
+> 
+>> Michael J Gruber (4):
+>>   t7004: move limited stack prereq to test-lib
+>>   t6120: test name-rev --all and --stdin
+>>   t6120: clean up state after breaking repo
+>>   t6120: test describe and name-rev with deep repos
+> 
+> Now comes the hard part: rewriting the C code. :)
 
-Thanks for the fix. I always forget that gotcha.
+Looking at it more closely, the solution in cbc60b6720 ("git tag
+--contains: avoid stack overflow", 2014-04-24) seems to be a bit "ad
+hoc" to me:
 
-> are there other
-> issues in the series, or is the series more or less ready to be
-> polished in 'next'?
+First of all, there is more than "tag --contains" that may exceed the
+stack by recursion. So I would expect the solution to be more general,
+and not localised and specialised to builtin/tag.c
 
-I'm working on v2 right now.
+Second, this is a walk, so I'm wondering whether our revision walk
+machinery should be the place to add missing functionality (if any).
+That way, everything would benefit from possible or existing
+improvements there. For example, I think some of our "extra walkers"
+don't heed object replacements. (I need to test more.)
 
 Michael
