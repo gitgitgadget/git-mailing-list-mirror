@@ -2,111 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 263872082D
-	for <e@80x24.org>; Fri,  8 Sep 2017 12:58:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 952DB2082D
+	for <e@80x24.org>; Fri,  8 Sep 2017 13:52:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755563AbdIHM6w (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Sep 2017 08:58:52 -0400
-Received: from mout.kundenserver.de ([212.227.126.130]:58679 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755013AbdIHM6u (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Sep 2017 08:58:50 -0400
-Received: from skimbleshanks.math.uni-hannover.de ([130.75.46.4]) by
- mrelayeu.kundenserver.de (mreue003 [212.227.15.167]) with ESMTPSA (Nemesis)
- id 0MIj6a-1dsVmx1ZZA-002DVq; Fri, 08 Sep 2017 14:58:39 +0200
-Subject: Re: git diff <commit> doesn't quite work as documented?
-To:     Junio C Hamano <gitster@pobox.com>,
-        Olaf Klischat <olaf.klischat@gmail.com>
-Cc:     git@vger.kernel.org
-References: <0696f94d-28c2-1f4b-03ee-16553d97f318@gmail.com>
- <xmqqfuby0yll.fsf@gitster.mtv.corp.google.com>
-From:   Michael J Gruber <git@grubix.eu>
-Message-ID: <c08ed84a-6c65-4278-851b-439c63c501ea@grubix.eu>
-Date:   Fri, 8 Sep 2017 14:58:38 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
-MIME-Version: 1.0
-In-Reply-To: <xmqqfuby0yll.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: de-DE
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:LOvQ1XyHhUDUdYe7GTf/N5oeoTYabSDRgEKYoM5vObFFU9vZJLe
- vo/EASjTml2ZTxIPm9afbJBBr1Qjv8OtF/XwDGF7b4ts4ClH4xCMMiBC60m+Y8ieF/96/IE
- I2Dd8d/HYcrLtDZ21gqVxucj6NRT+ey5Tg+9mUwSa7L9pHLQvduTvAvHQpctiPffBu8ZUX6
- 0qqtpdxB0tHSA2Aj1OaLA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:h/1lxS5vzw4=:IoRxh5W0eZDdVT1ZonrQOF
- RvnmAHP6u66imfmR1KbeaJ2BwBwbOdG4RvGUWPnQKgCmCHRBtMOfDEWbuR0WzV8khBhnYgra2
- 0mqTJrOOyGbdVwnyzNTj07p0MhFMw0ZExnj4+qPFfNbbznENlqKriWn4UCQ/p3dJ7FGH91uIk
- p5aKLx+fmePGdV+kDD/zssvCm8Tc1FOQ0AuNUsWsrHKqsWOSqomezwZdgEGm7EHbQHBxb5mIC
- 5u4dXsN7DIKb2hTBy+nTMCCikElaHFPfn2W1I0JKAOmytCiqCD3ykhr7xSdhchHo1e1Yad6Rq
- hx1gBS15MqjkZ1zLz+VP5XSCXxT5R3XXJCBHrlVnFaG8TaKWTC/YWlc7fuZsdVcyhanMnFu9I
- zMP0cbFmaRJPWrxuI9KE72O9brrqlZHLvksBRqu6rX/pFeClS+FFfzB4u9WOkmkgmMr5eR5Ic
- GZFWwGwrR7Cy83m1QmhWrJlojlHqiuZS+Oxn7s84gamzm9ZaVpOsTA6CZVf9gCwGTCJ9GlAW2
- r0xsrGoX4B7JLKYYRPSqoz/rGmOeAZXBQo1a3SVMFG/0HT2NDW0SOSBofbKB27afwHh7+D1b0
- 4TAoWd0ySViSTZGPfz/9KNc9kXDTvUjJpJdfohVfUBUwb4P0pgS8oU8s/+a+lM3IVGldvaOTq
- DCUw3+8BvdhiE6lxK3vEI2Ksfwq821PZ/JlctS2ishcARQQwvBeQPT6UaKF8grw4fS9JdpMyT
- fCCPRjJt2H5BifIep25Y/BXzD0nS2FxWJnHDkrDZBDJ1i87QwssWPCoSNZ4=
+        id S1753209AbdIHNwH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Sep 2017 09:52:07 -0400
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:53082 "EHLO
+        alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751166AbdIHNwE (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 8 Sep 2017 09:52:04 -0400
+X-AuditID: 1207440c-7fdff7000000143e-dc-59b2a084cce8
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id EF.2B.05182.480A2B95; Fri,  8 Sep 2017 09:52:04 -0400 (EDT)
+Received: from bagpipes.fritz.box (p54AAEECC.dip0.t-ipconnect.de [84.170.238.204])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v88Dpvjs002844
+        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+        Fri, 8 Sep 2017 09:52:02 -0400
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Brandon Williams <bmwill@google.com>,
+        git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH v2 01/11] packed-backend: don't adjust the reference count on lock/unlock
+Date:   Fri,  8 Sep 2017 15:51:43 +0200
+Message-Id: <1631f277bb86f653c5c679ca07fbcb2e92410046.1504877858.git.mhagger@alum.mit.edu>
+X-Mailer: git-send-email 2.14.1
+In-Reply-To: <cover.1504877858.git.mhagger@alum.mit.edu>
+References: <cover.1504877858.git.mhagger@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrMIsWRmVeSWpSXmKPExsUixO6iqNuyYFOkweXN0hZrn91hsni+/gS7
+        RdeVbiaLht4rzBa3V8xntuie8pbR4kdLD7PF5s3tLA4cHn/ff2Dy2DnrLrvHgk2lHs969zB6
+        XLyk7PF5k1wAWxSXTUpqTmZZapG+XQJXxvk5HAWPRSo2rH7D1MDYItjFyMkhIWAi8fZvM2sX
+        IxeHkMAOJomW6VdZIJyTTBIHWtpYQarYBHQlFvU0M4HYIgJqEhPbDoEVMQs8ZZLYefIuUBEH
+        h7BApMT8ax4gNSwCqhJv7ixiBLF5BaIkVj3+zg6xTV7i3IPbzCA2p4CFxKt/a9hAbCEBc4mr
+        uyexTmDkWcDIsIpRLjGnNFc3NzEzpzg1Wbc4OTEvL7VI11AvN7NELzWldBMjJLx4djB+Wydz
+        iFGAg1GJh3dC6MZIIdbEsuLK3EOMkhxMSqK8Mj2bIoX4kvJTKjMSizPii0pzUosPMUpwMCuJ
+        8JrPAsrxpiRWVqUW5cOkpDlYlMR5VZeo+wkJpCeWpGanphakFsFkZTg4lCR4A+YDNQoWpaan
+        VqRl5pQgpJk4OEGG8wAN3whSw1tckJhbnJkOkT/FqMvRcfPuHyYhlrz8vFQpcd62eUBFAiBF
+        GaV5cHNgaeEVozjQW8K8U0BG8QBTCtykV0BLmICWlDzfALKkJBEhJdXA2P3xoNreqKc2WTpp
+        L1lmLNI1+Hkio++C9d8vy29dz5+YuN1M9K2B05evdddf1XpEaM07H1ThKLpuz80NBcEnPmWl
+        R13OEtvy0G7Xyfx/6Zdtg2w//1+xSltwkaqe84moQhfegLMzTqS/NjwWuuhv+1Tl1Udfn6+0
+        687xfcwh9+jXA42Hn833piixFGckGmoxFxUnAgDlA6pq5gIAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano venit, vidit, dixit 08.09.2017 03:26:
-> Olaf Klischat <olaf.klischat@gmail.com> writes:
-> 
->> `git diff --help' says:
->>
->> git diff [--options] <commit> [--] [<path>...]
->>            This form is to view the changes you have in your
->>            working tree relative to the named <commit>.
-> 
-> That help text is poorly phrased.  
-> 
-> When "git diff" talks about files in your working tree, it always
-> looks them _through_ the index.  As far as the command is concerned,
-> a cruft left in your working tree that is not in the index does
-> *not* exist.
-> 
-> So when your index does not have bar.txt, even if you have an
-> untracked bar.txt in your directory, i.e.
-> 
->> oklischat@oklischat:/tmp/gittest$ git status
->> On branch master
->> Untracked files:
->>   (use "git add <file>..." to include in what will be committed)
->>
->> 	bar.txt
-> 
-> and you have a commit that _has_ that file, then the command thinks
-> <commit> has the path, and your working tree does *not*.  IOW, this
-> is...
-> 
->> oklischat@oklischat:/tmp/gittest$ git diff bar-added
->> diff --git a/bar.txt b/bar.txt
->> deleted file mode 100644
-> 
-> ... totally expected and intended output.
-> 
-> Hope the above explanation clarifies.  A documentation update might
-> be helpful to new users.
+The old code incremented the packed ref cache reference count when
+acquiring the packed-refs lock, and decremented the count when
+releasing the lock. This is unnecessary because:
 
-Well, there's a difference between "working tree" and  "working dir".
-The wt is "the tree of actual checked out files" per our glossary. So
-maybe the doc could point to the glossary (see the glossary for the
-difference to the work dir).
+* Another process cannot change the packed-refs file because it is
+  locked.
 
-But really, this type of misunderstandings comes up often: people try to
-understand the doc based on common language terms (which is okay, of
-course) and are unaware of the defined meanings of technical terms.
-Explaining them in every place where they are used simply does not scale.
+* When we ourselves change the packed-refs file, we do so by first
+  modifying the packed ref-cache, and then writing the data from the
+  ref-cache to disk. So the packed ref-cache remains fresh because any
+  changes that we plan to make to the file are made in the cache first
+  anyway.
 
-Maybe we should make more use of our glossary (extend it, enhance it,
-promote it) and somehow mark all technical terms as such when they are
-used (say, italics in HTML), or at least when the exact meaning is
-relevant like in the case above, and possibly link to the glossary (-item).
+So there is no reason for the cache to become stale.
 
-Michael
+Moreover, the extra reference count causes a problem if we
+intentionally clear the packed refs cache, as we sometimes need to do
+if we change the cache in anticipation of writing a change to disk,
+but then the write to disk fails. In that case, `packed_refs_unlock()`
+would have no easy way to find the cache whose reference count it
+needs to decrement.
+
+This whole issue will soon become moot due to upcoming changes that
+avoid changing the in-memory cache as part of updating the packed-refs
+on disk, but this change makes that transition easier.
+
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+ refs/packed-backend.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index 412c85034f..b76f14e5b3 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -525,7 +525,6 @@ int packed_refs_lock(struct ref_store *ref_store, int flags, struct strbuf *err)
+ 				"packed_refs_lock");
+ 	static int timeout_configured = 0;
+ 	static int timeout_value = 1000;
+-	struct packed_ref_cache *packed_ref_cache;
+ 
+ 	if (!timeout_configured) {
+ 		git_config_get_int("core.packedrefstimeout", &timeout_value);
+@@ -560,9 +559,11 @@ int packed_refs_lock(struct ref_store *ref_store, int flags, struct strbuf *err)
+ 	 */
+ 	validate_packed_ref_cache(refs);
+ 
+-	packed_ref_cache = get_packed_ref_cache(refs);
+-	/* Increment the reference count to prevent it from being freed: */
+-	acquire_packed_ref_cache(packed_ref_cache);
++	/*
++	 * Now make sure that the packed-refs file as it exists in the
++	 * locked state is loaded into the cache:
++	 */
++	get_packed_ref_cache(refs);
+ 	return 0;
+ }
+ 
+@@ -576,7 +577,6 @@ void packed_refs_unlock(struct ref_store *ref_store)
+ 	if (!is_lock_file_locked(&refs->lock))
+ 		die("BUG: packed_refs_unlock() called when not locked");
+ 	rollback_lock_file(&refs->lock);
+-	release_packed_ref_cache(refs->cache);
+ }
+ 
+ int packed_refs_is_locked(struct ref_store *ref_store)
+-- 
+2.14.1
+
