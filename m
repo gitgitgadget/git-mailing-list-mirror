@@ -2,78 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D9AA1FAD6
-	for <e@80x24.org>; Fri,  8 Sep 2017 18:55:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 22BF11FAD6
+	for <e@80x24.org>; Fri,  8 Sep 2017 19:01:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756859AbdIHSzB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Sep 2017 14:55:01 -0400
-Received: from mout.web.de ([212.227.15.14]:63354 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756777AbdIHSy7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Sep 2017 14:54:59 -0400
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MejjU-1e5kTs2zQe-00OCVo; Fri, 08
- Sep 2017 20:54:44 +0200
-Date:   Fri, 8 Sep 2017 20:54:43 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+        id S1756812AbdIHTBl (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Sep 2017 15:01:41 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64323 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1756303AbdIHTBk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Sep 2017 15:01:40 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0E4D0A16A4;
+        Fri,  8 Sep 2017 15:01:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=xQxCC4zkUGG8UgQBSj36vaFd6M8=; b=yHwZIE
+        SDXKY7DuQVVhvREjU9AUVvsm1BWtzHzvHKmN+5S5nVDtKW+YqBIMykonMOSSEPq0
+        HPETPR+PnREpJKP2o+OOJ9qbJk/1pQrBgTJYthIgbWuoWWuaDXvDgHO1sspj6nIC
+        QPSyfgWFYjsGA/z2NWiKqzFaTCCYJeYnanUss=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=sFUaujVyvEEYYGsmwQWZ+tPd795c86wq
+        5J/FbhlkGcSCTPygupSraEeGAcwf4ELsftK/49W0xTqi5K/GUHalbbipLH4JeZcz
+        aOj8u6ugUiQexOsPk/BDK6qI/6qxCoc9iT+CdNZ8HJh/+YIj35wzkain0x5pZ/LV
+        LcOMV6/yIPY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 05C5FA16A3;
+        Fri,  8 Sep 2017 15:01:39 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6A216A16A0;
+        Fri,  8 Sep 2017 15:01:38 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Kevin Willford <kewillf@microsoft.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        pclouds@gmail.com
-Subject: Re: [PATCH 1/1] reset: fix reset when using the sparse-checkout
- feature.
-Message-ID: <20170908185443.GA15081@tor.lan>
+Cc:     git@vger.kernel.org, peff@peff.net, pclouds@gmail.com
+Subject: Re: [PATCH 1/1] reset: fix reset when using the sparse-checkout feature.
 References: <20170908180050.25188-1-kewillf@microsoft.com>
- <20170908180050.25188-2-kewillf@microsoft.com>
+        <20170908180050.25188-2-kewillf@microsoft.com>
+Date:   Sat, 09 Sep 2017 04:01:37 +0900
+In-Reply-To: <20170908180050.25188-2-kewillf@microsoft.com> (Kevin Willford's
+        message of "Fri, 8 Sep 2017 12:00:50 -0600")
+Message-ID: <xmqq4lsdypym.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170908180050.25188-2-kewillf@microsoft.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Provags-ID: V03:K0:CPzwjOjZQ6ZZn7Z1pLIDAG8oIvTzgbCejHcZaJFLohxlQtG23L8
- GdmQIAAt2dKb2aK0oCbXMc6iB8HNM82nMzXvSLzwL92bsrcoWTGGYduAj26NLyq/Xx/nzf7
- GsuCaeJz0I3hDv2zvgYiaKC/4mUHWoWEzBkc5g/YGsjsmg51n5hm3sCMbaD8V+5aa5bGaJh
- Dspppw9fKCTYpeEYTfeFg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:QUSPOmjiUP0=:oDKhZ+I7WQzPSd6cEHvu+N
- 38Ae+TYO/T865lpSdHA2quvG3pxAFkCZgskyIG0LrIXsRgOIr+givwtrz1FohRe9cFo34fI1I
- YJkQ+HzV/xWBbYERMXleFLMwV+RVIBB4KaKwDOld+JR8ZtEzDSoMtVhs4l9WGoRl5KrzAHu08
- taUvbJj5X61rXGur8fLbUiTrdDTJFMw6TS6QLqhEymZsqui1ImY7g5chYkkDzBYazg/0wmTjn
- YQkGXUf7avN1N5HpLXHA5A6ArAdms6KpaTWk1KYy+wJG63YN3pGiJkR4Nv4SnW+s0NXa12xAc
- 0Obs6NTiQ8PsoMHbJEj6Z6L3pXxh0cUeTrPucI6mauOFz2YyH/gLF2mTVzx5DuG8Hs+LvTjaD
- 2IedgdkSsO84HsoZH02lVQl2dYwPexfU7S9uOfjtZQQqtKq3dlQGquKeYroqO8y0W1iZaZnDg
- oAKxh8t7JxqBiChzHtQ0U0sgPl2SBJEnF3r5abZEvK7ROxgF2QryKvXK6h/3N9WQJOW6TNeI2
- uTdaO/86hB/etvddGIky4fV8ayA9nV8hI80miVeT+W6ECyv8c/40rJxF+PfPYDDoCB4gLFcDa
- xFWwYQ4pDUyKqaEIBX9kdaJ1OVViFxoKWL2nYmBC/MI1S52R3zi0uOQP600anHFTAXFdR4jeH
- Jm7QVQ0re40iori1jmcB89nip+Q1K/vnasjMrnBBuwlCxEyXNjOYrDOBZKlKlsW6FcidN6VWk
- wooBPSp3W9bC/TMoghW7hCAF6YzXnPn+8l2IGJllWMwRizWEdZ+qstScQonPzGzHOMsJxybYc
- J0UQ+IRgHtqVD9+U479LVkZ8ucqCw==
+Content-Type: text/plain
+X-Pobox-Relay-ID: 247B12C6-94C8-11E7-8FF3-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 08, 2017 at 12:00:50PM -0600, Kevin Willford wrote:
-> When using the sparse checkout feature the git reset command will add
-> entries to the index that will have the skip-worktree bit off but will
-> leave the working directory empty.  File data is lost because the index
-> version of the files have been changed but there is nothing that is in the
-> working directory.  This will cause the next status call to show either
-> deleted for files modified or deleting or nothing for files added.  The
-> added files should be shown as untracked and modified files should be
-> shown as modified.
-> 
-> To fix this when the reset is running if there is not a file in the working
-> directory and if it will be missing with the new index entry or was not
-> missing in the previous version, we create the previous index version of
-> the file in the working directory so that status will report correctly
-> and the files will be availble for the user to deal with.
-> 
-> Signed-off-by: Kevin Willford <kewillf@microsoft.com>
-[]
+Kevin Willford <kewillf@microsoft.com> writes:
+
+> diff --git a/builtin/reset.c b/builtin/reset.c
+> index d72c7d1c96..1b8bb45989 100644
+> --- a/builtin/reset.c
+> +++ b/builtin/reset.c
+> @@ -24,6 +24,7 @@
+>  #include "cache-tree.h"
+>  #include "submodule.h"
+>  #include "submodule-config.h"
+> +#include "dir.h"
+>  
+>  static const char * const git_reset_usage[] = {
+>  	N_("git reset [--mixed | --soft | --hard | --merge | --keep] [-q] [<commit>]"),
+> @@ -124,8 +125,32 @@ static void update_index_from_diff(struct diff_queue_struct *q,
+>  
+>  	for (i = 0; i < q->nr; i++) {
+>  		struct diff_filespec *one = q->queue[i]->one;
+> +		struct diff_filespec *two = q->queue[i]->two;
+> +		int pos;
+>  		int is_missing = !(one->mode && !is_null_oid(&one->oid));
+> +		int was_missing = !two->mode && is_null_oid(&two->oid);
+>  		struct cache_entry *ce;
+> +		struct cache_entry *ceBefore;
+> +		struct checkout state = CHECKOUT_INIT;
+
+The five new variables are only used in the new block, so it
+probably is better to limit their scope to the "we do something
+unusual when sparse checkout is in effect" block as well.  The scope
+for the latter two can further be narrowed down to "we do need to
+force a checkout of this entry" block.
+
+We prefer to name our variables with underscore (e.g. ce_before)
+over camelCase (e.g. ceBefore) unless there is a compelling reason
+(e.g. a platform specific code in compat/ layer to match platform
+convention).
+
+> +
+> +		if (core_apply_sparse_checkout && !file_exists(two->path)) {
+> +			pos = cache_name_pos(two->path, strlen(two->path));
+> +			if ((pos >= 0 && ce_skip_worktree(active_cache[pos])) &&
+> +			    (is_missing || !was_missing))
+> +			{
+> +				state.force = 1;
+> +				state.refresh_cache = 1;
+> +				state.istate = &the_index;
+> +				ceBefore = make_cache_entry(two->mode,
+> +							    two->oid.hash,
+> +							    two->path, 0, 0);
+> +				if (!ceBefore)
+> +					die(_("make_cache_entry failed for path '%s'"),
+> +						two->path);
+> +
+> +				checkout_entry(ceBefore, &state, NULL);
+> +			}
+> +		}
+
+Can we tell between the case where the reason why the path was not
+there in the working tree was due to the path being excluded by the
+sparse checkout and the path being removed manually by the end user?
+
+I guess ce_skip_worktree() check is sufficient; we force checkout only
+when the path is marked to be skipped due to "sparse" thing.
+
+Do we have to worry about the reverse case, in which file_exists(two->path)
+is true (i.e. the user created a file there manually) even though
+the path is marked to be skipped due to "sparse" setting?
+
+Other than that, the patch looks quite cleanly done and well explained.
+
+Thanks.
+
 > diff --git a/t/t7114-reset-sparse-checkout.sh b/t/t7114-reset-sparse-checkout.sh
 > new file mode 100755
 > index 0000000000..f2a5426847
@@ -90,9 +145,6 @@ On Fri, Sep 08, 2017 at 12:00:50PM -0600, Kevin Willford wrote:
 > +
 > +test_expect_success 'setup' '
 > +	test_tick &&
-
-Do we need a test_tick here ?
-
 > +	echo "checkout file" >c &&
 > +	echo "modify file" >m &&
 > +	echo "delete file" >d &&
@@ -120,3 +172,26 @@ Do we need a test_tick here ?
 > +	test_path_is_missing d
 > +'
 > +
+> +test_expect_success 'reset after deleting file without skip-worktree bit' '
+> +	git checkout -f endCommit &&
+> +	git clean -xdf &&
+> +	cat >.git/info/sparse-checkout <<-\EOF &&
+> +	/c
+> +	/m
+> +	EOF
+> +	test_config core.sparsecheckout true &&
+> +	git checkout -b resetAfterDelete &&
+> +	test_path_is_file m &&
+> +	test_path_is_missing a &&
+> +	test_path_is_missing d &&
+> +	rm -f m &&
+> +	git reset HEAD~1 &&
+> +	test "checkout file" = "$(cat c)" &&
+> +	test "added file" = "$(cat a)" &&
+> +	test_path_is_missing m &&
+> +	test_path_is_missing d
+> +'
+> +
+> +
+> +
+> +test_done
