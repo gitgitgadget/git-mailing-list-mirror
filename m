@@ -2,94 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B119B2082D
-	for <e@80x24.org>; Fri,  8 Sep 2017 16:11:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D6B922082D
+	for <e@80x24.org>; Fri,  8 Sep 2017 17:15:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754346AbdIHQK7 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Sep 2017 12:10:59 -0400
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:58687 "EHLO
-        alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753577AbdIHQK6 (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 8 Sep 2017 12:10:58 -0400
-X-AuditID: 12074411-f7dff70000007f0a-cb-59b2c111b413
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id DA.FF.32522.111C2B95; Fri,  8 Sep 2017 12:10:57 -0400 (EDT)
-Received: from bagpipes.fritz.box (p54AAEECC.dip0.t-ipconnect.de [84.170.238.204])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v88GApYl010839
-        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Fri, 8 Sep 2017 12:10:53 -0400
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johan Herland <johan@herland.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH] load_subtree(): check that `prefix_len` is in the expected range
-Date:   Fri,  8 Sep 2017 18:10:10 +0200
-Message-Id: <ca6046b8b955df6a798b690fdecb0b8ba47d57a9.1504886586.git.mhagger@alum.mit.edu>
-X-Mailer: git-send-email 2.14.1
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrOIsWRmVeSWpSXmKPExsUixO6iqCt4cFOkwaeD8hZdV7qZLBp6rzBb
-        zLu7i8mif3kXm8XtFfOZHVg9/r7/wOTx4WOcx6WX39k8Ll5S9vi8SS6ANYrLJiU1J7MstUjf
-        LoEr4918yYJp3BWLFx5hbGCcz9nFyMEhIWAisWh/RhcjF4eQwA4miWPvZjNDOCeZJN4v2MHY
-        xcjJwSagK7Gop5kJxBYRUJOY2HaIBaSIWWA5o0TH2/NgCWGBQIl7z66CNbAIqEp8WvyOFcTm
-        FYiS6G1+xgZiSwjIS5x7cJt5AiPXAkaGVYxyiTmlubq5iZk5xanJusXJiXl5qUW6pnq5mSV6
-        qSmlmxghYSC4g3HGSblDjAIcjEo8vBXbN0UKsSaWFVfmHmKU5GBSEuWV6QEK8SXlp1RmJBZn
-        xBeV5qQWH2KU4GBWEuFV2Q2U401JrKxKLcqHSUlzsCiJ8/ItUfcTEkhPLEnNTk0tSC2Cycpw
-        cChJ8NocAGoULEpNT61Iy8wpQUgzcXCCDOcBGn4WpIa3uCAxtzgzHSJ/ilGXo+Pm3T9MQix5
-        +XmpUuK8+SBFAiBFGaV5cHNg8fuKURzoLWHepfuBqniAsQ836RXQEiagJSXPN4AsKUlESEk1
-        MGq9ehK4oKv/yD3Thr+VPW5pKnMmBBx8d8a710u6u4BlA4tQi4mW2/WI14fu1qYL/Thm4qn/
-        /T77mxndVQ6hMovrmZgL11X5bVuwY1Km5F0tidM/o3X2LDhWm7Juu+3KGx1fOGLdz/8Jr1/b
-        KqRh79oWU3ie/Y375ELXsrlSR614j7y4WdcbrsRSnJFoqMVcVJwIAHFrkd66AgAA
+        id S1756313AbdIHRPz (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Sep 2017 13:15:55 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62289 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1756227AbdIHRPy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Sep 2017 13:15:54 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7DE889FD4F;
+        Fri,  8 Sep 2017 13:15:53 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=MxU5WIcFxWDMwTl9VVitKo+SE9I=; b=ozR5+8
+        rSbRHXoqhB87/jIZXUBNS/GKU2CEMucYQeFNtfTID6ZgU3s58i9hnmKvIttT/wCK
+        DVeWShyayHjr0PqvWtmWc12NiNEgNcUBeYZR0gBBllcjgQcck8yYcfzCZdemFeXh
+        /uXgUwEPjmHIJAN1tBMrkB2k41f/xbTVSuI1E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=TKdz6ZWxHK/b+BWogGFhTmIWYQwU/QJM
+        R+wjuRV7NBlsdwXcDuRpUJaZPDEZufVe7+Luby7SNsSEgTsNXhelXDHajnRej8mi
+        Of3pJY7JpHy+OKdjiQsHujhryy20MJoqdrrVhqYERVwe8XS6NJE9eEBFI7kAZ9z7
+        DXo20HcrSsY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 73C579FD4E;
+        Fri,  8 Sep 2017 13:15:53 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C50949FD4C;
+        Fri,  8 Sep 2017 13:15:52 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.ath.cx>
+Subject: Re: [PATCH] refs: make sure we never pass NULL to hashcpy
+References: <20170904200504.15249-1-t.gummerer@gmail.com>
+        <xmqqh8wgaa7s.fsf@gitster.mtv.corp.google.com>
+        <CAMy9T_ED1KBqkE9GCHrOrt0frnYAx1vka7Xx1DrXmjJBNNKahw@mail.gmail.com>
+        <xmqqvaku10gj.fsf@gitster.mtv.corp.google.com>
+        <ab0c4064-6eaa-c298-a26d-58fc83e4574f@alum.mit.edu>
+Date:   Sat, 09 Sep 2017 02:15:51 +0900
+In-Reply-To: <ab0c4064-6eaa-c298-a26d-58fc83e4574f@alum.mit.edu> (Michael
+        Haggerty's message of "Fri, 8 Sep 2017 17:08:17 +0200")
+Message-ID: <xmqqfubxyuuw.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5E31A1EC-94B9-11E7-8052-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This value, which is stashed in the last byte of an object_id hash,
-gets handed around a lot. So add a sanity check before using it in
-`load_subtree()`.
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
-This patch is an addendum to v1 of the mh/notes-cleanup patch series
-[1]. It adds the assertion that was suggested by Junio [2].
+> So `ref_transaction_update()` *does* need to set or clear the `HAVE_NEW`
+> and `HAVE_OLD` bits as I sketched, to impedance-match between the two
+> conventions.
 
-Since the first patch series is already in next, this patch is
-constructed to apply on top of that branch.
+OK, so ignoring HAVE_NEW/HAVE_OLD bits that the callers of
+ref_transaction_update() may set in flags, and having
+ref_transaction_update() compute these bits based on new/old_sha1
+pointers from scratch, would be the right thing to do.
 
-Thanks to Junio and Johan for their review of v1.
+IOW
 
-Michael
+	flags &= ~(REF_HAVE_NEW|REF_HAVE_OLD);
+	if (new_sha1)
+		flags |= REF_HAVE_NEW;
+	if (old_sha1)
+		flags |= REF_HAVE_OLD;
 
-[1] https://public-inbox.org/git/cover.1503734566.git.mhagger@alum.mit.edu/
-[2] https://public-inbox.org/git/xmqqh8wuqo6e.fsf@gitster.mtv.corp.google.com/
+and your earlier "Does the warning go away if you change the line
+to" does essentially the same thing.
 
- notes.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+> It's a shame how much time we've wasted discussing this. Maybe the code
+> is trying to be too clever/efficient and needs a rethink.
 
-diff --git a/notes.c b/notes.c
-index 40d9ba6252..27d232f294 100644
---- a/notes.c
-+++ b/notes.c
-@@ -417,7 +417,10 @@ static void load_subtree(struct notes_tree *t, struct leaf_node *subtree,
- 		     oid_to_hex(&subtree->val_oid));
- 
- 	prefix_len = subtree->key_oid.hash[KEY_INDEX];
--	assert(prefix_len * 2 >= n);
-+	if (prefix_len >= GIT_SHA1_RAWSZ)
-+		BUG("prefix_len (%"PRIuMAX") is out of range", (uintmax_t)prefix_len);
-+	if (prefix_len * 2 < n)
-+		BUG("prefix_len (%"PRIuMAX") is too small", (uintmax_t)prefix_len);
- 	memcpy(object_oid.hash, subtree->key_oid.hash, prefix_len);
- 	while (tree_entry(&desc, &entry)) {
- 		unsigned char type;
--- 
-2.14.1
-
+It might be the case, but I do not know what to blame is "the two
+conventions", an over-eager compiler, or a confused commenter on the
+thread (that's me), though ;-).
