@@ -6,149 +6,73 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 54A09208E3
-	for <e@80x24.org>; Fri,  8 Sep 2017 01:13:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0745A20286
+	for <e@80x24.org>; Fri,  8 Sep 2017 01:18:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752752AbdIHBNd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Sep 2017 21:13:33 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53370 "EHLO
+        id S1751985AbdIHBS2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Sep 2017 21:18:28 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56591 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750966AbdIHBNc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Sep 2017 21:13:32 -0400
+        with ESMTP id S1750966AbdIHBS1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Sep 2017 21:18:27 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BFEF6938FE;
-        Thu,  7 Sep 2017 21:13:31 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5DEA5AE7DF;
+        Thu,  7 Sep 2017 21:18:27 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=Dj07oFz2miNc
-        Sk7QTEW1hYIdtnQ=; b=wc4A/w6BJYKk2uW/opuODlrfBlSOuTt02v9Fv+BWcbAL
-        kk+ZSxJx+Ln6wy778o1g/wZN/FyTZ61u6WDvgYgRTB835R7sqSgUl2iKmsfg9QQl
-        Q1hREnwBndMenoHzWVFyK1zk40NbMPQ0hLeVOtwYp5ZDuzGgr9bG3u+siB/0G2o=
+        :content-type; s=sasl; bh=BsgE8Y8PIcVZCt/sfZ1QZZwFi/g=; b=c7zksE
+        Km+yVhoam2gf+gky+IXwu1GGOxLgKTtwTxehJX4bgVn89KvqmH4hxmkghtBcmEBd
+        LcSr1fYpBNKBgCozNAeyTX57CwEx3e+owAwNc0EGEINILQGgLgKw3wkqCONPGLHx
+        OEdNKiUC1jXGVCF/ZS0NmxsOHOJ83GmKv+T4w=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=W3otcu
-        LaOvRDVNZgt+Xj3YfmIavdT7tJ9bilH9pjV4y6RXY6WnbnXiSiiXfL84LVHShQt5
-        Ljlfgd07ZWTa8iUM/O2z+hEaDzyLRBqYg5oEZU4wZCuy+fX7hbETyJ5fPkgPGx0C
-        SZSoKpf1mx9Sx7t1Mk+mBp4mIG3KeGPurXh3o=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A80BA938FD;
-        Thu,  7 Sep 2017 21:13:31 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=rfO/UdQumJsISNhHCN3swuwKB/ME2NBq
+        Qb7ubCmTmgIT4LwQfI/n5Z+W6JEAhwA2SzAu1zJtTkgRe14b5T4ygRpydLrDVzzE
+        +a8t7rnvs/1La06GMDH+xBtxuAeATKaYDFJeD+LK6uh2RlNqDwLOKyUbSnZtBHGp
+        uTHPKggCs88=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 543B2AE7DE;
+        Thu,  7 Sep 2017 21:18:27 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 04EEB938FC;
-        Thu,  7 Sep 2017 21:13:30 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AF2EFAE7DD;
+        Thu,  7 Sep 2017 21:18:26 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCHv3] builtin/merge: honor commit-msg hook for merges
-References: <xmqqd174bzco.fsf@gitster.mtv.corp.google.com>
-        <20170907220429.31312-1-sbeller@google.com>
-Date:   Fri, 08 Sep 2017 10:13:29 +0900
-In-Reply-To: <20170907220429.31312-1-sbeller@google.com> (Stefan Beller's
-        message of "Thu, 7 Sep 2017 15:04:29 -0700")
-Message-ID: <xmqqr2vi0z7q.fsf@gitster.mtv.corp.google.com>
+To:     Andrew Ardill <andrew.ardill@gmail.com>
+Cc:     =?utf-8?B?5aSP5aSn6Zuo?= <xia.jason23@gmail.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Branch name support & character
+References: <CA+zMtjmhrE54=ke6vVDGOcrbHkdPuE-Gf5cwQEp8LL2h+xen0g@mail.gmail.com>
+        <CAH5451m9asxzaOEzQ2Jjk9Ly97GVnb7DV0uZS=96B=yHCYLWCw@mail.gmail.com>
+Date:   Fri, 08 Sep 2017 10:18:25 +0900
+In-Reply-To: <CAH5451m9asxzaOEzQ2Jjk9Ly97GVnb7DV0uZS=96B=yHCYLWCw@mail.gmail.com>
+        (Andrew Ardill's message of "Thu, 7 Sep 2017 15:31:33 +1000")
+Message-ID: <xmqqk21a0yzi.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: ED67E92A-9432-11E7-A670-FE4B1A68708C-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9DA759B0-9433-11E7-9FC3-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Andrew Ardill <andrew.ardill@gmail.com> writes:
 
-> .... The --no-verify option however is not remembered across invocation=
-s
-> of git-merge. Originally the author assumed an alternative in which the
-> 'git merge --continue' command accepts the --no-verify flag, but that
-> opens up the discussion which flags are allows to the continued merge
-> command and which must be given in the first invocation.
+> Using git checkout -b 'my&branch' works for me (single quotes around
+> the branch name).
+>
+> Pushing to a local remote also works: git push --set-upstream
+> ../git-test-2 'my&branch'
 
-This leaves a reader (me) wondering what the final conclusion was,
-after the author assumed something and thought about alternatives.
-I am guessing that your final decision was not to remember
-"--no-verify" so a user who started "merge --no-verify" that stopped
-in the middle must say "merge --continue --no-verify" or "commit
---no-verify" to conclude the merge?  Or you added some mechanism to
-remember the fact that no-verify was given so that "merge --continue"
-will read from there, ignoring "merge --continue --verify" from the
-command line?  Not just the above part of the log message confusing,
-but there is no update to the documentation, and we shouldn't expect
-end-users to find out what ought to happen by reading t7504 X-<.
+Thanks for sanity-checking.  I was wondering if we have codepaths
+that botch quoting (we shouldn't, and if there is, we should fix
+it).
 
-The new test in t7504 tells me that you remember --[no-]verify from
-the initial invocation and use the same when --continue is given; it
-is unclear how that remembered one interacts with --[no-]verify that
-is given when --continue is given.  It is not documented, tested and
-explained in the log message.  I would expect that the command line=20
-trumps what was given in the initial invocation.
+>
+> That being said, I would advise not using & in branch names,
+> specifically because it is a special character in shells.
 
+Good advice.
 
-> +static int verify_msg =3D 1;
-> =20
->  static struct strategy all_strategy[] =3D {
->  	{ "recursive",  DEFAULT_TWOHEAD | NO_TRIVIAL },
-> @@ -236,6 +237,7 @@ static struct option builtin_merge_options[] =3D {
->  	  N_("GPG sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
->  	OPT_BOOL(0, "overwrite-ignore", &overwrite_ignore, N_("update ignored=
- files (default)")),
->  	OPT_BOOL(0, "signoff", &signoff, N_("add Signed-off-by:")),
-> +	OPT_BOOL(0, "verify", &verify_msg, N_("verify commit-msg hook")),
->  	OPT_END()
->  };
-
-I suspect that the previous iteration gives a much better end-user
-experience when "git merge -h" is used.  This will give the
-impression that the user MUST say "merge --verify" if the user wants
-to verify commit-msg hook (whatever that means), but because the
-option defaults to true, that is not what happens.  The user instead
-must say "merge --no-verify" if the verification is unwanted.
-
-"git commit -h" explains=20
-
-    --no-verify        bypass pre-commit and commit-msg hooks
-
-and I think that is the way how we want to explain this option in
-"git merge" too.  Normally it is not bypassed, and the user can ask
-with "--no-verify".  Thanks to Ren=C3=A9's change in 2012, the option
-definition you had in the previous one will make --[no-]verify
-accepted just fine.
-
-> +test_expect_success 'merge fails with failing hook' '
-> + ...
-> +'
-> +
-> +test_expect_success 'merge bypasses failing hook with --no-verify' '
-> + ...
-> +'
-
-Both look sensible.
-
-> +test_expect_failure 'merge --continue remembers --no-verify' '
-> +	test_when_finished "git branch -D newbranch" &&
-> +	test_when_finished "git checkout -f master" &&
-> +	git checkout master &&
-> +	echo a >file2 &&
-> +	git add file2 &&
-> +	git commit --no-verify -m "add file2 to master" &&
-> +	git checkout -b newbranch master^ &&
-> +	echo b >file2 &&
-> +	git add file2 &&
-> +	git commit --no-verify file2 -m in-side-branch &&
-> +	git merge --no-verify -m not-rewritten-by-hook master &&
-> +	# resolve conflict:
-> +	echo c >file2 &&
-> +	git add file2 &&
-> +	git merge --continue &&
-> +	commit_msg_is not-rewritten-by-hook
->  '
-
-OK.  What should happen when the last "merge --continue" was given
-"--verify" at the same time?  A similar test whose title is
-"--no-verify remembered by merge --continue can be overriden" may be
-a good thing to follow this one, perhaps?
-
-Thanks.
