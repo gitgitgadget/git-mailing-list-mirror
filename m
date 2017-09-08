@@ -6,162 +6,137 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EFAA62082D
-	for <e@80x24.org>; Fri,  8 Sep 2017 13:53:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8BD7C2082D
+	for <e@80x24.org>; Fri,  8 Sep 2017 15:08:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752499AbdIHNxN (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Sep 2017 09:53:13 -0400
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:60516 "EHLO
+        id S1752679AbdIHPIY (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Sep 2017 11:08:24 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:61212 "EHLO
         alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751139AbdIHNwT (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 8 Sep 2017 09:52:19 -0400
-X-AuditID: 1207440e-bf9ff70000007085-3b-59b2a092f46f
+        by vger.kernel.org with ESMTP id S1750842AbdIHPIX (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 8 Sep 2017 11:08:23 -0400
+X-AuditID: 1207440e-be1ff70000007085-73-59b2b26437b7
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 17.B1.28805.290A2B95; Fri,  8 Sep 2017 09:52:18 -0400 (EDT)
-Received: from bagpipes.fritz.box (p54AAEECC.dip0.t-ipconnect.de [84.170.238.204])
+        by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 41.36.28805.462B2B95; Fri,  8 Sep 2017 11:08:20 -0400 (EDT)
+Received: from [192.168.69.190] (p54AAEECC.dip0.t-ipconnect.de [84.170.238.204])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v88Dpvk1002844
-        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Fri, 8 Sep 2017 09:52:16 -0400
-From:   Michael Haggerty <mhagger@alum.mit.edu>
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v88F8HKQ007191
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Fri, 8 Sep 2017 11:08:19 -0400
+Subject: Re: [PATCH] refs: make sure we never pass NULL to hashcpy
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Brandon Williams <bmwill@google.com>,
-        git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 08/11] t1404: demonstrate two problems with reference transactions
-Date:   Fri,  8 Sep 2017 15:51:50 +0200
-Message-Id: <76d473f62a8c1d6328eb15003c4d0d4dbc8f277d.1504877858.git.mhagger@alum.mit.edu>
-X-Mailer: git-send-email 2.14.1
-In-Reply-To: <cover.1504877858.git.mhagger@alum.mit.edu>
-References: <cover.1504877858.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrKIsWRmVeSWpSXmKPExsUixO6iqDtpwaZIgyNrhCzWPrvDZPF8/Ql2
-        i64r3UwWDb1XmC1ur5jPbNE95S2jxY+WHmaLzZvbWRw4PP6+/8DksXPWXXaPBZtKPZ717mH0
-        uHhJ2ePzJrkAtigum5TUnMyy1CJ9uwSujFN7TjIVPJWvuH95J3MD40nJLkZODgkBE4n/W58y
-        dzFycQgJ7GCSOP1wIhOEc5JJ4uyUu4wgVWwCuhKLepqZQGwRATWJiW2HWECKmAWeMknsPHmX
-        FSQhLBAqcffmS7AiFgFVidUtM1lAbF6BKIlT178xQ6yTlzj34DaYzSlgIfHq3xo2EFtIwFzi
-        6u5JrBMYeRYwMqxilEvMKc3VzU3MzClOTdYtTk7My0st0jXWy80s0UtNKd3ECAkxvh2M7etl
-        DjEKcDAq8fBaBG+MFGJNLCuuzD3EKMnBpCTKK9OzKVKILyk/pTIjsTgjvqg0J7X4EKMEB7OS
-        CK/5LKAcb0piZVVqUT5MSpqDRUmcV22Jup+QQHpiSWp2ampBahFMVoaDQ0mCN2A+UKNgUWp6
-        akVaZk4JQpqJgxNkOA/Q8I0gNbzFBYm5xZnpEPlTjLocHTfv/mESYsnLz0uVEudtmwdUJABS
-        lFGaBzcHlhpeMYoDvSXMawAyigeYVuAmvQJawgS0pOT5BpAlJYkIKakGxjCT7rW2R2wifMUe
-        mTupT5/rce2NvefJ3R9fLQpSF28pnXt95s3YSMuUDo0/W93LTZdd1PzMdzJNOv2185IcNTX2
-        pTHBMhXxNTeVuZVK2E82rXBTSPQ/ndkygVt84ao7jqkWJld91s2M7prk+aD0WUGv2MN/U1M/
-        FkxNXmyZ3P1Jxm7vTvf7SizFGYmGWsxFxYkAnzfB2+gCAAA=
+Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.ath.cx>
+References: <20170904200504.15249-1-t.gummerer@gmail.com>
+ <xmqqh8wgaa7s.fsf@gitster.mtv.corp.google.com>
+ <CAMy9T_ED1KBqkE9GCHrOrt0frnYAx1vka7Xx1DrXmjJBNNKahw@mail.gmail.com>
+ <xmqqvaku10gj.fsf@gitster.mtv.corp.google.com>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <ab0c4064-6eaa-c298-a26d-58fc83e4574f@alum.mit.edu>
+Date:   Fri, 8 Sep 2017 17:08:17 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
+MIME-Version: 1.0
+In-Reply-To: <xmqqvaku10gj.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuplleLIzCtJLcpLzFFi42IRYndR1E3ZtCnSYN0dWYuuK91MFg29V5gt
+        7kxrZLe4sPo2uwOLx+QJV9k9ds66y+5x8ZKyx+dNcgEsUVw2Kak5mWWpRfp2CVwZJ6efYyyY
+        KlUx62A3WwPjTZEuRk4OCQETiY3tH1i7GLk4hAR2MElsO36FBcI5zyRx9PFzZpAqYQEniQ1P
+        P7OD2CICahIT2w6BFTELzGKUeHhvLRNExyNGiS/zGsGq2AR0JRb1NDOB2LwC9hLHP+0Es1kE
+        VCSaXrxiA7FFBSIk+t5eZoeoEZQ4OfMJC4jNKWAtMev6M7AaZgF1iT/zLjFD2OISt57MZ4Kw
+        5SWat85mnsAIdAJC+ywkLbOQtMxC0rKAkWUVo1xiTmmubm5iZk5xarJucXJiXl5qka6xXm5m
+        iV5qSukmRkio8+1gbF8vc4hRgINRiYfXInhjpBBrYllxZe4hRkkOJiVRXpmeTZFCfEn5KZUZ
+        icUZ8UWlOanFhxglOJiVRHhnbATK8aYkVlalFuXDpKQ5WJTEedWWqPsJCaQnlqRmp6YWpBbB
+        ZGU4OJQkeKeDNAoWpaanVqRl5pQgpJk4OEGG8wAN9wUbXlyQmFucmQ6RP8WoKCXOKwGSEABJ
+        ZJTmwfXCUtErRnGgV4R5OUGqeIBpDK77FdBgJqDBJc83gAwuSURISTUwFk4rTowKXyDi8VQt
+        8JWipaaE2tdwxy2h7nwmq5g1E31MH/7uyoy/fifmyhy+0odalfrVDWEFc2Umcv5YV/542aaP
+        biZ5c1KmiU74dTLA40EFA/PFilyP5CO7vy54Wmimc0ub/0rM4223T106Pe/Am98c+7tLrU3Y
+        5DMCpKZ6n9vXeVks1jhEiaU4I9FQi7moOBEAfUI2+yADAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, a loose reference is deleted even before locking the
-`packed-refs` file, let alone deleting any packed version of the
-reference. This leads to two problems, demonstrated by two new tests:
+On 09/08/2017 02:46 AM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> 
+>> I did just realize one thing: `ref_transaction_update()` takes `flags`
+>> as an argument and alters it using
+>>
+>>>         flags |= (new_sha1 ? REF_HAVE_NEW : 0) | (old_sha1 ? REF_HAVE_OLD : 0);
+>>
+>> Perhaps gcc is *more* intelligent than we give it credit for, and is
+>> actually worried that the `flags` argument passed in by the caller
+>> might *already* have one of these bits set. In that case
+>> `ref_transaction_add_update()` would indeed be called incorrectly.
+>> Does the warning go away if you change that line to
+>>
+>>>         if (new_sha1)
+>>>                 flags |=REF_HAVE_NEW;
+>>>         else
+>>>                 flags &= ~REF_HAVE_NEW;
+>>>         if (old_sha1)
+>>>                 flags |=REF_HAVE_OLD;
+>>>         else
+>>>                 flags &= ~REF_HAVE_OLD;
+>>
+>> ? This might be a nice change to have anyway, to isolate
+>> `ref_transaction_update()` from mistakes by its callers.
+> 
+> I understand "drop HAVE_NEW bit if new_sha1 is NULL" part, but not
+> the other side "add HAVE_NEW if new_SHA1 is not NULL"---doesn't the
+> NEW/OLD flag exist exactly because some callers pass the address of
+> an embedded oid.hash[] or null_sha1, instead of NULL, when one side 
+> does not exist?  So new|old being NULL is a definite signal that we
+> need to drop HAVE_NEW|OLD, but the reverse may not be true, no?  Is
+> it OK to overwrite null_sha1[] that is passed from some codepaths?
+> 
+> ref_transaction_create and _delete pass null_sha1 on the missing
+> side, while ref_transaction_verify passes NULL, while calling
+> _update().  Should this distinction affect how _add_update() gets
+> called?
 
-* While a reference is being deleted, other processes might see the
-  old, packed value of the reference for a moment before the packed
-  version is deleted. Normally this would be hard to observe, but we
-  can prolong the window by locking the `packed-refs` file externally
-  before running `update-ref`, then unlocking it before `update-ref`'s
-  attempt to acquire the lock times out.
+There are two functions under discussion:
 
-* If the `packed-refs` file is locked so long that `update-ref` fails
-  to lock it, then the reference can be left permanently in the
-  incorrect state described in the previous point.
+* `ref_transaction_add_update()` is the low-level, private function that
+uses the `HAVE_{NEW,OLD}` bits to decide what to do.
 
-In a moment, both problems will be fixed.
+* `ref_transaction_update()` (like
+`ref_transaction_{create,delete,verify}()`) are public functions that
+ignore the `HAVE_{NEW,OLD}` bits and base their behavior on whether
+`new_sha1` and `old_sha1` are NULL.
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- t/t1404-update-ref-errors.sh | 73 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 73 insertions(+)
+Each of these functions has to support three possibilities for its SHA-1
+arguments:
 
-diff --git a/t/t1404-update-ref-errors.sh b/t/t1404-update-ref-errors.sh
-index c34ece48f5..64a81345a8 100755
---- a/t/t1404-update-ref-errors.sh
-+++ b/t/t1404-update-ref-errors.sh
-@@ -404,4 +404,77 @@ test_expect_success 'broken reference blocks indirect create' '
- 	test_cmp expected output.err
- '
- 
-+test_expect_failure 'no bogus intermediate values during delete' '
-+	prefix=refs/slow-transaction &&
-+	# Set up a reference with differing loose and packed versions:
-+	git update-ref $prefix/foo $C &&
-+	git pack-refs --all &&
-+	git update-ref $prefix/foo $D &&
-+	git for-each-ref $prefix >unchanged &&
-+	# Now try to update the reference, but hold the `packed-refs` lock
-+	# for a while to see what happens while the process is blocked:
-+	: >.git/packed-refs.lock &&
-+	test_when_finished "rm -f .git/packed-refs.lock" &&
-+	{
-+		# Note: the following command is intentionally run in the
-+		# background. We increase the timeout so that `update-ref`
-+		# attempts to acquire the `packed-refs` lock for longer than
-+		# it takes for us to do the check then delete it:
-+		git -c core.packedrefstimeout=3000 update-ref -d $prefix/foo &
-+	} &&
-+	pid2=$! &&
-+	# Give update-ref plenty of time to get to the point where it tries
-+	# to lock packed-refs:
-+	sleep 1 &&
-+	# Make sure that update-ref did not complete despite the lock:
-+	kill -0 $pid2 &&
-+	# Verify that the reference still has its old value:
-+	sha1=$(git rev-parse --verify --quiet $prefix/foo || echo undefined) &&
-+	case "$sha1" in
-+	$D)
-+		# This is what we hope for; it means that nothing
-+		# user-visible has changed yet.
-+		: ;;
-+	undefined)
-+		# This is not correct; it means the deletion has happened
-+		# already even though update-ref should not have been
-+		# able to acquire the lock yet.
-+		echo "$prefix/foo deleted prematurely" &&
-+		break
-+		;;
-+	$C)
-+		# This value should never be seen. Probably the loose
-+		# reference has been deleted but the packed reference
-+		# is still there:
-+		echo "$prefix/foo incorrectly observed to be C" &&
-+		break
-+		;;
-+	*)
-+		# WTF?
-+		echo "unexpected value observed for $prefix/foo: $sha1" &&
-+		break
-+		;;
-+	esac >out &&
-+	rm -f .git/packed-refs.lock &&
-+	wait $pid2 &&
-+	test_must_be_empty out &&
-+	test_must_fail git rev-parse --verify --quiet $prefix/foo
-+'
-+
-+test_expect_failure 'delete fails cleanly if packed-refs file is locked' '
-+	prefix=refs/locked-packed-refs &&
-+	# Set up a reference with differing loose and packed versions:
-+	git update-ref $prefix/foo $C &&
-+	git pack-refs --all &&
-+	git update-ref $prefix/foo $D &&
-+	git for-each-ref $prefix >unchanged &&
-+	# Now try to delete it while the `packed-refs` lock is held:
-+	: >.git/packed-refs.lock &&
-+	test_when_finished "rm -f .git/packed-refs.lock" &&
-+	test_must_fail git update-ref -d $prefix/foo >out 2>err &&
-+	git for-each-ref $prefix >actual &&
-+	test_i18ngrep "Unable to create $Q.*packed-refs.lock$Q: File exists" err &&
-+	test_cmp unchanged actual
-+'
-+
- test_done
--- 
-2.14.1
+1. The SHA-1 is provided and not `null_sha1`—in this case it must match
+the old value (if `old_sha1`) or it is the value to be set as the new
+value (if `new_sha1`).
 
+2. The SHA-1 is provided and is equal to `null_sha1`—in this case the
+reference must not already exist (if `old_sha1` is `null_sha1`) or it
+will be deleted (if `new_sha1` is `null_sha1`).
+
+3. The SHA-1 is not provided at all—in this case the old value is
+ignored (if `old_sha1` is not provided) or the reference is left
+unchanged (if `new_sha1` is not provided).
+
+Much of the current confusion stems because
+`ref_transaction_add_update()` encodes the third condition using the
+`REF_HAVE_*` bits, whereas `ref_transaction_update()` and its friends
+encode the third condition by setting `old_sha1` or `new_sha1` to `NULL`.
+
+So `ref_transaction_update()` *does* need to set or clear the `HAVE_NEW`
+and `HAVE_OLD` bits as I sketched, to impedance-match between the two
+conventions.
+
+It's a shame how much time we've wasted discussing this. Maybe the code
+is trying to be too clever/efficient and needs a rethink.
+
+Michael
