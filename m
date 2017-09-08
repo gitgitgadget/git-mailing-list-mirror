@@ -6,26 +6,26 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E9762082D
-	for <e@80x24.org>; Fri,  8 Sep 2017 13:53:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EFAA62082D
+	for <e@80x24.org>; Fri,  8 Sep 2017 13:53:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754287AbdIHNwU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Sep 2017 09:52:20 -0400
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:57317 "EHLO
-        alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754413AbdIHNwO (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 8 Sep 2017 09:52:14 -0400
-X-AuditID: 12074411-f95ff70000007f0a-72-59b2a08e9782
+        id S1752499AbdIHNxN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Sep 2017 09:53:13 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:60516 "EHLO
+        alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751139AbdIHNwT (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 8 Sep 2017 09:52:19 -0400
+X-AuditID: 1207440e-bf9ff70000007085-3b-59b2a092f46f
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 13.07.32522.E80A2B95; Fri,  8 Sep 2017 09:52:14 -0400 (EDT)
+        by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 17.B1.28805.290A2B95; Fri,  8 Sep 2017 09:52:18 -0400 (EDT)
 Received: from bagpipes.fritz.box (p54AAEECC.dip0.t-ipconnect.de [84.170.238.204])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v88Dpvjx002844
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v88Dpvk1002844
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Fri, 8 Sep 2017 09:52:12 -0400
+        Fri, 8 Sep 2017 09:52:16 -0400
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -34,73 +34,134 @@ Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Brandon Williams <bmwill@google.com>,
         git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 06/11] prune_refs(): also free the linked list
-Date:   Fri,  8 Sep 2017 15:51:48 +0200
-Message-Id: <edcf7a0102ee168b9da080d38a4098774d37635e.1504877858.git.mhagger@alum.mit.edu>
+Subject: [PATCH v2 08/11] t1404: demonstrate two problems with reference transactions
+Date:   Fri,  8 Sep 2017 15:51:50 +0200
+Message-Id: <76d473f62a8c1d6328eb15003c4d0d4dbc8f277d.1504877858.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.14.1
 In-Reply-To: <cover.1504877858.git.mhagger@alum.mit.edu>
 References: <cover.1504877858.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrCIsWRmVeSWpSXmKPExsUixO6iqNu3YFOkwdYffBZrn91hsni+/gS7
-        RdeVbiaLht4rzBa3V8xntuie8pbR4kdLD7PF5s3tLA4cHn/ff2Dy2DnrLrvHgk2lHs969zB6
-        XLyk7PF5k1wAWxSXTUpqTmZZapG+XQJXxu4Lq1gK/nJVbN91nrmBsYWzi5GDQ0LARGLzNO0u
-        Ri4OIYEdTBLb/75gh3BOMkkcntDI1sXIycEmoCuxqKeZCcQWEVCTmNh2iAWkiFngKZPEzpN3
-        WUESwgKOEjePzGABsVkEVCV+Hl4L1swrECXxdcFSsBoJAXmJcw9uM4PYnAIWEq/+rQGrERIw
-        l7i6exLrBEaeBYwMqxjlEnNKc3VzEzNzilOTdYuTE/PyUot0TfVyM0v0UlNKNzFCAkxwB+OM
-        k3KHGAU4GJV4eC2CN0YKsSaWFVfmHmKU5GBSEuWV6dkUKcSXlJ9SmZFYnBFfVJqTWnyIUYKD
-        WUmE13wWUI43JbGyKrUoHyYlzcGiJM7Lt0TdT0ggPbEkNTs1tSC1CCYrw8GhJMEbMB+oUbAo
-        NT21Ii0zpwQhzcTBCTKcB2j4/nkgw4sLEnOLM9Mh8qcYdTk6bt79wyTEkpeflyolztsGUiQA
-        UpRRmgc3B5YYXjGKA70lzDsFZB0PMKnATXoFtIQJaEnJ8w0gS0oSEVJSDYwp0vl6K9Zu4v3Y
-        zRzZdzggmu1MblH20x6RZa6p+YzbVO/NFZnbfqliz07WB5IqC1Y92HxRwrH/bP9pvjTF1Z43
-        9rD+2MHDu/3s7+jNpnYXkqcLZSy62Zx13EDu/8IOYYH0g/EPfHKvmy9c/qfLxsa4cZ2Vk2gO
-        146kj0+zoxOe5DBHhaXNWKzEUpyRaKjFXFScCABsYjHI5wIAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrKIsWRmVeSWpSXmKPExsUixO6iqDtpwaZIgyNrhCzWPrvDZPF8/Ql2
+        i64r3UwWDb1XmC1ur5jPbNE95S2jxY+WHmaLzZvbWRw4PP6+/8DksXPWXXaPBZtKPZ717mH0
+        uHhJ2ePzJrkAtigum5TUnMyy1CJ9uwSujFN7TjIVPJWvuH95J3MD40nJLkZODgkBE4n/W58y
+        dzFycQgJ7GCSOP1wIhOEc5JJ4uyUu4wgVWwCuhKLepqZQGwRATWJiW2HWECKmAWeMknsPHmX
+        FSQhLBAqcffmS7AiFgFVidUtM1lAbF6BKIlT178xQ6yTlzj34DaYzSlgIfHq3xo2EFtIwFzi
+        6u5JrBMYeRYwMqxilEvMKc3VzU3MzClOTdYtTk7My0st0jXWy80s0UtNKd3ECAkxvh2M7etl
+        DjEKcDAq8fBaBG+MFGJNLCuuzD3EKMnBpCTKK9OzKVKILyk/pTIjsTgjvqg0J7X4EKMEB7OS
+        CK/5LKAcb0piZVVqUT5MSpqDRUmcV22Jup+QQHpiSWp2ampBahFMVoaDQ0mCN2A+UKNgUWp6
+        akVaZk4JQpqJgxNkOA/Q8I0gNbzFBYm5xZnpEPlTjLocHTfv/mESYsnLz0uVEudtmwdUJABS
+        lFGaBzcHlhpeMYoDvSXMawAyigeYVuAmvQJawgS0pOT5BpAlJYkIKakGxjCT7rW2R2wifMUe
+        mTupT5/rce2NvefJ3R9fLQpSF28pnXt95s3YSMuUDo0/W93LTZdd1PzMdzJNOv2185IcNTX2
+        pTHBMhXxNTeVuZVK2E82rXBTSPQ/ndkygVt84ao7jqkWJld91s2M7prk+aD0WUGv2MN/U1M/
+        FkxNXmyZ3P1Jxm7vTvf7SizFGYmGWsxFxYkAnzfB2+gCAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-At least since v1.7, the elements of the `refs_to_prune` linked list
-have been leaked. Fix the leak by teaching `prune_refs()` to free the
-list elements as it processes them.
+Currently, a loose reference is deleted even before locking the
+`packed-refs` file, let alone deleting any packed version of the
+reference. This leads to two problems, demonstrated by two new tests:
+
+* While a reference is being deleted, other processes might see the
+  old, packed value of the reference for a moment before the packed
+  version is deleted. Normally this would be hard to observe, but we
+  can prolong the window by locking the `packed-refs` file externally
+  before running `update-ref`, then unlocking it before `update-ref`'s
+  attempt to acquire the lock times out.
+
+* If the `packed-refs` file is locked so long that `update-ref` fails
+  to lock it, then the reference can be left permanently in the
+  incorrect state described in the previous point.
+
+In a moment, both problems will be fixed.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs/files-backend.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ t/t1404-update-ref-errors.sh | 73 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 73 insertions(+)
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 3475c6f8a2..60031fe3ae 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -1057,11 +1057,17 @@ static void prune_ref(struct files_ref_store *refs, struct ref_to_prune *r)
- 	strbuf_release(&err);
- }
+diff --git a/t/t1404-update-ref-errors.sh b/t/t1404-update-ref-errors.sh
+index c34ece48f5..64a81345a8 100755
+--- a/t/t1404-update-ref-errors.sh
++++ b/t/t1404-update-ref-errors.sh
+@@ -404,4 +404,77 @@ test_expect_success 'broken reference blocks indirect create' '
+ 	test_cmp expected output.err
+ '
  
--static void prune_refs(struct files_ref_store *refs, struct ref_to_prune *r)
-+/*
-+ * Prune the loose versions of the references in the linked list
-+ * `*refs_to_prune`, freeing the entries in the list as we go.
-+ */
-+static void prune_refs(struct files_ref_store *refs, struct ref_to_prune **refs_to_prune)
- {
--	while (r) {
-+	while (*refs_to_prune) {
-+		struct ref_to_prune *r = *refs_to_prune;
-+		*refs_to_prune = r->next;
- 		prune_ref(refs, r);
--		r = r->next;
-+		free(r);
- 	}
- }
- 
-@@ -1148,7 +1154,7 @@ static int files_pack_refs(struct ref_store *ref_store, unsigned int flags)
- 
- 	packed_refs_unlock(refs->packed_ref_store);
- 
--	prune_refs(refs, refs_to_prune);
-+	prune_refs(refs, &refs_to_prune);
- 	strbuf_release(&err);
- 	return 0;
- }
++test_expect_failure 'no bogus intermediate values during delete' '
++	prefix=refs/slow-transaction &&
++	# Set up a reference with differing loose and packed versions:
++	git update-ref $prefix/foo $C &&
++	git pack-refs --all &&
++	git update-ref $prefix/foo $D &&
++	git for-each-ref $prefix >unchanged &&
++	# Now try to update the reference, but hold the `packed-refs` lock
++	# for a while to see what happens while the process is blocked:
++	: >.git/packed-refs.lock &&
++	test_when_finished "rm -f .git/packed-refs.lock" &&
++	{
++		# Note: the following command is intentionally run in the
++		# background. We increase the timeout so that `update-ref`
++		# attempts to acquire the `packed-refs` lock for longer than
++		# it takes for us to do the check then delete it:
++		git -c core.packedrefstimeout=3000 update-ref -d $prefix/foo &
++	} &&
++	pid2=$! &&
++	# Give update-ref plenty of time to get to the point where it tries
++	# to lock packed-refs:
++	sleep 1 &&
++	# Make sure that update-ref did not complete despite the lock:
++	kill -0 $pid2 &&
++	# Verify that the reference still has its old value:
++	sha1=$(git rev-parse --verify --quiet $prefix/foo || echo undefined) &&
++	case "$sha1" in
++	$D)
++		# This is what we hope for; it means that nothing
++		# user-visible has changed yet.
++		: ;;
++	undefined)
++		# This is not correct; it means the deletion has happened
++		# already even though update-ref should not have been
++		# able to acquire the lock yet.
++		echo "$prefix/foo deleted prematurely" &&
++		break
++		;;
++	$C)
++		# This value should never be seen. Probably the loose
++		# reference has been deleted but the packed reference
++		# is still there:
++		echo "$prefix/foo incorrectly observed to be C" &&
++		break
++		;;
++	*)
++		# WTF?
++		echo "unexpected value observed for $prefix/foo: $sha1" &&
++		break
++		;;
++	esac >out &&
++	rm -f .git/packed-refs.lock &&
++	wait $pid2 &&
++	test_must_be_empty out &&
++	test_must_fail git rev-parse --verify --quiet $prefix/foo
++'
++
++test_expect_failure 'delete fails cleanly if packed-refs file is locked' '
++	prefix=refs/locked-packed-refs &&
++	# Set up a reference with differing loose and packed versions:
++	git update-ref $prefix/foo $C &&
++	git pack-refs --all &&
++	git update-ref $prefix/foo $D &&
++	git for-each-ref $prefix >unchanged &&
++	# Now try to delete it while the `packed-refs` lock is held:
++	: >.git/packed-refs.lock &&
++	test_when_finished "rm -f .git/packed-refs.lock" &&
++	test_must_fail git update-ref -d $prefix/foo >out 2>err &&
++	git for-each-ref $prefix >actual &&
++	test_i18ngrep "Unable to create $Q.*packed-refs.lock$Q: File exists" err &&
++	test_cmp unchanged actual
++'
++
+ test_done
 -- 
 2.14.1
 
