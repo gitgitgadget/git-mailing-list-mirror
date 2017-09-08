@@ -6,28 +6,28 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B87D202A4
-	for <e@80x24.org>; Fri,  8 Sep 2017 10:02:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 30B7F202A4
+	for <e@80x24.org>; Fri,  8 Sep 2017 10:04:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752637AbdIHKCu (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Sep 2017 06:02:50 -0400
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:55688 "EHLO
-        alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751654AbdIHKCs (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 8 Sep 2017 06:02:48 -0400
-X-AuditID: 12074411-f7dff70000007f0a-a0-59b26ac7f816
+        id S1754255AbdIHKEP (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Sep 2017 06:04:15 -0400
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:53666 "EHLO
+        alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1754216AbdIHKEO (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 8 Sep 2017 06:04:14 -0400
+X-AuditID: 1207440f-a43ff70000007960-fc-59b26b1d0207
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 24.50.32522.7CA62B95; Fri,  8 Sep 2017 06:02:47 -0400 (EDT)
+        by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 8C.83.31072.D1B62B95; Fri,  8 Sep 2017 06:04:13 -0400 (EDT)
 Received: from [192.168.69.190] (p54AAEECC.dip0.t-ipconnect.de [84.170.238.204])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v88A2iT9024468
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v88A4A7X024500
         (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Fri, 8 Sep 2017 06:02:45 -0400
-Subject: Re: [PATCH 01/10] packed-backend: don't adjust the reference count on
- lock/unlock
+        Fri, 8 Sep 2017 06:04:11 -0400
+Subject: Re: [PATCH 06/10] files_initial_transaction_commit(): use a
+ transaction for packed refs
 To:     Jeff King <peff@peff.net>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
@@ -35,127 +35,49 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Brandon Williams <bmwill@google.com>, git@vger.kernel.org
 References: <cover.1503993268.git.mhagger@alum.mit.edu>
- <c5d66cadb70efdb5b5ce91fbcc5673621f5d4792.1503993268.git.mhagger@alum.mit.edu>
- <20170908065223.f7f52hjcx5qsjbch@sigill.intra.peff.net>
+ <92b29defc3c4ddb65a948b7d142ded941eaccefd.1503993268.git.mhagger@alum.mit.edu>
+ <20170908072758.d3qvwsrm5t54kc63@sigill.intra.peff.net>
 From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <d49a7b75-66d4-7c63-d260-71c7413b3571@alum.mit.edu>
-Date:   Fri, 8 Sep 2017 12:02:44 +0200
+Message-ID: <0b1b1276-5a69-6db3-ab5d-0733bc9781b1@alum.mit.edu>
+Date:   Fri, 8 Sep 2017 12:04:10 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.2.1
 MIME-Version: 1.0
-In-Reply-To: <20170908065223.f7f52hjcx5qsjbch@sigill.intra.peff.net>
+In-Reply-To: <20170908072758.d3qvwsrm5t54kc63@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprPKsWRmVeSWpSXmKPExsUixO6iqHs8a1Okwcdb0hZrn91hsni+/gS7
-        RdeVbiaLht4rzBbdU94yWvxo6WG22Ly5ncWB3WPnrLvsHgs2lXo8693D6HHxkrLH501yAaxR
-        XDYpqTmZZalF+nYJXBlrbnaxFKxUrFh//Ah7A+NxqS5GTg4JAROJz9uvMXUxcnEICexgkpix
-        ZB0bhHOeSeLl7D9MIFXCAjES1x89YAaxRQRkJb4f3sgIUsQssIVJ4t3cDnaIjkOMEouf7WYF
-        qWIT0JVY1NMM1s0rYC8xffVpoLEcHCwCKhKbzzmAhEUFIiT63l5mhygRlDg58wkLiM0p4CJx
-        ce4ZNhCbWUBd4s+8S8wQtrjErSfzmSBseYntb+cwT2AUmIWkfRaSlllIWmYhaVnAyLKKUS4x
-        pzRXNzcxM6c4NVm3ODkxLy+1SNdULzezRC81pXQTIyQeBHcwzjgpd4hRgINRiYfXInhjpBBr
-        YllxZe4hRkkOJiVR3oYZQCG+pPyUyozE4oz4otKc1GJgKHAwK4nwXvTbFCnEm5JYWZValA+T
-        kuZgURLn5Vui7ickkJ5YkpqdmlqQWgSTleHgUJLgDQXGvZBgUWp6akVaZk4JQpqJgxNkOA/Q
-        cAWQGt7igsTc4sx0iPwpRkUpcV7/TKCEAEgiozQPrheWrl4xigO9IsybAFLFA0x1cN2vgAYz
-        AQ0ueb4BZHBJIkJKqoFRMtpd6KNjtOu8cDbOb3vVDugX/J0uLDZz7o7PM+YueK57WSDNc6Eu
-        z/qJs+Zt6lt85ntDzZd3sso7S6+ua1+o+m+28f5P832OrzdxuPbZbfNklz1bZnRvMzhz3Hji
-        w34jNc22ugn725+mnxIptgoR3jc1detH3guqEbau/d8aam9FM9nPv5qzTomlOCPRUIu5qDgR
-        AGop12cyAwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrFKsWRmVeSWpSXmKPExsUixO6iqCubvSnSYPUJEYu1z+4wWTxff4Ld
+        outKN5NFQ+8VZovuKW8ZLX609DBbbN7czuLA7rFz1l12jwWbSj2e9e5h9Lh4Sdnj8ya5ANYo
+        LpuU1JzMstQifbsEroz/azuZC94zV7w4I9nAOJm5i5GTQ0LAROL4zb1sXYxcHEICO5gk9r/Y
+        zg7hnGeSuLxoExNIlbBAksTRq+tYQGwRAVmJ74c3MoIUMQtsYZJ4N7cDquMQo8TmL6fAOtgE
+        dCUW9TSD2bwC9hIz7/1jA7FZBFQkVn55CBYXFYiQ6Ht7mR2iRlDi5MwnQBs4ODgFXCQuLNEA
+        CTMLqEv8mXeJGcIWl7j1ZD4ThC0vsf3tHOYJjAKzkHTPQtIyC0nLLCQtCxhZVjHKJeaU5urm
+        JmbmFKcm6xYnJ+blpRbpmujlZpbopaaUbmKERAP/Dsau9TKHGAU4GJV4eFd4b4oUYk0sK67M
+        PcQoycGkJMrbMGNjpBBfUn5KZUZicUZ8UWlOajEwFDiYlUR4L/oBlfOmJFZWpRblw6SkOViU
+        xHnVl6j7CQmkJ5akZqemFqQWwWRlODiUJHhfZAI1ChalpqdWpGXmlCCkmTg4QYbzAA1XyAIZ
+        XlyQmFucmQ6RP8Woy3Hj4fU/TEIsefl5qVLivP4ggwRAijJK8+DmwJLYK0ZxoLeEeWNARvEA
+        EyDcpFdAS5iAlpQ83wCypCQRISXVwJhwVOKas4398aAO/gkCj/Zd/bupe1nWmqAJ37RaehfX
+        9q9uXvrN0KvyaO/W7Q6WTowyV7Y3HVasU2/TucN3/5pUb2lKbfd67azUJbfMlz6wUnFbnh8u
+        t+LfwpdPbSzl+DYl+V8w3ZM5i9N54QvPhSzuHUp9e1OaP01ey8zHtd4qxXnfjP5je5RYijMS
+        DbWYi4oTAVISleE9AwAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/08/2017 08:52 AM, Jeff King wrote:
-> On Tue, Aug 29, 2017 at 10:20:25AM +0200, Michael Haggerty wrote:
+On 09/08/2017 09:27 AM, Jeff King wrote:
+> On Tue, Aug 29, 2017 at 10:20:30AM +0200, Michael Haggerty wrote:
 > 
->> The old code incremented the packed ref cache reference count when
->> acquiring the packed-refs lock, and decremented the count when
->> releasing the lock. This is unnecessary because a locked packed-refs
->> file cannot be changed, so there is no reason for the cache to become
->> stale.
+>> Used a `packed_ref_store` transaction in the implementation of
+>> `files_initial_transaction_commit()` rather than using internal
+>> features of the packed ref store. This further decouples
+>> `files_ref_store` from `packed_ref_store`.
 > 
-> Hmm, I thought that after your last series, we might hold the lock but
-> update the packed-refs from a separate tempfile. I.e., 42dfa7ecef
-> (commit_packed_refs(): use a staging file separate from the lockfile,
-> 2017-06-23).
+> Very nice to see these couplings going away.
 > 
->> Moreover, the extra reference count causes a problem if we
->> intentionally clear the packed refs cache, as we sometimes need to do
->> if we change the cache in anticipation of writing a change to disk,
->> but then the write to disk fails. In that case, `packed_refs_unlock()`
->> would have no easy way to find the cache whose reference count it
->> needs to decrement.
->>
->> This whole issue will soon become moot due to upcoming changes that
->> avoid changing the in-memory cache as part of updating the packed-refs
->> on disk, but this change makes that transition easier.
-> 
-> All of this makes sense, and I'm happy this complexity is going away in
-> the long run. But I guess what I'm wondering is in the meantime if we
-> can have a sequence like:
-> 
->   1. We hold packed-refs.lock
-> 
->   2. We update the file without releasing the lock, via 42dfa7ecef.
-> 
->   3. Still holding the lock, we try to look at packed-refs. The
->      stat_validity code says no, we're not up to date.
-> 
->   4. We discard the old packed_ref_cache and reload it. Because its
->      reference count was not incremented during step 1, we actually
->      free() it.
-> 
->   5. We try to look at at the old freed pointer.
-> 
-> There are several steps in there that might be implausible. So I'm
-> mostly playing devil's advocate here.
-> 
-> I'm wondering if the "don't validate while we hold the lock" logic in
-> get_packed_refs_cache() means that step 3 is impossible.
+> Minor nit: s/Used/Use/ in the commit message.
 
-That's one of the reasons your scenario can't happen, but that just begs
-the question of whether the "don't validate while we hold the lock" code
-is wrongheaded.
-
-In fact it's OK. The method by which the packed-refs file on disk is
-modified at this point in the patch series is by modifying the packed
-ref-cache and then writing the data from the ref-cache to disk. So the
-packed ref-cache remains fresh because any changes that we plan to make
-to the file are made in the cache first anyway.
-
-I'll explain that a bit better in the log message.
-
-The next question is whether this change interacts badly with changes
-later in the patch series, when we cease to modify the ref-cache before
-writing the new packed-refs file. Here we're OK, too, because
-immediately after `rename_tempfile()` is used to rename the new
-packed-refs file into place, we clear the packed ref-cache, so no
-subsequent callers of `get_packed_refs_cache()` should see the stale cache.
-
-Which in turn is partly because your step 5 is also implausible: code
-shouldn't be holding a pointer to the packed ref-cache across operations
-that might change the file. (Code that calls `get_packed_refs_cache()`
-is OK because that function would see that `refs->cache` is NULL and
-reload it regardless of whether we hold the lock.)
-
-So I think everything is OK, but thanks for making me think through and
-explain it better :-)
-
->> @@ -560,9 +559,7 @@ int packed_refs_lock(struct ref_store *ref_store, int flags, struct strbuf *err)
->>  	 */
->>  	validate_packed_ref_cache(refs);
->>  
->> -	packed_ref_cache = get_packed_ref_cache(refs);
->> -	/* Increment the reference count to prevent it from being freed: */
->> -	acquire_packed_ref_cache(packed_ref_cache);
->> +	get_packed_ref_cache(refs);
-> 
-> It seems a bit funny to call a "get" function and throw away the return
-> value. Presumably we care about its side effect of updating refs->cache.
-> That might be worth a comment (though if this is all going away soon, I
-> care a lot less about niceties like that).
-
-I'm rerolling anyway, so I'll add a comment. Thanks.
+Thanks; will fix.
 
 Michael
