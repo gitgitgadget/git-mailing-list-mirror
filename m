@@ -6,95 +6,149 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B034C20286
-	for <e@80x24.org>; Fri,  8 Sep 2017 00:46:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 54A09208E3
+	for <e@80x24.org>; Fri,  8 Sep 2017 01:13:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753353AbdIHAqk (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Sep 2017 20:46:40 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57894 "EHLO
+        id S1752752AbdIHBNd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Sep 2017 21:13:33 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53370 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753334AbdIHAqj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Sep 2017 20:46:39 -0400
+        with ESMTP id S1750966AbdIHBNc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Sep 2017 21:13:32 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 206C893285;
-        Thu,  7 Sep 2017 20:46:38 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BFEF6938FE;
+        Thu,  7 Sep 2017 21:13:31 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=l7ug/ODKWDBY/0yyQaGtTL6kkdE=; b=rGzauD
-        fp6H3sfa9+t23P2jm9omyCDH/VYR6zYVISOq8ha/bhSn4EDra1yqZBL8qILlEJ2f
-        l/qT9Alsnr9OCVW84+V6Kz9rTKvAVHtQR9fuJdOQELSlSWJFlFNyqxSj9wqLjj33
-        T0LBXT3wjJFvRlEPdGS1QVx1HRD6/d6QCWyak=
+        :content-type:content-transfer-encoding; s=sasl; bh=Dj07oFz2miNc
+        Sk7QTEW1hYIdtnQ=; b=wc4A/w6BJYKk2uW/opuODlrfBlSOuTt02v9Fv+BWcbAL
+        kk+ZSxJx+Ln6wy778o1g/wZN/FyTZ61u6WDvgYgRTB835R7sqSgUl2iKmsfg9QQl
+        Q1hREnwBndMenoHzWVFyK1zk40NbMPQ0hLeVOtwYp5ZDuzGgr9bG3u+siB/0G2o=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=cheMs1CJO/vZV+FmrS68KvSWBMgvB2Zr
-        XTRdBRwu51naXVoS0+tNb0cWOnZDdqxD+aTqi13FFCeG7tjhunW13eahLnUPxZGN
-        bwe5T3aZrKwDiYzqldjnnu3ZUTR/vvVrvSyiIYkFlmxv5kcKN8a6Y2AEd5lXtQLt
-        L61MY8vZI6o=
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=W3otcu
+        LaOvRDVNZgt+Xj3YfmIavdT7tJ9bilH9pjV4y6RXY6WnbnXiSiiXfL84LVHShQt5
+        Ljlfgd07ZWTa8iUM/O2z+hEaDzyLRBqYg5oEZU4wZCuy+fX7hbETyJ5fPkgPGx0C
+        SZSoKpf1mx9Sx7t1Mk+mBp4mIG3KeGPurXh3o=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 15CC793284;
-        Thu,  7 Sep 2017 20:46:38 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A80BA938FD;
+        Thu,  7 Sep 2017 21:13:31 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6046293283;
-        Thu,  7 Sep 2017 20:46:37 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 04EEB938FC;
+        Thu,  7 Sep 2017 21:13:30 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        "brian m. carlson" <sandals@crustytoothpaste.ath.cx>
-Subject: Re: [PATCH] refs: make sure we never pass NULL to hashcpy
-References: <20170904200504.15249-1-t.gummerer@gmail.com>
-        <xmqqh8wgaa7s.fsf@gitster.mtv.corp.google.com>
-        <CAMy9T_ED1KBqkE9GCHrOrt0frnYAx1vka7Xx1DrXmjJBNNKahw@mail.gmail.com>
-Date:   Fri, 08 Sep 2017 09:46:36 +0900
-In-Reply-To: <CAMy9T_ED1KBqkE9GCHrOrt0frnYAx1vka7Xx1DrXmjJBNNKahw@mail.gmail.com>
-        (Michael Haggerty's message of "Thu, 7 Sep 2017 09:26:35 +0200")
-Message-ID: <xmqqvaku10gj.fsf@gitster.mtv.corp.google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCHv3] builtin/merge: honor commit-msg hook for merges
+References: <xmqqd174bzco.fsf@gitster.mtv.corp.google.com>
+        <20170907220429.31312-1-sbeller@google.com>
+Date:   Fri, 08 Sep 2017 10:13:29 +0900
+In-Reply-To: <20170907220429.31312-1-sbeller@google.com> (Stefan Beller's
+        message of "Thu, 7 Sep 2017 15:04:29 -0700")
+Message-ID: <xmqqr2vi0z7q.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2B9BC62A-942F-11E7-9F36-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: ED67E92A-9432-11E7-A670-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> I did just realize one thing: `ref_transaction_update()` takes `flags`
-> as an argument and alters it using
->
->>         flags |= (new_sha1 ? REF_HAVE_NEW : 0) | (old_sha1 ? REF_HAVE_OLD : 0);
->
-> Perhaps gcc is *more* intelligent than we give it credit for, and is
-> actually worried that the `flags` argument passed in by the caller
-> might *already* have one of these bits set. In that case
-> `ref_transaction_add_update()` would indeed be called incorrectly.
-> Does the warning go away if you change that line to
->
->>         if (new_sha1)
->>                 flags |=REF_HAVE_NEW;
->>         else
->>                 flags &= ~REF_HAVE_NEW;
->>         if (old_sha1)
->>                 flags |=REF_HAVE_OLD;
->>         else
->>                 flags &= ~REF_HAVE_OLD;
->
-> ? This might be a nice change to have anyway, to isolate
-> `ref_transaction_update()` from mistakes by its callers.
+> .... The --no-verify option however is not remembered across invocation=
+s
+> of git-merge. Originally the author assumed an alternative in which the
+> 'git merge --continue' command accepts the --no-verify flag, but that
+> opens up the discussion which flags are allows to the continued merge
+> command and which must be given in the first invocation.
 
-I understand "drop HAVE_NEW bit if new_sha1 is NULL" part, but not
-the other side "add HAVE_NEW if new_SHA1 is not NULL"---doesn't the
-NEW/OLD flag exist exactly because some callers pass the address of
-an embedded oid.hash[] or null_sha1, instead of NULL, when one side 
-does not exist?  So new|old being NULL is a definite signal that we
-need to drop HAVE_NEW|OLD, but the reverse may not be true, no?  Is
-it OK to overwrite null_sha1[] that is passed from some codepaths?
+This leaves a reader (me) wondering what the final conclusion was,
+after the author assumed something and thought about alternatives.
+I am guessing that your final decision was not to remember
+"--no-verify" so a user who started "merge --no-verify" that stopped
+in the middle must say "merge --continue --no-verify" or "commit
+--no-verify" to conclude the merge?  Or you added some mechanism to
+remember the fact that no-verify was given so that "merge --continue"
+will read from there, ignoring "merge --continue --verify" from the
+command line?  Not just the above part of the log message confusing,
+but there is no update to the documentation, and we shouldn't expect
+end-users to find out what ought to happen by reading t7504 X-<.
 
-ref_transaction_create and _delete pass null_sha1 on the missing
-side, while ref_transaction_verify passes NULL, while calling
-_update().  Should this distinction affect how _add_update() gets
-called?
+The new test in t7504 tells me that you remember --[no-]verify from
+the initial invocation and use the same when --continue is given; it
+is unclear how that remembered one interacts with --[no-]verify that
+is given when --continue is given.  It is not documented, tested and
+explained in the log message.  I would expect that the command line=20
+trumps what was given in the initial invocation.
 
+
+> +static int verify_msg =3D 1;
+> =20
+>  static struct strategy all_strategy[] =3D {
+>  	{ "recursive",  DEFAULT_TWOHEAD | NO_TRIVIAL },
+> @@ -236,6 +237,7 @@ static struct option builtin_merge_options[] =3D {
+>  	  N_("GPG sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
+>  	OPT_BOOL(0, "overwrite-ignore", &overwrite_ignore, N_("update ignored=
+ files (default)")),
+>  	OPT_BOOL(0, "signoff", &signoff, N_("add Signed-off-by:")),
+> +	OPT_BOOL(0, "verify", &verify_msg, N_("verify commit-msg hook")),
+>  	OPT_END()
+>  };
+
+I suspect that the previous iteration gives a much better end-user
+experience when "git merge -h" is used.  This will give the
+impression that the user MUST say "merge --verify" if the user wants
+to verify commit-msg hook (whatever that means), but because the
+option defaults to true, that is not what happens.  The user instead
+must say "merge --no-verify" if the verification is unwanted.
+
+"git commit -h" explains=20
+
+    --no-verify        bypass pre-commit and commit-msg hooks
+
+and I think that is the way how we want to explain this option in
+"git merge" too.  Normally it is not bypassed, and the user can ask
+with "--no-verify".  Thanks to Ren=C3=A9's change in 2012, the option
+definition you had in the previous one will make --[no-]verify
+accepted just fine.
+
+> +test_expect_success 'merge fails with failing hook' '
+> + ...
+> +'
+> +
+> +test_expect_success 'merge bypasses failing hook with --no-verify' '
+> + ...
+> +'
+
+Both look sensible.
+
+> +test_expect_failure 'merge --continue remembers --no-verify' '
+> +	test_when_finished "git branch -D newbranch" &&
+> +	test_when_finished "git checkout -f master" &&
+> +	git checkout master &&
+> +	echo a >file2 &&
+> +	git add file2 &&
+> +	git commit --no-verify -m "add file2 to master" &&
+> +	git checkout -b newbranch master^ &&
+> +	echo b >file2 &&
+> +	git add file2 &&
+> +	git commit --no-verify file2 -m in-side-branch &&
+> +	git merge --no-verify -m not-rewritten-by-hook master &&
+> +	# resolve conflict:
+> +	echo c >file2 &&
+> +	git add file2 &&
+> +	git merge --continue &&
+> +	commit_msg_is not-rewritten-by-hook
+>  '
+
+OK.  What should happen when the last "merge --continue" was given
+"--verify" at the same time?  A similar test whose title is
+"--no-verify remembered by merge --continue can be overriden" may be
+a good thing to follow this one, perhaps?
+
+Thanks.
