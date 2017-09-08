@@ -2,116 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 35CCC20286
-	for <e@80x24.org>; Fri,  8 Sep 2017 03:34:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 18AD020286
+	for <e@80x24.org>; Fri,  8 Sep 2017 03:37:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752375AbdIHDeG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Sep 2017 23:34:06 -0400
-Received: from cloud.peff.net ([104.130.231.41]:60348 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752110AbdIHDeG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Sep 2017 23:34:06 -0400
-Received: (qmail 8105 invoked by uid 109); 8 Sep 2017 03:34:06 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 08 Sep 2017 03:34:06 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5465 invoked by uid 111); 8 Sep 2017 03:34:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Thu, 07 Sep 2017 23:34:38 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 07 Sep 2017 23:34:03 -0400
-Date:   Thu, 7 Sep 2017 23:34:03 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>, bmwill@google.com,
-        jonathantanmy@google.com, David Lang <david@lang.hm>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: RFC v3: Another proposed hash function transition plan
-Message-ID: <20170908033403.q7e6dj7benasrjes@sigill.intra.peff.net>
-References: <20170304011251.GA26789@aiede.mtv.corp.google.com>
- <CA+55aFz+gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com>
- <20170307001709.GC26789@aiede.mtv.corp.google.com>
- <xmqqa828733s.fsf@gitster.mtv.corp.google.com>
- <xmqq1snh29re.fsf@gitster.mtv.corp.google.com>
+        id S932244AbdIHDhc (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Sep 2017 23:37:32 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55211 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754083AbdIHDha (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Sep 2017 23:37:30 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id F185FB0044;
+        Thu,  7 Sep 2017 23:37:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=IfOYCaCvJylcOnmgRgwm1O1DvpY=; b=DZz2w3
+        9BQAJ774s0pzmoy42GK4Svwx0i0mFqfSWoqpGndXcseXFnIaup5isJsxFW5hREoC
+        K8LFnHlfgaYI3/fmuXKyeChXLh2SIo5etupodT5VirdF0gkCqIZUhkc+6lhuoGnS
+        1ifTcwEzg3fVX69fs8mYm1eWqSCzM7WAd4WhY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=PyThilu9Y7wfG5PTXfoDdaNdNL1KPyMt
+        8Y3yJd9AaSEO/oxoYlua/uN0xe3U2gWhZLcVKvpbGhnUIVYerG3dPX398obqAgJy
+        NDwgF9F4O6gXuBl0hya5mRivyHc94JsqdkAGEUVuOPvVDatAVFHpvSg430bOIwrR
+        hbNHKC1pDfQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E8763B0043;
+        Thu,  7 Sep 2017 23:37:29 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 576FDB0042;
+        Thu,  7 Sep 2017 23:37:29 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Stefan Beller <sbeller@google.com>,
+        =?utf-8?Q?Pawe=C5=82?= Marczewski <pwmarcz@gmail.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Strange behavior of git rev-list
+References: <CACNsYJ-UeEONZ+mDgg6x5Bi+D3VmS=5eGCYq1gEPHVsMEJGojA@mail.gmail.com>
+        <20170907094718.b6kuzp2uhvkmwcso@sigill.intra.peff.net>
+        <CACNsYJ8rRSf5gNtnPS05CnYCYGmoBymbgH7UumuOuBz1jp6RBA@mail.gmail.com>
+        <20170907101126.u574pr7l5odff6zo@sigill.intra.peff.net>
+        <CAGZ79kaubRDXnetj+EXawnr50LMo4tGObz+-Bd-=KerndLfSaA@mail.gmail.com>
+        <20170908031705.5zqs7jhamzgda47t@sigill.intra.peff.net>
+Date:   Fri, 08 Sep 2017 12:37:28 +0900
+In-Reply-To: <20170908031705.5zqs7jhamzgda47t@sigill.intra.peff.net> (Jeff
+        King's message of "Thu, 7 Sep 2017 23:17:05 -0400")
+Message-ID: <xmqqwp59zwqv.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq1snh29re.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0A411210-9447-11E7-86B2-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 08, 2017 at 11:40:21AM +0900, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> Our "git fsck" already treats certain brokenness (like a tree whose
-> entry has mode that is 0-padded to the left) as broken but still
-> tolerate them.  I am not sure if it is sufficient to diagnose and
-> declare broken and invalid when we see sha3-content that records
-> these "mechanically derivable but expensive to compute" pieces of
-> information incorrectly.
-> 
-> I am leaning towards saying "yes, catching in fsck is enough" and
-> suggesting to add generation number to sha3-content of the commit
-> objects, and to add even the "original sha1 name" thing if we find
-> good use of it.  But I cannot shake this nagging feeling off that I
-> am missing some huge problems that adding these fields and opening
-> ourselves to more classes of broken objects.
+> On Thu, Sep 07, 2017 at 12:24:02PM -0700, Stefan Beller wrote:
+>
+>> > We've discussed storing true generation numbers in the past, which would
+>> > make this optimization more robust, as well as allow us to speed up many
+>> > other traversals (e.g., the "tag --contains"). It's something I'd like
+>> > to revisit, but it's not at the top of the pile.
+>> 
+>> (We just had an office discussion if this is part of the hash transition plan,
+>> i.e. have a field in the commit object to contain its generation number.
+>> and as I think the generation numbers would lead to fast and correct
+>> behavior unlike the current heuristic which is only fast, I would try
+>> to make a strong point actual generation numbers inside commit objects)
+>
+> I'm still moderately against storing generation numbers inside the
+> objects. They're redundant with the existing parent pointers, which
+> means it's an opportunity for the two sets of data to disagree. And as
+> we've seen, once errors are cemented in history it's very hard to fix
+> them, because you break any history built on top.
+>
+> I'm much more in favor of building a local cache of generation numbers
+> (either on the fly or during repacks, where we can piggy-back on the
+> existing pack .idx for indexing).
 
-I share your nagging feeling.
+I guess our mails crossed.  Yes, objects that are needlessly broken
+only because they botch computation of derivable values are real
+problem, as we need to accomodate them forever because histories can
+and will be built on top of them.
 
-I have two thoughts on the "fsck can catch it" line of reasoning.
-
-  1. It's harder to fsck generation numbers than other syntactic
-     elements of an object, because it inherently depends on the links.
-     So I can't fsck a commit object in isolation. I have to open its
-     parents and check _their_ generation numbers.
-
-     In some sense that isn't a big deal. A real fsck wants to know that
-     we _have_ the parents in the first place. But traditionally we've
-     separated "is this syntactically valid" from "do we have full
-     connectivity". And features like shallow clones rely on us fudging
-     the latter but not the former. A shallow history could never
-     properly fsck the generation numbers.
-
-     A multiple-hash field doesn't have this problem. It's purely a
-     function of the bytes in the object.
-
-  2. I wouldn't classify the current fsck checks as a wild success in
-     containing breakages. If a buggy implementation produces invalid
-     objects, the same buggy implementation generally lets people (and
-     their colleagues) unwittingly build on top of those objects. It's
-     only later (sometimes much later) that they interact with a
-     non-buggy implementation whose fsck complains.
-
-     And what happens then? If they're lucky, the invalid objects
-     haven't spread far, and the worst thing is that they have to learn
-     to use filter-branch (which itself is punishment enough). But
-     sometimes a significant bit of history has been built on top, and
-     it's awkward or impossible to rewrite it.
-
-     That puts the burden on whoever is running the non-buggy
-     implementation that wants to reject the objects. Do they accept
-     these broken objects? If so, what do they do to mitigate the wrong
-     answers that Git will return?
-
-I'm much more in favor of keeping that data outside the object-hash
-computation, and caching the pre-computed results as necessary. Those
-cache can disagree with the objects, of course, but the cost to dropping
-and re-building them is much lower than a history rewrite.
-
-I'm speaking primarily to the generation-number thing, where I really
-don't think there's any benefit to embedding it in the object beyond the
-obvious "well, it has to go _somewhere_, and this saves us implementing
-a local cache layer".  I haven't thought hard enough on the
-multiple-hash thing to know if there's some other benefit to having it
-inside the objects.
-
--Peff
+On the other hand, seeing that the world did not stop even with some
+projects have trees with entries whose mode are written with 0-padding
+on the left in the ancient part of their histories, it might not be
+such a big deal.  I dunno.
