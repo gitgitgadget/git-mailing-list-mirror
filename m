@@ -2,145 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C5A0202A4
-	for <e@80x24.org>; Sat,  9 Sep 2017 11:39:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0FE2F1FADE
+	for <e@80x24.org>; Sat,  9 Sep 2017 13:13:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757397AbdIILjE (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Sep 2017 07:39:04 -0400
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:45052 "EHLO
-        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753489AbdIILjE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Sep 2017 07:39:04 -0400
-Received: by mail-wm0-f48.google.com with SMTP id 137so11356853wmj.1
-        for <git@vger.kernel.org>; Sat, 09 Sep 2017 04:39:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ajtnUrd0g2XchTIF4XTKxOweGQKmxuRU3PZ0yq/6rrs=;
-        b=g0zRbj18VSCYLQf4TYcaFnT3+E6pkOiOmmnHJzz8ANdJqpYHFLqZfnq2tOFUgb2K6a
-         NcilEA1ZnP8ltU6MqTaxNAoE3e1QdQQZIHdT7n0nfnSSceJLUggdLVziEKDXXJJP2LOD
-         wN6q6PXhZIuYLHa2BRkbXJVH2pO90mQ9Wh2cy/tY39NZd2RPb9wQKz5iu7h0EFD8Rj/q
-         rMVz+UuPWAoYwI4Oex1j2hlThP9/3NFPMOZuL+kwb7Sm4ihkSM6Z8qisCewizmHhCxx/
-         jBuT/P5yi+Twh0dTBmDgrccx6z1PztGkRFG17lpRT/MRppxxfKTK28d4Ja+EEPDbKXt/
-         3EYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ajtnUrd0g2XchTIF4XTKxOweGQKmxuRU3PZ0yq/6rrs=;
-        b=o6/kUvnsehatTWocetJswlalSzZPAXypqA/TNyo6m+h4aWwLva/7f4xsMCtmgKq28F
-         8Xs6pFGzSEfcXpbwzFjPFR8CLnXX5d90h3Ri+TJpZCnIDnGj/IQa7tLjrqRM2SJRgxgT
-         w7I230FAOP9RI+6i4ajZRZhTd8K9Niof+mwl4TaEstyncQxRN0Ps+/ui54lUX6uP4v+X
-         wgNu3qYv232KNAYnrOoyVdNo8dsc3fmY8v9tr/MlJ2Ajlh2SpAYtatPhyUa5NR+jk9Zg
-         oHU6GaOAENbxxmnUOct56i13lslqy7cgqtTCMwRig/Sx7N6zKty5xiVXWCit17pY8zrF
-         Go/w==
-X-Gm-Message-State: AHPjjUhjkxCJ+jkzYpsh9TOylJw0U+vnnZhrU/qG3dJLwUbRWV2zMIY8
-        JvjeDKHeVJ4AglbonUCjykIDL0HP8JxC
-X-Google-Smtp-Source: ADKCNb5okHDgZd+NMSKE0l5uZaGupkdB5zax7PfeCcx4M9uRCLcr4l6c/x8TRV9paVGuZ56PPti9nEud8CklTHSlnFY=
-X-Received: by 10.80.135.4 with SMTP id i4mr4575780edb.20.1504957142788; Sat,
- 09 Sep 2017 04:39:02 -0700 (PDT)
+        id S1753670AbdIINNg (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Sep 2017 09:13:36 -0400
+Received: from avasout08.plus.net ([212.159.14.20]:50652 "EHLO
+        avasout08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753519AbdIINNf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Sep 2017 09:13:35 -0400
+Received: from [10.0.2.15] ([147.147.86.16])
+        by avasout08 with smtp
+        id 7RDZ1w0020M91Ur01RDarb; Sat, 09 Sep 2017 14:13:34 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=EJl26xRC c=1 sm=1 tr=0
+ a=dubYQqM3tRRTmV8xSh8cXQ==:117 a=dubYQqM3tRRTmV8xSh8cXQ==:17
+ a=IkcTkHD0fZMA:10 a=aFHsfBbdpozbKrwjF20A:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+To:     Adam Dinwoodie <adam@dinwoodie.org>
+Cc:     Michael J Gruber <git@grubix.eu>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Unexpected pass for t6120-describe.sh on cygwin
+Message-ID: <7c3db153-2a56-f27d-af71-e4b61f1252a1@ramsayjones.plus.com>
+Date:   Sat, 9 Sep 2017 14:13:32 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Received: by 10.80.216.197 with HTTP; Sat, 9 Sep 2017 04:39:02 -0700 (PDT)
-In-Reply-To: <0696f94d-28c2-1f4b-03ee-16553d97f318@gmail.com>
-References: <0696f94d-28c2-1f4b-03ee-16553d97f318@gmail.com>
-From:   Yubin Ruan <ablacktshirt@gmail.com>
-Date:   Sat, 9 Sep 2017 19:39:02 +0800
-Message-ID: <CAJYFCiMV62HXD8++9ThvWWV8VELG89hUf++90TTCrD8ARMk2JA@mail.gmail.com>
-Subject: Re: git diff <commit> doesn't quite work as documented?
-To:     Olaf Klischat <olaf.klischat@gmail.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2017-09-08 0:31 GMT+08:00 Olaf Klischat <olaf.klischat@gmail.com>:
-> oklischat@oklischat:/tmp$ mkdir gittest
-> oklischat@oklischat:/tmp$ cd gittest/
-> oklischat@oklischat:/tmp/gittest$ git init
-> Initialized empty Git repository in /private/tmp/gittest/.git/
-> oklischat@oklischat:/tmp/gittest$ echo foo > foo.txt
-> oklischat@oklischat:/tmp/gittest$ git add foo.txt
-> oklischat@oklischat:/tmp/gittest$ git commit -m foo
-> [master (root-commit) 54d55f2] foo
->  1 file changed, 1 insertion(+)
->  create mode 100644 foo.txt
-> oklischat@oklischat:/tmp/gittest$ echo bar > bar.txt
-> oklischat@oklischat:/tmp/gittest$ git add bar.txt
-> oklischat@oklischat:/tmp/gittest$ git commit -m bar
-> [master 83b2e74] bar
->  1 file changed, 1 insertion(+)
->  create mode 100644 bar.txt
-> oklischat@oklischat:/tmp/gittest$ git tag bar-added
-> oklischat@oklischat:/tmp/gittest$ git rm bar.txt
-> rm 'bar.txt'
-> oklischat@oklischat:/tmp/gittest$ git commit -m 'rm bar'
-> [master 3ca4ff9] rm bar
->  1 file changed, 1 deletion(-)
->  delete mode 100644 bar.txt
-> oklischat@oklischat:/tmp/gittest$
-> oklischat@oklischat:/tmp/gittest$ git checkout bar-added -- bar.txt
-> oklischat@oklischat:/tmp/gittest$ git reset HEAD
-> oklischat@oklischat:/tmp/gittest$ git status
-> On branch master
-> Untracked files:
->   (use "git add <file>..." to include in what will be committed)
->
->         bar.txt
->
-> nothing added to commit but untracked files present (use "git add" to track)
-> oklischat@oklischat:/tmp/gittest$ git diff bar-added   # would expect this to show no differences
-> diff --git a/bar.txt b/bar.txt
-> deleted file mode 100644
-> index 5716ca5..0000000
-> --- a/bar.txt
-> +++ /dev/null
-> @@ -1 +0,0 @@
-> -bar
-> oklischat@oklischat:/tmp/gittest$
-> oklischat@oklischat:/tmp/gittest$ git diff bar-added  -- bar.txt   # dito
-> diff --git a/bar.txt b/bar.txt
-> deleted file mode 100644
-> index 5716ca5..0000000
-> --- a/bar.txt
-> +++ /dev/null
-> @@ -1 +0,0 @@
-> -bar
+Hi Adam,
 
-Michael J Gruber is correct about the working-dir/working-tree things.
-A quick example: add a new file with
+I ran the test-suite on the 'pu' branch last night (simply because
+that was what I had built at the time!), which resulted in a PASS,
+but t6120 was showing a 'TODO passed' for #52.
 
-    $ echo bzz > bzz.txt
+This is a test introduced by Michael's 'mg/name-rev-tests-with-short-stack'
+branch, which uses 'ulimit -s' to try and force a stack overflow.
+Unfortunately, 'ulimit -s' seems to have no effect on cygwin. I created
+a test program (see below) to eat up the stack and tried running it
+with various ulimit values (128, 12, 8), but it always seg-faulted
+at the same stack-frame. (after using approx 2MB stack space).
 
-then do "git diff bar-added".
+So, it looks like all ULIMIT_STACK_SIZE tests need to be disabled
+on cygwin. I also wonder about the ULIMIT_FILE_DESCRIPTORS tests,
+but haven't looked into it.
 
-The result is the same, because "bzz.txt" is not in the working-tree.
+Given that 'ulimit' is a bash built-in, this may also be a problem
+on MinGW and Git-For-Windows, but I can't test on those platforms.
 
-Yubin
+Unfortunately, I can't spend more time on git today, hence this
+heads up! ;-)
 
-> oklischat@oklischat:/tmp/gittest$
->
->
-> `git diff --help' says:
->
-> git diff [--options] <commit> [--] [<path>...]
->            This form is to view the changes you have in your working tree relative to the named <commit>.
->
-> If that were entirely true, the last two commands shouldn't have shown
-> any differences, right?
->
-> On closer inspection, it seems that what `git diff <commit>' really
-> does is take only those paths in the working directory that are also
-> in <commit> and compare the resulting tree against <commit>.
->
-> We should add some option to that git diff form to make it really do
-> what the docs claim it does.
->
-> Or am I missing something?
+ATB,
+Ramsay Jones
+
+-- >8 --
+diff --git a/test.c b/test.c
+new file mode 100644
+index 0000000..bcbb805
+--- /dev/null
++++ b/test.c
+@@ -0,0 +1,21 @@
++#include <stdio.h>
++#include <stdlib.h>
++#include <inttypes.h>
++
++void test(uint64_t count)
++{
++	int i, junk[1024];
++
++	for (i = 0; i < 1024; i++)
++		junk[i] = count;
++	i = junk[count % 1024];
++	printf("%" PRIuMAX "\n", (uintmax_t)count);
++	fflush(stdout);
++	test(count + 1);
++}
++
++int main(int argc, char *argv[])
++{
++	test(0);
++	return 0;
++}
+
