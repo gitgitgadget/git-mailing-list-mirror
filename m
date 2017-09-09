@@ -6,78 +6,72 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0670A1FAD6
-	for <e@80x24.org>; Sat,  9 Sep 2017 05:45:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3EF1C1FAD6
+	for <e@80x24.org>; Sat,  9 Sep 2017 05:59:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751892AbdIIFpK (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Sep 2017 01:45:10 -0400
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:43693 "EHLO
-        alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751244AbdIIFpJ (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 9 Sep 2017 01:45:09 -0400
-X-AuditID: 1207440e-bf9ff70000007085-fb-59b37fe408c7
+        id S1751909AbdIIF7J (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Sep 2017 01:59:09 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:48105 "EHLO
+        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751244AbdIIF7I (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 9 Sep 2017 01:59:08 -0400
+X-AuditID: 12074413-3a3ff70000007929-7e-59b3832bd8b0
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 45.0F.28805.4EF73B95; Sat,  9 Sep 2017 01:45:08 -0400 (EDT)
+        by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 01.F4.31017.B2383B95; Sat,  9 Sep 2017 01:59:07 -0400 (EDT)
 Received: from [192.168.69.190] (p57BCC859.dip0.t-ipconnect.de [87.188.200.89])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v895j6Ga018514
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v895x5CD019077
         (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Sat, 9 Sep 2017 01:45:07 -0400
-Subject: Re: [PATCH v4 06/16] refs: move submodule slash stripping code to
- get_submodule_ref_store
+        Sat, 9 Sep 2017 01:59:06 -0400
+Subject: Re: [PATCH v4 10/16] refs: remove dead for_each_*_submodule()
 To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
         <pclouds@gmail.com>, git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>
 References: <20170823123704.16518-1-pclouds@gmail.com>
- <20170823123704.16518-7-pclouds@gmail.com>
+ <20170823123704.16518-11-pclouds@gmail.com>
 From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <c620f399-9074-4a43-aed1-3995a1651114@alum.mit.edu>
-Date:   Sat, 9 Sep 2017 07:45:05 +0200
+Message-ID: <9705a733-76b4-e92c-1e4c-bb734b184529@alum.mit.edu>
+Date:   Sat, 9 Sep 2017 07:59:05 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.2.1
 MIME-Version: 1.0
-In-Reply-To: <20170823123704.16518-7-pclouds@gmail.com>
+In-Reply-To: <20170823123704.16518-11-pclouds@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFKsWRmVeSWpSXmKPExsUixO6iqPukfnOkwYZ5GhZdV7qZLBp6rzBb
-        dE95y2ixeXM7iwOLx85Zd9k9Fmwq9bh4Sdnj8ya5AJYoLpuU1JzMstQifbsErox1m7cxFSxh
-        r1hxdAZTA+Mv1i5GTg4JAROJXUcOM3UxcnEICexgkvg3axaUc45J4sL+t2wgVcICKRIXt+9n
-        B7FFBNIkFk9+z9zFyMHBLOAlMe9jOUhYSCBZYu7ZL2BD2QR0JRb1NDOB2LwC9hJvvs1jBCln
-        EVCRmHPUACQsKhAh0ff2MjtEiaDEyZlPWEBsTgFziYaFHWCtzALqEn/mXWKGsMUlbj2ZDxWX
-        l2jeOpt5AqPALCTts5C0zELSMgtJywJGllWMcok5pbm6uYmZOcWpybrFyYl5ealFusZ6uZkl
-        eqkppZsYIQHOt4Oxfb3MIUYBDkYlHt6K7ZsihVgTy4orcw8xSnIwKYnyXqjdHCnEl5SfUpmR
-        WJwRX1Sak1p8iFGCg1lJhNesBijHm5JYWZValA+TkuZgURLnVVui7ickkJ5YkpqdmlqQWgST
-        leHgUJLgZQJGspBgUWp6akVaZk4JQpqJgxNkOA/Q8Ll1IMOLCxJzizPTIfKnGI059uy9/oeJ
-        48ZDICnEkpeflyolzmsMUioAUppRmgc3DZakXjGKAz0nzLsEpIoHmODg5r0CWsUEtKrk+QaQ
-        VSWJCCmpBsYoIY9C/S2T31+e1h+zJ3L3tBuTP019Ni34b1ukOuP/QstGuyMKXhGZ4vEfcvta
-        rGuMD/4JKJ2V15rSfqSsSSF2xvd13brl7I4n3rO7m7xgOHXWhXGRSj+fdk+g/LzDVzRSa38l
-        L+iNbJ+p6PHwcIjV4ts5E3bEFor8018gHrD9L7dS/1P1qUosxRmJhlrMRcWJAPI8kvQtAwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprCKsWRmVeSWpSXmKPExsUixO6iqKvdvDnS4OhfK4uuK91MFg29V5gt
+        uqe8ZbTYvLmdxYHFY+esu+weCzaVely8pOzxeZNcAEsUl01Kak5mWWqRvl0CV0bjrI+MBUtZ
+        KqYtvc/YwPiXqYuRk0NCwETixJpmxi5GLg4hgR1MElenXGaGcM4xSRzbfA2sSljATWJd4zl2
+        EFtEIE1i8eT3QEUcHMwCXhLzPpaDhIUEUiTWH54KVs4moCuxqKcZzOYVsJeYeWsxG4jNIqAi
+        MWt+A9gYUYEIib63l9khagQlTs58wgIyklPAQmL1PS2QMLOAusSfeZeYIWxxiVtP5jNB2PIS
+        zVtnM09gFJiFpHsWkpZZSFpmIWlZwMiyilEuMac0Vzc3MTOnODVZtzg5MS8vtUjXXC83s0Qv
+        NaV0EyMkwIV3MO46KXeIUYCDUYmHt2L7pkgh1sSy4srcQ4ySHExKorwXajdHCvEl5adUZiQW
+        Z8QXleakFh9ilOBgVhLh5WsEyvGmJFZWpRblw6SkOViUxHnVlqj7CQmkJ5akZqemFqQWwWRl
+        ODiUJHjVmoAaBYtS01Mr0jJzShDSTBycIMN5gIZrgNTwFhck5hZnpkPkTzHqctx4eP0PkxBL
+        Xn5eqpQ4rydIkQBIUUZpHtwcWGJ6xSgO9JYw73uQO3mASQ1u0iugJUxAS0qebwBZUpKIkJJq
+        YJy7S2aL76Pp8mePVPxyt03f8mx3fUrbnrtt8y4ITt5p2Zw7cY3CAUcPvy7Pl2H6nTHJZo1b
+        9dU3Pj7RH/Ij5c1JBi3xh7FXC7uMT1TObbjZ/pw74aNav27kxoV13mpP39q4FoseDfeatKHK
+        2fcjg7PGQcUW/h93+v/siF96cWPEphdH5+zzWa/EUpyRaKjFXFScCABsdAZoJwMAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 08/23/2017 02:36 PM, Nguyễn Thái Ngọc Duy wrote:
-> This is a better place that will benefit all submodule callers instead
-> of just resolve_gitlink_ref()
+> These are used in revision.c. After the last patch they are replaced
+> with the refs_ version. Delete them.
+> 
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+>  Documentation/technical/api-ref-iteration.txt |  7 ++----
+>  refs.c                                        | 33 ---------------------------
+>  refs.h                                        | 10 --------
+>  3 files changed, 2 insertions(+), 48 deletions(-)
 
-This is a nice sentiment, but I have to wonder whether we should rather
-be requiring callers to use the "canonical" submodule name rather than
-covering up their sloppiness for them (perhaps multiple times?). I
-vaguely remember intentionally limiting the number of functions that do
-this canonicalization, and having in mind the goal that the number
-should become smaller over time, not larger.
-
-For example, there could be some kind of `canonicalize_submodule_name()`
-function that callers can use to clean up whatever submodule string they
-have in hand, then let them use the cleaned up value from then on.
-
-I don't really know much about the callers, though, so that is more of a
-lazy philosophical speculation than a concrete suggestion.
+What a lovely diffstat :-)
 
 Michael
