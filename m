@@ -6,84 +6,101 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 383461FAD6
-	for <e@80x24.org>; Sat,  9 Sep 2017 06:04:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE54B20286
+	for <e@80x24.org>; Sat,  9 Sep 2017 06:30:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751897AbdIIGEk (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Sep 2017 02:04:40 -0400
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:62189 "EHLO
-        alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750817AbdIIGEj (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 9 Sep 2017 02:04:39 -0400
-X-AuditID: 12074412-1fdff7000000748d-cc-59b38476c3cd
+        id S1755286AbdIIGaX (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Sep 2017 02:30:23 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:48286 "EHLO
+        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1755260AbdIIGaW (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 9 Sep 2017 02:30:22 -0400
+X-AuditID: 12074413-38bff70000007929-9f-59b38a7d64b6
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 37.37.29837.67483B95; Sat,  9 Sep 2017 02:04:38 -0400 (EDT)
+        by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 2E.15.31017.D7A83B95; Sat,  9 Sep 2017 02:30:21 -0400 (EDT)
 Received: from [192.168.69.190] (p57BCC859.dip0.t-ipconnect.de [87.188.200.89])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v8964ZxU019290
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v896UJfw020319
         (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Sat, 9 Sep 2017 02:04:37 -0400
-Subject: Re: [PATCH v4 11/16] revision.c: --all adds HEAD from all worktrees
+        Sat, 9 Sep 2017 02:30:20 -0400
+Subject: Re: [PATCH v4 12/16] files-backend: make reflog iterator go through
+ per-worktree reflog
 To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
         <pclouds@gmail.com>, git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>
 References: <20170823123704.16518-1-pclouds@gmail.com>
- <20170823123704.16518-12-pclouds@gmail.com>
+ <20170823123704.16518-13-pclouds@gmail.com>
 From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <ee8f9da9-3743-b8a0-d8dd-ec6a3d6f2cbf@alum.mit.edu>
-Date:   Sat, 9 Sep 2017 08:04:35 +0200
+Message-ID: <22ce3629-cd72-7fe0-8511-29b34e135122@alum.mit.edu>
+Date:   Sat, 9 Sep 2017 08:30:18 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.2.1
 MIME-Version: 1.0
-In-Reply-To: <20170823123704.16518-12-pclouds@gmail.com>
+In-Reply-To: <20170823123704.16518-13-pclouds@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprKKsWRmVeSWpSXmKPExsUixO6iqFvWsjnSYMkuBYuuK91MFg29V5gt
-        uqe8ZbTYvLmdxYHFY+esu+weCzaVely8pOzxeZNcAEsUl01Kak5mWWqRvl0CV8bqB22sBSfY
-        Klpu/GBtYOxn7WLk5JAQMJG43HyPqYuRi0NIYAeTRMPnNawQzjkmiZXbjjCBVAkL+Ei87NnI
-        DGKLCKRJLJ78Hsjm4GAW8JKY97EcJCwkkCIx5c5XsHI2AV2JRT3NYDavgL3EmnXzWUBsFgEV
-        icn3n4LFRQUiJPreXmaHqBGUODnzCVgNp4CFxKw/W8BsZgF1iT/zLjFD2OISt57MZ4Kw5SWa
-        t85mnsAoMAtJ+ywkLbOQtMxC0rKAkWUVo1xiTmmubm5iZk5xarJucXJiXl5qka6ZXm5miV5q
-        SukmRkiIC+1gXH9S7hCjAAejEg9vxfZNkUKsiWXFlbmHGCU5mJREeS/Ubo4U4kvKT6nMSCzO
-        iC8qzUktPsQowcGsJMLL1wiU401JrKxKLcqHSUlzsCiJ8/5crO4nJJCeWJKanZpakFoEk5Xh
-        4FCS4LVuBmoULEpNT61Iy8wpQUgzcXCCDOcBGt4NUsNbXJCYW5yZDpE/xajLcePh9T9MQix5
-        +XmpUuK8nk1ARQIgRRmleXBzYKnpFaM40FvCvBEgo3iAaQ1u0iugJUxAS0qebwBZUpKIkJJq
-        YGSt5i36ECMTnxjhldBax3d7iXTlpq5pQol64eaScq27ZjH+8/zo+EV2TZnz94YXXHUdVZ8e
-        nlL+ozOxNtll7o5bN57/D5I0LPh9xnP/dUvNCRHXJq/nluVkLHm69tym9pLZR1q1pnoFvDmx
-        t3oBkyWjomrPloeGzd8uX27Ncd0cpBtW2vetUImlOCPRUIu5qDgRAPODS6koAwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupgleLIzCtJLcpLzFFi42IRYndR1K3t2hxp0P9DzqLrSjeTRUPvFWaL
+        7ilvGS02b25ncWDx2DnrLrvHgk2lHhcvKXt83iQXwBLFZZOSmpNZllqkb5fAlTH31wrWgqc8
+        FXOOLWRrYFzK1cXIySEhYCLx+GcnexcjF4eQwA4mib/d7xghnHNMEkc/T2IFqRIWSJKYcPoj
+        M4gtIpAmsXjyeyCbg4NZwEti3sdykLCQQIpEd08zWAmbgK7Eop5mJhCbV8BeouVPLwtIOYuA
+        isTRrRYgYVGBCIm+t5fZIUoEJU7OfMICYnMKWEhs3LcEbCuzgLrEn3mXmCFscYlbT+YzQdjy
+        Es1bZzNPYBSYhaR9FpKWWUhaZiFpWcDIsopRLjGnNFc3NzEzpzg1Wbc4OTEvL7VI11wvN7NE
+        LzWldBMjJMCFdzDuOil3iFGAg1GJh7di+6ZIIdbEsuLK3EOMkhxMSqK8F2o3RwrxJeWnVGYk
+        FmfEF5XmpBYfYpTgYFYS4Z3dCpTjTUmsrEotyodJSXOwKInzqi1R9xMSSE8sSc1OTS1ILYLJ
+        ynBwKEnwzuwEahQsSk1PrUjLzClBSDNxcIIM5wEartgFMry4IDG3ODMdIn+KUVFKnDcBpFkA
+        JJFRmgfXC0tArxjFgV4R5q0BqeIBJi+47ldAg5mABpc83wAyuCQRISXVwLjVuilJXdHuY1bg
+        //l9Z+vuvizg+bI5opY/2P2MT87LkiplmWdl/F9NpkzImLRuv5PIDecZTW92m5+eVjXjx3eb
+        Exk3EhWYXSb9fXp1y90KzjOyZQcznk29UnfO/Lk5y7KlE9tdJWcEf1m5rUOlt1RtMesdgZad
+        Ebvvznnn+8xlSkPL66B7Xf1KLMUZiYZazEXFiQCUHXTQGwMAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08/23/2017 02:36 PM, Nguyễn Thái Ngọc Duy wrote:
+On 08/23/2017 02:37 PM, Nguyễn Thái Ngọc Duy wrote:
+> refs/bisect is unfortunately per-worktree, so we need to look in
+> per-worktree logs/refs/bisect in addition to per-repo logs/refs. The
+> current iterator only goes through per-repo logs/refs.
+> 
+> Use merge iterator to walk two ref stores at the same time and pick
+> per-worktree refs from the right iterator.
+> 
+> PS. Note the unsorted order of for_each_reflog in the test. This is
+> supposed to be OK, for now. If we enforce order on for_each_reflog()
+> then some more work will be required.
+> 
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+>  refs/files-backend.c          | 59 +++++++++++++++++++++++++++++++++----------
+>  t/t1407-worktree-ref-store.sh | 30 ++++++++++++++++++++++
+>  2 files changed, 75 insertions(+), 14 deletions(-)
+> 
+> diff --git a/refs/files-backend.c b/refs/files-backend.c
+> index 5cca55510b..d4d22882ef 100644
+> --- a/refs/files-backend.c
+> +++ b/refs/files-backend.c
 > [...]
-> diff --git a/revision.c b/revision.c
-> index 8d04516266..0e98444857 100644
-> --- a/revision.c
-> +++ b/revision.c
-> @@ -2133,6 +2133,14 @@ static int handle_revision_pseudo_opt(const char *submodule,
->  	int argcount;
->  
->  	if (submodule) {
+> +static enum iterator_selection reflog_iterator_select(
+> +	struct ref_iterator *iter_worktree,
+> +	struct ref_iterator *iter_common,
+> +	void *cb_data)
+> +{
+> +	if (iter_worktree) {
 > +		/*
-> +		 * We need some something like get_submodule_worktrees()
-> +		 * before we can go through all worktrees of a submodule,
-> +		 * .e.g with adding all HEADs from --all, which is not
-> +		 * supported right now, so stick to single worktree.
+> +		 * We're a bit loose here. We probably should ignore
+> +		 * common refs if they are accidentally added as
+> +		 * per-worktree refs.
 > +		 */
-> +		if (!revs->single_worktree)
-> +			die("BUG: --single-worktree cannot be used together with submodule");
->  		refs = get_submodule_ref_store(submodule);
->  	} else
->  		refs = get_main_ref_store();
+> +		return ITER_SELECT_0;
 
-Tiny nit: s/.e.g/e.g./
+I don't understand the point of the comment. If we should ignore common
+refs here, why not do it rather than commenting about it? Wouldn't it be
+really easy to implement? OTOH if it's not needed, then why the comment?
 
 > [...]
 
