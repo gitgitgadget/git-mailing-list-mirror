@@ -2,78 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 588611FAD6
-	for <e@80x24.org>; Sun, 10 Sep 2017 07:40:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ABC111FAD6
+	for <e@80x24.org>; Sun, 10 Sep 2017 08:45:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751310AbdIJHkA (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Sep 2017 03:40:00 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51908 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751279AbdIJHj7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Sep 2017 03:39:59 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2755BAC653;
-        Sun, 10 Sep 2017 03:39:59 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=jqVH2J12vKsK
-        HLs6hLoCBdYTg3M=; b=xu8v1Yjx1PqIwYwPxzJdofjJKVXxhZi9j52Ykhwuca7O
-        nirzJGxJ4Ek7OvcsV1FngpGuvA3j2itN/IEWpZzuCuZX39TwPkCXcFWcBXiqX6TD
-        59rtHKZLNTDNpbzuqdEYktUdL5mkNoL3z1qexS4LlRVmANsDC8njKwS42LO2554=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=LZnEkA
-        elTLPvCBAoeBzon3gXWtNodsuAcrzPDweSuqJZvLZY/r1WaeOQ4Y2Tnnf0a3mLn5
-        u2ndY1gIYrCxCGHGxp/OSquQ2HgYjoHEdvtOQrCj4HpqzU1hsXAcaBbqxliUrJwA
-        P7MVevOgUq1ORfHP21pRQzBuUIeTwobLgTMHE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 20928AC652;
-        Sun, 10 Sep 2017 03:39:59 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8688AAC650;
-        Sun, 10 Sep 2017 03:39:58 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+        id S1751219AbdIJIpE (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Sep 2017 04:45:04 -0400
+Received: from mout.web.de ([217.72.192.78]:59377 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750826AbdIJIpC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Sep 2017 04:45:02 -0400
+Received: from [192.168.178.36] ([91.20.62.83]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MRCnT-1e1Zvz0dJv-00UcXM; Sun, 10
+ Sep 2017 10:44:48 +0200
+Subject: Re: [PATCH] shortlog: skip format/parse roundtrip for internal
+ traversal
+To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 34/34] wt-status: release strbuf after use in wt_longstatus_print_tracking()
 References: <20170830175005.20756-1-l.s.r@web.de>
-        <20170830182018.21390-1-l.s.r@web.de>
-        <xmqqmv6761xk.fsf@gitster.mtv.corp.google.com>
-        <33aecb28-e930-f500-3452-3899d1116d9f@web.de>
-Date:   Sun, 10 Sep 2017 16:39:57 +0900
-In-Reply-To: <33aecb28-e930-f500-3452-3899d1116d9f@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Sun, 10 Sep 2017 08:27:30 +0200")
-Message-ID: <xmqqd16zxar6.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+ <20170830180037.20950-1-l.s.r@web.de> <20170830180037.20950-8-l.s.r@web.de>
+ <xmqqtw0f61xr.fsf@gitster.mtv.corp.google.com>
+ <20170907043354.fwxiifzbqf3yt5rr@sigill.intra.peff.net>
+ <xmqqzia61125.fsf@gitster.mtv.corp.google.com>
+ <20170908035648.jhm6ypxkwwms4bqu@sigill.intra.peff.net>
+ <20170908043633.smytugbn7ge4twlm@sigill.intra.peff.net>
+ <xmqqk219zobb.fsf@gitster.mtv.corp.google.com>
+ <20170908092126.55o3342macegtlga@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <0239ea26-199c-b39e-91a9-5ea5c470af8f@web.de>
+Date:   Sun, 10 Sep 2017 10:44:46 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
+In-Reply-To: <20170908092126.55o3342macegtlga@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 3F131082-95FB-11E7-B299-9D2B0D78B957-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:tqUqiEgnrp9N3gWTfit9PauN2N9lAHgRQypl4G4Sdk+lPV2++Vw
+ TwJnJ0ghdzJ0YqBh2gGK4sSXuCAKZfA4Mphs0lv9IlyDTNnmi57edLurYh+tcLlFB+g1ysS
+ V9QGVlQU5/Hhk4x0IiGNtOGbFU3Os7aEH8olrTwTk36iR99TScgUCvc06r4j1c9vwRPZa1P
+ E6BZ4DGfnQ7BweZZWQw+Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:s+8bgwDwe/A=:AFC1Pb+3/m9EQnvvK4+KaG
+ vlG/EbXs/YghjZVIa1TVlN+ft5GhNlkixIVmx1xScUi/EfrQ6uLE57hhBJErOS9nKMaFeDPMw
+ bwuwUx8gYuISrmkpHGX3oRvsL9EwE69qlrj1HXdX9aPaaoyus3rXA2Y7o5FaITgLtY013wc7Y
+ ZTFrwdp0Ui09PN0P1uO1IyeibajIA45p+8tHh17rD0y4M+42HNDZrheP6QHh58qxmo09Keg/p
+ ZGQ3Sb+JyDl+0jIjyXgdQJ8kxVvm+HIywu2C6n98MlEj1hZEB0r5y5y7cXo/0ySTpBL0L8L2m
+ 9IZerq0f/PDuchus1kyBfJgDGnGTUm2HC/LjRM4ETzfRBhNAVwFrjLKKGKhTmHDKJStwFeESn
+ gizRFkMK+go0EF2uZTpGv/EBRO+NbevghxyN+AblMC9XNYiDcM3Df2d8wSNoZxAl+Zq74VuqH
+ HV0JPlMZSfWFT/mDeKsFtlO1PvmgF00flqWAWJBOYBV2BAQhP/JFkahe1wZQzfE99UtwkqKJ9
+ JZIWMBWJoleawAXXejhq5DRwrHZxZuGYBrMWKASgxMiUQR8QpTpAAFpqm9ByxeBhB3nUwd/x2
+ rV1OH3vA08IiJxFnn8G0VRgUwytB8jxnry3es9MAVrq00Yx/vcK54+bN02AJsZNvkDsnsZ9mk
+ qrDfWDWhpGItp8HcdPwxVylW1Hcj2Ui4E+kUsTw3EGsNbBSgBcsOwDrwtGLIiRn5NTx++F8O4
+ 59kxwPbf6vS9PUZnBitEi15dNdMqiblqXGuVH08pFDfVx2JoYYtuEH/j8kfbnY9yYQYIkb28G
+ MQ+bjS1udV/X28Gw9N2RktuGuyYEhkrQiIePdFvIv6baLq6oUo=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+Am 08.09.2017 um 11:21 schrieb Jeff King:
+> Note that the non-stdin path no longer looks at the "mailmap" entry of
+> "struct shortlog" (instead we use the one cached inside pretty.c). But
+> we still waste time loading it. I'm not sure if it's worth addressing
+> that. It's only once per program invocation, and it's a little tricky to
+> fix (we do shortlog_init() before we know whether or not we're using
+> stdin). We could just load it lazily, though, which would cover the
+> stdin case.
 
-> Am 06.09.2017 um 21:51 schrieb Junio C Hamano:
->> Rene Scharfe <l.s.r@web.de> writes:
->>=20
->>> If format_tracking_info() returns 0 only if it didn't touch its strbu=
-f
->>> parameter, so it's OK to exit early in that case.  Clean up sb in the
->>> other case.
->>=20
->> These two "if"s confuse me; perhaps the first one is not needed?
->
-> Yes, removing it looks like the best way to make that sentence clearer.
-> Another would be to replace "only if" with "then".
+The difference in performance and memory usage will only be measurable
+with really big mailmap files.  However, it may be an opportunity for
+simplifying the mailmap API in general.  Conceptually the map data
+should fit into struct repository instead of being read and stored by
+each user, right?
 
-Either makes it understandable. Thanks.
+> -- >8 --
+> Subject: shortlog: skip format/parse roundtrip for internal traversal
+> 
+> The original git-shortlog command parsed the output of
+> git-log, and the logic went something like this:
+> 
+>    1. Read stdin looking for "author" lines.
+> 
+>    2. Parse the identity into its name/email bits.
+> 
+>    3. Apply mailmap to the name/email.
+> 
+>    4. Reformat the identity into a single buffer that is our
+>       "key" for grouping entries (either a name by default,
+>       or "name <email>" if --email was given).
+> 
+> The first part happens in read_from_stdin(), and the other
+> three steps are part of insert_one_record().
+> 
+> When we do an internal traversal, we just swap out the stdin
+> read in step 1 for reading the commit objects ourselves.
+> Prior to 2db6b83d18 (shortlog: replace hand-parsing of
+> author with pretty-printer, 2016-01-18), that made sense; we
+> still had to parse the ident in the commit message.
+> 
+> But after that commit, we use pretty.c's "%an <%ae>" to get
+> the author ident (for simplicity). Which means that the
+> pretty printer is doing a parse/format under the hood, and
+> then we parse the result, apply the mailmap, and format the
+> result again.
+> 
+> Instead, we can just ask pretty.c to do all of those steps
+> for us (including the mailmap via "%aN <%aE>", and not
+> formatting the address when --email is missing).
+> 
+> And then we can push steps 2-4 into read_from_stdin(). This
+> speeds up "git shortlog -ns" on linux.git by about 3%, and
+> eliminates a leak in insert_one_record() of the namemailbuf
+> strbuf.
+
+Great!  Thanks for stepping back, looking at the bigger
+picture and making it prettier.
+
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>   builtin/shortlog.c | 56 ++++++++++++++++++++++++++++++++++--------------------
+>   1 file changed, 35 insertions(+), 21 deletions(-)
+
+While longer, the resulting code is split up into more
+digestible chunks.
+
+René
