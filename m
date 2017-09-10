@@ -2,129 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C7DEB20286
-	for <e@80x24.org>; Sun, 10 Sep 2017 12:30:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C2B8202A4
+	for <e@80x24.org>; Sun, 10 Sep 2017 14:44:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751540AbdIJMaR (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Sep 2017 08:30:17 -0400
-Received: from mail-wr0-f173.google.com ([209.85.128.173]:34579 "EHLO
-        mail-wr0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751482AbdIJMaQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Sep 2017 08:30:16 -0400
-Received: by mail-wr0-f173.google.com with SMTP id v109so10251099wrc.1
-        for <git@vger.kernel.org>; Sun, 10 Sep 2017 05:30:16 -0700 (PDT)
+        id S1751704AbdIJOod (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Sep 2017 10:44:33 -0400
+Received: from mail-wr0-f178.google.com ([209.85.128.178]:35144 "EHLO
+        mail-wr0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751613AbdIJOoc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Sep 2017 10:44:32 -0400
+Received: by mail-wr0-f178.google.com with SMTP id m18so10477650wrm.2
+        for <git@vger.kernel.org>; Sun, 10 Sep 2017 07:44:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=gWK8fDqJtIgj3afTpBWQ2npWpiL0A0gJ6Sv3qIo6NOM=;
-        b=ae8muU35qcqNv9f6SVXPc4mlV8JMW3zcpK06r2Sl7jVJdLxYV/C5TLLT/t337+hbYq
-         c2D8b82K/3TkPngQd+e/fltoJydKr9xO4xOhEhVhX9rW5HcaY/NG12a7iBpY7z+zzFp1
-         wsbQFujXTIMCFBb9unyL93cNi5RQX0x3S4wei61YHHUfHtNgy5l6r/5ICl19XAs208Nb
-         9NOhR2Ee/U1da4UwUiuz6Z3w1GpriqE594MsuHSrq8O0AAeIJ9v0omzKY3PiH8FJrEC8
-         0z8oA7cq0b7N9srGG4VmOHle5sG79NESzclZv3CN4nHWVEVRGC/OdYY8Oxm6nvC9DXhc
-         9NEA==
+        h=from:to:cc:subject:date:message-id;
+        bh=PKjjVKrBW0UqHI3pU5Ru37Ctozbm/owLTU1QjSlFvxQ=;
+        b=Ic1EM4cKRU7w/kWuOokE4zii/rSoCgaPCyTlkRbgpqA9Zn5R1ZlEx0u3IojNq+3RAS
+         as2cJYK8vBUHMy/wMB7fWxVRQ4bK63CUDFpzuWdFKvSFywxw0/SyqFGZBjh1NmdAyWcP
+         RKybVt9swDfcmweuFx8FDiah3euXNFL0a2BEov6q8ayOFFjIR7bsebo1Mj8cZeGhgbEo
+         V4nI7Zrdc0Jw8nC3DHdX2txsnZ30Tpbqfz+LjZv8gXYWiMGdnLmcaDnDLOT8pj6TxSWi
+         oeMahgB1W7DJ7M2t4iAWuxZM9rAqX+R4H8L5ADF8baCs9GSdH8RbOmfHF+5CqsqNCxK3
+         oRsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=gWK8fDqJtIgj3afTpBWQ2npWpiL0A0gJ6Sv3qIo6NOM=;
-        b=bVdE+2pSKbYdcezaeZ8QCwBmBrcI1YRbP+AVT1tmnbC7mCxMMebeQobR0xgUCbUGoB
-         M6fKeWMR8Jstz4XVcwt8z9BgEyj1M8i7G+4/Jts8oJcMKJwJoTaxJcCJht0pC6iFRMnB
-         6MVQQ2h7MnTNu8gkbzSmOgyONnkE/bRFX4j/xsZ/IS1eM0kB9TSWjlCwaKdTAt4/qDIq
-         kwsrI7etyWVm7UkykcM3N9/5+c9DBE/Gow2c7TnNZgDIvuBn+s3C1rAGubGibSeAjdM1
-         S7z1tZ6ARJtW1VQ+QySCeWn033ONOAtyGp6U8NUS2iA1FM8L14y6Std7wzw9uXgYlQiL
-         vJpg==
-X-Gm-Message-State: AHPjjUg+PKrleia5QKjhMI1+XIAMUPc4oPRAESo7P9F5fO+n9BdNGdXp
-        RZpMYFafU7tiTw==
-X-Google-Smtp-Source: ADKCNb5qjQ2r/luMJFNvEhn9faKEg73GbA6LoP7khe9esununvYw+7hR15AZD3Zpah1NsoodOYTHZA==
-X-Received: by 10.223.172.14 with SMTP id v14mr6719990wrc.142.1505046615554;
-        Sun, 10 Sep 2017 05:30:15 -0700 (PDT)
-Received: from slxbook4.fritz.box (p5DDB7AFE.dip0.t-ipconnect.de. [93.219.122.254])
-        by smtp.gmail.com with ESMTPSA id 193sm11529774wmh.47.2017.09.10.05.30.14
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 10 Sep 2017 05:30:14 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v5 00/40] Add initial experimental external ODB support
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20170803091926.1755-1-chriscool@tuxfamily.org>
-Date:   Sun, 10 Sep 2017 14:30:13 +0200
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Ben Peart <Ben.Peart@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>, Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <BE9DF8E9-3771-42DD-B1F6-EC77783380F7@gmail.com>
-References: <20170803091926.1755-1-chriscool@tuxfamily.org>
-To:     Christian Couder <christian.couder@gmail.com>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=PKjjVKrBW0UqHI3pU5Ru37Ctozbm/owLTU1QjSlFvxQ=;
+        b=OxTrAtEJpl1NdzauSzXUDMRex4KLpA7BpiCC3XKWGLxecqpuf3SFVUI99oguY1I3ui
+         ANcLR9lHv/52Ed/HVU35arOgSLgbzCLo8VzRYJv9xYNV82wwBCDMEGXs98sEcaP1Do6h
+         FexkhTL5nlyvYY8nbYgCMGeC63UFOaH7oQ8o9iS1zcT4bIw/kAggpYSuPEndJhs3Zgs8
+         ja2QYJAbphH/V4TC3s5K/5lGpFEmc9T++4+fEzBbpjaXq73O0bZp37yCBau8H+DD70E3
+         B5iCkUHRCWGD8BoH6bRP35m2al+CFbV6WkHOjGI9tN0nTGjT21/DUaRjPZrKCKLyfqcg
+         ByJQ==
+X-Gm-Message-State: AHPjjUioaQwHmkR7vV2ng63FL8/myrD1n5n2QJhuAsZRsgimEOFxRhOq
+        sPRgKHBfVpjOZvol
+X-Google-Smtp-Source: ADKCNb7E7dpJ+ngr1j0ksrxmkRCLzngoPmmKPgyKF2lwzLynMHzxCg++7ZksZk51TwJsZUqh2+LDgg==
+X-Received: by 10.223.182.10 with SMTP id f10mr3380950wre.38.1505054671473;
+        Sun, 10 Sep 2017 07:44:31 -0700 (PDT)
+Received: from slxBook4.fritz.box (p5DDB7AFE.dip0.t-ipconnect.de. [93.219.122.254])
+        by smtp.gmail.com with ESMTPSA id 4sm6961223wmg.20.2017.09.10.07.44.30
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Sun, 10 Sep 2017 07:44:30 -0700 (PDT)
+From:   larsxschneider@gmail.com
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, Lars Schneider <larsxschneider@gmail.com>
+Subject: [PATCH v1 0/2] travis-ci: dedicated scripts + skip duplicated builds
+Date:   Sun, 10 Sep 2017 16:44:27 +0200
+Message-Id: <20170910144429.47346-1-larsxschneider@gmail.com>
+X-Mailer: git-send-email 2.14.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Lars Schneider <larsxschneider@gmail.com>
 
-> On 03 Aug 2017, at 10:18, Christian Couder =
-<christian.couder@gmail.com> wrote:
->=20
-> ...
->=20
-> * The "helpers" (registered commands)
->=20
-> Each helper manages access to one external ODB.
->=20
-> There are 2 different modes for helper:
->=20
->  - Helpers configured using "odb.<odbname>.scriptCommand" are
->    launched each time Git wants to communicate with the <odbname>
->    external ODB. This is called "script mode".
->=20
->  - Helpers configured using "odb.<odbname>.subprocessCommand" are
->    launched launched once as a sub-process (using sub-process.h), and
->    Git communicates with them using packet lines. This is called
->    "process mode".
+Hi,
 
-I am curious, why would we support two modes? Wouldn't that increase
-the maintenance cost? Wouldn't the subprocess command be superior?
-I imagine the script mode eases testing, right?!
+the patches were previously discussed here:
+https://public-inbox.org/git/xmqqinifrrzh.fsf@gitster.mtv.corp.google.com/#t
+
+Over there Junio posted the original patch to skip a build on Travis
+CI. The patch became 2/2 in this series.
+
+Cheers,
+Lars
+
+Base Ref: master
+Web-Diff: https://github.com/larsxschneider/git/commit/65ab003ec9
+Checkout: git fetch https://github.com/larsxschneider/git travisci/move-into-ci-v1 && git checkout 65ab003ec9
+
+Lars Schneider (2):
+  travis-ci: move Travis CI code into dedicated scripts
+  travis-ci: skip a branch build if equal tag is present
+
+ .travis.yml                | 88 +++++-----------------------------------------
+ ci/install-dependencies.sh | 43 ++++++++++++++++++++++
+ ci/lib-travisci.sh         | 28 +++++++++++++++
+ ci/print-test-failures.sh  | 18 ++++++++++
+ ci/run-build.sh            |  8 +++++
+ ci/run-linux32-docker.sh   | 23 ++++++++++++
+ ci/run-static-analysis.sh  |  8 +++++
+ ci/run-tests.sh            | 10 ++++++
+ ci/run-windows-build.sh    |  2 ++
+ ci/test-documentation.sh   |  4 ++-
+ 10 files changed, 151 insertions(+), 81 deletions(-)
+ create mode 100755 ci/install-dependencies.sh
+ create mode 100755 ci/lib-travisci.sh
+ create mode 100755 ci/print-test-failures.sh
+ create mode 100755 ci/run-build.sh
+ create mode 100755 ci/run-linux32-docker.sh
+ create mode 100755 ci/run-static-analysis.sh
+ create mode 100755 ci/run-tests.sh
 
 
-> ...
->=20
-> These odb refs point to a blob that is stored in the Git
-> repository and contain information about the blob stored in the
-> external odb. This information can be specific to the external odb.
-> The repos can then share this information using commands like:
->=20
-> `git fetch origin "refs/odbs/<odbname>/*:refs/odbs/<odbname>/*"`
->=20
-> At the end of the current patch series, "git clone" is teached a
-> "--initial-refspec" option, that asks it to first fetch some specified
-> refs. This is used in the tests to fetch the odb refs first.
->=20
-> This way only one "git clone" command can setup a repo using the
-> external ODB mechanism as long as the right helper is installed on the
-> machine and as long as the following options are used:
->=20
->  - "--initial-refspec <odbrefspec>" to fetch the odb refspec
->  - "-c odb.<odbname>.command=3D<helper>" to configure the helper
+base-commit: 3ec7d702a89c647ddf42a59bc3539361367de9d5
+--
+2.14.1
 
-The "odb" config could, of course, go into the global git config.=20
-The odbrefspec is optional, right?
-
-I have the impression there are a number of topics on the list
-that tackle the "many/big objects in a Git repo" problem. Is
-there a write up about the status of them, how they relate
-to each other, and what the current problems are?=20
-I found the following but it looks abandoned:
-https://github.com/jrn/git-large-repositories
-
-- Lars=
