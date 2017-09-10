@@ -2,114 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 030AE20286
-	for <e@80x24.org>; Sun, 10 Sep 2017 14:44:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B692E202A4
+	for <e@80x24.org>; Sun, 10 Sep 2017 16:58:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751803AbdIJOog (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Sep 2017 10:44:36 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:35180 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751613AbdIJOoe (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Sep 2017 10:44:34 -0400
-Received: by mail-wm0-f68.google.com with SMTP id e64so4986928wmi.2
-        for <git@vger.kernel.org>; Sun, 10 Sep 2017 07:44:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=VncqiVxQwXK0cCAPszyYXnL4bNubI/6xxLYPWxzpjh8=;
-        b=l5hlpr1zRTXLnguF0L9+sFv/TTN0NG/lP5nW5mdxlGF9eZi63wu/n7aKrRsLodMWx7
-         LrILEvU/vJm0KzwkKzFHRTIXnRXMKYBVvrC0WjJavPh24JjB/92u1l3mNiZxdMvL+MoE
-         4GA6AH/dNE17kypyo48s0K+K3AvGAEXkZL0+I34ol+u1ROxYKS5l8Z5x4H0W5vPf81so
-         e/cBLCkvC8QPCPBhyz/3SnIbaXzbMf4uwuQmnRm27+XgsthGc4f1xu1bS0CNpm/6CLFz
-         qqPnqHFAZiiZd+0BWYw1fNvx8SMFotyh+fE2fyjxFKvml0Pq0Jq3AUD1CZ+w3c9kIKAi
-         Y36Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=VncqiVxQwXK0cCAPszyYXnL4bNubI/6xxLYPWxzpjh8=;
-        b=NLH246oGQNl3xFlCo6VNDI8FcN/VJvu9K9WnDUqIY2cRI/+YBIszFD6Qo6gUce+Peb
-         s0eUH1GWKoqEJ3wEaoYOa8NPIThyfCWpFTOT6Ggsra4HbiMiCWJMvcDsotvww4ipxuAa
-         ErbIK3HQBRFKqcF6KMwjcjD9BdWGvCnuXl8Tmsek0vXAAgeHkyyv88raXcZ5gFw67iN6
-         DoCMYK/HY6CVLAX5G2fp+iRT5/jHO4XtvJqfoRyXTqP2tgy6On9VWYRu0rnjWadeFnz7
-         uELlB1b05JeFU4t/Y59ViKHpFOi1UVjM4CdFP/d7Hmne1XFaO/3zpXt4V/oSad5lN+2D
-         tSvg==
-X-Gm-Message-State: AHPjjUh0irHWfsaZ1uYqGyyeEVP+eoKaFO4vJHBs42SFxGT44I++J0yZ
-        pRYMBIogRDD4h4hDVnHrF1hsKw==
-X-Google-Smtp-Source: AOwi7QCtdpFvRMY9gmf6hdwuwywDG7e9ekC/dDaSu+WmFlAnNy3XXonMG79HXDki1qT14d8AdzTaLA==
-X-Received: by 10.28.0.207 with SMTP id 198mr5340656wma.92.1505054673459;
-        Sun, 10 Sep 2017 07:44:33 -0700 (PDT)
-Received: from slxBook4.fritz.box (p5DDB7AFE.dip0.t-ipconnect.de. [93.219.122.254])
-        by smtp.gmail.com with ESMTPSA id 4sm6961223wmg.20.2017.09.10.07.44.32
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Sun, 10 Sep 2017 07:44:32 -0700 (PDT)
-From:   larsxschneider@gmail.com
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH v1 2/2] travis-ci: skip a branch build if equal tag is present
-Date:   Sun, 10 Sep 2017 16:44:29 +0200
-Message-Id: <20170910144429.47346-3-larsxschneider@gmail.com>
-X-Mailer: git-send-email 2.14.1
-In-Reply-To: <20170910144429.47346-1-larsxschneider@gmail.com>
-References: <20170910144429.47346-1-larsxschneider@gmail.com>
+        id S1750985AbdIJQ6y (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Sep 2017 12:58:54 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:47671 "EHLO
+        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750810AbdIJQ6x (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Sep 2017 12:58:53 -0400
+Received: from [10.0.2.15] ([147.147.86.16])
+        by avasout07 with smtp
+        id 7syp1w00G0M91Ur01syrvF; Sun, 10 Sep 2017 17:58:51 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=CrLPSjwD c=1 sm=1 tr=0
+ a=dubYQqM3tRRTmV8xSh8cXQ==:117 a=dubYQqM3tRRTmV8xSh8cXQ==:17
+ a=IkcTkHD0fZMA:10 a=h38pAekbA06D3PRPN2cA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: Unexpected pass for t6120-describe.sh on cygwin
+To:     Michael J Gruber <git@grubix.eu>,
+        Adam Dinwoodie <adam@dinwoodie.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+References: <7c3db153-2a56-f27d-af71-e4b61f1252a1@ramsayjones.plus.com>
+ <947699e6-c206-7818-3780-c4367e0996f0@grubix.eu>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <2ef4b3b3-fa2f-ef06-203e-521b8cd6ecaa@ramsayjones.plus.com>
+Date:   Sun, 10 Sep 2017 17:58:49 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
+MIME-Version: 1.0
+In-Reply-To: <947699e6-c206-7818-3780-c4367e0996f0@grubix.eu>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Lars Schneider <larsxschneider@gmail.com>
 
-If we push a branch and a tag pointing to the HEAD of this branch,
-then Travis CI would run the build twice. This wastes resources and
-slows the testing.
 
-Add a function to detect this situation and skip the build the branch
-if appropriate. Invoke this function on every build.
+On 10/09/17 13:27, Michael J Gruber wrote:
+> Ramsay Jones venit, vidit, dixit 09.09.2017 15:13:
+[snip]
+>> So, it looks like all ULIMIT_STACK_SIZE tests need to be disabled
+>> on cygwin. I also wonder about the ULIMIT_FILE_DESCRIPTORS tests,
+>> but haven't looked into it.
+>>
+>> Given that 'ulimit' is a bash built-in, this may also be a problem
+>> on MinGW and Git-For-Windows, but I can't test on those platforms.
+>>
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
----
- ci/lib-travisci.sh | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+> Thanks for the note. We have this in t/test-lib.sh:
+> 
+> run_with_limited_cmdline () {
+>         (ulimit -s 128 && "$@")
+> }
+> 
+> test_lazy_prereq CMDLINE_LIMIT 'run_with_limited_cmdline true'
+> 
+> This apparantly expects "ulimit -s" to fail on platforms that don't
+> support it, 
 
-diff --git a/ci/lib-travisci.sh b/ci/lib-travisci.sh
-index 44d6ba2dd2..9c4ae9bdd0 100755
---- a/ci/lib-travisci.sh
-+++ b/ci/lib-travisci.sh
-@@ -1,5 +1,28 @@
- # Library of functions shared by all CI scripts
- 
-+skip_branch_tip_with_tag () {
-+	# Sometimes, a branch is pushed at the same time the tag that points
-+	# at the same commit as the tip of the branch is pushed, and building
-+	# both at the same time is a waste.
-+	#
-+	# Travis gives a tagname e.g. v2.14.0 in $TRAVIS_BRANCH when
-+	# the build is triggered by a push to a tag.  Let's see if
-+	# $TRAVIS_BRANCH is exactly at a tag, and if so, if it is
-+	# different from $TRAVIS_BRANCH.  That way, we can tell if
-+	# we are building the tip of a branch that is tagged and
-+	# we can skip the build because we won't be skipping a build
-+	# of a tag.
-+
-+	if TAG=$(git describe --exact-match "$TRAVIS_BRANCH" 2>/dev/null) &&
-+		$TAG != $TRAVIS_BRANCH
-+	then
-+		echo "Tip of $TRAVIS_BRANCH is exactly at $TAG"
-+		exit 0
-+	fi
-+}
-+
- # Set 'exit on error' for all CI scripts to let the caller know that
- # something went wrong
- set -e
-+
-+skip_branch_tip_with_tag
--- 
-2.14.1
+Indeed, but cygwin lies (about the stack, anyway) ... :-D
+
+  $ ulimit -a
+  core file size          (blocks, -c) unlimited
+  data seg size           (kbytes, -d) unlimited
+  file size               (blocks, -f) unlimited
+  open files                      (-n) 256
+  pipe size            (512 bytes, -p) 8
+  stack size              (kbytes, -s) 2032
+  cpu time               (seconds, -t) unlimited
+  max user processes              (-u) 256
+  virtual memory          (kbytes, -v) unlimited
+  $ 
+  $ ulimit -a -H
+  core file size          (blocks, -c) unlimited
+  data seg size           (kbytes, -d) unlimited
+  file size               (blocks, -f) unlimited
+  open files                      (-n) 3200
+  pipe size            (512 bytes, -p) 8
+  stack size              (kbytes, -s) unlimited
+  cpu time               (seconds, -t) unlimited
+  max user processes              (-u) 256
+  virtual memory          (kbytes, -v) unlimited
+  $ 
+
+Note that ulimit claims that the soft limit for the stack
+is (2MB - 16kb), but the hard limit is unlimited. Using the
+test program, it is clear that it always segfaults on the
+soft limit, no matter what value is requested. (while not
+'failing' the request).
+
+Note, also, that the soft/hard limit on open files is 256/3200.
+(but I still haven't investigated if ulimit honours that limit
+yet).
+
+               so set the prereq accordingly. I moved the following to
+> t/test-lib.sh:
+> 
+> run_with_limited_stack () {
+>         (ulimit -s 128 && "$@")
+> }
+> 
+> test_lazy_prereq ULIMIT_STACK_SIZE 'run_with_limited_stack true'
+> 
+> Same things as above. Two things to note:
+> - Those requisites could be the same, also they are used in different ways.
+> - "ulimit -s" returning success without doing anything means that, all
+> along, we ran the existing tests when we didn't mean to (on Win), and
+> they succeeded for the wrong reason, which we did not notice.
+
+Yes.
+
+> So, I guess, short of testing the effect of "ulimit -s" with another
+> expensive test, it's best to simply set these prerequisites based on
+> "uname -s".
+
+Yes, I was going to suggest adding !CYGWIN to the test(s) (or perhaps
+to the 'test_lazy_prereq' expression(s)).
+
+ATB,
+Ramsay Jones
+
 
