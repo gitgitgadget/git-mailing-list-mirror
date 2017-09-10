@@ -2,130 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 59346202A4
-	for <e@80x24.org>; Sun, 10 Sep 2017 12:13:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED9BD20286
+	for <e@80x24.org>; Sun, 10 Sep 2017 12:28:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751474AbdIJMM7 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Sep 2017 08:12:59 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:34614 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751451AbdIJMM6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Sep 2017 08:12:58 -0400
-Received: by mail-wm0-f67.google.com with SMTP id l19so4791170wmi.1
-        for <git@vger.kernel.org>; Sun, 10 Sep 2017 05:12:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=Uvlf9TIMGlSV3N93Y4aqRA45fAUZkbuHIMycl0RBXCs=;
-        b=l6r6SAuiJzTfKyw47MnFipl/4W+HrZ4PMbwCiay93/FImHWyjPFU8J2qU4pE+ck3cn
-         lOHDxi3B0QgT1fN0HVbQtRgKviQXA4JakSY+Ro9d4Ep0JIZM2nnZQJRUou1qTwI78Gny
-         d1m6aNkoPSwiU2w5jixhe+CcW4tnToOKkvRJHJKkGhxb2eBWp1prFNKxnBxWG4p3Q57X
-         FSHKAZaZP33q4S0dYfv4qR55LLYU9BWZyFZl3lYHlgl0TvHGBdHORROYKMcx+zcLe8a6
-         XXD8JOn7ihR3e9y8Q2FLX3qDTBEjfL0RgSYa0kZfQMAFurAKvEknjxIGXOVUdSCZBVtN
-         xrZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=Uvlf9TIMGlSV3N93Y4aqRA45fAUZkbuHIMycl0RBXCs=;
-        b=SAOIk/UlpFw0ZkHObGpvMW5DqEXTeZ5XXv5UmkU/3SwA1R3nsnNnRyp4hb4Nj0Tczi
-         GXOXHZkciW9sbe3ly19YkzJWU3oTGy4D0N9SeKjBa+Ag278wcAt0epAFxb9XrpG4MAul
-         BrdhFMGqHjt/I3PTzpCcz8oN3z0pWtgBfeVzSUJz7J4k3tfkxTh5rWSx2rrMuvCKkqn4
-         GXnJqGzeMd+fJnzlcIsnnZxOFLWNpvGa8f35OmbxC68ek0VT1bYCvMNNzOx5ktO7YINp
-         2R3i3oEmjXhRwse4CVUu5OaZQsTnZxGcLPcgX5K1dAKjSRx1VrXFDk8aH4LC1nbc5WJn
-         K+Dw==
-X-Gm-Message-State: AHPjjUgo8D+4UISrEs/kSQpRoRNl+6HZopWOZVTPrqN0+jdjXYENJ9lP
-        o23DanUjVT65qZms0/FNwSg=
-X-Google-Smtp-Source: AOwi7QAbNjASKS+lIh2ZnLesJsuapfBTh1TIFXbObeTjPNShbr0C6hbWT9ocRIHrEPJyS3Qb93pMxA==
-X-Received: by 10.28.27.87 with SMTP id b84mr6206864wmb.71.1505045577152;
-        Sun, 10 Sep 2017 05:12:57 -0700 (PDT)
-Received: from slxbook4.fritz.box (p5DDB7AFE.dip0.t-ipconnect.de. [93.219.122.254])
-        by smtp.gmail.com with ESMTPSA id 193sm11452563wmh.47.2017.09.10.05.12.55
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 10 Sep 2017 05:12:56 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v5 12/40] t0400: add 'put_raw_obj' instruction to odb-helper script
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20170803091926.1755-13-chriscool@tuxfamily.org>
-Date:   Sun, 10 Sep 2017 14:12:56 +0200
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Ben Peart <Ben.Peart@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>, Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <50C9AF15-26DF-48F5-926E-B5D57F492DD1@gmail.com>
-References: <20170803091926.1755-1-chriscool@tuxfamily.org> <20170803091926.1755-13-chriscool@tuxfamily.org>
-To:     Christian Couder <christian.couder@gmail.com>
-X-Mailer: Apple Mail (2.3124)
+        id S1751503AbdIJM16 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Sep 2017 08:27:58 -0400
+Received: from mout.kundenserver.de ([217.72.192.73]:62751 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751482AbdIJM15 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Sep 2017 08:27:57 -0400
+Received: from UltraSam.fritz.box ([92.76.183.238]) by
+ mrelayeu.kundenserver.de (mreue102 [212.227.15.183]) with ESMTPSA (Nemesis)
+ id 0M0i6Q-1dbGJ90Gpq-00umwl; Sun, 10 Sep 2017 14:27:49 +0200
+Subject: Re: Unexpected pass for t6120-describe.sh on cygwin
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Adam Dinwoodie <adam@dinwoodie.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+References: <7c3db153-2a56-f27d-af71-e4b61f1252a1@ramsayjones.plus.com>
+From:   Michael J Gruber <git@grubix.eu>
+Message-ID: <947699e6-c206-7818-3780-c4367e0996f0@grubix.eu>
+Date:   Sun, 10 Sep 2017 14:27:47 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
+MIME-Version: 1.0
+In-Reply-To: <7c3db153-2a56-f27d-af71-e4b61f1252a1@ramsayjones.plus.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: de-DE
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:28XMpWMKrxM1EuZZxFqZV10VKpKcodJI0AVTKTPEZ1L0f+qtIOK
+ eIBVFTsDSRsWHbuYlZdSbStTeoSYegai39X5lg5Ek3Al7SVb9CUr4DwU6V0qBA8FInYDEC7
+ 2cYG+hICrZE3Yr0Vb7MBO4r1PuAGknTfBWOhg8V61wgl+eEA8zibwqGkx7DhNF5eVXuQM2G
+ W35eFPBVj29csBJXOQtiA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:DC3tBjTIS3M=:O3gPvGSmSh2d52BTpmHq6f
+ y8TqCLqn7sIpp+U/yjNme5plyS9hUyDHdlKwjcpA0Wm9v5whE3n0SUc/aH+kNSUuVF01O2d1M
+ dN1PX2ukzm55fkB+QPtp8FWkNePIkEtxx4peEfrJmRqx6s35Vka23+YTY7K0it8w4xZdijs6N
+ XZMcbiGv1z5l+8mLCvWh2faJhlwsg3EApNHIU/0ChdpGpqSJb/13RH/TkGG8SOVRd+OVZEyqe
+ mh8juddwEeKryHmQT86IvU/OaQpK5CNRIEHu5K644ggdlGt5340YnIIPdgBg276conrZ056/e
+ /AxEutLBk3n0+UKMDUq4VyS8kmytQeofTxsSkIEptPNABMC5xbRt0FuFZAKeK5olYfyn8hB+7
+ oEMX+FVUnbSwhEFG3anp6UhcWfm+2wycQCUUdZNkkxxnXryB1Il5TYdHsXUAJOjfBT+eVYDkD
+ 7VvY1U0hnNjcjEjxvmm0GBFTd4byFhf8I6/3huFSfYHJGo9VaaxCwbeFeCA+7JRkI8QbT3+jG
+ b2XRewOVQG/QGjIUbs04jHbLKVwdq8+26DxgCcoVaqjTDE28Cy9pmsQoKzjnwH4MVAjZlIzqO
+ BokBOJ/Mugd/Z9mUng2TVp9bIhaQt+DFqnTZsJR3ozT+PK3z+4sSMR0JOxnSFTla8dzDcmX34
+ CD7mTyEl77/Lg9mStkl9lG0CAVfGFznj02ZXS147RqPhnWyGSmsZKx30R/ZGMRIX+2LXD9mXO
+ X6oGldjiAK1/tgyKohYwdXMui12jZ4Go7CP7nTFDSf6cot5CYtgWu40cSOQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Ramsay Jones venit, vidit, dixit 09.09.2017 15:13:
+> Hi Adam,
+> 
+> I ran the test-suite on the 'pu' branch last night (simply because
+> that was what I had built at the time!), which resulted in a PASS,
+> but t6120 was showing a 'TODO passed' for #52.
+> 
+> This is a test introduced by Michael's 'mg/name-rev-tests-with-short-stack'
+> branch, which uses 'ulimit -s' to try and force a stack overflow.
+> Unfortunately, 'ulimit -s' seems to have no effect on cygwin. I created
+> a test program (see below) to eat up the stack and tried running it
+> with various ulimit values (128, 12, 8), but it always seg-faulted
+> at the same stack-frame. (after using approx 2MB stack space).
+> 
+> So, it looks like all ULIMIT_STACK_SIZE tests need to be disabled
+> on cygwin. I also wonder about the ULIMIT_FILE_DESCRIPTORS tests,
+> but haven't looked into it.
+> 
+> Given that 'ulimit' is a bash built-in, this may also be a problem
+> on MinGW and Git-For-Windows, but I can't test on those platforms.
+> 
+> Unfortunately, I can't spend more time on git today, hence this
+> heads up! ;-)
 
-> On 03 Aug 2017, at 10:18, Christian Couder =
-<christian.couder@gmail.com> wrote:
->=20
-> To properly test passing objects from Git to an external odb
-> we need an odb-helper script that supports a 'put'
-> capability/instruction.
->=20
-> For now we will support only sending raw blobs, so the
-> supported capability/instruction will be 'put_raw_obj'.
+Thanks for the note. We have this in t/test-lib.sh:
 
-What other kind of blobs do you imagine could we send?
+run_with_limited_cmdline () {
+        (ulimit -s 128 && "$@")
+}
+
+test_lazy_prereq CMDLINE_LIMIT 'run_with_limited_cmdline true'
+
+This apparantly expects "ulimit -s" to fail on platforms that don't
+support it, so set the prereq accordingly. I moved the following to
+t/test-lib.sh:
+
+run_with_limited_stack () {
+        (ulimit -s 128 && "$@")
+}
+
+test_lazy_prereq ULIMIT_STACK_SIZE 'run_with_limited_stack true'
+
+Same things as above. Two things to note:
+- Those requisites could be the same, also they are used in different ways.
+- "ulimit -s" returning success without doing anything means that, all
+along, we ran the existing tests when we didn't mean to (on Win), and
+they succeeded for the wrong reason, which we did not notice.
+
+So, I guess, short of testing the effect of "ulimit -s" with another
+expensive test, it's best to simply set these prerequisites based on
+"uname -s".
 
 
-> While at it let's add a test to check that our odb-helper
-> script works well.
->=20
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
-> t/t0400-external-odb.sh | 24 ++++++++++++++++++++++++
-> 1 file changed, 24 insertions(+)
->=20
-> diff --git a/t/t0400-external-odb.sh b/t/t0400-external-odb.sh
-> index ed89f3ab40..3fa0449883 100755
-> --- a/t/t0400-external-odb.sh
-> +++ b/t/t0400-external-odb.sh
-> @@ -7,10 +7,15 @@ test_description=3D'basic tests for external object =
-databases'
-> ALT_SOURCE=3D"$PWD/alt-repo/.git"
-> export ALT_SOURCE
-> write_script odb-helper <<\EOF
-> +die() {
-> +	printf >&2 "%s\n" "$@"
-> +	exit 1
+> ATB,
+> Ramsay Jones
+> 
+> -- >8 --
+> diff --git a/test.c b/test.c
+> new file mode 100644
+> index 0000000..bcbb805
+> --- /dev/null
+> +++ b/test.c
+> @@ -0,0 +1,21 @@
+> +#include <stdio.h>
+> +#include <stdlib.h>
+> +#include <inttypes.h>
+> +
+> +void test(uint64_t count)
+> +{
+> +	int i, junk[1024];
+> +
+> +	for (i = 0; i < 1024; i++)
+> +		junk[i] = count;
+> +	i = junk[count % 1024];
+> +	printf("%" PRIuMAX "\n", (uintmax_t)count);
+> +	fflush(stdout);
+> +	test(count + 1);
 > +}
-> GIT_DIR=3D$ALT_SOURCE; export GIT_DIR
-> case "$1" in
-> init)
-> 	echo "capability=3Dget_git_obj"
-> +	echo "capability=3Dput_raw_obj"
-> 	echo "capability=3Dhave"
-> 	;;
-> have)
-> @@ -20,6 +25,16 @@ have)
-> get_git_obj)
-> 	cat "$GIT_DIR"/objects/$(echo $2 | sed 's#..#&/#')
-> 	;;
-> +put_raw_obj)
-> +	sha1=3D"$2"
-> +	size=3D"$3"
-> +	kind=3D"$4"
-> +	writen=3D$(git hash-object -w -t "$kind" --stdin)
-> +	test "$writen" =3D "$sha1" || die "bad sha1 passed '$sha1' vs =
-writen '$writen'"
+> +
+> +int main(int argc, char *argv[])
+> +{
+> +	test(0);
+> +	return 0;
+> +}
+> 
 
-Typo? Should it be "written"?
-
-- Lars=
