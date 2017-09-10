@@ -2,163 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D1801FAD6
+	by dcvr.yhbt.net (Postfix) with ESMTP id 324771FAD6
 	for <e@80x24.org>; Sun, 10 Sep 2017 07:36:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751107AbdIJHaG (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Sep 2017 03:30:06 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33650 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751077AbdIJHaF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Sep 2017 03:30:05 -0400
-Received: (qmail 20421 invoked by uid 109); 10 Sep 2017 07:30:04 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 10 Sep 2017 07:30:04 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18083 invoked by uid 111); 10 Sep 2017 07:30:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Sun, 10 Sep 2017 03:30:38 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 10 Sep 2017 03:30:03 -0400
-Date:   Sun, 10 Sep 2017 03:30:03 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 06/34] clone: release strbuf after use in remove_junk()
-Message-ID: <20170910073002.hg6tqgm2z7owqr2u@sigill.intra.peff.net>
-References: <20170830175005.20756-1-l.s.r@web.de>
- <20170830175005.20756-7-l.s.r@web.de>
- <xmqq1snj61wr.fsf@gitster.mtv.corp.google.com>
- <0884b528-d455-09c6-0eaf-d2af50077a98@web.de>
+        id S1751138AbdIJHgh (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Sep 2017 03:36:37 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51802 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751077AbdIJHgg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Sep 2017 03:36:36 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 74EA794CFB;
+        Sun, 10 Sep 2017 03:36:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=E1bEi249yz73w0sKh0WPu3381g0=; b=COrDK/
+        JiFRBe6dKGnJnHdo0M8aMcPIMT5eog6xcF32hzVOvXDJr0vDvUVxNp5ztJn9SmlU
+        ArLrOTvTtxqlAslGcQK13ue+xXmroPEy8QDzHm30ZqOA0uI4PU4WEEbR7UfkdmEf
+        J8wBXeAT8B1Zrzhvrt9cUshfk00bOL0GntFdE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=glrC+U0RAjSRrsNr4UVytbewL3lrAiEJ
+        hC6dOz234K4tpOzkndccUp3Z3IsK/mM/OfYuN9CjOvAkx+EdJHR7uMtxrj7Hj/qJ
+        QhjSY1Y0AH2utP65jRT9bWy3LGHAt3bH1eUEpeoG9eRHCr3L7ddYaLqgpBdGgJ62
+        P18ZoUHEQS0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6C9F394CFA;
+        Sun, 10 Sep 2017 03:36:33 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CBFC594CF9;
+        Sun, 10 Sep 2017 03:36:32 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Stefan Beller <sbeller@google.com>,
+        =?utf-8?B?0JLQsNC70LXQvdGC0Lg=?= =?utf-8?B?0L0=?= 
+        <valiko.ua@gmail.com>, "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: "git shortlog -sn --follow -- <path>" counts all commits to entire repo
+In-Reply-To: <20170909065247.wob3nuxvox4f65gg@sigill.intra.peff.net> (Jeff
+        King's message of "Sat, 9 Sep 2017 02:52:47 -0400")
+References: <CAJrPYn8_n1JD3hL1LSAVz2Khs=dZRVaZ-gpru5AV+ottv5WfAw@mail.gmail.com>
+        <CAGZ79kZAeCERKn6he2LzAj97BXEJ5U+Fy4sorAPNmW_XaCS9Vg@mail.gmail.com>
+        <20170908051015.ybq4egdrddecl4se@sigill.intra.peff.net>
+        <xmqqo9qlzodi.fsf@gitster.mtv.corp.google.com>
+        <20170908074910.reoyb47navgsg6kt@sigill.intra.peff.net>
+        <xmqqbmmlytv3.fsf@gitster.mtv.corp.google.com>
+        <20170909065247.wob3nuxvox4f65gg@sigill.intra.peff.net>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+Date:   Sun, 10 Sep 2017 16:36:31 +0900
+Message-ID: <xmqqh8wbxaww.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <0884b528-d455-09c6-0eaf-d2af50077a98@web.de>
+Content-Type: text/plain
+X-Pobox-Relay-ID: C47607B2-95FA-11E7-8CC9-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 10, 2017 at 08:27:40AM +0200, René Scharfe wrote:
+Jeff King <peff@peff.net> writes:
 
-> >>   	if (junk_work_tree) {
-> >>   		strbuf_addstr(&sb, junk_work_tree);
-> >>   		remove_dir_recursively(&sb, 0);
-> >> -		strbuf_reset(&sb);
-> >>   	}
-> >> +	strbuf_release(&sb);
-> >>   }
-> > 
-> > The code definitely needs a _release() at the end, but I feel
-> > lukewarm about the "if we are about to _release(), do not bother to
-> > _reset()" micro-optimization.  Keeping the existing two users that
-> > use sb as a (shared and reused) temporary similar would help those
-> > who add the third one or reuse the pattern in their code elsewhere.
-> 
-> That's not intended as an optimization, but as a promotion -- the reset
-> is moved to the outer block and upgraded to a release.  The result is
-> consistent with builtin/worktree.c::remove_junk().
+> On Sat, Sep 09, 2017 at 02:37:20AM +0900, Junio C Hamano wrote:
+>
+>> Using log-tree traversal machinery instead of just get_revision()
+>> would probably mean we would slow it down quite a bit unless we are
+>> careful, but at the same time, things like "git shortlog -G<string>"
+>> would suddenly start working, so this is not just helping the
+>> "--follow" hack.
+>
+> I didn't notice that, but I'm not surprised that there are more options
+> that shortlog doesn't quite work with.
+>
+> I don't plan on working on this myself any time soon, so maybe it's a
+> good #leftoverbits candidate (though it's perhaps a little more involved
+> than some).
 
-Hmm. This is a cleanup function called only from signal and atexit
-handlers. I don't think we actually do need to clean up, and this might
-be a good candidate for UNLEAK().
+I agree that I do not mind seeing those who haven't really touched
+the inner core of the system to try this change, so marking this
+discussion with #leftoverbits may be a good idea, but I have this
+gut feeling that "a little more involved" might be a bit of an
+understatement ;-)
 
-And in fact, being called from a signal handler means we should
-generally avoid touching malloc or free (which could be holding locks).
-That would mean preferring a leak to strbuf_release(). Of course that is
-the tip of the iceberg. We call strbuf_addstr() here, and
-remove_dir_recursively() will grow our buffer.
+But still I think it is a very good suggestion to allow log-tree to
+filter things more so that "shortlog $args" can become a more
+faithful imitation of "log $args | shortlog".
 
-So I actually wonder if junk_git_dir and junk_work_tree should be
-pre-sized strbufs themselves. And that makes the leak "go away" in the
-eyes of leak-checkers because we hold onto the static strbufs until
-program exit.
-
-I.e., something like this:
-
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 8d11b570a1..a350f7801e 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -471,8 +471,19 @@ static void clone_local(const char *src_repo, const char *dest_repo)
- 		fprintf(stderr, _("done.\n"));
- }
- 
--static const char *junk_work_tree;
--static const char *junk_git_dir;
-+static void register_junk(struct strbuf *junk, const char *str)
-+{
-+	/*
-+	 * we don't want to have to allocate for recursive removal during a
-+	 * signal handler, so pre-size our strbufs to something that is
-+	 * unlikely to overflow.
-+	 */
-+	strbuf_grow(junk, 4096);
-+	strbuf_addstr(junk, str);
-+}
-+
-+static struct strbuf junk_work_tree = STRBUF_INIT;
-+static struct strbuf junk_git_dir = STRBUF_INIT;
- static enum {
- 	JUNK_LEAVE_NONE,
- 	JUNK_LEAVE_REPO,
-@@ -486,8 +497,6 @@ N_("Clone succeeded, but checkout failed.\n"
- 
- static void remove_junk(void)
- {
--	struct strbuf sb = STRBUF_INIT;
--
- 	switch (junk_mode) {
- 	case JUNK_LEAVE_REPO:
- 		warning("%s", _(junk_leave_repo_msg));
-@@ -499,16 +508,10 @@ static void remove_junk(void)
- 		break;
- 	}
- 
--	if (junk_git_dir) {
--		strbuf_addstr(&sb, junk_git_dir);
--		remove_dir_recursively(&sb, 0);
--		strbuf_reset(&sb);
--	}
--	if (junk_work_tree) {
--		strbuf_addstr(&sb, junk_work_tree);
--		remove_dir_recursively(&sb, 0);
--		strbuf_reset(&sb);
--	}
-+	if (junk_git_dir.len)
-+		remove_dir_recursively(&junk_git_dir, 0);
-+	if (junk_work_tree.len)
-+		remove_dir_recursively(&junk_work_tree, 0);
- }
- 
- static void remove_junk_on_signal(int signo)
-@@ -970,11 +973,11 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 		if (!dest_exists && mkdir(work_tree, 0777))
- 			die_errno(_("could not create work tree dir '%s'"),
- 				  work_tree);
--		junk_work_tree = work_tree;
-+		register_junk(&junk_work_tree, work_tree);
- 		set_git_work_tree(work_tree);
- 	}
- 
--	junk_git_dir = real_git_dir ? real_git_dir : git_dir;
-+	register_junk(&junk_git_dir, real_git_dir ? real_git_dir : git_dir);
- 	if (safe_create_leading_directories_const(git_dir) < 0)
- 		die(_("could not create leading directories of '%s'"), git_dir);
- 
-
-Technically this would probably also benefit from all of the variables
-being marked volatile, but we'd have to cast the volatility away to use
-any strbuf functions. :(
-
-If we really wanted to make this robust for signals (and I'm not sure
-that it is worth the effort), I suspect the best route would be to teach
-the tempfile.c code (which tries very hard to be careful about signals
-and volatility) to handle directories.
-
--Peff
+Thanks.
