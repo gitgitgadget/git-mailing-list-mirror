@@ -2,143 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ED9BD20286
-	for <e@80x24.org>; Sun, 10 Sep 2017 12:28:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C7DEB20286
+	for <e@80x24.org>; Sun, 10 Sep 2017 12:30:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751503AbdIJM16 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Sep 2017 08:27:58 -0400
-Received: from mout.kundenserver.de ([217.72.192.73]:62751 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751482AbdIJM15 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Sep 2017 08:27:57 -0400
-Received: from UltraSam.fritz.box ([92.76.183.238]) by
- mrelayeu.kundenserver.de (mreue102 [212.227.15.183]) with ESMTPSA (Nemesis)
- id 0M0i6Q-1dbGJ90Gpq-00umwl; Sun, 10 Sep 2017 14:27:49 +0200
-Subject: Re: Unexpected pass for t6120-describe.sh on cygwin
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Adam Dinwoodie <adam@dinwoodie.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-References: <7c3db153-2a56-f27d-af71-e4b61f1252a1@ramsayjones.plus.com>
-From:   Michael J Gruber <git@grubix.eu>
-Message-ID: <947699e6-c206-7818-3780-c4367e0996f0@grubix.eu>
-Date:   Sun, 10 Sep 2017 14:27:47 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
-MIME-Version: 1.0
-In-Reply-To: <7c3db153-2a56-f27d-af71-e4b61f1252a1@ramsayjones.plus.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: de-DE
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:28XMpWMKrxM1EuZZxFqZV10VKpKcodJI0AVTKTPEZ1L0f+qtIOK
- eIBVFTsDSRsWHbuYlZdSbStTeoSYegai39X5lg5Ek3Al7SVb9CUr4DwU6V0qBA8FInYDEC7
- 2cYG+hICrZE3Yr0Vb7MBO4r1PuAGknTfBWOhg8V61wgl+eEA8zibwqGkx7DhNF5eVXuQM2G
- W35eFPBVj29csBJXOQtiA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:DC3tBjTIS3M=:O3gPvGSmSh2d52BTpmHq6f
- y8TqCLqn7sIpp+U/yjNme5plyS9hUyDHdlKwjcpA0Wm9v5whE3n0SUc/aH+kNSUuVF01O2d1M
- dN1PX2ukzm55fkB+QPtp8FWkNePIkEtxx4peEfrJmRqx6s35Vka23+YTY7K0it8w4xZdijs6N
- XZMcbiGv1z5l+8mLCvWh2faJhlwsg3EApNHIU/0ChdpGpqSJb/13RH/TkGG8SOVRd+OVZEyqe
- mh8juddwEeKryHmQT86IvU/OaQpK5CNRIEHu5K644ggdlGt5340YnIIPdgBg276conrZ056/e
- /AxEutLBk3n0+UKMDUq4VyS8kmytQeofTxsSkIEptPNABMC5xbRt0FuFZAKeK5olYfyn8hB+7
- oEMX+FVUnbSwhEFG3anp6UhcWfm+2wycQCUUdZNkkxxnXryB1Il5TYdHsXUAJOjfBT+eVYDkD
- 7VvY1U0hnNjcjEjxvmm0GBFTd4byFhf8I6/3huFSfYHJGo9VaaxCwbeFeCA+7JRkI8QbT3+jG
- b2XRewOVQG/QGjIUbs04jHbLKVwdq8+26DxgCcoVaqjTDE28Cy9pmsQoKzjnwH4MVAjZlIzqO
- BokBOJ/Mugd/Z9mUng2TVp9bIhaQt+DFqnTZsJR3ozT+PK3z+4sSMR0JOxnSFTla8dzDcmX34
- CD7mTyEl77/Lg9mStkl9lG0CAVfGFznj02ZXS147RqPhnWyGSmsZKx30R/ZGMRIX+2LXD9mXO
- X6oGldjiAK1/tgyKohYwdXMui12jZ4Go7CP7nTFDSf6cot5CYtgWu40cSOQ=
+        id S1751540AbdIJMaR (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Sep 2017 08:30:17 -0400
+Received: from mail-wr0-f173.google.com ([209.85.128.173]:34579 "EHLO
+        mail-wr0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751482AbdIJMaQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Sep 2017 08:30:16 -0400
+Received: by mail-wr0-f173.google.com with SMTP id v109so10251099wrc.1
+        for <git@vger.kernel.org>; Sun, 10 Sep 2017 05:30:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=gWK8fDqJtIgj3afTpBWQ2npWpiL0A0gJ6Sv3qIo6NOM=;
+        b=ae8muU35qcqNv9f6SVXPc4mlV8JMW3zcpK06r2Sl7jVJdLxYV/C5TLLT/t337+hbYq
+         c2D8b82K/3TkPngQd+e/fltoJydKr9xO4xOhEhVhX9rW5HcaY/NG12a7iBpY7z+zzFp1
+         wsbQFujXTIMCFBb9unyL93cNi5RQX0x3S4wei61YHHUfHtNgy5l6r/5ICl19XAs208Nb
+         9NOhR2Ee/U1da4UwUiuz6Z3w1GpriqE594MsuHSrq8O0AAeIJ9v0omzKY3PiH8FJrEC8
+         0z8oA7cq0b7N9srGG4VmOHle5sG79NESzclZv3CN4nHWVEVRGC/OdYY8Oxm6nvC9DXhc
+         9NEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=gWK8fDqJtIgj3afTpBWQ2npWpiL0A0gJ6Sv3qIo6NOM=;
+        b=bVdE+2pSKbYdcezaeZ8QCwBmBrcI1YRbP+AVT1tmnbC7mCxMMebeQobR0xgUCbUGoB
+         M6fKeWMR8Jstz4XVcwt8z9BgEyj1M8i7G+4/Jts8oJcMKJwJoTaxJcCJht0pC6iFRMnB
+         6MVQQ2h7MnTNu8gkbzSmOgyONnkE/bRFX4j/xsZ/IS1eM0kB9TSWjlCwaKdTAt4/qDIq
+         kwsrI7etyWVm7UkykcM3N9/5+c9DBE/Gow2c7TnNZgDIvuBn+s3C1rAGubGibSeAjdM1
+         S7z1tZ6ARJtW1VQ+QySCeWn033ONOAtyGp6U8NUS2iA1FM8L14y6Std7wzw9uXgYlQiL
+         vJpg==
+X-Gm-Message-State: AHPjjUg+PKrleia5QKjhMI1+XIAMUPc4oPRAESo7P9F5fO+n9BdNGdXp
+        RZpMYFafU7tiTw==
+X-Google-Smtp-Source: ADKCNb5qjQ2r/luMJFNvEhn9faKEg73GbA6LoP7khe9esununvYw+7hR15AZD3Zpah1NsoodOYTHZA==
+X-Received: by 10.223.172.14 with SMTP id v14mr6719990wrc.142.1505046615554;
+        Sun, 10 Sep 2017 05:30:15 -0700 (PDT)
+Received: from slxbook4.fritz.box (p5DDB7AFE.dip0.t-ipconnect.de. [93.219.122.254])
+        by smtp.gmail.com with ESMTPSA id 193sm11529774wmh.47.2017.09.10.05.30.14
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 10 Sep 2017 05:30:14 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v5 00/40] Add initial experimental external ODB support
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <20170803091926.1755-1-chriscool@tuxfamily.org>
+Date:   Sun, 10 Sep 2017 14:30:13 +0200
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Ben Peart <Ben.Peart@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Mike Hommey <mh@glandium.org>, Eric Wong <e@80x24.org>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <BE9DF8E9-3771-42DD-B1F6-EC77783380F7@gmail.com>
+References: <20170803091926.1755-1-chriscool@tuxfamily.org>
+To:     Christian Couder <christian.couder@gmail.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ramsay Jones venit, vidit, dixit 09.09.2017 15:13:
-> Hi Adam,
-> 
-> I ran the test-suite on the 'pu' branch last night (simply because
-> that was what I had built at the time!), which resulted in a PASS,
-> but t6120 was showing a 'TODO passed' for #52.
-> 
-> This is a test introduced by Michael's 'mg/name-rev-tests-with-short-stack'
-> branch, which uses 'ulimit -s' to try and force a stack overflow.
-> Unfortunately, 'ulimit -s' seems to have no effect on cygwin. I created
-> a test program (see below) to eat up the stack and tried running it
-> with various ulimit values (128, 12, 8), but it always seg-faulted
-> at the same stack-frame. (after using approx 2MB stack space).
-> 
-> So, it looks like all ULIMIT_STACK_SIZE tests need to be disabled
-> on cygwin. I also wonder about the ULIMIT_FILE_DESCRIPTORS tests,
-> but haven't looked into it.
-> 
-> Given that 'ulimit' is a bash built-in, this may also be a problem
-> on MinGW and Git-For-Windows, but I can't test on those platforms.
-> 
-> Unfortunately, I can't spend more time on git today, hence this
-> heads up! ;-)
 
-Thanks for the note. We have this in t/test-lib.sh:
+> On 03 Aug 2017, at 10:18, Christian Couder =
+<christian.couder@gmail.com> wrote:
+>=20
+> ...
+>=20
+> * The "helpers" (registered commands)
+>=20
+> Each helper manages access to one external ODB.
+>=20
+> There are 2 different modes for helper:
+>=20
+>  - Helpers configured using "odb.<odbname>.scriptCommand" are
+>    launched each time Git wants to communicate with the <odbname>
+>    external ODB. This is called "script mode".
+>=20
+>  - Helpers configured using "odb.<odbname>.subprocessCommand" are
+>    launched launched once as a sub-process (using sub-process.h), and
+>    Git communicates with them using packet lines. This is called
+>    "process mode".
 
-run_with_limited_cmdline () {
-        (ulimit -s 128 && "$@")
-}
-
-test_lazy_prereq CMDLINE_LIMIT 'run_with_limited_cmdline true'
-
-This apparantly expects "ulimit -s" to fail on platforms that don't
-support it, so set the prereq accordingly. I moved the following to
-t/test-lib.sh:
-
-run_with_limited_stack () {
-        (ulimit -s 128 && "$@")
-}
-
-test_lazy_prereq ULIMIT_STACK_SIZE 'run_with_limited_stack true'
-
-Same things as above. Two things to note:
-- Those requisites could be the same, also they are used in different ways.
-- "ulimit -s" returning success without doing anything means that, all
-along, we ran the existing tests when we didn't mean to (on Win), and
-they succeeded for the wrong reason, which we did not notice.
-
-So, I guess, short of testing the effect of "ulimit -s" with another
-expensive test, it's best to simply set these prerequisites based on
-"uname -s".
+I am curious, why would we support two modes? Wouldn't that increase
+the maintenance cost? Wouldn't the subprocess command be superior?
+I imagine the script mode eases testing, right?!
 
 
-> ATB,
-> Ramsay Jones
-> 
-> -- >8 --
-> diff --git a/test.c b/test.c
-> new file mode 100644
-> index 0000000..bcbb805
-> --- /dev/null
-> +++ b/test.c
-> @@ -0,0 +1,21 @@
-> +#include <stdio.h>
-> +#include <stdlib.h>
-> +#include <inttypes.h>
-> +
-> +void test(uint64_t count)
-> +{
-> +	int i, junk[1024];
-> +
-> +	for (i = 0; i < 1024; i++)
-> +		junk[i] = count;
-> +	i = junk[count % 1024];
-> +	printf("%" PRIuMAX "\n", (uintmax_t)count);
-> +	fflush(stdout);
-> +	test(count + 1);
-> +}
-> +
-> +int main(int argc, char *argv[])
-> +{
-> +	test(0);
-> +	return 0;
-> +}
-> 
+> ...
+>=20
+> These odb refs point to a blob that is stored in the Git
+> repository and contain information about the blob stored in the
+> external odb. This information can be specific to the external odb.
+> The repos can then share this information using commands like:
+>=20
+> `git fetch origin "refs/odbs/<odbname>/*:refs/odbs/<odbname>/*"`
+>=20
+> At the end of the current patch series, "git clone" is teached a
+> "--initial-refspec" option, that asks it to first fetch some specified
+> refs. This is used in the tests to fetch the odb refs first.
+>=20
+> This way only one "git clone" command can setup a repo using the
+> external ODB mechanism as long as the right helper is installed on the
+> machine and as long as the following options are used:
+>=20
+>  - "--initial-refspec <odbrefspec>" to fetch the odb refspec
+>  - "-c odb.<odbname>.command=3D<helper>" to configure the helper
 
+The "odb" config could, of course, go into the global git config.=20
+The odbrefspec is optional, right?
+
+I have the impression there are a number of topics on the list
+that tackle the "many/big objects in a Git repo" problem. Is
+there a write up about the status of them, how they relate
+to each other, and what the current problems are?=20
+I found the following but it looks abandoned:
+https://github.com/jrn/git-large-repositories
+
+- Lars=
