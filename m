@@ -2,86 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C5DA1FAD6
-	for <e@80x24.org>; Sun, 10 Sep 2017 07:39:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 588611FAD6
+	for <e@80x24.org>; Sun, 10 Sep 2017 07:40:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751296AbdIJHjb (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Sep 2017 03:39:31 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33666 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751279AbdIJHja (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Sep 2017 03:39:30 -0400
-Received: (qmail 20830 invoked by uid 109); 10 Sep 2017 07:39:30 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 10 Sep 2017 07:39:30 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18195 invoked by uid 111); 10 Sep 2017 07:40:04 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Sun, 10 Sep 2017 03:40:04 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 10 Sep 2017 03:39:28 -0400
-Date:   Sun, 10 Sep 2017 03:39:28 -0400
-From:   Jeff King <peff@peff.net>
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johan Herland <johan@herland.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH 00/12] Clean up notes-related code around `load_subtree()`
-Message-ID: <20170910073928.ys4nbap76tmiurjh@sigill.intra.peff.net>
-References: <cover.1503734566.git.mhagger@alum.mit.edu>
- <20170909103131.pppm346qbj2cdxuo@sigill.intra.peff.net>
- <2b7c0053-bf7a-fbdd-3cf9-39b5d9a962c3@alum.mit.edu>
+        id S1751310AbdIJHkA (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Sep 2017 03:40:00 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51908 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751279AbdIJHj7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Sep 2017 03:39:59 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2755BAC653;
+        Sun, 10 Sep 2017 03:39:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=jqVH2J12vKsK
+        HLs6hLoCBdYTg3M=; b=xu8v1Yjx1PqIwYwPxzJdofjJKVXxhZi9j52Ykhwuca7O
+        nirzJGxJ4Ek7OvcsV1FngpGuvA3j2itN/IEWpZzuCuZX39TwPkCXcFWcBXiqX6TD
+        59rtHKZLNTDNpbzuqdEYktUdL5mkNoL3z1qexS4LlRVmANsDC8njKwS42LO2554=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=LZnEkA
+        elTLPvCBAoeBzon3gXWtNodsuAcrzPDweSuqJZvLZY/r1WaeOQ4Y2Tnnf0a3mLn5
+        u2ndY1gIYrCxCGHGxp/OSquQ2HgYjoHEdvtOQrCj4HpqzU1hsXAcaBbqxliUrJwA
+        P7MVevOgUq1ORfHP21pRQzBuUIeTwobLgTMHE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 20928AC652;
+        Sun, 10 Sep 2017 03:39:59 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8688AAC650;
+        Sun, 10 Sep 2017 03:39:58 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 34/34] wt-status: release strbuf after use in wt_longstatus_print_tracking()
+References: <20170830175005.20756-1-l.s.r@web.de>
+        <20170830182018.21390-1-l.s.r@web.de>
+        <xmqqmv6761xk.fsf@gitster.mtv.corp.google.com>
+        <33aecb28-e930-f500-3452-3899d1116d9f@web.de>
+Date:   Sun, 10 Sep 2017 16:39:57 +0900
+In-Reply-To: <33aecb28-e930-f500-3452-3899d1116d9f@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Sun, 10 Sep 2017 08:27:30 +0200")
+Message-ID: <xmqqd16zxar6.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <2b7c0053-bf7a-fbdd-3cf9-39b5d9a962c3@alum.mit.edu>
+X-Pobox-Relay-ID: 3F131082-95FB-11E7-B299-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 10, 2017 at 06:45:08AM +0200, Michael Haggerty wrote:
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-> > So nothing to see here, but since I spent 20 minutes scratching my head
-> > (and I know others look at Coverity output and may scratch their heads
-> > too), I thought it was worth writing up. And also if I'm wrong, it would
-> > be good to know. ;)
-> 
-> Thanks for looking into this. I agree with your analysis.
-> 
-> I wonder whether it is the factor of two between path lengths and byte
-> lengths that is confusing Coverity. Perhaps the patch below would help.
-> It requires an extra, superfluous, check, but perhaps makes the code a
-> tad more readable. I'm neutral on whether we would want to make the change.
+> Am 06.09.2017 um 21:51 schrieb Junio C Hamano:
+>> Rene Scharfe <l.s.r@web.de> writes:
+>>=20
+>>> If format_tracking_info() returns 0 only if it didn't touch its strbu=
+f
+>>> parameter, so it's OK to exit early in that case.  Clean up sb in the
+>>> other case.
+>>=20
+>> These two "if"s confuse me; perhaps the first one is not needed?
+>
+> Yes, removing it looks like the best way to make that sentence clearer.
+> Another would be to replace "only if" with "then".
 
-Yeah, I do agree that it makes the code's assumptions a bit easier to
-follow.
-
-> Is there a way to ask Coverity whether a hypothetical change would
-> remove the warning, short of merging the change to master?
-
-You can download and run the build portion of the coverity tools
-yourself. IIRC, that pushes the build up to their servers which then do
-the analysis (you can make your own "project", or use the existing "git"
-project -- I checked and you are already listed as an admin). I recall
-it being a minor pain to get it set up, but not too bad.
-
-Stefan runs it against "pu" on a regular basis, which is where the
-emailed results come from. So just having Junio merge it to "pu" would
-be enough to get results.
-
-I noticed that they now have some GitHub/Travis integration:
-
-  https://scan.coverity.com/github
-
-I'm not sure if that is new, or if we just didn't notice it before. ;)
-But that probably makes more sense to use than ad-hoc uploading (and
-maybe it would make it easy for you to test personal branches, too).
-
--Peff
+Either makes it understandable. Thanks.
