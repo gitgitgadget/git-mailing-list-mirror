@@ -2,92 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB872209B8
-	for <e@80x24.org>; Mon, 11 Sep 2017 19:34:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D6A70209B8
+	for <e@80x24.org>; Mon, 11 Sep 2017 19:35:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751160AbdIKTez (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Sep 2017 15:34:55 -0400
-Received: from ikke.info ([178.21.113.177]:51060 "EHLO vps892.directvps.nl"
+        id S1751178AbdIKTfF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Sep 2017 15:35:05 -0400
+Received: from ikke.info ([178.21.113.177]:51074 "EHLO vps892.directvps.nl"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751022AbdIKTey (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Sep 2017 15:34:54 -0400
+        id S1751020AbdIKTfE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Sep 2017 15:35:04 -0400
 Received: by vps892.directvps.nl (Postfix, from userid 182)
-        id 595D544012D; Mon, 11 Sep 2017 21:20:35 +0200 (CEST)
+        id CA26D440377; Mon, 11 Sep 2017 21:20:45 +0200 (CEST)
 Received: from epsilon.home (unknown [10.8.0.22])
-        by vps892.directvps.nl (Postfix) with ESMTP id E159344012D;
-        Mon, 11 Sep 2017 21:20:34 +0200 (CEST)
+        by vps892.directvps.nl (Postfix) with ESMTP id 7103A44012D;
+        Mon, 11 Sep 2017 21:20:45 +0200 (CEST)
 From:   Kevin Daudt <me@ikke.info>
 To:     git@vger.kernel.org
 Cc:     Kevin Daudt <me@ikke.info>
-Subject: [PATCH v2 1/2] doc/for-each-ref: consistently use '=' to between argument names and values
-Date:   Mon, 11 Sep 2017 21:33:37 +0200
-Message-Id: <20170911193338.25985-1-me@ikke.info>
+Subject: [PATCH v2 2/2] doc/for-each-ref: explicitly specify option names
+Date:   Mon, 11 Sep 2017 21:33:38 +0200
+Message-Id: <20170911193338.25985-2-me@ikke.info>
 X-Mailer: git-send-email 2.14.1.459.g238e487ea9
-In-Reply-To: <20170901144931.26114-1-me@ikke.info>
+In-Reply-To: <20170911193338.25985-1-me@ikke.info>
 References: <20170901144931.26114-1-me@ikke.info>
+ <20170911193338.25985-1-me@ikke.info>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The synopsis and description inconsistently add a '=' between the
-argument name and it's value. Make this consistent.
+For count, sort and format, only the argument names were listed under
+OPTIONS, not the option names.
+
+Add the option names to make it clear the options exist
 
 Signed-off-by: Kevin Daudt <me@ikke.info>
 ---
- Documentation/git-for-each-ref.txt | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ Documentation/git-for-each-ref.txt | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
 diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index bb370c9c7..1015c88f6 100644
+index 1015c88f6..66b4e0a40 100644
 --- a/Documentation/git-for-each-ref.txt
 +++ b/Documentation/git-for-each-ref.txt
-@@ -10,8 +10,9 @@ SYNOPSIS
- [verse]
- 'git for-each-ref' [--count=<count>] [--shell|--perl|--python|--tcl]
- 		   [(--sort=<key>)...] [--format=<format>] [<pattern>...]
--		   [--points-at <object>] [(--merged | --no-merged) [<object>]]
--		   [--contains [<object>]] [--no-contains [<object>]]
-+		   [--points-at=<object>]
-+		   (--merged[=<object>] | --no-merged[=<object>])
-+		   [--contains[=<object>]] [--no-contains[=<object>]]
+@@ -26,19 +26,25 @@ host language allowing their direct evaluation in that language.
  
- DESCRIPTION
- -----------
-@@ -65,24 +66,24 @@ OPTIONS
- 	the specified host language.  This is meant to produce
- 	a scriptlet that can directly be `eval`ed.
+ OPTIONS
+ -------
+-<count>::
++<pattern>...::
++	If one or more patterns are given, only refs are shown that
++	match against at least one pattern, either using fnmatch(3) or
++	literally, in the latter case matching completely or from the
++	beginning up to a slash.
++
++--count=<count>::
+ 	By default the command shows all refs that match
+ 	`<pattern>`.  This option makes it stop after showing
+ 	that many refs.
  
----points-at <object>::
-+--points-at=<object>::
- 	Only list refs which points at the given object.
+-<key>::
++--sort=<key>::
+ 	A field name to sort on.  Prefix `-` to sort in
+ 	descending order of the value.  When unspecified,
+ 	`refname` is used.  You may use the --sort=<key> option
+ 	multiple times, in which case the last key becomes the primary
+ 	key.
  
----merged [<object>]::
-+--merged[=<object>]::
- 	Only list refs whose tips are reachable from the
- 	specified commit (HEAD if not specified),
- 	incompatible with `--no-merged`.
+-<format>::
++--format=<format>::
+ 	A string that interpolates `%(fieldname)` from a ref being shown
+ 	and the object it points at.  If `fieldname`
+ 	is prefixed with an asterisk (`*`) and the ref points
+@@ -51,12 +57,6 @@ OPTIONS
+ 	`xx`; for example `%00` interpolates to `\0` (NUL),
+ 	`%09` to `\t` (TAB) and `%0a` to `\n` (LF).
  
----no-merged [<object>]::
-+--no-merged[=<object>]::
- 	Only list refs whose tips are not reachable from the
- 	specified commit (HEAD if not specified),
- 	incompatible with `--merged`.
- 
----contains [<object>]::
-+--contains[=<object>]::
- 	Only list refs which contain the specified commit (HEAD if not
- 	specified).
- 
----no-contains [<object>]::
-+--no-contains[=<object>]::
- 	Only list refs which don't contain the specified commit (HEAD
- 	if not specified).
- 
+-<pattern>...::
+-	If one or more patterns are given, only refs are shown that
+-	match against at least one pattern, either using fnmatch(3) or
+-	literally, in the latter case matching completely or from the
+-	beginning up to a slash.
+-
+ --shell::
+ --perl::
+ --python::
 -- 
 2.14.1.459.g238e487ea9
 
