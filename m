@@ -6,117 +6,86 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 37A691FAD6
-	for <e@80x24.org>; Mon, 11 Sep 2017 17:47:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA4121FAD6
+	for <e@80x24.org>; Mon, 11 Sep 2017 18:08:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751193AbdIKRrO (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Sep 2017 13:47:14 -0400
-Received: from cloud.peff.net ([104.130.231.41]:34646 "HELO cloud.peff.net"
+        id S1750926AbdIKSI1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Sep 2017 14:08:27 -0400
+Received: from cloud.peff.net ([104.130.231.41]:34674 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750782AbdIKRrO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Sep 2017 13:47:14 -0400
-Received: (qmail 22186 invoked by uid 109); 11 Sep 2017 17:47:13 -0000
+        id S1750782AbdIKSI1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Sep 2017 14:08:27 -0400
+Received: (qmail 23133 invoked by uid 109); 11 Sep 2017 18:08:27 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 11 Sep 2017 17:47:13 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 11 Sep 2017 18:08:27 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29502 invoked by uid 111); 11 Sep 2017 17:47:47 -0000
+Received: (qmail 29576 invoked by uid 111); 11 Sep 2017 18:09:01 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Mon, 11 Sep 2017 13:47:47 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Mon, 11 Sep 2017 14:09:01 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Sep 2017 13:47:11 -0400
-Date:   Mon, 11 Sep 2017 13:47:11 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Sep 2017 14:08:25 -0400
+Date:   Mon, 11 Sep 2017 14:08:25 -0400
 From:   Jeff King <peff@peff.net>
 To:     Michael J Gruber <git@grubix.eu>
-Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Adam Dinwoodie <adam@dinwoodie.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: Unexpected pass for t6120-describe.sh on cygwin
-Message-ID: <20170911174711.j7ela4feg43gw34b@sigill.intra.peff.net>
-References: <7c3db153-2a56-f27d-af71-e4b61f1252a1@ramsayjones.plus.com>
- <947699e6-c206-7818-3780-c4367e0996f0@grubix.eu>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/4] Test name-rev with small stack
+Message-ID: <20170911180824.gf6jecxpx7d3d4a7@sigill.intra.peff.net>
+References: <c1cb526d-a567-b598-d980-5dbe695b7d6a@grubix.eu>
+ <cover.1504792601.git.git@grubix.eu>
+ <20170907145423.wz3iqxxz2yvxq5lm@sigill.intra.peff.net>
+ <9b3275a2-7b47-9ed8-6f1f-dac999c3b46a@grubix.eu>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <947699e6-c206-7818-3780-c4367e0996f0@grubix.eu>
+In-Reply-To: <9b3275a2-7b47-9ed8-6f1f-dac999c3b46a@grubix.eu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 10, 2017 at 02:27:47PM +0200, Michael J Gruber wrote:
+On Fri, Sep 08, 2017 at 02:33:35PM +0200, Michael J Gruber wrote:
 
-> This apparantly expects "ulimit -s" to fail on platforms that don't
-> support it, so set the prereq accordingly. I moved the following to
-> t/test-lib.sh:
+> Looking at it more closely, the solution in cbc60b6720 ("git tag
+> --contains: avoid stack overflow", 2014-04-24) seems to be a bit "ad
+> hoc" to me:
 > 
-> run_with_limited_stack () {
->         (ulimit -s 128 && "$@")
-> }
-> 
-> test_lazy_prereq ULIMIT_STACK_SIZE 'run_with_limited_stack true'
-> 
-> Same things as above. Two things to note:
-> - Those requisites could be the same, also they are used in different ways.
-> - "ulimit -s" returning success without doing anything means that, all
-> along, we ran the existing tests when we didn't mean to (on Win), and
-> they succeeded for the wrong reason, which we did not notice.
+> First of all, there is more than "tag --contains" that may exceed the
+> stack by recursion. So I would expect the solution to be more general,
+> and not localised and specialised to builtin/tag.c
 
-Right, if ulimit doesn't actually limit, then the test isn't really
-accomplishing anything. But we likely have several tests in our suite
-that do that. As long as they do something on _some_ platforms, they're
-still useful. And as long as their failure mode is a false-pass, they
-don't bother people on the other platforms.
+At the time, tag was the only one using this depth-first contains
+algorithm. It's since been adapted to ref-filter.c, but of course the
+stack handling went with it.
 
-So I think one option is to just leave it.
+Most traversals have a date-sorted queue, so are effectively doing a
+breadth-first iteration with no recursion.
 
-> So, I guess, short of testing the effect of "ulimit -s" with another
-> expensive test, it's best to simply set these prerequisites based on
-> "uname -s".
+> Second, this is a walk, so I'm wondering whether our revision walk
+> machinery should be the place to add missing functionality (if any).
+> That way, everything would benefit from possible or existing
+> improvements there. For example, I think some of our "extra walkers"
+> don't heed object replacements. (I need to test more.)
 
-You can make a cheap test that uses a lot of stack. E.g., this program
-runs in about 3ms on my machine, and you can reliably run "ulimit -s 128
-&& ./a.out >/dev/null" to detect it segfaulting:
+It's possible that name-rev could make better use of the existing
+traversal machinery. It's often tough to do so, though, because that
+machinery gives you a linearized ordering of the commits. Whereas
+something like name-rev really cares about the order that it visits the
+commits, because it's building up the names.
 
--- >8 --
-#include <stdio.h>
+It's the same for this "tag --contains" traversal. It _used_ to be a
+series of merge-base computations. But by doing a custom traversal, we
+can cache incremental results through the graph and avoid walking over
+the same bits multiple times. There actually is a way to do it with the
+regular breadth-first traversal, but you have to store one bit per ref
+you're checking for each commit.
 
-/*
- * Our goal is to use a lot of stack space relatively cheaply. To do that,
- * allocate a big stack buffer and recurse. But we take a few precautions to
- * avoid a clever compiler optimizing away our stack:
- *
- *   - we need to use the buffer so that it can't be eliminated
- *
- *   - we recurse after touching the buffer but before printing it,
- *     which makes it hard to do tail-recursion.
- */
-static void foo(unsigned x)
-{
-	size_t i;
-	unsigned char buf[1024];
+I played around with that a bit a while ago, and it did seem to work. I
+can dig up the patches if you're interested. But one downside is that
+one bit per ref per commit adds up if you have a lot of refs. A large
+number of those bitfields will be the same, so you could probably get by
+with a copy-on-write scheme, but I never implemented that.
 
-	if (!x)
-		return;
-
-	for (i = 0; i < sizeof(buf); i++)
-		buf[x] = x & 0xff;
-
-	foo(x - 1);
-
-	fwrite(buf, 1, sizeof(buf), stdout);
-}
-
-int main(void)
-{
-	foo(128);
-	return 0;
-}
--- 8< --
-
-One downside is that it means git's test suite would (on a successful
-run) stimulate segfaults, which are sometimes tracked and logged by the
-kernel (or may even generate coredumps outside of the test suite area).
+Of course somebody may have a more clever algorithm, too. I don't claim
+the above is a proof. ;)
 
 -Peff
