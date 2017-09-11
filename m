@@ -2,84 +2,176 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A4B2E20286
-	for <e@80x24.org>; Mon, 11 Sep 2017 04:01:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C74E20286
+	for <e@80x24.org>; Mon, 11 Sep 2017 04:27:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751019AbdIKEBn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Sep 2017 00:01:43 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64788 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750715AbdIKEBm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Sep 2017 00:01:42 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 60AC8A1E48;
-        Mon, 11 Sep 2017 00:01:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=5Vq2HeD+AtcrgfVDBz7TSCKJEAs=; b=xn+Hix
-        +2d4KbHqFZXizg4OTpjJuo3M8TYhk2KfNWQkAdABm/DT1xcJGls05fRDWWYEl0AX
-        pUv21ItZeEY2K1RTOsyZ7d8p5POz+C2y0h/ss8AyEHTETDKl7nnZz/mA1X5NMFbH
-        OeslFP31xc9/RhIUCI4cu4SHQMnBFWVSGtx3A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=fHv1IJl380nt/J8k6yNjO6xDImGHvDX0
-        4VHiQ9xKF0ThV0AYfXGnArOy/buzcOmPvkP+HiaBmqDbTvy8d6YvzARla0WDBY1L
-        79VajsojVVCF5Irf+j0NltzZwbA+kNFxGMUOj61Bb6LrAK0XUfER7c20Qob7bYut
-        5PkZIVcGzcs=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 570F6A1E47;
-        Mon, 11 Sep 2017 00:01:41 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        id S1750810AbdIKE1p (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Sep 2017 00:27:45 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5]:39528 "EHLO
+        mx0a-001b2d01.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1750748AbdIKE1o (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 11 Sep 2017 00:27:44 -0400
+Received: from pps.filterd (m0098417.ppops.net [127.0.0.1])
+        by mx0a-001b2d01.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id v8B4OA2h039709
+        for <git@vger.kernel.org>; Mon, 11 Sep 2017 00:27:44 -0400
+Received: from e23smtp03.au.ibm.com (e23smtp03.au.ibm.com [202.81.31.145])
+        by mx0a-001b2d01.pphosted.com with ESMTP id 2cwc08747r-1
+        (version=TLSv1.2 cipher=AES256-SHA bits=256 verify=NOT)
+        for <git@vger.kernel.org>; Mon, 11 Sep 2017 00:27:44 -0400
+Received: from localhost
+        by e23smtp03.au.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted
+        for <git@vger.kernel.org> from <sam.bobroff@au1.ibm.com>;
+        Mon, 11 Sep 2017 14:27:41 +1000
+Received: from d23relay09.au.ibm.com (202.81.31.228)
+        by e23smtp03.au.ibm.com (202.81.31.209) with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted;
+        Mon, 11 Sep 2017 14:27:40 +1000
+Received: from d23av01.au.ibm.com (d23av01.au.ibm.com [9.190.234.96])
+        by d23relay09.au.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id v8B4RdrT39256220
+        for <git@vger.kernel.org>; Mon, 11 Sep 2017 14:27:39 +1000
+Received: from d23av01.au.ibm.com (localhost [127.0.0.1])
+        by d23av01.au.ibm.com (8.14.4/8.14.4/NCO v10.0 AVout) with ESMTP id v8B4ReYR016842
+        for <git@vger.kernel.org>; Mon, 11 Sep 2017 14:27:40 +1000
+Received: from ozlabs.au.ibm.com (ozlabs.au.ibm.com [9.192.253.14])
+        by d23av01.au.ibm.com (8.14.4/8.14.4/NCO v10.0 AVin) with ESMTP id v8B4Rd1m016836;
+        Mon, 11 Sep 2017 14:27:39 +1000
+Received: from tungsten.ozlabs.ibm.com (haven.au.ibm.com [9.192.254.114])
+        (using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B7477A1E46;
-        Mon, 11 Sep 2017 00:01:40 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Kevin Willford <kewillf@microsoft.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
-        "peff\@peff.net" <peff@peff.net>,
-        "pclouds\@gmail.com" <pclouds@gmail.com>
-Subject: Re: [PATCH 1/1] reset: fix reset when using the sparse-checkout feature.
-References: <20170908180050.25188-1-kewillf@microsoft.com>
-        <20170908180050.25188-2-kewillf@microsoft.com>
-        <xmqqvaktxawk.fsf@gitster.mtv.corp.google.com>
-        <SN1PR21MB0014638E5D9CBFD0D9D85F10B7950@SN1PR21MB0014.namprd21.prod.outlook.com>
-        <xmqqr2vgy2yt.fsf@gitster.mtv.corp.google.com>
-        <SN1PR21MB00140C84DC02F3491F4E8469B76A0@SN1PR21MB0014.namprd21.prod.outlook.com>
-Date:   Mon, 11 Sep 2017 13:01:39 +0900
-In-Reply-To: <SN1PR21MB00140C84DC02F3491F4E8469B76A0@SN1PR21MB0014.namprd21.prod.outlook.com>
-        (Kevin Willford's message of "Sat, 9 Sep 2017 04:54:31 +0000")
-Message-ID: <xmqqh8w951ek.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        by ozlabs.au.ibm.com (Postfix) with ESMTPSA id 2C6BEA0173;
+        Mon, 11 Sep 2017 14:27:39 +1000 (AEST)
+Date:   Mon, 11 Sep 2017 14:27:38 +1000
+From:   Sam Bobroff <sam.bobroff@au1.ibm.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] format-patch: use raw format for notes
+References: <334a7be4f61c02db24008181eb1d6c80c95772f7.1503894009.git.sam.bobroff@au1.ibm.com>
+ <xmqqingw8ppj.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EA9792B6-96A5-11E7-821E-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqingw8ppj.fsf@gitster.mtv.corp.google.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-TM-AS-MML: disable
+x-cbid: 17091104-0008-0000-0000-000001573917
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 17091104-0009-0000-0000-0000098B5D2F
+Message-Id: <20170911042737.4h5b2jygdeu7cpmf@tungsten.ozlabs.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2017-09-11_01:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=0
+ malwarescore=0 phishscore=0 adultscore=0 bulkscore=0 classifier=spam
+ adjust=0 reason=mlx scancount=1 engine=8.0.1-1707230000
+ definitions=main-1709110067
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kevin Willford <kewillf@microsoft.com> writes:
+On Wed, Sep 06, 2017 at 12:34:48PM +0900, Junio C Hamano wrote:
+> Sam Bobroff <sam.bobroff@au1.ibm.com> writes:
+> 
+> > If "--notes=..." is used with "git format-patch", the notes are
+> > prefixed with the ref's local name and indented, which looks odd and
+> > exposes the path of the ref.
+> >
+> > Extend the test that suppresses this behaviour so that it also catches
+> > this case, causing the notes to be included without additional
+> > processing.
+> >
+> > Signed-off-by: Sam Bobroff <sam.bobroff@au1.ibm.com>
+> > ---
+> >
+> > Notes (foo):
+> >     Hi,
+> >     
+> >     I've noticed what appears to be a small cosmetic bug in git format-patch, as
+> >     I've described in the commit message.
+> >     
+> >     I'm not sure if this patch is the right way to fix it (or perhaps it's not even
+> >     a bug), but it should at least help to explain what I'm talking about.
+> >     
+> >     I've used "git format-patch --notes=foo" to prepare this email so that it is an
+> >     example of the issue :-)
+> >     
+> >     Cheers,
+> >     Sam.
+> 
+> Is the above addition from your 'foo' notes with or without this
+> patch?  I think the answer is "without", and the above "example"
+> looks just fine to me.
 
-> I agree with this when you are not dealing with a sparse-checkout.
-> When using a sparse-checkout I expect git not to touch things
-> outside of what I have specified in my sparse-checkout file.  If it
-> does, it should let me know or put my working directory in a
-> state that is expected.  Especially when it is changing the
-> skip-worktree bits causing files outside the sparse-checkout to be
-> reported incorrectly by status.
+Yes that's correct, it is without the patch.
 
-Well, whether using a sparse-checkout or not, I would expect Git not
-to touch *any* filesystem entity when "git reset" (not "--hard",
-just "git reset [<tree-ish>]") is given, whether the path is inside
-or outside the sparse-checkout area.
+>  - It is very much intended to allow The "(foo)" after the "Notes"
+>    label to show which notes ref the note comes from, because there
+>    can be more than one notes refs that annotate the same commit.
 
-Stepping back a bit, I am not sure if it is sane or even valid for
-the end-user to modify paths outside sparse-checkout area, but that
-is probably a separate tangent.
+Right, that makes perfect sense to me when it's being output locally.
 
+But the ref names are local to my git repo and there is no reaason why
+they should be meaningful or even known to the recipients of the patch
+email.
+
+>  - And the contents are indented, just like the diffstat and other
+>    stuff we place after "---" but before the first "diff", to ensure
+>    no matter what text appears there it will not be mistaken as part
+>    sure that the contents from the notes will not be mistaken as part
+>    of the patch.
+
+I don't quite agree here. I think it would be fine to indent the whole
+block by one space, like the diffstat, but the main text is indented an
+additional four which looks odd and breaks line wrapping. (Yes, the line
+wrapping can be worked around, but still...)
+
+> I do not think an unconditional change of the established format,
+> like your patch does, is acceptable, as existing users have relied
+> on, and expect to be able to continue relying on, the above two
+> aspect of the current format.
+
+Sure and I'm happy look at some kind of optional change but, just out of
+curiousity, is there some specific use case that this might break? (Not
+that there needs to be one, I agree with the general "don't break
+things" approach.)
+
+> But I am somewhat curious what your use case that wants to insert
+> the raw contents there is.  We may be able to construct a valid
+> argument to add such an output as an optional feature if there is a
+> good use case for it.
+
+Perhaps I'm misunderstanding something about it but I just want to
+insert text into the comments section automatically, so that I don't
+have to post-process the output of format-patch with some horrible sed
+script :-)
+
+(If only there were a way to set the coverletter text automatically as
+well...)
+
+> Thanks.
+
+Thanks for the reply!
+Cheers,
+Sam.
+
+> 
+> >  log-tree.c | 3 ++-
+> >  1 file changed, 2 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/log-tree.c b/log-tree.c
+> > index 410ab4f02..26bc21ad3 100644
+> > --- a/log-tree.c
+> > +++ b/log-tree.c
+> > @@ -655,7 +655,8 @@ void show_log(struct rev_info *opt)
+> >  		int raw;
+> >  		struct strbuf notebuf = STRBUF_INIT;
+> >  
+> > -		raw = (opt->commit_format == CMIT_FMT_USERFORMAT);
+> > +		raw = (opt->commit_format == CMIT_FMT_USERFORMAT) ||
+> > +		      (opt->commit_format == CMIT_FMT_EMAIL);
+> >  		format_display_notes(&commit->object.oid, &notebuf,
+> >  				     get_log_output_encoding(), raw);
+> >  		ctx.notes_message = notebuf.len
 
