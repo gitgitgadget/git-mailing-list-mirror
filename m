@@ -2,145 +2,173 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 89D8E1FAD6
-	for <e@80x24.org>; Mon, 11 Sep 2017 14:53:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A4F671FAD6
+	for <e@80x24.org>; Mon, 11 Sep 2017 17:12:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751393AbdIKOxx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Sep 2017 10:53:53 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:38305 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751153AbdIKOxw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Sep 2017 10:53:52 -0400
-Received: by mail-wr0-f194.google.com with SMTP id p37so4533879wrb.5
-        for <git@vger.kernel.org>; Mon, 11 Sep 2017 07:53:51 -0700 (PDT)
+        id S1752306AbdIKRMW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Sep 2017 13:12:22 -0400
+Received: from mail-wr0-f173.google.com ([209.85.128.173]:33610 "EHLO
+        mail-wr0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751524AbdIKRMV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Sep 2017 13:12:21 -0400
+Received: by mail-wr0-f173.google.com with SMTP id a43so16059485wrc.0
+        for <git@vger.kernel.org>; Mon, 11 Sep 2017 10:12:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:mime-version
-         :content-transfer-encoding;
-        bh=svUoqG7IyuQWV8GepRH1pT9Ihyuv1fwdqANwirAHQ9Q=;
-        b=uwSjm2gdBr7jtfk/9MERljTKs5N3c9Gc9+R5HEEuYxItTZAGkbYjTAdu+rgArVrJPA
-         a38oqI8mYAbEBOsA82tU3oFUQCNqsOZVaCUJfAZ/AFXhaKcDSkhP93HAUJ0nkKzWyXV5
-         l0OzQUjrwPaey/Y+qdZOR9ITbzvujFWBLk5vxRlJnrpo7Mrb/mty7QNo8dOW2OUkpFBO
-         5B9FY0f7FFz18JhlFO8TmSWh9rxDCD3vUP7hFs1+Avz2LgV6lSLxJjVVGF8Ph7hgRK9/
-         SJd9QKkpH8Rhqs7xfjwHbk+h7RdzadLzzZvMBrPN31xrCzImb0vMAU6QWbub/YzC/0Do
-         m1rg==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ucJsMeLDcfugv+YIwKVJYcvyjM0ezrMRqSoI//rfPwI=;
+        b=GXofsBOUl/cy2RnzRsjGBLDZYxdZbbVYkbPlUXN7C3mU4CfyfTRsnAdFrjT+IjwT2W
+         o0Jdcx10lFDm7sYGwhsmy0WtTn7l7jfMDl1Suf979D7W6Bh0j2qZDyoQuQwsvmrAKXIK
+         WMyMzEcqpZztiqXBvSuY/GLeNPGnpRReiwh8p6VttobeJbxzKqcYzcyHH+Hy9yom8Yqp
+         ijavo+mrUeX89zFfzbQMArcN1EuNbMZMRfhNwJdB2LbXdsI36iNr6QubGo6UD6526Twy
+         qTV7GnKErXeoFKPeCNNlYVJv3BsqDccqvZ3Or9kHkkhnlpRyVVZH6TC+IoFzcWBX/pCX
+         kz3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :mime-version:content-transfer-encoding;
-        bh=svUoqG7IyuQWV8GepRH1pT9Ihyuv1fwdqANwirAHQ9Q=;
-        b=fDoZsGwC+4vMVISiH5kjPv06gHAP9xM2eY4hDpgHtX1XQrE60KPxA+21h6macTI3AB
-         LDjiidivSybV59Cm/ow2k0mQd9AS+YQQldG8aTEmMyUV0RwHSKo2TKnSbS0JFjbZqUea
-         H3DcFX+U5Kbb8UH1CMJN6EYG60t9b4KrIFfWZqJArzQ8cts8pCh4WKHEoUXynuvV44BO
-         TXItgNZLCj3Bb/hRO3u764b6ArmAgJMXrJw5C/uYXadqiFEigCfv6RWXHEb2AjRX+uJr
-         E9SeYV2mgTw7oNPJTyJ7RZlYESmbj5MWA7EfzWPtLuvCqRZwNMUyM3TbTy2JIcOIgnNs
-         D+LQ==
-X-Gm-Message-State: AHPjjUinJrV9kaj4qgETwEPJKCwl7AIFdNh+pMs/EA2REkgaI2t8IFAo
-        qwzw8hr3yAmHuA==
-X-Google-Smtp-Source: ADKCNb6NvGnOVF5NkzeXDNgAOKjDBv+2uHRHOrjbekjprHfXUdLw3Hi1LEn+nD1oYkyXllHKznKigg==
-X-Received: by 10.223.135.97 with SMTP id 30mr8122562wrz.245.1505141631157;
-        Mon, 11 Sep 2017 07:53:51 -0700 (PDT)
-Received: from localhost.localdomain (x590e3ec7.dyn.telefonica.de. [89.14.62.199])
-        by smtp.gmail.com with ESMTPSA id n29sm6470046wmi.46.2017.09.11.07.53.49
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 11 Sep 2017 07:53:50 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        gitster@pobox.com, git@vger.kernel.org
-Subject: Re: [PATCH v1 2/2] travis-ci: skip a branch build if equal tag is present
-Date:   Mon, 11 Sep 2017 16:52:41 +0200
-Message-Id: <20170911145241.18571-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.14.1.527.g3f6d5ed64
-In-Reply-To: <20170910144429.47346-3-larsxschneider@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ucJsMeLDcfugv+YIwKVJYcvyjM0ezrMRqSoI//rfPwI=;
+        b=IFtVkvudAwudoPvQsX9/W7kiUpdGJvz2FIDfdfcvMKGQ1KSMIkLYbDSQP74aMfbWXm
+         NXszlvAzQA/ffoDN12c7mFqtOZcvDVIgoRGF+08rAvKX091My20BBbwsE5hTXahNV9kK
+         j0PEjbItGt0H+oFpOoAoP1aeJmIlIwf7wwBdei5Hu3WKdFZbGhIuumszEN7IDV0iMKmN
+         tNLEdEI3n1O6B3hSGzcHBI9rWPx+7WbVG6ANysGz3vSx8tBc4A/FHeMJdtsY/ieJ4E+N
+         v8v1XOUmWWKyVkySB4GQxW1TqzpxM+PcCN3YOwMJzhRi2mci8ZRskvOOBeeKeQnB2Ro6
+         SLvw==
+X-Gm-Message-State: AHPjjUiC5QECUXmCsC50hlRqsCQaXsi6vXnfqJQ8p4CLsyBGJHhL2WFu
+        MaB4KSGH17nIdhe0HCR1q0qbIEvAr+lxF2crNg==
+X-Google-Smtp-Source: ADKCNb5hy4KwHt5tWD92rslkXND1YlYBLAsCt++t8hJGoVKfnF8bEpkJ/Q3LJ/9J30npJ54+3mfezXpUY7HBiPbXmqo=
+X-Received: by 10.223.138.238 with SMTP id z43mr9050388wrz.83.1505149939283;
+ Mon, 11 Sep 2017 10:12:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.223.170.68 with HTTP; Mon, 11 Sep 2017 10:12:18 -0700 (PDT)
+In-Reply-To: <xmqqr2vi0z7q.fsf@gitster.mtv.corp.google.com>
+References: <xmqqd174bzco.fsf@gitster.mtv.corp.google.com> <20170907220429.31312-1-sbeller@google.com>
+ <xmqqr2vi0z7q.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 11 Sep 2017 10:12:18 -0700
+Message-ID: <CAGZ79kZCQq8ts6RAN2Qz5vWtUh7swu0UWO_6LTaRhNF5sDbnDg@mail.gmail.com>
+Subject: Re: [PATCHv3] builtin/merge: honor commit-msg hook for merges
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> If we push a branch and a tag pointing to the HEAD of this branch,
+On Thu, Sep 7, 2017 at 6:13 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>> .... The --no-verify option however is not remembered across invocations
+>> of git-merge. Originally the author assumed an alternative in which the
+>> 'git merge --continue' command accepts the --no-verify flag, but that
+>> opens up the discussion which flags are allows to the continued merge
+>> command and which must be given in the first invocation.
+>
+> This leaves a reader (me) wondering what the final conclusion was,
+> after the author assumed something and thought about alternatives.
 
-s/the HEAD of//, perhaps?
-There is no such thing as "HEAD" (all capital!) of a branch, is it?
+I did not draw a conclusion, I was just saying, that this has to be
+thought about.
+It looks to me as if --continue currently wants to take no extra arguments,
+but to remember all flags from the previous invocation of merge.
 
-> then Travis CI would run the build twice. This wastes resources and
+But that only looks this way as all the command line flags are related
+for tree manipulation, not (indirect) commit message manipulation.
 
-Nit: s/run the build/build and test the same tree/, to further stress
-that the two builds are redundant.
+So I think having --no-verify be respected (either by restating, or by
+remembering, or both) by the `git merge --continue` call would be a
+reasonable thing to want.
 
-> slows the testing.
-> 
-> Add a function to detect this situation and skip the build the branch
+So that new patch just added the test as a #needswork for the future,
+not actually making a decision how to approach it.
 
-s/skip the build/skip building/ ?
+> I am guessing that your final decision was not to remember
+> "--no-verify" so a user who started "merge --no-verify" that stopped
+> in the middle must say "merge --continue --no-verify" or "commit
+> --no-verify" to conclude the merge?  Or you added some mechanism to
+> remember the fact that no-verify was given so that "merge --continue"
+> will read from there, ignoring "merge --continue --verify" from the
+> command line?  Not just the above part of the log message confusing,
+> but there is no update to the documentation, and we shouldn't expect
+> end-users to find out what ought to happen by reading t7504 X-<.
 
-> if appropriate. Invoke this function on every build.
-> 
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
-> ---
->  ci/lib-travisci.sh | 23 +++++++++++++++++++++++
->  1 file changed, 23 insertions(+)
-> 
-> diff --git a/ci/lib-travisci.sh b/ci/lib-travisci.sh
-> index 44d6ba2dd2..9c4ae9bdd0 100755
-> --- a/ci/lib-travisci.sh
-> +++ b/ci/lib-travisci.sh
-> @@ -1,5 +1,28 @@
->  # Library of functions shared by all CI scripts
->  
-> +skip_branch_tip_with_tag () {
-> +	# Sometimes, a branch is pushed at the same time the tag that points
-> +	# at the same commit as the tip of the branch is pushed, and building
-> +	# both at the same time is a waste.
-> +	#
-> +	# Travis gives a tagname e.g. v2.14.0 in $TRAVIS_BRANCH when
-> +	# the build is triggered by a push to a tag.  Let's see if
-> +	# $TRAVIS_BRANCH is exactly at a tag, and if so, if it is
-> +	# different from $TRAVIS_BRANCH.  That way, we can tell if
-> +	# we are building the tip of a branch that is tagged and
-> +	# we can skip the build because we won't be skipping a build
-> +	# of a tag.
-> +
-> +	if TAG=$(git describe --exact-match "$TRAVIS_BRANCH" 2>/dev/null) &&
-> +		$TAG != $TRAVIS_BRANCH
+Interestingly the documentation that I read to approach the problem
+is already in shape as it would not specify the specific command for the
+'--no-verify' option. I missed that we need to add documentation for
+the continued merge case.
 
-This must be
+> The new test in t7504 tells me that you remember --[no-]verify from
+> the initial invocation and use the same when --continue is given; it
+> is unclear how that remembered one interacts with --[no-]verify that
+> is given when --continue is given.  It is not documented, tested and
+> explained in the log message.  I would expect that the command line
+> trumps what was given in the initial invocation.
 
-    [ $TAG != $TRAVIS_BRANCH ]
+I would expect that, too.
 
-otherwise the shell will rightfully complain:
+>
+>
+>> +static int verify_msg = 1;
+>>
+>>  static struct strategy all_strategy[] = {
+>>       { "recursive",  DEFAULT_TWOHEAD | NO_TRIVIAL },
+>> @@ -236,6 +237,7 @@ static struct option builtin_merge_options[] = {
+>>         N_("GPG sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
+>>       OPT_BOOL(0, "overwrite-ignore", &overwrite_ignore, N_("update ignored files (default)")),
+>>       OPT_BOOL(0, "signoff", &signoff, N_("add Signed-off-by:")),
+>> +     OPT_BOOL(0, "verify", &verify_msg, N_("verify commit-msg hook")),
+>>       OPT_END()
+>>  };
+>
+> I suspect that the previous iteration gives a much better end-user
+> experience when "git merge -h" is used.  This will give the
+> impression that the user MUST say "merge --verify" if the user wants
+> to verify commit-msg hook (whatever that means), but because the
+> option defaults to true, that is not what happens.  The user instead
+> must say "merge --no-verify" if the verification is unwanted.
 
-  $ TRAVIS_BRANCH=v2.14.0 ./ci/lib-travisci.sh 
-  ./ci/lib-travisci.sh: line 17: v2.14.0: command not found
+ok, will revert to that in a resend.
 
-Furthermore, I would prefer quotes around $TAG and $TRAVIS_BRANCH.  If
-either one of those two variables were empty (or contain multiple
-words) at that point, the shell would complain.  Now, I don't think
-that either can end up being empty, so quotes are not necessary, but
-having quotes around them would save future readers from spending
-brain cycles on this unnecessarily.
+>> +test_expect_failure 'merge --continue remembers --no-verify' '
+>> +     test_when_finished "git branch -D newbranch" &&
+>> +     test_when_finished "git checkout -f master" &&
+>> +     git checkout master &&
+>> +     echo a >file2 &&
+>> +     git add file2 &&
+>> +     git commit --no-verify -m "add file2 to master" &&
+>> +     git checkout -b newbranch master^ &&
+>> +     echo b >file2 &&
+>> +     git add file2 &&
+>> +     git commit --no-verify file2 -m in-side-branch &&
+>> +     git merge --no-verify -m not-rewritten-by-hook master &&
+>> +     # resolve conflict:
+>> +     echo c >file2 &&
+>> +     git add file2 &&
+>> +     git merge --continue &&
+>> +     commit_msg_is not-rewritten-by-hook
+>>  '
+>
+> OK.  What should happen when the last "merge --continue" was given
+> "--verify" at the same time?
 
-> +	then
-> +		echo "Tip of $TRAVIS_BRANCH is exactly at $TAG"
-> +		exit 0
-> +	fi
-> +}
-> +
->  # Set 'exit on error' for all CI scripts to let the caller know that
->  # something went wrong
->  set -e
-> +
-> +skip_branch_tip_with_tag
-> -- 
-> 2.14.1
-> 
-> 
+Currently not possible, due to --continue requiring that it is the
+only argument. In the future where --continue works well with other
+arguments, we should override the original.
+
+> A similar test whose title is
+> "--no-verify remembered by merge --continue can be overriden" may be
+> a good thing to follow this one, perhaps?
+
+Note that this is already test_expect_failure, which I used to mark
+that this particular flag is broken across a --continue invocation of git-merge,
+so I would not add yet another test that describes the future yet to be
+implemented?
+
+Thanks.
