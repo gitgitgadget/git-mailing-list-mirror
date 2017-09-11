@@ -2,154 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FAKE_REPLY_C,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0BB01202A4
-	for <e@80x24.org>; Mon, 11 Sep 2017 10:31:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 25E3B202A4
+	for <e@80x24.org>; Mon, 11 Sep 2017 11:15:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750986AbdIKKbr (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Sep 2017 06:31:47 -0400
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:46303 "EHLO
-        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750965AbdIKKbq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Sep 2017 06:31:46 -0400
-Received: by mail-wm0-f54.google.com with SMTP id i189so36065442wmf.1
-        for <git@vger.kernel.org>; Mon, 11 Sep 2017 03:31:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dinwoodie.org; s=google;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :in-reply-to:user-agent;
-        bh=jT2d8L/oqzLZSoFFT4Zi63jUFjf8IfUZZvTzCudKjlc=;
-        b=iNAMoMNewenwtxdH2wY3UqUv3RnmlYQtQFTDtyBtUNEOZyw2BB1Cukbo2O7pikb3t8
-         SBdflq7VVKJXE9EvfkmnOTE4HR4EEuorJCsGp/leRqeEguy1HMHhHx14EiqrdjwRX99p
-         yavhONBJqUud1qMFcZbG9X2n/HfXQbWUdyV/A=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=jT2d8L/oqzLZSoFFT4Zi63jUFjf8IfUZZvTzCudKjlc=;
-        b=YqjeC1IR0E0i3JwIx/kbArIU3E9vuSe9PYhF4qHEjocEoAsFaEKbz9LYiZX+a5nqoY
-         3sgWh4HQkHsIP9qdg1ipVGMpUyoMVfsY0PBXsO+X+U93+PKD5NoCvN48GCwkglDa5KcO
-         H5UpeOjF1tyLvELoBwUip0qgXvoQ2IpAvA2LN9leigfBChqkR60C2kNei5ELx5YtN6+c
-         ta9EBBko7lhiaZ5mHC4t6C8z4gvpjU0zSeEwgP+g4gsQm4mtbOSRDGCC6GWBhdg5MyzD
-         xQblJomNeKlzrB6op77QKIap0sGniS96IQlxksZSnGObCeGZ77DGT2zVzP5L2/liGKBq
-         M9og==
-X-Gm-Message-State: AHPjjUh9D08C/YOLPbspJlQHDrX7xchBxjmJJSXhgby9ZkUpbRFeJFB4
-        7JGdDP0VO24BjJvH
-X-Google-Smtp-Source: AOwi7QB4wyaWaG6VRzmplKFdR1P27XJgFF5XF8rgP5s3/RcugrUQ9+2mW4yTEibmsZNsV08AQvRJEA==
-X-Received: by 10.28.104.67 with SMTP id d64mr7584653wmc.15.1505125905079;
-        Mon, 11 Sep 2017 03:31:45 -0700 (PDT)
-Received: from dinwoodie.org ([2001:ba8:0:1c0::9:1])
-        by smtp.gmail.com with ESMTPSA id u1sm4545379wrd.95.2017.09.11.03.31.43
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 11 Sep 2017 03:31:44 -0700 (PDT)
-Date:   Mon, 11 Sep 2017 11:31:42 +0100
-From:   Adam Dinwoodie <adam@dinwoodie.org>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Michael J Gruber <git@grubix.eu>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: Unexpected pass for t6120-describe.sh on cygwin
-Message-ID: <20170911103142.GH10378@dinwoodie.org>
+        id S1751685AbdIKLP5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Sep 2017 07:15:57 -0400
+Received: from mout.gmx.net ([212.227.15.19]:55225 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751605AbdIKLP4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Sep 2017 07:15:56 -0400
+Received: from virtualbox ([37.201.203.107]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MD9NE-1dfE8r3POW-00GccX; Mon, 11
+ Sep 2017 13:15:37 +0200
+Date:   Mon, 11 Sep 2017 13:15:36 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Kevin Willford <kewillf@microsoft.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "peff@peff.net" <peff@peff.net>,
+        "pclouds@gmail.com" <pclouds@gmail.com>
+Subject: Re: [PATCH 1/1] reset: fix reset when using the sparse-checkout
+ feature.
+In-Reply-To: <xmqqh8w951ek.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1709111259430.4132@virtualbox>
+References: <20170908180050.25188-1-kewillf@microsoft.com>        <20170908180050.25188-2-kewillf@microsoft.com>        <xmqqvaktxawk.fsf@gitster.mtv.corp.google.com>        <SN1PR21MB0014638E5D9CBFD0D9D85F10B7950@SN1PR21MB0014.namprd21.prod.outlook.com>  
+      <xmqqr2vgy2yt.fsf@gitster.mtv.corp.google.com>        <SN1PR21MB00140C84DC02F3491F4E8469B76A0@SN1PR21MB0014.namprd21.prod.outlook.com> <xmqqh8w951ek.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7c3db153-2a56-f27d-af71-e4b61f1252a1@ramsayjones.plus.com>
- <2ef4b3b3-fa2f-ef06-203e-521b8cd6ecaa@ramsayjones.plus.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:bvylWoTNPCaro13ggw5b3Kdh8Li369TnnTTdEc0xuNEz5CGbPwt
+ Hl2NOKy1Lourml6TvA27Wkx9OX2E2i/JiM1LX4ISumCWbkDY3OzHnSClithPsmeRSOyh0kf
+ ZHvRiCg4jpOeL4xyHMgdBqKavTQkO4PUaUJJ4UG9XCWjoN5JMhjoUq0BEh5E2SwBI1qJjII
+ zfgMuJp2HstR/yOsEp+KQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:35ITe5eYuCk=:ve/HiOSupZfzujUL4dJPeN
+ 4ych284UHWreowEPmJMbhSr6FJJkrFwkdxmiTHGAL1X9CJwxj1EYnLakQO9h4v37BTnuRpZ3A
+ gFnsaGfXmZ2Y8VTBCtgUi6ybOXzdA1aLXJku/cygQWKrxPchunx8Poub0mDe9MQIVH1Df/7vu
+ UqSkQlpqQqLBj+xtKC6y5jSIU2drCu959X1NDszWB2tXe5JTSFNDR1AFePojvvGcPz/a8QE3u
+ zCWvLO2LHIJ8FmklVL4i68MfUQayKOViOmKiqtZO9rGQl0gJa3MADi+d26MYhXjO2ftfb5/xt
+ Hmde/mXYdNcAC70knT0GeV1K64mjcpNcizJqKorOMuepbwWyIvnKivx5fZolNFLSlMq+rtmwA
+ QDIAw8kO4dzYv6Q0j4vaJ97Htwhyg8AfP834dw0H4h5WdSpUa9ZN6bI40JTI9PYxsnbDWiR9U
+ N3uStufOYj1mJh1M1grfhkHbuHEcjnUcTv0sNh2Kbn5kQRA9sLwOOjsjXKGWsxRqzg01NRBGd
+ s6s63jip4yTdkj5QWxRbXvxkVmY0inuq1ATnSeNTuPDGI2RJcFY3S9qxQhkWcl06bJKtwv8nj
+ p73jLwppqDfQylu3XSZWbfI27Z9wJ4azKEKsW7sTgj3wL1XlkXRATBzHOLJPE+IFUcK8rsSlp
+ XpVjAElGLnBOA4FmXBogjuwseSvCxNohI0JiyL3drLCTs1rsFXp5M1LjTuJkBypLX9lp2ZW3z
+ igytqmwEvDpQPc1Jgmz4MTseAqlzsa0ADxtSXICLl31ZjfcD8VPwyClQem8ldBwJKlqR9rFBJ
+ BwYC5yiw1fKTT9CjMecrT9/h5GO0cVtnKdHnGkA0Yz1S2hSlUc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Sep 09, 2017 at 02:13:32PM +0100, Ramsay Jones wrote:
-> I ran the test-suite on the 'pu' branch last night (simply because
-> that was what I had built at the time!), which resulted in a PASS,
-> but t6120 was showing a 'TODO passed' for #52.
+Hi Junio,
 
-Confirmed, I also see this unexpected pass.
+On Mon, 11 Sep 2017, Junio C Hamano wrote:
 
-> This is a test introduced by Michael's 'mg/name-rev-tests-with-short-stack'
-> branch, which uses 'ulimit -s' to try and force a stack overflow.
-> Unfortunately, 'ulimit -s' seems to have no effect on cygwin. I created
-> a test program (see below) to eat up the stack and tried running it
-> with various ulimit values (128, 12, 8), but it always seg-faulted
-> at the same stack-frame. (after using approx 2MB stack space).
+> Stepping back a bit, I am not sure if it is sane or even valid for the
+> end-user to modify paths outside sparse-checkout area, but that is
+> probably a separate tangent.
 
-Yes, Cygwin does not implement the ulimit API from the Single Unix
-Specification, per https://cygwin.com/cygwin-api/std-notimpl.html.  I
-suspect the Bash builtin still exists because (a) nobody has bothered to
-remove it, (b) including it avoids breaking scripts that assume it
-exists but don't particularly rely on its output being sensical, or
-(c) both.
+That is not at all the scenario that Kevin fixed. Just have a quick look
+at the regression test: in a sparse checkout, the user checked out a
+branch, then called `reset` to switch to a different commit. No file was
+touched by the user outside the sparse checkout.
 
-> So, it looks like all ULIMIT_STACK_SIZE tests need to be disabled
-> on cygwin. I also wonder about the ULIMIT_FILE_DESCRIPTORS tests,
-> but haven't looked into it.
-> 
-> Given that 'ulimit' is a bash built-in, this may also be a problem
-> on MinGW and Git-For-Windows, but I can't test on those platforms.
+Yet without Kevin's fix, `git status` would report that the user *deleted
+files outside the sparse checkout*.
 
-I'll leave this to the relevant folks to test; I don't have a useful
-test environment for those either.  That said, I'll note the comment in
-t6120 says the ULIMIT_STACK_SIZE prerequisite excludes running the test
-on Windows, so I assume it's not a problem there.
+That is such an obvious bug, and Kevin's fix is such an obvious
+improvement over the current upstream Git version, that I would think the
+only thing worth discussing is whether the patch goes about it in a way of
+which you approve.
 
-On Sun, Sep 10, 2017 at 05:58:49PM +0100, Ramsay Jones wrote:
-> On 10/09/17 13:27, Michael J Gruber wrote:
-> > So, I guess, short of testing the effect of "ulimit -s" with another
-> > expensive test, it's best to simply set these prerequisites based on
-> > "uname -s".
-> 
-> Yes, I was going to suggest adding !CYGWIN to the test(s) (or perhaps
-> to the 'test_lazy_prereq' expression(s)).
+For example, you mentioned that you would want to move the declaration of
+`two` and `was_missing` into the conditional code block. That is a valid
+suggestion for `was_missing` (but of course not for `two`, which is used
+in the condition of the code block). That suggestion is more about code
+style (and of course easily fixed by Kevin using Edit>Refactor>Move
+Definition Location in VS), though, than about the correctness of the post
+image.
 
-Given the issue is Cygwin not implementing ulimit at all, but Cygwin
-Bash pretending everything's fine, I think handling this as a special
-case for Cygwin seems like the correct approach.  Something like the
-below, based on the existing code in test-lib.sh for the PIPE prereq?
+Much more interesting would be a review of the conditional code block. And
+I am not talking about the camelCasing of `ceBefore` (which will be fixed
+as easily by Edit>Refactor>Rename). I am talking about the stuff where
+tools cannot help, but where your experience is necessary: is it correct
+to use make_cache_entry()/checkout_entry() in this case? Are the
+parameters passed to those functions correct? Is the call to
+cache_name_pos() followed by ce_skip_worktree() the best way to find out
+whether the file that is absent was not actually deleted by the user, or
+is there a less CPU-intensive way, seeing as we are already guaranteed to
+iterate over the queue diff in alphabetical order?
 
--- >8 --
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 83f5d3dd2..376cd91ae 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1166,14 +1166,32 @@ test_lazy_prereq UNZIP '
- 	test $? -ne 127
- '
- 
-+# On Cygwin, ulimit has no effect because the underlying API hasn't been
-+# implemented.  Just fail if trying to do something with ulimit.
- run_with_limited_cmdline () {
--	(ulimit -s 128 && "$@")
-+	case $(uname -s) in
-+	CYGWIN*)
-+		false
-+		;;
-+	*)
-+		(ulimit -s 128 && "$@")
-+		;;
-+	esac
- }
- 
- test_lazy_prereq CMDLINE_LIMIT 'run_with_limited_cmdline true'
- 
-+# On Cygwin, ulimit has no effect because the underlying API hasn't been
-+# implemented.  Just fail if trying to do something with ulimit.
- run_with_limited_stack () {
--	(ulimit -s 128 && "$@")
-+	case $(uname -s) in
-+	CYGWIN*)
-+		false
-+		;;
-+	*)
-+		(ulimit -s 128 && "$@")
-+		;;
-+	esac
- }
- 
- test_lazy_prereq ULIMIT_STACK_SIZE 'run_with_limited_stack true'
+I understand that those latter questions are a lot harder to answer, sorry
+about that.
+
+Ciao,
+Dscho
