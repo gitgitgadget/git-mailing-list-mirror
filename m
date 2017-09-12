@@ -2,95 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,PLING_QUERY,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BFFBE1FADE
-	for <e@80x24.org>; Tue, 12 Sep 2017 17:38:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 317F81FADE
+	for <e@80x24.org>; Tue, 12 Sep 2017 18:24:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751480AbdILRiV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Sep 2017 13:38:21 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35894 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751441AbdILRiU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Sep 2017 13:38:20 -0400
-Received: (qmail 29596 invoked by uid 109); 12 Sep 2017 17:38:20 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 12 Sep 2017 17:38:20 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6901 invoked by uid 111); 12 Sep 2017 17:38:55 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Tue, 12 Sep 2017 13:38:55 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Sep 2017 13:38:18 -0400
-Date:   Tue, 12 Sep 2017 13:38:18 -0400
-From:   Jeff King <peff@peff.net>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-Subject: Re: SHA1 collision in production repo?! (probably not)
-Message-ID: <20170912173818.a22a54pvbv7yhjyt@sigill.intra.peff.net>
-References: <4D74C1D4-9EA7-4A17-AFC5-0B54B4A6DD0E@gmail.com>
- <xmqqh929z6wl.fsf@gitster.mtv.corp.google.com>
- <20170331174515.j2ruifuigskyvucc@sigill.intra.peff.net>
- <512E7480-E923-4EBF-BA9D-1FEEB99B8BA6@gmail.com>
+        id S1751439AbdILSYX (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Sep 2017 14:24:23 -0400
+Received: from mail-pg0-f43.google.com ([74.125.83.43]:37579 "EHLO
+        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751305AbdILSYW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Sep 2017 14:24:22 -0400
+Received: by mail-pg0-f43.google.com with SMTP id d8so22776196pgt.4
+        for <git@vger.kernel.org>; Tue, 12 Sep 2017 11:24:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=/YszdjMoCfA32O7+Qb7ACFF5vMbwfr7B9X/wfBDbLnw=;
+        b=gKQuqPnK2JQ2bPTim7ofMkIuFfC5PfAz3Ziq/DHAb2J1AL7JR3slNy73vWDZyPB3v3
+         p1EfUtISJHoRPXbZwUdRjamutpa5exmTG+/Y8oxwhZGgBBuOEdpAzTAjcYfGj1d0SRb9
+         /QA0HoKCiQ4Wj7lkuAPfR+rve3vKujc4cbHVZHszpHhqR2+u9++IX03afF9rBjxtdxhf
+         otUjBk6vgTrTrmh7IhS2FHnnbXjJJwPuI7C5lCCDcP69kgRXHWofnW2xqpJ2HNS5y4nu
+         c925f1UGulbhAcao2h2Jw97XPQ32gdevyzhDuj66k6ooxrfO/8OlWmyr+oKn70CcEJOs
+         TTWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=/YszdjMoCfA32O7+Qb7ACFF5vMbwfr7B9X/wfBDbLnw=;
+        b=ju/h9tpXvCi27IQPM14aBZJdhIiTH8vvL75RcPlbBNo5jJtY9DF6LsP5Xga6ptRtbo
+         qw1x47MfF0McvJFn94HKG7vCm6um/V91MB7KmZBrg+pKeqFFKxmqwEBLMlscgteFZDHY
+         IuPnU7LaIn9rBZtRQMnzGxGRoVkdJkP8H04fQDmPsvU/6XqlFn51R8ohrPIt0F3zTrve
+         IzwWlOK3reIsmqoblHczD9AmlBwXXRap3/Vy2OjF+YxHPlILJTmlh+sojnJxGH+zsnDN
+         WyUyi7GGuR8o6cdzSAtMDCuOvEMqMSm7K2rBe0V5U1CIhgW8EXZrZZPJX+4WuHUQ3rEt
+         /Org==
+X-Gm-Message-State: AHPjjUhmlH8C82rk6D2TrlX6QQK0dzzT18/FS2QztJA/LixDaiLgF9Ym
+        p2GnRtRwoXKFHQh+Updo6lklcn5XEg==
+X-Google-Smtp-Source: ADKCNb43ofBEEdq3UJbWbYLG+zP4Ekpzvr6kDoZzHHuw+UGg625IA8B+kvCTMdebHR01O9GGePd8fH/XEkX3IRzUxFo=
+X-Received: by 10.84.133.3 with SMTP id 3mr10871775plf.182.1505240661591; Tue,
+ 12 Sep 2017 11:24:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <512E7480-E923-4EBF-BA9D-1FEEB99B8BA6@gmail.com>
+Received: by 10.100.183.138 with HTTP; Tue, 12 Sep 2017 11:24:21 -0700 (PDT)
+In-Reply-To: <CAGZ79kZLvAgSgckQ7Doo_E7aY+L6xtv2Kq0xbO6GSZL5ZAb7TQ@mail.gmail.com>
+References: <CAC7pkbQhwLFQQjqBwaW=0j4iKFcLdKDucCMck-PsSAeCs0rqpw@mail.gmail.com>
+ <CAGZ79kZLvAgSgckQ7Doo_E7aY+L6xtv2Kq0xbO6GSZL5ZAb7TQ@mail.gmail.com>
+From:   Joseph Dunne <jdunne525@gmail.com>
+Date:   Tue, 12 Sep 2017 13:24:21 -0500
+Message-ID: <CAC7pkbQwn8pvLLCtjsEkKo7PJozycdDbnq2XLWbmOm_KHEjU-w@mail.gmail.com>
+Subject: Re: commit-msg hook does not run on merge with --no-ff option
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 12, 2017 at 06:18:32PM +0200, Lars Schneider wrote:
+Sorry I don't understand your question.  The commit-msg hook runs
+properly in all cases except when I perform a merge with the --no-ff
+option enabled.
 
-> we are seeing this now in Git 2.14.1:
-> 
-> ...
-> error: inflate: data stream error (unknown compression method)
-> error: unable to unpack 7b513f98a66ef9488e516e7abbc246438597c6d5 header
-> error: inflate: data stream error (unknown compression method)
-> error: unable to unpack 7b513f98a66ef9488e516e7abbc246438597c6d5 header
-> fatal: loose object 7b513f98a66ef9488e516e7abbc246438597c6d5 (stored in .git/objects/7b/513f98a66ef9488e516e7abbc246438597c6d5) is corrupt
-> fatal: The remote end hung up unexpectedly
-> 
-> I guess this means your fix [1] works properly :-)
-
-Oh, good. :)
-
-> At some point I will try to explore a retry mechanism for these cases.
-
-I don't think we can generally retry loose-object failures. We use
-copies from packs first, and then loose. So a corrupt loose can fallback
-to another pack or to loose, but not the other way around (because we
-would never look at the loose if we had a good copy elsewhere).
-
-Though in your particular case, if I recall, you're receiving the object
-over the network and the corrupted copy is in the way. So right now the
-recovery process is:
-
-  1. Notice the commit message.
-
-  2. Run git-fsck to notice that we don't really[1] need the object.
-
-  3. Run `rm .git/objects/7b/513f...`
-
-  4. Re-run the fetch.
-
-But in theory we should be able to say "oh, we don't _really_ have that,
-the collision test isn't necessary" and then overwrite it. I actually
-thought that's what would happen now (has_sha1_file() would return an
-error), but I guess for what we need, it just does a stat() and calls it
-a day, not realizing we ought to be overwriting.
-
--Peff
-
-[1] git-fsck will actually complain if reflogs point to the object, and
-    we can always expire those in a corrupted repo. So possibly what you
-    want to know is whether it's reachable from actual refs. Of course
-    this whole check is optional. If the object's corrupted, it's
-    corrupted. But I get nervous calling `rm` on something that _could_
-    be precious (say it's just a single-bit error that could be
-    recovered). But if you have a known-good copy incoming, that's less
-    of an issue.
+On Mon, Sep 11, 2017 at 12:25 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Mon, Sep 11, 2017 at 7:34 AM, Joseph Dunne <jdunne525@gmail.com> wrote:
+>
+>> When I merge ... however my commit-msg hook does not run.  (The
+>> commit-msg hook works fine in all other commits / merges.)
+>
+> When using git-commit, but not git-merge?
+>
+> See the discussion of patches at
+> https://public-inbox.org/git/20170907220429.31312-1-sbeller@google.com/
