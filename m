@@ -2,126 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2312C20281
-	for <e@80x24.org>; Tue, 12 Sep 2017 22:58:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 970E920281
+	for <e@80x24.org>; Tue, 12 Sep 2017 22:58:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751526AbdILW6x (ORCPT <rfc822;e@80x24.org>);
+        id S1751541AbdILW64 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Sep 2017 18:58:56 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:38170 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751502AbdILW6x (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 12 Sep 2017 18:58:53 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:34457 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751003AbdILW6w (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Sep 2017 18:58:52 -0400
-Received: by mail-pf0-f196.google.com with SMTP id g65so6546599pfe.1
-        for <git@vger.kernel.org>; Tue, 12 Sep 2017 15:58:52 -0700 (PDT)
+Received: by mail-wr0-f193.google.com with SMTP id p37so6883573wrb.5
+        for <git@vger.kernel.org>; Tue, 12 Sep 2017 15:58:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=THZjx+0md/DYrDp3wHDZORszR4P3xNS+TR6mya0bVkE=;
-        b=ooqSRrtqIJMtwGKqsdwncWeKowqig5m/Uqlj2Suzhl7GNqJvQJ/q9pMJLK1/btanEH
-         YxTW+NoQphC7AatWSKKRpKxbKr1+WwTCTeRBwGk1zCP2eg3pBN0ZefQsgItPqSITBz/O
-         /ib70ZWTqFza5Xd3wrRSJrKQgc6dtTsC0QdISlXMsQh+F5K+FSm3majHiXb9rlEp49lR
-         UdZUQteeovZKxGZpAMBD5s0Ns2v2t+nLy7UCoaB1ayJKB+G1frqBSTslkuHYwfCq76al
-         dPEtFLL6N9LXaHlXQSt3qvLV7QfLs8jhhCQ6EcW3tYg46gVbDuj9TDd3/UKjvji6lsqt
-         V0fA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=s1XxaxKJP3XXVla0RINeZOe4on7lhzk15Xg8QWuKLBY=;
+        b=TZ1Ji05GKongFBRp6pleDoS/hW0m8FBSvqwO+TSDcPGD8fWfjJbSHkqPBiQ6OJ6piS
+         KMS6OfzKB+GADEtDVxn3jyYYiGfusqgWkzDQYZS5wO6drxD2q592ab0tEY7qDaCy9toO
+         /ICs3WUXi+knJpSvps8ybAeX8DW3Xxbk51T1+EHfuwik3VR8PMAbJoYwY4Xzk6kIZJ8M
+         0nMGLyjlkBfFnuTy2XyfnlZmCb0TPCDgsXuZNvGSuMq47xB1mxbCQf11y8zUhfNUyfFH
+         kLiV4v0Pm43d4p+RtU+WZ8rYuC7L4eUy9vBT4FluV3Ha2tQT282wtEbAOz1h2qZ3jBnA
+         Ahgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=THZjx+0md/DYrDp3wHDZORszR4P3xNS+TR6mya0bVkE=;
-        b=tRqnKb6GyJhIJ4UysGsSel3Z9UTgvwBsvuKupXkD6DChXN/jqr+3/6dw4yjsLhKHeq
-         hnSZyln4HMyZuDdEx+ocs1Hg6UClXOLJxksl6mwLn17+IvsBmoYXpYlutw5Z0GDoGjJJ
-         2m1xWNwT58Fmdm6Hk5sybsIofnvk5TAVphdsl45KmqrGy0Moz2Box5dt7x+8cnKOHBHB
-         iHbUcA4R9FtCpRSEIpcmXyl1Qiw4PTBOFWq4RX4SHKF6wYhcmmTaH065Pjt5jnmJXyTS
-         J4vfioj9WZxUWOvWqnrju148tTpcxrayzoOceIiWbju2qDpmzoscZWuantSu4wp/SJaD
-         4fag==
-X-Gm-Message-State: AHPjjUiHulKJziiBeYIAjWoaCJB6uF3/ZCdUPI1XBZ6DDK2w1nhUbZHV
-        0+kLOW5k1rDdaAyAVsk=
-X-Google-Smtp-Source: ADKCNb6nYhVuZf6PPNKCiypo6NlOEzQbwvxrKDv0zgZr3PbWZz+VFcFNdlTwhRKd1frxUbGk1FlChw==
-X-Received: by 10.101.92.6 with SMTP id u6mr16289209pgr.198.1505257131950;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=s1XxaxKJP3XXVla0RINeZOe4on7lhzk15Xg8QWuKLBY=;
+        b=rKvs1D8fJOuFi6Ai3lHbXrJ+7YJ7dGtlIludW2U6N0u8b+fDcTFLhD3tgzgb3GW6MT
+         8aA7y2Jt3Xn5Q7ZebxHDq3ebqho/C7oclO9W/xOkQn0o+c9qp4GMKPwTs5v7bVOLct1Y
+         JHLFfZwoggELXImsdewm5Vn/IhPw/puNN6FaKn/dcwzCSiazCQGkVzyGxMEhvr7F24fn
+         zS0AW057aAACRnIZ2LFdMIYmHNcwysJy1Ms9Cn1uEitS6M+EBSlOfRmMIwwhl3yupc5q
+         U7xdxHoaW2IS/2xi5v2zHxCLjLr3V6fzW7YgaGFwd2hNXQ6CG+wofyGqeRAksRXlp1Kt
+         SQjw==
+X-Gm-Message-State: AHPjjUjOOYph4xIvfpBRB13d8wuWa8upMYp3Ou3QeamwUo14vdCGbmqJ
+        X96oVnTSGPjyhw==
+X-Google-Smtp-Source: ADKCNb6tAYhaif4KGdjwL8N08N7n0W6K+eDZbXq6uEFqIzKuyFKqz+VFmUFiRs7iMGDEC7PbfxlzOw==
+X-Received: by 10.223.133.65 with SMTP id 59mr14810007wrh.233.1505257132453;
+        Tue, 12 Sep 2017 15:58:52 -0700 (PDT)
+Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
+        by smtp.gmail.com with ESMTPSA id k52sm16499266wrf.62.2017.09.12.15.58.51
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
         Tue, 12 Sep 2017 15:58:51 -0700 (PDT)
-Received: from localhost.localdomain (67-5-157-35.ptld.qwest.net. [67.5.157.35])
-        by smtp.gmail.com with ESMTPSA id g76sm23444410pfa.134.2017.09.12.15.58.51
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Tue, 12 Sep 2017 15:58:51 -0700 (PDT)
-From:   Evan Zacks <zackse@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Evan Zacks <zackse@gmail.com>
-Subject: [PATCH] doc: fix minor typos (extra/duplicated words)
-Date:   Tue, 12 Sep 2017 15:58:39 -0700
-Message-Id: <1505257119-12086-1-git-send-email-zackse@gmail.com>
-X-Mailer: git-send-email 2.2.1
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: [RFC v2] refs: strip out not allowed flags from ref_transaction_update
+Date:   Tue, 12 Sep 2017 23:59:21 +0100
+Message-Id: <20170912225921.27705-1-t.gummerer@gmail.com>
+X-Mailer: git-send-email 2.14.1.480.gb18f417b89
+In-Reply-To: <CAMy9T_ED1KBqkE9GCHrOrt0frnYAx1vka7Xx1DrXmjJBNNKahw@mail.gmail.com>
+References: <CAMy9T_ED1KBqkE9GCHrOrt0frnYAx1vka7Xx1DrXmjJBNNKahw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Following are several fixes for duplicated words ("of of") and one
-case where an extra article ("a") slipped in.
+Callers are only allowed to pass certain flags into
+ref_transaction_update, other flags are internal to it.  To prevent
+mistakes from the callers, strip the internal only flags out before
+continuing.
 
-Signed-off-by: Evan Zacks <zackse@gmail.com>
+This was noticed because of a compiler warning gcc 7.1.1 issued about
+passing a NULL parameter as second parameter to memcpy (through
+hashcpy):
+
+In file included from refs.c:5:0:
+refs.c: In function ‘ref_transaction_verify’:
+cache.h:948:2: error: argument 2 null where non-null expected [-Werror=nonnull]
+  memcpy(sha_dst, sha_src, GIT_SHA1_RAWSZ);
+  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from git-compat-util.h:165:0,
+                 from cache.h:4,
+                 from refs.c:5:
+/usr/include/string.h:43:14: note: in a call to function ‘memcpy’ declared here
+ extern void *memcpy (void *__restrict __dest, const void *__restrict __src,
+              ^~~~~~
+
+The call to hascpy in ref_transaction_add_update is protected by the
+passed in flags, but as we only add flags there, gcc notices
+REF_HAVE_NEW or REF_HAVE_OLD flags could be passed in from the outside,
+which would potentially result in passing in NULL as second parameter to
+memcpy.
+
+Fix both the compiler warning, and make the interface safer for its
+users by stripping the internal flags out.
+
+Suggested-by: Michael Haggerty <mhagger@alum.mit.edu>
+Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- Documentation/git-cat-file.txt     | 2 +-
- Documentation/git-checkout.txt     | 2 +-
- Documentation/git-notes.txt        | 2 +-
- Documentation/git-update-index.txt | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
-index 204541c..fb09cd6 100644
---- a/Documentation/git-cat-file.txt
-+++ b/Documentation/git-cat-file.txt
-@@ -192,7 +192,7 @@ newline. The available atoms are:
- 	The 40-hex object name of the object.
+> This might be a nice change to have anyway, to isolate
+> `ref_transaction_update()` from mistakes by its callers. For that
+> matter, one might want to be even more selective about what bits are
+> allowed in the `flags` argument to `ref_transaction_update()`'s
+> callers:
+>
+> >         flags &= REF_ALLOWED_FLAGS; /* value would need to be determined */
+
+Here's my attempt at doing this.
+
+The odd flag out as the flag that's advertised as internal but can't
+stripped out is REF_ISPRUNING.  REF_ISPRUNING is passed in as argument
+to 'ref_transaction_delete()' in 'prune_ref()'.
+
+Maybe this flag should be public, or maybe I'm missing something here?
+Having only this internal flags as part of the allowed flags feels a
+bit ugly, but I'm also unfamiliar with the refs code, hence the RFC.
+If someone has more suggestions they would be very welcome :)
+
+ refs.c | 2 ++
+ refs.h | 8 ++++++++
+ 2 files changed, 10 insertions(+)
+
+diff --git a/refs.c b/refs.c
+index ba22f4acef..fad61be1da 100644
+--- a/refs.c
++++ b/refs.c
+@@ -921,6 +921,8 @@ int ref_transaction_update(struct ref_transaction *transaction,
+ 		return -1;
+ 	}
  
- `objecttype`::
--	The type of of the object (the same as `cat-file -t` reports).
-+	The type of the object (the same as `cat-file -t` reports).
++	flags &= REF_TRANSACTION_UPDATE_ALLOWED_FLAGS;
++
+ 	flags |= (new_sha1 ? REF_HAVE_NEW : 0) | (old_sha1 ? REF_HAVE_OLD : 0);
  
- `objectsize`::
- 	The size, in bytes, of the object (the same as `cat-file -s`
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index d6399c0..bd268a8 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -38,7 +38,7 @@ $ git checkout -b <branch> --track <remote>/<branch>
- ------------
- +
- You could omit <branch>, in which case the command degenerates to
--"check out the current branch", which is a glorified no-op with a
-+"check out the current branch", which is a glorified no-op with
- rather expensive side-effects to show only the tracking information,
- if exists, for the current branch.
+ 	ref_transaction_add_update(transaction, refname, flags,
+diff --git a/refs.h b/refs.h
+index 6daa78eb50..4d75c207e1 100644
+--- a/refs.h
++++ b/refs.h
+@@ -354,6 +354,14 @@ int refs_pack_refs(struct ref_store *refs, unsigned int flags);
+ #define REF_NODEREF	0x01
+ #define REF_FORCE_CREATE_REFLOG 0x40
  
-diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
-index be7db30..4367729 100644
---- a/Documentation/git-notes.txt
-+++ b/Documentation/git-notes.txt
-@@ -171,7 +171,7 @@ OPTIONS
- 	object that does not have notes attached to it.
- 
- --stdin::
--	Also read the object names to remove notes from from the standard
-+	Also read the object names to remove notes from the standard
- 	input (there is no reason you cannot combine this with object
- 	names from the command line).
- 
-diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
-index 1579abf..a14e6ae 100644
---- a/Documentation/git-update-index.txt
-+++ b/Documentation/git-update-index.txt
-@@ -153,7 +153,7 @@ you will need to handle the situation manually.
- +
- Version 4 performs a simple pathname compression that reduces index
- size by 30%-50% on large repositories, which results in faster load
--time. Version 4 is relatively young (first released in in 1.8.0 in
-+time. Version 4 is relatively young (first released in 1.8.0 in
- October 2012). Other Git implementations such as JGit and libgit2
- may not support it yet.
- 
++/*
++ * Flags that can be passed in to ref_transaction_update
++ */
++#define REF_TRANSACTION_UPDATE_ALLOWED_FLAGS \
++	REF_ISPRUNING |                      \
++	REF_FORCE_CREATE_REFLOG |            \
++	REF_NODEREF
++
+ /*
+  * Setup reflog before using. Fill in err and return -1 on failure.
+  */
 -- 
-2.2.1
+2.14.1.480.gb18f417b89
 
