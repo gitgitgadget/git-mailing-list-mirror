@@ -7,100 +7,182 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB90D1FADE
-	for <e@80x24.org>; Tue, 12 Sep 2017 17:24:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EECD51FADE
+	for <e@80x24.org>; Tue, 12 Sep 2017 17:28:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751435AbdILRYL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Sep 2017 13:24:11 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:38246 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751423AbdILRYK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Sep 2017 13:24:10 -0400
-Received: by mail-pf0-f193.google.com with SMTP id q76so6470493pfq.5
-        for <git@vger.kernel.org>; Tue, 12 Sep 2017 10:24:10 -0700 (PDT)
+        id S1751501AbdILR2o (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Sep 2017 13:28:44 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:33323 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751405AbdILR2n (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Sep 2017 13:28:43 -0400
+Received: by mail-pg0-f67.google.com with SMTP id i130so4477259pgc.0
+        for <git@vger.kernel.org>; Tue, 12 Sep 2017 10:28:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=59L4GfS0lqY1ZUFIndkutZf02vmlE2nFfyFJcxgX5ww=;
-        b=SSoeg7LpmRQ7Vfw4Sa3jLtQCy4cu0iszrtebJ2112ssuBGT2yFeyG6IVmoWggl9Ezk
-         kN0dr/EcUJBiSa6zFW2PpNBPFT/rJzWn/gnJ9OzIMFbtTnZwy/uTOfSanWd6k75ekzol
-         nQ1mQVVLZVqm6dWjVk7dhdiu2Wb9fXMtW15G5eii6FJykW10uPPdRsz7hz7FyAoqWokj
-         nesKb3+WoTetYBC4+Mxd8ouQHLneYvnPgE5Sg0onW1gX4gCNWygqcOFAQ03rH5yq02lV
-         x073pwQDC6XOYYBKl6OJqOoW9lR+Fn2Y33b+4nwa/OvZdJ8Vugl16TPipvoKKR4G/Kv9
-         kVeQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=OLcPZuuxvCUS9lECAHlM0WhEKykXT3HGKu0aQKjhttE=;
+        b=KLr+LKxbecWOhzGS94fyezu4SAZ16pzycKy788yQGCq2DQ1Lu2AXZNQ+izntXzj/r5
+         zcfKAgATeSHgF+s9njp3VErMhi+4vioSYoUTxrFVvBhQGuN0JXHaoPlBSecBuJvdov0d
+         6j44IXc/YyJnuIV3Dg3lmmEh9ZWO3lm5qbhIOi4TmU2+83WGSVkf5KNRUBAFkbxNNlgr
+         e+P8bVSoWRRV0v4xZQ/Id+znGNP9CxmJ7NFqIVDLgQipXt0DZbpVi3hR/teYBQAJEJrL
+         3L3PsiqzSi2rnCoqY0Eg2AK03y9RBr5ESDw+ybZBK1Gac142wGpC6rLyC5s7at7Wd+5r
+         gvdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=59L4GfS0lqY1ZUFIndkutZf02vmlE2nFfyFJcxgX5ww=;
-        b=IZsVtAbaqE5u0qHw/LaCvfRB6DqDfPAJog/KTh1c2II7S82b4H/1Z80bXgR5AN53eH
-         lcfbQRkWOVUUc0c2lNhj496j4SczUm9wxQTkC6Q9kh/4/UAIkb0euOLs8Wl+zSfJmnvQ
-         WokmQ6JPVuCbTRPMN7XOVnOvuI7cZHW7e6B3ZFD1Su2unoeRws04+ucoWIdJ0uFPj7jX
-         uUKAGyHR2UOfoFlnnuyD0+X72MbcZ/NaTW9hSgl4W5E796bycQGcPqlR3Oje1pV739r/
-         2kh7WqhwCoeiUW4B2sm6gLxY5lVOHZRLearhqUPImLIBYOQ34h8Jjq3ipntQ+CNKdNuU
-         EejA==
-X-Gm-Message-State: AHPjjUiZByMhdZHaPe8o1NtGd5OmLPwltPktj5+fbPuyk67bssOxTpJo
-        SeU4nXAx/di3aUx9d8k=
-X-Google-Smtp-Source: ADKCNb5wSiptd8ih/bZQGTRDjI060QRn3Kvy6y+j8stQ3oYqR83/V1m6b9yIH1yaIW7jiT0OM9u+aQ==
-X-Received: by 10.99.109.139 with SMTP id i133mr15210763pgc.29.1505237049548;
-        Tue, 12 Sep 2017 10:24:09 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=OLcPZuuxvCUS9lECAHlM0WhEKykXT3HGKu0aQKjhttE=;
+        b=s+LJncx5ra1xPrKvzb3SqFAAuE0/82Y5IebcigZ41gIv+xy9O9bIObof4L4TcUlkgA
+         j9LM907/CeWb5z4dKk+hsmrBPCOP3BU6FutZ2Pi+kVfbGJNpZTm05XB2d15s9tIzwkEH
+         hJ9B8mOLCerIXR5pWs8kICsW0KczSVCRJTrFPklN4kiWFDFfCdZPMzyjxE32NnGeThxy
+         f7CJ7rGAv91e3Z2fFWpVLhM6soroj715cmt+RlI3R4jQMzYd3W4NDK0d7Hz7xGRNcyGn
+         fmG+vThVVbgOIY7+yP3kLmCeJII8cLIhvkuaT9I9l7uAoCw5pYtWxcSxjsge2PlnErqv
+         ewaA==
+X-Gm-Message-State: AHPjjUir9w+SsFeG2J2Jn92lxhvgeMoyT8/u5v6E2uRwodffopJi/yLK
+        hu46+oMcgqWXSqwtEJA=
+X-Google-Smtp-Source: ADKCNb5ufRGbgbncqpKtzMVOc4/8CqrxjQQ9o8T2bJnRgM5EJbbZJGdNH34No7kye6cyS+gGgSFS/w==
+X-Received: by 10.84.232.199 with SMTP id x7mr18218108plm.191.1505237322266;
+        Tue, 12 Sep 2017 10:28:42 -0700 (PDT)
 Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:9def:8161:22df:85ca])
-        by smtp.gmail.com with ESMTPSA id k78sm21245355pfb.157.2017.09.12.10.24.08
+        by smtp.gmail.com with ESMTPSA id x13sm11711744pgt.16.2017.09.12.10.28.41
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 12 Sep 2017 10:24:08 -0700 (PDT)
-Date:   Tue, 12 Sep 2017 10:23:30 -0700
+        Tue, 12 Sep 2017 10:28:41 -0700 (PDT)
+Date:   Tue, 12 Sep 2017 10:28:39 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>
-Subject: [PATCH 0/4] Fixes from the per-repository object store series
-Message-ID: <20170912172330.GA144745@aiede.mtv.corp.google.com>
+Cc:     Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/4] pack: make packed_git_mru global a value instead of a
+ pointer
+Message-ID: <20170912172839.GB144745@aiede.mtv.corp.google.com>
+References: <20170912172330.GA144745@aiede.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <20170912172330.GA144745@aiede.mtv.corp.google.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+The MRU cache that keeps track of recently used packs is represented
+using two global variables:
 
-This is a continuation of the series at [1].  That was part 1 ---
-you can think of this as part 0, since it contains the simplest and
-least controversial part of the series --- each patch in this series
-is a bugfix in its own right.
+	struct mru packed_git_mru_storage;
+	struct mru *packed_git_mru = &packed_git_mru_storage;
 
-Patch 1 should be familiar if you reviewed the series [1].  It is
-unchanged from the patch there, except to note Peff's ack.
+Callers never assign to the packed_git_mru pointer, though, so we can
+simplify by eliminating it and using &packed_git_mru_storage (renamed
+to &packed_git_mru) directly.  This variable is only used by the
+packfile subsystem, making this a relatively uninvasive change (and
+any new unadapted callers would trigger a compile error).
 
-Patches 2-4 have not yet visited the list but are fixes (or, in the
-case of patch 4, cleanups) noticed as part of the same process of
-teaching object store code to handle multiple repositories.
+Noticed while moving these globals to the object_store struct.
 
-We hope that splitting these out should make them easier to review
-and for people to benefit from these fixes without having to wait
-for the rest of the series to settle.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Acked-by: Jeff King <peff@peff.net>
+---
+Unchanged from
+https://public-inbox.org/git/20170830064827.GB153983@aiede.mtv.corp.google.com/.
 
-Thoughts of all kinds welcome.
+I agree with the comments there that it would be nice to make this use
+list.h (#leftoverbits) and would be happy to read a patch doing that.
+Once we're done adapting the object store to work with arbitrary
+repositories we may come back to this, but I'd be happier if it's just
+already taken care of for us.
 
-Jonathan Nieder (1):
-  pack: make packed_git_mru global a value instead of a pointer
+ builtin/pack-objects.c |  4 ++--
+ cache.h                |  4 ++--
+ packfile.c             | 12 +++++-------
+ 3 files changed, 9 insertions(+), 11 deletions(-)
 
-Stefan Beller (3):
-  push, fetch: error out for submodule entries not pointing to commits
-  replace-objects: evaluate replacement refs without using the object
-    store
-  packed refs: pass .git dir instead of packed-refs path to init_fn
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index a57b4f058d..f721137eaf 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1012,7 +1012,7 @@ static int want_object_in_pack(const unsigned char *sha1,
+ 			return want;
+ 	}
+ 
+-	for (entry = packed_git_mru->head; entry; entry = entry->next) {
++	for (entry = packed_git_mru.head; entry; entry = entry->next) {
+ 		struct packed_git *p = entry->item;
+ 		off_t offset;
+ 
+@@ -1030,7 +1030,7 @@ static int want_object_in_pack(const unsigned char *sha1,
+ 			}
+ 			want = want_found_object(exclude, p);
+ 			if (!exclude && want > 0)
+-				mru_mark(packed_git_mru, entry);
++				mru_mark(&packed_git_mru, entry);
+ 			if (want != -1)
+ 				return want;
+ 		}
+diff --git a/cache.h b/cache.h
+index a916bc79e3..49b083ee0a 100644
+--- a/cache.h
++++ b/cache.h
+@@ -4,6 +4,7 @@
+ #include "git-compat-util.h"
+ #include "strbuf.h"
+ #include "hashmap.h"
++#include "mru.h"
+ #include "advice.h"
+ #include "gettext.h"
+ #include "convert.h"
+@@ -1589,8 +1590,7 @@ extern struct packed_git {
+  * A most-recently-used ordered version of the packed_git list, which can
+  * be iterated instead of packed_git (and marked via mru_mark).
+  */
+-struct mru;
+-extern struct mru *packed_git_mru;
++extern struct mru packed_git_mru;
+ 
+ struct pack_entry {
+ 	off_t offset;
+diff --git a/packfile.c b/packfile.c
+index f86fa051c9..f69a5c8d60 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -40,9 +40,7 @@ static unsigned int pack_max_fds;
+ static size_t peak_pack_mapped;
+ static size_t pack_mapped;
+ struct packed_git *packed_git;
+-
+-static struct mru packed_git_mru_storage;
+-struct mru *packed_git_mru = &packed_git_mru_storage;
++struct mru packed_git_mru;
+ 
+ #define SZ_FMT PRIuMAX
+ static inline uintmax_t sz_fmt(size_t s) { return s; }
+@@ -861,9 +859,9 @@ static void prepare_packed_git_mru(void)
+ {
+ 	struct packed_git *p;
+ 
+-	mru_clear(packed_git_mru);
++	mru_clear(&packed_git_mru);
+ 	for (p = packed_git; p; p = p->next)
+-		mru_append(packed_git_mru, p);
++		mru_append(&packed_git_mru, p);
+ }
+ 
+ static int prepare_packed_git_run_once = 0;
+@@ -1832,9 +1830,9 @@ int find_pack_entry(const unsigned char *sha1, struct pack_entry *e)
+ 	if (!packed_git)
+ 		return 0;
+ 
+-	for (p = packed_git_mru->head; p; p = p->next) {
++	for (p = packed_git_mru.head; p; p = p->next) {
+ 		if (fill_pack_entry(sha1, e, p->item)) {
+-			mru_mark(packed_git_mru, p);
++			mru_mark(&packed_git_mru, p);
+ 			return 1;
+ 		}
+ 	}
+-- 
+2.14.1.690.gbb1197296e
 
- builtin/pack-objects.c         |  4 ++--
- cache.h                        |  4 ++--
- packfile.c                     | 12 +++++-------
- refs.c                         |  2 +-
- refs/files-backend.c           |  4 ++--
- refs/packed-backend.c          |  4 ++--
- submodule.c                    | 33 +++++++++++++++++++++++++--------
- t/t5531-deep-submodule-push.sh | 10 ++++++++++
- 8 files changed, 49 insertions(+), 24 deletions(-)
-
-[1] https://public-inbox.org/git/20170830064634.GA153983@aiede.mtv.corp.google.com/
