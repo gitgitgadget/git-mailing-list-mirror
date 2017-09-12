@@ -2,160 +2,215 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 970E920281
-	for <e@80x24.org>; Tue, 12 Sep 2017 22:58:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B88ED20281
+	for <e@80x24.org>; Tue, 12 Sep 2017 23:30:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751541AbdILW64 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Sep 2017 18:58:56 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:38170 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751502AbdILW6x (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Sep 2017 18:58:53 -0400
-Received: by mail-wr0-f193.google.com with SMTP id p37so6883573wrb.5
-        for <git@vger.kernel.org>; Tue, 12 Sep 2017 15:58:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=s1XxaxKJP3XXVla0RINeZOe4on7lhzk15Xg8QWuKLBY=;
-        b=TZ1Ji05GKongFBRp6pleDoS/hW0m8FBSvqwO+TSDcPGD8fWfjJbSHkqPBiQ6OJ6piS
-         KMS6OfzKB+GADEtDVxn3jyYYiGfusqgWkzDQYZS5wO6drxD2q592ab0tEY7qDaCy9toO
-         /ICs3WUXi+knJpSvps8ybAeX8DW3Xxbk51T1+EHfuwik3VR8PMAbJoYwY4Xzk6kIZJ8M
-         0nMGLyjlkBfFnuTy2XyfnlZmCb0TPCDgsXuZNvGSuMq47xB1mxbCQf11y8zUhfNUyfFH
-         kLiV4v0Pm43d4p+RtU+WZ8rYuC7L4eUy9vBT4FluV3Ha2tQT282wtEbAOz1h2qZ3jBnA
-         Ahgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=s1XxaxKJP3XXVla0RINeZOe4on7lhzk15Xg8QWuKLBY=;
-        b=rKvs1D8fJOuFi6Ai3lHbXrJ+7YJ7dGtlIludW2U6N0u8b+fDcTFLhD3tgzgb3GW6MT
-         8aA7y2Jt3Xn5Q7ZebxHDq3ebqho/C7oclO9W/xOkQn0o+c9qp4GMKPwTs5v7bVOLct1Y
-         JHLFfZwoggELXImsdewm5Vn/IhPw/puNN6FaKn/dcwzCSiazCQGkVzyGxMEhvr7F24fn
-         zS0AW057aAACRnIZ2LFdMIYmHNcwysJy1Ms9Cn1uEitS6M+EBSlOfRmMIwwhl3yupc5q
-         U7xdxHoaW2IS/2xi5v2zHxCLjLr3V6fzW7YgaGFwd2hNXQ6CG+wofyGqeRAksRXlp1Kt
-         SQjw==
-X-Gm-Message-State: AHPjjUjOOYph4xIvfpBRB13d8wuWa8upMYp3Ou3QeamwUo14vdCGbmqJ
-        X96oVnTSGPjyhw==
-X-Google-Smtp-Source: ADKCNb6tAYhaif4KGdjwL8N08N7n0W6K+eDZbXq6uEFqIzKuyFKqz+VFmUFiRs7iMGDEC7PbfxlzOw==
-X-Received: by 10.223.133.65 with SMTP id 59mr14810007wrh.233.1505257132453;
-        Tue, 12 Sep 2017 15:58:52 -0700 (PDT)
-Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
-        by smtp.gmail.com with ESMTPSA id k52sm16499266wrf.62.2017.09.12.15.58.51
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 12 Sep 2017 15:58:51 -0700 (PDT)
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [RFC v2] refs: strip out not allowed flags from ref_transaction_update
-Date:   Tue, 12 Sep 2017 23:59:21 +0100
-Message-Id: <20170912225921.27705-1-t.gummerer@gmail.com>
-X-Mailer: git-send-email 2.14.1.480.gb18f417b89
-In-Reply-To: <CAMy9T_ED1KBqkE9GCHrOrt0frnYAx1vka7Xx1DrXmjJBNNKahw@mail.gmail.com>
-References: <CAMy9T_ED1KBqkE9GCHrOrt0frnYAx1vka7Xx1DrXmjJBNNKahw@mail.gmail.com>
+        id S1751351AbdILXaZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Sep 2017 19:30:25 -0400
+Received: from mail-by2nam03on0131.outbound.protection.outlook.com ([104.47.42.131]:7441
+        "EHLO NAM03-BY2-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1751031AbdILXaY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Sep 2017 19:30:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=GtzlfDIed81F2pMui0PCXIl36OVgNuEjMwjWVeDBUaM=;
+ b=OgeGBO2avITmBBnCkopGeEixD0lb0Ijk8ZVy52DCJDskEC85sloh4EdHaG3eeIlFxYkS8BW/F7+Y1kwObT9P/Suhfg8COJy1QkEfNuiiT1Vh/MV/BCK9qQb3sAxGNJLumrgwCeHEfo49LtURMu2XCmzG4NoYh1NJArVq4Kpw37o=
+Received: from SN1PR21MB0014.namprd21.prod.outlook.com (10.161.254.12) by
+ SN1PR21MB0016.namprd21.prod.outlook.com (10.161.254.139) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id
+ 15.20.77.4; Tue, 12 Sep 2017 23:30:21 +0000
+Received: from SN1PR21MB0014.namprd21.prod.outlook.com ([10.161.254.12]) by
+ SN1PR21MB0014.namprd21.prod.outlook.com ([10.161.254.12]) with mapi id
+ 15.20.0077.004; Tue, 12 Sep 2017 23:30:21 +0000
+From:   Kevin Willford <kewillf@microsoft.com>
+To:     Jacob Keller <jacob.keller@gmail.com>
+CC:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "peff@peff.net" <peff@peff.net>,
+        "pclouds@gmail.com" <pclouds@gmail.com>
+Subject: RE: [PATCH 1/1] reset: fix reset when using the sparse-checkout
+ feature.
+Thread-Topic: [PATCH 1/1] reset: fix reset when using the sparse-checkout
+ feature.
+Thread-Index: AQHTKMyCASx4J5FrG0SFSfVy0yz4a6KrWy30gAAJb7CAAH5jR4AAB2mQgAMpW3CAAHk5AIABF7AQgACzS9CAAIOfgIAAA+Ew
+Date:   Tue, 12 Sep 2017 23:30:21 +0000
+Message-ID: <SN1PR21MB001473733DAF15BC91C0E58AB7690@SN1PR21MB0014.namprd21.prod.outlook.com>
+References: <20170908180050.25188-1-kewillf@microsoft.com>
+ <20170908180050.25188-2-kewillf@microsoft.com>
+ <xmqqvaktxawk.fsf@gitster.mtv.corp.google.com>
+ <SN1PR21MB0014638E5D9CBFD0D9D85F10B7950@SN1PR21MB0014.namprd21.prod.outlook.com>
+ <xmqqr2vgy2yt.fsf@gitster.mtv.corp.google.com>
+ <SN1PR21MB00140C84DC02F3491F4E8469B76A0@SN1PR21MB0014.namprd21.prod.outlook.com>
+ <xmqqh8w951ek.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.21.1.1709111259430.4132@virtualbox>
+ <xmqq4ls836z3.fsf@gitster.mtv.corp.google.com>
+ <SN1PR21MB0014435A97BCDA324FD55B46B7690@SN1PR21MB0014.namprd21.prod.outlook.com>
+ <CA+P7+xqxmxexWS=MWNd9=EqG81uhKY-OdG+1mpyWhst6DvH5AA@mail.gmail.com>
+In-Reply-To: <CA+P7+xqxmxexWS=MWNd9=EqG81uhKY-OdG+1mpyWhst6DvH5AA@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=True;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Ref=https://api.informationprotection.azure.com/api/72f988bf-86f1-41af-91ab-2d7cd011db47;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Owner=kewillf@microsoft.com;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2017-09-12T17:30:19.8636450-06:00;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=General;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Application=Microsoft Azure
+ Information Protection;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Extended_MSFT_Method=Automatic;
+ Sensitivity=General
+x-originating-ip: [174.126.250.66]
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;SN1PR21MB0016;6:avMle+BZHdTGrNKa0HzaU4RyHdiNdpJ4ZwwE0O8xsRTfCDrpFGdmqdjwXECdc44Fb9GS/ofrlzitwpPVFAxTMKAnUuFI3PrZJS3QAVSzF8k8A1xaMbG7QETJMuz4nsbjS26/eEPSLydigFVhZxYh6HxciBalS8KRC3BoKtODTzlYI2c1Tu0/xm7/q1v64iW07e3RCKuU80978W5RBVVYYiSwcGwTVnTkfFMN7P5wmboBY750T4gQFNITK1ERSa92iKfP+hBdLKHE2vaDyzPjVJzfXPE8RtiWHDwNEc4VeIw3cceY15T5O0mOz4RxZi0MZKcb38ZwgsYgJS1y3vlhnA==;5:yGRwaR4dOGS5l5qbnSebcJ090XaTVxK1LecafLn47MMP66/RRiVEI6JRoKS2LstZepeWfPtO40hWGQSKOW+nkbYSD+oph9rtA/mLjIPKRbNRRvGGwxe7Z380HKL1mZulBjXlTVAikJl5C8JKlFIDsA==;24:j9+mf+dCca+XvmkSD+t9OL7LhftkckxdAv9URmzoPqlQs+AxOqMGSgRcYe463jB320a0RVxKYYLwmDgQgoVyA2x53uRSz4G27uBsvUhXC6w=;7:2f0yD+V6vHIg+sl2TXBQxwnFdzOJXH3Rz93M04tNQa1LC2aoyVOhYztrUET2sh1kRNoVtR/Sy4mqOKM2fGJTbwkaGMKX/e6afLorLFBodinCAFi3bH2UZlc9G6nhWrCE5MOOVZt0WDFF3pIQEwEHDP5evkb8CQqLmPtfVnvLXHUL9NczGgVY5eX+oQkW5/FCkk8X3NIr2KuVmx8uRw85/3nCagi4qouoa8b11P6VWM4=
+x-ms-exchange-antispam-srfa-diagnostics: SOS;
+x-ms-office365-filtering-correlation-id: ff058cfa-8258-425d-453a-08d4fa363c99
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(300000500095)(300135000095)(300000501095)(300135300095)(22001)(300000502095)(300135100095)(2017030254152)(48565401081)(300000503095)(300135400095)(2017052603199)(201703131423075)(201703031133081)(201702281549075)(300000504095)(300135200095)(300000505095)(300135600095)(300000506095)(300135500095);SRVR:SN1PR21MB0016;
+x-ms-traffictypediagnostic: SN1PR21MB0016:
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=kewillf@microsoft.com; 
+x-exchange-antispam-report-test: UriScan:(89211679590171);
+x-microsoft-antispam-prvs: <SN1PR21MB0016C86A768EEE7F82B8C823B7690@SN1PR21MB0016.namprd21.prod.outlook.com>
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(100000700101)(100105000095)(100000701101)(100105300095)(100000702101)(100105100095)(61425038)(6040450)(2401047)(8121501046)(5005006)(100000703101)(100105400095)(93006095)(93001095)(10201501046)(3002001)(6055026)(61426038)(61427038)(6041248)(20161123560025)(20161123562025)(20161123558100)(20161123555025)(20161123564025)(201703131423075)(201702281528075)(201703061421075)(201703061406153)(6072148)(201708071742011)(100000704101)(100105200095)(100000705101)(100105500095);SRVR:SN1PR21MB0016;BCL:0;PCL:0;RULEID:(100000800101)(100110000095)(100000801101)(100110300095)(100000802101)(100110100095)(100000803101)(100110400095)(100000804101)(100110200095)(100000805101)(100110500095);SRVR:SN1PR21MB0016;
+x-forefront-prvs: 042857DBB5
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(6009001)(39860400002)(346002)(376002)(366002)(47760400005)(199003)(51444003)(189002)(24454002)(377454003)(3660700001)(8666007)(316002)(189998001)(86362001)(8656003)(2906002)(966005)(110136004)(3280700002)(14454004)(6916009)(106356001)(2950100002)(93886005)(74316002)(101416001)(86612001)(55016002)(25786009)(54356999)(22452003)(8990500004)(53546010)(99286003)(7696004)(105586002)(50986999)(76176999)(4326008)(97736004)(8936002)(77096006)(9686003)(2900100001)(6506006)(54906002)(66066001)(39060400002)(8676002)(6306002)(229853002)(10290500003)(81166006)(3846002)(6436002)(81156014)(102836003)(6116002)(305945005)(6246003)(5660300001)(68736007)(33656002)(7736002)(478600001)(10090500001)(53936002);DIR:OUT;SFP:1102;SCL:1;SRVR:SN1PR21MB0016;H:SN1PR21MB0014.namprd21.prod.outlook.com;FPR:;SPF:None;PTR:InfoNoRecords;A:1;MX:1;LANG:en;
+received-spf: None (protection.outlook.com: microsoft.com does not designate
+ permitted sender hosts)
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Sep 2017 23:30:21.5750
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN1PR21MB0016
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Callers are only allowed to pass certain flags into
-ref_transaction_update, other flags are internal to it.  To prevent
-mistakes from the callers, strip the internal only flags out before
-continuing.
-
-This was noticed because of a compiler warning gcc 7.1.1 issued about
-passing a NULL parameter as second parameter to memcpy (through
-hashcpy):
-
-In file included from refs.c:5:0:
-refs.c: In function ‘ref_transaction_verify’:
-cache.h:948:2: error: argument 2 null where non-null expected [-Werror=nonnull]
-  memcpy(sha_dst, sha_src, GIT_SHA1_RAWSZ);
-  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-In file included from git-compat-util.h:165:0,
-                 from cache.h:4,
-                 from refs.c:5:
-/usr/include/string.h:43:14: note: in a call to function ‘memcpy’ declared here
- extern void *memcpy (void *__restrict __dest, const void *__restrict __src,
-              ^~~~~~
-
-The call to hascpy in ref_transaction_add_update is protected by the
-passed in flags, but as we only add flags there, gcc notices
-REF_HAVE_NEW or REF_HAVE_OLD flags could be passed in from the outside,
-which would potentially result in passing in NULL as second parameter to
-memcpy.
-
-Fix both the compiler warning, and make the interface safer for its
-users by stripping the internal flags out.
-
-Suggested-by: Michael Haggerty <mhagger@alum.mit.edu>
-Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
----
-
-> This might be a nice change to have anyway, to isolate
-> `ref_transaction_update()` from mistakes by its callers. For that
-> matter, one might want to be even more selective about what bits are
-> allowed in the `flags` argument to `ref_transaction_update()`'s
-> callers:
->
-> >         flags &= REF_ALLOWED_FLAGS; /* value would need to be determined */
-
-Here's my attempt at doing this.
-
-The odd flag out as the flag that's advertised as internal but can't
-stripped out is REF_ISPRUNING.  REF_ISPRUNING is passed in as argument
-to 'ref_transaction_delete()' in 'prune_ref()'.
-
-Maybe this flag should be public, or maybe I'm missing something here?
-Having only this internal flags as part of the allowed flags feels a
-bit ugly, but I'm also unfamiliar with the refs code, hence the RFC.
-If someone has more suggestions they would be very welcome :)
-
- refs.c | 2 ++
- refs.h | 8 ++++++++
- 2 files changed, 10 insertions(+)
-
-diff --git a/refs.c b/refs.c
-index ba22f4acef..fad61be1da 100644
---- a/refs.c
-+++ b/refs.c
-@@ -921,6 +921,8 @@ int ref_transaction_update(struct ref_transaction *transaction,
- 		return -1;
- 	}
- 
-+	flags &= REF_TRANSACTION_UPDATE_ALLOWED_FLAGS;
-+
- 	flags |= (new_sha1 ? REF_HAVE_NEW : 0) | (old_sha1 ? REF_HAVE_OLD : 0);
- 
- 	ref_transaction_add_update(transaction, refname, flags,
-diff --git a/refs.h b/refs.h
-index 6daa78eb50..4d75c207e1 100644
---- a/refs.h
-+++ b/refs.h
-@@ -354,6 +354,14 @@ int refs_pack_refs(struct ref_store *refs, unsigned int flags);
- #define REF_NODEREF	0x01
- #define REF_FORCE_CREATE_REFLOG 0x40
- 
-+/*
-+ * Flags that can be passed in to ref_transaction_update
-+ */
-+#define REF_TRANSACTION_UPDATE_ALLOWED_FLAGS \
-+	REF_ISPRUNING |                      \
-+	REF_FORCE_CREATE_REFLOG |            \
-+	REF_NODEREF
-+
- /*
-  * Setup reflog before using. Fill in err and return -1 on failure.
-  */
--- 
-2.14.1.480.gb18f417b89
-
+PiBGcm9tOiBKYWNvYiBLZWxsZXIgW21haWx0bzpqYWNvYi5rZWxsZXJAZ21haWwuY29tXQ0KPiBT
+ZW50OiBUdWVzZGF5LCBTZXB0ZW1iZXIgMTIsIDIwMTcgNDoyOSBQTQ0KPiANCj4gT24gVHVlLCBT
+ZXAgMTIsIDIwMTcgYXQgMToyMCBQTSwgS2V2aW4gV2lsbGZvcmQgPGtld2lsbGZAbWljcm9zb2Z0
+LmNvbT4gd3JvdGU6DQo+ID4NCj4gPiBJIHRoaW5rIHRoaXMgaXMgd2hlcmUgSSBuZWVkIHRvIGRv
+IGEgYmV0dGVyIGpvYiBvZiBleHBsYWluaW5nIHNvIGhlcmUgaXMgYQ0KPiA+IHNpbXBsZSBleGFt
+cGxlLg0KPiA+DQo+ID4gSSBoYXZlIGEgZmlsZSAiYSIgdGhhdCB3YXMgYWRkZWQgaW4gdGhlIGxh
+dGVzdCBjb21taXQuDQo+ID4gJCBnaXQgbG9nIC0tb25lbGluZQ0KPiA+IGMxZmE2NDYgKEhFQUQg
+LT4gcmVzZXQsIG1hc3RlcikgYWRkIGZpbGUgYQ0KPiA+IDQwYjM0MmMgSW5pdGlhbCBjb21taXQg
+d2l0aCBmaWxlIGkNCj4gPg0KPiA+IFJ1bm5pbmcgdGhlIHJlc2V0IHdpdGhvdXQgdXNpbmcgYSBz
+cGFyc2UtY2hlY2tvdXQgZmlsZQ0KPiA+DQo+ID4gJCBnaXQgcmVzZXQgSEVBRH4xDQo+ID4gJCBn
+aXQgc3RhdHVzDQo+ID4gT24gYnJhbmNoIHJlc2V0DQo+ID4gVW50cmFja2VkIGZpbGVzOg0KPiA+
+ICAgKHVzZSAiZ2l0IGFkZCA8ZmlsZT4uLi4iIHRvIGluY2x1ZGUgaW4gd2hhdCB3aWxsIGJlIGNv
+bW1pdHRlZCkNCj4gPg0KPiA+ICAgICAgICAgYQ0KPiA+DQo+ID4gbm90aGluZyBhZGRlZCB0byBj
+b21taXQgYnV0IHVudHJhY2tlZCBmaWxlcyBwcmVzZW50ICh1c2UgImdpdCBhZGQiIHRvIHRyYWNr
+KQ0KPiA+DQo+ID4gVHVybmluZyBvbiBzcGFyc2UtY2hlY2tvdXQgYW5kIHJ1bm5pbmcgY2hlY2tv
+dXQgdG8gbWFrZSBteSB3b3JraW5nDQo+ID4gZGlyZWN0b3J5IHNwYXJzZQ0KPiA+DQo+ID4gJCBn
+aXQgY29uZmlnIGNvcmUuc3BhcnNlY2hlY2tvdXQgdHJ1ZQ0KPiA+ICQgZWNobyAvaSA+IC5naXQv
+aW5mby9zcGFyc2UtY2hlY2tvdXQNCj4gPiAkIGdpdCBjaGVja291dCAtZg0KPiA+DQo+ID4gUnVu
+bmluZyByZXNldCBnaXZlcyBtZQ0KPiA+ICQgZ2l0IHJlc2V0IEhFQUR+MQ0KPiA+ICQgZ2l0IHN0
+YXR1cw0KPiA+IE9uIGJyYW5jaCByZXNldA0KPiA+IG5vdGhpbmcgdG8gY29tbWl0LCB3b3JraW5n
+IHRyZWUgY2xlYW4NCj4gPiAkIGdpdCBscy1maWxlcw0KPiA+IGkNCj4gPg0KPiA+IGZpbGUgYSBp
+cyBnb25lLiAgTm90IGluIHRoZSBpbmRleCBhbmQgbm90IGluIHRoZSB3b3JraW5nIGRpcmVjdG9y
+eS4NCj4gPiBOb3RoaW5nIHRvIGxldCB0aGUgdXNlciBrbm93IHRoYXQgYW55dGhpbmcgY2hhbmdl
+ZC4NCj4gPg0KPiA+IFdpdGggYSBtb2RpZmllZCBmaWxlIG5vIHNwYXJzZS1jaGVja291dA0KPiA+
+ICQgZ2l0IGxvZyAtLW9uZWxpbmUNCj4gPiA2ZmJkMzRhIChIRUFEIC0+IHJlc2V0LCBtb2RpZmll
+ZCkgbW9kaWZpZWQgZmlsZSBtDQo+ID4gYzczNGQ3MiBJbml0aWFsIGNvbW1pdCB3aXRoIGZpbGUg
+aSBhbmQgbQ0KPiA+ICQgZ2l0IHJlc2V0IEhFQUR+MQ0KPiA+IFVuc3RhZ2VkIGNoYW5nZXMgYWZ0
+ZXIgcmVzZXQ6DQo+ID4gTSAgICAgICBtDQo+ID4gJCBnaXQgc3RhdHVzDQo+ID4gT24gYnJhbmNo
+IHJlc2V0DQo+ID4gQ2hhbmdlcyBub3Qgc3RhZ2VkIGZvciBjb21taXQ6DQo+ID4gICAodXNlICJn
+aXQgYWRkIDxmaWxlPi4uLiIgdG8gdXBkYXRlIHdoYXQgd2lsbCBiZSBjb21taXR0ZWQpDQo+ID4g
+ICAodXNlICJnaXQgY2hlY2tvdXQgLS0gPGZpbGU+Li4uIiB0byBkaXNjYXJkIGNoYW5nZXMgaW4g
+d29ya2luZyBkaXJlY3RvcnkpDQo+ID4NCj4gPiAgICAgICAgIG1vZGlmaWVkOiAgIG0NCj4gPg0K
+PiA+IG5vIGNoYW5nZXMgYWRkZWQgdG8gY29tbWl0ICh1c2UgImdpdCBhZGQiIGFuZC9vciAiZ2l0
+IGNvbW1pdCAtYSIpDQo+ID4NCj4gPiBXaXRoIHNwYXJzZS1jaGVja291dA0KPiA+ICQgZ2l0IHJl
+c2V0IEhFQUR+MQ0KPiA+IFVuc3RhZ2VkIGNoYW5nZXMgYWZ0ZXIgcmVzZXQ6DQo+ID4gRCAgICAg
+ICBtDQo+ID4gJCBnaXQgc3RhdHVzDQo+ID4gT24gYnJhbmNoIHJlc2V0DQo+ID4gQ2hhbmdlcyBu
+b3Qgc3RhZ2VkIGZvciBjb21taXQ6DQo+ID4gICAodXNlICJnaXQgYWRkL3JtIDxmaWxlPi4uLiIg
+dG8gdXBkYXRlIHdoYXQgd2lsbCBiZSBjb21taXR0ZWQpDQo+ID4gICAodXNlICJnaXQgY2hlY2tv
+dXQgLS0gPGZpbGU+Li4uIiB0byBkaXNjYXJkIGNoYW5nZXMgaW4gd29ya2luZyBkaXJlY3Rvcnkp
+DQo+ID4NCj4gPiAgICAgICAgIGRlbGV0ZWQ6ICAgIG0NCj4gPg0KPiA+IG5vIGNoYW5nZXMgYWRk
+ZWQgdG8gY29tbWl0ICh1c2UgImdpdCBhZGQiIGFuZC9vciAiZ2l0IGNvbW1pdCAtYSIpDQo+ID4N
+Cj4gDQo+IFdhc24ndCAibSIgb3V0c2lkZSB0aGUgc3BhcnNlIGNoZWNrb3V0PyBPciB3YXMgaXQg
+YSBmaWxlIGluIHRoZSBzcGFyc2UNCj4gY2hlY2tvdXQ/IEkgbWVhbiB0byBzYXksIHRoZSBmaWxl
+IGFmdGVyIHNldHRpbmcgdXAgc3BhcnNlIGNoZWNrb3V0IHdhcw0KPiBvbmUgb2YgdGhlICJpbnRl
+cmVzdGluZyIgZmlsZXMgdGhhdCBzcGFyc2UgY2hlY2tlZCBvdXQ/DQo+IA0KPiBPciB3YXMgaXQg
+aW4gZmFjdCBhIHNlcGFyYXRlIGZpbGUgd2hpY2ggd2Fzbid0IHRoZXJlPw0KDQpTb3JyeS4gIEl0
+IHdhcyBub3QgaW4gdGhlIHNwYXJzZS1jaGVja291dCBmaWxlLiANCiQgZ2l0IGNvbmZpZyBjb3Jl
+LnNwYXJzZWNoZWNrb3V0IHRydWUNCiQgZWNobyAvaSA+IC5naXQvaW5mby9zcGFyc2UtY2hlY2tv
+dXQNCiQgZ2l0IGNoZWNrb3V0IC1mDQp3YXMgcmFuIGluIHRoZSBtb2RpZmllZCBmaWxlIGNhc2Ug
+YXMgd2VsbCBhbmQgImkiIHdhcyB0aGUgb25seSBmaWxlIGluIHRoZQ0Kd29ya2luZyBkaXJlY3Rv
+cnkgYmVmb3JlIHJlc2V0LiANCg0KPiANCj4gSSB3b3VsZCB0aGluayB0aGF0IGluIHNwYXJzZS1j
+aGVja291dCB3b3JsZCwgeW91IHNob3VsZCBvbmx5ICpldmVyKg0KPiBoYXZlIHRoZSBmaWxlcyB5
+b3UgbGlzdCBpbiBzcGFyc2UuDQo+IA0KPiBTbyBmaWxlcyBvdXRzaWRlIHNwYXJzZSB3b3JsZCBz
+aG91bGQgYmUgaWdub3JlZCwgbm90IHNob3duIGFuZCBub3QNCj4gc2hvdyB1cCBpbiBzdGF0dXMs
+IGJ1dCB0aGV5IHNob3VsZCBhYnNvbHV0ZWx5IG5vdCBzaG93IHVwIGluIHRoZQ0KPiB3b3JraW5n
+IHRyZWUgZWl0aGVyLg0KDQpTcGFyc2UgY2hlY2tvdXQgdXNlcyB0aGUgc2tpcC13b3JrdHJlZSBi
+aXQgd2hpY2ggaGFzIHRoZSBmb2xsb3dpbmcNCmRvY3VtZW50YXRpb246DQpodHRwczovL2dpdC1z
+Y20uY29tL2RvY3MvZ2l0LXVwZGF0ZS1pbmRleCANCiJTa2lwLXdvcmt0cmVlIGJpdCBjYW4gYmUg
+ZGVmaW5lZCBpbiBvbmUgKGxvbmcpIHNlbnRlbmNlOiBXaGVuIHJlYWRpbmcNCmFuIGVudHJ5LCBp
+ZiBpdCBpcyBtYXJrZWQgYXMgc2tpcC13b3JrdHJlZSwgdGhlbiBHaXQgcHJldGVuZHMgaXRzIHdv
+cmtpbmcNCmRpcmVjdG9yeSB2ZXJzaW9uIGlzIHVwIHRvIGRhdGUgYW5kIHJlYWQgdGhlIGluZGV4
+IHZlcnNpb24gaW5zdGVhZC4NCg0KVG8gZWxhYm9yYXRlLCAicmVhZGluZyIgbWVhbnMgY2hlY2tp
+bmcgZm9yIGZpbGUgZXhpc3RlbmNlLCByZWFkaW5nIGZpbGUNCmF0dHJpYnV0ZXMgb3IgZmlsZSBj
+b250ZW50LiBUaGUgd29ya2luZyBkaXJlY3RvcnkgdmVyc2lvbiBtYXkgYmUgcHJlc2VudA0Kb3Ig
+YWJzZW50LiBJZiBwcmVzZW50LCBpdHMgY29udGVudCBtYXkgbWF0Y2ggYWdhaW5zdCB0aGUgaW5k
+ZXggdmVyc2lvbiBvcg0Kbm90LiBXcml0aW5nIGlzIG5vdCBhZmZlY3RlZCBieSB0aGlzIGJpdCwg
+Y29udGVudCBzYWZldHkgaXMgc3RpbGwgZmlyc3QgcHJpb3JpdHkuDQpOb3RlIHRoYXQgR2l0IGNh
+biB1cGRhdGUgd29ya2luZyBkaXJlY3RvcnkgZmlsZSwgdGhhdCBpcyBtYXJrZWQgc2tpcC13b3Jr
+dHJlZSwNCmlmIGl0IGlzIHNhZmUgdG8gZG8gc28gKGkuZS4gd29ya2luZyBkaXJlY3RvcnkgdmVy
+c2lvbiBtYXRjaGVzIGluZGV4IHZlcnNpb24pIg0KDQpJJ20gbm90IHNheWluZyB0aGF0IGlzIHRo
+ZSByaWdodCBiZWhhdmlvciwganVzdCBwb2ludGluZyBvdXQgdGhlIGRvY3VtZW50YXRpb24uDQpB
+bmQgZnJvbSBteSBleHBlcmllbmNlIGdpdCB3aWxsIHR1cm4gb24gYW5kIG9mZiB0aGUgc2tpcC13
+b3JrdHJlZSBmbGFnDQpkZXBlbmRpbmcgb24gdGhlIGNvbW1hbmQgYXMgd2Ugc2VlIGhhcHBlbmlu
+ZyB3aXRoIHJlc2V0Lg0KDQo+IA0KPiBZb3UncmUgbm90ICJjaGFuZ2luZyIgYW55IGNvbW1pdHMs
+IGJlY2F1c2UgdGhlIHN0YXR1cyBvZiB0aGUgZmlsZSBhdA0KPiBIRUFEfjEgaXMgZXhhY3RseSB3
+aGF0IEhFQUR+MSBzYXlzIGl0IGlzLCBidXQgeW91IGp1c3QgZG9uJ3QgaGF2ZSBhDQo+IGNoZWNr
+ZWQgb3V0IGNvcHkgb2YgaXQuDQoNCkluIHRoZSBjYXNlIG9mIHJlc2V0IHllcyBhbmQgaXQgbWF0
+Y2hlcyBIRUFEIGFuZCBpZiB0aGUgc3BhcnNlIGZsYWcgd2FzIG9uLA0KdGhlIHVzZXIgZG9lcyBu
+b3Qga25vdyB0aGF0IHRoZSBmaWxlIHdhcyBjaGFuZ2VkIGluIGFueSB3YXksIHdoaWNoIGlmIEkg
+YWRkDQphbmQgY29tbWl0IHdpbGwgY3JlYXRlIGEgY29tbWl0IHdpdGggdGhlIGZpbGUgY29udGVu
+dCBhdCBIRUFEfjENCnRoYXQgaXMgb3V0c2lkZSB0aGUgc3BhcnNlIGFyZWEgd2l0aG91dCB0aGUg
+dXNlciBldmVuIGtub3dpbmcgd2hhdA0KdGhvc2UgY2hhbmdlcyB3ZXJlIHVubGVzcyBhZnRlciB0
+aGUgY29tbWl0IHRoZXkgcnVuIGEgZ2l0IGRpZmYgSEVBRH4xIGFuZA0Kc2VlLiAgU28gZmlsZXMg
+d2lsbCBiZSBjaGFuZ2VkIG91dHNpZGUgb2YgdGhlIHNwYXJzZSBhcmVhIHdpdGhvdXQgdGhlDQp1
+c2VyJ3Mga25vd2xlZGdlLg0KDQo+IA0KPiBJIHRoaW5rIHRoZSBrZXkgcHJvYmxlbSBpcyB0aGF0
+IHJlc2V0IGlzIGNsZWFyaW5nIHRoZSBzcGFyc2UgZmxhZyBvZiBhDQo+IGZpbGUgc28gdGhhdCBp
+dCBubyBsb25nZXIgc2hvd3MgdXAgYXMgc3BhcnNlLCB3aGljaCBpcyB3aHkgc3RhdHVzDQo+IHN1
+YnNlcXVlbnRseSBzaG93cyB0aGUgZmlsZSBkZWxldGVkIChzaW5jZSB5b3UgZG9uJ3QgaGF2ZSBh
+IGxvY2FsIGNvcHkNCj4gYW55bW9yZSkuDQoNCkFuZCBpbiB0aGUgY2FzZSBvZiBhbiBhZGRlZCBm
+aWxlIHRoZXJlIGlzIG5vdCBhIHNwYXJzZSBmbGFnIHRvIGNsZWFyIG9yIGtlZXANCkJlY2F1c2Ug
+dGhlIGZpbGUgZGlkbid0IGV4aXN0IGF0IEhFQUR+MSBhbmQgdGhlcmUgaXMgbm8gZW50cnkgaW4g
+dGhlIGluZGV4DQp0byBrZWVwIGFuZCB0aGUgZmlsZSBhbmQgYW55IGtub3dsZWRnZSBvZiBpdCBp
+cyBnb25lLg0KDQo+IA0KPiBBbSBJIHVuZGVyc3RhbmRpbmcgdGhlIHByb2JsZW0gY29ycmVjdGx5
+PyBJIHRoaW5rIHlvdXIgZXhhbXBsZXMgYWJvdmUNCj4gYXJlIG5vdCBjbGVhciBiZWNhdXNlIHRo
+ZXkgZG9uJ3Qgc2VlbSB0byBiZSBlYWNoIGNvbXBsZXRlIGluZGl2aWR1YWxseQ0KPiAoVGhlIHNw
+YXJzZSBjaGVja291dCBleGFtcGxlcyBzaG91bGQgc3RhcnQgZnJvbSBhIGNsZWFuIHdvcmxkIGFu
+ZA0KPiBleHBsYWluIGhvdyB0aGV5IGdvdCB0aGVyZSByYXRoZXIgdGhhbiByZWx5aW5nIG9uIGlt
+Zm9ybWF0aW9uIGluIHRoZQ0KPiBwcmlvciBub24gc3BhcnNlIGV4YW1wbGUuIFdlIHNob3VsZCBi
+ZSBjbGVhciBzbyBldmVyeW9uZSBrbm93cyB3aGF0DQo+IHRoZSBwcm9ibGVtIGlzKS4NCj4gDQoN
+CkkgdGhvdWdodCB0aGF0IHRoZSAnZ2l0IGxvZyAtLW9uZWxpbmUnIHdpdGggdGhlIGNvbW1pdCBt
+ZXNzYWdlIG1ha2UgaXQNCmNsZWFyIHdoYXQgdGhlIHN0YXRlIG9mIHRoZSByZXBvIHdhcyBiZWZv
+cmUgdGhlIHJlc2V0IGluIGVpdGhlciBjYXNlLg0KVGhlIG9ubHkgZGlmZmVyZW5jZSBpcyB0aGF0
+IGluIHRoZSBzcGFyc2UgY2FzZSwgaXQgaXMgdHVybmVkIG9uIGFuZCBvbmUNCmZpbGUgYWRkZWQg
+dG8gdGhlIHNwYXJzZS1jaGVja291dCBmaWxlIGFuZCBhIGNoZWNrb3V0IGlzIHBlcmZvcm1lZA0K
+dG8gbWFrZSB0aGUgd29ya2luZyBkaXJlY3Rvcnkgc3BhcnNlLg0KDQo+IElmIHlvdSdyZSBwZXJm
+b3JtaW5nIGEgc3BhcnNlIGNoZWNrb3V0IGFuZCB5b3UgbW9kaWZ5IGZpbGVzIG91dHNpZGUgb2YN
+Cj4gdGhlIHNwYXJzZSBhcmVhLCBJIHRoaW5rIHRoYXQgd2lsbCBjYXVzZSBwcm9ibGVtcywgYW5k
+IHdlIG1heSBub3QgYmUNCj4gbWFraW5nIHRoZSBiZXN0IGVmZm9ydHMgdG8gcmVzb2x2ZSBpdC4g
+SSBkbyBhZ3JlZSB0aGF0IGlmIHlvdSBoYXZlDQo+IGNyZWF0ZWQgYSBmaWxlICJtIiB3aGVuIG9u
+bHkgImkiIGlzIGluIHlvdXIgcGF0aCwgdGhhdCB3ZSBzaG91bGQNCj4gYWJzb2x1dGVseSBub3Qg
+ZGVsZXRlICJtIiBidXQgbGVhdmUgaXQgYXMgaXMuDQo+IA0KDQpBZ2FpbiBkb2N1bWVudGF0aW9u
+IHNheXMgYW5kIGZyb20gbXkgZXhwZXJpZW5jZSwgZ2l0IGNhbiB1cGRhdGUgYW5kDQpkZWxldGUg
+Im0iIGlmIGl0IG1hdGNoZXMgdGhlIGluZGV4IHZlcnNpb24uICANCg0KPiBUaGFua3MsDQo+IEph
+a2UNCj4gDQo=
