@@ -2,81 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1996720286
-	for <e@80x24.org>; Tue, 12 Sep 2017 06:46:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 90D9B20286
+	for <e@80x24.org>; Tue, 12 Sep 2017 06:47:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751119AbdILGqY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Sep 2017 02:46:24 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:65237 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751036AbdILGqX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Sep 2017 02:46:23 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CA8F7A7125;
-        Tue, 12 Sep 2017 02:46:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=uWiynFgGbgB3+rFuoivQJS8ysB0=; b=JsgBBr
-        gA3GozKX5l01v9/rvZFSwPoQuX2b76pJYiQk0HZz+RyYDtQvjLoJM/mnST65rC8g
-        l/YtEqSktpa8/I5k+OqrwrejrYhVZ2v5gjKuOarqLkl1+HY5zAnhFAdbX0OxbR6N
-        gAHSS9VpN8II88aeNiq4tQCiLpZv+3HYTV2Aw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Px+itVvCozGMGr5oRbAOwvJxKpDD51T3
-        FvXzr8cGfKmHjoqWbiPmB+NT4rhvcFn36N5ZY1yskPhQmdFPgj/ZrIXB8MRI85QD
-        ayM8v1IIljMOtE9M3+jZF0K/xocPuQv1GVW3o8mZeofOQzLExk6KjRh/GTQ9Zbiu
-        N9UX9S3+FeY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C3D4BA7124;
-        Tue, 12 Sep 2017 02:46:22 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 26DC4A7123;
-        Tue, 12 Sep 2017 02:46:22 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>,
-        Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 4/4] imap-send: use curl by default
-References: <c74c8c386f2c2d8b6cebd4addf925d0121986067.1502114584.git.nicolas@morey-chaisemartin.com>
-        <71479602-fabc-1861-124b-90b26b952344@morey-chaisemartin.com>
-        <20170807200126.fnbz57qd44vj43c6@sigill.intra.peff.net>
-Date:   Tue, 12 Sep 2017 15:46:20 +0900
-In-Reply-To: <20170807200126.fnbz57qd44vj43c6@sigill.intra.peff.net> (Jeff
-        King's message of "Mon, 7 Aug 2017 16:01:26 -0400")
-Message-ID: <xmqqy3pk1kjn.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751036AbdILGrV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Sep 2017 02:47:21 -0400
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:54628 "EHLO
+        alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750987AbdILGrU (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 12 Sep 2017 02:47:20 -0400
+X-AuditID: 12074414-0ebff70000006ddf-4c-59b782f4c560
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id F4.1E.28127.4F287B95; Tue, 12 Sep 2017 02:47:19 -0400 (EDT)
+Received: from mail-it0-f52.google.com (mail-it0-f52.google.com [209.85.214.52])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v8C6lF6c025070
+        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT)
+        for <git@vger.kernel.org>; Tue, 12 Sep 2017 02:47:16 -0400
+Received: by mail-it0-f52.google.com with SMTP id o200so25859187itg.0
+        for <git@vger.kernel.org>; Mon, 11 Sep 2017 23:47:16 -0700 (PDT)
+X-Gm-Message-State: AHPjjUj4DpMsXPVOLmC4GHG4klE8rdIcMxe+vrkuFEMPuIAWP5a3U5Oe
+        DLX2/KGoWU39BJ7scLQNvG7RfTPmoI3HomuXByE=
+X-Google-Smtp-Source: AOwi7QA1NfiAouial8A8CGWDHP65nrA8j2zUuPTVk5VJXJI8mPYRBzyn+HS8QNFelSOgkppwEZp2ow5lfG9jxa6juqw=
+X-Received: by 10.36.26.129 with SMTP id 123mr16679896iti.38.1505198835489;
+ Mon, 11 Sep 2017 23:47:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 16C87D92-9786-11E7-877A-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Reply-To: mhagger@alum.mit.edu
+Received: by 10.79.13.17 with HTTP; Mon, 11 Sep 2017 23:47:14 -0700 (PDT)
+In-Reply-To: <20170910073928.ys4nbap76tmiurjh@sigill.intra.peff.net>
+References: <cover.1503734566.git.mhagger@alum.mit.edu> <20170909103131.pppm346qbj2cdxuo@sigill.intra.peff.net>
+ <2b7c0053-bf7a-fbdd-3cf9-39b5d9a962c3@alum.mit.edu> <20170910073928.ys4nbap76tmiurjh@sigill.intra.peff.net>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Date:   Tue, 12 Sep 2017 08:47:14 +0200
+X-Gmail-Original-Message-ID: <CAMy9T_GGrb3+9n2nMT78mk8_4SGdf=EbS4gDYtvM1CA-i3+xXQ@mail.gmail.com>
+Message-ID: <CAMy9T_GGrb3+9n2nMT78mk8_4SGdf=EbS4gDYtvM1CA-i3+xXQ@mail.gmail.com>
+Subject: Re: [PATCH 00/12] Clean up notes-related code around `load_subtree()`
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johan Herland <johan@herland.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>,
+        Lars Schneider <larsxschneider@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprBKsWRmVeSWpSXmKPExsUixO6iqPu9aXukwff/GhZdV7qZHBg9Pm+S
+        C2CM4rJJSc3JLEst0rdL4Mr4cn4LW8EtzorPJ74xNzBeZO9i5OSQEDCRuLH/EGMXIxeHkMAO
+        JolZ7xqYIJxHTBLXl3xnh3D6GSWetX5jhGgpl7hx5gwLhF0kseLtVKA4B5BdLLH+VBVImFdA
+        UOLkzCdgJUICchKvNtxghLA9Jc4vuQNmcwq4SBw6voMJIn6XUeL8hFAQm01AV2JRTzNYnEVA
+        VeL1/VNMEOMTJVb3KEGMD5CY/HgZG4gtLOAn0bDnMFi5iICsxPfDG8GeYRaYxiRxY+seVpAE
+        s4CmROv23+wTGEVmITlvFpLUAkamVYxyiTmlubq5iZk5xanJusXJiXl5qUW6Fnq5mSV6qSml
+        mxghwS2yg/HISblDjAIcjEo8vA292yKFWBPLiitzDzFKcjApifL+Ft4eKcSXlJ9SmZFYnBFf
+        VJqTWnyIUYKDWUmEd1cBUI43JbGyKrUoHyYlzcGiJM77bbG6n5BAemJJanZqakFqEUxWhoND
+        SYI3ARjFQoJFqempFWmZOSUIaSYOTpDhPEDD/zWCDC8uSMwtzkyHyJ9iNOa4cOfSHyaOA3tu
+        /WESYsnLz0uVEuf1AhknAFKaUZoHNw2WoF4xigM9J8x7EWQgDzC5wc17BbSKCWgVz6UtIKtK
+        EhFSUg2MdTal4Q/+bz+5b03crVfSnX2J3JEqDiVyTHvMYqpi+49bbeir2LDVv5Nbgm3Bpfdu
+        bIKx+ufWfW28LLWgyGqn1W9Wznz9tclMj69VR91YsyMp6sWGW5pGXDd6TMoML79eFS557mDA
+        hOtF6WFHly0v+Wg+Qz9Bxfx9atTqmGnpW8NYj55Zx7ZNiaU4I9FQi7moOBEAd5HnACsDAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
-> On Mon, Aug 07, 2017 at 04:04:05PM +0200, Nicolas Morey-Chaisemartin wrote:
+On Sun, Sep 10, 2017 at 9:39 AM, Jeff King <peff@peff.net> wrote:
+> On Sun, Sep 10, 2017 at 06:45:08AM +0200, Michael Haggerty wrote:
 >
->> Signed-off-by: Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
+>> > So nothing to see here, but since I spent 20 minutes scratching my head
+>> > (and I know others look at Coverity output and may scratch their heads
+>> > too), I thought it was worth writing up. And also if I'm wrong, it would
+>> > be good to know. ;)
+>>
+>> Thanks for looking into this. I agree with your analysis.
+>>
+>> I wonder whether it is the factor of two between path lengths and byte
+>> lengths that is confusing Coverity. Perhaps the patch below would help.
+>> It requires an extra, superfluous, check, but perhaps makes the code a
+>> tad more readable. I'm neutral on whether we would want to make the change.
 >
-> Thanks for moving forward with this.
+> Yeah, I do agree that it makes the code's assumptions a bit easier to
+> follow.
 >
-> Can you please flesh out your commit messages with some of the reasoning
-> and related discussion? I know from a nearby thread why we want to flip
-> the default, but people reading `git log` much later will not have that
-> context.
-> ...
+>> Is there a way to ask Coverity whether a hypothetical change would
+>> remove the warning, short of merging the change to master?
+>
+> You can download and run the build portion of the coverity tools
+> yourself. [...]
 
-I was sweeping my mailbox to collect loose ends that haven't been
-tied down, and noticed that this topic does not seem to reach a
-conclusion.  Do we want to reboot the effort?  Or should we just
-throw it in the #leftoverbits bin for now?
+Thanks for the info.
 
-Thanks.
+My suggested tweak doesn't appease Coverity. Given that, I don't think
+I'll bother adding it to the patch series.
 
+Michael
