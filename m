@@ -7,56 +7,57 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EECD51FADE
-	for <e@80x24.org>; Tue, 12 Sep 2017 17:28:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 06CCA1FADE
+	for <e@80x24.org>; Tue, 12 Sep 2017 17:30:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751501AbdILR2o (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Sep 2017 13:28:44 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:33323 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751405AbdILR2n (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Sep 2017 13:28:43 -0400
-Received: by mail-pg0-f67.google.com with SMTP id i130so4477259pgc.0
-        for <git@vger.kernel.org>; Tue, 12 Sep 2017 10:28:43 -0700 (PDT)
+        id S1751455AbdILRac (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Sep 2017 13:30:32 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:36057 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751405AbdILRab (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Sep 2017 13:30:31 -0400
+Received: by mail-pg0-f66.google.com with SMTP id d8so6477147pgt.3
+        for <git@vger.kernel.org>; Tue, 12 Sep 2017 10:30:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=OLcPZuuxvCUS9lECAHlM0WhEKykXT3HGKu0aQKjhttE=;
-        b=KLr+LKxbecWOhzGS94fyezu4SAZ16pzycKy788yQGCq2DQ1Lu2AXZNQ+izntXzj/r5
-         zcfKAgATeSHgF+s9njp3VErMhi+4vioSYoUTxrFVvBhQGuN0JXHaoPlBSecBuJvdov0d
-         6j44IXc/YyJnuIV3Dg3lmmEh9ZWO3lm5qbhIOi4TmU2+83WGSVkf5KNRUBAFkbxNNlgr
-         e+P8bVSoWRRV0v4xZQ/Id+znGNP9CxmJ7NFqIVDLgQipXt0DZbpVi3hR/teYBQAJEJrL
-         3L3PsiqzSi2rnCoqY0Eg2AK03y9RBr5ESDw+ybZBK1Gac142wGpC6rLyC5s7at7Wd+5r
-         gvdQ==
+        bh=moU9y7kNZ7WAF54/CPSJN5MZCJ6QP2jAZlbZImYADKk=;
+        b=cyR2TDw11NicvOOM5NXPROaP3mLuzlfhCfG1OlNP0WrBcrbMIWIhTceyEPlbZl89FU
+         Kgry4ZkYFK1ZHJProKhxksTd1X0/phMisSrYrVXigv2IIvqox/KR0wtDzxEQiUR7/OF/
+         4pEN2Mrx+AWIR63mL36EbgxI/T4lFESerfxQ2iV/DgqVnVN5c6QSYL8zmalGL1ujc7pc
+         G6cH6UA//Awz4mgjDKJmV9+tQvNL+tUVkVVvXUUUamtNbxa8dBlapwSXFhP7sfYbuhup
+         1ZV1pM62QeGGR2fU9hnrFbXgILDrAbLq8+IH2M/9WmUqhAMDirxL378rJFjbtka+yBQj
+         iOYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=OLcPZuuxvCUS9lECAHlM0WhEKykXT3HGKu0aQKjhttE=;
-        b=s+LJncx5ra1xPrKvzb3SqFAAuE0/82Y5IebcigZ41gIv+xy9O9bIObof4L4TcUlkgA
-         j9LM907/CeWb5z4dKk+hsmrBPCOP3BU6FutZ2Pi+kVfbGJNpZTm05XB2d15s9tIzwkEH
-         hJ9B8mOLCerIXR5pWs8kICsW0KczSVCRJTrFPklN4kiWFDFfCdZPMzyjxE32NnGeThxy
-         f7CJ7rGAv91e3Z2fFWpVLhM6soroj715cmt+RlI3R4jQMzYd3W4NDK0d7Hz7xGRNcyGn
-         fmG+vThVVbgOIY7+yP3kLmCeJII8cLIhvkuaT9I9l7uAoCw5pYtWxcSxjsge2PlnErqv
-         ewaA==
-X-Gm-Message-State: AHPjjUir9w+SsFeG2J2Jn92lxhvgeMoyT8/u5v6E2uRwodffopJi/yLK
-        hu46+oMcgqWXSqwtEJA=
-X-Google-Smtp-Source: ADKCNb5ufRGbgbncqpKtzMVOc4/8CqrxjQQ9o8T2bJnRgM5EJbbZJGdNH34No7kye6cyS+gGgSFS/w==
-X-Received: by 10.84.232.199 with SMTP id x7mr18218108plm.191.1505237322266;
-        Tue, 12 Sep 2017 10:28:42 -0700 (PDT)
+        bh=moU9y7kNZ7WAF54/CPSJN5MZCJ6QP2jAZlbZImYADKk=;
+        b=GGyKbpAqjuC+ZEJGddiv0vw/WB9tF3u00TVyrT6qBl7tvTlrGMEDa/2B15+cU21ihI
+         GTr3NtmHJCpIdqdmWH0WdhyPDP8sRivU59rlMA/1AgpF4/b/0usNwsuUxwI1e02kDQSn
+         nKnRMxJyvOOk/VvPUDM2SPWgH5kRfFtZOavNoKOz+RYEbdYmPnA9TwEjUN5TXN/HoZhJ
+         +1xTMeZRH2uK9kOHIWMUMxueZEiUHJSasZ7mdSHbOwMZg3dIHpOaaiTWGpLn/IyG24TG
+         aWFDFch1OGcVjHf5eEkCh6n58s+nRAc3au9TwzRNyBcZsoO94IOxu0boWjp4UQfv7/tl
+         A5Lg==
+X-Gm-Message-State: AHPjjUjNlhetaS+2DTzZ2+WeQXCgExeLit/rWOMbP7o6+fZHo5YxqcZ+
+        lb49FUFY1Z/SbrYu3zg=
+X-Google-Smtp-Source: ADKCNb5kya0tl3n5BxNbdaqrlaGS1lKGR/peOC2HA7OJXOT0YHCBOIdm8hv2FeqN8LQ9ZiHy+9Gn2g==
+X-Received: by 10.84.244.3 with SMTP id g3mr17998662pll.12.1505237430078;
+        Tue, 12 Sep 2017 10:30:30 -0700 (PDT)
 Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:9def:8161:22df:85ca])
-        by smtp.gmail.com with ESMTPSA id x13sm11711744pgt.16.2017.09.12.10.28.41
+        by smtp.gmail.com with ESMTPSA id h82sm22871222pfd.148.2017.09.12.10.30.29
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 12 Sep 2017 10:28:41 -0700 (PDT)
-Date:   Tue, 12 Sep 2017 10:28:39 -0700
+        Tue, 12 Sep 2017 10:30:29 -0700 (PDT)
+Date:   Tue, 12 Sep 2017 10:30:27 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 1/4] pack: make packed_git_mru global a value instead of a
- pointer
-Message-ID: <20170912172839.GB144745@aiede.mtv.corp.google.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Brandon Williams <bmwill@google.com>,
+        Heiko Voigt <hvoigt@hvoigt.net>
+Subject: [PATCH 2/4] push, fetch: error out for submodule entries not
+ pointing to commits
+Message-ID: <20170912173027.GC144745@aiede.mtv.corp.google.com>
 References: <20170912172330.GA144745@aiede.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -68,121 +69,118 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The MRU cache that keeps track of recently used packs is represented
-using two global variables:
+From: Stefan Beller <sbeller@google.com>
 
-	struct mru packed_git_mru_storage;
-	struct mru *packed_git_mru = &packed_git_mru_storage;
+The check_has_commit helper uses resolves a submodule entry to a
+commit, when validating its existence. As a side effect this means
+tolerates a submodule entry pointing to a tag, which is not a valid
+submodule entry that git commands would know how to cope with.
 
-Callers never assign to the packed_git_mru pointer, though, so we can
-simplify by eliminating it and using &packed_git_mru_storage (renamed
-to &packed_git_mru) directly.  This variable is only used by the
-packfile subsystem, making this a relatively uninvasive change (and
-any new unadapted callers would trigger a compile error).
+Tighten the check to require an actual commit, not a tag pointing to a
+commit.
 
-Noticed while moving these globals to the object_store struct.
+Also improve the error handling when a submodule entry points to
+non-commit (e.g., a blob) to error out instead of warning and
+pretending the pointed to object doesn't exist.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-Acked-by: Jeff King <peff@peff.net>
 ---
-Unchanged from
-https://public-inbox.org/git/20170830064827.GB153983@aiede.mtv.corp.google.com/.
+ submodule.c                    | 33 +++++++++++++++++++++++++--------
+ t/t5531-deep-submodule-push.sh | 10 ++++++++++
+ 2 files changed, 35 insertions(+), 8 deletions(-)
 
-I agree with the comments there that it would be nice to make this use
-list.h (#leftoverbits) and would be happy to read a patch doing that.
-Once we're done adapting the object store to work with arbitrary
-repositories we may come back to this, but I'd be happier if it's just
-already taken care of for us.
-
- builtin/pack-objects.c |  4 ++--
- cache.h                |  4 ++--
- packfile.c             | 12 +++++-------
- 3 files changed, 9 insertions(+), 11 deletions(-)
-
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index a57b4f058d..f721137eaf 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -1012,7 +1012,7 @@ static int want_object_in_pack(const unsigned char *sha1,
- 			return want;
- 	}
- 
--	for (entry = packed_git_mru->head; entry; entry = entry->next) {
-+	for (entry = packed_git_mru.head; entry; entry = entry->next) {
- 		struct packed_git *p = entry->item;
- 		off_t offset;
- 
-@@ -1030,7 +1030,7 @@ static int want_object_in_pack(const unsigned char *sha1,
- 			}
- 			want = want_found_object(exclude, p);
- 			if (!exclude && want > 0)
--				mru_mark(packed_git_mru, entry);
-+				mru_mark(&packed_git_mru, entry);
- 			if (want != -1)
- 				return want;
- 		}
-diff --git a/cache.h b/cache.h
-index a916bc79e3..49b083ee0a 100644
---- a/cache.h
-+++ b/cache.h
-@@ -4,6 +4,7 @@
- #include "git-compat-util.h"
- #include "strbuf.h"
- #include "hashmap.h"
-+#include "mru.h"
- #include "advice.h"
- #include "gettext.h"
- #include "convert.h"
-@@ -1589,8 +1590,7 @@ extern struct packed_git {
-  * A most-recently-used ordered version of the packed_git list, which can
-  * be iterated instead of packed_git (and marked via mru_mark).
-  */
--struct mru;
--extern struct mru *packed_git_mru;
-+extern struct mru packed_git_mru;
- 
- struct pack_entry {
- 	off_t offset;
-diff --git a/packfile.c b/packfile.c
-index f86fa051c9..f69a5c8d60 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -40,9 +40,7 @@ static unsigned int pack_max_fds;
- static size_t peak_pack_mapped;
- static size_t pack_mapped;
- struct packed_git *packed_git;
--
--static struct mru packed_git_mru_storage;
--struct mru *packed_git_mru = &packed_git_mru_storage;
-+struct mru packed_git_mru;
- 
- #define SZ_FMT PRIuMAX
- static inline uintmax_t sz_fmt(size_t s) { return s; }
-@@ -861,9 +859,9 @@ static void prepare_packed_git_mru(void)
- {
- 	struct packed_git *p;
- 
--	mru_clear(packed_git_mru);
-+	mru_clear(&packed_git_mru);
- 	for (p = packed_git; p; p = p->next)
--		mru_append(packed_git_mru, p);
-+		mru_append(&packed_git_mru, p);
+diff --git a/submodule.c b/submodule.c
+index 3cea8221e0..e0da55920d 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -767,19 +767,36 @@ static int append_oid_to_argv(const struct object_id *oid, void *data)
+ 	return 0;
  }
  
- static int prepare_packed_git_run_once = 0;
-@@ -1832,9 +1830,9 @@ int find_pack_entry(const unsigned char *sha1, struct pack_entry *e)
- 	if (!packed_git)
- 		return 0;
++struct has_commit_data {
++	int result;
++	const char *path;
++};
++
+ static int check_has_commit(const struct object_id *oid, void *data)
+ {
+-	int *has_commit = data;
++	struct has_commit_data *cb = data;
  
--	for (p = packed_git_mru->head; p; p = p->next) {
-+	for (p = packed_git_mru.head; p; p = p->next) {
- 		if (fill_pack_entry(sha1, e, p->item)) {
--			mru_mark(packed_git_mru, p);
-+			mru_mark(&packed_git_mru, p);
- 			return 1;
- 		}
+-	if (!lookup_commit_reference(oid))
+-		*has_commit = 0;
++	enum object_type type = sha1_object_info(oid->hash, NULL);
+ 
+-	return 0;
++	switch (type) {
++	case OBJ_COMMIT:
++		return 0;
++	case OBJ_BAD:
++		/*
++		 * Object is missing or invalid. If invalid, an error message
++		 * has already been printed.
++		 */
++		cb->result = 0;
++		return 0;
++	default:
++		die(_("submodule entry '%s' (%s) is a %s, not a commit"),
++		    cb->path, oid_to_hex(oid), typename(type));
++	}
+ }
+ 
+ static int submodule_has_commits(const char *path, struct oid_array *commits)
+ {
+-	int has_commit = 1;
++	struct has_commit_data has_commit = { 1, path };
+ 
+ 	/*
+ 	 * Perform a cheap, but incorrect check for the existence of 'commits'.
+@@ -795,7 +812,7 @@ static int submodule_has_commits(const char *path, struct oid_array *commits)
+ 
+ 	oid_array_for_each_unique(commits, check_has_commit, &has_commit);
+ 
+-	if (has_commit) {
++	if (has_commit.result) {
+ 		/*
+ 		 * Even if the submodule is checked out and the commit is
+ 		 * present, make sure it exists in the submodule's object store
+@@ -814,12 +831,12 @@ static int submodule_has_commits(const char *path, struct oid_array *commits)
+ 		cp.dir = path;
+ 
+ 		if (capture_command(&cp, &out, GIT_MAX_HEXSZ + 1) || out.len)
+-			has_commit = 0;
++			has_commit.result = 0;
+ 
+ 		strbuf_release(&out);
  	}
+ 
+-	return has_commit;
++	return has_commit.result;
+ }
+ 
+ static int submodule_needs_pushing(const char *path, struct oid_array *commits)
+diff --git a/t/t5531-deep-submodule-push.sh b/t/t5531-deep-submodule-push.sh
+index 0f84a53146..39cb2c1c34 100755
+--- a/t/t5531-deep-submodule-push.sh
++++ b/t/t5531-deep-submodule-push.sh
+@@ -298,6 +298,16 @@ test_expect_success 'push succeeds if submodule commit disabling recursion from
+ 	)
+ '
+ 
++test_expect_success 'submodule entry pointing at a tag is error' '
++	git -C work/gar/bage tag -a test1 -m "tag" &&
++	tag=$(git -C work/gar/bage rev-parse test1^{tag}) &&
++	git -C work update-index --cacheinfo 160000 "$tag" gar/bage &&
++	git -C work commit -m "bad commit" &&
++	test_when_finished "git -C work reset --hard HEAD^" &&
++	test_must_fail git -C work push --recurse-submodules=on-demand ../pub.git master 2>err &&
++	test_i18ngrep "is a tag, not a commit" err
++'
++
+ test_expect_success 'push fails if recurse submodules option passed as yes' '
+ 	(
+ 		cd work/gar/bage &&
 -- 
 2.14.1.690.gbb1197296e
 
