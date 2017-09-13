@@ -2,73 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 20E16209B8
-	for <e@80x24.org>; Wed, 13 Sep 2017 10:44:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC687209B8
+	for <e@80x24.org>; Wed, 13 Sep 2017 11:06:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751709AbdIMKor (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Sep 2017 06:44:47 -0400
-Received: from ikke.info ([178.21.113.177]:42972 "EHLO vps892.directvps.nl"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751423AbdIMKoq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Sep 2017 06:44:46 -0400
-Received: by vps892.directvps.nl (Postfix, from userid 1008)
-        id 64C74440120; Wed, 13 Sep 2017 12:29:15 +0200 (CEST)
-Date:   Wed, 13 Sep 2017 12:29:15 +0200
-From:   Kevin Daudt <me@ikke.info>
-To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH] commit-template: change a message to be more intuitive
-Message-ID: <20170913102915.GA21499@alpha.vpn.ikke.info>
-References: <20170912105536.6094-1-kaarticsivaraam91196@gmail.com>
+        id S1752387AbdIMLGd (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Sep 2017 07:06:33 -0400
+Received: from cloud.peff.net ([104.130.231.41]:36458 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752317AbdIMLGc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Sep 2017 07:06:32 -0400
+Received: (qmail 31539 invoked by uid 109); 13 Sep 2017 11:06:32 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 13 Sep 2017 11:06:32 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12749 invoked by uid 111); 13 Sep 2017 11:07:07 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
+ by peff.net (qpsmtpd/0.94) with SMTP; Wed, 13 Sep 2017 07:07:07 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Sep 2017 07:06:30 -0400
+Date:   Wed, 13 Sep 2017 07:06:30 -0400
+From:   Jeff King <peff@peff.net>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: BUG: attempt to trim too many characters
+Message-ID: <20170913110630.mi75i5eeevn5sqpj@sigill.intra.peff.net>
+References: <CA+55aFxW3qcETiMrNk5SqZU+_jtM2Rxeb3mhF=J=c0ChdGm1tg@mail.gmail.com>
+ <20170905215056.4wihyd6hrtvk52yd@sigill.intra.peff.net>
+ <CA+55aFywhyELmbhAorgTjJZeuNxE-+j2qSP=3d3vqQXNM6p54A@mail.gmail.com>
+ <20170905220300.isxbt5y5fd2scd6b@sigill.intra.peff.net>
+ <CA+55aFyyHAjEPx6V3X4i7LV-0VGwu2n288ysnpftP1Bx53EX5g@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170912105536.6094-1-kaarticsivaraam91196@gmail.com>
-User-Agent: Mutt/1.8.3 (2017-05-23)
+In-Reply-To: <CA+55aFyyHAjEPx6V3X4i7LV-0VGwu2n288ysnpftP1Bx53EX5g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 12, 2017 at 04:25:36PM +0530, Kaartic Sivaraam wrote:
-> It's not possible to 'touch' the cut-line that is shown when the
-> user requests a patch in his commit template.
-> 
+On Tue, Sep 12, 2017 at 09:29:49PM -0700, Linus Torvalds wrote:
 
-Touching something can also mean to disturb or change something, which
-is the meaning being used here, so it is not an incorrect use of the
-word.
+> Just reminding people that this issue would seem to still exist in
+> current master..
 
-> So, make the sentence more intuitive.
+Yeah, the fix is in 1d0538e4860, but it's still working it's way up
+through the integration branches.
 
-I can understand however that it might be not so clear for people with
-less fluency in English.
-
-> 
-> Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-> ---
->  Just a small tweak. May or may not be worth the patch.
-> 
->  wt-status.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/wt-status.c b/wt-status.c
-> index 77c27c511..1f54b1df2 100644
-> --- a/wt-status.c
-> +++ b/wt-status.c
-> @@ -934,7 +934,7 @@ size_t wt_status_locate_end(const char *s, size_t len)
->  
->  void wt_status_add_cut_line(FILE *fp)
->  {
-> -	const char *explanation = _("Do not touch the line above.\nEverything below will be removed.");
-> +	const char *explanation = _("Do not edit the line above.\nEverything below will be removed.");
->  	struct strbuf buf = STRBUF_INIT;
->  
->  	fprintf(fp, "%c %s", comment_line_char, cut_line);
-> -- 
-> 2.14.1.1006.g90ad9a07c
-> 
+-Peff
