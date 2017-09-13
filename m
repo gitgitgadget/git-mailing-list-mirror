@@ -2,121 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 98BE7209B8
-	for <e@80x24.org>; Wed, 13 Sep 2017 09:07:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 31CD8209B8
+	for <e@80x24.org>; Wed, 13 Sep 2017 09:08:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751710AbdIMJHg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Sep 2017 05:07:36 -0400
-Received: from mail-it0-f41.google.com ([209.85.214.41]:45323 "EHLO
-        mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751555AbdIMJHf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Sep 2017 05:07:35 -0400
-Received: by mail-it0-f41.google.com with SMTP id v19so463131ite.0
-        for <git@vger.kernel.org>; Wed, 13 Sep 2017 02:07:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=72hONTUW8Jq2VeYpGrjuauy/3jfgPov2Z6T5wFpFGK4=;
-        b=XKzPDB6eBAEptdpES1IhAMaVLU2FD6UwppMsi0dYgW85rG9FubVu7xhLzN4zkcHNdh
-         7QVx+xiZHRGnqegpL7nQ2WLmtdcJL6Jn0XDWE46HhZEpfd7Ucg6qgcB1WRCYQjH2HaB5
-         RnvynuocmUjKrLzF9w5bbMKpGQBxh8hWNkzRJCLtPygGSJiu7E7pf7oGmn5LDgUWlJnM
-         c34/LwDoacwOmyNjEgP8fStMpZazAwFcklluSQvSD92Fhn8Fb0fENQ7sF+dUXQ+Ma6hG
-         IN0vSuC8yG3gG5iaKjiVcsSss9VZ38QlHOWM8IMFO87fFLRX+nWVg+9M/1ymV4AhM1On
-         cPiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=72hONTUW8Jq2VeYpGrjuauy/3jfgPov2Z6T5wFpFGK4=;
-        b=cqGRpdNGn7cOD7jv2MEuhZw6ABVRupGzNIUI0JOqdmYOvAoD98SAjdW74dtflg3RJJ
-         5bn3juKGgwI9TCG2r6RhR9ybmRYT41JmO5+xfUectU/NzA2nAa9Agfz9Rc/CxfoNM2DS
-         bTflnVYpO2TyadTH6R2/694cT6a82up5yJgEvn5G4GjcjAdWqcZwKAyd/br8vzSRkwAO
-         a+ACmVS72l66DAgl2yIy4NiLhDtoQmfCQePpAg2/APPGegkbsMwnCIXgL2vKTu21iYW0
-         H8bi2CsDmscMnT2nfRIX6JyGNpCwAMx2AIJfh7AMMlvIIejsJPqldBaNDOhCG5S4fumf
-         X8Fg==
-X-Gm-Message-State: AHPjjUgG2wh9L+F4+t6G2jCbZmvYmNPrW6yzt1uRMTuXd8j7x0lsk2rh
-        PGMlQpN2OdzrBOH/rMUDULwxyFid
-X-Google-Smtp-Source: AOwi7QCnrTsqlkAhfJ/26B3cukJcSEA0zyq4hSNdxDKVytfIuBWKcG2c/UeORCQlXcmth2QtzA9LDw==
-X-Received: by 10.36.0.77 with SMTP id 74mr3536751ita.119.1505293654397;
-        Wed, 13 Sep 2017 02:07:34 -0700 (PDT)
-Received: from [10.4.2.238] ([218.248.21.162])
-        by smtp.gmail.com with ESMTPSA id 72sm512420itz.43.2017.09.13.02.07.31
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 13 Sep 2017 02:07:33 -0700 (PDT)
-Subject: Re: Buffered value should be shown when requesting username for
- remote authentication
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-References: <1505220449.27800.23.camel@gmail.com>
- <20170912153355.mbsybuy3kqtfvmtd@sigill.intra.peff.net>
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Message-ID: <f07d9416-bf2b-83ac-176a-14411d6e8aca@gmail.com>
-Date:   Wed, 13 Sep 2017 14:37:39 +0530
+        id S1751812AbdIMJIY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Sep 2017 05:08:24 -0400
+Received: from mout.kundenserver.de ([212.227.17.13]:54891 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751413AbdIMJIX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Sep 2017 05:08:23 -0400
+Received: from skimbleshanks.math.uni-hannover.de ([130.75.46.4]) by
+ mrelayeu.kundenserver.de (mreue103 [212.227.15.183]) with ESMTPSA (Nemesis)
+ id 0Luaps-1dRQ342GZs-00zmRG; Wed, 13 Sep 2017 11:08:14 +0200
+Subject: Re: Unexpected pass for t6120-describe.sh on cygwin
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Adam Dinwoodie <adam@dinwoodie.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+References: <7c3db153-2a56-f27d-af71-e4b61f1252a1@ramsayjones.plus.com>
+ <alpine.DEB.2.21.1.1709121538360.4132@virtualbox>
+From:   Michael J Gruber <git@grubix.eu>
+Message-ID: <52f990d5-cdac-b516-269c-acbb68897e6e@grubix.eu>
+Date:   Wed, 13 Sep 2017 11:08:13 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-In-Reply-To: <20170912153355.mbsybuy3kqtfvmtd@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <alpine.DEB.2.21.1.1709121538360.4132@virtualbox>
+Content-Type: text/plain; charset=utf-8
+Content-Language: de-DE
 Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-Cyberoam-smtpxy-version: 1.0.6.3
-X-Cyberoam-AV-Policy: default
-X-CTCH-Error: Unable to connect local ctasd
+X-Provags-ID: V03:K0:MT63ECs4w/No6jTRRl5h6Y562eIRmyElfMqNbnY/ftv08bD6Nk/
+ MPRxCxFaCDgZnNneBbddb1IJweaItYvORsoEVTsV5lesP0y0pez9jsK2Z4s6CgvHWbQAFf4
+ JFhpxzYtdP1JhujeVEWapItnhgvYLT7lteCWy2rxNJT/oLyWY6mf4HjpjL/jsQtkIvYjC3l
+ O78PDyHRwJv5Vd68ZdU4w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:MIi11HMl788=:Zv4Zb1F+tzmnmgk8/DxTak
+ bXlwuNAjibAnbM8IZuv/ue8vTbNzfzdLqpofteAd+i09dPyAM8vZIanRaspXZI//Wap07sbM6
+ p9kZQWxBmyWCdDQvJoBRTkqEgInYlM3/Dt2W53KBNPJXFxtaQeW3EkJs0oXrxwKjyP/96VpyD
+ ZMrfSXXo5JO/Y2nA1j8UPO51XIbtu7w41Ewp4poHq6zRy4zK4Iq/p4blaHpWDda4QCZgWl1Q2
+ kp8UL14yVYnrq65b02Tni5L4cOn/D2TJ1qIQMWf0aOp0DAhE1akth2v4D0xEbmD/mSVmPFkPq
+ ywiFP+pzwyeaGHeMfjPsqLH/65Bzv+5MNfeDxwau24A0Tc62ZidbS7e9iUl4fk1APmsWaWfTg
+ vqv+jtL1pWKE+IZ66hezaPmyKKjPDtYhO7pRT5+4tKY1uJ8v50UqNtB/qlZI9cesT+PTtUGFV
+ 39Iq4bnqK6FgMYUa2iOxpnickbHerMrkc6zK38HEAV5ESdhwc7vbauS5R5DwtfHuMnrJKWYsQ
+ hl4fS0bPoNEfyHwSnUFySM426UBie/byN+AUEt6sv/sG2SGhS9jkBWYdKmORHHOPmKCzBi4js
+ 3VNS5UiNcqKZoq5c8CBT4mp0Vy9QnIGdCDdxmY8TVJh5cFtQ0nZbviGX97rsWKPENnpNOvdpf
+ oluDasMr0IW7op50nG0E4yJyshioSbpXQ7DS0sc1p1qHBPaojranNR2COj4BAOZWdp/f64GNB
+ JsT9OaEsPl3ycwyMLb3DwF5c9bDcvAqJrfhnIEpXZtQfNqMNpuugOj3xwE0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tuesday 12 September 2017 09:03 PM, Jeff King wrote:
-> If I understand right, you typed "sivaraam" once, then the network
-> lagged, then you typed "sivaraam" again.
-Almost there but I should have been more clearer. What I actually did was I
-run `git push` and knowing it would ask for a username I started typing 
-it immediately
-without looking at the terminal to notice that the request for the 
-username hasn't
-shown up yet due to the slow network. the terminal was like this before 
-the request showed up,
+Johannes Schindelin venit, vidit, dixit 12.09.2017 15:39:
+> Hi Ramsay,
+> 
+> On Sat, 9 Sep 2017, Ramsay Jones wrote:
+> 
+>> I ran the test-suite on the 'pu' branch last night (simply because that
+>> was what I had built at the time!), which resulted in a PASS, but t6120
+>> was showing a 'TODO passed' for #52.
+>>
+>> This is a test introduced by Michael's 'mg/name-rev-tests-with-short-stack'
+>> branch, which uses 'ulimit -s' to try and force a stack overflow.
+>> Unfortunately, 'ulimit -s' seems to have no effect on cygwin. I created
+>> a test program (see below) to eat up the stack and tried running it with
+>> various ulimit values (128, 12, 8), but it always seg-faulted at the
+>> same stack-frame. (after using approx 2MB stack space).
+>>
+>> So, it looks like all ULIMIT_STACK_SIZE tests need to be disabled
+>> on cygwin. I also wonder about the ULIMIT_FILE_DESCRIPTORS tests, but
+>> haven't looked into it.
+>>
+>> Given that 'ulimit' is a bash built-in, this may also be a problem on
+>> MinGW and Git-For-Windows, but I can't test on those platforms.
+> 
+> It is.
 
-    $ git push
-    sivaraam
+Thanks.
 
-After the request showed up the terminal was like,
+I just dug something up from an old cygwin list post. Could you please
+try and report on the following (cygwin, MinGW):
 
-    $ git push
-    sivaraamUsername for 'https://github.com' :
+ulimit -s
+ulimit -s 4096 # anything lower than the value from above
+ulimit -s
+bash -c "ulimit -s"
 
-I thought the buffered input wasn't recognised as it didn't show up 
-after the request.
-So, I typed the username once more to get this,
+My suspicion from that post is that ulimit affects the sub shell only -
+if yes, running a test inside the sub shell to confirm whether the
+setting is in effect would be great, of course. /usr/bin/echo $(seq
+100000) or such does the job on Linux (with stack limit 128), but I
+don't know whether this is portably reliable.
 
-      $ git push -u fork
-      sivaraamUsername for 'https://github.com' : sivaraam
-      Password for 'https://sivaraamsivaraam@github.com :
+If ulimit on these platforms has no effect but does not lie about the
+value either it's a simple prerequisite test (test ulimit present, if
+yes set and get and compare the stack size values).
 
-I have been accustomed with this now a days that I don't do the same 
-mistake now. I thought
-it would nice if this could be fixed as I have seen utilities show the 
-buffered input after the
-request but as I stated before I'm not able to recollect which utility 
-it was (hope I had better
-memory)
-
-> That isn't really something that Git can fix reliably. Reading those
-> characters and echoing them back to the terminal is handled by your
-> terminal driver (and potentially other things like ssh).  Git may have
-> received "sivaraamsivaraam" all at once, depending on where the lag is.
-
-I expected this but wasn't sure which "potential thing" was handling the 
-'https' handling in the background.
-I guess it's 'curl' but not sure.
-
----
-Kaartic
+Michael
