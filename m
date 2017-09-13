@@ -6,31 +6,31 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DCB6020286
-	for <e@80x24.org>; Wed, 13 Sep 2017 17:11:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E5A8620286
+	for <e@80x24.org>; Wed, 13 Sep 2017 17:11:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751102AbdIMRLI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Sep 2017 13:11:08 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37030 "HELO cloud.peff.net"
+        id S1751125AbdIMRLb (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Sep 2017 13:11:31 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37038 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751054AbdIMRLH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Sep 2017 13:11:07 -0400
-Received: (qmail 22498 invoked by uid 109); 13 Sep 2017 17:11:07 -0000
+        id S1751063AbdIMRLa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Sep 2017 13:11:30 -0400
+Received: (qmail 22545 invoked by uid 109); 13 Sep 2017 17:11:30 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 13 Sep 2017 17:11:07 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 13 Sep 2017 17:11:30 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16336 invoked by uid 111); 13 Sep 2017 17:11:42 -0000
+Received: (qmail 16354 invoked by uid 111); 13 Sep 2017 17:12:05 -0000
 Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
- by peff.net (qpsmtpd/0.94) with SMTP; Wed, 13 Sep 2017 13:11:42 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Wed, 13 Sep 2017 13:12:05 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Sep 2017 13:11:05 -0400
-Date:   Wed, 13 Sep 2017 13:11:05 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Sep 2017 13:11:28 -0400
+Date:   Wed, 13 Sep 2017 13:11:28 -0400
 From:   Jeff King <peff@peff.net>
 To:     demerphq <demerphq@gmail.com>
 Cc:     Git <git@vger.kernel.org>,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: [PATCH 1/7] config: avoid "write_in_full(fd, buf, len) < len" pattern
-Message-ID: <20170913171104.yu7ags4aq2zdwz6r@sigill.intra.peff.net>
+Subject: [PATCH 2/7] get-tar-commit-id: check write_in_full() return against 0
+Message-ID: <20170913171127.ocnitq6wz57ivhrh@sigill.intra.peff.net>
 References: <20170913170807.cyx7rrpoyhaauvol@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -41,96 +41,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The return type of write_in_full() is a signed ssize_t,
-because we may return "-1" on failure (even if we succeeded
-in writing some bytes). But "len" itself may be an
-unsigned type (the function takes a size_t, but of course we
-may have something else in the calling function). So while
-it seems like:
+We ask to write 41 bytes and make sure that the return value
+is at least 41. This is the same "dangerous" pattern that
+was fixed in the prior commit (wherein a negative return
+value is promoted to unsigned), though it is not dangerous
+here because our "41" is a constant, not an unsigned
+variable.
 
-  if (write_in_full(fd, buf, len) < len)
-	die_errno("write error");
+But we should convert it anyway to avoid modeling a
+dangerous construct.
 
-would notice an error, it won't if "len" is unsigned.  The
-compiler sees a signed/unsigned comparison and promotes the
-signed value, resulting in (size_t)-1, the highest possible
-size_t (or again, whatever type the caller has). This cannot
-possibly be smaller than "len", and so the conditional can
-never trigger.
-
-I scoured the code base for cases of this, but it turns out
-that these two in git_config_set_multivar_in_file_gently()
-are the only ones. This case is actually quite interesting:
-we don't have a size_t, but rather use the subtraction of
-two pointers. Which you might think would be a signed
-ptrdiff_t, but clearly both gcc and clang treat it as
-unsigned (possibly because the conditional just above
-guarantees that the result is greater than zero).
-
-We can avoid the whole question by just checking for a
-negative return value directly, as write_in_full() will
-never return any value except -1 or the full count.
-
-There's no addition to the test suite here, since you need
-to convince write() to fail in order to see the problem. The
-simplest reproduction recipe I came up with is to trigger
-ENOSPC (this only works on Linux, obviously):
-
-  # make a limited-size filesystem
-  dd if=/dev/zero of=small.disk bs=1M count=1
-  mke2fs small.disk
-  mkdir mnt
-  sudo mount -o loop small.disk mnt
-  cd mnt
-  sudo chown $USER:$USER .
-
-  # make a config file with some content
-  git config --file=config one.key value
-  git config --file=config two.key value
-
-  # now fill up the disk
-  dd if=/dev/zero of=fill
-
-  # and try to delete a key, which requires copying the rest
-  # of the file to config.lock, and will fail on write()
-  git config --file=config --unset two.key
-
-That final command should (and does after this patch)
-produce an error message due to the failed write, and leave
-the file intact. With the current code it silently ignores
-the failure and renames config.lock into place, leaving you
-with a totally empty config file!
-
-Reported-by: demerphq <demerphq@gmail.com>
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- config.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ builtin/get-tar-commit-id.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/config.c b/config.c
-index d0d8ce823a..eee4ac0355 100644
---- a/config.c
-+++ b/config.c
-@@ -2608,8 +2608,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 			/* write the first part of the config */
- 			if (copy_end > copy_begin) {
- 				if (write_in_full(fd, contents + copy_begin,
--						  copy_end - copy_begin) <
--				    copy_end - copy_begin)
-+						  copy_end - copy_begin) < 0)
- 					goto write_err_out;
- 				if (new_line &&
- 				    write_str_in_full(fd, "\n") != 1)
-@@ -2631,8 +2630,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 		/* write the rest of the config */
- 		if (copy_begin < contents_sz)
- 			if (write_in_full(fd, contents + copy_begin,
--					  contents_sz - copy_begin) <
--			    contents_sz - copy_begin)
-+					  contents_sz - copy_begin) < 0)
- 				goto write_err_out;
+diff --git a/builtin/get-tar-commit-id.c b/builtin/get-tar-commit-id.c
+index e21c5416cd..6d9a79f9b3 100644
+--- a/builtin/get-tar-commit-id.c
++++ b/builtin/get-tar-commit-id.c
+@@ -33,8 +33,7 @@ int cmd_get_tar_commit_id(int argc, const char **argv, const char *prefix)
+ 	if (!skip_prefix(content, "52 comment=", &comment))
+ 		return 1;
  
- 		munmap(contents, contents_sz);
+-	n = write_in_full(1, comment, 41);
+-	if (n < 41)
++	if (write_in_full(1, comment, 41) < 0)
+ 		die_errno("git get-tar-commit-id: write error");
+ 
+ 	return 0;
 -- 
 2.14.1.874.ge7b2e05270
 
