@@ -2,105 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 32F6820281
-	for <e@80x24.org>; Wed, 13 Sep 2017 00:38:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D12720281
+	for <e@80x24.org>; Wed, 13 Sep 2017 01:39:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751385AbdIMAib (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Sep 2017 20:38:31 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5]:54660 "EHLO
-        mx0a-001b2d01.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1750944AbdIMAia (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 12 Sep 2017 20:38:30 -0400
-Received: from pps.filterd (m0098417.ppops.net [127.0.0.1])
-        by mx0a-001b2d01.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id v8D0YDFS001739
-        for <git@vger.kernel.org>; Tue, 12 Sep 2017 20:38:29 -0400
-Received: from e23smtp08.au.ibm.com (e23smtp08.au.ibm.com [202.81.31.141])
-        by mx0a-001b2d01.pphosted.com with ESMTP id 2cxpge8ffs-1
-        (version=TLSv1.2 cipher=AES256-SHA bits=256 verify=NOT)
-        for <git@vger.kernel.org>; Tue, 12 Sep 2017 20:38:29 -0400
-Received: from localhost
-        by e23smtp08.au.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted
-        for <git@vger.kernel.org> from <sam.bobroff@au1.ibm.com>;
-        Wed, 13 Sep 2017 10:38:26 +1000
-Received: from d23relay09.au.ibm.com (202.81.31.228)
-        by e23smtp08.au.ibm.com (202.81.31.205) with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted;
-        Wed, 13 Sep 2017 10:38:23 +1000
-Received: from d23av06.au.ibm.com (d23av06.au.ibm.com [9.190.235.151])
-        by d23relay09.au.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id v8D0cN3K40304876
-        for <git@vger.kernel.org>; Wed, 13 Sep 2017 10:38:23 +1000
-Received: from d23av06.au.ibm.com (localhost [127.0.0.1])
-        by d23av06.au.ibm.com (8.14.4/8.14.4/NCO v10.0 AVout) with ESMTP id v8D0cM3U017739
-        for <git@vger.kernel.org>; Wed, 13 Sep 2017 10:38:23 +1000
-Received: from ozlabs.au.ibm.com (ozlabs.au.ibm.com [9.192.253.14])
-        by d23av06.au.ibm.com (8.14.4/8.14.4/NCO v10.0 AVin) with ESMTP id v8D0cMKv017734;
-        Wed, 13 Sep 2017 10:38:22 +1000
-Received: from tungsten.ozlabs.ibm.com (haven.au.ibm.com [9.192.254.114])
-        (using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ozlabs.au.ibm.com (Postfix) with ESMTPSA id 8C188A018C;
-        Wed, 13 Sep 2017 10:38:22 +1000 (AEST)
-Date:   Wed, 13 Sep 2017 10:38:21 +1000
-From:   Sam Bobroff <sam.bobroff@au1.ibm.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH] format-patch: use raw format for notes
-References: <334a7be4f61c02db24008181eb1d6c80c95772f7.1503894009.git.sam.bobroff@au1.ibm.com>
- <xmqqingw8ppj.fsf@gitster.mtv.corp.google.com>
- <20170911042737.4h5b2jygdeu7cpmf@tungsten.ozlabs.ibm.com>
- <CAGZ79kbcufMxbBdH=a9YzPWWet5nEdmUN6P+xmMEcGna-VL9=Q@mail.gmail.com>
+        id S1751525AbdIMBjj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Sep 2017 21:39:39 -0400
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:46175 "EHLO
+        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751493AbdIMBji (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Sep 2017 21:39:38 -0400
+Received: by mail-wm0-f45.google.com with SMTP id i189so6578048wmf.1
+        for <git@vger.kernel.org>; Tue, 12 Sep 2017 18:39:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Kv3OrCl+c808TlhIfhqmE1YKz3OYjA8ELK1RdpRjmys=;
+        b=qiZuz0W9bdhohZbmLw7xh1gghTwBLvnySx03OT09Jkbumz9vV3PRL3905310lPCF8E
+         DOpE8fbtIgBoKj/rJaDm6OkJdbuE+P0ZdCIFrB1pNj93Fi6+AHdasJDjaNmrTuzdPI4j
+         koG2Dyf8VAjew8TwtORCNz309RGyXs+Esbo88G2tIse1CvBeRotLgy/j+GCwGFfA9jDI
+         p2FvsE3nbLX52YRglNP0nkLQLg8OgN5zxTgLmuc4BaU4djbuZ0iVZoYo5t0lb4TFMJoJ
+         Rkduc6hSp1iXZ+WhCQTRg3wIXgQpYk/0J/FUTFtb9Xx7vaLFMbLDBxh4ogkq3fnDRJwz
+         6j/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Kv3OrCl+c808TlhIfhqmE1YKz3OYjA8ELK1RdpRjmys=;
+        b=CVGkcvDTv11JPBwxFEUj5wgLaWnLjiLVlsQfemoxd5bCCp44IZCaQD34GV4e2CurPV
+         TawEEpS5ZfSQhlx9foxI0bsIQemPKcxGwovUYzBx8tCEJzgq/DsSKcaUZQc5tkEFtdeF
+         BT6wCnTdRKD1OlKkVGQ5NUZk3Twkxuem6t9IcXmBC6O1lEDWswpyJOxKVL96TDqAaSCj
+         M2SOBpxvvqE/PkXn05LJWGbrMEHQVDk65kH1kw4qLKBiiWoJO9XD5zn2IdriSD6ZW1un
+         Fvoa/gXdLG90MYHDMif7JY7wBNQWua4cYgPFarwYjRpAb1YpyWbjaB0kbVc4Q6qDY3c1
+         cqPg==
+X-Gm-Message-State: AHPjjUg/F/pGlmoXZuCwLio/C9iaLE7qxb9dGxH8nvB+0KuhHdXxFrcw
+        tKstKwGQej37xbdyAZWZ16+4SYaWE6N2MkvzQ/M=
+X-Google-Smtp-Source: ADKCNb4W3zt7Kiewi0Eqrq7kX2MVjGoBd3nouEUEVgTJZ3WLqFnywRLEHZR33HbWyRuZlmgiD9H9l8LDyUuOqeAbr+M=
+X-Received: by 10.80.169.43 with SMTP id l40mr14463024edc.187.1505266776925;
+ Tue, 12 Sep 2017 18:39:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kbcufMxbBdH=a9YzPWWet5nEdmUN6P+xmMEcGna-VL9=Q@mail.gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-TM-AS-MML: disable
-x-cbid: 17091300-0048-0000-0000-0000025CECB9
-X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
-x-cbparentid: 17091300-0049-0000-0000-000048133839
-Message-Id: <20170913003821.xn43yosuieoivmqk@tungsten.ozlabs.ibm.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2017-09-12_11:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=0
- malwarescore=0 phishscore=0 adultscore=0 bulkscore=0 classifier=spam
- adjust=0 reason=mlx scancount=1 engine=8.0.1-1707230000
- definitions=main-1709130007
+Received: by 10.80.146.185 with HTTP; Tue, 12 Sep 2017 18:39:16 -0700 (PDT)
+In-Reply-To: <SN1PR21MB001473733DAF15BC91C0E58AB7690@SN1PR21MB0014.namprd21.prod.outlook.com>
+References: <20170908180050.25188-1-kewillf@microsoft.com> <20170908180050.25188-2-kewillf@microsoft.com>
+ <xmqqvaktxawk.fsf@gitster.mtv.corp.google.com> <SN1PR21MB0014638E5D9CBFD0D9D85F10B7950@SN1PR21MB0014.namprd21.prod.outlook.com>
+ <xmqqr2vgy2yt.fsf@gitster.mtv.corp.google.com> <SN1PR21MB00140C84DC02F3491F4E8469B76A0@SN1PR21MB0014.namprd21.prod.outlook.com>
+ <xmqqh8w951ek.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.21.1.1709111259430.4132@virtualbox>
+ <xmqq4ls836z3.fsf@gitster.mtv.corp.google.com> <SN1PR21MB0014435A97BCDA324FD55B46B7690@SN1PR21MB0014.namprd21.prod.outlook.com>
+ <CA+P7+xqxmxexWS=MWNd9=EqG81uhKY-OdG+1mpyWhst6DvH5AA@mail.gmail.com> <SN1PR21MB001473733DAF15BC91C0E58AB7690@SN1PR21MB0014.namprd21.prod.outlook.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Tue, 12 Sep 2017 18:39:16 -0700
+Message-ID: <CA+P7+xqcAh4v4gDQOm-feYGc1EmFztAu0zMg2xnp8Gn4=BzkoQ@mail.gmail.com>
+Subject: Re: [PATCH 1/1] reset: fix reset when using the sparse-checkout feature.
+To:     Kevin Willford <kewillf@microsoft.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "peff@peff.net" <peff@peff.net>,
+        "pclouds@gmail.com" <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 12, 2017 at 10:33:37AM -0700, Stefan Beller wrote:
-> On Sun, Sep 10, 2017 at 9:27 PM, Sam Bobroff <sam.bobroff@au1.ibm.com> wrote:
-> 
-> > (If only there were a way to set the coverletter text automatically as
-> > well...)
-> >
-> 
-> Checkout branch.<name>.description
+On Tue, Sep 12, 2017 at 4:30 PM, Kevin Willford <kewillf@microsoft.com> wrote:
+>
+> Sorry.  It was not in the sparse-checkout file.
+> $ git config core.sparsecheckout true
+> $ echo /i > .git/info/sparse-checkout
+> $ git checkout -f
+> was ran in the modified file case as well and "i" was the only file in the
+> working directory before reset.
+>
 
-AH! I had seen this section of the format-patch man page...
 
-       --[no-]cover-letter
-           In addition to the patches, generate a cover letter file containing the branch description, shortlog and the overall diffstat. You can fill in a description in the file before
-           sending it out.
+I'm assuming then that you mean that some file "m" is modified by the
+commit, and do not mean to say that it has local modifications in the
+working tree? That is not what I had inferred from earlier, so I was
+very much confused.
 
-... but I didn't realize that it meant that it would insert the text
-from branch.<name>.description into the cover letter. Perhaps there
-should be a hint to point you to the branch.<name>.description section
-of "git config"?
+In this example, the only file actually checked out is "i", as
+everything else will have the skip-worktree bit set..?
 
-Also, it's not very useful for automating patch submission, as it
-doesn't set the subject line or remove the "*** BLURB HERE ***" marker,
-so it must still be post-processed.
+So doing git reset HEAD~1 will reset the branch back one commit, and
+now because of this reset is clearing the skip worktree flag, and
+since you never had a copy of it checked out it is notified as
+deleted, because it's no longer marked as skip-worktree?
 
-(To be honest, I was surprised that it didn't use first line as the
-subject and leave out the markers.)
 
-Cheers,
-Sam.
+I think the real fix is to stop having reset clear skip-worktree, no?
 
+By definition if you do a sparse checkout, you're telling git "I only
+care about the files in this sparse checkout, and do not concern me
+with anything else"... So the proposed fix is "since git cleared the
+skip-worktree flag, we should actually also copy the file out again."
+but I think the real problem is that we're clearing skip worktree to
+begin with?
