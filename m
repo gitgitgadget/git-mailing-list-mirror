@@ -2,59 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E85A20286
-	for <e@80x24.org>; Wed, 13 Sep 2017 21:55:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC9D920286
+	for <e@80x24.org>; Wed, 13 Sep 2017 21:55:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751580AbdIMVzJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Sep 2017 17:55:09 -0400
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:45943 "EHLO
-        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751502AbdIMVzE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Sep 2017 17:55:04 -0400
-Received: by mail-pf0-f172.google.com with SMTP id q76so2187200pfq.2
-        for <git@vger.kernel.org>; Wed, 13 Sep 2017 14:55:04 -0700 (PDT)
+        id S1751584AbdIMVzM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Sep 2017 17:55:12 -0400
+Received: from mail-pg0-f45.google.com ([74.125.83.45]:46821 "EHLO
+        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751549AbdIMVzG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Sep 2017 17:55:06 -0400
+Received: by mail-pg0-f45.google.com with SMTP id i130so2814972pgc.3
+        for <git@vger.kernel.org>; Wed, 13 Sep 2017 14:55:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=w/+q8E/09DpjNKHHmZA6kk715FaUfELBfUw+A/HrSpo=;
-        b=vq1riFVTOr2VrU3yveVvwU63kMJLkQgMqcKG6Hha776FEy5ZJl/lC67M7U2hq2Ietr
-         AhKvmEKhIsH8yaFe4dMEHEukJV2Jrh5jneeD5P3I2zm5kthgFZ+RVrT6FCJvPn8npIDL
-         uzf2zBGEK6dVf4KhozdwyiWwUPl0W8IaCydMWTdpfbxqs0JBVu7oc9tuPbh6kLRKQ8AA
-         Rvjl6h1vtZ07tpurEh9ne+1cEgwVpLRuBsCu496xN3uLHl1endpjnUel6lcCpe4S8jjd
-         7K66yq/TifC44HBqgcpQ4yy4lE4PV1SMmyTw+7i0u0t8vgtXb+eBP7d1b+wSylP6pvdN
-         NLlg==
+        bh=fegXSvDvXkgaaozfDBBfYrKUkzygTqDNGOXicgkKWEo=;
+        b=EmTiWkzW+Ye/oEUMXQuZIsGG4OC80lBr3GlBFcc94B2OdeG4iwFXO7ufMxm0MOlFyQ
+         71Txz760QJcf/wXZlUKWyLWa/Qw059Dt88PoSOg8Gman18mUCBlmULtgN0h9ehPGeLUl
+         Ib8xwA4ODqZMNJ6DrEuYQ4W9MiYlrGlp6/PmPpCTXkhLlSXwgFn7J2eopOaAGOmPk70m
+         E9dW4b1zXJ7e5Mv2Zej4qfrfmiySuYeTmzclDoTWuTfQYcEEvTlj5Wa8mxmQGljOmtgh
+         tKE8UslCCnU7zAyDli2xXhTXEGV+cFu1LU6K/1yNLCZ7qn7OoP567KAHgyxhyzRitcyU
+         mIGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=w/+q8E/09DpjNKHHmZA6kk715FaUfELBfUw+A/HrSpo=;
-        b=PSziAvlT4e3bjKxJ66DdE6yK1yxATWT+V+gG2b1i3CmWdiLoMDhHXktFyy1TbhcWl6
-         aX6HIqdh/3y078VAIAq7N3gc6VGVscaKy/qSBpMS+d9ECuK30DXhLkdmEa3tV0qJsq8L
-         +ocICx4f0cJxJDRWtTbvZS3f22oTjIyzBXWsHiyXmYFiIXfAUj9B66SNFmzmD24Ho+1O
-         zwA5eCEXGdEiJGXG1Dd7zjqyTOdv02+dbbENKd5KUmoFzafcP5KCLoWRZ/qAbMAnSJ+Z
-         2EJ2OyzZs40sARxGbqL5W88timjSO/8O3l8sj06QNxOmp2+7VA98skMw5XQBx4ZHA9fm
-         oTAw==
-X-Gm-Message-State: AHPjjUhnpfvZOm/AFhOuRMvUzVpA4RDjDtRK5WcjIGp6qvVX4mV29uUz
-        qaIcjg/yJJOrVbr76NKy5A==
-X-Google-Smtp-Source: AOwi7QBfC5zf7yWluA0nEDJmpc1MCHIayKmm7twUR8Xs/SN66Kcdutu7VGSCIlpo+dyQxytHOsg4aA==
-X-Received: by 10.84.211.136 with SMTP id c8mr3721079pli.55.1505339703355;
-        Wed, 13 Sep 2017 14:55:03 -0700 (PDT)
+        bh=fegXSvDvXkgaaozfDBBfYrKUkzygTqDNGOXicgkKWEo=;
+        b=Lc6TH6ANedWlZTsgPYDZl6uBlaR0/ePRsL/bN0QFT9gRRsPOfNDjLJFNhA8giCW4iK
+         LBB1Z0pmyHVo7bJly6mmJvgnbkORosp3Xc7k8kZ774alTqqwCb5LDx2p4NKuxaRoOjTz
+         umCHZy3/8GrJ5d4Ngsopvlj5PbmKBWE2hQ/4HV1XVf+0Oi4aFLOqu3rdSvrY4EdY3VA5
+         En9WzvBQbxFvqLyOuj6XvJyvEo/EVMZia7gPshdMFHadhs6khn3FvxQtrjZXzvKe2dUO
+         31DXwjxhGHOFIrTq9oWe/M9qE31a6gJtf2HQ1fj1gdywJn609hVL9/gowKIokziVy/3z
+         9Udg==
+X-Gm-Message-State: AHPjjUhz8xqA9ptAiP/MLNX5wJXP1U3MYFQORJHcqh9G2zSynUaIyASJ
+        cBQYQcF3Ws9LHsJw3ZtxDg==
+X-Google-Smtp-Source: ADKCNb4HOPUca2i8Vk61nPTWmF5envvAicKuNmIrZBAkzKop9x1YpHi8xtc0zooq2A+aFj1LCbhS1g==
+X-Received: by 10.99.1.10 with SMTP id 10mr18837184pgb.377.1505339704716;
+        Wed, 13 Sep 2017 14:55:04 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id q13sm23152639pgt.87.2017.09.13.14.55.01
+        by smtp.gmail.com with ESMTPSA id q13sm23152639pgt.87.2017.09.13.14.55.03
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 13 Sep 2017 14:55:02 -0700 (PDT)
+        Wed, 13 Sep 2017 14:55:03 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, sbeller@google.com, gitster@pobox.com,
         jrnieder@gmail.com, bturner@atlassian.com, git@jeffhostetler.com,
         jonathantanmy@google.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH 2/8] protocol: introduce protocol extention mechanisms
-Date:   Wed, 13 Sep 2017 14:54:42 -0700
-Message-Id: <20170913215448.84674-3-bmwill@google.com>
+Subject: [PATCH 3/8] daemon: recognize hidden request arguments
+Date:   Wed, 13 Sep 2017 14:54:43 -0700
+Message-Id: <20170913215448.84674-4-bmwill@google.com>
 X-Mailer: git-send-email 2.14.1.690.gbb1197296e-goog
 In-Reply-To: <20170913215448.84674-1-bmwill@google.com>
 References: <20170913215448.84674-1-bmwill@google.com>
@@ -63,199 +64,184 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Create protocol.{c,h} and provide functions which future servers and
-clients can use to determine which protocol to use or is being used.
+A normal request to git-daemon is structured as
+"command path/to/repo\0host=..\0" and due to a bug in an old version of
+git-daemon 73bb33a94 (daemon: Strictly parse the "extra arg" part of the
+command, 2009-06-04) we aren't able to place any extra args (separated
+by NULs) besides the host.
 
-Also introduce the 'GIT_PROTOCOL' environment variable which will be
-used to communicate a colon separated list of keys with optional values
-to a server.  Unknown keys and values must be tolerated.  This mechanism
-is used to communicate which version of the wire protocol a client would
-like to use with a server.
+In order to get around this limitation teach git-daemon to recognize
+additional request arguments hidden behind a second NUL byte.  Requests
+can then be structured like:
+"command path/to/repo\0host=..\0\0version=1\0key=value\0".  git-daemon
+can then parse out the extra arguments and set 'GIT_PROTOCOL'
+accordingly.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- Documentation/config.txt | 16 +++++++++++
- Documentation/git.txt    |  5 ++++
- Makefile                 |  1 +
- cache.h                  |  7 +++++
- protocol.c               | 72 ++++++++++++++++++++++++++++++++++++++++++++++++
- protocol.h               | 15 ++++++++++
- 6 files changed, 116 insertions(+)
- create mode 100644 protocol.c
- create mode 100644 protocol.h
+ daemon.c | 71 +++++++++++++++++++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 61 insertions(+), 10 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index dc4e3f58a..d5b28a32c 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2517,6 +2517,22 @@ The protocol names currently used by git are:
-     `hg` to allow the `git-remote-hg` helper)
- --
+diff --git a/daemon.c b/daemon.c
+index 30747075f..250dbf82c 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -282,7 +282,7 @@ static const char *path_ok(const char *directory, struct hostinfo *hi)
+ 	return NULL;		/* Fallthrough. Deny by default */
+ }
  
-+protocol.version::
-+	If set, clients will attempt to communicate with a server using
-+	the specified protocol version.  If unset, no attempt will be
-+	made by the client to communicate using a particular protocol
-+	version, this results in protocol version 0 being used.
-+	Supported versions:
-++
-+--
-+
-+* `0` - the original wire protocol.
-+
-+* `1` - the original wire protocol with the addition of a version string
-+  in the initial respose from the server.
-+
-+--
-+
- pull.ff::
- 	By default, Git does not create an extra merge commit when merging
- 	a commit that is a descendant of the current commit. Instead, the
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 6e3a6767e..299f75c7b 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -697,6 +697,11 @@ of clones and fetches.
- 	which feed potentially-untrusted URLS to git commands.  See
- 	linkgit:git-config[1] for more details.
+-typedef int (*daemon_service_fn)(void);
++typedef int (*daemon_service_fn)(const struct argv_array *env);
+ struct daemon_service {
+ 	const char *name;
+ 	const char *config_name;
+@@ -363,7 +363,7 @@ static int run_access_hook(struct daemon_service *service, const char *dir,
+ }
  
-+`GIT_PROTOCOL`::
-+	For internal use only.  Used in handshaking the wire protocol.
-+	Contains a colon ':' separated list of keys with optional values
-+	'key[=value]'.  Presence of unknown keys must be tolerated.
-+
- Discussion[[Discussion]]
- ------------------------
+ static int run_service(const char *dir, struct daemon_service *service,
+-		       struct hostinfo *hi)
++		       struct hostinfo *hi, const struct argv_array *env)
+ {
+ 	const char *path;
+ 	int enabled = service->enabled;
+@@ -422,7 +422,7 @@ static int run_service(const char *dir, struct daemon_service *service,
+ 	 */
+ 	signal(SIGTERM, SIG_IGN);
  
-diff --git a/Makefile b/Makefile
-index f2bb7f2f6..1f300bd6b 100644
---- a/Makefile
-+++ b/Makefile
-@@ -837,6 +837,7 @@ LIB_OBJS += pretty.o
- LIB_OBJS += prio-queue.o
- LIB_OBJS += progress.o
- LIB_OBJS += prompt.o
-+LIB_OBJS += protocol.o
- LIB_OBJS += quote.o
- LIB_OBJS += reachable.o
- LIB_OBJS += read-cache.o
-diff --git a/cache.h b/cache.h
-index a916bc79e..8839b1ed4 100644
---- a/cache.h
-+++ b/cache.h
-@@ -444,6 +444,13 @@ static inline enum object_type object_type(unsigned int mode)
- #define GIT_ICASE_PATHSPECS_ENVIRONMENT "GIT_ICASE_PATHSPECS"
- #define GIT_QUARANTINE_ENVIRONMENT "GIT_QUARANTINE_PATH"
+-	return service->fn();
++	return service->fn(env);
+ }
  
-+/*
-+ * Environment variable used in handshaking the wire protocol.
-+ * Contains a colon ':' separated list of keys with optional values
-+ * 'key[=value]'.  Presence of unknown keys must be tolerated.
-+ */
-+#define GIT_PROTOCOL_ENVIRONMENT "GIT_PROTOCOL"
+ static void copy_to_log(int fd)
+@@ -462,25 +462,34 @@ static int run_service_command(struct child_process *cld)
+ 	return finish_command(cld);
+ }
+ 
+-static int upload_pack(void)
++static int upload_pack(const struct argv_array *env)
+ {
+ 	struct child_process cld = CHILD_PROCESS_INIT;
+ 	argv_array_pushl(&cld.args, "upload-pack", "--strict", NULL);
+ 	argv_array_pushf(&cld.args, "--timeout=%u", timeout);
 +
++	argv_array_pushv(&cld.env_array, env->argv);
++
+ 	return run_service_command(&cld);
+ }
+ 
+-static int upload_archive(void)
++static int upload_archive(const struct argv_array *env)
+ {
+ 	struct child_process cld = CHILD_PROCESS_INIT;
+ 	argv_array_push(&cld.args, "upload-archive");
++
++	argv_array_pushv(&cld.env_array, env->argv);
++
+ 	return run_service_command(&cld);
+ }
+ 
+-static int receive_pack(void)
++static int receive_pack(const struct argv_array *env)
+ {
+ 	struct child_process cld = CHILD_PROCESS_INIT;
+ 	argv_array_push(&cld.args, "receive-pack");
++
++	argv_array_pushv(&cld.env_array, env->argv);
++
+ 	return run_service_command(&cld);
+ }
+ 
+@@ -574,7 +583,7 @@ static void canonicalize_client(struct strbuf *out, const char *in)
  /*
-  * This environment variable is expected to contain a boolean indicating
-  * whether we should or should not treat:
-diff --git a/protocol.c b/protocol.c
-new file mode 100644
-index 000000000..1b16c7b9a
---- /dev/null
-+++ b/protocol.c
-@@ -0,0 +1,72 @@
-+#include "cache.h"
-+#include "config.h"
-+#include "protocol.h"
+  * Read the host as supplied by the client connection.
+  */
+-static void parse_host_arg(struct hostinfo *hi, char *extra_args, int buflen)
++static char *parse_host_arg(struct hostinfo *hi, char *extra_args, int buflen)
+ {
+ 	char *val;
+ 	int vallen;
+@@ -602,6 +611,39 @@ static void parse_host_arg(struct hostinfo *hi, char *extra_args, int buflen)
+ 		if (extra_args < end && *extra_args)
+ 			die("Invalid request");
+ 	}
 +
-+enum protocol_version parse_protocol_version(const char *value)
-+{
-+	if (!strcmp(value, "0"))
-+		return protocol_v0;
-+	else if (!strcmp(value, "1"))
-+		return protocol_v1;
-+	else
-+		return protocol_unknown_version;
++	return extra_args;
 +}
 +
-+enum protocol_version get_protocol_version_config(void)
++static void parse_extra_args(struct argv_array *env, const char *extra_args,
++			     int buflen)
 +{
-+	const char *value;
-+	if (!git_config_get_string_const("protocol.version", &value)) {
-+		enum protocol_version version = parse_protocol_version(value);
++	const char *end = extra_args + buflen;
++	struct strbuf git_protocol = STRBUF_INIT;
 +
-+		if (version == protocol_unknown_version)
-+			die("unknown value for config 'protocol.version': %s",
-+			    value);
++	for (; extra_args < end; extra_args += strlen(extra_args) + 1) {
++		const char *arg = extra_args;
 +
-+		return version;
-+	}
-+
-+	return protocol_v0;
-+}
-+
-+enum protocol_version determine_protocol_version_server(void)
-+{
-+	const char *git_protocol = getenv(GIT_PROTOCOL_ENVIRONMENT);
-+	enum protocol_version version = protocol_v0;
-+
-+	if (git_protocol) {
-+		struct string_list list = STRING_LIST_INIT_DUP;
-+		const struct string_list_item *item;
-+		string_list_split(&list, git_protocol, ':', -1);
-+
-+		for_each_string_list_item(item, &list) {
-+			const char *value;
-+			enum protocol_version v;
-+
-+			if (skip_prefix(item->string, "version=", &value)) {
-+				v = parse_protocol_version(value);
-+				if (v > version)
-+					version = v;
-+			}
++		/*
++		 * Parse the extra arguments, adding most to 'git_protocol'
++		 * which will be used to set the 'GIT_PROTOCOL' envvar in the
++		 * service that will be run.
++		 *
++		 * If there ends up being a particular arg in the future that
++		 * git-daemon needs to parse specificly (like the 'host' arg)
++		 * then it can be parsed here and not added to 'git_protocol'.
++		 */
++		if (*arg) {
++			if (git_protocol.len > 0)
++				strbuf_addch(&git_protocol, ':');
++			strbuf_addstr(&git_protocol, arg);
 +		}
-+
-+		string_list_clear(&list, 0);
 +	}
 +
-+	return version;
-+}
++	if (git_protocol.len > 0)
++		argv_array_pushf(env, GIT_PROTOCOL_ENVIRONMENT "=%s",
++				 git_protocol.buf);
++	strbuf_release(&git_protocol);
+ }
+ 
+ /*
+@@ -695,6 +737,7 @@ static int execute(void)
+ 	int pktlen, len, i;
+ 	char *addr = getenv("REMOTE_ADDR"), *port = getenv("REMOTE_PORT");
+ 	struct hostinfo hi;
++	struct argv_array env = ARGV_ARRAY_INIT;
+ 
+ 	hostinfo_init(&hi);
+ 
+@@ -716,8 +759,14 @@ static int execute(void)
+ 		pktlen--;
+ 	}
+ 
+-	if (len != pktlen)
+-		parse_host_arg(&hi, line + len + 1, pktlen - len - 1);
++	if (len != pktlen) {
++		const char *extra_args;
++		/* retrieve host */
++		extra_args = parse_host_arg(&hi, line + len + 1, pktlen - len - 1);
 +
-+enum protocol_version determine_protocol_version_client(const char *server_response)
-+{
-+	enum protocol_version version = protocol_v0;
-+
-+	if (skip_prefix(server_response, "version ", &server_response)) {
-+		version = parse_protocol_version(server_response);
-+
-+		if (version == protocol_unknown_version)
-+			die("server is speaking an unknown protocol");
-+		if (version == protocol_v0)
-+			die("protocol error: server explicitly said version 0");
++		/* parse additional args hidden behind a second NUL byte */
++		parse_extra_args(&env, extra_args + 1, pktlen - (extra_args - line) - 1);
 +	}
-+
-+	return version;
-+}
-diff --git a/protocol.h b/protocol.h
-new file mode 100644
-index 000000000..2fa6486d0
---- /dev/null
-+++ b/protocol.h
-@@ -0,0 +1,15 @@
-+#ifndef PROTOCOL_H
-+#define PROTOCOL_H
-+
-+enum protocol_version {
-+	protocol_unknown_version = -1,
-+	protocol_v0 = 0,
-+	protocol_v1 = 1,
-+};
-+
-+extern enum protocol_version parse_protocol_version(const char *value);
-+extern enum protocol_version get_protocol_version_config(void);
-+extern enum protocol_version determine_protocol_version_server(void);
-+extern enum protocol_version determine_protocol_version_client(const char *server_response);
-+
-+#endif /* PROTOCOL_H */
+ 
+ 	for (i = 0; i < ARRAY_SIZE(daemon_service); i++) {
+ 		struct daemon_service *s = &(daemon_service[i]);
+@@ -730,13 +779,15 @@ static int execute(void)
+ 			 * Note: The directory here is probably context sensitive,
+ 			 * and might depend on the actual service being performed.
+ 			 */
+-			int rc = run_service(arg, s, &hi);
++			int rc = run_service(arg, s, &hi, &env);
+ 			hostinfo_clear(&hi);
++			argv_array_clear(&env);
+ 			return rc;
+ 		}
+ 	}
+ 
+ 	hostinfo_clear(&hi);
++	argv_array_clear(&env);
+ 	logerror("Protocol error: '%s'", line);
+ 	return -1;
+ }
 -- 
 2.14.1.690.gbb1197296e-goog
 
