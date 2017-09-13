@@ -6,90 +6,72 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 49E7520286
-	for <e@80x24.org>; Wed, 13 Sep 2017 12:56:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0637A20286
+	for <e@80x24.org>; Wed, 13 Sep 2017 13:03:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751756AbdIMM4O (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Sep 2017 08:56:14 -0400
-Received: from cloud.peff.net ([104.130.231.41]:36650 "HELO cloud.peff.net"
+        id S1752280AbdIMNDg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Sep 2017 09:03:36 -0400
+Received: from cloud.peff.net ([104.130.231.41]:36664 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751120AbdIMM4N (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Sep 2017 08:56:13 -0400
-Received: (qmail 6212 invoked by uid 109); 13 Sep 2017 12:56:13 -0000
+        id S1751312AbdIMNDg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Sep 2017 09:03:36 -0400
+Received: (qmail 6672 invoked by uid 109); 13 Sep 2017 13:03:35 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 13 Sep 2017 12:56:13 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 13 Sep 2017 13:03:35 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13854 invoked by uid 111); 13 Sep 2017 12:56:48 -0000
+Received: (qmail 13909 invoked by uid 111); 13 Sep 2017 13:04:10 -0000
 Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
- by peff.net (qpsmtpd/0.94) with SMTP; Wed, 13 Sep 2017 08:56:48 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Wed, 13 Sep 2017 09:04:10 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Sep 2017 08:56:11 -0400
-Date:   Wed, 13 Sep 2017 08:56:11 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Sep 2017 09:03:34 -0400
+Date:   Wed, 13 Sep 2017 09:03:34 -0400
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+To:     Sam Bobroff <sam.bobroff@au1.ibm.com>
 Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 06/34] clone: release strbuf after use in remove_junk()
-Message-ID: <20170913125611.zdy3r5gijz5ohl2r@sigill.intra.peff.net>
-References: <20170830175005.20756-1-l.s.r@web.de>
- <20170830175005.20756-7-l.s.r@web.de>
- <xmqq1snj61wr.fsf@gitster.mtv.corp.google.com>
- <0884b528-d455-09c6-0eaf-d2af50077a98@web.de>
- <20170910073002.hg6tqgm2z7owqr2u@sigill.intra.peff.net>
- <7a30c171-22c8-4ae3-3e15-3f4eea893127@web.de>
- <20170910173826.jopzzt5cpc2i3c6m@sigill.intra.peff.net>
- <1c0918c7-8630-e545-6c34-ab03995797bb@web.de>
+Subject: Re: [PATCH] format-patch: use raw format for notes
+Message-ID: <20170913130333.y4sgn5yjdebbvwzn@sigill.intra.peff.net>
+References: <334a7be4f61c02db24008181eb1d6c80c95772f7.1503894009.git.sam.bobroff@au1.ibm.com>
+ <xmqqingw8ppj.fsf@gitster.mtv.corp.google.com>
+ <20170911042737.4h5b2jygdeu7cpmf@tungsten.ozlabs.ibm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1c0918c7-8630-e545-6c34-ab03995797bb@web.de>
+In-Reply-To: <20170911042737.4h5b2jygdeu7cpmf@tungsten.ozlabs.ibm.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 11, 2017 at 11:40:05PM +0200, René Scharfe wrote:
+On Mon, Sep 11, 2017 at 02:27:38PM +1000, Sam Bobroff wrote:
 
-> > Yes, but I didn't want to touch each code site that creates a file,
-> > which is a lot more invasive. I expect expanding to 4096 (or PATH_MAX)
-> > would be sufficient in practice.
+> >  - It is very much intended to allow The "(foo)" after the "Notes"
+> >    label to show which notes ref the note comes from, because there
+> >    can be more than one notes refs that annotate the same commit.
 > 
-> Perhaps it is in most cases.  Having certainty would be better.  We can
-> leave unpack_trees() untouched and instead traverse the tree beforehand,
-> in order to find the longest path.  Perhaps we can do something similar
-> for init_db().
-
-I wonder if it would be possible to just wrap open() in a transparent
-way.
-
-> > I'd also note that the current code isn't _remotely_ async safe and
-> > nobody's complained. So I'm perfectly happy doing nothing, too. I care
-> > a bit more about the tempfile.c interface because it's invoked a lot
-> > more frequently.
+> Right, that makes perfect sense to me when it's being output locally.
 > 
-> I guess clones are not interrupted very often during checkout; same
-> with worktree creation.  So perhaps nasty things could happen with a
-> low probability, but nobody tried hard enough to hit that case?
+> But the ref names are local to my git repo and there is no reaason why
+> they should be meaningful or even known to the recipients of the patch
+> email.
 
-Right, that's my guess. And "nasty" is quite likely to be "deadlocks on
-a malloc or stdio lock". Which is not the end of the world.
+I can see how your notes names might not be of interest to others. But I
+can also see how they _could_ be. For instance, if you kept test result
+annotations in a notes ref, you would want to mark them as such.
 
-> > No, I think that's how you'd have to do it. The implementation isn't all
-> > that bad, but hitting every file-creation would be invasive. I'd
-> > almost rather bail to exec-ing "rm -rf $dir", but we probably can't do
-> > _that_ in a signal-handler either. :)
-> 
-> Well, fork(2), execve(2), and waitpid(2) are on the list, so actually
-> you can.
-> 
-> mingw_spawnvpe(), which is used by start_command() on Windows,
-> allocates memory, though.  Preparing environment and argument list
-> in advance and just calling CreateProcess() in the signal handler
-> might work.
+The idea of the current output is that you'd put general text into
+"refs/notes/commits" (which shows up only as "Notes:"). And if you are
+putting notes in another ref, you have some reason to do so, which
+implies that it's worth showing that they're not in the default ref.
 
-Yeah, I imagine it's do-able with enough advance effort.
+I grant that there are reasons to do so which might not be worth showing
+(e.g., you might be pushing and fetching refs, and keep some hierarchy).
+But I don't think "are we emailing them" is a robust determiner of "are
+they worth showing". So this probably needs to be a separate option,
+rather than tied to the output format.
 
-Given the lack of reports and the rapidly expanding complexity, I'm not
-planning on looking further into this for now.
+Or possibly there should be a naming convention (e.g., that everything
+that ends in "/commits" doesn't have its name shown, which would allow
+multiple hierarchies). It's hard to say without knowing the reason you
+chose a non-default refname in the first place.
 
 -Peff
