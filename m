@@ -2,127 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 56C0120286
-	for <e@80x24.org>; Wed, 13 Sep 2017 21:09:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 227C620286
+	for <e@80x24.org>; Wed, 13 Sep 2017 21:14:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751316AbdIMVJb (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Sep 2017 17:09:31 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:34504 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751117AbdIMVJb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Sep 2017 17:09:31 -0400
-Received: by mail-pf0-f196.google.com with SMTP id g65so558393pfe.1
-        for <git@vger.kernel.org>; Wed, 13 Sep 2017 14:09:30 -0700 (PDT)
+        id S1751167AbdIMVOf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Sep 2017 17:14:35 -0400
+Received: from mail-pg0-f51.google.com ([74.125.83.51]:45492 "EHLO
+        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751117AbdIMVOe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Sep 2017 17:14:34 -0400
+Received: by mail-pg0-f51.google.com with SMTP id 188so2640863pgb.2
+        for <git@vger.kernel.org>; Wed, 13 Sep 2017 14:14:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=tkn4XlMC3T5ts6okeTeH0GeLBhIfs7yk8B22xAclqPA=;
-        b=cVJtsf+mmu1ppJdAZh8TO0LXkQ5o1zNfqzZsVXLSVQzM649Eew0C0PuSzR8JyhNCgB
-         B49xdP0C8INCFEQkE0eyyxL6ehMgN2d5g4cRKE1SN0KV9BDerRCtL5oKu1ggS3D/9lZU
-         DxH3aCkGI+bVtyqbCVe3ziq1lsm9obsC1bxwhSwyC1hY+7rG+URrB/d6GWOhR1U2s2zo
-         guSpZBpsXnzBbzuokOqYR4evNFMvQT9At/9TYAVF6OCenJX7Xx08s4/YYPSSs16fXyqS
-         iq//X474RXWRYcKBrAYgmAcW9KQsSR4vQVDFFX4pACzCF5Q+MGFc0GOf95Y1041Qb0UL
-         nQEA==
+        bh=A6sPIYROFoxDi215VTltw6mJiqp9Bn0JYkSEkghInNQ=;
+        b=pHLNbgiTH7fQvpoTGypgyT0Aj7pEBmvtXGIGmuxPCX5JOqOETlhBiRbD4wtvs02+Q2
+         CDu9tpJDXoHUX2H2GEfpmGseMFQH40+OfYRp2Dg6D1OREfdbo+HXMew+Hfu/NcoFPOCp
+         z2zV2DsIvt2ANEtW7e36crYFwwzdmy7+Vv743r4lApo7MdoRH2C/kJjNrKp7po+T4eTy
+         fKw3qws9kcl3WJGpvexaWVvlhqQ1ubEAjBPYZb6urqh+TqDhO7JK3sJjrMNfrSCRozF4
+         1BbA0GUXtBYsBTffH3vdC1W0+aOhHlnqe/LJV0YfgU1dcRSu++V1Uy4Xv1lL054poXLF
+         RP9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=tkn4XlMC3T5ts6okeTeH0GeLBhIfs7yk8B22xAclqPA=;
-        b=SFO7SXrtUSX8v8v2jWrJE2Xlza02rUl5NWRUlrGEeBDpK1DBkeGCoevPle+/5MkSgd
-         BjafUjxA0QtBWG1uBqS1Fa5gak+cDEd6maVyW3aCzBOwvt35NtfM5lESYGZ6EgtOMnht
-         0WsIDLgn1EaPphyCSqCDNXBpjmP8+xZPAa2mz/uopAHo3vajojMprX/mePRcfHbLyZNk
-         4V19Uq85bdFfgpfj5RubqLehrUwykidJabb0uvj+MyQqSS12rFR2+SOMNbYxaoQBWSVF
-         LplPBl3KC8p9l1n+aEwcuGXiTxtG/TqzFTmqRG4xA3eg2ytsY2Ftc5+lJSEVZyACmZjD
-         VoqA==
-X-Gm-Message-State: AHPjjUj0iYWLW3WYgWbnw6vb1slBq20mngELbWPmEJSwJxLkdcGJDbRa
-        hvUxjCfznEmwLg==
-X-Google-Smtp-Source: ADKCNb7Ofe5yjhr+MtLwz21LZRluSPC5Z2ZnffEZXkwQjO61SotqNazFKvGjXHqcsYeNCDAsEV53/g==
-X-Received: by 10.98.211.193 with SMTP id z62mr19318914pfk.118.1505336970365;
-        Wed, 13 Sep 2017 14:09:30 -0700 (PDT)
+        bh=A6sPIYROFoxDi215VTltw6mJiqp9Bn0JYkSEkghInNQ=;
+        b=W5UElUND8WxxzAd4a8/itelHf7Pg8lHKkDGTsvjGJJuaxvOguyfY2wvWZD/VHGw8jy
+         1JBqwejydeVn62cyaYNzppFUli/tPcL0lrmndEJfBSaofycVl+7TT322tsvD1saHPgvk
+         68oSXLYrpZ9wEsmzTFDgricIciAngrtN4UOCHgZvvxoKpo8lmQ1uilXyDUp0I5SJao1y
+         weqGvLmDTpLmScycd+r+rtJA3hLT2M2Dk3MF4GsMlhjDoadOVER0oyz4Bub3K0XXzUKd
+         CxYs7PsI7vqpLT001M6gZZvFtL3MmmcoviYy9UdMOAdaYdhDOtw4IcdXVSN7GhrTYjVt
+         VcKg==
+X-Gm-Message-State: AHPjjUjV9SHmIBdsJ8q84f0ax+/TEPpDfzTsIZjhfNFj9DVOUjWMcvpA
+        fdVXHterTrIMhQ==
+X-Google-Smtp-Source: AOwi7QB2Dpe1unvILHS52xk7M24FnubUImsRHE/BrL9KG3XojUcXZjUsgNMVD1dPXsAffMgj5446Pw==
+X-Received: by 10.99.110.12 with SMTP id j12mr2685851pgc.163.1505337273323;
+        Wed, 13 Sep 2017 14:14:33 -0700 (PDT)
 Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:d132:98b:3ff1:a635])
-        by smtp.gmail.com with ESMTPSA id u186sm22549912pgb.35.2017.09.13.14.09.29
+        by smtp.gmail.com with ESMTPSA id d21sm26766016pfe.68.2017.09.13.14.14.32
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 13 Sep 2017 14:09:29 -0700 (PDT)
-Date:   Wed, 13 Sep 2017 14:09:27 -0700
+        Wed, 13 Sep 2017 14:14:32 -0700 (PDT)
+Date:   Wed, 13 Sep 2017 14:14:30 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Jeff King <peff@peff.net>
 Cc:     demerphq <demerphq@gmail.com>, Git <git@vger.kernel.org>,
         =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH 2/7] get-tar-commit-id: check write_in_full() return
- against 0
-Message-ID: <20170913210927.GJ27425@aiede.mtv.corp.google.com>
+Subject: Re: [PATCH 3/7] avoid "write_in_full(fd, buf, len) != len" pattern
+Message-ID: <20170913211430.GK27425@aiede.mtv.corp.google.com>
 References: <20170913170807.cyx7rrpoyhaauvol@sigill.intra.peff.net>
- <20170913171127.ocnitq6wz57ivhrh@sigill.intra.peff.net>
+ <20170913171603.3whuql7l5da3ynrn@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20170913171127.ocnitq6wz57ivhrh@sigill.intra.peff.net>
+In-Reply-To: <20170913171603.3whuql7l5da3ynrn@sigill.intra.peff.net>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
 Jeff King wrote:
 
-> We ask to write 41 bytes and make sure that the return value
-> is at least 41. This is the same "dangerous" pattern that
-> was fixed in the prior commit (wherein a negative return
-> value is promoted to unsigned), though it is not dangerous
-> here because our "41" is a constant, not an unsigned
-> variable.
+> The return value of write_in_full() is either "-1", or the
+> requested number of bytes[1]. If we make a partial write
+> before seeing an error, we still return -1, not a partial
+> value. This goes back to f6aa66cb95 (write_in_full: really
+> write in full or return error on disk full., 2007-01-11).
 >
-> But we should convert it anyway to avoid modeling a
-> dangerous construct.
+> So checking anything except "was the return value negative"
+> is pointless. And there are a couple of reasons not to do
+> so:
 >
+>   1. It can do a funny signed/unsigned comparison. If your
+[...]
+>   2. Checking for a negative value is shorter to type,
+>      especially when the length is an expression.
+>
+>   3. Linus says so. In d34cf19b89 (Clean up write_in_full()
+>      users, 2007-01-11), right after the write_in_full()
+>      semantics were changed, he wrote:
+>
+>        I really wish every "write_in_full()" user would just
+>        check against "<0" now, but this fixes the nasty and
+>        stupid ones.
+
+Ok, you convinced me.
+
+Should we add a comment to cache.h as well encouraging this?
+
+[...]
+> [1] A careful reader may notice there is one way that
+>     write_in_full() can return a different value. If we ask
+>     write() to write N bytes and get a return value that is
+>     _larger_ than N, we could return a larger total. But
+>     besides the fact that this would imply a totally broken
+>     version of write(), it would already invoke undefined
+>     behavior. Our internal remaining counter is an unsigned
+>     size_t, which means that subtracting too many byte will
+>     wrap it around to a very large number. So we'll instantly
+>     begin reading off the end of the buffer, trying to write
+>     gigabytes (or petabytes) of data.
+
+This footnote just leaves me more confused, since as you mention,
+write() never would return a value greater than N.  Are you saying we
+need to defend against a broken platform where that isn't true?
+
 > Signed-off-by: Jeff King <peff@peff.net>
 > ---
->  builtin/get-tar-commit-id.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
+>  builtin/receive-pack.c | 2 +-
+>  builtin/rerere.c       | 2 +-
+>  builtin/unpack-file.c  | 2 +-
+>  config.c               | 4 ++--
+>  diff.c                 | 2 +-
+>  fast-import.c          | 2 +-
+>  http-backend.c         | 4 ++--
+>  ll-merge.c             | 2 +-
+>  read-cache.c           | 6 +++---
+>  refs.c                 | 2 +-
+>  refs/files-backend.c   | 8 ++++----
+>  rerere.c               | 2 +-
+>  shallow.c              | 6 +++---
+>  t/helper/test-delta.c  | 2 +-
+>  transport-helper.c     | 5 ++---
+>  wrapper.c              | 2 +-
+>  16 files changed, 26 insertions(+), 27 deletions(-)
 
-I kind of disagree with calling this dangerous (and I think that is
-what you alluded to above by putting it in quotes), but I like the
-postimage more than the preimage.
+All of these look correctly done.
 
-The variable 'n' could be eliminated to simplify this further.  I
-realize that would go against the spirit of this patch, but (1) it's
-on-topic for the patch, since it is another ssize_t vs constant
-comparison and (2) as mentioned elsewhere in this thread, it's a very
-common idiom with read_in_full.  If we want to eliminate it then we
-could introduce a separate helper to distinguish between
-read_this_much_i_mean_it and read_this_much_or_to_eof.
-
-Anyway, I think the below is an improvement.
-
-With or without this tweak,
 Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-
-Thanks.
-
-diff --git i/builtin/get-tar-commit-id.c w/builtin/get-tar-commit-id.c
-index 6d9a79f9b3..03ef7c5ba4 100644
---- i/builtin/get-tar-commit-id.c
-+++ w/builtin/get-tar-commit-id.c
-@@ -20,13 +20,11 @@ int cmd_get_tar_commit_id(int argc, const char **argv, const char *prefix)
- 	struct ustar_header *header = (struct ustar_header *)buffer;
- 	char *content = buffer + RECORDSIZE;
- 	const char *comment;
--	ssize_t n;
- 
- 	if (argc != 1)
- 		usage(builtin_get_tar_commit_id_usage);
- 
--	n = read_in_full(0, buffer, HEADERSIZE);
--	if (n < HEADERSIZE)
-+	if (read_in_full(0, buffer, HEADERSIZE) < HEADERSIZE)
- 		die("git get-tar-commit-id: read error");
- 	if (header->typeflag[0] != 'g')
- 		return 1;
