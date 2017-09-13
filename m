@@ -2,77 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 26E1B20286
-	for <e@80x24.org>; Wed, 13 Sep 2017 22:07:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 03FBC20286
+	for <e@80x24.org>; Wed, 13 Sep 2017 22:15:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751317AbdIMWHM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Sep 2017 18:07:12 -0400
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:43669 "EHLO
-        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751128AbdIMWHL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Sep 2017 18:07:11 -0400
-Received: by mail-wm0-f49.google.com with SMTP id a137so1214836wma.0
-        for <git@vger.kernel.org>; Wed, 13 Sep 2017 15:07:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=UOp6F3pMPRBV6EFKQqiwjb39dlrhDNeQ8Kpftzs5mnQ=;
-        b=X0Ko+B1qk1KFlfNIn8tLPlbrDhT8uS/9ryz+3v4N8+VzBGxv5vjXGNy9q8U79H5LD+
-         AXunVGoCVs+jwy64d735XhFgMP2tXtfQbBwKad0w5IYShx3blrzpe/tBSFZ+qtjpOtpb
-         071s82kBdcAvw8z2ilSFuLEKfOydQ8ark/FSpAtXYDW6AcnZo1ffgsKhmOWl+vT177RP
-         Ld/WvLPfHXp8ZnwB84ImGPqs4DaV1JSX/WkYCk5jPsqYN9ivWYPbTBI7gYCiE4LtYApS
-         uahcV+LU7SQEONt5dA/ogPOjuLORQsvUuEsnMjYZmMa7EwRjKiF0dE9COe+QKigIhjup
-         GAEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=UOp6F3pMPRBV6EFKQqiwjb39dlrhDNeQ8Kpftzs5mnQ=;
-        b=BhVBcosZx/BTPQc6YWLaktrcuH/pCO2vQcU3RefExZ64mEkprvdeiFRRrxl06+gsrI
-         BHsLpX+ARUs338O3yR4bLCc6+Lf9M6ZumBFzrvVPkQ3CYw4QbaX5vLtA1fuF+kpg347y
-         Xzxy4qlYjJWU5HI1o/yXg3drnIKTu1SWw1RGMPAMIymwETS+CCiyMAAmjSo25ww5HvYA
-         kRnazp8BMwNK9cZnvod3Gw9nzuYkMKAXzXCVZxF7v7A7cc8lpE+00CcmPSFirJ1D+5yP
-         vrAKHppOpJ9Rt60S18PfNjeBZw69JXArKCIJuwKKHaMmrW312B38uwtHOII4aqCtCeex
-         RFyg==
-X-Gm-Message-State: AHPjjUgSEykQEpOlrnEamTTG4LcxE/r7iOkv5PdujDz2H4amCI9tY/iK
-        UCkIwNzaNlvUusuGNIe/BTjP8iV5yTPo3BhDzm8Xeg==
-X-Google-Smtp-Source: AOwi7QBiaKI9HvBQUNsrh5DUSAS5lCNHgGN3Zd2OPsgza2P7YOyLTl1XYi1cLhRFPlrCfFjje58ZrvBHbcwK6vGyD6M=
-X-Received: by 10.28.73.133 with SMTP id w127mr102066wma.55.1505340429274;
- Wed, 13 Sep 2017 15:07:09 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.223.170.68 with HTTP; Wed, 13 Sep 2017 15:07:08 -0700 (PDT)
-In-Reply-To: <xmqq7ex21d2v.fsf@gitster.mtv.corp.google.com>
-References: <20170304011251.GA26789@aiede.mtv.corp.google.com>
- <CA+55aFz+gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com>
- <20170307001709.GC26789@aiede.mtv.corp.google.com> <xmqqa828733s.fsf@gitster.mtv.corp.google.com>
- <xmqq1snh29re.fsf@gitster.mtv.corp.google.com> <20170911185913.GA5869@google.com>
- <alpine.DEB.2.21.1.1709131340030.4132@virtualbox> <20170913163052.GA27425@aiede.mtv.corp.google.com>
- <xmqq7ex21d2v.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 13 Sep 2017 15:07:08 -0700
-Message-ID: <CAGZ79kakGcMJ7HuH+MPsMrvw40uGchr6H-SQw9-p8pgi3Yk_Bw@mail.gmail.com>
-Subject: Re: RFC v3: Another proposed hash function transition plan
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        id S1751311AbdIMWPP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Sep 2017 18:15:15 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60695 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751128AbdIMWPO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Sep 2017 18:15:14 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7D95A9FDEE;
+        Wed, 13 Sep 2017 18:15:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=aJmrgWD/AD4vmDGngLFBJ1OEpio=; b=jWrc4f
+        xFXCpcPwOfHRpJgKmtp4o/iZqze5ZBKR2hTfzu07OBXaW+jVGsQk2zfrCt7tmHwP
+        EEg2JGLNabE5ght3ZLANQe0Tyi/lvldrUzqEhkRzFP0Z8qfr3B9n4NkOT4+mJ4uL
+        1rz251+TGHw0Idx4aqEYCQLHwwFopxX/OFcak=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=MrSdymj2b0/RqmQGdPxjbPe4Ed7V4E6p
+        0I2iTzvITos9M4AqmuZItDbzMLIdsS4O+yAK7VZiYNDK7bS4a+jpJDVu2u4ZgzV/
+        wXkctL/uMru6oKFc0RJqietCvLOLomywNmJMl6GzDfCw83mVmSZyqgsmqaEYcjFm
+        shYd9FCkD9Y=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 744D69FDEC;
+        Wed, 13 Sep 2017 18:15:13 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B2DDD9FDEB;
+        Wed, 13 Sep 2017 18:15:12 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Brandon Williams <bmwill@google.com>,
         Linus Torvalds <torvalds@linux-foundation.org>,
         Git Mailing List <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>,
+        Stefan Beller <sbeller@google.com>, jonathantanmy@google.com,
         Jeff King <peff@peff.net>, David Lang <david@lang.hm>,
         "brian m. carlson" <sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: RFC v3: Another proposed hash function transition plan
+References: <20170304011251.GA26789@aiede.mtv.corp.google.com>
+        <CA+55aFz+gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com>
+        <20170307001709.GC26789@aiede.mtv.corp.google.com>
+        <xmqqa828733s.fsf@gitster.mtv.corp.google.com>
+        <xmqq1snh29re.fsf@gitster.mtv.corp.google.com>
+        <20170911185913.GA5869@google.com>
+        <alpine.DEB.2.21.1.1709131340030.4132@virtualbox>
+        <20170913163052.GA27425@aiede.mtv.corp.google.com>
+        <xmqq7ex21d2v.fsf@gitster.mtv.corp.google.com>
+Date:   Thu, 14 Sep 2017 07:15:11 +0900
+In-Reply-To: <xmqq7ex21d2v.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Thu, 14 Sep 2017 06:52:08 +0900")
+Message-ID: <xmqq377q1c0g.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 033EE56C-98D1-11E7-A398-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 13, 2017 at 2:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
+Junio C Hamano <gitster@pobox.com> writes:
+
 > Jonathan Nieder <jrnieder@gmail.com> writes:
 >
 >> Treating generation numbers as derived data (as in Jeff King's
@@ -96,37 +95,41 @@ On Wed, Sep 13, 2017 at 2:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
 > across repositories---just like often-mentioned rename detection
 > cache, it can be kept as a mere local performance aid and does not
 > have to participate in the object model.
-
-Locally it helps for some operations such as correct walks.
-For the network case however, it doesn't really help either.
-
-If we had global generation numbers, one could imagine that they
-are used in the pack negotiation (server advertises the maximum
-generation number or even gen number per branch; client
-could binary search in there for the fork point)
-
-I wonder if locally generated generation numbers (for the shallow
-case) could be used somehow to still improve network operations.
-
-
-
->> My assumption based on previous conversations (and other external
->> conversations like [1]) is that we are going to use SHA2-256 and have
->> a pretty strong consensus for that.  Don't worry!
 >
-> Hmph, I actually re-read the thread recently, and my impression was
-> that we didn't quite have a consensus but were leaning towards
-> SHA3-256.
+>> All that said, for simplicity I still lean against including
+>> generation numbers as part of a hash function transition.
 >
-> I do not personally have a strong preference myself and I would say
-> that anything will do as long as it is with good longevity and
-> availability.  SHA2 family would be a fine choice due to its age on
-> both counts, being scrutinized longer and having a chance to be
-> implemented in many places, even though its age itself may have to
-> be subtracted from the longevity factor.
+> Good.
 
-If we'd get the transition somewhat right, the next transition will
-be easier than the current transition, such that I am not that concerned
-about longevity. I am rather concerned about the complexity that is added
-to the code base (whilst accumulating technical debt instead of clearer
-abstraction layers)
+In the proposed transition plan, the treatment of various signatures
+(deliberately) makes the conversion not quite roundtrip.
+
+When existing SHA-1 history in individual clones are converted to
+NewHash, we obviously cannot re-sign the corresponding NewHash
+contents with the same PGP key, so these converted objects will
+carry only signature on SHA-1 contents.  They can still be validated
+when they are exported back to SHA-1 world via the fetch/push
+protocol, and can be validated locally by converting them back to
+SHA-1 contents and then passing the result to gpgv.
+
+The plan also states, if I remember what I read correctly, that
+newly created and signed objects (this includes signed commits and
+signed tags; mergetags merely carry over what the tag object that
+was merged was signed with, so we do not have to worry about them
+unless the resulting commit that has mergetag is signed itself, but
+that is already covered by how we handle signed commits) would be
+signed both for NewHash contents and its corresponding SHA-1
+contents (after internally convering it to SHA-1 contents).  That
+would allow us to strip the signature over NewHash contents and
+derive the SHA-1 contents to be shown to the outside world while
+migration is going on and I'd imagine it would be a good practice;
+it would allow us to sign something that allows everybody to verify,
+when some participants of the project are not yet NewHash capable.
+
+But the signing over SHA-1 contents has to stop at some point, when
+everybody's Git becomes completely unaware of SHA-1.  We may want to
+have a guideline in the transition plan to (1) encourage signing for
+both for quite some time, and (2) the criteria for us to decide when
+to stop.
+
+Thanks.
