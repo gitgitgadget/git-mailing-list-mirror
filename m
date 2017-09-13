@@ -6,26 +6,26 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 60FF120286
-	for <e@80x24.org>; Wed, 13 Sep 2017 17:16:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 324A720286
+	for <e@80x24.org>; Wed, 13 Sep 2017 17:16:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751121AbdIMRQ2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Sep 2017 13:16:28 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:58326 "EHLO
-        alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751054AbdIMRQZ (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 13 Sep 2017 13:16:25 -0400
-X-AuditID: 1207440d-86bff70000000f42-f1-59b967e8ffa6
+        id S1751153AbdIMRQa (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Sep 2017 13:16:30 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:45703 "EHLO
+        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751117AbdIMRQ2 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 13 Sep 2017 13:16:28 -0400
+X-AuditID: 12074413-3a3ff70000007929-32-59b967ea0e04
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 52.C6.03906.8E769B95; Wed, 13 Sep 2017 13:16:24 -0400 (EDT)
+        by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 57.25.31017.AE769B95; Wed, 13 Sep 2017 13:16:26 -0400 (EDT)
 Received: from bagpipes.fritz.box (p57BCC855.dip0.t-ipconnect.de [87.188.200.85])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v8DHGIiP001379
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v8DHGIiQ001379
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Wed, 13 Sep 2017 13:16:22 -0400
+        Wed, 13 Sep 2017 13:16:24 -0400
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -34,292 +34,105 @@ Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Brandon Williams <bmwill@google.com>,
         git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 01/20] ref_iterator: keep track of whether the iterator output is ordered
-Date:   Wed, 13 Sep 2017 19:15:55 +0200
-Message-Id: <cbad77c8cf579651c4448b1c6a5a7a703723eb9b.1505319366.git.mhagger@alum.mit.edu>
+Subject: [PATCH 02/20] prefix_ref_iterator: break when we leave the prefix
+Date:   Wed, 13 Sep 2017 19:15:56 +0200
+Message-Id: <2bb2e8ccb57eef8acbea5004167751a007a1bd2f.1505319366.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.14.1
 In-Reply-To: <cover.1505319366.git.mhagger@alum.mit.edu>
 References: <cover.1505319366.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrFIsWRmVeSWpSXmKPExsUixO6iqPsifWekwYEL2hZrn91hsni+/gS7
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrMIsWRmVeSWpSXmKPExsUixO6iqPsqfWekwbMpmhZrn91hsni+/gS7
         RdeVbiaLht4rzBa3V8xntuie8pbR4kdLD7PF5s3tLA4cHn/ff2Dy2DnrLrvHgk2lHs969zB6
-        XLyk7PF5k1wAWxSXTUpqTmZZapG+XQJXxp3lixgLXgVUXNv6lLGB8bVTFyMnh4SAicSb7ftY
-        uhi5OIQEdjBJ3Hp7ihHCOckk8fH7CzaQKjYBXYlFPc1MILaIgJrExLZDYB3MAk+ZJHaevMsK
-        khAWiJTY0bGLuYuRg4NFQFViV5sqSJhXIEri9OJHrBDb5CXOPbjNDGJzClhIbNzxhBHEFhIw
-        l2ics5NxAiPPAkaGVYxyiTmlubq5iZk5xanJusXJiXl5qUW6Rnq5mSV6qSmlmxghAca7g/H/
-        OplDjAIcjEo8vBY2OyOFWBPLiitzDzFKcjApifLu1QUK8SXlp1RmJBZnxBeV5qQWH2KU4GBW
-        EuENigLK8aYkVlalFuXDpKQ5WJTEedWWqPsJCaQnlqRmp6YWpBbBZGU4OJQkeJ2AkSQkWJSa
-        nlqRlplTgpBm4uAEGc4DNFwQpIa3uCAxtzgzHSJ/itGY48ekK3+YODpu3v3DJMSSl5+XKiXO
-        +zcVqFQApDSjNA9uGixJvGIUB3pOmDc6DaiKB5hg4Oa9AlrFBLTqzOkdIKtKEhFSUg2MIfPD
-        7fm3RG8QaXF9f9Tkb2Pt1B6BV1HXlK9uF7hnzKhv0Jxxi21+fkH2dwvfM0lWEruu103MXufu
-        c+K99Om7nMfMEuV4zfzzTvjtuJQvcT35x52zZ/9PejrNMsnlU5bsmqe+Fw6+SlGbsloy9h/n
-        tI9zFC2U30c/zK1YsPKE/gX5nKmP/e8FK7EUZyQaajEXFScCAK3dZrHtAgAA
+        XLyk7PF5k1wAWxSXTUpqTmZZapG+XQJXxtQ/k1gL/ghVNL3qZmtgbObvYuTkkBAwkVg5cQkz
+        iC0ksINJYuYp9S5GLiD7JJPE4rbjTCAJNgFdiUU9zWC2iICaxMS2QywgRcwCT5kkdp68ywqS
+        EBbwkrjypRWsiEVAVWL5+qVsXYwcHLwCURKnnipALJOXOPfgNtgyTgELiY07njBCLDaXaJyz
+        k3ECI88CRoZVjHKJOaW5urmJmTnFqcm6xcmJeXmpRbrmermZJXqpKaWbGCHhJbyDcddJuUOM
+        AhyMSjy8FjY7I4VYE8uKK3MPMUpyMCmJ8u7VBQrxJeWnVGYkFmfEF5XmpBYfYpTgYFYS4Q2K
+        AsrxpiRWVqUW5cOkpDlYlMR51Zao+wkJpCeWpGanphakFsFkZTg4lCR4nYBxJCRYlJqeWpGW
+        mVOCkGbi4AQZzgM0XBCkhre4IDG3ODMdIn+KUZej4+bdP0xCLHn5ealS4rx/U4GKBECKMkrz
+        4ObA0sIrRnGgt4R5j6UBVfEAUwrcpFdAS5iAlpw5vQNkSUkiQkqqgZGNJe6fZVpn2cLMnZkb
+        XOQOTqx0vrNaXiea6coqoekz7n3//DRsu2PpdkcrjQ3lr/SfLldUSPOyV6naVVp7V/D4mumy
+        HX7JF77O0WLdv2HzVKltobxzN7K8nnNdcSfvT3uxvUFvNdiUZYuzciRY02uven36N+VPeVDu
+        /7CNsV/kJy68My/k2CQlluKMREMt5qLiRACwkyaw5gIAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-References are iterated over in order by refname, but reflogs are not.
-Some consumers of reference iteration care about the difference. Teach
-each `ref_iterator` to keep track of whether its output is ordered.
+From: Jeff King <peff@peff.net>
 
-`overlay_ref_iterator` is one of the picky consumers. Add a sanity
-check in `overlay_ref_iterator_begin()` to verify that its inputs are
-ordered.
+If the underlying iterator is ordered, then `prefix_ref_iterator` can
+stop as soon as it sees a refname that comes after the prefix. This
+will rarely make a big difference now, because `ref_cache_iterator`
+only iterates over the directory containing the prefix (and usually
+the prefix will span a whole directory anyway). But if *hint, hint* a
+future reference backend doesn't itself know where to stop the
+iteration, then this optimization will be a big win.
 
+Note that there is no guarantee that the underlying iterator doesn't
+include output preceding the prefix, so we have to skip over any
+unwanted references before we get to the ones that we want.
+
+Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs.c                |  4 ++++
- refs/files-backend.c  | 16 +++++++++-------
- refs/iterator.c       | 15 ++++++++++-----
- refs/packed-backend.c |  2 +-
- refs/ref-cache.c      |  2 +-
- refs/ref-cache.h      |  3 ++-
- refs/refs-internal.h  | 23 +++++++++++++++++++----
- 7 files changed, 46 insertions(+), 19 deletions(-)
+Note that the implementation of `compare_prefix()` here is a bit
+different than Peff's original version.
 
-diff --git a/refs.c b/refs.c
-index b0106b8162..101c107ee8 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1309,6 +1309,10 @@ struct ref_iterator *refs_ref_iterator_begin(
- 	if (trim)
- 		iter = prefix_ref_iterator_begin(iter, "", trim);
- 
-+	/* Sanity check for subclasses: */
-+	if (!iter->ordered)
-+		BUG("reference iterator is not ordered");
-+
- 	return iter;
- }
- 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 961424a4ea..35648c89fc 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -762,7 +762,7 @@ static struct ref_iterator *files_ref_iterator_begin(
- 		const char *prefix, unsigned int flags)
- {
- 	struct files_ref_store *refs;
--	struct ref_iterator *loose_iter, *packed_iter;
-+	struct ref_iterator *loose_iter, *packed_iter, *overlay_iter;
- 	struct files_ref_iterator *iter;
- 	struct ref_iterator *ref_iterator;
- 	unsigned int required_flags = REF_STORE_READ;
-@@ -772,10 +772,6 @@ static struct ref_iterator *files_ref_iterator_begin(
- 
- 	refs = files_downcast(ref_store, required_flags, "ref_iterator_begin");
- 
--	iter = xcalloc(1, sizeof(*iter));
--	ref_iterator = &iter->base;
--	base_ref_iterator_init(ref_iterator, &files_ref_iterator_vtable);
--
- 	/*
- 	 * We must make sure that all loose refs are read before
- 	 * accessing the packed-refs file; this avoids a race
-@@ -811,7 +807,13 @@ static struct ref_iterator *files_ref_iterator_begin(
- 			refs->packed_ref_store, prefix, 0,
- 			DO_FOR_EACH_INCLUDE_BROKEN);
- 
--	iter->iter0 = overlay_ref_iterator_begin(loose_iter, packed_iter);
-+	overlay_iter = overlay_ref_iterator_begin(loose_iter, packed_iter);
-+
-+	iter = xcalloc(1, sizeof(*iter));
-+	ref_iterator = &iter->base;
-+	base_ref_iterator_init(ref_iterator, &files_ref_iterator_vtable,
-+			       overlay_iter->ordered);
-+	iter->iter0 = overlay_iter;
- 	iter->flags = flags;
- 
- 	return ref_iterator;
-@@ -2084,7 +2086,7 @@ static struct ref_iterator *files_reflog_iterator_begin(struct ref_store *ref_st
- 	struct ref_iterator *ref_iterator = &iter->base;
- 	struct strbuf sb = STRBUF_INIT;
- 
--	base_ref_iterator_init(ref_iterator, &files_reflog_iterator_vtable);
-+	base_ref_iterator_init(ref_iterator, &files_reflog_iterator_vtable, 0);
- 	files_reflog_path(refs, &sb, NULL);
- 	iter->dir_iterator = dir_iterator_begin(sb.buf);
- 	iter->ref_store = ref_store;
+ refs/iterator.c | 32 +++++++++++++++++++++++++++++++-
+ 1 file changed, 31 insertions(+), 1 deletion(-)
+
 diff --git a/refs/iterator.c b/refs/iterator.c
-index 4cf449ef66..c475360f0a 100644
+index c475360f0a..bd35da4e62 100644
 --- a/refs/iterator.c
 +++ b/refs/iterator.c
-@@ -25,9 +25,11 @@ int ref_iterator_abort(struct ref_iterator *ref_iterator)
- }
- 
- void base_ref_iterator_init(struct ref_iterator *iter,
--			    struct ref_iterator_vtable *vtable)
-+			    struct ref_iterator_vtable *vtable,
-+			    int ordered)
- {
- 	iter->vtable = vtable;
-+	iter->ordered = !!ordered;
- 	iter->refname = NULL;
- 	iter->oid = NULL;
- 	iter->flags = 0;
-@@ -72,7 +74,7 @@ struct ref_iterator *empty_ref_iterator_begin(void)
- 	struct empty_ref_iterator *iter = xcalloc(1, sizeof(*iter));
- 	struct ref_iterator *ref_iterator = &iter->base;
- 
--	base_ref_iterator_init(ref_iterator, &empty_ref_iterator_vtable);
-+	base_ref_iterator_init(ref_iterator, &empty_ref_iterator_vtable, 1);
- 	return ref_iterator;
- }
- 
-@@ -205,6 +207,7 @@ static struct ref_iterator_vtable merge_ref_iterator_vtable = {
+@@ -287,6 +287,20 @@ struct prefix_ref_iterator {
+ 	int trim;
  };
  
- struct ref_iterator *merge_ref_iterator_begin(
-+		int ordered,
- 		struct ref_iterator *iter0, struct ref_iterator *iter1,
- 		ref_iterator_select_fn *select, void *cb_data)
++/* Return -1, 0, 1 if refname is before, inside, or after the prefix. */
++static int compare_prefix(const char *refname, const char *prefix)
++{
++	while (*prefix) {
++		if (*refname != *prefix)
++			return ((unsigned char)*refname < (unsigned char)*prefix) ? -1 : +1;
++
++		refname++;
++		prefix++;
++	}
++
++	return 0;
++}
++
+ static int prefix_ref_iterator_advance(struct ref_iterator *ref_iterator)
  {
-@@ -219,7 +222,7 @@ struct ref_iterator *merge_ref_iterator_begin(
- 	 * references through only if they exist in both iterators.
- 	 */
+ 	struct prefix_ref_iterator *iter =
+@@ -294,9 +308,25 @@ static int prefix_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 	int ok;
  
--	base_ref_iterator_init(ref_iterator, &merge_ref_iterator_vtable);
-+	base_ref_iterator_init(ref_iterator, &merge_ref_iterator_vtable, ordered);
- 	iter->iter0 = iter0;
- 	iter->iter1 = iter1;
- 	iter->select = select;
-@@ -268,9 +271,11 @@ struct ref_iterator *overlay_ref_iterator_begin(
- 	} else if (is_empty_ref_iterator(back)) {
- 		ref_iterator_abort(back);
- 		return front;
-+	} else if (!front->ordered || !back->ordered) {
-+		BUG("overlay_ref_iterator requires ordered inputs");
- 	}
- 
--	return merge_ref_iterator_begin(front, back,
-+	return merge_ref_iterator_begin(1, front, back,
- 					overlay_iterator_select, NULL);
- }
- 
-@@ -361,7 +366,7 @@ struct ref_iterator *prefix_ref_iterator_begin(struct ref_iterator *iter0,
- 	iter = xcalloc(1, sizeof(*iter));
- 	ref_iterator = &iter->base;
- 
--	base_ref_iterator_init(ref_iterator, &prefix_ref_iterator_vtable);
-+	base_ref_iterator_init(ref_iterator, &prefix_ref_iterator_vtable, iter0->ordered);
- 
- 	iter->iter0 = iter0;
- 	iter->prefix = xstrdup(prefix);
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 0279aeceea..e411501871 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -437,7 +437,7 @@ static struct ref_iterator *packed_ref_iterator_begin(
- 
- 	iter = xcalloc(1, sizeof(*iter));
- 	ref_iterator = &iter->base;
--	base_ref_iterator_init(ref_iterator, &packed_ref_iterator_vtable);
-+	base_ref_iterator_init(ref_iterator, &packed_ref_iterator_vtable, 1);
- 
- 	/*
- 	 * Note that get_packed_ref_cache() internally checks whether
-diff --git a/refs/ref-cache.c b/refs/ref-cache.c
-index 76bb723c86..54dfb5218c 100644
---- a/refs/ref-cache.c
-+++ b/refs/ref-cache.c
-@@ -574,7 +574,7 @@ struct ref_iterator *cache_ref_iterator_begin(struct ref_cache *cache,
- 
- 	iter = xcalloc(1, sizeof(*iter));
- 	ref_iterator = &iter->base;
--	base_ref_iterator_init(ref_iterator, &cache_ref_iterator_vtable);
-+	base_ref_iterator_init(ref_iterator, &cache_ref_iterator_vtable, 1);
- 	ALLOC_GROW(iter->levels, 10, iter->levels_alloc);
- 
- 	iter->levels_nr = 1;
-diff --git a/refs/ref-cache.h b/refs/ref-cache.h
-index 794f000fd3..a082bfb06c 100644
---- a/refs/ref-cache.h
-+++ b/refs/ref-cache.h
-@@ -245,7 +245,8 @@ struct ref_entry *find_ref_entry(struct ref_dir *dir, const char *refname);
-  * Start iterating over references in `cache`. If `prefix` is
-  * specified, only include references whose names start with that
-  * prefix. If `prime_dir` is true, then fill any incomplete
-- * directories before beginning the iteration.
-+ * directories before beginning the iteration. The output is ordered
-+ * by refname.
-  */
- struct ref_iterator *cache_ref_iterator_begin(struct ref_cache *cache,
- 					      const char *prefix,
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index d7d344de73..d7f233beba 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -329,6 +329,13 @@ int refs_rename_ref_available(struct ref_store *refs,
-  */
- struct ref_iterator {
- 	struct ref_iterator_vtable *vtable;
+ 	while ((ok = ref_iterator_advance(iter->iter0)) == ITER_OK) {
+-		if (!starts_with(iter->iter0->refname, iter->prefix))
++		int cmp = compare_prefix(iter->iter0->refname, iter->prefix);
 +
-+	/*
-+	 * Does this `ref_iterator` iterate over references in order
-+	 * by refname?
-+	 */
-+	unsigned int ordered : 1;
++		if (cmp < 0)
+ 			continue;
+ 
++		if (cmp > 0) {
++			/*
++			 * If the source iterator is ordered, then we
++			 * can stop the iteration as soon as we see a
++			 * refname that comes after the prefix:
++			 */
++			if (iter->iter0->ordered) {
++				ok = ref_iterator_abort(iter->iter0);
++				break;
++			} else {
++				continue;
++			}
++		}
 +
- 	const char *refname;
- 	const struct object_id *oid;
- 	unsigned int flags;
-@@ -374,7 +381,7 @@ int is_empty_ref_iterator(struct ref_iterator *ref_iterator);
-  * which the refname begins with prefix. If trim is non-zero, then
-  * trim that many characters off the beginning of each refname. flags
-  * can be DO_FOR_EACH_INCLUDE_BROKEN to include broken references in
-- * the iteration.
-+ * the iteration. The output is ordered by refname.
-  */
- struct ref_iterator *refs_ref_iterator_begin(
- 		struct ref_store *refs,
-@@ -400,9 +407,11 @@ typedef enum iterator_selection ref_iterator_select_fn(
-  * Iterate over the entries from iter0 and iter1, with the values
-  * interleaved as directed by the select function. The iterator takes
-  * ownership of iter0 and iter1 and frees them when the iteration is
-- * over.
-+ * over. A derived class should set `ordered` to 1 or 0 based on
-+ * whether it generates its output in order by reference name.
-  */
- struct ref_iterator *merge_ref_iterator_begin(
-+		int ordered,
- 		struct ref_iterator *iter0, struct ref_iterator *iter1,
- 		ref_iterator_select_fn *select, void *cb_data);
- 
-@@ -431,6 +440,8 @@ struct ref_iterator *overlay_ref_iterator_begin(
-  * As an convenience to callers, if prefix is the empty string and
-  * trim is zero, this function returns iter0 directly, without
-  * wrapping it.
-+ *
-+ * The resulting ref_iterator is ordered if iter0 is.
-  */
- struct ref_iterator *prefix_ref_iterator_begin(struct ref_iterator *iter0,
- 					       const char *prefix,
-@@ -441,11 +452,14 @@ struct ref_iterator *prefix_ref_iterator_begin(struct ref_iterator *iter0,
- /*
-  * Base class constructor for ref_iterators. Initialize the
-  * ref_iterator part of iter, setting its vtable pointer as specified.
-+ * `ordered` should be set to 1 if the iterator will iterate over
-+ * references in order by refname; otherwise it should be set to 0.
-  * This is meant to be called only by the initializers of derived
-  * classes.
-  */
- void base_ref_iterator_init(struct ref_iterator *iter,
--			    struct ref_iterator_vtable *vtable);
-+			    struct ref_iterator_vtable *vtable,
-+			    int ordered);
- 
- /*
-  * Base class destructor for ref_iterators. Destroy the ref_iterator
-@@ -564,7 +578,8 @@ typedef int rename_ref_fn(struct ref_store *ref_store,
-  * Iterate over the references in `ref_store` whose names start with
-  * `prefix`. `prefix` is matched as a literal string, without regard
-  * for path separators. If prefix is NULL or the empty string, iterate
-- * over all references in `ref_store`.
-+ * over all references in `ref_store`. The output is ordered by
-+ * refname.
-  */
- typedef struct ref_iterator *ref_iterator_begin_fn(
- 		struct ref_store *ref_store,
+ 		if (iter->trim) {
+ 			/*
+ 			 * It is nonsense to trim off characters that
 -- 
 2.14.1
 
