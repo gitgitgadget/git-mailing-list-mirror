@@ -2,266 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8764620286
-	for <e@80x24.org>; Wed, 13 Sep 2017 22:39:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BBDF020286
+	for <e@80x24.org>; Wed, 13 Sep 2017 22:43:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751173AbdIMWj0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Sep 2017 18:39:26 -0400
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:45971 "EHLO
-        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751125AbdIMWjZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Sep 2017 18:39:25 -0400
-Received: by mail-wm0-f47.google.com with SMTP id g206so1711709wme.0
-        for <git@vger.kernel.org>; Wed, 13 Sep 2017 15:39:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=CEYALg7KpxG8pmC/r+KlvSTIHGLZaeNFY5FNm2NywfQ=;
-        b=j4DrtqY/oySssJjROReVhI3UacoxV0sTW428zqO1FPVfzFaxN85u3HsW9VGyy25uGk
-         gB3HXUmtw6H+qtYT0wmYuI8qhWDmKXA5pr0PhcPAvgD44pQ37BpNXZTE0wAozztCirpl
-         zQCxoaXlQPUhMsQfIMNF6h12dFwIVZRiczGLUq0+ljAMYKBAO2SVn9KFGMiTubuP/DQB
-         c//QcKaqeNJy3q2Mac0B2CiXhTJuQDEopsk8ZIlms4jAWgpHP8rIy4mOTEdE5eAcgFBX
-         U2NfOqAQ2Q2JKj0qVsJUHMxPt5AobATPhn9ftcgVid9jpUd7LtnOF1S6LFjBmiAAH0wV
-         izJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=CEYALg7KpxG8pmC/r+KlvSTIHGLZaeNFY5FNm2NywfQ=;
-        b=O+7pzvCfer3jUZaHuKX47kafbWZFXE/i8D/M7S0WYofwW22SqfLA1p/ZfCefyyQvGW
-         CTa4vaoVL7+jW1Pr1GbNddTK0oxDejbbSiAHeZAUboYygB16dNhqUOSu++nwkeAWPB9V
-         P7oKNDjquliVOsf1eBjMiAJOTZjsq7PxJ61fwhEnjUjmILRf8R1evcySfJvd16MrBlvk
-         KOsLrUkf1QqwWuRhKGsRWtsz1urUuZY3cqgmUTFFNE566zD3RdS27XKnxee71eS3FbAK
-         Fs2iTkv7T2TDQQt+lhdtuh68lEZN2vqOEtfCWWBapPryLaz7BhWyZ2LkGWe3tag5OwaE
-         MizQ==
-X-Gm-Message-State: AHPjjUiTP2mKzVxRN2Xn9OWzpY3ADlGLvf/gVEBdJkTeazJy0M7Zatmx
-        Y988LXyCfXdzDcGGKRQ4HgYRRSsiwfQewSNSfs6ciw==
-X-Google-Smtp-Source: AOwi7QBUIndrQDtcdnN7+mBp4DgpfUE/DuWdV4KE/Ocbd5nwmpP/p5yRh8NoyF58ayYWWeUHv3h0QNp4SnhrevpAw6M=
-X-Received: by 10.28.57.215 with SMTP id g206mr158283wma.117.1505341915356;
- Wed, 13 Sep 2017 15:31:55 -0700 (PDT)
+        id S1751179AbdIMWn4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Sep 2017 18:43:56 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:32788 "EHLO
+        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751125AbdIMWn4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Sep 2017 18:43:56 -0400
+Received: from [10.0.2.15] ([147.147.86.16])
+        by avasout07 with smtp
+        id 9Ajt1w0050M91Ur01AjuUu; Wed, 13 Sep 2017 23:43:54 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=CrLPSjwD c=1 sm=1 tr=0
+ a=dubYQqM3tRRTmV8xSh8cXQ==:117 a=dubYQqM3tRRTmV8xSh8cXQ==:17
+ a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=6eRnYTneNukW-bxTUPcA:9 a=QEXdDO2ut3YA:10
+ a=6kGIvZw6iX1k4Y-7sg4_:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH v2] config: avoid "write_in_full(fd, buf, len) < len"
+ pattern
+To:     Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>
+Cc:     demerphq <demerphq@gmail.com>, Git <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <20170913170807.cyx7rrpoyhaauvol@sigill.intra.peff.net>
+ <20170913171104.yu7ags4aq2zdwz6r@sigill.intra.peff.net>
+ <20170913181515.p7u2ouine3ysblqc@sigill.intra.peff.net>
+ <20170913182431.GE27425@aiede.mtv.corp.google.com>
+ <20170913185848.5ht44spbakzkrsu6@sigill.intra.peff.net>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <ef20628e-b7c0-8909-31a0-cc126d0c40ba@ramsayjones.plus.com>
+Date:   Wed, 13 Sep 2017 23:43:51 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Received: by 10.223.170.68 with HTTP; Wed, 13 Sep 2017 15:31:54 -0700 (PDT)
-In-Reply-To: <20170913215448.84674-4-bmwill@google.com>
-References: <20170913215448.84674-1-bmwill@google.com> <20170913215448.84674-4-bmwill@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 13 Sep 2017 15:31:54 -0700
-Message-ID: <CAGZ79kZkGfM=2Nek66gvZnbMAu2HLUkbd4D4S5Rij1D_t5DYKg@mail.gmail.com>
-Subject: Re: [PATCH 3/8] daemon: recognize hidden request arguments
-To:     Brandon Williams <bmwill@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>, bturner@atlassian.com,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20170913185848.5ht44spbakzkrsu6@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 13, 2017 at 2:54 PM, Brandon Williams <bmwill@google.com> wrote:
-> A normal request to git-daemon is structured as
-> "command path/to/repo\0host=..\0" and due to a bug in an old version of
-> git-daemon 73bb33a94 (daemon: Strictly parse the "extra arg" part of the
-> command, 2009-06-04) we aren't able to place any extra args (separated
-> by NULs) besides the host.
->
-> In order to get around this limitation teach git-daemon to recognize
-> additional request arguments hidden behind a second NUL byte.  Requests
-> can then be structured like:
-> "command path/to/repo\0host=..\0\0version=1\0key=value\0".  git-daemon
-> can then parse out the extra arguments and set 'GIT_PROTOCOL'
-> accordingly.
->
-> Signed-off-by: Brandon Williams <bmwill@google.com>
-> ---
->  daemon.c | 71 +++++++++++++++++++++++++++++++++++++++++++++++++++++++---------
->  1 file changed, 61 insertions(+), 10 deletions(-)
->
-> diff --git a/daemon.c b/daemon.c
-> index 30747075f..250dbf82c 100644
-> --- a/daemon.c
-> +++ b/daemon.c
-> @@ -282,7 +282,7 @@ static const char *path_ok(const char *directory, struct hostinfo *hi)
->         return NULL;            /* Fallthrough. Deny by default */
->  }
->
-> -typedef int (*daemon_service_fn)(void);
-> +typedef int (*daemon_service_fn)(const struct argv_array *env);
->  struct daemon_service {
->         const char *name;
->         const char *config_name;
-> @@ -363,7 +363,7 @@ static int run_access_hook(struct daemon_service *service, const char *dir,
->  }
->
->  static int run_service(const char *dir, struct daemon_service *service,
-> -                      struct hostinfo *hi)
-> +                      struct hostinfo *hi, const struct argv_array *env)
->  {
->         const char *path;
->         int enabled = service->enabled;
-> @@ -422,7 +422,7 @@ static int run_service(const char *dir, struct daemon_service *service,
->          */
->         signal(SIGTERM, SIG_IGN);
->
-> -       return service->fn();
-> +       return service->fn(env);
->  }
->
->  static void copy_to_log(int fd)
-> @@ -462,25 +462,34 @@ static int run_service_command(struct child_process *cld)
->         return finish_command(cld);
->  }
->
-> -static int upload_pack(void)
-> +static int upload_pack(const struct argv_array *env)
->  {
->         struct child_process cld = CHILD_PROCESS_INIT;
->         argv_array_pushl(&cld.args, "upload-pack", "--strict", NULL);
->         argv_array_pushf(&cld.args, "--timeout=%u", timeout);
-> +
-> +       argv_array_pushv(&cld.env_array, env->argv);
-> +
->         return run_service_command(&cld);
->  }
->
-> -static int upload_archive(void)
-> +static int upload_archive(const struct argv_array *env)
->  {
->         struct child_process cld = CHILD_PROCESS_INIT;
->         argv_array_push(&cld.args, "upload-archive");
-> +
-> +       argv_array_pushv(&cld.env_array, env->argv);
-> +
->         return run_service_command(&cld);
->  }
->
-> -static int receive_pack(void)
-> +static int receive_pack(const struct argv_array *env)
->  {
->         struct child_process cld = CHILD_PROCESS_INIT;
->         argv_array_push(&cld.args, "receive-pack");
-> +
-> +       argv_array_pushv(&cld.env_array, env->argv);
-> +
->         return run_service_command(&cld);
->  }
->
-> @@ -574,7 +583,7 @@ static void canonicalize_client(struct strbuf *out, const char *in)
->  /*
->   * Read the host as supplied by the client connection.
->   */
-> -static void parse_host_arg(struct hostinfo *hi, char *extra_args, int buflen)
-> +static char *parse_host_arg(struct hostinfo *hi, char *extra_args, int buflen)
->  {
->         char *val;
->         int vallen;
-> @@ -602,6 +611,39 @@ static void parse_host_arg(struct hostinfo *hi, char *extra_args, int buflen)
->                 if (extra_args < end && *extra_args)
->                         die("Invalid request");
->         }
-> +
-> +       return extra_args;
-> +}
-> +
-> +static void parse_extra_args(struct argv_array *env, const char *extra_args,
-> +                            int buflen)
-> +{
-> +       const char *end = extra_args + buflen;
-> +       struct strbuf git_protocol = STRBUF_INIT;
-> +
-> +       for (; extra_args < end; extra_args += strlen(extra_args) + 1) {
-> +               const char *arg = extra_args;
-> +
-> +               /*
-> +                * Parse the extra arguments, adding most to 'git_protocol'
-> +                * which will be used to set the 'GIT_PROTOCOL' envvar in the
-> +                * service that will be run.
-> +                *
-> +                * If there ends up being a particular arg in the future that
-> +                * git-daemon needs to parse specificly (like the 'host' arg)
-> +                * then it can be parsed here and not added to 'git_protocol'.
-> +                */
-> +               if (*arg) {
-> +                       if (git_protocol.len > 0)
-> +                               strbuf_addch(&git_protocol, ':');
-> +                       strbuf_addstr(&git_protocol, arg);
-> +               }
-> +       }
-> +
-> +       if (git_protocol.len > 0)
-> +               argv_array_pushf(env, GIT_PROTOCOL_ENVIRONMENT "=%s",
-> +                                git_protocol.buf);
-> +       strbuf_release(&git_protocol);
->  }
-
-I wonder if this could be written as
-
-  begin = extra_args;
-  p = extra_args;
-  end = extra_args + buflen;
-
-  while (p < end) {
-    if (!*p)
-        *p = ':';
-    p++;
-  }
-  argv_array_pushf(env, GIT_PROTOCOL_ENVIRONMENT "=%s", begin);
-
-to ease the load on the server side, as then we do not
-have to copy the partial strings into strbufs and then
-count the length individually? (maybe performance is no big deal here?)
 
 
->
->  /*
-> @@ -695,6 +737,7 @@ static int execute(void)
->         int pktlen, len, i;
->         char *addr = getenv("REMOTE_ADDR"), *port = getenv("REMOTE_PORT");
->         struct hostinfo hi;
-> +       struct argv_array env = ARGV_ARRAY_INIT;
->
->         hostinfo_init(&hi);
->
-> @@ -716,8 +759,14 @@ static int execute(void)
->                 pktlen--;
->         }
->
-> -       if (len != pktlen)
-> -               parse_host_arg(&hi, line + len + 1, pktlen - len - 1);
-> +       if (len != pktlen) {
-> +               const char *extra_args;
-> +               /* retrieve host */
-> +               extra_args = parse_host_arg(&hi, line + len + 1, pktlen - len - 1);
-> +
-> +               /* parse additional args hidden behind a second NUL byte */
-> +               parse_extra_args(&env, extra_args + 1, pktlen - (extra_args - line) - 1);
-> +       }
->
->         for (i = 0; i < ARRAY_SIZE(daemon_service); i++) {
->                 struct daemon_service *s = &(daemon_service[i]);
-> @@ -730,13 +779,15 @@ static int execute(void)
->                          * Note: The directory here is probably context sensitive,
->                          * and might depend on the actual service being performed.
->                          */
-> -                       int rc = run_service(arg, s, &hi);
-> +                       int rc = run_service(arg, s, &hi, &env);
->                         hostinfo_clear(&hi);
-> +                       argv_array_clear(&env);
->                         return rc;
->                 }
->         }
->
->         hostinfo_clear(&hi);
-> +       argv_array_clear(&env);
->         logerror("Protocol error: '%s'", line);
->         return -1;
->  }
-> --
-> 2.14.1.690.gbb1197296e-goog
->
+On 13/09/17 19:58, Jeff King wrote:
+> On Wed, Sep 13, 2017 at 11:24:31AM -0700, Jonathan Nieder wrote:
+> 
+>> For what it's worth,
+>> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+> 
+> Thanks, and thank you for questioning the ptrdiff_t bits that didn't
+> make sense. I _thought_ they felt like nonsense, but couldn't quite
+> puzzle it out.
+> 
+>> Compilers' signed/unsigned comparison warning can be noisy, but I'm
+>> starting to feel it's worth the suppression noise to turn it on when
+>> DEVELOPER=1 anyway.  What do you think?  Is there a way to turn it on
+>> selectively for certain functions on the LHS (like read() and write()
+>> style functions)?
+> 
+> Obviously we couldn't turn them on for -Werror at this point. Let me see
+> how bad "-Wsign-compare -Wno-error=sign-compare" is.
+> 
+>   $ make 2>&1 | grep -c warning:
+>   1391
+> 
+> Ouch. I'm afraid that's probably not going to be very helpful. Even if I
+> were introducing a new problem, I'm not likely to see it amidst the mass
+> of existing complaints.
+
+Hmm, about three or four years ago, I spent two or three evenings
+getting git to compile -Wextra clean. I remember the signed/unsigned
+issue was the cause of a large portion of the warnings issued by
+the compiler. I was surprised that it took such a relatively short
+time to do. However, it affected quite a large portion of the code, so
+I didn't think Junio would even consider applying it. Also, I only used
+gcc and was anticipating having additional warnings on clang (but I
+didn't get around to trying).
+
+Maybe I should give it another go. :-D
+
+ATB,
+Ramsay Jones
+
