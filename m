@@ -2,104 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D12720281
-	for <e@80x24.org>; Wed, 13 Sep 2017 01:39:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17C7420281
+	for <e@80x24.org>; Wed, 13 Sep 2017 04:29:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751525AbdIMBjj (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Sep 2017 21:39:39 -0400
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:46175 "EHLO
-        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751493AbdIMBji (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Sep 2017 21:39:38 -0400
-Received: by mail-wm0-f45.google.com with SMTP id i189so6578048wmf.1
-        for <git@vger.kernel.org>; Tue, 12 Sep 2017 18:39:37 -0700 (PDT)
+        id S1751010AbdIME3v (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Sep 2017 00:29:51 -0400
+Received: from mail-io0-f174.google.com ([209.85.223.174]:38687 "EHLO
+        mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750776AbdIME3u (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Sep 2017 00:29:50 -0400
+Received: by mail-io0-f174.google.com with SMTP id n69so56235236ioi.5
+        for <git@vger.kernel.org>; Tue, 12 Sep 2017 21:29:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Kv3OrCl+c808TlhIfhqmE1YKz3OYjA8ELK1RdpRjmys=;
-        b=qiZuz0W9bdhohZbmLw7xh1gghTwBLvnySx03OT09Jkbumz9vV3PRL3905310lPCF8E
-         DOpE8fbtIgBoKj/rJaDm6OkJdbuE+P0ZdCIFrB1pNj93Fi6+AHdasJDjaNmrTuzdPI4j
-         koG2Dyf8VAjew8TwtORCNz309RGyXs+Esbo88G2tIse1CvBeRotLgy/j+GCwGFfA9jDI
-         p2FvsE3nbLX52YRglNP0nkLQLg8OgN5zxTgLmuc4BaU4djbuZ0iVZoYo5t0lb4TFMJoJ
-         Rkduc6hSp1iXZ+WhCQTRg3wIXgQpYk/0J/FUTFtb9Xx7vaLFMbLDBxh4ogkq3fnDRJwz
-         6j/g==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=+gb9U79bLE65lIBwtgOZw0xmSQSsAQ7B4iW28hI7EbE=;
+        b=SLsw8kgnfk9GLPuEHXVnGqNoMpG6eeY7UT5F2HzHWYXJ6C+cDP67YvbPq/teZ5FyaG
+         JAq7DKe2pmXAgxImhLRFfAy7unU/WF4eoRydDbzpXgEKLMP9m++h4QgBAnmgs87WBC9T
+         0uoc2ilHE5SYT1ubpVjxVAOmlSo5ib+cdcQuknZPGnu2Hh+Cbsq0NbQJXGyhJkBsQzTN
+         mrsdKbChwk3gNeBwxpQ1UBwA2K6gpEn+7NxLUdPeKYeznbEBDSevJtqMaJtdLc5ace3Z
+         3yNFB09xU7sFUBMvsERsz4WMuRSnqqFAOXMCIfIf0t+aHezDN6d6xDAt8Z8t5OIxwwZ/
+         VDlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Kv3OrCl+c808TlhIfhqmE1YKz3OYjA8ELK1RdpRjmys=;
-        b=CVGkcvDTv11JPBwxFEUj5wgLaWnLjiLVlsQfemoxd5bCCp44IZCaQD34GV4e2CurPV
-         TawEEpS5ZfSQhlx9foxI0bsIQemPKcxGwovUYzBx8tCEJzgq/DsSKcaUZQc5tkEFtdeF
-         BT6wCnTdRKD1OlKkVGQ5NUZk3Twkxuem6t9IcXmBC6O1lEDWswpyJOxKVL96TDqAaSCj
-         M2SOBpxvvqE/PkXn05LJWGbrMEHQVDk65kH1kw4qLKBiiWoJO9XD5zn2IdriSD6ZW1un
-         Fvoa/gXdLG90MYHDMif7JY7wBNQWua4cYgPFarwYjRpAb1YpyWbjaB0kbVc4Q6qDY3c1
-         cqPg==
-X-Gm-Message-State: AHPjjUg/F/pGlmoXZuCwLio/C9iaLE7qxb9dGxH8nvB+0KuhHdXxFrcw
-        tKstKwGQej37xbdyAZWZ16+4SYaWE6N2MkvzQ/M=
-X-Google-Smtp-Source: ADKCNb4W3zt7Kiewi0Eqrq7kX2MVjGoBd3nouEUEVgTJZ3WLqFnywRLEHZR33HbWyRuZlmgiD9H9l8LDyUuOqeAbr+M=
-X-Received: by 10.80.169.43 with SMTP id l40mr14463024edc.187.1505266776925;
- Tue, 12 Sep 2017 18:39:36 -0700 (PDT)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=+gb9U79bLE65lIBwtgOZw0xmSQSsAQ7B4iW28hI7EbE=;
+        b=qqKKhjNNqXn3qNnptOdjCtB273GM6M29w9OJoT4nX58qRTk59FN7q/2y3faaTH2Q3t
+         jySoXUyPt0d3rkVZmqrBNxApM2DnH7SKIcMdfVOs+rHIUd541cm51F1ZQHUCJVoT/R3j
+         Om0oAq81AcNHRpGWdqpXf3WlgUy7JK/5o6sxVIANnt9RshjFrBXK18GefPrjfcg7kXXQ
+         kmMTtLPLJfRMc7qF3rbkfd7ZihmjX1yNftFhUaMzZoVkN6xv0l3hz4TQxK2OFPyqpSKv
+         pYLV2eCROHVXCWMH7sAKDEqJWCPLJ5h8YzZ2ul62cHh6Y2QgCiKuxvl3lOCJaOaN9e4z
+         DZ2Q==
+X-Gm-Message-State: AHPjjUg4j+1BntDeEbk3KCkTQ5ItHdq8+iBaOHYfK1QPWXPhIlw12y1X
+        P6S1lyTqKXrpz8xRZG/sswkEkiZj/XfIZvPBWDo=
+X-Google-Smtp-Source: AOwi7QAxKf5GK3GK/0oVlyzMopLnjItVE9D4CJ7A1wUGpx+Fs1d62BMdXGepa8hy7etJXCf1kCsNkksgi8XXyP9IG30=
+X-Received: by 10.107.15.32 with SMTP id x32mr1390597ioi.7.1505276989613; Tue,
+ 12 Sep 2017 21:29:49 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.80.146.185 with HTTP; Tue, 12 Sep 2017 18:39:16 -0700 (PDT)
-In-Reply-To: <SN1PR21MB001473733DAF15BC91C0E58AB7690@SN1PR21MB0014.namprd21.prod.outlook.com>
-References: <20170908180050.25188-1-kewillf@microsoft.com> <20170908180050.25188-2-kewillf@microsoft.com>
- <xmqqvaktxawk.fsf@gitster.mtv.corp.google.com> <SN1PR21MB0014638E5D9CBFD0D9D85F10B7950@SN1PR21MB0014.namprd21.prod.outlook.com>
- <xmqqr2vgy2yt.fsf@gitster.mtv.corp.google.com> <SN1PR21MB00140C84DC02F3491F4E8469B76A0@SN1PR21MB0014.namprd21.prod.outlook.com>
- <xmqqh8w951ek.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.21.1.1709111259430.4132@virtualbox>
- <xmqq4ls836z3.fsf@gitster.mtv.corp.google.com> <SN1PR21MB0014435A97BCDA324FD55B46B7690@SN1PR21MB0014.namprd21.prod.outlook.com>
- <CA+P7+xqxmxexWS=MWNd9=EqG81uhKY-OdG+1mpyWhst6DvH5AA@mail.gmail.com> <SN1PR21MB001473733DAF15BC91C0E58AB7690@SN1PR21MB0014.namprd21.prod.outlook.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 12 Sep 2017 18:39:16 -0700
-Message-ID: <CA+P7+xqcAh4v4gDQOm-feYGc1EmFztAu0zMg2xnp8Gn4=BzkoQ@mail.gmail.com>
-Subject: Re: [PATCH 1/1] reset: fix reset when using the sparse-checkout feature.
-To:     Kevin Willford <kewillf@microsoft.com>
+Received: by 10.107.164.103 with HTTP; Tue, 12 Sep 2017 21:29:49 -0700 (PDT)
+In-Reply-To: <20170905220300.isxbt5y5fd2scd6b@sigill.intra.peff.net>
+References: <CA+55aFxW3qcETiMrNk5SqZU+_jtM2Rxeb3mhF=J=c0ChdGm1tg@mail.gmail.com>
+ <20170905215056.4wihyd6hrtvk52yd@sigill.intra.peff.net> <CA+55aFywhyELmbhAorgTjJZeuNxE-+j2qSP=3d3vqQXNM6p54A@mail.gmail.com>
+ <20170905220300.isxbt5y5fd2scd6b@sigill.intra.peff.net>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Tue, 12 Sep 2017 21:29:49 -0700
+X-Google-Sender-Auth: _MbhQRObNfWUtTtiiN3P00cGRPU
+Message-ID: <CA+55aFyyHAjEPx6V3X4i7LV-0VGwu2n288ysnpftP1Bx53EX5g@mail.gmail.com>
+Subject: Re: BUG: attempt to trim too many characters
+To:     Jeff King <peff@peff.net>
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "peff@peff.net" <peff@peff.net>,
-        "pclouds@gmail.com" <pclouds@gmail.com>
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 12, 2017 at 4:30 PM, Kevin Willford <kewillf@microsoft.com> wrote:
+Just reminding people that this issue would seem to still exist in
+current master..
+
+It's trivial to show:
+
+   [torvalds@i7 git]$ git bisect start
+   [torvalds@i7 git]$ git bisect bad master
+   [torvalds@i7 git]$ git bisect good master~5
+   Bisecting: 23 revisions left to test after this (roughly 5 steps)
+   [f35a1d75b5ecefaef7b1a8ec55543c82883df82f] Merge branch
+'rs/t3700-clean-leftover' into maint
+   [torvalds@i7 git]$ git rev-parse --bisect
+   fatal: BUG: attempt to trim too many characters
+
+(Note: I use "git rev-parse --bisect" to show it as an error on the
+command line, but normal people would obviously do "gitk --bisect"
+that then does that "git rev-parse" internally and shows a UI error
+box instead).
+
+              Linus
+
+On Tue, Sep 5, 2017 at 3:03 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, Sep 05, 2017 at 02:55:08PM -0700, Linus Torvalds wrote:
 >
-> Sorry.  It was not in the sparse-checkout file.
-> $ git config core.sparsecheckout true
-> $ echo /i > .git/info/sparse-checkout
-> $ git checkout -f
-> was ran in the modified file case as well and "i" was the only file in the
-> working directory before reset.
+>> On Tue, Sep 5, 2017 at 2:50 PM, Jeff King <peff@peff.net> wrote:
+>> >
+>> > What version of git are you running? This should be fixed by 03df567fbf
+>> > (for_each_bisect_ref(): don't trim refnames, 2017-06-18) which is in
+>> > v2.14.
+>>
+>> I'm way more recent than 2.14.
+>>
+>> I'm at commit 238e487ea ("The fifth batch post 2.14")
 >
-
-
-I'm assuming then that you mean that some file "m" is modified by the
-commit, and do not mean to say that it has local modifications in the
-working tree? That is not what I had inferred from earlier, so I was
-very much confused.
-
-In this example, the only file actually checked out is "i", as
-everything else will have the skip-worktree bit set..?
-
-So doing git reset HEAD~1 will reset the branch back one commit, and
-now because of this reset is clearing the skip worktree flag, and
-since you never had a copy of it checked out it is notified as
-deleted, because it's no longer marked as skip-worktree?
-
-
-I think the real fix is to stop having reset clear skip-worktree, no?
-
-By definition if you do a sparse checkout, you're telling git "I only
-care about the files in this sparse checkout, and do not concern me
-with anything else"... So the proposed fix is "since git cleared the
-skip-worktree flag, we should actually also copy the file out again."
-but I think the real problem is that we're clearing skip worktree to
-begin with?
+> Ugh. Bitten again by the fact that rev-parse and revision.c implement
+> the same things in subtly different ways.
+>
+> This probably fixes it:
+>
+> diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+> index 2bd28d3c08..9f24004c0a 100644
+> --- a/builtin/rev-parse.c
+> +++ b/builtin/rev-parse.c
+> @@ -757,8 +757,8 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+>                                 continue;
+>                         }
+>                         if (!strcmp(arg, "--bisect")) {
+> -                               for_each_ref_in("refs/bisect/bad", show_reference, NULL);
+> -                               for_each_ref_in("refs/bisect/good", anti_reference, NULL);
+> +                               for_each_fullref_in("refs/bisect/bad", show_reference, NULL, 0);
+> +                               for_each_fullref_in("refs/bisect/good", anti_reference, NULL, 0);
+>                                 continue;
+>                         }
+>                         if (opt_with_value(arg, "--branches", &arg)) {
