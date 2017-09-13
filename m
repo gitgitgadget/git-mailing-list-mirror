@@ -2,250 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D6D7320A21
-	for <e@80x24.org>; Wed, 13 Sep 2017 17:17:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5602120A21
+	for <e@80x24.org>; Wed, 13 Sep 2017 17:17:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751499AbdIMRR2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Sep 2017 13:17:28 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:45717 "EHLO
-        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751380AbdIMRQ5 (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 13 Sep 2017 13:16:57 -0400
-X-AuditID: 12074413-3a3ff70000007929-6f-59b96808f1f7
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 2D.25.31017.80869B95; Wed, 13 Sep 2017 13:16:56 -0400 (EDT)
-Received: from bagpipes.fritz.box (p57BCC855.dip0.t-ipconnect.de [87.188.200.85])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v8DHGIie001379
-        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Wed, 13 Sep 2017 13:16:54 -0400
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Brandon Williams <bmwill@google.com>,
-        git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 16/20] ref_store: implement `refs_peel_ref()` generically
-Date:   Wed, 13 Sep 2017 19:16:10 +0200
-Message-Id: <b3eba02393910890a29e683a0e840b044fd8c311.1505319366.git.mhagger@alum.mit.edu>
-X-Mailer: git-send-email 2.14.1
-In-Reply-To: <cover.1505319366.git.mhagger@alum.mit.edu>
-References: <cover.1505319366.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrKIsWRmVeSWpSXmKPExsUixO6iqMuRsTPSYMkRJYu1z+4wWTxff4Ld
-        outKN5NFQ+8VZovbK+YzW3RPecto8aOlh9li8+Z2FgcOj7/vPzB57Jx1l91jwaZSj2e9exg9
-        Ll5S9vi8SS6ALYrLJiU1J7MstUjfLoErY+XZ40wFk/QrfjUtYWxg3KnWxcjJISFgIvH0xg22
-        LkYuDiGBHUwSGy9/gXJOMknsfj2DEaSKTUBXYlFPMxOILSKgJjGx7RALSBGzwFMmiZ0n77KC
-        JIQFPCVebt7MDGKzCKhKzG1sBmvmFYiS+HvhMiPEOnmJcw9ug9VwClhIbNzxBCwuJGAu0Thn
-        J+MERp4FjAyrGOUSc0pzdXMTM3OKU5N1i5MT8/JSi3TN9XIzS/RSU0o3MUJCTHgH466TcocY
-        BTgYlXh4LWx2RgqxJpYVV+YeYpTkYFIS5d2rCxTiS8pPqcxILM6ILyrNSS0+xCjBwawkwhsU
-        BZTjTUmsrEotyodJSXOwKInzqi1R9xMSSE8sSc1OTS1ILYLJynBwKEnw5qQDNQoWpaanVqRl
-        5pQgpJk4OEGG8wANFwSp4S0uSMwtzkyHyJ9i1OXouHn3D5MQS15+XqqUOO8kkCIBkKKM0jy4
-        ObDU8IpRHOgtYd5jaUBVPMC0AjfpFdASJqAlZ07vAFlSkoiQkmpgzPu7UjX5VxxXfthNacd7
-        pcrp2/Urz/o5rF8dsn3r4iyB+a52M1uapV0Y9gctNJ9jNk97r8VLsReJFy1Nn8x7cGHf7BaJ
-        ifHaq0Pun2NxiD/z9eWXoje+NwtuF0dGOzu/P77rtFO5XDCn3XrTqniPDl3DDTc7qz3Pc6mY
-        BB/tvvr56pE/0RvuKbEUZyQaajEXFScCAHnkMrvoAgAA
+        id S1751507AbdIMRRi (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Sep 2017 13:17:38 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37224 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751279AbdIMRRe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Sep 2017 13:17:34 -0400
+Received: (qmail 23064 invoked by uid 109); 13 Sep 2017 17:17:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 13 Sep 2017 17:17:33 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 17538 invoked by uid 111); 13 Sep 2017 17:18:07 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
+ by peff.net (qpsmtpd/0.94) with SMTP; Wed, 13 Sep 2017 13:18:07 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Sep 2017 13:17:30 -0400
+Date:   Wed, 13 Sep 2017 13:17:30 -0400
+From:   Jeff King <peff@peff.net>
+To:     demerphq <demerphq@gmail.com>
+Cc:     Git <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: [PATCH 5/7] pkt-line: check write_in_full() errors against "< 0"
+Message-ID: <20170913171730.ckcebchjhhvtwcsj@sigill.intra.peff.net>
+References: <20170913170807.cyx7rrpoyhaauvol@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170913170807.cyx7rrpoyhaauvol@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We're about to stop storing packed refs in a `ref_cache`. That means
-that the only way we have left to optimize `peel_ref()` is by checking
-whether the reference being peeled is the one currently being iterated
-over (in `current_ref_iter`), and if so, using `ref_iterator_peel()`.
-But this can be done generically; it doesn't have to be implemented
-per-backend.
+As with the previous two commits, we prefer to check
+write_in_full()'s return value to see if it is negative,
+rather than comparing it to the input length.
 
-So implement `refs_peel_ref()` in `refs.c` and remove the `peel_ref()`
-method from the refs API.
+These cases actually flip the logic to check for success,
+making conversion a little different than in other cases. We
+could of course write:
 
-This removes the last callers of a couple of functions, so delete
-them. More cleanup to come...
+  if (write_in_full(...) >= 0)
+          return 0;
+  return error(...);
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+But our usual method of spelling write() error checks is
+just "< 0". So let's flip the logic for each of these
+conditionals to our usual style.
+
+Signed-off-by: Jeff King <peff@peff.net>
 ---
- refs.c                | 18 +++++++++++++++++-
- refs/files-backend.c  | 38 --------------------------------------
- refs/packed-backend.c | 36 ------------------------------------
- refs/refs-internal.h  |  3 ---
- 4 files changed, 17 insertions(+), 78 deletions(-)
+This will have a minor textual conflict with ma/pkt-line-leakfix which
+hasn't quite made it into master yet. The resolution should be
+straight-forward, though.
 
-diff --git a/refs.c b/refs.c
-index 101c107ee8..c5e6f79c77 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1735,7 +1735,23 @@ int refs_pack_refs(struct ref_store *refs, unsigned int flags)
- int refs_peel_ref(struct ref_store *refs, const char *refname,
- 		  unsigned char *sha1)
+ pkt-line.c | 29 ++++++++++++++---------------
+ 1 file changed, 14 insertions(+), 15 deletions(-)
+
+diff --git a/pkt-line.c b/pkt-line.c
+index 7db9119573..4823d3bb9d 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -94,9 +94,9 @@ void packet_flush(int fd)
+ int packet_flush_gently(int fd)
  {
--	return refs->be->peel_ref(refs, refname, sha1);
-+	int flag;
-+	unsigned char base[20];
-+
-+	if (current_ref_iter && current_ref_iter->refname == refname) {
-+		struct object_id peeled;
-+
-+		if (ref_iterator_peel(current_ref_iter, &peeled))
-+			return -1;
-+		hashcpy(sha1, peeled.hash);
-+		return 0;
-+	}
-+
-+	if (refs_read_ref_full(refs, refname,
-+			       RESOLVE_REF_READING, base, &flag))
-+		return -1;
-+
-+	return peel_object(base, sha1);
- }
- 
- int peel_ref(const char *refname, unsigned char *sha1)
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 35648c89fc..7d12de88d0 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -655,43 +655,6 @@ static int lock_raw_ref(struct files_ref_store *refs,
- 	return ret;
- }
- 
--static int files_peel_ref(struct ref_store *ref_store,
--			  const char *refname, unsigned char *sha1)
--{
--	struct files_ref_store *refs =
--		files_downcast(ref_store, REF_STORE_READ | REF_STORE_ODB,
--			       "peel_ref");
--	int flag;
--	unsigned char base[20];
--
--	if (current_ref_iter && current_ref_iter->refname == refname) {
--		struct object_id peeled;
--
--		if (ref_iterator_peel(current_ref_iter, &peeled))
--			return -1;
--		hashcpy(sha1, peeled.hash);
+ 	packet_trace("0000", 4, 1);
+-	if (write_in_full(fd, "0000", 4) == 4)
 -		return 0;
--	}
--
--	if (refs_read_ref_full(ref_store, refname,
--			       RESOLVE_REF_READING, base, &flag))
--		return -1;
--
--	/*
--	 * If the reference is packed, read its ref_entry from the
--	 * cache in the hope that we already know its peeled value.
--	 * We only try this optimization on packed references because
--	 * (a) forcing the filling of the loose reference cache could
--	 * be expensive and (b) loose references anyway usually do not
--	 * have REF_KNOWS_PEELED.
--	 */
--	if (flag & REF_ISPACKED &&
--	    !refs_peel_ref(refs->packed_ref_store, refname, sha1))
+-	return error("flush packet write failed");
++	if (write_in_full(fd, "0000", 4) < 0)
++		return error("flush packet write failed");
++	return 0;
+ }
+ 
+ void packet_buf_flush(struct strbuf *buf)
+@@ -137,18 +137,17 @@ static int packet_write_fmt_1(int fd, int gently,
+ 			      const char *fmt, va_list args)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+-	ssize_t count;
+ 
+ 	format_packet(&buf, fmt, args);
+-	count = write_in_full(fd, buf.buf, buf.len);
+-	if (count == buf.len)
 -		return 0;
 -
--	return peel_object(base, sha1);
--}
--
- struct files_ref_iterator {
- 	struct ref_iterator base;
- 
-@@ -3012,7 +2975,6 @@ struct ref_storage_be refs_be_files = {
- 	files_initial_transaction_commit,
- 
- 	files_pack_refs,
--	files_peel_ref,
- 	files_create_symref,
- 	files_delete_refs,
- 	files_rename_ref,
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 9b10532eb3..88242a49fe 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -780,26 +780,6 @@ static struct packed_ref_cache *get_packed_ref_cache(struct packed_ref_store *re
- 	return refs->cache;
+-	if (!gently) {
+-		check_pipe(errno);
+-		die_errno("packet write with format failed");
++	if (write_in_full(fd, buf.buf, buf.len) < 0) {
++		if (!gently) {
++			check_pipe(errno);
++			die_errno("packet write with format failed");
++		}
++		return error("packet write with format failed");
+ 	}
+-	return error("packet write with format failed");
++
++	return 0;
  }
  
--static struct ref_dir *get_packed_ref_dir(struct packed_ref_cache *packed_ref_cache)
--{
--	return get_ref_dir(packed_ref_cache->cache->root);
--}
--
--static struct ref_dir *get_packed_refs(struct packed_ref_store *refs)
--{
--	return get_packed_ref_dir(get_packed_ref_cache(refs));
--}
--
--/*
-- * Return the ref_entry for the given refname from the packed
-- * references.  If it does not exist, return NULL.
-- */
--static struct ref_entry *get_packed_ref(struct packed_ref_store *refs,
--					const char *refname)
--{
--	return find_ref_entry(get_packed_refs(refs), refname);
--}
--
- static int packed_read_raw_ref(struct ref_store *ref_store,
- 			       const char *refname, unsigned char *sha1,
- 			       struct strbuf *referent, unsigned int *type)
-@@ -826,21 +806,6 @@ static int packed_read_raw_ref(struct ref_store *ref_store,
- 	return 0;
+ void packet_write_fmt(int fd, const char *fmt, ...)
+@@ -183,9 +182,9 @@ static int packet_write_gently(const int fd_out, const char *buf, size_t size)
+ 	packet_size = size + 4;
+ 	set_packet_header(packet_write_buffer, packet_size);
+ 	memcpy(packet_write_buffer + 4, buf, size);
+-	if (write_in_full(fd_out, packet_write_buffer, packet_size) == packet_size)
+-		return 0;
+-	return error("packet write failed");
++	if (write_in_full(fd_out, packet_write_buffer, packet_size) < 0)
++		return error("packet write failed");
++	return 0;
  }
  
--static int packed_peel_ref(struct ref_store *ref_store,
--			   const char *refname, unsigned char *sha1)
--{
--	struct packed_ref_store *refs =
--		packed_downcast(ref_store, REF_STORE_READ | REF_STORE_ODB,
--				"peel_ref");
--	struct ref_entry *r = get_packed_ref(refs, refname);
--
--	if (!r || peel_entry(r, 0))
--		return -1;
--
--	hashcpy(sha1, r->u.value.peeled.hash);
--	return 0;
--}
--
- struct packed_ref_iterator {
- 	struct ref_iterator base;
- 
-@@ -1526,7 +1491,6 @@ struct ref_storage_be refs_be_packed = {
- 	packed_initial_transaction_commit,
- 
- 	packed_pack_refs,
--	packed_peel_ref,
- 	packed_create_symref,
- 	packed_delete_refs,
- 	packed_rename_ref,
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index d7f233beba..cc6c373f59 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -562,8 +562,6 @@ typedef int ref_transaction_commit_fn(struct ref_store *refs,
- 				      struct strbuf *err);
- 
- typedef int pack_refs_fn(struct ref_store *ref_store, unsigned int flags);
--typedef int peel_ref_fn(struct ref_store *ref_store,
--			const char *refname, unsigned char *sha1);
- typedef int create_symref_fn(struct ref_store *ref_store,
- 			     const char *ref_target,
- 			     const char *refs_heads_master,
-@@ -668,7 +666,6 @@ struct ref_storage_be {
- 	ref_transaction_commit_fn *initial_transaction_commit;
- 
- 	pack_refs_fn *pack_refs;
--	peel_ref_fn *peel_ref;
- 	create_symref_fn *create_symref;
- 	delete_refs_fn *delete_refs;
- 	rename_ref_fn *rename_ref;
+ void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
 -- 
-2.14.1
+2.14.1.874.ge7b2e05270
 
