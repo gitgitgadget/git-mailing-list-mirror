@@ -6,79 +6,71 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 932E3209B8
-	for <e@80x24.org>; Wed, 13 Sep 2017 11:15:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 28F2020A21
+	for <e@80x24.org>; Wed, 13 Sep 2017 11:20:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751940AbdIMLPE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Sep 2017 07:15:04 -0400
-Received: from cloud.peff.net ([104.130.231.41]:36484 "HELO cloud.peff.net"
+        id S1751684AbdIMLUU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Sep 2017 07:20:20 -0400
+Received: from cloud.peff.net ([104.130.231.41]:36502 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751645AbdIMLPD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Sep 2017 07:15:03 -0400
-Received: (qmail 32093 invoked by uid 109); 13 Sep 2017 11:15:03 -0000
+        id S1752025AbdIMLUQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Sep 2017 07:20:16 -0400
+Received: (qmail 32465 invoked by uid 109); 13 Sep 2017 11:20:15 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 13 Sep 2017 11:15:03 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 13 Sep 2017 11:20:15 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12852 invoked by uid 111); 13 Sep 2017 11:15:38 -0000
+Received: (qmail 12924 invoked by uid 111); 13 Sep 2017 11:20:50 -0000
 Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
- by peff.net (qpsmtpd/0.94) with SMTP; Wed, 13 Sep 2017 07:15:38 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Wed, 13 Sep 2017 07:20:50 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Sep 2017 07:15:01 -0400
-Date:   Wed, 13 Sep 2017 07:15:01 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Sep 2017 07:20:13 -0400
+Date:   Wed, 13 Sep 2017 07:20:13 -0400
 From:   Jeff King <peff@peff.net>
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-        Stefan Beller <sbeller@google.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 3/4] replace-objects: evaluate replacement refs without
- using the object store
-Message-ID: <20170913111501.cosukqzf76oy65ow@sigill.intra.peff.net>
-References: <20170912172330.GA144745@aiede.mtv.corp.google.com>
- <20170912173140.GD144745@aiede.mtv.corp.google.com>
- <fe956802-41ab-783f-62b3-f7c4b8292e8c@alum.mit.edu>
+To:     Kevin Daudt <me@ikke.info>
+Cc:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>,
+        git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH] commit-template: change a message to be more intuitive
+Message-ID: <20170913112013.sk7bqarq2ktrva67@sigill.intra.peff.net>
+References: <20170912105536.6094-1-kaarticsivaraam91196@gmail.com>
+ <20170913102915.GA21499@alpha.vpn.ikke.info>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <fe956802-41ab-783f-62b3-f7c4b8292e8c@alum.mit.edu>
+In-Reply-To: <20170913102915.GA21499@alpha.vpn.ikke.info>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 13, 2017 at 10:03:58AM +0200, Michael Haggerty wrote:
+On Wed, Sep 13, 2017 at 12:29:15PM +0200, Kevin Daudt wrote:
 
-> On 09/12/2017 07:31 PM, Jonathan Nieder wrote:
-> > From: Stefan Beller <sbeller@google.com>
+> On Tue, Sep 12, 2017 at 04:25:36PM +0530, Kaartic Sivaraam wrote:
+> > It's not possible to 'touch' the cut-line that is shown when the
+> > user requests a patch in his commit template.
 > > 
-> > Pass DO_FOR_EACH_INCLUDE_BROKEN when iterating over replacement refs
-> > so that the iteration does not require opening the named objects from
-> > the object store. This avoids a dependency cycle between object access
-> > and replace ref iteration.
-> > 
-> > Moreover the ref subsystem has not been migrated yet to access the
-> > object store via passed in repository objects.  As a result, without
-> > this patch, iterating over replace refs in a repository other than
-> > the_repository it produces errors:
-> > 
-> >    error: refs/replace/3afabef75c627b894cccc3bcae86837abc7c32fe does not point to a valid object!
-> > 
-> > Noticed while adapting the object store (and in particular its
-> > evaluation of replace refs) to handle arbitrary repositories.
 > 
-> Have you checked that consumers of this API can handle broken
-> references? Aside from missing values, broken references can have
-> illegal names (though hopefully not unsafe in the sense of causing
-> filesystem traversal outside of `$GITDIR`).
+> Touching something can also mean to disturb or change something, which
+> is the meaning being used here, so it is not an incorrect use of the
+> word.
+> 
+> > So, make the sentence more intuitive.
+> 
+> I can understand however that it might be not so clear for people with
+> less fluency in English.
 
-It looks like there are only two callers. One complains about
-names that aren't 40-hex. The other ("git replace -l") parses the 40-hex
-in "long" mode, but will print anything in short mode (not that printing
-is very dangerous).
+I agree with both of your points. It is very clear to me as a native
+speaker, but I can see how it might not be for everyone.
 
-I do have to wonder if for_each_replace_ref() should just do the 40-hex
-syntactic check itself (and issue a warning for other refs). It seems
-like that would be the point of calling for_each_replace_ref() instead
-of just for_each_ref_in("refs/replace") yourself, and both of the
-callers would benefit.
+Interestingly, the change here:
+
+> > -	const char *explanation = _("Do not touch the line above.\nEverything below will be removed.");
+> > +	const char *explanation = _("Do not edit the line above.\nEverything below will be removed.");
+
+actually seems less clear to me. I think of "edit" as "modify". But
+obviously it also should not be removed. Perhaps
+
+  Do not modify or remove the line above.
+
+would be the most clear. Or perhaps it is overly verbose.
 
 -Peff
