@@ -2,88 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF01E20286
-	for <e@80x24.org>; Wed, 13 Sep 2017 23:30:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D1F3920286
+	for <e@80x24.org>; Wed, 13 Sep 2017 23:31:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751455AbdIMXaK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Sep 2017 19:30:10 -0400
-Received: from mail-it0-f51.google.com ([209.85.214.51]:46980 "EHLO
-        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751125AbdIMXaJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Sep 2017 19:30:09 -0400
-Received: by mail-it0-f51.google.com with SMTP id 6so1017925itl.1
-        for <git@vger.kernel.org>; Wed, 13 Sep 2017 16:30:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=DFKH57SajQttZ3rmxRPl6g1ieEoY+3fHhb3GJF7Z++s=;
-        b=DhgKM/TLlHnyd+5HYDhgza6Q5SYpmMroikaG3zgoBD8E2gYbnQ7ydaotvFqtXDqXiA
-         eD7eJFBA+GjHV+S15ug93ax3XMQDduBYwy5PCnt5pXu/e4NUIZIxdhkyZNV7+WLR+77P
-         DleI/zDHOTmI4lAPZrdvYmgoS/EEjysqD0n5Vx7YoNX0DFO68qXQkP5Se+OCmnSsEsvo
-         GaASGWt74b3kS9nV584/um8SPuIjnRCUyVovtSD5eI/ktkLFtSVwHvaBUnnUO/KAgC6E
-         0mcUDOddI2wU5jMTUbF26AcfAFcGRgz44a1lEo7Ci+949eGr98MN8g904HrgZd7edEUe
-         cVWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=DFKH57SajQttZ3rmxRPl6g1ieEoY+3fHhb3GJF7Z++s=;
-        b=aR0rPJ3QEUOjDWOS3A/k6JUlqw8iw7+MNBWwOpJRmjMXSl6h/yTNIA9cwLXs2voWzO
-         fb9aXb3C8QbHZbgLpncfFaa9uFYEA918E+60PWJTp7+/GiE9mWrucquOcTBUICO+bLnN
-         RRfoQk7UCD08yhjpa5yuF6N7o8e3e7Dias9F2DwBrz6acBBCF1Qvy2HR1bbi8fk6DnyE
-         cNjwhZPondzv87NebyONCjHJI+nLCnRG31IOK0LH9wVz3dLx4+5ORkTPtFQiyVYdw4nM
-         ZEmvcIWLGOXzSiw5ihTkzWKq8O7LyxvRRoe5xHG1Ek6G5pLIeEjGTgBPzw1CtwRDTVSf
-         d65A==
-X-Gm-Message-State: AHPjjUjXk11TK4DwMkhlW3HDoeuMyp18jfkFduZSXoTbEJmrhVmqbI3G
-        /ve6vejdGYq5OEP0kr5rEMDMS76CXGQvw3pmSGQ=
-X-Google-Smtp-Source: AOwi7QCvw5aW9obJ9XS3/a2uWqtZ3EzdNphwRPBP1zWTBvWGow7AYRUHODtjhXe9KV8zOyo1cJwf3jVpBksnH76GiFA=
-X-Received: by 10.36.199.130 with SMTP id t124mr731668itg.2.1505345408386;
- Wed, 13 Sep 2017 16:30:08 -0700 (PDT)
+        id S1751317AbdIMXbn (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Sep 2017 19:31:43 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:45102 "EHLO
+        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751125AbdIMXbm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Sep 2017 19:31:42 -0400
+Received: from [10.0.2.15] ([147.147.86.16])
+        by avasout07 with smtp
+        id 9BXg1w0040M91Ur01BXhe9; Thu, 14 Sep 2017 00:31:41 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=CrLPSjwD c=1 sm=1 tr=0
+ a=dubYQqM3tRRTmV8xSh8cXQ==:117 a=dubYQqM3tRRTmV8xSh8cXQ==:17
+ a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=EBOSESyhAAAA:8 a=t2-xRrgi3Douy3wb__sA:9
+ a=QEXdDO2ut3YA:10 a=6kGIvZw6iX1k4Y-7sg4_:22 a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH v2] config: avoid "write_in_full(fd, buf, len) < len"
+ pattern
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+To:     Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>
+Cc:     demerphq <demerphq@gmail.com>, Git <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <20170913170807.cyx7rrpoyhaauvol@sigill.intra.peff.net>
+ <20170913171104.yu7ags4aq2zdwz6r@sigill.intra.peff.net>
+ <20170913181515.p7u2ouine3ysblqc@sigill.intra.peff.net>
+ <20170913182431.GE27425@aiede.mtv.corp.google.com>
+ <20170913185848.5ht44spbakzkrsu6@sigill.intra.peff.net>
+ <ef20628e-b7c0-8909-31a0-cc126d0c40ba@ramsayjones.plus.com>
+Message-ID: <1012b31b-7bdd-ea20-f004-1c9f80de733c@ramsayjones.plus.com>
+Date:   Thu, 14 Sep 2017 00:31:38 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Received: by 10.107.164.103 with HTTP; Wed, 13 Sep 2017 16:30:07 -0700 (PDT)
-In-Reply-To: <CANgJU+Wv1nx79DJTDmYE=O7LUNA3LuRTJhXJn+y0L0C3R+YDEA@mail.gmail.com>
-References: <20170304011251.GA26789@aiede.mtv.corp.google.com>
- <CA+55aFz+gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com>
- <20170307001709.GC26789@aiede.mtv.corp.google.com> <xmqqa828733s.fsf@gitster.mtv.corp.google.com>
- <xmqq1snh29re.fsf@gitster.mtv.corp.google.com> <20170911185913.GA5869@google.com>
- <alpine.DEB.2.21.1.1709131340030.4132@virtualbox> <CANgJU+Wv1nx79DJTDmYE=O7LUNA3LuRTJhXJn+y0L0C3R+YDEA@mail.gmail.com>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Wed, 13 Sep 2017 16:30:07 -0700
-X-Google-Sender-Auth: OID_YOGoLhUVs2-wxA83ZPeYj_M
-Message-ID: <CA+55aFwUn0KibpDQK2ZrxzXKOk8-aAub2nJZQqKCpq1ddhDcMQ@mail.gmail.com>
-Subject: Re: RFC v3: Another proposed hash function transition plan
-To:     demerphq <demerphq@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Brandon Williams <bmwill@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jeff King <peff@peff.net>, David Lang <david@lang.hm>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <ef20628e-b7c0-8909-31a0-cc126d0c40ba@ramsayjones.plus.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 13, 2017 at 6:43 AM, demerphq <demerphq@gmail.com> wrote:
->
-> SHA3 however uses a completely different design where it mixes a 1088
-> bit block into a 1600 bit state, for a leverage of 2:3, and the excess
-> is *preserved between each block*.
 
-Yes. And considering that the SHA1 attack was actually predicated on
-the fact that each block was independent (no extra state between), I
-do think SHA3 is a better model.
 
-So I'd rather see SHA3-256 than SHA256.
+On 13/09/17 23:43, Ramsay Jones wrote:
+> 
+> 
+> On 13/09/17 19:58, Jeff King wrote:
+>> On Wed, Sep 13, 2017 at 11:24:31AM -0700, Jonathan Nieder wrote:
+>>
+>>> For what it's worth,
+>>> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+>>
+>> Thanks, and thank you for questioning the ptrdiff_t bits that didn't
+>> make sense. I _thought_ they felt like nonsense, but couldn't quite
+>> puzzle it out.
+>>
+>>> Compilers' signed/unsigned comparison warning can be noisy, but I'm
+>>> starting to feel it's worth the suppression noise to turn it on when
+>>> DEVELOPER=1 anyway.  What do you think?  Is there a way to turn it on
+>>> selectively for certain functions on the LHS (like read() and write()
+>>> style functions)?
+>>
+>> Obviously we couldn't turn them on for -Werror at this point. Let me see
+>> how bad "-Wsign-compare -Wno-error=sign-compare" is.
+>>
+>>   $ make 2>&1 | grep -c warning:
+>>   1391
+>>
+>> Ouch. I'm afraid that's probably not going to be very helpful. Even if I
+>> were introducing a new problem, I'm not likely to see it amidst the mass
+>> of existing complaints.
+> 
+> Hmm, about three or four years ago, I spent two or three evenings
+> getting git to compile -Wextra clean. I remember the signed/unsigned
+> issue was the cause of a large portion of the warnings issued by
+> the compiler. I was surprised that it took such a relatively short
+> time to do. However, it affected quite a large portion of the code, so
+> I didn't think Junio would even consider applying it. Also, I only used
+> gcc and was anticipating having additional warnings on clang (but I
+> didn't get around to trying).
+> 
+> Maybe I should give it another go. :-D
 
-              Linus
+For example, I remember the patch given below reduced the number
+of warnings quite a bit (because it's an inline function in a
+header file).
+
+I just tried it again tonight; the current master branch has 3532
+warnings when compiled with -Wextra, 1409 of which are -Wsign-compare
+warnings. After applying the patch below, those numbers are reduced
+by 344 to 3188/1065.
+
+Still quite a bit to go ... ;-)
+
+ATB,
+Ramsay Jones
+
+-- >8 --
+Subject: [PATCH] git-compat-util: avoid -Wsign-compare warnings from xsize_t()
+
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
+ git-compat-util.h | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 6678b488c..2f3cf0883 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -898,9 +898,11 @@ static inline char *xstrdup_or_null(const char *str)
+ 
+ static inline size_t xsize_t(off_t len)
+ {
+-	if (len > (size_t) len)
++	size_t size = (size_t) len;
++
++	if (len != (off_t) size)
+ 		die("Cannot handle files this big");
+-	return (size_t)len;
++	return size;
+ }
+ 
+ __attribute__((format (printf, 3, 4)))
+-- 
+2.14.0
