@@ -2,215 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B88ED20281
-	for <e@80x24.org>; Tue, 12 Sep 2017 23:30:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32F6820281
+	for <e@80x24.org>; Wed, 13 Sep 2017 00:38:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751351AbdILXaZ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Sep 2017 19:30:25 -0400
-Received: from mail-by2nam03on0131.outbound.protection.outlook.com ([104.47.42.131]:7441
-        "EHLO NAM03-BY2-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1751031AbdILXaY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Sep 2017 19:30:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=GtzlfDIed81F2pMui0PCXIl36OVgNuEjMwjWVeDBUaM=;
- b=OgeGBO2avITmBBnCkopGeEixD0lb0Ijk8ZVy52DCJDskEC85sloh4EdHaG3eeIlFxYkS8BW/F7+Y1kwObT9P/Suhfg8COJy1QkEfNuiiT1Vh/MV/BCK9qQb3sAxGNJLumrgwCeHEfo49LtURMu2XCmzG4NoYh1NJArVq4Kpw37o=
-Received: from SN1PR21MB0014.namprd21.prod.outlook.com (10.161.254.12) by
- SN1PR21MB0016.namprd21.prod.outlook.com (10.161.254.139) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id
- 15.20.77.4; Tue, 12 Sep 2017 23:30:21 +0000
-Received: from SN1PR21MB0014.namprd21.prod.outlook.com ([10.161.254.12]) by
- SN1PR21MB0014.namprd21.prod.outlook.com ([10.161.254.12]) with mapi id
- 15.20.0077.004; Tue, 12 Sep 2017 23:30:21 +0000
-From:   Kevin Willford <kewillf@microsoft.com>
-To:     Jacob Keller <jacob.keller@gmail.com>
-CC:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "peff@peff.net" <peff@peff.net>,
-        "pclouds@gmail.com" <pclouds@gmail.com>
-Subject: RE: [PATCH 1/1] reset: fix reset when using the sparse-checkout
- feature.
-Thread-Topic: [PATCH 1/1] reset: fix reset when using the sparse-checkout
- feature.
-Thread-Index: AQHTKMyCASx4J5FrG0SFSfVy0yz4a6KrWy30gAAJb7CAAH5jR4AAB2mQgAMpW3CAAHk5AIABF7AQgACzS9CAAIOfgIAAA+Ew
-Date:   Tue, 12 Sep 2017 23:30:21 +0000
-Message-ID: <SN1PR21MB001473733DAF15BC91C0E58AB7690@SN1PR21MB0014.namprd21.prod.outlook.com>
-References: <20170908180050.25188-1-kewillf@microsoft.com>
- <20170908180050.25188-2-kewillf@microsoft.com>
- <xmqqvaktxawk.fsf@gitster.mtv.corp.google.com>
- <SN1PR21MB0014638E5D9CBFD0D9D85F10B7950@SN1PR21MB0014.namprd21.prod.outlook.com>
- <xmqqr2vgy2yt.fsf@gitster.mtv.corp.google.com>
- <SN1PR21MB00140C84DC02F3491F4E8469B76A0@SN1PR21MB0014.namprd21.prod.outlook.com>
- <xmqqh8w951ek.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.21.1.1709111259430.4132@virtualbox>
- <xmqq4ls836z3.fsf@gitster.mtv.corp.google.com>
- <SN1PR21MB0014435A97BCDA324FD55B46B7690@SN1PR21MB0014.namprd21.prod.outlook.com>
- <CA+P7+xqxmxexWS=MWNd9=EqG81uhKY-OdG+1mpyWhst6DvH5AA@mail.gmail.com>
-In-Reply-To: <CA+P7+xqxmxexWS=MWNd9=EqG81uhKY-OdG+1mpyWhst6DvH5AA@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=True;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Ref=https://api.informationprotection.azure.com/api/72f988bf-86f1-41af-91ab-2d7cd011db47;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Owner=kewillf@microsoft.com;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2017-09-12T17:30:19.8636450-06:00;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=General;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Application=Microsoft Azure
- Information Protection;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Extended_MSFT_Method=Automatic;
- Sensitivity=General
-x-originating-ip: [174.126.250.66]
-x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;SN1PR21MB0016;6:avMle+BZHdTGrNKa0HzaU4RyHdiNdpJ4ZwwE0O8xsRTfCDrpFGdmqdjwXECdc44Fb9GS/ofrlzitwpPVFAxTMKAnUuFI3PrZJS3QAVSzF8k8A1xaMbG7QETJMuz4nsbjS26/eEPSLydigFVhZxYh6HxciBalS8KRC3BoKtODTzlYI2c1Tu0/xm7/q1v64iW07e3RCKuU80978W5RBVVYYiSwcGwTVnTkfFMN7P5wmboBY750T4gQFNITK1ERSa92iKfP+hBdLKHE2vaDyzPjVJzfXPE8RtiWHDwNEc4VeIw3cceY15T5O0mOz4RxZi0MZKcb38ZwgsYgJS1y3vlhnA==;5:yGRwaR4dOGS5l5qbnSebcJ090XaTVxK1LecafLn47MMP66/RRiVEI6JRoKS2LstZepeWfPtO40hWGQSKOW+nkbYSD+oph9rtA/mLjIPKRbNRRvGGwxe7Z380HKL1mZulBjXlTVAikJl5C8JKlFIDsA==;24:j9+mf+dCca+XvmkSD+t9OL7LhftkckxdAv9URmzoPqlQs+AxOqMGSgRcYe463jB320a0RVxKYYLwmDgQgoVyA2x53uRSz4G27uBsvUhXC6w=;7:2f0yD+V6vHIg+sl2TXBQxwnFdzOJXH3Rz93M04tNQa1LC2aoyVOhYztrUET2sh1kRNoVtR/Sy4mqOKM2fGJTbwkaGMKX/e6afLorLFBodinCAFi3bH2UZlc9G6nhWrCE5MOOVZt0WDFF3pIQEwEHDP5evkb8CQqLmPtfVnvLXHUL9NczGgVY5eX+oQkW5/FCkk8X3NIr2KuVmx8uRw85/3nCagi4qouoa8b11P6VWM4=
-x-ms-exchange-antispam-srfa-diagnostics: SOS;
-x-ms-office365-filtering-correlation-id: ff058cfa-8258-425d-453a-08d4fa363c99
-x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(300000500095)(300135000095)(300000501095)(300135300095)(22001)(300000502095)(300135100095)(2017030254152)(48565401081)(300000503095)(300135400095)(2017052603199)(201703131423075)(201703031133081)(201702281549075)(300000504095)(300135200095)(300000505095)(300135600095)(300000506095)(300135500095);SRVR:SN1PR21MB0016;
-x-ms-traffictypediagnostic: SN1PR21MB0016:
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=kewillf@microsoft.com; 
-x-exchange-antispam-report-test: UriScan:(89211679590171);
-x-microsoft-antispam-prvs: <SN1PR21MB0016C86A768EEE7F82B8C823B7690@SN1PR21MB0016.namprd21.prod.outlook.com>
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(100000700101)(100105000095)(100000701101)(100105300095)(100000702101)(100105100095)(61425038)(6040450)(2401047)(8121501046)(5005006)(100000703101)(100105400095)(93006095)(93001095)(10201501046)(3002001)(6055026)(61426038)(61427038)(6041248)(20161123560025)(20161123562025)(20161123558100)(20161123555025)(20161123564025)(201703131423075)(201702281528075)(201703061421075)(201703061406153)(6072148)(201708071742011)(100000704101)(100105200095)(100000705101)(100105500095);SRVR:SN1PR21MB0016;BCL:0;PCL:0;RULEID:(100000800101)(100110000095)(100000801101)(100110300095)(100000802101)(100110100095)(100000803101)(100110400095)(100000804101)(100110200095)(100000805101)(100110500095);SRVR:SN1PR21MB0016;
-x-forefront-prvs: 042857DBB5
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(6009001)(39860400002)(346002)(376002)(366002)(47760400005)(199003)(51444003)(189002)(24454002)(377454003)(3660700001)(8666007)(316002)(189998001)(86362001)(8656003)(2906002)(966005)(110136004)(3280700002)(14454004)(6916009)(106356001)(2950100002)(93886005)(74316002)(101416001)(86612001)(55016002)(25786009)(54356999)(22452003)(8990500004)(53546010)(99286003)(7696004)(105586002)(50986999)(76176999)(4326008)(97736004)(8936002)(77096006)(9686003)(2900100001)(6506006)(54906002)(66066001)(39060400002)(8676002)(6306002)(229853002)(10290500003)(81166006)(3846002)(6436002)(81156014)(102836003)(6116002)(305945005)(6246003)(5660300001)(68736007)(33656002)(7736002)(478600001)(10090500001)(53936002);DIR:OUT;SFP:1102;SCL:1;SRVR:SN1PR21MB0016;H:SN1PR21MB0014.namprd21.prod.outlook.com;FPR:;SPF:None;PTR:InfoNoRecords;A:1;MX:1;LANG:en;
-received-spf: None (protection.outlook.com: microsoft.com does not designate
- permitted sender hosts)
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        id S1751385AbdIMAib (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Sep 2017 20:38:31 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5]:54660 "EHLO
+        mx0a-001b2d01.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1750944AbdIMAia (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 12 Sep 2017 20:38:30 -0400
+Received: from pps.filterd (m0098417.ppops.net [127.0.0.1])
+        by mx0a-001b2d01.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id v8D0YDFS001739
+        for <git@vger.kernel.org>; Tue, 12 Sep 2017 20:38:29 -0400
+Received: from e23smtp08.au.ibm.com (e23smtp08.au.ibm.com [202.81.31.141])
+        by mx0a-001b2d01.pphosted.com with ESMTP id 2cxpge8ffs-1
+        (version=TLSv1.2 cipher=AES256-SHA bits=256 verify=NOT)
+        for <git@vger.kernel.org>; Tue, 12 Sep 2017 20:38:29 -0400
+Received: from localhost
+        by e23smtp08.au.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted
+        for <git@vger.kernel.org> from <sam.bobroff@au1.ibm.com>;
+        Wed, 13 Sep 2017 10:38:26 +1000
+Received: from d23relay09.au.ibm.com (202.81.31.228)
+        by e23smtp08.au.ibm.com (202.81.31.205) with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted;
+        Wed, 13 Sep 2017 10:38:23 +1000
+Received: from d23av06.au.ibm.com (d23av06.au.ibm.com [9.190.235.151])
+        by d23relay09.au.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id v8D0cN3K40304876
+        for <git@vger.kernel.org>; Wed, 13 Sep 2017 10:38:23 +1000
+Received: from d23av06.au.ibm.com (localhost [127.0.0.1])
+        by d23av06.au.ibm.com (8.14.4/8.14.4/NCO v10.0 AVout) with ESMTP id v8D0cM3U017739
+        for <git@vger.kernel.org>; Wed, 13 Sep 2017 10:38:23 +1000
+Received: from ozlabs.au.ibm.com (ozlabs.au.ibm.com [9.192.253.14])
+        by d23av06.au.ibm.com (8.14.4/8.14.4/NCO v10.0 AVin) with ESMTP id v8D0cMKv017734;
+        Wed, 13 Sep 2017 10:38:22 +1000
+Received: from tungsten.ozlabs.ibm.com (haven.au.ibm.com [9.192.254.114])
+        (using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ozlabs.au.ibm.com (Postfix) with ESMTPSA id 8C188A018C;
+        Wed, 13 Sep 2017 10:38:22 +1000 (AEST)
+Date:   Wed, 13 Sep 2017 10:38:21 +1000
+From:   Sam Bobroff <sam.bobroff@au1.ibm.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH] format-patch: use raw format for notes
+References: <334a7be4f61c02db24008181eb1d6c80c95772f7.1503894009.git.sam.bobroff@au1.ibm.com>
+ <xmqqingw8ppj.fsf@gitster.mtv.corp.google.com>
+ <20170911042737.4h5b2jygdeu7cpmf@tungsten.ozlabs.ibm.com>
+ <CAGZ79kbcufMxbBdH=a9YzPWWet5nEdmUN6P+xmMEcGna-VL9=Q@mail.gmail.com>
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Sep 2017 23:30:21.5750
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN1PR21MB0016
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kbcufMxbBdH=a9YzPWWet5nEdmUN6P+xmMEcGna-VL9=Q@mail.gmail.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-TM-AS-MML: disable
+x-cbid: 17091300-0048-0000-0000-0000025CECB9
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 17091300-0049-0000-0000-000048133839
+Message-Id: <20170913003821.xn43yosuieoivmqk@tungsten.ozlabs.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2017-09-12_11:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=0
+ malwarescore=0 phishscore=0 adultscore=0 bulkscore=0 classifier=spam
+ adjust=0 reason=mlx scancount=1 engine=8.0.1-1707230000
+ definitions=main-1709130007
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-PiBGcm9tOiBKYWNvYiBLZWxsZXIgW21haWx0bzpqYWNvYi5rZWxsZXJAZ21haWwuY29tXQ0KPiBT
-ZW50OiBUdWVzZGF5LCBTZXB0ZW1iZXIgMTIsIDIwMTcgNDoyOSBQTQ0KPiANCj4gT24gVHVlLCBT
-ZXAgMTIsIDIwMTcgYXQgMToyMCBQTSwgS2V2aW4gV2lsbGZvcmQgPGtld2lsbGZAbWljcm9zb2Z0
-LmNvbT4gd3JvdGU6DQo+ID4NCj4gPiBJIHRoaW5rIHRoaXMgaXMgd2hlcmUgSSBuZWVkIHRvIGRv
-IGEgYmV0dGVyIGpvYiBvZiBleHBsYWluaW5nIHNvIGhlcmUgaXMgYQ0KPiA+IHNpbXBsZSBleGFt
-cGxlLg0KPiA+DQo+ID4gSSBoYXZlIGEgZmlsZSAiYSIgdGhhdCB3YXMgYWRkZWQgaW4gdGhlIGxh
-dGVzdCBjb21taXQuDQo+ID4gJCBnaXQgbG9nIC0tb25lbGluZQ0KPiA+IGMxZmE2NDYgKEhFQUQg
-LT4gcmVzZXQsIG1hc3RlcikgYWRkIGZpbGUgYQ0KPiA+IDQwYjM0MmMgSW5pdGlhbCBjb21taXQg
-d2l0aCBmaWxlIGkNCj4gPg0KPiA+IFJ1bm5pbmcgdGhlIHJlc2V0IHdpdGhvdXQgdXNpbmcgYSBz
-cGFyc2UtY2hlY2tvdXQgZmlsZQ0KPiA+DQo+ID4gJCBnaXQgcmVzZXQgSEVBRH4xDQo+ID4gJCBn
-aXQgc3RhdHVzDQo+ID4gT24gYnJhbmNoIHJlc2V0DQo+ID4gVW50cmFja2VkIGZpbGVzOg0KPiA+
-ICAgKHVzZSAiZ2l0IGFkZCA8ZmlsZT4uLi4iIHRvIGluY2x1ZGUgaW4gd2hhdCB3aWxsIGJlIGNv
-bW1pdHRlZCkNCj4gPg0KPiA+ICAgICAgICAgYQ0KPiA+DQo+ID4gbm90aGluZyBhZGRlZCB0byBj
-b21taXQgYnV0IHVudHJhY2tlZCBmaWxlcyBwcmVzZW50ICh1c2UgImdpdCBhZGQiIHRvIHRyYWNr
-KQ0KPiA+DQo+ID4gVHVybmluZyBvbiBzcGFyc2UtY2hlY2tvdXQgYW5kIHJ1bm5pbmcgY2hlY2tv
-dXQgdG8gbWFrZSBteSB3b3JraW5nDQo+ID4gZGlyZWN0b3J5IHNwYXJzZQ0KPiA+DQo+ID4gJCBn
-aXQgY29uZmlnIGNvcmUuc3BhcnNlY2hlY2tvdXQgdHJ1ZQ0KPiA+ICQgZWNobyAvaSA+IC5naXQv
-aW5mby9zcGFyc2UtY2hlY2tvdXQNCj4gPiAkIGdpdCBjaGVja291dCAtZg0KPiA+DQo+ID4gUnVu
-bmluZyByZXNldCBnaXZlcyBtZQ0KPiA+ICQgZ2l0IHJlc2V0IEhFQUR+MQ0KPiA+ICQgZ2l0IHN0
-YXR1cw0KPiA+IE9uIGJyYW5jaCByZXNldA0KPiA+IG5vdGhpbmcgdG8gY29tbWl0LCB3b3JraW5n
-IHRyZWUgY2xlYW4NCj4gPiAkIGdpdCBscy1maWxlcw0KPiA+IGkNCj4gPg0KPiA+IGZpbGUgYSBp
-cyBnb25lLiAgTm90IGluIHRoZSBpbmRleCBhbmQgbm90IGluIHRoZSB3b3JraW5nIGRpcmVjdG9y
-eS4NCj4gPiBOb3RoaW5nIHRvIGxldCB0aGUgdXNlciBrbm93IHRoYXQgYW55dGhpbmcgY2hhbmdl
-ZC4NCj4gPg0KPiA+IFdpdGggYSBtb2RpZmllZCBmaWxlIG5vIHNwYXJzZS1jaGVja291dA0KPiA+
-ICQgZ2l0IGxvZyAtLW9uZWxpbmUNCj4gPiA2ZmJkMzRhIChIRUFEIC0+IHJlc2V0LCBtb2RpZmll
-ZCkgbW9kaWZpZWQgZmlsZSBtDQo+ID4gYzczNGQ3MiBJbml0aWFsIGNvbW1pdCB3aXRoIGZpbGUg
-aSBhbmQgbQ0KPiA+ICQgZ2l0IHJlc2V0IEhFQUR+MQ0KPiA+IFVuc3RhZ2VkIGNoYW5nZXMgYWZ0
-ZXIgcmVzZXQ6DQo+ID4gTSAgICAgICBtDQo+ID4gJCBnaXQgc3RhdHVzDQo+ID4gT24gYnJhbmNo
-IHJlc2V0DQo+ID4gQ2hhbmdlcyBub3Qgc3RhZ2VkIGZvciBjb21taXQ6DQo+ID4gICAodXNlICJn
-aXQgYWRkIDxmaWxlPi4uLiIgdG8gdXBkYXRlIHdoYXQgd2lsbCBiZSBjb21taXR0ZWQpDQo+ID4g
-ICAodXNlICJnaXQgY2hlY2tvdXQgLS0gPGZpbGU+Li4uIiB0byBkaXNjYXJkIGNoYW5nZXMgaW4g
-d29ya2luZyBkaXJlY3RvcnkpDQo+ID4NCj4gPiAgICAgICAgIG1vZGlmaWVkOiAgIG0NCj4gPg0K
-PiA+IG5vIGNoYW5nZXMgYWRkZWQgdG8gY29tbWl0ICh1c2UgImdpdCBhZGQiIGFuZC9vciAiZ2l0
-IGNvbW1pdCAtYSIpDQo+ID4NCj4gPiBXaXRoIHNwYXJzZS1jaGVja291dA0KPiA+ICQgZ2l0IHJl
-c2V0IEhFQUR+MQ0KPiA+IFVuc3RhZ2VkIGNoYW5nZXMgYWZ0ZXIgcmVzZXQ6DQo+ID4gRCAgICAg
-ICBtDQo+ID4gJCBnaXQgc3RhdHVzDQo+ID4gT24gYnJhbmNoIHJlc2V0DQo+ID4gQ2hhbmdlcyBu
-b3Qgc3RhZ2VkIGZvciBjb21taXQ6DQo+ID4gICAodXNlICJnaXQgYWRkL3JtIDxmaWxlPi4uLiIg
-dG8gdXBkYXRlIHdoYXQgd2lsbCBiZSBjb21taXR0ZWQpDQo+ID4gICAodXNlICJnaXQgY2hlY2tv
-dXQgLS0gPGZpbGU+Li4uIiB0byBkaXNjYXJkIGNoYW5nZXMgaW4gd29ya2luZyBkaXJlY3Rvcnkp
-DQo+ID4NCj4gPiAgICAgICAgIGRlbGV0ZWQ6ICAgIG0NCj4gPg0KPiA+IG5vIGNoYW5nZXMgYWRk
-ZWQgdG8gY29tbWl0ICh1c2UgImdpdCBhZGQiIGFuZC9vciAiZ2l0IGNvbW1pdCAtYSIpDQo+ID4N
-Cj4gDQo+IFdhc24ndCAibSIgb3V0c2lkZSB0aGUgc3BhcnNlIGNoZWNrb3V0PyBPciB3YXMgaXQg
-YSBmaWxlIGluIHRoZSBzcGFyc2UNCj4gY2hlY2tvdXQ/IEkgbWVhbiB0byBzYXksIHRoZSBmaWxl
-IGFmdGVyIHNldHRpbmcgdXAgc3BhcnNlIGNoZWNrb3V0IHdhcw0KPiBvbmUgb2YgdGhlICJpbnRl
-cmVzdGluZyIgZmlsZXMgdGhhdCBzcGFyc2UgY2hlY2tlZCBvdXQ/DQo+IA0KPiBPciB3YXMgaXQg
-aW4gZmFjdCBhIHNlcGFyYXRlIGZpbGUgd2hpY2ggd2Fzbid0IHRoZXJlPw0KDQpTb3JyeS4gIEl0
-IHdhcyBub3QgaW4gdGhlIHNwYXJzZS1jaGVja291dCBmaWxlLiANCiQgZ2l0IGNvbmZpZyBjb3Jl
-LnNwYXJzZWNoZWNrb3V0IHRydWUNCiQgZWNobyAvaSA+IC5naXQvaW5mby9zcGFyc2UtY2hlY2tv
-dXQNCiQgZ2l0IGNoZWNrb3V0IC1mDQp3YXMgcmFuIGluIHRoZSBtb2RpZmllZCBmaWxlIGNhc2Ug
-YXMgd2VsbCBhbmQgImkiIHdhcyB0aGUgb25seSBmaWxlIGluIHRoZQ0Kd29ya2luZyBkaXJlY3Rv
-cnkgYmVmb3JlIHJlc2V0LiANCg0KPiANCj4gSSB3b3VsZCB0aGluayB0aGF0IGluIHNwYXJzZS1j
-aGVja291dCB3b3JsZCwgeW91IHNob3VsZCBvbmx5ICpldmVyKg0KPiBoYXZlIHRoZSBmaWxlcyB5
-b3UgbGlzdCBpbiBzcGFyc2UuDQo+IA0KPiBTbyBmaWxlcyBvdXRzaWRlIHNwYXJzZSB3b3JsZCBz
-aG91bGQgYmUgaWdub3JlZCwgbm90IHNob3duIGFuZCBub3QNCj4gc2hvdyB1cCBpbiBzdGF0dXMs
-IGJ1dCB0aGV5IHNob3VsZCBhYnNvbHV0ZWx5IG5vdCBzaG93IHVwIGluIHRoZQ0KPiB3b3JraW5n
-IHRyZWUgZWl0aGVyLg0KDQpTcGFyc2UgY2hlY2tvdXQgdXNlcyB0aGUgc2tpcC13b3JrdHJlZSBi
-aXQgd2hpY2ggaGFzIHRoZSBmb2xsb3dpbmcNCmRvY3VtZW50YXRpb246DQpodHRwczovL2dpdC1z
-Y20uY29tL2RvY3MvZ2l0LXVwZGF0ZS1pbmRleCANCiJTa2lwLXdvcmt0cmVlIGJpdCBjYW4gYmUg
-ZGVmaW5lZCBpbiBvbmUgKGxvbmcpIHNlbnRlbmNlOiBXaGVuIHJlYWRpbmcNCmFuIGVudHJ5LCBp
-ZiBpdCBpcyBtYXJrZWQgYXMgc2tpcC13b3JrdHJlZSwgdGhlbiBHaXQgcHJldGVuZHMgaXRzIHdv
-cmtpbmcNCmRpcmVjdG9yeSB2ZXJzaW9uIGlzIHVwIHRvIGRhdGUgYW5kIHJlYWQgdGhlIGluZGV4
-IHZlcnNpb24gaW5zdGVhZC4NCg0KVG8gZWxhYm9yYXRlLCAicmVhZGluZyIgbWVhbnMgY2hlY2tp
-bmcgZm9yIGZpbGUgZXhpc3RlbmNlLCByZWFkaW5nIGZpbGUNCmF0dHJpYnV0ZXMgb3IgZmlsZSBj
-b250ZW50LiBUaGUgd29ya2luZyBkaXJlY3RvcnkgdmVyc2lvbiBtYXkgYmUgcHJlc2VudA0Kb3Ig
-YWJzZW50LiBJZiBwcmVzZW50LCBpdHMgY29udGVudCBtYXkgbWF0Y2ggYWdhaW5zdCB0aGUgaW5k
-ZXggdmVyc2lvbiBvcg0Kbm90LiBXcml0aW5nIGlzIG5vdCBhZmZlY3RlZCBieSB0aGlzIGJpdCwg
-Y29udGVudCBzYWZldHkgaXMgc3RpbGwgZmlyc3QgcHJpb3JpdHkuDQpOb3RlIHRoYXQgR2l0IGNh
-biB1cGRhdGUgd29ya2luZyBkaXJlY3RvcnkgZmlsZSwgdGhhdCBpcyBtYXJrZWQgc2tpcC13b3Jr
-dHJlZSwNCmlmIGl0IGlzIHNhZmUgdG8gZG8gc28gKGkuZS4gd29ya2luZyBkaXJlY3RvcnkgdmVy
-c2lvbiBtYXRjaGVzIGluZGV4IHZlcnNpb24pIg0KDQpJJ20gbm90IHNheWluZyB0aGF0IGlzIHRo
-ZSByaWdodCBiZWhhdmlvciwganVzdCBwb2ludGluZyBvdXQgdGhlIGRvY3VtZW50YXRpb24uDQpB
-bmQgZnJvbSBteSBleHBlcmllbmNlIGdpdCB3aWxsIHR1cm4gb24gYW5kIG9mZiB0aGUgc2tpcC13
-b3JrdHJlZSBmbGFnDQpkZXBlbmRpbmcgb24gdGhlIGNvbW1hbmQgYXMgd2Ugc2VlIGhhcHBlbmlu
-ZyB3aXRoIHJlc2V0Lg0KDQo+IA0KPiBZb3UncmUgbm90ICJjaGFuZ2luZyIgYW55IGNvbW1pdHMs
-IGJlY2F1c2UgdGhlIHN0YXR1cyBvZiB0aGUgZmlsZSBhdA0KPiBIRUFEfjEgaXMgZXhhY3RseSB3
-aGF0IEhFQUR+MSBzYXlzIGl0IGlzLCBidXQgeW91IGp1c3QgZG9uJ3QgaGF2ZSBhDQo+IGNoZWNr
-ZWQgb3V0IGNvcHkgb2YgaXQuDQoNCkluIHRoZSBjYXNlIG9mIHJlc2V0IHllcyBhbmQgaXQgbWF0
-Y2hlcyBIRUFEIGFuZCBpZiB0aGUgc3BhcnNlIGZsYWcgd2FzIG9uLA0KdGhlIHVzZXIgZG9lcyBu
-b3Qga25vdyB0aGF0IHRoZSBmaWxlIHdhcyBjaGFuZ2VkIGluIGFueSB3YXksIHdoaWNoIGlmIEkg
-YWRkDQphbmQgY29tbWl0IHdpbGwgY3JlYXRlIGEgY29tbWl0IHdpdGggdGhlIGZpbGUgY29udGVu
-dCBhdCBIRUFEfjENCnRoYXQgaXMgb3V0c2lkZSB0aGUgc3BhcnNlIGFyZWEgd2l0aG91dCB0aGUg
-dXNlciBldmVuIGtub3dpbmcgd2hhdA0KdGhvc2UgY2hhbmdlcyB3ZXJlIHVubGVzcyBhZnRlciB0
-aGUgY29tbWl0IHRoZXkgcnVuIGEgZ2l0IGRpZmYgSEVBRH4xIGFuZA0Kc2VlLiAgU28gZmlsZXMg
-d2lsbCBiZSBjaGFuZ2VkIG91dHNpZGUgb2YgdGhlIHNwYXJzZSBhcmVhIHdpdGhvdXQgdGhlDQp1
-c2VyJ3Mga25vd2xlZGdlLg0KDQo+IA0KPiBJIHRoaW5rIHRoZSBrZXkgcHJvYmxlbSBpcyB0aGF0
-IHJlc2V0IGlzIGNsZWFyaW5nIHRoZSBzcGFyc2UgZmxhZyBvZiBhDQo+IGZpbGUgc28gdGhhdCBp
-dCBubyBsb25nZXIgc2hvd3MgdXAgYXMgc3BhcnNlLCB3aGljaCBpcyB3aHkgc3RhdHVzDQo+IHN1
-YnNlcXVlbnRseSBzaG93cyB0aGUgZmlsZSBkZWxldGVkIChzaW5jZSB5b3UgZG9uJ3QgaGF2ZSBh
-IGxvY2FsIGNvcHkNCj4gYW55bW9yZSkuDQoNCkFuZCBpbiB0aGUgY2FzZSBvZiBhbiBhZGRlZCBm
-aWxlIHRoZXJlIGlzIG5vdCBhIHNwYXJzZSBmbGFnIHRvIGNsZWFyIG9yIGtlZXANCkJlY2F1c2Ug
-dGhlIGZpbGUgZGlkbid0IGV4aXN0IGF0IEhFQUR+MSBhbmQgdGhlcmUgaXMgbm8gZW50cnkgaW4g
-dGhlIGluZGV4DQp0byBrZWVwIGFuZCB0aGUgZmlsZSBhbmQgYW55IGtub3dsZWRnZSBvZiBpdCBp
-cyBnb25lLg0KDQo+IA0KPiBBbSBJIHVuZGVyc3RhbmRpbmcgdGhlIHByb2JsZW0gY29ycmVjdGx5
-PyBJIHRoaW5rIHlvdXIgZXhhbXBsZXMgYWJvdmUNCj4gYXJlIG5vdCBjbGVhciBiZWNhdXNlIHRo
-ZXkgZG9uJ3Qgc2VlbSB0byBiZSBlYWNoIGNvbXBsZXRlIGluZGl2aWR1YWxseQ0KPiAoVGhlIHNw
-YXJzZSBjaGVja291dCBleGFtcGxlcyBzaG91bGQgc3RhcnQgZnJvbSBhIGNsZWFuIHdvcmxkIGFu
-ZA0KPiBleHBsYWluIGhvdyB0aGV5IGdvdCB0aGVyZSByYXRoZXIgdGhhbiByZWx5aW5nIG9uIGlt
-Zm9ybWF0aW9uIGluIHRoZQ0KPiBwcmlvciBub24gc3BhcnNlIGV4YW1wbGUuIFdlIHNob3VsZCBi
-ZSBjbGVhciBzbyBldmVyeW9uZSBrbm93cyB3aGF0DQo+IHRoZSBwcm9ibGVtIGlzKS4NCj4gDQoN
-CkkgdGhvdWdodCB0aGF0IHRoZSAnZ2l0IGxvZyAtLW9uZWxpbmUnIHdpdGggdGhlIGNvbW1pdCBt
-ZXNzYWdlIG1ha2UgaXQNCmNsZWFyIHdoYXQgdGhlIHN0YXRlIG9mIHRoZSByZXBvIHdhcyBiZWZv
-cmUgdGhlIHJlc2V0IGluIGVpdGhlciBjYXNlLg0KVGhlIG9ubHkgZGlmZmVyZW5jZSBpcyB0aGF0
-IGluIHRoZSBzcGFyc2UgY2FzZSwgaXQgaXMgdHVybmVkIG9uIGFuZCBvbmUNCmZpbGUgYWRkZWQg
-dG8gdGhlIHNwYXJzZS1jaGVja291dCBmaWxlIGFuZCBhIGNoZWNrb3V0IGlzIHBlcmZvcm1lZA0K
-dG8gbWFrZSB0aGUgd29ya2luZyBkaXJlY3Rvcnkgc3BhcnNlLg0KDQo+IElmIHlvdSdyZSBwZXJm
-b3JtaW5nIGEgc3BhcnNlIGNoZWNrb3V0IGFuZCB5b3UgbW9kaWZ5IGZpbGVzIG91dHNpZGUgb2YN
-Cj4gdGhlIHNwYXJzZSBhcmVhLCBJIHRoaW5rIHRoYXQgd2lsbCBjYXVzZSBwcm9ibGVtcywgYW5k
-IHdlIG1heSBub3QgYmUNCj4gbWFraW5nIHRoZSBiZXN0IGVmZm9ydHMgdG8gcmVzb2x2ZSBpdC4g
-SSBkbyBhZ3JlZSB0aGF0IGlmIHlvdSBoYXZlDQo+IGNyZWF0ZWQgYSBmaWxlICJtIiB3aGVuIG9u
-bHkgImkiIGlzIGluIHlvdXIgcGF0aCwgdGhhdCB3ZSBzaG91bGQNCj4gYWJzb2x1dGVseSBub3Qg
-ZGVsZXRlICJtIiBidXQgbGVhdmUgaXQgYXMgaXMuDQo+IA0KDQpBZ2FpbiBkb2N1bWVudGF0aW9u
-IHNheXMgYW5kIGZyb20gbXkgZXhwZXJpZW5jZSwgZ2l0IGNhbiB1cGRhdGUgYW5kDQpkZWxldGUg
-Im0iIGlmIGl0IG1hdGNoZXMgdGhlIGluZGV4IHZlcnNpb24uICANCg0KPiBUaGFua3MsDQo+IEph
-a2UNCj4gDQo=
+On Tue, Sep 12, 2017 at 10:33:37AM -0700, Stefan Beller wrote:
+> On Sun, Sep 10, 2017 at 9:27 PM, Sam Bobroff <sam.bobroff@au1.ibm.com> wrote:
+> 
+> > (If only there were a way to set the coverletter text automatically as
+> > well...)
+> >
+> 
+> Checkout branch.<name>.description
+
+AH! I had seen this section of the format-patch man page...
+
+       --[no-]cover-letter
+           In addition to the patches, generate a cover letter file containing the branch description, shortlog and the overall diffstat. You can fill in a description in the file before
+           sending it out.
+
+... but I didn't realize that it meant that it would insert the text
+from branch.<name>.description into the cover letter. Perhaps there
+should be a hint to point you to the branch.<name>.description section
+of "git config"?
+
+Also, it's not very useful for automating patch submission, as it
+doesn't set the subject line or remove the "*** BLURB HERE ***" marker,
+so it must still be post-processed.
+
+(To be honest, I was surprised that it didn't use first line as the
+subject and leave out the markers.)
+
+Cheers,
+Sam.
+
