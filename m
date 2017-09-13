@@ -2,240 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A58EA20286
-	for <e@80x24.org>; Wed, 13 Sep 2017 21:55:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 26E1B20286
+	for <e@80x24.org>; Wed, 13 Sep 2017 22:07:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751678AbdIMVz0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Sep 2017 17:55:26 -0400
-Received: from mail-pg0-f46.google.com ([74.125.83.46]:44173 "EHLO
-        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751563AbdIMVzL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Sep 2017 17:55:11 -0400
-Received: by mail-pg0-f46.google.com with SMTP id j16so2814511pga.1
-        for <git@vger.kernel.org>; Wed, 13 Sep 2017 14:55:11 -0700 (PDT)
+        id S1751317AbdIMWHM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Sep 2017 18:07:12 -0400
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:43669 "EHLO
+        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751128AbdIMWHL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Sep 2017 18:07:11 -0400
+Received: by mail-wm0-f49.google.com with SMTP id a137so1214836wma.0
+        for <git@vger.kernel.org>; Wed, 13 Sep 2017 15:07:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=MAgXXkfsfFCjmeMAaBlJDGahX4Q6hpPpcHa/TTNzsuE=;
-        b=cgG26codioaIt3CSqeAGGkKU+h8wL03UcHpoMa93IkLE/zWnt/uc1eV+/1gUtr1k+z
-         ZV/a8GCgADmDOBwOieF4UfT9YYLu98fCd9K57eWajMGv5DZhabmr9Fky9vCl+OGrY4Ra
-         t2uvhRNteD4ZiT82DyUWbRfjkETCwF7vWhPiZe7dlNGmKCEM3F0IBKB5uIE5DesWV/5k
-         D4Vkpu59hYeIP/8+GFA1cMAV6adhZ9NXy59hmMv3stv5mbe3G04yuojRYMSdK5zNZlvF
-         sEECx32xKY8Lt1cBUUNQRLRjMU8hA5RkSzTGGnU9t+X+rqBipJRiMog8XgccS/4dKLLM
-         +xgQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=UOp6F3pMPRBV6EFKQqiwjb39dlrhDNeQ8Kpftzs5mnQ=;
+        b=X0Ko+B1qk1KFlfNIn8tLPlbrDhT8uS/9ryz+3v4N8+VzBGxv5vjXGNy9q8U79H5LD+
+         AXunVGoCVs+jwy64d735XhFgMP2tXtfQbBwKad0w5IYShx3blrzpe/tBSFZ+qtjpOtpb
+         071s82kBdcAvw8z2ilSFuLEKfOydQ8ark/FSpAtXYDW6AcnZo1ffgsKhmOWl+vT177RP
+         Ld/WvLPfHXp8ZnwB84ImGPqs4DaV1JSX/WkYCk5jPsqYN9ivWYPbTBI7gYCiE4LtYApS
+         uahcV+LU7SQEONt5dA/ogPOjuLORQsvUuEsnMjYZmMa7EwRjKiF0dE9COe+QKigIhjup
+         GAEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=MAgXXkfsfFCjmeMAaBlJDGahX4Q6hpPpcHa/TTNzsuE=;
-        b=p/X9ahZh24W/+5H1n+MB/cOfpfOtTr9FLXwegGZaQ1W9CwuypLNzp3Bk9KZxkZ95Po
-         yvJ5HvcktYudgD+aLdzRDBIw8vt77nKGebLXQSztJ5UWiAJIsySpNJQ48H+ZztYHi74z
-         JGbtFZDEhV+4t2wcDDDLbKM4+Dr1j3Bt7qBlMoe3tq9m8gfqeCQctzxd1kRfsL11DSEh
-         CyF8e08/LyK16eIYgg8PpXvHA58stvhkHpvxosfhe+5bHhlaPd2KjoY6EXU9Q27mneah
-         l3WcfPVlyeU4uYUXlc2Cp1VUJqNKxbrf9wB+sgHnpV77nEb47YgGkdZVoHnoGsainKBp
-         yItg==
-X-Gm-Message-State: AHPjjUgydrx6wqqcZCzUOhmhocPB4oVF5IzgzXRRxUWkeuLmFfvYOoij
-        0XIX52pupTIcwjYazT+bKQ==
-X-Google-Smtp-Source: AOwi7QC38ZYgnenn1XTQUMD7zr24PHvZLIM05rDkI8ajzyJIA0jo8VYiOLo2ogP8msaYzz7IVhggzQ==
-X-Received: by 10.101.74.81 with SMTP id a17mr148510pgu.441.1505339710417;
-        Wed, 13 Sep 2017 14:55:10 -0700 (PDT)
-Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id q13sm23152639pgt.87.2017.09.13.14.55.09
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 13 Sep 2017 14:55:09 -0700 (PDT)
-From:   Brandon Williams <bmwill@google.com>
-To:     git@vger.kernel.org
-Cc:     peff@peff.net, sbeller@google.com, gitster@pobox.com,
-        jrnieder@gmail.com, bturner@atlassian.com, git@jeffhostetler.com,
-        jonathantanmy@google.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH 7/8] http: tell server that the client understands v1
-Date:   Wed, 13 Sep 2017 14:54:47 -0700
-Message-Id: <20170913215448.84674-8-bmwill@google.com>
-X-Mailer: git-send-email 2.14.1.690.gbb1197296e-goog
-In-Reply-To: <20170913215448.84674-1-bmwill@google.com>
-References: <20170913215448.84674-1-bmwill@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=UOp6F3pMPRBV6EFKQqiwjb39dlrhDNeQ8Kpftzs5mnQ=;
+        b=BhVBcosZx/BTPQc6YWLaktrcuH/pCO2vQcU3RefExZ64mEkprvdeiFRRrxl06+gsrI
+         BHsLpX+ARUs338O3yR4bLCc6+Lf9M6ZumBFzrvVPkQ3CYw4QbaX5vLtA1fuF+kpg347y
+         Xzxy4qlYjJWU5HI1o/yXg3drnIKTu1SWw1RGMPAMIymwETS+CCiyMAAmjSo25ww5HvYA
+         kRnazp8BMwNK9cZnvod3Gw9nzuYkMKAXzXCVZxF7v7A7cc8lpE+00CcmPSFirJ1D+5yP
+         vrAKHppOpJ9Rt60S18PfNjeBZw69JXArKCIJuwKKHaMmrW312B38uwtHOII4aqCtCeex
+         RFyg==
+X-Gm-Message-State: AHPjjUgSEykQEpOlrnEamTTG4LcxE/r7iOkv5PdujDz2H4amCI9tY/iK
+        UCkIwNzaNlvUusuGNIe/BTjP8iV5yTPo3BhDzm8Xeg==
+X-Google-Smtp-Source: AOwi7QBiaKI9HvBQUNsrh5DUSAS5lCNHgGN3Zd2OPsgza2P7YOyLTl1XYi1cLhRFPlrCfFjje58ZrvBHbcwK6vGyD6M=
+X-Received: by 10.28.73.133 with SMTP id w127mr102066wma.55.1505340429274;
+ Wed, 13 Sep 2017 15:07:09 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.223.170.68 with HTTP; Wed, 13 Sep 2017 15:07:08 -0700 (PDT)
+In-Reply-To: <xmqq7ex21d2v.fsf@gitster.mtv.corp.google.com>
+References: <20170304011251.GA26789@aiede.mtv.corp.google.com>
+ <CA+55aFz+gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com>
+ <20170307001709.GC26789@aiede.mtv.corp.google.com> <xmqqa828733s.fsf@gitster.mtv.corp.google.com>
+ <xmqq1snh29re.fsf@gitster.mtv.corp.google.com> <20170911185913.GA5869@google.com>
+ <alpine.DEB.2.21.1.1709131340030.4132@virtualbox> <20170913163052.GA27425@aiede.mtv.corp.google.com>
+ <xmqq7ex21d2v.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 13 Sep 2017 15:07:08 -0700
+Message-ID: <CAGZ79kakGcMJ7HuH+MPsMrvw40uGchr6H-SQw9-p8pgi3Yk_Bw@mail.gmail.com>
+Subject: Re: RFC v3: Another proposed hash function transition plan
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Brandon Williams <bmwill@google.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jeff King <peff@peff.net>, David Lang <david@lang.hm>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Tell a server that protocol v1 can be used by sending the http header
-'Git-Protocol' indicating this.
+On Wed, Sep 13, 2017 at 2:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+>
+>> Treating generation numbers as derived data (as in Jeff King's
+>> preferred design, if I have understood his replies correctly) would
+>> also be possible but it does not interact well with shallow clone or
+>> narrow clone.
+>
+> Just like we have skewed committer timestamps, there is no reason to
+> believe that generation numbers embedded in objects are trustable,
+> and there is no way for narrow clients to even verify their correctness.
+>
+> So I agree with Peff that having generation numbers in object is
+> pointless; I agree any other derivables like corresponding sha-1
+> name is also pointless to have.
+>
+> This is a tangent, but it may be fine for a shallow clone to treat
+> the cut-off points in the history as if they are root commits and
+> compute generation numbers locally, just like everybody else does.
+> As generation numbers won't have to be global (because we will not
+> be embedding them in objects), nobody gets hurt if they do not match
+> across repositories---just like often-mentioned rename detection
+> cache, it can be kept as a mere local performance aid and does not
+> have to participate in the object model.
 
-Also teach the apache http server to pass through the 'Git-Protocol'
-header as an environment variable 'GIT_PROTOCOL'.
+Locally it helps for some operations such as correct walks.
+For the network case however, it doesn't really help either.
 
-Signed-off-by: Brandon Williams <bmwill@google.com>
----
- cache.h                 |  2 ++
- http.c                  | 18 +++++++++++++
- t/lib-httpd/apache.conf |  7 +++++
- t/t5700-protocol-v1.sh  | 69 +++++++++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 96 insertions(+)
+If we had global generation numbers, one could imagine that they
+are used in the pack negotiation (server advertises the maximum
+generation number or even gen number per branch; client
+could binary search in there for the fork point)
 
-diff --git a/cache.h b/cache.h
-index 8839b1ed4..82a643968 100644
---- a/cache.h
-+++ b/cache.h
-@@ -450,6 +450,8 @@ static inline enum object_type object_type(unsigned int mode)
-  * 'key[=value]'.  Presence of unknown keys must be tolerated.
-  */
- #define GIT_PROTOCOL_ENVIRONMENT "GIT_PROTOCOL"
-+/* HTTP header used to handshake the wire protocol */
-+#define GIT_PROTOCOL_HEADER "Git-Protocol"
- 
- /*
-  * This environment variable is expected to contain a boolean indicating
-diff --git a/http.c b/http.c
-index 9e40a465f..ffb719216 100644
---- a/http.c
-+++ b/http.c
-@@ -12,6 +12,7 @@
- #include "gettext.h"
- #include "transport.h"
- #include "packfile.h"
-+#include "protocol.h"
- 
- static struct trace_key trace_curl = TRACE_KEY_INIT(CURL);
- #if LIBCURL_VERSION_NUM >= 0x070a08
-@@ -897,6 +898,21 @@ static void set_from_env(const char **var, const char *envname)
- 		*var = val;
- }
- 
-+static void protocol_http_header(void)
-+{
-+	if (get_protocol_version_config() > 0) {
-+		struct strbuf protocol_header = STRBUF_INIT;
-+
-+		strbuf_addf(&protocol_header, GIT_PROTOCOL_HEADER ": version=%d",
-+			    get_protocol_version_config());
-+
-+
-+		extra_http_headers = curl_slist_append(extra_http_headers,
-+						       protocol_header.buf);
-+		strbuf_release(&protocol_header);
-+	}
-+}
-+
- void http_init(struct remote *remote, const char *url, int proactive_auth)
- {
- 	char *low_speed_limit;
-@@ -927,6 +943,8 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
- 	if (remote)
- 		var_override(&http_proxy_authmethod, remote->http_proxy_authmethod);
- 
-+	protocol_http_header();
-+
- 	pragma_header = curl_slist_append(http_copy_default_headers(),
- 		"Pragma: no-cache");
- 	no_pragma_header = curl_slist_append(http_copy_default_headers(),
-diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
-index 0642ae7e6..df1943631 100644
---- a/t/lib-httpd/apache.conf
-+++ b/t/lib-httpd/apache.conf
-@@ -67,6 +67,9 @@ LockFile accept.lock
- <IfModule !mod_unixd.c>
- 	LoadModule unixd_module modules/mod_unixd.so
- </IfModule>
-+<IfModule !mod_setenvif.c>
-+	LoadModule setenvif_module modules/mod_setenvif.so
-+</IfModule>
- </IfVersion>
- 
- PassEnv GIT_VALGRIND
-@@ -76,6 +79,10 @@ PassEnv ASAN_OPTIONS
- PassEnv GIT_TRACE
- PassEnv GIT_CONFIG_NOSYSTEM
- 
-+<IfVersion >= 2.4>
-+	SetEnvIf Git-Protocol ".*" GIT_PROTOCOL=$0
-+</IfVersion>
-+
- Alias /dumb/ www/
- Alias /auth/dumb/ www/auth/dumb/
- 
-diff --git a/t/t5700-protocol-v1.sh b/t/t5700-protocol-v1.sh
-index 1988bbce6..222265127 100755
---- a/t/t5700-protocol-v1.sh
-+++ b/t/t5700-protocol-v1.sh
-@@ -220,4 +220,73 @@ test_expect_success 'push with ssh:// using protocol v1' '
- 	grep "push< version 1" log
- '
- 
-+# Test protocol v1 with 'http://' transport
-+#
-+. "$TEST_DIRECTORY"/lib-httpd.sh
-+start_httpd
-+
-+test_expect_success 'create repo to be served by http:// transport' '
-+	git init "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" config http.receivepack true &&
-+	test_commit -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" one
-+'
-+
-+test_expect_success 'clone with http:// using protocol v1' '
-+	GIT_TRACE_PACKET=1 GIT_TRACE_CURL=1 git -c protocol.version=1 \
-+		clone "$HTTPD_URL/smart/http_parent" http_child 2>log &&
-+
-+	git -C http_child log -1 --format=%s >actual &&
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" log -1 --format=%s >expect &&
-+	test_cmp expect actual &&
-+
-+	# Client requested to use protocol v1
-+	grep "Git-Protocol: version=1" log &&
-+	# Server responded using protocol v1
-+	grep "git< version 1" log
-+'
-+
-+test_expect_success 'fetch with http:// using protocol v1' '
-+	test_commit -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" two &&
-+
-+	GIT_TRACE_PACKET=1 git -C http_child -c protocol.version=1 \
-+		fetch 2>log &&
-+
-+	git -C http_child log -1 --format=%s FETCH_HEAD >actual &&
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" log -1 --format=%s >expect &&
-+	test_cmp expect actual &&
-+
-+	# Server responded using protocol v1
-+	grep "git< version 1" log
-+'
-+
-+test_expect_success 'pull with http:// using protocol v1' '
-+	GIT_TRACE_PACKET=1 git -C http_child -c protocol.version=1 \
-+		pull 2>log &&
-+
-+	git -C http_child log -1 --format=%s >actual &&
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" log -1 --format=%s >expect &&
-+	test_cmp expect actual &&
-+
-+	# Server responded using protocol v1
-+	grep "git< version 1" log
-+'
-+
-+test_expect_success 'push with http:// using protocol v1' '
-+	test_commit -C http_child three &&
-+
-+	# Since the repository being served isnt bare we need to push to
-+	# another branch explicitly to avoid mangling the master branch
-+	GIT_TRACE_PACKET=1 git -C http_child -c protocol.version=1 \
-+		push origin HEAD:client_branch && #2>log &&
-+
-+	git -C http_child log -1 --format=%s >actual &&
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" log -1 --format=%s client_branch >expect &&
-+	test_cmp expect actual &&
-+
-+	# Server responded using protocol v1
-+	grep "git< version 1" log
-+'
-+
-+stop_httpd
-+
- test_done
--- 
-2.14.1.690.gbb1197296e-goog
+I wonder if locally generated generation numbers (for the shallow
+case) could be used somehow to still improve network operations.
 
+
+
+>> My assumption based on previous conversations (and other external
+>> conversations like [1]) is that we are going to use SHA2-256 and have
+>> a pretty strong consensus for that.  Don't worry!
+>
+> Hmph, I actually re-read the thread recently, and my impression was
+> that we didn't quite have a consensus but were leaning towards
+> SHA3-256.
+>
+> I do not personally have a strong preference myself and I would say
+> that anything will do as long as it is with good longevity and
+> availability.  SHA2 family would be a fine choice due to its age on
+> both counts, being scrutinized longer and having a chance to be
+> implemented in many places, even though its age itself may have to
+> be subtracted from the longevity factor.
+
+If we'd get the transition somewhat right, the next transition will
+be easier than the current transition, such that I am not that concerned
+about longevity. I am rather concerned about the complexity that is added
+to the code base (whilst accumulating technical debt instead of clearer
+abstraction layers)
