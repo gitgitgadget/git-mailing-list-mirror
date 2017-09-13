@@ -2,147 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1706120286
-	for <e@80x24.org>; Wed, 13 Sep 2017 17:18:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D462C20286
+	for <e@80x24.org>; Wed, 13 Sep 2017 17:47:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751547AbdIMRSB (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Sep 2017 13:18:01 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37256 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751542AbdIMRR7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Sep 2017 13:17:59 -0400
-Received: (qmail 23110 invoked by uid 109); 13 Sep 2017 17:17:59 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 13 Sep 2017 17:17:59 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17626 invoked by uid 111); 13 Sep 2017 17:18:34 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
- by peff.net (qpsmtpd/0.94) with SMTP; Wed, 13 Sep 2017 13:18:34 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Sep 2017 13:17:57 -0400
-Date:   Wed, 13 Sep 2017 13:17:57 -0400
-From:   Jeff King <peff@peff.net>
-To:     demerphq <demerphq@gmail.com>
-Cc:     Git <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: [PATCH 7/7] config: flip return value of store_write_*()
-Message-ID: <20170913171756.v7vzu3a77g2khq7x@sigill.intra.peff.net>
+        id S1751179AbdIMRrd (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Sep 2017 13:47:33 -0400
+Received: from mail-pg0-f41.google.com ([74.125.83.41]:46152 "EHLO
+        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751092AbdIMRrb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Sep 2017 13:47:31 -0400
+Received: by mail-pg0-f41.google.com with SMTP id i130so1709599pgc.3
+        for <git@vger.kernel.org>; Wed, 13 Sep 2017 10:47:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=gYpicr8k8OfTs5AlF2nIHEztrRYU75pYKcaIqPnEqzs=;
+        b=sK+j1il63ePjZ8pzHmgas3jkEdEOiV/VJuAbJ0pvwwMnV1BxTqB8BD7E7pIHBPcCnS
+         8FJKmRvHAeUSeoVWxKHpVw0IGfwvYdDgG9cQEPJqTCJe+B3Nchm/C3/mCyFEfSOCf2ur
+         vDgU7kvftbLJKDTy6N78N81wW0cBBzIRvZ2ui18FNiY1H5A9SYSPQOhk1YLQNEYSzqoC
+         Scn6/ttRFJcrK57xuwICkyylPMRh3T6J0Obr3N6qThahSXw7hn8nTuJw8lCa9sNEDBgV
+         VVpbLLxEIHubT2L+dwomm9s9rBJsgDrNZvmNyrCpV8M9x+95Qlm5d8O+I9b1pET4O/gd
+         enuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=gYpicr8k8OfTs5AlF2nIHEztrRYU75pYKcaIqPnEqzs=;
+        b=HRFwFWExnIv/RtPp9YzLpAe14iv2HNsRgvi6DlpMRXUPZ3YnZWTyTuAj8KrGiONp2A
+         Hcu6Yd5/poeNeoJMEifFfWPLftoRxt1nhcWRqA3lSdWqjBrCZYfe4D9eelmpjbu4BAFc
+         y2RYrLY1b8DIcw/rccRGCpVoFn5l6sf9Qf6ef+6M0a59xl7VyTgC0jxIghyuIiX3lJiS
+         Yem5ewz5TPcZRNzCsXDZmALUZb/zFtL14dFHO41k7Sablm5dlrk09IQbwceX6C2W6Rpe
+         L3JdPvMz02QzdlyvEku80Mnc2boK7r9IrcfIwuhE+8EV3a5tsrs6v3DxHxVEPjWUotEv
+         1Qjw==
+X-Gm-Message-State: AHPjjUgypiU4fiQNUlBL6KdngQ5Y2WuXSWPBm3+McTpVSNK5vL9ieNRy
+        xXEwNBDyVT5zQg==
+X-Google-Smtp-Source: ADKCNb6gPic19nceMSUEXxm5SDDxuf6KI16kLilBKg0fy1D9zWDj0c3tlPK1XuWNP/PUAZFo5b8IUA==
+X-Received: by 10.98.211.200 with SMTP id z69mr18417776pfk.112.1505324851007;
+        Wed, 13 Sep 2017 10:47:31 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:513d:47d2:882:8efc])
+        by smtp.gmail.com with ESMTPSA id z125sm26936227pfz.155.2017.09.13.10.47.30
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 13 Sep 2017 10:47:30 -0700 (PDT)
+Date:   Wed, 13 Sep 2017 10:47:28 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     demerphq <demerphq@gmail.com>, Git <git@vger.kernel.org>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 1/7] config: avoid "write_in_full(fd, buf, len) < len"
+ pattern
+Message-ID: <20170913174728.GB27425@aiede.mtv.corp.google.com>
 References: <20170913170807.cyx7rrpoyhaauvol@sigill.intra.peff.net>
+ <20170913171104.yu7ags4aq2zdwz6r@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20170913170807.cyx7rrpoyhaauvol@sigill.intra.peff.net>
+In-Reply-To: <20170913171104.yu7ags4aq2zdwz6r@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The store_write_section() and store_write_pairs() functions
-are basically high-level wrappers around write(). But their
-return values are flipped from our usual convention, using
-"1" for success and "0" for failure.
+Hi,
 
-Let's flip them to follow the usual write() conventions and
-update all callers. As these are local to config.c, it's
-unlikely that we'd have new callers in any topics in flight
-(which would be silently broken by our change). But just to
-be on the safe side, let's rename them to just
-write_section() and write_pairs().  That also accentuates
-their relationship with write().
+Jeff King wrote:
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- config.c | 28 +++++++++++++++-------------
- 1 file changed, 15 insertions(+), 13 deletions(-)
+> I scoured the code base for cases of this, but it turns out
+> that these two in git_config_set_multivar_in_file_gently()
+> are the only ones. This case is actually quite interesting:
+> we don't have a size_t, but rather use the subtraction of
+> two pointers. Which you might think would be a signed
+> ptrdiff_t, but clearly both gcc and clang treat it as
+> unsigned (possibly because the conditional just above
+> guarantees that the result is greater than zero).
 
-diff --git a/config.c b/config.c
-index daf093db45..f8b7b81445 100644
---- a/config.c
-+++ b/config.c
-@@ -2297,10 +2297,11 @@ static int write_error(const char *filename)
- 	return 4;
- }
- 
--static int store_write_section(int fd, const char *key)
-+static ssize_t write_section(int fd, const char *key)
- {
- 	const char *dot;
--	int i, success;
-+	int i;
-+	ssize_t ret;
- 	struct strbuf sb = STRBUF_INIT;
- 
- 	dot = memchr(key, '.', store.baselen);
-@@ -2316,15 +2317,16 @@ static int store_write_section(int fd, const char *key)
- 		strbuf_addf(&sb, "[%.*s]\n", store.baselen, key);
- 	}
- 
--	success = write_in_full(fd, sb.buf, sb.len) == sb.len;
-+	ret = write_in_full(fd, sb.buf, sb.len);
- 	strbuf_release(&sb);
- 
--	return success;
-+	return ret;
- }
- 
--static int store_write_pair(int fd, const char *key, const char *value)
-+static ssize_t write_pair(int fd, const char *key, const char *value)
- {
--	int i, success;
-+	int i;
-+	ssize_t ret;
- 	int length = strlen(key + store.baselen + 1);
- 	const char *quote = "";
- 	struct strbuf sb = STRBUF_INIT;
-@@ -2364,10 +2366,10 @@ static int store_write_pair(int fd, const char *key, const char *value)
- 		}
- 	strbuf_addf(&sb, "%s\n", quote);
- 
--	success = write_in_full(fd, sb.buf, sb.len) == sb.len;
-+	ret = write_in_full(fd, sb.buf, sb.len);
- 	strbuf_release(&sb);
- 
--	return success;
-+	return ret;
- }
- 
- static ssize_t find_beginning_of_line(const char *contents, size_t size,
-@@ -2497,8 +2499,8 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 		}
- 
- 		store.key = (char *)key;
--		if (!store_write_section(fd, key) ||
--		    !store_write_pair(fd, key, value))
-+		if (write_section(fd, key) < 0 ||
-+		    write_pair(fd, key, value) < 0)
- 			goto write_err_out;
- 	} else {
- 		struct stat st;
-@@ -2620,10 +2622,10 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 		/* write the pair (value == NULL means unset) */
- 		if (value != NULL) {
- 			if (store.state == START) {
--				if (!store_write_section(fd, key))
-+				if (write_section(fd, key) < 0)
- 					goto write_err_out;
- 			}
--			if (!store_write_pair(fd, key, value))
-+			if (write_pair(fd, key, value) < 0)
- 				goto write_err_out;
- 		}
- 
-@@ -2816,7 +2818,7 @@ int git_config_rename_section_in_file(const char *config_filename,
- 					continue;
- 				}
- 				store.baselen = strlen(new_name);
--				if (!store_write_section(out_fd, new_name)) {
-+				if (write_section(out_fd, new_name) < 0) {
- 					ret = write_error(get_lock_file_path(lock));
- 					goto out;
- 				}
--- 
-2.14.1.874.ge7b2e05270
+Do you have more detail about this?  I get worried when I read
+something like this that sounds like a compiler bug.
+
+C99 sayeth:
+
+	When two pointers are subtracted, both shall point to elements
+	of the same array object, or one past the last element of the
+	array object; the result is the difference of the subscripts
+	of the two array elements. The size of the result is
+	implementation-defined, and its type (a signed integer type)
+	is ptrdiff_t defined in the <stddef.h> header.
+
+How can I reproduce the problem?
+
+> We can avoid the whole question by just checking for a
+> negative return value directly, as write_in_full() will
+> never return any value except -1 or the full count.
+>
+> There's no addition to the test suite here, since you need
+> to convince write() to fail in order to see the problem. The
+> simplest reproduction recipe I came up with is to trigger
+> ENOSPC (this only works on Linux, obviously):
+
+Does /dev/full make it simpler to reproduce?
+
+Thanks,
+Jonathan
