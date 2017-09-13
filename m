@@ -6,101 +6,90 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 118C520286
-	for <e@80x24.org>; Wed, 13 Sep 2017 12:53:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49E7520286
+	for <e@80x24.org>; Wed, 13 Sep 2017 12:56:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751422AbdIMMxP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Sep 2017 08:53:15 -0400
-Received: from cloud.peff.net ([104.130.231.41]:36626 "HELO cloud.peff.net"
+        id S1751756AbdIMM4O (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Sep 2017 08:56:14 -0400
+Received: from cloud.peff.net ([104.130.231.41]:36650 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751120AbdIMMxO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Sep 2017 08:53:14 -0400
-Received: (qmail 5997 invoked by uid 109); 13 Sep 2017 12:53:14 -0000
+        id S1751120AbdIMM4N (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Sep 2017 08:56:13 -0400
+Received: (qmail 6212 invoked by uid 109); 13 Sep 2017 12:56:13 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 13 Sep 2017 12:53:14 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 13 Sep 2017 12:56:13 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13778 invoked by uid 111); 13 Sep 2017 12:53:49 -0000
+Received: (qmail 13854 invoked by uid 111); 13 Sep 2017 12:56:48 -0000
 Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
- by peff.net (qpsmtpd/0.94) with SMTP; Wed, 13 Sep 2017 08:53:49 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Wed, 13 Sep 2017 08:56:48 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Sep 2017 08:53:12 -0400
-Date:   Wed, 13 Sep 2017 08:53:12 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Sep 2017 08:56:11 -0400
+Date:   Wed, 13 Sep 2017 08:56:11 -0400
 From:   Jeff King <peff@peff.net>
 To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        David Adam <zanchey@ucc.gu.uwa.edu.au>,
-        Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 4/4] archive: queue directories for all types of pathspecs
-Message-ID: <20170913125312.awtlbndv5j6kkcmz@sigill.intra.peff.net>
-References: <alpine.DEB.2.11.1708131240360.15538@motsugo.ucc.gu.uwa.edu.au>
- <ae893c19-652d-1c8f-50ba-1242b95be84e@web.de>
- <887652a4-3f03-e2dd-2c68-cff4f7194898@web.de>
- <0432c7cc-a2a5-12bd-bf65-a16186313d5b@web.de>
- <33fa4f08-8f06-5a98-e492-3f05cc742555@web.de>
- <20170820090629.tumvqwzkromcykjf@sigill.intra.peff.net>
- <837ff6fe-a645-97fe-4b21-ec36f662ce19@web.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH 06/34] clone: release strbuf after use in remove_junk()
+Message-ID: <20170913125611.zdy3r5gijz5ohl2r@sigill.intra.peff.net>
+References: <20170830175005.20756-1-l.s.r@web.de>
+ <20170830175005.20756-7-l.s.r@web.de>
+ <xmqq1snj61wr.fsf@gitster.mtv.corp.google.com>
+ <0884b528-d455-09c6-0eaf-d2af50077a98@web.de>
+ <20170910073002.hg6tqgm2z7owqr2u@sigill.intra.peff.net>
+ <7a30c171-22c8-4ae3-3e15-3f4eea893127@web.de>
+ <20170910173826.jopzzt5cpc2i3c6m@sigill.intra.peff.net>
+ <1c0918c7-8630-e545-6c34-ab03995797bb@web.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <837ff6fe-a645-97fe-4b21-ec36f662ce19@web.de>
+In-Reply-To: <1c0918c7-8630-e545-6c34-ab03995797bb@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 13, 2017 at 12:43:57AM +0200, René Scharfe wrote:
+On Mon, Sep 11, 2017 at 11:40:05PM +0200, René Scharfe wrote:
 
-> -- >8 --
-> Subject: [PATCH] archive: don't add empty directories to archives
+> > Yes, but I didn't want to touch each code site that creates a file,
+> > which is a lot more invasive. I expect expanding to 4096 (or PATH_MAX)
+> > would be sufficient in practice.
 > 
-> While git doesn't track empty directories, git archive can be tricked
-> into putting some into archives.  One way is to construct an empty tree
-> object, as t5004 does.  While that is supported by the object database,
-> it can't be represented in the index and thus it's unlikely to occur in
-> the wild.
-> 
-> Another way is using the literal name of a directory in an exclude
-> pathspec -- its contents are are excluded, but the directory stub is
-> included.  That's inconsistent: exclude pathspecs containing wildcards
-> don't leave empty directories in the archive.
-> 
-> Yet another way is have a few levels of nested subdirectories (e.g.
-> d1/d2/d3/file1) and ignoring the entries at the leaved (e.g. file1).
+> Perhaps it is in most cases.  Having certainty would be better.  We can
+> leave unpack_trees() untouched and instead traverse the tree beforehand,
+> in order to find the longest path.  Perhaps we can do something similar
+> for init_db().
 
-s/leaved/leaves/ ?
+I wonder if it would be possible to just wrap open() in a transparent
+way.
 
-> The directories with the ignored content are ignored as well (e.g. d3),
-> but their empty parents are included (e.g. d2).
+> > I'd also note that the current code isn't _remotely_ async safe and
+> > nobody's complained. So I'm perfectly happy doing nothing, too. I care
+> > a bit more about the tempfile.c interface because it's invoked a lot
+> > more frequently.
 > 
-> As empty directories are not supported by git, they should also not be
-> written into archives.  If an empty directory is really needed then it
-> can be tracked and archived by placing an empty .gitignore file in it.
+> I guess clones are not interrupted very often during checkout; same
+> with worktree creation.  So perhaps nasty things could happen with a
+> low probability, but nobody tried hard enough to hit that case?
+
+Right, that's my guess. And "nasty" is quite likely to be "deadlocks on
+a malloc or stdio lock". Which is not the end of the world.
+
+> > No, I think that's how you'd have to do it. The implementation isn't all
+> > that bad, but hitting every file-creation would be invasive. I'd
+> > almost rather bail to exec-ing "rm -rf $dir", but we probably can't do
+> > _that_ in a signal-handler either. :)
 > 
-> There already is a mechanism in place for suppressing empty directories.
-> When read_tree_recursive() encounters a directory excluded by a pathspec
-> then it enters it anyway because it might contain included entries.  It
-> calls the callback function before it is able to decide if the directory
-> is actually needed.  For that reason git archive adds directories to a
-> queue and writes entries for them only when it encounters the first
-> child item -- but currently only if pathspecs with wildcards are used.
+> Well, fork(2), execve(2), and waitpid(2) are on the list, so actually
+> you can.
 > 
-> Queue *all* directories, no matter if there even are pathspecs present.
-> This prevents git archive from writing entries for empty directories in
-> all cases.
+> mingw_spawnvpe(), which is used by start_command() on Windows,
+> allocates memory, though.  Preparing environment and argument list
+> in advance and just calling CreateProcess() in the signal handler
+> might work.
 
-Nicely explained, and this seems like the right level to be handling it.
-Simple, and it will catch the cases we know about _and_ and any new ones
-which pop up.
+Yeah, I imagine it's do-able with enough advance effort.
 
-> ---
->  archive.c                       | 19 ++-----------------
->  t/t5001-archive-attr.sh         |  2 +-
->  t/t5002-archive-attr-pattern.sh |  2 +-
->  t/t5004-archive-corner-cases.sh |  4 ++--
->  4 files changed, 6 insertions(+), 21 deletions(-)
-
-I'm not too familiar with this part of the archive code, but it seemed
-pretty easy to follow. The patch looks good to me.
+Given the lack of reports and the rapidly expanding complexity, I'm not
+planning on looking further into this for now.
 
 -Peff
