@@ -2,75 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA69F20286
-	for <e@80x24.org>; Wed, 13 Sep 2017 14:56:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD0DB20286
+	for <e@80x24.org>; Wed, 13 Sep 2017 15:07:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751807AbdIMO4q (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Sep 2017 10:56:46 -0400
-Received: from mout.web.de ([212.227.15.14]:49435 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751460AbdIMO4p (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Sep 2017 10:56:45 -0400
-Received: from [192.168.178.36] ([91.20.62.83]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MJZLX-1dqE4s1gUd-0037o1; Wed, 13
- Sep 2017 16:56:29 +0200
-Subject: Re: [PATCH 4/4] archive: queue directories for all types of pathspecs
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        David Adam <zanchey@ucc.gu.uwa.edu.au>,
-        Duy Nguyen <pclouds@gmail.com>
-References: <alpine.DEB.2.11.1708131240360.15538@motsugo.ucc.gu.uwa.edu.au>
- <ae893c19-652d-1c8f-50ba-1242b95be84e@web.de>
- <887652a4-3f03-e2dd-2c68-cff4f7194898@web.de>
- <0432c7cc-a2a5-12bd-bf65-a16186313d5b@web.de>
- <33fa4f08-8f06-5a98-e492-3f05cc742555@web.de>
- <20170820090629.tumvqwzkromcykjf@sigill.intra.peff.net>
- <837ff6fe-a645-97fe-4b21-ec36f662ce19@web.de>
- <20170913125312.awtlbndv5j6kkcmz@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <03efb857-ed92-8815-3730-767cd5d6896a@web.de>
-Date:   Wed, 13 Sep 2017 16:56:24 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
-MIME-Version: 1.0
-In-Reply-To: <20170913125312.awtlbndv5j6kkcmz@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
+        id S1752409AbdIMPHM convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 13 Sep 2017 11:07:12 -0400
+Received: from relay-ff112.magwien.gv.at ([217.149.228.140]:51311 "EHLO
+        relay-ff112.magwien.gv.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751988AbdIMPHL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Sep 2017 11:07:11 -0400
+Received: from localhost (localhost [127.0.0.1])
+        by relay-ff112.magwien.gv.at (Postfix) with ESMTP id B1BB420695
+        for <git@vger.kernel.org>; Wed, 13 Sep 2017 17:09:40 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new using Sophie and ClamAV at magwien.gv.at
+Received: from relay11.host.magwien.gv.at (relay11.host.magwien.gv.at [--])
+        (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by relay-ff112.magwien.gv.at (Postfix) with ESMTPS id 9EA5F2068F
+        for <git@vger.kernel.org>; Wed, 13 Sep 2017 17:09:40 +0200 (CEST)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+        by relay11.host.magwien.gv.at (Postfix) with ESMTP id BC39F166A31
+        for <git@vger.kernel.org>; Wed, 13 Sep 2017 17:07:09 +0200 (CEST)
+Received: from mail.fsw.at (sfsww2k12ex02.intern.fsw.at [--])
+        (using TLSv1 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by relay11.host.magwien.gv.at (Postfix) with ESMTP id AFA99166A20
+        for <git@vger.kernel.org>; Wed, 13 Sep 2017 17:07:09 +0200 (CEST)
+Received: from SFSWW2K12EX02.intern.fsw.at (--) by
+ SFSWW2K12EX02.intern.fsw.at (--) with Microsoft SMTP Server (TLS)
+ id 15.0.1293.2; Wed, 13 Sep 2017 17:07:09 +0200
+Received: from SFSWW2K12EX02.intern.fsw.at ([fe80::a1d5:6bb5:fb11:2572]) by
+ SFSWW2K12EX02.intern.fsw.at ([fe80::a1d5:6bb5:fb11:2572%15]) with mapi id
+ 15.00.1293.002; Wed, 13 Sep 2017 17:07:09 +0200
+From:   Ekelhart Jakob <jakob.ekelhart@fsw.at>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+CC:     Matthias Lischka <matthias.lischka@fsw.at>
+Subject: RE: merge-base not working as expected when base is ahead
+Thread-Topic: merge-base not working as expected when base is ahead
+Thread-Index: AdMsnWsjP09HlRSfQ6CzncqiwXoHgwABAbVg
+Date:   Wed, 13 Sep 2017 15:07:09 +0000
+Message-ID: <e697e5f0da0845ee92ffdb88a4fa48d9@SFSWW2K12EX02.intern.fsw.at>
+References: <c76e76a4ef11480da9995b0bec5a70e1@SFSWW2K12EX02.intern.fsw.at>
+In-Reply-To: <c76e76a4ef11480da9995b0bec5a70e1@SFSWW2K12EX02.intern.fsw.at>
+Accept-Language: en-US, de-AT
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:GPwrz57SGfuWqThePfCnMERElajgosMuashV0hIka1gbYvjHbjc
- nrxQLUGagBvF4YBrS+TG6QbuebTenI+49IUq8tL75lUmO4xHpk0Mj8aO7QTlXuXdWd4GlmL
- 1+RMgdyU2cCS5bixQfw2leSQr7NTXYl43SB/3yt289EFZkwh0I+YactT1SJM02hNDARJp0y
- CklrstTRBiZffHCjjk5Vw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:hihSA3kB2AU=:jjPnNNqUfl1WxCd5NSN0lr
- Ea1IBUk2WMz5zcZ6ZLK6RZNB5WqPGVezLO91ToAzlxrAr4PU9qzFzNkEp92lJDpoSVh8PIwEw
- o8QhKRD7TMPOX5ExvWZ6CYYzE/YNe4F7OxvkOVxfvh7FIuueSSshXAvlxrlzC+w4nc7XJ2n6t
- AtZBmKC+VOW70TnhAJexo1syM4bkSHT1+BSjJjqDmAXxjXfxtgjA/VBD5w7l22RmEelFC/0JJ
- vDUdgN23YL0IQBL1rLESz5ZFD8A/WkOJvpYZP6sNSVkRfzxWAxQhXIxS9wRdOw2t+fdGVFaMv
- YEZP2zXoChLdtTmDddXdf8ibNB8awp+ixP9fEtwsyx69TMFjKppS3RlrUoH4QPnZESOZNJRch
- gazyoqNEBk1h3IyWeRZBUatlHzSOyAPYsR7F5GUAKYrzEbk5xp/SG5KL7Mjc8la9PsT1sz/aE
- ez1dgUOCC1drurBnTPodm+jeEU4J7rVoBGesRtAYvAf1ycLqkni4fF+0JX4g5XRgHrk4a+CiN
- Zp9p8u/1HMYLZUk6IVPNNzB1Qn0PJIWaTw2t+s06r9o3JJMzghZSLPgIPnUXV6e2Xye4O2R9A
- vg52LQR8EbnvEnCvuJScly66Cyl+Y9fhPytZJyYIiXsfw1ZaPO0c3SAjoNKbQzpNJK8UCEDg6
- 8RUGCyVLv9m3uoUyk5T1r0bWJw6NMnVAx/Ob89C7StLCZL7GGwAaUvMEbdybTrELhM/+X/pvW
- 5EFgSSLrxsJ/H6QlJ3vaEiwbqrb5ajiBDGYjmVPCp7AyEI1EnkHyAhhCZlum8M9hmB/17ZJoP
- Ti5F/FtWCfgCAtSZ3isnwvKdzn3EmxXB+NqtvQtkV5/lHH9LSc=
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+MIME-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 13.09.2017 um 14:53 schrieb Jeff King:
-> On Wed, Sep 13, 2017 at 12:43:57AM +0200, René Scharfe wrote:
->> Yet another way is have a few levels of nested subdirectories (e.g.
->> d1/d2/d3/file1) and ignoring the entries at the leaved (e.g. file1).
-> 
-> s/leaved/leaves/ ?
+Dear Git,
 
-Indeed.
+git merge-base --fork-point "master" not working if master is already newer then my current branch.
+Very oddly it seems to work whenever you had the expected commit checked out previously - what made it very tricky to detect this problem.
 
-René
+Example:
+ - Clone "https://github.com/jekelhart/GitInfoTry"
+ - Switch to branch "v1.0.0"
+ - git merge-base --fork-point "master"
+   - or: git merge-base --fork-point "origin/master" 
+ - expected result: fork point "fbb1db34c6317a6e8b319c1ec261e97ca1672c22"
+ - but result is empty
+
+In the repo where we created this example tree in the first place the command returned the expected fork point. If you clone it new and fresh it does not return any result anymore.
+
+Works, however, on branch "v2.0.0". Assumption: because "master" is older.(?)
+I think it works locally because the command uses the reflog in addition(!), however, it should work without the local reflog as well. (since the history was not modified in any way)
+
+BR, Jakob
