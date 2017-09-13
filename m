@@ -2,88 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E1F320286
-	for <e@80x24.org>; Wed, 13 Sep 2017 13:05:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 536E620286
+	for <e@80x24.org>; Wed, 13 Sep 2017 13:05:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751971AbdIMNFA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Sep 2017 09:05:00 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:37333 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751111AbdIMNE7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Sep 2017 09:04:59 -0400
-Received: by mail-pg0-f65.google.com with SMTP id v5so67543pgn.4
-        for <git@vger.kernel.org>; Wed, 13 Sep 2017 06:04:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=kYG5VF0TGUDwZkEK1ovbNr4UzyzbtKwZQSOxqKyrBno=;
-        b=mxNY54g6Q6XGDgWyyDJJLKx3y5szjz0W9BnQqLAK+2gTkJOyNRMq7Rbsmt9K5QKaXP
-         uFjryUwyDSLnsrdMBIi1YKtRmv5KASUGUR94cxolEezBJz0AAYqfWf4m1pI736876g1T
-         v1lZrkbHSdonLTQprayo6Ho6zAMNv8GO1EfSEQBbCZOJ0Gxa4N1eyav6PUTgFcatrlq+
-         ahpoeIeoYrehwH6vTlMDdo+XBIqYQqq2sG2edQ738DfaNEbTDbh1rqD6uQE0pLlz9Kcu
-         hUdyy9ZjtUcU6JxOWyMHhIRtxYhErXBgRmUfaFRM05sqBa0h1BX65xSHOToOCthD0ZHI
-         GzRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=kYG5VF0TGUDwZkEK1ovbNr4UzyzbtKwZQSOxqKyrBno=;
-        b=SS+dCP+uDbHqETTf815/yPys++rVBaLuRz/vF7P355zzT57qwg/EkzC4NHDPeglhbS
-         T1OVIoKzXqua3yJWWN98Anc6/pScgkkJKVyhF5jWVbG3G2le0zMP/vcliNApKHkMpLR7
-         GHcjpTSeJDFoPVq/mZcA8k1xWxd7LzG4IJ5n9iLx0dgcNzMNrmu4YCLJfo7SnNvU5Dfq
-         BAdM5Y8N+Ql667uKtJhZDW6b5W9d6uIwA0HC59jn7YTy8A0wedgRKDUsIzSI0AkHxrGd
-         eW4iLnce8YQYUN9qJoEp1Z8BAzBoUBRCdWIPYvXkic6BRwpONtqwNaOM0Yp3Xu0M2fVi
-         vIPg==
-X-Gm-Message-State: AHPjjUhGEIZA7niJ5ox5cmeLM6HtTPHVI/qE/XKGbo3xxkTsASrFlfGT
-        gnYFGgMrc5mb4g==
-X-Google-Smtp-Source: ADKCNb54y1Dnd5JS8rvClifyKeFhk7LGvh1R3zQhTwq0N74gFsuZEb85hK8h6GvcaqjC1Mgvb/LMMg==
-X-Received: by 10.101.67.2 with SMTP id j2mr17459366pgq.182.1505307898875;
-        Wed, 13 Sep 2017 06:04:58 -0700 (PDT)
-Received: from [10.4.2.238] ([218.248.21.162])
-        by smtp.gmail.com with ESMTPSA id b68sm27687919pfk.23.2017.09.13.06.04.54
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 13 Sep 2017 06:04:58 -0700 (PDT)
-Subject: [PATCH v2] commit-template: change a message to be more intuitive
+        id S1751803AbdIMNFl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Sep 2017 09:05:41 -0400
+Received: from a7-11.smtp-out.eu-west-1.amazonses.com ([54.240.7.11]:54318
+        "EHLO a7-11.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751019AbdIMNFk (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 13 Sep 2017 09:05:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1505307939;
+        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=3DZyF8dvYVi8h0clcoFeSF82bKTe+RfA7nbVxuhkYWE=;
+        b=WwexBDUIpgMmysuMG0qdh4zYLrfUs4gEvNeRFmcaubiKtmS/jXxoELHjVMGtLDcw
+        5+aw4XuRr3g4esrm1xTyi+UyhSMrFG190kxdBp/4/J4H93R2UQv6YZn7JA7OBARRf09
+        +A4E85u3kVFQUZRze2aOFCKjrY+fGeNuQVA4Dgww=
 From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Kevin Daudt <me@ikke.info>,
-        gitster@pobox.com
-References: <20170912105536.6094-1-kaarticsivaraam91196@gmail.com>
- <20170913102915.GA21499@alpha.vpn.ikke.info>
- <20170913112013.sk7bqarq2ktrva67@sigill.intra.peff.net>
- <624d873b-74af-b3e8-714c-8a439f4ee81f@gmail.com>
-Message-ID: <e656d1b4-c95e-e51d-5f48-bb3450580fa4@gmail.com>
-Date:   Wed, 13 Sep 2017 18:35:00 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+Message-ID: <0102015e7b585037-5f88e775-2696-49ec-8dd9-5e1635a34607-000000@eu-west-1.amazonses.com>
+In-Reply-To: <<e656d1b4-c95e-e51d-5f48-bb3450580fa4@gmail.com>>
+References: <<e656d1b4-c95e-e51d-5f48-bb3450580fa4@gmail.com>>
+Subject: [PATCH v2] commit-template: change a message to be more intuitive
 MIME-Version: 1.0
-In-Reply-To: <624d873b-74af-b3e8-714c-8a439f4ee81f@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-Cyberoam-smtpxy-version: 1.0.6.3
-X-Cyberoam-AV-Policy: default
-X-CTCH-Error: Unable to connect local ctasd
+Date:   Wed, 13 Sep 2017 13:05:38 +0000
+X-SES-Outgoing: 2017.09.13-54.240.7.11
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Changes in v2:
+It's not good to use the phrase 'do not touch' to convey the information
+that the cut-line should not be modified or removed as it could possibly
+be mis-interpreted by a person who doesn't know that the word 'touch' has
+the meaning of 'tamper with'. Further, it could make translations a little
+difficult as it might not have the intended meaning in a few languages when
+translated as such.
 
-    - Changed the message as suggested by Jeff
+So, use more intuitive terms in the sentence.
 
-    - Made the commit message to be even more clear
-
-
+Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
 ---
+ wt-status.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Kaartic
+diff --git a/wt-status.c b/wt-status.c
+index 77c27c51134d2..be53579760ee7 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -934,7 +934,7 @@ size_t wt_status_locate_end(const char *s, size_t len)
+ 
+ void wt_status_add_cut_line(FILE *fp)
+ {
+-	const char *explanation = _("Do not touch the line above.\nEverything below will be removed.");
++	const char *explanation = _("Do not modify or remove the line above.\nEverything below will be removed.");
+ 	struct strbuf buf = STRBUF_INIT;
+ 
+ 	fprintf(fp, "%c %s", comment_line_char, cut_line);
 
+--
+https://github.com/git/git/pull/401
