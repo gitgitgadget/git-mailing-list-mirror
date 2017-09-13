@@ -2,118 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76BDB20286
-	for <e@80x24.org>; Wed, 13 Sep 2017 21:52:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 775A020286
+	for <e@80x24.org>; Wed, 13 Sep 2017 21:55:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751427AbdIMVwM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Sep 2017 17:52:12 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65529 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751148AbdIMVwL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Sep 2017 17:52:11 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C0FFBADE94;
-        Wed, 13 Sep 2017 17:52:10 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=qByeN7ZppzS0/h+RGKo3+1Sn9L8=; b=FAkQ5S
-        bQbU1i9cOMj0T0KMNujqTj7qiHbc5DHZxEWXRKJjo448mcThVZeInq/YYsNZGUVp
-        YDZGp3ijQq5mJOLdBUaeEd99TjsYbeLGZcGlZv1p3iVvsVwjrDM3utpfbgS0vWUr
-        qBOoqeNFQ8tr5ieZxQxpX3orfPjjNI/OtiFCc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=kL+oi7Nf3pfoYsu3LnS1dhJQtzrOt97g
-        xF/7ZqEL4wmu+c9YeEwtvXzKf/dv2KdFS+IoprPDR+vfT2ndsZMIBSCgB9FgCsru
-        BMVs7J1Ly8SY73S8sievR8pRnU150JF13aizORFcOWe6zvWfS4fOPws8PkqUncFj
-        tJ8+QmTTPOw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B79B8ADE93;
-        Wed, 13 Sep 2017 17:52:10 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0C55EADE92;
-        Wed, 13 Sep 2017 17:52:10 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Brandon Williams <bmwill@google.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>, jonathantanmy@google.com,
-        Jeff King <peff@peff.net>, David Lang <david@lang.hm>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: RFC v3: Another proposed hash function transition plan
-References: <20170304011251.GA26789@aiede.mtv.corp.google.com>
-        <CA+55aFz+gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com>
-        <20170307001709.GC26789@aiede.mtv.corp.google.com>
-        <xmqqa828733s.fsf@gitster.mtv.corp.google.com>
-        <xmqq1snh29re.fsf@gitster.mtv.corp.google.com>
-        <20170911185913.GA5869@google.com>
-        <alpine.DEB.2.21.1.1709131340030.4132@virtualbox>
-        <20170913163052.GA27425@aiede.mtv.corp.google.com>
-Date:   Thu, 14 Sep 2017 06:52:08 +0900
-In-Reply-To: <20170913163052.GA27425@aiede.mtv.corp.google.com> (Jonathan
-        Nieder's message of "Wed, 13 Sep 2017 09:30:52 -0700")
-Message-ID: <xmqq7ex21d2v.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CB1A9BB6-98CD-11E7-8B67-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+        id S1751494AbdIMVzC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Sep 2017 17:55:02 -0400
+Received: from mail-pg0-f48.google.com ([74.125.83.48]:48972 "EHLO
+        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751440AbdIMVzB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Sep 2017 17:55:01 -0400
+Received: by mail-pg0-f48.google.com with SMTP id v66so2775871pgb.5
+        for <git@vger.kernel.org>; Wed, 13 Sep 2017 14:55:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=+gsq2FLGozTpNWRq3ZhGmJsUkjfSd6++DM1B/T74sGQ=;
+        b=HMqN/qg/tuFqiIZxpAz6rGGZn7gocRid5dgEyjcDazm/t4D8+LpStnJ59dm7NwkgmH
+         Ppm46O95v0QkXU/7ge3icSgn3/EPO8M4NY7ktxMv0hIv4Jv+SZm6N9mbHgdklPe0AMF5
+         bJiUsKEk1a1r2vKjCTHpEqbWIHc2OD36JLT9agw3svGpYXrsakut5mfEedAh2CcEgsEO
+         XTQmryILoVqLySkuw0q/TG4MkGF/Yx8U/z9fdjVDb3xyJ3T6IGZrJmQspPuhy1tkIOHM
+         24D/eVgNieThD3Fr4ZCajYk5anLs+NI9Pnc+mPk2lY4h2ZPJMcSn99Hu8w/uebVzsFyd
+         bJpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=+gsq2FLGozTpNWRq3ZhGmJsUkjfSd6++DM1B/T74sGQ=;
+        b=qvPanEYEUqrfdm4Nj5i5V3R/tutx+JtwfKiiSqHAOT8/z324KAPp/mWeTlw0ltBMjY
+         wigkLCBn6tCUPWNsoK/JqHUBYUCpanS02lSE3PqTfL/PggihTwO6YJ8NXhveQ26JtKfY
+         V+91jdLEMV6bUvy8v2CWLQurd/yAcdBhdwZ3Wtw3koBUNd2fmJE8CAbUf0onIJuLRKUf
+         WOqX0pp9kZx/emza8RbtxkbC+xWWPvSkIuITQddhZ3cQfiGEdZCvpMwX8p1EzZx6+aty
+         Aa0CDruk3MfbQrHG1Vu0CcCm0hYlIrgr88V/cB8kDIE+R/q5mJe5kxk7n1ERYr//eFW8
+         kDxw==
+X-Gm-Message-State: AHPjjUhx0HpI4Ixbsk9cCw7yh0k7k3llWEvjC7Fb3w6yYsrJZ7yMrfeW
+        0tHr1/D5QqXNKxc/xc5gBg==
+X-Google-Smtp-Source: ADKCNb46cvkaDSLf4YvY5hjgW6F0CC3S7xL/Z+DkAZsGzwfxHhohUJZpye95HXPRl+3nWUjgAEz/Tg==
+X-Received: by 10.84.232.76 with SMTP id f12mr21267358pln.297.1505339700643;
+        Wed, 13 Sep 2017 14:55:00 -0700 (PDT)
+Received: from roshar.svl.corp.google.com ([100.96.218.30])
+        by smtp.gmail.com with ESMTPSA id q13sm23152639pgt.87.2017.09.13.14.54.59
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 13 Sep 2017 14:54:59 -0700 (PDT)
+From:   Brandon Williams <bmwill@google.com>
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, sbeller@google.com, gitster@pobox.com,
+        jrnieder@gmail.com, bturner@atlassian.com, git@jeffhostetler.com,
+        jonathantanmy@google.com, Brandon Williams <bmwill@google.com>
+Subject: [PATCH 0/8] protocol transition
+Date:   Wed, 13 Sep 2017 14:54:40 -0700
+Message-Id: <20170913215448.84674-1-bmwill@google.com>
+X-Mailer: git-send-email 2.14.1.690.gbb1197296e-goog
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Here is the non-RFC version of of my proposed protocol transition plan which
+can be found here:
+https://public-inbox.org/git/20170824225328.8174-1-bmwill@google.com/
 
-> Treating generation numbers as derived data (as in Jeff King's
-> preferred design, if I have understood his replies correctly) would
-> also be possible but it does not interact well with shallow clone or
-> narrow clone.
+The main take away from the comments on the RFC were that the first transition
+shouldn't be drastic, so this patch set introduces protocol v1 which is simply
+protocol v0 (which is what I'm calling the current git wire protocol) with a
+single pkt-line containing a version string before the ref advertisement.
 
-Just like we have skewed committer timestamps, there is no reason to
-believe that generation numbers embedded in objects are trustable,
-and there is no way for narrow clients to even verify their correctness.
+I have included tests for protocol version 1 to verify that it works with the
+following transports: git://, file://, ssh://, and http://.  I have also
+included an interop test to ensure that sending the version request out of band
+doesn't cause issues with older servers.
 
-So I agree with Peff that having generation numbers in object is
-pointless; I agree any other derivables like corresponding sha-1
-name is also pointless to have.
+Any and all comments and feedback are welcome, thanks!
 
-This is a tangent, but it may be fine for a shallow clone to treat
-the cut-off points in the history as if they are root commits and
-compute generation numbers locally, just like everybody else does.
-As generation numbers won't have to be global (because we will not
-be embedding them in objects), nobody gets hurt if they do not match
-across repositories---just like often-mentioned rename detection
-cache, it can be kept as a mere local performance aid and does not
-have to participate in the object model.
+Brandon Williams (8):
+  pkt-line: add packet_write function
+  protocol: introduce protocol extention mechanisms
+  daemon: recognize hidden request arguments
+  upload-pack, receive-pack: introduce protocol version 1
+  connect: teach client to recognize v1 server response
+  connect: tell server that the client understands v1
+  http: tell server that the client understands v1
+  i5700: add interop test for protocol transition
 
-> All that said, for simplicity I still lean against including
-> generation numbers as part of a hash function transition.
+ Documentation/config.txt               |  16 ++
+ Documentation/git.txt                  |   5 +
+ Makefile                               |   1 +
+ builtin/receive-pack.c                 |  14 ++
+ cache.h                                |   9 +
+ connect.c                              |  59 ++++++-
+ daemon.c                               |  71 ++++++--
+ http.c                                 |  18 ++
+ pkt-line.c                             |   6 +
+ pkt-line.h                             |   1 +
+ protocol.c                             |  72 ++++++++
+ protocol.h                             |  15 ++
+ t/interop/i5700-protocol-transition.sh |  68 ++++++++
+ t/lib-httpd/apache.conf                |   7 +
+ t/t5700-protocol-v1.sh                 | 292 +++++++++++++++++++++++++++++++++
+ upload-pack.c                          |  17 +-
+ 16 files changed, 655 insertions(+), 16 deletions(-)
+ create mode 100644 protocol.c
+ create mode 100644 protocol.h
+ create mode 100755 t/interop/i5700-protocol-transition.sh
+ create mode 100755 t/t5700-protocol-v1.sh
 
-Good.
+-- 
+2.14.1.690.gbb1197296e-goog
 
-> This is unrelated to Brandon's message, except for his use of SHA3 as
-> a placeholder for "the next hash function".
->
-> My assumption based on previous conversations (and other external
-> conversations like [1]) is that we are going to use SHA2-256 and have
-> a pretty strong consensus for that.  Don't worry!
-
-Hmph, I actually re-read the thread recently, and my impression was
-that we didn't quite have a consensus but were leaning towards
-SHA3-256.
-
-I do not personally have a strong preference myself and I would say
-that anything will do as long as it is with good longevity and
-availability.  SHA2 family would be a fine choice due to its age on
-both counts, being scrutinized longer and having a chance to be
-implemented in many places, even though its age itself may have to
-be subtracted from the longevity factor.
-
-Thanks.
