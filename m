@@ -2,125 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5445520286
-	for <e@80x24.org>; Wed, 13 Sep 2017 18:24:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C03CB20286
+	for <e@80x24.org>; Wed, 13 Sep 2017 18:37:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751153AbdIMSYf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Sep 2017 14:24:35 -0400
-Received: from mail-pg0-f41.google.com ([74.125.83.41]:43402 "EHLO
-        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751128AbdIMSYe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Sep 2017 14:24:34 -0400
-Received: by mail-pg0-f41.google.com with SMTP id u18so1901309pgo.0
-        for <git@vger.kernel.org>; Wed, 13 Sep 2017 11:24:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ETaLrCsfG80ZQ+rsbDhcwHes2IHzO5gittpKqg1ZCCw=;
-        b=QmeispiEPnEIta6+XKScA7k681b8H+iynTqMwdH0X5ab9BvBMSn7NvJKwbcOcrtpDc
-         zLvrWzj1/NVr77xZcxFSRvDFFfiVmLBsXqLMuQBJd0XNSaZ5eSji25V+GChm6bfuUSnJ
-         +7lDplS3XUOuvgTxqJ4odDGDengu6Bob6oSTComC/q1FyFazuBIdaFPazVexZqf9kLCT
-         vDGy2cJDC4p/3zhVTSQ57kouagt61WVxEWNuCwx+2Ajzclk9GzyoQpNdbkpYiiZ8XZaJ
-         ckg20h81iTDscnoKmuX0TcPNTzHwhAGJv55i1kPYpkdi/stN/EzfxeM0v4j+QfiQHal2
-         hB2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ETaLrCsfG80ZQ+rsbDhcwHes2IHzO5gittpKqg1ZCCw=;
-        b=dZG20grr3k9ru3l++3tAGCPvvKh1IZoxqJWDAPpzr5woC28SdlGE0Eu0VR+hv1EmSm
-         h6naxu3IQVemaBUyBXtkZb32IrRLqW2VSXCvJmc0CHjTAlrCmO/ZHKuu4TmJNeOenAHk
-         uQwHTrdSx4bQw+uxjANsMiQsgiLsjgxX8iJLtODQ4AnqoAidrX/+SxBqnj/8pBDIXPVs
-         Fl3MVU+lbTydNAO8p4+3OEhc6Df9czXxSkGhuF++tLp1tWWJvZjhOMshdLU2LniAg1IP
-         FlrmX27QFZbjzZ7HE0OTcWzJEQqEBQktSoP26u355fkFwuyYdM2HwiZxyW/KqOU3+czT
-         +gnA==
-X-Gm-Message-State: AHPjjUgC0g13GEn1urNSYT2ruUVsppDdZZRWahWVK/YSph6CfP8H1MOJ
-        pQo2XsbtfomYKuY1pCg=
-X-Google-Smtp-Source: ADKCNb7VQqnxL4dGt+wFJ+NZiCo/+sbGlv3eToDAfe9JatugHerAUziEAuMwC+F4xVq0CU1+0RzlIQ==
-X-Received: by 10.84.218.7 with SMTP id q7mr21770928pli.111.1505327073312;
-        Wed, 13 Sep 2017 11:24:33 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:d132:98b:3ff1:a635])
-        by smtp.gmail.com with ESMTPSA id n19sm27207927pfj.114.2017.09.13.11.24.32
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 13 Sep 2017 11:24:32 -0700 (PDT)
-Date:   Wed, 13 Sep 2017 11:24:31 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeff King <peff@peff.net>
+        id S1751887AbdIMShD (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Sep 2017 14:37:03 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37414 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751148AbdIMShD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Sep 2017 14:37:03 -0400
+Received: (qmail 28280 invoked by uid 109); 13 Sep 2017 18:37:02 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 13 Sep 2017 18:37:02 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 18505 invoked by uid 111); 13 Sep 2017 18:37:37 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
+ by peff.net (qpsmtpd/0.94) with SMTP; Wed, 13 Sep 2017 14:37:37 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Sep 2017 14:37:00 -0400
+Date:   Wed, 13 Sep 2017 14:37:00 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Nieder <jrnieder@gmail.com>
 Cc:     demerphq <demerphq@gmail.com>, Git <git@vger.kernel.org>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v2] config: avoid "write_in_full(fd, buf, len) < len"
- pattern
-Message-ID: <20170913182431.GE27425@aiede.mtv.corp.google.com>
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 2/7] get-tar-commit-id: check write_in_full() return
+ against 0
+Message-ID: <20170913183700.amtrquhg66hjrbsp@sigill.intra.peff.net>
 References: <20170913170807.cyx7rrpoyhaauvol@sigill.intra.peff.net>
- <20170913171104.yu7ags4aq2zdwz6r@sigill.intra.peff.net>
- <20170913181515.p7u2ouine3ysblqc@sigill.intra.peff.net>
+ <20170913171127.ocnitq6wz57ivhrh@sigill.intra.peff.net>
+ <20170913175357.GC27425@aiede.mtv.corp.google.com>
+ <20170913180232.luxcnx7fbcpbt7bw@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170913181515.p7u2ouine3ysblqc@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20170913180232.luxcnx7fbcpbt7bw@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
+On Wed, Sep 13, 2017 at 02:02:32PM -0400, Jeff King wrote:
 
-> What I missed is that copy_begin and copy_end here are actually size_t
-> variables, not the pointers. Sorry for the confusion, and here's an
-> updated version of the patch with this paragraph amended (the patch
-> itself is identical):
-
-Subtle.  The world makes more sense now.  Thanks for figuring it out.
-
-> -- >8 --
-> Subject: [PATCH] config: avoid "write_in_full(fd, buf, len) < len" pattern
+> > Does read_in_full need a similar treatment?
 > 
-> The return type of write_in_full() is a signed ssize_t,
-> because we may return "-1" on failure (even if we succeeded
-> in writing some bytes). But "len" itself is may be an
-> unsigned type (the function takes a size_t, but of course we
-> may have something else in the calling function). So while
-> it seems like:
->
->   if (write_in_full(fd, buf, len) < len)
-> 	die_errno("write error");
->
-> would trigger on error, it won't if "len" is unsigned.  The
-> compiler sees a signed/unsigned comparison and promotes the
-> signed value, resulting in (size_t)-1, the highest possible
-> size_t (or again, whatever type the caller has). This cannot
-> possibly be smaller than "len", and so the conditional can
-> never trigger.
->
-> I scoured the code base for cases of this, but it turns out
-> that these two in git_config_set_multivar_in_file_gently()
-> are the only ones. Here our "len" is the difference between
-> two size_t variables, making the result an unsigned size_t.
-> We can fix this by just checking for a negative return value
-> directly, as write_in_full() will never return any value
-> except -1 or the full count.
-[...]
-> Reported-by: demerphq <demerphq@gmail.com>
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
+> It might actually return fewer than the requested number of bytes, so it
+> can't just use "< 0" in the same way (nor be adapted to return 0 on
+> success).  But I think it's still a bug to do:
+> 
+>   char buf[20];
+>   size_t len = sizeof(buf);
+>   if (read_in_full(fd, buf, len) < len)
+>           die(...);
+> 
+> since that will promote the -1 to a size_t. So it's probably worth
+> auditing.
 
-For what it's worth,
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+I looked it over and found one potentially buggy case. In
+read-pack_header(), we do:
 
-Thank you.
+          if (read_in_full(fd, header, sizeof(*header)) < sizeof(*header))
+                  /* "eof before pack header was fully read" */
+                  return PH_ERROR_EOF;
 
-Compilers' signed/unsigned comparison warning can be noisy, but I'm
-starting to feel it's worth the suppression noise to turn it on when
-DEVELOPER=1 anyway.  What do you think?  Is there a way to turn it on
-selectively for certain functions on the LHS (like read() and write()
-style functions)?
+which will treat a read error as a silent success. I don't think it's
+harmful in practice because the next line checks that the header
+matches the PACK signature (which yes, means we're reading uninitialized
+bytes, but the chances are 1 in 2^32 that they match the signature.
+Unless the buffer had an old PACK signature in it, of course ;) ).
 
-Sincerely,
-Jonathan
+There's one other harmless "< len" check. There are a bunch of "!="
+checks which are OK as-is. Converting them to something equally short is
+hard, though we could introduce a helper similar to your write_fully(),
+like:
+
+  int read_exactly(int fd, char *buf, size_t len)
+  {
+	ssize_t ret = read_in_full(fd, buf, len);
+	if (ret < 0)
+		return -1; /* real error */
+	else if (ret < len)
+		return -1; /* early eof */
+	return 0;
+  }
+
+But the trouble is that a _good_ caller actually handles those cases
+separately to provide better error messages (by doing that same
+if-cascade themselves). If those if's were turned into error() or die()
+calls, then we'd actually be improving the callsites. But of course not
+all of them actually print an error or die. And when they do, they
+usually say something specific about _what_ they were trying to read.
+
+So it may not be worth trying to do a mass-cleanup in the same way here.
+
+-Peff
