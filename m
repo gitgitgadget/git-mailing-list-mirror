@@ -6,26 +6,26 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 738E320286
-	for <e@80x24.org>; Wed, 13 Sep 2017 17:16:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B8FB320286
+	for <e@80x24.org>; Wed, 13 Sep 2017 17:16:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751364AbdIMRQn (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Sep 2017 13:16:43 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:45708 "EHLO
-        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751125AbdIMRQf (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 13 Sep 2017 13:16:35 -0400
-X-AuditID: 12074413-3a3ff70000007929-49-59b967f28ad0
+        id S1751369AbdIMRQo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Sep 2017 13:16:44 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:62784 "EHLO
+        alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751279AbdIMRQh (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 13 Sep 2017 13:16:37 -0400
+X-AuditID: 1207440e-bf9ff70000007085-da-59b967f46d78
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id E9.25.31017.2F769B95; Wed, 13 Sep 2017 13:16:34 -0400 (EDT)
+        by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 5E.8E.28805.4F769B95; Wed, 13 Sep 2017 13:16:36 -0400 (EDT)
 Received: from bagpipes.fritz.box (p57BCC855.dip0.t-ipconnect.de [87.188.200.85])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v8DHGIiU001379
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v8DHGIiV001379
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Wed, 13 Sep 2017 13:16:33 -0400
+        Wed, 13 Sep 2017 13:16:35 -0400
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -34,102 +34,106 @@ Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Brandon Williams <bmwill@google.com>,
         git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 06/20] read_packed_refs(): only check for a header at the top of the file
-Date:   Wed, 13 Sep 2017 19:16:00 +0200
-Message-Id: <a1d50f3a452873f3d845742d378887aac14f7cb6.1505319366.git.mhagger@alum.mit.edu>
+Subject: [PATCH 07/20] read_packed_refs(): make parsing of the header line more robust
+Date:   Wed, 13 Sep 2017 19:16:01 +0200
+Message-Id: <0cc2a9af0eeeb2ffbf1942d19fbcceb0c0cf6d5c.1505319366.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.14.1
 In-Reply-To: <cover.1505319366.git.mhagger@alum.mit.edu>
 References: <cover.1505319366.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrCIsWRmVeSWpSXmKPExsUixO6iqPspfWekwbx+I4u1z+4wWTxff4Ld
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrCIsWRmVeSWpSXmKPExsUixO6iqPslfWekwcVmW4u1z+4wWTxff4Ld
         outKN5NFQ+8VZovbK+YzW3RPecto8aOlh9li8+Z2FgcOj7/vPzB57Jx1l91jwaZSj2e9exg9
-        Ll5S9vi8SS6ALYrLJiU1J7MstUjfLoEr4+q7C0wFNwQrVi59ytzA+I63i5GTQ0LARGLPnAOM
-        XYxcHEICO5gkGhcfZgFJCAmcZJK42yEPYrMJ6Eos6mlmArFFBNQkJrYdYgFpYBZ4yiSx8+Rd
-        VpCEsECkxK9Hn8FsFgFViWOv9jOD2LwCURJPen8zQmyTlzj34DZYnFPAQmLjjieMEMvMJRrn
-        7GScwMizgJFhFaNcYk5prm5uYmZOcWqybnFyYl5eapGuuV5uZoleakrpJkZIgAnvYNx1Uu4Q
-        owAHoxIPr4XNzkgh1sSy4srcQ4ySHExKorx7dYFCfEn5KZUZicUZ8UWlOanFhxglOJiVRHiD
-        ooByvCmJlVWpRfkwKWkOFiVxXrUl6n5CAumJJanZqakFqUUwWRkODiUJXidgJAkJFqWmp1ak
-        ZeaUIKSZODhBhvMADRcEqeEtLkjMLc5Mh8ifYtTl6Lh59w+TEEtefl6qlDjv31SgIgGQoozS
-        PLg5sMTwilEc6C1h3mNpQFU8wKQCN+kV0BImoCVnTu8AWVKSiJCSamDMjgy25s28IPdz+uSg
-        QKnt1z5eseTzunkiXONiW9ksr21Ry5dVi4fbh/EJ/H+802RO6W2W0+UaAmLlm87tzvM7c+po
-        +9ne93Ham3lj0qTTb2h5ceeseSZ0KXzxX0PlH7WWbz8u0m2e8ezPoS06Dj/O3+tvaJxmF378
-        yiPmuyxT9HfVu/7faWGqxFKckWioxVxUnAgATF9l2+cCAAA=
+        Ll5S9vi8SS6ALYrLJiU1J7MstUjfLoEr4+LbH6wFM8UrTk/9yNjAeEKoi5GTQ0LARKJ/+TE2
+        EFtIYAeTxP0O1y5GLiD7JJNEz+4WRpAEm4CuxKKeZiYQW0RATWJi2yEWkCJmgadMEjtP3mUF
+        SQgLhElsfH+fBcRmEVCVuH/9DVgzr0CUxJuGHkaIbfIS5x7cZgaxOQUsJDbueMIIsdlconHO
+        TsYJjDwLGBlWMcol5pTm6uYmZuYUpybrFicn5uWlFuka6+VmluilppRuYoQEGN8Oxvb1MocY
+        BTgYlXh4LWx2RgqxJpYVV+YeYpTkYFIS5d2rCxTiS8pPqcxILM6ILyrNSS0+xCjBwawkwhsU
+        BZTjTUmsrEotyodJSXOwKInzqi1R9xMSSE8sSc1OTS1ILYLJynBwKEnwOgEjSUiwKDU9tSIt
+        M6cEIc3EwQkynAdouCBIDW9xQWJucWY6RP4Uoy5Hx827f5iEWPLy81KlxHn/pgIVCYAUZZTm
+        wc2BJYZXjOJAbwnz2oOM4gEmFbhJr4CWMAEtOXN6B8iSkkSElFQDo7tF2RbzNh7dmoM3VpbO
+        UHLbNnHygzs6K8Ii3wR82fzw14tVK1q+trx5uOSx84JHWxyEAz7mbPmeer7jWVpmVaLKh0Dv
+        AtW5/+67RdWrn2l0j9zd9euooa+4zEezB+smP0gLDFtYsXvNS77alralrR7hey8qaBhUza/N
+        9PjcZrTAqTz1eNjdjUosxRmJhlrMRcWJABKfoZTnAgAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This tightens up the parsing a bit; previously, stray header-looking
-lines would have been processed.
+The old code parsed the traits in the `packed-refs` header by looking
+for the string " trait " (i.e., the name of the trait with a space on
+either side) in the header line. This is fragile, because if any other
+implementation of Git forgets to write the trailing space, the last
+trait would silently be ignored (and the error might never be
+noticed).
+
+So instead, use `string_list_split_in_place()` to split the traits
+into tokens then use `unsorted_string_list_has_string()` to look for
+the tokens we are interested in. This means that we can read the
+traits correctly even if the header line is missing a trailing
+space (or indeed, if it is missing the space after the colon, or if it
+has multiple spaces somewhere).
+
+However, older Git clients (and perhaps other Git implementations)
+still require the surrounding spaces, so we still have to output the
+header with a trailing space.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs/packed-backend.c | 35 ++++++++++++++++++++++++-----------
- 1 file changed, 24 insertions(+), 11 deletions(-)
+ refs/packed-backend.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
 diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 154abbd83a..141f02b9c8 100644
+index 141f02b9c8..a45e3ff92f 100644
 --- a/refs/packed-backend.c
 +++ b/refs/packed-backend.c
-@@ -255,11 +255,34 @@ static struct packed_ref_cache *read_packed_refs(struct packed_ref_store *refs)
- 	pos = buf;
- 	eof = buf + size;
+@@ -257,25 +257,30 @@ static struct packed_ref_cache *read_packed_refs(struct packed_ref_store *refs)
  
-+	/* If the file has a header line, process it: */
-+	if (pos < eof && *pos == '#') {
-+		const char *traits;
-+
-+		eol = memchr(pos, '\n', eof - pos);
-+		if (!eol)
-+			die_unterminated_line(refs->path, pos, eof - pos);
-+
-+		strbuf_add(&line, pos, eol + 1 - pos);
-+
-+		if (!skip_prefix(line.buf, "# pack-refs with:", &traits))
-+			die_invalid_line(refs->path, pos, eof - pos);
-+
-+		if (strstr(traits, " fully-peeled "))
-+			peeled = PEELED_FULLY;
-+		else if (strstr(traits, " peeled "))
-+			peeled = PEELED_TAGS;
-+		/* perhaps other traits later as well */
-+
-+		/* The "+ 1" is for the LF character. */
-+		pos = eol + 1;
-+		strbuf_reset(&line);
-+	}
-+
- 	dir = get_ref_dir(packed_refs->cache->root);
- 	while (pos < eof) {
- 		struct object_id oid;
- 		const char *refname;
+ 	/* If the file has a header line, process it: */
+ 	if (pos < eof && *pos == '#') {
 -		const char *traits;
++		char *p;
++		struct string_list traits = STRING_LIST_INIT_NODUP;
  
  		eol = memchr(pos, '\n', eof - pos);
  		if (!eol)
-@@ -267,15 +290,6 @@ static struct packed_ref_cache *read_packed_refs(struct packed_ref_store *refs)
+ 			die_unterminated_line(refs->path, pos, eof - pos);
  
- 		strbuf_add(&line, pos, eol + 1 - pos);
+-		strbuf_add(&line, pos, eol + 1 - pos);
++		strbuf_add(&line, pos, eol - pos);
  
--		if (skip_prefix(line.buf, "# pack-refs with:", &traits)) {
--			if (strstr(traits, " fully-peeled "))
--				peeled = PEELED_FULLY;
--			else if (strstr(traits, " peeled "))
--				peeled = PEELED_TAGS;
--			/* perhaps other traits later as well */
--			goto next_line;
--		}
--
- 		refname = parse_ref_line(&line, &oid);
- 		if (refname) {
- 			int flag = REF_ISPACKED;
-@@ -307,7 +321,6 @@ static struct packed_ref_cache *read_packed_refs(struct packed_ref_store *refs)
- 			die_invalid_line(refs->path, line.buf, line.len);
- 		}
+-		if (!skip_prefix(line.buf, "# pack-refs with:", &traits))
++		if (!skip_prefix(line.buf, "# pack-refs with:", (const char **)&p))
+ 			die_invalid_line(refs->path, pos, eof - pos);
  
--	next_line:
+-		if (strstr(traits, " fully-peeled "))
++		string_list_split_in_place(&traits, p, ' ', -1);
++
++		if (unsorted_string_list_has_string(&traits, "fully-peeled"))
+ 			peeled = PEELED_FULLY;
+-		else if (strstr(traits, " peeled "))
++		else if (unsorted_string_list_has_string(&traits, "peeled"))
+ 			peeled = PEELED_TAGS;
+ 		/* perhaps other traits later as well */
+ 
  		/* The "+ 1" is for the LF character. */
  		pos = eol + 1;
++
++		string_list_clear(&traits, 0);
  		strbuf_reset(&line);
+ 	}
+ 
+@@ -610,7 +615,11 @@ int packed_refs_is_locked(struct ref_store *ref_store)
+ 
+ /*
+  * The packed-refs header line that we write out.  Perhaps other
+- * traits will be added later.  The trailing space is required.
++ * traits will be added later.
++ *
++ * Note that earlier versions of Git used to parse these traits by
++ * looking for " trait " in the line. For this reason, the space after
++ * the colon and the trailing space are required.
+  */
+ static const char PACKED_REFS_HEADER[] =
+ 	"# pack-refs with: peeled fully-peeled \n";
 -- 
 2.14.1
 
