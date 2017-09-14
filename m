@@ -2,83 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 52A6720A21
-	for <e@80x24.org>; Thu, 14 Sep 2017 13:15:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D0B07209B8
+	for <e@80x24.org>; Thu, 14 Sep 2017 13:49:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751455AbdINNPo (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Sep 2017 09:15:44 -0400
-Received: from mout.kundenserver.de ([212.227.126.135]:51140 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751131AbdINNPj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Sep 2017 09:15:39 -0400
-Received: from localhost ([130.75.46.4]) by mrelayeu.kundenserver.de (mreue001
- [212.227.15.167]) with ESMTPSA (Nemesis) id 0MYGYa-1dx0D12syW-00Uuv8; Thu, 14
- Sep 2017 15:15:27 +0200
-From:   Michael J Gruber <git@grubix.eu>
-To:     git@vger.kernel.org
-Cc:     Ekelhart Jakob <jakob.ekelhart@fsw.at>,
+        id S1751445AbdINNt2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Sep 2017 09:49:28 -0400
+Received: from mout.gmx.net ([212.227.15.18]:50112 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751133AbdINNt1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Sep 2017 09:49:27 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MfVU3-1e3IOd0rIh-00P2nX; Thu, 14
+ Sep 2017 15:49:16 +0200
+Date:   Thu, 14 Sep 2017 15:49:14 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Michael J Gruber <git@grubix.eu>
+cc:     git@vger.kernel.org, Ekelhart Jakob <jakob.ekelhart@fsw.at>,
         Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: [PATCH 1/3] t6010: test actual test output
-Date:   Thu, 14 Sep 2017 15:15:18 +0200
-Message-Id: <80f7dcfaa9162dc795f8c072effea44fa83ea196.1505394278.git.git@grubix.eu>
-X-Mailer: git-send-email 2.14.1.712.gda4591c8a2
-In-Reply-To: <68633b20-9e2b-ae23-2ede-8728283250f0@grubix.eu>
-References: <68633b20-9e2b-ae23-2ede-8728283250f0@grubix.eu>
+Subject: Re: [PATCH 0/3] merge-base --fork-point fixes
 In-Reply-To: <cover.1505394278.git.git@grubix.eu>
-References: <cover.1505394278.git.git@grubix.eu>
-X-Provags-ID: V03:K0:pyQ7HvOl+ZDLnWdRhmh+7ojoTwet5sStkcJI7I7oDd74Pi+zqJa
- huC7Gd9qpPfyvvB1nj+eZ5nlS/LcxaluvPSfYPE7SQ5j/NZBIIRa21LDtvMkzofH0CDvjC7
- RyMFzyQSSC7CYDHOevjzni1bTHTieRqyOi/ebJFyF8n0g1YFyNcOXVzIHwGOE+P5rzR3409
- /yhkH+u3eLHuVuXiezNPw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:TSEX5NN/6Xo=:xo3bUxnEHYvozzhun2wNDQ
- 40Mprp1s1mS305IGgAByqd09c2WkxQfojzWXh8PJ/yfa0wSNN1138a927QYARuEtIRWGp8V7/
- N1OEIlL41EVLrkEN1f/mEYGCLgODx1cgWV5EtNXn3dWnUfa49e2uRcjRSR6Z3ya1DoFRDslIy
- uzEodLYIkhe3srdVVwuTN3AwXVZ3ghgIbui+8QphChK2n+2fZ1lmaxsmBBjFSDtvt/1OM5AD2
- bV+1kWgM9AbUkkiA/gIerIIN0/uE2IqeXknHq/AIqfSdy0ykMs2riSZY3b+0EJzI1K6pCjQ4u
- T+sHOq2KTiv3CqGzMY0mBC0RDugvl20m6if4By5YhcG3AP3WqLRIY0Xqvw2MZRzb3xM9TI0VV
- k+tYH/AmlCxtDQNAll982uNJFkCTrnRNHHYq7ufDa8R6wVpx5pm03LiYdjYtxKW8YDrNiHCDF
- hbEvF0XOSsNK3TofZAhu2uJP3bI7KX+HvIql81dMYnYt5iA8VagHVXKlSZz+03YWL9d3s1SGV
- mP+US6ExefqTRfNCQWV6Zfd+uQ5xQ/kijGbAsv3/iQK+mZAzMcmmUF8ZntqpF3mH1YtJ6xJZ2
- fXhGKGsFcsxYrhdU5Lu9WO2kn3eP8C3haTHk6l/iqOBvM8+OrfhUIeZNmr0E5T2nWn42NWaUb
- fQ1UAxJok4JhwmIrOeph2V0kKpgIRGvyuj+BCB1qlpTUadkzt7t+Cp6w76NquHuMyWtcVzxhB
- WSzJ4rp5DCPfB1QF0N2VGcnwiwlp67gxPEARcQ==
+Message-ID: <alpine.DEB.2.21.1.1709141547100.4132@virtualbox>
+References: <68633b20-9e2b-ae23-2ede-8728283250f0@grubix.eu> <cover.1505394278.git.git@grubix.eu>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:/EaDAPYaKPeodgzwcCzStlRxrquAmqNmceMez5oHNYsvaPz51hs
+ pOJYVIvcktKV2geyep9GijWsvl3427PJ6wcZJuFsTZCW0i/hkD4mVfz2/DpHlzSCLFV+ONv
+ 0sL51ak3RJCC1z0i1ufe0H2OUi8W6hlzmES3FSUfwDZiFQkkiX3jjmJSTBjtrSD+6cwZ8PG
+ pMbXCXYpk6CUqOqIHKccg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:tXH985R5/6s=:HgGRE7Kvr1O1J6BfM9kRS9
+ e4RG5rSEpyxmsglOcuMqsYIBy0IF5+ZwYpc/cUrCMMm0cRzV/4WYNvfHULBoiJlO7pAIUaHkg
+ gtTaCeN7/0ne8rBRi1lyC+xYRMAHE/QEmbt+REKOJ1ofX1JR7vfMIT6Yk6JpACWYhd9RF05ED
+ suGnr1SZ7lUAOK3e52AKqywZsw0C0ElSxZFOJjy1e8pao6CkGqYcm1xyPNFbjIiLDifiqWAPs
+ 0JgThQuJfmpzYSsqKNv7ltbyxUggr1xCwWKh2oHpSXSMJHH9A9p4zYTPx09ZZHtBFTZOLCgGg
+ scVTHVPWcyU4+XBBB0Og6IQGrzAhaVLPxZzty3CDwsR6goDP5T0AhmaTQFYWgXMZzPa+iDtYL
+ zM5hyv7Dhq7QbyKXiFIUGeSt4NkjNBuW21QOTBLlu39bvU9nC6Ralulu9wnCy6gCBEDxIxkNB
+ pbXdIjgo6l1KTRBaAHm0NZLPlnJd5LuPk3/RgZ2MGLzAQ3jUjh3RvCBPaFjKyCGku3zjDdnll
+ 4oeBP7+waa45GZ6EttZEcrJEOemPmKkpZC3WFYgn98GxtBODpimuGuRPQKL47+AA+s3zn/SAH
+ kwFumPdVG0wZVLRwxr0iikffD06Pc7w4ZWi/xzrV36FMWGfijiKRWxB59V9BhrkUl72ZZ2FsA
+ YzQFRpmb9oSDquKNeDSGa+EcPhi08f6I3arPnWumA5cBTjPgTC/ejR4YiwLQsj3SRlsMcnvck
+ klvJwYnr74J48OcPhqSInH15r8CIhzqvaeNLBitoojJhQ4ZZlFCnmKWKgJTqlpWBwRkJckSaT
+ llcWIXwGXUstBs6qNBT0YCRKotvxeV1MSmBwVJ3lpwhYqPmU5c=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-4f21454b55 ("merge-base: handle --fork-point without reflog",
-2016-10-12) introduced a fix for merge-base --fork-point without reflog
-and a test. While that test is fine, it did not update expected nor actual
-output and tested that of the previous test instead.
+Hi Michael,
 
-Fix the test to test the merge-base output, not just its return code.
+On Thu, 14 Sep 2017, Michael J Gruber wrote:
 
-Signed-off-by: Michael J Gruber <git@grubix.eu>
----
- t/t6010-merge-base.sh | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+> merge-base --fork-point does not quite work as advertised when the
+> reflog is empty or partial. This series brings it in line with the
+> documentation and, hopefully, with the original intent.
 
-diff --git a/t/t6010-merge-base.sh b/t/t6010-merge-base.sh
-index 31db7b5f91..17fffd7998 100755
---- a/t/t6010-merge-base.sh
-+++ b/t/t6010-merge-base.sh
-@@ -262,8 +262,9 @@ test_expect_success 'using reflog to find the fork point' '
- 
- test_expect_success '--fork-point works with empty reflog' '
- 	git -c core.logallrefupdates=false branch no-reflog base &&
--	git merge-base --fork-point no-reflog derived &&
--	test_cmp expect3 actual
-+	git rev-parse base >expect &&
-+	git merge-base --fork-point no-reflog derived >actual &&
-+	test_cmp expect actual
- '
- 
- test_expect_success 'merge-base --octopus --all for complex tree' '
--- 
-2.14.1.712.gda4591c8a2
+Thank you so much for working on this. I recently tried to use
+--fork-point in a script of mine and it failed in this surprising way,
+too. So here's hoping for this patch series being accepted quickly (and
+sorry in advance for not having time to review...).
 
+Ciao,
+Dscho
