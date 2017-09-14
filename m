@@ -2,113 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 50DC5209B8
-	for <e@80x24.org>; Thu, 14 Sep 2017 12:23:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D6F39209B8
+	for <e@80x24.org>; Thu, 14 Sep 2017 12:40:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751612AbdINMXl (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Sep 2017 08:23:41 -0400
-Received: from cloud.peff.net ([104.130.231.41]:38546 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751516AbdINMXl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Sep 2017 08:23:41 -0400
-Received: (qmail 15689 invoked by uid 109); 14 Sep 2017 12:23:40 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 14 Sep 2017 12:23:40 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26834 invoked by uid 111); 14 Sep 2017 12:24:16 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
- by peff.net (qpsmtpd/0.94) with SMTP; Thu, 14 Sep 2017 08:24:16 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Sep 2017 08:23:38 -0400
-Date:   Thu, 14 Sep 2017 08:23:38 -0400
-From:   Jeff King <peff@peff.net>
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Git Mailing list <git@vger.kernel.org>
-Subject: Re: how to remove from history just *one* version of a file/dir?
-Message-ID: <20170914122338.4vlgx2rjr4mk62rh@sigill.intra.peff.net>
-References: <alpine.LFD.2.21.1709140721130.19770@localhost.localdomain>
+        id S1751936AbdINMkO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Sep 2017 08:40:14 -0400
+Received: from mout.gmx.net ([212.227.17.21]:59888 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751618AbdINMkN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Sep 2017 08:40:13 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MIQlv-1dr67E1Nuh-004Ccb; Thu, 14
+ Sep 2017 14:39:43 +0200
+Date:   Thu, 14 Sep 2017 14:39:39 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Jonathan Nieder <jrnieder@gmail.com>
+cc:     Brandon Williams <bmwill@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>, jonathantanmy@google.com,
+        Jeff King <peff@peff.net>, David Lang <david@lang.hm>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: RFC v3: Another proposed hash function transition plan
+In-Reply-To: <20170913163052.GA27425@aiede.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1709141119140.4132@virtualbox>
+References: <20170304011251.GA26789@aiede.mtv.corp.google.com> <CA+55aFz+gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com> <20170307001709.GC26789@aiede.mtv.corp.google.com> <xmqqa828733s.fsf@gitster.mtv.corp.google.com> <xmqq1snh29re.fsf@gitster.mtv.corp.google.com>
+ <20170911185913.GA5869@google.com> <alpine.DEB.2.21.1.1709131340030.4132@virtualbox> <20170913163052.GA27425@aiede.mtv.corp.google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.21.1709140721130.19770@localhost.localdomain>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:FcUCcpBz7BE77A8sK+HatAN+IwSCUUL4qmAKf6xgNKMsYjMG62L
+ z3TEOBGDeMAoxWkTorxjaXpYkiXv/GUxcPBOgR75IVSM7bcsqTKnQNBNBeXmN75V41yHbow
+ mUNucG5uPQMa4mjTEE8Ecuy7Tq3gLZtISEy3UfHgetye6DCD3wsKFL7cL4zyspDFPx8PGRE
+ LZrzip3qG3uj/ZnHUNEJg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:taO4lN/G3Ao=:F3MnDXsMw5JauI/hpRUxDW
+ wdmWsfp+Onh+cEcnQlxDPCfzZuiB/WgOI6a912BaxpTBRgxX+48AFuOoes7zTyKmAZjZzJR0i
+ CCwaS8LsEDSRLztiCCSt4Ru1hARyBDTFQA7IThjnJAzSCN/zgcSFz/0lgbatla05W8nfxgvQb
+ K+ZG0dPR8hnncEtGEJMoaJjB+Rp8pUJBMnBJ2jX+eMH7QORsQDF089zsH6Vuh228ypB+JPU/3
+ 4HukrtCfPWBxnUsKJN/E0Mm9mx67HLtYNbcp9vIFK5EjQ1YmvMs/QfpAfVvyZob2wMs80NgHa
+ Qbarv2VIoYfbPK8T3vA41sqvbz5+UchvyzMPPMlw0cuQRJV6AsM8iltlmnG2GPIUPAXac927m
+ 2EECd9WlOX5Lsw/k+ADWrF1agzxI/2SRjv75tscZILat6uPcrhKITiG01JKI+mLk/U0RrHGz7
+ Tj5CwE9BXS5H/mK67Uj3zvJlu2r/iQTdy913wVURaqTyHvrluOfo4N6x4PvdkYOuVOZNaaqcu
+ z4c/un4BoDgUHQFJkydkearKh521u3ACSd1iiPszb/Pxq4zOsiuOOEXMOxS1vQDc5K5g6zv6U
+ kB7kCNnuydYvoOwuv5qldyjtOfXCNVjZ2dc/c5thdqM+KxXxgd1wAtKJQxDkVu4hU05QjTeuD
+ EKKa4tGbLkEapVA//cbUTrncQYsjdWy+/6gzqiMTcX4bpVsFEcK5IylkCspMJhDdcK2sO+aiB
+ xv9WBB8nQbI/tzNaBr/u4291G+TYlj+J2E/Wj1F9BY0b7PmJX7s9thv18gM1Ldu142AXkeWoO
+ 7bKkhTM+O2PpgRXxiQ14BtjnGjBeQsJWmSMrWGmyOcBUQoimaI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 14, 2017 at 07:32:11AM -0400, Robert P. J. Day wrote:
+Hi Jonathan,
 
->   [is this the right place to ask questions about git usage? or is
-> there a different forum where one can submit possibly embarrassingly
-> silly questions?]
+On Wed, 13 Sep 2017, Jonathan Nieder wrote:
 
-No, this is the right place for embarrassing questions. :)
+> As a side note, I am probably misreading, but I found this set of
+> paragraphs a bit condescending.  It sounds to me like you are saying
+> "You are making the wrong choice of hash function and everything else
+> you are describing is irrelevant when compared to that monumental
+> mistake.  Please stop working on things I don't consider important".
+> With that reading it is quite demotivating to read.
 
->   say, early on, one commits a sizable directory of content, call it
-> /mydir. that directory sits there for a while until it becomes obvious
-> it's out of date and worthless and should never have been committed.
-> the obvious solution would seem to be:
-> 
->   $ git filter-branch --tree-filter 'rm -rf /mydir' HEAD
-> 
-> correct?
+I am sorry you read it that way. I did not feel condescending when I wrote
+that mail, I felt annoyed by the side track, and anxious. In my mind, the
+transition is too important for side tracking, and I worry that we are not
+fast enough (imagine what would happen if a better attack was discovered
+that is not as easily detected as the one we know about?).
 
-That would work, though note that using an --index-filter would be more
-efficient (since it avoids checking out each tree as it walks the
-history).
+> An alternative reading is that you are saying that the transition plan
+> described in this thread is not ironed out.  Can you spell that out
+> more?  What particular aspect of the transition plan (which is of
+> course orthogonal to the choice of hash function) are you discontent
+> with?
 
->   however, say one version of that directory was committed early on,
-> then later tossed for being useless with "git rm", and subsequently
-> replaced by newer content under exactly the same name. now i'd like to
-> go back and delete the history related to that early version of
-> /mydir, but not the second.
+My impression from reading Junio's mail was that he does not consider the
+transition plan ironed out yet, and that he wants to spend time on
+discussing generation numbers right now.
 
-Makes sense as a goal.
+I was in particularly frightened by the suggestion to "reboot" [*1*].
+Hopefully I misunderstand and he meant "finishing touches" instead.
 
->   obviously, i can't use the above command as it would delete both
-> versions. so it appears the solution would be a trivial application of
-> the "--commit-filter" option:
-> 
->    git filter-branch --commit-filter '
->      if [ "$GIT_COMMIT" = "<commit-id>" ] ; then
->        skip_commit "$@";
->      else
->        git commit-tree "$@";
->      fi' HEAD
-> 
-> where <commit-id> is the commit that introduced the first verrsion of
-> /mydir. do i have that right? is there a simpler way to do this?
+As to *my* opinion: after reading https://goo.gl/gh2Mzc (is it really
+correct that its last update has been on March 6th?), my only concern is
+really that it still talks about SHA3-256 when I think that the
+performance benefits of SHA-256 (think: "Git at scale", and also hardware
+support) really make the latter a better choice.
 
-No, this won't work. Filter-branch is not walking the history and
-applying the changes to each commit, like rebase does.  It's literally
-operating on each commit object, and recall that each commit object
-points to a tree that is a snapshot of the repository contents.
+In order to be "ironed out", I think we need to talk about the
+implementation detail "Translation table". This is important. It needs to
+be *fast*.
 
-So if you skip a commit, that commit itself goes away. But the commit
-after it (which didn't touch the unwanted contents) will still mention
-those contents in its tree.
+Speaking of *fast*, I could imagine that it would make sense to store the
+SHA-1 objects on disk, still, instead of converting them on the fly. I am
+not sure whether this is something we need to define in the document,
+though, as it may very well be premature optimization; Maybe mention that
+we could do this if necessary?
 
-I think you want to stick with a --tree-filter (or an --index-filter),
-but just selectively decide when to do the deletion. For example, if you
-can tell the difference between the two states based on the presence of
-some file, then perhaps:
+Apart from that, I would *love* to see this document as The Official Plan
+that I can Show To The Manager so that I can ask to Allocate Time.
 
-  git filter-branch --prune-empty --index-filter '
-	if git rev-parse --verify :dir/sentinel >/dev/null 2>&1
-	then
-	  git rm --cached -rf dir
-	fi
-  ' HEAD
+Ciao,
+Dscho
 
-The "--prune-empty" is optional, but will drop commits that become empty
-because they _only_ touched that directory.
-
-We use ":dir/sentinel" to see if the entry is in the index, because the
-index filter won't have the tree checked out. Likewise, we need to use
-"rm --cached" to just touch the index.
-
--Peff
+Footnote *1*:
+https://public-inbox.org/git/xmqqa828733s.fsf@gitster.mtv.corp.google.com/
