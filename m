@@ -2,146 +2,188 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E393520A21
-	for <e@80x24.org>; Thu, 14 Sep 2017 18:49:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 02F2020A21
+	for <e@80x24.org>; Thu, 14 Sep 2017 20:23:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751705AbdINStU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Sep 2017 14:49:20 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:51925 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751553AbdINStT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Sep 2017 14:49:19 -0400
-Received: by mail-pf0-f173.google.com with SMTP id b70so130649pfl.8
-        for <git@vger.kernel.org>; Thu, 14 Sep 2017 11:49:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=fmRwkEHLaUxsm68HLbW2sGfkpF5I1pOO2JtwS4zRxCE=;
-        b=oVFMHQg+FU+V/gx+vCWvQAGITpWmZ8krNCfmJEQUO/gAam3HXcj988KiXZ5tAbURFT
-         C+6ulzruV9eXgi47mOpPS23CFiT2SaCdTxeExiXiLqabFUGU7lLg9TIYqBninmUYlTmZ
-         a3NMCFOFL00IHatSG/JIuNYrxwjwmkzI2CSkJn5FLztkDOx8kunSDFGKfqgK5xqwQn86
-         rcS17b1/1RqenluyFh1EuzNw0P7MMa+aXzFVmB5oLz3ALhVIk73mhARwy3QB7rYAXnU/
-         DPL9+IKwWnGyBDhTziu2kJsur0Ibd+D3W6PeknL5iZV5USprUEqDu4XIr83FIEHIa5T8
-         vU8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=fmRwkEHLaUxsm68HLbW2sGfkpF5I1pOO2JtwS4zRxCE=;
-        b=ECPOHTKuowsZjdVHE+rlmpQl28rxrXrrIGrYG0wRNf8Be0l4MBY1ioNsdmcxGYGeM7
-         ZLoCQf1QHxb+5+5Ca9fTcO/MQ3V9ggSfw3HQGPkPy87yFxWfsmRZoJ/toAuLoRUEJFsj
-         XmuVq/yS3BfbXE6KORhNVzNuLEwN4CyqYapzeFIc3aRdIvm94LfIkagqN1O/kly3UJks
-         OXyupawvsqRYPHEevbvwktL/mSKuKDqdB9jTsYE/d7zBtTEyVo1RLmNjlb3Jc1LkLO+w
-         itSjMjJiNGMnDvwZWJ6wKojzKmpZf9u1Y2eg18tIhFJS7S3M7D/sNrEuza8pM0fxKaLN
-         OT4A==
-X-Gm-Message-State: AHPjjUiZHGeFUMJO3GIOJNzXR4Vxzhx88wZ+rNZV7OywIxqzX6VofjXj
-        S1ftYy4Q/lBszw==
-X-Google-Smtp-Source: ADKCNb7uV3vbX1EvStJ9DXmC4ZSYxKUoELknuhloptLhY/LEPWVngEw2zwMpF4qPcO4/DBKlMRbvtQ==
-X-Received: by 10.99.183.4 with SMTP id t4mr22149479pgf.128.1505414958309;
-        Thu, 14 Sep 2017 11:49:18 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:539:86cc:e014:7a2])
-        by smtp.gmail.com with ESMTPSA id n83sm33315006pfi.163.2017.09.14.11.49.17
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 14 Sep 2017 11:49:17 -0700 (PDT)
-Date:   Thu, 14 Sep 2017 11:49:15 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Brandon Williams <bmwill@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>, jonathantanmy@google.com,
-        Jeff King <peff@peff.net>, David Lang <david@lang.hm>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: RFC v3: Another proposed hash function transition plan
-Message-ID: <20170914184915.GC78683@aiede.mtv.corp.google.com>
-References: <20170304011251.GA26789@aiede.mtv.corp.google.com>
- <CA+55aFz+gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com>
- <20170307001709.GC26789@aiede.mtv.corp.google.com>
- <xmqqa828733s.fsf@gitster.mtv.corp.google.com>
- <xmqq1snh29re.fsf@gitster.mtv.corp.google.com>
- <20170911185913.GA5869@google.com>
- <alpine.DEB.2.21.1.1709131340030.4132@virtualbox>
- <20170913163052.GA27425@aiede.mtv.corp.google.com>
- <alpine.DEB.2.21.1.1709141119140.4132@virtualbox>
+        id S1751370AbdINUXw (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Sep 2017 16:23:52 -0400
+Received: from mout.gmx.net ([212.227.15.18]:53255 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751363AbdINUXv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Sep 2017 16:23:51 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Likl3-1dIQyM3brx-00cvZN; Thu, 14
+ Sep 2017 22:23:40 +0200
+Date:   Thu, 14 Sep 2017 22:23:37 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Brandon Williams <bmwill@google.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 00/20] Read `packed-refs` using mmap()
+In-Reply-To: <cover.1505319366.git.mhagger@alum.mit.edu>
+Message-ID: <alpine.DEB.2.21.1.1709142101560.4132@virtualbox>
+References: <cover.1505319366.git.mhagger@alum.mit.edu>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.21.1.1709141119140.4132@virtualbox>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:mK963s2pzZ4WiobOO82bqHv+6ln+icILilyyslZjwcDOoM5EQ8Y
+ wF5gv8sB5WOnntuUJ0RKVoZlRcFbZxAqek3gw7i3SBWn24/qEWGq2ehJhgd+Zvwqs/3VTC5
+ wBUp6rMcySWQJX0jX2vJOMMUMq+nGoxra4s/w3B6yFKiV6/nh0tGa4CpQ7JNaIhS0GXux91
+ 1gUrRYcFfx+tsDeX43Tzg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:fN/P26rpi/0=:gxkZaRAQ5HcvccJNig7o7z
+ qNyhC53K0HtJw6un1ff85dJDaJrJ87obFgIXuF7zX7j4wtiKLao9jKaxl1/2/xQ7o3dj9TqB8
+ QJHLSIRHVds61kHiSuB7Iz1CaSGG4U0lXZapNVDZRv7OtxIdsMBgixhkWHxZEI9oiXDjwu7ZI
+ ICImZolXuP3nOxmGHbyTilIxUh2FNJo74xk4l0nsP0vXo//AB3XDioYPnMwAJjqQgX/M/+CBn
+ Jp0/PUGbChEyEheJg0fgt9lMyv5vTx3VgWuQvB5NKBE+H5C07BRww7xstf3Tht26adfkptvPi
+ icjrecG8/jNNNWt7iSOYEjX2j8dho3WUFAF0GUf4J93q3ND0mZ4hEs0pGuR3/2PIbRoPtzmp+
+ y7h08bIWKHdTgeBvhkBnOvEsF17XivPIWJxQhjpENJPlPN0pIGgIAimfwW0z+9zOTgPhrspOg
+ 7kGxZuwXS4yNi6+Js0hRqaw8EzDD6N/FfF8/uNbf8nZEbR8DgfSXl8A257dIG2N3xG23kD2h/
+ qh9NwLWOE9nkfGtvh0ykFoo3pVp492v7+bpGblatPH9mYmM+np27HuwhJsYSk1RMzOkWOSkk4
+ xRFET0tx148PnCAXSnTkupg0pE/zQMc9fmSViyEq5/+ZMclJptXu+NvXGNC/b2DDptHNqusSO
+ 2URW0vNLJwkl1+8Yh3qvVgvkbYMOw/UGNWknhqJlSIe4Ooc2vkD7BOFwUXKzX3tsA7kYJg+uG
+ c5RebdZnQol3nubRLLKMBUrw5/0TLxSmuIf+lxg0amEfgS/3UqGdToS1BCKEMssc3KMy7tE1W
+ 0QgsSNtxzJrofA9uBx7zRdLYJOkUFwzMaui1KO9ImB+MKUefqY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin wrote:
-> On Wed, 13 Sep 2017, Jonathan Nieder wrote:
+Hi Michael,
 
->> As a side note, I am probably misreading, but I found this set of
->> paragraphs a bit condescending.  It sounds to me like you are saying
->> "You are making the wrong choice of hash function and everything else
->> you are describing is irrelevant when compared to that monumental
->> mistake.  Please stop working on things I don't consider important".
->> With that reading it is quite demotivating to read.
->
-> I am sorry you read it that way. I did not feel condescending when I wrote
-> that mail, I felt annoyed by the side track, and anxious. In my mind, the
-> transition is too important for side tracking, and I worry that we are not
-> fast enough (imagine what would happen if a better attack was discovered
-> that is not as easily detected as the one we know about?).
+On Wed, 13 Sep 2017, Michael Haggerty wrote:
 
-Thanks for clarifying.  That makes sense.
+> * `mmap()` the whole file rather than `read()`ing it.
 
-[...]
-> As to *my* opinion: after reading https://goo.gl/gh2Mzc (is it really
-> correct that its last update has been on March 6th?), my only concern is
-> really that it still talks about SHA3-256 when I think that the
-> performance benefits of SHA-256 (think: "Git at scale", and also hardware
-> support) really make the latter a better choice.
->
-> In order to be "ironed out", I think we need to talk about the
-> implementation detail "Translation table". This is important. It needs to
-> be *fast*.
->
-> Speaking of *fast*, I could imagine that it would make sense to store the
-> SHA-1 objects on disk, still, instead of converting them on the fly. I am
-> not sure whether this is something we need to define in the document,
-> though, as it may very well be premature optimization; Maybe mention that
-> we could do this if necessary?
->
-> Apart from that, I would *love* to see this document as The Official Plan
-> that I can Show To The Manager so that I can ask to Allocate Time.
+On Windows, a memory-mapped file cannot be renamed. As a consequence, the
+following tests fail on `pu`:
 
-Sounds promising!
+t1400-update-ref.sh
+t1404-update-ref-errors.sh
+t1405-main-ref-store.sh
+t1408-packed-refs.sh
+t1410-reflog.sh
+t1430-bad-ref-name.sh
+t1450-fsck.sh
+t1507-rev-parse-upstream.sh
+t2018-checkout-branch.sh
+t2020-checkout-detach.sh
+t2024-checkout-dwim.sh
+t3200-branch.sh
+t3204-branch-name-interpretation.sh
+t3210-pack-refs.sh
+t3211-peel-ref.sh
+t3306-notes-prune.sh
+t3400-rebase.sh
+t3404-rebase-interactive.sh
+t3420-rebase-autostash.sh
+t3903-stash.sh
+t3905-stash-include-untracked.sh
+t4151-am-abort.sh
+t5304-prune.sh
+t5312-prune-corruption.sh
+t5400-send-pack.sh
+t5404-tracking-branches.sh
+t5500-fetch-pack.sh
+t5505-remote.sh
+t5510-fetch.sh
+t5514-fetch-multiple.sh
+t5515-fetch-merge-logic.sh
+t5516-fetch-push.sh
+t5520-pull.sh
+t5533-push-cas.sh
+t5572-pull-submodule.sh
+t5600-clone-fail-cleanup.sh
+t5607-clone-bundle.sh
+t6016-rev-list-graph-simplify-history.sh
+t6030-bisect-porcelain.sh
+t6032-merge-large-rename.sh
+t6040-tracking-info.sh
+t6050-replace.sh
+t6500-gc.sh
+t6501-freshen-objects.sh
+t7003-filter-branch.sh
+t7004-tag.sh
+t7102-reset.sh
+t7201-co.sh
+t7406-submodule-update.sh
+t7504-commit-msg-hook.sh
+t7701-repack-unpack-unreachable.sh
+t9300-fast-import.sh
+t9902-completion.sh
+t9903-bash-prompt.sh
 
-Thanks much for this feedback.  This is very helpful for knowing what
-v4 of the doc needs.
+This diff:
 
-The discussion of the translation table in [1] didn't make it to the
-doc.  You're right that it needs to.
+-- snip --
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index f9c5e771bdd..ee8b3603624 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -1306,13 +1308,13 @@ static int packed_transaction_finish(struct
+ref_store *ref_store,
+ 	char *packed_refs_path;
+ 
+ 	packed_refs_path = get_locked_file_path(&refs->lock);
++	clear_snapshot(refs);
+ 	if (rename_tempfile(&refs->tempfile, packed_refs_path)) {
+ 		strbuf_addf(err, "error replacing %s: %s",
+ 			    refs->path, strerror(errno));
+ 		goto cleanup;
+ 	}
+ 
+-	clear_snapshot(refs);
+ 	ret = 0;
+ 
+ cleanup:
+-- snap --
 
-Caching SHA-1 objects (and the pros and cons involved) makes sense to
-mention in an "ideas for future work" section.
+reduces the failed tests to
 
-An implementation plan with well-defined pieces for people to take on
-and estimates of how much work each involves may be useful for Showing
-To The Manager.  So I'll include a sketch of that for reviewers to
-poke holes in, too.
+t1410-reflog.counts.sh
+t3210-pack-refs.counts.sh
+t3211-peel-ref.counts.sh
+t5505-remote.counts.sh
+t5510-fetch.counts.sh
+t5600-clone-fail-cleanup.counts.sh
 
-Another thing the doc doesn't currently describe is how Git protocol
-would work.  That's worth sketching in a "future work" section as
-well.
+However, much as I tried to wrap my head around it, I could not even start
+to come up with a solution for e.g. the t1410 regression. The failure
+happens in `git branch -d one/two`.
 
-Sorry it has been taking so long to get this out.  I think we should
-have something ready to send on Monday.
+The culprit: there is yet another unreleased snapshot while we try to
+finish the transaction.
 
-Thanks,
-Jonathan
+It is the snapshot of the main_worktree_ref_store as acquired by
+add_head_info() (which is called from get_main_worktree(), which in turn
+was called from get_worktrees(), in turn having been called from
+find_shared_symref() that was called from delete_branches()), and it seems
+to me that there was never any plan to have that released, including its
+snapshot.
 
-[1] https://public-inbox.org/git/CAJo=hJtoX9=AyLHHpUJS7fueV9ciZ_MNpnEPHUz8Whui6g9F0A@mail.gmail.com/
+And the snapshot gets initialized upon add_head_info() calling
+refs_resolve_ref_unsafe().
+
+Further down in the delete_branches() function, however, we call
+delete_ref() which in turn wants to overwrite the packed-refs file via an
+atomic rename. That rename fails now because there is still that main
+worktree's ref_store that has the snapshot mmap()ed .
+
+I imagine that the rest of the test failures stems from the same root
+cause.
+
+Do you have any idea how to ensure that all mmap()ed packed refs are
+released before attempting to finish a transaction?
+
+Ciao,
+Dscho
