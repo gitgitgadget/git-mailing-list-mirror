@@ -2,129 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 770C920A21
-	for <e@80x24.org>; Thu, 14 Sep 2017 18:40:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D512420A21
+	for <e@80x24.org>; Thu, 14 Sep 2017 18:46:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751660AbdINSk1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Sep 2017 14:40:27 -0400
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:51294 "EHLO
-        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751477AbdINSk0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Sep 2017 14:40:26 -0400
-Received: by mail-pf0-f179.google.com with SMTP id b70so118513pfl.8
-        for <git@vger.kernel.org>; Thu, 14 Sep 2017 11:40:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=HgS5k4ZD9O9PmWl72xecTu4+BC++7OlkWtJyKfGLuOs=;
-        b=sHqgt1LJa0VFq6VlebKTbjE5z4rJyKjmejg093Txzit3NKTk6+lkMT4+UOojioRPoG
-         ZtqXQZUL5JqhfcIdW7X7njL+nFsBjko465MTqNPOYwLW1DWySsg67kjZDeKG+vYKLc3H
-         cty9o1J0lDlBrzlQTLE0XRuDJsBOPXrhj0Aoc/qKnbVUEGqum4+/uMoXATUwWbuiJMVk
-         7LlnM7m+afHa5qgcloRCPKE5yINEdgiMI91cZsN45r08OTDoeedlVUz2Sl5RhmcvJ64e
-         Qo4CFLTvgUSoH9hOBNN77v+oDW2fZle8VVsYWyqtScXlaZPXx5Evh3CaT8i6EA5Yxouc
-         9Omg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=HgS5k4ZD9O9PmWl72xecTu4+BC++7OlkWtJyKfGLuOs=;
-        b=dmsqqEN+MvVTGavVGlA6mEIRXogsbDw5oF68Y+DOcefgVRVHLqyfsydZvw+hngo33K
-         3d+/00nEEuvhRLCQoXhrnCIyMdPMyaVGK1Blo7M3ab2fa2ytez9wDSQaiQ0IuyAVoLtC
-         N1Yf9QXyJbqEHb77nmzCZzv0sMNdKTM5CQJ94Vf6w8zxZtYb0f/FLE1gDLYsrZ6rWpfO
-         d02DiqNlTrf6V9Xt1tKxafx7It4Bccpe6zMcqcu9xhjn89kV9E+HSnwV6idOwZZjZ/x7
-         CokjgEvdJJiE5lIp7VBu8Q1JzktADKVB/CjX0GDK+kSRwqnZJqXulSMfT4ea4a8jJutj
-         n/+Q==
-X-Gm-Message-State: AHPjjUioxDnduuTNni3vwsahY17lNWZTfoHMtFVNADGMLYw+3V3pzeL2
-        U7ZP6Gm+6IZ6bA==
-X-Google-Smtp-Source: ADKCNb4H3JHtTYvJX6IcDcoM7cWg5jUhyJrAoixETkoGcM6sLVoLr2lfDmoz+LA2JiYzQBxIKSRUJA==
-X-Received: by 10.98.34.219 with SMTP id p88mr21886992pfj.121.1505414425519;
-        Thu, 14 Sep 2017 11:40:25 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:539:86cc:e014:7a2])
-        by smtp.gmail.com with ESMTPSA id b63sm32908552pga.27.2017.09.14.11.40.24
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 14 Sep 2017 11:40:24 -0700 (PDT)
-Date:   Thu, 14 Sep 2017 11:40:22 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     demerphq <demerphq@gmail.com>,
+        id S1751673AbdINSqH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Sep 2017 14:46:07 -0400
+Received: from mout.gmx.net ([212.227.17.20]:53304 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751626AbdINSqG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Sep 2017 14:46:06 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LnCkb-1dE0nG3wuz-00hPVU; Thu, 14
+ Sep 2017 20:45:40 +0200
+Date:   Thu, 14 Sep 2017 20:45:35 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+cc:     demerphq <demerphq@gmail.com>,
         Brandon Williams <bmwill@google.com>,
         Junio C Hamano <gitster@pobox.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>, jonathantanmy@google.com,
+        Stefan Beller <sbeller@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
         Jeff King <peff@peff.net>, David Lang <david@lang.hm>,
         "brian m. carlson" <sandals@crustytoothpaste.net>
 Subject: Re: RFC v3: Another proposed hash function transition plan
-Message-ID: <20170914184022.GB78683@aiede.mtv.corp.google.com>
-References: <20170304011251.GA26789@aiede.mtv.corp.google.com>
- <CA+55aFz+gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com>
- <20170307001709.GC26789@aiede.mtv.corp.google.com>
- <xmqqa828733s.fsf@gitster.mtv.corp.google.com>
- <xmqq1snh29re.fsf@gitster.mtv.corp.google.com>
- <20170911185913.GA5869@google.com>
- <alpine.DEB.2.21.1.1709131340030.4132@virtualbox>
- <CANgJU+Wv1nx79DJTDmYE=O7LUNA3LuRTJhXJn+y0L0C3R+YDEA@mail.gmail.com>
- <20170913225158.GR27425@aiede.mtv.corp.google.com>
- <alpine.DEB.2.21.1.1709141754240.4132@virtualbox>
+In-Reply-To: <CA+55aFwUn0KibpDQK2ZrxzXKOk8-aAub2nJZQqKCpq1ddhDcMQ@mail.gmail.com>
+Message-ID: <alpine.DEB.2.21.1.1709142037490.4132@virtualbox>
+References: <20170304011251.GA26789@aiede.mtv.corp.google.com> <CA+55aFz+gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com> <20170307001709.GC26789@aiede.mtv.corp.google.com> <xmqqa828733s.fsf@gitster.mtv.corp.google.com> <xmqq1snh29re.fsf@gitster.mtv.corp.google.com>
+ <20170911185913.GA5869@google.com> <alpine.DEB.2.21.1.1709131340030.4132@virtualbox> <CANgJU+Wv1nx79DJTDmYE=O7LUNA3LuRTJhXJn+y0L0C3R+YDEA@mail.gmail.com> <CA+55aFwUn0KibpDQK2ZrxzXKOk8-aAub2nJZQqKCpq1ddhDcMQ@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.21.1.1709141754240.4132@virtualbox>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:wRhnIxLiofwHUgy0e0rrJssKcRkvWRvPbLhT1PRBq+TAcyo7BEj
+ yRx7K5FmASBhxjX1HaOJElul0pGPcvjCYQyATkfoNyJcmNbETjxF4iTgxMYpj6Ir2cdeEW/
+ BkTgH3jF3txAMeFziOd4yGDeIcVBnLYYj63b78PxDpxh2v/rG+38wYMVG4MqR4dqVZ/DonK
+ vkX9Tu81Yxkea4CkkdshQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:WM+4IUxZeFE=:DjRCTb3Uuc+KsQBjhVVTVT
+ vrLsa7urY0S2OE4pP6bWu2L3UN7IcjwYatga+DPN/2/zgQv2/nYRC6CKhr8wkE2Y5a+NHiKej
+ h3DFLdVEuMuepzo1r89zSX75GwbbOxD22u9DposggLSI57kayqy63kj2dvgN4tJCUBte3Fbsi
+ y9S2RHWHr+df07mi5a0G4+pImC9MD/GMN4+FG97pCQbgEGgLJ2pjt41oPAQQRgUX0szkvlQrc
+ LBK4sZX/EvZF4JHvnAUn0KqmSCATLVhS5n2yMLpPbzCKfUrLsgkJADa5X3de8hNdWas086K47
+ biElaO0hIOi4wn/I1Jip1xBgxmZ4GbI/UGxe75h+kr2mBTFKuOdErmssUPQv2A5JZNkBibx1S
+ Tcly5SNuztDCS7wdls1xiJw0CVTfwwGyZ6U/ud5kkt9RstHhfGZOerMJnsPOqbuxFqQu0De5k
+ 8rj8Ao+ntvFDsH5aIl4tRnZ0jPc1j9KP9lM0NSWzPTKLtv0iBK5VuF5xsbtGsURKk0uISy7ny
+ ktJdN9RPIvbgVFshNUkiszKxGRIg+4t6SFX40+eaOaZGc2GUl6kGcOawHR0DOdOGvBfjPID60
+ VE16oVTlCWwHWl+dVmaotcLkaPs0OriX9yfCHEWnndcO5TAFhbNN8VhsVvmqd3ryDtsrG0MXB
+ OUkypHpnqeIT0NddszCDGiFUHrzFhqOn28IGFAihVOKXbNRKxC18PiaqXROksaC1GiXMwD+R+
+ zhh2dpT9nS5owdhKfgaRPaVx4DjWbe/2qBWrXq3zVkeSQqMhOPJWRYjR7Tri+Kvej+0dvNxLh
+ OnxZu8YTymYqWcBTtvtwgRwGDws+PmhYZoyrxZtY5boKMapBmI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Linus,
 
-Johannes Schindelin wrote:
-> On Wed, 13 Sep 2017, Jonathan Nieder wrote:
+On Wed, 13 Sep 2017, Linus Torvalds wrote:
 
->> [3] https://www.imperialviolet.org/2017/05/31/skipsha3.html,
->
-> I had read this short after it was published, and had missed the updates.
-> One link in particular caught my eye:
->
-> 	https://eprint.iacr.org/2012/476
->
-> Essentially, the authors demonstrate that using SIMD technology can speed
-> up computation by factor 2 for longer messages (2kB being considered
-> "long" already). It is a little bit unclear to me from a cursory look
-> whether their fast algorithm computes SHA-256, or something similar.
+> On Wed, Sep 13, 2017 at 6:43 AM, demerphq <demerphq@gmail.com> wrote:
+> >
+> > SHA3 however uses a completely different design where it mixes a 1088
+> > bit block into a 1600 bit state, for a leverage of 2:3, and the excess
+> > is *preserved between each block*.
+> 
+> Yes. And considering that the SHA1 attack was actually predicated on
+> the fact that each block was independent (no extra state between), I
+> do think SHA3 is a better model.
+> 
+> So I'd rather see SHA3-256 than SHA256.
 
-The latter: that paper is about a variant on SHA-256 called SHA-256x4
-(or SHA-256x16 to take advantage of newer instructions).  It's a
-different hash function.  This is what I was alluding to at [1].
+SHA-256 got much more cryptanalysis than SHA3-256, and apart from the
+length-extension problem that does not affect Git's usage, there are no
+known weaknesses so far.
 
-> As the author of that paper is also known to have contributed to OpenSSL,
-> I had a quick look and it would appear that a comment in
-> crypto/sha/asm/sha256-mb-x86_64.pl speaking about "lanes" suggests that
-> OpenSSL uses the ideas from the paper, even if b783858654 (x86_64 assembly
-> pack: add multi-block AES-NI, SHA1 and SHA256., 2013-10-03) does not talk
-> about the paper specifically.
->
-> The numbers shown in
-> https://github.com/openssl/openssl/blob/master/crypto/sha/asm/keccak1600-x86_64.pl#L28
-> and in
-> https://github.com/openssl/openssl/blob/master/crypto/sha/asm/sha256-mb-x86_64.pl#L17
->
-> are sufficiently satisfying.
+It would seem that the experts I talked to were much more concerned about
+that amount of attention than the particulars of the algorithm. My
+impression was that the new features of SHA3 were less studied than the
+well-known features of SHA2, and that the new-ness of SHA3 is not
+necessarily a good thing.
 
-This one is about actual SHA-256, but computing the hash of multiple
-streams in a single funtion call.  The paper to read is [2].  We could
-probably take advantage of it for e.g. bulk-checkin and index-pack.
-Most other code paths that compute hashes wouldn't be able to benefit
-from it.
+You will have to deal with the fact that I trust the crypto experts'
+opinion on this a lot more than your opinion. Sure, you learned from the
+fact that you had been warned about SHA-1 already seeing theoretical
+attacks in 2005 and still choosing to hard-wire it into Git. And yet, you
+are still no more of a cryptography expert than I am.
 
-Thanks,
-Jonathan
-
-[1] https://public-inbox.org/git/20170616212414.GC133952@aiede.mtv.corp.google.com/
-[2] https://eprint.iacr.org/2012/371
+Ciao,
+Dscho
