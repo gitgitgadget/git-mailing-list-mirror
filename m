@@ -2,129 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 34E0920A21
-	for <e@80x24.org>; Thu, 14 Sep 2017 07:18:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C7A520281
+	for <e@80x24.org>; Thu, 14 Sep 2017 07:36:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751132AbdINHSf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Sep 2017 03:18:35 -0400
-Received: from mail-it0-f50.google.com ([209.85.214.50]:45716 "EHLO
-        mail-it0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751085AbdINHSf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Sep 2017 03:18:35 -0400
-Received: by mail-it0-f50.google.com with SMTP id v19so2903146ite.0
-        for <git@vger.kernel.org>; Thu, 14 Sep 2017 00:18:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=nCiPrbVuwcui1m+So77BjYu1ukyvPxC/fezE460uqlA=;
-        b=rvWA+DypwX/Xz7OAZGwuaUOeDMTIYAbXSv/1VpQ6ez2MdaBi6ymzEy8sPOtbYCuiGw
-         N5ffgOHG8n1mQzHqzRUJxYwAktGpYZoD6WZBiqobyDQLay5VvTQ9dI2lslM7rDtynUKO
-         nQoLsOokwpev/UUW1KXBNiL2VjiT4h7WDj1uCLWgggMFlKrr/joCjMZ8mnwVhhonKIMW
-         CgOvsxtFIOWl5w6wghQLDau46TthcFq8tvbahxeAR+Qkufa1YZDVcXJWw6mXl60noS8O
-         AmKfFFYriPWUu1VtCmcXWmVy1Jcic9adzlYfOyn5ibQG64W9tsbojzrXAd0zjMdkD5qO
-         +THA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=nCiPrbVuwcui1m+So77BjYu1ukyvPxC/fezE460uqlA=;
-        b=nwu36n0pdQj7G6SI64Nre7l6NHt8NnyWjJ1aX2LUWvsX+E59cALFLmYU/P9DbzUeHw
-         y+TkTdcBoayfyS91TB4CPr3q6Mc+lJHC9WMQKn8tp59VO8Bi0t7+3JTv9Zim4608jx0m
-         f6tDW4OADICU6dMQTErKtZ6aF3Bfqo6ZJl/VmiOgUGFRWH1Bmhw8tByl1d7HLK/t9NIY
-         XsythGVnhlabF+VbTFGa8yFLnK7QdNmUoN/LGHkE79A4V1nHKmoLL4tZMfEbmSQGu8JQ
-         QfoGaxwKn5V9pSuEeE1ugrdPLcPsCXnqJf2hZWX7ZQ5UrIRr8xXZegH2Aj+JQDd1MM9z
-         pW1Q==
-X-Gm-Message-State: AHPjjUita18S1IvsJz736e6ORVTi97ZYTechaQiOV67/rQn0jVrd/LS8
-        KdF/8s/rQZzEx88afiAuzJSGLFnohgoOu0wGf+HYhw==
-X-Google-Smtp-Source: AOwi7QAmHVCXjX+9dM5FP3qwGuL1tnZ/wLdgN/ti3S/eQg69ZZPqnSwLjW1ZSNgYpJshcXVkCyijVt0xRyxXLAdDa6M=
-X-Received: by 10.36.73.216 with SMTP id e85mr2003210itd.116.1505373514068;
- Thu, 14 Sep 2017 00:18:34 -0700 (PDT)
+        id S1751330AbdINHgo (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Sep 2017 03:36:44 -0400
+Received: from mout.kundenserver.de ([212.227.126.187]:52369 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751085AbdINHgn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Sep 2017 03:36:43 -0400
+Received: from UltraSam.fritz.box ([178.11.154.32]) by
+ mrelayeu.kundenserver.de (mreue001 [212.227.15.167]) with ESMTPSA (Nemesis)
+ id 0MTsps-1e1EQ91d3I-00QPCN; Thu, 14 Sep 2017 09:36:37 +0200
+Subject: Re: [PATCH v2] commit-template: change a message to be more intuitive
+To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>,
+        git@vger.kernel.org
+References: <<e656d1b4-c95e-e51d-5f48-bb3450580fa4@gmail.com>
+ <0102015e7b585037-5f88e775-2696-49ec-8dd9-5e1635a34607-000000@eu-west-1.amazonses.com>
+From:   Michael J Gruber <git@grubix.eu>
+Cc:     Jeff King <peff@peff.net>
+Message-ID: <862e71a1-2dee-4a20-d828-69a0547fa5ec@grubix.eu>
+Date:   Thu, 14 Sep 2017 09:36:36 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-Received: by 10.79.107.136 with HTTP; Thu, 14 Sep 2017 00:18:33 -0700 (PDT)
-In-Reply-To: <C327746B-3E57-4AA9-B29E-AA3C33722D3B@gmail.com>
-References: <20170803091926.1755-1-chriscool@tuxfamily.org>
- <20170803091926.1755-12-chriscool@tuxfamily.org> <C327746B-3E57-4AA9-B29E-AA3C33722D3B@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 14 Sep 2017 09:18:33 +0200
-Message-ID: <CAP8UFD0roTFSt4Q9-_2fxDb9r0a5LxQ5rKbbbz2ZfPcEZqdTuQ@mail.gmail.com>
-Subject: Re: [PATCH v5 11/40] odb-helper: add odb_helper_init() to send 'init' instruction
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Ben Peart <Ben.Peart@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>, Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <0102015e7b585037-5f88e775-2696-49ec-8dd9-5e1635a34607-000000@eu-west-1.amazonses.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: de-DE
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:woHrN84aDwmnkEvjNk5iHEGcMKeMm49qcrCcri7l0nuV5fwSdOq
+ 5b8VRMBohk9WXmt05Yhn8+4DSjaZvfO9r4xXQ8m+xNr04S5WsvYPl2OeKRg3kkLtfyykBWJ
+ QkE4Tf9IWlTmLIUnmYxRrj3jrj6BXoM53lTcY7vwBxQMHX6ryd0f07DFwblnI0x6G7N3uFS
+ DEqDhmb6+QBLB/teHdgiA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:D3kUJCEnMiE=:QrfKSSKUOYWjWc4TtJU7T0
+ XL6Ab8ugKBDSgPhzju3SjGXFzBjZmwALjfb8ywGzX6fCMifN7DRp4JzQWztYq+oQ2MCKBqx48
+ PpCOv2AHLKsTwiEgGLwGu83qNvrbA0W7LrauMJ1DpqT2cr56WitMxe91ZpeMe2tllixfP+Nyx
+ lb0xqD0De9PRI0dnX5wuFr1vO0NHvz+Qry1S72R/NoBO8mpQutNczjpUudq3d3Eg8H9GTNz5p
+ k7fVPo2DHPgNo4qtB49uA1PTQtALpU+FyWY4c7h246V2APPBK+sKtt8OSI1OZ2nN638WpebJ4
+ 0YwASPixcrw1h/XBNJ8eQUHnYM00bIFSS26FS1HYh31WrVuntjdKUSVCG0ML8p26uIdY03Vwz
+ 90WNwNpUSbpvio2YlwQm2A79RPPveIQKtCgrfLbQvCv0xGmGy2j4MQOCl/J+yvEbbUmsxVj3I
+ acmZW2jgYyYyNsiwtzl4rv+P/+sVfbobGTtesJzO+8e/STtVuTa7DYutBFop0cfuega9kRo+j
+ aTqdWUQGiTVZmEuHyUJist1pRV4caVnpkbfs/sfTDz+gWS/P6NNyzMWmM7Mq/aarVO6o2DGO9
+ GdRtDgAJXwGcBYc0HyL+0WHaMKRKdh4pIF6r6av0siMjJ50oURpzPs02QQq5oiLvqxeaNlGFw
+ 38R79313GGnYXca/7eckaYVOOE03mVtmVSf/Rc6LfBe8NEfi5kkxfhlTburtc9p+JhbD9Jl4Y
+ 7xDXVip8SV3qchXHYhKcKJwxcYDgFGa7M9wjlhYGDfTVCs397bh4uuscoqE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 10, 2017 at 2:12 PM, Lars Schneider
-<larsxschneider@gmail.com> wrote:
->
->> On 03 Aug 2017, at 10:18, Christian Couder <christian.couder@gmail.com> wrote:
->>
->> +static void parse_capabilities(char *cap_buf,
->> +                            unsigned int *supported_capabilities,
->> +                            const char *process_name)
->> +{
->> +     struct string_list cap_list = STRING_LIST_INIT_NODUP;
->> +
->> +     string_list_split_in_place(&cap_list, cap_buf, '=', 1);
->> +
->> +     if (cap_list.nr == 2 && !strcmp(cap_list.items[0].string, "capability")) {
->> +             const char *cap_name = cap_list.items[1].string;
->> +
->> +             if (!strcmp(cap_name, "get_git_obj")) {
->> +                     *supported_capabilities |= ODB_HELPER_CAP_GET_GIT_OBJ;
->> +             } else if (!strcmp(cap_name, "get_raw_obj")) {
->> +                     *supported_capabilities |= ODB_HELPER_CAP_GET_RAW_OBJ;
->> +             } else if (!strcmp(cap_name, "get_direct")) {
->> +                     *supported_capabilities |= ODB_HELPER_CAP_GET_DIRECT;
->> +             } else if (!strcmp(cap_name, "put_git_obj")) {
->> +                     *supported_capabilities |= ODB_HELPER_CAP_PUT_GIT_OBJ;
->> +             } else if (!strcmp(cap_name, "put_raw_obj")) {
->> +                     *supported_capabilities |= ODB_HELPER_CAP_PUT_RAW_OBJ;
->> +             } else if (!strcmp(cap_name, "put_direct")) {
->> +                     *supported_capabilities |= ODB_HELPER_CAP_PUT_DIRECT;
->> +             } else if (!strcmp(cap_name, "have")) {
->> +                     *supported_capabilities |= ODB_HELPER_CAP_HAVE;
->> +             } else {
->> +                     warning("external process '%s' requested unsupported read-object capability '%s'",
->> +                             process_name, cap_name);
->> +             }
->
-> In 1514c8ed ("convert: refactor capabilities negotiation", 2017-06-30) I introduced
-> a simpler version of the capabilities negotiation. Maybe useful for you here, too?
+Kaartic Sivaraam venit, vidit, dixit 13.09.2017 15:05:
+> It's not good to use the phrase 'do not touch' to convey the information
+> that the cut-line should not be modified or removed as it could possibly
+> be mis-interpreted by a person who doesn't know that the word 'touch' has
+> the meaning of 'tamper with'. Further, it could make translations a little
+> difficult as it might not have the intended meaning in a few languages when
+> translated as such.
+> 
+> So, use more intuitive terms in the sentence.
+> 
+> Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+> ---
+>  wt-status.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/wt-status.c b/wt-status.c
+> index 77c27c51134d2..be53579760ee7 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -934,7 +934,7 @@ size_t wt_status_locate_end(const char *s, size_t len)
+>  
+>  void wt_status_add_cut_line(FILE *fp)
+>  {
+> -	const char *explanation = _("Do not touch the line above.\nEverything below will be removed.");
+> +	const char *explanation = _("Do not modify or remove the line above.\nEverything below will be removed.");
 
-Yeah, actually there is also fa64a2fdbe (sub-process: refactor
-handshake to common function, 2017-07-26) that Jonathan Tan wrote on
-top of your changes and that adds subprocess_handshake(). So the
-current code is using it like that:
+I don't want to complicate things. But now - due to the repeated usage
+of "remove" - these two sentences seem to be connected by an invisible
+"or else" ("will" vs. "would" not withstanding). i.e. "or else
+everything below will be removed, too", which is wrong. Before, they
+were separated more clearly.
 
-static int start_object_process_fn(struct subprocess_entry *subprocess)
-{
-    static int versions[] = {1, 0};
-    static struct subprocess_capability capabilities[] = {
-        { "get_git_obj", ODB_HELPER_CAP_GET_GIT_OBJ },
-        { "get_raw_obj", ODB_HELPER_CAP_GET_RAW_OBJ },
-        { "get_direct",  ODB_HELPER_CAP_GET_DIRECT  },
-        { "put_git_obj", ODB_HELPER_CAP_PUT_GIT_OBJ },
-        { "put_raw_obj", ODB_HELPER_CAP_PUT_RAW_OBJ },
-        { "put_direct",  ODB_HELPER_CAP_PUT_DIRECT  },
-        { "have",        ODB_HELPER_CAP_HAVE },
-        { NULL, 0 }
-    };
-    struct object_process *entry = (struct object_process *)subprocess;
-    return subprocess_handshake(subprocess, "git-read-object", versions, NULL,
-                    capabilities,
-                    &entry->supported_capabilities);
-}
+Also, given all the translations that we have, it seems somewhat strange
+to try and foresee and workaround possible misunderstandings of commonly
+used English phrases.
+
+>  	struct strbuf buf = STRBUF_INIT;
+>  
+>  	fprintf(fp, "%c %s", comment_line_char, cut_line);
+> 
+> --
+> https://github.com/git/git/pull/401
+> 
+
