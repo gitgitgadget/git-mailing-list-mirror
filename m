@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8ED0820281
-	for <e@80x24.org>; Thu, 14 Sep 2017 09:17:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 680C020281
+	for <e@80x24.org>; Thu, 14 Sep 2017 09:59:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751555AbdINJRP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Sep 2017 05:17:15 -0400
-Received: from mail-io0-f177.google.com ([209.85.223.177]:44840 "EHLO
-        mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751512AbdINJRO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Sep 2017 05:17:14 -0400
-Received: by mail-io0-f177.google.com with SMTP id v36so16334066ioi.1
-        for <git@vger.kernel.org>; Thu, 14 Sep 2017 02:17:13 -0700 (PDT)
+        id S1751797AbdINJ7U (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Sep 2017 05:59:20 -0400
+Received: from mail-it0-f48.google.com ([209.85.214.48]:47519 "EHLO
+        mail-it0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751424AbdINJ7T (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Sep 2017 05:59:19 -0400
+Received: by mail-it0-f48.google.com with SMTP id o200so58384itg.0
+        for <git@vger.kernel.org>; Thu, 14 Sep 2017 02:59:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=h4EXK+n0DtjrCVMY4rw4ONHEED/YgAAWVtYUN7LoLac=;
-        b=h2rLfXORnNxGWeBkKMRLX7RRJE/3k7I9JrlcH9PG4nOb6ZrZaNIr/QiOLs3bKcM1Ne
-         L4igwItNF1N5YdxuUAx4s8cqOktT0ZjnwFBhFqe6IsRKToFHtuwlOQVR7DFVLcAwx+KP
-         OPalOolydWx/joNq8MEaDK7mwoTWiBbZB9mdZV22j0yt/RX53Cd+3+FEtcSvB0GDYzRy
-         Mf+N7CcF5znVqz4YiUkWTW51vHaYgRtXf4sFyAM4vHL6wZLHa9Lro7uRT1LE1UJNu84Q
-         gFo4xgIgOs8Cdp8NjcSlu278/2xOorbaDM8mpDiPBqS5qEX3iPoQdMd55tbMRw+B0xh2
-         j05Q==
+        bh=s+oWa8VUBjSkwFPKafAXfp1UE+N509ZcGEcMPqRtXLI=;
+        b=hdfWj1XUDoefrEspeGx21h75Glb5Bi9n0dtL+9IPDHsiHjj/jrUEhOgwsPbN6oJu/C
+         3lRa5X3uD958sfiDNMEsjbz63I5VzJ7tE8C0kLG8Hv1oi3wY0q8WKHTF5gRxR/TYmUM8
+         G2QGKjxnI1j47TEFocU8xjhqnDKQWOLNlFWRltHgR4Tie1YcUqELG5nuY3K7h/yig2fl
+         XniNeq3KMSQATCDySAY7XrRasBdcgWmXzzwcffXLEkBXPabb1X7LYNpoEOHi5Oq2YeAx
+         QCwvmVYg2+jphgYAN7WyeGHurYcNutJ6q7tQxhbUgEjAUOVKIKFVbHPxc0zrDfqHj0Ps
+         a2bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=h4EXK+n0DtjrCVMY4rw4ONHEED/YgAAWVtYUN7LoLac=;
-        b=cHqDEBaAyUYIW/F8aZaRRfZmF7QFq+IJaVOcWgRmJxI8dRPbO9ovlMpNFGRRPxUsTv
-         MwfumOhn14lGWVhPJCQ0e1bCaEnl2P3kBbU8K8Qx8r+YXdTeyl5xm23HAfVXbcAEdmw1
-         8vr0DuuJsWlGbc48Jpwjb6W485se2htwDAnt+fGYmsFDA4xgaml3KvBAic5s2F2UQNXU
-         gOvZvgzv9jvi+fbRMk89FYxI+8pJUnBkq1x1IOdRJSeEoEe01G+8nK9RFHdZay+xWrHV
-         DJvHSL9zZ7c7yL2GbdhHQBHRnfCuO8vqvE6L6QGTWSnVY45oQsEBnOrmtqT3CfBgRWli
-         HXOw==
-X-Gm-Message-State: AHPjjUjE5ZhsO1f7IjGUUuQ8LzUrc/f+Hzeev4wgz/ncUOXlo8XkN3+d
-        MWdP/PIWoi/1K1X78BtJZUrvmGB2ard9AJBak4Y=
-X-Google-Smtp-Source: AOwi7QAGXZkTJeSgDVDBtSXVjMguphFTkZq8xsLtMIUs9dTP9wS2AePrQwX7eUrtvF0CFWH7sI8r7JKN0kH8Kj8WC2M=
-X-Received: by 10.107.20.14 with SMTP id 14mr1586517iou.69.1505380633374; Thu,
- 14 Sep 2017 02:17:13 -0700 (PDT)
+        bh=s+oWa8VUBjSkwFPKafAXfp1UE+N509ZcGEcMPqRtXLI=;
+        b=fsH9A4eiDlbxuhPasrOwYgbv2Z6fNQzeFfeLLAopZC7T10nSnM7esZpW4tJ4IkYXOF
+         NJEfO0v8mQ6kaYxdjhFpvAQWqut00cdb93HTl+Q89k+35xbZw7fdmoA8DhTG6OMk05My
+         ApsvzJJ8dkldrO4s6Qn6Uj+mGF4yJxdUUCas89x7hv9OWmxNp7/Sbx/UWcWvpKfULQvK
+         N+dt7yFhZ4gqoC6ww2oj2Z7c52uSHR0NuDIcFdifg/NOpdS5Imgr6UwNoxVdZtWU/rlF
+         vYFoRmPuG7Pl3tDDoNyg5wCJ0Ub/X+OqEAGGAVykfbVJ+zFHJSiASlmyOF1bhOJJA1OE
+         zS/Q==
+X-Gm-Message-State: AHPjjUifuxXRaw9N2O6YWTK8EmpJ+ZHxfEv/2Ee3x8v8wAn1/Dwbf+Ge
+        /D4ZKr4X7xD8bH5MfsnRzpKHb/e1YWbBNtSFS5M=
+X-Google-Smtp-Source: AOwi7QByP4ihFizOewFvbyGZn5y8LGl9SK6LbEE83EDupojD/Os4MkKC4f+BIUHIMDoZp4PbV/MfsZ6BoLf2RvnWRm4=
+X-Received: by 10.36.111.4 with SMTP id x4mr2101515itb.144.1505383158659; Thu,
+ 14 Sep 2017 02:59:18 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.79.107.136 with HTTP; Thu, 14 Sep 2017 02:17:12 -0700 (PDT)
-In-Reply-To: <xmqqbmnwxwfw.fsf@gitster.mtv.corp.google.com>
+Received: by 10.79.107.136 with HTTP; Thu, 14 Sep 2017 02:59:17 -0700 (PDT)
+In-Reply-To: <xmqq7eykxwbt.fsf@gitster.mtv.corp.google.com>
 References: <20170803091926.1755-1-chriscool@tuxfamily.org>
- <20170803091926.1755-14-chriscool@tuxfamily.org> <xmqqbmnwxwfw.fsf@gitster.mtv.corp.google.com>
+ <20170803091926.1755-15-chriscool@tuxfamily.org> <xmqq7eykxwbt.fsf@gitster.mtv.corp.google.com>
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 14 Sep 2017 11:17:12 +0200
-Message-ID: <CAP8UFD2+-0DYRO+PN+Ertn3TvoXEpghWfv=-He9+0kVSA=TNxA@mail.gmail.com>
-Subject: Re: [PATCH v5 13/40] external odb: add 'put_raw_obj' support
+Date:   Thu, 14 Sep 2017 11:59:17 +0200
+Message-ID: <CAP8UFD3=nuTRF24CLSoK4HSGm3nxGh8SbZVpMCg7cNcHj2zkBA@mail.gmail.com>
+Subject: Re: [PATCH v5 14/40] external-odb: accept only blobs for now
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
         Ben Peart <Ben.Peart@microsoft.com>,
@@ -69,67 +69,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 3, 2017 at 9:50 PM, Junio C Hamano <gitster@pobox.com> wrote:
+On Thu, Aug 3, 2017 at 9:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
 > Christian Couder <christian.couder@gmail.com> writes:
 >
->> Add support for a 'put_raw_obj' capability/instruction to send new
->> objects to an external odb. Objects will be sent as they are (in
->> their 'raw' format). They will not be converted to Git objects.
->>
->> For now any new Git object (blob, tree, commit, ...) would be sent
->> if 'put_raw_obj' is supported by an odb helper. This is not a great
->> default, but let's leave it to following commits to tweak that.
+>> The mechanism to decide which blobs should be sent to which
+>> external object database will be very simple for now.
+>> If the external odb helper support any "put_*" instruction
+>> all the new blobs will be sent to it.
 >>
 >> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 >> ---
+>>  external-odb.c | 4 ++++
+>>  1 file changed, 4 insertions(+)
+>>
+>> diff --git a/external-odb.c b/external-odb.c
+>> index 82fac702e8..a4f8c72e1c 100644
+>> --- a/external-odb.c
+>> +++ b/external-odb.c
+>> @@ -124,6 +124,10 @@ int external_odb_put_object(const void *buf, size_t len,
+>>  {
+>>       struct odb_helper *o;
+>>
+>> +     /* For now accept only blobs */
+>> +     if (strcmp(type, "blob"))
+>> +             return 1;
+>> +
 >
-> I thought in an earlier step that I saw this thing initialized in
-> the codepath that adds alternate object stores, which are read-only
-> places we "borrow" from.  Being able to write into it is good, but
-> conceptually it no longer feels correct to initialize it from the
-> alternate object database initialization codepath.
->
-> Another way to say it is that an object store, whether it is local
-> or external, is not "alt" if it will result in storing new objects
-> we locally create.  It's just an extension of our local object
-> store.
+> I somehow doubt that a policy decision like this should be made at
+> this layer.  Shouldn't it be encoded in the capability the other
+> side supports, or determined at runtime per each individual object
+> when a "put" is attempted (i.e. allow the other side to say "You
+> tell me that you want me to store an object of type X and size Y;
+> I cannot do that, sorry").
 
-I guess you are talking about the following code in "[PATCH v5 10/40]
-Add initial external odb support":
+I agree that it would be conceptually better to be able to support
+other kind of objects in external odb, but realistically most use
+cases for 'get_*' and 'put_*' instructions are for storing/retrieving
+blobs as other kind of objects are in specific formats that are well
+supported by the current object store.
 
-+void prepare_external_alt_odb(void)
-+{
-+       static int linked_external;
-+       const char *path;
-+
-+       if (linked_external)
-+               return;
-+
-+       path = external_odb_root();
-+       if (!access(path, F_OK)) {
-+               link_alt_odb_entry(path, NULL, 0, "");
-+               linked_external = 1;
-+       }
-+}
-+
- void prepare_alt_odb(void)
- {
-        const char *alt;
-@@ -650,6 +666,7 @@ void prepare_alt_odb(void)
-        link_alt_odb_entries(alt, strlen(alt), PATH_SEP, NULL, 0);
-
-        read_info_alternates(get_object_directory(), 0);
-+       prepare_external_alt_odb();
- }
-
-Would it be ok if I do the following:
-
-- rename prepare_external_alt_odb() to just prepare_external_odb(), as
-this would avoid confusion between alt_odbs and external odbs
-- remove the call to prepare_external_odb() in prepare_alt_odb()
-- add a prepare_alt_and_external_odb() that just calls
-prepare_alt_odb() and then prepare_external_odb()
-- replace all the calls to prepare_alt_odb() with calls to
-prepare_alt_and_external_odb()
-
-?
+I also agree that it would be a nice feature if external odb could
+decide by themselves which objects they accept and I really want to
+leave the door open to a future improvement implementing that using
+the capability mechanism or perhaps another mechanism. For now though
+in "[PATCH v5 34/40] external-odb: use 'odb=magic' attribute to mark
+odb blobs" the attribute system is used to decide which blobs are put
+into which external odb as it is probably good enough for many use
+cases. It is also simple to implement in Git and makes helpers simpler
+to implement.
