@@ -7,183 +7,96 @@ X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 02F2020A21
-	for <e@80x24.org>; Thu, 14 Sep 2017 20:23:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A3DD020A21
+	for <e@80x24.org>; Thu, 14 Sep 2017 22:07:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751370AbdINUXw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Sep 2017 16:23:52 -0400
-Received: from mout.gmx.net ([212.227.15.18]:53255 "EHLO mout.gmx.net"
+        id S1751833AbdINWHF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Sep 2017 18:07:05 -0400
+Received: from mout.gmx.net ([212.227.15.18]:59819 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751363AbdINUXv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Sep 2017 16:23:51 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Likl3-1dIQyM3brx-00cvZN; Thu, 14
- Sep 2017 22:23:40 +0200
-Date:   Thu, 14 Sep 2017 22:23:37 +0200 (CEST)
+        id S1751758AbdINWHC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Sep 2017 18:07:02 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LfjlS-1d3H5a2gjy-00pOl0; Fri, 15
+ Sep 2017 00:06:36 +0200
+Date:   Fri, 15 Sep 2017 00:06:32 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Michael Haggerty <mhagger@alum.mit.edu>
+To:     demerphq <demerphq@gmail.com>
 cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Brandon Williams <bmwill@google.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 00/20] Read `packed-refs` using mmap()
-In-Reply-To: <cover.1505319366.git.mhagger@alum.mit.edu>
-Message-ID: <alpine.DEB.2.21.1.1709142101560.4132@virtualbox>
-References: <cover.1505319366.git.mhagger@alum.mit.edu>
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Brandon Williams <bmwill@google.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jeff King <peff@peff.net>, David Lang <david@lang.hm>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: RFC v3: Another proposed hash function transition plan
+In-Reply-To: <CANgJU+UpMu82a09h644GjqKLsYzHq-t7Tv8x=+ybTYP-QqyPtQ@mail.gmail.com>
+Message-ID: <alpine.DEB.2.21.1.1709142357090.219280@virtualbox>
+References: <20170304011251.GA26789@aiede.mtv.corp.google.com> <CA+55aFz+gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com> <20170307001709.GC26789@aiede.mtv.corp.google.com> <xmqqa828733s.fsf@gitster.mtv.corp.google.com> <xmqq1snh29re.fsf@gitster.mtv.corp.google.com>
+ <20170911185913.GA5869@google.com> <alpine.DEB.2.21.1.1709131340030.4132@virtualbox> <20170913163052.GA27425@aiede.mtv.corp.google.com> <xmqq7ex21d2v.fsf@gitster.mtv.corp.google.com> <CAGZ79kakGcMJ7HuH+MPsMrvw40uGchr6H-SQw9-p8pgi3Yk_Bw@mail.gmail.com>
+ <20170913221854.GP27425@aiede.mtv.corp.google.com> <xmqqpoauyqlp.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.21.1.1709141722500.4132@virtualbox> <CANgJU+UpMu82a09h644GjqKLsYzHq-t7Tv8x=+ybTYP-QqyPtQ@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:mK963s2pzZ4WiobOO82bqHv+6ln+icILilyyslZjwcDOoM5EQ8Y
- wF5gv8sB5WOnntuUJ0RKVoZlRcFbZxAqek3gw7i3SBWn24/qEWGq2ehJhgd+Zvwqs/3VTC5
- wBUp6rMcySWQJX0jX2vJOMMUMq+nGoxra4s/w3B6yFKiV6/nh0tGa4CpQ7JNaIhS0GXux91
- 1gUrRYcFfx+tsDeX43Tzg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:fN/P26rpi/0=:gxkZaRAQ5HcvccJNig7o7z
- qNyhC53K0HtJw6un1ff85dJDaJrJ87obFgIXuF7zX7j4wtiKLao9jKaxl1/2/xQ7o3dj9TqB8
- QJHLSIRHVds61kHiSuB7Iz1CaSGG4U0lXZapNVDZRv7OtxIdsMBgixhkWHxZEI9oiXDjwu7ZI
- ICImZolXuP3nOxmGHbyTilIxUh2FNJo74xk4l0nsP0vXo//AB3XDioYPnMwAJjqQgX/M/+CBn
- Jp0/PUGbChEyEheJg0fgt9lMyv5vTx3VgWuQvB5NKBE+H5C07BRww7xstf3Tht26adfkptvPi
- icjrecG8/jNNNWt7iSOYEjX2j8dho3WUFAF0GUf4J93q3ND0mZ4hEs0pGuR3/2PIbRoPtzmp+
- y7h08bIWKHdTgeBvhkBnOvEsF17XivPIWJxQhjpENJPlPN0pIGgIAimfwW0z+9zOTgPhrspOg
- 7kGxZuwXS4yNi6+Js0hRqaw8EzDD6N/FfF8/uNbf8nZEbR8DgfSXl8A257dIG2N3xG23kD2h/
- qh9NwLWOE9nkfGtvh0ykFoo3pVp492v7+bpGblatPH9mYmM+np27HuwhJsYSk1RMzOkWOSkk4
- xRFET0tx148PnCAXSnTkupg0pE/zQMc9fmSViyEq5/+ZMclJptXu+NvXGNC/b2DDptHNqusSO
- 2URW0vNLJwkl1+8Yh3qvVgvkbYMOw/UGNWknhqJlSIe4Ooc2vkD7BOFwUXKzX3tsA7kYJg+uG
- c5RebdZnQol3nubRLLKMBUrw5/0TLxSmuIf+lxg0amEfgS/3UqGdToS1BCKEMssc3KMy7tE1W
- 0QgsSNtxzJrofA9uBx7zRdLYJOkUFwzMaui1KO9ImB+MKUefqY=
+X-Provags-ID: V03:K0:XPfcobsLfZt3SIPAjWQx8OTLm3sCGXJRSakr1PdWoKIZJlvf2kx
+ WGWBzrnmSWNUBHREgNXMspY5SfTcBSi6cCLKFhmYKaj+k6TIqMrp0VK5Dai/wXS7tkwIIhp
+ tjYBlkctg82gcanFnRF9kTs9DkIjui9IcmrtEvubhO3Y/KvzswsrkVjKmj1L0+cPacqx7VT
+ h3XN3F3Abj6dhRQKrkW+A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:4u7P7M3/AM0=:StTIpfSfTkgFO0nroRqZlF
+ Uoks4Oaigm558Xiq5AKYWzAjzijzKECgzIeR5wsZi/wr1s1S4LWuLpNsmh+SCCmxKWYGe+CH9
+ xd6FIs0V1nw/Pp8cG2Q8JmV6UMayzZv7s9Lv/m1r88RAyR/n06n6vc9ArN98iQJLlZwq0yVSV
+ b1nAktFhTd7Qj2nxOFwZXse+k6C3yIpSsIEXoR93gPrjyKqqERujVDuwmY795Y3zt9GVgujPR
+ kfg3IB5JVMpxDozW2MBhqD5fMTDD3ARLcmGndYB1hrsaCVY160Db+aaGlREq65yve43Elveqi
+ AeoUra2X2B2T9VYfJXRkEz/+d/BcehhFVIlTUc3+jjFQcHpL7hqiQAIkDTcH4K+iEpGkwdNNT
+ +KxxuHxD4Jw8+R03UzMYgpdXvA+tsoncrcJynN7q4tRNfj2nII8Fs3w56ouXNlEerA3byrW6t
+ vpSrA673WEdbXCjjpghNUlFb6bru+E4NIG8dnMq58y8yub6OcjmIJ8aXfbD6izapDBE+xq6Yg
+ unZnLNDA9fCf1FUiqB3jd+nMZg53GnGWaRITL6TOljDdkJGyJZyaZFWsVKdGBLprwx1ifV7Ey
+ jbPLnh33gmDUgsPZPqCrLbhvNGy67SN+m08hrv3Vog8jTA5KAcqE9cT50HQAuKCOgN3I0X9Ad
+ GUSJUsLx4NpLOgJFkc3Uh8TSHWUx6V7kja5ZOidqPtwai3gw9Ho1hvZgdCYL+MgEcapTA5qau
+ BUZb+dn2CeKiIqEo8CK4Z5ubUqYjNZWNIGN+9/YXVhBJwCE1fXKqHJUZGqMfOGDiO9jvZ8qRR
+ XYQugoI97UYM/zECnbaUgv6eJoS+eTNEhoFh1z4la4YjUeCWeg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Michael,
+Hi,
 
-On Wed, 13 Sep 2017, Michael Haggerty wrote:
+On Thu, 14 Sep 2017, demerphq wrote:
 
-> * `mmap()` the whole file rather than `read()`ing it.
+> On 14 September 2017 at 17:23, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > SHA-256 has been hammered on a lot more than SHA3-256.
+> 
+> Last year that was even more true of SHA1 than it is true of SHA-256
+> today.
 
-On Windows, a memory-mapped file cannot be renamed. As a consequence, the
-following tests fail on `pu`:
+I hope you are not deliberately trying to annoy me. I say that because you
+seemed to be interested enough in cryptography to know that the known
+attacks on SHA-256 *today* are unlikely to extend to Git's use case,
+whereas the known attacks on SHA-1 *in 2005* were already raising doubts.
 
-t1400-update-ref.sh
-t1404-update-ref-errors.sh
-t1405-main-ref-store.sh
-t1408-packed-refs.sh
-t1410-reflog.sh
-t1430-bad-ref-name.sh
-t1450-fsck.sh
-t1507-rev-parse-upstream.sh
-t2018-checkout-branch.sh
-t2020-checkout-detach.sh
-t2024-checkout-dwim.sh
-t3200-branch.sh
-t3204-branch-name-interpretation.sh
-t3210-pack-refs.sh
-t3211-peel-ref.sh
-t3306-notes-prune.sh
-t3400-rebase.sh
-t3404-rebase-interactive.sh
-t3420-rebase-autostash.sh
-t3903-stash.sh
-t3905-stash-include-untracked.sh
-t4151-am-abort.sh
-t5304-prune.sh
-t5312-prune-corruption.sh
-t5400-send-pack.sh
-t5404-tracking-branches.sh
-t5500-fetch-pack.sh
-t5505-remote.sh
-t5510-fetch.sh
-t5514-fetch-multiple.sh
-t5515-fetch-merge-logic.sh
-t5516-fetch-push.sh
-t5520-pull.sh
-t5533-push-cas.sh
-t5572-pull-submodule.sh
-t5600-clone-fail-cleanup.sh
-t5607-clone-bundle.sh
-t6016-rev-list-graph-simplify-history.sh
-t6030-bisect-porcelain.sh
-t6032-merge-large-rename.sh
-t6040-tracking-info.sh
-t6050-replace.sh
-t6500-gc.sh
-t6501-freshen-objects.sh
-t7003-filter-branch.sh
-t7004-tag.sh
-t7102-reset.sh
-t7201-co.sh
-t7406-submodule-update.sh
-t7504-commit-msg-hook.sh
-t7701-repack-unpack-unreachable.sh
-t9300-fast-import.sh
-t9902-completion.sh
-t9903-bash-prompt.sh
+So while SHA-1 has been hammered on for longer than SHA-256, the latter
+came out a lot less scathed than the former.
 
-This diff:
+Besides, you are totally missing the point here that the choice is *not*
+between SHA-1 and SHA-256, but between SHA-256 and SHA3-256.
 
--- snip --
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index f9c5e771bdd..ee8b3603624 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -1306,13 +1308,13 @@ static int packed_transaction_finish(struct
-ref_store *ref_store,
- 	char *packed_refs_path;
- 
- 	packed_refs_path = get_locked_file_path(&refs->lock);
-+	clear_snapshot(refs);
- 	if (rename_tempfile(&refs->tempfile, packed_refs_path)) {
- 		strbuf_addf(err, "error replacing %s: %s",
- 			    refs->path, strerror(errno));
- 		goto cleanup;
- 	}
- 
--	clear_snapshot(refs);
- 	ret = 0;
- 
- cleanup:
--- snap --
+After all, we would not consider any hash algorithm with known problems
+(as far as Git's usage is concerned). The amount of scrutiny with which
+the algorithm was investigated would only be a deciding factor among the
+remaining choices, yes?
 
-reduces the failed tests to
-
-t1410-reflog.counts.sh
-t3210-pack-refs.counts.sh
-t3211-peel-ref.counts.sh
-t5505-remote.counts.sh
-t5510-fetch.counts.sh
-t5600-clone-fail-cleanup.counts.sh
-
-However, much as I tried to wrap my head around it, I could not even start
-to come up with a solution for e.g. the t1410 regression. The failure
-happens in `git branch -d one/two`.
-
-The culprit: there is yet another unreleased snapshot while we try to
-finish the transaction.
-
-It is the snapshot of the main_worktree_ref_store as acquired by
-add_head_info() (which is called from get_main_worktree(), which in turn
-was called from get_worktrees(), in turn having been called from
-find_shared_symref() that was called from delete_branches()), and it seems
-to me that there was never any plan to have that released, including its
-snapshot.
-
-And the snapshot gets initialized upon add_head_info() calling
-refs_resolve_ref_unsafe().
-
-Further down in the delete_branches() function, however, we call
-delete_ref() which in turn wants to overwrite the packed-refs file via an
-atomic rename. That rename fails now because there is still that main
-worktree's ref_store that has the snapshot mmap()ed .
-
-I imagine that the rest of the test failures stems from the same root
-cause.
-
-Do you have any idea how to ensure that all mmap()ed packed refs are
-released before attempting to finish a transaction?
+In any case, don't trust me on cryptography (just like I do not trust you
+on that matter). Trust the cryptographers. I contacted some of my
+colleagues who are responsible for crypto, and the two who seem to
+disagree on pretty much everything agreed on this one thing: that SHA-256
+would be a good choice for Git (and one of them suggested that it would be
+much better than SHA3-256, because SHA-256 saw more cryptanalysis).
 
 Ciao,
-Dscho
+Johannes
