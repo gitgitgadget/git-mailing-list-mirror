@@ -2,116 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8EDF620A21
-	for <e@80x24.org>; Thu, 14 Sep 2017 22:09:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2DE7E20A25
+	for <e@80x24.org>; Thu, 14 Sep 2017 22:11:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751697AbdINWJ4 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Sep 2017 18:09:56 -0400
-Received: from mout.gmx.net ([212.227.17.21]:55060 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751594AbdINWJz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Sep 2017 18:09:55 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lcjdr-1dBGhP2Ssp-00k9Xj; Fri, 15
- Sep 2017 00:09:32 +0200
-Date:   Fri, 15 Sep 2017 00:09:29 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Jonathan Nieder <jrnieder@gmail.com>
-cc:     demerphq <demerphq@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>, jonathantanmy@google.com,
-        Jeff King <peff@peff.net>, David Lang <david@lang.hm>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: RFC v3: Another proposed hash function transition plan
-In-Reply-To: <20170914184022.GB78683@aiede.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.21.1.1709150008390.219280@virtualbox>
-References: <20170304011251.GA26789@aiede.mtv.corp.google.com> <CA+55aFz+gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com> <20170307001709.GC26789@aiede.mtv.corp.google.com> <xmqqa828733s.fsf@gitster.mtv.corp.google.com> <xmqq1snh29re.fsf@gitster.mtv.corp.google.com>
- <20170911185913.GA5869@google.com> <alpine.DEB.2.21.1.1709131340030.4132@virtualbox> <CANgJU+Wv1nx79DJTDmYE=O7LUNA3LuRTJhXJn+y0L0C3R+YDEA@mail.gmail.com> <20170913225158.GR27425@aiede.mtv.corp.google.com> <alpine.DEB.2.21.1.1709141754240.4132@virtualbox>
- <20170914184022.GB78683@aiede.mtv.corp.google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751833AbdINWLG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Sep 2017 18:11:06 -0400
+Received: from mail-pu1apc01on0075.outbound.protection.outlook.com ([104.47.126.75]:10669
+        "EHLO APC01-PU1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1751672AbdINWLE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Sep 2017 18:11:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=NoLimitsConsulting.onmicrosoft.com; s=selector1-nlc-co-nz;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=vsHOhPR5u6xf+/6QfrJijvnbarwbxYuuT8NxZW2EaNA=;
+ b=VLFnfDo97MqukQVa74CQBvQNj9Kh2dAzLH+HWU7FgY8FmFi5dWIesNZ740/XGFi9/2DoiM1fEm2FgOgVSYBiMCUXNR5ZG57vE1KweOBRHSKBMnNFqzoS2vIB6McWiQCeIZ4gjXifDNnO/1KvftrNys+tmJX87D2ql0JKPF9NxL8=
+Received: from PS1PR0601MB1883.apcprd06.prod.outlook.com (10.170.180.21) by
+ PS1PR0601MB1481.apcprd06.prod.outlook.com (10.165.211.13) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id
+ 15.20.56.11; Thu, 14 Sep 2017 22:11:01 +0000
+Received: from PS1PR0601MB1883.apcprd06.prod.outlook.com
+ ([fe80::ed29:f8ac:6c75:c6c6]) by PS1PR0601MB1883.apcprd06.prod.outlook.com
+ ([fe80::ed29:f8ac:6c75:c6c6%18]) with mapi id 15.20.0056.010; Thu, 14 Sep
+ 2017 22:11:01 +0000
+From:   Gene Thomas <gene@nlc.co.nz>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: git diff --name-status for deleted files
+Thread-Topic: git diff --name-status for deleted files
+Thread-Index: AdMtplB2FFGuO2d0TCCYmH1TzNzo1g==
+Date:   Thu, 14 Sep 2017 22:11:01 +0000
+Message-ID: <PS1PR0601MB1883177814CA771567A7193B8A6F0@PS1PR0601MB1883.apcprd06.prod.outlook.com>
+Accept-Language: en-NZ, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is ) smtp.mailfrom=gene@nlc.co.nz; 
+x-originating-ip: [222.154.250.75]
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;PS1PR0601MB1481;6:wKq6JSJCt5VNvdM9tkU5iS88HGPFjq7vlt6+p/78uJqfiSfnHEEk8JfsVUM3VgNFY/nmMdEVB4hAzbvV8yPdOo7wvRGfR84BIKC/omVYXoni9K9S+0hw//GLzAu9SvKilxd0E2YpAkKFoJGZFzJ+fmJv4NjFz0MoYyHGZtiVjZG6GAisNJ37OQ4fXCIyBjzcM7dYlpRK5LGeb6bMMX+jy6M796Zc7OyAYCGJgipXZj5Sqjegnf4d56ec9xOIPtmZiq5RuhbVU6nOV04gb2kwZJm4oxlDLpsciHz/Bnxs0r+dsV3mUt4bv9g/p0/4bC4q6yo95GHrrU3l+GiOOOnXrw==;5:HabVN6yWWqIh3wCGbjm02kdp/sRK+lRXVz0l1ZcrykNha1Fz5TKMOSwJyRT7WEmwCJWDTTVr4WWbF9SUEjm0NvIJ4sbV6FeH5xiKQWbDJRG0YRmjRRDZ2Jv5dJyGXeli166Yc/9qIozvAh+PQ52b3vExzMJ6d8L+rGSnMfNJHBg=;24:/8GTKMmzA/cWkzzVsl5hcH1sH9GF99LlfUb0lp+Ox9lb8g/KHMdh8XY4E6Tl4s40Yq7g4uAWEvoD8/eJhP0EiQzfp02BIIccy+pYYPD25gc=;7:YQdWD8XvCbCpvmQpajkKRhED1yXbJWQTCYLAkXT8fzADw/wIalivoIeGGdJGaUfVu+1i0VNrjMk9dIEJ7Ao1B03q5xf2i9v72gwDebu41psJjvHYWB83Ts1BWH9xWwWEe5vEsDN73PY1UZ2QxMgmmKNL9YKjbfCp7OHbynhAwO+ai1OqfzlF6ZlAZuH1MCJ90Nc59kdx/rL2jeGRxgUfzqIppAIb/BxefnsyV/eUepQ=
+x-ms-exchange-antispam-srfa-diagnostics: SSOS;
+x-ms-office365-filtering-correlation-id: c04c45d9-7dea-4f6a-8304-08d4fbbd7c5e
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(300000500095)(300135000095)(300000501095)(300135300095)(22001)(300000502095)(300135100095)(2017030254152)(2017082002075)(300000503095)(300135400095)(2017052603199)(201703131423075)(201702281549075)(300000504095)(300135200095)(300000505095)(300135600095)(300000506095)(300135500095);SRVR:PS1PR0601MB1481;
+x-ms-traffictypediagnostic: PS1PR0601MB1481:
+x-exchange-antispam-report-test: UriScan:;
+x-microsoft-antispam-prvs: <PS1PR0601MB1481EA65CB4A8F544D69EFBD8A6F0@PS1PR0601MB1481.apcprd06.prod.outlook.com>
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(100000700101)(100105000095)(100000701101)(100105300095)(100000702101)(100105100095)(6040450)(2401047)(5005006)(8121501046)(3002001)(100000703101)(100105400095)(10201501046)(93006095)(93001095)(6041248)(20161123564025)(20161123558100)(2016111802025)(201703131423075)(201702281528075)(201703061421075)(201703061406153)(20161123560025)(20161123562025)(20161123555025)(6072148)(6043046)(201708071742011)(100000704101)(100105200095)(100000705101)(100105500095);SRVR:PS1PR0601MB1481;BCL:0;PCL:0;RULEID:(100000800101)(100110000095)(100000801101)(100110300095)(100000802101)(100110100095)(100000803101)(100110400095)(100000804101)(100110200095)(100000805101)(100110500095);SRVR:PS1PR0601MB1481;
+x-forefront-prvs: 0430FA5CB7
+x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(979002)(6009001)(39830400002)(376002)(346002)(189002)(199003)(558084003)(9686003)(105586002)(106356001)(6436002)(55016002)(99286003)(110136004)(74482002)(5250100002)(101416001)(68736007)(2501003)(316002)(33656002)(14454004)(6506006)(2906002)(54356999)(189998001)(50986999)(2900100001)(7696004)(3660700001)(66066001)(7736002)(6916009)(42882006)(5640700003)(3846002)(102836003)(305945005)(6116002)(25786009)(74316002)(53936002)(8936002)(81166006)(2351001)(3280700002)(5660300001)(97736004)(86362001)(81156014)(1730700003)(478600001)(8676002)(969003)(989001)(999001)(1009001)(1019001);DIR:OUT;SFP:1101;SCL:1;SRVR:PS1PR0601MB1481;H:PS1PR0601MB1883.apcprd06.prod.outlook.com;FPR:;SPF:None;PTR:InfoNoRecords;MX:1;A:1;LANG:en;
+received-spf: None (protection.outlook.com: nlc.co.nz does not designate
+ permitted sender hosts)
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:YWqHKCdrwP7+NCCWmCagC4tlZZkKAK6eP9w6gBacuirDYZYJdPS
- 72oNqhVghC1OtUjijD2lEigpSCv+HcSVz5L1zHMeLi7GqAQVQrCyL8DOxWecZk0rDV4SuNw
- FUKjH6DeT09EUYA3t8SA3Fkq9DUhYYGXezMDg4yzfY3yu4rFs7nCi1J1SpXMEvvbQqedCFM
- bpkvt0b8qYyy3CWSMPzug==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:cmUYxbdq2x8=:q67Wq3SU4LIiD2Qtb12kIX
- kKemZ5Aqd9F7x54w82XT54STZqgce/V2GVmAjaBx+ZO8nPyjIk6zLatNpjR2gEgRUZ59DRKEL
- d3ET7mL6nron220N2FcKitfHgDWcGFqJ0D24vplb/65OI6fGJVQCJWwo9Amo9wPP3TzI27noL
- 4KcSv+ceu2zwBrJ7wR3LgktGDueyXD0yKtnXLID3MLzbe3wuuxH40Bo3MYzzmKnAvG4gZcWZ8
- WQY17E2n/DCAJcZUpKgS/IcD5ne9dSKUD8vLDo8ae/27ywJLV8yvOLip8Txq/JU1UQf7LFpTS
- /79eqY/oLnHd0xZ3RwfFyEZT9FD12DOi4EnspDxFNC3g2zLgJsq7idHZMZcH1xu+7oNV12zy1
- 9PeJpV+7OZbdDt+E/6H0ZZSTmv7li4VkoYAPwpdtRwQIM1Y0gzLUA3uHTjB8aJMr8rP50v1Ei
- 4yrlZeifaFdTEclns9bUQzZL4qS0NjeHULQqJyd2Al4pL6NVtUXKnB8yqXladew0o1B/luPji
- 91/Co0pvCZbjw6+EcEBlVVDGEy9HVD3BcyMuqmD27Sr1eNMY8GqlMshY0NNF8yMrn7U1sKf5u
- erhtDvin46TmneS5qoeemrypvU9+W+3wlNLYppVXb3o5ITjX6V3E3cOj7syCNWRSeJpgdtkQZ
- 8xcWY2Pgn+ZTVumYahKT5fKeFWebuXlBTRYYF7lvSucOwnmVF3VbUTiYqY2pwNlebM1mTOFba
- xxiUqXa7C5A6ILTC/iaQg0XKQoBRmaJKfyrgtPKIVcZYj7izKSs5e8/PnSzbcmS3tt8HZWJiC
- wEYQeOPCzp23Qdq42C+YLqtaKRIutsZsST8FQDmnX6c8VPPODY=
+X-OriginatorOrg: nlc.co.nz
+X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Sep 2017 22:11:01.8635
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: dcf97d24-0da4-497e-88f4-de71fd6a3c56
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PS1PR0601MB1481
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+Hello,
+          "git diff -name-status" is useful to list the files one has chang=
+ed but it does not list file that one has deleted with "git rm". It would b=
+e really handy if it did. I am using git 2.9.3 on Ubuntu Linux 16.10.
 
-On Thu, 14 Sep 2017, Jonathan Nieder wrote:
+Yours Sincerely,
 
-> Johannes Schindelin wrote:
-> > On Wed, 13 Sep 2017, Jonathan Nieder wrote:
-> 
-> >> [3] https://www.imperialviolet.org/2017/05/31/skipsha3.html,
-> >
-> > I had read this short after it was published, and had missed the updates.
-> > One link in particular caught my eye:
-> >
-> > 	https://eprint.iacr.org/2012/476
-> >
-> > Essentially, the authors demonstrate that using SIMD technology can speed
-> > up computation by factor 2 for longer messages (2kB being considered
-> > "long" already). It is a little bit unclear to me from a cursory look
-> > whether their fast algorithm computes SHA-256, or something similar.
-> 
-> The latter: that paper is about a variant on SHA-256 called SHA-256x4
-> (or SHA-256x16 to take advantage of newer instructions).  It's a
-> different hash function.  This is what I was alluding to at [1].
-
-Thanks for the explanation!
-
-> > As the author of that paper is also known to have contributed to OpenSSL,
-> > I had a quick look and it would appear that a comment in
-> > crypto/sha/asm/sha256-mb-x86_64.pl speaking about "lanes" suggests that
-> > OpenSSL uses the ideas from the paper, even if b783858654 (x86_64 assembly
-> > pack: add multi-block AES-NI, SHA1 and SHA256., 2013-10-03) does not talk
-> > about the paper specifically.
-> >
-> > The numbers shown in
-> > https://github.com/openssl/openssl/blob/master/crypto/sha/asm/keccak1600-x86_64.pl#L28
-> > and in
-> > https://github.com/openssl/openssl/blob/master/crypto/sha/asm/sha256-mb-x86_64.pl#L17
-> >
-> > are sufficiently satisfying.
-> 
-> This one is about actual SHA-256, but computing the hash of multiple
-> streams in a single funtion call.  The paper to read is [2].  We could
-> probably take advantage of it for e.g. bulk-checkin and index-pack.
-> Most other code paths that compute hashes wouldn't be able to benefit
-> from it.
-
-Again, thanks for the explanation.
-
-Ciao,
-Dscho
-
-> [1] https://public-inbox.org/git/20170616212414.GC133952@aiede.mtv.corp.google.com/
-> [2] https://eprint.iacr.org/2012/371
-> 
+Gene Thomas.
