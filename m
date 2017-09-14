@@ -6,91 +6,65 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AC5EC20A25
-	for <e@80x24.org>; Thu, 14 Sep 2017 11:32:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5B005209B8
+	for <e@80x24.org>; Thu, 14 Sep 2017 12:15:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751906AbdINLcP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Sep 2017 07:32:15 -0400
-Received: from cpanel2.indieserve.net ([199.212.143.6]:51456 "EHLO
-        cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751792AbdINLcO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Sep 2017 07:32:14 -0400
-Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:44810 helo=localhost.localdomain)
-        by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1dsSNR-0002Ja-QX
-        for git@vger.kernel.org; Thu, 14 Sep 2017 07:32:13 -0400
-Date:   Thu, 14 Sep 2017 07:32:11 -0400 (EDT)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Git Mailing list <git@vger.kernel.org>
-Subject: how to remove from history just *one* version of a file/dir?
-Message-ID: <alpine.LFD.2.21.1709140721130.19770@localhost.localdomain>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1751795AbdINMP5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Sep 2017 08:15:57 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38530 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751701AbdINMP4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Sep 2017 08:15:56 -0400
+Received: (qmail 15321 invoked by uid 109); 14 Sep 2017 12:15:56 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 14 Sep 2017 12:15:56 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26798 invoked by uid 111); 14 Sep 2017 12:16:31 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
+ by peff.net (qpsmtpd/0.94) with SMTP; Thu, 14 Sep 2017 08:16:31 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Sep 2017 08:15:54 -0400
+Date:   Thu, 14 Sep 2017 08:15:54 -0400
+From:   Jeff King <peff@peff.net>
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
+Cc:     Git Mailing list <git@vger.kernel.org>
+Subject: Re: should "git tag" option of "-a" conflict with "-s", "-u"?
+Message-ID: <20170914121553.mk4qksus2hqeqlh4@sigill.intra.peff.net>
+References: <alpine.LFD.2.21.1709130741120.2766@localhost.localdomain>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel2.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel2.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel2.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.2.21.1709130741120.2766@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Sep 14, 2017 at 06:08:10AM -0400, Robert P. J. Day wrote:
 
-  [is this the right place to ask questions about git usage? or is
-there a different forum where one can submit possibly embarrassingly
-silly questions?]
+>   just noticed in "man git-tag":
+> 
+>   1)  "-a" explicitly claims to create an unsigned tag
+>   2)  both "-s" and "-u" both claim to create signed tags
+> 
+> should that mean that it should be an error to try to use "-a" in
+> combination with either of "-u" or "-s"? the synopsis does suggest
+> that you can use only one of those at a time:
+> 
+>   git tag [-a | -s | -u <keyid>] ...
+> 
+> but i tested with (from memory) using both "-a" and "-s", and tag
+> actually tried to do it, but failed simply because i had no key.
+> clearly, though, it was making the attempt.
+> 
+>   can someone clarify this?
 
-  i've been perusing "git filter-branch", and i'm curious if i have
-the right idea about how to very selectively get rid of some useless
-history.
+I think the documentation could be a little more clear. "-a" just asks
+to create a tag object, rather than a "lightweight" tag. Using "-s" asks
+for a signature, which requires having a tag object, and thus implies
+"-a".
 
-  say, early on, one commits a sizable directory of content, call it
-/mydir. that directory sits there for a while until it becomes obvious
-it's out of date and worthless and should never have been committed.
-the obvious solution would seem to be:
+So there's no point in using the two together (since "-s" already
+implies "-a"), but it also doesn't hurt to do so.
 
-  $ git filter-branch --tree-filter 'rm -rf /mydir' HEAD
-
-correct?
-
-  however, say one version of that directory was committed early on,
-then later tossed for being useless with "git rm", and subsequently
-replaced by newer content under exactly the same name. now i'd like to
-go back and delete the history related to that early version of
-/mydir, but not the second.
-
-  obviously, i can't use the above command as it would delete both
-versions. so it appears the solution would be a trivial application of
-the "--commit-filter" option:
-
-   git filter-branch --commit-filter '
-     if [ "$GIT_COMMIT" = "<commit-id>" ] ; then
-       skip_commit "$@";
-     else
-       git commit-tree "$@";
-     fi' HEAD
-
-where <commit-id> is the commit that introduced the first verrsion of
-/mydir. do i have that right? is there a simpler way to do this?
-
-rday
-
--- 
-
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                        http://crashcourse.ca
-
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
+-Peff
