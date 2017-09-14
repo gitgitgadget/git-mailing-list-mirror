@@ -6,123 +6,92 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E21F620A21
-	for <e@80x24.org>; Thu, 14 Sep 2017 13:15:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2852E20A21
+	for <e@80x24.org>; Thu, 14 Sep 2017 13:15:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751451AbdINNPh (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Sep 2017 09:15:37 -0400
-Received: from mout.kundenserver.de ([212.227.17.10]:52493 "EHLO
+        id S1751454AbdINNPk (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Sep 2017 09:15:40 -0400
+Received: from mout.kundenserver.de ([212.227.126.187]:56961 "EHLO
         mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751131AbdINNPg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Sep 2017 09:15:36 -0400
-Received: from localhost ([130.75.46.4]) by mrelayeu.kundenserver.de (mreue101
- [212.227.15.183]) with ESMTPSA (Nemesis) id 0LoYQs-1dC1d50NkQ-00gVKf; Thu, 14
- Sep 2017 15:15:29 +0200
+        with ESMTP id S1751305AbdINNPh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Sep 2017 09:15:37 -0400
+Received: from localhost ([130.75.46.4]) by mrelayeu.kundenserver.de (mreue004
+ [212.227.15.167]) with ESMTPSA (Nemesis) id 0Ly8sz-1dP2xj0rsD-015ZUr; Thu, 14
+ Sep 2017 15:15:30 +0200
 From:   Michael J Gruber <git@grubix.eu>
 To:     git@vger.kernel.org
 Cc:     Ekelhart Jakob <jakob.ekelhart@fsw.at>,
         Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: [PATCH 2/3] merge-base: return fork-point outside reflog
-Date:   Thu, 14 Sep 2017 15:15:19 +0200
-Message-Id: <5513a1415d11517c28158d9b4212d383a233182f.1505394278.git.git@grubix.eu>
+Subject: [PATCH 3/3] merge-base: find fork-point outside partial reflog
+Date:   Thu, 14 Sep 2017 15:15:20 +0200
+Message-Id: <f16c671b268432199a0b2e0d22bb1b786a44bb2a.1505394278.git.git@grubix.eu>
 X-Mailer: git-send-email 2.14.1.712.gda4591c8a2
 In-Reply-To: <68633b20-9e2b-ae23-2ede-8728283250f0@grubix.eu>
 References: <68633b20-9e2b-ae23-2ede-8728283250f0@grubix.eu>
 In-Reply-To: <cover.1505394278.git.git@grubix.eu>
 References: <cover.1505394278.git.git@grubix.eu>
-X-Provags-ID: V03:K0:y5jXGQBVF8FO0S5CxiBHfh0RSjAtMukCLKLWYqS0aGu07iRh8AG
- 1XWGJv8QBkUBWlPX//LZuqVCzU2YrUMzzarwCoqRZ3wq0PkCzRbYnVr31+TEh1Th1gskH3k
- DHdUtEgP3x8q+MJ6MviKc8KG+FqoQj+DsiY5j3ljd/Y3t7Ys30UNdAD1/5pqbM+qMFj0s4k
- 1rfmepHhJBmWrWEHzkbyg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:rgeZ4YJUSJM=:UTTrJU+739jfoAJ+z0wBxa
- F10DIIqwTUK1TfhTQJBb/i/B3yVm6xwpkeWt62rW04/GQXN0NfIs3r6fA1+A+83BlgsFgHcfJ
- 2BBPgaAqCQfzfqAzVgb35R0/qox6i+u02awyjdCF+Wwb/Ck98RYBfvIgMR7Mp1AXt3Hw5HGd/
- xecBQbFyKibf2GlqdGfIeBVhSgusdX2dHC8y+8it76C+gKrTX4KgSNXOdqJcKQMaaCMLO2ulh
- 6gIxu+0MdQxhKC9ll4z04JB+fM788pqenBuH2BCIrg9HOLSP+sKaVzSCV78/VOdTc7n3w0/6t
- f7+R8P2bJ0IF5Kz7YUqYSIydFQRfa5GSkaatOIbFo/Qiv6lfKW9BOXdV5pcxkuRcag1buIaD+
- 41J44qMDGi0VmCD/KPEGsCMCIxmdQ/Yneqshu38HYyD/3pCzpIzEk8b5uTx/aakZuBZ+2oyce
- 5CJ7oHpWA2UK9+hkELZS/gmdj5WPUfbXOi9fW7ku0ZTiFnYWY18+STOvhVOpTttQG+fvypF45
- dDDQyXFnWoY4snEYRvKli5kI6IDvvMNR7J2i6zQ0pDdonCK+uma09BCCiYWjusnITVxS2M6rF
- uatD8DZqw+0lwlcQk/c3TUmsLq2CZMnyyseIfaJTRNOVYj7HES2BgU2VBsxkLcZKJIMOhWlK7
- zg6oIzm1/7v8R3QlLiwlfKx6EDB03iCs74ra9ClCcHtYqlykJXfiU/tnZI4dAI2YYyP+JKcpW
- SxCckTgTkBFn8TetGcMBYYefFyXwA6+0nJTiBw==
+X-Provags-ID: V03:K0:S81EBAtUsIbfguWbRPz2g07B2NCIjyc6SxVtL5nYMANAeHuU2//
+ Fd2E4NEjad72ar1qQLt4o37QXUlDX+E5KjubrOtYFLRB3Id7BmHio/V7YXhoVrr36MK+rqw
+ ByHcXUiJl5mNzl6SMhGGISUMBh2bp5Wu1oaMDDv8s3SQn+UWM1/jlOJPXy84Xwhi91Vf7xa
+ 49IQ620noq6uM2YqmoOmQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:1zQ/EKx4Lgk=:j+26UXhGH/iHj757+kY/FX
+ C+AtxjXzBdQY9/op7j3cqi8AzlsJIs3vzAZY9RanrWSWNfPaxr1oJbG8VF7h06b39ju1yEISm
+ q98cisdKbS+QYe0S2935QxXjqs9MBj9fXLu0Jfqs7o3uErg0cxMynxg030Pfd9vLwZNd4wpbr
+ 2QGOzqCAkCz/8cJXckzWkUnJeFUdLItLf2lsTtLvjQsbqrkAcTc8NDM9OpgHGNfXFx9lL6x/m
+ gNHmsdv3jZ4SvF+dsvn25QSzOMAZwRFnNjQzQTxE/v8e0RkQSZXnNaLk8dPbr65gaj9q2CCOI
+ HUOT1e9T04DneTh2y6pIH7Dd8IxbyOtfOdp5xBZ/hfL2/5VxPeZUNttvF2tB0KPgxVoTcAvxV
+ 3HD9M1HoZIWLazHGUW5cmeMd7ETCgePWE1AxA1N6RJCw7X5QVLOFfT+0Brw/0t97rbEzEj+RE
+ NUArpFH8wTmoSp1KgAgtwZQ7w2dLiRUoMPOKpzxnQRjvwVpBEfzHfDyelxrsO2lM05gGPXXA5
+ Ca6BXwTew7GUqTRkCIRhlk/LY2PgShNDAN+xemYJOlATWffbk5I9kjifGBSTJvV7B1ZIIZD6r
+ +qfDONejFLKAbjjGwJLltuaPAaa1UkWdgG4S3UIGlkTTl4BK2IIdy7SofCy3iFbSOqNVFOnRO
+ 5TQkz/OHOTmhxxoDCTR9UeKi2WrH4rL2ccleODreq0lUPNVRDp4LspcmXrsBHjCn5Cjba0ZJn
+ t7czZaHN1VAJ3tk15blfVVF5xkkvM4jy9TBneg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-4f21454b55 ("merge-base: handle --fork-point without reflog",
-2016-10-12) fixed the case without reflog, but only partially:
-The original code checks whether the merge base candidates are from the
-list that we started with, which was the list of reflog entries before
-4f21454b55 and the list of reflog entries - or the ref itself if empty -
-after. The test from 4f21454b55 tested in a situation where the merge
-base candidate equalled the commit at refname, so it was on this (1
-item) list by accident.
+In fork-point mode, merge-base adds the commit at refname to a list of
+candidates to walk from only when the reflog is empty. Therefore, it
+fails to find merge bases that are descendants of the most recent reflog
+entry.
 
-In fact, per documentation "--fork-point" looks at the reflog in
-addition to doing the usual walk from the tip. The original design
-description in d96855ff51 ("merge-base: teach "--fork-point" mode",
-2013-10-23) describes this as computing from a virtual merge-base of all
-the historical tips of refname. They may or may not all be present in
-the reflog (think pruning, non-ff fetching, fast forwarding etc.),
-so filtering by the current contents of the reflog is potentially
-harmful, and it does not seem to fulfill any purpose in the original
-design.
+Add the commit at the tip unconditionally so that a merge base on the
+history of refname is found in any case, independent of the state of the
+reflog.
 
-Remove the filtering and add a test for an out-of-reflog merge base.
-
-Reported-by: Ekelhart Jakob <jakob.ekelhart@fsw.at>
 Signed-off-by: Michael J Gruber <git@grubix.eu>
 ---
- builtin/merge-base.c  | 18 +++---------------
- t/t6010-merge-base.sh |  8 ++++++++
- 2 files changed, 11 insertions(+), 15 deletions(-)
+ builtin/merge-base.c  | 2 +-
+ t/t6010-merge-base.sh | 8 ++++++++
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/builtin/merge-base.c b/builtin/merge-base.c
-index 6dbd167d3b..926a7615ea 100644
+index 926a7615ea..b5b4cf7eac 100644
 --- a/builtin/merge-base.c
 +++ b/builtin/merge-base.c
-@@ -186,23 +186,11 @@ static int handle_fork_point(int argc, const char **argv)
- 	 * There should be one and only one merge base, when we found
- 	 * a common ancestor among reflog entries.
- 	 */
--	if (!bases || bases->next) {
-+	if (!bases || bases->next)
- 		ret = 1;
--		goto cleanup_return;
--	}
--
--	/* And the found one must be one of the reflog entries */
--	for (i = 0; i < revs.nr; i++)
--		if (&bases->item->object == &revs.commit[i]->object)
--			break; /* found */
--	if (revs.nr <= i) {
--		ret = 1; /* not found */
--		goto cleanup_return;
--	}
--
--	printf("%s\n", oid_to_hex(&bases->item->object.oid));
-+	else
-+		printf("%s\n", oid_to_hex(&bases->item->object.oid));
+@@ -174,7 +174,7 @@ static int handle_fork_point(int argc, const char **argv)
+ 	revs.initial = 1;
+ 	for_each_reflog_ent(refname, collect_one_reflog_ent, &revs);
  
--cleanup_return:
- 	free_commit_list(bases);
- 	return ret;
- }
+-	if (!revs.nr && !get_oid(refname, &oid))
++	if (!get_oid(refname, &oid))
+ 		add_one_commit(&oid, &revs);
+ 
+ 	for (i = 0; i < revs.nr; i++)
 diff --git a/t/t6010-merge-base.sh b/t/t6010-merge-base.sh
-index 17fffd7998..850463d4f2 100755
+index 850463d4f2..78342896c7 100755
 --- a/t/t6010-merge-base.sh
 +++ b/t/t6010-merge-base.sh
-@@ -267,6 +267,14 @@ test_expect_success '--fork-point works with empty reflog' '
+@@ -275,6 +275,14 @@ test_expect_success '--fork-point works with merge-base outside reflog' '
  	test_cmp expect actual
  '
  
-+test_expect_success '--fork-point works with merge-base outside reflog' '
-+	git -c core.logallrefupdates=false checkout no-reflog &&
-+	git -c core.logallrefupdates=false commit --allow-empty -m "Commit outside reflogs" &&
-+	git rev-parse base >expect &&
-+	git merge-base --fork-point no-reflog derived >actual &&
++test_expect_success '--fork-point works with merge-base outside partial reflog' '
++	git -c core.logallrefupdates=true branch partial-reflog base &&
++	git rev-parse no-reflog >.git/refs/heads/partial-reflog &&
++	git rev-parse no-reflog >expect &&
++	git merge-base --fork-point partial-reflog no-reflog >actual &&
 +	test_cmp expect actual
 +'
 +
