@@ -7,53 +7,51 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD34820A21
-	for <e@80x24.org>; Thu, 14 Sep 2017 22:17:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8752820A21
+	for <e@80x24.org>; Thu, 14 Sep 2017 22:21:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751782AbdINWRN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Sep 2017 18:17:13 -0400
-Received: from mout.gmx.net ([212.227.17.21]:61650 "EHLO mout.gmx.net"
+        id S1751806AbdINWVS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Sep 2017 18:21:18 -0400
+Received: from mout.gmx.net ([212.227.15.19]:56299 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751543AbdINWRM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Sep 2017 18:17:12 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MGzwE-1deofa0V2w-00Dqc3; Fri, 15
- Sep 2017 00:16:56 +0200
-Date:   Fri, 15 Sep 2017 00:16:40 +0200 (CEST)
+        id S1751673AbdINWVR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Sep 2017 18:21:17 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MY86C-1dx8k21eWO-00UttP; Fri, 15
+ Sep 2017 00:21:02 +0200
+Date:   Fri, 15 Sep 2017 00:21:00 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
+To:     Michael J Gruber <git@grubix.eu>
+cc:     git@vger.kernel.org, Adam Dinwoodie <adam@dinwoodie.org>,
+        Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Brandon Williams <bmwill@google.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 00/20] Read `packed-refs` using mmap()
-In-Reply-To: <ef919cc7-7e41-afb6-38b2-e2fae4efcbf1@alum.mit.edu>
-Message-ID: <alpine.DEB.2.21.1.1709150012550.219280@virtualbox>
-References: <cover.1505319366.git.mhagger@alum.mit.edu> <ef919cc7-7e41-afb6-38b2-e2fae4efcbf1@alum.mit.edu>
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH 1/2] test-lib: group system specific FIFO tests by
+ system
+In-Reply-To: <4482ae18370f3e759bf98f71e15eaab19fdd009a.1505400392.git.git@grubix.eu>
+Message-ID: <alpine.DEB.2.21.1.1709150020070.219280@virtualbox>
+References: <alpine.DEB.2.21.1.1709141440510.4132@virtualbox> <4482ae18370f3e759bf98f71e15eaab19fdd009a.1505400392.git.git@grubix.eu>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:lddnY01d9t1w2cLLeT4DkJdcfn3XnD90CSpMmNQ6I3Sln1a3xs6
- iEo3MBNRd0XpTBJNaF99dJPSZ8BZYk3vzEghFwb5JL5g1CCIjonxfOkSJX1QpAktLjleVbq
- DBR6WkM/nyDV64q1Mo8gLr9biFmlqoq1BejbR13Yjy/Ycc5AtRgx8BPQmTvD/PB421KonLt
- XOySyDPUk2n82iJ6FZYQQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:wRr7p+b57R8=:pSldDTH8pZWrFYdc7Z+Cro
- iOC+sCyFTUxaBXZA3QG6ok7J5Hu5p9acXE6A4OYB0nuNc0z2dm3nyT9D2j80/gf4SV6slbJq2
- o/ZfK6rqr4IsNhzgt/kfEBQan8srHEydKz0qbYOlHk/plPuf9mGskNoxVO2xk53TGFmTw/CHT
- 4V0rQvtByBnuZNkY+BFGlK+6Lkx9+44cTQyTf9PCP2WUVr6YgLpLKGDSx1dFx8Lep+X0Wc+dm
- luuXXFYGTrTc7bauRpAuuoyfvkqlWYpcHezEdyNrcdB3Jg3xB3nxE9EVycW5XgxXUVvvxt0SZ
- kVOp99oYbEGXmEvbwkRXr7OFDwgYZUP7BhnWqdAdoGp3y3Pb3H13bhTir/SS/kCO85QI7LLzW
- xYPpJpYawovCWUHFBO0XdwCANFUrYHGLm2CgxwckitnBEI2UH5OFA+epDtPilmiti1WizNQJZ
- Ek/CCK+vOOVjUvz3goBemi2v4lTtZJDbXLV+93mcU3YpDCgt4xSYO38FdJsqpJjJHnKs4XvPT
- 7UFOcRvCizDAS8e88VjGMZje47BBJkD05auipyWQ6Go33AAGiW6K9CPKbgubuU6dmC3P6B/HL
- qzh/ksPL3m3FuzKbDobyImFbAPCjVEOghuIXYBLtVVXwk/W9PswCzsc5GtOTNznK3RrcGqFdK
- 3Ft+GRM3coyA1ottYxKEPLsZUc3ScwzAqVdBSddQ7ybPw/QWsEdF4H0rAfWF537unJoWtOIuV
- Vmwzz9MmdkCwYesBKjZ7QTIU0uFIzDcUFl04CDjRzH/eUzwkoathpVO9e+2usSNjmjwVS2iv+
- sY8sexYh02xG9F2LlZ75Vpw2L3CXmCCG10sQceb8QT4qZsTvbU=
+X-Provags-ID: V03:K0:f8FSYo5ZMFgsAJKNADxKpQD4qFFXFJjuhxlt6FRqp5jRDZ9sK2O
+ 9DvxVnzY0i+lCbRP5P7oij4wJsU94B/6PrLjc9cvgjL3ci7z9iOScyq59NYaz/DQzniNijh
+ D0yG+tmm6gNmzjwObjMgQpnVq0i/tHj4wqgpzVcL6UXV+kZf+hHKZZVgnuKZgEO6SrOZwMf
+ Kr6Z9RVZrJUIZN1OCE6xA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:mAOqan4I5D4=:6lQYpThoL761ahD8072SeA
+ +xDp8HSpAPujxeKgwJ+LjZYwaeTwoUQbHJCm+R6pZp+7ozOTfdHE1RHv/w0+XvOSxwXwpyXiw
+ jouBqLSqLxWm8dPUWtlQ0sSVsWp3rQsLWxEotvdAARS3CaqXgNEnl1DiXPYztiumuavSSg7Lf
+ gxBIM3tPf9qIUNZMikf78b1v8PIHQE3fGO7/9ed1/xb3TqtDZMTddrQbziL3luNBiDF5JSo8+
+ HshPIzqdpgEzMsJz6wU850S209joqybNl/hOrzWU7y3YxTmNa/ulpD4CRorzIHzpT9sPcZ1s2
+ NzWD9tN7QMb6xSJ4rpp37tY3N4q093ADdViETD5e7Q1ARnA1dypWxXTwN0g7DGnJXKN4gFKb2
+ voiuB6Rpl9wB56fh7FHFVgp+ALx1oNQ+OTFTp2o7oSeDr/PLcLplXo9mS+F4OBHas8N9MupF5
+ d/fK+HmnIOCXEEQ3nvbRFN2uKOj0dysi74LNlkgXoiWLDd4YLphuAZpkrK/sch1nTBCNInGPC
+ Qcc4e6TfBR4ut7dsQSfbx6buDxx36jd6LQryPG+lPi1SuvaHS63bnJoFEiwCDq+W/pp0Xjx2b
+ NLQYVOjt4stRBrZhbLssuTeTp1S6E6+pevf/68T8wS6Ja+WLC2l5f0W1PZe4t7IGIqropiOt2
+ y+xvGxqsqoNVwwABYWW6o0KHHQF4ekcAnpmlWwCfK99zbznj5QH8N4ROB0HptLC6wdjNuUF/E
+ RCFImxfbHCiQHvss0sjnbu81tzaO6IQMtraO9keClfkGBi40Zrb2rP4YB/u9WBIsPr+vDkiQm
+ D5YjwRY03RRwLKM2tuRjbjcT3RBFEepK+U30RBtC9/W1WbZEds=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -61,33 +59,19 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Michael,
 
-On Thu, 14 Sep 2017, Michael Haggerty wrote:
+On Thu, 14 Sep 2017, Michael J Gruber wrote:
 
-> On 09/13/2017 07:15 PM, Michael Haggerty wrote:
-> > [...]
-> > * `mmap()` the whole file rather than `read()`ing it.
-> > [...]
->
-> Apparently this doesn't work on Windows, because the `snapshot` is
-> keeping the `packed-refs` file open too long, so the new file can't be
-> renamed on top of it.
+> test-lib determines whether a file-system supports FIFOs and needs to do
+> special casing for CYGWIN and MINGW. This separates those system
+> specific settings from those at more central place.
+> 
+> Set mkfifo()  to false in the central system specific place so that the
+> same test works everywhere.
 
-Indeed, I sent you a mail about it before I checked for new mails ;-)
+The mkfifo() emulation of Cygwin seems to work, no? I think it works even
+in MSYS2, but not in MINGW.
 
-> I didn't realize that this is even allowed, but TIL that you can close a
-> file while keeping it mmapped. Does that technique work on Windows? If
-> so, I'll change v2 to do it as sketched below.
-
-I do not know whether that technique works on Windows, but it would not
-solve the problem *entirely*, as I outlined in my reply: in
-delete_branches(), for example, the main_worktree_ref_store is implicitly
-getting its snapshot initialized, and nothing seems to release it.
-
-This is only one example, as I figure that multiple worktrees could cause
-even more ref_stores to have unreleased snapshots of the packed-refs file.
-
-I imagine that something like close_all_packs() is needed
-("clear_all_snapshots()"?).
+So maybe this patch should affect only the MINGW arm?
 
 Ciao,
 Dscho
