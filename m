@@ -2,83 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12D1E20A26
-	for <e@80x24.org>; Thu, 14 Sep 2017 17:31:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A76CF20A21
+	for <e@80x24.org>; Thu, 14 Sep 2017 17:46:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751497AbdINRbL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Sep 2017 13:31:11 -0400
-Received: from avasout07.plus.net ([84.93.230.235]:51387 "EHLO
-        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751476AbdINRbL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Sep 2017 13:31:11 -0400
-Received: from [10.0.2.15] ([147.147.86.16])
-        by avasout07 with smtp
-        id 9VX81w00H0M91Ur01VX9yk; Thu, 14 Sep 2017 18:31:10 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=CrLPSjwD c=1 sm=1 tr=0
- a=dubYQqM3tRRTmV8xSh8cXQ==:117 a=dubYQqM3tRRTmV8xSh8cXQ==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=FEWp7enXAAAA:8 a=igRvKs3pAAAA:8
- a=KEBdS_LikDasUoXedywA:9 a=QEXdDO2ut3YA:10 a=yJM6EZoI5SlJf8ks9Ge_:22
- a=IjYSrUNMXUflr7qE6tl5:22 a=TvETph7qJS3LYjDAKe5U:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH 2/2] test-lib: ulimit does not limit on CYGWIN and MINGW
-To:     Michael J Gruber <git@grubix.eu>, git@vger.kernel.org
-Cc:     Adam Dinwoodie <adam@dinwoodie.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <alpine.DEB.2.21.1.1709141440510.4132@virtualbox>
- <00b6d2a5508520635956da1d2db656bca126cd1a.1505400392.git.git@grubix.eu>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <5b0fcb15-cb02-92e4-29a9-39f45eda1786@ramsayjones.plus.com>
-Date:   Thu, 14 Sep 2017 18:31:06 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        id S1751370AbdINRqR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Sep 2017 13:46:17 -0400
+Received: from mail-yw0-f174.google.com ([209.85.161.174]:44125 "EHLO
+        mail-yw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751268AbdINRqQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Sep 2017 13:46:16 -0400
+Received: by mail-yw0-f174.google.com with SMTP id r85so58506ywg.1
+        for <git@vger.kernel.org>; Thu, 14 Sep 2017 10:46:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=vMeO1+YgAqJaN7ynDOPoSdVKA+YQ9MWn4quRgIQ7qzM=;
+        b=g6g0HPWRjMGGzw++8EbzNxzht07QeA9UtU7Wg4zjbm3ge6mPyeGZutRRcPDzABTz8v
+         L0ZbiIPpV0az7GAoyTVFaHUAzwPbI8qku013zwgLn3kOMw4YU5wfj43IL8Ll3JhnAwdr
+         4WyYGZBFycjCHgGqumoxEW9g2TbObtRj4nulh0vQp0uaJjyPEXV4zfj8b2v8hrx9nXnl
+         0Qqi97Tz5FKHC4KmfuSO6qyiBYTR7jdbvaGEKunJDupAdDqoVwKLa81UiYkzNOkgMTTz
+         YtIkfiatrpWMlbqe16N+//TsjIa/G5DdBmHwMRat6QlNiyb0DedTofUjzJ6v7AbdMMKq
+         WsxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=vMeO1+YgAqJaN7ynDOPoSdVKA+YQ9MWn4quRgIQ7qzM=;
+        b=ZbwRQaehTX1hrQO7psmyoNxKGWNAnuGCvWdYvTZ2XzJZ5dPVMBazCDU5GOu7TIgTfD
+         lZZnictr2V5LgsKDzpthg0An8Tu+utq+IelDCPMiHlR/iVxN3hptHFHVHUQS9fIEhD3u
+         Kaj6+EImsNJMnLAujOfNc2aQBW3Zw/R6IgtEubcaJcAqoUbb4adg92PkDb/P7coxP72Q
+         1XngP0K/QDsp43mpru4jHZD5aZ65LzmBDsBVVfoeFxcOtVvvBfuxKnXdXWLfIgsuWfgQ
+         10uYjLcWo2SXmuZABUPU0VGnRmSN1djg5wH4jfby2//oVTcYPKVbdONEBPgmtyX4ywxZ
+         Mjvw==
+X-Gm-Message-State: AHPjjUh0JGrrYkJyS6VpIZ9TE48A8rAb71hHSzRPpyb8eo+E23sMSgUh
+        WE57qOw1/CQUejS+DcAqMnXBhHkokh/vjc58gi8=
+X-Google-Smtp-Source: AOwi7QCl//qeIBMHdgpd67GICPD1IrjdWiVC12KkX+sQr5sKCY64BRYM7aKR7+JulYXQv8CUUW5yG4y9N863vyHkC6o=
+X-Received: by 10.37.95.80 with SMTP id h16mr17874260ybm.89.1505411175853;
+ Thu, 14 Sep 2017 10:46:15 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <00b6d2a5508520635956da1d2db656bca126cd1a.1505400392.git.git@grubix.eu>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.129.82.203 with HTTP; Thu, 14 Sep 2017 10:46:15 -0700 (PDT)
+In-Reply-To: <bf4275e5-ad96-4b71-e6a0-52c198cd541e@suse.de>
+References: <CAHd499ApnHpt0CmcQMx+qVQ60NV6auFKkuvikCq2Zut4p4rzaQ@mail.gmail.com>
+ <bf4275e5-ad96-4b71-e6a0-52c198cd541e@suse.de>
+From:   Robert Dailey <rcdailey.lists@gmail.com>
+Date:   Thu, 14 Sep 2017 12:46:15 -0500
+X-Google-Sender-Auth: D1sr6_019q-xCOWvdoH8ggB8jTw
+Message-ID: <CAHd499BeANJBryo3sOoD2vT-A0M-R00GTa5-wTOumyj0EkSHkQ@mail.gmail.com>
+Subject: Re: Rebase & submodules
+To:     Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.de>
+Cc:     Git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Sep 14, 2017 at 10:57 AM, Nicolas Morey-Chaisemartin
+<NMoreyChaisemartin@suse.de> wrote:
+> Without changing your workflow too much,
 
+If you mean to imply that you have other recommendations if I'm
+willing to change my workflow, then please by all means share them.
+I'm very interested. I'm not too hooked on my workflow.
 
-On 14/09/17 15:52, Michael J Gruber wrote:
-> ulimit succeeds (by return value) but does not limit on some systems.
-> 
-> Set ulimit() to false on these systems so that we do not rely on its
-> output nor effect. As an intended side-effect, ulimit based
-> prerequisites are set correctly (to "not-have") on these systems.
-> 
-> Reported-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
-> Reported-by: Adam Dinwoodie <adam@dinwoodie.org>
-> Reported-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> Signed-off-by: Michael J Gruber <git@grubix.eu>
-> ---
-> This is independent of my series, but should best go before so that no
-> ulimit based test is run on CYGWIN and MINGW.
-> 
-> It follows the basic assumption that a tool like ulimit is either
-> present and functional or not present; and that we work around by
-> defines or such when that assumption is broken.
-> (Alternatively, we could set ULIMT_LIMITS or so and depend on that.)
+> simply add an annotated tag to your branch before your rebase.
+> This way the SHA1 will always exists. Unless you want to cleanup at some point (branch merged ?) and then you can simply delete all those old tags.
 
-Heh, this was my first suggestion, if you recall, but I decided to
-go a different way ... ;-)
-
-Also, Johannes made a good suggestion, which lead to a new version
-of my patch (which could easily be extended to cover the FIFO).
-
-I don't have a strong preference for either approach (but I would
-have to test your patches, which I haven't done yet), so I would
-be happy to see either applied.
-
-ATB,
-Ramsay Jones
+This definitely the best idea so far; although the maintenance
+overhead of this could be high for long-lived branches with frequent
+rebases. Maybe with bigger workflow changes there are other solutions?
