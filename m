@@ -2,74 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.1 required=3.0 tests=BAYES_40,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B340520281
-	for <e@80x24.org>; Fri, 15 Sep 2017 19:32:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F3CDC20281
+	for <e@80x24.org>; Fri, 15 Sep 2017 19:33:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751878AbdIOTci (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Sep 2017 15:32:38 -0400
-Received: from mail.praxis.com.mx ([200.52.131.4]:30208 "EHLO
-        mail.praxis.com.mx" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751843AbdIOTch (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Sep 2017 15:32:37 -0400
-X-Greylist: delayed 499 seconds by postgrey-1.27 at vger.kernel.org; Fri, 15 Sep 2017 15:32:37 EDT
-Received: from localhost (localhost.localdomain [127.0.0.1])
-        by mail.praxis.com.mx (Postfix) with ESMTP id B33AE5055ED;
-        Fri, 15 Sep 2017 14:24:06 -0500 (CDT)
-Received: from mail.praxis.com.mx ([127.0.0.1])
-        by localhost (mail.praxis.com.mx [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id FuXwmKrIvCJn; Fri, 15 Sep 2017 14:24:06 -0500 (CDT)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-        by mail.praxis.com.mx (Postfix) with ESMTP id 670E0505BDB;
-        Fri, 15 Sep 2017 14:24:06 -0500 (CDT)
-DKIM-Filter: OpenDKIM Filter v2.10.3 mail.praxis.com.mx 670E0505BDB
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=praxis.com.mx;
-        s=97404160-8856-11E7-AB92-3192A1C5E255; t=1505503446;
-        bh=p+eLvlHfVR9tOoIzRsKvqW7oI0p7PiYkUOp3g75TNBg=;
-        h=From:To:Date:Message-ID:MIME-Version;
-        b=YEzIE7Sh+/rmyKk8aMSPqNCIdhi/UOS72ryCUlqVIwyVwJFDhI1JkDO6QGCQPgq71
-         gz+Ilqp91OXImNZnVGfWotA06sDosuA6lK60gwLEIpFj+K8cQpnF95mFzg5sgLYcfY
-         bZDQOlJRu448ksQlWRW4qm23GwAqedR2YYbyvRGWyMZOUXf/j+vhZjTGkGNbzk+IdU
-         87hCSPfjamTSHT6++soChccw4J153QYpftbTZxCiMOqJZBmXaPYCtdzbb1yq7uUETw
-         Q4OIWyR0ukA2l6j6WtcrCfEMeucVpAhGIRFdO61x7QHH5ZF/EDh0hS/e7Ypr6SwQSL
-         Auzd6E1VdTWYA==
-Received: from mail.praxis.com.mx ([127.0.0.1])
-        by localhost (mail.praxis.com.mx [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id Np3i7PXo6OTb; Fri, 15 Sep 2017 14:24:06 -0500 (CDT)
-Received: from PXL201701967 (unknown [192.168.16.120])
-        by mail.praxis.com.mx (Postfix) with ESMTPSA id 42DCE5055ED;
-        Fri, 15 Sep 2017 14:24:06 -0500 (CDT)
-From:   "EduardoLeon" <Lebx@praxis.com.mx>
-To:     <git@vger.kernel.org>, <majordomo@vger.kernel.org>
-Subject: Pertenecer a la Comunidad GIT
-Date:   Fri, 15 Sep 2017 14:24:15 -0500
-Message-ID: <008d01d32e58$38702630$a9507290$@praxis.com.mx>
+        id S1751830AbdIOTdM (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Sep 2017 15:33:12 -0400
+Received: from mout.gmx.net ([212.227.17.20]:63062 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751648AbdIOTdL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Sep 2017 15:33:11 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MLB89-1dtDTN09WT-000LfL; Fri, 15
+ Sep 2017 21:32:56 +0200
+Date:   Fri, 15 Sep 2017 21:32:53 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Michael J Gruber <git@grubix.eu>
+cc:     git@vger.kernel.org, Adam Dinwoodie <adam@dinwoodie.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH 1/2] test-lib: group system specific FIFO tests by
+ system
+In-Reply-To: <a159230a-d406-c772-13f0-f82a36faf763@grubix.eu>
+Message-ID: <alpine.DEB.2.21.1.1709152128000.219280@virtualbox>
+References: <alpine.DEB.2.21.1.1709141440510.4132@virtualbox> <4482ae18370f3e759bf98f71e15eaab19fdd009a.1505400392.git.git@grubix.eu> <alpine.DEB.2.21.1.1709150020070.219280@virtualbox> <a159230a-d406-c772-13f0-f82a36faf763@grubix.eu>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AdMuVPMVG4UTq6l2T4a3TVW0I/cJcA==
-Content-Language: es-mx
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:L2iNUChHXsFRBjMoHvSa4ldHVgUbhWxayxB+FfRtgKg3eVVgvpB
+ RXq4DO825yvfVDugZbu40COxA3p0stGmCIeP+3KPIMyaQFcyBf51uyX8yX2eyMA6S3UqTaI
+ p43+Jlc3q2kQ5ZOmtSdnxOcBekZZ7R54n/7s3MU5iGTV98oO7yMADW6d9gG9g8zRlM8FlSj
+ bIFUd5N2Zvq8RrAgfBpbQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:L5l48pey0yA=:oVXeV4fTCh38BFFgwTuPVU
+ pqFRv3YMTdfCIzcygfdf3yLzUg1RdDLYKBXHYbMjBGbmitl1sgSIL1WrkDefwE/8EboPJINBb
+ th6/+2K42mPexF/YtOzAZRH5KEQa8dFKukA16izb8BUHHcAJd/FMvO+m6X3vMTNdMoaQEEaki
+ ymH4Uk/Zg7jmpzIKUwyGEOi2OlP0xQthMNPOoVbDuA0aqYwHo5nuLTclnwg8/ARQFOYT668jv
+ 1g+WIdKCPsF3yXNIIHQVJbsCUO+gIYmcdtQ0DKt9v6gKb1Sag8b67P/gGBrPJyudPHJpC0A42
+ /j9rk0cIyCGge9+awZnTt5uFEf8DO6++DgH+bJnXU6GIizA5eXNISK2uPMvgR0iApgAX37908
+ fV0vkrKtghTEaJaEBqfi2U6vGWlH29n5ArIKmlZo93cmyjlFYlpDe1EEIdyewB1WNu2fUdH7l
+ zVslDsbf5C0q5aUHobiZ55YT3hiAIreKfGr/lqqnAwBIgumQhbFWQXttfIQUI2odQuTFdwEiD
+ YraETARSdsdvj1fqO7AfXZ9Qm41Z3TO9LJt/55CR/BfLPa6miFt3I1GrOSO6HDqD1euWRqzTe
+ D2A3nPXJaoAbK87Ss/Rpzicty5I0+suHxTQ4zSDWKIHjJPz57F+hvoeOYyY4v1+uOSNfRryaH
+ nqBTW1t8/RdMZg72l0bDmHmt1TiSqJdoWgcxoD7q/DNAxYGcndduGz4WH8awAtjZU0K+bArYG
+ 7foC3potXu/MiUUdMpE/U9LP70qo7T8flo1iEEmZX/8iD7Z++sN3E4WMQd3KF3Dq4/uZqWGtH
+ gWAHU3QqiGr2535nr2Li/7QiM3R4FHeQu9io7/D0URtLA3OPyw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Buen d=EDa,
+Hi Michael,
 
-Me gustar=EDa pertenecer a su comunidad y conocer mas sobre los temas de =
-git
+On Fri, 15 Sep 2017, Michael J Gruber wrote:
 
-Muchas Gracias,
-=A0
-Saludos Cordiales.=20
-=A0
-Administrador de la configuracion del software
-Eduardo Alfonso Le=F3n Ben=EDtez =96 Lebx =A0
-Ext- 2366
+> Johannes Schindelin venit, vidit, dixit 15.09.2017 00:21:
+> > 
+> > On Thu, 14 Sep 2017, Michael J Gruber wrote:
+> > 
+> >> test-lib determines whether a file-system supports FIFOs and needs to do
+> >> special casing for CYGWIN and MINGW. This separates those system
+> >> specific settings from those at more central place.
+> >>
+> >> Set mkfifo()  to false in the central system specific place so that the
+> >> same test works everywhere.
+> > 
+> > The mkfifo() emulation of Cygwin seems to work, no? I think it works even
+> > in MSYS2, but not in MINGW.
+> > 
+> > So maybe this patch should affect only the MINGW arm?
+> 
+> I only reorganised the code, so in that sense the patch does not affect
+> any system ;)
+> 
+> If indeed mkfifo works on CYGWIN than a separate patch should remove the
+> exclusion of CYGWIN; alas, I can't confirm (I wish MS still had the old
+> academic alliance programme).
 
+You don't need an academic license, as there are free VMs available (they
+expire after a while, though):
 
+https://developer.microsoft.com/en-us/windows/downloads/virtual-machines
+
+It seems that the current free VM will expire in 4 days. After that,
+probably a new one will be available that expires some time later (not
+sure about the exact time frame of those VMs).
+
+Alternatively, you can download VMs meant for web testing at
+https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/ which
+expire after 90 days.
+
+Ciao,
+Dscho
