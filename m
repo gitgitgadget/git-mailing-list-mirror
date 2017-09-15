@@ -2,133 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5714D20281
-	for <e@80x24.org>; Fri, 15 Sep 2017 21:35:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2AA3B20A25
+	for <e@80x24.org>; Fri, 15 Sep 2017 21:47:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751201AbdIOVf0 convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 15 Sep 2017 17:35:26 -0400
-Received: from mxo2.dft.dmz.twosigma.com ([208.77.212.182]:46192 "EHLO
-        mxo2.dft.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750841AbdIOVfZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Sep 2017 17:35:25 -0400
-Received: from localhost (localhost [127.0.0.1])
-        by mxo2.dft.dmz.twosigma.com (Postfix) with ESMTP id BDB4C10005F;
-        Fri, 15 Sep 2017 21:35:24 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at twosigma.com
-Received: from mxo2.dft.dmz.twosigma.com ([127.0.0.1])
-        by localhost (mxo2.dft.dmz.twosigma.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id iomaZz9TvU4U; Fri, 15 Sep 2017 21:35:24 +0000 (GMT)
-Received: from exmbdft7.ad.twosigma.com (exmbdft7.ad.twosigma.com [172.22.2.43])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mxo2.dft.dmz.twosigma.com (Postfix) with ESMTPS id ACA9F8002E;
-        Fri, 15 Sep 2017 21:35:24 +0000 (GMT)
-Received: from exmbdft7.ad.twosigma.com (172.22.2.43) by
- exmbdft7.ad.twosigma.com (172.22.2.43) with Microsoft SMTP Server (TLS) id
- 15.0.1263.5; Fri, 15 Sep 2017 21:35:24 +0000
-Received: from exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955]) by
- exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955%19]) with mapi id
- 15.00.1263.000; Fri, 15 Sep 2017 21:35:24 +0000
-From:   David Turner <David.Turner@twosigma.com>
-To:     'Ben Peart' <benpeart@microsoft.com>
-CC:     "avarab@gmail.com" <avarab@gmail.com>,
-        "christian.couder@gmail.com" <christian.couder@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "johannes.schindelin@gmx.de" <johannes.schindelin@gmx.de>,
-        "pclouds@gmail.com" <pclouds@gmail.com>,
-        "peff@peff.net" <peff@peff.net>
-Subject: RE: [PATCH v6 04/12] fsmonitor: teach git to optionally utilize a
- file system monitor to speed up detecting new or changed files.
-Thread-Topic: [PATCH v6 04/12] fsmonitor: teach git to optionally utilize a
- file system monitor to speed up detecting new or changed files.
-Thread-Index: AQHTLlfZ9UY7A3HP7kmYSR3gNLzDdaK2XgUA
-Date:   Fri, 15 Sep 2017 21:35:24 +0000
-Message-ID: <850c2ad20acc4c14be87a767af851b19@exmbdft7.ad.twosigma.com>
-References: <20170610134026.104552-1-benpeart@microsoft.com>
- <20170915192043.4516-1-benpeart@microsoft.com>
- <20170915192043.4516-5-benpeart@microsoft.com>
-In-Reply-To: <20170915192043.4516-5-benpeart@microsoft.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [172.20.60.10]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-MIME-Version: 1.0
+        id S1751502AbdIOVr1 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Sep 2017 17:47:27 -0400
+Received: from mail-qk0-f181.google.com ([209.85.220.181]:53053 "EHLO
+        mail-qk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751164AbdIOVrZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Sep 2017 17:47:25 -0400
+Received: by mail-qk0-f181.google.com with SMTP id o77so3243768qke.9
+        for <git@vger.kernel.org>; Fri, 15 Sep 2017 14:47:25 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=tfCCbu3LGrkaNZ/+vWuWevgwjdJ3nvEnGnNIYaGaVCI=;
+        b=CBdmjkCS9YE8gWM/m9O9GNbTzRfkfJbAZj26IXp6++uSXrhi55B454FZfCWenk3NQ1
+         uojMLNWTZNroqSVbcWxbUCNVuryCkO/9WJx6420A7XFTHA7eT8JCeuf2EI1GKX44AAz+
+         Kxtx2NhGFvE8l5HNHc5J1ud9aF/FDgpXNQ8f43YX0wXznJy/3f2B7rnwtv4Dny1AJvZX
+         oPHWJsNBZRiOP1yJzIZlxsVamwQYQBQCMJm2G/SgIeN/N/Uf5i54qGq5iv8NjdshTsyg
+         9IDMXOQgahoeE2t9jhC4WVLRS3ZfkqBblBKE/XP8otCjaiJImirIivGqdxbgafFcTrB7
+         Wu8g==
+X-Gm-Message-State: AHPjjUjzxq6P4NQPtdByin090bl/V79c27d91AgyJJpai2mxZm63Z4CW
+        E2sYnInQM7xsodc/YkpZFg==
+X-Google-Smtp-Source: AOwi7QBghrmPvQwnMn5cBLT0H9E0B/k1um67bcWWvFhhdv4dJ+m3VaYFUCPYjIN7vNc2dwAWirVinw==
+X-Received: by 10.55.42.216 with SMTP id q85mr9636373qkq.337.1505512044609;
+        Fri, 15 Sep 2017 14:47:24 -0700 (PDT)
+Received: from orpheus.redhat.com (209-6-90-240.s1774.c3-0.smr-ubr1.sbo-smr.ma.cable.rcncustomer.com. [209.6.90.240])
+        by smtp.gmail.com with ESMTPSA id v68sm1209516qkb.73.2017.09.15.14.47.23
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 15 Sep 2017 14:47:24 -0700 (PDT)
+From:   Jason Merrill <jason@redhat.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, Eric Wong <e@80x24.org>,
+        aldyh@redhat.com, Jason Merrill <jason@redhat.com>
+Subject: [PATCH v2] git-svn: Fix svn.pushmergeinfo handling of svn+ssh usernames.
+Date:   Fri, 15 Sep 2017 17:46:53 -0400
+Message-Id: <20170915214653.14720-1-jason@redhat.com>
+X-Mailer: git-send-email 2.13.5
+In-Reply-To: <CADzB+2mxyXcROYx72tac8cUxBMxi=ZxUNQYxpUR1CZ43e-j9gA@mail.gmail.com>
+References: <CADzB+2mxyXcROYx72tac8cUxBMxi=ZxUNQYxpUR1CZ43e-j9gA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> -----Original Message-----
-> From: Ben Peart [mailto:benpeart@microsoft.com]
-> Sent: Friday, September 15, 2017 3:21 PM
-> To: benpeart@microsoft.com
-> Cc: David Turner <David.Turner@twosigma.com>; avarab@gmail.com;
-> christian.couder@gmail.com; git@vger.kernel.org; gitster@pobox.com;
-> johannes.schindelin@gmx.de; pclouds@gmail.com; peff@peff.net
-> Subject: [PATCH v6 04/12] fsmonitor: teach git to optionally utilize a file system
-> monitor to speed up detecting new or changed files.
- 
-> +int git_config_get_fsmonitor(void)
-> +{
-> +	if (git_config_get_pathname("core.fsmonitor", &core_fsmonitor))
-> +		core_fsmonitor = getenv("GIT_FSMONITOR_TEST");
-> +
-> +	if (core_fsmonitor && !*core_fsmonitor)
-> +		core_fsmonitor = NULL;
-> +
-> +	if (core_fsmonitor)
-> +		return 1;
-> +
-> +	return 0;
-> +}
+Previously, svn dcommit of a merge with svn.pushmergeinfo set would
+get error messages like "merge parent <X> for <Y> is on branch
+svn+ssh://gcc.gnu.org/svn/gcc/trunk, which is not under the git-svn root
+svn+ssh://jason@gcc.gnu.org/svn/gcc!"
 
-This functions return values are backwards relative to the rest of the git_config_* functions.
+So, let's call remove_username (as we do for svn info) before comparing
+rooturl to branchurl.
 
-[snip]
+Signed-off-by: Jason Merrill <jason@redhat.com>
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ git-svn.perl | 1 +
+ 1 file changed, 1 insertion(+)
 
-+>	/*
-+>	 * With fsmonitor, we can trust the untracked cache's valid field.
-+>	 */
-
-[snip]
-
-> +int read_fsmonitor_extension(struct index_state *istate, const void *data,
-> +	unsigned long sz)
-> +{
-
-If git_config_get_fsmonitor returns 0, fsmonitor_dirty will leak.
-
-[snip]
-
-> +	/* a fsmonitor process can return '*' to indicate all entries are invalid */
-
-That's not documented in your documentation.  Also, I'm not sure I like it: what 
-if I have a file whose name starts with '*'?  Yeah, that would be silly, but this indicates the need 
-for the protocol to have some sort of signaling mechanism that's out-of-band  Maybe 
-have some key\0value\0 pairs and then \0\0 and then the list of files?  Or, if you want to keep
-it really simple, allow an entry of '/' (which is an invalid filename) to mean 'all'.
-
-> +void add_fsmonitor(struct index_state *istate) {
-> +	int i;
-> +
-> +	if (!istate->fsmonitor_last_update) {
-[snip]
-> +		/* reset the untracked cache */
-
-Is this really necessary?  Shouldn't the untracked cache be in a correct state already? 
-
-> +/*
-> + * Clear the given cache entries CE_FSMONITOR_VALID bit and invalidate
-
-Nit: "s/entries/entry's/".
- 
+diff --git a/git-svn.perl b/git-svn.perl
+index fa42364785..3b95d67bde 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -931,6 +931,7 @@ sub cmd_dcommit {
+ 		# information from different SVN repos, and paths
+ 		# which are not underneath this repository root.
+ 		my $rooturl = $gs->repos_root;
++	        Git::SVN::remove_username($rooturl);
+ 		foreach my $d (@$linear_refs) {
+ 			my %parentshash;
+ 			read_commit_parents(\%parentshash, $d);
+-- 
+2.13.5
 
