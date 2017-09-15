@@ -6,69 +6,68 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 71AE920A21
-	for <e@80x24.org>; Fri, 15 Sep 2017 00:43:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9C3020A21
+	for <e@80x24.org>; Fri, 15 Sep 2017 00:46:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751737AbdIOAno (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Sep 2017 20:43:44 -0400
-Received: from cloud.peff.net ([104.130.231.41]:39402 "HELO cloud.peff.net"
+        id S1751703AbdIOAqk (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Sep 2017 20:46:40 -0400
+Received: from cloud.peff.net ([104.130.231.41]:39416 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751599AbdIOAnn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Sep 2017 20:43:43 -0400
-Received: (qmail 17034 invoked by uid 109); 15 Sep 2017 00:43:44 -0000
+        id S1751645AbdIOAqj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Sep 2017 20:46:39 -0400
+Received: (qmail 17148 invoked by uid 109); 15 Sep 2017 00:46:39 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 15 Sep 2017 00:43:44 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 15 Sep 2017 00:46:39 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1500 invoked by uid 111); 15 Sep 2017 00:44:18 -0000
+Received: (qmail 1520 invoked by uid 111); 15 Sep 2017 00:47:14 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Thu, 14 Sep 2017 20:44:18 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Thu, 14 Sep 2017 20:47:14 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Sep 2017 20:43:41 -0400
-Date:   Thu, 14 Sep 2017 20:43:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Sep 2017 20:46:37 -0400
+Date:   Thu, 14 Sep 2017 20:46:37 -0400
 From:   Jeff King <peff@peff.net>
 To:     Jonathan Nieder <jrnieder@gmail.com>
 Cc:     demerphq <demerphq@gmail.com>, Git <git@vger.kernel.org>,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH 6/7] notes-merge: use ssize_t for write_in_full() return
- value
-Message-ID: <20170915004341.zwmpkvcvjgifn5zn@sigill.intra.peff.net>
+Subject: Re: [PATCH 7/7] config: flip return value of store_write_*()
+Message-ID: <20170915004637.jueyykocyktrwfk7@sigill.intra.peff.net>
 References: <20170913170807.cyx7rrpoyhaauvol@sigill.intra.peff.net>
- <20170913171744.32cmtjkdcp7yf7pt@sigill.intra.peff.net>
- <20170913212035.GN27425@aiede.mtv.corp.google.com>
+ <20170913171756.v7vzu3a77g2khq7x@sigill.intra.peff.net>
+ <20170913212528.GO27425@aiede.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170913212035.GN27425@aiede.mtv.corp.google.com>
+In-Reply-To: <20170913212528.GO27425@aiede.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 13, 2017 at 02:20:35PM -0700, Jonathan Nieder wrote:
+On Wed, Sep 13, 2017 at 02:25:28PM -0700, Jonathan Nieder wrote:
 
-> > --- a/notes-merge.c
-> > +++ b/notes-merge.c
-> > @@ -302,7 +302,7 @@ static void write_buf_to_worktree(const struct object_id *obj,
-> >  	fd = xopen(path, O_WRONLY | O_EXCL | O_CREAT, 0666);
-> >  
-> >  	while (size > 0) {
-> > -		long ret = write_in_full(fd, buf, size);
-> > +		ssize_t ret = write_in_full(fd, buf, size);
-> >  		if (ret < 0) {
-> >  			/* Ignore epipe */
-> >  			if (errno == EPIPE)
-> > 				break;
-> > 			die_errno("notes-merge");
-> > 		} else if (!ret) {
-> > 			die("notes-merge: disk full?");
-> > 		}
+> > Let's flip them to follow the usual write() conventions and
+> > update all callers. As these are local to config.c, it's
+> > unlikely that we'd have new callers in any topics in flight
+> > (which would be silently broken by our change). But just to
+> > be on the safe side, let's rename them to just
+> > write_section() and write_pairs().  That also accentuates
+> > their relationship with write().
+> >
+> > Signed-off-by: Jeff King <peff@peff.net>
 > 
-> These three lines are dead code.  How about the following, e.g. for
-> squashing in?
+> The caller only cares if it succeeded, right?  Could this return
+> the customary 0 vs -1 instead of the number of bytes written?
 
-Thanks, I didn't notice that.
+Yes, it could. I went with "follow the conventions of write()" because
+these are used in a big chain of write() calls (well, really
+write_in_full). But given the current callers, it does not matter either
+way.
 
-I'd actually prefer it as a separate patch, since it needs explained
-separately.
+Thanks for reviewing the series, and sorry if my comments have been a
+bit terse. I'm trying to clear my pile before going out of town for a
+few days (which I admit may have contributed to my desire for you to
+prepare patches on top).
+
+But either way, don't expect a re-roll until next week at the earliest.
 
 -Peff
