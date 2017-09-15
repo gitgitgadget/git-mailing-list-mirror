@@ -2,106 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B8AE820286
-	for <e@80x24.org>; Fri, 15 Sep 2017 06:50:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC75420286
+	for <e@80x24.org>; Fri, 15 Sep 2017 06:54:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751230AbdIOGuj (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Sep 2017 02:50:39 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64427 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751152AbdIOGui (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Sep 2017 02:50:38 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B0E1B8F8CD;
-        Fri, 15 Sep 2017 02:50:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=/X6YuVqqsOmzkn3qQfTEG3mWIlQ=; b=ikRhaf
-        Q4BAfvE04fMwSJ5m+wZs+VBzQjNL+lPr5R71iDPHwTKYH0wdUawhEZ2W8oT0/OLp
-        pbS0nHs9sHqKgNAX/k7V5bqN96RUjjaaxmO7KiqGJD6v8sMeAaXWoYt3J438BItY
-        D/SYx+2sDNeuNeIMQi/+vpCkV32dwT+0ExYDo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=s6jjteN827SxjxpOhwBoJ1Fv4ZXZSP65
-        NwNqvebSpcEVDIDRmHizq0asjmbNZoWbec42NzOzEctYAd/0YtcaD3fJGROYeUXa
-        YsgU7UCjaA+0SbPlRwfwIMhpctE2ZwvjRm6xlKw0luBB9C1h8ifaZyLsFwZc69DX
-        QpfMjTnhmNw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A88E28F8CC;
-        Fri, 15 Sep 2017 02:50:37 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0B2EF8F8CB;
-        Fri, 15 Sep 2017 02:50:36 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Wesley Smith <wsmith@greatergiving.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Is finalize_object_file in sha1_file.c handling errno from "rename" correctly?
-References: <c9b3bc17110048f0b7943704cfbd8f68@APEXC04.auctionpay.com>
-Date:   Fri, 15 Sep 2017 15:50:35 +0900
-In-Reply-To: <c9b3bc17110048f0b7943704cfbd8f68@APEXC04.auctionpay.com> (Wesley
-        Smith's message of "Fri, 15 Sep 2017 06:18:13 +0000")
-Message-ID: <xmqq4ls4xxok.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751213AbdIOGyV (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Sep 2017 02:54:21 -0400
+Received: from ikke.info ([178.21.113.177]:51550 "EHLO vps892.directvps.nl"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751152AbdIOGyU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Sep 2017 02:54:20 -0400
+Received: by vps892.directvps.nl (Postfix, from userid 1008)
+        id 725CB44012D; Fri, 15 Sep 2017 08:37:40 +0200 (CEST)
+Date:   Fri, 15 Sep 2017 08:37:40 +0200
+From:   Kevin Daudt <me@ikke.info>
+To:     "A. Wilcox" <awilfox@adelielinux.org>
+Cc:     git@vger.kernel.org
+Subject: Re: Git 2.14.1: t6500: error during test on musl libc
+Message-ID: <20170915063740.GB21499@alpha.vpn.ikke.info>
+References: <59BB3E40.7020804@adelielinux.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2DF25250-99E2-11E7-9706-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <59BB3E40.7020804@adelielinux.org>
+User-Agent: Mutt/1.8.3 (2017-05-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Wesley Smith <wsmith@greatergiving.com> writes:
+On Thu, Sep 14, 2017 at 09:43:12PM -0500, A. Wilcox wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+> 
+> Hi there,
+> 
+> While bumping Git's version for our Linux distribution to 2.14.1, I've
+> run in to a new test failure in t6500-gc.sh.  This is the output of
+> the failing test with debug=t verbose=t:
 
-> 1) This bug is triggered because "git fetch" is causing a pack
-> file to be written when that same pack file already exists.  It
-> seems like this is harmless and shouldn't cause a problem.  Is
-> that correct?
+This is a new test introduced by c45af94db 
+(gc: run pre-detach operations under lock, 2017-07-11) which was
+included in v2.14.0.
 
-The final name of the packfile is derived from the entire contents
-of the packfile; it should be harmless when we attempt to rename a
-new file, which has exactly the same contents as an existing file,
-to the existing file and see a failure out of that attempt.
+So it might be that this was already a problem for a longer time, only
+just recently uncovered.
 
-> 2) It seems that finalize_object_file is not accounting for the
-> fact that "link" will return EEXIST if the destination file
-> already exists but is not writeable, whereas "rename" will return
-> EACCESS in this case.  Is that correct?  If so, should
-> finalize_object_file be fixed to account for this? Perhaps it
-> should check if the newfile exists before calling rename.  Or,
-> should the Windows mingw_rename function be modified to return
-> EEXIST in this case, even though that's not the standard errno for
-> that situation?
-
-The codepath that is triggered by OBJECT_CREATION_USES_RENAMES ought
-to behave correctly even on non-Windows platforms, so bending the
-error code of rename() only on Windows to fit the existing error
-handling would not be a smart thing to do.  Rather, the rename()
-emulation should leave a correct errno and the caller should be
-updated to be aware of that error that is not EEXIST, which it
-currently knows about.
-
-Thanks for spotting a problem and digging to its cause.
-
-This is a #leftoverbits tangent, and should be done separately from
-your "OBJECT_CREATION_USES_RENAMES is broken" topic, but I think it
-is a bug to use finalize_object_file() directly to "finalize"
-anything but an individual loose object file in the first place.
-
-We should create a new shared helper that does what the function
-currently does, make finalize_object_file() call that new shared
-helper, and make sure finalize_object_file() is called only on a
-newly created loose object file.  The codepath that creates a new
-packfile and other things and moves them to the final name should
-not call finalize_object_file() but the new shared helper instead.
-
-That way, we could later implement the "collision? check" alluded by
-the in-code comment in finailize_object_file(), and we won't have to
-worry about affecting callers other than the one that creates a
-loose object file with such an enhancement.
-
+> 
+> 
+> expecting success:
+>         # make sure we run a background auto-gc
+>         test_commit make-pack &&
+>         git repack &&
+>         test_config gc.autopacklimit 1 &&
+>         test_config gc.autodetach true &&
+> 
+>         # create a ref whose loose presence we can use to detect a
+> pack-refs run
+>         git update-ref refs/heads/should-be-loose HEAD &&
+>         test_path_is_file .git/refs/heads/should-be-loose &&
+> 
+>         # now fake a concurrent gc that holds the lock; we can use our
+>         # shell pid so that it looks valid.
+>         hostname=$(hostname || echo unknown) &&
+>         printf "$$ %s" "$hostname" >.git/gc.pid &&
+> 
+>         # our gc should exit zero without doing anything
+>         run_and_wait_for_auto_gc &&
+>         test_path_is_file .git/refs/heads/should-be-loose
+> 
+> [master 28ecdda] make-pack
+>  Author: A U Thor <author@example.com>
+>  1 file changed, 1 insertion(+)
+>  create mode 100644 make-pack.t
+> Counting objects: 3, done.
+> Delta compression using up to 8 threads.
+> Compressing objects: 100% (2/2), done.
+> Writing objects: 100% (3/3), done.
+> Total 3 (delta 0), reused 0 (delta 0)
+> Auto packing the repository in background for optimum performance.
+> See "git help gc" for manual housekeeping.
+> File .git/refs/heads/should-be-loose doesn't exist.
+> not ok 8 - background auto gc respects lock for all operations
+> #
+> #               # make sure we run a background auto-gc
+> #               test_commit make-pack &&
+> #               git repack &&
+> #               test_config gc.autopacklimit 1 &&
+> #               test_config gc.autodetach true &&
+> #
+> #               # create a ref whose loose presence we can use to
+> detect a pack-refs run
+> #               git update-ref refs/heads/should-be-loose HEAD &&
+> #               test_path_is_file .git/refs/heads/should-be-loose &&
+> #
+> #               # now fake a concurrent gc that holds the lock; we can
+> use our
+> #               # shell pid so that it looks valid.
+> #               hostname=$(hostname || echo unknown) &&
+> #               printf "$$ %s" "$hostname" >.git/gc.pid &&
+> #
+> #               # our gc should exit zero without doing anything
+> #               run_and_wait_for_auto_gc &&
+> #               test_path_is_file .git/refs/heads/should-be-loose
+> #
+> 
+> # failed 1 among 8 test(s)
+> 1..8
+> 
+> 
+> I admit I am mostly blind with the Git gc system.  Should I use strace
+> on the git-gc process at the end?  How would I accomplish that?  Is
+> there a better way of debugging this error further?
+> 
+> Core system stats:
+> 
+> Intel x86_64 E3-1280 v3 @ 3.60 GHz
+> musl libc 1.1.16+20
+> git 2.14.1, vanilla except for a patch to an earlier test due to
+> musl's inability to cope with EUC-JP
+> bash 4.3.48(1)-release
+> 
+> Thank you very much.
+> 
+> All the best,
+> - --arw
+> 
+> - -- 
+> A. Wilcox (awilfox)
+> Project Lead, Adélie Linux
+> http://adelielinux.org
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v2
+> 
+> iQIcBAEBCAAGBQJZuz4yAAoJEMspy1GSK50UORwP/0Jxfp3xzexh27tSJlXYWS/g
+> g9QK8Xmid+3A0R696Vb2GguKg2roCcTmM2anR7iD1B2f2W31sgf+8M5mnJRHyJ1p
+> geEeqwrTdpCk6jQ/1Pj03L0NOftb1ftR6hcoVujBFAOph4jRlRdZDPA87fe6snrh
+> q99C3LoDXQcyK6WWJwzX+t2wOplKgpGJP8wTAaZ0AHoUwVS5CLPl8tP2XaY4kLfD
+> ZPPcvtp9wisVzzZ2ssE/CLGd38EbenNNZ6OJCBFJIHmlwey4G2isZ9kk6fVIHXi2
+> unBJ8yVqI7hQKmQFSVQMMSFSd9azhHnDjTBO5mzWeRK9HNVMda3LZsXTtVeswnRs
+> lN/ASMdt5KdfpNy/plFB7yDWLlQSQY7j1mxBMR8lL3AdVVQUbJppDM795tt+rn6a
+> NCE2ESZMWd/QEULmT92AbkNJTj5ibBEoubnVTka05KMjaBLwIauhpqU5XxLFq2UH
+> y3JYQU9hm0E7dQE0CLXxIm5/574T6bBUgp1cXH3CjxkeUYKR1USVKtDfBV6t/Qmt
+> xlDZKPEfjKbTvL3KUF33G+eAp55wTwrJTaWlOp8A/JqooXavYghcsuFhYtCPJ8qo
+> fFUa8kBZP70E/O7JkycUu8wi7p42+j1a8gR6/AnPG2u2wyoiosLCxHX+nll4gKmN
+> b6BuiRn0Z9ie5xw4xcMR
+> =Vf8Z
+> -----END PGP SIGNATURE-----
