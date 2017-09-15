@@ -2,121 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A047620281
-	for <e@80x24.org>; Fri, 15 Sep 2017 16:00:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 86EAC20281
+	for <e@80x24.org>; Fri, 15 Sep 2017 16:18:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751330AbdIOQAq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Sep 2017 12:00:46 -0400
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:58032 "EHLO
-        alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751211AbdIOQAp (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 15 Sep 2017 12:00:45 -0400
-X-AuditID: 12074411-f7dff70000007f0a-f0-59bbf92c2417
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 1A.75.32522.C29FBB95; Fri, 15 Sep 2017 12:00:44 -0400 (EDT)
-Received: from bagpipes.fritz.box (p54AAE5E5.dip0.t-ipconnect.de [84.170.229.229])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v8FG0f9p016427
-        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Fri, 15 Sep 2017 12:00:43 -0400
-From:   Michael Haggerty <mhagger@alum.mit.edu>
+        id S1751466AbdIOQS2 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Sep 2017 12:18:28 -0400
+Received: from mout.gmx.net ([212.227.17.22]:49597 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751211AbdIOQS1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Sep 2017 12:18:27 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Ldspr-1d9tni00yR-00j5PN; Fri, 15
+ Sep 2017 18:18:21 +0200
+Date:   Fri, 15 Sep 2017 18:18:19 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH] for_each_string_list_item(): behave correctly for empty list
-Date:   Fri, 15 Sep 2017 18:00:38 +0200
-Message-Id: <cb2d4d71c7c1db452b86c8076c153cabe7384e28.1505490776.git.mhagger@alum.mit.edu>
-X-Mailer: git-send-email 2.14.1
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprPIsWRmVeSWpSXmKPExsUixO6iqKvzc3ekQedjI4uuK91MFg29V5gt
-        bq+Yz2zxv+0dmwOLx9/3H5g8ds66y+5x8ZKyx+dNcgEsUVw2Kak5mWWpRfp2CVwZL+/eYStY
-        Jlyx5+5N1gbGFfxdjJwcEgImEo3/DjB2MXJxCAnsYJJoP/wFyjnFJDHl9DxGkCo2AV2JRT3N
-        TCC2iICaxMS2QywgNrNAtsThIzvYQWxhAV+Jq4/fg9WwCKhKvJj/DCzOKxAl0b3rGxvENnmJ
-        cw9uM09g5FrAyLCKUS4xpzRXNzcxM6c4NVm3ODkxLy+1SNdULzezRC81pXQTI8TvgjsYZ5yU
-        O8QowMGoxMPbcHl3pBBrYllxZe4hRkkOJiVRXvPXQCG+pPyUyozE4oz4otKc1OJDjBIczEoi
-        vIrfgXK8KYmVValF+TApaQ4WJXFeviXqfkIC6YklqdmpqQWpRTBZGQ4OJQle+x9AjYJFqemp
-        FWmZOSUIaSYOTpDhPEDDb4ANLy5IzC3OTIfIn2LU5ei4efcPkxBLXn5eqpQ47zWQIgGQoozS
-        PLg5sHh9xSgO9JYwbwLIOh5grMNNegW0hAloyZnTO0CWlCQipKQaGJded856KOd997eV6dk7
-        zy8X6fpMZjhY3Dx7ltqiHeLm8Y+dHTIXLc7gPTdvCf8x9eD1j+R/PdTz+33f/G0cn2pY0nKt
-        OmXxK6umnBJ/t/1NmXMx/7/Vl19bP6xyMC02rDliXrd63fPKknuO2hzc/Lx+fVPfrJ9u//tn
-        e7YX1/u2GRYKLFbPC5RYijMSDbWYi4oTAQZ/r1GyAgAA
+cc:     Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Aug 2017, #05; Tue, 22)
+In-Reply-To: <xmqq1so0wyjd.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1709151816390.219280@virtualbox>
+References: <xmqq4lsz2x6r.fsf@gitster.mtv.corp.google.com>        <7D99B245-4D22-4C9C-9C43-C8B8656F8E6D@gmail.com> <xmqq1so0wyjd.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:9P387GFvDdHs1jMCaN/5zBdkWWbDDlyhs0z/XM5d+AR0W/ZRi9j
+ VIy3jqti6MRnoF+ZkqhljL3HLLndzXPA7Np8F0rXzUFI6EmTwffDVsnLp7ook3NhhrO6Iqn
+ WsS4UtFeLTEXIgYQO1Ogoa/EFDvk46/w4PGGPGVJ9MHNbbHVrfKSXsKjgiSI8ivYt7TQi34
+ wrI46BrUCzwL/Uof8RXYQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:CkEOy7jhX78=:6InMed5dUQT56i7ZB6X4og
+ gMn/RP1f/1VSnYFFlPphZB0y9qpNKgkJRe+9wWVIpU9tES74yYOQ2HFy/VkF3k86/x/BbjI7P
+ ocRNBZKUjr/S2CSFkIyuRkSmnIIsSNj0FqTg1XS9rULcNZg5qThXk8SA6oDcWo8/Cv2qgf/r+
+ 1SFkZKMpz3ppKL0+Bnv6cNCB5XrSvHrVVJKEk/JZs+hwamKkthY4sPOaZwUXXZGdydIG//c+6
+ 3Eu+4wMkKeKzpI8PKYK6GEWvJzviqdySrdXKyuGKeuAdw317/cvgjmdSeEmNjRCdv5xnMqIZ6
+ LpYy/n+kWdLQCz29CXB7nLzCCLocc2YZsZIJ0FtZ6WmIu64hoK3MagVxEJp5yrOUTYoS7gze2
+ PZSDmfzdRt4MP+gOMGMiXnnhSUFQikPHw0yYuKlZGRsFI9XTRY51Zde8o4pXmYYbec1g6agkR
+ uqO5s0sqlqMi+aMXXfm7Tr9LdonsiEmnJRqoYPELNkU+nnHmzFXCR7JKlj/ILPAZWcL3p6B77
+ k4TfR+tvVQjsyoAZmMF4V7rdkC9RgHpUE2X37lybBnKNfPusoMM+w2eHBiRD7wCGXgQ+AHCod
+ uGQKmLFiYmpRrE8t0xZI03HJz6+Ie6elsXu91Zt4uwq5zlt26GUTZc73+76txy6GM363sPxP7
+ NYsvZiPVRMqcrOPeU26F4MSrnYoeE0B321TpOeV+reBn9HSDhKGGpJVES8OwuKRwAR2hIt1Rt
+ pgl6DVqrWMBEXy74zbCeRBkVSxiVzJfB1/6JWAkyfXTCEltBIerEc+qgFLi3UW6bInS2ZSwLb
+ kZ574gIeimal1m1DWlnYDnTnYHwU4yY9wxh2xwwGM6py3YHw6M=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If you pass a newly-initialized or newly-cleared `string_list` to
-`for_each_string_list_item()`, then the latter does
+Hi Junio,
 
-    for (
-            item = (list)->items; /* note, this is NULL */
-            item < (list)->items + (list)->nr; /* note: NULL + 0 */
-            ++item)
+On Thu, 24 Aug 2017, Junio C Hamano wrote:
 
-Even though this probably works almost everywhere, it is undefined
-behavior, and it could plausibly cause highly-optimizing compilers to
-misbehave.
+> Lars Schneider <larsxschneider@gmail.com> writes:
+> 
+> > On 22 Aug 2017, at 21:56, Junio C Hamano <gitster@pobox.com> wrote:
+> >
+> >> Here are the topics that have been cooking.  Commits prefixed with
+> >> '-' are only in 'pu' (proposed updates) while commits prefixed with
+> >> '+' are in 'next'.  The ones marked with '.' do not appear in any of
+> >> the integration branches, but I am still holding onto them.
+> >> 
+> >> The second batch of topics are in.  This cycle is going a bit slower
+> >> than the previous one (as of mid-week #3 of this cycle, we have
+> >> about 200 patches on 'master' since v2.14, compared to about 300
+> >> patches in the cycle towards v2.14 at a similar point in the cycle),
+> >> but hopefully we can catch up eventually.  
+> >> 
+> >> I am planning to be offline most of the next week, by the way.
+> >> 
+> >> You can find the changes described here in the integration branches
+> >> of the repositories listed at
+> >> 
+> >>    http://git-blame.blogspot.com/p/git-public-repositories.html
+> >> 
+> >> --------------------------------------------------
+> >> [Graduated to "master"]
+> >> 
+> >
+> > Hi Junio,
+> >
+> > just in case this got lost: I posted a patch with an improvement to 
+> > 2841e8f ("convert: add "status=delayed" to filter process protocol", 
+> > 2017-06-30) which was merged to master in the beginning of 2.15.
+> >
+> > https://public-inbox.org/git/20170820154720.32259-1-larsxschneider@gmail.com/
+> 
+> Thanks for pinging, but next time ping the thread itself if it is
+> about something that is not in What's cooking report you are
+> responding to.
 
-It would be a pain to have to change the signature of this macro, and
-we'd prefer not to add overhead to each iteration of the loop. So
-instead, whenever `list->items` is NULL, initialize `item` to point at
-a dummy `string_list_item` created for the purpose.
+If you want *contributors* to ping the thread themselves, how about
+*posting your updates there, too*?
 
-This problem was noticed by Coverity.
+It does make things inconvenient for contributors if they have to monitor
+those Whats' cooking emails in addition to the mail threads, you know?
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
-Just a little thing I noticed in a Coverity report. This macro has
-been broken since it was first introduced, in 2010.
-
-This patch applies against maint. It is also available from my Git
-fork [1] as branch `iter-empty-string-list`.
-
-Michael
-
-[1] https://github.com/mhagger/git
-
- string-list.c | 2 ++
- string-list.h | 7 +++++--
- 2 files changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/string-list.c b/string-list.c
-index 806b4c8723..7eacf6037f 100644
---- a/string-list.c
-+++ b/string-list.c
-@@ -1,6 +1,8 @@
- #include "cache.h"
- #include "string-list.h"
- 
-+struct string_list_item dummy_string_list_item;
-+
- void string_list_init(struct string_list *list, int strdup_strings)
- {
- 	memset(list, 0, sizeof(*list));
-diff --git a/string-list.h b/string-list.h
-index 29bfb7ae45..79bb78d80a 100644
---- a/string-list.h
-+++ b/string-list.h
-@@ -32,8 +32,11 @@ void string_list_clear_func(struct string_list *list, string_list_clear_func_t c
- typedef int (*string_list_each_func_t)(struct string_list_item *, void *);
- int for_each_string_list(struct string_list *list,
- 			 string_list_each_func_t, void *cb_data);
--#define for_each_string_list_item(item,list) \
--	for (item = (list)->items; item < (list)->items + (list)->nr; ++item)
-+extern struct string_list_item dummy_string_list_item;
-+#define for_each_string_list_item(item,list)                                 \
-+	for (item = (list)->items ? (list)->items : &dummy_string_list_item; \
-+	     item < (list)->items + (list)->nr;                              \
-+	     ++item)
- 
- /*
-  * Apply want to each item in list, retaining only the ones for which
--- 
-2.14.1
-
+Ciao,
+Dscho
