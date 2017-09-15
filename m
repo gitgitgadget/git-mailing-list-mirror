@@ -2,117 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C1E3F20281
-	for <e@80x24.org>; Fri, 15 Sep 2017 21:22:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DDDFE20281
+	for <e@80x24.org>; Fri, 15 Sep 2017 21:28:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751789AbdIOVWd (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Sep 2017 17:22:33 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51273 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751673AbdIOVWc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Sep 2017 17:22:32 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id EC3519AD3B;
-        Fri, 15 Sep 2017 17:22:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=fkDq1b8Bg23PXiA3zh8tLt+zvcI=; b=yh07C+
-        XYY9NPBeIiM5sYN10qLsseOFAfFSBSM6ebdiIDGyIofG63C0s4Nk9LF/RCIrt7i8
-        r1GwikKLj4Np5aZLpExqS+6J+9a3wYFwmix+8neB9mqofa387i0XxuGxKntBWJz0
-        I7OAJAQrmHNYijo6KE9wD8DGYDX0pJFDcQYrc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=QwI7dqScAbYzEySy1xVqbzsWyEESH5Qr
-        vYtfGeXMobwbnnusPnwU+I+NcV2J8emWpLguZe2HccpQ74+aUpLe/hXGQbzdkz9d
-        gUy/FrgOFJ5W5wCMx78/O3sVw6YeFmmgXlxFFi00M0UcvcVJIUftjCqo5+yThXTB
-        G4FlcQogpvk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E221E9AD3A;
-        Fri, 15 Sep 2017 17:22:31 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 37D6F9AD39;
-        Fri, 15 Sep 2017 17:22:31 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Aug 2017, #05; Tue, 22)
-References: <xmqq4lsz2x6r.fsf@gitster.mtv.corp.google.com>
-        <7D99B245-4D22-4C9C-9C43-C8B8656F8E6D@gmail.com>
-        <xmqq1so0wyjd.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.21.1.1709151816390.219280@virtualbox>
-        <xmqqo9qbx14b.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.21.1.1709152214100.219280@virtualbox>
-Date:   Sat, 16 Sep 2017 06:22:29 +0900
-In-Reply-To: <alpine.DEB.2.21.1.1709152214100.219280@virtualbox> (Johannes
-        Schindelin's message of "Fri, 15 Sep 2017 22:15:08 +0200 (CEST)")
-Message-ID: <xmqq377nwtbe.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751549AbdIOV2e (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Sep 2017 17:28:34 -0400
+Received: from mail-it0-f54.google.com ([209.85.214.54]:49620 "EHLO
+        mail-it0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751537AbdIOV2d (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Sep 2017 17:28:33 -0400
+Received: by mail-it0-f54.google.com with SMTP id w204so3959316itc.4
+        for <git@vger.kernel.org>; Fri, 15 Sep 2017 14:28:33 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=iFz5pv0yzMz2g0G+DoEsiOx5mkl9IioYxwx5DZ69Lq8=;
+        b=J1LJp33dxzahfuGMpH7oXg85WCuWutU6lvcnA24NNRiaBgk1ELOxlhBjlty4f1h9l/
+         zCXyDX3SSbzzHGLUt2oNsv5KLNgDyLWKwWsBzI7uWo07yiRt1HRQLMyyIhNbkmB6KEIv
+         /MTpnhSQd6BRuJTjKjRN0SJNLbhyuefg+lxeRfMifowemoD+KE9rdBhv8FKVoxUoNd8t
+         bmZ72qndcK3d43ALVh/EnyzArqGzh+5NCaQJy4BMGCSc2CM08QlOuzXvm6s6FfV1bvtJ
+         vI8w70Q16LSRcYrfuNY5ytr7qvYI6SD3A/B/v7C5icbBGuOCUvpacvFTWY3JCMfVthLs
+         Kq2A==
+X-Gm-Message-State: AHPjjUisQc+152RWemw5HTtmkXEuvIxirvJvqq/71pWgy5T4Ogj67Z1c
+        hjMrovrpGUV1p5d0Md/gXcJr/ITmyztxISZ0kTbGZlp28qU=
+X-Google-Smtp-Source: AOwi7QCt6XFWz4m3RkHDaT4dj9PNdkVDSFNTP0YzI+dB9PIZZtmjIfSMdcMvG+MIgk15FzgljMummJK+UUYdVkjYs6U=
+X-Received: by 10.36.201.196 with SMTP id h187mr6463349itg.42.1505510912984;
+ Fri, 15 Sep 2017 14:28:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FBA0FF02-9A5B-11E7-81AA-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Received: by 10.107.166.140 with HTTP; Fri, 15 Sep 2017 14:28:12 -0700 (PDT)
+In-Reply-To: <20170915175248.GT27425@aiede.mtv.corp.google.com>
+References: <20170915170818.27390-1-jason@redhat.com> <20170915175248.GT27425@aiede.mtv.corp.google.com>
+From:   Jason Merrill <jason@redhat.com>
+Date:   Fri, 15 Sep 2017 17:28:12 -0400
+Message-ID: <CADzB+2mxyXcROYx72tac8cUxBMxi=ZxUNQYxpUR1CZ43e-j9gA@mail.gmail.com>
+Subject: Re: [PATCH] Fix merge parent checking with svn.pushmergeinfo.
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org, Eric Wong <e@80x24.org>,
+        Aldy Hernandez <aldyh@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> On Sat, 16 Sep 2017, Junio C Hamano wrote:
+On Fri, Sep 15, 2017 at 1:52 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Hi,
 >
->> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->> 
->> > If you want *contributors* to ping the thread themselves, how about
->> > *posting your updates there, too*?
->> 
->> I do not understand this comment at all.  That is what I and others
->> already and always do by responding to the patches, and when trying
->> to see if a topic is still alive, with thread-specific responses and
->> pings.
->> 
->> If you are demanding that "What's cooking" report to be sent as a
->> response to all the topics, that will *NOT* going to happen.  It is
->> meant to give a summary of the current state to help contributors
->> and reviewers be aware of what is happening across the entire tree
->> and not limited to a specific topic.
+> Jason Merrill wrote:
 >
-> If that is the case, you will have to be okay with others responding to
-> your "What's cooking" mails instead of the original threads.
+>> Subject: Fix merge parent checking with svn.pushmergeinfo.
+>>
+>> Without this fix, svn dcommit of a merge with svn.pushmergeinfo set would
+>> get error messages like "merge parent <X> for <Y> is on branch
+>> svn+ssh://gcc.gnu.org/svn/gcc/trunk, which is not under the git-svn root
+>> svn+ssh://jason@gcc.gnu.org/svn/gcc!"
+>>
+>> * git-svn.perl: Remove username from rooturl before comparing to branchurl.
+>>
+>> Signed-off-by: Jason Merrill <jason@redhat.com>
+>
+> Interesting.  Thanks for writing it.
 
-Yes and no.  When I say "This topic waits for a reroll" and somebody
-(not necessarily the author of the topic) wants to remind me that a
-reroll has already been posted (or worse--I queued the updated
-version but forgot to update the message), I do appreciate that the
-reply is made to the "What's cooking" report.  When there is "This
-topic waits for a response to a review comment" and the responder
-wants to respond to the review comment, the reply should be made in
-response to that review comment.  Otherwise, the discussion will
-lose the continuity.
+Thanks for the review.
 
-And as you alluded to, we may need to see if we can help making it
-easier to do the latter when needed.
+> Could there be a test for this to make sure this doesn't regress in
+> the future?  See t/t9151-svn-mergeinfo.sh for some examples.
 
-> That's what
-> you are buying into by having these "What's cooking" mails that are in no
-> usable way connected to the original threads.
+Hmm, I'm afraid figuring out how to write such a test would take
+longer than I can really spare for this issue.  There don't seem to be
+any svn+ssh tests currently.
 
-For the above reason, I do not think this is a particularly useful
-stance to take.  Do you have a concrete suggestion to make these
-individual entries more helpful for people who may want go back to
-the original thread in doing so?  In-reply-to: or References: fields
-of the "What's cooking" report would not help.  I often have the
-message IDs that made/helped me make these individual comments in
-the description; they alone would not react to mouse clicks, though.
+> Nit: git doesn't use GNU-style changelogs, preferring to let the code
+> speak for itself.  Maybe it would work better as the subject line?
+> E.g. something like
+>
+>         git-svn: remove username from root before comparing to branch URL
+>
+>         Without this fix, ...
+>
+>         Signed-off-by: ...
 
-Having said that, I'd expect that individual contributors have past
-messages pertaining to the smaller numbers of their own topics in
-flight in their mailbox than the project wide "What's cooking"
-report covers, so perhaps an affort to devise such a mechanism may
-result in an over-engineering waste nobody finds useful.  I dunno.
+How about this?
 
+    git-svn: Fix svn.pushmergeinfo handling of svn+ssh usernames.
 
+    Previously, svn dcommit of a merge with svn.pushmergeinfo set would
+    get error messages like "merge parent <X> for <Y> is on branch
+    svn+ssh://gcc.gnu.org/svn/gcc/trunk, which is not under the git-svn root
+    svn+ssh://jason@gcc.gnu.org/svn/gcc!"
+
+    So, let's call remove_username (as we do for svn info) before comparing
+    rooturl to branchurl.
+
+>> ---
+>>  git-svn.perl | 1 +
+>>  1 file changed, 1 insertion(+)
+>>
+>> diff --git a/git-svn.perl b/git-svn.perl
+>> index fa42364785..1663612b1c 100755
+>> --- a/git-svn.perl
+>> +++ b/git-svn.perl
+>> @@ -931,6 +931,7 @@ sub cmd_dcommit {
+>>               # information from different SVN repos, and paths
+>>               # which are not underneath this repository root.
+>>               my $rooturl = $gs->repos_root;
+>> +             Git::SVN::remove_username ($rooturl);
+>
+> style nit: Git doesn't include a space between function names and
+> their argument list.
+
+Fixed.
+
+> I wonder if it would make sense to rename the $rooturl variable
+> since now it is not the unmodified root. E.g. how about
+>
+>                 my $expect_url = $gs->repos_root;
+>                 Git::SVN::remove_username($expect_url);
+>                 ...
+>
+>>               foreach my $d (@$linear_refs) {
+>>                       my %parentshash;
+>>                       read_commit_parents(\%parentshash, $d);
+
+It isn't the unmodified root, but it is the effective root that is
+printed by svn info and used in branch URLs in git-svn-id, so it seems
+to me that the name $rooturl is still appropriate.
+
+> The rest looks good.
+>
+> Thanks and hope that helps,
+> Jonathan
