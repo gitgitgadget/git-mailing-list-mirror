@@ -2,113 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C786320281
-	for <e@80x24.org>; Fri, 15 Sep 2017 18:19:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C654C20281
+	for <e@80x24.org>; Fri, 15 Sep 2017 18:24:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751423AbdIOSTC convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 15 Sep 2017 14:19:02 -0400
-Received: from mail.greatergiving.com ([208.187.18.38]:26139 "EHLO
-        APVWEB37.auctionpay.com" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1751201AbdIOSTB (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 15 Sep 2017 14:19:01 -0400
-Received: from APEXC04.auctionpay.com (192.168.2.11) by
- APVWEB37.auctionpay.com (192.168.2.17) with Microsoft SMTP Server (TLS) id
- 14.3.361.1; Fri, 15 Sep 2017 11:18:58 -0700
-Received: from APEXC04.auctionpay.com (192.168.2.11) by APEXC04.auctionpay.com
- (192.168.2.11) with Microsoft SMTP Server (TLS) id 15.0.1178.4; Fri, 15 Sep
- 2017 11:18:58 -0700
-Received: from APEXC04.auctionpay.com ([fe80::4d53:2f59:1dec:ea9d]) by
- APEXC04.auctionpay.com ([fe80::24ba:89c:65c4:8a2c%16]) with mapi id
- 15.00.1178.000; Fri, 15 Sep 2017 11:18:58 -0700
-From:   Wesley Smith <wsmith@greatergiving.com>
-To:     Junio C Hamano <gitster@pobox.com>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: Is finalize_object_file in sha1_file.c handling errno from
- "rename" correctly?
-Thread-Topic: Is finalize_object_file in sha1_file.c handling errno from
- "rename" correctly?
-Thread-Index: AdMt6BzgEtMQTdVEQOO+ofsy4hJiUwABtU2VABe1cCA=
-Date:   Fri, 15 Sep 2017 18:18:58 +0000
-Message-ID: <07c6a131ef4b4a92859d59d1dc2cde86@APEXC04.auctionpay.com>
-References: <c9b3bc17110048f0b7943704cfbd8f68@APEXC04.auctionpay.com>
- <xmqq4ls4xxok.fsf@gitster.mtv.corp.google.com>
-In-Reply-To: <xmqq4ls4xxok.fsf@gitster.mtv.corp.google.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [192.168.12.77]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
+        id S1751512AbdIOSYN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Sep 2017 14:24:13 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64589 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751201AbdIOSYM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Sep 2017 14:24:12 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 08281985E4;
+        Fri, 15 Sep 2017 14:24:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=jucVPup4mz1oHyP3VIYeYhUdKAA=; b=KCQr32
+        QH1HAfyJ2LlEZfBREQFxcqdI67ynpNzUgTmjSC3LZeOn8slT3R8Ud1hUIlgT4hIH
+        8CMJjLFpXk5ZVDE94uPI53o/xbTto9ThEI1G0rgflrDOKwN8/O9U8zbiVBnVjph+
+        MMkwhtn4TAzgiC+zdUUscM6GbHFtryXtzbpwc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=vGYQZanVaLZ9K375uZXH2ubpOHH1XVHH
+        3fy0l4OBt2Wn7CHay0PYUCx2oyXIUnVtV8xXPvun3n7UWib04l8n5/NKXrmjxEhY
+        cZYQx6kUEP0jpWI6NcJKfEIdE8Tc+a+PAKSJPUhUTYEaBfkTnaxK9vsYmODZK2ut
+        gwC9UgZxH0k=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 002D0985E3;
+        Fri, 15 Sep 2017 14:24:12 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5EC40985E2;
+        Fri, 15 Sep 2017 14:24:11 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Michael J Gruber <git@grubix.eu>
+Cc:     git@vger.kernel.org, Ekelhart Jakob <jakob.ekelhart@fsw.at>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/3] merge-base: return fork-point outside reflog
+References: <68633b20-9e2b-ae23-2ede-8728283250f0@grubix.eu>
+        <cover.1505394278.git.git@grubix.eu>
+        <5513a1415d11517c28158d9b4212d383a233182f.1505394278.git.git@grubix.eu>
+        <xmqq60ckzng7.fsf@gitster.mtv.corp.google.com>
+        <cd97bb1b-13f3-0856-a250-8f4921b9f6d8@grubix.eu>
+Date:   Sat, 16 Sep 2017 03:24:10 +0900
+In-Reply-To: <cd97bb1b-13f3-0856-a250-8f4921b9f6d8@grubix.eu> (Michael
+        J. Gruber's message of "Fri, 15 Sep 2017 12:23:33 +0200")
+Message-ID: <xmqqshfnx1kl.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-X-Brightmail-Tracker: =?us-ascii?Q?H4sIAAAAAAAAC12Sf0yMcRzHfZ/nueu59Nhzv+rTLeFBmrpkSRFLrK2xWTZj?=
- =?us-ascii?Q?HcmV093U3e2eOy7+aTNmJy39VzYuTqMxLZpGkmNKpTgJUU1kJLEzP0bJ89zz?=
- =?us-ascii?Q?lPL96/V9fz/vz+f7/u5L4oqWIA1pcNoNNrO+gJEGE80XsNna8vDGrPiPH6qG?=
- =?us-ascii?Q?Zcmu7uNYcvGJbnwdlvHYtzDja11kJqaTmMy5FuduifG+z49ZPeHOwc7bRDG6?=
- =?us-ascii?Q?q3KhYFJB1yEoH/DgUxv/qxtSYdOEYLD1vsSFZKSU1sJt9xGCZxUdBSePegOM?=
- =?us-ascii?Q?08vAP9aM8ayks+Gl/5NEqNkFd7p6g1yI5Hg1HP6i4mWCXgzdRz4HSig6HX7V?=
- =?us-ascii?Q?TOA8K+j9MObtC+gyOgVGf76X8ozoUPjRdgkTRoVB79szAQY6Bq4PN0kEjoW6?=
- =?us-ascii?Q?nhpC4LXgKfXhAtPgaewSmYETL0dFrxo+vPkjeuPg6Q03EngLlLQ+ETkRRjw+?=
- =?us-ascii?Q?sWc81J9vEjkBas9NSCZntV4eF/tvgJ/1z0V9Hkz0DxB8dKDT4HmnWLIAyoYe?=
- =?us-ascii?Q?iu0zobOsK6gMJVZOSyZwLLhv+qUCx0B11Ue8MvBacnhQ8ZZwI6IGhaVlbtue?=
- =?us-ascii?Q?vj4hKU7vyLObLGarviguz1JYh4RPIW9AtWM6L1pFYoyaCpE3Zinm5Fr2FBn1?=
- =?us-ascii?Q?rDHH5igwsEwktamjIUsRNiWzDtZqyjNZHGyOw1bgRakkyQCVDZxXbjPkG5x7?=
- =?us-ascii?Q?TQXczxPtCyin/WaWQjP95P8OGCnzoiQyhFFR6XwbirXqC1lTvthiLuXmbxA6?=
- =?us-ascii?Q?qc60t6EUTRgVwftovsLoME9N18ynejZx08OnHcx0+5Bao6Sa1Zw7xGqwFZrs?=
- =?us-ascii?Q?grMXKcnXmIIwW8wGDfdWs7gVjYZRIokYJbWBnxZiMtv/XTKCushfUi2KM6cM?=
- =?us-ascii?Q?c+kwLl1HewOfzq63T0833h5IJ6oznZpitEr9buNmV8vI6Ypy3SH/ge9LtMsX?=
- =?us-ascii?Q?pq64uiT52PWIxXtKY1Zq5bbY0T5dwt6I8a2tO/cN/fb6KhdFbTc/QoP96pyx?=
- =?us-ascii?Q?F7hbV/jmyRV/9bWdslt5pfX32oihNcYHPUSSsT7pfai2UZK+K2p2cKoqesWt?=
- =?us-ascii?Q?kZKjp57t+HYwLl5Zy1guegfPzmUI1qhfvhS3sfq/QA4/vFoEAAA=3D?=
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1207078C-9A43-11E7-BCA3-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio,
+Michael J Gruber <git@grubix.eu> writes:
 
-Thanks for your response.  I'm glad to see that you've been able to understand the problem.  I'm working with the Windows git team to properly return EACCESS when "rename" fails due to access permissions, but it also sounds like there will need to be a fix to finalize_object_file to better handle the case of an existing file when renaming.
+> I did not look up the discussion preceeding 4f21454b55 ("merge-base:
+> handle --fork-point without reflog", 2016-10-12), but if "merge-base
+> --fork-point" were about a "strict reflog" notion then there was nothing
+> to fix back then - no reflog, no merge-base candidates. Period.
+>
+> I don't mind having two modes, say "--reflog" (strict reflog notion) and
+> "--fork-point" (reflog plus DAG), but the current implementation is
+> neither, and the current documentation clearly is the latter, which is
+> what I'm trying to bring the implementaion in line with. Strict mode
+> would need a revert of 4f21454b55 (which adds the tip of ref if the
+> reflog is empty) for that mode.
 
-Wesley Smith
-T: 503.597.0556 | WSMITH@GREATERGIVING.COM
+Thanks for pointing out a flaw in the logic in my response.
 
------Original Message-----
-From: Junio C Hamano [mailto:gitster@pobox.com] 
-Sent: Thursday, September 14, 2017 11:51 PM
-To: Wesley Smith
-Cc: git@vger.kernel.org
-Subject: Re: Is finalize_object_file in sha1_file.c handling errno from "rename" correctly?
+When the user runs "merge-base --fork-point Branch Derived", the
+question she is asking is: "what is the merge-base between the
+Derived and a virtual commit across all the commits that we know
+were at the tip of the Branch at some point and is the merge-base
+commit among one of these historical tips of Branch?"
 
-Wesley Smith <wsmith@greatergiving.com> writes:
+You are correct to point out that loosening the definition of the
+"--fork-point" to lose the "and is the merge-base among the one of
+these historical tips?" half of the question may be useful, and we
+need to introduce "strict" vs "non-strict" modes in order to allow
+such a distinction.  I somehow thought that giving and not giving
+the "--fork-point" option would be a sufficient clue to express that
+distinction, but that is not the same thing and my reasoning was
+flawed.  Even when the exact answer of the more strict version of
+the "--fork-point" (i.e. what the current implementation computes)
+is not available because of missing reflog entries, the merge-base
+computation that takes available reflog entries into account but
+that does not insist that the resulting base must be among the known
+historical tips (i.e. what your patch 2/3 wants to compute) could be
+closer to the fork-point than "merge-base Branch Derived" without
+"--fork-point" option would compute, and could be more useful as a
+"best --onto commit that is guessed automatically" for the purpose
+of "rebase".  I agree that there is a value in what your patch 2/3
+wants to do when the current one that is more strict would say
+"there is no known fork-point"---we would gain a way to say "... but
+this is the best guess based on available data that may be better
+than getting no answer." which we lack.
 
-> 1) This bug is triggered because "git fetch" is causing a pack file to 
-> be written when that same pack file already exists.  It seems like 
-> this is harmless and shouldn't cause a problem.  Is that correct?
+Having said all that, I do not agree with your last sentence in the
+paragraph I quoted above.  It is a mere implementation detail to
+consult the reflog to find out the set of "historical tips of the
+Branch"; the current tip by definition is among the commits in that
+set, even when the reflog of Branch is missing.  What 4f21454b55 did
+was a reasonable "fix" that is still in line with the definition of
+"--fork-point" from that point of view.
 
-The final name of the packfile is derived from the entire contents of the packfile; it should be harmless when we attempt to rename a new file, which has exactly the same contents as an existing file, to the existing file and see a failure out of that attempt.
+Whether we add a "looser" version of "--fork-point" to the system or
+not, the more strict version should still use the current tip as one
+of the historical tips (i.e. those that we would take from the
+reflog if the reflog were not empty) in the more "strict" mode.  The
+looser version may also want to do so as well.
 
-> 2) It seems that finalize_object_file is not accounting for the fact 
-> that "link" will return EEXIST if the destination file already exists 
-> but is not writeable, whereas "rename" will return EACCESS in this 
-> case.  Is that correct?  If so, should finalize_object_file be fixed 
-> to account for this? Perhaps it should check if the newfile exists 
-> before calling rename.  Or, should the Windows mingw_rename function 
-> be modified to return EEXIST in this case, even though that's not the 
-> standard errno for that situation?
-
-The codepath that is triggered by OBJECT_CREATION_USES_RENAMES ought to behave correctly even on non-Windows platforms, so bending the error code of rename() only on Windows to fit the existing error handling would not be a smart thing to do.  Rather, the rename() emulation should leave a correct errno and the caller should be updated to be aware of that error that is not EEXIST, which it currently knows about.
-
-Thanks for spotting a problem and digging to its cause.
-
-This is a #leftoverbits tangent, and should be done separately from your "OBJECT_CREATION_USES_RENAMES is broken" topic, but I think it is a bug to use finalize_object_file() directly to "finalize"
-anything but an individual loose object file in the first place.
-
-We should create a new shared helper that does what the function currently does, make finalize_object_file() call that new shared helper, and make sure finalize_object_file() is called only on a newly created loose object file.  The codepath that creates a new packfile and other things and moves them to the final name should not call finalize_object_file() but the new shared helper instead.
-
-That way, we could later implement the "collision? check" alluded by the in-code comment in finailize_object_file(), and we won't have to worry about affecting callers other than the one that creates a loose object file with such an enhancement.
+Thanks.
 
