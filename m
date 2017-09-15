@@ -2,105 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC04820A21
-	for <e@80x24.org>; Fri, 15 Sep 2017 04:50:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B560120A21
+	for <e@80x24.org>; Fri, 15 Sep 2017 05:00:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750866AbdIOEup (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Sep 2017 00:50:45 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:36669 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750787AbdIOEup (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Sep 2017 00:50:45 -0400
-Received: by mail-pf0-f195.google.com with SMTP id f84so698331pfj.3
-        for <git@vger.kernel.org>; Thu, 14 Sep 2017 21:50:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=vtCyJJLBqqDpaoVboqR8AeKOc9UxA++7wwBoMHriAGA=;
-        b=HK3rNjvJ8g/czo9+y/BaUaZwyZrf+dvkpt61rtAJPJbwR2N/qnUn40LcrWrmS/aPyL
-         XTVRiL2DjFZYuobFIL2WcDJ6mLzu6tMPRaoD42QlGR3F1w9xCUZUFKMljTChv/JcSZoS
-         s68XZcfV4pPebDkxkk70Q9Sj5EIwKO1elWy3mUEqPER2znDajR3TnLSHQqJXzjGFFZ7S
-         LMePmyoBjDX29uEA2GwlrM2QvJPRJhdpy9pR2oGCgdbrJ+AKqiMPrE9ChtLKrPlsosxw
-         Exu7zKBwDR035Z9zNO/9quJ7VYNEPkygEQ86DLm2VJH6+Y/OewocmDcosFUmmmSqrvK+
-         CnJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=vtCyJJLBqqDpaoVboqR8AeKOc9UxA++7wwBoMHriAGA=;
-        b=bqe3c5KUCrkroLCygRMgaoozyP/Ro0DztOysYLlHSab/wHF0JjRD6dRYD/sprxhQe8
-         lyTfCWP/FfCC+O5qsXQh6Gn8iILCVtrHlGPECO0aCBnMpCisAcpGPYKpxLfEYL7JRJT5
-         kOXBT79DTQv9nAyQOHeh7ui8jWI9LJ66Feujgj9LhLaz6yOAhiE0LcDC8mQqm0dbvzTJ
-         W+HleJfFrrGRVmGlR5+a3juUsa/3iXFxihl7k4eYJyTQnSeerxxJcMueKUHUaZm40WwJ
-         Leb5mk9nQSKRjYKBpldvlIcTi81Oby42Rx6oZEsG2R8arL08gJ3CYKqbqzHosOKACeDC
-         YUzA==
-X-Gm-Message-State: AHPjjUhOTVYisW3dnCeBaj/3r7ep8Vldrqg77ov18sMdjWIJ0d0sxLbg
-        1TryuLOJBRymLOPjrS09dQ==
-X-Google-Smtp-Source: AOwi7QDfzBB/Y1/g5F4VwrQYAfj6kmL77iN4WvVx2AOxQ5ySGRIJfViua0CwJXsEgDN1bRWKh0k33A==
-X-Received: by 10.99.161.17 with SMTP id b17mr9742021pgf.292.1505451044655;
-        Thu, 14 Sep 2017 21:50:44 -0700 (PDT)
-Received: from localhost.localdomain ([2405:204:700c:2522:26be:510e:ef32:8edc])
-        by smtp.gmail.com with ESMTPSA id 184sm166516pfg.18.2017.09.14.21.50.41
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 14 Sep 2017 21:50:44 -0700 (PDT)
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Michael J Gruber <git@grubix.eu>,
-        Jeff King <peff@peff.net>
-Subject: [PATCH v3] commit-template: change a message to be more intuitive
-Date:   Fri, 15 Sep 2017 10:20:25 +0530
-Message-Id: <20170915045025.4272-1-kaarticsivaraam91196@gmail.com>
-X-Mailer: git-send-email 2.14.1.1006.g90ad9a07c
-In-Reply-To: <xmqqefr8zouy.fsf@gitster.mtv.corp.google.com>
-References: <xmqqefr8zouy.fsf@gitster.mtv.corp.google.com>
+        id S1751177AbdIOFAW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Sep 2017 01:00:22 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54956 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750797AbdIOFAU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Sep 2017 01:00:20 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C1B9EB4907;
+        Fri, 15 Sep 2017 01:00:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=cf9p9mIR7cA4+GOfH14Bl87/haI=; b=PU8lWMq3A6PvHyIABEsI
+        KcOSsQ42BS/rKiKzAoOiNSMm0869NNjtuWvwTW9T65S+pXgbsYIRdQIyM/W/gi9E
+        P/Z6CtRZ2RjRGDRCBHmJ/mbIDiOQrUfhYzPmiy3rCImT3DWpYm/PXlNvU+iqlZ7N
+        +nTWL4hILmuvmWnX1wlbhGw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=JMx4+4J9WmEPyHy5UeMOUtc5EuRlLJTeYRC0rGDTMCqO6C
+        kmwX3vjaYQyYWHX9gHLwJXneTgMxR+Ss/0acnK9fzzkGORwOJdZA23ZpEnlXPJ1z
+        V28Dvtbuehn4q3EcoEEi/LtzhgUJg13YoKYZ22rYL3/1gEUMmVEx/pWxPsn1c=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B7789B4906;
+        Fri, 15 Sep 2017 01:00:19 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 003C1B4905;
+        Fri, 15 Sep 2017 01:00:19 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kevin Willford <kewillf@microsoft.com>
+Cc:     Jacob Keller <jacob.keller@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        "peff\@peff.net" <peff@peff.net>,
+        "pclouds\@gmail.com" <pclouds@gmail.com>
+Subject: Re: [PATCH 1/1] reset: fix reset when using the sparse-checkout feature.
+References: <20170908180050.25188-1-kewillf@microsoft.com>
+        <20170908180050.25188-2-kewillf@microsoft.com>
+        <xmqqvaktxawk.fsf@gitster.mtv.corp.google.com>
+        <SN1PR21MB0014638E5D9CBFD0D9D85F10B7950@SN1PR21MB0014.namprd21.prod.outlook.com>
+        <xmqqr2vgy2yt.fsf@gitster.mtv.corp.google.com>
+        <SN1PR21MB00140C84DC02F3491F4E8469B76A0@SN1PR21MB0014.namprd21.prod.outlook.com>
+        <xmqqh8w951ek.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.21.1.1709111259430.4132@virtualbox>
+        <xmqq4ls836z3.fsf@gitster.mtv.corp.google.com>
+        <SN1PR21MB0014435A97BCDA324FD55B46B7690@SN1PR21MB0014.namprd21.prod.outlook.com>
+        <CA+P7+xqxmxexWS=MWNd9=EqG81uhKY-OdG+1mpyWhst6DvH5AA@mail.gmail.com>
+        <SN1PR21MB001473733DAF15BC91C0E58AB7690@SN1PR21MB0014.namprd21.prod.outlook.com>
+        <CA+P7+xqcAh4v4gDQOm-feYGc1EmFztAu0zMg2xnp8Gn4=BzkoQ@mail.gmail.com>
+        <xmqqy3piz1j4.fsf@gitster.mtv.corp.google.com>
+        <SN1PR21MB0014031012AEC69CED27FADFB76F0@SN1PR21MB0014.namprd21.prod.outlook.com>
+Date:   Fri, 15 Sep 2017 14:00:17 +0900
+Message-ID: <xmqqh8w4y2se.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: C552E430-99D2-11E7-A1BD-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It's not good to use the phrase 'do not touch' to convey the information
-that the cut-line should not be modified or removed as it could possibly
-be mis-interpreted by a person who doesn't know that the word 'touch' has
-the meaning of 'tamper with'. Further, it could make translations a little
-difficult as it might not have the intended meaning in a few languages (for
-which translations don't exist yet) when translated as such.
+Kevin Willford <kewillf@microsoft.com> writes:
 
-So, use intuitive terms in the sentence. Replacing the word 'touch' with
-other terms has introduced the possibility of the following sentence to be
-mis-interpreted, so change the terms in that too.
+> 1. Does this statement, "I only care about the files in this
+> sparse checkout, and do not concern me with anything else", mean
+> that git should not change files outside the sparse-checkout whether
+> that be in the working directory or in the index?  Or does that only
+> apply to the working directory and the index version of files can
+> change to whatever git the git command would do without using
+> sparse?  For example if I am doing a 'git reset HEAD~1'  should the
+> version in the index of files outside the sparse not be changed or
+> change to the HEAD~1 version with the skip-worktree bit on?
 
-Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
----
- Changes in v3:
- 
-    - changed the wordings of the second sentence as there seemed to be a
-      magical 'or else' connecting the two lines.
- 
- I didn't expect the least that this would go upto v3. In case anyboy finds
- something wrong with this change too, it's a lot better to drop this altogether
- than going for a v4.
+My understanding of the purpose of "sparse checkout" thing is that
+the user still wants to create correct whole-tree commit even the
+user does not have the whole-tree checkout.  The object names for
+blobs recorded in the index that are meant to be included in the
+next commit MUST be the same as those that would be in the index
+when the "sparse" feature is not in use.  "reset HEAD~1" should
+match the index entries to the tree entries in HEAD~1.  So, the
+latter, I would think, among your two alternatives.
 
- wt-status.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+IOW, after "git reset HEAD~", if you drop the skip-worktree bit from
+all index entries, "git diff --cached HEAD" must say "there is no
+changes".
 
-diff --git a/wt-status.c b/wt-status.c
-index 77c27c511..23e87e74d 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -934,7 +934,7 @@ size_t wt_status_locate_end(const char *s, size_t len)
- 
- void wt_status_add_cut_line(FILE *fp)
- {
--	const char *explanation = _("Do not touch the line above.\nEverything below will be removed.");
-+	const char *explanation = _("Do not modify or remove the line above.\nEverything below it will be ignored.");
- 	struct strbuf buf = STRBUF_INIT;
- 
- 	fprintf(fp, "%c %s", comment_line_char, cut_line);
--- 
-2.14.1.1006.g90ad9a07c
+The only difference between the "sparse" and normal would be that,
+because the "sparse" user does not intend to change anything outside
+the "sparse" area, these paths outside her "sparse" area would not
+materialize on the filesystem.  For the next "write-tree" out of the
+index to still write the correct tree out, the entries outside her
+"sparse" area in the index MUST match the tree of the commit she
+started working from.
 
+> 2. How will this work with other git commands like merge, rebase,
+> cherry-pick, etc.?  
+> 3. What about when there is a merge conflict with a file that is outside
+> the sparse checkout?
+
+I would say, rather than forbidding such a merge, it should let her
+see and deal with the conflict by dropping the "this is outside the
+sparse area, so do not bother materializing it to the filesystem"
+bit, but tell her loudly what it did ("I checked out a half-merged
+file outside your sparse-checkout area because you'd need it while
+resolving the conflict").  By doing things that way, the user can
+decide if she wants to go ahead and complete the merge, even if the
+conflict is outside the area she is currently interested in, or
+postpone the merge and continue working on what she has been working
+on inside the narrowed-down area first.
+
+I do not have a strong opinion whether the sparse-checkout
+configuration file should be adjusted to match when the command must
+tentatively bust the sparse checkout area; I'd imagine it can be
+argued either way.
+
+Note that "sparse" is not my itch, and I would not be surprised if
+those who designed it may want it to work differently from my
+knee-jerk reaction in the previous two paragraphs, and I may even
+find such an alternative solution preferable.  
+
+But it is highly unlikely for any sensible solution would violate
+the basic premise, i.e. "the indexed contents will stay the same as
+the case without any 'sparse', so the next write-tree will do the
+right thing".
