@@ -2,84 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 83C6A20286
-	for <e@80x24.org>; Fri, 15 Sep 2017 10:31:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6757120A21
+	for <e@80x24.org>; Fri, 15 Sep 2017 11:06:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751213AbdIOKbn (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Sep 2017 06:31:43 -0400
-Received: from mout.kundenserver.de ([212.227.126.131]:51059 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750879AbdIOKbm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Sep 2017 06:31:42 -0400
-Received: from skimbleshanks.math.uni-hannover.de ([130.75.46.4]) by
- mrelayeu.kundenserver.de (mreue004 [212.227.15.167]) with ESMTPSA (Nemesis)
- id 0LvNjj-1dRTvh0XQJ-010bfn; Fri, 15 Sep 2017 12:31:34 +0200
-Subject: Re: [PATCH 1/2] test-lib: group system specific FIFO tests by system
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Adam Dinwoodie <adam@dinwoodie.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-References: <alpine.DEB.2.21.1.1709141440510.4132@virtualbox>
- <4482ae18370f3e759bf98f71e15eaab19fdd009a.1505400392.git.git@grubix.eu>
- <alpine.DEB.2.21.1.1709150020070.219280@virtualbox>
-From:   Michael J Gruber <git@grubix.eu>
-Message-ID: <a159230a-d406-c772-13f0-f82a36faf763@grubix.eu>
-Date:   Fri, 15 Sep 2017 12:31:32 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        id S1751323AbdIOLGq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Sep 2017 07:06:46 -0400
+Received: from cpanel2.indieserve.net ([199.212.143.6]:37168 "EHLO
+        cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751213AbdIOLGp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Sep 2017 07:06:45 -0400
+Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:54078 helo=localhost.localdomain)
+        by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1dsoSK-0000Wl-OO; Fri, 15 Sep 2017 07:06:44 -0400
+Date:   Fri, 15 Sep 2017 07:06:43 -0400 (EDT)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Jeff King <peff@peff.net>
+cc:     Git Mailing list <git@vger.kernel.org>
+Subject: Re: how to remove from history just *one* version of a file/dir?
+In-Reply-To: <20170914122338.4vlgx2rjr4mk62rh@sigill.intra.peff.net>
+Message-ID: <alpine.LFD.2.21.1709150701010.4944@localhost.localdomain>
+References: <alpine.LFD.2.21.1709140721130.19770@localhost.localdomain> <20170914122338.4vlgx2rjr4mk62rh@sigill.intra.peff.net>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.21.1.1709150020070.219280@virtualbox>
-Content-Type: text/plain; charset=utf-8
-Content-Language: de-DE
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:nWMnAtTd/tTTcB3K/xiES9BwquSaDskX1VTjzdEbKAaUvtCaCUU
- S26Cfy2NvIvejF9VWDtBBFtS19/RaFT+V+0YlH0Vn7f3VHDqIuEe71bokDrXxVYqAizlBSj
- 66N+cYl/w8crXlVRAV5wdpVvl+YP/nkkciwSXVAv9VnRQBKpCs1bK0sxkhu48L8dnRuR6Jj
- F7L02bgE2uVyD3Jzt4fnw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:l6e7aj+YOMk=:X7JD1P8PgpXnvPEfW1D4N2
- coaGJcNMGMM0VPIJtauGIZQpMe443QNoZ795tDuHoDRhHIUKGA0KpqHTbsRrgtlgh1MffpBGI
- e8X0hYyHvm8damWTNP3RyqKz2dTlqc9Qzh9XPmP3Ap7QbGzSUhbcM2SFR0K49WZLJlRIZPBgK
- s9aP47RDv351hQqSY7wP5qMqSDbNnaFqScmC778RCPDWs2I5BWy3fRtjJSEvPK3EwC1F2WwlA
- 3kPcw7OEWsBoMYEw5zjOA66UzfRSosLwVM0Rf/Gyf4BrEeZgiB0u/8Tp9IoN7MqS/brPyMhwh
- fSF6mjH34QquCTbbjZY6LCQSnXfBddjAtgtToihcgfC9MxXE+MELhjfpPdfUCdMIvu9GBOrAN
- JJMGfDZBourwxwltHtSmZ4jOcg7HEQXJjjuRDKVg8jYlYKon+5pSE6A16ppUwPAreHtSRAACj
- MiCst7Gpaba0RQV6aOj6MK8tqt5w1NusoWFlr7D8l+0RP4Nb+i1E+6TrkZGiUcvXWaA4mE/UE
- BqkpMC4Ylk8eFvtGFuIiC7IAkj6jSwWpwKXoLqGjQzg34Zt2YcmjhbXnOGqVCUgQityWyoZCO
- FfIxcq7+vZ5ayPLRxqlKnf4PPMer3qxE5eTrgsDeBhnrcqCjTCjCS1VW+FxSuOjiwPgn+8lNz
- ESUHAcHVeKU85xIvYmxZ5JPDhj1GNi2DK4088aZBfLAWfBStR2q+0sNDp0R9Hy6OlyCn8trWA
- GiQhAOGfu1FzWlqFwTmjHo6T2CeEvzEoJ55KSlHRbTdwTMlsBPRzKN0nz/c=
+Content-Type: text/plain; charset=US-ASCII
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel2.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel2.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel2.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin venit, vidit, dixit 15.09.2017 00:21:
-> Hi Michael,
-> 
-> On Thu, 14 Sep 2017, Michael J Gruber wrote:
-> 
->> test-lib determines whether a file-system supports FIFOs and needs to do
->> special casing for CYGWIN and MINGW. This separates those system
->> specific settings from those at more central place.
->>
->> Set mkfifo()  to false in the central system specific place so that the
->> same test works everywhere.
-> 
-> The mkfifo() emulation of Cygwin seems to work, no? I think it works even
-> in MSYS2, but not in MINGW.
-> 
-> So maybe this patch should affect only the MINGW arm?
+On Thu, 14 Sep 2017, Jeff King wrote:
 
-I only reorganised the code, so in that sense the patch does not affect
-any system ;)
+> On Thu, Sep 14, 2017 at 07:32:11AM -0400, Robert P. J. Day wrote:
+>
+> >   [is this the right place to ask questions about git usage? or is
+> > there a different forum where one can submit possibly
+> > embarrassingly silly questions?]
+>
+> No, this is the right place for embarrassing questions. :)
+>
+> >   say, early on, one commits a sizable directory of content, call
+> > it /mydir. that directory sits there for a while until it becomes
+> > obvious it's out of date and worthless and should never have been
+> > committed. the obvious solution would seem to be:
+> >
+> >   $ git filter-branch --tree-filter 'rm -rf /mydir' HEAD
+> >
+> > correct?
+>
+> That would work, though note that using an --index-filter would be
+> more efficient (since it avoids checking out each tree as it walks
+> the history).
 
-If indeed mkfifo works on CYGWIN than a separate patch should remove the
-exclusion of CYGWIN; alas, I can't confirm (I wish MS still had the old
-academic alliance programme).
+  i'm just digging into --index-filter as we speak, i realize it's
+noticeably faster.
 
-Michael
+> >   however, say one version of that directory was committed early
+> > on, then later tossed for being useless with "git rm", and
+> > subsequently replaced by newer content under exactly the same
+> > name. now i'd like to go back and delete the history related to
+> > that early version of /mydir, but not the second.
+>
+> Makes sense as a goal.
+>
+> >   obviously, i can't use the above command as it would delete both
+> > versions. so it appears the solution would be a trivial
+> > application of the "--commit-filter" option:
+> >
+> >    git filter-branch --commit-filter '
+> >      if [ "$GIT_COMMIT" = "<commit-id>" ] ; then
+> >        skip_commit "$@";
+> >      else
+> >        git commit-tree "$@";
+> >      fi' HEAD
+> >
+> > where <commit-id> is the commit that introduced the first verrsion of
+> > /mydir. do i have that right? is there a simpler way to do this?
+>
+> No, this won't work. Filter-branch is not walking the history and
+> applying the changes to each commit, like rebase does.  It's
+> literally operating on each commit object, and recall that each
+> commit object points to a tree that is a snapshot of the repository
+> contents.
+>
+> So if you skip a commit, that commit itself goes away. But the
+> commit after it (which didn't touch the unwanted contents) will
+> still mention those contents in its tree.
+
+  ah, of course, duh.
+
+> I think you want to stick with a --tree-filter (or an
+> --index-filter), but just selectively decide when to do the
+> deletion. For example, if you can tell the difference between the
+> two states based on the presence of some file, then perhaps:
+>
+>   git filter-branch --prune-empty --index-filter '
+> 	if git rev-parse --verify :dir/sentinel >/dev/null 2>&1
+> 	then
+> 	  git rm --cached -rf dir
+> 	fi
+>   ' HEAD
+>
+> The "--prune-empty" is optional, but will drop commits that become
+> empty because they _only_ touched that directory.
+>
+> We use ":dir/sentinel" to see if the entry is in the index, because
+> the index filter won't have the tree checked out. Likewise, we need
+> to use "rm --cached" to just touch the index.
+
+  got it. one last query -- i note that there is no "else" clause in
+that code for "--index-filter". am i assuming correctly that if i was
+using "--tree-filter" instead, i really would need if/then/else along
+the lines of:
+
+  if blah ; then
+    skip_commit "$@"
+  else
+    git commit-tree "$@"
+  fi
+
+thank you kindly.
+
+rday
+
+-- 
+
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                        http://crashcourse.ca
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
