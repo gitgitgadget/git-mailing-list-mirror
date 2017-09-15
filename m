@@ -2,136 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F64520281
-	for <e@80x24.org>; Fri, 15 Sep 2017 19:51:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9B2E20281
+	for <e@80x24.org>; Fri, 15 Sep 2017 20:15:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751499AbdIOTvB convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 15 Sep 2017 15:51:01 -0400
-Received: from mxo1.dft.dmz.twosigma.com ([208.77.212.183]:52699 "EHLO
-        mxo1.dft.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751452AbdIOTvA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Sep 2017 15:51:00 -0400
-X-Greylist: delayed 448 seconds by postgrey-1.27 at vger.kernel.org; Fri, 15 Sep 2017 15:51:00 EDT
-Received: from localhost (localhost [127.0.0.1])
-        by mxo1.dft.dmz.twosigma.com (Postfix) with ESMTP id 07B2010005C;
-        Fri, 15 Sep 2017 19:43:32 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at twosigma.com
-Received: from mxo1.dft.dmz.twosigma.com ([127.0.0.1])
-        by localhost (mxo1.dft.dmz.twosigma.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id hF0ten5_Y6P1; Fri, 15 Sep 2017 19:43:31 +0000 (GMT)
-Received: from exmbdft6.ad.twosigma.com (exmbdft6.ad.twosigma.com [172.22.1.5])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mxo1.dft.dmz.twosigma.com (Postfix) with ESMTPS id E8BE680035;
-        Fri, 15 Sep 2017 19:43:31 +0000 (GMT)
-Received: from exmbdft7.ad.twosigma.com (172.22.2.43) by
- exmbdft6.ad.twosigma.com (172.22.1.5) with Microsoft SMTP Server (TLS) id
- 15.0.1263.5; Fri, 15 Sep 2017 19:43:31 +0000
-Received: from exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955]) by
- exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955%19]) with mapi id
- 15.00.1263.000; Fri, 15 Sep 2017 19:43:31 +0000
-From:   David Turner <David.Turner@twosigma.com>
-To:     'Ben Peart' <benpeart@microsoft.com>
-CC:     "avarab@gmail.com" <avarab@gmail.com>,
-        "christian.couder@gmail.com" <christian.couder@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "johannes.schindelin@gmx.de" <johannes.schindelin@gmx.de>,
-        "pclouds@gmail.com" <pclouds@gmail.com>,
-        "peff@peff.net" <peff@peff.net>
-Subject: RE: [PATCH v6 05/12] fsmonitor: add documentation for the fsmonitor
- extension.
-Thread-Topic: [PATCH v6 05/12] fsmonitor: add documentation for the fsmonitor
- extension.
-Thread-Index: AQHTLlfY788pGk9sj0CQO4VoibRJEKK2VGTg
-Date:   Fri, 15 Sep 2017 19:43:31 +0000
-Message-ID: <297da9019d8c44faa89434d699623408@exmbdft7.ad.twosigma.com>
-References: <20170610134026.104552-1-benpeart@microsoft.com>
- <20170915192043.4516-1-benpeart@microsoft.com>
- <20170915192043.4516-6-benpeart@microsoft.com>
-In-Reply-To: <20170915192043.4516-6-benpeart@microsoft.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [172.20.60.10]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
+        id S1751628AbdIOUPP (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Sep 2017 16:15:15 -0400
+Received: from mout.gmx.net ([212.227.15.15]:55736 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751545AbdIOUPO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Sep 2017 16:15:14 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MTBLi-1e1ETL2eik-00SBK1; Fri, 15
+ Sep 2017 22:15:09 +0200
+Date:   Fri, 15 Sep 2017 22:15:08 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Aug 2017, #05; Tue, 22)
+In-Reply-To: <xmqqo9qbx14b.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1709152214100.219280@virtualbox>
+References: <xmqq4lsz2x6r.fsf@gitster.mtv.corp.google.com> <7D99B245-4D22-4C9C-9C43-C8B8656F8E6D@gmail.com> <xmqq1so0wyjd.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.21.1.1709151816390.219280@virtualbox> <xmqqo9qbx14b.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:RlPFlm1M6MGUtEVo0CRUSMGGafC0nLTMGg2BkkTemIPaJKkpsN9
+ CJiQDa1fmQTRO3eNv0xUkybszG2oL/vPmq7+iEc/KQuU5Kow10/C7qcglJ9Nw6rhqrjOhwX
+ hqLIuFbXh94LoMSLPL6ZErbaf7zg/wm3uuSfIE10xOKEYfV7ple0OTxsmXXsbZeJvQkrtRY
+ 4aby5lPNuw2ElgmRBMzxg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:+wrUscSYWH0=:q7Nc+Cs+DHaSsDsAQ0U/QZ
+ n2cWaMk/4inKz5zln4HQwXo5ZnCBOoY2IjPBReIZ80fKLOE565tIFAMfzRzTkTxD3eW61lbRG
+ pGEq6935ddjnbMQ4Tf7CFnPB6rlzFIXO1yyLOWgvfTplPi+98mqonBnei4xkOO0OyAXVUISE4
+ Uf5t7FGOqRlAozvuzHumBXOIBHE7RYwcQ+8VsyuzEt9fgrfSVFe7Ev6xsOxwLDcaCgTW8frzl
+ Ud4qfnkOWbzNiPP1nlWRnH7zqYl7tMzh/zymA2fqCwtx3xsjdnJTKvCOUcwJanHCevFZvAZLP
+ Uu/SllIH6LfoXTMxRBbcsZNkUS6pknuWil0u8s2rA2YBKnh7C2vCDeZqWmJ1cm6/PpS5/hY6i
+ f/rqjArB7nFjCF3BARtKHAlazQ0llHYSB9Ycf4b/P7771zbqEUKPqY7Rahg5jrK7V3WdW1NlH
+ pl4QR8pDVhtXrndGuw0cFETpaTiQfUHfl7pj0sf4KDCXuY0LqZWGKhaLSqz377wQLYlmkdK1f
+ MOln8+t67mREQIe7AoxiiRdbQj3FBqx/XYlohokCSMpdnYl8NHeCmsss+UjezTpQ/BEIhYvdB
+ lLgNBMYmmYkWICT9fn1sJsaPwxaVNLYDtLAtxa/0Npr7jJGtIWVripYHJt5h8RtV45R0OrwZ9
+ Hs46vuj+xJkp7LayYyrP7btZ/uUnAMW/wBpsesJE+dIB4fsSL4djMp1e5srtlJ7KVIoMGasml
+ ccEm/zcbSbtBcvmnUFgom+Hew5sOm6xpNde7Vhj5GIoqZSYb7OkshF02nBz7LTlgxIZYCtSXF
+ 2CpfCNNyJ/8kArHXYSiYjeuTy4zTKY6gqrGfex11q7+HCrpOSc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Junio,
 
+On Sat, 16 Sep 2017, Junio C Hamano wrote:
 
-> -----Original Message-----
-> From: Ben Peart [mailto:benpeart@microsoft.com]
-> Sent: Friday, September 15, 2017 3:21 PM
-> To: benpeart@microsoft.com
-> Cc: David Turner <David.Turner@twosigma.com>; avarab@gmail.com;
-> christian.couder@gmail.com; git@vger.kernel.org; gitster@pobox.com;
-> johannes.schindelin@gmx.de; pclouds@gmail.com; peff@peff.net
-> Subject: [PATCH v6 05/12] fsmonitor: add documentation for the fsmonitor
-> extension.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> This includes the core.fsmonitor setting, the query-fsmonitor hook, and the
-> fsmonitor index extension.
+> > If you want *contributors* to ping the thread themselves, how about
+> > *posting your updates there, too*?
 > 
-> Signed-off-by: Ben Peart <benpeart@microsoft.com>
-> ---
->  Documentation/config.txt                 |  6 ++++++
->  Documentation/githooks.txt               | 23 +++++++++++++++++++++++
->  Documentation/technical/index-format.txt | 19 +++++++++++++++++++
->  3 files changed, 48 insertions(+)
+> I do not understand this comment at all.  That is what I and others
+> already and always do by responding to the patches, and when trying
+> to see if a topic is still alive, with thread-specific responses and
+> pings.
 > 
-> diff --git a/Documentation/config.txt b/Documentation/config.txt index
-> dc4e3f58a2..c196007a27 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -413,6 +413,12 @@ core.protectNTFS::
->  	8.3 "short" names.
->  	Defaults to `true` on Windows, and `false` elsewhere.
-> 
-> +core.fsmonitor::
-> +	If set, the value of this variable is used as a command which
-> +	will identify all files that may have changed since the
-> +	requested date/time. This information is used to speed up git by
-> +	avoiding unnecessary processing of files that have not changed.
+> If you are demanding that "What's cooking" report to be sent as a
+> response to all the topics, that will *NOT* going to happen.  It is
+> meant to give a summary of the current state to help contributors
+> and reviewers be aware of what is happening across the entire tree
+> and not limited to a specific topic.
 
-I'm confused here.  You have a file called "fsmonitor-watchman", which seems to discuss the protocol for core.fsmonitor scripts in general, and you have this documentation, which does not link to that file.  Can you clarify this? 
+If that is the case, you will have to be okay with others responding to
+your "What's cooking" mails instead of the original threads. That's what
+you are buying into by having these "What's cooking" mails that are in no
+usable way connected to the original threads.
 
-<snip>
-
-> +The hook should output to stdout the list of all files in the working
-> +directory that may have changed since the requested time.  The logic
-> +should be inclusive so that it does not miss any potential changes.
-
-+"It is OK to include files which have not actually changed.  Newly-created and deleted files should also be included.  When files are renamed, both the old and the new name should be included."
-
-Also, please discuss case sensitivity issues (e.g. on OS X).  
-
-> +The paths should be relative to the root of the working directory and
-> +be separated by a single NUL.
-
-<snip>
-
-> +  - 32-bit version number: the current supported version is 1.
-> +
-> +  - 64-bit time: the extension data reflects all changes through the given
-> +	time which is stored as the nanoseconds elapsed since midnight,
-> +	January 1, 1970.
-
-Nit: Please specify signed or unsigned for these.  (I expect to be getting out of 
-cryosleep around 2262, and I want to know if my old git repos will keep working...)
-
-> +  - 32-bit bitmap size: the size of the CE_FSMONITOR_VALID bitmap.
-> +
-> +  - An ewah bitmap, the n-th bit indicates whether the n-th index entry
-> +    is not CE_FSMONITOR_VALID.
-
+Ciao,
+Dscho
