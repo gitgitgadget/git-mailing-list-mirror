@@ -2,169 +2,323 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 327B420281
-	for <e@80x24.org>; Fri, 15 Sep 2017 13:16:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D5AFA20281
+	for <e@80x24.org>; Fri, 15 Sep 2017 13:19:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751342AbdIONQ4 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Sep 2017 09:16:56 -0400
-Received: from mail-io0-f170.google.com ([209.85.223.170]:44982 "EHLO
-        mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751226AbdIONQz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Sep 2017 09:16:55 -0400
-Received: by mail-io0-f170.google.com with SMTP id v36so8328704ioi.1
-        for <git@vger.kernel.org>; Fri, 15 Sep 2017 06:16:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=K0DeVsQcDs22t+pAR4z7a+wPadXyqhht4z0HJHXcAnw=;
-        b=sWAm+9FA7pwm+3Okar6rmT1NCvet2Lu+DFPBTaLD+7VHCTJ19aiSXd3PzvhxJwF3Rd
-         gcl3kzbnexHlthBjhopbZoLt/hRMkrqaKf5OgsYQcRw4L+uZBzH/k4Z3kGGf9UCJn6ei
-         5G0eP+ZFJWxVUhoPUpO2Fmogs/xLzuaHbMG6BIHPsWlv5IkS7O08iTJAAmN0Vsew3sE2
-         RAC9cSGvymriIJSwa9RoUhsMq2dEc4f5q5uos6IajMwPZHhG82MMq+dq2E3izuBI1awF
-         evIcUIqpBHnRrqBUk6B8gKt+iTXM1BG7b+e+z9BVHACZ+YYFNewg+dM0tn76luUYmvxO
-         5zZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=K0DeVsQcDs22t+pAR4z7a+wPadXyqhht4z0HJHXcAnw=;
-        b=cU2Ct28iIrKGuO5wRIi2VMl0xtWU3nRMqPQVk81RMmkic9D2WLrajkcwaqGk26wUlx
-         o+dvdHIv4ZRGHbs1f2SbtqvR0sKkz9UzmnFtU76gxIDJ+ujccqo73KnA4gHUUo5ce8bg
-         /GXS51ahOnMV2vk9i74Qdp3YoFi6J300vPZUhE9OMCg7h3zLQpJDrzLvqJIjP2mhi1Ya
-         iGxfCOfwNqdJ1eK3A7TTIZUH5/RGJT/nd4ZDmS7zErEQMIX4n5/0BG8MEakv9jngDXbb
-         evESD0Abk70iWI5JIag6UsiJQOCTSogwBWpb8ygQkj8J+g0wuHJSVC7TnvJkwf67qBMI
-         pM2g==
-X-Gm-Message-State: AHPjjUhAA6hrkLsVLjWcsz8J/kfXTRiGhOQE3p8F7187Whn2IFK3M11Y
-        dlid8+9Aa5D0FLRyogKk2Yw6WU3nao3jjVbsEp0=
-X-Google-Smtp-Source: AOwi7QBgN5jKrkKsDG6x4NQYmJOFsx+GAHzu/AKIAuPznvjPSME9HNdIDgJMT6n5nyNblkwt28V7Vq28blarUP3EG7E=
-X-Received: by 10.107.147.8 with SMTP id v8mr8838642iod.45.1505481414314; Fri,
- 15 Sep 2017 06:16:54 -0700 (PDT)
+        id S1751451AbdIONS6 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Sep 2017 09:18:58 -0400
+Received: from smtprelay03.ispgateway.de ([80.67.29.28]:24190 "EHLO
+        smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751207AbdIONS5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Sep 2017 09:18:57 -0400
+Received: from [84.46.92.130] (helo=book.hvoigt.net)
+        by smtprelay03.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89)
+        (envelope-from <hvoigt@hvoigt.net>)
+        id 1dsqWE-0005Le-Fv; Fri, 15 Sep 2017 15:18:54 +0200
+Date:   Fri, 15 Sep 2017 15:18:53 +0200
+From:   Heiko Voigt <hvoigt@hvoigt.net>
+To:     git@vger.kernel.org
+Cc:     sbeller@google.com, jrnieder@gmail.com, Jens.Lehmann@web.de,
+        Brandon Williams <bmwill@google.com>
+Subject: [RFC PATCH v2 1/2] implement fetching of moved submodules
+Message-ID: <20170915131853.GA99666@book.hvoigt.net>
+References: <20170817105349.GC52233@book.hvoigt.net>
 MIME-Version: 1.0
-Received: by 10.79.107.136 with HTTP; Fri, 15 Sep 2017 06:16:53 -0700 (PDT)
-In-Reply-To: <20170712120647.6340f75a@twelve2.svl.corp.google.com>
-References: <20170620075523.26961-1-chriscool@tuxfamily.org> <20170712120647.6340f75a@twelve2.svl.corp.google.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 15 Sep 2017 15:16:53 +0200
-Message-ID: <CAP8UFD1hYHU0Wb+=vd3OK1cKUOKETEH5APGNaXa0W2ZBUUNgFQ@mail.gmail.com>
-Subject: Re: [RFC/PATCH v4 00/49] Add initial experimental external ODB support
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Ben Peart <Ben.Peart@microsoft.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170817105349.GC52233@book.hvoigt.net>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-(It looks like I did not reply to this other email yet, sorry about
-this late reply.)
+We store the changed submodules paths to calculate which submodule needs
+fetching. This does not work for moved submodules since their paths do
+not stay the same in case of a moved submodules. In case of new
+submodules we do not have a path in the current checkout, since they
+just appeared in this fetch.
 
-On Wed, Jul 12, 2017 at 9:06 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
-> On Tue, 20 Jun 2017 09:54:34 +0200
-> Christian Couder <christian.couder@gmail.com> wrote:
->
->> Git can store its objects only in the form of loose objects in
->> separate files or packed objects in a pack file.
->>
->> To be able to better handle some kind of objects, for example big
->> blobs, it would be nice if Git could store its objects in other object
->> databases (ODB).
->
-> Thanks for this, and sorry for the late reply. It's good to know that
-> others are thinking about "missing" objects in repos too.
->
->>   - "have": the helper should respond with the sha1, size and type of
->>     all the objects the external ODB contains, one object per line.
->
-> This should work well if we are not caching this "have" information
-> locally (that is, if the object store can be accessed with low latency),
-> but I am not sure if this will work otherwise.
+It is more general to collect the submodule names for changes instead of
+their paths to include the above cases.
 
-Yeah, there could be problems related to caching or not caching the
-"have" information.
-As a repo should not send the blobs that are in an external odb, I
-think it could be useful to cache the "have" information.
-I plan to take a look and add related tests soon.
+With the change described above we implement 'on-demand' fetching of
+changes in moved submodules.
 
-> I see that you have
-> proposed a local cache-using method later in the e-mail - my comments on
-> that are below.
->
->>   - "get <sha1>": the helper should then read from the external ODB
->>     the content of the object corresponding to <sha1> and pass it to
->> Git.
->
-> This makes sense - I have some patches [1] that implement this with the
-> "fault_in" mechanism described in your e-mail.
->
-> [1] https://public-inbox.org/git/cover.1499800530.git.jonathantanmy@google.com/
->
->> * Transfering information
->>
->> To tranfer information about the blobs stored in external ODB, some
->> special refs, called "odb ref", similar as replace refs, are used in
->> the tests of this series, but in general nothing forces the helper to
->> use that mechanism.
->>
->> The external odb helper is responsible for using and creating the refs
->> in refs/odbs/<odbname>/, if it wants to do that. It is free for
->> example to just create one ref, as it is also free to create many
->> refs. Git would just transmit the refs that have been created by this
->> helper, if Git is asked to do so.
->>
->> For now in the tests there is one odb ref per blob, as it is simple
->> and as it is similar to what git-lfs does. Each ref name is
->> refs/odbs/<odbname>/<sha1> where <sha1> is the sha1 of the blob stored
->> in the external odb named <odbname>.
->>
->> These odb refs point to a blob that is stored in the Git
->> repository and contain information about the blob stored in the
->> external odb. This information can be specific to the external odb.
->> The repos can then share this information using commands like:
->>
->> `git fetch origin "refs/odbs/<odbname>/*:refs/odbs/<odbname>/*"`
->>
->> At the end of the current patch series, "git clone" is teached a
->> "--initial-refspec" option, that asks it to first fetch some specified
->> refs. This is used in the tests to fetch the odb refs first.
->>
->> This way only one "git clone" command can setup a repo using the
->> external ODB mechanism as long as the right helper is installed on the
->> machine and as long as the following options are used:
->>
->>   - "--initial-refspec <odbrefspec>" to fetch the odb refspec
->>   - "-c odb.<odbname>.command=<helper>" to configure the helper
->
-> A method like this means that information about every object is
-> downloaded, regardless of which branches were actually cloned, and
-> regardless of what parameters (e.g. max blob size) were used to control
-> the objects that were actually cloned.
->
-> We could make, say, one "odb ref" per size and branch - for example,
-> "refs/odbs/master/0", "refs/odbs/master/1k", "refs/odbs/master/1m", etc.
-> - and have the client know which one to download. But this wouldn't
-> scale if we introduce different object filters in the clone and fetch
-> commands.
+Note: This does only work when repositories have a .gitmodules file. In
+other words: It breaks if we do not get a name for a repository.
+IIRC, consensus was that this is a requirement to get nice submodule
+handling these days?
 
-Yeah, there are multiple ways to do that.
+NEEDSWORK: This breaks t5531 and t5545 because they do not use a
+.gitmodules file. I will add a fallback to paths to help such users.
 
-> I think that it is best to have upload-pack send this information
-> together with the packfile, since it knows exactly what objects were
-> omitted, and therefore what information the client needs. As discussed
-> in a sibling e-mail, clone/fetch already needs to be modified to omit
-> objects anyway.
+Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+---
+This an update of the previous series[1] to the current master. The
+fallback is still missing but now it should not conflict with any topics
+in flight anymore (hopefully).
 
-I try to avoid sending this information as I don't think it is
-necessary and it simplify things a lot to not have to change the
-communication protocol.
+Cheers Heiko
+
+[1] https://public-inbox.org/git/20170817105349.GC52233@book.hvoigt.net/
+
+ submodule.c                 | 91 +++++++++++++++++++++++++--------------------
+ t/t5526-fetch-submodules.sh | 35 +++++++++++++++++
+ 2 files changed, 85 insertions(+), 41 deletions(-)
+
+diff --git a/submodule.c b/submodule.c
+index 3cea8221e0..38b9905e43 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -21,7 +21,7 @@
+ #include "parse-options.h"
+ 
+ static int config_update_recurse_submodules = RECURSE_SUBMODULES_OFF;
+-static struct string_list changed_submodule_paths = STRING_LIST_INIT_DUP;
++static struct string_list changed_submodule_names = STRING_LIST_INIT_DUP;
+ static int initialized_fetch_ref_tips;
+ static struct oid_array ref_tips_before_fetch;
+ static struct oid_array ref_tips_after_fetch;
+@@ -667,11 +667,11 @@ const struct submodule *submodule_from_ce(const struct cache_entry *ce)
+ }
+ 
+ static struct oid_array *submodule_commits(struct string_list *submodules,
+-					   const char *path)
++					   const char *name)
+ {
+ 	struct string_list_item *item;
+ 
+-	item = string_list_insert(submodules, path);
++	item = string_list_insert(submodules, name);
+ 	if (item->util)
+ 		return (struct oid_array *) item->util;
+ 
+@@ -680,39 +680,34 @@ static struct oid_array *submodule_commits(struct string_list *submodules,
+ 	return (struct oid_array *) item->util;
+ }
+ 
++struct collect_changed_submodules_cb_data {
++	struct string_list *changed;
++	const struct object_id *commit_oid;
++};
++
+ static void collect_changed_submodules_cb(struct diff_queue_struct *q,
+ 					  struct diff_options *options,
+ 					  void *data)
+ {
++	struct collect_changed_submodules_cb_data *me = data;
++	struct string_list *changed = me->changed;
++	const struct object_id *commit_oid = me->commit_oid;
+ 	int i;
+-	struct string_list *changed = data;
+ 
+ 	for (i = 0; i < q->nr; i++) {
+ 		struct diff_filepair *p = q->queue[i];
+ 		struct oid_array *commits;
++		const struct submodule *submodule;
++
+ 		if (!S_ISGITLINK(p->two->mode))
+ 			continue;
+ 
+-		if (S_ISGITLINK(p->one->mode)) {
+-			/*
+-			 * NEEDSWORK: We should honor the name configured in
+-			 * the .gitmodules file of the commit we are examining
+-			 * here to be able to correctly follow submodules
+-			 * being moved around.
+-			 */
+-			commits = submodule_commits(changed, p->two->path);
+-			oid_array_append(commits, &p->two->oid);
+-		} else {
+-			/* Submodule is new or was moved here */
+-			/*
+-			 * NEEDSWORK: When the .git directories of submodules
+-			 * live inside the superprojects .git directory some
+-			 * day we should fetch new submodules directly into
+-			 * that location too when config or options request
+-			 * that so they can be checked out from there.
+-			 */
++		submodule = submodule_from_path(commit_oid, p->two->path);
++		if (!submodule)
+ 			continue;
+-		}
++
++		commits = submodule_commits(changed, submodule->name);
++		oid_array_append(commits, &p->two->oid);
+ 	}
+ }
+ 
+@@ -735,11 +730,14 @@ static void collect_changed_submodules(struct string_list *changed,
+ 
+ 	while ((commit = get_revision(&rev))) {
+ 		struct rev_info diff_rev;
++		struct collect_changed_submodules_cb_data data;
++		data.changed = changed;
++		data.commit_oid = &commit->object.oid;
+ 
+ 		init_revisions(&diff_rev, NULL);
+ 		diff_rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
+ 		diff_rev.diffopt.format_callback = collect_changed_submodules_cb;
+-		diff_rev.diffopt.format_callback_data = changed;
++		diff_rev.diffopt.format_callback_data = &data;
+ 		diff_tree_combined_merge(commit, 1, &diff_rev);
+ 	}
+ 
+@@ -870,7 +868,7 @@ int find_unpushed_submodules(struct oid_array *commits,
+ 		const char *remotes_name, struct string_list *needs_pushing)
+ {
+ 	struct string_list submodules = STRING_LIST_INIT_DUP;
+-	struct string_list_item *submodule;
++	struct string_list_item *name;
+ 	struct argv_array argv = ARGV_ARRAY_INIT;
+ 
+ 	/* argv.argv[0] will be ignored by setup_revisions */
+@@ -881,12 +879,16 @@ int find_unpushed_submodules(struct oid_array *commits,
+ 
+ 	collect_changed_submodules(&submodules, &argv);
+ 
+-	for_each_string_list_item(submodule, &submodules) {
+-		struct oid_array *commits = submodule->util;
+-		const char *path = submodule->string;
++	for_each_string_list_item(name, &submodules) {
++		struct oid_array *commits = name->util;
++		const struct submodule *submodule;
++
++		submodule = submodule_from_name(&null_oid, name->string);
++		if (!submodule)
++			continue;
+ 
+-		if (submodule_needs_pushing(path, commits))
+-			string_list_insert(needs_pushing, path);
++		if (submodule_needs_pushing(submodule->path, commits))
++			string_list_insert(needs_pushing, submodule->path);
+ 	}
+ 
+ 	free_submodules_oids(&submodules);
+@@ -1041,7 +1043,7 @@ static void calculate_changed_submodule_paths(void)
+ {
+ 	struct argv_array argv = ARGV_ARRAY_INIT;
+ 	struct string_list changed_submodules = STRING_LIST_INIT_DUP;
+-	const struct string_list_item *item;
++	const struct string_list_item *name;
+ 
+ 	/* No need to check if there are no submodules configured */
+ 	if (!submodule_from_path(NULL, NULL))
+@@ -1056,16 +1058,20 @@ static void calculate_changed_submodule_paths(void)
+ 
+ 	/*
+ 	 * Collect all submodules (whether checked out or not) for which new
+-	 * commits have been recorded upstream in "changed_submodule_paths".
++	 * commits have been recorded upstream in "changed_submodule_names".
+ 	 */
+ 	collect_changed_submodules(&changed_submodules, &argv);
+ 
+-	for_each_string_list_item(item, &changed_submodules) {
+-		struct oid_array *commits = item->util;
+-		const char *path = item->string;
++	for_each_string_list_item(name, &changed_submodules) {
++		struct oid_array *commits = name->util;
++		const struct submodule *submodule;
++
++		submodule = submodule_from_name(&null_oid, name->string);
++		if (!submodule)
++			continue;
+ 
+-		if (!submodule_has_commits(path, commits))
+-			string_list_append(&changed_submodule_paths, path);
++		if (!submodule_has_commits(submodule->path, commits))
++			string_list_append(&changed_submodule_names, name->string);
+ 	}
+ 
+ 	free_submodules_oids(&changed_submodules);
+@@ -1151,7 +1157,8 @@ static int get_next_submodule(struct child_process *cp,
+ 				if (fetch_recurse == RECURSE_SUBMODULES_OFF)
+ 					continue;
+ 				if (fetch_recurse == RECURSE_SUBMODULES_ON_DEMAND) {
+-					if (!unsorted_string_list_lookup(&changed_submodule_paths, ce->name))
++					if (!unsorted_string_list_lookup(&changed_submodule_names,
++									 submodule->name))
+ 						continue;
+ 					default_argv = "on-demand";
+ 				}
+@@ -1159,13 +1166,15 @@ static int get_next_submodule(struct child_process *cp,
+ 				if (spf->default_option == RECURSE_SUBMODULES_OFF)
+ 					continue;
+ 				if (spf->default_option == RECURSE_SUBMODULES_ON_DEMAND) {
+-					if (!unsorted_string_list_lookup(&changed_submodule_paths, ce->name))
++					if (!unsorted_string_list_lookup(&changed_submodule_names,
++									  submodule->name))
+ 						continue;
+ 					default_argv = "on-demand";
+ 				}
+ 			}
+ 		} else if (spf->command_line_option == RECURSE_SUBMODULES_ON_DEMAND) {
+-			if (!unsorted_string_list_lookup(&changed_submodule_paths, ce->name))
++			if (!unsorted_string_list_lookup(&changed_submodule_names,
++							 submodule->name))
+ 				continue;
+ 			default_argv = "on-demand";
+ 		}
+@@ -1258,7 +1267,7 @@ int fetch_populated_submodules(const struct argv_array *options,
+ 
+ 	argv_array_clear(&spf.args);
+ out:
+-	string_list_clear(&changed_submodule_paths, 1);
++	string_list_clear(&changed_submodule_names, 1);
+ 	return spf.result;
+ }
+ 
+diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
+index 42251f7f3a..22a7358b6f 100755
+--- a/t/t5526-fetch-submodules.sh
++++ b/t/t5526-fetch-submodules.sh
+@@ -530,4 +530,39 @@ test_expect_success 'fetching submodule into a broken repository' '
+ 	test_must_fail git -C dst fetch --recurse-submodules
+ '
+ 
++test_expect_success "fetch new commits when submodule got renamed" '
++	git clone . downstream_rename &&
++	(
++		cd downstream_rename &&
++		git submodule update --init &&
++# NEEDSWORK: we omitted --recursive for the submodule update here since
++# that does not work. See test 7001 for mv "moving nested submodules"
++# for details. Once that is fixed we should add the --recursive option
++# here.
++		git checkout -b rename &&
++		git mv submodule submodule_renamed &&
++		(
++			cd submodule_renamed &&
++			git checkout -b rename_sub &&
++			echo a >a &&
++			git add a &&
++			git commit -ma &&
++			git push origin rename_sub &&
++			git rev-parse HEAD >../../expect
++		) &&
++		git add submodule_renamed &&
++		git commit -m "update renamed submodule" &&
++		git push origin rename
++	) &&
++	(
++		cd downstream &&
++		git fetch --recurse-submodules=on-demand &&
++		(
++			cd submodule &&
++			git rev-parse origin/rename_sub >../../actual
++		)
++	) &&
++	test_cmp expect actual
++'
++
+ test_done
+-- 
+2.14.1.145.gb3622a4
+
