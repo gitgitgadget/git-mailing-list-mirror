@@ -2,135 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B560120A21
-	for <e@80x24.org>; Fri, 15 Sep 2017 05:00:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C828F20A21
+	for <e@80x24.org>; Fri, 15 Sep 2017 05:19:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751177AbdIOFAW (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Sep 2017 01:00:22 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54956 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750797AbdIOFAU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Sep 2017 01:00:20 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C1B9EB4907;
-        Fri, 15 Sep 2017 01:00:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=cf9p9mIR7cA4+GOfH14Bl87/haI=; b=PU8lWMq3A6PvHyIABEsI
-        KcOSsQ42BS/rKiKzAoOiNSMm0869NNjtuWvwTW9T65S+pXgbsYIRdQIyM/W/gi9E
-        P/Z6CtRZ2RjRGDRCBHmJ/mbIDiOQrUfhYzPmiy3rCImT3DWpYm/PXlNvU+iqlZ7N
-        +nTWL4hILmuvmWnX1wlbhGw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         q=dns; s=sasl; b=JMx4+4J9WmEPyHy5UeMOUtc5EuRlLJTeYRC0rGDTMCqO6C
-        kmwX3vjaYQyYWHX9gHLwJXneTgMxR+Ss/0acnK9fzzkGORwOJdZA23ZpEnlXPJ1z
-        V28Dvtbuehn4q3EcoEEi/LtzhgUJg13YoKYZ22rYL3/1gEUMmVEx/pWxPsn1c=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B7789B4906;
-        Fri, 15 Sep 2017 01:00:19 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 003C1B4905;
-        Fri, 15 Sep 2017 01:00:19 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Kevin Willford <kewillf@microsoft.com>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        "peff\@peff.net" <peff@peff.net>,
-        "pclouds\@gmail.com" <pclouds@gmail.com>
-Subject: Re: [PATCH 1/1] reset: fix reset when using the sparse-checkout feature.
-References: <20170908180050.25188-1-kewillf@microsoft.com>
-        <20170908180050.25188-2-kewillf@microsoft.com>
-        <xmqqvaktxawk.fsf@gitster.mtv.corp.google.com>
-        <SN1PR21MB0014638E5D9CBFD0D9D85F10B7950@SN1PR21MB0014.namprd21.prod.outlook.com>
-        <xmqqr2vgy2yt.fsf@gitster.mtv.corp.google.com>
-        <SN1PR21MB00140C84DC02F3491F4E8469B76A0@SN1PR21MB0014.namprd21.prod.outlook.com>
-        <xmqqh8w951ek.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.21.1.1709111259430.4132@virtualbox>
-        <xmqq4ls836z3.fsf@gitster.mtv.corp.google.com>
-        <SN1PR21MB0014435A97BCDA324FD55B46B7690@SN1PR21MB0014.namprd21.prod.outlook.com>
-        <CA+P7+xqxmxexWS=MWNd9=EqG81uhKY-OdG+1mpyWhst6DvH5AA@mail.gmail.com>
-        <SN1PR21MB001473733DAF15BC91C0E58AB7690@SN1PR21MB0014.namprd21.prod.outlook.com>
-        <CA+P7+xqcAh4v4gDQOm-feYGc1EmFztAu0zMg2xnp8Gn4=BzkoQ@mail.gmail.com>
-        <xmqqy3piz1j4.fsf@gitster.mtv.corp.google.com>
-        <SN1PR21MB0014031012AEC69CED27FADFB76F0@SN1PR21MB0014.namprd21.prod.outlook.com>
-Date:   Fri, 15 Sep 2017 14:00:17 +0900
-Message-ID: <xmqqh8w4y2se.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1750830AbdIOFSu (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Sep 2017 01:18:50 -0400
+Received: from mail-pu1apc01on0071.outbound.protection.outlook.com ([104.47.126.71]:26975
+        "EHLO APC01-PU1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1750767AbdIOFSt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Sep 2017 01:18:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=NoLimitsConsulting.onmicrosoft.com; s=selector1-nlc-co-nz;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=49tICLFGBirDf3zDnrUM7FhlaIcCuHt8cVzbQL4v4CQ=;
+ b=VX8BQq0lPQCWjzX0I0KpxtG/SVAi9mEBxWxtRESFbxCR6Hj0xNlWUG9voStv7c+R5C7Z0VW6SI7zXPoRF+lvKHaZ9F1DJPKYZT1mfsr2bVHDAElLctquMwbx6Eg0yVwniZBl2sLqhqvhU1TgFHnFCVMgAAQxU/eXRT1jn72057A=
+Received: from PS1PR0601MB1883.apcprd06.prod.outlook.com (10.170.180.21) by
+ PS1PR0601MB1449.apcprd06.prod.outlook.com (10.165.210.153) with Microsoft
+ SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id 15.20.56.11; Fri, 15
+ Sep 2017 05:18:44 +0000
+Received: from PS1PR0601MB1883.apcprd06.prod.outlook.com
+ ([fe80::ed29:f8ac:6c75:c6c6]) by PS1PR0601MB1883.apcprd06.prod.outlook.com
+ ([fe80::ed29:f8ac:6c75:c6c6%18]) with mapi id 15.20.0056.010; Fri, 15 Sep
+ 2017 05:18:44 +0000
+From:   Gene Thomas <gene@nlc.co.nz>
+To:     Junio C Hamano <gitster@pobox.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: git diff --name-status for deleted files
+Thread-Topic: git diff --name-status for deleted files
+Thread-Index: AdMtplB2FFGuO2d0TCCYmH1TzNzo1gAKBZpQAABydqA=
+Date:   Fri, 15 Sep 2017 05:18:43 +0000
+Message-ID: <PS1PR0601MB188364D92388A08D1D62E7078A6C0@PS1PR0601MB1883.apcprd06.prod.outlook.com>
+References: <PS1PR0601MB1883177814CA771567A7193B8A6F0@PS1PR0601MB1883.apcprd06.prod.outlook.com>
+ <xmqq1sn8zn1d.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqq1sn8zn1d.fsf@gitster.mtv.corp.google.com>
+Accept-Language: en-NZ, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is ) smtp.mailfrom=gene@nlc.co.nz; 
+x-originating-ip: [222.154.250.75]
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;PS1PR0601MB1449;6:nrdVumcexLrf0i21BYQMxpoZlDVyMuNtO3Hk7nG9P8i/JuNO4u/vgjpvDlLMXbxlyD3HJqCIv9Vf3s3U7Giy6KOp4Z528t1a2j8kgP8xqZQerp3s9uTpLGCkPbHGitMd2GatBfXCX3vYVQWL1uw/bKzidoUpWkiza/ZagHpOTHts3fTHP0kXWqHIKRQGrl0wffW44RPe239TKp3aubSjH3/jfRjbtzaYLXCb0ftLqW9e/Gn0SxGKqhn19jlacs8JocmOGdCd2juEuTVpDcgWZIAGGZzU1CpftG6EblM1eUt5UaZNwOBvdR/E8S1TLKSEIlQGG5CfojiVhMJGizCOrw==;5:APTbM9o1OFqWz/1vcePMkYqzqCLU4FFjasvJt61/MLvmIf9PqZSGBY94LQgqLINNN/cMNIcUXiV5/7NG02xEy5A1p5DNmjsVGxaJw0gtjscxHPqEqlFO9Uxnf5zhGh3v5VAXL86kNKIDUtge/jApKA==;24:AoFUzJyJqKFtmW5/XTl8YrFIDwcXInA0e+3mgvMrXUfsGX02eS663rjSshC2n/JGrtEPhFq3/0z715LahSK5KbCSFPjyEXsZshLU/88+ay0=;7:XhvPdeycoyIiB+VZqr0gjzQCEOcR310t1wefP/FxiOjPBIqfBueWTQ1fnvrDSqTQy60/xzJDufy4XK+LkoD/rE5jHHNvthq9UDAooYP5kEA9k9nAv8g8XnPWNYcHAuPZWU+01ANUvhNMr8TK8Mbu7wsQDU9xRHUU0TRTijAeHRWlvcorI0LRnk20PD6N1j4lwc+Wtk5OfOkqTBttCwV96puNx1QnNXurvrflOYHujts=
+x-ms-exchange-antispam-srfa-diagnostics: SSOS;
+x-ms-office365-filtering-correlation-id: ffdfdf53-f175-47fb-da5b-08d4fbf93c44
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(300000500095)(300135000095)(300000501095)(300135300095)(300000502095)(300135100095)(22001)(2017030254152)(2017082002075)(300000503095)(300135400095)(2017052603199)(201703131423075)(201702281549075)(300000504095)(300135200095)(300000505095)(300135600095)(300000506095)(300135500095);SRVR:PS1PR0601MB1449;
+x-ms-traffictypediagnostic: PS1PR0601MB1449:
+x-exchange-antispam-report-test: UriScan:(9452136761055)(100324003535756);
+x-microsoft-antispam-prvs: <PS1PR0601MB144987AA9B650726EE838CC68A6C0@PS1PR0601MB1449.apcprd06.prod.outlook.com>
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(100000700101)(100105000095)(100000701101)(100105300095)(100000702101)(100105100095)(6040450)(2401047)(5005006)(8121501046)(100000703101)(100105400095)(10201501046)(3002001)(93006095)(93001095)(6041248)(20161123564025)(20161123558100)(20161123555025)(20161123560025)(201703131423075)(201702281528075)(201703061421075)(201703061406153)(2016111802025)(20161123562025)(6072148)(6043046)(201708071742011)(100000704101)(100105200095)(100000705101)(100105500095);SRVR:PS1PR0601MB1449;BCL:0;PCL:0;RULEID:(100000800101)(100110000095)(100000801101)(100110300095)(100000802101)(100110100095)(100000803101)(100110400095)(100000804101)(100110200095)(100000805101)(100110500095);SRVR:PS1PR0601MB1449;
+x-forefront-prvs: 0431F981D8
+x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(6009001)(376002)(346002)(39830400002)(199003)(189002)(13464003)(377454003)(6246003)(33656002)(66066001)(99286003)(8656003)(50986999)(101416001)(4326008)(54356999)(76176999)(5660300001)(68736007)(53936002)(55016002)(2950100002)(6916009)(8936002)(42882006)(8676002)(9686003)(81156014)(7736002)(305945005)(110136004)(102836003)(81166006)(3846002)(6116002)(3280700002)(189998001)(3660700001)(7696004)(2900100001)(2906002)(106356001)(478600001)(105586002)(25786009)(74482002)(5250100002)(316002)(74316002)(97736004)(6436002)(14454004)(86362001)(53546010)(229853002)(6506006);DIR:OUT;SFP:1101;SCL:1;SRVR:PS1PR0601MB1449;H:PS1PR0601MB1883.apcprd06.prod.outlook.com;FPR:;SPF:None;PTR:InfoNoRecords;A:1;MX:1;LANG:en;
+received-spf: None (protection.outlook.com: nlc.co.nz does not designate
+ permitted sender hosts)
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C552E430-99D2-11E7-A1BD-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+X-OriginatorOrg: nlc.co.nz
+X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Sep 2017 05:18:43.9531
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: dcf97d24-0da4-497e-88f4-de71fd6a3c56
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PS1PR0601MB1449
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kevin Willford <kewillf@microsoft.com> writes:
+Junio,
+           Thanks for your reply. So git is essentially doing a "git commit=
+" when I "git rm".=20
 
-> 1. Does this statement, "I only care about the files in this
-> sparse checkout, and do not concern me with anything else", mean
-> that git should not change files outside the sparse-checkout whether
-> that be in the working directory or in the index?  Or does that only
-> apply to the working directory and the index version of files can
-> change to whatever git the git command would do without using
-> sparse?  For example if I am doing a 'git reset HEAD~1'  should the
-> version in the index of files outside the sparse not be changed or
-> change to the HEAD~1 version with the skip-worktree bit on?
+Gene.
 
-My understanding of the purpose of "sparse checkout" thing is that
-the user still wants to create correct whole-tree commit even the
-user does not have the whole-tree checkout.  The object names for
-blobs recorded in the index that are meant to be included in the
-next commit MUST be the same as those that would be in the index
-when the "sparse" feature is not in use.  "reset HEAD~1" should
-match the index entries to the tree entries in HEAD~1.  So, the
-latter, I would think, among your two alternatives.
+-----Original Message-----
+From: Junio C Hamano [mailto:gitster@pobox.com]=20
+Sent: Friday, 15 September 2017 2:58 PM
+To: Gene Thomas <gene@nlc.co.nz>
+Cc: git@vger.kernel.org
+Subject: Re: git diff --name-status for deleted files
 
-IOW, after "git reset HEAD~", if you drop the skip-worktree bit from
-all index entries, "git diff --cached HEAD" must say "there is no
-changes".
+Gene Thomas <gene@nlc.co.nz> writes:
 
-The only difference between the "sparse" and normal would be that,
-because the "sparse" user does not intend to change anything outside
-the "sparse" area, these paths outside her "sparse" area would not
-materialize on the filesystem.  For the next "write-tree" out of the
-index to still write the correct tree out, the entries outside her
-"sparse" area in the index MUST match the tree of the commit she
-started working from.
+> Hello,
+>           "git diff -name-status" is useful to list the files one
+>           has changed but it does not list file that one has
+>           deleted with "git rm". It would be really handy if it
+>           did. I am using git 2.9.3 on Ubuntu Linux 16.10.
 
-> 2. How will this work with other git commands like merge, rebase,
-> cherry-pick, etc.?  
-> 3. What about when there is a merge conflict with a file that is outside
-> the sparse checkout?
+With or without --name-status option, "git diff" compares between the conte=
+nts you have in the index and in your working tree.  After you modify conte=
+nts of a file, i.e.
 
-I would say, rather than forbidding such a merge, it should let her
-see and deal with the conflict by dropping the "this is outside the
-sparse area, so do not bother materializing it to the filesystem"
-bit, but tell her loudly what it did ("I checked out a half-merged
-file outside your sparse-checkout area because you'd need it while
-resolving the conflict").  By doing things that way, the user can
-decide if she wants to go ahead and complete the merge, even if the
-conflict is outside the area she is currently interested in, or
-postpone the merge and continue working on what she has been working
-on inside the narrowed-down area first.
+	edit file
+	git add file
 
-I do not have a strong opinion whether the sparse-checkout
-configuration file should be adjusted to match when the command must
-tentatively bust the sparse checkout area; I'd imagine it can be
-argued either way.
+you would not see that file edited exactly because the file on the filesyst=
+em is identical to what you added to the index with "git add".
 
-Note that "sparse" is not my itch, and I would not be surprised if
-those who designed it may want it to work differently from my
-knee-jerk reaction in the previous two paragraphs, and I may even
-find such an alternative solution preferable.  
+Your example works exactly the same way.  Instead of modifying the contents=
+ of a file, removing the presense of the file and recording that fact to th=
+e index (i.e. removing the path from the index, too) is done with "git rm",=
+ so after running
 
-But it is highly unlikely for any sensible solution would violate
-the basic premise, i.e. "the indexed contents will stay the same as
-the case without any 'sparse', so the next write-tree will do the
-right thing".
+	git rm file
+
+your working tree would lack "file" and so would your index.  Hence you wou=
+ldn't see "git diff" report any difference on "file".
+
+Perhaps you wanted "git diff HEAD", which is a way to compare between the c=
+ontents you have in the tip commit and the paths in your working tree thru =
+the index?
