@@ -2,75 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C4F820A25
-	for <e@80x24.org>; Fri, 15 Sep 2017 18:34:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B2FFF20281
+	for <e@80x24.org>; Fri, 15 Sep 2017 18:43:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751618AbdIOSeA (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Sep 2017 14:34:00 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58281 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751611AbdIOSd6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Sep 2017 14:33:58 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D218B9888E;
-        Fri, 15 Sep 2017 14:33:57 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=NzGNcTSXtJ1623gMHKg+j5FdbSk=; b=pqQoDm
-        kG1XoosUzF0tAiZqD3qBPy7qFpAWwm2tkfiNo3ctaRcAHuN5+bodi8P5auE97yJ8
-        tbWyW9Kkd8gZd659QnFpCyIUaVoe6T6JU2gqmlWFlUwwTptEyZIMZyWy4L+pS+sC
-        NHoPazZbGduotBrBRigFpDfLL4rHc67tNmpK0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=sH1OKU6sNQ6PKa5tabA2VgPruOIBfRr3
-        pweyrLQIxqP5SRg2wUpv93IyVWv8UC1hn+PGtCAyRe70X+n/3G7MO9Wm9ZsKRJ4A
-        /96By5tKpcNMI4K5NbRxxOs46856Su3fkydShvRNJvig1Z30M/1kBrH/9/I5qIKb
-        Ae6I528nQ1s=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C97A89888D;
-        Fri, 15 Sep 2017 14:33:57 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 34B409888C;
-        Fri, 15 Sep 2017 14:33:57 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Aug 2017, #05; Tue, 22)
-References: <xmqq4lsz2x6r.fsf@gitster.mtv.corp.google.com>
-        <7D99B245-4D22-4C9C-9C43-C8B8656F8E6D@gmail.com>
-        <xmqq1so0wyjd.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.21.1.1709151816390.219280@virtualbox>
-Date:   Sat, 16 Sep 2017 03:33:56 +0900
-In-Reply-To: <alpine.DEB.2.21.1.1709151816390.219280@virtualbox> (Johannes
-        Schindelin's message of "Fri, 15 Sep 2017 18:18:19 +0200 (CEST)")
-Message-ID: <xmqqo9qbx14b.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751557AbdIOSn1 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Sep 2017 14:43:27 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:36846 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751443AbdIOSn0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Sep 2017 14:43:26 -0400
+Received: by mail-pf0-f193.google.com with SMTP id f84so1595675pfj.3
+        for <git@vger.kernel.org>; Fri, 15 Sep 2017 11:43:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=t05XsgIW0vd/v1hYoM8qNe9pkUEtSRPQqUSImM4YOVc=;
+        b=SSdmgmcNUB2TxCBL06yCIDxNkG6HEDt4J7KVRRifdGfVe5EPl0AB18uiqjA+hPgmoD
+         n3+WuwCdAJUaEV8472jbAjcWtXhITZMH+MWWogyoz51r1M13hOtrzwindRwp4htpzNcN
+         08vknDgLaspIDeVqdHK5kHpme3py+glXEkJSmDgllis/qCCtnAyVzEX4t1qhXQYXX6rb
+         IOl5I2of7DCudwEJfCr22l6wfd28y+ktmih5P5w5ObJ6fG5GMnt2Oqtg2PCp+0Vzzg81
+         qextEe0DoeEcAWoH8GC4SYkDb1yd3pfIFFdTOALmWJXMDEqmdfhGUjxMQxypLFgMu0OZ
+         ktMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=t05XsgIW0vd/v1hYoM8qNe9pkUEtSRPQqUSImM4YOVc=;
+        b=XXjokBC+5iuRJoJZujbiGQ5l0EHWq8xIWCq+9RCiCykeAGmZ5jJGKY7z/3FCkMZuFB
+         EzPefSJY3z6WRa5EUwaaZWc3M7bgRF010PIVHl4Ftjc3cNEp3HTl7Wg59WIXiTEV53lo
+         Gu6JALhu61l6QFjEsoameStpnRiuMifSbb6L5Rk+qOO7CzH5uwjk9WXSksMQLtDAE0LN
+         Hjdrj8S+OLyWplqL/qXgPXeymicl87fkZAcl5yYtGhJ94mVVN+LQCnHnkhYEIZP4oLdZ
+         e6Ufl9ePFgWCxICvF+lJ8zJC6yGxCNsGlG6ZSjUTTZsVQwtS4CYW6qSu98VAuyZQsMek
+         M71w==
+X-Gm-Message-State: AHPjjUhSZdq8x7fOsPucMYV1oMK+8IGPadMiZLk2h4qUkDopgCFa/V7u
+        HgTBAs//ITTk2Q==
+X-Google-Smtp-Source: ADKCNb5UY96mnyFlhNVldDc215I3SjZU0Wfeq8E6sSY5rNmbLT+o7o47f34FGUK1HDtptydwvEUc1w==
+X-Received: by 10.99.95.145 with SMTP id t139mr25156462pgb.153.1505501005707;
+        Fri, 15 Sep 2017 11:43:25 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:40d3:83c7:2f82:80ea])
+        by smtp.gmail.com with ESMTPSA id y128sm3142630pfy.125.2017.09.15.11.43.24
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 15 Sep 2017 11:43:25 -0700 (PDT)
+Date:   Fri, 15 Sep 2017 11:43:23 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] for_each_string_list_item(): behave correctly for empty
+ list
+Message-ID: <20170915184323.GU27425@aiede.mtv.corp.google.com>
+References: <cb2d4d71c7c1db452b86c8076c153cabe7384e28.1505490776.git.mhagger@alum.mit.edu>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6F34FA6C-9A44-11E7-B0F6-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cb2d4d71c7c1db452b86c8076c153cabe7384e28.1505490776.git.mhagger@alum.mit.edu>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
-> If you want *contributors* to ping the thread themselves, how about
-> *posting your updates there, too*?
+Michael Haggerty wrote:
 
-I do not understand this comment at all.  That is what I and others
-already and always do by responding to the patches, and when trying
-to see if a topic is still alive, with thread-specific responses and
-pings.
+> If you pass a newly-initialized or newly-cleared `string_list` to
+> `for_each_string_list_item()`, then the latter does
+>
+>     for (
+>             item = (list)->items; /* note, this is NULL */
+>             item < (list)->items + (list)->nr; /* note: NULL + 0 */
+>             ++item)
+>
+> Even though this probably works almost everywhere, it is undefined
+> behavior, and it could plausibly cause highly-optimizing compilers to
+> misbehave.
 
-If you are demanding that "What's cooking" report to be sent as a
-response to all the topics, that will *NOT* going to happen.  It is
-meant to give a summary of the current state to help contributors
-and reviewers be aware of what is happening across the entire tree
-and not limited to a specific topic.
+Wait, NULL + 0 is undefined behavior?
+
+*checks the standard*  C99 section 6.5.6.8 says
+
+	"If both the pointer operand and the result point to elements
+	of the same array object, or one past the last element of the
+	array object, the evaluation shall not produce an overflow;
+	otherwise, the behavior is undefined."
+
+C99 section 7.17.3 says
+
+	"NULL
+
+	which expands to an implementation-defined null pointer constant"
+
+6.3.2.3.3 says
+
+	"An integer constant expression with the value 0, or such an
+	expression cast to type void *, is called a null pointer
+	constant.  If a null pointer constant is converted to a
+	pointer type, the resulting pointer, called a null pointer, is
+	guaranteed to compare unequal to a pointer to any object or
+	function."
+
+NULL doesn't point to anything so it looks like adding 0 to a null
+pointer is indeed undefined.  (As a piece of trivia, strictly speaking
+NULL + 0 would be undefined on some implementations and defined on
+others, since an implementation is permitted to #define NULL to 0.)
+
+So Coverity is not just warning because it is not able to guarantee
+that list->nr is 0.  Huh.
+
+> It would be a pain to have to change the signature of this macro, and
+> we'd prefer not to add overhead to each iteration of the loop. So
+> instead, whenever `list->items` is NULL, initialize `item` to point at
+> a dummy `string_list_item` created for the purpose.
+
+What signature change do you mean?  I don't understand what this
+paragraph is alluding to.
+
+> This problem was noticed by Coverity.
+>
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
+[...]
+>  string-list.c | 2 ++
+>  string-list.h | 7 +++++--
+>  2 files changed, 7 insertions(+), 2 deletions(-)
+
+Does the following alternate fix work?  I think I prefer it because
+it doesn't require introducing a new global.
+
+Thanks,
+Jonathan
+
+diff --git i/string-list.h w/string-list.h
+index 29bfb7ae45..dae33fbb89 100644
+--- i/string-list.h
++++ w/string-list.h
+@@ -33,7 +33,9 @@ typedef int (*string_list_each_func_t)(struct string_list_item *, void *);
+ int for_each_string_list(struct string_list *list,
+ 			 string_list_each_func_t, void *cb_data);
+ #define for_each_string_list_item(item,list) \
+-	for (item = (list)->items; item < (list)->items + (list)->nr; ++item)
++	for (item = (list)->items; \
++	     (list)->items && item < (list)->items + (list)->nr; \
++	     ++item)
+ 
+ /*
+  * Apply want to each item in list, retaining only the ones for which
