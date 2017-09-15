@@ -2,77 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 402D320281
-	for <e@80x24.org>; Fri, 15 Sep 2017 20:33:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B0F3220281
+	for <e@80x24.org>; Fri, 15 Sep 2017 20:34:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751615AbdIOUdE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Sep 2017 16:33:04 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57085 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751568AbdIOUdD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Sep 2017 16:33:03 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6C244ACF21;
-        Fri, 15 Sep 2017 16:33:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=uEzsg8SqJBEjWhMld6GWkadalRM=; b=j4z46R
-        mwEXhUyeHOXjOPXRlb6N1lwJ8yZV4fOiBABQul0N4o8qVzCkCu76aYQkRg16Z7kK
-        31sQE/PE0GD8m7CVB9W+BqDeBcxWCGd50q8rfLWGDXZGiXnDMAa8i56Mri4BffTA
-        +9irRjST8XI1J82c3wOQSjkNoWp5TnVBHaSdI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=XEgvB4X63R8ZsxP9uOWn9Kxq8gbUDVw5
-        ZnUHCFLAqvYgA7RC6wC0eeOEXdo63DuiNip4VtXJJk30MO+RttOplLLb6smL0D+1
-        8LAnTFmk5vnKO7xwKA6DHtZzkWKqXWXGst6RM8XmYqyoLCgCRkOGVOIut6H1mMB+
-        RyGxicmT96A=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 629E7ACF1A;
-        Fri, 15 Sep 2017 16:33:02 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        id S1751785AbdIOUeH convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Fri, 15 Sep 2017 16:34:07 -0400
+Received: from mxo2.nje.dmz.twosigma.com ([208.77.214.162]:57930 "EHLO
+        mxo2.nje.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751545AbdIOUeG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Sep 2017 16:34:06 -0400
+Received: from localhost (localhost [127.0.0.1])
+        by mxo2.nje.dmz.twosigma.com (Postfix) with ESMTP id B3AFF100049;
+        Fri, 15 Sep 2017 20:34:05 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at twosigma.com
+Received: from mxo2.nje.dmz.twosigma.com ([127.0.0.1])
+        by localhost (mxo2.nje.dmz.twosigma.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id fxnHPDvHL5-w; Fri, 15 Sep 2017 20:34:05 +0000 (GMT)
+Received: from exmbdft6.ad.twosigma.com (exmbdft6.ad.twosigma.com [172.22.1.5])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AC5A7ACF17;
-        Fri, 15 Sep 2017 16:33:01 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Sep 2017, #03; Fri, 15)
-References: <xmqq8thgy03t.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.21.1.1709152113070.219280@virtualbox>
-Date:   Sat, 16 Sep 2017 05:33:00 +0900
-In-Reply-To: <alpine.DEB.2.21.1.1709152113070.219280@virtualbox> (Johannes
-        Schindelin's message of "Fri, 15 Sep 2017 21:14:09 +0200 (CEST)")
-Message-ID: <xmqqk20zwvlv.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        by mxo2.nje.dmz.twosigma.com (Postfix) with ESMTPS id A2D728002E;
+        Fri, 15 Sep 2017 20:34:05 +0000 (GMT)
+Received: from exmbdft7.ad.twosigma.com (172.22.2.43) by
+ exmbdft6.ad.twosigma.com (172.22.1.5) with Microsoft SMTP Server (TLS) id
+ 15.0.1263.5; Fri, 15 Sep 2017 20:34:05 +0000
+Received: from exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955]) by
+ exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955%19]) with mapi id
+ 15.00.1263.000; Fri, 15 Sep 2017 20:34:05 +0000
+From:   David Turner <David.Turner@twosigma.com>
+To:     'Ben Peart' <benpeart@microsoft.com>
+CC:     "avarab@gmail.com" <avarab@gmail.com>,
+        "christian.couder@gmail.com" <christian.couder@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "johannes.schindelin@gmx.de" <johannes.schindelin@gmx.de>,
+        "pclouds@gmail.com" <pclouds@gmail.com>,
+        "peff@peff.net" <peff@peff.net>
+Subject: RE: [PATCH v6 06/12] ls-files: Add support in ls-files to display the
+ fsmonitor valid bit
+Thread-Topic: [PATCH v6 06/12] ls-files: Add support in ls-files to display
+ the fsmonitor valid bit
+Thread-Index: AQHTLlfZdo5nYE/U8U2J8C3ZLs/cxaK2Ztgw
+Date:   Fri, 15 Sep 2017 20:34:05 +0000
+Message-ID: <733a41051e084ba4b1f5c404ac8252e1@exmbdft7.ad.twosigma.com>
+References: <20170610134026.104552-1-benpeart@microsoft.com>
+ <20170915192043.4516-1-benpeart@microsoft.com>
+ <20170915192043.4516-7-benpeart@microsoft.com>
+In-Reply-To: <20170915192043.4516-7-benpeart@microsoft.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [172.20.60.10]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 11A8660C-9A55-11E7-824E-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> -----Original Message-----
+> From: Ben Peart [mailto:benpeart@microsoft.com]
+> Sent: Friday, September 15, 2017 3:21 PM
+> To: benpeart@microsoft.com
+> Cc: David Turner <David.Turner@twosigma.com>; avarab@gmail.com;
+> christian.couder@gmail.com; git@vger.kernel.org; gitster@pobox.com;
+> johannes.schindelin@gmx.de; pclouds@gmail.com; peff@peff.net
+> Subject: [PATCH v6 06/12] ls-files: Add support in ls-files to display the fsmonitor
+> valid bit
+> 
+> Add a new command line option (-f) to ls-files to have it use lowercase letters
+> for 'fsmonitor valid' files
 
-> Please stop stating that you expect a reroll for rebase-i-extra when you
-> explicitly stated months ago that you would not take my v6. It gets a bit
-> annoying.
-
-I already explained to you why I skipped v6, which turned to be
-identical to v5 when the unnecessary rebase was undone.  It does not
-have anything to do with expecting a v7 or later to fix other things
-already pointed out in the review.
-
-Having said that, I am getting sick of your constant hostile
-whining, and am inclined to merge it as-is to 'next' and advance it
-from there, if only to reduce these noises from you.  Even if you
-are unwilling to, you do not have the sole possession and veto power
-over the area of the code (neither do I) to prevent further
-improvements, so I can expect others with good design taste
-(hopefully not me) to fix up the misuse of revision traversal
-implementation detail with follow-up patches.
+Document in man page, please.
