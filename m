@@ -2,121 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DAFA620A21
-	for <e@80x24.org>; Fri, 15 Sep 2017 06:23:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B8AE820286
+	for <e@80x24.org>; Fri, 15 Sep 2017 06:50:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751722AbdIOGXZ convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 15 Sep 2017 02:23:25 -0400
-Received: from mail.greatergiving.com ([208.187.18.38]:64514 "EHLO
-        APVWEB37.auctionpay.com" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1751184AbdIOGXZ (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 15 Sep 2017 02:23:25 -0400
-X-Greylist: delayed 306 seconds by postgrey-1.27 at vger.kernel.org; Fri, 15 Sep 2017 02:23:24 EDT
-Received: from APEXC04.auctionpay.com (192.168.2.11) by
- APVWEB37.auctionpay.com (192.168.2.17) with Microsoft SMTP Server (TLS) id
- 14.3.361.1; Thu, 14 Sep 2017 23:18:15 -0700
-Received: from APEXC04.auctionpay.com (192.168.2.11) by APEXC04.auctionpay.com
- (192.168.2.11) with Microsoft SMTP Server (TLS) id 15.0.1178.4; Thu, 14 Sep
- 2017 23:18:14 -0700
-Received: from APEXC04.auctionpay.com ([fe80::4d53:2f59:1dec:ea9d]) by
- APEXC04.auctionpay.com ([fe80::24ba:89c:65c4:8a2c%16]) with mapi id
- 15.00.1178.000; Thu, 14 Sep 2017 23:18:14 -0700
-From:   Wesley Smith <wsmith@greatergiving.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Is finalize_object_file in sha1_file.c handling errno from "rename"
- correctly?
-Thread-Topic: Is finalize_object_file in sha1_file.c handling errno from
- "rename" correctly?
-Thread-Index: AdMt6BzgEtMQTdVEQOO+ofsy4hJiUw==
-Date:   Fri, 15 Sep 2017 06:18:13 +0000
-Message-ID: <c9b3bc17110048f0b7943704cfbd8f68@APEXC04.auctionpay.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [24.22.20.29]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
+        id S1751230AbdIOGuj (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Sep 2017 02:50:39 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64427 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751152AbdIOGui (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Sep 2017 02:50:38 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B0E1B8F8CD;
+        Fri, 15 Sep 2017 02:50:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=/X6YuVqqsOmzkn3qQfTEG3mWIlQ=; b=ikRhaf
+        Q4BAfvE04fMwSJ5m+wZs+VBzQjNL+lPr5R71iDPHwTKYH0wdUawhEZ2W8oT0/OLp
+        pbS0nHs9sHqKgNAX/k7V5bqN96RUjjaaxmO7KiqGJD6v8sMeAaXWoYt3J438BItY
+        D/SYx+2sDNeuNeIMQi/+vpCkV32dwT+0ExYDo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=s6jjteN827SxjxpOhwBoJ1Fv4ZXZSP65
+        NwNqvebSpcEVDIDRmHizq0asjmbNZoWbec42NzOzEctYAd/0YtcaD3fJGROYeUXa
+        YsgU7UCjaA+0SbPlRwfwIMhpctE2ZwvjRm6xlKw0luBB9C1h8ifaZyLsFwZc69DX
+        QpfMjTnhmNw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A88E28F8CC;
+        Fri, 15 Sep 2017 02:50:37 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0B2EF8F8CB;
+        Fri, 15 Sep 2017 02:50:36 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Wesley Smith <wsmith@greatergiving.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Is finalize_object_file in sha1_file.c handling errno from "rename" correctly?
+References: <c9b3bc17110048f0b7943704cfbd8f68@APEXC04.auctionpay.com>
+Date:   Fri, 15 Sep 2017 15:50:35 +0900
+In-Reply-To: <c9b3bc17110048f0b7943704cfbd8f68@APEXC04.auctionpay.com> (Wesley
+        Smith's message of "Fri, 15 Sep 2017 06:18:13 +0000")
+Message-ID: <xmqq4ls4xxok.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-X-Brightmail-Tracker: =?us-ascii?Q?H4sIAAAAAAAAC12Sf0gTYRzGe7fbdpYX5+b02+iHXRSSP9JKTEL6HVlUlpBM?=
- =?us-ascii?Q?sjrtcgPdxm6jiURGFrVQR5FREi40KykwyzJWMxdRqbQYaqJQaCKlGWGUFa51?=
- =?us-ascii?Q?tzttdn993ud9n+f9Pi+HS5VuhQZnbBbGbKALKfls7OlNyZyEGyaXNuluu687?=
- =?us-ascii?Q?bI2965xkPdr2rWlhJsqR6Q15Rtshme7kWCVm8iyzDddeQ6WoNMaOZuNKsgnB?=
- =?us-ascii?Q?cKBaPr2o6x1TCAs3gtKzPzA7CsPlZAK0Ok9xjOOR5AqoeKPmZRWphbLyShnP?=
- =?us-ascii?Q?keQBaPP2KQROhH5nFeIZI5fC8P3WIBPkFqgMuIOMyCiYaL8t4VlKRkPfUE2Q?=
- =?us-ascii?Q?gYyDhyNumcDx0NTTgAmcDnUVPqnAJNQ99opMQXn/F9Grhk8f/ojeRJgofyrn?=
- =?us-ascii?Q?RwZyD9ypNglyCnyu84mRSdB83S3yKmisDcimrnp5xy/Gb4Kfzb2ivggC795j?=
- =?us-ascii?Q?QuQ6uNSzdUqe/FGhEDgTXju8wRcE8oUEak78EXOy4ETjVMV0+HrRhTnQyish?=
- =?us-ascii?Q?7QWOB6drXC5wHNRfG5VeCb5cBLy6PIQ5EdaAojdk7svesnFVaiJtzbfojQYT?=
- =?us-ascii?Q?XZyYbyxqQsK/ENGCGidzPCgNl1Bq4knCI61ybp7xcLGOZnUHzdZChqUWEjs6?=
- =?us-ascii?Q?W7TK6GmZtbImfb7eaGUPWs2FHrQOxykgTEaXVhlhZgoY2xF9IffDifbFxKWS?=
- =?us-ascii?Q?h1qlJnTn/wQJHuZBqXg4FUnU8jEEa6KLWH2BGLGAcPITRE2pM+3taK0mmvAU?=
- =?us-ascii?Q?cT6SP6GzGqZv18QQPTu4jXkhGzPdPqTWqIjjDHco3MSYi/QWwdmHVPiARIkZ?=
- =?us-ascii?Q?jAZGw73VLO6LRSMoBUeUitjGTxmuN1j+DTmfuMUPqRbFmbeMcO0kXLvOjha+?=
- =?us-ascii?Q?nYW2hLbzdwTbiepMp6YUwRfM0upVJskqLfu9Vx2qM3lkvV91I/fr87FzSaer?=
- =?us-ascii?Q?3rm6dgeab/4+Eulvu6Xo1pRdji2girs+lnWe99keZFF3jw4O5so3DF8cd6RV?=
- =?us-ascii?Q?delGL/xafc9Rn6FgdpKxGUuO9e3Nfpb81q8d31Qir5+MeWkf2T9Af6/e/D1j?=
- =?us-ascii?Q?0piyfVdDehaFsTo6ebnUzNJ/ASamrVtRBAAA?=
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2DF25250-99E2-11E7-9706-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Using git 2.14.1 for Windows
+Wesley Smith <wsmith@greatergiving.com> writes:
 
-I'm seeing an issue with the follow sequence of commands:
+> 1) This bug is triggered because "git fetch" is causing a pack
+> file to be written when that same pack file already exists.  It
+> seems like this is harmless and shouldn't cause a problem.  Is
+> that correct?
 
+The final name of the packfile is derived from the entire contents
+of the packfile; it should be harmless when we attempt to rename a
+new file, which has exactly the same contents as an existing file,
+to the existing file and see a failure out of that attempt.
 
-git init D:\XXX\workspace
-git fetch --no-tags --progress https://XXX/_git/PAPI +refs/heads/*:refs/remotes/origin/* --depth=20
-git fetch --no-tags --progress https://XXX/_git/PAPI +refs/heads/*:refs/remotes/origin/* --depth=20
-git fetch --no-tags --progress https://XXX/_git/PAPI +refs/heads/*:refs/remotes/origin/* --depth=20
+> 2) It seems that finalize_object_file is not accounting for the
+> fact that "link" will return EEXIST if the destination file
+> already exists but is not writeable, whereas "rename" will return
+> EACCESS in this case.  Is that correct?  If so, should
+> finalize_object_file be fixed to account for this? Perhaps it
+> should check if the newfile exists before calling rename.  Or,
+> should the Windows mingw_rename function be modified to return
+> EEXIST in this case, even though that's not the standard errno for
+> that situation?
 
-The third "git fetch" command hangs forever and takes 100% of the CPU.
+The codepath that is triggered by OBJECT_CREATION_USES_RENAMES ought
+to behave correctly even on non-Windows platforms, so bending the
+error code of rename() only on Windows to fit the existing error
+handling would not be a smart thing to do.  Rather, the rename()
+emulation should leave a correct errno and the caller should be
+updated to be aware of that error that is not EEXIST, which it
+currently knows about.
 
-I've debugged this a bit, and what I've found is that after the first fetch, the .git/objects/pack directory contains 2 files:
+Thanks for spotting a problem and digging to its cause.
 
-pack-b64910484b4254836a6413ce6a94019278fc54c5.pack
-pack-b64910484b4254836a6413ce6a94019278fc54c5.idx
+This is a #leftoverbits tangent, and should be done separately from
+your "OBJECT_CREATION_USES_RENAMES is broken" topic, but I think it
+is a bug to use finalize_object_file() directly to "finalize"
+anything but an individual loose object file in the first place.
 
+We should create a new shared helper that does what the function
+currently does, make finalize_object_file() call that new shared
+helper, and make sure finalize_object_file() is called only on a
+newly created loose object file.  The codepath that creates a new
+packfile and other things and moves them to the final name should
+not call finalize_object_file() but the new shared helper instead.
 
-After the second fetch, the directory contains 4 files:
+That way, we could later implement the "collision? check" alluded by
+the in-code comment in finailize_object_file(), and we won't have to
+worry about affecting callers other than the one that creates a
+loose object file with such an enhancement.
 
-pack-b64910484b4254836a6413ce6a94019278fc54c5.pack
-pack-b64910484b4254836a6413ce6a94019278fc54c5.idx
-pack-ae983dc9c8057f4d5d2c8cdc3485cb6badde864b.pack
-pack-ae983dc9c8057f4d5d2c8cdc3485cb6badde864b.idx
-
-When the third "git fetch" is run, it spawns this chain of commands:
-
-git fetch --no-tags --progress https://XXX /_git/PAPI +refs/heads/*:refs/remotes/origin/* --depth=20
-  git remote-https https://XXX/_git/PAPI https://XXX/_git/PAPI
-    git-remote-https https://XXX/_git/PAPI https://XXX/_git/PAPI
-      git fetch-pack --stateless-rpc --stdin --lock-pack --thin --depth=20 https://XXX/_git/PAPI/
-         git --shallow-file D:/XXX/workspace/.git/shallow.lock index-pack --stdin -v --fix-thin "--keep=fetch-pack 15728 on DT0004" --pack_header=2,3425
-
-It's the final of these git instances  (the --shallow-file one) that's hanging.
-
-Upon debugging this "git --shallow-file" process, the problem is as follows:  (line numbers relative to https://github.com/git/git/blob/master/sha1_file.c)
-
-In sha1_file.c,  finalize_object_file is called with a tmpfile value of "tmp_pack_AmXsya" and a filename of "pack-ae983dc9c8057f4d5d2c8cdc3485cb6badde864b.pack". Note that this filename already exists (it was created by the second fetch).  On line 3236, the condition (object_creation_mode == OBJECT_CREATION_USES_RENAMES) is true on Windows, so the code runs the goto try_rename.
-
-On line 1378,  rename is called, which on Windows is defined as a specialized function called mingw_rename.  I've identified a bug in this Windows-specific mingw_rename function that causes an infinite loop if the new filename (pack-ae983dc9c8057f4d5d2c8cdc3485cb6badde864b.pack) already exists, _and_ is locked by another process.  In this case, it appears that the first "git fetch" call in the process chain has opened the pack file, which is why this process can't rename the temp file to that name.
-
-I can fix the infinite loop in the mingw_rename function, but the question is what errno should be returned by mingw_rename, and that brings me to my question regarding the finalize_object_file function.
-
-On UNIX-style OSes, the code would first try to perform a "link" call in line 1380.  According to my reading of the link(2) man page, I think (but haven't tested) that link call would return EEXIST in this case (the newpath already exists).  If link returns EEXIST, then the code will skip most of the rest of the code in finalize_object_file, and will return 0 (success) on line 1411.  However, on systems where object_creation_mode is OBJECT_CREATION_USES_RENAMES, then the code will call "rename" instead on line 1396.   According to my reading of the rename(2) man page,  EACCES would  be returned in this case (because the pack file is locked by another process).  Notably, EEXIST would _not_ be returned from rename, as rename only returns EEXIST if "newpath is a nonempty directory".   Since finalize_object_file doesn't have any special logic for EACCES, if I fixed the Windows version of the rename function to return the correct errno (EACCES), then the finalize_object_file will return the error "unable to write sha1 filename" on 1403 and that will cause the program to die.
-
-My questions:
-
-1) This bug is triggered because "git fetch" is causing a pack file to be written when that same pack file already exists.  It seems like this is harmless and shouldn't cause a problem.  Is that correct?
-2) It seems that finalize_object_file is not accounting for the fact that "link" will return EEXIST if the destination file already exists but is not writeable, whereas "rename" will return EACCESS in this case.  Is that correct?  If so, should finalize_object_file be fixed to account for this? Perhaps it should check if the newfile exists before calling rename.  Or, should the Windows mingw_rename function be modified to return EEXIST in this case, even though that's not the standard errno for that situation?
-
-Thanks for your help,
-
-Wesley Smith
