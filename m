@@ -2,108 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.1 required=3.0 tests=BAYES_40,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8BA1A20281
-	for <e@80x24.org>; Fri, 15 Sep 2017 19:23:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B340520281
+	for <e@80x24.org>; Fri, 15 Sep 2017 19:32:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751865AbdIOTXv (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Sep 2017 15:23:51 -0400
-Received: from mout.gmx.net ([212.227.15.18]:56106 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751860AbdIOTXu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Sep 2017 15:23:50 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MBVwM-1djYpQ0f6E-00AVyd; Fri, 15
- Sep 2017 21:23:46 +0200
-Date:   Fri, 15 Sep 2017 21:23:45 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Sep 2017, #03; Fri, 15)
-In-Reply-To: <xmqq8thgy03t.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.21.1.1709152122360.219280@virtualbox>
-References: <xmqq8thgy03t.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751878AbdIOTci (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Sep 2017 15:32:38 -0400
+Received: from mail.praxis.com.mx ([200.52.131.4]:30208 "EHLO
+        mail.praxis.com.mx" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751843AbdIOTch (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Sep 2017 15:32:37 -0400
+X-Greylist: delayed 499 seconds by postgrey-1.27 at vger.kernel.org; Fri, 15 Sep 2017 15:32:37 EDT
+Received: from localhost (localhost.localdomain [127.0.0.1])
+        by mail.praxis.com.mx (Postfix) with ESMTP id B33AE5055ED;
+        Fri, 15 Sep 2017 14:24:06 -0500 (CDT)
+Received: from mail.praxis.com.mx ([127.0.0.1])
+        by localhost (mail.praxis.com.mx [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id FuXwmKrIvCJn; Fri, 15 Sep 2017 14:24:06 -0500 (CDT)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+        by mail.praxis.com.mx (Postfix) with ESMTP id 670E0505BDB;
+        Fri, 15 Sep 2017 14:24:06 -0500 (CDT)
+DKIM-Filter: OpenDKIM Filter v2.10.3 mail.praxis.com.mx 670E0505BDB
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=praxis.com.mx;
+        s=97404160-8856-11E7-AB92-3192A1C5E255; t=1505503446;
+        bh=p+eLvlHfVR9tOoIzRsKvqW7oI0p7PiYkUOp3g75TNBg=;
+        h=From:To:Date:Message-ID:MIME-Version;
+        b=YEzIE7Sh+/rmyKk8aMSPqNCIdhi/UOS72ryCUlqVIwyVwJFDhI1JkDO6QGCQPgq71
+         gz+Ilqp91OXImNZnVGfWotA06sDosuA6lK60gwLEIpFj+K8cQpnF95mFzg5sgLYcfY
+         bZDQOlJRu448ksQlWRW4qm23GwAqedR2YYbyvRGWyMZOUXf/j+vhZjTGkGNbzk+IdU
+         87hCSPfjamTSHT6++soChccw4J153QYpftbTZxCiMOqJZBmXaPYCtdzbb1yq7uUETw
+         Q4OIWyR0ukA2l6j6WtcrCfEMeucVpAhGIRFdO61x7QHH5ZF/EDh0hS/e7Ypr6SwQSL
+         Auzd6E1VdTWYA==
+Received: from mail.praxis.com.mx ([127.0.0.1])
+        by localhost (mail.praxis.com.mx [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id Np3i7PXo6OTb; Fri, 15 Sep 2017 14:24:06 -0500 (CDT)
+Received: from PXL201701967 (unknown [192.168.16.120])
+        by mail.praxis.com.mx (Postfix) with ESMTPSA id 42DCE5055ED;
+        Fri, 15 Sep 2017 14:24:06 -0500 (CDT)
+From:   "EduardoLeon" <Lebx@praxis.com.mx>
+To:     <git@vger.kernel.org>, <majordomo@vger.kernel.org>
+Subject: Pertenecer a la Comunidad GIT
+Date:   Fri, 15 Sep 2017 14:24:15 -0500
+Message-ID: <008d01d32e58$38702630$a9507290$@praxis.com.mx>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:wsX8rvYE6/qileSnEzsi25TVe6uiRO+xQRyojuqiopia6G8j3In
- at4A/oBLm2uR2Shz35U8Sjy6ALViCnCj23/WuJZ2iGCeP0/ITRM7RUhO3WrA+nCNXizFRAL
- i23WFEVW+idefT8/pXP534mBiodSQM3oRjbkUIcrMB0loXjTLgetk5wAS0YaN3yHFs8DxCq
- 3C5npqQQi97J//CIORGFA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:sMs4+r9HnKE=:aQzyL5KIzKiSRp3zRX8LrW
- 3wZOAAQpF3lzsFMdbsKpHaik11Rty5py70FSYtcr0JY/w51KAPANHredYAD3xaQJfzOn47VE+
- xsl7qJh6yPfDQxiX2DeowFOKo6NwpDC2ZAowd1oVT2xG1zmzignUo8Y+WbTA64DfHW/H4qRqn
- gHqVi478MsIEHPp2ZBO/LcCimbg++v2e/fkwWyflOPeR73KEAIlsNtCWSA3WxfZOk1dVaIJZx
- YoX81G2cz5Cpwc5tU8UbPWdkJoI7APC4AWZkyLXFJBi0ncqr+pq/RNUYcDJlouHadtRIPPrP5
- iytT1FnaJJeWMS0Qnx2XBFO585oVraPvX7LSBqzjXZKZh8UUN+6SQaVeS2EIbJCGgvnLJNvji
- XtlROdACxFuPoz9JvcqPzc7pK2bze/Juu+x5eT0T/1iICKEMzvFCDlT/nY70hH8ry91AQRRJk
- khN38gcQo4otyzWU56aVnpJQj34NRuSAFiSvdL7wpBvqozBx/MHMAfWFrZKB99IoUSFdJebpB
- TSUX9FJial7PVJYBKa2bRHm0MA592dydDlUL22LCT1k2X0+/Y8YnDyeW8lshQQpNMjdF65/0Q
- 09Mk+MVRS/S4U5b7YqpPpeEiXDEq6rcJHb8BNPeunQX1Ws+Wr8GrXwUDk/yu051ekYcIIZLDa
- Jcz3I12OfRXHVpx2sWEOOFluXKiNPK/CmZ2SSEhE5L7ri6QXEYdqtEYKLJDr24lV+RwIbeBGW
- Awwbc3lO/bNdNLDxhMHb39/QWEZPPC7N5h/vKr9qQCgcOVkjMJAttI3du6hurLeKiPWQH2r+i
- QXFmMjvshhwUhwrLEecZQjigRVh94vHo2z+TUIBb9yvC6iIPy0=
+Content-Type: text/plain;
+        charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: AdMuVPMVG4UTq6l2T4a3TVW0I/cJcA==
+Content-Language: es-mx
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Buen d=EDa,
 
-On Fri, 15 Sep 2017, Junio C Hamano wrote:
+Me gustar=EDa pertenecer a su comunidad y conocer mas sobre los temas de =
+git
 
-> --------------------------------------------------
-> [Cooking]
-> 
-> [...]
-> 
-> * mk/diff-delta-uint-may-be-shorter-than-ulong (2017-08-10) 1 commit
->  . diff-delta: fix encoding size that would not fit in "unsigned int"
-> 
->  The machinery to create xdelta used in pack files received the
->  sizes of the data in size_t, but lost the higher bits of them by
->  storing them in "unsigned int" during the computation, which is
->  fixed.
-> 
->  Dropped, as it was rerolled for review as part of a larger series.
->  cf. <1502914591-26215-1-git-send-email-martin@mail.zuhause>
-> 
-> [...]
-> 
-> * mk/use-size-t-in-zlib (2017-08-10) 1 commit
->  . zlib.c: use size_t for size
-> 
->  The wrapper to call into zlib followed our long tradition to use
->  "unsigned long" for sizes of regions in memory, which have been
->  updated to use "size_t".
-> 
->  Dropped, as it was rerolled for review as part of a larger series.
->  cf. <1502914591-26215-1-git-send-email-martin@mail.zuhause>
-> 
-> 
-> * mk/diff-delta-avoid-large-offset (2017-08-11) 1 commit
->  . diff-delta: do not allow delta offset truncation
-> 
->  The delta format used in the packfile cannot reference data at
->  offset larger than what can be expressed in 4-byte, but the
->  generator for the data failed to make sure the offset does not
->  overflow.  This has been corrected.
-> 
->  Dropped, as it was rerolled for review as part of a larger series.
->  cf. <1502914591-26215-1-git-send-email-martin@mail.zuhause>
-> 
-> 
-> --------------------------------------------------
-> [Discarded]
-> 
-> [...]
+Muchas Gracias,
+=A0
+Saludos Cordiales.=20
+=A0
+Administrador de la configuracion del software
+Eduardo Alfonso Le=F3n Ben=EDtez =96 Lebx =A0
+Ext- 2366
 
-These three topics are still in the wrong category. Please fix.
 
-Ciao,
-Dscho
