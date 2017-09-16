@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8AB0C20A21
-	for <e@80x24.org>; Sat, 16 Sep 2017 08:09:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12E0720A21
+	for <e@80x24.org>; Sat, 16 Sep 2017 08:09:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751434AbdIPIIY (ORCPT <rfc822;e@80x24.org>);
+        id S1751529AbdIPIJS (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Sep 2017 04:09:18 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:38271 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751429AbdIPIIY (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 16 Sep 2017 04:08:24 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:35989 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751422AbdIPIIU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Sep 2017 04:08:20 -0400
-Received: by mail-wm0-f67.google.com with SMTP id r136so4498980wmf.3
-        for <git@vger.kernel.org>; Sat, 16 Sep 2017 01:08:19 -0700 (PDT)
+Received: by mail-wm0-f65.google.com with SMTP id x17so4481302wmd.5
+        for <git@vger.kernel.org>; Sat, 16 Sep 2017 01:08:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Kwh80uEmdQsvkUOQndEyw6Nq/iswdZKZo2oUgPaP5uQ=;
-        b=lhsa8RoZH4BmrRongHxtNWvlwvj+iFLebii8XQgWyIz3BzC4jAaC7MjSfewKaCxeqB
-         4kIlYQFjBtn+b6T/gD8gX6qUYP/5ZEGIyUO1vZAnYu5BH4R2Xv2dgmFQQ7b4g9rWgVsS
-         K4NgAlaeLQMMc2jFjJdhhu8Lbin0XgQ5xRfgzlzHygt1im/NxId706kKN9xuM2o0Lf/u
-         /xB/Z1Rj1wavWQ/cfxvStRM87HuUAE87lfUTC/ENJ0cprGMleXhkM2Di5B9p64JIIJ4E
-         MP710sLF9UkcN+blnx9235pbDcFlogdIsHwVyeZIftlNZt5ZFH6Q0fYXNeZaZv0iwO6V
-         A74w==
+        bh=+q6woJZzCbf+F0edr7gI8RSy9jT1UNYwTGjfVjfdp3E=;
+        b=ppR/IdvslMgyYcFqtUmFayGEWhZt8HfsMn8CY2qiB3IUQGXNsGKncuz6U9AbHNtYEc
+         HqVe5f9mnaMRLpvNuDa38HGM8p+BsLvfVy4amIZPLzAl43lPlJt+8OkkHsvr3fcRNwYK
+         nuGtqwdt2w+W9C1WGtJY6jMNptDHO8oakY7x5hkPHfNbVgmXVaCghebc03OG9tNnjRrC
+         Y8zrDh4scH3LSfKwJL/0Ri+8nd9ldPXzjOxhHQeTTCxQzTvyiHYZHDQZ2MYFN7zg8tMP
+         beQ+sR/LvaVZb0rjxCSN/VwaFHcqzwyk08FVu0KPVBwNsnEMdP25NY9OMFuqPuXlPXLP
+         gP4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Kwh80uEmdQsvkUOQndEyw6Nq/iswdZKZo2oUgPaP5uQ=;
-        b=dh3ukiudTNoCfrI3F9EBbOwcxNavsmHMNOXHzPZanaSXoKpQe3v3SmPSYmrcnJndKY
-         4KKQ09Uwb4HCYZgsmwZ0CLAIZZfotcEDN6Uw93xsnxLrPf7v6klDSTiviuDHDA10oSEF
-         M0gZUJwf2ROMAnqaHK4I08NkqfeaJqPJyqaEUXJ9Tyjrr2ksYewbeDMrDJU1IxGP7ova
-         J9K59i8bPBYhdw63AzFCt78LAzEKU/gopG7E9zfbc/SZo/otrMRbpKaCQrzUyzKNsirj
-         h7bFiAZf/kd3rhxhN5ocXPEwKP64SfIK/i14NjzpjNtl9smGP4TVklo6hn+FzEUIwr7p
-         7Vug==
-X-Gm-Message-State: AHPjjUjz/y7rg3QZoZ7MiiMm+zGRwb+iYnW1Zx36kwFmsyl1h8TDZbcZ
-        LrE2bEhuvudEQM5bpZauASE5QQ==
-X-Google-Smtp-Source: AOwi7QDnUH7RAtIWPYwL3CiMOHRBjcRwaqmapRgpdDHCYQP4gGj2AMVOoDmVM9kGal08dhVPI0wddg==
-X-Received: by 10.28.64.6 with SMTP id n6mr4866732wma.61.1505549298541;
-        Sat, 16 Sep 2017 01:08:18 -0700 (PDT)
+        bh=+q6woJZzCbf+F0edr7gI8RSy9jT1UNYwTGjfVjfdp3E=;
+        b=mCmlnDhESTBSOvwsqvzkxHgiWqgi6OWP4l1KXa2i6nL6oZN5CWk2YZKhGvZ+uhjm8l
+         dcUh85rPi82qFOjIXgNqM99+I1jfhYfBAFR5QL08AgPX1NiubW+Da7JkAxJO/0QB4XHd
+         x+1PwGajCe4zPs+swDprCszdDCodrYScQs1kf8FQiDmpwwAuxHZv4MdJTjojwAMR0KAV
+         IQJsLFhD8xscEKuf+6lrZ3LuxNptae/D6TA7NFL4MabYeRPqoFQ59Z3Gr5a2ffKtHREn
+         OIbO2rQvt3dtJMVsRSg+1TTT590E4h0OhPQYrj0SDZaQ9usX5NuKCYWg1roBelAC6dke
+         vuUw==
+X-Gm-Message-State: AHPjjUgeUxXpPLJPlPrRCYmx1KtM4uFEL3l6K8FemW0rGPS9fwB4BEAm
+        A6dwPFqNGCuajHnBWiQBSjS7nQ==
+X-Google-Smtp-Source: AOwi7QDCwaTqjzBa69jqkXM5cD94BG9d9jenbalTwR1d37nIil+BwmReR4SRvJcOwu87pmBIyBJtoQ==
+X-Received: by 10.28.22.82 with SMTP id 79mr5096145wmw.70.1505549303255;
+        Sat, 16 Sep 2017 01:08:23 -0700 (PDT)
 Received: from localhost.localdomain (sud35-h04-89-95-107-230.dsl.sta.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id l126sm2814641wmd.1.2017.09.16.01.08.17
+        by smtp.gmail.com with ESMTPSA id l126sm2814641wmd.1.2017.09.16.01.08.21
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 16 Sep 2017 01:08:17 -0700 (PDT)
+        Sat, 16 Sep 2017 01:08:22 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v6 25/40] odb-helper: add 'script_mode' to 'struct odb_helper'
-Date:   Sat, 16 Sep 2017 10:07:16 +0200
-Message-Id: <20170916080731.13925-26-chriscool@tuxfamily.org>
+Subject: [PATCH v6 28/40] Add t0460 to test passing git objects
+Date:   Sat, 16 Sep 2017 10:07:19 +0200
+Message-Id: <20170916080731.13925-29-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.14.1.576.g3f707d88cd
 In-Reply-To: <20170916080731.13925-1-chriscool@tuxfamily.org>
 References: <20170916080731.13925-1-chriscool@tuxfamily.org>
@@ -70,107 +70,132 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-to prepare for having a long running odb helper sub-process
-handling the communication between Git and an external odb.
-
-We introduce "odb.<name>.subprocesscommand" to make it
-possible to define such a sub-process, and we mark such odb
-helpers with the new 'script_mode' field set to 0.
-
-Helpers defined using the existing "odb.<name>.scriptcommand"
-are marked with the 'script_mode' field set to 1.
-
-Implementation of the different capabilities/instructions in
-the new (sub-)process mode is left for following commits.
-
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- external-odb.c |  8 +++++++-
- odb-helper.c   | 19 ++++++++++++++-----
- odb-helper.h   |  1 +
- 3 files changed, 22 insertions(+), 6 deletions(-)
+ t/t0460-read-object-git.sh | 28 +++++++++++++++++
+ t/t0460/read-object-git    | 78 ++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 106 insertions(+)
+ create mode 100755 t/t0460-read-object-git.sh
+ create mode 100755 t/t0460/read-object-git
 
-diff --git a/external-odb.c b/external-odb.c
-index 31d21bfe04..ccca67eff5 100644
---- a/external-odb.c
-+++ b/external-odb.c
-@@ -32,8 +32,14 @@ static int external_odb_config(const char *var, const char *value, void *data)
- 
- 	o = find_or_create_helper(name, namelen);
- 
--	if (!strcmp(subkey, "scriptcommand"))
-+	if (!strcmp(subkey, "scriptcommand")) {
-+		o->script_mode = 1;
- 		return git_config_string(&o->cmd, var, value);
-+	}
-+	if (!strcmp(subkey, "subprocesscommand")) {
-+		o->script_mode = 0;
-+		return git_config_string(&o->cmd, var, value);
-+	}
- 
- 	return 0;
- }
-diff --git a/odb-helper.c b/odb-helper.c
-index 3d940a3171..22728200e3 100644
---- a/odb-helper.c
-+++ b/odb-helper.c
-@@ -123,6 +123,9 @@ int odb_helper_init(struct odb_helper *o)
- 	FILE *fh;
- 	struct strbuf line = STRBUF_INIT;
- 
-+	if (!o->script_mode)
-+		return 0;
+diff --git a/t/t0460-read-object-git.sh b/t/t0460-read-object-git.sh
+new file mode 100755
+index 0000000000..2873b445f3
+--- /dev/null
++++ b/t/t0460-read-object-git.sh
+@@ -0,0 +1,28 @@
++#!/bin/sh
 +
- 	if (odb_helper_start(o, &cmd, 0, "init") < 0)
- 		return -1;
- 
-@@ -173,16 +176,12 @@ static int odb_helper_object_cmp(const void *va, const void *vb)
- 	return hashcmp(a->sha1, b->sha1);
- }
- 
--static void odb_helper_load_have(struct odb_helper *o)
-+static void have_object_script(struct odb_helper *o)
- {
- 	struct odb_helper_cmd cmd;
- 	FILE *fh;
- 	struct strbuf line = STRBUF_INIT;
- 
--	if (o->have_valid)
--		return;
--	o->have_valid = 1;
--
- 	if (odb_helper_start(o, &cmd, 0, "have") < 0)
- 		return;
- 
-@@ -194,6 +193,16 @@ static void odb_helper_load_have(struct odb_helper *o)
- 	strbuf_release(&line);
- 	fclose(fh);
- 	odb_helper_finish(o, &cmd);
++test_description='tests for long running read-object process passing git objects'
++
++. ./test-lib.sh
++
++PATH="$PATH:$TEST_DIRECTORY/t0460"
++
++test_expect_success 'setup host repo with a root commit' '
++	test_commit zero &&
++	hash1=$(git ls-tree HEAD | grep zero.t | cut -f1 | cut -d\  -f3)
++'
++
++HELPER="read-object-git"
++
++test_expect_success 'blobs can be retrieved from the host repo' '
++	git init guest-repo &&
++	(cd guest-repo &&
++	 git config odb.magic.subprocessCommand "$HELPER" &&
++	 git cat-file blob "$hash1" >/dev/null)
++'
++
++test_expect_success 'invalid blobs generate errors' '
++	cd guest-repo &&
++	test_must_fail git cat-file blob "invalid"
++'
++
++test_done
+diff --git a/t/t0460/read-object-git b/t/t0460/read-object-git
+new file mode 100755
+index 0000000000..38529e622e
+--- /dev/null
++++ b/t/t0460/read-object-git
+@@ -0,0 +1,78 @@
++#!/usr/bin/perl
++#
++# Example implementation for the Git read-object protocol version 1
++# See Documentation/technical/read-object-protocol.txt
++#
++# Allows you to test the ability for blobs to be pulled from a host git repo
++# "on demand."  Called when git needs a blob it couldn't find locally due to
++# a lazy clone that only cloned the commits and trees.
++#
++# A lazy clone can be simulated via the following commands from the host repo
++# you wish to create a lazy clone of:
++#
++# cd /host_repo
++# git rev-parse HEAD
++# git init /guest_repo
++# git cat-file --batch-check --batch-all-objects | grep -v 'blob' |
++#	cut -d' ' -f1 | git pack-objects /e/guest_repo/.git/objects/pack/noblobs
++# cd /guest_repo
++# git config core.virtualizeobjects true
++# git reset --hard <sha from rev-parse call above>
++#
++# Please note, this sample is a minimal skeleton. No proper error handling 
++# was implemented.
++#
++
++use 5.008;
++use lib (split(/:/, $ENV{GITPERLLIB}));
++use strict;
++use warnings;
++use Git::Packet;
++
++#
++# Point $DIR to the folder where your host git repo is located so we can pull
++# missing objects from it
++#
++my $DIR = "../.git/";
++
++packet_initialize("git-read-object", 1);
++
++packet_read_and_check_capabilities("get_git_obj");
++packet_write_capabilities("get_git_obj");
++
++while (1) {
++	my ($res, $command) = packet_txt_read();
++
++	if ( $res == -1 ) {
++		exit 0;
++	}
++
++	$command =~ s/^command=//;
++
++	if ( $command eq "init" ) {
++		packet_bin_read();
++
++		packet_txt_write("status=success");
++		packet_flush();
++	} elsif ( $command eq "get_git_obj" ) {
++		my ($sha1) = packet_txt_read() =~ /^sha1=([0-9a-f]{40})$/;
++		packet_bin_read();
++
++		my $path = $sha1;
++		$path =~ s{..}{$&/};
++		$path = $DIR . "/objects/" . $path;
++
++		my $contents = do {
++		    local $/;
++		    open my $fh, $path or die "Can't open '$path': $!";
++		    <$fh>
++		};
++
++		packet_bin_write($contents);
++		packet_flush();
++		packet_txt_write("status=success");
++		packet_flush();
++	} else {
++		die "bad command '$command'";
++	}
 +}
-+
-+static void odb_helper_load_have(struct odb_helper *o)
-+{
-+	if (o->have_valid)
-+		return;
-+	o->have_valid = 1;
-+
-+	if (o->script_mode)
-+		have_object_script(o);
- 
- 	qsort(o->have, o->have_nr, sizeof(*o->have), odb_helper_object_cmp);
- }
-diff --git a/odb-helper.h b/odb-helper.h
-index fbb6d333ee..ee2b09b182 100644
---- a/odb-helper.h
-+++ b/odb-helper.h
-@@ -15,6 +15,7 @@ struct odb_helper {
- 	const char *name;
- 	const char *cmd;
- 	unsigned int supported_capabilities;
-+	int script_mode;
- 
- 	struct odb_helper_object {
- 		unsigned char sha1[20];
 -- 
 2.14.1.576.g3f707d88cd
 
