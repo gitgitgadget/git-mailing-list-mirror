@@ -2,98 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 30EBF20281
-	for <e@80x24.org>; Sat, 16 Sep 2017 05:00:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 817CB20281
+	for <e@80x24.org>; Sat, 16 Sep 2017 06:02:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751233AbdIPFAx (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Sep 2017 01:00:53 -0400
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:49255 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751183AbdIPFAw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Sep 2017 01:00:52 -0400
-Received: by mail-pf0-f169.google.com with SMTP id l188so2416104pfc.6
-        for <git@vger.kernel.org>; Fri, 15 Sep 2017 22:00:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:date:mime-version
-         :content-transfer-encoding;
-        bh=URhzLBNC/huUOSdjfW4UHcZZR7frE2wPUyuM2rfTBtE=;
-        b=UjyD+AZJFSFycDDuE80F/oG651sDcHSlXadju3ZnGMOSYV6vbiOOPv/fDhR/DsY7wx
-         xewo55ftM8jSlTHPWDWpoQNjm9cnEz4uL4KNdIw+S8g0wv6KPyP9es1PkjZsQhc+o7nE
-         XkVtsO6qORsnMSPcFuo1kv7VtejPHh7OS1Dmrm0dtQHDmP5i7pmrtSdgya0Si3yBqoUF
-         0EQSt9PrSpzVp5Vo0BCk1sSEWCQT1GQDqOK44e2spdcImNG8mmVbhc3x6/GcIkE/RJc1
-         YwtRzlyWAANHR8xgVZl2gMo64cmPMoRgGiJAn9DoJ+oaU0XgBAr+T60voZ92nO3ALqjz
-         kaIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:date:mime-version
-         :content-transfer-encoding;
-        bh=URhzLBNC/huUOSdjfW4UHcZZR7frE2wPUyuM2rfTBtE=;
-        b=uATAn8IY0b+ex262pNACvLrqd7GYJO7GsOM8d0IrSrGN3DQp/c5fvkB7KxfegSZIKx
-         TVNbpl4Ej140FHZUSODWYZZEGOoHd0NLwkrKmRj2jU66htpboQ4c8FsoJUg+vRGhhxbW
-         91tM2Ym0ypNTdA3YzxyxDo7sbDMnlkDb23u3Wp3e5FeTdggZenHPUe1NzqSaAk6bIAWX
-         jKk3K2pvll0Qqa0gO5gMl/GQRwPcyOqvSJ/8YyrVUbeZ2sufBzk9OpshDg0hzhkxEX9/
-         4jp+2qjulB9Nl4NApGkMzPVngT9XsnMSKwaKV1BXoW6UOFRt6jHpJR9B34nt+VvVZfo2
-         Oujw==
-X-Gm-Message-State: AHPjjUiV2t4Pjbju0FQ+X8DBMM+m7Um8hTHbfPtsHUxS5HxW6timqGzn
-        61km0i6KgFbvByi5PQo=
-X-Google-Smtp-Source: ADKCNb4F1IiOlz+8W0EXYRlOK15NB8p3m1NGFbrNT9chSCsw5rTHK+vgQpoxfDFfSSoa0aXcKFXeFQ==
-X-Received: by 10.99.186.3 with SMTP id k3mr26381026pgf.149.1505538051698;
-        Fri, 15 Sep 2017 22:00:51 -0700 (PDT)
-Received: from unique-pc ([14.102.72.146])
-        by smtp.googlemail.com with ESMTPSA id q73sm5306367pfl.147.2017.09.15.22.00.48
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 15 Sep 2017 22:00:51 -0700 (PDT)
-Message-ID: <1505538043.21890.4.camel@gmail.com>
-Subject: Are the 'How to' documents present as man pages?
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="ISO-8859-15"
-Date:   Sat, 16 Sep 2017 10:30:43 +0530
-Mime-Version: 1.0
-X-Mailer: Evolution 3.22.6-1 
-Content-Transfer-Encoding: 8bit
-X-Cyberoam-smtpxy-version: 1.0.6.3
-X-Cyberoam-AV-Policy: default
-X-CTCH-Error: Unable to connect local ctasd
+        id S1750909AbdIPGCQ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Sep 2017 02:02:16 -0400
+Received: from p3plsmtpa12-07.prod.phx3.secureserver.net ([68.178.252.236]:57859
+        "EHLO p3plsmtpa12-07.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750779AbdIPGCP (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 16 Sep 2017 02:02:15 -0400
+X-Greylist: delayed 438 seconds by postgrey-1.27 at vger.kernel.org; Sat, 16 Sep 2017 02:02:15 EDT
+Received: from jessie.local ([212.149.203.197])
+        by :SMTPAUTH: with SMTP
+        id t63YdElFpa1gVt63cdDG0j; Fri, 15 Sep 2017 22:54:26 -0700
+From:   Max Kirillov <max@max630.net>
+To:     Jacob Keller <jacob.keller@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Max Kirillov <max@max630.net>, git@vger.kernel.org
+Subject: [PATCH] describe: fix matching to actually match all patterns
+Date:   Sat, 16 Sep 2017 08:53:44 +0300
+Message-Id: <20170916055344.31866-1-max@max630.net>
+X-Mailer: git-send-email 2.11.0.1122.gc3fec58.dirty
+X-CMAE-Envelope: MS4wfItPVt4WMNSid4lZeU7HuLwHcl7q40RWckVtDt8nzd/A08CUPppEM6xouMIixTiiH5aYLB8v1Y0oZ35rKEhzBywXr9zjVTQ8JnZgrVFYG+VtfrqCJkd8
+ tenECrjwAYZmT+iqLK27JcKxoydGNPAtQ1qKynGK+SeO/zLr8h9ALZ6tHzkMPW8HqkeF+5Fh+UFanG8K5yBXPlqn/q/zIzqnzj1ZpKIlOGTT4SnrH0mKUQPc
+ zEwmS0NllSw/i3I9IxnIEA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I was reading the 'git revert' documentation and found the following
-line in it,
+`git describe --match` with multiple patterns matches only first pattern.
+If it fails, next patterns are not tried.
 
+Fix it, add test cases and update existing test which has wrong
+expectation.
 
-    -m parent-number
-    --mainline parent-number
+Signed-off-by: Max Kirillov <max@max630.net>
+---
+ builtin/describe.c  | 9 ++++++---
+ t/t6120-describe.sh | 6 +++++-
+ 2 files changed, 11 insertions(+), 4 deletions(-)
 
-        ...
+diff --git a/builtin/describe.c b/builtin/describe.c
+index 89ea1cdd60..94ff2fba0b 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -155,18 +155,21 @@ static int get_name(const char *path, const struct object_id *oid, int flag, voi
+ 	 * pattern.
+ 	 */
+ 	if (patterns.nr) {
++		int found = 0;
+ 		struct string_list_item *item;
+ 
+ 		if (!is_tag)
+ 			return 0;
+ 
+ 		for_each_string_list_item(item, &patterns) {
+-			if (!wildmatch(item->string, path + 10, 0))
++			if (!wildmatch(item->string, path + 10, 0)) {
++				found = 1;
+ 				break;
++			}
++		}
+ 
+-			/* If we get here, no pattern matched. */
++		if (!found)
+ 			return 0;
+-		}
+ 	}
+ 
+ 	/* Is it annotated? */
+diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
+index aa74eb8f0d..25110ea55d 100755
+--- a/t/t6120-describe.sh
++++ b/t/t6120-describe.sh
+@@ -182,10 +182,14 @@ check_describe "test2-lightweight-*" --tags --match="test2-*"
+ 
+ check_describe "test2-lightweight-*" --long --tags --match="test2-*" HEAD^
+ 
+-check_describe "test1-lightweight-*" --long --tags --match="test1-*" --match="test2-*" HEAD^
++check_describe "test2-lightweight-*" --long --tags --match="test1-*" --match="test2-*" HEAD^
+ 
+ check_describe "test2-lightweight-*" --long --tags --match="test1-*" --no-match --match="test2-*" HEAD^
+ 
++check_describe "test1-lightweight-*" --long --tags --match="test1-*" --match="test3-*" HEAD
++
++check_describe "test1-lightweight-*" --long --tags --match="test3-*" --match="test1-*" HEAD
++
+ test_expect_success 'name-rev with exact tags' '
+ 	echo A >expect &&
+ 	tag_object=$(git rev-parse refs/tags/A) &&
+-- 
+2.11.0.1122.gc3fec58.dirty
 
-        See the revert-a-faulty-merge How-To[1] for more details.
-
-
-It says that the 'How-To' is present in the first section of the man
-page. I tried to access it to get this,
-
-
-    $ man 1 revert-a-faulty-merge How-To
-    No manual entry for revert-a-faulty-merge in section 1
-    No manual entry for How-To in section 1
-
-
-That made me wonder whether the 'How-To' documents were present as man
-pages and were installed when git is installed.
-
-In case they are, how should I be accessing them? In case they aren't
-doesn't the above seem misleading?
-
-
-    -- 
-    Kaartic
