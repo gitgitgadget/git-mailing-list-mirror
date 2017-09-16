@@ -2,141 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5EE6F20A21
-	for <e@80x24.org>; Sat, 16 Sep 2017 07:49:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B880420A25
+	for <e@80x24.org>; Sat, 16 Sep 2017 08:07:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751050AbdIPHsr (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Sep 2017 03:48:47 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:36745 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750796AbdIPHsq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Sep 2017 03:48:46 -0400
-Received: by mail-wm0-f66.google.com with SMTP id r136so4470968wmf.3
-        for <git@vger.kernel.org>; Sat, 16 Sep 2017 00:48:45 -0700 (PDT)
+        id S1751253AbdIPIHt (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Sep 2017 04:07:49 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:37567 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751170AbdIPIHp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Sep 2017 04:07:45 -0400
+Received: by mail-wr0-f194.google.com with SMTP id u48so2369699wrf.4
+        for <git@vger.kernel.org>; Sat, 16 Sep 2017 01:07:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=95h2m1J4956CqO/xu7t+7TuZK1OopUD8Lm+QsDK8EY0=;
-        b=OAkH1FeCEYwryAgnOGSo+sRgGImE353Q/NoQvol6Jx9KtQxKfyxKEEjuZmk6phOLVb
-         OMIWcztH/pyYBmBBT744orSF7gSbzfo9/uJ1h8CTeaGpwtaACwypRHIZeHkEQk7JPZxV
-         wMO0F5LUp49sYT66jZWzGXLsmMpIRVoNdxTe0n9RtwYvFLCfo1/9+BNzh1Oo0T7YmJ0W
-         IDaNM3P9RPxxm8/BXU3Qh7qToBDqU8dnDB1rUgQyU8nLawp44chCvxudYc3eQQAb/cZK
-         6a11OzhOqpDzTCp1GKi9FQgJFz5D69c/C3VxAqYIeojH+dOcvSqS/BijCdHhQqLZ0wXw
-         Xi2A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=Bv0S1hAoxdtYVu5hsHeZfIOJ3VoqogBEBXglCCqOktM=;
+        b=EvtDvb9uOQjQ7EKUPZN5QRjcMXYhiRJLPIBYReHdC0TX2rtDjdRvlgTt5zox5RYRVA
+         sZyPIf1glnaGexcIYk5Kht7unk/UCYI3VIM0pyBqqR8TONf4DwGmRduQCFu949NTyXru
+         nrculBdl1YRb3zWAHWzAg/VFtGR3hjuU4gGfL/NxYQnw+W7TSkPV2DTqi6Zqw9l6fwXA
+         OXIsGoneqWOcwZelZ6++YR5TyuiO72ebu1uql4HY9o8+0MNiKk4iiDqZlefTZqSwiahW
+         QZrZkx7UfEtjfgjtg45jUABnOomcetjo7iuMsjg5A9eLcGPxpJgiVi/oFSTRgUSyIxhR
+         KZKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=95h2m1J4956CqO/xu7t+7TuZK1OopUD8Lm+QsDK8EY0=;
-        b=K7ZEWOx5r7/WSCnyjnYutWwHtJvvI6pI6lGh+mUPjifTM/PZZeE8kwf0RmN7xLUu3m
-         g9VIJjVryGOlz9ZJWj3l3VeDPnoSQXjCCnTwYHqURS1BWE7Rpk8z88Df67icNpC5ePG7
-         zJx0Ttil/+qJiBd/KpsdzfUArHu3P6dqtqT2sP62O2c1yYZSdaYLiqy06gGRJnHBMgbe
-         MJkYcgudPdGfbcodVQHkKInYLm7Hm9p3I08Ze0YLqhG3znDDJm34eeAsIzuvwhWX3AyI
-         HhfaYhuJCXc+wGTK4jP5AJ0ZgsnooLjwoIpwnw32FzAuo8mmKOoUGnRostNKUVB6zywK
-         b+VQ==
-X-Gm-Message-State: AHPjjUjxQW/yjoyFlDPj3w9CKjVdqry6y7GfaDi8sZKhaHyrl6QLdK2Q
-        2miPb0DMNJovagLkTVvUd+yvAnts+fqDwbQmGrA=
-X-Google-Smtp-Source: AOwi7QAxno8JqBAV1xlcA8yiGDgKo2cFN+p9PNvi4OoZPZy+5FX3M4RfCgNpKDEy2T7ZwoqaaRZyOF4E9e3iWfXCxgs=
-X-Received: by 10.80.139.65 with SMTP id l59mr6534945edl.187.1505548125014;
- Sat, 16 Sep 2017 00:48:45 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.80.146.185 with HTTP; Sat, 16 Sep 2017 00:48:24 -0700 (PDT)
-In-Reply-To: <20170916055344.31866-1-max@max630.net>
-References: <20170916055344.31866-1-max@max630.net>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Sat, 16 Sep 2017 00:48:24 -0700
-Message-ID: <CA+P7+xqQQAd4X9PjjbRy7RTZVO6BqomQ2uiRXZ6pCSb-z+RC6Q@mail.gmail.com>
-Subject: Re: [PATCH] describe: fix matching to actually match all patterns
-To:     Max Kirillov <max@max630.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=Bv0S1hAoxdtYVu5hsHeZfIOJ3VoqogBEBXglCCqOktM=;
+        b=g0oFwS4dB7TUNO+b16Oow8Hst5fLSQNMJzDN+aVlrXWD3lGn/1I5WsGmkaH8c7DWDl
+         1/e5IydpoUZAU44BBgQeq6DPnIEirjSChj6mFARH/9t3ndgUHx18eJparpb7U3/5B2UV
+         hg8dCdmSEzahwh5jCCjKUPWWhBwuJ1tcL9TCgh1xn4wbMfu5guhp3tVl5/wa8s8Tkpvs
+         8swmfiJLyECFLTQqbd8FiCsRE5FQ6hYDIg27PwARtImD6Q1xnORREUJ5MBualCBBgBwM
+         bCn3b18HT8LksSLmmZjhv3Gd9oUk3lZMjOruptVk5bqyzLDHtCIeK3UkRDPOBwdNYryD
+         Wmcw==
+X-Gm-Message-State: AHPjjUg6+d6Rko9WrGeuuxwR/RpwC9jaagoW3wbSl9YGrfmpPcNMHpNp
+        V+w7QS4UkiHVXnj0
+X-Google-Smtp-Source: ADKCNb7Ex2cMR7JZVGIUgnj9R9CaL2RewmZ8rlqVFQhcDPAdoj/If/OSaqBQbSxRhFoqr60XulMsEQ==
+X-Received: by 10.223.177.18 with SMTP id l18mr22676841wra.167.1505549263657;
+        Sat, 16 Sep 2017 01:07:43 -0700 (PDT)
+Received: from localhost.localdomain (sud35-h04-89-95-107-230.dsl.sta.abo.bbox.fr. [89.95.107.230])
+        by smtp.gmail.com with ESMTPSA id l126sm2814641wmd.1.2017.09.16.01.07.42
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 16 Sep 2017 01:07:42 -0700 (PDT)
+From:   Christian Couder <christian.couder@gmail.com>
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v6 01/40] builtin/clone: get rid of 'value' strbuf
+Date:   Sat, 16 Sep 2017 10:06:52 +0200
+Message-Id: <20170916080731.13925-2-chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.14.1.576.g3f707d88cd
+In-Reply-To: <20170916080731.13925-1-chriscool@tuxfamily.org>
+References: <20170916080731.13925-1-chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 15, 2017 at 10:53 PM, Max Kirillov <max@max630.net> wrote:
-> `git describe --match` with multiple patterns matches only first pattern.
-> If it fails, next patterns are not tried.
->
-> Fix it, add test cases and update existing test which has wrong
-> expectation.
->
-> Signed-off-by: Max Kirillov <max@max630.net>
-> ---
->  builtin/describe.c  | 9 ++++++---
->  t/t6120-describe.sh | 6 +++++-
->  2 files changed, 11 insertions(+), 4 deletions(-)
->
-> diff --git a/builtin/describe.c b/builtin/describe.c
-> index 89ea1cdd60..94ff2fba0b 100644
-> --- a/builtin/describe.c
-> +++ b/builtin/describe.c
-> @@ -155,18 +155,21 @@ static int get_name(const char *path, const struct object_id *oid, int flag, voi
->          * pattern.
->          */
->         if (patterns.nr) {
-> +               int found = 0;
->                 struct string_list_item *item;
->
->                 if (!is_tag)
->                         return 0;
->
->                 for_each_string_list_item(item, &patterns) {
-> -                       if (!wildmatch(item->string, path + 10, 0))
-> +                       if (!wildmatch(item->string, path + 10, 0)) {
-> +                               found = 1;
->                                 break;
+This makes the code simpler by removing a few lines, and getting
+rid of one variable.
 
-I see what was wrong. The "if we got here" check is inside the loop,
-so after the first wildmatch we never loop again. The fix is to add an
-additional variable to store when we found something and exit the
-loop, and ensure that we actually did the whole loop without finding a
-match.
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ builtin/clone.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-Thanks for the fix and proper tests!
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 8d11b570a1..dcd5b878f1 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -875,7 +875,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	const struct ref *our_head_points_at;
+ 	struct ref *mapped_refs;
+ 	const struct ref *ref;
+-	struct strbuf key = STRBUF_INIT, value = STRBUF_INIT;
++	struct strbuf key = STRBUF_INIT;
+ 	struct strbuf branch_top = STRBUF_INIT, reflog_msg = STRBUF_INIT;
+ 	struct transport *transport = NULL;
+ 	const char *src_ref_prefix = "refs/heads/";
+@@ -1040,7 +1040,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		strbuf_addf(&branch_top, "refs/remotes/%s/", option_origin);
+ 	}
+ 
+-	strbuf_addf(&value, "+%s*:%s*", src_ref_prefix, branch_top.buf);
+ 	strbuf_addf(&key, "remote.%s.url", option_origin);
+ 	git_config_set(key.buf, repo);
+ 	strbuf_reset(&key);
+@@ -1054,10 +1053,9 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	if (option_required_reference.nr || option_optional_reference.nr)
+ 		setup_reference();
+ 
+-	fetch_pattern = value.buf;
++	fetch_pattern = xstrfmt("+%s*:%s*", src_ref_prefix, branch_top.buf);
+ 	refspec = parse_fetch_refspec(1, &fetch_pattern);
+-
+-	strbuf_reset(&value);
++	free((char *)fetch_pattern);
+ 
+ 	remote = remote_get(option_origin);
+ 	transport = transport_get(remote, remote->url[0]);
+@@ -1196,7 +1194,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	strbuf_release(&reflog_msg);
+ 	strbuf_release(&branch_top);
+ 	strbuf_release(&key);
+-	strbuf_release(&value);
+ 	junk_mode = JUNK_LEAVE_ALL;
+ 
+ 	free(refspec);
+-- 
+2.14.1.576.g3f707d88cd
 
-Regards,
-Jake
-
-
-> +                       }
-> +               }
->
-> -                       /* If we get here, no pattern matched. */
-> +               if (!found)
->                         return 0;
-> -               }
->         }
->
->         /* Is it annotated? */
-> diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-> index aa74eb8f0d..25110ea55d 100755
-> --- a/t/t6120-describe.sh
-> +++ b/t/t6120-describe.sh
-> @@ -182,10 +182,14 @@ check_describe "test2-lightweight-*" --tags --match="test2-*"
->
->  check_describe "test2-lightweight-*" --long --tags --match="test2-*" HEAD^
->
-> -check_describe "test1-lightweight-*" --long --tags --match="test1-*" --match="test2-*" HEAD^
-> +check_describe "test2-lightweight-*" --long --tags --match="test1-*" --match="test2-*" HEAD^
->
->  check_describe "test2-lightweight-*" --long --tags --match="test1-*" --no-match --match="test2-*" HEAD^
->
-> +check_describe "test1-lightweight-*" --long --tags --match="test1-*" --match="test3-*" HEAD
-> +
-> +check_describe "test1-lightweight-*" --long --tags --match="test3-*" --match="test1-*" HEAD
-> +
->  test_expect_success 'name-rev with exact tags' '
->         echo A >expect &&
->         tag_object=$(git rev-parse refs/tags/A) &&
-> --
-> 2.11.0.1122.gc3fec58.dirty
->
