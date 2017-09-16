@@ -2,94 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0631120281
-	for <e@80x24.org>; Fri, 15 Sep 2017 22:00:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4626920281
+	for <e@80x24.org>; Sat, 16 Sep 2017 03:29:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751316AbdIOWAG convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 15 Sep 2017 18:00:06 -0400
-Received: from mxo2.dft.dmz.twosigma.com ([208.77.212.182]:56083 "EHLO
-        mxo2.dft.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751213AbdIOWAF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Sep 2017 18:00:05 -0400
-Received: from localhost (localhost [127.0.0.1])
-        by mxo2.dft.dmz.twosigma.com (Postfix) with ESMTP id 64D0F10005B;
-        Fri, 15 Sep 2017 22:00:04 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at twosigma.com
-Received: from mxo2.dft.dmz.twosigma.com ([127.0.0.1])
-        by localhost (mxo2.dft.dmz.twosigma.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id 3ek7L-tEPXbY; Fri, 15 Sep 2017 22:00:04 +0000 (GMT)
-Received: from exmbdft5.ad.twosigma.com (exmbdft5.ad.twosigma.com [172.22.1.56])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mxo2.dft.dmz.twosigma.com (Postfix) with ESMTPS id 535608002E;
-        Fri, 15 Sep 2017 22:00:04 +0000 (GMT)
-Received: from exmbdft7.ad.twosigma.com (172.22.2.43) by
- exmbdft5.ad.twosigma.com (172.22.1.56) with Microsoft SMTP Server (TLS) id
- 15.0.1263.5; Fri, 15 Sep 2017 22:00:04 +0000
-Received: from exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955]) by
- exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955%19]) with mapi id
- 15.00.1263.000; Fri, 15 Sep 2017 22:00:03 +0000
-From:   David Turner <David.Turner@twosigma.com>
-To:     'Ben Peart' <benpeart@microsoft.com>
-CC:     "avarab@gmail.com" <avarab@gmail.com>,
-        "christian.couder@gmail.com" <christian.couder@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "johannes.schindelin@gmx.de" <johannes.schindelin@gmx.de>,
-        "pclouds@gmail.com" <pclouds@gmail.com>,
-        "peff@peff.net" <peff@peff.net>
-Subject: RE: [PATCH v6 10/12] fsmonitor: add test cases for fsmonitor
- extension
-Thread-Topic: [PATCH v6 10/12] fsmonitor: add test cases for fsmonitor
- extension
-Thread-Index: AQHTLlfecTYo8c+6f0G9yk1v0OUKpKK2aI1A
-Date:   Fri, 15 Sep 2017 22:00:03 +0000
-Message-ID: <dc1506689d3d4639b56f0489e4219054@exmbdft7.ad.twosigma.com>
-References: <20170610134026.104552-1-benpeart@microsoft.com>
- <20170915192043.4516-1-benpeart@microsoft.com>
- <20170915192043.4516-11-benpeart@microsoft.com>
-In-Reply-To: <20170915192043.4516-11-benpeart@microsoft.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [172.20.60.10]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
+        id S1751253AbdIPD32 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Sep 2017 23:29:28 -0400
+Received: from mail-it0-f54.google.com ([209.85.214.54]:50726 "EHLO
+        mail-it0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751211AbdIPD32 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Sep 2017 23:29:28 -0400
+Received: by mail-it0-f54.google.com with SMTP id y126so4309105itb.5
+        for <git@vger.kernel.org>; Fri, 15 Sep 2017 20:29:28 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=qHKU35URkHU+dkPILCudC/JXCTxLZWS4fuH4PKMneO0=;
+        b=lwAX+djOLhcYiNDCBHYoZL/MXRT6DYx0Zf9UrVYhzoyQ/+hy/SMtZWuh7kNhSHFOgm
+         gr6byNa5nvTcc0ygAF+5+pallSEgQ4USgtudhZVBupNZ4Q5D6arcvRppnZd8OnxRPd/L
+         Z56Rhj/xMajvWhgBex3vsjZADLupo88rXQGiqjLzAkwDaEGIDcJNj2BlD9eExvQTwsxB
+         C5oksw9jicY8M456yszCQT0b3TvsOOinJHqtA/58TdoG5vENf0Jq4D4FtuDlslL2R79/
+         cj33CEiAftoja2ODbjpCEeaSbYfwCwanXX8JBuoyQjZziPfODDC4U2xK1/MOi/jfeKmg
+         V1QA==
+X-Gm-Message-State: AHPjjUhz2xsaj7zzFzzYigoYTWuUYnF/E5lhtDkZWxXB95A179LM+nPM
+        ZDtWAuSBRFupzLUvhKN5aHVpeeLUCP5piwyuhtaMmA==
+X-Google-Smtp-Source: AOwi7QDffeqPEmMa1zf18t04pSobmbXSaW0qJSRCLJSilK6P1r5Wda1s9U98SDmaYtV7THTiAoWYlvh/ix94W8n6YBM=
+X-Received: by 10.36.4.151 with SMTP id 145mr9038731itb.33.1505532567441; Fri,
+ 15 Sep 2017 20:29:27 -0700 (PDT)
 MIME-Version: 1.0
+Received: by 10.107.166.140 with HTTP; Fri, 15 Sep 2017 20:29:06 -0700 (PDT)
+In-Reply-To: <20170915215303.GV27425@aiede.mtv.corp.google.com>
+References: <20170915170818.27390-1-jason@redhat.com> <20170915175248.GT27425@aiede.mtv.corp.google.com>
+ <CADzB+2mxyXcROYx72tac8cUxBMxi=ZxUNQYxpUR1CZ43e-j9gA@mail.gmail.com> <20170915215303.GV27425@aiede.mtv.corp.google.com>
+From:   Jason Merrill <jason@redhat.com>
+Date:   Fri, 15 Sep 2017 23:29:06 -0400
+Message-ID: <CADzB+2mT=Ht5AQybp+44+PMbRrWXB4dPyTmsEgfVkOOujZYQxQ@mail.gmail.com>
+Subject: Re: [PATCH] Fix merge parent checking with svn.pushmergeinfo.
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org, Eric Wong <e@80x24.org>,
+        Aldy Hernandez <aldyh@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> -----Original Message-----
-> +dirty_repo () {
-> +	: >untracked &&
-> +	: >dir1/untracked &&
-> +	: >dir2/untracked &&
-> +	echo 1 >modified &&
-> +	echo 2 >dir1/modified &&
-> +	echo 3 >dir2/modified &&
-> +	echo 4 >new &&
-> +	echo 5 >dir1/new &&
-> +	echo 6 >dir2/new
+On Fri, Sep 15, 2017 at 5:53 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Jason Merrill wrote:
+>> On Fri, Sep 15, 2017 at 1:52 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+>> > Jason Merrill wrote:
+>
+>>>> Subject: Fix merge parent checking with svn.pushmergeinfo.
+>>>>
+>>>> Without this fix, svn dcommit of a merge with svn.pushmergeinfo set would
+>>>> get error messages like "merge parent <X> for <Y> is on branch
+>>>> svn+ssh://gcc.gnu.org/svn/gcc/trunk, which is not under the git-svn root
+>>>> svn+ssh://jason@gcc.gnu.org/svn/gcc!"
+>>>>
+>>>> * git-svn.perl: Remove username from rooturl before comparing to branchurl.
+>>>>
+>>>> Signed-off-by: Jason Merrill <jason@redhat.com>
+>>>
+>>> Interesting.  Thanks for writing it.
+>>
+>> Thanks for the review.
+>>
+>>> Could there be a test for this to make sure this doesn't regress in
+>>> the future?  See t/t9151-svn-mergeinfo.sh for some examples.
+>>
+>> Hmm, I'm afraid figuring out how to write such a test would take
+>> longer than I can really spare for this issue.  There don't seem to be
+>> any svn+ssh tests currently.
+>
+> Well, could you give manual commands to allow me to reproduce the
+> problem?
+>
+> Then I'll translate them into a test. :)
 
-If I add an untracked file named dir3/untracked to dirty_repo
- (and write_integration_script), then "status doesn't detect 
-unreported modifications", below, fails.  Did I do something 
-wrong, or does this turn up a bug?
+Something like this:
 
-> +	test_expect_success "setup preloadIndex to $preload_val" '
-> +		git config core.preloadIndex $preload_val &&
-> +		if [ $preload_val -eq true ]
+git svn clone -s svn+ssh://user@host/repo
+git config svn.pushmergeinfo yes
+git checkout -b branch origin/branch
+git merge origin/trunk
+git svn dcommit
 
-"-eq" is for numeric equality in POSIX shell.  So this works if your 
-/bin/sh is bash but not if it's e.g. dash.  This happens twice more 
-below.  Use "=" instead.
+Thanks!
 
+> FWIW remove_username seems to be able to cope fine with an http://
+> URL.  t/lib-httpd.sh starts an http server with Subversion enabled,
+> as long as the envvar GIT_SVN_TEST_HTTPD is set to true.  Its address
+> is $svnrepo, which is an http URL (but I don't see a username in the
+> URL).  Does that help?
 
+I think the http transport handles the username separately, not in the URL.
+
+I would expect that a dummy ssh wrapper like some of the tests use
+would be sufficient, no need for an actual network connection.
+
+> Alternatively, does using rewrite-root as in t9151-svn-mergeinfo.sh
+> help?
+
+Hmm, I'm not sure how rewriteRoot would interact with this issue,
+whether it would be useful as a workaround or another problematic
+case.
+
+Jason
