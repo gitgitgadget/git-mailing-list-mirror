@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65F3720A21
-	for <e@80x24.org>; Sat, 16 Sep 2017 08:08:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E4E320A27
+	for <e@80x24.org>; Sat, 16 Sep 2017 08:08:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751447AbdIPII1 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Sep 2017 04:08:27 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:36014 "EHLO
+        id S1751453AbdIPIIa (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Sep 2017 04:08:30 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:35039 "EHLO
         mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751443AbdIPII0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Sep 2017 04:08:26 -0400
-Received: by mail-wm0-f67.google.com with SMTP id r136so4499109wmf.3
-        for <git@vger.kernel.org>; Sat, 16 Sep 2017 01:08:25 -0700 (PDT)
+        with ESMTP id S1751407AbdIPII1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Sep 2017 04:08:27 -0400
+Received: by mail-wm0-f67.google.com with SMTP id e64so4517451wmi.2
+        for <git@vger.kernel.org>; Sat, 16 Sep 2017 01:08:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=T1TJymogVo3e3SdToA8x0lNMdhq/ynCk3NTPNRp35Ys=;
-        b=ByADdrGEiAdWetnWA85e+uyUEiqLaPnZFbJtstup122qlIGhUO+dvjmAmwG25JyrCG
-         ssVGUNX7z9S8aTLe+5qTLiCC2l9MU3FywbL3nE/DAltjeM75YyN9lggvMo8vKcLsCqne
-         0c9Oa6nTn6NWnc8R0qhCFew1ZJbKGXl02thOCnpvhWeTh+BEImy3uw87tmagLL/fCe/B
-         rk6Kl+0ttrKbq9dnno9+CA6yej2hWI7UKkk0uVk/a1Baw0m2NYyEBIzkCxUm0C3+8mum
-         Rrzp89GdUwekBsbs0noSCzH3nN60yjRB5sfiA4XzKiecKLIo2AfniWheR46Z+wLcgop1
-         UorQ==
+        bh=j7YhnFmyXZUk2QPNnGUjjDfsBpKSyGnUlIe8x4v0X2w=;
+        b=W5hbse+y7W5a8Sa94jY/NObYvIbdZMSNukCqCDy1THgfgdGSfXcmQutI/x2KJvbWB5
+         1LVHVom55Jbq++04jKR0ntz0DbCsGKE28FWOHNFCiXDLB4BBn0vWj33PlJBeAwsd4MB5
+         gxNoE9jdKnvOAlhSmpBTo5kkdX4YV9t/qBlSyITOWapS3Dj2wksA07PG4r9rM5IdtdTc
+         8hZ816SDatgFkwD7tBaA6NofsZ+HcZe8W63T0KGSwy7jdhHUYVerjFUGOVOvYWMlQmvN
+         Ib17z8iQ9VnrX4f7bcsx1l1RZa9bwyqLfO+HKIXjYUGDpR6hPPMvL4sqlrLfoN6OWsGv
+         BRUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=T1TJymogVo3e3SdToA8x0lNMdhq/ynCk3NTPNRp35Ys=;
-        b=naQXMjr9CMuA8PBMXqYQutlQdkRjfO5B6twGcYN8j/S/YKe1twJK3DUarKi9zOszme
-         rCbQwIkAWIbMAWfH2zTEHAkCr7eJISZWw3yj8A16YZqt2+oJZB6xF7oOoq0cg5I1n5N4
-         Zkx1Q0zIq/sSQMxwezSX4+rPShnOrL7UUmK2BqMsZIOI0ZxejUsLfOxInfZmLroSgSOO
-         jy70iwkpXUHFrK3oIYiOsbHoMTITFziKT7mnp/Jgi+mCCIoMOG1d8w2/m7c1fXlkRfEP
-         r5efFZU8UZwLrsqK9ZYdSMScQv8kHPXqOuy0tyrzQBK92jRJ4yv9hFTlIdnkB+9zMKih
-         um9Q==
-X-Gm-Message-State: AHPjjUjtwZldhqZOkLFLgvrDPQch4m4PANt5MId2tsmk5nJlkMaiD6pK
-        P+CW0yn+tHOn59PRdIRlgLHTlg==
-X-Google-Smtp-Source: AOwi7QBnaJY7N00BVJZtvLFul9jLqZ4g2WWUSUWzX01xQXEJr5UehGi0ZxLu4Izt5iH+Qmx+L+yUeA==
-X-Received: by 10.28.186.135 with SMTP id k129mr4935079wmf.100.1505549304569;
-        Sat, 16 Sep 2017 01:08:24 -0700 (PDT)
+        bh=j7YhnFmyXZUk2QPNnGUjjDfsBpKSyGnUlIe8x4v0X2w=;
+        b=jBu7gMdV6gfE3e6DSk2bnntMar0aurijT8MUygTQIYI9suT7HwG2tyJSAu7FBndwwI
+         2H1ziwONFbPN9fvfo7AeyJG+ftVG9OmJ8/pFg6M60BDr8h6haGJDXUnr5DuCMhm0pByA
+         vQr/+a/UjrS1sx2tnRx17v5/ywNwu8lvb+VwuklCTb6mh0K+OZHNJ230z2zYV0td4RSn
+         TDHTcfIDRAS5h7qsYVg3DDW2i1fZzDzSuBs+c81j+2+bniR+z6Po36YWns9fN0vDd+qe
+         UnTJa5CbjR2BCFzP8tOGtc9fCbzGmDb5AyaY03loLoxWENf5VxwuBExRt39reBqqdHxG
+         dh+Q==
+X-Gm-Message-State: AHPjjUgkj8hjLGl7EKrikAfdwA0kC3VclTr0BHl21h3OAUSsrcaadPkt
+        OBZnC/Y2xlBH41Jlw+yIyoOK1w==
+X-Google-Smtp-Source: AOwi7QAqaW77npRxzxo3BDPjLYGKQTowr4vn35ciftMB2QekktyYKzvxPFzfWU6trlS5L2g8IOyZvg==
+X-Received: by 10.28.151.200 with SMTP id z191mr5102183wmd.115.1505549306007;
+        Sat, 16 Sep 2017 01:08:26 -0700 (PDT)
 Received: from localhost.localdomain (sud35-h04-89-95-107-230.dsl.sta.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id l126sm2814641wmd.1.2017.09.16.01.08.23
+        by smtp.gmail.com with ESMTPSA id l126sm2814641wmd.1.2017.09.16.01.08.24
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 16 Sep 2017 01:08:23 -0700 (PDT)
+        Sat, 16 Sep 2017 01:08:25 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v6 29/40] odb-helper: add put_object_process()
-Date:   Sat, 16 Sep 2017 10:07:20 +0200
-Message-Id: <20170916080731.13925-30-chriscool@tuxfamily.org>
+Subject: [PATCH v6 30/40] Add t0470 to test passing raw objects
+Date:   Sat, 16 Sep 2017 10:07:21 +0200
+Message-Id: <20170916080731.13925-31-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.14.1.576.g3f707d88cd
 In-Reply-To: <20170916080731.13925-1-chriscool@tuxfamily.org>
 References: <20170916080731.13925-1-chriscool@tuxfamily.org>
@@ -70,113 +70,217 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This adds the infrastructure to send objects to a sub-process
-handling the communication with an external odb.
-
-For now we only handle sending raw blobs using the 'put_raw_obj'
-instruction.
-
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- odb-helper.c | 75 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 72 insertions(+), 3 deletions(-)
+ t/t0470-read-object-http-e-odb.sh | 109 ++++++++++++++++++++++++++++++++++++++
+ t/t0470/read-object-plain         |  83 +++++++++++++++++++++++++++++
+ 2 files changed, 192 insertions(+)
+ create mode 100755 t/t0470-read-object-http-e-odb.sh
+ create mode 100755 t/t0470/read-object-plain
 
-diff --git a/odb-helper.c b/odb-helper.c
-index 3148bcfa15..356f6172d8 100644
---- a/odb-helper.c
-+++ b/odb-helper.c
-@@ -433,6 +433,58 @@ static int get_object_process(struct odb_helper *o, const unsigned char *sha1, i
- 					  o->cmd, cur_cap);
- }
- 
-+static int send_put_packets(struct object_process *entry,
-+			    const unsigned char *sha1,
-+			    const void *buf,
-+			    size_t len,
-+			    struct strbuf *status)
-+{
-+	struct child_process *process = &entry->subprocess.process;
-+	int err = packet_write_fmt_gently(process->in, "command=put_raw_obj\n");
-+	if (err)
-+		return err;
+diff --git a/t/t0470-read-object-http-e-odb.sh b/t/t0470-read-object-http-e-odb.sh
+new file mode 100755
+index 0000000000..774528c04f
+--- /dev/null
++++ b/t/t0470-read-object-http-e-odb.sh
+@@ -0,0 +1,109 @@
++#!/bin/sh
 +
-+	err = packet_write_fmt_gently(process->in, "sha1=%s\n", sha1_to_hex(sha1));
-+	if (err)
-+		return err;
++test_description='tests for read-object process passing plain objects to an HTTPD server'
 +
-+	err = packet_write_fmt_gently(process->in, "size=%"PRIuMAX"\n", len);
-+	if (err)
-+		return err;
++. ./test-lib.sh
 +
-+	err = packet_write_fmt_gently(process->in, "kind=blob\n");
-+	if (err)
-+		return err;
++# If we don't specify a port, the current test number will be used
++# which will not work as it is less than 1024, so it can only be used by root.
++LIB_HTTPD_PORT=$(expr ${this_test#t} + 12000)
 +
-+	err = packet_flush_gently(process->in);
-+	if (err)
-+		return err;
++. "$TEST_DIRECTORY"/lib-httpd.sh
 +
-+	err = write_packetized_from_buf(buf, len, process->in);
-+	if (err)
-+		return err;
++start_httpd apache-e-odb.conf
 +
-+	return check_object_process_status(process->out, status);
-+}
++PATH="$PATH:$TEST_DIRECTORY/t0470"
 +
-+static int put_object_process(struct odb_helper *o,
-+			      const void *buf, size_t len,
-+			      const char *type, unsigned char *sha1)
-+{
-+	int err;
-+	struct object_process *entry;
-+	struct strbuf status = STRBUF_INIT;
++# odb helper script must see this
++export HTTPD_URL
 +
-+	entry = launch_object_process(o, ODB_HELPER_CAP_PUT_RAW_OBJ);
-+	if (!entry)
-+		return -1;
++HELPER="read-object-plain"
 +
-+	err = send_put_packets(entry, sha1, buf, len, &status);
++test_expect_success 'setup repo with a root commit' '
++	test_commit zero
++'
 +
-+	return check_object_process_error(err, status.buf, entry, o->cmd,
-+					  ODB_HELPER_CAP_PUT_RAW_OBJ);
-+}
++test_expect_success 'setup another repo from the first one' '
++	git init other-repo &&
++	(cd other-repo &&
++	 git remote add origin .. &&
++	 git pull origin master &&
++	 git checkout master &&
++	 git log)
++'
 +
- struct odb_helper *odb_helper_new(const char *name, int namelen)
- {
- 	struct odb_helper *o;
-@@ -904,9 +956,9 @@ int odb_helper_get_object(struct odb_helper *o,
- 	return res;
- }
- 
--int odb_helper_put_object(struct odb_helper *o,
--			  const void *buf, size_t len,
--			  const char *type, unsigned char *sha1)
-+static int put_raw_object_script(struct odb_helper *o,
-+				 const void *buf, size_t len,
-+				 const char *type, unsigned char *sha1)
- {
- 	struct odb_helper_cmd cmd;
- 
-@@ -932,3 +984,20 @@ int odb_helper_put_object(struct odb_helper *o,
- 	odb_helper_finish(o, &cmd);
- 	return 0;
- }
++test_expect_success 'setup the helper in the root repo' '
++	git config odb.magic.subprocessCommand "$HELPER"
++'
 +
-+int odb_helper_put_object(struct odb_helper *o,
-+			  const void *buf, size_t len,
-+			  const char *type, unsigned char *sha1)
-+{
-+	int res;
-+	uint64_t start = getnanotime();
++UPLOADFILENAME="hello_apache_upload.txt"
 +
-+	if (o->script_mode)
-+		res = put_raw_object_script(o, buf, len, type, sha1);
-+	else
-+		res = put_object_process(o, buf, len, type, sha1);
++UPLOAD_URL="$HTTPD_URL/upload/?sha1=$UPLOADFILENAME&size=123&type=blob"
 +
-+	trace_performance_since(start, "odb_helper_put_object");
++test_expect_success 'can upload a file' '
++	echo "Hello Apache World!" >hello_to_send.txt &&
++	echo "How are you?" >>hello_to_send.txt &&
++	curl --data-binary @hello_to_send.txt --include "$UPLOAD_URL" >out_upload
++'
 +
-+	return res;
++LIST_URL="$HTTPD_URL/list/"
++
++test_expect_success 'can list uploaded files' '
++	curl --include "$LIST_URL" >out_list &&
++	grep "$UPLOADFILENAME" out_list
++'
++
++test_expect_success 'can delete uploaded files' '
++	curl --data "delete" --include "$UPLOAD_URL&delete=1" >out_delete &&
++	curl --include "$LIST_URL" >out_list2 &&
++	! grep "$UPLOADFILENAME" out_list2
++'
++
++FILES_DIR="httpd/www/files"
++
++test_expect_success 'new blobs are transfered to the http server' '
++	test_commit one &&
++	hash1=$(git ls-tree HEAD | grep one.t | cut -f1 | cut -d\  -f3) &&
++	echo "$hash1-4-blob" >expected &&
++	ls "$FILES_DIR" >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'blobs can be retrieved from the http server' '
++	git cat-file blob "$hash1" &&
++	git log -p >expected
++'
++
++test_expect_success 'update other repo from the first one' '
++	(cd other-repo &&
++	 git fetch origin "refs/odbs/magic/*:refs/odbs/magic/*" &&
++	 test_must_fail git cat-file blob "$hash1" &&
++	 git config odb.magic.subprocesscommand "$HELPER" &&
++	 git cat-file blob "$hash1" &&
++	 git pull origin master)
++'
++
++test_expect_success 'local clone from the first repo' '
++	mkdir my-clone &&
++	(cd my-clone &&
++	 git clone .. . &&
++	 git cat-file blob "$hash1")
++'
++
++test_expect_success 'no-local clone from the first repo fails' '
++	mkdir my-other-clone &&
++	(cd my-other-clone &&
++	 test_must_fail git clone --no-local .. .) &&
++	rm -rf my-other-clone
++'
++
++test_expect_success 'no-local clone from the first repo with helper succeeds' '
++	mkdir my-other-clone &&
++	(cd my-other-clone &&
++	 git clone -c odb.magic.subprocessCommand="$HELPER" --no-local .. .) &&
++	rm -rf my-other-clone
++'
++
++stop_httpd
++
++test_done
+diff --git a/t/t0470/read-object-plain b/t/t0470/read-object-plain
+new file mode 100755
+index 0000000000..918e7b00b5
+--- /dev/null
++++ b/t/t0470/read-object-plain
+@@ -0,0 +1,83 @@
++#!/usr/bin/perl
++#
++
++use 5.008;
++use lib (split(/:/, $ENV{GITPERLLIB}));
++use strict;
++use warnings;
++use Git::Packet;
++use LWP::UserAgent;
++use HTTP::Request::Common;
++
++packet_initialize("git-read-object", 1);
++
++packet_read_and_check_capabilities("get_raw_obj", "put_raw_obj");
++packet_write_capabilities("get_raw_obj", "put_raw_obj");
++
++my $http_url = $ENV{HTTPD_URL};
++
++while (1) {
++	my ($res, $command) = packet_txt_read();
++
++	if ( $res == -1 ) {
++		exit 0;
++	}
++
++	$command =~ s/^command=//;
++
++	if ( $command eq "init" ) {
++		packet_bin_read();
++
++		packet_txt_write("status=success");
++		packet_flush();
++	} elsif ( $command eq "get_raw_obj" ) {
++		my ($sha1) = packet_txt_read() =~ /^sha1=([0-9a-f]{40})$/;
++		packet_bin_read();
++
++		my $get_url = $http_url . "/list/?sha1=" . $sha1;
++
++		my $userAgent = LWP::UserAgent->new();
++
++		my $response = $userAgent->get( $get_url );
++
++		if ($response->is_error) {
++		    packet_txt_write("size=0");
++		    packet_txt_write("kind=none");	    
++		    packet_txt_write("status=notfound");
++		} else {
++		    packet_txt_write("size=" . length($response->content));
++		    packet_txt_write("kind=blob");
++		    packet_bin_write($response->content);
++		    packet_flush();
++		    packet_txt_write("status=success");
++		}
++
++		packet_flush();
++	} elsif ( $command eq "put_raw_obj" ) {
++		my ($sha1) = packet_txt_read() =~ /^sha1=([0-9a-f]{40})$/;
++		my ($size) = packet_txt_read() =~ /^size=([0-9]+)$/;
++		my ($kind) = packet_txt_read() =~ /^kind=(\w+)$/;
++		packet_bin_read();
++
++		# We must read the content we are sent and send it to the right url
++		my ($res, $buf) = packet_bin_read();
++		die "bad packet_bin_read res ($res)" unless ($res eq 0);
++		( packet_bin_read() eq ( 1, "" ) ) || die "bad send end";		
++
++		my $upload_url = $http_url . "/upload/?sha1=" . $sha1 . "&size=" . $size . "&type=blob";
++
++		my $userAgent = LWP::UserAgent->new();
++		my $request = POST $upload_url, Content_Type => 'multipart/form-data', Content => $buf;
++
++		my $response = $userAgent->request($request);
++
++		if ($response->is_error) {
++			packet_txt_write("status=failure");
++		} else {
++			packet_txt_write("status=success");
++		}
++		packet_flush();
++	} else {
++		die "bad command '$command'";
++	}
 +}
 -- 
 2.14.1.576.g3f707d88cd
