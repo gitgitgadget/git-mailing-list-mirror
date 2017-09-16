@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE70B20A21
-	for <e@80x24.org>; Sat, 16 Sep 2017 08:09:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B4CF220A21
+	for <e@80x24.org>; Sat, 16 Sep 2017 08:09:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751512AbdIPIJD (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Sep 2017 04:09:03 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:33684 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751462AbdIPIIg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Sep 2017 04:08:36 -0400
-Received: by mail-wm0-f67.google.com with SMTP id 187so4515355wmn.0
-        for <git@vger.kernel.org>; Sat, 16 Sep 2017 01:08:35 -0700 (PDT)
+        id S1751517AbdIPIJF (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Sep 2017 04:09:05 -0400
+Received: from mail-wm0-f50.google.com ([74.125.82.50]:47348 "EHLO
+        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751443AbdIPIIe (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Sep 2017 04:08:34 -0400
+Received: by mail-wm0-f50.google.com with SMTP id 13so12703741wmq.2
+        for <git@vger.kernel.org>; Sat, 16 Sep 2017 01:08:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=DicLBJxOtH19Zbam87HxX/LRhWNp6sS0R4u3rqMiMwo=;
-        b=ZHQ7NTjt+Xd1j/EGT2kDCUG3yOOYap3WcdxOjedai2XMcS66ZkKJpA4/sMDURmpa31
-         ikNCfMM1mMZGci9pXioClUwB3afQTvSHokq597XpxsLx4doKd3bjhDNIqKnu7xRi1Vah
-         2gFPIzlK6Wv/0+md8Pdbppf6+8Rq7hFznxv/FeYSet4ijV7c0OWb/ZbwLWY8twzG8ZuM
-         Y43nOm15+XLucXjpbBRfipx6ausDmOuGgG7UjhBuUwg5iZbuHqGdqYq8Pxt5rqy2Hi67
-         2myt7cds8MoWq0PByn4Uo9WBphGG2vS5citW0hezOW6uJcbqwKIvvcJ8Zjf03mOtzo/y
-         A3LA==
+        bh=uY5NySLgfxv0oUA9IHfs5jT/W3okiRaXxlJs2bi05p4=;
+        b=UMPPF/Qo+w+V25R3YmCiOVpMMGJXfbP3eZ4S9GrvpqQJ6LFw/MTIzRj+BLmJNtU/uW
+         bXm+xzAQgJXi29N6fede2M+RL1q8toOUJ6YGH2hax2gQcxR7VW2/MJLX759RQaOPb6s3
+         FWfN+kO1XVcEDrGO+6H+BYOUa+edtWiPkamA+cvrzU99jyEB3OCy36MWxcugNVelONAa
+         RQjeSTiPE0Pj2loxe7yQC0aDTgG24D5xO53QFqlT8/Jy39rDypabPg+5QKYNR3QZnM3L
+         AnCL6cQpAKbhx43NYYJpqlv6HhPOS8hTuR/b+ezzJc7LoYNnTXOX6JcyCB6VC/ZVaiAS
+         6CsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=DicLBJxOtH19Zbam87HxX/LRhWNp6sS0R4u3rqMiMwo=;
-        b=p4tQ1D/NhNzx7cUxyUgL9trLvK5ZVnZWSk/6SBgmt6kwEiATI3OAcUnBgR/UQolxO0
-         ichwuiDGVwFgyITR2cSeU2CbTw9Pv6TOvcjeXBiGlTLxBxm747B0RBbfOQW1PxanGFaA
-         2OBb3RKEXtbSUhtGM6ClLyiB+gWOvTpNGAbPXHuCxVPM3TXgLhw1Fq9la+O95D9PNe6b
-         JL5wMhRYm00YJEKzvg4T8N9RD4a8VBj6pzRPxnjqABgUnmysGVwwJNZTuyIT2mI8XIZO
-         zQt1lVU3pZb/4KnESDeYabVn5gWz8VRReHlXNBBgZya3CGrp4ngeymij4jlZI1KYSzEn
-         rppw==
-X-Gm-Message-State: AHPjjUjWh+sBcZ9rdWpRNAkg43rQxd2T6Z2UKgbi21C+CsDHLcFenA03
-        cxWoQPiE4E0eGZE8
-X-Google-Smtp-Source: AOwi7QAZEjAAk3BizareJe+sqww5meZuXWr3LiEqv7mujDs4U9V3yfF4bvXfDZ+CqW4VJenxLYWZmA==
-X-Received: by 10.28.217.134 with SMTP id q128mr4883265wmg.116.1505549314937;
-        Sat, 16 Sep 2017 01:08:34 -0700 (PDT)
+        bh=uY5NySLgfxv0oUA9IHfs5jT/W3okiRaXxlJs2bi05p4=;
+        b=SI8IC0ZLTFnQXJPZb4caeg4nsI0UC4QomNvzb+3+woP+IBVcWv6MsSE8MutRXLnnU/
+         MptR5GIFyh34ykvqgtOSa92ONbGOQo7XU46AIseFu1mpxakE3H29cC8lR6k52AvilQDR
+         4twX3tHEGzx7NlozyGei1oGGeVmo+BbMFnC9f/wz3zE2PshWW4XQJQBMTd0B7nb+nTWB
+         oGq/pu8U69gPO0NiDmblMvgUgjr+Y87YJBLxDdEZ0pAEYTjmnFB0ryHjbM8GXDRqG1/i
+         AAilU0oBTe0v12GjnCTO6QmtORNyzl/QEvXHF29SkP53/YRg3q1+x6dOjKesEoG+pnEw
+         valw==
+X-Gm-Message-State: AHPjjUjBsWasH+OGdlzttUplpK/tEJK5Vlss40zXuf7BlIbZWlOfEZfi
+        no6be9LPZRukU73u
+X-Google-Smtp-Source: AOwi7QDhsQA+8Sef0MDv+p/j4kaoYxLefD712/3YxE9HukcygLHP/j/C3+qAINs1hTs5ENfQ9ZZPJw==
+X-Received: by 10.28.129.23 with SMTP id c23mr4993046wmd.27.1505549312192;
+        Sat, 16 Sep 2017 01:08:32 -0700 (PDT)
 Received: from localhost.localdomain (sud35-h04-89-95-107-230.dsl.sta.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id l126sm2814641wmd.1.2017.09.16.01.08.33
+        by smtp.gmail.com with ESMTPSA id l126sm2814641wmd.1.2017.09.16.01.08.30
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 16 Sep 2017 01:08:34 -0700 (PDT)
+        Sat, 16 Sep 2017 01:08:31 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v6 36/40] clone: add --initial-refspec option
-Date:   Sat, 16 Sep 2017 10:07:27 +0200
-Message-Id: <20170916080731.13925-37-chriscool@tuxfamily.org>
+Subject: [PATCH v6 34/40] Add Documentation/technical/external-odb.txt
+Date:   Sat, 16 Sep 2017 10:07:25 +0200
+Message-Id: <20170916080731.13925-35-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.14.1.576.g3f707d88cd
 In-Reply-To: <20170916080731.13925-1-chriscool@tuxfamily.org>
 References: <20170916080731.13925-1-chriscool@tuxfamily.org>
@@ -70,128 +70,364 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This option makes it possible to separate fetching refs when cloning
-in two parts, an initial part and a later normal part.
+This describes the external odb mechanism's purpose and
+how it works.
 
-This way after the initial part, mechanisms like the external odb
-mechanism can be used to prefetch some objects using information
-that has been made available during the initial fetch.
-
+Helped-by: Ben Peart <benpeart@microsoft.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/clone.c | 55 ++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 54 insertions(+), 1 deletion(-)
+ Documentation/technical/external-odb.txt | 342 +++++++++++++++++++++++++++++++
+ 1 file changed, 342 insertions(+)
+ create mode 100644 Documentation/technical/external-odb.txt
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 2e5d60521d..57cecd194c 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -57,6 +57,7 @@ static enum transport_family family;
- static struct string_list option_config = STRING_LIST_INIT_NODUP;
- static struct string_list option_required_reference = STRING_LIST_INIT_NODUP;
- static struct string_list option_optional_reference = STRING_LIST_INIT_NODUP;
-+static struct string_list option_initial_refspec = STRING_LIST_INIT_NODUP;
- static int option_dissociate;
- static int max_jobs = -1;
- static struct string_list option_recurse_submodules = STRING_LIST_INIT_NODUP;
-@@ -107,6 +108,8 @@ static struct option builtin_clone_options[] = {
- 			N_("reference repository")),
- 	OPT_STRING_LIST(0, "reference-if-able", &option_optional_reference,
- 			N_("repo"), N_("reference repository")),
-+	OPT_STRING_LIST(0, "initial-refspec", &option_initial_refspec,
-+			N_("refspec"), N_("fetch this refspec first")),
- 	OPT_BOOL(0, "dissociate", &option_dissociate,
- 		 N_("use --reference only while cloning")),
- 	OPT_STRING('o', "origin", &option_origin, N_("name"),
-@@ -869,6 +872,47 @@ static void dissociate_from_references(void)
- 	free(alternates);
- }
- 
-+static struct refspec *parse_initial_refspecs(void)
-+{
-+	const char **refspecs;
-+	struct refspec *initial_refspecs;
-+	struct string_list_item *rs;
-+	int i = 0;
+diff --git a/Documentation/technical/external-odb.txt b/Documentation/technical/external-odb.txt
+new file mode 100644
+index 0000000000..58ec8a8145
+--- /dev/null
++++ b/Documentation/technical/external-odb.txt
+@@ -0,0 +1,342 @@
++External ODBs
++^^^^^^^^^^^^^
 +
-+	if (!option_initial_refspec.nr)
-+		return NULL;
++The External ODB mechanism makes it possible for Git objects, only
++blobs for now though, to be stored in an "external object database"
++(External ODB).
 +
-+	refspecs = xcalloc(option_initial_refspec.nr, sizeof(const char *));
++An External ODB can be any object store as long as there is an helper
++program called an "odb helper" that can communicate with Git to
++transfer objects to/from the external odb and to retrieve information
++about available objects in the external odb.
 +
-+	for_each_string_list_item(rs, &option_initial_refspec)
-+		refspecs[i++] = rs->string;
++Purpose
++=======
 +
-+	initial_refspecs = parse_fetch_refspec(option_initial_refspec.nr, refspecs);
++The purpose of this mechanism is to make possible to handle Git
++objects, especially blobs, in much more flexible ways.
 +
-+	free(refspecs);
++Currently Git can store its objects only in the form of loose objects
++in separate files or packed objects in a pack file. These existing
++object stores cannot be easily optimized for many different kind of
++contents.
 +
-+	return initial_refspecs;
-+}
++So the current stores are not flexible enough for some important use
++cases like handling really big binary files or handling a really big
++number of files that are fetched only as needed. And it is not
++realistic to expect that Git could fully natively handle many of such
++use cases. Git would need to natively implement different internal
++stores which would be a huge burden and which could lead to
++re-implement things like HTTP servers, Docker registries or artifact
++stores that already exist outside Git.
 +
-+static void fetch_initial_refs(struct transport *transport,
-+			       const struct ref *refs,
-+			       struct refspec *initial_refspecs,
-+			       const char *branch_top,
-+			       const char *reflog_msg,
-+			       int is_local)
-+{
-+	int i;
++Furthermore many improvements that are dependent on specific setups
++could be implemented in the way Git objects are managed if it was
++possible to customize how the Git objects are handled. For example a
++restartable clone using the bundle mechanism has often been requested,
++but implementing that would go against the current strict rules under
++which the Git objects are currently handled.
 +
-+	for (i = 0; i < option_initial_refspec.nr; i++) {
-+		struct ref *init_refs = NULL;
-+		struct ref **tail = &init_refs;
-+		get_fetch_map(refs, &initial_refspecs[i], &tail, 0);
-+		transport_fetch_refs(transport, init_refs);
-+		update_remote_refs(refs, init_refs, NULL, branch_top, reflog_msg,
-+				   transport, !is_local, 1);
-+	}
-+}
++What Git needs is a mechanism to make it possible to customize in a
++lot of different ways how the Git objects are handled. Though this
++mechanism should try as much as possible to avoid interfering with the
++usual way in which Git handle its objects.
 +
- int cmd_clone(int argc, const char **argv, const char *prefix)
- {
- 	int is_bundle = 0, is_local;
-@@ -892,6 +936,9 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	struct refspec *refspec;
- 	const char *fetch_pattern;
- 
-+	struct refspec *initial_refspecs;
-+	int is_initial;
++Helpers
++=======
 +
- 	packet_trace_identity("clone");
- 	argc = parse_options(argc, argv, prefix, builtin_clone_options,
- 			     builtin_clone_usage, 0);
-@@ -1059,6 +1106,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	if (option_required_reference.nr || option_optional_reference.nr)
- 		setup_reference();
- 
-+	initial_refspecs = parse_initial_refspecs();
++ODB helpers are commands that have to be registered using either the
++"odb.<odbname>.subprocessCommand" or the "odb.<odbname>.scriptCommand"
++config variables.
 +
- 	fetch_pattern = xstrfmt("+%s*:%s*", src_ref_prefix, branch_top.buf);
- 	refspec = parse_fetch_refspec(1, &fetch_pattern);
- 	free((char *)fetch_pattern);
-@@ -1114,6 +1163,9 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	refs = transport_get_remote_refs(transport);
- 
- 	if (refs) {
-+		fetch_initial_refs(transport, refs, initial_refspecs,
-+				   branch_top.buf, reflog_msg.buf, is_local);
++Registering such a command tells Git that an external odb called
++<odbname> exists and that the registered command should be used to
++communicate with it.
 +
- 		mapped_refs = wanted_peer_refs(refs, refspec);
- 		/*
- 		 * transport_get_remote_refs() may return refs with null sha-1
-@@ -1173,9 +1225,10 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	else if (refs && complete_refs_before_fetch)
- 		transport_fetch_refs(transport, mapped_refs);
- 
-+	is_initial = !refs || option_initial_refspec.nr == 0;
- 	update_remote_refs(refs, mapped_refs, remote_head_points_at,
- 			   branch_top.buf, reflog_msg.buf, transport,
--			   !is_local, 0);
-+			   !is_local, is_initial);
- 
- 	update_head(our_head_points_at, remote_head, reflog_msg.buf);
- 
++The communication happens through instructions that are sent by Git
++and that the commands should answer. If it makes sense, Git can send
++the same instruction to many commands in the order in which they are
++configured.
++
++There are 2 kinds of commands. Commands registered using the
++"odb.<odbname>.subprocessCommand" config variable are called "process
++commands" and the associated mode is called "process mode". Commands
++registered using the "odb.<odbname>.scriptCommand" config variables
++are called "script commands" and the associated mode is called "script
++mode".
++
++Early on git commands send an 'init' instruction to the registered
++commands. A capability negociation will take place during this
++request/response exchange which will let Git and the helpers know how
++they can further collaborate. The attribute system can also be used to
++tell Git which objects should be handled by which helper.
++
++Process Mode
++============
++
++In process mode the command is started as a single process invocation
++that should last for the entire life of the single Git command that
++started it.
++
++A packet format (pkt-line, see technical/protocol-common.txt) based
++protocol over standard input and standard output is used for
++communication between Git and the helper command.
++
++After the process command is started, Git sends a welcome message
++("git-read-object-client"), a list of supported protocol version
++numbers, and a flush packet. Git expects to read a welcome response
++message ("git-read-object-server"), exactly one protocol version
++number from the previously sent list, and a flush packet. All further
++communication will be based on the selected version.
++
++The remaining protocol description below documents "version=1". Please
++note that "version=42" in the example below does not exist and is only
++there to illustrate how the protocol would look with more than one
++version.
++
++After the version negotiation Git sends a list of all capabilities
++that it supports and a flush packet. Git expects to read a list of
++desired capabilities, which must be a subset of the supported
++capabilities list, and a flush packet as response:
++
++------------------------
++packet: git> git-read-object-client
++packet: git> version=1
++packet: git> version=42
++packet: git> 0000
++packet: git< git-read-object-server
++packet: git< version=1
++packet: git< 0000
++packet: git> capability=get_raw_obj
++packet: git> capability=have
++packet: git> capability=put_raw_obj
++packet: git> capability=not-yet-invented
++packet: git> 0000
++packet: git< capability=get_raw_obj
++packet: git< 0000
++------------------------
++
++Afterwards Git sends a list of "key=value" pairs terminated with a
++flush packet. The list will contain at least the instruction (based on
++the supported capabilities) and the arguments for the
++instruction. Please note, that the process must not send any response
++before it received the final flush packet.
++
++In general any response from the helper should end with a status
++packet. See the documentation of the 'get_*' instructions below for
++examples of status packets.
++
++After the helper has processed an instruction, it is expected to wait
++for the next "key=value" list containing another instruction.
++
++On exit Git will close the pipe to the helper. The helper is then
++expected to detect EOF and exit gracefully on its own. Git will wait
++until the process has stopped.
++
++Script Mode
++===========
++
++In this mode Git launches the script command each time it wants to
++communicates with the helper. There is no welcome message and no
++protocol version in this mode.
++
++The instruction and associated arguments are passed as arguments when
++launching the script command and if needed further information is
++passed between Git and the command through stdin and stdout.
++
++Capabilities/Instructions
++=========================
++
++The following instructions are currently supported by Git:
++
++- init
++- get_git_obj
++- get_raw_obj
++- get_direct
++- put_raw_obj
++- have
++
++The plan is to also support 'put_git_obj' and 'put_direct' soon, for
++consistency with the 'get_*' instructions.
++
++ - 'init'
++
++All the process and script commands must accept the 'init'
++instruction. It should be the first instruction sent to a command. It
++should not be advertised in the capability exchange. Any argument
++should be ignored.
++
++In process mode, after receiving the 'init' instruction and a flush
++packet, the helper should just send a status packet and then a flush
++packet. See the 'get_*' instructions below for examples of status
++packets.
++
++In script mode the command should print on stdout the capabilities
++that it supports if any. This is the only time in script mode when a
++capability exchange happens.
++
++For example a script command could use the following shell code
++snippet to handle the 'init' instruction:
++
++------------------------
++case "$1" in
++init)
++	echo "capability=get_git_obj"
++	echo "capability=put_raw_obj"
++	echo "capability=have"
++	;;
++------------------------
++
++ - 'get_git_obj <sha1>' and 'get_raw_obj <sha1>'
++
++These instructions should have a hexadecimal <sha1> argument to tell
++which object the helper should send to git.
++
++In process mode the sha1 argument should be followed by a flush packet
++like this:
++
++------------------------
++packet: git> command=get_git_obj
++packet: git> sha1=0a214a649e1b3d5011e14a3dc227753f2bd2be05
++packet: git> 0000
++------------------------
++
++After reading that the helper should send the requested object to Git in a
++packet series followed by a flush packet. If the helper does not experience
++problems then the helper must send a "success" status like the following:
++
++------------------------
++packet: git< status=success
++packet: git< 0000
++------------------------
++
++In case the helper cannot or does not want to send the requested
++object as well as any other object for the lifetime of the Git
++process, then it is expected to respond with an "abort" status at any
++point in the protocol:
++
++------------------------
++packet: git< status=abort
++packet: git< 0000
++------------------------
++
++Git neither stops nor restarts the helper in case a
++"notfound"/"error"/"abort" status is set. An "error" status means a
++possibly more transient error than an abort. The helper should also
++send a "notfound" error in case of a "get_*" instruction, which means
++that the requested object cannot be found.
++
++If the helper dies during the communication or does not adhere to the
++protocol then Git will stop and restart it with the next instruction.
++
++In script mode the helper should just send the requested object to Git
++by writing it to stdout and should then exit. The exit code should
++signal to Git if a problem occured or not.
++
++The only difference between 'get_git_obj' and 'get_raw_obj' is that in
++case of 'get_git_obj' the requested object should be sent as a Git
++object (that is in the same format as loose object files). In case of
++'get_raw_obj' the object should be sent in its raw format (that is the
++same output as `git cat-file <type> <sha1>`).
++
++ - 'get_direct <sha1>'
++
++This instruction is similar as the other 'get_*' instructions except
++that no object should be sent from the helper to Git. Instead the
++helper should directly write the requested object into a loose object
++file in the ".git/objects" directory.
++
++After the helper has sent the "status=success" packet and the
++following flush packet in process mode, or after it has exited in the
++script mode, Git will lookup again for the requested sha1 in its loose
++object files and pack files.
++
++ - 'put_raw_obj <sha1> <size> <type>'
++
++This instruction should be following by three arguments to tell which
++object the helper will receive from git: <sha1>, <size> and
++<type>. The hexadecimal <sha1> argument describes the object that will
++be sent from Git to the helper. The <type> is the object type ("blob",
++"tree", "commit" or "tag") of this object. The <size> is the size in
++bytes of the (decompressed) object content.
++
++In process mode the last argument (the type) should be followed by a
++flush packet.
++
++After reading that the helper should read the announced object from
++Git in a packet series followed by a flush packet.
++
++If the helper does not experience problems when receiving and storing
++or processing the object, then the helper must send a "success" status
++as described for the 'get_*' instructions.
++
++In script mode the helper should just receive the announced object
++from its standard input. After receiving and processing the object,
++the helper should exit and its exit code should signal to Git if a
++problem occured or not.
++
++- 'have'
++
++In process mode this instruction should be followed by a flush
++packet. After receiving this packet the helper should send the sha1,
++size and type, in this order, of all the objects it can provide to Git
++(through a 'get_*' instruction). There should be a space character
++between the sha1 and the size and between the size and the type, and
++then a new line character after the type.
++
++If many packets are needed to send back all this information, the
++split between packets should be made after the new line characters.
++
++If the helper does not experience problems, then it must then send a
++"success" status as described for the 'get_*' instructions.
++
++In script mode the helper should send to its standard output the sha1,
++size and type, in this order of all the objects it can provide to
++Git. There should also be a space character between the sha1 and the
++size and between the size and the type, and then a new line character
++after the type.
++
++After sending this, the script helper should exit and its exit code
++should signal to Git if a problem occured or not.
++
++Order of instructions
++=====================
++
++For get_*_object instructions the regular code to find objects is
++called before the odb helpers.
++
++For put_*_object instructions the regular code to store the objects is
++called after the odb helpers.
++
++For now this order is not configurable.
++
++Object caching
++==============
++
++If a helper returns the object data as requested by get_git_obj or
++get_raw_obj, then Git will itself store the object locally in its
++regular object store, so it is redundant for the helper to also store
++or try to store the object in the regular object store.
++
++Yeah, this seems to defeat the goal of enabling specialized object
++handlers to handle large or other "unusual" objects that git normally
++doesn't deal well with. So in the long run there should be a way to
++make this configurable.
++
++Selecting objects
++=================
++
++To select objects that should be handled by an external odb, one can
++use the git attributes system. For now this will only work with blobs
++and this will only work along with the 'put_raw_obj' instruction.
++
++For example if one has an external odb called "magic" and has
++registered an associated a process command helper that supports the
++'put_raw_obj' instruction, then one can tell Git that all the .jpg
++files should be handled by the "magic" odb using a .gitattributes file
++can that contains:
++
++------------------------
++*.jpg           odb=magic
++------------------------
++
 -- 
 2.14.1.576.g3f707d88cd
 
