@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4CF220A21
-	for <e@80x24.org>; Sat, 16 Sep 2017 08:09:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8AB0C20A21
+	for <e@80x24.org>; Sat, 16 Sep 2017 08:09:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751517AbdIPIJF (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Sep 2017 04:09:05 -0400
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:47348 "EHLO
-        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751443AbdIPIIe (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Sep 2017 04:08:34 -0400
-Received: by mail-wm0-f50.google.com with SMTP id 13so12703741wmq.2
-        for <git@vger.kernel.org>; Sat, 16 Sep 2017 01:08:33 -0700 (PDT)
+        id S1751434AbdIPIIY (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Sep 2017 04:08:24 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:35989 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751422AbdIPIIU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Sep 2017 04:08:20 -0400
+Received: by mail-wm0-f67.google.com with SMTP id r136so4498980wmf.3
+        for <git@vger.kernel.org>; Sat, 16 Sep 2017 01:08:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=uY5NySLgfxv0oUA9IHfs5jT/W3okiRaXxlJs2bi05p4=;
-        b=UMPPF/Qo+w+V25R3YmCiOVpMMGJXfbP3eZ4S9GrvpqQJ6LFw/MTIzRj+BLmJNtU/uW
-         bXm+xzAQgJXi29N6fede2M+RL1q8toOUJ6YGH2hax2gQcxR7VW2/MJLX759RQaOPb6s3
-         FWfN+kO1XVcEDrGO+6H+BYOUa+edtWiPkamA+cvrzU99jyEB3OCy36MWxcugNVelONAa
-         RQjeSTiPE0Pj2loxe7yQC0aDTgG24D5xO53QFqlT8/Jy39rDypabPg+5QKYNR3QZnM3L
-         AnCL6cQpAKbhx43NYYJpqlv6HhPOS8hTuR/b+ezzJc7LoYNnTXOX6JcyCB6VC/ZVaiAS
-         6CsQ==
+        bh=Kwh80uEmdQsvkUOQndEyw6Nq/iswdZKZo2oUgPaP5uQ=;
+        b=lhsa8RoZH4BmrRongHxtNWvlwvj+iFLebii8XQgWyIz3BzC4jAaC7MjSfewKaCxeqB
+         4kIlYQFjBtn+b6T/gD8gX6qUYP/5ZEGIyUO1vZAnYu5BH4R2Xv2dgmFQQ7b4g9rWgVsS
+         K4NgAlaeLQMMc2jFjJdhhu8Lbin0XgQ5xRfgzlzHygt1im/NxId706kKN9xuM2o0Lf/u
+         /xB/Z1Rj1wavWQ/cfxvStRM87HuUAE87lfUTC/ENJ0cprGMleXhkM2Di5B9p64JIIJ4E
+         MP710sLF9UkcN+blnx9235pbDcFlogdIsHwVyeZIftlNZt5ZFH6Q0fYXNeZaZv0iwO6V
+         A74w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=uY5NySLgfxv0oUA9IHfs5jT/W3okiRaXxlJs2bi05p4=;
-        b=SI8IC0ZLTFnQXJPZb4caeg4nsI0UC4QomNvzb+3+woP+IBVcWv6MsSE8MutRXLnnU/
-         MptR5GIFyh34ykvqgtOSa92ONbGOQo7XU46AIseFu1mpxakE3H29cC8lR6k52AvilQDR
-         4twX3tHEGzx7NlozyGei1oGGeVmo+BbMFnC9f/wz3zE2PshWW4XQJQBMTd0B7nb+nTWB
-         oGq/pu8U69gPO0NiDmblMvgUgjr+Y87YJBLxDdEZ0pAEYTjmnFB0ryHjbM8GXDRqG1/i
-         AAilU0oBTe0v12GjnCTO6QmtORNyzl/QEvXHF29SkP53/YRg3q1+x6dOjKesEoG+pnEw
-         valw==
-X-Gm-Message-State: AHPjjUjBsWasH+OGdlzttUplpK/tEJK5Vlss40zXuf7BlIbZWlOfEZfi
-        no6be9LPZRukU73u
-X-Google-Smtp-Source: AOwi7QDhsQA+8Sef0MDv+p/j4kaoYxLefD712/3YxE9HukcygLHP/j/C3+qAINs1hTs5ENfQ9ZZPJw==
-X-Received: by 10.28.129.23 with SMTP id c23mr4993046wmd.27.1505549312192;
-        Sat, 16 Sep 2017 01:08:32 -0700 (PDT)
+        bh=Kwh80uEmdQsvkUOQndEyw6Nq/iswdZKZo2oUgPaP5uQ=;
+        b=dh3ukiudTNoCfrI3F9EBbOwcxNavsmHMNOXHzPZanaSXoKpQe3v3SmPSYmrcnJndKY
+         4KKQ09Uwb4HCYZgsmwZ0CLAIZZfotcEDN6Uw93xsnxLrPf7v6klDSTiviuDHDA10oSEF
+         M0gZUJwf2ROMAnqaHK4I08NkqfeaJqPJyqaEUXJ9Tyjrr2ksYewbeDMrDJU1IxGP7ova
+         J9K59i8bPBYhdw63AzFCt78LAzEKU/gopG7E9zfbc/SZo/otrMRbpKaCQrzUyzKNsirj
+         h7bFiAZf/kd3rhxhN5ocXPEwKP64SfIK/i14NjzpjNtl9smGP4TVklo6hn+FzEUIwr7p
+         7Vug==
+X-Gm-Message-State: AHPjjUjz/y7rg3QZoZ7MiiMm+zGRwb+iYnW1Zx36kwFmsyl1h8TDZbcZ
+        LrE2bEhuvudEQM5bpZauASE5QQ==
+X-Google-Smtp-Source: AOwi7QDnUH7RAtIWPYwL3CiMOHRBjcRwaqmapRgpdDHCYQP4gGj2AMVOoDmVM9kGal08dhVPI0wddg==
+X-Received: by 10.28.64.6 with SMTP id n6mr4866732wma.61.1505549298541;
+        Sat, 16 Sep 2017 01:08:18 -0700 (PDT)
 Received: from localhost.localdomain (sud35-h04-89-95-107-230.dsl.sta.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id l126sm2814641wmd.1.2017.09.16.01.08.30
+        by smtp.gmail.com with ESMTPSA id l126sm2814641wmd.1.2017.09.16.01.08.17
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 16 Sep 2017 01:08:31 -0700 (PDT)
+        Sat, 16 Sep 2017 01:08:17 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v6 34/40] Add Documentation/technical/external-odb.txt
-Date:   Sat, 16 Sep 2017 10:07:25 +0200
-Message-Id: <20170916080731.13925-35-chriscool@tuxfamily.org>
+Subject: [PATCH v6 25/40] odb-helper: add 'script_mode' to 'struct odb_helper'
+Date:   Sat, 16 Sep 2017 10:07:16 +0200
+Message-Id: <20170916080731.13925-26-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.14.1.576.g3f707d88cd
 In-Reply-To: <20170916080731.13925-1-chriscool@tuxfamily.org>
 References: <20170916080731.13925-1-chriscool@tuxfamily.org>
@@ -70,364 +70,107 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This describes the external odb mechanism's purpose and
-how it works.
+to prepare for having a long running odb helper sub-process
+handling the communication between Git and an external odb.
 
-Helped-by: Ben Peart <benpeart@microsoft.com>
+We introduce "odb.<name>.subprocesscommand" to make it
+possible to define such a sub-process, and we mark such odb
+helpers with the new 'script_mode' field set to 0.
+
+Helpers defined using the existing "odb.<name>.scriptcommand"
+are marked with the 'script_mode' field set to 1.
+
+Implementation of the different capabilities/instructions in
+the new (sub-)process mode is left for following commits.
+
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Documentation/technical/external-odb.txt | 342 +++++++++++++++++++++++++++++++
- 1 file changed, 342 insertions(+)
- create mode 100644 Documentation/technical/external-odb.txt
+ external-odb.c |  8 +++++++-
+ odb-helper.c   | 19 ++++++++++++++-----
+ odb-helper.h   |  1 +
+ 3 files changed, 22 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/technical/external-odb.txt b/Documentation/technical/external-odb.txt
-new file mode 100644
-index 0000000000..58ec8a8145
---- /dev/null
-+++ b/Documentation/technical/external-odb.txt
-@@ -0,0 +1,342 @@
-+External ODBs
-+^^^^^^^^^^^^^
-+
-+The External ODB mechanism makes it possible for Git objects, only
-+blobs for now though, to be stored in an "external object database"
-+(External ODB).
-+
-+An External ODB can be any object store as long as there is an helper
-+program called an "odb helper" that can communicate with Git to
-+transfer objects to/from the external odb and to retrieve information
-+about available objects in the external odb.
-+
-+Purpose
-+=======
-+
-+The purpose of this mechanism is to make possible to handle Git
-+objects, especially blobs, in much more flexible ways.
-+
-+Currently Git can store its objects only in the form of loose objects
-+in separate files or packed objects in a pack file. These existing
-+object stores cannot be easily optimized for many different kind of
-+contents.
-+
-+So the current stores are not flexible enough for some important use
-+cases like handling really big binary files or handling a really big
-+number of files that are fetched only as needed. And it is not
-+realistic to expect that Git could fully natively handle many of such
-+use cases. Git would need to natively implement different internal
-+stores which would be a huge burden and which could lead to
-+re-implement things like HTTP servers, Docker registries or artifact
-+stores that already exist outside Git.
-+
-+Furthermore many improvements that are dependent on specific setups
-+could be implemented in the way Git objects are managed if it was
-+possible to customize how the Git objects are handled. For example a
-+restartable clone using the bundle mechanism has often been requested,
-+but implementing that would go against the current strict rules under
-+which the Git objects are currently handled.
-+
-+What Git needs is a mechanism to make it possible to customize in a
-+lot of different ways how the Git objects are handled. Though this
-+mechanism should try as much as possible to avoid interfering with the
-+usual way in which Git handle its objects.
-+
-+Helpers
-+=======
-+
-+ODB helpers are commands that have to be registered using either the
-+"odb.<odbname>.subprocessCommand" or the "odb.<odbname>.scriptCommand"
-+config variables.
-+
-+Registering such a command tells Git that an external odb called
-+<odbname> exists and that the registered command should be used to
-+communicate with it.
-+
-+The communication happens through instructions that are sent by Git
-+and that the commands should answer. If it makes sense, Git can send
-+the same instruction to many commands in the order in which they are
-+configured.
-+
-+There are 2 kinds of commands. Commands registered using the
-+"odb.<odbname>.subprocessCommand" config variable are called "process
-+commands" and the associated mode is called "process mode". Commands
-+registered using the "odb.<odbname>.scriptCommand" config variables
-+are called "script commands" and the associated mode is called "script
-+mode".
-+
-+Early on git commands send an 'init' instruction to the registered
-+commands. A capability negociation will take place during this
-+request/response exchange which will let Git and the helpers know how
-+they can further collaborate. The attribute system can also be used to
-+tell Git which objects should be handled by which helper.
-+
-+Process Mode
-+============
-+
-+In process mode the command is started as a single process invocation
-+that should last for the entire life of the single Git command that
-+started it.
-+
-+A packet format (pkt-line, see technical/protocol-common.txt) based
-+protocol over standard input and standard output is used for
-+communication between Git and the helper command.
-+
-+After the process command is started, Git sends a welcome message
-+("git-read-object-client"), a list of supported protocol version
-+numbers, and a flush packet. Git expects to read a welcome response
-+message ("git-read-object-server"), exactly one protocol version
-+number from the previously sent list, and a flush packet. All further
-+communication will be based on the selected version.
-+
-+The remaining protocol description below documents "version=1". Please
-+note that "version=42" in the example below does not exist and is only
-+there to illustrate how the protocol would look with more than one
-+version.
-+
-+After the version negotiation Git sends a list of all capabilities
-+that it supports and a flush packet. Git expects to read a list of
-+desired capabilities, which must be a subset of the supported
-+capabilities list, and a flush packet as response:
-+
-+------------------------
-+packet: git> git-read-object-client
-+packet: git> version=1
-+packet: git> version=42
-+packet: git> 0000
-+packet: git< git-read-object-server
-+packet: git< version=1
-+packet: git< 0000
-+packet: git> capability=get_raw_obj
-+packet: git> capability=have
-+packet: git> capability=put_raw_obj
-+packet: git> capability=not-yet-invented
-+packet: git> 0000
-+packet: git< capability=get_raw_obj
-+packet: git< 0000
-+------------------------
-+
-+Afterwards Git sends a list of "key=value" pairs terminated with a
-+flush packet. The list will contain at least the instruction (based on
-+the supported capabilities) and the arguments for the
-+instruction. Please note, that the process must not send any response
-+before it received the final flush packet.
-+
-+In general any response from the helper should end with a status
-+packet. See the documentation of the 'get_*' instructions below for
-+examples of status packets.
-+
-+After the helper has processed an instruction, it is expected to wait
-+for the next "key=value" list containing another instruction.
-+
-+On exit Git will close the pipe to the helper. The helper is then
-+expected to detect EOF and exit gracefully on its own. Git will wait
-+until the process has stopped.
-+
-+Script Mode
-+===========
-+
-+In this mode Git launches the script command each time it wants to
-+communicates with the helper. There is no welcome message and no
-+protocol version in this mode.
-+
-+The instruction and associated arguments are passed as arguments when
-+launching the script command and if needed further information is
-+passed between Git and the command through stdin and stdout.
-+
-+Capabilities/Instructions
-+=========================
-+
-+The following instructions are currently supported by Git:
-+
-+- init
-+- get_git_obj
-+- get_raw_obj
-+- get_direct
-+- put_raw_obj
-+- have
-+
-+The plan is to also support 'put_git_obj' and 'put_direct' soon, for
-+consistency with the 'get_*' instructions.
-+
-+ - 'init'
-+
-+All the process and script commands must accept the 'init'
-+instruction. It should be the first instruction sent to a command. It
-+should not be advertised in the capability exchange. Any argument
-+should be ignored.
-+
-+In process mode, after receiving the 'init' instruction and a flush
-+packet, the helper should just send a status packet and then a flush
-+packet. See the 'get_*' instructions below for examples of status
-+packets.
-+
-+In script mode the command should print on stdout the capabilities
-+that it supports if any. This is the only time in script mode when a
-+capability exchange happens.
-+
-+For example a script command could use the following shell code
-+snippet to handle the 'init' instruction:
-+
-+------------------------
-+case "$1" in
-+init)
-+	echo "capability=get_git_obj"
-+	echo "capability=put_raw_obj"
-+	echo "capability=have"
-+	;;
-+------------------------
-+
-+ - 'get_git_obj <sha1>' and 'get_raw_obj <sha1>'
-+
-+These instructions should have a hexadecimal <sha1> argument to tell
-+which object the helper should send to git.
-+
-+In process mode the sha1 argument should be followed by a flush packet
-+like this:
-+
-+------------------------
-+packet: git> command=get_git_obj
-+packet: git> sha1=0a214a649e1b3d5011e14a3dc227753f2bd2be05
-+packet: git> 0000
-+------------------------
-+
-+After reading that the helper should send the requested object to Git in a
-+packet series followed by a flush packet. If the helper does not experience
-+problems then the helper must send a "success" status like the following:
-+
-+------------------------
-+packet: git< status=success
-+packet: git< 0000
-+------------------------
-+
-+In case the helper cannot or does not want to send the requested
-+object as well as any other object for the lifetime of the Git
-+process, then it is expected to respond with an "abort" status at any
-+point in the protocol:
-+
-+------------------------
-+packet: git< status=abort
-+packet: git< 0000
-+------------------------
-+
-+Git neither stops nor restarts the helper in case a
-+"notfound"/"error"/"abort" status is set. An "error" status means a
-+possibly more transient error than an abort. The helper should also
-+send a "notfound" error in case of a "get_*" instruction, which means
-+that the requested object cannot be found.
-+
-+If the helper dies during the communication or does not adhere to the
-+protocol then Git will stop and restart it with the next instruction.
-+
-+In script mode the helper should just send the requested object to Git
-+by writing it to stdout and should then exit. The exit code should
-+signal to Git if a problem occured or not.
-+
-+The only difference between 'get_git_obj' and 'get_raw_obj' is that in
-+case of 'get_git_obj' the requested object should be sent as a Git
-+object (that is in the same format as loose object files). In case of
-+'get_raw_obj' the object should be sent in its raw format (that is the
-+same output as `git cat-file <type> <sha1>`).
-+
-+ - 'get_direct <sha1>'
-+
-+This instruction is similar as the other 'get_*' instructions except
-+that no object should be sent from the helper to Git. Instead the
-+helper should directly write the requested object into a loose object
-+file in the ".git/objects" directory.
-+
-+After the helper has sent the "status=success" packet and the
-+following flush packet in process mode, or after it has exited in the
-+script mode, Git will lookup again for the requested sha1 in its loose
-+object files and pack files.
-+
-+ - 'put_raw_obj <sha1> <size> <type>'
-+
-+This instruction should be following by three arguments to tell which
-+object the helper will receive from git: <sha1>, <size> and
-+<type>. The hexadecimal <sha1> argument describes the object that will
-+be sent from Git to the helper. The <type> is the object type ("blob",
-+"tree", "commit" or "tag") of this object. The <size> is the size in
-+bytes of the (decompressed) object content.
-+
-+In process mode the last argument (the type) should be followed by a
-+flush packet.
-+
-+After reading that the helper should read the announced object from
-+Git in a packet series followed by a flush packet.
-+
-+If the helper does not experience problems when receiving and storing
-+or processing the object, then the helper must send a "success" status
-+as described for the 'get_*' instructions.
-+
-+In script mode the helper should just receive the announced object
-+from its standard input. After receiving and processing the object,
-+the helper should exit and its exit code should signal to Git if a
-+problem occured or not.
-+
-+- 'have'
-+
-+In process mode this instruction should be followed by a flush
-+packet. After receiving this packet the helper should send the sha1,
-+size and type, in this order, of all the objects it can provide to Git
-+(through a 'get_*' instruction). There should be a space character
-+between the sha1 and the size and between the size and the type, and
-+then a new line character after the type.
-+
-+If many packets are needed to send back all this information, the
-+split between packets should be made after the new line characters.
-+
-+If the helper does not experience problems, then it must then send a
-+"success" status as described for the 'get_*' instructions.
-+
-+In script mode the helper should send to its standard output the sha1,
-+size and type, in this order of all the objects it can provide to
-+Git. There should also be a space character between the sha1 and the
-+size and between the size and the type, and then a new line character
-+after the type.
-+
-+After sending this, the script helper should exit and its exit code
-+should signal to Git if a problem occured or not.
-+
-+Order of instructions
-+=====================
-+
-+For get_*_object instructions the regular code to find objects is
-+called before the odb helpers.
-+
-+For put_*_object instructions the regular code to store the objects is
-+called after the odb helpers.
-+
-+For now this order is not configurable.
-+
-+Object caching
-+==============
-+
-+If a helper returns the object data as requested by get_git_obj or
-+get_raw_obj, then Git will itself store the object locally in its
-+regular object store, so it is redundant for the helper to also store
-+or try to store the object in the regular object store.
-+
-+Yeah, this seems to defeat the goal of enabling specialized object
-+handlers to handle large or other "unusual" objects that git normally
-+doesn't deal well with. So in the long run there should be a way to
-+make this configurable.
-+
-+Selecting objects
-+=================
-+
-+To select objects that should be handled by an external odb, one can
-+use the git attributes system. For now this will only work with blobs
-+and this will only work along with the 'put_raw_obj' instruction.
-+
-+For example if one has an external odb called "magic" and has
-+registered an associated a process command helper that supports the
-+'put_raw_obj' instruction, then one can tell Git that all the .jpg
-+files should be handled by the "magic" odb using a .gitattributes file
-+can that contains:
-+
-+------------------------
-+*.jpg           odb=magic
-+------------------------
-+
+diff --git a/external-odb.c b/external-odb.c
+index 31d21bfe04..ccca67eff5 100644
+--- a/external-odb.c
++++ b/external-odb.c
+@@ -32,8 +32,14 @@ static int external_odb_config(const char *var, const char *value, void *data)
+ 
+ 	o = find_or_create_helper(name, namelen);
+ 
+-	if (!strcmp(subkey, "scriptcommand"))
++	if (!strcmp(subkey, "scriptcommand")) {
++		o->script_mode = 1;
+ 		return git_config_string(&o->cmd, var, value);
++	}
++	if (!strcmp(subkey, "subprocesscommand")) {
++		o->script_mode = 0;
++		return git_config_string(&o->cmd, var, value);
++	}
+ 
+ 	return 0;
+ }
+diff --git a/odb-helper.c b/odb-helper.c
+index 3d940a3171..22728200e3 100644
+--- a/odb-helper.c
++++ b/odb-helper.c
+@@ -123,6 +123,9 @@ int odb_helper_init(struct odb_helper *o)
+ 	FILE *fh;
+ 	struct strbuf line = STRBUF_INIT;
+ 
++	if (!o->script_mode)
++		return 0;
++
+ 	if (odb_helper_start(o, &cmd, 0, "init") < 0)
+ 		return -1;
+ 
+@@ -173,16 +176,12 @@ static int odb_helper_object_cmp(const void *va, const void *vb)
+ 	return hashcmp(a->sha1, b->sha1);
+ }
+ 
+-static void odb_helper_load_have(struct odb_helper *o)
++static void have_object_script(struct odb_helper *o)
+ {
+ 	struct odb_helper_cmd cmd;
+ 	FILE *fh;
+ 	struct strbuf line = STRBUF_INIT;
+ 
+-	if (o->have_valid)
+-		return;
+-	o->have_valid = 1;
+-
+ 	if (odb_helper_start(o, &cmd, 0, "have") < 0)
+ 		return;
+ 
+@@ -194,6 +193,16 @@ static void odb_helper_load_have(struct odb_helper *o)
+ 	strbuf_release(&line);
+ 	fclose(fh);
+ 	odb_helper_finish(o, &cmd);
++}
++
++static void odb_helper_load_have(struct odb_helper *o)
++{
++	if (o->have_valid)
++		return;
++	o->have_valid = 1;
++
++	if (o->script_mode)
++		have_object_script(o);
+ 
+ 	qsort(o->have, o->have_nr, sizeof(*o->have), odb_helper_object_cmp);
+ }
+diff --git a/odb-helper.h b/odb-helper.h
+index fbb6d333ee..ee2b09b182 100644
+--- a/odb-helper.h
++++ b/odb-helper.h
+@@ -15,6 +15,7 @@ struct odb_helper {
+ 	const char *name;
+ 	const char *cmd;
+ 	unsigned int supported_capabilities;
++	int script_mode;
+ 
+ 	struct odb_helper_object {
+ 		unsigned char sha1[20];
 -- 
 2.14.1.576.g3f707d88cd
 
