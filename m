@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DAD7B20A21
-	for <e@80x24.org>; Sat, 16 Sep 2017 08:08:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D399320A21
+	for <e@80x24.org>; Sat, 16 Sep 2017 08:08:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751488AbdIPIIn (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Sep 2017 04:08:43 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:36397 "EHLO
+        id S1751507AbdIPIIy (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Sep 2017 04:08:54 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:37976 "EHLO
         mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751449AbdIPIIk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Sep 2017 04:08:40 -0400
-Received: by mail-wr0-f193.google.com with SMTP id g50so2374632wra.3
-        for <git@vger.kernel.org>; Sat, 16 Sep 2017 01:08:39 -0700 (PDT)
+        with ESMTP id S1751480AbdIPIIl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Sep 2017 04:08:41 -0400
+Received: by mail-wr0-f193.google.com with SMTP id p37so2368618wrb.5
+        for <git@vger.kernel.org>; Sat, 16 Sep 2017 01:08:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=+lUw+dJXKtLgMM92VYUfheGw/olErz835JB9RuHnzhQ=;
-        b=I5p1CmG2hpYAA7wu+kq24lTTK53VrEvKWJJhZ9nGg9gxzSV8D2C/T+b6bhfaf2RFs/
-         eg34XZYckC3anvg7N5nsEUMY5cxS9oUpkQpAsvIXnBjjSHwrvxXHpFOyTO+eiTUTNIK6
-         Duy9oA+37wDZQYifE5eX4qYiOBCefl6imAmRkuB3jCCC9kZgyA+yIzyCXUuZtRulFKnv
-         jRq3li+ESwaQY/AuVujsEniSSYdhHC1OSJvhPCMMA0DDG4FMvu8bNXHu2bZ0SBxj3elW
-         V9gdKb/rABttsg93DiFGA2vesq1nNuoIrRJ6X3F25LgdQMHCTnkBVC4kRCMpHXyr0WAD
-         diAw==
+        bh=IF2ajciyemVFavvF0K4Ysmdi6PN9HUjwhRLEE9yQtJs=;
+        b=aoyTQ4dn3xrKFm8bs9Xoljd/LSHUoztx0PR5gXpWcAeTUmMGLDC4EM54efbjceX1a5
+         V+emhwy5yA5b1OutXE86EcYe2n68SEqm6KVSzt1530dAbg+8ztqjYx4A9O2uozXkQ/nD
+         mFCEgUTRRaI+rRfcZNYC2KbFEueQw00lLd7g/+CspKTGnmgq4gFd/kV3oDWbPBcfjbcp
+         MP8jc9PqDTTahpQlA5u99SygOM21mSeOGHUq52pEvpZ1f5mtxVnhyFEKuxmUPRXFuHtX
+         LBKrJIbzOM2UVnatYix5VYMNdFBjvyRpjJDrfsJAxw1gUcfrVz8+xKNVpHjGWKhtFEt6
+         2A7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=+lUw+dJXKtLgMM92VYUfheGw/olErz835JB9RuHnzhQ=;
-        b=gae2LXEX0JZMpqvKT2JXtMFlQEqBpQj5mha9fUGMc0YV5iaqzHBLFexQIuieVj0b8Y
-         Eo0dPSUAxCCc+LxtmYg9lCQGMVEikHAeW+zZHiNQkaJ7g2k3RFFAY6LT1OCboRyZAy6c
-         ckyqB2HdNnfacjby/RBM9EaxgbFtiyJFLvoYUgPrMS22UdzR74bTWEOvs+aza9c/+4Ss
-         a4KOABedgyI7KvgUCfvHGyr/2p+t6ZcSR3SVRngR1nl0VJWXcOi3HYw/hd/khHYIm/y1
-         99L/IHbFM88NeCzEP/fhfHvPshMSVUrwgL9c3p4RaFdoTo47Glk6Gv9A54tUGGnRvAIV
-         0org==
-X-Gm-Message-State: AHPjjUgrPAPt+UrIYnJGEc8rL57FUyVEJ3YJ3bTuSoh9cw0LPa3mLpj+
-        7L3PaGnuuOMXJv9Q
-X-Google-Smtp-Source: ADKCNb5oUi3ey8Vjrt7wBjGzp+gMI8VaByt3qxvOIl4g8+v30V2EgiCSmkHmXMJPgKLfwoR34Ux8qQ==
-X-Received: by 10.223.174.201 with SMTP id y67mr25653796wrc.116.1505549318793;
-        Sat, 16 Sep 2017 01:08:38 -0700 (PDT)
+        bh=IF2ajciyemVFavvF0K4Ysmdi6PN9HUjwhRLEE9yQtJs=;
+        b=FFLfmkHNlI3fPseKBR1M9t8mPKDa02MTk3siZIDYRarJSgvaZV4xRciS0T0ys2l32N
+         1S4THsBAADIBamJVG4iL0tR6+qgfndcfu6HAisvfZ6YgmIDeMelT3cgJqtI9nJoeFigC
+         kV1tZjVAjvtJumMrXESVyaPfGTiGZ59yco85/3TBLXr59H81Qs0FRU4xiDvxcsl/06c6
+         K3crG/XDfKucHosl89cxD2UaZ968z77E8R3J00BKSu7xA33BO6nL+TE8aCYtr7mR913m
+         ZkqzdTP2Odzu5TkoaikUbqLEMGbN2CSLaroDfmspoiXO89Ojej2SnGocswaVtgsbUJtY
+         lvgA==
+X-Gm-Message-State: AHPjjUihWi1RvVLjhohifE9BvjHieZ9NaK6fcjUUctJiWSqeBI+s/sQh
+        to4rLL6phyYL43t9
+X-Google-Smtp-Source: AOwi7QCnNEEXtjyWhM16T2ksCBeo+aarxzaQHTLL9nk32ty6EKDbASM8QZqestzEGS7hm23g1elaIg==
+X-Received: by 10.223.164.153 with SMTP id g25mr14598297wrb.67.1505549320123;
+        Sat, 16 Sep 2017 01:08:40 -0700 (PDT)
 Received: from localhost.localdomain (sud35-h04-89-95-107-230.dsl.sta.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id l126sm2814641wmd.1.2017.09.16.01.08.37
+        by smtp.gmail.com with ESMTPSA id l126sm2814641wmd.1.2017.09.16.01.08.38
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 16 Sep 2017 01:08:38 -0700 (PDT)
+        Sat, 16 Sep 2017 01:08:39 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v6 39/40] Add t0430 to test cloning using bundles
-Date:   Sat, 16 Sep 2017 10:07:30 +0200
-Message-Id: <20170916080731.13925-40-chriscool@tuxfamily.org>
+Subject: [PATCH v6 40/40] Doc/external-odb: explain transfering objects and metadata
+Date:   Sat, 16 Sep 2017 10:07:31 +0200
+Message-Id: <20170916080731.13925-41-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.14.1.576.g3f707d88cd
 In-Reply-To: <20170916080731.13925-1-chriscool@tuxfamily.org>
 References: <20170916080731.13925-1-chriscool@tuxfamily.org>
@@ -72,101 +72,122 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/t0430-clone-bundle-e-odb.sh | 85 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 85 insertions(+)
- create mode 100755 t/t0430-clone-bundle-e-odb.sh
+ Documentation/technical/external-odb.txt | 105 +++++++++++++++++++++++++++++++
+ 1 file changed, 105 insertions(+)
 
-diff --git a/t/t0430-clone-bundle-e-odb.sh b/t/t0430-clone-bundle-e-odb.sh
-new file mode 100755
-index 0000000000..ac38ae1be5
---- /dev/null
-+++ b/t/t0430-clone-bundle-e-odb.sh
-@@ -0,0 +1,85 @@
-+#!/bin/sh
+diff --git a/Documentation/technical/external-odb.txt b/Documentation/technical/external-odb.txt
+index 58ec8a8145..76dd1e2e6c 100644
+--- a/Documentation/technical/external-odb.txt
++++ b/Documentation/technical/external-odb.txt
+@@ -340,3 +340,108 @@ can that contains:
+ *.jpg           odb=magic
+ ------------------------
+ 
++Transfering objects
++===================
 +
-+test_description='tests for cloning using a bundle through e-odb'
++When an external odb helper is configured, the objects managed by the
++external odb are not put in the pack file that is sent (when pushing
++or answering clone and fetch requests), so the receiver should also
++have configured an external odb helper that can get the missing
++objects otherwise Git will error out complaining about missing
++objects.
 +
-+. ./test-lib.sh
++This has some drawbacks of course, but at least it makes sure that
++users' and admins' repositories are both properly configured to use a
++common external ODB before they can talk to each other.
 +
-+# If we don't specify a port, the current test number will be used
-+# which will not work as it is less than 1024, so it can only be used by root.
-+LIB_HTTPD_PORT=$(expr ${this_test#t} + 12000)
++Transfering meta information and restartable clone
++==================================================
 +
-+. "$TEST_DIRECTORY"/lib-httpd.sh
++There are different ways to make it possible for the external odb
++helpers to know which services they should get the objects from (or
++put them into), for example the information could be hardcoded into
++the helpers, or the information could be computed from configuration
++information like the url of the "origin" remote.
 +
-+start_httpd apache-e-odb.conf
++The external odb mechanism itself doesn't really take care of this, so
++helpers are free to do whatever they want.
 +
-+# odb helper script must see this
-+export HTTPD_URL
++One interesting possibility though is to have this information as part
++of the repository in special refs, for example refs/odb/magic/*, where
++"magic" is the external odb name.
 +
-+write_script odb-clone-bundle-helper <<\EOF
-+die() {
-+	printf >&2 "%s\n" "$@"
-+	exit 1
-+}
-+echo >&2 "odb-clone-bundle-helper args:" "$@"
-+case "$1" in
-+init)
-+	ref_hash=$(git rev-parse refs/odbs/magic/bundle) ||
-+	die "couldn't find refs/odbs/magic/bundle"
-+	GIT_NO_EXTERNAL_ODB=1 git cat-file blob "$ref_hash" >bundle_info ||
-+	die "couldn't get blob $ref_hash"
-+	bundle_url=$(sed -e 's/bundle url: //' bundle_info)
-+	echo >&2 "bundle_url: '$bundle_url'"
-+	curl "$bundle_url" -o bundle_file ||
-+	die "curl '$bundle_url' failed"
-+	GIT_NO_EXTERNAL_ODB=1 git bundle unbundle bundle_file >unbundling_info ||
-+	die "unbundling 'bundle_file' failed"
-+	;;
-+get*)
-+	die "odb-clone-bundle-helper '$1' called"
-+	;;
-+put*)
-+	die "odb-clone-bundle-helper '$1' called"
-+	;;
-+*)
-+	die "unknown command '$1'"
-+	;;
-+esac
-+EOF
-+HELPER="\"$PWD\"/odb-clone-bundle-helper"
++This would especially make it possible to implement a restartable
++clone using Git bundles (and an external odb helper) like this:
 +
++	1) At the very start of the clone, Git would fetch the refs
++	that contain "meta information", for example refs/odb/magic/*
++	(where "magic" is the odb name). These refs would point to
++	some blobs that contain lists of the bundles that are
++	available for fetching by the helper, along with enough
++	information for the helper to fetch them (for example HTTP
++	urls of the bundles).
 +
-+test_expect_success 'setup repo with a few commits' '
-+	test_commit one &&
-+	test_commit two &&
-+	test_commit three &&
-+	test_commit four
-+'
++	2) After this first fetch of the refs/odb/magic/* refs, the
++	helper would be sent the 'init' instruction. At that time it
++	can read all the blobs pointed to by these refs and download
++	the bundles listed in the blobs.
 +
-+BUNDLE_FILE="file.bundle"
-+FILES_DIR="httpd/www/files"
-+GET_URL="$HTTPD_URL/files/$BUNDLE_FILE"
++	If something goes wrong when the helper "fetches" a bundle,
++	the helper could force the clone to error out (after maybe
++	retrying), and when the user (or the helper itself) tries
++	again to clone, the helper would restart its bundle "fetch"
++	(using the restartable protocol, for example HTTP).
 +
-+test_expect_success 'create a bundle for this repo and check that it can be downloaded' '
-+	git bundle create "$BUNDLE_FILE" master &&
-+	mkdir "$FILES_DIR" &&
-+	cp "$BUNDLE_FILE" "$FILES_DIR/" &&
-+	curl "$GET_URL" --output actual &&
-+	test_cmp "$BUNDLE_FILE" actual
-+'
++	When this "fetch" eventually succeeds, then the helper will
++	unbundle what it received, and then give back control to the
++	second regular part of the clone.
 +
-+test_expect_success 'create an e-odb ref for this bundle' '
-+	ref_hash=$(echo "bundle url: $GET_URL" | GIT_NO_EXTERNAL_ODB=1 git hash-object -w -t blob --stdin) &&
-+	git update-ref refs/odbs/magic/bundle "$ref_hash"
-+'
++	3) This regular part of the clone will then try to fetch the
++	usual refs, but as the unbundling has already updated the
++	content of the usual refs as well as the object stores this
++	fetch will find that everything is up-to-date.
 +
-+test_expect_success 'clone using the e-odb helper to download and install the bundle' '
-+	mkdir my-clone &&
-+	(cd my-clone &&
-+	 git clone --no-local \
-+		-c odb.magic.scriptCommand="$HELPER" \
-+		--initial-refspec "refs/odbs/magic/*:refs/odbs/magic/*" .. .)
-+'
++	Or if everything is not quite up-to-date and there are still
++	things to fetch, another hopefully much small regular fetch
++	will happen.
 +
-+stop_httpd
++As this is an interesting use of the external odb mechanism, the
++`--initial-refspec` option has been implemented in `git clone`. This
++makes it possible to perform all the above steps using a single clone
++command like:
 +
-+test_done
++------------------------
++$ git clone -c odb.magic.scriptCommand="$HELPER" \
++  --initial-refspec "refs/odbs/magic/*:refs/odbs/magic/*" "$URL"
++------------------------
++
++But note that the above could also be performed using:
++
++------------------------
++$ git init
++$ git remote add origin "$URL"
++$ git fetch origin "refs/odbs/magic/*:refs/odbs/magic/*"
++$ git config odb.magic.scriptCommand "$HELPER"
++$ git fetch origin
++------------------------
++
++So the `--initial-refspec` option can be seen as just a shortcut to
++simplify external odb helped clones for users.
++
++Also note that this `--initial-refspec` approach could be slower than
++a regular clone, so it is mostly interesting if one wants to fetch a
++big number of objects or many big objects, like for an initial clone
++of a big repo. In this use case a relatively small amount of time
++spent in the initial fetch is an acceptable trade-off if the clone is
++restartable.
++
++Though in some cases, as the `--initial-refspec` clone could alleviate
++resource usage of the Git server, it could be even faster than a
++regular clone.
++
++So admins and users should not blindly use the `--initial-refspec`
++option all the time when an external odb is configured. But using an
++external odb in the first place means that they have specific
++requirements for handling objects which suggests that the regular way
++to clone might not be very good for their use cases and for the
++objects that are stored in their external ODBs.
 -- 
 2.14.1.576.g3f707d88cd
 
