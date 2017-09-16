@@ -2,113 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4626920281
-	for <e@80x24.org>; Sat, 16 Sep 2017 03:29:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 937E720281
+	for <e@80x24.org>; Sat, 16 Sep 2017 04:06:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751253AbdIPD32 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Sep 2017 23:29:28 -0400
-Received: from mail-it0-f54.google.com ([209.85.214.54]:50726 "EHLO
-        mail-it0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751211AbdIPD32 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Sep 2017 23:29:28 -0400
-Received: by mail-it0-f54.google.com with SMTP id y126so4309105itb.5
-        for <git@vger.kernel.org>; Fri, 15 Sep 2017 20:29:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=qHKU35URkHU+dkPILCudC/JXCTxLZWS4fuH4PKMneO0=;
-        b=lwAX+djOLhcYiNDCBHYoZL/MXRT6DYx0Zf9UrVYhzoyQ/+hy/SMtZWuh7kNhSHFOgm
-         gr6byNa5nvTcc0ygAF+5+pallSEgQ4USgtudhZVBupNZ4Q5D6arcvRppnZd8OnxRPd/L
-         Z56Rhj/xMajvWhgBex3vsjZADLupo88rXQGiqjLzAkwDaEGIDcJNj2BlD9eExvQTwsxB
-         C5oksw9jicY8M456yszCQT0b3TvsOOinJHqtA/58TdoG5vENf0Jq4D4FtuDlslL2R79/
-         cj33CEiAftoja2ODbjpCEeaSbYfwCwanXX8JBuoyQjZziPfODDC4U2xK1/MOi/jfeKmg
-         V1QA==
-X-Gm-Message-State: AHPjjUhz2xsaj7zzFzzYigoYTWuUYnF/E5lhtDkZWxXB95A179LM+nPM
-        ZDtWAuSBRFupzLUvhKN5aHVpeeLUCP5piwyuhtaMmA==
-X-Google-Smtp-Source: AOwi7QDffeqPEmMa1zf18t04pSobmbXSaW0qJSRCLJSilK6P1r5Wda1s9U98SDmaYtV7THTiAoWYlvh/ix94W8n6YBM=
-X-Received: by 10.36.4.151 with SMTP id 145mr9038731itb.33.1505532567441; Fri,
- 15 Sep 2017 20:29:27 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.107.166.140 with HTTP; Fri, 15 Sep 2017 20:29:06 -0700 (PDT)
-In-Reply-To: <20170915215303.GV27425@aiede.mtv.corp.google.com>
-References: <20170915170818.27390-1-jason@redhat.com> <20170915175248.GT27425@aiede.mtv.corp.google.com>
- <CADzB+2mxyXcROYx72tac8cUxBMxi=ZxUNQYxpUR1CZ43e-j9gA@mail.gmail.com> <20170915215303.GV27425@aiede.mtv.corp.google.com>
-From:   Jason Merrill <jason@redhat.com>
-Date:   Fri, 15 Sep 2017 23:29:06 -0400
-Message-ID: <CADzB+2mT=Ht5AQybp+44+PMbRrWXB4dPyTmsEgfVkOOujZYQxQ@mail.gmail.com>
-Subject: Re: [PATCH] Fix merge parent checking with svn.pushmergeinfo.
+        id S1751050AbdIPEGj (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Sep 2017 00:06:39 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:64412 "EHLO
+        alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750779AbdIPEGi (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 16 Sep 2017 00:06:38 -0400
+X-AuditID: 1207440e-bf9ff70000007085-7e-59bca34d97d3
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 94.49.28805.D43ACB95; Sat, 16 Sep 2017 00:06:37 -0400 (EDT)
+Received: from [192.168.69.190] (p57BCC9BD.dip0.t-ipconnect.de [87.188.201.189])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v8G46YmU022095
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Sat, 16 Sep 2017 00:06:36 -0400
+Subject: Re: [PATCH] for_each_string_list_item(): behave correctly for empty
+ list
 To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git@vger.kernel.org, Eric Wong <e@80x24.org>,
-        Aldy Hernandez <aldyh@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+References: <cb2d4d71c7c1db452b86c8076c153cabe7384e28.1505490776.git.mhagger@alum.mit.edu>
+ <20170915184323.GU27425@aiede.mtv.corp.google.com>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <b8951886-feab-a87a-9683-3c155cfa98a8@alum.mit.edu>
+Date:   Sat, 16 Sep 2017 06:06:34 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
+MIME-Version: 1.0
+In-Reply-To: <20170915184323.GU27425@aiede.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpjleLIzCtJLcpLzFFi42IRYndR1PVdvCfS4FqztEXXlW4mi4beK8wW
+        b28uYbT43/aOzYHFY+esu+weFy8pe3zeJBfAHMVlk5Kak1mWWqRvl8CV8fFyJ1vBQbGKV9te
+        MjYwHhXsYuTkkBAwkbh18wNzFyMXh5DADiaJ03fWskA4F5gkbnxZxAJSJSwQLHH+1xEwW0RA
+        Q+L5p29sIDazQJrEjQ3rGSEa+hkl3hzvZwRJsAnoSizqaWYCsXkF7CV6n00FWsHBwSKgKnFn
+        lxJIWFQgQqLv7WV2iBJBiZMzn4DN5wQqP/thIgvEfHWJP/MuMUPY4hK3nsxngrDlJba/ncM8
+        gVFgFpL2WUhaZiFpmYWkZQEjyypGucSc0lzd3MTMnOLUZN3i5MS8vNQiXWO93MwSvdSU0k2M
+        kODm28HYvl7mEKMAB6MSD2/D5d2RQqyJZcWVuYcYJTmYlER5rfz2RArxJeWnVGYkFmfEF5Xm
+        pBYfYpTgYFYS4WWZA5TjTUmsrEotyodJSXOwKInzqi1R9xMSSE8sSc1OTS1ILYLJynBwKEnw
+        ai4CahQsSk1PrUjLzClBSDNxcIIM5wEaPnMhyPDigsTc4sx0iPwpRkUpcV4nkGYBkERGaR5c
+        Lyz5vGIUB3pFmLcVpIoHmLjgul8BDWYCGnzm9A6QwSWJCCmpBsYpySe/+0s+XmxTPi/c7fj7
+        o6H/6zdrHfmsafIwXPrK/2lGR7Q2fL7Lv7nJdt1m77kpvA0s+kuecBitt9Ytc2JbtjPU7EPG
+        3bIlCRX/pc9t3vRk55O9ttxyp/RNf1378ES6wFF7s92DA6ufPWPffGuSWtIMzeeHg//rtYmd
+        Sjv8Sy5Na1vSQ8dOJZbijERDLeai4kQAgQoCdxkDAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 15, 2017 at 5:53 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Jason Merrill wrote:
->> On Fri, Sep 15, 2017 at 1:52 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
->> > Jason Merrill wrote:
->
->>>> Subject: Fix merge parent checking with svn.pushmergeinfo.
->>>>
->>>> Without this fix, svn dcommit of a merge with svn.pushmergeinfo set would
->>>> get error messages like "merge parent <X> for <Y> is on branch
->>>> svn+ssh://gcc.gnu.org/svn/gcc/trunk, which is not under the git-svn root
->>>> svn+ssh://jason@gcc.gnu.org/svn/gcc!"
->>>>
->>>> * git-svn.perl: Remove username from rooturl before comparing to branchurl.
->>>>
->>>> Signed-off-by: Jason Merrill <jason@redhat.com>
->>>
->>> Interesting.  Thanks for writing it.
+On 09/15/2017 08:43 PM, Jonathan Nieder wrote:
+> Michael Haggerty wrote:
+> 
+>> If you pass a newly-initialized or newly-cleared `string_list` to
+>> `for_each_string_list_item()`, then the latter does
 >>
->> Thanks for the review.
+>>     for (
+>>             item = (list)->items; /* note, this is NULL */
+>>             item < (list)->items + (list)->nr; /* note: NULL + 0 */
+>>             ++item)
 >>
->>> Could there be a test for this to make sure this doesn't regress in
->>> the future?  See t/t9151-svn-mergeinfo.sh for some examples.
->>
->> Hmm, I'm afraid figuring out how to write such a test would take
->> longer than I can really spare for this issue.  There don't seem to be
->> any svn+ssh tests currently.
->
-> Well, could you give manual commands to allow me to reproduce the
-> problem?
->
-> Then I'll translate them into a test. :)
+>> Even though this probably works almost everywhere, it is undefined
+>> behavior, and it could plausibly cause highly-optimizing compilers to
+>> misbehave.
+> 
+> Wait, NULL + 0 is undefined behavior?
+> 
+> *checks the standard*  [...]
+> NULL doesn't point to anything so it looks like adding 0 to a null
+> pointer is indeed undefined.
 
-Something like this:
+Thanks for the legal work :-)
 
-git svn clone -s svn+ssh://user@host/repo
-git config svn.pushmergeinfo yes
-git checkout -b branch origin/branch
-git merge origin/trunk
-git svn dcommit
+>                             (As a piece of trivia, strictly speaking
+> NULL + 0 would be undefined on some implementations and defined on
+> others, since an implementation is permitted to #define NULL to 0.)
 
-Thanks!
+Isn't that the very definition of "undefined behavior", in the sense of
+a language standard?
 
-> FWIW remove_username seems to be able to cope fine with an http://
-> URL.  t/lib-httpd.sh starts an http server with Subversion enabled,
-> as long as the envvar GIT_SVN_TEST_HTTPD is set to true.  Its address
-> is $svnrepo, which is an http URL (but I don't see a username in the
-> URL).  Does that help?
+> [...]
+>> It would be a pain to have to change the signature of this macro, and
+>> we'd prefer not to add overhead to each iteration of the loop. So
+>> instead, whenever `list->items` is NULL, initialize `item` to point at
+>> a dummy `string_list_item` created for the purpose.
+> 
+> What signature change do you mean?  I don't understand what this
+> paragraph is alluding to.
 
-I think the http transport handles the username separately, not in the URL.
+I was thinking that one solution would be for the caller to provide a
+`size_t` variable for the macro's use as a counter (since I don't see a
+way for the macro to declare its own counter). The options are pretty
+limited because whatever the macro expands to has to play the same
+syntactic role as `for (...; ...; ...)`.
 
-I would expect that a dummy ssh wrapper like some of the tests use
-would be sufficient, no need for an actual network connection.
+> [...]
+> Does the following alternate fix work?  I think I prefer it because
+> it doesn't require introducing a new global. [...]
+>  #define for_each_string_list_item(item,list) \
+> -	for (item = (list)->items; item < (list)->items + (list)->nr; ++item)
+> +	for (item = (list)->items; \
+> +	     (list)->items && item < (list)->items + (list)->nr; \
+> +	     ++item)
 
-> Alternatively, does using rewrite-root as in t9151-svn-mergeinfo.sh
-> help?
+This is the possibility that I was referring to as "add[ing] overhead to
+each iteration of the loop". I'd rather not add an extra test-and-branch
+to every iteration of a loop in which `list->items` is *not* NULL, which
+your solution appears to do. Or are compilers routinely able to optimize
+the check out?
 
-Hmm, I'm not sure how rewriteRoot would interact with this issue,
-whether it would be useful as a workaround or another problematic
-case.
+The new global might be aesthetically unpleasant, but it only costs two
+words of memory, so I don't see it as a big disadvantage.
 
-Jason
+Another, more invasive change would be to initialize
+`string_list::items` to *always* point at `dummy_string_list_item`,
+rather similar to how `strbuf_slopbuf` is pointed at by empty `strbuf`s.
+But I really don't think the effort would be justified.
+
+Michael
