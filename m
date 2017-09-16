@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 134CB20A21
-	for <e@80x24.org>; Sat, 16 Sep 2017 08:10:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B4C5D20A21
+	for <e@80x24.org>; Sat, 16 Sep 2017 08:10:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751597AbdIPIKU (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Sep 2017 04:10:20 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:34052 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751218AbdIPIHt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Sep 2017 04:07:49 -0400
-Received: by mail-wr0-f193.google.com with SMTP id k20so2369999wre.1
-        for <git@vger.kernel.org>; Sat, 16 Sep 2017 01:07:48 -0700 (PDT)
+        id S1751457AbdIPIKT (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Sep 2017 04:10:19 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:35882 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751272AbdIPIHz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Sep 2017 04:07:55 -0400
+Received: by mail-wm0-f67.google.com with SMTP id r136so4498443wmf.3
+        for <git@vger.kernel.org>; Sat, 16 Sep 2017 01:07:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=eg5IWXt4G/b0OD6emKGQVi9r9a66hhZAxREhgCYajmY=;
-        b=O6a8QFaj4JzGSwrAYvh00w9hRPprBRH4NuYop0X2IgivxjFPLSMVj/I7sD6AGBaGXT
-         44XZqMwGKKp15XcTxstjJxxw4FzkYsijY/HZ2L8BIp9pFbjw2H7SfbAP0mK+BK9L0jNK
-         mDOcTF/TLK8bz9LscV1zCcqTQgMEIluyrA/PEKsQRNm6xQZj/EAnfhRqZXlgHNFsPAr/
-         fJBjuj7VkEOG5AZTghV0swU/56j32K1YHomWfma0tEEEdR9KIDjhXajEic1kMZcx+CXm
-         rChGdj9H9QCRn9YDqd0uhkM9yo+HEdSwLmNgcuN8u3QJgFtyqpNgpfgj1UeD7Mh022r3
-         +ENQ==
+        bh=LJ0/9TQ9dO/MGE7JsDaMakYVPaaGsEsQNlvQyTFQlHk=;
+        b=rdzdBogM6pvRH/qZhcAeQkDEfF5akCN/PDzxRYysTekNLhSXTts48FztwkgmzFlkGq
+         Xj5kdTmkWD1czsvz9YZi6Kjs7sivVZvXLMqFKWMK6DBuv5svKAgrQQzIQqem7pae2urP
+         OlLIo3KzpipecnuiOh0u5REF1wyJRyjbEAuB7Edt0QkuKGG9P+h0l2VA48BYTmuiI7nk
+         3fPXaYpmmttUnyzXCB4sUnvEHGjeRVbvH1y6k7BU78flvJYbTl5qa/ZWDx58d5U8reAH
+         tUTttOKjT5PapQMNJ7685/Fa7GqwBockfX+/DfgZz3+Vt0AyLxKl2zLQAl4n+GVvnOmO
+         3yoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=eg5IWXt4G/b0OD6emKGQVi9r9a66hhZAxREhgCYajmY=;
-        b=sxu79x250TWuTS3S9w2bzD8j1T7bneEkuC1/mM1lgdNjMMoZgGq+k61sWbgJD7M+ku
-         BhCOtHZ4egzoLwelXFGQ8xYFKnO5LwUNOUD05+SGF4PPuCsmhqUHSmVsZoROB93nm2Q8
-         EttPO/OL7dsyN71otbs7FH6x2pTYj8e5Z6S8SBQHWG1wg+FUHz97zIQOuhFh8ScOMPSa
-         ac3ExwXsYM0dmW7PAZZat77vq8TjHOmLGBTyvfcamTHpsk+s/K+keLNceCI5za3bOJXv
-         hcvrTQ5FLQPxirYDcOi9uU7Wy8przqU5UPfqm0sD9qIyE9oC+QvOTEC/X4ofRkMfaAP7
-         uyfg==
-X-Gm-Message-State: AHPjjUiee3iy5GY1R6xX2TKqNaR0+u5ujLRRnqbX5YmS3Ul0qKRcgian
-        u8OEJtVrguDN7m/l
-X-Google-Smtp-Source: ADKCNb7iVwCE2x6J3NaLZnghChFofqepB2UryZBQvGe02vvYtoRhAR1ZkndiJLlkDU5ovJEF4KXOJw==
-X-Received: by 10.223.175.217 with SMTP id y25mr25890882wrd.255.1505549266677;
-        Sat, 16 Sep 2017 01:07:46 -0700 (PDT)
+        bh=LJ0/9TQ9dO/MGE7JsDaMakYVPaaGsEsQNlvQyTFQlHk=;
+        b=QYBRRDV4RQTN/AumKE6orS68+TSP5H67HgA520vKKXE8bb48lbcFkUefD3DghzkgAY
+         4/NVAZZc8SB2AxUNyOZ9oqENouvrMO67TB8hT7NGdUfLnIsBONmCZf3k8UpijgJ5qaUV
+         AQv3gQcpNQndWdlRGVLJFowsN3DSUkWbApiq2+sA0RdJJ0nRaNHVGX4Jx2PDV85w5/fM
+         Sc0jpVDWACNG6fnK1hwRJrqjbvvD3536MFWqjqBP/9YBdsEHsuYxgIsvv89vaM2wM4Gt
+         vPuAhWVrF+ZhyGxTKAb616kqGmCZnf4GB/qYmRa+PbAYGRe1+AhVvyp5jBXlzOBqhWit
+         sXtg==
+X-Gm-Message-State: AHPjjUhBJzUp+v+EvKR6+MH9382q26cchixmT+tK8mP3wlMXmqcsZtFN
+        /dotDZDlA4M5gKj/
+X-Google-Smtp-Source: AOwi7QCXcGlwkcfo9l2+yJ2OGQ1gYuWvtjScwfm8a3uBH1smS15p/6ATIvYEn8vAIlTzgPgj7R/dsw==
+X-Received: by 10.28.129.23 with SMTP id c23mr4991770wmd.27.1505549273977;
+        Sat, 16 Sep 2017 01:07:53 -0700 (PDT)
 Received: from localhost.localdomain (sud35-h04-89-95-107-230.dsl.sta.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id l126sm2814641wmd.1.2017.09.16.01.07.45
+        by smtp.gmail.com with ESMTPSA id l126sm2814641wmd.1.2017.09.16.01.07.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 16 Sep 2017 01:07:45 -0700 (PDT)
+        Sat, 16 Sep 2017 01:07:53 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v6 03/40] t0021/rot13-filter: improve 'if .. elsif .. else' style
-Date:   Sat, 16 Sep 2017 10:06:54 +0200
-Message-Id: <20170916080731.13925-4-chriscool@tuxfamily.org>
+Subject: [PATCH v6 08/40] sha1_file: prepare for external odbs
+Date:   Sat, 16 Sep 2017 10:06:59 +0200
+Message-Id: <20170916080731.13925-9-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.14.1.576.g3f707d88cd
 In-Reply-To: <20170916080731.13925-1-chriscool@tuxfamily.org>
 References: <20170916080731.13925-1-chriscool@tuxfamily.org>
@@ -70,119 +70,157 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Before further refactoring the "t0021/rot13-filter.pl" script,
-let's modernize the style of its 'if .. elsif .. else' clauses
-to improve its readability by making it more similar to our
-other perl scripts.
+In the following commits we will need some functions that were
+internal to sha1_file.c, so let's first make them non static
+and declare them in "cache.h". While at it, let's rename
+'create_tmpfile()' to 'create_object_tmpfile()' to make its
+name less generic.
 
+Let's also split out 'sha1_file_name_alt()' from
+'sha1_file_name()' and 'open_sha1_file_alt()' from
+'open_sha1_file()', as we will need both of these new
+functions too.
+
+Helped-by: Jeff King <peff@peff.net>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/t0021/rot13-filter.pl | 39 +++++++++++++--------------------------
- 1 file changed, 13 insertions(+), 26 deletions(-)
+ cache.h     |  8 ++++++++
+ sha1_file.c | 47 +++++++++++++++++++++++++++++------------------
+ 2 files changed, 37 insertions(+), 18 deletions(-)
 
-diff --git a/t/t0021/rot13-filter.pl b/t/t0021/rot13-filter.pl
-index e4495a52f3..82882392ae 100644
---- a/t/t0021/rot13-filter.pl
-+++ b/t/t0021/rot13-filter.pl
-@@ -61,23 +61,20 @@ sub packet_bin_read {
- 	if ( $bytes_read == 0 ) {
- 		# EOF - Git stopped talking to us!
- 		return ( -1, "" );
--	}
--	elsif ( $bytes_read != 4 ) {
-+	} elsif ( $bytes_read != 4 ) {
- 		die "invalid packet: '$buffer'";
- 	}
- 	my $pkt_size = hex($buffer);
- 	if ( $pkt_size == 0 ) {
- 		return ( 1, "" );
--	}
--	elsif ( $pkt_size > 4 ) {
-+	} elsif ( $pkt_size > 4 ) {
- 		my $content_size = $pkt_size - 4;
- 		$bytes_read = read STDIN, $buffer, $content_size;
- 		if ( $bytes_read != $content_size ) {
- 			die "invalid packet ($content_size bytes expected; $bytes_read bytes read)";
- 		}
- 		return ( 0, $buffer );
--	}
--	else {
-+	} else {
- 		die "invalid packet size: $pkt_size";
+diff --git a/cache.h b/cache.h
+index a916bc79e3..00d89568f3 100644
+--- a/cache.h
++++ b/cache.h
+@@ -902,6 +902,12 @@ extern void check_repository_format(void);
+  */
+ extern const char *sha1_file_name(const unsigned char *sha1);
+ 
++/*
++ * Like sha1_file_name, but return the filename within a specific alternate
++ * object directory. Shares the same static buffer with sha1_file_name.
++ */
++extern const char *sha1_file_name_alt(const char *objdir, const unsigned char *sha1);
++
+ /*
+  * Return an abbreviated sha1 unique within this repository's object database.
+  * The result will be at least `len` characters long, and will be NUL
+@@ -1189,6 +1195,8 @@ extern int parse_sha1_header(const char *hdr, unsigned long *sizep);
+ 
+ extern int check_sha1_signature(const unsigned char *sha1, void *buf, unsigned long size, const char *type);
+ 
++extern int create_object_tmpfile(struct strbuf *tmp, const char *filename);
++extern void close_sha1_file(int fd);
+ extern int finalize_object_file(const char *tmpfile, const char *filename);
+ 
+ /*
+diff --git a/sha1_file.c b/sha1_file.c
+index 5f71bbac3e..bea1ae6afb 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -251,17 +251,22 @@ static void fill_sha1_path(struct strbuf *buf, const unsigned char *sha1)
  	}
  }
-@@ -165,8 +162,7 @@ while (1) {
- 		$debug->flush();
- 		packet_txt_write("status=success");
- 		packet_flush();
--	}
--	else {
-+	} else {
- 		my ( $pathname ) = packet_txt_read() =~ /^pathname=(.+)$/;
- 		print $debug " $pathname";
- 		$debug->flush();
-@@ -205,17 +201,13 @@ while (1) {
- 		my $output;
- 		if ( exists $DELAY{$pathname} and exists $DELAY{$pathname}{"output"} ) {
- 			$output = $DELAY{$pathname}{"output"}
--		}
--		elsif ( $pathname eq "error.r" or $pathname eq "abort.r" ) {
-+		} elsif ( $pathname eq "error.r" or $pathname eq "abort.r" ) {
- 			$output = "";
--		}
--		elsif ( $command eq "clean" and grep( /^clean$/, @capabilities ) ) {
-+		} elsif ( $command eq "clean" and grep( /^clean$/, @capabilities ) ) {
- 			$output = rot13($input);
--		}
--		elsif ( $command eq "smudge" and grep( /^smudge$/, @capabilities ) ) {
-+		} elsif ( $command eq "smudge" and grep( /^smudge$/, @capabilities ) ) {
- 			$output = rot13($input);
--		}
--		else {
-+		} else {
- 			die "bad command '$command'";
- 		}
  
-@@ -224,25 +216,21 @@ while (1) {
- 			$debug->flush();
- 			packet_txt_write("status=error");
- 			packet_flush();
--		}
--		elsif ( $pathname eq "abort.r" ) {
-+		} elsif ( $pathname eq "abort.r" ) {
- 			print $debug "[ABORT]\n";
- 			$debug->flush();
- 			packet_txt_write("status=abort");
- 			packet_flush();
--		}
--		elsif ( $command eq "smudge" and
-+		} elsif ( $command eq "smudge" and
- 			exists $DELAY{$pathname} and
--			$DELAY{$pathname}{"requested"} == 1
--		) {
-+			$DELAY{$pathname}{"requested"} == 1 ) {
- 			print $debug "[DELAYED]\n";
- 			$debug->flush();
- 			packet_txt_write("status=delayed");
- 			packet_flush();
- 			$DELAY{$pathname}{"requested"} = 2;
- 			$DELAY{$pathname}{"output"} = $output;
--		}
--		else {
-+		} else {
- 			packet_txt_write("status=success");
- 			packet_flush();
+-const char *sha1_file_name(const unsigned char *sha1)
++const char *sha1_file_name_alt(const char *objdir, const unsigned char *sha1)
+ {
+ 	static struct strbuf buf = STRBUF_INIT;
  
-@@ -262,8 +250,7 @@ while (1) {
- 				print $debug ".";
- 				if ( length($output) > $MAX_PACKET_CONTENT_SIZE ) {
- 					$output = substr( $output, $MAX_PACKET_CONTENT_SIZE );
--				}
--				else {
-+				} else {
- 					$output = "";
- 				}
- 			}
+ 	strbuf_reset(&buf);
+-	strbuf_addf(&buf, "%s/", get_object_directory());
++	strbuf_addf(&buf, "%s/", objdir);
+ 
+ 	fill_sha1_path(&buf, sha1);
+ 	return buf.buf;
+ }
+ 
++const char *sha1_file_name(const unsigned char *sha1)
++{
++	return sha1_file_name_alt(get_object_directory(), sha1);
++}
++
+ struct strbuf *alt_scratch_buf(struct alternate_object_database *alt)
+ {
+ 	strbuf_setlen(&alt->scratch, alt->base_len);
+@@ -822,24 +827,14 @@ static int stat_sha1_file(const unsigned char *sha1, struct stat *st,
+ 	return -1;
+ }
+ 
+-/*
+- * Like stat_sha1_file(), but actually open the object and return the
+- * descriptor. See the caveats on the "path" parameter above.
+- */
+-static int open_sha1_file(const unsigned char *sha1, const char **path)
++static int open_sha1_file_alt(const unsigned char *sha1, const char **path)
+ {
+-	int fd;
+ 	struct alternate_object_database *alt;
+-	int most_interesting_errno;
+-
+-	*path = sha1_file_name(sha1);
+-	fd = git_open(*path);
+-	if (fd >= 0)
+-		return fd;
+-	most_interesting_errno = errno;
++	int most_interesting_errno = errno;
+ 
+ 	prepare_alt_odb();
+ 	for (alt = alt_odb_list; alt; alt = alt->next) {
++		int fd;
+ 		*path = alt_sha1_path(alt, sha1);
+ 		fd = git_open(*path);
+ 		if (fd >= 0)
+@@ -851,6 +846,22 @@ static int open_sha1_file(const unsigned char *sha1, const char **path)
+ 	return -1;
+ }
+ 
++/*
++ * Like stat_sha1_file(), but actually open the object and return the
++ * descriptor. See the caveats on the "path" parameter above.
++ */
++static int open_sha1_file(const unsigned char *sha1, const char **path)
++{
++	int fd;
++
++	*path = sha1_file_name(sha1);
++	fd = git_open(*path);
++	if (fd >= 0)
++		return fd;
++
++	return open_sha1_file_alt(sha1, path);
++}
++
+ /*
+  * Map the loose object at "path" if it is not NULL, or the path found by
+  * searching for a loose object named "sha1".
+@@ -1428,7 +1439,7 @@ int hash_sha1_file(const void *buf, unsigned long len, const char *type,
+ }
+ 
+ /* Finalize a file on disk, and close it. */
+-static void close_sha1_file(int fd)
++void close_sha1_file(int fd)
+ {
+ 	if (fsync_object_files)
+ 		fsync_or_die(fd, "sha1 file");
+@@ -1452,7 +1463,7 @@ static inline int directory_size(const char *filename)
+  * We want to avoid cross-directory filename renames, because those
+  * can have problems on various filesystems (FAT, NFS, Coda).
+  */
+-static int create_tmpfile(struct strbuf *tmp, const char *filename)
++int create_object_tmpfile(struct strbuf *tmp, const char *filename)
+ {
+ 	int fd, dirlen = directory_size(filename);
+ 
+@@ -1492,7 +1503,7 @@ static int write_loose_object(const unsigned char *sha1, char *hdr, int hdrlen,
+ 	static struct strbuf tmp_file = STRBUF_INIT;
+ 	const char *filename = sha1_file_name(sha1);
+ 
+-	fd = create_tmpfile(&tmp_file, filename);
++	fd = create_object_tmpfile(&tmp_file, filename);
+ 	if (fd < 0) {
+ 		if (errno == EACCES)
+ 			return error("insufficient permission for adding an object to repository database %s", get_object_directory());
 -- 
 2.14.1.576.g3f707d88cd
 
