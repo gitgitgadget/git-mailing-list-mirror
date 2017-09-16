@@ -7,47 +7,46 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 66C0020A21
-	for <e@80x24.org>; Sat, 16 Sep 2017 08:10:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E35CE20A21
+	for <e@80x24.org>; Sat, 16 Sep 2017 08:10:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751590AbdIPIKM (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Sep 2017 04:10:12 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:34748 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750909AbdIPIH5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Sep 2017 04:07:57 -0400
-Received: by mail-wm0-f65.google.com with SMTP id i131so4521233wma.1
-        for <git@vger.kernel.org>; Sat, 16 Sep 2017 01:07:57 -0700 (PDT)
+        id S1751221AbdIPIHs (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Sep 2017 04:07:48 -0400
+Received: from mail-wr0-f174.google.com ([209.85.128.174]:56621 "EHLO
+        mail-wr0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750909AbdIPIHo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Sep 2017 04:07:44 -0400
+Received: by mail-wr0-f174.google.com with SMTP id r74so3156570wrb.13
+        for <git@vger.kernel.org>; Sat, 16 Sep 2017 01:07:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=5plaG19oo5uWjzldqvK4gCJUTH0M9VOCPBlqDcoPJAk=;
-        b=rp1tA4Q6cpz1T4S9RU6m6rD+JQoWE7rt5AOaGX3e8VUrw+ycxVbIuVKg1XKxrB2feO
-         FZEhfdu7GMwUeL+jMPM6MVMmm8Tr9QzdB6wDyTAkigKqx3zLpYIKQyuF6qyiUWEJoAsm
-         Iuhh3pIQMx58WCG3bn3vz0paYH3O0TCrYWfDXsQWJtmCaPC4OqZB3cAER2SJS2Kw0sPG
-         IQc8TEzL60tfZZX7E426xdyRuSJR9s+Emhbl6+Cf6a5G4pYKGXM7YA8V2Nu8Rvac1vW2
-         ucbx+uNb2/+s1nj7wDE1+Rffv5ri7e8W61jRQ0DoWouIjEfmdKUgHvBUYoQgEGIkin0j
-         MpYA==
+        h=from:to:cc:subject:date:message-id;
+        bh=NK0L8fg9Mp8k4R1tC5y9iG2B0TfLs7eyrpDVhL4NTzs=;
+        b=RKdNsUhg/cHzlB5TVTlnFe3evTNnIjA6xHZc4dfyAcCbU3KLlvdmGkWCTfLYZ1ewWx
+         5HFPpdhtwCv6A0CO6AhTuHvcoKVo4cKfXviO6OtGDnDfpDqxKOKEDH49c4YuruqWfAyy
+         F8MHUARXnd1Y7UFRsHtJX0k0gxoyF0IHBBsNl4OgB+Yi0dVmAQFBhYQkuXjL1/2pOy4K
+         WZxCDc9CzXXfQ+clPCbof5ch/tKchRpKmbeCrxky7Pg+ATsNGu+oyy6sozgvYnC4JxU/
+         UKE1f/4FgXq1shX4VJvvnIdxQAFTDDgLfTDbRIZrSpSL5VYnDqQ1rF33pczFYkVdtcHt
+         YUsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=5plaG19oo5uWjzldqvK4gCJUTH0M9VOCPBlqDcoPJAk=;
-        b=FISJtV481a8+nyFfle+VfrzgmgEh1j3r1qe5t7M0oqxgMZ/JGwcmNH8lfcwkcGuNuJ
-         oSKAdl+NEN4hpd9B4JqP//w/iuMKUn6K0xhlgp1OrZemcHQBgTgiYlCw4rlvfJf/1+Dq
-         3Y+VghHVUNGA2fbE82FlgNEhuhnqzHUSecbyJ4uXuL6frcaofX9XnHL7CpE/8XOj78s2
-         F4EgN2AcfB812dctnytZUt/vljyfzsjx5X0ExKg/lFHrmEJGWa3nI6xYJJLyyhkGwXhW
-         sqT4LxRNKM9WQJdinvDH8VUpuZ0UKoHfV455YlmDXHtfmuBjC8pzQ/lvhnqhyF6h+8NB
-         q7cw==
-X-Gm-Message-State: AHPjjUiDhBl/jbU9S6yDJPBMyuCCGwxsvkTOlpX9tBe9+kjO889A4oR9
-        qkc8BcOGgb+0bma1
-X-Google-Smtp-Source: AOwi7QDjCd1/HNVlrjFSY0gLHqDBcOMKbW8w9h53eNyUPKe+meNzbb8DeV5zAd8S6MiWR10/b/wQGw==
-X-Received: by 10.28.174.80 with SMTP id x77mr4823811wme.83.1505549275872;
-        Sat, 16 Sep 2017 01:07:55 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=NK0L8fg9Mp8k4R1tC5y9iG2B0TfLs7eyrpDVhL4NTzs=;
+        b=cECmCCWFIOJncINKNH9dYS2K+quCm4BMD1BLfNK8UdHgTgnA+eOuPrpemyWBRx7dhK
+         gM34IQS/yQC9eb7EPFabH+AiS0u19JzYmO4bpJVEjMtfySzxdibKW6d7VUvk0Kiz5jv9
+         o4fPibWAJI/yJjxb9DzaD0cD5eB9wAY5uv9VZ9KIYoQq54Kjw+UHHX5W48xOsTV+8wxt
+         JCQqgDXXgBWFJnRGF7MzH5N9LmotklE5UwuzV9PUd2VjoXm5z8R9SizwjaUeQeg9YqJm
+         q07acUAiH/or2njyL9OMPo/y0ItX+mB4zh03lGouSFhIKDP93zjMudSRh07h9k+LwUDs
+         /R8A==
+X-Gm-Message-State: AHPjjUgTQWn/IDz0DNaVS7fb62+NbJz8r3/xS5wAdVBDljdQpcCotzSj
+        QKI+mPxrMjVtqhXA
+X-Google-Smtp-Source: AOwi7QBMnV000wTbpEX19THtduW/T3wNsE6edGfhHXXPYwPZRoN3UMskA9d4kbu3AXmw08NEZpRCSQ==
+X-Received: by 10.223.177.139 with SMTP id q11mr4659893wra.269.1505549262280;
+        Sat, 16 Sep 2017 01:07:42 -0700 (PDT)
 Received: from localhost.localdomain (sud35-h04-89-95-107-230.dsl.sta.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id l126sm2814641wmd.1.2017.09.16.01.07.54
+        by smtp.gmail.com with ESMTPSA id l126sm2814641wmd.1.2017.09.16.01.07.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 16 Sep 2017 01:07:55 -0700 (PDT)
+        Sat, 16 Sep 2017 01:07:41 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -59,647 +58,366 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v6 09/40] Add initial external odb support
-Date:   Sat, 16 Sep 2017 10:07:00 +0200
-Message-Id: <20170916080731.13925-10-chriscool@tuxfamily.org>
+Subject: [PATCH v6 00/40] Add initial experimental external ODB support
+Date:   Sat, 16 Sep 2017 10:06:51 +0200
+Message-Id: <20170916080731.13925-1-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.14.1.576.g3f707d88cd
-In-Reply-To: <20170916080731.13925-1-chriscool@tuxfamily.org>
-References: <20170916080731.13925-1-chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The external-odb.{c,h} files contains the functions that are
-called by the rest of Git from "sha1_file.c".
+Note: a lot of information about the goals, the design and how things
+work is now in the followin patches:
 
-The odb-helper.{c,h} files contains the functions to
-actually implement communication with the external scripts or
-processes that will manage external git objects.
+  - [PATCH v6 34/40] Add Documentation/technical/external-odb.txt
+  - [PATCH v6 40/40] Doc/external-odb: explain transfering objects and metadata
 
-For now only script mode is supported, and only the 'have' and
-'get_git_obj' instructions are supported.
+Goal
+~~~~
 
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- Makefile                |   2 +
- cache.h                 |   1 +
- external-odb.c          | 113 ++++++++++++++++++++
- external-odb.h          |   8 ++
- odb-helper.c            | 269 ++++++++++++++++++++++++++++++++++++++++++++++++
- odb-helper.h            |  27 +++++
- sha1_file.c             |  31 +++++-
- t/t0400-external-odb.sh |  46 +++++++++
- 8 files changed, 495 insertions(+), 2 deletions(-)
+Git can store its objects only in the form of loose objects in
+separate files or packed objects in a pack file.
+
+To be able to better handle some kind of objects, for example big
+blobs, it would be nice if Git could store its objects in other object
+databases (ODB).
+
+To do that, this patch series makes it possible to register commands,
+also called "helpers", using "odb.<odbname>.scriptCommand" or
+"odb.<odbname>.subprocessCommand" config variables, to access external
+ODBs where objects can be stored and retrieved.
+
+Design
+~~~~~~
+
+* The "helpers" (registered commands)
+
+Each helper manages access to one external ODB.
+
+There are 2 different modes for helper:
+
+  - Helpers configured using "odb.<odbname>.scriptCommand" are
+    launched each time Git wants to communicate with the <odbname>
+    external ODB. This is called "script mode".
+
+  - Helpers configured using "odb.<odbname>.subprocessCommand" are
+    launched launched once as a sub-process (using sub-process.h), and
+    Git communicates with them using packet lines. This is called
+    "process mode".
+
+A helper can be given different instructions by Git. The instructions
+that are supported are negociated at the beginning of the
+communication using a capability mechanism.
+
+See patch 34/40 and 40/40 (the documentation patchs) for more
+information about the different instructions and their arguments.
+
+* Performance
+
+The process mode has been implemented using the refactoring that Ben
+Peart did on top of Lars Schneider's work on using sub-processes and
+packet lines in the smudge/clean filters for git-lfs.
+
+This also uses further work from Ben Peart called "read object
+process".
+
+See:
+
+https://public-inbox.org/git/20170113155253.1644-1-benpeart@microsoft.com/
+https://public-inbox.org/git/20170322165220.5660-1-benpeart@microsoft.com/
+
+Ben recently sent an update of this work but this update has not been
+integrated into the current patch series. See:
+
+https://public-inbox.org/git/20170714132651.170708-1-benpeart@microsoft.com/
+
+Anyway thanks to this, the external ODB mechanism should in the end perform
+as well as the git-lfs mechanism when many objects should be
+transfered.
+
+Implementation
+~~~~~~~~~~~~~~
+
+* Mechanism to call the registered commands
+
+A set of function in external-odb.{c,h} are called by the rest of Git
+to manage all the external ODBs.
+
+These functions use 'struct odb_helper' and its associated functions
+defined in odb-helper.{c,h} to talk to the different external ODBs by
+launching the configured "odb.<odbname>.*command" commands and writing
+to or reading from them.
+
+* Transfering information
+
+To tranfer information about the blobs stored in external ODB, some
+special refs, called "odb ref", similar as replace refs, are used in
+the tests of this series, but in general nothing forces the helper to
+use that mechanism.
+
+The external odb helper is responsible for using and creating the refs
+in refs/odbs/<odbname>/, if it wants to do that. It is free for example
+to just create one ref, as it is also free to create many refs. Git
+would just transmit the refs that have been created by this helper, if
+Git is asked to do so.
+
+For now in the tests there is one odb ref per blob, as it is simple
+and as it is similar to what git-lfs does. Each ref name is
+refs/odbs/<odbname>/<sha1> where <sha1> is the sha1 of the blob stored
+in the external odb named <odbname>.
+
+These odb refs point to a blob that is stored in the Git
+repository and contain information about the blob stored in the
+external odb. This information can be specific to the external odb.
+The repos can then share this information using commands like:
+
+`git fetch origin "refs/odbs/<odbname>/*:refs/odbs/<odbname>/*"`
+
+At the end of the current patch series, "git clone" is teached a
+"--initial-refspec" option, that asks it to first fetch some specified
+refs. This is used in the tests to fetch the odb refs first.
+
+This way only one "git clone" command can setup a repo using the
+external ODB mechanism as long as the right helper is installed on the
+machine and as long as the following options are used:
+
+  - "--initial-refspec <odbrefspec>" to fetch the odb refspec
+  - "-c odb.<odbname>.command=<helper>" to configure the helper
+
+There is also a test script (t0430) that shows that the
+"--initial-refspec" option along with the external ODB mechanism can
+be used to implement cloning using bundles.
+
+* ODB refs
+
+For now odb ref management is only implemented in a helper in t0410.
+
+When a new blob is added to an external odb, its sha1, size and type
+are writen in another new blob and the odb ref is created.
+
+When the list of existing blobs is requested from the external odb,
+the content of the blobs pointed to by the odb refs can also be used
+by the odb to claim that it can get the objects.
+
+When a blob is actually requested from the external odb, it can use
+the content stored in the blobs pointed to by the odb refs to get the
+actual blobs and then pass them.
+
+Highlevel view of the patches in the series
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    - Patch 1/40 is a small code cleanup that I already sent to the
+      mailing list but may be removed in the end due to ongoing work
+      on "git clone".
+
+    - Patches 02/40 to 07/40 create a "Git/Packet.pm" module by
+      refactoring "t0021/rot13-filter.pl". Functions from this new
+      module will be used later in test scripts. According to Junio's
+      suggestion compared to v5 we now first fully refactor
+      "t0021/rot13-filter.pl" before creating the "Git/Packet.pm"
+      module.
+
+    - Patches 08/40 to 16/40 create the external ODB insfrastructure
+      in external-odb.{c,h} and odb-helper.{c,h} for the script mode.
+      The main changes compared to v5 are the following:
+        - we mark as "extern" functions in *.h files
+	- we use sha1_pos() instead of sha1_entry_pos()
+	- we check the size in the header when we 'get' a Git object
+
+    - Patches 17/40 to 23/40 improve lib-http to make it possible to
+      use it as an external ODB to test storing blobs in an HTTP
+      server. The "upload.sh" and "list.sh" files are now properly
+      indented and they use %% instead of % in parameter
+      substitutions compared to v5.
+
+    - Patches 24/40 to 32/40 improve the external ODB insfrastructure
+      to support sub-processes and make everything work using
+      them. The main changes compared to v5 are the following:
+        - we mark as "extern" functions in *.h files
+	- we use the new subprocess_handshake() function
+	- we check the size in the header when we 'get' a Git object
+
+    - Patch 33/40 uses attributes to mark blobs that should be handled
+      by an external odb.
+
+    - Patch 34/40 adds documentation about the external odb
+      mechanism. This patch has been much improved since v5.
+
+    - Patches 35/40 to 39/40 add the --initial-refspec to git clone
+      along with tests.
+
+    - Patch 40/40 adds documentation about transfering objects and
+      metadata when using the external odb mechanism. This patch is
+      new since v5.
+
+Future work
+~~~~~~~~~~~
+
+There are still things that could be cleaned or improved. I think I
+may work on:
+
+  - Integrate changes in recent "read-object-process" work by Ben Peart.
+
+  - Better test all the combinations of the different modes with and
+    without "have" and "put_*" instructions.
+
+  - Maybe implement the missing kinds of 'put' ('put_git_obj' and
+    'put_direct'), so that Git could pass either a git object a plain
+    object or ask the helper to retreive it directly from Git's object
+    database.
+
+  - Add more long running tests and improve tests in general.
+
+Previous work and discussions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+(Sorry for the old Gmane links, I hope I will try to replace them with
+public-inbox.org at one point.)
+
+Peff started to work on this and discuss this some years ago:
+
+http://thread.gmane.org/gmane.comp.version-control.git/206886/focus=207040
+http://thread.gmane.org/gmane.comp.version-control.git/247171
+http://thread.gmane.org/gmane.comp.version-control.git/202902/focus=203020
+
+His work, which is not compile-tested any more, is still there:
+
+https://github.com/peff/git/commits/jk/external-odb-wip
+
+Initial discussions about this new series are there:
+
+http://thread.gmane.org/gmane.comp.version-control.git/288151/focus=295160
+
+Version 1, 2, 3, 4 and 5 of this series are here:
+
+https://public-inbox.org/git/20160613085546.11784-1-chriscool@tuxfamily.org/
+https://public-inbox.org/git/20160628181933.24620-1-chriscool@tuxfamily.org/
+https://public-inbox.org/git/20161130210420.15982-1-chriscool@tuxfamily.org/
+https://public-inbox.org/git/20170620075523.26961-1-chriscool@tuxfamily.org/
+https://public-inbox.org/git/20170803091926.1755-1-chriscool@tuxfamily.org/
+
+Some of the discussions related to Ben Peart's work that is used by
+this series are here:
+
+https://public-inbox.org/git/20170113155253.1644-1-benpeart@microsoft.com/
+https://public-inbox.org/git/20170322165220.5660-1-benpeart@microsoft.com/
+https://public-inbox.org/git/20170714132651.170708-1-benpeart@microsoft.com/
+
+Links
+~~~~~
+
+This patch series is available here:
+
+https://github.com/chriscool/git/commits/external-odb
+
+Version 1, 2, 3, 4 and 5 are here:
+
+https://github.com/chriscool/git/commits/gl-external-odb12
+https://github.com/chriscool/git/commits/gl-external-odb22
+https://github.com/chriscool/git/commits/gl-external-odb61
+https://github.com/chriscool/git/commits/gl-external-odb239
+https://github.com/chriscool/git/commits/gl-external-odb373
+
+
+Ben Peart (2):
+  odb-helper: add init_object_process()
+  Add t0450 to test 'get_direct' mechanism
+
+Christian Couder (38):
+  builtin/clone: get rid of 'value' strbuf
+  t0021/rot13-filter: refactor packet reading functions
+  t0021/rot13-filter: improve 'if .. elsif .. else' style
+  t0021/rot13-filter: improve error message
+  t0021/rot13-filter: add packet_initialize()
+  t0021/rot13-filter: add capability functions
+  Add Git/Packet.pm from parts of t0021/rot13-filter.pl
+  sha1_file: prepare for external odbs
+  Add initial external odb support
+  odb-helper: add odb_helper_init() to send 'init' instruction
+  t0400: add 'put_raw_obj' instruction to odb-helper script
+  external odb: add 'put_raw_obj' support
+  external-odb: accept only blobs for now
+  t0400: add test for external odb write support
+  Add GIT_NO_EXTERNAL_ODB env variable
+  Add t0410 to test external ODB transfer
+  lib-httpd: pass config file to start_httpd()
+  lib-httpd: add upload.sh
+  lib-httpd: add list.sh
+  lib-httpd: add apache-e-odb.conf
+  odb-helper: add odb_helper_get_raw_object()
+  pack-objects: don't pack objects in external odbs
+  Add t0420 to test transfer to HTTP external odb
+  external-odb: add 'get_direct' support
+  odb-helper: add 'script_mode' to 'struct odb_helper'
+  Add t0460 to test passing git objects
+  odb-helper: add put_object_process()
+  Add t0470 to test passing raw objects
+  odb-helper: add have_object_process()
+  Add t0480 to test "have" capability and raw objects
+  external-odb: use 'odb=magic' attribute to mark odb blobs
+  Add Documentation/technical/external-odb.txt
+  clone: add 'initial' param to write_remote_refs()
+  clone: add --initial-refspec option
+  clone: disable external odb before initial clone
+  Add tests for 'clone --initial-refspec'
+  Add t0430 to test cloning using bundles
+  Doc/external-odb: explain transfering objects and metadata
+
+ Documentation/technical/external-odb.txt |  447 +++++++++++++
+ Makefile                                 |    2 +
+ builtin/clone.c                          |   91 ++-
+ builtin/pack-objects.c                   |    4 +
+ cache.h                                  |   18 +
+ environment.c                            |    4 +
+ external-odb.c                           |  196 ++++++
+ external-odb.h                           |   12 +
+ odb-helper.c                             | 1076 ++++++++++++++++++++++++++++++
+ odb-helper.h                             |   45 ++
+ perl/Git/Packet.pm                       |  118 ++++
+ sha1_file.c                              |  155 +++--
+ t/lib-httpd.sh                           |    8 +-
+ t/lib-httpd/apache-e-odb.conf            |  214 ++++++
+ t/lib-httpd/list.sh                      |   41 ++
+ t/lib-httpd/upload.sh                    |   45 ++
+ t/t0021/rot13-filter.pl                  |  110 +--
+ t/t0400-external-odb.sh                  |   85 +++
+ t/t0410-transfer-e-odb.sh                |  147 ++++
+ t/t0420-transfer-http-e-odb.sh           |  152 +++++
+ t/t0430-clone-bundle-e-odb.sh            |   85 +++
+ t/t0450-read-object.sh                   |   28 +
+ t/t0450/read-object                      |   68 ++
+ t/t0460-read-object-git.sh               |   28 +
+ t/t0460/read-object-git                  |   78 +++
+ t/t0470-read-object-http-e-odb.sh        |  119 ++++
+ t/t0470/read-object-plain                |   83 +++
+ t/t0480-read-object-have-http-e-odb.sh   |  119 ++++
+ t/t0480/read-object-plain-have           |  103 +++
+ t/t5616-clone-initial-refspec.sh         |   48 ++
+ 30 files changed, 3588 insertions(+), 141 deletions(-)
+ create mode 100644 Documentation/technical/external-odb.txt
  create mode 100644 external-odb.c
  create mode 100644 external-odb.h
  create mode 100644 odb-helper.c
  create mode 100644 odb-helper.h
+ create mode 100644 perl/Git/Packet.pm
+ create mode 100644 t/lib-httpd/apache-e-odb.conf
+ create mode 100644 t/lib-httpd/list.sh
+ create mode 100644 t/lib-httpd/upload.sh
  create mode 100755 t/t0400-external-odb.sh
+ create mode 100755 t/t0410-transfer-e-odb.sh
+ create mode 100755 t/t0420-transfer-http-e-odb.sh
+ create mode 100755 t/t0430-clone-bundle-e-odb.sh
+ create mode 100755 t/t0450-read-object.sh
+ create mode 100755 t/t0450/read-object
+ create mode 100755 t/t0460-read-object-git.sh
+ create mode 100755 t/t0460/read-object-git
+ create mode 100755 t/t0470-read-object-http-e-odb.sh
+ create mode 100755 t/t0470/read-object-plain
+ create mode 100755 t/t0480-read-object-have-http-e-odb.sh
+ create mode 100755 t/t0480/read-object-plain-have
+ create mode 100755 t/t5616-clone-initial-refspec.sh
 
-diff --git a/Makefile b/Makefile
-index f2bb7f2f63..24aab8ace3 100644
---- a/Makefile
-+++ b/Makefile
-@@ -784,6 +784,7 @@ LIB_OBJS += ewah/ewah_bitmap.o
- LIB_OBJS += ewah/ewah_io.o
- LIB_OBJS += ewah/ewah_rlw.o
- LIB_OBJS += exec_cmd.o
-+LIB_OBJS += external-odb.o
- LIB_OBJS += fetch-pack.o
- LIB_OBJS += fsck.o
- LIB_OBJS += gettext.o
-@@ -816,6 +817,7 @@ LIB_OBJS += notes-cache.o
- LIB_OBJS += notes-merge.o
- LIB_OBJS += notes-utils.o
- LIB_OBJS += object.o
-+LIB_OBJS += odb-helper.o
- LIB_OBJS += oidset.o
- LIB_OBJS += packfile.o
- LIB_OBJS += pack-bitmap.o
-diff --git a/cache.h b/cache.h
-index 00d89568f3..6c22bd0525 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1534,6 +1534,7 @@ extern void prepare_alt_odb(void);
- extern char *compute_alternate_path(const char *path, struct strbuf *err);
- typedef int alt_odb_fn(struct alternate_object_database *, void *);
- extern int foreach_alt_odb(alt_odb_fn, void*);
-+extern void prepare_external_alt_odb(void);
- 
- /*
-  * Allocate a "struct alternate_object_database" but do _not_ actually
-diff --git a/external-odb.c b/external-odb.c
-new file mode 100644
-index 0000000000..e9c3f11666
---- /dev/null
-+++ b/external-odb.c
-@@ -0,0 +1,113 @@
-+#include "cache.h"
-+#include "external-odb.h"
-+#include "odb-helper.h"
-+
-+static struct odb_helper *helpers;
-+static struct odb_helper **helpers_tail = &helpers;
-+
-+static struct odb_helper *find_or_create_helper(const char *name, int len)
-+{
-+	struct odb_helper *o;
-+
-+	for (o = helpers; o; o = o->next)
-+		if (!strncmp(o->name, name, len) && !o->name[len])
-+			return o;
-+
-+	o = odb_helper_new(name, len);
-+	*helpers_tail = o;
-+	helpers_tail = &o->next;
-+
-+	return o;
-+}
-+
-+static int external_odb_config(const char *var, const char *value, void *data)
-+{
-+	struct odb_helper *o;
-+	const char *name;
-+	int namelen;
-+	const char *subkey;
-+
-+	if (parse_config_key(var, "odb", &name, &namelen, &subkey) < 0)
-+		return 0;
-+
-+	o = find_or_create_helper(name, namelen);
-+
-+	if (!strcmp(subkey, "scriptcommand"))
-+		return git_config_string(&o->cmd, var, value);
-+
-+	return 0;
-+}
-+
-+static void external_odb_init(void)
-+{
-+	static int initialized;
-+
-+	if (initialized)
-+		return;
-+	initialized = 1;
-+
-+	git_config(external_odb_config, NULL);
-+}
-+
-+const char *external_odb_root(void)
-+{
-+	static const char *root;
-+	if (!root)
-+		root = git_pathdup("objects/external");
-+	return root;
-+}
-+
-+int external_odb_has_object(const unsigned char *sha1)
-+{
-+	struct odb_helper *o;
-+
-+	external_odb_init();
-+
-+	for (o = helpers; o; o = o->next)
-+		if (odb_helper_has_object(o, sha1))
-+			return 1;
-+	return 0;
-+}
-+
-+int external_odb_get_object(const unsigned char *sha1)
-+{
-+	struct odb_helper *o;
-+	const char *path;
-+
-+	if (!external_odb_has_object(sha1))
-+		return -1;
-+
-+	path = sha1_file_name_alt(external_odb_root(), sha1);
-+	safe_create_leading_directories_const(path);
-+	prepare_external_alt_odb();
-+
-+	for (o = helpers; o; o = o->next) {
-+		struct strbuf tmpfile = STRBUF_INIT;
-+		int ret;
-+		int fd;
-+
-+		if (!odb_helper_has_object(o, sha1))
-+			continue;
-+
-+		fd = create_object_tmpfile(&tmpfile, path);
-+		if (fd < 0) {
-+			strbuf_release(&tmpfile);
-+			return -1;
-+		}
-+
-+		if (odb_helper_get_object(o, sha1, fd) < 0) {
-+			close(fd);
-+			unlink(tmpfile.buf);
-+			strbuf_release(&tmpfile);
-+			continue;
-+		}
-+
-+		close_sha1_file(fd);
-+		ret = finalize_object_file(tmpfile.buf, path);
-+		strbuf_release(&tmpfile);
-+		if (!ret)
-+			return 0;
-+	}
-+
-+	return -1;
-+}
-diff --git a/external-odb.h b/external-odb.h
-new file mode 100644
-index 0000000000..dc5635f452
---- /dev/null
-+++ b/external-odb.h
-@@ -0,0 +1,8 @@
-+#ifndef EXTERNAL_ODB_H
-+#define EXTERNAL_ODB_H
-+
-+extern const char *external_odb_root(void);
-+extern int external_odb_has_object(const unsigned char *sha1);
-+extern int external_odb_get_object(const unsigned char *sha1);
-+
-+#endif /* EXTERNAL_ODB_H */
-diff --git a/odb-helper.c b/odb-helper.c
-new file mode 100644
-index 0000000000..5e91044872
---- /dev/null
-+++ b/odb-helper.c
-@@ -0,0 +1,269 @@
-+#include "cache.h"
-+#include "object.h"
-+#include "argv-array.h"
-+#include "odb-helper.h"
-+#include "run-command.h"
-+#include "sha1-lookup.h"
-+
-+struct odb_helper *odb_helper_new(const char *name, int namelen)
-+{
-+	struct odb_helper *o;
-+
-+	o = xcalloc(1, sizeof(*o));
-+	o->name = xmemdupz(name, namelen);
-+
-+	return o;
-+}
-+
-+struct odb_helper_cmd {
-+	struct argv_array argv;
-+	struct child_process child;
-+};
-+
-+/*
-+ * Callers are responsible to ensure that the result of vaddf(fmt, ap)
-+ * is properly shell-quoted.
-+ */
-+static void prepare_helper_command(struct argv_array *argv, const char *cmd,
-+				   const char *fmt, va_list ap)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+
-+	strbuf_addstr(&buf, cmd);
-+	strbuf_addch(&buf, ' ');
-+	strbuf_vaddf(&buf, fmt, ap);
-+
-+	argv_array_push(argv, buf.buf);
-+	strbuf_release(&buf);
-+}
-+
-+__attribute__((format (printf,3,4)))
-+static int odb_helper_start(struct odb_helper *o,
-+			    struct odb_helper_cmd *cmd,
-+			    const char *fmt, ...)
-+{
-+	va_list ap;
-+
-+	memset(cmd, 0, sizeof(*cmd));
-+	argv_array_init(&cmd->argv);
-+
-+	if (!o->cmd)
-+		return -1;
-+
-+	va_start(ap, fmt);
-+	prepare_helper_command(&cmd->argv, o->cmd, fmt, ap);
-+	va_end(ap);
-+
-+	cmd->child.argv = cmd->argv.argv;
-+	cmd->child.use_shell = 1;
-+	cmd->child.no_stdin = 1;
-+	cmd->child.out = -1;
-+
-+	if (start_command(&cmd->child) < 0) {
-+		argv_array_clear(&cmd->argv);
-+		return -1;
-+	}
-+
-+	return 0;
-+}
-+
-+static int odb_helper_finish(struct odb_helper *o,
-+			     struct odb_helper_cmd *cmd)
-+{
-+	int ret = finish_command(&cmd->child);
-+	argv_array_clear(&cmd->argv);
-+	if (ret) {
-+		warning("odb helper '%s' reported failure", o->name);
-+		return -1;
-+	}
-+	return 0;
-+}
-+
-+static int parse_object_line(struct odb_helper_object *o, const char *line)
-+{
-+	char *end;
-+	if (get_sha1_hex(line, o->sha1) < 0)
-+		return -1;
-+
-+	line += 40;
-+	if (*line++ != ' ')
-+		return -1;
-+
-+	o->size = strtoul(line, &end, 10);
-+	if (line == end || *end++ != ' ')
-+		return -1;
-+
-+	o->type = type_from_string(end);
-+	return 0;
-+}
-+
-+static int add_have_entry(struct odb_helper *o, const char *line)
-+{
-+	ALLOC_GROW(o->have, o->have_nr+1, o->have_alloc);
-+	if (parse_object_line(&o->have[o->have_nr], line) < 0) {
-+		warning("bad 'have' input from odb helper '%s': %s",
-+			o->name, line);
-+		return 1;
-+	}
-+	o->have_nr++;
-+	return 0;
-+}
-+
-+static int odb_helper_object_cmp(const void *va, const void *vb)
-+{
-+	const struct odb_helper_object *a = va, *b = vb;
-+	return hashcmp(a->sha1, b->sha1);
-+}
-+
-+static void odb_helper_load_have(struct odb_helper *o)
-+{
-+	struct odb_helper_cmd cmd;
-+	FILE *fh;
-+	struct strbuf line = STRBUF_INIT;
-+
-+	if (o->have_valid)
-+		return;
-+	o->have_valid = 1;
-+
-+	if (odb_helper_start(o, &cmd, "have") < 0)
-+		return;
-+
-+	fh = xfdopen(cmd.child.out, "r");
-+	while (strbuf_getline(&line, fh) != EOF)
-+		if (add_have_entry(o, line.buf))
-+			break;
-+
-+	strbuf_release(&line);
-+	fclose(fh);
-+	odb_helper_finish(o, &cmd);
-+
-+	qsort(o->have, o->have_nr, sizeof(*o->have), odb_helper_object_cmp);
-+}
-+
-+static const unsigned char *have_sha1_access(size_t index, void *table)
-+{
-+	struct odb_helper_object *have = table;
-+	return have[index].sha1;
-+}
-+
-+static struct odb_helper_object *odb_helper_lookup(struct odb_helper *o,
-+						   const unsigned char *sha1)
-+{
-+	int idx;
-+
-+	odb_helper_load_have(o);
-+	idx = sha1_pos(sha1, o->have, o->have_nr, have_sha1_access);
-+	if (idx < 0)
-+		return NULL;
-+	return &o->have[idx];
-+}
-+
-+int odb_helper_has_object(struct odb_helper *o, const unsigned char *sha1)
-+{
-+	return !!odb_helper_lookup(o, sha1);
-+}
-+
-+int odb_helper_get_object(struct odb_helper *o, const unsigned char *sha1,
-+			    int fd)
-+{
-+	struct odb_helper_object *obj;
-+	struct odb_helper_cmd cmd;
-+	unsigned long total_got;
-+	git_zstream stream;
-+	int zret = Z_STREAM_END;
-+	git_SHA_CTX hash;
-+	unsigned char real_sha1[20];
-+	struct strbuf header = STRBUF_INIT;
-+	unsigned long hdr_size;
-+
-+	obj = odb_helper_lookup(o, sha1);
-+	if (!obj)
-+		return -1;
-+
-+	if (odb_helper_start(o, &cmd, "get_git_obj %s", sha1_to_hex(sha1)) < 0)
-+		return -1;
-+
-+	memset(&stream, 0, sizeof(stream));
-+	git_inflate_init(&stream);
-+	git_SHA1_Init(&hash);
-+	total_got = 0;
-+
-+	for (;;) {
-+		unsigned char buf[4096];
-+		int r;
-+
-+		r = xread(cmd.child.out, buf, sizeof(buf));
-+		if (r < 0) {
-+			error("unable to read from odb helper '%s': %s",
-+			      o->name, strerror(errno));
-+			close(cmd.child.out);
-+			odb_helper_finish(o, &cmd);
-+			git_inflate_end(&stream);
-+			return -1;
-+		}
-+		if (r == 0)
-+			break;
-+
-+		write_or_die(fd, buf, r);
-+
-+		stream.next_in = buf;
-+		stream.avail_in = r;
-+		do {
-+			unsigned char inflated[4096];
-+			unsigned long got;
-+
-+			stream.next_out = inflated;
-+			stream.avail_out = sizeof(inflated);
-+			zret = git_inflate(&stream, Z_SYNC_FLUSH);
-+			got = sizeof(inflated) - stream.avail_out;
-+
-+			git_SHA1_Update(&hash, inflated, got);
-+			/* skip header when counting size */
-+			if (!total_got) {
-+				const unsigned char *p = memchr(inflated, '\0', got);
-+				if (p) {
-+					unsigned long hdr_last = p - inflated + 1;
-+					strbuf_add(&header, inflated, hdr_last);
-+					got -= hdr_last;
-+				} else {
-+					strbuf_add(&header, inflated, got);
-+					got = 0;
-+				}
-+			}
-+			total_got += got;
-+		} while (stream.avail_in && zret == Z_OK);
-+	}
-+
-+	close(cmd.child.out);
-+	git_inflate_end(&stream);
-+	git_SHA1_Final(real_sha1, &hash);
-+	if (odb_helper_finish(o, &cmd))
-+		return -1;
-+	if (zret != Z_STREAM_END) {
-+		warning("bad zlib data from odb helper '%s' for %s",
-+			o->name, sha1_to_hex(sha1));
-+		return -1;
-+	}
-+	if (total_got != obj->size) {
-+		warning("size mismatch from odb helper '%s' for %s (%lu != %lu)",
-+			o->name, sha1_to_hex(sha1), total_got, obj->size);
-+		return -1;
-+	}
-+	if (hashcmp(real_sha1, sha1)) {
-+		warning("sha1 mismatch from odb helper '%s' for %s (got %s)",
-+			o->name, sha1_to_hex(sha1), sha1_to_hex(real_sha1));
-+		return -1;
-+	}
-+	if (parse_sha1_header(header.buf, &hdr_size) < 0) {
-+		warning("could not parse header from odb helper '%s' for %s",
-+			o->name, sha1_to_hex(sha1));
-+		return -1;
-+	}
-+	if (total_got != hdr_size) {
-+		warning("size mismatch from odb helper '%s' for %s (%lu != %lu)",
-+			o->name, sha1_to_hex(sha1), total_got, hdr_size);
-+		return -1;
-+	}
-+
-+	return 0;
-+}
-diff --git a/odb-helper.h b/odb-helper.h
-new file mode 100644
-index 0000000000..fb25ad579e
---- /dev/null
-+++ b/odb-helper.h
-@@ -0,0 +1,27 @@
-+#ifndef ODB_HELPER_H
-+#define ODB_HELPER_H
-+
-+struct odb_helper {
-+	const char *name;
-+	const char *cmd;
-+
-+	struct odb_helper_object {
-+		unsigned char sha1[20];
-+		unsigned long size;
-+		enum object_type type;
-+	} *have;
-+	int have_nr;
-+	int have_alloc;
-+	int have_valid;
-+
-+	struct odb_helper *next;
-+};
-+
-+extern struct odb_helper *odb_helper_new(const char *name, int namelen);
-+extern int odb_helper_has_object(struct odb_helper *o,
-+				 const unsigned char *sha1);
-+extern int odb_helper_get_object(struct odb_helper *o,
-+				 const unsigned char *sha1,
-+				 int fd);
-+
-+#endif /* ODB_HELPER_H */
-diff --git a/sha1_file.c b/sha1_file.c
-index bea1ae6afb..4a4f5df5ec 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -29,6 +29,7 @@
- #include "mergesort.h"
- #include "quote.h"
- #include "packfile.h"
-+#include "external-odb.h"
- 
- const unsigned char null_sha1[GIT_MAX_RAWSZ];
- const struct object_id null_oid;
-@@ -613,6 +614,21 @@ int foreach_alt_odb(alt_odb_fn fn, void *cb)
- 	return r;
- }
- 
-+void prepare_external_alt_odb(void)
-+{
-+	static int linked_external;
-+	const char *path;
-+
-+	if (linked_external)
-+		return;
-+
-+	path = external_odb_root();
-+	if (!access(path, F_OK)) {
-+		link_alt_odb_entry(path, NULL, 0, "");
-+		linked_external = 1;
-+	}
-+}
-+
- void prepare_alt_odb(void)
- {
- 	const char *alt;
-@@ -627,6 +643,7 @@ void prepare_alt_odb(void)
- 	link_alt_odb_entries(alt, strlen(alt), PATH_SEP, NULL, 0);
- 
- 	read_info_alternates(get_object_directory(), 0);
-+	prepare_external_alt_odb();
- }
- 
- /* Returns 1 if we have successfully freshened the file, 0 otherwise. */
-@@ -667,7 +684,7 @@ static int check_and_freshen_nonlocal(const unsigned char *sha1, int freshen)
- 		if (check_and_freshen_file(path, freshen))
- 			return 1;
- 	}
--	return 0;
-+	return external_odb_has_object(sha1);
- }
- 
- static int check_and_freshen(const unsigned char *sha1, int freshen)
-@@ -824,6 +841,9 @@ static int stat_sha1_file(const unsigned char *sha1, struct stat *st,
- 			return 0;
- 	}
- 
-+	if (!external_odb_get_object(sha1) && !lstat(*path, st))
-+		return 0;
-+
- 	return -1;
- }
- 
-@@ -859,7 +879,14 @@ static int open_sha1_file(const unsigned char *sha1, const char **path)
- 	if (fd >= 0)
- 		return fd;
- 
--	return open_sha1_file_alt(sha1, path);
-+	fd = open_sha1_file_alt(sha1, path);
-+	if (fd >= 0)
-+		return fd;
-+
-+	if (!external_odb_get_object(sha1))
-+		fd = open_sha1_file_alt(sha1, path);
-+
-+	return fd;
- }
- 
- /*
-diff --git a/t/t0400-external-odb.sh b/t/t0400-external-odb.sh
-new file mode 100755
-index 0000000000..2f4749fab1
---- /dev/null
-+++ b/t/t0400-external-odb.sh
-@@ -0,0 +1,46 @@
-+#!/bin/sh
-+
-+test_description='basic tests for external object databases'
-+
-+. ./test-lib.sh
-+
-+ALT_SOURCE="$PWD/alt-repo/.git"
-+export ALT_SOURCE
-+write_script odb-helper <<\EOF
-+GIT_DIR=$ALT_SOURCE; export GIT_DIR
-+case "$1" in
-+have)
-+	git cat-file --batch-check --batch-all-objects |
-+	awk '{print $1 " " $3 " " $2}'
-+	;;
-+get_git_obj)
-+	cat "$GIT_DIR"/objects/$(echo $2 | sed 's#..#&/#')
-+	;;
-+esac
-+EOF
-+HELPER="\"$PWD\"/odb-helper"
-+
-+test_expect_success 'setup alternate repo' '
-+	git init alt-repo &&
-+	(cd alt-repo &&
-+	 test_commit one &&
-+	 test_commit two
-+	) &&
-+	alt_head=`cd alt-repo && git rev-parse HEAD`
-+'
-+
-+test_expect_success 'alt objects are missing' '
-+	test_must_fail git log --format=%s $alt_head
-+'
-+
-+test_expect_success 'helper can retrieve alt objects' '
-+	test_config odb.magic.scriptCommand "$HELPER" &&
-+	cat >expect <<-\EOF &&
-+	two
-+	one
-+	EOF
-+	git log --format=%s $alt_head >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_done
 -- 
 2.14.1.576.g3f707d88cd
 
