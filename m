@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F87620A21
-	for <e@80x24.org>; Sat, 16 Sep 2017 08:10:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3CCE20A21
+	for <e@80x24.org>; Sat, 16 Sep 2017 08:10:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751294AbdIPIJz (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Sep 2017 04:09:55 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:33199 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751342AbdIPIII (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Sep 2017 04:08:08 -0400
-Received: by mail-wr0-f196.google.com with SMTP id b9so2383469wra.0
-        for <git@vger.kernel.org>; Sat, 16 Sep 2017 01:08:08 -0700 (PDT)
+        id S1751583AbdIPIKF (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Sep 2017 04:10:05 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:34927 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751299AbdIPIIB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Sep 2017 04:08:01 -0400
+Received: by mail-wm0-f67.google.com with SMTP id e64so4516902wmi.2
+        for <git@vger.kernel.org>; Sat, 16 Sep 2017 01:08:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=W020BDRMl9R4t49CH2iGs/fQLLNUUXwWsZCOFl4HBK8=;
-        b=H2RXpQrYEctC9XKEQI2GazTNyainTYqJp9lLYeCblORqVHwEmaE1ttpqrNFqcB2OnE
-         zwUH0i5LkixxLV2LfLX+prePTloqCIT1at56FVeXVPXq5jUDViJPBmF3K866pBBJ7pJe
-         tKoJuctHqUXme8DrAkwD7D4WsgoHWTn42CYbfE6oDuIDwLUo1cC5DPt3ocMRda1lGOV6
-         /+1pwipeGOueFpz32SMgPG80NduyG4jYzpoQBf5q6U34o24PVWX+eT31QoOgIaNIj1ab
-         bNpUnwTPUWZFmWI34rctIkUYIn1K+LhkHc0Rieqmczfwxef9NcpsNhjYoX5I9wCJwnEM
-         lAIw==
+        bh=FsvpqAzeunrxKiH6BIzCTdGK+NfplTaXdnw2qU8+JBs=;
+        b=VF7gBeAAHlcffjQLqXg5dJsTLo/KcyOwBTDHOzKpPshyMy0YDGnRjPmJHlA3+s7rpf
+         gohHTG3N6t8NTuX5mjwbWFl2QQAEBBKMQ/e+zfR10lNpZZscwZh64myW1vWLuvTQ62KM
+         kciaQFErGdz3UhcsTYEHfIT05KZ2wgQTxumb//HrCX8o6+zELyr+PytGSszPjEEHC3o0
+         G9M921HKB5Z0fcY6hUXqLRaHPPQu/evvtVdxHPanZuwCn9+lndfeXJpNoQiygt1pE5+W
+         4xtOW9xTJJdQHL5mH8ZEipM0ymQfjkiSJJiSIsH9funN9SqcrlSKLZD+b/nYAHj9warD
+         sIXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=W020BDRMl9R4t49CH2iGs/fQLLNUUXwWsZCOFl4HBK8=;
-        b=olpA/JG/9yIN71yBLzp66+4h8XeWWI4nOSm4It21qRY1dHZg+5wJXIPQTphzI5dAVP
-         3ngUWG1mkLZfJzZ3Mczkuivty2X629R2sF2zhw+eltI3yIxKczBvWOGvayhzsdHQsalj
-         na+tWbqSWBl96ogTfhUIfD/DvID6hdI4yizLKqYVzjsawOzLqh4YkozBNa17ogLSDDZT
-         zIrk8YRN+9toP4oSJAZlVc3gi7vPUBXfO8I8nYIVlI4pCKmttrxZWTJyvq1K3+KBqBLD
-         VBDZ76rN9ZoWV6DTH+ic1BWw4DQ/caPs5nDsFp72Y4SYWcGtfvNYVERzUeak2JBJR7YJ
-         neUg==
-X-Gm-Message-State: AHPjjUjVc/Dn/pcuAnUjldPC2mE07tTwIbVAkwRa/tqwB4GyB6KvgnPx
-        rfIUG13zKz3V1NTO
-X-Google-Smtp-Source: ADKCNb4c1pxUkh5Pu/7jdNASR202d6yQaQnnaio3plr4Lc8QHUn+E9GlTuOUzsxe1fkACsPnRwIvDg==
-X-Received: by 10.223.161.212 with SMTP id v20mr25416035wrv.195.1505549287139;
-        Sat, 16 Sep 2017 01:08:07 -0700 (PDT)
+        bh=FsvpqAzeunrxKiH6BIzCTdGK+NfplTaXdnw2qU8+JBs=;
+        b=Yoz+f0CD06c/2NWoxnFSRCvsrMrzqdlvmpBQTzLrgvp8Dtl60Zg7z3GDlpWvMZkXS8
+         JjzWCwiZj6k/8Tzw7xm3dDn1DHz5UWYHODDFwphwo8Ta3OwUrhObFAxG4AZ0XKvMBRHr
+         AgKvK9uc3ouyeBSQeZIaV3UumuEjDXqE4+fy00rEZGbFAM0ba8MHn8O4ODQcWJ5BZB7j
+         0ttJ7L0PIGS7aBaSFcwoVT8OyrW9hDGORucOZlwV7EUydsYVqHZwdNdBwg+byNA7ESoO
+         URksNo5MXUuxXbqvJG6QTNGz+Lu6gQRhmlctGRzyWMgNz2ImmWvoYAbgE0sIZd9d35Yv
+         1A7A==
+X-Gm-Message-State: AHPjjUhTSgY6dVZPfPX7bhdTa/hNbmsrI1rAiHuVZw95GoFPGaZMPvbR
+        Owvy0GjKxteVf+vYhIvwlFIY8g==
+X-Google-Smtp-Source: AOwi7QDNqe+PvghJrw6TDOFhQqqjCoiLIQLNmdLQkXj+8l8W6uAUn2kSEZfwDZNoH0BnmhcQwZ2x5Q==
+X-Received: by 10.28.151.200 with SMTP id z191mr5101323wmd.115.1505549280150;
+        Sat, 16 Sep 2017 01:08:00 -0700 (PDT)
 Received: from localhost.localdomain (sud35-h04-89-95-107-230.dsl.sta.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id l126sm2814641wmd.1.2017.09.16.01.08.05
+        by smtp.gmail.com with ESMTPSA id l126sm2814641wmd.1.2017.09.16.01.07.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 16 Sep 2017 01:08:06 -0700 (PDT)
+        Sat, 16 Sep 2017 01:07:59 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v6 17/40] lib-httpd: pass config file to start_httpd()
-Date:   Sat, 16 Sep 2017 10:07:08 +0200
-Message-Id: <20170916080731.13925-18-chriscool@tuxfamily.org>
+Subject: [PATCH v6 12/40] external odb: add 'put_raw_obj' support
+Date:   Sat, 16 Sep 2017 10:07:03 +0200
+Message-Id: <20170916080731.13925-13-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.14.1.576.g3f707d88cd
 In-Reply-To: <20170916080731.13925-1-chriscool@tuxfamily.org>
 References: <20170916080731.13925-1-chriscool@tuxfamily.org>
@@ -70,46 +70,172 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This makes it possible to start an apache web server with different
-config files.
+Add support for a 'put_raw_obj' capability/instruction to send new
+objects to an external odb. Objects will be sent as they are (in
+their 'raw' format). They will not be converted to Git objects.
 
-This will be used in a later patch to pass a config file that makes
-apache store external objects.
+For now any new Git object (blob, tree, commit, ...) would be sent
+if 'put_raw_obj' is supported by an odb helper. This is not a great
+default, but let's leave it to following commits to tweak that.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/lib-httpd.sh | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ external-odb.c | 15 +++++++++++++++
+ external-odb.h |  2 ++
+ odb-helper.c   | 43 ++++++++++++++++++++++++++++++++++++++-----
+ odb-helper.h   |  3 +++
+ sha1_file.c    |  2 ++
+ 5 files changed, 60 insertions(+), 5 deletions(-)
 
-diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
-index 435a37465a..2e659a8ee2 100644
---- a/t/lib-httpd.sh
-+++ b/t/lib-httpd.sh
-@@ -171,12 +171,14 @@ prepare_httpd() {
- }
+diff --git a/external-odb.c b/external-odb.c
+index 0f0de170b8..82fac702e8 100644
+--- a/external-odb.c
++++ b/external-odb.c
+@@ -118,3 +118,18 @@ int external_odb_get_object(const unsigned char *sha1)
  
- start_httpd() {
-+	APACHE_CONF_FILE=${1-apache.conf}
+ 	return -1;
+ }
 +
- 	prepare_httpd >&3 2>&4
++int external_odb_put_object(const void *buf, size_t len,
++			    const char *type, unsigned char *sha1)
++{
++	struct odb_helper *o;
++
++	external_odb_init();
++
++	for (o = helpers; o; o = o->next) {
++		int r = odb_helper_put_object(o, buf, len, type, sha1);
++		if (r <= 0)
++			return r;
++	}
++	return 1;
++}
+diff --git a/external-odb.h b/external-odb.h
+index dc5635f452..d369dfdf6f 100644
+--- a/external-odb.h
++++ b/external-odb.h
+@@ -4,5 +4,7 @@
+ extern const char *external_odb_root(void);
+ extern int external_odb_has_object(const unsigned char *sha1);
+ extern int external_odb_get_object(const unsigned char *sha1);
++extern int external_odb_put_object(const void *buf, size_t len,
++				   const char *type, unsigned char *sha1);
  
- 	trap 'code=$?; stop_httpd; (exit $code); die' EXIT
- 
- 	"$LIB_HTTPD_PATH" -d "$HTTPD_ROOT_PATH" \
--		-f "$TEST_PATH/apache.conf" $HTTPD_PARA \
-+		-f "$TEST_PATH/$APACHE_CONF_FILE" $HTTPD_PARA \
- 		-c "Listen 127.0.0.1:$LIB_HTTPD_PORT" -k start \
- 		>&3 2>&4
- 	if test $? -ne 0
-@@ -191,7 +193,7 @@ stop_httpd() {
- 	trap 'die' EXIT
- 
- 	"$LIB_HTTPD_PATH" -d "$HTTPD_ROOT_PATH" \
--		-f "$TEST_PATH/apache.conf" $HTTPD_PARA -k stop
-+		-f "$TEST_PATH/$APACHE_CONF_FILE" $HTTPD_PARA -k stop
+ #endif /* EXTERNAL_ODB_H */
+diff --git a/odb-helper.c b/odb-helper.c
+index 9375eca58f..39d20fdfd7 100644
+--- a/odb-helper.c
++++ b/odb-helper.c
+@@ -71,9 +71,10 @@ static void prepare_helper_command(struct argv_array *argv, const char *cmd,
+ 	strbuf_release(&buf);
  }
  
- test_http_push_nonff () {
+-__attribute__((format (printf,3,4)))
++__attribute__((format (printf,4,5)))
+ static int odb_helper_start(struct odb_helper *o,
+ 			    struct odb_helper_cmd *cmd,
++			    int use_stdin,
+ 			    const char *fmt, ...)
+ {
+ 	va_list ap;
+@@ -90,7 +91,10 @@ static int odb_helper_start(struct odb_helper *o,
+ 
+ 	cmd->child.argv = cmd->argv.argv;
+ 	cmd->child.use_shell = 1;
+-	cmd->child.no_stdin = 1;
++	if (use_stdin)
++		cmd->child.in = -1;
++	else
++		cmd->child.no_stdin = 1;
+ 	cmd->child.out = -1;
+ 
+ 	if (start_command(&cmd->child) < 0) {
+@@ -119,7 +123,7 @@ int odb_helper_init(struct odb_helper *o)
+ 	FILE *fh;
+ 	struct strbuf line = STRBUF_INIT;
+ 
+-	if (odb_helper_start(o, &cmd, "init") < 0)
++	if (odb_helper_start(o, &cmd, 0, "init") < 0)
+ 		return -1;
+ 
+ 	fh = xfdopen(cmd.child.out, "r");
+@@ -179,7 +183,7 @@ static void odb_helper_load_have(struct odb_helper *o)
+ 		return;
+ 	o->have_valid = 1;
+ 
+-	if (odb_helper_start(o, &cmd, "have") < 0)
++	if (odb_helper_start(o, &cmd, 0, "have") < 0)
+ 		return;
+ 
+ 	fh = xfdopen(cmd.child.out, "r");
+@@ -234,7 +238,7 @@ int odb_helper_get_object(struct odb_helper *o, const unsigned char *sha1,
+ 	if (!obj)
+ 		return -1;
+ 
+-	if (odb_helper_start(o, &cmd, "get_git_obj %s", sha1_to_hex(sha1)) < 0)
++	if (odb_helper_start(o, &cmd, 0, "get_git_obj %s", sha1_to_hex(sha1)) < 0)
+ 		return -1;
+ 
+ 	memset(&stream, 0, sizeof(stream));
+@@ -321,3 +325,32 @@ int odb_helper_get_object(struct odb_helper *o, const unsigned char *sha1,
+ 
+ 	return 0;
+ }
++
++int odb_helper_put_object(struct odb_helper *o,
++			  const void *buf, size_t len,
++			  const char *type, unsigned char *sha1)
++{
++	struct odb_helper_cmd cmd;
++
++	if (odb_helper_start(o, &cmd, 1, "put_raw_obj %s %"PRIuMAX" %s",
++			     sha1_to_hex(sha1), (uintmax_t)len, type) < 0)
++		return -1;
++
++	do {
++		int w = xwrite(cmd.child.in, buf, len);
++		if (w < 0) {
++			error("unable to write to odb helper '%s': %s",
++			      o->name, strerror(errno));
++			close(cmd.child.in);
++			close(cmd.child.out);
++			odb_helper_finish(o, &cmd);
++			return -1;
++		}
++		len -= w;
++	} while (len > 0);
++
++	close(cmd.child.in);
++	close(cmd.child.out);
++	odb_helper_finish(o, &cmd);
++	return 0;
++}
+diff --git a/odb-helper.h b/odb-helper.h
+index 5f28a6e512..0571ba09cb 100644
+--- a/odb-helper.h
++++ b/odb-helper.h
+@@ -35,5 +35,8 @@ extern int odb_helper_has_object(struct odb_helper *o,
+ extern int odb_helper_get_object(struct odb_helper *o,
+ 				 const unsigned char *sha1,
+ 				 int fd);
++extern int odb_helper_put_object(struct odb_helper *o,
++				 const void *buf, size_t len,
++				 const char *type, unsigned char *sha1);
+ 
+ #endif /* ODB_HELPER_H */
+diff --git a/sha1_file.c b/sha1_file.c
+index 4a4f5df5ec..d0155e392f 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1613,6 +1613,8 @@ int write_sha1_file(const void *buf, unsigned long len, const char *type, unsign
+ 	 * it out into .git/objects/??/?{38} file.
+ 	 */
+ 	write_sha1_file_prepare(buf, len, type, sha1, hdr, &hdrlen);
++	if (!external_odb_put_object(buf, len, type, sha1))
++		return 0;
+ 	if (freshen_packed_object(sha1) || freshen_loose_object(sha1))
+ 		return 0;
+ 	return write_loose_object(sha1, hdr, hdrlen, buf, len, 0);
 -- 
 2.14.1.576.g3f707d88cd
 
