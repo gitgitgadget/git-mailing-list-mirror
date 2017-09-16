@@ -2,52 +2,52 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4914720A21
-	for <e@80x24.org>; Sat, 16 Sep 2017 08:08:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C548720A21
+	for <e@80x24.org>; Sat, 16 Sep 2017 08:09:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751502AbdIPIIx (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Sep 2017 04:08:53 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:35083 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751465AbdIPIIh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Sep 2017 04:08:37 -0400
-Received: by mail-wm0-f67.google.com with SMTP id e64so4517705wmi.2
-        for <git@vger.kernel.org>; Sat, 16 Sep 2017 01:08:37 -0700 (PDT)
+        id S1751513AbdIPIJE (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Sep 2017 04:09:04 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:33678 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751459AbdIPIIf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Sep 2017 04:08:35 -0400
+Received: by mail-wm0-f68.google.com with SMTP id 187so4515323wmn.0
+        for <git@vger.kernel.org>; Sat, 16 Sep 2017 01:08:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=0aUN6VrqfWoI5QHTm9eq5b53HZ/QJE2xTzsL/DlNBOQ=;
-        b=Sj7XWHRK2ickns55LmlOGDhojL5Rrjf7zdzzYmfx7mhaFUUw+W+xfFqk7XqSYwFi7i
-         EyzhEYScjMWsUbBA0WFisOg/7qskVfmyJXpo75kX2HXQtJrvqcX2l7dOtPoY0/h4KSu+
-         bo+1p2ZccmTAuqcpyhnKmELN0tf81Tn7LTGHyIDWYQ2hmGXvgssdNPY2pZQ7YPza5jYm
-         yQ9K0ibzPaaZBwH/0PDpHnBm5iWJ2Yh0Q+vPdamnpYYnoMAtM3a/TRa2PNYPKlhJSNwI
-         JkrsRcG33INNmpgbcpmGvd2ZThlNPyaYAfF/2+rpk+2jo/L7LzM1SFDpfNyFmDW/td2T
-         HNuA==
+        bh=ZXFPBLRUC3VPBrSafw6AKvTlb3V0CTZEgLukxQEKQ2U=;
+        b=gLVaqqiUNsciiRUasXg5IAG0iNeYPHiCLtyw8xDSKvNviM0rdr34O9IrCVOsVIbBcd
+         bx+6gPrI01EcEaNiic/kcIcTeEEn5PZbdiXeikSZdRtIQDtpzQgGfLdcvselSCyZM6fy
+         cCul8sNbGtvBiF3YAMHRpuIdml79r1jjoEzpCpVnnH2k0EFXWbnsMjtQYD/STBt6PD4C
+         QECVfQKm9K7xauzuHGZY5uxfIFoxE7ZkipftqE9IpIlev2jebVGU/WTaWiT/FOl2Fxob
+         rXMGzwTp/f3OC7FPic1GAHO48zsrcC2y26hQg8+Yq6pTqQMoLGkdW57k0QjfsUAmHb/G
+         oXZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=0aUN6VrqfWoI5QHTm9eq5b53HZ/QJE2xTzsL/DlNBOQ=;
-        b=FEkUtvL6ZkHxicOHyDtT0o1NQZ1XkMH0eO4YSimSuof6dDGqe3A/GD/MpXbhvMpwlQ
-         i/nwsnN0Ow6RtnYgl7hoKW5gT7l3qZThnCL1u0LkGh8oUVNDUpls1OLSlHMe6L2h0cbk
-         RlKRicUhnbt2M+cxqUioSiumaTD5atSNnvXp0C2yS1iojoimRi1xAi+q/Azpq8/PrQgv
-         OaYWMzcQPpfG5GT+4D/xg+nCKYvNagbwwc4ePGTBQE5Qeq4rylWM7ZOcaE7vozO2+yVk
-         uC8HmHz7ircEI9SeQYhi3K9S82I6d9hgwj7WCewKEw6Z4t58ZCjcNte8z6S2myqKoQIr
-         Fz0Q==
-X-Gm-Message-State: AHPjjUjnLk97v+4KiRL+y4vrBPpt9+k2xk5Z+kejmb8zT1c9hf0am6QE
-        0cLx+Oj1u6rzkjE1
-X-Google-Smtp-Source: AOwi7QBvfYrRJlS7Vp6uvI8s/cvHYVQSR6/KpG+3V0+6mv0fwDJGBc5p1+gv27mFZ/IX6Ez4y9wS/w==
-X-Received: by 10.28.165.1 with SMTP id o1mr5072062wme.31.1505549316203;
-        Sat, 16 Sep 2017 01:08:36 -0700 (PDT)
+        bh=ZXFPBLRUC3VPBrSafw6AKvTlb3V0CTZEgLukxQEKQ2U=;
+        b=G4TBxzy0WP5Z50L6S2Wl4wGVkjFisviMersN8y/p0vFvibm3RzZUxWPJfyuGGknbAB
+         RSKXI5MJ9OwSkr73+YArOdN4RKX4U1W5pAlfcS+oEPqxxzHT5Nt4rzfRN9IIv/AjmgwI
+         olURxRMDFdrLTLi0crEahK3WY70OT4U8pv66R9NiPJt+d26loWOh8ZXglztc8BYH9F54
+         LZSI4jfTPEb/kLC9k2NJHkeqNTJlUWpqwkO3sssP9Adlrs9OUSMe++TecQUhUtMGVOS2
+         8oL7koKrGJMV6xZo+ed5iwq8roxmXLd0yO+jz7rHwhc3CJZCKTwMirv6+f0D7RYtnfdt
+         Lf4g==
+X-Gm-Message-State: AHPjjUiK1LPYvGrYrENFbYB9Ce/RwfdtYCwz4JH0xzfdEM1hZiPCyP/b
+        bS63gu5HJIZvaO1M
+X-Google-Smtp-Source: AOwi7QBFzOdfSdA2mJIXl0zeeOM6S0tcIQJ8AHRqsnGyqvkNzYwkUGpU8+HN0qgTXP9QNClAff83DQ==
+X-Received: by 10.28.174.80 with SMTP id x77mr4825006wme.83.1505549313498;
+        Sat, 16 Sep 2017 01:08:33 -0700 (PDT)
 Received: from localhost.localdomain (sud35-h04-89-95-107-230.dsl.sta.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id l126sm2814641wmd.1.2017.09.16.01.08.34
+        by smtp.gmail.com with ESMTPSA id l126sm2814641wmd.1.2017.09.16.01.08.32
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 16 Sep 2017 01:08:35 -0700 (PDT)
+        Sat, 16 Sep 2017 01:08:32 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v6 37/40] clone: disable external odb before initial clone
-Date:   Sat, 16 Sep 2017 10:07:28 +0200
-Message-Id: <20170916080731.13925-38-chriscool@tuxfamily.org>
+Subject: [PATCH v6 35/40] clone: add 'initial' param to write_remote_refs()
+Date:   Sat, 16 Sep 2017 10:07:26 +0200
+Message-Id: <20170916080731.13925-36-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.14.1.576.g3f707d88cd
 In-Reply-To: <20170916080731.13925-1-chriscool@tuxfamily.org>
 References: <20170916080731.13925-1-chriscool@tuxfamily.org>
@@ -70,60 +70,74 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To make it possible to have the external odb mechanism only kick in
-after the initial part of a clone, we should disable it during the
-initial part of the clone.
-
-Let's do that by saving and then restoring the value of the
-'use_external_odb' global variable.
+We want to make it possible to separate fetching remote refs into
+an initial part and a later part. To prepare for that, let's add
+an 'initial' boolean parameter to write_remote_refs() to tell this
+function if we are performing the initial part or not.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/clone.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ builtin/clone.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
 diff --git a/builtin/clone.c b/builtin/clone.c
-index 57cecd194c..323b73016e 100644
+index dcd5b878f1..2e5d60521d 100644
 --- a/builtin/clone.c
 +++ b/builtin/clone.c
-@@ -938,6 +938,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+@@ -574,7 +574,7 @@ static struct ref *wanted_peer_refs(const struct ref *refs,
+ 	return local_refs;
+ }
  
- 	struct refspec *initial_refspecs;
- 	int is_initial;
-+	int saved_use_external_odb;
+-static void write_remote_refs(const struct ref *local_refs)
++static void write_remote_refs(const struct ref *local_refs, int initial)
+ {
+ 	const struct ref *r;
  
- 	packet_trace_identity("clone");
- 	argc = parse_options(argc, argv, prefix, builtin_clone_options,
-@@ -1083,6 +1084,10 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+@@ -593,8 +593,13 @@ static void write_remote_refs(const struct ref *local_refs)
+ 			die("%s", err.buf);
+ 	}
  
- 	git_config(git_default_config, NULL);
+-	if (initial_ref_transaction_commit(t, &err))
+-		die("%s", err.buf);
++	if (initial) {
++		if (initial_ref_transaction_commit(t, &err))
++			die("%s", err.buf);
++	} else {
++		if (ref_transaction_commit(t, &err))
++			die("%s", err.buf);
++	}
  
-+	/* Temporarily disable external ODB before initial clone */
-+	saved_use_external_odb = use_external_odb;
-+	use_external_odb = 0;
-+
- 	if (option_bare) {
- 		if (option_mirror)
- 			src_ref_prefix = "refs/";
-@@ -1166,6 +1171,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 		fetch_initial_refs(transport, refs, initial_refspecs,
- 				   branch_top.buf, reflog_msg.buf, is_local);
+ 	strbuf_release(&err);
+ 	ref_transaction_free(t);
+@@ -641,7 +646,8 @@ static void update_remote_refs(const struct ref *refs,
+ 			       const char *branch_top,
+ 			       const char *msg,
+ 			       struct transport *transport,
+-			       int check_connectivity)
++			       int check_connectivity,
++			       int initial)
+ {
+ 	const struct ref *rm = mapped_refs;
  
-+		use_external_odb = saved_use_external_odb;
-+
- 		mapped_refs = wanted_peer_refs(refs, refspec);
- 		/*
- 		 * transport_get_remote_refs() may return refs with null sha-1
-@@ -1207,6 +1214,9 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 					option_branch, option_origin);
+@@ -656,7 +662,7 @@ static void update_remote_refs(const struct ref *refs,
+ 	}
  
- 		warning(_("You appear to have cloned an empty repository."));
-+
-+		use_external_odb = saved_use_external_odb;
-+
- 		mapped_refs = NULL;
- 		our_head_points_at = NULL;
- 		remote_head_points_at = NULL;
+ 	if (refs) {
+-		write_remote_refs(mapped_refs);
++		write_remote_refs(mapped_refs, initial);
+ 		if (option_single_branch && !option_no_tags)
+ 			write_followtags(refs, msg);
+ 	}
+@@ -1168,7 +1174,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		transport_fetch_refs(transport, mapped_refs);
+ 
+ 	update_remote_refs(refs, mapped_refs, remote_head_points_at,
+-			   branch_top.buf, reflog_msg.buf, transport, !is_local);
++			   branch_top.buf, reflog_msg.buf, transport,
++			   !is_local, 0);
+ 
+ 	update_head(our_head_points_at, remote_head, reflog_msg.buf);
+ 
 -- 
 2.14.1.576.g3f707d88cd
 
