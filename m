@@ -2,137 +2,169 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 88F5720A21
-	for <e@80x24.org>; Sat, 16 Sep 2017 10:42:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 79A3920A21
+	for <e@80x24.org>; Sat, 16 Sep 2017 11:52:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751203AbdIPKmB (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Sep 2017 06:42:01 -0400
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:45347 "EHLO
-        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751183AbdIPKmA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Sep 2017 06:42:00 -0400
-Received: by mail-wm0-f48.google.com with SMTP id g206so13160511wme.0
-        for <git@vger.kernel.org>; Sat, 16 Sep 2017 03:41:59 -0700 (PDT)
+        id S1751248AbdIPLv7 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Sep 2017 07:51:59 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:37517 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751185AbdIPLv6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Sep 2017 07:51:58 -0400
+Received: by mail-wm0-f65.google.com with SMTP id f4so4825936wmh.4
+        for <git@vger.kernel.org>; Sat, 16 Sep 2017 04:51:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Cl6YqFZ2CWtw2LJ0raesWCfWjuRl9CRNvFA93p5Zzgs=;
-        b=Nn1tx8pg4+nxM0ceAVYp+yJLrvHABndgCVvaBmBnkhAvZ5a4dcS1aYtbyDkZGu7RRY
-         tmKMdbSxeygQTdZqtLdSBt2EzMp3NdKQRS8YtuUTSY/azoLUtOPEI5G7Kk6DDd+Bbbbm
-         vzfRcgBBbcAJRI61AMS552vj9r/upie9x5PL7+cKF86S298SAYJIu2BQ5jLyFJFhNFtc
-         jZhKQNk7K2Ekjesckdfbgzt+uT3So02bwP9lA1znBVTL3ZJzQKbL9PI492l+mnctojRT
-         r7y+8pNKZtv7MiNCY62zF/LUktHSWDICJKnQrQFf5Pd38o4h834vDPFLbbsdpePc/RKz
-         gAJw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:mime-version
+         :content-transfer-encoding;
+        bh=cvtNqJErvxT4d2xvVpfs2RxrKymn3GITFzy2lNSa2ik=;
+        b=MJConuIBk7L0M95IZJnK2S+Q4lAGDm5XKUwbg8bUhTNMHGA9z511vRm9w/kgDpeMt3
+         yXo8mrB7kCznsrCD4+lQGw87CbSE20VMoR+mWVktCtcP7y5RovtyYPjbHuCqx+M4b1NF
+         Dzco03MFt/7P7RaLQHUNJUbKxLXqTVIKwzE6wF9zoU6zStKwIwzjN7uX3eMGk5hosstV
+         7545B77uLvhEb3YPjDnsM7+Alb9TCMjaSf6hjfga1YunsRFddhaMzAgeW7kN8hiL9xgD
+         vjHvbIWzxKxIBjbKlbxvo6r6Lo2BLj6th27buPoweqJ0++k3UHNvFG4cSVj/FC6hv7lS
+         1YnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Cl6YqFZ2CWtw2LJ0raesWCfWjuRl9CRNvFA93p5Zzgs=;
-        b=V5A5DVFUsf/+jfdyCNCfCnF7VrDedmtifm1MqtB6bDhnKfhrP/7XjZMK+Z/tl4Mvxc
-         Zm40Hwk43Updvtdp82rDD7nfWdo3eXUnn/PR6qhvwg9xannwWifTXuOIP3VzdR+I5OAa
-         9fJ3w5DN0cg/iVmzqM8pSIM3B+dbmvmJrp/H2cooZTJ9e5kToqZBDoJ+NAFp3NbNNt6r
-         dU4bzb/HsHvgUSKwT/4QGUeV/ohCOeuMaLv0fPFXkBTDmxRhk2a5YQDqjUlNawXKr5lv
-         LDK05vQPEUOB0yVFxv9/UNBEHOhEvVUVizyoXc57XpPZq+MIQnYBUmSpR95LpHLldT/O
-         bvDQ==
-X-Gm-Message-State: AHPjjUj3NnfPJPfAQYWsD08U+sRvIuN5sxGaqfWko74g0gX3yF++Q06S
-        S8mBW78mLpDq8YEwxiKWeEKvTQ==
-X-Google-Smtp-Source: AOwi7QBOluwJuZ/axhqECW/wW41ZwSv/+YerlP9XYe0LLvkYA52pFqvQtl6MiI9HVvLKAo49GIbItA==
-X-Received: by 10.28.212.140 with SMTP id l134mr4694255wmg.1.1505558518367;
-        Sat, 16 Sep 2017 03:41:58 -0700 (PDT)
-Received: from ?IPv6:2001:a61:3402:1b00:2003:73d8:ae4c:c1fd? ([2001:a61:3402:1b00:2003:73d8:ae4c:c1fd])
-        by smtp.googlemail.com with ESMTPSA id k9sm3468240wrk.27.2017.09.16.03.41.55
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 16 Sep 2017 03:41:56 -0700 (PDT)
-Subject: Re: Commit dropped when swapping commits with rebase -i -p
-To:     Junio C Hamano <gitster@pobox.com>,
-        Sebastian Schuberth <sschuberth@gmail.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-References: <oo62vr$pvq$1@blaine.gmane.org>
- <CAN0heSqGfxrFTwuaxgppZTx+3U=g_Qs4PyaCBF6ddV_PbvdpTQ@mail.gmail.com>
- <CAHGBnuMC_10krsdZe2KiQ4jjiL43kogn--dWjPgca_p2xgmQMA@mail.gmail.com>
- <20170902000417.GE143138@aiede.mtv.corp.google.com>
- <a47058cc-8ffc-4484-c247-3c8d4f827c07@gmail.com>
- <xmqqbmmbwuq0.fsf@gitster.mtv.corp.google.com>
-From:   Andreas Heiduk <asheiduk@gmail.com>
-Message-ID: <9e004c75-bc35-06ae-8479-9440059c4d0f@gmail.com>
-Date:   Sat, 16 Sep 2017 12:41:55 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :mime-version:content-transfer-encoding;
+        bh=cvtNqJErvxT4d2xvVpfs2RxrKymn3GITFzy2lNSa2ik=;
+        b=ZGRyado1Svp5yJNLF7xAUkVVyHbl/0FogJ6KJZZMeQ77trP3CmpGT5qA88pTCRy87z
+         c8xbNguNQ7w9cuOLdsTtQi9RxtloD0pAvP8VyjecgCYy8eHVl4XNWzXzeY28jwhoPQmd
+         euYWWYwDFnoddOuQ6I3be3tSnx5DI7Qc9574ugkPJ7+N2Vfh2J/Cth0nRbo8pbpqJ3Y3
+         aTgRPQfAs2cDAv39/dSJCRoUK2rRe61rRVU5ny+Lkgx13i41wKpymxN9hCa51DsIWkhq
+         r+yVbZypbj//TeCX4UAZ6ovAFu+LDKtEUZSgmCE3D7SLEjMRnqcUIrpf++gx4VNkAbRm
+         FWZg==
+X-Gm-Message-State: AHPjjUgTH1gSFUeX9RzXF99JhaKEMzxPrASveHEWiJwYtQamuCO3E024
+        Gr1ADeqY/OKWDA==
+X-Google-Smtp-Source: ADKCNb52tKWX+Px0c2PbqyC0M+r6c0nIFRecmVvKiRgiUfM8Tb6vYkqhgkrB6JCkA601Lgdqeur2Nw==
+X-Received: by 10.80.139.145 with SMTP id m17mr22864640edm.304.1505562717388;
+        Sat, 16 Sep 2017 04:51:57 -0700 (PDT)
+Received: from localhost.localdomain (x590c36f4.dyn.telefonica.de. [89.12.54.244])
+        by smtp.gmail.com with ESMTPSA id b8sm1508115edi.46.2017.09.16.04.51.56
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 16 Sep 2017 04:51:56 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] for_each_string_list_item(): behave correctly for empty list
+Date:   Sat, 16 Sep 2017 13:51:18 +0200
+Message-Id: <20170916115118.15490-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.14.1.527.g3f6d5ed64
+In-Reply-To: <b8951886-feab-a87a-9683-3c155cfa98a8@alum.mit.edu>
 MIME-Version: 1.0
-In-Reply-To: <xmqqbmmbwuq0.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 15.09.2017 um 22:52 schrieb Junio C Hamano:
-> Sebastian Schuberth <sschuberth@gmail.com> writes:
->>
->> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
->> index 6805a74aec..ccd0a04d54 100644
->> --- a/Documentation/git-rebase.txt
->> +++ b/Documentation/git-rebase.txt
->> @@ -782,10 +782,11 @@ case" recovery too!
->>  
->>  BUGS
->>  ----
->> -The todo list presented by `--preserve-merges --interactive` does not
->> -represent the topology of the revision graph.  Editing commits and
->> -rewording their commit messages should work fine, but attempts to
->> -reorder commits tend to produce counterintuitive results.
->> +Be careful when combining the `-i` / `--interactive` and `-p` /
 
-"Be careful" is not necessary because the text is already in the "BUGS"
-section.
-
->> +`--preserve-merges` options.  Reordering commits will drop commits from the
->> +main line. This is because the todo list does not represent the topology of the
->> +revision graph in this case.  However, editing commits and rewording their
->> +commit messages 'should' work fine.
->>  
->>  For example, an attempt to rearrange
->>  ------------
+> >> It would be a pain to have to change the signature of this macro, and
+> >> we'd prefer not to add overhead to each iteration of the loop. So
+> >> instead, whenever `list->items` is NULL, initialize `item` to point at
+> >> a dummy `string_list_item` created for the purpose.
+> > 
+> > What signature change do you mean?  I don't understand what this
+> > paragraph is alluding to.
 > 
+> I was thinking that one solution would be for the caller to provide a
+> `size_t` variable for the macro's use as a counter (since I don't see a
+> way for the macro to declare its own counter). The options are pretty
+> limited because whatever the macro expands to has to play the same
+> syntactic role as `for (...; ...; ...)`.
+
+Another option to consider is to squeeze in an if-else before the for
+loop header to handle the empty list case like this:
+
+diff --git a/string-list.h b/string-list.h
+index 29bfb7ae4..9eed47de0 100644
+--- a/string-list.h
++++ b/string-list.h
+@@ -32,8 +32,11 @@ void string_list_clear_func(struct string_list *list, string_list_clear_func_t c
+ typedef int (*string_list_each_func_t)(struct string_list_item *, void *);
+ int for_each_string_list(struct string_list *list,
+ 			 string_list_each_func_t, void *cb_data);
+-#define for_each_string_list_item(item,list) \
+-	for (item = (list)->items; item < (list)->items + (list)->nr; ++item)
++#define for_each_string_list_item(item,list) 	\
++	if ((list)->items == NULL) {		\
++		/* empty list, do nothing */	\
++	} else					\
++		for (item = (list)->items; item < (list)->items + (list)->nr; ++item)
+ 
+ /*
+  * Apply want to each item in list, retaining only the ones for which
+
+This way there would be neither additional overhead in each iteration
+nor a new global.
+
+Alas, there is a catch.  We can't use curly braces in the macro's else
+branch, because the macro would contain only the opening brace but not
+the closing one, which must come after the end of the loop's body.
+This means that the modified macro couldn't be used in if-else
+branches which themselves don't have curly braces, because it causes
+ambiguity:
+
+  if (condition)
+      for_each_string_list_item(item, list)
+          a_simple_oneliner(item);
+
+Our coding guidelines encourage this style for one-liner loop bodies,
+and there is indeed one such place in our codebase, so the following
+hunk is needed as well:
+
+diff --git a/send-pack.c b/send-pack.c
+index 11d6f3d98..00fa1622f 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -295,9 +295,10 @@ static int generate_push_cert(struct strbuf *req_buf,
+ 	}
+ 	if (push_cert_nonce[0])
+ 		strbuf_addf(&cert, "nonce %s\n", push_cert_nonce);
+-	if (args->push_options)
++	if (args->push_options) {
+ 		for_each_string_list_item(item, args->push_options)
+ 			strbuf_addf(&cert, "push-option %s\n", item->string);
++	}
+ 	strbuf_addstr(&cert, "\n");
+ 
+ 	for (ref = remote_refs; ref; ref = ref->next) {
+
+
+Luckily, reasonably modern compilers warn about such ambiguity, so
+perhaps this is an acceptable compromise?
+
+
+> > [...]
+> > Does the following alternate fix work?  I think I prefer it because
+> > it doesn't require introducing a new global. [...]
+> >  #define for_each_string_list_item(item,list) \
+> > -	for (item = (list)->items; item < (list)->items + (list)->nr; ++item)
+> > +	for (item = (list)->items; \
+> > +	     (list)->items && item < (list)->items + (list)->nr; \
+> > +	     ++item)
 > 
-> Anybody?  I personally feel that the updated text is not all that
-> stronger but it is clearer by clarifying what "counterintuitive
-> results" actually mean, but I am not the target audience this
-> paragraph is trying to help, nor I am the one who is making excuse
-> for a known bug, so...
+> This is the possibility that I was referring to as "add[ing] overhead to
+> each iteration of the loop". I'd rather not add an extra test-and-branch
+> to every iteration of a loop in which `list->items` is *not* NULL, which
+> your solution appears to do. Or are compilers routinely able to optimize
+> the check out?
 > 
-
-For me the proposed wording implies that the only bad effect are dropped
-commits on the mainline. But I experienced something like this:
-
-
-O--O--O--O---M--O        ==>   O--O--O--O---M--O
- \          /                   \          /
-  O--X--O--O                     O--X     O
-
-
-Where X was a commit without a ref and hence lost. Also the merge commit
-seemed to combine two unrelated histories.
-
-Therefore I would avoid "definitive wording" like "will drop" and use
-vague wording along "there are various dragons out there" like this:
-
-    The todo list presented by `--preserve-merges --interactive` does
-    not represent the topology of the revision graph.  Editing
-    commits and rewording their commit messages should work fine.
-    But reordering, combining or dropping commits of a complex topology
-    can produce unexpected and useless results like missing commits,
-    wrong merges, merges combining two unrelated histories and
-    similar things.
+> The new global might be aesthetically unpleasant, but it only costs two
+> words of memory, so I don't see it as a big disadvantage.
+> 
+> Another, more invasive change would be to initialize
+> `string_list::items` to *always* point at `dummy_string_list_item`,
+> rather similar to how `strbuf_slopbuf` is pointed at by empty `strbuf`s.
+> But I really don't think the effort would be justified.
 
