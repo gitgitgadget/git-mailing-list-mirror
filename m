@@ -2,52 +2,52 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4157620A21
-	for <e@80x24.org>; Sat, 16 Sep 2017 08:09:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B93020A21
+	for <e@80x24.org>; Sat, 16 Sep 2017 08:09:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751563AbdIPIJb (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Sep 2017 04:09:31 -0400
-Received: from mail-wr0-f171.google.com ([209.85.128.171]:46924 "EHLO
-        mail-wr0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751347AbdIPIIK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Sep 2017 04:08:10 -0400
-Received: by mail-wr0-f171.google.com with SMTP id o42so3171694wrb.3
-        for <git@vger.kernel.org>; Sat, 16 Sep 2017 01:08:09 -0700 (PDT)
+        id S1751547AbdIPIJZ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Sep 2017 04:09:25 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:36336 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751233AbdIPIIT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Sep 2017 04:08:19 -0400
+Received: by mail-wr0-f196.google.com with SMTP id g50so2374357wra.3
+        for <git@vger.kernel.org>; Sat, 16 Sep 2017 01:08:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=wmjF+o7WXSXn+qn4DySUwz68nD/wjjRnoOMqml1R4Ws=;
-        b=E8duzFHofvQ5Df/l74VWOXBgD9MqFoMx6grGNVa1dC5hS5Q+eVq0JmZx1pH2MbaPBn
-         5xR0CDAIwTEJ4wjrBd13p25JRYLX9BKKjDHVClXER+9yFWDGObHt+uCh+P30V/yU3VQk
-         X8CajAkyzRT78AhN3l6+gbVgfdHgUaEa4smZ5/KSaBdT79Bx2qg+l8/IZfN34ATtxzl7
-         7lvthpbxwoTWunh+odnxEfeyLK7tmJFhKB/vLtYx30gcQnqeos8VMhEjjDyKCRcF9RGf
-         /DXTjkZLnX3lehLkB3KCRl3bKufHg3mtETkw9nmPDr8C1mWsdAc8RTawPsngNd+z5bLw
-         fL3g==
+        bh=caPZ1e+hqnqHVWOa2Fy8R0Ftfb4GYCfNge/Nt8K40fg=;
+        b=OROV5kSJWgRHXLaM9EnKbKiqlLLK09uEwB5QiFPKFYCpmg+lCHB5DOPsJyR968Dy5a
+         Do+bmPvrmSFQJWHnj0qGX0fFso+mqxdZsq0s1pXYDA3fZwXNmQlmxYp0rmkNpOersbz2
+         4Ns9yrkoHkum4nUHOQgnNsGYL4Jdwa+slDEdbutJiP0i7wQqlcBkgiP90nS8TprbwpG9
+         qZ9vYwId7rNDwBL5/IbVBFc1cuFWz+OFr8oHOUS+tWNFfLzKmkR/Y2MXaY8Agpiu/Lyj
+         Bf38uFdTEh+rGme+lgzX9gSajksPrw8OgUuI2v5BdvaPA1+iSzBdZI5IJBC60V2AaeID
+         6OLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=wmjF+o7WXSXn+qn4DySUwz68nD/wjjRnoOMqml1R4Ws=;
-        b=ZWfDXc8QnJNefu6Mps11YG11RDKpZJsfN6Fw1SWixaNiUHMKHDxMzoHWKSmFTDtTHs
-         7flSkf3eH6nZhpR6Qt1erl9E4ochneHV+ChFGbrd7nE8X31/Crxi3FT6K/jKJo2bBu6T
-         qyJWIQpOX9qTnS+cpCotBkPong9l3LK8kw/5GbBQ8rO/PPKpLpwweGKd0KiTageeGu+G
-         Jthak0kAAIMOr3cgWE8A7VdXQ0AjB3UvERfSdek5FZEV8yYmaIfmtwnGiPb9w9rBKcau
-         raDdE39alRaTW50/qabqgWgJYoz7shsseLyzwFmcApAufX5aZPZan2eKFVlQGfoNoRnB
-         4D4Q==
-X-Gm-Message-State: AHPjjUjCmQlkSJ9ruXMmgddEJJAdQJ8UDUx3LksaaVXVUkW/maqRZsPL
-        de7lFXf0XKEtkgxz
-X-Google-Smtp-Source: AOwi7QDNdPTHnLaoj7JsDauJLu8TcYs4gsfjG+gWu9MOq1SF0oWnDjJVcCG3ETKff59KyrzoFUAfpg==
-X-Received: by 10.223.156.17 with SMTP id f17mr25201217wrc.203.1505549288505;
-        Sat, 16 Sep 2017 01:08:08 -0700 (PDT)
+        bh=caPZ1e+hqnqHVWOa2Fy8R0Ftfb4GYCfNge/Nt8K40fg=;
+        b=Uy7mk2FuW3HxogBZHGPK4GPNub2oWfNLizQzJXeS2dXGwCMoSdjYmRprsdYISa2HXx
+         OeJEISls34uQpZoVGHjCoan7f7L/julGkhmqDTQgmh0WILcQ09eicDMZ/+j4lsNSuBUO
+         jv1m484ttsZJpExw3QsDPU1nV2/ZndVlKPQ59mqLIG5mq2t18CTl7Qa96AHM3nL/GuU8
+         Eq9DbYXhX2eyxKeRvoQ8tFc2HP+zvcc6uUzKpZGLt5DKphX2K98E3Bc2M5VHV5TD0fpN
+         BV52c0llEU3vq4jwOQwRoWug5p6WHpIYmaJXOVWAUjfgQmk7L1YyaKtk7BmOWF/J3Fu2
+         O5ow==
+X-Gm-Message-State: AHPjjUhGlq/QioQ0WWIooeIQzAvtTNMnXS0zZ0ofm8nsEnIdAbkPgPs0
+        /0br9irp+kOgXChH
+X-Google-Smtp-Source: ADKCNb75RfYc48UGAoOVTCUHMq2Gc+bzKqTnDrfIYdK92MSzOMpj1Gk8WMS3qVb+pp3RMDPcx9MM9w==
+X-Received: by 10.223.193.71 with SMTP id w7mr25159652wre.158.1505549297148;
+        Sat, 16 Sep 2017 01:08:17 -0700 (PDT)
 Received: from localhost.localdomain (sud35-h04-89-95-107-230.dsl.sta.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id l126sm2814641wmd.1.2017.09.16.01.08.07
+        by smtp.gmail.com with ESMTPSA id l126sm2814641wmd.1.2017.09.16.01.08.15
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 16 Sep 2017 01:08:07 -0700 (PDT)
+        Sat, 16 Sep 2017 01:08:16 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v6 18/40] lib-httpd: add upload.sh
-Date:   Sat, 16 Sep 2017 10:07:09 +0200
-Message-Id: <20170916080731.13925-19-chriscool@tuxfamily.org>
+Subject: [PATCH v6 24/40] external-odb: add 'get_direct' support
+Date:   Sat, 16 Sep 2017 10:07:15 +0200
+Message-Id: <20170916080731.13925-25-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.14.1.576.g3f707d88cd
 In-Reply-To: <20170916080731.13925-1-chriscool@tuxfamily.org>
 References: <20170916080731.13925-1-chriscool@tuxfamily.org>
@@ -70,82 +70,132 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This cgi will be used to upload objects to, or to delete
-objects from, an apache web server.
+This implements the 'get_direct' capability/instruction that makes
+it possible for external odb helper scripts to pass blobs to Git
+by directly writing them as loose objects files.
 
-This way the apache server can work as an external object
-database.
+It is better to call this a "direct" mode rather than a "fault-in"
+mode as we could have the same kind of mechanism to "put" objects
+into an external odb, where the odb helper would access blobs it
+wants to send to an external odb directly from files, but it
+would be strange to call that a fault-in mode too.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/lib-httpd.sh        |  1 +
- t/lib-httpd/upload.sh | 45 +++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 46 insertions(+)
- create mode 100644 t/lib-httpd/upload.sh
+ external-odb.c | 21 ++++++++++++++++++++-
+ external-odb.h |  1 +
+ odb-helper.c   | 27 +++++++++++++++++++++++++--
+ odb-helper.h   |  2 ++
+ 4 files changed, 48 insertions(+), 3 deletions(-)
 
-diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
-index 2e659a8ee2..d80b004549 100644
---- a/t/lib-httpd.sh
-+++ b/t/lib-httpd.sh
-@@ -132,6 +132,7 @@ prepare_httpd() {
- 	cp "$TEST_PATH"/passwd "$HTTPD_ROOT_PATH"
- 	install_script broken-smart-http.sh
- 	install_script error.sh
-+	install_script upload.sh
+diff --git a/external-odb.c b/external-odb.c
+index 52cb448d01..31d21bfe04 100644
+--- a/external-odb.c
++++ b/external-odb.c
+@@ -96,7 +96,8 @@ int external_odb_get_object(const unsigned char *sha1)
+ 		int ret;
+ 		int fd;
  
- 	ln -s "$LIB_HTTPD_MODULE_PATH" "$HTTPD_ROOT_PATH/modules"
+-		if (!odb_helper_has_object(o, sha1))
++		if (!(o->supported_capabilities & ODB_HELPER_CAP_GET_RAW_OBJ) &&
++		    !(o->supported_capabilities & ODB_HELPER_CAP_GET_GIT_OBJ))
+ 			continue;
  
-diff --git a/t/lib-httpd/upload.sh b/t/lib-httpd/upload.sh
-new file mode 100644
-index 0000000000..64d3f31c31
---- /dev/null
-+++ b/t/lib-httpd/upload.sh
-@@ -0,0 +1,45 @@
-+#!/bin/sh
+ 		fd = create_object_tmpfile(&tmpfile, path);
+@@ -122,6 +123,24 @@ int external_odb_get_object(const unsigned char *sha1)
+ 	return -1;
+ }
+ 
++int external_odb_get_direct(const unsigned char *sha1)
++{
++	struct odb_helper *o;
 +
-+# In part from http://codereview.stackexchange.com/questions/79549/bash-cgi-upload-file
++	if (!external_odb_has_object(sha1))
++		return -1;
 +
-+FILES_DIR="www/files"
++	for (o = helpers; o; o = o->next) {
++		if (!(o->supported_capabilities & ODB_HELPER_CAP_GET_DIRECT))
++			continue;
++		if (odb_helper_get_direct(o, sha1) < 0)
++			continue;
++		return 0;
++	}
 +
-+OLDIFS="$IFS"
-+IFS='&'
-+set -- $QUERY_STRING
-+IFS="$OLDIFS"
++	return -1;
++}
 +
-+while test $# -gt 0
-+do
-+	key=${1%%=*}
-+	val=${1#*=}
+ int external_odb_put_object(const void *buf, size_t len,
+ 			    const char *type, unsigned char *sha1)
+ {
+diff --git a/external-odb.h b/external-odb.h
+index d369dfdf6f..1fda08c0fb 100644
+--- a/external-odb.h
++++ b/external-odb.h
+@@ -4,6 +4,7 @@
+ extern const char *external_odb_root(void);
+ extern int external_odb_has_object(const unsigned char *sha1);
+ extern int external_odb_get_object(const unsigned char *sha1);
++extern int external_odb_get_direct(const unsigned char *sha1);
+ extern int external_odb_put_object(const void *buf, size_t len,
+ 				   const char *type, unsigned char *sha1);
+ 
+diff --git a/odb-helper.c b/odb-helper.c
+index 1f4666b349..3d940a3171 100644
+--- a/odb-helper.c
++++ b/odb-helper.c
+@@ -425,14 +425,37 @@ static int odb_helper_get_git_object(struct odb_helper *o,
+ 	return 0;
+ }
+ 
++int odb_helper_get_direct(struct odb_helper *o,
++			  const unsigned char *sha1)
++{
++	struct odb_helper_object *obj;
++	struct odb_helper_cmd cmd;
 +
-+	case "$key" in
-+	"sha1") sha1="$val" ;;
-+	"type") type="$val" ;;
-+	"size") size="$val" ;;
-+	"delete") delete=1 ;;
-+	*) echo >&2 "unknown key '$key'" ;;
-+	esac
++	obj = odb_helper_lookup(o, sha1);
++	if (!obj)
++		return -1;
 +
-+	shift
-+done
++	if (odb_helper_start(o, &cmd, 0, "get_direct %s", sha1_to_hex(sha1)) < 0)
++		return -1;
 +
-+case "$REQUEST_METHOD" in
-+POST)
-+	if test "$delete" = "1"
-+	then
-+		rm -f "$FILES_DIR/$sha1-$size-$type"
-+	else
-+		mkdir -p "$FILES_DIR"
-+		cat >"$FILES_DIR/$sha1-$size-$type"
-+	fi
++	if (odb_helper_finish(o, &cmd))
++		return -1;
 +
-+	echo 'Status: 204 No Content'
-+	echo
-+	;;
++	return 0;
++}
 +
-+*)
-+	echo 'Status: 405 Method Not Allowed'
-+	echo
-+esac
+ int odb_helper_get_object(struct odb_helper *o,
+ 			  const unsigned char *sha1,
+ 			  int fd)
+ {
++	if (o->supported_capabilities & ODB_HELPER_CAP_GET_GIT_OBJ)
++		return odb_helper_get_git_object(o, sha1, fd);
+ 	if (o->supported_capabilities & ODB_HELPER_CAP_GET_RAW_OBJ)
+ 		return odb_helper_get_raw_object(o, sha1, fd);
+-	else
+-		return odb_helper_get_git_object(o, sha1, fd);
++	if (o->supported_capabilities & ODB_HELPER_CAP_GET_DIRECT)
++		return 0;
++
++	BUG("invalid get capability (capabilities: '%d')", o->supported_capabilities);
+ }
+ 
+ int odb_helper_put_object(struct odb_helper *o,
+diff --git a/odb-helper.h b/odb-helper.h
+index 0571ba09cb..fbb6d333ee 100644
+--- a/odb-helper.h
++++ b/odb-helper.h
+@@ -35,6 +35,8 @@ extern int odb_helper_has_object(struct odb_helper *o,
+ extern int odb_helper_get_object(struct odb_helper *o,
+ 				 const unsigned char *sha1,
+ 				 int fd);
++extern int odb_helper_get_direct(struct odb_helper *o,
++				 const unsigned char *sha1);
+ extern int odb_helper_put_object(struct odb_helper *o,
+ 				 const void *buf, size_t len,
+ 				 const char *type, unsigned char *sha1);
 -- 
 2.14.1.576.g3f707d88cd
 
