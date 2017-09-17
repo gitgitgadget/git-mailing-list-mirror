@@ -2,86 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD15D20A27
-	for <e@80x24.org>; Sun, 17 Sep 2017 05:28:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 87A2220A26
+	for <e@80x24.org>; Sun, 17 Sep 2017 05:28:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750793AbdIQF2S (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Sep 2017 01:28:18 -0400
-Received: from mail-pg0-f49.google.com ([74.125.83.49]:45119 "EHLO
-        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750743AbdIQF2R (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Sep 2017 01:28:17 -0400
-Received: by mail-pg0-f49.google.com with SMTP id 188so3465395pgb.2
-        for <git@vger.kernel.org>; Sat, 16 Sep 2017 22:28:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:date:mime-version
-         :content-transfer-encoding;
-        bh=YZDWXfiQivZgnjbVmrHbmFQeXdX6tKv5OV60Oxpf9jU=;
-        b=TaaywtOIbiFtvEZeFFLg4UEFVd3Xkr59ziEC/ahgpFh0+wvTVn4/yDYuNj3RDt4cMn
-         uEWcJSzQpswAWlhAmEmbVPBlpJAQlUHJMDnkIrAGN3+L/mQRVCrtJa/obBrouRP2LI7M
-         piH1DkyKxSo4yRvNz2VhNEUFRSFqlhaZu2phjlMRAYTlL/4r/cIqzANW0oK7WAo/cLqw
-         q3TBVyPYdHNCcdohCLqUXRxKVuUjOrV4SkePsujpjUy3FQGnzIuYKx9sT1JyadHhqhdY
-         XhFn+zxvQs/cUKutSNJ4Pw9apxLKd/Sn84f9kk2qAw/yezg9U3/7yYCYdBKIrWl6PGI5
-         1gyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:date:mime-version
-         :content-transfer-encoding;
-        bh=YZDWXfiQivZgnjbVmrHbmFQeXdX6tKv5OV60Oxpf9jU=;
-        b=fAkVvy5REjX7nZAdDjtH2k4qdCDnbC2xqR1NYidF1pulOA087Jx9tpM+pCi1X5sDDq
-         89dnbZxcTZ6xEbCPsdYmYW3hjorFBCbM7t4llStW4+OqE4ydTJyIUmOooEw/SThWgVB9
-         l6JiKszOtTtD4qPlSLJRCD5oGLLcI7o6dxRH8pXN2kEWzvbl/84Ja980cNbPFHzPlaXl
-         dzhrqo3qCZDgHeONsvsIYwo061ajXLL3s0bCIWiUQUw+GfrthH9iup1lT9rsUGckDcqc
-         fOB7l5LblDZAClwzAWTirDMzPWSX88nyfiWLsODziDaU2prtl56DeSrTb3nFwtqbVIQp
-         TM9Q==
-X-Gm-Message-State: AHPjjUiJXAFut5wFvORPnOh48Gm0/knYc9ZFlh6zm/BlsgRaW9fSheLG
-        tPvWG9pfegB9HvajCU4=
-X-Google-Smtp-Source: ADKCNb73xR5n5ifIYM7e/R5SybCUiliV8Eph4RxL9ISbTVI0XODyt+buaLPhaEOHPV01aQqM+F5yXg==
-X-Received: by 10.98.144.142 with SMTP id q14mr24112729pfk.303.1505626097205;
-        Sat, 16 Sep 2017 22:28:17 -0700 (PDT)
-Received: from unique-pc ([14.102.72.146])
-        by smtp.googlemail.com with ESMTPSA id 195sm8896208pgg.42.2017.09.16.22.28.14
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 16 Sep 2017 22:28:16 -0700 (PDT)
-Message-ID: <1505626069.9625.6.camel@gmail.com>
-Subject: Behaviour of 'git stash show' when a stash has untracked files
+        id S1750811AbdIQF2u (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Sep 2017 01:28:50 -0400
+Received: from a7-20.smtp-out.eu-west-1.amazonses.com ([54.240.7.20]:48668
+        "EHLO a7-20.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750743AbdIQF2u (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 17 Sep 2017 01:28:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1505626128;
+        h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=G/3nikPcCL84ejBTpj3xBhVuJOyT+bhJgUTQbbwW1FA=;
+        b=GJtkQWI+iJXUCsHgAX+OPDjLEdKKMsfuwwyQOIFPr4I/cf0087gPRo2Q1wyEEtqx
+        bm/l1WVtKlvmKlGRzsbUx2bBTRI5QH0J+mP61hfcgKJ1fT2aQecZOTjxsM4ZcwKDaTq
+        BN6fUi++Euh/p/0l/s4qW0c7ApDR6wAHyURcYnRs=
 From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="ISO-8859-15"
-Date:   Sun, 17 Sep 2017 10:57:49 +0530
-Mime-Version: 1.0
-X-Mailer: Evolution 3.22.6-1 
-Content-Transfer-Encoding: 8bit
-X-Cyberoam-smtpxy-version: 1.0.6.3
-X-Cyberoam-AV-Policy: default
-X-CTCH-Error: Unable to connect local ctasd
+Message-ID: <0102015e8e4f7e75-dfec22a3-bb1a-4208-a069-450275d52b6d-000000@eu-west-1.amazonses.com>
+Subject: [PATCH] doc: update information about windows build
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Date:   Sun, 17 Sep 2017 05:28:48 +0000
+X-SES-Outgoing: 2017.09.17-54.240.7.20
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Some time ago, I stashed a few changes along with untracked files. I
-almost forgot it until recently. Then I wanted to see what I change I
-had in the stash. So I did a 'git stash show <num>'. It worked fine but
-didn't say anything about the untracked files in that stash. That made
-me wonder where the untracked files I added went. I then applied the
-stash to see that they were still there but weren't listed in show.
+029aeeed5 (travis-ci: build and test Git on Windows, 2017-03-24) added
+support for testing the git build for Windows.
 
-I understand that they aren't listed because 'git stash show' is
-typically a "diff between the stashed state and its original parent" as
-the documentation says but shouldn't there be at least a message that
-the stash contains untracked files? Those untracked files are "part of
-the stash" and I see no way to get information about their presence
-currently.
+So, update the documentation and the example used in it.
 
-So, should this behaviour be changed?
+Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+---
+ Documentation/SubmittingPatches | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
--- 
-Kaartic
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index 558d465b656a0..43c9b9ae49298 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -395,8 +395,9 @@ GitHub-Travis CI hints
+ 
+ With an account at GitHub (you can get one for free to work on open
+ source projects), you can use Travis CI to test your changes on Linux,
+-Mac (and hopefully soon Windows).  You can find a successful example
+-test build here: https://travis-ci.org/git/git/builds/120473209
++Mac.  Though Travis CI doesn't support Windows we have worked around
++that temporarily!  You can find a successful example test build
++here: https://travis-ci.org/git/git/builds/264560175
+ 
+ Follow these steps for the initial setup:
+ 
+
+--
+https://github.com/git/git/pull/402
