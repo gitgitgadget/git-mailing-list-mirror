@@ -6,31 +6,31 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 088EC2047F
-	for <e@80x24.org>; Sun, 17 Sep 2017 16:14:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0A6742047F
+	for <e@80x24.org>; Sun, 17 Sep 2017 16:53:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751455AbdIQQOu (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Sep 2017 12:14:50 -0400
-Received: from avasout07.plus.net ([84.93.230.235]:43852 "EHLO
+        id S1751660AbdIQQxu (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Sep 2017 12:53:50 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:54640 "EHLO
         avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751391AbdIQQOu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Sep 2017 12:14:50 -0400
+        with ESMTP id S1751497AbdIQQxu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Sep 2017 12:53:50 -0400
 Received: from [10.0.2.15] ([147.147.86.16])
         by avasout07 with smtp
-        id AgEn1w0040M91Ur01gEooz; Sun, 17 Sep 2017 17:14:48 +0100
+        id Agtn1w0030M91Ur01gtov2; Sun, 17 Sep 2017 17:53:48 +0100
 X-CM-Score: 0.00
 X-CNFS-Analysis: v=2.2 cv=CrLPSjwD c=1 sm=1 tr=0
  a=dubYQqM3tRRTmV8xSh8cXQ==:117 a=dubYQqM3tRRTmV8xSh8cXQ==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=inrgoetUWoOxGkmx5VsA:9 a=QEXdDO2ut3YA:10
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=Ea180b7dbQmxOU1IUEIA:9 a=QEXdDO2ut3YA:10
  a=yJM6EZoI5SlJf8ks9Ge_:22
 X-AUTH: ramsayjones@:2500
-To:     benpeart@microsoft.com
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH] protocol: make parse_protocol_version() private
+To:     Brandon Williams <bmwill@google.com>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         GIT Mailing-list <git@vger.kernel.org>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH] test-drop-caches: mark file local symbols with static
-Message-ID: <762d317b-8174-1809-a077-38b036850d3f@ramsayjones.plus.com>
-Date:   Sun, 17 Sep 2017 17:14:47 +0100
+Message-ID: <1cb7d40d-3f11-71a0-6e53-dced7810a0ca@ramsayjones.plus.com>
+Date:   Sun, 17 Sep 2017 17:53:47 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.3.0
 MIME-Version: 1.0
@@ -46,93 +46,48 @@ X-Mailing-List: git@vger.kernel.org
 Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 ---
 
-Hi Ben,
+Hi Brandon,
 
-If you need to re-roll your 'bp/fsmonitor' branch, could you please
-squash this into the relevant patch (commit c6b5a28941, "fsmonitor:
-add a performance test", 15-09-2017).
+If you need to re-roll your 'bw/protocol-v1' branch, could you please
+squash this into the relevant patch (commit 45954f179e, "protocol:
+introduce protocol extention mechanisms", 13-09-2017).
+
+This assumes you agree that this symbol does not need to be public; if
+not, then please just ignore! ;-)
 
 Thanks!
 
 ATB,
 Ramsay Jones
 
- t/helper/test-drop-caches.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ protocol.c | 2 +-
+ protocol.h | 1 -
+ 2 files changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/t/helper/test-drop-caches.c b/t/helper/test-drop-caches.c
-index 717079865..17590170f 100644
---- a/t/helper/test-drop-caches.c
-+++ b/t/helper/test-drop-caches.c
+diff --git a/protocol.c b/protocol.c
+index 1b16c7b9a..369503065 100644
+--- a/protocol.c
++++ b/protocol.c
 @@ -2,7 +2,7 @@
+ #include "config.h"
+ #include "protocol.h"
  
- #if defined(GIT_WINDOWS_NATIVE)
- 
--int cmd_sync(void)
-+static int cmd_sync(void)
+-enum protocol_version parse_protocol_version(const char *value)
++static enum protocol_version parse_protocol_version(const char *value)
  {
- 	char Buffer[MAX_PATH];
- 	DWORD dwRet;
-@@ -49,7 +49,7 @@ typedef enum _SYSTEM_MEMORY_LIST_COMMAND {
- 	MemoryCommandMax
- } SYSTEM_MEMORY_LIST_COMMAND;
+ 	if (!strcmp(value, "0"))
+ 		return protocol_v0;
+diff --git a/protocol.h b/protocol.h
+index 2fa6486d0..18f9a5235 100644
+--- a/protocol.h
++++ b/protocol.h
+@@ -7,7 +7,6 @@ enum protocol_version {
+ 	protocol_v1 = 1,
+ };
  
--BOOL GetPrivilege(HANDLE TokenHandle, LPCSTR lpName, int flags)
-+static BOOL GetPrivilege(HANDLE TokenHandle, LPCSTR lpName, int flags)
- {
- 	BOOL bResult;
- 	DWORD dwBufferLength;
-@@ -77,7 +77,7 @@ BOOL GetPrivilege(HANDLE TokenHandle, LPCSTR lpName, int flags)
- 	return bResult;
- }
- 
--int cmd_dropcaches(void)
-+static int cmd_dropcaches(void)
- {
- 	HANDLE hProcess = GetCurrentProcess();
- 	HANDLE hToken;
-@@ -118,36 +118,36 @@ int cmd_dropcaches(void)
- 
- #elif defined(__linux__)
- 
--int cmd_sync(void)
-+static int cmd_sync(void)
- {
- 	return system("sync");
- }
- 
--int cmd_dropcaches(void)
-+static int cmd_dropcaches(void)
- {
- 	return system("echo 3 | sudo tee /proc/sys/vm/drop_caches");
- }
- 
- #elif defined(__APPLE__)
- 
--int cmd_sync(void)
-+static int cmd_sync(void)
- {
- 	return system("sync");
- }
- 
--int cmd_dropcaches(void)
-+static int cmd_dropcaches(void)
- {
- 	return system("sudo purge");
- }
- 
- #else
- 
--int cmd_sync(void)
-+static int cmd_sync(void)
- {
- 	return 0;
- }
- 
--int cmd_dropcaches(void)
-+static int cmd_dropcaches(void)
- {
- 	return error("drop caches not implemented on this platform");
- }
+-extern enum protocol_version parse_protocol_version(const char *value);
+ extern enum protocol_version get_protocol_version_config(void);
+ extern enum protocol_version determine_protocol_version_server(void);
+ extern enum protocol_version determine_protocol_version_client(const char *server_response);
 -- 
 2.14.0
