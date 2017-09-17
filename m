@@ -2,99 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7DBA62047F
-	for <e@80x24.org>; Sun, 17 Sep 2017 13:31:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 152792047F
+	for <e@80x24.org>; Sun, 17 Sep 2017 13:46:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751453AbdIQNbJ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Sep 2017 09:31:09 -0400
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:62224 "EHLO
-        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750861AbdIQNbI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Sep 2017 09:31:08 -0400
-Received: from [192.168.2.240] ([92.22.15.39])
-        by smtp.talktalk.net with SMTP
-        id tZf8dGbLgpb8rtZf8dGqCY; Sun, 17 Sep 2017 14:31:07 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
-        t=1505655067; bh=6GG3h7lVnimIuwbiDYBY44xWBFPgOZULgSahBjOtfPk=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=sfuOIgDyaiv9lEz6CCyWpdrAvGBAleEJPHO84jV2ob0/Lurzc3PnHG/PXGdFbbLO0
-         Bt3m3EUWhx3Cq2bvScCrkOfCarB6SvrAX4BfWOot//rzuGILIjK5Xc8SMZMjA9Kkuo
-         uV+MRNN7+GFlQDQMMzD3yyPytuhW+xuHlDo2Fxy4=
-X-Originating-IP: [92.22.15.39]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=ZM2noTzb c=1 sm=1 tr=0 a=3EVUng5azuUHeJ78rNzxRg==:117
- a=3EVUng5azuUHeJ78rNzxRg==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
- a=Xs9Mk7XThtz9oiwJoK4A:9 a=QEXdDO2ut3YA:10 a=6kGIvZw6iX1k4Y-7sg4_:22
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: Commit dropped when swapping commits with rebase -i -p
-To:     Sebastian Schuberth <sschuberth@gmail.com>,
-        Andreas Heiduk <asheiduk@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-References: <oo62vr$pvq$1@blaine.gmane.org>
- <CAN0heSqGfxrFTwuaxgppZTx+3U=g_Qs4PyaCBF6ddV_PbvdpTQ@mail.gmail.com>
- <CAHGBnuMC_10krsdZe2KiQ4jjiL43kogn--dWjPgca_p2xgmQMA@mail.gmail.com>
- <20170902000417.GE143138@aiede.mtv.corp.google.com>
- <a47058cc-8ffc-4484-c247-3c8d4f827c07@gmail.com>
- <xmqqbmmbwuq0.fsf@gitster.mtv.corp.google.com>
- <9e004c75-bc35-06ae-8479-9440059c4d0f@gmail.com>
- <CAHGBnuMBD1kVJoFLB-apUKbKJipOW3XTGqO+5W8jesY100ZFcg@mail.gmail.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <71c4d0ee-bc64-0c94-7991-2cb6d0a2bfd1@talktalk.net>
-Date:   Sun, 17 Sep 2017 14:31:04 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
-MIME-Version: 1.0
-In-Reply-To: <CAHGBnuMBD1kVJoFLB-apUKbKJipOW3XTGqO+5W8jesY100ZFcg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfEwifeQk3SCUJRPSpsNJtPh1BCpgAd5oi7jzgyVbtLRF2JRV7FBALZ+JPG5KUgRS6V7SL2Z7M9gRT4Ois9TXINLpBx0Uzz/HoI7NaequxeVsq+xDDmFq
- iUum5QZTNXlzkpz8GEOO1zCTz0BxKyOlM50MTCkEI/UTuaWP1HYooyDV1UwDn7/MdOpT6K9u1lo/obib1Hw0OBp0NfxT940+n3EhQ3dmyOhbQRws9ewZ7t5w
- JEZkteXy7+UbDsnr6BIJKBJgeMlVar9EbhTIKL7nK8H2CHWsp7EReNgDb3OCfrA0wQ9N90iS3UxUvOuVakxnY242MFfg5QU0dwAh2HL5Waw=
+        id S1751365AbdIQNnS (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Sep 2017 09:43:18 -0400
+Received: from mail-pf0-f173.google.com ([209.85.192.173]:44565 "EHLO
+        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750861AbdIQNnR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Sep 2017 09:43:17 -0400
+Received: by mail-pf0-f173.google.com with SMTP id e1so3580338pfk.1
+        for <git@vger.kernel.org>; Sun, 17 Sep 2017 06:43:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:in-reply-to:references:date:mime-version
+         :content-transfer-encoding;
+        bh=BBbTui8s6wWgA6eB8Wl5XfK0nzvBZhmGJ1kwCF7GKQQ=;
+        b=b2zrI5Xyquce9mFivzh1A2PDGpWXQruw3BZJ/ZTrfdzZEA1gJPWfMS9AnCYoJQmKzS
+         IKQQmgbRVG6ygNqQuAuwO/KVFSGLQZqKo1dJW7xsKbqKb0ogxZGiUaamgKwQ4A0QAFXH
+         gNazKqW1yh37r1tmq8yMQEueUigzPo5SIh02dWU/eq3pobFYAUt2DSn7DAcZl1Lv0RDJ
+         ZdtE2XQwZcKHZhizHLXINjr7hL3txrM8zHEBlMQotmSCelbjCbuQU2MvSwOrQkg7BAx2
+         04iDTPpOyMN7nEJv0VGz3qjgs6kQQ2lovTQdznqQt5CJNQidAjZUbJS7PgtHdKR2SSsJ
+         6XTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:in-reply-to
+         :references:date:mime-version:content-transfer-encoding;
+        bh=BBbTui8s6wWgA6eB8Wl5XfK0nzvBZhmGJ1kwCF7GKQQ=;
+        b=YmWfH6YtUOM8vQeF4kyPUckqo+1m7+52fVAMr1smm5Oka8rkkKzLacg9K4M9Eznq2U
+         s0w4iTdFCRu3G3krXdYCF1209TeYvUrUCIidjZkN102l98Fr26T3mH0pymBJIR+RpBTf
+         EF63oA9jAS1RIsXxlnnFOmpoXxE2Aq2U5FkW76ZSofamFMjRuj7q+ESdC0KrnSRbtjzN
+         aJJ2GPNMWLLupmVMrE3K06uyYAqRoOykW8046eMaSSATGvu8CBoLMB/1tx/y+zfr93p2
+         KggCVgZyN+AbE6JrxObMQp9jx63SStGM06S6q0vOvlUkfmg3LqPEzXZOl7IZVI1ebLr+
+         RNEg==
+X-Gm-Message-State: AHPjjUg8HOOJBNbWMi0w2fvYd3+bOuhRqA8Da71gp5ZBoOgbeDW5AdXt
+        t8yNsKVHt+mAvUu2ivk=
+X-Google-Smtp-Source: ADKCNb5KX3M0TU4tav4mcbGNoCsBosbrH2E8HPWcQRizrCNAZDS56/uaW3BkMXfObqi12opFrPZiQw==
+X-Received: by 10.98.224.143 with SMTP id d15mr29400925pfm.170.1505655796830;
+        Sun, 17 Sep 2017 06:43:16 -0700 (PDT)
+Received: from unique-pc ([14.102.72.146])
+        by smtp.googlemail.com with ESMTPSA id j13sm11158739pfk.107.2017.09.17.06.43.14
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 17 Sep 2017 06:43:16 -0700 (PDT)
+Message-ID: <1505655777.14232.3.camel@gmail.com>
+Subject: Re: [PATCH] doc: update information about windows build
+From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+To:     phillip.wood@dunelm.org.uk, git@vger.kernel.org
+In-Reply-To: <80afe093-aceb-9478-f0d2-d69f7f75eaab@talktalk.net>
+References: <0102015e8e4f7e75-dfec22a3-bb1a-4208-a069-450275d52b6d-000000@eu-west-1.amazonses.com>
+         <80afe093-aceb-9478-f0d2-d69f7f75eaab@talktalk.net>
+Content-Type: text/plain; charset="ISO-8859-15"
+Date:   Sun, 17 Sep 2017 19:12:57 +0530
+Mime-Version: 1.0
+X-Mailer: Evolution 3.22.6-1 
+Content-Transfer-Encoding: 8bit
+X-Cyberoam-smtpxy-version: 1.0.6.3
+X-Cyberoam-AV-Policy: default
+X-CTCH-Error: Unable to connect local ctasd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 16/09/17 14:45, Sebastian Schuberth wrote:
+On Sun, 2017-09-17 at 14:24 +0100, Phillip Wood wrote:
 > 
-> On Sat, Sep 16, 2017 at 12:41 PM, Andreas Heiduk <asheiduk@gmail.com> wrote:
+>  From that commit:
+> diff --git a/ci/run-windows-build.sh b/ci/run-windows-build.sh
+> new file mode 100755
+> index 000000000..4e3a50b60
+> --- /dev/null
+> +++ b/ci/run-windows-build.sh
+> @@ -0,0 +1,74 @@
+> +#!/usr/bin/env bash
+> +#
+> +# Script to trigger the a Git for Windows build and test run.
+> +# Set the $GFW_CI_TOKEN as environment variable.
+> +# Pass the branch (only branches on https://github.com/git/git are
+> +# supported) and a commit hash.
+> +#
 > 
->> Therefore I would avoid "definitive wording" like "will drop" and use
->> vague wording along "there are various dragons out there" like this:
->>
->>      The todo list presented by `--preserve-merges --interactive` does
->>      not represent the topology of the revision graph.  Editing
+> so only git/git from github gets built on windows, not other peoples 
+> trees. One cannot use travis to test ones changes on windows before 
+> submitting them
 > 
-> I tried to avoid this introducing sentence from the original wording
-> as it reads like from a scientific research paper instead of from a
-> user's manual.
-> 
->>      commits and rewording their commit messages should work fine.
->>      But reordering, combining or dropping commits of a complex topology
-> 
-> There is no need for complex topology. If you reorder the two most
-> recent commits in a linear history, one gets dropped.
-> 
->>      can produce unexpected and useless results like missing commits,
->>      wrong merges, merges combining two unrelated histories and
->>      similar things.
-> 
-> "can produce" is much too soft, IMO. Reordering commits goes wrong,
-> period. Like wise "unexpected and useless results" is inappropriate.
-> The results are wrong in case of reordering, and wrong results are of
-> course unexpected and useless.
 
-I agree that the wording needs to be explicit that bad things will 
-happen. It should spell out that if commits or reordered, or the fixup 
-or squash commands are used then commits will be dropped and if commits 
-are deleted from the list or the drop command is used other commits 
-other than the intended ones will be dropped as well.
+Thanks for pointing it out didn't notice it. I have been confused by
+the presence of the build named 'Windows' that I see even on my tree. I
+ always see a green check mark near it which tricked me into believing
+that they were running successfully. I didn't know they were being
+skipped all these days! 
 
+May be the Windows build exit with failure on other repos rather than
+saying it passes?
+
+---
+Kaartic
