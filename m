@@ -7,93 +7,76 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB61F2047F
-	for <e@80x24.org>; Sun, 17 Sep 2017 20:30:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6AC192047F
+	for <e@80x24.org>; Sun, 17 Sep 2017 20:42:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751646AbdIQUaJ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Sep 2017 16:30:09 -0400
-Received: from mail-it0-f44.google.com ([209.85.214.44]:45003 "EHLO
-        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751334AbdIQUaI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Sep 2017 16:30:08 -0400
-Received: by mail-it0-f44.google.com with SMTP id r131so4851785itc.1
-        for <git@vger.kernel.org>; Sun, 17 Sep 2017 13:30:08 -0700 (PDT)
+        id S1751877AbdIQUme (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Sep 2017 16:42:34 -0400
+Received: from mail-io0-f195.google.com ([209.85.223.195]:38708 "EHLO
+        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751646AbdIQUmd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Sep 2017 16:42:33 -0400
+Received: by mail-io0-f195.google.com with SMTP id e9so7288384iod.5
+        for <git@vger.kernel.org>; Sun, 17 Sep 2017 13:42:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=BU5dVPDAROfwOPaPQGyil14NgnS9DGh7VC6YOaz0Mg4=;
-        b=sxbTlFa/TH/Kn50Rdiz4qWtpMZMkmR0UEsnKuBtRLhOueWNuV3yQq4Iyh4jPMtnZhx
-         Y6JUZ3a6Y9gQ4kb+zGijIeIY1ukEPYj0DvnstA5L31uDGrhSxoZI/EzVVKDN/mm2Xuqc
-         lXsP7yuTuc88mOMZ9duNvfPAd8wZGqTXiCpUM6ubwqbDYjc5MfBFxhmGKCVFjBAJ78Do
-         xIwQox0zc6ToXEmiSUVKAR7xXDnbKOCXaDeQYGIEgcMow7hxnEXMifuUOFrYwU0q3sKu
-         g6fvn5VTTpIpCO432anzc7sMdMnk7xm9+a46TxpBfljigogGcXIuhyXgKGZjsVh4daS/
-         Y3TQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=zSKzGxuyuNFWbKCPjMTWyb17osAs3AbIqnzsdD26SSQ=;
+        b=YZ4R4rfw4zBzpB8trhhjaO9yCGNcpYdJkmtfyRWugIrpQjq4M0JRsh4omRW00JXh9l
+         MYW2WKJgV19BF+x0UmNzFIEMLae/dAhOKncxxSmGnT4YgiJ3Bu9cqoOenH6mO26l4o5u
+         8qAg1wfa//HZGeIkBnDQx4Dd5bhddeDLdW9sj+C6FrZVEk/wx4MlB04c3JDe4zImGrQ0
+         EeicGAgyjyglFNspqGSJtd6cewdBU34j/UCOMJIv5hvz4rnPifOeTo2PGkQuilidJMgm
+         p0EPX0Dvh92yFv69ezt4MmteDB3h85xV4dh4/GaO6/DaxqRtMM+lDa6y0kkRLFOeuVGy
+         r9+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=BU5dVPDAROfwOPaPQGyil14NgnS9DGh7VC6YOaz0Mg4=;
-        b=IeFdfALSVKy74YUGsqRrh0T6WOalNCviwDzhqajzGlIKXaamRnFyn2uCajfsI1zD5z
-         VTub6E36I8V5aT2BahRVY3l579mtVDo/iv+tqus32AEn2l3LksJ49J/Dpn9BJnTLTdNZ
-         4foVhUeqa+GXwp+ffJyMRniRSlAhcojyv1dmV9dyXtDSNpf7SgmQNQOrQcWwz9Yhw4+z
-         5Gf5OdfKqJQEfIpBzbexGsnse9LgX8T5KLSrq6Yuf5dYTuKSGyLia7b2QsKpHWxLkc38
-         ufrkfCL824g/tTysY8wfdFA+o7UJVe3SoHRTPWsWtLDLaNhbb8DQM9hWt8SfkUWc6+NR
-         k17A==
-X-Gm-Message-State: AHPjjUhlTgDV2OGiFdPfV/C+6MQshOn5veTkO2iCbzLvetwzdVReiMB0
-        hT0nlorVdlcROdLr1DQ4nbdgN+RtrfXhT2WSuBVczQ==
-X-Google-Smtp-Source: AOwi7QCou5iYHjlwueBkpQOxnDe8Z6JIdNLWzSGMp5QOuTTO5Y9Y0k/IUiUg3rS+3FQMPYKt1miSao65jpaZbtMFOq8=
-X-Received: by 10.36.111.4 with SMTP id x4mr12987642itb.144.1505680207728;
- Sun, 17 Sep 2017 13:30:07 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=zSKzGxuyuNFWbKCPjMTWyb17osAs3AbIqnzsdD26SSQ=;
+        b=hX3QFlODbhqRKvNy2E/vEJhCGuoLx909EPWT5hKkndeSxXTeD+iZfxysGRxP3bxAtp
+         juUVe9I7WLsDqDEBgLxnzJJZt8NChtv2u7vjEABD2QtefTMwQarLAPWl/DNu2w+Rk8bZ
+         XYpM3LTElsOq2zD824yto0YiCbiA/M54irsj7ZyjXcD/hA117E/zVv7K/zPNe1nyTMQT
+         Xo74jNCy5PjN/NDQtyDN8M2Y78IdKMC10uIp/RTUpaqqnknS7HnzIs6mvay0PFQwJBfl
+         Aa9R7CwBc02uDUvqaA5C9z3dqOWUgJtUQmcqtZ6RDpuR5OGnWEa+6IjbWO8wATBCl9Yq
+         YfgQ==
+X-Gm-Message-State: AHPjjUjaCU5EFuubTakXcUdl5LdA69sHF21gSeZFUenYGC78j4Aa9h6h
+        p2YyRog0j5QjUmSHn8+4VG5VRJvK8A3TU9MmRvwhcw==
+X-Google-Smtp-Source: AOwi7QDFHrWQZqh7+zoce9TyVP5ZOS01RdUmG8EHqHvT9VEJKqz8fjWJxmG7RkmXyXM89l9HduRSZpg+p5jFhEmFA2A=
+X-Received: by 10.107.147.8 with SMTP id v8mr2521786iod.45.1505680952448; Sun,
+ 17 Sep 2017 13:42:32 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.79.107.136 with HTTP; Sun, 17 Sep 2017 13:30:07 -0700 (PDT)
+Received: by 10.79.107.136 with HTTP; Sun, 17 Sep 2017 13:42:31 -0700 (PDT)
+In-Reply-To: <1505679467-20720-1-git-send-email-bugosip@gmail.com>
+References: <1505679467-20720-1-git-send-email-bugosip@gmail.com>
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sun, 17 Sep 2017 22:30:07 +0200
-Message-ID: <CAP8UFD01QdwWdeobXDG19X1ggk88Dcu55DJGMdbyoMoR-uc2XQ@mail.gmail.com>
-Subject: Draft of Git Rev News edition 31
-To:     git <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Thomas Ferris Nicolaisen <tfnico@gmail.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
+Date:   Sun, 17 Sep 2017 22:42:31 +0200
+Message-ID: <CAP8UFD2f3jXkRHb_S_dK7TDfhBwXQ+O63cBn0J7iQQA-5ysVMQ@mail.gmail.com>
+Subject: Re: [PATCH] pack: make packed_git_mru global a value instead of a pointer
+To:     phionah bugosi <bugosip@gmail.com>
+Cc:     Jeff King <peff@peff.net>, git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Sun, Sep 17, 2017 at 10:17 PM, phionah bugosi <bugosip@gmail.com> wrote:
+> Signed-off-by: phionah bugosi <bugosip@gmail.com>
+> ---
+>  builtin/pack-objects.c |  5 +++--
+>  cache.h                |  7 -------
+>  list.h                 |  6 ++++++
+>  packfile.c             | 12 ++++++------
+>  4 files changed, 15 insertions(+), 15 deletions(-)
+>
+> This patch makes packed_git_mru global a value instead of a pointer and
+> makes use of list.h
 
-A draft of a new Git Rev News edition is available here:
+Please explain _why_ you are doing that (why is the resulting code better).
 
-  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-31.md
+You may also add [Outreachy] in the patch subject to tell people that
+you are applying for the Outreachy round 15 program
+(https://git.github.io/Outreachy-15/).
 
-Everyone is welcome to contribute in any section either by editing the
-above page on GitHub and sending a pull request, or by commenting on
-this GitHub issue:
-
-  https://github.com/git/git.github.io/issues/256
-
-You can also reply to this email.
-
-In general all kinds of contribution, for example proofreading,
-suggestions for articles or links, help on the issues in GitHub, and
-so on, are very much appreciated.
-
-I tried to cc everyone who appears in this edition, but maybe I missed
-some people, sorry about that.
-
-Thomas, Jakub, Markus and myself plan to publish this edition on
-Wednesday September 20th.
-
-Thanks,
-Christian.
+Thanks!
