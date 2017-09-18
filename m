@@ -2,163 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B0E272047F
-	for <e@80x24.org>; Mon, 18 Sep 2017 20:03:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7ED4D20A27
+	for <e@80x24.org>; Mon, 18 Sep 2017 20:07:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751205AbdIRUDf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Sep 2017 16:03:35 -0400
-Received: from mail-wr0-f177.google.com ([209.85.128.177]:49284 "EHLO
-        mail-wr0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750872AbdIRUDe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Sep 2017 16:03:34 -0400
-Received: by mail-wr0-f177.google.com with SMTP id u96so1424870wrb.6
-        for <git@vger.kernel.org>; Mon, 18 Sep 2017 13:03:33 -0700 (PDT)
+        id S1750791AbdIRUHC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Sep 2017 16:07:02 -0400
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:50053 "EHLO
+        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750711AbdIRUHB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Sep 2017 16:07:01 -0400
+Received: by mail-wm0-f45.google.com with SMTP id e71so5779276wmg.4
+        for <git@vger.kernel.org>; Mon, 18 Sep 2017 13:07:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=9CFdCXjpVghqWrsDUGKHKOLEiEeVDGxhQFrZI3cwkZg=;
-        b=HHeFHTB0FJO/a6hmE6+h4v5ZRcG5zLKa+QzLeYMl/tZ6Q1aahncCz7yUzah73RXTmu
-         EdGZ5MZ2OaEiWnVxNpeHFwt+tOlFWN56pXouRyCftvQYc6ZtEKWXtrXtMSv3ORH0yf44
-         LQajX94yfHoZE2NU9q7QDpP1o8KDzKAP04nHeuQ2tLpyt/o8rkJs9gcUt6mag8lOvvGC
-         CgkMKZXHfcgewfnEa9bQu8o0TpRFlFSPBqCjXcys9db+PpvjMVsv+a8TyY5jXC5zJN5U
-         TZgr0I3amiiMxHPmM87xUORGpUc8CZFTjpPeyQ2/Bcj6JorSnZeNS/hDQvO03G+a7ZhP
-         R4ZQ==
+        bh=x2qMi2huhgu7WalKacuOSzOJCIyxRL1AsN2P1fDcN5M=;
+        b=PBiN72+vKc3gxWptglVyDeADGo+lILARqQSN0mn4TWAKrZLQS/fgpSBvY00ezOlZ7S
+         uUuV0zQ3sFbBePlXaGBJeljJSwD76gAhGVLhYxsJ31dZPS4v1mq+VNJHJhuLNTSPw4l2
+         Lall3K78u63da1cB1tnve0krCF63jiIznL9tcB5cZ0az+OMf0e3fU7WA3U1kK7banYk+
+         zCN3Y0jX9I92WWv+nd7clVbTPxsMQyQGAZtuhK9naTh9Am1bn+1vWqy+RybP9x1GXeV1
+         nFn9t7KtU0TxTsEomKit656iyUHVoRIoRXqbxY8fy8Wm764nxUWalWHuhLsLieUq130l
+         iOYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=9CFdCXjpVghqWrsDUGKHKOLEiEeVDGxhQFrZI3cwkZg=;
-        b=lez93rjtZKfO8ZoPHJPt05U8dFL3FcDcuDXMxJiTh/A5FoVE+82j0Hi9IF63ytXfCM
-         JWJhLtdx++RZkkZlcINppwPGoaJC6i0Ro46UPILX1CkhTlsjer3iIw72P95boQvEN7Rt
-         LhoqalkytjhNpHhsVGYhrlC4EPl2XZ8OzhzgHUhSL2RMSjwmMMn2JVcSMAQQRkHL/gv1
-         i9i89Cke3zhxvJB8fKvZVI3T0AMnqdh6hpAAUfdDL3uMgrjjDYtMgHjvhnFpKeLLv42t
-         NtCaiTogOCEFwtAGy8ef6/EQIiWHLgxO6vq2ofE87EQd5gw0eSmTktHLvmulUPiW28I5
-         gRoQ==
-X-Gm-Message-State: AHPjjUhzaq8eXO/LsTTIUQ9KtKTTKGILqfsmEDVjOVwTDd1/qqbDcTtz
-        vwhV7ayd02DlqS+kl37Eqp1WTjd9tf23AcLe5E8Mvu1KFn8=
-X-Google-Smtp-Source: ADKCNb7JrPBeTCNIZ5KVGUIkGQqSsCyIh9BpfWCgLdDBvNncO+iY7AI8+4xbtVy8rwRirULMd9mll3zJT3Uu71/9JFg=
-X-Received: by 10.223.138.238 with SMTP id z43mr28221358wrz.83.1505765012865;
- Mon, 18 Sep 2017 13:03:32 -0700 (PDT)
+        bh=x2qMi2huhgu7WalKacuOSzOJCIyxRL1AsN2P1fDcN5M=;
+        b=U4GfbaM9jKIgdrHYgKFOgzZWJWxALjSV9TklI9iIdxRJnlRkvYoKXvX5xbAhJjEuNp
+         Wb0Xg+sWmo4Yu9WL04oiI/ut4DHPLiGFFw61Wz2gUytSPekgLELosbkyBcxUvxuDdcLq
+         NEwqWz3zjsb57wrIRs0D/ZoRoAbx8H98YQgmUs9bqpnlaCkDYCD2qH2aeTMazRstRNII
+         8hmsom/TRKna11KbNPMZkepdRiEteeDN0kt15wKsJM0Yy/jp5ogu+Y/lx9r8VhdUV3B1
+         t292/8cw7kdZbYkcAaA+WXvYIk6d67FDqXiJm6v/B4TZ0EMkmAEAfqgyEVXXj2ky1tFv
+         pMcA==
+X-Gm-Message-State: AHPjjUgH/5rm2t4lvQ+lo8d1PKhpB2wuJO4IX3IdzakgitMIQ+hXRZ2G
+        e4jmvpiL9753Wm3bSKCB0s4jotAa4AhM5AodO6vTgQ==
+X-Google-Smtp-Source: AOwi7QDs8Jd3T0PRx1RnjUNWIHn4PWcvtBiZ2pUupmgyyIEGUmKFG6677pHoP4UJLfxZxtjlauRnr/AxJ2U+LOQmr04=
+X-Received: by 10.28.129.23 with SMTP id c23mr10811224wmd.27.1505765219785;
+ Mon, 18 Sep 2017 13:06:59 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.223.170.68 with HTTP; Mon, 18 Sep 2017 13:03:32 -0700 (PDT)
-In-Reply-To: <xmqqlgleup78.fsf@gitster.mtv.corp.google.com>
-References: <20170817103413.GA52233@book.hvoigt.net> <CAGZ79kZhUO95oSEzARqXi3+dm5Ow5Jwm-O1adowh0nkbqHdhMw@mail.gmail.com>
- <20170818160603.GA69414@book.hvoigt.net> <CAGZ79kYNLo_3PfLTOE5wusTs6wgFXZLVH+qNZ-ovxGguhinHLg@mail.gmail.com>
- <20170915115021.GB76244@book.hvoigt.net> <xmqqlgleup78.fsf@gitster.mtv.corp.google.com>
+Received: by 10.223.170.68 with HTTP; Mon, 18 Sep 2017 13:06:59 -0700 (PDT)
+In-Reply-To: <20170918195840.GG144331@google.com>
+References: <20170913215448.84674-1-bmwill@google.com> <20170913215448.84674-3-bmwill@google.com>
+ <CAGZ79kaeWsWdhoC7VDy-YkL1wVWqaQ9=TQUti9HfwjbT2poQdw@mail.gmail.com>
+ <20170918170207.GF144331@google.com> <CAGZ79kYQGguodnaiNfT_vWWDQdDdXwZmTi7JnqOmz+Po+FL1+Q@mail.gmail.com>
+ <20170918195840.GG144331@google.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 18 Sep 2017 13:03:32 -0700
-Message-ID: <CAGZ79kaycuiFuB1m0SiyKoZ6UyEBCMiipYXkavN+NNyCZaY1=Q@mail.gmail.com>
-Subject: Re: [PATCH v2] add test for bug in git-mv for recursive submodules
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Heiko Voigt <hvoigt@hvoigt.net>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
+Date:   Mon, 18 Sep 2017 13:06:59 -0700
+Message-ID: <CAGZ79kZ1odSp5O+uF_-ZXZfD4M2r=pZD1LADQ9Thfgki1b7nYw@mail.gmail.com>
+Subject: Re: [PATCH 2/8] protocol: introduce protocol extention mechanisms
+To:     Brandon Williams <bmwill@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Bryan Turner <bturner@atlassian.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Jonathan Tan <jonathantanmy@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->> Took a little while but here is a more clean patch creating individual
->> submodules for the nesting.
->>
->> Cheers Heiko
-
-Thanks for writing this test!
-
+>> instead compared to the proposed configuration above.
+>> (Even better yet, then people could play around with "v1 only"
+>> and see how it falls apart on old servers)
 >
-> Thanks.  Stefan, does this look good to you now?
-
-Yes, though there are nits below.
-
-> It is not quite clear which step is expected to fail with the
-> current code by reading the test or the proposed log message.  Does
-> "mv" refuse to work and we do not get to run "status", or does
-> "status" report a failure, or do we fail well before that?
-
-git-mv failing seems like a new possibility without incurring
-another process spawn with the new repository object.
-(Though then we could also just fix the recursed submodule)
-
-> The log message that only says "This does not work when ..." is not
-> helpful in figuring it out, either.  Something like "This does not
-> work and fails to update the paths for its configurations" or
-> whatever that describes "what actually happens" (in contrast to
-> "what ought to happen", which you described clearly) should be
-> there.
+> Except we can't start with an explicit whitelist because we must
+> fallback to v0 if v1 isn't supported otherwise we would break people.
 >
-> Description on how you happened to have discovered the issue feels a
-> lot less relevant compared to that, and it is totally useless if it
-> is unclear what the issue is in the first place.
+> That is unless we have the semantics of: If not configured v0 will be
+> used, otherwise only use the configured protocol versions.
 >
->>  t/t7001-mv.sh | 25 +++++++++++++++++++++++++
->>  1 file changed, 25 insertions(+)
->>
->> diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
->> index e365d1ff77..cbc5fb37fe 100755
->> --- a/t/t7001-mv.sh
->> +++ b/t/t7001-mv.sh
->> @@ -491,4 +491,29 @@ test_expect_success 'moving a submodule in nested directories' '
->>       test_cmp actual expect
->>  '
->>
->> +test_expect_failure 'moving nested submodules' '
->> +     git commit -am "cleanup commit" &&
->> +     mkdir sub_nested_nested &&
->> +     (cd sub_nested_nested &&
 
-We seem to have different styles for nested shell. I prefer
+Good point.
 
-  outside command &&
-  (
-      first nested command here &&
-      ...
+Thinking about this, how about:
 
-as that aligns indentation to the nesting level. I have seen
-the style you use a lot in the  test suite, and we do not have
-a guideline in Documentation/CodingGuidelines, so I do not
-complain too loudly. ;)
+  If not configured, we do as we want. (i.e. Git has full control over
+  it's decision making process, which for now is "favor v0 over v1 as
+  we are experimenting with v1". This strategy may change in the future
+  to "prefer highest version number that both client and server can speak".)
 
+  If it is configured, "use highest configured number from the given set".
 
->> +             touch nested_level2 &&
->> +             git init &&
->> +             git add . &&
->> +             git commit -m "nested level 2"
->> +     ) &&
->> +     mkdir sub_nested &&
->> +     (cd sub_nested &&
->> +             touch nested_level1 &&
->> +             git init &&
->> +             git add . &&
->> +             git commit -m "nested level 1"
->> +             git submodule add ../sub_nested_nested &&
->> +             git commit -m "add nested level 2"
->> +     ) &&
->> +     git submodule add ./sub_nested nested_move &&
->> +     git commit -m "add nested_move" &&
->> +     git submodule update --init --recursive &&
-
-So far a nice setup!
-
->> +     git mv nested_move sub_nested_moved &&
-
-This is the offending command that produces the bug,
-as it will break most subsequent commands, such as
-
->> +     git status
-
-git-status is one of the basic commands. Without
-status to function, I think it is hard to recover your repo without
-a lot of in-depth knowledge of Git (submodules).
-
-I wonder if git-status should complain more gracefully
-and fallback to one of --ignore-submodules={dirty, all},
-that actually still works.
-
-Maybe we could introduce a new default mode for this
-flag, that is "none-except-on-error", though this sounds
-as if we're fixing symptoms instead of the root cause.
+?
