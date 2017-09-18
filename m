@@ -2,178 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C34CE20A21
-	for <e@80x24.org>; Mon, 18 Sep 2017 11:37:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C63A92090B
+	for <e@80x24.org>; Mon, 18 Sep 2017 12:17:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755681AbdIRLh3 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Sep 2017 07:37:29 -0400
-Received: from mail-qk0-f178.google.com ([209.85.220.178]:53786 "EHLO
-        mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753830AbdIRLgO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Sep 2017 07:36:14 -0400
-Received: by mail-qk0-f178.google.com with SMTP id t184so171942qke.10
-        for <git@vger.kernel.org>; Mon, 18 Sep 2017 04:36:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=pIjuvuVMaueC/Z7HE1OvL7u3ZhJcQa8tGqULVCX3JU4=;
-        b=e7Igda8x5yzDLDzVUSQl5rpPll0Th0MLr/BriwewiP3hSNVGipv8D9Hl17ekP8W790
-         USH0u+YQ10sgOML+1fj62+EJ9witGddzgH7ZYBdB+CpcqR1c+cCx2gC/qEwhTKKa33Ni
-         2/v06xkA7OQlSB2B0O2sI+Dx7TW1nfLbDuGes1GFwK+f6oWpEIo0uym8pizM5+9Zcpie
-         OIoHAQ28JbInTC8ArhSHicRAr+6HoBsT1PS7bCwueGnDFrD6OmXjCuxOYPj13Oli5AJJ
-         922DAVOsWS4TAUtU08ct3G8GF9iVu485uVXewjL0KlS983dEC9McgHRinl3tZCwbP85c
-         WBDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=pIjuvuVMaueC/Z7HE1OvL7u3ZhJcQa8tGqULVCX3JU4=;
-        b=IYD1v704QOTguwo0iGUdEG8Ke9YAryhCdysFUvthSGXJ9+CkxWi+d2oEor0jXNmiO5
-         lq7A78MpeCn+eIiPIPasGD+pZBUO/V/cChPDSeADUcys8lBWslfqlO/sy3Zs+ipmU6FC
-         uZwmLgKJ6nnZ6fdOWMePcKMZ4pIzCucTBjUapzA/8DqjFrw59GfFDfvIqHy1Abtu+Fcl
-         kuAX1WoWvbQV6be7QX1duhu+iAMX27hdxmtyjtuM3BaoiKVqPyBy/ly1mX6QV1B1nUrJ
-         XtZ31zUtLEyPuiCHdprjyrNPVCVuEYMOaQmjbilbWwc6ShCOhYIW1ebKlK3bo0i/qo8c
-         UztA==
-X-Gm-Message-State: AHPjjUhmdjt1ElwKrn2THS5Mn7AbklWcgLF9smbAuGacxviu+tn1IDV4
-        /VOmumH+TzHm6g==
-X-Google-Smtp-Source: AOwi7QC/kL4fweX/UgE+idS4Ap7oLgQ+1ICW2WZR797meIuoJTFS6Gtb4O8eGotwMrsVP7FB6Lwv1w==
-X-Received: by 10.55.79.68 with SMTP id d65mr20077967qkb.110.1505734573397;
-        Mon, 18 Sep 2017 04:36:13 -0700 (PDT)
-Received: from [10.0.1.24] ([98.122.163.216])
-        by smtp.gmail.com with ESMTPSA id s44sm5003001qtc.92.2017.09.18.04.36.12
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 18 Sep 2017 04:36:12 -0700 (PDT)
-Subject: Re: [PATCH 1/3] sha1_name: Create perf test for find_unique_abbrev()
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Cc:     git@vger.kernel.org, johannes.schindelin@gmx.de,
-        git@jeffhostetler.com, kewillf@microsoft.com
-References: <20170915165750.198201-1-dstolee@microsoft.com>
- <20170915165750.198201-2-dstolee@microsoft.com>
- <xmqqa81su8v9.fsf@gitster.mtv.corp.google.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <960c73e2-6909-6894-a9ab-a191426aeda9@gmail.com>
-Date:   Mon, 18 Sep 2017 04:36:09 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:56.0) Gecko/20100101
- Thunderbird/56.0
+        id S1754465AbdIRMRP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Sep 2017 08:17:15 -0400
+Received: from mx07-00178001.pphosted.com ([62.209.51.94]:3867 "EHLO
+        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752502AbdIRMRM (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 18 Sep 2017 08:17:12 -0400
+Received: from pps.filterd (m0046668.ppops.net [127.0.0.1])
+        by mx07-.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id v8ICES14020522;
+        Mon, 18 Sep 2017 14:16:39 +0200
+Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
+        by mx07-00178001.pphosted.com with ESMTP id 2d20x03a1a-1
+        (version=TLSv1 cipher=ECDHE-RSA-AES256-SHA bits=256 verify=NOT);
+        Mon, 18 Sep 2017 14:16:39 +0200
+Received: from zeta.dmz-eu.st.com (zeta.dmz-eu.st.com [164.129.230.9])
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 9D86D34;
+        Mon, 18 Sep 2017 12:16:37 +0000 (GMT)
+Received: from Webmail-eu.st.com (sfhdag6node2.st.com [10.75.127.17])
+        by zeta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 6438B26B0;
+        Mon, 18 Sep 2017 12:16:37 +0000 (GMT)
+Received: from [10.137.2.67] (10.75.127.44) by SFHDAG6NODE2.st.com
+ (10.75.127.17) with Microsoft SMTP Server (TLS) id 15.0.1178.4; Mon, 18 Sep
+ 2017 14:16:36 +0200
+Subject: Re: RFC v3: Another proposed hash function transition plan
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20170304011251.GA26789@aiede.mtv.corp.google.com>
+ <CA+55aFz+gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com>
+ <20170307001709.GC26789@aiede.mtv.corp.google.com>
+ <xmqqa828733s.fsf@gitster.mtv.corp.google.com>
+ <xmqq1snh29re.fsf@gitster.mtv.corp.google.com>
+ <20170911185913.GA5869@google.com>
+ <alpine.DEB.2.21.1.1709131340030.4132@virtualbox>
+ <CANgJU+Wv1nx79DJTDmYE=O7LUNA3LuRTJhXJn+y0L0C3R+YDEA@mail.gmail.com>
+ <CA+55aFwUn0KibpDQK2ZrxzXKOk8-aAub2nJZQqKCpq1ddhDcMQ@mail.gmail.com>
+ <alpine.DEB.2.21.1.1709142037490.4132@virtualbox>
+CC:     Linus Torvalds <torvalds@linux-foundation.org>,
+        demerphq <demerphq@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jeff King <peff@peff.net>, David Lang <david@lang.hm>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Keccak Team <keccak@noekeon.org>
+From:   Gilles Van Assche <gilles.vanassche@st.com>
+X-Enigmail-Draft-Status: N1110
+Message-ID: <59BFB95D.1030903@st.com>
+Date:   Mon, 18 Sep 2017 14:17:33 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqa81su8v9.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <alpine.DEB.2.21.1.1709142037490.4132@virtualbox>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.75.127.44]
+X-ClientProxiedBy: SFHDAG3NODE3.st.com (10.75.127.9) To SFHDAG6NODE2.st.com
+ (10.75.127.17)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2017-09-18_03:,,
+ signatures=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/17/2017 5:51 PM, Junio C Hamano wrote:
-> Derrick Stolee <dstolee@microsoft.com> writes:
-> 
->> +int cmd_main(int ac, const char **av)
->> +{
->> +	setup_git_directory();
-> 
-> As far as I recall, we do not (yet) allow declaration after
-> statement in our codebase.  Move this down to make it after all
-> decls.
+Hi Johannes,
 
-Will fix.
+> SHA-256 got much more cryptanalysis than SHA3-256 […].
 
->> +
->> +	unsigned int hash_delt = 0x13579BDF;
->> +	unsigned int hash_base = 0x01020304;
->> +	struct object_id oid;
->> +
->> +	int i, count = 0;
->> +	int n = sizeof(struct object_id) / sizeof(int);
-> 
-> It probably is technically OK to assume sizeof(int) always equals to
-> sizeof(unsigned), but because you use 'n' _only_ to work with uint
-> and never with int, it would make more sense to match.
+I do not think this is true. Keccak/SHA-3 actually got (and is still
+getting) a lot of cryptanalysis, with papers published at renowned
+crypto conferences [1].
 
-Will fix. I also notice that "n" should be const.
+Keccak/SHA-3 is recognized to have a significant safety margin. E.g.,
+one can cut the number of rounds in half (as in Keyak or KangarooTwelve)
+and still get a very strong function. I don't think we could say the
+same for SHA-256 or SHA-512…
 
-> But I do not think we want this "clever" optimization that involves
-> 'n' in the first place.
- >>> +	while (count++ < 100000) {
->> +		for (i = 0; i < n; i++)
->> +			((unsigned int*)oid.hash)[i] = hash_base;
-> 
-> Does it make sense to assume that uint is always 4-byte (so this
-> code won't work if it is 8-byte on your platform) and doing this is
-> faster than using platform-optimized memcpy()?
+Kind regards,
+Gilles, for the Keccak team
 
-I'm not sure what you mean by using memcpy to improve this, because
-it would require calling memcpy in the inner loop, such as
-
-	for (i = 0; i < n; i++)
-		memcpy(oid.hash + i * sizeof(unsigned), &hash_base,
-		       sizeof(unsigned));
-
-I'm probably misunderstanding your intended use of memcpy().
-
->> +		find_unique_abbrev(oid.hash, MINIMUM_ABBREV);
->> +
->> +		hash_base += hash_delt;
->> +	}
-> 
-> I also wonder if this is measuring the right thing.  I am guessing
-> that by making many queries for a unique abbreviation of "random"
-> (well, it is deterministic, but my point is these queries are not
-> based on the names of objects that exist in the repository) hashes,
-> this test measures how much time it takes for us to decide that such
-> a random hash does not exist.  In the real life use, we make the
-> opposite query far more frequently: we have an object that we _know_
-> exists in the repository and we try to find a sufficient length to
-> disambiguate it from others, and I suspect that these two use
-> different logic.  Don't you need to be measuring the time it takes
-> to compute the shortest abbreviation of an object that exists
-> instead?
-
-First, this doesn't just measure the time it takes to determine non-
-existence, because it finds the len required to disambiguate an
-"incoming" hash from all known hashes. When testing, I put in a
-simple printf to report the result abbreviation so I could see how
-often it needed to be extended. In this sense, the test exposes the
-while loop that is removed by PATCH 2/3.
-
-Second, your criticism about extant hashes is valid, and one I
-struggled to reconcile. I see two issues with testing known hashes:
-
-1. By determining the hash exists, we have inspected the file that
-    contains it (either a .idx or the loose-object directory). This
-    has side-effects that warm up the file cache so the looped method
-    is artificially faster to find matching objects. The effect is
-    particularly significant on a repo with exactly one packfile.
-
-2. If we iterate over the entire set of objects, this test takes
-    O(N*t(N)) time, where t(N) is the average time to compute a
-    minimum abbreviation. For large repos, this can take several
-    minutes. Instead, even with the constant 100,000 test hashes, we
-    have an O(t(N)) test. We could avoid the asymptotic growth by
-    limiting the number of existing hashes we use, but how do we
-    find a sufficiently uniform sample from them?
-
-By looking at some other perf tests, I see that we can add a pre-
-requisite action. I will investigate making another helper that
-uniformly selects a set of hashes from the repo and writes them
-to stdout in a random order. p0008-abbrev.sh will run the helper as
-a prerequisite, saving the data to a file. test-abbrev will read
-the hashes from stdin to test find_unique_abbrev. This should avoid
-the side-effects I mentioned (test-abbrev will not warm up indexes)
-while also testing abbreviation lengths for existing objects.
-
-I'll get started on these changes and send a new patch with new perf
-data in a couple days. Please let me know if there is a better way
-to measure performance for this change.
-
-Thanks,
--Stolee
+[1] https://keccak.team/third_party.html
 
