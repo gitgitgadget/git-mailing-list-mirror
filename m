@@ -2,86 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D2BE32047F
-	for <e@80x24.org>; Mon, 18 Sep 2017 22:25:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 795DF2047F
+	for <e@80x24.org>; Mon, 18 Sep 2017 23:17:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750772AbdIRWZp (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Sep 2017 18:25:45 -0400
-Received: from mail-pg0-f42.google.com ([74.125.83.42]:45112 "EHLO
-        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750711AbdIRWZo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Sep 2017 18:25:44 -0400
-Received: by mail-pg0-f42.google.com with SMTP id 188so934649pgb.2
-        for <git@vger.kernel.org>; Mon, 18 Sep 2017 15:25:44 -0700 (PDT)
+        id S1750882AbdIRXR2 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Sep 2017 19:17:28 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:35336 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750772AbdIRXR1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Sep 2017 19:17:27 -0400
+Received: by mail-pf0-f193.google.com with SMTP id i23so765968pfi.2
+        for <git@vger.kernel.org>; Mon, 18 Sep 2017 16:17:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=LdFXkIcei+u4Jat0oh0hKoMVlQj46dowgNMJPPP10gQ=;
-        b=jadnE9+Ym97VCmP2Etro0g1PNPVoOOXUj2sAxOg0KAg8Bdn1iRXSL+URArBfwnzGl+
-         QpZpC+3wMrCQWOiTaf/mg/Zv2UDHH6R2W2Jd0kv3+flTPpWUc85WLhm/9MgE4ftoZc4l
-         YPAAWX2TLM8Og9XJ6VyrHqy0ulm4QJekmPM1a7rWxr5yLuRub+UTJetBKPEcwJVDHRSR
-         Y5u/ce4egwvadmXAwFFdDK2Jd/EgAKHNOjm9lmG7kBwDlDugIaLcKBkmWZ6Pi4JNmIwU
-         8nt8+AolyeTQC7ywrq6vrNRR0zDFUAxy5WT+0MM0s5KXqzeOb1IaTAxUqHh/+CMeUC8Y
-         RsJA==
+         :content-disposition:in-reply-to:user-agent;
+        bh=NKq4BmJcjVmi/lrENNydGXYiRHqnrc/9GxqYRvX/gUM=;
+        b=X0+Tv75peQWPIFuGZcSOXSOBbM6d5QcPWIk49RdovYH0forrbSKQLG+1r2xMXci7U3
+         VNEFMdc8/cyDuLJicDvKRrm+NjElRvW9xxgqQxef2N+VSQm0ODI+bAXzSRBwR0BYrTcG
+         AYtCmg5D3PLjez6xAybEm6F8na51B2s+yDDbejHTs2TN+imx0lgxd7YTO4995yUysxFG
+         2DhCM0FldYqWRAbNbwlfjLwRRgWUcd/JFllUZUgfFHPGnpRXAZrOFaRUkCsxOGZTLAU0
+         7F9YluFzB2Zze8uTkjdc0Fp0TOzBNYKeXwSW4xEGv9fucgilhRBaTPlK9GBgUtYdaxNV
+         sXuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=LdFXkIcei+u4Jat0oh0hKoMVlQj46dowgNMJPPP10gQ=;
-        b=ifK+41aOAHtENsOyrTu2MhQAerOKOlG1L3EX5vxsy7Mx2cQxWAAnMJ6IWdB+fuqJHx
-         e3Zh/fXccDBGWqKqkhAtOrEs2KyI3n3pJ5P0IohklZyEWHsJZlaeLboDqoFWNEsMgim8
-         XDvw+TqUdVcfENoKjJc49f5jwk0X7l64TeB0nrTtfzKImrNsCKaC6tSeK3cdCsguC5zL
-         bXteryfFbL0xxp+fbnq+LWIo3eSpoIlKPz4eFVii68LAyxgD/WhE/MgQn1EFK5ciLggW
-         KXqn1NJLN6nORWnhXijquqZSeLzUbMOwBtehzX5VuqcPx5uXa9dWxm/xL+jgfZXHLhuZ
-         t3jw==
-X-Gm-Message-State: AHPjjUj3WO6E1crST7LLxHFagU9F8mNIjirpp3fbsHkR6Dd+8pHfVKLe
-        pg76cbQH3cujHg==
-X-Google-Smtp-Source: AOwi7QAmzYe19u4lDgTU7heroHeULaZyWPimKII2D8fxV1iT/Hk6J8e2RoBzU+oYUZ/TFQKaCYwoLg==
-X-Received: by 10.84.132.78 with SMTP id 72mr74366ple.185.1505773543790;
-        Mon, 18 Sep 2017 15:25:43 -0700 (PDT)
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=NKq4BmJcjVmi/lrENNydGXYiRHqnrc/9GxqYRvX/gUM=;
+        b=qMNDn1Z/xmZzRLMrJ4cBTEdOPc1HYbTAEw8+acRNEoumLSUDu32LxX3vYeSe+qn93E
+         ZC3I2cph86GB9i0vcmMa8Zn4iXZBO989+tBNyWQsAQqoECsWqTNv5cyz5UYP7zWKp1MK
+         Qe3i03Gem6rqV1xSDGnW5fLWHNczXXgx/fLu69jPlwz5kpLi0mNoD6k2RyFy7/4hf9O9
+         AFtawrui6QXuNpRIlleuLgJlBYj0y/1dxjJCQXr2V6Jnd/QfJfYUVVA/zjSvJyPD6cx4
+         nNRV5qrr3TpSVwjqBNGyGViCwKwIpTTraTcb9YAho3Ittdas4vsdtPPZCM0NMIUQy9s9
+         90qQ==
+X-Gm-Message-State: AHPjjUii+R12q6B1vpFM/LMstJBnd+FzjQzkXwioqsKfnZT5Fks3p6Hp
+        pPxzwTBy7s7fqg==
+X-Google-Smtp-Source: AOwi7QCPANYmA391WJLSqgmQnLk7y5gSSRDvz/2vpzyx2qiq1KXlAToTeYDldJH/twwZb5/A4AXM+Q==
+X-Received: by 10.99.126.87 with SMTP id o23mr172831pgn.277.1505776646606;
+        Mon, 18 Sep 2017 16:17:26 -0700 (PDT)
 Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:288c:7217:eb8c:bacc])
-        by smtp.gmail.com with ESMTPSA id v25sm478654pfg.52.2017.09.18.15.25.42
+        by smtp.gmail.com with ESMTPSA id w134sm567824pfd.186.2017.09.18.16.17.25
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 18 Sep 2017 15:25:43 -0700 (PDT)
-Date:   Mon, 18 Sep 2017 15:25:40 -0700
+        Mon, 18 Sep 2017 16:17:26 -0700 (PDT)
+Date:   Mon, 18 Sep 2017 16:17:24 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Gilles Van Assche <gilles.vanassche@st.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        demerphq <demerphq@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jeff King <peff@peff.net>, David Lang <david@lang.hm>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Keccak Team <keccak@noekeon.org>
-Subject: Re: RFC v3: Another proposed hash function transition plan
-Message-ID: <20170918222540.GX27425@aiede.mtv.corp.google.com>
-References: <CA+55aFz+gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com>
- <20170307001709.GC26789@aiede.mtv.corp.google.com>
- <xmqqa828733s.fsf@gitster.mtv.corp.google.com>
- <xmqq1snh29re.fsf@gitster.mtv.corp.google.com>
- <20170911185913.GA5869@google.com>
- <alpine.DEB.2.21.1.1709131340030.4132@virtualbox>
- <CANgJU+Wv1nx79DJTDmYE=O7LUNA3LuRTJhXJn+y0L0C3R+YDEA@mail.gmail.com>
- <CA+55aFwUn0KibpDQK2ZrxzXKOk8-aAub2nJZQqKCpq1ddhDcMQ@mail.gmail.com>
- <alpine.DEB.2.21.1.1709142037490.4132@virtualbox>
- <59BFB95D.1030903@st.com>
+To:     phionah bugosi <bugosip@gmail.com>
+Cc:     peff@peff.net, git@vger.kernel.org
+Subject: Re: [OUTREACHY] pack: make packed_git_mru global a value instead of
+ a pointer
+Message-ID: <20170918231724.GY27425@aiede.mtv.corp.google.com>
+References: <1505755303-5583-1-git-send-email-bugosip@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <59BFB95D.1030903@st.com>
+In-Reply-To: <1505755303-5583-1-git-send-email-bugosip@gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -90,31 +69,36 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi,
 
-Gilles Van Assche wrote:
-> Hi Johannes,
+phionah bugosi wrote:
 
->> SHA-256 got much more cryptanalysis than SHA3-256 […].
+> Just to reecho a previous change requested before in one of the mail
+> threads, we currently have two global variables declared:
 >
-> I do not think this is true. Keccak/SHA-3 actually got (and is still
-> getting) a lot of cryptanalysis, with papers published at renowned
-> crypto conferences [1].
+> struct mru packed_git_mru_storage;
+> struct mru *packed_git_mru = &packed_git_mru_storage;
 >
-> Keccak/SHA-3 is recognized to have a significant safety margin. E.g.,
-> one can cut the number of rounds in half (as in Keyak or KangarooTwelve)
-> and still get a very strong function. I don't think we could say the
-> same for SHA-256 or SHA-512…
+> We normally use pointers in C to point or refer to the same location
+> or space in memory from multiple places. That means in situations
+> where we will have the pointer be assigned to in many places in our
+> code. But in this case, we do not have any other logic refering or
+> assigning to the pointer packed_git_mru. In simple words we actually
+> dont need a pointer in this case.
+>
+> Therefore this patch makes packed_git_mru global a value instead of
+> a pointer and makes use of list.h
+>
+> Signed-off-by: phionah bugosi <bugosip@gmail.com>
+> ---
+>  builtin/pack-objects.c |  5 +++--
+>  cache.h                |  7 -------
+>  list.h                 |  6 ++++++
+>  packfile.c             | 12 ++++++------
+>  4 files changed, 15 insertions(+), 15 deletions(-)
 
-I just wanted to thank you for paying attention to this conversation
-and weighing in.
+*puzzled* This appears to already be in "pu", with a different author.
+Did you independently make the same change?  Or are you asking for a
+progress report on that change, and just phrasing it in a confusing
+way?
 
-Most of the regulars in the git project are not crypto experts.  This
-kind of extra information (and e.g. [2]) is very useful to us.
-
-Thanks,
+Confused,
 Jonathan
-
-> Kind regards,
-> Gilles, for the Keccak team
->
-> [1] https://keccak.team/third_party.html
-[2] https://public-inbox.org/git/91a34c5b-7844-3db2-cf29-411df5bcf886@noekeon.org/
