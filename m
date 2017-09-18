@@ -2,155 +2,260 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E0C22047F
-	for <e@80x24.org>; Mon, 18 Sep 2017 14:22:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4F7342047F
+	for <e@80x24.org>; Mon, 18 Sep 2017 14:25:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753968AbdIROWH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Sep 2017 10:22:07 -0400
-Received: from mail-io0-f170.google.com ([209.85.223.170]:45770 "EHLO
-        mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753657AbdIROWG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Sep 2017 10:22:06 -0400
-Received: by mail-io0-f170.google.com with SMTP id g32so2467979ioj.2
-        for <git@vger.kernel.org>; Mon, 18 Sep 2017 07:22:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ZA+csZXBZQIZ59Kvp6lwIFkMjODlpdrnbObgJGwT7VM=;
-        b=AoucCFxTdHrM9axb7RjfQlBLVq+npNCOqI7suTqA/dkQo2ngvm00nhiCav0IIsG1GK
-         BbhnZASvzWpMHTfLaGQLnAQdx2/M8o9XrEryn5WF1kPxX64FB6zB/KRTR3cdF18994qb
-         oOWufiVRME14/A/8tG4FNeAdBe/FRA3uqdtw77L5KtMeOnlqCpEZTBEpJxeL69tApZN0
-         JTCWlCMjpyeUYfVn1TjDabFSt8phOSuEehQn5uKCcT+Oy9rK1Apk4537SqlXX0ULOGq0
-         aWyl+LjcXDuQ9bTODFdBWIIPCtG5YVEmgejHfiFtxQljWYz8D2tLg3fiNlDvc8tYPNQC
-         +WCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ZA+csZXBZQIZ59Kvp6lwIFkMjODlpdrnbObgJGwT7VM=;
-        b=rmFV3SmJj+eGFJG7O0cpWxhxpmibbonQQII4JsGHW09d9tiEbndC00mHP6IlkWPQlk
-         yfMjy/yoYPuz8FwBmwJll31UMLxXTkKENXYHu6uIMVT4g8DPsb8qU8cm3Tfv5SYOu95D
-         PA/cLeY80K1XuuTJEkLjT9Qo5bYP8cE2oncKEYLODqREY2nGy9gbwqdf6m9rBoWq5vdO
-         GSxcUj+8BhXqJdeifFCppC0OOBrljshvS+lx+mi4yKJB5ZtUrF/Sp7pwxowoogvAhVfx
-         XA+FjVGviIyWefT0dRvLG9fK8ioN/OB96w5vGtbuRg82Eoi0+hGmHropedpyrHsALmPU
-         fKqA==
-X-Gm-Message-State: AHPjjUjpXa9Wec9AJqGH2Ulf5YKB2sHz7TOP7TmZvWaWESvICKZT55WA
-        FCcUbSH1A32mDSO5
-X-Google-Smtp-Source: AOwi7QB3exh4Bdie0NSsPasze445JtqKC+wVIGx81PcocGnbfS3ugxAyLBe6NXO3Y8EVInnUPWuNpg==
-X-Received: by 10.202.223.7 with SMTP id w7mr11246257oig.237.1505744525401;
-        Mon, 18 Sep 2017 07:22:05 -0700 (PDT)
-Received: from LykOS.localdomain (216-165-95-131.NATPOOL.NYU.EDU. [216.165.95.131])
-        by smtp.gmail.com with ESMTPSA id f6sm682477oib.27.2017.09.18.07.22.04
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 18 Sep 2017 07:22:04 -0700 (PDT)
-Date:   Mon, 18 Sep 2017 10:22:06 -0400
-From:   Santiago Torres <santiago@nyu.edu>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Shikher Verma <root@shikherverma.com>,
-        Stefan Beller <sbeller@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [RFC PATCH 0/2] Add named reference to latest push cert
-Message-ID: <20170918142205.r5kwkq7ouy5zxisz@LykOS.localdomain>
-References: <20170906093913.21485-1-root@shikherverma.com>
- <CAGZ79kbxDh11KxrKCk_VjmN06kzp7x4iVO6XTV=a-qBmm39K5A@mail.gmail.com>
- <20170907091133.zygswf3f6z2bedfo@weakknees.security.iitk.ac.in>
- <CAGZ79kZO_u21JeAsNq7p7X88i0wmP6kJcg=JbKp62Bxdm4d4Uw@mail.gmail.com>
- <20170916072106.yxpwmndzif3lr2dp@weakknees.security.iitk.ac.in>
- <xmqqa81uumq6.fsf@gitster.mtv.corp.google.com>
+        id S1754315AbdIROZF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Sep 2017 10:25:05 -0400
+Received: from mout.gmx.net ([212.227.15.15]:52156 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754129AbdIROZE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Sep 2017 10:25:04 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M2Ldk-1db2e83YDk-00s3XI; Mon, 18
+ Sep 2017 16:24:45 +0200
+Date:   Mon, 18 Sep 2017 16:24:42 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Ben Peart <benpeart@microsoft.com>
+cc:     David.Turner@twosigma.com, avarab@gmail.com,
+        christian.couder@gmail.com, git@vger.kernel.org, gitster@pobox.com,
+        pclouds@gmail.com, peff@peff.net
+Subject: Re: [PATCH v6 12/12] fsmonitor: add a performance test
+In-Reply-To: <20170915192043.4516-13-benpeart@microsoft.com>
+Message-ID: <alpine.DEB.2.21.1.1709181615040.219280@virtualbox>
+References: <20170610134026.104552-1-benpeart@microsoft.com> <20170915192043.4516-1-benpeart@microsoft.com> <20170915192043.4516-13-benpeart@microsoft.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="dtuvov3knkjy45hn"
-Content-Disposition: inline
-In-Reply-To: <xmqqa81uumq6.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:J3hG/gQA8PuRQ3DWU4lUK3p/mY4EZJ77LJM6YPiokf1zbt87rHM
+ fCDWIW4TRRVjJyuc4GF6HCibSFvORoF4cJ3Eif7gayt30IzgzZEbjtLDkjeefkuTcjN5YmB
+ aDGAtSJ6PiXUB5idHfKpMCo6TV9vNOmXmnAXNVj0CRT4ZPdc/2mzu256Rq8TxTPgEFYMQDW
+ T1MjZxApP35WEmHQ40suw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:P8/ZR1dzutU=:ujjpTIlhGzscc253b0cVQZ
+ b8QlO5e/E0dvTwVAWWf2Fd/1oQdHpwnJANtjqV/r+z+i6AyJ7VyY3nzL9oyqAx7tVFjgXT3q4
+ T1DzHXPN+7Ep2G+8EH5jvl/ks8BMbaF9nmb1wFHe6ywEcVkd+Q5BxjrBi5cgMag/eqfwY6w/F
+ 44IdNTeqPUUJocLyselP3HSKqQQbLSedDhU71/jq4XY56Wr6jL0bGtl6ixmb+3uDr18LgolIn
+ aFr5UpErgu3bX/j2IYInPkWu57IfCz9nLg3rbk5UVyxj+Dybl0zZoIX9EPsswTmGcItarMWFz
+ bQV7bcj9S/mg9bNaLxPd9ty/CCfRpZ/JENfFeFkCuu0lzbJL/fOOnN88Sz8Q+TnPoWN2RmW2w
+ OgzWjSx7BM82/rR3gKJRNE1xcmt9v/QoP8DPHJ5jHQiw8b5fMJDt6Z4DYEB567YPOWJOTfr95
+ YaWU7ekW4DiGGWzWA1UJZUpBImkT1VfZCEt5orEcKoPeEV4MVDtXQnf0TqM/6U1ZHBTx1s0I4
+ eD7vhTCR0/pkHkeCuwkuBDCuX0R+CU8aPMovUlfJCt2yHYB4YP84E4FE0mMtS2ykeCZqczgWx
+ YrgP4Vgru+EDav756DSfcVPPJwDv4TFtrlRCg88B8oGHQa6ho901FICiXwT9ejPCKBunnAWdc
+ j/fCmTOfesCAq5hUNsZf6C/Yd0FFg4OoGbrTcwfe1pUEHSjOkH03UL/eUy/39E5aiHa/nkvo/
+ FOE5P2sI3a6FYNAvcqboHxyStEnG8lLDVhthnHjIEowD/mdy2FVImDQeruVKDpHzYfYpqUCMA
+ Zkp8hN0wY1+lLEBbRzU2wpOG3aUhfz14qx4RVgiyXZHk9FF7FQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Ben,
 
---dtuvov3knkjy45hn
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+sorry for not catching this earlier:
 
-Hello, everyone.
+On Fri, 15 Sep 2017, Ben Peart wrote:
 
-Sorry for being late in this thread, I was making sure I didn't say
-anything outrageously wrong.=20
+> [...]
+> +
+> +int cmd_dropcaches(void)
+> +{
+> +	HANDLE hProcess = GetCurrentProcess();
+> +	HANDLE hToken;
+> +	int status;
+> +
+> +	if (!OpenProcessToken(hProcess, TOKEN_QUERY | TOKEN_ADJUST_PRIVILEGES, &hToken))
+> +		return error("Can't open current process token");
+> +
+> +	if (!GetPrivilege(hToken, "SeProfileSingleProcessPrivilege", 1))
+> +		return error("Can't get SeProfileSingleProcessPrivilege");
+> +
+> +	CloseHandle(hToken);
+> +
+> +	HMODULE ntdll = LoadLibrary("ntdll.dll");
 
-> That's Stefan; I wouldn't have suggested any approach that uses the
-> blob whose sole purpose is to serve as a temporary storage area to
-> pass the information to the hook as part of the permanent record.
->=20
+Git's source code still tries to abide by C90, and for simplicity's sake,
+this extends to the Windows-specific part. Therefore, the `ntdll` variable
+needs to be declared at the beginning of the function (I do agree that it
+makes for better code to reduce the scope of variables, but C90 simply did
+not allow variables to be declared in the middle of functions).
 
-Hmm, as far as I understand *this* is the status quo. We get an
-ephemeral sha1/oid only if you have a hook attached. Otherwise, you will
-never see the object at all, even if you have --signed set.
+I wanted to send a patch address this in the obvious way, but then I
+encountered these lines:
 
-I suggested preparing this RFC/Patch because of the following reasons
-(please let me know if my understanding of any of this is wrong...):
+> +	DWORD(WINAPI *NtSetSystemInformation)(INT, PVOID, ULONG) =
+> +		(DWORD(WINAPI *)(INT, PVOID, ULONG))GetProcAddress(ntdll, "NtSetSystemInformation");
+> +	if (!NtSetSystemInformation)
+> +		return error("Can't get function addresses, wrong Windows version?");
 
-    - I find it weird that the cli allows for a --signed push and
-      nowhere in the receive-pack's feedback you're told if the push
-      certificate is compute/stored/handled at all. I think that, at the
-      latest, receive pack should let the user know whether the signed
-      push succeeded, or if there is no hook attached to handle it.
+It turns out that we have seen this plenty of times in Git for Windows'
+fork, so much so that we came up with a nice helper to make this all a bit
+more robust and a bit more obvious, too: the DECLARE_PROC_ADDR and
+INIT_PROC_ADDR helpers in compat/win32/lazyload.h.
 
-    - *if there is a hook* the blob is computed, but it is up to the
-      hook itself to store it *somewhere*. This makes me feel like it's
-      somewhat of a useless waste of computation if the hook is not
-      meant to handle it anyway(which is just a post-receive hook). I
-      find it rather weird that --signed is a builtin flag, and is
-      handled on the server side only partially (just my two cents).
+Maybe this would be the perfect excuse to integrate this patch into
+upstream Git? This would be the patch (you can also cherry-pick it from
+25c4dc3a73352e72e995594cf1b4afa46e93d040 in https://github.com/dscho/git):
 
-    - To me, the way push certificates are handled now feels like having
-      git commit -S producing a detached signature that you have to
-      embed somehow in the resulting commit object. (As a matter of
-      fact, many points on [1] seem to back this notion, and even recall
-      some drawbacks on push certificates the way they are handled
-      today)
+-- snip --
+From 25c4dc3a73352e72e995594cf1b4afa46e93d040 Mon Sep 17 00:00:00 2001
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Date: Tue, 10 Jan 2017 23:14:20 +0100
+Subject: [PATCH] Win32: simplify loading of DLL functions
 
-I understand the concurrency concerns, so I agree with stefan's
-solution, although I don't know how big of a deal it would be, if git
-already supports --atomic pushes (admittedly, I haven't checked if there
-are any guards in place for someone who pushes millions of refs
-atomically). It'd be completely understandable to have a setting to
-disable hadnling of --signed pushes and, ideally, a way to warn the user
-of this feature being disabled if --signed is sent.
+Dynamic loading of DLL functions is duplicated in several places in Git
+for Windows' source code.
 
-Maybe I'm missing the bigger picture, but to me it feels that a named
-ref to the latest push certificate would make it easier to
-handle/tool/sync around the push certificate solution?
+This patch adds a pair of macros to simplify the process: the
+DECLARE_PROC_ADDR(<dll>, <return-type>, <function-name>,
+...<function-parameter-types>...) macro to be used at the beginning of a
+code block, and the INIT_PROC_ADDR(<function-name>) macro to call before
+using the declared function. The return value of the INIT_PROC_ADDR()
+call has to be checked; If it is NULL, the function was not found in the
+specified DLL.
 
-Thanks,
--Santiago.
+Example:
 
-[1] https://public-inbox.org/git/CAJo=3DhJvWbjEM9E5AjPHgmQ=3DeY8xf=3DQ=3Dxt=
-ukeu2Ur7auUqeabDg@mail.gmail.com/
+        DECLARE_PROC_ADDR(kernel32.dll, BOOL, CreateHardLinkW,
+                          LPCWSTR, LPCWSTR, LPSECURITY_ATTRIBUTES);
 
---dtuvov3knkjy45hn
-Content-Type: application/pgp-signature; name="signature.asc"
+        if (!INIT_PROC_ADDR(CreateHardLinkW))
+                return error("Could not find CreateHardLinkW() function";
 
------BEGIN PGP SIGNATURE-----
+	if (!CreateHardLinkW(source, target, NULL))
+		return error("could not create hardlink from %S to %S",
+			     source, target);
+	return 0;
 
-iQIzBAEBCAAdFiEEkDurc2QOttZVM+/zRo8SLOgWIpUFAlm/1osACgkQRo8SLOgW
-IpXWXxAArPPjaxbooTly7ksZrv87Mqz5rdbywFgfjxV1Fy7d+4WL+xDTZQ3Dsbri
-KMzAbC0xA8j2XKMgS3+uBfUzlR9KJCVv3X5PUnbUXnAArxsDOVKYn3LB354Y76wP
-u+/NAX9LKJU8YPyHGwGMf9yyC7r0075IX5Z/ctdvZYExmVfS4bX2gnf01rl2a87k
-OHYkrpWvC/PadQvDY7Yqpg4z6nwm47yIZKZJqnUfvFeAwYNH5saqgUTBGkKqtW3H
-V8EE0H8wu3oixXVln/Zu8Llx3h1AtgoFZvnIjjShKFMYC7egab+Borge+om6mQX4
-oP6oOhDwZ6SpPEtamc4dJF+l+pW8yXIBO9JQbARlNc2VChXFb2DiQUkgi3v6rtQb
-NdTLhKVZ9Yf5vWLFxTsl0X3uHEVYgw5XA6fkQ8gEuoly39vShGZiuLPjPM0RbHeo
-wpN4OwAt6jus7Xyao4GXf9dYdoa+xt1LUmevPK7dnb4gBLNMNZ5RfdvGXjnh9bWC
-CQf2RTYuAEFgwe/3BvcRNoYoIYV9HoIZDrOBTI1noPoKpUFAnKqyP5QSGFHFu/c1
-szTBsM+pV/z5i1vQ5tF4bEGV2pPI70Q26VbgdRGTAp5UB6jv7SpE0KVfZI9ILNpU
-+54GWniXwqsGt32fKgsqMrljsXx3Nhvzl47vCG0I39Wq6ux6/zs=
-=kF0r
------END PGP SIGNATURE-----
+Signed-off-by: Karsten Blees <blees@dcon.de>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ compat/win32/lazyload.h | 44 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 44 insertions(+)
+ create mode 100644 compat/win32/lazyload.h
 
---dtuvov3knkjy45hn--
+diff --git a/compat/win32/lazyload.h b/compat/win32/lazyload.h
+new file mode 100644
+index 00000000000..91c10dad2fb
+--- /dev/null
++++ b/compat/win32/lazyload.h
+@@ -0,0 +1,44 @@
++#ifndef LAZYLOAD_H
++#define LAZYLOAD_H
++
++/* simplify loading of DLL functions */
++
++struct proc_addr {
++	const char *const dll;
++	const char *const function;
++	FARPROC pfunction;
++	unsigned initialized : 1;
++};
++
++/* Declares a function to be loaded dynamically from a DLL. */
++#define DECLARE_PROC_ADDR(dll, rettype, function, ...) \
++	static struct proc_addr proc_addr_##function = \
++	{ #dll, #function, NULL, 0 }; \
++	static rettype (WINAPI *function)(__VA_ARGS__)
++
++/*
++ * Loads a function from a DLL (once-only).
++ * Returns non-NULL function pointer on success.
++ * Returns NULL + errno == ENOSYS on failure.
++ */
++#define INIT_PROC_ADDR(function) \
++	(function = get_proc_addr(&proc_addr_##function))
++
++static inline void *get_proc_addr(struct proc_addr *proc)
++{
++	/* only do this once */
++	if (!proc->initialized) {
++		HANDLE hnd;
++		proc->initialized = 1;
++		hnd = LoadLibraryExA(proc->dll, NULL,
++				     LOAD_LIBRARY_SEARCH_SYSTEM32);
++		if (hnd)
++			proc->pfunction = GetProcAddress(hnd, proc->function);
++	}
++	/* set ENOSYS if DLL or function was not found */
++	if (!proc->pfunction)
++		errno = ENOSYS;
++	return proc->pfunction;
++}
++
++#endif
+-- snap --
+
+With this patch, this fixup to your patch would make things compile (you
+can also cherry-pick d05996fb61027512b8ab31a36c4a7a677dea11bb from my
+fork):
+
+-- snipsnap --
+From d05996fb61027512b8ab31a36c4a7a677dea11bb Mon Sep 17 00:00:00 2001
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Date: Mon, 18 Sep 2017 14:56:40 +0200
+Subject: [PATCH] fixup! fsmonitor: add a performance test
+
+---
+ t/helper/test-drop-caches.c | 16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
+
+diff --git a/t/helper/test-drop-caches.c b/t/helper/test-drop-caches.c
+index 717079865cb..b27358528f7 100644
+--- a/t/helper/test-drop-caches.c
++++ b/t/helper/test-drop-caches.c
+@@ -1,6 +1,7 @@
+ #include "git-compat-util.h"
+ 
+ #if defined(GIT_WINDOWS_NATIVE)
++#include "compat/win32/lazyload.h"
+ 
+ int cmd_sync(void)
+ {
+@@ -82,6 +83,9 @@ int cmd_dropcaches(void)
+ 	HANDLE hProcess = GetCurrentProcess();
+ 	HANDLE hToken;
+ 	int status;
++	SYSTEM_MEMORY_LIST_COMMAND command;
++	DECLARE_PROC_ADDR(ntll,
++			  DWORD, NtSetSystemInformation, INT, PVOID, ULONG);
+ 
+ 	if (!OpenProcessToken(hProcess, TOKEN_QUERY | TOKEN_ADJUST_PRIVILEGES, &hToken))
+ 		return error("Can't open current process token");
+@@ -91,16 +95,10 @@ int cmd_dropcaches(void)
+ 
+ 	CloseHandle(hToken);
+ 
+-	HMODULE ntdll = LoadLibrary("ntdll.dll");
+-	if (!ntdll)
+-		return error("Can't load ntdll.dll, wrong Windows
+ 		version?");
+-
+-	DWORD(WINAPI *NtSetSystemInformation)(INT, PVOID, ULONG) =
+-		(DWORD(WINAPI *)(INT, PVOID, ULONG))GetProcAddress(ntdll,
+ 		"NtSetSystemInformation");
+-	if (!NtSetSystemInformation)
++	if (!INIT_PROC_ADDR(NtSetSystemInformation))
+ 		return error("Can't get function addresses, wrong Windows version?");
+ 
+-	SYSTEM_MEMORY_LIST_COMMAND command = MemoryPurgeStandbyList;
++	command = MemoryPurgeStandbyList;
+ 	status = NtSetSystemInformation(
+ 		SystemMemoryListInformation,
+ 		&command,
+@@ -111,8 +109,6 @@ int cmd_dropcaches(void)
+ 	else if (status != STATUS_SUCCESS)
+ 		error("Unable to execute the memory list command %d", status);
+ 
+-	FreeLibrary(ntdll);
+-
+ 	return status;
+ }
+ 
+-- 
+2.14.1.windows.1.510.g0cb6d35d23
