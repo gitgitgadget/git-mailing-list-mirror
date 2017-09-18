@@ -4,85 +4,110 @@ X-Spam-Level:
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 277B62047F
-	for <e@80x24.org>; Mon, 18 Sep 2017 13:38:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D7F452047F
+	for <e@80x24.org>; Mon, 18 Sep 2017 13:38:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754875AbdIRNiG (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Sep 2017 09:38:06 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:33957 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754745AbdIRNiE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Sep 2017 09:38:04 -0400
-Received: by mail-pg0-f65.google.com with SMTP id u18so141743pgo.1
-        for <git@vger.kernel.org>; Mon, 18 Sep 2017 06:38:04 -0700 (PDT)
+        id S1754900AbdIRNiS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Sep 2017 09:38:18 -0400
+Received: from mail-qk0-f173.google.com ([209.85.220.173]:56566 "EHLO
+        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754745AbdIRNiQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Sep 2017 09:38:16 -0400
+Received: by mail-qk0-f173.google.com with SMTP id u7so498594qku.13
+        for <git@vger.kernel.org>; Mon, 18 Sep 2017 06:38:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=E15lqp3QrmvvTXr4cHQ2IbTRV9ke0w/jKL5C/yH4/X8=;
-        b=Kc2mWYzwhs4TLlFUMyVKbdFO8M77KQjwf8vEJKT0ms46Vbub8XUm5NlqUbTrkjAl+n
-         fBU0wmZdONxEiuIeQUYBMDSWOYmzvF7FBbRHIMqEpCnJ9c+vPOx3IojqcbMasYKosv8G
-         nQJnv2U4TNrRB86fhSmG8OYAlhGaf31rf7WE62Zensq+mUw5hFQS5Ded2ai8VUbq7y8Y
-         1dixh3EuO8tHhnzyoO4V0cm2/OAwrVWbwqO/60yUpcvfGbabiF5ne7hrZ479at4e6AEI
-         ZTo7zXgWQuq1B4B1X3cY5mV+jcHAzLrAqolnAglJXfwzPz+wM30eAMHSXJP8nz/AsfXx
-         5H6Q==
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=88QwQnIV3pHFIqok7gqO6f3atnTuL6Uzz30y+muOi8Q=;
+        b=oKeqBD2slzNG/qJIORBuK7DxUuXLyDxouhXOMC84MykRiVT9nXnaP9KrqxrOgqlAHX
+         yYDU2B0sWwR8yvsBchjRsgk8p5Z6X574KRJp3pKHkffO5UVbqy55xhck8AvlOg+06YIb
+         GFzLk4Vl2Ct4z1nJFsjhWac0JXjhEt6MVDq+FKV1O5vVmVngmNcUD8QzKjrBVAT7WspZ
+         ouOABEhCZnBWxLwsJZBIr+RgYj+bBEOs/X0sckJFrkwxy96FtYDguOXBwwU/xKC6JA1C
+         1w5uWjfNt7aEQ30jRkTKa7LuC2gdgfSqM4dA/e59SswbhNpQ9h3UmmpUZD8AewiZki88
+         Xo2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=E15lqp3QrmvvTXr4cHQ2IbTRV9ke0w/jKL5C/yH4/X8=;
-        b=EDGY8BLi3GkoSkfjDgzITW1Ox9/9ylMXt4yfm464V8wtlaFJvZN5hHaFbiubxBh8Zf
-         NiX/kCyaSFRJEAh/xr9D09uwuOTphFySxD3GMFY7hM6nZHt6HWWmcR9CSW7lmc72Foj5
-         ZNNeo46hh+tG/M7jJ1lSD1LFNG85qbFN2LK1hrmTycO/gWZlDJw+64z6GzQxBqNPut4o
-         8i+QFu0+oPRxTsBuz8UyD+6nfZcZXmd5peEI9T1EAQIa31S9Q7Kq6iVpdYf8uydT0a3Z
-         A4gNX6NMumFxnPTCoW0tGM4q7WirmnG4EEtSW4TfDfYv/sY81JrlZNtK+KiZic9Vy74x
-         XIBw==
-X-Gm-Message-State: AHPjjUiwihg4rIG658P1wS/KaxMw6zFWK7rJAH+iH4DtFXL1I+AqHnEf
-        jqhZyplCwQ2fefxg/2Y=
-X-Google-Smtp-Source: ADKCNb4t05VGIGWjnDssftIJYiyqUA5/5yWiw0Qf1ijg9ZxvAwuMRTfU4qFvQ1zpBGTT5WjpM71vTA==
-X-Received: by 10.99.3.15 with SMTP id 15mr31718649pgd.403.1505741883344;
-        Mon, 18 Sep 2017 06:38:03 -0700 (PDT)
-Received: from [10.4.2.238] ([14.102.72.146])
-        by smtp.gmail.com with ESMTPSA id k73sm15693049pfg.81.2017.09.18.06.38.01
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 18 Sep 2017 06:38:02 -0700 (PDT)
-Subject: Re: [PATCH] t2018: remove unwanted empty line
-To:     Kevin Daudt <me@ikke.info>
-Cc:     git@vger.kernel.org
-References: <0102015e8f599df4-6e3b45f3-b3ea-4483-ad62-08119e29b1cd-000000@eu-west-1.amazonses.com>
- <20170917192227.GD21499@alpha.vpn.ikke.info>
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Message-ID: <e7fd5df4-4496-09a2-5f67-7ae6868bb3e8@gmail.com>
-Date:   Mon, 18 Sep 2017 19:07:58 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=88QwQnIV3pHFIqok7gqO6f3atnTuL6Uzz30y+muOi8Q=;
+        b=j17KrMR9P6VediXCimHewMrbLXFyD0q70OsY+fWTv2d4qAq7VN7aEx5axXZU5U7ZUG
+         b4JV9KgnhJh+KBpNALdXe8nm9cRPG0Nih4wbxMZ5cf4gIBdAmo8pOReqIqN5YuyrfSVl
+         3gcev99eIj1oTvu9ZoS13zdTf85m5ywxdXkIJ7XpqOWKwXq1WFCmkEomlMTh0KCSq+UE
+         j9T5znL4NWTz+eDezN0cotaZlLc+taCXYQw5unxVv0Ep1kZ0bgE+xis4jvc+BIpzqinE
+         JHwvEeUR1v+Zi7eD3HpYcrbJvANVzVUuyzi9cbWBNuse8ACiTbqTG976my2A1yTjuQ1a
+         CsNQ==
+X-Gm-Message-State: AHPjjUjCrcc9TyWAA08i2QIZMKBP9K1xBhcjAMxuyvn6sD38PtKwiKJV
+        mSHeE+XY/Uuvvw==
+X-Google-Smtp-Source: AOwi7QA2+fUHZP6igzEtSzK9GGo0Q0iJze503T3Po3/Y2Arl1j2Z1rM1/yNLsefUCtdopY2GtJBEvw==
+X-Received: by 10.55.18.137 with SMTP id 9mr20153461qks.208.1505741895276;
+        Mon, 18 Sep 2017 06:38:15 -0700 (PDT)
+Received: from [192.168.1.13] ([65.222.173.206])
+        by smtp.gmail.com with ESMTPSA id t90sm5151543qkl.77.2017.09.18.06.38.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 18 Sep 2017 06:38:14 -0700 (PDT)
+Subject: Re: [PATCH v6 08/12] fsmonitor: add a test tool to dump the index
+ extension
+To:     Junio C Hamano <gitster@pobox.com>,
+        Ben Peart <benpeart@microsoft.com>
+Cc:     David.Turner@twosigma.com, avarab@gmail.com,
+        christian.couder@gmail.com, git@vger.kernel.org,
+        johannes.schindelin@gmx.de, pclouds@gmail.com, peff@peff.net
+References: <20170610134026.104552-1-benpeart@microsoft.com>
+ <20170915192043.4516-1-benpeart@microsoft.com>
+ <20170915192043.4516-9-benpeart@microsoft.com>
+ <xmqqtw01u50j.fsf@gitster.mtv.corp.google.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <5438765b-3119-ef15-8635-932b8cba08d3@gmail.com>
+Date:   Mon, 18 Sep 2017 09:38:11 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.3.0
 MIME-Version: 1.0
-In-Reply-To: <20170917192227.GD21499@alpha.vpn.ikke.info>
+In-Reply-To: <xmqqtw01u50j.fsf@gitster.mtv.corp.google.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
 Content-Language: en-US
-X-Cyberoam-smtpxy-version: 1.0.6.3
-X-Cyberoam-AV-Policy: default
-X-CTCH-Error: Unable to connect local ctasd
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Monday 18 September 2017 12:52 AM, Kevin Daudt wrote:
-> Why is this empty line unwanted? This kind of whitespace can help
-> separate logical sections, just like paragraphs would.
->
-You're right. I seem to have sent a fix precariously because I haven't 
-such separation
-before (forgetting the fact that git has contributors whose way of 
-writing test vary diversly).
-Should better stop back and think the next time rather than spamming the 
-list. Sorry, for this.
 
----
-Kaartic
+
+On 9/17/2017 4:02 AM, Junio C Hamano wrote:
+> Ben Peart <benpeart@microsoft.com> writes:
+> 
+>> diff --git a/t/helper/test-dump-fsmonitor.c b/t/helper/test-dump-fsmonitor.c
+>> new file mode 100644
+>> index 0000000000..482d749bb9
+>> --- /dev/null
+>> +++ b/t/helper/test-dump-fsmonitor.c
+>> @@ -0,0 +1,21 @@
+>> +#include "cache.h"
+>> +
+>> +int cmd_main(int ac, const char **av)
+>> +{
+>> +	struct index_state *istate = &the_index;
+>> +	int i;
+>> +
+>> +	setup_git_directory();
+>> +	if (do_read_index(istate, get_index_file(), 0) < 0)
+>> +		die("unable to read index file");
+>> +	if (!istate->fsmonitor_last_update) {
+>> +		printf("no fsmonitor\n");
+>> +		return 0;
+>> +	}
+>> +	printf("fsmonitor last update %"PRIuMAX"\n", istate->fsmonitor_last_update);
+> 
+> After pushing this out and had Travis complain, I queued a squash on
+> top of this to cast the argument to (uintmax_t), like you did in an
+> earlier step (I think it was [PATCH 04/12]).
+> 
+
+Thanks. I'll update this to cast it as (uint64_t) as that is what 
+get/put_be64 use.  As far as I can tell they both map to the same thing 
+(unsigned long long) so there isn't functional difference.
