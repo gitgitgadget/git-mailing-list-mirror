@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2DEF32047F
-	for <e@80x24.org>; Mon, 18 Sep 2017 13:07:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B4CE2047F
+	for <e@80x24.org>; Mon, 18 Sep 2017 13:27:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753210AbdIRNH2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Sep 2017 09:07:28 -0400
-Received: from mail-qk0-f194.google.com ([209.85.220.194]:35864 "EHLO
-        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752586AbdIRNH1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Sep 2017 09:07:27 -0400
-Received: by mail-qk0-f194.google.com with SMTP id i14so276385qke.3
-        for <git@vger.kernel.org>; Mon, 18 Sep 2017 06:07:27 -0700 (PDT)
+        id S1753014AbdIRN1k (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Sep 2017 09:27:40 -0400
+Received: from mail-qt0-f196.google.com ([209.85.216.196]:32847 "EHLO
+        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752377AbdIRN1j (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Sep 2017 09:27:39 -0400
+Received: by mail-qt0-f196.google.com with SMTP id b1so328130qtc.0
+        for <git@vger.kernel.org>; Mon, 18 Sep 2017 06:27:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=/XZFtNn8LQyHinBwyn83GL7Im4Lka/fOJiQiIYKZRJo=;
-        b=RioVjO9EJHQs1qDUzXzVLCoQJFrs1aTEN+A2uYZFBubX8wzIPqxG8xujTe2vVPYK4h
-         dU7mnMFX2D7iAE/Lmeed2ulKIaeFzzd0ZTuw9S3fkIRKpu7wzOHhgK0EHoQGf3/SPj5S
-         57YKCLOG4eO1g3NazfsT3WDtHeEnh3GqF4QgNMLzDtHr+Z1vrEM8mqKTRu5jWgirACSZ
-         8wff5orTcS/JPJ9b0U8wXNAxFLLnaxnBk6W6814Xrd0vRID0JyzSeL+iZEtsh+nMAxwf
-         dpwlPqQR5l/cnX5IN8Foao+2nfBI7Auzarfn/jg8lQ+TT9oSrxIOFZvtivR7zISQQ+0H
-         ws7g==
+        bh=pdwKFGRMho8fschxYxSEAZahgvmJ8JckEEbi/lZjOhw=;
+        b=J4gOjrpMVUfCml0l9NA/Efc78iwA3AloCizuHrQR7fxO9Y6cpi537ysByUJCJNcWHu
+         OatKwlOI64oA3HHtBLgl7uJLwC4pGjCH+psvqmYi/tDWrFPrdEf8SxccMwOlnO1z7t3X
+         bD21rz61ZSwm2PYcnsOp7MxxFS9tF836Ifo67fzHHFqmVtCD+koIGFGij0pMeqpuMS2+
+         enNClN1OW1uL20hU7TX2N31aor+OvgzMUQfFltce6f1kz2HECxrmbhomyTsfKwfAjb/a
+         RSIPSqlhPnAYRNrXiXKoCjre6U2UhEaZZ4aiiRQe7qZG8xEWBXhibkuCjVzgnRwB8Zu2
+         Gyrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=/XZFtNn8LQyHinBwyn83GL7Im4Lka/fOJiQiIYKZRJo=;
-        b=IQ4eBKqVfshM+CFh2/TbkPCP9ulqAwji7anyD7Vns1nMqgaPPeRRpJQUNbYupCwPOR
-         nCx7VTVlu8b5RrB7nP1FihN0SbvjYpggvwim4UKAYYodpWa73gmZ8Mvqop5soWhHb/xl
-         eiXyx7JQRGObL/ErP9Z4Bmv4T1YeIXYyKxMC51fdJSvcaWAGK8lqPZ7ojyt126I/3Bhf
-         6NY9OUa+YLW5pgjn1oAlfRngR9/tcXTtkn+EHjTSaW6Px+XYxi1zje3HI0FialB1Tiax
-         SM3kbqxq4y9YO7sQHiYZkfzFTlOkXqKTR8h58KfKQ4lOXmFaFhXZQ3oBjbSgmpxGHoNC
-         Rg0Q==
-X-Gm-Message-State: AHPjjUjKEY5msdfvDeJ5yDwZKb4BllMDjrLdE3HY8D+hXnfCU9ph4bTC
-        ZLz7FpkyWxQm+A==
-X-Google-Smtp-Source: AOwi7QDtJ/ZKqLKkevUSAeY+aFQVR/qxy6PzJNVNCDMwfY5pzAb5j9496l0piVNM+kT3E4w1f6aEzg==
-X-Received: by 10.55.16.74 with SMTP id a71mr20767203qkh.170.1505740046527;
-        Mon, 18 Sep 2017 06:07:26 -0700 (PDT)
+        bh=pdwKFGRMho8fschxYxSEAZahgvmJ8JckEEbi/lZjOhw=;
+        b=t+8I47ufMhTh7mr5gIpznnKNcp+t90e0YxtAbVADjuOUFRtwI7B9Af3LZPTPFuOnJ9
+         K9D2jE3EY1CYXgcD1v30m+a2nRSHYqEUOyxfeUk9wHNSQ81Liltt/mBmfEDjQtDvkP4t
+         tVXG/4O1LDfI4c33ca0ukGd57Wy+7BgCzXLdodexnXrlJNIz1kvWcrL2y3rdyXZQnDHN
+         E4rgeVbh9qSmOGK0tx5ItLfAKrcAaqs6wf/50Jipe7MgqPa7U5Kn+yykofwA33rjO0El
+         xe8pb1V7hXcxNdfPgj3IeyyK7G3452q/E6OoCeHHCE4kfIqz8OCCpfwc3s4gl/DkxL8e
+         1Pxg==
+X-Gm-Message-State: AHPjjUgBpm/LVg5mVW72/h77+F9HF/sM+KlexTzT2NIzrfc5sl7AKWu/
+        lu9S90B02OATSQ==
+X-Google-Smtp-Source: AOwi7QBs7Ew4oV0Kl2QzLM/5DWpivBGvAH2+BJgFGeKFPwMGqqFboRau2zO/7MpZJiraDhiNpY/aSA==
+X-Received: by 10.200.24.187 with SMTP id s56mr33287453qtj.64.1505741258651;
+        Mon, 18 Sep 2017 06:27:38 -0700 (PDT)
 Received: from [192.168.1.13] ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id h4sm323038qth.75.2017.09.18.06.07.24
+        by smtp.gmail.com with ESMTPSA id b26sm5167507qkj.64.2017.09.18.06.27.36
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 18 Sep 2017 06:07:25 -0700 (PDT)
-Subject: Re: [PATCH v6 04/12] fsmonitor: teach git to optionally utilize a
- file system monitor to speed up detecting new or changed files.
+        Mon, 18 Sep 2017 06:27:37 -0700 (PDT)
+Subject: Re: [PATCH v6 05/12] fsmonitor: add documentation for the fsmonitor
+ extension.
 To:     David Turner <David.Turner@twosigma.com>,
         'Ben Peart' <benpeart@microsoft.com>
 Cc:     "avarab@gmail.com" <avarab@gmail.com>,
@@ -63,15 +63,15 @@ Cc:     "avarab@gmail.com" <avarab@gmail.com>,
         "peff@peff.net" <peff@peff.net>
 References: <20170610134026.104552-1-benpeart@microsoft.com>
  <20170915192043.4516-1-benpeart@microsoft.com>
- <20170915192043.4516-5-benpeart@microsoft.com>
- <850c2ad20acc4c14be87a767af851b19@exmbdft7.ad.twosigma.com>
+ <20170915192043.4516-6-benpeart@microsoft.com>
+ <297da9019d8c44faa89434d699623408@exmbdft7.ad.twosigma.com>
 From:   Ben Peart <peartben@gmail.com>
-Message-ID: <3e0d003e-0643-0359-35fd-a5ecf9b751c3@gmail.com>
-Date:   Mon, 18 Sep 2017 09:07:23 -0400
+Message-ID: <532a74ca-804d-93f3-9eef-ceffc9f49623@gmail.com>
+Date:   Mon, 18 Sep 2017 09:27:35 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.3.0
 MIME-Version: 1.0
-In-Reply-To: <850c2ad20acc4c14be87a767af851b19@exmbdft7.ad.twosigma.com>
+In-Reply-To: <297da9019d8c44faa89434d699623408@exmbdft7.ad.twosigma.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -80,9 +80,11 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for taking the time to review/provide feedback!
 
-On 9/15/2017 5:35 PM, David Turner wrote:
+
+On 9/15/2017 3:43 PM, David Turner wrote:
+> 
+> 
 >> -----Original Message-----
 >> From: Ben Peart [mailto:benpeart@microsoft.com]
 >> Sent: Friday, September 15, 2017 3:21 PM
@@ -90,92 +92,77 @@ On 9/15/2017 5:35 PM, David Turner wrote:
 >> Cc: David Turner <David.Turner@twosigma.com>; avarab@gmail.com;
 >> christian.couder@gmail.com; git@vger.kernel.org; gitster@pobox.com;
 >> johannes.schindelin@gmx.de; pclouds@gmail.com; peff@peff.net
->> Subject: [PATCH v6 04/12] fsmonitor: teach git to optionally utilize a file system
->> monitor to speed up detecting new or changed files.
->   
->> +int git_config_get_fsmonitor(void)
->> +{
->> +	if (git_config_get_pathname("core.fsmonitor", &core_fsmonitor))
->> +		core_fsmonitor = getenv("GIT_FSMONITOR_TEST");
+>> Subject: [PATCH v6 05/12] fsmonitor: add documentation for the fsmonitor
+>> extension.
+>>
+>> This includes the core.fsmonitor setting, the query-fsmonitor hook, and the
+>> fsmonitor index extension.
+>>
+>> Signed-off-by: Ben Peart <benpeart@microsoft.com>
+>> ---
+>>   Documentation/config.txt                 |  6 ++++++
+>>   Documentation/githooks.txt               | 23 +++++++++++++++++++++++
+>>   Documentation/technical/index-format.txt | 19 +++++++++++++++++++
+>>   3 files changed, 48 insertions(+)
+>>
+>> diff --git a/Documentation/config.txt b/Documentation/config.txt index
+>> dc4e3f58a2..c196007a27 100644
+>> --- a/Documentation/config.txt
+>> +++ b/Documentation/config.txt
+>> @@ -413,6 +413,12 @@ core.protectNTFS::
+>>   	8.3 "short" names.
+>>   	Defaults to `true` on Windows, and `false` elsewhere.
+>>
+>> +core.fsmonitor::
+>> +	If set, the value of this variable is used as a command which
+>> +	will identify all files that may have changed since the
+>> +	requested date/time. This information is used to speed up git by
+>> +	avoiding unnecessary processing of files that have not changed.
+> 
+> I'm confused here.  You have a file called "fsmonitor-watchman", which seems to discuss the protocol for core.fsmonitor scripts in general, and you have this documentation, which does not link to that file.  Can you clarify this?
+
+I'll add the missing link to the documentation in githooks.txt.  The 
+documentation should be enough for someone to develop another 
+integration script.
+
+The fsmonitor-watchman script allows people to easily use this patch 
+series with the existing Watchman monitor but it can certainly also be 
+used as a sample for how to integrate with another file system monitor.
+
+> 
+> <snip>
+> 
+>> +The hook should output to stdout the list of all files in the working
+>> +directory that may have changed since the requested time.  The logic
+>> +should be inclusive so that it does not miss any potential changes.
+> 
+> +"It is OK to include files which have not actually changed.  Newly-created and deleted files should also be included.  When files are renamed, both the old and the new name should be included."
+> 
+> Also, please discuss case sensitivity issues (e.g. on OS X).
+> 
+>> +The paths should be relative to the root of the working directory and
+>> +be separated by a single NUL.
+> 
+> <snip>
+> 
+>> +  - 32-bit version number: the current supported version is 1.
 >> +
->> +	if (core_fsmonitor && !*core_fsmonitor)
->> +		core_fsmonitor = NULL;
+>> +  - 64-bit time: the extension data reflects all changes through the given
+>> +	time which is stored as the nanoseconds elapsed since midnight,
+>> +	January 1, 1970.
+> 
+> Nit: Please specify signed or unsigned for these.  (I expect to be getting out of
+> cryosleep around 2262, and I want to know if my old git repos will keep working...)
+> 
+
+While I'm not opposed to specifying unsigned, I did notice that the only 
+place signed/unsigned is specified today is in "index entry." Everywhere 
+else doesn't specify so I left it off for consistency.  I've not seen 
+negative version numbers nor negative time so am not entirely sure it is 
+necessary to clarify. :)
+
+>> +  - 32-bit bitmap size: the size of the CE_FSMONITOR_VALID bitmap.
 >> +
->> +	if (core_fsmonitor)
->> +		return 1;
->> +
->> +	return 0;
->> +}
-> 
-> This functions return values are backwards relative to the rest of the git_config_* functions.
-
-I'm confused.  If core.fsmonitor is configured, it returns 1. If it is 
-not configured, it returns 0. I don't make use of the -1 /* default 
-value */ option as I didn't see any use/value in this case. What is 
-backwards?
-
-> 
-> [snip]
-> 
-> +>	/*
-> +>	 * With fsmonitor, we can trust the untracked cache's valid field.
-> +>	 */
-> 
-
-Did you intend to make a comment here?
-
-> [snip]
-> 
->> +int read_fsmonitor_extension(struct index_state *istate, const void *data,
->> +	unsigned long sz)
->> +{
-> 
-> If git_config_get_fsmonitor returns 0, fsmonitor_dirty will leak.
-> 
-
-Good catch!  Thank you.
-
-> [snip]
-> 
->> +	/* a fsmonitor process can return '*' to indicate all entries are invalid */
-> 
-> That's not documented in your documentation.  Also, I'm not sure I like it: what
-> if I have a file whose name starts with '*'?  Yeah, that would be silly, but this indicates the need
-> for the protocol to have some sort of signaling mechanism that's out-of-band  Maybe
-> have some key\0value\0 pairs and then \0\0 and then the list of files?  Or, if you want to keep
-> it really simple, allow an entry of '/' (which is an invalid filename) to mean 'all'.
-> 
-
-Yea, this was an optimization I added late in the game to get around an 
-issue in Watchman where it returns the name of every file the first time 
-you query it (rather than the set of files that have actually changed 
-since the requested time).
-
-I didn't realize the wild card '*' was a valid character for a filename. 
-  I'll switch to '/' as you suggest as I don't want to complicate things 
-unnecessarily to handle this relatively rare optimization.  I'll also 
-get it documented properly.  Thanks!
-
->> +void add_fsmonitor(struct index_state *istate) {
->> +	int i;
->> +
->> +	if (!istate->fsmonitor_last_update) {
-> [snip]
->> +		/* reset the untracked cache */
-> 
-> Is this really necessary?  Shouldn't the untracked cache be in a correct state already?
-> 
-
-When fsmonitor is not turned on, I'm not explicitly invalidating 
-untracked cache directory entries as git makes changes to files. While I 
-doubt the sequence happens of 1) git making changes to files, *then* 2) 
-turning on fsmonitor - I thought it better safe than sorry to assume 
-that pattern won't ever happen in the future.  Especially since turning 
-on the extension is rare and the cost is low.
-
->> +/*
->> + * Clear the given cache entries CE_FSMONITOR_VALID bit and invalidate
-> 
-> Nit: "s/entries/entry's/".
->   
+>> +  - An ewah bitmap, the n-th bit indicates whether the n-th index entry
+>> +    is not CE_FSMONITOR_VALID.
 > 
