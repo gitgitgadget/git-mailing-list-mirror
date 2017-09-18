@@ -2,277 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7FE332047F
-	for <e@80x24.org>; Sun, 17 Sep 2017 22:58:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B15732047F
+	for <e@80x24.org>; Mon, 18 Sep 2017 00:40:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752024AbdIQW6W (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Sep 2017 18:58:22 -0400
-Received: from avasout07.plus.net ([84.93.230.235]:55928 "EHLO
-        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751551AbdIQW6V (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Sep 2017 18:58:21 -0400
-Received: from [10.0.2.15] ([147.147.86.16])
-        by avasout07 with smtp
-        id AmyK1w0010M91Ur01myLFi; Sun, 17 Sep 2017 23:58:20 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=CrLPSjwD c=1 sm=1 tr=0
- a=dubYQqM3tRRTmV8xSh8cXQ==:117 a=dubYQqM3tRRTmV8xSh8cXQ==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=A1X0JdhQAAAA:8 a=1QWimv5NHQjfUDsYsR8A:9
- a=QEXdDO2ut3YA:10 a=yJM6EZoI5SlJf8ks9Ge_:22 a=Df3jFdWbhGDLdZNm0fyq:22
-X-AUTH: ramsayjones@:2500
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Michael J Gruber <git@grubix.eu>,
-        Adam Dinwoodie <adam@dinwoodie.org>, Jeff King <peff@peff.net>,
-        GIT Mailing-list <git@vger.kernel.org>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH 2/2] t9010-*.sh: skip all tests if the PIPE prereq is missing
-Message-ID: <ffcf72e9-b724-3312-ca63-c21d0b8a235c@ramsayjones.plus.com>
-Date:   Sun, 17 Sep 2017 23:58:18 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        id S1751310AbdIRAha (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Sep 2017 20:37:30 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54328 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751254AbdIRAh3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Sep 2017 20:37:29 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D309DA7954;
+        Sun, 17 Sep 2017 20:37:27 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=gWOYQa47DTk8
+        T0cT9DIGJsS4lts=; b=EbLA14Ub84Y1cqi0lDBD0CmjIQftU+2kjm5csHwjakIN
+        FGp+pW+FN0q8FnTe3xzmbUqGnc2/atC/2xnWsh5quH1w9eyAtU07sALEieSNqaNm
+        GcUpDx0DcGlgFC/Hf3i6j/626wuD28wRept7ZJmjq6+iPFAzDh6ly88HKT2GUKQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=VCKgke
+        wnf+Tzjr3XdiYjE95SwthM2tYcGO4t33dlT8rTs5ehQzewhkVFBbgFvOwCpLWtwR
+        LRlEa3gaJmkcItC745e23mxpsBe3LdhtbGGXaBeu5Gg+F1O6x9+01vNBUTnvrQsG
+        750+ut4AuLfnycRCz/zCzgumGLq5TJswEoqJc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CA29DA7951;
+        Sun, 17 Sep 2017 20:37:27 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2CB96A7950;
+        Sun, 17 Sep 2017 20:37:27 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH] for_each_string_list_item(): behave correctly for empty list
+References: <cb2d4d71c7c1db452b86c8076c153cabe7384e28.1505490776.git.mhagger@alum.mit.edu>
+        <xmqqefr6uolr.fsf@gitster.mtv.corp.google.com>
+        <5c86b55e-20f6-df8e-b01f-66876c3a5f46@alum.mit.edu>
+Date:   Mon, 18 Sep 2017 09:37:25 +0900
+In-Reply-To: <5c86b55e-20f6-df8e-b01f-66876c3a5f46@alum.mit.edu> (Michael
+        Haggerty's message of "Sun, 17 Sep 2017 12:24:34 +0200")
+Message-ID: <xmqqfubku9iy.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+X-Pobox-Relay-ID: 8BC99126-9C09-11E7-B4C9-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-Every test in this file, except one, is marked with the PIPE prereq.
-However, that lone test ('set up svn repo'), only performs some setup
-work and checks whether the following test should be executed (by
-setting an additional SVNREPO prerequisite). Since the following test
-also requires the PIPE prerequisite, performing the setup test, when the
-PIPE preequisite is missing, is simply wasted effort. Use the skip-all
-test facility to skip all tests when the PIPE prerequisite is missing.
+> *sigh* of course you're right. I should know better than to "fire off a
+> quick fix to the mailing list".
+>
+> I guess the two proposals that are still in the running for rescuing
+> this macro are Jonathan's and G=C3=A1bor's. I have no strong preference
+> either way.
 
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
----
- t/t9010-svn-fe.sh | 55 ++++++++++++++++++++++++++++---------------------------
- 1 file changed, 28 insertions(+), 27 deletions(-)
+If somebody is writing this outisde a macro as a one-shot thing, the
+most natural and readable way I would imagine would be
 
-diff --git a/t/t9010-svn-fe.sh b/t/t9010-svn-fe.sh
-index 6dafe7e99..8eaaca6f9 100755
---- a/t/t9010-svn-fe.sh
-+++ b/t/t9010-svn-fe.sh
-@@ -4,12 +4,13 @@ test_description='check svn dumpfile importer'
- 
- . ./test-lib.sh
- 
-+if test_have_prereq !PIPE
-+then
-+	skip_all="svn dumpfile importer testing requires the PIPE prerequisite"
-+	test_done
-+fi
-+
- reinit_git () {
--	if ! test_declared_prereq PIPE
--	then
--		echo >&4 "reinit_git: need to declare PIPE prerequisite"
--		return 127
--	fi
- 	rm -fr .git &&
- 	rm -f stream backflow &&
- 	git init &&
-@@ -54,19 +55,19 @@ text_no_props () {
- 
- >empty
- 
--test_expect_success PIPE 'empty dump' '
-+test_expect_success 'empty dump' '
- 	reinit_git &&
- 	echo "SVN-fs-dump-format-version: 2" >input &&
- 	try_dump input
- '
- 
--test_expect_success PIPE 'v4 dumps not supported' '
-+test_expect_success 'v4 dumps not supported' '
- 	reinit_git &&
- 	echo "SVN-fs-dump-format-version: 4" >v4.dump &&
- 	try_dump v4.dump must_fail
- '
- 
--test_expect_failure PIPE 'empty revision' '
-+test_expect_failure 'empty revision' '
- 	reinit_git &&
- 	printf "rev <nobody, nobody@local>: %s\n" "" "" >expect &&
- 	cat >emptyrev.dump <<-\EOF &&
-@@ -86,7 +87,7 @@ test_expect_failure PIPE 'empty revision' '
- 	test_cmp expect actual
- '
- 
--test_expect_success PIPE 'empty properties' '
-+test_expect_success 'empty properties' '
- 	reinit_git &&
- 	printf "rev <nobody, nobody@local>: %s\n" "" "" >expect &&
- 	cat >emptyprop.dump <<-\EOF &&
-@@ -109,7 +110,7 @@ test_expect_success PIPE 'empty properties' '
- 	test_cmp expect actual
- '
- 
--test_expect_success PIPE 'author name and commit message' '
-+test_expect_success 'author name and commit message' '
- 	reinit_git &&
- 	echo "<author@example.com, author@example.com@local>" >expect.author &&
- 	cat >message <<-\EOF &&
-@@ -143,7 +144,7 @@ test_expect_success PIPE 'author name and commit message' '
- 	test_cmp expect.author actual.author
- '
- 
--test_expect_success PIPE 'unsupported properties are ignored' '
-+test_expect_success 'unsupported properties are ignored' '
- 	reinit_git &&
- 	echo author >expect &&
- 	cat >extraprop.dump <<-\EOF &&
-@@ -168,7 +169,7 @@ test_expect_success PIPE 'unsupported properties are ignored' '
- 	test_cmp expect actual
- '
- 
--test_expect_failure PIPE 'timestamp and empty file' '
-+test_expect_failure 'timestamp and empty file' '
- 	echo author@example.com >expect.author &&
- 	echo 1999-01-01 >expect.date &&
- 	echo file >expect.files &&
-@@ -210,7 +211,7 @@ test_expect_failure PIPE 'timestamp and empty file' '
- 	test_cmp empty file
- '
- 
--test_expect_success PIPE 'directory with files' '
-+test_expect_success 'directory with files' '
- 	reinit_git &&
- 	printf "%s\n" directory/file1 directory/file2 >expect.files &&
- 	echo hi >hi &&
-@@ -263,7 +264,7 @@ test_expect_success PIPE 'directory with files' '
- 	test_cmp hi directory/file2
- '
- 
--test_expect_success PIPE 'branch name with backslash' '
-+test_expect_success 'branch name with backslash' '
- 	reinit_git &&
- 	sort <<-\EOF >expect.branch-files &&
- 	trunk/file1
-@@ -362,7 +363,7 @@ test_expect_success PIPE 'branch name with backslash' '
- 	test_cmp expect.branch-files actual.branch-files
- '
- 
--test_expect_success PIPE 'node without action' '
-+test_expect_success 'node without action' '
- 	reinit_git &&
- 	cat >inaction.dump <<-\EOF &&
- 	SVN-fs-dump-format-version: 3
-@@ -383,7 +384,7 @@ test_expect_success PIPE 'node without action' '
- 	try_dump inaction.dump must_fail
- '
- 
--test_expect_success PIPE 'action: add node without text' '
-+test_expect_success 'action: add node without text' '
- 	reinit_git &&
- 	cat >textless.dump <<-\EOF &&
- 	SVN-fs-dump-format-version: 3
-@@ -405,7 +406,7 @@ test_expect_success PIPE 'action: add node without text' '
- 	try_dump textless.dump must_fail
- '
- 
--test_expect_failure PIPE 'change file mode but keep old content' '
-+test_expect_failure 'change file mode but keep old content' '
- 	reinit_git &&
- 	cat >expect <<-\EOF &&
- 	OBJID
-@@ -481,7 +482,7 @@ test_expect_failure PIPE 'change file mode but keep old content' '
- 	test_cmp hello actual.target
- '
- 
--test_expect_success PIPE 'NUL in property value' '
-+test_expect_success 'NUL in property value' '
- 	reinit_git &&
- 	echo "commit message" >expect.message &&
- 	{
-@@ -507,7 +508,7 @@ test_expect_success PIPE 'NUL in property value' '
- 	test_cmp expect.message actual.message
- '
- 
--test_expect_success PIPE 'NUL in log message, file content, and property name' '
-+test_expect_success 'NUL in log message, file content, and property name' '
- 	# Caveat: svnadmin 1.6.16 (r1073529) truncates at \0 in the
- 	# svn:specialQnotreally example.
- 	reinit_git &&
-@@ -587,7 +588,7 @@ test_expect_success PIPE 'NUL in log message, file content, and property name' '
- 	test_cmp expect.hello2 actual.hello2
- '
- 
--test_expect_success PIPE 'change file mode and reiterate content' '
-+test_expect_success 'change file mode and reiterate content' '
- 	reinit_git &&
- 	cat >expect <<-\EOF &&
- 	OBJID
-@@ -667,7 +668,7 @@ test_expect_success PIPE 'change file mode and reiterate content' '
- 	test_cmp hello actual.target
- '
- 
--test_expect_success PIPE 'deltas supported' '
-+test_expect_success 'deltas supported' '
- 	reinit_git &&
- 	{
- 		# (old) h + (inline) ello + (old) \n
-@@ -731,7 +732,7 @@ test_expect_success PIPE 'deltas supported' '
- 	try_dump delta.dump
- '
- 
--test_expect_success PIPE 'property deltas supported' '
-+test_expect_success 'property deltas supported' '
- 	reinit_git &&
- 	cat >expect <<-\EOF &&
- 	OBJID
-@@ -796,7 +797,7 @@ test_expect_success PIPE 'property deltas supported' '
- 	test_cmp expect actual
- '
- 
--test_expect_success PIPE 'properties on /' '
-+test_expect_success 'properties on /' '
- 	reinit_git &&
- 	cat <<-\EOF >expect &&
- 	OBJID
-@@ -850,7 +851,7 @@ test_expect_success PIPE 'properties on /' '
- 	test_cmp expect actual
- '
- 
--test_expect_success PIPE 'deltas for typechange' '
-+test_expect_success 'deltas for typechange' '
- 	reinit_git &&
- 	cat >expect <<-\EOF &&
- 	OBJID
-@@ -935,7 +936,7 @@ test_expect_success PIPE 'deltas for typechange' '
- 	test_cmp expect actual
- '
- 
--test_expect_success PIPE 'deltas need not consume the whole preimage' '
-+test_expect_success 'deltas need not consume the whole preimage' '
- 	reinit_git &&
- 	cat >expect <<-\EOF &&
- 	OBJID
-@@ -1040,7 +1041,7 @@ test_expect_success PIPE 'deltas need not consume the whole preimage' '
- 	test_cmp expect.3 actual.3
- '
- 
--test_expect_success PIPE 'no hang for delta trying to read past end of preimage' '
-+test_expect_success 'no hang for delta trying to read past end of preimage' '
- 	reinit_git &&
- 	{
- 		# COPY 1
-@@ -1087,7 +1088,7 @@ test_expect_success 'set up svn repo' '
- 	fi
- '
- 
--test_expect_success SVNREPO,PIPE 't9135/svn.dump' '
-+test_expect_success SVNREPO 't9135/svn.dump' '
- 	mkdir -p simple-git &&
- 	(
- 		cd simple-git &&
--- 
-2.14.0
+	if (the list is empty)
+        	;
+	else
+		for (each item in the list)
+			work on item
+
+I would think.  That "work on item" part may not be a single
+expression statement and instead be a compound statement inside a
+pair of braces {}.  Making a shorter version, i.e.
+
+	if (!the list is empty)
+		for (each item in the list)
+			work on item
+
+into a macro probably has syntax issues around cascading if/else
+chain, e.g.
+
+	if (condition caller cares about)
+		for_each_string_list_item() {
+			do this thing
+		}
+	else
+		do something else
+
+would expand to
+
+	if (condition caller cares about)
+		if (!the list is empty)
+			for (each item in the list) {
+				do this thing
+			}
+	else
+		do something else
+
+which is wrong.  But I couldn't think of a way to break the longer
+one with the body of the macro in the "else" clause in a similar
+way.  An overly helpful compiler might say
+
+	if (condition caller cares about)
+		if (the list is empty)
+			;
+		else
+			for (each item in the list) {
+				do this thing
+			}
+	else
+		do something else
+
+that it wants a pair of {} around the then-clause of the outer if;
+if we can find a way to squelch such warnings only with this
+construct that comes from the macro, then this solution may be ideal.
+
+If we cannot do that, then
+
+	for (item =3D (list)->items; /* could be NULL */
+	     (list)->items && item < (list)->items + (list)->nr;
+	     item++)
+		work on item
+
+may be an obvious way to write it without any such syntax worries,
+but I am unclear how a "undefined behaviour" contaminate the code
+around it.  My naive reading of the termination condition of the
+above is:
+
+	"(list)->items &&" clearly means that (list)->items is not
+	NULL in what follows it, i.e. (list->items + (list)->nr
+	cannot be a NULL + 0, so we are not allowed to make demon
+	fly out of your nose.
+
+but I wonder if this alternative reading is allowed:
+
+	(list)->items is not assigned to in this expression and is
+	used in a subexpression "(list)->items + (list)->nr" here;
+	for that subexpression not to be "undefined", it cannot be
+	NULL, so we can optimize out "do this only (list)->items is
+	not NULL" part.
+
+which takes us back to where we started X-<.  So I dunno.
+
+I am hoping that this last one is not allowed and we can use the
+"same condition is checked every time we loop" version that hides
+the uglyness inside the macro.
