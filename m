@@ -2,186 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9ABDA2047F
-	for <e@80x24.org>; Mon, 18 Sep 2017 23:52:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C27F72047F
+	for <e@80x24.org>; Tue, 19 Sep 2017 00:08:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750990AbdIRXwf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Sep 2017 19:52:35 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58516 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750714AbdIRXwe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Sep 2017 19:52:34 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 61150A80B3;
-        Mon, 18 Sep 2017 19:52:26 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=4LCtY/bvoQTyglKlITciZp0Ukn4=; b=lD2KRz
-        Z80iOc3hBI9Ha5vLsh8fjEkjg2muV2DRP2EY8b1K1+hutNxcDL/LfmHlfCz9V7c/
-        BGF9LPp/KcSsgkKwbjuqZdCWiGMKwlpjGBneRrewm4f+IJ0wyLXpWOEHWIRYpk+m
-        L9I1nNwrARr3VDdZ7TvnM+9HL1M4GcTVpYvRQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=tQjeNH15d4Lk0PpPgBPztJi9zxkSKNjj
-        swC5qY5MIWOuYIqrvE5UdLCIIf/n6oixDsn1KKMdN1ZsiLUnUrbNInNDSpXibpJO
-        kNXXv+piLKCIp6O/kpE1wF9/dG8NgEGaZHSaj3qSlBOMO30vnSfKwEmee7NH7oSO
-        R33yp2nO5S8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 596F7A80B2;
-        Mon, 18 Sep 2017 19:52:26 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BC1C3A80B1;
-        Mon, 18 Sep 2017 19:52:25 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Max Kirillov <max@max630.net>
-Cc:     Jacob Keller <jacob.keller@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] describe: teach --match to handle branches and remotes
-References: <20170917142416.30685-1-max@max630.net>
-Date:   Tue, 19 Sep 2017 08:52:24 +0900
-In-Reply-To: <20170917142416.30685-1-max@max630.net> (Max Kirillov's message
-        of "Sun, 17 Sep 2017 17:24:16 +0300")
-Message-ID: <xmqqzi9rsgxz.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1750882AbdISAIQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Sep 2017 20:08:16 -0400
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:48884 "EHLO
+        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750714AbdISAIP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Sep 2017 20:08:15 -0400
+Received: by mail-wm0-f52.google.com with SMTP id r68so912158wmg.3
+        for <git@vger.kernel.org>; Mon, 18 Sep 2017 17:08:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=PLF+Tj2oMAs0bPaSATQTPULWJcrnQFipyVSW4jd6flU=;
+        b=IMhbQqyD9E6E03m9Nf2Wv33k4bTdsCEaI0VAjnT1TWacysEGdYRSAZsXVjQqhbcgRR
+         gpdKbECjunyGqU+xQFj+l/p69fB6z+N9w5b4CZTj7jNROg6DVP2oMit6WjUmL7U8Ju9+
+         ee6qoOSa0ho1mPffRaV8RCMqMFpIOoDpeVaSFFbls3+6O2x0Eb9f6AQbYEVj44MN7QYx
+         4JoHPbiPFi/9bkTF9BCfBUKDTb9eIG6Ahnd/GJDb/WY7jmjbfb0QA4vYQr7NrKDZVP3A
+         inGZmUHPXxmG4FP1mzHkSEvJ5TRPLPVUYniJb8Iy7k+BeN/Q4+ysDQw0geuZuUMf1p3z
+         lADA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=PLF+Tj2oMAs0bPaSATQTPULWJcrnQFipyVSW4jd6flU=;
+        b=nNpi3o5/X7NaiOHpFf9W5dvXC4M+xdQX6+k+xFFbKY3JP9ZjRwxvzIJjLiET+tEgUR
+         yagCXh6UIPvABXPVFsOwHyq/t5qnKPSapkYK5cQoffMUVbbz87Xi/EtKlRFwA/fmS33s
+         YTdsCnX5Sxq3526YOPAv6XG9hVgPi3OkevmkFzfWOLitc5JbC6/EUA6anHvZLPShMoej
+         e94IuyusUkM9E31yK9I+pZcqIhdhpum5DvfK4/swri8H+CXASu7VDaXHf34jLJsMLXgz
+         dJDgOsp0lostkdmLKHscGBd/BFoWdpXrwv/0L5aeV9CcTpm1igwGZlMuYzytVq+KXCZF
+         iZVw==
+X-Gm-Message-State: AHPjjUgW6YU2aQVz2Ri6VuWzrgJH0iuQuCJqnTYUHFS9VzJNb4nTbs3K
+        w9HxhejR5aXmO3xBd0+5u8sZibhoWDj3AnbQFIxpIA==
+X-Google-Smtp-Source: AOwi7QDreJoQdxOyfNyPbcTwFjbKnRRT42TDDph54hefddbZgZqzY/9D2E+BhyCeNeAOz4yjwwVadz5VVoICYf30ouY=
+X-Received: by 10.28.73.133 with SMTP id w127mr9082789wma.55.1505779694547;
+ Mon, 18 Sep 2017 17:08:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6C085C64-9CCC-11E7-AE17-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Received: by 10.223.170.68 with HTTP; Mon, 18 Sep 2017 17:08:13 -0700 (PDT)
+In-Reply-To: <xmqqfubku9iy.fsf@gitster.mtv.corp.google.com>
+References: <cb2d4d71c7c1db452b86c8076c153cabe7384e28.1505490776.git.mhagger@alum.mit.edu>
+ <xmqqefr6uolr.fsf@gitster.mtv.corp.google.com> <5c86b55e-20f6-df8e-b01f-66876c3a5f46@alum.mit.edu>
+ <xmqqfubku9iy.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 18 Sep 2017 17:08:13 -0700
+Message-ID: <CAGZ79kYXDhcVXd2C-x6e=o7jYdKqV22DY45c7E2TeuhKLfn26w@mail.gmail.com>
+Subject: Re: [PATCH] for_each_string_list_item(): behave correctly for empty list
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
+        Alex Riesen <raa.lkml@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Max Kirillov <max@max630.net> writes:
+> I am hoping that this last one is not allowed and we can use the
+> "same condition is checked every time we loop" version that hides
+> the uglyness inside the macro.
 
->  --match <pattern>::
->  	Only consider tags matching the given `glob(7)` pattern,
-> -	excluding the "refs/tags/" prefix.  This can be used to avoid
-> -	leaking private tags from the repository. If given multiple times, a
-> -	list of patterns will be accumulated, and tags matching any of the
-> -	patterns will be considered. Use `--no-match` to clear and reset the
-> -	list of patterns.
-> +	excluding the "refs/tags/" prefix. If used with `--all`, it also
-> +	considers local branches and remote-tracking references matching the
-> +	pattern, excluding respectively "refs/heads/" and "refs/remotes/"
-> +	prefix; references of other types are never considered. If given
-> +	multiple times, a list of patterns will be accumulated, and tags
-> +	matching any of the patterns will be considered.  Use `--no-match` to
-> +	clear and reset the list of patterns.
->  
->  --exclude <pattern>::
->  	Do not consider tags matching the given `glob(7)` pattern, excluding
-> -	the "refs/tags/" prefix. This can be used to narrow the tag space and
-> -	find only tags matching some meaningful criteria. If given multiple
-> -	times, a list of patterns will be accumulated and tags matching any
-> -	of the patterns will be excluded. When combined with --match a tag will
-> -	be considered when it matches at least one --match pattern and does not
-> +	the "refs/tags/" prefix. If used with `--all`, it also does not consider
-> +	local branches and remote-tracking references matching the pattern,
-> +	excluding respectively "refs/heads/" and "refs/remotes/" prefix;
-> +	references of other types are never considered. If given multiple times,
-> +	a list of patterns will be accumulated and tags matching any of the
-> +	patterns will be excluded. When combined with --match a tag will be
-> +	considered when it matches at least one --match pattern and does not
->  	match any of the --exclude patterns. Use `--no-exclude` to clear and
->  	reset the list of patterns.
+By which you are referring to Jonathans solution posted.
+Maybe we can combine the two solutions (checking for thelist
+to not be NULL once, by Jonathan) and using an outer structure
+(SZEDERs solution) by replacing the condition by a for loop,
+roughly (untested):
 
-OK, I find this written clearly enough.
+#define for_each_string_list_item(item,list) \
+-       for (item = (list)->items; item < (list)->items + (list)->nr; ++item)
++    for (; list; list = NULL)
++        for (item = (list)->items; item < (list)->items + (list)->nr; ++item)
 
-> diff --git a/builtin/describe.c b/builtin/describe.c
-> index 94ff2fba0b..2a2e998063 100644
-> --- a/builtin/describe.c
-> +++ b/builtin/describe.c
-> @@ -124,6 +124,22 @@ static void add_to_known_names(const char *path,
->  	}
->  }
->  
-> +/* Drops prefix. Returns NULL if the path is not expected with current settings. */
-> +static const char *get_path_to_match(int is_tag, int all, const char *path)
-> +{
-> +	if (is_tag)
-> +		return path + 10;
+as that would not mingle with any dangling else clause.
+It is also just one statement, such that
 
-This is a faithful conversion of the existing code that wants to
-behave the same as original, but a bit more on this later.
+    if (bla)
+      for_each_string_list_item {
+        baz(item);
+      }
+    else
+      foo;
 
-> +	else if (all) {
-> +		if (starts_with(path, "refs/heads/"))
-> +			return path + 11; /* "refs/heads/..." */
-> +		else if (starts_with(path, "refs/remotes/"))
-> +			return path + 13; /* "refs/remotes/..." */
-> +		else
-> +			return 0;
+still works.
 
-I think you can use skip_prefix() to avoid counting the length of
-the prefix yourself, i.e.
-
-	else if all {
-		const char *body;
-
-                if (skip_prefix(path, "refs/heads/", &body))
-			return body;
-		else if (skip_prefix(path, "refs/remotes/", &body))
-			...
-	}
-
-Whether you do the above or not, the last one that returns 0 should
-return NULL (to the language it is the same thing, but to humans, we
-write NULL when it is the null pointer, not the number 0).
-
-> +	} else
-> +		return NULL;
-> +}
-
-Perhaps the whole thing may want to be a bit more simplified, like:
-
-        static const *skip_ref_prefix(const char *path, int all)
-        {
-                const char *prefix[] = {
-                        "refs/tags/", "refs/heads/", "refs/remotes/"
-                };
-                const char *body;
-                int cnt;
-                int bound = all ? ARRAY_SIZE(prefix) : 1;
-
-                for (cnt = 0; cnt < bound; cnt++)
-                        if (skip_prefix(path, prefix[cnt], &body);
-                                return body;
-                return NULL;
-        }
-
-The hardcoded +10 for "is_tag" case assumes that anything other than
-"refs/tags/something" would ever be used to call into this function
-when is_tag is true, and that may well be true in the current code
-and have been so ever since the original code was written, but it
-still smells like an invitation for future bugs.
-
-I dunno.
-
-> +
->  static int get_name(const char *path, const struct object_id *oid, int flag, void *cb_data)
->  {
->  	int is_tag = starts_with(path, "refs/tags/");
-> @@ -140,12 +156,13 @@ static int get_name(const char *path, const struct object_id *oid, int flag, voi
->  	 */
->  	if (exclude_patterns.nr) {
->  		struct string_list_item *item;
-> +		const char *path_to_match = get_path_to_match(is_tag, all, path);
-
-> +test_expect_success 'set-up branches' '
-> +	git branch branch_A A &&
-> +	git branch branch_c c &&
-
-Was there a reason why A and c are in different cases?  Are we
-worried about case insensitive filesystems or something?
-
-> +	git update-ref refs/remotes/origin/remote_branch_A "A^{commit}" &&
-> +	git update-ref refs/remotes/origin/remote_branch_c "c^{commit}" &&
-> +	git update-ref refs/original/original_branch_A test-annotated~2
-> +'
-
-Thanks.
+Are there downsides to this combined approach?
