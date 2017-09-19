@@ -2,132 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B6BE20281
-	for <e@80x24.org>; Tue, 19 Sep 2017 03:27:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F27F20281
+	for <e@80x24.org>; Tue, 19 Sep 2017 04:57:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751370AbdISD1W (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Sep 2017 23:27:22 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62174 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750897AbdISD1V (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Sep 2017 23:27:21 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C1B3197CA2;
-        Mon, 18 Sep 2017 23:27:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=7m07ldaXL5ZCcym/d2FAOD4v3e4=; b=Q1UcD+
-        B8XDlXpD8oSZVfQuCubLryLFL2lWKU6W0o8ib2JWJqbAMRXv/5GTZFYLWdU7KT+A
-        xnOIZ++kWSoh40BGqiaho8DxpMCJ6FV7ZXtjhgW4yWBZqOU5JNIZ2aXQXqHQJg1K
-        S+SM6Z791jBSYoxv7Iyf3gCCP0InhHiBFZ1YY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=thW7KcPQUJWdicDBc6c4mpPnSvYkif5q
-        u5fWmI9+E4XgwRuuLg5BTQlUAjPDdnEbK2YoAgpzunvhPe5go/5ZeaEQlGyIaPxF
-        AcuKTNNaEtkH5ZkME6+usSAY+ARsp38hIpdlART8h9zGDIGL4dgSj84z1coLHoa1
-        FhyrpCmUNIM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BACD797CA1;
-        Mon, 18 Sep 2017 23:27:20 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1ADDF97C9F;
-        Mon, 18 Sep 2017 23:27:20 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jameson Miller <jameson.miller81@gmail.com>
-Cc:     bmwill@google.com, git@vger.kernel.org, jamill@microsoft.com,
-        peff@peff.net, sxlijin@gmail.com
-Subject: Re: [PATCH v2] Improve performance of git status --ignored
-References: <20170810184936.239542-1-jamill@microsoft.com>
-        <1505755473-6720-1-git-send-email-jamill@microsoft.com>
-        <1505755473-6720-2-git-send-email-jamill@microsoft.com>
-Date:   Tue, 19 Sep 2017 12:27:18 +0900
-In-Reply-To: <1505755473-6720-2-git-send-email-jamill@microsoft.com> (Jameson
-        Miller's message of "Mon, 18 Sep 2017 13:24:33 -0400")
-Message-ID: <xmqqd16nqsfd.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751000AbdISE5K (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Sep 2017 00:57:10 -0400
+Received: from cloud.peff.net ([104.130.231.41]:42934 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1750758AbdISE5J (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Sep 2017 00:57:09 -0400
+Received: (qmail 2389 invoked by uid 109); 19 Sep 2017 04:57:09 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 19 Sep 2017 04:57:09 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 31897 invoked by uid 111); 19 Sep 2017 04:57:45 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Tue, 19 Sep 2017 00:57:45 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Sep 2017 00:57:07 -0400
+Date:   Tue, 19 Sep 2017 00:57:07 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 0/2] fix read past end of array in alternates files
+Message-ID: <20170919045706.evw2l37hd4r2czra@sigill.intra.peff.net>
+References: <20170918155059.54f7z6cnrl47f5el@sigill.intra.peff.net>
+ <20170919023603.GB175206@aiede.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 71A923F6-9CEA-11E7-A907-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170919023603.GB175206@aiede.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jameson Miller <jameson.miller81@gmail.com> writes:
+On Mon, Sep 18, 2017 at 07:36:03PM -0700, Jonathan Nieder wrote:
 
-> Improve the performance of the directory listing logic when it wants to list
-> non-empty ignored directories. In order to show non-empty ignored directories,
-> the existing logic will recursively iterate through all contents of an ignored
-> directory. This change introduces the optimization to stop iterating through
-> the contents once it finds the first file.
+> Jeff King wrote:
+> 
+> > This series fixes a regression in v2.11.1 where we might read past the
+> > end of an mmap'd buffer. It was introduced in cf3c635210,
+> 
+> The above information is super helpful.  Can it go in one of the commit
+> messages?
 
-Wow, such an obviously correct optimization.  Very nicely explained, too.
+Er, didn't I?
 
-> This can have a significant
-> improvement in 'git status --ignored' performance in repositories with a large
-> number of files in ignored directories.
->
-> For an example of the performance difference on an example repository with
-> 196,000 files in 400 ignored directories:
->
-> | Command                    |  Time (s) |
-> | -------------------------- | --------- |
-> | git status                 |   1.2     |
-> | git status --ignored (old) |   3.9     |
-> | git status --ignored (new) |   1.4     |
->
-> Signed-off-by: Jameson Miller <jamill@microsoft.com>
-> ---
+> > base the patch on there, for a few reasons:
+> >
+> >   1. There's a trivial conflict when merging up (because of
+> >      git_open_noatime() becoming just git_open() in the inerim).
+> >
+> >   2. The reproduction advice relies on our SANITIZE Makefile knob, which
+> >      didn't exist back then.
+> >
+> >   3. The second patch does not apply there because we don't have
+> >      warn_on_fopen_errors(). Though admittedly it could be applied
+> >      separately after merging up; it's just a clean-up on top.
+> 
+> Even this part could go in a commit message, but it's fine for it not
+> to.
 
-I wish all the contributions I have to accept are as nicely done as
-this one ;-)
+IMHO this kind of meta information doesn't belong in the commit message.
+It's useful to the maintainer to know where to apply the patch, but I
+don't think it helps somebody who is reading "git log" output.
 
-Thanks.
-
->  dir.c | 47 +++++++++++++++++++++++++++++++++++++++++------
->  1 file changed, 41 insertions(+), 6 deletions(-)
->
-> diff --git a/dir.c b/dir.c
-> index 1c55dc3..1d17b80 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -49,7 +49,7 @@ struct cached_dir {
->  static enum path_treatment read_directory_recursive(struct dir_struct *dir,
->  	struct index_state *istate, const char *path, int len,
->  	struct untracked_cache_dir *untracked,
-> -	int check_only, const struct pathspec *pathspec);
-> +	int check_only, int stop_at_first_file, const struct pathspec *pathspec);
-
-We might want to make check_only and stop_at_first_file into a
-single "unsigned flags" used as a collection of bits, but we can
-wait until we start feeling the urge to add the third boolean
-parameter to this function (at which point I'd probably demand a
-preliminary clean-up to merge these two into a single flags word
-before adding the third one as a new bit in that word).
-
-> @@ -1404,8 +1404,13 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
->  
->  	untracked = lookup_untracked(dir->untracked, untracked,
->  				     dirname + baselen, len - baselen);
-> +
-> +	/*
-> +	 * If this is an excluded directory, then we only need to check if
-> +	 * the directory contains any files.
-> +	 */
->  	return read_directory_recursive(dir, istate, dirname, len,
-> -					untracked, 1, pathspec);
-> +					untracked, 1, exclude, pathspec);
-
-Nicely explained in the in-code comment.
-
-I'd assume that you want your microsoft e-mail address used on the
-signed-off-by line appear as the author, so I'll tweak this a bit to
-make it so (otherwise, your 81@gmail.com would become the author).
-
-Thanks.
+-Peff
