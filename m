@@ -6,26 +6,26 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 728B020281
-	for <e@80x24.org>; Tue, 19 Sep 2017 06:23:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 69ADE20281
+	for <e@80x24.org>; Tue, 19 Sep 2017 06:23:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751517AbdISGX0 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Sep 2017 02:23:26 -0400
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:42112 "EHLO
-        alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751497AbdISGXY (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 19 Sep 2017 02:23:24 -0400
-X-AuditID: 1207440c-7e5ff7000000143e-0d-59c0b7da4e0d
+        id S1751537AbdISGXd (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Sep 2017 02:23:33 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:53611 "EHLO
+        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751479AbdISGXO (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 19 Sep 2017 02:23:14 -0400
+X-AuditID: 12074413-3a3ff70000007929-75-59c0b7d1dc39
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 72.47.05182.AD7B0C95; Tue, 19 Sep 2017 02:23:23 -0400 (EDT)
+        by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id E0.F2.31017.1D7B0C95; Tue, 19 Sep 2017 02:23:13 -0400 (EDT)
 Received: from bagpipes.fritz.box (p54AAE885.dip0.t-ipconnect.de [84.170.232.133])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v8J6MV1s002857
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v8J6MV1o002857
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Tue, 19 Sep 2017 02:23:20 -0400
+        Tue, 19 Sep 2017 02:23:11 -0400
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Stefan Beller <sbeller@google.com>,
@@ -35,932 +35,218 @@ Cc:     Stefan Beller <sbeller@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Brandon Williams <bmwill@google.com>,
         git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 21/21] packed-backend.c: rename a bunch of things and update comments
-Date:   Tue, 19 Sep 2017 08:22:29 +0200
-Message-Id: <20d7a38b6f65c78df5979923f012dcfbf5ed4a55.1505799700.git.mhagger@alum.mit.edu>
+Subject: [PATCH v2 17/21] ref_store: implement `refs_peel_ref()` generically
+Date:   Tue, 19 Sep 2017 08:22:25 +0200
+Message-Id: <4bfae266be39a1ecc217380f4a8b1eafb669f521.1505799700.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.14.1
 In-Reply-To: <cover.1505799700.git.mhagger@alum.mit.edu>
 References: <cover.1505799700.git.mhagger@alum.mit.edu>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrKKsWRmVeSWpSXmKPExsUixO6iqHt7+4FIg0vn+SzWPrvDZPF8/Ql2
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrNIsWRmVeSWpSXmKPExsUixO6iqHtx+4FIg92v1CzWPrvDZPF8/Ql2
         i64r3UwWDb1XmC36l3exWdxeMZ/ZonvKW0aLHy09zBabN7ezOHB6/H3/gclj56y77B4fPsZ5
-        LNhU6vGsdw+jx8VLyh6fN8kFsEdx2aSk5mSWpRbp2yVwZby+8IypYM0fxop3fSuZGhivnGTs
-        YuTkkBAwkVh36AZ7FyMXh5DADiaJrh8/GSGcU0wSfw82MoFUsQnoSizqaQazRQTUJCa2HWIB
-        KWIWWMksMWnrFVaQhLBAhMTO9sfMIDaLgKrEj74mFhCbVyBK4traN1Dr5CXOPbgNVsMpYCHR
-        vGc7UA0H0DZziQNHiyHKBSVOznwCFmYWUJdYP08IJMwM1Nm8dTbzBEb+WUiqZiFUzUJStYCR
-        eRWjXGJOaa5ubmJmTnFqsm5xcmJeXmqRrqFebmaJXmpK6SZGSAzw7GD8tk7mEKMAB6MSD6/A
-        tf2RQqyJZcWVuYcYJTmYlER5wzYdiBTiS8pPqcxILM6ILyrNSS0+xCjBwawkwntoEVCONyWx
-        siq1KB8mJc3BoiTOq7pE3U9IID2xJDU7NbUgtQgmK8PBoSTBqwiMdSHBotT01Iq0zJwShDQT
-        ByfIcB6g4SogNbzFBYm5xZnpEPlTjLocHTfv/mESYsnLz0uVEue9vw2oSACkKKM0D24OLHW9
-        YhQHekuYtwGkigeY9uAmvQJawgS0JHsD2JKSRISUVANjR/P7xiXPS0qDtt181Zv4Y2fi9993
-        OfVrZx1eWxHA933rJTmN15xeFoazlV5qfHlpbvZefMJGue6SLNv27p3CVzMPnPRfLXvyvt5N
-        jrma6mdyHlmKbu03+BSfur5N8k1tomGz4yYBY2cpmfDHc2dvenbU//sZu4ILPZnbkg6Vd7hv
-        KvNnTbylxFKckWioxVxUnAgAXhyp9TgDAAA=
+        LNhU6vGsdw+jx8VLyh6fN8kFsEdx2aSk5mSWpRbp2yVwZdw8NputYJJ+xeZnk9kbGHeqdTFy
+        cEgImEhc7NHuYuTkEBLYwSRx9UlRFyMXkH2KSeLi4j3MIAk2AV2JRT3NTCC2iICaxMS2Qywg
+        RcwCK5klJm29wgqSEBbwkThyro0NxGYRUJXoWH0brIFXIEpi/+IGMFtCQF7i3IPbYEM5BSwk
+        mvdsZwE5QkjAXOLA0eIJjDwLGBlWMcol5pTm6uYmZuYUpybrFicn5uWlFuma6+VmluilppRu
+        YoSEm/AOxl0n5Q4xCnAwKvHwClzbHynEmlhWXJl7iFGSg0lJlDds04FIIb6k/JTKjMTijPii
+        0pzU4kOMEhzMSiK8hxYB5XhTEiurUovyYVLSHCxK4rxqS9T9hATSE0tSs1NTC1KLYLIyHBxK
+        EryKwLgSEixKTU+tSMvMKUFIM3FwggznARquAlLDW1yQmFucmQ6RP8Woy9Fx8+4fJiGWvPy8
+        VClx3vvbgIoEQIoySvPg5sDSxCtGcaC3hHkbQKp4gCkGbtIroCVMQEuyN4AtKUlESEk1MHb3
+        mX4rfr7oel6S6rJ7JyLkjcpi3k/cIV14xjP4rFIXa7f2qwD5WN7+eKGWZXMWcLn+beiyihR0
+        /Dll5bnerC17wuq11f2Z6jbNki77d7jdd8OcznMvLz7Zs1nBeterE8rquww7t+6ctmaTDU+s
+        3Z4Pe1ilRVJ7+H1/XTxRmnToSdht21UdPUosxRmJhlrMRcWJADdoN37uAgAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We've made huge changes to this file, and some of the old names and
-comments are no longer very fitting. So rename a bunch of things:
+We're about to stop storing packed refs in a `ref_cache`. That means
+that the only way we have left to optimize `peel_ref()` is by checking
+whether the reference being peeled is the one currently being iterated
+over (in `current_ref_iter`), and if so, using `ref_iterator_peel()`.
+But this can be done generically; it doesn't have to be implemented
+per-backend.
 
-* `struct packed_ref_cache` → `struct snapshot`
-* `acquire_packed_ref_cache()` → `acquire_snapshot()`
-* `release_packed_ref_buffer()` → `clear_snapshot_buffer()`
-* `release_packed_ref_cache()` → `release_snapshot()`
-* `clear_packed_ref_cache()` → `clear_snapshot()`
-* `struct packed_ref_entry` → `struct snapshot_record`
-* `cmp_packed_ref_entries()` → `cmp_packed_ref_records()`
-* `cmp_entry_to_refname()` → `cmp_record_to_refname()`
-* `sort_packed_refs()` → `sort_snapshot()`
-* `read_packed_refs()` → `create_snapshot()`
-* `validate_packed_ref_cache()` → `validate_snapshot()`
-* `get_packed_ref_cache()` → `get_snapshot()`
-* Renamed local variables and struct members accordingly.
+So implement `refs_peel_ref()` in `refs.c` and remove the `peel_ref()`
+method from the refs API.
 
-Also update a bunch of comments to reflect the renaming and the
-accumulated changes that the code has undergone.
+This removes the last callers of a couple of functions, so delete
+them. More cleanup to come...
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs/packed-backend.c | 422 +++++++++++++++++++++++++++-----------------------
- 1 file changed, 232 insertions(+), 190 deletions(-)
+ refs.c                | 18 +++++++++++++++++-
+ refs/files-backend.c  | 38 --------------------------------------
+ refs/packed-backend.c | 36 ------------------------------------
+ refs/refs-internal.h  |  3 ---
+ 4 files changed, 17 insertions(+), 78 deletions(-)
 
+diff --git a/refs.c b/refs.c
+index 101c107ee8..c5e6f79c77 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1735,7 +1735,23 @@ int refs_pack_refs(struct ref_store *refs, unsigned int flags)
+ int refs_peel_ref(struct ref_store *refs, const char *refname,
+ 		  unsigned char *sha1)
+ {
+-	return refs->be->peel_ref(refs, refname, sha1);
++	int flag;
++	unsigned char base[20];
++
++	if (current_ref_iter && current_ref_iter->refname == refname) {
++		struct object_id peeled;
++
++		if (ref_iterator_peel(current_ref_iter, &peeled))
++			return -1;
++		hashcpy(sha1, peeled.hash);
++		return 0;
++	}
++
++	if (refs_read_ref_full(refs, refname,
++			       RESOLVE_REF_READING, base, &flag))
++		return -1;
++
++	return peel_object(base, sha1);
+ }
+ 
+ int peel_ref(const char *refname, unsigned char *sha1)
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 35648c89fc..7d12de88d0 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -655,43 +655,6 @@ static int lock_raw_ref(struct files_ref_store *refs,
+ 	return ret;
+ }
+ 
+-static int files_peel_ref(struct ref_store *ref_store,
+-			  const char *refname, unsigned char *sha1)
+-{
+-	struct files_ref_store *refs =
+-		files_downcast(ref_store, REF_STORE_READ | REF_STORE_ODB,
+-			       "peel_ref");
+-	int flag;
+-	unsigned char base[20];
+-
+-	if (current_ref_iter && current_ref_iter->refname == refname) {
+-		struct object_id peeled;
+-
+-		if (ref_iterator_peel(current_ref_iter, &peeled))
+-			return -1;
+-		hashcpy(sha1, peeled.hash);
+-		return 0;
+-	}
+-
+-	if (refs_read_ref_full(ref_store, refname,
+-			       RESOLVE_REF_READING, base, &flag))
+-		return -1;
+-
+-	/*
+-	 * If the reference is packed, read its ref_entry from the
+-	 * cache in the hope that we already know its peeled value.
+-	 * We only try this optimization on packed references because
+-	 * (a) forcing the filling of the loose reference cache could
+-	 * be expensive and (b) loose references anyway usually do not
+-	 * have REF_KNOWS_PEELED.
+-	 */
+-	if (flag & REF_ISPACKED &&
+-	    !refs_peel_ref(refs->packed_ref_store, refname, sha1))
+-		return 0;
+-
+-	return peel_object(base, sha1);
+-}
+-
+ struct files_ref_iterator {
+ 	struct ref_iterator base;
+ 
+@@ -3012,7 +2975,6 @@ struct ref_storage_be refs_be_files = {
+ 	files_initial_transaction_commit,
+ 
+ 	files_pack_refs,
+-	files_peel_ref,
+ 	files_create_symref,
+ 	files_delete_refs,
+ 	files_rename_ref,
 diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 92b837a237..b9351da843 100644
+index 2cf2f7f73d..6a930a440c 100644
 --- a/refs/packed-backend.c
 +++ b/refs/packed-backend.c
-@@ -37,10 +37,30 @@ static enum mmap_strategy mmap_strategy = MMAP_OK;
- 
- struct packed_ref_store;
- 
--struct packed_ref_cache {
-+/*
-+ * A `snapshot` represents one snapshot of a `packed-refs` file.
-+ *
-+ * Normally, this will be a mmapped view of the contents of the
-+ * `packed-refs` file at the time the snapshot was created. However,
-+ * if the `packed-refs` file was not sorted, this might point at heap
-+ * memory holding the contents of the `packed-refs` file with its
-+ * records sorted by refname.
-+ *
-+ * `snapshot` instances are reference counted (via
-+ * `acquire_snapshot()` and `release_snapshot()`). This is to prevent
-+ * an instance from disappearing while an iterator is still iterating
-+ * over it. Instances are garbage collected when their `referrers`
-+ * count goes to zero.
-+ *
-+ * The most recent `snapshot`, if available, is referenced by the
-+ * `packed_ref_store`. Its freshness is checked whenever
-+ * `get_snapshot()` is called; if the existing snapshot is obsolete, a
-+ * new snapshot is taken.
-+ */
-+struct snapshot {
- 	/*
- 	 * A back-pointer to the packed_ref_store with which this
--	 * cache is associated:
-+	 * snapshot is associated:
- 	 */
- 	struct packed_ref_store *refs;
- 
-@@ -61,26 +81,42 @@ struct packed_ref_cache {
- 	size_t header_len;
- 
- 	/*
--	 * What is the peeled state of this cache? (This is usually
--	 * determined from the header of the "packed-refs" file.)
-+	 * What is the peeled state of the `packed-refs` file that
-+	 * this snapshot represents? (This is usually determined from
-+	 * the file's header.)
- 	 */
- 	enum { PEELED_NONE, PEELED_TAGS, PEELED_FULLY } peeled;
- 
- 	/*
--	 * Count of references to the data structure in this instance,
--	 * including the pointer from files_ref_store::packed if any.
--	 * The data will not be freed as long as the reference count
--	 * is nonzero.
-+	 * Count of references to this instance, including the pointer
-+	 * from `packed_ref_store::snapshot`, if any. The instance
-+	 * will not be freed as long as the reference count is
-+	 * nonzero.
- 	 */
- 	unsigned int referrers;
- 
--	/* The metadata from when this packed-refs cache was read */
-+	/*
-+	 * The metadata of the `packed-refs` file from which this
-+	 * snapshot was created, used to tell if the file has been
-+	 * replaced since we read it.
-+	 */
- 	struct stat_validity validity;
- };
- 
- /*
-- * A container for `packed-refs`-related data. It is not (yet) a
-- * `ref_store`.
-+ * A `ref_store` representing references stored in a `packed-refs`
-+ * file. It implements the `ref_store` interface, though it has some
-+ * limitations:
-+ *
-+ * - It cannot store symbolic references.
-+ *
-+ * - It cannot store reflogs.
-+ *
-+ * - It does not support reference renaming (though it could).
-+ *
-+ * On the other hand, it can be locked outside of a reference
-+ * transaction. In that case, it remains locked even after the
-+ * transaction is done and the new `packed-refs` file is activated.
-  */
- struct packed_ref_store {
- 	struct ref_store base;
-@@ -91,10 +127,10 @@ struct packed_ref_store {
- 	char *path;
- 
- 	/*
--	 * A cache of the values read from the `packed-refs` file, if
--	 * it might still be current; otherwise, NULL.
-+	 * A snapshot of the values read from the `packed-refs` file,
-+	 * if it might still be current; otherwise, NULL.
- 	 */
--	struct packed_ref_cache *cache;
-+	struct snapshot *snapshot;
- 
- 	/*
- 	 * Lock used for the "packed-refs" file. Note that this (and
-@@ -111,43 +147,42 @@ struct packed_ref_store {
- };
- 
- /*
-- * Increment the reference count of *packed_refs.
-+ * Increment the reference count of `*snapshot`.
-  */
--static void acquire_packed_ref_cache(struct packed_ref_cache *packed_refs)
-+static void acquire_snapshot(struct snapshot *snapshot)
- {
--	packed_refs->referrers++;
-+	snapshot->referrers++;
+@@ -849,26 +849,6 @@ static struct packed_ref_cache *get_packed_ref_cache(struct packed_ref_store *re
+ 	return refs->cache;
  }
  
- /*
-- * If the buffer in `packed_refs` is active, then either munmap the
-+ * If the buffer in `snapshot` is active, then either munmap the
-  * memory and close the file, or free the memory. Then set the buffer
-  * pointers to NULL.
-  */
--static void release_packed_ref_buffer(struct packed_ref_cache *packed_refs)
-+static void clear_snapshot_buffer(struct snapshot *snapshot)
- {
--	if (packed_refs->mmapped) {
--		if (munmap(packed_refs->buf,
--			   packed_refs->eof - packed_refs->buf))
-+	if (snapshot->mmapped) {
-+		if (munmap(snapshot->buf, snapshot->eof - snapshot->buf))
- 			die_errno("error ummapping packed-refs file %s",
--				  packed_refs->refs->path);
--		packed_refs->mmapped = 0;
-+				  snapshot->refs->path);
-+		snapshot->mmapped = 0;
- 	} else {
--		free(packed_refs->buf);
-+		free(snapshot->buf);
- 	}
--	packed_refs->buf = packed_refs->eof = NULL;
--	packed_refs->header_len = 0;
-+	snapshot->buf = snapshot->eof = NULL;
-+	snapshot->header_len = 0;
- }
- 
- /*
-- * Decrease the reference count of *packed_refs.  If it goes to zero,
-- * free *packed_refs and return true; otherwise return false.
-+ * Decrease the reference count of `*snapshot`. If it goes to zero,
-+ * free `*snapshot` and return true; otherwise return false.
-  */
--static int release_packed_ref_cache(struct packed_ref_cache *packed_refs)
-+static int release_snapshot(struct snapshot *snapshot)
- {
--	if (!--packed_refs->referrers) {
--		stat_validity_clear(&packed_refs->validity);
--		release_packed_ref_buffer(packed_refs);
--		free(packed_refs);
-+	if (!--snapshot->referrers) {
-+		stat_validity_clear(&snapshot->validity);
-+		clear_snapshot_buffer(snapshot);
-+		free(snapshot);
- 		return 1;
- 	} else {
- 		return 0;
-@@ -192,13 +227,13 @@ static struct packed_ref_store *packed_downcast(struct ref_store *ref_store,
- 	return refs;
- }
- 
--static void clear_packed_ref_cache(struct packed_ref_store *refs)
-+static void clear_snapshot(struct packed_ref_store *refs)
- {
--	if (refs->cache) {
--		struct packed_ref_cache *cache = refs->cache;
-+	if (refs->snapshot) {
-+		struct snapshot *snapshot = refs->snapshot;
- 
--		refs->cache = NULL;
--		release_packed_ref_cache(cache);
-+		refs->snapshot = NULL;
-+		release_snapshot(snapshot);
- 	}
- }
- 
-@@ -225,14 +260,14 @@ static NORETURN void die_invalid_line(const char *path,
- 
- }
- 
--struct packed_ref_entry {
-+struct snapshot_record {
- 	const char *start;
- 	size_t len;
- };
- 
--static int cmp_packed_ref_entries(const void *v1, const void *v2)
-+static int cmp_packed_ref_records(const void *v1, const void *v2)
- {
--	const struct packed_ref_entry *e1 = v1, *e2 = v2;
-+	const struct snapshot_record *e1 = v1, *e2 = v2;
- 	const char *r1 = e1->start + GIT_SHA1_HEXSZ + 1;
- 	const char *r2 = e2->start + GIT_SHA1_HEXSZ + 1;
- 
-@@ -251,10 +286,10 @@ static int cmp_packed_ref_entries(const void *v1, const void *v2)
- }
- 
- /*
-- * Compare a packed-refs record pointed to by `rec` to the specified
-- * NUL-terminated refname.
-+ * Compare a snapshot record at `rec` to the specified NUL-terminated
-+ * refname.
-  */
--static int cmp_entry_to_refname(const char *rec, const char *refname)
-+static int cmp_record_to_refname(const char *rec, const char *refname)
- {
- 	const char *r1 = rec + GIT_SHA1_HEXSZ + 1;
- 	const char *r2 = refname;
-@@ -272,31 +307,30 @@ static int cmp_entry_to_refname(const char *rec, const char *refname)
- }
- 
- /*
-- * `packed_refs->buf` is not known to be sorted. Check whether it is,
-- * and if not, sort it into new memory and munmap/free the old
-- * storage.
-+ * `snapshot->buf` is not known to be sorted. Check whether it is, and
-+ * if not, sort it into new memory and munmap/free the old storage.
-  */
--static void sort_packed_refs(struct packed_ref_cache *packed_refs)
-+static void sort_snapshot(struct snapshot *snapshot)
- {
--	struct packed_ref_entry *entries = NULL;
-+	struct snapshot_record *records = NULL;
- 	size_t alloc = 0, nr = 0;
- 	int sorted = 1;
- 	const char *pos, *eof, *eol;
- 	size_t len, i;
- 	char *new_buffer, *dst;
- 
--	pos = packed_refs->buf + packed_refs->header_len;
--	eof = packed_refs->eof;
-+	pos = snapshot->buf + snapshot->header_len;
-+	eof = snapshot->eof;
- 	len = eof - pos;
- 
- 	if (!len)
- 		return;
- 
- 	/*
--	 * Initialize entries based on a crude estimate of the number
-+	 * Initialize records based on a crude estimate of the number
- 	 * of references in the file (we'll grow it below if needed):
- 	 */
--	ALLOC_GROW(entries, len / 80 + 20, alloc);
-+	ALLOC_GROW(records, len / 80 + 20, alloc);
- 
- 	while (pos < eof) {
- 		eol = memchr(pos, '\n', eof - pos);
-@@ -304,7 +338,7 @@ static void sort_packed_refs(struct packed_ref_cache *packed_refs)
- 			/* The safety check should prevent this. */
- 			BUG("unterminated line found in packed-refs");
- 		if (eol - pos < GIT_SHA1_HEXSZ + 2)
--			die_invalid_line(packed_refs->refs->path,
-+			die_invalid_line(snapshot->refs->path,
- 					 pos, eof - pos);
- 		eol++;
- 		if (eol < eof && *eol == '^') {
-@@ -321,15 +355,15 @@ static void sort_packed_refs(struct packed_ref_cache *packed_refs)
- 			eol++;
- 		}
- 
--		ALLOC_GROW(entries, nr + 1, alloc);
--		entries[nr].start = pos;
--		entries[nr].len = eol - pos;
-+		ALLOC_GROW(records, nr + 1, alloc);
-+		records[nr].start = pos;
-+		records[nr].len = eol - pos;
- 		nr++;
- 
- 		if (sorted &&
- 		    nr > 1 &&
--		    cmp_packed_ref_entries(&entries[nr - 2],
--					   &entries[nr - 1]) >= 0)
-+		    cmp_packed_ref_records(&records[nr - 2],
-+					   &records[nr - 1]) >= 0)
- 			sorted = 0;
- 
- 		pos = eol;
-@@ -338,31 +372,31 @@ static void sort_packed_refs(struct packed_ref_cache *packed_refs)
- 	if (sorted)
- 		goto cleanup;
- 
--	/* We need to sort the memory. First we sort the entries array: */
--	QSORT(entries, nr, cmp_packed_ref_entries);
-+	/* We need to sort the memory. First we sort the records array: */
-+	QSORT(records, nr, cmp_packed_ref_records);
- 
- 	/*
- 	 * Allocate a new chunk of memory, and copy the old memory to
--	 * the new in the order indicated by `entries` (not bothering
-+	 * the new in the order indicated by `records` (not bothering
- 	 * with the header line):
- 	 */
- 	new_buffer = xmalloc(len);
- 	for (dst = new_buffer, i = 0; i < nr; i++) {
--		memcpy(dst, entries[i].start, entries[i].len);
--		dst += entries[i].len;
-+		memcpy(dst, records[i].start, records[i].len);
-+		dst += records[i].len;
- 	}
- 
- 	/*
- 	 * Now munmap the old buffer and use the sorted buffer in its
- 	 * place:
- 	 */
--	release_packed_ref_buffer(packed_refs);
--	packed_refs->buf = new_buffer;
--	packed_refs->eof = new_buffer + len;
--	packed_refs->header_len = 0;
-+	clear_snapshot_buffer(snapshot);
-+	snapshot->buf = new_buffer;
-+	snapshot->eof = new_buffer + len;
-+	snapshot->header_len = 0;
- 
- cleanup:
--	free(entries);
-+	free(records);
- }
- 
- /*
-@@ -406,10 +440,10 @@ static const char *find_end_of_record(const char *p, const char *end)
-  * (GIT_SHA1_HEXSZ + 1) characters before the LF. Die if either of
-  * these checks fails.
-  */
--static void verify_buffer_safe(struct packed_ref_cache *packed_refs)
-+static void verify_buffer_safe(struct snapshot *snapshot)
- {
--	const char *buf = packed_refs->buf + packed_refs->header_len;
--	const char *eof = packed_refs->eof;
-+	const char *buf = snapshot->buf + snapshot->header_len;
-+	const char *eof = snapshot->eof;
- 	const char *last_line;
- 
- 	if (buf == eof)
-@@ -417,23 +451,22 @@ static void verify_buffer_safe(struct packed_ref_cache *packed_refs)
- 
- 	last_line = find_start_of_record(buf, eof - 1);
- 	if (*(eof - 1) != '\n' || eof - last_line < GIT_SHA1_HEXSZ + 2)
--		die_invalid_line(packed_refs->refs->path,
-+		die_invalid_line(snapshot->refs->path,
- 				 last_line, eof - last_line);
- }
- 
- /*
-  * Depending on `mmap_strategy`, either mmap or read the contents of
-- * the `packed-refs` file into the `packed_refs` instance. Return 1 if
-- * the file existed and was read, or 0 if the file was absent. Die on
-- * errors.
-+ * the `packed-refs` file into the snapshot. Return 1 if the file
-+ * existed and was read, or 0 if the file was absent. Die on errors.
-  */
--static int load_contents(struct packed_ref_cache *packed_refs)
-+static int load_contents(struct snapshot *snapshot)
- {
- 	int fd;
- 	struct stat st;
- 	size_t size, bytes_read;
- 
--	fd = open(packed_refs->refs->path, O_RDONLY);
-+	fd = open(snapshot->refs->path, O_RDONLY);
- 	if (fd < 0) {
- 		if (errno == ENOENT) {
- 			/*
-@@ -445,30 +478,30 @@ static int load_contents(struct packed_ref_cache *packed_refs)
- 			 */
- 			return 0;
- 		} else {
--			die_errno("couldn't read %s", packed_refs->refs->path);
-+			die_errno("couldn't read %s", snapshot->refs->path);
- 		}
- 	}
- 
--	stat_validity_update(&packed_refs->validity, fd);
-+	stat_validity_update(&snapshot->validity, fd);
- 
- 	if (fstat(fd, &st) < 0)
--		die_errno("couldn't stat %s", packed_refs->refs->path);
-+		die_errno("couldn't stat %s", snapshot->refs->path);
- 	size = xsize_t(st.st_size);
- 
- 	switch (mmap_strategy) {
- 	case MMAP_NONE:
--		packed_refs->buf = xmalloc(size);
--		bytes_read = read_in_full(fd, packed_refs->buf, size);
-+		snapshot->buf = xmalloc(size);
-+		bytes_read = read_in_full(fd, snapshot->buf, size);
- 		if (bytes_read < 0 || bytes_read != size)
--			die_errno("couldn't read %s", packed_refs->refs->path);
--		packed_refs->eof = packed_refs->buf + size;
--		packed_refs->mmapped = 0;
-+			die_errno("couldn't read %s", snapshot->refs->path);
-+		snapshot->eof = snapshot->buf + size;
-+		snapshot->mmapped = 0;
- 		break;
- 	case MMAP_TEMPORARY:
- 	case MMAP_OK:
--		packed_refs->buf = xmmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);
--		packed_refs->eof = packed_refs->buf + size;
--		packed_refs->mmapped = 1;
-+		snapshot->buf = xmmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);
-+		snapshot->eof = snapshot->buf + size;
-+		snapshot->mmapped = 1;
- 		break;
- 	}
- 	close(fd);
-@@ -477,7 +510,7 @@ static int load_contents(struct packed_ref_cache *packed_refs)
- }
- 
- /*
-- * Find the place in `cache->buf` where the start of the record for
-+ * Find the place in `snapshot->buf` where the start of the record for
-  * `refname` starts. If `mustexist` is true and the reference doesn't
-  * exist, then return NULL. If `mustexist` is false and the reference
-  * doesn't exist, then return the point where that reference would be
-@@ -485,10 +518,10 @@ static int load_contents(struct packed_ref_cache *packed_refs)
-  * reference name; for example, one could search for "refs/replace/"
-  * to find the start of any replace references.
-  *
-- * The record is sought using a binary search, so `cache->buf` must be
-- * sorted.
-+ * The record is sought using a binary search, so `snapshot->buf` must
-+ * be sorted.
-  */
--static const char *find_reference_location(struct packed_ref_cache *cache,
-+static const char *find_reference_location(struct snapshot *snapshot,
- 					   const char *refname, int mustexist)
- {
- 	/*
-@@ -505,13 +538,13 @@ static const char *find_reference_location(struct packed_ref_cache *cache,
- 	 * preceding records all have reference names that come
- 	 * *before* `refname`.
- 	 */
--	const char *lo = cache->buf + cache->header_len;
-+	const char *lo = snapshot->buf + snapshot->header_len;
- 
- 	/*
- 	 * A pointer to a the first character of a record whose
- 	 * reference name comes *after* `refname`.
- 	 */
--	const char *hi = cache->eof;
-+	const char *hi = snapshot->eof;
- 
- 	while (lo < hi) {
- 		const char *mid, *rec;
-@@ -519,7 +552,7 @@ static const char *find_reference_location(struct packed_ref_cache *cache,
- 
- 		mid = lo + (hi - lo) / 2;
- 		rec = find_start_of_record(lo, mid);
--		cmp = cmp_entry_to_refname(rec, refname);
-+		cmp = cmp_record_to_refname(rec, refname);
- 		if (cmp < 0) {
- 			lo = find_end_of_record(mid, hi);
- 		} else if (cmp > 0) {
-@@ -536,9 +569,9 @@ static const char *find_reference_location(struct packed_ref_cache *cache,
- }
- 
- /*
-- * Read from the `packed-refs` file into a newly-allocated
-- * `packed_ref_cache` and return it. The return value will already
-- * have its reference count incremented.
-+ * Create a newly-allocated `snapshot` of the `packed-refs` file in
-+ * its current state and return it. The return value will already have
-+ * its reference count incremented.
-  *
-  * A comment line of the form "# pack-refs with: " may contain zero or
-  * more traits. We interpret the traits as follows:
-@@ -568,116 +601,117 @@ static const char *find_reference_location(struct packed_ref_cache *cache,
-  *
-  *      The references in this file are known to be sorted by refname.
-  */
--static struct packed_ref_cache *read_packed_refs(struct packed_ref_store *refs)
-+static struct snapshot *create_snapshot(struct packed_ref_store *refs)
- {
--	struct packed_ref_cache *packed_refs = xcalloc(1, sizeof(*packed_refs));
-+	struct snapshot *snapshot = xcalloc(1, sizeof(*snapshot));
- 	int sorted = 0;
- 
--	packed_refs->refs = refs;
--	acquire_packed_ref_cache(packed_refs);
--	packed_refs->peeled = PEELED_NONE;
-+	snapshot->refs = refs;
-+	acquire_snapshot(snapshot);
-+	snapshot->peeled = PEELED_NONE;
- 
--	if (!load_contents(packed_refs))
--		return packed_refs;
-+	if (!load_contents(snapshot))
-+		return snapshot;
- 
- 	/* If the file has a header line, process it: */
--	if (packed_refs->buf < packed_refs->eof && *packed_refs->buf == '#') {
-+	if (snapshot->buf < snapshot->eof && *snapshot->buf == '#') {
- 		struct strbuf tmp = STRBUF_INIT;
- 		char *p;
- 		const char *eol;
- 		struct string_list traits = STRING_LIST_INIT_NODUP;
- 
--		eol = memchr(packed_refs->buf, '\n',
--			     packed_refs->eof - packed_refs->buf);
-+		eol = memchr(snapshot->buf, '\n',
-+			     snapshot->eof - snapshot->buf);
- 		if (!eol)
- 			die_unterminated_line(refs->path,
--					      packed_refs->buf,
--					      packed_refs->eof - packed_refs->buf);
-+					      snapshot->buf,
-+					      snapshot->eof - snapshot->buf);
- 
--		strbuf_add(&tmp, packed_refs->buf, eol - packed_refs->buf);
-+		strbuf_add(&tmp, snapshot->buf, eol - snapshot->buf);
- 
- 		if (!skip_prefix(tmp.buf, "# pack-refs with:", (const char **)&p))
- 			die_invalid_line(refs->path,
--					 packed_refs->buf,
--					 packed_refs->eof - packed_refs->buf);
-+					 snapshot->buf,
-+					 snapshot->eof - snapshot->buf);
- 
- 		string_list_split_in_place(&traits, p, ' ', -1);
- 
- 		if (unsorted_string_list_has_string(&traits, "fully-peeled"))
--			packed_refs->peeled = PEELED_FULLY;
-+			snapshot->peeled = PEELED_FULLY;
- 		else if (unsorted_string_list_has_string(&traits, "peeled"))
--			packed_refs->peeled = PEELED_TAGS;
-+			snapshot->peeled = PEELED_TAGS;
- 
- 		sorted = unsorted_string_list_has_string(&traits, "sorted");
- 
- 		/* perhaps other traits later as well */
- 
- 		/* The "+ 1" is for the LF character. */
--		packed_refs->header_len = eol + 1 - packed_refs->buf;
-+		snapshot->header_len = eol + 1 - snapshot->buf;
- 
- 		string_list_clear(&traits, 0);
- 		strbuf_release(&tmp);
- 	}
- 
--	verify_buffer_safe(packed_refs);
-+	verify_buffer_safe(snapshot);
- 
- 	if (!sorted) {
--		sort_packed_refs(packed_refs);
-+		sort_snapshot(snapshot);
- 
- 		/*
- 		 * Reordering the records might have moved a short one
- 		 * to the end of the buffer, so verify the buffer's
- 		 * safety again:
- 		 */
--		verify_buffer_safe(packed_refs);
-+		verify_buffer_safe(snapshot);
- 	}
- 
--	if (mmap_strategy != MMAP_OK && packed_refs->mmapped) {
-+	if (mmap_strategy != MMAP_OK && snapshot->mmapped) {
- 		/*
- 		 * We don't want to leave the file mmapped, so we are
- 		 * forced to make a copy now:
- 		 */
--		size_t size = packed_refs->eof -
--			(packed_refs->buf + packed_refs->header_len);
-+		size_t size = snapshot->eof -
-+			(snapshot->buf + snapshot->header_len);
- 		char *buf_copy = xmalloc(size);
- 
--		memcpy(buf_copy, packed_refs->buf + packed_refs->header_len, size);
--		release_packed_ref_buffer(packed_refs);
--		packed_refs->buf = buf_copy;
--		packed_refs->eof = buf_copy + size;
-+		memcpy(buf_copy, snapshot->buf + snapshot->header_len, size);
-+		clear_snapshot_buffer(snapshot);
-+		snapshot->buf = buf_copy;
-+		snapshot->eof = buf_copy + size;
- 	}
- 
--	return packed_refs;
-+	return snapshot;
- }
- 
- /*
-- * Check that the packed refs cache (if any) still reflects the
-- * contents of the file. If not, clear the cache.
-+ * Check that `refs->snapshot` (if present) still reflects the
-+ * contents of the `packed-refs` file. If not, clear the snapshot.
-  */
--static void validate_packed_ref_cache(struct packed_ref_store *refs)
-+static void validate_snapshot(struct packed_ref_store *refs)
- {
--	if (refs->cache &&
--	    !stat_validity_check(&refs->cache->validity, refs->path))
--		clear_packed_ref_cache(refs);
-+	if (refs->snapshot &&
-+	    !stat_validity_check(&refs->snapshot->validity, refs->path))
-+		clear_snapshot(refs);
- }
- 
- /*
-- * Get the packed_ref_cache for the specified packed_ref_store,
-- * creating and populating it if it hasn't been read before or if the
-- * file has been changed (according to its `validity` field) since it
-- * was last read. On the other hand, if we hold the lock, then assume
-- * that the file hasn't been changed out from under us, so skip the
-- * extra `stat()` call in `stat_validity_check()`.
-+ * Get the `snapshot` for the specified packed_ref_store, creating and
-+ * populating it if it hasn't been read before or if the file has been
-+ * changed (according to its `validity` field) since it was last read.
-+ * On the other hand, if we hold the lock, then assume that the file
-+ * hasn't been changed out from under us, so skip the extra `stat()`
-+ * call in `stat_validity_check()`. This function does *not* increase
-+ * the snapshot's reference count on behalf of the caller.
-  */
--static struct packed_ref_cache *get_packed_ref_cache(struct packed_ref_store *refs)
-+static struct snapshot *get_snapshot(struct packed_ref_store *refs)
- {
- 	if (!is_lock_file_locked(&refs->lock))
--		validate_packed_ref_cache(refs);
-+		validate_snapshot(refs);
- 
--	if (!refs->cache)
--		refs->cache = read_packed_refs(refs);
-+	if (!refs->snapshot)
-+		refs->snapshot = create_snapshot(refs);
- 
--	return refs->cache;
-+	return refs->snapshot;
- }
- 
+-static struct ref_dir *get_packed_ref_dir(struct packed_ref_cache *packed_ref_cache)
+-{
+-	return get_ref_dir(packed_ref_cache->cache->root);
+-}
+-
+-static struct ref_dir *get_packed_refs(struct packed_ref_store *refs)
+-{
+-	return get_packed_ref_dir(get_packed_ref_cache(refs));
+-}
+-
+-/*
+- * Return the ref_entry for the given refname from the packed
+- * references.  If it does not exist, return NULL.
+- */
+-static struct ref_entry *get_packed_ref(struct packed_ref_store *refs,
+-					const char *refname)
+-{
+-	return find_ref_entry(get_packed_refs(refs), refname);
+-}
+-
  static int packed_read_raw_ref(struct ref_store *ref_store,
-@@ -686,12 +720,12 @@ static int packed_read_raw_ref(struct ref_store *ref_store,
- {
- 	struct packed_ref_store *refs =
- 		packed_downcast(ref_store, REF_STORE_READ, "read_raw_ref");
--	struct packed_ref_cache *packed_refs = get_packed_ref_cache(refs);
-+	struct snapshot *snapshot = get_snapshot(refs);
- 	const char *rec;
- 
- 	*type = 0;
- 
--	rec = find_reference_location(packed_refs, refname, 1);
-+	rec = find_reference_location(snapshot, refname, 1);
- 
- 	if (!rec) {
- 		/* refname is not a packed reference. */
-@@ -700,7 +734,7 @@ static int packed_read_raw_ref(struct ref_store *ref_store,
- 	}
- 
- 	if (get_sha1_hex(rec, sha1))
--		die_invalid_line(refs->path, rec, packed_refs->eof - rec);
-+		die_invalid_line(refs->path, rec, snapshot->eof - rec);
- 
- 	*type = REF_ISPACKED;
+ 			       const char *refname, unsigned char *sha1,
+ 			       struct strbuf *referent, unsigned int *type)
+@@ -895,21 +875,6 @@ static int packed_read_raw_ref(struct ref_store *ref_store,
  	return 0;
-@@ -715,26 +749,33 @@ static int packed_read_raw_ref(struct ref_store *ref_store,
- #define REF_KNOWS_PEELED 0x40
+ }
  
- /*
-- * An iterator over a packed-refs file that is currently mmapped.
-+ * An iterator over a snapshot of a `packed-refs` file.
-  */
+-static int packed_peel_ref(struct ref_store *ref_store,
+-			   const char *refname, unsigned char *sha1)
+-{
+-	struct packed_ref_store *refs =
+-		packed_downcast(ref_store, REF_STORE_READ | REF_STORE_ODB,
+-				"peel_ref");
+-	struct ref_entry *r = get_packed_ref(refs, refname);
+-
+-	if (!r || peel_entry(r, 0))
+-		return -1;
+-
+-	hashcpy(sha1, r->u.value.peeled.hash);
+-	return 0;
+-}
+-
  struct packed_ref_iterator {
  	struct ref_iterator base;
  
--	struct packed_ref_cache *packed_refs;
-+	struct snapshot *snapshot;
+@@ -1596,7 +1561,6 @@ struct ref_storage_be refs_be_packed = {
+ 	packed_initial_transaction_commit,
  
--	/* The current position in the mmapped file: */
-+	/* The current position in the snapshot's buffer: */
- 	const char *pos;
+ 	packed_pack_refs,
+-	packed_peel_ref,
+ 	packed_create_symref,
+ 	packed_delete_refs,
+ 	packed_rename_ref,
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index d7f233beba..cc6c373f59 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -562,8 +562,6 @@ typedef int ref_transaction_commit_fn(struct ref_store *refs,
+ 				      struct strbuf *err);
  
--	/* The end of the mmapped file: */
-+	/* The end of the part of the buffer that will be iterated over: */
- 	const char *eof;
+ typedef int pack_refs_fn(struct ref_store *ref_store, unsigned int flags);
+-typedef int peel_ref_fn(struct ref_store *ref_store,
+-			const char *refname, unsigned char *sha1);
+ typedef int create_symref_fn(struct ref_store *ref_store,
+ 			     const char *ref_target,
+ 			     const char *refs_heads_master,
+@@ -668,7 +666,6 @@ struct ref_storage_be {
+ 	ref_transaction_commit_fn *initial_transaction_commit;
  
-+	/* Scratch space for current values: */
- 	struct object_id oid, peeled;
--
- 	struct strbuf refname_buf;
- 
- 	unsigned int flags;
- };
- 
-+/*
-+ * Move the iterator to the next record in the snapshot, without
-+ * respect for whether the record is actually required by the current
-+ * iteration. Adjust the fields in `iter` and return `ITER_OK` or
-+ * `ITER_DONE`. This function does not free the iterator in the case
-+ * of `ITER_DONE`.
-+ */
- static int next_record(struct packed_ref_iterator *iter)
- {
- 	const char *p = iter->pos, *eol;
-@@ -749,12 +790,12 @@ static int next_record(struct packed_ref_iterator *iter)
- 	if (iter->eof - p < GIT_SHA1_HEXSZ + 2 ||
- 	    parse_oid_hex(p, &iter->oid, &p) ||
- 	    !isspace(*p++))
--		die_invalid_line(iter->packed_refs->refs->path,
-+		die_invalid_line(iter->snapshot->refs->path,
- 				 iter->pos, iter->eof - iter->pos);
- 
- 	eol = memchr(p, '\n', iter->eof - p);
- 	if (!eol)
--		die_unterminated_line(iter->packed_refs->refs->path,
-+		die_unterminated_line(iter->snapshot->refs->path,
- 				      iter->pos, iter->eof - iter->pos);
- 
- 	strbuf_add(&iter->refname_buf, p, eol - p);
-@@ -767,8 +808,8 @@ static int next_record(struct packed_ref_iterator *iter)
- 		oidclr(&iter->oid);
- 		iter->base.flags |= REF_BAD_NAME | REF_ISBROKEN;
- 	}
--	if (iter->packed_refs->peeled == PEELED_FULLY ||
--	    (iter->packed_refs->peeled == PEELED_TAGS &&
-+	if (iter->snapshot->peeled == PEELED_FULLY ||
-+	    (iter->snapshot->peeled == PEELED_TAGS &&
- 	     starts_with(iter->base.refname, "refs/tags/")))
- 		iter->base.flags |= REF_KNOWS_PEELED;
- 
-@@ -779,7 +820,7 @@ static int next_record(struct packed_ref_iterator *iter)
- 		if (iter->eof - p < GIT_SHA1_HEXSZ + 1 ||
- 		    parse_oid_hex(p, &iter->peeled, &p) ||
- 		    *p++ != '\n')
--			die_invalid_line(iter->packed_refs->refs->path,
-+			die_invalid_line(iter->snapshot->refs->path,
- 					 iter->pos, iter->eof - iter->pos);
- 		iter->pos = p;
- 
-@@ -849,7 +890,7 @@ static int packed_ref_iterator_abort(struct ref_iterator *ref_iterator)
- 	int ok = ITER_DONE;
- 
- 	strbuf_release(&iter->refname_buf);
--	release_packed_ref_cache(iter->packed_refs);
-+	release_snapshot(iter->snapshot);
- 	base_ref_iterator_free(ref_iterator);
- 	return ok;
- }
-@@ -865,7 +906,7 @@ static struct ref_iterator *packed_ref_iterator_begin(
- 		const char *prefix, unsigned int flags)
- {
- 	struct packed_ref_store *refs;
--	struct packed_ref_cache *packed_refs;
-+	struct snapshot *snapshot;
- 	const char *start;
- 	struct packed_ref_iterator *iter;
- 	struct ref_iterator *ref_iterator;
-@@ -875,30 +916,30 @@ static struct ref_iterator *packed_ref_iterator_begin(
- 		required_flags |= REF_STORE_ODB;
- 	refs = packed_downcast(ref_store, required_flags, "ref_iterator_begin");
- 
--	packed_refs = get_packed_ref_cache(refs);
-+	/*
-+	 * Note that `get_snapshot()` internally checks whether the
-+	 * snapshot is up to date with what is on disk, and re-reads
-+	 * it if not.
-+	 */
-+	snapshot = get_snapshot(refs);
- 
--	if (!packed_refs->buf)
-+	if (!snapshot->buf)
- 		return empty_ref_iterator_begin();
- 
- 	iter = xcalloc(1, sizeof(*iter));
- 	ref_iterator = &iter->base;
- 	base_ref_iterator_init(ref_iterator, &packed_ref_iterator_vtable, 1);
- 
--	/*
--	 * Note that get_packed_ref_cache() internally checks whether
--	 * the packed-ref cache is up to date with what is on disk,
--	 * and re-reads it if not.
--	 */
--	iter->packed_refs = packed_refs;
--	acquire_packed_ref_cache(packed_refs);
-+	iter->snapshot = snapshot;
-+	acquire_snapshot(snapshot);
- 
- 	if (prefix && *prefix)
--		start = find_reference_location(packed_refs, prefix, 0);
-+		start = find_reference_location(snapshot, prefix, 0);
- 	else
--		start = packed_refs->buf + packed_refs->header_len;
-+		start = snapshot->buf + snapshot->header_len;
- 
- 	iter->pos = start;
--	iter->eof = packed_refs->eof;
-+	iter->eof = snapshot->eof;
- 	strbuf_init(&iter->refname_buf, 0);
- 
- 	iter->base.oid = &iter->oid;
-@@ -962,19 +1003,19 @@ int packed_refs_lock(struct ref_store *ref_store, int flags, struct strbuf *err)
- 
- 	/*
- 	 * Now that we hold the `packed-refs` lock, make sure that our
--	 * cache matches the current version of the file. Normally
--	 * `get_packed_ref_cache()` does that for us, but that
--	 * function assumes that when the file is locked, any existing
--	 * cache is still valid. We've just locked the file, but it
--	 * might have changed the moment *before* we locked it.
-+	 * snapshot matches the current version of the file. Normally
-+	 * `get_snapshot()` does that for us, but that function
-+	 * assumes that when the file is locked, any existing snapshot
-+	 * is still valid. We've just locked the file, but it might
-+	 * have changed the moment *before* we locked it.
- 	 */
--	validate_packed_ref_cache(refs);
-+	validate_snapshot(refs);
- 
- 	/*
- 	 * Now make sure that the packed-refs file as it exists in the
--	 * locked state is loaded into the cache:
-+	 * locked state is loaded into the snapshot:
- 	 */
--	get_packed_ref_cache(refs);
-+	get_snapshot(refs);
- 	return 0;
- }
- 
-@@ -1001,8 +1042,8 @@ int packed_refs_is_locked(struct ref_store *ref_store)
- }
- 
- /*
-- * The packed-refs header line that we write out.  Perhaps other
-- * traits will be added later.
-+ * The packed-refs header line that we write out. Perhaps other traits
-+ * will be added later.
-  *
-  * Note that earlier versions of Git used to parse these traits by
-  * looking for " trait " in the line. For this reason, the space after
-@@ -1018,9 +1059,9 @@ static int packed_init_db(struct ref_store *ref_store, struct strbuf *err)
- }
- 
- /*
-- * Write the packed-refs from the cache to the packed-refs tempfile,
-- * incorporating any changes from `updates`. `updates` must be a
-- * sorted string list whose keys are the refnames and whose util
-+ * Write the packed refs from the current snapshot to the packed-refs
-+ * tempfile, incorporating any changes from `updates`. `updates` must
-+ * be a sorted string list whose keys are the refnames and whose util
-  * values are `struct ref_update *`. On error, rollback the tempfile,
-  * write an error message to `err`, and return a nonzero value.
-  *
-@@ -1261,9 +1302,10 @@ static int packed_transaction_prepare(struct ref_store *ref_store,
- 	/*
- 	 * Note that we *don't* skip transactions with zero updates,
- 	 * because such a transaction might be executed for the side
--	 * effect of ensuring that all of the references are peeled.
--	 * If the caller wants to optimize away empty transactions, it
--	 * should do so itself.
-+	 * effect of ensuring that all of the references are peeled or
-+	 * ensuring that the `packed-refs` file is sorted. If the
-+	 * caller wants to optimize away empty transactions, it should
-+	 * do so itself.
- 	 */
- 
- 	data = xcalloc(1, sizeof(*data));
-@@ -1329,7 +1371,7 @@ static int packed_transaction_finish(struct ref_store *ref_store,
- 	int ret = TRANSACTION_GENERIC_ERROR;
- 	char *packed_refs_path;
- 
--	clear_packed_ref_cache(refs);
-+	clear_snapshot(refs);
- 
- 	packed_refs_path = get_locked_file_path(&refs->lock);
- 	if (rename_tempfile(&refs->tempfile, packed_refs_path)) {
+ 	pack_refs_fn *pack_refs;
+-	peel_ref_fn *peel_ref;
+ 	create_symref_fn *create_symref;
+ 	delete_refs_fn *delete_refs;
+ 	rename_ref_fn *rename_ref;
 -- 
 2.14.1
 
