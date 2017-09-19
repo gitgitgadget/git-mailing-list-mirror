@@ -7,114 +7,128 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 93DA32047F
-	for <e@80x24.org>; Tue, 19 Sep 2017 20:44:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D3AFF2047F
+	for <e@80x24.org>; Tue, 19 Sep 2017 20:44:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751503AbdISUn6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Sep 2017 16:43:58 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:33089 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751370AbdISUn5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Sep 2017 16:43:57 -0400
-Received: by mail-pg0-f68.google.com with SMTP id i130so426534pgc.0
-        for <git@vger.kernel.org>; Tue, 19 Sep 2017 13:43:57 -0700 (PDT)
+        id S1751507AbdISUod (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Sep 2017 16:44:33 -0400
+Received: from mail-qk0-f195.google.com ([209.85.220.195]:36436 "EHLO
+        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751367AbdISUoc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Sep 2017 16:44:32 -0400
+Received: by mail-qk0-f195.google.com with SMTP id i14so502286qke.3
+        for <git@vger.kernel.org>; Tue, 19 Sep 2017 13:44:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=5Z6V0HfnEukSyNM7JX8JykvVfhG/7BNmiablfOKQ4EA=;
-        b=udpEqvfkC+Aw/QVqCD9jPZ0Ws2YeORnyQa8BEbOXNTgUw3w7xlLAlPqsiGQ/kU4shE
-         WWsY+F29G/4P5ms9w6UUGWZiWvbrLq6BSHNJCdjx+1ei/QBK7MUM86jT1ZeDx+EEDUGy
-         5D3XkBolGUbYr6rI/3ErmXkGHWYov3IWzfWuZZpyaiduvw/yrs8IVo9MqUw/tkjlzvL6
-         H4qpi5fqaAwGjrTTv+R1BRCVe1jEXcJl/9kNIh82pxcv/hVJH2zsc4ID2gbL608j/7Qp
-         S0ORasb3k1AM1cb6gLbzH/DhMz40mhhZM9IRX5rKchaOkcUM4JuJ6+kb1Q4pSolTeMGh
-         5isA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=0y2JWgyqX6whlSoweZvMK8Ab/611whtJ2+1cPlwxnlA=;
+        b=Hv1/P7dBTQ+enlGJxghcrp4C363Y05JnQoCdSA5fR9Ohgz86kK20w49T6mxfkBd05b
+         jHwxWRTgHRp58VyrGFCOEqnTikGHfC7ZsTX9z9Kkyw2gYkx4ILXFqBgDtMNFrDg42FWr
+         yhxk3NKXNnChD3Q1gowWu86CoZO0Sh2MDV+69IA7xePvTELx1jiKeeOPthmCTWyUTrgu
+         agLQuLYotUTxKWX2QvmmTWeYYsYVCvidZ4ovAnAsw/gX1hs/pGgt2TnHpGxEvEwE0A1n
+         g0qvsaetJycI928ZxICZZZHPExyxYru7Ccdg+gLfJI7GCwnRB95tj+Ab0ZTTxE3LE2oz
+         k7mA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=5Z6V0HfnEukSyNM7JX8JykvVfhG/7BNmiablfOKQ4EA=;
-        b=PWpZccWSlVycpd2reb1xtKlm3uF+qLzlIPmx5u2BeIxivLKEvCtDZT/HXN3X2NqW0D
-         BJdJ1W9xf+3OCkXbGWjJT5CRuElXxpBnvoAj9PknbUFdytOzdCQKQALj7wBl9Oh302pX
-         jZMKQTr2UCg2g47TR0UmywWryUdaP54hlozft+tRN0iVg5QkvYEHG0ImPl9jqVNQ7b6S
-         wShsOYKiPGhx/WRkEPWus6ShNtyTLl2u80lGCjqHPt+v1yXsj4QHYM05txOGjeClPfm4
-         PjYAaI7cDLt3BgY8AhS+F2AdFcNY/4HY1xKR/KMOhKJPPy+zRBF0ZVuHP6t0cERITI8w
-         sbIA==
-X-Gm-Message-State: AHPjjUiirz9JedFKbZ9WOcr3TbG/K0FJeBV0wHfFbKoyC0n0uc6+U8KE
-        JC/GDY7A8SVYtx7/g/pFXtQAbGth
-X-Google-Smtp-Source: AOwi7QAYj47kuO/pRy/OGrXuYyRz3LKfzU5ZZFPu81WmWsKqx87HeP9G5oOTJW241+A4nI5g3/7NIQ==
-X-Received: by 10.99.117.30 with SMTP id q30mr2412175pgc.75.1505853836857;
-        Tue, 19 Sep 2017 13:43:56 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:ed67:93b4:3411:bf26])
-        by smtp.gmail.com with ESMTPSA id f3sm6635223pfd.82.2017.09.19.13.43.55
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 19 Sep 2017 13:43:56 -0700 (PDT)
-Date:   Tue, 19 Sep 2017 13:43:54 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Ben Peart <benpeart@microsoft.com>
-Cc:     David.Turner@twosigma.com, avarab@gmail.com,
-        christian.couder@gmail.com, git@vger.kernel.org, gitster@pobox.com,
-        johannes.schindelin@gmx.de, pclouds@gmail.com, peff@peff.net
-Subject: Re: [PATCH v6 09/12] split-index: disable the fsmonitor extension
- when running the split index test
-Message-ID: <20170919204354.GG75068@aiede.mtv.corp.google.com>
-References: <20170610134026.104552-1-benpeart@microsoft.com>
- <20170915192043.4516-1-benpeart@microsoft.com>
- <20170915192043.4516-10-benpeart@microsoft.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=0y2JWgyqX6whlSoweZvMK8Ab/611whtJ2+1cPlwxnlA=;
+        b=fZkgoXfEj/kyk9odPnw4vCC9cLSuHgGrdskBC/J1jmKFAdIxbbMVtWUp7+j8d3qovz
+         /qRj6dousSS5n1A/xdUfCwCh7KTswMHov8gihVPycKM/BILs7m+sf8pK9N04UPjUdFH3
+         L+NKRdhomx47//KFI5O8vyrPHBsnNBTz6MOEUh1vsT5P8CLQMlnFLAy92puBqtGzGcKM
+         r7liK086Kd/+KVX2CTE6aw8zXAIn3I9Hfqe/Y01ez31ZboHjuJedwnNfRK+1LsGO2VIE
+         j7pRcr5J6dci1MJaHKoTxaFRxoP4m/LYc80nMbnuB5Ky34ntGVh72B5fGX0INTdCVys/
+         k8hQ==
+X-Gm-Message-State: AHPjjUiw5fsQc1QhQbl780rUqxbJPOG2QhDspyWxUAVL6pJU7JB+lh6g
+        BB4piPiz3cPnS2NP8K0DVng=
+X-Google-Smtp-Source: AOwi7QAV/DW6l7nye1pCY70fI66g7oEDVh/LBC1/k6uq2aJM2GWCYaYPS+14482ITj+mvZYAhbNzUw==
+X-Received: by 10.55.79.65 with SMTP id d62mr3840403qkb.224.1505853872091;
+        Tue, 19 Sep 2017 13:44:32 -0700 (PDT)
+Received: from [192.168.1.13] ([65.222.173.206])
+        by smtp.gmail.com with ESMTPSA id c38sm172985qtc.18.2017.09.19.13.44.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 19 Sep 2017 13:44:31 -0700 (PDT)
+Subject: Re: [PATCH v7 06/12] ls-files: Add support in ls-files to display the
+ fsmonitor valid bit
+To:     David Turner <David.Turner@twosigma.com>,
+        'Ben Peart' <benpeart@microsoft.com>
+Cc:     "avarab@gmail.com" <avarab@gmail.com>,
+        "christian.couder@gmail.com" <christian.couder@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "johannes.schindelin@gmx.de" <johannes.schindelin@gmx.de>,
+        "pclouds@gmail.com" <pclouds@gmail.com>,
+        "peff@peff.net" <peff@peff.net>
+References: <20170915192043.4516-1-benpeart@microsoft.com>
+ <20170919192744.19224-1-benpeart@microsoft.com>
+ <20170919192744.19224-7-benpeart@microsoft.com>
+ <37b2e5b4ca1d490b9f50d430b3b420f0@exmbdft7.ad.twosigma.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <f1213833-be5e-4850-0ffa-d063e2d1deb8@gmail.com>
+Date:   Tue, 19 Sep 2017 16:44:30 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170915192043.4516-10-benpeart@microsoft.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <37b2e5b4ca1d490b9f50d430b3b420f0@exmbdft7.ad.twosigma.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-Ben Peart wrote:
 
-> The split index test t1700-split-index.sh has hard coded SHA values for
-> the index.  Currently it supports index V4 and V3 but assumes there are
-> no index extensions loaded.
->
-> When manually forcing the fsmonitor extension to be turned on when
-> running the test suite, the SHA values no longer match which causes the
-> test to fail.
->
-> The potential matrix of index extensions and index versions can is quite
-> large so instead disable the extension before attempting to run the test.
+On 9/19/2017 3:46 PM, David Turner wrote:
+>> -----Original Message-----
+>> From: Ben Peart [mailto:benpeart@microsoft.com]
+>> Sent: Tuesday, September 19, 2017 3:28 PM
+>> To: benpeart@microsoft.com
+>> Cc: David Turner <David.Turner@twosigma.com>; avarab@gmail.com;
+>> christian.couder@gmail.com; git@vger.kernel.org; gitster@pobox.com;
+>> johannes.schindelin@gmx.de; pclouds@gmail.com; peff@peff.net
+>> Subject: [PATCH v7 06/12] ls-files: Add support in ls-files to display the
+>> fsmonitor valid bit
+>>
+>> Add a new command line option (-f) to ls-files to have it use lowercase
+>> letters for 'fsmonitor valid' files
+>>
+>> Signed-off-by: Ben Peart <benpeart@microsoft.com>
+>> ---
+>>   builtin/ls-files.c | 8 ++++++--
+>>   1 file changed, 6 insertions(+), 2 deletions(-)
+> 
+> This is still missing the corresponding documentation patch.
 
-Thanks for finding and diagnosing this problem.
+Sorry for the confusion.
 
-This feels to me like the wrong fix.  Wouldn't it be better for the
-test not to depend on the precise object ids?  See the "Tips for
-Writing Tests" section in t/README:
+The documentation is all in a patch together as they all have links to 
+each other.  You can find it here:
 
-	                                                         And
-	such drastic changes to the core GIT that even changes these
-	otherwise supposedly stable object IDs should be accompanied by
-	an update to t0000-basic.sh.
+https://public-inbox.org/git/20170919192744.19224-6-benpeart@microsoft.com/T/#u
 
-	However, other tests that simply rely on basic parts of the core
-	GIT working properly should not have that level of intimate
-	knowledge of the core GIT internals.  If all the test scripts
-	hardcoded the object IDs like t0000-basic.sh does, that defeats
-	the purpose of t0000-basic.sh, which is to isolate that level of
-	validation in one place.  Your test also ends up needing
-	updating when such a change to the internal happens, so do _not_
-	do it and leave the low level of validation to t0000-basic.sh.
+> 
+> I can see from replies that at least some of my messages got through.  In total, I sent messages about:
+> 04/12 (I see replies)
+> 05/12 (I see replies)
+> 06/12 (no reply, issue not fixed)
 
-Worse, t1700-split-index.sh doesn't explain where the object ids it
-uses comes from so it is not even obvious to a casual reader like me
-how to fix it.
+The documentation is all in a patch together as they all have links to 
+each other.  You can find it here:
 
-See t/diff-lib.sh for some examples of one way to avoid depending on
-the object id computation.  Another way that is often preferable is to
-come up with commands to compute the expected hash values, like
-$(git rev-parse HEAD^{tree}), and use those instead of hard-coded
-values.
+https://public-inbox.org/git/20170919192744.19224-6-benpeart@microsoft.com/T/#u
 
-Thanks and hope that helps,
-Jonathan
+> 10/12 (no reply, haven't checked whether same issue but I assume same issue since the new case I mentioned isn't added)
+
+It wasn't a bug so I didn't "fix" it.  I just sent an explanation and 
+patch demonstrating why. You can find it here:
+
+https://public-inbox.org/git/84981984-02c1-f322-a617-57dfe1d87ad2@gmail.com/T/#u
+
+> 12/12 (no reply, typo fixed -- no reply required)
+> 
+
+Hope this helps.
