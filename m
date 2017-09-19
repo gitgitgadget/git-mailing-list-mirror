@@ -6,88 +6,71 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4317A20281
-	for <e@80x24.org>; Tue, 19 Sep 2017 03:12:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5530320281
+	for <e@80x24.org>; Tue, 19 Sep 2017 03:18:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751547AbdISDMd (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Sep 2017 23:12:33 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61668 "EHLO
+        id S1751009AbdISDSi (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Sep 2017 23:18:38 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50551 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750925AbdISDMb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Sep 2017 23:12:31 -0400
+        with ESMTP id S1750789AbdISDSh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Sep 2017 23:18:37 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3152397A44;
-        Mon, 18 Sep 2017 23:12:31 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 58F2BAA852;
+        Mon, 18 Sep 2017 23:18:37 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=HiTuo3Ubje9MGfmYZKoGfRUJNC8=; b=Z2Qaaf
-        XCyNYW3Rtr3xzmmhQKHrSCcqlLslayIY4wyWVJNQaiTuOHuDyCBlZfYk0NDLud/6
-        L0u8nYala2BPyvJSR5fYBi1S37ayGS8GaWuAmweFTT3//uZkppzet3OwU31unPgF
-        wXM3B/hQipY1FE5Ndtc9f4uFEB3heIghXWmek=
+        :content-type:content-transfer-encoding; s=sasl; bh=uyVKLNk+JY7i
+        cO69Aia+orSU6NY=; b=LHk3qc4L1YthsszHiDlTvzp4qVh9w2IfGbhgYeHmZ3Vc
+        xD1OHLaPg6Zxjiq9iUNfxokvAArCBEOBr7vot5x4t0fhadbudJKuUDWgzn+PappH
+        9CuBXQWT4Udh+/Cx7EReOG2Im6hvRvnU7+dZrmVH+FDOORxOWX20XU40WZpAF/4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=YOVSi9QLAWuUQ2bwiG8LLXxTmmbtcG0s
-        t9mKj6lj1TFOiIqX2X6S3AIfisf8szWPqWsZKu24FxR5E1jTozHoXzl/FZ7xZVTB
-        6wMEFwBqmVtQ4W+RwAQNKUR6DbztmmbVjTkjEYsb2mPDQXdnTVbWAmUziOBQZEwz
-        CoN8sWKiXh8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2990997A43;
-        Mon, 18 Sep 2017 23:12:31 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=WtLvGM
+        FYpUTf4Qgmwe8C/or4OqJANk1vYPAOohtBO4gZ8WTsQNymlkiacV8sokSVs6PeHK
+        tYF8EIwWxmjJ0ilJl9YBBofj7nSTPyjS7v4pMhdCV5bYVzv148JjL6CRw3KRUAme
+        oEPXk8VP+w+2ZMQVpCOcTRwmdTgu84/RaHN1g=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 522C9AA850;
+        Mon, 18 Sep 2017 23:18:37 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8A54C97A42;
-        Mon, 18 Sep 2017 23:12:30 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BE223AA84E;
+        Mon, 18 Sep 2017 23:18:36 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] t/README: fix typo and grammatically improve a sentence
-References: <0102015e8f587e1a-6101d61b-8db8-4f22-8101-68f582c6df8f-000000@eu-west-1.amazonses.com>
-Date:   Tue, 19 Sep 2017 12:12:29 +0900
-In-Reply-To: <0102015e8f587e1a-6101d61b-8db8-4f22-8101-68f582c6df8f-000000@eu-west-1.amazonses.com>
-        (Kaartic Sivaraam's message of "Sun, 17 Sep 2017 10:18:15 +0000")
-Message-ID: <xmqqpoanqt42.fsf@gitster.mtv.corp.google.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] rev-parse: rev-parse: add --is-shallow-repository
+References: <20170918170429.8328-1-oystwa@gmail.com>
+        <20170919023349.GA175206@aiede.mtv.corp.google.com>
+Date:   Tue, 19 Sep 2017 12:18:35 +0900
+In-Reply-To: <20170919023349.GA175206@aiede.mtv.corp.google.com> (Jonathan
+        Nieder's message of "Mon, 18 Sep 2017 19:33:49 -0700")
+Message-ID: <xmqqlglbqstw.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5F734C36-9CE8-11E7-AA9F-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 39BA7522-9CE9-11E7-80C3-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-> ---
->  t/README | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+>>  test_expect_success 'showing the superproject correctly' '
 >
-> diff --git a/t/README b/t/README
-> index 2f95860369751..4b079e4494d93 100644
-> --- a/t/README
-> +++ b/t/README
-> @@ -265,12 +265,12 @@ or:
->  
->      $ sh ./t9200-git-cvsexport-commit.sh --run='-3 21'
->  
-> -As noted above, the test set is built going though items left to
-> -right, so this:
-> +As noted above, the test set is built by going through the items
-> +from left to right, so this:
->  
->      $ sh ./t9200-git-cvsexport-commit.sh --run='1-4 !3'
->  
-> -will run tests 1, 2, and 4.  Items that comes later have higher
-> +will run tests 1, 2, and 4.  Items that come later have higher
->  precedence.  It means that this:
->  
->      $ sh ./t9200-git-cvsexport-commit.sh --run='!3 1-4'
->
-> --
-> https://github.com/git/git/pull/404
+> With the two tweaks mentioned above,
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-Both of these look to me obvious improvements.  I'll queue them
-unless other people object.
+I agree with the fixes to the test titles suggested, so I'll queue
+the patch with the fixes squashed in.  Hearing "yeah, the titles
+were copy-pasted without adjusting, thanks for fixing, Jonathan!"
+sent by =C3=98ystein would be super nice.
 
-Thanks.
+Thanks, both.
+
+
