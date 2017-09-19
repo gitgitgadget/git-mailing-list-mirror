@@ -6,61 +6,132 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E9A7C2090B
-	for <e@80x24.org>; Tue, 19 Sep 2017 06:42:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 701EA2090B
+	for <e@80x24.org>; Tue, 19 Sep 2017 06:51:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751227AbdISGmm (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Sep 2017 02:42:42 -0400
-Received: from benson.default.arb33.uk0.bigv.io ([46.43.0.16]:50594 "EHLO
-        benson.default.arb33.uk0.bigv.io" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751109AbdISGmm (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 19 Sep 2017 02:42:42 -0400
-Received: from cpc91198-cmbg18-2-0-cust103.5-4.cable.virginm.net ([81.98.98.104] helo=dagon.hellion.org.uk)
-        by benson.default.arb33.uk0.bigv.io with esmtpsa (TLS1.2:RSA_AES_256_CBC_SHA1:256)
-        (Exim 4.80)
-        (envelope-from <ijc@hellion.org.uk>)
-        id 1duCEx-0002ii-Cv; Tue, 19 Sep 2017 07:42:39 +0100
-Message-ID: <1505803358.4636.4.camel@hellion.org.uk>
-Subject: Re: [PATCH v2 1/4] mktag: add option which allows the tagger field
- to be omitted
-From:   Ian Campbell <ijc@hellion.org.uk>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Date:   Tue, 19 Sep 2017 07:42:38 +0100
-In-Reply-To: <xmqqzi9rqtmn.fsf@gitster.mtv.corp.google.com>
-References: <1505633797.22447.4.camel@hellion.org.uk>
-         <20170917073657.31193-1-ijc@hellion.org.uk>
-         <xmqqzi9rqtmn.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset="ISO-8859-1"
-X-Mailer: Evolution 3.22.6-1 
-Mime-Version: 1.0
+        id S1750822AbdISGv1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Sep 2017 02:51:27 -0400
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:42282 "EHLO
+        alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750713AbdISGv0 (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 19 Sep 2017 02:51:26 -0400
+X-AuditID: 1207440c-7e5ff7000000143e-92-59c0be6d5f26
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 50.87.05182.D6EB0C95; Tue, 19 Sep 2017 02:51:25 -0400 (EDT)
+Received: from [192.168.69.190] (p54AAE885.dip0.t-ipconnect.de [84.170.232.133])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v8J6pMpp004225
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Tue, 19 Sep 2017 02:51:23 -0400
+Subject: Re: [PATCH] for_each_string_list_item(): behave correctly for empty
+ list
+To:     Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Alex Riesen <raa.lkml@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <cb2d4d71c7c1db452b86c8076c153cabe7384e28.1505490776.git.mhagger@alum.mit.edu>
+ <xmqqefr6uolr.fsf@gitster.mtv.corp.google.com>
+ <5c86b55e-20f6-df8e-b01f-66876c3a5f46@alum.mit.edu>
+ <xmqqfubku9iy.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kYXDhcVXd2C-x6e=o7jYdKqV22DY45c7E2TeuhKLfn26w@mail.gmail.com>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <dab2d555-7e09-4eb3-19b8-cab085626bbe@alum.mit.edu>
+Date:   Tue, 19 Sep 2017 08:51:22 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
+MIME-Version: 1.0
+In-Reply-To: <CAGZ79kYXDhcVXd2C-x6e=o7jYdKqV22DY45c7E2TeuhKLfn26w@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprGKsWRmVeSWpSXmKPExsUixO6iqJu770CkwYpZchZdV7qZLBp6rzBb
+        vL25hNHif9s7NovNm9tZLHob/7A6sHnsnHWX3WPBplKPi5eUPT5vkgtgieKySUnNySxLLdK3
+        S+DKuP/tMGvBTJGKc/ePsTQw3ufvYuTkkBAwkdiw/QVrFyMXh5DADiaJpbP6oZwLTBKfD95k
+        A6kSFgiWOP/rCAtIQkRgB6NE18fr7CAJZoEoiU3Pl0F17GSSuP9uCgtIgk1AV2JRTzMTiM0r
+        YC9x/c9TVhCbRUBVYuLUeWC2qECERN/by+wQNYISJ2c+AevlFAiU+H9wCRvEAnWJP/MuMUPY
+        4hK3nsxngrDlJZq3zmaewCgwC0n7LCQts5C0zELSsoCRZRWjXGJOaa5ubmJmTnFqsm5xcmJe
+        XmqRrqFebmaJXmpK6SZGSPDz7GD8tk7mEKMAB6MSD6/Atf2RQqyJZcWVuYcYJTmYlER5wzYd
+        iBTiS8pPqcxILM6ILyrNSS0+xCjBwawkwntoEVCONyWxsiq1KB8mJc3BoiTOq7pE3U9IID2x
+        JDU7NbUgtQgmK8PBoSTBm7MXqFGwKDU9tSItM6cEIc3EwQkynAdouBtIDW9xQWJucWY6RP4U
+        o6KUOK8GSEIAJJFRmgfXC0tOrxjFgV4R5j0PUsUDTGxw3a+ABjMBDc7eADa4JBEhJdXAWHnq
+        U8+Wy/vF5LnD9xz8NkVHMHOK4OYfHasE9Ta/rrrYpWlXuzBO8IPh1Q2P86oTTiRm5vtGvF6n
+        voD3yxfjyI0Jt5g/9+n+5WvJWHbqjvCFi4cv79Mp1XXbeKJvxspXPT6cvQdCrpvFr5ON+8jQ
+        KbhUcX3dnkzryd8mKtdtvi6qPsf62z+9pUosxRmJhlrMRcWJAGV3azMpAwAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 2017-09-19 at 12:01 +0900, Junio C Hamano wrote:
+On 09/19/2017 02:08 AM, Stefan Beller wrote:
+>> I am hoping that this last one is not allowed and we can use the
+>> "same condition is checked every time we loop" version that hides
+>> the uglyness inside the macro.
 > 
-> Hmph.  I cannot shake this nagging feeling that this is probably a
-> solution that is overly narrow to a single problem that won't scale
-> into the future.
+> By which you are referring to Jonathans solution posted.
+> Maybe we can combine the two solutions (checking for thelist
+> to not be NULL once, by Jonathan) and using an outer structure
+> (SZEDERs solution) by replacing the condition by a for loop,
+> roughly (untested):
 > 
-> [...snip good point...]
+> #define for_each_string_list_item(item,list) \
+> -       for (item = (list)->items; item < (list)->items + (list)->nr; ++item)
+> +    for (; list; list = NULL)
+> +        for (item = (list)->items; item < (list)->items + (list)->nr; ++item)
 > 
-> If we drop the "verification" step from the above, that essentially
-> becomes an equivaent to "hash-object -t tag -w --stdin".
+> as that would not mingle with any dangling else clause.
+> It is also just one statement, such that
 > 
-> So I now have to wonder if it may be sufficient to use "hash-object"
-> in filter-branch, without doing this "allow malformed data that we
-> would not permit if the tag were being created today, only to help
-> replaying an old, already broken data" change to "git mktag".
+>     if (bla)
+>       for_each_string_list_item {
+>         baz(item);
+>       }
+>     else
+>       foo;
 > 
-> Is there something that makes "hash-object" insufficient (like it
-> still does some extra checks we would want to disable and cannot
-> work as a replacement for your "--allow-missing-tagger")?
+> still works.
+> 
+> Are there downsides to this combined approach?
 
-I've done a couple of quick tests and it looks like it will work. I'll
-run a few more checks and repost.
+On the plus side, it's pleasantly devious; I wouldn't have thought of
+using a `for` loop for the initial test. But it doesn't work as written,
+because (1) we don't need to guard against `list` being NULL, but rather
+`list->items`; and (2) we don't have the liberty to set `list = NULL`
+(or `list->items = NULL`, because `list` is owned by the caller and we
+shouldn't modify it.
 
-Ian.
+The following is a bit closer:
+
+#define for_each_string_list_item(item,list) \
+	for (item = (list)->items; item; item = NULL) \
+        	for (; item < (list)->items + (list)->nr; ++item)
+
+But I think that also fails, because a callsite that does
+
+	for_each_string_list_item(myitem, mylist)
+		if (myitem.util)
+			break;
+
+would expect that `myitem` is still set after breaking out of the loop,
+whereas the outer `for` loop would reset it to NULL.
+
+If `break` were an expression we could do something like
+
+#define for_each_string_list_item(item,list) \
+	for (item = (list)->items; item; break) \
+        	for (; item < (list)->items + (list)->nr; ++item)
+
+So I think we're still left with the suggestions of Jonathan or GÃ¡bor.
+Or the bigger change of initializing `string_list::items` to point at an
+empty sentinal array (similar to `strbuf_slopbuf`) rather than NULL.
+Personally, I think that Jonathan's approach makes the most sense,
+unless somebody wants to jump in an implement a `string_list_slopbuf`.
+
+By the way, I wonder if any open-coded loops over `string_lists` make
+the same mistake as the macro?
+
+Michael
