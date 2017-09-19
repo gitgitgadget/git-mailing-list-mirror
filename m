@@ -2,190 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 423212090B
-	for <e@80x24.org>; Tue, 19 Sep 2017 07:16:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12A882090B
+	for <e@80x24.org>; Tue, 19 Sep 2017 08:06:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751635AbdISHP7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Sep 2017 03:15:59 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:38364 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751612AbdISHP4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Sep 2017 03:15:56 -0400
-Received: by mail-pf0-f196.google.com with SMTP id a7so8614pfj.5
-        for <git@vger.kernel.org>; Tue, 19 Sep 2017 00:15:56 -0700 (PDT)
+        id S1751537AbdISIF6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Sep 2017 04:05:58 -0400
+Received: from mail-io0-f176.google.com ([209.85.223.176]:56487 "EHLO
+        mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751283AbdISIF5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Sep 2017 04:05:57 -0400
+Received: by mail-io0-f176.google.com with SMTP id m103so8022761iod.13
+        for <git@vger.kernel.org>; Tue, 19 Sep 2017 01:05:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=wyup3kAwpFN6qp5XMsyFFme6yfvjbLjE50IHxF7j+40=;
-        b=QXzuf1OepATRz59uXP4i93EfuXzcaoF10hTXpOBVtaPvJkfM9ukNufrsjEy+zy3jKt
-         5C/605brOpIDl/gKuImfU/OKvHbNkymTeEcrSH70XHsFOniQn1amNp/C6gX/9dVSuFzx
-         /Ci2bdTFQQVURJzpQuJt6pVMxvNX5gJ5gfXWrMR/TbvMWmCCOQ+d26434SPqv4vMRrUp
-         b3NEJl2ehP7BJYVVjWjLFtSm9Ug7EhiJBP0LsqrZPaLKueU0SmKmLgKYayhkAvNnLvlb
-         XN7QpOBKpS5obJEfLqBo7kmSKd1dNQjlvlLklBzl5LwUyCK5Bvr8sI6McFzH/oGVpwP1
-         6zsQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=7i0eY9bwglOMnXvOOa/OixjB+cz8WyFVMbT1AMP7jXs=;
+        b=EMQ8l4Gy04jBVJSFy35UJYcUSwfUeO7NeWkKN4hQwYR7+I16RN4tCrsdvO6jiEbUBZ
+         OMRJtxj5UIYkWmpTWMnO2+UhzmV5LV7H4Bnl31lNKq1jFsFoqRDOSc1XQXoxbyC6lIUV
+         yYIl1ZSHFo9XnEeLOcQqjiC8n1hMnQA+t65rpWUBcUQm3vimLNNefzkyUmHF/JhppylU
+         0sIxcwXSHd7NjhETsl3K544jsAMGodhl3N8ylFkBz2l9WcMPWY0iO910dJrS5yHcEDZt
+         ZA/uwVDqmewwcLV0FeWlB8VO/gJHFZaqCLCtwWak0MJ3k1icaZHWz44OaAM0qRI5TlVz
+         XQGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=wyup3kAwpFN6qp5XMsyFFme6yfvjbLjE50IHxF7j+40=;
-        b=msM4y68LWGnzaKNKSksvZEooF5l/bM2+v0UC+8UwTsr4fSi+WmmfjfE8XDV+yIrVix
-         YDpr9yv/cUPmpy+Ys2GfgsSykTYoPg683Zpk5WpTO1z2QzLizFvBH/5juQEm1u+14I1t
-         /ftfq8gLvw6DY4SJTiJApPyiK9mtdgmSSadp8+X3UpXLJ2shYkQtiNKnt4F20s82MEIe
-         mtq4TJegj+sz/fbZPBT3AmLRB0/wg6mK02rx64xIBaKhmSrXgbxR1YwieX6OZ5jUrZTm
-         ev6+khdwSqEcAnduQhVZGSu5m2BJ1k7E2C16HJnAWv6uKS7FCw4stCt3MjGgTZ3kRsBJ
-         +h2w==
-X-Gm-Message-State: AHPjjUjwWlK24Y68R3ZwXg1uJLtdYWjrzrvKV/AuR003SkHTU5AMhpD7
-        QnaRiVjCSvjYOCXj3peP5+5lvygkUw0=
-X-Google-Smtp-Source: AOwi7QAFDiYv2MaucqJWAzu5dO8O8bL3hkRIEQ0pT9CXlL5enpyBBOgg2PilDy66gQllmid1HNTIGw==
-X-Received: by 10.101.83.143 with SMTP id x15mr443322pgq.425.1505805355661;
-        Tue, 19 Sep 2017 00:15:55 -0700 (PDT)
-Received: from glitch-pc.sce.com ([117.209.170.72])
-        by smtp.gmail.com with ESMTPSA id d126sm1927863pgc.85.2017.09.19.00.15.53
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 19 Sep 2017 00:15:55 -0700 (PDT)
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com
-Subject: [RFC PATCH 5/5] builtin/branch: give more useful error messages when renaming
-Date:   Tue, 19 Sep 2017 12:45:25 +0530
-Message-Id: <20170919071525.9404-6-kaarticsivaraam91196@gmail.com>
-X-Mailer: git-send-email 2.14.1.930.g532ff9be2
-In-Reply-To: <20170919071525.9404-1-kaarticsivaraam91196@gmail.com>
-References: <xmqqd18pcysa.fsf@gitster.mtv.corp.google.com>
- <20170919071525.9404-1-kaarticsivaraam91196@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=7i0eY9bwglOMnXvOOa/OixjB+cz8WyFVMbT1AMP7jXs=;
+        b=uSux7hIXOsre7EvQkd2IMzib2V4K5ZCjnnDcNvyxu/LMHqOv3OeladY/u/Coi5bHNU
+         3hiatwHIIGOjQJqcoWqbK7fqJ4OkgkGshqTu20vJjYM+rtx1Zkg2bNYJ1ueMJDjAN6ul
+         7t2GzIHhfcON/1ZtAP/LG+c2bChrCH5g5TKEU7pTqDHi2OC2I0naSkYWI14ePSst5VRG
+         31hwcmMDTJ5KrWSf1fXK26jE9gjwzGB2PErzHrXxMMHmBRWnqjPQa3qbSjzIK+Ed0iGB
+         Wc7L+tIGHgMA3sUeL0Bv+2NO5nRO/L40qgNm96aeIuEVjT71zrRmttXLxlue0HeEqv4N
+         N5rw==
+X-Gm-Message-State: AHPjjUjju6SmdqN/bBB5Ck0P28okdlHt5Q6EwLug6BJaDSret61zu5Cv
+        GFjqcdE1hILFIWsVU7QUNMND2szwVQasn2qBdGQ=
+X-Google-Smtp-Source: AOwi7QB1QwLrQCPiNV1NwEENPJue+wb0IOFGz87MT2HPOS6pumH8/4Yint40pOHaOdC4+1kwko/mo8G83idmpj/uOT8=
+X-Received: by 10.107.137.96 with SMTP id l93mr720809iod.138.1505808356766;
+ Tue, 19 Sep 2017 01:05:56 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.79.107.136 with HTTP; Tue, 19 Sep 2017 01:05:56 -0700 (PDT)
+In-Reply-To: <CAL21Bm=e9C4ANTsc4n1BG3xqjCJmORDSPcS5QEXYKUkK3cAH6w@mail.gmail.com>
+References: <CAL21Bm=e9C4ANTsc4n1BG3xqjCJmORDSPcS5QEXYKUkK3cAH6w@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 19 Sep 2017 10:05:56 +0200
+Message-ID: <CAP8UFD3vPQHJZNt1+egKkshiyqrGKiJp7eWU-Es6bTLgvXe1Kg@mail.gmail.com>
+Subject: Re: My first contribution
+To:     =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>
+Cc:     Jeff King <peff@peff.net>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When trying to rename an inexistent branch to an existing branch
-the rename failed specifying the new branch name exists rather than
-specifying that the branch trying to be renamed doesn't exist.
+Hi Olga,
 
-    $ git branch -m tset master
-    fatal: A branch named 'master' already exists.
+On Tue, Sep 19, 2017 at 8:44 AM, =D0=9E=D0=BB=D1=8F =D0=A2=D0=B5=D0=BB=D0=
+=B5=D0=B6=D0=BD=D0=B0=D1=8F <olyatelezhnaya@gmail.com> wrote:
+> Hello Jeff,
+> I want to try myself into new role of a Git contributor.
 
-It's conventional to report that 'tset' doesn't exist rather than
-reporting that 'master' exists, the same way the 'mv' command does.
+Welcome to Git!
 
-    $ git branch -m tset master
-    fatal: branch 'tset' doesn't exist.
+> All of the projects sound super interesting for me and I am ready to take
+> part in all of them, but the project "Unifying Git's format languages" wi=
+ll
+> be super useful for me myself, so my dream is to try solve that task firs=
+t.
 
-That has the problem that the error about an existing branch is shown
-only after the user corrects the error about inexistent branch.
+Great that you found a project you like!
 
-    $ git branch -m test master
-    fatal: A branch named 'master' already exists.
+> I need help to choose my first task in the project, because first steps a=
+re
+> usually the most frightening.
+> I am familiar enough with C and there's no problem to read any docs, but
+> please help me choosing the first task. If you have any guidance like "ho=
+w
+> to start" or "how to choose tasks", please send that links also.
 
-This isn't useful either because the user would have corrected this error in
-a single go if he had been told this alongside the first error. So, give
-more useful error messages by giving errors about old branch name and new
-branch name at the same time. This is possible as the branch update validation
-function now returns the reason it was about to die, when requested.
+You can try to work first on the project you are interested in or you
+can find and work on a small project first.
 
-    $ git branch -m tset master
-    fatal: branch 'tset' doesn't exist, and branch 'master' already exists
+One way to find a small project is to see what people are
+talking about on the mailing list[1]. Quite often there are bugs
+that can be fixed, and more experienced people may help sketch out
+a solution. You can also find small items good for newcomers marked
+with the "leftoverbits" tag, which you can search for in the
+mailing list[2].
 
-Note: Thanks to the strbuf API that made it possible to easily construct
-the composite error message strings!
+We don't have a written guide specifically downloading git, getting it
+built, running the tests, and so forth, but you might start with:
 
-Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
----
- builtin/branch.c | 48 ++++++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 42 insertions(+), 6 deletions(-)
+       git clone https://github.com/git/git
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 205c12a11..27d24e83d 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -456,25 +456,56 @@ static void reject_rebase_or_bisect_branch(const char *target)
- 	free_worktrees(worktrees);
- }
- 
-+static void get_error_msg(struct strbuf* error_msg, const char* oldname, unsigned old_branch_exists,
-+			  const char* newname, int new_branch_validation_result)
-+{
-+	const char* connector_string = ", and ";
-+	const unsigned connector_length = 6;
-+	unsigned connector_added = 0;
-+
-+	if (!old_branch_exists) {
-+		strbuf_addf(error_msg, _("branch '%s' doesn't exist"), oldname);
-+
-+		/* add the 'connector_string' and remove it later if it's not needed */
-+		strbuf_addstr(error_msg, connector_string);
-+		connector_added = 1;
-+	}
-+
-+	switch (new_branch_validation_result) {
-+		case BRANCH_EXISTS:
-+			strbuf_addf(error_msg, _("branch '%s' already exists"), newname);
-+			break;
-+		case CANNOT_FORCE_UPDATE_CURRENT_BRANCH:
-+			strbuf_addstr(error_msg, _("cannot force update the current branch"));
-+			break;
-+		case INVALID_BRANCH_NAME:
-+			strbuf_addf(error_msg, _("branch name '%s' is invalid"), newname);
-+			break;
-+		case VALID_BRANCH_NAME:
-+		case FORCE_UPDATING_BRANCH:
-+			if(connector_added)
-+				strbuf_remove(error_msg, error_msg->len-connector_length, connector_length);
-+	}
-+}
-+
- static void rename_branch(const char *oldname, const char *newname, int force)
- {
- 	struct strbuf oldref = STRBUF_INIT, newref = STRBUF_INIT, logmsg = STRBUF_INIT;
- 	struct strbuf oldsection = STRBUF_INIT, newsection = STRBUF_INIT;
- 	int recovery = 0;
- 	int clobber_head_ok;
-+	struct strbuf error_msg = STRBUF_INIT, empty = STRBUF_INIT;
- 
- 	if (!oldname)
- 		die(_("cannot rename the current branch while not on any."));
- 
--	if (strbuf_check_branch_ref(&oldref, oldname)) {
-+	if (strbuf_check_branch_ref(&oldref, oldname) && ref_exists(oldref.buf))
-+	{
- 		/*
- 		 * Bad name --- this could be an attempt to rename a
- 		 * ref that we used to allow to be created by accident.
- 		 */
--		if (ref_exists(oldref.buf))
--			recovery = 1;
--		else
--			die(_("Invalid branch name: '%s'"), oldname);
-+		recovery = 1;
- 	}
- 
- 	/*
-@@ -483,7 +514,10 @@ static void rename_branch(const char *oldname, const char *newname, int force)
- 	 */
- 	clobber_head_ok = !strcmp(oldname, newname);
- 
--	validate_branch_update(newname, &newref, force, clobber_head_ok, 0);
-+	get_error_msg(&error_msg, oldname, ref_exists(oldref.buf),
-+			newname, validate_branch_update(newname, &newref, force, clobber_head_ok, 1));
-+	if (strbuf_cmp(&error_msg, &empty))
-+		die("%s", error_msg.buf);
- 
- 	reject_rebase_or_bisect_branch(oldref.buf);
- 
-@@ -509,6 +543,8 @@ static void rename_branch(const char *oldname, const char *newname, int force)
- 		die(_("Branch is renamed, but update of config-file failed"));
- 	strbuf_release(&oldsection);
- 	strbuf_release(&newsection);
-+	strbuf_release(&error_msg);
-+	strbuf_release(&empty);
- }
- 
- static GIT_PATH_FUNC(edit_description, "EDIT_DESCRIPTION")
--- 
-2.14.1.868.g66c78774b
+and reading the INSTALL file.
 
+As the mailing list can be a bit intimidating at first, we don't mind
+working with you one-on-one a bit during the application period.
+
+About the mailing list, please add [Outreachy] in the subject to make
+it clear that you are applying for the Outreachy program.
+
+While at it on the Git mailing list we are used to replying to parts
+of message after those parts. We don't usually reply before the
+message. In other words we are used to "inline replying", not "top
+posting" (see https://en.wikipedia.org/wiki/Posting_style). Please try
+to use the same posting style as us, it will help keep discussions
+more standard and easier to understand.
+
+Also we feel free to remove parts of the messages we are quoting that
+are not relevant anymore.
+
+For getting in touch with us, direct email is our preferred method. We
+could also meet on IRC if you like, but it looks like our timezones
+might not overlap much. Still, we can probably set up a time.
+
+Let us know if you have any questions at all. This is our first time
+mentoring for Outreachy, so we've surely forgotten to mention some
+obvious thing you would want to know. :)
+
+Thanks,
+Christian.
+
+[1] There are details of the list at https://git-scm.com/community,
+    but you may want to just browse the archive at:
+
+      https://public-inbox.org/git
+
+[2] https://public-inbox.org/git/?q=3Dleftoverbits
