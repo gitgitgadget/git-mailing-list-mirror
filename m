@@ -2,100 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 572962047F
-	for <e@80x24.org>; Tue, 19 Sep 2017 14:38:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD2392047F
+	for <e@80x24.org>; Tue, 19 Sep 2017 15:24:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751378AbdISOiO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Sep 2017 10:38:14 -0400
-Received: from mail-pf0-f175.google.com ([209.85.192.175]:54924 "EHLO
-        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750733AbdISOiN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Sep 2017 10:38:13 -0400
-Received: by mail-pf0-f175.google.com with SMTP id d187so75396pfg.11
-        for <git@vger.kernel.org>; Tue, 19 Sep 2017 07:38:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=+aiIg5YRJfvNPyA0jtIM6fJ1fVGXpeUD8KoP5SPLAoo=;
-        b=NklUKw7FmV1izkdoXiQiimRJz+Cj0TZdzyZTio7Wsrp3a1P6EFM//9yL5aNXMmbjRv
-         znigsHaUQ2dOSOO/cet54VmkT6HuNjzw9jPS2EO+UbFjK/eV2EOFy0zuPwMMkT8O4XIm
-         YRHWHphJFs+0ijhBWyOaUpFfSgm80IA4vZ+aQF5dCtHCUfiQzpQFsbXQjbVNESZ0BJjk
-         482wsYR7tkX0uFqihJoe7/4X9BTOjm0AHYr9d6nYl7omNt4Zti1NfrN5OSrisUK59reG
-         DoZCOWFKLpnaU2hUGfxi2bLlo/1yECWFhhHI9uOucf1S47bUSdCDT06Jp7dp2liL0Vs6
-         Dy6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=+aiIg5YRJfvNPyA0jtIM6fJ1fVGXpeUD8KoP5SPLAoo=;
-        b=SaVGRntWISGQ7rxi00w9FGV3HjCSqh975F+W+AXq05bSEzHXYTGx9uHEY5JoBlMhNg
-         0MAl8CjFIi8DsosCXff+ZQnRFL2qSXq2tu8epVMiQ/8fP8l+8u1qaO+8j1JURuRP/szY
-         sfnouLQRH1yN4yBf1yCrUOYjDvKdPCzpkRsoA/YLFHohLiR+SqPEXjKQzEestLboC4l9
-         m3jgpW5V6V+Xb539zP5agF3s8oFTftv21DoMFIG4vWkENHx4kEeUS4ZJ01FyJlGJ7mbp
-         dtjcM4Ncxl2PtHnh3BV7lUAu7282G7T7lZzveAjDTXV3/U/Ts4kq0R869xxZzzN2lP1v
-         1IUA==
-X-Gm-Message-State: AHPjjUhlMap5G4z0x5vU9H30BcvHcvF97Fkd4Gnsf+AN1blvviUX4ZS0
-        Gsf6wYWGMEk2FXRLbNAHDlnrfpXF
-X-Google-Smtp-Source: AOwi7QAR4wuP+lNTYSE+DRxYShDMgNS30ctWpe6k9jfQKz5s5gINEDzJikxC4aNiW7RCSfom3Oy1aA==
-X-Received: by 10.101.78.201 with SMTP id w9mr1608370pgq.24.1505831892819;
-        Tue, 19 Sep 2017 07:38:12 -0700 (PDT)
-Received: from [10.4.2.238] ([14.102.72.146])
-        by smtp.gmail.com with ESMTPSA id x124sm781532pfx.56.2017.09.19.07.38.09
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 19 Sep 2017 07:38:12 -0700 (PDT)
-Subject: Re: [PATCH] for_each_string_list_item(): behave correctly for empty
- list
-To:     Michael Haggerty <mhagger@alum.mit.edu>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-References: <cb2d4d71c7c1db452b86c8076c153cabe7384e28.1505490776.git.mhagger@alum.mit.edu>
- <20170915184323.GU27425@aiede.mtv.corp.google.com>
- <b8951886-feab-a87a-9683-3c155cfa98a8@alum.mit.edu>
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Message-ID: <b03c7b09-853f-a2ed-f73e-7d946c90cedb@gmail.com>
-Date:   Tue, 19 Sep 2017 20:08:06 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        id S1751484AbdISPY4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Sep 2017 11:24:56 -0400
+Received: from mout.gmx.net ([212.227.17.20]:64028 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751425AbdISPYy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Sep 2017 11:24:54 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LbxQO-1dV7yV0uJg-00jM8g; Tue, 19
+ Sep 2017 17:24:47 +0200
+Date:   Tue, 19 Sep 2017 17:24:45 +0200 (CEST)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     git@vger.kernel.org
+cc:     Ben Peart <Ben.Peart@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] Win32: simplify loading of DLL functions
+Message-ID: <f5a3add27206df3e7f39efeac8a3c3b47f2b79f2.1505834586.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <b8951886-feab-a87a-9683-3c155cfa98a8@alum.mit.edu>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-Cyberoam-smtpxy-version: 1.0.6.3
-X-Cyberoam-AV-Policy: default
-X-CTCH-Error: Unable to connect local ctasd
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:zOtuiyJOAD03WmKvjbNCpA7aNsaSrx8zxNXkwBDodLCtLidGMWS
+ 6xvFkSfsqF+vDPlOuUCI04gdAXRyi0C72KOsgvDxbjjnInctT6J3zwPOblcOHqBeUAd8JKi
+ pmdKLTxe4kcrNgpZQMzCI5ObU0v6Zb9Z0Eb476AP+/HS1jBatcrhyZOr1sADbWa8OCze4Y9
+ a7sBGgVgphcMnKJXS88Jw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:j7C/4V6285Y=:15kP3eLThOeFv0ZIYyVMiG
+ 6l7hX/q7/HF4/MTXg35pWjgb4TTw7kSbv9dvVO5KI+F3/eeCxJK1lXbv/Gb8QqFmfmdnfPd8n
+ MIpRj0jVSH9bH62KqtvSX168MBCd1GYqg9+7ZotnuaPYr4hJredginZEfFa80W18l6/8ltxig
+ JxjrIkppmsujZvALMtmJLod+f6rVC9eHSDRecmrFCIE9EK1Ocwk/XiydpNktOidjx/Z4movXp
+ Zxv/oJjsuS21eAeos7ZqcyZqOnGx3M8hoOv9Gk2eOz1RRLM/VgyH+WTs3X4WKVRur0L4202in
+ SJ0jgZDYtaQYdKhanOWsdY6l+C8h8AGFMGh/ODOHEgABIZHm+4NNskEr4O941zxWBI1t7XdSH
+ 06uQz7c6XoeMHnj7lsHu/A2V9RKk2w1V0yNBxNQ311uFaTJwsGbwLDmAyMgcs+5TCiRJ6rDVu
+ jEwc5VxGp3fzi7X1TS4YqF/AvdmgHZRW4Km/8n4W0MFP4rfw71a98ejHBItRBvTtC2AD91D5s
+ B5hdR3IW4V/KqJEY/aA+1M+yufTe/cUJagrxZkVA4Zpg6p8iYZNN7dq1BGCEL2rm6xQpkZxpe
+ XWICVp7jW/qNKL7JJ2ZjLeiWEIKLTdJN1iJ7J2ex0qvDtqbTRST4M825f4G4Bfu7vry0d5puy
+ +fo9tF/k3MuHI5AJogwbTSKRAVR7a57nLM6fEF2d9pdLVecmqCEeNhoyiqHvNkxyGg/33NxFQ
+ 2Ae25L7+1MbOQ5pdosUTTGKE5fDaee+c8na28dJ1emzw3aqwmKNnTPB9G4+5oG0s/pMzTgWA0
+ g9hwhqNogJu5sSjOhi2ZXDpkWIyxV2193/loNiPDQitcO9cpZs=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Saturday 16 September 2017 09:36 AM, Michael Haggerty wrote:
->> Does the following alternate fix work?  I think I prefer it because
->> it doesn't require introducing a new global. [...]
->>   #define for_each_string_list_item(item,list) \
->> -	for (item = (list)->items; item < (list)->items + (list)->nr; ++item)
->> +	for (item = (list)->items; \
->> +	     (list)->items && item < (list)->items + (list)->nr; \
->> +	     ++item)
-> This is the possibility that I was referring to as "add[ing] overhead to
-> each iteration of the loop". I'd rather not add an extra test-and-branch
-> to every iteration of a loop in which `list->items` is *not* NULL, which
-> your solution appears to do. Or are compilers routinely able to optimize
-> the check out?
+Dynamic loading of DLL functions is duplicated in several places in Git
+for Windows' source code.
 
-It seems at least 'gcc' is able to optimize this out even with a -O1
-and 'clang' optimizes this out with a -O2. Taking a sneak peek at
-the 'Makefile' shows that our default is -O2.
+This patch adds a pair of macros to simplify the process: the
+DECLARE_PROC_ADDR(<dll>, <return-type>, <function-name>,
+...<function-parameter-types>...) macro to be used at the beginning of a
+code block, and the INIT_PROC_ADDR(<function-name>) macro to call before
+using the declared function. The return value of the INIT_PROC_ADDR()
+call has to be checked; If it is NULL, the function was not found in the
+specified DLL.
 
-For a proof, see https://godbolt.org/g/CPt73L
+Example:
 
+        DECLARE_PROC_ADDR(kernel32.dll, BOOL, CreateHardLinkW,
+                          LPCWSTR, LPCWSTR, LPSECURITY_ATTRIBUTES);
+
+        if (!INIT_PROC_ADDR(CreateHardLinkW))
+                return error("Could not find CreateHardLinkW() function";
+
+	if (!CreateHardLinkW(source, target, NULL))
+		return error("could not create hardlink from %S to %S",
+			     source, target);
+	return 0;
+
+Signed-off-by: Karsten Blees <blees@dcon.de>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
-Kaartic
+
+	So far, there are no users (except in Git for Windows). Ben
+	promised to make use of it in his fsmonitor patch series.
+
+Published-As: https://github.com/dscho/git/releases/tag/lazyload-v1
+Fetch-It-Via: git fetch https://github.com/dscho/git lazyload-v1
+ compat/win32/lazyload.h | 44 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 44 insertions(+)
+ create mode 100644 compat/win32/lazyload.h
+
+diff --git a/compat/win32/lazyload.h b/compat/win32/lazyload.h
+new file mode 100644
+index 00000000000..91c10dad2fb
+--- /dev/null
++++ b/compat/win32/lazyload.h
+@@ -0,0 +1,44 @@
++#ifndef LAZYLOAD_H
++#define LAZYLOAD_H
++
++/* simplify loading of DLL functions */
++
++struct proc_addr {
++	const char *const dll;
++	const char *const function;
++	FARPROC pfunction;
++	unsigned initialized : 1;
++};
++
++/* Declares a function to be loaded dynamically from a DLL. */
++#define DECLARE_PROC_ADDR(dll, rettype, function, ...) \
++	static struct proc_addr proc_addr_##function = \
++	{ #dll, #function, NULL, 0 }; \
++	static rettype (WINAPI *function)(__VA_ARGS__)
++
++/*
++ * Loads a function from a DLL (once-only).
++ * Returns non-NULL function pointer on success.
++ * Returns NULL + errno == ENOSYS on failure.
++ */
++#define INIT_PROC_ADDR(function) \
++	(function = get_proc_addr(&proc_addr_##function))
++
++static inline void *get_proc_addr(struct proc_addr *proc)
++{
++	/* only do this once */
++	if (!proc->initialized) {
++		HANDLE hnd;
++		proc->initialized = 1;
++		hnd = LoadLibraryExA(proc->dll, NULL,
++				     LOAD_LIBRARY_SEARCH_SYSTEM32);
++		if (hnd)
++			proc->pfunction = GetProcAddress(hnd, proc->function);
++	}
++	/* set ENOSYS if DLL or function was not found */
++	if (!proc->pfunction)
++		errno = ENOSYS;
++	return proc->pfunction;
++}
++
++#endif
+
+base-commit: 9ddaf86b06a8078420f59aec8cab6daa93cf1a91
+-- 
+2.14.1.windows.1.1020.g03faabc8bc8.dirty
