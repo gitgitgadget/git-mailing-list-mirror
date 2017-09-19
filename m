@@ -2,90 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A31782047F
-	for <e@80x24.org>; Tue, 19 Sep 2017 05:20:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D3F4E20281
+	for <e@80x24.org>; Tue, 19 Sep 2017 05:51:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751001AbdISFUU (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Sep 2017 01:20:20 -0400
-Received: from cloud.peff.net ([104.130.231.41]:42984 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750713AbdISFUT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Sep 2017 01:20:19 -0400
-Received: (qmail 3491 invoked by uid 109); 19 Sep 2017 05:20:19 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 19 Sep 2017 05:20:19 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32108 invoked by uid 111); 19 Sep 2017 05:20:55 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Tue, 19 Sep 2017 01:20:55 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Sep 2017 01:20:17 -0400
-Date:   Tue, 19 Sep 2017 01:20:17 -0400
-From:   Jeff King <peff@peff.net>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     phionah bugosi <bugosip@gmail.com>, git@vger.kernel.org
-Subject: Re: [OUTREACHY] pack: make packed_git_mru global a value instead of
- a pointer
-Message-ID: <20170919052017.mcspwuse3vlobpxf@sigill.intra.peff.net>
-References: <1505755303-5583-1-git-send-email-bugosip@gmail.com>
- <20170918231724.GY27425@aiede.mtv.corp.google.com>
+        id S1751453AbdISFvz (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Sep 2017 01:51:55 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53192 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750867AbdISFvz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Sep 2017 01:51:55 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 60548AC1A1;
+        Tue, 19 Sep 2017 01:51:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=xZ80lR/yPkML/84jyCgqPTvKLJ8=; b=Ggrd/I
+        jhpua/ryYmOva76ZkWv8PgCW4vQMkK1u8OEt/RGzT3NnfT+ok+N5QQrgqKkGQX4k
+        WgIqO26JFgWq4j1fych5iBjKwxAPBOq05ASklWy1n57uCT/Jeo0j5XTtFyocdeMe
+        6vWnwWFfOYiJ21INCjdwBZAZBMSc3/vD0LeAw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=nRkk6tpT2MtQcmSXD2aFsBiZ/X+PfDpr
+        9N6mmb38rc9+MUH50bFFaROxp/i+9gYpWlrEF+fQW56tQhJ4o44YEJ/NZ/KsdEqm
+        fBQku2QVi3fZvcIxIyyutluuF8OP5lxSFHh2eocAKVOdPetbjht0p8pdZ+34HIDF
+        s2mx0uWzoME=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 583D5AC1A0;
+        Tue, 19 Sep 2017 01:51:54 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8672DAC19F;
+        Tue, 19 Sep 2017 01:51:53 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, peartben@gmail.com,
+        Christian Couder <christian.couder@gmail.com>,
+        git@jeffhostetler.com
+Subject: Re: RFC: Design and code of partial clones (now, missing commits and trees OK)
+References: <20170915134343.3814dc38@twelve2.svl.corp.google.com>
+Date:   Tue, 19 Sep 2017 14:51:52 +0900
+In-Reply-To: <20170915134343.3814dc38@twelve2.svl.corp.google.com> (Jonathan
+        Tan's message of "Fri, 15 Sep 2017 13:43:43 -0700")
+Message-ID: <xmqq8thbqlqf.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170918231724.GY27425@aiede.mtv.corp.google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: A378DE6C-9CFE-11E7-98D1-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 18, 2017 at 04:17:24PM -0700, Jonathan Nieder wrote:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-> phionah bugosi wrote:
-> 
-> > Just to reecho a previous change requested before in one of the mail
-> > threads, we currently have two global variables declared:
-> >
-> > struct mru packed_git_mru_storage;
-> > struct mru *packed_git_mru = &packed_git_mru_storage;
-> >
-> > We normally use pointers in C to point or refer to the same location
-> > or space in memory from multiple places. That means in situations
-> > where we will have the pointer be assigned to in many places in our
-> > code. But in this case, we do not have any other logic refering or
-> > assigning to the pointer packed_git_mru. In simple words we actually
-> > dont need a pointer in this case.
-> >
-> > Therefore this patch makes packed_git_mru global a value instead of
-> > a pointer and makes use of list.h
-> >
-> > Signed-off-by: phionah bugosi <bugosip@gmail.com>
-> > ---
-> >  builtin/pack-objects.c |  5 +++--
-> >  cache.h                |  7 -------
-> >  list.h                 |  6 ++++++
-> >  packfile.c             | 12 ++++++------
-> >  4 files changed, 15 insertions(+), 15 deletions(-)
-> 
-> *puzzled* This appears to already be in "pu", with a different author.
-> Did you independently make the same change?  Or are you asking for a
-> progress report on that change, and just phrasing it in a confusing
-> way?
+> For those interested in partial clones and/or missing objects in repos,
+> I've updated my original partialclone patches to not require an explicit
+> list of promises. Fetch/clone still only permits exclusion of blobs, but
+> the infrastructure is there for a local repo to support missing trees
+> and commits as well.
+> ...
+> Demo
+> ====
+>
+> Obtain a repository.
+>
+>     $ make prefix=$HOME/local install
+>     $ cd $HOME/tmp
+>     $ git clone https://github.com/git/git
+>
+> Make it advertise the new feature and allow requests for arbitrary blobs.
+>
+>     $ git -C git config uploadpack.advertiseblobmaxbytes 1
+>     $ git -C git config uploadpack.allowanysha1inwant 1
+>
+> Perform the partial clone and check that it is indeed smaller. Specify
+> "file://" in order to test the partial clone mechanism. (If not, Git will
+> perform a local clone, which unselectively copies every object.)
+>
+>     $ git clone --blob-max-bytes=100000 "file://$(pwd)/git" git2
+>     $ git clone "file://$(pwd)/git" git3
+>     $ du -sh git2 git3
+>     116M	git2
+>     129M	git3
+>
+> Observe that the new repo is automatically configured to fetch missing objects
+> from the original repo. Subsequent fetches will also be partial.
+>
+>     $ cat git2/.git/config
+>     [core]
+>     	repositoryformatversion = 1
+>     	filemode = true
+>     	bare = false
+>     	logallrefupdates = true
+>     [remote "origin"]
+>     	url = [snip]
+>     	fetch = +refs/heads/*:refs/remotes/origin/*
+>     	blobmaxbytes = 100000
+>     [extensions]
+>     	partialclone = origin
+>     [branch "master"]
+>     	remote = origin
+>     	merge = refs/heads/master
 
-I pointed Phionah at your #leftoverbits comment in:
+The above sequence of events make quite a lot of sense.  And the
+following description of how it is designed (snipped) is clear
+enough (at least to me) to allow me to say that I quite like it.
 
-  https://public-inbox.org/git/20170912172839.GB144745@aiede.mtv.corp.google.com/
 
-about moving packed_git_mru to list.h. But I'm afraid I wasn't very
-clear in giving further guidance.
-
-The goal is to build on _top_ of the patch in that message, and convert
-the doubly-linked list implementation used in "struct mru" to use the
-shared code in list.h. That should mostly involve touching mru.c and
-mru.h, though I think we'd need to tweak the name of the "next" pointer
-during the traversal, too.
-
--Peff
