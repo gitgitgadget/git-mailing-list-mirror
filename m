@@ -2,168 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CBDE12047F
-	for <e@80x24.org>; Tue, 19 Sep 2017 18:07:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 854212047F
+	for <e@80x24.org>; Tue, 19 Sep 2017 18:52:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751009AbdISSHr (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Sep 2017 14:07:47 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:38540 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750733AbdISSHq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Sep 2017 14:07:46 -0400
-Received: by mail-pg0-f65.google.com with SMTP id m30so207204pgn.5
-        for <git@vger.kernel.org>; Tue, 19 Sep 2017 11:07:46 -0700 (PDT)
+        id S1750973AbdISSwG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Sep 2017 14:52:06 -0400
+Received: from mail-lf0-f49.google.com ([209.85.215.49]:43603 "EHLO
+        mail-lf0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750892AbdISSwF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Sep 2017 14:52:05 -0400
+Received: by mail-lf0-f49.google.com with SMTP id c80so560661lfh.0
+        for <git@vger.kernel.org>; Tue, 19 Sep 2017 11:52:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=nZ8XUtzdFpxmJ7zdrcraNPI5iE+0jd9cddXi0AZNBVQ=;
-        b=kQ1jojekOQxzwcAFeUOCUEWMVRwoznZrgmzILft37WNFMS0p46i0hGACF8tObvVTdd
-         YBnXORjhgUPhyOXgn5rejqnEVthiHl5Ok/6RmW7FEmPl8q7+6TV4Nkoencl2QDoVmWFl
-         jCGRBOeZ7t/Q2VZ9CzjsMDj4kCs1zbe3nWobu2WaT8jpoCu/AFXDrtmJxTWlRVOmJqEt
-         KgkoTKhuYrF9mnZ3jnOy9VHWtuMVgGbsHmgZwYkldvyrVG+204nSX9Q8/TlOgS97pNAA
-         o0GaB1USFyW8sxgDWqbvifMi8frfXjYtbZfGILt+qxfRG8jacDmI4D/UivrGfAJLmFj0
-         MHKg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=kX15ymashSnJjnZCrQ3Wo9+1iBYH1BROJBWsDsDA818=;
+        b=TZ0ayy138vmjkGV4jpyB3yV2gVDxYrXWlXv0bF3iPZG7V9qHBJAB6XFWhrSthUd/9E
+         aWeCgx+qQull43oHekkR4sV9l06cAbQwaAHpq+/lFP+qFkb2oQ7h3rsFsAnLeiyphyLP
+         9Tx49dn046PTrjzZvsC2mDwqnhK0E9TOAW6v9opE4k9UJfWsJUnunmUt1wRriJp8Jcw8
+         DIQSRRfIWqLc2rKmakdii2t4wnBWiaXSDmGV+0W0UkLCUCW3e6vDSbt1suUyvgwnLJcC
+         Ymkeu2an5Y/pwbQRNLEwmczIEvHHeBSIM6UtnTF1VaSeFxmiW8eY5TYwms7dUo8fWeTl
+         8U4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=nZ8XUtzdFpxmJ7zdrcraNPI5iE+0jd9cddXi0AZNBVQ=;
-        b=Mgwge9uyb1vUzahnR+7xoQ6ajLwj6gfvanDJ87cRB1169p77dYyNjNK8yALRG8Qbt6
-         pBW2HG2fYaM6go3xiOGe6dZjn+a10HI97yR9Ju+lk6PhJmfpk+/1L2O681HCp+lMgjKl
-         3yZjons8yCGVi1f6Q5/JYkSdmf0RfV88AGH4FwOuODIbgh0fV99tJM1BKFu19wJKYG4S
-         XPc0Rw7nam1W7pdT7qnoMVweTAv97Nzk+/VxFznjaCXOVZaKhUrhHNv/IHjze5qbByC3
-         Z275pQvHEydyzjHzghW4ciWcsVNO2xyQ8e8OUF/XMmdPGYzNj8aFcYNcJCJmHoWYzRZk
-         xhjw==
-X-Gm-Message-State: AHPjjUgHAEcxybOvcFekjtEj8MkC/SXy74tjq4RaW4Q7dvvoKSunc3DK
-        +3BuB3N0rgBwWVioYo+A1YU=
-X-Google-Smtp-Source: AOwi7QAkR6zv9qB1eHypBrWqFCLHZga8xf+vc4sCks464wT/YHVQmIm4bbIbDlhxvvsS2x5opAcBAA==
-X-Received: by 10.98.66.220 with SMTP id h89mr2077965pfd.270.1505844465677;
-        Tue, 19 Sep 2017 11:07:45 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:ed67:93b4:3411:bf26])
-        by smtp.gmail.com with ESMTPSA id f9sm4374632pfe.150.2017.09.19.11.07.44
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 19 Sep 2017 11:07:44 -0700 (PDT)
-Date:   Tue, 19 Sep 2017 11:07:42 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Ben Peart <Ben.Peart@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Karsten Blees <blees@dcon.de>
-Subject: Re: [PATCH] Win32: simplify loading of DLL functions
-Message-ID: <20170919180742.GC75068@aiede.mtv.corp.google.com>
-References: <f5a3add27206df3e7f39efeac8a3c3b47f2b79f2.1505834586.git.johannes.schindelin@gmx.de>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=kX15ymashSnJjnZCrQ3Wo9+1iBYH1BROJBWsDsDA818=;
+        b=nJdpboEx1+pGX3QBpW5wRr2EuNtymY1rOjyacOOkGthuIsc9OAILiYUswpptZCAiXd
+         VKuzdvRtPTOp5gEn9fbhc47jRm6Bv3XTN43rM8yr1siTZ2G+0P5t9+pP25cowfbzJqfA
+         uDVLD6TvBE4r34VPCTz20dG+zt/SYaV1cFvgRdX9OYGcWM7dJriNUeNnEcoqu2mnfeIj
+         EXETYl2mGOIxjaMtGbE1iIscLmrroDflpr2JGrx5n62FMk4bv8tBHuV0tM/xwDJmm3+r
+         8/Sn2i98zpSrub/SQGF6+y4/As8ExCPuy6WgvDb5KaU39k40zmYvejKSjhL/KjHbi3Wo
+         x6ig==
+X-Gm-Message-State: AHPjjUhKeYlhV+3/RpqOaxi7eejpz9/+GLxOB9WgA+CEap2oWch6Ly8K
+        o6nbP5Fb1rNEzy2gNASR1oY=
+X-Google-Smtp-Source: AOwi7QBLznoFBJVmxSrjDHJ8tGReXM/IBec2328OX93iw/+D0JOqEZcSEWs2B8UBJnlfj2TAYsM5RQ==
+X-Received: by 10.46.19.26 with SMTP id 26mr1136671ljt.20.1505847123669;
+        Tue, 19 Sep 2017 11:52:03 -0700 (PDT)
+Received: from localhost.localdomain (114.138.16.62.customer.cdi.no. [62.16.138.114])
+        by smtp.gmail.com with ESMTPSA id c26sm1986ljb.12.2017.09.19.11.51.59
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 19 Sep 2017 11:52:00 -0700 (PDT)
+From:   =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, jrnieder@gmail.com, oystwa@gmail.com
+Subject: Re: [PATCH] rev-parse: rev-parse: add --is-shallow-repository
+Date:   Tue, 19 Sep 2017 20:51:56 +0200
+Message-Id: <20170919185156.4285-1-oystwa@gmail.com>
+X-Mailer: git-send-email 2.11.0.485.g4e59582
+In-Reply-To: <xmqqlglbqstw.fsf@gitster.mtv.corp.google.com>
+References: <xmqqlglbqstw.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f5a3add27206df3e7f39efeac8a3c3b47f2b79f2.1505834586.git.johannes.schindelin@gmx.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+> Hm, can you say more about the context?  From a certain point of view,
+> it might make sense for that command to succeed instead: if the repo
+> is already unshallow, then why should't "fetch --unshallow" complain
+> instead of declaring victory?
 
-Johannes Schindelin wrote:
+A fellow in #git on Freenode was writing a script for automation and
+encountered this error, and asked how to find out whether a repo was
+shallow. My *first instinct* was to check if rev-parse had a flag for
+it; I wouldn't have been surprised if it did.
 
-> Dynamic loading of DLL functions is duplicated in several places in Git
-> for Windows' source code.
->
-> This patch adds a pair of macros to simplify the process: the
-> DECLARE_PROC_ADDR(<dll>, <return-type>, <function-name>,
-> ...<function-parameter-types>...) macro to be used at the beginning of a
-> code block, and the INIT_PROC_ADDR(<function-name>) macro to call before
-> using the declared function. The return value of the INIT_PROC_ADDR()
-> call has to be checked; If it is NULL, the function was not found in the
-> specified DLL.
->
-> Example:
->
->         DECLARE_PROC_ADDR(kernel32.dll, BOOL, CreateHardLinkW,
->                           LPCWSTR, LPCWSTR, LPSECURITY_ATTRIBUTES);
->
->         if (!INIT_PROC_ADDR(CreateHardLinkW))
->                 return error("Could not find CreateHardLinkW() function";
->
-> 	if (!CreateHardLinkW(source, target, NULL))
-> 		return error("could not create hardlink from %S to %S",
-> 			     source, target);
-> 	return 0;
+I agree that treating it as a fatal error is a bit much in the first
+place, but I also think having a way to check can be useful. I also
+wonder if a lot of the stuff rev-parse is used for now should be moved
+to some sort of `git misc` command, but that's a different can of worms,
+so into rev-parse a new flag went.
 
-nit: whitespace is a bit strange here (mixture of tabs and spaces).
+> What does git-path mean here?  I wonder if it's a copy/paste error.
+> ...
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-Could this example go near the top of the header instead?  That way,
-it's easier for people reading the header to see how to use it.
+Yeah, the titles were copy-pasted without adjusting, thanks for fixing,
+Jonathan! ;)
 
-> Signed-off-by: Karsten Blees <blees@dcon.de>
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
+> I agree with the fixes to the test titles suggested, so I'll queue the
+> patch with the fixes squashed in.  Hearing "yeah, the titles were
+> copy-pasted without adjusting, thanks for fixing, Jonathan!" sent by
+> =C3=98ystein would be super nice.
 
-Just curious: what was Karsten's contribution?  (I ask mostly because
-I'm interested in kinds of collaboration git metadata is failing to
-capture correctly --- e.g. pair programming.)
+Sounds good. Thanks for queueing my patch. My fourth!
 
->         So far, there are no users (except in Git for Windows). Ben
->         promised to make use of it in his fsmonitor patch series.
->
->  compat/win32/lazyload.h | 44 ++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 44 insertions(+)
->  create mode 100644 compat/win32/lazyload.h
-
-Are any of the Git for Windows users something that could go upstream
-along with this patch?  That would help illustrate what a good caller
-looks like, which should help with reviewing future patches that use
-this code.
-
-> --- /dev/null
-> +++ b/compat/win32/lazyload.h
-> @@ -0,0 +1,44 @@
-[...]
-> +/* Declares a function to be loaded dynamically from a DLL. */
-> +#define DECLARE_PROC_ADDR(dll, rettype, function, ...) \
-> +	static struct proc_addr proc_addr_##function = \
-> +	{ #dll, #function, NULL, 0 }; \
-> +	static rettype (WINAPI *function)(__VA_ARGS__)
-> +
-> +/*
-> + * Loads a function from a DLL (once-only).
-> + * Returns non-NULL function pointer on success.
-> + * Returns NULL + errno == ENOSYS on failure.
-> + */
-> +#define INIT_PROC_ADDR(function) \
-> +	(function = get_proc_addr(&proc_addr_##function))
-
-Probably worth mentioning in the doc comment that this is not thread
-safe, so a caller that wants to lazy-init in a threaded context is
-responsible for doing their own locking.
-
-> +
-> +static inline void *get_proc_addr(struct proc_addr *proc)
-> +{
-> +	/* only do this once */
-> +	if (!proc->initialized) {
-> +		HANDLE hnd;
-> +		proc->initialized = 1;
-> +		hnd = LoadLibraryExA(proc->dll, NULL,
-> +				     LOAD_LIBRARY_SEARCH_SYSTEM32);
-> +		if (hnd)
-> +			proc->pfunction = GetProcAddress(hnd, proc->function);
-> +	}
-> +	/* set ENOSYS if DLL or function was not found */
-> +	if (!proc->pfunction)
-> +		errno = ENOSYS;
-> +	return proc->pfunction;
-> +}
-
-strerror(ENOSYS) is "Function not implemented".  Cute.
-
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-
-Thanks,
-Jonathan
+Øsse
