@@ -2,111 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE09D2047F
-	for <e@80x24.org>; Tue, 19 Sep 2017 15:43:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C02320A2B
+	for <e@80x24.org>; Tue, 19 Sep 2017 16:08:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751391AbdISPnI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Sep 2017 11:43:08 -0400
-Received: from mout.gmx.net ([212.227.17.21]:52199 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751097AbdISPnH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Sep 2017 11:43:07 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MUUWN-1dlq7A0Yeh-00RG00; Tue, 19
- Sep 2017 17:43:03 +0200
-Date:   Tue, 19 Sep 2017 17:43:02 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org
+        id S1751361AbdISQIM (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Sep 2017 12:08:12 -0400
+Received: from mail-pg0-f44.google.com ([74.125.83.44]:51342 "EHLO
+        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751365AbdISQIL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Sep 2017 12:08:11 -0400
+Received: by mail-pg0-f44.google.com with SMTP id k193so46234pgc.8
+        for <git@vger.kernel.org>; Tue, 19 Sep 2017 09:08:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=3hAIxjVnCdB4IGvVCsipgXLQh3hmg50tu/tUKIah4Us=;
+        b=fg/1PgIvSfxNK6ll160jB8lC94lATbnSLiCkZHRZRvjjL3UgkiuU0vuhWkn/iX2OuR
+         17ha+yuBNg1TvUOvMBjYc3U3QAht3EYs4a6gdp8jZAten6Q2EdOREK2FQNhRV93COcFP
+         DWB6fUqR9F/O5lUNLQwuoT6gwXtsLUFkqR0VwivtphwVSaIx+n66QxCjE6yeG/lRfo3y
+         4hkoEZYdPdYRHwkCegRmOdKGZxTWfvcpVXMP8K8xR+iWQqyR5MBiq5YMY4wa7GDg36GR
+         40ZMJSNtzVbfWQwuifkAHMi8WGiY7yheEMnG9WX9+TRZ6tMrPNlyJnvhSgynZb6xHqJK
+         W4yw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=3hAIxjVnCdB4IGvVCsipgXLQh3hmg50tu/tUKIah4Us=;
+        b=NzQf8hUwO+6PqlHTitm2rHiq1jbYIcxydfI7HsiDQdDr17yvDRdyTDtdp3L3cHQ3Eo
+         y3gNxBOBA/OuxZrXPsupyMZkMqebD+cIhIWWclh/R5RVxfUoMR4vmzXfV1138pHwxXfk
+         Z9lOys3Ye41VNPrCCLh3nbvbKpBrclaiECh+ICg41PoyI5SwZ2XMuZyIwVutxh4qLn1E
+         Vr61TQnd+QpHyYavopeynmFFdaM5kJRNHeFQwm9UKBbRtpKVq4pjfmzWGO1s8vIk+sjA
+         iOj64xK1fZuuNJCn/rjGuQgG0SHm2vFsQ2eoD33MJ1Uz5l8d5D/Aj6gbIE8LnvQfn3I9
+         tlpA==
+X-Gm-Message-State: AHPjjUjzG9rG7glwbXdybq5A1NqgESEAns7NerWuR7A/tATIthPXcT14
+        m2a0S0i2gNOEaxQOwTFKwST2a4SK
+X-Google-Smtp-Source: AOwi7QC+7zhC5xbIEfXdViawXXrSLWf59Y9H5j7bCHozMO75pJxHip2ADcpOeTbFMTk/Wyo22/K6uw==
+X-Received: by 10.84.235.9 with SMTP id o9mr1728610plk.8.1505837290303;
+        Tue, 19 Sep 2017 09:08:10 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:288c:7217:eb8c:bacc])
+        by smtp.gmail.com with ESMTPSA id m15sm3544188pfh.35.2017.09.19.09.08.08
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 19 Sep 2017 09:08:09 -0700 (PDT)
+Date:   Tue, 19 Sep 2017 09:07:53 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org
 Subject: Re: What's cooking in git.git (Aug 2017, #05; Tue, 22)
-In-Reply-To: <xmqqbmm7s9ja.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.21.1.1709191733450.219280@virtualbox>
-References: <xmqq4lsz2x6r.fsf@gitster.mtv.corp.google.com> <7D99B245-4D22-4C9C-9C43-C8B8656F8E6D@gmail.com> <xmqq1so0wyjd.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.21.1.1709151816390.219280@virtualbox> <xmqqo9qbx14b.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.21.1.1709152214100.219280@virtualbox> <xmqq377nwtbe.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.21.1.1709181637420.219280@virtualbox> <xmqqbmm7s9ja.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+Message-ID: <20170919160753.GA75068@aiede.mtv.corp.google.com>
+References: <xmqq4lsz2x6r.fsf@gitster.mtv.corp.google.com>
+ <7D99B245-4D22-4C9C-9C43-C8B8656F8E6D@gmail.com>
+ <xmqq1so0wyjd.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.21.1.1709151816390.219280@virtualbox>
+ <xmqqo9qbx14b.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.21.1.1709152214100.219280@virtualbox>
+ <xmqq377nwtbe.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.21.1.1709181637420.219280@virtualbox>
+ <xmqqbmm7s9ja.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.21.1.1709191733450.219280@virtualbox>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:d65PpfPGw2XERbLjUc60AiPcXu2x538wBNK3RtDZKiXPSUevnc4
- IBS7K8ideCCPIhoXz80tWflyQ+zicZDPi/78l9uDW/BrQTL4SGgiVkYgM3xQE3ac6e2ddfK
- wj98HecrT/YePcA+Ehdhom4hh4vsg5MH+DVPuOzU8bazsnhG0mamjyna/mNE3VLIg2YcOxo
- 0psFJLkchp9vgQdSJFZUg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:vnQDV9rY7Tw=:7ITwi6h31XSZgjmHQH03g0
- JAsd9w+sy2oQHOua5rTdXZ6VDAFj1n04UYNtt8XMfoItIHRAucuBeeaQyv8I+3suhfqgTNMSK
- LQsF9SpyMecAUeHJ80QWdSchn0a1YRCAMocXk95K7tVQL2bMSKBZMbBvnW40uyvnwfrkCJbJI
- gGrwSzBt+RBaMFHlcZ20TJxZfiDWeW3V7Ld/p+6nC50xam+6j5PDKhqqfiZTbLrm1Dg6BsBHA
- fg5o8elmxjlGQwBeOFU3CuGV/QJVGk2IGH3nLk753CaNwC0ikBhuJVoAWEsZxyZVQg4438jWR
- zEWWeUdLhZ6AnxwXkx2wUy9LXSvwr4gl+hfFzKweHjTsRmfwpDoMTdjSQGvF5I1NdnzoE4y1g
- Yj3JVGCub24izvzSML/H+0ppRB+NzUpA7TS6ZuxckbBYbtiXfohc/PO7z0WmhY7n7PJ6D3j0w
- 8ZtBM8/V5YX8bs0VB2pOAFlRtrvL1+MWrzOmkYoNEBdk0J5wo1nUsMPa4jWivSlXINg/CEWRi
- B3oiNTrBwptaZAxM2TY2IgOEcjAez9Imumy/iv0m6ygLvMQOiR7EmPRi4gFKy5bNnrjshFb/0
- ewd/qlHJIhmDdh4en/npbqHar06KsAtrvvBsPhv77/4hYmEXyGlsjc4Rf8eP7ZgrWM47v7UDW
- Ruwvr+5/R3ptNkSL6wLq/eFFRhjfK6fH3Cyy/nU6g32uOXRHi/5jplfWOHmaHpzWYkzlSyKYP
- DeHT5WRREVEa/XBKC+6cFOGxye53g6o8joWpcKfrIOngr26wTRLUeSxZU/1WKlGfVjHuc3JBO
- zy9Dn49HyIgtD4l6CPcYQ12QCMxl8drUbm68159zWzdxKX5TUM=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.21.1.1709191733450.219280@virtualbox>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi,
 
-On Tue, 19 Sep 2017, Junio C Hamano wrote:
+Johannes Schindelin wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> >> Do you have a concrete suggestion to make these individual entries
-> >> more helpful for people who may want go back to the original thread
-> >> in doing so?  In-reply-to: or References: fields of the "What's
-> >> cooking" report would not help.  I often have the message IDs that
-> >> made/helped me make these individual comments in the description;
-> >> they alone would not react to mouse clicks, though.
-> >
-> > Oh gawd, not even more stuff piled onto the mail format. Please stop.
-> > ...
-> > It probably tries to serve too many purposes at the same time, and
-> > thereby none.
-> 
-> Well, this was started as my attempt to give a public service that shows
-> a summary of what is happening in the entire integration tree, as there
-> was nothing like that before (and going to github.com and looking at
-> 'pu' branch would not give you an easy overview).  As many people
-> contribute many topics to the project, complaining that it talks about
-> too many topics would not get you anywhere.
-> 
-> If you find "What's cooking" report not serving your needs, and if no
-> one finds it not serving his or her needs, then I can stop sending these
-> out, of course, but I am not getting the impression that we are at that
-> point, at least not yet.
+> To relate that, you are using a plain text format that is not well defined
+> and not structured, and certainly not machine-readable, for information
+> that is crucial for project management.
+>
+> What you need is a tool to aggregate this information, to help working
+> with it, to manage the project, and to be updated automatically. And to
+> publish this information continuously, without costing you extra effort.
+>
+> I understand that you started before GitHub existed, and before GitHub was
+> an option, the script-generated What's cooking mail was the best you could
+> do.
 
-C'mon, don't *try* to misunderstand me.
+I think you are subtly (but not directly, for some reason?) advocating
+moving project management for the Git project to GitHub Issues.
 
-Of course there need to be updates as to the state of patch series.
+For what it's worth:
 
-It's just that mails only go *so* far when you need to connect and
-aggregate information. You need the connection between the original patch
-series, the latest unaddressed reviews, links to the branches, history of
-the patch series' iterations, and ideally links to the repositories of the
-contributors with *their* branch names. And then, of course, your verdict
-as to the state of the patch series and your expectation what happens
-next.
+ 1. I would be happy to see Git adopt a bug tracker.  As we've
+    discussed on the list before, I suspect the only way that this is
+    going to happen is if some contributors start using a bug tracker
+    and keep up with bugs there, without requiring everyone to use it.
+    That is how the Linux Kernel project started using
+    bugzilla.kernel.org, for example.
 
-To relate that, you are using a plain text format that is not well defined
-and not structured, and certainly not machine-readable, for information
-that is crucial for project management.
+ 2. GitHub Issues is one of my least favorite bug trackers, for what
+    it's worth.  If some sub-project of Git chooses to use it, then
+    that's great and I won't get in their way.  I'm just providing
+    this single data point that approximately any other tracker
+    (Bugzilla, JIRA, debbugs, patchwork) is something I'd be more
+    likely to use.
 
-What you need is a tool to aggregate this information, to help working
-with it, to manage the project, and to be updated automatically. And to
-publish this information continuously, without costing you extra effort.
+ 3. This advice might feel hopeless, because if the maintainer is not
+    involved in the initial pilot, then how does the bug tracker get
+    notified when a patch has been accepted?  But fortunately this is
+    a problem other people have solved: e.g. most bug trackers have an
+    API that can be used to automatically notify the bug when a patch
+    with a certain subject line appears on a certain branch.
 
-I understand that you started before GitHub existed, and before GitHub was
-an option, the script-generated What's cooking mail was the best you could
-do.
-
-Ciao,
-Dscho
+Thanks and hope that helps,
+Jonathan
