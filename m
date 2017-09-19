@@ -6,26 +6,26 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C50FE20281
-	for <e@80x24.org>; Tue, 19 Sep 2017 06:23:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5DEF120281
+	for <e@80x24.org>; Tue, 19 Sep 2017 06:23:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751425AbdISGW7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Sep 2017 02:22:59 -0400
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:44597 "EHLO
-        alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751408AbdISGW6 (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 19 Sep 2017 02:22:58 -0400
-X-AuditID: 12074412-1e5ff7000000748d-45-59c0b7c12f9c
+        id S1751451AbdISGXD (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Sep 2017 02:23:03 -0400
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:45145 "EHLO
+        alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751408AbdISGXB (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 19 Sep 2017 02:23:01 -0400
+X-AuditID: 12074411-f7dff70000007f0a-dd-59c0b7c32b82
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id A0.CB.29837.1C7B0C95; Tue, 19 Sep 2017 02:22:57 -0400 (EDT)
+        by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id E5.50.32522.3C7B0C95; Tue, 19 Sep 2017 02:22:59 -0400 (EDT)
 Received: from bagpipes.fritz.box (p54AAE885.dip0.t-ipconnect.de [84.170.232.133])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v8J6MV1h002857
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v8J6MV1i002857
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Tue, 19 Sep 2017 02:22:55 -0400
+        Tue, 19 Sep 2017 02:22:58 -0400
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Stefan Beller <sbeller@google.com>,
@@ -35,298 +35,59 @@ Cc:     Stefan Beller <sbeller@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Brandon Williams <bmwill@google.com>,
         git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 10/21] mmapped_ref_iterator: add iterator over a packed-refs file
-Date:   Tue, 19 Sep 2017 08:22:18 +0200
-Message-Id: <aab75b5a61b5b71248267d29c04254b60f4ae385.1505799700.git.mhagger@alum.mit.edu>
+Subject: [PATCH v2 11/21] mmapped_ref_iterator_advance(): no peeled value for broken refs
+Date:   Tue, 19 Sep 2017 08:22:19 +0200
+Message-Id: <d34d2cbde67e9ef0b0b11910de19c7f722c2314c.1505799700.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.14.1
 In-Reply-To: <cover.1505799700.git.mhagger@alum.mit.edu>
 References: <cover.1505799700.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrLIsWRmVeSWpSXmKPExsUixO6iqHtw+4FIgzc7jS3WPrvDZPF8/Ql2
-        i64r3UwWDb1XmC36l3exWdxeMZ/ZonvKW0aLHy09zBabN7ezOHB6/H3/gclj56y77B4fPsZ5
-        LNhU6vGsdw+jx8VLyh6fN8kFsEdx2aSk5mSWpRbp2yVwZZzZeIa9YJ99xbZTt9kaGDuMuxg5
-        OSQETCRW/P/G2sXIxSEksINJYk7XIyYI5xSTxK+rU1hBqtgEdCUW9TQzgdgiAmoSE9sOsYAU
-        MQusZJaYtPUKWJGwQIjErnt/mUFsFgFViUe/rrGB2LwCURKvjy9mh1gnL3HuwW2wGk4BC4nm
-        PduBBnEAbTOXOHC0eAIjzwJGhlWMcok5pbm6uYmZOcWpybrFyYl5ealFumZ6uZkleqkppZsY
-        ISEntINx/Um5Q4wCHIxKPLwC1/ZHCrEmlhVX5h5ilORgUhLlDdt0IFKILyk/pTIjsTgjvqg0
-        J7X4EKMEB7OSCO+hRUA53pTEyqrUonyYlDQHi5I478/F6n5CAumJJanZqakFqUUwWRkODiUJ
-        3sXbgBoFi1LTUyvSMnNKENJMHJwgw3mAhheD1PAWFyTmFmemQ+RPMepydNy8+4dJiCUvPy9V
-        Spz3PkiRAEhRRmke3BxYqnjFKA70ljDvHpAqHmCagZv0CmgJE9CS7A1gS0oSEVJSDYyi60zN
-        mzj/11+eMf2Sob2gUtAdj/De7WLHzvioVlVcMbIzNotsPzlre6rJMVPV+lf99fI6IZPmhzc6
-        cu3oEzGQUM595jTjSIiCwxwuwe8uHF6rb2yak/jPSINFK+SPn821HdNnPDI69OVw/Yv3l4/v
-        3nw81GhOwMZZLiueCvK1Zz9TL2kI2azEUpyRaKjFXFScCAAR85/V8AIAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrMIsWRmVeSWpSXmKPExsUixO6iqHtk+4FIg+vtzBZrn91hsni+/gS7
+        RdeVbiaLht4rzBb9y7vYLG6vmM9s0T3lLaPFj5YeZovNm9tZHDg9/r7/wOSxc9Zddo8PH+M8
+        Fmwq9XjWu4fR4+IlZY/Pm+QC2KO4bFJSczLLUov07RK4MqZPOspacIa94tmPSWwNjD1sXYyc
+        HBICJhLTdjczdzFycQgJ7GCS+NDSCOWcYpKYPvsQWBWbgK7Eop5mJhBbREBNYmLbIRaQImaB
+        lcwSk7ZeYQVJCAtESix7NBusiEVAVeLq2T52EJtXIEqif95zVoh18hLnHtxmBrE5BSwkmvds
+        BxrEAbTNXOLA0eIJjDwLGBlWMcol5pTm6uYmZuYUpybrFicn5uWlFuma6uVmluilppRuYoSE
+        nOAOxhkn5Q4xCnAwKvHwClzbHynEmlhWXJl7iFGSg0lJlDds04FIIb6k/JTKjMTijPii0pzU
+        4kOMEhzMSiK8hxYB5XhTEiurUovyYVLSHCxK4rx8S9T9hATSE0tSs1NTC1KLYLIyHBxKEryL
+        twE1ChalpqdWpGXmlCCkmTg4QYbzAA0vBqnhLS5IzC3OTIfIn2I05rjx8PofJo6Om3f/MAmx
+        5OXnpUqJ894HKRUAKc0ozYObBksbrxjFgZ4T5t0DUsUDTDlw814BrWICWpW9AWxVSSJCSqqB
+        kbHjDBvLtZR2oQ1OtvXfuWIPTHSRWi5Yt/HEqc6/StemLlJ8bRMy6Y/3if9CbpwqF2K0uroq
+        NrjN2vQmdOPXd5uWM7d8PKjabrH1gl6k2oxbzJxGz1/O/e0WvTZcfNvrPo+d/2vCLacsr+fk
+        2s8eph0hq+wflrVmrmGNscjGJ1LTFCfaLVB6oMRSnJFoqMVcVJwIAP6cBD72AgAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a new `mmapped_ref_iterator`, which can iterate over the
-references in an mmapped `packed-refs` file directly. Use this
-iterator from `read_packed_refs()` to fill the packed refs cache.
-
-Note that we are not yet willing to promise that the new iterator
-generates its output in order. That doesn't matter for now, because
-the packed refs cache doesn't care what order it is filled.
-
-This change adds a lot of boilerplate without providing any obvious
-benefits. The benefits will come soon, when we get rid of the
-`ref_cache` for packed references altogether.
+If a reference is broken, suppress its peeled value.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs/packed-backend.c | 207 ++++++++++++++++++++++++++++++++++++--------------
- 1 file changed, 152 insertions(+), 55 deletions(-)
+ refs/packed-backend.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index ae276f3445..312116a99d 100644
+index 312116a99d..724c88631d 100644
 --- a/refs/packed-backend.c
 +++ b/refs/packed-backend.c
-@@ -163,6 +163,141 @@ static NORETURN void die_invalid_line(const char *path,
+@@ -234,9 +234,15 @@ static int mmapped_ref_iterator_advance(struct ref_iterator *ref_iterator)
  
- }
- 
-+/*
-+ * An iterator over a packed-refs file that is currently mmapped.
-+ */
-+struct mmapped_ref_iterator {
-+	struct ref_iterator base;
-+
-+	struct packed_ref_cache *packed_refs;
-+
-+	/* The current position in the mmapped file: */
-+	const char *pos;
-+
-+	/* The end of the mmapped file: */
-+	const char *eof;
-+
-+	struct object_id oid, peeled;
-+
-+	struct strbuf refname_buf;
-+};
-+
-+static int mmapped_ref_iterator_advance(struct ref_iterator *ref_iterator)
-+{
-+	struct mmapped_ref_iterator *iter =
-+		(struct mmapped_ref_iterator *)ref_iterator;
-+	const char *p = iter->pos, *eol;
-+
-+	strbuf_reset(&iter->refname_buf);
-+
-+	if (iter->pos == iter->eof)
-+		return ref_iterator_abort(ref_iterator);
-+
-+	iter->base.flags = REF_ISPACKED;
-+
-+	if (iter->eof - p < GIT_SHA1_HEXSZ + 2 ||
-+	    parse_oid_hex(p, &iter->oid, &p) ||
-+	    !isspace(*p++))
-+		die_invalid_line(iter->packed_refs->refs->path,
-+				 iter->pos, iter->eof - iter->pos);
-+
-+	eol = memchr(p, '\n', iter->eof - p);
-+	if (!eol)
-+		die_unterminated_line(iter->packed_refs->refs->path,
-+				      iter->pos, iter->eof - iter->pos);
-+
-+	strbuf_add(&iter->refname_buf, p, eol - p);
-+	iter->base.refname = iter->refname_buf.buf;
-+
-+	if (check_refname_format(iter->base.refname, REFNAME_ALLOW_ONELEVEL)) {
-+		if (!refname_is_safe(iter->base.refname))
-+			die("packed refname is dangerous: %s",
-+			    iter->base.refname);
-+		oidclr(&iter->oid);
-+		iter->base.flags |= REF_BAD_NAME | REF_ISBROKEN;
-+	}
-+	if (iter->packed_refs->peeled == PEELED_FULLY ||
-+	    (iter->packed_refs->peeled == PEELED_TAGS &&
-+	     starts_with(iter->base.refname, "refs/tags/")))
-+		iter->base.flags |= REF_KNOWS_PEELED;
-+
-+	iter->pos = eol + 1;
-+
-+	if (iter->pos < iter->eof && *iter->pos == '^') {
-+		p = iter->pos + 1;
-+		if (iter->eof - p < GIT_SHA1_HEXSZ + 1 ||
-+		    parse_oid_hex(p, &iter->peeled, &p) ||
-+		    *p++ != '\n')
-+			die_invalid_line(iter->packed_refs->refs->path,
-+					 iter->pos, iter->eof - iter->pos);
-+		iter->pos = p;
-+
-+		/*
-+		 * Regardless of what the file header said, we
-+		 * definitely know the value of *this* reference:
-+		 */
-+		iter->base.flags |= REF_KNOWS_PEELED;
-+	} else {
-+		oidclr(&iter->peeled);
-+	}
-+
-+	return ITER_OK;
-+}
-+
-+static int mmapped_ref_iterator_peel(struct ref_iterator *ref_iterator,
-+				    struct object_id *peeled)
-+{
-+	struct mmapped_ref_iterator *iter =
-+		(struct mmapped_ref_iterator *)ref_iterator;
-+
-+	if ((iter->base.flags & REF_KNOWS_PEELED)) {
-+		oidcpy(peeled, &iter->peeled);
-+		return is_null_oid(&iter->peeled) ? -1 : 0;
-+	} else if ((iter->base.flags & (REF_ISBROKEN | REF_ISSYMREF))) {
-+		return -1;
-+	} else {
-+		return !!peel_object(iter->oid.hash, peeled->hash);
-+	}
-+}
-+
-+static int mmapped_ref_iterator_abort(struct ref_iterator *ref_iterator)
-+{
-+	struct mmapped_ref_iterator *iter =
-+		(struct mmapped_ref_iterator *)ref_iterator;
-+
-+	release_packed_ref_cache(iter->packed_refs);
-+	strbuf_release(&iter->refname_buf);
-+	base_ref_iterator_free(ref_iterator);
-+	return ITER_DONE;
-+}
-+
-+static struct ref_iterator_vtable mmapped_ref_iterator_vtable = {
-+	mmapped_ref_iterator_advance,
-+	mmapped_ref_iterator_peel,
-+	mmapped_ref_iterator_abort
-+};
-+
-+struct ref_iterator *mmapped_ref_iterator_begin(
-+		const char *packed_refs_file,
-+		struct packed_ref_cache *packed_refs,
-+		const char *pos, const char *eof)
-+{
-+	struct mmapped_ref_iterator *iter = xcalloc(1, sizeof(*iter));
-+	struct ref_iterator *ref_iterator = &iter->base;
-+
-+	base_ref_iterator_init(ref_iterator, &mmapped_ref_iterator_vtable, 0);
-+
-+	iter->packed_refs = packed_refs;
-+	acquire_packed_ref_cache(iter->packed_refs);
-+	iter->pos = pos;
-+	iter->eof = eof;
-+	strbuf_init(&iter->refname_buf, 0);
-+
-+	iter->base.oid = &iter->oid;
-+
-+	return ref_iterator;
-+}
-+
- /*
-  * Read from the `packed-refs` file into a newly-allocated
-  * `packed_ref_cache` and return it. The return value will already
-@@ -199,9 +334,10 @@ static struct packed_ref_cache *read_packed_refs(struct packed_ref_store *refs)
- 	struct stat st;
- 	size_t size;
- 	char *buf;
--	const char *pos, *eol, *eof;
--	struct strbuf tmp = STRBUF_INIT;
-+	const char *pos, *eof;
- 	struct ref_dir *dir;
-+	struct ref_iterator *iter;
-+	int ok;
- 
- 	packed_refs->refs = refs;
- 	acquire_packed_ref_cache(packed_refs);
-@@ -235,7 +371,9 @@ static struct packed_ref_cache *read_packed_refs(struct packed_ref_store *refs)
- 
- 	/* If the file has a header line, process it: */
- 	if (pos < eof && *pos == '#') {
-+		struct strbuf tmp = STRBUF_INIT;
- 		char *p;
-+		const char *eol;
- 		struct string_list traits = STRING_LIST_INIT_NODUP;
- 
- 		eol = memchr(pos, '\n', eof - pos);
-@@ -259,69 +397,28 @@ static struct packed_ref_cache *read_packed_refs(struct packed_ref_store *refs)
- 		pos = eol + 1;
- 
- 		string_list_clear(&traits, 0);
--		strbuf_reset(&tmp);
-+		strbuf_release(&tmp);
+ 		/*
+ 		 * Regardless of what the file header said, we
+-		 * definitely know the value of *this* reference:
++		 * definitely know the value of *this* reference. But
++		 * we suppress it if the reference is broken:
+ 		 */
+-		iter->base.flags |= REF_KNOWS_PEELED;
++		if ((iter->base.flags & REF_ISBROKEN)) {
++			oidclr(&iter->peeled);
++			iter->base.flags &= ~REF_KNOWS_PEELED;
++		} else {
++			iter->base.flags |= REF_KNOWS_PEELED;
++		}
+ 	} else {
+ 		oidclr(&iter->peeled);
  	}
- 
- 	dir = get_ref_dir(packed_refs->cache->root);
--	while (pos < eof) {
--		const char *p = pos;
--		struct object_id oid;
--		const char *refname;
--		int flag = REF_ISPACKED;
--		struct ref_entry *entry = NULL;
--
--		if (eof - pos < GIT_SHA1_HEXSZ + 2 ||
--		    parse_oid_hex(p, &oid, &p) ||
--		    !isspace(*p++))
--			die_invalid_line(refs->path, pos, eof - pos);
-+	iter = mmapped_ref_iterator_begin(refs->path, packed_refs, pos, eof);
-+	while ((ok = ref_iterator_advance(iter)) == ITER_OK) {
-+		struct ref_entry *entry =
-+			create_ref_entry(iter->refname, iter->oid, iter->flags);
- 
--		eol = memchr(p, '\n', eof - p);
--		if (!eol)
--			die_unterminated_line(refs->path, pos, eof - pos);
--
--		strbuf_add(&tmp, p, eol - p);
--		refname = tmp.buf;
--
--		if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
--			if (!refname_is_safe(refname))
--				die("packed refname is dangerous: %s", refname);
--			oidclr(&oid);
--			flag |= REF_BAD_NAME | REF_ISBROKEN;
--		}
--		if (packed_refs->peeled == PEELED_FULLY ||
--		    (packed_refs->peeled == PEELED_TAGS &&
--		     starts_with(refname, "refs/tags/")))
--			flag |= REF_KNOWS_PEELED;
--		entry = create_ref_entry(refname, &oid, flag);
-+		if ((iter->flags & REF_KNOWS_PEELED))
-+			ref_iterator_peel(iter, &entry->u.value.peeled);
- 		add_ref_entry(dir, entry);
--
--		pos = eol + 1;
--
--		if (pos < eof && *pos == '^') {
--			p = pos + 1;
--			if (eof - p < GIT_SHA1_HEXSZ + 1 ||
--			    parse_oid_hex(p, &entry->u.value.peeled, &p) ||
--			    *p++ != '\n')
--				die_invalid_line(refs->path, pos, eof - pos);
--
--			/*
--			 * Regardless of what the file header said,
--			 * we definitely know the value of *this*
--			 * reference:
--			 */
--			entry->flag |= REF_KNOWS_PEELED;
--
--			pos = p;
--		}
--
--		strbuf_reset(&tmp);
- 	}
- 
-+	if (ok != ITER_DONE)
-+		die("error reading packed-refs file %s", refs->path);
-+
- 	if (munmap(buf, size))
--		die_errno("error ummapping packed-refs file");
-+		die_errno("error ummapping packed-refs file %s", refs->path);
-+
- 	close(fd);
- 
--	strbuf_release(&tmp);
- 	return packed_refs;
- }
- 
 -- 
 2.14.1
 
