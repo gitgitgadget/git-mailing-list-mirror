@@ -6,32 +6,32 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A65882047F
-	for <e@80x24.org>; Tue, 19 Sep 2017 19:29:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED30C2047F
+	for <e@80x24.org>; Tue, 19 Sep 2017 19:29:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751397AbdIST3C (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Sep 2017 15:29:02 -0400
+        id S1751513AbdIST3E (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Sep 2017 15:29:04 -0400
 Received: from mail-dm3nam03on0134.outbound.protection.outlook.com ([104.47.41.134]:8672
         "EHLO NAM03-DM3-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1751509AbdIST2x (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Sep 2017 15:28:53 -0400
+        id S1751502AbdIST2s (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Sep 2017 15:28:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=GT/u0nGqE3nATT1lTnb/48l/kv807jGnW5HNa2562HI=;
- b=OHiF130NlFHtsBX0TXqR6y4ifnSWc/d8c08mFo70P+dojUyAAd9MK7+Jf7URKo9MwVLwFQnX0N907u7KXEtD+NXPqpKPcnVIQVX69YUSE1S/aC9SYrU6ARpJmOyaMm0mP2msiapuXxqgcxXD8mx3mJhQLHh7s80QzxPFiQqtwl4=
+ bh=6wLFU4ALya5xzcGekap8V3/uUq2ltsv/FMcWR5H0GjU=;
+ b=WsQIbkwTaUFXnyT12QHiJAjZO6aGfF8D5eT2KzuE+i1et43s5/3GS5BUruJtZ8CE2DmbvsHEbAv6h6Ibl5NV9ozJcAltcY4XE3PPLjP08kxjJXebgLcgcoboF1Y/N6XATU99x4a0g3vL18IYBci5IZnNiNySGgBam4AI5u7QqfE=
 Received: from localhost.localdomain (65.222.173.206) by
  CY4PR21MB0471.namprd21.prod.outlook.com (10.172.121.149) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id
- 15.20.98.1; Tue, 19 Sep 2017 19:28:43 +0000
+ 15.20.98.1; Tue, 19 Sep 2017 19:28:41 +0000
 From:   Ben Peart <benpeart@microsoft.com>
 To:     benpeart@microsoft.com
 Cc:     David.Turner@twosigma.com, avarab@gmail.com,
         christian.couder@gmail.com, git@vger.kernel.org, gitster@pobox.com,
         johannes.schindelin@gmx.de, pclouds@gmail.com, peff@peff.net
-Subject: [PATCH v7 12/12] fsmonitor: add a performance test
-Date:   Tue, 19 Sep 2017 15:27:44 -0400
-Message-Id: <20170919192744.19224-13-benpeart@microsoft.com>
+Subject: [PATCH v7 11/12] fsmonitor: add a sample integration script for Watchman
+Date:   Tue, 19 Sep 2017 15:27:43 -0400
+Message-Id: <20170919192744.19224-12-benpeart@microsoft.com>
 X-Mailer: git-send-email 2.14.1.windows.1
 In-Reply-To: <20170919192744.19224-1-benpeart@microsoft.com>
 References: <20170915192043.4516-1-benpeart@microsoft.com>
@@ -43,58 +43,59 @@ X-Originating-IP: [65.222.173.206]
 X-ClientProxiedBy: DM5PR03CA0030.namprd03.prod.outlook.com (10.174.189.147) To
  CY4PR21MB0471.namprd21.prod.outlook.com (10.172.121.149)
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: b2f0923b-d712-4010-d9ab-08d4ff94a46b
+X-MS-Office365-Filtering-Correlation-Id: 55a56b6d-537b-49f5-9573-08d4ff94a384
 X-MS-Office365-Filtering-HT: Tenant
 X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:(300000500095)(300135000095)(300000501095)(300135300095)(22001)(300000502095)(300135100095)(2017030254152)(300000503095)(300135400095)(48565401081)(2017052603199)(201703131423075)(201703031133081)(201702281549075)(300000504095)(300135200095)(300000505095)(300135600095)(300000506095)(300135500095);SRVR:CY4PR21MB0471;
-X-Microsoft-Exchange-Diagnostics: 1;CY4PR21MB0471;3:gXwY6dkbfvcO5craHGyDznNns3ENjYv0rYdHuHNGzoi4orQK6eS5j05S/7djsgdsm922mzvrSdk2QYJ1CHk+uTg0ulYEoLE8caAhmKjAoaAetbiLkT25heQEVeWcEbauR38a2BTs5AcYOjlgeLEnU59neUzUA0ryDMvE+SZqjZVZjcV/g0eQqZlNq9dLiP70Ovs9DN3VrkaYfJAYRC1pSFzUE15mId6qA5ntRaf0gcRaY4RjUn4ycxku1I4saBDz;25:/Pkpf+u7pfw/FpoFAqn0jQvp6I9l7beaqe0Mb0so0a21WMQ2jieg+LATriK9yUovb1oa+bEefvUKv0JCpTcU6ZJIBMwJZlbOX77AsbW1+DVlvnXrqJuiiEnnK75EeucnpHOO5+X90YMEAFf5kCZol7K39st0Pho/eX0HyEdVRIClxiCdwLDiyBL4iCmQJ4FAWLrhmfCeOID2juZYBhNuNd+5NFzxNQpndGE/ShtGzZ8+rWXqcG6vg6f+dwrdiVyrLwQE+eI7cCP7YnWgAVb9VyxFAT1tc8sWDJ7vMN1vt1RW4iEcZj+oRjdsLzAlrBrjGVhkFrNicDTEywEz5nJ/dA==;31:QGuoP3uIU5rfeGzwBAedvwL5VYaJKdd6HlXvYLELJbql/xppkv1XZkLfPZcbZt5veWbwIHnO5VKRzq2S2GhBAnoDVOvaA+4hh6BTfdbZ5zKDjx6UwB8nCJpoEET1b8/g6JoWyvyQDuFMuvG/hF9SW17fk81NRhT7q7N1LiSCoygZnmf/iDaHXAeagXInkthEuUNYKXSbmMMIueEFJ+T15oYon6ouHHNPi9nQv1i9m+c=
+X-Microsoft-Exchange-Diagnostics: 1;CY4PR21MB0471;3:gDlBHUassOI3LcVJC+jj1hL2m0XpDt+KV16+GSkmzuz/9E0+uVMTRvUM62QjJv9999ajLILeUCSDDD+NhGsBt/Hte7D97f4oWAX6vmmQKYxJ03QkmLZ38IfKa1HHAfId0biystZ97G4jDJc8H2fOessooSsbU4XNqY31lxNrGZWbH60f3b0qA2CUEz6Hb23O1en4IvYfxuUfdJDlHSfOB/Cyq5gfT8y1sXdY15/an0k29OGS67EhykZgDUmi9IXS;25:G+e2hT0nFl/0qlJA2g64943uDKJzl7bAtp3YfH3LrQTtFo15QYXpHKv5NnCvU2ozrNA/9q2AM7oIWhnxY1alWc8rOCPYUYIpxc7JryQBIirEBidDsPZJ4JsmcyB1eToIS1TnuLjUjbqUC2Nb5s86PhPuRD8OqbqO9gSYmYnDRevOuZRKRlWxN/aPQQzRxnO+IM9ECXO/AxKCkwia3k6a22O7o6Pp58ezNL6HOSQUepGAOMA4auU6sJnF4X/mzTInwZhzUn80l8Q6DpiJm7pNeCMuLsflpj4w4ra5u/cDvzWFnVvM9GNael3xJREsBvnlK7R9OTsavWBB8is8YmlH+A==;31:5JLQ5nkbK2uKYYvNqGw3CIcQwtLrK4RAz7XymyIL6eHzKQDpx/22kLawuiUu/Tib1S/HZCRywR8djJApXZ6Y6zbk+ZSWXdEwRpfgAuGhijKehxd1yBL0PPNXPMOl9mDAJYohHxsZso02DCGKKJlkyv8PqoaQ1LWGrTAhPtKM+pehNMxHUePkC0wANJiScplt9tyfeqc54X60M5V63iNo7Z4FwynQBtGDS1ymi60r+EU=
 X-MS-TrafficTypeDiagnostic: CY4PR21MB0471:
 Authentication-Results: spf=none (sender IP is )
  smtp.mailfrom=Ben.Peart@microsoft.com; 
-X-Microsoft-Exchange-Diagnostics: 1;CY4PR21MB0471;20:NOwpRTLeLzCHwm35tOKnsJxerJB196SWxmFTZ0RATAk0jNV6T64jtWOV2O1OJAxA+75bXZuQCrylsuL73EsjfUPRBqqY/qeIpo28izhai7Iwz+yVQnl+nJhB7+0Lm6E8XJ/7paHUGzFyCb+PWDBJCU+O3EDevth6OwWXow3xsyEDVDSO25bExrTYnuD6KP5E1SWdSUoiOAaJcG4T8/imE5KwWecleRoe+taVC8rjSzQRQKkwvyMTb5S6jdJNn+/JMb5G5eRacrXe/HuMZ3ne1VXaBFnkwECXsJ254Nctj1xEaIRTRB324qR1fUSzcs2UXHZE87zIhz6eXV/bDYWWzPRj3jC/65s08SuFAOMjqST7KUTnzUBZbiwO6aoalP0L3OzSR67cWb/rzuzrEFaM+5tECcywwM7d25OM8z8HKXR586X+hY6Mh6sbiOSRVSmh0VP0TSacQzK/5SgRH8i7yhr5JGO4FmM86LS42thzTa2lun1/5K2ZrOKarKb5R2cH;4:9zNaKCc95uJB/ZBGa7IHYQ2b5r31etzMmiIB3IYYzUgwnYtK3iqk1iuY6K8MyPEdaQH1FQ17rWzaG825fWu0LEK3KmdlLnqrIBZDdGRV1kYS5DE3apK7Ir0keqYoEwZ8ruNOxDroG6uYjAN95gaBO3/xwb3yG2NDvKgscHr0nqffHi8jRMq9naiMFMULSYFVboAFyBigXAhq0+l+9aZohcUicvdxRWLFAG0WKjvjXoqeidd9QOiD4FkGFbGpaUrLbU9q1cs8UUsct8yx4SExty57E6JN1ePSbK78IIQxy1c=
-X-Exchange-Antispam-Report-Test: UriScan:(89211679590171);
-X-Microsoft-Antispam-PRVS: <CY4PR21MB047156D211B316D9422BFBA1F4600@CY4PR21MB0471.namprd21.prod.outlook.com>
+X-Microsoft-Exchange-Diagnostics: 1;CY4PR21MB0471;20:w+L0gTNmOiKdBgCKwFKnjtCzdNAbdxwINIf44fYJIF23FWARsZMcdZUVHKIVjcJO+4ZbRymgfezoy0PjpIUB1iMI0ba78KajbrL/2AokAG6Dwa5Q7AaAupySqYypTCScwxeK2Q8cMVSLXuLwiBX0deeAlGsVozEPSQq4qlUyFF6whyHY2NfzVd3pGiz5JgrxUyvZ0iamHO3k+v3uVjdhqVf1nLwxHi9gtmOKswvnzbI9U9RMG+vH8HeerlhwlNG/9ckrShZI1opmamMaWCvFLa08fMAo+X9kD3UVdESOBXco1xvm86hiFyRlsf6FZLJ6PDKAsA/74tMb+F/K2cbSPkCNdSeZzkhwUBTsnld/SDLEcQoJ9uiRF9Ns4tXmDpcgEBsYZiKCA+/gAM1dI5aG8b8CSRQqwZyYxE/K3o0JGhMg8gbGntLYTbXQaNUi+2zvg2y/xu/UlYhBkSJQnV+z1reXl0fhhtbGxrzygnGHaJqWTCE3KxJCxcVOwjtuGNO+;4:3U1o7ZvuoDGlMQYnZY9E9rf1YmxEDmS3nlrbsm1fJCNRTa09g5g30lQsWZL0Op2Si9DKsCOb/1/LHxFPwPx0SFfbIehvVtCbg6Aj/BizKK4TM8xdHeLuQCCZS8WhHNeFlzlxciu2yMU/yPCcBUo/GPJ96ZSvGjFUZ+JPkcEgdSVAaB5BOKjuXCAkWU49u9I0howws1LObAwMiqRLYyxRO+UsbFDStZVCCTufhxsOxGOjGoGGhD6Sc4I34sWH2yn7qjiZs0gDr9YZcpvCA0DPGyFoDPa+JhVdCCh3Oul+xLh3fQk6YEIdnSVXYNcUFHMkednbGntvOBpt0b7Ce0DE2w==
+X-Exchange-Antispam-Report-Test: UriScan:(26323138287068)(89211679590171);
+X-Microsoft-Antispam-PRVS: <CY4PR21MB04710AF32C6E657F30E01EDBF4600@CY4PR21MB0471.namprd21.prod.outlook.com>
 X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(100000700101)(100105000095)(100000701101)(100105300095)(100000702101)(100105100095)(61425038)(6040450)(2401047)(5005006)(8121501046)(93006095)(93001095)(100000703101)(100105400095)(10201501046)(3002001)(6055026)(61426038)(61427038)(6041248)(20161123562025)(201703131423075)(201702281528075)(201703061421075)(201703061406153)(20161123560025)(20161123564025)(20161123555025)(20161123558100)(6072148)(201708071742011)(100000704101)(100105200095)(100000705101)(100105500095);SRVR:CY4PR21MB0471;BCL:0;PCL:0;RULEID:(100000800101)(100110000095)(100000801101)(100110300095)(100000802101)(100110100095)(100000803101)(100110400095)(100000804101)(100110200095)(100000805101)(100110500095);SRVR:CY4PR21MB0471;
 X-Forefront-PRVS: 04359FAD81
-X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(6069001)(6009001)(346002)(376002)(39860400002)(47760400005)(189002)(199003)(25786009)(1076002)(2906002)(50226002)(478600001)(6486002)(5660300001)(33646002)(50466002)(23676002)(36756003)(8676002)(16526017)(10290500003)(316002)(37006003)(2870700001)(189998001)(97736004)(3846002)(22452003)(86612001)(81166006)(6116002)(305945005)(6512007)(4326008)(34206002)(101416001)(39060400002)(106356001)(105586002)(8656003)(76176999)(50986999)(68736007)(53936002)(2351001)(7736002)(10090500001)(81156014)(8666007)(72206003)(2361001)(1511001)(8936002)(47776003)(66066001)(2950100002)(6506006)(2421001)(22906009);DIR:OUT;SFP:1102;SCL:1;SRVR:CY4PR21MB0471;H:localhost.localdomain;FPR:;SPF:None;PTR:InfoNoRecords;MX:1;A:1;LANG:en;
+X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(6069001)(6009001)(346002)(376002)(39860400002)(47760400005)(189002)(199003)(25786009)(1076002)(2906002)(50226002)(478600001)(6486002)(5660300001)(33646002)(50466002)(23676002)(36756003)(8676002)(16526017)(10290500003)(316002)(37006003)(2870700001)(189998001)(97736004)(3846002)(22452003)(86612001)(81166006)(6116002)(305945005)(6512007)(4326008)(34206002)(101416001)(39060400002)(106356001)(105586002)(8656003)(76176999)(50986999)(68736007)(53936002)(2351001)(7736002)(10090500001)(81156014)(8666007)(72206003)(966005)(2361001)(1511001)(8936002)(47776003)(6306002)(66066001)(2950100002)(6506006)(2421001)(22906009)(171213001);DIR:OUT;SFP:1102;SCL:1;SRVR:CY4PR21MB0471;H:localhost.localdomain;FPR:;SPF:None;PTR:InfoNoRecords;MX:1;A:1;LANG:en;
 Received-SPF: None (protection.outlook.com: microsoft.com does not designate
  permitted sender hosts)
-X-Microsoft-Exchange-Diagnostics: =?utf-8?B?MTtDWTRQUjIxTUIwNDcxOzIzOm03alY1S0NNZy9WRFlTaHRTLzNmNFBuSDls?=
- =?utf-8?B?WUl5RFozVG9neGM3dUtKY3JUZUVTL3Q5YmIzdDgzMUVXQkk1QUNvVDdKbzdx?=
- =?utf-8?B?dHgxbEJ5Ry9Ocm43dWIxMkpDamJWNEs3ajdRYnJnSHZLdXdWMk1xRm11bnFE?=
- =?utf-8?B?eVprQlIyMXBhTzNEVVpjS2lnQzJFOC9YZGxOOWY4TmlabGRscFhYVTZsZllZ?=
- =?utf-8?B?aWx1cENyQUR2bzgrZlBXR3cwQVNxeUZlWTVJSG15MWl0aEJzYnVJdGZDU1d2?=
- =?utf-8?B?NEU0SjVKSmhDb3l0RHZVY09oTlBkU2JaWjJHSXpnZVp3bXd3Yit6a3lNZ1lk?=
- =?utf-8?B?elpVTExkL1IxalRjY2RmemczdVE3eEdrbTEwYTlYVkExTE40YzdCM0xGMEFE?=
- =?utf-8?B?LzNOL0J5NTNxZ0dUODRqeUo0QVlWek5uczBxNXI1Q2wrMDdBNE5wN25MU3JI?=
- =?utf-8?B?NWl3eG94SGdnK0xHT3JubVpiNDAxc1l1M1I3N0JWTnZrdVQwb2RzZkdXekdq?=
- =?utf-8?B?VDlZQXkvSFFpcGZrTHpmWkUwajJQcEgrVDJhcXdQQnN4NHlXbjRueDdPQm8r?=
- =?utf-8?B?WjAva3FuKyttbkQ0U3MvYllTZ1dEZk5Dd2ZZMVluYXltTFlXOXpsN2tIYUM2?=
- =?utf-8?B?bUNTRzR2a1BLanRJRHlIVU1yRU52UTdZbWhYSWdPTUNtS1l0N21BMzJKQVNy?=
- =?utf-8?B?bFJWZ1AzcVk3a1RRT2JUdkc2ejQ0VVVXWExMRy9TNmhYWDRyeVBMMmtDWkZQ?=
- =?utf-8?B?R2liYkJULy93S09wSWM5UGMxVmZ4WXJhSEk1VTVnZ21FYVJyZUpvSzJ6Q0tR?=
- =?utf-8?B?Y21RcEF2Smh5SEVjNjJPR28rU3dabzY0QXNWZ0VxNUk4NmdDWnZlcGVlUVFn?=
- =?utf-8?B?aERCVFF6cGltWGlpYUxHcFRkUElXV1Q1QU9nZUxZWHdkL05ucTdoTXBNNmtX?=
- =?utf-8?B?emRXM1hBK3QyN1BqMjF6d0NjLzFQUnJvZlcxZGM0UHVzd1RudEJiZU5CMmdX?=
- =?utf-8?B?dzVJRElJcGZCQ1UzM2syQVJQUUVYWWRCZHBjbzlNT29RbitjcitSczJsSkh2?=
- =?utf-8?B?K1Q5YmR1T0hXcXZXNW5DUzFxVkFDYWtEcmxyRGMvdHlCRUVnWnBrZEF5VGto?=
- =?utf-8?B?K0E4L1RzcG51dVZHcjk4QVdxaU4xcWg3MVhPZm9Gc2ZRY0NMa2MzaFlNMkFh?=
- =?utf-8?B?ZnYxYkFxZ0l1dXozbEpPQUlXOVFVMHV3dEdKbWxMWnZnZlVSOHhkeU5saTVF?=
- =?utf-8?B?bGJPeGhPTUw1WGdUVHJTSnpVUTd2ckFOaFpzK09XVmFNQ2l1TE9pWWR6MFR2?=
- =?utf-8?B?SmszR2ZhT2dDWTRKbzU4ZkMwdFBLRitGNFovZU0zejRsejZsak1hRDVwM3Za?=
- =?utf-8?B?eTA4NzVRTW5uOWNuRDFrVFBGbWJUVkpBZG0yc256TWZXVlRlbTJCYzNhSTlp?=
- =?utf-8?B?M2UxSnlDcCswT096bHdzT3R2d0E1YlB0c3lQaVU5dUpLVHBLQTA4NnFOVHlp?=
- =?utf-8?B?eE1iTzh6MVdocFp4M2FxYTdWNlZvNEZEUThpRUhQbEpmditSa1hTMFVKb1p4?=
- =?utf-8?B?TU9PV0tNNGhBMmdkLzI2TFRvZmczVkQ3SXR1a2kyK0hjRElnb25nRExVL2Uy?=
- =?utf-8?B?ZGxQbXgyVzROd3hvOENIMzMzeTlWQjk4b1FyNGtiQmVQWWNyTXRZbk5mdnRw?=
- =?utf-8?B?bFYzU0RKYW13MGVoQzVNZTA4NHhZL2g4enR1MHZrZDFzbWlWbU8wWk5TM1lv?=
- =?utf-8?B?bk9ReHhrakswamNldDlDemMvYnpJZ2t4cVExc1lNenZyLzNyRjZmUnpDY3pJ?=
- =?utf-8?B?aTl4YXhITE0xRkhUUzBMQVhjT3RyZEtpZHA3VUFLRmo0VFNoNEwxUU1LalBH?=
- =?utf-8?Q?yM2+9esi09YAj0TYFiebtvJ+YHEUfXla?=
-X-Microsoft-Exchange-Diagnostics: 1;CY4PR21MB0471;6:srqr+RlizRcQtI0k017XuNXfEj7ybBm1KtLD0JtCubYHVrnXaEOwi6TS8urFeez3+1YsPD+W9roGLNHMnGA3rYhFh8MC/oMq74F93AdXDokWb5TCdve94uKsvuwuaXBnaphesDYRTTSdSa8R9WFrbLz8u2reiAgiIviYcVG5DYvuQK/dAkbY1ue+URxRdmQGjpfqu0WUaks/rWAG2vhyiBf3+yx5yJpuBcGPWy6Uddb95p53xPxxvnoxHhwSvIpEsCEU6Ne+mRfCq/SRM9xdLMVulfkoeRQEuU0BxRqnGQGVAkn3tcwlAHeAhrBQrvzWfXERfgcPS0XpmAbcdlFDSg==;5:29oNY3vSDDn4Fh717U6ZZNeKKK5aNY/p6ncHoW/wIVy67NoqP0KDKbI1rXWlvtix2oRXCdgEfzywl7LIWD9JNJlBC6gbxMDVd7iUBKSqPRgBebcncHkdQ8hrPnF+yD+t242+AwiMOB3pGgjBDCEMbw==;24:v1T0dvgGStBOBxOK8OuhXyXpMl5d2iqmacUjQ/rEjGeKb/qOT/WMaoxGsoYh4Q/vzDDInx1Mmai5oOle3pArR2Zi7lYbZPPpuHjzCvGAIOs=;7:aE2WqRFL2kZKgWYU5pzswjuXDRxFQGnImbzR9bq4MUvDiXjCvRczUqsoIP4n2JcA4fq/JzqApK/7QPPy1sR/Bw9SoM9+3cnrAe+CCn+0zoqaoOkFfp7t2zkvbgyBLPvrv7c0PvAfKCPt/ZgjczCdlCWKpE+EtAxToAOzRs6go66nI03EJUB6ti/tCEhLQ4h21d/pdPJKp9LC1v02o9/nuT18wxRCwZRsVWIFgPIVYzo=
+X-Microsoft-Exchange-Diagnostics: =?utf-8?B?MTtDWTRQUjIxTUIwNDcxOzIzOm5RNTNReHljTklpZXptLzR5V29qWjBZTnVO?=
+ =?utf-8?B?alhhWlFCU3pUaC9FdWRDd2tvdE1sejk0YVRuMUl3VTRlbjJpaXI5UC9CMjhM?=
+ =?utf-8?B?VE03SGJXN25nSVBCa3AyOUFQc2swMmQ1Q05PdG0vWS8wV2ZvVnVGTmUrWk4v?=
+ =?utf-8?B?RzRJQkJMRUhsTTlCVkFhWWtTV0NGSUdyT2sxL3FkSUNzTzh6d010OE1vMUJ1?=
+ =?utf-8?B?dUxzU3djZlZKdkFCZlhZQ3Q4NEJNa0ZWSFVlN1FCMy81dm5tUzhkSDUyVjRO?=
+ =?utf-8?B?NzFGTFdxR3pHR3Z1ME9vNDY2cVNnNzJYU3YyOCtJUEZReUJ5LzYvMmNFQ1pR?=
+ =?utf-8?B?UkkxUmd1OHBmcUNsWERVY2licFhEcEdiSVF5VGpwbEVCT3BTaXhuVGgxR1Rm?=
+ =?utf-8?B?VTA1eDF5emp1bGVGdENGYTJ4ck5TVHNNRUNrY3JCMjA3M0k2TkJjS0Ntd0tQ?=
+ =?utf-8?B?ZzRSMm5PQ2ozd1I4bHc2cEdSczU2aHRMb1FOYjZwMExaTnV5SHFReEVvSFRo?=
+ =?utf-8?B?SjNuVlNveit2UVlPaDRvR29rNXJWdTJOZFZ1bUlud210ZHV5STNKdm1nKzZF?=
+ =?utf-8?B?WDFGU0FSNE1RbkE1S3dnbU9OcFN3UzlXN2ZhZTFVTHBmaldlRVYrZEttTHND?=
+ =?utf-8?B?b2lhY1NWY2ZZNGJQNjZ1SFlMN1Z4WngvRWo3cjFkRXpTSEdxZS9tWmxMYXFE?=
+ =?utf-8?B?V3daR0xTMGpqWERmanJqckJlZldwa2lIS0VObUc5TFZHMWtHb0tEdFVWQ2hK?=
+ =?utf-8?B?MHBHWTBzaG54Rmc1THprSldCTElnQWkvSHg4L0lFb3ZKMnF5Rlo4UlRic3VL?=
+ =?utf-8?B?TXRTZ3NHaE5pNmFNUTJxVHBUSE1QQnpSTE11eTh6V1RPbGFSWGF6MDYxWUg2?=
+ =?utf-8?B?MW5tYnhPVVZ5MVg2Z3VWVk0xR2pWQUNxNmRMRVp2ZVFTU2lrQ3pISm01cEpl?=
+ =?utf-8?B?NEhleW1nblZLd0N3aFpVRFF0cUVZODlxMk9YM0FpSkFvYktQY1NjRTRUUnVI?=
+ =?utf-8?B?djdnNlNVZ1lJVmNOZlR0b2xJNnpaQ0xoa2lEeWxHd2tEMW5TWk8wMUZ1c0tU?=
+ =?utf-8?B?U0RFNmxqN3pQUmJ6WXFOZUNjMkRlTnRrTWdNQlVFSFhMV25EdVpITlpIMFNR?=
+ =?utf-8?B?ZHBnK01yWDBHOUNUZ3krV1o0TFhEdjAwMG93V3ZWSWpaSlRvVU1rc01XbDBo?=
+ =?utf-8?B?VnJMbjk5b3pxdmVETlU3U2ZUWm9ZYUJCbEgxeko0cjRlWjAyK2prcUZGRUdS?=
+ =?utf-8?B?d3d0VEZYTjhwVkRjNmFPVExWZXNqYTBqQmxQWlo2M1Z6V3FmWlhGT016NThJ?=
+ =?utf-8?B?WUVGQmtqdU5RdkkySWg0Z3JTZ05vWVpyd0t5b1A4ZkFsbVpiTzV3cWRXYlpi?=
+ =?utf-8?B?bHVxOHc5Yzh4S2M4NWtINWpraDJyemZkM3pDK0ZPK0FNdnJEQTdlY2loN2Rv?=
+ =?utf-8?B?UnFaVndYS1NkdWljNWpXNzFab29zSCtoUEZzS1E0dHc2UXBoQUtVdHhEN2s5?=
+ =?utf-8?B?L2I4RW5YWXY3RUJKY2kvM0N0RVFyQXVZZlpJajh2Wk5vOFp1SVJzbFVidFdL?=
+ =?utf-8?B?RVdHWEJZVjRBYUM4WThWZEkzUWhzTmlFNjAyU0RZYlg1MVJ0VWNBVGhWTVA1?=
+ =?utf-8?B?RHlYOWl1OUM5bVoxU2ZRc3lXZDlBcS8yOTB3WWhHQkw4S0h0OUx6NnRFZjQ4?=
+ =?utf-8?B?MzVycFNjd0NDS2UyNHFBY0NsM05kSGlwVWtCTUJtaWFaT09jQ0ZEYUJiTmQ4?=
+ =?utf-8?B?U2ZGQlY0ZmdCZW9mclRuUkFCRTRNM3VlUE4xYzlUWEd4L3lUeWhBeDB6cHpD?=
+ =?utf-8?B?OU9UeGxTZXRxejFXNWx5ZGlJcEowbmJKcVlDUlhlN1lzdGRQNk5GbmZtMEFl?=
+ =?utf-8?B?Z0V0S2JuRHFIaFpGZVZaRFNqeGNwRWZrcmNFNlNPV1YrSmdHYXdDeWh2eWhm?=
+ =?utf-8?Q?iwRA54KHyRjlCL8DQTP+k9tTbfDXQc=3D?=
+X-Microsoft-Exchange-Diagnostics: 1;CY4PR21MB0471;6:pvuoLcMLKoL4INCT6IT4CwN/UC3uqXXQUGp+hUlULnqs0wyVsCyX9UY27MO+pI1cUVGraZdlPqWKp8hqCm2SHD6hZcbh6w9pISDn0iiNiDjHMPIocGAcPStS+TW1/B623DNrMPLe+390fbi7xFjgflIjH6/gaQEoEkEEXWDxjPsbO0tjKd9VCfjmACtnzrMvnDkp1UbH3kdkqpDeREkMjVA/z5hOtrGQ+yiK7+rtPof0BXVplMoLEY7CgK45pxfJSqm+Z9sGBTtNxYu07KhMidLB97snWzdqpjGJnderQmJe6+gDAHXJ3w+krz548ox7QhyvCFS60N9Lz0lTijWfFQ==;5:Rv1WE1TzWFAlSXAoED2W3whR3vn8VGumNRslt2H4ULmgM5yhGsBBcJaOr/MOBCKPZrTcWZxPpPcVHbGfZS7vXZ0288HLcRtKRiqJAACQwaXl5jt/Us2g771X92uQDrBUjfFBx63aK3BuiuosRZZvlg==;24:sJ69Hy1eGI7HpP8xaY8IqldKsJNOcR2cxrDtp9+TdvOd4ex7UHxInZ+6FbVBpmMsroQ5T+W/bexThGygN6vRoyDa510JgH8o9nrDeMfi65g=;7:j6eRb0046zZ9loJxGL2gFNOj+yhRbDdTWKMNaaavH0+4sOVQAHRjqLpT9YLPwsfrQWtmm1P5Z90LsLShcoFesGak6a12/hXJlSkGFv4oMm9l+4NEBxv4ON3D7E16XqRtzzI8E9GTj5VKRdEYxd/UwmFdIMZ49NoDDXmMO/Bm3J7Wj4CB8biaJPKhH1i8y9eHQ4+kjHwhl3sRn6EMYh4BmwXqj3XLWEU0RDkOO9K/oQE=
 SpamDiagnosticOutput: 1:99
 SpamDiagnosticMetadata: NSPM
 X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Sep 2017 19:28:43.4387
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Sep 2017 19:28:41.4700
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 72f988bf-86f1-41af-91ab-2d7cd011db47
@@ -104,425 +105,154 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a test utility (test-drop-caches) that flushes all changes to disk
-then drops file system cache on Windows, Linux, and OSX.
+This script integrates the new fsmonitor capabilities of git with the
+cross platform Watchman file watching service. To use the script:
 
-Add a perf test (p7519-fsmonitor.sh) for fsmonitor.
+Download and install Watchman from https://facebook.github.io/watchman/.
+Rename the sample integration hook from fsmonitor-watchman.sample to
+fsmonitor-watchman. Configure git to use the extension:
 
-By default, the performance test will utilize the Watchman file system
-monitor if it is installed.  If Watchman is not installed, it will use a
-dummy integration script that does not report any new or modified files.
-The dummy script has very little overhead which provides optimistic results.
+git config core.fsmonitor .git/hooks/fsmonitor-watchman
 
-The performance test will also use the untracked cache feature if it is
-available as fsmonitor uses it to speed up scanning for untracked files.
-
-There are 3 environment variables that can be used to alter the default
-behavior of the performance test:
-
-GIT_PERF_7519_UNTRACKED_CACHE: used to configure core.untrackedCache
-GIT_PERF_7519_SPLIT_INDEX: used to configure core.splitIndex
-GIT_PERF_7519_FSMONITOR: used to configure core.fsMonitor
-
-The big win for using fsmonitor is the elimination of the need to scan the
-working directory looking for changed and untracked files. If the file
-information is all cached in RAM, the benefits are reduced.
-
-GIT_PERF_7519_DROP_CACHE: if set, the OS caches are dropped between tests
+Optionally turn on the untracked cache for optimal performance.
 
 Signed-off-by: Ben Peart <benpeart@microsoft.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Signed-off-by: Christian Couder <christian.couder@gmail.com>
 ---
- Makefile                    |   1 +
- t/helper/.gitignore         |   1 +
- t/helper/test-drop-caches.c | 162 ++++++++++++++++++++++++++++++++++++++
- t/perf/p7519-fsmonitor.sh   | 184 ++++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 348 insertions(+)
- create mode 100644 t/helper/test-drop-caches.c
- create mode 100755 t/perf/p7519-fsmonitor.sh
+ templates/hooks--fsmonitor-watchman.sample | 122 +++++++++++++++++++++++++++++
+ 1 file changed, 122 insertions(+)
+ create mode 100755 templates/hooks--fsmonitor-watchman.sample
 
-diff --git a/Makefile b/Makefile
-index d970cd00e9..b2653ee64f 100644
---- a/Makefile
-+++ b/Makefile
-@@ -638,6 +638,7 @@ TEST_PROGRAMS_NEED_X += test-ctype
- TEST_PROGRAMS_NEED_X += test-config
- TEST_PROGRAMS_NEED_X += test-date
- TEST_PROGRAMS_NEED_X += test-delta
-+TEST_PROGRAMS_NEED_X += test-drop-caches
- TEST_PROGRAMS_NEED_X += test-dump-cache-tree
- TEST_PROGRAMS_NEED_X += test-dump-fsmonitor
- TEST_PROGRAMS_NEED_X += test-dump-split-index
-diff --git a/t/helper/.gitignore b/t/helper/.gitignore
-index 721650256e..f9328eebdd 100644
---- a/t/helper/.gitignore
-+++ b/t/helper/.gitignore
-@@ -3,6 +3,7 @@
- /test-config
- /test-date
- /test-delta
-+/test-drop-caches
- /test-dump-cache-tree
- /test-dump-split-index
- /test-dump-untracked-cache
-diff --git a/t/helper/test-drop-caches.c b/t/helper/test-drop-caches.c
-new file mode 100644
-index 0000000000..4e5ca8f397
---- /dev/null
-+++ b/t/helper/test-drop-caches.c
-@@ -0,0 +1,162 @@
-+#include "git-compat-util.h"
-+
-+#if defined(GIT_WINDOWS_NATIVE)
-+
-+static int cmd_sync(void)
-+{
-+	char Buffer[MAX_PATH];
-+	DWORD dwRet;
-+	char szVolumeAccessPath[] = "\\\\.\\X:";
-+	HANDLE hVolWrite;
-+	int success = 0;
-+
-+	dwRet = GetCurrentDirectory(MAX_PATH, Buffer);
-+	if ((0 == dwRet) || (dwRet > MAX_PATH))
-+		return error("Error getting current directory");
-+
-+	if ((Buffer[0] < 'A') || (Buffer[0] > 'Z'))
-+		return error("Invalid drive letter '%c'", Buffer[0]);
-+
-+	szVolumeAccessPath[4] = Buffer[0];
-+	hVolWrite = CreateFile(szVolumeAccessPath, GENERIC_READ | GENERIC_WRITE,
-+		FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, 0, NULL);
-+	if (INVALID_HANDLE_VALUE == hVolWrite)
-+		return error("Unable to open volume for writing, need admin access");
-+
-+	success = FlushFileBuffers(hVolWrite);
-+	if (!success)
-+		error("Unable to flush volume");
-+
-+	CloseHandle(hVolWrite);
-+
-+	return !success;
-+}
-+
-+#define STATUS_SUCCESS			(0x00000000L)
-+#define STATUS_PRIVILEGE_NOT_HELD	(0xC0000061L)
-+
-+typedef enum _SYSTEM_INFORMATION_CLASS {
-+	SystemMemoryListInformation = 80,
-+} SYSTEM_INFORMATION_CLASS;
-+
-+typedef enum _SYSTEM_MEMORY_LIST_COMMAND {
-+	MemoryCaptureAccessedBits,
-+	MemoryCaptureAndResetAccessedBits,
-+	MemoryEmptyWorkingSets,
-+	MemoryFlushModifiedList,
-+	MemoryPurgeStandbyList,
-+	MemoryPurgeLowPriorityStandbyList,
-+	MemoryCommandMax
-+} SYSTEM_MEMORY_LIST_COMMAND;
-+
-+static BOOL GetPrivilege(HANDLE TokenHandle, LPCSTR lpName, int flags)
-+{
-+	BOOL bResult;
-+	DWORD dwBufferLength;
-+	LUID luid;
-+	TOKEN_PRIVILEGES tpPreviousState;
-+	TOKEN_PRIVILEGES tpNewState;
-+
-+	dwBufferLength = 16;
-+	bResult = LookupPrivilegeValueA(0, lpName, &luid);
-+	if (bResult) {
-+		tpNewState.PrivilegeCount = 1;
-+		tpNewState.Privileges[0].Luid = luid;
-+		tpNewState.Privileges[0].Attributes = 0;
-+		bResult = AdjustTokenPrivileges(TokenHandle, 0, &tpNewState,
-+			(DWORD)((LPBYTE)&(tpNewState.Privileges[1]) - (LPBYTE)&tpNewState),
-+			&tpPreviousState, &dwBufferLength);
-+		if (bResult) {
-+			tpPreviousState.PrivilegeCount = 1;
-+			tpPreviousState.Privileges[0].Luid = luid;
-+			tpPreviousState.Privileges[0].Attributes = flags != 0 ? 2 : 0;
-+			bResult = AdjustTokenPrivileges(TokenHandle, 0, &tpPreviousState,
-+				dwBufferLength, 0, 0);
-+		}
-+	}
-+	return bResult;
-+}
-+
-+static int cmd_dropcaches(void)
-+{
-+	HANDLE hProcess = GetCurrentProcess();
-+	HANDLE hToken;
-+	HMODULE ntdll;
-+	int status;
-+
-+	if (!OpenProcessToken(hProcess, TOKEN_QUERY | TOKEN_ADJUST_PRIVILEGES, &hToken))
-+		return error("Can't open current process token");
-+
-+	if (!GetPrivilege(hToken, "SeProfileSingleProcessPrivilege", 1))
-+		return error("Can't get SeProfileSingleProcessPrivilege");
-+
-+	CloseHandle(hToken);
-+
-+	ntdll = LoadLibrary("ntdll.dll");
-+	if (!ntdll)
-+		return error("Can't load ntdll.dll, wrong Windows version?");
-+
-+	DWORD(WINAPI *NtSetSystemInformation)(INT, PVOID, ULONG) =
-+		(DWORD(WINAPI *)(INT, PVOID, ULONG))GetProcAddress(ntdll, "NtSetSystemInformation");
-+	if (!NtSetSystemInformation)
-+		return error("Can't get function addresses, wrong Windows version?");
-+
-+	SYSTEM_MEMORY_LIST_COMMAND command = MemoryPurgeStandbyList;
-+	status = NtSetSystemInformation(
-+		SystemMemoryListInformation,
-+		&command,
-+		sizeof(SYSTEM_MEMORY_LIST_COMMAND)
-+	);
-+	if (status == STATUS_PRIVILEGE_NOT_HELD)
-+		error("Insufficient privileges to purge the standby list, need admin access");
-+	else if (status != STATUS_SUCCESS)
-+		error("Unable to execute the memory list command %d", status);
-+
-+	FreeLibrary(ntdll);
-+
-+	return status;
-+}
-+
-+#elif defined(__linux__)
-+
-+static int cmd_sync(void)
-+{
-+	return system("sync");
-+}
-+
-+static int cmd_dropcaches(void)
-+{
-+	return system("echo 3 | sudo tee /proc/sys/vm/drop_caches");
-+}
-+
-+#elif defined(__APPLE__)
-+
-+static int cmd_sync(void)
-+{
-+	return system("sync");
-+}
-+
-+static int cmd_dropcaches(void)
-+{
-+	return system("sudo purge");
-+}
-+
-+#else
-+
-+static int cmd_sync(void)
-+{
-+	return 0;
-+}
-+
-+static int cmd_dropcaches(void)
-+{
-+	return error("drop caches not implemented on this platform");
-+}
-+
-+#endif
-+
-+int cmd_main(int argc, const char **argv)
-+{
-+	cmd_sync();
-+	return cmd_dropcaches();
-+}
-diff --git a/t/perf/p7519-fsmonitor.sh b/t/perf/p7519-fsmonitor.sh
+diff --git a/templates/hooks--fsmonitor-watchman.sample b/templates/hooks--fsmonitor-watchman.sample
 new file mode 100755
-index 0000000000..16d1bf72e5
+index 0000000000..870a59d237
 --- /dev/null
-+++ b/t/perf/p7519-fsmonitor.sh
-@@ -0,0 +1,184 @@
-+#!/bin/sh
++++ b/templates/hooks--fsmonitor-watchman.sample
+@@ -0,0 +1,122 @@
++#!/usr/bin/perl
 +
-+test_description="Test core.fsmonitor"
++use strict;
++use warnings;
++use IPC::Open2;
 +
-+. ./perf-lib.sh
-+
++# An example hook script to integrate Watchman
++# (https://facebook.github.io/watchman/) with git to speed up detecting
++# new and modified files.
 +#
-+# Performance test for the fsmonitor feature which enables git to talk to a
-+# file system change monitor and avoid having to scan the working directory
-+# for new or modified files.
++# The hook is passed a version (currently 1) and a time in nanoseconds
++# formatted as a string and outputs to stdout all files that have been
++# modified since the given time. Paths must be relative to the root of
++# the working tree and separated by a single NUL.
 +#
-+# By default, the performance test will utilize the Watchman file system
-+# monitor if it is installed.  If Watchman is not installed, it will use a
-+# dummy integration script that does not report any new or modified files.
-+# The dummy script has very little overhead which provides optimistic results.
++# To enable this hook, rename this file to "query-watchman" and set
++# 'git config core.fsmonitor .git/hooks/query-watchman'
 +#
-+# The performance test will also use the untracked cache feature if it is
-+# available as fsmonitor uses it to speed up scanning for untracked files.
-+#
-+# There are 3 environment variables that can be used to alter the default
-+# behavior of the performance test:
-+#
-+# GIT_PERF_7519_UNTRACKED_CACHE: used to configure core.untrackedCache
-+# GIT_PERF_7519_SPLIT_INDEX: used to configure core.splitIndex
-+# GIT_PERF_7519_FSMONITOR: used to configure core.fsMonitor
-+#
-+# The big win for using fsmonitor is the elimination of the need to scan the
-+# working directory looking for changed and untracked files. If the file
-+# information is all cached in RAM, the benefits are reduced.
-+#
-+# GIT_PERF_7519_DROP_CACHE: if set, the OS caches are dropped between tests
-+#
++my ($version, $time) = @ARGV;
 +
-+test_perf_large_repo
-+test_checkout_worktree
++# Check the hook interface version
 +
-+test_lazy_prereq UNTRACKED_CACHE '
-+	{ git update-index --test-untracked-cache; ret=$?; } &&
-+	test $ret -ne 1
-+'
++if ($version == 1) {
++	# convert nanoseconds to seconds
++	$time = int $time / 1000000000;
++} else {
++	die "Unsupported query-fsmonitor hook version '$version'.\n" .
++	    "Falling back to scanning...\n";
++}
 +
-+test_lazy_prereq WATCHMAN '
-+	{ command -v watchman >/dev/null 2>&1; ret=$?; } &&
-+	test $ret -ne 1
-+'
++# Convert unix style paths to escaped Windows style paths when running
++# in Windows command prompt
 +
-+if test_have_prereq WATCHMAN
-+then
-+	# Convert unix style paths to escaped Windows style paths for Watchman
-+	case "$(uname -s)" in
-+	MSYS_NT*)
-+	  GIT_WORK_TREE="$(cygpath -aw "$PWD" | sed 's,\\,/,g')"
-+	  ;;
-+	*)
-+	  GIT_WORK_TREE="$PWD"
-+	  ;;
-+	esac
-+fi
++my $system = `uname -s`;
++$system =~ s/[\r\n]+//g;
++my $git_work_tree;
 +
-+if test -n "$GIT_PERF_7519_DROP_CACHE"
-+then
-+	# When using GIT_PERF_7519_DROP_CACHE, GIT_PERF_REPEAT_COUNT must be 1 to
-+	# generate valid results. Otherwise the caching that happens for the nth
-+	# run will negate the validity of the comparisons.
-+	if test "$GIT_PERF_REPEAT_COUNT" -ne 1
-+	then
-+		echo "warning: Setting GIT_PERF_REPEAT_COUNT=1" >&2
-+		GIT_PERF_REPEAT_COUNT=1
-+	fi
-+fi
++if ($system =~ m/^MSYS_NT/) {
++	$git_work_tree = `cygpath -aw "\$PWD"`;
++	$git_work_tree =~ s/[\r\n]+//g;
++	$git_work_tree =~ s,\\,/,g;
++} else {
++	$git_work_tree = $ENV{'PWD'};
++}
 +
-+test_expect_success "setup for fsmonitor" '
-+	# set untrackedCache depending on the environment
-+	if test -n "$GIT_PERF_7519_UNTRACKED_CACHE"
-+	then
-+		git config core.untrackedCache "$GIT_PERF_7519_UNTRACKED_CACHE"
-+	else
-+		if test_have_prereq UNTRACKED_CACHE
-+		then
-+			git config core.untrackedCache true
-+		else
-+			git config core.untrackedCache false
-+		fi
-+	fi &&
++my $retry = 1;
 +
-+	# set core.splitindex depending on the environment
-+	if test -n "$GIT_PERF_7519_SPLIT_INDEX"
-+	then
-+		git config core.splitIndex "$GIT_PERF_7519_SPLIT_INDEX"
-+	fi &&
++launch_watchman();
 +
-+	# set INTEGRATION_SCRIPT depending on the environment
-+	if test -n "$GIT_PERF_7519_FSMONITOR"
-+	then
-+		INTEGRATION_SCRIPT="$GIT_PERF_7519_FSMONITOR"
-+	else
-+		#
-+		# Choose integration script based on existence of Watchman.
-+		# If Watchman exists, watch the work tree and attempt a query.
-+		# If everything succeeds, use Watchman integration script,
-+		# else fall back to an empty integration script.
-+		#
-+		mkdir .git/hooks &&
-+		if test_have_prereq WATCHMAN
-+		then
-+			INTEGRATION_SCRIPT=".git/hooks/fsmonitor-watchman" &&
-+			cp "$TEST_DIRECTORY/../templates/hooks--fsmonitor-watchman.sample" "$INTEGRATION_SCRIPT" &&
-+			watchman watch "$GIT_WORK_TREE" &&
-+			watchman watch-list | grep -q -F "$GIT_WORK_TREE"
-+		else
-+			INTEGRATION_SCRIPT=".git/hooks/fsmonitor-empty" &&
-+			write_script "$INTEGRATION_SCRIPT"<<-\EOF
-+			EOF
-+		fi
-+	fi &&
++sub launch_watchman {
 +
-+	git config core.fsmonitor "$INTEGRATION_SCRIPT" &&
-+	git update-index --fsmonitor
-+'
++	# Set input record separator
++	local $/ = 0666;
 +
-+if test -n "$GIT_PERF_7519_DROP_CACHE"; then
-+	test-drop-caches
-+fi
++	my $pid = open2(\*CHLD_OUT, \*CHLD_IN, 'watchman -j')
++	    or die "open2() failed: $!\n" .
++	    "Falling back to scanning...\n";
 +
-+test_perf "status (fsmonitor=$INTEGRATION_SCRIPT)" '
-+	git status
-+'
++	# In the query expression below we're asking for names of files that
++	# changed since $time but were not transient (ie created after
++	# $time but no longer exist).
++	#
++	# To accomplish this, we're using the "since" generator to use the
++	# recency index to select candidate nodes and "fields" to limit the
++	# output to file names only. Then we're using the "expression" term to
++	# further constrain the results.
++	#
++	# The category of transient files that we want to ignore will have a
++	# creation clock (cclock) newer than $time_t value and will also not
++	# currently exist.
 +
-+if test -n "$GIT_PERF_7519_DROP_CACHE"; then
-+	test-drop-caches
-+fi
++	my $query = <<"	END";
++		["query", "$git_work_tree", {
++			"since": $time,
++			"fields": ["name"],
++			"expression": ["not", ["allof", ["since", $time, "cclock"], ["not", "exists"]]]
++		}]
++	END
 +
-+test_perf "status -uno (fsmonitor=$INTEGRATION_SCRIPT)" '
-+	git status -uno
-+'
++	print CHLD_IN $query;
++	my $response = <CHLD_OUT>;
 +
-+if test -n "$GIT_PERF_7519_DROP_CACHE"; then
-+	test-drop-caches
-+fi
++	die "Watchman: command returned no output.\n" .
++	    "Falling back to scanning...\n" if $response eq "";
++	die "Watchman: command returned invalid output: $response\n" .
++	    "Falling back to scanning...\n" unless $response =~ /^\{/;
 +
-+test_perf "status -uall (fsmonitor=$INTEGRATION_SCRIPT)" '
-+	git status -uall
-+'
++	my $json_pkg;
++	eval {
++		require JSON::XS;
++		$json_pkg = "JSON::XS";
++		1;
++	} or do {
++		require JSON::PP;
++		$json_pkg = "JSON::PP";
++	};
 +
-+test_expect_success "setup without fsmonitor" '
-+	unset INTEGRATION_SCRIPT &&
-+	git config --unset core.fsmonitor &&
-+	git update-index --no-fsmonitor
-+'
++	my $o = $json_pkg->new->utf8->decode($response);
 +
-+if test -n "$GIT_PERF_7519_DROP_CACHE"; then
-+	test-drop-caches
-+fi
++	if ($retry > 0 and $o->{error} and $o->{error} =~ m/unable to resolve root .* directory (.*) is not watched/) {
++		print STDERR "Adding '$git_work_tree' to watchman's watch list.\n";
++		$retry--;
++		qx/watchman watch "$git_work_tree"/;
++		die "Failed to make watchman watch '$git_work_tree'.\n" .
++		    "Falling back to scanning...\n" if $? != 0;
 +
-+test_perf "status (fsmonitor=$INTEGRATION_SCRIPT)" '
-+	git status
-+'
++		# Watchman will always return all files on the first query so
++		# return the fast "everything is dirty" flag to git and do the
++		# Watchman query just to get it over with now so we won't pay
++		# the cost in git to look up each individual file.
++		print "/\0";
++		eval { launch_watchman() };
++		exit 0;
++	}
 +
-+if test -n "$GIT_PERF_7519_DROP_CACHE"; then
-+	test-drop-caches
-+fi
++	die "Watchman: $o->{error}.\n" .
++	    "Falling back to scanning...\n" if $o->{error};
 +
-+test_perf "status -uno (fsmonitor=$INTEGRATION_SCRIPT)" '
-+	git status -uno
-+'
-+
-+if test -n "$GIT_PERF_7519_DROP_CACHE"; then
-+	test-drop-caches
-+fi
-+
-+test_perf "status -uall (fsmonitor=$INTEGRATION_SCRIPT)" '
-+	git status -uall
-+'
-+
-+if test_have_prereq WATCHMAN
-+then
-+	watchman watch-del "$GIT_WORK_TREE" >/dev/null 2>&1 &&
-+
-+	# Work around Watchman bug on Windows where it holds on to handles
-+	# preventing the removal of the trash directory
-+	watchman shutdown-server >/dev/null 2>&1
-+fi
-+
-+test_done
++	binmode STDOUT, ":utf8";
++	local $, = "\0";
++	print @{$o->{files}};
++}
 -- 
 2.14.1.windows.1
 
