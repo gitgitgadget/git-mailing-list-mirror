@@ -2,239 +2,213 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 495E22047F
-	for <e@80x24.org>; Tue, 19 Sep 2017 17:46:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B52952047F
+	for <e@80x24.org>; Tue, 19 Sep 2017 17:52:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751640AbdISRp7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Sep 2017 13:45:59 -0400
-Received: from mail-pg0-f48.google.com ([74.125.83.48]:45687 "EHLO
-        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751480AbdISRp6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Sep 2017 13:45:58 -0400
-Received: by mail-pg0-f48.google.com with SMTP id 188so212344pgb.2
-        for <git@vger.kernel.org>; Tue, 19 Sep 2017 10:45:58 -0700 (PDT)
+        id S1751343AbdISRwo (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Sep 2017 13:52:44 -0400
+Received: from mail-pf0-f173.google.com ([209.85.192.173]:50664 "EHLO
+        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750998AbdISRwn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Sep 2017 13:52:43 -0400
+Received: by mail-pf0-f173.google.com with SMTP id m63so190504pfk.7
+        for <git@vger.kernel.org>; Tue, 19 Sep 2017 10:52:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=5Vt6eTFlvSkdhl/jAg2Kb8UM5SYfTcrmb/EStcVgFY0=;
-        b=PqSTR07lj0EUKjP7Y/Nd+jiLZyYmmjZUUO+kXEPbosMEXdGO5FhZKknkZpiTAynlhS
-         4J8yLJfM28rKmVQOBe/jKiIhPW0qYinEZnPb5XzLaVuKLsFIxBd88I06KHUpqZ+fqD/+
-         cN8z6PMG5dPrnwB70zq93Sg+7AE3vBNiVxHJOv+DvRtOgWac5bFes3VaGG4v1AAFwZDQ
-         imZUUhBqE2CfoaZJFtCMtXiWvIc95ht+oRboWoi3KF/eERTV2Kh1KaZI3S+iODdwafae
-         PHcgB1D1mUow0Qwc90LCFzqHPeEgFGEfNyt089nhEsiI6t6JC9Fcv8AtBA532oiObURx
-         0KkQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=HGoVzyXBi2dkG8FR3NGbATatQ3m1330yMCnY9U/n5cQ=;
+        b=PdFmg/XVZzHLfUOAVUZVuhGJbRpgSx4ATRr87m2OyokRBgnjH/x6iX/7gs60as36o8
+         6wGdf5Jv97DF8exyErf1GOtEGqUPNa5jOdLLh2fdOaJAUJnfg5NXFshFjP6QwEGdFE37
+         6a30JzprCMiGIgTR3mA1wOzLKwfw+DWvH97emyJiWTG0nIfilCsMsB25SlsVKuuTePEv
+         iy0r8FrvkJE2O/k3JPyodFxBjDrZVIm2Qq9yDlVoXSUZ3V93cQUWCE8TQs3W1sNdnwsg
+         Uf2LScYOTBZGHaayQVzUEgR0TVdsvFGwW4nGMPCAr26xesVazQyan12lma87agFsaSS2
+         NouQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=5Vt6eTFlvSkdhl/jAg2Kb8UM5SYfTcrmb/EStcVgFY0=;
-        b=N90qDoubAJrvJ7McdUHZ4ACP0MwP8mm9bUY3JoPnmKzcKiZ7Z7nx1lv3gKsrz5QtH7
-         bfty/pNchIj37qtSJ1VkAZ6R/IY3hiZCc5jybP2Z87nloSTSVH4BVFYVW0T3oPuAjIPZ
-         krNQnIrP+s0qb6m7UWRG/leFKrPJnG9Ogrnax9TzkakfyhZrisIxTJat4VyDzloqXkU3
-         4xKmVkzXQzCetFp3b5zNpkZuI9C6IsIIUv1W6YL4IfFx6PbxCd2bo1GxvsYHscTpPDIV
-         fgB48xPS6pWO/8yD9PVtLdKj4swhS80yRrJtpqYPRXOaBSG9W1FVYC7NiFVnAt2lxIYg
-         gjBw==
-X-Gm-Message-State: AHPjjUiPJx7Iz+WQvatU+nqkLxJ5r/ei97h+hAgBMtJH8+q9C9NaQqtn
-        ulNG4Gp5ilsabKbXqJdH8tYjOw==
-X-Google-Smtp-Source: AOwi7QBcmUWAiNgbgEE8995VrZACI6CwjSaqUdocwNuuH7g7gzYz07yBN5qypcFjR1Mk+SPHAtqa1A==
-X-Received: by 10.98.133.17 with SMTP id u17mr1995264pfd.235.1505843157821;
-        Tue, 19 Sep 2017 10:45:57 -0700 (PDT)
-Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:c4b9:4349:9a84:b260])
-        by smtp.gmail.com with ESMTPSA id q23sm4268501pfk.182.2017.09.19.10.45.57
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=HGoVzyXBi2dkG8FR3NGbATatQ3m1330yMCnY9U/n5cQ=;
+        b=jjAGo80a9MZgnh1Hd3dZzofSRQTHAvxqWkLamvQWJsLoqop2t9K1u9H3bWzUu1gChV
+         Vdu0KuDLOgIstsxLHUci5NKkcv+HhhxI8KDOzra22ZVNRnQKYVoUN8zN8KCCSfZWIg8O
+         7h2sg6cqjB9y4s6oiY03dsMocjQIee0TlE+Kzid7X9A5QrqIVoSnzcwnRGxG9pu4bzM/
+         kqi9O1QWyaVTC4VyTRLW5u+pcSmHK4f93optcfaSGGjJAa1g3mEbqEbtwEiPzhBYrYIJ
+         YSggYXrpLVjBl+ntofUOM0De0xweqSSEtaoAyppvdhQ1yJW4ttZFLQRXO+JiMCWF1bnA
+         Mmyw==
+X-Gm-Message-State: AHPjjUivwzsEzaTJdO7RW8ZiLWQmQsRhp5bgscYzQHl2xR9I+sgncHIK
+        abrwuXsv1iEPmsGzafmz9NkGrw==
+X-Google-Smtp-Source: AOwi7QD+dB4mfwYxvqMH4jH12hFETkwEo+7H3LXxHLrE5ta3tavSaAS8nOCzeDLjbMkF9R2A58qvyA==
+X-Received: by 10.84.173.4 with SMTP id o4mr2056636plb.150.1505843562586;
+        Tue, 19 Sep 2017 10:52:42 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:b56e:8c34:dd0d:1070])
+        by smtp.gmail.com with ESMTPSA id c2sm4857197pgq.61.2017.09.19.10.52.41
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 19 Sep 2017 10:45:57 -0700 (PDT)
-Date:   Tue, 19 Sep 2017 10:45:53 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Ben Peart <Ben.Peart@microsoft.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v6 09/40] Add initial external odb support
-Message-ID: <20170919104553.494d7d3b@twelve2.svl.corp.google.com>
-In-Reply-To: <20170916080731.13925-10-chriscool@tuxfamily.org>
-References: <20170916080731.13925-1-chriscool@tuxfamily.org>
-        <20170916080731.13925-10-chriscool@tuxfamily.org>
-X-Mailer: Claws Mail 3.9.3 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+        Tue, 19 Sep 2017 10:52:41 -0700 (PDT)
+Date:   Tue, 19 Sep 2017 10:52:40 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Jameson Miller <jameson.miller81@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, jamill@microsoft.com,
+        peff@peff.net, sxlijin@gmail.com
+Subject: Re: [PATCH v2] Improve performance of git status --ignored
+Message-ID: <20170919175240.GA94704@google.com>
+References: <20170810184936.239542-1-jamill@microsoft.com>
+ <1505755473-6720-1-git-send-email-jamill@microsoft.com>
+ <1505755473-6720-2-git-send-email-jamill@microsoft.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1505755473-6720-2-git-send-email-jamill@microsoft.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I wonder if it's better to get a change like this (PATCH v6 09/40 and
-any of the previous patches that this depends on) in and then build on
-it rather than to review the whole patch set at a time.  This would
-reduce ripple effects (of needing to change later patches in a patch set
-multiple times unnecessarily) and help collaboration (in that multiple
-people can write patches, since the foundation would already be laid).
-
-The same concerns about fsck apply, but that shouldn't be a problem,
-since this patch provides the same internal API as mine ("get" function
-taking in a single hash, and "have" function taking in a single hash) so
-it shouldn't be too difficult to adapt my fsck and gc patches [1]. (I
-can do that if necessary.)
-
-[1] https://public-inbox.org/git/20170915134343.3814dc38@twelve2.svl.corp.google.com/
-
-One possible issue (with committing something early) is that later work
-(for example, a fast long-running process protocol) will make the
-earlier work (for example, here, a simple single-shot protocol)
-obsolete, while saddling us with the necessity of maintaining the
-earlier one. To that end, if we want to start with the support for a
-hook, a better approach might be to only code the fast long-running
-process protocol, and put a wrapper script in contrib/ that can wrap a
-single-shot process in a long-running process.
-
-And another possible issue is that we design ourselves into a corner.
-Thinking about the use cases that I know about (the Android use case and
-the Microsoft GVFS use case), I don't think we are doing that - for
-Android, this means that large blob metadata needs to be part of the
-design (and this patch series does provide for that), and for Microsoft
-GVFS, "get" is relatively cheap, so a configuration option to not invoke
-"have" first when loading a missing object might be sufficient.
-
-As for the design itself (including fetch and clone), it differs from my
-patches (linked above as [1]) in that mine is self-contained (requiring
-only an updated Git server and Git client) whereas this, as far as I can
-tell, requires an external process and some measure of coordination
-between the administrator of the server and the client user (for
-example, the client must have the same ODB mechanism as the server, if
-not, the server might omit certain blobs that the client does not know
-how to fetch).
-
-And I think that my design can be extended to support a use case in
-which, for example, blobs corresponding to a certain type of filename
-(defined by a glob like in gitattributes) can be excluded during
-fetch/clone, much like --blob-max-bytes, and they can be fetched either
-through the built-in mechanism or through a custom hook.
-
-For those reasons, I still lean towards my design, but if we do want to
-go with this design, here are my comments about this patch...
-
-First of all:
- - You'll probably need to add a repository extension.
- - I get compile errors when I "git am" these onto master. I think
-   '#include "config.h"' is needed in some places.
-
-On Sat, 16 Sep 2017 10:07:00 +0200
-Christian Couder <christian.couder@gmail.com> wrote:
-
-> The external-odb.{c,h} files contains the functions that are
-> called by the rest of Git from "sha1_file.c".
+On 09/18, Jameson Miller wrote:
+> Improve the performance of the directory listing logic when it wants to list
+> non-empty ignored directories. In order to show non-empty ignored directories,
+> the existing logic will recursively iterate through all contents of an ignored
+> directory. This change introduces the optimization to stop iterating through
+> the contents once it finds the first file. This can have a significant
+> improvement in 'git status --ignored' performance in repositories with a large
+> number of files in ignored directories.
 > 
-> The odb-helper.{c,h} files contains the functions to
-> actually implement communication with the external scripts or
-> processes that will manage external git objects.
+> For an example of the performance difference on an example repository with
+> 196,000 files in 400 ignored directories:
 > 
-> For now only script mode is supported, and only the 'have' and
-> 'get_git_obj' instructions are supported.
+> | Command                    |  Time (s) |
+> | -------------------------- | --------- |
+> | git status                 |   1.2     |
+> | git status --ignored (old) |   3.9     |
+> | git status --ignored (new) |   1.4     |
+> 
+> Signed-off-by: Jameson Miller <jamill@microsoft.com>
 
-This "have", as I see from this commit, is more like a "list" command in
-that it lists all hashes that it knows about, and does not check if a
-given hash exists.
+Everything looks good to me.  My only nit (and no need to change it for
+this patch) is that the first line of the commit msg usually has the
+form:
 
-> +static struct odb_helper *helpers;
-> +static struct odb_helper **helpers_tail = &helpers;
+  <area>: <short summary>
 
-This could be done with the helpers in list.h instead.
+So that its easy to tell which part of the code a commit is changing.
 
-> +int external_odb_get_object(const unsigned char *sha1)
-> +{
-> +	struct odb_helper *o;
-> +	const char *path;
+Seriously, great patch.  Thanks!
+
+> ---
+>  dir.c | 47 +++++++++++++++++++++++++++++++++++++++++------
+>  1 file changed, 41 insertions(+), 6 deletions(-)
+> 
+> diff --git a/dir.c b/dir.c
+> index 1c55dc3..1d17b80 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -49,7 +49,7 @@ struct cached_dir {
+>  static enum path_treatment read_directory_recursive(struct dir_struct *dir,
+>  	struct index_state *istate, const char *path, int len,
+>  	struct untracked_cache_dir *untracked,
+> -	int check_only, const struct pathspec *pathspec);
+> +	int check_only, int stop_at_first_file, const struct pathspec *pathspec);
+>  static int get_dtype(struct dirent *de, struct index_state *istate,
+>  		     const char *path, int len);
+>  
+> @@ -1404,8 +1404,13 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
+>  
+>  	untracked = lookup_untracked(dir->untracked, untracked,
+>  				     dirname + baselen, len - baselen);
 > +
-> +	if (!external_odb_has_object(sha1))
-> +		return -1;
-> +
-> +	path = sha1_file_name_alt(external_odb_root(), sha1);
-
-If the purpose of making these functions global in the previous patch is
-just for temporary names, I don't think it's necessary for them to be
-global. Just concatenate the hex SHA1 to external_odb_root()?
-
->  /* Returns 1 if we have successfully freshened the file, 0 otherwise. */
-> @@ -667,7 +684,7 @@ static int check_and_freshen_nonlocal(const unsigned char *sha1, int freshen)
->  		if (check_and_freshen_file(path, freshen))
->  			return 1;
->  	}
-> -	return 0;
-> +	return external_odb_has_object(sha1);
+> +	/*
+> +	 * If this is an excluded directory, then we only need to check if
+> +	 * the directory contains any files.
+> +	 */
+>  	return read_directory_recursive(dir, istate, dirname, len,
+> -					untracked, 1, pathspec);
+> +					untracked, 1, exclude, pathspec);
 >  }
 >  
->  static int check_and_freshen(const unsigned char *sha1, int freshen)
-> @@ -824,6 +841,9 @@ static int stat_sha1_file(const unsigned char *sha1, struct stat *st,
->  			return 0;
->  	}
+>  /*
+> @@ -1633,7 +1638,7 @@ static enum path_treatment treat_path_fast(struct dir_struct *dir,
+>  		 * with check_only set.
+>  		 */
+>  		return read_directory_recursive(dir, istate, path->buf, path->len,
+> -						cdir->ucd, 1, pathspec);
+> +						cdir->ucd, 1, 0, pathspec);
+>  	/*
+>  	 * We get path_recurse in the first run when
+>  	 * directory_exists_in_index() returns index_nonexistent. We
+> @@ -1793,12 +1798,20 @@ static void close_cached_dir(struct cached_dir *cdir)
+>   * Also, we ignore the name ".git" (even if it is not a directory).
+>   * That likely will not change.
+>   *
+> + * If 'stop_at_first_file' is specified, 'path_excluded' is returned
+> + * to signal that a file was found. This is the least significant value that
+> + * indicates that a file was encountered that does not depend on the order of
+> + * whether an untracked or exluded path was encountered first.
+> + *
+>   * Returns the most significant path_treatment value encountered in the scan.
+> + * If 'stop_at_first_file' is specified, `path_excluded` is the most
+> + * significant path_treatment value that will be returned.
+>   */
+> +
+>  static enum path_treatment read_directory_recursive(struct dir_struct *dir,
+>  	struct index_state *istate, const char *base, int baselen,
+>  	struct untracked_cache_dir *untracked, int check_only,
+> -	const struct pathspec *pathspec)
+> +	int stop_at_first_file, const struct pathspec *pathspec)
+>  {
+>  	struct cached_dir cdir;
+>  	enum path_treatment state, subdir_state, dir_state = path_none;
+> @@ -1832,12 +1845,34 @@ static enum path_treatment read_directory_recursive(struct dir_struct *dir,
+>  			subdir_state =
+>  				read_directory_recursive(dir, istate, path.buf,
+>  							 path.len, ud,
+> -							 check_only, pathspec);
+> +							 check_only, stop_at_first_file, pathspec);
+>  			if (subdir_state > dir_state)
+>  				dir_state = subdir_state;
+>  		}
 >  
-> +	if (!external_odb_get_object(sha1) && !lstat(*path, st))
-> +		return 0;
+>  		if (check_only) {
+> +			if (stop_at_first_file) {
+> +				/*
+> +				 * If stopping at first file, then
+> +				 * signal that a file was found by
+> +				 * returning `path_excluded`. This is
+> +				 * to return a consistent value
+> +				 * regardless of whether an ignored or
+> +				 * excluded file happened to be
+> +				 * encountered 1st.
+> +				 *
+> +				 * In current usage, the
+> +				 * `stop_at_first_file` is passed when
+> +				 * an ancestor directory has matched
+> +				 * an exclude pattern, so any found
+> +				 * files will be excluded.
+> +				 */
+> +				if (dir_state >= path_excluded) {
+> +					dir_state = path_excluded;
+> +					break;
+> +				}
+> +			}
 > +
->  	return -1;
->  }
+>  			/* abort early if maximum state has been reached */
+>  			if (dir_state == path_untracked) {
+>  				if (cdir.fdir)
+> @@ -2108,7 +2143,7 @@ int read_directory(struct dir_struct *dir, struct index_state *istate,
+>  		 */
+>  		dir->untracked = NULL;
+>  	if (!len || treat_leading_path(dir, istate, path, len, pathspec))
+> -		read_directory_recursive(dir, istate, path, len, untracked, 0, pathspec);
+> +		read_directory_recursive(dir, istate, path, len, untracked, 0, 0, pathspec);
+>  	QSORT(dir->entries, dir->nr, cmp_dir_entry);
+>  	QSORT(dir->ignored, dir->ignored_nr, cmp_dir_entry);
 >  
-> @@ -859,7 +879,14 @@ static int open_sha1_file(const unsigned char *sha1, const char **path)
->  	if (fd >= 0)
->  		return fd;
->  
-> -	return open_sha1_file_alt(sha1, path);
-> +	fd = open_sha1_file_alt(sha1, path);
-> +	if (fd >= 0)
-> +		return fd;
-> +
-> +	if (!external_odb_get_object(sha1))
-> +		fd = open_sha1_file_alt(sha1, path);
-> +
-> +	return fd;
->  }
+> -- 
+> 2.7.4
+> 
 
-Any reason why you prefer to update the loose object functions than to
-update the generic one (sha1_object_info_extended)? My concern with just
-updating the loose object functions was that a caller might have
-obtained the path by iterating through the loose object dirs, and in
-that case we shouldn't query the external ODB for anything.
-
-> +ALT_SOURCE="$PWD/alt-repo/.git"
-> +export ALT_SOURCE
-> +write_script odb-helper <<\EOF
-> +GIT_DIR=$ALT_SOURCE; export GIT_DIR
-> +case "$1" in
-> +have)
-> +	git cat-file --batch-check --batch-all-objects |
-> +	awk '{print $1 " " $3 " " $2}'
-> +	;;
-> +get_git_obj)
-> +	cat "$GIT_DIR"/objects/$(echo $2 | sed 's#..#&/#')
-> +	;;
-> +esac
-> +EOF
-> +HELPER="\"$PWD\"/odb-helper"
-
-Thanks for the clear test. It is very obvious that "have" returns a list
-of objects, and "get_git_obj" returns the compressed loose object with
-the Git loose object header included.
-
-> +
-> +test_expect_success 'setup alternate repo' '
-> +	git init alt-repo &&
-> +	(cd alt-repo &&
-> +	 test_commit one &&
-
-Probably better written as "test_commit -C alt-repo one".
-
-> +	 test_commit two
-> +	) &&
-> +	alt_head=`cd alt-repo && git rev-parse HEAD`
-
-I think the style is to use $() and "git -C alt-repo rev-parse HEAD".
+-- 
+Brandon Williams
