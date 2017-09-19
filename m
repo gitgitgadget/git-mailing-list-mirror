@@ -2,213 +2,168 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B52952047F
-	for <e@80x24.org>; Tue, 19 Sep 2017 17:52:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CBDE12047F
+	for <e@80x24.org>; Tue, 19 Sep 2017 18:07:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751343AbdISRwo (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Sep 2017 13:52:44 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:50664 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750998AbdISRwn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Sep 2017 13:52:43 -0400
-Received: by mail-pf0-f173.google.com with SMTP id m63so190504pfk.7
-        for <git@vger.kernel.org>; Tue, 19 Sep 2017 10:52:43 -0700 (PDT)
+        id S1751009AbdISSHr (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Sep 2017 14:07:47 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:38540 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750733AbdISSHq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Sep 2017 14:07:46 -0400
+Received: by mail-pg0-f65.google.com with SMTP id m30so207204pgn.5
+        for <git@vger.kernel.org>; Tue, 19 Sep 2017 11:07:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=HGoVzyXBi2dkG8FR3NGbATatQ3m1330yMCnY9U/n5cQ=;
-        b=PdFmg/XVZzHLfUOAVUZVuhGJbRpgSx4ATRr87m2OyokRBgnjH/x6iX/7gs60as36o8
-         6wGdf5Jv97DF8exyErf1GOtEGqUPNa5jOdLLh2fdOaJAUJnfg5NXFshFjP6QwEGdFE37
-         6a30JzprCMiGIgTR3mA1wOzLKwfw+DWvH97emyJiWTG0nIfilCsMsB25SlsVKuuTePEv
-         iy0r8FrvkJE2O/k3JPyodFxBjDrZVIm2Qq9yDlVoXSUZ3V93cQUWCE8TQs3W1sNdnwsg
-         Uf2LScYOTBZGHaayQVzUEgR0TVdsvFGwW4nGMPCAr26xesVazQyan12lma87agFsaSS2
-         NouQ==
+        bh=nZ8XUtzdFpxmJ7zdrcraNPI5iE+0jd9cddXi0AZNBVQ=;
+        b=kQ1jojekOQxzwcAFeUOCUEWMVRwoznZrgmzILft37WNFMS0p46i0hGACF8tObvVTdd
+         YBnXORjhgUPhyOXgn5rejqnEVthiHl5Ok/6RmW7FEmPl8q7+6TV4Nkoencl2QDoVmWFl
+         jCGRBOeZ7t/Q2VZ9CzjsMDj4kCs1zbe3nWobu2WaT8jpoCu/AFXDrtmJxTWlRVOmJqEt
+         KgkoTKhuYrF9mnZ3jnOy9VHWtuMVgGbsHmgZwYkldvyrVG+204nSX9Q8/TlOgS97pNAA
+         o0GaB1USFyW8sxgDWqbvifMi8frfXjYtbZfGILt+qxfRG8jacDmI4D/UivrGfAJLmFj0
+         MHKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=HGoVzyXBi2dkG8FR3NGbATatQ3m1330yMCnY9U/n5cQ=;
-        b=jjAGo80a9MZgnh1Hd3dZzofSRQTHAvxqWkLamvQWJsLoqop2t9K1u9H3bWzUu1gChV
-         Vdu0KuDLOgIstsxLHUci5NKkcv+HhhxI8KDOzra22ZVNRnQKYVoUN8zN8KCCSfZWIg8O
-         7h2sg6cqjB9y4s6oiY03dsMocjQIee0TlE+Kzid7X9A5QrqIVoSnzcwnRGxG9pu4bzM/
-         kqi9O1QWyaVTC4VyTRLW5u+pcSmHK4f93optcfaSGGjJAa1g3mEbqEbtwEiPzhBYrYIJ
-         YSggYXrpLVjBl+ntofUOM0De0xweqSSEtaoAyppvdhQ1yJW4ttZFLQRXO+JiMCWF1bnA
-         Mmyw==
-X-Gm-Message-State: AHPjjUivwzsEzaTJdO7RW8ZiLWQmQsRhp5bgscYzQHl2xR9I+sgncHIK
-        abrwuXsv1iEPmsGzafmz9NkGrw==
-X-Google-Smtp-Source: AOwi7QD+dB4mfwYxvqMH4jH12hFETkwEo+7H3LXxHLrE5ta3tavSaAS8nOCzeDLjbMkF9R2A58qvyA==
-X-Received: by 10.84.173.4 with SMTP id o4mr2056636plb.150.1505843562586;
-        Tue, 19 Sep 2017 10:52:42 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:b56e:8c34:dd0d:1070])
-        by smtp.gmail.com with ESMTPSA id c2sm4857197pgq.61.2017.09.19.10.52.41
+        bh=nZ8XUtzdFpxmJ7zdrcraNPI5iE+0jd9cddXi0AZNBVQ=;
+        b=Mgwge9uyb1vUzahnR+7xoQ6ajLwj6gfvanDJ87cRB1169p77dYyNjNK8yALRG8Qbt6
+         pBW2HG2fYaM6go3xiOGe6dZjn+a10HI97yR9Ju+lk6PhJmfpk+/1L2O681HCp+lMgjKl
+         3yZjons8yCGVi1f6Q5/JYkSdmf0RfV88AGH4FwOuODIbgh0fV99tJM1BKFu19wJKYG4S
+         XPc0Rw7nam1W7pdT7qnoMVweTAv97Nzk+/VxFznjaCXOVZaKhUrhHNv/IHjze5qbByC3
+         Z275pQvHEydyzjHzghW4ciWcsVNO2xyQ8e8OUF/XMmdPGYzNj8aFcYNcJCJmHoWYzRZk
+         xhjw==
+X-Gm-Message-State: AHPjjUgHAEcxybOvcFekjtEj8MkC/SXy74tjq4RaW4Q7dvvoKSunc3DK
+        +3BuB3N0rgBwWVioYo+A1YU=
+X-Google-Smtp-Source: AOwi7QAkR6zv9qB1eHypBrWqFCLHZga8xf+vc4sCks464wT/YHVQmIm4bbIbDlhxvvsS2x5opAcBAA==
+X-Received: by 10.98.66.220 with SMTP id h89mr2077965pfd.270.1505844465677;
+        Tue, 19 Sep 2017 11:07:45 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:ed67:93b4:3411:bf26])
+        by smtp.gmail.com with ESMTPSA id f9sm4374632pfe.150.2017.09.19.11.07.44
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 19 Sep 2017 10:52:41 -0700 (PDT)
-Date:   Tue, 19 Sep 2017 10:52:40 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Jameson Miller <jameson.miller81@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, jamill@microsoft.com,
-        peff@peff.net, sxlijin@gmail.com
-Subject: Re: [PATCH v2] Improve performance of git status --ignored
-Message-ID: <20170919175240.GA94704@google.com>
-References: <20170810184936.239542-1-jamill@microsoft.com>
- <1505755473-6720-1-git-send-email-jamill@microsoft.com>
- <1505755473-6720-2-git-send-email-jamill@microsoft.com>
+        Tue, 19 Sep 2017 11:07:44 -0700 (PDT)
+Date:   Tue, 19 Sep 2017 11:07:42 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Ben Peart <Ben.Peart@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Karsten Blees <blees@dcon.de>
+Subject: Re: [PATCH] Win32: simplify loading of DLL functions
+Message-ID: <20170919180742.GC75068@aiede.mtv.corp.google.com>
+References: <f5a3add27206df3e7f39efeac8a3c3b47f2b79f2.1505834586.git.johannes.schindelin@gmx.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1505755473-6720-2-git-send-email-jamill@microsoft.com>
+In-Reply-To: <f5a3add27206df3e7f39efeac8a3c3b47f2b79f2.1505834586.git.johannes.schindelin@gmx.de>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/18, Jameson Miller wrote:
-> Improve the performance of the directory listing logic when it wants to list
-> non-empty ignored directories. In order to show non-empty ignored directories,
-> the existing logic will recursively iterate through all contents of an ignored
-> directory. This change introduces the optimization to stop iterating through
-> the contents once it finds the first file. This can have a significant
-> improvement in 'git status --ignored' performance in repositories with a large
-> number of files in ignored directories.
-> 
-> For an example of the performance difference on an example repository with
-> 196,000 files in 400 ignored directories:
-> 
-> | Command                    |  Time (s) |
-> | -------------------------- | --------- |
-> | git status                 |   1.2     |
-> | git status --ignored (old) |   3.9     |
-> | git status --ignored (new) |   1.4     |
-> 
-> Signed-off-by: Jameson Miller <jamill@microsoft.com>
+Hi,
 
-Everything looks good to me.  My only nit (and no need to change it for
-this patch) is that the first line of the commit msg usually has the
-form:
+Johannes Schindelin wrote:
 
-  <area>: <short summary>
+> Dynamic loading of DLL functions is duplicated in several places in Git
+> for Windows' source code.
+>
+> This patch adds a pair of macros to simplify the process: the
+> DECLARE_PROC_ADDR(<dll>, <return-type>, <function-name>,
+> ...<function-parameter-types>...) macro to be used at the beginning of a
+> code block, and the INIT_PROC_ADDR(<function-name>) macro to call before
+> using the declared function. The return value of the INIT_PROC_ADDR()
+> call has to be checked; If it is NULL, the function was not found in the
+> specified DLL.
+>
+> Example:
+>
+>         DECLARE_PROC_ADDR(kernel32.dll, BOOL, CreateHardLinkW,
+>                           LPCWSTR, LPCWSTR, LPSECURITY_ATTRIBUTES);
+>
+>         if (!INIT_PROC_ADDR(CreateHardLinkW))
+>                 return error("Could not find CreateHardLinkW() function";
+>
+> 	if (!CreateHardLinkW(source, target, NULL))
+> 		return error("could not create hardlink from %S to %S",
+> 			     source, target);
+> 	return 0;
 
-So that its easy to tell which part of the code a commit is changing.
+nit: whitespace is a bit strange here (mixture of tabs and spaces).
 
-Seriously, great patch.  Thanks!
+Could this example go near the top of the header instead?  That way,
+it's easier for people reading the header to see how to use it.
 
+> Signed-off-by: Karsten Blees <blees@dcon.de>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > ---
->  dir.c | 47 +++++++++++++++++++++++++++++++++++++++++------
->  1 file changed, 41 insertions(+), 6 deletions(-)
-> 
-> diff --git a/dir.c b/dir.c
-> index 1c55dc3..1d17b80 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -49,7 +49,7 @@ struct cached_dir {
->  static enum path_treatment read_directory_recursive(struct dir_struct *dir,
->  	struct index_state *istate, const char *path, int len,
->  	struct untracked_cache_dir *untracked,
-> -	int check_only, const struct pathspec *pathspec);
-> +	int check_only, int stop_at_first_file, const struct pathspec *pathspec);
->  static int get_dtype(struct dirent *de, struct index_state *istate,
->  		     const char *path, int len);
->  
-> @@ -1404,8 +1404,13 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
->  
->  	untracked = lookup_untracked(dir->untracked, untracked,
->  				     dirname + baselen, len - baselen);
-> +
-> +	/*
-> +	 * If this is an excluded directory, then we only need to check if
-> +	 * the directory contains any files.
-> +	 */
->  	return read_directory_recursive(dir, istate, dirname, len,
-> -					untracked, 1, pathspec);
-> +					untracked, 1, exclude, pathspec);
->  }
->  
->  /*
-> @@ -1633,7 +1638,7 @@ static enum path_treatment treat_path_fast(struct dir_struct *dir,
->  		 * with check_only set.
->  		 */
->  		return read_directory_recursive(dir, istate, path->buf, path->len,
-> -						cdir->ucd, 1, pathspec);
-> +						cdir->ucd, 1, 0, pathspec);
->  	/*
->  	 * We get path_recurse in the first run when
->  	 * directory_exists_in_index() returns index_nonexistent. We
-> @@ -1793,12 +1798,20 @@ static void close_cached_dir(struct cached_dir *cdir)
->   * Also, we ignore the name ".git" (even if it is not a directory).
->   * That likely will not change.
->   *
-> + * If 'stop_at_first_file' is specified, 'path_excluded' is returned
-> + * to signal that a file was found. This is the least significant value that
-> + * indicates that a file was encountered that does not depend on the order of
-> + * whether an untracked or exluded path was encountered first.
-> + *
->   * Returns the most significant path_treatment value encountered in the scan.
-> + * If 'stop_at_first_file' is specified, `path_excluded` is the most
-> + * significant path_treatment value that will be returned.
->   */
-> +
->  static enum path_treatment read_directory_recursive(struct dir_struct *dir,
->  	struct index_state *istate, const char *base, int baselen,
->  	struct untracked_cache_dir *untracked, int check_only,
-> -	const struct pathspec *pathspec)
-> +	int stop_at_first_file, const struct pathspec *pathspec)
->  {
->  	struct cached_dir cdir;
->  	enum path_treatment state, subdir_state, dir_state = path_none;
-> @@ -1832,12 +1845,34 @@ static enum path_treatment read_directory_recursive(struct dir_struct *dir,
->  			subdir_state =
->  				read_directory_recursive(dir, istate, path.buf,
->  							 path.len, ud,
-> -							 check_only, pathspec);
-> +							 check_only, stop_at_first_file, pathspec);
->  			if (subdir_state > dir_state)
->  				dir_state = subdir_state;
->  		}
->  
->  		if (check_only) {
-> +			if (stop_at_first_file) {
-> +				/*
-> +				 * If stopping at first file, then
-> +				 * signal that a file was found by
-> +				 * returning `path_excluded`. This is
-> +				 * to return a consistent value
-> +				 * regardless of whether an ignored or
-> +				 * excluded file happened to be
-> +				 * encountered 1st.
-> +				 *
-> +				 * In current usage, the
-> +				 * `stop_at_first_file` is passed when
-> +				 * an ancestor directory has matched
-> +				 * an exclude pattern, so any found
-> +				 * files will be excluded.
-> +				 */
-> +				if (dir_state >= path_excluded) {
-> +					dir_state = path_excluded;
-> +					break;
-> +				}
-> +			}
-> +
->  			/* abort early if maximum state has been reached */
->  			if (dir_state == path_untracked) {
->  				if (cdir.fdir)
-> @@ -2108,7 +2143,7 @@ int read_directory(struct dir_struct *dir, struct index_state *istate,
->  		 */
->  		dir->untracked = NULL;
->  	if (!len || treat_leading_path(dir, istate, path, len, pathspec))
-> -		read_directory_recursive(dir, istate, path, len, untracked, 0, pathspec);
-> +		read_directory_recursive(dir, istate, path, len, untracked, 0, 0, pathspec);
->  	QSORT(dir->entries, dir->nr, cmp_dir_entry);
->  	QSORT(dir->ignored, dir->ignored_nr, cmp_dir_entry);
->  
-> -- 
-> 2.7.4
-> 
 
--- 
-Brandon Williams
+Just curious: what was Karsten's contribution?  (I ask mostly because
+I'm interested in kinds of collaboration git metadata is failing to
+capture correctly --- e.g. pair programming.)
+
+>         So far, there are no users (except in Git for Windows). Ben
+>         promised to make use of it in his fsmonitor patch series.
+>
+>  compat/win32/lazyload.h | 44 ++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 44 insertions(+)
+>  create mode 100644 compat/win32/lazyload.h
+
+Are any of the Git for Windows users something that could go upstream
+along with this patch?  That would help illustrate what a good caller
+looks like, which should help with reviewing future patches that use
+this code.
+
+> --- /dev/null
+> +++ b/compat/win32/lazyload.h
+> @@ -0,0 +1,44 @@
+[...]
+> +/* Declares a function to be loaded dynamically from a DLL. */
+> +#define DECLARE_PROC_ADDR(dll, rettype, function, ...) \
+> +	static struct proc_addr proc_addr_##function = \
+> +	{ #dll, #function, NULL, 0 }; \
+> +	static rettype (WINAPI *function)(__VA_ARGS__)
+> +
+> +/*
+> + * Loads a function from a DLL (once-only).
+> + * Returns non-NULL function pointer on success.
+> + * Returns NULL + errno == ENOSYS on failure.
+> + */
+> +#define INIT_PROC_ADDR(function) \
+> +	(function = get_proc_addr(&proc_addr_##function))
+
+Probably worth mentioning in the doc comment that this is not thread
+safe, so a caller that wants to lazy-init in a threaded context is
+responsible for doing their own locking.
+
+> +
+> +static inline void *get_proc_addr(struct proc_addr *proc)
+> +{
+> +	/* only do this once */
+> +	if (!proc->initialized) {
+> +		HANDLE hnd;
+> +		proc->initialized = 1;
+> +		hnd = LoadLibraryExA(proc->dll, NULL,
+> +				     LOAD_LIBRARY_SEARCH_SYSTEM32);
+> +		if (hnd)
+> +			proc->pfunction = GetProcAddress(hnd, proc->function);
+> +	}
+> +	/* set ENOSYS if DLL or function was not found */
+> +	if (!proc->pfunction)
+> +		errno = ENOSYS;
+> +	return proc->pfunction;
+> +}
+
+strerror(ENOSYS) is "Function not implemented".  Cute.
+
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+Thanks,
+Jonathan
