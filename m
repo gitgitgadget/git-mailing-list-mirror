@@ -2,133 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 92BE120A2A
-	for <e@80x24.org>; Tue, 19 Sep 2017 19:54:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 385A52047F
+	for <e@80x24.org>; Tue, 19 Sep 2017 20:22:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751728AbdISTyF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Sep 2017 15:54:05 -0400
-Received: from mout.gmx.net ([212.227.15.15]:63709 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751715AbdISTyE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Sep 2017 15:54:04 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MQzUc-1dpLhl3mmc-00UN8M; Tue, 19
- Sep 2017 21:53:48 +0200
-Date:   Tue, 19 Sep 2017 21:53:45 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-        <pclouds@gmail.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Brandon Williams <bmwill@google.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2 00/21] Read `packed-refs` using mmap()
-In-Reply-To: <cover.1505799700.git.mhagger@alum.mit.edu>
-Message-ID: <alpine.DEB.2.21.1.1709192047450.219280@virtualbox>
-References: <cover.1505799700.git.mhagger@alum.mit.edu>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751503AbdISUWF (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Sep 2017 16:22:05 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:35814 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751396AbdISUWF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Sep 2017 16:22:05 -0400
+Received: by mail-pg0-f65.google.com with SMTP id j16so393750pga.2
+        for <git@vger.kernel.org>; Tue, 19 Sep 2017 13:22:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=GWRsQCUpWJwHqbKimJ9aLS+j4Y6VgxUeMePFkX6Iels=;
+        b=uesCmNGaxlqeeYSAOk4o8qHe1vb6uL9acZwqdaGIM1AGLNpyKDcz2CjXNJ43VFtzqI
+         jHe5Kg0/NN2xqQx+d/NELFNtQuSZ0obhto1+cOz7cN4bu6StitbTmXLSLMSUi4QoZ2oi
+         E3tciGuDAyzvoZpofa2JEtQ+2DJ9mUYGgbXjIy5tMP7HKlMLDwYTpqx/FEUyzJ7HeNIV
+         /vvo9mhLzrQsmENoFvtuADbd/0HiHOlavEBrdaYMToB2fpwoHCYMHgNndWNhzQXmC/iA
+         xPQKW8ArqHbaeYA/HZThhE0RxDNWAp5Y6T+lZIEg84wPDM6LDB7n5vOrVn23Owxke2Po
+         GJQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=GWRsQCUpWJwHqbKimJ9aLS+j4Y6VgxUeMePFkX6Iels=;
+        b=JpmsJRi6AFhwycvoRTsGneh3aTVYO3hWcxgFFlGmgJHHd92Jq80gvuNTqadpllam4x
+         p/mS6Mk25NUKSfydPmu5aAWH+j68aMUcsOUVxgQ31FLpq7v4slQvfVhcRjfEIilXX4k4
+         e1ArHM5juEe/uZY8efZa8NWYXxvpooZOIhNHnkt+2M3veEE5yVQphoSvZnUvDUdYz44R
+         hhYpGoo2KEcTSJ6tjbGGO5ODR1yWyToGfJhKfpan+iaQ0i8rqL0U2Ov86fEjcS/JfcLj
+         LS8eld1m9USzZdH80kX6wo38tesb8GIiA7TpQyuHLlzK+o2gl7ETSLYDMwcQtdM9t2Pf
+         Ufxg==
+X-Gm-Message-State: AHPjjUjqP9WwayqhOS8GRw1NSQxt+WUvAS6JKsYbL6ZEqM6Zcqp54O7p
+        ROKuCl4pmdm2+mb5srplqr1dJCF7
+X-Google-Smtp-Source: AOwi7QCTZK+sriPTRDwAhSnT05cw7gpC6aOhXUsHUhtgGx+bUXcWRPBh1KB/pkCQuI2EwBHXHhVAkA==
+X-Received: by 10.84.197.69 with SMTP id m63mr2316142pld.226.1505852524469;
+        Tue, 19 Sep 2017 13:22:04 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:ed67:93b4:3411:bf26])
+        by smtp.gmail.com with ESMTPSA id e4sm4184634pfa.112.2017.09.19.13.22.03
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 19 Sep 2017 13:22:03 -0700 (PDT)
+Date:   Tue, 19 Sep 2017 13:22:01 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] doc: camelCase the config variables to improve
+ readability
+Message-ID: <20170919202201.GD75068@aiede.mtv.corp.google.com>
+References: <0102015e9a2d3eb6-bee76ba8-4298-47d2-8822-d513bc33bd71-000000@eu-west-1.amazonses.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-1862387965-1505850827=:219280"
-X-Provags-ID: V03:K0:xiHBLMIFjZDMdSgEbFZsnnKe/oQDoH2Sxd8QWWtYhRiuUuo9+M5
- faKZGpymnGwiQ5FN17CLJXBpU8BJuRn6uRY6LzoiYYtzG8iG8OqzwJC3E/3OekNgIE8jEFt
- 5AX/IrGcEPeGq0LoNunL8TVtsiwuosXhb34TLoRZbGHmJ9UoCmK3enJWU+hDpzDEjS1YIA4
- tfXdIqwavCwv+0ahB+YKQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:myHLpRCcz+U=:715RULQcIfLnFmvKfAIHfr
- kx5GHzuL7QcbhrBVnlsHVhze4dYVWdz/ceyUQT6ngLS4HXhJ1SyAUpgVVL+cLlGXhw6zmrirq
- A1zK+YVKfs3bE0UciNqpiTT/JQSGNhKQM0VkLssjla8ljUhnGTzI4b9NJWihK0f6WnFh/HUaS
- UjpunnXC6MtuTPQkESpBy4SVj1uV3GoS4xqsvDvKgTIjbP9F2rdbN4/a7k4wa4zgAd5g5Uaa7
- XML68dEXSZjt9KS1MsbCbKTt5lQLrcjpLwRGYjbns/Wxzl0Hh+XizNwvzC1LsBrBmiayFnh43
- +dTGYciNd7ri/P+3OA9gTelPmk+bzF/dwxVDLw7az/QSITlIYebzgnwgv+hDEYLM0VOBZg1WC
- Zgk6anUbV5Cb/hrCx5tiMmcC6gkASthjXWpDLikIT2YKGKJz9CLy+p5QGDDkeQ385GMns/kL/
- mKlYlFAfXhrfKCbr7RkBfVBKPvtVkBWgg1sJoS+o3gcPtiU27qNGnaSCjcVn5UwJGtu2feNxm
- 4hyO9jOEgScZLlDpicYUDRFKHnPEoX/I6XJKko5Q8816mTyTpKYWlcSdZOjcTlpApj8o7qMro
- +EjwHIZIWKuWLjcSPMB/pciYYiCJ8QIo3P4w+YGiNqexNJPccQaYREAOfzLFRawOKGmLJThLL
- AR1tjcuR5ok02UOUZb44adHLUR1VWLg9xn1Hq0H6yn5STDjINKt4N7wMaylUk04jJDaQWF4w9
- P8seJEWZkDKhhXy5AXKL5QdBP5DQ+62CY14KLRw/MGp+sp4pyc2w5aRxOshiXgRH/6srMSNgZ
- lGiRV0rYo28WBZFgX9ezSUlXGwSAuqoEhnzz2QqBpY5cLJp7CM=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0102015e9a2d3eb6-bee76ba8-4298-47d2-8822-d513bc33bd71-000000@eu-west-1.amazonses.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi,
 
---8323329-1862387965-1505850827=:219280
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Kaartic Sivaraam wrote:
 
-Hi Michael,
+> The config variable used weren't readable as they were in the
+> crude form of how git stores/uses it's config variables.
 
-On Tue, 19 Sep 2017, Michael Haggerty wrote:
+nit: Git's commit messages describe the current behavior of Git in the
+present tense.  Something like:
 
-> This is v2 of a patch series that changes the reading and caching of the
-> `packed-refs` file to use `mmap()`. Thanks to Junio, Stefan, and
-> Johannes for their comments about v1 [1].
+	These manpages' references to config variables are hard to read because
+	they use all-lowercase names, without indicating where each word ends
+	and begins in the configuration variable names.
 
-Thank you for the new iteration.
+	Improve readability by using camelCase instead.  Git treats these names
+	case-insensitively so this does not affect functionality.
 
-> The main change since v1 is to accommodate Windows, which doesn't let
-> you replace a file using `rename()` if the file is currently mmapped.
-> This is unfortunate, because it means that Windows will never get the
-> O(N) =E2=86=92 O(lg N) improvement for reading single references that mor=
-e
-> capable systems can now enjoy.
+> Improve it's readability by replacing them with camelCased versions
+> of config variables as it doesn't have any impact on it's usage.
 
-Triggered by your enquiry, I looked into passing the FILE_SHARE_DELETE
-flag which I hoped would let us delete the file even if it still is open
-(and mapped). In my tests, this did not work. If anybody wants to have a
-look at what I did (and whether they can make it work):
-https://github.com/dscho/git/tree/replace-wopen
+nit: s/it's/its/ (in both places)
 
-> The background was discussed on the mailing list [2]. The bottom line
-> is that on Windows, keeping the `packed-refs` lock mmapped would be
-> tantamount to holding reader lock on that file, preventing anybody
-> (even unrelated processes) from changing the `packed-refs` file while
-> it is mmapped. This is even worse than the situation for packfiles
-> (which is solved using `close_all_packs()`), because a packfile, once
-> created, never needs to be replaced=E2=80=94every packfile has a filename=
- that
-> is determined from its contents. The worst that can happen if a
-> packfile is locked is that another process cannot remove it, but that
-> is not critical for correctness. The `packed-refs` file, on the other
-> hand, always has the same filename and needs to be overwritten for
-> correctness.
->=20
-> So the approach taken here is that a new compile-time option,
-> `MMAP_PREVENTS_DELETE`, is introduced. When this option is set, then
-> the `packed-refs` file is read quickly into memory then closed.
+> Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+> ---
+>  Documentation/git-branch.txt | 4 ++--
+>  Documentation/git-tag.txt    | 2 +-
+>  2 files changed, 3 insertions(+), 3 deletions(-)
 
-Another approach would be to imitate close_all_packs() and rely on the
-Windows-specific code that retries renames in a staggered fashion, waiting
-a little longer and longer before retrying, and finally telling the user
-that some file cannot be overwritten:
-https://github.com/git-for-windows/git/blob/v2.14.1.windows.1/compat/mingw.=
-c#L2439-L2441
+This also is just more consistent with the rest of the docs.
 
-This is not a new problem, by the way. If a file is in use while you try
-to run `git checkout` with a different version of that file, we have the
-exact same problem on Windows. And we deal with it using that
-retry_ask_yes_no() function.
+FWIW, with or without the commit message tweaks mentioned above,
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-For this to work, the current process really would need to be able to
-release all snapshots in one go (for simplicity, I would not even check
-the filename but simply blow them all away when we want to overwrite
-packed-refs).
-
-I guess I should set aside some time to implement that on top of your
-series (I *really* want our in-house users to benefit from that O(lg n)
-improvement). In the meantime, I think this can go forward with the
-current design.
-
-Ciao,
-Dscho
---8323329-1862387965-1505850827=:219280--
+Thanks for your attention to detail.
