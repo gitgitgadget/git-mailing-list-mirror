@@ -6,26 +6,26 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A72220281
+	by dcvr.yhbt.net (Postfix) with ESMTP id C50FE20281
 	for <e@80x24.org>; Tue, 19 Sep 2017 06:23:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751410AbdISGW6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Sep 2017 02:22:58 -0400
+        id S1751425AbdISGW7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Sep 2017 02:22:59 -0400
 Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:44597 "EHLO
         alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751367AbdISGW4 (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 19 Sep 2017 02:22:56 -0400
-X-AuditID: 12074412-1e5ff7000000748d-42-59c0b7bf93e3
+        by vger.kernel.org with ESMTP id S1751408AbdISGW6 (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 19 Sep 2017 02:22:58 -0400
+X-AuditID: 12074412-1e5ff7000000748d-45-59c0b7c12f9c
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id CF.BB.29837.FB7B0C95; Tue, 19 Sep 2017 02:22:55 -0400 (EDT)
+        by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id A0.CB.29837.1C7B0C95; Tue, 19 Sep 2017 02:22:57 -0400 (EDT)
 Received: from bagpipes.fritz.box (p54AAE885.dip0.t-ipconnect.de [84.170.232.133])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v8J6MV1g002857
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v8J6MV1h002857
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Tue, 19 Sep 2017 02:22:53 -0400
+        Tue, 19 Sep 2017 02:22:55 -0400
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Stefan Beller <sbeller@google.com>,
@@ -35,96 +35,298 @@ Cc:     Stefan Beller <sbeller@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Brandon Williams <bmwill@google.com>,
         git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 09/21] packed_ref_cache: remember the file-wide peeling state
-Date:   Tue, 19 Sep 2017 08:22:17 +0200
-Message-Id: <6b7c9b6bd4160635cc5bebf5c0d6e298f05d4af4.1505799700.git.mhagger@alum.mit.edu>
+Subject: [PATCH v2 10/21] mmapped_ref_iterator: add iterator over a packed-refs file
+Date:   Tue, 19 Sep 2017 08:22:18 +0200
+Message-Id: <aab75b5a61b5b71248267d29c04254b60f4ae385.1505799700.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.14.1
 In-Reply-To: <cover.1505799700.git.mhagger@alum.mit.edu>
 References: <cover.1505799700.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrDIsWRmVeSWpSXmKPExsUixO6iqLt/+4FIg40LDSzWPrvDZPF8/Ql2
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrLIsWRmVeSWpSXmKPExsUixO6iqHtw+4FIgzc7jS3WPrvDZPF8/Ql2
         i64r3UwWDb1XmC36l3exWdxeMZ/ZonvKW0aLHy09zBabN7ezOHB6/H3/gclj56y77B4fPsZ5
-        LNhU6vGsdw+jx8VLyh6fN8kFsEdx2aSk5mSWpRbp2yVwZbx7/4WpYKdIxZVNb5kaGC8KdDFy
-        ckgImEg0rX3J3MXIxSEksINJYtbzzywQzikmiauTvjKCVLEJ6Eos6mlmArFFBNQkJrYdAiti
-        FljJLDFp6xVWkISwQIBE2+x/YEUsAqoSc58dArI5OHgFoiRaO5kgtslLnHtwmxnE5hSwkGje
-        s50FpERIwFziwNHiCYw8CxgZVjHKJeaU5urmJmbmFKcm6xYnJ+blpRbpmunlZpbopaaUbmKE
-        BJzQDsb1J+UOMQpwMCrx8Apc2x8pxJpYVlyZe4hRkoNJSZQ3bNOBSCG+pPyUyozE4oz4otKc
-        1OJDjBIczEoivIcWAeV4UxIrq1KL8mFS0hwsSuK8Pxer+wkJpCeWpGanphakFsFkZTg4lCR4
-        F28DahQsSk1PrUjLzClBSDNxcIIM5wEaXgxSw1tckJhbnJkOkT/FqMvRcfPuHyYhlrz8vFQp
-        cd77IEUCIEUZpXlwc2CJ4hWjONBbwrx7QKp4gEkGbtIroCVMQEuyN4AtKUlESEk1MEqdliuT
-        Etq1+u7mrx7bdWynmSRNeKBw3St6pZ5E+a1lPRekuGYHxSlwCHXvkmG+ktCkXW6yuXK/Atfy
-        pAnCK1L4JHZs2ZX45tfxQq3yxaWf5Bo2HJTPPHK41DtYvNJ/woRDnDqf8wxtLJt/ax+WSlhT
-        Xr7s+P5LktemZbu2fHT/HfM+1fLXCiWW4oxEQy3mouJEALJcMKvvAgAA
+        LNhU6vGsdw+jx8VLyh6fN8kFsEdx2aSk5mSWpRbp2yVwZZzZeIa9YJ99xbZTt9kaGDuMuxg5
+        OSQETCRW/P/G2sXIxSEksINJYk7XIyYI5xSTxK+rU1hBqtgEdCUW9TQzgdgiAmoSE9sOsYAU
+        MQusZJaYtPUKWJGwQIjErnt/mUFsFgFViUe/rrGB2LwCURKvjy9mh1gnL3HuwW2wGk4BC4nm
+        PduBBnEAbTOXOHC0eAIjzwJGhlWMcok5pbm6uYmZOcWpybrFyYl5ealFumZ6uZkleqkppZsY
+        ISEntINx/Um5Q4wCHIxKPLwC1/ZHCrEmlhVX5h5ilORgUhLlDdt0IFKILyk/pTIjsTgjvqg0
+        J7X4EKMEB7OSCO+hRUA53pTEyqrUonyYlDQHi5I478/F6n5CAumJJanZqakFqUUwWRkODiUJ
+        3sXbgBoFi1LTUyvSMnNKENJMHJwgw3mAhheD1PAWFyTmFmemQ+RPMepydNy8+4dJiCUvPy9V
+        Spz3PkiRAEhRRmke3BxYqnjFKA70ljDvHpAqHmCagZv0CmgJE9CS7A1gS0oSEVJSDYyi60zN
+        mzj/11+eMf2Sob2gUtAdj/De7WLHzvioVlVcMbIzNotsPzlre6rJMVPV+lf99fI6IZPmhzc6
+        cu3oEzGQUM595jTjSIiCwxwuwe8uHF6rb2yak/jPSINFK+SPn821HdNnPDI69OVw/Yv3l4/v
+        3nw81GhOwMZZLiueCvK1Zz9TL2kI2azEUpyRaKjFXFScCAAR85/V8AIAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rather than store the peeling state (i.e., the one defined by traits
-in the `packed-refs` file header line) in a local variable in
-`read_packed_refs()`, store it permanently in `packed_ref_cache`. This
-will be needed when we stop reading all packed refs at once.
+Add a new `mmapped_ref_iterator`, which can iterate over the
+references in an mmapped `packed-refs` file directly. Use this
+iterator from `read_packed_refs()` to fill the packed refs cache.
+
+Note that we are not yet willing to promise that the new iterator
+generates its output in order. That doesn't matter for now, because
+the packed refs cache doesn't care what order it is filled.
+
+This change adds a lot of boilerplate without providing any obvious
+benefits. The benefits will come soon, when we get rid of the
+`ref_cache` for packed references altogether.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs/packed-backend.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ refs/packed-backend.c | 207 ++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 152 insertions(+), 55 deletions(-)
 
 diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 2b80f244c8..ae276f3445 100644
+index ae276f3445..312116a99d 100644
 --- a/refs/packed-backend.c
 +++ b/refs/packed-backend.c
-@@ -18,6 +18,12 @@ struct packed_ref_cache {
+@@ -163,6 +163,141 @@ static NORETURN void die_invalid_line(const char *path,
  
- 	struct ref_cache *cache;
+ }
  
-+	/*
-+	 * What is the peeled state of this cache? (This is usually
-+	 * determined from the header of the "packed-refs" file.)
-+	 */
-+	enum { PEELED_NONE, PEELED_TAGS, PEELED_FULLY } peeled;
++/*
++ * An iterator over a packed-refs file that is currently mmapped.
++ */
++struct mmapped_ref_iterator {
++	struct ref_iterator base;
 +
- 	/*
- 	 * Count of references to the data structure in this instance,
- 	 * including the pointer from files_ref_store::packed if any.
-@@ -195,13 +201,13 @@ static struct packed_ref_cache *read_packed_refs(struct packed_ref_store *refs)
++	struct packed_ref_cache *packed_refs;
++
++	/* The current position in the mmapped file: */
++	const char *pos;
++
++	/* The end of the mmapped file: */
++	const char *eof;
++
++	struct object_id oid, peeled;
++
++	struct strbuf refname_buf;
++};
++
++static int mmapped_ref_iterator_advance(struct ref_iterator *ref_iterator)
++{
++	struct mmapped_ref_iterator *iter =
++		(struct mmapped_ref_iterator *)ref_iterator;
++	const char *p = iter->pos, *eol;
++
++	strbuf_reset(&iter->refname_buf);
++
++	if (iter->pos == iter->eof)
++		return ref_iterator_abort(ref_iterator);
++
++	iter->base.flags = REF_ISPACKED;
++
++	if (iter->eof - p < GIT_SHA1_HEXSZ + 2 ||
++	    parse_oid_hex(p, &iter->oid, &p) ||
++	    !isspace(*p++))
++		die_invalid_line(iter->packed_refs->refs->path,
++				 iter->pos, iter->eof - iter->pos);
++
++	eol = memchr(p, '\n', iter->eof - p);
++	if (!eol)
++		die_unterminated_line(iter->packed_refs->refs->path,
++				      iter->pos, iter->eof - iter->pos);
++
++	strbuf_add(&iter->refname_buf, p, eol - p);
++	iter->base.refname = iter->refname_buf.buf;
++
++	if (check_refname_format(iter->base.refname, REFNAME_ALLOW_ONELEVEL)) {
++		if (!refname_is_safe(iter->base.refname))
++			die("packed refname is dangerous: %s",
++			    iter->base.refname);
++		oidclr(&iter->oid);
++		iter->base.flags |= REF_BAD_NAME | REF_ISBROKEN;
++	}
++	if (iter->packed_refs->peeled == PEELED_FULLY ||
++	    (iter->packed_refs->peeled == PEELED_TAGS &&
++	     starts_with(iter->base.refname, "refs/tags/")))
++		iter->base.flags |= REF_KNOWS_PEELED;
++
++	iter->pos = eol + 1;
++
++	if (iter->pos < iter->eof && *iter->pos == '^') {
++		p = iter->pos + 1;
++		if (iter->eof - p < GIT_SHA1_HEXSZ + 1 ||
++		    parse_oid_hex(p, &iter->peeled, &p) ||
++		    *p++ != '\n')
++			die_invalid_line(iter->packed_refs->refs->path,
++					 iter->pos, iter->eof - iter->pos);
++		iter->pos = p;
++
++		/*
++		 * Regardless of what the file header said, we
++		 * definitely know the value of *this* reference:
++		 */
++		iter->base.flags |= REF_KNOWS_PEELED;
++	} else {
++		oidclr(&iter->peeled);
++	}
++
++	return ITER_OK;
++}
++
++static int mmapped_ref_iterator_peel(struct ref_iterator *ref_iterator,
++				    struct object_id *peeled)
++{
++	struct mmapped_ref_iterator *iter =
++		(struct mmapped_ref_iterator *)ref_iterator;
++
++	if ((iter->base.flags & REF_KNOWS_PEELED)) {
++		oidcpy(peeled, &iter->peeled);
++		return is_null_oid(&iter->peeled) ? -1 : 0;
++	} else if ((iter->base.flags & (REF_ISBROKEN | REF_ISSYMREF))) {
++		return -1;
++	} else {
++		return !!peel_object(iter->oid.hash, peeled->hash);
++	}
++}
++
++static int mmapped_ref_iterator_abort(struct ref_iterator *ref_iterator)
++{
++	struct mmapped_ref_iterator *iter =
++		(struct mmapped_ref_iterator *)ref_iterator;
++
++	release_packed_ref_cache(iter->packed_refs);
++	strbuf_release(&iter->refname_buf);
++	base_ref_iterator_free(ref_iterator);
++	return ITER_DONE;
++}
++
++static struct ref_iterator_vtable mmapped_ref_iterator_vtable = {
++	mmapped_ref_iterator_advance,
++	mmapped_ref_iterator_peel,
++	mmapped_ref_iterator_abort
++};
++
++struct ref_iterator *mmapped_ref_iterator_begin(
++		const char *packed_refs_file,
++		struct packed_ref_cache *packed_refs,
++		const char *pos, const char *eof)
++{
++	struct mmapped_ref_iterator *iter = xcalloc(1, sizeof(*iter));
++	struct ref_iterator *ref_iterator = &iter->base;
++
++	base_ref_iterator_init(ref_iterator, &mmapped_ref_iterator_vtable, 0);
++
++	iter->packed_refs = packed_refs;
++	acquire_packed_ref_cache(iter->packed_refs);
++	iter->pos = pos;
++	iter->eof = eof;
++	strbuf_init(&iter->refname_buf, 0);
++
++	iter->base.oid = &iter->oid;
++
++	return ref_iterator;
++}
++
+ /*
+  * Read from the `packed-refs` file into a newly-allocated
+  * `packed_ref_cache` and return it. The return value will already
+@@ -199,9 +334,10 @@ static struct packed_ref_cache *read_packed_refs(struct packed_ref_store *refs)
+ 	struct stat st;
+ 	size_t size;
  	char *buf;
- 	const char *pos, *eol, *eof;
- 	struct strbuf tmp = STRBUF_INIT;
--	enum { PEELED_NONE, PEELED_TAGS, PEELED_FULLY } peeled = PEELED_NONE;
+-	const char *pos, *eol, *eof;
+-	struct strbuf tmp = STRBUF_INIT;
++	const char *pos, *eof;
  	struct ref_dir *dir;
++	struct ref_iterator *iter;
++	int ok;
  
  	packed_refs->refs = refs;
  	acquire_packed_ref_cache(packed_refs);
- 	packed_refs->cache = create_ref_cache(NULL, NULL);
- 	packed_refs->cache->root->flag &= ~REF_INCOMPLETE;
-+	packed_refs->peeled = PEELED_NONE;
+@@ -235,7 +371,9 @@ static struct packed_ref_cache *read_packed_refs(struct packed_ref_store *refs)
  
- 	fd = open(refs->path, O_RDONLY);
- 	if (fd < 0) {
-@@ -244,9 +250,9 @@ static struct packed_ref_cache *read_packed_refs(struct packed_ref_store *refs)
- 		string_list_split_in_place(&traits, p, ' ', -1);
+ 	/* If the file has a header line, process it: */
+ 	if (pos < eof && *pos == '#') {
++		struct strbuf tmp = STRBUF_INIT;
+ 		char *p;
++		const char *eol;
+ 		struct string_list traits = STRING_LIST_INIT_NODUP;
  
- 		if (unsorted_string_list_has_string(&traits, "fully-peeled"))
--			peeled = PEELED_FULLY;
-+			packed_refs->peeled = PEELED_FULLY;
- 		else if (unsorted_string_list_has_string(&traits, "peeled"))
--			peeled = PEELED_TAGS;
-+			packed_refs->peeled = PEELED_TAGS;
- 		/* perhaps other traits later as well */
+ 		eol = memchr(pos, '\n', eof - pos);
+@@ -259,69 +397,28 @@ static struct packed_ref_cache *read_packed_refs(struct packed_ref_store *refs)
+ 		pos = eol + 1;
  
- 		/* The "+ 1" is for the LF character. */
-@@ -282,8 +288,9 @@ static struct packed_ref_cache *read_packed_refs(struct packed_ref_store *refs)
- 			oidclr(&oid);
- 			flag |= REF_BAD_NAME | REF_ISBROKEN;
- 		}
--		if (peeled == PEELED_FULLY ||
--		    (peeled == PEELED_TAGS && starts_with(refname, "refs/tags/")))
-+		if (packed_refs->peeled == PEELED_FULLY ||
-+		    (packed_refs->peeled == PEELED_TAGS &&
-+		     starts_with(refname, "refs/tags/")))
- 			flag |= REF_KNOWS_PEELED;
- 		entry = create_ref_entry(refname, &oid, flag);
+ 		string_list_clear(&traits, 0);
+-		strbuf_reset(&tmp);
++		strbuf_release(&tmp);
+ 	}
+ 
+ 	dir = get_ref_dir(packed_refs->cache->root);
+-	while (pos < eof) {
+-		const char *p = pos;
+-		struct object_id oid;
+-		const char *refname;
+-		int flag = REF_ISPACKED;
+-		struct ref_entry *entry = NULL;
+-
+-		if (eof - pos < GIT_SHA1_HEXSZ + 2 ||
+-		    parse_oid_hex(p, &oid, &p) ||
+-		    !isspace(*p++))
+-			die_invalid_line(refs->path, pos, eof - pos);
++	iter = mmapped_ref_iterator_begin(refs->path, packed_refs, pos, eof);
++	while ((ok = ref_iterator_advance(iter)) == ITER_OK) {
++		struct ref_entry *entry =
++			create_ref_entry(iter->refname, iter->oid, iter->flags);
+ 
+-		eol = memchr(p, '\n', eof - p);
+-		if (!eol)
+-			die_unterminated_line(refs->path, pos, eof - pos);
+-
+-		strbuf_add(&tmp, p, eol - p);
+-		refname = tmp.buf;
+-
+-		if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
+-			if (!refname_is_safe(refname))
+-				die("packed refname is dangerous: %s", refname);
+-			oidclr(&oid);
+-			flag |= REF_BAD_NAME | REF_ISBROKEN;
+-		}
+-		if (packed_refs->peeled == PEELED_FULLY ||
+-		    (packed_refs->peeled == PEELED_TAGS &&
+-		     starts_with(refname, "refs/tags/")))
+-			flag |= REF_KNOWS_PEELED;
+-		entry = create_ref_entry(refname, &oid, flag);
++		if ((iter->flags & REF_KNOWS_PEELED))
++			ref_iterator_peel(iter, &entry->u.value.peeled);
  		add_ref_entry(dir, entry);
+-
+-		pos = eol + 1;
+-
+-		if (pos < eof && *pos == '^') {
+-			p = pos + 1;
+-			if (eof - p < GIT_SHA1_HEXSZ + 1 ||
+-			    parse_oid_hex(p, &entry->u.value.peeled, &p) ||
+-			    *p++ != '\n')
+-				die_invalid_line(refs->path, pos, eof - pos);
+-
+-			/*
+-			 * Regardless of what the file header said,
+-			 * we definitely know the value of *this*
+-			 * reference:
+-			 */
+-			entry->flag |= REF_KNOWS_PEELED;
+-
+-			pos = p;
+-		}
+-
+-		strbuf_reset(&tmp);
+ 	}
+ 
++	if (ok != ITER_DONE)
++		die("error reading packed-refs file %s", refs->path);
++
+ 	if (munmap(buf, size))
+-		die_errno("error ummapping packed-refs file");
++		die_errno("error ummapping packed-refs file %s", refs->path);
++
+ 	close(fd);
+ 
+-	strbuf_release(&tmp);
+ 	return packed_refs;
+ }
+ 
 -- 
 2.14.1
 
