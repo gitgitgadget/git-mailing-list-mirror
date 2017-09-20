@@ -2,82 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 51CA020A28
-	for <e@80x24.org>; Wed, 20 Sep 2017 12:06:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 165E820A28
+	for <e@80x24.org>; Wed, 20 Sep 2017 12:22:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751660AbdITMGx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Sep 2017 08:06:53 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:38408 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751488AbdITMGw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Sep 2017 08:06:52 -0400
-Received: by mail-it0-f67.google.com with SMTP id 85so1324004ith.5
-        for <git@vger.kernel.org>; Wed, 20 Sep 2017 05:06:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=OGKqKb45kZScwIcZ0CZPpPJ/SprG7+XZ4Hdaf/09urI=;
-        b=jaRBfFnBG+PRrPYv6nRaSHv65T7qpgFyO5ZUIKnPO48eF95pzWugh85lCEJKdJvT3F
-         Vh4wQdFlckuNsmZ5tshvBPOr8Hp3fBqvaAco1znJmM97MFwxauTjXVSr1NO34pGCxzkA
-         rGcnaEZdLJHmelAPdAr6g0Nc9LFiBPrriGRgvk2JXweP7wnGiCl9LAkOZ3NlgCxcbtgc
-         ldJCzLsb08kUaUCJlwdZysk2XvCrnjzgYVWdtY8TnBvp9EoEVE0eiFN9eL8fXZXDf2v0
-         hbgQ1iDwG8xkR6NuzaqPxiSIZ32uppa8lOPg9aFpoVh0W4GIK0MfNTgsecrBSmvjtGYJ
-         CtPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=OGKqKb45kZScwIcZ0CZPpPJ/SprG7+XZ4Hdaf/09urI=;
-        b=sBUclGPPr2WQhi4pMbJK5j7MHwgHuS5tAkxXoHvwmShAikvdR5lE5tD9aeLf8eWf5i
-         Bp76XCwWL8KJouDoJEi7Ck70PXRFq9JMt3j6vXVhRF7TUZWPchKgQShDbg+yxxNdTSSF
-         t7M1ZYVBl85MI85XesZW+mA+LGWhdZDEDzzFVhd+YYIZzU06Qz85i/1KDUdc2GJVL0wX
-         YvQVaBD2BHo7Y59uXbD6l9ZUGfCaaoi/mCOwf9YMfwtseRvNrApv/cRyDs4mGdnF9tNp
-         pRNERzAHvThCGPpk4DoVwQVUxa+FCMFGlNM20rcAAFD1dXy+jXMbja74zI8kvXw4+7Ni
-         8zSQ==
-X-Gm-Message-State: AHPjjUgGiBDGqHrmg5gSSNCsJAxqL8Ud3LDNmxqFUTnwxwdcKRyffI4H
-        BJJKJFVQfqv3LkSxLeaoXWCx65yzyK2bf3ZoB5Xbcg==
-X-Google-Smtp-Source: AOwi7QAdeoGJzZ4Ghsf1D3MsgDbQ5Jf74NEerPhqucOwz43y+gaihB3aZ7q3bk4Wrp0xIvnAyI9FW8Iiq9z6ee532GM=
-X-Received: by 10.36.5.84 with SMTP id 81mr2525110itl.96.1505909211393; Wed,
- 20 Sep 2017 05:06:51 -0700 (PDT)
+        id S1751626AbdITMWW (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Sep 2017 08:22:22 -0400
+Received: from a7-17.smtp-out.eu-west-1.amazonses.com ([54.240.7.17]:54176
+        "EHLO a7-17.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751488AbdITMWV (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 20 Sep 2017 08:22:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1505910140;
+        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=U/jplJuqvTALv8QmRC1RdbbKrNPyeb7JwpJa9vC91VY=;
+        b=aXs51fFP0kVGjQ/8rB9atEKh9OJjFPfKsLtNhC3k0ZEhg2V4tuJSPVKYQxnwIkHs
+        jXaEZNyg4MGM8bmMF2jw7SICkqVCfBO5tT80bkSyzN6bpBWSpuEzfI/NrhyQxyHkTJw
+        x3bb5YMsiqVFLMqU5QQw2QGHedQXKe6Iep8BrS/M=
+From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+To:     git@vger.kernel.org
+Message-ID: <0102015e9f3d2d6b-b68ad740-0847-42e2-beb6-9d3fde4b427f-000000@eu-west-1.amazonses.com>
+In-Reply-To: <20170920052705.GC126984@aiede.mtv.corp.google.com>
+References: <20170920052705.GC126984@aiede.mtv.corp.google.com>
+Subject: [PATCH v2] doc: camelCase the config variables to improve
+ readability
 MIME-Version: 1.0
-Received: by 10.79.107.136 with HTTP; Wed, 20 Sep 2017 05:06:49 -0700 (PDT)
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 20 Sep 2017 14:06:49 +0200
-Message-ID: <CAP8UFD3Rs47HMcw4=tr5DFnKAS3TtpceAffSWNfjTzoHe-DFwg@mail.gmail.com>
-Subject: [ANNOUNCE] Git Rev News edition 31
-To:     git <git@vger.kernel.org>
-Cc:     lwn@lwn.net, Junio C Hamano <gitster@pobox.com>,
-        Thomas Ferris Nicolaisen <tfnico@gmail.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 20 Sep 2017 12:22:20 +0000
+X-SES-Outgoing: 2017.09.20-54.240.7.17
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
+A few configuration variable names of Git are composite words. References
+to such variables in manpages are hard to read because they use all-lowercase
+names, without indicating where each word ends and begins.
 
-The 31st edition of Git Rev News is now published:
+Improve its readability by using camelCase instead.  Git treats these
+names case-insensitively so this does not affect functionality. This
+also ensures consistency with other parts of the docs that use camelCase
+fo refer to configuration variable names.
 
-  https://git.github.io/rev_news/2017/09/20/edition-31/
+Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ Documentation/git-branch.txt | 4 ++--
+ Documentation/git-tag.txt    | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-Thanks a lot to all the contributors and helpers!
+diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+index e292737b9c5ab..58f1e5c9c74e1 100644
+--- a/Documentation/git-branch.txt
++++ b/Documentation/git-branch.txt
+@@ -92,10 +92,10 @@ OPTIONS
+ 	all changes made to the branch ref, enabling use of date
+ 	based sha1 expressions such as "<branchname>@\{yesterday}".
+ 	Note that in non-bare repositories, reflogs are usually
+-	enabled by default by the `core.logallrefupdates` config option.
++	enabled by default by the `core.logAllRefUpdates` config option.
+ 	The negated form `--no-create-reflog` only overrides an earlier
+ 	`--create-reflog`, but currently does not negate the setting of
+-	`core.logallrefupdates`.
++	`core.logAllRefUpdates`.
+ 
+ -f::
+ --force::
+diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+index 543fb425ee7c1..95e9f391d88fc 100644
+--- a/Documentation/git-tag.txt
++++ b/Documentation/git-tag.txt
+@@ -174,7 +174,7 @@ This option is only applicable when listing tags without annotation lines.
+ 	`core.logAllRefUpdates` in linkgit:git-config[1].
+ 	The negated form `--no-create-reflog` only overrides an earlier
+ 	`--create-reflog`, but currently does not negate the setting of
+-	`core.logallrefupdates`.
++	`core.logAllRefUpdates`.
+ 
+ <tagname>::
+ 	The name of the tag to create, delete, or describe.
 
-Enjoy,
-Christian, Thomas, Jakub and Markus.
+--
+https://github.com/git/git/pull/407
