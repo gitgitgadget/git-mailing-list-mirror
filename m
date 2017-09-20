@@ -2,140 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC3D7202A5
-	for <e@80x24.org>; Wed, 20 Sep 2017 20:48:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2AF4D20281
+	for <e@80x24.org>; Wed, 20 Sep 2017 20:57:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751969AbdITUsZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Sep 2017 16:48:25 -0400
-Received: from mail-pg0-f45.google.com ([74.125.83.45]:45657 "EHLO
-        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751899AbdITUsW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Sep 2017 16:48:22 -0400
-Received: by mail-pg0-f45.google.com with SMTP id 188so2338645pgb.2
-        for <git@vger.kernel.org>; Wed, 20 Sep 2017 13:48:22 -0700 (PDT)
+        id S1751853AbdITU5l (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Sep 2017 16:57:41 -0400
+Received: from mail-qt0-f175.google.com ([209.85.216.175]:52182 "EHLO
+        mail-qt0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751365AbdITU5j (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Sep 2017 16:57:39 -0400
+Received: by mail-qt0-f175.google.com with SMTP id q4so4138456qtq.8
+        for <git@vger.kernel.org>; Wed, 20 Sep 2017 13:57:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Xa95zCZt/WDHxx+TbcQGYZ42mm9Ox4+Nb305puFatK0=;
-        b=msWJxnTpMn+kCUhPgsWHJeLOtHYiGsMtozH4KLOzn5PKvHL8lAYqUICosAbyObAYit
-         PPyVBfQdG5FxNbRSlpqjAIK5eu82t+kQPpZhfCoptPdKQn5JpvW9D2NmnaE+Hqy0UkJK
-         Hj6ObR2hNFma7IcIQBtM0LP/K/mlhP0I36+mRX17BZIBffhWIz4bX9BBFjmMLNYOhVcM
-         KWg7/UXcXkdF13u0aiT63rgAcvd2I+tUAzhYPVv4Qhtg20NktHjvFRVAUY+NRbjIQu9z
-         JNZ/8hbBTxVp7AXa5GabDcCK2eZCHvN3BtfR44Ok+F9JD1vwwtr5rOuP7k37h2UjkELr
-         y3RQ==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=mSBLQvFTI9ChEFKBb+E1U1b6YMzvahImwKN5zzFiRpM=;
+        b=EEGEanoolceVtNFq2ts+zPdkRJGYCfIAE7Z4IEhypTHBM7jC5jxPn9GR0MQCMeuWCm
+         TSRelkSkF+z+ZeAedW1YcaamppfcmLG6whiDAuqPvAUs5Wb11sZRY6nDBfqzzgyHfr+8
+         2IiDfkIP3HIBAYhRjGZEspmF2B//3sFSfa4y1SRPcEzvkS1xlpF7DDnZqIjMmedi3ETH
+         A0SM2WOhnyjUTVS1uWwZG3lWGmwoGGM2tif+I5UmfYiG02+K7xM0jjf1X9Gnyi4jzXEX
+         5SPt5GbvYpLuoEL8qtyvYJED2HEj5B7/mezcKMSgQk58fNISkioOW/C6tUWCnzFOsoUY
+         ZLfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Xa95zCZt/WDHxx+TbcQGYZ42mm9Ox4+Nb305puFatK0=;
-        b=HGmpcZ8npYgbeHqmTvMcZ/s1qALVE0qxJycSR3eWtE6FvmyEb0metJoaHQ5NNGyYP4
-         4DgDmmm/XETYJrQJIpIt827osGwH1ObwrLa2MKizxxhyMbO9VgQFAz1J1lrQxuOI1O4F
-         +76nR2tMgHEdCkU/4YH4+dzSTsxBrAQPAJc45WTiIUQUW9dUmFDFyRYdvA12njvKz+uN
-         Fv68BOB+U2n0P/aNRgPOzMBS8wycRpYa7zRH82lmTyrU7/Y0rmKmMOrIuHaFAhkngQUx
-         QSYpwB0xKdRhgAsY9P32m7MFGvqlk5MQigy7ExHR5nkY2R8FovhwPTtZJpqBGFgzmHIP
-         uw7w==
-X-Gm-Message-State: AHPjjUgjtFQqgvlBcw/mEKGvkiVDRmWLiksJhXfekC2a8EtqgUFt0Q32
-        hz8TMsJF3JhS079h+0hhmKQ=
-X-Google-Smtp-Source: AOwi7QC99Qp+o+35gqtG7o/z0v6hKx750RmyqkEo1jWd1Oy99+TWUFX3l7gak3cUkaCBzYKLidgRaQ==
-X-Received: by 10.84.129.226 with SMTP id b89mr3278952plb.0.1505940501653;
-        Wed, 20 Sep 2017 13:48:21 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:da9:ac38:cdcf:de91])
-        by smtp.gmail.com with ESMTPSA id b22sm9351331pfh.175.2017.09.20.13.48.20
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 20 Sep 2017 13:48:20 -0700 (PDT)
-Date:   Wed, 20 Sep 2017 13:48:18 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org, sbeller@google.com,
-        gitster@pobox.com, bturner@atlassian.com, git@jeffhostetler.com,
-        jonathantanmy@google.com
-Subject: Re: [PATCH 1.5/8] connect: die when a capability line comes after a
- ref
-Message-ID: <20170920204818.GE27425@aiede.mtv.corp.google.com>
-References: <20170913215448.84674-1-bmwill@google.com>
- <20170920184832.146564-1-bmwill@google.com>
- <20170920191431.emornzhse6f7s5mg@sigill.intra.peff.net>
- <20170920200627.GA82704@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=mSBLQvFTI9ChEFKBb+E1U1b6YMzvahImwKN5zzFiRpM=;
+        b=PcapFzSzCev2H8i1sdfcqTyOTHIIfbu0IN/BU/mlcsPsMTKB/AdF5tufA/otRyZtG9
+         OwsjVdojVFOm2+iiOtI/1E7XkUGc7ghCOq/GqrHcbQgpjNP01OW4SsWcwKHpbDC5/4Gf
+         NtY9xilYwWtwn74flMiBz5FcOynLHzxiznoiDDbHjOLeix5qaMegtVbxAOc5eOEdfa7I
+         t7Go8NwIKLKsLNExFPnUIWTRVw8EkAjfls+dv42s9eDPmTBbVLLgRUM68cOPGyW/v5di
+         zjNDfJMicHitFwTBLAerVtPTuFic6e2L8GKk+wQUpS1HgW/SeJe5OS67sfBFOmlaVpWb
+         Q6Pg==
+X-Gm-Message-State: AHPjjUiE5srHgKCfXvX/ACaHtDsfFxLlpX0CR484LvKVtaGHQ6W3wQzb
+        57J9FSwRBeaA6Og91Ax5gf/gMqWJHML/7LaEzB6FH1BkZPk=
+X-Google-Smtp-Source: AOwi7QCqRyP++ZF6Kk9ZmUdUQmPFFprN8oxCkzWYl7L5lOIQlbdjCQd+V6eshaTLkqW0T179465LD9k7h4F2VGoifNE=
+X-Received: by 10.200.48.49 with SMTP id f46mr15941qte.260.1505941058680; Wed,
+ 20 Sep 2017 13:57:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170920200627.GA82704@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.140.102.51 with HTTP; Wed, 20 Sep 2017 13:57:38 -0700 (PDT)
+In-Reply-To: <20170919071525.9404-6-kaarticsivaraam91196@gmail.com>
+References: <xmqqd18pcysa.fsf@gitster.mtv.corp.google.com> <20170919071525.9404-1-kaarticsivaraam91196@gmail.com>
+ <20170919071525.9404-6-kaarticsivaraam91196@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 20 Sep 2017 13:57:38 -0700
+Message-ID: <CAGZ79kYMagCFS765NtOBDxDJYaXMyA4-=xxi3JMxbga638b6Yg@mail.gmail.com>
+Subject: Re: [RFC PATCH 5/5] builtin/branch: give more useful error messages
+ when renaming
+To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams wrote:
-> On 09/20, Jeff King wrote:
-
->> (For that matter, could we just be checking whether *list is NULL?)
+On Tue, Sep 19, 2017 at 12:15 AM, Kaartic Sivaraam
+<kaarticsivaraam91196@gmail.com> wrote:
+> When trying to rename an inexistent branch to an existing branch
+> the rename failed specifying the new branch name exists rather than
+> specifying that the branch trying to be renamed doesn't exist.
 >
-> True, that would probably be the better way to do this.
+>     $ git branch -m tset master
+>     fatal: A branch named 'master' already exists.
+>
+> It's conventional to report that 'tset' doesn't exist rather than
+> reporting that 'master' exists, the same way the 'mv' command does.
+>
+>     $ git branch -m tset master
 
-Nice idea, thank you.
+This is not the 'mv' command as promised? So this is just
+to demonstrate the (still fictional) better error message?
+Maybe use a real 'mv' command here?
 
-That doesn't capture a few other cases of pkts that aren't supposed to
-come before the capabilities^{} line:
+>     fatal: branch 'tset' doesn't exist.
+>
+> That has the problem that the error about an existing branch is shown
+> only after the user corrects the error about inexistent branch.
+>
+>     $ git branch -m test master
+>     fatal: A branch named 'master' already exists.
+>
+> This isn't useful either because the user would have corrected this error in
+> a single go if he had been told this alongside the first error. So, give
+> more useful error messages by giving errors about old branch name and new
+> branch name at the same time. This is possible as the branch update validation
+> function now returns the reason it was about to die, when requested.
+>
+>     $ git branch -m tset master
+>     fatal: branch 'tset' doesn't exist, and branch 'master' already exists
+>
+> Note: Thanks to the strbuf API that made it possible to easily construct
+> the composite error message strings!
 
- * shallow
- * .have
- * capabilities^{}
- * invalid refnames
+This shall be read as an apology to all translators out there. ;)
+Playing sentence lego in source code is not optimal, as other
+languages are very different and you cannot assume even simplest
+things about them (because of their variety).
 
-Perhaps it should check all of those:
-
-	if ((shallow_points && shallow_points->nr) ||
-	    (extra_have && extra_have->nr) ||
-	    got_dummy_ref_with_capabilities_declaration ||
-	    got_invalid_ref ||
-	    *list)
-
-What happens when another type of pkt gets introduced?  This feels
-pretty error-prone.  The underlying problem is that we are emulating a
-state machine that is not a simple for loop using a simple for loop,
-by piling up variables that keep track of the current state.  That
-suggests one of the following approaches:
-
- A. Replace saw_response with an enum describing the state.
-    Immediately after reading the first packet, update the state to
-    EXPECTING_FIRST_REF.  Immediately after reading the first ref,
-    update the state to EXPECTING_SHALLOW.
-
- B. Use instruction flow to encode the state machine.  Have separate
-    loops for processing refs and shallow lines.
-
-By the way, there are some other ways the current code is less strict
-than described in pack-protocol.txt:
-
- - allowing an empty list-of-refs.  (This is deliberate ---
-   pack-protocol.txt's lack of documentation of this case is a bug.)
-
- - allowing multiple capability-lists
-
- - allowing capabilities^{} combined with other refs
-
- - allowing refs, shallow, and .have to be interleaved
-
-Tightening those would likely be good for the ecosystem (so that
-buggy servers get noticed quickly), but that's a separate topic from
-this change.
-
-[...]
-> I wasn't sure either, which is why I added the comment to prod
-> discussion.  I agree that is is orthogonal to this series so I'll most
-> likely drop it, as it doesn't help with the protocol transition
-> discussion.
-
-I'd be happy to write a separate patch adding the NEEDSWORK comment
-(or even a patch doing what the NEEDSWORK comment suggests) to avoid
-derailing this one. :)
-
-Thanks,
-Jonathan
+In this case it might not be as bad, because we're providing a
+whole sentence per _(translatable) unit.
