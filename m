@@ -4,208 +4,145 @@ X-Spam-Level:
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5662320A2A
-	for <e@80x24.org>; Wed, 20 Sep 2017 09:02:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B0F320A2A
+	for <e@80x24.org>; Wed, 20 Sep 2017 10:00:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751673AbdITJCI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Sep 2017 05:02:08 -0400
-Received: from mail-it0-f45.google.com ([209.85.214.45]:46678 "EHLO
-        mail-it0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751655AbdITJCG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Sep 2017 05:02:06 -0400
-Received: by mail-it0-f45.google.com with SMTP id 6so1913061itl.1
-        for <git@vger.kernel.org>; Wed, 20 Sep 2017 02:02:05 -0700 (PDT)
+        id S1751533AbdITKAG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Sep 2017 06:00:06 -0400
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:56962 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751468AbdITKAF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Sep 2017 06:00:05 -0400
+Received: by mail-pf0-f181.google.com with SMTP id g65so1285368pfe.13
+        for <git@vger.kernel.org>; Wed, 20 Sep 2017 03:00:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=DzlzaXweZuobZuYLgZCb1x4K0MgJw6R8sCOmKi9wglo=;
-        b=eZPgtdhnFsagu3we7gpujCGLkTOt8XoJ1K5SDTqqvlBySaC9EjLHKyEWvqm+9fCrmP
-         R7XfZRsLXsF359p//pLkas4NyVlemtuh7sAJh48x6YyOSDdfPn5jtGp20o7z2zr+8duo
-         WfBUcSu9qBHhmsSEA5S1ls1NMNtM0W5GHSAz1/u0H5DvciDaKTB96dhgnln62cwX6xPk
-         dK5+hqlfLozyNvyCaHsgd2qwWa9LR778jkL9dSFwabFRdvLb6RfBha97N32Y6qkvMlXh
-         yqX27MqYsXAgznmeZwrPSoowsAuUc76OFjJ+GjRQj+0d0MEEBix/cop0Xwrh6pbrmRJq
-         MGvQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=IeZIbtJHSN+3wtj7IdxdGnQf6QURrbHMRTfHLKPuLto=;
+        b=TxNX4hPNnJpVXdALW4sh+PiBkUWIzzIJX64Ffc9oiUgXxZTdXtnDGc5yHuO7AqjPH2
+         etK0pzAkzm3PiwgSmoIQ0oollG9LVKq88vSXmLbsu9gMnpQBPBV1Bbs8exKM4uhtEp4A
+         zo3UKXe0ew3K+5vh3Vtx3Yid+qPpGHIzRCkSjPcHrVKg5M19KjYxCInjX72bPvQSn6E+
+         fpLBk+VoqYYfO/CfHyVQsa3sHDt4W0Ad1I+VZ72lSEIpux1USif6mzcFpxYKbdOj8FLo
+         ko0pDYaqnw/v3SOAw7QNDS+JqGJKATUdEANdQZzzClL8OCrVnl0j9sn8oHo8GYTTioaD
+         q3IQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=DzlzaXweZuobZuYLgZCb1x4K0MgJw6R8sCOmKi9wglo=;
-        b=Iex0is+FCzc9G+L7sJsmBTa+A3ynRzorgUXCoqatBIhg1ImZDXjh2WcNGXpDkT6Ar/
-         mAQM+IjPGe7m36w46LtAK5wQ7ghz5zbZ1TCUK05n4UcohtK2w8LXRiZZw05/KivdiE7z
-         tmNl/qsV07oT6/HCC14CAlFD1w3xvd8uIhtlyxDAsiruKfUd5P8dPAGxshCWCvdxebsY
-         ivQPDKDcYJOi+zN5HZNjw65LZKadcwFbyphINdQjrH1mWpAm3fE4G2od3oKHPhQghW0k
-         Jc7hnAk484Gn4E50vNG/vjX35GyM44r51HMR+UgyCmU8HHVFjLqIrGR3VRbnBCC9bCBD
-         2YoQ==
-X-Gm-Message-State: AHPjjUioSWNXgseH3VRr7YWYn8px4FH4TWKRRwklg9+kuZDvK3eYzh/D
-        SodA5U9r3fTn+4HjxGM309+mq1m4
-X-Google-Smtp-Source: AOwi7QBFvld7cRXoNdZxePqm8PnGLPkvb/x4EjlzgINbtmgxBnFl97xVZmn67dk3LcAnaR+F1NUj3Q==
-X-Received: by 10.36.204.135 with SMTP id x129mr1921544itf.7.1505898125341;
-        Wed, 20 Sep 2017 02:02:05 -0700 (PDT)
-Received: from [10.4.2.238] ([14.102.72.146])
-        by smtp.gmail.com with ESMTPSA id r14sm2106068ith.4.2017.09.20.02.02.01
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 20 Sep 2017 02:02:04 -0700 (PDT)
-Subject: Re: [RFC PATCH 2/5] branch: document the usage of certain parameters
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-References: <xmqqd18pcysa.fsf@gitster.mtv.corp.google.com>
- <20170919071525.9404-1-kaarticsivaraam91196@gmail.com>
- <20170919071525.9404-3-kaarticsivaraam91196@gmail.com>
- <xmqq4lryovnm.fsf@gitster.mtv.corp.google.com>
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Message-ID: <d4e61e9b-e7ed-3565-6017-128b2fe3b72a@gmail.com>
-Date:   Wed, 20 Sep 2017 14:31:58 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=IeZIbtJHSN+3wtj7IdxdGnQf6QURrbHMRTfHLKPuLto=;
+        b=I47qWi+vlrOUgcQM4lOfCLE1ktjMtE6EqMZxxo+if04er7Ql6T1jR7AzlnyLr0zf8g
+         ac95CyVifPmFVVYpLljEI13KT8WgscPEZlBzMMbB8Nq1JgrkHvp/2PvH9S0cI8evG4cy
+         tRUbmF6K0Uu1oHupDXphAKe9/5WtVoSl2xt7BFjLvr8Z1ySWGQLoueIGs8YUMo1PM8oe
+         ZldcYX93lBBrdooNLkHDAcxmbZfAwN3BYthrDkC+AjxcoQS0qzppfFY6cnmEIBOPqi1b
+         F1AgNNrpA/PupoqI4LE4TT4ma8MAZoYv/ktnAjMe53dxF5yFZ/ypR3/Lw3k92a2NYPv7
+         cwcg==
+X-Gm-Message-State: AHPjjUjmlei/LuA1dmGHYnEs+wkWYoSM5iAI3ieoTgGmnDaZtV/8EHNw
+        VuPa1zXT9mKXAmNYF3s7CuRcVrxungeq1y92p28=
+X-Google-Smtp-Source: AOwi7QDFlmhxuCir4/qTW6uaGTfNZDoEETjfZsBYiIpLTNA7ElKBeDIzVnXnbqPujjntjx5JAgo++M2X7Rf9zgu9/7Y=
+X-Received: by 10.99.185.86 with SMTP id v22mr1701448pgo.236.1505901605009;
+ Wed, 20 Sep 2017 03:00:05 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqq4lryovnm.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-Cyberoam-smtpxy-version: 1.0.6.3
-X-Cyberoam-AV-Policy: default
-X-CTCH-Error: Unable to connect local ctasd
+Received: by 10.100.142.73 with HTTP; Wed, 20 Sep 2017 03:00:04 -0700 (PDT)
+In-Reply-To: <20170919192744.19224-6-benpeart@microsoft.com>
+References: <20170915192043.4516-1-benpeart@microsoft.com> <20170919192744.19224-1-benpeart@microsoft.com>
+ <20170919192744.19224-6-benpeart@microsoft.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Wed, 20 Sep 2017 12:00:04 +0200
+Message-ID: <CAN0heSqFsm0BSUzufXjCKNv=JpRpUQzFA9GkKfA6nd_hPhW_qg@mail.gmail.com>
+Subject: Re: [PATCH v7 05/12] fsmonitor: add documentation for the fsmonitor extension.
+To:     Ben Peart <benpeart@microsoft.com>
+Cc:     David.Turner@twosigma.com,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wednesday 20 September 2017 09:42 AM, Junio C Hamano wrote:
+On 19 September 2017 at 21:27, Ben Peart <benpeart@microsoft.com> wrote:
+> diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
+> index e19eba62cd..95231dbfcb 100644
+> --- a/Documentation/git-update-index.txt
+> +++ b/Documentation/git-update-index.txt
+> @@ -16,9 +16,11 @@ SYNOPSIS
+>              [--chmod=(+|-)x]
+>              [--[no-]assume-unchanged]
+>              [--[no-]skip-worktree]
+> +            [--[no-]fsmonitor-valid]
+>              [--ignore-submodules]
+>              [--[no-]split-index]
+>              [--[no-|test-|force-]untracked-cache]
+> +            [--[no-]fsmonitor]
+>              [--really-refresh] [--unresolve] [--again | -g]
+>              [--info-only] [--index-info]
+>              [-z] [--stdin] [--index-version <n>]
+> @@ -111,6 +113,12 @@ you will need to handle the situation manually.
+>         set and unset the "skip-worktree" bit for the paths. See
+>         section "Skip-worktree bit" below for more information.
 >
->> @@ -15,6 +15,11 @@
->>    *
->>    *   - reflog creates a reflog for the branch
->>    *
->> + *   - if 'force' is true, clobber_head indicates whether the branch could be
->> + *     the current branch; else it has no effect
-> Everybody else in this list begins with what it is describing for
-> easy eyeballing.  Can you make this match that pattern?
+> +--[no-]fsmonitor-valid::
+> +       When one of these flags is specified, the object name recorded
+> +       for the paths are not updated. Instead, these options
+> +       set and unset the "fsmonitor valid" bit for the paths. See
+> +       section "File System Monitor" below for more information.
+> +
 
-Sure!
+So --no-foo does not undo --foo, but there are three values: --foo,
+--no-foo and <nothing/default>. I find that unintuitive, but maybe it's
+just me. Maybe there are other such options in the codebase already. How
+about --fsmonitor-valid=set, --fsmonitor-valid=unset, and
+--no-fsmonitor-valid (which would be the default, and which would forget
+any earlier --fsmonitor-valid=...)?
 
-> Also, what does "could be" mean in that sentence?  Is the caller
-> telling the function "how, I do not exactly know if that is the
-> case, but the branch I am asking to create you might be the same
-> branch as what is currently checked out, so be extra careful"?
+>  -g::
+>  --again::
+>         Runs 'git update-index' itself on the paths whose index
+> @@ -201,6 +209,15 @@ will remove the intended effect of the option.
+>         `--untracked-cache` used to imply `--test-untracked-cache` but
+>         this option would enable the extension unconditionally.
 >
-> Or is the comment telling a potential caller that it can pass true
-> to signal that create_branch() is allowed to (re)"create" the branch
-> that is already checked out (hence it already exists)?
+> +--fsmonitor::
+> +--no-fsmonitor::
 
-Thanks. I didn't anticipate the possibility of misinterpretation.
+Maybe "--[no-]fsmonitor" for symmetry with how you've done it above and
+later.
 
-> I think the confusing statement above arises because an assumption
-> is unstated there.  If the reader knows "Even with force, calling
-> create_branch() on the currently checked out branch is normally
-> forbidden", then the reader can guess your "could" mean the latter.
->
-> 	- clobber_head_ok allows the currently checked out (hence
->            existing) branch to be overwritten; without force, it has
->            no effect.
->
-> perhaps?
+> +When used in conjunction with the untracked cache, it can further improve
+> +performance by avoiding the cost of scaning the entire working directory
+> +looking for new files.
 
-Sounds better. Will use it.
+s/scaning/scanning/
 
-> ...  As the underlying helper calls it clobber_head_ok, and
-> that name is more clearly expresses that this is a permission than
-> the current name, I chose to add _ok to the above example, but if
-> you are to take the suggestion, you'd need to also update the names
-> in the declaration, too.
+> +If you want to enable (or disable) this feature, it is easier to use
+> +the `core.fsmonitor` configuration variable (see
+> +linkgit:git-config[1]) than using the `--fsmonitor` option to
+> +`git update-index` in each repository, especially if you want to do so
+> +across all repositories you use, because you can set the configuration
+> +variable to `true` (or `false`) in your `$HOME/.gitconfig` just once
+> +and have it affect all repositories you touch.
 
-Yes.
+This is a mouthful. Maybe you could split it a little, perhaps like so:
 
-One thing I haven't done suspecting it wouldn't be encouraged is,
-rearranging the order of parameters to group the related ones
-together i.e., something like,
+  If you want to enable (or disable) this feature, you will probably
+  want to use the `core.fsmonitor` configuration variable (see
+  linkgit:git-config[1]). By setting it to `true` (or `false`) in your
+  `$HOME/.gitconfig`, it will affect all repositories you touch. For a
+  more fine-grained control, you can set it per repository, or use the
+  `--fsmonitor` option with `git update-index` in each repository.
 
-diff --git a/branch.c b/branch.c
-index 703ded69c..0ea105b55 100644
---- a/branch.c
-+++ b/branch.c
-@@ -229,7 +229,7 @@ N_("\n"
-  "\"git push -u\" to set the upstream config as you push.");
-  
-  void create_branch(const char *name, const char *start_name,
--		   int force, int reflog, int clobber_head,
-+		   int force, int clobber_head_ok, int reflog,
-  		   int quiet, enum branch_track track)
-  {
-  	struct commit *commit;
-@@ -245,7 +245,7 @@ void create_branch(const char *name, const char *start_name,
-  
-  	if (validate_new_branchname(name, &ref, force,
-  				    track == BRANCH_TRACK_OVERRIDE ||
--				    clobber_head)) {
-+				    clobber_head_ok)) {
-  		if (!force)
-  			dont_change_ref = 1;
-  		else
-diff --git a/branch.h b/branch.h
-index 33b7f5d88..c62763ac9 100644
---- a/branch.h
-+++ b/branch.h
-@@ -13,10 +13,10 @@
-   *
-   *   - force enables overwriting an existing (non-head) branch
-   *
-- *   - reflog creates a reflog for the branch
-+ *   - clobber_head_ok allows the currently checked out (hence existing)
-+ *     branch to be overwritten; without 'force', it has no effect.
-   *
-- *   - if 'force' is true, clobber_head indicates whether the branch could be
-- *     the current branch; else it has no effect
-+ *   - reflog creates a reflog for the branch
-   *
-   *   - quiet suppresses tracking information
-   *
-@@ -24,8 +24,8 @@
-   *     that start_name is a tracking branch for (if any).
-   */
-  void create_branch(const char *name, const char *start_name,
--		   int force, int reflog,
--		   int clobber_head, int quiet, enum branch_track track);
-+		   int force, int clobber_head_ok,
-+		   int reflog, int quiet, enum branch_track track);
-  
-  /*
-   * Validates that the requested branch may be created, returning the
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 355f9ef5d..62c311478 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -773,7 +773,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
-  			die(_("the '--set-upstream' option is no longer supported. Please use '--track' or '--set-upstream-to' instead."));
-  
-  		create_branch(argv[0], (argc == 2) ? argv[1] : head,
--			      force, reflog, 0, quiet, track);
-+			      force, 0, reflog, quiet, track);
-  
-  	} else
-  		usage_with_options(builtin_branch_usage, options);
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 76859da9d..116d4709d 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -641,8 +641,8 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
-  		else
-  			create_branch(opts->new_branch, new->name,
-  				      opts->new_branch_force ? 1 : 0,
--				      opts->new_branch_log,
-  				      opts->new_branch_force ? 1 : 0,
-+				      opts->new_branch_log,
-  				      opts->quiet,
-  				      opts->track);
-  		new->name = opts->new_branch;
+The part about $HOME/.gitconfig vs per-repo config is perhaps generic
+enough that it doesn't belong here. So it'd only be about config vs.
+option. Where to place the config item and what implications that has is
+arguably orthogonal to knowing that the option exists and what it does.
 
-
-Can I do this or should I keep the patch focused around the
-documentation part alone?
-
----
-Kaartic
+Martin
