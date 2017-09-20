@@ -2,134 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 017F220A29
-	for <e@80x24.org>; Wed, 20 Sep 2017 18:48:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 44F5E20A29
+	for <e@80x24.org>; Wed, 20 Sep 2017 18:50:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751485AbdITSsm (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Sep 2017 14:48:42 -0400
-Received: from mail-it0-f49.google.com ([209.85.214.49]:47179 "EHLO
-        mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751367AbdITSsl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Sep 2017 14:48:41 -0400
-Received: by mail-it0-f49.google.com with SMTP id z8so3322070itc.2
-        for <git@vger.kernel.org>; Wed, 20 Sep 2017 11:48:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=UWep6pgO53ozaby3VSdHO01+PjT7MYjLzCpjV2blzkU=;
-        b=dDTCE9Fxp5QiCycduxPSUmol7iqD+lQSNFn9NQKH6VUu+Cg1xQTqHF1GnbH6u2qkVe
-         5GbyR1btZP+5a5/LfmN0Nq425egftfL+YlTwKZHIM3LEeNJkjpemjUhD6eFvbMV/5U2S
-         +jdc6qxLJyxTqy+DQ/3hhjhWCSOSPiciwIJUnZPqc0ofx+wqyIrYEvxIm14qzZs5iYqB
-         yLHzrp6TvNvugyBPNxwaeiqmav2qteoO0zgEFpI8FcJshXtTZVfSKbxDA+4JGRacl0aI
-         fBign/99mom00dkuYNQXq7ly2Xs/+iM9QmgmKFpuEdHpXC9djb61AoFyOyKZJMVFsqgp
-         JyoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=UWep6pgO53ozaby3VSdHO01+PjT7MYjLzCpjV2blzkU=;
-        b=QpsVF/tqMUU5TuN2wV/6DI8LC2xfOilce40qhmnPveV/y9UIUeTf5KF7nDNU++2v9A
-         WijLAKQue93m4SblExi/0zglCbk3KWxPhadDNkPuS+GfBnmppXfckYuQDuQ7vEP6kkEw
-         fDnz9e1xLtk0NSTha28QKwc6sZ6rLw5sQBH9p8Ocj3R41eK0Okgqrotg5WvzwlfJcPWF
-         tR9Qa4OSmWEC9SrLDG6eeLyLC0tXwvkQ/i7kY5rsZt59Qg39MixcdTJlIsruR22gcmaB
-         34T2v8UQYMQ1IWHfwbrmQ/379bNSj8MXLhu9JaPyd7x/f3FyJxar8I7muN1z8RvQdHgr
-         z2Lw==
-X-Gm-Message-State: AHPjjUjLzwnlKZrk+/gjGM5SA/c8+f2L3Yqz/nZoDVtyLuc1uGcvMurx
-        5RLc2f75kA0C4nw+gBGlHQ4cFEN3kZE=
-X-Google-Smtp-Source: AOwi7QCOYhaWujBoTD3hh5/fIatjk8EDiih67ujBR31xMFybnzGlJmVrM1YtbjhOHeBLIT1Cqt0IDw==
-X-Received: by 10.36.2.204 with SMTP id 195mr4338306itu.35.1505933320148;
-        Wed, 20 Sep 2017 11:48:40 -0700 (PDT)
-Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id w132sm2559985itf.4.2017.09.20.11.48.38
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 20 Sep 2017 11:48:39 -0700 (PDT)
-From:   Brandon Williams <bmwill@google.com>
-To:     git@vger.kernel.org
-Cc:     Brandon Williams <bmwill@google.com>, peff@peff.net,
-        sbeller@google.com, gitster@pobox.com, jrnieder@gmail.com,
-        bturner@atlassian.com, git@jeffhostetler.com,
-        jonathantanmy@google.com
-Subject: [PATCH 1.5/8] connect: die when a capability line comes after a ref
-Date:   Wed, 20 Sep 2017 11:48:32 -0700
-Message-Id: <20170920184832.146564-1-bmwill@google.com>
-X-Mailer: git-send-email 2.14.1.821.g8fa685d3b7-goog
-In-Reply-To: <20170913215448.84674-1-bmwill@google.com>
-References: <20170913215448.84674-1-bmwill@google.com>
+        id S1751396AbdITSuv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Sep 2017 14:50:51 -0400
+Received: from cloud.peff.net ([104.130.231.41]:44912 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751365AbdITSuu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Sep 2017 14:50:50 -0400
+Received: (qmail 7784 invoked by uid 109); 20 Sep 2017 18:50:50 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 20 Sep 2017 18:50:50 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15163 invoked by uid 111); 20 Sep 2017 18:51:27 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Wed, 20 Sep 2017 14:51:27 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Sep 2017 14:50:47 -0400
+Date:   Wed, 20 Sep 2017 14:50:47 -0400
+From:   Jeff King <peff@peff.net>
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Brandon Williams <bmwill@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2 14/21] read_packed_refs(): ensure that references are
+ ordered when read
+Message-ID: <20170920185047.6fzuspaseofb7r5x@sigill.intra.peff.net>
+References: <cover.1505799700.git.mhagger@alum.mit.edu>
+ <5bb362d9cb74c7386cd072e3ecd49b22cea1d8d2.1505799700.git.mhagger@alum.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <5bb362d9cb74c7386cd072e3ecd49b22cea1d8d2.1505799700.git.mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commit eb398797c (connect: advertized capability is not a ref,
-2016-09-09) taught 'get_remote_heads()' to recognize that the
-'capabilities^{}' line isn't a ref but required that the
-'capabilities^{}' line came during the first response from the server.
-A future patch will introduce a version string sent by the server during
-its first response which can then cause a client to unnecessarily die if
-a 'capabilities^{}' line sent as the first ref.
+On Tue, Sep 19, 2017 at 08:22:22AM +0200, Michael Haggerty wrote:
 
-Teach 'get_remote_heads()' to instead die if a 'capabilities^{}' line is
-sent after a ref.
+> If `packed-refs` was already sorted, then (if the system allows it) we
+> can use the mmapped file contents directly. But if the system doesn't
+> allow a file that is currently mmapped to be replaced using
+> `rename()`, then it would be bad for us to keep the file mmapped for
+> any longer than necessary. So, on such systems, always make a copy of
+> the file contents, either as part of the sorting process, or
+> afterwards.
 
-Reported-by: Miguel Alcon <malcon@google.com>
-Signed-off-by: Brandon Williams <bmwill@google.com>
----
-This is a fix to the bug we found when internally deploying this series.  It
-just makes it so that a capability line wont cause a client to error out if its
-not the first response, because it won't be the first response come protocol
-v1.
+So this sort-of answers my question from the previous commit (why we
+care about the distinction between NONE and TEMPORARY), since we now
+start treating them differently.
 
- connect.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+But I'm a bit confused why there's any advantage in the TEMPORARY case
+to doing the mmap-and-copy versus just treating it like NONE and reading
+it directly.
 
-diff --git a/connect.c b/connect.c
-index df56c0cbf..af5096ec6 100644
---- a/connect.c
-+++ b/connect.c
-@@ -124,10 +124,11 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
- 	 * response does not necessarily mean an ACL problem, though.
- 	 */
- 	int saw_response;
-+	int seen_ref;
- 	int got_dummy_ref_with_capabilities_declaration = 0;
+Hmm, I guess it comes down to the double-allocation thing again? Let me
+see if I have this right:
 
- 	*list = NULL;
--	for (saw_response = 0; ; saw_response = 1) {
-+	for (saw_response = 0, seen_ref = 0; ; saw_response = 1) {
- 		struct ref *ref;
- 		struct object_id old_oid;
- 		char *name;
-@@ -165,6 +166,8 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
+  1. For NO_MMAP, we'd read the buffer once. If it's sorted, good. If
+     not, then we temporarily hold it in memory twice while we copy it
+     into the new sorted buffer.
 
- 		name_len = strlen(name);
- 		if (len != name_len + GIT_SHA1_HEXSZ + 1) {
-+			if (seen_ref)
-+				; /* NEEDSWORK: Error out for multiple capabilities lines? */
- 			free(server_capabilities);
- 			server_capabilities = xstrdup(name + name_len + 1);
- 		}
-@@ -175,7 +178,7 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
- 		}
+  2. For TEMPORARY, we mmap once. If it's sorted, then we make a single
+     copy. If it's not sorted, then we do the copy+sort as a single
+     step.
 
- 		if (!strcmp(name, "capabilities^{}")) {
--			if (saw_response)
-+			if (seen_ref)
- 				die("protocol error: unexpected capabilities^{}");
- 			if (got_dummy_ref_with_capabilities_declaration)
- 				die("protocol error: multiple capabilities^{}");
-@@ -193,6 +196,7 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
- 		oidcpy(&ref->old_oid, &old_oid);
- 		*list = ref;
- 		list = &ref->next;
-+		seen_ref = 1;
- 	}
+  3. For MMAP_OK, if it's sorted, we're done. Otherwise, we do the
+     single copy.
 
- 	annotate_refs_with_symref_info(*orig_list);
---
-2.14.1.821.g8fa685d3b7-goog
+So this is really there to help the TEMPORARY case reading an old
+unsorted file avoid needing to use double-the-ram during the copy?
 
+That seems like a good reason (and it does not seem to add too much
+complexity).
+
+-Peff
