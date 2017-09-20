@@ -2,117 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 566BE20A28
-	for <e@80x24.org>; Wed, 20 Sep 2017 16:29:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA32320A28
+	for <e@80x24.org>; Wed, 20 Sep 2017 16:56:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751879AbdITQ3o (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Sep 2017 12:29:44 -0400
-Received: from mail-qt0-f170.google.com ([209.85.216.170]:54009 "EHLO
-        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751709AbdITQ3l (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Sep 2017 12:29:41 -0400
-Received: by mail-qt0-f170.google.com with SMTP id 47so3330663qts.10
-        for <git@vger.kernel.org>; Wed, 20 Sep 2017 09:29:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=fLe+WsdoEMspEQwKqhbMh5VUEtEScd5DwD0JDMGu5rM=;
-        b=I4rRozdx8+qtOZ3m1JOCZ/znU9ea8RrdXpuzLfHHE1DTN3ZkS7NuMCCFIYk+tH/IHu
-         WsMWT3kC5NkvfOr2eU9PNXEcy0TQZE+k9o6WICP+Kq21ZbWkqCYeybbN/GAra/dZXAwe
-         6zeQfaAVZD9ahYx25vVR2s0/JtWP8b1x/nwgnNw1W/Ru6VexNLE/S2YRhIi+Q0+uKSQY
-         QCavWIQ89hvMKDxkXcnXF2pypmn7jej3dbBf8WbeRUVckDcPqqWMPcVg+Zf9GEf1EhAR
-         zXBOm7lJn2bG6MitPiuTb32Mfz4LpdRufGTz2MvGkbR2ws3Z6M6PRjOKGJzjMrjeb86r
-         mPaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=fLe+WsdoEMspEQwKqhbMh5VUEtEScd5DwD0JDMGu5rM=;
-        b=d64wN534W+527jWfmJY78nrJ6zzKfyp6/M1QAXHJC5nFZvIflBqFHeytNunWUs7Jsa
-         Prnw0aGKA13EAzTkj0ReV+1lwhnXu/03kev/SfLXfJKUSoJA2irUZrNFzAItgvnAhXXC
-         /s2qd6Gd33qhumN5On1GnNMAm9ue/O+FbzfWmv78A04fSIKgf49P8WIWHmxvnwYFooWz
-         me9d5/kHEoWnEFvjf8vlFkVuiMvwK/9z7XA5RzX1tGsEzYUDa517L/2ddRskb9HVJ66S
-         J5Ub5G4iTvtHbhODAs3H+2LynSzxOpaCKYXaD0KqhTL8rl0W/QEM6NzQyns79w6D5Oq7
-         r0Mg==
-X-Gm-Message-State: AHPjjUiPr6t0CjEJ3hnNCaYsDqysuptIGWdQyJPvQLJHEhoF+OqTPgvO
-        tyUPWsNg2jzhBxi+uoCKJt6LJ4m1
-X-Google-Smtp-Source: AOwi7QCmT5IhSh2EmEVpt5n5HDIjmaxuiN99oAGeROuX8K4FO5kZFROqVj9644ybEyIQ7sCFd6RFFw==
-X-Received: by 10.200.17.20 with SMTP id c20mr8487649qtj.321.1505924980789;
-        Wed, 20 Sep 2017 09:29:40 -0700 (PDT)
-Received: from [192.168.1.13] ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id d186sm1553615qkg.46.2017.09.20.09.29.38
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 20 Sep 2017 09:29:39 -0700 (PDT)
-Subject: Re: [PATCH v7 04/12] fsmonitor: teach git to optionally utilize a
- file system monitor to speed up detecting new or changed files.
-To:     Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <benpeart@microsoft.com>
-Cc:     David.Turner@twosigma.com, avarab@gmail.com,
-        christian.couder@gmail.com, git@vger.kernel.org,
-        johannes.schindelin@gmx.de, pclouds@gmail.com, peff@peff.net
-References: <20170915192043.4516-1-benpeart@microsoft.com>
- <20170919192744.19224-1-benpeart@microsoft.com>
- <20170919192744.19224-5-benpeart@microsoft.com>
- <xmqq377hopma.fsf@gitster.mtv.corp.google.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <53d05ca7-381b-255c-1362-ca1888d626fe@gmail.com>
-Date:   Wed, 20 Sep 2017 12:29:37 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        id S1751715AbdITQ4R convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 20 Sep 2017 12:56:17 -0400
+Received: from mail5.fer.hr ([161.53.72.235]:52983 "EHLO mail.fer.hr"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1751718AbdITQ4P (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Sep 2017 12:56:15 -0400
+Received: from POSTAR.fer.hr (2001:b68:16:250::72:237) by MAIL5.fer.hr
+ (2001:b68:16:250::72:235) with Microsoft SMTP Server (TLS) id 14.3.361.1;
+ Wed, 20 Sep 2017 18:56:12 +0200
+Received: from mail-yw0-f174.google.com (209.85.161.174) by POSTAR.fer.hr
+ (161.53.72.237) with Microsoft SMTP Server (TLS) id 14.3.361.1; Wed, 20 Sep
+ 2017 18:56:12 +0200
+Received: by mail-yw0-f174.google.com with SMTP id x131so2323473ywa.10
+        for <git@vger.kernel.org>; Wed, 20 Sep 2017 09:56:12 -0700 (PDT)
+X-Gm-Message-State: AHPjjUj3Vir8Sm1p9EjuTyaVeZvsxUeShGtteG3fZG7ltiIpy1yAn/qt
+        U3KCA+VSmx/JTNGZz8ErilJ9hkIC6w20HaPAMRU=
+X-Google-Smtp-Source: AOwi7QCvjGOskOPyoE5yMFHF3NjqDXWTcLojIDOg/FDFD81pxrDHdNm8t6rPQjkccbatrk+KSbv9y1ckTn3/fx3n1R4=
+X-Received: by 10.13.235.197 with SMTP id u188mr4280337ywe.349.1505926570950;
+ Wed, 20 Sep 2017 09:56:10 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqq377hopma.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Received: by 10.37.170.138 with HTTP; Wed, 20 Sep 2017 09:55:30 -0700 (PDT)
+In-Reply-To: <CAEPqvoyVJFe2EOvhnZD4vdF=1-VuoZrMP92TeGJ2WAE0X+B5Tw@mail.gmail.com>
+References: <CAEPqvoyVJFe2EOvhnZD4vdF=1-VuoZrMP92TeGJ2WAE0X+B5Tw@mail.gmail.com>
+From:   =?UTF-8?B?SnVyYWogT3LFoXVsacSH?= <juraj.orsulic@fer.hr>
+Date:   Wed, 20 Sep 2017 18:55:30 +0200
+X-Gmail-Original-Message-ID: <CAEPqvowWEdFdJoyqsmBt7KRU8xWyuLnFwV7CJ7zH2QRa2AQCtg@mail.gmail.com>
+Message-ID: <CAEPqvowWEdFdJoyqsmBt7KRU8xWyuLnFwV7CJ7zH2QRa2AQCtg@mail.gmail.com>
+Subject: Re: git fast-export/import bug with -M -C
+To:     <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Originating-IP: [209.85.161.174]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi, did anyone manage to take a look at this bug? Friendly ping.
 
+Juraj
 
-On 9/20/2017 2:23 AM, Junio C Hamano wrote:
-> Ben Peart <benpeart@microsoft.com> writes:
-> 
->> @@ -344,6 +346,7 @@ struct index_state {
->>   	struct hashmap dir_hash;
->>   	unsigned char sha1[20];
->>   	struct untracked_cache *untracked;
->> +	uint64_t fsmonitor_last_update;
-> 
-> This field being zero has more significance than just "we haven't
-> got any update yet", right?  The way I am reading the code is that
-> setting it 0 is a way to signal that fsmon has been inactivated.  It
-> also made me wonder if add_fsmonitor() that silently returns without
-> doing anything when this field is already non-zero is a bug (in
-> other words, I couldn't tell what the right answer would be to a
-> question "shouldn't the caller be avoiding duplicate calls?").
-> 
-
-Correct again.  For better (and sometimes for worse) I followed the 
-pattern set by the untracked cache.  If you compare them, you will 
-notice striking similarities. :)
-
->> diff --git a/fsmonitor.c b/fsmonitor.c
->> new file mode 100644
->> index 0000000000..b8b2d88fe1
->> --- /dev/null
->> +++ b/fsmonitor.c
->> ...
-> 
-> This part was a pleasant read.
-> > Thanks.
-> 
-
-Thank you for your careful review.  I appreciate having another set of 
-eyes taking a close look especially as I see this as a big first step 
-towards making many git operations O(# changed files) instead of O(# 
-size of working directory). Seeing status times drop from 1m22s to 1.45s 
-is a huge perf win - but only if it is correct!
+On Fri, Sep 15, 2017 at 12:01 AM, Juraj Oršulić <juraj.orsulic@fer.hr> wrote:
+> The commands should be self explanatory. 0.2.0~20 is the first commit
+> where the reconstructed repository diverges, that commit had a
+> simultaneous copy and edit of one file. It seems that copy/rename
+> detection, enabled with -M -C is confused by this. I reproduced it
+> with git 2.14 next @ 8fa685d.
+>
+> git clone https://github.com/googlecartographer/cartographer_ros
+> mkdir copy && cd copy && git init
+> (cd ../cartographer_ros; git fast-export --all --date-order -M -C) |
+> git fast-import
+> git rev-parse 0.2.0~20 #2237e1d0a974977fbcb0737dd1fb5876a2b8e29d
+> git rev-parse 0.2.0~21 #cd1276a99ccffcc491d0b2e50296ec04347ba5f2
+> cd ../cartographer_ros
+> git rev-parse 0.2.0~20 #9d5b221ed41783b15c84bc90b71527194b8d9a49
+> git rev-parse 0.2.0~21 #cd1276a99ccffcc491d0b2e50296ec04347ba5f2
