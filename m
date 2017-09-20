@@ -2,84 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D08F120281
-	for <e@80x24.org>; Wed, 20 Sep 2017 21:34:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C6FA202A5
+	for <e@80x24.org>; Wed, 20 Sep 2017 21:52:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751653AbdITVeV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Sep 2017 17:34:21 -0400
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:50285 "EHLO
-        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751387AbdITVeU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Sep 2017 17:34:20 -0400
-Received: by mail-pf0-f171.google.com with SMTP id m63so2167381pfk.7
-        for <git@vger.kernel.org>; Wed, 20 Sep 2017 14:34:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=S6bBtMCsKRulmxpcjVBNJHXWiKSz4tm7EuPBQxV47a8=;
-        b=mmXsJ6uApftKxheqnUEt4Rf/H6hy8CjYxEyYNY9e59TPE8V0i9yJ3zgm0NHvZ5U2KM
-         JuWtkE0q/3hZh0oPpHbMIjue1FQ/Nu0MAyicumgqSqXGRq7c1TfpgV9NXTkb7OSIURBH
-         fevitYDryjGGbYMIrGsaKWswHlx8D3IWBIYSW3rgKipJ2SeQewcfYBIGZaFBWhY+BNtd
-         Q1adlrAc9eX9EV7jmyKS1duZw4yy+J3Nz2Yaya3IW76ZVKmyzorHNpZ1tN7h/UWsr+46
-         UWnRCNQMAQeCMaFVbvIL1nHE50XjNCrc9/R/jA/dDNynGQFf4x9o4pe8QLrjPuoQ+55G
-         LxHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=S6bBtMCsKRulmxpcjVBNJHXWiKSz4tm7EuPBQxV47a8=;
-        b=I7o1F58o8COa7hxQ+H9NPq8j6lr+o9eI6umutAlitTw0lB2QaC9EdiF59d3O/OiY0I
-         YqulkUeNKuIKVisaM9SOq2pN4Og8MIi/5a8VfKcoJKlhI1+GZz69DV5SzOf29GoKxO7Y
-         blrCR1vdcMHu+RzQYMciz23RAxdfFwADMBlcd/TaU8yU0xObJ/ekx+HpkgU9opUKV2BT
-         mO1a887r3P5qpTJ5T7/QoDiBh40lLDy4rGHsJwjMgIXHFu284HPKmu+tYKYtcXw2JMVV
-         SkXUjUmrgMHOK8b8RpfGPK0bA29cgXl1Xp/5FhD+DBu8HHxX6pMFhzPH7zFg5/tu8e4L
-         JHeQ==
-X-Gm-Message-State: AHPjjUhAXkdUDCMI/hnMyoeOz6RCF+ld5hP8NlNYld7pD21X3kU9s110
-        HWitT9VJKu01Oc5MHHY2pM0=
-X-Google-Smtp-Source: AOwi7QD5QXMjmWakSTq9PHvC7QLm9L8bqbL9FqjGh05XfX4WkcU6LitErSuDx888kBIe9joGx462Vg==
-X-Received: by 10.84.224.13 with SMTP id r13mr3404054plj.137.1505943260068;
-        Wed, 20 Sep 2017 14:34:20 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:da9:ac38:cdcf:de91])
-        by smtp.gmail.com with ESMTPSA id r66sm9766437pfl.15.2017.09.20.14.34.19
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 20 Sep 2017 14:34:19 -0700 (PDT)
-Date:   Wed, 20 Sep 2017 14:34:17 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] commit: fix memory leak in `reduce_heads()`
-Message-ID: <20170920213417.GG27425@aiede.mtv.corp.google.com>
-References: <1505936846-2195-3-git-send-email-martin.agren@gmail.com>
+        id S1751547AbdITVv6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Sep 2017 17:51:58 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:34629 "EHLO
+        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751408AbdITVv5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Sep 2017 17:51:57 -0400
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+        by mail-out.m-online.net (Postfix) with ESMTP id 3xyD3Z4F5Pz1s23j;
+        Wed, 20 Sep 2017 23:51:54 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.70])
+        by mail.m-online.net (Postfix) with ESMTP id 3xyD3Z3BDrz1r0x4;
+        Wed, 20 Sep 2017 23:51:54 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+        by localhost (dynscan1.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
+        with ESMTP id xQD79-UN2-XW; Wed, 20 Sep 2017 23:51:53 +0200 (CEST)
+X-Auth-Info: 5D9e0/BddxfUT6DDTtDi7MApUMbulZq8QhtO3zMh2RcdNiH8FscJg3MqzIgnDDpb
+Received: from igel.home (ppp-88-217-17-201.dynamic.mnet-online.de [88.217.17.201])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.mnet-online.de (Postfix) with ESMTPSA;
+        Wed, 20 Sep 2017 23:51:53 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 1000)
+        id 31A8D2C3975; Wed, 20 Sep 2017 23:51:53 +0200 (CEST)
+From:   Andreas Schwab <schwab@linux-m68k.org>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2] for_each_string_list_item: avoid undefined behavior for empty list
+References: <cb2d4d71c7c1db452b86c8076c153cabe7384e28.1505490776.git.mhagger@alum.mit.edu>
+        <20170915184323.GU27425@aiede.mtv.corp.google.com>
+        <b8951886-feab-a87a-9683-3c155cfa98a8@alum.mit.edu>
+        <b03c7b09-853f-a2ed-f73e-7d946c90cedb@gmail.com>
+        <20170920023008.GB126984@aiede.mtv.corp.google.com>
+        <xmqqd16mowig.fsf@gitster.mtv.corp.google.com>
+        <20170920052705.GC126984@aiede.mtv.corp.google.com>
+        <87vakd2v22.fsf@linux-m68k.org>
+        <20170920173134.GZ27425@aiede.mtv.corp.google.com>
+X-Yow:  I'm a GENIUS!  I want to dispute sentence structure with SUSAN SONTAG!!
+Date:   Wed, 20 Sep 2017 23:51:53 +0200
+In-Reply-To: <20170920173134.GZ27425@aiede.mtv.corp.google.com> (Jonathan
+        Nieder's message of "Wed, 20 Sep 2017 10:31:34 -0700")
+Message-ID: <87lgl9rqbq.fsf@linux-m68k.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1505936846-2195-3-git-send-email-martin.agren@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin Ågren wrote:
+On Sep 20 2017, Jonathan Nieder <jrnieder@gmail.com> wrote:
 
-> We don't free the temporary scratch space we use with
-> `remove_redundant()`. Free it similar to how we do it in
-> `get_merge_bases_many_0()`.
+> Andreas Schwab wrote:
+>> On Sep 19 2017, Jonathan Nieder <jrnieder@gmail.com> wrote:
 >
-> Signed-off-by: Martin Ågren <martin.agren@gmail.com>
-> ---
->  commit.c | 1 +
->  1 file changed, 1 insertion(+)
+>>> B. #define for_each_string_list_item(item, list) \
+>>> 	if (list->items) \
+>>> 		for (item = ...; ...; ... )
+>>>
+>>>    This breaks a caller like
+>>> 	if (foo)
+>>> 		for_each_string_list_item(item, list)
+>>> 			...
+>>> 	else
+>>> 		...
+>>>
+>>>    making it a non-starter.
+>>
+>> That can be fixed with a dangling else.
+>
+> I believe the fix you're referring to is option C, from the same email
+> you are replying to.  If not, please correct me.
 
-Good catch.  Thanks.
+A variant thereof, yes.
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
