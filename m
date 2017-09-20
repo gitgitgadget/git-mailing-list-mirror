@@ -6,104 +6,138 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D10D82047F
-	for <e@80x24.org>; Wed, 20 Sep 2017 02:44:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D74CE2047F
+	for <e@80x24.org>; Wed, 20 Sep 2017 02:50:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751480AbdITCow (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Sep 2017 22:44:52 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56223 "EHLO
+        id S1751378AbdITCuL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Sep 2017 22:50:11 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52942 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751009AbdITCov (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Sep 2017 22:44:51 -0400
+        with ESMTP id S1750733AbdITCuK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Sep 2017 22:50:10 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E1908A9C2B;
-        Tue, 19 Sep 2017 22:44:50 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8BF9A94795;
+        Tue, 19 Sep 2017 22:50:09 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=fSPAbzvaOSjJxZ9/WpXsjSeqLUk=; b=qVLEW8
-        rGfDC+mmUEgdC7DupF7206F6fqCBEXYf4+qalU7nOf3JwhjZvOiVrw2g2kHoT/9k
-        skTspYXHn7niAZ7w2YYbIy5QR1GK+jZ8X1fetJK6WnpRzHw8Shrhz5iPd+SxwlAp
-        EvBnC6SGVVeJEeyIXm/uLQT12YWN0vOW4GE8M=
+        :content-type:content-transfer-encoding; s=sasl; bh=pYTVrki6rfCh
+        mjm/DDMxOXEHdSo=; b=CnYZRWC69FOqdiqRu6kvmkCfeZQgXNFFqtP1e1ewG7/4
+        +b0rd/4TVDoip3OPb0j9csSc5Xio0fYZjRTTZoQI9iwMrOCG/7XSlWztLB2pBHIf
+        IaqEba1VP6mHzvmFizMdB+fDXOq2Axkka11TEokdmSOdYavoruPPDyn998EOoRo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=JKMLndaPdx+4PIHTeohBuwnQ/nkkYNkP
-        chNtIW3uSwnNlOj2b9j2yMXWox/2YCx2ZcKpHTO7aaZaCI80DLwTEMFR87wVNfQj
-        HEMNeJEenkCmFqOY0vRDcn+ZsCcNuYqel+mbCIa1eTzQg+KoVRnYFWnJ69V7mZaH
-        JYbADwaz6TE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D8C8CA9C2A;
-        Tue, 19 Sep 2017 22:44:50 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=M5WTTe
+        ubgOHtQLuZ9nQUGZ8IPLeuVrMtjf4K9Yav+o0PtTlLbsayCzmtyKQbXC/gKpzuRD
+        QC3e1oxujzbGsvKBAUms48KInMD7O1YK09dLZ5vXn+tdoPnvgXyIV8UVHdF4vs1b
+        3cH7/qkW7qPj262+Q03obAKuJ11tVwPWmrfys=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8543E94794;
+        Tue, 19 Sep 2017 22:50:09 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 39A26A9C29;
-        Tue, 19 Sep 2017 22:44:50 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EB47C94792;
+        Tue, 19 Sep 2017 22:50:08 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 0/2] fix read past end of array in alternates files
-References: <20170918155059.54f7z6cnrl47f5el@sigill.intra.peff.net>
-        <20170919194044.3prgaxd4sqandy75@sigill.intra.peff.net>
-Date:   Wed, 20 Sep 2017 11:44:48 +0900
-In-Reply-To: <20170919194044.3prgaxd4sqandy75@sigill.intra.peff.net> (Jeff
-        King's message of "Tue, 19 Sep 2017 15:40:44 -0400")
-Message-ID: <xmqqmv5qozq7.fsf@gitster.mtv.corp.google.com>
+To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] t4014: strengthen search patterns
+References: <0102015e9a2d5d25-e34b7c98-1662-4cfe-9eb8-50dc56c36240-000000@eu-west-1.amazonses.com>
+Date:   Wed, 20 Sep 2017 11:50:07 +0900
+In-Reply-To: <0102015e9a2d5d25-e34b7c98-1662-4cfe-9eb8-50dc56c36240-000000@eu-west-1.amazonses.com>
+        (Kaartic Sivaraam's message of "Tue, 19 Sep 2017 12:46:57 +0000")
+Message-ID: <xmqqingeozhc.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AC3AA508-9DAD-11E7-8F6F-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 6A3406EE-9DAE-11E7-977C-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
 
-> On Mon, Sep 18, 2017 at 11:51:00AM -0400, Jeff King wrote:
+> The regex patterns for some failing test cases were a bit loose
+> giving way for a few incorrect outputs being accepted as correct
+> outputs.
+
+If these were part of scripted Porcelain that needs to take any
+end-user input, then having '.' that are meant to match only a dot
+is a bug, but I personally do not think it is worth the patch noise
+to quote them, when we _know_ (after all, we are in control of the
+data we use for these tests) there is no other lines that would
+match these patterns.
+
+
+
+> To avoid such incorrect outputs from being flagged as correct ones
+> use fixed string matches when possible and strengthen regex when
+> it's not.
 >
->> This series fixes a regression in v2.11.1 where we might read past the
->> end of an mmap'd buffer. It was introduced in cf3c635210, but I didn't
->> base the patch on there, for a few reasons:
+> Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+> ---
+>  t/t4014-format-patch.sh | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
 >
-> Here's a v2 that fixes a minor leak in the first patch (I carefully
-> remembered to free() the path buffer on the error path, but forgot to do
-> it in the normal one. Oops).
-
-Thanks.
-
-> I also tried to address Jonathan's "should this be in the commit
-> message" comment. The information above _is_ in there, but maybe putting
-> it at the top as a sort of tl;dr makes it easier to find?
-
-Probably.
-
-> The second patch is unchanged.
+> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+> index 482112ca339f0..7dff7996c9e1f 100755
+> --- a/t/t4014-format-patch.sh
+> +++ b/t/t4014-format-patch.sh
+> @@ -163,7 +163,7 @@ test_expect_failure 'additional command line cc (rf=
+c822)' '
+>  	git config --replace-all format.headers "Cc: R E Cipient <rcipient@ex=
+ample.com>" &&
+>  	git format-patch --cc=3D"S. E. Cipient <scipient@example.com>" --stdo=
+ut master..side | sed -e "/^\$/q" >patch5 &&
+>  	grep "^Cc: R E Cipient <rcipient@example.com>,\$" patch5 &&
+> -	grep "^ *\"S. E. Cipient\" <scipient@example.com>\$" patch5
+> +	grep "^ *\"S\. E\. Cipient\" <scipient@example\.com>\$" patch5
+>  '
+> =20
+>  test_expect_success 'command line headers' '
+> @@ -191,13 +191,13 @@ test_expect_success 'command line To: header (asc=
+ii)' '
+>  test_expect_failure 'command line To: header (rfc822)' '
+> =20
+>  	git format-patch --to=3D"R. E. Cipient <rcipient@example.com>" --stdo=
+ut master..side | sed -e "/^\$/q" >patch8 &&
+> -	grep "^To: \"R. E. Cipient\" <rcipient@example.com>\$" patch8
+> +	grep -F "To: \"R. E. Cipient\" <rcipient@example.com>" patch8
+>  '
+> =20
+>  test_expect_failure 'command line To: header (rfc2047)' '
+> =20
+>  	git format-patch --to=3D"R =C3=84 Cipient <rcipient@example.com>" --s=
+tdout master..side | sed -e "/^\$/q" >patch8 &&
+> -	grep "^To: =3D?UTF-8?q?R=3D20=3DC3=3D84=3D20Cipient?=3D <rcipient@exa=
+mple.com>\$" patch8
+> +	grep "^To: =3D?UTF-8?q?R=3D20=3DC3=3D84=3D20Cipient?=3D <rcipient@exa=
+mple\.com>\$" patch8
+>  '
+> =20
+>  test_expect_success 'configuration To: header (ascii)' '
+> @@ -211,14 +211,14 @@ test_expect_failure 'configuration To: header (rf=
+c822)' '
+> =20
+>  	git config format.to "R. E. Cipient <rcipient@example.com>" &&
+>  	git format-patch --stdout master..side | sed -e "/^\$/q" >patch9 &&
+> -	grep "^To: \"R. E. Cipient\" <rcipient@example.com>\$" patch9
+> +	grep -F "To: \"R. E. Cipient\" <rcipient@example.com>" patch9
+>  '
+> =20
+>  test_expect_failure 'configuration To: header (rfc2047)' '
+> =20
+>  	git config format.to "R =C3=84 Cipient <rcipient@example.com>" &&
+>  	git format-patch --stdout master..side | sed -e "/^\$/q" >patch9 &&
+> -	grep "^To: =3D?UTF-8?q?R=3D20=3DC3=3D84=3D20Cipient?=3D <rcipient@exa=
+mple.com>\$" patch9
+> +	grep "^To: =3D?UTF-8?q?R=3D20=3DC3=3D84=3D20Cipient?=3D <rcipient@exa=
+mple\.com>\$" patch9
+>  '
+> =20
+>  # check_patch <patch>: Verify that <patch> looks like a half-sane
 >
-> Junio, I see you ended up back-porting it to v2.11. Would you prefer me
-> to have done it that way in the first place? I was trying to reduce your
-> work by basing it on "maint" (figuring that we wouldn't bother making a
-> v2.11.x release anyway, and that skips you having to apply the second
-> patch separately after the merge).
-
-Upon seeing that this dated back to 2.11, because I am lazy and do
-not assess how much the fix needs to go to older tracks when I am
-queuing (remember: my attention span during patch queueing is
-measured in minutes, as people send changes to different areas), I
-tend to first try to see what's the oldest maintenance track we can
-practically apply the patch to.  It turned out that the conflict
-resolution to apply on maint-2.11 wasn't that painful, so I took the
-lazy route all the way---the real fix on the oldest, even though I
-do not know (because I refused to think and decide due to laziness)
-if a next v2.11.x release is necessary, followed by a nice-to-have
-warning that uses newer features on the maintenance track.  That
-way, when we decide that the fix won't be a big deal to require a
-new v2.11.x, but it is nice to have in v2.13.x, we could merge the
-first one, without having to cherry-pick.
-
-All of the above is part of how the daily maintainer workflow goes,
-and there is no strong preference on my side, if the original is on
-the theoretically oldest (i.e. maint-2.11) or on the oldest
-practical (i.e. maint), as long as the conflicts are not too
-painful.
-
+> --
+> https://github.com/git/git/pull/406
