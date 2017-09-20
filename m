@@ -2,110 +2,190 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2AF4D20281
-	for <e@80x24.org>; Wed, 20 Sep 2017 20:57:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 96A3620281
+	for <e@80x24.org>; Wed, 20 Sep 2017 21:16:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751853AbdITU5l (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Sep 2017 16:57:41 -0400
-Received: from mail-qt0-f175.google.com ([209.85.216.175]:52182 "EHLO
-        mail-qt0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751365AbdITU5j (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Sep 2017 16:57:39 -0400
-Received: by mail-qt0-f175.google.com with SMTP id q4so4138456qtq.8
-        for <git@vger.kernel.org>; Wed, 20 Sep 2017 13:57:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=mSBLQvFTI9ChEFKBb+E1U1b6YMzvahImwKN5zzFiRpM=;
-        b=EEGEanoolceVtNFq2ts+zPdkRJGYCfIAE7Z4IEhypTHBM7jC5jxPn9GR0MQCMeuWCm
-         TSRelkSkF+z+ZeAedW1YcaamppfcmLG6whiDAuqPvAUs5Wb11sZRY6nDBfqzzgyHfr+8
-         2IiDfkIP3HIBAYhRjGZEspmF2B//3sFSfa4y1SRPcEzvkS1xlpF7DDnZqIjMmedi3ETH
-         A0SM2WOhnyjUTVS1uWwZG3lWGmwoGGM2tif+I5UmfYiG02+K7xM0jjf1X9Gnyi4jzXEX
-         5SPt5GbvYpLuoEL8qtyvYJED2HEj5B7/mezcKMSgQk58fNISkioOW/C6tUWCnzFOsoUY
-         ZLfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=mSBLQvFTI9ChEFKBb+E1U1b6YMzvahImwKN5zzFiRpM=;
-        b=PcapFzSzCev2H8i1sdfcqTyOTHIIfbu0IN/BU/mlcsPsMTKB/AdF5tufA/otRyZtG9
-         OwsjVdojVFOm2+iiOtI/1E7XkUGc7ghCOq/GqrHcbQgpjNP01OW4SsWcwKHpbDC5/4Gf
-         NtY9xilYwWtwn74flMiBz5FcOynLHzxiznoiDDbHjOLeix5qaMegtVbxAOc5eOEdfa7I
-         t7Go8NwIKLKsLNExFPnUIWTRVw8EkAjfls+dv42s9eDPmTBbVLLgRUM68cOPGyW/v5di
-         zjNDfJMicHitFwTBLAerVtPTuFic6e2L8GKk+wQUpS1HgW/SeJe5OS67sfBFOmlaVpWb
-         Q6Pg==
-X-Gm-Message-State: AHPjjUiE5srHgKCfXvX/ACaHtDsfFxLlpX0CR484LvKVtaGHQ6W3wQzb
-        57J9FSwRBeaA6Og91Ax5gf/gMqWJHML/7LaEzB6FH1BkZPk=
-X-Google-Smtp-Source: AOwi7QCqRyP++ZF6Kk9ZmUdUQmPFFprN8oxCkzWYl7L5lOIQlbdjCQd+V6eshaTLkqW0T179465LD9k7h4F2VGoifNE=
-X-Received: by 10.200.48.49 with SMTP id f46mr15941qte.260.1505941058680; Wed,
- 20 Sep 2017 13:57:38 -0700 (PDT)
+        id S1751583AbdITVQd (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Sep 2017 17:16:33 -0400
+Received: from mout.gmx.net ([212.227.15.18]:59355 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751396AbdITVQb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Sep 2017 17:16:31 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lu7a2-1dDA4w2DFW-011W1U; Wed, 20
+ Sep 2017 23:16:20 +0200
+Date:   Wed, 20 Sep 2017 23:16:19 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Jonathan Nieder <jrnieder@gmail.com>
+cc:     git@vger.kernel.org, Ben Peart <Ben.Peart@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Karsten Blees <blees@dcon.de>
+Subject: Re: [PATCH] Win32: simplify loading of DLL functions
+In-Reply-To: <20170919180742.GC75068@aiede.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1709202235300.219280@virtualbox>
+References: <f5a3add27206df3e7f39efeac8a3c3b47f2b79f2.1505834586.git.johannes.schindelin@gmx.de> <20170919180742.GC75068@aiede.mtv.corp.google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.140.102.51 with HTTP; Wed, 20 Sep 2017 13:57:38 -0700 (PDT)
-In-Reply-To: <20170919071525.9404-6-kaarticsivaraam91196@gmail.com>
-References: <xmqqd18pcysa.fsf@gitster.mtv.corp.google.com> <20170919071525.9404-1-kaarticsivaraam91196@gmail.com>
- <20170919071525.9404-6-kaarticsivaraam91196@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 20 Sep 2017 13:57:38 -0700
-Message-ID: <CAGZ79kYMagCFS765NtOBDxDJYaXMyA4-=xxi3JMxbga638b6Yg@mail.gmail.com>
-Subject: Re: [RFC PATCH 5/5] builtin/branch: give more useful error messages
- when renaming
-To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:pGniOkCqnZeasLLSdhH3Mt0jb/8tC0I0PnqaKcH4bem+lNZSlQa
+ c1cHqDo71rLd32ssPn1I+N0dYz2VYSWtQJvWeg6DOvUCQaOMOVhFB+ZFStx52XgnGC7dJxe
+ EqvhQbsbt8OOCWnuUwcQYa01IHmbxf0gQmuVaqNPId/eifHBBOJJU8R9fb6i08UKbuPEaza
+ x/uApN6wk9tsjIodSn+/Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:CmaUv7oqfkk=:WkJ6sR9yArzyiuFOdJlK1I
+ mq2HZbGnbYHIXXhPAq550uzHPyJoF2xP1hbNW1kBP6/vz+Dl/R8o+8v4ZUCPGeA9/Vo/HYNgn
+ 9uFxtU7pmdq2ZuN+J/1y6Xo94V6oowale077yfR74UhVauUHdElTckdKxV7xBrhDXw3tfwJm6
+ lmSu2VaWQqRkA7kDCfqAsHs2+TjvZHo1dQ9GecqncAyksJ9u5CHR56RHk0sffc7F8fmVqqqD2
+ wRWVAeAJJ3lwsUvE9WFQJ375NcTrmOJMCzw37y0iLUR5fVrx4FfEv2ucCnWHzoy2oF3uCiv7c
+ YowkhA9Kn6GH3PlBamKZplSfO5VBjDhS1Tt3AtHtM6YszAk2M1hfMNLTOfbjQu8UdKshv4kBs
+ DeGRWvIRYogE7Cs2PVzr6NV1E2SilLOMbhBImn1OTt5ylyYBL0Z1r6WFo/t203vovLXVJMoxX
+ 5yuzgqGl4GRbXdv7AC4e25fnCcvj034pUlSwt/o9zsKXgUYy93+uXv8NDicAEH62wO6KHTCYq
+ 1Qp2OsOrSr3AC8APDQwavX/jtc1VVrayKKspK3aflGKq3feoOi2HQTqth+K+KLnXnC35fIuTF
+ W0/hI3MLh0WyCoCvBnaFVMG97npk1J8Q3nK3tCneF8RESjaH+3lsHDJPGTA8B8Uhhy/P0xce1
+ Fa5n6nznyq8WilFWVj1ohsQvEV3W48mxr6j4bwn+unzb8wXEtbc453tfUjS+cgHP3JvzzF47W
+ EpQp2bfeXgUpwJcUuhydq/4eQf0nWVrjq/eIyrcf7brDg2niP8Yc3OnUsHMJ8395vWSDSN4VJ
+ NcxNVa+Yp/2NDwjrjhSqKZYGBQ0rbr4YTGRNAmEkQHI8/rkVdw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 19, 2017 at 12:15 AM, Kaartic Sivaraam
-<kaarticsivaraam91196@gmail.com> wrote:
-> When trying to rename an inexistent branch to an existing branch
-> the rename failed specifying the new branch name exists rather than
-> specifying that the branch trying to be renamed doesn't exist.
->
->     $ git branch -m tset master
->     fatal: A branch named 'master' already exists.
->
-> It's conventional to report that 'tset' doesn't exist rather than
-> reporting that 'master' exists, the same way the 'mv' command does.
->
->     $ git branch -m tset master
+Hi Jonathan,
 
-This is not the 'mv' command as promised? So this is just
-to demonstrate the (still fictional) better error message?
-Maybe use a real 'mv' command here?
+On Tue, 19 Sep 2017, Jonathan Nieder wrote:
 
->     fatal: branch 'tset' doesn't exist.
->
-> That has the problem that the error about an existing branch is shown
-> only after the user corrects the error about inexistent branch.
->
->     $ git branch -m test master
->     fatal: A branch named 'master' already exists.
->
-> This isn't useful either because the user would have corrected this error in
-> a single go if he had been told this alongside the first error. So, give
-> more useful error messages by giving errors about old branch name and new
-> branch name at the same time. This is possible as the branch update validation
-> function now returns the reason it was about to die, when requested.
->
->     $ git branch -m tset master
->     fatal: branch 'tset' doesn't exist, and branch 'master' already exists
->
-> Note: Thanks to the strbuf API that made it possible to easily construct
-> the composite error message strings!
+> Johannes Schindelin wrote:
+> 
+> > Dynamic loading of DLL functions is duplicated in several places in Git
+> > for Windows' source code.
+> >
+> > This patch adds a pair of macros to simplify the process: the
+> > DECLARE_PROC_ADDR(<dll>, <return-type>, <function-name>,
+> > ...<function-parameter-types>...) macro to be used at the beginning of a
+> > code block, and the INIT_PROC_ADDR(<function-name>) macro to call before
+> > using the declared function. The return value of the INIT_PROC_ADDR()
+> > call has to be checked; If it is NULL, the function was not found in the
+> > specified DLL.
+> >
+> > Example:
+> >
+> >         DECLARE_PROC_ADDR(kernel32.dll, BOOL, CreateHardLinkW,
+> >                           LPCWSTR, LPCWSTR, LPSECURITY_ATTRIBUTES);
+> >
+> >         if (!INIT_PROC_ADDR(CreateHardLinkW))
+> >                 return error("Could not find CreateHardLinkW() function";
+> >
+> > 	if (!CreateHardLinkW(source, target, NULL))
+> > 		return error("could not create hardlink from %S to %S",
+> > 			     source, target);
+> > 	return 0;
+> 
+> nit: whitespace is a bit strange here (mixture of tabs and spaces).
 
-This shall be read as an apology to all translators out there. ;)
-Playing sentence lego in source code is not optimal, as other
-languages are very different and you cannot assume even simplest
-things about them (because of their variety).
+Heh, I never thought that this would be a problem in *commit messages*.
+TBH I simply copy-edited the code from Git for Windows' source code.
 
-In this case it might not be as bad, because we're providing a
-whole sentence per _(translatable) unit.
+> Could this example go near the top of the header instead?  That way,
+> it's easier for people reading the header to see how to use it.
+
+Funny, I am *so* used to examples being at the very end, from tutorials to
+man pages.
+
+If my experience is any indication, I would rather keep this order.
+
+> > Signed-off-by: Karsten Blees <blees@dcon.de>
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> 
+> Just curious: what was Karsten's contribution?
+
+Essentially all of the code. I just moved it around, separated it out from
+the patch introducing it, used it elsewhere (e.g. in compat/poll/, not yet
+contributed to git/git) and replaced the LoadLibrary() call by
+LoadLibraryEx() for more precise control over the operation.
+
+> (I ask mostly because I'm interested in kinds of collaboration git
+> metadata is failing to capture correctly --- e.g. pair programming.)
+
+Well, then I have this challenge for you: make use of the history of Git
+for Windows' master branch. It is rebased to git/git's maint (or for .0
+versions, master) using the "merging rebase" strategy (i.e. first merging
+the to-be-rebased history using the "ours" strategy, then applying the
+patches on top, so that the previous commit history is part of the new
+history, yet there are still rebased patches ready to be prepared for
+submission to git/git). This strategy means that multiple versions of the
+same patches exist.
+
+> >         So far, there are no users (except in Git for Windows). Ben
+> >         promised to make use of it in his fsmonitor patch series.
+> >
+> >  compat/win32/lazyload.h | 44 ++++++++++++++++++++++++++++++++++++++++++++
+> >  1 file changed, 44 insertions(+)
+> >  create mode 100644 compat/win32/lazyload.h
+> 
+> Are any of the Git for Windows users something that could go upstream
+> along with this patch?  That would help illustrate what a good caller
+> looks like, which should help with reviewing future patches that use
+> this code.
+
+I do not currently have the time to do that, that's why I did not
+accompany the patch by any user.
+
+However, having said that, Ben's patch series will make for an *excellent*
+user, fulfilling your wish.
+
+> > --- /dev/null
+> > +++ b/compat/win32/lazyload.h
+> > @@ -0,0 +1,44 @@
+> [...]
+> > +/* Declares a function to be loaded dynamically from a DLL. */
+> > +#define DECLARE_PROC_ADDR(dll, rettype, function, ...) \
+> > +	static struct proc_addr proc_addr_##function = \
+> > +	{ #dll, #function, NULL, 0 }; \
+> > +	static rettype (WINAPI *function)(__VA_ARGS__)
+> > +
+> > +/*
+> > + * Loads a function from a DLL (once-only).
+> > + * Returns non-NULL function pointer on success.
+> > + * Returns NULL + errno == ENOSYS on failure.
+> > + */
+> > +#define INIT_PROC_ADDR(function) \
+> > +	(function = get_proc_addr(&proc_addr_##function))
+> 
+> Probably worth mentioning in the doc comment that this is not thread
+> safe, so a caller that wants to lazy-init in a threaded context is
+> responsible for doing their own locking.
+
+True.
+
+> > +static inline void *get_proc_addr(struct proc_addr *proc)
+> > +{
+> > +	/* only do this once */
+> > +	if (!proc->initialized) {
+> > +		HANDLE hnd;
+> > +		proc->initialized = 1;
+> > +		hnd = LoadLibraryExA(proc->dll, NULL,
+> > +				     LOAD_LIBRARY_SEARCH_SYSTEM32);
+> > +		if (hnd)
+> > +			proc->pfunction = GetProcAddress(hnd, proc->function);
+> > +	}
+> > +	/* set ENOSYS if DLL or function was not found */
+> > +	if (!proc->pfunction)
+> > +		errno = ENOSYS;
+> > +	return proc->pfunction;
+> > +}
+> 
+> strerror(ENOSYS) is "Function not implemented".  Cute.
+> 
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+Okay, I'll add that for v2. Will wait a couple of days in case more stuff
+crops up.
+
+Ciao,
+Dscho
