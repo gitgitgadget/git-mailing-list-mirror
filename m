@@ -7,96 +7,122 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0736320A28
-	for <e@80x24.org>; Wed, 20 Sep 2017 17:31:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F57320A2A
+	for <e@80x24.org>; Wed, 20 Sep 2017 17:46:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751605AbdITRbj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Sep 2017 13:31:39 -0400
-Received: from mail-pg0-f44.google.com ([74.125.83.44]:47050 "EHLO
-        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751589AbdITRbi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Sep 2017 13:31:38 -0400
-Received: by mail-pg0-f44.google.com with SMTP id i130so2062129pgc.3
-        for <git@vger.kernel.org>; Wed, 20 Sep 2017 10:31:38 -0700 (PDT)
+        id S1751361AbdITRqS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Sep 2017 13:46:18 -0400
+Received: from mail-pg0-f51.google.com ([74.125.83.51]:49919 "EHLO
+        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750938AbdITRqR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Sep 2017 13:46:17 -0400
+Received: by mail-pg0-f51.google.com with SMTP id m30so2080008pgn.6
+        for <git@vger.kernel.org>; Wed, 20 Sep 2017 10:46:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=DQ93ir3piaa1jCiVLXHu6Fg+VP5bJMluWdtGMrtghV8=;
-        b=cuywLlCIAjdsdR8p1NVvW59WFj5jojX2dF98wEYVoXqitrAz7r5lzEPKEOdZDyNxLY
-         kZXj3xraJLBu2tmbDk1Pvry9JEGO7XE5D57KhwEJP1OIwJjmOdE11UDz9ZPJIwi3KjJd
-         UeJgLZEzbI3e3iXtY+23UPgoyyJBzBuxJBh5uw/Pns+GnjR0jQtPFk10Fmf3QMEOWm6t
-         Ydwh4q7t4hEgiQu5NXQ2et7eQ673RbrOMP54Iv0CJDlVCoLFKNqjBFTKJGjniOxq8O4z
-         1ERZsQeEoQK28trUDhMUwC4Uh2ZY0byT1Ta7b3/IzPCWN2rShHAuZyLzFC+82ZWiDG3c
-         SoEg==
+        bh=qutPxqIYhbBUptWi4QMCApX+hArEfjuoZJ4Mj9AuLaQ=;
+        b=TqNz+ehTlUBqclMy1Z+5djqLp1/Q9QgjVSqzaFXFxdanFfMjJfFd/xP6/zpA4CcMFi
+         pjTe1fI1uLN2fUEjdxwpcTlLh4KVtuZ0vqkB/Hwxza6XQvsJKMEdR2qnj4OPoH/lB0Lt
+         8I1OAP2SVlIKf62HaGFtdFDlWs+rcO4bL1nbDQSxUNORWaQ9b9qJgLW86N0OrEGjiQwQ
+         IVokl5P0RITyGjQxcdLdOzOx5nNi8Z4SXsAcD9YyWIm+ftGcrbTZsIVjlUhzz7XZieZ1
+         1cxvmh22rV8E+AQH7pq4pn/vXUhgQjW2o88CS/bza/XhnTg3r3VTpl8Y3qKq9Wr0+Chm
+         g6Nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=DQ93ir3piaa1jCiVLXHu6Fg+VP5bJMluWdtGMrtghV8=;
-        b=eqmiTk1P3VzPgeIVq7cN7rtIfZVPHDNjpEbWEYTRAnu1Xl69MVfZGiPw/X1WkGfQaA
-         TDSpfuAD8jz5D0dtpMebO3h/GwpsxiXpp6Q59QgeyQyCnSBdJ435QAVdPonskcdkgdav
-         OUFjHaCxgOM0l5llgBwKknR5fHMGyzMbcV/9F+8sfjonv5Z9Y9vhqa0g9cXw4oW/FVpR
-         e833nEK6J86MrznsaGYjENwQFUKhYUEmRfdSm145xMwZQxXnmZCYl5jV81j587bcgh6q
-         LYWti4FniPd8yz2ahINTRFFsn8Wz5Q/QwyhdHR28m16SIRjayV7yHqo/Pv+7khz37aON
-         JbRA==
-X-Gm-Message-State: AHPjjUgZCa5t2oXLTpffCWPhLCJEnLP3Wrt95eOoFn6uUb1ZlXzSdojv
-        hmbj8VXq0kakf+sKT1z8WaVF0DMV
-X-Google-Smtp-Source: AOwi7QBlLhSy6ZplXdVK1hXTj5q1hC84O7G+bX+J9bQGJiuDwWL+zKQRJytFT0XTXDrM8sa6IXjENA==
-X-Received: by 10.84.176.65 with SMTP id u59mr2835902plb.278.1505928698046;
-        Wed, 20 Sep 2017 10:31:38 -0700 (PDT)
+        bh=qutPxqIYhbBUptWi4QMCApX+hArEfjuoZJ4Mj9AuLaQ=;
+        b=hIgu8AwsREKWGcuFQRMim3WlBWj6cCe1zi7Rq4Xd1+5aFlFdzOX+xyu87oN5ih9yig
+         hnBYxtxd548UnabqqeEd0w5E58E2fkSHVamQ/ZN16OIrENzgXdrOV83V0MjTcDkbY9aW
+         qmawDRTMhv2IZU70eDMsHxagdr0tEiWJXXBGDu3dA+dG4TyxNkzKn1OcSH8HMF0BBtRv
+         QjyfZHwdVSukuT6BIMswRz1O8yC0ZAwGnUBbW9Glvx5h/VI0Z+9Hj0wxKPbCiMNdvVn4
+         Ks1TjI7c21X2uVz3g5znjCxZMsvY4wnpy+E/+jwLc5Oap1wIJXVo8peOtkBSyueF3ciM
+         nKOQ==
+X-Gm-Message-State: AHPjjUg5OaLBTCpJkfDo/2NudBYG2WounyM1s0Wtl48eQeLpg5MIO5jN
+        6sItoWTN99N1LM7TxSILrCU=
+X-Google-Smtp-Source: AOwi7QDqombLfRXJXQQVfGQWD0KbG8B77tUfXr2Wf9DKplB5crX23IDOeA9Yq67oEYwmnPt2X0V3uw==
+X-Received: by 10.98.11.19 with SMTP id t19mr2955533pfi.212.1505929576572;
+        Wed, 20 Sep 2017 10:46:16 -0700 (PDT)
 Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:da9:ac38:cdcf:de91])
-        by smtp.gmail.com with ESMTPSA id r90sm9537384pfb.183.2017.09.20.10.31.36
+        by smtp.gmail.com with ESMTPSA id x8sm8595154pff.104.2017.09.20.10.46.15
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 20 Sep 2017 10:31:36 -0700 (PDT)
-Date:   Wed, 20 Sep 2017 10:31:34 -0700
+        Wed, 20 Sep 2017 10:46:15 -0700 (PDT)
+Date:   Wed, 20 Sep 2017 10:46:13 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Andreas Schwab <schwab@linux-m68k.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2] for_each_string_list_item: avoid undefined behavior
- for empty list
-Message-ID: <20170920173134.GZ27425@aiede.mtv.corp.google.com>
-References: <cb2d4d71c7c1db452b86c8076c153cabe7384e28.1505490776.git.mhagger@alum.mit.edu>
- <20170915184323.GU27425@aiede.mtv.corp.google.com>
- <b8951886-feab-a87a-9683-3c155cfa98a8@alum.mit.edu>
- <b03c7b09-853f-a2ed-f73e-7d946c90cedb@gmail.com>
- <20170920023008.GB126984@aiede.mtv.corp.google.com>
- <xmqqd16mowig.fsf@gitster.mtv.corp.google.com>
- <20170920052705.GC126984@aiede.mtv.corp.google.com>
- <87vakd2v22.fsf@linux-m68k.org>
+To:     Ben Peart <peartben@gmail.com>
+Cc:     Ben Peart <benpeart@microsoft.com>, David.Turner@twosigma.com,
+        avarab@gmail.com, christian.couder@gmail.com, git@vger.kernel.org,
+        gitster@pobox.com, johannes.schindelin@gmx.de, pclouds@gmail.com,
+        peff@peff.net
+Subject: Re: [PATCH v6 09/12] split-index: disable the fsmonitor extension
+ when running the split index test
+Message-ID: <20170920174613.GA27425@aiede.mtv.corp.google.com>
+References: <20170610134026.104552-1-benpeart@microsoft.com>
+ <20170915192043.4516-1-benpeart@microsoft.com>
+ <20170915192043.4516-10-benpeart@microsoft.com>
+ <20170919204354.GG75068@aiede.mtv.corp.google.com>
+ <43c9d3b2-2895-adcb-6f77-b6967aacf9c8@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <87vakd2v22.fsf@linux-m68k.org>
+In-Reply-To: <43c9d3b2-2895-adcb-6f77-b6967aacf9c8@gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Andreas Schwab wrote:
-> On Sep 19 2017, Jonathan Nieder <jrnieder@gmail.com> wrote:
+Hi,
 
->> B. #define for_each_string_list_item(item, list) \
->> 	if (list->items) \
->> 		for (item = ...; ...; ... )
->>
->>    This breaks a caller like
->> 	if (foo)
->> 		for_each_string_list_item(item, list)
->> 			...
->> 	else
->> 		...
->>
->>    making it a non-starter.
+Ben Peart wrote:
+> On 9/19/2017 4:43 PM, Jonathan Nieder wrote:
+
+>> This feels to me like the wrong fix.  Wouldn't it be better for the
+>> test not to depend on the precise object ids?  See the "Tips for
+>> Writing Tests" section in t/README:
 >
-> That can be fixed with a dangling else.
+> I completely agree that a better fix would be to rewrite the test to
+> not hard code the SHA values.  I'm sure this will come to bite us
+> again as we discuss the migration to a different SHA algorithm.
 
-I believe the fix you're referring to is option C, from the same email
-you are replying to.  If not, please correct me.
+nit: the kind of change I'm proposing does not entail a full rewrite. :)
+
+The SHA migration aspect is true, but that's actually the least of my
+worries.  I intend to introduce a SHA1 test prereq that crazy tests
+which want to depend on the hash function can declare a dependency on.
+
+My actual worry is that tests hard-coding object ids are (1) hard to
+understand, as illustrated by my having no clue what these particular
+object ids refer to and (2) very brittle, since an object id changes
+whenever a timestamp or any of the history leading to an object
+changes.  They create a trap for anyone wanting to change the test
+later.  They are basically change detector tests, which is generally
+accepted to be a bad practice.
+
+> That said, I think fixing this correctly is outside the scope of
+> this patch series.  It has been written this way since it was
+> created back in 2014 (and patched in 2015 to hard code the V4 index
+> SHA).
+
+Fair enough.
+
+> If desired, this patch can simply be dropped from the series
+> entirely as I doubt anyone other than me will attempt to run it with
+> the fsmonitor extension turned on.
+
+*shrug*
+
+My motivations in the context of the review were:
+
+ * now that we noticed the problem, we have an opportunity to fix it!
+   (i.e. a fix would not have to be part of this series and would not
+   necessarily have to be written by you)
+
+ * if we include this non-fix, the commit message really needs to say
+   something about it.  Otherwise people are likely to cargo-cult it
+   in other contexts and make the problem worse.
 
 Thanks,
 Jonathan
