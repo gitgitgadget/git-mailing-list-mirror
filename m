@@ -2,113 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B9C420A28
-	for <e@80x24.org>; Wed, 20 Sep 2017 18:41:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 99D0020A29
+	for <e@80x24.org>; Wed, 20 Sep 2017 18:48:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751698AbdITSlB (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Sep 2017 14:41:01 -0400
-Received: from cloud.peff.net ([104.130.231.41]:44880 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751387AbdITSlB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Sep 2017 14:41:01 -0400
-Received: (qmail 7362 invoked by uid 109); 20 Sep 2017 18:41:01 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 20 Sep 2017 18:41:01 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15058 invoked by uid 111); 20 Sep 2017 18:41:37 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Wed, 20 Sep 2017 14:41:37 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Sep 2017 14:40:58 -0400
-Date:   Wed, 20 Sep 2017 14:40:58 -0400
-From:   Jeff King <peff@peff.net>
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Brandon Williams <bmwill@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2 13/21] packed_ref_cache: keep the `packed-refs` file
- mmapped if possible
-Message-ID: <20170920184058.w3tipgsz54ig7dm5@sigill.intra.peff.net>
-References: <cover.1505799700.git.mhagger@alum.mit.edu>
- <b32234e07a1bd1e60442a13d97d7c4e51edf3336.1505799700.git.mhagger@alum.mit.edu>
+        id S1751476AbdITSr6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Sep 2017 14:47:58 -0400
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:49237 "EHLO
+        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751367AbdITSr5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Sep 2017 14:47:57 -0400
+Received: by mail-pf0-f180.google.com with SMTP id l188so1962041pfc.6
+        for <git@vger.kernel.org>; Wed, 20 Sep 2017 11:47:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=PmzAQDRQ23AiClfpWmEQYl8L6o4SC+hGfx6cg4w5skk=;
+        b=uIU6haCv7IXMuGTsnp5RqbYhlHxEgJvUJJiOscMJw3T3QTLOeO/KU9yXDSDXW1v4ba
+         fhf57otd2n8ozZ00z7cGe0OaurTThZegT/6cr3UHy3nugIBFJHqC+Dpm7M2w0BnmaMAV
+         oUi2Ee6k/jZ8XCBkipbPVC7GZ2YdnkIr32L3N3tD1tMzaVQpP+YRAkowI+uvUr3q01eb
+         fC13LMh75lx8r2PCtKDzLUqwjrZyU1VsCZj8ixrYoiXfsGTYM3+xCJfpLNuSHwWVEDWD
+         ZDaDJ30UeHGMcYaV+eRIfqj5/azEWHdvmwzEj7WIAoZo1/ncqkDxeuB2I405Gc/cMM46
+         sU9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=PmzAQDRQ23AiClfpWmEQYl8L6o4SC+hGfx6cg4w5skk=;
+        b=RGjqbQ7KaUAQFPmNKa5sF0uxSGLzwLas/O7vNZif3GYQIyrkHg4zHcUoljvWB/hj6w
+         EBAke1njvWq5ta0fO6JLw18lJpqbuYOBPgtEC4im05qsqeN0MiIKN/jOPycT8aVhQ+HC
+         R2SSVrv61qgZaijg0ZIknggMnXobDK/b0HBAcR6dIjxVCPpuWbO0UrTlDcV92ot0sYu5
+         qUfnzYtysPdOdMf44ugKHDYDmv3ibHTNfHCeDUpjqxOIMnREg/4y4DeuMTSL0Eh7lgx/
+         aWrfIRtIQAWUptWOX+Hr418+WudUWZvvyRGIvejo1A40EbxHw2PFeY+g8zCovSev1gf/
+         RwOA==
+X-Gm-Message-State: AHPjjUgd34WP8md7MvlF6Q0e6Lv8LD8JV9MZPr7rnoL7wtRlbY9ms2Or
+        GQj1+rdRRZjxixRk8DFIc7I=
+X-Google-Smtp-Source: AOwi7QA7MrVZwn8W9vuO+g/MXKVNIgxbLw/afa4mkMCrsXmwTRgzvOuI/P/X8xPFhdO4nxZxRXvG9g==
+X-Received: by 10.84.252.144 with SMTP id y16mr3058853pll.113.1505933276838;
+        Wed, 20 Sep 2017 11:47:56 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:da9:ac38:cdcf:de91])
+        by smtp.gmail.com with ESMTPSA id w90sm9530954pfi.80.2017.09.20.11.47.55
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 20 Sep 2017 11:47:55 -0700 (PDT)
+Date:   Wed, 20 Sep 2017 11:47:53 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        kewillf@microsoft.com, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add t/helper/test-write-cache to .gitignore
+Message-ID: <20170920184753.GC27425@aiede.mtv.corp.google.com>
+References: <20170828200618.27569-1-jonathantanmy@google.com>
+ <20170828210939.GA71562@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <b32234e07a1bd1e60442a13d97d7c4e51edf3336.1505799700.git.mhagger@alum.mit.edu>
+In-Reply-To: <20170828210939.GA71562@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 19, 2017 at 08:22:21AM +0200, Michael Haggerty wrote:
+Brandon Williams wrote:
+> On 08/28, Jonathan Tan wrote:
 
-> Keep a copy of the `packed-refs` file contents in memory for as long
-> as a `packed_ref_cache` object is in use:
-> 
-> * If the system allows it, keep the `packed-refs` file mmapped.
-> 
-> * If not (either because the system doesn't support `mmap()` at all,
->   or because a file that is currently mmapped cannot be replaced via
->   `rename()`), then make a copy of the file's contents in
->   heap-allocated space, and keep that around instead.
-> 
-> We base the choice of behavior on a new build-time switch,
-> `MMAP_PREVENTS_DELETE`. By default, this switch is set for Windows
-> variants.
-> 
-> This whole change is still pointless, because we only read the
-> `packed-refs` file contents immediately after instantiating the
-> `packed_ref_cache`. But that will soon change.
+>> This new binary was introduced in commit 3921a0b ("perf: add test for
+>> writing the index", 2017-08-21), but a .gitignore entry was not added
+>> for it. Add that entry.
+>>
+>> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+>
+> Looks good to me
 
-The overall strategy for this compile-time knob makes sense, but one
-thing confused me:
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+as well.
 
-> +ifdef MMAP_PREVENTS_DELETE
-> +	BASIC_CFLAGS += -DMMAP_PREVENTS_DELETE
-> +else
-> +	ifdef USE_WIN32_MMAP
-> +		BASIC_CFLAGS += -DMMAP_PREVENTS_DELETE
-> +	endif
-> +endif
+I wonder if we can automate this a little.  Some thoughts:
 
-So setting the knob does what you'd expect. But if you don't set it,
-then we still auto-tweak it based on the USE_WIN32_MMAP knob. Do we need
-that? It seems like we set our new knob in config.mak.uname any time
-we'd set USE_WIN32_MMAP. So this only has an effect in two cases:
+ A. We could include a test that all the binaries named in
+    TEST_PROGRAMS_NEED_X are also named in t/helper/.gitignore.  That
+    way tests would fail if this ever falls out of date again.
 
- 1. You aren't on Windows, but you set USE_WIN32_MMAP yourself.
+ B. Even better would be if we could have /t/helper/test-* in
+    .gitignore.  E.g. if we rename test-*.c to *.c (e.g.
+    t/helper/ctype.c instead of t/helper/test-ctype.c), then the test
+    helper source file names would be easier to type and maintaining
+    this .gitignore would become a problem of the past.
 
- 2. You are on Windows, but you manually unset MMAP_PREVENTS_DELETE.
-
-I expect both cases are rare (and would probably involve somebody
-actively debugging these knobs). Probably it's a minor convenience in
-case 1, but in case 2 it would be actively confusing, I'd think.
-
-> +enum mmap_strategy {
-> +	/*
-> +	 * Don't use mmap() at all for reading `packed-refs`.
-> +	 */
-> +	MMAP_NONE,
-> +
-> +	/*
-> +	 * Can use mmap() for reading `packed-refs`, but the file must
-> +	 * not remain mmapped. This is the usual option on Windows,
-> +	 * where you cannot rename a new version of a file onto a file
-> +	 * that is currently mmapped.
-> +	 */
-> +	MMAP_TEMPORARY,
-
-I suspect you originally distinguished these cases so that NO_MMAP does
-not read into a fake-mmap buffer, followed by us copying it into another
-buffer. But AFAICT we handle the "NONE" and "TEMPORARY" cases exactly
-the same (by just doing a read_in_full() into our own buffer). Do we
-actually need separate strategies?
-
--Peff
+What do you think?
+Jonathan
