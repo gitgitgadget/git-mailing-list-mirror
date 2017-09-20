@@ -6,92 +6,93 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9A0FF20A2A
-	for <e@80x24.org>; Wed, 20 Sep 2017 20:25:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D9EA720281
+	for <e@80x24.org>; Wed, 20 Sep 2017 20:37:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751799AbdITUZz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Sep 2017 16:25:55 -0400
-Received: from cloud.peff.net ([104.130.231.41]:45134 "HELO cloud.peff.net"
+        id S1751583AbdITUhC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Sep 2017 16:37:02 -0400
+Received: from cloud.peff.net ([104.130.231.41]:45158 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751687AbdITUZz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Sep 2017 16:25:55 -0400
-Received: (qmail 12105 invoked by uid 109); 20 Sep 2017 20:25:55 -0000
+        id S1751228AbdITUhC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Sep 2017 16:37:02 -0400
+Received: (qmail 12624 invoked by uid 109); 20 Sep 2017 20:37:02 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 20 Sep 2017 20:25:55 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 20 Sep 2017 20:37:02 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16025 invoked by uid 111); 20 Sep 2017 20:26:32 -0000
+Received: (qmail 16156 invoked by uid 111); 20 Sep 2017 20:37:39 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Wed, 20 Sep 2017 16:26:32 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Wed, 20 Sep 2017 16:37:39 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Sep 2017 16:25:52 -0400
-Date:   Wed, 20 Sep 2017 16:25:52 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Sep 2017 16:37:00 -0400
+Date:   Wed, 20 Sep 2017 16:36:59 -0400
 From:   Jeff King <peff@peff.net>
 To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] revision: fix memory leaks with `struct cmdline_pathspec`
-Message-ID: <20170920202552.kkwhigmv7lq6cj3y@sigill.intra.peff.net>
+Subject: [PATCH] revision: replace "struct cmdline_pathspec" with argv_array
+Message-ID: <20170920203659.xqy76bg5nfabvbfx@sigill.intra.peff.net>
 References: <1505936846-2195-4-git-send-email-martin.agren@gmail.com>
+ <20170920202552.kkwhigmv7lq6cj3y@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1505936846-2195-4-git-send-email-martin.agren@gmail.com>
+In-Reply-To: <20170920202552.kkwhigmv7lq6cj3y@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 20, 2017 at 09:47:26PM +0200, Martin Ågren wrote:
+On Wed, Sep 20, 2017 at 04:25:52PM -0400, Jeff King wrote:
 
-> We don't free the array `prune_data.path` or the individual strings it
-> points to. Do so by introducing and using `free_cmdline_pathspec()`. To
-> be able to safely free the strings, always use `xstrdup()` when
-> assigning them. That does mean we allocate more memory than we used to,
-> but it also means it is clear who owns the strings and that we can stop
-> leaking those that we do allocate.
+> Isn't this whole thing just an argv_array, and this is argv_array_pushv?
+> We even NULL-terminate it manually later on!
+> 
+> So rather than increasing the line count by adding
+> free_cmdline_pathspec, I think we could actually _reduce_ it by
+> converting to an argv array, as below. And then adding in your free
+> would be one extra line.
 
-Hmm. From this description (and from looking at the patch), it seems
-like we could just skip the allocation.
+Here it is with a commit message, and that final free added.
 
-The missing piece of the puzzle is that sometimes we call
-append_prune_data() to append from argv, and sometimes we use
-read_pathspec_from_stdin().
+Sorry for stealing your patch, but I didn't want to suggest "couldn't
+you replace this with argv_array" without actually seeing if it was
+possible. At which point the patch was pretty much done.
 
-So we may literally have a mix-and-match of allocated and unallocated
-entries, and the only sane way to resolve that is by making them all
-allocated.
+-- >8 --
+Subject: [PATCH] revision: replace "struct cmdline_pathspec" with argv_array
 
-So I think this solves the problem, but I couldn't help notice...
+We assemble an array of strings in a custom struct,
+NULL-terminate the result, and then pass it to
+parse_pathspec().
 
-> @@ -1682,7 +1682,7 @@ static void append_prune_data(struct cmdline_pathspec *prune, const char **av)
->  {
->  	while (*av) {
->  		ALLOC_GROW(prune->path, prune->nr + 1, prune->alloc);
-> -		prune->path[prune->nr++] = *(av++);
-> +		prune->path[prune->nr++] = xstrdup(*(av++));
->  	}
+But then we never free the array or the individual strings
+(nor can we do the latter, as they are heap-allocated when
+they come from stdin but not when they come from the
+passed-in argv).
 
-Isn't this whole thing just an argv_array, and this is argv_array_pushv?
-We even NULL-terminate it manually later on!
+Let's swap this out for an argv_array. It does the same
+thing with fewer lines of code, and it's safe to call
+argv_array_clear() at the end to avoid a memory leak.
 
-So rather than increasing the line count by adding
-free_cmdline_pathspec, I think we could actually _reduce_ it by
-converting to an argv array, as below. And then adding in your free
-would be one extra line.
+Reported-by: Martin Ågren <martin.agren@gmail.com>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ revision.c | 39 +++++++++++----------------------------
+ 1 file changed, 11 insertions(+), 28 deletions(-)
 
 diff --git a/revision.c b/revision.c
-index 94a5e98525..5c58b3fb2b 100644
+index f9a90d71d2..1520f69d93 100644
 --- a/revision.c
 +++ b/revision.c
-@@ -20,6 +20,7 @@
- #include "cache-tree.h"
+@@ -21,6 +21,7 @@
  #include "bisect.h"
  #include "packfile.h"
+ #include "worktree.h"
 +#include "argv-array.h"
  
  volatile show_early_output_fn_t show_early_output;
  
-@@ -1612,31 +1613,15 @@ int handle_revision_arg(const char *arg_, struct rev_info *revs, int flags, unsi
+@@ -1672,31 +1673,15 @@ int handle_revision_arg(const char *arg_, struct rev_info *revs, int flags, unsi
  	return 0;
  }
  
@@ -127,7 +128,7 @@ index 94a5e98525..5c58b3fb2b 100644
  {
  	struct strbuf sb;
  	int seen_dashdash = 0;
-@@ -2201,10 +2186,9 @@ static void NORETURN diagnose_missing_default(const char *def)
+@@ -2286,10 +2271,9 @@ static void NORETURN diagnose_missing_default(const char *def)
  int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct setup_revision_opt *opt)
  {
  	int i, flags, left, seen_dashdash, read_from_stdin, got_rev_arg = 0, revarg_opt;
@@ -139,7 +140,7 @@ index 94a5e98525..5c58b3fb2b 100644
  	if (opt)
  		submodule = opt->submodule;
  
-@@ -2220,7 +2204,7 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+@@ -2305,7 +2289,7 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
  			argv[i] = NULL;
  			argc = i;
  			if (argv[i + 1])
@@ -148,7 +149,7 @@ index 94a5e98525..5c58b3fb2b 100644
  			seen_dashdash = 1;
  			break;
  		}
-@@ -2281,14 +2265,14 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+@@ -2366,14 +2350,14 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
  			for (j = i; j < argc; j++)
  				verify_filename(revs->prefix, argv[j], j == i);
  
@@ -165,7 +166,7 @@ index 94a5e98525..5c58b3fb2b 100644
  		/*
  		 * If we need to introduce the magic "a lone ':' means no
  		 * pathspec whatsoever", here is the place to do so.
-@@ -2303,10 +2287,8 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+@@ -2388,11 +2372,10 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
  		 *	call init_pathspec() to set revs->prune_data here.
  		 * }
  		 */
@@ -175,5 +176,10 @@ index 94a5e98525..5c58b3fb2b 100644
 -			       revs->prefix, prune_data.path);
 +			       revs->prefix, prune_data.argv);
  	}
++	argv_array_clear(&prune_data);
  
  	if (revs->def == NULL)
+ 		revs->def = opt ? opt->def : NULL;
+-- 
+2.14.1.1040.gcaf8795f39
+
