@@ -2,192 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC44720A28
-	for <e@80x24.org>; Wed, 20 Sep 2017 13:46:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9D7620A28
+	for <e@80x24.org>; Wed, 20 Sep 2017 13:50:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751551AbdITNqo (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Sep 2017 09:46:44 -0400
-Received: from smtprelay09.ispgateway.de ([134.119.228.115]:9672 "EHLO
-        smtprelay09.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751192AbdITNqn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Sep 2017 09:46:43 -0400
-Received: from [84.46.92.130] (helo=book.hvoigt.net)
-        by smtprelay09.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89)
-        (envelope-from <hvoigt@hvoigt.net>)
-        id 1dufKn-0006fB-EH; Wed, 20 Sep 2017 15:46:37 +0200
-Date:   Wed, 20 Sep 2017 15:46:33 +0200
-From:   Heiko Voigt <hvoigt@hvoigt.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH v2] add test for bug in git-mv for recursive submodules
-Message-ID: <20170920134633.GA89070@book.hvoigt.net>
-References: <20170817103413.GA52233@book.hvoigt.net>
- <CAGZ79kZhUO95oSEzARqXi3+dm5Ow5Jwm-O1adowh0nkbqHdhMw@mail.gmail.com>
- <20170818160603.GA69414@book.hvoigt.net>
- <CAGZ79kYNLo_3PfLTOE5wusTs6wgFXZLVH+qNZ-ovxGguhinHLg@mail.gmail.com>
- <20170915115021.GB76244@book.hvoigt.net>
- <xmqqlgleup78.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kaycuiFuB1m0SiyKoZ6UyEBCMiipYXkavN+NNyCZaY1=Q@mail.gmail.com>
+        id S1751499AbdITNuB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Sep 2017 09:50:01 -0400
+Received: from mout.web.de ([212.227.15.14]:65473 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751306AbdITNuA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Sep 2017 09:50:00 -0400
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0Me6Va-1dk8tD1TOY-00PrSZ; Wed, 20
+ Sep 2017 15:49:53 +0200
+Date:   Wed, 20 Sep 2017 15:49:52 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org, benpeart@microsoft.com,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v1 1/1] test-lint: echo -e (or -E) is not portable
+Message-ID: <20170920134952.GA1898@tor.lan>
+References: <ce17a042-91e4-bf84-d9e6-36a9e99f3644@web.de>
+ <20170917054318.28560-1-tboegi@web.de>
+ <20170919203714.GF75068@aiede.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <CAGZ79kaycuiFuB1m0SiyKoZ6UyEBCMiipYXkavN+NNyCZaY1=Q@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20170919203714.GF75068@aiede.mtv.corp.google.com>
 User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+X-Provags-ID: V03:K0:AD12kmzpJ4NUxDgOW5KT+on3gIYYNiYrHo1z3kqRPX7eK5qn2Cy
+ 0SiUdxN+wID4nU248fd8hNc5Yh/P6N642iYLJYf3mhuyrcVQX/WQT0mlsCzm6aeVy8+qg5P
+ 0+D40ykr5L7qn3bM4ZfYV/qc3Nx7IQZbRFJJUVFXz4PggHr50kDjiwyVgL/4slIPgZVAIDy
+ Dvh5ZOz3hxQhSGC7Tl8Zw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:O3RDBXSYJoI=:JDx6Anl50XoPQ8kR0q2xNS
+ XkyX4vW/9yBdht+CsZeqKdxoHtrh/ANLWCm57vMR7X/QiIV4laR0DyWw1upieUB2MhATCdArJ
+ ufYVHpvOOqgdbo89a8sIJJlGs5j2sC6NlUR18PeH5/FAwJJpnvELRmqLqgigTFdFdhxyX5n8o
+ g/DuHvXsFtP9yTVdeng3DNsrDa4z1QR41YAaLxTXzOlUkjaE1E3LYVOAuqgzjpYLUEaIo3uX2
+ DGb+vKdCRX/KiqzZJ2n+yjDyNF4oEE3ftm/p0K1pNusDLuilY9oV+UZob+plpwf86yJmunoAA
+ NMILUp9EAYBYq4W8h9oUy5cdntzoULDd2ozBkE7ChpyMEMLHNBGp7ac8ewvXHl22oTtyOva/G
+ KRWRawzqhAqxnCqTLyxu0QirFiNwyS6tYG7I+R+i1UDl00scmzP4cSZB0kIunZlOQXNbpbqwo
+ ERQlVbNuc26zA4ItuDkSCqg38P0epkbEs8W1ENw+RTYXcTl/+r3HxxO7iZmu/+dNO2Yd4Qem8
+ w/9jy9tmV1yJSVjHiA45ZfDZlqz/IZv0J7VEDCKjB74ZGUUfFu+C1ojpAOcATYa1sIuvL7Bxn
+ f6Kgp/Q5nzA0WEOZ4JxyKWAAQAsu50GCClJRxKDkt4BeTlL1N5pUXKc5Q3xIR8gitj2dhkNDa
+ zM3zs7N+kfYmsbHIEtxZnyr6/nQ9CDTS/29RPIoInVJn054/q3XbU3hk/Rpf0DLqMGrfuYP2D
+ pgIF9eUFzqdSdXVJGpQ2cuWYXjzldX8eYJkwIyePyteVExtGB6c1Mh126pTceOYR4fRZwdoWe
+ wwP0wBHMEEUoLkPbrJ+7s4a1KEkCQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 18, 2017 at 01:03:32PM -0700, Stefan Beller wrote:
-> >> Took a little while but here is a more clean patch creating individual
-> >> submodules for the nesting.
-> >>
-> >> Cheers Heiko
+On Tue, Sep 19, 2017 at 01:37:14PM -0700, Jonathan Nieder wrote:
+> Torsten Bögershausen <tboegi@web.de> wrote:
 > 
-> Thanks for writing this test!
-
-No worries. :)
-
-> > Thanks.  Stefan, does this look good to you now?
+> > Some implementations of `echo` support the '-e' option to enable
+> > backslash interpretation of the following string.
+> > As an addition, they support '-E' to turn it off.
 > 
-> Yes, though there are nits below.
+> nit: please wrap the commit message to a consistent line width.
 > 
-> > It is not quite clear which step is expected to fail with the
-> > current code by reading the test or the proposed log message.  Does
-> > "mv" refuse to work and we do not get to run "status", or does
-> > "status" report a failure, or do we fail well before that?
-> 
-> git-mv failing seems like a new possibility without incurring
-> another process spawn with the new repository object.
-> (Though then we could also just fix the recursed submodule)
-
-It is mv that fails to update everything necessary when using it with
-recursively nested submodules. So the git-mv command does not report a
-failure here. As an interim fix it could maybe report an error when
-encountering nested submodules but the real fix would be to teach it to
-recursively spawn the appropriate git-mv commands.
-
-> > The log message that only says "This does not work when ..." is not
-> > helpful in figuring it out, either.  Something like "This does not
-> > work and fails to update the paths for its configurations" or
-> > whatever that describes "what actually happens" (in contrast to
-> > "what ought to happen", which you described clearly) should be
-> > there.
+> > However, none of these are portable, POSIX doesn't even mention them,
+> > and many implementations don't support them.
 > >
-> > Description on how you happened to have discovered the issue feels a
-> > lot less relevant compared to that, and it is totally useless if it
-> > is unclear what the issue is in the first place.
-
-Sorry about being a bit brief here. How about dropping that information
-how I discovered the bug then and change the commit message to something
-like this:
-
-    add test for bug in git-mv for recursive submodules
-
-    When using git-mv with a submodule it will detect that and update
-    the paths for its configurations (.gitmodules, worktree and
-    gitfile). This does not work in case it encounters nested
-    submodules. In that case it only updates the configurations for the
-    submodule directly underneath the superproject and fails to update
-    the paths for the submodules nested more deeply. This in turn leads
-    to the symptom that git status reports that it can not chdir to the
-    nested submodule in its old location.
-
-    Lets add a test to document.
-
-?
-
-> >>  t/t7001-mv.sh | 25 +++++++++++++++++++++++++
-> >>  1 file changed, 25 insertions(+)
-> >>
-> >> diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
-> >> index e365d1ff77..cbc5fb37fe 100755
-> >> --- a/t/t7001-mv.sh
-> >> +++ b/t/t7001-mv.sh
-> >> @@ -491,4 +491,29 @@ test_expect_success 'moving a submodule in nested directories' '
-> >>       test_cmp actual expect
-> >>  '
-> >>
-> >> +test_expect_failure 'moving nested submodules' '
-> >> +     git commit -am "cleanup commit" &&
-> >> +     mkdir sub_nested_nested &&
-> >> +     (cd sub_nested_nested &&
+> > A check for '-n' is already done in check-non-portable-shell.pl,
+> > extend it to cover '-n', '-e' or '-E-'
+> >
+> > Signed-off-by: Torsten Bögershausen <tboegi@web.de>
+> > ---
+> >  t/check-non-portable-shell.pl | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> We seem to have different styles for nested shell. I prefer
+> An excellent change.  Thanks for noticing and fixing this.
 > 
->   outside command &&
->   (
->       first nested command here &&
->       ...
-> 
-> as that aligns indentation to the nesting level. I have seen
-> the style you use a lot in the  test suite, and we do not have
-> a guideline in Documentation/CodingGuidelines, so I do not
-> complain too loudly. ;)
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-Yeah we have some different styles it seems ;) So here some reasoning
-behind my style:
+Thanks for the review.
+Junio, if you wouldn't mind to squash that in, 
+another fix is needed as well(trailing '-' after '-E') :
 
-I actually would agree on your style if 'first nested command' was any
-arbitrary command but when I use my style it is always when I use a
-nested shell for changing into some directory, doing something there and
-then being able to return to the previous directory by closing the nested
-shell. So for me the 'cd somewhere' belongs to the brackets similarly
-like a condition definition belongs to the if it is used with.
+s/'-n', '-e' or '-E-'/'-n', '-e' or '-E'
+                   ^
+                   
 
-> >> +             touch nested_level2 &&
-> >> +             git init &&
-> >> +             git add . &&
-> >> +             git commit -m "nested level 2"
-> >> +     ) &&
-> >> +     mkdir sub_nested &&
-> >> +     (cd sub_nested &&
-> >> +             touch nested_level1 &&
-> >> +             git init &&
-> >> +             git add . &&
-> >> +             git commit -m "nested level 1"
-> >> +             git submodule add ../sub_nested_nested &&
-> >> +             git commit -m "add nested level 2"
-> >> +     ) &&
-> >> +     git submodule add ./sub_nested nested_move &&
-> >> +     git commit -m "add nested_move" &&
-> >> +     git submodule update --init --recursive &&
-> 
-> So far a nice setup!
-
-Thanks.
-
-> >> +     git mv nested_move sub_nested_moved &&
-> 
-> This is the offending command that produces the bug,
-> as it will break most subsequent commands, such as
-
-Yes.
-
-> >> +     git status
-> 
-> git-status is one of the basic commands. Without
-> status to function, I think it is hard to recover your repo without
-> a lot of in-depth knowledge of Git (submodules).
-> 
-> I wonder if git-status should complain more gracefully
-> and fallback to one of --ignore-submodules={dirty, all},
-> that actually still works.
-> 
-> Maybe we could introduce a new default mode for this
-> flag, that is "none-except-on-error", though this sounds
-> as if we're fixing symptoms instead of the root cause.
-
-I think we should rather fix the root cause. For me git-mv is actually
-breaking the repository and as described above one possible interim
-solution for me would be for 'git-mv' to error out and tell the user
-that it does currently not work on recursively nested submodules.
-
-Cheers Heiko
