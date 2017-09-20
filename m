@@ -2,127 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F57320A2A
-	for <e@80x24.org>; Wed, 20 Sep 2017 17:46:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D971120A2A
+	for <e@80x24.org>; Wed, 20 Sep 2017 18:27:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751361AbdITRqS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Sep 2017 13:46:18 -0400
-Received: from mail-pg0-f51.google.com ([74.125.83.51]:49919 "EHLO
-        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750938AbdITRqR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Sep 2017 13:46:17 -0400
-Received: by mail-pg0-f51.google.com with SMTP id m30so2080008pgn.6
-        for <git@vger.kernel.org>; Wed, 20 Sep 2017 10:46:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=qutPxqIYhbBUptWi4QMCApX+hArEfjuoZJ4Mj9AuLaQ=;
-        b=TqNz+ehTlUBqclMy1Z+5djqLp1/Q9QgjVSqzaFXFxdanFfMjJfFd/xP6/zpA4CcMFi
-         pjTe1fI1uLN2fUEjdxwpcTlLh4KVtuZ0vqkB/Hwxza6XQvsJKMEdR2qnj4OPoH/lB0Lt
-         8I1OAP2SVlIKf62HaGFtdFDlWs+rcO4bL1nbDQSxUNORWaQ9b9qJgLW86N0OrEGjiQwQ
-         IVokl5P0RITyGjQxcdLdOzOx5nNi8Z4SXsAcD9YyWIm+ftGcrbTZsIVjlUhzz7XZieZ1
-         1cxvmh22rV8E+AQH7pq4pn/vXUhgQjW2o88CS/bza/XhnTg3r3VTpl8Y3qKq9Wr0+Chm
-         g6Nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=qutPxqIYhbBUptWi4QMCApX+hArEfjuoZJ4Mj9AuLaQ=;
-        b=hIgu8AwsREKWGcuFQRMim3WlBWj6cCe1zi7Rq4Xd1+5aFlFdzOX+xyu87oN5ih9yig
-         hnBYxtxd548UnabqqeEd0w5E58E2fkSHVamQ/ZN16OIrENzgXdrOV83V0MjTcDkbY9aW
-         qmawDRTMhv2IZU70eDMsHxagdr0tEiWJXXBGDu3dA+dG4TyxNkzKn1OcSH8HMF0BBtRv
-         QjyfZHwdVSukuT6BIMswRz1O8yC0ZAwGnUBbW9Glvx5h/VI0Z+9Hj0wxKPbCiMNdvVn4
-         Ks1TjI7c21X2uVz3g5znjCxZMsvY4wnpy+E/+jwLc5Oap1wIJXVo8peOtkBSyueF3ciM
-         nKOQ==
-X-Gm-Message-State: AHPjjUg5OaLBTCpJkfDo/2NudBYG2WounyM1s0Wtl48eQeLpg5MIO5jN
-        6sItoWTN99N1LM7TxSILrCU=
-X-Google-Smtp-Source: AOwi7QDqombLfRXJXQQVfGQWD0KbG8B77tUfXr2Wf9DKplB5crX23IDOeA9Yq67oEYwmnPt2X0V3uw==
-X-Received: by 10.98.11.19 with SMTP id t19mr2955533pfi.212.1505929576572;
-        Wed, 20 Sep 2017 10:46:16 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:da9:ac38:cdcf:de91])
-        by smtp.gmail.com with ESMTPSA id x8sm8595154pff.104.2017.09.20.10.46.15
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 20 Sep 2017 10:46:15 -0700 (PDT)
-Date:   Wed, 20 Sep 2017 10:46:13 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     Ben Peart <benpeart@microsoft.com>, David.Turner@twosigma.com,
-        avarab@gmail.com, christian.couder@gmail.com, git@vger.kernel.org,
-        gitster@pobox.com, johannes.schindelin@gmx.de, pclouds@gmail.com,
-        peff@peff.net
-Subject: Re: [PATCH v6 09/12] split-index: disable the fsmonitor extension
- when running the split index test
-Message-ID: <20170920174613.GA27425@aiede.mtv.corp.google.com>
-References: <20170610134026.104552-1-benpeart@microsoft.com>
- <20170915192043.4516-1-benpeart@microsoft.com>
- <20170915192043.4516-10-benpeart@microsoft.com>
- <20170919204354.GG75068@aiede.mtv.corp.google.com>
- <43c9d3b2-2895-adcb-6f77-b6967aacf9c8@gmail.com>
+        id S1751365AbdITS1l (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Sep 2017 14:27:41 -0400
+Received: from cloud.peff.net ([104.130.231.41]:44846 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751024AbdITS1l (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Sep 2017 14:27:41 -0400
+Received: (qmail 6722 invoked by uid 109); 20 Sep 2017 18:27:35 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 20 Sep 2017 18:27:35 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14953 invoked by uid 111); 20 Sep 2017 18:28:12 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Wed, 20 Sep 2017 14:28:12 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Sep 2017 14:27:33 -0400
+Date:   Wed, 20 Sep 2017 14:27:33 -0400
+From:   Jeff King <peff@peff.net>
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Brandon Williams <bmwill@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2 08/21] read_packed_refs(): read references with
+ minimal copying
+Message-ID: <20170920182732.wy6bojeaonpxb3mc@sigill.intra.peff.net>
+References: <cover.1505799700.git.mhagger@alum.mit.edu>
+ <597241da13f62d51fefd3396bfbab22a8f633a56.1505799700.git.mhagger@alum.mit.edu>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <43c9d3b2-2895-adcb-6f77-b6967aacf9c8@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <597241da13f62d51fefd3396bfbab22a8f633a56.1505799700.git.mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Tue, Sep 19, 2017 at 08:22:16AM +0200, Michael Haggerty wrote:
 
-Ben Peart wrote:
-> On 9/19/2017 4:43 PM, Jonathan Nieder wrote:
+> Instead of copying data from the `packed-refs` file one line at time
+> and then processing it, process the data in place as much as possible.
+> 
+> Also, instead of processing one line per iteration of the main loop,
+> process a reference line plus its corresponding peeled line (if
+> present) together.
+> 
+> Note that this change slightly tightens up the parsing of the
+> `parse-ref` file. Previously, the parser would have accepted multiple
 
->> This feels to me like the wrong fix.  Wouldn't it be better for the
->> test not to depend on the precise object ids?  See the "Tips for
->> Writing Tests" section in t/README:
->
-> I completely agree that a better fix would be to rewrite the test to
-> not hard code the SHA values.  I'm sure this will come to bite us
-> again as we discuss the migration to a different SHA algorithm.
+s/parse-ref/packed-refs/, I assume
 
-nit: the kind of change I'm proposing does not entail a full rewrite. :)
+The patch itself looks good, though I did notice an interesting tangent.
 
-The SHA migration aspect is true, but that's actually the least of my
-worries.  I intend to introduce a SHA1 test prereq that crazy tests
-which want to depend on the hash function can declare a dependency on.
+> +		if (eof - pos < GIT_SHA1_HEXSZ + 2 ||
+> +		    parse_oid_hex(p, &oid, &p) ||
+> +		    !isspace(*p++))
+> +			die_invalid_line(refs->path, pos, eof - pos);
 
-My actual worry is that tests hard-coding object ids are (1) hard to
-understand, as illustrated by my having no clue what these particular
-object ids refer to and (2) very brittle, since an object id changes
-whenever a timestamp or any of the history leading to an object
-changes.  They create a trap for anyone wanting to change the test
-later.  They are basically change detector tests, which is generally
-accepted to be a bad practice.
+I wondered why you didn't just check the output of parse_oid_hex(), and
+included the length check (since in the long run we'd like to get rid of
+uses of the static GIT_SHA1_HEXSZ macro). I imagine the answer is that
+this is an mmap'd buffer, and we can't guarantee that parse_oid_hex()
+wouldn't walk off the end of it.
 
-> That said, I think fixing this correctly is outside the scope of
-> this patch series.  It has been written this way since it was
-> created back in 2014 (and patched in 2015 to hard code the V4 index
-> SHA).
+That's fine for now, but I suspect it may become a problem when we move
+to having a second hash function with a different length. You can't just
+say "it must have as many bytes as the longest hash", because of course
+we could have the shorter hash at the end of the buffer. But we also
+can't say "it must have as many bytes as the shortest hash", because if
+the content implies it's a longer hash, we'd read off the end of the
+buffer.
 
-Fair enough.
+I think in the long run we will need a parse_oid_hex() function that
+takes a ptr/len (or start/end) pair.
 
-> If desired, this patch can simply be dropped from the series
-> entirely as I doubt anyone other than me will attempt to run it with
-> the fsmonitor extension turned on.
+Sorry, that got a bit off-topic. I don't think there's anything to be
+done now in your series. It just raises an interesting question for
+people working on the hash conversion stuff. +cc brian as an FYI.
 
-*shrug*
-
-My motivations in the context of the review were:
-
- * now that we noticed the problem, we have an opportunity to fix it!
-   (i.e. a fix would not have to be part of this series and would not
-   necessarily have to be written by you)
-
- * if we include this non-fix, the commit message really needs to say
-   something about it.  Otherwise people are likely to cargo-cult it
-   in other contexts and make the problem worse.
-
-Thanks,
-Jonathan
+-Peff
