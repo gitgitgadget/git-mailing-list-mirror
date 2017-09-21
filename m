@@ -2,139 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ECCA820281
-	for <e@80x24.org>; Thu, 21 Sep 2017 00:06:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A5147202A5
+	for <e@80x24.org>; Thu, 21 Sep 2017 00:24:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751796AbdIUAGD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Sep 2017 20:06:03 -0400
-Received: from mail-qk0-f173.google.com ([209.85.220.173]:49599 "EHLO
-        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751663AbdIUAGC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Sep 2017 20:06:02 -0400
-Received: by mail-qk0-f173.google.com with SMTP id u67so4333578qkg.6
-        for <git@vger.kernel.org>; Wed, 20 Sep 2017 17:06:02 -0700 (PDT)
+        id S1751959AbdIUAYt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Sep 2017 20:24:49 -0400
+Received: from mail-pf0-f178.google.com ([209.85.192.178]:56792 "EHLO
+        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751680AbdIUAYs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Sep 2017 20:24:48 -0400
+Received: by mail-pf0-f178.google.com with SMTP id g65so2346760pfe.13
+        for <git@vger.kernel.org>; Wed, 20 Sep 2017 17:24:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=NmVjiXbRnSF+X+/aAHJkhaNPAD7oYBc1vOrms3EaIEg=;
-        b=s5fSzV2FYeCtTZCvwKDLUUTNHlkafNeyVUSlTwWM+QtpuFBrLMJVach+TkrT0b8KiT
-         L163C20QTEXXEoIeJVw8Csa87UqiZG1O38a/NH38JaYCwl5vqeQJtIA5x3OY1JCR7bMp
-         0qNFiVyCKGrT7Jp7T7zbbX8ZbN/Arqppzl6S2PkzLRBl8Z4XAtFab8/n4l4zR/TRYzPD
-         0eqzNscN7yvonAmqUYEXGnHfAmBDWh2SVwVj7jKdizrnur15Q4+tNrIlOMOV9+QzqjgI
-         VJDKJH/etu2/GjHScFtC9UywrKvvj/FFsJ07hDiKhV/llHuUvmuwRZWetWhdT/oiEM4J
-         t+pA==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Y7PFDwhQkn5AAw0ULAj3tj33QyZgy4Sk9gTefZoj1rk=;
+        b=mU7O/px8wlucnIemDDMKaLTguk1lL94go3WDpsmAw57sgideiVO3mCgV+ZojWMjx7W
+         B6K0C4THDzgeivqawefDcA5h1o4NXBstWhzjEV2vmaFDxUkck7tI372VczPiYK+xz7Jm
+         Hosfko8FIv29ACqKOY69VQIl+QqJvcL8KGNLqXI6jjvgG9QOEUPRLcGkzdj5hNXMqMn4
+         5PLoyu3I1aOnBbRqyiDN6duRN5+CZVCodvkZ3IyllkCxDJCe2ffyPTSUneYoXQY/qTXu
+         GqRan1JTTP/GQffOPTOzHUVnEUatqfNyUlJBifurSdUCSVq8rCTDVx9rpqwXKCmwHsn0
+         TI1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=NmVjiXbRnSF+X+/aAHJkhaNPAD7oYBc1vOrms3EaIEg=;
-        b=AhfADY0kHeXbtGq3nMrBxI/lHVtllddY+Uo8J5Al/w86VpFS4I06WTgc/HOEH8RZo0
-         d/JzH2Fn29OMtBflQLNcX8Y7UN2v9WxZ204a82n4Em+WuV3zfraz/6Cxzf5s6ZYm7iBE
-         2BattFBevlPT8Va+Je5U7jtNSD1mLYTVyNJM6kJEhcROeLZlaSBbm07BUCGHiMECB0S1
-         eMnTdgkXaNHbGq61AWU2wQiI/cWR95+Dp74lQ39u6NeZ0tNCuc93HKOFS7uOnKkoIFuq
-         fXslHP1TTJPKVEqhVhVDIGNTaV8Bbo+fvypKmYNJWBhNHuGVvdSRxZLLJrYAt5gtlW4r
-         Rgdw==
-X-Gm-Message-State: AHPjjUhWNCo0zpv1yqQzuZ8NOhUobVGUsWs+cEALWWIa3Tw8soNJs330
-        X3qiOYoXvdNYg3RnSf/1PRk=
-X-Google-Smtp-Source: AOwi7QBrdPXsODUFWTeRUbuMe9aXaa2L8InB8ftULz/KiN7Nksea0yY41KVC/aG1VXBmkr+WWHYbdQ==
-X-Received: by 10.233.237.7 with SMTP id c7mr662280qkg.69.1505952362071;
-        Wed, 20 Sep 2017 17:06:02 -0700 (PDT)
-Received: from [192.168.1.13] ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id m29sm104283qtk.58.2017.09.20.17.06.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 20 Sep 2017 17:06:00 -0700 (PDT)
-Subject: Re: [PATCH v6 09/12] split-index: disable the fsmonitor extension
- when running the split index test
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Ben Peart <benpeart@microsoft.com>, David.Turner@twosigma.com,
-        avarab@gmail.com, christian.couder@gmail.com, git@vger.kernel.org,
-        gitster@pobox.com, johannes.schindelin@gmx.de, pclouds@gmail.com,
-        peff@peff.net
-References: <20170610134026.104552-1-benpeart@microsoft.com>
- <20170915192043.4516-1-benpeart@microsoft.com>
- <20170915192043.4516-10-benpeart@microsoft.com>
- <20170919204354.GG75068@aiede.mtv.corp.google.com>
- <43c9d3b2-2895-adcb-6f77-b6967aacf9c8@gmail.com>
- <20170920174613.GA27425@aiede.mtv.corp.google.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <ee8157e0-1f82-2384-3742-1dd00ea4b58c@gmail.com>
-Date:   Wed, 20 Sep 2017 20:05:59 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Y7PFDwhQkn5AAw0ULAj3tj33QyZgy4Sk9gTefZoj1rk=;
+        b=tRa86C4Sl22hAHlOIlnOeC0UBwZ6gBsAOknR9W3X2oa4GbmbQn6xGJrGIO3qFmHiIe
+         tXnI1bywsqBAzyFHEcqTtXcnUxLo/0401C2Zzl+QgCvkxOwj3yuNnAt+nTOOgnbjHJ7D
+         QjmnEywPjhWvDhyrrmxpvFBsjzPuISM71JvxoE3jQPDrkE3qk+JF23OgiRlqnZllvUM8
+         YkfIsVf9/Tv7ZvU7ZsN5jr2f2rxSP5Q0nOFUXI2gJfF+JXUq1ZpjctHLjIKX6EwArXLk
+         9stloxrUiLMxqSuav2yurXxUMnFYCqnfkW16VuRiLpWjcFcXeuCO20O8nshRabiwcV0T
+         rjPQ==
+X-Gm-Message-State: AHPjjUh5Ldext5tUJn8Q9//s9ikd/WpGvzMQdc0BZKxLmk2kt7XM5IYU
+        YsZv7OiTMDQNv1ULG4UE86wV9A==
+X-Google-Smtp-Source: AOwi7QAIxO2Asj0doqhMP2Om4oZnewg7J/NYMHxAH3M+sTu4HWy3HDy1y0+VXuyOqy+3lcoHB3VIZQ==
+X-Received: by 10.159.204.140 with SMTP id t12mr3809394plo.192.1505953487673;
+        Wed, 20 Sep 2017 17:24:47 -0700 (PDT)
+Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:9912:5681:f7d0:a00c])
+        by smtp.gmail.com with ESMTPSA id z69sm141223pfl.86.2017.09.20.17.24.47
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 20 Sep 2017 17:24:47 -0700 (PDT)
+Date:   Wed, 20 Sep 2017 17:24:43 -0700
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net, sbeller@google.com,
+        gitster@pobox.com, jrnieder@gmail.com, bturner@atlassian.com,
+        git@jeffhostetler.com
+Subject: Re: [PATCH 3/8] daemon: recognize hidden request arguments
+Message-ID: <20170920172443.6b42c9ba@twelve2.svl.corp.google.com>
+In-Reply-To: <20170913215448.84674-4-bmwill@google.com>
+References: <20170913215448.84674-1-bmwill@google.com>
+        <20170913215448.84674-4-bmwill@google.com>
+X-Mailer: Claws Mail 3.9.3 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-In-Reply-To: <20170920174613.GA27425@aiede.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, 13 Sep 2017 14:54:43 -0700
+Brandon Williams <bmwill@google.com> wrote:
 
+> A normal request to git-daemon is structured as
+> "command path/to/repo\0host=..\0" and due to a bug in an old version of
+> git-daemon 73bb33a94 (daemon: Strictly parse the "extra arg" part of the
+> command, 2009-06-04) we aren't able to place any extra args (separated
+> by NULs) besides the host.
+> 
+> In order to get around this limitation teach git-daemon to recognize
+> additional request arguments hidden behind a second NUL byte.  Requests
+> can then be structured like:
+> "command path/to/repo\0host=..\0\0version=1\0key=value\0".  git-daemon
+> can then parse out the extra arguments and set 'GIT_PROTOCOL'
+> accordingly.
 
-On 9/20/2017 1:46 PM, Jonathan Nieder wrote:
-> Hi,
-> 
-> Ben Peart wrote:
->> On 9/19/2017 4:43 PM, Jonathan Nieder wrote:
-> 
->>> This feels to me like the wrong fix.  Wouldn't it be better for the
->>> test not to depend on the precise object ids?  See the "Tips for
->>> Writing Tests" section in t/README:
->>
->> I completely agree that a better fix would be to rewrite the test to
->> not hard code the SHA values.  I'm sure this will come to bite us
->> again as we discuss the migration to a different SHA algorithm.
-> 
-> nit: the kind of change I'm proposing does not entail a full rewrite. :)
-> 
-> The SHA migration aspect is true, but that's actually the least of my
-> worries.  I intend to introduce a SHA1 test prereq that crazy tests
-> which want to depend on the hash function can declare a dependency on.
-> 
-> My actual worry is that tests hard-coding object ids are (1) hard to
-> understand, as illustrated by my having no clue what these particular
-> object ids refer to and (2) very brittle, since an object id changes
-> whenever a timestamp or any of the history leading to an object
-> changes.  They create a trap for anyone wanting to change the test
-> later.  They are basically change detector tests, which is generally
-> accepted to be a bad practice.
-> 
->> That said, I think fixing this correctly is outside the scope of
->> this patch series.  It has been written this way since it was
->> created back in 2014 (and patched in 2015 to hard code the V4 index
->> SHA).
-> 
-> Fair enough.
-> 
->> If desired, this patch can simply be dropped from the series
->> entirely as I doubt anyone other than me will attempt to run it with
->> the fsmonitor extension turned on.
-> 
-> *shrug*
-> 
-> My motivations in the context of the review were:
-> 
->   * now that we noticed the problem, we have an opportunity to fix it!
->     (i.e. a fix would not have to be part of this series and would not
->     necessarily have to be written by you)
-> 
->   * if we include this non-fix, the commit message really needs to say
->     something about it.  Otherwise people are likely to cargo-cult it
->     in other contexts and make the problem worse.
-> 
+A test in this patch (if possible) would be nice, but it is probably
+clearer to test this when one of the commands (e.g. upload-pack) is
+done. Could a test be added to the next patch to verify (using
+GIT_TRACE_PACKET, maybe) that the expected strings are sent? Then
+mention in this commit message that this will be tested in the next
+patch too.
 
-I'll update the commit message to indicate this is a temporary 
-workaround until the underlying hard coded SHA issue is fixed.
+> @@ -574,7 +583,7 @@ static void canonicalize_client(struct strbuf *out, const char *in)
+>  /*
+>   * Read the host as supplied by the client connection.
+>   */
+> -static void parse_host_arg(struct hostinfo *hi, char *extra_args, int buflen)
+> +static char *parse_host_arg(struct hostinfo *hi, char *extra_args, int buflen)
+>  {
+>  	char *val;
+>  	int vallen;
+> @@ -602,6 +611,39 @@ static void parse_host_arg(struct hostinfo *hi, char *extra_args, int buflen)
+>  		if (extra_args < end && *extra_args)
+>  			die("Invalid request");
+>  	}
+> +
+> +	return extra_args;
+> +}
+> +
+> +static void parse_extra_args(struct argv_array *env, const char *extra_args,
+> +			     int buflen)
+> +{
+> +	const char *end = extra_args + buflen;
+> +	struct strbuf git_protocol = STRBUF_INIT;
+> +
+> +	for (; extra_args < end; extra_args += strlen(extra_args) + 1) {
+> +		const char *arg = extra_args;
+> +
+> +		/*
+> +		 * Parse the extra arguments, adding most to 'git_protocol'
+> +		 * which will be used to set the 'GIT_PROTOCOL' envvar in the
+> +		 * service that will be run.
+> +		 *
+> +		 * If there ends up being a particular arg in the future that
+> +		 * git-daemon needs to parse specificly (like the 'host' arg)
+> +		 * then it can be parsed here and not added to 'git_protocol'.
+> +		 */
+> +		if (*arg) {
+> +			if (git_protocol.len > 0)
+> +				strbuf_addch(&git_protocol, ':');
+> +			strbuf_addstr(&git_protocol, arg);
+> +		}
+> +	}
+> +
+> +	if (git_protocol.len > 0)
+> +		argv_array_pushf(env, GIT_PROTOCOL_ENVIRONMENT "=%s",
+> +				 git_protocol.buf);
+> +	strbuf_release(&git_protocol);
+>  }
 
-> Thanks,
-> Jonathan
-> 
+I would rewrite this with parse_extra_args() calling parse_host_arg()
+instead (right now, you have 2 functions with 2 different meanings of
+"extra_args"). If you want to keep this arrangement, though, add a
+documentation comment about the meaning of the return value of
+parse_host_arg().
