@@ -2,106 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2124F202A5
-	for <e@80x24.org>; Thu, 21 Sep 2017 21:56:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1848920A26
+	for <e@80x24.org>; Thu, 21 Sep 2017 22:26:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751792AbdIUVz7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Sep 2017 17:55:59 -0400
-Received: from mail-pg0-f46.google.com ([74.125.83.46]:50679 "EHLO
-        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751763AbdIUVz6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Sep 2017 17:55:58 -0400
-Received: by mail-pg0-f46.google.com with SMTP id p5so4237912pgn.7
-        for <git@vger.kernel.org>; Thu, 21 Sep 2017 14:55:58 -0700 (PDT)
+        id S1751847AbdIUW0s (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Sep 2017 18:26:48 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:37991 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751728AbdIUW0r (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Sep 2017 18:26:47 -0400
+Received: by mail-wr0-f194.google.com with SMTP id p37so3804840wrb.5
+        for <git@vger.kernel.org>; Thu, 21 Sep 2017 15:26:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=RLs32gFLugPUWESz/5afdrt01NIRdEfJK7AyCXHz/bU=;
-        b=RRdRcQoX2dS1HeDIrzWi69oN91c9kbfWLwt0AFCzU8GIjm1afJAW59ew4CLFhNw9mj
-         7IVrVgTn0lFj1k+g6Dm/foyMWJnwN3lZzTiM3lpGZZiolmv01Ds2KmdJECe/GxYb+QCX
-         6R+5H4YywhGltVWGpljJ7LlFEl0nh5VlWfTNWAslK2MlgMPh09oqX3MaT7kow8wcKNW0
-         GCQR4sy3N5Ifgbhx8r1Mv5zHQl/Ii4Nfg+Y5FR9v9hdnSZRgg9ITSIRYgt4SHa17Eisq
-         to8QbfjDnUhnLyNMV7DhkHQDWpbUpRl131SEidK2VaT6xysqelSkZc/tUDWoT4/lSNMt
-         t7vQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=FudH9HdFk9XNA2hOLsNnznuR2s0xs8LGSL36+ybqE8Q=;
+        b=UvX+nkyA/5ln6W1WFwGB7/qccHcn+CkZRfLgzyaFENbjLmvDdq2AaVGufVrVcyD3Jv
+         0u3/5dILDmKlaLRhXY4sb6VM3A3H+xyjPE/ZPGIbSuS6i7IdXPFUnhQkkKlIcONYrbWK
+         hb/7Iwbd3t5Sw7ByLZ1ZkqP8IuJFdvbihe6TkkLD5N+aD9R6CUbqfbCa0s46BF1eRunU
+         LwvnnmEHLOKjZzn0HbgftupP1PRx0KwXzyQ5H2wqCjqUO+JG3qWdjPJFsKWa9E8iXZLe
+         z44RyrWHETerHaG3hhGzb3BBv9tZ33OjJPOX5xvMLLSQLOVPsvID7w4n20jeDgJdQeyI
+         iiFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=RLs32gFLugPUWESz/5afdrt01NIRdEfJK7AyCXHz/bU=;
-        b=lMCUMwHAHQH3QS1kkKDXjIqmIvAdG2gixe2Qq1Piunzy60y3hZRo4QfneAo99UsCgE
-         UCoDJQUgSw5pzvpr5bVLKqYPxnMFJ52YPe88ipFphOeSrw/+KuCXHrglpXbn6FQ22YNz
-         C7GVp3mGZ07lY9+w6L4BKAldUT6tLAYpBCq1miMpUcCyNe3uYJAndWSRnvaQQL+s7GVQ
-         GeAzdT7srLI+PQTEbE64cbVSFBljVQmvFjsM6czK+LhVN2T6INeWkb9VwrnlugubPBLc
-         TWFZ0gT6Jz2KoDew515YTunj9kZgImArCDR3DDarYmo+BDRq0x/enX/8hhWRx3y5RlPp
-         zVhA==
-X-Gm-Message-State: AHPjjUgXDz/7niXBDjv15yQ8sfs5I0DetkkNJ0k82Xd2F0qCTbYmDmfS
-        ezpu9+vtqtNnycIG17ZpsBxPog==
-X-Google-Smtp-Source: AOwi7QAfMV3pjOR1yII8c2EX6/YA6Tx1WL8n5DHNnaEiqxSOfX2qCEgnSiy6Y80WJwRra+loaVNDcA==
-X-Received: by 10.101.78.131 with SMTP id b3mr7155255pgs.28.1506030957768;
-        Thu, 21 Sep 2017 14:55:57 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:1986:3ebf:8c68:2a02])
-        by smtp.gmail.com with ESMTPSA id c2sm5662909pgq.61.2017.09.21.14.55.56
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 21 Sep 2017 14:55:56 -0700 (PDT)
-Date:   Thu, 21 Sep 2017 14:55:55 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, peff@peff.net, sbeller@google.com,
-        gitster@pobox.com, jrnieder@gmail.com, bturner@atlassian.com,
-        git@jeffhostetler.com
-Subject: Re: [PATCH 3/8] daemon: recognize hidden request arguments
-Message-ID: <20170921215555.GA77641@google.com>
-References: <20170913215448.84674-1-bmwill@google.com>
- <20170913215448.84674-4-bmwill@google.com>
- <20170920172443.6b42c9ba@twelve2.svl.corp.google.com>
- <20170920173120.2731e761@twelve2.svl.corp.google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170920173120.2731e761@twelve2.svl.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=FudH9HdFk9XNA2hOLsNnznuR2s0xs8LGSL36+ybqE8Q=;
+        b=aTsItpPqvLR91T6yo5ICiZGvHVcDr0noGNdmSWdA05Iw+vCkR3rGrmEqpbJdlCegTf
+         GCW51hcSvax3ECJ+gNDqe+kK13O9MfRaecJsRIWU5FxmH6V26T6lYzKzj642W31Tx2y2
+         ZLY4iasfD+fufdKPWWYwFKIPdSAP+9VIRzD8rN6iCU2AB0JBR917Y2a+hNttfIPzKfAo
+         Wxa1FFVFhy5ffryTnLruhxwutjJtEtyVJ0jYuz60iKl4hVVYHLKP4IE5OxcbDh1ajuTQ
+         uktzw42y8aDUcEg/HgxVKE3IQBTztEgPSUOn7OcvvqcaI28zpLaOJ5C164pkpp6I+GJk
+         YK0Q==
+X-Gm-Message-State: AHPjjUgPmez2vedGlNJAqE5PCKESCnHjF/M0jfaH452SJJmF4vSgoFY7
+        s3VWWHhtB+rrukqPPvBFyP0=
+X-Google-Smtp-Source: AOwi7QDdNCrXkYH34DoJLd+bDbv3M0bKmWH5aCfBd9iGfWtjt/V9YxX5YRLMb1MR4O46SAusMNqffw==
+X-Received: by 10.223.186.6 with SMTP id o6mr2837156wrg.263.1506032806658;
+        Thu, 21 Sep 2017 15:26:46 -0700 (PDT)
+Received: from rempc0mfw8m.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
+        by smtp.gmail.com with ESMTPSA id q188sm2170088wmb.43.2017.09.21.15.26.45
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 21 Sep 2017 15:26:45 -0700 (PDT)
+Content-Type: text/plain; charset=iso-8859-1
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v1] travis-ci: fix "skip_branch_tip_with_tag()" string comparison
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <20170921212848.GJ27425@aiede.mtv.corp.google.com>
+Date:   Fri, 22 Sep 2017 00:26:44 +0200
+Cc:     git@vger.kernel.org, szeder.dev@gmail.com, gitster@pobox.com
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <4FC081C4-355E-4E62-8CD8-89C299485182@gmail.com>
+References: <20170921204830.66831-1-larsxschneider@gmail.com> <20170921212848.GJ27425@aiede.mtv.corp.google.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/20, Jonathan Tan wrote:
-> On Wed, 20 Sep 2017 17:24:43 -0700
-> Jonathan Tan <jonathantanmy@google.com> wrote:
-> 
-> > On Wed, 13 Sep 2017 14:54:43 -0700
-> > Brandon Williams <bmwill@google.com> wrote:
-> > 
-> > > A normal request to git-daemon is structured as
-> > > "command path/to/repo\0host=..\0" and due to a bug in an old version of
-> > > git-daemon 73bb33a94 (daemon: Strictly parse the "extra arg" part of the
-> > > command, 2009-06-04) we aren't able to place any extra args (separated
-> > > by NULs) besides the host.
-> > > 
-> > > In order to get around this limitation teach git-daemon to recognize
-> > > additional request arguments hidden behind a second NUL byte.  Requests
-> > > can then be structured like:
-> > > "command path/to/repo\0host=..\0\0version=1\0key=value\0".  git-daemon
-> > > can then parse out the extra arguments and set 'GIT_PROTOCOL'
-> > > accordingly.
-> > 
-> > A test in this patch (if possible) would be nice, but it is probably
-> > clearer to test this when one of the commands (e.g. upload-pack) is
-> > done. Could a test be added to the next patch to verify (using
-> > GIT_TRACE_PACKET, maybe) that the expected strings are sent? Then
-> > mention in this commit message that this will be tested in the next
-> > patch too.
-> 
-> Ah, I see that it is tested in 6/8. You can ignore this comment.
 
-Yeah I felt it would have been difficult to test any earlier without
-both the client and server sides done.
+> On 21 Sep 2017, at 23:28, Jonathan Nieder <jrnieder@gmail.com> wrote:
+>=20
+> larsxschneider@gmail.com wrote:
+>=20
+>> 09f5e97 ("travis-ci: skip a branch build if equal tag is present",
+>> 2017-09-17) introduced the "skip_branch_tip_with_tag" function with
+>> a broken string comparison. Fix it!
+>>=20
+>> Reported-by: SZEDER G=E1bor <szeder.dev@gmail.com>
+>> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+>> ---
+>=20
+> Thanks for the fix.
+>=20
+> 09f5e97 appears to be for the ls/travis-scriptify branch, which is
+> already part of "next" (if it weren't, I'd suggest just squashing your
+> patch into that commit).
+>=20
+>> --- a/ci/lib-travisci.sh
+>> +++ b/ci/lib-travisci.sh
+>> @@ -14,7 +14,7 @@ skip_branch_tip_with_tag () {
+>> 	# of a tag.
+>>=20
+>> 	if TAG=3D$(git describe --exact-match "$TRAVIS_BRANCH" =
+2>/dev/null) &&
+>> -		$TAG !=3D $TRAVIS_BRANCH
+>> +		[ "$TAG" !=3D "$TRAVIS_BRANCH" ]
+>=20
+> Git style is to use 'test' instead of '[' for this.  See
+> =
+https://public-inbox.org/git/2f3cdc85-f051-c0ae-b9db-fd13cac78aed@gmail.co=
+m/
+> for more on that subject.
 
--- 
-Brandon Williams
+Oh, you're right!
+
+
+> Could you squash in the following?
+
+@Junio: Can you squash it when you apply the patch?
+
+Thank you,
+Lars
+
+
+>=20
+> Thanks,
+> Jonathan
+>=20
+> diff --git i/ci/lib-travisci.sh w/ci/lib-travisci.sh
+> index c3b46f4a7d..b3ed0a0dda 100755
+> --- i/ci/lib-travisci.sh
+> +++ w/ci/lib-travisci.sh
+> @@ -14,7 +14,7 @@ skip_branch_tip_with_tag () {
+> 	# of a tag.
+>=20
+> 	if TAG=3D$(git describe --exact-match "$TRAVIS_BRANCH" =
+2>/dev/null) &&
+> -		[ "$TAG" !=3D "$TRAVIS_BRANCH" ]
+> +		test "$TAG" !=3D "$TRAVIS_BRANCH"
+> 	then
+> 		echo "Tip of $TRAVIS_BRANCH is exactly at $TAG"
+> 		exit 0
+
