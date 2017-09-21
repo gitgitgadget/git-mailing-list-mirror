@@ -2,265 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00F2C202A5
-	for <e@80x24.org>; Thu, 21 Sep 2017 04:32:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 247F420281
+	for <e@80x24.org>; Thu, 21 Sep 2017 04:41:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751484AbdIUEcS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Sep 2017 00:32:18 -0400
-Received: from cloud.peff.net ([104.130.231.41]:45546 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751361AbdIUEcR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Sep 2017 00:32:17 -0400
-Received: (qmail 1003 invoked by uid 109); 21 Sep 2017 04:32:18 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 21 Sep 2017 04:32:18 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18916 invoked by uid 111); 21 Sep 2017 04:32:54 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Thu, 21 Sep 2017 00:32:54 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Sep 2017 00:32:15 -0400
-Date:   Thu, 21 Sep 2017 00:32:15 -0400
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: [PATCH] git: add --no-optional-locks option
-Message-ID: <20170921043214.pyhdsrpy4omy54rm@sigill.intra.peff.net>
+        id S1751484AbdIUElj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Sep 2017 00:41:39 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:36220 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750912AbdIUEli (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Sep 2017 00:41:38 -0400
+Received: by mail-pg0-f65.google.com with SMTP id d8so2806381pgt.3
+        for <git@vger.kernel.org>; Wed, 20 Sep 2017 21:41:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=c3r/DIl2hXvmvlDEb7d2S1PLKv5PWeJKtf6l4MMs35g=;
+        b=TUt/L+YLhdUGzZYP/RxHEbWFJp02DQi83ky+1ANxJqfD3UruxhHjWbVca3zi/wkGsI
+         5+CYV1J+0X3+u0QZsMujNVttCZ2fRtcQmFFgeYN8gReUU2GBTINLOb0kGGhr752V3FIF
+         CoblsnDyGzHNi3rBAqCy88LX0qVJC8H5Rm6vlC7rJHzu1AeueKI58rmsn6hHSk382zXE
+         RDtRTY88v6lb8RNtt1LvN17NTtXA3FwqoUeYMCHDvLPFL9IiLaKBKfzdje2GdjeRltT1
+         wCT7BT0LwITDeKzIs3Gsf0WMU2NS0gkpc1Dc2U2ZxNXGVJ4ES/DzvmfeqBRWoiuxzTTA
+         fS6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=c3r/DIl2hXvmvlDEb7d2S1PLKv5PWeJKtf6l4MMs35g=;
+        b=Vo7JhOxTrSod3C69a4VtfN3kU1DraGnwnbPoQax2sRK5X9VC0acyRL5DhYmPhloBZu
+         YwwOUHMGFZqeTHAe8Br3ViggFOA7d937ZGRNWfQlD0d54CcIWQqM7duqAHIAGNAoD9BO
+         MhvYNF0Oos9z5ejjYykAYcjxWiTsdaovU4aYF1qghT6bnmIzpL1BFCet+JSrWi2NJ60/
+         +TKaukRH+lResIkZ6R0ngg0vLItpKUC9+q0T6nF/KpHaQth5iLJGlzIoK1o1uM2y+7/0
+         1o4CC3RIOrir2cIZ5LfU1oLVCG6rxi79SIsCwLD6t6MvukkgvnC12ggBMpirVYtMQQIS
+         kgQQ==
+X-Gm-Message-State: AHPjjUhpyD03Y9ZopmMfCSwreVb8/DMVOLML/eMwXcdPBZiMIEp6B7wT
+        TyNnnm3L1Hlw4Hi6CCpK1LY=
+X-Google-Smtp-Source: AOwi7QDRIBQeETteoKjSwXYjPUfM0y0floG8lNuIO2SvEtJ9kyWHvlleVedSgyrpzmep+ccxXCt2kQ==
+X-Received: by 10.98.135.194 with SMTP id i185mr4357326pfe.330.1505968897391;
+        Wed, 20 Sep 2017 21:41:37 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:da9:ac38:cdcf:de91])
+        by smtp.gmail.com with ESMTPSA id e27sm745016pfk.41.2017.09.20.21.41.36
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 20 Sep 2017 21:41:36 -0700 (PDT)
+Date:   Wed, 20 Sep 2017 21:41:12 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] revision: replace "struct cmdline_pathspec" with
+ argv_array
+Message-ID: <20170921044112.GB91069@aiede.mtv.corp.google.com>
+References: <1505936846-2195-4-git-send-email-martin.agren@gmail.com>
+ <20170920202552.kkwhigmv7lq6cj3y@sigill.intra.peff.net>
+ <20170920203659.xqy76bg5nfabvbfx@sigill.intra.peff.net>
+ <20170920224826.GH27425@aiede.mtv.corp.google.com>
+ <20170921030424.akqaou7tqj2updgr@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <20170921030424.akqaou7tqj2updgr@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes, this is an adaptation of your 67e5ce7f63 (status: offer *not*
-to lock the index and update it, 2016-08-12). Folks working on GitHub
-Desktop complained to me that it's only available on Windows. :)
+Jeff King wrote:
+> On Wed, Sep 20, 2017 at 03:48:26PM -0700, Jonathan Nieder wrote:
+>> Jeff King wrote:
 
-I expanded the scope a bit to let us give the same treatment to more
-commands in the long run.  I'd also be OK with just cherry-picking your
-patch to non-Windows Git if you don't find my reasoning below
-compelling. But I think we need _something_ like this, as the other
-solutions I could come up with don't seem very promising.
+>>> Subject: [PATCH] revision: replace "struct cmdline_pathspec" with argv_array
+>>>
+>>> We assemble an array of strings in a custom struct,
+>>> NULL-terminate the result, and then pass it to
+>>> parse_pathspec().
+>>>
+>>> But then we never free the array or the individual strings
+>>> (nor can we do the latter, as they are heap-allocated when
+>>> they come from stdin but not when they come from the
+>>> passed-in argv).
+[...]
+>> Except... is the idea that this allows the strings from stdin to be
+>> freed sooner, as soon as they have been parsed into a "struct
+>> pathspec"?
+>
+> Well, no...the idea is that this is a function which leaks a bunch of
+> memory, and we shouldn't have to think hard about how often its leak can
+> be triggered or how severe it is. We should just fix it.
 
--Peff
+I forgot to say: thanks for writing such a pleasant patch.
 
--- >8 --
-Some tools like IDEs or fancy editors may periodically run
-commands like "git status" in the background to keep track
-of the state of the repository. Some of these commands may
-refresh the index and write out the result in an
-opportunistic way: if they can get the index lock, then they
-update the on-disk index with any updates they find. And if
-not, then their in-core refresh is lost and just has to be
-recomputed by the next caller.
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-But taking the index lock may conflict with other operations
-in the repository. Especially ones that the user is doing
-themselves, which _aren't_ opportunistic. In other words,
-"git status" knows how to back off when somebody else is
-holding the lock, but other commands don't know that status
-would be happy to drop the lock if somebody else wanted it.
+[...]
+> I certainly agree that the pathspec interface could use better
+> documentation. Patches welcome? :)
 
-There are a couple possible solutions:
+Here's such a patch.
 
-  1. Have some kind of "pseudo-lock" that allows other
-     commands to tell status that they want the lock.
+-- 8< --
+Subject: pathspec doc: parse_pathspec does not maintain references to args
 
-     This is likely to be complicated and error-prone to
-     implement (and maybe even impossible with just
-     dotlocks to work from, as it requires some
-     inter-process communication).
+The command line arguments passed to main() are valid for the life of
+a program, but the same is not true for all other argv-style arrays
+(e.g.  when a caller creates an argv_array).  Clarify that
+parse_pathspec does not rely on the argv passed to it to remain valid.
 
-  2. Avoid background runs of commands like "git status"
-     that want to do opportunistic updates, preferring
-     instead plumbing like diff-files, etc.
+This makes it easier to tell that callers like "git rev-list --stdin"
+are safe and ensures that that is more likely to remain true as the
+implementation of parse_pathspec evolves.
 
-     This is awkward for a couple of reasons. One is that
-     "status --porcelain" reports a lot more about the
-     repository state than is available from individual
-     plumbing commands. And two is that we actually _do_
-     want to see the refreshed index. We just don't want to
-     take a lock or write out the result. Whereas commands
-     like diff-files expect us to refresh the index
-     separately and write it to disk so that they can depend
-     on the result. But that write is exactly what we're
-     trying to avoid.
-
-  3. Ask "status" not to lock or write the index.
-
-     This is easy to implement. The big downside is that any
-     work done in refreshing the index for such a call is
-     lost when the process exits. So a background process
-     may end up re-hashing a changed file multiple times
-     until the user runs a command that does an index
-     refresh themselves.
-
-This patch implements the option 3. The idea (and the test)
-is largely stolen from a Git for Windows patch by Johannes
-Schindelin, 67e5ce7f63 (status: offer *not* to lock the
-index and update it, 2016-08-12). The twist here is that
-instead of making this an option to "git status", it becomes
-a "git" option and matching environment variable.
-
-The reason there is two-fold:
-
-  1. An environment variable is carried through to
-     sub-processes. And whether an invocation is a
-     background process or not should apply to the whole
-     process tree. So you could do "git --no-optional-locks
-     foo", and if "foo" is a script or alias that calls
-     "status", you'll still get the effect.
-
-  2. There may be other programs that want the same
-     treatment.
-
-     I've punted here on finding more callers to convert,
-     since "status" is the obvious one to call as a repeated
-     background job. But "git diff"'s opportunistic refresh
-     of the index may be a good candidate.
-
-The test is taken from 67e5ce7f63, and it's worth repeating
-Johannes's explanation:
-
-  Note that the regression test added in this commit does
-  not *really* verify that no index.lock file was written;
-  that test is not possible in a portable way. Instead, we
-  verify that .git/index is rewritten *only* when `git
-  status` is run without `--no-optional-locks`.
-
-Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- Documentation/git.txt | 13 +++++++++++++
- builtin/commit.c      |  5 ++++-
- cache.h               |  6 ++++++
- environment.c         |  5 +++++
- git.c                 |  4 ++++
- t/t7508-status.sh     | 10 ++++++++++
- 6 files changed, 42 insertions(+), 1 deletion(-)
+ pathspec.c | 4 ----
+ pathspec.h | 7 +++++++
+ 2 files changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 6e3a6767e5..8dd3ae05ae 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -159,6 +159,10 @@ foo.bar= ...`) sets `foo.bar` to the empty string which ` git config
- 	Add "icase" magic to all pathspec. This is equivalent to setting
- 	the `GIT_ICASE_PATHSPECS` environment variable to `1`.
+diff --git a/pathspec.c b/pathspec.c
+index e2a23ebc96..cdefdc7cc0 100644
+--- a/pathspec.c
++++ b/pathspec.c
+@@ -526,10 +526,6 @@ static void NORETURN unsupported_magic(const char *pattern,
+ 	    pattern, sb.buf);
+ }
  
-+--no-optional-locks::
-+	Do not perform optional operations that require locks. This is
-+	equivalent to setting the `GIT_OPTIONAL_LOCKS` to `0`.
-+
- GIT COMMANDS
- ------------
- 
-@@ -697,6 +701,15 @@ of clones and fetches.
- 	which feed potentially-untrusted URLS to git commands.  See
- 	linkgit:git-config[1] for more details.
- 
-+`GIT_OPTIONAL_LOCKS`::
-+	If set to `0`, Git will avoid performing any operations which
-+	require taking a lock and which are not required to complete the
-+	requested operation. For example, this will prevent `git status`
-+	from refreshing the index as a side effect. This is useful for
-+	processes running in the background which do not want to cause
-+	lock contention with other operations on the repository.
-+	Defaults to `1`.
-+
- Discussion[[Discussion]]
- ------------------------
- 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 58f9747c2f..fafd492029 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1387,7 +1387,10 @@ int cmd_status(int argc, const char **argv, const char *prefix)
- 	read_cache_preload(&s.pathspec);
- 	refresh_index(&the_index, REFRESH_QUIET|REFRESH_UNMERGED, &s.pathspec, NULL, NULL);
- 
--	fd = hold_locked_index(&index_lock, 0);
-+	if (use_optional_locks())
-+		fd = hold_locked_index(&index_lock, 0);
-+	else
-+		fd = -1;
- 
- 	s.is_initial = get_oid(s.reference, &oid) ? 1 : 0;
- 	if (!s.is_initial)
-diff --git a/cache.h b/cache.h
-index a916bc79e3..fea400c5ec 100644
---- a/cache.h
-+++ b/cache.h
-@@ -443,6 +443,7 @@ static inline enum object_type object_type(unsigned int mode)
- #define GIT_NOGLOB_PATHSPECS_ENVIRONMENT "GIT_NOGLOB_PATHSPECS"
- #define GIT_ICASE_PATHSPECS_ENVIRONMENT "GIT_ICASE_PATHSPECS"
- #define GIT_QUARANTINE_ENVIRONMENT "GIT_QUARANTINE_PATH"
-+#define GIT_OPTIONAL_LOCKS_ENVIRONMENT "GIT_OPTIONAL_LOCKS"
- 
- /*
-  * This environment variable is expected to contain a boolean indicating
-@@ -782,6 +783,11 @@ extern int protect_ntfs;
+-/*
+- * Given command line arguments and a prefix, convert the input to
+- * pathspec. die() if any magic in magic_mask is used.
+- */
+ void parse_pathspec(struct pathspec *pathspec,
+ 		    unsigned magic_mask, unsigned flags,
+ 		    const char *prefix, const char **argv)
+diff --git a/pathspec.h b/pathspec.h
+index 60e6500401..6420d1080a 100644
+--- a/pathspec.h
++++ b/pathspec.h
+@@ -70,6 +70,13 @@ struct pathspec {
   */
- extern int ref_paranoia;
+ #define PATHSPEC_LITERAL_PATH (1<<6)
  
 +/*
-+ * Returns the boolean value of $GIT_OPTIONAL_LOCKS (or the default value).
++ * Given command line arguments and a prefix, convert the input to
++ * pathspec. die() if any magic in magic_mask is used.
++ *
++ * Any arguments used are copied. It is safe for the caller to modify
++ * or free 'prefix' and 'args' after calling this function.
 + */
-+int use_optional_locks(void);
-+
- /*
-  * The character that begins a commented line in user-editable file
-  * that is subject to stripspace.
-diff --git a/environment.c b/environment.c
-index f1f934b6fd..8289c25b44 100644
---- a/environment.c
-+++ b/environment.c
-@@ -338,3 +338,8 @@ void reset_shared_repository(void)
- {
- 	need_shared_repository_from_config = 1;
- }
-+
-+int use_optional_locks(void)
-+{
-+	return git_env_bool(GIT_OPTIONAL_LOCKS_ENVIRONMENT, 1);
-+}
-diff --git a/git.c b/git.c
-index f31dca6962..9e96dd4090 100644
---- a/git.c
-+++ b/git.c
-@@ -182,6 +182,10 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
- 			setenv(GIT_ICASE_PATHSPECS_ENVIRONMENT, "1", 1);
- 			if (envchanged)
- 				*envchanged = 1;
-+		} else if (!strcmp(cmd, "--no-optional-locks")) {
-+			setenv(GIT_OPTIONAL_LOCKS_ENVIRONMENT, "0", 1);
-+			if (envchanged)
-+				*envchanged = 1;
- 		} else if (!strcmp(cmd, "--shallow-file")) {
- 			(*argv)++;
- 			(*argc)--;
-diff --git a/t/t7508-status.sh b/t/t7508-status.sh
-index 43d19a9b22..93f162a4f7 100755
---- a/t/t7508-status.sh
-+++ b/t/t7508-status.sh
-@@ -1670,4 +1670,14 @@ test_expect_success '"Initial commit" should not be noted in commit template' '
- 	test_i18ngrep ! "Initial commit" output
- '
- 
-+test_expect_success '--no-optional-locks prevents index update' '
-+	test-chmtime =1234567890 .git/index &&
-+	git --no-optional-locks status &&
-+	test-chmtime -v +0 .git/index >out &&
-+	grep ^1234567890 out &&
-+	git status &&
-+	test-chmtime -v +0 .git/index >out &&
-+	! grep ^1234567890 out
-+'
-+
- test_done
+ extern void parse_pathspec(struct pathspec *pathspec,
+ 			   unsigned magic_mask,
+ 			   unsigned flags,
 -- 
-2.14.1.1040.gcaf8795f39
+2.14.1.821.g8fa685d3b7
+
