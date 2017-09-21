@@ -2,82 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97072202A5
-	for <e@80x24.org>; Thu, 21 Sep 2017 15:32:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E20A20A29
+	for <e@80x24.org>; Thu, 21 Sep 2017 15:39:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751973AbdIUPb7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Sep 2017 11:31:59 -0400
-Received: from mail-wr0-f173.google.com ([209.85.128.173]:48587 "EHLO
-        mail-wr0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751972AbdIUPb6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Sep 2017 11:31:58 -0400
-Received: by mail-wr0-f173.google.com with SMTP id 108so4896716wra.5
-        for <git@vger.kernel.org>; Thu, 21 Sep 2017 08:31:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=cG94n8bv4gsZYqybD42lioLTtMA8hYOEssC9r5Vhl8I=;
-        b=k8sgwSm1eMQR1YIESS3UYmYqnn4m+P+RngnquDvzNj9sLbHaN5XaSeT/6mhQzvutFr
-         jzcC8xdF9gXT25+svwFnqUjoL3TIJlC8ClHCD7uWkUNBkYnJy8c6h+9un7dupd3l+VrU
-         G4/ZK7KMujSp9m7eaIU3jv9OwzrBU6VjCiv9C9YfL0R4sO5uTxsJpGdFBdR/4+9R820w
-         5CZqGzM2i5OD6MlvXyd9G/hSQBkwhE6V3ybv51gdQZALvc3yb37P1JZQn0iZUhAWS8IA
-         fXnaXf74GDheat54+64FJ/FAbWTYta0UXfxB3zpJdfPQ584cLfAoHG1IIYGQlUcvgjpS
-         8ckw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=cG94n8bv4gsZYqybD42lioLTtMA8hYOEssC9r5Vhl8I=;
-        b=N10brNhzGBCUBhN4RZZx/mlFFloEBQrjVLZxjKY4GRwCkglhbTqH5f6StnypPaZoXm
-         IT9+S1J1r9iYz15xeAcP5j21IGKxbRKf4TpH1/pnVnZv1ELPDdI8/DqNMWXP4rz5efaI
-         EhdyCfWh3RC3/Ai183Vv5w/hRDDDNsMUsnnbMl1WlqRfxn9FdegDbvsecxUFkOa5Sxs4
-         XaW7QU5j8CTJGmcYXX5icpeo6qWKACmDvGmg4177SA0uZ9vPBd96xqH//ajiayUEvRIA
-         Tdhf6UA4T8r7OLvagtRJ5wpZgB9JhfbAFclFUfDORv+KNWSuQShqSlbfcALsfmw1i3FF
-         R7Pg==
-X-Gm-Message-State: AHPjjUh8jdCGGpx9F4Bi3kjc/7s+qJLx3SFICMsAIKyDXaTQ0fnIPp6d
-        qVH+in1D2fCyrU11iBHeOuvnjg==
-X-Google-Smtp-Source: AOwi7QDAtKvxUrHljHFwF3VFpYhEDykVE4GVJR3CloStAQ2Rwvwf16zatGR9Dm6HMn6pCn2vJ2xp2A==
-X-Received: by 10.223.197.13 with SMTP id q13mr2458644wrf.80.1506007917072;
-        Thu, 21 Sep 2017 08:31:57 -0700 (PDT)
-Received: from hanwen.roam.corp.google.com ([104.132.61.99])
-        by smtp.gmail.com with ESMTPSA id l91sm1639602wrc.16.2017.09.21.08.31.56
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 21 Sep 2017 08:31:56 -0700 (PDT)
-From:   Han-Wen Nienhuys <hanwen@google.com>
-To:     pc44800@gmail.com
-Cc:     christian.couder@gmail.com, git@vger.kernel.org, gitster@pobox.com,
-        sbeller@google.com
-Subject: [GSoC][PATCH v4 3/4] submodule: port set_name_rev() from shell to C
-Date:   Thu, 21 Sep 2017 17:31:55 +0200
-Message-Id: <20170921153155.8544-1-hanwen@google.com>
-X-Mailer: git-send-email 2.14.1.821.g8fa685d3b7-goog
-In-Reply-To: <20170828115558.28297-4-pc44800@gmail.com>
-References: <20170828115558.28297-4-pc44800@gmail.com>
+        id S1751959AbdIUPjg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Sep 2017 11:39:36 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:54802 "EHLO
+        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751957AbdIUPje (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Sep 2017 11:39:34 -0400
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+        by mail-out.m-online.net (Postfix) with ESMTP id 3xyglR1X22z1r3bZ;
+        Thu, 21 Sep 2017 17:39:30 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.70])
+        by mail.m-online.net (Postfix) with ESMTP id 3xyglQ3jN3z1qrll;
+        Thu, 21 Sep 2017 17:39:30 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+        by localhost (dynscan1.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
+        with ESMTP id 1HxIdy39fnyi; Thu, 21 Sep 2017 17:39:29 +0200 (CEST)
+X-Auth-Info: lCRI2xoeN3YvFJny0rlxt4DjESK211EDFLpI/pDJQQS0Q3PehRyckLglN1+DsyW4
+Received: from igel.home (ppp-88-217-30-250.dynamic.mnet-online.de [88.217.30.250])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.mnet-online.de (Postfix) with ESMTPSA;
+        Thu, 21 Sep 2017 17:39:29 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 1000)
+        id 3F0F12C2317; Thu, 21 Sep 2017 17:39:29 +0200 (CEST)
+From:   Andreas Schwab <schwab@linux-m68k.org>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2] for_each_string_list_item: avoid undefined behavior for empty list
+References: <cb2d4d71c7c1db452b86c8076c153cabe7384e28.1505490776.git.mhagger@alum.mit.edu>
+        <20170915184323.GU27425@aiede.mtv.corp.google.com>
+        <b8951886-feab-a87a-9683-3c155cfa98a8@alum.mit.edu>
+        <b03c7b09-853f-a2ed-f73e-7d946c90cedb@gmail.com>
+        <20170920023008.GB126984@aiede.mtv.corp.google.com>
+        <xmqqd16mowig.fsf@gitster.mtv.corp.google.com>
+        <20170920052705.GC126984@aiede.mtv.corp.google.com>
+        <87vakd2v22.fsf@linux-m68k.org>
+        <20170920173134.GZ27425@aiede.mtv.corp.google.com>
+        <87lgl9rqbq.fsf@linux-m68k.org>
+        <xmqqtvzwn9bj.fsf@gitster.mtv.corp.google.com>
+X-Yow:  NOW, I'm supposed to SCRAMBLE two, and HOLD th' MAYO!!
+Date:   Thu, 21 Sep 2017 17:39:29 +0200
+In-Reply-To: <xmqqtvzwn9bj.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Thu, 21 Sep 2017 10:12:48 +0900")
+Message-ID: <87y3p8uklq.fsf@linux-m68k.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-LGTM with nits
+On Sep 21 2017, Junio C Hamano <gitster@pobox.com> wrote:
 
-commit message:
+> Now you make me curious.  How would that variant be different from
+> option C. in Jonathan's message?
 
-"revision name, and later handles its formating and printing."
+Only in the parity of the condition.
 
-typo: formatting
+Andreas.
 
-+		if (!capture_command(&cp, &sb, 0) && sb.len) {
-+			strbuf_strip_suffix(&sb, "\n");
-+			return strbuf_detach(&sb, NULL);
-+		}
-
-you discard all output if these commands fail, so if the argument is a
-not a submodule, or the other is not a sha1, it will just print
-nothing without error message. Maybe that is OK, though? I don't see
-documentation for these commands, so maybe this is not meant to be
-usable?
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
