@@ -2,219 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1546B202A5
-	for <e@80x24.org>; Thu, 21 Sep 2017 16:49:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3525E202A5
+	for <e@80x24.org>; Thu, 21 Sep 2017 17:29:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751653AbdIUQtl (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Sep 2017 12:49:41 -0400
-Received: from avasout07.plus.net ([84.93.230.235]:34251 "EHLO
-        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751602AbdIUQtk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Sep 2017 12:49:40 -0400
-Received: from [10.0.2.15] ([147.147.86.16])
-        by avasout07 with smtp
-        id CGpe1w00A0M91Ur01GpfB2; Thu, 21 Sep 2017 17:49:39 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=CrLPSjwD c=1 sm=1 tr=0
- a=dubYQqM3tRRTmV8xSh8cXQ==:117 a=dubYQqM3tRRTmV8xSh8cXQ==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=r1TGXED2hVWV2PWFCtEA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, GIT Mailing-list <git@vger.kernel.org>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH 4/4] ALLOC_GROW: avoid -Wsign-compare warnings
-Message-ID: <c97784ce-d85d-2b7a-4eb7-d4043dc1a0b7@ramsayjones.plus.com>
-Date:   Thu, 21 Sep 2017 17:49:38 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        id S1752258AbdIUR3G (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Sep 2017 13:29:06 -0400
+Received: from mail-qk0-f177.google.com ([209.85.220.177]:52976 "EHLO
+        mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751922AbdIUR3F (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Sep 2017 13:29:05 -0400
+Received: by mail-qk0-f177.google.com with SMTP id o77so6475754qke.9
+        for <git@vger.kernel.org>; Thu, 21 Sep 2017 10:29:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=l0h845zs7rjwEo6wjJSsST9WuT77+ADe4Bog28M35+s=;
+        b=Lo2mH3JBmPhumJfV0b3aa1G4eFucSDj69wBNrZRQLmk0R4L2BvSzZW9bUEhYGTTSoJ
+         Nm/t0vVJpwgP052ffKA7lEDYR18p5Mr1b3YntgR8082fajzeBovv/IhubdNnwlnEzhV0
+         8Jgx8uIRt+urawLHwlXCCM34j7D6VZTGkSmaa6zCaFw/8fCSKrkmFoMVdjQwMmdct7oT
+         KdNVguPawbHGwrzzrT3uH82MJvMMwZPlBw1aho/aYOQoIC63C+uqnshCK8ENmelmFeaF
+         WkZrzSqAyEj+wQlLh2cjH5I3A3LyHbp9ynuzravvX0fpThynpQGg0/ow60/j+SincvBR
+         Sb6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=l0h845zs7rjwEo6wjJSsST9WuT77+ADe4Bog28M35+s=;
+        b=LlTPAQV+t3BjTAiSgQxt1ue7bIGX3iRcJXaB7EXLFb4fAae9u01vOP4aesjnuJzrtC
+         z0oYH/yTceAbQRnxj3ozy49TGJqn3/ZCFNlJtmVJ007EVK6SVv+c5kib4ExrF5UYj0sd
+         Qrc8NUTYYRspY9bGrE4wLSfgoVCQ3tajMsRhnQtyAPY7nnGJJJZ9LqvT8rfLpoC6gB6v
+         pOOE9cpp5LuQVf6IwOZUY8NFCmIgpUwJbpmrkQoQg2T1AwYGvksyo6Dj+JszzQIuuXau
+         48kfWhbiAtWUNyad1DwiQBnXpVJDneBALweGVoZD92kXXAW/U7ilNEDJdimxX/nDgHln
+         CPqQ==
+X-Gm-Message-State: AHPjjUjvit7Wg0kPSVWb/XZ5A4R741zpzQKzPjgi11Rua8yOJy7IXURG
+        nAe5rfPA0lRE1hD5x3TTH4yoDfeVe751eQlsXKsJXw==
+X-Google-Smtp-Source: AOwi7QD5eAyYAVNyvh2aXvDQHsXosAz2Q1z/X8IDZd6c0lzQ15wiYkvDIhQz0jRajGqljc7MdL/WykFMQ+B5eOXXu+U=
+X-Received: by 10.55.52.135 with SMTP id b129mr4278924qka.308.1506014944046;
+ Thu, 21 Sep 2017 10:29:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Received: by 10.140.102.51 with HTTP; Thu, 21 Sep 2017 10:29:03 -0700 (PDT)
+In-Reply-To: <20170921045932.b5y33fm7gao27ium@sigill.intra.peff.net>
+References: <cover.1505799700.git.mhagger@alum.mit.edu> <2bb2e8ccb57eef8acbea5004167751a007a1bd2f.1505799700.git.mhagger@alum.mit.edu>
+ <CAGZ79kbwCAidGR3cgukdjckZVYwj+qbOikqN-e934uP1yk9Cuw@mail.gmail.com> <20170921045932.b5y33fm7gao27ium@sigill.intra.peff.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 21 Sep 2017 10:29:03 -0700
+Message-ID: <CAGZ79kZ5xcw3hw_aEp2ggLbC8AQm8DwpqK3+i5UO7s+aGzgXjQ@mail.gmail.com>
+Subject: Re: [PATCH v2 02/21] prefix_ref_iterator: break when we leave the prefix
+To:     Jeff King <peff@peff.net>
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Sep 20, 2017 at 9:59 PM, Jeff King <peff@peff.net> wrote:
 
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
----
- builtin/pack-objects.c |  4 ++--
- config.c               |  2 +-
- diff.c                 |  2 +-
- line-log.c             | 18 +++++++++---------
- line-log.h             |  2 +-
- revision.c             |  2 +-
- tree-walk.c            |  3 +--
- 7 files changed, 16 insertions(+), 17 deletions(-)
+>> But this compare function is not to order by the natural encoding order,
+>> but it's used to detect the '0' at the end of prefix, which orders
+>> before *any* unsigned char.
+>
+> It's not just detecting the "0". We care about the ordering overall (so
+> that "refs/foo" comes after "refs/bar", and we know that "refs/bar/baz"
+> cannot come after "refs/foo", and we can stop iterating).
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index a57b4f058..a6ee653bf 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -2563,8 +2563,8 @@ struct in_pack_object {
- };
- 
- struct in_pack {
--	int alloc;
--	int nr;
-+	unsigned int alloc;
-+	unsigned int  nr;
- 	struct in_pack_object *array;
- };
- 
-diff --git a/config.c b/config.c
-index cd5a69e63..aeab02c06 100644
---- a/config.c
-+++ b/config.c
-@@ -2200,7 +2200,7 @@ static struct {
- 	size_t *offset;
- 	unsigned int offset_alloc;
- 	enum { START, SECTION_SEEN, SECTION_END_SEEN, KEY_SEEN } state;
--	int seen;
-+	unsigned int seen;
- } store;
- 
- static int matches(const char *key, const char *value)
-diff --git a/diff.c b/diff.c
-index ea7e5978b..be94ad4f4 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1541,7 +1541,7 @@ static void emit_rewrite_diff(const char *name_a,
- 
- struct diff_words_buffer {
- 	mmfile_t text;
--	long alloc;
-+	unsigned long alloc;
- 	struct diff_words_orig {
- 		const char *begin, *end;
- 	} *orig;
-diff --git a/line-log.c b/line-log.c
-index ab0709f9a..545ad0f28 100644
---- a/line-log.c
-+++ b/line-log.c
-@@ -90,7 +90,7 @@ static int range_cmp(const void *_r, const void *_s)
-  */
- static void range_set_check_invariants(struct range_set *rs)
- {
--	int i;
-+	unsigned int i;
- 
- 	if (!rs)
- 		return;
-@@ -110,8 +110,8 @@ static void range_set_check_invariants(struct range_set *rs)
-  */
- void sort_and_merge_range_set(struct range_set *rs)
- {
--	int i;
--	int o = 0; /* output cursor */
-+	unsigned int i;
-+	unsigned int o = 0; /* output cursor */
- 
- 	QSORT(rs->ranges, rs->nr, range_cmp);
- 
-@@ -144,7 +144,7 @@ void sort_and_merge_range_set(struct range_set *rs)
- static void range_set_union(struct range_set *out,
- 			     struct range_set *a, struct range_set *b)
- {
--	int i = 0, j = 0;
-+	unsigned int i = 0, j = 0;
- 	struct range *ra = a->ranges;
- 	struct range *rb = b->ranges;
- 	/* cannot make an alias of out->ranges: it may change during grow */
-@@ -186,7 +186,7 @@ static void range_set_union(struct range_set *out,
- static void range_set_difference(struct range_set *out,
- 				  struct range_set *a, struct range_set *b)
- {
--	int i, j =  0;
-+	unsigned int i, j =  0;
- 	for (i = 0; i < a->nr; i++) {
- 		long start = a->ranges[i].start;
- 		long end = a->ranges[i].end;
-@@ -397,7 +397,7 @@ static void diff_ranges_filter_touched(struct diff_ranges *out,
- 				       struct diff_ranges *diff,
- 				       struct range_set *rs)
- {
--	int i, j = 0;
-+	unsigned int i, j = 0;
- 
- 	assert(out->target.nr == 0);
- 
-@@ -426,7 +426,7 @@ static void range_set_shift_diff(struct range_set *out,
- 				 struct range_set *rs,
- 				 struct diff_ranges *diff)
- {
--	int i, j = 0;
-+	unsigned int i, j = 0;
- 	long offset = 0;
- 	struct range *src = rs->ranges;
- 	struct range *target = diff->target.ranges;
-@@ -873,7 +873,7 @@ static char *output_prefix(struct diff_options *opt)
- 
- static void dump_diff_hacky_one(struct rev_info *rev, struct line_log_data *range)
- {
--	int i, j = 0;
-+	unsigned int i, j = 0;
- 	long p_lines, t_lines;
- 	unsigned long *p_ends = NULL, *t_ends = NULL;
- 	struct diff_filepair *pair = range->pair;
-@@ -906,7 +906,7 @@ static void dump_diff_hacky_one(struct rev_info *rev, struct line_log_data *rang
- 		long t_start = range->ranges.ranges[i].start;
- 		long t_end = range->ranges.ranges[i].end;
- 		long t_cur = t_start;
--		int j_last;
-+		unsigned int j_last;
- 
- 		while (j < diff->target.nr && diff->target.ranges[j].end < t_start)
- 			j++;
-diff --git a/line-log.h b/line-log.h
-index 7a5c24e2d..e2a5ee7c6 100644
---- a/line-log.h
-+++ b/line-log.h
-@@ -14,7 +14,7 @@ struct range {
- 
- /* A set of ranges.  The ranges must always be disjoint and sorted. */
- struct range_set {
--	int alloc, nr;
-+	unsigned int alloc, nr;
- 	struct range *ranges;
- };
- 
-diff --git a/revision.c b/revision.c
-index f9a90d71d..c8c9cb32c 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1105,7 +1105,7 @@ static void add_rev_cmdline(struct rev_info *revs,
- 			    unsigned flags)
- {
- 	struct rev_cmdline_info *info = &revs->cmdline;
--	int nr = info->nr;
-+	unsigned int nr = info->nr;
- 
- 	ALLOC_GROW(info->rev, nr + 1, info->alloc);
- 	info->rev[nr].item = item;
-diff --git a/tree-walk.c b/tree-walk.c
-index c99309069..684f0e337 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -582,12 +582,11 @@ enum follow_symlinks_result get_tree_entry_follow_symlinks(unsigned char *tree_s
- 	int retval = MISSING_OBJECT;
- 	struct dir_state *parents = NULL;
- 	size_t parents_alloc = 0;
--	ssize_t parents_nr = 0;
-+	size_t i, parents_nr = 0;
- 	unsigned char current_tree_sha1[20];
- 	struct strbuf namebuf = STRBUF_INIT;
- 	struct tree_desc t;
- 	int follows_remaining = GET_TREE_ENTRY_FOLLOW_SYMLINKS_MAX_LINKS;
--	int i;
- 
- 	init_tree_desc(&t, NULL, 0UL);
- 	strbuf_addstr(&namebuf, name);
--- 
-2.14.0
+refs/{foo,bar,bar/baz} is all ASCII, such that the ordering by byte value
+and byte position (2nd order) orders 'correctly'. correct in the sense as
+Git expects. But if you use other encodings, the natural encoding
+may differ from the arbitrary order that we have here. (Example
+utf-8 with BOM and smileys)
+
+However these different orders do not matter (according to my initial
+conclusion), because we need (a) find out about '\0' and (b) only need
+only 'arbitrary' order (which is referred to by the " ordered" trait).
+
+>> Essentially compare_prefix wants to provide the same return
+>> value as `strncmp(refname, prefix, min(strlen(refname), strlen(prefix)));`
+>> except that it is optimized as we do not have to walk over a string
+>> multiple times (to determine length and then pass it to compare).
+>
+> Hmm, yeah, I think that would be an equivalent. I didn't think of that,
+> but as you say it would be less efficient.
+
+I was just too lazy to check if we had the results of strlen around already,
+such that the comparison would be equally cheap, but more readable.
+Also IIRC later patches enhance this function, so we shall not make use
+of the strncmp function here.
+
+> The patch is credited to me, but I actually screwed up the ordering by
+> failing to do the unsigned cast. Michael fixed that part before posting
+> it. :)
+
+Thanks,
+Stefan
