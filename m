@@ -6,92 +6,45 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B6F72047F
-	for <e@80x24.org>; Thu, 21 Sep 2017 07:42:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 871122047F
+	for <e@80x24.org>; Thu, 21 Sep 2017 07:49:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751530AbdIUHmk (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Sep 2017 03:42:40 -0400
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:53166 "EHLO
-        alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751485AbdIUHmj (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 21 Sep 2017 03:42:39 -0400
-X-AuditID: 12074414-0ebff70000006ddf-a3-59c36d6e5498
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 89.6A.28127.E6D63C95; Thu, 21 Sep 2017 03:42:38 -0400 (EDT)
-Received: from [192.168.69.190] (p57BCCB74.dip0.t-ipconnect.de [87.188.203.116])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v8L7gZb5021372
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Thu, 21 Sep 2017 03:42:36 -0400
-Subject: Re: [PATCH v2 02/21] prefix_ref_iterator: break when we leave the
- prefix
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-References: <cover.1505799700.git.mhagger@alum.mit.edu>
- <2bb2e8ccb57eef8acbea5004167751a007a1bd2f.1505799700.git.mhagger@alum.mit.edu>
- <CAGZ79kbwCAidGR3cgukdjckZVYwj+qbOikqN-e934uP1yk9Cuw@mail.gmail.com>
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <32b3d338-6781-a600-2c7e-65dc2818aab5@alum.mit.edu>
-Date:   Thu, 21 Sep 2017 09:42:35 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
-MIME-Version: 1.0
-In-Reply-To: <CAGZ79kbwCAidGR3cgukdjckZVYwj+qbOikqN-e934uP1yk9Cuw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+        id S1751606AbdIUHtK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Sep 2017 03:49:10 -0400
+Received: from benson.default.arb33.uk0.bigv.io ([46.43.0.16]:43229 "EHLO
+        benson.default.arb33.uk0.bigv.io" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751484AbdIUHtK (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 21 Sep 2017 03:49:10 -0400
+Received: from cpc91198-cmbg18-2-0-cust103.5-4.cable.virginm.net ([81.98.98.104] helo=dagon.hellion.org.uk)
+        by benson.default.arb33.uk0.bigv.io with esmtpsa (TLS1.2:RSA_AES_256_CBC_SHA1:256)
+        (Exim 4.80)
+        (envelope-from <ijc@hellion.org.uk>)
+        id 1duwEM-0005NY-VP; Thu, 21 Sep 2017 08:49:07 +0100
+Message-ID: <1505980146.4636.9.camel@hellion.org.uk>
+Subject: [PATCH v3 0/4] filter-branch: support for incremental update + fix
+ for ancient tag format
+From:   Ian Campbell <ijc@hellion.org.uk>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Date:   Thu, 21 Sep 2017 08:49:06 +0100
+Content-Type: text/plain; charset="ISO-8859-1"
+X-Mailer: Evolution 3.22.6-1 
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrCKsWRmVeSWpSXmKPExsUixO6iqJuXezjS4PJdY4u1z+4wWTxff4Ld
-        outKN5NFQ+8VZov+5V1sFt1T3jJa/GjpYbbYvLmdxYHDY+esu+weHz7GeSzYVOrxrHcPo8fF
-        S8oenzfJBbBFcdmkpOZklqUW6dslcGXsnDqbpWA3e8W6q8tYGhivsHYxcnJICJhINB/vZe5i
-        5OIQEtjBJDFj5j4o5wKTxOLeycwgVcICwRLNb7awg9giAmoSM1fNZgMpYhboZJZ41n2LBSQh
-        JHCeUeLtTVsQm01AV2JRTzMTiM0rYC9x9+prsBoWAVWJvUd+gQ0VFYiQ6Ht7mR2iRlDi5Mwn
-        YDWcAoESr+buZwOxmQXUJf7Mu8QMYYtL3HoynwnClpfY/nYO8wRGgVlI2mchaZmFpGUWkpYF
-        jCyrGOUSc0pzdXMTM3OKU5N1i5MT8/JSi3Qt9HIzS/RSU0o3MUIiRGQH45GTcocYBTgYlXh4
-        J5gcjhRiTSwrrsw9xCjJwaQkyjspEyjEl5SfUpmRWJwRX1Sak1p8iFGCg1lJhDcjCCjHm5JY
-        WZValA+TkuZgURLn/bZY3U9IID2xJDU7NbUgtQgmK8PBoSTBm5AD1ChYlJqeWpGWmVOCkGbi
-        4AQZzgM0XDQbZHhxQWJucWY6RP4Uoy7HjYfX/zAJseTl56VKifOmgQwSACnKKM2DmwNLbK8Y
-        xYHeEublA6niASZFuEmvgJYwAS3J3nAAZElJIkJKqoFR0dFEQUIrtaC3zt+VL7GmLIaLY8oX
-        83Orn516m565ekH2W48jkhd6Hq259JMjNTElMqV08dIjeYuX3dssPcmBa9o81x9BUU1ljwL+
-        TfCT8Nh6hO3yR+No9w///p1JlF9hIq/8Tajn/Y/LjpFmIXdeXM5+vXbZk8tdDHm3p5r+/vcr
-        edbE9qSLSizFGYmGWsxFxYkASZgKWkcDAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/20/2017 10:25 PM, Stefan Beller wrote:
-> On Mon, Sep 18, 2017 at 11:22 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->> [...]
->> +/* Return -1, 0, 1 if refname is before, inside, or after the prefix. */
->> +static int compare_prefix(const char *refname, const char *prefix)
->> +{
->> +       while (*prefix) {
->> +               if (*refname != *prefix)
->> +                       return ((unsigned char)*refname < (unsigned char)*prefix) ? -1 : +1;
-> 
-> This looks interesting.
-> 
-> We get a signed char* , cast it to unsigned char* and then
-> compare byte by byte.
+This is the third version of my patches to add incremental support to
+git-filter-branch. Since the last time I have replaced `git mktag --
+allow-missing-tagger` with `git hash-object -t tag -w --stdin`.
 
-Not quite. We get a `char *` of unknown signedness (it's
-implementation-dependent), dereference it into a `char`, then cast that
-value to `unsigned char`. What you described would be
+I've force pushed to [1] (Travis is still running) and have set off the
+process of re-rewriting the devicetree tree from scratch (a multi-day
+affair) to validate (it's looking good).
 
-    *(const unsigned char *)refname < *(const unsigned char *)prefix
+Ian.
 
-But I assume that these two variants would result in identical assembly
-code.
-
-> [...]
-
-Michael
+[0] https://git.kernel.org/pub/scm/linux/kernel/git/devicetree/devicetree-rebasing.git/
+[1] https://github.com/ijc/git/tree/git-filter-branch
