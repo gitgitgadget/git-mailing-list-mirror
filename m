@@ -6,80 +6,83 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF25420A2B
-	for <e@80x24.org>; Thu, 21 Sep 2017 01:23:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F06920281
+	for <e@80x24.org>; Thu, 21 Sep 2017 01:32:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751387AbdIUBXk (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Sep 2017 21:23:40 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59746 "EHLO
+        id S1751343AbdIUBcE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Sep 2017 21:32:04 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61659 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751000AbdIUBXj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Sep 2017 21:23:39 -0400
+        with ESMTP id S1751189AbdIUBcD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Sep 2017 21:32:03 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A872E92AC9;
-        Wed, 20 Sep 2017 21:23:38 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 434E9A67E3;
+        Wed, 20 Sep 2017 21:31:58 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=0rZljh0/KgM3qSjbLplRhr8QMWM=; b=I++z0y
-        XIVfLQ1M2cdx0SvJQizsxntukZEjgFENdiZYPAk8VN0CMIlZDjMFevtxBK1XEeRH
-        ruvj29JI5SvUw5DEJK9dpVI3p8qIBru/J/vTorWb6a7PLjTyxphvHwjKFOjVLYSU
-        34SrjOmAnSUL51G4R56bqug14MahQAxkManR8=
+        :content-type; s=sasl; bh=6JvXUvmbsLOkExB3aJUjsNhDJWw=; b=LfKm5g
+        h16kWKcmntuvgxhINUw07cpJmzzyIw+BkZWLGVDCphRAi95OfXimMeJ5iJkwJSxW
+        4OALZ5MIjQpsb/QsuSPSDLmUu3oDXJIGsCWSy2nL/N0kvcSJDCn+x1lW5fnABqLS
+        DC1Er2QYa33C1CqykPDVsie8l8On0PLmlJFOw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=u9d6Xum19HFCUPB5PGQdxnA97lDgqwAX
-        FgA6zIkk8fuAAFmGKjiy5xZGma0vDJ3iPn03jPN3ZVM0B1wQd/BQQFNXaE6E1N0k
-        01Q4JWvHBoeN5EtJMnz+1WuuJ5Fc47z8ora9Gygunk2I4s/XPPrZZe9k2BKBPfxq
-        1+CAeKG8xmU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A036492AC8;
-        Wed, 20 Sep 2017 21:23:38 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=G4JjDyTqQABQe972FYEk+mpe4SpsAiov
+        HUtfC6OOYZ7KgUrTyx07uAEpXCv+LuZ1A6w7fY64xjz1SbMK6mOBtCIsYS7Nrgy9
+        P9A1KDDpEoPT/OQKmWOLchJ/Dhs+2PJP2nWdiK7IUBrr5EUhAfxE1FC7f6W3K7S/
+        53bGlVt5dHU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3BF0AA67E2;
+        Wed, 20 Sep 2017 21:31:58 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0E78F92AC7;
-        Wed, 20 Sep 2017 21:23:37 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A06A3A67E1;
+        Wed, 20 Sep 2017 21:31:57 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: Behaviour of 'git stash show' when a stash has untracked files
-References: <1505626069.9625.6.camel@gmail.com>
-        <xmqqfubinddb.fsf@gitster.mtv.corp.google.com>
-        <20170920193630.l7ifret5dpqgxiwm@sigill.intra.peff.net>
-Date:   Thu, 21 Sep 2017 10:23:36 +0900
-In-Reply-To: <20170920193630.l7ifret5dpqgxiwm@sigill.intra.peff.net> (Jeff
-        King's message of "Wed, 20 Sep 2017 15:36:30 -0400")
-Message-ID: <xmqqpoakn8tj.fsf@gitster.mtv.corp.google.com>
+To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH 1/5] builtin/checkout: avoid usage of '!!'
+References: <xmqqd18pcysa.fsf@gitster.mtv.corp.google.com>
+        <20170919071525.9404-1-kaarticsivaraam91196@gmail.com>
+        <20170919071525.9404-2-kaarticsivaraam91196@gmail.com>
+        <xmqq8thaow8f.fsf@gitster.mtv.corp.google.com>
+        <e07a613e-8b69-e382-777b-b5797270ecaf@gmail.com>
+        <fbe3d3e2-a14c-fe7c-7e5d-c24789b249ca@gmail.com>
+Date:   Thu, 21 Sep 2017 10:31:56 +0900
+In-Reply-To: <fbe3d3e2-a14c-fe7c-7e5d-c24789b249ca@gmail.com> (Kaartic
+        Sivaraam's message of "Wed, 20 Sep 2017 16:56:48 +0530")
+Message-ID: <xmqqlgl8n8fn.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 7E98DE44-9E6B-11E7-9263-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: A861B63C-9E6C-11E7-B57F-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
 
-> I sketched out a possible solution in:
+> Wait, I missed a contradiction here.
+> ..
+> Documentation/SubmittingPatches says:
 >
->   https://public-inbox.org/git/20170317141417.g2oenl67k74nlqrq@sigill.intra.peff.net/
->
-> though I share your concerns over whether people would be annoyed to see
-> the existing "stash show" output changed.
+>>  - Some clever tricks, like using the !! operator with arithmetic
+>>    constructs, can be extremely confusing to others.
 
-Forgot about that one.  I sometimes do "stash show -p | apply", so
-changing what is included without any option would be annoying, and
-not having an option to restore the original behaviour would be
-doubly irritating.  
+What does "with arithmetic constructs" mean?  Would it refer to
+things like
 
-Perhaps "stash show [--[untracked|index|worktree]]" to show only
-one, without the "==> I am this variant <==" label, would be
-workable, and with no option we would do --worktree that is the
-traditional output.
+	!!i != !!(j + 3)
 
-In addition "stash show --all" could be the output in your earlier
-patch.  I like the way it uses the '.' pathspec to squelch the
-entire thing when there is no change ;-)
+that unnecessarily obfuscates what is going on?
 
-Thanks.
+The primary reason why !!ptr is good in the code that this patch
+touches is because what is doubly negated is a pointer, not an
+integer or other things.  The called function does *not* limit its
+input to 0 or 1 (it wants 0 for false and everything else for true),
+so we wouldn't be doing !!i if what we are passing is already an
+integer.  But we cannot just pass a pointer to such a parameter
+without getting the compiler upset.
+
+
