@@ -2,76 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E259202A5
-	for <e@80x24.org>; Thu, 21 Sep 2017 15:06:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 97072202A5
+	for <e@80x24.org>; Thu, 21 Sep 2017 15:32:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751936AbdIUPGk (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Sep 2017 11:06:40 -0400
-Received: from mail-wm0-f44.google.com ([74.125.82.44]:43363 "EHLO
-        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751709AbdIUPGi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Sep 2017 11:06:38 -0400
-Received: by mail-wm0-f44.google.com with SMTP id m72so1280357wmc.0
-        for <git@vger.kernel.org>; Thu, 21 Sep 2017 08:06:37 -0700 (PDT)
+        id S1751973AbdIUPb7 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Sep 2017 11:31:59 -0400
+Received: from mail-wr0-f173.google.com ([209.85.128.173]:48587 "EHLO
+        mail-wr0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751972AbdIUPb6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Sep 2017 11:31:58 -0400
+Received: by mail-wr0-f173.google.com with SMTP id 108so4896716wra.5
+        for <git@vger.kernel.org>; Thu, 21 Sep 2017 08:31:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=HdYloK36DV++vW7M3Q6lBD8rISer5znUKO6CucDJseA=;
-        b=fxuj79JKckrO8O/1Cl4693dkTtKoSnBPHsaEybMLp9RIxDcJPzzb2QB+RBH7kbqpdp
-         +k3r8X8iz9hfUhWLM1HbjZWLNqSu/l/IzNLLC6bujzEAE7Kj1Aj0HFDtS6cUueWdFXQq
-         VNS4kF81O9ZKoFHXH4UrGKGxg8bvV5gwFxKuvEFty8/njBv/i6PQa3Bx8hikgMX3nxqf
-         reBWPOEtJCd8ZjUJaivkf4eEVJQRMJet6++DZolk0IIJtv36Bmi8unYzd6sdcW9P46jH
-         5injtWCDsboCEMHJa9QqrLF7RpBCxJKxT81ZvW7UPaSjVfRpI+10liwO8CnaY7YW2Dom
-         N+Kw==
+        bh=cG94n8bv4gsZYqybD42lioLTtMA8hYOEssC9r5Vhl8I=;
+        b=k8sgwSm1eMQR1YIESS3UYmYqnn4m+P+RngnquDvzNj9sLbHaN5XaSeT/6mhQzvutFr
+         jzcC8xdF9gXT25+svwFnqUjoL3TIJlC8ClHCD7uWkUNBkYnJy8c6h+9un7dupd3l+VrU
+         G4/ZK7KMujSp9m7eaIU3jv9OwzrBU6VjCiv9C9YfL0R4sO5uTxsJpGdFBdR/4+9R820w
+         5CZqGzM2i5OD6MlvXyd9G/hSQBkwhE6V3ybv51gdQZALvc3yb37P1JZQn0iZUhAWS8IA
+         fXnaXf74GDheat54+64FJ/FAbWTYta0UXfxB3zpJdfPQ584cLfAoHG1IIYGQlUcvgjpS
+         8ckw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=HdYloK36DV++vW7M3Q6lBD8rISer5znUKO6CucDJseA=;
-        b=KKVu5WpR6WRMDFyvvpItNHUjljO65GcC5VDXDJndRyvmmClIPh/3FTqilYRFPOMAT7
-         jZO7pfrCHKXcyhK+H8GlGIIWmJwNbBjR3+Ehp2wodu9LgTBXT12uyG14PCO/ajmqdVG8
-         0Gzhenek9YHt/L2JlLPoH/C/CMcgI6UmDcCh0sIs7ESWBhYgTge0W841fwEYbBIrcKGm
-         ZZe+ejwtCZEWXviQbuv5GHIbPSsfV0ncop+33iPEtinAnpjvYx9nsE3atWLaJrwYJiZI
-         yo7wRVtaF5NV45w6rjZA8+FYComI2e/xpC6DOtssQNJLODd/m5gR4KIT9b0VTX/0aFSi
-         dLpw==
-X-Gm-Message-State: AHPjjUi/gYTivkrYVAUvfbPGHwNOxMB4zXaBTXly2XqgkGpL0df6Iubx
-        G69dpdHPPG0KZsd0+WAStfAiVA==
-X-Google-Smtp-Source: AOwi7QD2FeMBhHQdxkuJGz9p8Ve7zxIxQ7Xk4pmVYObB05wxBst3P1NzJSJqGmRzexgrL6w7ZZEo7g==
-X-Received: by 10.28.161.2 with SMTP id k2mr1236775wme.118.1506006396856;
-        Thu, 21 Sep 2017 08:06:36 -0700 (PDT)
+        bh=cG94n8bv4gsZYqybD42lioLTtMA8hYOEssC9r5Vhl8I=;
+        b=N10brNhzGBCUBhN4RZZx/mlFFloEBQrjVLZxjKY4GRwCkglhbTqH5f6StnypPaZoXm
+         IT9+S1J1r9iYz15xeAcP5j21IGKxbRKf4TpH1/pnVnZv1ELPDdI8/DqNMWXP4rz5efaI
+         EhdyCfWh3RC3/Ai183Vv5w/hRDDDNsMUsnnbMl1WlqRfxn9FdegDbvsecxUFkOa5Sxs4
+         XaW7QU5j8CTJGmcYXX5icpeo6qWKACmDvGmg4177SA0uZ9vPBd96xqH//ajiayUEvRIA
+         Tdhf6UA4T8r7OLvagtRJ5wpZgB9JhfbAFclFUfDORv+KNWSuQShqSlbfcALsfmw1i3FF
+         R7Pg==
+X-Gm-Message-State: AHPjjUh8jdCGGpx9F4Bi3kjc/7s+qJLx3SFICMsAIKyDXaTQ0fnIPp6d
+        qVH+in1D2fCyrU11iBHeOuvnjg==
+X-Google-Smtp-Source: AOwi7QDAtKvxUrHljHFwF3VFpYhEDykVE4GVJR3CloStAQ2Rwvwf16zatGR9Dm6HMn6pCn2vJ2xp2A==
+X-Received: by 10.223.197.13 with SMTP id q13mr2458644wrf.80.1506007917072;
+        Thu, 21 Sep 2017 08:31:57 -0700 (PDT)
 Received: from hanwen.roam.corp.google.com ([104.132.61.99])
-        by smtp.gmail.com with ESMTPSA id 61sm1354394wre.44.2017.09.21.08.06.35
+        by smtp.gmail.com with ESMTPSA id l91sm1639602wrc.16.2017.09.21.08.31.56
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 21 Sep 2017 08:06:35 -0700 (PDT)
+        Thu, 21 Sep 2017 08:31:56 -0700 (PDT)
 From:   Han-Wen Nienhuys <hanwen@google.com>
 To:     pc44800@gmail.com
 Cc:     christian.couder@gmail.com, git@vger.kernel.org, gitster@pobox.com,
         sbeller@google.com
-Subject: [GSoC][PATCH v4 1/4] submodule--helper: introduce get_submodule_displaypath()
-Date:   Thu, 21 Sep 2017 17:06:26 +0200
-Message-Id: <20170921150626.4979-1-hanwen@google.com>
+Subject: [GSoC][PATCH v4 3/4] submodule: port set_name_rev() from shell to C
+Date:   Thu, 21 Sep 2017 17:31:55 +0200
+Message-Id: <20170921153155.8544-1-hanwen@google.com>
 X-Mailer: git-send-email 2.14.1.821.g8fa685d3b7-goog
-In-Reply-To: <20170828115558.28297-2-pc44800@gmail.com>
-References: <20170828115558.28297-2-pc44800@gmail.com>
+In-Reply-To: <20170828115558.28297-4-pc44800@gmail.com>
+References: <20170828115558.28297-4-pc44800@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-LGTM with nits.
+LGTM with nits
 
-+static char *get_submodule_displaypath(const char *path, const char *prefix)
+commit message:
 
-this could do with a comment
+"revision name, and later handles its formating and printing."
 
-  /* the result should be freed by the caller. */
+typo: formatting
 
-+	} else if (super_prefix) {
-+		int len = strlen(super_prefix);
-+		const char *format = is_dir_sep(super_prefix[len - 1]) ? "%s%s" : "%s/%s";
++		if (!capture_command(&cp, &sb, 0) && sb.len) {
++			strbuf_strip_suffix(&sb, "\n");
++			return strbuf_detach(&sb, NULL);
++		}
 
-what if len == 0? The handling of '/' looks like a change from the original.
+you discard all output if these commands fail, so if the argument is a
+not a submodule, or the other is not a sha1, it will just print
+nothing without error message. Maybe that is OK, though? I don't see
+documentation for these commands, so maybe this is not meant to be
+usable?
