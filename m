@@ -2,103 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B0B79202A5
-	for <e@80x24.org>; Thu, 21 Sep 2017 01:13:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF25420A2B
+	for <e@80x24.org>; Thu, 21 Sep 2017 01:23:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751894AbdIUBNQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Sep 2017 21:13:16 -0400
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:40282 "EHLO
-        glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751681AbdIUBNP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Sep 2017 21:13:15 -0400
-Received: from glandium by mitsuha.glandium.org with local (Exim 4.89)
-        (envelope-from <mh@glandium.org>)
-        id 1duq39-0004qJ-RP; Thu, 21 Sep 2017 10:13:07 +0900
-Date:   Thu, 21 Sep 2017 10:13:07 +0900
-From:   Mike Hommey <mh@glandium.org>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, git-for-windows@googlegroups.com
-Subject: Re: [git-for-windows] Re: Revision resolution for remote-helpers?
-Message-ID: <20170921011307.ktqwesbh5wuckl55@glandium.org>
-References: <20170818064208.plkppke7efpucuwm@glandium.org>
- <20170818220637.GN13924@aiede.mtv.corp.google.com>
- <20170818221754.3rbh35aewj5xnu4z@glandium.org>
- <20170818223323.GO13924@aiede.mtv.corp.google.com>
- <alpine.DEB.2.21.1.1708222212320.19382@virtualbox>
- <20170824082350.6ed6jqkn6aeylvnv@glandium.org>
- <alpine.DEB.2.21.1.1708251258080.7424@virtualbox>
- <20170825120236.orf6wubxf6qlvouy@glandium.org>
+        id S1751387AbdIUBXk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Sep 2017 21:23:40 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59746 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751000AbdIUBXj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Sep 2017 21:23:39 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A872E92AC9;
+        Wed, 20 Sep 2017 21:23:38 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=0rZljh0/KgM3qSjbLplRhr8QMWM=; b=I++z0y
+        XIVfLQ1M2cdx0SvJQizsxntukZEjgFENdiZYPAk8VN0CMIlZDjMFevtxBK1XEeRH
+        ruvj29JI5SvUw5DEJK9dpVI3p8qIBru/J/vTorWb6a7PLjTyxphvHwjKFOjVLYSU
+        34SrjOmAnSUL51G4R56bqug14MahQAxkManR8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=u9d6Xum19HFCUPB5PGQdxnA97lDgqwAX
+        FgA6zIkk8fuAAFmGKjiy5xZGma0vDJ3iPn03jPN3ZVM0B1wQd/BQQFNXaE6E1N0k
+        01Q4JWvHBoeN5EtJMnz+1WuuJ5Fc47z8ora9Gygunk2I4s/XPPrZZe9k2BKBPfxq
+        1+CAeKG8xmU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A036492AC8;
+        Wed, 20 Sep 2017 21:23:38 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0E78F92AC7;
+        Wed, 20 Sep 2017 21:23:37 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: Behaviour of 'git stash show' when a stash has untracked files
+References: <1505626069.9625.6.camel@gmail.com>
+        <xmqqfubinddb.fsf@gitster.mtv.corp.google.com>
+        <20170920193630.l7ifret5dpqgxiwm@sigill.intra.peff.net>
+Date:   Thu, 21 Sep 2017 10:23:36 +0900
+In-Reply-To: <20170920193630.l7ifret5dpqgxiwm@sigill.intra.peff.net> (Jeff
+        King's message of "Wed, 20 Sep 2017 15:36:30 -0400")
+Message-ID: <xmqqpoakn8tj.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170825120236.orf6wubxf6qlvouy@glandium.org>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: NeoMutt/20170609 (1.8.3)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7E98DE44-9E6B-11E7-9263-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 25, 2017 at 09:02:36PM +0900, Mike Hommey wrote:
-> On Fri, Aug 25, 2017 at 12:58:52PM +0200, Johannes Schindelin wrote:
-> > > > > Cc-ing the Git for Windows mailing list as an FYI.
-> > > > > 
-> > > > > I have faint memories that some developers on that project have had to
-> > > > > delve deep into Msys path modification rules.  It's possible they can
-> > > > > give us advice (e.g. about <helper>::<url> having been a bad choice of
-> > > > > syntax in the first place :)).
-> > > > 
-> > > > I think it is safe to assume that :: is not part of any Unix-y path. That
-> > > > is why the MSYS2 runtime does not try to play games with it by converting
-> > > > it to a Windows path.
-> > > > 
-> > > > (And indeed, I just tested this, an argument of the form
-> > > > "a::file://b/x/y/z" is not converted to a "Windows path")
-> > > 
-> > > Note that there are people out there using msys, *and* git for windows,
-> > > although I don't know if such people exist outside Mozilla.
-> > 
-> > Note that I am maintainer of Git for Windows, not of any setup that uses
-> > MSys. Please do not even try to put more stuff on my plate.
-> 
-> I'm not trying to do that. I'm just saying that there are setups where
-> the current way of using remote helpers doesn't work out, and it's
-> completely independent of git or git for windows, and there's not much
-> git for windows can do about it except maybe unmangling what msys does,
-> but it's about as horrible as not doing anything.
-> 
-> This does bring the question, though, whether there should be an
-> alternative syntax, which there actually is, but it doesn't really allow
-> to convey things with a protocol after the double colons (e.g.
-> you can't really distinguish between hg::http://... and hg::http://...
-> with the hg:// form ; git-cinnabar allows the protocol to appear as part
-> of the port number, e.g. hg://host:http/... and hg:// defaults to https)
-> 
-> And this brings the question whether :: would be the right "trigger" for
-> the feature that opened this thread originally.
+Jeff King <peff@peff.net> writes:
 
-(FYI, FWIW)
+> I sketched out a possible solution in:
+>
+>   https://public-inbox.org/git/20170317141417.g2oenl67k74nlqrq@sigill.intra.peff.net/
+>
+> though I share your concerns over whether people would be annoyed to see
+> the existing "stash show" output changed.
 
-So, interestingly, I tried using the instructions on
-https://github.com/git-for-windows/git/wiki/Install-inside-MSYS2-proper
-today, and that led me to the same problem, being that the msys path
-munging was breaking <helper>::<url> syntax.
+Forgot about that one.  I sometimes do "stash show -p | apply", so
+changing what is included without any option would be annoying, and
+not having an option to restore the original behaviour would be
+doubly irritating.  
 
-It turns out, I had placed the git-for-windows section last in
-pacman.conf, so msys2-runtime hadn't been updated. Once it is updated,
-the <helper>::<url> syntax is not munged anymore, and everything works
-as expected.
+Perhaps "stash show [--[untracked|index|worktree]]" to show only
+one, without the "==> I am this variant <==" label, would be
+workable, and with no option we would do --worktree that is the
+traditional output.
 
-Meaning, in fact, that git-for-windows has addressed the problem on its
-end, but the problem still exists when running git-for-windows from a
-msys2 shell without the git-for-windows msys2 runtime.
+In addition "stash show --all" could be the output in your earlier
+patch.  I like the way it uses the '.' pathspec to squelch the
+entire thing when there is no change ;-)
 
-Also, the munging happens at the caller side, so the shell needs to be
-using git-for-windows's msys2 runtime, it's not enough that git itself
-does.
-
-Mike
+Thanks.
