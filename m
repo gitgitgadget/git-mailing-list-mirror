@@ -2,75 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD668202A5
-	for <e@80x24.org>; Thu, 21 Sep 2017 18:25:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 83DF6202A5
+	for <e@80x24.org>; Thu, 21 Sep 2017 18:50:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751652AbdIUSZy (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Sep 2017 14:25:54 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:54875 "EHLO bsmtp7.bon.at"
+        id S1751765AbdIUSuF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Sep 2017 14:50:05 -0400
+Received: from mout.web.de ([217.72.192.78]:49785 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751675AbdIUSZx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Sep 2017 14:25:53 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 3xylRM54Kzz5tlG;
-        Thu, 21 Sep 2017 20:25:51 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id EE5972090;
-        Thu, 21 Sep 2017 20:25:50 +0200 (CEST)
-Subject: Re: [PATCH] git: add --no-optional-locks option
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-References: <20170921043214.pyhdsrpy4omy54rm@sigill.intra.peff.net>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <7a2d895c-df8c-1305-234f-7f8e2b271ec2@kdbg.org>
-Date:   Thu, 21 Sep 2017 20:25:50 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        id S1751739AbdIUSuE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Sep 2017 14:50:04 -0400
+Received: from macce.local ([195.198.252.176]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MBkLb-1e3fVk3l6F-00AkHO; Thu, 21
+ Sep 2017 20:49:31 +0200
+Subject: Re: [PATCH 1/4] git-compat-util.h: xsize_t() - avoid -Wsign-compare
+ warnings
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, GIT Mailing-list <git@vger.kernel.org>
+References: <15367a04-754c-f6b8-a89b-2c1ff65dedf5@ramsayjones.plus.com>
+From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Message-ID: <75416139-74c5-8a60-22e8-79c53dd062c1@web.de>
+Date:   Thu, 21 Sep 2017 20:49:31 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:52.0)
+ Gecko/20100101 Thunderbird/52.3.0
 MIME-Version: 1.0
-In-Reply-To: <20170921043214.pyhdsrpy4omy54rm@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <15367a04-754c-f6b8-a89b-2c1ff65dedf5@ramsayjones.plus.com>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:FBgXjksED/H0UYXq2AGMug71oXcGjV+qfOYbtmFKFCwn5MhuCPj
+ lI5pHmQwcfgr0Xi/soFd27JUPza+NmOdWwvlzs5Jt7rfmowbnI1CG2X0A9N/9Y5VNMmydBT
+ 0B6W8TZK5vaFJG2Oxd1S8xtMrRqHGEfY3ZPIcnUX+5GVc7+Lc9vc23F3+ZYs9air+X9Otyf
+ dk+WBvmkIs641/qmimNtA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:+SWhFUOd7ug=:96d77/LVaVgfJfU4v0BGn2
+ H2jdsZAFeYiBYZpj905/uaWt02ZZq1icakWBf3jZo2zQGTJdWG1+iyrvFSuzsHIRCLxD3C7x8
+ rXmjFPsXcKsBE3TBqYwDo+sxGMuWNCw/tjvwTmmLl0D5Xcjt328IggKHZ4egZHMw7j/mIk5h6
+ zQYq1bH4Y/Zm5pob00xu39eVI4ig3nttz0/3JCbjgBYAtCZpd3b8IoEH8p1A0jEyqQ5BRsWD4
+ 10MDGufdYHfQZUt5T0V8ltZVdBPDrCllfoM3xe0Zat5lTO1FIfMF684N0S4Jev8IOzmV9+ZBJ
+ qSawang7wg1bysCD2vxV4Yuu1kM7kDr1To4zbyX2qOhyNEAjCpv9OFeOV5rFCcUrSlxxBgz46
+ E3195jbiZ1kimf5jt0wfAQcsgWMlTdCUBLd+FwXRRkB9ak3SwX+1YFyrsPIrIewEEOiDA23q7
+ ZkAsYUKIiDGs9en/xYuYjjWCEDfiOWtr/n7cgsKECXjX4RV1TkahDblcKEydT7O/HizWyKfHI
+ GxqyPYnN7YLzllfPlwjn5cmVEHFciOk3m3USyU40jOgkuRPbq4S2AjGe7YsWhc1G7i2S9m8co
+ czVYla572z3rMXCsXaD9CXa4jcQEFzkwvrXs63QTHOcfHuF93gcEwbliI1WKscM3wLyepqEYb
+ V2dp8Rz2RjEgzbil+YMq++wyqhEYfAtp01cPyoh3OAkwdrDFw7pTplNGu4qL0ipE3/8oRyFPT
+ +ww6GGWQMM+K0FdUFz9mVKWCeTFsgGoPl+SevXqVFPqnWtzeqpckZsHJavyK9OkF6Ka4b0XhJ
+ fgFbv8w1I4/IjxO+hHJQpXqiTCMDdFlYgVTb0I3fC4b7uqAmZs=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 21.09.2017 um 06:32 schrieb Jeff King:
-> diff --git a/Documentation/git.txt b/Documentation/git.txt
-> index 6e3a6767e5..8dd3ae05ae 100644
-> --- a/Documentation/git.txt
-> +++ b/Documentation/git.txt
-> @@ -159,6 +159,10 @@ foo.bar= ...`) sets `foo.bar` to the empty string which ` git config
->   	Add "icase" magic to all pathspec. This is equivalent to setting
->   	the `GIT_ICASE_PATHSPECS` environment variable to `1`.
->   
-> +--no-optional-locks::
-> +	Do not perform optional operations that require locks. This is
-> +	equivalent to setting the `GIT_OPTIONAL_LOCKS` to `0`.
+On 2017-09-21 18:46, Ramsay Jones wrote:
+> 
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> ---
+>  git-compat-util.h | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+> 
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 9bc15b036..cedad4d58 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -898,9 +898,11 @@ static inline char *xstrdup_or_null(const char *str)
+>  
+>  static inline size_t xsize_t(off_t len)
+>  {
+> -	if (len > (size_t) len)
+> +	size_t size = (size_t) len;
 > +
->   GIT COMMANDS
->   ------------
->   
-> @@ -697,6 +701,15 @@ of clones and fetches.
->   	which feed potentially-untrusted URLS to git commands.  See
->   	linkgit:git-config[1] for more details.
->   
-> +`GIT_OPTIONAL_LOCKS`::
-> +	If set to `0`, Git will avoid performing any operations which
-> +	require taking a lock and which are not required to complete the
-> +	requested operation. For example, this will prevent `git status`
-> +	from refreshing the index as a side effect. This is useful for
-> +	processes running in the background which do not want to cause
-> +	lock contention with other operations on the repository.
-> +	Defaults to `1`.
+> +	if (len != (off_t) size)
+>  		die("Cannot handle files this big");
+> -	return (size_t)len;
+> +	return size;
 
-I don't think we should pass this environment variable to remote 
-repositories. It should be listed in local_repo_env[] in environment.c.
+Hm, can someone help me out ?
+Why is the cast not needed ?
 
--- Hannes
+>  }
+>  
+>  __attribute__((format (printf, 3, 4)))
+> 
+
