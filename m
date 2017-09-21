@@ -2,111 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 40BD5202A5
-	for <e@80x24.org>; Thu, 21 Sep 2017 20:48:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5302A202A5
+	for <e@80x24.org>; Thu, 21 Sep 2017 21:15:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751797AbdIUUsf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Sep 2017 16:48:35 -0400
-Received: from mail-wr0-f178.google.com ([209.85.128.178]:51874 "EHLO
-        mail-wr0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751763AbdIUUse (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Sep 2017 16:48:34 -0400
-Received: by mail-wr0-f178.google.com with SMTP id z39so5454248wrb.8
-        for <git@vger.kernel.org>; Thu, 21 Sep 2017 13:48:33 -0700 (PDT)
+        id S1751741AbdIUVPQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Sep 2017 17:15:16 -0400
+Received: from mail-oi0-f54.google.com ([209.85.218.54]:48955 "EHLO
+        mail-oi0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751697AbdIUVPP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Sep 2017 17:15:15 -0400
+Received: by mail-oi0-f54.google.com with SMTP id v188so3232026oia.5
+        for <git@vger.kernel.org>; Thu, 21 Sep 2017 14:15:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=RewrOqa+9azbnGP0PgdqZsTH6VLZf8f0NJa36Sh4ruw=;
-        b=R+8lNpNg99Krl2qp+tnJvI1mXHia3KLffHLe2FJ2OWOD6Pta0vXT7uSUlck2KpOyKS
-         4kojMf8qz8anW8+ChDLGRtg+ac6MHXQiIsNG2ksXTzRf6hoS+STrK84IYMb7G22pBck4
-         5L/Vd2kffZejgoz/PrxNQ5kJ59vnbKiwAX4Z1Pk2+g42HkoNZBqvoEQBVt/7KT4r22AW
-         1rJCk9DjMhFRGgekgO5xNIStZOC6tHynbcgMcAI24r1VvWHJ7vzVYe6TL51aLrGWV19N
-         zO7qDEbhORxgdabupqueVxoeQb2z2ee4sFfOzS7aoxldclmyjYzol7r+dGwoS8x9VfGp
-         2DqQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=4oAoqzUMg/0LVWFTzM43wPdxNF0MwS6EvcLKxiOofdI=;
+        b=Wsu/uLMJbV06M9A+vhluuweJxWYiBVwfnjtmDaaNlRRAT4GJ3daDdzPEmeBYmxw3WP
+         u2FbjgqjJ62xEoYacDt4fft8a/zVIwftVY/9edoKbQn7n1UvP2Y09IHbUjmfjNz9gYGq
+         YoTckB3kghBGlvIAvvHsN6OmtkVJTERD1Z6S6Ci+joyaAokbEeK6Vig+bzO7vjvKdR03
+         w5rsh/LlbXmZIDOR8wtUp4xIrivlKqB9MANsiNNty5S4AIZZMrsBHBspQEauV+3lIVIw
+         tEhdmhaOYB/FydUOrqEviwc44YyL4BI3nAwsNEmz4isaSHaOqoMnAIwzqrxy9GSsRV9q
+         h+ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=RewrOqa+9azbnGP0PgdqZsTH6VLZf8f0NJa36Sh4ruw=;
-        b=OcgB6Y6Mmp4+pIMSXNwqDnm9MvCCT8uxR8FNJ7bc8sIGro09YGyu349xMudDE8I7gC
-         jb5Jp7wtTgCS08ZbD3ifAaV/ntqG8EQrJ/DlGEOqyxYcFcXk4pI0UeQPVnEivG9yRJPc
-         YF1EeKIe6Duv9zbh//MGXQ6vMCUttbmbh/9NHxwjrfh3UsoFhs+wFhf8j/nWnEyK58tI
-         rQ0FlDRzRUdfzya1OSuvQ6zfFocwhIm0rMJRg7vXB3+cqjQhPIAtDGQkEB39JHmJgvnH
-         aSUCJB8xWTRpYGBMjO3ePNspNRxoC460ps49TN15892KOaIqGJlOiUvyFF3ai3squuHY
-         qeQw==
-X-Gm-Message-State: AHPjjUjW6SPyn1oN8gr7Qe50Q9xkwVvYhzNZ6SD2jJ813l0uztYlzyGU
-        XX2ZneVZ50IfNDQqelC1TYt0/w==
-X-Google-Smtp-Source: AOwi7QA6srRdbIDYLOLar8Ii9Ivjs6MyY9LhvHIRyl82ZA2zasTTixfwuI/7Ij1WORbapUxTFsOG0A==
-X-Received: by 10.223.198.130 with SMTP id j2mr3063889wrg.52.1506026912985;
-        Thu, 21 Sep 2017 13:48:32 -0700 (PDT)
-Received: from slxBook4.fritz.box (p5DDB5FCC.dip0.t-ipconnect.de. [93.219.95.204])
-        by smtp.gmail.com with ESMTPSA id q140sm2444444wmd.17.2017.09.21.13.48.31
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Thu, 21 Sep 2017 13:48:32 -0700 (PDT)
-From:   larsxschneider@gmail.com
-To:     git@vger.kernel.org
-Cc:     szeder.dev@gmail.com, gitster@pobox.com,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH v1] travis-ci: fix "skip_branch_tip_with_tag()" string comparison
-Date:   Thu, 21 Sep 2017 22:48:30 +0200
-Message-Id: <20170921204830.66831-1-larsxschneider@gmail.com>
-X-Mailer: git-send-email 2.14.1
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=4oAoqzUMg/0LVWFTzM43wPdxNF0MwS6EvcLKxiOofdI=;
+        b=mDF+Nl9vzk3B04cyXKrOQy0oEuIgFh/F7j/kzXrfMJVTCIU8BGHrzMzjHZztfRLF66
+         AwYkRs4hAe5SOiIsexgelU8Inhh96RGAVZgW5rJDUhBluazb02oauz5mUQBbRchjBOy7
+         AgpfR346+iGRoUL+zWwEGAJnJ2RjoB0StUUKdqh0RkD6zrXLGBwah0WtdEB3N43hp5Um
+         VGPyotwbQ52XJhBZrhpsplnSDAIONz/JJqsK8Hw6L2RDEDJ7oDlxRLdg5Sh0P9v9v0H7
+         7VzlOZudewF0Gh1wjzWvAJYE/JMfSZWImHtIGrp0RfbqF8LQj+rSjMwI7yiJ9s4jfYKV
+         qebA==
+X-Gm-Message-State: AHPjjUgYwmi/PMU5KnSqkEhxyXHcA6i8030LtnTRaCWvow+dFAeFCJwY
+        jn4oWLdRaqQ9Dlf/SQGKdeTDzVwNCszihmjc79I=
+X-Google-Smtp-Source: AOwi7QA/gnAWj9q4agRR03X4PWtylMwdcWrEg2xre79jqwVui74rcH7+T8yK8YP09FR45TdNSveE2SfMi1yHORfdAhg=
+X-Received: by 10.202.86.141 with SMTP id k135mr3621430oib.254.1506028514610;
+ Thu, 21 Sep 2017 14:15:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.157.11.88 with HTTP; Thu, 21 Sep 2017 14:14:54 -0700 (PDT)
+In-Reply-To: <xmqq8thgy03t.fsf@gitster.mtv.corp.google.com>
+References: <xmqq8thgy03t.fsf@gitster.mtv.corp.google.com>
+From:   Sahil Dua <sahildua2305@gmail.com>
+Date:   Thu, 21 Sep 2017 23:14:54 +0200
+Message-ID: <CALiud+m1PAD8r0ygoUj3g4LzQjdoPu0CmjiejyG8pHOhr3Fk=Q@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Sep 2017, #03; Fri, 15)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Lars Schneider <larsxschneider@gmail.com>
+>
+> * sd/branch-copy (2017-06-18) 3 commits
+>  - branch: add a --copy (-c) option to go with --move (-m)
+>  - branch: add test for -m renaming multiple config sections
+>  - config: create a function to format section headers
+>
+>  "git branch" learned "-c/-C" to create and switch to a new branch
+>  by copying an existing one.
+>
+>  I personally do not think "branch --copy master backup" while on
+>  "master" that switches to "backup" is a good UI, and I *will* say
+>  "I told you so" when users complain after we merge this down to
+>  'master'.
 
-09f5e97 ("travis-ci: skip a branch build if equal tag is present",
-2017-09-17) introduced the "skip_branch_tip_with_tag" function with
-a broken string comparison. Fix it!
-
-Reported-by: SZEDER Gábor <szeder.dev@gmail.com>
-Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
----
-
-Hi,
-
-previous discussion:
-https://public-inbox.org/git/3B175D35-5B1C-43CD-A7E9-85693335B10A@gmail.com/
-
-Sorry that this trivial fix took so long.
-
-Cheers,
-Lars
-
-
-Notes:
-    Base Commit: a81423d7cf (a81423d7cfdc57238783f05394dddd1064c99165)
-    Diff on Web: https://github.com/larsxschneider/git/commit/6b532a42f0
-    Checkout:    git fetch https://github.com/larsxschneider/git travisci/fix-skip-branch-v1 && git checkout 6b532a42f0
-
- ci/lib-travisci.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/ci/lib-travisci.sh b/ci/lib-travisci.sh
-index 9c4ae9bdd0..c3b46f4a7d 100755
---- a/ci/lib-travisci.sh
-+++ b/ci/lib-travisci.sh
-@@ -14,7 +14,7 @@ skip_branch_tip_with_tag () {
- 	# of a tag.
-
- 	if TAG=$(git describe --exact-match "$TRAVIS_BRANCH" 2>/dev/null) &&
--		$TAG != $TRAVIS_BRANCH
-+		[ "$TAG" != "$TRAVIS_BRANCH" ]
- 	then
- 		echo "Tip of $TRAVIS_BRANCH is exactly at $TAG"
- 		exit 0
---
-2.14.1
-
+Junio, what's up with this one? It's been a long time for this being
+cooked in next. Do we have a plan/idea going forward or is it just
+waiting for more feedback?
