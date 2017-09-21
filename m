@@ -2,244 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A2592047F
-	for <e@80x24.org>; Thu, 21 Sep 2017 09:08:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CACCF2047F
+	for <e@80x24.org>; Thu, 21 Sep 2017 09:39:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751952AbdIUJId convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 21 Sep 2017 05:08:33 -0400
-Received: from mail5.fer.hr ([161.53.72.235]:47176 "EHLO mail.fer.hr"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1751724AbdIUJId (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Sep 2017 05:08:33 -0400
-Received: from POSTAR.fer.hr (2001:b68:16:250::72:237) by MAIL5.fer.hr
- (2001:b68:16:250::72:235) with Microsoft SMTP Server (TLS) id 14.3.361.1;
- Thu, 21 Sep 2017 11:08:30 +0200
-Received: from mail-yw0-f176.google.com (209.85.161.176) by POSTAR.fer.hr
- (161.53.72.237) with Microsoft SMTP Server (TLS) id 14.3.361.1; Thu, 21 Sep
- 2017 11:08:30 +0200
-Received: by mail-yw0-f176.google.com with SMTP id p10so3619664ywh.8
-        for <git@vger.kernel.org>; Thu, 21 Sep 2017 02:08:30 -0700 (PDT)
-X-Gm-Message-State: AHPjjUjK1I1zp645yFjyq5JCzfgAIuZYwP38k8DO2T3FlIWok/jP4S5e
-        Mbrm+LdDj+h4vdne5/oiYACTe1IXJQWUCuxXKck=
-X-Google-Smtp-Source: AOwi7QDTAFW5mwO6vKqkwef7i1cgkD7/4RmKruXcX1y6OBUEeF9NqE0tsL/rYowInXgrGpKBej9vYJK9Y6cJXNyBNxg=
-X-Received: by 10.13.235.197 with SMTP id u188mr1092825ywe.349.1505984908514;
- Thu, 21 Sep 2017 02:08:28 -0700 (PDT)
+        id S1751618AbdIUJj0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Sep 2017 05:39:26 -0400
+Received: from mout.kundenserver.de ([212.227.126.187]:61238 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751436AbdIUJjZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Sep 2017 05:39:25 -0400
+Received: from skimbleshanks.math.uni-hannover.de ([130.75.46.4]) by
+ mrelayeu.kundenserver.de (mreue001 [212.227.15.167]) with ESMTPSA (Nemesis)
+ id 0MU9x3-1dlzmq0sy1-00QoAO; Thu, 21 Sep 2017 11:39:13 +0200
+Subject: Re: [PATCH 2/3] merge-base: return fork-point outside reflog
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Ekelhart Jakob <jakob.ekelhart@fsw.at>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <68633b20-9e2b-ae23-2ede-8728283250f0@grubix.eu>
+ <cover.1505394278.git.git@grubix.eu>
+ <5513a1415d11517c28158d9b4212d383a233182f.1505394278.git.git@grubix.eu>
+ <xmqq60ckzng7.fsf@gitster.mtv.corp.google.com>
+ <cd97bb1b-13f3-0856-a250-8f4921b9f6d8@grubix.eu>
+ <xmqqshfnx1kl.fsf@gitster.mtv.corp.google.com>
+ <xmqqshfgk1mr.fsf@gitster.mtv.corp.google.com>
+From:   Michael J Gruber <git@grubix.eu>
+Message-ID: <5a2fca1d-4edf-965f-4840-58c924c91051@grubix.eu>
+Date:   Thu, 21 Sep 2017 11:39:12 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-Received: by 10.37.170.138 with HTTP; Thu, 21 Sep 2017 02:07:48 -0700 (PDT)
-In-Reply-To: <20170920235502.6214-1-jonathantanmy@google.com>
-References: <CAEPqvoyVJFe2EOvhnZD4vdF=1-VuoZrMP92TeGJ2WAE0X+B5Tw@mail.gmail.com>
- <20170920235502.6214-1-jonathantanmy@google.com>
-From:   =?UTF-8?B?SnVyYWogT3LFoXVsacSH?= <juraj.orsulic@fer.hr>
-Date:   Thu, 21 Sep 2017 11:07:48 +0200
-X-Gmail-Original-Message-ID: <CAEPqvox03p3jVSy4e9q+e_rE+oEudE=Y3FtX+AXahaYs9hYX9A@mail.gmail.com>
-Message-ID: <CAEPqvox03p3jVSy4e9q+e_rE+oEudE=Y3FtX+AXahaYs9hYX9A@mail.gmail.com>
-Subject: Re: [PATCH] fast-export: do not copy from modified file
-To:     Jonathan Tan <jonathantanmy@google.com>
-CC:     <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Originating-IP: [209.85.161.176]
+In-Reply-To: <xmqqshfgk1mr.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: de-DE
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:BcHU4OJAiMY3B02DYu8UVzxNg1j3MfgIPdZpdX1KXjWWuiJtkxQ
+ 7kdGNgb61CBq7UnRQhurE9N9dkafZyRcUlmMpeyuB6XOXP+qMAyYzxNyBfYEf/BTmu50mb2
+ qT0wIB7rsapjWXz/LSs0b51Hxi/kRv05mb2xDTmwZSydJbdlkqCoYZ7AKL5havw5NY6kSSQ
+ N2P2Ctcx18bZ5wiKXI81g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:TUaKWqYcVpg=:7kufFcXI3nZgQ+DgTLRtBT
+ Jpy7eHis2YX2hGXfvb7njxa2xrQEyUZALqDmsGw5QgBzr4K6t7kNnegSDpUtAlLhpZNX/J9KT
+ eZlz/eGY1KG3LrQ6moyjsbFo+JwXEgs/v+dhmV96weADLYKIYYzcc+PJShvJ4XC1aEoz0lHgj
+ S3ih98xNoc5JpKZUJEXCrYZJsXbEQlPV/NeEa0YzJpT9QycbWCgcwRSdtjTjo6bEPAq+O+fTS
+ WTi7/y56s7blZEYj+CEjI1N88ogJVG+CGjVwD8ZFxUTjE66rHauDtH0z4nPcUm19eS2OpO96N
+ TnAHdtUzFL4orFRzE3eOZb6ZVx5nNN+4XGHQen7LhkkHu9++fY1VUieWNxqdM7tVMEYjxVjlP
+ SOwibBmntxmsScG4iPQ47mYyDh+IFvGPgvbevPo44B5yh94jBhqeuIursWiQgTfzVzJ2yV6+f
+ zA905Po1j1uA/Id8wcfCmgnVGNuRDHNQ9jCIxXZsth+2Jyz/IVci2JBdatZEU4qUbF/mIK/KF
+ DjvAXLK/1qmxMbNogFbWY+Yh87ADki70O4mG2M0vP53/UgDMYlZ09Rr8TDbRof77wbAt2vWj2
+ pRq7Xcb+egcdPGrzj9MUjcQQKKuYIYRcDeIwjWTocOW2TLr2GX8C45p7J6E27OVUlYwzL3LuT
+ tdHcUm9jG0/CjVwcILYgb8W0Vtg6zHldqjRcX8bgWzi3AcwboGM7NWT4qHILPlfzRnOw5mS45
+ 6EZIhXBOUQ6g1S1y+1ie0LqA8NRCxH291FX57gjlTh6tlWAQm0SRfaL0OiE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you, Jonathan!
+Junio C Hamano venit, vidit, dixit 21.09.2017 08:27:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> ...  I agree that there is a value in what your patch 2/3
+>> wants to do when the current one that is more strict would say
+>> "there is no known fork-point"---we would gain a way to say "... but
+>> this is the best guess based on available data that may be better
+>> than getting no answer." which we lack.
+>>
+>> Having said all that, I do not agree with your last sentence in the
+>> paragraph I quoted above.  It is a mere implementation detail to
+>> consult the reflog to find out the set of "historical tips of the
+>> Branch"; the current tip by definition is among the commits in that
+>> set, even when the reflog of Branch is missing.  What 4f21454b55 did
+>> was a reasonable "fix" that is still in line with the definition of
+>> "--fork-point" from that point of view.
+>>
+>> Whether we add a "looser" version of "--fork-point" to the system or
+>> not, the more strict version should still use the current tip as one
+>> of the historical tips (i.e. those that we would take from the
+>> reflog if the reflog were not empty) in the more "strict" mode.  The
+>> looser version may also want to do so as well.
+> 
+> So, should I mark this in What's cooking report as "expecting a
+> reroll", anticipating that a new option would be added to trigger
+> the new & looser behaviour?
+> 
 
-On Thu, Sep 21, 2017 at 1:55 AM, Jonathan Tan <jonathantanmy@google.com> wrote:
-> When run with the "-C" option, fast-export writes 'C' commands in its
-> output whenever the internal diff mechanism detects a file copy,
-> indicating that fast-import should copy the given existing file to the
-> given new filename. However, the diff mechanism works against the
-> prior version of the file, whereas fast-import uses whatever is current.
-> This causes issues when a commit both modifies a file and uses it as the
-> source for a copy.
->
-> Therefore, teach fast-export to refrain from writing 'C' when it has
-> already written a modification command for a file.
->
-> An existing test in t9350-fast-export is also fixed in this patch. The
-> existing line "C file6 file7" copies the wrong version of file6, but it
-> has coincidentally worked because file7 was subsequently overridden.
->
-> Reported-by: Juraj Oršulić <juraj.orsulic@fer.hr>
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
-> I tested this with the reproduction commands given by Juraj Oršulić and
-> it works.
->
-> I also have a version that prints the redundant 'C' (and does not
-> require the change to t9350), omitting it only if it would cause a wrong
-> result. That seems imprecise to me, but I can send that out if the
-> redundant 'C' is preferred.
-> ---
->  builtin/fast-export.c  | 46 ++++++++++++++++++++++++++++++++--------------
->  t/t9350-fast-export.sh | 20 +++++++++++++++++++-
->  2 files changed, 51 insertions(+), 15 deletions(-)
->
-> diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-> index d412c0a8f..da42ee5e6 100644
-> --- a/builtin/fast-export.c
-> +++ b/builtin/fast-export.c
-> @@ -344,6 +344,7 @@ static void show_filemodify(struct diff_queue_struct *q,
->                             struct diff_options *options, void *data)
->  {
->         int i;
-> +       struct string_list *changed = data;
->
->         /*
->          * Handle files below a directory first, in case they are all deleted
-> @@ -359,20 +360,31 @@ static void show_filemodify(struct diff_queue_struct *q,
->                 case DIFF_STATUS_DELETED:
->                         printf("D ");
->                         print_path(spec->path);
-> +                       string_list_insert(changed, spec->path);
->                         putchar('\n');
->                         break;
->
->                 case DIFF_STATUS_COPIED:
->                 case DIFF_STATUS_RENAMED:
-> -                       printf("%c ", q->queue[i]->status);
-> -                       print_path(ospec->path);
-> -                       putchar(' ');
-> -                       print_path(spec->path);
-> -                       putchar('\n');
-> -
-> -                       if (!oidcmp(&ospec->oid, &spec->oid) &&
-> -                           ospec->mode == spec->mode)
-> -                               break;
-> +                       /*
-> +                        * If a change in the file corresponding to ospec->path
-> +                        * has been observed, we cannot trust its contents
-> +                        * because the diff is calculated based on the prior
-> +                        * contents, not the current contents.  So, declare a
-> +                        * copy or rename only if there was no change observed.
-> +                        */
-> +                       if (!string_list_has_string(changed, ospec->path)) {
-> +                               printf("%c ", q->queue[i]->status);
-> +                               print_path(ospec->path);
-> +                               putchar(' ');
-> +                               print_path(spec->path);
-> +                               string_list_insert(changed, spec->path);
-> +                               putchar('\n');
-> +
-> +                               if (!oidcmp(&ospec->oid, &spec->oid) &&
-> +                                   ospec->mode == spec->mode)
-> +                                       break;
-> +                       }
->                         /* fallthrough */
->
->                 case DIFF_STATUS_TYPE_CHANGED:
-> @@ -393,6 +405,7 @@ static void show_filemodify(struct diff_queue_struct *q,
->                                        get_object_mark(object));
->                         }
->                         print_path(spec->path);
-> +                       string_list_insert(changed, spec->path);
->                         putchar('\n');
->                         break;
->
-> @@ -528,7 +541,8 @@ static void anonymize_ident_line(const char **beg, const char **end)
->         *end = out->buf + out->len;
->  }
->
-> -static void handle_commit(struct commit *commit, struct rev_info *rev)
-> +static void handle_commit(struct commit *commit, struct rev_info *rev,
-> +                         struct string_list *paths_of_changed_objects)
->  {
->         int saved_output_format = rev->diffopt.output_format;
->         const char *commit_buffer;
-> @@ -615,6 +629,7 @@ static void handle_commit(struct commit *commit, struct rev_info *rev)
->         if (full_tree)
->                 printf("deleteall\n");
->         log_tree_diff_flush(rev);
-> +       string_list_clear(paths_of_changed_objects, 0);
->         rev->diffopt.output_format = saved_output_format;
->
->         printf("\n");
-> @@ -630,14 +645,15 @@ static void *anonymize_tag(const void *old, size_t *len)
->         return strbuf_detach(&out, len);
->  }
->
-> -static void handle_tail(struct object_array *commits, struct rev_info *revs)
-> +static void handle_tail(struct object_array *commits, struct rev_info *revs,
-> +                       struct string_list *paths_of_changed_objects)
->  {
->         struct commit *commit;
->         while (commits->nr) {
->                 commit = (struct commit *)commits->objects[commits->nr - 1].item;
->                 if (has_unshown_parent(commit))
->                         return;
-> -               handle_commit(commit, revs);
-> +               handle_commit(commit, revs, paths_of_changed_objects);
->                 commits->nr--;
->         }
->  }
-> @@ -977,6 +993,7 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
->         char *export_filename = NULL, *import_filename = NULL;
->         uint32_t lastimportid;
->         struct string_list refspecs_list = STRING_LIST_INIT_NODUP;
-> +       struct string_list paths_of_changed_objects = STRING_LIST_INIT_DUP;
->         struct option options[] = {
->                 OPT_INTEGER(0, "progress", &progress,
->                             N_("show progress after <n> objects")),
-> @@ -1049,14 +1066,15 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
->         if (prepare_revision_walk(&revs))
->                 die("revision walk setup failed");
->         revs.diffopt.format_callback = show_filemodify;
-> +       revs.diffopt.format_callback_data = &paths_of_changed_objects;
->         DIFF_OPT_SET(&revs.diffopt, RECURSIVE);
->         while ((commit = get_revision(&revs))) {
->                 if (has_unshown_parent(commit)) {
->                         add_object_array(&commit->object, NULL, &commits);
->                 }
->                 else {
-> -                       handle_commit(commit, &revs);
-> -                       handle_tail(&commits, &revs);
-> +                       handle_commit(commit, &revs, &paths_of_changed_objects);
-> +                       handle_tail(&commits, &revs, &paths_of_changed_objects);
->                 }
->         }
->
-> diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-> index 8dcb05c4a..866ddf605 100755
-> --- a/t/t9350-fast-export.sh
-> +++ b/t/t9350-fast-export.sh
-> @@ -234,7 +234,7 @@ test_expect_success 'fast-export -C -C | fast-import' '
->         mkdir new &&
->         git --git-dir=new/.git init &&
->         git fast-export -C -C --signed-tags=strip --all > output &&
-> -       grep "^C file6 file7\$" output &&
-> +       grep "^C file2 file4\$" output &&
->         cat output |
->         (cd new &&
->          git fast-import &&
-> @@ -522,4 +522,22 @@ test_expect_success 'delete refspec' '
->         test_cmp expected actual
->  '
->
-> +test_expect_success 'when using -C, do not declare copy when source of copy is also modified' '
-> +       test_create_repo src &&
-> +       echo a_line >src/file.txt &&
-> +       git -C src add file.txt &&
-> +       git -C src commit -m 1st_commit &&
-> +
-> +       cp src/file.txt src/file2.txt &&
-> +       echo another_line >>src/file.txt &&
-> +       git -C src add file.txt file2.txt &&
-> +       git -C src commit -m 2nd_commit &&
-> +
-> +       test_create_repo dst &&
-> +       git -C src fast-export --all -C | git -C dst fast-import &&
-> +       git -C src show >expected &&
-> +       git -C dst show >actual &&
-> +       test_cmp expected actual
-> +'
-> +
->  test_done
-> --
-> 2.14.1.821.g8fa685d3b7-goog
->
+I dunno. Some participants in this thread considered my patch to be a
+fix rather than alternative behaviour. So I hoped for more responses to
+your response. (Re-adding dscho on cc - our thread graph forked...)
+
+Also, I'm undecided about about your reflog argument above - if we leave
+"--fork-point" to be the current behaviour including Jeff's fix then the
+documentation would need an even bigger overhaul, because it's neither
+"reflog also" (as claimed in the doc) nor "reflog only" (as in the
+original implementation) but "historical tips as inferred from the
+current value and the reflog".
+
+In any case, for two modes we need two names for the options. Maybe
+--fork-point and --fork-base because in the loose mode, you may get a
+"base of a strict fork point"?
+
+Michael
