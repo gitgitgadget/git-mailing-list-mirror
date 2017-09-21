@@ -6,31 +6,31 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5479C2047F
-	for <e@80x24.org>; Thu, 21 Sep 2017 07:49:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6965F2047F
+	for <e@80x24.org>; Thu, 21 Sep 2017 07:49:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751804AbdIUHtl (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Sep 2017 03:49:41 -0400
-Received: from benson.default.arb33.uk0.bigv.io ([46.43.0.16]:43240 "EHLO
+        id S1751781AbdIUHth (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Sep 2017 03:49:37 -0400
+Received: from benson.default.arb33.uk0.bigv.io ([46.43.0.16]:43233 "EHLO
         benson.default.arb33.uk0.bigv.io" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751531AbdIUHtj (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 21 Sep 2017 03:49:39 -0400
+        by vger.kernel.org with ESMTP id S1751530AbdIUHth (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 21 Sep 2017 03:49:37 -0400
 Received: from cpc91198-cmbg18-2-0-cust103.5-4.cable.virginm.net ([81.98.98.104] helo=celaeno.hellion.org.uk)
         by benson.default.arb33.uk0.bigv.io with esmtpsa (TLS1.2:RSA_AES_128_CBC_SHA1:128)
         (Exim 4.80)
         (envelope-from <ijc-relay-phiayoh8@benson.default.arb33.uk0.bigv.io>)
-        id 1duwEr-0005Og-Kw; Thu, 21 Sep 2017 08:49:38 +0100
+        id 1duwEo-0005O6-9X; Thu, 21 Sep 2017 08:49:34 +0100
 Received: from dagon.hellion.org.uk ([192.168.1.7])
         by celaeno.hellion.org.uk with smtp (Exim 4.84_2)
         (envelope-from <ijc@hellion.org.uk>)
-        id 1duwEq-0000hr-1Z; Thu, 21 Sep 2017 08:49:37 +0100
-Received: by dagon.hellion.org.uk (sSMTP sendmail emulation); Thu, 21 Sep 2017 08:49:36 +0100
+        id 1duwEm-0000hh-EX; Thu, 21 Sep 2017 08:49:33 +0100
+Received: by dagon.hellion.org.uk (sSMTP sendmail emulation); Thu, 21 Sep 2017 08:49:32 +0100
 From:   Ian Campbell <ijc@hellion.org.uk>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, Ian Campbell <ijc@hellion.org.uk>
-Subject: [PATCH v3 4/4] filter-branch: use hash-object instead of mktag
-Date:   Thu, 21 Sep 2017 08:49:32 +0100
-Message-Id: <20170921074932.5490-4-ijc@hellion.org.uk>
+Subject: [PATCH v3 1/4] filter-branch: reset $GIT_* before cleaning up
+Date:   Thu, 21 Sep 2017 08:49:29 +0100
+Message-Id: <20170921074932.5490-1-ijc@hellion.org.uk>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <1505980146.4636.9.camel@hellion.org.uk>
 References: <1505980146.4636.9.camel@hellion.org.uk>
@@ -39,36 +39,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This allows us to recreate even historical tags which would now be consider
-invalid, such as v2.6.12-rc2..v2.6.13-rc3 in the Linux kernel source tree which
-lack the `tagger` header.
-
-    $ git rev-parse v2.6.12-rc2
-    9e734775f7c22d2f89943ad6c745571f1930105f
-    $ git cat-file tag v2.6.12-rc2 | git mktag
-    error: char76: could not find "tagger "
-    fatal: invalid tag signature file
-    $ git cat-file tag v2.6.12-rc2 | git hash-object -t tag -w --stdin
-    9e734775f7c22d2f89943ad6c745571f1930105f
+This is pure code motion to enable a subsequent patch to add code which needs
+to happen with the reset $GIT_* but before the temporary directory has been
+cleaned up.
 
 Signed-off-by: Ian Campbell <ijc@hellion.org.uk>
 ---
- git-filter-branch.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ git-filter-branch.sh | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index 956869b8e..3365a3b86 100755
+index 3a74602ef..3da281f8a 100755
 --- a/git-filter-branch.sh
 +++ b/git-filter-branch.sh
-@@ -561,7 +561,7 @@ if [ "$filter_tag_name" ]; then
- 					}' \
- 				    -e '/^-----BEGIN PGP SIGNATURE-----/q' \
- 				    -e 'p' ) |
--				git mktag) ||
-+				git hash-object -t tag -w --stdin) ||
- 				die "Could not create new tag object for $ref"
- 			if git cat-file tag "$ref" | \
- 			   sane_grep '^-----BEGIN PGP SIGNATURE-----' >/dev/null 2>&1
+@@ -544,11 +544,6 @@ if [ "$filter_tag_name" ]; then
+ 	done
+ fi
+ 
+-cd "$orig_dir"
+-rm -rf "$tempdir"
+-
+-trap - 0
+-
+ unset GIT_DIR GIT_WORK_TREE GIT_INDEX_FILE
+ test -z "$ORIG_GIT_DIR" || {
+ 	GIT_DIR="$ORIG_GIT_DIR" && export GIT_DIR
+@@ -562,6 +557,11 @@ test -z "$ORIG_GIT_INDEX_FILE" || {
+ 	export GIT_INDEX_FILE
+ }
+ 
++cd "$orig_dir"
++rm -rf "$tempdir"
++
++trap - 0
++
+ if [ "$(is_bare_repository)" = false ]; then
+ 	git read-tree -u -m HEAD || exit
+ fi
 -- 
 2.11.0
 
