@@ -2,100 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 717B120281
-	for <e@80x24.org>; Thu, 21 Sep 2017 03:31:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D39520281
+	for <e@80x24.org>; Thu, 21 Sep 2017 03:50:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751521AbdIUDb4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Sep 2017 23:31:56 -0400
-Received: from cloud.peff.net ([104.130.231.41]:45488 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751283AbdIUDbz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Sep 2017 23:31:55 -0400
-Received: (qmail 30648 invoked by uid 109); 21 Sep 2017 03:31:55 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 21 Sep 2017 03:31:55 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18478 invoked by uid 111); 21 Sep 2017 03:32:32 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Wed, 20 Sep 2017 23:32:32 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Sep 2017 23:31:52 -0400
-Date:   Wed, 20 Sep 2017 23:31:52 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: Behaviour of 'git stash show' when a stash has untracked files
-Message-ID: <20170921033152.4hbkctzxraww5rqo@sigill.intra.peff.net>
-References: <1505626069.9625.6.camel@gmail.com>
- <xmqqfubinddb.fsf@gitster.mtv.corp.google.com>
- <20170920193630.l7ifret5dpqgxiwm@sigill.intra.peff.net>
- <xmqqpoakn8tj.fsf@gitster.mtv.corp.google.com>
+        id S1751450AbdIUDtG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Sep 2017 23:49:06 -0400
+Received: from mail-pf0-f178.google.com ([209.85.192.178]:49392 "EHLO
+        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751361AbdIUDtF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Sep 2017 23:49:05 -0400
+Received: by mail-pf0-f178.google.com with SMTP id l188so2585667pfc.6
+        for <git@vger.kernel.org>; Wed, 20 Sep 2017 20:49:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=PEfjMeHkLSWq5T2M+lojhl2kobOGx+C5X+1L+0WViaU=;
+        b=iV/xj3Z5a8c3usWgl4JHG84krA5vS4zxtBwn6spAE76eflXr7dYeMRppbYkq4VH0cg
+         9+8rHhCm2btwBgerzyyV97WOdvXdAWUCJM1/1629FT0CAgNpTfMe/TyAf6ZcAqNRkjTy
+         IsWkfa/FIS1VwBhsWCXeX4rYQCfeqZJVxQlimkazE0G/Gx5VZTDBaiv8/5PXfaPYQUbg
+         xWpy780WZTlpWeD0U/B/aAL6ozDVigT9TLCeWZ1jSNBE2zrh3iBuJEMowEAoS+h8kba+
+         JdwGHyPtc0GgrAO5Xh59b4FmOiQu+rapXVMuysN+Z06enEQA3IRbp3a2oXTnxmXX0Hsh
+         5nyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=PEfjMeHkLSWq5T2M+lojhl2kobOGx+C5X+1L+0WViaU=;
+        b=Cy4yh3gjc23+d8fVitP48w4AJhC4PATurkryLqTow7y5eyLbgtGq8Bb8+1KFud86qt
+         vP/9yih6EuQnBglCFomAJIEcSs9UZk8v5PWrA/gG3eJnVOshx9rAHsh/C85b3EVpZu6f
+         J5eojIW1nnLr9bpjR3FzSOgu7qlNek2bohwIpmJjddrUdl1+yT72qTfFtQFm3Os/CNx9
+         kyM4qeoKNeA5QxNX33Sr/YVvVon2xQLQr5VfV1qDmVSx2E4nz9RkOJXkhWYbsFFQmyid
+         IR43Ja6zO8HOb9bkjw3c4t7li0CPfs27IXhc+vZ/lmls5ag0Dc23ZIU4h4tdZmiSKBfu
+         ZZGQ==
+X-Gm-Message-State: AHPjjUjMKDUUEK+eLnlvLkK/tzdljTPkTqF4rjkqnAD9Vd+MbApa5vdU
+        5qIJN5a2keMksC3BMtDCUOg=
+X-Google-Smtp-Source: AOwi7QCB6rVIYrYKiMSIuKcWYfBPTDkm4P4NbL9+3V1vMtsU49BQ5Brxv+f0RMmuJRvv8IgOtiSPSw==
+X-Received: by 10.84.244.6 with SMTP id g6mr4227635pll.223.1505965744628;
+        Wed, 20 Sep 2017 20:49:04 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:da9:ac38:cdcf:de91])
+        by smtp.gmail.com with ESMTPSA id n18sm489322pgd.69.2017.09.20.20.49.03
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 20 Sep 2017 20:49:03 -0700 (PDT)
+Date:   Wed, 20 Sep 2017 20:49:00 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] revision: replace "struct cmdline_pathspec" with
+ argv_array
+Message-ID: <20170921034900.GB88098@aiede.mtv.corp.google.com>
+References: <1505936846-2195-4-git-send-email-martin.agren@gmail.com>
+ <20170920202552.kkwhigmv7lq6cj3y@sigill.intra.peff.net>
+ <20170920203659.xqy76bg5nfabvbfx@sigill.intra.peff.net>
+ <20170920224826.GH27425@aiede.mtv.corp.google.com>
+ <20170921030424.akqaou7tqj2updgr@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqpoakn8tj.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <20170921030424.akqaou7tqj2updgr@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 21, 2017 at 10:23:36AM +0900, Junio C Hamano wrote:
+Hi,
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > I sketched out a possible solution in:
-> >
-> >   https://public-inbox.org/git/20170317141417.g2oenl67k74nlqrq@sigill.intra.peff.net/
-> >
-> > though I share your concerns over whether people would be annoyed to see
-> > the existing "stash show" output changed.
-> 
-> Forgot about that one.  I sometimes do "stash show -p | apply", so
-> changing what is included without any option would be annoying, and
-> not having an option to restore the original behaviour would be
-> doubly irritating.
+Jeff King wrote:
 
-I think it would mostly Just Work for your case. git-apply should ignore
-the subject cruft at the top of the patch. And if you didn't create a
-stash with "-u" or with bits in the index, then those would be absent
-from the diff.
+> But mostly I am fundamentally against using UNLEAK() in a case like
+> this, because it does not match either of the properties which justified
+> adding UNLEAK() in the first place:
+>
+>   1. We are about to exit the program, so the "leak" is only caused by
+>      the memory going out of scope at that exit.
+>
+>      By contrast, the revision machinery may be called many times in the
+>      same program.
+>
+>   2. The memory remains useful until around the time of program exit.
+>
+>      This most certainly does not, as it would not even be reachable.
+[...]
+> On Wed, Sep 20, 2017 at 03:48:26PM -0700, Jonathan Nieder wrote:
 
-And if you _did_ create such a stash, I actually suspect that "apply"
-barfing on the resulting patch may be a better outcome than silently
-ignoring the changes.
+>> In other words, proposed changes:
+>>
+>>  1. Could the commit message describe what effect this would have on
+>>     maximum heap usage, if any?  (In qualitative terms is fine, though
+>>     actual numbers would be even better if it's easy to get them.)
+>>     That would make it easier to justify not using UNLEAK.
+>
+> What wording are you looking for? It was a leak, and now it's gone.  The
+> size of the leak depends on how much you feed to --stdin. IMHO using
+> UNLEAK is totally inappropriate for this case, and doesn't even seem
+> like an alternative worth rejecting.
+>
+>>  2. Can parse_pathspec get a comment in pathspec.h saying that it
+>>     defensively copies anything it needs from args so the caller is
+>>     free to modify or free it?  That way, it should be more obvious
+>>     to people in the future modifying parse_pathspec() that callers
+>>     may rely on that.  (The current API comment describes argv as
+>>     "command line arguments", which I fear would send the opposite
+>>     message to implementors.)
+>
+> I certainly agree that the pathspec interface could use better
+> documentation. Patches welcome? :)
 
-I dunno. I do not use either of those features ("-u" or stashing the
-index state) myself. But I have always been bothered how the saved state
-is a bit hidden from the user. It seems like a recipe for user confusion
-when they save something with "git stash" but then "stash show" doesn't
-even mention it.
+I think I failed at communicating here.  That is not what I meant at
+all.
 
-> Perhaps "stash show [--[untracked|index|worktree]]" to show only
-> one, without the "==> I am this variant <==" label, would be
-> workable, and with no option we would do --worktree that is the
-> traditional output.
-> 
-> In addition "stash show --all" could be the output in your earlier
-> patch.  I like the way it uses the '.' pathspec to squelch the
-> entire thing when there is no change ;-)
+The context is that Git (especially older parts of it) suffers from a
+pretty severe lack of API documentation.  For newcomers that is
+especially obvious --- long-time git contributors, on the other hand,
+may get used to patterns and common interfaces and may have trouble
+seeing just how bad the lack of clearly communicated API contracts is.
 
-Those all seem like sane interface proposals. As I said above, I have a
-vague feeling that the default _ought_ to tell about everything. But I
-don't care all that much myself, and I agree that we should avoid
-creating headaches for existing users (it's just not clear to me how big
-the headaches would be).
+There is a bit of a "broken window" problem, too: authors of one-off
+patches may reasonably assume from existing code that this is just the
+way it is and, lacking examples of how to document an API, add more
+underdocumented API contracts.
 
-I guess the nuclear option there is introducing "git stash info" or
-something, and marking "git stash show" as an alias for "git stash info
---worktree". It is too bad, though, as "show" is really the perfect
-name.
+The patch I am replying to tightens the contract for parse_pathspec().
+I am not asking for comprehensive documentation of that function ---
+that would be clearly off-topic for the patch.  Instead, I am saying
+that we should document what we are newly requiring of the function in
+the patch.  That way, the documented contract becomes clearer over
+time as people document what they are relying on.  I think of that as
+generally a good practice.
 
-Anyway. I don't have plans to work on this anytime soon, but I'd be
-happy to review if anybody picked up the topic.
+In other words, it was not at all obvious that "(2) The memory remains
+useful until around the time of program exit" did not hold.  To a
+casual reader it instead looks like (2) does hold, and there's no
+documentation short of delving into the implementation of
+parse_pathspec() to convince a reader otherwise.  The documentation
+that is present leads to the opposite conclusion.
 
--Peff
+The assertion (1) that this allocation is going to happen multiple
+times in a program isn't true either.  As you noted, we only read
+stdin once.  But that doesn't matter as long as (2) doesn't hold.
+
+TBH saying that I should write the one-sentence doc patch feels like
+a cop-out.  Just like it is not sustainable for those reviewers that
+are interested in good test coverage to be the only ones who write
+tests, I think we cannot avoid treating documentation of API contracts
+as a shared responsibility.
+
+Thanks and hope that clarifies,
+Jonathan
