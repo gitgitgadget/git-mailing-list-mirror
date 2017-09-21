@@ -2,101 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 614BA20281
-	for <e@80x24.org>; Thu, 21 Sep 2017 01:12:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B0B79202A5
+	for <e@80x24.org>; Thu, 21 Sep 2017 01:13:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751879AbdIUBMv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Sep 2017 21:12:51 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53627 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751681AbdIUBMu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Sep 2017 21:12:50 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3EE7E92933;
-        Wed, 20 Sep 2017 21:12:50 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=TtTQFbOcEwLARoCQEFDZlyxqmng=; b=GY6PeM
-        FydWDGVVdc01+gdvmxb6s2sCpiKANnNuxUEHAULFteLabPVHja0DUurFq5y5bDyu
-        9INkVqaj32fbxbyUX9/qoOlAaru3upq8x5rsVpQcQc85oaz2ivXKEw2FoYLNogT3
-        g5nGHlweNRlNSL61K5WyMi9IfS4XIspZWVh9Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Zxf/eBQO4xJVeOXvgdroEY2hysuOcgid
-        WeseL4pkyoNV236kv9wO4jPghNJJjzE7wuxRrJFt6aZkE/Kr2Ig1yj17tNiV80Na
-        5cA3PMX8xPBKQ+1Nh0jf2VY6bCDyhmNsFkyB8VGPY6nvhP0DL36y/Op17PjjlJG6
-        UEELJVSpiAM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 355D192932;
-        Wed, 20 Sep 2017 21:12:50 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 824F892930;
-        Wed, 20 Sep 2017 21:12:49 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Andreas Schwab <schwab@linux-m68k.org>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2] for_each_string_list_item: avoid undefined behavior for empty list
-References: <cb2d4d71c7c1db452b86c8076c153cabe7384e28.1505490776.git.mhagger@alum.mit.edu>
-        <20170915184323.GU27425@aiede.mtv.corp.google.com>
-        <b8951886-feab-a87a-9683-3c155cfa98a8@alum.mit.edu>
-        <b03c7b09-853f-a2ed-f73e-7d946c90cedb@gmail.com>
-        <20170920023008.GB126984@aiede.mtv.corp.google.com>
-        <xmqqd16mowig.fsf@gitster.mtv.corp.google.com>
-        <20170920052705.GC126984@aiede.mtv.corp.google.com>
-        <87vakd2v22.fsf@linux-m68k.org>
-        <20170920173134.GZ27425@aiede.mtv.corp.google.com>
-        <87lgl9rqbq.fsf@linux-m68k.org>
-Date:   Thu, 21 Sep 2017 10:12:48 +0900
-In-Reply-To: <87lgl9rqbq.fsf@linux-m68k.org> (Andreas Schwab's message of
-        "Wed, 20 Sep 2017 23:51:53 +0200")
-Message-ID: <xmqqtvzwn9bj.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751894AbdIUBNQ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Sep 2017 21:13:16 -0400
+Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:40282 "EHLO
+        glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751681AbdIUBNP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Sep 2017 21:13:15 -0400
+Received: from glandium by mitsuha.glandium.org with local (Exim 4.89)
+        (envelope-from <mh@glandium.org>)
+        id 1duq39-0004qJ-RP; Thu, 21 Sep 2017 10:13:07 +0900
+Date:   Thu, 21 Sep 2017 10:13:07 +0900
+From:   Mike Hommey <mh@glandium.org>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, git-for-windows@googlegroups.com
+Subject: Re: [git-for-windows] Re: Revision resolution for remote-helpers?
+Message-ID: <20170921011307.ktqwesbh5wuckl55@glandium.org>
+References: <20170818064208.plkppke7efpucuwm@glandium.org>
+ <20170818220637.GN13924@aiede.mtv.corp.google.com>
+ <20170818221754.3rbh35aewj5xnu4z@glandium.org>
+ <20170818223323.GO13924@aiede.mtv.corp.google.com>
+ <alpine.DEB.2.21.1.1708222212320.19382@virtualbox>
+ <20170824082350.6ed6jqkn6aeylvnv@glandium.org>
+ <alpine.DEB.2.21.1.1708251258080.7424@virtualbox>
+ <20170825120236.orf6wubxf6qlvouy@glandium.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FC163F30-9E69-11E7-809F-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170825120236.orf6wubxf6qlvouy@glandium.org>
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+User-Agent: NeoMutt/20170609 (1.8.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Andreas Schwab <schwab@linux-m68k.org> writes:
+On Fri, Aug 25, 2017 at 09:02:36PM +0900, Mike Hommey wrote:
+> On Fri, Aug 25, 2017 at 12:58:52PM +0200, Johannes Schindelin wrote:
+> > > > > Cc-ing the Git for Windows mailing list as an FYI.
+> > > > > 
+> > > > > I have faint memories that some developers on that project have had to
+> > > > > delve deep into Msys path modification rules.  It's possible they can
+> > > > > give us advice (e.g. about <helper>::<url> having been a bad choice of
+> > > > > syntax in the first place :)).
+> > > > 
+> > > > I think it is safe to assume that :: is not part of any Unix-y path. That
+> > > > is why the MSYS2 runtime does not try to play games with it by converting
+> > > > it to a Windows path.
+> > > > 
+> > > > (And indeed, I just tested this, an argument of the form
+> > > > "a::file://b/x/y/z" is not converted to a "Windows path")
+> > > 
+> > > Note that there are people out there using msys, *and* git for windows,
+> > > although I don't know if such people exist outside Mozilla.
+> > 
+> > Note that I am maintainer of Git for Windows, not of any setup that uses
+> > MSys. Please do not even try to put more stuff on my plate.
+> 
+> I'm not trying to do that. I'm just saying that there are setups where
+> the current way of using remote helpers doesn't work out, and it's
+> completely independent of git or git for windows, and there's not much
+> git for windows can do about it except maybe unmangling what msys does,
+> but it's about as horrible as not doing anything.
+> 
+> This does bring the question, though, whether there should be an
+> alternative syntax, which there actually is, but it doesn't really allow
+> to convey things with a protocol after the double colons (e.g.
+> you can't really distinguish between hg::http://... and hg::http://...
+> with the hg:// form ; git-cinnabar allows the protocol to appear as part
+> of the port number, e.g. hg://host:http/... and hg:// defaults to https)
+> 
+> And this brings the question whether :: would be the right "trigger" for
+> the feature that opened this thread originally.
 
-> On Sep 20 2017, Jonathan Nieder <jrnieder@gmail.com> wrote:
->
->> Andreas Schwab wrote:
->>> On Sep 19 2017, Jonathan Nieder <jrnieder@gmail.com> wrote:
->>
->>>> B. #define for_each_string_list_item(item, list) \
->>>> 	if (list->items) \
->>>> 		for (item = ...; ...; ... )
->>>>
->>>>    This breaks a caller like
->>>> 	if (foo)
->>>> 		for_each_string_list_item(item, list)
->>>> 			...
->>>> 	else
->>>> 		...
->>>>
->>>>    making it a non-starter.
->>>
->>> That can be fixed with a dangling else.
->>
->> I believe the fix you're referring to is option C, from the same email
->> you are replying to.  If not, please correct me.
->
-> A variant thereof, yes.
+(FYI, FWIW)
 
-Now you make me curious.  How would that variant be different from
-option C. in Jonathan's message?  Perhaps that different version may
-be a solution to work around the potential issue mentioned in the
-description of option C.?
+So, interestingly, I tried using the instructions on
+https://github.com/git-for-windows/git/wiki/Install-inside-MSYS2-proper
+today, and that led me to the same problem, being that the msys path
+munging was breaking <helper>::<url> syntax.
 
+It turns out, I had placed the git-for-windows section last in
+pacman.conf, so msys2-runtime hadn't been updated. Once it is updated,
+the <helper>::<url> syntax is not munged anymore, and everything works
+as expected.
+
+Meaning, in fact, that git-for-windows has addressed the problem on its
+end, but the problem still exists when running git-for-windows from a
+msys2 shell without the git-for-windows msys2 runtime.
+
+Also, the munging happens at the caller side, so the shell needs to be
+using git-for-windows's msys2 runtime, it's not enough that git itself
+does.
+
+Mike
