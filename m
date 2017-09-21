@@ -2,100 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8EB3220281
-	for <e@80x24.org>; Thu, 21 Sep 2017 00:44:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F130202A5
+	for <e@80x24.org>; Thu, 21 Sep 2017 01:10:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751898AbdIUAoY (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Sep 2017 20:44:24 -0400
-Received: from mail-qt0-f169.google.com ([209.85.216.169]:52088 "EHLO
-        mail-qt0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751584AbdIUAoX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Sep 2017 20:44:23 -0400
-Received: by mail-qt0-f169.google.com with SMTP id q4so4538823qtq.8
-        for <git@vger.kernel.org>; Wed, 20 Sep 2017 17:44:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=K1y4l04j4rOl0DhuPD4+yG56YpOB4QDf9ephgYD2FqI=;
-        b=oeRIjUwG56vM4+l56OB8iD2CklHwa6Jy8Ar3yhr8az+D7yTVsWf144F5yaPoNp3zrc
-         Gj2P1yztDDxUZlce6Rr8fBBL1QzV55dToohMU25Jt1NpqLYLYlEXotuQ/3WkEqpu/KBw
-         JcwoyDLvgEeIc67tkwBb32cf9sh4zqvZjheB9NqCe1rIRADHwne+UOpKKGp5SP2be6Gk
-         +aL4IkAPTikXVNm+LKv9a5u9CeOfix/kKREY/JlgWFnH8UBdx/4SH0T7rXsoiMc16Y90
-         ai1KtnxZRFxCcur2sjE2qctAX4jQ9lXNmuIiNx5rkhxbtIuOVhk0/An180s2s++KwkM+
-         oK+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=K1y4l04j4rOl0DhuPD4+yG56YpOB4QDf9ephgYD2FqI=;
-        b=K9xrb0Uz/lZUreZNNTYRPZT+o76dlgA5plEHpgNb+z6ofyi52+x0doLW/tlYGjUSmF
-         L2h3dIBJTzfkf2D0q/La5HdyuuT0/IlY1QmlGmmNKeUMymIFWzWkH0RPKmCvoPzTzbtz
-         zobM47hWT7g7ZazWl0/XfNXSwbbHRL53Iph4trA9DzeCPBY1kggEI6eFEFTqpJ3Kj39W
-         IMhmT1gt/XUTW375tLCVofNGp8lboexRUEfBhsq/55Aorrij4bC4b2iPUMcigjCyq2D0
-         ZRsYk+xjC3t19+JvPMDqQrnqZRz3JDAJv9Rx4zSRndA9a0GOlp03m6H+dnDbUf1Gn75u
-         uB8g==
-X-Gm-Message-State: AHPjjUhYtySWctVh43W53rRUrYX73d23EJYnUjCctUBJw1u7LJ1GuOlH
-        /9hwJOI9+PDcLeS7ynQcq7Y/s1OlOmD0nCSobkvY2g==
-X-Google-Smtp-Source: AOwi7QA7V1Xw+/oO+NaOCW0Qim0u7tbspD5uDNoHQB0X5RLsVP/ifrtURNxtoE0YlZ5ictij54iZn2+FO5u62fT98Tw=
-X-Received: by 10.200.41.89 with SMTP id z25mr778039qtz.79.1505954662245; Wed,
- 20 Sep 2017 17:44:22 -0700 (PDT)
+        id S1751873AbdIUBKc (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Sep 2017 21:10:32 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62732 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751681AbdIUBKb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Sep 2017 21:10:31 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 69BCFA6355;
+        Wed, 20 Sep 2017 21:10:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=5VyXQSIQHGfMFYIMy94SPa7JCnA=; b=VBtKpt
+        HSyMPMpoew0KTDjNis8jx6W20mbcdEkoRQmeyKaKm69LBEpQ/2k332cmO9kk0dN/
+        3EEAn5mx9os4JUmvOXX1LNvxuI2V/kddKagXmJphKnSEYndHWjLwkVj/2GXx2O1v
+        VRYijOLqy0tvjzMghSVlcOLlyH8PdzSRsgVpQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=eWpdY3ak71Tr3N563Q/UAfUXj/1i7WUc
+        OJhDyTK3Xsw9/UyO2dPCalvdcUPTLRZpQ+IoYaRzG4hWZg4RZIzqUePWlBMx+nov
+        7nI5QelnT0TPhK/FaM3xd1ov0YnebkduCAk9IBj/NDcA95T86Nv9ritv4gW2dNBt
+        jc7urO4MPvY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 61628A6354;
+        Wed, 20 Sep 2017 21:10:31 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B03EAA6351;
+        Wed, 20 Sep 2017 21:10:30 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCHv3] builtin/merge: honor commit-msg hook for merges
+References: <xmqqd174bzco.fsf@gitster.mtv.corp.google.com>
+        <20170907220429.31312-1-sbeller@google.com>
+        <1505542931.27598.4.camel@gmail.com>
+        <CAGZ79kaN4nKwGXq9t+Lv9e4X6qkBUAj4S8gofrNj3VZYw1sv+w@mail.gmail.com>
+Date:   Thu, 21 Sep 2017 10:10:29 +0900
+In-Reply-To: <CAGZ79kaN4nKwGXq9t+Lv9e4X6qkBUAj4S8gofrNj3VZYw1sv+w@mail.gmail.com>
+        (Stefan Beller's message of "Wed, 20 Sep 2017 12:55:49 -0700")
+Message-ID: <xmqqy3p8n9fe.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.140.102.51 with HTTP; Wed, 20 Sep 2017 17:44:21 -0700 (PDT)
-In-Reply-To: <0bc0b797-fb82-2300-6df1-dc5380e64c85@gmail.com>
-References: <20170915192043.4516-1-benpeart@microsoft.com> <20170919192744.19224-1-benpeart@microsoft.com>
- <20170919192744.19224-3-benpeart@microsoft.com> <CAGZ79kaJWDWGgqRGTdgc+RjVxAb52CpUCk2DCotSksni4cH1Ww@mail.gmail.com>
- <0bc0b797-fb82-2300-6df1-dc5380e64c85@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 20 Sep 2017 17:44:21 -0700
-Message-ID: <CAGZ79kbW1GnaSz8qhCgV6BP23CWiYAzq_WbDVv_Yf1GN_3u=wQ@mail.gmail.com>
-Subject: Re: [PATCH v7 02/12] preload-index: add override to enable testing preload-index
-To:     Ben Peart <peartben@gmail.com>
-Cc:     Ben Peart <benpeart@microsoft.com>,
-        David Turner <David.Turner@twosigma.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: A94EE98C-9E69-11E7-B90A-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> To execute the preload code path, we need a minimum of 2 cache entries and 2
-> threads so that each thread actually has work to do.  Otherwise the logic
-> below that divides the work up would need to be updated as well.  The
-> additional complexity didn't seem worth it just to enable the code path to
-> execute with a single thread on a single cache entry.
+Stefan Beller <sbeller@google.com> writes:
 
-[snip]
+> I'll send a patch fixing the docs, though with this thought, maybe we need
+> to fix other commands, that produce commits as well?
+> (git revert, others?)
 
->
-> That would require a larger patch that would update the work division and
-> thread creation logic for little to no gain.
+I do not think "commands that create commits" is not a good
+criteria.  "git notes" and "git stash" would (internally) create a
+commit while recording a new change, but you obvously would not want
+these hooks to kick in.
 
-Oh I was not aware of the additional needed refactoring. (I assumed that
-would *just work*, experience should have told me to have a look first).
+A command that can stop in the middle and to which running "git
+commit" is how the end-user concludes the operation would be a
+candidate.  "git merge X", "git cherry-pick A", and "git cherry-pick
+A..B" may be good candidates.
 
->
-> There are no new tests that take advantage of this new environment variable.
-> Instead you can run the entire git test suite with it by running:
->
-> GIT_FORCE_PRELOAD_TEXT=1 prove -j12 --state=all ./t[0-9]*.sh
->
-> I can add that to the commit message to make it more obvious if desired.
+For "rebase" and others that have the "convenience --continue"
+option that make a commit before continuing, I would think that we
+should treat these as invoking "git commit".  That is, when these
+commands stop and you resolve the conflict in the index and in the
+working tree, the next "git $cmd --continue" you type is merely a
+way to let you be lazy.  You'd be typing "git commit && git $cmd
+--continue" if you were to refuse the lazy convenience option and
+want to spell out what you are doing explicitly, and you'd get the
+same result as you'd get from just "git $cmd --continue" if you did
+so.
 
-it would have helped me being less confused as there was an "obvious"
-easier and more correct alternative, which you just explained
-is neither easier nor more correct as we probably do not desire that
-anyway.
-
-Thanks,
-Stefan
+On the other hand, "git am" is not a candidate.  You never use "git
+commit" to mark that you are done, even if you refuse to use the
+lazy convenience option and spell out what you are doing explicitly.
