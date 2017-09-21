@@ -6,113 +6,91 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 802E62047F
-	for <e@80x24.org>; Thu, 21 Sep 2017 07:34:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B6F72047F
+	for <e@80x24.org>; Thu, 21 Sep 2017 07:42:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751868AbdIUHeK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Sep 2017 03:34:10 -0400
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:53105 "EHLO
+        id S1751530AbdIUHmk (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Sep 2017 03:42:40 -0400
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:53166 "EHLO
         alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751588AbdIUHeJ (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 21 Sep 2017 03:34:09 -0400
-X-AuditID: 12074414-0d3ff70000006ddf-be-59c36b70dca3
+        by vger.kernel.org with ESMTP id S1751485AbdIUHmj (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 21 Sep 2017 03:42:39 -0400
+X-AuditID: 12074414-0ebff70000006ddf-a3-59c36d6e5498
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 44.5A.28127.07B63C95; Thu, 21 Sep 2017 03:34:08 -0400 (EDT)
+        by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 89.6A.28127.E6D63C95; Thu, 21 Sep 2017 03:42:38 -0400 (EDT)
 Received: from [192.168.69.190] (p57BCCB74.dip0.t-ipconnect.de [87.188.203.116])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v8L7Y4xv020945
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v8L7gZb5021372
         (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Thu, 21 Sep 2017 03:34:06 -0400
-Subject: Re: [PATCH v2 08/21] read_packed_refs(): read references with minimal
- copying
-To:     Jeff King <peff@peff.net>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
+        Thu, 21 Sep 2017 03:42:36 -0400
+Subject: Re: [PATCH v2 02/21] prefix_ref_iterator: break when we leave the
+ prefix
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>,
+        <pclouds@gmail.com>, Jeff King <peff@peff.net>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Brandon Williams <bmwill@google.com>, git@vger.kernel.org
+        Brandon Williams <bmwill@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
 References: <cover.1505799700.git.mhagger@alum.mit.edu>
- <597241da13f62d51fefd3396bfbab22a8f633a56.1505799700.git.mhagger@alum.mit.edu>
- <20170920182732.wy6bojeaonpxb3mc@sigill.intra.peff.net>
+ <2bb2e8ccb57eef8acbea5004167751a007a1bd2f.1505799700.git.mhagger@alum.mit.edu>
+ <CAGZ79kbwCAidGR3cgukdjckZVYwj+qbOikqN-e934uP1yk9Cuw@mail.gmail.com>
 From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <b7936c07-a2a2-f17c-b557-2b4916cac3bc@alum.mit.edu>
-Date:   Thu, 21 Sep 2017 09:34:04 +0200
+Message-ID: <32b3d338-6781-a600-2c7e-65dc2818aab5@alum.mit.edu>
+Date:   Thu, 21 Sep 2017 09:42:35 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.2.1
 MIME-Version: 1.0
-In-Reply-To: <20170920182732.wy6bojeaonpxb3mc@sigill.intra.peff.net>
+In-Reply-To: <CAGZ79kbwCAidGR3cgukdjckZVYwj+qbOikqN-e934uP1yk9Cuw@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrHKsWRmVeSWpSXmKPExsUixO6iqFuQfTjSYO1+AYu1z+4wWTxff4Ld
-        outKN5NFQ+8VZov+5V1sFt1T3jJa/GjpYbZom/mDyWLz5nYWB06P5Tf/MnnsnHWX3ePDxziP
-        BZtKPZ717mH0uHhJ2ePzJrkA9igum5TUnMyy1CJ9uwSujN7/J5kL9vNVzPos0cC4kruLkZND
-        QsBEYkXDHNYuRi4OIYEdTBJnF21hAkkICVxgkni6KLmLkYNDWCBCYv6SIJCwiICsxPfDGxlB
-        6pkFFjFLvDp2kxGi+RCjxL3DK1lBqtgEdCUW9TSDDeIVsJfYObGJEWQQi4CqxOF7wSBhUaCZ
-        fW8vs0OUCEqcnPmEBaSEU8BFYvI1MZAws4C6xJ95l5ghbHGJW0/mM0HY8hLb385hnsAoMAtJ
-        9ywkLbOQtMxC0rKAkWUVo1xiTmmubm5iZk5xarJucXJiXl5qka6FXm5miV5qSukmRki0iOxg
-        PHJS7hCjAAejEg/vBJPDkUKsiWXFlbmHGCU5mJREeSdlAoX4kvJTKjMSizPii0pzUouBgcDB
-        rCTCmxEElONNSaysSi3Kh0lJc7AoifN+W6zuJySQnliSmp2aWpBaBJOV4eBQkuC1zwJqFCxK
-        TU+tSMvMKUFIM3FwggznARquCFLDW1yQmFucmQ6RP8WoKCXOWwiSEABJZJTmwfXCktkrRnGg
-        V4R500GqeICJEK77FdBgJqDB2RsOgAwuSURISTUwOrWtKJ/wKrNyyc7tt7+Z2nNdkkr79U20
-        qsXa+fKMkx8Uip2bT7HdZsnkrlPv7ry5deGcjolP3n6Vkt4TssBK0SBHJP6E18f5bxOLbt6O
-        0V1j8GNu+Wbbab1/Xr0/pb2e+/NLmxCR1Rq21pvt41fWGmeHHbiddb3qzJsY16MzPh9fofjM
-        MerrWyWW4oxEQy3mouJEAOn/PYNBAwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrCKsWRmVeSWpSXmKPExsUixO6iqJuXezjS4PJdY4u1z+4wWTxff4Ld
+        outKN5NFQ+8VZov+5V1sFt1T3jJa/GjpYbbYvLmdxYHDY+esu+weHz7GeSzYVOrxrHcPo8fF
+        S8oenzfJBbBFcdmkpOZklqUW6dslcGXsnDqbpWA3e8W6q8tYGhivsHYxcnJICJhINB/vZe5i
+        5OIQEtjBJDFj5j4o5wKTxOLeycwgVcICwRLNb7awg9giAmoSM1fNZgMpYhboZJZ41n2LBSQh
+        JHCeUeLtTVsQm01AV2JRTzMTiM0rYC9x9+prsBoWAVWJvUd+gQ0VFYiQ6Ht7mR2iRlDi5Mwn
+        YDWcAoESr+buZwOxmQXUJf7Mu8QMYYtL3HoynwnClpfY/nYO8wRGgVlI2mchaZmFpGUWkpYF
+        jCyrGOUSc0pzdXMTM3OKU5N1i5MT8/JSi3Qt9HIzS/RSU0o3MUIiRGQH45GTcocYBTgYlXh4
+        J5gcjhRiTSwrrsw9xCjJwaQkyjspEyjEl5SfUpmRWJwRX1Sak1p8iFGCg1lJhDcjCCjHm5JY
+        WZValA+TkuZgURLn/bZY3U9IID2xJDU7NbUgtQgmK8PBoSTBm5AD1ChYlJqeWpGWmVOCkGbi
+        4AQZzgM0XDQbZHhxQWJucWY6RP4Uoy7HjYfX/zAJseTl56VKifOmgQwSACnKKM2DmwNLbK8Y
+        xYHeEublA6niASZFuEmvgJYwAS3J3nAAZElJIkJKqoFR0dFEQUIrtaC3zt+VL7GmLIaLY8oX
+        83Orn516m565ekH2W48jkhd6Hq259JMjNTElMqV08dIjeYuX3dssPcmBa9o81x9BUU1ljwL+
+        TfCT8Nh6hO3yR+No9w///p1JlF9hIq/8Tajn/Y/LjpFmIXdeXM5+vXbZk8tdDHm3p5r+/vcr
+        edbE9qSLSizFGYmGWsxFxYkASZgKWkcDAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/20/2017 08:27 PM, Jeff King wrote:
-> On Tue, Sep 19, 2017 at 08:22:16AM +0200, Michael Haggerty wrote:
+On 09/20/2017 10:25 PM, Stefan Beller wrote:
+> On Mon, Sep 18, 2017 at 11:22 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>> [...]
+>> +/* Return -1, 0, 1 if refname is before, inside, or after the prefix. */
+>> +static int compare_prefix(const char *refname, const char *prefix)
+>> +{
+>> +       while (*prefix) {
+>> +               if (*refname != *prefix)
+>> +                       return ((unsigned char)*refname < (unsigned char)*prefix) ? -1 : +1;
 > 
->> Instead of copying data from the `packed-refs` file one line at time
->> and then processing it, process the data in place as much as possible.
->>
->> Also, instead of processing one line per iteration of the main loop,
->> process a reference line plus its corresponding peeled line (if
->> present) together.
->>
->> Note that this change slightly tightens up the parsing of the
->> `parse-ref` file. Previously, the parser would have accepted multiple
+> This looks interesting.
 > 
-> s/parse-ref/packed-refs/, I assume
+> We get a signed char* , cast it to unsigned char* and then
+> compare byte by byte.
 
-Thanks; will fix.
+Not quite. We get a `char *` of unknown signedness (it's
+implementation-dependent), dereference it into a `char`, then cast that
+value to `unsigned char`. What you described would be
 
-> The patch itself looks good, though I did notice an interesting tangent.
-> 
->> +		if (eof - pos < GIT_SHA1_HEXSZ + 2 ||
->> +		    parse_oid_hex(p, &oid, &p) ||
->> +		    !isspace(*p++))
->> +			die_invalid_line(refs->path, pos, eof - pos);
-> 
-> I wondered why you didn't just check the output of parse_oid_hex(), and
-> included the length check (since in the long run we'd like to get rid of
-> uses of the static GIT_SHA1_HEXSZ macro). I imagine the answer is that
-> this is an mmap'd buffer, and we can't guarantee that parse_oid_hex()
-> wouldn't walk off the end of it.
+    *(const unsigned char *)refname < *(const unsigned char *)prefix
 
-Yes.
-
-> That's fine for now, but I suspect it may become a problem when we move
-> to having a second hash function with a different length. You can't just
-> say "it must have as many bytes as the longest hash", because of course
-> we could have the shorter hash at the end of the buffer. But we also
-> can't say "it must have as many bytes as the shortest hash", because if
-> the content implies it's a longer hash, we'd read off the end of the
-> buffer.
-> 
-> I think in the long run we will need a parse_oid_hex() function that
-> takes a ptr/len (or start/end) pair.
-
-Yes, that makes sense.
+But I assume that these two variants would result in identical assembly
+code.
 
 > [...]
 
