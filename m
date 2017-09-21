@@ -2,259 +2,181 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5DFE320281
-	for <e@80x24.org>; Wed, 20 Sep 2017 23:55:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 208B920281
+	for <e@80x24.org>; Thu, 21 Sep 2017 00:02:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751704AbdITXzQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Sep 2017 19:55:16 -0400
-Received: from mail-pg0-f48.google.com ([74.125.83.48]:52786 "EHLO
-        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751584AbdITXzP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Sep 2017 19:55:15 -0400
-Received: by mail-pg0-f48.google.com with SMTP id i195so2554909pgd.9
-        for <git@vger.kernel.org>; Wed, 20 Sep 2017 16:55:15 -0700 (PDT)
+        id S1751894AbdIUACW (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Sep 2017 20:02:22 -0400
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:38882 "EHLO
+        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751663AbdIUACT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Sep 2017 20:02:19 -0400
+Received: by mail-qt0-f195.google.com with SMTP id o3so2195261qte.5
+        for <git@vger.kernel.org>; Wed, 20 Sep 2017 17:02:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=8uVCWDUYS5QRZMlH1+1rVk/DLE3Tg6LZjSPXPqbZYCc=;
-        b=U/dwhu3KZlDeBPUyfUHEyFbQaaC8UPueK8/czts6sppqBqDgIotNzLhhx29gdWRTCU
-         3uEWt7jIOBhWSqT/OOC6VuaDhh2q4meugPSlQWImRhRTK4CqbpkgHGUYrALMVWwCNMDT
-         MMxJ8iktTrM+pxkD7yZJQaVwIFaBBDXvMx2g0qa2wG/NsUr874as9CbAaQj95JaAuI1o
-         2bGa/B+n+omaVr7/QzWOqKJTSw2SZTO/KCuNkX6ogmPnA1Zv9muBa6OQ6Ielu7H8g1XD
-         ob844k6D+8+Tx0PuB79PaMpPdSnzagZHKuM3v1QGAeNKmrqIodXb+cyc1ET/UwawWutn
-         lD5g==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=twaYsFVk97gRmXhGArZaxLxcXNLfLE7rZ2bCM7jIl4Y=;
+        b=C/+yg8GsZsf5nsjXT+mfYHDiHcBZSoL+WdPZjn1DTNkCpYtQS09SGWU3KaKrELwiXy
+         fZQdMgDyOF8Ya+yMD4K5zh/nLfJQUuY2JfJ41RYTX/xR07DqdtkObU8u7DQKpqCNHjkg
+         VZWNhKz2j/S2RRjz0p+Npf43ukT5gNFD52PR+szA3IUFsl4SsOY/m1wY4k1ZwJLmh28/
+         xgYKIemeESzTYa/5Yoj6ChDwg8fC4zXHf+8WKEdgF4f9WCWF4QWAR2qIObZtcROXOelr
+         h1XGMhCccF5sFZnJ66iTSE+wwCm/7JjU/qQAZUKTFhUnYXBnXfF4DM/atDDEFydJJ2bn
+         AnzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=8uVCWDUYS5QRZMlH1+1rVk/DLE3Tg6LZjSPXPqbZYCc=;
-        b=uTCzFkEPZxI8u8GfzLt9Eo/83JTbSP9SqXHIKW7pf30G1CKaeljLMAQwaHbig9Smxt
-         iWxTedim7yWW0O5qUGUvicXSOhVQuNk+6WuasDsPu2G2SN/5pZ/K6UczPKcCSKDBc2+N
-         p2kd3dzbCDVONjuL8JkU/OVUsAGNvTLdHdURtbpB3P0k62YG4BcnhDtT0FqJwf6pYPRY
-         xKwkMWBXqJ7U9XNMhsLP7F/E8qU0XRxOtXPMmlYOka2xVECsvR4c3ayfWl+g/l8OkXbs
-         VdfsT38cnYVXsYMcTJyCP/5mauIeotwl9g9+BuCQg5d5/lpHn2k4BDClKAkGQyOSvWMk
-         Mdsw==
-X-Gm-Message-State: AHPjjUj0c3/RkJuOgG/lW6+Wub8qz4SQlcK4Y8yngl2PwkRbDtrTu9KI
-        7oNOHlHHcGaVonQ1e833Ag4SIrn9ddA=
-X-Google-Smtp-Source: AOwi7QC+MPkAlwsZv0N9dhl18FgQuPVYxbEju3y2+zDeyGJjHxuKVzyXELut81dPdUxN0GzBQDpZAA==
-X-Received: by 10.101.80.202 with SMTP id s10mr3788784pgp.34.1505951714467;
-        Wed, 20 Sep 2017 16:55:14 -0700 (PDT)
-Received: from twelve2.svl.corp.google.com ([100.96.218.24])
-        by smtp.gmail.com with ESMTPSA id g68sm88041pfk.136.2017.09.20.16.55.11
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 20 Sep 2017 16:55:12 -0700 (PDT)
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, juraj.orsulic@fer.hr
-Subject: [PATCH] fast-export: do not copy from modified file
-Date:   Wed, 20 Sep 2017 16:55:02 -0700
-Message-Id: <20170920235502.6214-1-jonathantanmy@google.com>
-X-Mailer: git-send-email 2.14.1.821.g8fa685d3b7-goog
-In-Reply-To: <CAEPqvoyVJFe2EOvhnZD4vdF=1-VuoZrMP92TeGJ2WAE0X+B5Tw@mail.gmail.com>
-References: <CAEPqvoyVJFe2EOvhnZD4vdF=1-VuoZrMP92TeGJ2WAE0X+B5Tw@mail.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=twaYsFVk97gRmXhGArZaxLxcXNLfLE7rZ2bCM7jIl4Y=;
+        b=DeNHAQV+pGZ7HxVcHoOhJLd/0lmjTX5ZVzs54SBIVZHFoWCzqjhEw+Nvz4WW2+No4O
+         3JgvKNGOl3UHyrkeBD3TdqPtnkdTFB8EZ/0ovk8XxbAkkTSXlDg2y2Qlijvxs1U/6Ffn
+         b8hmQuK1p6HNclVDtNJb2ssIOUyv/epowFFgW+tAlBN29EMe8aA0c0S9zkWgm44zga9O
+         3Acjdg3vdq8X+llgdCQC8akdeVcuv71Zu2qUnLAXvio+t95Pudui+mRMgH/w4qjaZC58
+         DUdK0eFIeB7kLa5VRoXuAp+k/zPLUFpHJ3thAi2M+VrlVs3uBNa/Gt2V7yvtJwAd19dK
+         M4ZQ==
+X-Gm-Message-State: AHPjjUg3rcsMnQVEtrM0oIyNw8ahjYCiESqczaQgvir/EOtbYfPhTmJJ
+        gjUuAEdj+QguSfFRPaeSank=
+X-Google-Smtp-Source: AOwi7QD9dCCiRsObLCmw8GNo8vr3IQkZEPEAGOtaVmyQTrVXaJIBazi8nj9krVnbJZxUzJ1vcOQuoQ==
+X-Received: by 10.200.48.185 with SMTP id v54mr598854qta.245.1505952138565;
+        Wed, 20 Sep 2017 17:02:18 -0700 (PDT)
+Received: from [192.168.1.13] ([65.222.173.206])
+        by smtp.gmail.com with ESMTPSA id s2sm104027qti.40.2017.09.20.17.02.17
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 20 Sep 2017 17:02:17 -0700 (PDT)
+Subject: Re: [PATCH v7 02/12] preload-index: add override to enable testing
+ preload-index
+To:     Stefan Beller <sbeller@google.com>,
+        Ben Peart <benpeart@microsoft.com>
+Cc:     David Turner <David.Turner@twosigma.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>
+References: <20170915192043.4516-1-benpeart@microsoft.com>
+ <20170919192744.19224-1-benpeart@microsoft.com>
+ <20170919192744.19224-3-benpeart@microsoft.com>
+ <CAGZ79kaJWDWGgqRGTdgc+RjVxAb52CpUCk2DCotSksni4cH1Ww@mail.gmail.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <0bc0b797-fb82-2300-6df1-dc5380e64c85@gmail.com>
+Date:   Wed, 20 Sep 2017 20:02:16 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAGZ79kaJWDWGgqRGTdgc+RjVxAb52CpUCk2DCotSksni4cH1Ww@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When run with the "-C" option, fast-export writes 'C' commands in its
-output whenever the internal diff mechanism detects a file copy,
-indicating that fast-import should copy the given existing file to the
-given new filename. However, the diff mechanism works against the
-prior version of the file, whereas fast-import uses whatever is current.
-This causes issues when a commit both modifies a file and uses it as the
-source for a copy.
 
-Therefore, teach fast-export to refrain from writing 'C' when it has
-already written a modification command for a file.
 
-An existing test in t9350-fast-export is also fixed in this patch. The
-existing line "C file6 file7" copies the wrong version of file6, but it
-has coincidentally worked because file7 was subsequently overridden.
+On 9/20/2017 6:06 PM, Stefan Beller wrote:
+> On Tue, Sep 19, 2017 at 12:27 PM, Ben Peart <benpeart@microsoft.com> wrote:
+>> Preload index doesn't run unless it has a minimum number of 1000 files.
+>> To enable running tests with fewer files, add an environment variable
+>> (GIT_FORCE_PRELOAD_TEST) which will override that minimum and set it to 2.
+> 
+> 'it' being the number of threads ('it' was not mentioned before,
+> so reading the commit message confused me initially)
+> 
+>>
+>> Signed-off-by: Ben Peart <benpeart@microsoft.com>
+>> ---
+>>   preload-index.c | 2 ++
+>>   1 file changed, 2 insertions(+)
+>>
+>> diff --git a/preload-index.c b/preload-index.c
+>> index 70a4c80878..75564c497a 100644
+>> --- a/preload-index.c
+>> +++ b/preload-index.c
+>> @@ -79,6 +79,8 @@ static void preload_index(struct index_state *index,
+>>                  return;
+>>
+>>          threads = index->cache_nr / THREAD_COST;
+>> +       if ((index->cache_nr > 1) && (threads < 2) && getenv("GIT_FORCE_PRELOAD_TEST"))
+>> +               threads = 2;
+> 
+> Adding these lines is just a bandaid to trick
+> 
+>>          if (threads < 2)
+>>                  return;
+> 
+> to not return early as the commit message does not discuss why
+> we set it to 2.
+> 
 
-Reported-by: Juraj Oršulić <juraj.orsulic@fer.hr>
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
-I tested this with the reproduction commands given by Juraj Oršulić and
-it works.
+To execute the preload code path, we need a minimum of 2 cache entries 
+and 2 threads so that each thread actually has work to do.  Otherwise 
+the logic below that divides the work up would need to be updated as 
+well.  The additional complexity didn't seem worth it just to enable the 
+code path to execute with a single thread on a single cache entry.
 
-I also have a version that prints the redundant 'C' (and does not
-require the change to t9350), omitting it only if it would cause a wrong
-result. That seems imprecise to me, but I can send that out if the
-redundant 'C' is preferred.
----
- builtin/fast-export.c  | 46 ++++++++++++++++++++++++++++++++--------------
- t/t9350-fast-export.sh | 20 +++++++++++++++++++-
- 2 files changed, 51 insertions(+), 15 deletions(-)
+> Do we need threads at all for these tests, or would a patch like
+> 
+> -    if (threads < 2)
+> +    if (threads < 2 && !GIT_FORCE_PRELOAD_TEST)
+>           return;
+> 
+> work as well?
 
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index d412c0a8f..da42ee5e6 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -344,6 +344,7 @@ static void show_filemodify(struct diff_queue_struct *q,
- 			    struct diff_options *options, void *data)
- {
- 	int i;
-+	struct string_list *changed = data;
- 
- 	/*
- 	 * Handle files below a directory first, in case they are all deleted
-@@ -359,20 +360,31 @@ static void show_filemodify(struct diff_queue_struct *q,
- 		case DIFF_STATUS_DELETED:
- 			printf("D ");
- 			print_path(spec->path);
-+			string_list_insert(changed, spec->path);
- 			putchar('\n');
- 			break;
- 
- 		case DIFF_STATUS_COPIED:
- 		case DIFF_STATUS_RENAMED:
--			printf("%c ", q->queue[i]->status);
--			print_path(ospec->path);
--			putchar(' ');
--			print_path(spec->path);
--			putchar('\n');
--
--			if (!oidcmp(&ospec->oid, &spec->oid) &&
--			    ospec->mode == spec->mode)
--				break;
-+			/*
-+			 * If a change in the file corresponding to ospec->path
-+			 * has been observed, we cannot trust its contents
-+			 * because the diff is calculated based on the prior
-+			 * contents, not the current contents.  So, declare a
-+			 * copy or rename only if there was no change observed.
-+			 */
-+			if (!string_list_has_string(changed, ospec->path)) {
-+				printf("%c ", q->queue[i]->status);
-+				print_path(ospec->path);
-+				putchar(' ');
-+				print_path(spec->path);
-+				string_list_insert(changed, spec->path);
-+				putchar('\n');
-+
-+				if (!oidcmp(&ospec->oid, &spec->oid) &&
-+				    ospec->mode == spec->mode)
-+					break;
-+			}
- 			/* fallthrough */
- 
- 		case DIFF_STATUS_TYPE_CHANGED:
-@@ -393,6 +405,7 @@ static void show_filemodify(struct diff_queue_struct *q,
- 				       get_object_mark(object));
- 			}
- 			print_path(spec->path);
-+			string_list_insert(changed, spec->path);
- 			putchar('\n');
- 			break;
- 
-@@ -528,7 +541,8 @@ static void anonymize_ident_line(const char **beg, const char **end)
- 	*end = out->buf + out->len;
- }
- 
--static void handle_commit(struct commit *commit, struct rev_info *rev)
-+static void handle_commit(struct commit *commit, struct rev_info *rev,
-+			  struct string_list *paths_of_changed_objects)
- {
- 	int saved_output_format = rev->diffopt.output_format;
- 	const char *commit_buffer;
-@@ -615,6 +629,7 @@ static void handle_commit(struct commit *commit, struct rev_info *rev)
- 	if (full_tree)
- 		printf("deleteall\n");
- 	log_tree_diff_flush(rev);
-+	string_list_clear(paths_of_changed_objects, 0);
- 	rev->diffopt.output_format = saved_output_format;
- 
- 	printf("\n");
-@@ -630,14 +645,15 @@ static void *anonymize_tag(const void *old, size_t *len)
- 	return strbuf_detach(&out, len);
- }
- 
--static void handle_tail(struct object_array *commits, struct rev_info *revs)
-+static void handle_tail(struct object_array *commits, struct rev_info *revs,
-+			struct string_list *paths_of_changed_objects)
- {
- 	struct commit *commit;
- 	while (commits->nr) {
- 		commit = (struct commit *)commits->objects[commits->nr - 1].item;
- 		if (has_unshown_parent(commit))
- 			return;
--		handle_commit(commit, revs);
-+		handle_commit(commit, revs, paths_of_changed_objects);
- 		commits->nr--;
- 	}
- }
-@@ -977,6 +993,7 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
- 	char *export_filename = NULL, *import_filename = NULL;
- 	uint32_t lastimportid;
- 	struct string_list refspecs_list = STRING_LIST_INIT_NODUP;
-+	struct string_list paths_of_changed_objects = STRING_LIST_INIT_DUP;
- 	struct option options[] = {
- 		OPT_INTEGER(0, "progress", &progress,
- 			    N_("show progress after <n> objects")),
-@@ -1049,14 +1066,15 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
- 	if (prepare_revision_walk(&revs))
- 		die("revision walk setup failed");
- 	revs.diffopt.format_callback = show_filemodify;
-+	revs.diffopt.format_callback_data = &paths_of_changed_objects;
- 	DIFF_OPT_SET(&revs.diffopt, RECURSIVE);
- 	while ((commit = get_revision(&revs))) {
- 		if (has_unshown_parent(commit)) {
- 			add_object_array(&commit->object, NULL, &commits);
- 		}
- 		else {
--			handle_commit(commit, &revs);
--			handle_tail(&commits, &revs);
-+			handle_commit(commit, &revs, &paths_of_changed_objects);
-+			handle_tail(&commits, &revs, &paths_of_changed_objects);
- 		}
- 	}
- 
-diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-index 8dcb05c4a..866ddf605 100755
---- a/t/t9350-fast-export.sh
-+++ b/t/t9350-fast-export.sh
-@@ -234,7 +234,7 @@ test_expect_success 'fast-export -C -C | fast-import' '
- 	mkdir new &&
- 	git --git-dir=new/.git init &&
- 	git fast-export -C -C --signed-tags=strip --all > output &&
--	grep "^C file6 file7\$" output &&
-+	grep "^C file2 file4\$" output &&
- 	cat output |
- 	(cd new &&
- 	 git fast-import &&
-@@ -522,4 +522,22 @@ test_expect_success 'delete refspec' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'when using -C, do not declare copy when source of copy is also modified' '
-+	test_create_repo src &&
-+	echo a_line >src/file.txt &&
-+	git -C src add file.txt &&
-+	git -C src commit -m 1st_commit &&
-+
-+	cp src/file.txt src/file2.txt &&
-+	echo another_line >>src/file.txt &&
-+	git -C src add file.txt file2.txt &&
-+	git -C src commit -m 2nd_commit &&
-+
-+	test_create_repo dst &&
-+	git -C src fast-export --all -C | git -C dst fast-import &&
-+	git -C src show >expected &&
-+	git -C dst show >actual &&
-+	test_cmp expected actual
-+'
-+
- test_done
--- 
-2.14.1.821.g8fa685d3b7-goog
+That would require a larger patch that would update the work division 
+and thread creation logic for little to no gain.
 
+> 
+> That way tests can use any number of threads, though
+> they currently have no way of overriding the heuristic, yet.
+> 
+> With this alternative patch, it sounds to me as if the
+> issues kept more orthogonal. (specifically "Do we use preload?"
+> and "How many threads?". One could imagine that we later
+> want to introduce GIT_PRELOAD_THREADS for $reasons
+> and that would go over well in combination with
+> GIT_FORCE_PRELOAD_TEST)
+> 
+
+I'm not sure why someone would want to test varying numbers of threads 
+as that isn't a case that can ever actually happen with the existing 
+code/feature.
+
+I was just enabling testing of the code path with fewer than 1000 files 
+as when I made my changes, I discovered that 1) there were no test cases 
+for the core.preloadindex feature at all and 2) there was no way to run 
+the existing tests with core.preloadindex as they don't have the minimum 
+number of files.  This patch allows you to run the existing test suite 
+with preload_index turned on for any test case that has 2 or more files 
+(it passes by the way :)).
+
+> It seems to be only an internal test variable, such that we do
+> not need documentation. (Is that worth mentioning in the
+> commit message?)
+
+Correct.  That is the reason I used the magic GIT_***_TEST naming 
+pattern as that is the only way to ensure the environment variable is 
+preserved when running the tests.
+
+> 
+> The test to make use of this new variable is found
+> in another patch I presume?
+> 
+
+There are no new tests that take advantage of this new environment 
+variable.  Instead you can run the entire git test suite with it by running:
+
+GIT_FORCE_PRELOAD_TEXT=1 prove -j12 --state=all ./t[0-9]*.sh
+
+I can add that to the commit message to make it more obvious if desired.
+
+> Stefan
+> 
