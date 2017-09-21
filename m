@@ -2,97 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C965D20281
-	for <e@80x24.org>; Thu, 21 Sep 2017 00:31:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8EB3220281
+	for <e@80x24.org>; Thu, 21 Sep 2017 00:44:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751904AbdIUAb0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Sep 2017 20:31:26 -0400
-Received: from mail-pf0-f170.google.com ([209.85.192.170]:57156 "EHLO
-        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751762AbdIUAbZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Sep 2017 20:31:25 -0400
-Received: by mail-pf0-f170.google.com with SMTP id g65so2353988pfe.13
-        for <git@vger.kernel.org>; Wed, 20 Sep 2017 17:31:25 -0700 (PDT)
+        id S1751898AbdIUAoY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Sep 2017 20:44:24 -0400
+Received: from mail-qt0-f169.google.com ([209.85.216.169]:52088 "EHLO
+        mail-qt0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751584AbdIUAoX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Sep 2017 20:44:23 -0400
+Received: by mail-qt0-f169.google.com with SMTP id q4so4538823qtq.8
+        for <git@vger.kernel.org>; Wed, 20 Sep 2017 17:44:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=u7ycGgcPZZT6ItX7uezf67XqbmAQZvdl/q0Ap6txEwU=;
-        b=rv6L/GNnIwza+E9ntziW7+zGsewZn2lPVj6LDMG20b2jWSlgrnptWqwnqeHXuztHMq
-         NMQEwGtrssm0EPv7R23ae3bM1DKCaRKM3HD3aRVDt2pjOJmpQTi7XpBzFJRsG1iQNW9m
-         qsKPiyCc9oUqjAVfqxdj7Vecj5PPrVddGyno9jFPReWmT1A90kGaizbLcYgdB2QxrJet
-         5QLi0UJB/s6D0Q7CnbVPFm/qng+josg+QQ0g3iQxlQidKaJ8GFd0e1FDu/gIvKfzfoJU
-         MjbHijD4W0MNmv42t8eM5ADDYOolfYMyq3snVJs5cxw4gwvn4W5XXBEBitna7Dc235tb
-         BYdA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=K1y4l04j4rOl0DhuPD4+yG56YpOB4QDf9ephgYD2FqI=;
+        b=oeRIjUwG56vM4+l56OB8iD2CklHwa6Jy8Ar3yhr8az+D7yTVsWf144F5yaPoNp3zrc
+         Gj2P1yztDDxUZlce6Rr8fBBL1QzV55dToohMU25Jt1NpqLYLYlEXotuQ/3WkEqpu/KBw
+         JcwoyDLvgEeIc67tkwBb32cf9sh4zqvZjheB9NqCe1rIRADHwne+UOpKKGp5SP2be6Gk
+         +aL4IkAPTikXVNm+LKv9a5u9CeOfix/kKREY/JlgWFnH8UBdx/4SH0T7rXsoiMc16Y90
+         ai1KtnxZRFxCcur2sjE2qctAX4jQ9lXNmuIiNx5rkhxbtIuOVhk0/An180s2s++KwkM+
+         oK+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=u7ycGgcPZZT6ItX7uezf67XqbmAQZvdl/q0Ap6txEwU=;
-        b=rtxcBL998eIewc1gn9eZod65o7S83AyTBgYLdmfaaHYIwQY1+163e4kTaj3YID2YHK
-         ik5RFuT+pRQ3rqgiaOYno2I57P8eTHyUHwiOzEzqWvkc/r/AuefsEBaFuNPIdeICF0Um
-         YeHqOWYIA0FkktEXp4luP0McMwPWbufOxMONHxX7JKcJiXoicucH9/CZ1sUWkV7SKS30
-         SxyYzQC3V2yuT06OtJGMTiVobRbOcU7CTt3r66D67A/B4SnYHMgABHWlCbxfIqZojXlW
-         f8BbxEcaP/nv0ulvA+m9IRaKD1GXObfovNVcNfzh/UaiflXBkTHnSwiBpr2ed1xtz68L
-         o5nQ==
-X-Gm-Message-State: AHPjjUjVfnRAjaYCSRah0rW0igM6BfvgZ3Y6YB05/Wxm7syG/LoJQhWG
-        xBXiPh4yb1iklBgLdcuahDf3w6sF568=
-X-Google-Smtp-Source: AOwi7QDHgJSIcF6n14nvHRcvDts5lObz8J5k12Smo664zu+4d8nsx4QBVNvCZnEigu65l4hzVFENGA==
-X-Received: by 10.99.2.214 with SMTP id 205mr3841533pgc.375.1505953885294;
-        Wed, 20 Sep 2017 17:31:25 -0700 (PDT)
-Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:9912:5681:f7d0:a00c])
-        by smtp.gmail.com with ESMTPSA id e66sm155704pfb.48.2017.09.20.17.31.24
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 20 Sep 2017 17:31:25 -0700 (PDT)
-Date:   Wed, 20 Sep 2017 17:31:20 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
-        peff@peff.net, sbeller@google.com, gitster@pobox.com,
-        jrnieder@gmail.com, bturner@atlassian.com, git@jeffhostetler.com
-Subject: Re: [PATCH 3/8] daemon: recognize hidden request arguments
-Message-ID: <20170920173120.2731e761@twelve2.svl.corp.google.com>
-In-Reply-To: <20170920172443.6b42c9ba@twelve2.svl.corp.google.com>
-References: <20170913215448.84674-1-bmwill@google.com>
-        <20170913215448.84674-4-bmwill@google.com>
-        <20170920172443.6b42c9ba@twelve2.svl.corp.google.com>
-X-Mailer: Claws Mail 3.9.3 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=K1y4l04j4rOl0DhuPD4+yG56YpOB4QDf9ephgYD2FqI=;
+        b=K9xrb0Uz/lZUreZNNTYRPZT+o76dlgA5plEHpgNb+z6ofyi52+x0doLW/tlYGjUSmF
+         L2h3dIBJTzfkf2D0q/La5HdyuuT0/IlY1QmlGmmNKeUMymIFWzWkH0RPKmCvoPzTzbtz
+         zobM47hWT7g7ZazWl0/XfNXSwbbHRL53Iph4trA9DzeCPBY1kggEI6eFEFTqpJ3Kj39W
+         IMhmT1gt/XUTW375tLCVofNGp8lboexRUEfBhsq/55Aorrij4bC4b2iPUMcigjCyq2D0
+         ZRsYk+xjC3t19+JvPMDqQrnqZRz3JDAJv9Rx4zSRndA9a0GOlp03m6H+dnDbUf1Gn75u
+         uB8g==
+X-Gm-Message-State: AHPjjUhYtySWctVh43W53rRUrYX73d23EJYnUjCctUBJw1u7LJ1GuOlH
+        /9hwJOI9+PDcLeS7ynQcq7Y/s1OlOmD0nCSobkvY2g==
+X-Google-Smtp-Source: AOwi7QA7V1Xw+/oO+NaOCW0Qim0u7tbspD5uDNoHQB0X5RLsVP/ifrtURNxtoE0YlZ5ictij54iZn2+FO5u62fT98Tw=
+X-Received: by 10.200.41.89 with SMTP id z25mr778039qtz.79.1505954662245; Wed,
+ 20 Sep 2017 17:44:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Received: by 10.140.102.51 with HTTP; Wed, 20 Sep 2017 17:44:21 -0700 (PDT)
+In-Reply-To: <0bc0b797-fb82-2300-6df1-dc5380e64c85@gmail.com>
+References: <20170915192043.4516-1-benpeart@microsoft.com> <20170919192744.19224-1-benpeart@microsoft.com>
+ <20170919192744.19224-3-benpeart@microsoft.com> <CAGZ79kaJWDWGgqRGTdgc+RjVxAb52CpUCk2DCotSksni4cH1Ww@mail.gmail.com>
+ <0bc0b797-fb82-2300-6df1-dc5380e64c85@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 20 Sep 2017 17:44:21 -0700
+Message-ID: <CAGZ79kbW1GnaSz8qhCgV6BP23CWiYAzq_WbDVv_Yf1GN_3u=wQ@mail.gmail.com>
+Subject: Re: [PATCH v7 02/12] preload-index: add override to enable testing preload-index
+To:     Ben Peart <peartben@gmail.com>
+Cc:     Ben Peart <benpeart@microsoft.com>,
+        David Turner <David.Turner@twosigma.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 20 Sep 2017 17:24:43 -0700
-Jonathan Tan <jonathantanmy@google.com> wrote:
+> To execute the preload code path, we need a minimum of 2 cache entries and 2
+> threads so that each thread actually has work to do.  Otherwise the logic
+> below that divides the work up would need to be updated as well.  The
+> additional complexity didn't seem worth it just to enable the code path to
+> execute with a single thread on a single cache entry.
 
-> On Wed, 13 Sep 2017 14:54:43 -0700
-> Brandon Williams <bmwill@google.com> wrote:
-> 
-> > A normal request to git-daemon is structured as
-> > "command path/to/repo\0host=..\0" and due to a bug in an old version of
-> > git-daemon 73bb33a94 (daemon: Strictly parse the "extra arg" part of the
-> > command, 2009-06-04) we aren't able to place any extra args (separated
-> > by NULs) besides the host.
-> > 
-> > In order to get around this limitation teach git-daemon to recognize
-> > additional request arguments hidden behind a second NUL byte.  Requests
-> > can then be structured like:
-> > "command path/to/repo\0host=..\0\0version=1\0key=value\0".  git-daemon
-> > can then parse out the extra arguments and set 'GIT_PROTOCOL'
-> > accordingly.
-> 
-> A test in this patch (if possible) would be nice, but it is probably
-> clearer to test this when one of the commands (e.g. upload-pack) is
-> done. Could a test be added to the next patch to verify (using
-> GIT_TRACE_PACKET, maybe) that the expected strings are sent? Then
-> mention in this commit message that this will be tested in the next
-> patch too.
+[snip]
 
-Ah, I see that it is tested in 6/8. You can ignore this comment.
+>
+> That would require a larger patch that would update the work division and
+> thread creation logic for little to no gain.
+
+Oh I was not aware of the additional needed refactoring. (I assumed that
+would *just work*, experience should have told me to have a look first).
+
+>
+> There are no new tests that take advantage of this new environment variable.
+> Instead you can run the entire git test suite with it by running:
+>
+> GIT_FORCE_PRELOAD_TEXT=1 prove -j12 --state=all ./t[0-9]*.sh
+>
+> I can add that to the commit message to make it more obvious if desired.
+
+it would have helped me being less confused as there was an "obvious"
+easier and more correct alternative, which you just explained
+is neither easier nor more correct as we probably do not desire that
+anyway.
+
+Thanks,
+Stefan
