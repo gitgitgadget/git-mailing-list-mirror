@@ -6,180 +6,124 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7FFF32047F
-	for <e@80x24.org>; Thu, 21 Sep 2017 07:49:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 15AC02047F
+	for <e@80x24.org>; Thu, 21 Sep 2017 08:04:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751834AbdIUHto (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Sep 2017 03:49:44 -0400
-Received: from benson.default.arb33.uk0.bigv.io ([46.43.0.16]:43237 "EHLO
-        benson.default.arb33.uk0.bigv.io" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751588AbdIUHti (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 21 Sep 2017 03:49:38 -0400
-Received: from cpc91198-cmbg18-2-0-cust103.5-4.cable.virginm.net ([81.98.98.104] helo=celaeno.hellion.org.uk)
-        by benson.default.arb33.uk0.bigv.io with esmtpsa (TLS1.2:RSA_AES_128_CBC_SHA1:128)
-        (Exim 4.80)
-        (envelope-from <ijc-relay-phiayoh8@benson.default.arb33.uk0.bigv.io>)
-        id 1duwEq-0005OS-CT; Thu, 21 Sep 2017 08:49:36 +0100
-Received: from dagon.hellion.org.uk ([192.168.1.7])
-        by celaeno.hellion.org.uk with smtp (Exim 4.84_2)
-        (envelope-from <ijc@hellion.org.uk>)
-        id 1duwEo-0000hn-RI; Thu, 21 Sep 2017 08:49:35 +0100
-Received: by dagon.hellion.org.uk (sSMTP sendmail emulation); Thu, 21 Sep 2017 08:49:34 +0100
-From:   Ian Campbell <ijc@hellion.org.uk>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Ian Campbell <ijc@hellion.org.uk>
-Subject: [PATCH v3 3/4] filter-branch: stash away ref map in a branch
-Date:   Thu, 21 Sep 2017 08:49:31 +0100
-Message-Id: <20170921074932.5490-3-ijc@hellion.org.uk>
-X-Mailer: git-send-email 2.11.0
-In-Reply-To: <1505980146.4636.9.camel@hellion.org.uk>
-References: <1505980146.4636.9.camel@hellion.org.uk>
+        id S1751753AbdIUIEG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Sep 2017 04:04:06 -0400
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:43208 "EHLO
+        alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751649AbdIUIEF (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 21 Sep 2017 04:04:05 -0400
+X-AuditID: 12074411-f95ff70000007f0a-b4-59c372745cc7
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 37.D5.32522.47273C95; Thu, 21 Sep 2017 04:04:04 -0400 (EDT)
+Received: from [192.168.69.190] (p57BCCB74.dip0.t-ipconnect.de [87.188.203.116])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v8L841Ks022349
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Thu, 21 Sep 2017 04:04:02 -0400
+Subject: Re: [PATCH v2 13/21] packed_ref_cache: keep the `packed-refs` file
+ mmapped if possible
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Brandon Williams <bmwill@google.com>, git@vger.kernel.org
+References: <cover.1505799700.git.mhagger@alum.mit.edu>
+ <b32234e07a1bd1e60442a13d97d7c4e51edf3336.1505799700.git.mhagger@alum.mit.edu>
+ <20170920184058.w3tipgsz54ig7dm5@sigill.intra.peff.net>
+ <20170920185119.upnyomtlxobxwvlw@sigill.intra.peff.net>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <b092c424-987a-fe00-43d4-17062000dfc0@alum.mit.edu>
+Date:   Thu, 21 Sep 2017 10:04:01 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
+MIME-Version: 1.0
+In-Reply-To: <20170920185119.upnyomtlxobxwvlw@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrEKsWRmVeSWpSXmKPExsUixO6iqFtadDjSoFPeYu2zO0wWz9efYLfo
+        utLNZNHQe4XZon95F5tF95S3jBY/WnqYLTZvbmdx4PDYOesuu8eHj3EeCzaVejzr3cPocfGS
+        ssfnTXIBbFFcNimpOZllqUX6dglcGfs6ZApeC1TsndnM2MA4l7eLkZNDQsBEou1/K1sXIxeH
+        kMAOJolTTzYyQjgXmCQunDvLDFIlLJAosWD5A1YQW0RAVuL7YYgiZoFnTBKvb85jguj4wyjx
+        5dpLJpAqNgFdiUU9zUA2BwevgL3E1nN8IGEWAVWJhlezwUpEBSIk+t5eZgexeQUEJU7OfMIC
+        YnMKuEhMnLiEEcRmFlCX+DPvEjOELS5x68l8JghbXmL72znMExgFZiFpn4WkZRaSlllIWhYw
+        sqxilEvMKc3VzU3MzClOTdYtTk7My0st0jXVy80s0UtNKd3ECIkOwR2MM07KHWIU4GBU4uGd
+        YHI4Uog1say4MvcQoyQHk5Io75FCoBBfUn5KZUZicUZ8UWlOavEhRgkOZiUR3owgoBxvSmJl
+        VWpRPkxKmoNFSZyXb4m6n5BAemJJanZqakFqEUxWg4NDoHfN6guMUix5+XmpShK8bMDkICRY
+        lJqeWpGWmVOCUMrEwQmyiAdo0UOQI3iLCxJzizPTIfKnGBWlxHlrQBICIImM0jy4XlhSe8Uo
+        DvSWMK8NSBUPMCHCdb8CGswENDh7wwGQwSWJCCmpBsb8yiuXkxrUXro+067i6LDa9WuNj9wP
+        l331cS1CD5/FJVxTrT917fsuHcn/1/bnxfdLX/l34VP1pfm/+nwPPl2ovt3F431X+nq/O7/4
+        2Fxjp5lOKD7Eonv+e8tk0e0GrJoKywSVY5ZpPzNks5C6kHpru/L30+6uf/5UZUtfStLqipb4
+        Isk2X1aJpTgj0VCLuag4EQANUqhaRQMAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-With "--state-branch=<branchname>" option, the mapping from old object names
-and filtered ones in ./map/ directory is stashed away in the object database,
-and the one from the previous run is read to populate the ./map/ directory,
-allowing for incremental updates of large trees.
+On 09/20/2017 08:40 PM, Jeff King wrote:
+> [...]
+> The overall strategy for this compile-time knob makes sense, but one
+> thing confused me:
+> 
+>> +ifdef MMAP_PREVENTS_DELETE
+>> +	BASIC_CFLAGS += -DMMAP_PREVENTS_DELETE
+>> +else
+>> +	ifdef USE_WIN32_MMAP
+>> +		BASIC_CFLAGS += -DMMAP_PREVENTS_DELETE
+>> +	endif
+>> +endif
+> 
+> So setting the knob does what you'd expect. But if you don't set it,
+> then we still auto-tweak it based on the USE_WIN32_MMAP knob. Do we need
+> that? It seems like we set our new knob in config.mak.uname any time
+> we'd set USE_WIN32_MMAP. So this only has an effect in two cases:
+> 
+>  1. You aren't on Windows, but you set USE_WIN32_MMAP yourself.
+> 
+>  2. You are on Windows, but you manually unset MMAP_PREVENTS_DELETE.
+> 
+> I expect both cases are rare (and would probably involve somebody
+> actively debugging these knobs). Probably it's a minor convenience in
+> case 1, but in case 2 it would be actively confusing, I'd think.
 
-Signed-off-by: Ian Campbell <ijc@hellion.org.uk>
----
-I have been using this as part of the device tree extraction from the Linux
-kernel source since 2013, about time I sent the patch upstream!
+Makes sense. I'll delete the `else` clause from the above hunk.
 
-v2:
-- added several preceding cleanup patches, including:
-  - new: use of mktag --allow-missing tagger.
-  - split-out: preserving $GIT_*.
-- use git rev-parse rather than git show-ref.
-- improved error handling for Perl sub-processes.
-- collapsed some shell pipelines involving piping output of git and ls into
-  Perl into the Perl scripts.
-- style fixes for conditionals and sub-shells.
-- fixup indentation.
-- added documentation.
-- improved commit message.
----
- Documentation/git-filter-branch.txt |  8 +++++-
- git-filter-branch.sh                | 49 ++++++++++++++++++++++++++++++++++++-
- 2 files changed, 55 insertions(+), 2 deletions(-)
+On 09/20/2017 08:51 PM, Jeff King wrote:
+> On Wed, Sep 20, 2017 at 02:40:58PM -0400, Jeff King wrote:
+> 
+>>> +enum mmap_strategy {
+>>> +	/*
+>>> +	 * Don't use mmap() at all for reading `packed-refs`.
+>>> +	 */
+>>> +	MMAP_NONE,
+>>> +
+>>> +	/*
+>>> +	 * Can use mmap() for reading `packed-refs`, but the file must
+>>> +	 * not remain mmapped. This is the usual option on Windows,
+>>> +	 * where you cannot rename a new version of a file onto a file
+>>> +	 * that is currently mmapped.
+>>> +	 */
+>>> +	MMAP_TEMPORARY,
+>>
+>> I suspect you originally distinguished these cases so that NO_MMAP does
+>> not read into a fake-mmap buffer, followed by us copying it into another
+>> buffer. But AFAICT we handle the "NONE" and "TEMPORARY" cases exactly
+>> the same (by just doing a read_in_full() into our own buffer). Do we
+>> actually need separate strategies?
+> 
+> In case you are reading these sequentially, I think I talked myself into
+> the utility of this during the next patch. ;)
 
-diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
-index 9e5169aa6..bebdcdec5 100644
---- a/Documentation/git-filter-branch.txt
-+++ b/Documentation/git-filter-branch.txt
-@@ -14,7 +14,7 @@ SYNOPSIS
- 	[--commit-filter <command>] [--tag-name-filter <command>]
- 	[--subdirectory-filter <directory>] [--prune-empty]
- 	[--original <namespace>] [-d <directory>] [-f | --force]
--	[--] [<rev-list options>...]
-+	[--state-branch <branch>] [--] [<rev-list options>...]
- 
- DESCRIPTION
- -----------
-@@ -198,6 +198,12 @@ to other tags will be rewritten to point to the underlying commit.
- 	directory or when there are already refs starting with
- 	'refs/original/', unless forced.
- 
-+--state-branch <branch>::
-+	This option will cause the mapping from old to new objects to
-+	be loaded from named branch upon startup and saved as a new
-+	commit to that branch upon exit, enabling incremental of large
-+	trees. If '<branch>' does not exist it will be created.
-+
- <rev-list options>...::
- 	Arguments for 'git rev-list'.  All positive refs included by
- 	these options are rewritten.  You may also specify options
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index 9edb94206..956869b8e 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -86,7 +86,7 @@ USAGE="[--setup <command>] [--env-filter <command>]
- 	[--parent-filter <command>] [--msg-filter <command>]
- 	[--commit-filter <command>] [--tag-name-filter <command>]
- 	[--subdirectory-filter <directory>] [--original <namespace>]
--	[-d <directory>] [-f | --force]
-+	[-d <directory>] [-f | --force] [--state-branch <branch>]
- 	[--] [<rev-list options>...]"
- 
- OPTIONS_SPEC=
-@@ -106,6 +106,7 @@ filter_msg=cat
- filter_commit=
- filter_tag_name=
- filter_subdir=
-+state_branch=
- orig_namespace=refs/original/
- force=
- prune_empty=
-@@ -181,6 +182,9 @@ do
- 	--original)
- 		orig_namespace=$(expr "$OPTARG/" : '\(.*[^/]\)/*$')/
- 		;;
-+	--state-branch)
-+		state_branch="$OPTARG"
-+		;;
- 	*)
- 		usage
- 		;;
-@@ -259,6 +263,26 @@ export GIT_INDEX_FILE
- # map old->new commit ids for rewriting parents
- mkdir ../map || die "Could not create map/ directory"
- 
-+if test -n "$state_branch"
-+then
-+	state_commit=$(git rev-parse --no-flags --revs-only "$state_branch")
-+	if test -n "$state_commit"
-+	then
-+		echo "Populating map from $state_branch ($state_commit)" 1>&2
-+		perl -e'open(MAP, "-|", "git show $ARGV[0]:filter.map") or die;
-+			while (<MAP>) {
-+				m/(.*):(.*)/ or die;
-+				open F, ">../map/$1" or die;
-+				print F "$2" or die;
-+				close(F) or die;
-+			}
-+			close(MAP) or die;' "$state_commit" \
-+				|| die "Unable to load state from $state_branch:filter.map"
-+	else
-+		echo "Branch $state_branch does not exist. Will create" 1>&2
-+	fi
-+fi
-+
- # we need "--" only if there are no path arguments in $@
- nonrevs=$(git rev-parse --no-revs "$@") || exit
- if test -z "$nonrevs"
-@@ -590,6 +614,29 @@ test -z "$ORIG_GIT_COMMITTER_DATE" || {
- 	export GIT_COMMITTER_DATE
- }
- 
-+if test -n "$state_branch"
-+then
-+	echo "Saving rewrite state to $state_branch" 1>&2
-+	state_blob=$(
-+		perl -e'opendir D, "../map" or die;
-+			open H, "|-", "git hash-object -w --stdin" or die;
-+			foreach (sort readdir(D)) {
-+				next if m/^\.\.?$/;
-+				open F, "<../map/$_" or die;
-+				chomp($f = <F>);
-+				print H "$_:$f\n" or die;
-+			}
-+			close(H) or die;' || die "Unable to save state")
-+	state_tree=$(/bin/echo -e "100644 blob $state_blob\tfilter.map" | git mktree)
-+	if test -n "$state_commit"
-+	then
-+		state_commit=$(/bin/echo "Sync" | git commit-tree "$state_tree" -p "$state_commit")
-+	else
-+		state_commit=$(/bin/echo "Sync" | git commit-tree "$state_tree" )
-+	fi
-+	git update-ref "$state_branch" "$state_commit"
-+fi
-+
- cd "$orig_dir"
- rm -rf "$tempdir"
- 
--- 
-2.11.0
+Sorry about that. I'll add a forward breadcrumb to the log message of
+this commit.
 
+Michael
