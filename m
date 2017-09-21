@@ -2,69 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AEA3D202A5
-	for <e@80x24.org>; Thu, 21 Sep 2017 12:44:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC3BB202A5
+	for <e@80x24.org>; Thu, 21 Sep 2017 12:44:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751602AbdIUMoS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Sep 2017 08:44:18 -0400
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:50967 "EHLO
-        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751436AbdIUMoR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Sep 2017 08:44:17 -0400
-Received: by mail-wm0-f48.google.com with SMTP id b195so1436733wmb.5
-        for <git@vger.kernel.org>; Thu, 21 Sep 2017 05:44:16 -0700 (PDT)
+        id S1751788AbdIUMoX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Sep 2017 08:44:23 -0400
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:49290 "EHLO
+        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751693AbdIUMoW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Sep 2017 08:44:22 -0400
+Received: by mail-wm0-f49.google.com with SMTP id r74so1450430wme.4
+        for <git@vger.kernel.org>; Thu, 21 Sep 2017 05:44:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=lia3pwrtHUkr/f5Mfuv1kbwy6mkUL1XtezHhw3Sm4qY=;
-        b=Bno95eN2jdu3Y8Dv8vAJ7tDJiqU0M0xwmrWj9V47ID6QqGbx6ezM+k4kugQ4JplTLe
-         OEQcic4h8TiMMxB8xWE/UZkmywFtDr7G3/omqEhmigJkYkAJD6dlAjhTx1Q3OUowk2wa
-         YHrLBriIL2HrGM/ZtEHgfqGN9m56mc81KczpR1W49yTTB9/Nbu6+4Ari9R2F1VWAt5H2
-         wBpiRATnTC+FW8q4h3dTQx/kokbtVR0xhgqVWAsCCFGQUidef9Bs8DhXmjjofPurld/b
-         mpU2tx8pc1KTTeQX5nT/pJ4u6bna11fJkg56wjvRVmu4n3igjZJ2slgVLE+MvPioNSL0
-         /EXQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=Im5CPUex1ja6YY3DXehbM3soIxrO17T6LgkAOK6JXjI=;
+        b=CpHR2B6XXol9sgsLdq3AHtxrrxIz60MKTfzbp1cf3HO2Xe0adZzu8p2sRmlth2su3F
+         0QFUU9pq200mUAiiZP2OoIi88HTeWhM8yg02eMilyPzu9J6eDm/LAQ4Do/R70L60V8Yt
+         1m3hCybQVx4QZTee1xlG6lcdJviwWaXAmQBIp+oX1XWDf9nATz+L1fRkB2SeNQJug0tr
+         jQke8zLk6cbkfTUi2Dcb9rcS6gG/BRTJOC3iMthOqKMH2s4CroeCLnIey2I6/53vEd+n
+         blQcnYFeV5S5MXP1hA7dDEPtN7x/B2W+AEN9blqs7GajgbPnUSuqMgNUS8wOA65eHfEq
+         OgXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=lia3pwrtHUkr/f5Mfuv1kbwy6mkUL1XtezHhw3Sm4qY=;
-        b=oY38INGGI5/j1OKLbcvTfMmKmyk4YwZ7u3etvJGZAtR24J/tEyGusolNifdF6g4Gb5
-         u36EN6l0/pPGKxNbnHEmUHBRlFZrESCq9j+JxPNjbwleqbJs6Af9MjjfZBngNruNUxR2
-         iCkqahfVAzJK7NoTmeQqwnBdDu0Vb6yEkowi+8y8NtRCelW6GDmvOi2Zkb7EcORjBBSX
-         bvv9GR4QTs/vV6KTyjdILhjFCQVNvsQfp0NncUFZGiP+scg60ZvDGXSmxiiY7qTzl0CC
-         jPnpP559FoAp2B5dUDn1t8LXCMR6BNYIkVElh8KULmsXTYis+m+KkNoG5q756RB3O8rT
-         aQ4w==
-X-Gm-Message-State: AHPjjUi06iIkcgUUkWzx99o5xVWKSxGc1HQ3qdAYdPcC9FkxDc1u6ZC7
-        B6EulZDEVQgv9h1uHLl7ygGoDk+RBhQ=
-X-Google-Smtp-Source: AOwi7QDUrC1xsdNlFljYks6lWs0q8/j8gijdeOly8Fixi6lNWycTlJCwQoF3x6598CkaN0t689TpXg==
-X-Received: by 10.28.227.68 with SMTP id a65mr1023720wmh.88.1505997855761;
-        Thu, 21 Sep 2017 05:44:15 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=Im5CPUex1ja6YY3DXehbM3soIxrO17T6LgkAOK6JXjI=;
+        b=On6wW0mdHHYGLxRoirp8ZHimJ8CeABUjMTJ7SI7d8lYt5xm8se89UPHjU0fbeoll+8
+         KdfzZjRsJP4P9ZsRw1VlPEbSuoD7H8IyIVoh2mHmc51hSUU7jYd1FfjPpf1sLFJ3CzfO
+         qT/LJNbAeJAl9TB1NnDH6MJ/ne2jTkk4SxczxH4Dc685SoYuNJGSLWT+IS4SqpIl5fNj
+         JzP0UMpKVcHwXSCTIbQLwUi4mk2Bnyqrol0+aQf4dhLS/C/8bMwVZPticYa0iB0w7/U7
+         W602aOq8VRIB/dC/pDzYuRtdjFRt3xCGVZP0xFuSDX17qK8r//upl338QbymwwrAhU64
+         bC1A==
+X-Gm-Message-State: AHPjjUj3e7fTOMU2pJ/mL9lZgivWKySCphms0y880lpjuetYhY8LJov3
+        t6ot5xDyJndIOtk0ZQn7887/s+uPguI=
+X-Google-Smtp-Source: AOwi7QCatMWXE9z5r7QozVNaHQjQxx6V0uiyhxoxq4SKbVzceT26lQ7WIkkC9yXL1VWemWNJY+d74w==
+X-Received: by 10.28.73.133 with SMTP id w127mr840323wma.55.1505997861198;
+        Thu, 21 Sep 2017 05:44:21 -0700 (PDT)
 Received: from hanwen.roam.corp.google.com ([104.132.61.99])
-        by smtp.gmail.com with ESMTPSA id p59sm1494778wrc.75.2017.09.21.05.44.14
+        by smtp.gmail.com with ESMTPSA id p59sm1494778wrc.75.2017.09.21.05.44.20
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 21 Sep 2017 05:44:15 -0700 (PDT)
+        Thu, 21 Sep 2017 05:44:20 -0700 (PDT)
 From:   Han-Wen Nienhuys <hanwen@google.com>
 To:     git@vger.kernel.org
-Cc:     Han-Wen Nienhuys <hanwen@google.com>, sbeller@google.com
-Subject: [PATCH 0/2] Two small comment fixes.
-Date:   Thu, 21 Sep 2017 14:43:36 +0200
-Message-Id: <20170921124338.26626-1-hanwen@google.com>
+Cc:     Han-Wen Nienhuys <hanwen@google.com>
+Subject: [PATCH 1/2] Fix typo in submodule.h
+Date:   Thu, 21 Sep 2017 14:43:37 +0200
+Message-Id: <20170921124338.26626-2-hanwen@google.com>
 X-Mailer: git-send-email 2.14.1.821.g8fa685d3b7-goog
+In-Reply-To: <20170921124338.26626-1-hanwen@google.com>
+References: <20170921124338.26626-1-hanwen@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Han-Wen Nienhuys (2):
-  Fix typo in submodule.h
-  Document the string_list structure
+Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+---
+ submodule.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- string-list.h | 6 ++++++
- submodule.h   | 2 +-
- 2 files changed, 7 insertions(+), 1 deletion(-)
-
---
+diff --git a/submodule.h b/submodule.h
+index 6b52133c8..f0da0277a 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -120,7 +120,7 @@ extern int submodule_move_head(const char *path,
+ 
+ /*
+  * Prepare the "env_array" parameter of a "struct child_process" for executing
+- * a submodule by clearing any repo-specific envirionment variables, but
++ * a submodule by clearing any repo-specific environment variables, but
+  * retaining any config in the environment.
+  */
+ extern void prepare_submodule_repo_env(struct argv_array *out);
+-- 
 2.14.1.821.g8fa685d3b7-goog
+
