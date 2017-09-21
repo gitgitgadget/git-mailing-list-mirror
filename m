@@ -2,102 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A61120281
-	for <e@80x24.org>; Thu, 21 Sep 2017 05:08:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9E1520A29
+	for <e@80x24.org>; Thu, 21 Sep 2017 05:10:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751283AbdIUFIj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Sep 2017 01:08:39 -0400
-Received: from cloud.peff.net ([104.130.231.41]:45642 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750795AbdIUFIi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Sep 2017 01:08:38 -0400
-Received: (qmail 2720 invoked by uid 109); 21 Sep 2017 05:08:38 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 21 Sep 2017 05:08:38 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19218 invoked by uid 111); 21 Sep 2017 05:09:15 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Thu, 21 Sep 2017 01:09:15 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Sep 2017 01:08:36 -0400
-Date:   Thu, 21 Sep 2017 01:08:36 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        id S1751598AbdIUFKK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Sep 2017 01:10:10 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61978 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751068AbdIUFKJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Sep 2017 01:10:09 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id F3E63A8B5F;
+        Thu, 21 Sep 2017 01:10:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=UrPyKA2PzJtWc0PfgWW3rHrjjik=; b=Dgcgc4
+        qjqoCyGSBcn5qkwgdoYhbRVjznTDiRkg5n7+mFElqTiDSomKHCEyF7X/Vi24EaA3
+        43xx0nQev6XGJjcqGn7yN90gp7RkhXY7aL5ifbeeiAWN6LYEagfYbTlkOougzmJC
+        AiUqE1GyOHEzqa7G/z44E+0NDvm+E6JZKE0Vs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=q4n8DIg/rRgpz9P2PtdQKUvaDe/IjtSe
+        FViwHpPk6Sq0U7ZiIHk0iLwA8b9vMI0KGgq0curjO3SXWiYsYwbKtnHTG3Ku7FZf
+        9PayxLPsXNbY6r7exT/fw/cH3areeS+hI4qNqY1vCnq913EpI5N7qc5NjnDwZePZ
+        OBVuvY++prU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id EB046A8B5E;
+        Thu, 21 Sep 2017 01:10:08 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 442CAA8B5D;
+        Thu, 21 Sep 2017 01:10:08 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Jeff King <peff@peff.net>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
         git@vger.kernel.org
-Subject: Re: [PATCH] git: add --no-optional-locks option
-Message-ID: <20170921050835.mrbgx2zryy3jusdk@sigill.intra.peff.net>
-References: <20170921043214.pyhdsrpy4omy54rm@sigill.intra.peff.net>
- <xmqqbmm4lkf5.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH] revision: replace "struct cmdline_pathspec" with argv_array
+References: <1505936846-2195-4-git-send-email-martin.agren@gmail.com>
+        <20170920202552.kkwhigmv7lq6cj3y@sigill.intra.peff.net>
+        <20170920203659.xqy76bg5nfabvbfx@sigill.intra.peff.net>
+        <20170920224826.GH27425@aiede.mtv.corp.google.com>
+        <20170921030424.akqaou7tqj2updgr@sigill.intra.peff.net>
+        <20170921044112.GB91069@aiede.mtv.corp.google.com>
+Date:   Thu, 21 Sep 2017 14:10:06 +0900
+In-Reply-To: <20170921044112.GB91069@aiede.mtv.corp.google.com> (Jonathan
+        Nieder's message of "Wed, 20 Sep 2017 21:41:12 -0700")
+Message-ID: <xmqq7ewsljrl.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqbmm4lkf5.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2300697E-9E8B-11E7-8ED0-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 21, 2017 at 01:55:58PM +0900, Junio C Hamano wrote:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> The phrase 'optional lock' does not answer this question clearly,
-> though: does it make sense to extend the coverage of this option in
-> the future to things more than the "opportunistic update to the
-> index file"?
-> 
-> If the answer is no, then having 'index' instead of 'lock' in the
-> name of the option would make more sense (and 'opportunistic' over
-> 'optional', too), because what the change is about is to allow other
-> processes that are directly interacting with the user to update the
-> index, and 'lock' being hindrance is merely an implementation
-> detail.  The comment on the "test" in the log message mentions as if
-> it were a short-coming that it does not check the lock but checks
-> if the index is written, but I think that is testing what matters
-> and preferable than testing "did we lock and then unlock it?"
-> 
-> On the other hand, if the answer is yes, then I am curious what
-> other things this may extend to, and if these other things are also
-> opportunistic optimizations.
+> diff --git a/pathspec.c b/pathspec.c
+> index e2a23ebc96..cdefdc7cc0 100644
+> --- a/pathspec.c
+> +++ b/pathspec.c
+> @@ -526,10 +526,6 @@ static void NORETURN unsupported_magic(const char *pattern,
+>  	    pattern, sb.buf);
+>  }
+>  
+> -/*
+> - * Given command line arguments and a prefix, convert the input to
+> - * pathspec. die() if any magic in magic_mask is used.
+> - */
+>  void parse_pathspec(struct pathspec *pathspec,
+>  		    unsigned magic_mask, unsigned flags,
+>  		    const char *prefix, const char **argv)
+> diff --git a/pathspec.h b/pathspec.h
+> index 60e6500401..6420d1080a 100644
+> --- a/pathspec.h
+> +++ b/pathspec.h
+> @@ -70,6 +70,13 @@ struct pathspec {
+>   */
+>  #define PATHSPEC_LITERAL_PATH (1<<6)
+>  
+> +/*
+> + * Given command line arguments and a prefix, convert the input to
+> + * pathspec. die() if any magic in magic_mask is used.
+> + *
+> + * Any arguments used are copied. It is safe for the caller to modify
+> + * or free 'prefix' and 'args' after calling this function.
+> + */
+>  extern void parse_pathspec(struct pathspec *pathspec,
+>  			   unsigned magic_mask,
+>  			   unsigned flags,
 
-I left it intentionally vague exactly because I thought we might want to
-leave room for the answer to change to "yes" eventually.  For instance,
-imagine that we had a ref storage format that required periodic
-compaction, and readers might sometimes choose to compact in order to
-save future readers from repeating some work they've done. If that
-compaction means holding a lock even for a brief period, I think it
-would fall under this option.
+Obviously the extra text is better than not having any, but I
+somehow found "Any arguments used" a bit unsatisfactory.  magic_mask
+and flags are probably also copied ;-) but I wonder if *pathspec is
+also copied?  The second sentence that singles out 'prefix' and 'args'
+helps to remove such a confusion from a clueless reader like me, and
+makes me wonder if can take advantage of the existence of them in a
+more direct way.
 
-I admit that's just adding more hand-waving to the pile. But I don't
-think it really _hurts_ to leave that door open (aside from making the
-documentation a bit wishy-washy). And it helps because callers would
-pick up the new features automatically, without having to learn about a
-new option.
+	It is safe for the caller to modify or free 'prefix' and
+	'args' after calling this function, as copies of them are
+	stored in the pathspec structure.
 
-And I think that's really what this option is. It is less about the
-caller asking for some specific behavior, and more about them telling
-Git about the context in which it's executing so it can make intelligent
-decisions.
+or something like that, perhaps.  Adding "(which is freed by calling
+clear_pathspec())" at the end might even better, as that function
+does not currently have any docstring.
 
-And in that sense, something descriptive like --background-process
-perhaps would be a better name. Except that I couldn't come up with a
-name that isn't confusing (certainly --background-process implies to me
-that Git would itself run in the background, which makes no sense here).
-
-I also considered something like "--read-only" to tell Git that we
-should avoid writing to the repository. But that's really not what this
-does. It just avoids writes that may cause contention, not all writes.
-
-I also considered using the word "opportunistic" in the option name, but
-decided it was too long and hard to spell.
-
-So there. I am open to a better name, but I could not come up with one.
-
-> Thanks (and sorry for not being Johannes ;-).
-
-You lack his rugged good looks, but your review was still welcome.
-
--Peff
