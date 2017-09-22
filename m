@@ -2,330 +2,335 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 04767202A5
-	for <e@80x24.org>; Fri, 22 Sep 2017 21:01:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC46D20A2A
+	for <e@80x24.org>; Fri, 22 Sep 2017 21:02:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752094AbdIVVBI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Sep 2017 17:01:08 -0400
-Received: from mail-pg0-f43.google.com ([74.125.83.43]:53220 "EHLO
-        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751974AbdIVVBH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Sep 2017 17:01:07 -0400
-Received: by mail-pg0-f43.google.com with SMTP id i195so1188159pgd.9
-        for <git@vger.kernel.org>; Fri, 22 Sep 2017 14:01:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=VzGMA2tDh/EkaHwcg5p5p5pC4TaD9F3eqBRfPWKm4Jc=;
-        b=YW9V8bB0BAoXDOHuz/klowe/flzcd5q8qGd3BIGWeu8aH7e/Dq8jF1nvRwetapLXqS
-         g4BE1J7xhndbXCACDUHaMgMVxLHCRyksxb/DJywWzq7wNE6ywLxSRfAedQ5/cR00b8Fr
-         fgIAZuehQTn6U9pnSbw40spVXxivVop5ol14255YY5OEDar2qrABAcLSmCwTtzRCmB5L
-         olAbpPudz33L+WrKTa4nheNYeZlXm0c97jZhmSFyR7HGsBA9kokoHGl/kZHi1LaNr0o9
-         BiqeoXgp8ZEKZ6Q3fZQldHnDRB4fxIS81/1dSZHRe7jOBiW/r0kKp2q7NgjA5xcLXc7V
-         OCXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=VzGMA2tDh/EkaHwcg5p5p5pC4TaD9F3eqBRfPWKm4Jc=;
-        b=nDPoRBioQQjmSaYIEbipFLPYJCM3lXxFrv9wSkxAwgWRxjIwfsBchS877Tmu105GKO
-         PC9j9SjpKy1h0chnxA8PeDb8Epwggm1+FFhmQsJPVtRcWof96dieqJdlKgMFoi7Epc//
-         EiEJvkU3QxOnuLm3Rr+YF8Q9iocMSpYyFXLEt5nmJlQ77c/i41fvvDPCPfwvZe2oiuY+
-         9RmbkyRY0I7GEselu1STQAgybG6scsw3CONmu4b7++HJlcCMKR0ATGhkBWzDnn7NxQt6
-         iDj5+Xmz+iJ1Um+0iNuVztX4njmo2Xnu/VGciKmCIGGN4Z39lEJnF8iFaVWuHJ0JavAN
-         Exyg==
-X-Gm-Message-State: AHPjjUj8cvMsBUTRJatVg73ag4h3UmAqgQ8ajPtTtFNcgtnHWTgQsRMx
-        pThsoYjuw14z2riVxhUSuelYoO9qZZ4=
-X-Google-Smtp-Source: AOwi7QD5Fl/BTSqLyKzkE9oKorC+eCp2HJfyNqOXK89LiDj+8ISqg9AE1N8HqEb99b9/QLRyrQU8dg==
-X-Received: by 10.101.88.134 with SMTP id d6mr331211pgu.339.1506114066683;
-        Fri, 22 Sep 2017 14:01:06 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:1986:3ebf:8c68:2a02])
-        by smtp.gmail.com with ESMTPSA id h90sm886718pfj.32.2017.09.22.14.01.05
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 22 Sep 2017 14:01:05 -0700 (PDT)
-Date:   Fri, 22 Sep 2017 14:01:04 -0700
-From:   Brandon Williams <bmwill@google.com>
+        id S1752307AbdIVVCN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Sep 2017 17:02:13 -0400
+Received: from siwi.pair.com ([209.68.5.199]:20919 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752276AbdIVVCM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Sep 2017 17:02:12 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id EDA5A84577;
+        Fri, 22 Sep 2017 17:02:11 -0400 (EDT)
+Received: from [192.168.1.71] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id C35F484576;
+        Fri, 22 Sep 2017 17:02:11 -0400 (EDT)
+Subject: Re: RFC: Design and code of partial clones (now, missing commits and
+ trees OK)
 To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com, gitster@pobox.com,
-        peff@peff.net
-Subject: Re: [PATCH v4] connect: in ref advertisement, shallows are last
-Message-ID: <20170922210104.GB24036@google.com>
-References: <20170922164504.GD77641@google.com>
- <20170922201551.15012-1-jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, peartben@gmail.com,
+        Christian Couder <christian.couder@gmail.com>
+References: <20170915134343.3814dc38@twelve2.svl.corp.google.com>
+ <e6259d03-e904-8c57-73b0-2434939fba71@jeffhostetler.com>
+ <20170921154214.0d2ac45f@twelve2.svl.corp.google.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <af084ada-4607-53e8-c6bb-f5bf13bdc153@jeffhostetler.com>
+Date:   Fri, 22 Sep 2017 17:02:11 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170922201551.15012-1-jonathantanmy@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20170921154214.0d2ac45f@twelve2.svl.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/22, Jonathan Tan wrote:
-> Currently, get_remote_heads() parses the ref advertisement in one loop,
-> allowing refs and shallow lines to intersperse, despite this not being
-> allowed by the specification. Refactor get_remote_heads() to use two
-> loops instead, enforcing that refs come first, and then shallows.
-> 
-> This also makes it easier to teach get_remote_heads() to interpret other
-> lines in the ref advertisement, which will be done in a subsequent
-> patch.
-> 
-> As part of this change, this patch interprets capabilities only on the
-> first line in the ref advertisement, ignoring all others.
-> 
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
-> I've updated state transitions to occur in get_remote_heads() instead,
-> as suggested. I didn't want to do that previously because each step in
-> the state machine needed to communicate if (i) the line is "consumed"
-> and (ii) the state needed to be advanced, but with Junio's suggestion to
-> reorganize the methods, that is no longer true.
-> 
-> As Junio said, the free(server_capabilities) can be removed.
-> 
-> As for whether how capabilities on subsequent lines are handled, I think
-> it's better to ignore them - they are behind NULs, after all.
-> 
-> Yes, "connect: teach client to recognize v1 server response" will need
-> to be modified.
-> 
-> This change does have the side effect that if the server sends a ref
-> advertisement with "shallow"s only (and no refs), things will still
-> work, and the server can even tuck capabilities on the first "shallow"
-> line. I think that's fine, and it does make the client code cleaner.
-> ---
->  connect.c | 171 ++++++++++++++++++++++++++++++++++++++------------------------
->  1 file changed, 105 insertions(+), 66 deletions(-)
-> 
-> diff --git a/connect.c b/connect.c
-> index 49b28b83b..978d01359 100644
-> --- a/connect.c
-> +++ b/connect.c
-> @@ -11,6 +11,7 @@
->  #include "string-list.h"
->  #include "sha1-array.h"
->  #include "transport.h"
-> +#include "strbuf.h"
->  
->  static char *server_capabilities;
->  static const char *parse_feature_value(const char *, const char *, int *);
-> @@ -107,6 +108,86 @@ static void annotate_refs_with_symref_info(struct ref *ref)
->  	string_list_clear(&symref, 0);
->  }
->  
-> +/*
-> + * Read one line of a server's ref advertisement into packet_buffer.
-> + */
-> +static int read_remote_ref(int in, char **src_buf, size_t *src_len,
-> +			   int *responded)
-> +{
-> +	int len = packet_read(in, src_buf, src_len,
-> +			      packet_buffer, sizeof(packet_buffer),
-> +			      PACKET_READ_GENTLE_ON_EOF |
-> +			      PACKET_READ_CHOMP_NEWLINE);
-> +	const char *arg;
-> +	if (len < 0)
-> +		die_initial_contact(*responded);
-> +	if (len > 4 && skip_prefix(packet_buffer, "ERR ", &arg))
-> +		die("remote error: %s", arg);
-> +
-> +	*responded = 1;
-> +
-> +	return len;
-> +}
-> +
-> +#define EXPECTING_FIRST_REF 0
-> +#define EXPECTING_REF 1
-> +#define EXPECTING_SHALLOW 2
-> +
-> +static void process_capabilities(int len)
-> +{
-> +	int nul_location = strlen(packet_buffer);
 
-It may make more sense to not rely on accessing a global buffer here
-directly and instead pass in the buff you're working on, much like your
-are doing with len.
 
-> +	if (nul_location == len)
-> +		return;
-> +	server_capabilities = xstrdup(packet_buffer + nul_location + 1);
-> +}
-> +
-> +static int process_dummy_ref(void)
-> +{
-> +	static char *template;
-> +	if (!template)
-> +		template = xstrfmt("%040d capabilities^{}", 0);
+On 9/21/2017 6:42 PM, Jonathan Tan wrote:
+> On Thu, 21 Sep 2017 13:57:30 -0400
+> Jeff Hostetler <git@jeffhostetler.com> wrote:
+> 
+>> There's a lot in this patch series.  I'm still studying it, but here
+>> are some notes and questions.  I'll start with direct responses to
+>> the RFC here and follow up in a second email with specific questions
+>> and comments to keep this from being too long).
+> 
+> OK - thanks for your detailed comments.
+> 
+>> I like that git-clone saves the partial clone settings in the
+>> .git/config.  This should make it easier for subsequent commands to
+>> default to the right settings.
+>>
+>> Do we allow a partial-fetch following a regular clone (such that
+>> git-fetch would create these config file settings)?  This seems like
+>> a reasonable upgrade path for a user with an existing repo to take
+>> advantage of partial fetches going forward.
+> 
+> A "git-fetch ...options... --save-options" does not sound unreasonable,
+> although I would think that (i) partial fetches/clones are useful on
+> very large repositories, and (ii) the fact that you had already cloned
+> this large repository shows that you can handle the disk and network
+> load, so partial fetch after non-partial clone doesn't seem very useful.
+> 
+> But if there is a use case, I think it could work. Although note that
+> the GC in my patch set stops at promisor objects, so if an object
+> originally cloned cannot be reached through a walk (with non-promisor
+> intermediate objects only), it might end up GC-ed (which might be fine).
+> 
+>> Or do we require that git-fetch only be allowed to do partial-fetches
+>> after a partial-clone (so that only clone creates these settings) and
+>> fetch always does partial-fetches thereafter?  It might be useful to
+>> allow fetch to do a full fetch on top of a partial-clone, but there
+>> are probably thin-pack issues to work out first.
+> 
+> About the thin-pack issue, I wonder if it is sufficient to turn on
+> fetch_if_missing while index-pack is trying to fix the thin pack.
+> 
+> If the thin-pack issues are worked out, then non-partial fetch after
+> partial clone seems doable (all commits from our tip to their tip are
+> fetched, as well as all new trees and all new blobs; any trees and blobs
+> still missing are already promised).
 
-I'm not the biggest fan of dynamically allocating this and then using it
-to compare.  Maybe we can check to make sure that the oid matches the
-null_oid and that the name matches the "capabilities^{}" string?  That
-way you can avoid the allocation?
+Agreed.  If we get a thin-pack and there are missing objects from the
+commits in the edge set, we wouldn't be able to fix the newly received
+objects without demand loading the object they are relative to.  Perhaps
+we can use my filter/prefetch concept on the edge set to bulk fetch
+them. (this is a bit of a SWAG.)  turning on the dynamic fetch would
+be a first step (and may be sufficient).
 
-> +	return !strcmp(packet_buffer, template);
-> +}
-> +
-> +static int process_ref(struct ref ***list, unsigned int flags,
-> +		       struct oid_array *extra_have)
-
-So from comparing this to the current code it doesn't look like there is
-a check in 'process_ref' that ensures that a 'capabilities^{}' line
-doesn't show up after a normal ref, or am I missing something?
-
-> +{
-> +	struct object_id old_oid;
-> +	const char *name;
-> +
-> +	if (parse_oid_hex(packet_buffer, &old_oid, &name))
-> +		return 0;
-> +	if (*name != ' ')
-> +		return 0;
-> +	name++;
-> +
-> +	if (extra_have && !strcmp(name, ".have")) {
-> +		oid_array_append(extra_have, &old_oid);
-> +	} else if (check_ref(name, flags)) {
-> +		struct ref *ref = alloc_ref(name);
-> +		oidcpy(&ref->old_oid, &old_oid);
-> +		**list = ref;
-> +		*list = &ref->next;
-> +	}
-> +	return 1;
-> +}
-> +
-> +static int process_shallow(struct oid_array *shallow_points)
-> +{
-> +	const char *arg;
-> +	struct object_id old_oid;
-> +
-> +	if (!skip_prefix(packet_buffer, "shallow ", &arg))
-> +		return 0;
-> +
-> +	if (get_oid_hex(arg, &old_oid))
-> +		die("protocol error: expected shallow sha-1, got '%s'", arg);
-> +	if (!shallow_points)
-> +		die("repository on the other end cannot be shallow");
-> +	oid_array_append(shallow_points, &old_oid);
-> +	return 1;
-> +}
-> +
->  /*
->   * Read all the refs from the other end
->   */
-> @@ -123,76 +204,34 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
->  	 * willing to talk to us.  A hang-up before seeing any
->  	 * response does not necessarily mean an ACL problem, though.
->  	 */
-> -	int saw_response;
-> -	int got_dummy_ref_with_capabilities_declaration = 0;
-> +	int responded = 0;
-> +	int len;
-> +	int state = EXPECTING_FIRST_REF;
->  
->  	*list = NULL;
-> -	for (saw_response = 0; ; saw_response = 1) {
-> -		struct ref *ref;
-> -		struct object_id old_oid;
-> -		char *name;
-> -		int len, name_len;
-> -		char *buffer = packet_buffer;
-> -		const char *arg;
-> -
-> -		len = packet_read(in, &src_buf, &src_len,
-> -				  packet_buffer, sizeof(packet_buffer),
-> -				  PACKET_READ_GENTLE_ON_EOF |
-> -				  PACKET_READ_CHOMP_NEWLINE);
-> -		if (len < 0)
-> -			die_initial_contact(saw_response);
-> -
-> -		if (!len)
-> -			break;
->  
-> -		if (len > 4 && skip_prefix(buffer, "ERR ", &arg))
-> -			die("remote error: %s", arg);
-> -
-> -		if (len == GIT_SHA1_HEXSZ + strlen("shallow ") &&
-> -			skip_prefix(buffer, "shallow ", &arg)) {
-> -			if (get_oid_hex(arg, &old_oid))
-> -				die("protocol error: expected shallow sha-1, got '%s'", arg);
-> -			if (!shallow_points)
-> -				die("repository on the other end cannot be shallow");
-> -			oid_array_append(shallow_points, &old_oid);
-> -			continue;
-> -		}
-> -
-> -		if (len < GIT_SHA1_HEXSZ + 2 || get_oid_hex(buffer, &old_oid) ||
-> -			buffer[GIT_SHA1_HEXSZ] != ' ')
-> -			die("protocol error: expected sha/ref, got '%s'", buffer);
-> -		name = buffer + GIT_SHA1_HEXSZ + 1;
-> -
-> -		name_len = strlen(name);
-> -		if (len != name_len + GIT_SHA1_HEXSZ + 1) {
-> -			free(server_capabilities);
-> -			server_capabilities = xstrdup(name + name_len + 1);
-> -		}
-> -
-> -		if (extra_have && !strcmp(name, ".have")) {
-> -			oid_array_append(extra_have, &old_oid);
-> -			continue;
-> -		}
-> -
-> -		if (!strcmp(name, "capabilities^{}")) {
-> -			if (saw_response)
-> -				die("protocol error: unexpected capabilities^{}");
-> -			if (got_dummy_ref_with_capabilities_declaration)
-> -				die("protocol error: multiple capabilities^{}");
-> -			got_dummy_ref_with_capabilities_declaration = 1;
-> -			continue;
-> +	while ((len = read_remote_ref(in, &src_buf, &src_len, &responded))) {
-> +		switch (state) {
-> +		case EXPECTING_FIRST_REF:
-> +			process_capabilities(len);
-> +			if (process_dummy_ref()) {
-> +				state = EXPECTING_SHALLOW;
-> +				break;
-> +			}
-> +			state = EXPECTING_REF;
-> +			/* fallthrough */
-> +		case EXPECTING_REF:
-> +			if (process_ref(&list, flags, extra_have))
-> +				break;
-> +			state = EXPECTING_SHALLOW;
-> +			/* fallthrough */
-> +		case EXPECTING_SHALLOW:
-> +			if (process_shallow(shallow_points))
-> +				break;
-> +			die("protocol error: unexpected '%s'", packet_buffer);
-> +		default:
-> +			die("unexpected state %d", state);
-
-Looks much cleaner, thanks!
-
->  		}
-> -
-> -		if (!check_ref(name, flags))
-> -			continue;
-> -
-> -		if (got_dummy_ref_with_capabilities_declaration)
-> -			die("protocol error: unexpected ref after capabilities^{}");
-> -
-> -		ref = alloc_ref(buffer + GIT_SHA1_HEXSZ + 1);
-> -		oidcpy(&ref->old_oid, &old_oid);
-> -		*list = ref;
-> -		list = &ref->next;
->  	}
->  
->  	annotate_refs_with_symref_info(*orig_list);
-> -- 
-> 2.14.1.728.g20a5b67d5.dirty
+> 
+> Thanks for these questions - I am concentrating on repos in which both
+> clone and fetch are partial, but it is good to discuss what happens if
+> the user does something else.
+> 
+>> Also, there is an assumption here that the user will want to keep
+>> using the same filtering settings on subsequent fetches.  That's
+>> probably fine for now and until we get a chance to try it out for
+>> real.
+> 
+> Yes. Having said that, the fetching of missing objects does not take
+> into account the filter at all, so the filter can be easily changed.
+> 
+>> Do we allow EXACTLY ONE promisor-remote?  That is, can we later add
+>> another remote as a promisor-remote?  And then do partial-fetches from
+>> either?
+> 
+> Yes, exactly one (because we need to know which remote to fetch missing
+> objects from, and which remote to allow partial fetches from). But the
+> promisor remote can be switched to another.
+> 
+>> Do we need to disallow removing or altering a remote that is
+>> listed as a promisor-remote?
+> 
+> Perhaps, although I think that right now configs are checked when we run
+> the command using the config, not when we run "git config".
+> 
+>> I think for now, one promisor-remote is fine.  Just asking.
+>>
+>> Changing a remote's URL might be fine, but deleting the
+>> promisor-remote would put the user in a weird state.  We don't need
+>> to worry about it now though.
+> 
+> Agreed.
+> 
+>> I struggled with the terms here a little when looking at the source.
+>> () A remote responding to a partial-clone is termed a
+>> "promisor-remote". () Packfiles received from a promisor-remote are
+>> marked with "<name>.promisor" like "<name>.keep" names.
+>> () An object actually contained in such packfiles is called a
+>> "promisor-object". () An object not-present but referenced by one of
+>> the above promisor-objects is called a "promised-object" (aka a
+>> "missing-object").
+>>
+>> I think the similarity of the words "promisOR" and "promisED" threw
+>> me here and as I was looking at the code.  The code in is_promised()
+>> [1] looked like it was adding all promisor- and promised-objects to
+>> the "promised" OIDSET, but I could be mistaken.
+>>
+>> [1]
+>> https://github.com/jonathantanmy/git/commit/7a9c2d9b6e2fce293817b595dee29a7eede0dddd#diff-5d5d5dc185ef37dc30bb7d9a7ae0c4e8R1960
+> 
+> I was struggling a bit with the terminology, true.
+> 
+> Right now I'm thinking of:
+>   - promisor remote (as you defined)
+>   - promisor packfile (as you defined)
+>   - promisor object is an object known to belong to the promisor (whether
+>     because we have it in a promisor packfile or because it is referenced
+>     by an object in a promisor packfile)
+> 
+> This might eliminate "promise(d)", and thus eliminate the confusion
+> between "promised" and "promisor", but I haven't done an exhaustive
+> search.
 > 
 
--- 
-Brandon Williams
+maybe just call the "promised" ones "missing".
+
+>> The contents of the "<name>.promisor" file are described as arbitrary?
+>> Should we write the name of the remote (or some other structured data)
+>> into this file so that later fetches can find the server?  This is
+>> more a question for when we have multiple promisor-remotes and may
+>> need to decide who can supply a missing object.  Not urgent now
+>> though.
+> 
+> Yeah, I don't have a use for it right now. Although it might be a good
+> idea to make it future-proof, by say, declaring it to be lines of
+> key-value pairs (with comments)...but then again, we might need to
+> forbid earlier tools from working on such modern repositories, so we
+> would need a repository extension (or something similar), and we can
+> upgrade the format then.
+> 
+>> I assume you mean that a dynamic fetch of a single tree object would
+>> be unpacked upon receipt (rather than creating a one object packfile)
+>> and that we may need to mark it as promisor-object so that missing
+>> objects that *IT* references would still follow the promised-object
+>> rules.
+> 
+> Yes, that's right. (And that it would not participate in GC.)
+> 
+>> So is the assumption that as soon as you touch a promisOR-object you
+>> might as well stop scanning, because anything it references might be
+>> missing?
+>>
+>>
+>> The code in rev-list.c and revision.c in [2] looks like it will
+>> continue thru PROMISOR-objects and stop at (still-missing)
+>> PROMISED-objects.
+>>
+>> [2]
+>> https://github.com/jonathantanmy/git/commit/2d7ae2bc780dd056552643e4f5061a0ca7b5b1e5
+> 
+> The invocation of for_each_packed_object() in prepare_revision_walk()
+> should mark all objects in promisor packs as uninteresting, so the
+> traversal should stop there (unless I'm misunderstanding something).
+> 
+>>> The object walk done by gc also stops at all promisor objects and
+>>> promised objects. Only non-promisor packfiles are deleted (if pack
+>>> deletion is requested); promisor packfiles are left alone. This
+>>> maintains the distinction between promisor packfiles and
+>>> non-promisor packfiles. (In the future, we might need to do
+>>> something more sophisticated with promisor packfiles.)
+>>>
+>>
+>> Seems like we could combine promisor-packfiles -- so, for example,
+>> the net result of a complete repack might be one normal- and one
+>> promisor-packfile.
+> 
+> Yes, that is a good next step. (I'm aiming for a minimum viable product
+> here so I didn't include that.)
+> 
+>> Question: if the initial clone is a partial-clone, we will ONLY have
+>> promisor-packfiles, right?  (Unless they later add a second regular
+>> remote.) So fsck and GC will basically stop scanning immediately,
+>> right? Likewise, repack will basically be disabled until we support
+>> repacking promisor-packfiles, right?  So performance of the resulting
+>> repo will deteriorate over time as subsequent partial-fetches pull in
+>> more and more promisor-packfiles.
+> 
+> Files locally created are non-promisor objects, and will become
+> non-promisor packfiles when GC/repack is run.
+
+i forgot about locally created objects.
+
+> 
+> As for performance, you are right. We'll need to make a way to combine
+> promisor packfiles after this.
+> 
+>>> Fetching of promised objects
+>>> ----------------------------
+>>>
+>>> When `sha1_object_info_extended()` (or similar) is invoked, it will
+>>> automatically attempt to fetch a missing object from the promisor
+>>> remote if that object is not in the local repository. For
+>>> efficiency, no check is made as to whether that object is a
+>>> promised object or not.
+>>>
+>>
+>> I don't understand this last statement.  A missing-object is assumed
+>> to be a promised-object, but we don't check that.  By this do you
+>> mean that is_promised() [1] is only used by commands like fsck and
+>> not elsewhere?
+> 
+> Sorry, I meant not checked in sha1_object_info_extended(). Yes, fsck and
+> gc will check them.
+> 
+>> The dynamic object fetching in fetch_object() [3] only fetches 1
+>> object from the server.  This will spawn a transport process, network
+>> connection (and authentication), a packfile download, and index-pack
+>> or unpack for each object.
+>>
+>> Perhaps this is just preliminary code, but I don't see how you can
+>> adapt that model to be efficient.  Even using a long-running
+>> background process to fetch individual blobs, it will still be
+>> fetching blobs individually.  We do need to have dynamic object
+>> fetching, but we should try to minimize its use; that is, to try have
+>> higher-level mechanisms in place to predict and bulk prefetch missing
+>> objects.
+> 
+> My plan is to have batch fetching. We would need to extend this command
+> by command, for example, my patch for batched checkout here:
+> 
+> https://github.com/jonathantanmy/git/commit/14f07d3f06bc3a1a2c9bca85adc8c42b230b9143
+> 
+> (I didn't update this for my newest patch set because I didn't figure
+> out a good way to deal with the possibility of missing trees, but
+> something like this could probably be done - for example, by only
+> batching blobs, and whenever we need to fetch a tree, automatically
+> fetch all objects to a certain depth, for example.)
+> 
+> Server incompatibility is not a problem because the server already
+> supports multiple objects per request. (Well, except the fetching trees
+> to a certain depth part.)
+> 
+
+Here I think we plug in my filter mechanism and hook it to a pre-fetch
+command.  Then we have a pre-checkout hook or something that drives
+this.  We may need a similar pre-merge hook (to get both tips and the
+merge base).
+
+>> I guess it depends on how many missing-objects you expect the client
+>> to have. My concern here is that we're limiting the design to the
+>> "occasional" big file problem, rather than the more general scale
+>> problem.
+> 
+> Do you have a specific situation in mind?
+> 
+
+I have would like to be able do sparse-enlistments in the Windows
+source tree. (3.5M files at HEAD.)  Most developers only need a small
+feature area (a device driver or file system or whatever) and not the
+whole tree.  A typical Windows developer may have only 30-50K files
+populated.  If we can synchronize on a sparse-checkout spec and use
+that for both the checkout and the clone/fetch, then we can bulk fetch
+the blobs that they'll actually need.  GVFS can hydrate the files as
+they touch them, but I can use this to pre-fetch the needed blobs in
+bulk, rather than faulting and fetching them one-by-one.
+
+So, my usage may have >95% of the ODB be missing blobs.  Contrast that
+with the occasional large blob / LFS usage where you may have <5% of
+the ODB as large objects (by count of OIDs not disk usage).
+
+
+>> Also, relying on dynamic object fetching also means that operations,
+>> like checkout, may now require a network connection.  Because we
+>> don't know we need an object until we actually need it (and are
+>> half-way thru some operation that the user thought was safe to do
+>> off-line).
+> 
+> Yes, but I think this is expected when we're dealing with partial
+> clones.
+
+Right, but if we could pre-fetch, we could make checkout a little
+less unpredictable.
+
+> 
+>> Thanks,
+>> Jeff
+> 
+> Thanks.
+> 
+
+Thanks
+Jeff
