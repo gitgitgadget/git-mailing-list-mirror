@@ -2,68 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E217202A5
-	for <e@80x24.org>; Fri, 22 Sep 2017 16:22:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EAC5F202A5
+	for <e@80x24.org>; Fri, 22 Sep 2017 16:24:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752503AbdIVQW4 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Sep 2017 12:22:56 -0400
-Received: from cloud.peff.net ([104.130.231.41]:46996 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752055AbdIVQWy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Sep 2017 12:22:54 -0400
-Received: (qmail 26156 invoked by uid 109); 22 Sep 2017 16:22:54 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 22 Sep 2017 16:22:54 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4444 invoked by uid 111); 22 Sep 2017 16:23:31 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Fri, 22 Sep 2017 12:23:31 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Sep 2017 12:22:51 -0400
-Date:   Fri, 22 Sep 2017 12:22:51 -0400
-From:   Jeff King <peff@peff.net>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+        id S1752484AbdIVQYE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Sep 2017 12:24:04 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:40006 "EHLO
+        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751877AbdIVQYC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Sep 2017 12:24:02 -0400
+Received: from [10.0.2.15] ([147.147.86.16])
+        by avasout07 with smtp
+        id CgQ01w0080M91Ur01gQ1SX; Fri, 22 Sep 2017 17:24:01 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=CrLPSjwD c=1 sm=1 tr=0
+ a=dubYQqM3tRRTmV8xSh8cXQ==:117 a=dubYQqM3tRRTmV8xSh8cXQ==:17
+ a=IkcTkHD0fZMA:10 a=KIigPrQIV3MSycBmqhIA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH 3/4] cache.h: hex2chr() - avoid -Wsign-compare warnings
+To:     Jeff King <peff@peff.net>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: [PATCH 3/4] cache.h: hex2chr() - avoid -Wsign-compare warnings
-Message-ID: <20170922162251.kx2w5u4falztcpnh@sigill.intra.peff.net>
 References: <ae537e7e-2c3d-f7f3-28f4-451c37c01bbb@ramsayjones.plus.com>
  <20170922054748.iseinawwwfw56vis@sigill.intra.peff.net>
  <89beb424-2cc0-bfe3-7847-c11035bfec70@ramsayjones.plus.com>
  <20170922161159.hkw4id4kpnwo7jou@sigill.intra.peff.net>
- <20170922161817.iy5tpexouxn5uwsb@sigill.intra.peff.net>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <d47cdae8-b37f-f378-6df6-bf70a819dd5b@ramsayjones.plus.com>
+Date:   Fri, 22 Sep 2017 17:24:00 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
+In-Reply-To: <20170922161159.hkw4id4kpnwo7jou@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170922161817.iy5tpexouxn5uwsb@sigill.intra.peff.net>
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 22, 2017 at 12:18:17PM -0400, Jeff King wrote:
 
-> > I think if this function is fed an empty string that it will also read
-> > past the end of the buffer for in[1]. It shouldn't matter, since the NUL
-> > in in[0] would cause us to return an error regardless, but it's still
-> > undefined behavior.
+
+On 22/09/17 17:11, Jeff King wrote:
+> On Fri, Sep 22, 2017 at 05:05:03PM +0100, Ramsay Jones wrote:
 > 
-> This is still a bug, though.
+>>> As an aside, I also see some uses of hexval() that don't appear to be
+>>> quite as rigorous in checking for invalid characters. A few
+>>> unconditionally shift the first nibble and assume that there will still
+>>> be high bits set. I think that's generally true for twos-complement
+>>> negative numbers, but isn't shifting off the left side of a signed
+>>> integer undefined behavior?
+>>
+>> All uses of hexval() that I can see are shifting an unsigned value.
+>> Have I missed something?
+> 
+> Hmm. get_hex_color() does:
+> 
+>   unsigned int val;
+>   val = (hexval(in[0]) << 4) | hexval(in[1]));
+> 
+> Isn't that shifting the signed return value of hexval(), and then
+> converting it to unsigned afterwards?
 
-Last message, I promise. ;)
+Err ... no. the return value of hexval() is *unsigned int*.
+(which is kinda the point!)
 
-I started on the minimal fix for this, but actually it's OK by virtue of
-its sole caller first checking that we have enough length (because we're
-not parsing a string, in fact, but a ptr/len buffer).
+> I've been confused by C's integer conversion rules before, though, so
+> perhaps I'm wrong.
+> 
+> I think if this function is fed an empty string that it will also read
+> past the end of the buffer for in[1]. It shouldn't matter, since the NUL
+> in in[0] would cause us to return an error regardless, but it's still
+> undefined behavior.
 
-So all is well, though I think get_hex_color() does serve as a poor
-example if somebody were to try to adapt it generally (hopefully they
-wouldn't, since hex2chr() is already globally available).
+Correct.
 
-Sorry for the all the noise.
+> In fact, this whole function is just hex2chr() implemented badly. Who is
+> responsible for this terrible code? ;)
 
--Peff
+;-)
+
+ATB,
+Ramsay Jones
+
+
