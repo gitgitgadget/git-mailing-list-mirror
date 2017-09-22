@@ -2,141 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 33F8A20281
-	for <e@80x24.org>; Fri, 22 Sep 2017 09:14:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 355D720281
+	for <e@80x24.org>; Fri, 22 Sep 2017 11:22:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751919AbdIVJOr (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Sep 2017 05:14:47 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61194 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751808AbdIVJOq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Sep 2017 05:14:46 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 46FD3AADAD;
-        Fri, 22 Sep 2017 05:14:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=fXGW0XKNXml3JiEn5OCALEdbW7c=; b=pIy5u4
-        78yWTi5s/1bvg6cslZpJedM9IUdlgPhI+YOuZXVk9F229Z4QMbywdakqZmjGtbr6
-        908OFibNaK39QpbWznBG3wrOBqYfrYT3tYOzpomidvXDE3yfhTHRdFiJ4vM3FJWq
-        uD9C7Y5O5JJiRCcKr1HyqnVZ0SKGcZDhlvipI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=euInrmTBSxTWtyiRRZGNATV0BRIYcxik
-        ObG0wt+IPuXZRlNjHlZf0BGXQ3NcPY/8C9C523d4sSIBWOaRosh6uVElJNQLU5wE
-        HfCtfRiMl3zkHsFaThjle08fBXSu7ypMB8Vto1XLcd6P3Ftpz1ZqwxMIuRGuWLfK
-        o+n53Z7MSuU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3E3BCAADAC;
-        Fri, 22 Sep 2017 05:14:41 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        id S1752098AbdIVLWb (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Sep 2017 07:22:31 -0400
+Received: from siwi.pair.com ([209.68.5.199]:12135 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752086AbdIVLWa (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Sep 2017 07:22:30 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 96A6B8468C;
+        Fri, 22 Sep 2017 07:22:29 -0400 (EDT)
+Received: from [192.168.1.71] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 943ADAADAB;
-        Fri, 22 Sep 2017 05:14:40 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael J Gruber <git@grubix.eu>
-Cc:     git@vger.kernel.org, Ekelhart Jakob <jakob.ekelhart@fsw.at>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 2/3] merge-base: return fork-point outside reflog
-References: <68633b20-9e2b-ae23-2ede-8728283250f0@grubix.eu>
-        <cover.1505394278.git.git@grubix.eu>
-        <5513a1415d11517c28158d9b4212d383a233182f.1505394278.git.git@grubix.eu>
-        <xmqq60ckzng7.fsf@gitster.mtv.corp.google.com>
-        <cd97bb1b-13f3-0856-a250-8f4921b9f6d8@grubix.eu>
-        <xmqqshfnx1kl.fsf@gitster.mtv.corp.google.com>
-        <xmqqshfgk1mr.fsf@gitster.mtv.corp.google.com>
-        <5a2fca1d-4edf-965f-4840-58c924c91051@grubix.eu>
-        <xmqqzi9nlcyw.fsf@gitster.mtv.corp.google.com>
-        <4a14c35c-88b0-7bc3-0a6e-c69ed9ec7ee7@grubix.eu>
-Date:   Fri, 22 Sep 2017 18:14:39 +0900
-In-Reply-To: <4a14c35c-88b0-7bc3-0a6e-c69ed9ec7ee7@grubix.eu> (Michael
-        J. Gruber's message of "Fri, 22 Sep 2017 10:34:52 +0200")
-Message-ID: <xmqqa81njds0.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        by siwi.pair.com (Postfix) with ESMTPSA id 1FD1484635;
+        Fri, 22 Sep 2017 07:22:28 -0400 (EDT)
+Subject: Re: [PATCH] git: add --no-optional-locks option
+To:     Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org
+References: <20170921043214.pyhdsrpy4omy54rm@sigill.intra.peff.net>
+ <7a2d895c-df8c-1305-234f-7f8e2b271ec2@kdbg.org>
+ <20170922042539.fs37bauiabfqcjx5@sigill.intra.peff.net>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <dcd542e9-ba92-4dc8-6929-2d0f02bd6307@jeffhostetler.com>
+Date:   Fri, 22 Sep 2017 07:22:28 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 76D71C3C-9F76-11E7-B121-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+In-Reply-To: <20170922042539.fs37bauiabfqcjx5@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael J Gruber <git@grubix.eu> writes:
 
-> I'm still trying to understand what the original intent was: If we
-> abstract from the implementation (as we should, as you rightly
-> emphasize) and talk about historical tips then we have to ask ourselves:
-> - What is "historical"?
-> - What is tip?
-> - Tip of what, i.e. what is a "branch"?
 
-The feature was meant to be a solution for "upstream rebased the
-branch I based my work on."
+On 9/22/2017 12:25 AM, Jeff King wrote:
+> On Thu, Sep 21, 2017 at 08:25:50PM +0200, Johannes Sixt wrote:
+> 
+>>> +`GIT_OPTIONAL_LOCKS`::
+>>> +	If set to `0`, Git will avoid performing any operations which
+>>> +	require taking a lock and which are not required to complete the
+>>> +	requested operation. For example, this will prevent `git status`
+>>> +	from refreshing the index as a side effect. This is useful for
+>>> +	processes running in the background which do not want to cause
+>>> +	lock contention with other operations on the repository.
+>>> +	Defaults to `1`. >>
+>> I don't think we should pass this environment variable to remote
+>> repositories. It should be listed in local_repo_env[] in environment.c.
+> 
+> I'm not sure I agree. This is really about the context in which the
+> command is executing, not anything about the particular repository
+> you're operating on.
+> 
+> For fetch/push operations that touch a remote, I doubt it would matter
+> either way (and anyway, those often cross network boundaries that don't
+> propagate environment variables anyway).
+> 
+> But imagine that "git status" learns to recurse into submodules and run
+> "git status" inside them. Surely we would want the submodule repos to
+> also avoid taking any unnecessary locks?
+> 
+> -Peff
+> 
 
-Suppose you did
+https://github.com/git-for-windows/git/commit/ff63b51c22389139a864eb2e565c6cdc5a30f061
 
-	git clone $URL
-	git checkout -b mytopic origin/topic
-	work work work and commit commit commit
+https://github.com/git-for-windows/git/pull/1004/commits/45bad66192352481acbc826f11d90c8928b39a7a
 
-and then the next "git fetch" found that remote/origin/topic did not
-fast-forward, i.e. your upstream rewound and rebuilt the topic.
+We should compare this with what we did in Git for Windows last fall.
+I guess those commits didn't get pushed upstream.
 
-Now, running
+We added '--no-lock-index' to keep status from locking the index
+during status and effectively being read-only.  This helped with
+problems with Visual Studio similar to the ones being described
+for KDevelop.
 
-	git rebase origin/topic mytopic
-
-would be a disaster, as it would try to replay all the commits
-reachable from mytopic on top of the updated origin/topic, but the
-set of commits reachable from mytopic includes those the upstream
-used to have, on top of which you based your work, and you are not
-interested in replaying them at all.
-
-If you remember where you forked your topic from (you should be able
-to tell from "git log mytopic"), then
-
-	git rebase --onto origin/topic $fork_point mytopic
-
-would be the way to replay "your" work on mytopic on top of the
-updated upstream.
-
-The reason why "--fork-point" exists is because people wanted to
-automate the "remember where you forked your topic from" part.
-
-Your upstream might have rewound the tip of topic many times while
-your repository did not fetch from it (iow, the reflog for
-origin/topic may not have _all_ the tips of other people observed to
-be historicallly at the tip of the remote), but that is immaterial
-for our purpose.  As long as you built on top of origin/topic, the
-fork point must be one of the commits _you_ saw at the tip and it
-does not matter that you did not constantly fetch to observe all the
-changes at the remote.
-
-So the answers of these three questions are:
-
- - "historical": _you_ saw in your repository;
-
- - "tip": _you_ saw it pointed by the branch you forked your work
-   from; and
-
- - "branch": whatever you consider you based your work on top of,
-   typically a remote tracking branch.
-
-Of course, if you are employing a more advanced workflow, you might
-not have started your mytopic branch at any of the tip.  E.g.  if
-you wanted to extend Ben's fsmonitor topic, you would have forked
-your own topic like
-
-	git checkout -b my-fsmonitor origin/pu^2
-
-after fetching from me, and --fork-point would not be of much help
-obviously for such a workflow.  But such users will use --onto and
-explicitly specify the fork point so it is outside the scope of the
-feature.
+Jeff
 
