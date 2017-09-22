@@ -2,146 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB91E202A5
-	for <e@80x24.org>; Fri, 22 Sep 2017 21:32:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 09039202A5
+	for <e@80x24.org>; Fri, 22 Sep 2017 21:37:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752770AbdIVVcF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Sep 2017 17:32:05 -0400
-Received: from siwi.pair.com ([209.68.5.199]:33017 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752605AbdIVVcC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Sep 2017 17:32:02 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 3F15F8461B;
-        Fri, 22 Sep 2017 17:32:01 -0400 (EDT)
-Received: from [192.168.1.71] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 0913F845BA;
-        Fri, 22 Sep 2017 17:32:00 -0400 (EDT)
-Subject: Re: RFC: Design and code of partial clones (now, missing commits and
- trees OK) (part 3)
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, peartben@gmail.com,
-        Christian Couder <christian.couder@gmail.com>
-References: <20170915134343.3814dc38@twelve2.svl.corp.google.com>
- <af717446-95bf-c5a5-cd27-aaf20531db0f@jeffhostetler.com>
- <20170921160416.1c4c6e2c@twelve2.svl.corp.google.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <7977bab0-09c3-0e43-4d6f-f2bf87a3fd9e@jeffhostetler.com>
-Date:   Fri, 22 Sep 2017 17:32:00 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        id S1752168AbdIVVhp (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Sep 2017 17:37:45 -0400
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:50597 "EHLO
+        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752109AbdIVVho (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Sep 2017 17:37:44 -0400
+Received: by mail-pf0-f176.google.com with SMTP id m63so1140540pfk.7
+        for <git@vger.kernel.org>; Fri, 22 Sep 2017 14:37:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=vGhWxONy8pBoSRIXh63LXHTUVbwgwvcU/RQJsCKPwpI=;
+        b=bNIH6DHXv9tt/qPiHm0S9evWY05LlTqBj0HaZNjDPVPmpZiffBVrtR2HSUZ/sFiHZZ
+         Duq5u3jLNLnpvEbc5pdgewMNT/sqMZdkjf4D7HZvwZz10SGuuvrGW1tLUVGyk4G72fQo
+         DHIaJsg7h9K6AAAkT0coEz4rhHxiF1RhJvDxwB1C6M42Qoczjp8kQVkiGRIjfRbuWd87
+         CTy7YyCyJeaNGyiwqmyUmeJPB7keTtWy12yJLk+SUeGRzUz78sAc/Vjd3spLUt2D9Rh+
+         Fbpvr6uOnaXdFqkgZK98vHldQ2PUiYI0VX2yfM2lXHKdERTRVAKYPpFpPXPZt+JktOMB
+         bs5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=vGhWxONy8pBoSRIXh63LXHTUVbwgwvcU/RQJsCKPwpI=;
+        b=RsG2lGOpuIfyXZ0NrxHNAXFC55/MYOFJ3mwY2KAF4ixvkI1SNI1/P1w3ZGLnZF2nFb
+         691StBm2EX+SetgQOInh/AAuPBMxqqLMhDc3pmYFKDL51UKNASAe18hB0Ux1mssNdJgK
+         erWXVuEJm68E+dSRVgjO//i20Mr6EE7AQ46jQSYdq/Mrf5l7q/w9EnJ9Hogy6uhfQzyY
+         T5pEoqk5krLWAtebTM5NdQjhcR92tvCpZBIs/Pd+bTK9uRaaG2DokjTODEz6h+6DPS7M
+         FW6QzGMeo15RUWSx1DbehX+jwGiCrZQVomBzlLUdH+SY8q403elj19PuyveHp1OK6pu+
+         a27g==
+X-Gm-Message-State: AHPjjUi18x+uYEqPp6uNrmwrh0+z+shiOnausPufT89gGruoDUgG46lk
+        GKSrc6hNSNpbjKd4kIYRxRIbQ8zn
+X-Google-Smtp-Source: AOwi7QCYF5jXE5zse+OZmbj7DyJKfJ3zXeJ3WDxR32ARhP5T9THoSHuaDQ/G7/TQuatmon3OagcFbw==
+X-Received: by 10.159.255.12 with SMTP id bi12mr25907plb.284.1506116263168;
+        Fri, 22 Sep 2017 14:37:43 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:a8e5:9a8:2d5b:f3dd])
+        by smtp.gmail.com with ESMTPSA id x128sm807869pgb.6.2017.09.22.14.37.42
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 22 Sep 2017 14:37:42 -0700 (PDT)
+Date:   Fri, 22 Sep 2017 14:37:40 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] Documentation/config: clarify the meaning of
+ submodule.<name>.update
+Message-ID: <20170922213740.GL27425@aiede.mtv.corp.google.com>
+References: <20170922212818.9958-1-sbeller@google.com>
 MIME-Version: 1.0
-In-Reply-To: <20170921160416.1c4c6e2c@twelve2.svl.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170922212818.9958-1-sbeller@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
+Stefan Beller wrote:
 
-On 9/21/2017 7:04 PM, Jonathan Tan wrote:
-> On Thu, 21 Sep 2017 14:00:40 -0400
-> Jeff Hostetler <git@jeffhostetler.com> wrote:
-> 
->> (part 3)
->>
->> Additional overall comments on:
->> https://github.com/jonathantanmy/git/commits/partialclone2
->>
->> {} WRT the code in is_promised() [1]
->>
->> [1]
->> https://github.com/jonathantanmy/git/commit/7a9c2d9b6e2fce293817b595dee29a7eede0dddd#diff-5d5d5dc185ef37dc30bb7d9a7ae0c4e8R1960
->>
->>      {} it looked like it was adding ALL promisor- and
->> promised-objects to the "promised" OIDSET, rather than just
->> promised-objects, but I could be mistaken.
-> 
-> As far as I can tell, it is just adding the promised objects (some of
-> which may also be promisor objects). If you're saying that you expected
-> it to add the promisor objects as well, that might be a reasonable
-> expectation...I'm thinking of doing that.
-> 
+> With more commands (that potentially change a submodule) paying attention
+> to submodules as well as the recent discussion[1] on submodule.<name>.update,
+> let's spell out that submodule.<name>.update is strictly to be used
+> for configuring the "submodule update" command and not to be obeyed
+> by other commands.
 
-It looked like it was adding both types.  I was concerned that that
-it might be doing too much.  But I haven't run the code, that was from
-an observation.
+Good idea, thank you.
 
->>      {} Is this iterating over ALL promisor-packfiles?
-> 
-> Yes.
-> 
->>      {} It looked like this was being used by fsck and rev-list.  I
->> have concerns about how big this OIDSET will get and how it will
->> scale, since if we start with a partial-clone all packfiles will be
->>         promisor-packfiles.
-> 
-> It's true that scaling is an issue. I'm not sure if omitting the oidset
-> will solve anything, though - as it is, Git maintains an object hash and
-> adds to it quite liberally.
+You'll want to update Documentation/gitmodules.txt, too.
 
-I guess I'm afraid that the first call to is_promised() is going
-cause a very long pause as it loads up a very large hash of objects.
+I think this can go further: it should say explicitly that commands
+like "git checkout --recurse-submodules" do not pay attention to this
+option.
 
-Perhaps you could augment the OID lookup to remember where the object
-was found (essentially a .promisor bit set).  Then you wouldn't need
-to touch them all.
+> These other commands usually have a strict meaning of what they should
+> do (i.e. checkout, reset, rebase, merge) as well as have their name
+> overlapping with the modes possible for submodule.<name>.update.
+>
+> [1] https://public-inbox.org/git/4283F0B0-BC1C-4ED1-8126-7E512D84484B@gmail.com/
 
-> 
-> One thing that might help is some sort of flushing of objects in
-> promisor packfiles from the local repository - that way, the oidset
-> won't be so large.
-> 
->>
->>      {} When iterating thru a tree object, you add everything that it
->>         references (everything in that folder).  This adds all of the
->>         child OIDs -- without regard to whether they are new to this
->>         version of the tree object. (Granted, this is hard to compute.)
-> 
-> The oidset will deduplicate OIDs.
+Can you summarize what this discussion concluded with so the reader
+does not have to look far to understand it?
 
-Right, but you still have an entry for each object.  For a repo the
-size of Windows, you may have 25M+ objects your copy of the ODB.
+> Signed-off-by: Stefan Beller <sbeller@google.com>
 
-> 
->>         My concern is that this will add too many objects to the
->> OIDSET. That is, a new tree object (because of a recent change to
->> something in that folder) will also have the OIDs of the other
->> *unchanged* files which may be present in an earlier non-provisor
->> packfile from an earlier commit.
->>
->>         I worry that this will grow the OIDSET to essentially include
->>         everything.  And possibly defeating its own purpose.  I could
->> be wrong here, but that's my concern.
-> 
-> Same answer as above (about flushing of objects in promisor packfiles).
-> 
->> {} I'm not opposed to the .promisor file concept, but I have concerns
->>      that in practice all packfiles after a partial clone will be
->>      promisor-packfiles and therefore short-cut during fsck, so fsck
->>      still won't gain anything.
->>
->>      It would help if there are also non-promisor packfiles present,
->>      but only for objects referenced by non-promisor packfiles.
->>
->>      But then I also have to wonder whether we can even support
->> non-promisor packfiles after starting with a partial clone -- because
->> of the properties of received thin-packs on a non-partial fetch.
-> 
-> Same reply as to your other e-mail - locally created objects are not in
-> promisor packfiles. (Or were you thinking of a situation where locally
-> created objects are immediately uploaded to the promisor remote, thus
-> making them promisor objects too?)
-> 
+Reported-by: Lars Schneider <larsxschneider@gmail.com>
 
-Thanks,
-Jeff
+> ---
+>  Documentation/config.txt | 7 +++----
+>  1 file changed, 3 insertions(+), 4 deletions(-)
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index dc4e3f58a2..b0ded777fe 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -3085,10 +3085,9 @@ submodule.<name>.url::
+>  	See linkgit:git-submodule[1] and linkgit:gitmodules[5] for details.
+>  
+>  submodule.<name>.update::
+> -	The default update procedure for a submodule. This variable
+> -	is populated by `git submodule init` from the
+> -	linkgit:gitmodules[5] file. See description of 'update'
+> -	command in linkgit:git-submodule[1].
+> +	The method how a submodule is updated via 'git submodule update'.
+> +	It is populated by `git submodule init` from the linkgit:gitmodules[5]
+> +	file. See description of 'update' command in linkgit:git-submodule[1].
+>  
+
+Wording nits: s/The method how/The method by which/; s/via/by/
+
+More importantly, can this be more explicit about how it is meant to
+be used?  E.g. to say
+
+ 1. This only affects "git submodule update" and doesn't affect
+    commands like "git checkout --recurse-submodules".
+
+ 2. It exists for historical reasons; settings like submodule.active
+    and pull.rebase are more likely to be what someone is looking for.
+
+Thanks and hope that helps,
+Jonathan
