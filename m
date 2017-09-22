@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ABE8420A26
-	for <e@80x24.org>; Fri, 22 Sep 2017 23:35:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC3B920A26
+	for <e@80x24.org>; Fri, 22 Sep 2017 23:35:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751995AbdIVXfM (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Sep 2017 19:35:12 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:37040 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751763AbdIVXfK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Sep 2017 19:35:10 -0400
-Received: by mail-wr0-f195.google.com with SMTP id u48so1321406wrf.4
-        for <git@vger.kernel.org>; Fri, 22 Sep 2017 16:35:10 -0700 (PDT)
+        id S1752070AbdIVXfS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Sep 2017 19:35:18 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:33817 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751763AbdIVXfR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Sep 2017 19:35:17 -0400
+Received: by mail-wr0-f194.google.com with SMTP id k20so1322848wre.1
+        for <git@vger.kernel.org>; Fri, 22 Sep 2017 16:35:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=LQGMNfCaLsOZgXyqkPzF7qysO+6Wq8jkdv76v4o8j4w=;
-        b=ccqv1H6d8tkRPj38WPqnFH1bngZbh94oqXQSZXJKlc6oEqv7/5q7038Ugt5X+680Rc
-         bHcobpz79lAkrC1JQSR8CFJBZeWRRRxhCkmtVSnAw7jLYJTTqQ6vh3ZVok5ETuDnI+zy
-         kRrl7vCaElZ2gtuIMwIj/lU1tA4z37/BOcXDrv02NRre0DR6W0H9U4rZkdvO5zkekCS2
-         Dm+WwDUw+pxnVXoNtk/qRkY4+XfYWYxSgClzsdW99EvkLnFzBxxHSlBGdJ5pVqLDzwcj
-         P82fPXVkuN6HtMsqJiI1wVkrn5PzhSU/8sTypL3064vdzkxgNW0Jkqin/Vu9JI9uL8IQ
-         H1LQ==
+        bh=fyGzxBif1XALKSclSSO1QXC/Y3p1EZIBsJWQQ6dopHQ=;
+        b=S/vz6ww70W+p8LYmCWTx4ItxEcBBQf6xt4w3gNrimlxu6RGgWYzPNvC5k1No5NZYFa
+         wf3ZakzUqi94Cg9Tw+PhyOI/9oTOoFFNkaJ0H1jhKijpIHSjzeHcRwbZk763V+yrn2Q1
+         PE/EYufNV+ntSghrVYUHBQrmlklkUMnMSsjTAUfbz/GO94AOoILM9A6MjWyrM/yaP6c7
+         7s7l81XkXlT4nvT2ok+vmPY2N84nc/JMCb3uDbe+S6DbfaDERqKWZwamY1nLc10l2Ks0
+         NyCUXhFDA4SDGkqGFWNK7qbZnNe2ra4KZQ+f8tONLxyarStwN3QaMe1eoRJpsF7S1y6A
+         BblQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=LQGMNfCaLsOZgXyqkPzF7qysO+6Wq8jkdv76v4o8j4w=;
-        b=WQXVT8tlCzaGnz3xfqU/9mYIlWeTVwkvvUCWepM7RuZ55YxTo6OzTuw+tywdMVRhMq
-         dL1Q8Hdxt5kc1BrFSaNNrk01dibJTsMNuqDv84+XMys8jVjjv4twHsKABESAO3H/7ruF
-         3ET9JcyXgsWN9K7M7KQ9PUdVnTd7IkbOVIi11hQYxM483EpY2D/HN5lbhKItmSvivEhu
-         AIV4ldNgSEWGUTvCwouwQzAx2R/4X50N79u8h4DIt6XEu7Cb2FcUEdC+TlxD/3uzwWv8
-         11W0xepAhdn37FwWM1tFFXzOnsi4JxokRZg2d0lOpzZ+/MWmZnLqRMMgGev39cX7r7k5
-         v7zA==
-X-Gm-Message-State: AHPjjUhgq89b20HsWdf4CggVBInnqcCCHoQg2VHqHOksmF5xNwB2ViFi
-        g714zL8JmOQNcVFF/lIJpWqDzg==
-X-Google-Smtp-Source: AOwi7QCj0Jw8T658GOlxX5D3apQu/FKOeetd7fjYmCQ1fZ6ZlmGD0XjyO2B4nZUoKIQh7PxhST0yqA==
-X-Received: by 10.223.159.11 with SMTP id l11mr505295wrf.148.1506123309204;
-        Fri, 22 Sep 2017 16:35:09 -0700 (PDT)
+        bh=fyGzxBif1XALKSclSSO1QXC/Y3p1EZIBsJWQQ6dopHQ=;
+        b=nC/c4/iXTkn/eN4E/o+PYg+OTbJ2u6AnjY3YJsakhZDhGmPcrDFKRcP4qOdaeoZ/5x
+         OzqxgzCl0M6vvCbWy+vHuO8jMgwwXVBXAr7dnGbj0L3hM3wm1KkopsAE7MqAryMlSeFD
+         yAC8aOw1ev12Pjt9+qs+C/meZcApODAgHfUC1zBRuGCCjAZSgoP8RsHbWwf7fn97oAQx
+         glz64F2tk9/MBZb3o6DDBny3Dp75vU32Vk0gQsBVYDGHNFWu8UXgj/ENKmNb7gnSz6yP
+         Te4NT2bchTbUpr+Ui7Q/PYtxEjBU8TqJHS6fBompZzvkEKt0mK9w4hZFXTOvDa2I1aFb
+         SYaQ==
+X-Gm-Message-State: AHPjjUivSPmuO4HPwbrOuZ/oe/3TSRnav1z5UJn204cm8Uke6zd2xA28
+        ihBXWpkx4CwgPF/Wunt/vuK4Gw==
+X-Google-Smtp-Source: AOwi7QDRlBmlLmz/BwYgaJXfDKgeFGYqIFivElP4lUAG3SpHCiXUF4yKusRjXvfw6snIkkJZqBr7eA==
+X-Received: by 10.223.182.80 with SMTP id i16mr534164wre.131.1506123316130;
+        Fri, 22 Sep 2017 16:35:16 -0700 (PDT)
 Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
-        by smtp.gmail.com with ESMTPSA id e77sm2071333wmf.27.2017.09.22.16.35.07
+        by smtp.gmail.com with ESMTPSA id e77sm2071333wmf.27.2017.09.22.16.35.14
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 22 Sep 2017 16:35:08 -0700 (PDT)
+        Fri, 22 Sep 2017 16:35:15 -0700 (PDT)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>
-Subject: [PATCH v2 0/6] reroll ma/plugleaks; more `object_array`-fixes
-Date:   Sat, 23 Sep 2017 01:34:48 +0200
-Message-Id: <cover.1506120291.git.martin.agren@gmail.com>
+Subject: [PATCH v2 1/6] builtin/commit: fix memory leak in `prepare_index()`
+Date:   Sat, 23 Sep 2017 01:34:49 +0200
+Message-Id: <48b08b7c776220ae8bf1144e297f9ee304f18d27.1506120292.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.14.1.727.g9ddaf86
-In-Reply-To: <20170920200229.bc4yniz6otng2zyz@sigill.intra.peff.net>
-References: <20170920200229.bc4yniz6otng2zyz@sigill.intra.peff.net>
+In-Reply-To: <cover.1506120291.git.martin.agren@gmail.com>
+References: <20170920200229.bc4yniz6otng2zyz@sigill.intra.peff.net> <cover.1506120291.git.martin.agren@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,72 +66,85 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 20 September 2017 at 22:02, Jeff King <peff@peff.net> wrote:
-> On Wed, Sep 20, 2017 at 09:47:24PM +0200, Martin Ågren wrote:
->
->> Instead of conditionally freeing `rev.pending.objects`, just call
->> `object_array_clear()` on `rev.pending`. This means we don't poke as
->> much into the implementation, which is already a good thing, but also
->> that we free the individual entries as well, thereby fixing a
->> memory-leak.
->
-> Looks good. A similar bug was the exact reason for adding the function
-> in 46be82312. I did a grep for 'free.*\.objects' to see if there were
-> other cases.
->
-> There are some hits. E.g., the one in orphaned_commit_warning(). It does
-> something funny with setting revs.leak_pending. But I _think_ after the
-> whole thing is done and we call free(refs.objects), that probably ought
-> to be an object_array_clear().
+Release `pathspec` and the string list `partial`.
 
-Looking into this, I found various classes of leaks and oddities. I
-ended up replacing this patch with four patches.
+When we clear the string list, make sure we do not free the `util`
+pointers. That would result in double-freeing, since we set them up as
+`item->util = item` in `list_paths()`.
 
-Since Junio collected my "independent" patches into ma/leakplugs, this
-is a re-roll of that whole topic. I got the first two patches from
-Junio's tree. The only difference there is "builtin/" at the very start
-of the first commit message.
+Initialize the string list early, so that we can always release it. That
+introduces some unnecessary overhead in various code paths, but means
+there is one and only one way out of the function. If we ever accumulate
+more things we need to free, it should be straightforward to do so.
 
-The third patch handles the places where we use `leak_pending`. The
-fourth addresses the rest of what your grep found and includes the
-original patch from this thread. While working on those, I felt that
-some callers fiddle a bit too much with the internals of `object_array`.
-One pattern leaks, another only looks like it. That resulted in the last
-two patches.
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+Reviewed-by: Jeff King <peff@peff.net>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/commit.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-Since ma/plugleaks is branched off maint, I did the same with this
-series. It applies on master and next and has a minor conflict on pu
-(`handle_commit()` got a new argument).
-
-Martin
-
-Martin Ågren (6):
-  builtin/commit: fix memory leak in `prepare_index()`
-  commit: fix memory leak in `reduce_heads()`
-  leak_pending: use `object_array_clear()`, not `free()`
-  object_array: use `object_array_clear()`, not `free()`
-  object_array: add and use `object_array_pop()`
-  pack-bitmap[-write]: use `object_array_clear()`, don't leak
-
- bisect.c              |  3 ++-
- builtin/checkout.c    |  9 ++++++++-
- builtin/commit.c      | 15 ++++++++++-----
- builtin/fast-export.c |  3 +--
- builtin/fsck.c        |  7 +------
- builtin/reflog.c      |  6 +++---
- bundle.c              |  9 ++++++++-
- commit.c              |  1 +
- diff-lib.c            |  3 +--
- object.c              | 13 +++++++++++++
- object.h              |  7 +++++++
- pack-bitmap-write.c   |  4 +---
- pack-bitmap.c         | 10 +++-------
- revision.h            | 11 +++++++++++
- shallow.c             |  2 +-
- submodule.c           |  4 ++--
- upload-pack.c         |  2 +-
- 17 files changed, 74 insertions(+), 35 deletions(-)
-
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 1a0da71a4..ce76b6f96 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -336,7 +336,7 @@ static void refresh_cache_or_die(int refresh_flags)
+ static const char *prepare_index(int argc, const char **argv, const char *prefix,
+ 				 const struct commit *current_head, int is_status)
+ {
+-	struct string_list partial;
++	struct string_list partial = STRING_LIST_INIT_DUP;
+ 	struct pathspec pathspec;
+ 	int refresh_flags = REFRESH_QUIET;
+ 	const char *ret;
+@@ -381,7 +381,8 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
+ 			warning(_("Failed to update main cache tree"));
+ 
+ 		commit_style = COMMIT_NORMAL;
+-		return get_lock_file_path(&index_lock);
++		ret = get_lock_file_path(&index_lock);
++		goto out;
+ 	}
+ 
+ 	/*
+@@ -404,7 +405,8 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
+ 		if (write_locked_index(&the_index, &index_lock, CLOSE_LOCK))
+ 			die(_("unable to write new_index file"));
+ 		commit_style = COMMIT_NORMAL;
+-		return get_lock_file_path(&index_lock);
++		ret = get_lock_file_path(&index_lock);
++		goto out;
+ 	}
+ 
+ 	/*
+@@ -430,7 +432,8 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
+ 			rollback_lock_file(&index_lock);
+ 		}
+ 		commit_style = COMMIT_AS_IS;
+-		return get_index_file();
++		ret = get_index_file();
++		goto out;
+ 	}
+ 
+ 	/*
+@@ -461,7 +464,6 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
+ 			die(_("cannot do a partial commit during a cherry-pick."));
+ 	}
+ 
+-	string_list_init(&partial, 1);
+ 	if (list_paths(&partial, !current_head ? NULL : "HEAD", prefix, &pathspec))
+ 		exit(1);
+ 
+@@ -491,6 +493,9 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
+ 	discard_cache();
+ 	ret = get_lock_file_path(&false_lock);
+ 	read_cache_from(ret);
++out:
++	string_list_clear(&partial, 0);
++	clear_pathspec(&pathspec);
+ 	return ret;
+ }
+ 
 -- 
 2.14.1.727.g9ddaf86
 
