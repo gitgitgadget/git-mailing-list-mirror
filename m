@@ -2,70 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DBDC820A26
-	for <e@80x24.org>; Fri, 22 Sep 2017 03:47:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4487A202A5
+	for <e@80x24.org>; Fri, 22 Sep 2017 04:06:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751791AbdIVDri (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Sep 2017 23:47:38 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50532 "EHLO
+        id S1751832AbdIVEGk (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Sep 2017 00:06:40 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59484 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751653AbdIVDrh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Sep 2017 23:47:37 -0400
+        with ESMTP id S1750734AbdIVEGj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Sep 2017 00:06:39 -0400
+X-Greylist: delayed 536 seconds by postgrey-1.27 at vger.kernel.org; Fri, 22 Sep 2017 00:06:39 EDT
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1918E940BA;
-        Thu, 21 Sep 2017 23:47:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=CAZL6jwUBIG+2N6Om9QQuqUi0LE=; b=QTvz2q
-        je0h/Q9RYbcOloYa6hHy5St0AKb/C/PAr+Zvl+myHqcGN9Fm3Qop9CBXXf0XVozG
-        fAxcmXXhzx/CVRQ03vNMAcfDay0UBYCl7qQKvvyQOO+43Nhwn1yW6+Lp+gVBUbcr
-        KaSNg/K+X5ikXnzkaHL9IBgjJaBN/Z9aiW/oI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=yFg7UKGlI4vSQceIUnEJ4IK1fDPtXfmo
-        +AsNf5FZ/+UbZO2jagaTPRzU5ErvK2jX7WGwKgP2bRxTJzz029D0iMLwfKmOXlIU
-        UiquKdc/ayaY8qE+/6jcus/6lNgvqlH1AgyvbgrF+MxHLYhDAkVoLLEB9DvBCI/9
-        Uc/opyedkbQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 10843940B9;
-        Thu, 21 Sep 2017 23:47:37 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5CE26A78D0
+        for <git@vger.kernel.org>; Thu, 21 Sep 2017 23:57:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:from
+        :subject:message-id:date:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=zQINPxdsZ34mVavEQXrINk5Gc
+        WY=; b=H3XlaLDfj+EwAqp1xUU+eFRBz0ZPbW8EuCjsUuEcNlUa9nuRjOaTRJ5T9
+        5UWfadPJ4EzRMRNnt7z6F8x8WHarrV+4JjVJg5dQZ3a00CmnSQXKvMAiHmTZ/sor
+        OHFr/FFA0o0BCXiSD/LEfJq2Ga05w3j1QO+ApAmZy2i0s9j/fc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:from:subject
+        :message-id:date:mime-version:content-type
+        :content-transfer-encoding; q=dns; s=sasl; b=k+mJL17p1HtjoSnrfvx
+        FCWbZSRrOj8QgVxIJenbWzOwq9m+Ab7ubdlPchfo7b8+bs1xcP9EYDMSrSxdH2yn
+        et/QX3AZ2rs5sEg/LQqGEd7obPt+/BrbTdAldHYvHLJn3Vli/BQHHrk48QGMihS+
+        YLLe5A4peC/K1XD9uUnv9bOY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 54362A78CF
+        for <git@vger.kernel.org>; Thu, 21 Sep 2017 23:57:43 -0400 (EDT)
+Received: from [192.168.1.4] (unknown [76.215.41.237])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7F3A5940B8;
-        Thu, 21 Sep 2017 23:47:36 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/4] test-line-buffer: simplify command parsing
-References: <20170921062043.la2f3pjsnojirzyw@sigill.intra.peff.net>
-        <20170921062242.t63u2gvpysrrmijs@sigill.intra.peff.net>
-Date:   Fri, 22 Sep 2017 12:47:35 +0900
-In-Reply-To: <20170921062242.t63u2gvpysrrmijs@sigill.intra.peff.net> (Jeff
-        King's message of "Thu, 21 Sep 2017 02:22:43 -0400")
-Message-ID: <xmqqh8vvl7hk.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A4EA1A78CE
+        for <git@vger.kernel.org>; Thu, 21 Sep 2017 23:57:42 -0400 (EDT)
+To:     git <git@vger.kernel.org>
+From:   Daniel Santos <daniel.santos@pobox.com>
+Subject: KDevelop developers obviously don't use git :(
+Message-ID: <1469bc42-0a21-8cc4-f9bb-000c3737fe19@pobox.com>
+Date:   Thu, 21 Sep 2017 23:03:53 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C5EEF782-9F48-11E7-9931-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+X-Pobox-Relay-ID: 2F45D0D8-9F4A-11E7-A785-FE4B1A68708C-06139138!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+https://bugs.kde.org/show_bug.cgi?id=3D379219
 
-> However, each case arm of the switch falls through to the
-> one below it. This is pointless (we know that a command
-> starting with 'b' does not need to check any of the commands
-> in the 'c' block), and it makes gcc's -Wimplicit-fallthrough
-> complain.
+$ git push minor-rant-warning
 
-Wow, this is an embarassment. The code tries to cleverly optimize
-it, and then fails miserably.
+KDevelop has a despicable habit of performing `git status --porcelain`
+whenever it damn well pleases ... or rather when it sees an alteration.=C2=
+=A0
+This this breaks git rebase because it grabs the $*()&@#$ lock file,
+often leading to catastrophic heart failure and sometimes really forcing
+you to git rebase --abort and start over (at least, that's been my
+solution when git rebase --continue complained that there was nothing to
+commit and maybe I had forgotten to add something).
 
-The updated one reads good.  Thanks.
+I have argued that they should at least verify that there isn't a
+.git/rebase-merge directory present before doing that, but if I want to
+prevent a heart attack, it looks like I'm going to have to fix this one
+myself.=C2=A0 (Sorry for the rant!)
+
+$ git reset minor-rant-warning~1
+
+So first I need to inquire if there is a current mechanism to say "git
+status, but please fail if you're busy with a non-atomic operation".=C2=A0=
+ If
+there is not one, then it would seem that there should be and how do I
+go about requesting it?
+
+Thanks,
+Daniel
+
+
