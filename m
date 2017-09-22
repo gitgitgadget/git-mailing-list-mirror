@@ -2,132 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A74F320A26
-	for <e@80x24.org>; Fri, 22 Sep 2017 22:52:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB696202A5
+	for <e@80x24.org>; Fri, 22 Sep 2017 22:58:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752440AbdIVWw5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Sep 2017 18:52:57 -0400
-Received: from mail-pg0-f49.google.com ([74.125.83.49]:52813 "EHLO
-        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752165AbdIVWw4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Sep 2017 18:52:56 -0400
-Received: by mail-pg0-f49.google.com with SMTP id i195so1296654pgd.9
-        for <git@vger.kernel.org>; Fri, 22 Sep 2017 15:52:56 -0700 (PDT)
+        id S1752386AbdIVW6F (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Sep 2017 18:58:05 -0400
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:48824 "EHLO
+        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752322AbdIVW6E (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Sep 2017 18:58:04 -0400
+Received: by mail-pf0-f180.google.com with SMTP id n24so1214579pfk.5
+        for <git@vger.kernel.org>; Fri, 22 Sep 2017 15:58:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=BAYm2skkYQr0vL5jmria7WKAnEm8fRQeIdyDl0AUC40=;
-        b=V7uBv61dXnsC8i/kL1Sn1l5f7y37dTq3zVn/p8jB1jvAaGbEOZ00FubNCOaXXKeFE5
-         IUvmVdL3EmLd8S6JrSXU7rSudEZXzGQs0BC9jw7ti0N2o6vPlDQYY1z2crXQ9FIamHlL
-         EKdwr7SfolCowerGmp5Gv5XWThvRhWrveV74+mJ41XVnb/c3eFFXBjzfdEiPuTUKwolv
-         bd03nmiPSyk3Eia1KBxgb4CXba1LdhN0AZsOjLszswS2NHxXXUr+Qjj/logEyHUvbNr/
-         NHOKUR5uiVvodsIofFktCUB5cI/sx/ASShwmZevaL1XCSXRDqZ/ikCgNryUjqbf8P5w/
-         gY4g==
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=e9dVAOSV/VCueslNcLSKgbgbnYUYpAj3WWtMNw7V5Zg=;
+        b=intHRUUiq/IYg+AO1DonNyMWJkbF7exm9/ObUw4lTxJBxtWMGIwpC65+T5r0G+H/oR
+         i2ZTJxBlIjqELNxqD6bS6atHsjMDtdYpAJ63JucRFeiit+OVeMQzKEedkuFEWHQ6Rnv9
+         T/EsHCwHgjj7XWB6mKuaKBYGbvfFg0fD7X3QwM1WP5zfYQiB9gija03PqtV4/1v1oarl
+         gIMyPquklVFPHj7St13mHTTSDgqXsQLjAc/2TK0Rxk/IR8RVuIt3R15UAxu68H8jKws4
+         eNGyiF1OcuKL+T9VZMavzPx2hBaMxFUAbGWdxMpqSu9MnQswmFh5tFB7zzV7NFAtcOUR
+         H81Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=BAYm2skkYQr0vL5jmria7WKAnEm8fRQeIdyDl0AUC40=;
-        b=oJv1+xdRpGUymwXBbQnIFt7r/GLmm1NTy55BEvxX6J/QMHFdcY5GW7q1/b5JS9deez
-         Kb9osoudpwZ+GNo4QEEwLDLgPfmcZEovhrGU4Or5Eocks5FvAEWDl4Zhmp1LypB7YJ6q
-         GLE26WKGFv2hwK/4GJzqjqkkAXRIkm5h8FAkMBYU+JjaVAzqsvEqw7Skx2QpwwHD1z26
-         fo1yz1FsNPTrREqr1we+YCFgzF5jikYRUnNLlPEMZptcqaom5prOYo46/rGGBP6QVxmi
-         872iYX1qVM29ImnO/CHOsx22R3h586yWMbC8feAe8gcDtlIoPlc1XPiq77TEF21YIwO0
-         P98g==
-X-Gm-Message-State: AHPjjUitymgt/K7j1xA69g92ipUeDlOYGhv/XVeC3NexbCfJuuPkGvHl
-        NuTKOBTzliU42C8M+rR0JicR5g==
-X-Google-Smtp-Source: AOwi7QDqnaZHjtWfT5EKkK2lkU6mpzSt0wtDsu1lqDC6+sY2uHrsFQLnXfJjyGDCN+v+4rBjLxpcIQ==
-X-Received: by 10.99.96.10 with SMTP id u10mr569370pgb.70.1506120776125;
-        Fri, 22 Sep 2017 15:52:56 -0700 (PDT)
-Received: from localhost ([2620:0:100e:422:d91e:db02:7f11:b424])
-        by smtp.gmail.com with ESMTPSA id c7sm1061004pfc.55.2017.09.22.15.52.55
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 22 Sep 2017 15:52:55 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-To:     jrnieder@gmail.com
-Cc:     git@vger.kernel.org, sbeller@google.com
-Subject: [PATCHv2] Documentation/config: clarify the meaning of submodule.<name>.update
-Date:   Fri, 22 Sep 2017 15:52:50 -0700
-Message-Id: <20170922225250.19705-1-sbeller@google.com>
-X-Mailer: git-send-email 2.14.0.rc0.3.g6c2e499285
-In-Reply-To: <20170922213740.GL27425@aiede.mtv.corp.google.com>
-References: <20170922213740.GL27425@aiede.mtv.corp.google.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=e9dVAOSV/VCueslNcLSKgbgbnYUYpAj3WWtMNw7V5Zg=;
+        b=bZcwFLrwvgUZz+QtOmL7Fe5+nBIHL+B/GwRBpraNagH2qzZDu1bCv/fWWYqZ8nm/kX
+         1xZBPvzi6313GChDel3JDhVS5TeuLSS2lKNv8XE5G9v3POnRjyrPe4mKnpFLvz6dLA4d
+         TJX6DpGSafsn4LHoPtFZQayijlQ70iwO9a2TMO1iue8szfSUzFkdz3aPW6BXWp84GE5V
+         sowYBPqRscTy0x/OeuPOtWTLxQzPxSy7OZHTvBg62wWHhgCkfbT7tT4LLraCMTxN1Yah
+         YTQegUfAlBZChaSKiO7d+VwQIjm/TCJPTYn5sy4WMDxp+BfpOnQOZXZJ5sGj9lu2oyl4
+         XN6A==
+X-Gm-Message-State: AHPjjUjpKEfCFbbNTeFSpGxJUiS6y0Hsb+C6KDHFSx9rGQ5g//McDqC+
+        uKt9LdDJNSzaSCYeCqY0akmI6g==
+X-Google-Smtp-Source: AOwi7QBJ0b9UkD84O8dXtBHIxfqCQxzdf3GRRC/3Ut0TYqOoJk7PJ2ga03QQKz14s4E7zXltC7tBsA==
+X-Received: by 10.99.95.204 with SMTP id t195mr538814pgb.135.1506121083946;
+        Fri, 22 Sep 2017 15:58:03 -0700 (PDT)
+Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:840f:cadd:b54e:2e8c])
+        by smtp.gmail.com with ESMTPSA id z83sm1004604pfd.10.2017.09.22.15.58.03
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 22 Sep 2017 15:58:03 -0700 (PDT)
+Date:   Fri, 22 Sep 2017 15:58:02 -0700
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     git@vger.kernel.org, peartben@gmail.com,
+        Christian Couder <christian.couder@gmail.com>
+Subject: Re: RFC: Design and code of partial clones (now, missing commits
+ and trees OK) (part 3)
+Message-Id: <20170922155802.ab79717818578a23cc31f6fe@google.com>
+In-Reply-To: <7977bab0-09c3-0e43-4d6f-f2bf87a3fd9e@jeffhostetler.com>
+References: <20170915134343.3814dc38@twelve2.svl.corp.google.com>
+        <af717446-95bf-c5a5-cd27-aaf20531db0f@jeffhostetler.com>
+        <20170921160416.1c4c6e2c@twelve2.svl.corp.google.com>
+        <7977bab0-09c3-0e43-4d6f-f2bf87a3fd9e@jeffhostetler.com>
+X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-With more commands (that potentially change a submodule) paying attention
-to submodules as well as the recent discussion[1] on
-submodule.<name>.update, let's spell out that submodule.<name>.update
-is strictly to be used for configuring the "submodule update" command
-and not to be obeyed by other commands.
+On Fri, 22 Sep 2017 17:32:00 -0400
+Jeff Hostetler <git@jeffhostetler.com> wrote:
 
-These other commands usually have a strict meaning of what they should
-do (i.e. checkout, reset, rebase, merge) as well as have their name
-overlapping with the modes possible for submodule.<name>.update.
+> I guess I'm afraid that the first call to is_promised() is going
+> cause a very long pause as it loads up a very large hash of objects.
 
-[1] https://public-inbox.org/git/4283F0B0-BC1C-4ED1-8126-7E512D84484B@gmail.com/
-    submodule.<name>.update was set to "none", triggering unexpected
-    behavior as the submodule was thought to never be touched.
-    However a newer version of Git taught 'git pull --rebase' to also
-    populate and rebase submodules if they were active.
-    The newer options such as submodule.active and command specific
-    flags would not have triggered unexpected behavior.
+Yes, the first call will cause a long pause. (I think fsck and gc can
+tolerate this, but a better solution is appreciated.)
 
-Reported-by: Lars Schneider <larsxschneider@gmail.com>
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- Documentation/config.txt | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+> Perhaps you could augment the OID lookup to remember where the object
+> was found (essentially a .promisor bit set).  Then you wouldn't need
+> to touch them all.
 
-Jonathan writes:
-> You'll want to update Documentation/gitmodules.txt, too.
+Sorry - I don't understand this. Are you saying that missing promisor
+objects should go into the global object hashtable, so that we can set a
+flag on them?
 
-No. /grumpycat
+> > The oidset will deduplicate OIDs.
+> 
+> Right, but you still have an entry for each object.  For a repo the
+> size of Windows, you may have 25M+ objects your copy of the ODB.
 
-It should already be fine, as I read it as if it is only relevant to 
-"git submodule update" there, already:
-
-  submodule.<name>.update::
-	Defines the default update procedure for the named submodule,
-	i.e. how the submodule is updated by "git submodule update"
-	command in the superproject. This is only used by `git
-	submodule init` to initialize the configuration variable of
-	the same name. Allowed values here are 'checkout', 'rebase',
-	'merge' or 'none'. See description of 'update' command in
-	linkgit:git-submodule[1] for their meaning. Note that the
-	'!command' form is intentionally ignored here for security
-	reasons.
- 
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index dc4e3f58a2..1ac0ae6adb 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -3085,10 +3085,14 @@ submodule.<name>.url::
- 	See linkgit:git-submodule[1] and linkgit:gitmodules[5] for details.
- 
- submodule.<name>.update::
--	The default update procedure for a submodule. This variable
--	is populated by `git submodule init` from the
--	linkgit:gitmodules[5] file. See description of 'update'
--	command in linkgit:git-submodule[1].
-+	The method by which a submodule is updated by 'git submodule update',
-+	which is the only affected command, others such as
-+	'git checkout --recurse-submodules' are unaffected. It exists for
-+	historical reasons, when 'git submodule' was the only command to
-+	interact with submodules; settings like `submodule.active`
-+	and `pull.rebase` are more specific. It is populated by
-+	`git submodule init` from the linkgit:gitmodules[5] file.
-+	See description of 'update' command in linkgit:git-submodule[1].
- 
- submodule.<name>.branch::
- 	The remote branch name for a submodule, used by `git submodule
--- 
-2.14.0.rc0.3.g6c2e499285
-
+We have entries only for the "frontier" objects (the objects directly
+referenced by any promisor object). For the Windows repo, for example, I
+foresee that many of the blobs, trees, and commits will be "hiding"
+behind objects that the repository user did not download into their
+repo.
