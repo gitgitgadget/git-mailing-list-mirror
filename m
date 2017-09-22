@@ -7,130 +7,90 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5654F202A5
-	for <e@80x24.org>; Fri, 22 Sep 2017 23:35:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A178202A5
+	for <e@80x24.org>; Fri, 22 Sep 2017 23:37:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752220AbdIVXfh (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Sep 2017 19:35:37 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:33853 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751763AbdIVXfe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Sep 2017 19:35:34 -0400
-Received: by mail-wm0-f68.google.com with SMTP id i131so2481485wma.1
-        for <git@vger.kernel.org>; Fri, 22 Sep 2017 16:35:33 -0700 (PDT)
+        id S1752254AbdIVXh3 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Sep 2017 19:37:29 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:35470 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752071AbdIVXh2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Sep 2017 19:37:28 -0400
+Received: by mail-wr0-f194.google.com with SMTP id n64so1323014wrb.2
+        for <git@vger.kernel.org>; Fri, 22 Sep 2017 16:37:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=NRd5ge4wGRMQW5ZeK22Q6SSBmZcEMDEtRWdEp218OvE=;
-        b=JZUaKJI2PwI6d3dQ7KEjjiRG49viTbzHfdZGA+ibjIm0qxn5/EaSuSus8B5rSmr+JR
-         1AfrMeNIwvjpZzDafUJSx7HvtZWRUiPUt/3fn8NXnzyhDTyHfAT5jUac2+3OVVhUqG9g
-         N607SJdwiFKo2xWB7JwCbGxxbosb4lPFTKj+E17kQoPmXJeXqUpR3DP4SNer+C25eSq+
-         8Gov3L+FhROxhaxqxCpcI77pQD5d3CKKZeQHE12Vr0KzbVnX747gKuHBA3CaV62GQ29v
-         VBJ3QGZcCp9Xn5IO/XW9tt7u5ox3P46zbxIAycKxT7Diuhz9U00V0L2y6Uhk07EnyEz4
-         z4zQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=ffysjx9zYnJFhZkKphqttVokeAsshaucFReEkpw6oj8=;
+        b=JuRkh06xXIZ3XhyVZzi/6d5/1PB05b8lVnnIpe718vTky0lYcdU6Jww16spI7x6CFE
+         gHN7QqCbCEZ+9d/NPfE66aMOJTvBZY7O87kY0x32gbMAdeL3MKjZU+qEURIH4uGZE8T0
+         RG5JZyqB3Za6WlzvsX0iygpAWPmmIask3/Oy0/PXLYSSu5zu6/XGRa42GzHBqQOXYtja
+         vRw3+OYTmoGRffNM3nISp15+KSkapmfQacjpnx6o+saKQA8yXoMogJfJedw2VL03hM01
+         4nbBa33lJmo3Z6rwPnsq5yBRzZZd1h0wjFFPxmwS1okSVFisY39V93ibZbU1eGWUoQ5A
+         TVzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=NRd5ge4wGRMQW5ZeK22Q6SSBmZcEMDEtRWdEp218OvE=;
-        b=LL1ZkiH/cz8QTMuNni7oXL4EZOnfi+9CdTRsoNPV+ZuRRApjX7+Llk51EPKJKCJQqC
-         uuQunYOZk3RwpWN2J8lTf8pwFjIZZsr/9KpCqtDDtGWQdLQG6P1wvhp+qXuokXcm410A
-         fmVZqKdoLfmfmfYgx5ge66Zs5k4DhIKrJ0wRDCsiKM0BDsjVvmXL2O1QA9OfhxtdtqF1
-         +9x6kvo0Aw344VSBSkK2ceEhTjmA4SiWiLLN8u8kt1zXss/B1G+ATuHPfsFY4VtnItLK
-         g7HmtHs597QMF4qNg2anljCBxDh9rVDom/XmjDZNRvfDNPI/GlzstDXDAUXhrmr7tr1v
-         PROA==
-X-Gm-Message-State: AHPjjUihyz/iRSVL3BQaUus1sLXibgoBSMHF8Y4UggFDeyEZNUNUxkAM
-        /D0/cXosKmf37Li7kg0FSZKnTQ==
-X-Google-Smtp-Source: AOwi7QATsLUg67TF9NvL5EL/H08srt2V+8ICTrBrW+5bb8n+jQ5uCbeBOFUua0RXiBtg7/ozO9SdBA==
-X-Received: by 10.28.238.140 with SMTP id j12mr756682wmi.103.1506123332548;
-        Fri, 22 Sep 2017 16:35:32 -0700 (PDT)
+         :references;
+        bh=ffysjx9zYnJFhZkKphqttVokeAsshaucFReEkpw6oj8=;
+        b=VOBg+u3tEBPQuBycZ68O9b4EIjvOL16PHPpeBVxvcqzTAYTXgPVDXdGg0mTvoyaVe5
+         Rb7NQOYqsZRSJDr59WBQDFA8jSyS/IoXL1vQX023m4oSlQDwQu0J9fhCC6DYMOuRyoIB
+         aaALpOgsUdbA8Pq9UiMRho/cfEvM7X6insRD82VZx7ZjweKLp7OrvYZJ/i/L958WfQq2
+         S97C3uOGrWFRSA/xOnoqE/LYm3/YiUUBMSkaspBZunhDoxgN0tw4P5B3ggQjMqiGfDRj
+         BItwti7pExWJvoP5Dx8cEpthWq3rJJgUsDI5FY0J77dhQk4632j95TltGR0F9NyZvuly
+         YdcA==
+X-Gm-Message-State: AHPjjUj+RYXS9Fu+aEW0Xh8db4DK814yqeBkb7ekcRp8PkQYawiNMutp
+        uCFLvJEWSQBHDFrZ8gUMufHBkoEx
+X-Google-Smtp-Source: AOwi7QBJdLvmfuXNiOPfN60EKI6IN1MHIIGwJQZWYGP1AfCxZso7TvSvtBOOfOeuehfXMn+cWMmgWg==
+X-Received: by 10.223.171.206 with SMTP id s72mr472898wrc.27.1506123447792;
+        Fri, 22 Sep 2017 16:37:27 -0700 (PDT)
 Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
-        by smtp.gmail.com with ESMTPSA id e77sm2071333wmf.27.2017.09.22.16.35.31
+        by smtp.gmail.com with ESMTPSA id b47sm1053276wra.73.2017.09.22.16.37.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 22 Sep 2017 16:35:31 -0700 (PDT)
+        Fri, 22 Sep 2017 16:37:27 -0700 (PDT)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>
-Subject: [PATCH v2 6/6] pack-bitmap[-write]: use `object_array_clear()`, don't leak
-Date:   Sat, 23 Sep 2017 01:34:54 +0200
-Message-Id: <30407fada0ee65ca61e5cc52b1dafc708ab90883.1506120292.git.martin.agren@gmail.com>
+To:     Ben Peart <benpeart@microsoft.com>
+Cc:     David Turner <David.Turner@twosigma.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Christian Couder <christian.couder@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v8 01/12] bswap: add 64 bit endianness helper get_be64
+Date:   Sat, 23 Sep 2017 01:37:06 +0200
+Message-Id: <20170922233707.25414-1-martin.agren@gmail.com>
 X-Mailer: git-send-email 2.14.1.727.g9ddaf86
-In-Reply-To: <cover.1506120291.git.martin.agren@gmail.com>
-References: <20170920200229.bc4yniz6otng2zyz@sigill.intra.peff.net> <cover.1506120291.git.martin.agren@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20170922163548.11288-2-benpeart@microsoft.com>
+References: <20170922163548.11288-2-benpeart@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of setting the fields of rev->pending to 0/NULL, thereby leaking
-memory, call `object_array_clear(&rev->pending)`.
+On 22 September 2017 at 18:35, Ben Peart <benpeart@microsoft.com> wrote:
+> Add a new get_be64 macro to enable 64 bit endian conversions on memory
+> that may or may not be aligned.
 
-In pack-bitmap.c, we make copies of those fields as `pending_nr` and
-`pending_e`. We never update the aliases and the original fields never
-change, so the aliases are not really needed and just make it harder
-than necessary to understand the code. While we're here, remove the
-aliases to make the code easier to follow.
+I needed this to compile and pass the tests with NO_UNALIGNED_LOADS.
 
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
----
- pack-bitmap-write.c |  4 +---
- pack-bitmap.c       | 10 +++-------
- 2 files changed, 4 insertions(+), 10 deletions(-)
+Martin
 
-diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index 8e47a96b3..a8df5ce2a 100644
---- a/pack-bitmap-write.c
-+++ b/pack-bitmap-write.c
-@@ -297,9 +297,7 @@ void bitmap_writer_build(struct packing_data *to_pack)
- 
- 			traverse_commit_list(&revs, show_commit, show_object, base);
- 
--			revs.pending.nr = 0;
--			revs.pending.alloc = 0;
--			revs.pending.objects = NULL;
-+			object_array_clear(&revs.pending);
- 
- 			stored->bitmap = bitmap_to_ewah(base);
- 			need_reset = 0;
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 327634cd7..0a49c1595 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -653,8 +653,6 @@ static int in_bitmapped_pack(struct object_list *roots)
- int prepare_bitmap_walk(struct rev_info *revs)
+diff --git a/compat/bswap.h b/compat/bswap.h
+index 6b22c4621..9dc79bdf5 100644
+--- a/compat/bswap.h
++++ b/compat/bswap.h
+@@ -183,8 +183,8 @@ static inline uint32_t get_be32(const void *ptr)
+ static inline uint64_t get_be64(const void *ptr)
  {
- 	unsigned int i;
--	unsigned int pending_nr = revs->pending.nr;
--	struct object_array_entry *pending_e = revs->pending.objects;
+ 	const unsigned char *p = ptr;
+-	return	(uint64_t)get_be32(p[0]) << 32 |
+-		(uint64_t)get_be32(p[4]) <<  0;
++	return	(uint64_t)get_be32(p + 0) << 32 |
++		(uint64_t)get_be32(p + 4) <<  0;
+ }
  
- 	struct object_list *wants = NULL;
- 	struct object_list *haves = NULL;
-@@ -669,8 +667,8 @@ int prepare_bitmap_walk(struct rev_info *revs)
- 			return -1;
- 	}
- 
--	for (i = 0; i < pending_nr; ++i) {
--		struct object *object = pending_e[i].item;
-+	for (i = 0; i < revs->pending.nr; ++i) {
-+		struct object *object = revs->pending.objects[i].item;
- 
- 		if (object->type == OBJ_NONE)
- 			parse_object_or_die(&object->oid, NULL);
-@@ -714,9 +712,7 @@ int prepare_bitmap_walk(struct rev_info *revs)
- 	if (!bitmap_git.loaded && load_pack_bitmap() < 0)
- 		return -1;
- 
--	revs->pending.nr = 0;
--	revs->pending.alloc = 0;
--	revs->pending.objects = NULL;
-+	object_array_clear(&revs->pending);
- 
- 	if (haves) {
- 		revs->ignore_missing_links = 1;
+ static inline void put_be32(void *ptr, uint32_t value)
 -- 
 2.14.1.727.g9ddaf86
 
