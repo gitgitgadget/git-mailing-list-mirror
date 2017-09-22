@@ -7,85 +7,72 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BBFBC202A5
-	for <e@80x24.org>; Fri, 22 Sep 2017 20:01:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DAC95202A5
+	for <e@80x24.org>; Fri, 22 Sep 2017 20:09:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752200AbdIVUBf (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Sep 2017 16:01:35 -0400
-Received: from mail-qk0-f172.google.com ([209.85.220.172]:55206 "EHLO
-        mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752165AbdIVUBd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Sep 2017 16:01:33 -0400
-Received: by mail-qk0-f172.google.com with SMTP id d70so2080174qkc.11
-        for <git@vger.kernel.org>; Fri, 22 Sep 2017 13:01:33 -0700 (PDT)
+        id S1752530AbdIVUJf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Sep 2017 16:09:35 -0400
+Received: from mail-qk0-f178.google.com ([209.85.220.178]:48940 "EHLO
+        mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752297AbdIVUJd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Sep 2017 16:09:33 -0400
+Received: by mail-qk0-f178.google.com with SMTP id a128so2110330qkc.5
+        for <git@vger.kernel.org>; Fri, 22 Sep 2017 13:09:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=q+AIEHSBNOOZMwGNgLuEY8btUVDq0og2an3EHuFg+CY=;
-        b=lYxs/WU0mCwAk5JzVJ//7N/yAe4nwR82/1UzTtmCc62bxKut94FRHUvoe0ACNPdFpy
-         zrAU4p+CyXDPP0CTIGYJqyuDv5wD3EG1u5Q7ENFAvNL484CMkXFWu7O40MirnjMya/IT
-         /9XgZSErBbHCtRzgtX8Pl5aGqvp9figuSTVlw8f75dhAo/+UP3vN/dskUSC0KxbgNaLO
-         IRP1aoN3MBzP3592t1z6iDl8z/Vg5CUYDGcA9ma3WT6xCFyY66uxj+k0y8nHAK8izrmE
-         aGg9dLB7VdSzgKGnNEbBRQdfJGPZDOdbRTvVuZYHRo/WY83lVoTM8Ox61cA49kHg+M+E
-         kcZg==
+        bh=b5HZaMBh6SPpOQI9C4IJZk78oSJ8Okkv84dRTmG+wyw=;
+        b=B24ZWdM+fbs0KLKLsNcFK8+0GvVOslAFXU3CNexYadEWnsD2qC7EY/xWLHhKq3ZnbB
+         b5meC9dPHqmSFXW5t1Nb+Phj3IEfRm4Y3tCWTruaLqGK/RKjakkwLOelQ3rKSI0vAB16
+         c/3YqjEbt/z5BdiutV+zpQL+bV9hrWlAHPWbsNQDeS2nh7Y2g395H+7YXZw6qxJJ8oDi
+         2FUqfQqvcO+WR9mei+JkqQB1eqpwOIWicZInVm2LTD6MgZF3D7xdgCwHmQGM6CGCmGcI
+         VfbN5wuXuslzpVYGEG+YG9QPYD9Q0Pf3eN6Pqn833x1CquOCRVl3jlGMJGTTvSx3NMc4
+         fiUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=q+AIEHSBNOOZMwGNgLuEY8btUVDq0og2an3EHuFg+CY=;
-        b=L17x5Lt/Ca4RDkm5AUw9eaDjZkRdb8omuEPMKqefviFDrRNXYLO29p8Z691Iw4+9NP
-         LpcAc81Y28gVh6Qg/K3RRXwIH6zVe5rtE0OHrjNJ934DncnWNwGRvRz7lgmuwHTcChu/
-         vMjqiGMPBQVSDqfuWgeW/gKaMrUL43aB51+cR2T7miGDNUBFelFmEZOdpG1v2CMKFDd7
-         jZZ4m4j1eJVtdc1pnPxWxFpFdzuiOkkMTgGTCmA3t2RlRl0KqJwu74YgzY3zS3edaTQy
-         HDGDl2L75Gcki0xzydE16uHCFOwbW6ywb3DWXLSVG4aJdIh492oloPYJAufK0NQmOyCm
-         TzBg==
-X-Gm-Message-State: AHPjjUjCHEOjcr5eifjoO6KzD+RgG3E8BzQl/DfLx8aeoLm8mZ2kMlFX
-        SeWAZ9KDGyXoTXMAc8ygn4SY/3cS3FddajhwmFectBBU
-X-Google-Smtp-Source: AOwi7QDKpqvMgUE1+uNwhWO5KXcJ+a56PXgNQDHedrrPe+yP6265AljuhQsi+lE+0wpfLXJ/1Ul8zWnwtltZPTxkEGU=
-X-Received: by 10.55.52.135 with SMTP id b129mr446683qka.308.1506110492593;
- Fri, 22 Sep 2017 13:01:32 -0700 (PDT)
+        bh=b5HZaMBh6SPpOQI9C4IJZk78oSJ8Okkv84dRTmG+wyw=;
+        b=Q65oN6/tZrmLnUU0iamFHdrOXkowELUT581Qhn8SAjaarYKQWha2TKBm3Tr9QVDUvM
+         vsPG2uQNIflGzilxA0oskMfIk6yQmFBwqvmacUJddSOyF68SBccrU2it99A5dmzVUsHo
+         xfO+BSWzT9pAQpZZBslrcqO/q+gDB5CoTpIe+NO+nCNS/y8sib+00odfwHJlhM7L/WZk
+         UwvBjJkUuJMHJBmSclzG/9ONtargl+iM/zEQ24A+Wx9xiNl2lYvzjwKm2Op+0JFwvTI8
+         AEmJ/8mXRHj0LMVg2VLCR45KtO4TtY0I+mvk9S2GUdntxIdn04WL8LBo6NQGToAdyGRh
+         qo3A==
+X-Gm-Message-State: AHPjjUiWA4quXyVx8DwQcNEUIqjWV3GrUyR4Um9r53WiL1999WV5bksF
+        YiBFzyMI6M8t6ZwNxIyy2twHQLltko9ipY2MHVYNxGGEyZo=
+X-Google-Smtp-Source: AOwi7QBPXPOffCEv6vdw9Ws0Xk7zJWdlXBAx2IFfV2DcBeyVx3Uj6uuhGHkIrircYeqNNcW1Ew7vS0zqMC/qkQpIpfw=
+X-Received: by 10.233.223.132 with SMTP id t126mr464561qkf.332.1506110972585;
+ Fri, 22 Sep 2017 13:09:32 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.140.102.51 with HTTP; Fri, 22 Sep 2017 13:01:31 -0700 (PDT)
-In-Reply-To: <381fe8facbbc1667d655572fcff5d6eb5f0e07fc.1506081120.git.git@grubix.eu>
-References: <cover.1506081120.git.git@grubix.eu> <381fe8facbbc1667d655572fcff5d6eb5f0e07fc.1506081120.git.git@grubix.eu>
+Received: by 10.140.102.51 with HTTP; Fri, 22 Sep 2017 13:09:32 -0700 (PDT)
+In-Reply-To: <20170922042539.fs37bauiabfqcjx5@sigill.intra.peff.net>
+References: <20170921043214.pyhdsrpy4omy54rm@sigill.intra.peff.net>
+ <7a2d895c-df8c-1305-234f-7f8e2b271ec2@kdbg.org> <20170922042539.fs37bauiabfqcjx5@sigill.intra.peff.net>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 22 Sep 2017 13:01:31 -0700
-Message-ID: <CAGZ79ka3Bejmv=hT2xNAzx0K-r7S8SaTKmgeW9MB1FqhrY31pA@mail.gmail.com>
-Subject: Re: [PATCH 4/4] t7503: add tests for pre-merge-hook
-To:     Michael J Gruber <git@grubix.eu>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Michael J Gruber <git@drmicha.warpmail.net>
+Date:   Fri, 22 Sep 2017 13:09:32 -0700
+Message-ID: <CAGZ79kaUTdFi5LkgR6zKeb+CH8vpfPQRZf6bFqRfYY-YXy_TNA@mail.gmail.com>
+Subject: Re: [PATCH] git: add --no-optional-locks option
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 22, 2017 at 5:04 AM, Michael J Gruber <git@grubix.eu> wrote:
+On Thu, Sep 21, 2017 at 9:25 PM, Jeff King <peff@peff.net> wrote:
 
-> --- a/t/t7503-pre-commit-hook.sh
-> +++ b/t/t7503-pre-commit-hook.sh
+>
+> But imagine that "git status" learns to recurse into submodules and run
+> "git status" inside them. Surely we would want the submodule repos to
+> also avoid taking any unnecessary locks?
 
-> -test_description='pre-commit hook'
-> +test_description='pre-commit and pre-merge hooks'
+You can teach Git to recurse into submodules already at home,
+just 'git config status.submoduleSummary none'. ;)
 
-Tangent: do we also want to rename the file?
-
-> +test_expect_success '--no-verify with succeeding hook (merge)' '
-
-The return value of the hook ought to not matter, so we'd rather want
-to test for 'no side effect by hook on --no-verify' ?
-
-
-> +test_expect_success '--no-verify with failing hook (merge)' '
-> +
-> +       git checkout side &&
-> +       git merge --no-verify -m "merge master" master &&
-> +       git checkout master
-> +
-> +'
-
-I assume the same (unsolved) issues apply to this hook as
-to the commit-msg hook with 'git merge --continue'
-Do we want a test for that (I am torn on that) ?
+It occurs to me that the config name is badly choosen, as it stores
+an argument for git status --ignore-submodules[=mode]
