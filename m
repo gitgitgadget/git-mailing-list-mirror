@@ -2,68 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B099E202A5
-	for <e@80x24.org>; Fri, 22 Sep 2017 21:25:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D703202A5
+	for <e@80x24.org>; Fri, 22 Sep 2017 21:28:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752107AbdIVVZ2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Sep 2017 17:25:28 -0400
-Received: from cloud.peff.net ([104.130.231.41]:47538 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752071AbdIVVZ1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Sep 2017 17:25:27 -0400
-Received: (qmail 6273 invoked by uid 109); 22 Sep 2017 21:25:28 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 22 Sep 2017 21:25:28 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9107 invoked by uid 111); 22 Sep 2017 21:26:05 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Fri, 22 Sep 2017 17:26:05 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Sep 2017 17:25:25 -0400
-Date:   Fri, 22 Sep 2017 17:25:25 -0400
-From:   Jeff King <peff@peff.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH] git: add --no-optional-locks option
-Message-ID: <20170922212525.kxldygbjrmjqu7ci@sigill.intra.peff.net>
-References: <20170921043214.pyhdsrpy4omy54rm@sigill.intra.peff.net>
- <7a2d895c-df8c-1305-234f-7f8e2b271ec2@kdbg.org>
- <20170922042539.fs37bauiabfqcjx5@sigill.intra.peff.net>
- <CAGZ79kaUTdFi5LkgR6zKeb+CH8vpfPQRZf6bFqRfYY-YXy_TNA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kaUTdFi5LkgR6zKeb+CH8vpfPQRZf6bFqRfYY-YXy_TNA@mail.gmail.com>
+        id S1752109AbdIVV2X (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Sep 2017 17:28:23 -0400
+Received: from mail-pg0-f53.google.com ([74.125.83.53]:43658 "EHLO
+        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752071AbdIVV2W (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Sep 2017 17:28:22 -0400
+Received: by mail-pg0-f53.google.com with SMTP id u18so1227219pgo.0
+        for <git@vger.kernel.org>; Fri, 22 Sep 2017 14:28:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=SkG2IVuLjyOszykzhKiDStytm2we0DeXcWnfoIjl+n8=;
+        b=bHK3oRHYWEIMSoqQ4oKEHxtEI9xyalxC5bKw2pOpRx68F/CZMGbrFlUJmosSsfd0XO
+         CKyahAbp/qucJ7M7A5QUeKbXADH01322EG/S9Eylc2KrQLXczh3+b3vwiWgRFU3OEe0R
+         HPWi/GZZFra/Gmj+qenpKfQpSfpXi7Axpsa4UqGmvS/eN28VGDt11Gtc8kmlNzOFgaPe
+         hRIzZEUe+SXfrZ4Vu0FcrA6CdPKw9Zjl6r9T7c0FyxoNzdQ7aIoZy/5Y7ReA/aOMnsg8
+         GOofrBMI7gr1kobl0JN6Oxf771oOkhkSJhWFK0M4jn3TTlcAklfPT/MkYBjkTWxUmwe0
+         ZOzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=SkG2IVuLjyOszykzhKiDStytm2we0DeXcWnfoIjl+n8=;
+        b=qGF4ToruXdqJ0woMHBT18lI2NeGSjgs90EgYRHARcV7NQtxRnJ5TbuLrzz5oniR7Dw
+         vahZf2H9ko3KvK3DspAFu1qAibpqzwWes/aZ3LdT4vGviFpo3zNKqun7tdRmb+YVj7vn
+         uUV4f1QPBY9WaJMKh2bNIy8WlaZIAK7zu0FaV5S5gFTFWLcud3MMpCev+u13mTYUDPx2
+         I4q4E4oN3MOu/NJwd9dnQ4pAutpmT3dMuvPNsOgO4OhPrzVtGWVsxQVENnpqbqTqHYD3
+         xRZkjYXIK2GJLXwNB0Uzxcr6lQX6ysHLyEuf8+s3wRImWN9GUk6lA05jL1Dy5Dcm6yhL
+         9B/A==
+X-Gm-Message-State: AHPjjUiVn4yz9QN5lU4nnMV3HLbcU4AHeW3dnc0hft2a94bb5ASddhxo
+        8C1vMTx+ZnulEb6g8ttzEv8oTOZJWGk=
+X-Google-Smtp-Source: AOwi7QB+F9QgFkA3QHiOBIBMKkyyyKw+DLOjn31qPLdiV6PdJAE+5mezLe4Nua5bgwgHnpA/sUHMGA==
+X-Received: by 10.101.88.142 with SMTP id d14mr410020pgu.36.1506115701106;
+        Fri, 22 Sep 2017 14:28:21 -0700 (PDT)
+Received: from localhost ([2620:0:100e:422:d91e:db02:7f11:b424])
+        by smtp.gmail.com with ESMTPSA id s86sm850885pfi.74.2017.09.22.14.28.20
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 22 Sep 2017 14:28:20 -0700 (PDT)
+From:   Stefan Beller <sbeller@google.com>
+To:     git@vger.kernel.org
+Cc:     Stefan Beller <sbeller@google.com>
+Subject: [PATCH] Documentation/config: clarify the meaning of submodule.<name>.update
+Date:   Fri, 22 Sep 2017 14:28:18 -0700
+Message-Id: <20170922212818.9958-1-sbeller@google.com>
+X-Mailer: git-send-email 2.14.0.rc0.3.g6c2e499285
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 22, 2017 at 01:09:32PM -0700, Stefan Beller wrote:
+With more commands (that potentially change a submodule) paying attention
+to submodules as well as the recent discussion[1] on submodule.<name>.update,
+let's spell out that submodule.<name>.update is strictly to be used
+for configuring the "submodule update" command and not to be obeyed
+by other commands.
 
-> On Thu, Sep 21, 2017 at 9:25 PM, Jeff King <peff@peff.net> wrote:
-> 
-> >
-> > But imagine that "git status" learns to recurse into submodules and run
-> > "git status" inside them. Surely we would want the submodule repos to
-> > also avoid taking any unnecessary locks?
-> 
-> You can teach Git to recurse into submodules already at home,
-> just 'git config status.submoduleSummary none'. ;)
-> 
-> It occurs to me that the config name is badly choosen, as it stores
-> an argument for git status --ignore-submodules[=mode]
+These other commands usually have a strict meaning of what they should
+do (i.e. checkout, reset, rebase, merge) as well as have their name
+overlapping with the modes possible for submodule.<name>.update.
 
-Ah, thanks. I _thought_ we could already do that but when I went looking
-for the standard --recursive option I couldn't find it.
+[1] https://public-inbox.org/git/4283F0B0-BC1C-4ED1-8126-7E512D84484B@gmail.com/
 
-So yes, I would think we would want this option to apply recursively in
-that case, even when we cross repository boundaries.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ Documentation/config.txt | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
--Peff
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index dc4e3f58a2..b0ded777fe 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -3085,10 +3085,9 @@ submodule.<name>.url::
+ 	See linkgit:git-submodule[1] and linkgit:gitmodules[5] for details.
+ 
+ submodule.<name>.update::
+-	The default update procedure for a submodule. This variable
+-	is populated by `git submodule init` from the
+-	linkgit:gitmodules[5] file. See description of 'update'
+-	command in linkgit:git-submodule[1].
++	The method how a submodule is updated via 'git submodule update'.
++	It is populated by `git submodule init` from the linkgit:gitmodules[5]
++	file. See description of 'update' command in linkgit:git-submodule[1].
+ 
+ submodule.<name>.branch::
+ 	The remote branch name for a submodule, used by `git submodule
+-- 
+2.14.0.rc0.3.g6c2e499285
+
