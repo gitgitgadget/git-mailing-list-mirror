@@ -6,90 +6,124 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 92ADE202A5
-	for <e@80x24.org>; Fri, 22 Sep 2017 12:04:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E4B56202A5
+	for <e@80x24.org>; Fri, 22 Sep 2017 12:04:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752427AbdIVMEY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Sep 2017 08:04:24 -0400
-Received: from mout.kundenserver.de ([217.72.192.75]:50328 "EHLO
+        id S1752441AbdIVMEZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Sep 2017 08:04:25 -0400
+Received: from mout.kundenserver.de ([212.227.126.187]:64276 "EHLO
         mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752429AbdIVMEW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Sep 2017 08:04:22 -0400
-Received: from localhost ([130.75.46.4]) by mrelayeu.kundenserver.de (mreue102
- [212.227.15.183]) with ESMTPSA (Nemesis) id 0LlnLU-1dM1wK2jOC-00ZNN9; Fri, 22
+        with ESMTP id S1752435AbdIVMEY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Sep 2017 08:04:24 -0400
+Received: from localhost ([130.75.46.4]) by mrelayeu.kundenserver.de (mreue003
+ [212.227.15.167]) with ESMTPSA (Nemesis) id 0M4mmf-1dA6lV1Di9-00yveE; Fri, 22
  Sep 2017 14:04:20 +0200
 From:   Michael J Gruber <git@grubix.eu>
 To:     git@vger.kernel.org
-Subject: [PATCH 2/4] merge: do no-verify like commit
-Date:   Fri, 22 Sep 2017 14:04:13 +0200
-Message-Id: <1ec69134cad991f01f6a48b57fbc7047cc226965.1506081120.git.git@grubix.eu>
+Cc:     Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH 1/4] git-merge: Honor pre-merge hook
+Date:   Fri, 22 Sep 2017 14:04:12 +0200
+Message-Id: <053ce92e978aff511667669682c9a71830008605.1506081120.git.git@grubix.eu>
 X-Mailer: git-send-email 2.14.1.909.g0fa57a0913
 In-Reply-To: <cover.1506081120.git.git@grubix.eu>
 References: <cover.1506081120.git.git@grubix.eu>
-X-Provags-ID: V03:K0:Oet1V+MfUhGYe7NyDDKQQtZrKF+n5AH/xOcJXC8YFjHvAg2s9E1
- v1i6lU+XBN8YB8+WKU2H1NLPGLTxADEcqDhhRwWOjETNzSEKDSL38Ez/iap83M2WfJti0bq
- XphugQ2YBKNOVTf1a5z6puCDWWTcK2qnx3kFuss8nKoTgrh2EKUa0CIPowVYEiBPoypZE5w
- oXnavsLz7ZgkFhuO78XWQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:4+AR6sRtyyU=:kf+6TX9ouW5t3Tztjv0Jt5
- rwMeq+ioGwF/NLKR/N3Mr3SMWfk1WlJCixa7rD+FCxHdunc3m1vsailS245+wZmKbU5Q4Tazh
- XFv0yrEAymUVXHwYb/cE1BQ41EPVxVZFOSsDeATcnhE4MGJfCKirpO1YJ68E/wBHkST/nQhhz
- aYY0x3OAP3mcuo2xDme+ac8GBpLjUiSnFntS+zEgJwRq5GFwQBSsAvblZdRWP+IsNzP19Pt6B
- ORmUsL21CHqMdFHoKP0/YUbRtEowglRH4D0K6Hd4GPjCBwWF1jU/nnqoUIXrqc0ufHSUWpRQC
- IIKV57IzE3D/m9CAx9ZaUP2XvJCbrv7iWxavKXIiCBcdx+S6pP1gnlW5EZgIOfr0zYnBGyxpZ
- mfnjB6oaj/V1jzjCIaf03I0RB8JfCUBgfMak7gP2PSPcyVpbbgnEt6VE+uX/feTTXRWorFXIA
- KJO9tWqCRjNdIJeZwe4jce5f9RIPJoViZkBmGQ/0dxd8W/zWH94oYvmSQKS/rw1Pyj7EAOsd3
- AfOtckDQr9tOBdpvYn822iE4NqPM9eaVZU/mJy0PO08Q4DbJBwwa+gHnOBMFxb/JjoyO7mO5m
- vXrOzB5fRtiU+F2ImwbMDCaal3QF7fmalzuymjOfZxnZ5wKKYruJAPQhGXc2e3yfvQzMTxZIc
- E56yT6qGf7v4t+oRoVudlprLZEHIvj69vrT6MU/jl2i8kfE7QMId9nyIROxB15kUaWYZqLxOc
- JXSnCKVVXeJlAwwJmbJWUceIyzl1hiIq71ooEA==
+X-Provags-ID: V03:K0:rEvE5jK76NdgzT759Do9oiSCKNVhl2K+hJiV51MI0NPKM8KDqsk
+ 5NL5uOBk1YfvfpWGWQ8DZ4I560HcviDf18lPdCm7hnu9AbXVkXFG9iYR5hJaXhpXalmeous
+ PZj3AGT2ljQM/Tmd8O3trxpb9BKp7eIOLoGesbdcBrPavQ6Y/3qiEUJX90vOHrqA1HdPBtK
+ xCKBEB1U3XME1MKiozZeQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:rJHNvprAMpM=:0Aku1SNuBRBt0iHQjRHvJ+
+ IoCZp04SH9zEdEMJsh7baneRczt8ezRo3RgQM4tA7ifsAOkUgPKNhDtKxg5rULyeDq24LIxYJ
+ 7eFq2s6CjuKs1TwR1xj6EolswPNZsNrqOAx40sQx2iDeR7U7RIOPn9H5dVeA0l3ROb6JGv8uO
+ g7GY8pYv+uteyQKXdAPDSvULLAxLoklXpm96Zsnk1XB8QiA1DnzPV7t3+ryTlQw1kUKn9Dzdo
+ kDnm5fSDJbOn7Qguxso+KhUSwLEPA5xlbJkXM5+ieuWflENhdeAFtybLadjfzo31GXuK/9x8v
+ bDwIDqqsGQbLTjGEQ79azbm2L7vty4CFXpzu8Ww+as6VmaRpeX/CTMnkJQmZrOnkYIDvUV9vt
+ iWeTIpqmzUQ5vwude+pOnV0SHZMb+I6Dvy72zD/Mb1gSu+zBjTRnVtU3e5LEViRpgrpVDJbmy
+ 2e4jpGxgkj4+plSYqwetvKNRUpEO304eMXoHEKoDrsiumfb7dn4yk/lnJ6HrUNXQYT0WO5nNv
+ iwnYNERbvpzOgBY7aw+b9LJrLnwYKzvq41q10FMTm1mKK9lpqN8zkINHTb+0SDwo3fGBot54w
+ nt9DL+ev/oxzt9n3bawJ7HbUZyqA3c+LNWYG3wjRD/LKX7LDhd/fpeZsulDZycvLXkil8e7qL
+ /Hmph2pTfoFL9xTAgrqYPiqFhe1q5dx7Wfn17QtgSyTozBu/xfIn098PpXG3HcAnhWI3Nzbkf
+ 1y8usavO5AJlYSJGLTcTmHrAQeb2WsxiYvOI1w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-f8b863598c ("builtin/merge: honor commit-msg hook for merges", 2017-09-07)
-introduced the no-verify to merge for bypassing the commit-msg hook,
-though in a different way from the implementation in commit.c.
+From: Michael J Gruber <git@drmicha.warpmail.net>
 
-Change the implementation in merge.c to be the same as in merge.c so
-that both do the same in the same way.
+git-merge does not honor the pre-commit hook when doing automatic merge
+commits, and for compatibility reasons this is going to stay.
+
+Introduce a pre-merge hook which is called for an automatic merge commit
+just like pre-commit is called for a non-automatic merge commit (or any
+other commit).
 
 Signed-off-by: Michael J Gruber <git@grubix.eu>
 ---
- builtin/merge.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ Documentation/githooks.txt        |  7 +++++++
+ builtin/merge.c                   | 11 +++++++++++
+ templates/hooks--pre-merge.sample | 13 +++++++++++++
+ 3 files changed, 31 insertions(+)
+ create mode 100755 templates/hooks--pre-merge.sample
 
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index 1bb4f92d4d..85bedd208c 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -99,6 +99,13 @@ All the 'git commit' hooks are invoked with the environment
+ variable `GIT_EDITOR=:` if the command will not bring up an editor
+ to modify the commit message.
+ 
++pre-merge
++~~~~~~~~~
++
++This hook is invoked by 'git merge' when doing an automatic merge
++commit; it is equivalent to 'pre-commit' for a non-automatic commit
++for a merge.
++
+ prepare-commit-msg
+ ~~~~~~~~~~~~~~~~~~
+ 
 diff --git a/builtin/merge.c b/builtin/merge.c
-index de254d466b..7ba094ee87 100644
+index ab5ffe85e8..de254d466b 100644
 --- a/builtin/merge.c
 +++ b/builtin/merge.c
-@@ -73,7 +73,7 @@ static int show_progress = -1;
- static int default_to_upstream = 1;
- static int signoff;
- static const char *sign_commit;
--static int verify_msg = 1;
-+static int no_verify;
- 
- static struct strategy all_strategy[] = {
- 	{ "recursive",  DEFAULT_TWOHEAD | NO_TRIVIAL },
-@@ -237,7 +237,7 @@ static struct option builtin_merge_options[] = {
- 	  N_("GPG sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
- 	OPT_BOOL(0, "overwrite-ignore", &overwrite_ignore, N_("update ignored files (default)")),
- 	OPT_BOOL(0, "signoff", &signoff, N_("add Signed-off-by:")),
--	OPT_BOOL(0, "verify", &verify_msg, N_("verify commit-msg hook")),
-+	OPT_BOOL(0, "no-verify", &no_verify, N_("bypass commit-msg hook")),
- 	OPT_END()
- };
- 
-@@ -798,7 +798,7 @@ static void prepare_to_commit(struct commit_list *remoteheads)
- 			abort_commit(remoteheads, NULL);
- 	}
- 
--	if (verify_msg && run_commit_hook(0 < option_edit, get_index_file(),
-+	if (!no_verify && run_commit_hook(0 < option_edit, get_index_file(),
- 					  "commit-msg",
- 					  git_path_merge_msg(), NULL))
- 		abort_commit(remoteheads, NULL);
+@@ -769,6 +769,17 @@ static void write_merge_heads(struct commit_list *);
+ static void prepare_to_commit(struct commit_list *remoteheads)
+ {
+ 	struct strbuf msg = STRBUF_INIT;
++	const char *index_file = get_index_file();
++
++	if (run_commit_hook(0 < option_edit, index_file, "pre-merge", NULL))
++		abort_commit(remoteheads, NULL);
++	/*
++	 * Re-read the index as pre-merge hook could have updated it,
++	 * and write it out as a tree.  We must do this before we invoke
++	 * the editor and after we invoke run_status above.
++	 */
++	discard_cache();
++	read_cache_from(index_file);
+ 	strbuf_addbuf(&msg, &merge_msg);
+ 	strbuf_addch(&msg, '\n');
+ 	if (squash)
+diff --git a/templates/hooks--pre-merge.sample b/templates/hooks--pre-merge.sample
+new file mode 100755
+index 0000000000..a6313e6d5c
+--- /dev/null
++++ b/templates/hooks--pre-merge.sample
+@@ -0,0 +1,13 @@
++#!/bin/sh
++#
++# An example hook script to verify what is about to be committed.
++# Called by "git merge" with no arguments.  The hook should
++# exit with non-zero status after issuing an appropriate message if
++# it wants to stop the commit.
++#
++# To enable this hook, rename this file to "pre-merge".
++
++. git-sh-setup
++test -x "$GIT_DIR/hooks/pre-commit" &&
++        exec "$GIT_DIR/hooks/pre-commit"
++:
 -- 
 2.14.1.909.g0fa57a0913
 
