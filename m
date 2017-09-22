@@ -2,78 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 251E0202A5
-	for <e@80x24.org>; Fri, 22 Sep 2017 04:51:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4CE81202A5
+	for <e@80x24.org>; Fri, 22 Sep 2017 04:57:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751794AbdIVEvH (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Sep 2017 00:51:07 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57362 "EHLO
+        id S1751791AbdIVE5t (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Sep 2017 00:57:49 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59700 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751358AbdIVEvH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Sep 2017 00:51:07 -0400
+        with ESMTP id S1751358AbdIVE5t (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Sep 2017 00:57:49 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6152FA826B;
-        Fri, 22 Sep 2017 00:51:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=subject:to:cc
-        :references:from:message-id:date:mime-version:in-reply-to
-        :content-type:content-transfer-encoding; s=sasl; bh=u/z2ruuTWjxJ
-        hvMSWS9drz33v7o=; b=rUQV5LufoMisFfeh8v+sAJpKryKjf7IjVm4pJ7zyYR84
-        v9Z+PJ2uubj/EsAfv9giWZg5asi2yOV7/evf5FHCHYoJsvCxp136yKMDLAZWWRZJ
-        nn3BU83erLbL7Rn0sd9gq3uQ/yXUyihGsMGXgb2M2J9LfZwPXHkYbeGAF0D/iBg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=subject:to:cc
-        :references:from:message-id:date:mime-version:in-reply-to
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=VhUfU+
-        GZfjEMiUTtyoi809ZIkoFncIhNv67i6Y3d6DiBZacbr0eyWcHyzb94+gK3kG/xlS
-        rjZlEZaisDaiL1ESAd2V28bM1S5e8fes56ZDKkyHvB76ipWh+x6iNfxt5DkABYTR
-        HawcMmxziEYpfC3WRhhEQnzLIwqfCSteP4/vQ=
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A0478A8444;
+        Fri, 22 Sep 2017 00:57:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=fKAAhjAdvAUsiuKn+yLJkriyVVw=; b=DApNb7
+        9HUHQ7r8R7WZ+klwRqU58HVTmARx+d9G8/4v7enxWnGemunzays/Cb3MaeNi1GPd
+        GRhNFyITSI8Jve2lOynJyue9oUYFGzUgO9goD7vHtVnSqLjhVMOTwZ0gJZ1zLhSV
+        yQo824Lb7ZKhJ5aJ4HmCHQAFYk6U5qi7bvKqE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=X6xdfA9+GDyB8urHdb45H5OV5dKzl4V1
+        uhOY+M7Knptuz1U/ZroexAVyiKv0M4kruPssFUZGvA6nRZJLguTOJB7KA9dKsqcX
+        DEaWZ8ln7Lg9pdMN/JF6+c9cQGnH4UgWSxobXaE/tL0uBl1YfDykRojl0u8A2ClY
+        AlsDTFd7Gl4=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5612BA826A;
-        Fri, 22 Sep 2017 00:51:06 -0400 (EDT)
-Received: from [192.168.1.4] (unknown [76.215.41.237])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 97328A8443;
+        Fri, 22 Sep 2017 00:57:48 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9D020A8267;
-        Fri, 22 Sep 2017 00:51:05 -0400 (EDT)
-Subject: Re: KDevelop developers obviously don't use git :(
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>
-References: <1469bc42-0a21-8cc4-f9bb-000c3737fe19@pobox.com>
- <xmqq4lrvl559.fsf@gitster.mtv.corp.google.com>
-From:   Daniel Santos <daniel.santos@pobox.com>
-Message-ID: <4cc9d76c-e4bc-54a7-e62c-25e2659e6954@pobox.com>
-Date:   Thu, 21 Sep 2017 23:57:15 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EA87AA8441;
+        Fri, 22 Sep 2017 00:57:47 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Sahil Dua <sahildua2305@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Brandon Williams <bmwill@google.com>
+Subject: [PATCH 4/3] branch: fix "copy" to never touch HEAD
+References: <xmqqeftuh5q7.fsf@gitster.mtv.corp.google.com>
+        <20170705231454.15666-1-avarab@gmail.com>
+        <xmqq60f6h03t.fsf@gitster.mtv.corp.google.com>
+Date:   Fri, 22 Sep 2017 13:57:46 +0900
+In-Reply-To: <xmqq60f6h03t.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Wed, 05 Jul 2017 17:37:10 -0700")
+Message-ID: <xmqqvakbjpo5.fsf_-_@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqq4lrvl559.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-X-Pobox-Relay-ID: A46DE54C-9F51-11E7-B11F-FE4B1A68708C-06139138!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9426B50A-9F52-11E7-95E3-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/21/2017 11:38 PM, Junio C Hamano wrote:
-> Daniel Santos <daniel.santos@pobox.com> writes:
->
->> So first I need to inquire if there is a current mechanism to say "git
->> status, but please fail if you're busy with a non-atomic operation".
-> Reading this list sometimes makes me wonder if there is some higher
-> intelligence telling independent souls to come up with the same wish
-> at the same time.
->
-> https://public-inbox.org/git/20170921050835.mrbgx2zryy3jusdk@sigill.int=
-ra.peff.net/
+When creating a new branch B by copying the branch A that happens to
+be the current branch, it also updates HEAD to point at the new
+branch.  It probably was made this way because "git branch -c A B"
+piggybacked its implementation on "git branch -m A B",
 
-LMAO! This has been irritating me for some time, but I had to abort a
-somewhat complex interactive rebase earlier and it finally drove me to
-action.=C2=A0 I'm juggling so many projects right now that I really don't
-want to fix this myself, but..... grrr! and raaarh!, etc.
+This does not match the usual expectation.  If I were sitting on a
+blue chair, and somebody comes and repaints it to red, I would
+accept ending up sitting on a chair that is now red (I am also OK to
+stand, instead, as there no longer is my favourite blue chair).  But
+if somebody creates a new red chair, modelling it after the blue
+chair I am sitting on, I do not expect to be booted off of the blue
+chair and ending up on sitting on the new red one.
 
-Daniel
+Let's fix this before it hits 'next'.  Those who want to create a
+new branch and switch to it can do "git checkout B" after doing a
+"git branch -c B", and if that operation is so useful and deserves a
+short-hand way to do so, perhaps extend "git checkout -b B" to copy
+configurations while creating the new branch B.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+
+ * Let's send an updated one as a follow-up to the discussion thread
+   that it is a follow-up to.  The patch in this message is the same
+   as the one I previously sent; the proposed log message has been
+   updated somewhat.
+
+ builtin/branch.c  |  9 +++------
+ t/t3200-branch.sh | 10 +++++-----
+ 2 files changed, 8 insertions(+), 11 deletions(-)
+
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 89f64f4123..e2e3692838 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -506,12 +506,9 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
+ 				oldref.buf + 11);
+ 	}
+ 
+-	if (replace_each_worktree_head_symref(oldref.buf, newref.buf, logmsg.buf)) {
+-		if (copy)
+-			die(_("Branch copied to %s, but HEAD is not updated!"), newname);
+-		else
+-			die(_("Branch renamed to %s, but HEAD is not updated!"), newname);
+-	}
++	if (!copy &&
++	    replace_each_worktree_head_symref(oldref.buf, newref.buf, logmsg.buf))
++		die(_("Branch renamed to %s, but HEAD is not updated!"), newname);
+ 
+ 	strbuf_release(&logmsg);
+ 
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index 5d03ad16f6..be9b3784c6 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -422,7 +422,7 @@ test_expect_success 'git branch --copy is a synonym for -c' '
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success 'git branch -c ee ef should copy and checkout branch ef' '
++test_expect_success 'git branch -c ee ef should copy to create branch ef' '
+ 	git checkout -b ee &&
+ 	git reflog exists refs/heads/ee &&
+ 	git config branch.ee.dummy Hello &&
+@@ -431,7 +431,7 @@ test_expect_success 'git branch -c ee ef should copy and checkout branch ef' '
+ 	git reflog exists refs/heads/ef &&
+ 	test $(git config branch.ee.dummy) = Hello &&
+ 	test $(git config branch.ef.dummy) = Hello &&
+-	test $(git rev-parse --abbrev-ref HEAD) = ef
++	test $(git rev-parse --abbrev-ref HEAD) = ee
+ '
+ 
+ test_expect_success 'git branch -c f/f g/g should work' '
+@@ -494,12 +494,12 @@ test_expect_success 'git branch -C c1 c2 should succeed when c1 is checked out'
+ 	git checkout -b c1 &&
+ 	git branch c2 &&
+ 	git branch -C c1 c2 &&
+-	test $(git rev-parse --abbrev-ref HEAD) = c2
++	test $(git rev-parse --abbrev-ref HEAD) = c1
+ '
+ 
+-test_expect_success 'git branch -C c1 c2 should add entries to .git/logs/HEAD' '
++test_expect_success 'git branch -C c1 c2 should never touch HEAD' '
+ 	msg="Branch: copied refs/heads/c1 to refs/heads/c2" &&
+-	grep "$msg$" .git/logs/HEAD
++	! grep "$msg$" .git/logs/HEAD
+ '
+ 
+ test_expect_success 'git branch -C master should work when master is checked out' '
+-- 
+2.14.1-929-g25eae544e9
+
