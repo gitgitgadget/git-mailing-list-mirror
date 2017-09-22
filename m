@@ -2,102 +2,191 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A75F1202A5
-	for <e@80x24.org>; Fri, 22 Sep 2017 18:01:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B270F202A5
+	for <e@80x24.org>; Fri, 22 Sep 2017 19:23:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752340AbdIVSBz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Sep 2017 14:01:55 -0400
-Received: from mout.web.de ([212.227.15.3]:58391 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752276AbdIVSBy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Sep 2017 14:01:54 -0400
-Received: from [192.168.178.36] ([91.20.61.209]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lu1Be-1dD0HB34rO-011RGf; Fri, 22
- Sep 2017 20:01:27 +0200
-Subject: Re: [PATCH 3/4] cache.h: hex2chr() - avoid -Wsign-compare warnings
-To:     Jeff King <peff@peff.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
+        id S1751905AbdIVTXV (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Sep 2017 15:23:21 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:59055 "EHLO
+        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751795AbdIVTXU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Sep 2017 15:23:20 -0400
+Received: from [10.0.2.15] ([147.147.86.16])
+        by avasout07 with smtp
+        id CjPH1w0050M91Ur01jPJbq; Fri, 22 Sep 2017 20:23:18 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=CrLPSjwD c=1 sm=1 tr=0
+ a=dubYQqM3tRRTmV8xSh8cXQ==:117 a=dubYQqM3tRRTmV8xSh8cXQ==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=T01vTosiYOF-wdXBhFoA:9
+ a=Ia-tGoq3EiCOk3Pc:21 a=A2-wdGUZBDZTvBzY:21 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH 4/4] ALLOC_GROW: avoid -Wsign-compare warnings
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         GIT Mailing-list <git@vger.kernel.org>
-References: <ae537e7e-2c3d-f7f3-28f4-451c37c01bbb@ramsayjones.plus.com>
- <20170922054748.iseinawwwfw56vis@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <5e21362b-7c42-37f5-73a8-907d4ad5db86@web.de>
-Date:   Fri, 22 Sep 2017 20:01:26 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+References: <20170922162512.7398-1-szeder.dev@gmail.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <49da282f-3a9d-4d0a-c21f-a96e5eb4410f@ramsayjones.plus.com>
+Date:   Fri, 22 Sep 2017 20:23:17 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.3.0
 MIME-Version: 1.0
-In-Reply-To: <20170922054748.iseinawwwfw56vis@sigill.intra.peff.net>
+In-Reply-To: <20170922162512.7398-1-szeder.dev@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+Content-Language: en-GB
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:V77dq2fGL+LXMwWdy73VqhsLYfQQsinsusq8lafWleIny3JFwJQ
- fSppGLGJ5ewboW6nWvOOVkYve88X2SC4hpUaySJok/PSH5eLDkVHo4JxJmrhWNzHlH+Z6JS
- VbTdItZWoFdgwGxAoylnWmuWwgQuOFiYkVJS1YBfmyOISIZ33mv99k5mAckKRIB6iq1BO2d
- fFBA2uQUcGFWRzTihV2xA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Sl3TNOLneU8=:uOr1xj1AeWBK/jyvrw/NBa
- HtAzMeLPl4620tIb8iuUyR3dL1WTPXExnFRDARZUtsS5nojvHugG9TOE8x926FaeaAqKnXg76
- oo86dnO+EgVMarWlPxcSFeiFq++g0+Yf6UftOLQK3pSMSUCEUlNYceDU/pgMFasa4L3GBR6xZ
- 0nzvoT7aEpVwzQj/gl0+sF8vVMQ/WoUFxjmbhZqiK4GO7HmNdnXriAy6DYoLSKQkWUWzVMWPr
- S+KINNKek0KHyJjvm92UbUoNb3ulQocgSiUjmMRLcmBUy755OljzfPR3anEp6Abpax4MXPBqe
- UKCNlxZOPozidPM8yYAt4ssrZys7rMuQQScaV6wDpgeJFuuFZDzwxeSaEOYMqf/T0bndGBOl9
- B50fL/aAm/7OgpiTv2dkPTZEZCrLlkTgeekLnwb2whABB52bsBZRNR+QrUvtSsD7RkDvlNgmv
- yiv9qsPhRQh57r26dgVMNDyPdMjA2SZKl1gJF5SEGx543yHsDN696FXEFS5pH67xxUThXfrBK
- BODnKhjQzynOTFiZj/5fWUw5JMJbdN3l8Y6o3W5u/CrBE2f/acQg6KLGN55tYWNjASboKDXEV
- 7jb6ySG4CrPW4Nc68qjXSH2sPH7jf0rRV7X7f59FI+q6G1B3/vxpcIIkWlJH5FUoIEr4W8Xz3
- 7Y+WOV8QsMMj8JQ0xO7s+Jy3EXI0RBBAW2HhZBsI6QKIB23u1P6pZahmdsU0u0NxQx0DVPBk9
- OiuqjcrSmk8eI8lSe7SkTgAS82JeDC7OfQazNlWQfJYNOGXpY7FcsflJkSjJocwblNiubfmoJ
- 3U22sIBfQItEcEV9mp3goOsHYSchNlehvD+Wu7BvEbw8/kEU6k=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 22.09.2017 um 07:47 schrieb Jeff King:
-> On Thu, Sep 21, 2017 at 05:48:38PM +0100, Ramsay Jones wrote:
-> 
->> diff --git a/cache.h b/cache.h
->> index a916bc79e..a0e3e362c 100644
->> --- a/cache.h
->> +++ b/cache.h
->> @@ -1243,8 +1243,8 @@ static inline unsigned int hexval(unsigned char c)
->>    */
->>   static inline int hex2chr(const char *s)
->>   {
->> -	int val = hexval(s[0]);
->> -	return (val < 0) ? val : (val << 4) | hexval(s[1]);
->> +	unsigned int val = hexval(s[0]);
->> +	return (val & ~0xf) ? val : (val << 4) | hexval(s[1]);
->>   }
-> 
-> Ironically, the unsigned return from hexval() comes from internally
-> converting the signed char in hexval_table. And then we again return it
-> as a signed int from hex2chr().
-> 
-> Would it make sense to return a signed int from hexval()? That would
-> make hex2chr just work as it tries to above. I admit that shifting
-> signed values is a little funny, but it should be fine here since we
-> know they're no larger than 8 bits in the first place.
 
-I'd say yes.  We can replace that shift with a multiplication --
-compilers will nevertheless use a shift even with -O0 (if
-beneficial).
 
-> As an aside, I also see some uses of hexval() that don't appear to be
-> quite as rigorous in checking for invalid characters. A few
-> unconditionally shift the first nibble and assume that there will still
-> be high bits set. I think that's generally true for twos-complement
-> negative numbers, but isn't shifting off the left side of a signed
-> integer undefined behavior?
+On 22/09/17 17:25, SZEDER Gábor wrote:
 > 
-> And mailinfo's decode_q_segment() does not seem to check for errors at
-> all.
+> At first I was somewhat puzzled by the "ALLOC_GROW:" prefix in the
+> subject line, because this patch doesn't touch ALLOC_GROW() at all.
+> However, since ALLOC_GROW() is a macro, of course, and since this
+> patch changes the data type of variables "passed" to ALLOC_GROW(),
+> that's sort of fine...
 
-It also allocates and returns a strbuf, which seems odd as well.
+Yes, the original subject line was "... when using the ALLOC_GROW macro",
+but vim scolded me for busting the line length. I tried several other
+variations, but I couldn't come up with anything better.
 
-René
+So, yes, given that the subject left a little to be desired, I probably
+should have included a commit message body. :(
+
+[This patch was originally written years ago, as part of a much larger
+series to fix all -Wextra warnings. I was pleasantly surprised that it
+applied to master without conflicts. However, I had to add to the patch
+because new instances of -Wsign-compare due to using the ALLOC_GROW macro
+had appeared since then.]
+
+> But then I was even more puzzled to see that this patch also changes
+> the data type of several variables that are never passed to
+> ALLOC_GROW(), but only compared to other variables that are indeed
+> passed to ALLOC_GROW(), i.e. most of (all?) the changes in line-log.c.
+> Perhaps it would be worth mentioning that all those changes are
+> fallout of the type change in 'struct range_set' in line-log.h. (and
+> all those changes silence only two warnings!)
+
+Hmm, I did consider splitting this patch up, so that this (and other
+issues you mention below) could be called out separately, but well ... ;-)
+
+>> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+>> ---
+>>  builtin/pack-objects.c |  4 ++--
+>>  config.c               |  2 +-
+>>  diff.c                 |  2 +-
+>>  line-log.c             | 18 +++++++++---------
+>>  line-log.h             |  2 +-
+>>  revision.c             |  2 +-
+>>  tree-walk.c            |  3 +--
+>>  7 files changed, 16 insertions(+), 17 deletions(-)
+>>
+>> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+>> index a57b4f058..a6ee653bf 100644
+>> --- a/builtin/pack-objects.c
+>> +++ b/builtin/pack-objects.c
+>> @@ -2563,8 +2563,8 @@ struct in_pack_object {
+>>  };
+>>  
+>>  struct in_pack {
+>> -	int alloc;
+>> -	int nr;
+>> +	unsigned int alloc;
+>> +	unsigned int  nr;
+>>  	struct in_pack_object *array;
+>>  };
+>>  
+>> diff --git a/config.c b/config.c
+>> index cd5a69e63..aeab02c06 100644
+>> --- a/config.c
+>> +++ b/config.c
+>> @@ -2200,7 +2200,7 @@ static struct {
+>>  	size_t *offset;
+>>  	unsigned int offset_alloc;
+>>  	enum { START, SECTION_SEEN, SECTION_END_SEEN, KEY_SEEN } state;
+>> -	int seen;
+>> +	unsigned int seen;
+>>  } store;
+> 
+> On first sight this looked like an independent change, but on closer
+> inspection it turns out that the variables 'seen' and 'offset_alloc'
+> are used to manage the allocation of the '*offset' array.
+> 
+> I wish we would have named these fields more consistently with '_nr'
+> and '_alloc' suffixes, or, if there is a compelling reason to diverge,
+> then at least put the two fields on subsequent lines (or even on the
+> same line), with a comment explaining the connection between the two
+> fields and the array.
+
+Yes, I agree. If I had split this patch up, I would have considered
+adding such modifications to that patch. (That's easy to say now, of
+course!)
+
+>>  static int matches(const char *key, const char *value)
+>> diff --git a/diff.c b/diff.c
+>> index ea7e5978b..be94ad4f4 100644
+>> --- a/diff.c
+>> +++ b/diff.c
+>> @@ -1541,7 +1541,7 @@ static void emit_rewrite_diff(const char *name_a,
+>>  
+>>  struct diff_words_buffer {
+>>  	mmfile_t text;
+>> -	long alloc;
+>> +	unsigned long alloc;
+> 
+> This one is interesting.  'alloc' and 'mmfile_t's 'text.size' manage
+> the allocation of 'text.ptr', and both are signed longs...  so where
+> does the warning come from?  Well, just a couple of lines later we
+> have this:
+> 
+>   static void diff_words_append(char *line, unsigned long len,
+>                   struct diff_words_buffer *buffer)
+>   {
+>           ALLOC_GROW(buffer->text.ptr, buffer->text.size + len, buffer->alloc);
+> 
+> Note the addition of the signed long 'buffer->text.size' and the
+> unsigned long 'len', which, according to "6.3.1.8 Usual arithmetic
+> conversions", converts the signed long to unsigned.  ALLOC_GROW() then
+> compares the resulting unsigned long sum to the signed long
+> 'buffer->alloc', hence the warning.
+> 
+> So, while the change in this hunk is technically correct and indeed
+> eliminates the warning, it is subtle and the resulting code with a
+> signed long 'text.size' in 'mmfile_t' and unsigned long 'alloc' might
+> raise the eyebrows of future readers.  I think this would be worth
+> mentioning in the commit message or in a comment.
+> 
+> Ultimately 'text.size' should be turned into unsigned, too, maybe even
+> size_t, but that change would be much more difficult to make and
+> review, because mmfile_t is used over hundred times in our codebase,
+> and 'size' is not a grep-friendly field name to look for.
+
+Indeed, ... :-P
+
+>>  	struct diff_words_orig {
+>>  		const char *begin, *end;
+>>  	} *orig;
+> 
+> The very next line of 'struct diff_words_buffer's definition is:
+> 
+>     int orig_nr, orig_alloc;
+> 
+> These two fields are used to manage the allocation of the struct's
+> '*orig' array.  While these are not involved in any warnings, having
+> an 'unsigned long alloc' and a signed 'orig_alloc' so close to each
+> other in the same struct might raise some eyebrows, too.
+Thanks for the detailed review.
+
+ATB,
+Ramsay Jones
+
+
