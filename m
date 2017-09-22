@@ -2,84 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C8A8D202A5
-	for <e@80x24.org>; Fri, 22 Sep 2017 12:04:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A1D6C202A5
+	for <e@80x24.org>; Fri, 22 Sep 2017 15:04:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752436AbdIVMEX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Sep 2017 08:04:23 -0400
-Received: from mout.kundenserver.de ([217.72.192.74]:61641 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752427AbdIVMEW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Sep 2017 08:04:22 -0400
-Received: from localhost ([130.75.46.4]) by mrelayeu.kundenserver.de (mreue101
- [212.227.15.183]) with ESMTPSA (Nemesis) id 0LxO7W-1dKFmj3QB0-016xQm; Fri, 22
- Sep 2017 14:04:19 +0200
-From:   Michael J Gruber <git@grubix.eu>
-To:     git@vger.kernel.org
-Subject: [PATCH 0/4] pre-merge hook
-Date:   Fri, 22 Sep 2017 14:04:11 +0200
-Message-Id: <cover.1506081120.git.git@grubix.eu>
-X-Mailer: git-send-email 2.14.1.909.g0fa57a0913
-X-Provags-ID: V03:K0:qfGROaOxGpulhqMYThuXsRw5PqaVW9IzUoT2gQsPFRXVffEH2pi
- /gdO9+RCMZ0TtvVhwXZRZXvrgjonICtQr6ucR0h2snIu18qOfuDn5P1HpUNcZBOCKMWMkIG
- M1RgulQImPF8nauQYANoGowFsSaZvrKc0dWeC+v+R2IpF1ruRWoixQwA8e8sZIBTo+NVtqR
- Bgx76CNyrMXswLi2XmQgw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Jt84LBhou78=:g1PjOtILulRuWBLeBE//6Q
- SPre9YpUZM8vZ3JmIG9yiSSWeNxpmULU3p1GUs3/W1p6F3xa92p6ek03XupUCSIRvyf8TglLo
- sJTWmtGECUGNxc4I5pW0sA1Pg5+rUeBzPFKWDXPsUkinrrHAMSdAcdx84q9Z5MxHEF2e6K19N
- +CSPvx7H+A7Tc9G8om+7//4fivf5HRukBfxi3kCGeYPsgVmmPS7MhV3+LUvd53ivZuTx+3s9b
- 3aSVdchxVaI88o3kJqo3NAg6pF2aCiKif/OCyMY08nvjSkVIUKUowIJEzL/1H3r98P3jql3uB
- rZ6eaB6GJYw4vBTIUK8/SSBGBNxmSkfB2M5406l62ESsooeJYdgYmpYj0+UGyyTPZR/HRuS0c
- J8l350jg+YPvs/WIKSPf2eBXDwB8dYlREFJ3+6Y+n9gdbWaRlcQnnSmzK+K1BMOHWofZFoOQb
- +JKJX5ydMRG0dVuZyrodeLwIZBGEtrSqyh9GyXExLErSzMzsauy7biJIuYIruqBxQ6zR7I4BI
- 6/2u7wg/N7xUkKu8d2a+CIzu1v05jXciSolGJUQ1NNLnT0ppNoLmd7mJdhF8PLJXP9epFjXHL
- iH8wym5hQku+zmoTtXBx8Ct4eaZRx1lUh3bBBnUjsZvJYpng2byTS2N2fNWBn4XsUycl1BgZo
- DXPQtuR2YkYhZGFVB9hoUMcyemTuEe6CCiK4jHHDNcq3j9mRhZDWk7VrE0GWIIz4GCSfgI09W
- 3l8tO/cdtGvlEaxV9sEgVlhUvGJWAZpPCRmkZA==
+        id S1752371AbdIVPEm (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Sep 2017 11:04:42 -0400
+Received: from cloud.peff.net ([104.130.231.41]:46882 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752020AbdIVPEl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Sep 2017 11:04:41 -0400
+Received: (qmail 22803 invoked by uid 109); 22 Sep 2017 15:04:41 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 22 Sep 2017 15:04:41 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3338 invoked by uid 111); 22 Sep 2017 15:05:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Fri, 22 Sep 2017 11:05:18 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Sep 2017 11:04:38 -0400
+Date:   Fri, 22 Sep 2017 11:04:38 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] git: add --no-optional-locks option
+Message-ID: <20170922150438.whslnn4qkamdhewr@sigill.intra.peff.net>
+References: <20170921043214.pyhdsrpy4omy54rm@sigill.intra.peff.net>
+ <7a2d895c-df8c-1305-234f-7f8e2b271ec2@kdbg.org>
+ <20170922042539.fs37bauiabfqcjx5@sigill.intra.peff.net>
+ <dcd542e9-ba92-4dc8-6929-2d0f02bd6307@jeffhostetler.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <dcd542e9-ba92-4dc8-6929-2d0f02bd6307@jeffhostetler.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Now that f8b863598c ("builtin/merge: honor commit-msg hook for merges",
-2017-09-07) has landed, merge is getting closer to behaving like commit,
-which is important because both are used to complete merges (automatic
-vs. non-automatic).
+On Fri, Sep 22, 2017 at 07:22:28AM -0400, Jeff Hostetler wrote:
 
-This series revives an old suggestion of mine to make merge honor
-pre-commit hook or a separate pre-merge hook. Since pre-commit does not
-receive any arguments (which the hook could use tell between commit and
-merge) and in order to keep existing behaviour (as opposed to the other
-patch) this series introduces a pre-merge hook, with a sample hook that
-simply calls the pre-commit hook.
+> > > I don't think we should pass this environment variable to remote
+> > > repositories. It should be listed in local_repo_env[] in environment.c.
+> > 
+> > I'm not sure I agree. This is really about the context in which the
+> > command is executing, not anything about the particular repository
+> > you're operating on.
+> > 
+> > For fetch/push operations that touch a remote, I doubt it would matter
+> > either way (and anyway, those often cross network boundaries that don't
+> > propagate environment variables anyway).
+> > 
+> > But imagine that "git status" learns to recurse into submodules and run
+> > "git status" inside them. Surely we would want the submodule repos to
+> > also avoid taking any unnecessary locks?
+> > 
+> > -Peff
+> > 
+> 
+> https://github.com/git-for-windows/git/commit/ff63b51c22389139a864eb2e565c6cdc5a30f061
+> 
+> https://github.com/git-for-windows/git/pull/1004/commits/45bad66192352481acbc826f11d90c8928b39a7a
+> 
+> We should compare this with what we did in Git for Windows last fall.
+> I guess those commits didn't get pushed upstream.
 
-commit and merge have very similar code paths. f8b863598c implemented
-"--no-verify" for merge differently from the existing implementation in
-commit. 2/4 changes that and could be first in this series, with the
-remaining 3 squashed into 2 commits or 1. I've been rebasing and using
-this series for years now, 2/4 is the new-comer which fixed the breakage
-from f8b863598c that I encountered because of the no-verify
-implementation. 
+Right. I think you missed the initial message in the thread that
+explains how this is an expanded version of ff63b51c22. :)
 
-Michael J Gruber (4):
-  git-merge: Honor pre-merge hook
-  merge: do no-verify like commit
-  merge: --no-verify to bypass pre-merge hook
-  t7503: add tests for pre-merge-hook
+I didn't know about the environment thing in 45bad66192, though[1]. That
+makes me even more confident that this is the right approach.
 
- Documentation/git-merge.txt       |  2 +-
- Documentation/githooks.txt        |  7 +++++
- Documentation/merge-options.txt   |  4 +++
- builtin/merge.c                   | 17 ++++++++--
- t/t7503-pre-commit-hook.sh        | 66 ++++++++++++++++++++++++++++++++++++++-
- templates/hooks--pre-merge.sample | 13 ++++++++
- 6 files changed, 104 insertions(+), 5 deletions(-)
- create mode 100755 templates/hooks--pre-merge.sample
+-Peff
 
--- 
-2.14.1.909.g0fa57a0913
-
+[1] Sorry for not doing my homework more carefully on the existing
+    solution.  GitHub Desktop ran into the same situation and pointed me
+    at ff63b51c22. I extrapolated the rest of it on my own. ;)
