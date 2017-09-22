@@ -2,70 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F1492202A5
-	for <e@80x24.org>; Fri, 22 Sep 2017 04:25:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DFC81202A5
+	for <e@80x24.org>; Fri, 22 Sep 2017 04:38:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751808AbdIVEZn (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Sep 2017 00:25:43 -0400
-Received: from cloud.peff.net ([104.130.231.41]:46616 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751790AbdIVEZm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Sep 2017 00:25:42 -0400
-Received: (qmail 27979 invoked by uid 109); 22 Sep 2017 04:25:42 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 22 Sep 2017 04:25:42 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1272 invoked by uid 111); 22 Sep 2017 04:26:19 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Fri, 22 Sep 2017 00:26:19 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Sep 2017 00:25:40 -0400
-Date:   Fri, 22 Sep 2017 00:25:40 -0400
-From:   Jeff King <peff@peff.net>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] git: add --no-optional-locks option
-Message-ID: <20170922042539.fs37bauiabfqcjx5@sigill.intra.peff.net>
-References: <20170921043214.pyhdsrpy4omy54rm@sigill.intra.peff.net>
- <7a2d895c-df8c-1305-234f-7f8e2b271ec2@kdbg.org>
+        id S1751845AbdIVEiO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Sep 2017 00:38:14 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55081 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751809AbdIVEiN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Sep 2017 00:38:13 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7A1E6A807A;
+        Fri, 22 Sep 2017 00:38:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=AOxyMpFFjt5iBY4PnaQDmQAC4HA=; b=Ynbiuj
+        gay+AnBmc/8xViAMs8GJqP7jITUVQkXfxd9AokqRdjqUaCsY5sx3BPQZvVkfWajp
+        djudgpnVzjg1TGnKjRZZB6XRqrGzMb2fb8jtttFIoVjp8eKco2r9E+0f1I2ZsqPX
+        S45RAWxrOT7ezEx0+aD4/8WP5vzgXawFc4xN0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=rxzujmO49rJmKQ2BNrDxAVIyAT/gkGTE
+        bdtw1FLgjV4ZobNeFx3oiQ0vRUkg5ra7y7JRJFnwaKO6/a0OH19Sqin3DTNj9GeI
+        lhmB/Jtt8mmAX570hHIHApf3T+CAeBrOBDaOWKmlafJSRD/YvfEdTS17GJuxAUms
+        vXm6Xcn712A=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7285CA8079;
+        Fri, 22 Sep 2017 00:38:12 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B4409A8078;
+        Fri, 22 Sep 2017 00:38:11 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Daniel Santos <daniel.santos@pobox.com>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: KDevelop developers obviously don't use git :(
+References: <1469bc42-0a21-8cc4-f9bb-000c3737fe19@pobox.com>
+Date:   Fri, 22 Sep 2017 13:38:10 +0900
+In-Reply-To: <1469bc42-0a21-8cc4-f9bb-000c3737fe19@pobox.com> (Daniel Santos's
+        message of "Thu, 21 Sep 2017 23:03:53 -0500")
+Message-ID: <xmqq4lrvl559.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <7a2d895c-df8c-1305-234f-7f8e2b271ec2@kdbg.org>
+Content-Type: text/plain
+X-Pobox-Relay-ID: D7109C3A-9F4F-11E7-A1F2-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 21, 2017 at 08:25:50PM +0200, Johannes Sixt wrote:
+Daniel Santos <daniel.santos@pobox.com> writes:
 
-> > +`GIT_OPTIONAL_LOCKS`::
-> > +	If set to `0`, Git will avoid performing any operations which
-> > +	require taking a lock and which are not required to complete the
-> > +	requested operation. For example, this will prevent `git status`
-> > +	from refreshing the index as a side effect. This is useful for
-> > +	processes running in the background which do not want to cause
-> > +	lock contention with other operations on the repository.
-> > +	Defaults to `1`.
-> 
-> I don't think we should pass this environment variable to remote
-> repositories. It should be listed in local_repo_env[] in environment.c.
+> So first I need to inquire if there is a current mechanism to say "git
+> status, but please fail if you're busy with a non-atomic operation".
 
-I'm not sure I agree. This is really about the context in which the
-command is executing, not anything about the particular repository
-you're operating on.
+Reading this list sometimes makes me wonder if there is some higher
+intelligence telling independent souls to come up with the same wish
+at the same time.
 
-For fetch/push operations that touch a remote, I doubt it would matter
-either way (and anyway, those often cross network boundaries that don't
-propagate environment variables anyway).
+https://public-inbox.org/git/20170921050835.mrbgx2zryy3jusdk@sigill.intra.peff.net/
 
-But imagine that "git status" learns to recurse into submodules and run
-"git status" inside them. Surely we would want the submodule repos to
-also avoid taking any unnecessary locks?
 
--Peff
