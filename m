@@ -2,110 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE85B202A5
+	by dcvr.yhbt.net (Postfix) with ESMTP id E4357202A5
 	for <e@80x24.org>; Fri, 22 Sep 2017 01:00:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751794AbdIVA7C (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Sep 2017 20:59:02 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:37338 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751781AbdIVA7B (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Sep 2017 20:59:01 -0400
-Received: by mail-pf0-f196.google.com with SMTP id e69so3111579pfg.4
-        for <git@vger.kernel.org>; Thu, 21 Sep 2017 17:59:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=MPDWFcRW/tfIpLmGyqnt96d7tZq/0Q6bmlY4LnRPgNc=;
-        b=jDSxuVbsqlmepO0oUs1TjwfKgpBK/dd4BX6dyrlz7WO0ZhEjYvDOGdY/Nhzzt4txGy
-         wIjeSWVvOWM1+lwaxtJPj2sRf/gm242YskeI+OfxllT2W3OCFOw93I5ngJ1dOYLPLFED
-         51J7YutSHCVwP4v3ecOIPjwgXYSEJzruq9q/bxwFilfhYlE5JcPd6X+/HYqUQxqhbd4N
-         5HjbwakW+FiI97HV7vxtKvGhcmgF2TLQhbjlAvBfYfV91+j9uGuYwWqJgU4EWrx5FgYc
-         eFVi2EIXriKcy4nIcnBQ3DHGEMQvWzH8Gi3SsZo0pYYCmNOOrDJGkjjSiINPUQhXCG8g
-         4N/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=MPDWFcRW/tfIpLmGyqnt96d7tZq/0Q6bmlY4LnRPgNc=;
-        b=aGscDqIJuRc86l8waaNCWRbN3m482LbPRojpsmk/ZjU60Hj46X9E1QMwyEoNR+vZpg
-         tkECcSX4+XDNR8qWzNpAMx54T60Jdo6Kg16fdL5+3KdI8d6Fs0N3/PrLa3N7toDV67iB
-         82dVkrLTH/EWWTCpdiXbi5zRZbGfQm3otE4jJMD+1/z+yLj/vgbTsi6+Omrn0yZy4Irj
-         QNhk/w3BCkGioLjbyVKruHccRPhJJMReQq0E4kTWoWQjfH7FbVUM91GUxv7oQmo+PR56
-         Ew9N0QIG+PhotnlLGDXstQDzdFxOuLmv6cU3Gok42hzl6FK5PaOiESvfdekqQbUkLnYt
-         noxA==
-X-Gm-Message-State: AHPjjUh/CfNBrXtdoKvSaP7ETNjZFwF6b5A2y/oNPfxbw0EsRHvG43Ij
-        bOcoD7dfX5Q+VUtWnVbfrfU=
-X-Google-Smtp-Source: AOwi7QAgWCA0v6AHsdSKdGzRlfsKVW9SHE6LTCD/GkXUlqnIrTT2Gid9ZiNgdA2I5VZ4lHEGEgCypg==
-X-Received: by 10.99.42.72 with SMTP id q69mr7403635pgq.379.1506041940456;
-        Thu, 21 Sep 2017 17:59:00 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:217a:913b:5a28:6f69])
-        by smtp.gmail.com with ESMTPSA id b90sm5430009pfm.17.2017.09.21.17.58.59
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 21 Sep 2017 17:58:59 -0700 (PDT)
-Date:   Thu, 21 Sep 2017 17:58:57 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/4] cat-file: handle NULL object_context.path
-Message-ID: <20170922005857.GK27425@aiede.mtv.corp.google.com>
-References: <20170921062043.la2f3pjsnojirzyw@sigill.intra.peff.net>
- <20170921062140.cyfjv7rfuppqpblh@sigill.intra.peff.net>
+        id S1751798AbdIVA7f (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Sep 2017 20:59:35 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64510 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751781AbdIVA7e (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Sep 2017 20:59:34 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 97473A5708;
+        Thu, 21 Sep 2017 20:59:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=KxaC6v6juk/HnN/vtZbnSBmZH5o=; b=HbDAGE
+        TXJQ/ZPAY2C+UhT3OiFkX7oCVVkFmtVddR6O8efXBPlTKYFSk2hM3eS3zTua8mt6
+        8u8+yhz4R15fWu82S9Ow+5AscoEh0xmfH/QyjqoU4AfXV5r426b4ec/XvX6R2sgO
+        9sI1e8h90yeumY8iCh5rfO6sbO16AuqNdl9Og=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=QUeFxBNhuen6OtHWEfStbZhMHjgYFtFD
+        FN15M4/QAXiGg1G9i7ieF1XIGQJHyNe4ch/eGvklA0YKdMN10xmoeU+yy9DCJU7r
+        1PewumC8StRLXZ3KUMJl7YF+Bv2CXFRi2rdO4oQfTPXBxJHHLdDUYP/7ayJDqpFg
+        iNzniu1V9C0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 80BE7A5707;
+        Thu, 21 Sep 2017 20:59:33 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D0AC6A5706;
+        Thu, 21 Sep 2017 20:59:32 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Sahil Dua <sahildua2305@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Sep 2017, #03; Fri, 15)
+References: <xmqq8thgy03t.fsf@gitster.mtv.corp.google.com>
+        <CALiud+m1PAD8r0ygoUj3g4LzQjdoPu0CmjiejyG8pHOhr3Fk=Q@mail.gmail.com>
+Date:   Fri, 22 Sep 2017 09:59:31 +0900
+In-Reply-To: <CALiud+m1PAD8r0ygoUj3g4LzQjdoPu0CmjiejyG8pHOhr3Fk=Q@mail.gmail.com>
+        (Sahil Dua's message of "Thu, 21 Sep 2017 23:14:54 +0200")
+Message-ID: <xmqqpoajmtu4.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170921062140.cyfjv7rfuppqpblh@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4B99F91C-9F31-11E7-B524-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
+Sahil Dua <sahildua2305@gmail.com> writes:
 
-> Commit dc944b65f1 (get_sha1_with_context: dynamically
-> allocate oc->path, 2017-05-19) changed the rules that
-> callers must follow for seeing if we parsed a path in the
-> object name. The rules switched from "check if the oc.path
-> buffer is empty" to "check if the oc.path pointer is NULL".
-> But that commit forgot to update some sites in
-> cat_one_file(), meaning we might dereference a NULL pointer.
+>>
+>> * sd/branch-copy (2017-06-18) 3 commits
+>>  - branch: add a --copy (-c) option to go with --move (-m)
+>>  - branch: add test for -m renaming multiple config sections
+>>  - config: create a function to format section headers
+>>
+>>  "git branch" learned "-c/-C" to create and switch to a new branch
+>>  by copying an existing one.
+>>
+>>  I personally do not think "branch --copy master backup" while on
+>>  "master" that switches to "backup" is a good UI, and I *will* say
+>>  "I told you so" when users complain after we merge this down to
+>>  'master'.
 >
-> You can see this by making a path-aware request like
-> --textconv without specifying --path, and giving an object
-> name that doesn't have a path in it. Like:
->
->   git cat-file --textconv HEAD
->
-> which will reliably segfault.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  builtin/cat-file.c          | 4 ++--
->  t/t8010-cat-file-filters.sh | 5 +++++
->  2 files changed, 7 insertions(+), 2 deletions(-)
+> Junio, what's up with this one? It's been a long time for this being
+> cooked in next. Do we have a plan/idea going forward or is it just
+> waiting for more feedback?
 
-Yikes.  Commit dc944b65f1 even touched this function, so we reviewers
-have no excuse for not having found it.
+Thanks for pinging.
 
-Technically this changes the behavior of cat-file --path='', but I
-don't think that matters.
+I was (in a strange way) hoping that it was just me who felt that a
+"copy" operation of the current branch that moves me to a new branch
+is a design mistake, and I was planning to start merging this down
+to 'next' based on that assumption, but IIRC it turned out that it
+wasn't just me.  During the renewed discussion I somehow got an
+impression that the concensus was for "copy" to just copy without
+ever changing what HEAD says, and if an operation that switches to a
+new branch based on the current branch is needed, the right place to
+do so is to enhance/extend "checkout -b".
 
-Do other GET_SHA1_RECORD_PATH callers need similar treatment?
+My understanding of the next step was for those who are interested
+in moving this topic forward to update these patches in that
+direction.
 
-* builtin/grep.c appears to do the right thing (it stores NULL in
-  list, so it passes NULL to grep_object, which calls grep_oid, which
-  calls grep_source_init, which stores NULL for the grep machinery
-  that is able to cope with a NULL).
 
-* builtin/log.c is correctly updated as part of the patch.
-
-Those are the only other callers.  So we're safe. *phew*
-
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
