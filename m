@@ -2,63 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3332C20A26
-	for <e@80x24.org>; Fri, 22 Sep 2017 22:16:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C1A44202A5
+	for <e@80x24.org>; Fri, 22 Sep 2017 22:49:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752168AbdIVWQh (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Sep 2017 18:16:37 -0400
-Received: from mail-pg0-f49.google.com ([74.125.83.49]:50673 "EHLO
-        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752109AbdIVWQh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Sep 2017 18:16:37 -0400
-Received: by mail-pg0-f49.google.com with SMTP id p5so1268575pgn.7
-        for <git@vger.kernel.org>; Fri, 22 Sep 2017 15:16:37 -0700 (PDT)
+        id S1752560AbdIVWtu (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Sep 2017 18:49:50 -0400
+Received: from mail-pg0-f54.google.com ([74.125.83.54]:46930 "EHLO
+        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752338AbdIVWtt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Sep 2017 18:49:49 -0400
+Received: by mail-pg0-f54.google.com with SMTP id i130so1300737pgc.3
+        for <git@vger.kernel.org>; Fri, 22 Sep 2017 15:49:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=uXo+Kr8tuTaoyiIOf9JkEDhk0RVGrrugtsAe1q0cUrg=;
-        b=uBSY46LXrsBDc1AKIg6+oK1ARIGtpl58XvnJFiqtAOkBR2OdRwtkyxhHUWm43Z3/Mt
-         LwZz4i8LY8+3A4SY2hTvFg8rjFG4fp3lWhcMulUugFLIS/HLM7TsllPXPCY02oSB2xHH
-         Xlj/oZsSUb1irQZDiiNm3+Z2aSwLVxV090hEXSUYnVqZDA+8J8RKMAZFlTgi1tZl1ExB
-         Mv6D73VpKodZNO2Lx6UmmzKPA19hknUd/DNdDzUlGASXpXKroIbLDEH3Rv41QkgdlU//
-         zscIvBQIAOEdlLo/mWuF3cg+w+uITKG/Q9jPYKTQz3Eh/v+dnnxqU5e3TVybFbDKeJ4X
-         vGpg==
+        bh=yrDlySkNtSv/MG1VFF3qTGl8gUDmNflcg9yotPWdu8k=;
+        b=hWbSca8U//LqLM1zi45rNTC8TYdrGvODxNxoGKTcbeSF1h12kzJ/I9nZVoETzK2wH4
+         ghCT+9Xowv90Fw/95QeSrTccD8T8YypqfkNIB0Ep5eB30FklUsZuiad/0K3f5J8kEhlM
+         WL7sj91QnvvJOc86bHWdbKbaIp8TrbF1zdPFC/8lNHiPkIVY/WmsocXZvLZVlhU7OynK
+         aSzWGK1gRwuhFypdeh6uNKWphNKnFgI+BH8K14D7vd0sAU9Co/o9lm6iFyryOWp2YFPG
+         FZ9AJJc0rCHFxKBoQDrPNvFT7snSxuLbRBPaMd7EIgypHV+9QqEv+QwUUaifT9jHsBrc
+         78Bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=uXo+Kr8tuTaoyiIOf9JkEDhk0RVGrrugtsAe1q0cUrg=;
-        b=EVuOlMIo7ZDuacI3Pa2j0p3le4h1+9GHyBJlE2HQt4f5wCIgVRKyO/0QrkklufoYVO
-         NY+3sL3AMbb+I1feba1X2gfZljKh6yFvHE7oj483mx5K/3u+jK71XOljnRYqjNxNC1MP
-         wbwILVa4YuHtsVxyIht8SJlmGOJNp5/EMuM7WV5Y8iAmFA+f/fie17r7UQg255rj71ej
-         NtqPJ6Bh6W+zn8lcP5RpY2dn10ZfA1sytRApx0uhsKogaBdtLkcS4UVVTj6OndrRs1Pd
-         Ks1iryaOqsidOvoW6Syf5oeyKcjmgJvWOaSbADAlzCnfSBXai+QUjO7FDiPLGCMPcVQu
-         64Yw==
-X-Gm-Message-State: AHPjjUgIFpZ5kqRs0rnegQ3HFpzCVwdoJbdAdnWkbS7F5QA4ryweei0X
-        NmQKltJlmlz9Xbd0nkjOSJtarg==
-X-Google-Smtp-Source: AOwi7QCg/AV2cVTLWemFdrqadryIp4VU7gWYweIR6WQHRWkVtJJ1zZOJ2yfE25ejwOYqlaGTRH1VzQ==
-X-Received: by 10.84.238.206 with SMTP id l14mr489319pln.156.1506118596531;
-        Fri, 22 Sep 2017 15:16:36 -0700 (PDT)
+        bh=yrDlySkNtSv/MG1VFF3qTGl8gUDmNflcg9yotPWdu8k=;
+        b=bE0vEwu2jE/er1SK3I1RHNhwJ7xv8FhwOtbI5EilE6GftqEAzwQhHNbdYkOxb5HgtZ
+         omCy4YhJlJVvaM0247N/ZJmzMlm4KPCi266UwwMfp5gngIGdcH7I6Hf6F59lE9oexpBw
+         DsvKWa0yaeXFiSxsDv2INeoPebo6kNTy6Mb2Nii+pG12y6ac3epRj8vYQOMyl2f+tv5c
+         D+q1BN5dt6DNcytBUXJQIAhRWFtom9fS2o3MqHt+rGCi37mewvuR8rmxHhyuUGR7Er10
+         9COxQOFmtj4nOsnlqPHDKfx40oubEEkn+bzgA+yjbP7EaIJuiKZsohubYyBVQ00PRsAi
+         VAUg==
+X-Gm-Message-State: AHPjjUippxmzy5RbCI+wSD12mtfXRE+X62q/6lffBkXHqXmEVg3dgxxA
+        qWBup7TlkqHCwExnnze95jVfEB7cV+M=
+X-Google-Smtp-Source: AOwi7QCwNPPbIC1YUHIfUsngJMOD60ZW49h8tsuY/TH+Aw6Ey8CornyxjpKc0BcCdchwmXdUSbebaA==
+X-Received: by 10.99.136.73 with SMTP id l70mr528083pgd.185.1506120588790;
+        Fri, 22 Sep 2017 15:49:48 -0700 (PDT)
 Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:840f:cadd:b54e:2e8c])
-        by smtp.gmail.com with ESMTPSA id 65sm886688pgh.31.2017.09.22.15.16.35
+        by smtp.gmail.com with ESMTPSA id x4sm953127pfb.101.2017.09.22.15.49.46
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 22 Sep 2017 15:16:35 -0700 (PDT)
-Date:   Fri, 22 Sep 2017 15:16:35 -0700
+        Fri, 22 Sep 2017 15:49:47 -0700 (PDT)
+Date:   Fri, 22 Sep 2017 15:49:46 -0700
 From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com, gitster@pobox.com,
-        peff@peff.net
-Subject: Re: [PATCH v4] connect: in ref advertisement, shallows are last
-Message-Id: <20170922151635.9c058ce5a06c67ed9610fc6e@google.com>
-In-Reply-To: <20170922210104.GB24036@google.com>
-References: <20170922164504.GD77641@google.com>
-        <20170922201551.15012-1-jonathantanmy@google.com>
-        <20170922210104.GB24036@google.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     git@vger.kernel.org, peartben@gmail.com,
+        Christian Couder <christian.couder@gmail.com>
+Subject: Re: RFC: Design and code of partial clones (now, missing commits
+ and trees OK)
+Message-Id: <20170922154946.5052732a061155a3f81ae2a0@google.com>
+In-Reply-To: <af084ada-4607-53e8-c6bb-f5bf13bdc153@jeffhostetler.com>
+References: <20170915134343.3814dc38@twelve2.svl.corp.google.com>
+        <e6259d03-e904-8c57-73b0-2434939fba71@jeffhostetler.com>
+        <20170921154214.0d2ac45f@twelve2.svl.corp.google.com>
+        <af084ada-4607-53e8-c6bb-f5bf13bdc153@jeffhostetler.com>
 X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
@@ -68,44 +71,56 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 22 Sep 2017 14:01:04 -0700
-Brandon Williams <bmwill@google.com> wrote:
+On Fri, 22 Sep 2017 17:02:11 -0400
+Jeff Hostetler <git@jeffhostetler.com> wrote:
 
-> > +static void process_capabilities(int len)
-> > +{
-> > +	int nul_location = strlen(packet_buffer);
+> > I was struggling a bit with the terminology, true.
+> > 
+> > Right now I'm thinking of:
+> >   - promisor remote (as you defined)
+> >   - promisor packfile (as you defined)
+> >   - promisor object is an object known to belong to the promisor (whether
+> >     because we have it in a promisor packfile or because it is referenced
+> >     by an object in a promisor packfile)
+> > 
+> > This might eliminate "promise(d)", and thus eliminate the confusion
+> > between "promised" and "promisor", but I haven't done an exhaustive
+> > search.
+> > 
 > 
-> It may make more sense to not rely on accessing a global buffer here
-> directly and instead pass in the buff you're working on, much like your
-> are doing with len.
+> maybe just call the "promised" ones "missing".
 
-I wanted to preserve the existing code's behavior of using the global
-buffer, and it didn't make sense for me to alias it (like the existing
-code does).
+They are not the same, though - "missing" usually just means that the
+local repo does not have it, without regard to whether another repo has
+it.
 
-I pass len in because I need to read beyond NUL.
-
-> I'm not the biggest fan of dynamically allocating this and then using it
-> to compare.  Maybe we can check to make sure that the oid matches the
-> null_oid and that the name matches the "capabilities^{}" string?  That
-> way you can avoid the allocation?
-
-The dynamic allocation happens only once per process, since it is
-static. To check the oid matches null_oid, I would have to parse it
-first, and that seemed unnecessary.
-
-Ideally I would just check again "000...000 capabilities^{}", but
-writing it in source code would be error-prone, I think.
-
-> > +static int process_ref(struct ref ***list, unsigned int flags,
-> > +		       struct oid_array *extra_have)
+> >> I guess it depends on how many missing-objects you expect the client
+> >> to have. My concern here is that we're limiting the design to the
+> >> "occasional" big file problem, rather than the more general scale
+> >> problem.
+> > 
+> > Do you have a specific situation in mind?
+> > 
 > 
-> So from comparing this to the current code it doesn't look like there is
-> a check in 'process_ref' that ensures that a 'capabilities^{}' line
-> doesn't show up after a normal ref, or am I missing something?
+> I have would like to be able do sparse-enlistments in the Windows
+> source tree. (3.5M files at HEAD.)  Most developers only need a small
+> feature area (a device driver or file system or whatever) and not the
+> whole tree.  A typical Windows developer may have only 30-50K files
+> populated.  If we can synchronize on a sparse-checkout spec and use
+> that for both the checkout and the clone/fetch, then we can bulk fetch
+> the blobs that they'll actually need.  GVFS can hydrate the files as
+> they touch them, but I can use this to pre-fetch the needed blobs in
+> bulk, rather than faulting and fetching them one-by-one.
+> 
+> So, my usage may have >95% of the ODB be missing blobs.  Contrast that
+> with the occasional large blob / LFS usage where you may have <5% of
+> the ODB as large objects (by count of OIDs not disk usage).
 
-Ah...yes, you're right. I'll fix this by adding a check in
-process_ref().
+I don't think the current design precludes a more intelligent bulk
+fetching (e.g. being allowed to specify a "want" tree and several "have"
+trees, although we will have to figure out a design for that, including
+how to select the "have" trees to inform the server about).
 
-This is getting more complicated than I thought, so I'll wait a while
-for other comments before sending out an updated patch.
+In the meantime, yes, this will be more useful for occasional large blob
+repos, and (if/when the hook support is added) a GVFS situation where
+the missing objects are available network-topologically close by.
