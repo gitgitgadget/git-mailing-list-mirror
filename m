@@ -2,191 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B270F202A5
-	for <e@80x24.org>; Fri, 22 Sep 2017 19:23:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C625520A29
+	for <e@80x24.org>; Fri, 22 Sep 2017 19:52:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751905AbdIVTXV (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Sep 2017 15:23:21 -0400
-Received: from avasout07.plus.net ([84.93.230.235]:59055 "EHLO
-        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751795AbdIVTXU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Sep 2017 15:23:20 -0400
-Received: from [10.0.2.15] ([147.147.86.16])
-        by avasout07 with smtp
-        id CjPH1w0050M91Ur01jPJbq; Fri, 22 Sep 2017 20:23:18 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=CrLPSjwD c=1 sm=1 tr=0
- a=dubYQqM3tRRTmV8xSh8cXQ==:117 a=dubYQqM3tRRTmV8xSh8cXQ==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=T01vTosiYOF-wdXBhFoA:9
- a=Ia-tGoq3EiCOk3Pc:21 a=A2-wdGUZBDZTvBzY:21 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH 4/4] ALLOC_GROW: avoid -Wsign-compare warnings
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        GIT Mailing-list <git@vger.kernel.org>
-References: <20170922162512.7398-1-szeder.dev@gmail.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <49da282f-3a9d-4d0a-c21f-a96e5eb4410f@ramsayjones.plus.com>
-Date:   Fri, 22 Sep 2017 20:23:17 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        id S1751897AbdIVTwC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Sep 2017 15:52:02 -0400
+Received: from mail-qt0-f180.google.com ([209.85.216.180]:45432 "EHLO
+        mail-qt0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751845AbdIVTwB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Sep 2017 15:52:01 -0400
+Received: by mail-qt0-f180.google.com with SMTP id t46so2137939qtj.2
+        for <git@vger.kernel.org>; Fri, 22 Sep 2017 12:52:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=n3ZZKARqqQF27rS2mrLUUcAXQGL9EJNcksvR/QSOFYg=;
+        b=YOl/XHJemIG5i4Eg+evi7kenrPK7iw/P4x0uiQkb5WJfnMPc8SZCF7FZ6TG4tjfgcU
+         K9JX7N+tOtmMCNqCVkiZo4wvJcXV/yj6Qt37igK7Pfg37lbCYkz0KRbVJNtUJNQaKFrW
+         B0PZ8gek4js8Mx90vkkaYSJfvMdsj3Yu5cvrRoR42BeclDNy4YMp0XGW3+r44ngeKIwd
+         T5ofQljjotkQ2QKK3PIo4k2qzlAcC1y5AfeP+6KRMGJARPtOjmAlIdbTL0fsbVaMh/gO
+         uJJQgqGnylopKLzQVpinIPhpXAcItALywN44HjNclzpbP2DSjoV18Y2y6ajQEU1gFVyk
+         kV6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=n3ZZKARqqQF27rS2mrLUUcAXQGL9EJNcksvR/QSOFYg=;
+        b=kmbBEp6l1iAEa3kFe6JDzY1nFj6j8xUS62yOsI4gKp78lQoyObMrDzMbgJRV0ryC9K
+         2FVjqPp5kliQIFwZgYsVUYgSAUuQBdbQapqjWupyYk2frRcdz6UZGGjcEV+vDMp11Xbj
+         390Z/U4uUrnGiSNBUArhQGhTZJOnuo45kwDhdIaFS6uU2y6Wl0Nu0zIYZbkPTsWWvMXy
+         QBySd/Tg/hK1u2pd6z4cd3PP+Z/41AnjbOQf8KleYa2K1NzImE7YWf2kQYz9ITwMwxTj
+         Oxv7xT9qrt6XvzYOJVFlKPWcH9fjvGh3sKmM3TFpkzE4tOZ3GlsJSQB4nwwX1V+nKuXJ
+         kVwQ==
+X-Gm-Message-State: AHPjjUilCfWtcVkpWemPANH3nTvJ6TaiPBKkuPVvIonbXCzVyTHId9Qf
+        V2NZ+Rxo2Ah9QPqfW+Mwkjpu3/BnB9im3m6teh5qubLOdz8=
+X-Google-Smtp-Source: AOwi7QCjH//krDghRzzfEfugqZoEGJmGknaylSKa1WxsDGZZb3ny3ccT5hX0GcgtFGOnpLpupxI0yAi1mlthH4yHv10=
+X-Received: by 10.200.48.49 with SMTP id f46mr484391qte.260.1506109920700;
+ Fri, 22 Sep 2017 12:52:00 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20170922162512.7398-1-szeder.dev@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
+Received: by 10.140.102.51 with HTTP; Fri, 22 Sep 2017 12:52:00 -0700 (PDT)
+In-Reply-To: <053ce92e978aff511667669682c9a71830008605.1506081120.git.git@grubix.eu>
+References: <cover.1506081120.git.git@grubix.eu> <053ce92e978aff511667669682c9a71830008605.1506081120.git.git@grubix.eu>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 22 Sep 2017 12:52:00 -0700
+Message-ID: <CAGZ79kZTeGyNRX59h-Vsw+ZcV9_HOQugz8YN=3H+XxDT0R+iEQ@mail.gmail.com>
+Subject: Re: [PATCH 1/4] git-merge: Honor pre-merge hook
+To:     Michael J Gruber <git@grubix.eu>,
+        Kevin Willford <kewillf@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Michael J Gruber <git@drmicha.warpmail.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Sep 22, 2017 at 5:04 AM, Michael J Gruber <git@grubix.eu> wrote:
+> From: Michael J Gruber <git@drmicha.warpmail.net>
+>
+> git-merge does not honor the pre-commit hook when doing automatic merge
+> commits, and for compatibility reasons this is going to stay.
+>
+> Introduce a pre-merge hook which is called for an automatic merge commit
+> just like pre-commit is called for a non-automatic merge commit (or any
+> other commit).
+>
+> Signed-off-by: Michael J Gruber <git@grubix.eu>
+> ---
+>  Documentation/githooks.txt        |  7 +++++++
+>  builtin/merge.c                   | 11 +++++++++++
+>  templates/hooks--pre-merge.sample | 13 +++++++++++++
+>  3 files changed, 31 insertions(+)
+>  create mode 100755 templates/hooks--pre-merge.sample
+>
+> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+> index 1bb4f92d4d..85bedd208c 100644
+> --- a/Documentation/githooks.txt
+> +++ b/Documentation/githooks.txt
+> @@ -99,6 +99,13 @@ All the 'git commit' hooks are invoked with the environment
+>  variable `GIT_EDITOR=:` if the command will not bring up an editor
+>  to modify the commit message.
+>
+> +pre-merge
+> +~~~~~~~~~
+> +
+> +This hook is invoked by 'git merge' when doing an automatic merge
+> +commit; it is equivalent to 'pre-commit' for a non-automatic commit
+> +for a merge.
+> +
+>  prepare-commit-msg
+>  ~~~~~~~~~~~~~~~~~~
+>
+> diff --git a/builtin/merge.c b/builtin/merge.c
+> index ab5ffe85e8..de254d466b 100644
+> --- a/builtin/merge.c
+> +++ b/builtin/merge.c
+> @@ -769,6 +769,17 @@ static void write_merge_heads(struct commit_list *);
+>  static void prepare_to_commit(struct commit_list *remoteheads)
+>  {
+>         struct strbuf msg = STRBUF_INIT;
+> +       const char *index_file = get_index_file();
+> +
+> +       if (run_commit_hook(0 < option_edit, index_file, "pre-merge", NULL))
+> +               abort_commit(remoteheads, NULL);
+> +       /*
+> +        * Re-read the index as pre-merge hook could have updated it,
+> +        * and write it out as a tree.  We must do this before we invoke
+> +        * the editor and after we invoke run_status above.
+> +        */
+> +       discard_cache();
+> +       read_cache_from(index_file);
 
+Please see 680ee550d7 (commit: skip discarding the index
+if there is no pre-commit hook, 2017-08-14), maybe we can do it similarly.
+Dropping and rereading the index may be expensive for large repos.
 
-On 22/09/17 17:25, SZEDER Gábor wrote:
-> 
-> At first I was somewhat puzzled by the "ALLOC_GROW:" prefix in the
-> subject line, because this patch doesn't touch ALLOC_GROW() at all.
-> However, since ALLOC_GROW() is a macro, of course, and since this
-> patch changes the data type of variables "passed" to ALLOC_GROW(),
-> that's sort of fine...
+>         strbuf_addbuf(&msg, &merge_msg);
+>         strbuf_addch(&msg, '\n');
+>         if (squash)
+> diff --git a/templates/hooks--pre-merge.sample b/templates/hooks--pre-merge.sample
+> new file mode 100755
+> index 0000000000..a6313e6d5c
+> --- /dev/null
+> +++ b/templates/hooks--pre-merge.sample
+> @@ -0,0 +1,13 @@
+> +#!/bin/sh
+> +#
+> +# An example hook script to verify what is about to be committed.
+> +# Called by "git merge" with no arguments.  The hook should
+> +# exit with non-zero status after issuing an appropriate message if
 
-Yes, the original subject line was "... when using the ALLOC_GROW macro",
-but vim scolded me for busting the line length. I tried several other
-variations, but I couldn't come up with anything better.
+The message goes to stdout or sterr or both?
 
-So, yes, given that the subject left a little to be desired, I probably
-should have included a commit message body. :(
+> +# it wants to stop the commit.
 
-[This patch was originally written years ago, as part of a much larger
-series to fix all -Wextra warnings. I was pleasantly surprised that it
-applied to master without conflicts. However, I had to add to the patch
-because new instances of -Wsign-compare due to using the ALLOC_GROW macro
-had appeared since then.]
+nit: s/commit/merge commit/ maybe?
 
-> But then I was even more puzzled to see that this patch also changes
-> the data type of several variables that are never passed to
-> ALLOC_GROW(), but only compared to other variables that are indeed
-> passed to ALLOC_GROW(), i.e. most of (all?) the changes in line-log.c.
-> Perhaps it would be worth mentioning that all those changes are
-> fallout of the type change in 'struct range_set' in line-log.h. (and
-> all those changes silence only two warnings!)
-
-Hmm, I did consider splitting this patch up, so that this (and other
-issues you mention below) could be called out separately, but well ... ;-)
-
->> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
->> ---
->>  builtin/pack-objects.c |  4 ++--
->>  config.c               |  2 +-
->>  diff.c                 |  2 +-
->>  line-log.c             | 18 +++++++++---------
->>  line-log.h             |  2 +-
->>  revision.c             |  2 +-
->>  tree-walk.c            |  3 +--
->>  7 files changed, 16 insertions(+), 17 deletions(-)
->>
->> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
->> index a57b4f058..a6ee653bf 100644
->> --- a/builtin/pack-objects.c
->> +++ b/builtin/pack-objects.c
->> @@ -2563,8 +2563,8 @@ struct in_pack_object {
->>  };
->>  
->>  struct in_pack {
->> -	int alloc;
->> -	int nr;
->> +	unsigned int alloc;
->> +	unsigned int  nr;
->>  	struct in_pack_object *array;
->>  };
->>  
->> diff --git a/config.c b/config.c
->> index cd5a69e63..aeab02c06 100644
->> --- a/config.c
->> +++ b/config.c
->> @@ -2200,7 +2200,7 @@ static struct {
->>  	size_t *offset;
->>  	unsigned int offset_alloc;
->>  	enum { START, SECTION_SEEN, SECTION_END_SEEN, KEY_SEEN } state;
->> -	int seen;
->> +	unsigned int seen;
->>  } store;
-> 
-> On first sight this looked like an independent change, but on closer
-> inspection it turns out that the variables 'seen' and 'offset_alloc'
-> are used to manage the allocation of the '*offset' array.
-> 
-> I wish we would have named these fields more consistently with '_nr'
-> and '_alloc' suffixes, or, if there is a compelling reason to diverge,
-> then at least put the two fields on subsequent lines (or even on the
-> same line), with a comment explaining the connection between the two
-> fields and the array.
-
-Yes, I agree. If I had split this patch up, I would have considered
-adding such modifications to that patch. (That's easy to say now, of
-course!)
-
->>  static int matches(const char *key, const char *value)
->> diff --git a/diff.c b/diff.c
->> index ea7e5978b..be94ad4f4 100644
->> --- a/diff.c
->> +++ b/diff.c
->> @@ -1541,7 +1541,7 @@ static void emit_rewrite_diff(const char *name_a,
->>  
->>  struct diff_words_buffer {
->>  	mmfile_t text;
->> -	long alloc;
->> +	unsigned long alloc;
-> 
-> This one is interesting.  'alloc' and 'mmfile_t's 'text.size' manage
-> the allocation of 'text.ptr', and both are signed longs...  so where
-> does the warning come from?  Well, just a couple of lines later we
-> have this:
-> 
->   static void diff_words_append(char *line, unsigned long len,
->                   struct diff_words_buffer *buffer)
->   {
->           ALLOC_GROW(buffer->text.ptr, buffer->text.size + len, buffer->alloc);
-> 
-> Note the addition of the signed long 'buffer->text.size' and the
-> unsigned long 'len', which, according to "6.3.1.8 Usual arithmetic
-> conversions", converts the signed long to unsigned.  ALLOC_GROW() then
-> compares the resulting unsigned long sum to the signed long
-> 'buffer->alloc', hence the warning.
-> 
-> So, while the change in this hunk is technically correct and indeed
-> eliminates the warning, it is subtle and the resulting code with a
-> signed long 'text.size' in 'mmfile_t' and unsigned long 'alloc' might
-> raise the eyebrows of future readers.  I think this would be worth
-> mentioning in the commit message or in a comment.
-> 
-> Ultimately 'text.size' should be turned into unsigned, too, maybe even
-> size_t, but that change would be much more difficult to make and
-> review, because mmfile_t is used over hundred times in our codebase,
-> and 'size' is not a grep-friendly field name to look for.
-
-Indeed, ... :-P
-
->>  	struct diff_words_orig {
->>  		const char *begin, *end;
->>  	} *orig;
-> 
-> The very next line of 'struct diff_words_buffer's definition is:
-> 
->     int orig_nr, orig_alloc;
-> 
-> These two fields are used to manage the allocation of the struct's
-> '*orig' array.  While these are not involved in any warnings, having
-> an 'unsigned long alloc' and a signed 'orig_alloc' so close to each
-> other in the same struct might raise some eyebrows, too.
-Thanks for the detailed review.
-
-ATB,
-Ramsay Jones
-
-
+Thanks,
+Stefan
