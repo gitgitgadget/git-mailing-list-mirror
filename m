@@ -6,43 +6,43 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 278FC202A5
-	for <e@80x24.org>; Fri, 22 Sep 2017 12:04:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6BE7620A26
+	for <e@80x24.org>; Fri, 22 Sep 2017 12:04:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752444AbdIVMEa (ORCPT <rfc822;e@80x24.org>);
+        id S1752442AbdIVMEa (ORCPT <rfc822;e@80x24.org>);
         Fri, 22 Sep 2017 08:04:30 -0400
-Received: from mout.kundenserver.de ([212.227.126.135]:65367 "EHLO
+Received: from mout.kundenserver.de ([212.227.17.24]:57519 "EHLO
         mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752430AbdIVMEZ (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1752439AbdIVMEZ (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 22 Sep 2017 08:04:25 -0400
-Received: from localhost ([130.75.46.4]) by mrelayeu.kundenserver.de (mreue001
- [212.227.15.167]) with ESMTPSA (Nemesis) id 0MhJ69-1diM7R49on-00MM3I; Fri, 22
+Received: from localhost ([130.75.46.4]) by mrelayeu.kundenserver.de (mreue103
+ [212.227.15.183]) with ESMTPSA (Nemesis) id 0MQ8It-1e0Zl81Xu7-005Kao; Fri, 22
  Sep 2017 14:04:21 +0200
 From:   Michael J Gruber <git@grubix.eu>
 To:     git@vger.kernel.org
 Cc:     Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH 3/4] merge: --no-verify to bypass pre-merge hook
-Date:   Fri, 22 Sep 2017 14:04:14 +0200
-Message-Id: <bdc45cade9a8d108b7d11d66c0eecb27c2f23af6.1506081120.git.git@grubix.eu>
+Subject: [PATCH 4/4] t7503: add tests for pre-merge-hook
+Date:   Fri, 22 Sep 2017 14:04:15 +0200
+Message-Id: <381fe8facbbc1667d655572fcff5d6eb5f0e07fc.1506081120.git.git@grubix.eu>
 X-Mailer: git-send-email 2.14.1.909.g0fa57a0913
 In-Reply-To: <cover.1506081120.git.git@grubix.eu>
 References: <cover.1506081120.git.git@grubix.eu>
-X-Provags-ID: V03:K0:oHAHwxht3Sq4/08Wv62r9YWUKXeH9yO/gnqYK7LcDiaZSKHdnOM
- u3UNkTLUpzfdjC9GLS2wedXXBAzx9BUwzDFj8KAASjCx2mfVdHPQBSlp2ps3LURerYxn5EY
- Q9Iyyg106SFzAGs88mHxr9ruwBFzqazl+v48Ef7bKwdJxlKrxq//mwsEuMi8MgF+hOMIrDX
- 4hcjJOhkFUR+9WjNqaQlQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:rbxxVvJitZc=:ofg6eU+fgk0FsEZlBE5DFM
- 0SM/ppFXImqu40WJr409lm09QwURxnTohHj/E8p9p7aGwOe4Uc/UlyI2GrPhW7HsxPtuFzkwA
- HyZDR4yLKiEQiuZDU/nkeOAYJZDKfHAKHyZLML/MVm/4MpgqrDZyFb8WGj63+kHQ2pTFQAeZJ
- 87luK1ahcya/+dnPuiIu28S2Q5bNP3260T9tMdw50exCbqVBjwLPNqzth3RXd/1zhx46zQmcd
- 9W4MbKo3vWM4EsasGh5LlUwm/k3YzO2Zz6OEyVNg8IGN1OptAYua2KQJ9goIqmy66y2p213p/
- 73pmuBoaQJgAZVaqpvfVal2ugVQdi2n850+1R+DUwhJ4UmbpJIr1WGsFNPFhTgMGFERlcKLPm
- 86M1hm0WG3bcSGJnxx6CItiZZ3BJVqIHEDQrm5byRez2OveYJcJhnd0kQHuKD6XQVkixqoOdE
- cz8d//SeFshTLpSUM/EPLpay4wDF6x+2OXmvsWQgnFyJLIN7DoAO5RN88h6lHrvveNzlbkSY3
- eTIVh0qdkxHXEpDhrB7DEBx3E25OojfbuMVZI2oFKTjdtgNpT6cLErq2GVRalsz6V6d4uzxyp
- jnrxVdrKRk/HQ4hDZBCpPMvhEUT0ZTL8osONBY+f8f8R7+Cp0C88zAiyqteMLxdKxtAFKoXsK
- i4fsc9wIn574129BJF6W5hrtKZ1RRaje96eFxiaCLsraWxTiARwdE8lANeSSXJ6/PFhtkzViL
- JwUxjFOQMNKcFbfO4hyJFYQ88c9y1Iy0PV9GVA==
+X-Provags-ID: V03:K0:7F1Ve15TJ33YIA69tgvR8rEEZ3IYbM5zRCJLH4xAbkU48FAOT0S
+ HXyKtoaehnbhImx1gMjraSoPglRircBxC6Px09xyBBOIM3C52nIC22Nrmg8T9HGV0PkzUjh
+ 1rDcRPr7/I5WzTCx1l2Xmg9scih3WasKkg6oUV/DRAMf0toSgS9yLRn4rTs0wT1ZxIzWRoz
+ F8bAGfhVzw1SKVtX2p6kw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ru5pDXsWpdE=:aWwQviZ66yw1m93+UwT0Cp
+ fC2F4C4LjLZXrPo0+FpH3fdWak/sropO/eh7PGbHduw1pzXCDmPbDgkK3YnDXsAkU9KfrhEyq
+ FEAZRhsjjhH9rZw9d9nhIpSUmgybkgUJsuUAy1KnlWUbSh7OSfAKRaBWyWjZZTJhqfW8pMPMp
+ 1pmCCBm0DIKTxA2FJGKEgxtovEviCaN1a61UsdZTuha6VRTwrbJJY81c/R+pD/wygqdACYII6
+ 6XcNrB7chFcaW4vEfrxF1EnyWgywB4Dq2dcFxouWvb95QLHT8pNQzDigZcJtWNb+NPhy+7XAC
+ N61+RhcfP9cMzZHDg3eaZ0mdzynDIzaZlljZybNJF7C5PL2HzlX7EF3CsBVtObVYDZlZkmX2Z
+ Bt+5SvzVadDbRSFvqQd16Ry4A9mLY8uwZqUr53hHiW6YGoe8yDC6VcdTUA9MwU528q3qIYfZO
+ ly4+0Y1GBFTrvqbochwepIb61a1VW70VoHoiKg2zeQDp/GN6aISkKDNwuIOOrRQZlaAEnN7JL
+ QSg4RL/erqh2MqCVNU38KoKKucMilu6XFZzniQONVKVFmepNsHRMx3zhujt5gkNTJphtNbEHB
+ l9fk+FrONmAOOjJMYYODnxFKiPpX7Tn3MHAhMTUKCyZ6+LIIlZxGM0/ZwTTbp7AfshuWLl7aY
+ 9dast1ekLS3QbQHpPtApk4zePR0buGgPoF8uTK5R3vZjAaZCCJF5Tq0pZeZQ+Sj+fAdKhUaCI
+ 8qa5bn7o7RUWChO4AlZgmm0Iktodb3tcj4RC+w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -50,81 +50,143 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Michael J Gruber <git@drmicha.warpmail.net>
 
-Analogous to commit, introduce a '--no-verify' option which bypasses the
-pre-merge hook. The shorthand '-n' is taken by the (non-existing)
-'--no-stat' already.
+Add tests which make sure that the pre-merge-hook is called when
+present, allows/disallows merge commits depending on its return value
+and is suppressed by "--no-verify".
 
 Signed-off-by: Michael J Gruber <git@grubix.eu>
 ---
- Documentation/git-merge.txt     | 2 +-
- Documentation/githooks.txt      | 2 +-
- Documentation/merge-options.txt | 4 ++++
- builtin/merge.c                 | 4 ++--
- 4 files changed, 8 insertions(+), 4 deletions(-)
+ t/t7503-pre-commit-hook.sh | 66 +++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 65 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-index 4df6431c34..5f0e1768e1 100644
---- a/Documentation/git-merge.txt
-+++ b/Documentation/git-merge.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git merge' [-n] [--stat] [--no-commit] [--squash] [--[no-]edit]
--	[-s <strategy>] [-X <strategy-option>] [-S[<keyid>]]
-+	[--no-verify] [-s <strategy>] [-X <strategy-option>] [-S[<keyid>]]
- 	[--[no-]allow-unrelated-histories]
- 	[--[no-]rerere-autoupdate] [-m <msg>] [<commit>...]
- 'git merge' --abort
-diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index 85bedd208c..969441d7a2 100644
---- a/Documentation/githooks.txt
-+++ b/Documentation/githooks.txt
-@@ -104,7 +104,7 @@ pre-merge
+diff --git a/t/t7503-pre-commit-hook.sh b/t/t7503-pre-commit-hook.sh
+index 984889b39d..36ae87f7ef 100755
+--- a/t/t7503-pre-commit-hook.sh
++++ b/t/t7503-pre-commit-hook.sh
+@@ -1,9 +1,22 @@
+ #!/bin/sh
  
- This hook is invoked by 'git merge' when doing an automatic merge
- commit; it is equivalent to 'pre-commit' for a non-automatic commit
--for a merge.
-+for a merge, and can be bypassed with the `--no-verify` option. 
+-test_description='pre-commit hook'
++test_description='pre-commit and pre-merge hooks'
  
- prepare-commit-msg
- ~~~~~~~~~~~~~~~~~~
-diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
-index 4e32304301..75019d5919 100644
---- a/Documentation/merge-options.txt
-+++ b/Documentation/merge-options.txt
-@@ -74,6 +74,10 @@ merge.
- With --no-squash perform the merge and commit the result. This
- option can be used to override --squash.
+ . ./test-lib.sh
  
-+--no-verify::
-+	This option bypasses the pre-merge and commit-msg hooks.
-+	See also linkgit:githooks[5].
++test_expect_success 'root commit' '
 +
- -s <strategy>::
- --strategy=<strategy>::
- 	Use the given merge strategy; can be supplied more than
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 7ba094ee87..c63510c199 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -237,7 +237,7 @@ static struct option builtin_merge_options[] = {
- 	  N_("GPG sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
- 	OPT_BOOL(0, "overwrite-ignore", &overwrite_ignore, N_("update ignored files (default)")),
- 	OPT_BOOL(0, "signoff", &signoff, N_("add Signed-off-by:")),
--	OPT_BOOL(0, "no-verify", &no_verify, N_("bypass commit-msg hook")),
-+	OPT_BOOL(0, "no-verify", &no_verify, N_("bypass pre-merge and commit-msg hooks")),
- 	OPT_END()
- };
++	echo "root" > file &&
++	git add file &&
++	git commit -m "zeroth" &&
++	git checkout -b side &&
++	echo "foo" > foo &&
++	git add foo &&
++	git commit -m "make it non-ff" &&
++	git checkout master
++
++'
++
+ test_expect_success 'with no hook' '
  
-@@ -771,7 +771,7 @@ static void prepare_to_commit(struct commit_list *remoteheads)
- 	struct strbuf msg = STRBUF_INIT;
- 	const char *index_file = get_index_file();
+ 	echo "foo" > file &&
+@@ -12,6 +25,14 @@ test_expect_success 'with no hook' '
  
--	if (run_commit_hook(0 < option_edit, index_file, "pre-merge", NULL))
-+	if (!no_verify && run_commit_hook(0 < option_edit, index_file, "pre-merge", NULL))
- 		abort_commit(remoteheads, NULL);
- 	/*
- 	 * Re-read the index as pre-merge hook could have updated it,
+ '
+ 
++test_expect_success 'with no hook (merge)' '
++
++	git checkout side &&
++	git merge -m "merge master" master &&
++	git checkout master
++
++'
++
+ test_expect_success '--no-verify with no hook' '
+ 
+ 	echo "bar" > file &&
+@@ -20,15 +41,25 @@ test_expect_success '--no-verify with no hook' '
+ 
+ '
+ 
++test_expect_success '--no-verify with no hook (merge)' '
++
++	git checkout side &&
++	git merge --no-verify -m "merge master" master &&
++	git checkout master
++
++'
++
+ # now install hook that always succeeds
+ HOOKDIR="$(git rev-parse --git-dir)/hooks"
+ HOOK="$HOOKDIR/pre-commit"
++MERGEHOOK="$HOOKDIR/pre-merge"
+ mkdir -p "$HOOKDIR"
+ cat > "$HOOK" <<EOF
+ #!/bin/sh
+ exit 0
+ EOF
+ chmod +x "$HOOK"
++cp -p "$HOOK" "$MERGEHOOK"
+ 
+ test_expect_success 'with succeeding hook' '
+ 
+@@ -38,6 +69,14 @@ test_expect_success 'with succeeding hook' '
+ 
+ '
+ 
++test_expect_success 'with succeeding hook (merge)' '
++
++	git checkout side &&
++	git merge -m "merge master" master &&
++	git checkout master
++
++'
++
+ test_expect_success '--no-verify with succeeding hook' '
+ 
+ 	echo "even more" >> file &&
+@@ -46,11 +85,20 @@ test_expect_success '--no-verify with succeeding hook' '
+ 
+ '
+ 
++test_expect_success '--no-verify with succeeding hook (merge)' '
++
++	git checkout side &&
++	git merge --no-verify -m "merge master" master &&
++	git checkout master
++
++'
++
+ # now a hook that fails
+ cat > "$HOOK" <<EOF
+ #!/bin/sh
+ exit 1
+ EOF
++cp -p "$HOOK" "$MERGEHOOK"
+ 
+ test_expect_success 'with failing hook' '
+ 
+@@ -68,6 +116,22 @@ test_expect_success '--no-verify with failing hook' '
+ 
+ '
+ 
++test_expect_success 'with failing hook (merge)' '
++
++	git checkout side &&
++	test_must_fail git merge -m "merge master" master &&
++	git checkout master
++
++'
++
++test_expect_success '--no-verify with failing hook (merge)' '
++
++	git checkout side &&
++	git merge --no-verify -m "merge master" master &&
++	git checkout master
++
++'
++
+ chmod -x "$HOOK"
+ test_expect_success POSIXPERM 'with non-executable hook' '
+ 
 -- 
 2.14.1.909.g0fa57a0913
 
