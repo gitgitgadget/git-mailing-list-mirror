@@ -2,102 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E4CB62047F
-	for <e@80x24.org>; Sat, 23 Sep 2017 09:54:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 294672047F
+	for <e@80x24.org>; Sat, 23 Sep 2017 10:50:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750847AbdIWJye (ORCPT <rfc822;e@80x24.org>);
-        Sat, 23 Sep 2017 05:54:34 -0400
-Received: from mail-pf0-f170.google.com ([209.85.192.170]:44900 "EHLO
-        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750766AbdIWJyc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Sep 2017 05:54:32 -0400
-Received: by mail-pf0-f170.google.com with SMTP id e1so1655232pfk.1
-        for <git@vger.kernel.org>; Sat, 23 Sep 2017 02:54:32 -0700 (PDT)
+        id S1751683AbdIWKup (ORCPT <rfc822;e@80x24.org>);
+        Sat, 23 Sep 2017 06:50:45 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:34508 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751059AbdIWKuo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Sep 2017 06:50:44 -0400
+Received: by mail-pg0-f67.google.com with SMTP id u18so2110317pgo.1
+        for <git@vger.kernel.org>; Sat, 23 Sep 2017 03:50:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Trpv80I72SANPvrAP2IOSKorHOtodXBEOw2JlJMpBPg=;
-        b=AL5krRERMcLVT/WE78OTIyZCWbm/0rlTsygrYXw73R13SbkD/AQn9vq5i1cJqchXI2
-         TebnTNdF19QqyzO9rVFy3ZZgdtMA7mXr2r7u8+aqjOvj4jQPhUo9CHjSIPMt97YLNlz4
-         ujELvPwJxbCViS6PUZnqFf330tuMmdqHCjyWsd6FrXvJvcfuyCsGirLpIOqFTl6Evcvm
-         1u2GPLZt+F6p+PEAYJKQAYlcL+F0PT6fZC/gqQdbwks34faYK1hQcqlHPL6ncrHTYCQA
-         6vi0sx3UR/BBn7qNst74AwkR4YlKqDaisE4z+4uYD2Gf8DqHV4NpUnB/UFN6ih0tXljB
-         TrsA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=p2JYxLqpXjiZA/fe4Za+R9nA4ZEHW4ih8eFgaV2n8kg=;
+        b=LlhQiKrF5IT8uJp7Xk+T2onYJzWtQteSA1atvSqk/hQJKKjXZ2jLUzzD/PfUvNyJhm
+         3LQUaKZAstMB8+VGzH/kvYjcyu0vqhsVPiM9mGRMbOaWjtw3QVmsz+m1JiC5FAME2wZJ
+         FEhpwSb6u/oyOo1obXuzy4Pft+v6r4OuBwukVCg9jGAPR9ATqInF0/1XbW6UrVRi9Wh/
+         zgUFos2B1D0uA75SKmm038h+9CBD67Uj+uHD8SkbIbMbAiC8EqPR6f3VI1ilW7+JD8f1
+         e/INpQY+QoYff5eT/sf79WMWroh3CxWaXKqfrhMjxkvfc0N4mE/m2/DttQxNQDqQQtbn
+         40Ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Trpv80I72SANPvrAP2IOSKorHOtodXBEOw2JlJMpBPg=;
-        b=gXFp6Cs9Vm9wqGBrqt/5LRBjGzzPXL2Gm4ZILfFz3z9366CPI4OeMEAkeq9s5qG8ae
-         Kly5KUxzZ+msr5zO+2aouRI79J1/WvaOz5LBVBNQ2M3gb2ROYWaXcHtg/qu4kuChtboO
-         BbMTsEuNL3waLCypLtivTsTYfT76sg4Bbpj1DM1mtc8N8++Xpij71x1Ssh96vrCPrR2g
-         nI0InDkc3TOuqyjvOQiJlBGDsu3StLcykDSaK2GMNxGd0DwZocyJKk7UnmsfN6ls+9TI
-         TskBGTDJIkUoAr+DExyURSssuww2c+KTKRYUQkdaJUkc24dLk3lamHq/3klAlW4E56GU
-         Xu3A==
-X-Gm-Message-State: AHPjjUheWJ/pJL8q9eiKDxUOT9PqVjlaFBflqu3wl7swO0GvxKhhPTci
-        nsg73bZSZrTtQ4YWdj7Ozd/y4oQj16Ws+ThgE61gdHRO
-X-Google-Smtp-Source: AOwi7QBNwRMwoVujvptTSJLG976khGRnhsY21XRN7rxbhkVt25iQJ8lAdsZOyq7N7TTCG7HWJu4oOM7YLLp5wSzb4Gk=
-X-Received: by 10.99.98.70 with SMTP id w67mr1780528pgb.362.1506160472170;
- Sat, 23 Sep 2017 02:54:32 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=p2JYxLqpXjiZA/fe4Za+R9nA4ZEHW4ih8eFgaV2n8kg=;
+        b=Q6mXEej0VG39LpW1CO/rej0acLN9rX5cy46+q11kUBGii6iKFSCyUvGS6M0UtDF21M
+         lImVp+hIvERBpRixzkRS46OqQIRfLxzbUO5p2olSN40dAGWd0J2phpeeNZYzRH40WQBk
+         uVilV5ZUMzV6aJ7XxRsBoTi0zEBqrhueGmw3eWF4giOSyhxmjKggeO2apSLOYw6RLvWM
+         yQLBjbQigMVslZAwNaqaZnhOcMDF3sicAVnJf6mX1+MEzFpbZdM4hT5i30uyr8W1wKGX
+         NB6PN9YZ8MusNdJGgmfvIq1RMhweneaQer9ZdLuhPpUaBITVtohYInxY3eNIduOpKZTM
+         AIFA==
+X-Gm-Message-State: AHPjjUgq0BAL5jKscOPxTFEakKfdeyWENC0mxFsy2KV+/3zPT+tVeQ/J
+        Y1QxfwtHRKcnfcR929+p7dpIIKgn
+X-Google-Smtp-Source: AOwi7QC3eu+kpCDt2ql4LtrTHQjCyC5lM1JQUQJ26uqbol+BR56KCtYNCgaRvOawS3LBEvPRX8HVuQ==
+X-Received: by 10.84.238.201 with SMTP id l9mr1794982pln.159.1506163843862;
+        Sat, 23 Sep 2017 03:50:43 -0700 (PDT)
+Received: from ?IPv6:2405:204:70c5:34d4:f862:3e2d:a1bf:681d? ([2405:204:70c5:34d4:f862:3e2d:a1bf:681d])
+        by smtp.gmail.com with ESMTPSA id m87sm3188530pfi.122.2017.09.23.03.50.39
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 23 Sep 2017 03:50:42 -0700 (PDT)
+Subject: Re: [RFC PATCH 5/5] builtin/branch: give more useful error messages
+ when renaming
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+References: <xmqqd18pcysa.fsf@gitster.mtv.corp.google.com>
+ <20170919071525.9404-1-kaarticsivaraam91196@gmail.com>
+ <20170919071525.9404-6-kaarticsivaraam91196@gmail.com>
+ <CAGZ79kYMagCFS765NtOBDxDJYaXMyA4-=xxi3JMxbga638b6Yg@mail.gmail.com>
+From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+Message-ID: <2e91fd2e-3c8a-ff93-ff6f-4a30191d1249@gmail.com>
+Date:   Sat, 23 Sep 2017 16:20:35 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-Received: by 10.100.142.137 with HTTP; Sat, 23 Sep 2017 02:54:31 -0700 (PDT)
-In-Reply-To: <20170923043701.4s3xuytp5hdjwmsy@sigill.intra.peff.net>
-References: <20170920200229.bc4yniz6otng2zyz@sigill.intra.peff.net>
- <cover.1506120291.git.martin.agren@gmail.com> <20170923043701.4s3xuytp5hdjwmsy@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sat, 23 Sep 2017 11:54:31 +0200
-Message-ID: <CAN0heSrPBDi4q9fqr=qoTbjRHpFS_VEL0O8=MFFJ4DLCuJwahA@mail.gmail.com>
-Subject: Re: [PATCH v2 0/6] reroll ma/plugleaks; more `object_array`-fixes
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAGZ79kYMagCFS765NtOBDxDJYaXMyA4-=xxi3JMxbga638b6Yg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 23 September 2017 at 06:37, Jeff King <peff@peff.net> wrote:
-> On Sat, Sep 23, 2017 at 01:34:48AM +0200, Martin =C3=85gren wrote:
+On Thursday 21 September 2017 02:27 AM, Stefan Beller wrote:
 >
->> Martin =C3=85gren (6):
->>   builtin/commit: fix memory leak in `prepare_index()`
->>   commit: fix memory leak in `reduce_heads()`
->>   leak_pending: use `object_array_clear()`, not `free()`
->>   object_array: use `object_array_clear()`, not `free()`
->>   object_array: add and use `object_array_pop()`
->>   pack-bitmap[-write]: use `object_array_clear()`, don't leak
->
-> All six look good to me. Thanks again for poking into this. I'm afraid
-> to ask how far we have left to go on running the test suite all the way
-> through with leak-checking turned on. :)
+>> It's conventional to report that 'tset' doesn't exist rather than
+>> reporting that 'master' exists, the same way the 'mv' command does.
+>>
+>>      $ git branch -m tset master
+> This is not the 'mv' command as promised? So this is just
+> to demonstrate the (still fictional) better error message?
 
-Thanks for reviewing.
+Yes
 
-Unfortunately, I have not figured out how to get LSan to simply report
-the leaks and continue. Its default behavior is to abort if there are
-leaks. That's useful for finding the first leaking test, but not much
-else. (Later tests might depend on that test doing everything it should,
-so now those later tests will start failing and/or executing different
-code paths.)
+> Maybe use a real 'mv' command here?
 
-I can tell LeakSanitizer to exit with an exit code instead, but then all
-leaking git-processes exit with the same exit code. That also interferes
-with the tests.
+It didn't want to do that to avoid preserve continuity. I'll change the 
+commit
+message a little to fix this.
 
-What I would like is for the git-process to exit with the same exit
-status it would have had without the leak-checking. That would make it
-possible to run the whole test suite, collect all leaks, identify
-duplicates, sort them, categorize them, prioritize them, track how we
-are progressing...
-
-I did spend some time looking into this before I gave up. I'd love to be
-told I've missed something obvious.
-
-Martin
+---
+Kaartic
