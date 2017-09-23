@@ -2,86 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 760C820A26
-	for <e@80x24.org>; Sat, 23 Sep 2017 11:32:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2EB6820281
+	for <e@80x24.org>; Sat, 23 Sep 2017 12:17:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750916AbdIWLcL (ORCPT <rfc822;e@80x24.org>);
-        Sat, 23 Sep 2017 07:32:11 -0400
-Received: from mout.web.de ([212.227.15.14]:64998 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750839AbdIWLcK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Sep 2017 07:32:10 -0400
-Received: from macce.local ([195.198.252.176]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MWirL-1dtEd01SCh-00Xq4N for
- <git@vger.kernel.org>; Sat, 23 Sep 2017 13:32:09 +0200
-Subject: Re: is there a "symlink" option for cloning a repo in a separate
- filesystem?
-To:     Git Mailing list <git@vger.kernel.org>
-References: <alpine.LFD.2.21.1709230418340.22644@localhost.localdomain>
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <94fae18a-09e5-e387-213d-d840dd5201bd@web.de>
-Date:   Sat, 23 Sep 2017 13:32:08 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:52.0)
- Gecko/20100101 Thunderbird/52.3.0
+        id S1751002AbdIWMRR (ORCPT <rfc822;e@80x24.org>);
+        Sat, 23 Sep 2017 08:17:17 -0400
+Received: from mail-pg0-f50.google.com ([74.125.83.50]:50859 "EHLO
+        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750912AbdIWMRQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Sep 2017 08:17:16 -0400
+Received: by mail-pg0-f50.google.com with SMTP id p5so1843293pgn.7
+        for <git@vger.kernel.org>; Sat, 23 Sep 2017 05:17:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=ZpM/Hup2tY3Adpo2EOjovgEorI4oPuLxJVtG8JrBhtk=;
+        b=AdmsY7g6WL2xVuFKd6rTPfkAfM4FzaumyCQiXbWynibGgaYXhIsmCURnpWY/6OMO6o
+         SrDFbCV2HwiCAWsCdZQ6E8o7c4BGAMjdJ1LtvRNwQf7P/jtu5sptdoV4FG+QVixJoy3h
+         qNqtm831184QuBqqKSes3WmFdr10/k7ZFlRqcU8HPXonhiovm8cXCVJRtCdHCKhgsKk0
+         qHR3Ok63jP/Z4kDDTuR5JLX6tV5VHdnISPHTUbdvKE58QoqbtNw257RhO91WgAmIkJBZ
+         cQoYrJJraegAe+rr3UwBjCPNJItGoZlRoZpJx9elB3cSPp3P2kAVdVk8pv20VKQUVQpi
+         vdrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=ZpM/Hup2tY3Adpo2EOjovgEorI4oPuLxJVtG8JrBhtk=;
+        b=ZbM0X4pLaaEwGp+u58AvInoqI6Y9OJpahDpTswVu0i7x3WNYVHci6tk76TT5j2oYKp
+         Bx6qv5KJKJcsOwUPABBmVyjxQRCnZwnOfwQkx2tgYTV7Z+ivUBI2r7OywCVW2oFKfbpO
+         DHb7Tu3TfJJu0ssBq13e7hO8DNZ1yzpnX3ov4H6AZZokYu6DOfW1tNO7DbepaKuF26lM
+         C130YJRScFZExlY15lcnUqn2jsvUFdENeqGyUIyXypxiZVYv2fXZnEbq5lFO4aTgB3aJ
+         UXqOg+tKekNcCtFocDh2vRnkts617K59VLjQ+PaBpKqS52oJz1Mn4QoGmZ70jhBdxW6M
+         o/Rw==
+X-Gm-Message-State: AHPjjUh51Co1rsmnPF7IMqOL1qfCpMHhS+vytgp1buczDcVE6kdklWFc
+        j19+ziymM/NNw4D+q2uj0uz0Lu+W
+X-Google-Smtp-Source: AOwi7QD8oekz00/0QXKZnmJKtV+rl/QW5YpurkLCXNov0cV0NijCbg4Q/Ua1mFOgDw+77R7PghmDIw==
+X-Received: by 10.84.224.206 with SMTP id k14mr2040989pln.317.1506169035332;
+        Sat, 23 Sep 2017 05:17:15 -0700 (PDT)
+Received: from [10.4.2.238] ([14.102.72.146])
+        by smtp.gmail.com with ESMTPSA id n19sm4838579pfj.114.2017.09.23.05.17.12
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 23 Sep 2017 05:17:14 -0700 (PDT)
+Subject: Re: [RFC PATCH 1/5] builtin/checkout: avoid usage of '!!'
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+References: <xmqqd18pcysa.fsf@gitster.mtv.corp.google.com>
+ <20170919071525.9404-1-kaarticsivaraam91196@gmail.com>
+ <20170919071525.9404-2-kaarticsivaraam91196@gmail.com>
+ <xmqq8thaow8f.fsf@gitster.mtv.corp.google.com>
+ <e07a613e-8b69-e382-777b-b5797270ecaf@gmail.com>
+ <fbe3d3e2-a14c-fe7c-7e5d-c24789b249ca@gmail.com>
+ <xmqqlgl8n8fn.fsf@gitster.mtv.corp.google.com>
+From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+Message-ID: <de378f54-1c6f-327e-3f61-f8b215cfe203@gmail.com>
+Date:   Sat, 23 Sep 2017 17:47:09 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-In-Reply-To: <alpine.LFD.2.21.1709230418340.22644@localhost.localdomain>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+In-Reply-To: <xmqqlgl8n8fn.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:4Hu36yjWyYgZ7m7fLpJlXH8KyvLSX4V7IsPuBZN5X7fweXNu8o2
- xAv+f2BWsliFj7h8IBkK5xz6dbeQVFzcXUmpe8m/sVnYisq8LibOcPgbV9B02O+HwH+hzZV
- L8nYDEanJji1GJmCZrHyuqqmg241jP9Tirv/rI8NShR5CynhJiuOZme86zsiYN8rzBIi3Oi
- Hou7NKb8mHXAScmrOTlVQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ZsNizzM9TJ4=:BukXecRDfwErjgqlOUre/y
- cqiAZNHl7kmjsbOgTwwrCAEHnyi0CBSzq3zgdUkr5BXyUthHX0XUto/MD9NJUxCRurt5yGVeg
- lDopuyDqhyzteThJ7sB2QcsYOo5CYMbBFx0bhAFWcDDUqa7qQTL4IBn7VItsKMCNlVl4gLhkI
- 4CEFh1zT1jAvntCToQ3zaKlOQzKTWHUF2GfOOhu3FPsHUz8GqCaA9Y2qJYXEWYO1gBu6XXIt9
- yWhfmvdBocoitNvsY4M+fF4agQB740CIhrmnd3SUxRkJHpcq0rGrQchMJKi7kfL1KOMqAa0Lu
- J+t7Og5O8+BJyyjSscypPGJhMECCZSZ92mML9CS77FP/qw/ZC8C3Y2AJ+5TnzH9CRQtAPNe77
- 9AM0HKZg/fodgVk5p62Rl3LLp+MN5qyFMlrmoL22MXg39xWmpJj06AvnRE+7Y2dyFywyhZxDt
- X32AmXZjwqWdhxezyQtnBAkqlFnJ6N1pVLDwNivQnn/fxiAyf2mv/rcoJkNOgG9tk9yqX7fwC
- wGiwPezhM9swQSuVhkiqTVxn9HAd6DOUsu2ZN60/iWrtSBoTnuSV+7iXSPUKLiTMoT29CyYT1
- R+SU6toQJfUJmk29dopCSSxtXhg5vN++vfBD5oHJba+nPwxQ2gjIsu24KkaCZaeKLao1Z8kB+
- +MdpNAOiaM2zs97hEuVGbQzaGlZeZ3ovh19Tg6X3Hftgv+s8+I86coP01nU8oh8k4SxeSjktU
- Cfw8wajx7URcYZWhVzo03PJ7VcM4P9gawuEr/gg0Lro6fBkF3QGyRvpM8IG0nHnNn2pGLE0pU
- 3llaYKn0Xg492eGS8Y1CExeoQFZcRDar9a+MLrocMd+R5gSOq4=
+Content-Language: en-US
+X-Cyberoam-smtpxy-version: 1.0.6.3
+X-Cyberoam-AV-Policy: default
+X-CTCH-Error: Unable to connect local ctasd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2017-09-23 10:22, Robert P. J. Day wrote:
-> 
->   reading "man git-clone", and i understand the mechanics of the local
-> protocol, so that if i run:
-> 
->   $ git clone /path/to/repo
-> 
-> then "files under .git/objects/ directory are hardlinked to save space
-> when possible."
-> 
->   but if the repo is in a separate filesystem, or on an NFS mount,
-> hardlinks clearly won't work, so what happens then? does it default
-> all the way back to regular copies? is there no intermediate symlink
-> feature that would still work? (i suspect i am far from the first
-> person to wonder this.)
-> 
-> rday
-> 
+On Thursday 21 September 2017 07:01 AM, Junio C Hamano wrote:
+> What does "with arithmetic constructs" mean? Would it refer to
+> things like
+>
+> 	!!i != !!(j + 3)
+>
+> that unnecessarily obfuscates what is going on?
 
-Isn't that what "--reference" is good for ?
+Thanks that clears the confusion because I haven't seen constructs
+like this before (who would even do something like this?)
 
-https://git-scm.com/docs/git-clone
+> The primary reason why !!ptr is good in the code that this patch
+> touches is because what is doubly negated is a pointer, not an
+> integer or other things.  The called function does *not* limit its
+> input to 0 or 1 (it wants 0 for false and everything else for true),
+> so we wouldn't be doing !!i if what we are passing is already an
+> integer.  But we cannot just pass a pointer to such a parameter
+> without getting the compiler upset.
+>
+>
 
-or
+Done. So I'll drop this patch.
 
-man git-clone
-
-PS:
-Robert P. J. Day <rpjday@crashcourse.ca>
-Does not work from web.de
+---
+Kaartic
