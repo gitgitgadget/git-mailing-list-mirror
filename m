@@ -2,105 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 090C620281
-	for <e@80x24.org>; Sat, 23 Sep 2017 16:38:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 416AC20281
+	for <e@80x24.org>; Sat, 23 Sep 2017 18:05:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751002AbdIWQiV (ORCPT <rfc822;e@80x24.org>);
-        Sat, 23 Sep 2017 12:38:21 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48144 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750839AbdIWQiU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Sep 2017 12:38:20 -0400
-Received: (qmail 21140 invoked by uid 109); 23 Sep 2017 16:38:20 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 23 Sep 2017 16:38:20 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13595 invoked by uid 111); 23 Sep 2017 16:38:58 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Sat, 23 Sep 2017 12:38:58 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 23 Sep 2017 12:38:18 -0400
-Date:   Sat, 23 Sep 2017 12:38:18 -0400
-From:   Jeff King <peff@peff.net>
-To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v2 0/6] reroll ma/plugleaks; more `object_array`-fixes
-Message-ID: <20170923163817.7ltmkav2ytk7n43k@sigill.intra.peff.net>
-References: <20170920200229.bc4yniz6otng2zyz@sigill.intra.peff.net>
- <cover.1506120291.git.martin.agren@gmail.com>
- <20170923043701.4s3xuytp5hdjwmsy@sigill.intra.peff.net>
- <CAN0heSrPBDi4q9fqr=qoTbjRHpFS_VEL0O8=MFFJ4DLCuJwahA@mail.gmail.com>
- <20170923161316.yntnccqrhv5d3jza@sigill.intra.peff.net>
+        id S1751465AbdIWSE7 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 23 Sep 2017 14:04:59 -0400
+Received: from mout.web.de ([212.227.17.11]:56167 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750959AbdIWSE5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Sep 2017 14:04:57 -0400
+Received: from [192.168.178.36] ([91.20.61.209]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LbaBL-1dXBGz3jnn-00lB5y; Sat, 23
+ Sep 2017 20:04:42 +0200
+X-Mozilla-News-Host: news://news.public-inbox.org:119
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] mailinfo: don't decode invalid =XY quoted-printable sequences
+Message-ID: <d48b3d67-5f03-19f3-5a32-ec7e8397c98d@web.de>
+Date:   Sat, 23 Sep 2017 20:04:40 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170923161316.yntnccqrhv5d3jza@sigill.intra.peff.net>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:zbsxayigZ2i1sEorbXI4HuhEcY5LatbDB3h/BNEy+LE2YF/2vmX
+ Oa7tySshAsrNQJakGXoVvEFvm+1A0z1C4YRxUFh3PRmkIIDarcaagP0AQujuxRpNSvabBxc
+ os2gn4chXwbAsq+SBYkQz8GrtKfWJeIJm7uHH7ephGSn5F3xBf4i/o1IrVZOo+CO2mWBfzw
+ 4ZKh7Jn3kvJb3JjBt93MA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:lH0BgBBD6ic=:ka7Cu2MmjK3iTLHGRIX4Pb
+ /cGzAiWLtgaGTjlwAAsq9TMley9NtyKE3fRnwfg5wOZqd9aZSxQRWht4AWbUU3NdF2zCDiSEd
+ ic1wuMiP23WuL0q6BpjzkAtKBxLjQNWBM5LH5vwXFNa1OKEECIBqXmsD2d/H/5YieGRAnF6ed
+ kBsIE9Hq/edv/ojCumkzLPvuhAXEpYEKnlJ1WuCiADavyAz2YM92qGDC/wEfvaC+g2mD6LcKc
+ /Wlxh+8sfwLVA5BY8tWzzcWZMRMvatOD7GyXDYYIVIZ4ttq7TjkGg0wMp8/ml6yWraGVWFmuF
+ MuRMDjjMSWVcnRO2dwLodGKYkK9xr211gwOsAMFVna1Rw/1YdGYXV3KaFwzRYei0YYZMZOo+N
+ a9vVsLVDtDsATjsmWliHa0c3UJaJC+YTEh9Ffn0ZB4COl9RreFxy+CZsHPL0gVKC61Hhuaz6u
+ mTkPuoDOvEDUWsUcqsITBys/oeNEJ1mdEctODlZS0Kp2IC7Chclg7g/2vMtq/NDFeLu5J4FFW
+ QZg3TmnnCGtuTui/2FcaOOeSidBuiD4+hZh/keDw34EDOG4Etcjyw/9Sn1Fj1427KlPwTiZQo
+ zfhTALltKzhNYyoQnjFfL59cW3ev9HkSnGG31nc3WKaLn0g93yVE5it8Y+LSF8S6UDUsF1nKu
+ bq0Kut5+XTWUxos9kb/UZAxY5v9SDiJhdgV4TPf8ko35hhZl6m2t9/pG+PVCJeylGfhGxHXYE
+ ri1aVzBIi55P3R+83TJM1a6sSyr8/2JwPwPid6as6HkvWSvoZH/g4nShZbCLj+lebDN/innoP
+ YCHKre0BH4yeqvVJzLXcNCj6CgyuqsLw77so5Qwc+vzXA4RlXc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Sep 23, 2017 at 12:13:16PM -0400, Jeff King wrote:
+Decode =XY in quoted-printable segments only if X and Y are hexadecimal
+digits, otherwise just copy them.  That's at least better than
+interpreting negative results from hexval() as a character.
 
-> In theory you should be able to just add "log_path=/tmp/lsan/output" to
-> that, which should put all the logs in a convenient place (and stop the
-> extra output from confusing any tests which capture stderr). But I can't
-> seem to get log_path to do anything, contrary to the documentation.
-> 
-> Doing log_to_syslog=1 does work for me. I'm not sure if it's a bug or
-> I'm holding it wrong. But it does seem like it should be possible to do
-> what you want.
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ mailinfo.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-Hrm. log_path doesn't seem to work for me directly from LSAN_OPTIONS.
-But if you compile with ASan, it _does_ work from there. That seems like
-a bug from my reading of the documentation, but maybe I'm missing
-something.
-
-Anyway, doing:
-
-  ASAN_OPTIONS=detect_leaks=1:abort_on_error=0:exitcode=0:log_path=/tmp/lsan/output \
-  make SANITIZE=address,leak test
-
-should pass the whole suite and give you a host of files to analyze.
-
-I'm not sure of the best way to count things. Surely many of these are
-the same leak over and over. One way to visualize is to look at the
-unique entries at each level of the call stack:
-
-  show() {
-    level=$1
-    perl -lne 'print $1 if /#'$level' .*? in (.*)/' * |
-    sort | uniq -c | sort -rn
-  }
-
-Level 0 isn't that interesting, it's just malloc:
-
-  $ show 0
-    27217 realloc (/usr/lib/x86_64-linux-gnu/libasan.so.4+0xd9f20)
-    23297 __interceptor_strdup (/usr/lib/x86_64-linux-gnu/libasan.so.4+0x74490)
-    19370 malloc (/usr/lib/x86_64-linux-gnu/libasan.so.4+0xd9b70)
-    12105 __interceptor_calloc (/usr/lib/x86_64-linux-gnu/libasan.so.4+0xd9d48)
-
-And level 1 is just our allocators:
-
-  $ show 1
-    28321 xrealloc /home/peff/compile/git/wrapper.c:138
-    25199 xstrdup /home/peff/compile/git/wrapper.c:44
-    18856 do_xmalloc /home/peff/compile/git/wrapper.c:60
-    12664 xcalloc /home/peff/compile/git/wrapper.c:160
-      660 __getdelim (/lib/x86_64-linux-gnu/libc.so.6+0x682b7)
-
-But level 2 starts to get interesting (and is too big to copy here).
-Some of them are direct sources of leaks. But others like strbuf_grow()
-are yet another level of indirection, and you'd want to jump to level 3
-or 4.
-
-If you want the "real" source of the leak, probably you'd have to mark
-certain functions as uninteresting and keep walking each stack trace
-until you find an interesting function to report.
-
--Peff
+diff --git a/mailinfo.c b/mailinfo.c
+index f2387a3267..3d8ac07399 100644
+--- a/mailinfo.c
++++ b/mailinfo.c
+@@ -367,11 +367,16 @@ static struct strbuf *decode_q_segment(const struct strbuf *q_seg, int rfc2047)
+ 
+ 	while ((c = *in++) != 0) {
+ 		if (c == '=') {
+-			int d = *in++;
++			int ch, d = *in;
+ 			if (d == '\n' || !d)
+ 				break; /* drop trailing newline */
+-			strbuf_addch(out, (hexval(d) << 4) | hexval(*in++));
+-			continue;
++			ch = hex2chr(in);
++			if (ch >= 0) {
++				strbuf_addch(out, ch);
++				in += 2;
++				continue;
++			}
++			/* garbage -- fall through */
+ 		}
+ 		if (rfc2047 && c == '_') /* rfc2047 4.2 (2) */
+ 			c = 0x20;
+-- 
+2.14.1
