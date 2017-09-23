@@ -2,117 +2,191 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF08220281
-	for <e@80x24.org>; Sat, 23 Sep 2017 19:02:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 63B7F20281
+	for <e@80x24.org>; Sat, 23 Sep 2017 19:39:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751522AbdIWTC6 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 23 Sep 2017 15:02:58 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:53980 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750916AbdIWTC4 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 23 Sep 2017 15:02:56 -0400
-X-Greylist: delayed 425 seconds by postgrey-1.27 at vger.kernel.org; Sat, 23 Sep 2017 15:02:56 EDT
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id EF2C660D76;
-        Sat, 23 Sep 2017 18:55:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1506192949;
-        bh=t5uIpYaB8PexBtnN0+lB4IPtHdWQoNTHYx03RTbiJzQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=eevKqTfzwBWnNbH5SKPZK5zhZqug9qPPgGVa9CGiyPjkLqCtXBpriDorGV+lNZvci
-         bOx1VTNEuWk+TkHqiHDuD7/nUaFMgQjK1ZGPCHkUKvXEhiQy9A768T36IuGBhcIov/
-         mjd3dPVUuJHTh8/2kMgZFuSQEK0KvRXE5/aebZM1Xkm8/NB4L6KyZBZ3TFOltgz/oS
-         EzisYeoRe30xIk3GbHYuMDrsOc9dUSEiGjxWwqhB7S+BYqXQrCDeTYMCBfn15DgWpa
-         tATGn8fQJh0EfpTd1YTVr2KILD1QQYq6iuqvpZdZCeIKGGMnDYU/5Vnqm38cSTyzS5
-         xKgULLDWm9xaQR3ngKLl1U2275dxfGRjYH3OfH46p4EzQ+mdh1nYdt2rhsTClxYc5T
-         rRNXnA23cKP9387wXAU79qpp31+rGNtSGW8tNqwc9JKBStMeFUu6nNsKA2ejEV6IbF
-         uWhB9QNJccgZ/ZnR8fqr11ontpCIrtR+HaflC0sKvgBimxgtCON
-Date:   Sat, 23 Sep 2017 18:55:43 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Git Mailing list <git@vger.kernel.org>
-Subject: Re: is there a "symlink" option for cloning a repo in a separate
- filesystem?
-Message-ID: <20170923185543.ithsgi3nvksp5uos@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Robert P. J. Day" <rpjday@crashcourse.ca>,
-        Git Mailing list <git@vger.kernel.org>
-References: <alpine.LFD.2.21.1709230418340.22644@localhost.localdomain>
+        id S1751846AbdIWTjE (ORCPT <rfc822;e@80x24.org>);
+        Sat, 23 Sep 2017 15:39:04 -0400
+Received: from mail-it0-f47.google.com ([209.85.214.47]:52845 "EHLO
+        mail-it0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751389AbdIWTjD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Sep 2017 15:39:03 -0400
+Received: by mail-it0-f47.google.com with SMTP id c195so3823631itb.1
+        for <git@vger.kernel.org>; Sat, 23 Sep 2017 12:39:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=9H6KmIPEPZWt72VuzOB4tEnFPL4HF3Ae5UqulyxSOfI=;
+        b=aRdXHdb+HKKMlAde/chfsYtxKqvMQ+hhHGreAwFGQJovg0O5c7fEjLoIUAocO/5qR+
+         s6Cx6+eP2LjHwNq0lcyhL2Iya3BXsW8U1gOrumtq8fBZQRDllcOHRQ/mPnUbgN2sBcma
+         WaBuDlN2pGCZ5Fd/dzhxjSqsZDUtnnEmMoIJJ+UXpHtUmwkmuZA2zkgWlvsCSF3XvnmU
+         EsA3dYwe75HVoXD2FtxAyTZUHc1MxIytryYT/EU+58wi1dR4rJ7y5mzHvXXUjjEPSNqZ
+         JWxteizoEYD/9/MIX7tMQm/QowL7MOsomuycA9tQXT6gBWYFrYujHYL4gjsTcIcsGzOU
+         FCGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=9H6KmIPEPZWt72VuzOB4tEnFPL4HF3Ae5UqulyxSOfI=;
+        b=FvTwEdythRK1hH61keN80w92P8ZSUX8DgVhpPTEvwuZX88LmfltmDnuSa442Wb2/8P
+         1YSxGTXAEZwFrpSdtm67pG9AFo9kLiqrFEc9EupNvZNbdI+LTQ3T3Mpo1vpbwI4QCuSR
+         blSnpAyzfqbnsxxi8jH+Kj97KDe/Yl8oPVlt07OdI+BZVVT+ais1QIZMBmjPs9+G97+a
+         1BFFxFvo/6+FBV5EaTVKn0NEGYoWu4e+TIZ45ZyMUeINyuC5T2Vg8LhE2wEPj4zUF+k+
+         vQtZ9D8/PF/8crlu0hYDQ7Is0Yx0pH7e8Y93F0SanfiKtNJU4sYNrAPz5bNP+3j9Ct45
+         ws4g==
+X-Gm-Message-State: AHPjjUizJNbC5MVYsDk6cEqOlLg6T5SStD01ItncrGDid0QHbeiIi89q
+        5NMlh+8jPxnx8XiZ4Km23lAqQxnIW43ZPn8KYjvfjQ==
+X-Google-Smtp-Source: AOwi7QAcLZDjVKCF0nnpUiqFPEvIUvAj52nQr+goNqzW3ALMltld7Y1sPMHHAz+Z2w1qzfL1Vtw8TDTJGjXH8xZLQOo=
+X-Received: by 10.36.5.84 with SMTP id 81mr11263903itl.96.1506195542657; Sat,
+ 23 Sep 2017 12:39:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="rct3mbk6ppba7mps"
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.21.1709230418340.22644@localhost.localdomain>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.12.0-2-amd64)
-User-Agent: NeoMutt/20170609 (1.8.3)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Received: by 10.79.107.136 with HTTP; Sat, 23 Sep 2017 12:39:02 -0700 (PDT)
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sat, 23 Sep 2017 21:39:02 +0200
+Message-ID: <CAP8UFD2j-UFh+9awz91gtZ-jusq7EUOExMgURO59vpf29jXS4A@mail.gmail.com>
+Subject: [PATCH v2 0/9] Teach 'run' perf script to read config files
+To:     git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Thomas Rast <tr@thomasrast.ch>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+(It looks like smtp.gmail.com isn't working anymore for me, so I am
+trying to send this using Gmail for the cover letter and Submitgit for
+the patches.)
 
---rct3mbk6ppba7mps
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Goal
+~~~~
 
-On Sat, Sep 23, 2017 at 04:22:32AM -0400, Robert P. J. Day wrote:
->=20
->   reading "man git-clone", and i understand the mechanics of the local
-> protocol, so that if i run:
->=20
->   $ git clone /path/to/repo
->=20
-> then "files under .git/objects/ directory are hardlinked to save space
-> when possible."
->=20
->   but if the repo is in a separate filesystem, or on an NFS mount,
-> hardlinks clearly won't work, so what happens then? does it default
-> all the way back to regular copies? is there no intermediate symlink
-> feature that would still work? (i suspect i am far from the first
-> person to wonder this.)
+Using many long environment variables to give parameters to the 'run'
+script is error prone and tiring.
 
-I believe the current behavior is to make a copy.  However, if the
-source repo is reasonably well packed, you won't be copying that many
-files anyway.  You can always run git gc in the source repo to speed up
-that process if you're going to be making many clones.
+We want to make it possible to store the parameters to the 'run'
+script in a config file. This makes it easier to store, reuse,
+share and compare parameters.
 
-As Torsten pointed out, --reference is available.  If your source
-repository is ephemeral (or otherwise won't last as long the destination
-repository), then you won't want to use that option, as you'll lose
-data.  The --shared option documents all the sharp edges.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
+It also makes it easy to run series of tests.
 
---rct3mbk6ppba7mps
-Content-Type: application/pgp-signature; name="signature.asc"
+Design
+~~~~~~
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.1 (GNU/Linux)
+We use the same config format as the ".git/config" file as Git users
+and developers are familiar with this nice format and have great tools
+to change, query and manage it.
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlnGri8ACgkQv1NdgR9S
-9otK2Q//Xknut5DFfK/3A8aHpFO9v49uVeVrHxwtcy1NvDNDDItQiObpQigiwc+c
-xF2I6V28GUfcBZEh5ekuKK61FfiTwpGtEa2hxH6G+qiJu6jl3uhmuWWkDPWXGIzC
-ttp2sxJr+xV/0C5wb+aS1ZUngunKJ2ZFt9Nz99XQl6CC6gqvOcrTkZmiQjL9CoLY
-Ya3WihTiPVLBE7GqzcnYz6jKoYODfPF5fbajyPQ6L6EXp44qkesWzvJ38ZQI4dFR
-GE4N/DIQUkaFPoPMhT6w14hTOv1488cLNiBvCDThxRV8sAoitHlksRg3mB1mHpkE
-rnugqXItQYZCO1NbFU6A+LauaFmx4WSEDuk+erJX4g89Awq8xYsIoSOuCD+uhCLI
-i7c6/1Ls6WQn+B3WpB2+5oXoB8EpGc+iYMP7noPA2mzKAzUnIi+EkBdK9OlKgLLu
-ekNLDPdyJPjQDL2XQRetu7lz5lGHj8uPq0yhlxvpwsGB8eQB76YbK+w/uy6Ajc6q
-jngHJQtKTCRkDXxUvrBcuiVBeRwVLUahpCvVwb9t8FwZI/wgDLGOGdYyS+ZLrMPV
-dRFGqiThPqYRHIW3dJ+BS0JllDAjjslLDe2ecTvFD0GzjmtwWb42mHqdGeB7NqPD
-C50kDzCyHSAO5Zu1WjROBm+YjYe/xC1yGR0+4NiQ79tbRsrl+zk=
-=GaUy
------END PGP SIGNATURE-----
+We use values from the config file to set the environment variables
+that are used by the scripts if they are not already set.
 
---rct3mbk6ppba7mps--
+We want to make it possible to run series of tests by passing only a
+config file to the 'run' script.
+
+For example a config file like the following can be used to run perf
+tests with Git compiled both with and without libpcre:
+
+[perf]
+        dirsOrRevs = v2.12.0 v2.13.0
+        repeatCount = 10
+[perf "with libpcre"]
+        makeOpts = "DEVELOPER=1 USE_LIBPCRE=YesPlease"
+[perf "without libpcre"]
+        makeOpts = "DEVELOPER=1"
+
+This makes it easy to see what changes between the different runs.
+
+It's also possible (though maybe not so useful) to just separate tests
+from different versions like this:
+
+[perf]
+        repeatCount = 2
+        makeOpts = "DEVELOPER=1 USE_LIBPCRE=YesPlease"
+
+[perf "with v2.12.0 and v2.13.1"]
+        dirsOrRevs = v2.12.0 v2.13.1
+[perf "with v2.11.0 and v2.12.1"]
+        dirsOrRevs = v2.11.0 v2.12.1
+
+Highlevel view of the patches in the series
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  - Patches 1/9 to 4/9 were already in v1 and haven't changed.
+
+Patch 1/9 teaches the '--config <configfile>' option to the 'run'
+script, but <configfile> is just put into the GIT_PERF_CONFIG_FILE
+variable which is not used yet.
+
+Patch 2/9 add the get_var_from_env_or_config() function to read config
+options from the <configfile> and set values to some variables from
+these config options or from default values.
+
+Patch 3/9 and 4/9 use the get_var_from_env_or_config() function to
+make it possible to set parameters used by the 'run' script.
+
+  - Patches 5/9 to 9/9 are new.
+
+Patch 5/9 introduce a function to deal with subsections in the config
+file.
+
+Patch 6/9 improves the get_var_from_env_or_config() function so that
+it can handle subsections.
+
+Patch 7/9 adds the run_subsection() function to run the tests for a
+subsection.
+
+Patch 8/9 improves the output when building a rev.
+
+Patch 9/9 stores subsection results into subdirectories of test-results
+so that results from previous subsections is not overwritten.
+
+Future work
+~~~~~~~~~~~
+
+In the future I may work on the following:
+
+  - improving aggregate.perl so that it can aggregates the results in
+    different ways and formats, especially so that the results can be
+    used by Codespeed (https://github.com/tobami/codespeed)
+  - making it possible to configure more things in the config file
+  - improving how GIT-BUILD-OPTIONS is handled
+
+Though I think the series does not need the above improvements to be
+already valuable.
+
+Links
+~~~~~
+
+This patch series is also available here:
+
+  https://github.com/chriscool/git/commits/perf-conf
+
+Links to the previous version of this series are:
+
+v1:
+  https://github.com/chriscool/git/commits/perf-conf5
+  https://public-inbox.org/git/20170713065050.19215-1-chriscool@tuxfamily.org/
+
+Christian Couder (9):
+  perf/run: add '--config' option to the 'run' script
+  perf/run: add get_var_from_env_or_config()
+  perf/run: add GIT_PERF_DIRS_OR_REVS
+  perf/run: add calls to get_var_from_env_or_config()
+  perf/run: add get_subsections()
+  perf/run: update get_var_from_env_or_config() for subsections
+  perf/run: add run_subsection()
+  perf/run: show name of rev being built
+  perf: store subsection results in "test-results/$GIT_PERF_SUBSECTION/"
+
+ t/perf/aggregate.perl | 11 +++++--
+ t/perf/perf-lib.sh    |  4 +--
+ t/perf/run            | 89 +++++++++++++++++++++++++++++++++++++++++++++------
+ 3 files changed, 89 insertions(+), 15 deletions(-)
+
+-- 
+2.14.1.767.g2dbbf9317b
