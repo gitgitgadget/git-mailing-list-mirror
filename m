@@ -7,88 +7,83 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9FD5B2047F
-	for <e@80x24.org>; Sat, 23 Sep 2017 07:11:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5ECA22047F
+	for <e@80x24.org>; Sat, 23 Sep 2017 07:54:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750847AbdIWHLO (ORCPT <rfc822;e@80x24.org>);
-        Sat, 23 Sep 2017 03:11:14 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:36573 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750762AbdIWHLN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Sep 2017 03:11:13 -0400
-Received: by mail-it0-f67.google.com with SMTP id e134so1757362ite.3
-        for <git@vger.kernel.org>; Sat, 23 Sep 2017 00:11:13 -0700 (PDT)
+        id S1750831AbdIWHyL (ORCPT <rfc822;e@80x24.org>);
+        Sat, 23 Sep 2017 03:54:11 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:32823 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750766AbdIWHyK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Sep 2017 03:54:10 -0400
+Received: by mail-wm0-f68.google.com with SMTP id m127so2992281wmm.0
+        for <git@vger.kernel.org>; Sat, 23 Sep 2017 00:54:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:in-reply-to:references:date
-         :mime-version:content-transfer-encoding;
-        bh=/cvDnVr5rDsET18FlaWvcfNjY38VMervUoDuNs0PMYA=;
-        b=Hn8J8D/wiOtKejZztXA6P82gpexAxz6TnyoSU7IU1VP5BJbYBMXZgwxk47qvIcXVjd
-         gcdbqvrXI/HDAoLhXvtZtsbioC3zg1h2zouefxMcDx/tOhy3DHOiUzERtSBbS/yYrI9c
-         BRt756FiOs2pCrYRcz7pI07Qicm5g3yElzUbaBH4BFENYwmJP1hD2qDpy6u4tgOQn84C
-         4SutvcmUCKmLcRQDTfXwP3XCxNfQyowB35bJFEqti92d8XJyqiPKnb8B63lQe7FVO5fu
-         cItM1cnTVsNUZeRobwnXvsGnWTb1O3EnTbEQv74P5Ze1A1jVDicGbalMyBtZYD7s3p6T
-         rCfA==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=t4KWFaR8ZAYS4QeiOGFhIBpLL/vYX1OjNVILdsIeoac=;
+        b=pOGa/BwuLFcB/xorQ+tBkaNi/M6OCzKYXXAP7WzNonwkS0DJxmJ508aZVKxJqJA3iV
+         quSDvi3BV4fEE8x8LuDxEImTAzApmW/f1KFknHZwf8AHCBYT27p7Xugys9JVCqla913I
+         9pme3BgHlHg7j7TrlBkUoj1/qPis5CinCtzDJuIt3KFNyxJrqlQ4JyD5AYKGOOLGx69r
+         zAZ8AiblyKMaFVd5nOvrCQ/W2c3XQLCvZJZtcYCJBEGeAALVAhdznAFy8wlrdQIRLD+E
+         uK2F9WoJdMBOhi99/U5ukrMN4fqbY8c2XJXLKK3RXQGnCFZ1wi3VlsiPDBEHYboW1uCp
+         Msyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:in-reply-to
-         :references:date:mime-version:content-transfer-encoding;
-        bh=/cvDnVr5rDsET18FlaWvcfNjY38VMervUoDuNs0PMYA=;
-        b=QaLtE+owZnhdVXifcTDd0B9ZogULJgSD6Liv3xHqFA/T8qdZPjX2J9Mo6boXxFnbIe
-         4/uU28NyWrL+7FHLRW+YUB8dA8DlOY33LAVIyLPVVGL6GKMNcF+oSDzRbbYYpr85wgs1
-         stCXk/C1BLvq/RF9SAlietP10yZyztS5ANlkkXSZVUE1+4S3cPnY67x3nmoSvd2Qxotw
-         /8Ffim4evAUSmoUeASqCMQxu9u90n4ymKaD+ed76d+OifkIADaRaslW8Q3Y975jSdzPn
-         SikBSyZzxHNkaUJ91GG9hOIGWXEdqWL5RHApKO42V+J7zoOLVWgkqvSpxF3zcFogANTl
-         INyA==
-X-Gm-Message-State: AHPjjUhOSMNBaCyLBIuBPe8H1XWoVRlUgcsrKA0nU0Pr+SPXPhYGsL4v
-        fUwbMcJ3iPm3xsAk+JSDX5m9iIGH
-X-Google-Smtp-Source: AOwi7QAuLzlBL/lnNfSTUjSYOub+HSp1KG/UmLnGS5ncsxruo+rY+qUvKXj3naQ9/jo0H8unGiYSAA==
-X-Received: by 10.36.37.194 with SMTP id g185mr10365465itg.14.1506150673214;
-        Sat, 23 Sep 2017 00:11:13 -0700 (PDT)
-Received: from unique-pc ([2405:204:70c5:34d4:d97c:af1b:33e7:ca29])
-        by smtp.googlemail.com with ESMTPSA id k76sm1616025ita.4.2017.09.23.00.11.09
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 23 Sep 2017 00:11:12 -0700 (PDT)
-Message-ID: <1506150665.3877.7.camel@gmail.com>
-Subject: Re: Behaviour of 'git stash show' when a stash has untracked files
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-In-Reply-To: <20170921033152.4hbkctzxraww5rqo@sigill.intra.peff.net>
-References: <1505626069.9625.6.camel@gmail.com>
-         <xmqqfubinddb.fsf@gitster.mtv.corp.google.com>
-         <20170920193630.l7ifret5dpqgxiwm@sigill.intra.peff.net>
-         <xmqqpoakn8tj.fsf@gitster.mtv.corp.google.com>
-         <20170921033152.4hbkctzxraww5rqo@sigill.intra.peff.net>
-Content-Type: text/plain; charset="ISO-8859-15"
-Date:   Sat, 23 Sep 2017 12:41:05 +0530
-Mime-Version: 1.0
-X-Mailer: Evolution 3.22.6-1 
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=t4KWFaR8ZAYS4QeiOGFhIBpLL/vYX1OjNVILdsIeoac=;
+        b=Po4hFTJvVFFzAA8Ayd/au+fS0NfApVToA3pzYO26mhlQATY4XTjTSLmHzJFJNE6gvG
+         vnWgDQnqJ5BIU5M+1WQpWolpbvGAlxtwnQPqx+iisglGdkLBVFyr+4FZ816fF+7TPUor
+         4yOmsZS5h77Nm28eoo1cvZDvK1sWmt9POHqJ6zqQas7gHvr5mGrOnb7b+HG9SmXo7oaw
+         1ZtvwfF5KAeaBblh2QwwaEu46ygeRtpDwJCGJTxVmZe0GnwV/J3HA+pxk5IsOA/WZv+P
+         3mz58Tib2QpDzfB/hKeSxnC8cdvKpN1PyvaSJ8zSv8//7NhlllmBoYoaOEcr9HIoR+j6
+         Ei0g==
+X-Gm-Message-State: AHPjjUjS5RkFNWH8SUJ7HCePpJ8hbtSDrNu9kjKnoHVWa6uK8MCtl619
+        EYaxwJAWB9bZdTeLOVj31u2FurCnvWkL/Q2do1fox5/z
+X-Google-Smtp-Source: AOwi7QCWKW0vMQga0xy0lnfrgac2/mtGdqwyse5GR23+vTAbLwCInECcl8aylo7MEi0wJoGjKoSl+J0VdybftLQLhRc=
+X-Received: by 10.28.45.9 with SMTP id t9mr4463134wmt.94.1506153248335; Sat,
+ 23 Sep 2017 00:54:08 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.223.154.247 with HTTP; Sat, 23 Sep 2017 00:53:47 -0700 (PDT)
+From:   Ilya Kantor <iliakan@gmail.com>
+Date:   Sat, 23 Sep 2017 10:53:47 +0300
+Message-ID: <CAFU8umjZL0nXUFbuZWVapTaCfAjtAoTT=G3GCKczDE7O8bzAOw@mail.gmail.com>
+Subject: [PATCH] userdiff: fix HTML hunk header regexp
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 2017-09-20 at 23:31 -0400, Jeff King wrote:
-> But I have always been bothered how the saved state
-> is a bit hidden from the user. It seems like a recipe for user confusion
-> when they save something with "git stash" but then "stash show" doesn't
-> even mention it.
-> 
+Current HTML header regexp doesn't match headers without attributes.
 
-Yeah, I feel the same.
+So it fails to match <h1>...</h1>, while <h1 class="smth">...</h1> matches.
+The fix makes attributes optional.
+The regexp is still far from perfect, but now it at least handles the
+common case.
 
-> I guess the nuclear option there is introducing "git stash info" or
-> something, and marking "git stash show" as an alias for "git stash info
-> --worktree".
+Signed-off-by: Ilya Kantor <iliakan@gmail.com>
+---
+ userdiff.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Sounds good.
-
-> but I'd be happy to review if anybody picked up the topic.
-> 
-
-I would be, too.
+diff --git a/userdiff.c b/userdiff.c
+index 6321103ce..dbfb4e13c 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -38,7 +38,7 @@ IPATTERN("fortran",
+  "|//|\\*\\*|::|[/<>=]="),
+ IPATTERN("fountain", "^((\\.[^.]|(int|ext|est|int\\.?/ext|i/e)[. ]).*)$",
+  "[^ \t-]+"),
+-PATTERNS("html", "^[ \t]*(<[Hh][1-6][ \t].*>.*)$",
++PATTERNS("html", "^[ \t]*(<[Hh][1-6]([ \t].*)?>.*)$",
+  "[^<>= \t]+"),
+ PATTERNS("java",
+  "!^[ \t]*(catch|do|for|if|instanceof|new|return|switch|throw|while)\n"
+--
+2.14.1
 
 ---
-Kaartic
+Best Regards,
+Ilya Kantor
