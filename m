@@ -2,94 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 294672047F
-	for <e@80x24.org>; Sat, 23 Sep 2017 10:50:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 760C820A26
+	for <e@80x24.org>; Sat, 23 Sep 2017 11:32:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751683AbdIWKup (ORCPT <rfc822;e@80x24.org>);
-        Sat, 23 Sep 2017 06:50:45 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:34508 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751059AbdIWKuo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Sep 2017 06:50:44 -0400
-Received: by mail-pg0-f67.google.com with SMTP id u18so2110317pgo.1
-        for <git@vger.kernel.org>; Sat, 23 Sep 2017 03:50:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=p2JYxLqpXjiZA/fe4Za+R9nA4ZEHW4ih8eFgaV2n8kg=;
-        b=LlhQiKrF5IT8uJp7Xk+T2onYJzWtQteSA1atvSqk/hQJKKjXZ2jLUzzD/PfUvNyJhm
-         3LQUaKZAstMB8+VGzH/kvYjcyu0vqhsVPiM9mGRMbOaWjtw3QVmsz+m1JiC5FAME2wZJ
-         FEhpwSb6u/oyOo1obXuzy4Pft+v6r4OuBwukVCg9jGAPR9ATqInF0/1XbW6UrVRi9Wh/
-         zgUFos2B1D0uA75SKmm038h+9CBD67Uj+uHD8SkbIbMbAiC8EqPR6f3VI1ilW7+JD8f1
-         e/INpQY+QoYff5eT/sf79WMWroh3CxWaXKqfrhMjxkvfc0N4mE/m2/DttQxNQDqQQtbn
-         40Ow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=p2JYxLqpXjiZA/fe4Za+R9nA4ZEHW4ih8eFgaV2n8kg=;
-        b=Q6mXEej0VG39LpW1CO/rej0acLN9rX5cy46+q11kUBGii6iKFSCyUvGS6M0UtDF21M
-         lImVp+hIvERBpRixzkRS46OqQIRfLxzbUO5p2olSN40dAGWd0J2phpeeNZYzRH40WQBk
-         uVilV5ZUMzV6aJ7XxRsBoTi0zEBqrhueGmw3eWF4giOSyhxmjKggeO2apSLOYw6RLvWM
-         yQLBjbQigMVslZAwNaqaZnhOcMDF3sicAVnJf6mX1+MEzFpbZdM4hT5i30uyr8W1wKGX
-         NB6PN9YZ8MusNdJGgmfvIq1RMhweneaQer9ZdLuhPpUaBITVtohYInxY3eNIduOpKZTM
-         AIFA==
-X-Gm-Message-State: AHPjjUgq0BAL5jKscOPxTFEakKfdeyWENC0mxFsy2KV+/3zPT+tVeQ/J
-        Y1QxfwtHRKcnfcR929+p7dpIIKgn
-X-Google-Smtp-Source: AOwi7QC3eu+kpCDt2ql4LtrTHQjCyC5lM1JQUQJ26uqbol+BR56KCtYNCgaRvOawS3LBEvPRX8HVuQ==
-X-Received: by 10.84.238.201 with SMTP id l9mr1794982pln.159.1506163843862;
-        Sat, 23 Sep 2017 03:50:43 -0700 (PDT)
-Received: from ?IPv6:2405:204:70c5:34d4:f862:3e2d:a1bf:681d? ([2405:204:70c5:34d4:f862:3e2d:a1bf:681d])
-        by smtp.gmail.com with ESMTPSA id m87sm3188530pfi.122.2017.09.23.03.50.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 23 Sep 2017 03:50:42 -0700 (PDT)
-Subject: Re: [RFC PATCH 5/5] builtin/branch: give more useful error messages
- when renaming
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-References: <xmqqd18pcysa.fsf@gitster.mtv.corp.google.com>
- <20170919071525.9404-1-kaarticsivaraam91196@gmail.com>
- <20170919071525.9404-6-kaarticsivaraam91196@gmail.com>
- <CAGZ79kYMagCFS765NtOBDxDJYaXMyA4-=xxi3JMxbga638b6Yg@mail.gmail.com>
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Message-ID: <2e91fd2e-3c8a-ff93-ff6f-4a30191d1249@gmail.com>
-Date:   Sat, 23 Sep 2017 16:20:35 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        id S1750916AbdIWLcL (ORCPT <rfc822;e@80x24.org>);
+        Sat, 23 Sep 2017 07:32:11 -0400
+Received: from mout.web.de ([212.227.15.14]:64998 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750839AbdIWLcK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Sep 2017 07:32:10 -0400
+Received: from macce.local ([195.198.252.176]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MWirL-1dtEd01SCh-00Xq4N for
+ <git@vger.kernel.org>; Sat, 23 Sep 2017 13:32:09 +0200
+Subject: Re: is there a "symlink" option for cloning a repo in a separate
+ filesystem?
+To:     Git Mailing list <git@vger.kernel.org>
+References: <alpine.LFD.2.21.1709230418340.22644@localhost.localdomain>
+From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Message-ID: <94fae18a-09e5-e387-213d-d840dd5201bd@web.de>
+Date:   Sat, 23 Sep 2017 13:32:08 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:52.0)
+ Gecko/20100101 Thunderbird/52.3.0
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kYMagCFS765NtOBDxDJYaXMyA4-=xxi3JMxbga638b6Yg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <alpine.LFD.2.21.1709230418340.22644@localhost.localdomain>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:4Hu36yjWyYgZ7m7fLpJlXH8KyvLSX4V7IsPuBZN5X7fweXNu8o2
+ xAv+f2BWsliFj7h8IBkK5xz6dbeQVFzcXUmpe8m/sVnYisq8LibOcPgbV9B02O+HwH+hzZV
+ L8nYDEanJji1GJmCZrHyuqqmg241jP9Tirv/rI8NShR5CynhJiuOZme86zsiYN8rzBIi3Oi
+ Hou7NKb8mHXAScmrOTlVQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ZsNizzM9TJ4=:BukXecRDfwErjgqlOUre/y
+ cqiAZNHl7kmjsbOgTwwrCAEHnyi0CBSzq3zgdUkr5BXyUthHX0XUto/MD9NJUxCRurt5yGVeg
+ lDopuyDqhyzteThJ7sB2QcsYOo5CYMbBFx0bhAFWcDDUqa7qQTL4IBn7VItsKMCNlVl4gLhkI
+ 4CEFh1zT1jAvntCToQ3zaKlOQzKTWHUF2GfOOhu3FPsHUz8GqCaA9Y2qJYXEWYO1gBu6XXIt9
+ yWhfmvdBocoitNvsY4M+fF4agQB740CIhrmnd3SUxRkJHpcq0rGrQchMJKi7kfL1KOMqAa0Lu
+ J+t7Og5O8+BJyyjSscypPGJhMECCZSZ92mML9CS77FP/qw/ZC8C3Y2AJ+5TnzH9CRQtAPNe77
+ 9AM0HKZg/fodgVk5p62Rl3LLp+MN5qyFMlrmoL22MXg39xWmpJj06AvnRE+7Y2dyFywyhZxDt
+ X32AmXZjwqWdhxezyQtnBAkqlFnJ6N1pVLDwNivQnn/fxiAyf2mv/rcoJkNOgG9tk9yqX7fwC
+ wGiwPezhM9swQSuVhkiqTVxn9HAd6DOUsu2ZN60/iWrtSBoTnuSV+7iXSPUKLiTMoT29CyYT1
+ R+SU6toQJfUJmk29dopCSSxtXhg5vN++vfBD5oHJba+nPwxQ2gjIsu24KkaCZaeKLao1Z8kB+
+ +MdpNAOiaM2zs97hEuVGbQzaGlZeZ3ovh19Tg6X3Hftgv+s8+I86coP01nU8oh8k4SxeSjktU
+ Cfw8wajx7URcYZWhVzo03PJ7VcM4P9gawuEr/gg0Lro6fBkF3QGyRvpM8IG0nHnNn2pGLE0pU
+ 3llaYKn0Xg492eGS8Y1CExeoQFZcRDar9a+MLrocMd+R5gSOq4=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thursday 21 September 2017 02:27 AM, Stefan Beller wrote:
->
->> It's conventional to report that 'tset' doesn't exist rather than
->> reporting that 'master' exists, the same way the 'mv' command does.
->>
->>      $ git branch -m tset master
-> This is not the 'mv' command as promised? So this is just
-> to demonstrate the (still fictional) better error message?
+On 2017-09-23 10:22, Robert P. J. Day wrote:
+> 
+>   reading "man git-clone", and i understand the mechanics of the local
+> protocol, so that if i run:
+> 
+>   $ git clone /path/to/repo
+> 
+> then "files under .git/objects/ directory are hardlinked to save space
+> when possible."
+> 
+>   but if the repo is in a separate filesystem, or on an NFS mount,
+> hardlinks clearly won't work, so what happens then? does it default
+> all the way back to regular copies? is there no intermediate symlink
+> feature that would still work? (i suspect i am far from the first
+> person to wonder this.)
+> 
+> rday
+> 
 
-Yes
+Isn't that what "--reference" is good for ?
 
-> Maybe use a real 'mv' command here?
+https://git-scm.com/docs/git-clone
 
-It didn't want to do that to avoid preserve continuity. I'll change the 
-commit
-message a little to fix this.
+or
 
----
-Kaartic
+man git-clone
+
+PS:
+Robert P. J. Day <rpjday@crashcourse.ca>
+Does not work from web.de
