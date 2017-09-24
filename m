@@ -6,74 +6,65 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 457D6202A5
-	for <e@80x24.org>; Sun, 24 Sep 2017 06:56:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F3B61202A5
+	for <e@80x24.org>; Sun, 24 Sep 2017 07:01:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751059AbdIXG4I (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Sep 2017 02:56:08 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55204 "EHLO
+        id S1751345AbdIXHBn (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Sep 2017 03:01:43 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63223 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750880AbdIXG4H (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Sep 2017 02:56:07 -0400
+        with ESMTP id S1750947AbdIXHBn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Sep 2017 03:01:43 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3D175B59A9;
-        Sun, 24 Sep 2017 02:56:06 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B4025B5AB2;
+        Sun, 24 Sep 2017 03:01:42 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=KPYtiCBrJlcTwuPcOzfeKCxWtZU=; b=CLRG4H
-        mrn8bfVZ93RNAdz8Iz159oU61U+kWKKsev0MuvGzea5gqYYoAxqG/BpDDeGmWBhC
-        rm19bBNEHn1JoDlb6e5q7ggTPV9HdzPZW9YqqYIhRu/QIbzlIFinTsGS5rbAVtoH
-        oJ0CGI1aLHvwWmp/59hrefWOINYBedQJSr3Rc=
+        :content-type:content-transfer-encoding; s=sasl; bh=uMTpk8T5AJxM
+        AqkEe/v97+pw/Mw=; b=cfuud284xNGvx9520YGDvK0uWmuYjKv7rlntPmA2Rs8s
+        Wos6eN0e9Vdkh7ExuLxUl+Cr3ABVkrxZszThVkuUC788xQA29Qpo+rOX8TDzqKMP
+        bUPY12NX9p/BzTTKTbr4tVoikNYPt6FGaWfuD63oF2F+sHsB4xM/JHAFnn2FTC0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=t39Zb9pqL+hbkTIHnD8tlTS7jwlZo3/E
-        JhYQn8Wh3BZpnZD/fRY7h4XBF6UlwaRbdhVbAMOubBtp4d5RnUG87f7r9PHXlIzx
-        qwfjzoX8kLA+EOsG94NIGgbYCBAS/NJEADaPiMBmyCamHKVQKGXfzLOvCimaueyE
-        jNG2aZBTkkk=
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=nutSkY
+        fela1Sp5wvNThNkJ+rKPnTmCYbBxLcymMilQ6mq3el6ofea8HLqosl8w6lcqu/BF
+        UFQiacxDlVUdTgfnJSLkHiPzf5BCdkrA3JhoFIcggNhXl1bAzkJrqXik6vpwyiS6
+        NrVAMeWXzYw+9gMj5d6sK4VEPiMCiB/kya0yw=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3524DB59A8;
-        Sun, 24 Sep 2017 02:56:06 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id ACF7EB5AB1;
+        Sun, 24 Sep 2017 03:01:42 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 879BFB59A7;
-        Sun, 24 Sep 2017 02:56:05 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1E46CB5AB0;
+        Sun, 24 Sep 2017 03:01:42 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Jeff King <peff@peff.net>,
-        =?utf-8?B?w4Z2YXIgQXJu?= =?utf-8?B?ZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>, Brandon Williams <bmwill@google.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2 13/21] packed_ref_cache: keep the `packed-refs` file mmapped if possible
-References: <cover.1505799700.git.mhagger@alum.mit.edu>
-        <b32234e07a1bd1e60442a13d97d7c4e51edf3336.1505799700.git.mhagger@alum.mit.edu>
-        <354c8088-ae24-479d-3b4e-fe8e189223b2@alum.mit.edu>
-Date:   Sun, 24 Sep 2017 15:56:04 +0900
-In-Reply-To: <354c8088-ae24-479d-3b4e-fe8e189223b2@alum.mit.edu> (Michael
-        Haggerty's message of "Tue, 19 Sep 2017 14:44:24 +0200")
-Message-ID: <xmqqlgl4h9ff.fsf@gitster.mtv.corp.google.com>
+To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 0/6] reroll ma/plugleaks; more `object_array`-fixes
+References: <20170920200229.bc4yniz6otng2zyz@sigill.intra.peff.net>
+        <cover.1506120291.git.martin.agren@gmail.com>
+Date:   Sun, 24 Sep 2017 16:01:40 +0900
+In-Reply-To: <cover.1506120291.git.martin.agren@gmail.com> ("Martin
+ =?utf-8?Q?=C3=85gren=22's?=
+        message of "Sat, 23 Sep 2017 01:34:48 +0200")
+Message-ID: <xmqqh8vsh963.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6F826056-A0F5-11E7-A560-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 3814E9B2-A0F6-11E7-BC1F-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Martin =C3=85gren <martin.agren@gmail.com> writes:
 
->> +	struct stat st;
->> +	size_t size, bytes_read;
->
-> Coverity helpfully pointed out that `bytes_read` has to be signed:
-> `ssize_t`. I'll fix that in the next round after waiting for other comments.
+> Since Junio collected my "independent" patches into ma/leakplugs, this
+> is a re-roll of that whole topic. I got the first two patches from
+> Junio's tree. The only difference there is "builtin/" at the very start
+> of the first commit message.
 
-Thanks.  
-
-The macOS build at Travis also was also upset about it, so I'd
-tentatively queue a trivial squash on top.
+Thanks, all 6 look sensible.
 
