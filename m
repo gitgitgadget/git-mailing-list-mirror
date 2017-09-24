@@ -2,185 +2,202 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 755E620A29
-	for <e@80x24.org>; Sun, 24 Sep 2017 16:17:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 729FA2047F
+	for <e@80x24.org>; Sun, 24 Sep 2017 16:17:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752474AbdIXQRL (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Sep 2017 12:17:11 -0400
-Received: from mail-oi0-f68.google.com ([209.85.218.68]:37013 "EHLO
-        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752368AbdIXQRK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Sep 2017 12:17:10 -0400
-Received: by mail-oi0-f68.google.com with SMTP id h9so2318982oia.4
-        for <git@vger.kernel.org>; Sun, 24 Sep 2017 09:17:09 -0700 (PDT)
+        id S1752515AbdIXQRT (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Sep 2017 12:17:19 -0400
+Received: from mail-yw0-f195.google.com ([209.85.161.195]:34162 "EHLO
+        mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752416AbdIXQRS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Sep 2017 12:17:18 -0400
+Received: by mail-yw0-f195.google.com with SMTP id v72so2586795ywa.1
+        for <git@vger.kernel.org>; Sun, 24 Sep 2017 09:17:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=i5t54lSD0EKe23RdBf0qkaBUKzv4bqFgdStLMfQWiGI=;
-        b=fkx5iTetpuEcMvn2/mRad4ERLmivQTd7lcCJK9/FW2DVx28nx8KY9ORu5+qLHx6cc4
-         cFwtjwGk52JuzHXnTzOCxuwZX7ikwe47z95rskyGDe2dD1Ug8sUT5x/fJFLjLncfhYq/
-         C634JhlYpqXECZfUasWsWR2GaehCr0O3Cv5iLmM4uxo8jni1fE+jBlKLk0yPqAk4db/l
-         aOfx79NbNi9X/Uqc6T8b3Z14nKfHmqo+b5nASRI1+5fKtqR6GZJhE6cTc1sPDE1U4kg+
-         9xR+yYGvfPHBTs/l29FgQ9bQUcmW28tj8T6toN3F6YSXexTSD2q+wmhDcG/v3Wavaz9n
-         vFIA==
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=6fVVQw7epSxQMcuGSIgOpGHXfVZAxfX4lrg8B0/UJnk=;
+        b=cr2Kg0J0yuBecnwYzPQk99UECHl16lF9Hb8MaTRDdTGmEEt8tJ18+SWZuB3SAkw3Lf
+         /Thbog65uh0Ts1qrugMOmGGxwVBN3xpaREEzL83ZCNA5Mg1C9jtCcUJZZlp78B10mtcj
+         Cw//wsMNEQ6lMGBlG8zlZnW8xB+LyPyPiv1IttljwKNxIjGGHubzNB20Pw/G8iyk0NYC
+         SVCCOX+OUlIIA1l0RVjQFB6SJiwciriNnCEV0FZWTWfGtzo61VqEW/iYsqOS0utsyGcd
+         g8frIU7mmwh6dXcNeVvvAxuEUJGKsA5zEtEvB7tFkQPML7BQ+P52DR3dHt5mYkRQjAKw
+         xcSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=i5t54lSD0EKe23RdBf0qkaBUKzv4bqFgdStLMfQWiGI=;
-        b=c69Ibg6g3VVgijh7DEjiIZizSh6I4Dp9EHut0TPjaZwlOx8X/2kQICV0dN7qe06US9
-         6qApsE8k6nQu/cNHxhCKs+eRBKucYwx1c2Zo+3ZgPIKNRKV5Y7txScwaL07WqfPtG4f+
-         52wuRQhmiyzghi7JSdslFsMTSofZELdnR4cr+24yAqz6zyJyLKWdU4/6ta7+04X8Z0kk
-         NTYYAChfcJZuq8XB0RKCXlAWWt0WHqdlt6Zc6ZRbBFJaKGML4tuRzpq9M2OBtfyiUbTu
-         v6MIL+YCuxIhPqs+tlbxKOHDXoF5LbpLHPESik8M7m1WrHk33Vi7z1ZoJXimAyOjrlKA
-         4dJQ==
-X-Gm-Message-State: AHPjjUj9iW8+5iorpwmIkvyv06p3yM1dFKaU2fsR0aq00NMYMepi4sKy
-        Ft/MtvJFvQ681xWfRtofZWS/aCuyFfn2DdxBYjs=
-X-Google-Smtp-Source: AOwi7QBFW1LV+YQqnRYAjSugRng7SBVzHjoEoMSB7yZ2X2XbF3ZvTVF7RITEMfIJA4oXvAvM5RVrgseccvjJ7LDlZXE=
-X-Received: by 10.202.229.5 with SMTP id c5mr6339402oih.82.1506269829365; Sun,
- 24 Sep 2017 09:17:09 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=6fVVQw7epSxQMcuGSIgOpGHXfVZAxfX4lrg8B0/UJnk=;
+        b=s1a/iVoMh5/s8zEi9pqfim9HyD1cbx3hF/cPFi5hHjxj5tHWDIMwjpYiTy/OyJpC9T
+         sP2JzZzwt6GVG7zEaex16oFa18c1q7xioTVri9DfY0deNL+8D72Wd86VY5dgBo0co9pe
+         fULr8LfE9WQeMyZoCBjU2/GJp2WahbvBSufyF0CSyBPklxlcvJjvlxJpz8vhpJ6BSDLx
+         5DdASTLbM3oqXIiIh8HEojiMF17Gc3uzcTF8GuztmwT26CR9FrL1SmgAf9BqvFhC5zw0
+         GpvCBxIflxMN404R5RdpkaFCwAXjhhin9X6TAdDvn+uNyst+cAVXRc6pLJDXSyrQdbjj
+         qscQ==
+X-Gm-Message-State: AHPjjUgmSnDJDjWvUfSDTnsroqpmMdQHAEgijDxgKig2RykaEwwasZAO
+        7bw5uoAM19urEGLX4+zF87Pd2KdJoIsSfHUEZtDqUCLB
+X-Google-Smtp-Source: AOwi7QCoEwzKUzdaIbF+lLNM3sS8u3suibEiAjNGy5UjKmqO2ivD6ressxkJ8AYlbKax3qZTZu3RioOco2KkbRWJRwM=
+X-Received: by 10.13.225.138 with SMTP id k132mr3074450ywe.327.1506269836894;
+ Sun, 24 Sep 2017 09:17:16 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.157.11.88 with HTTP; Sun, 24 Sep 2017 09:16:48 -0700 (PDT)
-In-Reply-To: <xmqqlgl7l7ul.fsf@gitster.mtv.corp.google.com>
-References: <xmqq8thgy03t.fsf@gitster.mtv.corp.google.com> <CALiud+m1PAD8r0ygoUj3g4LzQjdoPu0CmjiejyG8pHOhr3Fk=Q@mail.gmail.com>
- <xmqqpoajmtu4.fsf@gitster.mtv.corp.google.com> <xmqqlgl7l7ul.fsf@gitster.mtv.corp.google.com>
-From:   Sahil Dua <sahildua2305@gmail.com>
-Date:   Sun, 24 Sep 2017 18:16:48 +0200
-Message-ID: <CALiud+mjN=cTg_CXWNWnE=0N5RiT-FEN5JMGbYW0byMbmexQvQ@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Sep 2017, #03; Fri, 15)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Received: by 10.129.173.37 with HTTP; Sun, 24 Sep 2017 09:17:16 -0700 (PDT)
+From:   Manav Rathi <mnvrth@gmail.com>
+Date:   Sun, 24 Sep 2017 21:47:16 +0530
+Message-ID: <CAEuZsW8vR0LesL=+ZoiFa=BBwhhm=KON+U3H2H9sNdTT+jgBkQ@mail.gmail.com>
+Subject: [PATCH] docs: improve discoverability of exclude pathspec
+To:     git@vger.kernel.org
+Cc:     pclouds@gmail.com, Manav Rathi <mnvrth@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 22, 2017 at 5:39 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> My understanding of the next step was for those who are interested
->> in moving this topic forward to update these patches in that
->> direction.
->
-> Well, I am one of those who are interested in moving this topic
-> forward, not because I'm likely to use it, but because the fewer
-> number of topics I have to keep in flight, the easier my work gets.
->
-> So here is such an update.  As the topic is not in 'next' yet, it
-> could also be implemented by replacing patch(es) in the series, but
-> doing it as a follow-up fix made it easier to see what got changed
-> (both in the code and in the tests), so that is how I decided to do
-> this patch.
->
-Awesome! Thanks for the patch. It was easier than I'd have expected it
-to be. Looks like it fixes the concerns of moving head. Is there
-anythign required from my side on this features / series of patches?
-> -- >8 --
-> Subject: [PATCH] branch: fix "copy" to never touch HEAD
->
-> Probably because "git branch -c A B" piggybacked its implementation
-> on "git branch -m A B", when creating a new branch B by copying the
-> branch A that happens to be the current branch, it also updated HEAD
-> to point at the new branch.
->
-> This does not match the usual expectation.  If I were sitting on a
-> blue chair, and somebody comes and repaints it to red, I would
-> accept ending up sitting on a red chair, but if somebody creates a
-> new red chair, modelling it after the blue chair I am sitting on, I
-> do not expect to be booted off of the blue chair and ending up on
-> sitting on the red one.
->
-> Let's fix this strange behaviour before it hits 'next'.  Those who
-> want to create a new branch and switch to it can do "git checkout B"
-> after creating it by copying the current branch, or if that is so
-> useful to deserve a short-hand way to do so, perhaps extend "git
-> checkout -b B" to copy configurations while creating the new branch
-> B.  A "copy" should remain to be "copy", not "copy and sometimes
-> checkout".
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  builtin/branch.c  |  9 +++------
->  t/t3200-branch.sh | 10 +++++-----
->  2 files changed, 8 insertions(+), 11 deletions(-)
->
-> diff --git a/builtin/branch.c b/builtin/branch.c
-> index 89f64f4123..e2e3692838 100644
-> --- a/builtin/branch.c
-> +++ b/builtin/branch.c
-> @@ -506,12 +506,9 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
->                                 oldref.buf + 11);
->         }
->
-> -       if (replace_each_worktree_head_symref(oldref.buf, newref.buf, logmsg.buf)) {
-> -               if (copy)
-> -                       die(_("Branch copied to %s, but HEAD is not updated!"), newname);
-> -               else
-> -                       die(_("Branch renamed to %s, but HEAD is not updated!"), newname);
-> -       }
-> +       if (!copy &&
-> +           replace_each_worktree_head_symref(oldref.buf, newref.buf, logmsg.buf))
-> +               die(_("Branch renamed to %s, but HEAD is not updated!"), newname);
->
->         strbuf_release(&logmsg);
->
-> diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-> index 5d03ad16f6..be9b3784c6 100755
-> --- a/t/t3200-branch.sh
-> +++ b/t/t3200-branch.sh
-> @@ -422,7 +422,7 @@ test_expect_success 'git branch --copy is a synonym for -c' '
->         test_cmp expect actual
->  '
->
-> -test_expect_success 'git branch -c ee ef should copy and checkout branch ef' '
-> +test_expect_success 'git branch -c ee ef should copy to create branch ef' '
->         git checkout -b ee &&
->         git reflog exists refs/heads/ee &&
->         git config branch.ee.dummy Hello &&
-> @@ -431,7 +431,7 @@ test_expect_success 'git branch -c ee ef should copy and checkout branch ef' '
->         git reflog exists refs/heads/ef &&
->         test $(git config branch.ee.dummy) = Hello &&
->         test $(git config branch.ef.dummy) = Hello &&
-> -       test $(git rev-parse --abbrev-ref HEAD) = ef
-> +       test $(git rev-parse --abbrev-ref HEAD) = ee
->  '
->
->  test_expect_success 'git branch -c f/f g/g should work' '
-> @@ -494,12 +494,12 @@ test_expect_success 'git branch -C c1 c2 should succeed when c1 is checked out'
->         git checkout -b c1 &&
->         git branch c2 &&
->         git branch -C c1 c2 &&
-> -       test $(git rev-parse --abbrev-ref HEAD) = c2
-> +       test $(git rev-parse --abbrev-ref HEAD) = c1
->  '
->
-> -test_expect_success 'git branch -C c1 c2 should add entries to .git/logs/HEAD' '
-> +test_expect_success 'git branch -C c1 c2 should never touch HEAD' '
->         msg="Branch: copied refs/heads/c1 to refs/heads/c2" &&
-> -       grep "$msg$" .git/logs/HEAD
-> +       ! grep "$msg$" .git/logs/HEAD
->  '
->
->  test_expect_success 'git branch -C master should work when master is checked out' '
-> --
-> 2.14.1-907-g5aa63875cf
->
->
->
+The ability to exclude paths in pathspecs is not mentioned in the man
+pages of git grep and other commands where it might be useful.
 
+Add a pointer to the pathspec syntax and a quick example in the git
+grep man page to help the user to discover this ability.
 
+Add similar pointers from the git-add and git-status man pages.
 
+Additionally,
+
+- Add a test for the behaviour when multiple exclusions are present.
+- Add a test for the ^ alias.
+- Perform general touch ups of surrounding lines.
+
+Signed-off-by: Manav Rathi <mnvrth@gmail.com>
+---
+ Documentation/git-add.txt          | 27 ++++++++++++++++-----------
+ Documentation/git-grep.txt         |  6 ++++++
+ Documentation/git-status.txt       |  2 ++
+ Documentation/glossary-content.txt |  2 +-
+ t/t6132-pathspec-exclude.sh        | 13 ++++++++++++-
+ 5 files changed, 37 insertions(+), 13 deletions(-)
+
+diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+index f4169fb..6f76f39 100644
+--- a/Documentation/git-add.txt
++++ b/Documentation/git-add.txt
+@@ -50,17 +50,22 @@ commit.
+ OPTIONS
+ -------
+ <pathspec>...::
+- Files to add content from.  Fileglobs (e.g. `*.c`) can
+- be given to add all matching files.  Also a
+- leading directory name (e.g. `dir` to add `dir/file1`
+- and `dir/file2`) can be given to update the index to
+- match the current state of the directory as a whole (e.g.
+- specifying `dir` will record not just a file `dir/file1`
+- modified in the working tree, a file `dir/file2` added to
+- the working tree, but also a file `dir/file3` removed from
+- the working tree.  Note that older versions of Git used
+- to ignore removed files; use `--no-all` option if you want
+- to add modified or new files but ignore removed ones.
++ Files to add content from.
+++
++File globs (e.g. `*.c`) can be given to add all matching files.  A
++leading directory name (e.g. `dir` to add `dir/file1` and `dir/file2`)
++can be given to update the index to match the current state of the
++directory as a whole.
+++
++Note that specifying `dir` will record not just a file `dir/file1`
++modified in the working tree, a file `dir/file2` added to the working
++tree, but also a file `dir/file3` removed from the working tree.
++Older versions of Git used to ignore removed files; use the `--no-all`
++option if you want to add new and modified files but ignore removed
++ones.
+++
++For more details about the <pathspec> syntax, see the 'pathspec' entry
++in linkgit:gitglossary[7].
+
+ -n::
+ --dry-run::
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index 720c785..18b4947 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -289,6 +289,9 @@ providing this option will cause it to die.
+ <pathspec>...::
+  If given, limit the search to paths matching at least one pattern.
+  Both leading paths match and glob(7) patterns are supported.
+++
++For more details about the <pathspec> syntax, see the 'pathspec' entry
++in linkgit:gitglossary[7].
+
+ Examples
+ --------
+@@ -305,6 +308,9 @@ Examples
+  Looks for a line that has `NODE` or `Unexpected` in
+  files that have lines that match both.
+
++`git grep solution -- :^Documentation`::
++ Looks for `solution`, excluding files in `Documentation`.
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
+diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
+index d47f198..9f3a78a 100644
+--- a/Documentation/git-status.txt
++++ b/Documentation/git-status.txt
+@@ -111,6 +111,8 @@ configuration variable documented in linkgit:git-config[1].
+  without options are equivalent to 'always' and 'never'
+  respectively.
+
++<pathspec>...::
++ See the 'pathspec' entry in linkgit:gitglossary[7].
+
+ OUTPUT
+ ------
+diff --git a/Documentation/glossary-content.txt
+b/Documentation/glossary-content.txt
+index b71b943..6b8888d 100644
+--- a/Documentation/glossary-content.txt
++++ b/Documentation/glossary-content.txt
+@@ -407,7 +407,7 @@ these forms:
+
+ exclude;;
+  After a path matches any non-exclude pathspec, it will be run
+- through all exclude pathspec (magic signature: `!` or its
++ through all exclude pathspecs (magic signature: `!` or its
+  synonym `^`). If it matches, the path is ignored.  When there
+  is no non-exclude pathspec, the exclusion is applied to the
+  result set as if invoked without any pathspec.
+diff --git a/t/t6132-pathspec-exclude.sh b/t/t6132-pathspec-exclude.sh
+index 9dd5cde..7ce91ef 100755
+--- a/t/t6132-pathspec-exclude.sh
++++ b/t/t6132-pathspec-exclude.sh
+@@ -25,7 +25,7 @@ EOF
+  test_cmp expect actual
+ '
+
+-test_expect_success 'exclude only no longer errors out' '
++test_expect_success 'exclude only pathspec uses default implicit pathspec' '
+  git log --oneline --format=%s -- . ":(exclude)sub" >expect &&
+  git log --oneline --format=%s -- ":(exclude)sub" >actual &&
+  test_cmp expect actual
+@@ -183,4 +183,15 @@ EOF
+  test_cmp expect actual
+ '
+
++test_expect_success 'multiple exclusions' '
++ git ls-files -- :^*/file2 :^sub2 >actual &&
++ cat <<EOF >expect &&
++file
++sub/file
++sub/sub/file
++sub/sub/sub/file
++EOF
++ test_cmp expect actual
++'
++
+ test_done
 -- 
-Regards
-Sahil Dua
-Software Developer
-Booking.com
-Connect on LinkedIn
-www.sahildua.com
+2.10.1
