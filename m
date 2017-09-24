@@ -2,81 +2,185 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 683072047F
-	for <e@80x24.org>; Sun, 24 Sep 2017 12:39:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 755E620A29
+	for <e@80x24.org>; Sun, 24 Sep 2017 16:17:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752210AbdIXMjz (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Sep 2017 08:39:55 -0400
-Received: from mout.web.de ([212.227.15.14]:59034 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752020AbdIXMjy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Sep 2017 08:39:54 -0400
-Received: from [192.168.178.36] ([91.20.61.209]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MGzFy-1e8jG91UW2-00DpCm; Sun, 24
- Sep 2017 14:39:43 +0200
-Subject: Re: [PATCH 1/3] refs: make sha1 output parameter of
- refs_resolve_ref_unsafe() optional
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-References: <b89d36b5-0996-829b-a267-7ee4da9673dc@web.de>
- <xmqq60c8j38t.fsf@gitster.mtv.corp.google.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <047033a6-1e3d-103e-a406-cc89447f4327@web.de>
-Date:   Sun, 24 Sep 2017 14:39:40 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        id S1752474AbdIXQRL (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Sep 2017 12:17:11 -0400
+Received: from mail-oi0-f68.google.com ([209.85.218.68]:37013 "EHLO
+        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752368AbdIXQRK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Sep 2017 12:17:10 -0400
+Received: by mail-oi0-f68.google.com with SMTP id h9so2318982oia.4
+        for <git@vger.kernel.org>; Sun, 24 Sep 2017 09:17:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=i5t54lSD0EKe23RdBf0qkaBUKzv4bqFgdStLMfQWiGI=;
+        b=fkx5iTetpuEcMvn2/mRad4ERLmivQTd7lcCJK9/FW2DVx28nx8KY9ORu5+qLHx6cc4
+         cFwtjwGk52JuzHXnTzOCxuwZX7ikwe47z95rskyGDe2dD1Ug8sUT5x/fJFLjLncfhYq/
+         C634JhlYpqXECZfUasWsWR2GaehCr0O3Cv5iLmM4uxo8jni1fE+jBlKLk0yPqAk4db/l
+         aOfx79NbNi9X/Uqc6T8b3Z14nKfHmqo+b5nASRI1+5fKtqR6GZJhE6cTc1sPDE1U4kg+
+         9xR+yYGvfPHBTs/l29FgQ9bQUcmW28tj8T6toN3F6YSXexTSD2q+wmhDcG/v3Wavaz9n
+         vFIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=i5t54lSD0EKe23RdBf0qkaBUKzv4bqFgdStLMfQWiGI=;
+        b=c69Ibg6g3VVgijh7DEjiIZizSh6I4Dp9EHut0TPjaZwlOx8X/2kQICV0dN7qe06US9
+         6qApsE8k6nQu/cNHxhCKs+eRBKucYwx1c2Zo+3ZgPIKNRKV5Y7txScwaL07WqfPtG4f+
+         52wuRQhmiyzghi7JSdslFsMTSofZELdnR4cr+24yAqz6zyJyLKWdU4/6ta7+04X8Z0kk
+         NTYYAChfcJZuq8XB0RKCXlAWWt0WHqdlt6Zc6ZRbBFJaKGML4tuRzpq9M2OBtfyiUbTu
+         v6MIL+YCuxIhPqs+tlbxKOHDXoF5LbpLHPESik8M7m1WrHk33Vi7z1ZoJXimAyOjrlKA
+         4dJQ==
+X-Gm-Message-State: AHPjjUj9iW8+5iorpwmIkvyv06p3yM1dFKaU2fsR0aq00NMYMepi4sKy
+        Ft/MtvJFvQ681xWfRtofZWS/aCuyFfn2DdxBYjs=
+X-Google-Smtp-Source: AOwi7QBFW1LV+YQqnRYAjSugRng7SBVzHjoEoMSB7yZ2X2XbF3ZvTVF7RITEMfIJA4oXvAvM5RVrgseccvjJ7LDlZXE=
+X-Received: by 10.202.229.5 with SMTP id c5mr6339402oih.82.1506269829365; Sun,
+ 24 Sep 2017 09:17:09 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqq60c8j38t.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:NOG/9L1NyC5EjtKYGGxEKMW3iM57gIKr3qr2quIUAl8ch0TMDbm
- 9a4m6MKrF6O486Me3Ioaervxz+UwnAis9Y0xRSyPTD64gbtuxkqMgvaAeTkCHjilX1A3K8H
- RjQWPFVgk1W2ytQeYf3oWrpsssY0YC70W9flrCAn65zlvshIddImyP1aGR1ZgQV2luLcrIR
- h2nyedzs5IniwFmnYYBZg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:AekC98LBBVM=:c+xVBH/Z1DpMDjql9X4WjF
- DvYGWY+/oBkpp13Tuu2IEpruTWHCDPayJl/vaNV1lFLG6dUQTz2IlMsNNNYaJ2nPnhA99jECh
- kmXYwmKxVu9ssZZnllfbg0MiG+zVwNeDPKxRF386C8CoH8+69knPx8sWUEBk4269QLw+eDuvN
- gHUejf2MuNm8iVkCzreR98+JPeY1sugT6IACNLtyW/3q/46wMXpC3OK0L7SZF2kiClWhQmN20
- RBumpd/nW04VpKYlGjVu5GL4j8lVYPgYYvSdl7oyJdsUiNrk6pnP7fbyYh1Thc0JUP9wa7QMd
- p27qhch97i91Oh5CMeKNNFIZKOdcV5sQwTR8E5+xgBG7iDxweltChxs29Z0i4Ll9FhgSTrHvG
- qMNnb6NdCVr44kJGcdzhXf+RW1SZV9x++UD7dTWJUb59NTFZc6UL/OIaq05svIg8m3bNhEk0T
- NCKpgV55F8WJnE2qcBFeg8gYdF6HNF988q7PGk2J/Lx/FnLMRCtxu9p4J5+5CxmzPJYw1oFmX
- ReS+/vVRuEvU+/Unqumgqu2PsK7IkIoNPGAzYx+9lV2YhWw44MISyzWTNeWvesU3M0vVJoQMA
- NF8B+PDfbhaFs+cwyn3NrzF/f3NpFONM7MAbOQ79qnLcqtanWssLY4vKvFuwpXDnFgw4bF7B9
- /8WQztwVsm92dLGPgg+8EDnfHjNm/1yyxRohFj/wQcDFAfi6sCgUQjHPNDVsMd0uaXwMbYzd1
- G+3Zx/DArL3r7ABbtoNQedHSXND1MPhyHBWIyVFzhRJAINnu/eYpaYt/dYtvPZNMGxDfv4ygi
- agvFv93t5gtBZMYJfLMMsIBTdkfSAii/ZEn0Q3gQcQB521SeZc=
+Received: by 10.157.11.88 with HTTP; Sun, 24 Sep 2017 09:16:48 -0700 (PDT)
+In-Reply-To: <xmqqlgl7l7ul.fsf@gitster.mtv.corp.google.com>
+References: <xmqq8thgy03t.fsf@gitster.mtv.corp.google.com> <CALiud+m1PAD8r0ygoUj3g4LzQjdoPu0CmjiejyG8pHOhr3Fk=Q@mail.gmail.com>
+ <xmqqpoajmtu4.fsf@gitster.mtv.corp.google.com> <xmqqlgl7l7ul.fsf@gitster.mtv.corp.google.com>
+From:   Sahil Dua <sahildua2305@gmail.com>
+Date:   Sun, 24 Sep 2017 18:16:48 +0200
+Message-ID: <CALiud+mjN=cTg_CXWNWnE=0N5RiT-FEN5JMGbYW0byMbmexQvQ@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Sep 2017, #03; Fri, 15)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 24.09.2017 um 03:26 schrieb Junio C Hamano:
-> I wonder if we want a dedicated helper for them (perhaps about a
-> dozen callers we have that fall into this pattern?) to call for the
-> exact purpose, implemented as a thin-wrapper around the
-> resolve_ref_unsafe() function, though.
+On Fri, Sep 22, 2017 at 5:39 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> My understanding of the next step was for those who are interested
+>> in moving this topic forward to update these patches in that
+>> direction.
+>
+> Well, I am one of those who are interested in moving this topic
+> forward, not because I'm likely to use it, but because the fewer
+> number of topics I have to keep in flight, the easier my work gets.
+>
+> So here is such an update.  As the topic is not in 'next' yet, it
+> could also be implemented by replacing patch(es) in the series, but
+> doing it as a follow-up fix made it easier to see what got changed
+> (both in the code and in the tests), so that is how I decided to do
+> this patch.
+>
+Awesome! Thanks for the patch. It was easier than I'd have expected it
+to be. Looks like it fixes the concerns of moving head. Is there
+anythign required from my side on this features / series of patches?
+> -- >8 --
+> Subject: [PATCH] branch: fix "copy" to never touch HEAD
+>
+> Probably because "git branch -c A B" piggybacked its implementation
+> on "git branch -m A B", when creating a new branch B by copying the
+> branch A that happens to be the current branch, it also updated HEAD
+> to point at the new branch.
+>
+> This does not match the usual expectation.  If I were sitting on a
+> blue chair, and somebody comes and repaints it to red, I would
+> accept ending up sitting on a red chair, but if somebody creates a
+> new red chair, modelling it after the blue chair I am sitting on, I
+> do not expect to be booted off of the blue chair and ending up on
+> sitting on the red one.
+>
+> Let's fix this strange behaviour before it hits 'next'.  Those who
+> want to create a new branch and switch to it can do "git checkout B"
+> after creating it by copying the current branch, or if that is so
+> useful to deserve a short-hand way to do so, perhaps extend "git
+> checkout -b B" to copy configurations while creating the new branch
+> B.  A "copy" should remain to be "copy", not "copy and sometimes
+> checkout".
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  builtin/branch.c  |  9 +++------
+>  t/t3200-branch.sh | 10 +++++-----
+>  2 files changed, 8 insertions(+), 11 deletions(-)
+>
+> diff --git a/builtin/branch.c b/builtin/branch.c
+> index 89f64f4123..e2e3692838 100644
+> --- a/builtin/branch.c
+> +++ b/builtin/branch.c
+> @@ -506,12 +506,9 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
+>                                 oldref.buf + 11);
+>         }
+>
+> -       if (replace_each_worktree_head_symref(oldref.buf, newref.buf, logmsg.buf)) {
+> -               if (copy)
+> -                       die(_("Branch copied to %s, but HEAD is not updated!"), newname);
+> -               else
+> -                       die(_("Branch renamed to %s, but HEAD is not updated!"), newname);
+> -       }
+> +       if (!copy &&
+> +           replace_each_worktree_head_symref(oldref.buf, newref.buf, logmsg.buf))
+> +               die(_("Branch renamed to %s, but HEAD is not updated!"), newname);
+>
+>         strbuf_release(&logmsg);
+>
+> diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+> index 5d03ad16f6..be9b3784c6 100755
+> --- a/t/t3200-branch.sh
+> +++ b/t/t3200-branch.sh
+> @@ -422,7 +422,7 @@ test_expect_success 'git branch --copy is a synonym for -c' '
+>         test_cmp expect actual
+>  '
+>
+> -test_expect_success 'git branch -c ee ef should copy and checkout branch ef' '
+> +test_expect_success 'git branch -c ee ef should copy to create branch ef' '
+>         git checkout -b ee &&
+>         git reflog exists refs/heads/ee &&
+>         git config branch.ee.dummy Hello &&
+> @@ -431,7 +431,7 @@ test_expect_success 'git branch -c ee ef should copy and checkout branch ef' '
+>         git reflog exists refs/heads/ef &&
+>         test $(git config branch.ee.dummy) = Hello &&
+>         test $(git config branch.ef.dummy) = Hello &&
+> -       test $(git rev-parse --abbrev-ref HEAD) = ef
+> +       test $(git rev-parse --abbrev-ref HEAD) = ee
+>  '
+>
+>  test_expect_success 'git branch -c f/f g/g should work' '
+> @@ -494,12 +494,12 @@ test_expect_success 'git branch -C c1 c2 should succeed when c1 is checked out'
+>         git checkout -b c1 &&
+>         git branch c2 &&
+>         git branch -C c1 c2 &&
+> -       test $(git rev-parse --abbrev-ref HEAD) = c2
+> +       test $(git rev-parse --abbrev-ref HEAD) = c1
+>  '
+>
+> -test_expect_success 'git branch -C c1 c2 should add entries to .git/logs/HEAD' '
+> +test_expect_success 'git branch -C c1 c2 should never touch HEAD' '
+>         msg="Branch: copied refs/heads/c1 to refs/heads/c2" &&
+> -       grep "$msg$" .git/logs/HEAD
+> +       ! grep "$msg$" .git/logs/HEAD
+>  '
+>
+>  test_expect_success 'git branch -C master should work when master is checked out' '
+> --
+> 2.14.1-907-g5aa63875cf
+>
+>
+>
 
-refs_resolve_ref_unsafe() effectively has seven wrappers already:
 
-	resolve_ref_unsafe()
-	refs_resolve_refdup()
-	resolve_refdup()
-	refs_read_ref_full()
-	read_ref_full()
-	read_ref()
 
-	ref_exists()
-
-The last one already supplies a dummy SHA1 buffer; for a handful of
-the others we could add and use variants that do the same.  I feel
-that this API would become a bit crowded, though.
-
-René
+-- 
+Regards
+Sahil Dua
+Software Developer
+Booking.com
+Connect on LinkedIn
+www.sahildua.com
