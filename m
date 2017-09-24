@@ -6,104 +6,122 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 96F0D20281
-	for <e@80x24.org>; Sun, 24 Sep 2017 00:41:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C09C720281
+	for <e@80x24.org>; Sun, 24 Sep 2017 00:52:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751555AbdIXAle (ORCPT <rfc822;e@80x24.org>);
-        Sat, 23 Sep 2017 20:41:34 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53077 "EHLO
+        id S1751389AbdIXAwJ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 23 Sep 2017 20:52:09 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61745 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751389AbdIXAld (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Sep 2017 20:41:33 -0400
+        with ESMTP id S1750839AbdIXAwI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Sep 2017 20:52:08 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 50290B1FFA;
-        Sat, 23 Sep 2017 20:41:33 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7BBDDA169A;
+        Sat, 23 Sep 2017 20:52:07 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ziKdqBFuZMH32LhF485G5L5O6jE=; b=ewOP/H
-        o+nzvEMvrPsQFvyzcqVUxfI25h34tSmI4n/DkF/9A0z6qSWzK8Dvi4mq90/Z+Y0s
-        yfmcG2NvT20OuYO/ED9awjXo7TNzLZ0PGGNpPgp3/Zhg8uBel8xUY3tijrzbtdlm
-        bBxzY6JRbFT0VSeck5dx4XMsj4TGP9+KBRoBk=
+        :content-type; s=sasl; bh=/m3bRzzhY/pBvTQ8vj9Wh5Xq/nM=; b=CN2QdP
+        2aAoPovUsvIkkFcncwgMkk8GGnb3SrsjI3ehkUs0mckVxNRJbh9xmoL9xFQxPjI3
+        2RVq/o6p6SD3wyNFM4xCnkFucQLs48uZfx2ssIMMlhJlR/OmxYxu4Fs8Tug5cIMz
+        +OiXyrAJbSGeSW9HUSULl6536B2NwYlPs33bw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=u00XAaRfhyP9RFOpnMljKwFNxHyruFru
-        q1WjMFVf95wBNfaeE5keyuMyWR5fJAZ6+ojrCA5+aZppFK6WoJHkL5yq3BX2boh1
-        U3tQuocCieZGraWUzBDzpoS1E90WJoL7vUhV6Ar5lnQ/N173qaOT/5GPZtscwlpB
-        kHiA9LHSo1I=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 49355B1FF9;
-        Sat, 23 Sep 2017 20:41:33 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=GtpyWghFy6E+r6HzI8mb5YQyosWn/OTO
+        ERLXdsH4FZHRH4AWI9XLR061qykb6lapk0VNr+l8unX+Dto4ECP0Wr+UQN+GfgTl
+        CcX+8GBO5NfwSKP/DETnVVQ92oxZHQ3lTwAOIswNSrmcgFKtwFPwHy3G/QDpzQFx
+        uD+SBhpPjQY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 73CD6A1699;
+        Sat, 23 Sep 2017 20:52:07 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B19C6B1FF8;
-        Sat, 23 Sep 2017 20:41:32 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D8A66A1698;
+        Sat, 23 Sep 2017 20:52:06 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: Behaviour of 'git stash show' when a stash has untracked files
-References: <1505626069.9625.6.camel@gmail.com>
-        <xmqqfubinddb.fsf@gitster.mtv.corp.google.com>
-        <20170920193630.l7ifret5dpqgxiwm@sigill.intra.peff.net>
-        <xmqqpoakn8tj.fsf@gitster.mtv.corp.google.com>
-        <20170921033152.4hbkctzxraww5rqo@sigill.intra.peff.net>
-Date:   Sun, 24 Sep 2017 09:41:31 +0900
-In-Reply-To: <20170921033152.4hbkctzxraww5rqo@sigill.intra.peff.net> (Jeff
-        King's message of "Wed, 20 Sep 2017 23:31:52 -0400")
-Message-ID: <xmqqing9hqro.fsf@gitster.mtv.corp.google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, jrnieder@gmail.com, peff@peff.net,
+        bmwill@google.com
+Subject: Re: [PATCH v4] connect: in ref advertisement, shallows are last
+References: <20170922164504.GD77641@google.com>
+        <20170922201551.15012-1-jonathantanmy@google.com>
+Date:   Sun, 24 Sep 2017 09:52:05 +0900
+In-Reply-To: <20170922201551.15012-1-jonathantanmy@google.com> (Jonathan Tan's
+        message of "Fri, 22 Sep 2017 13:15:51 -0700")
+Message-ID: <xmqqefqwj4ui.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 1C9F64F8-A0C1-11E7-97FC-9D2B0D78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 969C76C8-A0C2-11E7-A70C-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-> I think it would mostly Just Work for your case. git-apply should ignore
-> the subject cruft at the top of the patch. And if you didn't create a
-> stash with "-u" or with bits in the index, then those would be absent
-> from the diff.
+> Currently, get_remote_heads() parses the ref advertisement in one loop,
+> allowing refs and shallow lines to intersperse, despite this not being
+> allowed by the specification. Refactor get_remote_heads() to use two
+> loops instead, enforcing that refs come first, and then shallows.
 >
-> And if you _did_ create such a stash, I actually suspect that "apply"
-> barfing on the resulting patch may be a better outcome than silently
-> ignoring the changes.
+> This also makes it easier to teach get_remote_heads() to interpret other
+> lines in the ref advertisement, which will be done in a subsequent
+> patch.
+>
+> As part of this change, this patch interprets capabilities only on the
+> first line in the ref advertisement, ignoring all others.
+>
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+> I've updated state transitions to occur in get_remote_heads() instead,
+> as suggested. I didn't want to do that previously because each step in
+> the state machine needed to communicate if (i) the line is "consumed"
+> and (ii) the state needed to be advanced, but with Junio's suggestion to
+> reorganize the methods, that is no longer true.
+>
+> As Junio said, the free(server_capabilities) can be removed.
+>
+> As for whether how capabilities on subsequent lines are handled, I think
+> it's better to ignore them - they are behind NULs, after all.
 
-OK, that sounds sensible.
+Not even a diagnosis?  When the other side clearly wants to tell us
+something and we deliberately ignore, I'd think we want to at least
+know about it---that may lead us to notify the implementators of the
+other side of a protocol violation, or rethink the design decision
+(i.e. only the first one matters) ourselves.
 
-> I dunno. I do not use either of those features ("-u" or stashing the
-> index state) myself. But I have always been bothered how the saved state
-> is a bit hidden from the user. It seems like a recipe for user confusion
-> when they save something with "git stash" but then "stash show" doesn't
-> even mention it.
+> This change does have the side effect that if the server sends a ref
+> advertisement with "shallow"s only (and no refs), things will still
+> work, and the server can even tuck capabilities on the first "shallow"
+> line. I think that's fine, and it does make the client code cleaner.
 
-Yes, I do not dispute that the issue needs to be addressed.  What I
-was unsure was how (e.g. should that be given always? does the user
-ask and if so how? what the output to tell the information looks
-like?)
+I am ambivalent on this aspect of the change.
 
-> Those all seem like sane interface proposals. As I said above, I have a
-> vague feeling that the default _ought_ to tell about everything.
+The change makes the resulting state transition logic quite easy to
+follow.  Very nicely done.
 
-OK.
-
-> I guess the nuclear option there is introducing "git stash info" or
-> something, and marking "git stash show" as an alias for "git stash info
-> --worktree". It is too bad, though, as "show" is really the perfect
-> name.
-
-I think the end result of that becomes the same as adding "git stash
-info" an alias for "git stash show --all" on top of what I wrote.
-
-I suspect nobody uses "stash show" in a script in such a way that
-its output is consumed by the script logic, so it may probably be OK
-to show everything by default (which I agree is the way we would
-have done _if_ people demanded on day 1 that we need to record all
-three variants; IIRC, in the early days of the command back when the
-"show" subcommand appeared, even "--index" was merely an intellectual
-curiosity and was not a serious feature, and from that point of view
-the historical output we currently have made sense).
+> +	while ((len = read_remote_ref(in, &src_buf, &src_len, &responded))) {
+> +		switch (state) {
+> +		case EXPECTING_FIRST_REF:
+> +			process_capabilities(len);
+> +			if (process_dummy_ref()) {
+> +				state = EXPECTING_SHALLOW;
+> +				break;
+> +			}
+> +			state = EXPECTING_REF;
+> +			/* fallthrough */
+> +		case EXPECTING_REF:
+> +			if (process_ref(&list, flags, extra_have))
+> +				break;
+> +			state = EXPECTING_SHALLOW;
+> +			/* fallthrough */
+> +		case EXPECTING_SHALLOW:
+> +			if (process_shallow(shallow_points))
+> +				break;
+> +			die("protocol error: unexpected '%s'", packet_buffer);
+> +		default:
+> +			die("unexpected state %d", state);
+>  		}
+>  	}
 
