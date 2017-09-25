@@ -7,248 +7,141 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0CA4A2047F
+	by dcvr.yhbt.net (Postfix) with ESMTP id 288DE2047F
 	for <e@80x24.org>; Mon, 25 Sep 2017 04:08:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751836AbdIYEIN (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Sep 2017 00:08:13 -0400
-Received: from mail-oi0-f66.google.com ([209.85.218.66]:35635 "EHLO
+        id S1752576AbdIYEIQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Sep 2017 00:08:16 -0400
+Received: from mail-oi0-f66.google.com ([209.85.218.66]:34369 "EHLO
         mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750852AbdIYEIM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Sep 2017 00:08:12 -0400
-Received: by mail-oi0-f66.google.com with SMTP id r20so2967308oie.2
-        for <git@vger.kernel.org>; Sun, 24 Sep 2017 21:08:12 -0700 (PDT)
+        with ESMTP id S1750852AbdIYEIO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Sep 2017 00:08:14 -0400
+Received: by mail-oi0-f66.google.com with SMTP id v188so2984818oia.1
+        for <git@vger.kernel.org>; Sun, 24 Sep 2017 21:08:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=lBHsUmj0FHZJLdsdUAVJYA72fdJWUTqtP000ToSRv1I=;
-        b=s6VsobMTsVdaxuTJT4ZZ6uHiwT+XjzuVTJWO8mktlHOHBaKbm1FqFgBF9CrNyRbHUN
-         diF5DBhWNy6jaxzP8oOgcYOgdSf7RzwVf4FZzXZ/ioRSIFdV9emo6BXZNOy9bc+9ZKZo
-         wQMSIMYCnqztPWrLEvjMkUfdZ3vGo9/wXvh63fda5eVM4FTPWqvxxBVxJZA8ugZ5GuQw
-         92QuI7H1f6Mx3W503SUwg949ostbtYohIUgGxKpgono/vFrbCFNLgZ3MO3wOPUqSDgTe
-         dSMOyydEMZiLkUpnPRliN7yDLPXQtq7wBYQJ3hk+mCV3sdQl3ymEWLTtAHvFpdSlU6Xg
-         9v4A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=ZpEdbEUIDGmnmMpZ/TTCm6yurtVjEpXE/FjGd6hHOwQ=;
+        b=Xd9jMxZpDRFHwQpEyu51emHUSQOV/Y4hRIqNN1v0E1YvljDz4f8g9yMgubC4Vh3GJt
+         pt6SSOFs8VMFCSx6qcO1kRUpOtjKkk3auaAa8784kfzLwe+sbckMrO3WVb2+PIDvofwr
+         D+zZt6uyjCYWOPLgz70PDWkOBfpB2/2Z+pSOxnn/4GyVkKqrkFWObIyBXcE80WJ1QYQV
+         J1EOXsurYgeYEhWA8G8inhFbV/eCEUPvOEVQbVYX7c5vRrgwfsupFElf3RNbk6MGNbBO
+         oYTjQ3ISv0UE4Qlzc+K2J15neI8A2xLPLogvir6ChlRidbvc3zwdr/v/vqPTeBYzdt6+
+         /LGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=lBHsUmj0FHZJLdsdUAVJYA72fdJWUTqtP000ToSRv1I=;
-        b=XO1jkpW+ba8DN6Df4vYPNhX39C+cSE+RwGo7IrZJxcZHiaPxIcYO7BJfz3hMc+4Jjz
-         JkZ5oU3C36NSX6EApTrLc8P4RjLH+pH256xS++L0Oib2q7PL2uzzQA5aN6dXlk9wrF1w
-         NH5FMw7j7KK6MJATj7Fh6x/JYWbZE2bGyaFMer1k/qcpDJx1XggeAuo1vECViadsjFQL
-         qynPJZ4ZFv1AYE6OBWqqSqHmWzE6+CLexRniLC4u/v2JvwwDAqu8AOx0nnkybJup9VTX
-         EGXBD5yuhGM3aZRLDw1ElF9Vq2XuELdIqVWEr8TSAzOXIXSL9YlX0cJEX4KnnKQ6pf45
-         nEqA==
-X-Gm-Message-State: AHPjjUjgo1OLqmiemBFkeRFOFktvfUSsz2UoFbhFeIqbTEefQljz1zzd
-        HZnP8ppMiPdIepL4ISfXcQKrmj0k
-X-Google-Smtp-Source: AOwi7QC56qEojHgbHBYc9S6l4WN8aG3VRA5TZmjmsxNJyhX5uV290/6eY5nIMF7QabgIP9XkoWCxhg==
-X-Received: by 10.202.107.10 with SMTP id g10mr3457296oic.98.1506312491405;
-        Sun, 24 Sep 2017 21:08:11 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=ZpEdbEUIDGmnmMpZ/TTCm6yurtVjEpXE/FjGd6hHOwQ=;
+        b=YTxrV7yEDu6L/OoP4e9gwbj96GO2gwIq4ZRUsv2Z3yUs5OYQL7Ks7QJbifzUSigMUV
+         Xpjenj5kEkbAzR2NgkCP9zAfyqRQiHeOBFp8+O2FdgzvwciqIkqqV0uIVy3AsWo23ti6
+         lJHbWFwch8FnFGLrGIjupRfk15MXC3TKvrqWAk+b+geRpIzLDjywEeMU6ndYFsNrjN0D
+         NDQJCPSOQlqvbyzdZZYyFgLddZ4X+t1DnBh7kpgU6IgDQqIs4xONVaqEi7t+cwNtBBIL
+         rIx1Qae3EuJRotU7iPx1QjQ2nATUuxfLTUhy7DX5/aiqJp6fckY4QIHppiWBGBOvN2h6
+         EWug==
+X-Gm-Message-State: AHPjjUgNtRttIwUiT8/m+9XutVpPwM9KVNiqaKuP+JCNy3nE3hGnhAFv
+        GUCg1l93Oe7zDAZaD5/Rcm5wSkmd
+X-Google-Smtp-Source: AOwi7QAHIVnBCfHx51T+gAEtjpkuwvcZAcniRLB4pd19mIbuNshlX/xbOIoad9GXa+H2AgJ3HseMxA==
+X-Received: by 10.202.177.70 with SMTP id a67mr7717941oif.35.1506312493776;
+        Sun, 24 Sep 2017 21:08:13 -0700 (PDT)
 Received: from pixel.attlocal.net (75-59-239-78.lightspeed.sntcca.sbcglobal.net. [75.59.239.78])
-        by smtp.gmail.com with ESMTPSA id x206sm6514571oig.55.2017.09.24.21.08.10
+        by smtp.gmail.com with ESMTPSA id x206sm6514571oig.55.2017.09.24.21.08.12
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 24 Sep 2017 21:08:10 -0700 (PDT)
+        Sun, 24 Sep 2017 21:08:13 -0700 (PDT)
 From:   Brandon Casey <drafnel@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Casey <drafnel@gmail.com>
-Subject: [PATCH 1/3] t0040,t1502: Demonstrate parse_options bugs
-Date:   Sun, 24 Sep 2017 21:08:03 -0700
-Message-Id: <1506312485-8370-1-git-send-email-drafnel@gmail.com>
+Subject: [PATCH 3/3] parse-options: only insert newline in help text if needed
+Date:   Sun, 24 Sep 2017 21:08:05 -0700
+Message-Id: <1506312485-8370-3-git-send-email-drafnel@gmail.com>
 X-Mailer: git-send-email 2.2.0.rc3
+In-Reply-To: <1506312485-8370-1-git-send-email-drafnel@gmail.com>
+References: <1506312485-8370-1-git-send-email-drafnel@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the option spec contains no switches or only hidden switches,
-parse_options will emit an extra blank line at the end of help output so
-that the help text will end in two blank lines instead of one.
+Currently, when parse_options() produces a help message it always emits
+a blank line after the usage text to separate it from the options text.
+If the option spec does not define any switches, or only defines hidden
+switches that will not be displayed, then the help text will end up with
+two trailing blank lines instead of one.  Let's defer emitting the blank
+line between the usage text and the options text until it is clear that
+the options section will not be empty.
 
-When parse_options produces internal help output after an error has
-occurred it will emit blank lines within the usage string to stdout
-instead of stderr.
-
-Update t/helper/test-parse-options.c to have a description body in the
-usage string to exercise this second bug and mark tests as failing in
-t0040.
-
-Add tests to t1502 to demonstrate both of these problems.
+Fixes t1502.5, t1502.6.
 
 Signed-off-by: Brandon Casey <drafnel@gmail.com>
 ---
+ parse-options.c               | 10 ++++++++--
+ t/t1502-rev-parse-parseopt.sh |  4 ++--
+ 2 files changed, 10 insertions(+), 4 deletions(-)
 
-Notes:
-    FYI: this is built on top of bc/rev-parse-parseopt-fix (697bc88) merged
-    into next.
-
- t/helper/test-parse-options.c |   2 +
- t/t0040-parse-options.sh      |   8 ++--
- t/t1502-rev-parse-parseopt.sh | 100 ++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 107 insertions(+), 3 deletions(-)
-
-diff --git a/t/helper/test-parse-options.c b/t/helper/test-parse-options.c
-index 75fe883..630c76d 100644
---- a/t/helper/test-parse-options.c
-+++ b/t/helper/test-parse-options.c
-@@ -99,6 +99,8 @@ int cmd_main(int argc, const char **argv)
- 	const char *prefix = "prefix/";
- 	const char *usage[] = {
- 		"test-parse-options <options>",
-+		"",
-+		"A helper function for the parse-options API.",
- 		NULL
- 	};
- 	struct string_list expect = STRING_LIST_INIT_NODUP;
-diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
-index 74d2cd7..a36434b 100755
---- a/t/t0040-parse-options.sh
-+++ b/t/t0040-parse-options.sh
-@@ -10,6 +10,8 @@ test_description='our own option parser'
- cat >expect <<\EOF
- usage: test-parse-options <options>
+diff --git a/parse-options.c b/parse-options.c
+index 6a03a52..fca7159 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -581,6 +581,7 @@ static int usage_with_options_internal(struct parse_opt_ctx_t *ctx,
+ 				       const struct option *opts, int full, int err)
+ {
+ 	FILE *outfile = err ? stderr : stdout;
++	int need_newline;
  
-+    A helper function for the parse-options API.
+ 	if (!usagestr)
+ 		return PARSE_OPT_HELP;
+@@ -603,8 +604,7 @@ static int usage_with_options_internal(struct parse_opt_ctx_t *ctx,
+ 		usagestr++;
+ 	}
+ 
+-	if (opts->type != OPTION_GROUP)
+-		fputc('\n', outfile);
++	need_newline = 1;
+ 
+ 	for (; opts->type != OPTION_END; opts++) {
+ 		size_t pos;
+@@ -612,6 +612,7 @@ static int usage_with_options_internal(struct parse_opt_ctx_t *ctx,
+ 
+ 		if (opts->type == OPTION_GROUP) {
+ 			fputc('\n', outfile);
++			need_newline = 0;
+ 			if (*opts->help)
+ 				fprintf(outfile, "%s\n", _(opts->help));
+ 			continue;
+@@ -619,6 +620,11 @@ static int usage_with_options_internal(struct parse_opt_ctx_t *ctx,
+ 		if (!full && (opts->flags & PARSE_OPT_HIDDEN))
+ 			continue;
+ 
++		if (need_newline) {
++			fputc('\n', outfile);
++			need_newline = 0;
++		}
 +
-     --yes                 get a boolean
-     -D, --no-doubt        begins with 'no-'
-     -B, --no-fear         be brave
-@@ -90,8 +92,8 @@ test_expect_success 'OPT_BOOL() is idempotent #2' 'check boolean: 1 -DB'
- test_expect_success 'OPT_BOOL() negation #1' 'check boolean: 0 -D --no-yes'
- test_expect_success 'OPT_BOOL() negation #2' 'check boolean: 0 -D --no-no-doubt'
- 
--test_expect_success 'OPT_BOOL() no negation #1' 'check_unknown_i18n --fear'
--test_expect_success 'OPT_BOOL() no negation #2' 'check_unknown_i18n --no-no-fear'
-+test_expect_failure 'OPT_BOOL() no negation #1' 'check_unknown_i18n --fear'
-+test_expect_failure 'OPT_BOOL() no negation #2' 'check_unknown_i18n --no-no-fear'
- 
- test_expect_success 'OPT_BOOL() positivation' 'check boolean: 0 -D --doubt'
- 
-@@ -286,7 +288,7 @@ test_expect_success 'OPT_CALLBACK() and OPT_BIT() work' '
- 
- >expect
- 
--test_expect_success 'OPT_CALLBACK() and callback errors work' '
-+test_expect_failure 'OPT_CALLBACK() and callback errors work' '
- 	test_must_fail test-parse-options --no-length >output 2>output.err &&
- 	test_i18ncmp expect output &&
- 	test_i18ncmp expect.err output.err
+ 		pos = fprintf(outfile, "    ");
+ 		if (opts->short_name) {
+ 			if (opts->flags & PARSE_OPT_NODASH)
 diff --git a/t/t1502-rev-parse-parseopt.sh b/t/t1502-rev-parse-parseopt.sh
-index 6e1b45f..1bfa80f 100755
+index ce7dda1..a859abe 100755
 --- a/t/t1502-rev-parse-parseopt.sh
 +++ b/t/t1502-rev-parse-parseopt.sh
-@@ -38,6 +38,25 @@ test_expect_success 'setup optionspec' '
- EOF
- '
- 
-+test_expect_success 'setup optionspec-no-switches' '
-+	sed -e "s/^|//" >optionspec_no_switches <<\EOF
-+|some-command [options] <args>...
-+|
-+|some-command does foo and bar!
-+|--
-+EOF
-+'
-+
-+test_expect_success 'setup optionspec-only-hidden-switches' '
-+	sed -e "s/^|//" >optionspec_only_hidden_switches <<\EOF
-+|some-command [options] <args>...
-+|
-+|some-command does foo and bar!
-+|--
-+|hidden1* A hidden switch
-+EOF
-+'
-+
- test_expect_success 'test --parseopt help output' '
- 	sed -e "s/^|//" >expect <<\END_EXPECT &&
- |cat <<\EOF
-@@ -79,6 +98,87 @@ END_EXPECT
+@@ -98,7 +98,7 @@ END_EXPECT
  	test_i18ncmp expect output
  '
  
-+test_expect_failure 'test --parseopt help output no switches' '
-+	sed -e "s/^|//" >expect <<\END_EXPECT &&
-+|cat <<\EOF
-+|usage: some-command [options] <args>...
-+|
-+|    some-command does foo and bar!
-+|
-+|EOF
-+END_EXPECT
-+	test_expect_code 129 git rev-parse --parseopt -- -h > output < optionspec_no_switches &&
-+	test_i18ncmp expect output
-+'
-+
-+test_expect_failure 'test --parseopt help output hidden switches' '
-+	sed -e "s/^|//" >expect <<\END_EXPECT &&
-+|cat <<\EOF
-+|usage: some-command [options] <args>...
-+|
-+|    some-command does foo and bar!
-+|
-+|EOF
-+END_EXPECT
-+	test_expect_code 129 git rev-parse --parseopt -- -h > output < optionspec_only_hidden_switches &&
-+	test_i18ncmp expect output
-+'
-+
-+test_expect_success 'test --parseopt help-all output hidden switches' '
-+	sed -e "s/^|//" >expect <<\END_EXPECT &&
-+|cat <<\EOF
-+|usage: some-command [options] <args>...
-+|
-+|    some-command does foo and bar!
-+|
-+|    --hidden1             A hidden switch
-+|
-+|EOF
-+END_EXPECT
-+	test_expect_code 129 git rev-parse --parseopt -- --help-all > output < optionspec_only_hidden_switches &&
-+	test_i18ncmp expect output
-+'
-+
-+test_expect_failure 'test --parseopt invalid switch help output' '
-+	sed -e "s/^|//" >expect <<\END_EXPECT &&
-+|error: unknown option `does-not-exist'\''
-+|usage: some-command [options] <args>...
-+|
-+|    some-command does foo and bar!
-+|
-+|    -h, --help            show the help
-+|    --foo                 some nifty option --foo
-+|    --bar ...             some cool option --bar with an argument
-+|    -b, --baz             a short and long option
-+|
-+|An option group Header
-+|    -C[...]               option C with an optional argument
-+|    -d, --data[=...]      short and long option with an optional argument
-+|
-+|Argument hints
-+|    -B <arg>              short option required argument
-+|    --bar2 <arg>          long option required argument
-+|    -e, --fuz <with-space>
-+|                          short and long option required argument
-+|    -s[<some>]            short option optional argument
-+|    --long[=<data>]       long option optional argument
-+|    -g, --fluf[=<path>]   short and long option optional argument
-+|    --longest <very-long-argument-hint>
-+|                          a very long argument hint
-+|    --pair <key=value>    with an equals sign in the hint
-+|    --aswitch             help te=t contains? fl*g characters!`
-+|    --bswitch <hint>      hint has trailing tab character
-+|    --cswitch             switch has trailing tab character
-+|    --short-hint <a>      with a one symbol hint
-+|
-+|Extras
-+|    --extra1              line above used to cause a segfault but no longer does
-+|
-+END_EXPECT
-+	test_expect_code 129 git rev-parse --parseopt -- --does-not-exist 1>/dev/null 2>output < optionspec &&
-+	test_i18ncmp expect output
-+'
-+
- test_expect_success 'setup expect.1' "
- 	cat > expect <<EOF
- set -- --foo --bar 'ham' -b --aswitch -- 'arg'
+-test_expect_failure 'test --parseopt help output no switches' '
++test_expect_success 'test --parseopt help output no switches' '
+ 	sed -e "s/^|//" >expect <<\END_EXPECT &&
+ |cat <<\EOF
+ |usage: some-command [options] <args>...
+@@ -111,7 +111,7 @@ END_EXPECT
+ 	test_i18ncmp expect output
+ '
+ 
+-test_expect_failure 'test --parseopt help output hidden switches' '
++test_expect_success 'test --parseopt help output hidden switches' '
+ 	sed -e "s/^|//" >expect <<\END_EXPECT &&
+ |cat <<\EOF
+ |usage: some-command [options] <args>...
 -- 
 2.2.0.rc3
 
