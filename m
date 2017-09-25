@@ -2,89 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MIME_QP_LONG_LINE,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E4B0220281
-	for <e@80x24.org>; Mon, 25 Sep 2017 07:31:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 09EA420A29
+	for <e@80x24.org>; Mon, 25 Sep 2017 08:00:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933603AbdIYHbT (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Sep 2017 03:31:19 -0400
-Received: from mail-io0-f178.google.com ([209.85.223.178]:55007 "EHLO
-        mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932135AbdIYHbS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Sep 2017 03:31:18 -0400
-Received: by mail-io0-f178.google.com with SMTP id h66so8934951ioh.11
-        for <git@vger.kernel.org>; Mon, 25 Sep 2017 00:31:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=user-agent:date:subject:from:to:message-id:thread-topic
-         :mime-version:content-transfer-encoding;
-        bh=ZHiZFgUWAwvSc2vCcoe13wuSt5/K8Moye9wai1mB7J0=;
-        b=l0OtYmsIgfNmwNjgemAvi5G1RUeI9ElDWM8kkzlNwN8rxgzzezTygk8XgLbutQ6zTg
-         0jfZ8Oc/dJn3IwgJpPxfFnM+x14No0Y19+jaP3anVVTilcyui31punUvjzwZZuMT9q+a
-         LcrKU7UZ9Ll5q7X8gxJGN8pENi/LBPeyATVhj12mSchH32K7iwTwebh9gPxazqD4I9aF
-         q28YZdA9Ye7+R5m8Eyp4XQGCbxpFNc187ZhhoN5PVEUtaVWXrnuMnbJQ72hEkqNc1SpX
-         qFf3DMDskrAXOgQr3a9Kkz8u53Mdwj/J+HsQx8laH6Fpn7jaRwW8knBk00G+X0UEvIe0
-         gbAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:user-agent:date:subject:from:to:message-id
-         :thread-topic:mime-version:content-transfer-encoding;
-        bh=ZHiZFgUWAwvSc2vCcoe13wuSt5/K8Moye9wai1mB7J0=;
-        b=KaaOheuZSXfK3PHqYPOLqdMYvEadHiHOEPqLXdvuYSOcudtvbD5e+u1V7/zPjDyvyP
-         s625fQs844LLEm1GGisGNdAO+XG8aI5jkuzG8/2BJ5irXicmZ2e5JKZy+V0jCrh1G9/g
-         CTKGRDuZNoiBsW9N7nAI53fz9NOsZdNrY7Z5+noUqJNU2xTJ7zyXbugWH1uv+ptHbo1H
-         4mtFYyDhHYXN1mucaTdwRHD1a8zZQNsVERVl3cm9fHfu+hBKfzHkVzOzwryNP2Y3/iCR
-         HL2z106IWX2pI7tqTn5sbDFFPIZcoLW48mKK/LEo6G2ZxdfdHusJ08plrU2JRB5Uy3pr
-         MFTw==
-X-Gm-Message-State: AHPjjUjo8iw7CM/lMImF0e+gS0KA7pfMGJnkjtDeUApE51r0UWb2M32C
-        QgxnLGA2ycTmQiiahr4/PzY4EkOJ
-X-Google-Smtp-Source: AOwi7QD/ma2dGu4WFXtWEhh7NKsQHdqpThBDjMLvznT/rzgn34he8NoHTW81lL5vuvy+8PaKhLxSTQ==
-X-Received: by 10.107.81.1 with SMTP id f1mr8396036iob.17.1506324677787;
-        Mon, 25 Sep 2017 00:31:17 -0700 (PDT)
-Received: from [143.248.200.68] ([143.248.200.68])
-        by smtp.gmail.com with ESMTPSA id y63sm659613itc.44.2017.09.25.00.31.15
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 25 Sep 2017 00:31:16 -0700 (PDT)
-User-Agent: Microsoft-MacOutlook/f.26.0.170902
-Date:   Mon, 25 Sep 2017 16:31:10 +0900
-Subject: '--shallow-since' option is not available for git-pull in Git version
- 2.14.1
-From:   Sanggyu Nam <pokeplus@gmail.com>
-To:     <git@vger.kernel.org>
-Message-ID: <F3F7A768-C844-4D77-9403-53AC3F506080@gmail.com>
-Thread-Topic: '--shallow-since' option is not available for git-pull in Git
- version 2.14.1
-Mime-version: 1.0
-Content-type: text/plain;
-        charset="UTF-8"
-Content-transfer-encoding: quoted-printable
+        id S933822AbdIYIA3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Sep 2017 04:00:29 -0400
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:49292 "EHLO
+        alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S933809AbdIYIA2 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 25 Sep 2017 04:00:28 -0400
+X-AuditID: 1207440f-a43ff70000007960-4c-59c8b79ad7b6
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 88.29.31072.A97B8C95; Mon, 25 Sep 2017 04:00:26 -0400 (EDT)
+Received: from bagpipes.fritz.box (p57BCCDF6.dip0.t-ipconnect.de [87.188.205.246])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v8P80N6K027347
+        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+        Mon, 25 Sep 2017 04:00:24 -0400
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Brandon Williams <bmwill@google.com>,
+        git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH v3 00/21] Read `packed-refs` using mmap()
+Date:   Mon, 25 Sep 2017 09:59:57 +0200
+Message-Id: <cover.1506325610.git.mhagger@alum.mit.edu>
+X-Mailer: git-send-email 2.14.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupileLIzCtJLcpLzFFi42IRYndR1J29/USkwalOOYu1z+4wWTxff4Ld
+        outKN5NFQ+8VZov+5V1sFrdXzGe26J7yltHiR0sPs8Xmze0sDpwef99/YPLYOesuu8eHj3Ee
+        CzaVejzr3cPocfGSssfnTXIB7FFcNimpOZllqUX6dglcGVvWqBccEa1Y+u4MWwPjGsEuRg4O
+        CQETiT+neboYuTiEBHYwSfRdOsMI4Zxikri7YiVrFyMnB5uArsSinmYmEFtEQE1iYtshFpAi
+        ZoGVzBKTtl4BKxIWsJR4smg7C4jNIqAqsfT3PrA4r4C5RMebO2BxCQF5iXMPbjNDxAUlTs58
+        wgJyBbOAusT6eUIgYWagkuats5knMPLOQlI1C6FqFpKqBYzMqxjlEnNKc3VzEzNzilOTdYuT
+        E/PyUot0TfRyM0v0UlNKNzFCgpl/B2PXeplDjAIcjEo8vBH/jkcKsSaWFVfmHmKU5GBSEuW9
+        y3ciUogvKT+lMiOxOCO+qDQntfgQowQHs5II77HVQDnelMTKqtSifJiUNAeLkjiv+hJ1PyGB
+        9MSS1OzU1ILUIpisDAeHkgSv6zagRsGi1PTUirTMnBKENBMHJ8hwHqDhy0FqeIsLEnOLM9Mh
+        8qcYdTk6bt79wyTEkpeflyolzrsBpEgApCijNA9uDiwJvWIUB3pLmDcNpIoHmMDgJr0CWsIE
+        tKR3KtiSkkSElFQDo8bB8590lks3Bf+S0k/YvDUsWWuridZ0F7nF8tVpnhXvdvQEvFvz0blr
+        l0ylGW+J4P9bDXPfd4o/4lOZqu8Ts0HNcjcPT99H4aDVj21F/s1IM2o/mbl3xpOHqm8tX682
+        3XrC+cX01YZPOPYxOV96F7N8z9R94Z6HWNeKLmcQSZDnFjf0aKnvVGIpzkg01GIuKk4EAIpN
+        HeQdAwAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I=E2=80=99ve found that some subcommands such as git-clone, git-fetch, and git-pu=
-ll support an option named =E2=80=98--shallow-since=E2=80=99, as of Git version 2.11. Th=
-is option is documented in the man page of each subcommand. In Git 2.14.1, I=
-=E2=80=99ve checked that the option is available for git-clone and git-fetch so th=
-at the history of a shallow repository is updated. However, running git-pull=
- with this option shows an error as follows:
+This is v3 of a patch series that changes the reading and caching of
+the `packed-refs` file to use `mmap()`. Thanks to Stefan, Peff, Dscho,
+and Junio for their comments about v2. I think I have addressed all of
+the feedback from v1 [1] and v2 [2].
 
-error: unknown option `shallow-since=3D2017-09-10T00:00:00+00:00'
+This version has only minor changes relative to v2:
 
-usage: git pull [<options>] [<repository> [<refspec>...]]
-...
+* Fixed a trivial error in the commit message for patch 08.
 
-I found that this option is not available in Git 2.14.1 on macOS and Ubuntu=
- 16.04.1. It seems the option handling of git-pull does not match with what=E2=
-=80=99s described in the man page. Since =E2=80=98git pull=E2=80=99 is a shorthand for =E2=80=98gi=
-t fetch=E2=80=99 followed by =E2=80=98git merge FETCH_HEAD=E2=80=99 in its default mode, we ca=
-n run these two commands in this order as a workaround.
+* In patch 13:
 
+  * In the commit message, explain the appearance of `MMAP_TEMPORARY`
+    even though it is not yet treated differently than `MMAP_NONE`.
+
+  * In `Makefile`, don't make `USE_WIN32_MMAP` imply
+    `MMAP_PREVENTS_DELETE`.
+
+  * Correct the type of a local variable from `size_t` to `ssize_t`.
+
+This patch series is also available from my GitHub repo [3] as branch
+`mmap-packed-refs`.
+
+[1] http://public-inbox.org/git/cover.1505319366.git.mhagger@alum.mit.edu/
+[2] https://public-inbox.org/git/cover.1505799700.git.mhagger@alum.mit.edu/
+[3] https://github.com/mhagger/git/
+
+Jeff King (1):
+  prefix_ref_iterator: break when we leave the prefix
+
+Michael Haggerty (20):
+  ref_iterator: keep track of whether the iterator output is ordered
+  packed_ref_cache: add a backlink to the associated `packed_ref_store`
+  die_unterminated_line(), die_invalid_line(): new functions
+  read_packed_refs(): use mmap to read the `packed-refs` file
+  read_packed_refs(): only check for a header at the top of the file
+  read_packed_refs(): make parsing of the header line more robust
+  read_packed_refs(): read references with minimal copying
+  packed_ref_cache: remember the file-wide peeling state
+  mmapped_ref_iterator: add iterator over a packed-refs file
+  mmapped_ref_iterator_advance(): no peeled value for broken refs
+  packed-backend.c: reorder some definitions
+  packed_ref_cache: keep the `packed-refs` file mmapped if possible
+  read_packed_refs(): ensure that references are ordered when read
+  packed_ref_iterator_begin(): iterate using `mmapped_ref_iterator`
+  packed_read_raw_ref(): read the reference from the mmapped buffer
+  ref_store: implement `refs_peel_ref()` generically
+  packed_ref_store: get rid of the `ref_cache` entirely
+  ref_cache: remove support for storing peeled values
+  mmapped_ref_iterator: inline into `packed_ref_iterator`
+  packed-backend.c: rename a bunch of things and update comments
+
+ Makefile              |   6 +
+ config.mak.uname      |   3 +
+ refs.c                |  22 +-
+ refs/files-backend.c  |  54 +--
+ refs/iterator.c       |  47 ++-
+ refs/packed-backend.c | 979 ++++++++++++++++++++++++++++++++++++++------------
+ refs/ref-cache.c      |  44 +--
+ refs/ref-cache.h      |  35 +-
+ refs/refs-internal.h  |  26 +-
+ 9 files changed, 847 insertions(+), 369 deletions(-)
+
+-- 
+2.14.1
 
