@@ -6,25 +6,25 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7BD50202A5
-	for <e@80x24.org>; Mon, 25 Sep 2017 14:30:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66DE2202A5
+	for <e@80x24.org>; Mon, 25 Sep 2017 14:40:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964990AbdIYOat (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Sep 2017 10:30:49 -0400
-Received: from washoe.dartmouth.edu ([129.170.30.229]:57519 "EHLO
+        id S934954AbdIYOka (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Sep 2017 10:40:30 -0400
+Received: from washoe.dartmouth.edu ([129.170.30.229]:57662 "EHLO
         smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934676AbdIYOas (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Sep 2017 10:30:48 -0400
+        with ESMTP id S933355AbdIYOk3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Sep 2017 10:40:29 -0400
 Received: from [192.197.121.178] (helo=localhost)
         by smtp.onerussian.com with esmtpsa (TLS1.2:RSA_AES_256_CBC_SHA1:256)
         (Exim 4.80)
         (envelope-from <yoh@onerussian.com>)
-        id 1dwUPG-0003AU-Md
-        for git@vger.kernel.org; Mon, 25 Sep 2017 10:30:47 -0400
-Date:   Mon, 25 Sep 2017 10:30:40 -0400
+        id 1dwUYd-0003mu-KC
+        for git@vger.kernel.org; Mon, 25 Sep 2017 10:40:28 -0400
+Date:   Mon, 25 Sep 2017 10:40:21 -0400
 From:   Yaroslav Halchenko <yoh@onerussian.com>
 To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Message-ID: <20170925143040.4qgofxcdahal46r7@hopa.kiewit.dartmouth.edu>
+Message-ID: <20170925144021.vhbd3wb3uqejs5wq@hopa.kiewit.dartmouth.edu>
 References: <20170925000213.rilmsczdbi3jqkta@hopa.kiewit.dartmouth.edu>
  <xmqqwp4nfuv1.fsf@gitster.mtv.corp.google.com>
  <20170925031751.lg7zk6krt65dxwas@hopa.kiewit.dartmouth.edu>
@@ -41,8 +41,7 @@ User-Agent: NeoMutt/20170113 (1.7.2)
 X-SA-Exim-Connect-IP: 192.197.121.178
 X-SA-Exim-Rcpt-To: git@vger.kernel.org
 X-SA-Exim-Mail-From: yoh@onerussian.com
-Subject: -X theirs does not resolve symlink conflict  Was: BUG: merge -s
- theirs  is not in effect
+Subject: -s theirs use-case(s) Was: BUG: merge -s theirs  is not in effect
 X-SA-Exim-Version: 4.2.1 (built Mon, 26 Dec 2011 16:57:07 +0000)
 X-SA-Exim-Scanned: Yes (on smtp.onerussian.com)
 Sender: git-owner@vger.kernel.org
@@ -52,55 +51,55 @@ X-Mailing-List: git@vger.kernel.org
 
 
 On Mon, 25 Sep 2017, Junio C Hamano wrote:
+>    It is a different matter to resurrect the age old discussion that
+>    happend in the summer of 2008 if '-s theirs' should or should not
+>    exist.  In short, the previous discussion can be summarised to
+>    "we don't want '-s theirs' as it encourages the wrong workflow".
 
-> Yaroslav Halchenko <yoh@onerussian.com> writes:
+>    https://public-inbox.org/git/alpine.DEB.1.00.0807290123300.2725@eeepc-johanness/
+>    https://public-inbox.org/git/7vtzen7bul.fsf@gitster.siamese.dyndns.org/
+>    https://public-inbox.org/git/20080720192130.6117@nanako3.lavabit.com/
 
-> > d'oh, indeed there is no git-merge-theirs  neither in debian pkg or a freshly
-> > built git  and I found a rogue script in the PATH (which did nothing
-> > apparently, sorry!). BUT I was originally mislead by the --help/manpage:
+>    It is OK for people to come with new perspective and bring new
+>    ideas to the table.  We learned from experience while using Git
+>    for longer and are wiser than what we were back then, and might
+>    be able to make a better decision ;-)
 
-> Ahh, you're right.  The text does make readers expect "-s theirs" to
-> exist.
-> ...
->  * I hope this should help things a bit.
+FWIW
 
-yes it does. Thanks.  And that is where I realized that I should have used -X
-theirs (not -s theirs), as the instruction on the option for the
-(recursive) merge.  And now problem is more specific:
+1. As a workaround for absence of -m theirs I using mtheirs git alias:
+(I believe provided to me awhile back here on the list):
 
-- conflict within file content editing was resolved as instructed
-  (taking "theirs" version)
+    mtheirs = !sh -c 'git merge -s ours --no-commit $1 && git read-tree -m -u $1' -
 
-- BUT symlink was not taken from "theirs" and left as unresolved conflict:
+and it worked fine for my usecases
 
-$> rm -rf /tmp/repo1; mkdir /tmp/repo1; cd /tmp/repo1; git init .; ln -s sym1 link; echo 1 > file; git add file link; git commit -m 'common'; git co -b b1 ; ln -sf b1link link; echo "b1 file" >| file; git commit -m 'b2 changes' -a; git co master; ln -sf masterlink link; echo "master file" >| file; git commit -m 'also modified in master' -a; git merge -X theirs --no-edit b1; ls -l link; cat file
-warning: templates not found /home/yoh/share/git-core/templates
-Initialized empty Git repository in /tmp/repo1/.git/
-[master (root-commit) f0b75bc] common
- 2 files changed, 2 insertions(+)
- create mode 100644 file
- create mode 120000 link
-Switched to a new branch 'b1'
-[b1 45c93ca] b2 changes
- 2 files changed, 2 insertions(+), 2 deletions(-)
-Switched to branch 'master'
-[master 0ee6db2] also modified in master
- 2 files changed, 2 insertions(+), 2 deletions(-)
-Auto-merging link
-CONFLICT (content): Merge conflict in link
-Auto-merging file
-Automatic merge failed; fix conflicts and then commit the result.
-lrwxrwxrwx 1 yoh yoh 10 Sep 25 10:21 link -> masterlink
-b1 file
-changes on filesystem:                                                                                          
- link | Unmerged
-cached/staged changes:
- file | 2 +-
- link | Unmerged
+2. I think that if there is a reason for -s ours to exist, so there for -s theirs
+since it is just the directionality of merges which changes between the two
 
+3. My most frequently used use-case for -m theirs strategy is repositories such as 
 
-PS I will followup on -s theirs in a split thread
-PSS Thanks for CCing me your replies
+http://datasets.datalad.org/openfmri/ds000001/.git
+
+where we construct "datalad dataset" by crawling the web resource(s), and
+workflow consists of 3 branches:
+
+incoming             -- content from the web "as is"
+incoming-processed   -- content from the web "processed" (fully automatically),
+                        e.g. tarballs extracted etc
+master               -- the "final" result, delivered to public
+
+incoming-processed   is formed  by  -s theirs --no-commit  incoming, then all
+content needed to be extracted/processed (since last such merge point) is
+processed and commit is done.  Such "merge" allows us to establish a point of
+previous "processing state" so we could react appropriately whenever anything
+in "incoming" branch changes (so that there is a new commit).
+
+  And then incoming-processed is merged (regular recursive) into the
+master branch, which might have further "manual" tune ups.
+
+PS thanks for CCing replies
+
 -- 
 Yaroslav O. Halchenko
 Center for Open Neuroscience     http://centerforopenneuroscience.org
