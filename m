@@ -6,31 +6,30 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D39AE202A5
-	for <e@80x24.org>; Mon, 25 Sep 2017 20:29:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ADBB7202A5
+	for <e@80x24.org>; Mon, 25 Sep 2017 20:30:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966253AbdIYU3v (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Sep 2017 16:29:51 -0400
-Received: from cloud.peff.net ([104.130.231.41]:49606 "HELO cloud.peff.net"
+        id S966256AbdIYUah (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Sep 2017 16:30:37 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49610 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S966239AbdIYU3u (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Sep 2017 16:29:50 -0400
-Received: (qmail 2440 invoked by uid 109); 25 Sep 2017 20:29:50 -0000
+        id S966250AbdIYUag (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Sep 2017 16:30:36 -0400
+Received: (qmail 2484 invoked by uid 109); 25 Sep 2017 20:30:36 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 25 Sep 2017 20:29:50 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 25 Sep 2017 20:30:36 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28527 invoked by uid 111); 25 Sep 2017 20:30:28 -0000
+Received: (qmail 28531 invoked by uid 111); 25 Sep 2017 20:31:14 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Mon, 25 Sep 2017 16:30:28 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Mon, 25 Sep 2017 16:31:14 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Sep 2017 16:29:48 -0400
-Date:   Mon, 25 Sep 2017 16:29:48 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Sep 2017 16:30:34 -0400
+Date:   Mon, 25 Sep 2017 16:30:34 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 4/7] get-tar-commit-id: prefer "!=" for read_in_full() error
- check
-Message-ID: <20170925202947.u6onp66ztliyxjcj@sigill.intra.peff.net>
+Subject: [PATCH 5/7] worktree: use xsize_t to access file size
+Message-ID: <20170925203033.z4czmuhedm3f54b3@sigill.intra.peff.net>
 References: <20170925202646.agsnpmar3dzocdcr@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -41,49 +40,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Comparing the result of read_in_full() using less-than is
-potentially dangerous, as discussed in 561598cfcf
-(read_pack_header: handle signed/unsigned comparison in read
-result, 2017-09-13).
+To read the "gitdir" file into memory, we stat the file and
+allocate a buffer. But we store the size in an "int", which
+may be truncated. We should use a size_t and xsize_t(),
+which will detect truncation.
 
-The instance in get-tar-commit-id is OK, because the
-HEADERSIZE macro expands to a signed integer. But if it were
-switched to an unsigned type like:
+An overflow is unlikely for a "gitdir" file, but it's a good
+practice to model.
 
-  size_t HEADERSIZE = ...;
-
-this would be a bug. Let's use the more robust "!="
-construct.
-
-We can also drop the useless "n" variable while we're at it.
-
-Suggested-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/get-tar-commit-id.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ builtin/worktree.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/get-tar-commit-id.c b/builtin/get-tar-commit-id.c
-index 6d9a79f9b3..259ad40339 100644
---- a/builtin/get-tar-commit-id.c
-+++ b/builtin/get-tar-commit-id.c
-@@ -20,14 +20,12 @@ int cmd_get_tar_commit_id(int argc, const char **argv, const char *prefix)
- 	struct ustar_header *header = (struct ustar_header *)buffer;
- 	char *content = buffer + RECORDSIZE;
- 	const char *comment;
--	ssize_t n;
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index de26849f55..2f4a4ef9cd 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -38,7 +38,8 @@ static int prune_worktree(const char *id, struct strbuf *reason)
+ {
+ 	struct stat st;
+ 	char *path;
+-	int fd, len;
++	int fd;
++	size_t len;
  
- 	if (argc != 1)
- 		usage(builtin_get_tar_commit_id_usage);
- 
--	n = read_in_full(0, buffer, HEADERSIZE);
--	if (n < HEADERSIZE)
--		die("git get-tar-commit-id: read error");
-+	if (read_in_full(0, buffer, HEADERSIZE) != HEADERSIZE)
-+		die_errno("git get-tar-commit-id: read error");
- 	if (header->typeflag[0] != 'g')
+ 	if (!is_directory(git_path("worktrees/%s", id))) {
+ 		strbuf_addf(reason, _("Removing worktrees/%s: not a valid directory"), id);
+@@ -56,7 +57,7 @@ static int prune_worktree(const char *id, struct strbuf *reason)
+ 			    id, strerror(errno));
  		return 1;
- 	if (!skip_prefix(content, "52 comment=", &comment))
+ 	}
+-	len = st.st_size;
++	len = xsize_t(st.st_size);
+ 	path = xmallocz(len);
+ 	read_in_full(fd, path, len);
+ 	close(fd);
 -- 
 2.14.1.1148.ga2561536a1
 
