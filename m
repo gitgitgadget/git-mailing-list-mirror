@@ -6,32 +6,32 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C96620A26
-	for <e@80x24.org>; Mon, 25 Sep 2017 09:55:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6BE9920A26
+	for <e@80x24.org>; Mon, 25 Sep 2017 09:55:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934510AbdIYJza (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Sep 2017 05:55:30 -0400
+        id S934484AbdIYJzY (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Sep 2017 05:55:24 -0400
 Received: from mail-sn1nam02on0100.outbound.protection.outlook.com ([104.47.36.100]:37136
         "EHLO NAM02-SN1-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S933128AbdIYJz1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Sep 2017 05:55:27 -0400
+        id S934475AbdIYJzV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Sep 2017 05:55:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=WWnLtAUpUuY8hulT1KN0psyFoAL8b9mhjDKsXLl7jVE=;
- b=k2DARrZCnz8KWJ+KSTHCJ8DpOwEenJ2559kFs6JNLdxXvc7C0+hUJPHVu2E4QhSbZogopVA15aE4RYK96/U/goRRsUA3T7PTcJ1FOQpSgFNpLKYt1GLbT0rEbg3uAxRAIcfmP78Jz1EpDyf+uQ8mezeGvn4LF+ZOkQABKUOuV3Q=
+ bh=bHG4b4Q+oSSWCPJ8tzM5bCN5TTSV/x38RX18lwsdOAI=;
+ b=gIhcWnaFCvYboLWwusn0CuIyGzHP+XtXaV+f6Tvw7oeMfLDTS/i8feXXwJj/Yv5tDwK+4yMzxHHzRnPMzjLnx6MoSIh1sR/y3RxW/57ATFBM+TJakCs7dXI1I292VV+V+XLDmL24N2yW0rj+/8VBGLJDbMQFLCQZJCYD+LkcI5o=
 Received: from stolee-linux.corp.microsoft.com (2001:4898:8010:1::2e) by
  DM2PR21MB0092.namprd21.prod.outlook.com (2a01:111:e400:50c7::12) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id 15.20.98.3; Mon, 25 Sep
- 2017 09:55:21 +0000
+ 2017 09:55:17 +0000
 From:   Derrick Stolee <dstolee@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     stolee@gmail.com, git@jeffhostetler.com,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH v2 5/5] sha1_name: Minimize OID comparisons during disambiguation
-Date:   Mon, 25 Sep 2017 05:54:52 -0400
-Message-Id: <20170925095452.66833-6-dstolee@microsoft.com>
+Subject: [PATCH v2 1/5] test-list-objects: List a subset of object ids
+Date:   Mon, 25 Sep 2017 05:54:48 -0400
+Message-Id: <20170925095452.66833-2-dstolee@microsoft.com>
 X-Mailer: git-send-email 2.14.1.538.g56ec8fc98.dirty
 In-Reply-To: <20170925095452.66833-1-dstolee@microsoft.com>
 References: <20170925095452.66833-1-dstolee@microsoft.com>
@@ -41,49 +41,49 @@ X-Originating-IP: [2001:4898:8010:1::2e]
 X-ClientProxiedBy: BN6PR08CA0055.namprd08.prod.outlook.com
  (2603:10b6:404:b9::17) To DM2PR21MB0092.namprd21.prod.outlook.com
  (2a01:111:e400:50c7::12)
-X-MS-Office365-Filtering-Correlation-Id: 04f22e70-8800-43ec-f51f-08d503fb891d
+X-MS-Office365-Filtering-Correlation-Id: f7b91504-0d49-4dfa-348f-08d503fb8735
 X-MS-Office365-Filtering-HT: Tenant
 X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:(22001)(2017030254152)(48565401081)(2017052603199)(201703131423075)(201703031133081)(201702281549075);SRVR:DM2PR21MB0092;
-X-Microsoft-Exchange-Diagnostics: 1;DM2PR21MB0092;3:KBCsinP+5CGjbFGOsG4AXUFZ0SVl1ktV80cymDScgx4/gMC0HqnxikjI1lBLXCLVUbts9UeabvsEz9ljvgDrR3K9eJ75EWf1/fXAbsUM50vmURpgd6OVQ9NtyHI/g5AjQgZQk2FzVHkRPtvl9jwJhMh4mt0hu+Wd6esCAOyC63IBLmCw0kuGCloPfxv3CxWTT8RDlqa9Aec/OxE6li/OI1cUrjNCI92bLRKnMtGWfPJfSOMaex6Cbgsza37OPqmd;25:Qegj28WbHqTJZd9gLPwk1wqknEsGYxBasAnzBo//4kATQHAXyFja27OundnkXICXF3U+YnSMi9vce/nShkszCu5afgfbJINRf51lqgUk4o7FwBexxfZjHTZRk9EXwg0a4sC2giZ3BWge2z0WavofLCUkc1dZ/a/AJHJT8LRgx7sRPr16fYat31BcfKiLOTz0+p0WIPWDT0onKO2HK8wPLWxG9Lkefo+ymyRSu1uhmHgFOLI/fgqdZEzFyAC7wnWIDfgSbxlHtdnco4D6I0TehUcMmD42UH07QdDkKtJLmMN4IeUqeo/BjBGcT3mVYXP5RIvpvTmAehmv+saSaVxpwA==;31:zRwPoO5zDUqnzQmIYArAuStnVW8AD4VDgVrJwbuXxiVqsGMCob7J7piUUDt+8JuGuSZhZdBdsXzusvJZFUAio+2mVgdEpdsY+hHY1gZhHDtiWNICs9S4iZXKn58Cd0z6fJdzrOoaFVDp5nXTMchAhwtHiyDEocVQRaZmIP7cN2r3SXPQqGqEhcGnBaMlMTi5h9/JI+eaA+kgUOIyg4vczOLsyelnSwI8UChAGCYhXEQ=
+X-Microsoft-Exchange-Diagnostics: 1;DM2PR21MB0092;3:+hUR0rBKQ9odL6o9R29WzpNqI1MoRvFSh/4ql7MiWGCQVaORMN7d2nr4ecpV9+330U1euthTVqQqxVXuYlUWysYMRIALv3zON8tnT9GHBw2mS9P8Mi6cloVSHwz414cZIJp19EPztufigrWeL6oobNAhPmWtDVcdwH5VUhVwFo1ND/rkS+/7FEPWHJCxu17sjeH/Yks3vdSg1DNaonv8TUV7+20im4uGWyNZZ2hIB8dt6KhdBXW770gOzd9+Ut61;25:1YurERSCwFi4NOvf2Rye09pXoZb0QVbbcv3FPmNPgX63ZapjmuJxKycQF24eKnoGFjtJg71VzncEIUC7pTsViwspg+18ENl0wDFc/uV8v9efON/8MWvee24FrutYHFI7WaLrxYO2+TwcDZYYECvIhGd10RCVgpZN1ZU7E+GyBsAQKzMjif4SnlrPhwHKgZ3sx8RybR8NySp/5WXeSuxoCjcXz4sdxhPWAHLbxzAmmbz8b/AbitOnNiaY2pA2kKSuAQNqa99U0eSzW9IuGLXIy5/4z16VKu3QIFKYQSZzjkjt9uZvPtUdcIykCE7jvQpH2goKEGDHFo5pJUtQoMpUew==;31:TrozpKVWrNPKqCDZYIyW6vFBoLK50KmBhLpGb+GW2XIbP4lT+iw/tTYgU39Bx39KTtJLzPGVEvY7peT8A36zVinnr117ksvs0ozi0SJHdTaYxQ96/qnhaIGzC0ISuj4MTkIzBSoQP+Dl5XPNLu/BR8WxYaxDlfNse0MMPYUfvtia+bZaIej4rKcMCOurrYiYFs14QhrQJUriwGje9zlotCTUHwN/N0GrTF+UocXePN0=
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: DM2PR21MB0092:
 Authentication-Results: spf=none (sender IP is )
  smtp.mailfrom=dstolee@microsoft.com; 
-X-Microsoft-Exchange-Diagnostics: 1;DM2PR21MB0092;20:pkJb7voSITJi/tfHkZmLBkXo3nDG9K1gxdfa7jUFsoKzWA7jPYqOT7nbiCp4ZzQFQqTfvHm80SbM9I6Uwq6wwweCNCeo+oWGCfY5WWgYFf+q0DSvjH53yHC6vjmIYfJ9DyCNbVqBO+3kr0IAOtjm680abzxsVVSK3yCztBkQ6GjyT8gWBxkxabr+LSEeN80Bh0rk0TNTy0V5cEZSk5n2R0ZYYDq51VtokXwTkqLP0s6SAwK4cd50QCJ7WJxTJNr55XORsSZPmH8sUhWgMNh3635IrjGlRc5gJ5oC4OghTEJ9EMu+8yzFFZKS9ypsQDrkq6YyExP0CPvGvJ5VcoDngfkMtRyXPTCydrgmOQ0RBd2wUpqQ0LpE+/PvOenDH5NuqFYtrRSJPcqsfobo4FD/i+1alaAaJKm3p5Lwj6UEgjg8L/NEeWuooqByUuuiYFP24YTzWK/TfBf26rR/UjvxKC1lVKsi7dt74iyKsoZIjiWoo3iPUNKvvNvzUefufuUp;4:9jfK5jtmUZiJQ9FG5/wi3kyTERrhL8Ij2n6lG9aAmM/WkgZoWEORPD1cEDM49x08I2LqxQRA1xyFzENyOqrXiFE2G8GNwnqbPXuF2j0lOpqZ735hrzsxHS18ym0IYMBggBAs4PhYY9jz67Wf7RJIhVj254uIZzQdYHG/4qRtFX4vZ1QQg1B6OYwyyYoNKZi156y8U+4wWp0Orq2/9eUrWgBvKl4P9ubMyip8A4HW587qFEoIS/NOz0f1xkelcsZSUiECH+cFAOxsOrZmc75xdYHtMGVR6qp4Cco7oyoBvC0=
+X-Microsoft-Exchange-Diagnostics: 1;DM2PR21MB0092;20:LZOeAyryWhC3wp1ZPCqWLCKTji8PcmNwehVOU8bw189GavB7JjRuEaRY15XDDx+WjueM+7ju/Vrsq6qqqkCgXuoXGVPMHSNN4nyRIYcyx/1lgPnqcrZYS1XwTqPBcQwql6+CRYjIMT9/PrbY194hKDhGrPxh7EVKfh7ZzgUhzVoiVgNVbSvzbHZdMisIw89rgz29M+bv7Flf9kPDVHgUKDk+TM+eXK+fcyGgIeUjstYqeQSMuXYaQHgvPrLLICOBst0pB+AFixdOMmDi0Vk3Zb6GGDeznfnrdta9SLznZXQ3hss2RNlwzRCxKZD1OblDNXzhzcIlb8RokZhSC96SL1RKgXl9170fE/OwGT0LFsMW2DJtWftQxp5hpEz3PhZTOkL5LiOWMwH9X9OhT4ls2sew0ub5fRhK4up8clxjTI019ytgtOklQJ8YXFXGls1bgOLoFHT0yc78g8BpopMfUhBgbFgrRdhNiQxQ7P3fBgmjWwFJKQXY1Fc74CiG9EBC;4:BoPhF74qlhhYqpbJMJ1VVkN4Blp7mX0+myo9Bys/PiloXkHYBSS1JQYCO8cPKV44XezNmDaBiz91C5GWzrYrirv8UoXxIUt0DpdEFtayAjGj5a1tULPydwHEQy84014OGuxId8jKGDefWjrYSML0Mm03gMuPbfIimHnXsopsV3N8eh0da0CIM0G76ANSF37z2mrGTO/DzicDtr4gLX2coaCByvWsD3aPcs9Jtr0Nu3aHSluZQihUPeZ5Wj8ykOK6niGNpA/sbdWWw93TT85kcDce7P4lKN+7Albx2PYsnA8=
 X-Exchange-Antispam-Report-Test: UriScan:(89211679590171);
-X-Microsoft-Antispam-PRVS: <DM2PR21MB00924C82D2F6B0790FDB82A9A17A0@DM2PR21MB0092.namprd21.prod.outlook.com>
+X-Microsoft-Antispam-PRVS: <DM2PR21MB0092CBA0FC9F79128C4BACCEA17A0@DM2PR21MB0092.namprd21.prod.outlook.com>
 X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(100000700101)(100105000095)(100000701101)(100105300095)(100000702101)(100105100095)(61425038)(6040450)(2401047)(8121501046)(5005006)(10201501046)(100000703101)(100105400095)(93006095)(93001095)(3002001)(6055026)(61426038)(61427038)(6041248)(201703131423075)(201702281528075)(201703061421075)(201703061406153)(20161123560025)(20161123555025)(20161123562025)(20161123558100)(20161123564025)(6072148)(201708071742011)(100000704101)(100105200095)(100000705101)(100105500095);SRVR:DM2PR21MB0092;BCL:0;PCL:0;RULEID:(100000800101)(100110000095)(100000801101)(100110300095)(100000802101)(100110100095)(100000803101)(100110400095)(100000804101)(100110200095)(100000805101)(100110500095);SRVR:DM2PR21MB0092;
 X-Forefront-PRVS: 04410E544A
-X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(6009001)(39860400002)(346002)(376002)(47760400005)(43544003)(189002)(199003)(316002)(305945005)(68736007)(86362001)(10290500003)(101416001)(6666003)(7736002)(478600001)(2950100002)(105586002)(53936002)(6916009)(2351001)(86612001)(4326008)(2361001)(1076002)(48376002)(10090500001)(6116002)(189998001)(81166006)(5660300001)(25786009)(8676002)(97736004)(106356001)(39060400002)(107886003)(81156014)(36756003)(50986999)(22452003)(6486002)(8936002)(2906002)(47776003)(5003940100001)(50466002)(16586007)(33646002)(76176999)(50226002);DIR:OUT;SFP:1102;SCL:1;SRVR:DM2PR21MB0092;H:stolee-linux.corp.microsoft.com;FPR:;SPF:None;PTR:InfoNoRecords;MX:1;A:1;LANG:en;
+X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(6009001)(39860400002)(346002)(376002)(47760400005)(189002)(199003)(316002)(305945005)(68736007)(86362001)(10290500003)(101416001)(6666003)(7736002)(478600001)(2950100002)(105586002)(53936002)(6916009)(2351001)(86612001)(4326008)(2361001)(1076002)(48376002)(10090500001)(6116002)(189998001)(81166006)(5660300001)(25786009)(230783001)(8676002)(97736004)(106356001)(39060400002)(107886003)(81156014)(36756003)(50986999)(22452003)(6486002)(8936002)(2906002)(47776003)(5003940100001)(50466002)(16586007)(33646002)(76176999)(50226002);DIR:OUT;SFP:1102;SCL:1;SRVR:DM2PR21MB0092;H:stolee-linux.corp.microsoft.com;FPR:;SPF:None;PTR:InfoNoRecords;MX:1;A:1;LANG:en;
 Received-SPF: None (protection.outlook.com: microsoft.com does not designate
  permitted sender hosts)
-X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;DM2PR21MB0092;23:VYsNozrQxd8IT2wqnptaat+2rtWJfMbdw/7CPrN37?=
- =?us-ascii?Q?TE0MXuoyOAaMNDFJJFGwWAnwYHm/OIjVe6OOBBg5xF+wykrxBhsItrm7QIKD?=
- =?us-ascii?Q?Nn60VcaCXtIshXUC2MXmlmS07rW+h0JXQnIdb38k6KaDJQAX0wmgjn73V/lY?=
- =?us-ascii?Q?2aJjQoLSoueRG6kcWoE4GxUBUQFki3j2Hfw50ksaAJwxfyI6oaedQwN53ea5?=
- =?us-ascii?Q?Spg66YEBlO/6khXI9vvPf5fLyw50ZwCC4b7UBkNdWYhNwiyyymmFWOVtS2V+?=
- =?us-ascii?Q?o4S5785ALxVPMgwcZJFa+4QbP9CpMzkel73iQzjYoBBs5d2GIsAG9IEilPDA?=
- =?us-ascii?Q?BIi6M3FsB3tHRMmbNqnx0GmWAEs0oGg0b5m1M4vR2L6PN8Jp/5H/rrPCqQzS?=
- =?us-ascii?Q?CBixPlkxbKxZ49vkGYDri8h1LnmGoMuZcXrLCZznX2jf2a+W1ezJNYEkznvB?=
- =?us-ascii?Q?R9s8XrTukeNYmdSFYyrZLDabEj1rH4DN46ToSVTESiXJIdO24JT3Cnx8sgqc?=
- =?us-ascii?Q?5BAI/+0q2rwZhG7NJcjrQADkA15hBSJTzNhR5kIqw+OvK7qnZM+WH77cNZGf?=
- =?us-ascii?Q?U284M58SRxGufpsQKpUC8fm7hkX3IpxPPNwVLt1h0iXBrLU0HW7W2zNNzrSC?=
- =?us-ascii?Q?gBKSNDZXs5GEj0+5ytmp+N0o5MeZOr6lnyK0LT3/FlJ4PdIgZxB0ZkPw1vKt?=
- =?us-ascii?Q?IfB5MUKCPPvewV3dhYeNc0j8+pAgZFJYUYQd4kdEE7AGmLFpxrSpUkJuSiLT?=
- =?us-ascii?Q?gCcJqmD7QFkBz6/mqBfzV7FHAha76aHUBuN7nwgrzOKeaQX3U9VXId5qjBuD?=
- =?us-ascii?Q?CDbgcR6euaM4cMfktwJrAVGejjKBL9gLbYtG3v8C9T5l55BBpZPoEsOlYBJb?=
- =?us-ascii?Q?8y9/r0rfRBPxQuuFRomWY5FkfiqtR12AIf0dJB1nFLRLcueleTLYLocUi813?=
- =?us-ascii?Q?Psk+8GuNbynhf09v+GCI8sbTmpT+9PUJUafIGGbcRjX+L1l12fzV6+5+UENR?=
- =?us-ascii?Q?JFfvXk+5XaqxyRTmwMdkHmTnKHYmgX5nxcP/Buwg/M9Yb1vLB9thB8gOI2vy?=
- =?us-ascii?Q?dkWpUNePi7dccTrnLdmZi6K2CqgDT9TyKiMd4Zs4y4t48ui53DfYohH7a5qL?=
- =?us-ascii?Q?fGp4W9kZcPmRMVRDzYSTrw2Uuz1czuOdUV1QzXy3uXBzNfkcAqszaGDa8qF5?=
- =?us-ascii?Q?YivfLBEFch7nzqtnllkIBpvc9It0UVGDhRk/SQGpafn8k8O22961xamkAwgM?=
- =?us-ascii?Q?MHbDe3W8E2D7khpFkY=3D?=
-X-Microsoft-Exchange-Diagnostics: 1;DM2PR21MB0092;6:zdEdCfGeGCsOy7JPEPf0CrpASHpa/bHDL36tVw2rUiEBqcsfe78MsghHNFaEfMGqtUqEIL1w0yxMXUtvcl561XtddAGdeEQODdeKmlmujasessHcyAJb4YGmyK7hdoIAaKgPXR7bzpRviJs4btGhcAM93trAzpaP29NrR0sdhfngb7MiHG0yOUZBH0PWymKWLOp77zS+RokmVLsjDgT5tOFPx4GYi0tCfP3GyRaomaB+8i/WCD7GiA4DwO2Tx2zPOveizu/Ev0wEXdELQOuTomcijunZkg2AgWQCDUBSwvU9WMRN5646J9nE5ZM5VCQ0kVj7OMrO2fXphJRvvZkrhg==;5:ZtueXJfH0/2M4a8GExxu1DJzt2RPElZhsbedwYtOcVotAa9zxLoKnD7+Fp10aPXh8A8ISwHJguyb9iWSYPpHyFPXGiEK+uXbmMZH6/9kp06rYUjYMfKkFcQk8EgwNjnkh4uRDS5VAfP+gq6yPcnQvQ==;24:c6csDNQ7s5O3i8N4eXRLzFSB8xYfxqIimD+jE3CCahxxMDF7RwPtkyMzqn7mZPQ/espfx5cYILKTCAOhnXEg1PXolr3PhF05+cz14Ycbz14=;7:w+JDKJPjw/6oOW+Gzs05ioO51bhX+6rY4kE1F/rCgxQHyZKnpSWrpjSo54wthjiUWNQPsGdFjNBi3+DntcEStT5BoXwfmoW7AYwPynen8GiGYx2aXDbbKfcawu3KGi9Naneq1tmoUOCclngV1Vcz2VKsrJC/IEgh99AMaEEiF4DZvh6m4Zf/XhU+wkNvU5aCcCRWqt0XiowcTgXp+FsRTSLWx2E/iQnPxg4Rm3jP7MY=
+X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;DM2PR21MB0092;23:jsTTGw5wzaHHNC0XWA9j6XkShUb4IumGT4XfKFHCW?=
+ =?us-ascii?Q?2kwC+v7z5XdQRJcbxulU0s4tqIlLzfbr15Eer+AOHl9TZxyKXY91yRYfhN+I?=
+ =?us-ascii?Q?4TS6P4BF61RUA/y64p3Qdt18YzVMWbb87bdY/LAl05wSfG/aGfGLVRuhcMie?=
+ =?us-ascii?Q?zdW+B2AKD0WlRqdvjvqL0+XDwkWRl0QXFXWvcDsDYsyqDu+eDX0OyTjYTo4S?=
+ =?us-ascii?Q?Go70xwPaCWPLvUP6OuVRHGOYOs/BA5Z8ZFPDLXr64lPGXyt/yifX5fEL8KhB?=
+ =?us-ascii?Q?52qs9i3HAWSKAZ8mZm52xqG02ox6bc7MP2WDnsmto5xVNUnbmLTc0tBWV4Bq?=
+ =?us-ascii?Q?OXmvGnJKqvntZv5QgoFEy6TnVGsHZ5yEj84NE9fvA2+rTu302+jL50dZGYeQ?=
+ =?us-ascii?Q?JBCH9jJHLk5LNW2bhAQyyFDcEKg2/vpRixQjFtmuolNT471xpF6hs6UhCi3N?=
+ =?us-ascii?Q?lpHhyFvuLCF8vfc4GJEJlfy4UGlJhyouZKG8PwBEFOFiN3zeJ8RHB2qC7nDK?=
+ =?us-ascii?Q?5yEpJT/EZGSLci3vbct3ttWxJF6c1vn0+l0Oust3mFPq5cMlsT/tLu0nVWHb?=
+ =?us-ascii?Q?HfHWs0OAuKxPFO6IxpQ1XIYs03QIF4pUFyWtMrg0h7JBy9fCJlT2OKimJGO+?=
+ =?us-ascii?Q?q773WYXLVZLXV8Q+1qTLcIpQIRu1bZpCwCiVe11V2+AWyBpgL9Aka5GgMps6?=
+ =?us-ascii?Q?9Czt0nGpEUOw4zbwIOIheK7kmvI8Ut3mB8hPhHPlLpdaKSNdluScKWzxpZ/2?=
+ =?us-ascii?Q?ljMsz6zbvuyfhvXK1lotXd1v7/7QbBVjrGLWJXXRlrUo5XEHnYVUFkI5pAaf?=
+ =?us-ascii?Q?rlXWORRGrHbwbjsTP0YhNXNv1i87PVlLO4oFcURF2tOhHfzeL6VZ+gS0/yuy?=
+ =?us-ascii?Q?PP7sdNPAhXt5bXqPMHH6eB6vAifVZcM+iEsP3/lhtARBVT7wD8MreXNfDxzj?=
+ =?us-ascii?Q?dj6rikMaojIU0a+wsHQQ87WvSGNO58j/jQBd4lFQ4BIbAZYVD5Lajrrmir86?=
+ =?us-ascii?Q?F7hx0xB7zEaV/slVp7yRcS75FRkgkHWQgBE2CInhkmQqtpdhMxLTJyyeo/bC?=
+ =?us-ascii?Q?F7KiYYU1uJehHEfUzIgYCTp8UoK25tqD/8XXXpCa/pPjo2aszHNB0C1CBtLE?=
+ =?us-ascii?Q?ipKp5obPUkvWveskziJTXdS5xWyPwGAHt/7YvSSHkNUx/FiBkV3BBBh9aejC?=
+ =?us-ascii?Q?91q8kfkjlZ8hazPP9kOTHtWJP1TtunmLtZzmIFr1DVDMJI9ruMqS0WGMagGN?=
+ =?us-ascii?Q?mU0ArNl8UIQnY3KJ3M=3D?=
+X-Microsoft-Exchange-Diagnostics: 1;DM2PR21MB0092;6:uqjq/VaeYsEAVukLV0AlL7AeLhGFVQKVh3S53PzWQq7B7u+K2scV7gwPs9ZVyDhFpAH6GhN+c9ROL1LOHnTi7BMZ4+PsOUISBSYLT2vO5p1Z19UV9WVYF95mT1dVzyj1ynXeNtEMtQNUEeHQqebrEDyuB4e3feh3tkc0qSw6bookxYLbJOsWuljBivnqfffNE86g+RLj1p5zQh1n+3JeNGi7LDk3PRSUjv/9y65v3J8J1/WLlFcks4grCO/O3DF1xV43+yZ3Ulz6sQ7Du/JxWN0fbFr43lB1mPIJ5mrOSuPTwvXFMJv3eBY6BwC+EUK/UW7ghpJsnOwJirLLlbqdsw==;5:09eGaqEwJjmp837Bk6wI1u3Rd4NF318CGbPLdSSCk+2F0XcOwPVcZIqpM6rM8J/2etuoD/6UwrBvF2GoOSEjlT78wumvCZANebNomm+kyru+g6gjDXk5cXShucp+U4HFTxkGuxfn2qYHCkVccE9jzw==;24:OovnqNWFvmF/zqfALRtVFWwR1XFcQaRcqxeft2okSVzUoRy/5bMFP4H6YOc1PZiNifLRtPQmj4TwwjfuQH+W761JRHx1JZd8iWAvIaLk/PI=;7:Ag7qf7A74T0Ylly0nGT/M4EjVvgklBWeATRzNdtzgIJRcuOSNTgfJkDQ1a8J3o7gMqHMWUPUW6eMtdhacySoazeSPCFEAcbQjTqOIlG3plO+cHmxjlM1ZrVsh6Jj3WS/ENB3KwCqwhRvy+Pd02x3hJAqN+mHyIc7IxirGpOfp/x607p1RW3QICChSdPyZZoEavKFcRbhaZG5zcNQ/lez9Wma2LlJVJTvh1mIVQMIRAI=
 SpamDiagnosticOutput: 1:99
 SpamDiagnosticMetadata: NSPM
 X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Sep 2017 09:55:21.0847
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Sep 2017 09:55:17.8816
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 72f988bf-86f1-41af-91ab-2d7cd011db47
@@ -93,187 +93,141 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Minimize OID comparisons during disambiguatiosn of packfile OIDs.
+Create test-list-objects helper program to output a random sample of
+OIDs present in the repo.
 
-Teach git to use binary search with the full OID to find the object's
-position (or insertion position, if not present) in the pack-index.
-The object before and immediately after (or the one at the insertion
-position) give the maximum common prefix.  No subsequent linear search
-is required.
+If no command line arguments are provided, all OIDs are output.
 
-Take care of which two to inspect, in case the object id exists in the
-packfile.
+The first command line argument specifies how many samples to output.
+Samples are collected across the entire set of available OIDs to avoid
+clustering and therefore quite uniformly distributed.
 
-If the input to find_unique_abbrev_r() is a partial prefix, then the
-OID used for the binary search is padded with zeroes so the object will
-not exist in the repo (with high probability) and the same logic
-applies.
-
-p0008.1: find_unique_abbrev() for existing objects
---------------------------------------------------
-
-For 10 repeated tests, each checking 100,000 known objects, we find the
-following results when running in a Linux VM:
-
-|       | Pack  | Packed  | Loose  | Base   | New    |        |
-| Repo  | Files | Objects | Objects| Time   | Time   | Rel%   |
-|-------|-------|---------|--------|--------|--------|--------|
-| Git   |     1 |  230078 |      0 | 0.08 s | 0.05 s | -37.5% |
-| Git   |     5 |  230162 |      0 | 0.16 s | 0.15 s | - 6.3% |
-| Git   |     4 |  154310 |  75852 | 0.12 s | 0.11 s | - 8.3% |
-| Linux |     1 | 5606645 |      0 | 0.25 s | 0.10 s | -60.0% |
-| Linux |    24 | 5606645 |      0 | 2.08 s | 2.00 s | - 3.8% |
-| Linux |    23 | 5283204 | 323441 | 1.69 s | 1.62 s | - 4.1% |
-| VSTS  |     1 | 4355923 |      0 | 0.22 s | 0.09 s | -59.1% |
-| VSTS  |    32 | 4355923 |      0 | 1.99 s | 2.01 s | + 1.0% |
-| VSTS  |    31 | 4276829 |  79094 | 3.20 s | 3.02 s | - 5.6% |
-
-For the Windows repo running in Windows Subsystem for Linux:
-
-    Pack Files: 50
-Packed Objects: 22,385,898
- Loose Objects: 492
-     Base Time: 4.62 s
-      New Time: 4.09 s
-         Rel %: -11.5%
-
-p0008.2: find_unique_abbrev() for missing objects
--------------------------------------------------
-
-For 10 repeated tests, each checking 100,000 missing objects, we find
-the following results when running in a Linux VM:
-
-|       | Pack  | Packed  | Loose  | Base   | New    |        |
-| Repo  | Files | Objects | Objects| Time   | Time   | Rel%   |
-|-------|-------|---------|--------|--------|--------|--------|
-| Git   |     1 |  230078 |      0 | 0.05 s | 0.04 s | -20.0% |
-| Git   |     5 |  230162 |      0 | 0.15 s | 0.15 s |   0.0% |
-| Git   |     4 |  154310 |  75852 | 0.12 s | 0.12 s |   0.0% |
-| Linux |     1 | 5606645 |      0 | 0.17 s | 0.05 s | -70.6% |
-| Linux |    24 | 5606645 |      0 | 1.30 s | 1.28 s | - 1.5% |
-| Linux |    23 | 5283204 | 323441 | 1.10 s | 0.96 s | -12.7% |
-| VSTS  |     1 | 4355923 |      0 | 0.12 s | 0.05 s | -58.3% |
-| VSTS  |    32 | 4355923 |      0 | 1.34 s | 1.36 s | + 1.5% |
-| VSTS  |    31 | 4276829 |  79094 | 1.34 s | 1.36 s | + 1.5% |
-
-For the Windows repo running in Windows Subsystem for Linux:
-
-    Pack Files: 50
-Packed Objects: 22,385,898
- Loose Objects: 492
-     Base Time: 3.08 s
-      New Time: 2.72 s
-         Rel %: -11.8
+If a second command line argument "--missing" is given, then a list of
+OIDs is generated without examining the repo.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- sha1_name.c | 70 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 66 insertions(+), 4 deletions(-)
+ Makefile                     |  1 +
+ t/helper/.gitignore          |  1 +
+ t/helper/test-list-objects.c | 85 ++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 87 insertions(+)
+ create mode 100644 t/helper/test-list-objects.c
 
-diff --git a/sha1_name.c b/sha1_name.c
-index bb47b6702..1566cd4fc 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -478,6 +478,7 @@ struct min_abbrev_data {
- 	unsigned int init_len;
- 	unsigned int cur_len;
- 	char *hex;
-+	const unsigned char *hash;
- };
- 
- static inline char get_hex_char_from_oid(const struct object_id *oid, int i)
-@@ -504,6 +505,65 @@ static int extend_abbrev_len(const struct object_id *oid, void *cb_data)
- 	return 0;
- }
- 
-+static void find_abbrev_len_for_pack(struct packed_git *p,
-+				     struct min_abbrev_data *mad)
+diff --git a/Makefile b/Makefile
+index f2bb7f2f6..af94b655a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -647,6 +647,7 @@ TEST_PROGRAMS_NEED_X += test-hashmap
+ TEST_PROGRAMS_NEED_X += test-index-version
+ TEST_PROGRAMS_NEED_X += test-lazy-init-name-hash
+ TEST_PROGRAMS_NEED_X += test-line-buffer
++TEST_PROGRAMS_NEED_X += test-list-objects
+ TEST_PROGRAMS_NEED_X += test-match-trees
+ TEST_PROGRAMS_NEED_X += test-mergesort
+ TEST_PROGRAMS_NEED_X += test-mktemp
+diff --git a/t/helper/.gitignore b/t/helper/.gitignore
+index 721650256..9dd1c9f3c 100644
+--- a/t/helper/.gitignore
++++ b/t/helper/.gitignore
+@@ -13,6 +13,7 @@
+ /test-index-version
+ /test-lazy-init-name-hash
+ /test-line-buffer
++/test-list-objects
+ /test-match-trees
+ /test-mergesort
+ /test-mktemp
+diff --git a/t/helper/test-list-objects.c b/t/helper/test-list-objects.c
+new file mode 100644
+index 000000000..83b1250fe
+--- /dev/null
++++ b/t/helper/test-list-objects.c
+@@ -0,0 +1,85 @@
++#include "cache.h"
++#include "packfile.h"
++#include <stdio.h>
++
++struct count {
++	int total;
++	int select_mod;
++};
++
++int count_loose(const struct object_id *oid,
++		const char *path,
++		void *data)
 +{
-+	int match = 0;
-+	uint32_t num, last, first = 0;
-+	struct object_id oid;
-+
-+	open_pack_index(p);
-+	num = p->num_objects;
-+	last = num;
-+	while (first < last) {
-+		uint32_t mid = (first + last) / 2;
-+		const unsigned char *current;
-+		int cmp;
-+
-+		current = nth_packed_object_sha1(p, mid);
-+		cmp = hashcmp(mad->hash, current);
-+		if (!cmp) {
-+			match = 1;
-+			first = mid;
-+			break;
-+		}
-+		if (cmp > 0) {
-+			first = mid + 1;
-+			continue;
-+		}
-+		last = mid;
-+	}
-+
-+	/*
-+	 * first is now the position in the packfile where we would insert
-+	 * mad->hash if it does not exist (or the position of mad->hash if
-+	 * it does exist). Hence, we consider a maximum of three objects
-+	 * nearby for the abbreviation length.
-+	 */
-+	mad->init_len = 0;
-+	if (!match) {
-+		nth_packed_object_oid(&oid, p, first);
-+		extend_abbrev_len(&oid, mad);
-+	} else if (first < num - 1) {
-+		nth_packed_object_oid(&oid, p, first + 1);
-+		extend_abbrev_len(&oid, mad);
-+	}
-+	if (first > 0) {
-+		nth_packed_object_oid(&oid, p, first - 1);
-+		extend_abbrev_len(&oid, mad);
-+	}
-+	mad->init_len = mad->cur_len;
++	((struct count*)data)->total++;
++	return 0;
 +}
 +
-+static void find_abbrev_len_packed(struct min_abbrev_data *mad)
++int count_packed(const struct object_id *oid,
++		 struct packed_git *pack,
++		 uint32_t pos,
++		 void* data)
 +{
-+	struct packed_git *p;
-+
-+	prepare_packed_git();
-+	for (p = packed_git; p; p = p->next)
-+		find_abbrev_len_for_pack(p, mad);
++	((struct count*)data)->total++;
++	return 0;
 +}
 +
- int find_unique_abbrev_r(char *hex, const unsigned char *sha1, int len)
- {
- 	struct disambiguate_state ds;
-@@ -535,19 +595,21 @@ int find_unique_abbrev_r(char *hex, const unsigned char *sha1, int len)
- 	if (len == GIT_SHA1_HEXSZ || !len)
- 		return GIT_SHA1_HEXSZ;
- 
--	if (init_object_disambiguation(hex, len, &ds) < 0)
--		return -1;
--
- 	mad.init_len = len;
- 	mad.cur_len = len;
- 	mad.hex = hex;
-+	mad.hash = sha1;
++void output(const struct object_id *oid,
++	    struct count *c)
++{
++	if (!(c->total % c->select_mod))
++		printf("%s\n", oid_to_hex(oid));
++	c->total--;
++}
 +
-+	find_abbrev_len_packed(&mad);
++int output_loose(const struct object_id *oid,
++		 const char *path,
++		 void *data)
++{
++	output(oid, (struct count*)data);
++	return 0;
++}
 +
-+	if (init_object_disambiguation(hex, mad.cur_len, &ds) < 0)
-+		return -1;
- 
- 	ds.fn = extend_abbrev_len;
- 	ds.always_call_fn = 1;
- 	ds.cb_data = (void*)&mad;
- 
- 	find_short_object_filename(&ds);
--	find_short_packed_object(&ds);
- 	(void)finish_object_disambiguation(&ds, &oid_ret);
- 
- 	hex[mad.cur_len] = 0;
++int output_packed(const struct object_id *oid,
++		  struct packed_git *pack,
++		  uint32_t pos,
++		  void* data)
++{
++	output(oid, (struct count*)data);
++	return 0;
++}
++
++int cmd_main(int ac, const char **av)
++{
++	unsigned int hash_delt = 0xFDB97531;
++	unsigned int hash_base = 0x01020304;
++	int i, n = 0;
++	struct count c;
++	const int u_per_oid = sizeof(struct object_id) / sizeof(unsigned int);
++
++	c.total = 0;
++	if (ac > 1)
++		n = atoi(av[1]);
++
++	if (ac > 2 && !strcmp(av[2], "--missing")) {
++		while (c.total++ < n) {
++			for (i = 0; i < u_per_oid; i++) {
++				printf("%08x", hash_base);
++				hash_base += hash_delt;
++			}
++			printf("\n");
++		}
++	} else {
++		setup_git_directory();
++
++		for_each_loose_object(count_loose, &c, 0);
++		for_each_packed_object(count_packed, &c, 0);
++
++		c.select_mod = 1 + c.total / n;
++
++		for_each_loose_object(output_loose, &c, 0);
++		for_each_packed_object(output_packed, &c, 0);
++	}
++
++	exit(0);
++}
 -- 
 2.14.1.538.g56ec8fc98.dirty
 
