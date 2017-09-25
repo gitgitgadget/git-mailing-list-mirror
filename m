@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9DF9F20281
-	for <e@80x24.org>; Mon, 25 Sep 2017 08:21:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 884A020281
+	for <e@80x24.org>; Mon, 25 Sep 2017 08:21:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934126AbdIYIU7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Sep 2017 04:20:59 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:36494 "EHLO
+        id S934124AbdIYIU6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Sep 2017 04:20:58 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:33291 "EHLO
         mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932617AbdIYIUv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Sep 2017 04:20:51 -0400
-Received: by mail-pg0-f66.google.com with SMTP id d8so4495568pgt.3
-        for <git@vger.kernel.org>; Mon, 25 Sep 2017 01:20:51 -0700 (PDT)
+        with ESMTP id S933996AbdIYIUy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Sep 2017 04:20:54 -0400
+Received: by mail-pg0-f66.google.com with SMTP id i130so4499254pgc.0
+        for <git@vger.kernel.org>; Mon, 25 Sep 2017 01:20:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=O3pdoodcYgkII6MQ3UuT+Fz+wTyVGZ9wET8TNOZ6dBI=;
-        b=aW2HI3x0rOafqfv3ub11zJwziEOdpW96/E9M0eGjXk7xbG/NQEv+6BVYpg0YlC3duD
-         /auV/cKT1Lv1tmAZobaj1SVQsXa7SO7l+B45IpAvHO0Dgjw2PpHJG9HbNf+335uJc/gE
-         fFMf1kDTRI1t/+iwkb+LmBez8fbD8tAZcQpWJuQZraVeV9Xf/qkbN8RrVvzx2iOfjI60
-         USoQjEgjNbwUYq+1lEQy4ijM/+lASLOVGK8VsB6sRv1RKflQStjD753BJXO1PZyYeNYP
-         J4dZCHuXJt8UpR2r2y4pERxK0nXirZ0CXmcbRZCG2PASl2K2c0gmfsJSwx9Elr+4C1s0
-         2IPQ==
+        bh=LHnGf0JtJDAq3zDgHcjEVZUnLQ6VDGMsifz/Xo+UZHY=;
+        b=AaA4NAJ+G+skv9jwL70JK1UF9W6EaXra2AyXSr0DxMzBvoCaAWV7E4PuMOvv4Se8lZ
+         e/ipbLoFbFw0kZq3k9+MFezpd+hKfG4FUZa+PmHUh4q5f9hnM/X90UlyVEvcBNL+XC6q
+         JO5Q+iS7NdHINb+34bOVAsGhQg4zNINAgnGdPr6eJNcT+8tH8Pv1Pq54gMDVFj5UEx+e
+         YkMn92U4JMvHgpx/yJI20/CXPoT/8h9hqKOIup0+9lYOYip3Tvmuv+4rKzWp0qFGywN+
+         Y1Y6RGVcqplGAjsGHX91c7pC935iAumJ3jaoOCMm1rCbjopkLVzX+woy8UeVpuB9/nw7
+         ZzLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=O3pdoodcYgkII6MQ3UuT+Fz+wTyVGZ9wET8TNOZ6dBI=;
-        b=KK3oG4+jqI1Ip540HPgjyEbhQjxMbNStT3ICWmRVBifENqTKyM/KyUmLieW1PEIo9t
-         j5JY0O9gdM+V5+IiLDhyHHBKLm5ogK3okL3LFY+E4spv2JpQqDtrWCvGEXhHCuyLX8CH
-         DdVfZ6vwFoU8cTcahjNaAvEGHWNbB1nv59DnT8i842kO0odGw84B4HhDIVGzHOvN2/9f
-         17SgxNujVix8nxV1XYwYb70jTnAdWd+bzbsU2rS7w1RwYU5H0JsFCotXXtObd8pH6Wa8
-         pMduvkYCbXIsNHSEoBq5JCMGoEV+GZlABPcgF8lpPlTOBvQPH/KcrbUbfu/SIerlebOn
-         09yQ==
-X-Gm-Message-State: AHPjjUh0lI67LgW0Xve+BvQApT4hAfqHxWEdCLxyAG7R2PdI7gdmnkRp
-        rw9QRZkHOFAtAEQde0HBAFI=
-X-Google-Smtp-Source: AOwi7QCvYU+wM5yKevUi6DngC3FZZMqYutS5LfQYyoY/kvEvc0mkN/JAA+Jz726Wsmvu6iY/iPuEDg==
-X-Received: by 10.98.74.4 with SMTP id x4mr6776927pfa.222.1506327650613;
-        Mon, 25 Sep 2017 01:20:50 -0700 (PDT)
+        bh=LHnGf0JtJDAq3zDgHcjEVZUnLQ6VDGMsifz/Xo+UZHY=;
+        b=eIWdrfOUv0HHtWnIYTRuO9i2yh2x6nSz090+ugtLQ87qO8bcDVrsrrRBlbRormyI6T
+         gPsAxxAZphEpHHtzmmXa4BIYXBT74prA+XpnZov91RwxSg31/r2Rn74xEt8KESgsa36+
+         wgstgmzlLdPZDFdcrnUKcAgJfg7jvnWddiWwq41lTkSSgSHlYWi/Py6QHezNrEcutkG0
+         +1lRNCoSFIgG2bvHTf5iExSQRcytfsFjIpXIDxZD+4QvmyLrUNxbZTzXO5ZdQuJL8nU+
+         3gQb3G3AlDbRYE3V7J3kX7FFW5DWxM5BI6mKhvWNjAWuYpCWEeZy0hDeuTQz5hZ9yLHc
+         X5yg==
+X-Gm-Message-State: AHPjjUgdYBnZiYx73CgJzm26K1/lMvJf6xnPuvl7CH8yyOum4OyHTN5/
+        ZJSnTMqHRz+Cg8SOx6SWuN8=
+X-Google-Smtp-Source: AOwi7QB2sRa0hmrYpfFqwfJP943lKX2yzNNKVvwXvylNrFzekjRWLOL4J0ymOSyYN8GVXiEE+ZAawQ==
+X-Received: by 10.99.160.65 with SMTP id u1mr6945010pgn.227.1506327654194;
+        Mon, 25 Sep 2017 01:20:54 -0700 (PDT)
 Received: from localhost.localdomain ([2405:204:700a:bb87:18d5:bb83:9cfe:b5d3])
-        by smtp.gmail.com with ESMTPSA id g16sm11469444pfd.6.2017.09.25.01.20.47
+        by smtp.gmail.com with ESMTPSA id g16sm11469444pfd.6.2017.09.25.01.20.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 25 Sep 2017 01:20:49 -0700 (PDT)
+        Mon, 25 Sep 2017 01:20:52 -0700 (PDT)
 From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 X-Google-Original-From: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, sbeller@google.com
-Subject: [RFC PATCH v2 4/5] branch: introduce dont_fail parameter for create validation
-Date:   Mon, 25 Sep 2017 13:50:23 +0530
-Message-Id: <20170925082024.2691-5-kaarticsivaraam91196@gmail.com>
+Subject: [RFC PATCH v2 5/5] builtin/branch: give more useful error messages when renaming
+Date:   Mon, 25 Sep 2017 13:50:24 +0530
+Message-Id: <20170925082024.2691-6-kaarticsivaraam91196@gmail.com>
 X-Mailer: git-send-email 2.14.1.935.ge2b2bcd8a
 In-Reply-To: <20170925082024.2691-1-kaarticsivaraam91196@gmail.com>
 References: <20170919071525.9404-1-kaarticsivaraam91196@gmail.com>
@@ -64,158 +64,124 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This parameter allows the branch create validation function to
-optionally return a flag specifying the reason for failure, when
-requested. This allows the caller to know why it was about to die.
-This allows more useful error messages to be given to the user when
-trying to rename a branch.
+When trying to rename an inexistent branch to with a name of a branch
+that already exists the rename failed specifying the new branch name
+exists rather than specifying that the branch trying to be renamed
+doesn't exist.
 
-The flags are specified in the form of an enum and values for success
-flags have been assigned explicitly to clearly express that certain
-callers rely those values and they cannot be arbitrary.
+    $ git branch -m tset master
+    fatal: A branch named 'master' already exists.
 
-Only the logic has been added but no caller has been made to use it, yet.
-So, no functional changes.
+It's conventional to report that 'tset' doesn't exist rather than
+reporting that 'master' exists, the same way the 'mv' command does.
+
+    (hypothetical)
+    $ git branch -m tset master
+    fatal: branch 'tset' doesn't exist.
+
+That has the problem that the error about an existing branch is shown
+only after the user corrects the error about inexistent branch.
+
+    $ git branch -m test master
+    fatal: A branch named 'master' already exists.
+
+This isn't useful either because the user would have corrected this error in
+a single go if he had been told this alongside the first error. So, give
+more useful error messages by giving errors about old branch name and new
+branch name at the same time. This is possible as the branch validation
+function now returns the reason it was about to die, when requested.
+
+    $ git branch -m tset master
+    fatal: branch 'tset' doesn't exist, and branch 'master' already exists
+
+Note: Thanks to the strbuf API that made it possible to easily construct
+the composite error message strings!
 
 Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
 ---
- branch.c           | 32 ++++++++++++++++++++++----------
- branch.h           | 23 +++++++++++++++++++++--
- builtin/branch.c   |  2 +-
- builtin/checkout.c |  2 +-
- 4 files changed, 45 insertions(+), 14 deletions(-)
+ builtin/branch.c | 41 +++++++++++++++++++++++++++++++++++------
+ 1 file changed, 35 insertions(+), 6 deletions(-)
 
-diff --git a/branch.c b/branch.c
-index db2abeb7e..83305ded6 100644
---- a/branch.c
-+++ b/branch.c
-@@ -179,27 +179,39 @@ int read_branch_desc(struct strbuf *buf, const char *branch_name)
- }
- 
- int validate_branch_creation(const char *name, struct strbuf *ref,
--			     int shouldnt_exist, int clobber_head_ok)
-+			     int shouldnt_exist, int clobber_head_ok, unsigned dont_fail)
- {
--	if (strbuf_check_branch_ref(ref, name))
--		die(_("'%s' is not a valid branch name."), name);
-+	if (strbuf_check_branch_ref(ref, name)) {
-+		if (dont_fail)
-+			return INVALID_BRANCH_NAME;
-+		else
-+			die(_("'%s' is not a valid branch name."), name);
-+	}
- 
- 	if (!ref_exists(ref->buf))
--		return 0;
-+		return VALID_BRANCH_NAME;
- 
--	if (shouldnt_exist)
--		die(_("A branch named '%s' already exists."), ref->buf + strlen("refs/heads/"));
-+	if (shouldnt_exist) {
-+		if (dont_fail)
-+			return BRANCH_EXISTS;
-+		else
-+			die(_("A branch named '%s' already exists."), ref->buf + strlen("refs/heads/"));
-+	}
- 
- 	if (!clobber_head_ok) {
- 		const char *head;
- 		struct object_id oid;
- 
- 		head = resolve_ref_unsafe("HEAD", 0, oid.hash, NULL);
--		if (!is_bare_repository() && head && !strcmp(head, ref->buf))
--			die(_("Cannot force update the current branch."));
-+		if (!is_bare_repository() && head && !strcmp(head, ref->buf)) {
-+			if (dont_fail)
-+				return CANNOT_FORCE_UPDATE_CURRENT_BRANCH;
-+			else
-+				die(_("Cannot force update the current branch."));
-+		}
- 	}
- 
--	return 1;
-+	return FORCE_UPDATING_BRANCH;
- }
- 
- /*
-@@ -268,7 +280,7 @@ void create_branch(const char *name, const char *start_name,
- 		validate_existing_branch(name, &ref);
- 		dont_change_ref = 1;
- 	} else {
--		forcing = validate_branch_creation(name, &ref, !force, clobber_head_ok);
-+		forcing = validate_branch_creation(name, &ref, !force, clobber_head_ok, 0);
- 	}
- 
- 	real_ref = NULL;
-diff --git a/branch.h b/branch.h
-index a6dde552c..4b68a789d 100644
---- a/branch.h
-+++ b/branch.h
-@@ -27,6 +27,16 @@ void create_branch(const char *name, const char *start_name,
- 		   int force, int clobber_head_ok,
- 		   int reflog, int quiet, enum branch_track track);
- 
-+enum branch_validation_result {
-+	/* Flags that say it's NOT OK to update */
-+	BRANCH_EXISTS = -3,
-+	CANNOT_FORCE_UPDATE_CURRENT_BRANCH,
-+	INVALID_BRANCH_NAME,
-+	/* Flags that say it's OK to update */
-+	VALID_BRANCH_NAME = 0,
-+	FORCE_UPDATING_BRANCH = 1
-+};
-+
- /*
-  * Validates whether the branch with the given name may be updated (created, renamed etc.,)
-  * with respect to the given conditions.
-@@ -41,10 +51,19 @@ void create_branch(const char *name, const char *start_name,
-  *   - clobber_head_ok allows another branch with given branch name to be
-  *     the currently checkout branch; with 'shouldnt_exist', it has no effect.
-  *
-- * A non-zero return value indicates that a branch already exists and can be force updated.
-+ * The return values have the following meaning,
-+ *
-+ *   - If dont_fail is 0, the function dies in case of failure and returns flags of
-+ *     'validate_result' that indicate that it's OK to update the branch. The positive
-+ *     non-zero flag implies that the branch can be force updated.
-+ *
-+ *   - If dont_fail is 1, the function doesn't die in case of failure but returns flags
-+ *     of 'validate_result' that specify the reason for failure. The behaviour in case of
-+ *     success is same as above.
-  *
-  */
--int validate_branch_creation(const char *name, struct strbuf *ref, int shouldnt_exist, int clobber_head_ok);
-+int validate_branch_creation(const char *name, struct strbuf *ref,
-+			     int shouldnt_exist, int clobber_head_ok, unsigned dont_fail);
- 
- /*
-  * Remove information about the state of working on the current
 diff --git a/builtin/branch.c b/builtin/branch.c
-index aa2f36519..25e3a2f29 100644
+index 25e3a2f29..0c2017bee 100644
 --- a/builtin/branch.c
 +++ b/builtin/branch.c
-@@ -483,7 +483,7 @@ static void rename_branch(const char *oldname, const char *newname, int force)
+@@ -456,25 +456,49 @@ static void reject_rebase_or_bisect_branch(const char *target)
+ 	free_worktrees(worktrees);
+ }
+ 
++static void get_error_msg(struct strbuf* error_msg, const char* oldname, unsigned old_branch_exists,
++			  const char* newname, int new_branch_validation_result)
++{
++	const char* connector_string = _(", and ");
++
++	if (!old_branch_exists) {
++		strbuf_addf(error_msg, _("branch '%s' doesn't exist"), oldname);
++	}
++
++	switch (new_branch_validation_result) {
++		case BRANCH_EXISTS:
++			strbuf_addf(error_msg, "%s", (!old_branch_exists) ? connector_string : "");
++			strbuf_addf(error_msg,_("branch '%s' already exists"), newname);
++			break;
++		case CANNOT_FORCE_UPDATE_CURRENT_BRANCH:
++			strbuf_addf(error_msg, "%s", (!old_branch_exists) ? connector_string : "");
++			strbuf_addstr(error_msg, _("cannot force update the current branch"));
++			break;
++		case INVALID_BRANCH_NAME:
++			strbuf_addf(error_msg, "%s", (!old_branch_exists) ? connector_string : "");
++			strbuf_addf(error_msg, _("branch name '%s' is invalid"), newname);
++			break;
++	}
++}
++
+ static void rename_branch(const char *oldname, const char *newname, int force)
+ {
+ 	struct strbuf oldref = STRBUF_INIT, newref = STRBUF_INIT, logmsg = STRBUF_INIT;
+ 	struct strbuf oldsection = STRBUF_INIT, newsection = STRBUF_INIT;
+ 	int recovery = 0;
+ 	int clobber_head_ok;
++	struct strbuf error_msg = STRBUF_INIT, empty = STRBUF_INIT;
+ 
+ 	if (!oldname)
+ 		die(_("cannot rename the current branch while not on any."));
+ 
+-	if (strbuf_check_branch_ref(&oldref, oldname)) {
++	if (strbuf_check_branch_ref(&oldref, oldname) && ref_exists(oldref.buf))
++	{
+ 		/*
+ 		 * Bad name --- this could be an attempt to rename a
+ 		 * ref that we used to allow to be created by accident.
+ 		 */
+-		if (ref_exists(oldref.buf))
+-			recovery = 1;
+-		else
+-			die(_("Invalid branch name: '%s'"), oldname);
++		recovery = 1;
+ 	}
+ 
+ 	/*
+@@ -483,7 +507,10 @@ static void rename_branch(const char *oldname, const char *newname, int force)
  	 */
  	clobber_head_ok = !strcmp(oldname, newname);
  
--	validate_branch_creation(newname, &newref, !force, clobber_head_ok);
-+	validate_branch_creation(newname, &newref, !force, clobber_head_ok, 0);
+-	validate_branch_creation(newname, &newref, !force, clobber_head_ok, 0);
++	get_error_msg(&error_msg, oldname, ref_exists(oldref.buf),
++			newname, validate_branch_creation(newname, &newref, !force, clobber_head_ok, 1));
++	if (strbuf_cmp(&error_msg, &empty))
++		die("%s", error_msg.buf);
  
  	reject_rebase_or_bisect_branch(oldref.buf);
  
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index fcbbbb1fa..e9d636c66 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1285,7 +1285,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 		opts.branch_exists =
- 			validate_branch_creation(opts.new_branch, &buf,
- 						!opts.new_branch_force,
--						!!opts.new_branch_force);
-+						!!opts.new_branch_force, 0);
+@@ -509,6 +536,8 @@ static void rename_branch(const char *oldname, const char *newname, int force)
+ 		die(_("Branch is renamed, but update of config-file failed"));
+ 	strbuf_release(&oldsection);
+ 	strbuf_release(&newsection);
++	strbuf_release(&error_msg);
++	strbuf_release(&empty);
+ }
  
- 		strbuf_release(&buf);
- 	}
+ static GIT_PATH_FUNC(edit_description, "EDIT_DESCRIPTION")
 -- 
 2.14.1.935.ge2b2bcd8a
 
