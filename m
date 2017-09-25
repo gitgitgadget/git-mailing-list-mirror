@@ -6,26 +6,26 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4366720281
-	for <e@80x24.org>; Mon, 25 Sep 2017 08:00:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C5E9A20281
+	for <e@80x24.org>; Mon, 25 Sep 2017 08:00:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933974AbdIYIAk (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Sep 2017 04:00:40 -0400
+        id S933956AbdIYIAj (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Sep 2017 04:00:39 -0400
 Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:54855 "EHLO
         alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S933835AbdIYIAh (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 25 Sep 2017 04:00:37 -0400
-X-AuditID: 1207440c-7e5ff7000000143e-1d-59c8b7a3f54c
+        by vger.kernel.org with ESMTP id S933854AbdIYIAi (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 25 Sep 2017 04:00:38 -0400
+X-AuditID: 1207440c-7e5ff7000000143e-25-59c8b7a57f5e
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id CF.E5.05182.3A7B8C95; Mon, 25 Sep 2017 04:00:35 -0400 (EDT)
+        by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id B0.F5.05182.5A7B8C95; Mon, 25 Sep 2017 04:00:37 -0400 (EDT)
 Received: from bagpipes.fritz.box (p57BCCDF6.dip0.t-ipconnect.de [87.188.205.246])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v8P80N6O027347
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v8P80N6P027347
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Mon, 25 Sep 2017 04:00:33 -0400
+        Mon, 25 Sep 2017 04:00:35 -0400
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Stefan Beller <sbeller@google.com>,
@@ -35,98 +35,129 @@ Cc:     Stefan Beller <sbeller@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Brandon Williams <bmwill@google.com>,
         git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v3 04/21] die_unterminated_line(), die_invalid_line(): new functions
-Date:   Mon, 25 Sep 2017 10:00:01 +0200
-Message-Id: <55b1102936de66e00bdee75cd38454a70d4228af.1506325610.git.mhagger@alum.mit.edu>
+Subject: [PATCH v3 05/21] read_packed_refs(): use mmap to read the `packed-refs` file
+Date:   Mon, 25 Sep 2017 10:00:02 +0200
+Message-Id: <9a4914af7f6abfed196986c59abd9875e64b0a9d.1506325610.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.14.1
 In-Reply-To: <cover.1506325610.git.mhagger@alum.mit.edu>
 References: <cover.1506325610.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrHIsWRmVeSWpSXmKPExsUixO6iqLt4+4lIg7mvjS3WPrvDZPF8/Ql2
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrBIsWRmVeSWpSXmKPExsUixO6iqLt0+4lIgzsnbCzWPrvDZPF8/Ql2
         i64r3UwWDb1XmC36l3exWdxeMZ/ZonvKW0aLHy09zBabN7ezOHB6/H3/gclj56y77B4fPsZ5
-        LNhU6vGsdw+jx8VLyh6fN8kFsEdx2aSk5mSWpRbp2yVwZSy+uZ21YK9wxdVdk5kbGO/wdzFy
-        ckgImEh87H3K1MXIxSEksINJ4vrjTkYI5xSTxJUr99hBqtgEdCUW9TQzgdgiAmoSE9sOsYAU
-        MQusZJaYtPUKK0hCWCBE4v66j2ANLAKqEk8X/wWL8wpESaxtPcYEsU5e4tyD28wgNqeAhcSb
-        M0fYQGwhAXOJ8zdusU5g5FnAyLCKUS4xpzRXNzcxM6c4NVm3ODkxLy+1SNdQLzezRC81pXQT
-        IyToeHYwflsnc4hRgINRiYc34t/xSCHWxLLiytxDjJIcTEqivHf5TkQK8SXlp1RmJBZnxBeV
-        5qQWH2KU4GBWEuE9thoox5uSWFmVWpQPk5LmYFES51Vdou4nJJCeWJKanZpakFoEk5Xh4FCS
-        4P29DahRsCg1PbUiLTOnBCHNxMEJMpwHaPhykBre4oLE3OLMdIj8KUZdjo6bd/8wCbHk5eel
-        SonzbgApEgApyijNg5sDSxavGMWB3hLmlQWmDiEeYKKBm/QKaAkT0JLeqWBLShIRUlINjPFN
-        L87N6JdUfPNnbe/UiTk8v1Tln6UVbqjg2bI6/puPNdO6GTGSPT8/fKtKmBNi9D6r9Fnu6pV5
-        VzUm3/h/Y6bZr7nluwpOPF6zZY7+13Uy/NaPtl9YdOI3f86GKXMKBFKbapKtfM+/2Sdjn+93
-        Qbyn1zRj4nRd9pdaz/ssigROLF68+SMfq48SS3FGoqEWc1FxIgDeDour8QIAAA==
+        LNhU6vGsdw+jx8VLyh6fN8kFsEdx2aSk5mSWpRbp2yVwZTScfMlY8FCi4v+EOywNjJ+Fuxg5
+        OCQETCT+HQ3uYuTiEBLYwSTRvG0OE4Rzikni0NwnLF2MnBxsAroSi3qamUBsEQE1iYlth1hA
+        ipgFVjJLTNp6hRUkISwQKnFrwmKwIhYBVYkDC6axgGzgFYiSOPA7ByQsISAvce7BbWYQm1PA
+        QuLNmSNsILaQgLnE+Ru3WCcw8ixgZFjFKJeYU5qrm5uYmVOcmqxbnJyYl5dapGuol5tZopea
+        UrqJERJwPDsYv62TOcQowMGoxMMb8e94pBBrYllxZe4hRkkOJiVR3rt8JyKF+JLyUyozEosz
+        4otKc1KLDzFKcDArifAeWw2U401JrKxKLcqHSUlzsCiJ86ouUfcTEkhPLEnNTk0tSC2CyWpw
+        cAj0rll9gVGKJS8/L1VJgvf3NqAhgkWp6akVaZk5JQilTBycIIt4gBYtB6nhLS5IzC3OTIfI
+        n2LU5ei4efcPkxDYIClx3g0gRQIgRRmleXBzYAnkFaM40IvCvLLAdCLEA0w+cJNeAS1hAlrS
+        OxVsSUkiQkqqgdEv5s3h9iVbhM5XXuVS7Datkkrb4xPKwGXsovfGO+agtsZED91UkSP7Uxk3
+        LKt0LFky++jRacW6CzSmVPT+Enktu95J8eQn1pt+Dokiv4tkfr6c68nJIBh9a4qAiJJI+kcu
+        ycLeIttmlteeXMut5195fNuR89H3uy+KDzgrLZS70VD5UiReTomlOCPRUIu5qDgRAPSau5T7
+        AgAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Extract some helper functions for reporting errors. While we're at it,
-prevent them from spewing unlimited output to the terminal. These
-functions will soon have more callers.
-
-These functions accept the problematic line as a `(ptr, len)` pair
-rather than a NUL-terminated string, and `die_invalid_line()` checks
-for an EOL itself, because these calling conventions will be
-convenient for future callers. (Efficiency is not a concern here
-because these functions are only ever called if the `packed-refs` file
-is corrupt.)
+It's still done in a pretty stupid way, involving more data copying
+than necessary. That will improve in future commits.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs/packed-backend.c | 28 +++++++++++++++++++++++++---
- 1 file changed, 25 insertions(+), 3 deletions(-)
+ refs/packed-backend.c | 42 ++++++++++++++++++++++++++++++++----------
+ 1 file changed, 32 insertions(+), 10 deletions(-)
 
 diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index a3d9210cb0..5c50c223ef 100644
+index 5c50c223ef..154abbd83a 100644
 --- a/refs/packed-backend.c
 +++ b/refs/packed-backend.c
-@@ -161,6 +161,29 @@ static const char *parse_ref_line(struct strbuf *line, struct object_id *oid)
- 	return ref;
- }
+@@ -215,8 +215,12 @@ static NORETURN void die_invalid_line(const char *path,
+  */
+ static struct packed_ref_cache *read_packed_refs(struct packed_ref_store *refs)
+ {
+-	FILE *f;
+ 	struct packed_ref_cache *packed_refs = xcalloc(1, sizeof(*packed_refs));
++	int fd;
++	struct stat st;
++	size_t size;
++	char *buf;
++	const char *pos, *eol, *eof;
+ 	struct ref_entry *last = NULL;
+ 	struct strbuf line = STRBUF_INIT;
+ 	enum { PEELED_NONE, PEELED_TAGS, PEELED_FULLY } peeled = PEELED_NONE;
+@@ -227,8 +231,8 @@ static struct packed_ref_cache *read_packed_refs(struct packed_ref_store *refs)
+ 	packed_refs->cache = create_ref_cache(NULL, NULL);
+ 	packed_refs->cache->root->flag &= ~REF_INCOMPLETE;
  
-+static NORETURN void die_unterminated_line(const char *path,
-+					   const char *p, size_t len)
-+{
-+	if (len < 80)
-+		die("unterminated line in %s: %.*s", path, (int)len, p);
-+	else
-+		die("unterminated line in %s: %.75s...", path, p);
-+}
+-	f = fopen(refs->path, "r");
+-	if (!f) {
++	fd = open(refs->path, O_RDONLY);
++	if (fd < 0) {
+ 		if (errno == ENOENT) {
+ 			/*
+ 			 * This is OK; it just means that no
+@@ -241,16 +245,27 @@ static struct packed_ref_cache *read_packed_refs(struct packed_ref_store *refs)
+ 		}
+ 	}
+ 
+-	stat_validity_update(&packed_refs->validity, fileno(f));
++	stat_validity_update(&packed_refs->validity, fd);
 +
-+static NORETURN void die_invalid_line(const char *path,
-+				      const char *p, size_t len)
-+{
-+	const char *eol = memchr(p, '\n', len);
++	if (fstat(fd, &st) < 0)
++		die_errno("couldn't stat %s", refs->path);
 +
-+	if (!eol)
-+		die_unterminated_line(path, p, len);
-+	else if (eol - p < 80)
-+		die("unexpected line in %s: %.*s", path, (int)(eol - p), p);
-+	else
-+		die("unexpected line in %s: %.75s...", path, p);
-+
-+}
-+
- /*
-  * Read from the `packed-refs` file into a newly-allocated
-  * `packed_ref_cache` and return it. The return value will already
-@@ -227,7 +250,7 @@ static struct packed_ref_cache *read_packed_refs(struct packed_ref_store *refs)
++	size = xsize_t(st.st_size);
++	buf = xmmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);
++	pos = buf;
++	eof = buf + size;
+ 
+ 	dir = get_ref_dir(packed_refs->cache->root);
+-	while (strbuf_getwholeline(&line, f, '\n') != EOF) {
++	while (pos < eof) {
+ 		struct object_id oid;
+ 		const char *refname;
  		const char *traits;
  
- 		if (!line.len || line.buf[line.len - 1] != '\n')
--			die("unterminated line in %s: %s", refs->path, line.buf);
-+			die_unterminated_line(refs->path, line.buf, line.len);
+-		if (!line.len || line.buf[line.len - 1] != '\n')
+-			die_unterminated_line(refs->path, line.buf, line.len);
++		eol = memchr(pos, '\n', eof - pos);
++		if (!eol)
++			die_unterminated_line(refs->path, pos, eof - pos);
++
++		strbuf_add(&line, pos, eol + 1 - pos);
  
  		if (skip_prefix(line.buf, "# pack-refs with:", &traits)) {
  			if (strstr(traits, " fully-peeled "))
-@@ -266,8 +289,7 @@ static struct packed_ref_cache *read_packed_refs(struct packed_ref_store *refs)
- 			 */
- 			last->flag |= REF_KNOWS_PEELED;
- 		} else {
--			strbuf_setlen(&line, line.len - 1);
--			die("unexpected line in %s: %s", refs->path, line.buf);
-+			die_invalid_line(refs->path, line.buf, line.len);
+@@ -258,7 +273,7 @@ static struct packed_ref_cache *read_packed_refs(struct packed_ref_store *refs)
+ 			else if (strstr(traits, " peeled "))
+ 				peeled = PEELED_TAGS;
+ 			/* perhaps other traits later as well */
+-			continue;
++			goto next_line;
  		}
+ 
+ 		refname = parse_ref_line(&line, &oid);
+@@ -291,11 +306,18 @@ static struct packed_ref_cache *read_packed_refs(struct packed_ref_store *refs)
+ 		} else {
+ 			die_invalid_line(refs->path, line.buf, line.len);
+ 		}
++
++	next_line:
++		/* The "+ 1" is for the LF character. */
++		pos = eol + 1;
++		strbuf_reset(&line);
  	}
+ 
+-	fclose(f);
+-	strbuf_release(&line);
++	if (munmap(buf, size))
++		die_errno("error ummapping packed-refs file");
++	close(fd);
+ 
++	strbuf_release(&line);
+ 	return packed_refs;
+ }
  
 -- 
 2.14.1
