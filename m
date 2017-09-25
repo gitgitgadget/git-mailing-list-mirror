@@ -2,215 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C1F27202A5
-	for <e@80x24.org>; Mon, 25 Sep 2017 20:33:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 848B1202A5
+	for <e@80x24.org>; Mon, 25 Sep 2017 21:14:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935802AbdIYUd1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Sep 2017 16:33:27 -0400
-Received: from cloud.peff.net ([104.130.231.41]:49626 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S934254AbdIYUd0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Sep 2017 16:33:26 -0400
-Received: (qmail 2652 invoked by uid 109); 25 Sep 2017 20:33:26 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 25 Sep 2017 20:33:26 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28565 invoked by uid 111); 25 Sep 2017 20:34:04 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Mon, 25 Sep 2017 16:34:04 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Sep 2017 16:33:24 -0400
-Date:   Mon, 25 Sep 2017 16:33:24 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 7/7] add xread_in_full() helper
-Message-ID: <20170925203323.rmm3i5kx266ma3wu@sigill.intra.peff.net>
-References: <20170925202646.agsnpmar3dzocdcr@sigill.intra.peff.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170925202646.agsnpmar3dzocdcr@sigill.intra.peff.net>
+        id S934013AbdIYVOV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Sep 2017 17:14:21 -0400
+Received: from mail-wr0-f182.google.com ([209.85.128.182]:49060 "EHLO
+        mail-wr0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752028AbdIYVOU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Sep 2017 17:14:20 -0400
+Received: by mail-wr0-f182.google.com with SMTP id 108so10135842wra.5
+        for <git@vger.kernel.org>; Mon, 25 Sep 2017 14:14:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:content-transfer-encoding:subject:message-id:date:to
+         :mime-version;
+        bh=O4zKUlxD5sXxDjtq1C0M3+88iH0b0Y8IjQKisYHr/Us=;
+        b=KakeoGWnqdOhfNa4ozUAVQoHIBowk0m85f5IwBlGp1F3FLwFJUnXSxuafWBtj+8IpS
+         sMkqYI+Gxd6wwDmJJORxbgLx3uazlFLfQV7IChpJWV6ZqX9zNJpFu/VQYDIOTDA0h5h1
+         C8Nb3dxx8+BJ1KHCYl++szeu/MxerkI8kRY3IMoJtpUVk0w4lshNCLNAdKjTocK8zRIC
+         Jn+38sOF6UW8g4w+vwKtc7HJhaCMGHemXYkIKMzkTlHaXIfsZvRdat0Il/1mne0cl3o5
+         cYxvs/N8sgLPs6uMsF4LTfgu79h9nFyY08ikQEmBKuBubnwOZKsO/t/N70VKRaeASJnB
+         l1DQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:content-transfer-encoding:subject
+         :message-id:date:to:mime-version;
+        bh=O4zKUlxD5sXxDjtq1C0M3+88iH0b0Y8IjQKisYHr/Us=;
+        b=JXBgOEdMfFyBO93ykWWMTtPKe5G3gc4YWNBKguad+XM4QvwgR+ixGz38YMBkTl51Be
+         7uuswjj7g4w5YkCv20PBUcYMKm6gWkIlVyDKHj6hJQzkQdd9pff2QgBaDT7A+J+YjNB6
+         RGftFcvY0IspHqhWpT2ApQ5xnMXtqg6tHneEwdVUxSlEd7EFmSM5jwFmbI8kjSczUDAq
+         rRKU9d0w3aqZIB5RxG6SIr5ZVeoPjIaFy6h/0x38Ehi64ciNWBhxita1+RsF7EB3Ix49
+         G3LDdhzDS3VIYUgsDBI2Hjy8US7gYbVHFj59FQ3ogzhAL+DROoKXYtFoZ8Om6bAdNq3v
+         5ceQ==
+X-Gm-Message-State: AHPjjUh0kVreEDmg71YYlL1JmhnCpMZInkWB3bYXcmw7qvTSpICT9bWj
+        c4AIfA+tlKYK53Iu1EBA6tduRfuT
+X-Google-Smtp-Source: AOwi7QCqUL74CT50WR1Ud/+G2BOn02uDm+U3VnEp8D8jmI413Y29jMYxJxjh04f9I0MN8pdfCf+U5Q==
+X-Received: by 10.223.145.5 with SMTP id j5mr6970924wrj.114.1506374058998;
+        Mon, 25 Sep 2017 14:14:18 -0700 (PDT)
+Received: from [10.32.249.241] (adsknateur.autodesk.com. [132.188.32.100])
+        by smtp.gmail.com with ESMTPSA id j73sm650202wmf.15.2017.09.25.14.14.17
+        for <git@vger.kernel.org>
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 25 Sep 2017 14:14:18 -0700 (PDT)
+From:   Lars Schneider <larsxschneider@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Subject: macOS Git installer on SourceForge
+Message-Id: <31F80F26-5EEE-440B-8E5F-A7E1403B75EB@gmail.com>
+Date:   Mon, 25 Sep 2017 23:14:16 +0200
+To:     Git Users <git@vger.kernel.org>
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Many callers of read_in_full() expect to see exactly "len"
-bytes, and die if that isn't the case. Since there are two
-interesting error cases:
+Hi,
 
-  1. We saw a read() error.
+one of my colleagues made me aware today that the macOS Git installer is=20=
 
-  2. We saw EOF with fewer bytes than expected.
+hosted on SourceForge and advertised on the official git-scm page:
+https://git-scm.com/download/mac
 
-we would ideally distinguish between them when reporting to
-the user. Let's add a helper to make this easier. We can
-convert cases that currently lump the two conditions
-together (improving their error messages) and ones that
-already distinguish (shortening their code).
+SourceForge had some bad press as they apparently bundled junkware in
+their downloads:
+=
+https://www.howtogeek.com/218764/warning-don%E2%80%99t-download-software-f=
+rom-sourceforge-if-you-can-help-it/
 
-There are a number of read_in_full() calls left that we
-can't (or shouldn't) convert, for one or more of these
-reasons:
+Is this a reason for concern?
 
- - Some are not trying to read an exact number in the first
-   place. So they only care about case 1, and are fine.
-
- - Some call error() instead of die(). We could possibly
-   accommodate these, at the expense of making our helper a
-   bit more clunky.
-
- - Some print nothing and return a failing code up the
-   stack, in which case somebody eventually looks at errno.
-   Handling these with a helper would be hard. Ideally there
-   would be some errno value that we could set for short
-   read, but there's no standard one (ENODATA is kind-of
-   accurate, but it's not really "no data"; it's "not enough
-   data", and we wouldn't want to get confused with a real
-   ENODATA error).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/get-tar-commit-id.c |  3 +--
- bulk-checkin.c              |  4 +---
- cache.h                     |  7 +++++++
- combine-diff.c              |  8 +-------
- csum-file.c                 |  6 +-----
- pack-write.c                |  3 +--
- wrapper.c                   | 11 +++++++++++
- 7 files changed, 23 insertions(+), 19 deletions(-)
-
-diff --git a/builtin/get-tar-commit-id.c b/builtin/get-tar-commit-id.c
-index 259ad40339..0b97196afc 100644
---- a/builtin/get-tar-commit-id.c
-+++ b/builtin/get-tar-commit-id.c
-@@ -24,8 +24,7 @@ int cmd_get_tar_commit_id(int argc, const char **argv, const char *prefix)
- 	if (argc != 1)
- 		usage(builtin_get_tar_commit_id_usage);
- 
--	if (read_in_full(0, buffer, HEADERSIZE) != HEADERSIZE)
--		die_errno("git get-tar-commit-id: read error");
-+	xread_in_full(0, buffer, HEADERSIZE, "stdin");
- 	if (header->typeflag[0] != 'g')
- 		return 1;
- 	if (!skip_prefix(content, "52 comment=", &comment))
-diff --git a/bulk-checkin.c b/bulk-checkin.c
-index 9a1f6c49ab..a9743785fb 100644
---- a/bulk-checkin.c
-+++ b/bulk-checkin.c
-@@ -115,9 +115,7 @@ static int stream_to_pack(struct bulk_checkin_state *state,
- 
- 		if (size && !s.avail_in) {
- 			ssize_t rsize = size < sizeof(ibuf) ? size : sizeof(ibuf);
--			if (read_in_full(fd, ibuf, rsize) != rsize)
--				die("failed to read %d bytes from '%s'",
--				    (int)rsize, path);
-+			xread_in_full(fd, ibuf, rsize, path);
- 			offset += rsize;
- 			if (*already_hashed_to < offset) {
- 				size_t hsize = offset - *already_hashed_to;
-diff --git a/cache.h b/cache.h
-index 49b083ee0a..deec532228 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1757,6 +1757,13 @@ extern ssize_t read_in_full(int fd, void *buf, size_t count);
- extern ssize_t write_in_full(int fd, const void *buf, size_t count);
- extern ssize_t pread_in_full(int fd, void *buf, size_t count, off_t offset);
- 
-+/*
-+ * Like read_in_full(), but die on errors or a failure to read exactly "count"
-+ * bytes. The "desc" string will be inserted into the error message as "reading
-+ * %s".
-+ */
-+extern void xread_in_full(int fd, void *buf, size_t count, const char *desc);
-+
- static inline ssize_t write_str_in_full(int fd, const char *str)
- {
- 	return write_in_full(fd, str, strlen(str));
-diff --git a/combine-diff.c b/combine-diff.c
-index 9e163d5ada..4bdf797a10 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -1027,7 +1027,6 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
- 			free_filespec(df);
- 		} else if (0 <= (fd = open(elem->path, O_RDONLY))) {
- 			size_t len = xsize_t(st.st_size);
--			ssize_t done;
- 			int is_file, i;
- 
- 			elem->mode = canon_mode(st.st_mode);
-@@ -1042,12 +1041,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
- 
- 			result_size = len;
- 			result = xmallocz(len);
--
--			done = read_in_full(fd, result, len);
--			if (done < 0)
--				die_errno("read error '%s'", elem->path);
--			else if (done < len)
--				die("early EOF '%s'", elem->path);
-+			xread_in_full(fd, result, len, elem->path);
- 
- 			/* If not a fake symlink, apply filters, e.g. autocrlf */
- 			if (is_file) {
-diff --git a/csum-file.c b/csum-file.c
-index a172199e44..8a9a6075a4 100644
---- a/csum-file.c
-+++ b/csum-file.c
-@@ -15,12 +15,8 @@ static void flush(struct sha1file *f, const void *buf, unsigned int count)
- {
- 	if (0 <= f->check_fd && count)  {
- 		unsigned char check_buffer[8192];
--		ssize_t ret = read_in_full(f->check_fd, check_buffer, count);
- 
--		if (ret < 0)
--			die_errno("%s: sha1 file read error", f->name);
--		if (ret < count)
--			die("%s: sha1 file truncated", f->name);
-+		xread_in_full(f->check_fd, check_buffer, count, f->name);
- 		if (memcmp(buf, check_buffer, count))
- 			die("sha1 file '%s' validation error", f->name);
- 	}
-diff --git a/pack-write.c b/pack-write.c
-index a333ec6754..05a7defdd2 100644
---- a/pack-write.c
-+++ b/pack-write.c
-@@ -219,8 +219,7 @@ void fixup_pack_header_footer(int pack_fd,
- 
- 	if (lseek(pack_fd, 0, SEEK_SET) != 0)
- 		die_errno("Failed seeking to start of '%s'", pack_name);
--	if (read_in_full(pack_fd, &hdr, sizeof(hdr)) != sizeof(hdr))
--		die_errno("Unable to reread header of '%s'", pack_name);
-+	xread_in_full(pack_fd, &hdr, sizeof(hdr), pack_name);
- 	if (lseek(pack_fd, 0, SEEK_SET) != 0)
- 		die_errno("Failed seeking to start of '%s'", pack_name);
- 	git_SHA1_Update(&old_sha1_ctx, &hdr, sizeof(hdr));
-diff --git a/wrapper.c b/wrapper.c
-index f55debc92d..66ba4dbff3 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -329,6 +329,17 @@ ssize_t read_in_full(int fd, void *buf, size_t count)
- 	return total;
- }
- 
-+void xread_in_full(int fd, void *buf, size_t count, const char *desc)
-+{
-+	ssize_t ret = read_in_full(fd, buf, count);
-+
-+	if (ret < 0)
-+		die_errno("error reading %s", desc);
-+	if (ret != count)
-+		die("too few bytes while reading %s (expected %"PRIuMAX", got %"PRIuMAX")",
-+		    desc, (uintmax_t)count, (uintmax_t)ret);
-+}
-+
- ssize_t write_in_full(int fd, const void *buf, size_t count)
- {
- 	const char *p = buf;
--- 
-2.14.1.1148.ga2561536a1
+Thanks,
+Lars=
