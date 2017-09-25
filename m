@@ -2,110 +2,182 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E01AD2047F
-	for <e@80x24.org>; Mon, 25 Sep 2017 03:18:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A850D2047F
+	for <e@80x24.org>; Mon, 25 Sep 2017 03:35:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932076AbdIYDSC (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Sep 2017 23:18:02 -0400
-Received: from washoe.dartmouth.edu ([129.170.30.229]:43790 "EHLO
-        smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753086AbdIYDSB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Sep 2017 23:18:01 -0400
-Received: from [173.231.109.82] (helo=localhost)
-        by smtp.onerussian.com with esmtpsa (TLS1.2:RSA_AES_256_CBC_SHA1:256)
-        (Exim 4.80)
-        (envelope-from <yoh@onerussian.com>)
-        id 1dwJuA-0004Bm-3i
-        for git@vger.kernel.org; Sun, 24 Sep 2017 23:18:00 -0400
-Date:   Sun, 24 Sep 2017 23:17:51 -0400
-From:   Yaroslav Halchenko <yoh@onerussian.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Message-ID: <20170925031751.lg7zk6krt65dxwas@hopa.kiewit.dartmouth.edu>
-References: <20170925000213.rilmsczdbi3jqkta@hopa.kiewit.dartmouth.edu>
- <xmqqwp4nfuv1.fsf@gitster.mtv.corp.google.com>
+        id S1753473AbdIYDfV (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Sep 2017 23:35:21 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53444 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753088AbdIYDfU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Sep 2017 23:35:20 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E8189B2101;
+        Sun, 24 Sep 2017 23:35:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=EgAUQXWeGRrIbopCSVPZ/CVHJdI=; b=kFMUna
+        Nzw6nzGnqi01RkPokGBpkTiD+5DKGhiyPEwfQmYcRz7OlbmcwC3xQm6wzny+7b+r
+        QQzZ2QB283Po6Uh3+1b2xlXfHWC0AUcE7jmvtjNMZOkZ+/pQON+3GvGnrd1wM0MC
+        7xHwLT+ON1QO7e5uQlHm1qn4c1M+Dj8SEHzDs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=xZqHWTobKZbU3aqvXcKYsSCRHlCMgOS1
+        5HsilN3BzSc1zOqZSrxfn/Dq1fYqSzALYBV+jxILlYixWd4knUBsfkodGAw6hE2f
+        jQd+Y242ATTfFhhvHG+ZlodwCOtNMDUIis8SOlPjrosB8y6s6Pks2MMjL+qBRHKV
+        lVOkvEQ7OXY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E0292B2100;
+        Sun, 24 Sep 2017 23:35:19 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 415C7B20FF;
+        Sun, 24 Sep 2017 23:35:19 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Prathamesh Chavan <pc44800@gmail.com>
+Cc:     hanwen@google.com, christian.couder@gmail.com, git@vger.kernel.org,
+        sbeller@google.com
+Subject: Re: [PATCH v5 1/4] submodule--helper: introduce get_submodule_displaypath()
+References: <20170921161059.11750-1-hanwen@google.com>
+        <20170924120858.26813-1-pc44800@gmail.com>
+        <20170924120858.26813-2-pc44800@gmail.com>
+Date:   Mon, 25 Sep 2017 12:35:18 +0900
+In-Reply-To: <20170924120858.26813-2-pc44800@gmail.com> (Prathamesh Chavan's
+        message of "Sun, 24 Sep 2017 17:38:55 +0530")
+Message-ID: <xmqqshfbfo21.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqwp4nfuv1.fsf@gitster.mtv.corp.google.com>
-X-URL:  http://www.onerussian.com
-X-Image-Url: http://www.onerussian.com/img/yoh.png
-X-PGP-Key: http://www.onerussian.com/gpg-yoh.asc
-X-fingerprint: C5B9 05F0 E8D9 FD96 68FF  366F A2DE 2350 62DA 33FA
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-SA-Exim-Connect-IP: 173.231.109.82
-X-SA-Exim-Rcpt-To: git@vger.kernel.org
-X-SA-Exim-Mail-From: yoh@onerussian.com
-Subject: Re: BUG: merge -s theirs  is not in effect (does the same as -s ours)
-X-SA-Exim-Version: 4.2.1 (built Mon, 26 Dec 2011 16:57:07 +0000)
-X-SA-Exim-Scanned: Yes (on smtp.onerussian.com)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8DC6DBDE-A1A2-11E7-9271-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Prathamesh Chavan <pc44800@gmail.com> writes:
 
-On Mon, 25 Sep 2017, Junio C Hamano wrote:
+> Introduce function get_submodule_displaypath() to replace the code
+> occurring in submodule_init() for generating displaypath of the
+> submodule with a call to it.
+>
+> This new function will also be used in other parts of the system
+> in later patches.
+>
+> Mentored-by: Christian Couder <christian.couder@gmail.com>
+> Mentored-by: Stefan Beller <sbeller@google.com>
+> Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
+> ---
+>  builtin/submodule--helper.c | 38 ++++++++++++++++++++++++++------------
+>  1 file changed, 26 insertions(+), 12 deletions(-)
+>
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index 818fe74f0..d24ac9028 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -220,6 +220,29 @@ static int resolve_relative_url_test(int argc, const char **argv, const char *pr
+>  	return 0;
+>  }
+>  
+> +/* the result should be freed by the caller. */
+> +static char *get_submodule_displaypath(const char *path, const char *prefix)
+> +{
+> +	const char *super_prefix = get_super_prefix();
+> +
+> +	if (prefix && super_prefix) {
+> +		BUG("cannot have prefix '%s' and superprefix '%s'",
+> +		    prefix, super_prefix);
+> +	} else if (prefix) {
+> +		struct strbuf sb = STRBUF_INIT;
+> +		char *displaypath = xstrdup(relative_path(path, prefix, &sb));
+> +		strbuf_release(&sb);
+> +		return displaypath;
+> +	} else if (super_prefix) {
+> +		int len = strlen(super_prefix);
+> +		const char *format = (len > 0 && is_dir_sep(super_prefix[len - 1])) ? "%s%s" : "%s/%s";
+> +
+> +		return xstrfmt(format, super_prefix, path);
+> +	} else {
+> +		return xstrdup(path);
+> +	}
+> +}
 
-> Yaroslav Halchenko <yoh@onerussian.com> writes:
+Looks like a fairly faithful rewrite of the original below, with a
+reasonable clean-up (e.g. use of xstrfmt() instead of addf()).
 
-> > My interest was to get remote branch "merge" the changes in the
-> > branch taking the branch's version (primarily alternative symlinks
-> > for git-annex'ed content) over the version in master (previous
-> > merge of a similar branch).  Unfortunately -s theirs seems to do
-> > actually -s ours
+One thing I noticed is that future callers of this function, unlike
+init_submodule() which is its original caller, are allowed to have
+super-prefix that does not end in a slash, because the helper
+automatically supplies one when it is missing.
 
-> What does
-
->     ls $(git --exec-path) | grep git-merge
-
-NB when running git just built, --exec-path reports some non existing dir
-in ~:
-
-$> git --exec-path 
-/home/yoh/libexec/git-core
-$> ls -l /home/yoh/libexec/git-core
-ls: cannot access '/home/yoh/libexec/git-core': No such file or directory
-$> which git
-/home/yoh/proj/misc/git/git
-
-> say?  
-
-> The official Git never shipped "git-merge-theirs" as far as I know,
-> and it should not exist (neither should "git merge -s theirs"; you
-> can use "git reset --hard theirs" instead).
-
-d'oh, indeed there is no git-merge-theirs  neither in debian pkg or a freshly
-built git  and I found a rogue script in the PATH (which did nothing
-apparently, sorry!). BUT I was originally mislead by the --help/manpage:
+I am not sure the added leniency is desirable [*1*], but in any
+case, the added leniency deserves a mention in the log message, I
+would think.
 
 
-MERGE STRATEGIES
-       The merge mechanism (git merge and git pull commands) allows the backend merge strategies to be chosen with -s option. Some strategies can also take their own options, which can be passed by giving -X<option>
-       arguments to git merge and/or git pull.
-       ...
-       recursive
-           This can only resolve two heads using a 3-way merge algorithm. When there is more than one common ancestor that can be used for 3-way merge, it creates a merged tree of the common ancestors and uses that as
-           the reference tree for the 3-way merge. This has been reported to result in fewer merge conflicts without causing mismerges by tests done on actual merge commits taken from Linux 2.6 kernel development
-           history. Additionally this can detect and handle merges involving renames. This is the default merge strategy when pulling or merging one branch.
+[Footnote]
 
-           The recursive strategy can take the following options:
+*1* Often it is harder to introduce bugs when the internal rules are
+stricter, e.g. "prefix must end with slash", than when they are
+looser, e.g. "prefix may or may not end with slash", because
+allowing different codepaths to have the same thing in different
+representations would hide bugs that is only uncovered when these
+codepaths eventually meet (e.g. one codepath has a path with and the
+other without trailing slash and they both think that is the
+prefix---then they use strcmp() to see if they have the same prefix,
+which would be a bug, which may not be noticed for a long time).
 
-           ours
-               This option forces conflicting hunks to be auto-resolved cleanly by favoring our version. ...
-           theirs
-               This is the opposite of ours.
-
-
-(Documentation/merge-strategies.txt in the sources I guess)
-
-PS thanks for CCing me in replies!
--- 
-Yaroslav O. Halchenko
-Center for Open Neuroscience     http://centerforopenneuroscience.org
-Dartmouth College, 419 Moore Hall, Hinman Box 6207, Hanover, NH 03755
-Phone: +1 (603) 646-9834                       Fax: +1 (603) 646-1419
-WWW:   http://www.linkedin.com/in/yarik        
+>  struct module_list {
+>  	const struct cache_entry **entries;
+>  	int alloc, nr;
+> @@ -335,15 +358,7 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
+>  	struct strbuf sb = STRBUF_INIT;
+>  	char *upd = NULL, *url = NULL, *displaypath;
+>  
+> -	if (prefix && get_super_prefix())
+> -		die("BUG: cannot have prefix and superprefix");
+> -	else if (prefix)
+> -		displaypath = xstrdup(relative_path(path, prefix, &sb));
+> -	else if (get_super_prefix()) {
+> -		strbuf_addf(&sb, "%s%s", get_super_prefix(), path);
+> -		displaypath = strbuf_detach(&sb, NULL);
+> -	} else
+> -		displaypath = xstrdup(path);
+> +	displaypath = get_submodule_displaypath(path, prefix);
+>  
+>  	sub = submodule_from_path(&null_oid, path);
+>  
+> @@ -358,9 +373,9 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
+>  	 * Set active flag for the submodule being initialized
+>  	 */
+>  	if (!is_submodule_active(the_repository, path)) {
+> -		strbuf_reset(&sb);
+>  		strbuf_addf(&sb, "submodule.%s.active", sub->name);
+>  		git_config_set_gently(sb.buf, "true");
+> +		strbuf_reset(&sb);
+>  	}
+>  
+>  	/*
+> @@ -368,7 +383,6 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
+>  	 * To look up the url in .git/config, we must not fall back to
+>  	 * .gitmodules, so look it up directly.
+>  	 */
+> -	strbuf_reset(&sb);
+>  	strbuf_addf(&sb, "submodule.%s.url", sub->name);
+>  	if (git_config_get_string(sb.buf, &url)) {
+>  		if (!sub->url)
+> @@ -405,9 +419,9 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
+>  				_("Submodule '%s' (%s) registered for path '%s'\n"),
+>  				sub->name, url, displaypath);
+>  	}
+> +	strbuf_reset(&sb);
+>  
+>  	/* Copy "update" setting when it is not set yet */
+> -	strbuf_reset(&sb);
+>  	strbuf_addf(&sb, "submodule.%s.update", sub->name);
+>  	if (git_config_get_string(sb.buf, &upd) &&
+>  	    sub->update_strategy.type != SM_UPDATE_UNSPECIFIED) {
