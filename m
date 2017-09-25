@@ -2,186 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 884A020281
-	for <e@80x24.org>; Mon, 25 Sep 2017 08:21:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B93A420A26
+	for <e@80x24.org>; Mon, 25 Sep 2017 08:28:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934124AbdIYIU6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Sep 2017 04:20:58 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:33291 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933996AbdIYIUy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Sep 2017 04:20:54 -0400
-Received: by mail-pg0-f66.google.com with SMTP id i130so4499254pgc.0
-        for <git@vger.kernel.org>; Mon, 25 Sep 2017 01:20:54 -0700 (PDT)
+        id S934234AbdIYI17 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Sep 2017 04:27:59 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:34327 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933294AbdIYI14 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Sep 2017 04:27:56 -0400
+Received: by mail-pg0-f67.google.com with SMTP id u18so4511427pgo.1
+        for <git@vger.kernel.org>; Mon, 25 Sep 2017 01:27:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=LHnGf0JtJDAq3zDgHcjEVZUnLQ6VDGMsifz/Xo+UZHY=;
-        b=AaA4NAJ+G+skv9jwL70JK1UF9W6EaXra2AyXSr0DxMzBvoCaAWV7E4PuMOvv4Se8lZ
-         e/ipbLoFbFw0kZq3k9+MFezpd+hKfG4FUZa+PmHUh4q5f9hnM/X90UlyVEvcBNL+XC6q
-         JO5Q+iS7NdHINb+34bOVAsGhQg4zNINAgnGdPr6eJNcT+8tH8Pv1Pq54gMDVFj5UEx+e
-         YkMn92U4JMvHgpx/yJI20/CXPoT/8h9hqKOIup0+9lYOYip3Tvmuv+4rKzWp0qFGywN+
-         Y1Y6RGVcqplGAjsGHX91c7pC935iAumJ3jaoOCMm1rCbjopkLVzX+woy8UeVpuB9/nw7
-         ZzLg==
+        bh=N5CjArfRCIiAfoAANu5M4HzzoDxOA5i8nteonQByBow=;
+        b=OC+RvgZi8PiD/s8r0UWdrOothdZjSkRDDt/6m0mZhy+tOo+p6nDrSxQpH5u4XuC1Cs
+         6+9hPVDH/t6o+MCWhrAcgasUI5+6/Yw2fjwaqbm5DrGZu6/cQ7X5IkzKOzhfx7XyPnV3
+         0HSoeXW43Vpf+hvnLhd9zpnWjYkiIPAdEO2MajuE6Hy2TX0+Ea5FbwKpxpttBICY0BJE
+         7iaoYX9KCSLPHvhzOKp4KDVp3pRKK/2Hp/lteNNoYzHo+5cifFGR75MLbUCJpRtiMNBv
+         U2jGusW+8Y9PkOOemLbzPGjgoj6WvJ35iX+HZSTEDV4GIsKpdJ5QEsQop731wivylbqG
+         L03Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=LHnGf0JtJDAq3zDgHcjEVZUnLQ6VDGMsifz/Xo+UZHY=;
-        b=eIWdrfOUv0HHtWnIYTRuO9i2yh2x6nSz090+ugtLQ87qO8bcDVrsrrRBlbRormyI6T
-         gPsAxxAZphEpHHtzmmXa4BIYXBT74prA+XpnZov91RwxSg31/r2Rn74xEt8KESgsa36+
-         wgstgmzlLdPZDFdcrnUKcAgJfg7jvnWddiWwq41lTkSSgSHlYWi/Py6QHezNrEcutkG0
-         +1lRNCoSFIgG2bvHTf5iExSQRcytfsFjIpXIDxZD+4QvmyLrUNxbZTzXO5ZdQuJL8nU+
-         3gQb3G3AlDbRYE3V7J3kX7FFW5DWxM5BI6mKhvWNjAWuYpCWEeZy0hDeuTQz5hZ9yLHc
-         X5yg==
-X-Gm-Message-State: AHPjjUgdYBnZiYx73CgJzm26K1/lMvJf6xnPuvl7CH8yyOum4OyHTN5/
-        ZJSnTMqHRz+Cg8SOx6SWuN8=
-X-Google-Smtp-Source: AOwi7QB2sRa0hmrYpfFqwfJP943lKX2yzNNKVvwXvylNrFzekjRWLOL4J0ymOSyYN8GVXiEE+ZAawQ==
-X-Received: by 10.99.160.65 with SMTP id u1mr6945010pgn.227.1506327654194;
-        Mon, 25 Sep 2017 01:20:54 -0700 (PDT)
+        bh=N5CjArfRCIiAfoAANu5M4HzzoDxOA5i8nteonQByBow=;
+        b=YcosxViham1bolWQn1SiF3wp7D/KA6EBgZTqnvKDYaSzXYTFlZlCIJXgJRqIAqeEZI
+         ztKbBjMAZSTzXCvpKwhUZ6n5WcxNpa/qZqN9EzroPrLc082oVDU5EnK3wR2kbLW2AKHP
+         gzC+tDEOKlV/9MpuYrIlk4kCG6ZQ+16shPpwIGehj1N6Egg/8WdLxd+GPAY1babExZNa
+         TuXnfNTgwFRjsjNOh69LSfNToUA9HPYdtCRHv4OFcARS7aG8ZLCdZGf5Ui0VSPC3ldmC
+         tBgUllMa1B9P+CuyzWIzRyyUJODe1kJcPSlbtQcSJdWqMpmdoy1aB+4YoFocdgmVyGAx
+         wmtA==
+X-Gm-Message-State: AHPjjUh8EwxSA37jmSdFdMRZxVHJHSTRpoVusxRVbgZz9lZViqnlLraA
+        9lyKD0tOgJrlje8XFK0VnXM=
+X-Google-Smtp-Source: AOwi7QD1r81aep6rOctRcAHF0vjg069HkmRCiHtebHl+kQgvaQZ+zwHASUY/U+KC226aNAurpv8hCQ==
+X-Received: by 10.99.186.15 with SMTP id k15mr6873526pgf.402.1506328076317;
+        Mon, 25 Sep 2017 01:27:56 -0700 (PDT)
 Received: from localhost.localdomain ([2405:204:700a:bb87:18d5:bb83:9cfe:b5d3])
-        by smtp.gmail.com with ESMTPSA id g16sm11469444pfd.6.2017.09.25.01.20.50
+        by smtp.gmail.com with ESMTPSA id n18sm9893870pgd.69.2017.09.25.01.27.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 25 Sep 2017 01:20:52 -0700 (PDT)
+        Mon, 25 Sep 2017 01:27:54 -0700 (PDT)
 From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 X-Google-Original-From: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
 To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, sbeller@google.com
-Subject: [RFC PATCH v2 5/5] builtin/branch: give more useful error messages when renaming
-Date:   Mon, 25 Sep 2017 13:50:24 +0530
-Message-Id: <20170925082024.2691-6-kaarticsivaraam91196@gmail.com>
+Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH v3] doc: camelCase the config variables to improve readability
+Date:   Mon, 25 Sep 2017 13:57:47 +0530
+Message-Id: <20170925082747.3171-1-kaarticsivaraam91196@gmail.com>
 X-Mailer: git-send-email 2.14.1.935.ge2b2bcd8a
-In-Reply-To: <20170925082024.2691-1-kaarticsivaraam91196@gmail.com>
-References: <20170919071525.9404-1-kaarticsivaraam91196@gmail.com>
- <20170925082024.2691-1-kaarticsivaraam91196@gmail.com>
+In-Reply-To: <xmqqmv5lhre2.fsf@gitster.mtv.corp.google.com>
+References: <xmqqmv5lhre2.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When trying to rename an inexistent branch to with a name of a branch
-that already exists the rename failed specifying the new branch name
-exists rather than specifying that the branch trying to be renamed
-doesn't exist.
+References to multi-word configuration variable names in our
+documentation must consistently use camelCase to highlight
+where the word boundaries are, even though these are treated
+case insensitively.
 
-    $ git branch -m tset master
-    fatal: A branch named 'master' already exists.
-
-It's conventional to report that 'tset' doesn't exist rather than
-reporting that 'master' exists, the same way the 'mv' command does.
-
-    (hypothetical)
-    $ git branch -m tset master
-    fatal: branch 'tset' doesn't exist.
-
-That has the problem that the error about an existing branch is shown
-only after the user corrects the error about inexistent branch.
-
-    $ git branch -m test master
-    fatal: A branch named 'master' already exists.
-
-This isn't useful either because the user would have corrected this error in
-a single go if he had been told this alongside the first error. So, give
-more useful error messages by giving errors about old branch name and new
-branch name at the same time. This is possible as the branch validation
-function now returns the reason it was about to die, when requested.
-
-    $ git branch -m tset master
-    fatal: branch 'tset' doesn't exist, and branch 'master' already exists
-
-Note: Thanks to the strbuf API that made it possible to easily construct
-the composite error message strings!
+Fix a few places that spell them in all lowercase, which
+makes them harder to read.
 
 Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- builtin/branch.c | 41 +++++++++++++++++++++++++++++++++++------
- 1 file changed, 35 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 25e3a2f29..0c2017bee 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -456,25 +456,49 @@ static void reject_rebase_or_bisect_branch(const char *target)
- 	free_worktrees(worktrees);
- }
+ Changes in v3:
+
+    - Used the commit message as suggested by Junio
+
+ Documentation/git-branch.txt | 4 ++--
+ Documentation/git-tag.txt    | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+index e292737b9..58f1e5c9c 100644
+--- a/Documentation/git-branch.txt
++++ b/Documentation/git-branch.txt
+@@ -92,10 +92,10 @@ OPTIONS
+ 	all changes made to the branch ref, enabling use of date
+ 	based sha1 expressions such as "<branchname>@\{yesterday}".
+ 	Note that in non-bare repositories, reflogs are usually
+-	enabled by default by the `core.logallrefupdates` config option.
++	enabled by default by the `core.logAllRefUpdates` config option.
+ 	The negated form `--no-create-reflog` only overrides an earlier
+ 	`--create-reflog`, but currently does not negate the setting of
+-	`core.logallrefupdates`.
++	`core.logAllRefUpdates`.
  
-+static void get_error_msg(struct strbuf* error_msg, const char* oldname, unsigned old_branch_exists,
-+			  const char* newname, int new_branch_validation_result)
-+{
-+	const char* connector_string = _(", and ");
-+
-+	if (!old_branch_exists) {
-+		strbuf_addf(error_msg, _("branch '%s' doesn't exist"), oldname);
-+	}
-+
-+	switch (new_branch_validation_result) {
-+		case BRANCH_EXISTS:
-+			strbuf_addf(error_msg, "%s", (!old_branch_exists) ? connector_string : "");
-+			strbuf_addf(error_msg,_("branch '%s' already exists"), newname);
-+			break;
-+		case CANNOT_FORCE_UPDATE_CURRENT_BRANCH:
-+			strbuf_addf(error_msg, "%s", (!old_branch_exists) ? connector_string : "");
-+			strbuf_addstr(error_msg, _("cannot force update the current branch"));
-+			break;
-+		case INVALID_BRANCH_NAME:
-+			strbuf_addf(error_msg, "%s", (!old_branch_exists) ? connector_string : "");
-+			strbuf_addf(error_msg, _("branch name '%s' is invalid"), newname);
-+			break;
-+	}
-+}
-+
- static void rename_branch(const char *oldname, const char *newname, int force)
- {
- 	struct strbuf oldref = STRBUF_INIT, newref = STRBUF_INIT, logmsg = STRBUF_INIT;
- 	struct strbuf oldsection = STRBUF_INIT, newsection = STRBUF_INIT;
- 	int recovery = 0;
- 	int clobber_head_ok;
-+	struct strbuf error_msg = STRBUF_INIT, empty = STRBUF_INIT;
+ -f::
+ --force::
+diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+index 543fb425e..95e9f391d 100644
+--- a/Documentation/git-tag.txt
++++ b/Documentation/git-tag.txt
+@@ -174,7 +174,7 @@ This option is only applicable when listing tags without annotation lines.
+ 	`core.logAllRefUpdates` in linkgit:git-config[1].
+ 	The negated form `--no-create-reflog` only overrides an earlier
+ 	`--create-reflog`, but currently does not negate the setting of
+-	`core.logallrefupdates`.
++	`core.logAllRefUpdates`.
  
- 	if (!oldname)
- 		die(_("cannot rename the current branch while not on any."));
- 
--	if (strbuf_check_branch_ref(&oldref, oldname)) {
-+	if (strbuf_check_branch_ref(&oldref, oldname) && ref_exists(oldref.buf))
-+	{
- 		/*
- 		 * Bad name --- this could be an attempt to rename a
- 		 * ref that we used to allow to be created by accident.
- 		 */
--		if (ref_exists(oldref.buf))
--			recovery = 1;
--		else
--			die(_("Invalid branch name: '%s'"), oldname);
-+		recovery = 1;
- 	}
- 
- 	/*
-@@ -483,7 +507,10 @@ static void rename_branch(const char *oldname, const char *newname, int force)
- 	 */
- 	clobber_head_ok = !strcmp(oldname, newname);
- 
--	validate_branch_creation(newname, &newref, !force, clobber_head_ok, 0);
-+	get_error_msg(&error_msg, oldname, ref_exists(oldref.buf),
-+			newname, validate_branch_creation(newname, &newref, !force, clobber_head_ok, 1));
-+	if (strbuf_cmp(&error_msg, &empty))
-+		die("%s", error_msg.buf);
- 
- 	reject_rebase_or_bisect_branch(oldref.buf);
- 
-@@ -509,6 +536,8 @@ static void rename_branch(const char *oldname, const char *newname, int force)
- 		die(_("Branch is renamed, but update of config-file failed"));
- 	strbuf_release(&oldsection);
- 	strbuf_release(&newsection);
-+	strbuf_release(&error_msg);
-+	strbuf_release(&empty);
- }
- 
- static GIT_PATH_FUNC(edit_description, "EDIT_DESCRIPTION")
+ <tagname>::
+ 	The name of the tag to create, delete, or describe.
 -- 
-2.14.1.935.ge2b2bcd8a
+2.14.1.539.g78797280a.dirty
 
