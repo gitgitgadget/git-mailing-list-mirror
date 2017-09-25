@@ -7,61 +7,60 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC56A202A5
-	for <e@80x24.org>; Mon, 25 Sep 2017 22:14:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B7070202A5
+	for <e@80x24.org>; Mon, 25 Sep 2017 22:16:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935579AbdIYWOa (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Sep 2017 18:14:30 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:36979 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935505AbdIYWO3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Sep 2017 18:14:29 -0400
-Received: by mail-pf0-f195.google.com with SMTP id e69so4157373pfg.4
-        for <git@vger.kernel.org>; Mon, 25 Sep 2017 15:14:29 -0700 (PDT)
+        id S935787AbdIYWQM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Sep 2017 18:16:12 -0400
+Received: from mail-pg0-f43.google.com ([74.125.83.43]:49400 "EHLO
+        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935505AbdIYWQL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Sep 2017 18:16:11 -0400
+Received: by mail-pg0-f43.google.com with SMTP id m30so4798531pgn.6
+        for <git@vger.kernel.org>; Mon, 25 Sep 2017 15:16:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=qHMfmYWH0rjZ1g+F4Qbym1HeTJSFtsqtDDbIpaAYg2k=;
-        b=djqPn/y8nuM2+WGPmg9jmSKYBE+QvLl0kgNlg/umq/Aw9asfH8HqKSP8lrnpqxyxnr
-         t6SAXhJiCr+6vSnBaZ/sZtvg4Z/9YTacqCfwAglWiUL4kPT72YkASqLr4iIp1bTSOx6r
-         qYI6sRwaVnFLFCJ4p4AAGHnGbl8pw1OvAMC5z0mpBzI+E3gviKvmBhuLfwpcFhekwRop
-         4/E3X0kK/oXzmulXB2GJIwnNyKO0Swq07qCch3A7qSP7NDvOY+RNu6IFEA/azJesWROa
-         T7siDDPA7a73grwszaS46+5TnpC6ajWbiA1Ia98QG0IbyQMAYp6AxFc3G5D2XK91ObAA
-         n6Pw==
+        bh=0mJLVUa/5IafcCJBWjAOWBGv5y6Nb2wJWR+DB9Htwps=;
+        b=pIeWL+bDB21esMA67NlDDxRhfuFGqhj2NADkH/EcOwDbdYDHDneeqQjlNaJdnXsJJf
+         kC4K9vXGhJOh5RcwFn4AbZs7qkL9Yj1pN4uRvTwV//pvH+VthCMfrts5AlxMt1kdL5gR
+         1ggSqk8ePDvKM9HyXXDiHUGVHeerud3TJHhexfhkajjz8i4VjvowkpjfzWIlxmA1dj40
+         WOFQEH8PObASv/i24GqqxlZAThUbq1dG0lYWlls1AeNsAw+zcu9zmFFuc7EvQ4MLtTO4
+         HtWhrpBnh2fhQD77Wpjd2+9hFcWA8JXIDGMiTO6OHieMH2Qecg9CA+PBg+xQQSvzd+Bs
+         vXWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=qHMfmYWH0rjZ1g+F4Qbym1HeTJSFtsqtDDbIpaAYg2k=;
-        b=SGM2Tl2yuLuqO4Hs/EwnXI0yiAlb2TUkFVCLJIl6pVSc5YJ2XkhaIbOgud8RC5UnNS
-         S50DGX1GTmRFWoQ/3flTUe3v5pkobZhEc8+AaQ7dyftTUe7EQ/r49hiH8IJIaz34wSRQ
-         TXOtw3DkVPFa/cHHFbyF24hE8SdwsBKP1WO6fqaHhjWrS89RtN0jg/LNcr+yoCe5riQ/
-         duVDgt9uRJ481Rx4elZK1PWuhQtqfga/Yp84UvsniToPLVpMD0t6d/1vYAtRL1LjLK78
-         VCeHdcBxHtesz1L00mFWurqd1Ncd5UKMe/CB3As9mNVKNjQ4xeLYpVtIlhF8pdFu/1mi
-         WlXQ==
-X-Gm-Message-State: AHPjjUimolZk08d/6zB6A7E1Q47izWDmMCqrSsKbetQqpDDxoi5WFB/6
-        3BRquyYbZ6R3tWZ2dkMsoas=
-X-Google-Smtp-Source: AOwi7QDMoPOkFMlAS34ASI5/WCtM1Ny6rG6lbS6wK/9+cgr1nNZHFPJ8QgA/tAyEuNRXD260ChWEdg==
-X-Received: by 10.98.34.15 with SMTP id i15mr8942166pfi.257.1506377668923;
-        Mon, 25 Sep 2017 15:14:28 -0700 (PDT)
+        bh=0mJLVUa/5IafcCJBWjAOWBGv5y6Nb2wJWR+DB9Htwps=;
+        b=Qklz7cbAm2jSpANUawtxP4laTM2R0eDjYq1bjQPlmjMj8ybkNTtTACu3CB1tyFlngG
+         Zp8ztOzvw3E7uJlcqpsSkNqhlJ8kLnJUQg7V7dl63Yu1ce7cja82X0tHko8h3BXaEiJb
+         Bt74kIfv4Co8OWa4dEZwm0Ns9V7LfoPZtWEAj2zRKw+nSEYU2oBQZOqRPIjLOpi7xBXi
+         0Jj7yvMEUlV62RuNmuxcYD4l41FRFkv8a3McwRFXMqlyh6a1t6XQCDrOlP0pFXYO9w3o
+         QSY6z6x6NevyfIHLLZw/aBgdXK+FrPDyNPL3IQgjePHPxXxlMVQTyc/fMUhoVd2VCXzE
+         k/Pw==
+X-Gm-Message-State: AHPjjUgxAGLmWxwgWFJv/rrNUnFFX8JRk6QxwrgDhuRkcaAIrQsIO3LZ
+        X8nqgFqdtuO7IXRgTUZQvDY=
+X-Google-Smtp-Source: AOwi7QBi7afRqDl+/Mpq8mBRRolDvcTYaYbXkAJtsJ2Py547r2Bfj3WL+zKmdkM0OZOOepPKmofy5w==
+X-Received: by 10.98.89.151 with SMTP id k23mr9065988pfj.69.1506377770909;
+        Mon, 25 Sep 2017 15:16:10 -0700 (PDT)
 Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:b5cd:5017:828c:d0cb])
-        by smtp.gmail.com with ESMTPSA id p6sm12074495pga.93.2017.09.25.15.14.28
+        by smtp.gmail.com with ESMTPSA id s86sm12136556pfi.74.2017.09.25.15.16.09
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 25 Sep 2017 15:14:28 -0700 (PDT)
-Date:   Mon, 25 Sep 2017 15:14:26 -0700
+        Mon, 25 Sep 2017 15:16:10 -0700 (PDT)
+Date:   Mon, 25 Sep 2017 15:16:08 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 6/7] worktree: check the result of read_in_full()
-Message-ID: <20170925221426.GE27425@aiede.mtv.corp.google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 7/7] add xread_in_full() helper
+Message-ID: <20170925221608.GF27425@aiede.mtv.corp.google.com>
 References: <20170925202646.agsnpmar3dzocdcr@sigill.intra.peff.net>
- <20170925203156.boieic627t3dbpzd@sigill.intra.peff.net>
+ <20170925203323.rmm3i5kx266ma3wu@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20170925203156.boieic627t3dbpzd@sigill.intra.peff.net>
+In-Reply-To: <20170925203323.rmm3i5kx266ma3wu@sigill.intra.peff.net>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -70,39 +69,16 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King wrote:
 
-> We try to read "len" bytes into a buffer and just assume
-> that it happened correctly. In practice this should usually
-> be the case, since we just stat'd the file to get the
-> length.  But we could be fooled by transient errors or by
-> other processes racily truncating the file.
->
-> Let's be more careful. There's a slim chance this could
-> catch a real error, but it also prevents people and tools
-> from getting worried while reading the code.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  builtin/worktree.c | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
->
-> diff --git a/builtin/worktree.c b/builtin/worktree.c
-> index 2f4a4ef9cd..87b3d70b0b 100644
-> --- a/builtin/worktree.c
-> +++ b/builtin/worktree.c
-> @@ -59,7 +59,11 @@ static int prune_worktree(const char *id, struct strbuf *reason)
->  	}
->  	len = xsize_t(st.st_size);
->  	path = xmallocz(len);
-> -	read_in_full(fd, path, len);
-> +	if (read_in_full(fd, path, len) != len) {
-> +		strbuf_addf(reason, _("Removing worktrees/%s: gitdir read did not match stat (%s)"),
-> +			    id, strerror(errno));
+> Many callers of read_in_full() expect to see exactly "len"
+> bytes, and die if that isn't the case.
 
-I'm a little confused.  The 'if' condition checks for a read error but
-the message says something about 'stat'.
+micronit: Can this be named read_in_full_or_die?
 
-If we're trying to double-check the 'stat' result, shouldn't we read
-all the way to EOF in case the file got longer?
+Otherwise it's too easy to mistake for a function like xread, which
+has different semantics.
 
-Puzzled,
+I realize that xmalloc, xmemdupz, etc use a different convention.
+That's yet another reason to be explicit, IMHO.
+
+Thanks,
 Jonathan
