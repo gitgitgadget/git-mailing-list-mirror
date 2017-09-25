@@ -6,26 +6,26 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B64DB20281
-	for <e@80x24.org>; Mon, 25 Sep 2017 08:00:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C8D820281
+	for <e@80x24.org>; Mon, 25 Sep 2017 08:01:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934053AbdIYIA4 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Sep 2017 04:00:56 -0400
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:49303 "EHLO
-        alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S934043AbdIYIAy (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 25 Sep 2017 04:00:54 -0400
-X-AuditID: 1207440f-a43ff70000007960-ef-59c8b7b5a7f2
+        id S934056AbdIYIA6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Sep 2017 04:00:58 -0400
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:45290 "EHLO
+        alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S933852AbdIYIA5 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 25 Sep 2017 04:00:57 -0400
+X-AuditID: 12074414-0ebff70000006ddf-c8-59c8b7b7c54e
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 69.79.31072.5B7B8C95; Mon, 25 Sep 2017 04:00:53 -0400 (EDT)
+        by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 18.79.28127.7B7B8C95; Mon, 25 Sep 2017 04:00:55 -0400 (EDT)
 Received: from bagpipes.fritz.box (p57BCCDF6.dip0.t-ipconnect.de [87.188.205.246])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v8P80N6W027347
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v8P80N6X027347
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Mon, 25 Sep 2017 04:00:51 -0400
+        Mon, 25 Sep 2017 04:00:53 -0400
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Stefan Beller <sbeller@google.com>,
@@ -35,104 +35,406 @@ Cc:     Stefan Beller <sbeller@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Brandon Williams <bmwill@google.com>,
         git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v3 12/21] packed-backend.c: reorder some definitions
-Date:   Mon, 25 Sep 2017 10:00:09 +0200
-Message-Id: <314e08dc1b39101d6e08b8ce20bf4a96ab83ce7c.1506325610.git.mhagger@alum.mit.edu>
+Subject: [PATCH v3 13/21] packed_ref_cache: keep the `packed-refs` file mmapped if possible
+Date:   Mon, 25 Sep 2017 10:00:10 +0200
+Message-Id: <d3f0e5541bdf774deb1ee850fe21ca5c21b3ba98.1506325610.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.14.1
 In-Reply-To: <cover.1506325610.git.mhagger@alum.mit.edu>
 References: <cover.1506325610.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrLIsWRmVeSWpSXmKPExsUixO6iqLt1+4lIg4cXpS3WPrvDZPF8/Ql2
-        i64r3UwWDb1XmC36l3exWdxeMZ/ZonvKW0aLHy09zBabN7ezOHB6/H3/gclj56y77B4fPsZ5
-        LNhU6vGsdw+jx8VLyh6fN8kFsEdx2aSk5mSWpRbp2yVwZXxYsIap4AV/xcxZ71kbGBt4uxg5
-        OSQETCSa5+1n6WLk4hAS2MEkcb11AZRzikni1uGdrCBVbAK6Eot6mplAbBEBNYmJbYfAipgF
-        VjJLTNp6BaxIWMBFYtqRtWwgNouAqsTb/f1AcQ4OXoEoiYP3UiG2yUuce3CbGcTmFLCQeHPm
-        CFi5kIC5xPkbt1gnMPIsYGRYxSiXmFOaq5ubmJlTnJqsW5ycmJeXWqRropebWaKXmlK6iRES
-        cvw7GLvWyxxiFOBgVOLhjfh3PFKINbGsuDL3EKMkB5OSKO9dvhORQnxJ+SmVGYnFGfFFpTmp
-        xYcYJTiYlUR4j60GyvGmJFZWpRblw6SkOViUxHnVl6j7CQmkJ5akZqemFqQWwWRlODiUJHhd
-        twE1ChalpqdWpGXmlCCkmTg4QYbzAA1fDlLDW1yQmFucmQ6RP8Woy9Fx8+4fJiGWvPy8VClx
-        3g0gRQIgRRmleXBzYKniFaM40FvCvGkgVTzANAM36RXQEiagJb1TwZaUJCKkpBoYndmv/bi7
-        bmnEO9k4nQXlFhMzV04L0zrdnyHp+2QJ+8P7wkczGy/s7Kw9fFvtZZTFDnVFKdc587tmdLc9
-        7lXgkPORZzRknKW/ofSCSfFR3xX37q5f9tq64H3wrJ2qzm1SHjHzq2d5R+duDP6U97j6i5E3
-        o3xXumvDmQVXDU5cu6a7+fBKwRd/lFiKMxINtZiLihMBneD6aPACAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrJIsWRmVeSWpSXmKPExsUixO6iqLt9+4lIg7etRhZrn91hsni+/gS7
+        RdeVbiaLht4rzBb9y7vYLG6vmM9s0T3lLaPFj5YeZovNm9tZHDg9/r7/wOSxc9Zddo8PH+M8
+        Fmwq9XjWu4fR4+IlZY/Pm+QC2KO4bFJSczLLUov07RK4MtZvPcte0BRfsW2zawPjdp8uRk4O
+        CQETicsn3zB3MXJxCAnsYJJ4O+ESC4Rzikli88NFTCBVbAK6Eot6msFsEQE1iYlth8CKmAVW
+        MktM2nqFFSQhLBAt0fD5CiOIzSKgKrGl9Q8biM0rECVx8uwJZoh18hLnHtwGszkFLCTenDkC
+        ViMkYC5x/sYt1gmMPAsYGVYxyiXmlObq5iZm5hSnJusWJyfm5aUW6Vro5WaW6KWmlG5ihISc
+        yA7GIyflDjEKcDAq8fBG/DseKcSaWFZcmXuIUZKDSUmU9y7fiUghvqT8lMqMxOKM+KLSnNTi
+        Q4wSHMxKIrzHVgPleFMSK6tSi/JhUtIcLErivN8Wq/sJCaQnlqRmp6YWpBbBZDU4OAR616y+
+        wCjFkpefl6okweu6DWiIYFFqempFWmZOCUIpEwcnyCIeoEVbtoIsKi5IzC3OTIfIn2LU5ei4
+        efcPkxDYIClx3niQQQIgRRmleXBzYCnkFaM40IvCvAtBqniA6Qdu0iugJUxAS3qngi0pSURI
+        STUwCk1c1Dbx3LZ8m2C/ilMmWSt8X/KuZOpvjJc+I17978TM2XlvTKKenHfO1yz12LOGfee6
+        ddME7VzLLJgaa9pUvSYmz7nJacmZtHKm9HyWua3SjaH6N2rrp+WUz+eYEen9pk7u0mf/2Qrd
+        OaypS1xyK9Zku99lZRVhV5xg02LQdmW6asP+1ElKLMUZiYZazEXFiQDAgpYt/AIAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-No code has been changed. This will make subsequent patches more
-self-contained.
+Keep a copy of the `packed-refs` file contents in memory for as long
+as a `packed_ref_cache` object is in use:
+
+* If the system allows it, keep the `packed-refs` file mmapped.
+
+* If not (either because the system doesn't support `mmap()` at all,
+  or because a file that is currently mmapped cannot be replaced via
+  `rename()`), then make a copy of the file's contents in
+  heap-allocated space, and keep that around instead.
+
+We base the choice of behavior on a new build-time switch,
+`MMAP_PREVENTS_DELETE`. By default, this switch is set for Windows
+variants.
+
+After this commit, `MMAP_NONE` and `MMAP_TEMPORARY` are still handled
+identically. But the next commit will introduce a difference.
+
+This whole change is still pointless, because we only read the
+`packed-refs` file contents immediately after instantiating the
+`packed_ref_cache`. But that will soon change.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs/packed-backend.c | 48 ++++++++++++++++++++++++------------------------
- 1 file changed, 24 insertions(+), 24 deletions(-)
+ Makefile              |   6 ++
+ config.mak.uname      |   3 +
+ refs/packed-backend.c | 185 ++++++++++++++++++++++++++++++++++++++------------
+ 3 files changed, 152 insertions(+), 42 deletions(-)
 
+diff --git a/Makefile b/Makefile
+index f2bb7f2f63..d34c3dfe69 100644
+--- a/Makefile
++++ b/Makefile
+@@ -200,6 +200,9 @@ all::
+ #
+ # Define NO_MMAP if you want to avoid mmap.
+ #
++# Define MMAP_PREVENTS_DELETE if a file that is currently mmapped cannot be
++# deleted or cannot be replaced using rename().
++#
+ # Define NO_SYS_POLL_H if you don't have sys/poll.h.
+ #
+ # Define NO_POLL if you do not have or don't want to use poll().
+@@ -1383,6 +1386,9 @@ else
+ 		COMPAT_OBJS += compat/win32mmap.o
+ 	endif
+ endif
++ifdef MMAP_PREVENTS_DELETE
++	BASIC_CFLAGS += -DMMAP_PREVENTS_DELETE
++endif
+ ifdef OBJECT_CREATION_USES_RENAMES
+ 	COMPAT_CFLAGS += -DOBJECT_CREATION_MODE=1
+ endif
+diff --git a/config.mak.uname b/config.mak.uname
+index 6604b130f8..685a80d138 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -184,6 +184,7 @@ ifeq ($(uname_O),Cygwin)
+ 	UNRELIABLE_FSTAT = UnfortunatelyYes
+ 	SPARSE_FLAGS = -isystem /usr/include/w32api -Wno-one-bit-signed-bitfield
+ 	OBJECT_CREATION_USES_RENAMES = UnfortunatelyNeedsTo
++	MMAP_PREVENTS_DELETE = UnfortunatelyYes
+ 	COMPAT_OBJS += compat/cygwin.o
+ 	FREAD_READS_DIRECTORIES = UnfortunatelyYes
+ endif
+@@ -353,6 +354,7 @@ ifeq ($(uname_S),Windows)
+ 	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
+ 	NO_NSEC = YesPlease
+ 	USE_WIN32_MMAP = YesPlease
++	MMAP_PREVENTS_DELETE = UnfortunatelyYes
+ 	# USE_NED_ALLOCATOR = YesPlease
+ 	UNRELIABLE_FSTAT = UnfortunatelyYes
+ 	OBJECT_CREATION_USES_RENAMES = UnfortunatelyNeedsTo
+@@ -501,6 +503,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
+ 	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
+ 	NO_NSEC = YesPlease
+ 	USE_WIN32_MMAP = YesPlease
++	MMAP_PREVENTS_DELETE = UnfortunatelyYes
+ 	USE_NED_ALLOCATOR = YesPlease
+ 	UNRELIABLE_FSTAT = UnfortunatelyYes
+ 	OBJECT_CREATION_USES_RENAMES = UnfortunatelyNeedsTo
 diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 724c88631d..0fe41a7203 100644
+index 0fe41a7203..75d44cf061 100644
 --- a/refs/packed-backend.c
 +++ b/refs/packed-backend.c
-@@ -36,30 +36,6 @@ struct packed_ref_cache {
- 	struct stat_validity validity;
- };
+@@ -7,6 +7,35 @@
+ #include "../iterator.h"
+ #include "../lockfile.h"
  
--/*
-- * Increment the reference count of *packed_refs.
-- */
--static void acquire_packed_ref_cache(struct packed_ref_cache *packed_refs)
--{
--	packed_refs->referrers++;
--}
--
--/*
-- * Decrease the reference count of *packed_refs.  If it goes to zero,
-- * free *packed_refs and return true; otherwise return false.
-- */
--static int release_packed_ref_cache(struct packed_ref_cache *packed_refs)
--{
--	if (!--packed_refs->referrers) {
--		free_ref_cache(packed_refs->cache);
--		stat_validity_clear(&packed_refs->validity);
--		free(packed_refs);
--		return 1;
--	} else {
--		return 0;
--	}
--}
--
- /*
-  * A container for `packed-refs`-related data. It is not (yet) a
-  * `ref_store`.
-@@ -92,6 +68,30 @@ struct packed_ref_store {
- 	struct tempfile tempfile;
- };
- 
-+/*
-+ * Increment the reference count of *packed_refs.
-+ */
-+static void acquire_packed_ref_cache(struct packed_ref_cache *packed_refs)
-+{
-+	packed_refs->referrers++;
-+}
++enum mmap_strategy {
++	/*
++	 * Don't use mmap() at all for reading `packed-refs`.
++	 */
++	MMAP_NONE,
 +
++	/*
++	 * Can use mmap() for reading `packed-refs`, but the file must
++	 * not remain mmapped. This is the usual option on Windows,
++	 * where you cannot rename a new version of a file onto a file
++	 * that is currently mmapped.
++	 */
++	MMAP_TEMPORARY,
++
++	/*
++	 * It is OK to leave the `packed-refs` file mmapped while
++	 * arbitrary other code is running.
++	 */
++	MMAP_OK
++};
++
++#if defined(NO_MMAP)
++static enum mmap_strategy mmap_strategy = MMAP_NONE;
++#elif defined(MMAP_PREVENTS_DELETE)
++static enum mmap_strategy mmap_strategy = MMAP_TEMPORARY;
++#else
++static enum mmap_strategy mmap_strategy = MMAP_OK;
++#endif
++
+ struct packed_ref_store;
+ 
+ struct packed_ref_cache {
+@@ -18,6 +47,21 @@ struct packed_ref_cache {
+ 
+ 	struct ref_cache *cache;
+ 
++	/* Is the `packed-refs` file currently mmapped? */
++	int mmapped;
++
++	/*
++	 * The contents of the `packed-refs` file. If the file is
++	 * mmapped, this points at the mmapped contents of the file.
++	 * If not, this points at heap-allocated memory containing the
++	 * contents. If there were no contents (e.g., because the file
++	 * didn't exist), `buf` and `eof` are both NULL.
++	 */
++	char *buf, *eof;
++
++	/* The size of the header line, if any; otherwise, 0: */
++	size_t header_len;
++
+ 	/*
+ 	 * What is the peeled state of this cache? (This is usually
+ 	 * determined from the header of the "packed-refs" file.)
+@@ -76,6 +120,26 @@ static void acquire_packed_ref_cache(struct packed_ref_cache *packed_refs)
+ 	packed_refs->referrers++;
+ }
+ 
 +/*
-+ * Decrease the reference count of *packed_refs.  If it goes to zero,
-+ * free *packed_refs and return true; otherwise return false.
++ * If the buffer in `packed_refs` is active, then either munmap the
++ * memory and close the file, or free the memory. Then set the buffer
++ * pointers to NULL.
 + */
-+static int release_packed_ref_cache(struct packed_ref_cache *packed_refs)
++static void release_packed_ref_buffer(struct packed_ref_cache *packed_refs)
 +{
-+	if (!--packed_refs->referrers) {
-+		free_ref_cache(packed_refs->cache);
-+		stat_validity_clear(&packed_refs->validity);
-+		free(packed_refs);
-+		return 1;
++	if (packed_refs->mmapped) {
++		if (munmap(packed_refs->buf,
++			   packed_refs->eof - packed_refs->buf))
++			die_errno("error ummapping packed-refs file %s",
++				  packed_refs->refs->path);
++		packed_refs->mmapped = 0;
 +	} else {
-+		return 0;
++		free(packed_refs->buf);
 +	}
++	packed_refs->buf = packed_refs->eof = NULL;
++	packed_refs->header_len = 0;
 +}
 +
- struct ref_store *packed_ref_store_create(const char *path,
- 					  unsigned int store_flags)
+ /*
+  * Decrease the reference count of *packed_refs.  If it goes to zero,
+  * free *packed_refs and return true; otherwise return false.
+@@ -85,6 +149,7 @@ static int release_packed_ref_cache(struct packed_ref_cache *packed_refs)
+ 	if (!--packed_refs->referrers) {
+ 		free_ref_cache(packed_refs->cache);
+ 		stat_validity_clear(&packed_refs->validity);
++		release_packed_ref_buffer(packed_refs);
+ 		free(packed_refs);
+ 		return 1;
+ 	} else {
+@@ -284,13 +349,15 @@ static struct ref_iterator_vtable mmapped_ref_iterator_vtable = {
+ };
+ 
+ struct ref_iterator *mmapped_ref_iterator_begin(
+-		const char *packed_refs_file,
+ 		struct packed_ref_cache *packed_refs,
+ 		const char *pos, const char *eof)
  {
+ 	struct mmapped_ref_iterator *iter = xcalloc(1, sizeof(*iter));
+ 	struct ref_iterator *ref_iterator = &iter->base;
+ 
++	if (!packed_refs->buf)
++		return empty_ref_iterator_begin();
++
+ 	base_ref_iterator_init(ref_iterator, &mmapped_ref_iterator_vtable, 0);
+ 
+ 	iter->packed_refs = packed_refs;
+@@ -304,6 +371,62 @@ struct ref_iterator *mmapped_ref_iterator_begin(
+ 	return ref_iterator;
+ }
+ 
++/*
++ * Depending on `mmap_strategy`, either mmap or read the contents of
++ * the `packed-refs` file into the `packed_refs` instance. Return 1 if
++ * the file existed and was read, or 0 if the file was absent. Die on
++ * errors.
++ */
++static int load_contents(struct packed_ref_cache *packed_refs)
++{
++	int fd;
++	struct stat st;
++	size_t size;
++	ssize_t bytes_read;
++
++	fd = open(packed_refs->refs->path, O_RDONLY);
++	if (fd < 0) {
++		if (errno == ENOENT) {
++			/*
++			 * This is OK; it just means that no
++			 * "packed-refs" file has been written yet,
++			 * which is equivalent to it being empty,
++			 * which is its state when initialized with
++			 * zeros.
++			 */
++			return 0;
++		} else {
++			die_errno("couldn't read %s", packed_refs->refs->path);
++		}
++	}
++
++	stat_validity_update(&packed_refs->validity, fd);
++
++	if (fstat(fd, &st) < 0)
++		die_errno("couldn't stat %s", packed_refs->refs->path);
++	size = xsize_t(st.st_size);
++
++	switch (mmap_strategy) {
++	case MMAP_NONE:
++	case MMAP_TEMPORARY:
++		packed_refs->buf = xmalloc(size);
++		bytes_read = read_in_full(fd, packed_refs->buf, size);
++		if (bytes_read < 0 || bytes_read != size)
++			die_errno("couldn't read %s", packed_refs->refs->path);
++		packed_refs->eof = packed_refs->buf + size;
++		packed_refs->mmapped = 0;
++		break;
++	case MMAP_OK:
++		packed_refs->buf = xmmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);
++		packed_refs->eof = packed_refs->buf + size;
++		packed_refs->mmapped = 1;
++		break;
++	}
++	close(fd);
++
++	return 1;
++}
++
+ /*
+  * Read from the `packed-refs` file into a newly-allocated
+  * `packed_ref_cache` and return it. The return value will already
+@@ -336,11 +459,6 @@ struct ref_iterator *mmapped_ref_iterator_begin(
+ static struct packed_ref_cache *read_packed_refs(struct packed_ref_store *refs)
+ {
+ 	struct packed_ref_cache *packed_refs = xcalloc(1, sizeof(*packed_refs));
+-	int fd;
+-	struct stat st;
+-	size_t size;
+-	char *buf;
+-	const char *pos, *eof;
+ 	struct ref_dir *dir;
+ 	struct ref_iterator *iter;
+ 	int ok;
+@@ -351,45 +469,29 @@ static struct packed_ref_cache *read_packed_refs(struct packed_ref_store *refs)
+ 	packed_refs->cache->root->flag &= ~REF_INCOMPLETE;
+ 	packed_refs->peeled = PEELED_NONE;
+ 
+-	fd = open(refs->path, O_RDONLY);
+-	if (fd < 0) {
+-		if (errno == ENOENT) {
+-			/*
+-			 * This is OK; it just means that no
+-			 * "packed-refs" file has been written yet,
+-			 * which is equivalent to it being empty.
+-			 */
+-			return packed_refs;
+-		} else {
+-			die_errno("couldn't read %s", refs->path);
+-		}
+-	}
+-
+-	stat_validity_update(&packed_refs->validity, fd);
+-
+-	if (fstat(fd, &st) < 0)
+-		die_errno("couldn't stat %s", refs->path);
+-
+-	size = xsize_t(st.st_size);
+-	buf = xmmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);
+-	pos = buf;
+-	eof = buf + size;
++	if (!load_contents(packed_refs))
++		return packed_refs;
+ 
+ 	/* If the file has a header line, process it: */
+-	if (pos < eof && *pos == '#') {
++	if (packed_refs->buf < packed_refs->eof && *packed_refs->buf == '#') {
+ 		struct strbuf tmp = STRBUF_INIT;
+ 		char *p;
+ 		const char *eol;
+ 		struct string_list traits = STRING_LIST_INIT_NODUP;
+ 
+-		eol = memchr(pos, '\n', eof - pos);
++		eol = memchr(packed_refs->buf, '\n',
++			     packed_refs->eof - packed_refs->buf);
+ 		if (!eol)
+-			die_unterminated_line(refs->path, pos, eof - pos);
++			die_unterminated_line(refs->path,
++					      packed_refs->buf,
++					      packed_refs->eof - packed_refs->buf);
+ 
+-		strbuf_add(&tmp, pos, eol - pos);
++		strbuf_add(&tmp, packed_refs->buf, eol - packed_refs->buf);
+ 
+ 		if (!skip_prefix(tmp.buf, "# pack-refs with:", (const char **)&p))
+-			die_invalid_line(refs->path, pos, eof - pos);
++			die_invalid_line(refs->path,
++					 packed_refs->buf,
++					 packed_refs->eof - packed_refs->buf);
+ 
+ 		string_list_split_in_place(&traits, p, ' ', -1);
+ 
+@@ -400,14 +502,17 @@ static struct packed_ref_cache *read_packed_refs(struct packed_ref_store *refs)
+ 		/* perhaps other traits later as well */
+ 
+ 		/* The "+ 1" is for the LF character. */
+-		pos = eol + 1;
++		packed_refs->header_len = eol + 1 - packed_refs->buf;
+ 
+ 		string_list_clear(&traits, 0);
+ 		strbuf_release(&tmp);
+ 	}
+ 
+ 	dir = get_ref_dir(packed_refs->cache->root);
+-	iter = mmapped_ref_iterator_begin(refs->path, packed_refs, pos, eof);
++	iter = mmapped_ref_iterator_begin(
++			packed_refs,
++			packed_refs->buf + packed_refs->header_len,
++			packed_refs->eof);
+ 	while ((ok = ref_iterator_advance(iter)) == ITER_OK) {
+ 		struct ref_entry *entry =
+ 			create_ref_entry(iter->refname, iter->oid, iter->flags);
+@@ -420,11 +525,6 @@ static struct packed_ref_cache *read_packed_refs(struct packed_ref_store *refs)
+ 	if (ok != ITER_DONE)
+ 		die("error reading packed-refs file %s", refs->path);
+ 
+-	if (munmap(buf, size))
+-		die_errno("error ummapping packed-refs file %s", refs->path);
+-
+-	close(fd);
+-
+ 	return packed_refs;
+ }
+ 
+@@ -1031,6 +1131,8 @@ static int packed_transaction_finish(struct ref_store *ref_store,
+ 	int ret = TRANSACTION_GENERIC_ERROR;
+ 	char *packed_refs_path;
+ 
++	clear_packed_ref_cache(refs);
++
+ 	packed_refs_path = get_locked_file_path(&refs->lock);
+ 	if (rename_tempfile(&refs->tempfile, packed_refs_path)) {
+ 		strbuf_addf(err, "error replacing %s: %s",
+@@ -1038,7 +1140,6 @@ static int packed_transaction_finish(struct ref_store *ref_store,
+ 		goto cleanup;
+ 	}
+ 
+-	clear_packed_ref_cache(refs);
+ 	ret = 0;
+ 
+ cleanup:
 -- 
 2.14.1
 
