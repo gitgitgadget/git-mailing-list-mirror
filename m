@@ -2,154 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C03BB202A5
-	for <e@80x24.org>; Mon, 25 Sep 2017 16:06:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 452FB202A5
+	for <e@80x24.org>; Mon, 25 Sep 2017 16:08:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965196AbdIYQGg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Sep 2017 12:06:36 -0400
-Received: from mout.gmx.net ([212.227.17.20]:59711 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S935462AbdIYQGe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Sep 2017 12:06:34 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MMpYB-1e06PO1Pqh-008bUw; Mon, 25
- Sep 2017 18:06:25 +0200
-Date:   Mon, 25 Sep 2017 18:06:24 +0200 (CEST)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH v2 1/1] Win32: simplify loading of DLL functions
-In-Reply-To: <cover.1506355545.git.johannes.schindelin@gmx.de>
-Message-ID: <177d34742e603aabb57046a0d5f9a5c6e40696ca.1506355545.git.johannes.schindelin@gmx.de>
-References: <f5a3add27206df3e7f39efeac8a3c3b47f2b79f2.1505834586.git.johannes.schindelin@gmx.de> <cover.1506355545.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S965025AbdIYQIi (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Sep 2017 12:08:38 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49314 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S964842AbdIYQIh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Sep 2017 12:08:37 -0400
+Received: (qmail 21946 invoked by uid 109); 25 Sep 2017 16:08:37 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 25 Sep 2017 16:08:37 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26517 invoked by uid 111); 25 Sep 2017 16:09:16 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Mon, 25 Sep 2017 12:09:16 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Sep 2017 12:08:35 -0400
+Date:   Mon, 25 Sep 2017 12:08:35 -0400
+From:   Jeff King <peff@peff.net>
+To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v2 0/6] reroll ma/plugleaks; more `object_array`-fixes
+Message-ID: <20170925160835.aoomjaqrn2o2aosi@sigill.intra.peff.net>
+References: <20170920200229.bc4yniz6otng2zyz@sigill.intra.peff.net>
+ <cover.1506120291.git.martin.agren@gmail.com>
+ <20170923043701.4s3xuytp5hdjwmsy@sigill.intra.peff.net>
+ <CAN0heSrPBDi4q9fqr=qoTbjRHpFS_VEL0O8=MFFJ4DLCuJwahA@mail.gmail.com>
+ <20170923161316.yntnccqrhv5d3jza@sigill.intra.peff.net>
+ <20170923163817.7ltmkav2ytk7n43k@sigill.intra.peff.net>
+ <CAN0heSqQ3Etj1mkGhuft8JzKA8SNhpF0jcnVEdFeKX5NHpyqTw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:EHsERf6fXVUlK3MrNA9QO+YGAC2M/vEZgnCd9PVxc8mhOd2RVWT
- HLdSbxx183ZqzACO2RYKCA4gFo8flXFCc64l1CSUvO/XVNgO9XsysOk15QcQZUoZFPVCM60
- Q26QD7sgnu4kZhEBs8Uhw3tigvw2V04D4/cZJ24aaTVw4fy7vZLKpnZOKaEMFyuDX9YX/xS
- vqo7E1ZJk7dW/vIn4Qdzw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:D5JVsg34jhk=:gxykIsLuCNODVe/wjnOYMd
- AEbHNQtmg2QHjl9Qe+DfhL7g5Bf3PtiGv6vOE7Xseu9AGx+M8v58NVSyA0hBudF5F1kHFJuxS
- jjL0EYTItIBzDTMtfveYROye1Y/ExHfbF4dMdmgVVd/htlfFGgRjoSHR9/odSB9/bjSu5d8mC
- J4u0PRbxS9V3j+O+gXg2RtvH6XEqK9WwGMrMUkZPjIaiKFax7b3kZTbqV6tRiihbJ9Q+Dgi9D
- /JzNCmehV2q3WkWFBP8qRcvVyqG57tspM6ZOr7Dda3WLsqBrpW7j+/ELVcQ90G69XR2lrGBu3
- 6PlWizt1IWLRMMPHJ/SJ2d+vLb7pSVKKmJBop+MpKpix4vh4Kl6uaQvbt0cIlZmHQin9JDq9x
- sR8knlUwVlHt1JbCjwoKFApieeB3GblyzOsobd+ZkPfDdwiC6pVVjmaasw6vPjX4pBytkDoyW
- 41xm+kkqosIJOCnZnjNxFkG46e3Jj+D4+JRtDHc0jFLy4am4cjJudn+oiYwz2MWGuXl9B5PR2
- HsIguFQWIZs0PtxjbLjbF7ryPgbUtoT25Pd9a++MMQxpBlFVRWBkfEm6feQ48FbqMo6DQzV1m
- 9Co8CD/AJ3cdKhCX+7vwSebPmPyEGnKBU+LLmN6nNAhs+VknHklhb6M2p4CAjNGqw+FW+kYA3
- Z+KHiUtL9Xt0uKZpEhNFLR/CpGsY9MZ5VgjmqyhcublmDnaYgHxXr8/OaGIhwX2ydPK/hRt8T
- AuN6b5LqHEEn7ldVBPoyUoMRs+mM9YTtGiWG2PIZfS9yZUaTn787skYh+mKms99Ulv5UHl8YI
- SG8Wm8XxRQFdaGjOVOyVGK/iIy3u+KDdZxpAkERiXut0eBeY08=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAN0heSqQ3Etj1mkGhuft8JzKA8SNhpF0jcnVEdFeKX5NHpyqTw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dynamic loading of DLL functions is duplicated in several places in Git
-for Windows' source code.
+On Sun, Sep 24, 2017 at 09:59:28PM +0200, Martin Ågren wrote:
 
-This patch adds a pair of macros to simplify the process: the
-DECLARE_PROC_ADDR(<dll>, <return-type>, <function-name>,
-...<function-parameter-types>...) macro to be used at the beginning of a
-code block, and the INIT_PROC_ADDR(<function-name>) macro to call before
-using the declared function. The return value of the INIT_PROC_ADDR()
-call has to be checked; If it is NULL, the function was not found in the
-specified DLL.
+> > Anyway, doing:
+> >
+> >   ASAN_OPTIONS=detect_leaks=1:abort_on_error=0:exitcode=0:log_path=/tmp/lsan/output \
+> >   make SANITIZE=address,leak test
+> >
+> > should pass the whole suite and give you a host of files to analyze.
+> 
+> Thanks. My reading of the documentation was off. Turns out exitcode=0
+> does not set the exit code to 0, but rather turns it off. Duh.
 
-Example:
+Actually, the docs are quite confusing. The LSan "exitcode" option
+defaults to 23, and that is the exit code you get. So I think it
+probably is interpreted as the code to exit with, or 0 for "use the
+original exit code".
 
-        DECLARE_PROC_ADDR(kernel32.dll, BOOL, CreateHardLinkW,
-                          LPCWSTR, LPCWSTR, LPSECURITY_ATTRIBUTES);
+> > I'm not sure of the best way to count things.
+> 
+> Right. It's a tricky problem. And in the end, all we find out is where
+> we allocate and how we got there. Exactly where we lose/leak that piece
+> of allocated memory is another question...
 
-        if (!INIT_PROC_ADDR(CreateHardLinkW))
-                return error("Could not find CreateHardLinkW() function";
+For hunting a particular trace, I think you have to walk up the list of
+called functions and see where the pointers go out of scope. I'm not
+sure how to make that easier (in theory a compiler-instrumentation like
+LSan could do it by performing a leak-check when pointers go out of
+scope. But it would also need to know about copies you've made of
+pointers, so I imagine it would be extremely slow to run).
 
-	if (!CreateHardLinkW(source, target, NULL))
-		return error("could not create hardlink from %S to %S",
-			     source, target);
-	return 0;
+But at least on the topic of "how many unique leaks are there", I wrote
+the script below to try to give some basic answers. It just finds the
+first non-boring entry in each stack trace and reports that. Where
+"boring" is really "this function is not expected to free, but hands off
+memory ownership to somebody else".
 
-Signed-off-by: Karsten Blees <blees@dcon.de>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- compat/win32/lazyload.h | 57 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 57 insertions(+)
- create mode 100644 compat/win32/lazyload.h
+You can use it to do:
 
-diff --git a/compat/win32/lazyload.h b/compat/win32/lazyload.h
-new file mode 100644
-index 00000000000..9e631c8593f
---- /dev/null
-+++ b/compat/win32/lazyload.h
-@@ -0,0 +1,57 @@
-+#ifndef LAZYLOAD_H
-+#define LAZYLOAD_H
-+
-+/*
-+ * A pair of macros to simplify loading of DLL functions. Example:
-+ *
-+ *   DECLARE_PROC_ADDR(kernel32.dll, BOOL, CreateHardLinkW,
-+ *                     LPCWSTR, LPCWSTR, LPSECURITY_ATTRIBUTES);
-+ *
-+ *   if (!INIT_PROC_ADDR(CreateHardLinkW))
-+ *           return error("Could not find CreateHardLinkW() function";
-+ *
-+ *   if (!CreateHardLinkW(source, target, NULL))
-+ *           return error("could not create hardlink from %S to %S",
-+ *                        source, target);
-+ */
-+
-+struct proc_addr {
-+	const char *const dll;
-+	const char *const function;
-+	FARPROC pfunction;
-+	unsigned initialized : 1;
-+};
-+
-+/* Declares a function to be loaded dynamically from a DLL. */
-+#define DECLARE_PROC_ADDR(dll, rettype, function, ...) \
-+	static struct proc_addr proc_addr_##function = \
-+	{ #dll, #function, NULL, 0 }; \
-+	static rettype (WINAPI *function)(__VA_ARGS__)
-+
-+/*
-+ * Loads a function from a DLL (once-only).
-+ * Returns non-NULL function pointer on success.
-+ * Returns NULL + errno == ENOSYS on failure.
-+ * This function is not thread-safe.
-+ */
-+#define INIT_PROC_ADDR(function) \
-+	(function = get_proc_addr(&proc_addr_##function))
-+
-+static inline void *get_proc_addr(struct proc_addr *proc)
-+{
-+	/* only do this once */
-+	if (!proc->initialized) {
-+		HANDLE hnd;
-+		proc->initialized = 1;
-+		hnd = LoadLibraryExA(proc->dll, NULL,
-+				     LOAD_LIBRARY_SEARCH_SYSTEM32);
-+		if (hnd)
-+			proc->pfunction = GetProcAddress(hnd, proc->function);
-+	}
-+	/* set ENOSYS if DLL or function was not found */
-+	if (!proc->pfunction)
-+		errno = ENOSYS;
-+	return proc->pfunction;
-+}
-+
-+#endif
--- 
-2.14.1.windows.1.1024.gf2dea585d74.dirty
+  perl leaks.pl /tmp/lsan/output.* | sort | uniq -c | sort -rn | head
+
+to see places that leak a lot. These are either boring calls that need
+to be annotated, or are high-value targets for de-leaking.
+
+I notice ref-filter.c has quite a few high entries on the list. I'm not
+sure yet which case it falls into. :)
+
+The other interesting thing is seeing how many "unique" leaks there are:
+
+  perl leaks.pl /tmp/lsan/output.* | sort -u | wc -l
+
+I get a bit over 800 with a run of the test suite. Which is a lot, but
+fewer than I expected. And I'm sure quite a few of them are really
+"duplicates" that can be eliminated in chunks.
+
+So I don't know how useful any of that will be, but it at least should
+give _some_ metric that should be diminishing as we fix leaks.
+
+-- >8 --
+#!/usr/bin/perl
+
+my $boring = join('|',
+  # These are allocation functions that get called from a lot of places.
+  qw(
+        __interceptor_strdup
+        __interceptor_calloc
+        realloc
+        malloc
+        xstrdup
+        xcalloc
+        strbuf_
+        xmemdupz
+        xstrvfmt
+        xstrfmt
+        xstrndup
+  ),
+  # These are really just the revision machinery not getting cleaned up;
+  # for many we'd probably want to just UNLEAK() at the apex caller
+  qw(
+        add_rev_cmdline
+        add_object_array_with_path
+        add_pending_object_with_path
+        add_pending_object_with_mode
+        add_pending_object
+        handle_revision_arg
+        setup_revisions
+  ),
+  # More allocators that drop memory ownership
+  qw(
+        alloc_ref_with_prefix
+        alloc_ref
+        copy_ref
+        commit_list_insert
+        copy_pathspec
+  ),
+);
+my $boring_re = qr/^$boring/;
+my $skipping;
+
+while (<>) {
+  if (/^\s*#[0-9]+ 0x[0-9a-f]+ in (.*)/) {
+    next if $skipping; # we already reported this trace
+    next if $1 =~ $boring_re;
+
+    print $1, "\n";
+    $skipping = 1;
+  } else {
+    $skipping = 0;
+  }
+}
