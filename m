@@ -6,30 +6,31 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BBF2A202A5
-	for <e@80x24.org>; Mon, 25 Sep 2017 20:29:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D39AE202A5
+	for <e@80x24.org>; Mon, 25 Sep 2017 20:29:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966248AbdIYU3T (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Sep 2017 16:29:19 -0400
-Received: from cloud.peff.net ([104.130.231.41]:49598 "HELO cloud.peff.net"
+        id S966253AbdIYU3v (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Sep 2017 16:29:51 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49606 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S966245AbdIYU3S (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Sep 2017 16:29:18 -0400
-Received: (qmail 2423 invoked by uid 109); 25 Sep 2017 20:29:18 -0000
+        id S966239AbdIYU3u (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Sep 2017 16:29:50 -0400
+Received: (qmail 2440 invoked by uid 109); 25 Sep 2017 20:29:50 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 25 Sep 2017 20:29:18 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 25 Sep 2017 20:29:50 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28510 invoked by uid 111); 25 Sep 2017 20:29:56 -0000
+Received: (qmail 28527 invoked by uid 111); 25 Sep 2017 20:30:28 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Mon, 25 Sep 2017 16:29:56 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Mon, 25 Sep 2017 16:30:28 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Sep 2017 16:29:16 -0400
-Date:   Mon, 25 Sep 2017 16:29:16 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Sep 2017 16:29:48 -0400
+Date:   Mon, 25 Sep 2017 16:29:48 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 3/7] read_in_full: reset errno before reading
-Message-ID: <20170925202916.4tqo4gttrsoy7kai@sigill.intra.peff.net>
+Subject: [PATCH 4/7] get-tar-commit-id: prefer "!=" for read_in_full() error
+ check
+Message-ID: <20170925202947.u6onp66ztliyxjcj@sigill.intra.peff.net>
 References: <20170925202646.agsnpmar3dzocdcr@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -40,50 +41,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Many callers of read_in_full() complain when we do not read
-their full byte-count. But a check like:
+Comparing the result of read_in_full() using less-than is
+potentially dangerous, as discussed in 561598cfcf
+(read_pack_header: handle signed/unsigned comparison in read
+result, 2017-09-13).
 
-  if (read_in_full(fd, buf, len) != len)
-	  return error_errno("unable to read");
+The instance in get-tar-commit-id is OK, because the
+HEADERSIZE macro expands to a signed integer. But if it were
+switched to an unsigned type like:
 
-conflates two problem conditions:
+  size_t HEADERSIZE = ...;
 
-  1. A real error from read().
+this would be a bug. Let's use the more robust "!="
+construct.
 
-  2. There were fewer than "len" bytes available.
+We can also drop the useless "n" variable while we're at it.
 
-In the first case, showing the user strerror(errno) is
-useful. But in the second, we may see a random errno that
-was set by some previous system call.
-
-In an ideal world, callers would always distinguish between
-these cases and give a useful message for each. But as an
-easy way to make our imperfect world better, let's reset
-errno to a known value. The best we can do is "0", which
-will yield something like:
-
-  unable to read: Success
-
-That's not great, but at least it's deterministic and makes
-it clear that we didn't see an error from read().
-
+Suggested-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- wrapper.c | 1 +
- 1 file changed, 1 insertion(+)
+ builtin/get-tar-commit-id.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/wrapper.c b/wrapper.c
-index 61aba0b5c1..f55debc92d 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -314,6 +314,7 @@ ssize_t read_in_full(int fd, void *buf, size_t count)
- 	char *p = buf;
- 	ssize_t total = 0;
+diff --git a/builtin/get-tar-commit-id.c b/builtin/get-tar-commit-id.c
+index 6d9a79f9b3..259ad40339 100644
+--- a/builtin/get-tar-commit-id.c
++++ b/builtin/get-tar-commit-id.c
+@@ -20,14 +20,12 @@ int cmd_get_tar_commit_id(int argc, const char **argv, const char *prefix)
+ 	struct ustar_header *header = (struct ustar_header *)buffer;
+ 	char *content = buffer + RECORDSIZE;
+ 	const char *comment;
+-	ssize_t n;
  
-+	errno = 0;
- 	while (count > 0) {
- 		ssize_t loaded = xread(fd, p, count);
- 		if (loaded < 0)
+ 	if (argc != 1)
+ 		usage(builtin_get_tar_commit_id_usage);
+ 
+-	n = read_in_full(0, buffer, HEADERSIZE);
+-	if (n < HEADERSIZE)
+-		die("git get-tar-commit-id: read error");
++	if (read_in_full(0, buffer, HEADERSIZE) != HEADERSIZE)
++		die_errno("git get-tar-commit-id: read error");
+ 	if (header->typeflag[0] != 'g')
+ 		return 1;
+ 	if (!skip_prefix(content, "52 comment=", &comment))
 -- 
 2.14.1.1148.ga2561536a1
 
