@@ -6,26 +6,26 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3872C20A2A
-	for <e@80x24.org>; Mon, 25 Sep 2017 08:01:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 401EB20A2B
+	for <e@80x24.org>; Mon, 25 Sep 2017 08:01:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934076AbdIYIBS (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Sep 2017 04:01:18 -0400
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:58321 "EHLO
-        alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S934054AbdIYIBM (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 25 Sep 2017 04:01:12 -0400
-X-AuditID: 12074412-1e5ff7000000748d-f4-59c8b7c715b7
+        id S934078AbdIYIBT (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Sep 2017 04:01:19 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:43121 "EHLO
+        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S934066AbdIYIBK (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 25 Sep 2017 04:01:10 -0400
+X-AuditID: 12074413-38bff70000007929-e4-59c8b7c5a5c5
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id A3.21.29837.7C7B8C95; Mon, 25 Sep 2017 04:01:11 -0400 (EDT)
+        by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id EB.A8.31017.5C7B8C95; Mon, 25 Sep 2017 04:01:09 -0400 (EDT)
 Received: from bagpipes.fritz.box (p57BCCDF6.dip0.t-ipconnect.de [87.188.205.246])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v8P80N6e027347
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v8P80N6d027347
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Mon, 25 Sep 2017 04:01:09 -0400
+        Mon, 25 Sep 2017 04:01:07 -0400
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Stefan Beller <sbeller@google.com>,
@@ -35,205 +35,55 @@ Cc:     Stefan Beller <sbeller@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Brandon Williams <bmwill@google.com>,
         git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v3 20/21] mmapped_ref_iterator: inline into `packed_ref_iterator`
-Date:   Mon, 25 Sep 2017 10:00:17 +0200
-Message-Id: <fb1cfabfedb916b4eb6a0a70aba7f0e36a2f10f0.1506325610.git.mhagger@alum.mit.edu>
+Subject: [PATCH v3 19/21] ref_cache: remove support for storing peeled values
+Date:   Mon, 25 Sep 2017 10:00:16 +0200
+Message-Id: <3b6ee2c23079724e5381aec77ba82e18d0088600.1506325610.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.14.1
 In-Reply-To: <cover.1506325610.git.mhagger@alum.mit.edu>
 References: <cover.1506325610.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrLIsWRmVeSWpSXmKPExsUixO6iqHt8+4lIg/sndS3WPrvDZPF8/Ql2
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrHIsWRmVeSWpSXmKPExsUixO6iqHt0+4lIgy+/lSzWPrvDZPF8/Ql2
         i64r3UwWDb1XmC36l3exWdxeMZ/ZonvKW0aLHy09zBabN7ezOHB6/H3/gclj56y77B4fPsZ5
-        LNhU6vGsdw+jx8VLyh6fN8kFsEdx2aSk5mSWpRbp2yVwZTz61s5esDyiYkXfWsYGxmfuXYyc
-        HBICJhIX961i62Lk4hAS2MEkcevsGlYI5xSQc3cBE0gVm4CuxKKeZjBbREBNYmLbIRaQImaB
-        lcwSk7ZeYQVJCAsESlx5tRDMZhFQlTi06ihQAwcHr0CUxMkNcRDb5CXOPbjNDGJzClhIvDlz
-        hA3EFhIwlzh/4xbrBEaeBYwMqxjlEnNKc3VzEzNzilOTdYuTE/PyUot0zfRyM0v0UlNKNzFC
-        Qk5oB+P6k3KHGAU4GJV4eCP+HY8UYk0sK67MPcQoycGkJMp7l+9EpBBfUn5KZUZicUZ8UWlO
-        avEhRgkOZiUR3mOrgXK8KYmVValF+TApaQ4WJXHen4vV/YQE0hNLUrNTUwtSi2CyMhwcShK8
-        v7cBNQoWpaanVqRl5pQgpJk4OEGG8wANXw5Sw1tckJhbnJkOkT/FqMvRcfPuHyYhlrz8vFQp
-        cd4NIEUCIEUZpXlwc2Cp4hWjONBbwrwLQap4gGkGbtIroCVMQEt6p4ItKUlESEk1MB76fijo
-        +oO0EoPo+OxzNYw10cHHetNuWH7PfLiRJ4r547arli+aJvpXyG/7fzSlN7nWJlTd5vPRZRMc
-        OLR3zXln9uXsDyaP1klz3vktdeJf3qz5L3nhZ8N5niJXeVuMXfZwy6ecfvOmlGnR7fOb/di8
-        vywNrF/2yWCO2NLaB9wfma/8s81+cl+JpTgj0VCLuag4EQCE6pTI8AIAAA==
+        LNhU6vGsdw+jx8VLyh6fN8kFsEdx2aSk5mSWpRbp2yVwZSzqPcdecFSjYunxK4wNjJcVuhg5
+        OSQETCQuL/7H3sXIxSEksINJYlPXaVYI5xSTRPOs+8wgVWwCuhKLepqZQGwRATWJiW2HWECK
+        mAVWMktM2nqFFSQhLOAr8WL5ORYQm0VAVWLKnOdgcV6BKIlth/4wQayTlzj34DbYUE4BC4k3
+        Z46wgdhCAuYS52/cYp3AyLOAkWEVo1xiTmmubm5iZk5xarJucXJiXl5qka65Xm5miV5qSukm
+        RkjQCe9g3HVS7hCjAAejEg9vxL/jkUKsiWXFlbmHGCU5mJREee/ynYgU4kvKT6nMSCzOiC8q
+        zUktPsQowcGsJMJ7bDVQjjclsbIqtSgfJiXNwaIkzqu2RN1PSCA9sSQ1OzW1ILUIJivDwaEk
+        wWsKjC4hwaLU9NSKtMycEoQ0EwcnyHAeoOHLt4EMLy5IzC3OTIfIn2LU5ei4efcPkxBLXn5e
+        qpQ47waQIgGQoozSPLg5sGTxilEc6C1h3oUgVTzARAM36RXQEiagJb1TwZaUJCKkpBoYuXP+
+        GBc8K2MrP3w/7MUbwalq3+2/t4U65R+f92LiTM6G1le/Z/dw+Jvo7+x4X/BglVy95/cjed+7
+        kh13CLzcm/rAcE6Mcxf3AwvDeouzsU/EmRuFN0fyyzlZS684uauOv+z2g9MxP/X9F3w9bRQU
+        3BJc9d/vhn2p36VPP63mzA166S54wPinEktxRqKhFnNRcSIA+40/W/ECAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since `packed_ref_iterator` is now delegating to
-`mmapped_ref_iterator` rather than `cache_ref_iterator` to do the
-heavy lifting, there is no need to keep the two iterators separate. So
-"inline" `mmapped_ref_iterator` into `packed_ref_iterator`. This
-removes a bunch of boilerplate.
+Now that the `packed-refs` backend doesn't use `ref_cache`, there is
+nobody left who might want to store peeled values of references in
+`ref_cache`. So remove that feature.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs/packed-backend.c | 284 ++++++++++++++++++++------------------------------
- 1 file changed, 114 insertions(+), 170 deletions(-)
+ refs/packed-backend.c |  9 ++++++++-
+ refs/ref-cache.c      | 42 +-----------------------------------------
+ refs/ref-cache.h      | 32 ++------------------------------
+ 3 files changed, 11 insertions(+), 72 deletions(-)
 
 diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 66e5525174..1ed52d7eca 100644
+index 3829e9c294..66e5525174 100644
 --- a/refs/packed-backend.c
 +++ b/refs/packed-backend.c
-@@ -225,157 +225,6 @@ static NORETURN void die_invalid_line(const char *path,
+@@ -2,7 +2,6 @@
+ #include "../config.h"
+ #include "../refs.h"
+ #include "refs-internal.h"
+-#include "ref-cache.h"
+ #include "packed-backend.h"
+ #include "../iterator.h"
+ #include "../lockfile.h"
+@@ -226,6 +225,14 @@ static NORETURN void die_invalid_line(const char *path,
  
- }
- 
--/*
-- * This value is set in `base.flags` if the peeled value of the
-- * current reference is known. In that case, `peeled` contains the
-- * correct peeled value for the reference, which might be `null_sha1`
-- * if the reference is not a tag or if it is broken.
-- */
--#define REF_KNOWS_PEELED 0x40
--
--/*
-- * An iterator over a packed-refs file that is currently mmapped.
-- */
--struct mmapped_ref_iterator {
--	struct ref_iterator base;
--
--	struct packed_ref_cache *packed_refs;
--
--	/* The current position in the mmapped file: */
--	const char *pos;
--
--	/* The end of the mmapped file: */
--	const char *eof;
--
--	struct object_id oid, peeled;
--
--	struct strbuf refname_buf;
--};
--
--static int mmapped_ref_iterator_advance(struct ref_iterator *ref_iterator)
--{
--	struct mmapped_ref_iterator *iter =
--		(struct mmapped_ref_iterator *)ref_iterator;
--	const char *p = iter->pos, *eol;
--
--	strbuf_reset(&iter->refname_buf);
--
--	if (iter->pos == iter->eof)
--		return ref_iterator_abort(ref_iterator);
--
--	iter->base.flags = REF_ISPACKED;
--
--	if (iter->eof - p < GIT_SHA1_HEXSZ + 2 ||
--	    parse_oid_hex(p, &iter->oid, &p) ||
--	    !isspace(*p++))
--		die_invalid_line(iter->packed_refs->refs->path,
--				 iter->pos, iter->eof - iter->pos);
--
--	eol = memchr(p, '\n', iter->eof - p);
--	if (!eol)
--		die_unterminated_line(iter->packed_refs->refs->path,
--				      iter->pos, iter->eof - iter->pos);
--
--	strbuf_add(&iter->refname_buf, p, eol - p);
--	iter->base.refname = iter->refname_buf.buf;
--
--	if (check_refname_format(iter->base.refname, REFNAME_ALLOW_ONELEVEL)) {
--		if (!refname_is_safe(iter->base.refname))
--			die("packed refname is dangerous: %s",
--			    iter->base.refname);
--		oidclr(&iter->oid);
--		iter->base.flags |= REF_BAD_NAME | REF_ISBROKEN;
--	}
--	if (iter->packed_refs->peeled == PEELED_FULLY ||
--	    (iter->packed_refs->peeled == PEELED_TAGS &&
--	     starts_with(iter->base.refname, "refs/tags/")))
--		iter->base.flags |= REF_KNOWS_PEELED;
--
--	iter->pos = eol + 1;
--
--	if (iter->pos < iter->eof && *iter->pos == '^') {
--		p = iter->pos + 1;
--		if (iter->eof - p < GIT_SHA1_HEXSZ + 1 ||
--		    parse_oid_hex(p, &iter->peeled, &p) ||
--		    *p++ != '\n')
--			die_invalid_line(iter->packed_refs->refs->path,
--					 iter->pos, iter->eof - iter->pos);
--		iter->pos = p;
--
--		/*
--		 * Regardless of what the file header said, we
--		 * definitely know the value of *this* reference. But
--		 * we suppress it if the reference is broken:
--		 */
--		if ((iter->base.flags & REF_ISBROKEN)) {
--			oidclr(&iter->peeled);
--			iter->base.flags &= ~REF_KNOWS_PEELED;
--		} else {
--			iter->base.flags |= REF_KNOWS_PEELED;
--		}
--	} else {
--		oidclr(&iter->peeled);
--	}
--
--	return ITER_OK;
--}
--
--static int mmapped_ref_iterator_peel(struct ref_iterator *ref_iterator,
--				    struct object_id *peeled)
--{
--	struct mmapped_ref_iterator *iter =
--		(struct mmapped_ref_iterator *)ref_iterator;
--
--	if ((iter->base.flags & REF_KNOWS_PEELED)) {
--		oidcpy(peeled, &iter->peeled);
--		return is_null_oid(&iter->peeled) ? -1 : 0;
--	} else if ((iter->base.flags & (REF_ISBROKEN | REF_ISSYMREF))) {
--		return -1;
--	} else {
--		return !!peel_object(iter->oid.hash, peeled->hash);
--	}
--}
--
--static int mmapped_ref_iterator_abort(struct ref_iterator *ref_iterator)
--{
--	struct mmapped_ref_iterator *iter =
--		(struct mmapped_ref_iterator *)ref_iterator;
--
--	release_packed_ref_cache(iter->packed_refs);
--	strbuf_release(&iter->refname_buf);
--	base_ref_iterator_free(ref_iterator);
--	return ITER_DONE;
--}
--
--static struct ref_iterator_vtable mmapped_ref_iterator_vtable = {
--	mmapped_ref_iterator_advance,
--	mmapped_ref_iterator_peel,
--	mmapped_ref_iterator_abort
--};
--
--struct ref_iterator *mmapped_ref_iterator_begin(
--		struct packed_ref_cache *packed_refs,
--		const char *pos, const char *eof)
--{
--	struct mmapped_ref_iterator *iter = xcalloc(1, sizeof(*iter));
--	struct ref_iterator *ref_iterator = &iter->base;
--
--	if (!packed_refs->buf)
--		return empty_ref_iterator_begin();
--
--	base_ref_iterator_init(ref_iterator, &mmapped_ref_iterator_vtable, 1);
--
--	iter->packed_refs = packed_refs;
--	acquire_packed_ref_cache(iter->packed_refs);
--	iter->pos = pos;
--	iter->eof = eof;
--	strbuf_init(&iter->refname_buf, 0);
--
--	iter->base.oid = &iter->oid;
--
--	return ref_iterator;
--}
--
- struct packed_ref_entry {
- 	const char *start;
- 	size_t len;
-@@ -858,38 +707,120 @@ static int packed_read_raw_ref(struct ref_store *ref_store,
- 	return 0;
  }
  
 +/*
@@ -244,190 +94,133 @@ index 66e5525174..1ed52d7eca 100644
 + */
 +#define REF_KNOWS_PEELED 0x40
 +
-+/*
-+ * An iterator over a packed-refs file that is currently mmapped.
-+ */
- struct packed_ref_iterator {
- 	struct ref_iterator base;
+ /*
+  * An iterator over a packed-refs file that is currently mmapped.
+  */
+diff --git a/refs/ref-cache.c b/refs/ref-cache.c
+index 54dfb5218c..4f850e1b5c 100644
+--- a/refs/ref-cache.c
++++ b/refs/ref-cache.c
+@@ -38,7 +38,6 @@ struct ref_entry *create_ref_entry(const char *refname,
  
--	struct packed_ref_cache *cache;
--	struct ref_iterator *iter0;
-+	struct packed_ref_cache *packed_refs;
-+
-+	/* The current position in the mmapped file: */
-+	const char *pos;
-+
-+	/* The end of the mmapped file: */
-+	const char *eof;
-+
-+	struct object_id oid, peeled;
-+
-+	struct strbuf refname_buf;
-+
- 	unsigned int flags;
+ 	FLEX_ALLOC_STR(ref, name, refname);
+ 	oidcpy(&ref->u.value.oid, oid);
+-	oidclr(&ref->u.value.peeled);
+ 	ref->flag = flag;
+ 	return ref;
+ }
+@@ -491,49 +490,10 @@ static int cache_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 	}
+ }
+ 
+-enum peel_status peel_entry(struct ref_entry *entry, int repeel)
+-{
+-	enum peel_status status;
+-
+-	if (entry->flag & REF_KNOWS_PEELED) {
+-		if (repeel) {
+-			entry->flag &= ~REF_KNOWS_PEELED;
+-			oidclr(&entry->u.value.peeled);
+-		} else {
+-			return is_null_oid(&entry->u.value.peeled) ?
+-				PEEL_NON_TAG : PEEL_PEELED;
+-		}
+-	}
+-	if (entry->flag & REF_ISBROKEN)
+-		return PEEL_BROKEN;
+-	if (entry->flag & REF_ISSYMREF)
+-		return PEEL_IS_SYMREF;
+-
+-	status = peel_object(entry->u.value.oid.hash, entry->u.value.peeled.hash);
+-	if (status == PEEL_PEELED || status == PEEL_NON_TAG)
+-		entry->flag |= REF_KNOWS_PEELED;
+-	return status;
+-}
+-
+ static int cache_ref_iterator_peel(struct ref_iterator *ref_iterator,
+ 				   struct object_id *peeled)
+ {
+-	struct cache_ref_iterator *iter =
+-		(struct cache_ref_iterator *)ref_iterator;
+-	struct cache_ref_iterator_level *level;
+-	struct ref_entry *entry;
+-
+-	level = &iter->levels[iter->levels_nr - 1];
+-
+-	if (level->index == -1)
+-		die("BUG: peel called before advance for cache iterator");
+-
+-	entry = level->dir->entries[level->index];
+-
+-	if (peel_entry(entry, 0))
+-		return -1;
+-	oidcpy(peeled, &entry->u.value.peeled);
+-	return 0;
++	return peel_object(ref_iterator->oid->hash, peeled->hash);
+ }
+ 
+ static int cache_ref_iterator_abort(struct ref_iterator *ref_iterator)
+diff --git a/refs/ref-cache.h b/refs/ref-cache.h
+index a082bfb06c..eda65e73ed 100644
+--- a/refs/ref-cache.h
++++ b/refs/ref-cache.h
+@@ -38,14 +38,6 @@ struct ref_value {
+ 	 * referred to by the last reference in the symlink chain.
+ 	 */
+ 	struct object_id oid;
+-
+-	/*
+-	 * If REF_KNOWS_PEELED, then this field holds the peeled value
+-	 * of this reference, or null if the reference is known not to
+-	 * be peelable.  See the documentation for peel_ref() for an
+-	 * exact definition of "peelable".
+-	 */
+-	struct object_id peeled;
  };
  
-+static int next_record(struct packed_ref_iterator *iter)
-+{
-+	const char *p = iter->pos, *eol;
-+
-+	strbuf_reset(&iter->refname_buf);
-+
-+	if (iter->pos == iter->eof)
-+		return ITER_DONE;
-+
-+	iter->base.flags = REF_ISPACKED;
-+
-+	if (iter->eof - p < GIT_SHA1_HEXSZ + 2 ||
-+	    parse_oid_hex(p, &iter->oid, &p) ||
-+	    !isspace(*p++))
-+		die_invalid_line(iter->packed_refs->refs->path,
-+				 iter->pos, iter->eof - iter->pos);
-+
-+	eol = memchr(p, '\n', iter->eof - p);
-+	if (!eol)
-+		die_unterminated_line(iter->packed_refs->refs->path,
-+				      iter->pos, iter->eof - iter->pos);
-+
-+	strbuf_add(&iter->refname_buf, p, eol - p);
-+	iter->base.refname = iter->refname_buf.buf;
-+
-+	if (check_refname_format(iter->base.refname, REFNAME_ALLOW_ONELEVEL)) {
-+		if (!refname_is_safe(iter->base.refname))
-+			die("packed refname is dangerous: %s",
-+			    iter->base.refname);
-+		oidclr(&iter->oid);
-+		iter->base.flags |= REF_BAD_NAME | REF_ISBROKEN;
-+	}
-+	if (iter->packed_refs->peeled == PEELED_FULLY ||
-+	    (iter->packed_refs->peeled == PEELED_TAGS &&
-+	     starts_with(iter->base.refname, "refs/tags/")))
-+		iter->base.flags |= REF_KNOWS_PEELED;
-+
-+	iter->pos = eol + 1;
-+
-+	if (iter->pos < iter->eof && *iter->pos == '^') {
-+		p = iter->pos + 1;
-+		if (iter->eof - p < GIT_SHA1_HEXSZ + 1 ||
-+		    parse_oid_hex(p, &iter->peeled, &p) ||
-+		    *p++ != '\n')
-+			die_invalid_line(iter->packed_refs->refs->path,
-+					 iter->pos, iter->eof - iter->pos);
-+		iter->pos = p;
-+
-+		/*
-+		 * Regardless of what the file header said, we
-+		 * definitely know the value of *this* reference. But
-+		 * we suppress it if the reference is broken:
-+		 */
-+		if ((iter->base.flags & REF_ISBROKEN)) {
-+			oidclr(&iter->peeled);
-+			iter->base.flags &= ~REF_KNOWS_PEELED;
-+		} else {
-+			iter->base.flags |= REF_KNOWS_PEELED;
-+		}
-+	} else {
-+		oidclr(&iter->peeled);
-+	}
-+
-+	return ITER_OK;
-+}
-+
- static int packed_ref_iterator_advance(struct ref_iterator *ref_iterator)
- {
- 	struct packed_ref_iterator *iter =
- 		(struct packed_ref_iterator *)ref_iterator;
- 	int ok;
+ /*
+@@ -97,21 +89,14 @@ struct ref_dir {
+  * public values; see refs.h.
+  */
  
--	while ((ok = ref_iterator_advance(iter->iter0)) == ITER_OK) {
-+	while ((ok = next_record(iter)) == ITER_OK) {
- 		if (iter->flags & DO_FOR_EACH_PER_WORKTREE_ONLY &&
--		    ref_type(iter->iter0->refname) != REF_TYPE_PER_WORKTREE)
-+		    ref_type(iter->base.refname) != REF_TYPE_PER_WORKTREE)
- 			continue;
- 
- 		if (!(iter->flags & DO_FOR_EACH_INCLUDE_BROKEN) &&
--		    !ref_resolves_to_object(iter->iter0->refname,
--					    iter->iter0->oid,
--					    iter->iter0->flags))
-+		    !ref_resolves_to_object(iter->base.refname, &iter->oid,
-+					    iter->flags))
- 			continue;
- 
--		iter->base.refname = iter->iter0->refname;
--		iter->base.oid = iter->iter0->oid;
--		iter->base.flags = iter->iter0->flags;
- 		return ITER_OK;
- 	}
- 
--	iter->iter0 = NULL;
- 	if (ref_iterator_abort(ref_iterator) != ITER_DONE)
- 		ok = ITER_ERROR;
- 
-@@ -902,7 +833,14 @@ static int packed_ref_iterator_peel(struct ref_iterator *ref_iterator,
- 	struct packed_ref_iterator *iter =
- 		(struct packed_ref_iterator *)ref_iterator;
- 
--	return ref_iterator_peel(iter->iter0, peeled);
-+	if ((iter->base.flags & REF_KNOWS_PEELED)) {
-+		oidcpy(peeled, &iter->peeled);
-+		return is_null_oid(&iter->peeled) ? -1 : 0;
-+	} else if ((iter->base.flags & (REF_ISBROKEN | REF_ISSYMREF))) {
-+		return -1;
-+	} else {
-+		return !!peel_object(iter->oid.hash, peeled->hash);
-+	}
- }
- 
- static int packed_ref_iterator_abort(struct ref_iterator *ref_iterator)
-@@ -911,10 +849,8 @@ static int packed_ref_iterator_abort(struct ref_iterator *ref_iterator)
- 		(struct packed_ref_iterator *)ref_iterator;
- 	int ok = ITER_DONE;
- 
--	if (iter->iter0)
--		ok = ref_iterator_abort(iter->iter0);
+-/*
+- * The field ref_entry->u.value.peeled of this value entry contains
+- * the correct peeled value for the reference, which might be
+- * null_sha1 if the reference is not a tag or if it is broken.
+- */
+-#define REF_KNOWS_PEELED 0x10
 -
--	release_packed_ref_cache(iter->cache);
-+	strbuf_release(&iter->refname_buf);
-+	release_packed_ref_cache(iter->packed_refs);
- 	base_ref_iterator_free(ref_iterator);
- 	return ok;
- }
-@@ -940,6 +876,11 @@ static struct ref_iterator *packed_ref_iterator_begin(
- 		required_flags |= REF_STORE_ODB;
- 	refs = packed_downcast(ref_store, required_flags, "ref_iterator_begin");
+ /* ref_entry represents a directory of references */
+-#define REF_DIR 0x20
++#define REF_DIR 0x10
  
-+	packed_refs = get_packed_ref_cache(refs);
-+
-+	if (!packed_refs->buf)
-+		return empty_ref_iterator_begin();
-+
- 	iter = xcalloc(1, sizeof(*iter));
- 	ref_iterator = &iter->base;
- 	base_ref_iterator_init(ref_iterator, &packed_ref_iterator_vtable, 1);
-@@ -949,7 +890,7 @@ static struct ref_iterator *packed_ref_iterator_begin(
- 	 * the packed-ref cache is up to date with what is on disk,
- 	 * and re-reads it if not.
- 	 */
--	iter->cache = packed_refs = get_packed_ref_cache(refs);
-+	iter->packed_refs = packed_refs;
- 	acquire_packed_ref_cache(packed_refs);
+ /*
+  * Entry has not yet been read from disk (used only for REF_DIR
+  * entries representing loose references)
+  */
+-#define REF_INCOMPLETE 0x40
++#define REF_INCOMPLETE 0x20
  
- 	if (prefix && *prefix)
-@@ -957,8 +898,11 @@ static struct ref_iterator *packed_ref_iterator_begin(
- 	else
- 		start = packed_refs->buf + packed_refs->header_len;
+ /*
+  * A ref_entry represents either a reference or a "subdirectory" of
+@@ -252,17 +237,4 @@ struct ref_iterator *cache_ref_iterator_begin(struct ref_cache *cache,
+ 					      const char *prefix,
+ 					      int prime_dir);
  
--	iter->iter0 = mmapped_ref_iterator_begin(packed_refs,
--						 start, packed_refs->eof);
-+	iter->pos = start;
-+	iter->eof = packed_refs->eof;
-+	strbuf_init(&iter->refname_buf, 0);
-+
-+	iter->base.oid = &iter->oid;
- 
- 	iter->flags = flags;
- 
+-/*
+- * Peel the entry (if possible) and return its new peel_status.  If
+- * repeel is true, re-peel the entry even if there is an old peeled
+- * value that is already stored in it.
+- *
+- * It is OK to call this function with a packed reference entry that
+- * might be stale and might even refer to an object that has since
+- * been garbage-collected.  In such a case, if the entry has
+- * REF_KNOWS_PEELED then leave the status unchanged and return
+- * PEEL_PEELED or PEEL_NON_TAG; otherwise, return PEEL_INVALID.
+- */
+-enum peel_status peel_entry(struct ref_entry *entry, int repeel);
+-
+ #endif /* REFS_REF_CACHE_H */
 -- 
 2.14.1
 
