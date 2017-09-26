@@ -2,90 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 726B020A26
-	for <e@80x24.org>; Tue, 26 Sep 2017 00:28:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 45C02202A5
+	for <e@80x24.org>; Tue, 26 Sep 2017 01:31:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935611AbdIZA2J (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Sep 2017 20:28:09 -0400
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:51104 "EHLO
-        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934198AbdIZA2I (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Sep 2017 20:28:08 -0400
-Received: by mail-pf0-f172.google.com with SMTP id m63so4674176pfk.7
-        for <git@vger.kernel.org>; Mon, 25 Sep 2017 17:28:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=MavkN1ej1/VBzTood+r0ekD2E8WeYD5hXCRM38zMaLM=;
-        b=ZyX/qJWcsIRdRka2JMDfggNQ9a2FAZ5v+QZxvmSoH60yRhpHcfv+ZOVzdKp4ST0zts
-         gNDkLiEMyLQ/NT+tsr+T+NLbs14YTgPuWEFCzNRq+z+971NAIxluNLKlo8kYAj5utT9b
-         YuO16C1jIBJAOLS5Tn7hi/k6F/OCRoSlDonLO6J/EYwXBX5PXTUT+cknwKkOAKHtGnmd
-         xKnlWU9uRS8BRW48uDuUpB2wz1Am5IaUnWOkaYMimkhyZ8Dv+73rrfJSarunmeVkLQ55
-         ovIDAm1yWlAxJv5w329nrILBJ11JX131mFulXukaFxAKj+aZIrN5P1Wv+0/dEb4OY9M4
-         3W+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=MavkN1ej1/VBzTood+r0ekD2E8WeYD5hXCRM38zMaLM=;
-        b=pXIxjg2Br0OUSCVLM/SjlNL+LZTy7XDhOE+UAo/NGJ0mYmmFeRgpFPoo/BNML2wsuY
-         1FdmD/ittrkR7uTLcwQKRJAPLPozVrJwe/W9/HgYBm0Bj1qp+Rz7pwvEGoteD0kuJgM9
-         ZWeTQeOkNY1rSfPSwsnSwymbfHaOosnWYr53lzTmyHSBBoY74RLqAmjHbiNEJno+JnHe
-         ZQfaOtQN/J8i02Zj/RgQc8//0sG+a4TfOjKEH435Xn21RO6B/7KMeNQZ8wax0wcopSTm
-         jXGIhJWy64LzUWf1qo4UVefnoIuJM0rXGv57geBLBayT+/Afw0vs8v3brdeeceHurcKC
-         MrFg==
-X-Gm-Message-State: AHPjjUjT+ATp1U6asE8wfb3kD4cMdCBuhumc9uq4UbKgmHEmjlW61fR4
-        UCFb3FsUkVptbpb2IIzS48k=
-X-Google-Smtp-Source: AOwi7QCekJYRtBL9dN78Y6r3jwe9fSpVmdssfgHlULMGHmyikeqsdkdZ3r5V+Gm3K5tbE/SlsvBjYg==
-X-Received: by 10.159.244.132 with SMTP id y4mr9249318plr.354.1506385687794;
-        Mon, 25 Sep 2017 17:28:07 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:b5cd:5017:828c:d0cb])
-        by smtp.gmail.com with ESMTPSA id o5sm12905620pfh.67.2017.09.25.17.28.07
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 25 Sep 2017 17:28:07 -0700 (PDT)
-Date:   Mon, 25 Sep 2017 17:28:05 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 3/7] read_in_full: reset errno before reading
-Message-ID: <20170926002805.GS27425@aiede.mtv.corp.google.com>
-References: <20170925232313.hhtqpxuzpzbnbdop@sigill.intra.peff.net>
- <20170925233316.GI27425@aiede.mtv.corp.google.com>
- <20170925233732.4lqavl56qwpfjuxy@sigill.intra.peff.net>
- <20170925234541.l6qcislhfwtnxf5m@sigill.intra.peff.net>
- <20170925235510.GL27425@aiede.mtv.corp.google.com>
- <20170926000117.y3solltovyueq3zc@sigill.intra.peff.net>
- <20170926001354.GN27425@aiede.mtv.corp.google.com>
- <20170926001724.cxuwsdadjbqqmnig@sigill.intra.peff.net>
- <20170926002020.GQ27425@aiede.mtv.corp.google.com>
- <20170926002510.xmusj6fkvb25fm5w@sigill.intra.peff.net>
+        id S966977AbdIZBbF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Sep 2017 21:31:05 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59587 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S965729AbdIZBbE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Sep 2017 21:31:04 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C4DBE9BE2C;
+        Mon, 25 Sep 2017 21:31:01 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=4S7gP6VEqvKe8JDPDbjUI30Uil0=; b=jtB59W
+        q6tSk5gjekuUdpQwT3symS+Y1gtEJ+mu7vQJOnjJTaByTjdCye40ghutsA33IElA
+        pDssw9AUUclH+YALzzVmAgFzDWgtAoTheuBPk/XAdCDVwzYdlpPKH2uWD35gHZoR
+        Ov7FXoyPfFcLRhy39PlLf6EBXOsUm3pYeFc6A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ckPviOCvtRnweKDld5Td0MnX3bYButia
+        B5eINRygMwWtzO6Ov+ULBaDkPLMeVykLMNB71Y4zSAWRd9SEaSw8X/Apx+fUGR+K
+        HaSdImRljLbvf4KibW66nA/DlTtXwjqlng5oLN2vE15IRMekVPZwSS4o37QHRiLs
+        P6brHqOIBkM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BC0F89BE2B;
+        Mon, 25 Sep 2017 21:31:01 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CAF709BE29;
+        Mon, 25 Sep 2017 21:31:00 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+        jrnieder@gmail.com
+Subject: Re: [PATCH] Documentation: consolidate submodule.<name>.update
+References: <xmqq1smxj7md.fsf@gitster.mtv.corp.google.com>
+        <20170925191011.29863-1-sbeller@google.com>
+        <20170925191726.GE35385@google.com>
+Date:   Tue, 26 Sep 2017 10:30:59 +0900
+In-Reply-To: <20170925191726.GE35385@google.com> (Brandon Williams's message
+        of "Mon, 25 Sep 2017 12:17:26 -0700")
+Message-ID: <xmqqy3p2ckks.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170926002510.xmusj6fkvb25fm5w@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5AAADF26-A25A-11E7-AD19-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
+Brandon Williams <bmwill@google.com> writes:
 
-> What do you think of patch 7 in light of this? If the short-read case
-> gives us a sane errno, should we even bother trying to consistently
-> handle its error separately?
+>> +	The method by which a submodule is updated by 'git submodule update',
+>> +	which is the only affected command, others such as
+>> +	'git checkout --recurse-submodules' are unaffected. It exists for
+>> +	historical reasons, when 'git submodule' was the only command to
+>> +	interact with submodules; settings like `submodule.active`
+>> +	and `pull.rebase` are more specific. It is copied to the config
+>> +	by `git submodule init` from the .gitmodules file.
+>> +	Allowed values here are 'checkout', 'rebase', 'merge' or 'none'.
+>> +	See description of 'update' command in linkgit:git-submodule[1]
+>> +	for their meaning. Note that the '!command' form is intentionally
+>> +	ignored here for security reasons.
+>
+> This probably needs to be tweaked a bit to say that the '!command' form
+> is ignored by submodule init, in that it isn't copied over from the
+> .gitmodules file, but if it is configured in your config it will be
+> respected by 'submodule update'.
 
-I like the read_exactly_or_die variant because it makes callers more
-concise, but on the other hand a caller handling the error can write a
-more meaningful error message with the right amount of context.
+I do not think gitmodules.txt is the place to say anything more than
+what Stefan's patch says above.  Perhaps config.txt should mention
+that in addition to what the variable with the same in .gitmodules
+can take, it is allowed to use the !command form.
 
-So I think you're right that it's better to drop patch 7.
+IOW, in config.txt
 
-Thanks,
-Jonathan
+	submodule.<name>.update::
+		Specifies how 'git submodule update' should work on
+		the named submodule.  In addition to the values that
+		can be specified in (and copied from) `.gitmodules`
+		(see linkgit:gitmodules[5]), `!command` form can
+		also be used.
+
+or something, perhaps?
