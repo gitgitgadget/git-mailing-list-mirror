@@ -2,139 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B2FA20281
-	for <e@80x24.org>; Tue, 26 Sep 2017 17:21:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 486EE20281
+	for <e@80x24.org>; Tue, 26 Sep 2017 17:32:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967955AbdIZRVV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Sep 2017 13:21:21 -0400
-Received: from outbound1.eu.mailhop.org ([52.28.251.132]:21933 "EHLO
-        outbound1.eu.mailhop.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965047AbdIZRVT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Sep 2017 13:21:19 -0400
-X-Greylist: delayed 963 seconds by postgrey-1.27 at vger.kernel.org; Tue, 26 Sep 2017 13:21:19 EDT
-X-MHO-User: d78eb96c-a2dc-11e7-a893-25625093991c
-X-Report-Abuse-To: https://support.duocircle.com/support/solutions/articles/5000540958-duocircle-standard-smtp-abuse-information
-X-Originating-IP: 173.50.81.193
-X-Mail-Handler: DuoCircle Outbound SMTP
-Received: from io (unknown [173.50.81.193])
-        by outbound1.eu.mailhop.org (Halon) with ESMTPSA
-        id d78eb96c-a2dc-11e7-a893-25625093991c;
-        Tue, 26 Sep 2017 17:05:07 +0000 (UTC)
-Received: from io.lakedaemon.net (localhost [127.0.0.1])
-        by io (Postfix) with ESMTP id 29E0980060;
-        Tue, 26 Sep 2017 17:05:03 +0000 (UTC)
-X-DKIM: OpenDKIM Filter v2.6.8 io 29E0980060
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lakedaemon.net;
-        s=mail; t=1506445503;
-        bh=PBK5rHz+t4py/L8BfZXB6sKW1GVo9lWSb14xoRxTuEo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=xJmrO/rHdOQWuYG8UOxxv08kmjhx4QevupSkWcPhdQ27/DXhv0hFnQUNmiDE1KeZY
-         LzcksrdnUObHDgFJFVH4QZa7mgOiGL6yml51X2CML2uW9+eR2NK+HfgxrVOF4LTMb2
-         mng/eTvRua6wQpJVMJLGzXNug5CxE8eppLXWg392AndzTmcylCWTzpwHikNLZDqawP
-         scPJEo1EzaA37RkpMnEpNM1dd1mHaej5+XS+HG9xZFGFo+f3F2qbHbbZQRUuLnh4DR
-         qPqvRzw6JXF68ik36InvUhi2x55+5guiHOT4ShhPvgWKBljhRPWggqR2ole8l3lpCq
-         0iVSZa1wn7C4A==
-Date:   Tue, 26 Sep 2017 17:05:03 +0000
-From:   Jason Cooper <jason@lakedaemon.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
-        demerphq <demerphq@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jeff King <peff@peff.net>, David Lang <david@lang.hm>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: RFC v3: Another proposed hash function transition plan
-Message-ID: <20170926170502.GY31762@io.lakedaemon.net>
-References: <20170304011251.GA26789@aiede.mtv.corp.google.com>
- <CA+55aFz+gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com>
- <20170307001709.GC26789@aiede.mtv.corp.google.com>
- <xmqqa828733s.fsf@gitster.mtv.corp.google.com>
- <xmqq1snh29re.fsf@gitster.mtv.corp.google.com>
- <20170911185913.GA5869@google.com>
- <alpine.DEB.2.21.1.1709131340030.4132@virtualbox>
- <CANgJU+Wv1nx79DJTDmYE=O7LUNA3LuRTJhXJn+y0L0C3R+YDEA@mail.gmail.com>
- <CA+55aFwUn0KibpDQK2ZrxzXKOk8-aAub2nJZQqKCpq1ddhDcMQ@mail.gmail.com>
- <alpine.DEB.2.21.1.1709142037490.4132@virtualbox>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.21.1.1709142037490.4132@virtualbox>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        id S1031087AbdIZRc4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Sep 2017 13:32:56 -0400
+Received: from mail-pf0-f173.google.com ([209.85.192.173]:46234 "EHLO
+        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1031084AbdIZRcy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Sep 2017 13:32:54 -0400
+Received: by mail-pf0-f173.google.com with SMTP id r68so5873892pfj.3
+        for <git@vger.kernel.org>; Tue, 26 Sep 2017 10:32:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=LKnXzCmID2nFSQdCpmsKlHPMDdi66iZ5IH+EuacU7TA=;
+        b=uodd7gDKrLZttsqv1zLv3BF56b2ucs16HheotmpBwtMaFqbk+Bp59W0U1qwEw1+VtV
+         vmcI2Y/V3o5yo6Wdd/pjQLq1ydl4COjeal8aE++iVHRcFmJLZFaCSapPXI6fhpCm566N
+         ey/CcOWO/4QqMotyAc0GUM6Gi7yhfGYUj7ueoqt4RhNusmghY7J4M0mwqLsPLRFfCn9Y
+         tb0NXqtoNQL+4J17mbBwe0uLC7AUJUH2X9UBbVQYCQF8dT6d5CM2oJiQqxZ28JNzQvY4
+         BOLJj8mg3pbUj6TIMvrWD/EKRshb6ooWkianrMhDqLmsSyD6ddDnNDQ7PlZn8y6N7XP8
+         Lfjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=LKnXzCmID2nFSQdCpmsKlHPMDdi66iZ5IH+EuacU7TA=;
+        b=fZh9qKBepasVqUWWQQ4PlARPTm6CpupbIGrxX2BJRcuhOVAt9hcPob36KkwYvpf1lS
+         SIyS1oF7I+uJXC1bY1jsq87j16GBCZBjl+qrjinv1mgKAAN8rvXxE2My4zDW5p83gF1O
+         FllRtRaq08NKUqq28m9vnvij85fyT/iSTEw3AwOv6ovSzL3PeGK4Qj5smfFjtkr+jXSu
+         HBbOogxsytjlxMR0S6FDIvWgN6IFf15CGfFjBmSooHHm2Q71oNPyA8/axlEsnnSb1rgw
+         fXRdJXgn32qNVu92OvCzDMfk887F6pnmGf63JztMrcMeMGKouo4TNuJ+hX4PwxGIPCtC
+         aTLA==
+X-Gm-Message-State: AHPjjUgo09RWqWf/vASI5RS5KImE98bsGg+G9FwPc0/LNZ0+ejo4iA+d
+        t2hSmUndsFE6EOCfy++0rfHiwA==
+X-Google-Smtp-Source: AOwi7QD5dBEcE/Q02DcdJrqyNjCrtxansqFxqcC/nop1MDgNli5MzZF/0SEULo7NxK+uvi1k8WMfHA==
+X-Received: by 10.99.55.85 with SMTP id g21mr11737431pgn.306.1506447173762;
+        Tue, 26 Sep 2017 10:32:53 -0700 (PDT)
+Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:6046:dda3:c5ad:1d0b])
+        by smtp.gmail.com with ESMTPSA id s62sm18140737pfe.91.2017.09.26.10.32.52
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 26 Sep 2017 10:32:52 -0700 (PDT)
+Date:   Tue, 26 Sep 2017 10:32:52 -0700
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     git@vger.kernel.org, peartben@gmail.com,
+        Christian Couder <christian.couder@gmail.com>
+Subject: Re: RFC: Design and code of partial clones (now, missing commits
+ and trees OK) (part 3)
+Message-Id: <20170926103252.8330a266cf450e64dee27500@google.com>
+In-Reply-To: <e05a7978-c312-9e26-79a2-fca3ae44f59a@jeffhostetler.com>
+References: <20170915134343.3814dc38@twelve2.svl.corp.google.com>
+        <af717446-95bf-c5a5-cd27-aaf20531db0f@jeffhostetler.com>
+        <20170921160416.1c4c6e2c@twelve2.svl.corp.google.com>
+        <7977bab0-09c3-0e43-4d6f-f2bf87a3fd9e@jeffhostetler.com>
+        <20170922155802.ab79717818578a23cc31f6fe@google.com>
+        <e05a7978-c312-9e26-79a2-fca3ae44f59a@jeffhostetler.com>
+X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+On Tue, 26 Sep 2017 10:25:16 -0400
+Jeff Hostetler <git@jeffhostetler.com> wrote:
 
-Sorry for late commentary...
-
-On Thu, Sep 14, 2017 at 08:45:35PM +0200, Johannes Schindelin wrote:
-> On Wed, 13 Sep 2017, Linus Torvalds wrote:
-> > On Wed, Sep 13, 2017 at 6:43 AM, demerphq <demerphq@gmail.com> wrote:
-> > > SHA3 however uses a completely different design where it mixes a 1088
-> > > bit block into a 1600 bit state, for a leverage of 2:3, and the excess
-> > > is *preserved between each block*.
+> >> Perhaps you could augment the OID lookup to remember where the object
+> >> was found (essentially a .promisor bit set).  Then you wouldn't need
+> >> to touch them all.
 > > 
-> > Yes. And considering that the SHA1 attack was actually predicated on
-> > the fact that each block was independent (no extra state between), I
-> > do think SHA3 is a better model.
-> > 
-> > So I'd rather see SHA3-256 than SHA256.
+> > Sorry - I don't understand this. Are you saying that missing promisor
+> > objects should go into the global object hashtable, so that we can set a
+> > flag on them?
+> 
+> I just meant could we add a bit to "struct object_info" to indicate
+> that the object was found in a .promisor packfile ?  This could
+> be set in sha1_object_info_extended().
+> 
+> Then the is_promised() calls in fsck and gc would just test that bit.
+> 
+> Given that that bit will be set on promisOR objects (and we won't
+> have object_info for missing objects), you may need to adjust the
+> iterator in the fsck/gc code slightly.
+> 
+> This is a bit of a handwave, but could something like that eliminate
+> the need to build this oidset?
 
-Well, for what it's worth, we need to be aware that SHA3 is *different*.
-In crypto, "different" = "bugs haven't been found yet".  :-P
+This oidset is meant to contain the missing objects, and is needed as
+the final check (attempt to read the object, then check this oidset).
+Admittedly, right now I add objects to it even if they are present in
+the DB, but that's because I think that it's better for the set to be
+bigger than to incur the repeated existence checks. But even if we only
+include truly missing objects in this oidset, we still need the oidset,
+or store information about missing objects in some equivalent data
+structure.
 
-And SHA2 is *known*.  So we have a pretty good handle on how it'll
-weaken over time.
-
-> SHA-256 got much more cryptanalysis than SHA3-256, and apart from the
-> length-extension problem that does not affect Git's usage, there are no
-> known weaknesses so far.
-
-While I think that statement is true on it's face (particularly when
-including post-competition analysis), I don't think it's sufficient
-justification to chose one over the other.
-
-> It would seem that the experts I talked to were much more concerned about
-> that amount of attention than the particulars of the algorithm. My
-> impression was that the new features of SHA3 were less studied than the
-> well-known features of SHA2, and that the new-ness of SHA3 is not
-> necessarily a good thing.
-
-The only thing I really object to here is the abstract "experts".  We're
-talking about cryptography and integrity here.  It's no longer
-sufficient to cite anonymous experts.  Either they can put their
-thoughts, opinions and analysis on record here, or it shouldn't be
-considered.  Sorry.
-
-Other than their anonymity, though, I do agree with your experts
-assessments.
-
-However, whether we chose SHA2 or SHA3 doesn't matter.  Moving away from
-SHA1 does.  Once the object_id code is in place to facilitate that
-transition, the problem is solved from git's perspective.
-
-If SHA3 is chosen as the successor, it's going to get a *lot* more
-adoption, and thus, a lot more analysis.  If cracks start to show, the
-hard work of making git flexible is already done.  We can migrate to
-SHA4/5/whatever in an orderly fashion with far less effort than the
-transition away from SHA1.
-
-For my use cases, as a user of git, I have a plan to maintain provable
-integrity of existing objects stored in git under sha1 while migrating
-away from sha1.  The same plan works for migrating away from SHA2 or
-SHA3 when the time comes.
-
-
-thx,
-
-Jason.
+The bit that you mention being set on promisOR objects is already being
+set. See the invocation of mark_uninteresting() in rev-list.c.
