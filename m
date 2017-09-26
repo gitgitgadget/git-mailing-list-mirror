@@ -2,57 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1EEE820281
-	for <e@80x24.org>; Tue, 26 Sep 2017 19:46:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA33D20A26
+	for <e@80x24.org>; Tue, 26 Sep 2017 19:54:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1032000AbdIZTq4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Sep 2017 15:46:56 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:29956 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1031997AbdIZTqz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Sep 2017 15:46:55 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 3y1s0Y46K8z5tlF;
-        Tue, 26 Sep 2017 21:46:53 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id F3038211E;
-        Tue, 26 Sep 2017 21:46:50 +0200 (CEST)
-Subject: Re: [PATCH] t7406: submodule.<name>.update command must not be run
- from .gitmodules
-To:     Stefan Beller <sbeller@google.com>
-Cc:     gitster@pobox.com, git@vger.kernel.org, jrnieder@gmail.com
-References: <xmqqshfa9doa.fsf@gitster.mtv.corp.google.com>
- <20170926185413.21209-1-sbeller@google.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <0b69c0b0-6246-2428-b4b0-bb3ef3cb5ae7@kdbg.org>
-Date:   Tue, 26 Sep 2017 21:46:50 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
-MIME-Version: 1.0
-In-Reply-To: <20170926185413.21209-1-sbeller@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        id S968490AbdIZTyR (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Sep 2017 15:54:17 -0400
+Received: from mail-pg0-f45.google.com ([74.125.83.45]:53544 "EHLO
+        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965209AbdIZTyQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Sep 2017 15:54:16 -0400
+Received: by mail-pg0-f45.google.com with SMTP id j70so6479755pgc.10
+        for <git@vger.kernel.org>; Tue, 26 Sep 2017 12:54:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=R09SI9SShC7hhotb320LIWjQmBSZH4q1b4VNzoeviCA=;
+        b=UAJZCpS1lXLb/H8hCiXAHp3UfboN+90+zho4cTxG6hgmCI43JSu9+GnXNE9wVc9g2A
+         COm/jCpcCfgG5pE3RlZvGXeLWncv9um/v3eYsiGt/q7LhLdHh/gfMKX7yu7acqd80cdk
+         Tjjd8l4wxy2MYnB22yN8GLJ5OtaA7ia1jSYgbqIADNis/KyKQIVHSfUKkULdZlenLVUh
+         yD6bdP88Q0zwsrtMs/9ViGEWteeQffvxg5MVUQOHOPpmzLoNPChOxvoY3TBpnt+Z2Dck
+         ntK6v3aCdNLWLhkMcxb/lMJPo+zUyR7ptBGVVL2qoRhG2ThEUVUPMqyvID3oLJj3cccl
+         QScA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=R09SI9SShC7hhotb320LIWjQmBSZH4q1b4VNzoeviCA=;
+        b=WEsQKsuQNvxd3IKz2tOVwmrkGra4/4+973ATL5iZFeGGZ826rFzWbtP1Lk5Mu415mq
+         LDHMgRPstUO1wBdsTGNIy9ic/s+cTPxTspx+HmCklDKYUZ2u1c1+Dg58MV38bU9nXmxq
+         GA9kTYT35CWMAgjmi65Lz4dOBTUbMl+AHihzA5Dcpozi/LDK/decYglIgKdWNONJhsc8
+         HG6LQ9TzVPFErBeINLperMS7hf8uxMu31p5omPn4WZVg6TZoQX762uUOjRpjYAe/PoGc
+         fBG69g/B98BnTuapERLPOcNeBuaJMWXkVeZTo5VwsF9p0CJUThhPO4jGpJL5yNvRY3qV
+         ty0A==
+X-Gm-Message-State: AHPjjUi26UuQXDfOWhSp/V7r602B17rtxVHFivTGx3w/hwD0RVkONeAr
+        ZmON3M405tH38MZnDaaR8PTNqg==
+X-Google-Smtp-Source: AOwi7QA8Ce3KzexAxlo0U0OzdzucStBdWWqS4Gwxc0YTLfOMkVoayOcWUJrdRJ/iGjyR5iLV9uRdVw==
+X-Received: by 10.98.74.74 with SMTP id x71mr11972939pfa.236.1506455655991;
+        Tue, 26 Sep 2017 12:54:15 -0700 (PDT)
+Received: from localhost ([2620:0:100e:422:7981:413b:8357:cbf7])
+        by smtp.gmail.com with ESMTPSA id s76sm17808559pfj.119.2017.09.26.12.54.15
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 26 Sep 2017 12:54:15 -0700 (PDT)
+From:   Stefan Beller <sbeller@google.com>
+To:     j6t@kdbg.org
+Cc:     git@vger.kernel.org, gitster@pobox.com, jrnieder@gmail.com,
+        sbeller@google.com
+Subject: [PATCH] t7406: submodule.<name>.update command must not be run from .gitmodules
+Date:   Tue, 26 Sep 2017 12:54:13 -0700
+Message-Id: <20170926195413.3916-1-sbeller@google.com>
+X-Mailer: git-send-email 2.14.0.rc0.3.g6c2e499285
+In-Reply-To: <0b69c0b0-6246-2428-b4b0-bb3ef3cb5ae7@kdbg.org>
+References: <0b69c0b0-6246-2428-b4b0-bb3ef3cb5ae7@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 26.09.2017 um 20:54 schrieb Stefan Beller:
-> +test_expect_success 'submodule update - command in .gitmodules is ignored' '
-> +	test_when_finished "git -C super reset --hard HEAD^" &&
-> +
-> +	git -C super config -f .gitmodules submodule.submodule.update "!false" &&
-> +	git -C super commit -a -m "add command to .gitmodules file" &&
-> +	git -C super/submodule reset --hard $submodulesha1^ &&
-> +	git -C super submodule update submodule &&
-> +	test_path_is_missing bad
+submodule.<name>.update can be assigned an arbitrary command via setting
+it to "!command". When this command is found in the regular config, Git
+ought to just run that command instead of other update mechanisms.
 
-This test for a missing file is certainly a remnant from the previous 
-iteration, isn't it?
+However if that command is just found in the .gitmodules file, it is
+potentially untrusted, which is why we do not run it.  Add a test
+confirming the behavior.
 
--- Hannes
+Suggested-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+
+> This test for a missing file is certainly a remnant from the
+> previous iteration, isn't it?
+
+Yes. This is a good indicator I need some vacation.
+
+Thanks,
+Stefan
+
+ t/t7406-submodule-update.sh | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+index 034914a14f..6f083c4d68 100755
+--- a/t/t7406-submodule-update.sh
++++ b/t/t7406-submodule-update.sh
+@@ -406,6 +406,14 @@ test_expect_success 'submodule update - command in .git/config' '
+ 	)
+ '
+ 
++test_expect_success 'submodule update - command in .gitmodules is ignored' '
++	test_when_finished "git -C super reset --hard HEAD^" &&
++	git -C super config -f .gitmodules submodule.submodule.update "!false" &&
++	git -C super commit -a -m "add command to .gitmodules file" &&
++	git -C super/submodule reset --hard $submodulesha1^ &&
++	git -C super submodule update submodule
++'
++
+ cat << EOF >expect
+ Execution of 'false $submodulesha1' failed in submodule path 'submodule'
+ EOF
+-- 
+2.14.0.rc0.3.g6c2e499285
+
