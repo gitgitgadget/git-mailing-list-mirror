@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BF9BF20281
-	for <e@80x24.org>; Tue, 26 Sep 2017 23:57:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5025120281
+	for <e@80x24.org>; Tue, 26 Sep 2017 23:57:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1032794AbdIZX5D (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Sep 2017 19:57:03 -0400
-Received: from mail-pg0-f41.google.com ([74.125.83.41]:44035 "EHLO
-        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1032788AbdIZX47 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Sep 2017 19:56:59 -0400
-Received: by mail-pg0-f41.google.com with SMTP id j16so6782082pga.1
-        for <git@vger.kernel.org>; Tue, 26 Sep 2017 16:56:59 -0700 (PDT)
+        id S1032784AbdIZX46 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Sep 2017 19:56:58 -0400
+Received: from mail-pf0-f178.google.com ([209.85.192.178]:46893 "EHLO
+        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1032775AbdIZX4z (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Sep 2017 19:56:55 -0400
+Received: by mail-pf0-f178.google.com with SMTP id r68so6330016pfj.3
+        for <git@vger.kernel.org>; Tue, 26 Sep 2017 16:56:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=5R7R+ThXzUbQKMIElVB3PspTYjzsbRUhLYiP8kyxI1M=;
-        b=YftcLX3WHO5nCJ4CbvKxGHmD1lEdPH5GFzcurkOIui0N6/8QnhGyhYdduzxEw9+SXS
-         oPeZnn+TI8aaBzJFFEYSL4owvj0PzWjDF/imgaVKv6d99xxPNAZCyDhD+RejQy5IZrTP
-         mZeyYWmV07XBlwRFj3ExnuKb8euffqtEijABHmqtGdRks+6/AKI5ii6V9tUu8uxTBrr3
-         CYCT+zFZwUgNnXoyqfi/Jls7nFgl9I4mPtHLZTIkhrxskegfEqo8teOzJkolvHPjYCJ8
-         xeo71/gPrWkrn9NlDKd0VS5yMIMgveRlxYvQKg9I/2/BEB5YfLF8VCfL1bJ1yajASZ3W
-         FzUw==
+        bh=WZMWmLyV008z5CN9VL+OKROjiZOLHsDto0VhpmSGSfI=;
+        b=vMk9RmrcR2oj0aAl5QHZ25UbF+xx7JASAIMSsFD5oFyTggTGoU8rj/TRKaTHZW71gI
+         yuEiQo686RQqXo7MU4GqaIbuUs+EuC8ifOtw8r+joyI/A14yIyF+pWg/VDHY3jYjcmey
+         jobf/PpLwtyOaaSg2uuFZcQyPOXkDmAtxppuVNErYRJoCC6+hQUKD2GipRBH2Ty1urc8
+         uHNPl9mOUVBXTaN/1W+xROziMDEirxEGrfPkWS/E0A22C8BkiqsEJF20MGzRtIS6dKo9
+         3SxJ0096T/9hTOHd0OQwTXNPwy7Su3wmSofVgNhVDpNP0CL2zqX1GspdWd6X59vKAPPa
+         RXrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=5R7R+ThXzUbQKMIElVB3PspTYjzsbRUhLYiP8kyxI1M=;
-        b=UnJPLEvkzsUMvSmBcb7OGc9mmj3mUpHlnsVb9mD5Hk88cE4hl0k3ETFV4Afn0iuG1A
-         2qB6nOwvA4sDc4metM55/eR46lStiebhA6p1JYld9nQN0FT9t5U2bkiurW57ERfczQAm
-         06FTUQPlhoVkgrRnMYzJi+mvD8LnT4e3t1Ri2Nxv/rmYCwYs416hACZL5LQDOvodmJHE
-         E15XvHmbUoGjKXNkSnGdX4qLyiyWGYC1UFo7LiUe+faL0msTy77Vd36hLHkFqmSyv1NP
-         2YJzWel+6iKuikjpB/Z6lQeRDiCLTTy1uvx3O15MrqXDrPiM4nauFLZMi6+tONora7VQ
-         TlWw==
-X-Gm-Message-State: AHPjjUhkV+xXaM0Vhe1YUV9fygl0FL5qY+9KvnjdfOACmU728TjmxP8q
-        0neQljjzsVO+BIa99d1Q6dEj2Ttxcf4=
-X-Google-Smtp-Source: AOwi7QBVYKcZiAEX1YO2QgdIqKmeuIsFdew3KRrdISztnMfAqG1lPei3PpnmXLF/6gmobQ42bQofyA==
-X-Received: by 10.84.129.71 with SMTP id 65mr11981435plb.250.1506470218650;
-        Tue, 26 Sep 2017 16:56:58 -0700 (PDT)
+        bh=WZMWmLyV008z5CN9VL+OKROjiZOLHsDto0VhpmSGSfI=;
+        b=i4LjbMWkamwRgy8jvjxO6h/w8fM2B8zHUEhbiJkP+uHOZKCmp7/oNSbkvjDtgNsGxP
+         CjkcJzJKdVuk8pjjItSYD0sbMpfgq6PoVICAN/VM0p68knHWOJ5lj0iC4Cm0jTSAfWT0
+         cjvvct+YCvONJTgTB0LHDGOGE5wnQfZOrKzyZyUB8aEDHIqq82z7XimKG0sj7BNc85Q5
+         rIctVY+wdE+NPXenuAlejxMybSchXGOLlD2Rz03cFyKFFMWBwIBN2L5WtHMtHm+NoXSY
+         bSi2m//eKPv6VyTl4Om1ZKy8H9FJSDU2DRrzWDFEMSwMYxVimT/yC4vVDDxrCpPYCO1t
+         mwoQ==
+X-Gm-Message-State: AHPjjUgPKSpZ9KB5P96A5GGxZtuiHnWgT0DQ+fAYtFN5cMSYZdFFimJD
+        vzjMzIFDXBBwW+gyKej26KjA/3r0N1g=
+X-Google-Smtp-Source: AOwi7QAgSUdFgeb9NLaS6ChWC4nEexDnWfKDc7/splmeOUbtFHT64PwEJW66r4yeG5cfGXPUSM811g==
+X-Received: by 10.99.160.65 with SMTP id u1mr12519130pgn.227.1506470214070;
+        Tue, 26 Sep 2017 16:56:54 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id j2sm18071699pgn.26.2017.09.26.16.56.57
+        by smtp.gmail.com with ESMTPSA id j2sm18071699pgn.26.2017.09.26.16.56.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 26 Sep 2017 16:56:57 -0700 (PDT)
+        Tue, 26 Sep 2017 16:56:52 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     bturner@atlassian.com, git@jeffhostetler.com, gitster@pobox.com,
         jonathantanmy@google.com, jrnieder@gmail.com, peff@peff.net,
         sbeller@google.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH v2 8/9] http: tell server that the client understands v1
-Date:   Tue, 26 Sep 2017 16:56:26 -0700
-Message-Id: <20170926235627.79606-9-bmwill@google.com>
+Subject: [PATCH v2 5/9] upload-pack, receive-pack: introduce protocol version 1
+Date:   Tue, 26 Sep 2017 16:56:23 -0700
+Message-Id: <20170926235627.79606-6-bmwill@google.com>
 X-Mailer: git-send-email 2.14.1.992.g2c7b836f3a-goog
 In-Reply-To: <20170926235627.79606-1-bmwill@google.com>
 References: <20170913215448.84674-1-bmwill@google.com>
@@ -64,179 +64,86 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Tell a server that protocol v1 can be used by sending the http header
-'Git-Protocol' indicating this.
+Teach upload-pack and receive-pack to understand and respond using
+protocol version 1, if requested.
 
-Also teach the apache http server to pass through the 'Git-Protocol'
-header as an environment variable 'GIT_PROTOCOL'.
+Protocol version 1 is simply the original and current protocol (what I'm
+calling version 0) with the addition of a single packet line, which
+precedes the ref advertisement, indicating the protocol version being
+spoken.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- cache.h                 |  2 ++
- http.c                  | 18 +++++++++++++
- t/lib-httpd/apache.conf |  7 +++++
- t/t5700-protocol-v1.sh  | 69 +++++++++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 96 insertions(+)
+ builtin/receive-pack.c | 14 ++++++++++++++
+ upload-pack.c          | 17 ++++++++++++++++-
+ 2 files changed, 30 insertions(+), 1 deletion(-)
 
-diff --git a/cache.h b/cache.h
-index 0c792545f..aaadac1f0 100644
---- a/cache.h
-+++ b/cache.h
-@@ -451,6 +451,8 @@ static inline enum object_type object_type(unsigned int mode)
-  * 'key[=value]'.  Presence of unknown keys must be tolerated.
-  */
- #define GIT_PROTOCOL_ENVIRONMENT "GIT_PROTOCOL"
-+/* HTTP header used to handshake the wire protocol */
-+#define GIT_PROTOCOL_HEADER "Git-Protocol"
- 
- /*
-  * This environment variable is expected to contain a boolean indicating
-diff --git a/http.c b/http.c
-index 9e40a465f..ffb719216 100644
---- a/http.c
-+++ b/http.c
-@@ -12,6 +12,7 @@
- #include "gettext.h"
- #include "transport.h"
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index dd06b3fb4..cb179367b 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -24,6 +24,7 @@
+ #include "tmp-objdir.h"
+ #include "oidset.h"
  #include "packfile.h"
 +#include "protocol.h"
  
- static struct trace_key trace_curl = TRACE_KEY_INIT(CURL);
- #if LIBCURL_VERSION_NUM >= 0x070a08
-@@ -897,6 +898,21 @@ static void set_from_env(const char **var, const char *envname)
- 		*var = val;
- }
+ static const char * const receive_pack_usage[] = {
+ 	N_("git receive-pack <git-dir>"),
+@@ -1963,6 +1964,19 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+ 	else if (0 <= receive_unpack_limit)
+ 		unpack_limit = receive_unpack_limit;
  
-+static void protocol_http_header(void)
-+{
-+	if (get_protocol_version_config() > 0) {
-+		struct strbuf protocol_header = STRBUF_INIT;
-+
-+		strbuf_addf(&protocol_header, GIT_PROTOCOL_HEADER ": version=%d",
-+			    get_protocol_version_config());
-+
-+
-+		extra_http_headers = curl_slist_append(extra_http_headers,
-+						       protocol_header.buf);
-+		strbuf_release(&protocol_header);
++	switch (determine_protocol_version_server()) {
++	case protocol_v1:
++		if (advertise_refs || !stateless_rpc)
++			packet_write_fmt(1, "version 1\n");
++		/*
++		 * v1 is just the original protocol with a version string,
++		 * so just fall through after writing the version string.
++		 */
++	case protocol_v0:
++	default:
++		break;
 +	}
-+}
 +
- void http_init(struct remote *remote, const char *url, int proactive_auth)
- {
- 	char *low_speed_limit;
-@@ -927,6 +943,8 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
- 	if (remote)
- 		var_override(&http_proxy_authmethod, remote->http_proxy_authmethod);
+ 	if (advertise_refs || !stateless_rpc) {
+ 		write_head_info();
+ 	}
+diff --git a/upload-pack.c b/upload-pack.c
+index 7efff2fbf..5cab39819 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -18,6 +18,7 @@
+ #include "parse-options.h"
+ #include "argv-array.h"
+ #include "prio-queue.h"
++#include "protocol.h"
  
-+	protocol_http_header();
-+
- 	pragma_header = curl_slist_append(http_copy_default_headers(),
- 		"Pragma: no-cache");
- 	no_pragma_header = curl_slist_append(http_copy_default_headers(),
-diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
-index 0642ae7e6..df1943631 100644
---- a/t/lib-httpd/apache.conf
-+++ b/t/lib-httpd/apache.conf
-@@ -67,6 +67,9 @@ LockFile accept.lock
- <IfModule !mod_unixd.c>
- 	LoadModule unixd_module modules/mod_unixd.so
- </IfModule>
-+<IfModule !mod_setenvif.c>
-+	LoadModule setenvif_module modules/mod_setenvif.so
-+</IfModule>
- </IfVersion>
+ static const char * const upload_pack_usage[] = {
+ 	N_("git upload-pack [<options>] <dir>"),
+@@ -1067,6 +1068,20 @@ int cmd_main(int argc, const char **argv)
+ 		die("'%s' does not appear to be a git repository", dir);
  
- PassEnv GIT_VALGRIND
-@@ -76,6 +79,10 @@ PassEnv ASAN_OPTIONS
- PassEnv GIT_TRACE
- PassEnv GIT_CONFIG_NOSYSTEM
- 
-+<IfVersion >= 2.4>
-+	SetEnvIf Git-Protocol ".*" GIT_PROTOCOL=$0
-+</IfVersion>
+ 	git_config(upload_pack_config, NULL);
+-	upload_pack();
 +
- Alias /dumb/ www/
- Alias /auth/dumb/ www/auth/dumb/
- 
-diff --git a/t/t5700-protocol-v1.sh b/t/t5700-protocol-v1.sh
-index 1988bbce6..222265127 100755
---- a/t/t5700-protocol-v1.sh
-+++ b/t/t5700-protocol-v1.sh
-@@ -220,4 +220,73 @@ test_expect_success 'push with ssh:// using protocol v1' '
- 	grep "push< version 1" log
- '
- 
-+# Test protocol v1 with 'http://' transport
-+#
-+. "$TEST_DIRECTORY"/lib-httpd.sh
-+start_httpd
++	switch (determine_protocol_version_server()) {
++	case protocol_v1:
++		if (advertise_refs || !stateless_rpc)
++			packet_write_fmt(1, "version 1\n");
++		/*
++		 * v1 is just the original protocol with a version string,
++		 * so just fall through after writing the version string.
++		 */
++	case protocol_v0:
++	default:
++		upload_pack();
++		break;
++	}
 +
-+test_expect_success 'create repo to be served by http:// transport' '
-+	git init "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" config http.receivepack true &&
-+	test_commit -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" one
-+'
-+
-+test_expect_success 'clone with http:// using protocol v1' '
-+	GIT_TRACE_PACKET=1 GIT_TRACE_CURL=1 git -c protocol.version=1 \
-+		clone "$HTTPD_URL/smart/http_parent" http_child 2>log &&
-+
-+	git -C http_child log -1 --format=%s >actual &&
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" log -1 --format=%s >expect &&
-+	test_cmp expect actual &&
-+
-+	# Client requested to use protocol v1
-+	grep "Git-Protocol: version=1" log &&
-+	# Server responded using protocol v1
-+	grep "git< version 1" log
-+'
-+
-+test_expect_success 'fetch with http:// using protocol v1' '
-+	test_commit -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" two &&
-+
-+	GIT_TRACE_PACKET=1 git -C http_child -c protocol.version=1 \
-+		fetch 2>log &&
-+
-+	git -C http_child log -1 --format=%s FETCH_HEAD >actual &&
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" log -1 --format=%s >expect &&
-+	test_cmp expect actual &&
-+
-+	# Server responded using protocol v1
-+	grep "git< version 1" log
-+'
-+
-+test_expect_success 'pull with http:// using protocol v1' '
-+	GIT_TRACE_PACKET=1 git -C http_child -c protocol.version=1 \
-+		pull 2>log &&
-+
-+	git -C http_child log -1 --format=%s >actual &&
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" log -1 --format=%s >expect &&
-+	test_cmp expect actual &&
-+
-+	# Server responded using protocol v1
-+	grep "git< version 1" log
-+'
-+
-+test_expect_success 'push with http:// using protocol v1' '
-+	test_commit -C http_child three &&
-+
-+	# Since the repository being served isnt bare we need to push to
-+	# another branch explicitly to avoid mangling the master branch
-+	GIT_TRACE_PACKET=1 git -C http_child -c protocol.version=1 \
-+		push origin HEAD:client_branch && #2>log &&
-+
-+	git -C http_child log -1 --format=%s >actual &&
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" log -1 --format=%s client_branch >expect &&
-+	test_cmp expect actual &&
-+
-+	# Server responded using protocol v1
-+	grep "git< version 1" log
-+'
-+
-+stop_httpd
-+
- test_done
+ 	return 0;
+ }
 -- 
 2.14.1.992.g2c7b836f3a-goog
 
