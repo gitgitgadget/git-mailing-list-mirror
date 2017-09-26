@@ -2,94 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 45C02202A5
-	for <e@80x24.org>; Tue, 26 Sep 2017 01:31:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57804202A5
+	for <e@80x24.org>; Tue, 26 Sep 2017 01:56:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966977AbdIZBbF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Sep 2017 21:31:05 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59587 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S965729AbdIZBbE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Sep 2017 21:31:04 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C4DBE9BE2C;
-        Mon, 25 Sep 2017 21:31:01 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=4S7gP6VEqvKe8JDPDbjUI30Uil0=; b=jtB59W
-        q6tSk5gjekuUdpQwT3symS+Y1gtEJ+mu7vQJOnjJTaByTjdCye40ghutsA33IElA
-        pDssw9AUUclH+YALzzVmAgFzDWgtAoTheuBPk/XAdCDVwzYdlpPKH2uWD35gHZoR
-        Ov7FXoyPfFcLRhy39PlLf6EBXOsUm3pYeFc6A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ckPviOCvtRnweKDld5Td0MnX3bYButia
-        B5eINRygMwWtzO6Ov+ULBaDkPLMeVykLMNB71Y4zSAWRd9SEaSw8X/Apx+fUGR+K
-        HaSdImRljLbvf4KibW66nA/DlTtXwjqlng5oLN2vE15IRMekVPZwSS4o37QHRiLs
-        P6brHqOIBkM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BC0F89BE2B;
-        Mon, 25 Sep 2017 21:31:01 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CAF709BE29;
-        Mon, 25 Sep 2017 21:31:00 -0400 (EDT)
+        id S967039AbdIZB4i (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Sep 2017 21:56:38 -0400
+Received: from mail-pg0-f51.google.com ([74.125.83.51]:49730 "EHLO
+        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935034AbdIZB4g (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Sep 2017 21:56:36 -0400
+Received: by mail-pg0-f51.google.com with SMTP id m30so5075785pgn.6
+        for <git@vger.kernel.org>; Mon, 25 Sep 2017 18:56:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:in-reply-to:references:user-agent:date
+         :message-id:mime-version;
+        bh=TtjJ9bNmkUWVLE41zZgOLiG3P1UnpClsuI9rIct0Em0=;
+        b=Gz2pRRq1ZsvuIy7ALPMN0s7SLmprW/33sWj2CKUFXcz/iZT7f/PjCdU23Xl7xFXYWH
+         s0Reb9TX5Qx5hJfBJH8Lm/njdDlkJV8I9Ft9L02ASfPJB2OWhuSjo6kQkgOef/TXBLfz
+         Mi/w4o4ZgPhT6cJeaCMvpjVQ7fQUfk58Gz3Bj8ParPlyMsocOatu4hic4QBjGYA/j2fC
+         sMcH3DAXgpq8r5vnftxLhFLd0A/CEH+ylSBpyQJtMQv0mgt/gKJ3caZ3PUax34IUVjnN
+         qplORAA+yo6e/EnwKzRnDe/nmSQ+DdUXz4AZ2lmJ15LGbkkaFfXH5k/yrg3A/Ykd7xGA
+         sbqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:in-reply-to:references
+         :user-agent:date:message-id:mime-version;
+        bh=TtjJ9bNmkUWVLE41zZgOLiG3P1UnpClsuI9rIct0Em0=;
+        b=gaj/AXpt8ahLBZTne8s46nwNsZ7ywNZq77FDoto3BA+tqpF5MsTy/Kz+FsTKuQJiWH
+         Cz9LyDQXb44pdowH5ojUNFqEI9gahJI4ZkVeZPxn2TyIlK16TT/VSjwpIWv5QSjOcMq/
+         mrDqqF1A6Tp2Tanad8mVHUIeAq9D0MgBQYeTzT3gTo7h173qLkWoeeGfHaC0ZHmXS/lS
+         zHMfS6DtgqzkgMaTcbR+4b4zfxmy3nqAKDAY6rBKFCkLkgrVAGSzWn7RWBuhUHxqF78K
+         F7CNUcKm7X9ZONjWPJi08wACQ5x7C5uY6eMjE6wMk8W0SlVKCNWHdpkBjALZGb5wv+V1
+         B4IA==
+X-Gm-Message-State: AHPjjUhSFBvyrjiWas7lzWLGx5W0c3YLEwKVz5gJSXuQ8mzGXSyUIOCy
+        wL0O1PhJ2TnCnF/U/OubLdS1tzy6
+X-Google-Smtp-Source: AOwi7QAavukTqPIogiE1FYBcKk4SjO9l/21qD8e3ze3V36eqyDWd6seA9xQn1261CajfCxM6Hgq0Gg==
+X-Received: by 10.99.126.84 with SMTP id o20mr9344496pgn.183.1506390995567;
+        Mon, 25 Sep 2017 18:56:35 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:8cad:f525:a0b8:9738])
+        by smtp.gmail.com with ESMTPSA id f3sm14386200pfd.82.2017.09.25.18.56.32
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 25 Sep 2017 18:56:33 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
-        jrnieder@gmail.com
-Subject: Re: [PATCH] Documentation: consolidate submodule.<name>.update
-References: <xmqq1smxj7md.fsf@gitster.mtv.corp.google.com>
-        <20170925191011.29863-1-sbeller@google.com>
-        <20170925191726.GE35385@google.com>
-Date:   Tue, 26 Sep 2017 10:30:59 +0900
-In-Reply-To: <20170925191726.GE35385@google.com> (Brandon Williams's message
-        of "Mon, 25 Sep 2017 12:17:26 -0700")
-Message-ID: <xmqqy3p2ckks.fsf@gitster.mtv.corp.google.com>
+To:     Yaroslav Halchenko <yoh@onerussian.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: -X theirs does not resolve symlink conflict  Was: BUG: merge -s theirs  is not in effect
+In-Reply-To: <20170925143040.4qgofxcdahal46r7@hopa.kiewit.dartmouth.edu>
+        (Yaroslav Halchenko's message of "Mon, 25 Sep 2017 10:30:40 -0400")
+References: <20170925000213.rilmsczdbi3jqkta@hopa.kiewit.dartmouth.edu>
+        <xmqqwp4nfuv1.fsf@gitster.mtv.corp.google.com>
+        <20170925031751.lg7zk6krt65dxwas@hopa.kiewit.dartmouth.edu>
+        <xmqqmv5je412.fsf_-_@gitster.mtv.corp.google.com>
+        <20170925143040.4qgofxcdahal46r7@hopa.kiewit.dartmouth.edu>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+Date:   Tue, 26 Sep 2017 10:56:32 +0900
+Message-ID: <xmqqing6cje7.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 5AAADF26-A25A-11E7-AD19-FE4B1A68708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
+Yaroslav Halchenko <yoh@onerussian.com> writes:
 
->> +	The method by which a submodule is updated by 'git submodule update',
->> +	which is the only affected command, others such as
->> +	'git checkout --recurse-submodules' are unaffected. It exists for
->> +	historical reasons, when 'git submodule' was the only command to
->> +	interact with submodules; settings like `submodule.active`
->> +	and `pull.rebase` are more specific. It is copied to the config
->> +	by `git submodule init` from the .gitmodules file.
->> +	Allowed values here are 'checkout', 'rebase', 'merge' or 'none'.
->> +	See description of 'update' command in linkgit:git-submodule[1]
->> +	for their meaning. Note that the '!command' form is intentionally
->> +	ignored here for security reasons.
+> yes it does. Thanks.  And that is where I realized that I should have used -X
+> theirs (not -s theirs), as the instruction on the option for the
+> (recursive) merge.  And now problem is more specific:
 >
-> This probably needs to be tweaked a bit to say that the '!command' form
-> is ignored by submodule init, in that it isn't copied over from the
-> .gitmodules file, but if it is configured in your config it will be
-> respected by 'submodule update'.
+> - conflict within file content editing was resolved as instructed
+>   (taking "theirs" version)
+>
+> - BUT symlink was not taken from "theirs" and left as unresolved conflict:
 
-I do not think gitmodules.txt is the place to say anything more than
-what Stefan's patch says above.  Perhaps config.txt should mention
-that in addition to what the variable with the same in .gitmodules
-can take, it is allowed to use the !command form.
+I wouldn't call it working-as-intended, but this unfortunately is
+expected.  You'd encounter exactly the same behaviour when changes
+to a binary file conflicts.
 
-IOW, in config.txt
+It is because -X<ours|theirs> _ONLY_ kicks in (i.e. that is how it
+is defined) when we would otherwise throw the half-merged result:
 
-	submodule.<name>.update::
-		Specifies how 'git submodule update' should work on
-		the named submodule.  In addition to the values that
-		can be specified in (and copied from) `.gitmodules`
-		(see linkgit:gitmodules[5]), `!command` form can
-		also be used.
+	<<<<<<<
+	our version looks like this
+	=======
+	their version looks like this
+	>>>>>>>
 
-or something, perhaps?
+and ask you to edit that to a correct resolution.
+
+Because you would not normally be given something like the above
+when merging conflicted changes to symbolic links or to binary
+files, -X<ours|theirs> has no chance of affecting the outcome.
+
+I do not recall people talking about symbolic links but the case of
+binary files has been on the wishlist for a long time, and I do not
+know of anybody who is working on (or is planning to work on) it.
