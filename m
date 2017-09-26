@@ -2,61 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1549B202A5
-	for <e@80x24.org>; Tue, 26 Sep 2017 05:15:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5CFA2202A5
+	for <e@80x24.org>; Tue, 26 Sep 2017 05:22:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935417AbdIZFPm (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Sep 2017 01:15:42 -0400
-Received: from ikke.info ([178.21.113.177]:50396 "EHLO vps892.directvps.nl"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S934095AbdIZFPl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Sep 2017 01:15:41 -0400
-Received: by vps892.directvps.nl (Postfix, from userid 1008)
-        id 94B0F4403B1; Tue, 26 Sep 2017 07:15:39 +0200 (CEST)
-Date:   Tue, 26 Sep 2017 07:15:39 +0200
-From:   Kevin Daudt <me@ikke.info>
-To:     Sanggyu Nam <pokeplus@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: '--shallow-since' option is not available for git-pull in Git
- version 2.14.1
-Message-ID: <20170926051539.GA22514@alpha.vpn.ikke.info>
-References: <F3F7A768-C844-4D77-9403-53AC3F506080@gmail.com>
+        id S935008AbdIZFW2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Sep 2017 01:22:28 -0400
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:47685 "EHLO
+        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752952AbdIZFW1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Sep 2017 01:22:27 -0400
+Received: by mail-pf0-f170.google.com with SMTP id u12so5024188pfl.4
+        for <git@vger.kernel.org>; Mon, 25 Sep 2017 22:22:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=QuGSVhhhFzCsINZlDp77/HiEJzMbeqDQn50rCL57OFw=;
+        b=ZkKNcx1YQMoTFeF/y+O7C6pspcJrJBqPG/LMAQnMnEiSYdYz/r6ZbcJgG4SoZmEgbM
+         OFkNKTJuqwiGLL5Octh61bbcOQ8xgMYcHib/6mk1hTDUkcxrtxqXYqINPDdMuNG4WaJi
+         lQ7i0EM/+4SoD4yU0969KKRGjlQ6TcTDq5pZvVTg/tGIs/QpQWgy67/v/4EjFnvJ7xAi
+         zSol2+IywWeR8dzppPe5tdTr3HmjeTCBFgWApkk9Ml5gbjVexNYJe/tg7vy+J0NLWm9b
+         4EWhVCm0W5RdEenOHyC/igA5a2+bGJesDaFRcb4rnEbSbETlK1ChMDfUj55YwF0CXKJM
+         5yjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=QuGSVhhhFzCsINZlDp77/HiEJzMbeqDQn50rCL57OFw=;
+        b=RdR5kQvQ1Y6tamI9FSt/H7J1DQY5arrFu8JpZKzPU+7vjLBOcs5fkMDRkIrqAam71+
+         V0UdM7tHFE1jQslKvam3nX3UgrlzZgNNUoOL9/qhxVv5j/tMn+wR4C+LzsJJQPTpqt3G
+         /3jP7zrNiPyoliUhFzSnSZbRbwpwe+j8Ap0ld1Yup801uCV3Abb2hWiadDhr1/FAyc91
+         u32EddtVkhujjodVNFaaFNm2K19qplCxZCQib0HaYVDt+/PVCJsKyZi2MQcUZ6CNfXnQ
+         4H3jxENdw5eYtyv+C5jaC8heMO3h8QAp56eshEOn0GA6c1eDM4Sx6Z+V+hHtf9Ll0v3G
+         boKQ==
+X-Gm-Message-State: AHPjjUhDVv9TBrMLvXhA1lnqusRfvkiSvuQkB2H8i2YrnabNqybXc7v0
+        2mjMUvo/VeSD3HAMU2AqFkU=
+X-Google-Smtp-Source: AOwi7QDyRHS1ZdmliDIk0YgKAOrYBXd1r5AOaIK06GYh9GvhUtY/zKKiSsJWLPNWJWb3t74lc4HPNA==
+X-Received: by 10.101.86.133 with SMTP id v5mr10029919pgs.249.1506403346910;
+        Mon, 25 Sep 2017 22:22:26 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:8cad:f525:a0b8:9738])
+        by smtp.gmail.com with ESMTPSA id i12sm13812582pgr.21.2017.09.25.22.22.25
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 25 Sep 2017 22:22:26 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net, bmwill@google.com
+Subject: Re: [PATCH 4/4] Move documentation of string_list into string-list.h
+References: <20170925155927.32328-1-hanwen@google.com>
+        <20170925155927.32328-5-hanwen@google.com>
+        <xmqqing6aw0w.fsf@gitster.mtv.corp.google.com>
+Date:   Tue, 26 Sep 2017 14:22:25 +0900
+In-Reply-To: <xmqqing6aw0w.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Tue, 26 Sep 2017 14:06:39 +0900")
+Message-ID: <xmqqefquavam.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <F3F7A768-C844-4D77-9403-53AC3F506080@gmail.com>
-User-Agent: Mutt/1.8.3 (2017-05-23)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 25, 2017 at 04:31:10PM +0900, Sanggyu Nam wrote:
-> I’ve found that some subcommands such as git-clone, git-fetch, and
-> git-pull support an option named ‘--shallow-since’, as of Git version
-> 2.11. This option is documented in the man page of each subcommand. In
-> Git 2.14.1, I’ve checked that the option is available for git-clone
-> and git-fetch so that the history of a shallow repository is updated.
-> However, running git-pull with this option shows an error as follows:
-> 
-> error: unknown option `shallow-since=2017-09-10T00:00:00+00:00'
-> 
-> usage: git pull [<options>] [<repository> [<refspec>...]]
-> ...
-> 
-> I found that this option is not available in Git 2.14.1 on macOS and
-> Ubuntu 16.04.1. It seems the option handling of git-pull does not
-> match with what’s described in the man page. Since ‘git pull’ is a
-> shorthand for ‘git fetch’ followed by ‘git merge FETCH_HEAD’ in its
-> default mode, we can run these two commands in this order as a
-> workaround.
-> 
-> 
+Junio C Hamano <gitster@pobox.com> writes:
 
-This does not only count for --shallow-since, but also --deepen
-and --shallow-exclude.
+>
+> Thanks.  I am not sure if you can safely reorder the contents of the
+> header files in general, but I trust that you made sure that this
+> does not introduce problems (e.g. referrals before definition).
+
+Alas, this time it seems my trust was grossly misplaced.  Discarding
+this patch and redoing the integration cycle for the day.
