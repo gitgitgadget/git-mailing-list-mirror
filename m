@@ -2,108 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 486EE20281
-	for <e@80x24.org>; Tue, 26 Sep 2017 17:32:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E3DC20281
+	for <e@80x24.org>; Tue, 26 Sep 2017 18:14:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1031087AbdIZRc4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Sep 2017 13:32:56 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:46234 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1031084AbdIZRcy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Sep 2017 13:32:54 -0400
-Received: by mail-pf0-f173.google.com with SMTP id r68so5873892pfj.3
-        for <git@vger.kernel.org>; Tue, 26 Sep 2017 10:32:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=LKnXzCmID2nFSQdCpmsKlHPMDdi66iZ5IH+EuacU7TA=;
-        b=uodd7gDKrLZttsqv1zLv3BF56b2ucs16HheotmpBwtMaFqbk+Bp59W0U1qwEw1+VtV
-         vmcI2Y/V3o5yo6Wdd/pjQLq1ydl4COjeal8aE++iVHRcFmJLZFaCSapPXI6fhpCm566N
-         ey/CcOWO/4QqMotyAc0GUM6Gi7yhfGYUj7ueoqt4RhNusmghY7J4M0mwqLsPLRFfCn9Y
-         tb0NXqtoNQL+4J17mbBwe0uLC7AUJUH2X9UBbVQYCQF8dT6d5CM2oJiQqxZ28JNzQvY4
-         BOLJj8mg3pbUj6TIMvrWD/EKRshb6ooWkianrMhDqLmsSyD6ddDnNDQ7PlZn8y6N7XP8
-         Lfjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=LKnXzCmID2nFSQdCpmsKlHPMDdi66iZ5IH+EuacU7TA=;
-        b=fZh9qKBepasVqUWWQQ4PlARPTm6CpupbIGrxX2BJRcuhOVAt9hcPob36KkwYvpf1lS
-         SIyS1oF7I+uJXC1bY1jsq87j16GBCZBjl+qrjinv1mgKAAN8rvXxE2My4zDW5p83gF1O
-         FllRtRaq08NKUqq28m9vnvij85fyT/iSTEw3AwOv6ovSzL3PeGK4Qj5smfFjtkr+jXSu
-         HBbOogxsytjlxMR0S6FDIvWgN6IFf15CGfFjBmSooHHm2Q71oNPyA8/axlEsnnSb1rgw
-         fXRdJXgn32qNVu92OvCzDMfk887F6pnmGf63JztMrcMeMGKouo4TNuJ+hX4PwxGIPCtC
-         aTLA==
-X-Gm-Message-State: AHPjjUgo09RWqWf/vASI5RS5KImE98bsGg+G9FwPc0/LNZ0+ejo4iA+d
-        t2hSmUndsFE6EOCfy++0rfHiwA==
-X-Google-Smtp-Source: AOwi7QD5dBEcE/Q02DcdJrqyNjCrtxansqFxqcC/nop1MDgNli5MzZF/0SEULo7NxK+uvi1k8WMfHA==
-X-Received: by 10.99.55.85 with SMTP id g21mr11737431pgn.306.1506447173762;
-        Tue, 26 Sep 2017 10:32:53 -0700 (PDT)
-Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:6046:dda3:c5ad:1d0b])
-        by smtp.gmail.com with ESMTPSA id s62sm18140737pfe.91.2017.09.26.10.32.52
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 26 Sep 2017 10:32:52 -0700 (PDT)
-Date:   Tue, 26 Sep 2017 10:32:52 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     git@vger.kernel.org, peartben@gmail.com,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: RFC: Design and code of partial clones (now, missing commits
- and trees OK) (part 3)
-Message-Id: <20170926103252.8330a266cf450e64dee27500@google.com>
-In-Reply-To: <e05a7978-c312-9e26-79a2-fca3ae44f59a@jeffhostetler.com>
-References: <20170915134343.3814dc38@twelve2.svl.corp.google.com>
-        <af717446-95bf-c5a5-cd27-aaf20531db0f@jeffhostetler.com>
-        <20170921160416.1c4c6e2c@twelve2.svl.corp.google.com>
-        <7977bab0-09c3-0e43-4d6f-f2bf87a3fd9e@jeffhostetler.com>
-        <20170922155802.ab79717818578a23cc31f6fe@google.com>
-        <e05a7978-c312-9e26-79a2-fca3ae44f59a@jeffhostetler.com>
-X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        id S965399AbdIZSO5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Sep 2017 14:14:57 -0400
+Received: from mout.gmx.net ([212.227.15.19]:50073 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S936202AbdIZSOz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Sep 2017 14:14:55 -0400
+Received: from localhost.localdomain ([37.201.193.73]) by mail.gmx.com
+ (mrgmx002 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 0LdHqj-1dWgJh2wqn-00iX7F; Tue, 26 Sep 2017 20:14:52 +0200
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.14.2
+Date:   Tue, 26 Sep 2017 20:14:37 +0200
+Message-Id: <20170926181437.5244-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.14.1.windows.1
+Content-Type: text/plain; charset=UTF-8
+MIME-Version: 1.0
+Fcc:    Sent
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:1NPDLQTTYx08m6PyQ9lFgMr7UcwYn0VNHvWm1C+zoyw1EzJ8d4A
+ pH6NYxKN9pkGYPD5JSarxsfIGV0NnpAHMqO5ReUs6nTPYOyc6EmkpOx7yduq3q0c9EiAnSJ
+ EtQItkGkVE5HTPykDPUgDiXFGWHtdREoOpg/agod+CxyRhN30vAA5H/QeKm0YS7m55d057r
+ HpCYshcTvwSztQH839/hQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:AoNtZ6REWzc=:I3GgplpPIsTbeACyNOgNjd
+ 8+LeyX06d/oMNR3sNuYyTK5xdEQVsxmdedXGqmauX4aYYgMwuyjIn4vdP0PXOvDynibYrcNZK
+ YxbVCF8dA9a0C9j7Vp3uCr1kpBIZ8IuXQoOdxpXUmxrK1Lop7WLarkv3YSDJ4PDm/fLbILoHu
+ Ki9eNUCvZyIkLofsZUVe7WF7JsaBE8Md5uGPQWy0h11WQ+vnfv5uIyNVmEoygSzICqZfASzVt
+ LmECfj7WZmnON9Inne8VylGXQvv1RMfJ8XKc7K/1xr1i4pL14OkFLrONWtJFg60OaENCkSg1A
+ J0n8dRHcUWiLL1T6bZ+/d9wKbQYdbuvrbLLM60FUErKPcuX96j+GfCpLw4x6cCHVNAAN3MsUp
+ my7K/143nHl07FwUkPDl/2mVt35kDyj0PaZYrPWCHIs9irHiG8cHJGqoUu+ewD2qiSlE0f0vq
+ FiXRsX48aJwRvRJaV/HuwHcHxgi/k96jntqoSxnsKDsqIYMX1QfWkrUjzbdfmAJEbFDBhuksw
+ 5qUi76cDVg5P93udJpRWZalgOo6flSrESrJ57ErRZGFPbOyxAx6uNh4L1Szl2taCfy13IfaHE
+ LccuhQ8d8mEmWoT1W3cZQrM/sQT6XHFNevIitsdko8+sTXmoIPMNBXfCmwtVaRGKZ5KWOKnwP
+ c8gwLlUPeUeo8kPvjoLDbclo+nJzgl6mdKbPFBBZK9p5vvGbvcoTmROzeN3j4QkzyTQsjfaFj
+ GDgc54qOYgsmMpBMtMQomKTEJEl7m9fDAVLf9FPR1yuwgJL+/rYRVooBSnQh3+RkBC3osxnZz
+ JJ9F9uJTsMsIVJoP5CKpe8tQiwAhdajdW7VeVQZ/6DMMAhDA2Y=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 26 Sep 2017 10:25:16 -0400
-Jeff Hostetler <git@jeffhostetler.com> wrote:
+Dear Git users,
 
-> >> Perhaps you could augment the OID lookup to remember where the object
-> >> was found (essentially a .promisor bit set).  Then you wouldn't need
-> >> to touch them all.
-> > 
-> > Sorry - I don't understand this. Are you saying that missing promisor
-> > objects should go into the global object hashtable, so that we can set a
-> > flag on them?
-> 
-> I just meant could we add a bit to "struct object_info" to indicate
-> that the object was found in a .promisor packfile ?  This could
-> be set in sha1_object_info_extended().
-> 
-> Then the is_promised() calls in fsck and gc would just test that bit.
-> 
-> Given that that bit will be set on promisOR objects (and we won't
-> have object_info for missing objects), you may need to adjust the
-> iterator in the fsck/gc code slightly.
-> 
-> This is a bit of a handwave, but could something like that eliminate
-> the need to build this oidset?
+It is my pleasure to announce that Git for Windows 2.14.2 is available from:
 
-This oidset is meant to contain the missing objects, and is needed as
-the final check (attempt to read the object, then check this oidset).
-Admittedly, right now I add objects to it even if they are present in
-the DB, but that's because I think that it's better for the set to be
-bigger than to incur the repeated existence checks. But even if we only
-include truly missing objects in this oidset, we still need the oidset,
-or store information about missing objects in some equivalent data
-structure.
+	https://git-for-windows.github.io/
 
-The bit that you mention being set on promisOR objects is already being
-set. See the invocation of mark_uninteresting() in rev-list.c.
+Changes since Git for Windows v2.14.1 (August 10th 2017)
+
+New Features
+
+  * Comes with Git v2.14.2.
+  * Comes with cURL v7.55.1.
+  * The XP-compatibility layer emulating pthreads (which is no longer
+    needed) was dropped in favor of modern Windows threading APIs; This
+    should make threaded operations slightly faster and more robust.
+  * On Windows, UNC paths can now be accessed via file://host/share/
+    repo.git-style paths.
+  * Comes with a new custom Git command git update to help keeping Git
+    up-to-date on your machine.
+  * The Git installer now offers an option to keep Git up-to-date by
+    calling git update regularly.
+  * Comes with BusyBox v1.28.0pre.16353.2739df917.
+  * As is common elsewhere, Ctrl+Left and Ctrl+Right now move word-wise
+    in Git Bash, too.
+  * Comes with patch level 2 of the MSYS2 runtime (Git for Windows
+    flavor) based on Cygwin 2.9.0.
+  * Comes with Git LFS v2.3.0.
+  * The vs/master branch can now be built in Visual Studio 2017, too
+  * As requested by the same user who implemented the change, Git for
+    Windows now comes with tig, a text-mode interface for Git.
+
+Bug Fixes
+
+  * It is now possible to override http.sslBackend on the command-line.
+  * The installer now detects correctly whether symbolic links can be
+    created by regular users.
+  * Git Bash now renders non-ASCII directories nicely.
+  * A regression that caused the fetch operation with lots of refs to
+    be a lot slower than before was fixed.
+  * The git-gui.exe and gitk.exe wrappers intended to be used in Git
+    CMD now handle command-line parameters correctly.
+  * The core.longPaths setting is now heeded when packing refs, and
+    other previously forgotten Git commands.
+  * Pressing Ctrl+Z in Git Bash no longer kills Win32 processes (e.g.
+    git.exe) anymore, because POSIX job control is only available with
+    MSYS2 processes.
+  * Git for Windows now sets core.fsyncObjectFiles = true by default
+    which makes it a lot more fault-tolerant, say, when power is lost.
+  * A bug has been fixed where Git for Windows could run into an
+    infinite loop trying to rename a file.
+  * Before installing Git for Windows, we already verified that no Git
+    Bash instance is active (which would prevent files from being
+    overwritten). We now also verify that no git.exe processes are
+    active, either.
+
+Filename | SHA-256
+-------- | -------
+Git-2.14.2-64-bit.exe | ef144a5dbb74518b56727f6c228993b9e7f5aedec7bbf7d680dcffb5d36ce354
+Git-2.14.2-32-bit.exe | 0c7cf5f1bd6532c3720920b953da6b5c563acab35e3caee0b6f337975e284f35
+PortableGit-2.14.2-64-bit.7z.exe | 3d451383519379dfe2f160c4c3a49e4b9e39a666698f3eea2534593cc3fb5a4e
+PortableGit-2.14.2-32-bit.7z.exe | 6acd886bb1cebee7b5b607599c8327453110c28ddd8c4f976d14050ab0a17e11
+MinGit-2.14.2-64-bit.zip | 9638733b8d749c43d59c34a714d582b2352356ee7d13c4acf919c18f307387f5
+MinGit-2.14.2-32-bit.zip | 1c8ed7f54a8d50c84fbc767d97cf35992de42463d9852c56a1f3a3c1ac80c965
+MinGit-2.14.2-busybox-64-bit.zip | e6a75e75378b89c4d2e9c89a7cd0b0995ea0b8c2bcd3a93c42d0ffadd17ccd75
+MinGit-2.14.2-busybox-32-bit.zip | b0b4d2135ad63347dfd787aa8046a625272764d0a6ea73f4ebd793105d6d9545
+Git-2.14.2-64-bit.tar.bz2 | cf2d4ccce3dbdd42755e2e89830a406b9cf5cef6305dc7bf176a4ef5d55cb47e
+Git-2.14.2-32-bit.tar.bz2 | 8901421656b6e5215cf4a2f3872de3e6d89aa1177ea3c3ffbed54af292957023
+
+Ciao,
+Johannes
