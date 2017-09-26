@@ -2,60 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00B5620281
-	for <e@80x24.org>; Tue, 26 Sep 2017 23:56:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C94B20281
+	for <e@80x24.org>; Tue, 26 Sep 2017 23:56:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1032778AbdIZX4y (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Sep 2017 19:56:54 -0400
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:52657 "EHLO
-        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S966844AbdIZX4v (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Sep 2017 19:56:51 -0400
-Received: by mail-pf0-f181.google.com with SMTP id p87so6323281pfj.9
-        for <git@vger.kernel.org>; Tue, 26 Sep 2017 16:56:51 -0700 (PDT)
+        id S969123AbdIZX4u (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Sep 2017 19:56:50 -0400
+Received: from mail-pg0-f46.google.com ([74.125.83.46]:53547 "EHLO
+        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S966844AbdIZX4s (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Sep 2017 19:56:48 -0400
+Received: by mail-pg0-f46.google.com with SMTP id j70so6771337pgc.10
+        for <git@vger.kernel.org>; Tue, 26 Sep 2017 16:56:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=xDqpTYmxApsIECPvZsjdLubIeIqM83U5l7+i5lg0nOw=;
-        b=byZ8ov6HElfMVyORFyrsHbpzlxRDh898l6zy5X13E7dPpAvVPGctxZjjFTe64QcxR5
-         +I3axJbYOoP4m/A45FoICSLFJqZUeeDCpBGMhC1gcAUY9SE55QibZkCN9DwKaPOcuRTI
-         dAPRI3kqF6wJCX0/D++8JSggKh+JpVijUOHTfpWBnMgly31TURy/MZXyXjK3thrjfJkf
-         4WVZgvN77SLWs4ywfE/8G0U06S4oVRmmfLieIaSR9L+oUVqdan/F6nBslNQaFJYPxsnR
-         5prTL//Xkf8Nv4IgGl68ioqSpPYkYQqUPnOtL6ZUKMQKvwwb3IVfmLDym9r8MXQODph6
-         xeDg==
+        bh=8Zm3MM/0tsBjCAS0DqLZvQiabGE7UNbz+wSrz7UUZF0=;
+        b=UH7Pe1y7+Fa4E0yhJjtduOYPWsSAHpM8lvvgGHtcmk1J874H8mCPzHO9KYXm/jsBae
+         pdA+vd59XNdVPxWOh4iNTK61d4iiDS2TdOwYoHtLzVBRPiCCIC8NXbqzh0dHtubp4TST
+         WxZyuh4MM/QfXcCWGUzpZMk6St988Kyo+LlTc+3biDzvz0RL0oFGdYO8oS1yBiDXPJzy
+         NRrr8f2YffJzo/FEZGNouyqZZ1CjFJIPtlKf7//88YiFM64qIN3VlNQGYea67J4R/6z1
+         aE68nRS6LZ8b4sdFNUdpskMvwBQzUDMS8Z6VKNJsTm5MDZxZ6py5UO53bCpK6HFlAVoe
+         p9Pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=xDqpTYmxApsIECPvZsjdLubIeIqM83U5l7+i5lg0nOw=;
-        b=gk25RzC9f16hpIlru6hy6Ij357OBmjSTWZfrWaa+Q1TO/NEBDv/nzouCjq2l4aB0Aj
-         BZgTJTMxM68/UHQBiD+42BBQy6rrXZGfICTSfRxti3MpWLaq12zqNxxNAzkEYkyF3J7X
-         ls5vEbeS/GeCRpE0b2yA+zIaVl7Nalmvb11vw3mM/k8WsJMnEAy+xP2W0DthZCy6MtvR
-         X6Ts8uGlpiEW/13ftUk2qdzTSqPqqrj5qrDMYpwAuYqyLgVeVarC9WbX5FgCBVyRTOFE
-         iaiMsJ2/R3cZ1faBRmCxK7cyNT0wjBOVSN4GgD46SVeEG33CmaQip4/LFoLcnQYtnDpV
-         Ildw==
-X-Gm-Message-State: AHPjjUj7w6BJo7HmV0E4RAgf/3GoSQTy9G7nHKw0IgzoSSsb56wZpUDz
-        qKxYvEIKXDP91azlzUxkB5wZCNfrpaE=
-X-Google-Smtp-Source: AOwi7QCOm6r+WewFDgmw6u5gk4twUGLESN5YLC2s1q/1RnUj97yo+RsH1+Z4uT3o3y3qqjvCTwpcfg==
-X-Received: by 10.99.53.206 with SMTP id c197mr12504053pga.440.1506470210824;
-        Tue, 26 Sep 2017 16:56:50 -0700 (PDT)
+        bh=8Zm3MM/0tsBjCAS0DqLZvQiabGE7UNbz+wSrz7UUZF0=;
+        b=hue8wxg79ybzQVGA1M/dZup6J2JSbD5pr7bh+oKFNpwEC83IWZI3X6+okaaMI8oGUf
+         QE2F0ZUkAXqmxbMBn2r12sZ2keQuPXniBkVCZPnIVlqJQByHhcyt0LQ0U6OzE4hjfTYM
+         Fn/Hjt4rY/ArkCms5M6HHuWF7SaYRtNB/Vhz54n2mDGhcBe5TzTXnFj0qgIt/R+vGH0t
+         z6QLsoq7mU4pyhP9y86Yl8i5xocL1wKbExG+1EnG2s2Bq3bSVjUOcnlesQwfRr+EJrIT
+         bZv21PrJh8FdIkt6roE/s40xb1kFimSGB/Q3bMHBvotBAWhxmXzGEGyVP0SbTOlOleQV
+         nYYg==
+X-Gm-Message-State: AHPjjUgnUX7Z0pWPoZenaLMP8YkpGieKyW+FCjoPJM7bHytH6WrQHM/A
+        0vRaKBCeiY5+TZtTYmpHSNVTvtKSlIQ=
+X-Google-Smtp-Source: AOwi7QAGzHazErJHlID9CLmUlX3wxfW34NKfZWxwvyPh/o7gNRzc9ekRx1M1VzdiK6tVCgSIR28EAw==
+X-Received: by 10.99.112.79 with SMTP id a15mr12462408pgn.154.1506470207267;
+        Tue, 26 Sep 2017 16:56:47 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id j2sm18071699pgn.26.2017.09.26.16.56.49
+        by smtp.gmail.com with ESMTPSA id j2sm18071699pgn.26.2017.09.26.16.56.45
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 26 Sep 2017 16:56:49 -0700 (PDT)
+        Tue, 26 Sep 2017 16:56:46 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     bturner@atlassian.com, git@jeffhostetler.com, gitster@pobox.com,
         jonathantanmy@google.com, jrnieder@gmail.com, peff@peff.net,
         sbeller@google.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH v2 3/9] protocol: introduce protocol extention mechanisms
-Date:   Tue, 26 Sep 2017 16:56:21 -0700
-Message-Id: <20170926235627.79606-4-bmwill@google.com>
+Subject: [PATCH v2 1/9] connect: in ref advertisement, shallows are last
+Date:   Tue, 26 Sep 2017 16:56:19 -0700
+Message-Id: <20170926235627.79606-2-bmwill@google.com>
 X-Mailer: git-send-email 2.14.1.992.g2c7b836f3a-goog
 In-Reply-To: <20170926235627.79606-1-bmwill@google.com>
 References: <20170913215448.84674-1-bmwill@google.com>
@@ -65,199 +64,245 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Create protocol.{c,h} and provide functions which future servers and
-clients can use to determine which protocol to use or is being used.
+From: Jonathan Tan <jonathantanmy@google.com>
 
-Also introduce the 'GIT_PROTOCOL' environment variable which will be
-used to communicate a colon separated list of keys with optional values
-to a server.  Unknown keys and values must be tolerated.  This mechanism
-is used to communicate which version of the wire protocol a client would
-like to use with a server.
+Currently, get_remote_heads() parses the ref advertisement in one loop,
+allowing refs and shallow lines to intersperse, despite this not being
+allowed by the specification. Refactor get_remote_heads() to use two
+loops instead, enforcing that refs come first, and then shallows.
 
+This also makes it easier to teach get_remote_heads() to interpret other
+lines in the ref advertisement, which will be done in a subsequent
+patch.
+
+As part of this change, this patch interprets capabilities only on the
+first line in the ref advertisement, printing a warning message when
+encountering capabilities on other lines.
+
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- Documentation/config.txt | 17 ++++++++++++
- Documentation/git.txt    |  5 ++++
- Makefile                 |  1 +
- cache.h                  |  7 +++++
- protocol.c               | 72 ++++++++++++++++++++++++++++++++++++++++++++++++
- protocol.h               | 14 ++++++++++
- 6 files changed, 116 insertions(+)
- create mode 100644 protocol.c
- create mode 100644 protocol.h
+ connect.c | 189 ++++++++++++++++++++++++++++++++++++++++----------------------
+ 1 file changed, 123 insertions(+), 66 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index dc4e3f58a..b78747abc 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2517,6 +2517,23 @@ The protocol names currently used by git are:
-     `hg` to allow the `git-remote-hg` helper)
- --
+diff --git a/connect.c b/connect.c
+index df56c0cbf..8e2e276b6 100644
+--- a/connect.c
++++ b/connect.c
+@@ -11,6 +11,7 @@
+ #include "string-list.h"
+ #include "sha1-array.h"
+ #include "transport.h"
++#include "strbuf.h"
  
-+protocol.version::
-+	Experimental. If set, clients will attempt to communicate with a
-+	server using the specified protocol version.  If unset, no
-+	attempt will be made by the client to communicate using a
-+	particular protocol version, this results in protocol version 0
-+	being used.
-+	Supported versions:
-++
-+--
-+
-+* `0` - the original wire protocol.
-+
-+* `1` - the original wire protocol with the addition of a version string
-+  in the initial response from the server.
-+
-+--
-+
- pull.ff::
- 	By default, Git does not create an extra merge commit when merging
- 	a commit that is a descendant of the current commit. Instead, the
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 6e3a6767e..299f75c7b 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -697,6 +697,11 @@ of clones and fetches.
- 	which feed potentially-untrusted URLS to git commands.  See
- 	linkgit:git-config[1] for more details.
- 
-+`GIT_PROTOCOL`::
-+	For internal use only.  Used in handshaking the wire protocol.
-+	Contains a colon ':' separated list of keys with optional values
-+	'key[=value]'.  Presence of unknown keys must be tolerated.
-+
- Discussion[[Discussion]]
- ------------------------
- 
-diff --git a/Makefile b/Makefile
-index ed4ca438b..9ce68cded 100644
---- a/Makefile
-+++ b/Makefile
-@@ -842,6 +842,7 @@ LIB_OBJS += pretty.o
- LIB_OBJS += prio-queue.o
- LIB_OBJS += progress.o
- LIB_OBJS += prompt.o
-+LIB_OBJS += protocol.o
- LIB_OBJS += quote.o
- LIB_OBJS += reachable.o
- LIB_OBJS += read-cache.o
-diff --git a/cache.h b/cache.h
-index 49b083ee0..0c792545f 100644
---- a/cache.h
-+++ b/cache.h
-@@ -445,6 +445,13 @@ static inline enum object_type object_type(unsigned int mode)
- #define GIT_ICASE_PATHSPECS_ENVIRONMENT "GIT_ICASE_PATHSPECS"
- #define GIT_QUARANTINE_ENVIRONMENT "GIT_QUARANTINE_PATH"
+ static char *server_capabilities;
+ static const char *parse_feature_value(const char *, const char *, int *);
+@@ -107,6 +108,104 @@ static void annotate_refs_with_symref_info(struct ref *ref)
+ 	string_list_clear(&symref, 0);
+ }
  
 +/*
-+ * Environment variable used in handshaking the wire protocol.
-+ * Contains a colon ':' separated list of keys with optional values
-+ * 'key[=value]'.  Presence of unknown keys must be tolerated.
++ * Read one line of a server's ref advertisement into packet_buffer.
 + */
-+#define GIT_PROTOCOL_ENVIRONMENT "GIT_PROTOCOL"
++static int read_remote_ref(int in, char **src_buf, size_t *src_len,
++			   int *responded)
++{
++	int len = packet_read(in, src_buf, src_len,
++			      packet_buffer, sizeof(packet_buffer),
++			      PACKET_READ_GENTLE_ON_EOF |
++			      PACKET_READ_CHOMP_NEWLINE);
++	const char *arg;
++	if (len < 0)
++		die_initial_contact(*responded);
++	if (len > 4 && skip_prefix(packet_buffer, "ERR ", &arg))
++		die("remote error: %s", arg);
++
++	*responded = 1;
++
++	return len;
++}
++
++#define EXPECTING_FIRST_REF 0
++#define EXPECTING_REF 1
++#define EXPECTING_SHALLOW 2
++
++static void process_capabilities(int *len)
++{
++	int nul_location = strlen(packet_buffer);
++	if (nul_location == *len)
++		return;
++	server_capabilities = xstrdup(packet_buffer + nul_location + 1);
++	*len = nul_location;
++}
++
++static int process_dummy_ref(void)
++{
++	struct object_id oid;
++	const char *name;
++
++	if (parse_oid_hex(packet_buffer, &oid, &name))
++		return 0;
++	if (*name != ' ')
++		return 0;
++	name++;
++
++	return !oidcmp(&null_oid, &oid) && !strcmp(name, "capabilities^{}");
++}
++
++static void check_no_capabilities(int len)
++{
++	if (strlen(packet_buffer) != len)
++		warning("Ignoring capabilities after first line '%s'",
++			packet_buffer + strlen(packet_buffer));
++}
++
++static int process_ref(int len, struct ref ***list, unsigned int flags,
++		       struct oid_array *extra_have)
++{
++	struct object_id old_oid;
++	const char *name;
++
++	if (parse_oid_hex(packet_buffer, &old_oid, &name))
++		return 0;
++	if (*name != ' ')
++		return 0;
++	name++;
++
++	if (extra_have && !strcmp(name, ".have")) {
++		oid_array_append(extra_have, &old_oid);
++	} else if (!strcmp(name, "capabilities^{}")) {
++		die("protocol error: unexpected capabilities^{}");
++	} else if (check_ref(name, flags)) {
++		struct ref *ref = alloc_ref(name);
++		oidcpy(&ref->old_oid, &old_oid);
++		**list = ref;
++		*list = &ref->next;
++	}
++	check_no_capabilities(len);
++	return 1;
++}
++
++static int process_shallow(int len, struct oid_array *shallow_points)
++{
++	const char *arg;
++	struct object_id old_oid;
++
++	if (!skip_prefix(packet_buffer, "shallow ", &arg))
++		return 0;
++
++	if (get_oid_hex(arg, &old_oid))
++		die("protocol error: expected shallow sha-1, got '%s'", arg);
++	if (!shallow_points)
++		die("repository on the other end cannot be shallow");
++	oid_array_append(shallow_points, &old_oid);
++	check_no_capabilities(len);
++	return 1;
++}
 +
  /*
-  * This environment variable is expected to contain a boolean indicating
-  * whether we should or should not treat:
-diff --git a/protocol.c b/protocol.c
-new file mode 100644
-index 000000000..369503065
---- /dev/null
-+++ b/protocol.c
-@@ -0,0 +1,72 @@
-+#include "cache.h"
-+#include "config.h"
-+#include "protocol.h"
-+
-+static enum protocol_version parse_protocol_version(const char *value)
-+{
-+	if (!strcmp(value, "0"))
-+		return protocol_v0;
-+	else if (!strcmp(value, "1"))
-+		return protocol_v1;
-+	else
-+		return protocol_unknown_version;
-+}
-+
-+enum protocol_version get_protocol_version_config(void)
-+{
-+	const char *value;
-+	if (!git_config_get_string_const("protocol.version", &value)) {
-+		enum protocol_version version = parse_protocol_version(value);
-+
-+		if (version == protocol_unknown_version)
-+			die("unknown value for config 'protocol.version': %s",
-+			    value);
-+
-+		return version;
-+	}
-+
-+	return protocol_v0;
-+}
-+
-+enum protocol_version determine_protocol_version_server(void)
-+{
-+	const char *git_protocol = getenv(GIT_PROTOCOL_ENVIRONMENT);
-+	enum protocol_version version = protocol_v0;
-+
-+	if (git_protocol) {
-+		struct string_list list = STRING_LIST_INIT_DUP;
-+		const struct string_list_item *item;
-+		string_list_split(&list, git_protocol, ':', -1);
-+
-+		for_each_string_list_item(item, &list) {
-+			const char *value;
-+			enum protocol_version v;
-+
-+			if (skip_prefix(item->string, "version=", &value)) {
-+				v = parse_protocol_version(value);
-+				if (v > version)
-+					version = v;
+  * Read all the refs from the other end
+  */
+@@ -123,76 +222,34 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
+ 	 * willing to talk to us.  A hang-up before seeing any
+ 	 * response does not necessarily mean an ACL problem, though.
+ 	 */
+-	int saw_response;
+-	int got_dummy_ref_with_capabilities_declaration = 0;
++	int responded = 0;
++	int len;
++	int state = EXPECTING_FIRST_REF;
+ 
+ 	*list = NULL;
+-	for (saw_response = 0; ; saw_response = 1) {
+-		struct ref *ref;
+-		struct object_id old_oid;
+-		char *name;
+-		int len, name_len;
+-		char *buffer = packet_buffer;
+-		const char *arg;
+-
+-		len = packet_read(in, &src_buf, &src_len,
+-				  packet_buffer, sizeof(packet_buffer),
+-				  PACKET_READ_GENTLE_ON_EOF |
+-				  PACKET_READ_CHOMP_NEWLINE);
+-		if (len < 0)
+-			die_initial_contact(saw_response);
+-
+-		if (!len)
+-			break;
+-
+-		if (len > 4 && skip_prefix(buffer, "ERR ", &arg))
+-			die("remote error: %s", arg);
+-
+-		if (len == GIT_SHA1_HEXSZ + strlen("shallow ") &&
+-			skip_prefix(buffer, "shallow ", &arg)) {
+-			if (get_oid_hex(arg, &old_oid))
+-				die("protocol error: expected shallow sha-1, got '%s'", arg);
+-			if (!shallow_points)
+-				die("repository on the other end cannot be shallow");
+-			oid_array_append(shallow_points, &old_oid);
+-			continue;
+-		}
+ 
+-		if (len < GIT_SHA1_HEXSZ + 2 || get_oid_hex(buffer, &old_oid) ||
+-			buffer[GIT_SHA1_HEXSZ] != ' ')
+-			die("protocol error: expected sha/ref, got '%s'", buffer);
+-		name = buffer + GIT_SHA1_HEXSZ + 1;
+-
+-		name_len = strlen(name);
+-		if (len != name_len + GIT_SHA1_HEXSZ + 1) {
+-			free(server_capabilities);
+-			server_capabilities = xstrdup(name + name_len + 1);
+-		}
+-
+-		if (extra_have && !strcmp(name, ".have")) {
+-			oid_array_append(extra_have, &old_oid);
+-			continue;
+-		}
+-
+-		if (!strcmp(name, "capabilities^{}")) {
+-			if (saw_response)
+-				die("protocol error: unexpected capabilities^{}");
+-			if (got_dummy_ref_with_capabilities_declaration)
+-				die("protocol error: multiple capabilities^{}");
+-			got_dummy_ref_with_capabilities_declaration = 1;
+-			continue;
++	while ((len = read_remote_ref(in, &src_buf, &src_len, &responded))) {
++		switch (state) {
++		case EXPECTING_FIRST_REF:
++			process_capabilities(&len);
++			if (process_dummy_ref()) {
++				state = EXPECTING_SHALLOW;
++				break;
 +			}
-+		}
-+
-+		string_list_clear(&list, 0);
-+	}
-+
-+	return version;
-+}
-+
-+enum protocol_version determine_protocol_version_client(const char *server_response)
-+{
-+	enum protocol_version version = protocol_v0;
-+
-+	if (skip_prefix(server_response, "version ", &server_response)) {
-+		version = parse_protocol_version(server_response);
-+
-+		if (version == protocol_unknown_version)
-+			die("server is speaking an unknown protocol");
-+		if (version == protocol_v0)
-+			die("protocol error: server explicitly said version 0");
-+	}
-+
-+	return version;
-+}
-diff --git a/protocol.h b/protocol.h
-new file mode 100644
-index 000000000..18f9a5235
---- /dev/null
-+++ b/protocol.h
-@@ -0,0 +1,14 @@
-+#ifndef PROTOCOL_H
-+#define PROTOCOL_H
-+
-+enum protocol_version {
-+	protocol_unknown_version = -1,
-+	protocol_v0 = 0,
-+	protocol_v1 = 1,
-+};
-+
-+extern enum protocol_version get_protocol_version_config(void);
-+extern enum protocol_version determine_protocol_version_server(void);
-+extern enum protocol_version determine_protocol_version_client(const char *server_response);
-+
-+#endif /* PROTOCOL_H */
++			state = EXPECTING_REF;
++			/* fallthrough */
++		case EXPECTING_REF:
++			if (process_ref(len, &list, flags, extra_have))
++				break;
++			state = EXPECTING_SHALLOW;
++			/* fallthrough */
++		case EXPECTING_SHALLOW:
++			if (process_shallow(len, shallow_points))
++				break;
++			die("protocol error: unexpected '%s'", packet_buffer);
++		default:
++			die("unexpected state %d", state);
+ 		}
+-
+-		if (!check_ref(name, flags))
+-			continue;
+-
+-		if (got_dummy_ref_with_capabilities_declaration)
+-			die("protocol error: unexpected ref after capabilities^{}");
+-
+-		ref = alloc_ref(buffer + GIT_SHA1_HEXSZ + 1);
+-		oidcpy(&ref->old_oid, &old_oid);
+-		*list = ref;
+-		list = &ref->next;
+ 	}
+ 
+ 	annotate_refs_with_symref_info(*orig_list);
 -- 
 2.14.1.992.g2c7b836f3a-goog
 
