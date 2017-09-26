@@ -2,77 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5CFA2202A5
-	for <e@80x24.org>; Tue, 26 Sep 2017 05:22:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 22AD820A26
+	for <e@80x24.org>; Tue, 26 Sep 2017 05:37:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935008AbdIZFW2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Sep 2017 01:22:28 -0400
-Received: from mail-pf0-f170.google.com ([209.85.192.170]:47685 "EHLO
-        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752952AbdIZFW1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Sep 2017 01:22:27 -0400
-Received: by mail-pf0-f170.google.com with SMTP id u12so5024188pfl.4
-        for <git@vger.kernel.org>; Mon, 25 Sep 2017 22:22:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=QuGSVhhhFzCsINZlDp77/HiEJzMbeqDQn50rCL57OFw=;
-        b=ZkKNcx1YQMoTFeF/y+O7C6pspcJrJBqPG/LMAQnMnEiSYdYz/r6ZbcJgG4SoZmEgbM
-         OFkNKTJuqwiGLL5Octh61bbcOQ8xgMYcHib/6mk1hTDUkcxrtxqXYqINPDdMuNG4WaJi
-         lQ7i0EM/+4SoD4yU0969KKRGjlQ6TcTDq5pZvVTg/tGIs/QpQWgy67/v/4EjFnvJ7xAi
-         zSol2+IywWeR8dzppPe5tdTr3HmjeTCBFgWApkk9Ml5gbjVexNYJe/tg7vy+J0NLWm9b
-         4EWhVCm0W5RdEenOHyC/igA5a2+bGJesDaFRcb4rnEbSbETlK1ChMDfUj55YwF0CXKJM
-         5yjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=QuGSVhhhFzCsINZlDp77/HiEJzMbeqDQn50rCL57OFw=;
-        b=RdR5kQvQ1Y6tamI9FSt/H7J1DQY5arrFu8JpZKzPU+7vjLBOcs5fkMDRkIrqAam71+
-         V0UdM7tHFE1jQslKvam3nX3UgrlzZgNNUoOL9/qhxVv5j/tMn+wR4C+LzsJJQPTpqt3G
-         /3jP7zrNiPyoliUhFzSnSZbRbwpwe+j8Ap0ld1Yup801uCV3Abb2hWiadDhr1/FAyc91
-         u32EddtVkhujjodVNFaaFNm2K19qplCxZCQib0HaYVDt+/PVCJsKyZi2MQcUZ6CNfXnQ
-         4H3jxENdw5eYtyv+C5jaC8heMO3h8QAp56eshEOn0GA6c1eDM4Sx6Z+V+hHtf9Ll0v3G
-         boKQ==
-X-Gm-Message-State: AHPjjUhDVv9TBrMLvXhA1lnqusRfvkiSvuQkB2H8i2YrnabNqybXc7v0
-        2mjMUvo/VeSD3HAMU2AqFkU=
-X-Google-Smtp-Source: AOwi7QDyRHS1ZdmliDIk0YgKAOrYBXd1r5AOaIK06GYh9GvhUtY/zKKiSsJWLPNWJWb3t74lc4HPNA==
-X-Received: by 10.101.86.133 with SMTP id v5mr10029919pgs.249.1506403346910;
-        Mon, 25 Sep 2017 22:22:26 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:8cad:f525:a0b8:9738])
-        by smtp.gmail.com with ESMTPSA id i12sm13812582pgr.21.2017.09.25.22.22.25
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 25 Sep 2017 22:22:26 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     git@vger.kernel.org, peff@peff.net, bmwill@google.com
-Subject: Re: [PATCH 4/4] Move documentation of string_list into string-list.h
-References: <20170925155927.32328-1-hanwen@google.com>
-        <20170925155927.32328-5-hanwen@google.com>
-        <xmqqing6aw0w.fsf@gitster.mtv.corp.google.com>
-Date:   Tue, 26 Sep 2017 14:22:25 +0900
-In-Reply-To: <xmqqing6aw0w.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Tue, 26 Sep 2017 14:06:39 +0900")
-Message-ID: <xmqqefquavam.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S965135AbdIZFhe (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Sep 2017 01:37:34 -0400
+Received: from bsmtp7.bon.at ([213.33.87.19]:23925 "EHLO bsmtp7.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S965051AbdIZFhd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Sep 2017 01:37:33 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 3y1V8W1bXLz5tlb;
+        Tue, 26 Sep 2017 07:37:31 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 8F80C211D;
+        Tue, 26 Sep 2017 07:37:30 +0200 (CEST)
+Subject: Re: [PATCH] t7406: submodule.<name>.update command must not be run
+ from .gitmodules
+To:     Stefan Beller <sbeller@google.com>
+Cc:     jrnieder@gmail.com, git@vger.kernel.org
+References: <20170925200448.GY27425@aiede.mtv.corp.google.com>
+ <20170925225054.10819-1-sbeller@google.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <0aa754b4-93fb-3f23-be51-4af5227ac847@kdbg.org>
+Date:   Tue, 26 Sep 2017 07:37:30 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <20170925225054.10819-1-sbeller@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Am 26.09.2017 um 00:50 schrieb Stefan Beller:
+> submodule.<name>.update can be assigned an arbitrary command via setting
+> it to "!command". When this command is found in the regular config, Git
+> ought to just run that command instead of other update mechanisms.
+> 
+> However if that command is just found in the .gitmodules file, it is
+> potentially untrusted, which is why we do not run it.  Add a test
+> confirming the behavior.
+> 
+> Suggested-by: Jonathan Nieder <jrnieder@gmail.com>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+> 
+>   updated to use the super robust script.
+>   Thanks Jonathan,
+>   
+>   Stefan
+> 
+>   t/t7406-submodule-update.sh | 14 ++++++++++++++
+>   1 file changed, 14 insertions(+)
+> 
+> diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+> index 034914a14f..d718cb00e7 100755
+> --- a/t/t7406-submodule-update.sh
+> +++ b/t/t7406-submodule-update.sh
+> @@ -406,6 +406,20 @@ test_expect_success 'submodule update - command in .git/config' '
+>   	)
+>   '
+>   
+> +test_expect_success 'submodule update - command in .gitmodules is ignored' '
+> +	test_when_finished "git -C super reset --hard HEAD^" &&
+> +
+> +	write_script must_not_run.sh <<-EOF &&
+> +	>$TEST_DIRECTORY/bad
+> +	EOF
 
->
-> Thanks.  I am not sure if you can safely reorder the contents of the
-> header files in general, but I trust that you made sure that this
-> does not introduce problems (e.g. referrals before definition).
+I am pretty confident that this does not test what you intend to test. 
+Notice that $TEST_DIRECTORY is expanded when the script is written. But 
+that path contains a blank, and we have something like this in the test 
+script:
 
-Alas, this time it seems my trust was grossly misplaced.  Discarding
-this patch and redoing the integration cycle for the day.
+	#!/bin/sh
+	>/the/build/directory/t/trash directory.t7406/bad
+
+If you inject the bug against which this test protects into 
+git-submodule, you should find a file "trash" in your t directory, and 
+the file "bad" still absent. Not to mention that the script fails 
+because it cannot run "directory.t7406/bad".
+
+To fix that, you should use and exported variable and access that from 
+the test script, for example:
+
+	write_script must_not_run.sh <<-\EOF &&
+	>"$TEST_DIRECTORY"/bad
+	EOF
+...
+	(
+		export TEST_DIRECTORY &&
+		git -C super submodule update submodule
+	) &&
+	test_path_is_missing bad
+
+> +
+> +	git -C super config -f .gitmodules submodule.submodule.update "!$TEST_DIRECTORY/must_not_run.sh" &&
+> +	git -C super commit -a -m "add command to .gitmodules file" &&
+> +	git -C super/submodule reset --hard $submodulesha1^ &&
+> +	git -C super submodule update submodule &&
+> +	test_path_is_missing bad
+> +'
+> +
+>   cat << EOF >expect
+>   Execution of 'false $submodulesha1' failed in submodule path 'submodule'
+>   EOF
+> 
+
+-- Hannes
