@@ -6,58 +6,58 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D4532047F
-	for <e@80x24.org>; Tue, 26 Sep 2017 09:24:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B57D62047F
+	for <e@80x24.org>; Tue, 26 Sep 2017 09:27:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S968454AbdIZJYv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Sep 2017 05:24:51 -0400
-Received: from mail-pf0-f178.google.com ([209.85.192.178]:52849 "EHLO
-        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S967742AbdIZJYs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Sep 2017 05:24:48 -0400
-Received: by mail-pf0-f178.google.com with SMTP id p87so5261844pfj.9
-        for <git@vger.kernel.org>; Tue, 26 Sep 2017 02:24:48 -0700 (PDT)
+        id S967783AbdIZJ1a (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Sep 2017 05:27:30 -0400
+Received: from mail-pg0-f41.google.com ([74.125.83.41]:55164 "EHLO
+        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S967750AbdIZJ12 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Sep 2017 05:27:28 -0400
+Received: by mail-pg0-f41.google.com with SMTP id c137so5604861pga.11
+        for <git@vger.kernel.org>; Tue, 26 Sep 2017 02:27:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=MWyNDIDoQaF7CJmPR+U7uq39Qq3FkPWC+OQwNMHxjEk=;
-        b=uZ2NimU04zGrV0TCs5/sufWiwvWyEWBXL6xEBt1ZtCrZFPoIwChCNlkq3sY4ZJC1BG
-         a3c0VlhxbIPqux/f07Q4Pdji6k+PQ2KWHwhpniP36iQAdO8o+OWJrGhuMv4GIFIL4Z06
-         +ufO0EDp4qn24/84XtxdmlTuFHCNZvxJa1hG/ZJZU4Uikw/76Mce/A3/NvP+zsgx/o27
-         IMDdUdJ44Ufh6CwQjgB16yblKJZywzBd+PA7HBQLqcNDkBVWC4S8NffD5a3X4oYyLj0i
-         QIYnFUuyDPEZ0UYulA7c0IcOKtm4C7N3M4/Jsd8nJytfUTFW2RUF0r5Sb+6VnrtrZgn6
-         K65w==
+        bh=jfjFfQQaAhZL0t1nsLD7QFDAhi3769fbPePsftw5c2k=;
+        b=jI7QdD0HFD2AWShwJ7QLZlatnqNpnLv2uxUqmvZiswTUEo38GPB9RGgBiB+PAyNGw2
+         vYpmmRCZyCBE2uqFZpJ2Rp7qcdfyZt+K/W2G3CSHY6aRWqBpT2JS4vG+3hS/D+XHUqrb
+         LduF63edN+4lyJelnXFSiQ5VTGyHief/hgwIpMF4i2uVM7J1pbJuUI+Tv4l9gX++bpAa
+         zityc0/e0I7SBSHeaWFcn6XCjQvijPaBgekoKh5u+iy2Q1Bl7IWZMVqcK1ZJJkwrQUI5
+         p2RCmE7E7Hj36DQRJeeq5f2IlhjR03X+prvrePs52pBtjAhwgWXWqPte/amlb2sNrS3D
+         ZyAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=MWyNDIDoQaF7CJmPR+U7uq39Qq3FkPWC+OQwNMHxjEk=;
-        b=ry+Gla0aV4rHdTV0sxzFJtzhKtSHA3gL9MuEB6xexfgw/aYfa+P0E2vfAwtxS+oD+K
-         ipIcgcwEJV4RPb4Ght/1jZf0tHQtsdNp9wP3p8hdlutER4l4YNy0wXYmE/eVEAJj48Eo
-         hv6MeFVFlcqN1yR7icwjKUKzniqruwmDWNplr6ow8LqLhJ4AbjPbKtn7DqJCF5mw9Mpf
-         GojLSqhUbikwT3OgWgK479tNOakM7gZ4zv6iDcXWei2wvrvMoGeahx8eRWvM0AZeNNEP
-         OU6jBe+l1a04neO0dVgzwULf7yPWCwl+eEsZE+cL14kd29zNEDDgjM28KPiSO7ErKoy+
-         mjnw==
-X-Gm-Message-State: AHPjjUjTUEUcD4YADeS8mFAv/Oa8HyfmsqvSgvz0T3NDtEPUJb6FShVg
-        HiHvM7cWotK1Lk/mvTaLy6w=
-X-Google-Smtp-Source: AOwi7QD6lKl9CKg80SO1nZNaeZlgKD1aS7BK0Xx0dinE5gohmxyLPNEks3k1+u1mSqJjw1vaGxVd9A==
-X-Received: by 10.84.131.74 with SMTP id 68mr10314749pld.227.1506417887702;
-        Tue, 26 Sep 2017 02:24:47 -0700 (PDT)
+        bh=jfjFfQQaAhZL0t1nsLD7QFDAhi3769fbPePsftw5c2k=;
+        b=nkTCxErBt8SZuzVX9h81fcn11s146rebyTy+s3B32Z3nUGX4gYjzbH8cMQjSBymcxo
+         H1FhjnozsuTIPS7AGO6h8x93xSH66UB6s82vgFk2ZgWvsMliobN4nUNwr3IQIzDKOjQ3
+         ozDvUPedXUsiiKiPiBtBoBwYdkIZtV6RzCStG1zbN+vGlCs/90Pn0yNX4sGZJEarAPfe
+         U8pl0RbKNi6oKDOcXVWNMLbtvyMlYvZQmqXl4fWqf/ha4w/SYKsauKNgmf94XM0amO1P
+         fKrxd/ZK/rRyPrdnZqDfHpQR39nw7vJ8VBfm2sXMJcjB6yHquobAtMsxf1c8wHzoMUY/
+         XNdg==
+X-Gm-Message-State: AHPjjUikYBR0om7LNkp27xkO7FYT2/eTKAPsGuDi73+uA8wLfWBZWBFS
+        UFtdUsC+LtMQTetRl9Z3IHc=
+X-Google-Smtp-Source: AOwi7QBR0WPfvzr5fKZqDlQOQvr3vJhDMcqxsgKU9uVt1ah2u+knAlknxnHG8qNgR1HtmGdskk+s1Q==
+X-Received: by 10.101.65.205 with SMTP id b13mr10429233pgq.319.1506418047883;
+        Tue, 26 Sep 2017 02:27:27 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:8cad:f525:a0b8:9738])
-        by smtp.gmail.com with ESMTPSA id 65sm14727842pgh.31.2017.09.26.02.24.44
+        by smtp.gmail.com with ESMTPSA id f3sm16362811pfd.82.2017.09.26.02.27.27
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 26 Sep 2017 02:24:45 -0700 (PDT)
+        Tue, 26 Sep 2017 02:27:27 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Derrick Stolee <dstolee@microsoft.com>
 Cc:     git@vger.kernel.org, stolee@gmail.com, git@jeffhostetler.com
-Subject: Re: [PATCH v2 1/5] test-list-objects: List a subset of object ids
+Subject: Re: [PATCH v2 2/5] p0008-abbrev.sh: Test find_unique_abbrev() perf
 References: <20170925095452.66833-1-dstolee@microsoft.com>
-        <20170925095452.66833-2-dstolee@microsoft.com>
-Date:   Tue, 26 Sep 2017 18:24:43 +0900
-In-Reply-To: <20170925095452.66833-2-dstolee@microsoft.com> (Derrick Stolee's
-        message of "Mon, 25 Sep 2017 05:54:48 -0400")
-Message-ID: <xmqqd16dak2s.fsf@gitster.mtv.corp.google.com>
+        <20170925095452.66833-3-dstolee@microsoft.com>
+Date:   Tue, 26 Sep 2017 18:27:26 +0900
+In-Reply-To: <20170925095452.66833-3-dstolee@microsoft.com> (Derrick Stolee's
+        message of "Mon, 25 Sep 2017 05:54:49 -0400")
+Message-ID: <xmqq8th1ajy9.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,99 +68,66 @@ X-Mailing-List: git@vger.kernel.org
 
 Derrick Stolee <dstolee@microsoft.com> writes:
 
-> diff --git a/t/helper/test-list-objects.c b/t/helper/test-list-objects.c
+> diff --git a/t/helper/test-abbrev.c b/t/helper/test-abbrev.c
 > new file mode 100644
-> index 000000000..83b1250fe
+> index 000000000..6866896eb
 > --- /dev/null
-> +++ b/t/helper/test-list-objects.c
-> @@ -0,0 +1,85 @@
+> +++ b/t/helper/test-abbrev.c
+> @@ -0,0 +1,19 @@
 > +#include "cache.h"
-> +#include "packfile.h"
 > +#include <stdio.h>
 
-If you include "cache.h", like the ordinary "git" program, you
-should not have to include any system headers like stdio.h
-yourself.  The whole point of "git-compat-util.h must be the first
-to be included (indirectly including it via cache.h and friends is
-also OK)" rule is to make sure that system headers are included at
-the right place in the include sequence (e.g. defining feature
-macros before including certain headers, etc.).
+Same comment on <stdio.h> as [1/5] applies.
 
+> +
 > +int cmd_main(int ac, const char **av)
 > +{
-> +	unsigned int hash_delt = 0xFDB97531;
-> +	unsigned int hash_base = 0x01020304;
-> +...
-> +	const int u_per_oid = sizeof(struct object_id) / sizeof(unsigned int);
+> +	struct object_id oid;
+> +	char hex[GIT_MAX_HEXSZ + 2];
 
-Because the above will not work as you expect, unless your uint is
-32-bit, you would probably want to make hash_delt and hash_base
-explicitly uint32_t, I think.
+Why +2 (as opposed to +1)?
 
-Alternatively, because you assume that uint is at least 8-hex-digit
-wide in the output loop, you can keep "unsigned int" above, but
-change the divisor from sizeof(unsigned int) to a hardcoded 4.
-
-Either would fix the issue.
-
-> +	c.total = 0;
-> +	if (ac > 1)
-> +		n = atoi(av[1]);
-
-Otherwise n will stay 0 as initialized.  Not checking the result of
-atoi() is probably permissible, as this is merely a test helper and
-we can assume that the caller will not do anything silly, like
-passing "-3" in av[1].  But it certainly would be a good discipline
-to make sure av[1] is a reasonable number.
-
-I am afraid that I may be misreading the code, but the following
-code seems to require that the caller must know roughly how many
-objects there are (so that a large-enough value can be passed to
-av[1] to force c.select_mod to 1) when it wants to show everything,
-as the "missing" loop will run 0 times showing nothing, and
-"listing" case will divide by zero.
-
-"Not passing anything will show everything" the proposed log message
-promises is a better design than what the code actually seems to be
-doing.
-
+> +	const char *end;
 > +
-> +	if (ac > 2 && !strcmp(av[2], "--missing")) {
-> +		while (c.total++ < n) {
-
-When n==0, this does nothing.  I am not sure what the desired
-behaviour should be for "When no count is given, we show everything"
-in this codepath, though.
-
-Also, doesn't "test-list-objects 5 --missing" look very wrong?
-Shouldn't it be more like "test-list-objects --missing 5"?
-
-> +			for (i = 0; i < u_per_oid; i++) {
-> +				printf("%08x", hash_base);
-> +				hash_base += hash_delt;
-> +			}
-> +			printf("\n");
-> +		}
-> +	} else {
-> +		setup_git_directory();
+> +	setup_git_directory();
 > +
-> +		for_each_loose_object(count_loose, &c, 0);
-> +		for_each_packed_object(count_packed, &c, 0);
-> +
-> +		c.select_mod = 1 + c.total / n;
-
-When n==0, this would divide by zero.
-Perhaps
-
-		c.select_mod = n ? (1 + c.total / n) : 1;
-
-or something to keep the promise of showing everything?
-
-> +		for_each_loose_object(output_loose, &c, 0);
-> +		for_each_packed_object(output_packed, &c, 0);
+> +	while (fgets(hex, GIT_MAX_HEXSZ + 2, stdin)) {
+> +		hex[GIT_MAX_HEXSZ] = 0;
+> +		if (!parse_oid_hex(hex, &oid, &end))
+> +			find_unique_abbrev(oid.hash, MINIMUM_ABBREV);
 > +	}
 > +
 > +	exit(0);
 > +}
+> diff --git a/t/perf/p0008-abbrev.sh b/t/perf/p0008-abbrev.sh
+> new file mode 100755
+> index 000000000..ba25e7824
+> --- /dev/null
+> +++ b/t/perf/p0008-abbrev.sh
+> @@ -0,0 +1,22 @@
+> +#!/bin/bash
+> +
+> +test_description='Test object disambiguation through abbreviations'
+> +. ./perf-lib.sh
+> +
+> +test_perf_large_repo
+> +
+> +test-list-objects 100000 | sort -R > objs.txt
 
-Thanks.
+I thought "sort randomly" was a GNUism.  Does it work across
+platforms?  I think not.
+
+> +
+> +test_perf 'find_unique_abbrev() for existing objects' '
+> +	test-abbrev < objs.txt
+> +'
+> +
+> +test-list-objects 100000 --missing | sort -R > objs.txt
+> +
+> +test_perf 'find_unique_abbrev() for missing objects' '
+> +	test-abbrev < objs.txt
+> +'
+> +
+> +rm objs.txt
+> +
+> +test_done
