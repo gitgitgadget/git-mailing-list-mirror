@@ -2,119 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 22AD820A26
-	for <e@80x24.org>; Tue, 26 Sep 2017 05:37:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B965202A5
+	for <e@80x24.org>; Tue, 26 Sep 2017 06:09:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965135AbdIZFhe (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Sep 2017 01:37:34 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:23925 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S965051AbdIZFhd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Sep 2017 01:37:33 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 3y1V8W1bXLz5tlb;
-        Tue, 26 Sep 2017 07:37:31 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 8F80C211D;
-        Tue, 26 Sep 2017 07:37:30 +0200 (CEST)
-Subject: Re: [PATCH] t7406: submodule.<name>.update command must not be run
- from .gitmodules
-To:     Stefan Beller <sbeller@google.com>
-Cc:     jrnieder@gmail.com, git@vger.kernel.org
-References: <20170925200448.GY27425@aiede.mtv.corp.google.com>
- <20170925225054.10819-1-sbeller@google.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <0aa754b4-93fb-3f23-be51-4af5227ac847@kdbg.org>
-Date:   Tue, 26 Sep 2017 07:37:30 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        id S1754027AbdIZGJF (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Sep 2017 02:09:05 -0400
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:56821 "EHLO
+        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751641AbdIZGJE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Sep 2017 02:09:04 -0400
+Received: by mail-pf0-f170.google.com with SMTP id g65so5054241pfe.13;
+        Mon, 25 Sep 2017 23:09:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:date:message-id:user-agent:mime-version;
+        bh=ijD2MVKnOV9bSk/dUQqlWwZ1woQopJjDgd64K373cfA=;
+        b=nvRZzmGH+cMxp5Hkzu33I25pDuMw3ciSVVAAfS6n47e9gBfsMSoM/EZ0TlAu7zlhsA
+         MfjYEa6sVD06CWggJXrwcpiqR0hb9bfmcG2YOSf+sRjxPmdo1kLVtShCqYLWv+lDi+MF
+         gAd+GTx0cSyzqP+f6hKgFKPFCukaWwYp3cnsDL1fGfrZEh3TnNDvEY2wERrnLsVe9qgV
+         pUm/IrMG+auQNtpzZm0xbi1ICJ44Q+mfCWwM7rizJXnA7y5Vrk/upl80Ow7G2/IXTWAl
+         wt55qmt6W7lhjoAjZlACHiGTzeOdn/4gpjYsCN5jlYEnmj0xPjjMqLg0rO7PCqcfQN32
+         aNkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :user-agent:mime-version;
+        bh=ijD2MVKnOV9bSk/dUQqlWwZ1woQopJjDgd64K373cfA=;
+        b=DQ815REMB3xbVNRHaIlmDs/VW3wKnzGM7jUnTqTosnqCUtKHF/vobyVrRKwSOxNQla
+         XSwTBP3oBHgGwJPbgKWInty7mhEZ3KtDO9Ls3U+fKOXY/4pRSgZAYKx7SRr1bCYsxqge
+         T6+LUS68eWWPax9KT4LFjognlHs1Ulmd3BJArF0EzneZr54qBlt8FWl2XDW70/zxBn9l
+         uf5QWUnu8l8NNkt93ENC5EukgJlDJJFDOGvzROdmN8VAzLK0X9dWw3pn9iHrEeL5sSzv
+         86NNVcHCJQVWul7C7MRQ1rQ1Ytp4R9/ZaK4dXDsbKiYI+YCH2pqx18RsEbccQbkf1+Ac
+         6XBA==
+X-Gm-Message-State: AHPjjUgznLCDOQ/fa/xC0P6QvzdCRVCglMTJVfcSYx2s/tMjolqXWT3L
+        5pEGAOzMt4SUczEE7NLkDuJ9mZS5
+X-Google-Smtp-Source: AOwi7QDXhCV9fNO5xDyfovC9I/nGiuxj/xIKX1MKA9HP2nqKxr7ADnmhCdwsCRRBhYQXhJ1lOWqFVg==
+X-Received: by 10.98.60.14 with SMTP id j14mr9696537pfa.51.1506406142900;
+        Mon, 25 Sep 2017 23:09:02 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:8cad:f525:a0b8:9738])
+        by smtp.gmail.com with ESMTPSA id c16sm14615510pfj.123.2017.09.25.23.09.01
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 25 Sep 2017 23:09:02 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Cc:     Linux Kernel <linux-kernel@vger.kernel.org>
+Subject: [ANNOUNCE] Git v2.13.6 and others
+Date:   Tue, 26 Sep 2017 15:09:00 +0900
+Message-ID: <xmqqy3p29ekj.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20170925225054.10819-1-sbeller@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 26.09.2017 um 00:50 schrieb Stefan Beller:
-> submodule.<name>.update can be assigned an arbitrary command via setting
-> it to "!command". When this command is found in the regular config, Git
-> ought to just run that command instead of other update mechanisms.
-> 
-> However if that command is just found in the .gitmodules file, it is
-> potentially untrusted, which is why we do not run it.  Add a test
-> confirming the behavior.
-> 
-> Suggested-by: Jonathan Nieder <jrnieder@gmail.com>
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
-> 
->   updated to use the super robust script.
->   Thanks Jonathan,
->   
->   Stefan
-> 
->   t/t7406-submodule-update.sh | 14 ++++++++++++++
->   1 file changed, 14 insertions(+)
-> 
-> diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-> index 034914a14f..d718cb00e7 100755
-> --- a/t/t7406-submodule-update.sh
-> +++ b/t/t7406-submodule-update.sh
-> @@ -406,6 +406,20 @@ test_expect_success 'submodule update - command in .git/config' '
->   	)
->   '
->   
-> +test_expect_success 'submodule update - command in .gitmodules is ignored' '
-> +	test_when_finished "git -C super reset --hard HEAD^" &&
-> +
-> +	write_script must_not_run.sh <<-EOF &&
-> +	>$TEST_DIRECTORY/bad
-> +	EOF
+Maintenance releases Git v2.10.5, v2.11.4, v2.12.5 and v2.13.6 are
+now available at the usual places.  These are solely about hardening
+"git shell" that is used on servers against an unsafe user input,
+which "git cvsserver" copes with poorly.  A copy of the release notes
+for v2.10.5 is attached at the end of the message, but the notes for
+other releases listed above essentially say the same thing.
 
-I am pretty confident that this does not test what you intend to test. 
-Notice that $TEST_DIRECTORY is expanded when the script is written. But 
-that path contains a blank, and we have something like this in the test 
-script:
+The tarballs are found at:
 
-	#!/bin/sh
-	>/the/build/directory/t/trash directory.t7406/bad
+    https://www.kernel.org/pub/software/scm/git/
 
-If you inject the bug against which this test protects into 
-git-submodule, you should find a file "trash" in your t directory, and 
-the file "bad" still absent. Not to mention that the script fails 
-because it cannot run "directory.t7406/bad".
+The following public repositories all have a copy of the 'v2.10.5',
+'v2.11.4', 'v2.12.5' and 'v2.13.6' tags and some of them have the
+'maint-2.10', 'maint-2.11', 'maint-2.12' and 'maint-2.13' branches
+that the tags point at:
 
-To fix that, you should use and exported variable and access that from 
-the test script, for example:
+  url = https://kernel.googlesource.com/pub/scm/git/git
+  url = git://repo.or.cz/alt-git.git
+  url = https://github.com/gitster/git
 
-	write_script must_not_run.sh <<-\EOF &&
-	>"$TEST_DIRECTORY"/bad
-	EOF
-...
-	(
-		export TEST_DIRECTORY &&
-		git -C super submodule update submodule
-	) &&
-	test_path_is_missing bad
+Note that the committed version of the release notes for these
+versions all incorrectly mention "git daemon", where they should
+have said "git shell".  It has been corrected in the attached copy,
+but because the release engineering was done several days in advance
+and the tags have already been shared with binary packagers and
+others at the git-security@googlegroups.com mailing list, these
+release tarballs are issued _with_ the known typo to avoid confusion
+of having two release tags with different contents.  Sorry about that.
 
-> +
-> +	git -C super config -f .gitmodules submodule.submodule.update "!$TEST_DIRECTORY/must_not_run.sh" &&
-> +	git -C super commit -a -m "add command to .gitmodules file" &&
-> +	git -C super/submodule reset --hard $submodulesha1^ &&
-> +	git -C super submodule update submodule &&
-> +	test_path_is_missing bad
-> +'
-> +
->   cat << EOF >expect
->   Execution of 'false $submodulesha1' failed in submodule path 'submodule'
->   EOF
-> 
+----------------------------------------------------------------
 
--- Hannes
+Git v2.10.5 Release Notes
+=========================
+
+Fixes since v2.10.4
+-------------------
+
+ * "git cvsserver" no longer is invoked by "git shell" by default,
+   as it is old and largely unmaintained.
+
+ * Various Perl scripts did not use safe_pipe_capture() instead of
+   backticks, leaving them susceptible to end-user input.  They have
+   been corrected.
+
+Credits go to joernchen <joernchen@phenoelit.de> for finding the
+unsafe constructs in "git cvsserver", and to Jeff King at GitHub for
+finding and fixing instances of the same issue in other scripts.
+
+----------------------------------------------------------------
+
+Changes since v2.10.4 are as follows:
+
+Jeff King (3):
+      shell: drop git-cvsserver support by default
+      archimport: use safe_pipe_capture for user input
+      cvsimport: shell-quote variable used in backticks
+
+Junio C Hamano (3):
+      cvsserver: move safe_pipe_capture() to the main package
+      cvsserver: use safe_pipe_capture for `constant commands` as well
+      Git 2.10.5
+
+joernchen (1):
+      cvsserver: use safe_pipe_capture instead of backticks
+
