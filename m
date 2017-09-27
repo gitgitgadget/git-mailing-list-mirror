@@ -2,99 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76D6B2047F
-	for <e@80x24.org>; Wed, 27 Sep 2017 19:53:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 21A9C20A26
+	for <e@80x24.org>; Wed, 27 Sep 2017 20:21:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751905AbdI0TxQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Sep 2017 15:53:16 -0400
-Received: from mail-pf0-f170.google.com ([209.85.192.170]:55505 "EHLO
-        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751136AbdI0TxO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Sep 2017 15:53:14 -0400
-Received: by mail-pf0-f170.google.com with SMTP id r71so7766431pfe.12
-        for <git@vger.kernel.org>; Wed, 27 Sep 2017 12:53:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=np8uI/OXzddBFUgyVp6VirHjEG3sD2X5c9NRmWRfTqs=;
-        b=d1G+assztBcbk/Y1Wg7TtlSCbiXjfZgA7s5yBJaynB/ZJZ+DrWJN7JLPN6g2ji5+f0
-         kUsKuf8a0HlqU+3Z+kUWYPhQU4+FkIAM2M2NrNLugyArqpI1qxWQqpxqDoo7lZR1qJEO
-         vIpEPJTkv538mhRb27VRfeS0uba+E5lDyDU+HktjmOHRF+Bc/+wz7LGvKAHcZZgtdmzI
-         tByIyvzOeCXtBHHngGQre7GbdyK33nBLVGiXelOvPdC506dEVw3GEtifcS1mcaJilep6
-         GlgAyJAdSJ96DN6oqmK5Vhzx/uS3A6fyrA4UMhp/d6pVgLz2jx5jr0O7m/BASq45HZKg
-         BWKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=np8uI/OXzddBFUgyVp6VirHjEG3sD2X5c9NRmWRfTqs=;
-        b=s8v/S9AnayZDWwvbbn9y45Uqe5ExVk7kBD5FOdT9sylrf6eiM5VS/IDFj/2n4vrc2Q
-         Vjs49cu7Os/m4CPkxxGvmOnu7s4DHAS14pc0RZmeGRJIN9WJDXaMzYo5quw5J57/T/d7
-         grnQ4VEN+d/E4FexVxxA/SCnycNdtCARzlM9oUkrTVGZA6bcUNf3qQwk8Fb/fLh7PV9r
-         QX3d3i+1tEY/Xn+ir6lrjkzRVMqHGF5JuShjWyStj8QY1fCxRT5Oygs/0zfubRFh4l7J
-         0xEH+kdlm2vwot8Wd5tvJvMUK/da2rtdsHWMQGb3VX/C6dQk1EIwAjd5OvZdb6zukPs/
-         0MUw==
-X-Gm-Message-State: AHPjjUgw7S5qf7Cgu5QBbobX9Lr66yKvmjlnXGKm/RuOKmvX7wHmgCk8
-        k51iRCWamQraVV1wFgVpTHU=
-X-Google-Smtp-Source: AOwi7QD1DZxySr7PpM43ioLfc5Lsp9lRWVQOpFBpFHFdCtBdTOgeug5ojaR99VSW1Cq2YftP+g2l4w==
-X-Received: by 10.99.111.194 with SMTP id k185mr2276351pgc.424.1506541993394;
-        Wed, 27 Sep 2017 12:53:13 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:1558:8bd:d6aa:64f8])
-        by smtp.gmail.com with ESMTPSA id i84sm21880169pfj.105.2017.09.27.12.53.12
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 27 Sep 2017 12:53:12 -0700 (PDT)
-Date:   Wed, 27 Sep 2017 12:53:10 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Toni Uebernickel <tuebernickel@gmail.com>, git@vger.kernel.org
-Subject: Re: Updated to v2.14.2 on macOS; git add --patch broken
-Message-ID: <20170927195310.GF19555@aiede.mtv.corp.google.com>
-References: <86D0A377-8AFD-460D-A90E-6327C6934DFC@gmail.com>
- <20170927170716.slqxje2tkh5ws5ak@sigill.intra.peff.net>
- <38D148EC-B77D-426E-A7E0-128509590407@gmail.com>
- <20170927180127.khwqwmv74tsji5im@sigill.intra.peff.net>
- <20170927195159.GE19555@aiede.mtv.corp.google.com>
+        id S1751692AbdI0UVl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Sep 2017 16:21:41 -0400
+Received: from washoe.dartmouth.edu ([129.170.30.229]:50588 "EHLO
+        smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751484AbdI0UVk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Sep 2017 16:21:40 -0400
+Received: from c-76-24-253-1.hsd1.nh.comcast.net ([76.24.253.1] helo=localhost)
+        by smtp.onerussian.com with esmtpsa (TLS1.2:RSA_AES_256_CBC_SHA1:256)
+        (Exim 4.80)
+        (envelope-from <yoh@onerussian.com>)
+        id 1dxIpu-0001TN-C6
+        for git@vger.kernel.org; Wed, 27 Sep 2017 16:21:39 -0400
+Date:   Wed, 27 Sep 2017 16:21:32 -0400
+From:   Yaroslav Halchenko <yoh@onerussian.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Message-ID: <20170927202132.e4gqbozkczctci5z@hopa.kiewit.dartmouth.edu>
+References: <20170925000213.rilmsczdbi3jqkta@hopa.kiewit.dartmouth.edu>
+ <xmqqwp4nfuv1.fsf@gitster.mtv.corp.google.com>
+ <20170925031751.lg7zk6krt65dxwas@hopa.kiewit.dartmouth.edu>
+ <xmqqmv5je412.fsf_-_@gitster.mtv.corp.google.com>
+ <20170925144021.vhbd3wb3uqejs5wq@hopa.kiewit.dartmouth.edu>
+ <xmqqzi9iazrp.fsf@gitster.mtv.corp.google.com>
+ <20170926133232.3yjasune6um4qw45@hopa.kiewit.dartmouth.edu>
+ <xmqqzi9h80jp.fsf@gitster.mtv.corp.google.com>
+ <20170927051915.tsxw2zycnjx4dyo4@hopa.kiewit.dartmouth.edu>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170927195159.GE19555@aiede.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20170927051915.tsxw2zycnjx4dyo4@hopa.kiewit.dartmouth.edu>
+X-URL:  http://www.onerussian.com
+X-Image-Url: http://www.onerussian.com/img/yoh.png
+X-PGP-Key: http://www.onerussian.com/gpg-yoh.asc
+X-fingerprint: C5B9 05F0 E8D9 FD96 68FF  366F A2DE 2350 62DA 33FA
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-SA-Exim-Connect-IP: 76.24.253.1
+X-SA-Exim-Rcpt-To: git@vger.kernel.org
+X-SA-Exim-Mail-From: yoh@onerussian.com
+Subject: Re: -s theirs use-case(s) Was: BUG: merge -s theirs  is not in effect
+X-SA-Exim-Version: 4.2.1 (built Mon, 26 Dec 2011 16:57:07 +0000)
+X-SA-Exim-Scanned: Yes (on smtp.onerussian.com)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder wrote:
-> Jeff King wrote:
 
->> There aren't a lot of changes to the script between v2.13.2 and v2.14.2.
->> The most plausible culprit is d5addcf522 (add--interactive: handle EOF
->> in prompt_yesno, 2017-06-21), but I'm scratching my head over how that
->> could cause what you're seeing.
->>
->> Are you able to build Git from source and bisect the problem? It would
->> help to know which commit introduced the problem.
->
-> How about this change?
->
->  commit 136c8c8b8fa39f1315713248473dececf20f8fe7
->  Author: Jeff King <peff@peff.net>
->  Date:   Thu Jul 13 11:07:03 2017 -0400
->
->      color: check color.ui in git_default_config()
+On Wed, 27 Sep 2017, Yaroslav Halchenko wrote:
+> > And at that point, use of "-s ours" is no longer a workaround for
+> > lack of "-s theirs".  It is a proper part of the desired semantics,
+> > i.e. from the point of view of the surviving canonical history line,
+> > you want to preserve what it did, nullifying what the other line of
+> > history did.
 
-Uh, I think I was thinking of another thread when I wrote this.  Sorry
-for the nonsense.
+> > So I still do not think the above scenario justifies "-s theirs".
 
-> Toni, what is the output of "git config -l"?
+> ok, when you describe it like this (in my case I rarely cared about the
+> side of the merge), then indeed I might better do the entire dance with
+> git reset --hard theirstate; git merge -s ours HEAD@{1}
+> and live happily with the left side being the one always correct and
+> hide "my" mistakes ;)  will keep it in mind
 
-I'm still curious about this.
+ha -- was about to use it, which reminded me about this use case!
 
-Thanks,
-Jonathan
+NB pardon me for not so wonderful ascii-diagrams as yours but hopefully
+still helps
+
+              x-o-o-o-x-o-o    debian
+             /        /
+             x-------x-----    releases -- should just linearly sweep through releases I care about
+            /       /
+           R1      R2          various release branches/tags
+           A       B           which have differing commits
+          /       /
+      ---o---o----o----o        masteg
+
+For packaging some packages for Debian, with my git-rotten-soul, I am trying to
+keep my debian packaging  (in a branch "debian") on top of upstream
+releases.  But the problem comes whenever upstream releases from "release
+branches", which are never merged into master and might have different and
+conflicting changes.  
+
+So, it becomes impossible to maintain a linearly progressing "debian"
+branch without adding a middle-man between upstream releases (in release
+branches), and debian branch (should progress linearly forward) -- "releases"
+branch.  See e.g.  http://github.com/neurodebian/pandas and its releases
+branch.
+
+so I use -s theirs for "linearizing" the branched up development history
+
+-- 
+Yaroslav O. Halchenko
+Center for Open Neuroscience     http://centerforopenneuroscience.org
+Dartmouth College, 419 Moore Hall, Hinman Box 6207, Hanover, NH 03755
+Phone: +1 (603) 646-9834                       Fax: +1 (603) 646-1419
+WWW:   http://www.linkedin.com/in/yarik        
