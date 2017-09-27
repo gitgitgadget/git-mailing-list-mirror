@@ -2,169 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID,
-	URIBL_SBL,URIBL_SBL_A shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2712B20281
-	for <e@80x24.org>; Wed, 27 Sep 2017 03:37:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62B9420281
+	for <e@80x24.org>; Wed, 27 Sep 2017 04:07:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S968113AbdI0Dh1 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Sep 2017 23:37:27 -0400
-Received: from mail-pg0-f43.google.com ([74.125.83.43]:46602 "EHLO
-        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965646AbdI0DhZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Sep 2017 23:37:25 -0400
-Received: by mail-pg0-f43.google.com with SMTP id i130so7037505pgc.3
-        for <git@vger.kernel.org>; Tue, 26 Sep 2017 20:37:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=eixM2K8B18w2ncPuyYJjAuHsoTSYpv9TI6lIjzzOU+k=;
-        b=OAYW1hiRE6z7MFq5IkTWSOCZ5rLx2ktsOywn+ShnClOHfwN/TvUmlWNFss2z2/0EMZ
-         yIM+JGR6sIryAIixf2hW2oJ7fGcrvMol2yFUynC+G5lUA35dHTb0tS1wzDUrwZIK4FZU
-         ugfBi80NwRAVwaOjh2xuhhrhvQ7gnl5delK7gUcLwZLCeD2Ine9qRZjcUSGX6c7uYldk
-         r3mry2u0ZWLtD3+aPfP2Mz4oAjMxatmuSkRoO18Ous9AW4AqZAPZufC1LPx+G1jpRZIz
-         DYJwIA+JTjeSO3A++DZ9VTLnEmD0y0EuMgm8/qZPq64UyCSZqsUVYO4SANM45cnIVrmy
-         aOLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=eixM2K8B18w2ncPuyYJjAuHsoTSYpv9TI6lIjzzOU+k=;
-        b=qJIEt7yQ7eQctSCT2sVq/+NuxhkJJiwhf/Os65FMUoNxC7Tgzz2/WoKJonHQYQt7VL
-         2N0eHLMRiqdlWt3N+fnYc4nhlC/NDR5xc0Vk9CyyPmlKU9v+aWLVgC8VpHD/9pB2pgix
-         w2m9VD+Ti6x4o0bJ2XEe7OEYGGSYzqFYq4DqLgYoP3vpI2Zyctf86Q2hlhpDAa2bUUz6
-         P4akQFw0nG4z3uLtPeDF/PsgtDICWkinGj8t9r/7gJqJgljzsZCbGjHvoZJPVjrfevZ+
-         70gsbSbs+9kmATgVHDcAGqwko75tI4B6apd9S+zGCBqNrF3yhrMBzlTJNAqCEGNgzK/e
-         /sRg==
-X-Gm-Message-State: AHPjjUhaIK2YjyqEVKNRSLChrRBaV3HmzGXe770Pdug5tKEsMdbySuwZ
-        W3zq2i3eSSBmW91kbLP7uz8=
-X-Google-Smtp-Source: AOwi7QCNFJfikbJ3r9WTc/13Xf2NzkbMoysQCtV2eIY0+75ArzMSRh4XXdI5S1PR/spkfoHynVt2+Q==
-X-Received: by 10.159.208.5 with SMTP id a5mr37572plp.436.1506483444787;
-        Tue, 26 Sep 2017 20:37:24 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:a541:226f:6d4c:7f7a])
-        by smtp.gmail.com with ESMTPSA id y1sm1168597pgp.15.2017.09.26.20.37.23
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 26 Sep 2017 20:37:24 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Eric Rannaud" <e@nanocritical.com>
-Cc:     git@vger.kernel.org, jeremy.serror@gmail.com,
-        "Shawn O . Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 1/1] fast-import: checkpoint: dump branches/tags/marks even if object_count==0
-References: <xmqqr2uuaxy1.fsf@gitster.mtv.corp.google.com>
-        <eedb545ccb43a14820802bab10f59ab8ab9557a0.1506419307.git.e@nanocritical.com>
-Date:   Wed, 27 Sep 2017 12:37:23 +0900
-In-Reply-To: <eedb545ccb43a14820802bab10f59ab8ab9557a0.1506419307.git.e@nanocritical.com>
-        (Eric Rannaud's message of "Tue, 26 Sep 2017 02:53:04 -0700")
-Message-ID: <xmqqefqs7qx8.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1753865AbdI0EHZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Sep 2017 00:07:25 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51424 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1753489AbdI0EHY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Sep 2017 00:07:24 -0400
+Received: (qmail 21205 invoked by uid 109); 27 Sep 2017 04:07:01 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 27 Sep 2017 04:07:01 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 10501 invoked by uid 111); 27 Sep 2017 04:08:03 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Wed, 27 Sep 2017 00:08:03 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Sep 2017 00:07:22 -0400
+Date:   Wed, 27 Sep 2017 00:07:22 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH 3/7] read_in_full: reset errno before reading
+Message-ID: <20170927040721.6av4o7cjrrkzizzo@sigill.intra.peff.net>
+References: <20170925233732.4lqavl56qwpfjuxy@sigill.intra.peff.net>
+ <20170925234541.l6qcislhfwtnxf5m@sigill.intra.peff.net>
+ <20170925235510.GL27425@aiede.mtv.corp.google.com>
+ <20170926000117.y3solltovyueq3zc@sigill.intra.peff.net>
+ <CAGZ79kZwc8bNWJfH_36soy75EpyHAMbJGhQd4rV5f-0RMjiwHQ@mail.gmail.com>
+ <20170926000913.6x7qhj2vw73tldxe@sigill.intra.peff.net>
+ <20170926001602.GO27425@aiede.mtv.corp.google.com>
+ <20170926001732.GP27425@aiede.mtv.corp.google.com>
+ <20170926001956.hgtdeklogvkirdxa@sigill.intra.peff.net>
+ <xmqqvak6ayk0.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqvak6ayk0.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Eric Rannaud" <e@nanocritical.com> writes:
+On Tue, Sep 26, 2017 at 01:11:59PM +0900, Junio C Hamano wrote:
 
-> Any comments on the testing strategy with a background fast-import?
->
-> To summarize:
-> - fast-import is started in the background with a command stream that
->   ends with "checkpoint\nprogress checkpoint\n". fast-import keeps
->   running after reaching the last command (we don't want fast-import to
->   terminate).
-> - In the meantime, the test is waiting to read "progress checkpoint" in
->   the output of fast-import, then it checks the testing conditions.
-> - Finally, the test ensures that fast-import is still running in the
->   background (and thus that it has just observed the effect of
->   checkpoint, and not the side effects of fast-import terminating).
-> - After 10 sec, no matter what, the background fast-import is sent
->   "done" and terminates.
->
-> I tried to make sure that the test runs quickly and does not (typically) sleep.
-> Upon failure, the test may take up to 10 sec to fully terminate.
+> Jeff King <peff@peff.net> writes:
+> 
+> >> #ifndef EUNDERFLOW
+> >> # ifdef ENODATA
+> >> #  define EUNDERFLOW ENODATA
+> >> # else
+> >> #  define EUNDERFLOW ESPIPE
+> >> # endif
+> >> #endif
+> >
+> > Right, I think our mails just crossed but I'm leaning in this direction.
+> 
+> Hmph, I may be slow (or may be skimming the exchanges too fast), but
+> what exactly is wrong with "0"?  As long as we do not have to tell
+> two or more "not exactly an error from syscall in errno" cases, I
+> would think "0" is the best value to use.
 
-Hmmmm, it certainly looks a bit too brittle with many tweakables
-like 10, 50, 55, etc. that heavily depend on the load on the system.
+The main reason to avoid "0" is just that the "read error: Success"
+message is a bit funny.
 
-Sorry for asking you to go through the hoops.
+> If the syserror message _is_ the issue, then we'd need to either
+> pick an existing errno that is available everywhere (with possibly
+> suboptimal message), or pick something and prepare a fallback for
+> platforms that lack the errno, so picking "0" as the value and use
+> whatever logic we would have used for the "fallback" would not sound
+> too bad.  I.e.
+> 
+> 	if (read_in_full(..., size) != size)
+> 		if (errno)
+> 			die_errno("oops");
+> 		else
+> 			die("short read");
+> 
+> If the callsite were too numerous,
 
-> diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-> index 67b8c50a5ab4..b410bf3a3a7a 100755
-> --- a/t/t9300-fast-import.sh
-> +++ b/t/t9300-fast-import.sh
-> @@ -3120,4 +3120,121 @@ test_expect_success 'U: validate root delete result' '
->  	compare_diff_raw expect actual
->  '
->  
-> +###
-> +### series V (checkpoint)
-> +###
-> +
-> +# To make sure you're observing the side effects of checkpoint *before*
-> +# fast-import terminates (and thus writes out its state), check that the
-> +# fast-import process is still running using background_import_still_running
-> +# *after* evaluating the test conditions.
-> +background_import_until_checkpoint () {
-> +	options=$1
-> +	input_file=$2
-> +	( cat $input_file; sleep 10; echo done ) | git fast-import $options >V.output &
-> +	echo $! >V.pid
-> +
-> +	# The loop will poll for approximately 5 seconds before giving up.
-> +	n=0
-> +	while ! test "$(cat V.output)" = "progress checkpoint"; do
+You actually don't need errno for that. You can write:
 
-Micronit.  Just like you have if/then on different lines, have
-while/do on different lines, i.e.
+  ret = read_in_full(..., size);
+  if (ret < 0)
+	die_errno("oops");
+  else if (ret != size)
+	die("short read");
 
-	while test "$(cat V.output)" != "progress checkpoint"
-	do
+So I think using errno as a sentinel value to tell between the two cases
+doesn't have much value.
 
-> +		if test $n -gt 55
-> +		then
-> +...
+> #define die_errno_or(msg1, msg2) if (errno) die_errno(msg1); else die(msg2)
+> 
+> perhaps?
 
-> +background_import_still_running () {
-> +	if ! ps --pid "$(cat V.pid)"
+If you just care about dying, you can wrap the whole read_in_full() in a
+helper (which is what my original patch 7 did). But I found there were
+cases that didn't want to die. Of course _most_ of those don't bother
+looking at errno in the first place. I think the only one that does is
+index_core(), which calls error_errno().
 
-"ps --pid" is probably not portable (I think we'd do "kill -0 $pid"
-instead in our existing tests---and it should be kosher according to
-POSIX [*1*, *2*]).
+So with two helpers (one for die and one for error), I think we could
+cover the existing cases. Or we could convert the single error() case to
+just handle the logic inline.
 
-> +test_expect_success 'V: checkpoint updates refs after reset' '
-> +	cat >input <<-INPUT_END &&
+One of the reasons I dislike the helper I showed earlier is that it
+involves assembling a lego sentence. But the alternative is requiring
+the caller to write both sentences from scratch (and writing a good
+sentence for the short read really is long: you expected X bytes but got
+Y).
 
-It is not wrong per-se but we quote INPUT_END when there is no
-interpolation necessary in the body of here document to help
-readers, like so:
+I guess just tweaking the errno value does not really give a good "short
+read" error either. You get "unable to read foo: No data available",
+without the X/Y information.
 
-	cat >input <<-\INPUT_END &&
+Sometimes a custom "short read" message can be better, if it's "could
+not read enough bytes for packfile header" or similar. You don't need to
+know the exact number then.
 
-> +	reset refs/heads/V
-> +	from refs/heads/U
-> +
-> +	checkpoint
-> +	progress checkpoint
-> +	INPUT_END
+So I dunno. Maybe I have just talked myself into actually just fixing
+all of the read_in_full() call sites manually.
 
-> +test_expect_success 'V: checkpoint updates refs and marks after commit' '
-> +	cat >input <<-INPUT_END &&
-
-This we do want interpolation and the above is correct.
-
-
-[Footnotes]
-
-*1* http://pubs.opengroup.org/onlinepubs/9699919799/utilities/kill.html 
-    lists '0' as an allowed signal number to be sent, and defers to the
-    description of the kill() function to explain what happens.
-
-*2* http://pubs.opengroup.org/onlinepubs/9699919799/functions/kill.html
-    says """If sig is 0 (the null signal), error checking is
-    performed but no signal is actually sent. The null signal can be
-    used to check the validity of pid."""
+-Peff
