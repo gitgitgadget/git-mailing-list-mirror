@@ -2,117 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 220292047F
-	for <e@80x24.org>; Wed, 27 Sep 2017 13:23:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C6C72047F
+	for <e@80x24.org>; Wed, 27 Sep 2017 13:50:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752634AbdI0NX3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Sep 2017 09:23:29 -0400
-Received: from mail-wr0-f170.google.com ([209.85.128.170]:50386 "EHLO
-        mail-wr0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752264AbdI0NX2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Sep 2017 09:23:28 -0400
-Received: by mail-wr0-f170.google.com with SMTP id w12so16440865wrc.7
-        for <git@vger.kernel.org>; Wed, 27 Sep 2017 06:23:27 -0700 (PDT)
+        id S1753026AbdI0NuM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Sep 2017 09:50:12 -0400
+Received: from mail-pg0-f49.google.com ([74.125.83.49]:44212 "EHLO
+        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752039AbdI0NuL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Sep 2017 09:50:11 -0400
+Received: by mail-pg0-f49.google.com with SMTP id j16so7807179pga.1
+        for <git@vger.kernel.org>; Wed, 27 Sep 2017 06:50:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:mime-version:subject:message-id:date:to;
-        bh=FEk8w4xl895ctLan17KlkevGvV7MUZyEITVMgzHgI/c=;
-        b=DI42hk7t+e0UBwpKYydvs6gp39Xm+Xp18ayngT0msSz4ca48kwND1HUlCi7uT1KjaC
-         CcUZyMb9VKKtEYjAKLZgh0mxKyTc6KfJVhkaLjTjBVp3SsvACevagp2wUdRck5DAkHph
-         rwh8KxxBGp1Q6QS1juhMVwzxWlXS9rVaBOp5mUxiL7tyyYSD7FhnFZUYqy1apPUxXers
-         ScOL2WSvpdgGwNlZDxMirMStkkKNR67IqCIvgUvj74GD37LAON3tkvV6iCazc6PVD2VV
-         Ww1o+p44iSaEGFkRdvMfi5Z9qsNhqrNCawdqzGgCtEwj1Pqyfr5XiiuNda6QIFSg2CZM
-         vlRg==
+        h=message-id:subject:from:to:cc:in-reply-to:references:date
+         :mime-version:content-transfer-encoding;
+        bh=v3S0IToOIKW3/mNne9Q1xr5+C06GJ2hc4/SAQEBTjcM=;
+        b=cFNK6nVLZSfODzl7Xqy6fCNAg/DGbxYOqOdk26CCCRwTCKiiDhwT2ew+MDYJlP/ydF
+         1wnucqllNEhZuaSejvhNKzcBAMYxGjUVS2Hb9Bj31oc9pcSr1NbkDfeDBj+98oLHaCrq
+         eEvubkfkLu+7KEDkPVP5OSGpS0yaw0XXgfLSo8vBTnvmf45n/N4nVdVvA9QrFacR70mv
+         IYbqHgzZPlSfqiGctfraJ8lUZsPf3GVlwkQ6RyoBy3EG8GBmFVC6Le8Xo35qL6SkzhXG
+         LXb1Qhpd6b/8f5PF+R5JWQ4QBE0Q8AKZbK5dwGdFW1VgGnv/Tx4Xu71q0MDdU0yLXerS
+         WxRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:mime-version:subject:message-id:date:to;
-        bh=FEk8w4xl895ctLan17KlkevGvV7MUZyEITVMgzHgI/c=;
-        b=ivC5H+Z59RtN6I1jmsov554vsPMcda0kPc8wiIwoR07tyAZ6nUANuWF2pKtaM623rd
-         qf7XPzimdRpdS6lX8cuQo7X2748+0mvrXFBYe04qDHllP2wuMc0seWsYASpBO0wYsLnp
-         cEau58C/4xEk9MWesIDLMnC+N/kPE0TtqVq//6yid5uNEzx9kVHGXU3KKwR8Fk/P4qrJ
-         6U4LN92o/GDWRf19UAHAM6Yprh1eXEo69V76J+VnkEERvZ5rmdnvc0YhQc7AMiREYN85
-         fEawPEt8NDn3+mSKYCvXbuapUVtlzvsp7yh50tCqhRIkHa/fhC4JjgkwnaCd5sJJuLN1
-         cKgQ==
-X-Gm-Message-State: AHPjjUjA+GPdOsIcvAebbkMI/RETPckEarWqisszKVqmPhE6y90tT6xB
-        0MCy/Vslrps7MBOl1mic8bUoEa41
-X-Google-Smtp-Source: AOwi7QCYxmTQBeeG7cWmItjRV45uXY+DtuS4XsNoAr08t48HlFRncqaxypAUqsKCF+gy5Kp6wVxXFQ==
-X-Received: by 10.223.160.170 with SMTP id m39mr1365312wrm.174.1506518606132;
-        Wed, 27 Sep 2017 06:23:26 -0700 (PDT)
-Received: from [172.27.233.198] (vpn-muc.tarifhaus.ag. [104.207.130.146])
-        by smtp.gmail.com with ESMTPSA id h29sm10874883wrf.76.2017.09.27.06.23.24
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 27 Sep 2017 06:23:24 -0700 (PDT)
-From:   Toni Uebernickel <tuebernickel@gmail.com>
-Content-Type: multipart/signed;
- boundary="Apple-Mail=_5302A483-64FB-447F-9E17-E044FC631EB3";
- protocol="application/pgp-signature"; micalg=pgp-sha512
-Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
-Subject: Updated to v2.14.2 on macOS; git add --patch broken
-Message-Id: <86D0A377-8AFD-460D-A90E-6327C6934DFC@gmail.com>
-Date:   Wed, 27 Sep 2017 15:23:21 +0200
-To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3273)
+        h=x-gm-message-state:message-id:subject:from:to:cc:in-reply-to
+         :references:date:mime-version:content-transfer-encoding;
+        bh=v3S0IToOIKW3/mNne9Q1xr5+C06GJ2hc4/SAQEBTjcM=;
+        b=qQRr2394G6BMqev40JiwKVwH+71jq321TTh7m0vQnUWmwaOUUSuO+uyojA+VvFqqhN
+         Jj19KQhQIUSCm7EHAHjysks0skLOFURQ6FbTVcKnIxq0ZDCRmsY6DaLM8aM+zWEMSrrO
+         v++o5WubWXpJ1DMf+kvHyHh0WuH0dq2PkxZSCX8rnVH3j1cs1E3rdscyc26gYdhmmJdi
+         JfDwXZqeRxxQr35M2G0i7ca+/e8f+YK+BwFeYMCxGLntfLcX1MtDDY8eL+pnpcIqgsKs
+         UummWp7l4uAewpnjopua1/P0+AcNMGyGT0hdAWi8bpjCh7s4UNuiFA1K+2+6+u+7C+fy
+         EQaQ==
+X-Gm-Message-State: AHPjjUi1NWpFth/caV0wnMKx6rc5zk5HBqrHvCA6YMH6Igda0FtaJBD5
+        GGmy1BHh3Md9MJL+/fcXgyI=
+X-Google-Smtp-Source: AOwi7QA8ZqmMeYm3FWdTmbSjD14+mvkLC35XGBPsz+UdeW2JhrV4VupZSRb36kCO5w2pf9ZOxX/ibQ==
+X-Received: by 10.84.131.74 with SMTP id 68mr1353139pld.227.1506520210798;
+        Wed, 27 Sep 2017 06:50:10 -0700 (PDT)
+Received: from unique-pc ([14.102.72.146])
+        by smtp.gmail.com with ESMTPSA id p77sm21034283pfa.92.2017.09.27.06.50.07
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 27 Sep 2017 06:50:10 -0700 (PDT)
+Message-ID: <1506520205.6209.4.camel@gmail.com>
+Subject: Re: [PATCH] git: add --no-optional-locks option
+From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org
+In-Reply-To: <20170927064026.5xa3ydaggmknvulw@sigill.intra.peff.net>
+References: <20170921043214.pyhdsrpy4omy54rm@sigill.intra.peff.net>
+         <79ed4c34-1727-7c1e-868a-1206902638ad@gmail.com>
+         <20170927064026.5xa3ydaggmknvulw@sigill.intra.peff.net>
+Content-Type: text/plain; charset="ISO-8859-15"
+Date:   Wed, 27 Sep 2017 19:20:05 +0530
+Mime-Version: 1.0
+X-Mailer: Evolution 3.22.6-1 
+Content-Transfer-Encoding: 8bit
+X-Cyberoam-smtpxy-version: 1.0.6.3
+X-Cyberoam-AV-Policy: default
+X-CTCH-Error: Unable to connect local ctasd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, 2017-09-27 at 02:40 -0400, Jeff King wrote:
+> On Sun, Sep 24, 2017 at 01:08:41PM +0530, Kaartic Sivaraam wrote:
+> 
+> > 
+> > So, if I get that correctly "git status --no-optional-locks" is a way to get
+> > the "current" status without updating the on disk index file?
+> 
+> It's actually "git --no-optional-locks status", since it's a git-wide
+> option (it's just that "status" is the only one who respects it for
+> now).
 
---Apple-Mail=_5302A483-64FB-447F-9E17-E044FC631EB3
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+Thanks for correcting the command. Now let me ask my (corrected)
+question again! So, if I get that correctly "git --no-optional-
+locks status" is a way to get the "current" status *without updating*
+the on disk index file?
 
-Hi there,
-
-I updated to git version v2.14.2 on macOS using homebrew.
-
-Since then `git add --patch` and `git stash save --patch` are not =
-working anymore. It's just printing the complete diff without ever =
-stopping to ask for actions. This results in an unusable state, as the =
-whole command option is rendered useless.
-
-For illustration see: https://asciinema.org/a/fw6cy9Ds6CeNOt4RYknLYgOD3
-
-Kind Regards,
-Toni
-
---
-Toni Uebernickel
-
-tuebernickel@gmail.com - https://keybase.io/havvg
-https://github.com/havvg - https://www.xing.com/profile/Toni_Uebernickel
-
-
---Apple-Mail=_5302A483-64FB-447F-9E17-E044FC631EB3
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEqtw0WfnqbGj2qtYvvngIZvYDXHoFAlnLpksACgkQvngIZvYD
-XHppohAAsdp4zXk3HoEX++1E2hbBCKfkq52n8MYw8PjXySipNq/EKPSPedOICsiU
-k4aRCs2irJJWDHbxhxZ6DXCNZNDRr2nqtW02kX8CN/8/i4B1Mwm1mny1Rk98/cGA
-FHo/XMMR+MOymAnwy2Bhqfmn/gjPiuwcSeLKUS4vO+QyzSy1OcGGjQUk25EMnK6u
-uWnK+jQQGvuWQvJ34UqubRFpTLrOUI9W69JXT3Anz8U96cWrpBeEbAOoCVhfetXm
-GwSaINKJUycy+R9lQ1wIbpWNlv/GFGztC5OuP0PVpoYYp/+jMeDNijZi58i+40z9
-gKm4aHksAY1K+ps/5pveAH1iI8Db/Of1NVrU6y9PRpaeaDcuYmy7kupcyPpyKFpe
-jasoykAelBQ/D+BvtMQ64/XPFb0teChf39lRqBfUizdeSrnaXmeKCInDR31vmNVj
-KcRfkwoJMXOIwlcb4pNmQuf5orN2LTtbUL+8jtZ11+g38PNinK6XsLILU2WbH1Qp
-qRR1vxLKq0thUk5j47cZCem6CQZVKcOQFTSgVL/TX7QWM0JdvgtmOK74yNcMNu4e
-CltjZ8PeyzI5P99AmzZAIWHmuKuxBVkX4S6NKfB909yIUAqiddxzMbdWzLW38ry1
-lpyc5x1QUY/dNyJOdcislmYr67vMojrqwoFT08qT7S+C/rkjrz8=
-=D0Dj
------END PGP SIGNATURE-----
-
---Apple-Mail=_5302A483-64FB-447F-9E17-E044FC631EB3--
+---
+Kaartic
