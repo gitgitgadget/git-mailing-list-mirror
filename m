@@ -2,78 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 04429202A5
-	for <e@80x24.org>; Wed, 27 Sep 2017 07:07:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F665202A5
+	for <e@80x24.org>; Wed, 27 Sep 2017 07:10:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751811AbdI0HHT (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Sep 2017 03:07:19 -0400
-Received: from mail-pg0-f45.google.com ([74.125.83.45]:51319 "EHLO
-        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751136AbdI0HHS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Sep 2017 03:07:18 -0400
-Received: by mail-pg0-f45.google.com with SMTP id k193so7284016pgc.8
-        for <git@vger.kernel.org>; Wed, 27 Sep 2017 00:07:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=FtQnpjr3pNu4FeP0Py/bYpkl+Jvz2mZEcB9Chxg3h2I=;
-        b=qV6KSsHNHSl4P0qmEtVsXyXBmQTs7eghRReSyAKwF/8UWLAfZKtVW49t+4Tfu2DQYE
-         vCUw/ElBuFd7uVBAz0+X8I55cWaQtJ50Q2FEV62jsIKtJzI+9yWxt1v6rLNd6rtFjb3I
-         lye7PsXHGZF2boM9BjNgz4Bn8n7/lVG30/LTS1kKoPdz0tFpO73m4XDnwdbHVb9Osi8r
-         85Woni7zhZtyzReQSpQt0PeqqA3fochwnTrwOMbZ+WRwVTWJX5KawtxLSu1enk9cEqhg
-         PR6pGhjr7SkWrdvimkLmWEcT7nd2J+CsWHnDQMfbF1wDAm/+/WHTIP+zpy3h0MZ4Xsx1
-         Z3XA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=FtQnpjr3pNu4FeP0Py/bYpkl+Jvz2mZEcB9Chxg3h2I=;
-        b=S+LyD+okyjJ9vEooEkSxLPB/BJ9eXNROgKe2X14wJA+z83s5oULLPPH6rdyrb66BfU
-         Rqj+y5obKLj8EJ+rUEisNR1SV0jAwH39yT/3qlEmn9NDGXcr/F+9fuMXD1QKbnuDb/z5
-         VYYtzCutMpk5USug0UTRMr5zz5nac61ikG25Soa3cXVMWNyjdWVs7H0JiriU/K39+Faz
-         wjGTicWvaJz0YJsdPZdzlBTXLEo7RgILhn8Ym1JZC9f6As0fTC2XhbzohKWueMsy6sCW
-         CQVyWCQr1YiDQVxGN51q6DGXbctX5+teKPGq8XFAEC/5B4zDGtrqTl0Xb7dGtnCzjrhj
-         nypQ==
-X-Gm-Message-State: AHPjjUhOtLY98ubBGzZDBhG3sxBhfTaFiu6eDZBWiUQuwARj5OtEOQUy
-        ymfsqOOKtnjmNTSlZkbRA7KT4jqh
-X-Google-Smtp-Source: AOwi7QCuQ5ElP+v9jmkI5ViK2PKkSMrZoLuiAt43JO5z7vkvhKNl30+SB6OBaTwFPQcxqiRQt7MXwg==
-X-Received: by 10.98.93.85 with SMTP id r82mr432740pfb.327.1506496037573;
-        Wed, 27 Sep 2017 00:07:17 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:a541:226f:6d4c:7f7a])
-        by smtp.gmail.com with ESMTPSA id y16sm17099394pfe.68.2017.09.27.00.07.16
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 27 Sep 2017 00:07:16 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/3] validate_headref: use skip_prefix for symref parsing
-References: <20170927061644.gwlhxaiairiy2njp@sigill.intra.peff.net>
-        <20170927061726.gat3ykqx4fdstzq6@sigill.intra.peff.net>
-Date:   Wed, 27 Sep 2017 16:07:16 +0900
-In-Reply-To: <20170927061726.gat3ykqx4fdstzq6@sigill.intra.peff.net> (Jeff
-        King's message of "Wed, 27 Sep 2017 02:17:26 -0400")
-Message-ID: <xmqqa81g4o2j.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751887AbdI0HKC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Sep 2017 03:10:02 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51778 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751136AbdI0HKB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Sep 2017 03:10:01 -0400
+Received: (qmail 28103 invoked by uid 109); 27 Sep 2017 07:10:01 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 27 Sep 2017 07:10:01 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12588 invoked by uid 111); 27 Sep 2017 07:10:40 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Wed, 27 Sep 2017 03:10:40 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Sep 2017 03:09:59 -0400
+Date:   Wed, 27 Sep 2017 03:09:59 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2 3/7] prefer "!=" when checking read_in_full() result
+Message-ID: <20170927070959.snjdfrunaybo2buc@sigill.intra.peff.net>
+References: <20170927055424.22ati3g24xaqtqrk@sigill.intra.peff.net>
+ <20170927060028.ehddn5zwf6v6jsvs@sigill.intra.peff.net>
+ <xmqqr2us4ofw.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqr2us4ofw.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Wed, Sep 27, 2017 at 03:59:15PM +0900, Junio C Hamano wrote:
 
-> Since the previous commit guarantees that our symref buffer
-> is NUL-terminated, we can just use skip_prefix() and friends
-> to parse it. This is shorter and saves us having to deal
-> with magic numbers and keeping the "len" counter up to date.
+> Jeff King <peff@peff.net> writes:
+> 
+> > diff --git a/csum-file.c b/csum-file.c
+> > index a172199e44..2adae04073 100644
+> > --- a/csum-file.c
+> > +++ b/csum-file.c
+> > @@ -19,7 +19,7 @@ static void flush(struct sha1file *f, const void *buf, unsigned int count)
+> >  
+> >  		if (ret < 0)
+> >  			die_errno("%s: sha1 file read error", f->name);
+> > -		if (ret < count)
+> > +		if (ret != count)
+> >  			die("%s: sha1 file truncated", f->name);
+> 
+> I personally find that this "ret < count" that comes after checking
+> if ret is negative expresses what it is checking in a more natural
+> way than "ret must be exactly count".
+> 
+> It is not a big deal, as either one needs to be read with an
+> understanding that read_in_full() would read at most "count" bytes
+> to see if the right condition is being checked to declare
+> "truncated" anyway.  But I somehow find
+> 
+> 	ret = read up to count
+> 	if (ret < 0)
+> 		read failed
+> 	if (ret < count)
+> 		we failed to read as much as expected
+> 
+> a bit more natural.
 
-Ah, I should have read the whole thing before starting to type a
-response to 1/3 ;-)
+I actually do, too, and I wouldn't terribly mind to drop these. Mostly I
+didn't want people blindly copying only the second half. The fact that
+the second condition is OK only because the first condition is present
+is somewhat subtle.
 
-Looks good.
+I also wondered if this would shut up -Wsign-compare. But it doesn't
+seem to complain about the originals, which kind of surprises me.
+
+-Peff
