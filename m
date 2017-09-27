@@ -2,105 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 21A9C20A26
-	for <e@80x24.org>; Wed, 27 Sep 2017 20:21:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2EBF520A26
+	for <e@80x24.org>; Wed, 27 Sep 2017 20:40:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751692AbdI0UVl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Sep 2017 16:21:41 -0400
-Received: from washoe.dartmouth.edu ([129.170.30.229]:50588 "EHLO
-        smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751484AbdI0UVk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Sep 2017 16:21:40 -0400
-Received: from c-76-24-253-1.hsd1.nh.comcast.net ([76.24.253.1] helo=localhost)
-        by smtp.onerussian.com with esmtpsa (TLS1.2:RSA_AES_256_CBC_SHA1:256)
-        (Exim 4.80)
-        (envelope-from <yoh@onerussian.com>)
-        id 1dxIpu-0001TN-C6
-        for git@vger.kernel.org; Wed, 27 Sep 2017 16:21:39 -0400
-Date:   Wed, 27 Sep 2017 16:21:32 -0400
-From:   Yaroslav Halchenko <yoh@onerussian.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Message-ID: <20170927202132.e4gqbozkczctci5z@hopa.kiewit.dartmouth.edu>
-References: <20170925000213.rilmsczdbi3jqkta@hopa.kiewit.dartmouth.edu>
- <xmqqwp4nfuv1.fsf@gitster.mtv.corp.google.com>
- <20170925031751.lg7zk6krt65dxwas@hopa.kiewit.dartmouth.edu>
- <xmqqmv5je412.fsf_-_@gitster.mtv.corp.google.com>
- <20170925144021.vhbd3wb3uqejs5wq@hopa.kiewit.dartmouth.edu>
- <xmqqzi9iazrp.fsf@gitster.mtv.corp.google.com>
- <20170926133232.3yjasune6um4qw45@hopa.kiewit.dartmouth.edu>
- <xmqqzi9h80jp.fsf@gitster.mtv.corp.google.com>
- <20170927051915.tsxw2zycnjx4dyo4@hopa.kiewit.dartmouth.edu>
+        id S1751782AbdI0Ukd (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Sep 2017 16:40:33 -0400
+Received: from mail-qk0-f180.google.com ([209.85.220.180]:56506 "EHLO
+        mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751697AbdI0Ukc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Sep 2017 16:40:32 -0400
+Received: by mail-qk0-f180.google.com with SMTP id g128so14584018qke.13
+        for <git@vger.kernel.org>; Wed, 27 Sep 2017 13:40:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=0n18kKdc98A+leRFFQwkWIn0CSXJkjBrEdZLpE5XoLM=;
+        b=Pp4iyQtPpWBgsOaFXL9yP62+nCS1FJJqLEJrp88Ts4l8q5/vJOo1FxGzM+ybVcHITM
+         71VM7W9oHwrP6W8hLGkVJEFFtHSBjfWU51sX3MkhWuuJl83pZcZNnsAD51FtfMMwScVT
+         aEAz4Zn/ecTUEXuawv5MgXx/Y1am9lnC4oXKiX0/LBaiBhXGA6HIuTZ+XDvpcE1c0hYk
+         /5GzA/iIMa+ThZuIOUydyTY92V9AQZW345juGnf4pOIY6sQAMttQMs9chaa8o5AwedhU
+         QtoUz2OEcT5p3C8qyBUpDTC5f1tgq/62fOmAA4dzRE2bFDLdmYY46b564AxrtPWsDl2V
+         wq+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=0n18kKdc98A+leRFFQwkWIn0CSXJkjBrEdZLpE5XoLM=;
+        b=IZwlZR5j4T9lEP7jODGXAGoUMtsDEO8D9COEN2yY0CRZoM2PJp1pArCq0CNjc72/rq
+         o0j4dwf0KPSBp2IibWF6QRZn1i/tYuR7XkBuL2s0n21Z5XwXgpSufTss8CE2J6Tv2LkR
+         PsXhkaHutdupBI3rHEiYMGBCNFewbefo5j59lWb95DagGg1kmQL2uH6Yc1ufDX6Na2mQ
+         Fl0oEPeJyu+i6M2GT36G69GFW6PeEnXDcZ3smo93C4/etgkta+CbVFnJw+CzqPo6xmJj
+         pzungbxhRHi3+wMTBCIhjwknFv85LgMfQgAvzUsPuEdNqh5STeorZQy4+bPFLeC73E6h
+         K//g==
+X-Gm-Message-State: AHPjjUjoyLbJpjcHTlMmPHHKdarJ0V98R/kjIOfkH2T0DqxXQ04sDaY9
+        UVXliRtLt4yGCGxzPHf0FWh7IKrPehlTvYMtRkSZgQ==
+X-Google-Smtp-Source: AOwi7QCdY3LgbqzlwrtOk+buk41Ew0S8NSvKCgyTDqr05ASv4fzuNFzAevwEryf41FO3ZJb2uNPGYdNVTNLOWXjH+44=
+X-Received: by 10.55.90.199 with SMTP id o190mr4357366qkb.180.1506544831235;
+ Wed, 27 Sep 2017 13:40:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170927051915.tsxw2zycnjx4dyo4@hopa.kiewit.dartmouth.edu>
-X-URL:  http://www.onerussian.com
-X-Image-Url: http://www.onerussian.com/img/yoh.png
-X-PGP-Key: http://www.onerussian.com/gpg-yoh.asc
-X-fingerprint: C5B9 05F0 E8D9 FD96 68FF  366F A2DE 2350 62DA 33FA
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-SA-Exim-Connect-IP: 76.24.253.1
-X-SA-Exim-Rcpt-To: git@vger.kernel.org
-X-SA-Exim-Mail-From: yoh@onerussian.com
-Subject: Re: -s theirs use-case(s) Was: BUG: merge -s theirs  is not in effect
-X-SA-Exim-Version: 4.2.1 (built Mon, 26 Dec 2011 16:57:07 +0000)
-X-SA-Exim-Scanned: Yes (on smtp.onerussian.com)
+Received: by 10.140.102.51 with HTTP; Wed, 27 Sep 2017 13:40:30 -0700 (PDT)
+In-Reply-To: <CA+55aFzThd6cayUVuv39k=sb8KCphLkWGCV4n2HUjfn7Pxkd3g@mail.gmail.com>
+References: <CA+55aFzThd6cayUVuv39k=sb8KCphLkWGCV4n2HUjfn7Pxkd3g@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 27 Sep 2017 13:40:30 -0700
+Message-ID: <CAGZ79kZF5w7ucbUCKJAuAbz2KBoMJjWneAxFcjOPeted8SBNmg@mail.gmail.com>
+Subject: Re: diffstat summary mode change bug
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Sep 27, 2017 at 11:15 AM, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
 
-On Wed, 27 Sep 2017, Yaroslav Halchenko wrote:
-> > And at that point, use of "-s ours" is no longer a workaround for
-> > lack of "-s theirs".  It is a proper part of the desired semantics,
-> > i.e. from the point of view of the surviving canonical history line,
-> > you want to preserve what it did, nullifying what the other line of
-> > history did.
+> (ok, linewrapping in this email may make that look wrong - but the
+> "mode change" land the "create mode" are both on the same line.
 
-> > So I still do not think the above scenario justifies "-s theirs".
+Thanks for the bug report.
 
-> ok, when you describe it like this (in my case I rarely cared about the
-> side of the merge), then indeed I might better do the entire dance with
-> git reset --hard theirstate; git merge -s ours HEAD@{1}
-> and live happily with the left side being the one always correct and
-> hide "my" mistakes ;)  will keep it in mind
+> and the reason seems to be that the '\n' at the end got dropped as the
+> old code was very confusing (the old code had two different '\n' cases
+> for the "show filename or not").
 
-ha -- was about to use it, which reminded me about this use case!
+I disagree with this analysis, as the fix you propose adds the
+new line unconditionally, i.e. this code path would be broken
+regardless of "show filename or not".
 
-NB pardon me for not so wonderful ascii-diagrams as yours but hopefully
-still helps
+Both search for "create mode" and "mode change" results in
+hits in the test suite, so we should have caught this.
+I wonder why our tests failed to tell us about this.
 
-              x-o-o-o-x-o-o    debian
-             /        /
-             x-------x-----    releases -- should just linearly sweep through releases I care about
-            /       /
-           R1      R2          various release branches/tags
-           A       B           which have differing commits
-          /       /
-      ---o---o----o----o        masteg
+Specifically we have t4100/t-apply-4.expect
+  mode change 100644 => 100755 t/t0000-basic.sh
+  mode change 100644 => 100755 t/test-lib.sh
+which would seem to exercise this code path.
 
-For packaging some packages for Debian, with my git-rotten-soul, I am trying to
-keep my debian packaging  (in a branch "debian") on top of upstream
-releases.  But the problem comes whenever upstream releases from "release
-branches", which are never merged into master and might have different and
-conflicting changes.  
+The code *looks* correct, but I am full of doubts now.
 
-So, it becomes impossible to maintain a linearly progressing "debian"
-branch without adding a middle-man between upstream releases (in release
-branches), and debian branch (should progress linearly forward) -- "releases"
-branch.  See e.g.  http://github.com/neurodebian/pandas and its releases
-branch.
+Stefan
 
-so I use -s theirs for "linearizing" the branched up development history
-
--- 
-Yaroslav O. Halchenko
-Center for Open Neuroscience     http://centerforopenneuroscience.org
-Dartmouth College, 419 Moore Hall, Hinman Box 6207, Hanover, NH 03755
-Phone: +1 (603) 646-9834                       Fax: +1 (603) 646-1419
-WWW:   http://www.linkedin.com/in/yarik        
+> I think the right fix is this whitespace-damaged trivial one-liner:
+>
+>   diff --git a/diff.c b/diff.c
+>   index 3c6a3e0fa..653bb2e72 100644
+>   --- a/diff.c
+>   +++ b/diff.c
+>   @@ -5272,6 +5272,7 @@ static void show_mode_change(struct
+> diff_options *opt, struct diff_filepair *p,
+>                           strbuf_addch(&sb, ' ');
+>                           quote_c_style(p->two->path, &sb, NULL, 0);
+>                   }
+>   +               strbuf_addch(&sb, '\n');
+>                   emit_diff_symbol(opt, DIFF_SYMBOL_SUMMARY,
+>                                    sb.buf, sb.len, 0);
+>                   strbuf_release(&sb);
+>
+> but somebody should double-check that.
+>
+>                         Linus
