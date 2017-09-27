@@ -2,63 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID,
+	URIBL_SBL,URIBL_SBL_A shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB43820281
-	for <e@80x24.org>; Wed, 27 Sep 2017 03:21:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2712B20281
+	for <e@80x24.org>; Wed, 27 Sep 2017 03:37:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1031637AbdI0DVd (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Sep 2017 23:21:33 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:33761 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1031618AbdI0DVc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Sep 2017 23:21:32 -0400
-Received: by mail-pg0-f68.google.com with SMTP id i130so7907385pgc.0
-        for <git@vger.kernel.org>; Tue, 26 Sep 2017 20:21:32 -0700 (PDT)
+        id S968113AbdI0Dh1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Sep 2017 23:37:27 -0400
+Received: from mail-pg0-f43.google.com ([74.125.83.43]:46602 "EHLO
+        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965646AbdI0DhZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Sep 2017 23:37:25 -0400
+Received: by mail-pg0-f43.google.com with SMTP id i130so7037505pgc.3
+        for <git@vger.kernel.org>; Tue, 26 Sep 2017 20:37:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=FcSNuW8kIpx53zxvaIw0BvU0MEedP4bz7DLc5hELns4=;
-        b=CL1GhyTF3GMgdwqWeKLy8inggA7P0Glmw8ZlyNPyw/K+5nAXmo9Q9oPnduZuywztvb
-         MbeFb6wM9K2NzHkKN5r5kdVz+eEl7pO2TjnhcYoYnd7IQ2r1P+NNoIXqe9DHnetRU4yz
-         /isHxh2v83UfNseHUYvTdeOzUNoAcciucHjgcBXTwe84O0SAAb0++ABWl7hOfu/sHu5a
-         EHenvsKzTLFfJCcriZbsf009VEJBLZiR73wOBneDIuWhN/Z9kFxOuoDmDkUJ7O2RjUZg
-         HB2gvtQBHPRAQm6SZfy4ZcZAI9W2+4rJp7lDSpxP/W1NnKQqSUykhHW2sE65j0xf4YtM
-         35vA==
+        bh=eixM2K8B18w2ncPuyYJjAuHsoTSYpv9TI6lIjzzOU+k=;
+        b=OAYW1hiRE6z7MFq5IkTWSOCZ5rLx2ktsOywn+ShnClOHfwN/TvUmlWNFss2z2/0EMZ
+         yIM+JGR6sIryAIixf2hW2oJ7fGcrvMol2yFUynC+G5lUA35dHTb0tS1wzDUrwZIK4FZU
+         ugfBi80NwRAVwaOjh2xuhhrhvQ7gnl5delK7gUcLwZLCeD2Ine9qRZjcUSGX6c7uYldk
+         r3mry2u0ZWLtD3+aPfP2Mz4oAjMxatmuSkRoO18Ous9AW4AqZAPZufC1LPx+G1jpRZIz
+         DYJwIA+JTjeSO3A++DZ9VTLnEmD0y0EuMgm8/qZPq64UyCSZqsUVYO4SANM45cnIVrmy
+         aOLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=FcSNuW8kIpx53zxvaIw0BvU0MEedP4bz7DLc5hELns4=;
-        b=fdxuCCEz3tC8CRrXVCM20Z91hlRGSGITpNWYIJwW8Nsstl3ANJ+LAM4Zc4djFd8XI0
-         MmL0b591VZEIDfhSvtzclQAC10ECGKQsfQdeXAN0ZAsF+R+n77oelln01wtQC2UaDrEc
-         ++YN7FWtRzewohts5izFaQbdvCerGDnOTggjmLwe6lIJtiVl19cjgq8QZ7ZQN83tPl1t
-         Ii5T4LUtQwKLYyXZbHDoU55PbEe+znFx/mYnHcIORYrc3f52hy5rSauZtNPpZ3U5lOh2
-         3X0TNuf0+4lmx96ahrUBtLl4DBrCxELyPO/Kv9URf+NobYflmPhp5APvhZzsfapeEmPJ
-         GKog==
-X-Gm-Message-State: AHPjjUi/7yV/H2bRWmT+ZWZLOrc7tJqomOcr70azVaSCC1Esh3LPaqps
-        w2vOev0+/BhWHdj2YCbW79Q=
-X-Google-Smtp-Source: AOwi7QCP7R21s6QQDzA44GmWf9z+i4PKI4pTEZ27iO7r73yWhXL6HOiJTQQOxxiJFlkaf4QT23IU2Q==
-X-Received: by 10.84.229.78 with SMTP id d14mr12411545pln.415.1506482491311;
-        Tue, 26 Sep 2017 20:21:31 -0700 (PDT)
+        bh=eixM2K8B18w2ncPuyYJjAuHsoTSYpv9TI6lIjzzOU+k=;
+        b=qJIEt7yQ7eQctSCT2sVq/+NuxhkJJiwhf/Os65FMUoNxC7Tgzz2/WoKJonHQYQt7VL
+         2N0eHLMRiqdlWt3N+fnYc4nhlC/NDR5xc0Vk9CyyPmlKU9v+aWLVgC8VpHD/9pB2pgix
+         w2m9VD+Ti6x4o0bJ2XEe7OEYGGSYzqFYq4DqLgYoP3vpI2Zyctf86Q2hlhpDAa2bUUz6
+         P4akQFw0nG4z3uLtPeDF/PsgtDICWkinGj8t9r/7gJqJgljzsZCbGjHvoZJPVjrfevZ+
+         70gsbSbs+9kmATgVHDcAGqwko75tI4B6apd9S+zGCBqNrF3yhrMBzlTJNAqCEGNgzK/e
+         /sRg==
+X-Gm-Message-State: AHPjjUhaIK2YjyqEVKNRSLChrRBaV3HmzGXe770Pdug5tKEsMdbySuwZ
+        W3zq2i3eSSBmW91kbLP7uz8=
+X-Google-Smtp-Source: AOwi7QCNFJfikbJ3r9WTc/13Xf2NzkbMoysQCtV2eIY0+75ArzMSRh4XXdI5S1PR/spkfoHynVt2+Q==
+X-Received: by 10.159.208.5 with SMTP id a5mr37572plp.436.1506483444787;
+        Tue, 26 Sep 2017 20:37:24 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:a541:226f:6d4c:7f7a])
-        by smtp.gmail.com with ESMTPSA id j14sm16998973pff.59.2017.09.26.20.21.28
+        by smtp.gmail.com with ESMTPSA id y1sm1168597pgp.15.2017.09.26.20.37.23
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 26 Sep 2017 20:21:29 -0700 (PDT)
+        Tue, 26 Sep 2017 20:37:24 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     j6t@kdbg.org, git@vger.kernel.org, jrnieder@gmail.com
-Subject: Re: [PATCH] t7406: submodule.<name>.update command must not be run from .gitmodules
-References: <0b69c0b0-6246-2428-b4b0-bb3ef3cb5ae7@kdbg.org>
-        <20170926195413.3916-1-sbeller@google.com>
-Date:   Wed, 27 Sep 2017 12:21:27 +0900
-In-Reply-To: <20170926195413.3916-1-sbeller@google.com> (Stefan Beller's
-        message of "Tue, 26 Sep 2017 12:54:13 -0700")
-Message-ID: <xmqqr2us7rns.fsf@gitster.mtv.corp.google.com>
+To:     "Eric Rannaud" <e@nanocritical.com>
+Cc:     git@vger.kernel.org, jeremy.serror@gmail.com,
+        "Shawn O . Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 1/1] fast-import: checkpoint: dump branches/tags/marks even if object_count==0
+References: <xmqqr2uuaxy1.fsf@gitster.mtv.corp.google.com>
+        <eedb545ccb43a14820802bab10f59ab8ab9557a0.1506419307.git.e@nanocritical.com>
+Date:   Wed, 27 Sep 2017 12:37:23 +0900
+In-Reply-To: <eedb545ccb43a14820802bab10f59ab8ab9557a0.1506419307.git.e@nanocritical.com>
+        (Eric Rannaud's message of "Tue, 26 Sep 2017 02:53:04 -0700")
+Message-ID: <xmqqefqs7qx8.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,65 +68,103 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+"Eric Rannaud" <e@nanocritical.com> writes:
 
-> submodule.<name>.update can be assigned an arbitrary command via setting
-> it to "!command". When this command is found in the regular config, Git
-> ought to just run that command instead of other update mechanisms.
+> Any comments on the testing strategy with a background fast-import?
 >
-> However if that command is just found in the .gitmodules file, it is
-> potentially untrusted, which is why we do not run it.  Add a test
-> confirming the behavior.
+> To summarize:
+> - fast-import is started in the background with a command stream that
+>   ends with "checkpoint\nprogress checkpoint\n". fast-import keeps
+>   running after reaching the last command (we don't want fast-import to
+>   terminate).
+> - In the meantime, the test is waiting to read "progress checkpoint" in
+>   the output of fast-import, then it checks the testing conditions.
+> - Finally, the test ensures that fast-import is still running in the
+>   background (and thus that it has just observed the effect of
+>   checkpoint, and not the side effects of fast-import terminating).
+> - After 10 sec, no matter what, the background fast-import is sent
+>   "done" and terminates.
 >
-> Suggested-by: Jonathan Nieder <jrnieder@gmail.com>
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
+> I tried to make sure that the test runs quickly and does not (typically) sleep.
+> Upon failure, the test may take up to 10 sec to fully terminate.
 
-Earlier, we saw:
+Hmmmm, it certainly looks a bit too brittle with many tweakables
+like 10, 50, 55, etc. that heavily depend on the load on the system.
 
-    Ideally we want this test to be super robust: e.g. if it runs the
-    command but from a different directory, we still want the test to fail,
-    and if it runs the command but using exec instead of a shell, we still
-    want the test to fail.
+Sorry for asking you to go through the hoops.
 
-and this one (i.e. signal that it is a command by prefixing with
-'!', and then have a single command that would fail whether it is
-run via run_command() with or without shell) would satisfy that
-criteria, I would think.
-
->> This test for a missing file is certainly a remnant from the
->> previous iteration, isn't it?
->
-> Yes. This is a good indicator I need some vacation.
-
-Or just take a deep breath before making a knee-jerk reaction public
-and instead double-check before sending things out ;-)
-
-Will queue.  Thanks.
-
->
-> Thanks,
-> Stefan
->
->  t/t7406-submodule-update.sh | 8 ++++++++
->  1 file changed, 8 insertions(+)
->
-> diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-> index 034914a14f..6f083c4d68 100755
-> --- a/t/t7406-submodule-update.sh
-> +++ b/t/t7406-submodule-update.sh
-> @@ -406,6 +406,14 @@ test_expect_success 'submodule update - command in .git/config' '
->  	)
+> diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+> index 67b8c50a5ab4..b410bf3a3a7a 100755
+> --- a/t/t9300-fast-import.sh
+> +++ b/t/t9300-fast-import.sh
+> @@ -3120,4 +3120,121 @@ test_expect_success 'U: validate root delete result' '
+>  	compare_diff_raw expect actual
 >  '
 >  
-> +test_expect_success 'submodule update - command in .gitmodules is ignored' '
-> +	test_when_finished "git -C super reset --hard HEAD^" &&
-> +	git -C super config -f .gitmodules submodule.submodule.update "!false" &&
-> +	git -C super commit -a -m "add command to .gitmodules file" &&
-> +	git -C super/submodule reset --hard $submodulesha1^ &&
-> +	git -C super submodule update submodule
-> +'
+> +###
+> +### series V (checkpoint)
+> +###
 > +
->  cat << EOF >expect
->  Execution of 'false $submodulesha1' failed in submodule path 'submodule'
->  EOF
+> +# To make sure you're observing the side effects of checkpoint *before*
+> +# fast-import terminates (and thus writes out its state), check that the
+> +# fast-import process is still running using background_import_still_running
+> +# *after* evaluating the test conditions.
+> +background_import_until_checkpoint () {
+> +	options=$1
+> +	input_file=$2
+> +	( cat $input_file; sleep 10; echo done ) | git fast-import $options >V.output &
+> +	echo $! >V.pid
+> +
+> +	# The loop will poll for approximately 5 seconds before giving up.
+> +	n=0
+> +	while ! test "$(cat V.output)" = "progress checkpoint"; do
+
+Micronit.  Just like you have if/then on different lines, have
+while/do on different lines, i.e.
+
+	while test "$(cat V.output)" != "progress checkpoint"
+	do
+
+> +		if test $n -gt 55
+> +		then
+> +...
+
+> +background_import_still_running () {
+> +	if ! ps --pid "$(cat V.pid)"
+
+"ps --pid" is probably not portable (I think we'd do "kill -0 $pid"
+instead in our existing tests---and it should be kosher according to
+POSIX [*1*, *2*]).
+
+> +test_expect_success 'V: checkpoint updates refs after reset' '
+> +	cat >input <<-INPUT_END &&
+
+It is not wrong per-se but we quote INPUT_END when there is no
+interpolation necessary in the body of here document to help
+readers, like so:
+
+	cat >input <<-\INPUT_END &&
+
+> +	reset refs/heads/V
+> +	from refs/heads/U
+> +
+> +	checkpoint
+> +	progress checkpoint
+> +	INPUT_END
+
+> +test_expect_success 'V: checkpoint updates refs and marks after commit' '
+> +	cat >input <<-INPUT_END &&
+
+This we do want interpolation and the above is correct.
+
+
+[Footnotes]
+
+*1* http://pubs.opengroup.org/onlinepubs/9699919799/utilities/kill.html 
+    lists '0' as an allowed signal number to be sent, and defers to the
+    description of the kill() function to explain what happens.
+
+*2* http://pubs.opengroup.org/onlinepubs/9699919799/functions/kill.html
+    says """If sig is 0 (the null signal), error checking is
+    performed but no signal is actually sent. The null signal can be
+    used to check the validity of pid."""
