@@ -2,121 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0230920281
-	for <e@80x24.org>; Wed, 27 Sep 2017 05:29:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD3BF20281
+	for <e@80x24.org>; Wed, 27 Sep 2017 05:54:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752019AbdI0F3J (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Sep 2017 01:29:09 -0400
-Received: from mail-pf0-f175.google.com ([209.85.192.175]:47104 "EHLO
-        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751915AbdI0F3I (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Sep 2017 01:29:08 -0400
-Received: by mail-pf0-f175.google.com with SMTP id u12so6708364pfl.4
-        for <git@vger.kernel.org>; Tue, 26 Sep 2017 22:29:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=1P2wnruewrHCOODL+KahPl/rLWJynR334M9T0+D/BCE=;
-        b=EmnywWyZZnRqXb4yipwHkNS1hd3zj/wFevjGaFJnO8gzeAVKqFTZikEg/ABi0YSvJo
-         +RLqkA0xMmuf0UojeVT16k/6im//N/KbrOkb0m+ARFK49eGtFciV2SHM1e/rYRG4ccFK
-         /zzkiUngdmZ0d9XDnYmCq2NxUwce4OU9gdY/5aO9r1nXUs4ONq7t7rtLBwrQf7cw5o/Z
-         KmHT/o9YXKsZz1IfxX50W3YRCDH7Mo49AczlzgVA+JTpjnIBeGNTKy8kZzBJESs3T217
-         ybXvq8LYvxQwNFEtvNja/KZmeYtXN3Ipkbxgcaa/g3WTbOxMmFfEXSl6S6GwLCz8jgdb
-         28dg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=1P2wnruewrHCOODL+KahPl/rLWJynR334M9T0+D/BCE=;
-        b=HGhlMMy9fN9WBF9L76u72hTQX5wZSjQlmGm2cx9p4H7IotKZ17n09MdSk39qZ0kZNn
-         gcRf7xceMIvJRJ9aNm41PtfIEyNv4MRhOO5OBwkB4jZwsxxYal7Z6JOjGRwVaHATiDXM
-         MzvE6CXlPOY9tRUOcAmGyoAjiiBYYvXssqmfmBp7BWk9BVRUtzYQC34J/NIT7GWfJNjY
-         knEzL4vTE+juQV5FfdHEOuJuzaTblNHavjYW+gi+ytIlXyOsW1Lt6ETfLwRJYNSe8+3F
-         wnX8mpAZrb86xElRf7fPesaGL3tT8uhTCb43FqtbqVer/5PvTia2Mk6SD4Otp/yFM8s9
-         1sig==
-X-Gm-Message-State: AHPjjUg6iAdxjQJpKl2G6XCcPnNsu83hfHCpzlcmsL+srAzrhiJb8s5X
-        4hMznoFAizu0AMZwQbXbf70=
-X-Google-Smtp-Source: AOwi7QBwU2fmxTQGhBgqtoR4155WpFLbiB1/R3CYEx6TIt5TCp8DIiE6MVr5pG8KH8GYJMMbDE0eHA==
-X-Received: by 10.84.225.130 with SMTP id u2mr248255plj.334.1506490148002;
-        Tue, 26 Sep 2017 22:29:08 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:a541:226f:6d4c:7f7a])
-        by smtp.gmail.com with ESMTPSA id w188sm3248316pfb.67.2017.09.26.22.29.07
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 26 Sep 2017 22:29:07 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, bturner@atlassian.com, git@jeffhostetler.com,
-        jonathantanmy@google.com, jrnieder@gmail.com, peff@peff.net,
-        sbeller@google.com
-Subject: Re: [PATCH v2 6/9] connect: teach client to recognize v1 server response
-References: <20170913215448.84674-1-bmwill@google.com>
-        <20170926235627.79606-1-bmwill@google.com>
-        <20170926235627.79606-7-bmwill@google.com>
-Date:   Wed, 27 Sep 2017 14:29:06 +0900
-In-Reply-To: <20170926235627.79606-7-bmwill@google.com> (Brandon Williams's
-        message of "Tue, 26 Sep 2017 16:56:24 -0700")
-Message-ID: <xmqqpoac676l.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752190AbdI0Fy2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Sep 2017 01:54:28 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51524 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751396AbdI0Fy0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Sep 2017 01:54:26 -0400
+Received: (qmail 25061 invoked by uid 109); 27 Sep 2017 05:54:04 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 27 Sep 2017 05:54:04 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11314 invoked by uid 111); 27 Sep 2017 05:55:05 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Wed, 27 Sep 2017 01:55:05 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Sep 2017 01:54:24 -0400
+Date:   Wed, 27 Sep 2017 01:54:24 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 0/7] read/write_in_full leftovers
+Message-ID: <20170927055424.22ati3g24xaqtqrk@sigill.intra.peff.net>
+References: <20170925202646.agsnpmar3dzocdcr@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170925202646.agsnpmar3dzocdcr@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
+On Mon, Sep 25, 2017 at 04:26:47PM -0400, Jeff King wrote:
 
-> +/* Returns 1 if packet_buffer is a protocol version pkt-line, 0 otherwise. */
-> +static int process_protocol_version(void)
-> +{
-> +	switch (determine_protocol_version_client(packet_buffer)) {
-> +		case protocol_v1:
-> +			return 1;
-> +		case protocol_v0:
-> +			return 0;
-> +		default:
-> +			die("server is speaking an unknown protocol");
-> +	}
-> +}
+> This series addresses the bits leftover from the discussion two weeks
+> ago in:
+> 
+>   https://public-inbox.org/git/20170913170807.cyx7rrpoyhaauvol@sigill.intra.peff.net/
+> 
+> and its subthread. I don't think any of these is a real problem in
+> practice, so this can be considered as a cleanup. I'm on the fence over
+> whether the final one is a good idea. See the commit message for
+> details.
+> 
+>   [1/7]: files-backend: prefer "0" for write_in_full() error check
+>   [2/7]: notes-merge: drop dead zero-write code
+>   [3/7]: read_in_full: reset errno before reading
+>   [4/7]: get-tar-commit-id: prefer "!=" for read_in_full() error check
+>   [5/7]: worktree: use xsize_t to access file size
+>   [6/7]: worktree: check the result of read_in_full()
+>   [7/7]: add xread_in_full() helper
 
-For the purpose of "technology demonstration" v1 protocol, it is OK
-to discard the result of "determine_pvc()" like the above code, but
-in a real application, we would do a bit more than just ignoring an
-extra "version #" packet that appears at the beginning, no?
+Here's a followup based on the discussion on v1. There are actually a
+few changes here.
 
-It would be sensible to design how the result of determien_pvc()
-call is propagated to the remainder of the program in this patch and
-implement it.  Perhaps add a new global (like server_capabilities
-already is) and store the value there, or something?  Or pass a
-pointer to enum protocol_version as a return-location parameter to
-this helper function so that the process_capabilities() can pass a
-pointer to its local variable?
+I dropped the "read_in_full() should set errno on short reads" idea (3/7
+in the earlier series). It really is the caller's fault for looking at
+errno when they know there hasn't been an error in the first place. We
+should just bite the bullet and have the callers do the right thing.
 
->  static void process_capabilities(int *len)
->  {
-> @@ -224,12 +239,19 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
->  	 */
->  	int responded = 0;
->  	int len;
-> -	int state = EXPECTING_FIRST_REF;
-> +	int state = EXPECTING_PROTOCOL_VERSION;
->  
->  	*list = NULL;
->  
->  	while ((len = read_remote_ref(in, &src_buf, &src_len, &responded))) {
->  		switch (state) {
-> +		case EXPECTING_PROTOCOL_VERSION:
-> +			if (process_protocol_version()) {
-> +				state = EXPECTING_FIRST_REF;
-> +				break;
-> +			}
-> +			state = EXPECTING_FIRST_REF;
-> +			/* fallthrough */
->  		case EXPECTING_FIRST_REF:
->  			process_capabilities(&len);
->  			if (process_dummy_ref()) {
+I also dropped the "xread_in_full" helper (7/7 earlier). The lego
+sentences it created just weren't worth the hassle. Instead, I've fixed
+all of the relevant callers to provide good error messages for both
+cases. It's a few more lines of code, and it's probably rare for users
+to see these in the first place. But it doesn't hurt too much to be
+thorough, and I think it's good to model correct error handling. This is
+in patches 4 and 5 below.
+
+There are a handful of other changes:
+
+  [1/7]: files-backend: prefer "0" for write_in_full() error check
+  [2/7]: notes-merge: drop dead zero-write code
+
+    These two are the same as before.
+
+  [3/7]: prefer "!=" when checking read_in_full() result
+
+    Along with the get-tar-commit-id case, I found two other cases which
+    aren't bugs, but which should be updated for style reasons.
+
+  [4/7]: avoid looking at errno for short read_in_full() returns
+  [5/7]: distinguish error versus short_read from read_in_full()
+
+    These two are new, and add in the messages. The ones in patch 4 are
+    actively wrong (they show a bogus errno). The ones in 5 are just
+    less descriptive than they could be. So if we find the extra lines
+    of code too much, we could drop 5 (or even convert the ones in 4 to
+    just stop looking at errno).
+
+  [6/7]: worktree: use xsize_t to access file size
+
+    Same as before.
+
+  [7/7]: worktree: check the result of read_in_full()
+
+    Similar, but now handles errors and short_reads separately. It also
+    avoids leaking descriptors and memory in the error path (noticed by
+    Coverity).
+
+ builtin/get-tar-commit-id.c |  6 ++++--
+ builtin/worktree.c          | 24 +++++++++++++++++++++---
+ bulk-checkin.c              |  5 ++++-
+ csum-file.c                 |  2 +-
+ notes-merge.c               |  2 --
+ pack-write.c                |  7 ++++++-
+ packfile.c                  | 11 +++++++++--
+ pkt-line.c                  |  2 +-
+ refs/files-backend.c        |  2 +-
+ sha1_file.c                 | 11 ++++++++---
+ 10 files changed, 55 insertions(+), 17 deletions(-)
+
+-Peff
