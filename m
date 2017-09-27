@@ -2,259 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5507B202A5
-	for <e@80x24.org>; Wed, 27 Sep 2017 10:18:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F3D14202A5
+	for <e@80x24.org>; Wed, 27 Sep 2017 11:23:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752331AbdI0KSv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Sep 2017 06:18:51 -0400
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:38786 "EHLO
-        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752012AbdI0KSt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Sep 2017 06:18:49 -0400
-Received: by mail-qk0-f193.google.com with SMTP id q8so1134773qkl.5
-        for <git@vger.kernel.org>; Wed, 27 Sep 2017 03:18:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=PgoY+og/7n+5jCEfM1F5uZ/n0waF00mrjt74zftihqk=;
-        b=Z8Z/C7y8CL4WvkDayvQjyJz6Zrz0muGLVnTUzF/x5/TwA+28FYB3W2OsmEGSgrTI8f
-         nmZoVhAWroQN5xVGtY6mznZAYNgDsuZvgRnlLqpPVhqjWNb6lyH9SnvFcNyQS5bqa63+
-         ayfTXL5tID0H2G6kzE6wI+9/TTDJcRhre93zcKYpgjuFSRXL0sBRX6FYOiJFpeeyMsC8
-         5f/NdrNNAyKYtnddsiGvMcWTdTF7KjQgR81m9vDNdOq3rLFpponVogrjVJeB1NjUTfT+
-         AYcQ84OkB3S+F/YZHdWHHR4/qRJvOh+g31MDOWOByZ695eiIqfKe0HGWp2YY7urVZiqr
-         huyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=PgoY+og/7n+5jCEfM1F5uZ/n0waF00mrjt74zftihqk=;
-        b=al6XARV5/wx/hAHfuKeP/cxeuE+Njy2hfCDpkBM1CtO0JhYdDKka7a5d0tO6Ub91nf
-         BcipZxvDqwh4j/AQqwFQ3LHOw4DM4KAq8+ndyQuqh8dLPDDDJZxqDhKGokLSU+rnYlTb
-         yz1V94gzRedtrMvin30zeNqMtMxVchA6sCyalQIyqugJYzLWuW+YRBpdwfjEyjpFDXU8
-         AoY9dBFHrTUBPh3CsyDtqZ9Lftu72SC7kL3h76bzDN85ZyZ9d1iBn/y5/jUmZTm3tLlS
-         nT1AKO9fr2yf8M0ppIoQHqzPH/+pyaA2GnWtCgQTmNwhJOWwpaM4MMJ1cCUFUsU8q6v/
-         uE4A==
-X-Gm-Message-State: AHPjjUiqyIZcJi0U99dmTugoqUlMq9XYamG/Gp6Tyrk48RD8mgjxu85w
-        m+7LySiL19L1y1RDbQKcdWNwA/5dmV5TeBUqtA0EZQ==
-X-Google-Smtp-Source: AOwi7QDeTEqMTl/rSwHz8jO+SRjI/1CzlaedGqfR+kAShRsi7NDGRoEpza00UWxpgoT4/WQDIGj1lIPqhxRffpm28YA=
-X-Received: by 10.55.169.81 with SMTP id s78mr1643128qke.34.1506507528755;
- Wed, 27 Sep 2017 03:18:48 -0700 (PDT)
+        id S1752196AbdI0LXk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Sep 2017 07:23:40 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53342 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751671AbdI0LXj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Sep 2017 07:23:39 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A0D6DA30EE;
+        Wed, 27 Sep 2017 07:23:30 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ZVAkyvtepfJPrpQws7WwunmHdfk=; b=I5hngG
+        jTdFJ7iaShnc/5t0JFHlY8TIeMH80Zd16OvP8T88NrfmHTnA8cxB+KzApl+OOaMG
+        TnMQwLouYnEoRKDnKXEyPs2sq1cigf4g6+zS49eWMcbgcrmv6w/wCvh2Qyv4xXR8
+        FomlLzo1ehiIBq3qhjYXN34oFue+qOiBLJcH0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=orsQbot7apmDKXSbIdk4GCm5WL+WHkxi
+        MKkxOyVVXZrxDFx5MiqnPaYJhE5TnLAzwyrkiMpDGQPAOX6PJBJQAK+4jEDAL/FC
+        IBHZpfQoO/lpZmXsUXg4RPGpwwIPDvsWqhOEcKr05IwdrQJey0W7kz3GgAdgQ2ma
+        ATmsQCxU1Bk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 97C88A30ED;
+        Wed, 27 Sep 2017 07:23:30 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DAE97A30EC;
+        Wed, 27 Sep 2017 07:23:29 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, bturner@atlassian.com, git@jeffhostetler.com,
+        jonathantanmy@google.com, jrnieder@gmail.com, peff@peff.net,
+        sbeller@google.com
+Subject: Re: [PATCH v2 3/9] protocol: introduce protocol extention mechanisms
+References: <20170913215448.84674-1-bmwill@google.com>
+        <20170926235627.79606-1-bmwill@google.com>
+        <20170926235627.79606-4-bmwill@google.com>
+        <xmqq4lro7mab.fsf@gitster.mtv.corp.google.com>
+Date:   Wed, 27 Sep 2017 20:23:28 +0900
+In-Reply-To: <xmqq4lro7mab.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Wed, 27 Sep 2017 14:17:32 +0900")
+Message-ID: <xmqqvak42xn3.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.200.35.233 with HTTP; Wed, 27 Sep 2017 03:18:48 -0700 (PDT)
-From:   =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>
-Date:   Wed, 27 Sep 2017 13:18:48 +0300
-Message-ID: <CAL21BmnvJSaN+Tnw7Hdc5P5biAnM5dfWR7gX5FrAG1r_D8th=A@mail.gmail.com>
-Subject: [PATCH] [Outreachy] cleanup: use list.h in mru.h and mru.c
-To:     git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 49EC44D2-A376-11E7-99A9-9D2B0D78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove implementation of double-linked list in mru.c and mru.h and use
-implementation from list.h.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
-Mentored-by: Christian Couder <christian.couder@gmail.com>, Jeff King
-<peff@peff.net>
----
- builtin/pack-objects.c |  5 +++--
- mru.c                  | 51 +++++++++++++++-----------------------------------
- mru.h                  | 31 +++++++++++++-----------------
- packfile.c             |  6 ++++--
- 4 files changed, 35 insertions(+), 58 deletions(-)
+>> +enum protocol_version determine_protocol_version_server(void)
+>> +{
+>> +	const char *git_protocol = getenv(GIT_PROTOCOL_ENVIRONMENT);
+>> +	enum protocol_version version = protocol_v0;
+>> +
+>> +	if (git_protocol) {
+>> +		struct string_list list = STRING_LIST_INIT_DUP;
+>> +		const struct string_list_item *item;
+>> +		string_list_split(&list, git_protocol, ':', -1);
+>> +
+>> +		for_each_string_list_item(item, &list) {
+>> +			const char *value;
+>> +			enum protocol_version v;
+>> +
+>> +			if (skip_prefix(item->string, "version=", &value)) {
+>> +				v = parse_protocol_version(value);
+>> +				if (v > version)
+>> +					version = v;
+>> +			}
+>> +		}
+>> +
+>> +		string_list_clear(&list, 0);
+>> +	}
+>> +
+>> +	return version;
+>> +}
+>
+> This implements "the largest one wins", not "the last one wins".  Is
+> there a particular reason why the former is chosen?
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index f721137ea..fb4c9be89 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -995,8 +995,8 @@ static int want_object_in_pack(const unsigned char *sha1,
-         struct packed_git **found_pack,
-         off_t *found_offset)
- {
-- struct mru_entry *entry;
-  int want;
-+        struct list_head *pos;
+Let me give my version of why the usual "the last one wins" would
+not necessarily a good idea.  I would imagine that a client
+contacting the server may want to say "I understand v3, v2 (but not
+v1 nor v0)" and in order to influence the server's choice between
+the available two, it may want to somehow say it prefers v3 over v2
+(or v2 over v3).  
 
-  if (!exclude && local && has_loose_object_nonlocal(sha1))
-  return 0;
-@@ -1012,7 +1012,8 @@ static int want_object_in_pack(const unsigned char *sha1,
-  return want;
-  }
+One way to implement such a behaviour would be "the first one that
+is understood is used", i.e. something along this line:
 
-- for (entry = packed_git_mru.head; entry; entry = entry->next) {
-+ list_for_each(pos, &packed_git_mru.list) {
-+ struct mru *entry = list_entry(pos, struct mru, list);
-  struct packed_git *p = entry->item;
-  off_t offset;
+        enum protocol_version version = protocol_unknown;
 
-diff --git a/mru.c b/mru.c
-index 9dedae028..8b6ba3d9b 100644
---- a/mru.c
-+++ b/mru.c
-@@ -1,50 +1,29 @@
- #include "cache.h"
- #include "mru.h"
+	for_each_string_list_item(item, &list) {
+		const char *value;
+		enum protocol_version v;
+		if (skip_prefix(item->string, "version=", &value)) {
+                	if (version == protocol_unknown) {
+                        	v = parse_protocol_version(value);
+			        if (v != protocol_unknown)
+					version = v;
+			}
+		}
+	}
 
--void mru_append(struct mru *mru, void *item)
-+void mru_append(struct mru *head, void *item)
- {
-- struct mru_entry *cur = xmalloc(sizeof(*cur));
-+ struct mru *cur = xmalloc(sizeof(*cur));
-  cur->item = item;
-- cur->prev = mru->tail;
-- cur->next = NULL;
--
-- if (mru->tail)
-- mru->tail->next = cur;
-- else
-- mru->head = cur;
-- mru->tail = cur;
-+ list_add_tail(&cur->list, &head->list);
- }
+	if (version == protocol_unknown)
+		version = protocol_v0;
 
--void mru_mark(struct mru *mru, struct mru_entry *entry)
-+void mru_mark(struct mru *head, struct mru *entry)
- {
-- /* If we're already at the front of the list, nothing to do */
-- if (mru->head == entry)
-- return;
--
-- /* Otherwise, remove us from our current slot... */
-- if (entry->prev)
-- entry->prev->next = entry->next;
-- if (entry->next)
-- entry->next->prev = entry->prev;
-- else
-- mru->tail = entry->prev;
--
-- /* And insert us at the beginning. */
-- entry->prev = NULL;
-- entry->next = mru->head;
-- if (mru->head)
-- mru->head->prev = entry;
-- mru->head = entry;
-+ /* To mark means to put at the front of the list. */
-+ list_del(&entry->list);
-+ list_add(&entry->list, &head->list);
- }
+and not "the largest one wins" nor "the last one wins".
 
--void mru_clear(struct mru *mru)
-+void mru_clear(struct mru *head)
- {
-- struct mru_entry *p = mru->head;
--
-- while (p) {
-- struct mru_entry *to_free = p;
-- p = p->next;
-+ struct list_head *p1;
-+ struct list_head *p2;
-+ struct mru *to_free;
-+
-+ list_for_each_safe(p1, p2, &head->list) {
-+ to_free = list_entry(p1, struct mru, list);
-  free(to_free);
-  }
-- mru->head = mru->tail = NULL;
-+ INIT_LIST_HEAD(&head->list);
- }
-diff --git a/mru.h b/mru.h
-index 42e4aeaa1..36a332af0 100644
---- a/mru.h
-+++ b/mru.h
-@@ -1,6 +1,8 @@
- #ifndef MRU_H
- #define MRU_H
+I am not saying your code or the choice of "the largest one wins" is
+necessarily wrong.  I am just illlustrating the way to explain
+"because I want to support a usecase like _this_, I define the way
+in which multiple values to the version variable is parsed like so,
+hence this code".  IOW, I think this commit should mention how the
+"largest one wins" rule would be useful to the clients and the
+servers when they want to achieve X---and that X is left unexplained.
 
-+#include "list.h"
-+
- /**
-  * A simple most-recently-used cache, backed by a doubly-linked list.
-  *
-@@ -8,18 +10,15 @@
-  *
-  *   // Create a list.  Zero-initialization is required.
-  *   static struct mru cache;
-- *   mru_append(&cache, item);
-- *   ...
-+ *   INIT_LIST_HEAD(&cache.list);
-  *
-- *   // Iterate in MRU order.
-- *   struct mru_entry *p;
-- *   for (p = cache.head; p; p = p->next) {
-- * if (matches(p->item))
-- * break;
-- *   }
-+ *   // Add new item to the end of the list.
-+ *   void *item;
-+ *   ...
-+ *   mru_append(&cache, item);
-  *
-  *   // Mark an item as used, moving it to the front of the list.
-- *   mru_mark(&cache, p);
-+ *   mru_mark(&cache, item);
-  *
-  *   // Reset the list to empty, cleaning up all resources.
-  *   mru_clear(&cache);
-@@ -29,17 +28,13 @@
-  * you will begin traversing the whole list again.
-  */
 
--struct mru_entry {
-- void *item;
-- struct mru_entry *prev, *next;
--};
--
- struct mru {
-- struct mru_entry *head, *tail;
-+ struct list_head list;
-+        void *item;
- };
 
--void mru_append(struct mru *mru, void *item);
--void mru_mark(struct mru *mru, struct mru_entry *entry);
--void mru_clear(struct mru *mru);
-+void mru_append(struct mru *head, void *item);
-+void mru_mark(struct mru *head, struct mru *entry);
-+void mru_clear(struct mru *head);
-
- #endif /* MRU_H */
-diff --git a/packfile.c b/packfile.c
-index f69a5c8d6..ae3b0b2e9 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -876,6 +876,7 @@ void prepare_packed_git(void)
-  for (alt = alt_odb_list; alt; alt = alt->next)
-  prepare_packed_git_one(alt->path, 0);
-  rearrange_packed_git();
-+ INIT_LIST_HEAD(&packed_git_mru.list);
-  prepare_packed_git_mru();
-  prepare_packed_git_run_once = 1;
- }
-@@ -1824,13 +1825,14 @@ static int fill_pack_entry(const unsigned char *sha1,
-  */
- int find_pack_entry(const unsigned char *sha1, struct pack_entry *e)
- {
-- struct mru_entry *p;
-+ struct list_head *pos;
-
-  prepare_packed_git();
-  if (!packed_git)
-  return 0;
-
-- for (p = packed_git_mru.head; p; p = p->next) {
-+ list_for_each(pos, &packed_git_mru.list) {
-+ struct mru *p = list_entry(pos, struct mru, list);
-  if (fill_pack_entry(sha1, e, p->item)) {
-  mru_mark(&packed_git_mru, p);
-  return 1;
--- 
-2.14.1.727.g9ddaf86b0
