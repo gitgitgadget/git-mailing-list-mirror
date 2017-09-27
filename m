@@ -2,111 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C5E5120A29
-	for <e@80x24.org>; Wed, 27 Sep 2017 23:49:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F14892047F
+	for <e@80x24.org>; Wed, 27 Sep 2017 23:57:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752430AbdI0Xtj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Sep 2017 19:49:39 -0400
-Received: from avasout08.plus.net ([212.159.14.20]:56111 "EHLO
-        avasout08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752357AbdI0Xtj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Sep 2017 19:49:39 -0400
-Received: from [10.0.2.15] ([147.147.86.16])
-        by avasout08 with smtp
-        id Enpc1w0080M91Ur01npdKR; Thu, 28 Sep 2017 00:49:37 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=EJl26xRC c=1 sm=1 tr=0
- a=dubYQqM3tRRTmV8xSh8cXQ==:117 a=dubYQqM3tRRTmV8xSh8cXQ==:17
- a=IkcTkHD0fZMA:10 a=Z4Rwk6OoAAAA:8 a=PKzvZo6CAAAA:8 a=1XWaLZrsAAAA:8
- a=SmQUNsg3GiOK7-FFx98A:9 a=QEXdDO2ut3YA:10 a=HkZW87K1Qel5hWWM3VKY:22
- a=q92HNjYiIAC_jH7JDaYf:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH] diff: correct newline in summary for renamed files
-To:     Stefan Beller <sbeller@google.com>, peff@peff.net
-Cc:     git@vger.kernel.org, gitster@pobox.com,
-        torvalds@linux-foundation.org
-References: <20170927224909.25dfojhx6wzaqwt7@sigill.intra.peff.net>
- <20170927225126.4836-1-sbeller@google.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <094ebbd4-1bc6-8360-222f-55a4a16a6ca3@ramsayjones.plus.com>
-Date:   Thu, 28 Sep 2017 00:49:36 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        id S1752455AbdI0X5m (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Sep 2017 19:57:42 -0400
+Received: from mail-qt0-f174.google.com ([209.85.216.174]:56120 "EHLO
+        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752402AbdI0X5l (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Sep 2017 19:57:41 -0400
+Received: by mail-qt0-f174.google.com with SMTP id x54so15405587qth.12
+        for <git@vger.kernel.org>; Wed, 27 Sep 2017 16:57:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=mGAwAnlzJ60SaY3dRPBU59TbWode4PpTTDpHD4FH7Eg=;
+        b=RbInHwqciSUbjUIjKptwmHQAGBb4RyDga7pxv4Usd7sj9jk7ea9sqz2ZYjz966FEuo
+         4g8yE2HZAkHHdA6Ey8Ahs1nt/IqzUQ/WVWK3cn63JKT+EJVrK87MeSxXntCqLkO4k0gS
+         4pZVEsTkqsl3dDtgn6KRCTf/GBdYsmWykVkQkgKUUhhhwM11OW49OVQaPr/3C+OfEVzu
+         5JcWIjHHq4n0hzWDgYNAyipNxwLIo+dJzim6qfmA936Nuw4pK0od3gS7C7L4eZB3WWC2
+         DbYCt44TLqVaX5H1JsDa6l72DNOyXBpAeqreFgYIHWW3HS5RDob/EVhREen9+cjY1tzZ
+         agIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=mGAwAnlzJ60SaY3dRPBU59TbWode4PpTTDpHD4FH7Eg=;
+        b=YgyyK+48vLFM1CV94bVkDVt2ZfSLya9+Pdlw7bC6CYuLFonq81NPlqtL/cxRuTwUBm
+         5IGwX4q/VZaPR+XFAXb0jfKnsTkkQAbTwoTvjmNFmdcwwA33G+D6Sjaa2gFLr6ffprZg
+         G1Ok4wz1xIvKk7BW4sKWeeZ646NVemc0afT53mtNiGd1Us1LGUg7Z6AJNdH2gB+mTwik
+         qzVKe+GwUUi1uKMfkYLNOFl4NS9CsQJlSeVfBKunEfD8VqHZ6K3yxwnETA8fArAidzQk
+         uVL6hELKMVT/3OY4Me43D9ZVkFmzCAs+UJiSMwM8QZe4fBGPciwbQ4PrwI7eu0JzfDP8
+         gxtA==
+X-Gm-Message-State: AHPjjUivRwQoK3+Bdhk40MAopZ5rVJXiLnQ2SLEI60yEYgQT4VFsTPQX
+        b9aHs8mcSuCxDVW2RSMPiiIPgr1ArXm7nJMd5OXdvQ==
+X-Google-Smtp-Source: AOwi7QATMI3LOplvLcczoi0yr43G0gOmL1EoMyqS5BJWT82vPuVlMixhuk9xhj13Ex1lJjbnSOo34oLKZ5p3I+s5uQ0=
+X-Received: by 10.237.53.23 with SMTP id a23mr4802462qte.125.1506556660981;
+ Wed, 27 Sep 2017 16:57:40 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20170927225126.4836-1-sbeller@google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Received: by 10.140.102.51 with HTTP; Wed, 27 Sep 2017 16:57:40 -0700 (PDT)
+In-Reply-To: <094ebbd4-1bc6-8360-222f-55a4a16a6ca3@ramsayjones.plus.com>
+References: <20170927224909.25dfojhx6wzaqwt7@sigill.intra.peff.net>
+ <20170927225126.4836-1-sbeller@google.com> <094ebbd4-1bc6-8360-222f-55a4a16a6ca3@ramsayjones.plus.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 27 Sep 2017 16:57:40 -0700
+Message-ID: <CAGZ79kYAzcjECZ0Pt3weyxE0V7J0WCM=M-MvM+HM9DgBDcJQTA@mail.gmail.com>
+Subject: Re: [PATCH] diff: correct newline in summary for renamed files
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Jeff King <peff@peff.net>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+>> +     GIT_AUTHOR_DATE="2006-06-26 00:06:00 +0000" &&
+>> +     GIT_COMMITTER_DATE="2006-06-26 00:06:00 +0000" &&
+>> +     export GIT_AUTHOR_DATE GIT_COMMITTER_DATE &&
+>> +     git checkout -b mode initial &&
+>> +     git update-index --chmod=+x file0 &&
+>
+> would 'test_chmod +x file0 &&' work here?
 
+That is what I was looking for in my previous solution,
+this one doesn't care about the on-disk things at all (regarding
+the mode of files).
 
-On 27/09/17 23:51, Stefan Beller wrote:
-> In 146fdb0dfe (diff.c: emit_diff_symbol learns about DIFF_SYMBOL_SUMMARY,
-> 2017-06-29), the conversion from direct printing to the symbol emission
-> dropped the new line character for renamed, copied and rewritten files.
-> 
-> Add the emission of a newline, add a test for this case.
-> 
-> Reported-by: Linus Torvalds <torvalds@linux-foundation.org>
-> Helped-by: Jeff King <peff@peff.net>
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
-> 
->  Peff, I am undecided about the added 'diff --stat' call as that
->  uses a completely different code path and would not show the mode
->  change, but I guess we can just use it to document the current state.
->  
->  Thanks,
->  Stefan
-> 
->  diff.c                                        |  1 +
->  t/t4013-diff-various.sh                       | 12 ++++++++++++
->  t/t4013/diff.diff-tree_--stat_initial_mode    |  4 ++++
->  t/t4013/diff.diff-tree_--summary_initial_mode |  3 +++
->  t/t4013/diff.diff-tree_initial_mode           |  3 +++
->  t/t4013/diff.log_--decorate=full_--all        |  6 ++++++
->  t/t4013/diff.log_--decorate_--all             |  6 ++++++
->  7 files changed, 35 insertions(+)
->  create mode 100644 t/t4013/diff.diff-tree_--stat_initial_mode
->  create mode 100644 t/t4013/diff.diff-tree_--summary_initial_mode
->  create mode 100644 t/t4013/diff.diff-tree_initial_mode
-> 
-> diff --git a/diff.c b/diff.c
-> index 3c6a3e0faa..653bb2e72e 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -5272,6 +5272,7 @@ static void show_mode_change(struct diff_options *opt, struct diff_filepair *p,
->  			strbuf_addch(&sb, ' ');
->  			quote_c_style(p->two->path, &sb, NULL, 0);
->  		}
-> +		strbuf_addch(&sb, '\n');
->  		emit_diff_symbol(opt, DIFF_SYMBOL_SUMMARY,
->  				 sb.buf, sb.len, 0);
->  		strbuf_release(&sb);
-> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-> index d09acfe48e..c515e3e53f 100755
-> --- a/t/t4013-diff-various.sh
-> +++ b/t/t4013-diff-various.sh
-> @@ -90,6 +90,14 @@ test_expect_success setup '
->  	git commit -m "Rearranged lines in dir/sub" &&
->  	git checkout master &&
->  
-> +	GIT_AUTHOR_DATE="2006-06-26 00:06:00 +0000" &&
-> +	GIT_COMMITTER_DATE="2006-06-26 00:06:00 +0000" &&
-> +	export GIT_AUTHOR_DATE GIT_COMMITTER_DATE &&
-> +	git checkout -b mode initial &&
-> +	git update-index --chmod=+x file0 &&
-
-would 'test_chmod +x file0 &&' work here?
-
-ATB,
-Ramsay Jones
-
+So I would argue that test_chmod may be overkill
+(well we could drop the force flag from the following
+checkout... not sure if that is a good trade off)
