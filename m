@@ -2,43 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D3D312047F
-	for <e@80x24.org>; Wed, 27 Sep 2017 14:47:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E30B2047F
+	for <e@80x24.org>; Wed, 27 Sep 2017 15:59:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752290AbdI0OrQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Sep 2017 10:47:16 -0400
-Received: from siwi.pair.com ([209.68.5.199]:64849 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751982AbdI0OrP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Sep 2017 10:47:15 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 9EB81845E3;
-        Wed, 27 Sep 2017 10:47:14 -0400 (EDT)
-Received: from [10.160.98.77] (unknown [167.220.148.86])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 59212845E2;
-        Wed, 27 Sep 2017 10:47:14 -0400 (EDT)
-Subject: Re: [PATCH 02/13] oidset2: create oidset subclass with object length
- and pathname
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        jeffhost@microsoft.com
-References: <20170922202632.53714-1-git@jeffhostetler.com>
- <20170922202632.53714-3-git@jeffhostetler.com>
- <20170926152022.67d3d6bcc93d862aa1066207@google.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <5f028dc4-ce57-d628-19a3-006df7aa5bea@jeffhostetler.com>
-Date:   Wed, 27 Sep 2017 10:47:13 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+        id S1752632AbdI0P7q (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Sep 2017 11:59:46 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:37155 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752455AbdI0P7p (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Sep 2017 11:59:45 -0400
+Received: by mail-wr0-f195.google.com with SMTP id u48so5414245wrf.4
+        for <git@vger.kernel.org>; Wed, 27 Sep 2017 08:59:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=7eMRhNn/LuqzPpiyAF+Sp4nqOItITqGHq1xeB5RHTQA=;
+        b=LRcnp3ak8UFwHbjWAyQQdJJarUsk4XyNmZu+KedAvq55rMFQzPnRZL5hVGCbrgn/vZ
+         8KNIaO7rdOezFCoRLd9ycnjz2kZrtebPxqx/T4Stzu7O8enBqafBKck0Z2OtPK1Eh8KN
+         eNo1vBmr3tFWvaAogDDcSKQUGzXdhMO1Oc15BzKELqaurYFm+tAG1K2jV/hnuGrE49Hl
+         NWhxKIUisbT0v8ZUVRUpYgjilW8U3moQuuiXhCuhPTzuyD+CixwCT7UgNQ6VWzy0S9se
+         p8WFhrQYXDRIuQC2VWKsv/O2KIsVaRr1Z5m+SMpJoTMeAtjcEx2z/UOEgIAGRjK1JX+q
+         DO0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=7eMRhNn/LuqzPpiyAF+Sp4nqOItITqGHq1xeB5RHTQA=;
+        b=YO4zpDI4c8nh5noxHcCWHnGk5ujTlJc+gpLQ6LnHOP9+HX4PpG5iZ+KPn8x5aRydnN
+         EFU3zL6w9ajE15m9X4akxPx4JH1eUJ6E4MRKy6IHQhqk5qjQYGIcXSIewnIWnLNURZa2
+         DJ9SJFlXPZvRzCNv8QqTIynNyIrkImJRFJ3FEmFsrHrJCRJ9kG3BNJ04ro5Xl8/x3Fmm
+         rY21JOZ+HwrSJjVErGssGwwmsnSu1nfHeHzDYDIoB+x6HOXo8A0zfoRfP41LCVuxaFqb
+         hkB+DGG2+QlbL6bzVPPMWO2TfDC+PufaCGKjjQgOQmDwuTm5FuNprdMTmoiVhb+Em2AB
+         y/Rg==
+X-Gm-Message-State: AHPjjUjSvU/0KK7toM919kZyfh/Ga96S4xLvMLveJrDhOW0q9/P/Aiob
+        5Fz0YY37Yu6oRFY8k2XOuX4=
+X-Google-Smtp-Source: AOwi7QClqBGF5aeMpEAqQ/5Aa7A+IeuPZ6KxF8aZE/2+G9Qfx6euszEjsh5oNGD02ZflDKI391ojAQ==
+X-Received: by 10.46.9.150 with SMTP id 144mr863367ljj.30.1506527984561;
+        Wed, 27 Sep 2017 08:59:44 -0700 (PDT)
+Received: from [192.168.20.21] ([89.113.128.32])
+        by smtp.gmail.com with ESMTPSA id f87sm1772619lfi.89.2017.09.27.08.59.42
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 27 Sep 2017 08:59:42 -0700 (PDT)
+Subject: Re: [PATCH 4/4] Move documentation of string_list into string-list.h
+To:     Brandon Williams <bmwill@google.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net
+References: <20170925155927.32328-1-hanwen@google.com>
+ <20170925155927.32328-5-hanwen@google.com>
+ <20170925174033.GD35385@google.com>
+From:   Andrey Rybak <rybak.a.v@gmail.com>
+Message-ID: <94b87cf7-9636-32d7-95a8-977acf299b7d@gmail.com>
+Date:   Wed, 27 Sep 2017 18:59:41 +0300
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.3.0
 MIME-Version: 1.0
-In-Reply-To: <20170926152022.67d3d6bcc93d862aa1066207@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <20170925174033.GD35385@google.com>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
@@ -46,55 +72,17 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 9/26/2017 6:20 PM, Jonathan Tan wrote:
-> On Fri, 22 Sep 2017 20:26:21 +0000
-> Jeff Hostetler <git@jeffhostetler.com> wrote:
+On 25.09.2017 20:40, Brandon Williams wrote:
+> On 09/25, Han-Wen Nienhuys wrote:
+>> This mirrors commit bdfdaa4978dd92992737e662f25adc01d32d0774 which did
 > 
->> From: Jeff Hostetler <jeffhost@microsoft.com>
->>
->> Create subclass of oidset where each entry has a
->> field to store the length of the object's content
->> and an optional pathname.
->>
->> This will be used in a future commit to build a
->> manifest of omitted objects in a partial/narrow
->> clone/fetch.
+> Not really important but most times we reference another commit from a
+> commit msg we include the one line summary like:
+>     'bdfdaa497 (strbuf.h: integrate api-strbuf.txt documentation,
+>     2015-01-16)'
 > 
-> As Brandon mentioned, I think "oidmap" should be the new data structure
-> of choice (with "oidset" modified to use it).
 
-I'll take a look at that. I'm not exactly happy with
-my oidset2, but it works and it minimized touching other
-things.  But yes, it may clear up a few things.
+Also available from the context menu in gitk as "Copy commit summary".
 
-
->> +struct oidset2_entry {
->> +	struct hashmap_entry hash;
->> +	struct object_id oid;
->> +
->> +	enum object_type type;
->> +	int64_t object_length;	/* This is SIGNED. Use -1 when unknown. */
->> +	char *pathname;
->> +};
-> 
-> object_length is defined to be "unsigned long" in Git code, I think.
-> When is object_length not known, and in those cases, would it be better
-> to use a separate data structure to store what we need?
-
-Yeah, I struggled with that one.  Git currently treats file size as
-a 32-bit unsigned value throughout the code.  I assume eventually there
-will be a round of changes to support 64-bit values, so this anticipates
-that.
-
-I could change it to be an unknown flag, rather assuming -1, but in an
-earlier draft I was printing -1 in the rev-list output.  I can change this.
-
-WRT a separate structure, the SET I create will contain entries for items
-where we may or may not know the size and that depends on the context.
-When building a list of already-missing blobs (with the --filter-print-missing)
-we never know the size.  But when building a list of to-be-omitted blobs
-(from the current set of filter options), we may or may not know.  I'm
-not sure we need 2 _entry definitions right now.
-
+--
+Best regards, Andrey Rybak
