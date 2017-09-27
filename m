@@ -2,244 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E4B420281
-	for <e@80x24.org>; Tue, 26 Sep 2017 23:57:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8978620281
+	for <e@80x24.org>; Wed, 27 Sep 2017 00:04:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1032782AbdIZX45 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Sep 2017 19:56:57 -0400
-Received: from mail-pf0-f174.google.com ([209.85.192.174]:52659 "EHLO
-        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1032774AbdIZX4x (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Sep 2017 19:56:53 -0400
-Received: by mail-pf0-f174.google.com with SMTP id p87so6323307pfj.9
-        for <git@vger.kernel.org>; Tue, 26 Sep 2017 16:56:53 -0700 (PDT)
+        id S967963AbdI0AEW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Sep 2017 20:04:22 -0400
+Received: from mail-pg0-f51.google.com ([74.125.83.51]:54001 "EHLO
+        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965047AbdI0AEV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Sep 2017 20:04:21 -0400
+Received: by mail-pg0-f51.google.com with SMTP id j70so6780242pgc.10
+        for <git@vger.kernel.org>; Tue, 26 Sep 2017 17:04:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=voc6wZSr+tzlGZXQuIHyDHsgOZzzwM6V5ylRc5Vne30=;
-        b=jLK+Zt7WaKUkXKkNugAifvFZOtAfMLSwAB0G/rVDsfY803sSnm53tRCuvJHBsYsYSn
-         OSF7gYWnA225ROwt8p20X3uBvvK2j2IyISx3rdNxuI06h+og5I4HXUylQWY86vM7KIRG
-         w2dX1zxV8XXDRBlxicytiFxkWSd+GXLDIeW496ha6v/cXMTUtokjlyy1yv2zUl7eOPX1
-         H2wcek8tGYno8705jUb+FTmmynboZ7qUnuJCLMHNm2Lc9YpHlr8YhPqK6v4UZhHZAFKl
-         miadhnek9m2zj4UYlCqW+0EROqu6OiwlY8/jhNrvKayyhk1mvuEYs0HD7TmF20mx1W8F
-         u+zw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=UnYJGMRzV0yqdXLy9t2Sj0fVBHEFnvB6oZRi0fzBOZQ=;
+        b=JWAKx1PrJmIaBU8jIcsyzU+VnQktYu+qxc2e2WO6iPQKl8ltyveHOjfL6RrX814igG
+         cKlOMcuO4vZhwp8RYyxuSeRq9ixuONPlf7jYJSBetVytAEmfGzj1hCR2LbvTantuHLd2
+         sihBU6K0HjzI62hMyJl0oQupjgbl96NtB0XsY1YBvp3gFRCqZq5ja2mifuOnC2J88AbD
+         OxR+bpPdtS2/67PQTmI3UjE4ENQJX+shEPnW3XWEEPTlvqMcx/ObvL6CqKBJVctbEOd/
+         Qh3wemG0YVD+nkLvaVgXBPoBiyhHWUsDOqqIMHXObb86LU+myFEYIZY525bycHP9nUjl
+         jxwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=voc6wZSr+tzlGZXQuIHyDHsgOZzzwM6V5ylRc5Vne30=;
-        b=glz6FmdCW8b6Kb0vH5LAWknSUZTyCpN6nC7eUiQSlnyuzBIApCu9EzEXnTz+WwWavg
-         eEuRFyEfXuAsCZjDTIcrBhAqS+FHM2hmCa25fFTyORzUcAEcCzGbJWsFBPjo9Cg7nYm1
-         kuC3pPNgAOmNgIWR6IhTf9F63GelbFgs6WPB1kS7BkvAkcv5ug7YqEIWTUR+vWfsLSTd
-         LqvMVPyvivMEDJzdDrE19053Bp7JSBKupEYLdIEmcHGDpzaf4IEluMBcJmo0RhBSVWGg
-         y8mEC7AgrZecoBnis/SpyEV+zVneUUJfXm6Y17Jmbe1vpp7CdNHuTT2pobwlKQnzl5yH
-         4N8A==
-X-Gm-Message-State: AHPjjUhglM7y+yi93qZd6cs0bb6d1f9kMG5gCSqTtE/BH4ltgqe7t5E3
-        0PZ5EzB6H+Iqpqufd0WvMWoa34R+nLc=
-X-Google-Smtp-Source: AOwi7QBb/ZUGtKAg2c0IIkT+Q+9i5NJ3eqp1+9RbVP/CkGNzrnjBrFiqhI6B0HZf/7Io+saGb2L1nQ==
-X-Received: by 10.84.218.71 with SMTP id f7mr12048363plm.145.1506470212268;
-        Tue, 26 Sep 2017 16:56:52 -0700 (PDT)
-Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id j2sm18071699pgn.26.2017.09.26.16.56.50
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 26 Sep 2017 16:56:51 -0700 (PDT)
-From:   Brandon Williams <bmwill@google.com>
-To:     git@vger.kernel.org
-Cc:     bturner@atlassian.com, git@jeffhostetler.com, gitster@pobox.com,
-        jonathantanmy@google.com, jrnieder@gmail.com, peff@peff.net,
-        sbeller@google.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH v2 4/9] daemon: recognize hidden request arguments
-Date:   Tue, 26 Sep 2017 16:56:22 -0700
-Message-Id: <20170926235627.79606-5-bmwill@google.com>
-X-Mailer: git-send-email 2.14.1.992.g2c7b836f3a-goog
-In-Reply-To: <20170926235627.79606-1-bmwill@google.com>
-References: <20170913215448.84674-1-bmwill@google.com>
- <20170926235627.79606-1-bmwill@google.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=UnYJGMRzV0yqdXLy9t2Sj0fVBHEFnvB6oZRi0fzBOZQ=;
+        b=TBSpsVOo1Q9DxhomHEerAl2dRu4Qch1xg3f5XhI25tnA+u/upkYqfdB2C0awsz5/9P
+         Pez1vf/PhP1QQDRw15ynpjGwP2vPpDDY4T7HmovvPKNXrZqMcGZwVucWHUiPAKnd+GuP
+         g0KE5UO03a6cIIpYthD+NQYcRDYokppqpwbR86tHgmXC0VXEUgb61+TqSQaclykrxYG5
+         /QfFgrKqLeu8bkTajLnp5PkpiHSVqIy/YRaGeWsq3Tqi0ce5GtbHXS1ZXIMxud9J/Wm/
+         EPLSNYTD0vHSNacea2bb5B1AokmugqbM3C7THdtWMQSLiJYUXgqdsAaDcs/oRysLme6k
+         k74g==
+X-Gm-Message-State: AHPjjUh28T+oMPtqWJqmaGbBYT0l/Rfq7HpUqDZd83i4RfLhvmTR/DUZ
+        zwG750CLfV95EXDlskz1M5U=
+X-Google-Smtp-Source: AOwi7QDP87RVJGAWfQY6FIGnNu0MnR/tbmgObBe9dsmS2zCHm5OPZqf1yb44lRNe+1ov70K06xvcZQ==
+X-Received: by 10.84.194.226 with SMTP id h89mr12281000pld.54.1506470660852;
+        Tue, 26 Sep 2017 17:04:20 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:a541:226f:6d4c:7f7a])
+        by smtp.gmail.com with ESMTPSA id n12sm19516275pfb.131.2017.09.26.17.04.19
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 26 Sep 2017 17:04:20 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Roberto Tyley <roberto.tyley@gmail.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Thomas Rast <tr@thomasrast.ch>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Roberto Tyley <robertotyley@gmail.com>
+Subject: Re: [PATCH v2 0/9] Teach 'run' perf script to read config files
+References: <CAP8UFD2j-UFh+9awz91gtZ-jusq7EUOExMgURO59vpf29jXS4A@mail.gmail.com>
+        <xmqqbmm0h6h1.fsf@gitster.mtv.corp.google.com>
+        <CAP8UFD1C80cHnMtdZ-iTYQpNNErUEJ9TmQ9baG1J2w+pv1ceSw@mail.gmail.com>
+        <CAFY1edZ6FX6s+H_XWa-=nKqr4NA9BNVxR6fcOo+5gn-Z1XKdUg@mail.gmail.com>
+Date:   Wed, 27 Sep 2017 09:04:18 +0900
+In-Reply-To: <CAFY1edZ6FX6s+H_XWa-=nKqr4NA9BNVxR6fcOo+5gn-Z1XKdUg@mail.gmail.com>
+        (Roberto Tyley's message of "Tue, 26 Sep 2017 20:33:16 +0100")
+Message-ID: <xmqq4lrp9fct.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A normal request to git-daemon is structured as
-"command path/to/repo\0host=..\0" and due to a bug in an old version of
-git-daemon 73bb33a94 (daemon: Strictly parse the "extra arg" part of the
-command, 2009-06-04) we aren't able to place any extra args (separated
-by NULs) besides the host.
+Roberto Tyley <roberto.tyley@gmail.com> writes:
 
-In order to get around this limitation teach git-daemon to recognize
-additional request arguments hidden behind a second NUL byte.  Requests
-can then be structured like:
-"command path/to/repo\0host=..\0\0version=1\0key=value\0".  git-daemon
-can then parse out the extra arguments and set 'GIT_PROTOCOL'
-accordingly.
+> I had a quick look at git-send-email.perl, I see the trick is the `time++` one
+> introduced with https://github.com/git/git/commit/a5370b16 - seems reasonable!
+>
+> SubmitGit makes all emails in-reply-to the initial email, which I
+> think is correct behaviour,
+> but I can see that offsetting the times would probably give a more
+> reliable sorting in
+> a newsreader. ...
+> ...so the only way SubmitGit can offset the times is to literally
+> delay the sending of the emails,
+> which is a bit unfortunate for patchbombs more than a few dozen commits long!
 
-Signed-off-by: Brandon Williams <bmwill@google.com>
----
- daemon.c | 68 +++++++++++++++++++++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 59 insertions(+), 9 deletions(-)
+As this matters mostly for a series that is longer than several
+patches, it indeed is unfortunate.  If SubmitGit needs to send and
+sleep for a dozen messages, does it mean the end user has to wait 12
+(or is it 11? ;-)) seconds?  If the human is the only thing that
+needs waiting, it may be OK (after all, it all happens in the web
+browser and the human can switch to other tasks after clicking
+"submit"), but that may not be acceptable if this artificial delay
+can cause a timeout in a moving part among many.
 
-diff --git a/daemon.c b/daemon.c
-index 30747075f..36cc794c9 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -282,7 +282,7 @@ static const char *path_ok(const char *directory, struct hostinfo *hi)
- 	return NULL;		/* Fallthrough. Deny by default */
- }
- 
--typedef int (*daemon_service_fn)(void);
-+typedef int (*daemon_service_fn)(const struct argv_array *env);
- struct daemon_service {
- 	const char *name;
- 	const char *config_name;
-@@ -363,7 +363,7 @@ static int run_access_hook(struct daemon_service *service, const char *dir,
- }
- 
- static int run_service(const char *dir, struct daemon_service *service,
--		       struct hostinfo *hi)
-+		       struct hostinfo *hi, const struct argv_array *env)
- {
- 	const char *path;
- 	int enabled = service->enabled;
-@@ -422,7 +422,7 @@ static int run_service(const char *dir, struct daemon_service *service,
- 	 */
- 	signal(SIGTERM, SIG_IGN);
- 
--	return service->fn();
-+	return service->fn(env);
- }
- 
- static void copy_to_log(int fd)
-@@ -462,25 +462,34 @@ static int run_service_command(struct child_process *cld)
- 	return finish_command(cld);
- }
- 
--static int upload_pack(void)
-+static int upload_pack(const struct argv_array *env)
- {
- 	struct child_process cld = CHILD_PROCESS_INIT;
- 	argv_array_pushl(&cld.args, "upload-pack", "--strict", NULL);
- 	argv_array_pushf(&cld.args, "--timeout=%u", timeout);
-+
-+	argv_array_pushv(&cld.env_array, env->argv);
-+
- 	return run_service_command(&cld);
- }
- 
--static int upload_archive(void)
-+static int upload_archive(const struct argv_array *env)
- {
- 	struct child_process cld = CHILD_PROCESS_INIT;
- 	argv_array_push(&cld.args, "upload-archive");
-+
-+	argv_array_pushv(&cld.env_array, env->argv);
-+
- 	return run_service_command(&cld);
- }
- 
--static int receive_pack(void)
-+static int receive_pack(const struct argv_array *env)
- {
- 	struct child_process cld = CHILD_PROCESS_INIT;
- 	argv_array_push(&cld.args, "receive-pack");
-+
-+	argv_array_pushv(&cld.env_array, env->argv);
-+
- 	return run_service_command(&cld);
- }
- 
-@@ -574,7 +583,7 @@ static void canonicalize_client(struct strbuf *out, const char *in)
- /*
-  * Read the host as supplied by the client connection.
-  */
--static void parse_host_arg(struct hostinfo *hi, char *extra_args, int buflen)
-+static char *parse_host_arg(struct hostinfo *hi, char *extra_args, int buflen)
- {
- 	char *val;
- 	int vallen;
-@@ -602,6 +611,43 @@ static void parse_host_arg(struct hostinfo *hi, char *extra_args, int buflen)
- 		if (extra_args < end && *extra_args)
- 			die("Invalid request");
- 	}
-+
-+	return extra_args;
-+}
-+
-+static void parse_extra_args(struct hostinfo *hi, struct argv_array *env,
-+			     char *extra_args, int buflen)
-+{
-+	const char *end = extra_args + buflen;
-+	struct strbuf git_protocol = STRBUF_INIT;
-+
-+	/* First look for the host argument */
-+	extra_args = parse_host_arg(hi, extra_args, buflen);
-+
-+	/* Look for additional arguments places after a second NUL byte */
-+	for (; extra_args < end; extra_args += strlen(extra_args) + 1) {
-+		const char *arg = extra_args;
-+
-+		/*
-+		 * Parse the extra arguments, adding most to 'git_protocol'
-+		 * which will be used to set the 'GIT_PROTOCOL' envvar in the
-+		 * service that will be run.
-+		 *
-+		 * If there ends up being a particular arg in the future that
-+		 * git-daemon needs to parse specificly (like the 'host' arg)
-+		 * then it can be parsed here and not added to 'git_protocol'.
-+		 */
-+		if (*arg) {
-+			if (git_protocol.len > 0)
-+				strbuf_addch(&git_protocol, ':');
-+			strbuf_addstr(&git_protocol, arg);
-+		}
-+	}
-+
-+	if (git_protocol.len > 0)
-+		argv_array_pushf(env, GIT_PROTOCOL_ENVIRONMENT "=%s",
-+				 git_protocol.buf);
-+	strbuf_release(&git_protocol);
- }
- 
- /*
-@@ -695,6 +741,7 @@ static int execute(void)
- 	int pktlen, len, i;
- 	char *addr = getenv("REMOTE_ADDR"), *port = getenv("REMOTE_PORT");
- 	struct hostinfo hi;
-+	struct argv_array env = ARGV_ARRAY_INIT;
- 
- 	hostinfo_init(&hi);
- 
-@@ -716,8 +763,9 @@ static int execute(void)
- 		pktlen--;
- 	}
- 
-+	/* parse additional args hidden behind a NUL byte */
- 	if (len != pktlen)
--		parse_host_arg(&hi, line + len + 1, pktlen - len - 1);
-+		parse_extra_args(&hi, &env, line + len + 1, pktlen - len - 1);
- 
- 	for (i = 0; i < ARRAY_SIZE(daemon_service); i++) {
- 		struct daemon_service *s = &(daemon_service[i]);
-@@ -730,13 +778,15 @@ static int execute(void)
- 			 * Note: The directory here is probably context sensitive,
- 			 * and might depend on the actual service being performed.
- 			 */
--			int rc = run_service(arg, s, &hi);
-+			int rc = run_service(arg, s, &hi, &env);
- 			hostinfo_clear(&hi);
-+			argv_array_clear(&env);
- 			return rc;
- 		}
- 	}
- 
- 	hostinfo_clear(&hi);
-+	argv_array_clear(&env);
- 	logerror("Protocol error: '%s'", line);
- 	return -1;
- }
--- 
-2.14.1.992.g2c7b836f3a-goog
-
+Thanks for looking into this.  
