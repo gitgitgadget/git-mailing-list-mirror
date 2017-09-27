@@ -2,79 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5015C2047F
-	for <e@80x24.org>; Wed, 27 Sep 2017 22:04:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B121A2047F
+	for <e@80x24.org>; Wed, 27 Sep 2017 22:06:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752184AbdI0WES (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Sep 2017 18:04:18 -0400
-Received: from mail-it0-f65.google.com ([209.85.214.65]:55843 "EHLO
-        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752159AbdI0WER (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Sep 2017 18:04:17 -0400
-Received: by mail-it0-f65.google.com with SMTP id 4so8349668itv.4
-        for <git@vger.kernel.org>; Wed, 27 Sep 2017 15:04:17 -0700 (PDT)
+        id S1752109AbdI0WGb (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Sep 2017 18:06:31 -0400
+Received: from mail-qk0-f169.google.com ([209.85.220.169]:49479 "EHLO
+        mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752086AbdI0WGb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Sep 2017 18:06:31 -0400
+Received: by mail-qk0-f169.google.com with SMTP id u67so14751148qkg.6
+        for <git@vger.kernel.org>; Wed, 27 Sep 2017 15:06:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=P5gnVxrRWzO+irzBVn4puDKkcLz8GYPv4ooM+VP4Dmk=;
-        b=jfTLp6r0g9mruzSvEgCEeEmVZhg4bA7Qg+XYelVUwz1uFFujwNZ/0Ns3UbV/s6lpVK
-         4XJ6q/zzX7zmpBffLIdSh2icRoAJzTcDIQaLLlAw/35aINKjke1m2MS4xZLJtCy/eVMj
-         ebqL9zCHQPXFpQfP0vUDiDTf56w7rQhyCFuzraxBZ27jcCYZm2s2ItwLDHxKZMqHW4ec
-         PxfmCY7qM+asYPKmRig1sAUl+dC5fWm1bzKch+ikE1sVu72s4gJkq0E4t8yeEp6Uu2F0
-         uHeCzpdLcWC+Bv1wjrK85pTHK6ZLBtwHku0lSY6+L8x1sJKsmywfb5+UpJGexUvv3l9e
-         v/bA==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=ZFIbSUQM9+4U1K4HFkEtrCLU+WUm65K32OFvVBOiJ+0=;
+        b=d9bH49hZvmTGPN1GvoUiXxbGT2XsL9p0+muVLMbLsCK5YM+f/8xi/JFEiR3OlwcWwK
+         6P99IGy+ahZbws+N3PMCD0VUd4EkXJJg52B8MgYir0KTUmyCzboXC3GrTo090IrXTOYx
+         XVNZguF+XPWOvL2pzn0cbJSbZus/6a1QtGpWTcU6VjZEbGCSprHuyEDTv/JkFvcdCu7Q
+         tWWhdVdg748W2R6E2bAppuVbjzv1aSW5DgJ/8YcWKsJGTaHJMD13Le+ujsa/v+E3w7uk
+         OEUjfagGCta6PTfQgT7v75m9hfx0VTHlAWCa+inumvFiasPIvmoUJ/wqFMyifOKhRgLa
+         SPFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=P5gnVxrRWzO+irzBVn4puDKkcLz8GYPv4ooM+VP4Dmk=;
-        b=p5RbBlBNgN3aYn2jP6gEbPo+r+hWjM3OXuJjSXR5aLt4iZKas2KVw7L4yQbOX8fTIZ
-         hCxKnfEoqpF+rJxzTFnEZWevUzCiFyN+2A46fOelhnJwI0vcOB+g3hzImyZ1hCNSrHvm
-         1RICW1qLQcKQd1Y0sIJoLDICaOYAPsPy6ifIANqlBTMeT//bV2REEjudz9HMWBfuJJDg
-         sqilTYFUuH3xi8AS4s1uU70gG2awqEJ1k6b+EZHBRGypqn9vmVKG6SCyq4eZIpoiOryB
-         27XdZ4MejgWyTPTpyYBwk7yhfmfr5hlpJOlD+0txB4u9Fo3mLzdVFih2fF4EMCK4p9aF
-         7NAg==
-X-Gm-Message-State: AHPjjUg61glPCJ4hSMCug8jCZ+nSCVktoE01gBfdzmTJCkOWpQbmZDoI
-        q7rYcNcuufNMYUDW2/k7dKDY4UOoCF4M7zfHd2A=
-X-Google-Smtp-Source: AOwi7QBRIzLVXTvYj3ebW1/xelYpEMWrJl98AYBJupI6hv8uk5VZNwTUoc4HAAC1Od/c3yzBy+NQ4mfofl8I5/wdO1Y=
-X-Received: by 10.36.12.14 with SMTP id 14mr2906343itn.94.1506549856674; Wed,
- 27 Sep 2017 15:04:16 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=ZFIbSUQM9+4U1K4HFkEtrCLU+WUm65K32OFvVBOiJ+0=;
+        b=VQgGf5mx6FMSoudMvfQoqv3W2s+IrFpVKhFpYBoB+Z57L6LURYu/Q4sMm386fl76o6
+         7SuBH42r0VpMLcl4Lw7tvmrIrhPzstsltDagKB2R8X48DCmQoFkea0KUaZEqEcTOHj6L
+         EOxlysuuHgTTdtZJ0pNDElIaWfrlBe2fWq2VZTsYiUCWLAj5djMc1BBh97DDavAg/yEj
+         +mukq/L8oDdYQZCW+15UXWBvM0Owqb/hRX78Mt+Pekh4/dc9elsHZXDtmkDFBQGMVqNO
+         5XpUfV7x9ouhSnBr6Ay0Bo3ykWdNZXQJ0QL3s3dt23DE0LwXzqcZWK+wtWW2WGrpxSq2
+         Fbxw==
+X-Gm-Message-State: AHPjjUhL+/igPoFJ7Zjsvkca0OFvycC1yHup5S5wv1hqaiqIypwgTqPH
+        AZ/d5mCUe+SPiHkM7bRQwnMBbktisyET88P87MCsSvbI
+X-Google-Smtp-Source: AOwi7QAUb1JW3SsvXmDb/uaPXp4v/SSRpXZfnvGf85547kRYjTOM9qtLEwDfamGjf4hxFJfsA19UFKVDhzP/MAlHYuM=
+X-Received: by 10.55.76.134 with SMTP id z128mr4427492qka.183.1506549990058;
+ Wed, 27 Sep 2017 15:06:30 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.164.103 with HTTP; Wed, 27 Sep 2017 15:04:16 -0700 (PDT)
-In-Reply-To: <20170927215852.20163-1-sbeller@google.com>
-References: <CAGZ79kbCgTNaunfneWHP3xkLeXwW72CZZWs7Sv8A7QL_UYE_HQ@mail.gmail.com>
- <20170927215852.20163-1-sbeller@google.com>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Wed, 27 Sep 2017 15:04:16 -0700
-X-Google-Sender-Auth: Uj0WnJiwtq4kLnVPujQ-lkRSZHM
-Message-ID: <CA+55aFxPZ8+MrB5mbad76aPo8v9S-Q9p3zvK7=j1m2e7o2dFFA@mail.gmail.com>
-Subject: Re: [PATCH] diff: correct newline in summary for renamed files
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
+Received: by 10.200.54.124 with HTTP; Wed, 27 Sep 2017 15:05:49 -0700 (PDT)
+From:   pedro rijo <pedrorijo91@gmail.com>
+Date:   Wed, 27 Sep 2017 23:05:49 +0100
+Message-ID: <CAPMsMoBK+EQZQx4FUs_EqN+BE+93-mtu9kzViqQ6B=LUOFESbw@mail.gmail.com>
+Subject: hacktoberfest
+To:     Git Users <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 27, 2017 at 2:58 PM, Stefan Beller <sbeller@google.com> wrote:
->
->  Linus, I assumed your sign off for the original patch. Thanks for spotting.
->
->  Adding the mode change to t4016 seems like the easiest way to test it.
+Hey,
 
-Looks good to me, and you don't need to give me authorship credit.
-Just a "Reported-by:" is fine by me.
+As some may have noticed, GitHub and DigitalOcean have been promoting
+Open Source contributions in October for a few years now.
 
-But yes, you can also consider the patch signed off by me, although
-with your test update, _most_ of the patch is yours so it feels kind
-of stupid to mark me as author.
+While the git repository itself is not hosted under GitHub, the Pro
+Git book, git for Windows, and git-scm website (at least) projects
+are, and could use this movement to get some more contributions, and
+eventually more maintainers (at least git-scm website had some
+maintainers problem some time ago).
 
-              Linus
+I've been helping on the git-scm repository (mostly filtering issues
+and PRs), and I know there are still some issues which need to be
+addressed. If the remaining maintainers agree, we could filter and
+provide more instructions to some easy (or not so easy) issues, adding
+the 'hacktoberfest' label and try to use this movement to solve some
+problems
+
+Probably, other repositories could also enjoy the opportunity.
+
+Here's the website: https://hacktoberfest.digitalocean.com/
+
+
+-- 
+Thanks,
+
+Pedro
