@@ -2,66 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00E9E20281
-	for <e@80x24.org>; Wed, 27 Sep 2017 06:24:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 72DDD202A5
+	for <e@80x24.org>; Wed, 27 Sep 2017 06:29:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751683AbdI0GYf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Sep 2017 02:24:35 -0400
-Received: from mail-pg0-f52.google.com ([74.125.83.52]:44592 "EHLO
-        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751671AbdI0GYd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Sep 2017 02:24:33 -0400
-Received: by mail-pg0-f52.google.com with SMTP id j16so7235989pga.1
-        for <git@vger.kernel.org>; Tue, 26 Sep 2017 23:24:33 -0700 (PDT)
+        id S1750971AbdI0G3k (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Sep 2017 02:29:40 -0400
+Received: from mail-pg0-f43.google.com ([74.125.83.43]:44919 "EHLO
+        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750836AbdI0G3i (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Sep 2017 02:29:38 -0400
+Received: by mail-pg0-f43.google.com with SMTP id j16so7241877pga.1
+        for <git@vger.kernel.org>; Tue, 26 Sep 2017 23:29:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=6OlJqxxmNiqdCjPCFJJg6bmzbCwCNh4PFzRM/mnKwPQ=;
-        b=LibuU4M8aJ4BUToQ4KFQYl8Kay5gG3qqUmhHiu2umHBwVini3jP7wxllf6qYZYciPH
-         cU2ffJwrsQs21+VgG41OJZ2RtbAAqbpWEAyCbUcxd/sMKTBwHwyCiy/DG7vFyn336A4V
-         2TgAwNLkouI/IiUIrLhhzbbRMlsVoapDmgFlP4ebYHS8G7iV6PcYtdHyE3XLhS6fwIi4
-         MY3Lebk+3PFkXUu2o1xINS0FkjptgOpco3mYFXHUzKMajo16ua7yZGZuZvkaOhzrhXpF
-         E8qeBN++fuFmZ3FQqCjgceu1ZjZmbZA5Tr7JzlUh6on62RitHu5QtYB7myX4+52annGR
-         Qlhg==
+        bh=LndE8z6RKVvgIi/EPfJk2bp+huglLIJZ77751oK98TU=;
+        b=gBxjbCXFSU1BR3Ozm0oBu3dgk7JuLeL6gXGHpnRta4sv9tI36Y+xbkq8u6rGBmndDz
+         LKNhkm6bj7I+dSWFrKJThmmSB7Nbn4L739BhiTJ6joqA444ZE+d8mCYwCAG4FF+ky4sp
+         Nt9Eqt99LHRLioS2pOxP9ro77RBLAst0RTEkD4E/8LgztQgPSAx7D9zKsWbHO24U2CTR
+         +qIGtm20wnCIvnrJ21vz2s2u7EQE9dStc2fn3pBQuwZePeYk3C8tbu8A6ohhl+JqVo7e
+         cNRi4kvj6Twzw63hrCrzSv923Qf1dobpnkqwFLuUk88hXu1Qvgnyv1tlu+f4kVlyRllC
+         dE9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=6OlJqxxmNiqdCjPCFJJg6bmzbCwCNh4PFzRM/mnKwPQ=;
-        b=jUqBovRLDTOL9fAv9VMgkh1+h7tixsstiJ/YImOMaapoT0Wxm7RY40fTmZtecmWShw
-         WIW/xpXzXCB164CfZnKQKiMyPbuCsZzgLdz8umBQYZbWKAUvWgCeqpYwyxVNvJaUB5aK
-         LSNUFN5tnYumXXZ7sjDcqDczT0DlkgnaZWQklaHUbqOH1c9wmuVgfRtnX5b2ejSkT12B
-         ELMzdWdlxMdiBTbKJ1zjnY1lnw08E8jySJIkRL3UWGou6AcVC2EtvbODnav22SUXd5Nh
-         tMJuS3R0ShF0tM7jBRrAnB6hqStvJNH6//fr46Ch+oDTw0mILkqqkyEYIoTHO/4b33LG
-         HXQA==
-X-Gm-Message-State: AHPjjUhwHOBdq8b61rKl2Z3E3q5yTyTAbFeqnVCcumBGZ/+TBDQvgHKm
-        0p8bNjJz2lBpNBLDKGLxd4Y=
-X-Google-Smtp-Source: AOwi7QBA/NXCKJbgjH9vclrEUQAaOpDsLm19iMMzni7f/aOMn7yS8dgFgnoadH6nJcwsit6dKK8k0Q==
-X-Received: by 10.84.225.2 with SMTP id t2mr330443plj.425.1506493472853;
-        Tue, 26 Sep 2017 23:24:32 -0700 (PDT)
+        bh=LndE8z6RKVvgIi/EPfJk2bp+huglLIJZ77751oK98TU=;
+        b=Cw+mFgfjxHhi83lNTHu5qR6mcfAhR4kklVrsHOOQ2HUeBcAIihnE1MNnLpnqZgHXNR
+         L8BVsjkSxd3fcLtLOPWtjh4QavTJSHaagpHy55kl5Vv7XBZ7g0spneZr5ZV+jCypIny9
+         +J5ijo24GR7+qEZImSDvjCLx49c4vpXYEIScHfGZtlPABfFUpSxgkdqfQIERJvGIILh/
+         U/VfRrprga9zTyHm2If+Z2RCfmfVcfQbGGFhVkKLDYoFJmt4GJqVHrga9mKD+ahA+6cI
+         Ct+R2QMXQVASt7mM7XHZs3JbNUvHOjixEkneoGCFNG3HgqS31bBbPZloNxsaXIxa0yTa
+         /Ldg==
+X-Gm-Message-State: AHPjjUjjp48Sf8vq5Fo6cjt9UEVYwUlEQVnHTHyvYE+dwTUCgp/g/wUP
+        n+iOutZKo47aTFgXptkqA2I=
+X-Google-Smtp-Source: AOwi7QDnPSv8LXWe8EmKx97vIvuPSr/k/ywLdAT4U+zTibiNAOh0UGrNs7jyxbjkNqPMR6sFU72Fsg==
+X-Received: by 10.84.244.73 with SMTP id e9mr377650plt.112.1506493778058;
+        Tue, 26 Sep 2017 23:29:38 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:a541:226f:6d4c:7f7a])
-        by smtp.gmail.com with ESMTPSA id 78sm18612551pfk.70.2017.09.26.23.24.32
+        by smtp.gmail.com with ESMTPSA id y5sm19011245pfd.89.2017.09.26.23.29.37
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 26 Sep 2017 23:24:32 -0700 (PDT)
+        Tue, 26 Sep 2017 23:29:37 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Brandon Williams <bmwill@google.com>
 Cc:     git@vger.kernel.org, bturner@atlassian.com, git@jeffhostetler.com,
         jonathantanmy@google.com, jrnieder@gmail.com, peff@peff.net,
         sbeller@google.com
-Subject: Re: [PATCH v2 8/9] http: tell server that the client understands v1
+Subject: Re: [PATCH v2 7/9] connect: tell server that the client understands v1
 References: <20170913215448.84674-1-bmwill@google.com>
         <20170926235627.79606-1-bmwill@google.com>
-        <20170926235627.79606-9-bmwill@google.com>
-Date:   Wed, 27 Sep 2017 15:24:31 +0900
-In-Reply-To: <20170926235627.79606-9-bmwill@google.com> (Brandon Williams's
-        message of "Tue, 26 Sep 2017 16:56:26 -0700")
-Message-ID: <xmqqfub864m8.fsf@gitster.mtv.corp.google.com>
+        <20170926235627.79606-8-bmwill@google.com>
+        <xmqqk20k64r4.fsf@gitster.mtv.corp.google.com>
+Date:   Wed, 27 Sep 2017 15:29:36 +0900
+In-Reply-To: <xmqqk20k64r4.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Wed, 27 Sep 2017 15:21:35 +0900")
+Message-ID: <xmqqbmlw64dr.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,62 +70,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> @@ -897,6 +898,21 @@ static void set_from_env(const char **var, const char *envname)
->  		*var = val;
->  }
->  
-> +static void protocol_http_header(void)
-> +{
-> +	if (get_protocol_version_config() > 0) {
-> +		struct strbuf protocol_header = STRBUF_INIT;
-> +
-> +		strbuf_addf(&protocol_header, GIT_PROTOCOL_HEADER ": version=%d",
-> +			    get_protocol_version_config());
-> +
-> +
-> +		extra_http_headers = curl_slist_append(extra_http_headers,
-> +						       protocol_header.buf);
-> +		strbuf_release(&protocol_header);
-> +	}
-> +}
-> +
->  void http_init(struct remote *remote, const char *url, int proactive_auth)
->  {
->  	char *low_speed_limit;
-> @@ -927,6 +943,8 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
->  	if (remote)
->  		var_override(&http_proxy_authmethod, remote->http_proxy_authmethod);
->  
-> +	protocol_http_header();
-> +
->  	pragma_header = curl_slist_append(http_copy_default_headers(),
->  		"Pragma: no-cache");
->  	no_pragma_header = curl_slist_append(http_copy_default_headers(),
-> diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
-> index 0642ae7e6..df1943631 100644
-> --- a/t/lib-httpd/apache.conf
-> +++ b/t/lib-httpd/apache.conf
-> @@ -67,6 +67,9 @@ LockFile accept.lock
->  <IfModule !mod_unixd.c>
->  	LoadModule unixd_module modules/mod_unixd.so
->  </IfModule>
-> +<IfModule !mod_setenvif.c>
-> +	LoadModule setenvif_module modules/mod_setenvif.so
-> +</IfModule>
->  </IfVersion>
->  
->  PassEnv GIT_VALGRIND
-> @@ -76,6 +79,10 @@ PassEnv ASAN_OPTIONS
->  PassEnv GIT_TRACE
->  PassEnv GIT_CONFIG_NOSYSTEM
->  
-> +<IfVersion >= 2.4>
-> +	SetEnvIf Git-Protocol ".*" GIT_PROTOCOL=$0
-> +</IfVersion>
-> +
+>> +	# Client requested to use protocol v1
+>> +	grep "version=1" log &&
+>> +	# Server responded using protocol v1
+>> +	grep "clone< version 1" log
+>
+> This looked a bit strange to check "clone< version 1" for one
+> direction, but did not check "$something> version 1" for the other
+> direction.  Doesn't "version=1" end up producing 2 hits?
+>
+> Not a complaint, but wondering if we can write it in such a way that
+> does not have to make readers wonder.
 
-It is very nice to see that only with a single extra HTTP header and
-the server configuration, everybody else does not have to care how
-the version information is plumbed through ;-)
+Ah, the check for "version=1" is a short-hand for
+
+	grep "clone> git-upload-pack ...\\0\\0version=1\\0$" log
+
+and the symmetry I sought is already there.  So ignore the above; if
+we wanted to make the symmetry more explicit, it would not hurt to
+spell the first one as
+
+	grep "clone> .*\\0\\0version=1\\0$" log
+
+though.
+
