@@ -2,60 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C8022202A5
-	for <e@80x24.org>; Wed, 27 Sep 2017 06:59:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ADBA920A26
+	for <e@80x24.org>; Wed, 27 Sep 2017 07:06:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751664AbdI0G71 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Sep 2017 02:59:27 -0400
-Received: from mail-pf0-f174.google.com ([209.85.192.174]:47532 "EHLO
-        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751587AbdI0G70 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Sep 2017 02:59:26 -0400
-Received: by mail-pf0-f174.google.com with SMTP id u12so6808175pfl.4
-        for <git@vger.kernel.org>; Tue, 26 Sep 2017 23:59:25 -0700 (PDT)
+        id S1752077AbdI0HGZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Sep 2017 03:06:25 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:34261 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751136AbdI0HGY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Sep 2017 03:06:24 -0400
+Received: by mail-pg0-f66.google.com with SMTP id u18so8211337pgo.1
+        for <git@vger.kernel.org>; Wed, 27 Sep 2017 00:06:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:message-id:user-agent
-         :mime-version;
-        bh=MxOgwMrWm8jbDMdcdps2uJ4TrsjtmAwme3AeXrTSEVE=;
-        b=dhQLax8uwKCA5m3fMisWYgXwZa9ULdAJJ5u/7jWOlbuva1x82WDAeScHe6tDkBlU2/
-         SBTTRjuIUpXFl65dLeka+dpoNguzoxL4PSprvIHZcrcya79VTVgkOvOoZ0UWNAchR2cJ
-         BhFefjL2k3MkXiOUk3XkdfY+9Z2YhrFXwimuZg94O7y3GXkEQZG7YoSkXwmYLJg4SykQ
-         o+9L8K5jZaQ4LQOV5Yl/fx2/B43zSX1LLD8/2dvE/gpGjlkfSzt8NY5KfldX5Utohm0e
-         EzcZHBZOqLBBxDN/YIh57lgwOIgYl0F+VVfhuKPP2uAYUWXTT0ejwB9bXe+8sEGzl2kS
-         HMRQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=PoMrFHan8M7zksSQNxG6I2skcS7JWYDgRBQ45QgLYX8=;
+        b=mKEwXUFWMXMa2g+dynRYbhm0qZ3GFEErgx50EPixMw8XEqA7oOYhe9KIWJYPO4atZq
+         tnosBKOyp0xiW9pqbpzWc6ZazHJl7OEXL6T6kX0OuxmfuAJ7Wqy4kQeMJZSgV51LqdR7
+         AHUw5mQwX9/rTgxmcfvRD2m85Czqw6bn+AL+qjUwQb74b/8N45jWAdJDtZivn48tqgnx
+         wj3YK1QvxI0rIja00nG/zDyxdtzXuDv9uJ9H8ggwwvS5nD6ObMJX9HwYI+8r2iHwXuY7
+         lbC5qlz8Qr3D1/n1cChvinDfisJuQZjYrA8cy+AWo51URiV1GqtA+NMhUHP4JzppS6+X
+         ilLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :message-id:user-agent:mime-version;
-        bh=MxOgwMrWm8jbDMdcdps2uJ4TrsjtmAwme3AeXrTSEVE=;
-        b=AnStulKj8UGPds7KhmELodXgQnkc4f/2LB0GNfpyYwwOfplArcO4xQ41FZktZMlpZF
-         v96/GzUeyTtU+ysJm7Up7jzxEqC8dB6xP25m5fV4vt+rm+POxDZ8EHFQxRrJTAGS/On2
-         J9eQcgqZI0QSCcuFjcLeehXWHE9uKw5h/kOP8Qf2eDQgskoGUITPOD+3s6MYA7aPTiM5
-         a72gikrv3F5hiM8PQOrD5WX+0QrYFB+PAj7mrzm92NyEH45h2XgxKD7qg54qWJoVx/8b
-         boTNZov9V/HK6W83xV27aR47oUTfKQKOhwjr4AYC84Wf1833WdW+W59L6OIAsEJTESK2
-         Qy8w==
-X-Gm-Message-State: AHPjjUglqc4PvOe2Pa31noTJyH7KTBFC6ozydzZ/aXLnke/r2QriEDBw
-        vyy211OkUGB6XgvqVDbC7uo=
-X-Google-Smtp-Source: AOwi7QACPfFwP+tUH6nmVmT3me6JSxsCVNo0UMdawAI2kpp37RVsdCH5mSm14Eml12SuhK5FW+uxSA==
-X-Received: by 10.99.146.24 with SMTP id o24mr423384pgd.217.1506495565467;
-        Tue, 26 Sep 2017 23:59:25 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=PoMrFHan8M7zksSQNxG6I2skcS7JWYDgRBQ45QgLYX8=;
+        b=cNJX/DIQa7sdSkCcoGptJaxyCIqkHIZQkZuFRNV//S1+Vu7DFxq+QzzxTzPOqRIeYY
+         tGPru22v5KvksZYj3BKWzyGILlX4ljuPFeIsKb+N9EULR6SCLYIeT7nxuyE9AJXE0O7n
+         OM1LesOybNH4tbALUzq4lFOqydmg61+YwuaRSXlXNa+lNFEXRrMqQhkVOXbuAaeHgy6L
+         5Yt7QJeS9ffEJMnnbcug0I+Gnez0fMYjXZji7R0oYLT17YRUnS2C0YeNWcm99wuDocvd
+         kxz0K/YEe/tgBZj4NoGufD6y4+aZ3cxzXxzgNheJDqEF9Me4ehOxeENvM0qCNK/r5PGy
+         wFlg==
+X-Gm-Message-State: AHPjjUgKSWCHeRlDIAj25+Ic0kV+PU0ywr0nUQzzp8X++IwcNIvpdASL
+        t8tCFTqHmTtMkvhfn6H/j+A=
+X-Google-Smtp-Source: AOwi7QAIO4glqJVrbE7IBco7UI2+h7R25jD8VT7wTYSty5dyyWBh+6HQ75U8wndhhZdSZL/bR1ri2A==
+X-Received: by 10.84.129.193 with SMTP id b59mr441987plb.200.1506495983961;
+        Wed, 27 Sep 2017 00:06:23 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:a541:226f:6d4c:7f7a])
-        by smtp.gmail.com with ESMTPSA id k78sm20690043pfb.157.2017.09.26.23.59.24
+        by smtp.gmail.com with ESMTPSA id k12sm21092910pgt.3.2017.09.27.00.06.23
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 26 Sep 2017 23:59:25 -0700 (PDT)
+        Wed, 27 Sep 2017 00:06:23 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2 4/7] avoid looking at errno for short read_in_full() returns
-References: <20170927055424.22ati3g24xaqtqrk@sigill.intra.peff.net>
-        <20170927060107.duocwl3mf62zvgjp@sigill.intra.peff.net>
-Date:   Wed, 27 Sep 2017 15:59:24 +0900
-Message-ID: <xmqqk20k4ofn.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/3] validate_headref: NUL-terminate HEAD buffer
+References: <20170927061644.gwlhxaiairiy2njp@sigill.intra.peff.net>
+        <20170927061722.7ubswfgykxiawzh3@sigill.intra.peff.net>
+Date:   Wed, 27 Sep 2017 16:06:22 +0900
+In-Reply-To: <20170927061722.7ubswfgykxiawzh3@sigill.intra.peff.net> (Jeff
+        King's message of "Wed, 27 Sep 2017 02:17:23 -0400")
+Message-ID: <xmqqefqs4o41.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,27 +69,31 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> When a caller tries to read a particular set of bytes via
-> read_in_full(), there are three possible outcomes:
->
->   1. An error, in which case -1 is returned and errno is
->      set.
->
->   2. A short read, in which fewer bytes are returned and
->      errno is unspecified (we never saw a read error, so we
->      may have some random value from whatever syscall failed
->      last).
->
->   3. The full read completed successfully.
->
-> Many callers handle cases 1 and 2 together by just checking
-> the result against the requested size. If their combined
-> error path looks at errno (e.g., by calling die_errno), they
-> may report a nonsense value.
->
-> Let's fix these sites by having them distinguish between the
-> two error cases. That avoids the random errno confusion, and
-> lets us give more detailed error messages.
+> diff --git a/path.c b/path.c
+> index b533ec938d..3e4d7505ef 100644
+> --- a/path.c
+> +++ b/path.c
+> @@ -662,6 +662,10 @@ int validate_headref(const char *path)
+>  	len = read_in_full(fd, buffer, sizeof(buffer)-1);
+>  	close(fd);
+>  
+> +	if (len < 0)
+> +		return -1;
+> +	buffer[len] = '\0';
+> +
+>  	/*
+>  	 * Is it a symbolic ref?
+>  	 */
 
-The resulting code might be more verbose but I personally think both
-of them give a lot more clear error indication.
+A few tangents I noticed:
+
+ - the result of readlink should be checked with starts_with() in
+   the modern codebase (#leftoverbits).
+
+ - buffer[256] would mean that we cannot have a branch whose name is
+   more than a couple of hundred bytes long; as you said, we may be
+   better off using strbuf_read to read the whole thing.
+
+Neither should be touched by this patch, of course.
+
+Thanks.
