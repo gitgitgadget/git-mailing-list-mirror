@@ -2,96 +2,201 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,URIBL_SBL,
+	URIBL_SBL_A shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E2B592047F
-	for <e@80x24.org>; Wed, 27 Sep 2017 23:15:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 46E1E2047F
+	for <e@80x24.org>; Wed, 27 Sep 2017 23:19:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752473AbdI0XPV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Sep 2017 19:15:21 -0400
-Received: from mail-pf0-f170.google.com ([209.85.192.170]:53275 "EHLO
-        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752455AbdI0XPU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Sep 2017 19:15:20 -0400
-Received: by mail-pf0-f170.google.com with SMTP id x78so7997896pff.10
-        for <git@vger.kernel.org>; Wed, 27 Sep 2017 16:15:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=flByv13JZC5wL3MQZltKr/XHsigj8KwMv2GJOTrc5Rs=;
-        b=gapgwNGtMFseeVdLIRO1ArRaZr4c9DiKgvf3P2rg3DlS9IHsoCWYFd4hakvVgCUrKa
-         8wDE8RUTmpcQbR7VWjiPrVhxQkz3F4UB70vi0haUjLFhJOkrWP0bnomztK1TmfjMhhha
-         797c6FkG3+pHcxL/t512bMoGRBiIQBqsKBgZkLbRGaTeNqfuoT7x3/Q+gO9XyBWqRLv7
-         x2GQhBKBZ8/koB6Nmx21CujQV8/egamjrwR4hxl9PH4cIv9dh/vk2sdRIv3fR5XdQyU1
-         VRdCkaauw3mMSQNU3O5g5gbeKTJmRDrkrdHo3FvJvoXOiDrGbkYSjeS7CfgKcpjJAhz2
-         AEPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=flByv13JZC5wL3MQZltKr/XHsigj8KwMv2GJOTrc5Rs=;
-        b=dOPJXxipopS8O2MI8/JdleRcLtEmtRBhK5ntCERnQQgzJ+AYEC8B5iAiZn4tbZVETb
-         NWRrvCU6P88DsPdCXU5hkypqzG2uPagfu1qqZI6ugD1FTO6TSuv2Pd8V1pS8k9aV/qBy
-         1jsYnGWqhVPvHH6W0I9jD5MXm7Mk9OQ7OCf80bHdeqIUpFxdZNAI1cPMpUd9iyjrhdQE
-         jTWzva2I596NefwR686VG9uIXkTu2zhAnr4WXx5cgTL1yESrBim6a8nKrdcfu+oIiEya
-         c6xlUxGA0y/lgLdZ5EYMpjoeAFfpwxFa2IOY4uMjcGPzgcqUGGt+E6tBvVEbcV2iGBx7
-         Y+fA==
-X-Gm-Message-State: AHPjjUgI1zwidob7Ek4inr3Mi3DyDcwrzF9XGn85X0so5HEaMcNV3obq
-        gvxtVEzN2ucJugrkXPpM3xPugRZ8
-X-Google-Smtp-Source: AOwi7QBa/aQezrGQiYWPTD7pnSn1v5+4KXiOklY4kMLpWSz6yzdgRxPZwB2cI/eHsr7As1lhYtFK9A==
-X-Received: by 10.84.238.135 with SMTP id v7mr2458664plk.276.1506554119769;
-        Wed, 27 Sep 2017 16:15:19 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:1558:8bd:d6aa:64f8])
-        by smtp.gmail.com with ESMTPSA id p127sm84525pfp.168.2017.09.27.16.15.18
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 27 Sep 2017 16:15:19 -0700 (PDT)
-Date:   Wed, 27 Sep 2017 16:15:16 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     peff@peff.net, git@vger.kernel.org, gitster@pobox.com,
-        torvalds@linux-foundation.org
-Subject: Re: [PATCH] diff: correct newline in summary for renamed files
-Message-ID: <20170927231516.GG19555@aiede.mtv.corp.google.com>
-References: <20170927224909.25dfojhx6wzaqwt7@sigill.intra.peff.net>
- <20170927225126.4836-1-sbeller@google.com>
+        id S1752343AbdI0XTk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Sep 2017 19:19:40 -0400
+Received: from avasout08.plus.net ([212.159.14.20]:52437 "EHLO
+        avasout08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752237AbdI0XTj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Sep 2017 19:19:39 -0400
+Received: from [10.0.2.15] ([147.147.86.16])
+        by avasout08 with smtp
+        id EnKc1w0050M91Ur01nKd5G; Thu, 28 Sep 2017 00:19:38 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=EJl26xRC c=1 sm=1 tr=0
+ a=dubYQqM3tRRTmV8xSh8cXQ==:117 a=dubYQqM3tRRTmV8xSh8cXQ==:17
+ a=IkcTkHD0fZMA:10 a=swZap-XzAAAA:8 a=R--0M-u41TAep-aT_5UA:9 a=QEXdDO2ut3YA:10
+ a=ckTUcnKWf81qg4j9hmMM:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH] fast-import: checkpoint: dump branches/tags/marks even if
+ object_count==0
+To:     Eric Rannaud <e@nanocritical.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, jeremy.serror@gmail.com,
+        "Shawn O . Pearce" <spearce@spearce.org>
+References: <xmqqefqs7qx8.fsf@gitster.mtv.corp.google.com>
+ <cccb06b75df3cad9f013d5a9ab0371f0a2d9c2ce.1506541322.git.e@nanocritical.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <2a9cc69b-2e9f-7fe9-3c55-66ffe3060732@ramsayjones.plus.com>
+Date:   Thu, 28 Sep 2017 00:19:36 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170927225126.4836-1-sbeller@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <cccb06b75df3cad9f013d5a9ab0371f0a2d9c2ce.1506541322.git.e@nanocritical.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller wrote:
 
-> In 146fdb0dfe (diff.c: emit_diff_symbol learns about DIFF_SYMBOL_SUMMARY,
-> 2017-06-29), the conversion from direct printing to the symbol emission
-> dropped the new line character for renamed, copied and rewritten files.
->
-> Add the emission of a newline, add a test for this case.
->
-> Reported-by: Linus Torvalds <torvalds@linux-foundation.org>
-> Helped-by: Jeff King <peff@peff.net>
-> Signed-off-by: Stefan Beller <sbeller@google.com>
+
+On 27/09/17 20:46, Eric Rannaud wrote:
+> The checkpoint command cycles packfiles if object_count != 0, a sensible
+> test or there would be no pack files to write. Since 820b931012, the
+> command also dumps branches, tags and marks, but still conditionally.
+> However, it is possible for a command stream to modify refs or create
+> marks without creating any new objects.
+> 
+> For example, reset a branch (and keep fast-import running):
+> 
+> 	$ git fast-import
+> 	reset refs/heads/master
+> 	from refs/heads/master^
+> 
+> 	checkpoint
+> 
+> but refs/heads/master remains unchanged.
+> 
+> Other example: a commit command that re-creates an object that already
+> exists in the object database.
+> 
+> The man page also states that checkpoint "updates the refs" and that
+> "placing a progress command immediately after a checkpoint will inform
+> the reader when the checkpoint has been completed and it can safely
+> access the refs that fast-import updated". This wasn't always true
+> without this patch.
+> 
+> This fix unconditionally calls dump_{branches,tags,marks}() for all
+> checkpoint commands. dump_branches() and dump_tags() are cheap to call
+> in the case of a no-op.
+> 
+> Add tests to t9300 that observe the (non-packfiles) effects of
+> checkpoint.
+> 
+> Signed-off-by: Eric Rannaud <e@nanocritical.com>
 > ---
->  diff.c                                        |  1 +
->  t/t4013-diff-various.sh                       | 12 ++++++++++++
->  t/t4013/diff.diff-tree_--stat_initial_mode    |  4 ++++
->  t/t4013/diff.diff-tree_--summary_initial_mode |  3 +++
->  t/t4013/diff.diff-tree_initial_mode           |  3 +++
->  t/t4013/diff.log_--decorate=full_--all        |  6 ++++++
->  t/t4013/diff.log_--decorate_--all             |  6 ++++++
->  7 files changed, 35 insertions(+)
->  create mode 100644 t/t4013/diff.diff-tree_--stat_initial_mode
->  create mode 100644 t/t4013/diff.diff-tree_--summary_initial_mode
->  create mode 100644 t/t4013/diff.diff-tree_initial_mode
+>  fast-import.c          |   6 +--
+>  t/t9300-fast-import.sh | 129 +++++++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 132 insertions(+), 3 deletions(-)
+> 
+> 
+> Use named pipes instead of the polling approach. Also incorporate your other
+> comments.
+> 
+> 
+> diff --git a/fast-import.c b/fast-import.c
+> index 35bf671f12c4..d5e4cf0bad41 100644
+> --- a/fast-import.c
+> +++ b/fast-import.c
+> @@ -3189,10 +3189,10 @@ static void checkpoint(void)
+>  	checkpoint_requested = 0;
+>  	if (object_count) {
+>  		cycle_packfile();
+> -		dump_branches();
+> -		dump_tags();
+> -		dump_marks();
+>  	}
+> +	dump_branches();
+> +	dump_tags();
+> +	dump_marks();
+>  }
+>  
+>  static void parse_checkpoint(void)
+> diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+> index 67b8c50a5ab4..9aa3470d895b 100755
+> --- a/t/t9300-fast-import.sh
+> +++ b/t/t9300-fast-import.sh
+> @@ -3120,4 +3120,133 @@ test_expect_success 'U: validate root delete result' '
+>  	compare_diff_raw expect actual
+>  '
+>  
+> +###
+> +### series V (checkpoint)
+> +###
+> +
+> +# To make sure you're observing the side effects of checkpoint *before*
+> +# fast-import terminates (and thus writes out its state), check that the
+> +# fast-import process is still running using background_import_still_running
+> +# *after* evaluating the test conditions.
+> +background_import_until_checkpoint () {
+> +	options=$1
+> +	input_file=$2
+> +
+> +	mkfifo V.input
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Since you are using mkfifo here ...
 
-Thanks.
+> +	exec 8<>V.input
+> +	rm V.input
+> +
+> +	mkfifo V.output
+> +	exec 9<>V.output
+> +	rm V.output
+> +
+> +	cat $input_file >&8
+> +	git fast-import $options <&8 >&9 &
+> +	echo $! >V.pid
+> +	test_when_finished "kill $(cat V.pid) || true"
+> +
+> +	error=0
+> +	if read output <&9
+> +	then
+> +		if ! test "$output" = "progress checkpoint"
+> +		then
+> +			echo >&2 "no progress checkpoint received: $output"
+> +			error=1
+> +		fi
+> +	else
+> +		echo >&2 "failed to read fast-import output"
+> +		error=1
+> +	fi
+> +
+> +	exec 8>&-
+> +	exec 9>&-
+> +
+> +	if test $error -eq 1
+> +	then
+> +		exit 1
+> +	fi
+> +}
+> +
+> +background_import_still_running () {
+> +	if ! kill -0 "$(cat V.pid)"
+> +	then
+> +		echo >&2 "background fast-import terminated too early"
+> +		exit 1
+> +	fi
+> +}
+> +
+
+... you need to set the PIPE prerequisite on all of your new tests.
+
+> +test_expect_success 'V: checkpoint updates refs after reset' '
+> +	cat >input <<-\INPUT_END &&
+> +	reset refs/heads/V
+> +	from refs/heads/U
+> +
+> +	checkpoint
+> +	progress checkpoint
+> +	INPUT_END
+> +
+> +	background_import_until_checkpoint "" input &&
+> +	test "$(git rev-parse --verify V)" = "$(git rev-parse --verify U)" &&
+> +	background_import_still_running
+> +'
+
+[snip]
+
+ATB,
+Ramsay Jones
+
+
