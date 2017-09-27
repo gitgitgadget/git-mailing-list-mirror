@@ -2,138 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CB1E52047F
-	for <e@80x24.org>; Wed, 27 Sep 2017 21:36:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BB9D52047F
+	for <e@80x24.org>; Wed, 27 Sep 2017 21:58:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752140AbdI0VgU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Sep 2017 17:36:20 -0400
-Received: from mail-pg0-f48.google.com ([74.125.83.48]:50393 "EHLO
-        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752028AbdI0VgT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Sep 2017 17:36:19 -0400
-Received: by mail-pg0-f48.google.com with SMTP id p5so8480244pgn.7
-        for <git@vger.kernel.org>; Wed, 27 Sep 2017 14:36:19 -0700 (PDT)
+        id S1752089AbdI0V65 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Sep 2017 17:58:57 -0400
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:46978 "EHLO
+        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752011AbdI0V64 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Sep 2017 17:58:56 -0400
+Received: by mail-pf0-f170.google.com with SMTP id r68so7922189pfj.3
+        for <git@vger.kernel.org>; Wed, 27 Sep 2017 14:58:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=behYz6Zd59fbZhyAW5um5pLQE5xzovcRl333X+1TxsM=;
-        b=rkT2niNnpNlPZlZUDo8dRmp22RoKx251g/bsXlljWJ244NbUSSjJRCiLO9Yn8+2CIo
-         J9RxXenAEcpqjx5yQP5nd5AW1U5CeQGH9q0OOUSwIOid2J0sD85Or06DJ2MiffEM7UYF
-         RfeV34SK4SMI8BaxAjQOk0ZfaJMjsSdKt+HALU84Li/qlHqjae+HRZe23niUB2PEjUlu
-         1gCxkDcuh6RDAaGN0wxYfRxoWjbO6z+vA87CL9MkHML5MhdOsTfelzH5aZOnte+swNK3
-         ert5cYyqEZ1FGiybyVlLhHOIUl9gSOZsnLMyWbtqq68Mtgtm7StBIp3ZfOUjQgEmzLOU
-         uhRg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=TrL1vsBIYjnXuoRagagP1iuRIu65EYim98SJdJ2Iaz4=;
+        b=qmAL7C/aDeVbs5MjTq5afmpvzVy6BuZ8FUjv0htAmPh6jUn7+qQPoLBxUvhwV0jUcz
+         DCPXRvD55o6kLNqtGKAFZd/ddzRXK5GrWE2hYKHIVoLzOWDQ+ZaweJxe0COc8D5m9x+Y
+         21L9IhEkUIdWJpKFe3cwlx891FPDvhMcTBS+91E5FkJWgQoYKUiwpSRX6/1ShHs6ZPY0
+         Gztgx935kxetzEBWX2/nXMWuWG8h3xQVpWP6ntsKc6RK1L1OewTie61F7PXwinCh+5ST
+         xWcnbfaSGGuiw+Izade4D8p01Wo4txlUdUYdawzh56zSg8sY1daUy3gx48WhxDMLVe/A
+         +CbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=behYz6Zd59fbZhyAW5um5pLQE5xzovcRl333X+1TxsM=;
-        b=sDml4SJAaJeYEJkqm7fq9Ahwdf3h5pf9Uwao+RrxCWRoeRnmt6Uv8EpnWdw32iEIsr
-         Lleredt9Cn6p8p1vWbRI3GrnhMYA5y59rsm/JPnsOy2JvTg6dAEMiP59pp+4hUHQrhQ6
-         S3kvjtjPHqsXwgKi3cOniXpOP+OoRqr6gsO5KeCinPOYNl5BMXLjVBGR/87sAlq3k0lX
-         qEVMWN8fq/pYQCGgUgDfttC7HF7axpgJt9NsQkrlgc6HTlgI7NdswFWIfreDmMpg4RcL
-         qVcJlobKcxQn7Fqtl5YyQs5ESHRFZcStfgIhoMm4gZLUL5bSEih0MiiFm201HLdj9UGf
-         Ooyg==
-X-Gm-Message-State: AHPjjUgct+DEswIQzHXST8CUr09RSkH5zd7PzRR/9BPmVymU758DgmAE
-        UUIueOoGxXOM+aJQDeb4LTRBew==
-X-Google-Smtp-Source: AOwi7QCZ3oaz6Pr+GAhAimWZJ2g7wYREh/8D+kkTKKlh+EEEcQKNQd8JPTxys/3+DOlUm8zaegr4Dg==
-X-Received: by 10.159.198.74 with SMTP id y10mr2292394plt.45.1506548178957;
-        Wed, 27 Sep 2017 14:36:18 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:880:967f:fa0a:fc13])
-        by smtp.gmail.com with ESMTPSA id u20sm20267323pfh.171.2017.09.27.14.36.17
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=TrL1vsBIYjnXuoRagagP1iuRIu65EYim98SJdJ2Iaz4=;
+        b=doz3/nIQQzZiavonEzCn0dPM/PXRxXI/hiD0Z+Q52ioXaBc9m004/aexjdM+/t8Ywi
+         L5XIGbftwJfjjze+SLGRn3NZ140lDvV2CbHeayjdahwOFUU9F5Vug7DVn7z2Au1ulA0t
+         6TIFjQCLQg3MuS3FaZ2pBtMantvsJeoktc4hkyolNT+KlzZlGfJlhhTjdHwNldSIhKaQ
+         QJogCsH3MdHnwYJXP84tXG+/LAifnhiWzz19tczeZCVuoBf4zFNqxcxLXAGwXwPpf8h7
+         3WwcHktdpRdacHpnZadnW9wpVQuw9YZyVLY1SKNQ1XT15+szdTimyHs9FyWbL/G5hbfN
+         xbwg==
+X-Gm-Message-State: AHPjjUiUXJLwpyCXnDPrXOpmc8pC2c17HVZFRtcwf0zVFAEHKIRIxDel
+        mwxZnk3Mm3zFj5PjU1qFyQMfFQ==
+X-Google-Smtp-Source: AOwi7QDpK72qbf6wIn+rqznPuxDdDCRcZEwk7jELcE7Hs6ho9HTEK1YWF1ZeIeIXYhYODaXU5VuUPA==
+X-Received: by 10.99.160.65 with SMTP id u1mr2433060pgn.227.1506549536088;
+        Wed, 27 Sep 2017 14:58:56 -0700 (PDT)
+Received: from localhost ([2620:0:100e:422:45a1:47cd:f4ee:d772])
+        by smtp.gmail.com with ESMTPSA id r3sm18961698pgf.48.2017.09.27.14.58.54
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 27 Sep 2017 14:36:18 -0700 (PDT)
-Date:   Wed, 27 Sep 2017 14:36:16 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, bturner@atlassian.com, git@jeffhostetler.com,
-        jonathantanmy@google.com, jrnieder@gmail.com, peff@peff.net,
-        sbeller@google.com
-Subject: Re: [PATCH v2 8/9] http: tell server that the client understands v1
-Message-ID: <20170927213616.GC68699@google.com>
-References: <20170913215448.84674-1-bmwill@google.com>
- <20170926235627.79606-1-bmwill@google.com>
- <20170926235627.79606-9-bmwill@google.com>
- <xmqqfub864m8.fsf@gitster.mtv.corp.google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqfub864m8.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        Wed, 27 Sep 2017 14:58:54 -0700 (PDT)
+From:   Stefan Beller <sbeller@google.com>
+To:     sbeller@google.com
+Cc:     git@vger.kernel.org, gitster@pobox.com,
+        torvalds@linux-foundation.org
+Subject: [PATCH] diff: correct newline in summary for renamed files
+Date:   Wed, 27 Sep 2017 14:58:52 -0700
+Message-Id: <20170927215852.20163-1-sbeller@google.com>
+X-Mailer: git-send-email 2.14.0.rc0.3.g6c2e499285
+In-Reply-To: <CAGZ79kbCgTNaunfneWHP3xkLeXwW72CZZWs7Sv8A7QL_UYE_HQ@mail.gmail.com>
+References: <CAGZ79kbCgTNaunfneWHP3xkLeXwW72CZZWs7Sv8A7QL_UYE_HQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/27, Junio C Hamano wrote:
-> Brandon Williams <bmwill@google.com> writes:
-> 
-> > @@ -897,6 +898,21 @@ static void set_from_env(const char **var, const char *envname)
-> >  		*var = val;
-> >  }
-> >  
-> > +static void protocol_http_header(void)
-> > +{
-> > +	if (get_protocol_version_config() > 0) {
-> > +		struct strbuf protocol_header = STRBUF_INIT;
-> > +
-> > +		strbuf_addf(&protocol_header, GIT_PROTOCOL_HEADER ": version=%d",
-> > +			    get_protocol_version_config());
-> > +
-> > +
-> > +		extra_http_headers = curl_slist_append(extra_http_headers,
-> > +						       protocol_header.buf);
-> > +		strbuf_release(&protocol_header);
-> > +	}
-> > +}
-> > +
-> >  void http_init(struct remote *remote, const char *url, int proactive_auth)
-> >  {
-> >  	char *low_speed_limit;
-> > @@ -927,6 +943,8 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
-> >  	if (remote)
-> >  		var_override(&http_proxy_authmethod, remote->http_proxy_authmethod);
-> >  
-> > +	protocol_http_header();
-> > +
-> >  	pragma_header = curl_slist_append(http_copy_default_headers(),
-> >  		"Pragma: no-cache");
-> >  	no_pragma_header = curl_slist_append(http_copy_default_headers(),
-> > diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
-> > index 0642ae7e6..df1943631 100644
-> > --- a/t/lib-httpd/apache.conf
-> > +++ b/t/lib-httpd/apache.conf
-> > @@ -67,6 +67,9 @@ LockFile accept.lock
-> >  <IfModule !mod_unixd.c>
-> >  	LoadModule unixd_module modules/mod_unixd.so
-> >  </IfModule>
-> > +<IfModule !mod_setenvif.c>
-> > +	LoadModule setenvif_module modules/mod_setenvif.so
-> > +</IfModule>
-> >  </IfVersion>
-> >  
-> >  PassEnv GIT_VALGRIND
-> > @@ -76,6 +79,10 @@ PassEnv ASAN_OPTIONS
-> >  PassEnv GIT_TRACE
-> >  PassEnv GIT_CONFIG_NOSYSTEM
-> >  
-> > +<IfVersion >= 2.4>
-> > +	SetEnvIf Git-Protocol ".*" GIT_PROTOCOL=$0
-> > +</IfVersion>
-> > +
-> 
-> It is very nice to see that only with a single extra HTTP header and
-> the server configuration, everybody else does not have to care how
-> the version information is plumbed through ;-)
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-Having limited experience working with HTTP, it took me a bit to
-figure out how to get the server configuration right, but once I got it
-working it seemed to work pretty seamlessly :)
+In 146fdb0dfe (diff.c: emit_diff_symbol learns about DIFF_SYMBOL_SUMMARY,
+2017-06-29), the conversion from direct printing to the symbol emission
+dropped the new line character for renamed, copied and rewritten files.
 
+Add the emission of a newline, add a test for this case.
+
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+
+ Linus, I assumed your sign off for the original patch. Thanks for spotting.
+ 
+ Adding the mode change to t4016 seems like the easiest way to test it.
+ 
+ Thanks,
+ Stefan
+  
+ diff.c                | 1 +
+ t/t4016-diff-quote.sh | 2 ++
+ 2 files changed, 3 insertions(+)
+
+diff --git a/diff.c b/diff.c
+index 3c6a3e0faa..653bb2e72e 100644
+--- a/diff.c
++++ b/diff.c
+@@ -5272,6 +5272,7 @@ static void show_mode_change(struct diff_options *opt, struct diff_filepair *p,
+ 			strbuf_addch(&sb, ' ');
+ 			quote_c_style(p->two->path, &sb, NULL, 0);
+ 		}
++		strbuf_addch(&sb, '\n');
+ 		emit_diff_symbol(opt, DIFF_SYMBOL_SUMMARY,
+ 				 sb.buf, sb.len, 0);
+ 		strbuf_release(&sb);
+diff --git a/t/t4016-diff-quote.sh b/t/t4016-diff-quote.sh
+index 9c48e5c2c9..514056dd10 100755
+--- a/t/t4016-diff-quote.sh
++++ b/t/t4016-diff-quote.sh
+@@ -30,6 +30,7 @@ test_expect_success setup '
+ 	git add . &&
+ 	git commit -m initial &&
+ 	git mv "$P0.0" "R$P0.0" &&
++	chmod a+x "R$P0.0" &&
+ 	git mv "$P0.1" "R$P1.0" &&
+ 	git mv "$P0.2" "R$P2.0" &&
+ 	git mv "$P0.3" "R$P3.0" &&
+@@ -47,6 +48,7 @@ cat >expect <<\EOF
+  rename pathname.2 => Rpathname with SP.0 (100%)
+  rename "pathname\twith HT.2" => Rpathname with SP.1 (100%)
+  rename pathname.0 => Rpathname.0 (100%)
++ mode change 100644 => 100755
+  rename "pathname\twith HT.0" => Rpathname.1 (100%)
+ EOF
+ '
 -- 
-Brandon Williams
+2.14.0.rc0.3.g6c2e499285
+
