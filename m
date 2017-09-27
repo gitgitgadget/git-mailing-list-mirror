@@ -2,117 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C9BF42047F
-	for <e@80x24.org>; Wed, 27 Sep 2017 18:15:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5ACE52047F
+	for <e@80x24.org>; Wed, 27 Sep 2017 19:06:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751692AbdI0SPG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Sep 2017 14:15:06 -0400
-Received: from mail-it0-f68.google.com ([209.85.214.68]:48905 "EHLO
-        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751263AbdI0SPF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Sep 2017 14:15:05 -0400
-Received: by mail-it0-f68.google.com with SMTP id m123so8366602ita.3
-        for <git@vger.kernel.org>; Wed, 27 Sep 2017 11:15:05 -0700 (PDT)
+        id S1750858AbdI0TGs (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Sep 2017 15:06:48 -0400
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:44411 "EHLO
+        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750805AbdI0TGr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Sep 2017 15:06:47 -0400
+Received: by mail-wm0-f52.google.com with SMTP id m127so21854561wmm.1
+        for <git@vger.kernel.org>; Wed, 27 Sep 2017 12:06:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:from:date:message-id:subject:to:cc;
-        bh=UItAk2qKgXY3ECpihR3cLbDL/bk1W5T8mguK3mh4Lho=;
-        b=LgrQu2To/iVKWesWA1Et8xbo+CAcfLaF1mA0D13eHRckP23P2kHDs8wvJGPZIXttl0
-         UlrrbHnxe72iuoOGWPMdiuigewydnGidI9wNZzQYds6Jg6gzUr10Dr+/PWQbLCXUJh6Y
-         hBPL1MphaSqPobxHxoNTeCX1Z1+1ZU9noZRxSVQSM/Q7X+t0PsrWA/MEogSDAOCy+gWj
-         0wBoJZLCiCTrAVpNeHlNIF1Skk0RpOdZM3Lq7FFiieEbbDU0QJnGqWfjfjjjgkO7KzDu
-         KBszGsKLpmFg59ZacNQljlILSu8i6uWNcsmOo6iBJ7/cUj8cvFY3dYXfmhnAUgq2lMXc
-         DzjQ==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=X801YUb4qARmcM2qhY7uiNCTfBqC/wXjkVecEf2rkRU=;
+        b=LpZbPIXDipSjYIWcPaFNH/unrsAACYTLWP9Jxk2gNq2BQf1chD/O/8r7uGrowWGjE/
+         6b0rK8+9K11gF8mxpzA8z60N0uzR12bJB44/5wSd1RkBKkn6yBCuDz15m6nQwp3KpbCD
+         o4V0HqLZAcEm5B4bhHrY8c32V/bDjjno83X2I4LGOX0CFILVOWVrQBAtG44qVCCU2Oha
+         vUpnApWkePnzjvtl8CZxCa426PKfotM59i1nwi/lWCZLDvgJhNoscpBSAhY+ALPZf69T
+         2v8VRuH+sSbUY4E8nXDECERAP5o/ODcFFHa/JMoFovziwQwHfTO50Q7LLE39eAqfVaDz
+         ZPDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to:cc;
-        bh=UItAk2qKgXY3ECpihR3cLbDL/bk1W5T8mguK3mh4Lho=;
-        b=DdWFy06MfkaeCADdD8WMTj0scvhdFqP4B9PK3F4a4grZilmbjncJVC8yCYUJ1pzkCc
-         9krFQYZ51XbpoPsY5E0bZde2r+zVgcgtKYjQf787l1hKPMlwMe7Fyxu772xYCJaePXaE
-         mP0q4bKorBSmnSVzG5ionn0KdqZxICJYh3JyqDjoKPCBkXnR2+LxmfVCanyAZ2ElBIUR
-         Biu9SpdORAXpysX53fyWzlEl1AbDjCdXxe3uggyygFSHQHLxLppjqVOOfp5GNY8rpgGs
-         64xiFSUi88aDdU0DyKxkpMfG3+RwEDP2kWEgllsJ/DRLkOREDkdRq8x2At86p10Z1Z3o
-         Y1pw==
-X-Gm-Message-State: AHPjjUgSvjt7Ri0Z8NqaH3oijm6BJYmKeoBocyuxopwMDK/RI3iADSXm
-        bb4EpMJNVqsYvGHzllLl1ySAZdX5edkyCLtITsdoC2iR
-X-Google-Smtp-Source: AOwi7QBQzPL8YP7lza1pRcWLXMHPSjbG/x6P+0ytgRD5UXUZ2n/ujG1g/OHocR12SZhDZa18hGVyUdDnZ1E/h/C+Oag=
-X-Received: by 10.36.199.130 with SMTP id t124mr2091196itg.2.1506536104873;
- Wed, 27 Sep 2017 11:15:04 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=X801YUb4qARmcM2qhY7uiNCTfBqC/wXjkVecEf2rkRU=;
+        b=aPjpR2U7FPtex+rbr9zdeRF0kvOrF0zMsx8ZyCGp9/13KwayoNtmgsjOZKtxG+EJUM
+         bfTNv30Che3U+VC8+MhPhtYm5K85SVd/wvnXz8QCzQ5vGbljM4BCG2dKBxoeRuv2DpXD
+         DXch7YdIBNHhaQ/W/ZhDO9fhJ7nG3PLANWXx4/66/ak9X1C6O79V1WdWhkXuMI06sDW7
+         LsTNkZs250miDEcEkSZXCkhjHCdILg9H5HNnwMVgUvq4mpOe3Mr7CDVSM1pTJq/MFZKo
+         5VFvCwNRZwdukjhuuDwL7IIr6/jqc0nhTmFc/mUhZ0lkSsjYamcmzbV5VCAI5LdMKzLg
+         XZOw==
+X-Gm-Message-State: AHPjjUhsv+3Sfdk++mKD4B/PWQUDj6Fy9XUOZFsjgDS9Hr8KuanVqywc
+        J8ZkE7F3a35ma8mQllHv2HcpcIBU4d39aadsCtJPr2n4
+X-Google-Smtp-Source: AOwi7QCzuyezTulZHlJLTozCP7E0CdQbfXfkjWv6tmXDgybS+ZsV7800zeg4qEPh6lq308shj6/Usr/t0NDm62l1d+A=
+X-Received: by 10.28.210.5 with SMTP id j5mr1075352wmg.15.1506539206071; Wed,
+ 27 Sep 2017 12:06:46 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.164.103 with HTTP; Wed, 27 Sep 2017 11:15:04 -0700 (PDT)
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Wed, 27 Sep 2017 11:15:04 -0700
-X-Google-Sender-Auth: R7ig0BDENgHvelt1Sm5vqtqDD5U
-Message-ID: <CA+55aFzThd6cayUVuv39k=sb8KCphLkWGCV4n2HUjfn7Pxkd3g@mail.gmail.com>
-Subject: diffstat summary mode change bug
-To:     Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Received: by 10.223.154.163 with HTTP; Wed, 27 Sep 2017 12:06:25 -0700 (PDT)
+From:   Ilya Kantor <iliakan@gmail.com>
+Date:   Wed, 27 Sep 2017 22:06:25 +0300
+Message-ID: <CAFU8umg2cgmmCvGYbu0P3M02AMcttUfTCFGTUcsF7shd80XwSw@mail.gmail.com>
+Subject: What's the idea of specifying binary=true together with textconv?
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Current git shows file-mode changes incorrectly in the diffstat
-summary, as I just noted from a pull request I did on the kernel.
+Hello,
 
-The pull request *should* have resulted in a summary like this:
+When textconv is specified, the program is always used for conversion.
 
-   ...
-   21 files changed, 247 insertions(+), 67 deletions(-)
-   mode change 100644 => 100755 tools/testing/selftests/memfd/run_tests.sh
-   create mode 100644 tools/testing/selftests/net/reuseaddr_conflict.c
+E.g. consider this:
+[diff "png"]
+  textconv = wc
 
-but instead that "mode change" line didn't have a newline at the end, and I got
+Even if a png file is ASCII (manually created), wc gets called, and
+the result is made of its output.
 
-   ...
-   21 files changed, 247 insertions(+), 67 deletions(-)
-   mode change 100644 => 100755
-tools/testing/selftests/memfd/run_tests.sh create mode 100644
-tools/testing/selftests/net/reuseaddr_conflict.c
+So, the question is: why should one specify binary = true together
+with textconv?
 
-(ok, linewrapping in this email may make that look wrong - but the
-"mode change" land the "create mode" are both on the same line.
+There is an example in docs:
+[diff "ps"]
+  textconv = ps2ascii
+  binary = true
 
-Bisecting it got me:
+...But what binary = true does here?
+Even if we remove it, textconv is called for all ps-files.
 
-  146fdb0dfe445464fa438f3835557c58a01d85d7 is the first bad commit
-  commit 146fdb0dfe445464fa438f3835557c58a01d85d7
-  Author: Stefan Beller <sbeller@google.com>
-  Date:   Thu Jun 29 17:07:05 2017 -0700
-
-      diff.c: emit_diff_symbol learns about DIFF_SYMBOL_SUMMARY
-
-      Signed-off-by: Stefan Beller <sbeller@google.com>
-      Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-and the reason seems to be that the '\n' at the end got dropped as the
-old code was very confusing (the old code had two different '\n' cases
-for the "show filename or not").
-
-I think the right fix is this whitespace-damaged trivial one-liner:
-
-  diff --git a/diff.c b/diff.c
-  index 3c6a3e0fa..653bb2e72 100644
-  --- a/diff.c
-  +++ b/diff.c
-  @@ -5272,6 +5272,7 @@ static void show_mode_change(struct
-diff_options *opt, struct diff_filepair *p,
-                          strbuf_addch(&sb, ' ');
-                          quote_c_style(p->two->path, &sb, NULL, 0);
-                  }
-  +               strbuf_addch(&sb, '\n');
-                  emit_diff_symbol(opt, DIFF_SYMBOL_SUMMARY,
-                                   sb.buf, sb.len, 0);
-                  strbuf_release(&sb);
-
-but somebody should double-check that.
-
-                        Linus
+---
+Best Regards,
+Ilya Kantor
