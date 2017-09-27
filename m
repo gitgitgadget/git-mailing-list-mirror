@@ -2,43 +2,42 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,URIBL_SBL,
-	URIBL_SBL_A shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 46E1E2047F
-	for <e@80x24.org>; Wed, 27 Sep 2017 23:19:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C5E5120A29
+	for <e@80x24.org>; Wed, 27 Sep 2017 23:49:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752343AbdI0XTk (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Sep 2017 19:19:40 -0400
-Received: from avasout08.plus.net ([212.159.14.20]:52437 "EHLO
+        id S1752430AbdI0Xtj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Sep 2017 19:49:39 -0400
+Received: from avasout08.plus.net ([212.159.14.20]:56111 "EHLO
         avasout08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752237AbdI0XTj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Sep 2017 19:19:39 -0400
+        with ESMTP id S1752357AbdI0Xtj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Sep 2017 19:49:39 -0400
 Received: from [10.0.2.15] ([147.147.86.16])
         by avasout08 with smtp
-        id EnKc1w0050M91Ur01nKd5G; Thu, 28 Sep 2017 00:19:38 +0100
+        id Enpc1w0080M91Ur01npdKR; Thu, 28 Sep 2017 00:49:37 +0100
 X-CM-Score: 0.00
 X-CNFS-Analysis: v=2.2 cv=EJl26xRC c=1 sm=1 tr=0
  a=dubYQqM3tRRTmV8xSh8cXQ==:117 a=dubYQqM3tRRTmV8xSh8cXQ==:17
- a=IkcTkHD0fZMA:10 a=swZap-XzAAAA:8 a=R--0M-u41TAep-aT_5UA:9 a=QEXdDO2ut3YA:10
- a=ckTUcnKWf81qg4j9hmMM:22
+ a=IkcTkHD0fZMA:10 a=Z4Rwk6OoAAAA:8 a=PKzvZo6CAAAA:8 a=1XWaLZrsAAAA:8
+ a=SmQUNsg3GiOK7-FFx98A:9 a=QEXdDO2ut3YA:10 a=HkZW87K1Qel5hWWM3VKY:22
+ a=q92HNjYiIAC_jH7JDaYf:22
 X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH] fast-import: checkpoint: dump branches/tags/marks even if
- object_count==0
-To:     Eric Rannaud <e@nanocritical.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, jeremy.serror@gmail.com,
-        "Shawn O . Pearce" <spearce@spearce.org>
-References: <xmqqefqs7qx8.fsf@gitster.mtv.corp.google.com>
- <cccb06b75df3cad9f013d5a9ab0371f0a2d9c2ce.1506541322.git.e@nanocritical.com>
+Subject: Re: [PATCH] diff: correct newline in summary for renamed files
+To:     Stefan Beller <sbeller@google.com>, peff@peff.net
+Cc:     git@vger.kernel.org, gitster@pobox.com,
+        torvalds@linux-foundation.org
+References: <20170927224909.25dfojhx6wzaqwt7@sigill.intra.peff.net>
+ <20170927225126.4836-1-sbeller@google.com>
 From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <2a9cc69b-2e9f-7fe9-3c55-66ffe3060732@ramsayjones.plus.com>
-Date:   Thu, 28 Sep 2017 00:19:36 +0100
+Message-ID: <094ebbd4-1bc6-8360-222f-55a4a16a6ca3@ramsayjones.plus.com>
+Date:   Thu, 28 Sep 2017 00:49:36 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.3.0
 MIME-Version: 1.0
-In-Reply-To: <cccb06b75df3cad9f013d5a9ab0371f0a2d9c2ce.1506541322.git.e@nanocritical.com>
+In-Reply-To: <20170927225126.4836-1-sbeller@google.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
@@ -49,154 +48,65 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-On 27/09/17 20:46, Eric Rannaud wrote:
-> The checkpoint command cycles packfiles if object_count != 0, a sensible
-> test or there would be no pack files to write. Since 820b931012, the
-> command also dumps branches, tags and marks, but still conditionally.
-> However, it is possible for a command stream to modify refs or create
-> marks without creating any new objects.
+On 27/09/17 23:51, Stefan Beller wrote:
+> In 146fdb0dfe (diff.c: emit_diff_symbol learns about DIFF_SYMBOL_SUMMARY,
+> 2017-06-29), the conversion from direct printing to the symbol emission
+> dropped the new line character for renamed, copied and rewritten files.
 > 
-> For example, reset a branch (and keep fast-import running):
+> Add the emission of a newline, add a test for this case.
 > 
-> 	$ git fast-import
-> 	reset refs/heads/master
-> 	from refs/heads/master^
-> 
-> 	checkpoint
-> 
-> but refs/heads/master remains unchanged.
-> 
-> Other example: a commit command that re-creates an object that already
-> exists in the object database.
-> 
-> The man page also states that checkpoint "updates the refs" and that
-> "placing a progress command immediately after a checkpoint will inform
-> the reader when the checkpoint has been completed and it can safely
-> access the refs that fast-import updated". This wasn't always true
-> without this patch.
-> 
-> This fix unconditionally calls dump_{branches,tags,marks}() for all
-> checkpoint commands. dump_branches() and dump_tags() are cheap to call
-> in the case of a no-op.
-> 
-> Add tests to t9300 that observe the (non-packfiles) effects of
-> checkpoint.
-> 
-> Signed-off-by: Eric Rannaud <e@nanocritical.com>
+> Reported-by: Linus Torvalds <torvalds@linux-foundation.org>
+> Helped-by: Jeff King <peff@peff.net>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
 > ---
->  fast-import.c          |   6 +--
->  t/t9300-fast-import.sh | 129 +++++++++++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 132 insertions(+), 3 deletions(-)
 > 
-> 
-> Use named pipes instead of the polling approach. Also incorporate your other
-> comments.
-> 
-> 
-> diff --git a/fast-import.c b/fast-import.c
-> index 35bf671f12c4..d5e4cf0bad41 100644
-> --- a/fast-import.c
-> +++ b/fast-import.c
-> @@ -3189,10 +3189,10 @@ static void checkpoint(void)
->  	checkpoint_requested = 0;
->  	if (object_count) {
->  		cycle_packfile();
-> -		dump_branches();
-> -		dump_tags();
-> -		dump_marks();
->  	}
-> +	dump_branches();
-> +	dump_tags();
-> +	dump_marks();
->  }
+>  Peff, I am undecided about the added 'diff --stat' call as that
+>  uses a completely different code path and would not show the mode
+>  change, but I guess we can just use it to document the current state.
 >  
->  static void parse_checkpoint(void)
-> diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-> index 67b8c50a5ab4..9aa3470d895b 100755
-> --- a/t/t9300-fast-import.sh
-> +++ b/t/t9300-fast-import.sh
-> @@ -3120,4 +3120,133 @@ test_expect_success 'U: validate root delete result' '
->  	compare_diff_raw expect actual
->  '
+>  Thanks,
+>  Stefan
+> 
+>  diff.c                                        |  1 +
+>  t/t4013-diff-various.sh                       | 12 ++++++++++++
+>  t/t4013/diff.diff-tree_--stat_initial_mode    |  4 ++++
+>  t/t4013/diff.diff-tree_--summary_initial_mode |  3 +++
+>  t/t4013/diff.diff-tree_initial_mode           |  3 +++
+>  t/t4013/diff.log_--decorate=full_--all        |  6 ++++++
+>  t/t4013/diff.log_--decorate_--all             |  6 ++++++
+>  7 files changed, 35 insertions(+)
+>  create mode 100644 t/t4013/diff.diff-tree_--stat_initial_mode
+>  create mode 100644 t/t4013/diff.diff-tree_--summary_initial_mode
+>  create mode 100644 t/t4013/diff.diff-tree_initial_mode
+> 
+> diff --git a/diff.c b/diff.c
+> index 3c6a3e0faa..653bb2e72e 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -5272,6 +5272,7 @@ static void show_mode_change(struct diff_options *opt, struct diff_filepair *p,
+>  			strbuf_addch(&sb, ' ');
+>  			quote_c_style(p->two->path, &sb, NULL, 0);
+>  		}
+> +		strbuf_addch(&sb, '\n');
+>  		emit_diff_symbol(opt, DIFF_SYMBOL_SUMMARY,
+>  				 sb.buf, sb.len, 0);
+>  		strbuf_release(&sb);
+> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+> index d09acfe48e..c515e3e53f 100755
+> --- a/t/t4013-diff-various.sh
+> +++ b/t/t4013-diff-various.sh
+> @@ -90,6 +90,14 @@ test_expect_success setup '
+>  	git commit -m "Rearranged lines in dir/sub" &&
+>  	git checkout master &&
 >  
-> +###
-> +### series V (checkpoint)
-> +###
-> +
-> +# To make sure you're observing the side effects of checkpoint *before*
-> +# fast-import terminates (and thus writes out its state), check that the
-> +# fast-import process is still running using background_import_still_running
-> +# *after* evaluating the test conditions.
-> +background_import_until_checkpoint () {
-> +	options=$1
-> +	input_file=$2
-> +
-> +	mkfifo V.input
+> +	GIT_AUTHOR_DATE="2006-06-26 00:06:00 +0000" &&
+> +	GIT_COMMITTER_DATE="2006-06-26 00:06:00 +0000" &&
+> +	export GIT_AUTHOR_DATE GIT_COMMITTER_DATE &&
+> +	git checkout -b mode initial &&
+> +	git update-index --chmod=+x file0 &&
 
-Since you are using mkfifo here ...
-
-> +	exec 8<>V.input
-> +	rm V.input
-> +
-> +	mkfifo V.output
-> +	exec 9<>V.output
-> +	rm V.output
-> +
-> +	cat $input_file >&8
-> +	git fast-import $options <&8 >&9 &
-> +	echo $! >V.pid
-> +	test_when_finished "kill $(cat V.pid) || true"
-> +
-> +	error=0
-> +	if read output <&9
-> +	then
-> +		if ! test "$output" = "progress checkpoint"
-> +		then
-> +			echo >&2 "no progress checkpoint received: $output"
-> +			error=1
-> +		fi
-> +	else
-> +		echo >&2 "failed to read fast-import output"
-> +		error=1
-> +	fi
-> +
-> +	exec 8>&-
-> +	exec 9>&-
-> +
-> +	if test $error -eq 1
-> +	then
-> +		exit 1
-> +	fi
-> +}
-> +
-> +background_import_still_running () {
-> +	if ! kill -0 "$(cat V.pid)"
-> +	then
-> +		echo >&2 "background fast-import terminated too early"
-> +		exit 1
-> +	fi
-> +}
-> +
-
-... you need to set the PIPE prerequisite on all of your new tests.
-
-> +test_expect_success 'V: checkpoint updates refs after reset' '
-> +	cat >input <<-\INPUT_END &&
-> +	reset refs/heads/V
-> +	from refs/heads/U
-> +
-> +	checkpoint
-> +	progress checkpoint
-> +	INPUT_END
-> +
-> +	background_import_until_checkpoint "" input &&
-> +	test "$(git rev-parse --verify V)" = "$(git rev-parse --verify U)" &&
-> +	background_import_still_running
-> +'
-
-[snip]
+would 'test_chmod +x file0 &&' work here?
 
 ATB,
 Ramsay Jones
-
 
