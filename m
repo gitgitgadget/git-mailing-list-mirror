@@ -2,122 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB9D52047F
-	for <e@80x24.org>; Wed, 27 Sep 2017 21:58:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5015C2047F
+	for <e@80x24.org>; Wed, 27 Sep 2017 22:04:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752089AbdI0V65 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Sep 2017 17:58:57 -0400
-Received: from mail-pf0-f170.google.com ([209.85.192.170]:46978 "EHLO
-        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752011AbdI0V64 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Sep 2017 17:58:56 -0400
-Received: by mail-pf0-f170.google.com with SMTP id r68so7922189pfj.3
-        for <git@vger.kernel.org>; Wed, 27 Sep 2017 14:58:56 -0700 (PDT)
+        id S1752184AbdI0WES (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Sep 2017 18:04:18 -0400
+Received: from mail-it0-f65.google.com ([209.85.214.65]:55843 "EHLO
+        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752159AbdI0WER (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Sep 2017 18:04:17 -0400
+Received: by mail-it0-f65.google.com with SMTP id 4so8349668itv.4
+        for <git@vger.kernel.org>; Wed, 27 Sep 2017 15:04:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=TrL1vsBIYjnXuoRagagP1iuRIu65EYim98SJdJ2Iaz4=;
-        b=qmAL7C/aDeVbs5MjTq5afmpvzVy6BuZ8FUjv0htAmPh6jUn7+qQPoLBxUvhwV0jUcz
-         DCPXRvD55o6kLNqtGKAFZd/ddzRXK5GrWE2hYKHIVoLzOWDQ+ZaweJxe0COc8D5m9x+Y
-         21L9IhEkUIdWJpKFe3cwlx891FPDvhMcTBS+91E5FkJWgQoYKUiwpSRX6/1ShHs6ZPY0
-         Gztgx935kxetzEBWX2/nXMWuWG8h3xQVpWP6ntsKc6RK1L1OewTie61F7PXwinCh+5ST
-         xWcnbfaSGGuiw+Izade4D8p01Wo4txlUdUYdawzh56zSg8sY1daUy3gx48WhxDMLVe/A
-         +CbQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=P5gnVxrRWzO+irzBVn4puDKkcLz8GYPv4ooM+VP4Dmk=;
+        b=jfTLp6r0g9mruzSvEgCEeEmVZhg4bA7Qg+XYelVUwz1uFFujwNZ/0Ns3UbV/s6lpVK
+         4XJ6q/zzX7zmpBffLIdSh2icRoAJzTcDIQaLLlAw/35aINKjke1m2MS4xZLJtCy/eVMj
+         ebqL9zCHQPXFpQfP0vUDiDTf56w7rQhyCFuzraxBZ27jcCYZm2s2ItwLDHxKZMqHW4ec
+         PxfmCY7qM+asYPKmRig1sAUl+dC5fWm1bzKch+ikE1sVu72s4gJkq0E4t8yeEp6Uu2F0
+         uHeCzpdLcWC+Bv1wjrK85pTHK6ZLBtwHku0lSY6+L8x1sJKsmywfb5+UpJGexUvv3l9e
+         v/bA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=TrL1vsBIYjnXuoRagagP1iuRIu65EYim98SJdJ2Iaz4=;
-        b=doz3/nIQQzZiavonEzCn0dPM/PXRxXI/hiD0Z+Q52ioXaBc9m004/aexjdM+/t8Ywi
-         L5XIGbftwJfjjze+SLGRn3NZ140lDvV2CbHeayjdahwOFUU9F5Vug7DVn7z2Au1ulA0t
-         6TIFjQCLQg3MuS3FaZ2pBtMantvsJeoktc4hkyolNT+KlzZlGfJlhhTjdHwNldSIhKaQ
-         QJogCsH3MdHnwYJXP84tXG+/LAifnhiWzz19tczeZCVuoBf4zFNqxcxLXAGwXwPpf8h7
-         3WwcHktdpRdacHpnZadnW9wpVQuw9YZyVLY1SKNQ1XT15+szdTimyHs9FyWbL/G5hbfN
-         xbwg==
-X-Gm-Message-State: AHPjjUiUXJLwpyCXnDPrXOpmc8pC2c17HVZFRtcwf0zVFAEHKIRIxDel
-        mwxZnk3Mm3zFj5PjU1qFyQMfFQ==
-X-Google-Smtp-Source: AOwi7QDpK72qbf6wIn+rqznPuxDdDCRcZEwk7jELcE7Hs6ho9HTEK1YWF1ZeIeIXYhYODaXU5VuUPA==
-X-Received: by 10.99.160.65 with SMTP id u1mr2433060pgn.227.1506549536088;
-        Wed, 27 Sep 2017 14:58:56 -0700 (PDT)
-Received: from localhost ([2620:0:100e:422:45a1:47cd:f4ee:d772])
-        by smtp.gmail.com with ESMTPSA id r3sm18961698pgf.48.2017.09.27.14.58.54
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 27 Sep 2017 14:58:54 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-To:     sbeller@google.com
-Cc:     git@vger.kernel.org, gitster@pobox.com,
-        torvalds@linux-foundation.org
-Subject: [PATCH] diff: correct newline in summary for renamed files
-Date:   Wed, 27 Sep 2017 14:58:52 -0700
-Message-Id: <20170927215852.20163-1-sbeller@google.com>
-X-Mailer: git-send-email 2.14.0.rc0.3.g6c2e499285
-In-Reply-To: <CAGZ79kbCgTNaunfneWHP3xkLeXwW72CZZWs7Sv8A7QL_UYE_HQ@mail.gmail.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=P5gnVxrRWzO+irzBVn4puDKkcLz8GYPv4ooM+VP4Dmk=;
+        b=p5RbBlBNgN3aYn2jP6gEbPo+r+hWjM3OXuJjSXR5aLt4iZKas2KVw7L4yQbOX8fTIZ
+         hCxKnfEoqpF+rJxzTFnEZWevUzCiFyN+2A46fOelhnJwI0vcOB+g3hzImyZ1hCNSrHvm
+         1RICW1qLQcKQd1Y0sIJoLDICaOYAPsPy6ifIANqlBTMeT//bV2REEjudz9HMWBfuJJDg
+         sqilTYFUuH3xi8AS4s1uU70gG2awqEJ1k6b+EZHBRGypqn9vmVKG6SCyq4eZIpoiOryB
+         27XdZ4MejgWyTPTpyYBwk7yhfmfr5hlpJOlD+0txB4u9Fo3mLzdVFih2fF4EMCK4p9aF
+         7NAg==
+X-Gm-Message-State: AHPjjUg61glPCJ4hSMCug8jCZ+nSCVktoE01gBfdzmTJCkOWpQbmZDoI
+        q7rYcNcuufNMYUDW2/k7dKDY4UOoCF4M7zfHd2A=
+X-Google-Smtp-Source: AOwi7QBRIzLVXTvYj3ebW1/xelYpEMWrJl98AYBJupI6hv8uk5VZNwTUoc4HAAC1Od/c3yzBy+NQ4mfofl8I5/wdO1Y=
+X-Received: by 10.36.12.14 with SMTP id 14mr2906343itn.94.1506549856674; Wed,
+ 27 Sep 2017 15:04:16 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.107.164.103 with HTTP; Wed, 27 Sep 2017 15:04:16 -0700 (PDT)
+In-Reply-To: <20170927215852.20163-1-sbeller@google.com>
 References: <CAGZ79kbCgTNaunfneWHP3xkLeXwW72CZZWs7Sv8A7QL_UYE_HQ@mail.gmail.com>
+ <20170927215852.20163-1-sbeller@google.com>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Wed, 27 Sep 2017 15:04:16 -0700
+X-Google-Sender-Auth: Uj0WnJiwtq4kLnVPujQ-lkRSZHM
+Message-ID: <CA+55aFxPZ8+MrB5mbad76aPo8v9S-Q9p3zvK7=j1m2e7o2dFFA@mail.gmail.com>
+Subject: Re: [PATCH] diff: correct newline in summary for renamed files
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+On Wed, Sep 27, 2017 at 2:58 PM, Stefan Beller <sbeller@google.com> wrote:
+>
+>  Linus, I assumed your sign off for the original patch. Thanks for spotting.
+>
+>  Adding the mode change to t4016 seems like the easiest way to test it.
 
-In 146fdb0dfe (diff.c: emit_diff_symbol learns about DIFF_SYMBOL_SUMMARY,
-2017-06-29), the conversion from direct printing to the symbol emission
-dropped the new line character for renamed, copied and rewritten files.
+Looks good to me, and you don't need to give me authorship credit.
+Just a "Reported-by:" is fine by me.
 
-Add the emission of a newline, add a test for this case.
+But yes, you can also consider the patch signed off by me, although
+with your test update, _most_ of the patch is yours so it feels kind
+of stupid to mark me as author.
 
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
-
- Linus, I assumed your sign off for the original patch. Thanks for spotting.
- 
- Adding the mode change to t4016 seems like the easiest way to test it.
- 
- Thanks,
- Stefan
-  
- diff.c                | 1 +
- t/t4016-diff-quote.sh | 2 ++
- 2 files changed, 3 insertions(+)
-
-diff --git a/diff.c b/diff.c
-index 3c6a3e0faa..653bb2e72e 100644
---- a/diff.c
-+++ b/diff.c
-@@ -5272,6 +5272,7 @@ static void show_mode_change(struct diff_options *opt, struct diff_filepair *p,
- 			strbuf_addch(&sb, ' ');
- 			quote_c_style(p->two->path, &sb, NULL, 0);
- 		}
-+		strbuf_addch(&sb, '\n');
- 		emit_diff_symbol(opt, DIFF_SYMBOL_SUMMARY,
- 				 sb.buf, sb.len, 0);
- 		strbuf_release(&sb);
-diff --git a/t/t4016-diff-quote.sh b/t/t4016-diff-quote.sh
-index 9c48e5c2c9..514056dd10 100755
---- a/t/t4016-diff-quote.sh
-+++ b/t/t4016-diff-quote.sh
-@@ -30,6 +30,7 @@ test_expect_success setup '
- 	git add . &&
- 	git commit -m initial &&
- 	git mv "$P0.0" "R$P0.0" &&
-+	chmod a+x "R$P0.0" &&
- 	git mv "$P0.1" "R$P1.0" &&
- 	git mv "$P0.2" "R$P2.0" &&
- 	git mv "$P0.3" "R$P3.0" &&
-@@ -47,6 +48,7 @@ cat >expect <<\EOF
-  rename pathname.2 => Rpathname with SP.0 (100%)
-  rename "pathname\twith HT.2" => Rpathname with SP.1 (100%)
-  rename pathname.0 => Rpathname.0 (100%)
-+ mode change 100644 => 100755
-  rename "pathname\twith HT.0" => Rpathname.1 (100%)
- EOF
- '
--- 
-2.14.0.rc0.3.g6c2e499285
-
+              Linus
