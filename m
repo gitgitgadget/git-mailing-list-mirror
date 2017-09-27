@@ -2,111 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2EBF520A26
-	for <e@80x24.org>; Wed, 27 Sep 2017 20:40:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA91F20A26
+	for <e@80x24.org>; Wed, 27 Sep 2017 20:49:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751782AbdI0Ukd (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Sep 2017 16:40:33 -0400
-Received: from mail-qk0-f180.google.com ([209.85.220.180]:56506 "EHLO
-        mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751697AbdI0Ukc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Sep 2017 16:40:32 -0400
-Received: by mail-qk0-f180.google.com with SMTP id g128so14584018qke.13
-        for <git@vger.kernel.org>; Wed, 27 Sep 2017 13:40:32 -0700 (PDT)
+        id S1751894AbdI0Uth (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Sep 2017 16:49:37 -0400
+Received: from mail-pg0-f44.google.com ([74.125.83.44]:47541 "EHLO
+        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751708AbdI0Utg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Sep 2017 16:49:36 -0400
+Received: by mail-pg0-f44.google.com with SMTP id d8so8426589pgt.4
+        for <git@vger.kernel.org>; Wed, 27 Sep 2017 13:49:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=0n18kKdc98A+leRFFQwkWIn0CSXJkjBrEdZLpE5XoLM=;
-        b=Pp4iyQtPpWBgsOaFXL9yP62+nCS1FJJqLEJrp88Ts4l8q5/vJOo1FxGzM+ybVcHITM
-         71VM7W9oHwrP6W8hLGkVJEFFtHSBjfWU51sX3MkhWuuJl83pZcZNnsAD51FtfMMwScVT
-         aEAz4Zn/ecTUEXuawv5MgXx/Y1am9lnC4oXKiX0/LBaiBhXGA6HIuTZ+XDvpcE1c0hYk
-         /5GzA/iIMa+ThZuIOUydyTY92V9AQZW345juGnf4pOIY6sQAMttQMs9chaa8o5AwedhU
-         QtoUz2OEcT5p3C8qyBUpDTC5f1tgq/62fOmAA4dzRE2bFDLdmYY46b564AxrtPWsDl2V
-         wq+g==
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Q9bpFeGe7zVPP+zEC2W4/l1lqImS/QYCIY6N5/vpoHg=;
+        b=mbFobKYv3opH/+7WFw+/EvbYSI4rS3mVNzrXB/xsL142K7LEO2pYg03nsybNMe9e/B
+         fV0yTdIz348rGnafGVBU1G9YyeAc/TJzmGqiFz9ZeRWdCLx3yuHW1tyCLowgsqym1BTa
+         wtNziraRX6p0zH8qmplS3nB1EQi+iByUZ+OFCyIDs7RQKcdYCO8X2Vqk8dKECxBZxv32
+         Jr4mccLQ+2xK1pMcpU0mVIYuYZ1ByGY5DEjPRKiBU2xB8B10sg6xX1IkyHXMlceMnbVH
+         Y2l3b6e5pwjf0QNqr9x8zIEfjcgLWLeIssw/15P6ESwyO+pCw8k653XPHrqcR9+gciTU
+         p3sQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=0n18kKdc98A+leRFFQwkWIn0CSXJkjBrEdZLpE5XoLM=;
-        b=IZwlZR5j4T9lEP7jODGXAGoUMtsDEO8D9COEN2yY0CRZoM2PJp1pArCq0CNjc72/rq
-         o0j4dwf0KPSBp2IibWF6QRZn1i/tYuR7XkBuL2s0n21Z5XwXgpSufTss8CE2J6Tv2LkR
-         PsXhkaHutdupBI3rHEiYMGBCNFewbefo5j59lWb95DagGg1kmQL2uH6Yc1ufDX6Na2mQ
-         Fl0oEPeJyu+i6M2GT36G69GFW6PeEnXDcZ3smo93C4/etgkta+CbVFnJw+CzqPo6xmJj
-         pzungbxhRHi3+wMTBCIhjwknFv85LgMfQgAvzUsPuEdNqh5STeorZQy4+bPFLeC73E6h
-         K//g==
-X-Gm-Message-State: AHPjjUjoyLbJpjcHTlMmPHHKdarJ0V98R/kjIOfkH2T0DqxXQ04sDaY9
-        UVXliRtLt4yGCGxzPHf0FWh7IKrPehlTvYMtRkSZgQ==
-X-Google-Smtp-Source: AOwi7QCdY3LgbqzlwrtOk+buk41Ew0S8NSvKCgyTDqr05ASv4fzuNFzAevwEryf41FO3ZJb2uNPGYdNVTNLOWXjH+44=
-X-Received: by 10.55.90.199 with SMTP id o190mr4357366qkb.180.1506544831235;
- Wed, 27 Sep 2017 13:40:31 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.140.102.51 with HTTP; Wed, 27 Sep 2017 13:40:30 -0700 (PDT)
-In-Reply-To: <CA+55aFzThd6cayUVuv39k=sb8KCphLkWGCV4n2HUjfn7Pxkd3g@mail.gmail.com>
-References: <CA+55aFzThd6cayUVuv39k=sb8KCphLkWGCV4n2HUjfn7Pxkd3g@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 27 Sep 2017 13:40:30 -0700
-Message-ID: <CAGZ79kZF5w7ucbUCKJAuAbz2KBoMJjWneAxFcjOPeted8SBNmg@mail.gmail.com>
-Subject: Re: diffstat summary mode change bug
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Q9bpFeGe7zVPP+zEC2W4/l1lqImS/QYCIY6N5/vpoHg=;
+        b=NXyWufo121Ycl4JSqKakql88ZPOFZnXdjzwTlbE0FeXAn+71y4ZueFgvwwRdok1DYN
+         PVbtDDs9SuEkpf6bUMIo1tsPriTGdDpzLoisOyGfv4b3Kpo0sj2la/RSbZPTJQKTfNK5
+         EGdZWuuJT45Wb+3EwYwnClkjznZHdNl1XRxGFQUnmmQPqesEwvVYo6BhVcrkCZcdKDVP
+         rGAPZQQFyVMpr06EQFY4Lz6bQv1oSs85VEZ0G5U3dYaQp0zBJ7RPxHZFZH7mfBAKTsue
+         g/JTZvAbnhKcWZg28iw0Y6c7lG/NcA2CWZ3z8Q1WEadisy2E3jbHs/YV4VXJoan8Guex
+         7SGQ==
+X-Gm-Message-State: AHPjjUhssKoYACwsb33+8zvudp0eGP1vpnQg2sTeiiDtQLPi2A7TtLrx
+        Nl6GPrP5/n/whqqjeUg7JDlYC03jlIE=
+X-Google-Smtp-Source: AOwi7QCpadL5++I/1uZsWjrMoD6xKxiyfeEXYZwjb0CxPBQWgTs0PQ9Dq4VHg3dF6yLL+P/ur83C5A==
+X-Received: by 10.84.228.207 with SMTP id y15mr2099888pli.301.1506545375795;
+        Wed, 27 Sep 2017 13:49:35 -0700 (PDT)
+Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:6d10:3370:77a8:b2d0])
+        by smtp.gmail.com with ESMTPSA id y7sm278405pfy.35.2017.09.27.13.49.34
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 27 Sep 2017 13:49:35 -0700 (PDT)
+Date:   Wed, 27 Sep 2017 13:49:34 -0700
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        jeffhost@microsoft.com
+Subject: Re: [PATCH 03/13] list-objects: filter objects in
+ traverse_commit_list
+Message-Id: <20170927134934.d40b24d08749c6d4589e8b33@google.com>
+In-Reply-To: <1577b87b-d6de-1434-930a-83fde384d4ca@jeffhostetler.com>
+References: <20170922202632.53714-1-git@jeffhostetler.com>
+        <20170922202632.53714-4-git@jeffhostetler.com>
+        <20170926153141.6a8d7e5024eeed5bbda838c8@google.com>
+        <d5de0eda-18aa-a796-e7d0-d536d2e59605@jeffhostetler.com>
+        <20170927110007.9ee2f725c01f0c7465838c04@google.com>
+        <1577b87b-d6de-1434-930a-83fde384d4ca@jeffhostetler.com>
+X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 27, 2017 at 11:15 AM, Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
+On Wed, 27 Sep 2017 15:09:43 -0400
+Jeff Hostetler <git@jeffhostetler.com> wrote:
 
-> (ok, linewrapping in this email may make that look wrong - but the
-> "mode change" land the "create mode" are both on the same line.
+> By adding it to the set of provisionally omitted objects, we
+> have the option to capture a little extra information with it
+> and refer to that the next time we see the object in the traversal.
+> For example, in the sparse-checkout case, the first time we see the
+> object we know the pathname and know that it does not need to be
+> included.  The second time we see that object, we can see if the
+> new pathname is the same as the previous one with a simple strcmp
+> and avoid the expensive is_excluded_from_list() computation.  Keep
+> in mind that rev-list or pack-objects could be called be on something
+> like HEAD~100000..HEAD or that there may be 50,000 tips.  So a file
+> that doesn't change across that range will be visited many times
+> with the same {pathname, sha}.
 
-Thanks for the bug report.
+Ah, capturing the extra information makes sense. I missed that detail.
 
-> and the reason seems to be that the '\n' at the end got dropped as the
-> old code was very confusing (the old code had two different '\n' cases
-> for the "show filename or not").
+> Right now I want to force the tree to be shown the first time it is
+> visited (because I don't want to do tree filtering yet).  I don't mark
+> it SEEN yet because we may want to revisit blobs within (say, after a
+> folder rename like I described previously).
+> 
+> I do, however, mark the tree object as SEEN (in the _END event) when I
+> can verify that I've included ALL of the children.
 
-I disagree with this analysis, as the fix you propose adds the
-new line unconditionally, i.e. this code path would be broken
-regardless of "show filename or not".
+This optimization makes sense too.
 
-Both search for "create mode" and "mode change" results in
-hits in the test suite, so we should have caught this.
-I wonder why our tests failed to tell us about this.
+> So it might be possible that I could change the flags and not use
+> FILTER_REVISIT on tree objects, I hesitate to do that right now.
 
-Specifically we have t4100/t-apply-4.expect
-  mode change 100644 => 100755 t/t0000-basic.sh
-  mode change 100644 => 100755 t/test-lib.sh
-which would seem to exercise this code path.
+You're probably right that we need some sort of flag on tree objects,
+and FILTER_REVISIT can do the job. (My suggestion SHOWN plays a similar
+role anyway.)
 
-The code *looks* correct, but I am full of doubts now.
+> Having the FILTER_REVISIT flag on blob objects means I can avoid
+> doing a hash/oidset lookup on subsequent visits.
 
-Stefan
+By the hash/oidset lookup, I presume you mean the lookup on the set of
+provisionally omitted objects? If yes, this makes sense.
 
-> I think the right fix is this whitespace-damaged trivial one-liner:
->
->   diff --git a/diff.c b/diff.c
->   index 3c6a3e0fa..653bb2e72 100644
->   --- a/diff.c
->   +++ b/diff.c
->   @@ -5272,6 +5272,7 @@ static void show_mode_change(struct
-> diff_options *opt, struct diff_filepair *p,
->                           strbuf_addch(&sb, ' ');
->                           quote_c_style(p->two->path, &sb, NULL, 0);
->                   }
->   +               strbuf_addch(&sb, '\n');
->                   emit_diff_symbol(opt, DIFF_SYMBOL_SUMMARY,
->                                    sb.buf, sb.len, 0);
->                   strbuf_release(&sb);
->
-> but somebody should double-check that.
->
->                         Linus
+Thanks for your clarifications - I'll take another look at the code
+here.
