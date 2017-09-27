@@ -2,84 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8252B2047F
-	for <e@80x24.org>; Wed, 27 Sep 2017 12:56:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 220292047F
+	for <e@80x24.org>; Wed, 27 Sep 2017 13:23:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752589AbdI0M4F (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Sep 2017 08:56:05 -0400
-Received: from mail.hostpark.net ([212.243.197.30]:46618 "EHLO
-        mail.hostpark.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752104AbdI0M4E (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Sep 2017 08:56:04 -0400
-X-Greylist: delayed 389 seconds by postgrey-1.27 at vger.kernel.org; Wed, 27 Sep 2017 08:56:04 EDT
-Received: from localhost (localhost [127.0.0.1])
-        by mail.hostpark.net (Postfix) with ESMTP id 501B21675B
-        for <git@vger.kernel.org>; Wed, 27 Sep 2017 14:49:34 +0200 (CEST)
-X-Virus-Scanned: by Hostpark/NetZone Mailprotection at hostpark.net
-Received: from mail.hostpark.net ([127.0.0.1])
-        by localhost (mail0.hostpark.net [127.0.0.1]) (amavisd-new, port 10124)
-        with ESMTP id RLnev__HN6fW for <git@vger.kernel.org>;
-        Wed, 27 Sep 2017 14:49:33 +0200 (CEST)
-Received: from desktop (unknown [31.10.135.70])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.hostpark.net (Postfix) with ESMTPSA id DA12116575
-        for <git@vger.kernel.org>; Wed, 27 Sep 2017 14:49:33 +0200 (CEST)
-User-agent: mu4e 0.9.19; emacs 25.3.1
-From:   Jonas Bernoulli <jonas@bernoul.li>
+        id S1752634AbdI0NX3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Sep 2017 09:23:29 -0400
+Received: from mail-wr0-f170.google.com ([209.85.128.170]:50386 "EHLO
+        mail-wr0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752264AbdI0NX2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Sep 2017 09:23:28 -0400
+Received: by mail-wr0-f170.google.com with SMTP id w12so16440865wrc.7
+        for <git@vger.kernel.org>; Wed, 27 Sep 2017 06:23:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:mime-version:subject:message-id:date:to;
+        bh=FEk8w4xl895ctLan17KlkevGvV7MUZyEITVMgzHgI/c=;
+        b=DI42hk7t+e0UBwpKYydvs6gp39Xm+Xp18ayngT0msSz4ca48kwND1HUlCi7uT1KjaC
+         CcUZyMb9VKKtEYjAKLZgh0mxKyTc6KfJVhkaLjTjBVp3SsvACevagp2wUdRck5DAkHph
+         rwh8KxxBGp1Q6QS1juhMVwzxWlXS9rVaBOp5mUxiL7tyyYSD7FhnFZUYqy1apPUxXers
+         ScOL2WSvpdgGwNlZDxMirMStkkKNR67IqCIvgUvj74GD37LAON3tkvV6iCazc6PVD2VV
+         Ww1o+p44iSaEGFkRdvMfi5Z9qsNhqrNCawdqzGgCtEwj1Pqyfr5XiiuNda6QIFSg2CZM
+         vlRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:mime-version:subject:message-id:date:to;
+        bh=FEk8w4xl895ctLan17KlkevGvV7MUZyEITVMgzHgI/c=;
+        b=ivC5H+Z59RtN6I1jmsov554vsPMcda0kPc8wiIwoR07tyAZ6nUANuWF2pKtaM623rd
+         qf7XPzimdRpdS6lX8cuQo7X2748+0mvrXFBYe04qDHllP2wuMc0seWsYASpBO0wYsLnp
+         cEau58C/4xEk9MWesIDLMnC+N/kPE0TtqVq//6yid5uNEzx9kVHGXU3KKwR8Fk/P4qrJ
+         6U4LN92o/GDWRf19UAHAM6Yprh1eXEo69V76J+VnkEERvZ5rmdnvc0YhQc7AMiREYN85
+         fEawPEt8NDn3+mSKYCvXbuapUVtlzvsp7yh50tCqhRIkHa/fhC4JjgkwnaCd5sJJuLN1
+         cKgQ==
+X-Gm-Message-State: AHPjjUjA+GPdOsIcvAebbkMI/RETPckEarWqisszKVqmPhE6y90tT6xB
+        0MCy/Vslrps7MBOl1mic8bUoEa41
+X-Google-Smtp-Source: AOwi7QCYxmTQBeeG7cWmItjRV45uXY+DtuS4XsNoAr08t48HlFRncqaxypAUqsKCF+gy5Kp6wVxXFQ==
+X-Received: by 10.223.160.170 with SMTP id m39mr1365312wrm.174.1506518606132;
+        Wed, 27 Sep 2017 06:23:26 -0700 (PDT)
+Received: from [172.27.233.198] (vpn-muc.tarifhaus.ag. [104.207.130.146])
+        by smtp.gmail.com with ESMTPSA id h29sm10874883wrf.76.2017.09.27.06.23.24
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 27 Sep 2017 06:23:24 -0700 (PDT)
+From:   Toni Uebernickel <tuebernickel@gmail.com>
+Content-Type: multipart/signed;
+ boundary="Apple-Mail=_5302A483-64FB-447F-9E17-E044FC631EB3";
+ protocol="application/pgp-signature"; micalg=pgp-sha512
+Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
+Subject: Updated to v2.14.2 on macOS; git add --patch broken
+Message-Id: <86D0A377-8AFD-460D-A90E-6327C6934DFC@gmail.com>
+Date:   Wed, 27 Sep 2017 15:23:21 +0200
 To:     git@vger.kernel.org
-Subject: About Magit (git client) and its fundraiser
-Date:   Wed, 27 Sep 2017 14:49:33 +0200
-Message-ID: <878th02tnm.fsf@bernoul.li>
-MIME-Version: 1.0
-Content-Type: text/plain
+X-Mailer: Apple Mail (2.3273)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
 
-Magit is a Git client implemented as an Emacs extension.  It has been
-around since 2008 and I have been maintaining it since 2013.
+--Apple-Mail=_5302A483-64FB-447F-9E17-E044FC631EB3
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
-Magit was recently featured in Git Rev News #31 and one of its curators
-encouraged me to write to this list as well.  I haven't done that before
-because I was unsure how that would be received, but he thinks that you
-would not object or consider this to be spam.
+Hi there,
 
-The fundraising campaign on Kickstarter [1] ends this weekend and while
-it has already surpassed the funding goal I am under the impression that
-I did not succeed in attracting many new potential users, which actually
-was a goal.  The support from existing users however was phenomenal.
+I updated to git version v2.14.2 on macOS using homebrew.
 
-I have written several articles [2] about Magit that are primarily
-intended for non-Emacs users.  Please have a look, especially at [3],
-which starts out by summarizing basic similarities and differences
-between Magit and Git/GUIs.
+Since then `git add --patch` and `git stash save --patch` are not =
+working anymore. It's just printing the complete diff without ever =
+stopping to ask for actions. This results in an unusable state, as the =
+whole command option is rendered useless.
 
-I have not written to this list about Magit before (in general, not just
-regarding the campaign), because it still has some major issues that I
-would have liked to address first.  I also plan to make Magit more
-accessible to people who do not live inside Emacs, so the best time to
-try it out if you are not an Emacs user has not come yet.  Now that the
-campaign has succeeded, I will finally be able to tackle long standing
-issues and to make it more attractive to non-Emacs users.
+For illustration see: https://asciinema.org/a/fw6cy9Ds6CeNOt4RYknLYgOD3
 
-The ultimate honor would be if Linus or some core Git developers started
-using it.  While that is probably quite unrealistic, I do think that
-Magit has a lot of potential beyond its current user-base.
+Kind Regards,
+Toni
 
-If you would like to see how this plays out,
-then please consider backing my campaign.
+--
+Toni Uebernickel
 
-  Cheers,
-  Jonas
+tuebernickel@gmail.com - https://keybase.io/havvg
+https://github.com/havvg - https://www.xing.com/profile/Toni_Uebernickel
 
-[1] https://www.kickstarter.com/projects/1681258897/its-magit-the-magical-git-client?ref=dtueui
-[2] https://emacsair.me/2017/09/01/campaign-articles
-[3] https://emacsair.me/2017/09/01/the-magical-git-interface
+
+--Apple-Mail=_5302A483-64FB-447F-9E17-E044FC631EB3
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEqtw0WfnqbGj2qtYvvngIZvYDXHoFAlnLpksACgkQvngIZvYD
+XHppohAAsdp4zXk3HoEX++1E2hbBCKfkq52n8MYw8PjXySipNq/EKPSPedOICsiU
+k4aRCs2irJJWDHbxhxZ6DXCNZNDRr2nqtW02kX8CN/8/i4B1Mwm1mny1Rk98/cGA
+FHo/XMMR+MOymAnwy2Bhqfmn/gjPiuwcSeLKUS4vO+QyzSy1OcGGjQUk25EMnK6u
+uWnK+jQQGvuWQvJ34UqubRFpTLrOUI9W69JXT3Anz8U96cWrpBeEbAOoCVhfetXm
+GwSaINKJUycy+R9lQ1wIbpWNlv/GFGztC5OuP0PVpoYYp/+jMeDNijZi58i+40z9
+gKm4aHksAY1K+ps/5pveAH1iI8Db/Of1NVrU6y9PRpaeaDcuYmy7kupcyPpyKFpe
+jasoykAelBQ/D+BvtMQ64/XPFb0teChf39lRqBfUizdeSrnaXmeKCInDR31vmNVj
+KcRfkwoJMXOIwlcb4pNmQuf5orN2LTtbUL+8jtZ11+g38PNinK6XsLILU2WbH1Qp
+qRR1vxLKq0thUk5j47cZCem6CQZVKcOQFTSgVL/TX7QWM0JdvgtmOK74yNcMNu4e
+CltjZ8PeyzI5P99AmzZAIWHmuKuxBVkX4S6NKfB909yIUAqiddxzMbdWzLW38ry1
+lpyc5x1QUY/dNyJOdcislmYr67vMojrqwoFT08qT7S+C/rkjrz8=
+=D0Dj
+-----END PGP SIGNATURE-----
+
+--Apple-Mail=_5302A483-64FB-447F-9E17-E044FC631EB3--
