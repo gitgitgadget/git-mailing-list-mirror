@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C46A20281
-	for <e@80x24.org>; Wed, 27 Sep 2017 05:20:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F08C20281
+	for <e@80x24.org>; Wed, 27 Sep 2017 05:23:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751936AbdI0FUp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Sep 2017 01:20:45 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:33543 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751628AbdI0FUo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Sep 2017 01:20:44 -0400
-Received: by mail-pf0-f193.google.com with SMTP id h4so5949891pfk.0
-        for <git@vger.kernel.org>; Tue, 26 Sep 2017 22:20:44 -0700 (PDT)
+        id S1752028AbdI0FXe (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Sep 2017 01:23:34 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:38831 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752019AbdI0FXb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Sep 2017 01:23:31 -0400
+Received: by mail-pf0-f194.google.com with SMTP id a7so5941570pfj.5
+        for <git@vger.kernel.org>; Tue, 26 Sep 2017 22:23:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=/oGDtezVb3JuLu0fWWEloK1RAxspak/ozmN1XPzojm4=;
-        b=mj3WyENSzjsBaFyy0tfZ9LlAESV9JJn5uq9fdlTI4G7IB2JCZqJmmmLaqcG82SuRB7
-         RibfxluHR+CQ481XsXS6bC8zIp9IoI6wQ6oJ6gBUgYHhohdmlZbuZcUSRts7+/mdPkUI
-         /oOTuN2jnF+h6KjAPKhP8yvpOy1E+MieQCqOCMZPtB60oLJHktyzqK3TI3aQaUjgRQym
-         m0LP3BtzJChTda712/MoYtEdqAO5p7lslgl4O4se/wQvn43i4nPCXSKmVX1LbMY8Fy/3
-         3vFEP0A6MffHoCi/Aiet3pdah5oAOviQB3y1hfwkUMHHBZibr2mQh7lYpd8xAM2hvI2t
-         Y7oQ==
+        bh=egE+igZNyKzvaVnmfyO7SffR8QGhgxvAy5DzZe7JM4c=;
+        b=SSQhlP+fnKb0ypetFHHROsHMxdcz0Lp2XxkJxgx3Go5+R9jcGPmJMX+RBX7NlAizAK
+         OcClP14asuuv8t7pkI1IQxFlwwEONzithxua0AAlbgEy4jIaNDcND/ffxteHXqCfdSKI
+         IDzpZYAlDhRwe4Du2MQLOcZao6tg2RVXabcUbVBeQfdN3sydgObvEUMkC37DCM5yXKqT
+         RqW2T4uAccij4mRnbJDl+WX5APzlmO0qM0JCYZ01h1gj2qZU4DSqYPatdwmxHvlXnp1Q
+         9+0jxsbdIky2oV/saLY6l8/k3g97UFu8NwklB3Z2D7sv5eDDKhfLiIbtYeA5pjIODZEl
+         Uoig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=/oGDtezVb3JuLu0fWWEloK1RAxspak/ozmN1XPzojm4=;
-        b=JviePHQHsR3ZCpO8oV/1kagi9LdvzL6I3Z3ZDsD0UipSLp9g+cvhpudpSFzW4o0PuK
-         GO88HJVGxMhXE/UYbSwTWu84gyMhOvwiZ1JDkujC/GpFoT+7vGpfDvjjX6rr1pKMxVlW
-         Ob9HQpVuo7/rxyU/wz9eROBFB2KHqrxmPgX0Ho2yCuznbXpfMwRu+LIBgL3ZTeOAW26Y
-         rBOcOcrdr8bKbYzLQkTCFqyzZQqmbv4RC9i9BKNnwhN4NHoPfFpxidtsHfNnxFxA6WIw
-         9RLn8YDgE0gbDc4OGbjAgfPbYZxpCsNeZ2X+gvQEqgQC8xzvf1Yq7ha4eC5GaVHLpyIW
-         VMaw==
-X-Gm-Message-State: AHPjjUjO7ZU/YZOj0fzIHN03fBI/vLpD2YU3xkiqwhjF04Vi8eVz+Ycp
-        hh6cji8WnPvBh3Orm+29L6s=
-X-Google-Smtp-Source: AOwi7QCpg4Nn1NC9MPYef2a65zBYtjRx7anEy5WtL27yhRDs1AlEIYI1M+qNigKyM9O6GhOs7wmwKw==
-X-Received: by 10.98.73.2 with SMTP id w2mr230987pfa.133.1506489643560;
-        Tue, 26 Sep 2017 22:20:43 -0700 (PDT)
+        bh=egE+igZNyKzvaVnmfyO7SffR8QGhgxvAy5DzZe7JM4c=;
+        b=mFst+T8R5De/ZDYPlKMqfZzV7KqfWAF1Xux7j7qe3rriUTKaA1HOjxnT06UQz+iMH9
+         irGpCmyzk7XL2QqJEEZLIB6WM1X2MLRH5axnW7PtrDv5ozjiBpT+ElyCK3Tcoc/3Nprc
+         jYfMi80nQvkjdW1GGvcPTZYbpDbtfhYHVOZcYh30/DaT+TyS0EioZ+PtgnnyweUoLerW
+         TSAhLaTwWMDJtqV6Do60cibFzzziGkuYHy+C7Cde8UTtKlKKmtcGja8X9Fi1yDBu1R4o
+         UVhef1cI5NbZyS+OYfuUVvEw7i10vkWaaAY7T/v/An+UvTX4JUDffnxegXpn5KMRHKOP
+         ImZg==
+X-Gm-Message-State: AHPjjUh1xUZ6lPZps13KqFzS3bIe+rF2oqlk2A4LOOfRqGBjTIX4APyv
+        FBkNu4ItDKjgXrZbFw+kBZA=
+X-Google-Smtp-Source: AOwi7QD8nIjbip73mBXC0h4zU1DAsXW+UpIG3JEAvno9qUTmdbOiqY+eO5w6sX/LWFyGr9aldnystg==
+X-Received: by 10.101.71.193 with SMTP id f1mr239855pgs.251.1506489811089;
+        Tue, 26 Sep 2017 22:23:31 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:a541:226f:6d4c:7f7a])
-        by smtp.gmail.com with ESMTPSA id y1sm1694011pgp.15.2017.09.26.22.20.42
+        by smtp.gmail.com with ESMTPSA id 207sm18841981pfu.0.2017.09.26.22.23.30
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 26 Sep 2017 22:20:42 -0700 (PDT)
+        Tue, 26 Sep 2017 22:23:30 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Brandon Williams <bmwill@google.com>
 Cc:     git@vger.kernel.org, bturner@atlassian.com, git@jeffhostetler.com,
         jonathantanmy@google.com, jrnieder@gmail.com, peff@peff.net,
         sbeller@google.com
-Subject: Re: [PATCH v2 4/9] daemon: recognize hidden request arguments
+Subject: Re: [PATCH v2 5/9] upload-pack, receive-pack: introduce protocol version 1
 References: <20170913215448.84674-1-bmwill@google.com>
         <20170926235627.79606-1-bmwill@google.com>
-        <20170926235627.79606-5-bmwill@google.com>
-Date:   Wed, 27 Sep 2017 14:20:42 +0900
-In-Reply-To: <20170926235627.79606-5-bmwill@google.com> (Brandon Williams's
-        message of "Tue, 26 Sep 2017 16:56:22 -0700")
-Message-ID: <xmqqzi9g67kl.fsf@gitster.mtv.corp.google.com>
+        <20170926235627.79606-6-bmwill@google.com>
+Date:   Wed, 27 Sep 2017 14:23:29 +0900
+In-Reply-To: <20170926235627.79606-6-bmwill@google.com> (Brandon Williams's
+        message of "Tue, 26 Sep 2017 16:56:23 -0700")
+Message-ID: <xmqqvak467fy.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -72,48 +72,26 @@ X-Mailing-List: git@vger.kernel.org
 
 Brandon Williams <bmwill@google.com> writes:
 
-> A normal request to git-daemon is structured as
-> "command path/to/repo\0host=..\0" and due to a bug in an old version of
-> git-daemon 73bb33a94 (daemon: Strictly parse the "extra arg" part of the
-> command, 2009-06-04) we aren't able to place any extra args (separated
-> by NULs) besides the host.
-
-It's a bit unclear if that commit _introduced_ a bug, or just
-noticed an old bug and documented it in its log message.  How does
-that commit impact the versons of Git that the updated code is
-capable of interracting with?
-
-> +static void parse_extra_args(struct hostinfo *hi, struct argv_array *env,
-> +			     char *extra_args, int buflen)
-> +{
-> +	const char *end = extra_args + buflen;
-> +	struct strbuf git_protocol = STRBUF_INIT;
-> +
-> +	/* First look for the host argument */
-> +	extra_args = parse_host_arg(hi, extra_args, buflen);
-> +
-> +	/* Look for additional arguments places after a second NUL byte */
-> +	for (; extra_args < end; extra_args += strlen(extra_args) + 1) {
-> +		const char *arg = extra_args;
-> +
+> @@ -1963,6 +1964,19 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+>  	else if (0 <= receive_unpack_limit)
+>  		unpack_limit = receive_unpack_limit;
+>  
+> +	switch (determine_protocol_version_server()) {
+> +	case protocol_v1:
+> +		if (advertise_refs || !stateless_rpc)
+> +			packet_write_fmt(1, "version 1\n");
 > +		/*
-> +		 * Parse the extra arguments, adding most to 'git_protocol'
-> +		 * which will be used to set the 'GIT_PROTOCOL' envvar in the
-> +		 * service that will be run.
-> +		 *
-> +		 * If there ends up being a particular arg in the future that
-> +		 * git-daemon needs to parse specificly (like the 'host' arg)
-> +		 * then it can be parsed here and not added to 'git_protocol'.
+> +		 * v1 is just the original protocol with a version string,
+> +		 * so just fall through after writing the version string.
 > +		 */
-> +		if (*arg) {
-> +			if (git_protocol.len > 0)
-> +				strbuf_addch(&git_protocol, ':');
-> +			strbuf_addstr(&git_protocol, arg);
-> +		}
-> +	}
-> +
-> +	if (git_protocol.len > 0)
-> +		argv_array_pushf(env, GIT_PROTOCOL_ENVIRONMENT "=%s",
-> +				 git_protocol.buf);
-> +	strbuf_release(&git_protocol);
->  }
+> +	case protocol_v0:
+> +	default:
+> +		break;
+
+When protocol_v2 is introduced in the other part of the codebase
+(i.e. in protocol.[ch]), until these lines are updated accordingly
+to take care of the new protocol, we'd pretend that client asked
+(and the server accepted) v0, even though the client and the daemon
+agreed to talk v2.
+
+Shouldn't the "default:" die instead?  The same for upload-pack.c
