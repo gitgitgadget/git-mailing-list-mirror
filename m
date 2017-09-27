@@ -2,283 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C669202A5
-	for <e@80x24.org>; Wed, 27 Sep 2017 06:54:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 277B3202A5
+	for <e@80x24.org>; Wed, 27 Sep 2017 06:58:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751396AbdI0Gye (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Sep 2017 02:54:34 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51716 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751134AbdI0Gyc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Sep 2017 02:54:32 -0400
-Received: (qmail 27511 invoked by uid 109); 27 Sep 2017 06:54:32 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 27 Sep 2017 06:54:32 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12200 invoked by uid 111); 27 Sep 2017 06:55:11 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Wed, 27 Sep 2017 02:55:11 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Sep 2017 02:54:30 -0400
-Date:   Wed, 27 Sep 2017 02:54:30 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Subject: [PATCH v2] git: add --no-optional-locks option
-Message-ID: <20170927065430.cssyxxsxjhp7k4ye@sigill.intra.peff.net>
-References: <20170921043214.pyhdsrpy4omy54rm@sigill.intra.peff.net>
+        id S1751522AbdI0G6B (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Sep 2017 02:58:01 -0400
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:53201 "EHLO
+        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751362AbdI0G6A (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Sep 2017 02:58:00 -0400
+Received: by mail-pf0-f179.google.com with SMTP id p87so6793780pfj.9
+        for <git@vger.kernel.org>; Tue, 26 Sep 2017 23:58:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=3wulENTXLe3ao2U9lEmFlGK5IaW/1tzgwHmVp74XlLU=;
+        b=Gtcr2SaR9uLIM2CB1eKryR4OQBecNiNChW/HPKJ385/fyfRFGzTzqdhDgZ56pDypmi
+         vTMoPrCDHjP17hf4zCuG1A48IiYnnZv8WBfWVW40dfjmJZTGJ57AwMccH2Xn+Heb2ipt
+         Vh61BI1feD74gZGZG6lk2N0OL2wpIgChtFNC8HidVHo1gx6PdtmpJArr/pG0Mpwyv0GA
+         XI0q1cuiiO+R83aN+T5ZfOmO6gc0elAJ4X+blSYUCfBIFyyn4bqYh6CzjUcELfmb3MgC
+         /hAldW50eKo8Z8xm0bSEXtLGUM7uCIQyeHEFUw8eulcXy36Yd/osfrPHqR3+F2jTS0zX
+         ixcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=3wulENTXLe3ao2U9lEmFlGK5IaW/1tzgwHmVp74XlLU=;
+        b=cQXz0zLYnancVpAwOJI9dDM0y/qJGCRG/vjxmeyk8kol+bbbsf+l35s5WULD4NFnRk
+         e+G9JGxv8oabwCF91Ha+e/B9LZ/uD/vjG7qrGWbGm2bkWzi4sRBS6nB/Y2QPACDnskfr
+         fzBHmuH0Lrvwte+jE6tErJVA143scFCC3Dldceik/+398olzQXxhNRqs+iccQm4BPpxE
+         baaTugZRO0x7voCwa/vefiHUaY21Z+9jcNaY8inj0C+nRwFmpp/BRkr1quj0Y3fOqvj5
+         8Pv4TuCJIQy1hdgGEzLptdDNipdqUKWpDTdlJm6feuPKHgotMQZYK8ocx22cL43VuvX3
+         KA1w==
+X-Gm-Message-State: AHPjjUjHKoXaAYHEZ3XtCZtCq0o8yTyS0DVA70hzKWplGiWyHrbaTzlw
+        xH+YnJ5M5uu88Flm7S8QOLA=
+X-Google-Smtp-Source: AOwi7QA/PjoUxBkYsEGqdiU6Ix42YIFkZgjaowXC/KFJx0bIN+hVvOIR+tm1GjVfeV/kzkaHdAPNlg==
+X-Received: by 10.98.211.193 with SMTP id z62mr442982pfk.118.1506495479478;
+        Tue, 26 Sep 2017 23:57:59 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:a541:226f:6d4c:7f7a])
+        by smtp.gmail.com with ESMTPSA id b66sm19431390pfe.165.2017.09.26.23.57.58
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 26 Sep 2017 23:57:58 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2 0/7] read/write_in_full leftovers
+References: <20170925202646.agsnpmar3dzocdcr@sigill.intra.peff.net>
+        <20170927055424.22ati3g24xaqtqrk@sigill.intra.peff.net>
+Date:   Wed, 27 Sep 2017 15:57:57 +0900
+In-Reply-To: <20170927055424.22ati3g24xaqtqrk@sigill.intra.peff.net> (Jeff
+        King's message of "Wed, 27 Sep 2017 01:54:24 -0400")
+Message-ID: <xmqqy3p04oi2.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170921043214.pyhdsrpy4omy54rm@sigill.intra.peff.net>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an update of my --no-optional-locks patch. The only difference
-is that I updated the documentation to be a bit less clunky (Thanks,
-Kaartic).
+Jeff King <peff@peff.net> writes:
 
-For the other comments on v1, I decided not to make any changes:
+> I dropped the "read_in_full() should set errno on short reads" idea (3/7
+> in the earlier series). It really is the caller's fault for looking at
+> errno when they know there hasn't been an error in the first place. We
+> should just bite the bullet and have the callers do the right thing.
+>
+> I also dropped the "xread_in_full" helper (7/7 earlier). The lego
+> sentences it created just weren't worth the hassle. Instead, I've fixed
+> all of the relevant callers to provide good error messages for both
+> cases. It's a few more lines of code, and it's probably rare for users
+> to see these in the first place. But it doesn't hurt too much to be
+> thorough, and I think it's good to model correct error handling. This is
+> in patches 4 and 5 below.
 
-  - JSixt suggested marking this as a local-repo variable. I think we
-    really do want it to cross repo boundaries to handle submodules (and
-    the GfW version does the same).
+Thanks for being thorough.  My comment on 3/7 might be taken as
+contradicting with how 5/7 ties the loose ends up, but I do not care
+too deeply either way.
 
-  - there was some discussion over the name. I didn't see other
-    suggestions, and I didn't come up with anything better.
-
-  - there was some discussion of alternatives, including reader/writer
-    locking schemes and lock-retry timeouts for other callers. This
-    approach has the benefit of simplicity and having been tested in the
-    real world by GfW/VS.  I wouldn't mind if somebody wanted to explore
-    lock retries, but I think we'd want to have this feature regardless.
-
-So I'm happy with this version, though of course I'm open to more
-comments.
-
--- >8 --
-Subject: git: add --no-optional-locks option
-
-Some tools like IDEs or fancy editors may periodically run
-commands like "git status" in the background to keep track
-of the state of the repository. Some of these commands may
-refresh the index and write out the result in an
-opportunistic way: if they can get the index lock, then they
-update the on-disk index with any updates they find. And if
-not, then their in-core refresh is lost and just has to be
-recomputed by the next caller.
-
-But taking the index lock may conflict with other operations
-in the repository. Especially ones that the user is doing
-themselves, which _aren't_ opportunistic. In other words,
-"git status" knows how to back off when somebody else is
-holding the lock, but other commands don't know that status
-would be happy to drop the lock if somebody else wanted it.
-
-There are a couple possible solutions:
-
-  1. Have some kind of "pseudo-lock" that allows other
-     commands to tell status that they want the lock.
-
-     This is likely to be complicated and error-prone to
-     implement (and maybe even impossible with just
-     dotlocks to work from, as it requires some
-     inter-process communication).
-
-  2. Avoid background runs of commands like "git status"
-     that want to do opportunistic updates, preferring
-     instead plumbing like diff-files, etc.
-
-     This is awkward for a couple of reasons. One is that
-     "status --porcelain" reports a lot more about the
-     repository state than is available from individual
-     plumbing commands. And two is that we actually _do_
-     want to see the refreshed index. We just don't want to
-     take a lock or write out the result. Whereas commands
-     like diff-files expect us to refresh the index
-     separately and write it to disk so that they can depend
-     on the result. But that write is exactly what we're
-     trying to avoid.
-
-  3. Ask "status" not to lock or write the index.
-
-     This is easy to implement. The big downside is that any
-     work done in refreshing the index for such a call is
-     lost when the process exits. So a background process
-     may end up re-hashing a changed file multiple times
-     until the user runs a command that does an index
-     refresh themselves.
-
-This patch implements the option 3. The idea (and the test)
-is largely stolen from a Git for Windows patch by Johannes
-Schindelin, 67e5ce7f63 (status: offer *not* to lock the
-index and update it, 2016-08-12). The twist here is that
-instead of making this an option to "git status", it becomes
-a "git" option and matching environment variable.
-
-The reason there is two-fold:
-
-  1. An environment variable is carried through to
-     sub-processes. And whether an invocation is a
-     background process or not should apply to the whole
-     process tree. So you could do "git --no-optional-locks
-     foo", and if "foo" is a script or alias that calls
-     "status", you'll still get the effect.
-
-  2. There may be other programs that want the same
-     treatment.
-
-     I've punted here on finding more callers to convert,
-     since "status" is the obvious one to call as a repeated
-     background job. But "git diff"'s opportunistic refresh
-     of the index may be a good candidate.
-
-The test is taken from 67e5ce7f63, and it's worth repeating
-Johannes's explanation:
-
-  Note that the regression test added in this commit does
-  not *really* verify that no index.lock file was written;
-  that test is not possible in a portable way. Instead, we
-  verify that .git/index is rewritten *only* when `git
-  status` is run without `--no-optional-locks`.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/git.txt | 12 ++++++++++++
- builtin/commit.c      |  5 ++++-
- cache.h               |  6 ++++++
- environment.c         |  5 +++++
- git.c                 |  4 ++++
- t/t7508-status.sh     | 10 ++++++++++
- 6 files changed, 41 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 6e3a6767e5..f7e603bc82 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -159,6 +159,10 @@ foo.bar= ...`) sets `foo.bar` to the empty string which ` git config
- 	Add "icase" magic to all pathspec. This is equivalent to setting
- 	the `GIT_ICASE_PATHSPECS` environment variable to `1`.
- 
-+--no-optional-locks::
-+	Do not perform optional operations that require locks. This is
-+	equivalent to setting the `GIT_OPTIONAL_LOCKS` to `0`.
-+
- GIT COMMANDS
- ------------
- 
-@@ -697,6 +701,14 @@ of clones and fetches.
- 	which feed potentially-untrusted URLS to git commands.  See
- 	linkgit:git-config[1] for more details.
- 
-+`GIT_OPTIONAL_LOCKS`::
-+	If set to `0`, Git will complete any requested operation without
-+	performing any optional sub-operations that require taking a lock.
-+	For example, this will prevent `git status` from refreshing the
-+	index as a side effect. This is useful for processes running in
-+	the background which do not want to cause lock contention with
-+	other operations on the repository.  Defaults to `1`.
-+
- Discussion[[Discussion]]
- ------------------------
- 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 58f9747c2f..fafd492029 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1387,7 +1387,10 @@ int cmd_status(int argc, const char **argv, const char *prefix)
- 	read_cache_preload(&s.pathspec);
- 	refresh_index(&the_index, REFRESH_QUIET|REFRESH_UNMERGED, &s.pathspec, NULL, NULL);
- 
--	fd = hold_locked_index(&index_lock, 0);
-+	if (use_optional_locks())
-+		fd = hold_locked_index(&index_lock, 0);
-+	else
-+		fd = -1;
- 
- 	s.is_initial = get_oid(s.reference, &oid) ? 1 : 0;
- 	if (!s.is_initial)
-diff --git a/cache.h b/cache.h
-index 49b083ee0a..75f8efc56f 100644
---- a/cache.h
-+++ b/cache.h
-@@ -444,6 +444,7 @@ static inline enum object_type object_type(unsigned int mode)
- #define GIT_NOGLOB_PATHSPECS_ENVIRONMENT "GIT_NOGLOB_PATHSPECS"
- #define GIT_ICASE_PATHSPECS_ENVIRONMENT "GIT_ICASE_PATHSPECS"
- #define GIT_QUARANTINE_ENVIRONMENT "GIT_QUARANTINE_PATH"
-+#define GIT_OPTIONAL_LOCKS_ENVIRONMENT "GIT_OPTIONAL_LOCKS"
- 
- /*
-  * This environment variable is expected to contain a boolean indicating
-@@ -783,6 +784,11 @@ extern int protect_ntfs;
-  */
- extern int ref_paranoia;
- 
-+/*
-+ * Returns the boolean value of $GIT_OPTIONAL_LOCKS (or the default value).
-+ */
-+int use_optional_locks(void);
-+
- /*
-  * The character that begins a commented line in user-editable file
-  * that is subject to stripspace.
-diff --git a/environment.c b/environment.c
-index f1f934b6fd..8289c25b44 100644
---- a/environment.c
-+++ b/environment.c
-@@ -338,3 +338,8 @@ void reset_shared_repository(void)
- {
- 	need_shared_repository_from_config = 1;
- }
-+
-+int use_optional_locks(void)
-+{
-+	return git_env_bool(GIT_OPTIONAL_LOCKS_ENVIRONMENT, 1);
-+}
-diff --git a/git.c b/git.c
-index f31dca6962..9e96dd4090 100644
---- a/git.c
-+++ b/git.c
-@@ -182,6 +182,10 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
- 			setenv(GIT_ICASE_PATHSPECS_ENVIRONMENT, "1", 1);
- 			if (envchanged)
- 				*envchanged = 1;
-+		} else if (!strcmp(cmd, "--no-optional-locks")) {
-+			setenv(GIT_OPTIONAL_LOCKS_ENVIRONMENT, "0", 1);
-+			if (envchanged)
-+				*envchanged = 1;
- 		} else if (!strcmp(cmd, "--shallow-file")) {
- 			(*argv)++;
- 			(*argc)--;
-diff --git a/t/t7508-status.sh b/t/t7508-status.sh
-index 43d19a9b22..93f162a4f7 100755
---- a/t/t7508-status.sh
-+++ b/t/t7508-status.sh
-@@ -1670,4 +1670,14 @@ test_expect_success '"Initial commit" should not be noted in commit template' '
- 	test_i18ngrep ! "Initial commit" output
- '
- 
-+test_expect_success '--no-optional-locks prevents index update' '
-+	test-chmtime =1234567890 .git/index &&
-+	git --no-optional-locks status &&
-+	test-chmtime -v +0 .git/index >out &&
-+	grep ^1234567890 out &&
-+	git status &&
-+	test-chmtime -v +0 .git/index >out &&
-+	! grep ^1234567890 out
-+'
-+
- test_done
--- 
-2.14.2.988.g01c8b37dde
-
+Will queue.
