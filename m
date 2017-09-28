@@ -2,185 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4BE9420A10
-	for <e@80x24.org>; Thu, 28 Sep 2017 22:31:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 784ED20A10
+	for <e@80x24.org>; Thu, 28 Sep 2017 22:42:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751088AbdI1Wbn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Sep 2017 18:31:43 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:35327 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750821AbdI1Wbm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Sep 2017 18:31:42 -0400
-Received: by mail-wr0-f196.google.com with SMTP id n64so3391760wrb.2
-        for <git@vger.kernel.org>; Thu, 28 Sep 2017 15:31:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=TR0m+8oBhwaza/ytYEhsblywiZQSIHwpRV85YhrsvCg=;
-        b=GldSgVygzF91IxBSt1swF1b3vzJon1h6qPdcbpM6nuErLzBTwfP+HOyKnml1q2hUvs
-         4Njd47eA+8gas6x6T84gcPYPhR0eCJALWIhm/ZtFL8HaD0qVn6KAztkB1hyWlqx1eiAe
-         tRgWMqB1+kK/+d+xMHWRlG7d3+PNxS4onBVP+NiEiiEUWOWfU2OQGfKg13IdA2KbxG8Z
-         jmEj7/uKedON1NMYQyai6A7PE/+En8avquk+aeksh0aq6MvaO4CAu23PwjHZbmC+Poel
-         o+GV0C5d91nxuwlKkJZwOOGWN5wn+aVxbqwHdh2TDTYWG56y6voeIOFhywCtdGNxMwZb
-         VxAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=TR0m+8oBhwaza/ytYEhsblywiZQSIHwpRV85YhrsvCg=;
-        b=jq7efEiVtCutv+Xc/LOLxfa9B7OpkIn7VaNe8YZfqJun9wQLG8EW/kgdFLITuN5rVr
-         iZMGv5zaZu1FhvfsyqoqB9aGNS+2EPicvbkmY+NYR5qRDvmMwridJnKjqzgmegbVUr2G
-         E1LegH99W2tWWFY47ODKnM/0LnRjh61RCqg+yQ2vLwVXDGUCdQ18Gudv/Fombm4BowXz
-         GgSmwn6U0G5rCXvnskmpAw4uTIK+j54OD7bgsI4XKRMmAabE9j1G0suy6LPFSvfngzVf
-         BonORl9cezeyvRT7EhIdFIIMU4rAIJKacVTm6C/EguvBAryuNaL4g5iz9yBYMEkAoKJx
-         U92A==
-X-Gm-Message-State: AHPjjUiOyYGeYIDwDLz2qowW25cs/QQA493IdTzQhQ5sQFJJ7EReomtT
-        z9T33T7ixzqIL4G6Mexzc7kg8pcF
-X-Google-Smtp-Source: AOwi7QAau47Vs3nPNDggfEhoU+X2ESaBhDHXmAcK8n+t8WKlS1VBLcQ0TSmTkPeoWv7tL2/3sjgpzg==
-X-Received: by 10.223.164.71 with SMTP id e7mr5632803wra.4.1506637900632;
-        Thu, 28 Sep 2017 15:31:40 -0700 (PDT)
-Received: from varnish ([92.184.97.102])
-        by smtp.gmail.com with ESMTPSA id 69sm2547262wmp.11.2017.09.28.15.31.39
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 28 Sep 2017 15:31:39 -0700 (PDT)
-Date:   Fri, 29 Sep 2017 00:31:34 +0200
-From:   Dridi Boukelmoune <dridi.boukelmoune@gmail.com>
-To:     git@vger.kernel.org
-Subject: [PATCH] git-sh: Avoid sourcing scripts with git --exec-path
-Message-ID: <20170928223134.GA30744@varnish>
+        id S1750891AbdI1Wmr (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Sep 2017 18:42:47 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53964 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1750805AbdI1Wmq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Sep 2017 18:42:46 -0400
+Received: (qmail 2893 invoked by uid 109); 28 Sep 2017 22:42:47 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 28 Sep 2017 22:42:47 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 31781 invoked by uid 111); 28 Sep 2017 22:43:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Thu, 28 Sep 2017 18:43:25 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Sep 2017 18:42:44 -0400
+Date:   Thu, 28 Sep 2017 18:42:44 -0400
+From:   Jeff King <peff@peff.net>
+To:     Olga Telezhnaya <olyatelezhnaya@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH Outreachy] mru: use double-linked list from list.h
+Message-ID: <20170928224244.pi34zwifnornssqk@sigill.intra.peff.net>
+References: <CAP8UFD24A8rxMfLMFmSStWnBMMeB58SqUdNoo3niQuc7LqRMMg@mail.gmail.com>
+ <0102015ec7a3424b-529be659-bdb6-42c4-a48f-db264f33d53a-000000@eu-west-1.amazonses.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-User-Agent: Mutt/1.9.0 (2017-09-02)
+In-Reply-To: <0102015ec7a3424b-529be659-bdb6-42c4-a48f-db264f33d53a-000000@eu-west-1.amazonses.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-For end users making use of a custom exec path many commands will simply
-fail. Adding git's exec path to the PATH also allows overriding git-sh-*
-scripts, not just adding commands. One can then patch a script without
-tainting their system installation of git for example.
+On Thu, Sep 28, 2017 at 08:38:39AM +0000, Olga Telezhnaya wrote:
 
-Signed-off-by: Dridi Boukelmoune <dridi.boukelmoune@gmail.com>
----
+> diff --git a/packfile.c b/packfile.c
+> index f69a5c8d607af..ae3b0b2e9c09a 100644
+> --- a/packfile.c
+> +++ b/packfile.c
+> @@ -876,6 +876,7 @@ void prepare_packed_git(void)
+>  	for (alt = alt_odb_list; alt; alt = alt->next)
+>  		prepare_packed_git_one(alt->path, 0);
+>  	rearrange_packed_git();
+> +	INIT_LIST_HEAD(&packed_git_mru.list);
+>  	prepare_packed_git_mru();
+>  	prepare_packed_git_run_once = 1;
+>  }
 
-Hi,
+I was thinking on this hunk a bit more, and I think it's not quite
+right.
 
-I've been bothered by this problem ever since I upgraded my system to
-Fedora 26, and I grew tired of locally patching git-sh-setup after every
-git-core update. So I decided to look at the instructions on how to send
-patches to the Git project, and here is my first patch.
+The prepare_packed_git_mru() function will clear the mru list and then
+re-add each item from the packed_git list. But by calling
+INIT_LIST_HEAD() here, we're effectively clearing the packed_git_mru
+list, and we end up leaking whatever was on the list before.
 
-I hope you will find it appropriate, I didn't study the test suite to
-have it enforce that files shouldn't be sourced from the "system"
-installation. I couldn't reproduce it after a quick look, and I'm not
-familiar enough to tinker with it yet, so I reached my trial&error quota
-before I could figure things out.
+So for the first call to prepare_packed_git, we really need this
+INIT_LIST_HEAD() call. But for subsequent calls (which come from
+reprepare_packed_git()), we must not call it.
 
-Best Regards,
-Dridi
+There are a few ways to work around it that I can think of:
 
- Documentation/CodingGuidelines            | 22 ++++++++++++++++++++++
- contrib/convert-grafts-to-replace-refs.sh |  3 ++-
- contrib/rerere-train.sh                   |  3 ++-
- contrib/subtree/git-subtree.sh            |  1 -
- git-sh-setup.sh                           |  2 +-
- 5 files changed, 27 insertions(+), 4 deletions(-)
+  1. Check whether packed_git_mru.list.head is NULL, and only initialize
+     in that case.
 
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index c4cb5ff0d..fdc0d3318 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -151,6 +151,28 @@ For shell scripts specifically (not exhaustive):
-    interface translatable. See "Marking strings for translation" in
-    po/README.
- 
-+ - When sourcing a "git-sh-*" file using "git --exec-path" make sure
-+   to only use its base name.
-+
-+	(incorrect)
-+	. "$(git --exec-path)/git-sh-setup"
-+
-+	(correct)
-+	. git-sh-setup
-+
-+   Otherwise for a user with a custom "GIT_EXEC_PATH=/foo" the shell
-+   expects "/foo:/usr/libexec/git-core/git-sh-setup" or something
-+   similar depending on the installation. The git command already
-+   adds the git exec path to the regular path before executing a
-+   command.
-+
-+   For scripts that aren't run via the git command, add the git exec
-+   path to the path instead.
-+
-+	(correct)
-+	PATH="$(git --exec-path):$PATH"
-+	. git-sh-setup
-+
-  - We do not write our "test" command with "-a" and "-o" and use "&&"
-    or "||" to concatenate multiple "test" commands instead, because
-    the use of "-a/-o" is often error-prone.  E.g.
-diff --git a/contrib/convert-grafts-to-replace-refs.sh b/contrib/convert-grafts-to-replace-refs.sh
-index 0cbc917b8..f7d2fab03 100755
---- a/contrib/convert-grafts-to-replace-refs.sh
-+++ b/contrib/convert-grafts-to-replace-refs.sh
-@@ -5,7 +5,8 @@
- 
- GRAFTS_FILE="${GIT_DIR:-.git}/info/grafts"
- 
--. $(git --exec-path)/git-sh-setup
-+PATH="$(git --exec-path):$PATH"
-+. git-sh-setup
- 
- test -f "$GRAFTS_FILE" || die "Could not find graft file: '$GRAFTS_FILE'"
- 
-diff --git a/contrib/rerere-train.sh b/contrib/rerere-train.sh
-index 52ad9e41f..07bad67e6 100755
---- a/contrib/rerere-train.sh
-+++ b/contrib/rerere-train.sh
-@@ -7,7 +7,8 @@ USAGE="$me rev-list-args"
- 
- SUBDIRECTORY_OK=Yes
- OPTIONS_SPEC=
--. "$(git --exec-path)/git-sh-setup"
-+PATH="$(git --exec-path):$PATH"
-+. git-sh-setup
- require_work_tree
- cd_to_toplevel
- 
-diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index dec085a23..1d61f75d0 100755
---- a/contrib/subtree/git-subtree.sh
-+++ b/contrib/subtree/git-subtree.sh
-@@ -32,7 +32,6 @@ squash        merge subtree changes as a single commit
- "
- eval "$(echo "$OPTS_SPEC" | git rev-parse --parseopt -- "$@" || echo exit $?)"
- 
--PATH=$PATH:$(git --exec-path)
- . git-sh-setup
- 
- require_work_tree
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index 378928518..12e1220f8 100644
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -44,7 +44,7 @@ git_broken_path_fix () {
- # @@BROKEN_PATH_FIX@@
- 
- # Source git-sh-i18n for gettext support.
--. "$(git --exec-path)/git-sh-i18n"
-+. git-sh-i18n
- 
- die () {
- 	die_with_status 1 "$@"
--- 
-2.13.5
+  2. Use a static initializer for packed_git_mru.list, so that we don't
+     have do the first-time initializing here.
 
+  3. Teach reprepare_packed_git() to do the mru_clear() call, so that we
+     know the list is empty when we get here.
+
+One final and more invasive option is to stop regenerating the
+packed_git_mru list from scratch during each prepare_packed_git(). I did
+it that way so that we start with the same order that
+rearrange_packed_git() will give us, but I'm not sure how much value
+that has in practice (it probably had a lot more when we didn't have the
+mru, and the time-sorted pack order helped find recent objects more
+quickly).
+
+The alternative would be to just teach install_packed_git() to add each
+newly-added pack to the mru list, and then never clear the list (and we
+wouldn't need an mru_clear() at all, then).
+
+-Peff
