@@ -2,91 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 66C3720A10
-	for <e@80x24.org>; Thu, 28 Sep 2017 22:03:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF7F620A10
+	for <e@80x24.org>; Thu, 28 Sep 2017 22:08:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751710AbdI1WDK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Sep 2017 18:03:10 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56670 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751107AbdI1WDJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Sep 2017 18:03:09 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7129596867;
-        Thu, 28 Sep 2017 18:03:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=hgTK20/lCZxLl92pkKGa/b6mmoU=; b=QGHWMF
-        SzBtjHQJPZH8MjO7IcXfrXfq9mhEOpKG6an+0mlNyD9h6Alt9poBNBf+XIcjcCxB
-        OVoGo3wMed7Af9v4AVjN5TY2mvXkstRfcaaHmfCk7LxnCVoaeGe0KtgI8UnupS7g
-        bisF+ychi+/YNITNllAJPfxNam3NQOyQNYd2E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=XbXA/q/2wegigQDuRyJkPFnvrdebdkR+
-        LTB7wHVjf0MWELu0tIE/0wTi5LxBTHhebhG4w4J5BmH7VFQZuFzSsvqUaSgWfWg1
-        dxABcneE6t+qcSfWNM2cQrV7lLsyE+dnHaFGlRW4rVwHtIbHt92FA7Zjalki0l1H
-        J144t31FqVY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 65D1896866;
-        Thu, 28 Sep 2017 18:03:09 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AAB4F96863;
-        Thu, 28 Sep 2017 18:03:08 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Max Kirillov <max@max630.net>, Paul Mackerras <paulus@ozlabs.org>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] gitk: expand $config_file_tmp before reporting to user
-References: <20170928041417.28947-1-max@max630.net>
-        <xmqq4lrn30bz.fsf@gitster.mtv.corp.google.com>
-        <xmqqzi9f1lb2.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.21.1.1709281428170.40514@virtualbox>
-Date:   Fri, 29 Sep 2017 07:03:07 +0900
-In-Reply-To: <alpine.DEB.2.21.1.1709281428170.40514@virtualbox> (Johannes
-        Schindelin's message of "Thu, 28 Sep 2017 14:31:17 +0200 (CEST)")
-Message-ID: <xmqqzi9ezdk4.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751088AbdI1WIS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Sep 2017 18:08:18 -0400
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:55381 "EHLO
+        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750946AbdI1WIR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Sep 2017 18:08:17 -0400
+Received: by mail-pf0-f182.google.com with SMTP id r71so1517060pfe.12
+        for <git@vger.kernel.org>; Thu, 28 Sep 2017 15:08:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=gPrO4rOCNLbQeszuAErYk80rSfOTZjzm+nYUpRUrDXU=;
+        b=S4ozl9hoQ9IbGgvcVQzkCgAJwJ0ChZ/Hcmhzfabiu+zkWhKf3Up0vyvmM52UqYD7j4
+         2/7uK6jAzMzOHVAyPXIJ190vZ8Dnbeotz3xk/cFXusR82g5T2NIbXvhaoP6wSUy9v+nb
+         RxBNpyR7gaGfyUDlp7pkNmgWPUkWWGizK9jSiQ3d0PLDAVyfj3jEP8nUQBnyy5zA/hMq
+         dKJV6jnJGK+zFnelTd3RiDukNd+wn2UIl+CXPmKXE+ZgrtEj9cDMd6v6lQHPi31XfrEc
+         rRFDcEP92nEr4xg5L6Q1Q3JoZnQAO+t1XbVifU0Y02YyaG5gEu6ra+FWjDh5ovWAOVZP
+         M3zg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=gPrO4rOCNLbQeszuAErYk80rSfOTZjzm+nYUpRUrDXU=;
+        b=WQ0eJPSL+6aHqtkHgRYxhdmeJ+4/evDEobfgiW2QJ5RumvKVSyc5OMiycgDoSLqoP3
+         wvGzIlFjyWnQnJ6JCLFRqn2oxhfVYkWja6UvvUXET3+LfvOAqIKs3lik/Zc5lSet2uXY
+         q0deCqieaijN1yK1Zm4gLe12GQYBu27arVbtJ1lBuyIKMwswqr6U2zj1EAIy097k7mWL
+         aqPAJKed1awXvoWVULW2sLxL9wk6yF4wTwFHQaJ9AG5zsThNBgBvjlrZ2srvYZYyrrl7
+         gx9tMuQg8D1Q0FRGsokyPN6ExkP3tPhbMs/ZQf8hIvtgJRvG8GPcgbGlZ4x6SPEFmoi4
+         Lzlw==
+X-Gm-Message-State: AHPjjUgn8aC4KyFmL1ZkAoYzex3NebQwQxLuAsiBHZXdjM29IEIlTH/J
+        nH8z2BE+YU8fNezzerJd0e/Sbg==
+X-Google-Smtp-Source: AOwi7QBGOIMO5Ge2g09ZJuS8jsgDEFGb6agWAJS/FdjKBDZ/437r/KG1cy1QpWWd8LtY35H6pZ1KsQ==
+X-Received: by 10.99.191.6 with SMTP id v6mr5562292pgf.284.1506636496929;
+        Thu, 28 Sep 2017 15:08:16 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:c55b:7140:f55d:7eed])
+        by smtp.gmail.com with ESMTPSA id c62sm4584027pfl.84.2017.09.28.15.08.15
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 28 Sep 2017 15:08:15 -0700 (PDT)
+Date:   Thu, 28 Sep 2017 15:08:14 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, bturner@atlassian.com, git@jeffhostetler.com,
+        jonathantanmy@google.com, jrnieder@gmail.com, peff@peff.net,
+        sbeller@google.com
+Subject: Re: [PATCH v2 6/9] connect: teach client to recognize v1 server
+ response
+Message-ID: <20170928220814.GC177031@google.com>
+References: <20170913215448.84674-1-bmwill@google.com>
+ <20170926235627.79606-1-bmwill@google.com>
+ <20170926235627.79606-7-bmwill@google.com>
+ <xmqqpoac676l.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CFD924A2-A498-11E7-AF77-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqpoac676l.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On 09/27, Junio C Hamano wrote:
+> Brandon Williams <bmwill@google.com> writes:
+> 
+> > +/* Returns 1 if packet_buffer is a protocol version pkt-line, 0 otherwise. */
+> > +static int process_protocol_version(void)
+> > +{
+> > +	switch (determine_protocol_version_client(packet_buffer)) {
+> > +		case protocol_v1:
+> > +			return 1;
+> > +		case protocol_v0:
+> > +			return 0;
+> > +		default:
+> > +			die("server is speaking an unknown protocol");
+> > +	}
+> > +}
+> 
+> For the purpose of "technology demonstration" v1 protocol, it is OK
+> to discard the result of "determine_pvc()" like the above code, but
+> in a real application, we would do a bit more than just ignoring an
+> extra "version #" packet that appears at the beginning, no?
+> 
+> It would be sensible to design how the result of determien_pvc()
+> call is propagated to the remainder of the program in this patch and
+> implement it.  Perhaps add a new global (like server_capabilities
+> already is) and store the value there, or something?  Or pass a
+> pointer to enum protocol_version as a return-location parameter to
+> this helper function so that the process_capabilities() can pass a
+> pointer to its local variable?
 
->> > Max Kirillov <max@max630.net> writes:
->> >
->> >> Tilda-based path may confise some users. First, tilda is not known
->> >> for Window users, second, it may point to unexpected location
->> >> depending on various environment setup.
-> ...
-> As familiar, as it is unfamiliar to Windows users.
->
-> So I would actually suggest to make this a conditional on the platform: on
-> Windows, use the native name, everywhere else, not.
->
-> Sound good?
+Yes, once we actually implement a v2 we would need to not throw away the
+result of 'determine_pvc()' and instead do control flow based on the
+resultant version.  I was trying to implement 'v1' as simply as possible
+so that I wouldn't have to do a large amount of refactoring when
+proposing this transition, though it seems Jonathan ended up doing more
+than I planned, as I figured we didn't really know what the code will
+need to be refactored to, in order to handle another protocol version.
+I would suspect that we maybe wouldn't want to determine which version a
+server is speaking in 'get_remote_heads()' but rather at some point
+before that so we can branch off to do v2 like things, for example,
+capability discovery and not ref discovery.
 
-Not really.  
+If you do think we need to do more of that refactoring now, before a v2,
+I can most certainly work on that.
 
-I agree with and (more importantly) consider the second rationale
-Max cites a more relevant one for this change.  
 
-This is about reporting an error, and using the short-hand ~/$rest
-that could be pointing at a location different from what the user
-_thinks_ it points at for whatever reason (miconfigured HOME, some
-intermediate process setting it to something else, etc.) can hide
-the real issue.  The problem can be more easily noticed and
-diagnosed if the message shows the result of 'nativename'.  
+> 
+> >  static void process_capabilities(int *len)
+> >  {
+> > @@ -224,12 +239,19 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
+> >  	 */
+> >  	int responded = 0;
+> >  	int len;
+> > -	int state = EXPECTING_FIRST_REF;
+> > +	int state = EXPECTING_PROTOCOL_VERSION;
+> >  
+> >  	*list = NULL;
+> >  
+> >  	while ((len = read_remote_ref(in, &src_buf, &src_len, &responded))) {
+> >  		switch (state) {
+> > +		case EXPECTING_PROTOCOL_VERSION:
+> > +			if (process_protocol_version()) {
+> > +				state = EXPECTING_FIRST_REF;
+> > +				break;
+> > +			}
+> > +			state = EXPECTING_FIRST_REF;
+> > +			/* fallthrough */
+> >  		case EXPECTING_FIRST_REF:
+> >  			process_capabilities(&len);
+> >  			if (process_dummy_ref()) {
 
-And that rationale holds whether you are seeing the error message on
-Windows or non-Windows.
-
+-- 
+Brandon Williams
