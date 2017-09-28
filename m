@@ -2,172 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA28A20A10
-	for <e@80x24.org>; Thu, 28 Sep 2017 21:04:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 575C420A10
+	for <e@80x24.org>; Thu, 28 Sep 2017 21:04:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751697AbdI1VEm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Sep 2017 17:04:42 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53800 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751129AbdI1VEm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Sep 2017 17:04:42 -0400
-Received: (qmail 30866 invoked by uid 109); 28 Sep 2017 21:04:42 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 28 Sep 2017 21:04:42 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30543 invoked by uid 111); 28 Sep 2017 21:05:21 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Thu, 28 Sep 2017 17:05:21 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Sep 2017 17:04:39 -0400
-Date:   Thu, 28 Sep 2017 17:04:39 -0400
-From:   Jeff King <peff@peff.net>
-To:     Olga Telezhnaya <olyatelezhnaya@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH Outreachy] mru: use double-linked list from list.h
-Message-ID: <20170928210439.msmzxlih4ykrsmee@sigill.intra.peff.net>
-References: <CAP8UFD24A8rxMfLMFmSStWnBMMeB58SqUdNoo3niQuc7LqRMMg@mail.gmail.com>
- <0102015ec7a3424b-529be659-bdb6-42c4-a48f-db264f33d53a-000000@eu-west-1.amazonses.com>
+        id S1751776AbdI1VEz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Sep 2017 17:04:55 -0400
+Received: from mail-pg0-f48.google.com ([74.125.83.48]:56680 "EHLO
+        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751713AbdI1VEy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Sep 2017 17:04:54 -0400
+Received: by mail-pg0-f48.google.com with SMTP id 7so1584153pgd.13
+        for <git@vger.kernel.org>; Thu, 28 Sep 2017 14:04:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=nbeIzpb1wciAhLNNYB2/wt0YXXz478kyatah2/RVCQ4=;
+        b=ro0pkXeCpdXBORiB1tYAnRyI5QdzeGE5xUuAFEap/ERDKWPuxjmE3dFzNu0KyOiDZO
+         bKd+iLpA+DKoEpEJv/CJO2CKfhEIp0GBsiEhltaWlZ7Xil0zrfcB3I9zlaNtO9j2eDb+
+         Z/XPyb7sheycIiDef5w3sPGzZgEyNEHLKBNtzT5ymO8A7tUr4Z030Zihvpyunpgx0Oui
+         u32PHwWo67zzCRB5eg3NqV2PM5uqg+kzV3PuM9PFXTdUCTwuSpn5jkqnrTvyOK6wNEfU
+         fczo/3oSV4vf3h8GEeSYYdnPNrlRg+V7v4i5HfMs2Wn2yrLQYXpDLEXPzRFo+Ou8XNIW
+         Zxdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=nbeIzpb1wciAhLNNYB2/wt0YXXz478kyatah2/RVCQ4=;
+        b=WpazHvS0PHf/6TYcYW3AFsJHB496WwzjTryoOB0WQCW2JL/d+9yWL9YptP5grxSnFu
+         /yNsBgHE8QiKZHerz6xojZaNBFzz0ayMLgr5tCgtfiUgpHgjHp33hsRGuTSw6UgTNWdj
+         /K0rlAI7Jboa7NdGi/51P8OcPiPcwwqZYPPy0RAhXYVTxRuDsJAqK321kYaQYnpN1Vu6
+         AaUS+AUoqF+BAfZ1j3878dOoO9S6oiD5fyE9pn1sxcXGTOCMC1RjDgsoXaRCPwXjNBja
+         vhfxI7t0KX6MRjs6sTShKu7qtw3nCPO+uAxETE1iVl4CpLGJqIHN0lVwV4KriNEg6tnv
+         R68g==
+X-Gm-Message-State: AHPjjUhh62TH7pLgl1tQctQQqJQUanXtcRl0enWNvmZkaPke+aqDkI6H
+        as9uokTlDc2FKQcOgJ0h4d9y2A==
+X-Google-Smtp-Source: AOwi7QBjRptWD8IaF7Gjzzqd3PNbgvr8PcxuvAzPsXajO8+bBR0AosRKQb42fYgA5y64DVIU7LIb8w==
+X-Received: by 10.98.13.81 with SMTP id v78mr5435819pfi.61.1506632694010;
+        Thu, 28 Sep 2017 14:04:54 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:c55b:7140:f55d:7eed])
+        by smtp.gmail.com with ESMTPSA id f2sm4226266pfg.135.2017.09.28.14.04.52
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 28 Sep 2017 14:04:52 -0700 (PDT)
+Date:   Thu, 28 Sep 2017 14:04:51 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Bryan Turner <bturner@atlassian.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 3/9] protocol: introduce protocol extention mechanisms
+Message-ID: <20170928210451.GA177031@google.com>
+References: <20170913215448.84674-1-bmwill@google.com>
+ <20170926235627.79606-1-bmwill@google.com>
+ <20170926235627.79606-4-bmwill@google.com>
+ <CAGZ79kZxOr3ug7V40kv77e2_kF9MBviCu99-6rcXy76tg2YVGg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <0102015ec7a3424b-529be659-bdb6-42c4-a48f-db264f33d53a-000000@eu-west-1.amazonses.com>
+In-Reply-To: <CAGZ79kZxOr3ug7V40kv77e2_kF9MBviCu99-6rcXy76tg2YVGg@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 28, 2017 at 08:38:39AM +0000, Olga Telezhnaya wrote:
+On 09/26, Stefan Beller wrote:
+> > +extern enum protocol_version get_protocol_version_config(void);
+> > +extern enum protocol_version determine_protocol_version_server(void);
+> > +extern enum protocol_version determine_protocol_version_client(const char *server_response);
+> 
+> It would be cool to have some documentation here.
 
-> Simplify mru.c, mru.h and related code by reusing the double-linked
-> list implementation from list.h instead of a custom one.
+Thanks for reminding me, I'll get to writing some more documentation :)
 
-The commit message is a good reason to talk about why we want to do
-this. In this case, the answer may be fairly obvious. But I sometimes
-find that things that are obvious to me as the patch author are not
-quite as obvious to people reading it later (either reviewing, or six
-months from now when they are hunting the cause of a bug).
-
-> -void mru_mark(struct mru *mru, struct mru_entry *entry)
-> +void mru_mark(struct mru *head, struct mru *entry)
->  {
-> -	/* If we're already at the front of the list, nothing to do */
-> -	if (mru->head == entry)
-> -		return;
-> -
-> -	/* Otherwise, remove us from our current slot... */
-> -	if (entry->prev)
-> -		entry->prev->next = entry->next;
-> -	if (entry->next)
-> -		entry->next->prev = entry->prev;
-> -	else
-> -		mru->tail = entry->prev;
-> -
-> -	/* And insert us at the beginning. */
-> -	entry->prev = NULL;
-> -	entry->next = mru->head;
-> -	if (mru->head)
-> -		mru->head->prev = entry;
-> -	mru->head = entry;
-> +	/* To mark means to put at the front of the list. */
-> +	list_del(&entry->list);
-> +	list_add(&entry->list, &head->list);
->  }
-
-Nice, this hunk is very satisfying. :)
-
-> -void mru_clear(struct mru *mru)
-> +void mru_clear(struct mru *head)
->  {
-> -	struct mru_entry *p = mru->head;
-> -
-> -	while (p) {
-> -		struct mru_entry *to_free = p;
-> -		p = p->next;
-> +	struct list_head *p1;
-> +	struct list_head *p2;
-> +	struct mru *to_free;
-> +	
-> +	list_for_each_safe(p1, p2, &head->list) {
-> +		to_free = list_entry(p1, struct mru, list);
->  		free(to_free);
->  	}
-> -	mru->head = mru->tail = NULL;
-> +	INIT_LIST_HEAD(&head->list);
-
-Two minor style comments here:
-
-  - Perhaps "tmp" is a better name than "p2" for the second argument of
-    a list_for_each_safe, as it makes it less likely to confuse p1 and
-    p2 (though admittedly the whole function is short enough that it
-    probably doesn't matter much either way).
-
-  - It's a good practice to declare variables in the smallest scope
-    possible. So I think the declaration of to_free could go inside the
-    loop.
-
-    You could actually get rid of it entirely with:
-
-      free(list_entry(p1, struct mru, list));
-
-    but I certainly don't mind using a variable for better readability.
-
-> @@ -29,17 +28,13 @@
->   * you will begin traversing the whole list again.
->   */
->  
-> -struct mru_entry {
-> -	void *item;
-> -	struct mru_entry *prev, *next;
-> -};
-> -
->  struct mru {
-> -	struct mru_entry *head, *tail;
-> +	struct list_head list;
-> +        void *item;
->  };
-
-The decision to get rid of the "mru versus mru_entry" distinction
-surprised me a little. In the original, a "struct mru" represented the
-whole list. In the list.h implementation, a "struct list_head" serves
-that purpose, as a sentinel value. But that sentinel doesn't need to
-have an "item", right? I.e., we could have:
-
-  struct mru {
-          struct list_head head;
-  };
-
-  struct mru_entry {
-          void *item;
-	  struct list_head list;
-  };
-
-As I said in my response to Junio (and as we discussed a little
-off-list), I think we can eventually move to having no structs at all
-(just list_heads embedded inside the existing packfile objects). At
-which point the user of the API would just declare:
-
-  LIST_HEAD(packed_git_mru);
-
-themselves. So I'm actually fine with this direction if we're using it
-as the "middle step" that I mentioned there.
-
->  struct mru {
-> -	struct mru_entry *head, *tail;
-> +	struct list_head list;
-> +        void *item;
->  };
-
-The funny indentation in this diff shows that "void *item" is indented
-with spaces, not a tab.
-
-> [...]
-
-I pointed out a few minor bits, but overall this is looking very strong.
-Great work!
-
--Peff
+-- 
+Brandon Williams
