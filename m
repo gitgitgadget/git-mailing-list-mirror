@@ -2,94 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97D7820A26
-	for <e@80x24.org>; Thu, 28 Sep 2017 00:41:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C403620A26
+	for <e@80x24.org>; Thu, 28 Sep 2017 01:21:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752510AbdI1All (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Sep 2017 20:41:41 -0400
-Received: from mail-pg0-f52.google.com ([74.125.83.52]:49767 "EHLO
-        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752402AbdI1Alk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Sep 2017 20:41:40 -0400
-Received: by mail-pg0-f52.google.com with SMTP id m30so8686314pgn.6
-        for <git@vger.kernel.org>; Wed, 27 Sep 2017 17:41:40 -0700 (PDT)
+        id S1752027AbdI1BV4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Sep 2017 21:21:56 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:33068 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751881AbdI1BVz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Sep 2017 21:21:55 -0400
+Received: by mail-pg0-f68.google.com with SMTP id u136so74794pgc.0
+        for <git@vger.kernel.org>; Wed, 27 Sep 2017 18:21:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Hd+Cqw1YgSCFYhL1ArOydluKxhihEjw72ciSfA2WTHk=;
-        b=I42bv+/ln4Xqx9b9Wt+gN3Nx0pHCEclhZYfpzZCXhlSVHUuusIV4jDlVQPdqm57ak8
-         K321rABL0lV9m9YFRrKVxVKYtVSOdr6R4Z/3EdSknJQrtd25LSKn0xuLEXWznWMCu6p8
-         ce6ct/d2abvrxcm9/e3u3ypbC+gfg8YeU2FBGe4LCAsjDXmP8k8kN3dFo+/1USbnnx1p
-         FaYEsL9xIRAVVCFTe6pPGYorR8q9w+K9oDIha3yi/7AjKe6u8pCvyIyb5A0JGCF6g4Qq
-         I/sbOA54B2uxeS4w8wG3IiO5JAlNuW8+N6L605FVSmnnBvcpFmJjdT9pzNndHDpYedSY
-         SiQg==
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:date:mime-version
+         :content-transfer-encoding;
+        bh=l3nfHo52klbVlOqerPgukKTE2cqOQAt198VOjFUM4Po=;
+        b=ba7mOQOHoB2ljdb3bfg5jSfWDxpPvBeySZ8Pvfe9nlFULGoNz1rasobQlPbb64mKiK
+         Bl9YwtskJiAemZSqXziWdaA0RD+aPQM6KuySVjSfJr6c9DkQHsQP6uCKTvVzl9Qhwknh
+         HqfR6RHw6buOOkps/2HbB7G/Hp2w5k0qMICZJ+PNnpcOIrWctnbvSYaIQhSAmFjXDyfw
+         vosRpat/VbtA5mB5xDXDU3F3zHPbQS5fMzUPSuCkTkdrwhPgX7Akhqp2Oar3l7Avjaoe
+         wa4C/lgGMsdJ4V0emuDN45hRDZ+drRMwMKrSxMpJ4YMCeklfqxAkp/zagmtx4qAK+Haf
+         gYYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Hd+Cqw1YgSCFYhL1ArOydluKxhihEjw72ciSfA2WTHk=;
-        b=UOLwTa57FLrYRyvlZD/d1IUttrFl4585EzXq7LgqylrK/ur6lsMMLl17aOuf0T49sE
-         DTUacEIRfQUrlhDwc9JuxZzvqi8HfplmlnSJ3Z93k/za5qUADk18hRmfQ22xyoNx1YUx
-         Y1VXoppUQ5f+ueTUbv38l6N7NEkKMWEwLwjapD7dLx2apL672xc34piN6Fqif1JEfSVg
-         R8zozsiEeYDZfV8PcbNWygFuEbrO3OsWAC8nNh1aBt9AH7R00NPw8AgnoWwRnaoQr7or
-         Cco2cgR23u7t9WxhvqkdKqsgu2iLTh+U1+OOF89pXZjHgLF5LMKl9rTj0BpUpzrkRGtf
-         sJ3w==
-X-Gm-Message-State: AHPjjUjsKaP4NWpJqdiuGx6onkOiBCrdjsCbvS+KWHYkxuVc6zfTX1cQ
-        9+asAUPijprsr6CLkjmRdmaB0Q==
-X-Google-Smtp-Source: AOwi7QAoniSe8CH1GMr1U58o9m+IsYfugpd6/QRKALbeSXOQ2DtbI9aEEJ7RNWXpLaORQ8jS4YGrFA==
-X-Received: by 10.98.14.213 with SMTP id 82mr2786774pfo.320.1506559300075;
-        Wed, 27 Sep 2017 17:41:40 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:880:967f:fa0a:fc13])
-        by smtp.gmail.com with ESMTPSA id n83sm220080pfi.163.2017.09.27.17.41.38
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 27 Sep 2017 17:41:39 -0700 (PDT)
-Date:   Wed, 27 Sep 2017 17:41:37 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, git@jeffhostetler.com
-Subject: Re: [PATCH] oidmap: map with OID as key
-Message-ID: <20170928004137.GD68699@google.com>
-References: <20170927221910.164552-1-jonathantanmy@google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170927221910.164552-1-jonathantanmy@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=x-gm-message-state:message-id:subject:from:to:date:mime-version
+         :content-transfer-encoding;
+        bh=l3nfHo52klbVlOqerPgukKTE2cqOQAt198VOjFUM4Po=;
+        b=ihU0DJJxuX30cLXGQUcn1Y7YmnPJhIRJHLxWB/G2uOwOENC4k4Q7q96NFyHOF8hRxF
+         L6lpDrZED6utum7rz4798jRqCy3+jfE4S7HOtniNQ6XxU96qb+g8AR/oXhLcha3LRbpi
+         +QacLIKgiSK2UUsy870iA1iH9Mn1bG2t9nBvF16iChdy4/O8u448cZFdfNrScZVp2Mfu
+         WZytSs1pxYhHnf8hZVQUUfFG3zDf1DFeV4W7mnMrEr77IVS8PgTrepSplZWYJUYZvJZX
+         8D4+NYDstpVzZFVmwzWdgKt8GCv/SrWrZcCXNGbxCCHkQvLpy8okguESJr/gJ/HXojZ0
+         nnlQ==
+X-Gm-Message-State: AHPjjUiuLD68mksE9SbRsAnwbO5B7aOhHWUYirJs2BrSC9U86VBBI9nZ
+        uQpSY2qPQ9dT7SzL9ITID7J9rdMai73RrQ==
+X-Google-Smtp-Source: AOwi7QDBaoEHncYBE3bbIOvTCDBx1aIC79A0UZZJHBxTcFF9smpeCXK4baDCoPSE6RaDn5MI5MaGyg==
+X-Received: by 10.98.149.69 with SMTP id p66mr2843247pfd.199.1506561714005;
+        Wed, 27 Sep 2017 18:21:54 -0700 (PDT)
+Received: from debian ([101.210.209.208])
+        by smtp.googlemail.com with ESMTPSA id j68sm302486pfa.93.2017.09.27.18.21.45
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 27 Sep 2017 18:21:51 -0700 (PDT)
+Message-ID: <1506561693.24644.2.camel@gmail.com>
+Subject: Help
+From:   Nityananda <nityanandagohain@gmail.com>
+To:     git@vger.kernel.org
+Date:   Thu, 28 Sep 2017 06:51:33 +0530
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.22.6-1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/27, Jonathan Tan wrote:
-> This is similar to using the hashmap in hashmap.c, but with an
-> easier-to-use API. In particular, custom entry comparisons no longer
-> need to be written, and lookups can be done without constructing a
-> temporary entry structure.
-> 
-> oidset has been updated to use oidmap.
+Hello,
+I am new to this community. I am facing a problem while using the
+"make" command inside the "t/" folder.
 
-After a quick glance at the code, I think it looks good.  I do have one
-suggestion though.  This map is structured much like our internal
-hashmap where if you want to include any data you have to implement your
-own struct with the internal 'entry' struct as the first member in your
-custom struct.  I personal dislike this method, despite the potential
-memory savings, because it makes the data structure much more difficult
-to use.
+The error is 
 
-If all i wanted was a map from 'OID -> const char *' then I would need
-to write all the boilerplate code to make a struct which contains the
-map 'entry' struct + the 'const char *' entry.  You are also making the
-caller responsible for allocating the individual entries instead of
-letting the data structure take care of that internally.
 
-To me it seems like a much simpler API for a map would be to just allow
-callers to store a 'void *' as the value.
+"1..31
+Makefile:49: recipe for target 't5551-http-fetch-smart.sh' failed
+make[1]: *** [t5551-http-fetch-smart.sh] Error 1
+make[1]: Leaving directory '/home/nitya/projects/git/t'
+Makefile:36: recipe for target 'test' failed
+make: *** [test] Error 2"
 
--- 
-Brandon Williams
+It will really be an act of kindness if you help me out.
+
+Regards,
+Nityananda Gohain
