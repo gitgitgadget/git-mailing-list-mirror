@@ -2,105 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,URIBL_SBL,URIBL_SBL_A shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A932B202A5
-	for <e@80x24.org>; Thu, 28 Sep 2017 12:31:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7132E202A5
+	for <e@80x24.org>; Thu, 28 Sep 2017 12:59:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752896AbdI1Mb2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Sep 2017 08:31:28 -0400
-Received: from mout.gmx.net ([212.227.15.19]:53367 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752739AbdI1Mb2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Sep 2017 08:31:28 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MhAVV-1dkZQE0yUT-00MLIU; Thu, 28
- Sep 2017 14:31:19 +0200
-Date:   Thu, 28 Sep 2017 14:31:17 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Max Kirillov <max@max630.net>, Paul Mackerras <paulus@ozlabs.org>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] gitk: expand $config_file_tmp before reporting to user
-In-Reply-To: <xmqqzi9f1lb2.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.21.1.1709281428170.40514@virtualbox>
-References: <20170928041417.28947-1-max@max630.net> <xmqq4lrn30bz.fsf@gitster.mtv.corp.google.com> <xmqqzi9f1lb2.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1753203AbdI1M7Y (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Sep 2017 08:59:24 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:37831 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753150AbdI1M7U (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Sep 2017 08:59:20 -0400
+Received: by mail-wr0-f196.google.com with SMTP id u48so1972727wrf.4
+        for <git@vger.kernel.org>; Thu, 28 Sep 2017 05:59:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dinwoodie.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=dkuSii6yY15E++06V+5DOjSpSvEXpv0ZBm1erlqDhYI=;
+        b=TCtuYRiU3m+QXiU9wQ5KO7kjl1VqjQo+krDKk/wihJboIVvLlm4rlABH0T9oIjTnP2
+         LX2+QzEciviSDg1AD9mKzebNOqMfmlgZ7NH1kqYta7VOzszAyPaSGEEXDAktLNyLV5sH
+         zba7RsGRcv1GYJ6MBueWRrt+LVdmearWlDzRA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=dkuSii6yY15E++06V+5DOjSpSvEXpv0ZBm1erlqDhYI=;
+        b=PsT67iZ+Z0+4TjLWhjEgnDGzT8IsZ2l+LtQhHod8LGPznfteott1fCLFXeUi/DKvmh
+         si0tDYfqcbsD9zvYs5jmF+5vcFstFG2U5owQhzS+qhvp37rPg7QJaARglaJjZaNmmZwR
+         euGAJ5CYg/hJxPpPT9gWheKxmCDRN1fhTGtEiXW+ocWjmmjg8vIwRsnQJ3cZ697JYj8I
+         zdu3R9zl0Cl08MtC7WeH7ZZ6lDaTKglNRxn4O/om0HPD6Jtw155/BXa2I5zln2l8m1HR
+         iRU0XMpAkAkMUdDirAi3RXsJT7dZ8nFogGebdsmEX812SlOWJAWYV/hOO1vAZe8gRu7j
+         ZyaA==
+X-Gm-Message-State: AHPjjUgn/y57vQgtE88n0femOOOBwK3tlFe6NRq3DjcR/sAB6LcRfRqf
+        N6zuWHoVsahFqyRDvu0ZDP8xsQ==
+X-Google-Smtp-Source: AOwi7QDa4di++3YIJfCHWQtQKwelC4xnFp7Ws7vy7Wg7CBp+cspx7wpvMk5ZNnHCaFZ9XVVTxKJMZw==
+X-Received: by 10.223.155.157 with SMTP id d29mr4610171wrc.24.1506603559416;
+        Thu, 28 Sep 2017 05:59:19 -0700 (PDT)
+Received: from dinwoodie.org ([2001:ba8:0:1c0::9:1])
+        by smtp.gmail.com with ESMTPSA id w2sm2067775wrb.67.2017.09.28.05.59.17
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 28 Sep 2017 05:59:17 -0700 (PDT)
+Date:   Thu, 28 Sep 2017 13:59:16 +0100
+From:   Adam Dinwoodie <adam@dinwoodie.org>
+To:     Eric Rannaud <e@nanocritical.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        jeremy.serror@gmail.com, "Shawn O . Pearce" <spearce@spearce.org>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH 1/1] fast-import: checkpoint: dump branches/tags/marks
+ even if object_count==0
+Message-ID: <20170928125916.GB9439@dinwoodie.org>
+References: <CAH_=xoZfuJDE515zZbry1DdGV+YeySy+5T9QOBefO-MMTSvXSA@mail.gmail.com>
+ <5b6001e7db3c57fdd9e6354ed4294e2192524061.1506574951.git.e@nanocritical.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:gCLbwIfTZP0b7kjuH8cdu7qiZuNUSrs6b2CfK8eZLffS11VUfAY
- Uf+IB9j4rktvHpdVXxjY5lJl3I84m0tycXL25D3918NlaxuYn1GLvOnkMEuou9epyaChcK0
- W2IhgtG7p0eX9UZHskOjjXa7WAV3R6W5SjupW06d8/6HGNby/Dkgk72/2dbHKpXGdk09Qym
- ajuG37jpAt7Dh0lRICixw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:lUHejbv5mA8=:9yg6u9yDdY5zdyf0A71T/V
- M+1Oj3AG4Y0u2lLIYX6b1dRUHJ8UyEiQgXjN0Ob7tXV0HLCPiW4uXSW1yaSIiry4hZfGnFNvl
- giJ8h5TVjqW+Zuxwe3UJpB2upPT16X26HZmoTxyQiZjLw77Dteph/S4B0y97RhbSw1T3YD+bQ
- 59khZnwCYQcofaAxQSF+Ign42pS8pv0RPRdCKYJnhQQwOKtx9OVi9N8GXTRBvUdULnog2vTKT
- cEC3I45W7zau3YwhUC62VEBouzZ/XkodSBarbLmMWMzL2wkBZdcnggjCqSA5Ovmzf+HZYYT0D
- CEGaKN2wSBL2xBCSYmC4yOHaqiqd0cNQzgo0RtNhiSXWa37LHTEcHMfZqUe41Qg5yckdzKSkO
- 7Z2/EyI9jpLx27lJNnGqksDPQIgg7fzahiNj6tYB8rYe+DJrrLcNgU3vKh8hb0q9OHvnN1iXJ
- nSZ7HnTSpuN8z1b8udwFDA5dX49bSRbD9E3qvg+ePr+YJYaG3fSomA5G5NT1f+W4xCMLEA+rb
- VtOxtCr4oCzMuKdvJi9lPHEipLD+G7fV0qTxk2LH38itTKCUnXUDmgY9htxT0GDcEt6GgCXd6
- WjDUose/HYhO5JKKJGLOO0Jj7pmIyC2XI8TAJ8ECxYGN1iVNpoqzoqKwZqta1jyBHhV5CKFdM
- HoHJSTATt0475xt+JtL42K+ltFElr+BIOhsUAwNopV2XOBWtugnm3A16xIPzeKSDqHoc7hHGa
- OTkDu761hPsbPPr38l6BvYAS/+lCqHR/qz008gqoLFgW2aM+QxbXn2vDon7Vf9xvArLH/C4r0
- 4EqwvFcf/oOcVzeaXcU44YIXxhIL0ST7/N+POoexp35RuVEV5M=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5b6001e7db3c57fdd9e6354ed4294e2192524061.1506574951.git.e@nanocritical.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
-
-On Thu, 28 Sep 2017, Junio C Hamano wrote:
-
-> Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Sep 27, 2017 at 10:07:41PM -0700, Eric Rannaud wrote:
+> The checkpoint command cycles packfiles if object_count != 0, a sensible
+> test or there would be no pack files to write. Since 820b931012, the
+> command also dumps branches, tags and marks, but still conditionally.
+> However, it is possible for a command stream to modify refs or create
+> marks without creating any new objects.
 > 
-> > Max Kirillov <max@max630.net> writes:
-> >
-> >> Tilda-based path may confise some users. First, tilda is not known
-> >> for Window users, second, it may point to unexpected location
-> >> depending on various environment setup.
-> >>
-> >> Expand the path to "nativename", so that ~/.config/git/gitk-tmp
-> >> would be "C:\Users\user\.config\git\gitk-tmp", for example.
-> >> It should be less cryptic
-
-Thanks, Max, for your contribution!
-
-> > It might be less cryptic, but for those of us whose $HOME is a
-> > looooooong path, ~/.config/git/gitk-tmp is much easier to understand
-> > than the same path with ~/ expanded, which would push the part of
-> > the filename that most matters far to the right hand side of the
-> > dialog.
-
-Heh, do you want to know how that must sound to a Windows user? I'm not
-saying that I am a hard-core Windows user, but I do know a few, and I
-already hear their comments in their own voice in my head...
-
-> > I somehow find this change just robbing Peter to pay Paul.
+> For example, reset a branch (and keep fast-import running):
 > 
-> Having said that, because a set-up might have HOME or XDG_CONFIG or
-> other things misconfigured to point at a place where the end user
-> may not be expecting, I tend to think that catering to Paul by
-> showing the information closer to the bare metal is much more worthy
-> thing to do than keeping Peter happy.  Since this is an error path,
-> accuracy trumps convenience.
+> 	$ git fast-import
+> 	reset refs/heads/master
+> 	from refs/heads/master^
 > 
-> So no objection from me (unless somebody else comes up with an
-> alternative that would make both camps happy, that is).
+> 	checkpoint
+> 
+> but refs/heads/master remains unchanged.
+> 
+> Other example: a commit command that re-creates an object that already
+> exists in the object database.
+> 
+> The man page also states that checkpoint "updates the refs" and that
+> "placing a progress command immediately after a checkpoint will inform
+> the reader when the checkpoint has been completed and it can safely
+> access the refs that fast-import updated". This wasn't always true
+> without this patch.
+> 
+> This fix unconditionally calls dump_{branches,tags,marks}() for all
+> checkpoint commands. dump_branches() and dump_tags() are cheap to call
+> in the case of a no-op.
+> 
+> Add tests to t9300 that observe the (non-packfiles) effects of
+> checkpoint.
+> 
+> Signed-off-by: Eric Rannaud <e@nanocritical.com>
+> ---
+>  fast-import.c          |   6 +--
+>  t/t9300-fast-import.sh | 126 +++++++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 129 insertions(+), 3 deletions(-)
+> 
+> 
+> Updated to include Junio's latest remarks.
+> 
+> Also adding the necessary PIPE prereq, as pointed out by Ramsay Jones.
 
-To Unix/Linux users, the tilde (or Tilda, I really like that nickname, it
-makes it much more human and tolerable) is probably *very* familiar.
-
-As familiar, as it is unfamiliar to Windows users.
-
-So I would actually suggest to make this a conditional on the platform: on
-Windows, use the native name, everywhere else, not.
-
-Sound good?
-Johannes
+Cygwin doesn't have the PIPE prereq; I've just confirmed that the
+previous version of this patch has t9300 failing on Cygwin, but this
+version passes.
