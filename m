@@ -2,82 +2,936 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,URIBL_SBL,URIBL_SBL_A shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 294382047F
-	for <e@80x24.org>; Thu, 28 Sep 2017 04:37:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CFEA62047F
+	for <e@80x24.org>; Thu, 28 Sep 2017 04:43:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751569AbdI1Ehk (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Sep 2017 00:37:40 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53967 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750947AbdI1Ehj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Sep 2017 00:37:39 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B02679D210;
-        Thu, 28 Sep 2017 00:37:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=dWElSiu0c5nUbRuzbDRobKdRb/o=; b=ZS2yRY
-        qVJBMSLFhAZ42ZgSoBYnoN/9WK3cIPWdPeYiZPUx8K+B9Vc2H8ZdgfuvDIC9YD5F
-        AMuG/F61RSbiMpWUNwp5MhCKDXApHHFU0MIuiineEVxwHZN9yyLSqlzEI7MoTfW9
-        a4RVk1L7jx0XAIVs8e1W6uvZDTZSZr0DWYgxQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=oQ6mpzD6VXw6XJxGKrxo3MQ3eV4ipJRB
-        xiP+SgoA181NRpWSGAW3ihcRgsouaBGq6te7WgieUt1s5lESdTgz/hU2xLX/qEX7
-        RRzVyu0lNfWqi/g7odn1kQ+9nZekPUGcyLVECknmGhbt92xLsyRjvpTPEmvpCYdM
-        DP5oFv+8z1U=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9566B9D20E;
-        Thu, 28 Sep 2017 00:37:38 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E614E9D20D;
-        Thu, 28 Sep 2017 00:37:37 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Max Kirillov <max@max630.net>
-Cc:     Paul Mackerras <paulus@ozlabs.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] gitk: expand $config_file_tmp before reporting to user
-References: <20170928041417.28947-1-max@max630.net>
-Date:   Thu, 28 Sep 2017 13:37:36 +0900
-In-Reply-To: <20170928041417.28947-1-max@max630.net> (Max Kirillov's message
-        of "Thu, 28 Sep 2017 07:14:17 +0300")
-Message-ID: <xmqq4lrn30bz.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751874AbdI1Enw (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Sep 2017 00:43:52 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:35475 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751082AbdI1Enu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Sep 2017 00:43:50 -0400
+Received: by mail-pg0-f68.google.com with SMTP id j16so562674pga.2
+        for <git@vger.kernel.org>; Wed, 27 Sep 2017 21:43:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=6at5rdA/20ckJ9dSoyxUNDzvjQoeR8pWoY0JpB/FtSU=;
+        b=qgVgztmTczAL2xWzKqv91QxHWWwhaXLtwGkuDb9kU055p9VzzGGkVrYcSqYHSDxL9n
+         GHkCIzrCuhlOwWj/nxQkCgpW+eC8MQBh4NvXqcLZjWM83YaF8L6PjOo2bcFGr1azutMX
+         6BSUIdMRRmcUWuAoEnks0RKrshjpZmvmLHiKTqbTu8dEpdozDVaACWjkx2KznPtJfO2k
+         WkCgGLjIX4UaoNUNK8PNmDZV9eDdk61MV4KZKbJ1u5obHAWBxVQJlFkWETmJ08kTqO2d
+         5/IZGXwI1/S1uud1XWmx13KZoHTMFEs4Y4nu89ABpf4oLJUZYCVZUTCeXBzjeD0WYPgi
+         bIrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=6at5rdA/20ckJ9dSoyxUNDzvjQoeR8pWoY0JpB/FtSU=;
+        b=RoXKUVysN70pzoFoH6mDvHDvnJbWve9CkO6DBqFjFLgPj8o2bVlld8V57OCYCcXv0E
+         hDpdfqZTgCWBhMpVszkrGM6LNISND+xVIlnl7Y1uK1pkSIFBrNX3MetnGaolNW5IJ0be
+         AzrONyj7mve8dLfe0IhS9ahA9SvlMJc6Wx7Mivbp7qLmSZ/oZz5piZfvFy2A+EGaBlEk
+         9d+JQYfAgr5oidrrv5veYjuyp58rHeFryVpnWPLh6coElAJ2XFupmCEUcndeRq5X9ebR
+         Cz9jpRrYq6FDoFWGHUF60YsFxh2DaFKz74LYIu3OL6lQcnc1yspVm5H55+M1uxS/C8A9
+         MGLg==
+X-Gm-Message-State: AHPjjUh179itrNusZe9e9SPkdZTKBfn/x6GWPBEw5kYdRhYZwYowD4v7
+        e5O5gsZJKw6Zcew9y0bQ9l8=
+X-Google-Smtp-Source: AOwi7QCWhdD9Df9HDVWy9+WTyIMW6UoDtfdfz3db5KzZJcu4gZAK6BQUHQJqzTn4BG5LttnT2eYGHg==
+X-Received: by 10.98.67.209 with SMTP id l78mr3329047pfi.3.1506573828818;
+        Wed, 27 Sep 2017 21:43:48 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:ddb6:7bcc:de8:4755])
+        by smtp.gmail.com with ESMTPSA id j18sm758254pfh.161.2017.09.27.21.43.47
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 27 Sep 2017 21:43:48 -0700 (PDT)
+Date:   Wed, 27 Sep 2017 21:43:21 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Shawn Pearce <spearce@spearce.org>
+Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>, bmwill@google.com,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jeff King <peff@peff.net>, David Lang <david@lang.hm>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Masaya Suzuki <masayasuzuki@google.com>, demerphq@gmail.com,
+        The Keccak Team <keccak@noekeon.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH v4] technical doc: add a design doc for hash function
+ transition
+Message-ID: <20170928044320.GA84719@aiede.mtv.corp.google.com>
+References: <20170304011251.GA26789@aiede.mtv.corp.google.com>
+ <CA+55aFz+gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com>
+ <20170307001709.GC26789@aiede.mtv.corp.google.com>
+ <CAJo=hJtoX9=AyLHHpUJS7fueV9ciZ_MNpnEPHUz8Whui6g9F0A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C16672FE-A406-11E7-B15F-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAJo=hJtoX9=AyLHHpUJS7fueV9ciZ_MNpnEPHUz8Whui6g9F0A@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Max Kirillov <max@max630.net> writes:
+This document describes what a transition to a new hash function for
+Git would look like.  Add it to Documentation/technical/ as the plan
+of record so that future changes can be recorded as patches.
 
-> Tilda-based path may confise some users. First, tilda is not known
-> for Window users, second, it may point to unexpected location
-> depending on various environment setup.
+Also-by: Brandon Williams <bmwill@google.com>
+Also-by: Jonathan Tan <jonathantanmy@google.com>
+Also-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+On Thu, Mar 09, 2017 at 11:14 AM, Shawn Pearce wrote:
+> On Mon, Mar 6, 2017 at 4:17 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+
+>> Thanks for the kind words on what had quite a few flaws still.  Here's
+>> a new draft.  I think the next version will be a patch against
+>> Documentation/technical/.
 >
-> Expand the path to "nativename", so that ~/.config/git/gitk-tmp
-> would be "C:\Users\user\.config\git\gitk-tmp", for example.
-> It should be less cryptic
+> FWIW, I like this approach.
 
-It might be less cryptic, but for those of us whose $HOME is a
-looooooong path, ~/.config/git/gitk-tmp is much easier to understand
-than the same path with ~/ expanded, which would push the part of
-the filename that most matters far to the right hand side of the
-dialog.
+Okay, here goes.
 
-I somehow find this change just robbing Peter to pay Paul.
+Instead of sharding the loose object translation tables by first byte,
+we went for a single table.  It simplifies the design and we need to
+keep the number of loose objects under control anyway.
 
->  	} else {
-> -	    error_popup "There appears to be a stale $config_file_tmp\
-> +	    error_popup "There appears to be a stale \
-> + \"[file nativename $config_file_tmp]\" \
+We also included a description of the transition plan and tried to
+include a summary of what has been agreed upon so far about the choice
+of hash function.
+
+Thanks to Junio for reviving the discussion and in particular to Dscho
+for pushing this forward and making the missing pieces clearer.
+
+Thoughts of all kinds welcome, as always.
+
+ Documentation/Makefile                             |   1 +
+ .../technical/hash-function-transition.txt         | 797 +++++++++++++++++++++
+ 2 files changed, 798 insertions(+)
+ create mode 100644 Documentation/technical/hash-function-transition.txt
+
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 2415e0d657..471bb29725 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -67,6 +67,7 @@ SP_ARTICLES += howto/maintain-git
+ API_DOCS = $(patsubst %.txt,%,$(filter-out technical/api-index-skel.txt technical/api-index.txt, $(wildcard technical/api-*.txt)))
+ SP_ARTICLES += $(API_DOCS)
+ 
++TECH_DOCS += technical/hash-function-transition
+ TECH_DOCS += technical/http-protocol
+ TECH_DOCS += technical/index-format
+ TECH_DOCS += technical/pack-format
+diff --git a/Documentation/technical/hash-function-transition.txt b/Documentation/technical/hash-function-transition.txt
+new file mode 100644
+index 0000000000..417ba491d0
+--- /dev/null
++++ b/Documentation/technical/hash-function-transition.txt
+@@ -0,0 +1,797 @@
++Git hash function transition
++============================
++
++Objective
++---------
++Migrate Git from SHA-1 to a stronger hash function.
++
++Background
++----------
++At its core, the Git version control system is a content addressable
++filesystem. It uses the SHA-1 hash function to name content. For
++example, files, directories, and revisions are referred to by hash
++values unlike in other traditional version control systems where files
++or versions are referred to via sequential numbers. The use of a hash
++function to address its content delivers a few advantages:
++
++* Integrity checking is easy. Bit flips, for example, are easily
++  detected, as the hash of corrupted content does not match its name.
++* Lookup of objects is fast.
++
++Using a cryptographically secure hash function brings additional
++advantages:
++
++* Object names can be signed and third parties can trust the hash to
++  address the signed object and all objects it references.
++* Communication using Git protocol and out of band communication
++  methods have a short reliable string that can be used to reliably
++  address stored content.
++
++Over time some flaws in SHA-1 have been discovered by security
++researchers. https://shattered.io demonstrated a practical SHA-1 hash
++collision. As a result, SHA-1 cannot be considered cryptographically
++secure any more. This impacts the communication of hash values because
++we cannot trust that a given hash value represents the known good
++version of content that the speaker intended.
++
++SHA-1 still possesses the other properties such as fast object lookup
++and safe error checking, but other hash functions are equally suitable
++that are believed to be cryptographically secure.
++
++Goals
++-----
++Where NewHash is a strong 256-bit hash function to replace SHA-1 (see
++"Selection of a New Hash", below):
++
++1. The transition to NewHash can be done one local repository at a time.
++   a. Requiring no action by any other party.
++   b. A NewHash repository can communicate with SHA-1 Git servers
++      (push/fetch).
++   c. Users can use SHA-1 and NewHash identifiers for objects
++      interchangeably (see "Object names on the command line", below).
++   d. New signed objects make use of a stronger hash function than
++      SHA-1 for their security guarantees.
++2. Allow a complete transition away from SHA-1.
++   a. Local metadata for SHA-1 compatibility can be removed from a
++      repository if compatibility with SHA-1 is no longer needed.
++3. Maintainability throughout the process.
++   a. The object format is kept simple and consistent.
++   b. Creation of a generalized repository conversion tool.
++
++Non-Goals
++---------
++1. Add NewHash support to Git protocol. This is valuable and the
++   logical next step but it is out of scope for this initial design.
++2. Transparently improving the security of existing SHA-1 signed
++   objects.
++3. Intermixing objects using multiple hash functions in a single
++   repository.
++4. Taking the opportunity to fix other bugs in Git's formats and
++   protocols.
++5. Shallow clones and fetches into a NewHash repository. (This will
++   change when we add NewHash support to Git protocol.)
++6. Skip fetching some submodules of a project into a NewHash
++   repository. (This also depends on NewHash support in Git
++   protocol.)
++
++Overview
++--------
++We introduce a new repository format extension. Repositories with this
++extension enabled use NewHash instead of SHA-1 to name their objects.
++This affects both object names and object content --- both the names
++of objects and all references to other objects within an object are
++switched to the new hash function.
++
++NewHash repositories cannot be read by older versions of Git.
++
++Alongside the packfile, a NewHash repository stores a bidirectional
++mapping between NewHash and SHA-1 object names. The mapping is generated
++locally and can be verified using "git fsck". Object lookups use this
++mapping to allow naming objects using either their SHA-1 and NewHash names
++interchangeably.
++
++"git cat-file" and "git hash-object" gain options to display an object
++in its sha1 form and write an object given its sha1 form. This
++requires all objects referenced by that object to be present in the
++object database so that they can be named using the appropriate name
++(using the bidirectional hash mapping).
++
++Fetches from a SHA-1 based server convert the fetched objects into
++NewHash form and record the mapping in the bidirectional mapping table
++(see below for details). Pushes to a SHA-1 based server convert the
++objects being pushed into sha1 form so the server does not have to be
++aware of the hash function the client is using.
++
++Detailed Design
++---------------
++Repository format extension
++~~~~~~~~~~~~~~~~~~~~~~~~~~~
++A NewHash repository uses repository format version `1` (see
++Documentation/technical/repository-version.txt) with extensions
++`objectFormat` and `compatObjectFormat`:
++
++	[core]
++		repositoryFormatVersion = 1
++	[extensions]
++		objectFormat = newhash
++		compatObjectFormat = sha1
++
++Specifying a repository format extension ensures that versions of Git
++not aware of NewHash do not try to operate on these repositories,
++instead producing an error message:
++
++	$ git status
++	fatal: unknown repository extensions found:
++		objectformat
++		compatobjectformat
++
++See the "Transition plan" section below for more details on these
++repository extensions.
++
++Object names
++~~~~~~~~~~~~
++Objects can be named by their 40 hexadecimal digit sha1-name or 64
++hexadecimal digit newhash-name, plus names derived from those (see
++gitrevisions(7)).
++
++The sha1-name of an object is the SHA-1 of the concatenation of its
++type, length, a nul byte, and the object's sha1-content. This is the
++traditional <sha1> used in Git to name objects.
++
++The newhash-name of an object is the NewHash of the concatenation of its
++type, length, a nul byte, and the object's newhash-content.
++
++Object format
++~~~~~~~~~~~~~
++The content as a byte sequence of a tag, commit, or tree object named
++by sha1 and newhash differ because an object named by newhash-name refers to
++other objects by their newhash-names and an object named by sha1-name
++refers to other objects by their sha1-names.
++
++The newhash-content of an object is the same as its sha1-content, except
++that objects referenced by the object are named using their newhash-names
++instead of sha1-names. Because a blob object does not refer to any
++other object, its sha1-content and newhash-content are the same.
++
++The format allows round-trip conversion between newhash-content and
++sha1-content.
++
++Object storage
++~~~~~~~~~~~~~~
++Loose objects use zlib compression and packed objects use the packed
++format described in Documentation/technical/pack-format.txt, just like
++today. The content that is compressed and stored uses newhash-content
++instead of sha1-content.
++
++Pack index
++~~~~~~~~~~
++Pack index (.idx) files use a new v3 format that supports multiple
++hash functions. They have the following format (all integers are in
++network byte order):
++
++- A header appears at the beginning and consists of the following:
++  - The 4-byte pack index signature: '\377t0c'
++  - 4-byte version number: 3
++  - 4-byte length of the header section, including the signature and
++    version number
++  - 4-byte number of objects contained in the pack
++  - 4-byte number of object formats in this pack index: 2
++  - For each object format:
++    - 4-byte format identifier (e.g., 'sha1' for SHA-1)
++    - 4-byte length in bytes of shortened object names. This is the
++      shortest possible length needed to make names in the shortened
++      object name table unambiguous.
++    - 4-byte integer, recording where tables relating to this format
++      are stored in this index file, as an offset from the beginning.
++  - 4-byte offset to the trailer from the beginning of this file.
++  - Zero or more additional key/value pairs (4-byte key, 4-byte
++    value). Only one key is supported: 'PSRC'. See the "Loose objects
++    and unreachable objects" section for supported values and how this
++    is used.  All other keys are reserved. Readers must ignore
++    unrecognized keys.
++- Zero or more NUL bytes. This can optionally be used to improve the
++  alignment of the full object name table below.
++- Tables for the first object format:
++  - A sorted table of shortened object names.  These are prefixes of
++    the names of all objects in this pack file, packed together
++    without offset values to reduce the cache footprint of the binary
++    search for a specific object name.
++
++  - A table of full object names in pack order. This allows resolving
++    a reference to "the nth object in the pack file" (from a
++    reachability bitmap or from the next table of another object
++    format) to its object name.
++
++  - A table of 4-byte values mapping object name order to pack order.
++    For an object in the table of sorted shortened object names, the
++    value at the corresponding index in this table is the index in the
++    previous table for that same object.
++
++    This can be used to look up the object in reachability bitmaps or
++    to look up its name in another object format.
++
++  - A table of 4-byte CRC32 values of the packed object data, in the
++    order that the objects appear in the pack file. This is to allow
++    compressed data to be copied directly from pack to pack during
++    repacking without undetected data corruption.
++
++  - A table of 4-byte offset values. For an object in the table of
++    sorted shortened object names, the value at the corresponding
++    index in this table indicates where that object can be found in
++    the pack file. These are usually 31-bit pack file offsets, but
++    large offsets are encoded as an index into the next table with the
++    most significant bit set.
++
++  - A table of 8-byte offset entries (empty for pack files less than
++    2 GiB). Pack files are organized with heavily used objects toward
++    the front, so most object references should not need to refer to
++    this table.
++- Zero or more NUL bytes.
++- Tables for the second object format, with the same layout as above,
++  up to and not including the table of CRC32 values.
++- Zero or more NUL bytes.
++- The trailer consists of the following:
++  - A copy of the 20-byte NewHash checksum at the end of the
++    corresponding packfile.
++
++  - 20-byte NewHash checksum of all of the above.
++
++Loose object index
++~~~~~~~~~~~~~~~~~~
++A new file $GIT_OBJECT_DIR/loose-object-idx contains information about
++all loose objects. Its format is
++
++  # loose-object-idx
++  (newhash-name SP sha1-name LF)*
++
++where the object names are in hexadecimal format. The file is not
++sorted.
++
++The loose object index is protected against concurrent writes by a
++lock file $GIT_OBJECT_DIR/loose-object-idx.lock. To add a new loose
++object:
++
++1. Write the loose object to a temporary file, like today.
++2. Open loose-object-idx.lock with O_CREAT | O_EXCL to acquire the lock.
++3. Rename the loose object into place.
++4. Open loose-object-idx with O_APPEND and write the new object
++5. Unlink loose-object-idx.lock to release the lock.
++
++To remove entries (e.g. in "git pack-refs" or "git-prune"):
++
++1. Open loose-object-idx.lock with O_CREAT | O_EXCL to acquire the
++   lock.
++2. Write the new content to loose-object-idx.lock.
++3. Unlink any loose objects being removed.
++4. Rename to replace loose-object-idx, releasing the lock.
++
++Translation table
++~~~~~~~~~~~~~~~~~
++The index files support a bidirectional mapping between sha1-names
++and newhash-names. The lookup proceeds similarly to ordinary object
++lookups. For example, to convert a sha1-name to a newhash-name:
++
++ 1. Look for the object in idx files. If a match is present in the
++    idx's sorted list of truncated sha1-names, then:
++    a. Read the corresponding entry in the sha1-name order to pack
++       name order mapping.
++    b. Read the corresponding entry in the full sha1-name table to
++       verify we found the right object. If it is, then
++    c. Read the corresponding entry in the full newhash-name table.
++       That is the object's newhash-name.
++ 2. Check for a loose object. Read lines from loose-object-idx until
++    we find a match.
++
++Step (1) takes the same amount of time as an ordinary object lookup:
++O(number of packs * log(objects per pack)). Step (2) takes O(number of
++loose objects) time. To maintain good performance it will be necessary
++to keep the number of loose objects low. See the "Loose objects and
++unreachable objects" section below for more details.
++
++Since all operations that make new objects (e.g., "git commit") add
++the new objects to the corresponding index, this mapping is possible
++for all objects in the object store.
++
++Reading an object's sha1-content
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++The sha1-content of an object can be read by converting all newhash-names
++its newhash-content references to sha1-names using the translation table.
++
++Fetch
++~~~~~
++Fetching from a SHA-1 based server requires translating between SHA-1
++and NewHash based representations on the fly.
++
++SHA-1s named in the ref advertisement that are present on the client
++can be translated to NewHash and looked up as local objects using the
++translation table.
++
++Negotiation proceeds as today. Any "have"s generated locally are
++converted to SHA-1 before being sent to the server, and SHA-1s
++mentioned by the server are converted to NewHash when looking them up
++locally.
++
++After negotiation, the server sends a packfile containing the
++requested objects. We convert the packfile to NewHash format using
++the following steps:
++
++1. index-pack: inflate each object in the packfile and compute its
++   SHA-1. Objects can contain deltas in OBJ_REF_DELTA format against
++   objects the client has locally. These objects can be looked up
++   using the translation table and their sha1-content read as
++   described above to resolve the deltas.
++2. topological sort: starting at the "want"s from the negotiation
++   phase, walk through objects in the pack and emit a list of them,
++   excluding blobs, in reverse topologically sorted order, with each
++   object coming later in the list than all objects it references.
++   (This list only contains objects reachable from the "wants". If the
++   pack from the server contained additional extraneous objects, then
++   they will be discarded.)
++3. convert to newhash: open a new (newhash) packfile. Read the topologically
++   sorted list just generated. For each object, inflate its
++   sha1-content, convert to newhash-content, and write it to the newhash
++   pack. Record the new sha1<->newhash mapping entry for use in the idx.
++4. sort: reorder entries in the new pack to match the order of objects
++   in the pack the server generated and include blobs. Write a newhash idx
++   file
++5. clean up: remove the SHA-1 based pack file, index, and
++   topologically sorted list obtained from the server in steps 1
++   and 2.
++
++Step 3 requires every object referenced by the new object to be in the
++translation table. This is why the topological sort step is necessary.
++
++As an optimization, step 1 could write a file describing what non-blob
++objects each object it has inflated from the packfile references. This
++makes the topological sort in step 2 possible without inflating the
++objects in the packfile for a second time. The objects need to be
++inflated again in step 3, for a total of two inflations.
++
++Step 4 is probably necessary for good read-time performance. "git
++pack-objects" on the server optimizes the pack file for good data
++locality (see Documentation/technical/pack-heuristics.txt).
++
++Details of this process are likely to change. It will take some
++experimenting to get this to perform well.
++
++Push
++~~~~
++Push is simpler than fetch because the objects referenced by the
++pushed objects are already in the translation table. The sha1-content
++of each object being pushed can be read as described in the "Reading
++an object's sha1-content" section to generate the pack written by git
++send-pack.
++
++Signed Commits
++~~~~~~~~~~~~~~
++We add a new field "gpgsig-newhash" to the commit object format to allow
++signing commits without relying on SHA-1. It is similar to the
++existing "gpgsig" field. Its signed payload is the newhash-content of the
++commit object with any "gpgsig" and "gpgsig-newhash" fields removed.
++
++This means commits can be signed
++1. using SHA-1 only, as in existing signed commit objects
++2. using both SHA-1 and NewHash, by using both gpgsig-newhash and gpgsig
++   fields.
++3. using only NewHash, by only using the gpgsig-newhash field.
++
++Old versions of "git verify-commit" can verify the gpgsig signature in
++cases (1) and (2) without modifications and view case (3) as an
++ordinary unsigned commit.
++
++Signed Tags
++~~~~~~~~~~~
++We add a new field "gpgsig-newhash" to the tag object format to allow
++signing tags without relying on SHA-1. Its signed payload is the
++newhash-content of the tag with its gpgsig-newhash field and "-----BEGIN PGP
++SIGNATURE-----" delimited in-body signature removed.
++
++This means tags can be signed
++1. using SHA-1 only, as in existing signed tag objects
++2. using both SHA-1 and NewHash, by using gpgsig-newhash and an in-body
++   signature.
++3. using only NewHash, by only using the gpgsig-newhash field.
++
++Mergetag embedding
++~~~~~~~~~~~~~~~~~~
++The mergetag field in the sha1-content of a commit contains the
++sha1-content of a tag that was merged by that commit.
++
++The mergetag field in the newhash-content of the same commit contains the
++newhash-content of the same tag.
++
++Submodules
++~~~~~~~~~~
++To convert recorded submodule pointers, you need to have the converted
++submodule repository in place. The translation table of the submodule
++can be used to look up the new hash.
++
++Loose objects and unreachable objects
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++Fast lookups in the loose-object-idx require that the number of loose
++objects not grow too high.
++
++"git gc --auto" currently waits for there to be 6700 loose objects
++present before consolidating them into a packfile. We will need to
++measure to find a more appropriate threshold for it to use.
++
++"git gc --auto" currently waits for there to be 50 packs present
++before combining packfiles. Packing loose objects more aggressively
++may cause the number of pack files to grow too quickly. This can be
++mitigated by using a strategy similar to Martin Fick's exponential
++rolling garbage collection script:
++https://gerrit-review.googlesource.com/c/gerrit/+/35215
++
++"git gc" currently expels any unreachable objects it encounters in
++pack files to loose objects in an attempt to prevent a race when
++pruning them (in case another process is simultaneously writing a new
++object that refers to the about-to-be-deleted object). This leads to
++an explosion in the number of loose objects present and disk space
++usage due to the objects in delta form being replaced with independent
++loose objects.  Worse, the race is still present for loose objects.
++
++Instead, "git gc" will need to move unreachable objects to a new
++packfile marked as UNREACHABLE_GARBAGE (using the PSRC field; see
++below). To avoid the race when writing new objects referring to an
++about-to-be-deleted object, code paths that write new objects will
++need to copy any objects from UNREACHABLE_GARBAGE packs that they
++refer to to new, non-UNREACHABLE_GARBAGE packs (or loose objects).
++UNREACHABLE_GARBAGE are then safe to delete if their creation time (as
++indicated by the file's mtime) is long enough ago.
++
++To avoid a proliferation of UNREACHABLE_GARBAGE packs, they can be
++combined under certain circumstances. If "gc.garbageTtl" is set to
++greater than one day, then packs created within a single calendar day,
++UTC, can be coalesced together. The resulting packfile would have an
++mtime before midnight on that day, so this makes the effective maximum
++ttl the garbageTtl + 1 day. If "gc.garbageTtl" is less than one day,
++then we divide the calendar day into intervals one-third of that ttl
++in duration. Packs created within the same interval can be coalesced
++together. The resulting packfile would have an mtime before the end of
++the interval, so this makes the effective maximum ttl equal to the
++garbageTtl * 4/3.
++
++This rule comes from Thirumala Reddy Mutchukota's JGit change
++https://git.eclipse.org/r/90465.
++
++The UNREACHABLE_GARBAGE setting goes in the PSRC field of the pack
++index. More generally, that field indicates where a pack came from:
++
++ - 1 (PACK_SOURCE_RECEIVE) for a pack received over the network
++ - 2 (PACK_SOURCE_AUTO) for a pack created by a lightweight
++   "gc --auto" operation
++ - 3 (PACK_SOURCE_GC) for a pack created by a full gc
++ - 4 (PACK_SOURCE_UNREACHABLE_GARBAGE) for potential garbage
++   discovered by gc
++ - 5 (PACK_SOURCE_INSERT) for locally created objects that were
++   written directly to a pack file, e.g. from "git add ."
++
++This information can be useful for debugging and for "gc --auto" to
++make appropriate choices about which packs to coalesce.
++
++Caveats
++-------
++Invalid objects
++~~~~~~~~~~~~~~~
++The conversion from sha1-content to newhash-content retains any
++brokenness in the original object (e.g., tree entry modes encoded with
++leading 0, tree objects whose paths are not sorted correctly, and
++commit objects without an author or committer). This is a deliberate
++feature of the design to allow the conversion to round-trip.
++
++More profoundly broken objects (e.g., a commit with a truncated "tree"
++header line) cannot be converted but were not usable by current Git
++anyway.
++
++Shallow clone and submodules
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++Because it requires all referenced objects to be available in the
++locally generated translation table, this design does not support
++shallow clone or unfetched submodules. Protocol improvements might
++allow lifting this restriction.
++
++Alternates
++~~~~~~~~~~
++For the same reason, a newhash repository cannot borrow objects from a
++sha1 repository using objects/info/alternates or
++$GIT_ALTERNATE_OBJECT_REPOSITORIES.
++
++git notes
++~~~~~~~~~
++The "git notes" tool annotates objects using their sha1-name as key.
++This design does not describe a way to migrate notes trees to use
++newhash-names. That migration is expected to happen separately (for
++example using a file at the root of the notes tree to describe which
++hash it uses).
++
++Server-side cost
++~~~~~~~~~~~~~~~~
++Until Git protocol gains NewHash support, using NewHash based storage
++on public-facing Git servers is strongly discouraged. Once Git
++protocol gains NewHash support, NewHash based servers are likely not
++to support SHA-1 compatibility, to avoid what may be a very expensive
++hash reencode during clone and to encourage peers to modernize.
++
++The design described here allows fetches by SHA-1 clients of a
++personal NewHash repository because it's not much more difficult than
++allowing pushes from that repository. This support needs to be guarded
++by a configuration option --- servers like git.kernel.org that serve a
++large number of clients would not be expected to bear that cost.
++
++Meaning of signatures
++~~~~~~~~~~~~~~~~~~~~~
++The signed payload for signed commits and tags does not explicitly
++name the hash used to identify objects. If some day Git adopts a new
++hash function with the same length as the current SHA-1 (40
++hexadecimal digit) or NewHash (64 hexadecimal digit) objects then the
++intent behind the PGP signed payload in an object signature is
++unclear:
++
++	object e7e07d5a4fcc2a203d9873968ad3e6bd4d7419d7
++	type commit
++	tag v2.12.0
++	tagger Junio C Hamano <gitster@pobox.com> 1487962205 -0800
++
++	Git 2.12
++
++Does this mean Git v2.12.0 is the commit with sha1-name
++e7e07d5a4fcc2a203d9873968ad3e6bd4d7419d7 or the commit with
++new-40-digit-hash-name e7e07d5a4fcc2a203d9873968ad3e6bd4d7419d7?
++
++Fortunately NewHash and SHA-1 have different lengths. If Git starts
++using another hash with the same length to name objects, then it will
++need to change the format of signed payloads using that hash to
++address this issue.
++
++Object names on the command line
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++To support the transition (see Transition plan below), this design
++supports four different modes of operation:
++
++ 1. ("dark launch") Treat object names input by the user as SHA-1 and
++    convert any object names written to output to SHA-1, but store
++    objects using NewHash.  This allows users to test the code with no
++    visible behavior change except for performance.  This allows
++    allows running even tests that assume the SHA-1 hash function, to
++    sanity-check the behavior of the new mode.
++
++ 2. ("early transition") Allow both SHA-1 and NewHash object names in
++    input. Any object names written to output use SHA-1. This allows
++    users to continue to make use of SHA-1 to communicate with peers
++    (e.g. by email) that have not migrated yet and prepares for mode 3.
++
++ 3. ("late transition") Allow both SHA-1 and NewHash object names in
++    input. Any object names written to output use NewHash. In this
++    mode, users are using a more secure object naming method by
++    default.  The disruption is minimal as long as most of their peers
++    are in mode 2 or mode 3.
++
++ 4. ("post-transition") Treat object names input by the user as
++    NewHash and write output using NewHash. This is safer than mode 3
++    because there is less risk that input is incorrectly interpreted
++    using the wrong hash function.
++
++The mode is specified in configuration.
++
++The user can also explicitly specify which format to use for a
++particular revision specifier and for output, overriding the mode. For
++example:
++
++git --output-format=sha1 log abac87a^{sha1}..f787cac^{newhash}
++
++Selection of a New Hash
++-----------------------
++In early 2005, around the time that Git was written,  Xiaoyun Wang,
++Yiqun Lisa Yin, and Hongbo Yu announced an attack finding SHA-1
++collisions in 2^69 operations. In August they published details.
++Luckily, no practical demonstrations of a collision in full SHA-1 were
++published until 10 years later, in 2017.
++
++The hash function NewHash to replace SHA-1 should be stronger than
++SHA-1 was: we would like it to be trustworthy and useful in practice
++for at least 10 years.
++
++Some other relevant properties:
++
++1. A 256-bit hash (long enough to match common security practice; not
++   excessively long to hurt performance and disk usage).
++
++2. High quality implementations should be widely available (e.g. in
++   OpenSSL).
++
++3. The hash function's properties should match Git's needs (e.g. Git
++   requires collision and 2nd preimage resistance and does not require
++   length extension resistance).
++
++4. As a tiebreaker, the hash should be fast to compute (fortunately
++   many contenders are faster than SHA-1).
++
++Some hashes under consideration are SHA-256, SHA-512/256, SHA-256x16,
++K12, and BLAKE2bp-256.
++
++Transition plan
++---------------
++Some initial steps can be implemented independently of one another:
++- adding a hash function API (vtable)
++- teaching fsck to tolerate the gpgsig-newhash field
++- excluding gpgsig-* from the fields copied by "git commit --amend"
++- annotating tests that depend on SHA-1 values with a SHA1 test
++  prerequisite
++- using "struct object_id", GIT_MAX_RAWSZ, and GIT_MAX_HEXSZ
++  consistently instead of "unsigned char *" and the hardcoded
++  constants 20 and 40.
++- introducing index v3
++- adding support for the PSRC field and safer object pruning
++
++
++The first user-visible change is the introduction of the objectFormat
++extension (without compatObjectFormat). This requires:
++- implementing the loose-object-idx
++- teaching fsck about this mode of operation
++- using the hash function API (vtable) when computing object names
++- signing objects and verifying signatures
++- rejecting attempts to fetch from or push to an incompatible
++  repository
++
++Next comes introduction of compatObjectFormat:
++- translating object names between object formats
++- translating object content between object formats
++- generating and verifying signatures in the compat format
++- adding appropriate index entries when adding a new object to the
++  object store
++- --output-format option
++- ^{sha1} and ^{newhash} revision notation
++- configuration to specify default input and output format (see
++  "Object names on the command line" above)
++
++The next step is supporting fetches and pushes to SHA-1 repositories:
++- allow pushes to a repository using the compat format
++- generate a topologically sorted list of the SHA-1 names of fetched
++  objects
++- convert the fetched packfile to newhash format and generate an idx
++  file
++- re-sort to match the order of objects in the fetched packfile
++
++The infrastructure supporting fetch also allows converting an existing
++repository. In converted repositories and new clones, end users can
++gain support for the new hash function without any visible change in
++behavior (see "dark launch" in the "Object names on the command line"
++section). In particular this allows users to verify NewHash signatures
++on objects in the repository, and it should ensure the transition code
++is stable in production in preparation for using it more widely.
++
++Over time projects would encourage their users to adopt the "early
++transition" and then "late transition" modes to take advantage of the
++new, more futureproof NewHash object names.
++
++When objectFormat and compatObjectFormat are both set, commands
++generating signatures would generate both SHA-1 and NewHash signatures
++by default to support both new and old users.
++
++In projects using NewHash heavily, users could be encouraged to adopt
++the "post-transition" mode to avoid accidentally making implicit use
++of SHA-1 object names.
++
++Once a critical mass of users have upgraded to a version of Git that
++can verify NewHash signatures and have converted their existing
++repositories to support verifying them, we can add support for a
++setting to generate only NewHash signatures. This is expected to be at
++least a year later.
++
++That is also a good moment to advertise the ability to convert
++repositories to use NewHash only, stripping out all SHA-1 related
++metadata. This improves performance by eliminating translation
++overhead and security by avoiding the possibility of accidentally
++relying on the safety of SHA-1.
++
++Updating Git's protocols to allow a server to specify which hash
++functions it supports is also an important part of this transition. It
++is not discussed in detail in this document but this transition plan
++assumes it happens. :)
++
++Alternatives considered
++-----------------------
++Upgrading everyone working on a particular project on a flag day
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++Projects like the Linux kernel are large and complex enough that
++flipping the switch for all projects based on the repository at once
++is infeasible.
++
++Not only would all developers and server operators supporting
++developers have to switch on the same flag day, but supporting tooling
++(continuous integration, code review, bug trackers, etc) would have to
++be adapted as well. This also makes it difficult to get early feedback
++from some project participants testing before it is time for mass
++adoption.
++
++Using hash functions in parallel
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++(e.g. https://public-inbox.org/git/22708.8913.864049.452252@chiark.greenend.org.uk/ )
++Objects newly created would be addressed by the new hash, but inside
++such an object (e.g. commit) it is still possible to address objects
++using the old hash function.
++* You cannot trust its history (needed for bisectability) in the
++  future without further work
++* Maintenance burden as the number of supported hash functions grows
++  (they will never go away, so they accumulate). In this proposal, by
++  comparison, converted objects lose all references to SHA-1.
++
++Signed objects with multiple hashes
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++Instead of introducing the gpgsig-newhash field in commit and tag objects
++for newhash-content based signatures, an earlier version of this design
++added "hash newhash <newhash-name>" fields to strengthen the existing
++sha1-content based signatures.
++
++In other words, a single signature was used to attest to the object
++content using both hash functions. This had some advantages:
++* Using one signature instead of two speeds up the signing process.
++* Having one signed payload with both hashes allows the signer to
++  attest to the sha1-name and newhash-name referring to the same object.
++* All users consume the same signature. Broken signatures are likely
++  to be detected quickly using current versions of git.
++
++However, it also came with disadvantages:
++* Verifying a signed object requires access to the sha1-names of all
++  objects it references, even after the transition is complete and
++  translation table is no longer needed for anything else. To support
++  this, the design added fields such as "hash sha1 tree <sha1-name>"
++  and "hash sha1 parent <sha1-name>" to the newhash-content of a signed
++  commit, complicating the conversion process.
++* Allowing signed objects without a sha1 (for after the transition is
++  complete) complicated the design further, requiring a "nohash sha1"
++  field to suppress including "hash sha1" fields in the newhash-content
++  and signed payload.
++
++Lazily populated translation table
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++Some of the work of building the translation table could be deferred to
++push time, but that would significantly complicate and slow down pushes.
++Calculating the sha1-name at object creation time at the same time it is
++being streamed to disk and having its newhash-name calculated should be
++an acceptable cost.
++
++Document History
++----------------
++
++2017-03-03
++bmwill@google.com, jonathantanmy@google.com, jrnieder@gmail.com,
++sbeller@google.com
++
++Initial version sent to
++http://public-inbox.org/git/20170304011251.GA26789@aiede.mtv.corp.google.com
++
++2017-03-03 jrnieder@gmail.com
++Incorporated suggestions from jonathantanmy and sbeller:
++* describe purpose of signed objects with each hash type
++* redefine signed object verification using object content under the
++  first hash function
++
++2017-03-06 jrnieder@gmail.com
++* Use SHA3-256 instead of SHA2 (thanks, Linus and brian m. carlson).[1][2]
++* Make sha3-based signatures a separate field, avoiding the need for
++  "hash" and "nohash" fields (thanks to peff[3]).
++* Add a sorting phase to fetch (thanks to Junio for noticing the need
++  for this).
++* Omit blobs from the topological sort during fetch (thanks to peff).
++* Discuss alternates, git notes, and git servers in the caveats
++  section (thanks to Junio Hamano, brian m. carlson[4], and Shawn
++  Pearce).
++* Clarify language throughout (thanks to various commenters,
++  especially Junio).
++
++2017-09-27 jrnieder@gmail.com, sbeller@google.com
++* use placeholder NewHash instead of SHA3-256
++* describe criteria for picking a hash function.
++* include a transition plan (thanks especially to Brandon Williams
++  for fleshing these ideas out)
++* define the translation table (thanks, Shawn Pearce[5], Jonathan
++  Tan, and Masaya Suzuki)
++* avoid loose object overhead by packing more aggressively in
++  "git gc --auto"
++
++[1] http://public-inbox.org/git/CA+55aFzJtejiCjV0e43+9oR3QuJK2PiFiLQemytoLpyJWe6P9w@mail.gmail.com/
++[2] http://public-inbox.org/git/CA+55aFz+gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com/
++[3] http://public-inbox.org/git/20170306084353.nrns455dvkdsfgo5@sigill.intra.peff.net/
++[4] http://public-inbox.org/git/20170304224936.rqqtkdvfjgyezsht@genre.crustytoothpaste.net
++[5] https://public-inbox.org/git/CAJo=hJtoX9=AyLHHpUJS7fueV9ciZ_MNpnEPHUz8Whui6g9F0A@mail.gmail.com/
+-- 
+2.14.2.822.g60be5d43e6-goog
 
