@@ -2,316 +2,271 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E76220A26
-	for <e@80x24.org>; Thu, 28 Sep 2017 11:03:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D04ED20281
+	for <e@80x24.org>; Thu, 28 Sep 2017 11:41:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752829AbdI1LDL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Sep 2017 07:03:11 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56712 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751591AbdI1LDJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Sep 2017 07:03:09 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 43E87A1741;
-        Thu, 28 Sep 2017 07:03:03 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ykzY47pKWw7k2aAbUuSI3hPmfic=; b=UXscxb
-        sPi5KWTKdffjSeJtYu1SwiHz8p8SLqph8xWFpGLAkDTn8sn1GKGF08zV+9R7jPif
-        ivTPOnMcxAhDdOZVoyUVtEUZAi3e6O/e/XR7a01yYr239A6117twf3nZb3hyYOpZ
-        PVrL11awyq0GMEHAupgVAbXmXM64GSFW8OTyE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=E8RnjLJEN9HypeyOhcdPbyWpuFG75RHi
-        ThFCwcFO48PAzcZWmaljO5FUn0YpDUw5uQOqcPtQoEWanfaR5uvPA4aXMkNiuqiO
-        Kfsyj5T7MPPqIyny94KhYE+GbW95zP++Fq4FhKWSlJ83EyuM8NmtLU7Fr7KgNhHW
-        aixXTB7tJ4c=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2A469A173F;
-        Thu, 28 Sep 2017 07:03:03 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1C4BAA173A;
-        Thu, 28 Sep 2017 07:03:02 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Olga Telezhnaya <olyatelezhnaya@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH Outreachy] mru: use double-linked list from list.h
-References: <CAP8UFD24A8rxMfLMFmSStWnBMMeB58SqUdNoo3niQuc7LqRMMg@mail.gmail.com>
-        <0102015ec7a3424b-529be659-bdb6-42c4-a48f-db264f33d53a-000000@eu-west-1.amazonses.com>
-Date:   Thu, 28 Sep 2017 20:03:00 +0900
-In-Reply-To: <0102015ec7a3424b-529be659-bdb6-42c4-a48f-db264f33d53a-000000@eu-west-1.amazonses.com>
-        (Olga Telezhnaya's message of "Thu, 28 Sep 2017 08:38:39 +0000")
-Message-ID: <xmqq8tgz13x7.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752111AbdI1Ll5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Sep 2017 07:41:57 -0400
+Received: from mout.gmx.net ([212.227.15.18]:51614 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751058AbdI1Llz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Sep 2017 07:41:55 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MS5QA-1dmzdr2Rru-00TFqK; Thu, 28
+ Sep 2017 13:41:53 +0200
+Date:   Thu, 28 Sep 2017 13:41:52 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Brandon Williams <bmwill@google.com>
+cc:     Stefan Beller <sbeller@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [RFC] clang-format: outline the git project's coding style
+In-Reply-To: <alpine.DEB.2.21.1.1708100032050.11175@virtualbox>
+Message-ID: <alpine.DEB.2.21.1.1709281249520.40514@virtualbox>
+References: <20170808012554.186051-1-bmwill@google.com> <alpine.DEB.2.21.1.1708081404200.4271@virtualbox> <CAGZ79kb2860nUs46bP=x-gAx9Ao6DxnvXQv3x387Wxw+kEyxJw@mail.gmail.com> <20170808182324.GB73298@google.com>
+ <alpine.DEB.2.21.1.1708100032050.11175@virtualbox>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 987BE6F4-A43C-11E7-AD20-FE4B1A68708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:kLhnLYUqJas0uGqQgNr/8rGWqCcuKQEF7/eAs3+mRF8VZOwyHmV
+ n2YAMPN1xBa4iIhcWZaYwm0Zg50KlTRnCQBMqef0IdYmO1TTW/2NtSCXh9yq8K+1JBcB+mQ
+ tmpCtwlX22aMKW8yO4Cg7FiEW5H71jUxhoOvTpCZHe/VxBb6+1he9Fa6YeSJyUZE2kPJHow
+ 3dr8sit/3TlNGkjTp63Rw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:yCH2pUhIRTE=:Dxxl3UsURi95jqL9bGArQq
+ JwhWhL8aH/BlGHrwNEu1VkHFoY4nW5RwsXGm7nKXeJaA+V1wfTpkB00CtgnvxEbigj/36UzCj
+ PHSV7wV3zYTxIzZ+Sjmipu4aH1mBom4njSJd2x3wyEg0Fxo8Y1IllyActxMfPDWKRd83zo/6g
+ v8RoWbSDGTKJ4kepi8qcf+8Ni1HsDrncxLwduBVBVF8hvDBLT6xtq9MXqauJ/M202YLq3btyg
+ 4ZpyhFD0VbWDooKs2HCWZsBDtDVzu9oG4FH7Cc8T/jlgFD8gx6FxPpblVP3XZdQ5pmf/AqccT
+ uAewRiZquj/45/bqPkGUEPPciu1LX3QLW1wtrJP0oI5GNKCc3Iox4fonMTHyHADZyWWFLdaUf
+ B6VORS4A5m9GiuoOJpYwugGQCfOCGdxSPLoBXl5RMHClLH48D+8h5v6V73rWuDgQVGn4arYCt
+ YHVvwXC4dutkoKayYsn3hUhqCpwf/ZVxh0N5vAVsOUsh7xQ2cPkaJzytyWz6kX08lqGjQKARW
+ nSue+t3UTX2SW9K0zeEgvM+h05HzB23HLw6a/35Xs39QnXqfZmMBfog1h8ff13MTR1sh7U9nr
+ lYcQtl8j/RY4vSg9rqziuvRxDiAZBqSR7ZY99GbjjUX2D1uCM2G3+ZLQiHAU6ZfZQ8MAxJFqS
+ 1a+/PpuKytEaXfezjwngaGHC46tneV2GDirggZ296Fkp3kg5HMb8daqZ5gdzZD1bDaSKnmFQa
+ pxAon+pTRAQ0jlUtA0QJWHSj3G+7jqAff6YVSGN2oO7aGMVK9mzenQR9MBcTsb0pdvKYJk546
+ wzvTuS+XFo0IeGO6/Ldn7SKRgizg69vwvjMHAzA63vyyIEOlis=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Olga Telezhnaya <olyatelezhnaya@gmail.com> writes:
+Hi all,
 
-> Simplify mru.c, mru.h and related code by reusing the double-linked list implementation from list.h instead of a custom one.
+On Thu, 10 Aug 2017, Johannes Schindelin wrote:
 
-An overlong line (I can locally wrap it, so the patch does not have
-to be re-sent only to fix this alone).
+> On Tue, 8 Aug 2017, Brandon Williams wrote:
+> 
+> > On 08/08, Stefan Beller wrote:
+> > > On Tue, Aug 8, 2017 at 5:05 AM, Johannes Schindelin
+> > > <Johannes.Schindelin@gmx.de> wrote:
+> > > >
+> > > > On Mon, 7 Aug 2017, Brandon Williams wrote:
+> > > >
+> > > >> Add a '.clang-format' file which outlines the git project's
+> > > >> coding style.  This can be used with clang-format to auto-format
+> > > >> .c and .h files to conform with git's style.
+> > > >>
+> > > >> Signed-off-by: Brandon Williams <bmwill@google.com>
+> > > >> ---
+> > > >>
+> > > >> I'm sure this sort of thing comes up every so often on the list
+> > > >> but back at git-merge I mentioned how it would be nice to not
+> > > >> have to worry about style when reviewing patches as that is
+> > > >> something mechanical and best left to a machine (for the most
+> > > >> part).
+> > > >
+> > > > Amen.
+> > > >
+> > > > If I never have to see a review mentioning an unwrapped line, I am quite
+> > > > certain I will be quite content.
+> > > 
+> > > As a thought experiment I'd like to propose to take it one step further:
+> > > 
+> > >   If the code was formatted perfectly in one style such that a
+> > >   formatter for this style would not produce changes when rerun
+> > >   again on the code, then each individual could have a clean/smudge
+> > >   filter to work in their preferred style, and only the exchange and
+> > >   storage of code is in a mutual agreed style. If the mutually
+> > >   agreed style is close to what I prefer, I don't have to use
+> > >   clean/smudge filters.
+> > > 
+> > > Additionally to this patch, we'd want to either put a note into
+> > > SubmittingPatches or Documentation/gitworkflows.txt to hint at
+> > > how to use this formatting to just affect the patch that is currently
+> > > worked on or rather a pre-commit hook?
+> > 
+> > I'm sure both of these things will probably happen if we decide to make
+> > use of a code-formatter.  This RFC is really just trying to ask the
+> > question: "Is this something we want to entertain doing?"
+> > My response would be 'Yes' but there's many other opinions to consider
+> > first :)
+> 
+> I am sure that something even better will be possible: a Continuous
+> "Integration" that fixes the coding style automatically by using
+> `filter-branch` (avoiding the merge conflicts that would arise if `rebase
+> -i` was used).
 
-> Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
+FWIW I just set this up in my VSTS account, with the following build step
+(performed in one of the Hosted Linux agents, i.e. I do not even have to
+have a VM dedicated to the task):
 
-Thanks for making your "From:" name match the "Signed-off-by:" name;
-anglicising like you did is probably more friendly to the readers
-than writing both in Cyrillic, which is another valid way to make
-them match.
+-- snip --
+die () {
+    echo "$*" >&2
+    exit 1
+}
 
-> Mentored-by: Christian Couder <christian.couder@gmail.com>
-> Mentored by: Jeff King <peff@peff.net>
-> ---
->  builtin/pack-objects.c |  5 +++--
->  mru.c                  | 51 +++++++++++++++-----------------------------------
->  mru.h                  | 31 +++++++++++++-----------------
->  packfile.c             |  6 ++++--
->  4 files changed, 35 insertions(+), 58 deletions(-)
+head=$(git rev-parse HEAD) ||
+die "Could not determine HEAD"
 
-As Christian mentioned earlier, nice line reduction ;-)
+test -n "$BUILD_SOURCEBRANCHNAME" ||
+die "Need a source branch name to work with"
 
-> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> index f721137eaf881..ba812349e0aab 100644
-> --- a/builtin/pack-objects.c
-%> +++ b/builtin/pack-objects.c
-> @@ -995,8 +995,8 @@ static int want_object_in_pack(const unsigned char *sha1,
->  			       struct packed_git **found_pack,
->  			       off_t *found_offset)
->  {
-> -	struct mru_entry *entry;
->  	int want;
-> +	struct list_head *pos;
->  
->  	if (!exclude && local && has_loose_object_nonlocal(sha1))
->  		return 0;
-> @@ -1012,7 +1012,8 @@ static int want_object_in_pack(const unsigned char *sha1,
->  			return want;
->  	}
->  
-> -	for (entry = packed_git_mru.head; entry; entry = entry->next) {
-> +	list_for_each(pos, &packed_git_mru.list) {
-> +		struct mru *entry = list_entry(pos, struct mru, list);
->  		struct packed_git *p = entry->item;
->  		off_t offset;
+base=$(git merge-base origin/core/master HEAD) &&
+count=$(git rev-list --count $base..) &&
+test 0 -lt $count ||
+die "Could not determine commits to clean up (count: $count)"
 
-I was a bit surprised to see a change outside mru.[ch] like this
-one.  The reason why I was surprised was because I expected mru.[ch]
-would offer its own API that encapsulates enumeration like this one
-and this patch would just be reimplementing that API using the list
-API, instead of rewriting the users of mru API to directly access
-the list API.
+test -f .clang-format ||
+git show origin/core/pu/.clang-format >.clang-format ||
+die "Need a .clang-format"
 
-Alas, there is no such mru API that lets a mru user to iterate over
-elements, so the original of the above code were using mru's
-implementation detail directly.
+sudo add-apt-repository 'deb http://apt.llvm.org/xenial/
+llvm-toolchain-xenial main' &&
+sudo apt-get update &&
+sudo apt-get --allow-unauthenticated -y install clang-format-6.0 ||
+die "Could not install clang-format 6.0"
 
-We probably want to invent mru_for_each() that hides the fact that
-mru is implemented in terms of list_head from the users of mru API
-and use it here.
+git filter-branch -f --tree-filter \
+    'git diff HEAD^.. |
+     clang-format-diff-6.0 -p 1 -i &&
 
-> diff --git a/mru.c b/mru.c
-> index 9dedae0287ed2..8b6ba3d9b7fad 100644
-> --- a/mru.c
-> +++ b/mru.c
-> @@ -1,50 +1,29 @@
->  #include "cache.h"
->  #include "mru.h"
->  
-> -void mru_append(struct mru *mru, void *item)
-> +void mru_append(struct mru *head, void *item)
->  {
-> -	struct mru_entry *cur = xmalloc(sizeof(*cur));
-> +	struct mru *cur = xmalloc(sizeof(*cur));
->  	cur->item = item;
-> -	cur->prev = mru->tail;
-> -	cur->next = NULL;
-> -
-> -	if (mru->tail)
-> -		mru->tail->next = cur;
-> -	else
-> -		mru->head = cur;
-> -	mru->tail = cur;
-> +	list_add_tail(&cur->list, &head->list);
->  }
->  
-> -void mru_mark(struct mru *mru, struct mru_entry *entry)
-> +void mru_mark(struct mru *head, struct mru *entry)
->  {
-> -	/* If we're already at the front of the list, nothing to do */
-> -	if (mru->head == entry)
-> -		return;
-> -
-> -	/* Otherwise, remove us from our current slot... */
-> -	if (entry->prev)
-> -		entry->prev->next = entry->next;
-> -	if (entry->next)
-> -		entry->next->prev = entry->prev;
-> -	else
-> -		mru->tail = entry->prev;
-> -
-> -	/* And insert us at the beginning. */
-> -	entry->prev = NULL;
-> -	entry->next = mru->head;
-> -	if (mru->head)
-> -		mru->head->prev = entry;
-> -	mru->head = entry;
-> +	/* To mark means to put at the front of the list. */
-> +	list_del(&entry->list);
-> +	list_add(&entry->list, &head->list);
->  }
->  
-> -void mru_clear(struct mru *mru)
-> +void mru_clear(struct mru *head)
->  {
-> -	struct mru_entry *p = mru->head;
-> -
-> -	while (p) {
-> -		struct mru_entry *to_free = p;
-> -		p = p->next;
-> +	struct list_head *p1;
-> +	struct list_head *p2;
-> +	struct mru *to_free;
-> +	
-> +	list_for_each_safe(p1, p2, &head->list) {
-> +		to_free = list_entry(p1, struct mru, list);
->  		free(to_free);
->  	}
-> -	mru->head = mru->tail = NULL;
-> +	INIT_LIST_HEAD(&head->list);
->  }
-> diff --git a/mru.h b/mru.h
-> index 42e4aeaa1098a..36a332af0bf88 100644
-> --- a/mru.h
-> +++ b/mru.h
-> @@ -1,6 +1,8 @@
->  #ifndef MRU_H
->  #define MRU_H
->  
-> +#include "list.h"
-> +
->  /**
->   * A simple most-recently-used cache, backed by a doubly-linked list.
->   *
-> @@ -8,18 +10,15 @@
->   *
->   *   // Create a list.  Zero-initialization is required.
->   *   static struct mru cache;
-> - *   mru_append(&cache, item);
-> - *   ...
-> + *   INIT_LIST_HEAD(&cache.list);
+     git update-index --refresh --ignore-submodules &&
+     git diff-files --quiet --ignore-submodules ||
+     git commit --amend -C HEAD' $base.. ||
+die "Could not rewrite branch"
 
-"Zero-initialization is required." is no longer true, it seems, and
-the comment above needs to be updated, right?
+if test "$head" = "$(git rev-parse HEAD)"
+then
+    echo "No changes in $BUILD_SOURCEBRANCHNAME introduced by clang-format" >&2
+else
+    git push vsts +HEAD:refs/heads/clang-format/"$BUILD_SOURCEBRANCHNAME" ||
+    die "Could not push clang-format/$BUILD_SOURCEBRANCHNAME"
+    echo "Clean branch pushed as clang-format/$BUILD_SOURCEBRANCHNAME" >&2
+    exit 123
+fi
+-- snap --
 
-More importantly, this leaks to the user of the API the fact that
-mru is internally implemented in terms of the list API, which is
-not necessary (when we want to update the implementation later, we'd
-need to update all the users again).  Perhaps you'd want
+A couple of notes for the interested:
 
-	INIT_MRU(cache);
+- you can easily set this up for yourself, as Visual Studio Team Services
+  is free for small teams up to five people (including single developer
+  "teams"): https://www.visualstudio.com/team-services/, and of course you
+  can back it by your own git.git fork on GitHub, no need to host the code
+  in VSTS.
 
-which is #define'd in this file, perhaps like so:
+  Disclaimer: I work closely with the developers behind Visual Studio Team
+  Services, and I am a genuine fan, yet I understand if anybody thinks of
+  this as advertising the service, so this will be the only time I mention
+  this.
 
-	#define INIT_MRU(mru)	INIT_LIST_HEAD(&((mru).list))
+- the script assumes that there is a `core/master` tracking upstream Git's
+  master branch, then reformats the commits in the current branch that are
+  not also reachable from core/master.
 
+- The push credentials to push the result at the end are of course not
+  included in the script, they need to be provided separately.
 
+- the exit code 123 when the branch needed to be rewritten indicates to
+  any consumer that the build "failed". The reason is that I want to
+  integrate this into a system where I open a PR in my own account, which
+  triggers the build automatically contingent on the base branch being
+  core/master, and if the build fails, the PR gets "blocked", providing a
+  very easy way to see that there is still work to be done.
 
-> - *   // Iterate in MRU order.
-> - *   struct mru_entry *p;
-> - *   for (p = cache.head; p; p = p->next) {
-> - *	if (matches(p->item))
-> - *		break;
-> - *   }
+- for the moment, I do not push back to the original branch, even if I
+  could. The reason is that already my first test produced a dubious
+  result, see below.
 
-Ah, here is a good piece that illustrates what I meant earlier.
-This could have been something like:
+I am reasonably happy with the way this build job works right now,
+especially given that I do not have to mess up any other setup I have just
+to get the bleeding edge version of Clang.
 
-	// Iterate in MRU order.
-	struct mru *item;
-	mru_for_each(item, &cache) {
-		if (matches(item))
-			break;
-	}
+Now for the dubious result.
 
-and then the user would not have to know mru is implemented in terms
-of the list API.
+I took my most recent contribution, the lazyload one (which you can easily
+get yourself by fetching the lazyload-v2 tag from
+https://github.com/dscho/git), because it was pretty self-contained and
+small, only one patch. With the current .clang-format as per git.git's
+master (or for that matter, pu, as they are identical), the output `git
+show | clang-format-diff-6.0 -p 1` ends in this hunk:
 
-> + *   // Add new item to the end of the list.
-> + *   void *item;
-> + *   ...
-> + *   mru_append(&cache, item);
->   *
->   *   // Mark an item as used, moving it to the front of the list.
-> - *   mru_mark(&cache, p);
-> + *   mru_mark(&cache, item);
->   *
->   *   // Reset the list to empty, cleaning up all resources.
->   *   mru_clear(&cache);
-> @@ -29,17 +28,13 @@
->   * you will begin traversing the whole list again.
->   */
->  
-> -struct mru_entry {
-> -	void *item;
-> -	struct mru_entry *prev, *next;
-> -};
-> -
->  struct mru {
-> -	struct mru_entry *head, *tail;
-> +	struct list_head list;
-> +        void *item;
->  };
->  
-> -void mru_append(struct mru *mru, void *item);
-> -void mru_mark(struct mru *mru, struct mru_entry *entry);
-> -void mru_clear(struct mru *mru);
-> +void mru_append(struct mru *head, void *item);
-> +void mru_mark(struct mru *head, struct mru *entry);
-> +void mru_clear(struct mru *head);
->  
->  #endif /* MRU_H */
-> diff --git a/packfile.c b/packfile.c
-> index f69a5c8d607af..ae3b0b2e9c09a 100644
-> --- a/packfile.c
-> +++ b/packfile.c
-> @@ -876,6 +876,7 @@ void prepare_packed_git(void)
->  	for (alt = alt_odb_list; alt; alt = alt->next)
->  		prepare_packed_git_one(alt->path, 0);
->  	rearrange_packed_git();
-> +	INIT_LIST_HEAD(&packed_git_mru.list);
->  	prepare_packed_git_mru();
->  	prepare_packed_git_run_once = 1;
->  }
-> @@ -1824,13 +1825,14 @@ static int fill_pack_entry(const unsigned char *sha1,
->   */
->  int find_pack_entry(const unsigned char *sha1, struct pack_entry *e)
->  {
-> -	struct mru_entry *p;
-> +	struct list_head *pos;
->  
->  	prepare_packed_git();
->  	if (!packed_git)
->  		return 0;
->  
-> -	for (p = packed_git_mru.head; p; p = p->next) {
-> +	list_for_each(pos, &packed_git_mru.list) {
-> +		struct mru *p = list_entry(pos, struct mru, list);
->  		if (fill_pack_entry(sha1, e, p->item)) {
->  			mru_mark(&packed_git_mru, p);
->  			return 1;
+-- snip --
+@@ -43,8 +43,7 @@
+        if (!proc->initialized) {
+                HANDLE hnd;
+                proc->initialized = 1;
+-               hnd = LoadLibraryExA(proc->dll, NULL,
+-                                    LOAD_LIBRARY_SEARCH_SYSTEM32);
++               hnd = LoadLibraryExA(proc->dll, NULL, LOAD_LIBRARY_SEARCH_SYSTEM32);
+                if (hnd)
+                        proc->pfunction = GetProcAddress(hnd, proc->function);
+        }
+-- snap --
 
-The same comment as the first hunk applies here, too.
+(tabs intentionally converted to spaces, to show the extent of the damage
+clearly)
 
-Thanks.
+In other words, despite the column limit of 80 (with a tab width of 8
+spaces), it takes a perfectly well formatted pair of lines and combines
+them into a single line that now has 84 columns. Absolutely not what we
+want.
+
+Even worse: if I replace the column limit of 80 by 79, like so:
+
+-- snip --
+diff --git a/.clang-format b/.clang-format
+index 3ede2628d2d..9f686c1ed5a 100644
+--- a/.clang-format
++++ b/.clang-format
+@@ -6,7 +6,7 @@ UseTab: Always
+ TabWidth: 8
+ IndentWidth: 8
+ ContinuationIndentWidth: 8
+-ColumnLimit: 80
++ColumnLimit: 79
+ 
+ # C Language specifics
+ Language: Cpp
+-- snap --
+
+then that hunk vanishes and clang-format leaves the LoadLibraryEx() lines
+alone!
+
+Even stranger, if I revert to 80 columns, copy the offending line above
+the conditional block so that the indentation level is different (based on
+a hunch that this may have something to do with clang's understanding of
+tab widths) and extend the last parameter artificially, it still breaks at
+exactly 84 columns, i.e. if I make the line 84 columns long, it keeps it
+as one line, if I extend it to 85 columns, it breaks the line into two.
+
+In fact, the same holds true even with no indentation at all: if I turn
+this line into a static variable assignment outside of the function, it
+again breaks the line as soon as I extend it to 85 columns.
+
+Then I repeated the exercise with clang-format-6.0 instead of
+clang-format-diff-6.0, and the finding still holds. 85 columns, despite
+the explicit ColumnLimit: 80 in .clang-format.
+
+I then tried to format a file containing only the line "int i123, j123;"
+with various values for ColumnLimit, and could not get it to break at all.
+
+Any insights?
+
+Thanks,
+Dscho
