@@ -2,150 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 50D0820A10
-	for <e@80x24.org>; Thu, 28 Sep 2017 21:59:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66C3720A10
+	for <e@80x24.org>; Thu, 28 Sep 2017 22:03:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751663AbdI1V7C (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Sep 2017 17:59:02 -0400
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:47438 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751567AbdI1V7B (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Sep 2017 17:59:01 -0400
-Received: by mail-pf0-f169.google.com with SMTP id u12so1515045pfl.4
-        for <git@vger.kernel.org>; Thu, 28 Sep 2017 14:59:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=tOU8SSXZf+H0K6Sliqp9vvOw30MlPama3NSNyTlBatg=;
-        b=Ty9Pw7jWDr7CErMggP7fn1Ey+6ips8aabGqGDFjFlDnr23ly07o66u8OVre4bzOoPk
-         1AVZ9y29VXB4JtybU70ysQurYbm023k0lWUDsEr+NJD1Bs3Cc+RO7Bn2Q5dVc7NpXQ8o
-         N7ykOPZZbK+fgCVdTdnG0EO0ypdy8pJzBTN67i0SIUXCbRdd+c6j1oUwdJUK/fXK2yw5
-         fZrpHqy+TAn4FfdKMwDj7/96wFYfZczXTk/pfPS2/yX/cNUXGw7FFZJjo8ooU3lCTCpp
-         b4xf/gE9K1quoyNRJCVCU3EYq/EmmbcEgSUXgrNeuIPkjYKTCt2a8xtTZGTBYdKS3vml
-         N6VQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=tOU8SSXZf+H0K6Sliqp9vvOw30MlPama3NSNyTlBatg=;
-        b=UXXUisxqBL+3AbZl4U2N+P2knq+sU//J69Jelv6cBLbFtt9c2nhv5EuYxqVXKqDotj
-         gBJllcMPZxbZGZTBz0RWmu+d/3YTpkwpdgcSeO66EOkNvMO/JjpzfU2dGl1f6DGtJ2tn
-         zfZpxKMGcBbUz9GUZSuOJ+XullYBMkzi1b9YMiWv9+VYAHqlqu3xTsQ0altE8fi4d3yH
-         yetgi/Z2FGlyHq3MhNERwa0YYynvNZo8f6TguMDobupC9mNIRWLnLVR3/yn4L5WSNxcw
-         hoxSBLa33eOimOMVuJX2Heg894JLFx5ga0AThSC+zL7whbZWb9MqwHtMq1biGJ3gCVCf
-         iwGQ==
-X-Gm-Message-State: AHPjjUgoagGY8dnHnuXHan0RyVOX+n2OCzXdaUobdaCU0jSd/2mfsia2
-        d/RdgkIz4jQUEFE7B+HY0w2QYQ==
-X-Google-Smtp-Source: AOwi7QB1xDSEMPMPMCPsEL9VzGt8xxil8jrlcQ5PcZTRTj+l1ZchlqVHoB7GMRdGRlpY+JBNX2pr0Q==
-X-Received: by 10.98.219.6 with SMTP id f6mr5464833pfg.59.1506635940503;
-        Thu, 28 Sep 2017 14:59:00 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:c55b:7140:f55d:7eed])
-        by smtp.gmail.com with ESMTPSA id z89sm4275793pff.13.2017.09.28.14.58.59
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 28 Sep 2017 14:58:59 -0700 (PDT)
-Date:   Thu, 28 Sep 2017 14:58:58 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, bturner@atlassian.com, git@jeffhostetler.com,
-        jonathantanmy@google.com, jrnieder@gmail.com, peff@peff.net,
-        sbeller@google.com
-Subject: Re: [PATCH v2 3/9] protocol: introduce protocol extention mechanisms
-Message-ID: <20170928215858.GB177031@google.com>
-References: <20170913215448.84674-1-bmwill@google.com>
- <20170926235627.79606-1-bmwill@google.com>
- <20170926235627.79606-4-bmwill@google.com>
- <xmqq4lro7mab.fsf@gitster.mtv.corp.google.com>
+        id S1751710AbdI1WDK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Sep 2017 18:03:10 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56670 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751107AbdI1WDJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Sep 2017 18:03:09 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7129596867;
+        Thu, 28 Sep 2017 18:03:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=hgTK20/lCZxLl92pkKGa/b6mmoU=; b=QGHWMF
+        SzBtjHQJPZH8MjO7IcXfrXfq9mhEOpKG6an+0mlNyD9h6Alt9poBNBf+XIcjcCxB
+        OVoGo3wMed7Af9v4AVjN5TY2mvXkstRfcaaHmfCk7LxnCVoaeGe0KtgI8UnupS7g
+        bisF+ychi+/YNITNllAJPfxNam3NQOyQNYd2E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=XbXA/q/2wegigQDuRyJkPFnvrdebdkR+
+        LTB7wHVjf0MWELu0tIE/0wTi5LxBTHhebhG4w4J5BmH7VFQZuFzSsvqUaSgWfWg1
+        dxABcneE6t+qcSfWNM2cQrV7lLsyE+dnHaFGlRW4rVwHtIbHt92FA7Zjalki0l1H
+        J144t31FqVY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 65D1896866;
+        Thu, 28 Sep 2017 18:03:09 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AAB4F96863;
+        Thu, 28 Sep 2017 18:03:08 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Max Kirillov <max@max630.net>, Paul Mackerras <paulus@ozlabs.org>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] gitk: expand $config_file_tmp before reporting to user
+References: <20170928041417.28947-1-max@max630.net>
+        <xmqq4lrn30bz.fsf@gitster.mtv.corp.google.com>
+        <xmqqzi9f1lb2.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.21.1.1709281428170.40514@virtualbox>
+Date:   Fri, 29 Sep 2017 07:03:07 +0900
+In-Reply-To: <alpine.DEB.2.21.1.1709281428170.40514@virtualbox> (Johannes
+        Schindelin's message of "Thu, 28 Sep 2017 14:31:17 +0200 (CEST)")
+Message-ID: <xmqqzi9ezdk4.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq4lro7mab.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: CFD924A2-A498-11E7-AF77-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/27, Junio C Hamano wrote:
-> Brandon Williams <bmwill@google.com> writes:
-> 
-> > +`GIT_PROTOCOL`::
-> > +	For internal use only.  Used in handshaking the wire protocol.
-> > +	Contains a colon ':' separated list of keys with optional values
-> > +	'key[=value]'.  Presence of unknown keys must be tolerated.
-> 
-> Is this meant to be used only on the "server" end?  Am I correct to
-> interpret "handshaking" to mean the initial connection acceptor
-> (e.g. "git daemon") uses it to pass what it decided to the programs
-> that implement the service (e.g. "git receive-pack")?
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Yes, the idea is that the client will request a protocol version by
-setting GIT_PROTOCOL (or indirectly set when using git:// or http://).
-upload-pack and receive-pack will use the keys and values set in
-GIT_PROTOCOL to determine which version of the protocol to use.  At some
-point in the future they may even use other keys and values as a means
-of sending more information in an initial request from the client.
+>> > Max Kirillov <max@max630.net> writes:
+>> >
+>> >> Tilda-based path may confise some users. First, tilda is not known
+>> >> for Window users, second, it may point to unexpected location
+>> >> depending on various environment setup.
+> ...
+> As familiar, as it is unfamiliar to Windows users.
+>
+> So I would actually suggest to make this a conditional on the platform: on
+> Windows, use the native name, everywhere else, not.
+>
+> Sound good?
 
-> 
-> > +/*
-> > + * Environment variable used in handshaking the wire protocol.
-> > + * Contains a colon ':' separated list of keys with optional values
-> > + * 'key[=value]'.  Presence of unknown keys must be tolerated.
-> > + */
-> > +#define GIT_PROTOCOL_ENVIRONMENT "GIT_PROTOCOL"
-> 
-> "Must be tolerated" feels a bit strange.  When somebody asks you to
-> use "version 3" or "version 1 variant 2", when you only know
-> "version 0" or "version 1" and you are not yet even aware of the
-> concept of "variant", we simply ignore "variant=2" as if it wasn't
-> there, even though "version=3" will be rejected (because we know of
-> "version"; it's just that we don't know "version=3").
+Not really.  
 
-By "Must be tolerated" I was trying to get across that if the server
-seeing something it doesn't understand, it shouldn't choke.  Maybe a
-better wording would be to use the word "ignored"?
+I agree with and (more importantly) consider the second rationale
+Max cites a more relevant one for this change.  
 
-> 
-> > +enum protocol_version determine_protocol_version_server(void)
-> > +{
-> > +	const char *git_protocol = getenv(GIT_PROTOCOL_ENVIRONMENT);
-> > +	enum protocol_version version = protocol_v0;
-> > +
-> > +	if (git_protocol) {
-> > +		struct string_list list = STRING_LIST_INIT_DUP;
-> > +		const struct string_list_item *item;
-> > +		string_list_split(&list, git_protocol, ':', -1);
-> > +
-> > +		for_each_string_list_item(item, &list) {
-> > +			const char *value;
-> > +			enum protocol_version v;
-> > +
-> > +			if (skip_prefix(item->string, "version=", &value)) {
-> > +				v = parse_protocol_version(value);
-> > +				if (v > version)
-> > +					version = v;
-> > +			}
-> > +		}
-> > +
-> > +		string_list_clear(&list, 0);
-> > +	}
-> > +
-> > +	return version;
-> > +}
-> 
-> This implements "the largest one wins", not "the last one wins".  Is
-> there a particular reason why the former is chosen?
-> 
+This is about reporting an error, and using the short-hand ~/$rest
+that could be pointing at a location different from what the user
+_thinks_ it points at for whatever reason (miconfigured HOME, some
+intermediate process setting it to something else, etc.) can hide
+the real issue.  The problem can be more easily noticed and
+diagnosed if the message shows the result of 'nativename'.  
 
-I envision this logic changing for newer servers once more protocol
-versions are added because at some point a server may want to disallow a
-particular version (because of a security issue or what have you).  So I
-figured the easiest thing to do for now was to implement "Newest version
-wins".
+And that rationale holds whether you are seeing the error message on
+Windows or non-Windows.
 
--- 
-Brandon Williams
