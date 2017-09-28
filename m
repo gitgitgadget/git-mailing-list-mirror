@@ -2,87 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A5BD202A5
-	for <e@80x24.org>; Thu, 28 Sep 2017 14:06:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA05C20A26
+	for <e@80x24.org>; Thu, 28 Sep 2017 14:33:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752456AbdI1OGz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Sep 2017 10:06:55 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:53534 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750794AbdI1OGy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Sep 2017 10:06:54 -0400
-Received: by mail-wm0-f65.google.com with SMTP id q132so2528982wmd.2
-        for <git@vger.kernel.org>; Thu, 28 Sep 2017 07:06:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dinwoodie.org; s=google;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=N7R4UhvKLn8HQSgo6hPvNT4p/Xp5C+/lCPQ5+KShNnM=;
-        b=j7vbqAvBkDICImQnrkOVltEhWgb/m3OewHaE14WHtVsxuOJq1bLkctngwL2CoOJ58V
-         nAuXLGWA8QBrPz6CW/kgONZ7kx/qkA3zT1EHWsMOvTSZT9Qt+Sm5rXLyjyYWq7LuZM2i
-         THgAr6x+0EDRo7sTqEy1UV6Spu/CxSVNTCp9M=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=N7R4UhvKLn8HQSgo6hPvNT4p/Xp5C+/lCPQ5+KShNnM=;
-        b=C8yLM4W/9mctmqTyBuByb0SD6vmB9teGHmzKp3BODN2Hva6OyTEK/KIEhE0/P5pcGP
-         NF0QrfD2JgQa6Iv/tHkXdLE3Y05hod/2KZ47GLI1Uk0l9NT3PtlRSTKv8YRAlGKbRXeN
-         mxHJIpN57WpbhaAGcgXCZD3FC3e8nVjwgddY6rz0f6nyZST+O8iZ1f0ncG88XwPCNlxK
-         U0IV9UrsJKRJq2t1f5b1YkiaMjYnFt4UfCUgYYnPPRx/5IvRrbc9MSQGdiNUhAFqczrT
-         lD2LULfYcEJsNyKTZ5XAyUw0LaQyXkh4Ff/6sHqvrpePGzVBy/n0vm72mZYtvtmod6+f
-         V52g==
-X-Gm-Message-State: AHPjjUiSKWtSJMgGQJZOeor5M0lGwYD+SnP4omNj/DD5+Gnzg5l7Wb1u
-        4cBWkpg9pUlOUWV92dqLfE2XUqezqnk=
-X-Google-Smtp-Source: AOwi7QBxRnJ2usRPXVR+IhwrXopKoNPdbX2wFzoDIpP033UQT++5F3cbNspzpGQkgdr8gxz9IvEW1A==
-X-Received: by 10.28.24.7 with SMTP id 7mr1376858wmy.78.1506607613079;
-        Thu, 28 Sep 2017 07:06:53 -0700 (PDT)
-Received: from dinwoodie.org ([2001:ba8:0:1c0::9:1])
-        by smtp.gmail.com with ESMTPSA id n10sm1913963wrb.0.2017.09.28.07.06.50
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 28 Sep 2017 07:06:50 -0700 (PDT)
-Date:   Thu, 28 Sep 2017 15:06:48 +0100
-From:   Adam Dinwoodie <adam@dinwoodie.org>
-To:     git@vger.kernel.org
-Cc:     Andreas Heiduk <asheiduk@gmail.com>
-Subject: [PATCH] doc: correct command formatting
-Message-ID: <20170928140648.GC9439@dinwoodie.org>
+        id S1753113AbdI1Odm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Sep 2017 10:33:42 -0400
+Received: from siwi.pair.com ([209.68.5.199]:15556 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752156AbdI1Odl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Sep 2017 10:33:41 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 7A8AE84612;
+        Thu, 28 Sep 2017 10:33:40 -0400 (EDT)
+Received: from [10.160.98.77] (unknown [167.220.148.86])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 3737784611;
+        Thu, 28 Sep 2017 10:33:40 -0400 (EDT)
+Subject: Re: [PATCH 07/13] object-filter: common declarations for object
+ filtering
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <20170922203017.53986-6-git@jeffhostetler.com>
+ <20170922203017.53986-8-git@jeffhostetler.com>
+ <20170926153950.a147c48ce62f73702eff7ebb@google.com>
+ <7774ff8d-3a53-860d-9343-292938d59d12@jeffhostetler.com>
+ <20170927170533.65498396e008fa148a3fda90@google.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <3cab0259-f20e-5913-d886-e37c4da9fd04@jeffhostetler.com>
+Date:   Thu, 28 Sep 2017 10:33:39 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20170927170533.65498396e008fa148a3fda90@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Leaving spaces around the `-delimeters for commands means asciidoc fails
-to parse them as the start of a literal string.  Remove an extraneous
-space that is causing a literal to not be formatted as such.
 
-Signed-off-by: Adam Dinwoodie <adam@dinwoodie.org>
----
- Documentation/git.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 6e3a6767e..98b9b46b9 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -75,7 +75,7 @@ example the following invocations are equivalent:
- Note that omitting the `=` in `git -c foo.bar ...` is allowed and sets
- `foo.bar` to the boolean true value (just like `[foo]bar` would in a
- config file). Including the equals but with an empty value (like `git -c
--foo.bar= ...`) sets `foo.bar` to the empty string which ` git config
-+foo.bar= ...`) sets `foo.bar` to the empty string which `git config
- --bool` will convert to `false`.
- 
- --exec-path[=<path>]::
--- 
-2.14.1
+On 9/27/2017 8:05 PM, Jonathan Tan wrote:
+> On Wed, 27 Sep 2017 13:09:42 -0400
+> Jeff Hostetler <git@jeffhostetler.com> wrote:
+> 
+>> On 9/26/2017 6:39 PM, Jonathan Tan wrote:
+>>> On Fri, 22 Sep 2017 20:30:11 +0000
+>>> Jeff Hostetler <git@jeffhostetler.com> wrote:
+>>>
+>>>>    Makefile        |   1 +
+>>>>    object-filter.c | 269 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>>>>    object-filter.h | 173 ++++++++++++++++++++++++++++++++++++
+>>>>    3 files changed, 443 insertions(+)
+>>>>    create mode 100644 object-filter.c
+>>>>    create mode 100644 object-filter.h
+>>>
+>>> I think these and list-objects-filter-* are multiple levels of
+>>> indirection too many. Would a single file with a few implementations of
+>>> filter_object_fn be sufficient?
+>>
+>> I did that in my first draft and I found it confusing.
+>>
+>> Each filter has 3 parts (some filter-specific data structures,
+>> a filter callback routine, a driver to call the traverse code).
+>> I found it easier to reason about each filter in isolation.
+>> And it makes it easier to work on each independently and keep
+>> their inclusion in separate commits.
+> 
+> I looked at object-filter.{c,h} a bit more. It seems that these files:
+>   1) define a struct that contains all the options that we would want
+>   2) supplies a way to populate this struct from code that uses parse-options
+>   3) supplies a way to populate this struct from code that calculates
+>      options by hand
+>   4) supplies a way to populate this struct from "protocol" ("<key>" or
+>      "<key> <value>" strings)
+> 
+> And the next commit takes the struct that object-filter.{c,h} produces
+> and actually performs the traversal.
+> 
+> I think this can be significantly simplified, though. Would this work:
+>   a) Define the object_filter_options struct, but make all fields
+>      correspond to a single parameter each. Define
+>      OBJECT_FILTER_OPTIONS_INIT to initialize everything to 0 except for
+>      large_byte_limit to ULONG_MAX (so that we can detect if something
+>      else is set to it).
+>   b) Define one single OPT_PARSE_FILTER macro containing all the
+>      parameters. We can use the non-callback macros here. That solves 2)
+>      above.
+>   c) Define a function that takes in (int *argc, char ***argv) that can
+>      "massage" it to remove all filter-related arguments, storing them in
+>      a object_filter_options struct. That solves 3) above. As discussed
+>      in the API documentation, this means that argument lists of the form
+>      "--unknown --known" (where "--unknown" takes an argument) are
+>      processed differently, but then again, rev-list never supported them
+>      anyway (it required "--unknown=<arg>").
+>   d) Define a function that converts "<key>" into "--<key>" and "<key>
+>      <value>" into "--<key>=<value>", and use the existing mechanism.
+>      That solves 4) above.
+> 
+> This removes the need to maintain the lists of one-per-argument
+> functions, including the parse_filter_* and opt_parse_filter_* functions
+> declared in the header file. If we were to add a feature, we wouldn't
+> need to change anything in the caller, and wouldn't need to hand-edit
+> object_filter_hand_parse_arg() and object_filter_hand_parse_protocol().
+
+Maybe.  What I have here now is the result of adding these arguments to
+rev-list and pack-objects (in the current patch series), and also to
+fetch-pack, fetch, clone, upload-pack, index-pack, and the transport and
+protocol code (in a follow-on patch series that I've omitted for the moment).
+And there will probably be a few more, such as fsck, gc, and etc.  I hesitate
+to refine the macros too much further until we've agreement on the overall
+approach and terms.
+
+Thanks
+Jeff
+
 
