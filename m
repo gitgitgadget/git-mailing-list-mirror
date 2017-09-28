@@ -2,145 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF7F620A10
-	for <e@80x24.org>; Thu, 28 Sep 2017 22:08:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 80A0B20A10
+	for <e@80x24.org>; Thu, 28 Sep 2017 22:19:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751088AbdI1WIS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Sep 2017 18:08:18 -0400
-Received: from mail-pf0-f182.google.com ([209.85.192.182]:55381 "EHLO
-        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750946AbdI1WIR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Sep 2017 18:08:17 -0400
-Received: by mail-pf0-f182.google.com with SMTP id r71so1517060pfe.12
-        for <git@vger.kernel.org>; Thu, 28 Sep 2017 15:08:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=gPrO4rOCNLbQeszuAErYk80rSfOTZjzm+nYUpRUrDXU=;
-        b=S4ozl9hoQ9IbGgvcVQzkCgAJwJ0ChZ/Hcmhzfabiu+zkWhKf3Up0vyvmM52UqYD7j4
-         2/7uK6jAzMzOHVAyPXIJ190vZ8Dnbeotz3xk/cFXusR82g5T2NIbXvhaoP6wSUy9v+nb
-         RxBNpyR7gaGfyUDlp7pkNmgWPUkWWGizK9jSiQ3d0PLDAVyfj3jEP8nUQBnyy5zA/hMq
-         dKJV6jnJGK+zFnelTd3RiDukNd+wn2UIl+CXPmKXE+ZgrtEj9cDMd6v6lQHPi31XfrEc
-         rRFDcEP92nEr4xg5L6Q1Q3JoZnQAO+t1XbVifU0Y02YyaG5gEu6ra+FWjDh5ovWAOVZP
-         M3zg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=gPrO4rOCNLbQeszuAErYk80rSfOTZjzm+nYUpRUrDXU=;
-        b=WQ0eJPSL+6aHqtkHgRYxhdmeJ+4/evDEobfgiW2QJ5RumvKVSyc5OMiycgDoSLqoP3
-         wvGzIlFjyWnQnJ6JCLFRqn2oxhfVYkWja6UvvUXET3+LfvOAqIKs3lik/Zc5lSet2uXY
-         q0deCqieaijN1yK1Zm4gLe12GQYBu27arVbtJ1lBuyIKMwswqr6U2zj1EAIy097k7mWL
-         aqPAJKed1awXvoWVULW2sLxL9wk6yF4wTwFHQaJ9AG5zsThNBgBvjlrZ2srvYZYyrrl7
-         gx9tMuQg8D1Q0FRGsokyPN6ExkP3tPhbMs/ZQf8hIvtgJRvG8GPcgbGlZ4x6SPEFmoi4
-         Lzlw==
-X-Gm-Message-State: AHPjjUgn8aC4KyFmL1ZkAoYzex3NebQwQxLuAsiBHZXdjM29IEIlTH/J
-        nH8z2BE+YU8fNezzerJd0e/Sbg==
-X-Google-Smtp-Source: AOwi7QBGOIMO5Ge2g09ZJuS8jsgDEFGb6agWAJS/FdjKBDZ/437r/KG1cy1QpWWd8LtY35H6pZ1KsQ==
-X-Received: by 10.99.191.6 with SMTP id v6mr5562292pgf.284.1506636496929;
-        Thu, 28 Sep 2017 15:08:16 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:c55b:7140:f55d:7eed])
-        by smtp.gmail.com with ESMTPSA id c62sm4584027pfl.84.2017.09.28.15.08.15
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 28 Sep 2017 15:08:15 -0700 (PDT)
-Date:   Thu, 28 Sep 2017 15:08:14 -0700
-From:   Brandon Williams <bmwill@google.com>
+        id S1751403AbdI1WTm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Sep 2017 18:19:42 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53934 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751349AbdI1WTm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Sep 2017 18:19:42 -0400
+Received: (qmail 1895 invoked by uid 109); 28 Sep 2017 22:19:42 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 28 Sep 2017 22:19:42 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 31580 invoked by uid 111); 28 Sep 2017 22:20:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Thu, 28 Sep 2017 18:20:21 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Sep 2017 18:19:39 -0400
+Date:   Thu, 28 Sep 2017 18:19:39 -0400
+From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, bturner@atlassian.com, git@jeffhostetler.com,
-        jonathantanmy@google.com, jrnieder@gmail.com, peff@peff.net,
-        sbeller@google.com
-Subject: Re: [PATCH v2 6/9] connect: teach client to recognize v1 server
- response
-Message-ID: <20170928220814.GC177031@google.com>
-References: <20170913215448.84674-1-bmwill@google.com>
- <20170926235627.79606-1-bmwill@google.com>
- <20170926235627.79606-7-bmwill@google.com>
- <xmqqpoac676l.fsf@gitster.mtv.corp.google.com>
+Cc:     Olga Telezhnaya <olyatelezhnaya@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH Outreachy] mru: use double-linked list from list.h
+Message-ID: <20170928221939.zxssv7jlzes56tq7@sigill.intra.peff.net>
+References: <CAP8UFD24A8rxMfLMFmSStWnBMMeB58SqUdNoo3niQuc7LqRMMg@mail.gmail.com>
+ <0102015ec7a3424b-529be659-bdb6-42c4-a48f-db264f33d53a-000000@eu-west-1.amazonses.com>
+ <xmqq8tgz13x7.fsf@gitster.mtv.corp.google.com>
+ <20170928204705.7ixxspiflmhsdh7d@sigill.intra.peff.net>
+ <xmqq4lrm1o8j.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqpoac676l.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <xmqq4lrm1o8j.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/27, Junio C Hamano wrote:
-> Brandon Williams <bmwill@google.com> writes:
+On Fri, Sep 29, 2017 at 06:56:28AM +0900, Junio C Hamano wrote:
+
+> Jeff King <peff@peff.net> writes:
 > 
-> > +/* Returns 1 if packet_buffer is a protocol version pkt-line, 0 otherwise. */
-> > +static int process_protocol_version(void)
-> > +{
-> > +	switch (determine_protocol_version_client(packet_buffer)) {
-> > +		case protocol_v1:
-> > +			return 1;
-> > +		case protocol_v0:
-> > +			return 0;
-> > +		default:
-> > +			die("server is speaking an unknown protocol");
-> > +	}
-> > +}
+> > But I also think this patch may be a stepping stone to dropping "struct
+> > mru" entirely, and just pushing a "struct list_head mru" into the
+> > packed_git object itself (or of course any object you like). At which
+> > point we'd just directly use the list iterators anyway.
 > 
-> For the purpose of "technology demonstration" v1 protocol, it is OK
-> to discard the result of "determine_pvc()" like the above code, but
-> in a real application, we would do a bit more than just ignoring an
-> extra "version #" packet that appears at the beginning, no?
+> The endgame state implied by your statement would mean that we won't
+> have mru_mark() and instead have these open-coded in terms of the
+> two calls into the list API.  There only are two callers of it in
+> the current system, so it is not the end of the world, so I guess I
+> can agree that this is a good preparation step toward the longer
+> term goal, which says "mru API is over-engineered and what it offers
+> over the plain vanilla list API is almost never used except for a
+> few callsite; let's remove it and use the bare list API instead".
+
+Thanks, that last sentence is a good summary of my thinking (I think
+what I find most silly about it is that it allocates a whole extra
+struct per item, which is where most of the complication comes from).
+
+I had envisioned leaving mru_mark() as a wrapper for "move to the front"
+that could operate on any list. But seeing how Olga's patch takes it
+down to two trivial lines, I'd also be fine with an endgame that just
+eliminates it.
+
+> > I'd make the same claims here as above (both that I agree your proposed
+> > interface looks nicer, but also that I think we eventually do want to
+> > expose that this is tightly coupled with list.h).
 > 
-> It would be sensible to design how the result of determien_pvc()
-> call is propagated to the remainder of the program in this patch and
-> implement it.  Perhaps add a new global (like server_capabilities
-> already is) and store the value there, or something?  Or pass a
-> pointer to enum protocol_version as a return-location parameter to
-> this helper function so that the process_capabilities() can pass a
-> pointer to its local variable?
+> I agree.  I just do not yet know if I fully embrace the idea that we
+> just should use bare list API, getting rid of the mru API.
 
-Yes, once we actually implement a v2 we would need to not throw away the
-result of 'determine_pvc()' and instead do control flow based on the
-resultant version.  I was trying to implement 'v1' as simply as possible
-so that I wouldn't have to do a large amount of refactoring when
-proposing this transition, though it seems Jonathan ended up doing more
-than I planned, as I figured we didn't really know what the code will
-need to be refactored to, in order to handle another protocol version.
-I would suspect that we maybe wouldn't want to determine which version a
-server is speaking in 'get_remote_heads()' but rather at some point
-before that so we can branch off to do v2 like things, for example,
-capability discovery and not ref discovery.
+Fair enough.
 
-If you do think we need to do more of that refactoring now, before a v2,
-I can most certainly work on that.
-
-
-> 
-> >  static void process_capabilities(int *len)
-> >  {
-> > @@ -224,12 +239,19 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
-> >  	 */
-> >  	int responded = 0;
-> >  	int len;
-> > -	int state = EXPECTING_FIRST_REF;
-> > +	int state = EXPECTING_PROTOCOL_VERSION;
-> >  
-> >  	*list = NULL;
-> >  
-> >  	while ((len = read_remote_ref(in, &src_buf, &src_len, &responded))) {
-> >  		switch (state) {
-> > +		case EXPECTING_PROTOCOL_VERSION:
-> > +			if (process_protocol_version()) {
-> > +				state = EXPECTING_FIRST_REF;
-> > +				break;
-> > +			}
-> > +			state = EXPECTING_FIRST_REF;
-> > +			/* fallthrough */
-> >  		case EXPECTING_FIRST_REF:
-> >  			process_capabilities(&len);
-> >  			if (process_dummy_ref()) {
-
--- 
-Brandon Williams
+-Peff
