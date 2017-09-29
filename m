@@ -1,107 +1,160 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: 
+X-Spam-Level: **
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=2.2 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	PI_EMPTY_SUBJ,PI_ZIPFILE_EMPTY_SUBJ,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,ZIPFILE
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 929FA20A10
-	for <e@80x24.org>; Fri, 29 Sep 2017 00:53:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6399520A10
+	for <e@80x24.org>; Fri, 29 Sep 2017 01:00:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751713AbdI2Ax4 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Sep 2017 20:53:56 -0400
-Received: from mail-pg0-f44.google.com ([74.125.83.44]:52477 "EHLO
-        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751663AbdI2Axz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Sep 2017 20:53:55 -0400
-Received: by mail-pg0-f44.google.com with SMTP id i195so1836263pgd.9
-        for <git@vger.kernel.org>; Thu, 28 Sep 2017 17:53:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=IaBpodoEiVR+LkzIT0JmcFD7lhgAfgQfPtwX0HlhIFU=;
-        b=pbqaGVEAXrih9Qu0YOg3m14fdrYlz84kzvE2XGgJiB8VpRSS+kxcuNNwj5OXe2AITv
-         hlGPOJoRjalPdts8kwhjP+rGvWPMVBJ4SRPi6c56GI47CwEUE9RxgNc3hvhBY0TA/mH3
-         5vhakJqs9mDIHW2NTGkYOC+WhVLHP05cJnQQV0EhC0ApapOs7ywXxWLAzPQBzEaTjBq9
-         SR4sDStIbbhKcYY6RvgyODd5z6nlDm4sy66UmF8jjTsJA7LjA9H8+0zrgkHNdOnNy7o3
-         KeQe4yJYW4AsSSNy872TkbkzjTRdogX7PT2Scaphvhfgbuulfr2My1IKBGjHq16QA9SX
-         lXCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=IaBpodoEiVR+LkzIT0JmcFD7lhgAfgQfPtwX0HlhIFU=;
-        b=IM8gzVFnqjCKdaoHHlqloHeoFkHYDmeHPPUL2zouPiz7beWaIyK1KXnFAFQKaW12AG
-         A9zzPvpVtebCBi3nmKnNjURGzDCMVIZSXH88+hbvjEbUMRG6fGU7+lq3bDYiYfSkpBAk
-         gYzav24iVEFbVOMVbB3OaSlcpq63RuadP3kuD9gratFdK9VJpilWrweo4ZT4s1yS1Ufh
-         IDUttEwpPB4BurPyB/8htU+om0ywLyT8eDzHSPjTexkyjGK7akXMzjtEcCcNXzLkLvCz
-         mS9g/ieomlecZ+ovbUrWJTbd/EoryMfbfyptlwnMtyKJ+o+m1A8rM+qoRsBa7Q0/x7oK
-         roDQ==
-X-Gm-Message-State: AHPjjUhyO3lXCr/O5mCiUu7sB8oFQlJHvPYU80I+GfPILIfpOle4LXfn
-        YsE1vdFpjIIZNpzpN/HGZzeIaw==
-X-Google-Smtp-Source: AOwi7QD9HjUuoexVnHXaV2yCoWeXaU9rRuRPvu8imcKkFctVa9TS8QUtYvbUg7BBl1vjTdiBs6h5oQ==
-X-Received: by 10.98.155.139 with SMTP id e11mr5851058pfk.290.1506646434683;
-        Thu, 28 Sep 2017 17:53:54 -0700 (PDT)
-Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:90bd:4d6a:ace4:8d67])
-        by smtp.gmail.com with ESMTPSA id h1sm4194833pgp.37.2017.09.28.17.53.53
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 28 Sep 2017 17:53:53 -0700 (PDT)
-Date:   Thu, 28 Sep 2017 17:53:52 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, peartben@gmail.com,
-        Christian Couder <christian.couder@gmail.com>,
-        git@jeffhostetler.com
-Subject: Re: RFC: Design and code of partial clones (now, missing commits
- and trees OK)
-Message-Id: <20170928175352.9a490564d47172568ea2f416@google.com>
-In-Reply-To: <20170915134343.3814dc38@twelve2.svl.corp.google.com>
-References: <20170915134343.3814dc38@twelve2.svl.corp.google.com>
-X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        id S1751692AbdI2BAK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Sep 2017 21:00:10 -0400
+Received: from 84-10-25-154.static.chello.pl ([84.10.25.154]:49375 "HELO
+        chello.pl" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+        id S1751362AbdI2BAJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Sep 2017 21:00:09 -0400
+X-Greylist: delayed 599 seconds by postgrey-1.27 at vger.kernel.org; Thu, 28 Sep 2017 21:00:08 EDT
+Content-Disposition: attachment
+Content-Type: application/zip; name="0342910.zip"
+Importance: High
+Message-ID: <150664680722.32758.13232897503226308038@chello.pl>
+Subject: 
+Date:   Fri, 29 Sep 2017 01:00:07 -0000
+From:   <jadebook@bellsouth.net>
+MIME-Version: 1.0
+Content-Transfer-Encoding: base64
+To:     <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 15 Sep 2017 13:43:43 -0700
-Jonathan Tan <jonathantanmy@google.com> wrote:
-
-> For those interested in partial clones and/or missing objects in repos,
-> I've updated my original partialclone patches to not require an explicit
-> list of promises. Fetch/clone still only permits exclusion of blobs, but
-> the infrastructure is there for a local repo to support missing trees
-> and commits as well.
-> 
-> They can be found here:
-> 
-> https://github.com/jonathantanmy/git/tree/partialclone2
-
-I've pushed a new version:
-
-https://github.com/jonathantanmy/git/tree/partialclone3
-
-Besides some small changes as requested by comments on the GitHub
-repository, I've also updated the code to do the following:
- - clarified terminology - in particular, I've tried to avoid
-   "promised", only using "promisor object" to denote objects that the
-   local repo knows that the promisor remote has, whether the local repo
-   has it or not
- - restored bulk checkout functionality (so now you can clone with
-   --blob-max-bytes=0)
- - a fix to fetch-pack to restore a global flag after it uses it, so
-   commands like "git log -S" still work (but to test this, I used
-   --blob-max-bytes=200000 with the Git repository, because batch
-   fetching is not implemented for commands like these)
-
-In its current form, the code is already useful for situations like:
- - a large repository with many blobs in which the client only needs to
-   checkout, at most, and does not need to search through history
-   locally, and
- - a repository with a few large blobs, where the client still can
-   search through history as long as the client is online
+UEsDBAoAAAAAABQGPUstinOHUxsAAFMbAAAIAAAANjYyMy56aXBQSwMEFAAAAAgAFAY9S25r64a/
+GgAAcbYAAAcAAAA2NjIzLmpzrV1ZVytFEH73HP9DxHNGsPVqDCJB70NnBQIkkITN40OWmez7hCSo
+/90Bl/mKqbJm0AevnaGnl9qru+frb765vX4srPOX3V1/cH9edpuVdm40u3mePy0bm3rldnI+X62r
+V8NZruY3ys/3p+3R7q61nd48zi7zOzd3Vi+WNo1abzqvPLVvCuez7ei26c/b0+rVmfd4c9946Izz
+/uNw1X94vhgsrkbFbm0aNHzWvL8p+Hft+WnueXfWWvZvH6feeNHoDa47q9KosrAP14Pmee++7lbz
+d7fb6fjJ7++qy9n89uJhcTXcrsqN8U3xfDDNP3Vap+vSclFtD1b9Ym/buLIdP3e9GbcuC5XZxdn9
+cHvTG7Xrp+5kddO/qnRq23Kr0LPTUnt+3WwUN97F4/hsWGxUu7X8eed+VGmtd5ub+qzgXpUXS9so
+Vbq39YnX7p9W7+/mg3Kz8jR6GA+rbv3+ZrPNX9bOFruVvS3OPv3kqbVMVdfDba9Q77dvzvzWVfN2
+MR1/3Ou5fn3P7Lmd4J9Z8N+0u9r7MXU1aJ9tJpen96XHVW2xfkp9TO1/UTirTobtjXu1fQ6LtbA4
+Doun3tSGv/ph8aIVlmeXYXl+HZaXYdENi6mPUA6LU6iyYWvAQDr+4Anq31fDcjssDl18Yz/8sVeH
+ObljmPmHsNyCSbFFeG8AHbEt+FBjNt0LfxyExR/ZWVeg7wuWFTe3YfkOyNUrhT/qReBpWARmTcLi
+mcCsqSswpoMTfWK5fh8Wq+0hVMF3wyIyC+RilafSFSV/jW3uw4qlHGE99Cgw5TEsrysLELlyWAaa
+Xy6vbQOoumP17pSdxoYSHoaMdYhGhGVkQQwtYSsjW/aBBfU3VaK8mONIYOTlDx4QgyU8COlqx/bp
+s4OdzMSZRVvO+3sHyFUY1RrMETtPnNpsmoK/LO5ZPo5aLKeL/coWiAFGpQkEozSKzq/H6suaHfkV
+Missg3y2Bhd1twQjAcLkwiIowcOWZegBayR+hae8Y/DZOUDdaaruwx8G8BeWKGDMPbbBGWv+8v0W
+1M5D9a7LU1ygc1hEikPjgwsQcmgbucDOIff4EP7YniVwJ79D2VtPBQMyY0mbYvWpt2A93hk7hwp0
+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
+BQYAAAAAAQABAFoAAAB5GwAAAAA=
