@@ -6,56 +6,56 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EEED020281
-	for <e@80x24.org>; Fri, 29 Sep 2017 20:12:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 107C820281
+	for <e@80x24.org>; Fri, 29 Sep 2017 20:12:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752628AbdI2UMg (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Sep 2017 16:12:36 -0400
-Received: from mail-pg0-f53.google.com ([74.125.83.53]:45573 "EHLO
-        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752622AbdI2UMb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Sep 2017 16:12:31 -0400
-Received: by mail-pg0-f53.google.com with SMTP id 188so355095pgb.2
-        for <git@vger.kernel.org>; Fri, 29 Sep 2017 13:12:30 -0700 (PDT)
+        id S1752633AbdI2UMi (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Sep 2017 16:12:38 -0400
+Received: from mail-pg0-f42.google.com ([74.125.83.42]:49151 "EHLO
+        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752557AbdI2UM2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Sep 2017 16:12:28 -0400
+Received: by mail-pg0-f42.google.com with SMTP id v23so351371pgc.5
+        for <git@vger.kernel.org>; Fri, 29 Sep 2017 13:12:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=dHLs9/UME2iU/FrY3Bb2bga6u1fOEyaib1GmLRxBl5k=;
-        b=U3gvqv32R60nL8YL8VC28A2ySIp7SfQT78maT4v4D5X3FwZYQ3o2uMnJ2GzyZXPm+W
-         GTlOPZcUB/P7loRtuk+QoNngumL1xj3DTGteiAlh/ZPmwty7JoNOb894Fonycfy9Xmhw
-         46tugB7kSORE8SCnWvZgN1GpgTvQF5D4PIAcQq+kdMzCfSgHC37+yzunslPcsXJO69s7
-         qG096B3J2cKxZg+bynfJSO0W9ck+BDmH4cNyo45KuH3V8WkdXidrNwymwFd/BWVK4P9F
-         SJrwTCel3xdiqXjGfvpaGBhxLKeNnl7zYoDPOIqgk3in6QO+ItZMfih7SFi8q4bQr+re
-         UfLg==
+        bh=MO8O17ChEdGL8ZdghhIArrIIocTz4HPt4K1a53zONFw=;
+        b=QVu8qNhFB9t5VX8KCahvBLoyro9QGatBnLO/aFS1BQtvbwwffUYLBsYzybwqRIbCvt
+         3sKxzpTUoiBhvOQeAaFAwNomfIdTiq6Q5tZXQ5tP/xiRJoKMbu+sUDMOxmWma9D6ERun
+         Qjb6iSShYDIEmlUQIjNOa1HQqJIU3sl75As9DhKV28zLBnGO6qzNcVj05UNY83lmRr4m
+         Q+RAb0Y7oyzTz9ufkEUwckM8NSTEcBA70r6TZmG0wuSetlkigfICDZuuFbV7rwIshcf9
+         Y+jPi5Z1OERJyZvr1Pv4Pq3KKeSpbW50NtCFCHOMn7/VJmmT5SDv49GyR6+L/vhH+zXP
+         SqVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=dHLs9/UME2iU/FrY3Bb2bga6u1fOEyaib1GmLRxBl5k=;
-        b=bLT2AJvLY19Kjt8LI9BNzpc2dmVZkAoyle2NmN10hofN2pWXMtvFiLk8IQAda5wFDD
-         5soUn3YctUmwjsgocau8u44y5Ia0Nshoua23O7EqZvVnCp5dPi1lqXE7e3c7WjUxIFP9
-         NzegjDMqBUFq+CIOlmChFskL4uZ1/ONdka+0OK08ZKdjFkCsdInsdqA+x/mhb6AuJdWx
-         +cNgblbRIXAlNLSknQ+ga75CJzTcDQB93oTPR+G/Uh+mR7lA34VnBRLjobI5meyDVHgQ
-         r/0Pelm8Udei6lyqItO9iYHvwmNL0b06vxbDnxkZCnlAh46uGy46WMmQAmAfKZ7pqDuB
-         5Pzw==
-X-Gm-Message-State: AHPjjUjSk4bmEn8HiURvEc+0jnTPt3tDxMM1KsS+3ucRP7bUN+yzyfQb
-        83oGloScnIp5eTe7vVMbFs8QUZohY8E=
-X-Google-Smtp-Source: AOwi7QCaIKoy57UE9KDRQARcqVAwNIE3y1U0JTY8rDpb3HSA1fo6Rljgd36RM6hTovwhBBgXQogXOw==
-X-Received: by 10.84.240.137 with SMTP id z9mr8123135plk.114.1506715949669;
-        Fri, 29 Sep 2017 13:12:29 -0700 (PDT)
+        bh=MO8O17ChEdGL8ZdghhIArrIIocTz4HPt4K1a53zONFw=;
+        b=tcohRBgYJlbXoyOoEgUzqxH+R6IA8tcuFTC8uw0skA6esbYsV2J2eV660EiJfTo2o4
+         yHB6nDMyczaHNKgKKtBi0imGAw2B0xsnHdH3pujF6M8ihNopNc7em594+G7eBQ/rOiGj
+         SIBsjFbpOFxMLrdZGaQcwPa28MqL8Qx79KYacrt0ZYYfz7vP29L63HMVpg59hpZlhFWY
+         4b+J3/8gllbjvNK0CaECa+3jP7bzilqetYsOBAhT4E5Y/IdffdAhRXjAMqq4D1RoAR3r
+         FSLrLgasOk4WAyRO/z1usXb1AO1QyIl62Jw/iZhKTFLW8ahlqLsn+kBQHcPcyOCLpElH
+         px+Q==
+X-Gm-Message-State: AMCzsaX47jhF1DrOcY00iuDAt3Dog0ZWDP2mDGkb4BqM811Z6gMWkurG
+        6CPfige600D21IvLKaVzBbhwnrW4X4U=
+X-Google-Smtp-Source: AOwi7QBxOjQlOZPuIbeTgnVM7/IGJgCgfDUeYX62EF1pYw+Cq8VuszMznVMvY0yxSm38JE7eEdtN0g==
+X-Received: by 10.98.16.203 with SMTP id 72mr882250pfq.150.1506715947308;
+        Fri, 29 Sep 2017 13:12:27 -0700 (PDT)
 Received: from twelve3.mtv.corp.google.com ([100.96.218.44])
-        by smtp.gmail.com with ESMTPSA id g5sm9280561pgo.66.2017.09.29.13.12.28
+        by smtp.gmail.com with ESMTPSA id g5sm9280561pgo.66.2017.09.29.13.12.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 29 Sep 2017 13:12:28 -0700 (PDT)
+        Fri, 29 Sep 2017 13:12:26 -0700 (PDT)
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com,
         git@jeffhostetler.com, peartben@gmail.com,
         christian.couder@gmail.com
-Subject: [PATCH 17/18] unpack-trees: batch fetching of missing blobs
-Date:   Fri, 29 Sep 2017 13:11:53 -0700
-Message-Id: <73f9648b4c258eae1d02f91f12250ea139b72519.1506714999.git.jonathantanmy@google.com>
+Subject: [PATCH 15/18] clone: support excluding large blobs
+Date:   Fri, 29 Sep 2017 13:11:51 -0700
+Message-Id: <9f0c6eb5aea49a5620de8e56fab2065805570f0e.1506714999.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.14.1.748.g20475d2c7
 In-Reply-To: <cover.1506714999.git.jonathantanmy@google.com>
 References: <cover.1506714999.git.jonathantanmy@google.com>
@@ -66,198 +66,148 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When running checkout, first prefetch all blobs that are to be updated
-but are missing. This means that only one pack is downloaded during such
-operations, instead of one per missing blob.
-
-This operates only on the blob level - if a repository has a missing
-tree, they are still fetched one at a time.
-
-This does not use the delayed checkout mechanism introduced in commit
-2841e8f ("convert: add "status=delayed" to filter process protocol",
-2017-06-30) due to significant conceptual differences - in particular,
-for partial clones, we already know what needs to be fetched based on
-the contents of the local repo alone, whereas for status=delayed, it is
-the filter process that tells us what needs to be checked in the end.
+Teach clone to support excluding large blobs through a blob-max-bytes
+parameter.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- fetch-object.c   | 27 +++++++++++++++++++++++----
- fetch-object.h   |  5 +++++
- t/t5601-clone.sh | 52 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- unpack-trees.c   | 22 ++++++++++++++++++++++
- 4 files changed, 102 insertions(+), 4 deletions(-)
+ builtin/clone.c  | 23 +++++++++++++++++++++--
+ t/t5601-clone.sh | 49 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 70 insertions(+), 2 deletions(-)
 
-diff --git a/fetch-object.c b/fetch-object.c
-index 369b61c0e..21b4dfafc 100644
---- a/fetch-object.c
-+++ b/fetch-object.c
-@@ -3,12 +3,12 @@
- #include "pkt-line.h"
- #include "strbuf.h"
- #include "transport.h"
-+#include "fetch-object.h"
+diff --git a/builtin/clone.c b/builtin/clone.c
+index dbddd98f8..4c2193dc4 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -60,6 +60,7 @@ static struct string_list option_optional_reference = STRING_LIST_INIT_NODUP;
+ static int option_dissociate;
+ static int max_jobs = -1;
+ static struct string_list option_recurse_submodules = STRING_LIST_INIT_NODUP;
++static char *blob_max_bytes;
  
--void fetch_object(const char *remote_name, const unsigned char *sha1)
-+static void fetch_refs(const char *remote_name, struct ref *ref)
- {
- 	struct remote *remote;
- 	struct transport *transport;
--	struct ref *ref;
- 	int original_fetch_if_missing = fetch_if_missing;
+ static int recurse_submodules_cb(const struct option *opt,
+ 				 const char *arg, int unset)
+@@ -135,6 +136,8 @@ static struct option builtin_clone_options[] = {
+ 			TRANSPORT_FAMILY_IPV4),
+ 	OPT_SET_INT('6', "ipv6", &family, N_("use IPv6 addresses only"),
+ 			TRANSPORT_FAMILY_IPV6),
++	OPT_STRING(0, "blob-max-bytes", &blob_max_bytes, N_("bytes"),
++		   N_("do not fetch blobs above this size")),
+ 	OPT_END()
+ };
  
- 	fetch_if_missing = 0;
-@@ -17,10 +17,29 @@ void fetch_object(const char *remote_name, const unsigned char *sha1)
- 		die(_("Remote with no URL"));
- 	transport = transport_get(remote, remote->url[0]);
+@@ -886,6 +889,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	struct refspec *refspec;
+ 	const char *fetch_pattern;
  
--	ref = alloc_ref(sha1_to_hex(sha1));
--	hashcpy(ref->old_oid.hash, sha1);
- 	transport_set_option(transport, TRANS_OPT_FROM_PROMISOR, "1");
- 	transport_set_option(transport, TRANS_OPT_NO_HAVES, "1");
- 	transport_fetch_refs(transport, ref);
- 	fetch_if_missing = original_fetch_if_missing;
- }
++	fetch_if_missing = 0;
 +
-+void fetch_object(const char *remote_name, const unsigned char *sha1)
-+{
-+	struct ref *ref = alloc_ref(sha1_to_hex(sha1));
-+	hashcpy(ref->old_oid.hash, sha1);
-+	fetch_refs(remote_name, ref);
-+}
-+
-+void fetch_objects(const char *remote_name, const struct oid_array *to_fetch)
-+{
-+	struct ref *ref = NULL;
-+	int i;
-+
-+	for (i = 0; i < to_fetch->nr; i++) {
-+		struct ref *new_ref = alloc_ref(oid_to_hex(&to_fetch->oid[i]));
-+		oidcpy(&new_ref->old_oid, &to_fetch->oid[i]);
-+		new_ref->next = ref;
-+		ref = new_ref;
+ 	packet_trace_identity("clone");
+ 	argc = parse_options(argc, argv, prefix, builtin_clone_options,
+ 			     builtin_clone_usage, 0);
+@@ -1104,7 +1109,13 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		transport_set_option(transport, TRANS_OPT_UPLOADPACK,
+ 				     option_upload_pack);
+ 
+-	if (transport->smart_options && !deepen)
++	if (blob_max_bytes) {
++		transport_set_option(transport, TRANS_OPT_BLOB_MAX_BYTES,
++				     blob_max_bytes);
++		transport_set_option(transport, TRANS_OPT_FROM_PROMISOR, "1");
 +	}
-+	fetch_refs(remote_name, ref);
-+}
-diff --git a/fetch-object.h b/fetch-object.h
-index f371300c8..4b269d07e 100644
---- a/fetch-object.h
-+++ b/fetch-object.h
-@@ -1,6 +1,11 @@
- #ifndef FETCH_OBJECT_H
- #define FETCH_OBJECT_H
- 
-+#include "sha1-array.h"
 +
- extern void fetch_object(const char *remote_name, const unsigned char *sha1);
++	if (transport->smart_options && !deepen && !blob_max_bytes)
+ 		transport->smart_options->check_self_contained_and_connected = 1;
  
-+extern void fetch_objects(const char *remote_name,
-+			  const struct oid_array *to_fetch);
+ 	refs = transport_get_remote_refs(transport);
+@@ -1164,13 +1175,20 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	write_refspec_config(src_ref_prefix, our_head_points_at,
+ 			remote_head_points_at, &branch_top);
+ 
++	if (blob_max_bytes) {
++		git_config_set("core.repositoryformatversion", "1");
++		git_config_set("extensions.partialclone", "origin");
++		repository_format_partial_clone = "origin";
++	}
 +
- #endif
+ 	if (is_local)
+ 		clone_local(path, git_dir);
+ 	else if (refs && complete_refs_before_fetch)
+ 		transport_fetch_refs(transport, mapped_refs);
+ 
+ 	update_remote_refs(refs, mapped_refs, remote_head_points_at,
+-			   branch_top.buf, reflog_msg.buf, transport, !is_local);
++			   branch_top.buf, reflog_msg.buf, transport,
++			   !is_local && !blob_max_bytes);
+ 
+ 	update_head(our_head_points_at, remote_head, reflog_msg.buf);
+ 
+@@ -1191,6 +1209,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	junk_mode = JUNK_LEAVE_REPO;
++	fetch_if_missing = 1;
+ 	err = checkout(submodule_progress);
+ 
+ 	strbuf_release(&reflog_msg);
 diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 951b1ffa8..0ca24c215 100755
+index 9c56f771b..951b1ffa8 100755
 --- a/t/t5601-clone.sh
 +++ b/t/t5601-clone.sh
-@@ -611,6 +611,58 @@ test_expect_success 'partial clone: warn if server does not support blob-max-byt
- 	test_i18ngrep "blob-max-bytes not recognized by server" err
+@@ -571,4 +571,53 @@ test_expect_success 'GIT_TRACE_PACKFILE produces a usable pack' '
+ 	git -C replay.git index-pack -v --stdin <tmp.pack
  '
  
-+test_expect_success 'batch missing blob request during checkout' '
-+	rm -rf server client &&
++partial_clone () {
++	SERVER="$1" &&
++	URL="$2" &&
 +
-+	test_create_repo server &&
-+	echo a >server/a &&
-+	echo b >server/b &&
-+	git -C server add a b &&
++	rm -rf "$SERVER" client &&
++	test_create_repo "$SERVER" &&
++	test_commit -C "$SERVER" one &&
++	HASH1=$(git hash-object "$SERVER/one.t") &&
++	git -C "$SERVER" revert HEAD &&
++	test_commit -C "$SERVER" two &&
++	HASH2=$(git hash-object "$SERVER/two.t") &&
++	test_config -C "$SERVER" uploadpack.advertiseblobmaxbytes 1 &&
++	test_config -C "$SERVER" uploadpack.allowanysha1inwant 1 &&
 +
-+	git -C server commit -m x &&
-+	echo aa >server/a &&
-+	echo bb >server/b &&
-+	git -C server add a b &&
-+	git -C server commit -m x &&
++	git clone --blob-max-bytes=0 "$URL" client &&
 +
-+	test_config -C server uploadpack.advertiseblobmaxbytes 1 &&
-+	test_config -C server uploadpack.allowanysha1inwant 1 &&
++	git -C client fsck &&
 +
-+	git clone --blob-max-bytes=0 "file://$(pwd)/server" client &&
++	# Ensure that unneeded blobs are not inadvertently fetched.
++	test_config -C client extensions.partialclone "not a remote" &&
++	test_must_fail git -C client cat-file -e "$HASH1" &&
 +
-+	# Ensure that there is only one negotiation by checking that there is
-+	# only "done" line sent. ("done" marks the end of negotiation.)
-+	GIT_TRACE_PACKET="$(pwd)/trace" git -C client checkout HEAD^ &&
-+	grep "git> done" trace >done_lines &&
-+	test_line_count = 1 done_lines
++	# But this blob was fetched, because clone performs an initial checkout
++	git -C client cat-file -e "$HASH2"
++}
++
++test_expect_success 'partial clone' '
++	partial_clone server "file://$(pwd)/server"
 +'
 +
-+test_expect_success 'batch missing blob request does not inadvertently try to fetch gitlinks' '
++test_expect_success 'partial clone: warn if server does not support blob-max-bytes' '
 +	rm -rf server client &&
-+
-+	test_create_repo repo_for_submodule &&
-+	test_commit -C repo_for_submodule x &&
-+
 +	test_create_repo server &&
-+	echo a >server/a &&
-+	echo b >server/b &&
-+	git -C server add a b &&
-+	git -C server commit -m x &&
++	test_commit -C server one &&
 +
-+	echo aa >server/a &&
-+	echo bb >server/b &&
-+	# Also add a gitlink pointing to an arbitrary repository
-+	git -C server submodule add "$(pwd)/repo_for_submodule" c &&
-+	git -C server add a b c &&
-+	git -C server commit -m x &&
++	git clone --blob-max-bytes=0 "file://$(pwd)/server" client 2> err &&
 +
-+	test_config -C server uploadpack.advertiseblobmaxbytes 1 &&
-+	test_config -C server uploadpack.allowanysha1inwant 1 &&
-+
-+	# Make sure that it succeeds
-+	git clone --blob-max-bytes=0 "file://$(pwd)/server" client
++	test_i18ngrep "blob-max-bytes not recognized by server" err
 +'
 +
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
- 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 71b70ccb1..73a1cdb43 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -14,6 +14,7 @@
- #include "dir.h"
- #include "submodule.h"
- #include "submodule-config.h"
-+#include "fetch-object.h"
- 
- /*
-  * Error messages expected by scripts out of plumbing commands such as
-@@ -369,6 +370,27 @@ static int check_updates(struct unpack_trees_options *o)
- 		load_gitmodules_file(index, &state);
- 
- 	enable_delayed_checkout(&state);
-+	if (repository_format_partial_clone && o->update && !o->dry_run) {
-+		/*
-+		 * Prefetch the objects that are to be checked out in the loop
-+		 * below.
-+		 */
-+		struct oid_array to_fetch = OID_ARRAY_INIT;
-+		int fetch_if_missing_store = fetch_if_missing;
-+		fetch_if_missing = 0;
-+		for (i = 0; i < index->cache_nr; i++) {
-+			struct cache_entry *ce = index->cache[i];
-+			if ((ce->ce_flags & CE_UPDATE) &&
-+			    !S_ISGITLINK(ce->ce_mode)) {
-+				if (!has_object_file(&ce->oid))
-+					oid_array_append(&to_fetch, &ce->oid);
-+			}
-+		}
-+		if (to_fetch.nr)
-+			fetch_objects(repository_format_partial_clone,
-+				      &to_fetch);
-+		fetch_if_missing = fetch_if_missing_store;
-+	}
- 	for (i = 0; i < index->cache_nr; i++) {
- 		struct cache_entry *ce = index->cache[i];
- 
++. "$TEST_DIRECTORY"/lib-httpd.sh
++start_httpd
++
++test_expect_success 'partial clone using HTTP' '
++	partial_clone "$HTTPD_DOCUMENT_ROOT_PATH/server" "$HTTPD_URL/smart/server"
++'
++
++stop_httpd
++
+ test_done
 -- 
 2.14.2.822.g60be5d43e6-goog
 
