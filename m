@@ -2,85 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 087EE20281
-	for <e@80x24.org>; Fri, 29 Sep 2017 21:09:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 34B7420A2A
+	for <e@80x24.org>; Fri, 29 Sep 2017 21:11:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752203AbdI2VJH (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Sep 2017 17:09:07 -0400
-Received: from mout.gmx.net ([212.227.15.15]:50490 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752123AbdI2VJG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Sep 2017 17:09:06 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M3zT0-1d6cf43LV4-00rUkS; Fri, 29
- Sep 2017 23:08:56 +0200
-Date:   Fri, 29 Sep 2017 23:08:41 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Jonathan Tan <jonathantanmy@google.com>
-cc:     git@vger.kernel.org, gitster@pobox.com, git@jeffhostetler.com,
-        peartben@gmail.com, christian.couder@gmail.com
-Subject: Re: [PATCH 00/18] Partial clone (from clone to lazy fetch in 18
- patches)
-In-Reply-To: <cover.1506714999.git.jonathantanmy@google.com>
-Message-ID: <alpine.DEB.2.21.1.1709292301440.40514@virtualbox>
-References: <cover.1506714999.git.jonathantanmy@google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1752533AbdI2VLB (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Sep 2017 17:11:01 -0400
+Received: from mail-qk0-f170.google.com ([209.85.220.170]:45942 "EHLO
+        mail-qk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752518AbdI2VLA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Sep 2017 17:11:00 -0400
+Received: by mail-qk0-f170.google.com with SMTP id c67so237394qkg.2
+        for <git@vger.kernel.org>; Fri, 29 Sep 2017 14:11:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=T63PZTkhmWHWjtdhoKiPJVvUd3ZBmSktHZWLmX5Zknw=;
+        b=arHqkslBDWGvB0N2oCGHSTgGmfofjbWQHerr7YVxSEBIc2OGaOGiM2abb8cmPPj6ob
+         GhpYksUmKncMbJm6/thCOG2JFv7YAabWvMrZKoyyJerQS6T0m7vFOzC9LeEcdyjm+v1M
+         M+3kji0WwaRUxX9ANNyhh/T3pYFPyTE2Hq7S9ONWxY9rwC4J6j/2ZToND3goBiRdJaXN
+         fvR+LhfTu5ybPWqP0OUf7wp2EI6LxYj6BameXa2Fc3DXIAqQOS/19Go6BEvNsx0ez7zM
+         UXAmC1G3dzQ/MvhZRmT5j4+wRgvV6RS1PrlTpW4NHQRIS2the55M6InXmBSeA7LE4ji6
+         krGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=T63PZTkhmWHWjtdhoKiPJVvUd3ZBmSktHZWLmX5Zknw=;
+        b=TLCtMpDAxKm6quC++Yxgd2iPNu8LuHOSHK9+UiSx53Ev7VatZSOf5uFqR3J6BvPu/3
+         zQ8dIoVnBaqclmk7eRVvlvV6jfMk6oY67SHUUnrqSwWeOPFC7YklC7uaRII1hlI7UxKu
+         bMHeWpcHt/Z1MzbKdDxs+5iM65vCMHeKjWnHnUedtbRfPB/WuZRSdMnF4RJDvZEZT4aA
+         QyywQGMahT6tTrn9KgZwGAntctG6XF2akdyoyhQd0YTEcB6MjI9CFOGXMaA9HRhqW5rA
+         1ZSxdWCMeSuWEB2R+SQ4q7fHHvzoPDXPDaeUMLgk4r1INt9vBgYAF2ktke6OUgK17/V6
+         1nbQ==
+X-Gm-Message-State: AMCzsaVhS1buaqqNquqZGyL9QWS+TPzet1h55ff7uy657FsUuKwtvviO
+        4lt5wz5K7poiDqhkEZ5gtH+Tb9oUZUv8p3vjFd4=
+X-Google-Smtp-Source: AOwi7QBh6/KgsQ1u11hzGf2fBI8/Ed8nk78WRHIhEuW9dY6IZBjnxv2mp1dDKuFYXs63sXFH4emJ27+igs1gquVmrl4=
+X-Received: by 10.55.98.214 with SMTP id w205mr4892510qkb.355.1506719459575;
+ Fri, 29 Sep 2017 14:10:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:DhrdrrgF02vvNrCSJR415yLknHZ69swRAue74mTywUtdV4fqhFt
- fqfU642M+I3e7BrZrHd32P7qEp7w6PFkHLX+BBdrQ+emBFlpO7nNfj5mDaH6fMvFAoUT4h8
- bQEy7VcLBMMpfmPpyoh87vyp3okV4FmvLxCWctUmUrR3oWk7p1VhohqYNpmn3jG5UegcrNY
- M6CdF2az7oPO0nIJQA5sg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:8jNCLUARo5k=:Sg1gJEXifMB+YLCzSetPx5
- d3L4688qG2XCQwANMWXucjpoq3dJ+E6T5m4d2f2SlikzMRXJnrNTs/08VfYrH5JJSRzi73KAD
- RZNrPhbnrTvV2l0mlo+ehCbMvALElkyaveyBxosZ1i9D4X4JZcqDsD/1mNYOY0mQdOj1whvCK
- HX5unR137/WDPySQ1PNAD3/T1vkSg/dDr79nRnidiVaLnqxXoKuQ64FmTz4idFC8eSEFtGiqb
- qHMq+1SnGWPvgScaLgFY7eRYDZBsSS6RvGIgnnq50ocvZK+kXmNPOszzVXjJOp83pbfgX8oMy
- 0AX/+CYgMPAFySnTmA6WUqt0TFI5gtb+hqMv9Hpl9aRlGab/EtXDA0CQJ6UHcOA7JzDbOO/nd
- 9sLkFbKyc7Q6j9IoZKnEFX/EZtTmDezs+n4YvXPKH1HtlAnR2M+BnKSkNorWt8pxVy8ISZrMG
- oh2quF9h1Tcu64GSowc4e5W8l3W+6gCjvAjwXz4kNeCtmtUqag9rCA2r1MCObbLsTFdBINniW
- KdsSAVnOsw6uV95YFBkoISFDLtVY2kffdXnqW82qwSmaE8ZU9unIi0p/CeAeZObdrfDPgg/gd
- Rs2llvoOcb8MDsgpIxpsyhFYfFZxEy+HBrd99UJ7223BrUVkTkAPUXnrs8F8E1ipQg2k/L4Ce
- GdPmed0ReeB1fHp8y8/sCyvF/PxetxkopofW/ewi/ul87rpwVxH3Vi3RPFt21bzZOVWOeJcGT
- E89Od4Owu9z8wGzIFmgNhGJi7IxR7Y8ogSwMhIDTjARDF9HQ8Wu+qWoNrxTvaweHnw5dfbO9W
- f66L4+xW7EJyEu2YF1JmCrs0JccDVTvBbPG4S9X5fMKqWhZhIg=
+Received: by 10.140.33.161 with HTTP; Fri, 29 Sep 2017 14:10:58 -0700 (PDT)
+In-Reply-To: <1ffcb7a7-6ffe-c98e-66a1-c3d392f76077@gmx.net>
+References: <CAFZEwPOjK25m84BgTF7AL72DL_K1dHf7OrYoX=_vky9r3GayNw@mail.gmail.com>
+ <0102015ecc65d695-22151d3b-752b-4c10-a3a3-b8ef52491664-000000@eu-west-1.amazonses.com>
+ <1ffcb7a7-6ffe-c98e-66a1-c3d392f76077@gmx.net>
+From:   Pranit Bauva <pranit.bauva@gmail.com>
+Date:   Sat, 30 Sep 2017 02:40:58 +0530
+Message-ID: <CAFZEwPPikNjVDmif0izfwYUqywDO5N2RLf0UF7pZ6qSQyT3q6w@mail.gmail.com>
+Subject: Re: [PATCH v16 1/6] bisect--helper: use OPT_CMDMODE instead of OPT_BOOL
+To:     Stephan Beyer <s-beyer@gmx.net>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+Hey Stephan,
 
-On Fri, 29 Sep 2017, Jonathan Tan wrote:
+On Sat, Sep 30, 2017 at 12:24 AM, Stephan Beyer <s-beyer@gmx.net> wrote:
+>
+> Hi Pranit,
+>
+> On 09/29/2017 08:49 AM, Pranit Bauva wrote:
+> > It has been a long time since this series appeared on the mailing list.
+> > The previous version v15[1] is now split into many parts and I am
+> > sending the first part right now, will focus on getting this merged and
+> > then send out the next part.
+>
+> That's a good idea!
+>
+> I just reviewed your series by assuming I did the v15 review well (it
+> took quite some time at least)... so I just diff'ed the v15 and the v16
+> patches. I am totally fine with it!
 
-> Jeff Hostetler has sent out some object-filtering patches [1] that is a
-> superset of the object-filtering functionality that I have (in the
-> pack-objects patches). I have gone for the minimal approach here, but if
-> his patches are merged, I'll update my patch set to use those.
+Thanks for having the patience of waiting for it and reviewing it again.
 
-I wish there was a way for you to work *with* Jeff on this. It seems that
-your aims are similar enough for that (you both need changes in the
-protocol) yet different enough to allow for talking past each other (big
-blobs vs narrow clone).
-
-And I get the impression that in this instance, it slows everything down
-to build competing, large patch series rather than building on top of each
-other's work.
-
-Additionally, I am not helping by pestering Jeff all the time about
-different issues, so it is partially my fault.
-
-But maybe there is a chance to *really* go for a minimal approach, as in
-"incremental enough that you can share the first <N> patches"? And even
-better: "come up with those first <N> patches together"?
-
-Ciao,
-Dscho
-
-
+Regards,
+Pranit Bauva
+www.bauva.com
