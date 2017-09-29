@@ -2,74 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D072620281
-	for <e@80x24.org>; Fri, 29 Sep 2017 18:54:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D3F8120281
+	for <e@80x24.org>; Fri, 29 Sep 2017 19:05:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752581AbdI2Syz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Sep 2017 14:54:55 -0400
-Received: from mout.gmx.net ([212.227.17.20]:55270 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752351AbdI2Syy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Sep 2017 14:54:54 -0400
-Received: from [192.168.178.43] ([92.76.242.84]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MCPhl-1e77Em2KzR-00996q; Fri, 29
- Sep 2017 20:54:49 +0200
-Subject: Re: [PATCH v16 1/6] bisect--helper: use OPT_CMDMODE instead of
- OPT_BOOL
-To:     Pranit Bauva <pranit.bauva@gmail.com>, git@vger.kernel.org
-References: <CAFZEwPOjK25m84BgTF7AL72DL_K1dHf7OrYoX=_vky9r3GayNw@mail.gmail.com>
- <0102015ecc65d695-22151d3b-752b-4c10-a3a3-b8ef52491664-000000@eu-west-1.amazonses.com>
-Cc:     Junio C Hamano <gitster@pobox.com>
-From:   Stephan Beyer <s-beyer@gmx.net>
-Message-ID: <1ffcb7a7-6ffe-c98e-66a1-c3d392f76077@gmx.net>
-Date:   Fri, 29 Sep 2017 20:54:48 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
-MIME-Version: 1.0
-In-Reply-To: <0102015ecc65d695-22151d3b-752b-4c10-a3a3-b8ef52491664-000000@eu-west-1.amazonses.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:5W9dWUwhq6cQir1wwRv2sQmsR5J0kNyhoEk4re0bCmBqAzSxjIx
- 4XxXNGUIBRHZoa5djplocLyBkf2IRD94yXcNSbu+ujDai9zISrgoXSVfIFPHE0CHO3oCndQ
- og+2jkOSmtkM7Vn1Zi4/ELglgRWrLLosD7dt+14pVsm9Rd7Ps1KNSaHwqCWXfdqgW3Mpldx
- YatMCMuWw3fZR5PtuaFcg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:rD945CBdB8o=:40MIhsSpagY0zhCYq0izJo
- gX/3wyNGXyLhJkAWhHkX4EAxjdv0rHri6Aq9eX+5vdn97uADGpnEuRWIG1wFgI8tYc6IA6OEA
- cfcHcjOjzMMp0jFM2/H2qpZa2+RKYYDbgAvBCpIeW3mN6mwTqPYiH+OSITYZfEfRYIu6N06No
- 0ko3G7qA4OMW8mxWc/NEXYY3vBCQx5fYS7+ejherv1mej5LVLQx/mHWPClJsFsPUbTDXzcaWH
- OWkJMzITH1ReAw+kUee0mdm5NKltblhKXRARmwDpYD3il1UU4hoXSL618u/ubmwdQR3CYntKn
- NNhyd0dqOQKPy7YJbC1kj5/I9wlxwxxeo4SykXVew1+Di9IFo9KMLrRKg+vGzYZK1DfOzVJYQ
- OhHUeK0ZBWFhhcn1SqXglEsPQrSKSNvpnTRWju5yGlJnEZo3B/Rlw1j1mIkZR22fS4s2D6IEd
- WpIZmzHiq2VhAQVE3ghdlOhKe69zQE7374SM3MCq4lU7s8kwTWUWXZhf9Rr882UoLScWxpWkl
- o4VynDBe93TO/8GNFXf+Tx1swogWOISLD9RQLC1i7AItGhRjPaNCrPEpkh5qXelZEdL5k35ra
- uu5XBFZnMkersExhotYmMOVn5eMbi9uHpfJpN21cvXNUoQ4p4w5vLOpKXtnaIN6ZYjCdRfnR0
- cg1e4q/3R1lpMi3EKNDH6hwCuETlmXYCpd5p7q0aCKqWzoi3v6filyhLrFsMQ7gLa8Oj6vIRF
- IAk0DwxfyBiUbFz+siL87fxNrWNJCFNAMIy/jDxSdXhOJ/naiYFW8H6bCIEO3/Aw5Eju31Zpi
- 2LvzA2BJZ6LGTTRNfo+liiOYSRbaxGNSmd9+EUMvcwnh36r7os=
+        id S1752458AbdI2TFA (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Sep 2017 15:05:00 -0400
+Received: from mail-pg0-f49.google.com ([74.125.83.49]:46679 "EHLO
+        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752280AbdI2TE7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Sep 2017 15:04:59 -0400
+Received: by mail-pg0-f49.google.com with SMTP id v3so278971pgv.3
+        for <git@vger.kernel.org>; Fri, 29 Sep 2017 12:04:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=4l/VH7pKe5H6s7XNygiCBPUm2pqq/3BsgxrbbzcYWYQ=;
+        b=TMNAv+MONrB9BSH5JzqNqobmj7gBLwq1U17ZdEKWUCvL0a+jL/IPEDovVCSFSM8Oha
+         Acxf1KGxbx/p+TArlwM+HYKOQB+uIUfNQAC0DmOYPLnnQZco3Mob5VeAICUliZl2FoH6
+         JCmaA+aKuF/tu2yx75MuWiSlLUCTXPu5ejFGuNhiQNCgKiReVLgg6M+fCz84WIyPTtsu
+         xEolwENtZ6j0JmXZGXL5KBneGQVQ6bzM55Jwel7Z6seQ7uRikd6IQkpaDm7nHk9MQfVo
+         01qQ25Nm1zE5Q1UaE6VyCNICsP4nI9gdmEWImKJEBVbU2MOnv/yua3BdSFCrYTRYxkWt
+         nh/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=4l/VH7pKe5H6s7XNygiCBPUm2pqq/3BsgxrbbzcYWYQ=;
+        b=fOJl7SobJP78e+PC2DaO7uGvVuW1n24JwXueLTnDWeLmwmfamZpRDUSaPSoo1hjgwW
+         KLyqc4m2DcyeZGGGgKehydQDORALgPw8d+VvVXSOnBiot/615sLkC2aTJyMNBsAIc26r
+         3VR7GWUaHr3N/YOQoGWkLVp3Eco41aY1I8vXBL/hcZASOdBbmpRG9nV7mDxOBC/3fzhn
+         fTXjOdF1v5ISmL0zphf61zXF4E9ua5uWxl9BeydL+bc3lcy34p73EbJf9JXX57Ite/Xo
+         n7Aj9yZCe2bTuA8eNWd4kiKSYQffk2d+lyEEwJ6Z+MsMNiRdfiMKAc1REhm+6t2EPOU5
+         lJBw==
+X-Gm-Message-State: AMCzsaV6Q5NeModutFQO0yYy/FT0GiCkO6Hr9Koo3xauNydUckOsmLXh
+        DEv3wLt33q2+YQx7ugBMAhS4KQ==
+X-Google-Smtp-Source: AOwi7QCGwcP+G0GK6+HgaDSyVZRZLAu9mRYUc0f+CFpkSPeGXz3SVAFngg6VjIvFB8Le6MI7HuyXFQ==
+X-Received: by 10.98.58.157 with SMTP id v29mr147356pfj.5.1506711898362;
+        Fri, 29 Sep 2017 12:04:58 -0700 (PDT)
+Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:90bd:4d6a:ace4:8d67])
+        by smtp.gmail.com with ESMTPSA id w134sm7997464pfd.186.2017.09.29.12.04.57
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 29 Sep 2017 12:04:57 -0700 (PDT)
+Date:   Fri, 29 Sep 2017 12:04:56 -0700
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
+        git@jeffhostetler.com
+Subject: Re: [PATCH] oidmap: map with OID as key
+Message-Id: <20170929120456.3bb8021de1c7aebee7bb5026@google.com>
+In-Reply-To: <20170928200556.grysihlj7cbzocfq@sigill.intra.peff.net>
+References: <20170927221910.164552-1-jonathantanmy@google.com>
+        <20170928004137.GD68699@google.com>
+        <20170928104616.be61b394b50dc5193be275be@google.com>
+        <20170928200556.grysihlj7cbzocfq@sigill.intra.peff.net>
+X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Pranit,
+On Thu, 28 Sep 2017 16:05:57 -0400
+Jeff King <peff@peff.net> wrote:
 
-On 09/29/2017 08:49 AM, Pranit Bauva wrote:
-> It has been a long time since this series appeared on the mailing list.
-> The previous version v15[1] is now split into many parts and I am
-> sending the first part right now, will focus on getting this merged and
-> then send out the next part.
+> When I saw that you were implementing "oidset" in terms of "oidmap", I
+> was all ready to be crabby about this extra memory. But then I saw that
+> the implementation tries hard not to waste any memory. :)
+> 
+> All of which is to say I gave this some thought when I was in the "ready
+> to be crabby" phase, and came to the conclusion that it probably isn't
+> that painful. An unused pointer is 8 bytes per entry. We're already
+> spending 20 for the oid itself (which is likely to grow to 32
+> eventually), plus 8 for the chained "next" pointer. Plus potentially 8
+> for a padded version of the hash, if we just use a straight hashmap that
+> duplicates the hash field.
+> 
+> So depending how you count it, we're wasting between 28% (sha1 and no
+> extra hash) and 16% (sha256 plus reusing hashmap). That's not great, but
+> it's probably not breaking the bank.
 
-That's a good idea!
+Hmm...how did you get the 16% figure? The values, as I see it, are:
+ - 32 for the sha256 hash itself
+ - 8 for the "next" chain pointer
+ - 8 for the padded hash
+ - 8 for the "util" pointer
 
-I just reviewed your series by assuming I did the v15 review well (it
-took quite some time at least)... so I just diff'ed the v15 and the v16
-patches. I am totally fine with it!
+For an oidset, the padded hash and the "util" pointer are wasted, which is
+16/56=0.286. (If you assume, say, 8 bytes of malloc bookkeeping overhead, then
+16/64=0.25.)
 
-Thanks,
-Stephan
+For other uses of an oidmap, the padded hash and "util" pointer are still
+wasted, so the numbers are the same as above (except that the malloc
+bookkeeping overhead is doubled).
+
+> Another way of thinking about it. Large-ish (but not insane) repos have
+> on the order of 5-10 million objects. If we had an oidset that mentioned
+> every single object in the repository, that's 40-80MB wasted in the
+> worst case. For current uses of oidset, that's probably fine. It's
+> generally used only to collect ref tips (so probably two orders of
+> magnitude less).
+> 
+> If you're planning on using an oidset to mark every object in a
+> 100-million-object monorepo, we'd probably care more. But I'd venture to
+> say that any scheme which involves generating that hash table on the fly
+> is doing it wrong. At at that scale we'd want to look at compact
+> mmap-able on-disk representations.
+
+In a 100-million-object monorepo, we will probably end up only operating on the
+"frontier" objects (objects that we do not have but we know about because some
+object we have reference them) at the worst. I don't have numbers but I think
+that that is at least an order of magnitude less than 100M.
+
+> So I think we may be better off going with the solution here that's
+> simpler and requires introducing less code. If it does turn out to be a
+> memory problem in the future, this is a _really_ easy thing to optimize
+> after the fact, because we have these nice abstractions.
+
+Optimizing away the padded hash should be straightforward. Optimizing away the
+"util" pointer after we have code that uses it is (slightly?) less
+straightforward, but still doable.
+
+I still lean towards saving memory by eliminating the padded hash and
+not using the "util" pointer, because the complication is contained
+within only two files (oidmap.{c,h}), and because the constant factors
+in memory savings might end up mattering. But I don't feel strongly
+about that - I think any of the oidmaps that we have discussed is an
+improvement over what we have now.
