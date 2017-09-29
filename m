@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DCE9D20A2A
-	for <e@80x24.org>; Fri, 29 Sep 2017 20:12:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9205E20281
+	for <e@80x24.org>; Fri, 29 Sep 2017 20:13:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752582AbdI2UMX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Sep 2017 16:12:23 -0400
-Received: from mail-pg0-f41.google.com ([74.125.83.41]:49137 "EHLO
-        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752533AbdI2UMP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Sep 2017 16:12:15 -0400
-Received: by mail-pg0-f41.google.com with SMTP id v23so351100pgc.5
-        for <git@vger.kernel.org>; Fri, 29 Sep 2017 13:12:14 -0700 (PDT)
+        id S1752639AbdI2UNA (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Sep 2017 16:13:00 -0400
+Received: from mail-pf0-f175.google.com ([209.85.192.175]:49983 "EHLO
+        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752547AbdI2UMU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Sep 2017 16:12:20 -0400
+Received: by mail-pf0-f175.google.com with SMTP id l188so335041pfc.6
+        for <git@vger.kernel.org>; Fri, 29 Sep 2017 13:12:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=sQzbfBe1epG1IuDBfxyBFJt3naN9qSJBdY34RY3lk54=;
-        b=fvkT0xfIqEVYJj6l0/BXW9Apuj54yafXuB1pqpq0/7qXPlSN57XesO86W41TmOQLqA
-         4cb2vS/IDNr4qOMe1N4sIr2n7TAsdn4TsUIIE7joYXlUnnWT7zX+Oq61fe2Krmadk3//
-         OgicaLm1HVG5PINRhzvQzc5Sw347DMYc9Wi8PN19mL0HR/M28k036Vy3ckinWOKXo1A/
-         1uUFahTOq9HTlPWTMbO8tbUx1DwoQP2CSJDOcv0qC0ctD4y1JvBxilLw+PxshUh4GPMj
-         ONzLpUGBKJwJZTQDKy/0agGpwrfixAlaEonapJXI5kZDAPmXW9VUrLQsP37B/2rm+eeA
-         FHaA==
+        bh=bnLErNjLIh46k4mLkH2JKwd762MONVgOOl6ytNlgB/c=;
+        b=DAIaGGqs5haSJV4a4QeLFhDnMSoQxRVHkEC6+/gVYUWkmUAW8i2WJo97u/15PIWfdz
+         +uc4bgwhZLlDsc9WEp7ZN/mgDQbyaGLZDrp+2EqidjhrZYOZb50JtcnNNFgLfoTXiHV6
+         EOjomXOl+N3mlML/nFuLY/XDonHar8b0aYrsgPEhMjMq/L6x6h0qQTbxIRtbbY0VAu70
+         U5cs9EEPDelCxA0mUcfArtBkSo8tEf0RA6olNT7JPHRB2dWPQm8PSaeeKAovY5Uv5qCR
+         rBHz+B3ivWpWMRT+ez0/zTSOS3CZzjJ7SnGUXPnNk5dX3Vfjf0VCU+/l36gNrFO63zUs
+         nnkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=sQzbfBe1epG1IuDBfxyBFJt3naN9qSJBdY34RY3lk54=;
-        b=oDeHdMm9Jtm7mj241czvG7hVYrGWPJBUzKFbd4Wknu1uYFfCZvdqgyxQySfLatY+VH
-         T07q0sYA1a7/ALFlgTBIat6qK6/saa9pLc2CIi753NxJg3ELfezJ/QcfQVAjEoBPNc0i
-         bDjeaTM0m6jXguO5/DkilKAKIjG7rA1iFQPSDYVWBQqz6HNsv7hiOkHg4MnkJD9H9Wjm
-         s6ZHH07rJFeREz3/EmyiuZpWo2Nk3oP+85UKqdO59NmX34+y80qsla1dUAQKpRgdIxOi
-         JGfF9R2xCSp28dcPuGXVaM1hnt+E/ZK+zHyMZHwvE+h6bGklLGbwNEQ7vkbHXLqcdT1F
-         tw/g==
-X-Gm-Message-State: AHPjjUgAzRuM0yzJqpogrS3X5WgfgeAS8Ft1Bc6dRuTQ4c3fOEdwDVc4
-        1dhK9158HpN1NhDNdO3Mmnv1QBAsY44=
-X-Google-Smtp-Source: AOwi7QCPy6H0xeZ+/dbLrQVcoAhdowQxg3iZxDjMfu+DPLLPEQcBwifHLa+1yHqQVSMaUts4TgTK+Q==
-X-Received: by 10.98.86.28 with SMTP id k28mr8826010pfb.89.1506715934033;
-        Fri, 29 Sep 2017 13:12:14 -0700 (PDT)
+        bh=bnLErNjLIh46k4mLkH2JKwd762MONVgOOl6ytNlgB/c=;
+        b=RV91ziZmS3Fdjcip3oLBHULRDWAavyaICKz9qU8/WIrNw2LuE/tYfa4cSldbeMlD1A
+         esUFbwLrO+AJ0OzV7BPKoSrBtH2rIzMR63QjwJluVM2Dv1Tts5drOWjRM408GKA0Eksu
+         PNfMBTF3nMtWNVSaabYjXLV/8whvnARwDz1l1416MkWp9KxsGLmO1t+NTq1osn4AJ9Fu
+         v38rPp6iROfauFoJx+FFpf7QO8y0656rS93P+nXFs1gVbOVfdvwcZlInZFImaqYW1tbk
+         Ndt8d6B+AYCsDXIHr7hy90/as5eV9K3ouu2hS5QmpnYLCpT/d+A9jDg6msR9pz9dL2vM
+         lRsw==
+X-Gm-Message-State: AHPjjUj43DPSPR1d46amJZD0wPufgDbkPnYpPMYSN5kbgDxrhNk1CKiJ
+        RWEXZgqYnCXbWmDBWQNxAQvhRmH0/jk=
+X-Google-Smtp-Source: AOwi7QBpswGC/eF1VbE4yg7ZowfZiI0UpYYB3s+QQTJDcm02tWXDcCStbR7rMOErquztTKRah6Msrw==
+X-Received: by 10.98.28.210 with SMTP id c201mr8803801pfc.269.1506715939377;
+        Fri, 29 Sep 2017 13:12:19 -0700 (PDT)
 Received: from twelve3.mtv.corp.google.com ([100.96.218.44])
-        by smtp.gmail.com with ESMTPSA id g5sm9280561pgo.66.2017.09.29.13.12.12
+        by smtp.gmail.com with ESMTPSA id g5sm9280561pgo.66.2017.09.29.13.12.18
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 29 Sep 2017 13:12:13 -0700 (PDT)
+        Fri, 29 Sep 2017 13:12:18 -0700 (PDT)
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com,
         git@jeffhostetler.com, peartben@gmail.com,
         christian.couder@gmail.com
-Subject: [PATCH 05/18] index-pack: refactor writing of .keep files
-Date:   Fri, 29 Sep 2017 13:11:41 -0700
-Message-Id: <eb0b57bc917db45ae517e9cea05d94b4977b4952.1506714999.git.jonathantanmy@google.com>
+Subject: [PATCH 09/18] gc: do not repack promisor packfiles
+Date:   Fri, 29 Sep 2017 13:11:45 -0700
+Message-Id: <75be6a3b191753d14c5e10caf24ecf6926a7f544.1506714999.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.14.1.748.g20475d2c7
 In-Reply-To: <cover.1506714999.git.jonathantanmy@google.com>
 References: <cover.1506714999.git.jonathantanmy@google.com>
@@ -66,177 +66,208 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a subsequent commit, index-pack will be taught to write ".promisor"
-files which are similar to the ".keep" files it knows how to write.
-Refactor the writing of ".keep" files, so that the implementation of
-writing ".promisor" files becomes easier.
+Teach gc to stop traversal at promisor objects, and to leave promisor
+packfiles alone. This has the effect of only repacking non-promisor
+packfiles, and preserves the distinction between promisor packfiles and
+non-promisor packfiles.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- builtin/index-pack.c | 99 ++++++++++++++++++++++++++++------------------------
- 1 file changed, 53 insertions(+), 46 deletions(-)
+ builtin/gc.c             |  3 +++
+ builtin/pack-objects.c   | 10 ++++++++++
+ builtin/prune.c          |  7 +++++++
+ builtin/repack.c         |  7 +++++--
+ t/t0410-partial-clone.sh | 52 +++++++++++++++++++++++++++++++++++++++++++++++-
+ 5 files changed, 76 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index f2be145e1..7ad170590 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1389,15 +1389,58 @@ static void fix_unresolved_deltas(struct sha1file *f)
- 	free(sorted_by_pos);
- }
+diff --git a/builtin/gc.c b/builtin/gc.c
+index c22787ac7..7a9632bba 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -458,6 +458,9 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 			argv_array_push(&prune, prune_expire);
+ 			if (quiet)
+ 				argv_array_push(&prune, "--no-progress");
++			if (repository_format_partial_clone)
++				argv_array_push(&prune,
++						"--exclude-promisor-objects");
+ 			if (run_command_v_opt(prune.argv, RUN_GIT_CMD))
+ 				return error(FAILED_RUN, prune.argv[0]);
+ 		}
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index a57b4f058..958822bf4 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -73,6 +73,8 @@ static int use_bitmap_index = -1;
+ static int write_bitmap_index;
+ static uint16_t write_bitmap_options;
  
-+static const char *derive_filename(const char *pack_name, const char *suffix,
-+				   struct strbuf *buf)
-+{
-+	size_t len;
-+	if (!strip_suffix(pack_name, ".pack", &len))
-+		die(_("packfile name '%s' does not end with '.pack'"),
-+		    pack_name);
-+	strbuf_add(buf, pack_name, len);
-+	strbuf_addch(buf, '.');
-+	strbuf_addstr(buf, suffix);
-+	return buf->buf;
-+}
++static int exclude_promisor_objects;
 +
-+static void write_special_file(const char *suffix, const char *msg,
-+			       const char *pack_name, const unsigned char *sha1,
-+			       const char **report)
-+{
-+	struct strbuf name_buf = STRBUF_INIT;
-+	const char *filename;
-+	int fd;
-+	int msg_len = strlen(msg);
-+
-+	if (pack_name)
-+		filename = derive_filename(pack_name, suffix, &name_buf);
-+	else
-+		filename = odb_pack_name(&name_buf, sha1, suffix);
-+
-+	fd = odb_pack_keep(filename);
-+	if (fd < 0) {
-+		if (errno != EEXIST)
-+			die_errno(_("cannot write %s file '%s'"),
-+				  suffix, filename);
-+	} else {
-+		if (msg_len > 0) {
-+			write_or_die(fd, msg, msg_len);
-+			write_or_die(fd, "\n", 1);
-+		}
-+		if (close(fd) != 0)
-+			die_errno(_("cannot close written %s file '%s'"),
-+				  suffix, filename);
-+		*report = suffix;
+ static unsigned long delta_cache_size = 0;
+ static unsigned long max_delta_cache_size = 256 * 1024 * 1024;
+ static unsigned long cache_max_small_delta_size = 1000;
+@@ -2952,6 +2954,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 			 N_("use a bitmap index if available to speed up counting objects")),
+ 		OPT_BOOL(0, "write-bitmap-index", &write_bitmap_index,
+ 			 N_("write a bitmap index together with the pack index")),
++		OPT_BOOL(0, "exclude-promisor-objects", &exclude_promisor_objects,
++			 N_("do not pack objects in promisor packfiles")),
+ 		OPT_END(),
+ 	};
+ 
+@@ -2997,6 +3001,12 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 		argv_array_push(&rp, "--unpacked");
+ 	}
+ 
++	if (exclude_promisor_objects) {
++		use_internal_rev_list = 1;
++		fetch_if_missing = 0;
++		argv_array_push(&rp, "--exclude-promisor-objects");
 +	}
-+	strbuf_release(&name_buf);
-+}
 +
- static void final(const char *final_pack_name, const char *curr_pack_name,
- 		  const char *final_index_name, const char *curr_index_name,
--		  const char *keep_name, const char *keep_msg,
--		  unsigned char *sha1)
-+		  const char *keep_msg, unsigned char *sha1)
+ 	if (!reuse_object)
+ 		reuse_delta = 0;
+ 	if (pack_compression_level == -1)
+diff --git a/builtin/prune.c b/builtin/prune.c
+index cddabf26a..be34645dc 100644
+--- a/builtin/prune.c
++++ b/builtin/prune.c
+@@ -101,12 +101,15 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
  {
- 	const char *report = "pack";
- 	struct strbuf pack_name = STRBUF_INIT;
- 	struct strbuf index_name = STRBUF_INIT;
--	struct strbuf keep_name_buf = STRBUF_INIT;
- 	int err;
+ 	struct rev_info revs;
+ 	struct progress *progress = NULL;
++	int exclude_promisor_objects = 0;
+ 	const struct option options[] = {
+ 		OPT__DRY_RUN(&show_only, N_("do not remove, show only")),
+ 		OPT__VERBOSE(&verbose, N_("report pruned objects")),
+ 		OPT_BOOL(0, "progress", &show_progress, N_("show progress")),
+ 		OPT_EXPIRY_DATE(0, "expire", &expire,
+ 				N_("expire objects older than <time>")),
++		OPT_BOOL(0, "exclude-promisor-objects", &exclude_promisor_objects,
++			 N_("limit traversal to objects outside promisor packfiles")),
+ 		OPT_END()
+ 	};
+ 	char *s;
+@@ -139,6 +142,10 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
+ 		show_progress = isatty(2);
+ 	if (show_progress)
+ 		progress = start_delayed_progress(_("Checking connectivity"), 0);
++	if (exclude_promisor_objects) {
++		fetch_if_missing = 0;
++		revs.exclude_promisor_objects = 1;
++	}
  
- 	if (!from_stdin) {
-@@ -1409,28 +1452,9 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
- 			die_errno(_("error while closing pack file"));
- 	}
+ 	mark_reachable_objects(&revs, 1, expire, progress);
+ 	stop_progress(&progress);
+diff --git a/builtin/repack.c b/builtin/repack.c
+index f17a68a17..f43317bb5 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -83,7 +83,8 @@ static void remove_pack_on_signal(int signo)
  
--	if (keep_msg) {
--		int keep_fd, keep_msg_len = strlen(keep_msg);
--
--		if (!keep_name)
--			keep_name = odb_pack_name(&keep_name_buf, sha1, "keep");
--
--		keep_fd = odb_pack_keep(keep_name);
--		if (keep_fd < 0) {
--			if (errno != EEXIST)
--				die_errno(_("cannot write keep file '%s'"),
--					  keep_name);
--		} else {
--			if (keep_msg_len > 0) {
--				write_or_die(keep_fd, keep_msg, keep_msg_len);
--				write_or_die(keep_fd, "\n", 1);
--			}
--			if (close(keep_fd) != 0)
--				die_errno(_("cannot close written keep file '%s'"),
--					  keep_name);
--			report = "keep";
--		}
--	}
-+	if (keep_msg)
-+		write_special_file("keep", keep_msg, final_pack_name, sha1,
-+				   &report);
+ /*
+  * Adds all packs hex strings to the fname list, which do not
+- * have a corresponding .keep file.
++ * have a corresponding .keep or .promisor file. These packs are not to
++ * be kept if we are going to pack everything into one file.
+  */
+ static void get_non_kept_pack_filenames(struct string_list *fname_list)
+ {
+@@ -101,7 +102,8 @@ static void get_non_kept_pack_filenames(struct string_list *fname_list)
  
- 	if (final_pack_name != curr_pack_name) {
- 		if (!final_pack_name)
-@@ -1472,7 +1496,6 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
+ 		fname = xmemdupz(e->d_name, len);
  
- 	strbuf_release(&index_name);
- 	strbuf_release(&pack_name);
--	strbuf_release(&keep_name_buf);
+-		if (!file_exists(mkpath("%s/%s.keep", packdir, fname)))
++		if (!file_exists(mkpath("%s/%s.keep", packdir, fname)) &&
++		    !file_exists(mkpath("%s/%s.promisor", packdir, fname)))
+ 			string_list_append_nodup(fname_list, fname);
+ 		else
+ 			free(fname);
+@@ -232,6 +234,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	argv_array_push(&cmd.args, "--all");
+ 	argv_array_push(&cmd.args, "--reflog");
+ 	argv_array_push(&cmd.args, "--indexed-objects");
++	argv_array_push(&cmd.args, "--exclude-promisor-objects");
+ 	if (window)
+ 		argv_array_pushf(&cmd.args, "--window=%s", window);
+ 	if (window_memory)
+diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
+index 3ca6af5cd..071736c7b 100755
+--- a/t/t0410-partial-clone.sh
++++ b/t/t0410-partial-clone.sh
+@@ -11,13 +11,15 @@ delete_object () {
+ pack_as_from_promisor () {
+ 	HASH=$(git -C repo pack-objects .git/objects/pack/pack) &&
+ 	>repo/.git/objects/pack/pack-$HASH.promisor
++	echo $HASH
  }
  
- static int git_index_pack_config(const char *k, const char *v, void *cb)
-@@ -1615,26 +1638,13 @@ static void show_pack_info(int stat_only)
- 	}
+ promise_and_delete () {
+ 	HASH=$(git -C repo rev-parse "$1") &&
+ 	git -C repo tag -a -m message my_annotated_tag "$HASH" &&
+ 	git -C repo rev-parse my_annotated_tag | pack_as_from_promisor &&
+-	git -C repo tag -d my_annotated_tag &&
++	# tag -d prints a message to stdout, so redirect it
++	git -C repo tag -d my_annotated_tag >/dev/null &&
+ 	delete_object repo "$HASH"
  }
  
--static const char *derive_filename(const char *pack_name, const char *suffix,
--				   struct strbuf *buf)
--{
--	size_t len;
--	if (!strip_suffix(pack_name, ".pack", &len))
--		die(_("packfile name '%s' does not end with '.pack'"),
--		    pack_name);
--	strbuf_add(buf, pack_name, len);
--	strbuf_addstr(buf, suffix);
--	return buf->buf;
--}
--
- int cmd_index_pack(int argc, const char **argv, const char *prefix)
- {
- 	int i, fix_thin_pack = 0, verify = 0, stat_only = 0;
- 	const char *curr_index;
- 	const char *index_name = NULL, *pack_name = NULL;
--	const char *keep_name = NULL, *keep_msg = NULL;
--	struct strbuf index_name_buf = STRBUF_INIT,
--		      keep_name_buf = STRBUF_INIT;
-+	const char *keep_msg = NULL;
-+	struct strbuf index_name_buf = STRBUF_INIT;
- 	struct pack_idx_entry **idx_objects;
- 	struct pack_idx_option opts;
- 	unsigned char pack_sha1[20];
-@@ -1745,9 +1755,7 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
- 	if (from_stdin && !startup_info->have_repository)
- 		die(_("--stdin requires a git repository"));
- 	if (!index_name && pack_name)
--		index_name = derive_filename(pack_name, ".idx", &index_name_buf);
--	if (keep_msg && !keep_name && pack_name)
--		keep_name = derive_filename(pack_name, ".keep", &keep_name_buf);
-+		index_name = derive_filename(pack_name, "idx", &index_name_buf);
+@@ -261,6 +263,54 @@ test_expect_success 'rev-list accepts missing and promised objects on command li
+ 	git -C repo rev-list --exclude-promisor-objects --objects "$COMMIT" "$TREE" "$BLOB"
+ '
  
- 	if (verify) {
- 		if (!index_name)
-@@ -1795,13 +1803,12 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
- 	if (!verify)
- 		final(pack_name, curr_pack,
- 		      index_name, curr_index,
--		      keep_name, keep_msg,
-+		      keep_msg,
- 		      pack_sha1);
- 	else
- 		close(input_fd);
- 	free(objects);
- 	strbuf_release(&index_name_buf);
--	strbuf_release(&keep_name_buf);
- 	if (pack_name == NULL)
- 		free((void *) curr_pack);
- 	if (index_name == NULL)
++test_expect_success 'gc does not repack promisor objects' '
++	rm -rf repo &&
++	test_create_repo repo &&
++	test_commit -C repo my_commit &&
++
++	TREE_HASH=$(git -C repo rev-parse HEAD^{tree}) &&
++	HASH=$(printf "$TREE_HASH\n" | pack_as_from_promisor) &&
++
++	git -C repo config core.repositoryformatversion 1 &&
++	git -C repo config extensions.partialclone "arbitrary string" &&
++	git -C repo gc &&
++
++	# Ensure that the promisor packfile still exists, and remove it
++	test -e repo/.git/objects/pack/pack-$HASH.pack &&
++	rm repo/.git/objects/pack/pack-$HASH.* &&
++
++	# Ensure that the single other pack contains the commit, but not the tree
++	ls repo/.git/objects/pack/pack-*.pack >packlist &&
++	test_line_count = 1 packlist &&
++	git verify-pack repo/.git/objects/pack/pack-*.pack -v >out &&
++	grep "$(git -C repo rev-parse HEAD)" out &&
++	! grep "$TREE_HASH" out
++'
++
++test_expect_success 'gc stops traversal when a missing but promised object is reached' '
++	rm -rf repo &&
++	test_create_repo repo &&
++	test_commit -C repo my_commit &&
++
++	TREE_HASH=$(git -C repo rev-parse HEAD^{tree}) &&
++	HASH=$(promise_and_delete $TREE_HASH) &&
++
++	git -C repo config core.repositoryformatversion 1 &&
++	git -C repo config extensions.partialclone "arbitrary string" &&
++	git -C repo gc &&
++
++	# Ensure that the promisor packfile still exists, and remove it
++	test -e repo/.git/objects/pack/pack-$HASH.pack &&
++	rm repo/.git/objects/pack/pack-$HASH.* &&
++
++	# Ensure that the single other pack contains the commit, but not the tree
++	ls repo/.git/objects/pack/pack-*.pack >packlist &&
++	test_line_count = 1 packlist &&
++	git verify-pack repo/.git/objects/pack/pack-*.pack -v >out &&
++	grep "$(git -C repo rev-parse HEAD)" out &&
++	! grep "$TREE_HASH" out
++'
++
+ LIB_HTTPD_PORT=12345  # default port, 410, cannot be used as non-root
+ . "$TEST_DIRECTORY"/lib-httpd.sh
+ start_httpd
 -- 
 2.14.2.822.g60be5d43e6-goog
 
