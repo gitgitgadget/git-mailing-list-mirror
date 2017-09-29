@@ -2,107 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 14B9A20281
-	for <e@80x24.org>; Fri, 29 Sep 2017 21:32:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8461C20281
+	for <e@80x24.org>; Fri, 29 Sep 2017 21:44:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752208AbdI2Vcm (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Sep 2017 17:32:42 -0400
-Received: from mail-pg0-f47.google.com ([74.125.83.47]:49964 "EHLO
-        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751667AbdI2Vcl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Sep 2017 17:32:41 -0400
-Received: by mail-pg0-f47.google.com with SMTP id v13so435076pgq.6
-        for <git@vger.kernel.org>; Fri, 29 Sep 2017 14:32:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=cFoS/O160YgQd4a7VSDpgP4byEePY4PhYkN6j1OzBFk=;
-        b=S5ROhfrewtW8pVPCf1JkzOxngVvhbIV9RWRAfLtumzzFviT0JhVs3C8SPelXuMw5kK
-         mMlVOYe3jadhuXX9Nq2m0oJfc/gMnPKXk9BSu522SWMqiApECHwH6s69jIsNeSR20EXX
-         ZeFCk/GZDp9ays0UgFT5UUJr68MZW3MnXyYRNHB1MA3j274xsxKl4Jf2vlqQ+dr1SQJJ
-         zCTNV5HBJBEqs8Fa37iKrufk1Owapn7GzUDiTI2tK6CjNNOiRqqlb7awO0OIPwFxq6Nv
-         xXrXltsQu89OnTv10JN+hH2FhBb9jKANidJe1qXM5K7d1XfyqzT4H9r/d7EXRUGhDHSX
-         AxZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=cFoS/O160YgQd4a7VSDpgP4byEePY4PhYkN6j1OzBFk=;
-        b=PV34/o3rS/Ap4oPqO4VPLzUNuUBMcsyUEBid+upRRy/m7whcSBgBCKXS8MIse18PgY
-         1rLKR6Zxq1rg2gsSZ7nZOVvZAkYJmIQHvwDdKBe8E8iwXbvutp9GfJQKfVcT+ulc6995
-         /DfSAob0LChL9oCSCj8+b4nhrKAnq68W4J50JD0U7gKYt7ZKnpfe6GF/vixZIW7Pvjlt
-         4v08t9EB8ajy3R2ID0rXGjwLNmfFvMWC5tw3seEKHRg3cVqfOtZGDE8BrkokhvsI2iTv
-         Wo6AmcrJqnBPMp4ijaL7AyVYo4By3QQpiZnEQ2diKbr9gL5EgfUgkFU2UYBAMa+0lJro
-         ZB0A==
-X-Gm-Message-State: AHPjjUjOpY4TAb/bKT9x+vGPwjobdFWBR1rt8w8K9vDz+sML0n4sMI9K
-        3ysKH6Qm9sM7oZ/zBxWG+Kkh128GE4o=
-X-Google-Smtp-Source: AOwi7QCo5jH9Hl7AkqGEPbAFi+KplmbffjEra3XezYauXDsb0ZNq5BD0I/0LQFhfIjZNgKHh91cqQw==
-X-Received: by 10.98.56.74 with SMTP id f71mr9111974pfa.44.1506720761186;
-        Fri, 29 Sep 2017 14:32:41 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:41cf:d592:f95a:46b2])
-        by smtp.gmail.com with ESMTPSA id s81sm8964545pfg.162.2017.09.29.14.32.39
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 29 Sep 2017 14:32:40 -0700 (PDT)
-Date:   Fri, 29 Sep 2017 14:32:38 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, bturner@atlassian.com, git@jeffhostetler.com,
-        jonathantanmy@google.com, jrnieder@gmail.com, peff@peff.net,
-        sbeller@google.com
-Subject: Re: [PATCH v2 7/9] connect: tell server that the client understands
- v1
-Message-ID: <20170929213238.GB92120@google.com>
-References: <20170913215448.84674-1-bmwill@google.com>
- <20170926235627.79606-1-bmwill@google.com>
- <20170926235627.79606-8-bmwill@google.com>
- <xmqqk20k64r4.fsf@gitster.mtv.corp.google.com>
- <xmqqbmlw64dr.fsf@gitster.mtv.corp.google.com>
+        id S1752320AbdI2VoN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Sep 2017 17:44:13 -0400
+Received: from mout.gmx.net ([212.227.15.15]:63808 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752255AbdI2VoM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Sep 2017 17:44:12 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lb5nF-1dVXt80FIH-00kiRm; Fri, 29
+ Sep 2017 23:43:59 +0200
+Date:   Fri, 29 Sep 2017 23:43:57 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Jeff King <peff@peff.net>
+cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
+        git@jeffhostetler.com
+Subject: Re: [PATCH] oidmap: map with OID as key
+In-Reply-To: <20170928200556.grysihlj7cbzocfq@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.21.1.1709292341280.40514@virtualbox>
+References: <20170927221910.164552-1-jonathantanmy@google.com> <20170928004137.GD68699@google.com> <20170928104616.be61b394b50dc5193be275be@google.com> <20170928200556.grysihlj7cbzocfq@sigill.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqbmlw64dr.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:emDNB2ejqUiMO8NdHv6ezEH6VkjfXfifT+M1CDEUhjPUf9MrftQ
+ yGQRKaXGaBTP+1u31M20i6F2r2aunhoMxhXt1gsQiCWl075udI/7vU5OcfC/ByNpE8FYhBg
+ ndqxRljYuBnSI++fAs/TIy7hjZsVkIvGgAHP8rJk3g4bBmwcuDaSe8Jq/PojiiE1FU4sw6p
+ YeqzEAQXvgAmnLq1IljDg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:3SqZBAmv5fc=:hndy5bdtIN5WzG4u84ZbMU
+ h0cB0xAs6XEqVzScPXZ/C2vpFUBH1fRIyTQvLl7U5UOivFyeshTtz0P1FuZ4POg5Zf0VkgSmN
+ hs9TxqeqivnLMiwcXVAG01Umk21J80eRELwpGHWRx1MbeGB64Gox5sLBkSxkSCk5QI6RamvEn
+ tFqQrrLADVOV0aklwBQji2lgwyLXHDgg5/cJ75sEWkPIemP9AElIYhBZ65tGwIMnARLe+K+xk
+ a1bKEVOcWjOdSe6OYseDBqZGZmY7MFVzwb9ZTUckatbnBl87aLdu0R3qv33CWilVRmwzkqVZl
+ sqK3/JNgebX6cxG5A9Er/G9Ij8R08CloNUhWqUOLz9Q+rdoYaaPAQeoqKNxD5CTX/ZqLIKWmM
+ 3yeB1hrszNm8naODlNNhe31FRjAuoRB1vBuu7Jwvib6kcNyjKgBYH3vaOOavJuMA8oD7F8MU7
+ Mo32c+FGs5rrKHza9ydqdPwj9URMDsHLa2/p3l/20MN4CDWhWzDZIYzn1END6wGSRfIDtSokK
+ nvSARn5kUaQKhs/7YX7lzmA6spiyCZEvqncMuOdr5bVZ5E4l2QoprE6T9+xON6JAZXgmO9V1L
+ 3etEkn5Nlg5GQlpf/vppMV6vawPAXbBz0rHcFTqcgQ5hWvSHkEdMb8IpsCnSbwKkkGyu9Fky/
+ EmLf1WSLjks5dL1zKTwSzkAckelLAaxRK0/V2OXwRWmf9smAMnKF03Ob9uAx03SYewRzcOQ53
+ EcYUGBbHRWs59IpaDdYLlNAPodFPpvVXQx7I2pbbTJq5BPQ5ijIf+BMetXjzTx/m5FcbC9iMS
+ RsR3HMXZi+naCsayLu7Cl3jerbyMo2M25M1t2RKlt1fnqeFvBc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/27, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> >> +	# Client requested to use protocol v1
-> >> +	grep "version=1" log &&
-> >> +	# Server responded using protocol v1
-> >> +	grep "clone< version 1" log
-> >
-> > This looked a bit strange to check "clone< version 1" for one
-> > direction, but did not check "$something> version 1" for the other
-> > direction.  Doesn't "version=1" end up producing 2 hits?
-> >
-> > Not a complaint, but wondering if we can write it in such a way that
-> > does not have to make readers wonder.
-> 
-> Ah, the check for "version=1" is a short-hand for
-> 
-> 	grep "clone> git-upload-pack ...\\0\\0version=1\\0$" log
-> 
-> and the symmetry I sought is already there.  So ignore the above; if
-> we wanted to make the symmetry more explicit, it would not hurt to
-> spell the first one as
-> 
-> 	grep "clone> .*\\0\\0version=1\\0$" log
+Hi Peff,
 
-I think you need three '\' to get an escaped backslash, but I agree,
-I'll spell this out more explicitly in the tests.
+On Thu, 28 Sep 2017, Jeff King wrote:
 
-> 
-> though.
-> 
+> If you're planning on using an oidset to mark every object in a
+> 100-million-object monorepo, we'd probably care more. But I'd venture to
+> say that any scheme which involves generating that hash table on the fly
+> is doing it wrong. At at that scale we'd want to look at compact
+> mmap-able on-disk representations.
 
--- 
-Brandon Williams
+Or maybe you would look at a *not-so-compact* mmap()able on-disk
+representation, to allow for painless updates.
+
+You really will want to avoid having to write out large files just because
+a small part of them changed. We learn that lesson the hard way, from
+having to write 350MB worth of .git/index for every single, painful `git
+add` operation.
+
+Ciao,
+Dscho
