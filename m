@@ -2,96 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2078B20A10
-	for <e@80x24.org>; Fri, 29 Sep 2017 05:00:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D127F20A10
+	for <e@80x24.org>; Fri, 29 Sep 2017 05:40:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751349AbdI2FAL (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Sep 2017 01:00:11 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54914 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751114AbdI2FAL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Sep 2017 01:00:11 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 939AA9B3B6;
-        Fri, 29 Sep 2017 01:00:10 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=o1EMdraL5+T64CCzBSW3gkpA57U=; b=tmcc5L
-        gqK9MzKFUaI/exaJLxLWJ2+GZSvKcV2FMOG9WIshF2q2z1fzGcdgO/PyCYzIgogI
-        YRuqKiaL2E+bQygKoJINYgcje4Zh0uHKu+aMK3cZiYB08BjtkEhH/DJ6xkFA4bUv
-        xNs0NY9y++ekYCglRJaS3XHO5CHTq6Ke6FiwY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=rtYKC/lgttLEu+Y8hU5eYn+pfqOeS2Y9
-        Mrmotoc84F06lDk8fhMpvC6wga/RxjfFGB+up22wNXp53QUYI4xMBEcIiPVId2CT
-        v7Ow/M6iQoU7rKMmbhFSvuaTMhkfR5TuiE/uQhxs+6oN4+nmxzHr+/mLsiPZh2vo
-        T6V7MT/97AY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 84BE19B3B5;
-        Fri, 29 Sep 2017 01:00:10 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5F6869B3B0;
-        Fri, 29 Sep 2017 01:00:08 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Dridi Boukelmoune <dridi.boukelmoune@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] git-sh: Avoid sourcing scripts with git --exec-path
-References: <20170928223134.GA30744@varnish>
-Date:   Fri, 29 Sep 2017 14:00:05 +0900
-In-Reply-To: <20170928223134.GA30744@varnish> (Dridi Boukelmoune's message of
-        "Fri, 29 Sep 2017 00:31:34 +0200")
-Message-ID: <xmqqh8vmxfoq.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751667AbdI2Fkv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Sep 2017 01:40:51 -0400
+Received: from mail-ua0-f181.google.com ([209.85.217.181]:53960 "EHLO
+        mail-ua0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750996AbdI2Fku (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Sep 2017 01:40:50 -0400
+Received: by mail-ua0-f181.google.com with SMTP id t36so139540uah.10
+        for <git@vger.kernel.org>; Thu, 28 Sep 2017 22:40:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nanocritical.com; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=HlJ/Ac84KtWspEfOPlohFy/y5sVA7nFGfCPtH8Q5BAs=;
+        b=dSBaA3rpDXeHEUCDkCimZcnEpOUed9XKhrUfv5b2lfComMIxz0JRXufWo4uc9nEhkt
+         3vJj9qkkz0fanSEOPeeN1e714EGO4/uHY2KCZthrBq3iTpdwpRehXTnO2rfdNVbZEmD+
+         ciQ0x4xHy8foyLmhz+G1hzty/nKyrazTqgi2o=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=HlJ/Ac84KtWspEfOPlohFy/y5sVA7nFGfCPtH8Q5BAs=;
+        b=P5mmgsIyaWrum0VQEsgx1QJMsP8ziAKGVQ6VLPd7pvilCWJPIRbqPE1xDDA2Z8w/RS
+         yYndUZIfey4vRuGlkEVHBbwRlMqvzDColJaj2a9mi6kpr0QScPm6UBGiU1m2frVHY5Oy
+         X2HoX8RrTqjZzFrkL2Emaaz5tWpchCTTiIrUkQ/1Gjp/Xs4vPQHyHPZ5uLvw2fPXEqt4
+         O/76Q81ee3+TrBboiSvNbqK4UlWjqnghyXaq3CSYzn/2F30JkrRfcAr+yE5RJlUEklQz
+         v3yLVARGz4KBlsnQn2jGTe3Rszu/2DncpyM+7DtL5wSoi5KXbiEqrEN5DxwRgR9e4/tA
+         b64w==
+X-Gm-Message-State: AHPjjUgnq7uu9VSvOBxMktTn3BtmycR7G4tysXV8YRtgywIevO7obqIl
+        fZ2LTqFQiJR6WMAZu1nt9Bdy1MoHf3xOeyYTpmfHdw==
+X-Google-Smtp-Source: AOwi7QA/xHUGf9vXfHFCS20wxJYSwvHkWuz0l08Bl3WgOwEGy9UHSWTZfg1AgfyZdmlHjVDarUJzmn3HYhOA90fyMm8=
+X-Received: by 10.159.32.36 with SMTP id 33mr4281776uam.41.1506663649871; Thu,
+ 28 Sep 2017 22:40:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 10BEF62E-A4D3-11E7-A2DE-575F0C78B957-77302942!pb-smtp2.pobox.com
+Received: by 10.103.146.1 with HTTP; Thu, 28 Sep 2017 22:40:29 -0700 (PDT)
+In-Reply-To: <xmqqy3oyxiuo.fsf@gitster.mtv.corp.google.com>
+References: <xmqq3776z0jg.fsf@gitster.mtv.corp.google.com> <0cb786584bd2669763c303f80072baa3693efc33.1506654123.git.e@nanocritical.com>
+ <xmqqy3oyxiuo.fsf@gitster.mtv.corp.google.com>
+From:   Eric Rannaud <e@nanocritical.com>
+Date:   Thu, 28 Sep 2017 22:40:29 -0700
+Message-ID: <CAH_=xobLo+K74HJ3a+XK4A3ok-FZJkAkO-9griaETkH50Qtp-A@mail.gmail.com>
+Subject: Re: [PATCH] fast-import: checkpoint: dump branches/tags/marks even if object_count==0
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Adam Dinwoodie <adam@dinwoodie.org>, git@vger.kernel.org,
+        Jeremy SERROR <jeremy.serror@gmail.com>,
+        "Shawn O . Pearce" <spearce@spearce.org>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dridi Boukelmoune <dridi.boukelmoune@gmail.com> writes:
+On Thu, Sep 28, 2017 at 8:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> I think that your patch the last round that feeds fd#8 in the
+> foreground (i.e. fully trusting that the caller is sensibly giving
+> input that produces no output) is already a good place to stop.
+>
+> Your patch this round that feeds fd#8 in the background, plus the
+> attached patch (i.e. not trusting the caller as much and allowing it
+> to use commands that outputs something, within reason), would also
+> be a good place to stop.
+>
+> But I am not sure your patch this round alone is a good place to
+> stop.  It somehow feels halfway either way.
 
-> For end users making use of a custom exec path many commands will simply
-> fail. Adding git's exec path to the PATH also allows overriding git-sh-*
-> scripts, not just adding commands. One can then patch a script without
-> tainting their system installation of git for example.
+I agree. If we're coding defensively against the caller, we do have to
+include your patch to be effective, you're right. I reckon we likely
+don't need to be quite so paranoid, at least until this has more
+users.
 
-I think the first sentence is where you went wrong.  It seems that
-you think this ought to work:
-
-    rm -fr $HOME/random-stuff
-    mkdir $HOME/random-stuff
-    echo "echo happy" >$HOME/random-stuff/git-happy
-    chmod +x $HOME/random-stuff/git-happy
-    GIT_EXEC_PATH=$HOME/random-stuff
-    export GIT_EXEC_PATH
-    # then...
-    git happy
-
-But that is not the right/officially sanctioned/kosher way to add
-custom git commands (adding your directory that has git-happy in it
-to $PATH is).  GIT_EXEC_PATH is for the git-cmd binaries and scripts
-we ship; it always is used to find non built-in commands, and even
-for built-in commands, the command found via alias look-up is invoked
-that way.
-
-By insisting on overriding GIT_EXEC_PATH and not populating with
-the stuff we ship, you'd need a workaround like your patch just to
-make the scripts "work" again.  I have a feeling that even with your
-patch you wouldn't be able to make non built-in commands, unless you
-copy them (or write a thin wrapper that exec's the real thing).
-
-So, instead of the two GIT_EXEC_PATH steps in the above example,
-you can do
-
-	PATH=$HOME/random-stuff:$PATH
-
-and you'll see "git happy" to work, I would think, without breaking
-other things.
+Thanks.
