@@ -2,145 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ABA7F20281
-	for <e@80x24.org>; Fri, 29 Sep 2017 12:15:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CAFFC20281
+	for <e@80x24.org>; Fri, 29 Sep 2017 13:08:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751667AbdI2MPt (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Sep 2017 08:15:49 -0400
-Received: from mout.gmx.net ([212.227.17.22]:61967 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751972AbdI2MPq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Sep 2017 08:15:46 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MCxfb-1e6OeB0c6N-009kkm; Fri, 29
- Sep 2017 14:15:36 +0200
-Date:   Fri, 29 Sep 2017 14:15:34 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.de>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Aug 2017, #05; Tue, 22)
-In-Reply-To: <905a4adf-a6bd-7484-f81c-0381f7200cfc@suse.de>
-Message-ID: <alpine.DEB.2.21.1.1709291402440.40514@virtualbox>
-References: <xmqq4lsz2x6r.fsf@gitster.mtv.corp.google.com> <7D99B245-4D22-4C9C-9C43-C8B8656F8E6D@gmail.com> <xmqq1so0wyjd.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.21.1.1709151816390.219280@virtualbox> <xmqqo9qbx14b.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.21.1.1709152214100.219280@virtualbox> <xmqq377nwtbe.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.21.1.1709181637420.219280@virtualbox> <xmqqbmm7s9ja.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.21.1.1709191733450.219280@virtualbox>
- <905a4adf-a6bd-7484-f81c-0381f7200cfc@suse.de>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751643AbdI2NIt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Sep 2017 09:08:49 -0400
+Received: from mail-qk0-f176.google.com ([209.85.220.176]:47426 "EHLO
+        mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750877AbdI2NIs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Sep 2017 09:08:48 -0400
+Received: by mail-qk0-f176.google.com with SMTP id b82so1089028qkc.4
+        for <git@vger.kernel.org>; Fri, 29 Sep 2017 06:08:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=1hZMjxrwsdAxKemfTIplkCEH8omYVb6jZUxsF/1bxyM=;
+        b=pg8vxcwcA1ve4B+yRxn0nu47TRy0bvkiNCYK3jxc1RL+t7wzZ3oy6w4zQmVA033bu0
+         PypUFWryXxoMXZZixG0NEzy8g50bZz2xrgY/EKep0kUQue686yjeVAVcj7X+4ri5k76s
+         2z3Xz9OYzYWhrsA8A8tiCfLpKDeQXltVEOS5M+ohwRYOhFSOLuC0I+4XcBawC+3LRZ93
+         M6vr2OD3H9+iCcsDToLaN5ccwWaWU8QSrr3VEzH1L25/GWiek4MX3+GU0KejORD55jX1
+         6GQCKYqHKkOQdVihB/atj/SbBsVqMPpTVCXOPZfoMe5Zcl0IkJXPkt4SzXr4MWXPYZvx
+         1AxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=1hZMjxrwsdAxKemfTIplkCEH8omYVb6jZUxsF/1bxyM=;
+        b=QfxHps0yeDCMxidjP6FLfS2aexjLRckmA5VJniZk6dRxic0FfxI3JoOB41RxWHmzNt
+         oFhFWW/ZBaSDCfQQ7x81YFI37ED3HxV8k87vNdHEf3F9VmeMNYCDN2pZXTd5fTi1DNCb
+         wYR/TpshkdGQMsHMiuhzAXNY913yVNuuk6SUATwzCtfMefJqdsYNB4DvXa/dcEaEHJ3o
+         9ERKWXP/HJ4GuRyweTWzaXqfURKOVycTMuJ1+d549r0j5R+Xia6GQqEUvWqrYpbkHlXH
+         JZeUThfPG0AFgPTlyRpuvFP4VCcWthD4ladk2jZyj8NoyIe7d/DhuNJ04LtFVPvrHQyI
+         Q8rw==
+X-Gm-Message-State: AMCzsaUQgdH7n48DW39TCItnLhhnz+BsgXOti6IL14C65gmWef5JOMwz
+        frVUuJ3dezYpR93Bs8EawqFgo23j
+X-Google-Smtp-Source: AOwi7QDH6RwLuP1ByyMLzcmJ/3K4TBNTDI+qeH4qDrSfzJCTyoL9XohZttrggmNlI0FS6e7I+vUf1g==
+X-Received: by 10.55.20.72 with SMTP id e69mr2495153qkh.194.1506690527446;
+        Fri, 29 Sep 2017 06:08:47 -0700 (PDT)
+Received: from [10.0.1.24] ([98.122.163.216])
+        by smtp.gmail.com with ESMTPSA id w199sm530151qkw.80.2017.09.29.06.08.45
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 29 Sep 2017 06:08:46 -0700 (PDT)
+Subject: Re: What's cooking in git.git (Sep 2017, #06; Fri, 29)
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqlgkyxgvq.fsf@gitster.mtv.corp.google.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <5f7dbd81-ae27-c3a2-a14d-2832f71db1e9@gmail.com>
+Date:   Fri, 29 Sep 2017 09:08:42 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:56.0) Gecko/20100101
+ Thunderbird/56.0
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-1363798904-1506687336=:40514"
-X-Provags-ID: V03:K0:6sRleSq1Yu9ZqrD/nH7g6K+ya2daXVC5UDhTUPigjh492u3OiU3
- mGX+QBA1/6HZRJWIXecNggyEwwn35dAEOhIIgg/tsaZO2Si0YmkIZ5PUCgkwu5ae8bdTEAu
- usu6lFe9Y4UzwuUyGfP23laMChZ/rV+1bWOQrg3ssk89w9+zUGsXv5be3HLFuPq1XRDgwlU
- dRWecX7RPEOGB6QlGV9tQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:2LoKu3Vvb4Q=:mPBcARxxhKZAEn6m5IxVnA
- +OXe8Ohk5WLKm1E+T6gjQDKY6qQcsoW4gfjHiEQXXRO+4xF2YJPhYxksHN4uVMK3Zn+/M9gBP
- pbRsPZkpvJS4ep6rubwJgb7fUAxM92QyjZ+I4a8nB+PLungE+QPWW5NFkZUrB1w+GLGheqU2Z
- 35n/wDFD3skd0kDRjUlaXEsKlfb2U+t2FYGOlSzfs9Uk6d60u5EkBR4Hl2XESyHtK55R2ZUNn
- lqIv/2KtA23AHxO0UZbCuFMj8MF8oCI0eq4gnpFxncMFhgmMvsfaz9hvNJNgHcShRdfv3Efef
- VWzJtyx3aGec4F7nmJFin1CwRIIzYo1pjV4/9yv52blhjTn5HA+7IyUGFlGpfQEMnj7Hoj/r1
- UJLrLx8mWWthBLL5/gUEWebrFV6wkoCZyRL4TKCBqHb+fEyYVLQDTgqRNalwdhblend+nYr16
- 7i4dmBF8O8ULRSjOD4aDitBpfchGcPOAjPPgweCDV5NGBI8tzVlyglJpq07y1sEb4MUR+ly3e
- Fl8J7XQDLiY0aJ3RP5I3NGu04iztGg3RvPT0W+uk+woFdniOLhFlMUUYh7W2FGDWiunWWdsJq
- 799OdDWzSAYvmoTM+pabCch3vE3UizxW+QUFptkzZyHz/Nk0H/wfxgs9lK1pfH2cWGFvJuEDh
- fh8SEDLvGtwyHzMW5ATjihZyRoJUWTdpnRp92XNCbhDDjgXR+xJl09IRFZVudNTuuEo9TLKfC
- JggXE73NapM9nN5nxqMayBWx0OTenNHdlZ4JW6ZC38f0xxu0NawORr+GWRyCcgv6KVj6hLvB0
- +WRgg8VS2Sz5RFhuenGIzIq9bIo/AKg14ifPAqKb2gF71pYH4U=
+In-Reply-To: <xmqqlgkyxgvq.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Junio,
 
---8323329-1363798904-1506687336=:40514
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+On 9/29/2017 12:34 AM, Junio C Hamano wrote:
+> * ds/find-unique-abbrev-optim (2017-09-19) 4 commits
+>   - SQUASH???
+>   - sha1_name: parse less while finding common prefix
+>   - sha1_name: unroll len loop in find_unique_abbrev_r()
+>   - sha1_name: create perf test for find_unique_abbrev()
 
-Hi Nicolas,
+I'll re-roll my patch on Monday if reviews have stabilized. I think I 
+understand your comments this time (especially around 32-bit ints).
+Since I'm new to the list, I'm not sure what the change in messages
+means here.
 
-On Tue, 19 Sep 2017, Nicolas Morey-Chaisemartin wrote:
+What does "SQUASH???" mean? Is that why there are three meaningful 
+commits in this note, despite my five-commit patch? Would you like me to 
+squash the commits in v3?
 
-> Le 19/09/2017 =C3=A0 17:43, Johannes Schindelin a =C3=A9crit=C2=A0:
-> >
-> > C'mon, don't *try* to misunderstand me.
-> >
-> > Of course there need to be updates as to the state of patch series.
-> >
-> > It's just that mails only go *so* far when you need to connect and
-> > aggregate information. You need the connection between the original pat=
-ch
-> > series, the latest unaddressed reviews, links to the branches, history =
-of
-> > the patch series' iterations, and ideally links to the repositories of =
-the
-> > contributors with *their* branch names. And then, of course, your verdi=
-ct
-> > as to the state of the patch series and your expectation what happens
-> > next.
-> >
-> > To relate that, you are using a plain text format that is not well defi=
-ned
-> > and not structured, and certainly not machine-readable, for information
-> > that is crucial for project management.
-> >
-> > What you need is a tool to aggregate this information, to help working
-> > with it, to manage the project, and to be updated automatically. And to
-> > publish this information continuously, without costing you extra effort=
-=2E
-> >
-> > I understand that you started before GitHub existed, and before GitHub =
-was
-> > an option, the script-generated What's cooking mail was the best you co=
-uld
-> > do.
->=20
-> Would something like patchwork fix your need ?
-
-Maybe. Here is the link, for other interested parties:
-http://jk.ozlabs.org/projects/patchwork/ and
-https://github.com/getpatchwork/patchwork
-
-> They now seems to have a REST API, which means it could probably be
-> pluggeg into Junio's scripts and work seemlessly for him (or any other
-> happy ML user) while other people can browse through the web interface.
-
-It seems that patchwork's design calls for the communication still being
-performed as previously, and just providing a web interface to search a
-little more efficiently through the mails containing patch submissions.
-
-Git's mailing list, of course, poses the problem to patchwork that the
-status of any patch series is opaque to any automatic system that does not
-specifically try to connect the What's cooking dot to the patch mail dots.
-
-Also, a point that came up in a private discussion with another core Git
-contributor this week: how many reviewers actually even so much as
-test-compile, let alone look at the code in context? I am fairly certain
-that none do, *just* because of the shortcomings of the process.
-
-Patchwork would not address this, of course.
-
-In my ideal world (in which there would be world peace, too, so it would
-be pretty boring, therefore you should not put much stock into what I am
-saying next), the direction would be the other way round: the tool should
-not scrape the mailing list and make the results accessible via web
-interface. Instead, the tool would let me sidestep the mailing list
-altogether, using it just as a lossy communication medium (and keep the
-lost information accessible in different ways). SubmitGit "threatened" to
-allow me to do this: I could open a PR at https://github.com/git/git and
-then hit a button and off it goes. SubmitGit stops there, though; If it
-would have continued from there (and did not make the initial step
-difficult by requiring some registration not everybody is comfortable
-with), it would have fulfilled my wishes. Alas, it is written in Scala,
-using a framework I am utterly unfamiliar with, so I could not do anything
-about it.
-
-Ciao,
-Dscho
---8323329-1363798904-1506687336=:40514--
+Thanks,
+-Stolee
