@@ -2,60 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 509E020281
-	for <e@80x24.org>; Fri, 29 Sep 2017 20:12:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 868E520281
+	for <e@80x24.org>; Fri, 29 Sep 2017 20:12:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752602AbdI2UMh (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Sep 2017 16:12:37 -0400
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:51727 "EHLO
-        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752621AbdI2UM3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Sep 2017 16:12:29 -0400
-Received: by mail-pf0-f179.google.com with SMTP id b70so331671pfl.8
-        for <git@vger.kernel.org>; Fri, 29 Sep 2017 13:12:29 -0700 (PDT)
+        id S1752632AbdI2UMf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Sep 2017 16:12:35 -0400
+Received: from mail-pg0-f54.google.com ([74.125.83.54]:50256 "EHLO
+        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752628AbdI2UMb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Sep 2017 16:12:31 -0400
+Received: by mail-pg0-f54.google.com with SMTP id p5so349220pgn.7
+        for <git@vger.kernel.org>; Fri, 29 Sep 2017 13:12:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=WyYNSkXdZupU/+GTHFFxSlEM4zUz4OqII7YViZbBu00=;
-        b=fKUqonnu1xDF5lvsOvxuElqSM+3ZSz/DU0mTDRh4UMu473HCf7i/H9hIzOREmBm5b8
-         6AkAamNi1jYtSq5jmpPiiYHTtzaLskLn/w+F3WpIcSgWRdilwOSduVvKqpztcRa709K1
-         qlL/RA9dFGab8k8jAHWljmgwaSIETXAIb5Md+MkzkOBJkp6WKYczRV5EDEFo9VXqhouO
-         iDF8Q8dRvSB0ZaP32GAY1G/bUzbC/RenB6IZ73Qoer5UkIZVyNLs/A1M3noAn5rNYjn3
-         8dIaZCpJtFVt5DolUrbXBdfEJledydhPIcTx5FnmZUbASWw/I8NdSn2rhNZ9Ut0kPdAU
-         pVEQ==
+        bh=onVjHtgiZBlZshqbwV7uTOmVYxH1XyqW+mb5Cfvn+Zk=;
+        b=YhqDCHgynrOk1niNk2nV33vSzGZkWY7dSdbgJOJFcTB0RDfo4aH2IuBxguEuHyBm+M
+         hXuO2x/bXogWSGlxnfoUazk+1PClLgTi0nqxFs++8ue8JUejCRy6VEBje4+9z2OxrfmQ
+         AXz0dQzodZEMOdJSFAF0v5PpktSkXhMp8pKX7kZvdk4GcqXtymZ0vGP8UzeeSBLpPM3W
+         fic9yyrsuu7jqREasrfA2oFY4LswjZdXKtTArC1W3eTU2LN1r5zlHh0UYQkGeFcfCE8u
+         0G+CpkCtEvNGml49GLmdB8oldy0mqRsJH+kNl49IpXRD4YUBa1+CyrcwQ7O1MOxDaLvE
+         1o0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=WyYNSkXdZupU/+GTHFFxSlEM4zUz4OqII7YViZbBu00=;
-        b=atXK+zoBfvf/e9dER+LOss5M7RkdH3iZel1AzbLugzmyfg4DIzIa7mitDuN7TnD8ZA
-         JTrT0rZ/dFYaB9CYxWnpgLKhiLsE8yooERwe/1KDO90ZxDeEbBd0MYlPEHpX6uYZdEef
-         opb2A5rp6GfM22+WC+qWpKZmv8r11z99hLOX1EtVHo7OjufNjlTW9RgsTFkAPmWN8GYk
-         gZy+naPqZ9L+ngDmVEg54dziFNsj12VBV0AURdshs+dFSrYe6JTSxN8+kFaCdVeuj3a5
-         zw0qzzYc6GLzm4u4wE3C46KIGX49JbSAe2iphKAtYZR9i9ntOkk8nY/puPa2GsY3IuLE
-         RvKg==
-X-Gm-Message-State: AHPjjUjHfRgWjDuzmSTe69WfTJMJPfwDUXVoMmY/6nYZO72bu95qlCA2
-        l7Lb61U7SJRPV0sjLEjMvgw1kr4kyWw=
-X-Google-Smtp-Source: AOwi7QBW5k+Tc1zPVX2fpZDmFPvvzeC7SNjwMIDOUz3P8anLguiEbK5R0fgl6duR2AiZsi7Po0paHg==
-X-Received: by 10.84.248.144 with SMTP id q16mr8303624pll.345.1506715948373;
-        Fri, 29 Sep 2017 13:12:28 -0700 (PDT)
+        bh=onVjHtgiZBlZshqbwV7uTOmVYxH1XyqW+mb5Cfvn+Zk=;
+        b=PBtyJa0GNdykbbR3X8eyvydiGPPvLKd4675+NmOE94O8byvLJYk8HqlF2nXicd84hb
+         BOg74b8nk3vaZ5ZgmOreReGaicOsbNEOy7Oe/9MliTCRGTuSHwb/oVNC4Z9wCRoaesca
+         mJH21ZGRRdjr8oNHE9GL1PM+dFuSAP5Msb+3lRuS2V0vBDqXGd0NPKklH/ewYEw76Mds
+         AV8dmnHfgZs0rAmhxLUsZu9kaFD7AhsiEKkiSF854uAY4/bJTa4rgg9zxxKp9+T9RAZ+
+         i6tmL8TMYCzBMgpuml4TgQYGK6xxupx1nq3xt9VawVP4Uo+BLA/nrZ4WPx/6VH6JDkF7
+         c/Jw==
+X-Gm-Message-State: AHPjjUj03Edw7hz1tQ2gRCpttZLtA8w9VMSktna4VPO0+olM7laQzEdf
+        olR6/fbu1WItGZY+j4LNohNh5qgU2xw=
+X-Google-Smtp-Source: AOwi7QDYyHQQ0XQok6BxFyg/8xp3q4HtHYmb0z2SrlevSGYT5mJaG90POap1Jtf5vAfd6mEQttNMhw==
+X-Received: by 10.159.194.10 with SMTP id x10mr8350300pln.47.1506715950747;
+        Fri, 29 Sep 2017 13:12:30 -0700 (PDT)
 Received: from twelve3.mtv.corp.google.com ([100.96.218.44])
-        by smtp.gmail.com with ESMTPSA id g5sm9280561pgo.66.2017.09.29.13.12.27
+        by smtp.gmail.com with ESMTPSA id g5sm9280561pgo.66.2017.09.29.13.12.29
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 29 Sep 2017 13:12:27 -0700 (PDT)
+        Fri, 29 Sep 2017 13:12:30 -0700 (PDT)
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com,
         git@jeffhostetler.com, peartben@gmail.com,
         christian.couder@gmail.com
-Subject: [PATCH 16/18] clone: configure blobmaxbytes in created repos
-Date:   Fri, 29 Sep 2017 13:11:52 -0700
-Message-Id: <407a298b52a9e0a2ee4135fe844e35b9a14c0f7b.1506714999.git.jonathantanmy@google.com>
+Subject: [PATCH 18/18] fetch-pack: restore save_commit_buffer after use
+Date:   Fri, 29 Sep 2017 13:11:54 -0700
+Message-Id: <b88725476d9f13ba4381d85e5fe049f6ef93f621.1506714999.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.14.1.748.g20475d2c7
 In-Reply-To: <cover.1506714999.git.jonathantanmy@google.com>
 References: <cover.1506714999.git.jonathantanmy@google.com>
@@ -66,167 +67,57 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach clone to configure blobmaxbytes in any repos that it generates
-when the --blob-max-bytes parameter is set. Also teach fetch to use this
-parameter.
+In fetch-pack, the global variable save_commit_buffer is set to 0, but
+not restored to its original value after use.
+
+In particular, if show_log() (in log-tree.c) is invoked after
+fetch_pack() in the same process, show_log() will return before printing
+out the commit message (because the invocation to
+get_cached_commit_buffer() returns NULL, because the commit buffer was
+not saved). I discovered this when attempting to run "git log -S" in a
+partial clone, triggering the case where revision walking lazily loads
+missing objects.
+
+Therefore, restore save_commit_buffer to its original value after use.
+
+An alternative to solve the problem I had is to replace
+get_cached_commit_buffer() with get_commit_buffer(). That invocation was
+introduced in commit a97934d ("use get_cached_commit_buffer where
+appropriate", 2014-06-13) to replace "commit->buffer" introduced in
+commit 3131b71 ("Add "--show-all" revision walker flag for debugging",
+2008-02-13). In the latter commit, the commit author seems to be
+deciding between not showing an unparsed commit at all and showing an
+unparsed commit without the message (which is what the commit does), and
+did not mention parsing the unparsed commit, so I prefer to preserve the
+existing behavior.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- builtin/clone.c       |  1 +
- builtin/fetch.c       |  4 ++++
- remote.c              |  2 ++
- remote.h              |  2 ++
- t/t5500-fetch-pack.sh | 64 ++++++++++++++++++++++++++++++++++++++++++++++-----
- 5 files changed, 67 insertions(+), 6 deletions(-)
+ fetch-pack.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 4c2193dc4..58cbc8ae3 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -1179,6 +1179,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 		git_config_set("core.repositoryformatversion", "1");
- 		git_config_set("extensions.partialclone", "origin");
- 		repository_format_partial_clone = "origin";
-+		git_config_set("remote.origin.blobmaxbytes", blob_max_bytes);
- 	}
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 19b8e9322..8e6f54547 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -719,6 +719,7 @@ static int everything_local(struct fetch_pack_args *args,
+ {
+ 	struct ref *ref;
+ 	int retval;
++	int old_save_commit_buffer = save_commit_buffer;
+ 	timestamp_t cutoff = 0;
  
- 	if (is_local)
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 07beaf5b5..ace238554 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1050,6 +1050,10 @@ static struct transport *prepare_transport(struct remote *remote, int deepen)
- 	if (blob_max_bytes) {
- 		set_option(transport, TRANS_OPT_BLOB_MAX_BYTES, blob_max_bytes);
- 		set_option(transport, TRANS_OPT_FROM_PROMISOR, "1");
-+	} else if (remote->blob_max_bytes) {
-+		set_option(transport, TRANS_OPT_BLOB_MAX_BYTES,
-+			   remote->blob_max_bytes);
-+		set_option(transport, TRANS_OPT_FROM_PROMISOR, "1");
+ 	save_commit_buffer = 0;
+@@ -786,6 +787,9 @@ static int everything_local(struct fetch_pack_args *args,
+ 		print_verbose(args, _("already have %s (%s)"), oid_to_hex(remote),
+ 			      ref->name);
  	}
- 	return transport;
- }
-diff --git a/remote.c b/remote.c
-index 411309006..eade3c312 100644
---- a/remote.c
-+++ b/remote.c
-@@ -440,6 +440,8 @@ static int handle_config(const char *key, const char *value, void *cb)
- 					 key, value);
- 	} else if (!strcmp(subkey, "vcs")) {
- 		return git_config_string(&remote->foreign_vcs, key, value);
-+	} else if (!strcmp(subkey, "blobmaxbytes")) {
-+		return git_config_string(&remote->blob_max_bytes, key, value);
- 	}
- 	return 0;
- }
-diff --git a/remote.h b/remote.h
-index 2ecf4c8c7..3d56e62b7 100644
---- a/remote.h
-+++ b/remote.h
-@@ -56,6 +56,8 @@ struct remote {
- 	 */
- 	char *http_proxy;
- 	char *http_proxy_authmethod;
 +
-+	const char *blob_max_bytes;
- };
- 
- struct remote *remote_get(const char *name);
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index b2682862f..ee533ea32 100755
---- a/t/t5500-fetch-pack.sh
-+++ b/t/t5500-fetch-pack.sh
-@@ -782,9 +782,9 @@ test_expect_success '--blob-max-bytes has no effect if support for it is not adv
- 	test_i18ngrep "blob-max-bytes not recognized by server" err
- '
- 
--fetch_blob_max_bytes () {
--	SERVER="$1"
--	URL="$2"
-+setup_blob_max_bytes () {
-+	SERVER="$1" &&
-+	URL="$2" &&
- 
- 	rm -rf "$SERVER" client &&
- 	test_create_repo "$SERVER" &&
-@@ -794,7 +794,11 @@ fetch_blob_max_bytes () {
- 	git clone "$URL" client &&
- 	test_config -C client extensions.partialclone origin &&
- 
--	test_commit -C "$SERVER" two &&
-+	test_commit -C "$SERVER" two
-+}
++	save_commit_buffer = old_save_commit_buffer;
 +
-+do_blob_max_bytes() {
-+	SERVER="$1" &&
- 
- 	git -C client fetch --blob-max-bytes=0 origin HEAD:somewhere &&
- 
-@@ -805,14 +809,62 @@ fetch_blob_max_bytes () {
+ 	return retval;
  }
  
- test_expect_success 'fetch with --blob-max-bytes' '
--	fetch_blob_max_bytes server server
-+	setup_blob_max_bytes server server &&
-+	do_blob_max_bytes server
-+'
-+
-+test_expect_success 'fetch respects configured blobmaxbytes' '
-+	setup_blob_max_bytes server server &&
-+
-+	test_config -C client remote.origin.blobmaxbytes 0 &&
-+
-+	git -C client fetch origin HEAD:somewhere &&
-+
-+	# Ensure that commit is fetched, but blob is not
-+	test_config -C client extensions.partialclone "arbitrary string" &&
-+	git -C client cat-file -e $(git -C server rev-parse two) &&
-+	test_must_fail git -C client cat-file -e $(git hash-object server/two.t)
-+'
-+
-+test_expect_success 'pull respects configured blobmaxbytes' '
-+	setup_blob_max_bytes server server &&
-+
-+	# Hide two.t from tip so that client does not load it upon the
-+	# automatic checkout that pull performs
-+	git -C server rm two.t &&
-+	test_commit -C server three &&
-+
-+	test_config -C server uploadpack.allowanysha1inwant 1 &&
-+	test_config -C client remote.origin.blobmaxbytes 0 &&
-+
-+	git -C client pull origin &&
-+
-+	# Ensure that commit is fetched, but blob is not
-+	test_config -C client extensions.partialclone "arbitrary string" &&
-+	git -C client cat-file -e $(git -C server rev-parse two) &&
-+	test_must_fail git -C client cat-file -e $(git hash-object server/two.t)
-+'
-+
-+test_expect_success 'clone configures blobmaxbytes' '
-+	rm -rf server client &&
-+	test_create_repo server &&
-+	test_commit -C server one &&
-+	test_commit -C server two &&
-+	test_config -C server uploadpack.allowanysha1inwant 1 &&
-+
-+	git clone --blob-max-bytes=12345 server client &&
-+
-+	# Ensure that we can, for example, checkout HEAD^
-+	rm -rf client/.git/objects/* &&
-+	git -C client checkout HEAD^
- '
- 
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
- 
- test_expect_success 'fetch with --blob-max-bytes and HTTP' '
--	fetch_blob_max_bytes "$HTTPD_DOCUMENT_ROOT_PATH/server" "$HTTPD_URL/smart/server"
-+	setup_blob_max_bytes "$HTTPD_DOCUMENT_ROOT_PATH/server" "$HTTPD_URL/smart/server" &&
-+	do_blob_max_bytes "$HTTPD_DOCUMENT_ROOT_PATH/server"
- '
- 
- stop_httpd
 -- 
 2.14.2.822.g60be5d43e6-goog
 
