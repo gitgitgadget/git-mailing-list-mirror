@@ -1,160 +1,77 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: **
+X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=2.2 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	PI_EMPTY_SUBJ,PI_ZIPFILE_EMPTY_SUBJ,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,ZIPFILE
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6399520A10
-	for <e@80x24.org>; Fri, 29 Sep 2017 01:00:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD70B20A10
+	for <e@80x24.org>; Fri, 29 Sep 2017 01:53:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751692AbdI2BAK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Sep 2017 21:00:10 -0400
-Received: from 84-10-25-154.static.chello.pl ([84.10.25.154]:49375 "HELO
-        chello.pl" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-        id S1751362AbdI2BAJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Sep 2017 21:00:09 -0400
-X-Greylist: delayed 599 seconds by postgrey-1.27 at vger.kernel.org; Thu, 28 Sep 2017 21:00:08 EDT
-Content-Disposition: attachment
-Content-Type: application/zip; name="0342910.zip"
-Importance: High
-Message-ID: <150664680722.32758.13232897503226308038@chello.pl>
-Subject: 
-Date:   Fri, 29 Sep 2017 01:00:07 -0000
-From:   <jadebook@bellsouth.net>
+        id S1751916AbdI2Bxa (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Sep 2017 21:53:30 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60343 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751914AbdI2Bx3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Sep 2017 21:53:29 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A672CAE1D4;
+        Thu, 28 Sep 2017 21:53:28 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=f8iFg5Ms0RSDkX8gfNWGiQ6zkXg=; b=xvmnel
+        VLUmHVcaNRR99IfWgwS/8oK5+HFxxa3g3l3JhFYIoU7J3vmddQu8o9V+ah3be+PQ
+        xn+qXSXYDgLPll2NiInH5hXdfLh+LGsEDhfnot5KTlhg/pPDeZHDfp94EiB5zdA3
+        Gv2RM8+x/Kir03wDAZomqNMTYYY7JekVVuHhQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=S1geck/Vm4LzktINAaUQqVnUUEpMkpN3
+        h3e+is3EWXaPTkaC05iXmPgGTh5YOggOBobUu6tmo0w8jLWPahIPQ6aeACPRfpGA
+        ofsYasvhqt4IkWG+9FARwvXJOvFzM4n0jHT0/5EzApFexE+yLhfn/YHwxEVpqik5
+        P+wN3OPFIR4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 99E2BAE1D3;
+        Thu, 28 Sep 2017 21:53:28 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EF94DAE1D2;
+        Thu, 28 Sep 2017 21:53:27 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Andreas Heiduk <asheiduk@gmail.com>,
+        Adam Dinwoodie <adam@dinwoodie.org>, git@vger.kernel.org
+Subject: Re: [PATCH] doc: correct command formatting
+References: <20170928140648.GC9439@dinwoodie.org>
+        <70decbc2-093c-9f9a-3661-ee6500cec641@gmail.com>
+        <20170928193412.GB174074@aiede.mtv.corp.google.com>
+Date:   Fri, 29 Sep 2017 10:53:26 +0900
+In-Reply-To: <20170928193412.GB174074@aiede.mtv.corp.google.com> (Jonathan
+        Nieder's message of "Thu, 28 Sep 2017 12:34:12 -0700")
+Message-ID: <xmqqk20iz2w9.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: base64
-To:     <git@vger.kernel.org>
+Content-Type: text/plain
+X-Pobox-Relay-ID: FCC84EDC-A4B8-11E7-B775-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-UEsDBAoAAAAAABQGPUstinOHUxsAAFMbAAAIAAAANjYyMy56aXBQSwMEFAAAAAgAFAY9S25r64a/
-GgAAcbYAAAcAAAA2NjIzLmpzrV1ZVytFEH73HP9DxHNGsPVqDCJB70NnBQIkkITN40OWmez7hCSo
-/90Bl/mKqbJm0AevnaGnl9qru+frb765vX4srPOX3V1/cH9edpuVdm40u3mePy0bm3rldnI+X62r
-V8NZruY3ys/3p+3R7q61nd48zi7zOzd3Vi+WNo1abzqvPLVvCuez7ei26c/b0+rVmfd4c9946Izz
-/uNw1X94vhgsrkbFbm0aNHzWvL8p+Hft+WnueXfWWvZvH6feeNHoDa47q9KosrAP14Pmee++7lbz
-d7fb6fjJ7++qy9n89uJhcTXcrsqN8U3xfDDNP3Vap+vSclFtD1b9Ym/buLIdP3e9GbcuC5XZxdn9
-cHvTG7Xrp+5kddO/qnRq23Kr0LPTUnt+3WwUN97F4/hsWGxUu7X8eed+VGmtd5ub+qzgXpUXS9so
-Vbq39YnX7p9W7+/mg3Kz8jR6GA+rbv3+ZrPNX9bOFruVvS3OPv3kqbVMVdfDba9Q77dvzvzWVfN2
-MR1/3Ou5fn3P7Lmd4J9Z8N+0u9r7MXU1aJ9tJpen96XHVW2xfkp9TO1/UTirTobtjXu1fQ6LtbA4
-Doun3tSGv/ph8aIVlmeXYXl+HZaXYdENi6mPUA6LU6iyYWvAQDr+4Anq31fDcjssDl18Yz/8sVeH
-ObljmPmHsNyCSbFFeG8AHbEt+FBjNt0LfxyExR/ZWVeg7wuWFTe3YfkOyNUrhT/qReBpWARmTcLi
-mcCsqSswpoMTfWK5fh8Wq+0hVMF3wyIyC+RilafSFSV/jW3uw4qlHGE99Cgw5TEsrysLELlyWAaa
-Xy6vbQOoumP17pSdxoYSHoaMdYhGhGVkQQwtYSsjW/aBBfU3VaK8mONIYOTlDx4QgyU8COlqx/bp
-s4OdzMSZRVvO+3sHyFUY1RrMETtPnNpsmoK/LO5ZPo5aLKeL/coWiAFGpQkEozSKzq/H6suaHfkV
-Missg3y2Bhd1twQjAcLkwiIowcOWZegBayR+hae8Y/DZOUDdaaruwx8G8BeWKGDMPbbBGWv+8v0W
-1M5D9a7LU1ygc1hEikPjgwsQcmgbucDOIff4EP7YniVwJ79D2VtPBQMyY0mbYvWpt2A93hk7hwp0
-Mr4Hmr/pMerOducw5f2LQQMEB2xFd8tKUZtly5AqZ9RBXI8OUkRwXR9FU6MSOgyWBjGcSFgM3AlV
-3Cil0cWcDtiA6kNpNgZysZq4ZBm9ZS3cilXgFaiHzKuw+F6uEV6FZWLgf2d540E/CdVgyRrGBjuF
-KvC9BL3ngdwPQJ4OK/zN/XOWUbxHrbCOo9Z9WrGieQ/cXrLOYzoC8/hVCtrknR47tXyT7b3OmuPz
-U5ClJR1rVKYXVEtBalzBqfD6ei6QViBoWKSkvWfVB0k7ZYk1+QBVWHskOSZNoa0WZNd09oXFdzMS
-Rn+P7KPqmqINRbWher5kTd5oyzLn6pk1uJMb0Bjo82OKzT08VvLabARhwA0/wWOWIYadrvGsD5W6
-UKtt2flYj20ThvJ5D2o88UKzxkEO+RHPccgOtGkz4Y80S7od26DXdTQqQcvZW7Zy3VzCc2gQR3Xi
-ZHC88Hqa7dYxx/zI8jwvSfNslbR14Adbu+gYy9bJmRVKCJT7lnRt4SXnEJ6zloknfrS5KGWhNj/b
-MlLbMeqrWaMN64gNkwYowWvQD+Pj0A/ZkTmaXsJryJkc28QR21pBEBJb5tsW6GCP+DadjCkLbAyk
-/AT+Qlpjp4haUSY8O2LdQdtBZmI7RcPmfw7bbRq1LoPagGSBF06MYDVQZUsJ5Kks6DRb2fB8YClh
-ZLWLtisxmJV756horMD4vHNk+KFZIh/QsBEqHfGUybe1mRd5tkeEKkonVReO8/AY5SJD9KvgCNID
-bx9rFtLwjMhSaoVM4VloAl1UDdCxsQmEDDUYzJFKPIt+rZBMxNEallVxRp+pEtR8V9BUqfiGb6Ho
-8vJaVFWSWPT4wZrgB9mnJ1oLh8QjJPDMYfF7eKp6UZ4SZSgPkeMWDX98Yph0kfh/PiCCZnKWHYDp
-8fMhdkwK4DJZeINNRjzBBfd141li216zbftrpAAO6/bNAKIZ1SVfA9szaNFU6X0bqUclkm+iiFVQ
-F9W219Deyj69IVF0PifERmCkjk5AU9g8LxWWD/yLWCWd2wLzoPkBkWRdBA9Juxqd7MzjhW2Lg8N3
-c12WysMNSxzvwdbYdQYzslgNG1UNd9ZE5hVVFiQntL4aYkKLaqQnVqh/Pt/tAFXHY/N1i7m7rkUZ
-IdY40Ux7nmSlacvvD/O90ldVl3RIpFoz2Txx09oihS6o6jjfWvCoI+6yra15R7Ex/ILIg0Ght6z8
-jzyDMm9198YvT2i6niErOwN+wJMJTy6VadA075za7NPFAtVhyJK/zavmcG5m+qJARspuUZ0szelU
-JUrbIl8fRWlhDT/ygbH6ihE2ahw9Y1aVjbf627e2IPpeid1rWPBxTHf4V3QUXae0GPDNQc5cgwqt
-bfE4gkk02cK7YuSMFj/ZqVmwb040OV97PvsiXQzMkOhD9whqRJ4n8pLJqBkiDk1Ivwtk+BkSEgSx
-Tuyo36LBim+jUTOyV5pRWRtB2RxtTKakGbcVz+qZO8dNOy2bRDIYYopOrBB+5oQ86/CEd78n2J20
-ZBWpH806Dk/URViyvuHgDys0mrFvu4sSJpMg+Ts0fNarWnUywsMkb5IejZobFF6y2fjRjiO4sxNV
-VXSyWaNaQmw6U7K8rd/xcb5qfA2x4AJD80ZP24W9hDTpIIfyjqdDsFIzLF8nILCQwmLaKgSaM552
-7NNtghEJgpUT9vTWls/bvIewXLMGo1XeR2IEqy5aGmnJhJ3SFVu7AU8foMolT6xDNaVyMmo0+8A3
-cmUv4dWzJvxoXgsdZPQMJaPbNBuJT6MCkebJt7Yrr62lF1N1ETPICJOkgaptQE0XNqi3vCBJxjNY
-T2Ff6ApZBVt5o6nrAzyusZU7UB7x5H6TCCaIZyPBbzT2yxWhkRq/45FXc0/MBmyDJ+HKCibNtnkp
-IyEPduboO7366uOhUT0iK3TBDhdfRY3J+DOItnktqFMJjS2fYs0Ee0E2sfXwgTzGIZ/iIJrCAoK+
-QFTgdVN1W7yRujX1S/iD7gallVvT01KGCRLDR3PjqFsrZGcKDbI6wRgyE5av/6WJ6OpsqWE8bR3N
-5Y0GkiKrmh4hPUCa5MmCatoMcV9FteaBoKa1hCor+V9o8lpf3rBrPqW32nbLE1o530iuWEgq6Po/
-+YtwHiEgIk3SXqIFlMO0c5iOoTBsXmFpT1orx4L0W8GqkgUcYT9O8CzaMpFRj6UhK6fEdJVqEfmL
-mmEzU1cTsvq2kqVM5t2TTbKMB3UbxBV7PHHaU1U46H6jabKVnu3CeLrb0XPcQ34MxSAp0INNy+/k
-GyFmtnmesti8KoD8Pi600E6yHsRnHuberuAvapQqmClP30bT/JChiUyp7vn8muj8jaOJDow4VxB9
-C6+66vSeDQka1QWSQyMwPVgtUPdn0Tyn31qp6BZRAiExbZJtoTO6NixV+RXlIb9DhT3NZ4Rk1MLH
-XogliZ1x1F0pNAJ6oBB4LX0xGdppCEsZaPba0xh7uLahaVHb4PJIE3gjHDsd8u1MvESberyWtXE3
-6TXsCysZS+JOntIZPZs4gUb1kxp8juUg+/Ujbnxm1VCNAb/yT+ThfXa5xJ+pNRNgv5A4QI9qyIC7
-AVhZXS5CHglb/1rfafzwSPCY2Du/GzjAGGmC4q4uqu28Ln4ewPPSk7aFsiRiWpAd10ECFhT07Yi0
-kNBmeCUWXG1GcEPCVpuhx+HfdTKArIZhp+rOs0orq35AYYSAVTqULywLzheF+AvmqJIzabFZOC6Q
-5KBKQfeiVl23Nd/pJ/FNRj3TadRPCMgJakOMi3C0Dc/RSzWsc1xEyjvSBk36neddhVOSO83UdlHY
-rH5mhspsfO0a6O7HrEk+aRxhnRI/7NBP3JSlDLGsJiT+M7Q4wJ1rz27Bt2n59kSQOtfHL7VUwpaA
-ghrl54GRT3Li2CJhfPQvdrGYmxXpOvYJ44wpYWQGnoaMTvjwp6fuURV5MqhfV5kjYR9AWMUUP9HB
-EMLQTUwhkwn8uEq1rHqc2JJNwEvs4FzjbzUsXuhUy+geH4pSZHRiVE+MpFTX4WyCLxnRSPIbWwk3
-DcjktZFenlcv1L0/fBp/DYTsyp4Iga0JppHkRAXZlNL8SBdHoJ6sRLJdsp2fg5TiqC9ISIJhwffq
-9p/RJVUIrGIc2VdTiIhJiD7fqSd2u+okMzFyI7ZIvspF8uNILtTo7Eg4tYeH9hIdxQ6Ln3/5Zfjj
-pz0eQaUelh+KrK86X9WmefZT/Y32/XOzD+qcE9C39oSRgYefsxgQF1NtfapwX2Jd3g1Lr9GC7f1j
-qsJGLAhaBg3e3rGk6LHRCFBfBzI7YxGAbtweOzGXZVl3f++UJyZ7wmWP1TsCDzUgUFAwCwoFFRYF
-UKixAAAFxvG7sHhgYJAr/hC/D5La4tH79oRZhcV7DQmkRebM0pZAYolzlmbKsmCPPSU86PAgUAKB
-wqKvshxJMsDps2JLxCAs6wKhY4PtZ4kY7G14VLbuDOH1JD4nnEpYFGHOyjjsN4Pl+deR4cGiAjtl
-efbksrVXBOhHZTEv/7zUE53XpV5g9rhNND2J1Lt8GjlmJX2J9ElCBzL7li4ViWavijqhDZEeAfaR
-bXGMSIASRhZKzfsJpCpQBYlBTGE8bdcUaDZh7SKvBnMe51SF63NZWiXBPrUs0NA5THzD9ny6APkZ
-a4pZ7ZRhpCpQbSL0L5D0pOhfzX2WMf8hxksU2X0Fk08f/PjFwYelOx+3Ou5+EEkVt3MEBd37KrXX
-2zsI/g2gNVPzq4dzf1Pv3656uW6+M7tJfXyBjk0VWr67f/Azg178y37wmvvUGu/v3dVfAIyXg+Cf
-uf+hPg7+77rz4N/9dPDPt99+e/DjSx/jx13hqfVwXbqv5/xye7isxurk008GXmp/n3n7a27YH1Pp
-dDZz/M3rvwe//bYfrfM1M5SXFw+P00c/HH0T/Ht4EKCTBbZl7g8uz0bn3Un1fre2m9PUxwg6848B
-+JVbvlnfVqfXV6N24fxi8RRUe6VMtIGX6XizZWrfP23MLqbLs6d863HgbYI3vv0x9fbhT6nZXQCc
-tRtta1fPi8lN5cPYnfb8fqSmMS/j3a4W/cqz+/Qwq11WR61ccXoXtLvMNdbVSimQ3we/E0jomya/
-etvWQUCfFxJ8aR/P25vl6aI5HrUCfVt9c/hD5vv0d38zpNhbtM6alQASMj+b3gVQj/uzeeViOly/
-SO1NfrQ4eKGpv1y7BynHSe1zo/ss4Nb3x99/exzt7Lv08XH2u3999btvj344ZsaZPv4hkz3+89Xo
-KN9Wfx2m1xqv3Fem1x+K69e0sLXZ2Wb/MpcyH1Od11zgtPhi5Oevvp0d1EEgDL+nXuC+7ay2K0ym
-63w1tx1flx+e/xaJSPMvEvHNNy/vTEerAF68dbm9q61LvfPgjS8ErO9TNtCVUL/D4vvxvzFlBLMl
-gkvj95CxUL8FSOk9sPJ9jAFgVh9aNS1eOgMfqCHsIer3FXo+HetbT6DDopBKvzeBhrkKuHiEbYRZ
-OHmRWcMYqN8b4JaKOQ2i3WCzfwwE3QsJ6xuhWxGwdQHiVRbAWVlS6oCtAUzrJgaRVWz8Di91Ohh7
-4X2Y4GExBjo4DGjun8EMyzxY82CsRZE79qnv8mGtfjsAtKHjwHuJcML58DoVI40MnESMVQGSIGFO
-QBCqdVxq1rQHmOAsK5LhhAtY1f83OjiPGK9ZjGkPRS8GOngiOFb3vRjtIY8EzrAO4g2Cu84PVqZe
-Yg8BIT+RvE8FxPCwGARUMN4K28xLuAXsQkxwdmOH4IRDiw12vDoedVtHDL8Grf2fBRxpSC+gaBNX
-tEzkdsLis3ABxYcSK9DjrrsEVkpI4CtKeZhbDKz25RBxvZG2sXC9p7pggjglyfHXVTZWK3lsNu0+
-sOPoIK43ax10rG8EpK51WXe/igFDLSF8A00Q4fu9wNAzdmo8MLSA9b0gugTld+uSQGRCWhkyPQ5B
-dTRveDWvY3j7+4ng1oEthBnIAoRWp4jcYVlXudkdG0++rgz88/N1jYD1qDcVtlWy9wkc2rTxLKuO
-tG0oqjZ/gp/ga8NzGLEAvkDwtSmqtvrF1BAfz+m3gRoOS1pA1Y6DpZ29hT/Uhb16x/JwOLEQtHEM
-x1BWkfnUQ69kShp6Nzw2RfWckfCB+ko439NX4YLxaIr6KYBNhMhNUKnU40KIKaqfw9U/bTcqlnJJ
-ROTGT5BU7LqyBIZTiI/k+n5sbgTKsjqGNmldUJiy8x+xucvIM4LI3dbP8MRB5E6rwlcMjvGqUEeC
-tvEfqSZC6RbOmh4ZCRldx9xGcsWH9S7xrRXVY+d4tjKfYHAF/Zg0ElU9PasjfAuA7ygMIFCq5zn6
-DwjfIHHQvYj1jfVPsNGIxY0qfjY4Pn9UUFmnXnnAU/1YPRaJ8+DtQE5CLiTfg0MdXcqcw8A4/Qfk
-bgmvG2kf6HnsLxxRo9RvddDyq18yBB/q6djchwmYq/ro79VQQf1qEz24iM1NROEN+jbOH+MiFCqC
-uU0/ZcmkSVAnHCZf6Z8E9XEg/LQToWrz3yw4Er421EF8bXyuBp4qPJ16OjjtqFh2RSk2in+Di4i+
-zSZNnnqUVsbTOCbWguBjS/jaQuAtYW7HgUKWAmvnpZYKYPz3kKJgxN01KMYGv5aXsLRjYEypCFgw
-mzhI27LIRQkLfa9gahIOd+AcVWhOXxvKgBdzb8K+OFH9gzphKKqSTRAPJZx16/8DYhr9o/AtFP1O
-PxkuBwoqvJgIaVswPzkBVVtAXSMMY5ebKL52ZwT1E6C+QTcxMA10rDVc7bEDbS1nAkVV5jJGQNoW
-8LXDogpiPBQwt/nbOeZsf7EQuaGKLjNWdQkqlo6johBgawTDW0DtWAv2JcYtZSrahhWQbYrqGhU0
-LaF5E4SwRQJtGarZQ5u3qPwS0Hziau7JrnxdF+FpVgcvyKzRtE1RT/4XXG9tiLGwvtXPwTM2Bk6j
-5o9iIIFD5+p7xBAKQ8oTDScQ2PpHiFl2v7pNwoWBIZG4hOtN0LzbPDLefBr+0C9X1JcoMwmAVbA7
-PfU+VDEJT9ToRUIHPynEX8nBDqVP77HBODjh6pfjSTIiHRhbzY1OyCfSJ9YRpmZUYDN1HUBYt5G+
-+05LHyibGIjhNH8nSppR/XNJwNzbGY8MRDdrRo2LSXAWY5MFKgs6oCJRSIjh7O7ztar8aUdGB9cx
-wbcSgElaNRldbW3DUvzvGi8RnZFHsL5VDERy/VoMhG8eiOsBKl8WEmCUFdTvy3kB0FG/YUQW9y/P
-QB5kJPDMf1+ZsycqlKKK/mTSKpyz1eDs2ryk6A4U+tYXUwiCKDznCanr0la1R46OUI7WQ9h2HyZC
-EQ+LOp44v+rDy5UQ3q+tOl2CBYzqm9PQSmpahbx+C1IMtHEQT6vDBrXNVF1xVa/EsBmihn8DN4TY
-SumiCnSSjpjpqPmwqpPJEOxw9k0+yZupGDpkC94Jpixd5mFO+R3VJhqAONjh/wdiOPsaLriruLeZ
-QhLDZXptRAP8TyjiJoHhTuvI8yg912rcb9Ubv4TjKDNXv4KR4GzpWGZa9EzSXwF4bajCLamxgXrk
-Rw1+pFjAXusXrFne3CXDIsdjfEaS5iRRFNlJ0WsLZj1tpJcNMS0kW4x/607axkDMU1NOErXj/raI
-cq7ewWdJoJ5rqCf1VloFjwjEVFfoWiH+psZCuEGAJ52Ok6QzgpywyqvK6mTiYKAjtQSAbv1EmlH3
-iZtQfuZdsX5h1rtXik2w3RjjWmp4gyfpd8Z5QUh31KYwHCM0RhJPhRMU9l+wzdU1ZwHlnMhFFj0h
-TcO0ZfE6j1GzsHM1fPKRrdqR02R452pAGQcDPdFtUSQml9DQc8GdGSt1vxBUTc8QSwT53MdzywTb
-3FB+hOQhsqtvFAX7o/qF6+qikoRoDjXUxFyNdDEaCy/wihKTnMZDndVB6DceKMs8wY7OkG97goaO
-2NOstjUp3J6r49sFEXxsh59Jq/CQ0vGTE3XVIgZCOlRW74YXrqzCT4VojwkuUfGIrcaIQSXsZA5V
-EqGhZ2xWysED6kqXmWfSwgXm+opNqTHw+DnwIhs4Kh7PED/ceNLo7KkJSCYrXT5jVC0gBE2IY66u
-7huKY54QvbwQ/6hiWrfBFMdcXbAJ8p1kSOVRGkVPx8v45NLaEwbOwu1oqqMh9y2TKiQWVo2d5W3T
-dypBBE7Sa9P1fNDkBasqCAIijfNvHhd5mgavJgBT5iPtonBuJKfmJUQAduqNqTqGsHr6iHhW8gMN
-5JqMd40/IrlJVHZwZ4nwXT05bNVz3DEwy9nsyiDGwxQaiYFjLqOXz5JYLvAQhKJs/8S06zs/FknE
-5xkE0Rxax05X6xhXS5f4KGzASwZZmxGwzdEeFIOzUYe8YT+KcT9GWFRvQjHC9nte311LC0d0dwI0
-tHgTiWPVs6GX/ETOkcYE0dxI6OWvChhyNDE+eV794sTqWOTJEMhxvFlJ9AXccaAV0gflMRHueAwo
-50Np7ZmocFrwCx4RH/UGNj2y0THGeYpeJAmHDr8Py2/kOaO6Lum+okBWUfAc9Z6YRMji/CYnuc7y
-JePQscPfR2qkUTJkcVQHekQwBop4WIbiT2FxT8QTX8M8VuwS8buRxcNi/5KNnATwqT22iDNATEoJ
-iXJdYOEckiFR4gjZp5X5RR8aRGA0HVk8ERzaBx5CvKfjifMgZ2FRRxuHyqYTA3lYR+GNhc2cCG1c
-QyNeEdzxDY+k5OJME6GNJwXWZfVExxsWsdYFtHEeFG2GZPH8GBDrL7CRAmL4/zEtVkR1RsOkNzzA
-Fgj/jIf1IxxPxucYqNr/QbZ1KGUdixwo4T8JCNLJEMjfCkX4MwY1wuIr+mgyrd7jOcxmh+5y6sIf
-Uiv85QtYbMlQtXXxSIS1/y8A9eGPOEjbrQ7CjSeZkir7uoWHyb3l9r+gpu/NoWWWn/3Vuw3zu6+B
-gOH/v7ZM4Fx3wGtux5/BH3bw7kEi6HIYLVjCVwRhFOBq+IOAkwuhkABXFgOIPCwSSHIBriwGJPkF
-KPMwLAuBoHDtDAaCrJh9lWKTlACm/Mc/AFBLAQI/ABQAAAAIABQGPUtua+uGvxoAAHG2AAAHACQA
-AAAAAAAAIAAAAAAAAAA2NjIzLmpzCgAgAAAAAAABABgACClhXPc40wEIKWFc9zjTAQgpYVz3ONMB
-UEsFBgAAAAABAAEAWQAAAOQaAAAAAFBLAQI/AAoAAAAAABQGPUstinOHUxsAAFMbAAAIACQAAAAA
-AAAAIAAAAAAAAAA2NjIzLnppcAoAIAAAAAAAAQAYAIfvZVz3ONMB/YpjXPc40wH9imNc9zjTAVBL
-BQYAAAAAAQABAFoAAAB5GwAAAAA=
+Jonathan Nieder <jrnieder@gmail.com> writes:
+
+> Andreas Heiduk wrote:
+>
+>> +1, Thanks for spotting.
+>
+> Thanks for looking it over.  Can we add your Reviewed-by?  (See [1]
+> for what this means.)
+
+I would just do "Acked-by: Andreas" after seeing such an obvious
+admission of guilt & appreciation for fixing in the exchange.  
+
+Would we rather want to make it more formal like how Linux folks do
+the Reviewed-by: thing?
+
+
