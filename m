@@ -2,61 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 868E520281
-	for <e@80x24.org>; Fri, 29 Sep 2017 20:12:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1276420281
+	for <e@80x24.org>; Fri, 29 Sep 2017 20:12:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752632AbdI2UMf (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Sep 2017 16:12:35 -0400
-Received: from mail-pg0-f54.google.com ([74.125.83.54]:50256 "EHLO
-        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752628AbdI2UMb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Sep 2017 16:12:31 -0400
-Received: by mail-pg0-f54.google.com with SMTP id p5so349220pgn.7
-        for <git@vger.kernel.org>; Fri, 29 Sep 2017 13:12:31 -0700 (PDT)
+        id S1752613AbdI2UMY (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Sep 2017 16:12:24 -0400
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:53763 "EHLO
+        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752472AbdI2UMM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Sep 2017 16:12:12 -0400
+Received: by mail-pf0-f179.google.com with SMTP id x78so328563pff.10
+        for <git@vger.kernel.org>; Fri, 29 Sep 2017 13:12:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=onVjHtgiZBlZshqbwV7uTOmVYxH1XyqW+mb5Cfvn+Zk=;
-        b=YhqDCHgynrOk1niNk2nV33vSzGZkWY7dSdbgJOJFcTB0RDfo4aH2IuBxguEuHyBm+M
-         hXuO2x/bXogWSGlxnfoUazk+1PClLgTi0nqxFs++8ue8JUejCRy6VEBje4+9z2OxrfmQ
-         AXz0dQzodZEMOdJSFAF0v5PpktSkXhMp8pKX7kZvdk4GcqXtymZ0vGP8UzeeSBLpPM3W
-         fic9yyrsuu7jqREasrfA2oFY4LswjZdXKtTArC1W3eTU2LN1r5zlHh0UYQkGeFcfCE8u
-         0G+CpkCtEvNGml49GLmdB8oldy0mqRsJH+kNl49IpXRD4YUBa1+CyrcwQ7O1MOxDaLvE
-         1o0A==
+        bh=ioYDx7FKmC+8q21mXaVLoRtbYGWqP7GT+h8COqjasDA=;
+        b=BcMIVBlq5ZaRs+LC+/KKC6KRlySYX307iHYAe0+3Q5JsW2LWy0xjC/1aXXzA7oUPv+
+         BDGCuvjj1t7RVyDuCAVoMR6cgJM3wZctVErrxqk0jQBWTSca6AztwX5GKilWrszPMb0i
+         35OYtao2xJbbgnoMdpOK4Z0dst4yaxwha2hlgYrqzyYrdETvRq/J+2PH0WbGSj0ZzCEQ
+         4W58Ia5e4RhB+KhKcggm0+spE425fgmcn5L9uDpZu8ZoJaCaySXVrOu+QOqMObG5KIHQ
+         DduojcTvA7tpY+zILjGD1M3fBTd+raJNjTsWXEaohJjKA5kJyhQK9ITe3kJc8kaprKab
+         GkLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=onVjHtgiZBlZshqbwV7uTOmVYxH1XyqW+mb5Cfvn+Zk=;
-        b=PBtyJa0GNdykbbR3X8eyvydiGPPvLKd4675+NmOE94O8byvLJYk8HqlF2nXicd84hb
-         BOg74b8nk3vaZ5ZgmOreReGaicOsbNEOy7Oe/9MliTCRGTuSHwb/oVNC4Z9wCRoaesca
-         mJH21ZGRRdjr8oNHE9GL1PM+dFuSAP5Msb+3lRuS2V0vBDqXGd0NPKklH/ewYEw76Mds
-         AV8dmnHfgZs0rAmhxLUsZu9kaFD7AhsiEKkiSF854uAY4/bJTa4rgg9zxxKp9+T9RAZ+
-         i6tmL8TMYCzBMgpuml4TgQYGK6xxupx1nq3xt9VawVP4Uo+BLA/nrZ4WPx/6VH6JDkF7
-         c/Jw==
-X-Gm-Message-State: AHPjjUj03Edw7hz1tQ2gRCpttZLtA8w9VMSktna4VPO0+olM7laQzEdf
-        olR6/fbu1WItGZY+j4LNohNh5qgU2xw=
-X-Google-Smtp-Source: AOwi7QDYyHQQ0XQok6BxFyg/8xp3q4HtHYmb0z2SrlevSGYT5mJaG90POap1Jtf5vAfd6mEQttNMhw==
-X-Received: by 10.159.194.10 with SMTP id x10mr8350300pln.47.1506715950747;
-        Fri, 29 Sep 2017 13:12:30 -0700 (PDT)
+        bh=ioYDx7FKmC+8q21mXaVLoRtbYGWqP7GT+h8COqjasDA=;
+        b=SHCeZN2iX5CMiKPjWtuZKTrtA2+FbCHcodqszhbBLLJL5m58ehB5EkO7mgi2uv4eir
+         JZDE81RL380G7e09etdxO4MPzX9XI8J2iz1U//S9wPIP32QdcdQ7EMQHppp5sZitT7Tr
+         C1M5sxPZ+5aGBYiwJWuS9NPdv+bscNWdVtnUB23gC+4PeuQpmyhioLdSgdmVg1PhfDuR
+         AwcfmnZmVGJJ4Pl0ZeartnTwA99WQRje3AEWnNclNqzY3Q8n9j5SJTroLCbkCYh6WVr7
+         WOoTkUMWovbbuqTtskJsYh67Tl4+e7t418nyLywB2bhCNrGLCETwN520QUdVh51XoqLY
+         ZAiw==
+X-Gm-Message-State: AHPjjUiNcAoNsaAzY+ZwcntyT9sD3oB9mnVm0ZmeSJp5lVVZXABC9TkR
+        oxI9dDiW6Fu3HaeWzgD3R+4bAQ2gkMg=
+X-Google-Smtp-Source: AOwi7QC47yvEMlNuyZ5g2uiq1L39MFDveFPesV30x6euRtRYsGjY+HpIMvjjhUqfiBtKNyaUdbVyKw==
+X-Received: by 10.98.68.82 with SMTP id r79mr8924359pfa.184.1506715931816;
+        Fri, 29 Sep 2017 13:12:11 -0700 (PDT)
 Received: from twelve3.mtv.corp.google.com ([100.96.218.44])
-        by smtp.gmail.com with ESMTPSA id g5sm9280561pgo.66.2017.09.29.13.12.29
+        by smtp.gmail.com with ESMTPSA id g5sm9280561pgo.66.2017.09.29.13.12.10
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 29 Sep 2017 13:12:30 -0700 (PDT)
+        Fri, 29 Sep 2017 13:12:10 -0700 (PDT)
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com,
         git@jeffhostetler.com, peartben@gmail.com,
         christian.couder@gmail.com
-Subject: [PATCH 18/18] fetch-pack: restore save_commit_buffer after use
-Date:   Fri, 29 Sep 2017 13:11:54 -0700
-Message-Id: <b88725476d9f13ba4381d85e5fe049f6ef93f621.1506714999.git.jonathantanmy@google.com>
+Subject: [PATCH 03/18] fsck: support referenced promisor objects
+Date:   Fri, 29 Sep 2017 13:11:39 -0700
+Message-Id: <5e5806e020a639560bca397d77045cc5286c1655.1506714999.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.14.1.748.g20475d2c7
 In-Reply-To: <cover.1506714999.git.jonathantanmy@google.com>
 References: <cover.1506714999.git.jonathantanmy@google.com>
@@ -67,57 +66,76 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In fetch-pack, the global variable save_commit_buffer is set to 0, but
-not restored to its original value after use.
-
-In particular, if show_log() (in log-tree.c) is invoked after
-fetch_pack() in the same process, show_log() will return before printing
-out the commit message (because the invocation to
-get_cached_commit_buffer() returns NULL, because the commit buffer was
-not saved). I discovered this when attempting to run "git log -S" in a
-partial clone, triggering the case where revision walking lazily loads
-missing objects.
-
-Therefore, restore save_commit_buffer to its original value after use.
-
-An alternative to solve the problem I had is to replace
-get_cached_commit_buffer() with get_commit_buffer(). That invocation was
-introduced in commit a97934d ("use get_cached_commit_buffer where
-appropriate", 2014-06-13) to replace "commit->buffer" introduced in
-commit 3131b71 ("Add "--show-all" revision walker flag for debugging",
-2008-02-13). In the latter commit, the commit author seems to be
-deciding between not showing an unparsed commit at all and showing an
-unparsed commit without the message (which is what the commit does), and
-did not mention parsing the unparsed commit, so I prefer to preserve the
-existing behavior.
+Teach fsck to not treat missing promisor objects indirectly pointed to
+by refs as an error when extensions.partialclone is set.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- fetch-pack.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ builtin/fsck.c           | 11 +++++++++++
+ t/t0410-partial-clone.sh | 23 +++++++++++++++++++++++
+ 2 files changed, 34 insertions(+)
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 19b8e9322..8e6f54547 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -719,6 +719,7 @@ static int everything_local(struct fetch_pack_args *args,
- {
- 	struct ref *ref;
- 	int retval;
-+	int old_save_commit_buffer = save_commit_buffer;
- 	timestamp_t cutoff = 0;
- 
- 	save_commit_buffer = 0;
-@@ -786,6 +787,9 @@ static int everything_local(struct fetch_pack_args *args,
- 		print_verbose(args, _("already have %s (%s)"), oid_to_hex(remote),
- 			      ref->name);
- 	}
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index f1529527b..4492a4fab 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -149,6 +149,15 @@ static int mark_object(struct object *obj, int type, void *data, struct fsck_opt
+ 	if (obj->flags & REACHABLE)
+ 		return 0;
+ 	obj->flags |= REACHABLE;
 +
-+	save_commit_buffer = old_save_commit_buffer;
++	if (is_promisor_object(&obj->oid))
++		/*
++		 * Further recursion does not need to be performed on this
++		 * object since it is a promisor object (so it does not need to
++		 * be added to "pending").
++		 */
++		return 0;
 +
- 	return retval;
- }
+ 	if (!(obj->flags & HAS_OBJ)) {
+ 		if (parent && !has_object_file(&obj->oid)) {
+ 			printf("broken link from %7s %s\n",
+@@ -213,6 +222,8 @@ static void check_reachable_object(struct object *obj)
+ 	 * do a full fsck
+ 	 */
+ 	if (!(obj->flags & HAS_OBJ)) {
++		if (is_promisor_object(&obj->oid))
++			return;
+ 		if (has_sha1_pack(obj->oid.hash))
+ 			return; /* it is in pack - forget about it */
+ 		printf("missing %s %s\n", printable_type(obj),
+diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
+index bf75162c1..4f9931f9b 100755
+--- a/t/t0410-partial-clone.sh
++++ b/t/t0410-partial-clone.sh
+@@ -102,4 +102,27 @@ test_expect_success 'missing ref object, but promised, passes fsck' '
+ 	git -C repo fsck
+ '
  
++test_expect_success 'missing object, but promised, passes fsck' '
++	rm -rf repo &&
++	test_create_repo repo &&
++	test_commit -C repo 1 &&
++	test_commit -C repo 2 &&
++	test_commit -C repo 3 &&
++	git -C repo tag -a annotated_tag -m "annotated tag" &&
++
++	C=$(git -C repo rev-parse 1) &&
++	T=$(git -C repo rev-parse 2^{tree}) &&
++	B=$(git hash-object repo/3.t) &&
++	AT=$(git -C repo rev-parse annotated_tag) &&
++
++	promise_and_delete "$C" &&
++	promise_and_delete "$T" &&
++	promise_and_delete "$B" &&
++	promise_and_delete "$AT" &&
++
++	git -C repo config core.repositoryformatversion 1 &&
++	git -C repo config extensions.partialclone "arbitrary string" &&
++	git -C repo fsck
++'
++
+ test_done
 -- 
 2.14.2.822.g60be5d43e6-goog
 
