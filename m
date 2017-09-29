@@ -2,100 +2,266 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3DDF420281
-	for <e@80x24.org>; Fri, 29 Sep 2017 19:50:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C33120281
+	for <e@80x24.org>; Fri, 29 Sep 2017 20:12:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752464AbdI2TuE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Sep 2017 15:50:04 -0400
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:49734 "EHLO
-        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752280AbdI2TuE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Sep 2017 15:50:04 -0400
-Received: by mail-pf0-f171.google.com with SMTP id l188so311081pfc.6
-        for <git@vger.kernel.org>; Fri, 29 Sep 2017 12:50:04 -0700 (PDT)
+        id S1752334AbdI2UMJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Sep 2017 16:12:09 -0400
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:46458 "EHLO
+        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752208AbdI2UMI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Sep 2017 16:12:08 -0400
+Received: by mail-pf0-f176.google.com with SMTP id r68so340198pfj.3
+        for <git@vger.kernel.org>; Fri, 29 Sep 2017 13:12:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=VKnmfUMqw30zpOnxts+X/yh7qp0cpugZKEW9iLrnbKk=;
-        b=wEI88cdZvczvgY4ZwxnS2sJimBTr5A6Y5zisz0Jgo9ZfWSwKywU6hlZHHIbSUndrxM
-         nwBi4k6v5MbENupl3VNGQ5HMYPhfPRp0Ra4AwCoSFjYt4GqwbdeNLMTf2XLSQUIa0285
-         UrzfUsgaMoKgC0uilmwbpOuEqv1o0N7YKzf4VICEjDM99kfSgd7ywWMhD72lFWl+K8QW
-         x+VZ55s3zHKmV3p40i5De6RYudUwJxBaa+m+Nla0ad1nYQmooikljiY4QvXrbwi63mSn
-         Sh3o625t8biPYjjxx1gVAVFxmMEEuM8WmDIWiT89FsmsyiBsB0fHilOxP7OV2kaQu2XB
-         hyHA==
+        h=from:to:cc:subject:date:message-id;
+        bh=rTfpMNZsfd2hENwNLcxjRRdeA+PAhcFwwwabaw0GAwA=;
+        b=tIU3Hb4m+m0K2jBpyAd3EJo8MwiKRqkCUw+ZhWDVFTWzHmvB/Z/sYs92dYA8tQmpyz
+         amyIsAWkWG89PxLOIiq4KlExfbjF9w4RcNMUVyi1OkwBLUCTfZEva3U7vVxUObpBoAMZ
+         kHzquPTnBsyrXSAZ1xy8Y1QpbcqQpwnWR6WWz2RxtIW7bXKgGfCoro9gJU9N5OnflSXm
+         dhl1QbpTsl/SgXs+azzw/26zXse6nOzhtbCgMGhHjX1lhnTk47NRi28Sq87O0NXwNE0K
+         p8Nw8uY0wMEyAC1ht2tpoN2DbkT0e0Ip4AE8xoru1qUbDC8nfL6LK0FUYnnbsUDlKFXg
+         XLGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=VKnmfUMqw30zpOnxts+X/yh7qp0cpugZKEW9iLrnbKk=;
-        b=U/j/dQsA2YuvVxYbx2xMCl5fDIPYNUQ6ooPwOew4xd1Gf+Epp+8avMDuQgxoDhV/U0
-         L4++NsXMPNVO/jRD26Ni8VVxoXI2zojPdk/P8fBydSaEeTUYMD+bpAbU1P2qTqUR33HU
-         kN7V/rRY+9VtN2UnSUF0HXxao9PPwQHzAT4KCFyV4ITFvcP9ZwW5Q0oEJgN+jQddgFvi
-         IiGpEGzbfJC/pyzyECSk2m01HS/QQVj7w9RGg1LW+F7DS4i4WXM0baLS6NE88VSIQlc/
-         Xb/0+VBM2PAH9fS0iS4cSEMQJWUCDLddG3SRC7aQwo5UyloZ6xwrvgqLfPkxB+TrGyRD
-         k/6g==
-X-Gm-Message-State: AMCzsaVKDUfJmq4mc6zkgn6JpbogCmajBeFgKJrhNJS424c6K04EGN/7
-        T2lcJ5Om6jcm9xWncgOlfTZ61w==
-X-Google-Smtp-Source: AOwi7QBZicHoha/fgoJJUvV3eOYwRITxVoxlfD1OusJubCiva27iGl51dfSovD2zFoyCJumcMhBvIQ==
-X-Received: by 10.159.245.141 with SMTP id a13mr3352673pls.441.1506714603237;
-        Fri, 29 Sep 2017 12:50:03 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:c55b:7140:f55d:7eed])
-        by smtp.gmail.com with ESMTPSA id r12sm7847615pfd.187.2017.09.29.12.50.01
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 29 Sep 2017 12:50:02 -0700 (PDT)
-Date:   Fri, 29 Sep 2017 12:50:00 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] clang-format: adjust line break penalties
-Message-ID: <20170929195000.GE177031@google.com>
-References: <073f00fa11930a3607e34828e7563e1b2dc27d2a.1506709551.git.johannes.schindelin@gmx.de>
- <20170929184032.GK19555@aiede.mtv.corp.google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170929184032.GK19555@aiede.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=rTfpMNZsfd2hENwNLcxjRRdeA+PAhcFwwwabaw0GAwA=;
+        b=AlGwws+ZiwKk83Lxy/qwfwL7ipVUbKf6vLyvCQJTKxds/olmBSn7lLdvS9OQnaOm60
+         /BBVEA+341vhx/KRThTiZm8fTlP4M1j7bLCxDP8vESLrMjqN+RHlWnVV8o8Jgf/BVPnE
+         TtGv6+tuN+/cllA7j+csjv30Wfywy/kxYkDB3zyyKP5Dz3Q9c2kzwWCg4bzJEi+KLt1t
+         A9GX6cSogSOUx4ax1BQ2bbx34cCiU2B9MV9ZYqUtW64cwfK7BvCEaFeLlQd93Sot+lbA
+         58TE5DszO+N6JnJXSjCQjDxhocGMfof37RSfnzRrYTFUDbA2SYENUWDsrwZpKldbCTx9
+         2UGg==
+X-Gm-Message-State: AHPjjUiTiJipY+GKGlHWz/48ILwDuMlkZV6rKUzKmdj5s8pQ+okhvY/G
+        wLktyj80qllBPYIbDcZjduEIoNc8+y8=
+X-Google-Smtp-Source: AOwi7QD/MLv9+p6UCSChjAtYjoZg+XTJkRZuluQyp0jOxOst6tJm2E9hTBRRS+RuDlkjtFzLqxhcjg==
+X-Received: by 10.98.163.156 with SMTP id q28mr8917053pfl.185.1506715927579;
+        Fri, 29 Sep 2017 13:12:07 -0700 (PDT)
+Received: from twelve3.mtv.corp.google.com ([100.96.218.44])
+        by smtp.gmail.com with ESMTPSA id g5sm9280561pgo.66.2017.09.29.13.12.06
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 29 Sep 2017 13:12:06 -0700 (PDT)
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com,
+        git@jeffhostetler.com, peartben@gmail.com,
+        christian.couder@gmail.com
+Subject: [PATCH 00/18] Partial clone (from clone to lazy fetch in 18 patches)
+Date:   Fri, 29 Sep 2017 13:11:36 -0700
+Message-Id: <cover.1506714999.git.jonathantanmy@google.com>
+X-Mailer: git-send-email 2.14.1.748.g20475d2c7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/29, Jonathan Nieder wrote:
-> Hi Dscho,
-> 
-> Johannes Schindelin wrote:
-> 
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  .clang-format | 12 ++++++------
-> >  1 file changed, 6 insertions(+), 6 deletions(-)
-> 
-> Well executed and well explained. Thank you.
-> 
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-> 
-> Going forward, is there an easy way to preview the effect of this kind
-> of change (e.g., to run "make style" on the entire codebase so as to be
-> able to compare the result with two different versions of
-> .clang-format)?
-> 
-> Thanks,
-> Jonathan
+These patches are also available online:
+https://github.com/jonathantanmy/git/commits/partialclone3
 
-I don't think there's an easy way to do this yet (I'm sure we can make
-one) though the biggest barrier to that is that most of the code base
-probably isn't consistent with the current .clang-format.
+(I've announced it in another e-mail, but am now sending the patches to the
+mailing list too.)
 
-I also took a look at the patch and agree with all your points.  I'm
-sure we'll still have to do some tweaking of these parameters but I'll
-start using this locally and see if I find any problems.
+Here's an update of my work so far. Notable features:
+ - These 18 patches allow a user to clone with --blob-max-bytes=<bytes>,
+   creating a partial clone that is automatically configured to lazily
+   fetch missing objects from the origin. The local repo also has fsck
+   working offline, and GC working (albeit only on locally created
+   objects).
+ - Cloning and fetching is currently only able to exclude blobs by a
+   size threshold, but the local repository is already capable of
+   fetching missing objects of any type. For example, if a repository
+   with missing trees or commits is generated by any tool (for example,
+   a future version of Git), current Git with my patches will still be
+   able to operate on them, automatically fetching those missing trees
+   and commits when needed.
+ - Missing blobs are fetched all at once during checkout.
+
+Jeff Hostetler has sent out some object-filtering patches [1] that is a
+superset of the object-filtering functionality that I have (in the
+pack-objects patches). I have gone for the minimal approach here, but if
+his patches are merged, I'll update my patch set to use those.
+
+[1] https://public-inbox.org/git/20170922203017.53986-6-git@jeffhostetler.com/
+
+Demo
+====
+
+Obtain a repository.
+
+    $ make prefix=$HOME/local install
+    $ cd $HOME/tmp
+    $ git clone https://github.com/git/git
+
+Make it advertise the new feature and allow requests for arbitrary blobs.
+
+    $ git -C git config uploadpack.advertiseblobmaxbytes 1
+    $ git -C git config uploadpack.allowanysha1inwant 1
+
+Perform the partial clone and check that it is indeed smaller. Specify
+"file://" in order to test the partial clone mechanism. (If not, Git will
+perform a local clone, which unselectively copies every object.)
+
+    $ git clone --blob-max-bytes=0 "file://$(pwd)/git" git2
+    $ git clone "file://$(pwd)/git" git3
+    $ du -sh git2 git3
+    85M	git2
+    130M	git3
+
+Observe that the new repo is automatically configured to fetch missing objects
+from the original repo. Subsequent fetches will also be partial.
+
+    $ cat git2/.git/config
+    [core]
+    	repositoryformatversion = 1
+    	filemode = true
+    	bare = false
+    	logallrefupdates = true
+    [remote "origin"]
+    	url = [snip]
+    	fetch = +refs/heads/*:refs/remotes/origin/*
+    	blobmaxbytes = 0
+    [extensions]
+    	partialclone = origin
+    [branch "master"]
+    	remote = origin
+    	merge = refs/heads/master
+
+Design
+======
+
+Local repository layout
+-----------------------
+
+A repository declares its dependence on a *promisor remote* (a remote that
+declares that it can serve certain objects when requested) by a repository
+extension "partialclone". `extensions.partialclone` must be set to the name of
+the remote ("origin" in the demo above).
+
+A packfile can be annotated as originating from the promisor remote by the
+existence of a "(packfile name).promisor" file with arbitrary contents (similar
+to the ".keep" file). Whenever a promisor remote sends an object, it declares
+that it can serve every object directly or indirectly referenced by the sent
+object.
+
+A promisor packfile is a packfile annotated with the ".promisor" file. A
+promisor object is an object that the promisor remote is known to be able to
+serve, because it is an object in a promisor packfile or directly referred to by
+one.
+
+(In the future, we might need to add ".promisor" support to loose objects.)
+
+Connectivity check and gc
+-------------------------
+
+The object walk done by the connectivity check (as used by fsck and fetch) stops
+at all promisor objects.
+
+The object walk done by gc also stops at all promisor objects. Only non-promisor
+packfiles are deleted (if pack deletion is requested); promisor packfiles are
+left alone. This maintains the distinction between promisor packfiles and
+non-promisor packfiles. (In the future, we might need to do something more
+sophisticated with promisor packfiles.)
+
+Fetching of missing objects
+---------------------------
+
+When `sha1_object_info_extended()` (or similar) is invoked, it will
+automatically attempt to fetch a missing object from the promisor remote if that
+object is not in the local repository. For efficiency, no check is made as to
+whether that object is known to be a promisor object or not.
+
+This automatic fetching can be toggled on and off by the `fetch_if_missing`
+global variable, and it is on by default.
+
+The actual fetch is done through the fetch-pack/upload-pack protocol. Right now,
+this uses the fact that upload-pack allows blob and tree "want"s, and this
+incurs the overhead of the unnecessary ref advertisement. I hope that protocol
+v2 will allow us to declare that blob and tree "want"s are allowed, and allow
+the client to declare that it does not want the ref advertisement. All packfiles
+downloaded in this way are annotated with ".promisor".
+
+Fetching with `git fetch`
+-------------------------
+
+The fetch-pack/upload-pack protocol has also been extended to support omission
+of blobs above a certain size. The client only allows this when fetching from
+the promisor remote, and will annotate any packs received from the promisor
+remote with ".promisor".
+
+Jonathan Tan (18):
+  fsck: introduce partialclone extension
+  fsck: support refs pointing to promisor objects
+  fsck: support referenced promisor objects
+  fsck: support promisor objects as CLI argument
+  index-pack: refactor writing of .keep files
+  introduce fetch-object: fetch one promisor object
+  sha1_file: support lazily fetching missing objects
+  rev-list: support termination at promisor objects
+  gc: do not repack promisor packfiles
+  pack-objects: rename want_.* to ignore_.*
+  pack-objects: support --blob-max-bytes
+  fetch-pack: support excluding large blobs
+  fetch: refactor calculation of remote list
+  fetch: support excluding large blobs
+  clone: support excluding large blobs
+  clone: configure blobmaxbytes in created repos
+  unpack-trees: batch fetching of missing blobs
+  fetch-pack: restore save_commit_buffer after use
+
+ Documentation/git-pack-objects.txt                |  12 +-
+ Documentation/technical/pack-protocol.txt         |   9 +
+ Documentation/technical/protocol-capabilities.txt |   7 +
+ Documentation/technical/repository-version.txt    |  12 +
+ Makefile                                          |   1 +
+ builtin/cat-file.c                                |   2 +
+ builtin/clone.c                                   |  24 +-
+ builtin/fetch-pack.c                              |  21 ++
+ builtin/fetch.c                                   |  36 ++-
+ builtin/fsck.c                                    |  26 +-
+ builtin/gc.c                                      |   3 +
+ builtin/index-pack.c                              | 113 ++++---
+ builtin/pack-objects.c                            |  97 ++++--
+ builtin/prune.c                                   |   7 +
+ builtin/repack.c                                  |   7 +-
+ builtin/rev-list.c                                |  13 +
+ cache.h                                           |  13 +-
+ connected.c                                       |   1 +
+ environment.c                                     |   1 +
+ fetch-object.c                                    |  45 +++
+ fetch-object.h                                    |  11 +
+ fetch-pack.c                                      |  23 +-
+ fetch-pack.h                                      |   3 +
+ list-objects.c                                    |  16 +-
+ object.c                                          |   2 +-
+ packfile.c                                        |  77 ++++-
+ packfile.h                                        |  13 +
+ remote-curl.c                                     |  21 +-
+ remote.c                                          |   2 +
+ remote.h                                          |   2 +
+ revision.c                                        |  33 ++-
+ revision.h                                        |   5 +-
+ setup.c                                           |   7 +-
+ sha1_file.c                                       |  38 ++-
+ t/t0410-partial-clone.sh                          | 343 ++++++++++++++++++++++
+ t/t5300-pack-object.sh                            |  45 +++
+ t/t5500-fetch-pack.sh                             | 115 ++++++++
+ t/t5601-clone.sh                                  | 101 +++++++
+ t/test-lib-functions.sh                           |  12 +
+ transport-helper.c                                |   4 +
+ transport.c                                       |  18 ++
+ transport.h                                       |  12 +
+ unpack-trees.c                                    |  22 ++
+ upload-pack.c                                     |  16 +-
+ 44 files changed, 1278 insertions(+), 113 deletions(-)
+ create mode 100644 fetch-object.c
+ create mode 100644 fetch-object.h
+ create mode 100755 t/t0410-partial-clone.sh
 
 -- 
-Brandon Williams
+2.14.2.822.g60be5d43e6-goog
+
