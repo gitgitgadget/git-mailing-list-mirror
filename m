@@ -6,56 +6,56 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 40C4220281
-	for <e@80x24.org>; Fri, 29 Sep 2017 20:12:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 89C4720281
+	for <e@80x24.org>; Fri, 29 Sep 2017 20:12:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752615AbdI2UM0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Sep 2017 16:12:26 -0400
-Received: from mail-pf0-f178.google.com ([209.85.192.178]:44597 "EHLO
-        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752392AbdI2UML (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Sep 2017 16:12:11 -0400
-Received: by mail-pf0-f178.google.com with SMTP id e1so342547pfk.1
-        for <git@vger.kernel.org>; Fri, 29 Sep 2017 13:12:11 -0700 (PDT)
+        id S1752630AbdI2UMb (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Sep 2017 16:12:31 -0400
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:51723 "EHLO
+        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752472AbdI2UMZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Sep 2017 16:12:25 -0400
+Received: by mail-pf0-f179.google.com with SMTP id b70so331599pfl.8
+        for <git@vger.kernel.org>; Fri, 29 Sep 2017 13:12:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=aLDAGtZhGoBLHToj025VHudf4+KGNMs1+TwLR0Z2mnk=;
-        b=TkfNqhxl+YM0QG96inz9IMU0xlTAQcnRBP1ILWUd2s+EObypvn/E4lvSrEnqqbVezm
-         fsi1wV/xBP3lQb8zLMzpOpOae+UbOATI5/GHfa/Rws66o6Yu0A6NqGC0P74V/epKBKKZ
-         6yL6VEWY2f3MLaYH3GH+VVuS0sC8OUFHW8+mc/dGOgSTw7bWm0znbyOHX/WxDcaoyLcF
-         38D+xVeeP/HkytG7KmXTTPD6LGILQzB2CJTX/M2VXdN6UuB1vNxryO0yCom4O8F8vMM2
-         5+3LL3VvvWmFs+KXSztSyR3ctjRLrLWYxPRvoH5kzAjeYiFDbvIXIhr686atME0Czk5h
-         BGWw==
+        bh=PbfaTcCqJ6VCyH+atE6bF7GzIfEALT5mBUaV3hW27mY=;
+        b=quy0oMRvcGbeM7kSFPnZA5GguV6GF6493poqzr1meDS8DqqlSA+GS67ApBor7XetrK
+         fKLdKoe10yE0UUCd7PktvNy9zhcMSWDwVfSgXyjZbiHyOK1FQYgTBa3TB8adVfd3emVo
+         lV+Lc4CP/EvXs6JIuw2bKdaDLjEllZ2eskxIrraD5qjy7lfNG0DWZl4VAFYtDCDvhtYh
+         7oDi9nxkefzB0LJayIEWrQEcebooBpCb5pflweSTEunSmfc+jHWHFsCMQhOf6dOsivZ+
+         benpZsuxvsOxoQ1Pel0ds2JKbn5mR1/eezt8kYtgvkw9UZmT/uQ8w6Q6qIKEV9clyXKH
+         R+dQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=aLDAGtZhGoBLHToj025VHudf4+KGNMs1+TwLR0Z2mnk=;
-        b=LzcioRZiam5ZeIKiQYuBVeTnf5kTcvpob5YdWDnbqf4rqpETbXm0nNvgiswU2EMi83
-         6bd35H4Vi6AEgK01R0jHPVFYOLC4o/JEkD/K9vL4gvj7vQj693jpSugrtIMG2X1TXpfP
-         oh4edO9Baf9r8/iJrg6frb34xP7i7xlla3IYFrWnd9As4agFThc3uXmkzJo/fHFkoY/f
-         M30ztIZ0nZG2f9WtLnXQkfsm8+zC79LNu/MVCuBwVyqAEdu8oAcsEmBKUSaa5gkvBlIm
-         gnecw+kocgw4+Riby+tJx5CFAxhJn4vva7hSBynT+kILtWOQFgswJytiBL5mDoeVqNYf
-         vvYg==
-X-Gm-Message-State: AHPjjUhjSQ4RTTqEbFcvLHWYjXZabkafGPddpDwfdPCEsJz0CfIwIhrV
-        tEoXJ4hnrGQ8hAfbaV6RwbbZozQ8eMY=
-X-Google-Smtp-Source: AOwi7QDDLieNH33hONYPmV8u2l3wik88NfMMJFi6aFEB0DXvCmpHUUN+W8O+KWheunCyuVvqwH5Jkw==
-X-Received: by 10.98.63.140 with SMTP id z12mr8874162pfj.218.1506715930600;
-        Fri, 29 Sep 2017 13:12:10 -0700 (PDT)
+        bh=PbfaTcCqJ6VCyH+atE6bF7GzIfEALT5mBUaV3hW27mY=;
+        b=m0q5D5xw1iym22wcrmtLkkVPuYZ3hhlIruDNCEf2u+KmbVSiyrEBhTsC1gor8PaHFp
+         u0QQC2M2GlEyCz1r0ec9XUpte12jLOFlYSbk4tF0mhA4zpE29S5fr1k+XoTv6EkvZLGX
+         4yraogDRTjtMnM1kj1b3hHTovh0xGVRDbU+y0MNoCEFZTca2UyaewcILeutEr+GRGlWa
+         4WE7mgwNuPiqAbJ5s6tlXuptGBhkep+1X475ybVK10O1beVA8tuz15ZdcDIWset6DU9N
+         EFg5fU5gZymkOkI8LM7r8btx073G2q+pbwSnrOynqeOzZHKRMZbhzEp5Gy2tL0Ej/Glu
+         /Kxg==
+X-Gm-Message-State: AHPjjUhYQVQjg32bsR452GCT0xR3nzuMIunO1ck+a2s4nWwVe1z2hBJs
+        wSgDeM0u9ywD6mgBU/x7+DuF1izsUH0=
+X-Google-Smtp-Source: AOwi7QCGXkzhUcB22zcfB96nPsOvm5V2yXKC/CeGxqDhtayyYcwsopL9FgnOH3hMIL14UoTwDU8z8g==
+X-Received: by 10.98.95.1 with SMTP id t1mr8720152pfb.217.1506715944861;
+        Fri, 29 Sep 2017 13:12:24 -0700 (PDT)
 Received: from twelve3.mtv.corp.google.com ([100.96.218.44])
-        by smtp.gmail.com with ESMTPSA id g5sm9280561pgo.66.2017.09.29.13.12.09
+        by smtp.gmail.com with ESMTPSA id g5sm9280561pgo.66.2017.09.29.13.12.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 29 Sep 2017 13:12:10 -0700 (PDT)
+        Fri, 29 Sep 2017 13:12:23 -0700 (PDT)
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com,
         git@jeffhostetler.com, peartben@gmail.com,
         christian.couder@gmail.com
-Subject: [PATCH 02/18] fsck: support refs pointing to promisor objects
-Date:   Fri, 29 Sep 2017 13:11:38 -0700
-Message-Id: <9cb7d457b8c06905d1fdab25576d8e7e899c0cd4.1506714999.git.jonathantanmy@google.com>
+Subject: [PATCH 13/18] fetch: refactor calculation of remote list
+Date:   Fri, 29 Sep 2017 13:11:49 -0700
+Message-Id: <2234882d889d72f7f8ed86850d9aed3c471cd5b8.1506714999.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.14.1.748.g20475d2c7
 In-Reply-To: <cover.1506714999.git.jonathantanmy@google.com>
 References: <cover.1506714999.git.jonathantanmy@google.com>
@@ -66,77 +66,68 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach fsck to not treat refs referring to missing promisor objects as an
-error when extensions.partialclone is set.
-
-For the purposes of warning about no default refs, such refs are still
-treated as legitimate refs.
+Separate out the calculation of remotes to be fetched from and the
+actual fetching. This will allow us to include an additional step before
+the actual fetching in a subsequent commit.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- builtin/fsck.c           |  8 ++++++++
- t/t0410-partial-clone.sh | 24 ++++++++++++++++++++++++
- 2 files changed, 32 insertions(+)
+ builtin/fetch.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 97d1e621e..f1529527b 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -439,6 +439,14 @@ static int fsck_handle_ref(const char *refname, const struct object_id *oid,
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 225c73492..1b1f03923 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1322,7 +1322,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ {
+ 	int i;
+ 	struct string_list list = STRING_LIST_INIT_DUP;
+-	struct remote *remote;
++	struct remote *remote = NULL;
+ 	int result = 0;
+ 	struct argv_array argv_gc_auto = ARGV_ARRAY_INIT;
  
- 	obj = parse_object(oid);
- 	if (!obj) {
-+		if (is_promisor_object(oid)) {
-+			/*
-+			 * Increment default_refs anyway, because this is a
-+			 * valid ref.
-+			 */
-+			 default_refs++;
-+			 return 0;
-+		}
- 		error("%s: invalid sha1 pointer %s", refname, oid_to_hex(oid));
- 		errors_found |= ERROR_REACHABLE;
- 		/* We'll continue with the rest despite the error.. */
-diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
-index 3ddb3b98f..bf75162c1 100755
---- a/t/t0410-partial-clone.sh
-+++ b/t/t0410-partial-clone.sh
-@@ -13,6 +13,14 @@ pack_as_from_promisor () {
- 	>repo/.git/objects/pack/pack-$HASH.promisor
- }
+@@ -1367,17 +1367,14 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 		else if (argc > 1)
+ 			die(_("fetch --all does not make sense with refspecs"));
+ 		(void) for_each_remote(get_one_remote_for_fetch, &list);
+-		result = fetch_multiple(&list);
+ 	} else if (argc == 0) {
+ 		/* No arguments -- use default remote */
+ 		remote = remote_get(NULL);
+-		result = fetch_one(remote, argc, argv);
+ 	} else if (multiple) {
+ 		/* All arguments are assumed to be remotes or groups */
+ 		for (i = 0; i < argc; i++)
+ 			if (!add_remote_or_group(argv[i], &list))
+ 				die(_("No such remote or remote group: %s"), argv[i]);
+-		result = fetch_multiple(&list);
+ 	} else {
+ 		/* Single remote or group */
+ 		(void) add_remote_or_group(argv[0], &list);
+@@ -1385,14 +1382,19 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 			/* More than one remote */
+ 			if (argc > 1)
+ 				die(_("Fetching a group and specifying refspecs does not make sense"));
+-			result = fetch_multiple(&list);
+ 		} else {
+ 			/* Zero or one remotes */
+ 			remote = remote_get(argv[0]);
+-			result = fetch_one(remote, argc-1, argv+1);
++			argc--;
++			argv++;
+ 		}
+ 	}
  
-+promise_and_delete () {
-+	HASH=$(git -C repo rev-parse "$1") &&
-+	git -C repo tag -a -m message my_annotated_tag "$HASH" &&
-+	git -C repo rev-parse my_annotated_tag | pack_as_from_promisor &&
-+	git -C repo tag -d my_annotated_tag &&
-+	delete_object repo "$HASH"
-+}
++	if (remote)
++		result = fetch_one(remote, argc, argv);
++	else
++		result = fetch_multiple(&list);
 +
- test_expect_success 'missing reflog object, but promised by a commit, passes fsck' '
- 	test_create_repo repo &&
- 	test_commit -C repo my_commit &&
-@@ -78,4 +86,20 @@ test_expect_success 'missing reflog object alone fails fsck, even with extension
- 	test_must_fail git -C repo fsck
- '
+ 	if (!result && (recurse_submodules != RECURSE_SUBMODULES_OFF)) {
+ 		struct argv_array options = ARGV_ARRAY_INIT;
  
-+test_expect_success 'missing ref object, but promised, passes fsck' '
-+	rm -rf repo &&
-+	test_create_repo repo &&
-+	test_commit -C repo my_commit &&
-+
-+	A=$(git -C repo commit-tree -m a HEAD^{tree}) &&
-+
-+	# Reference $A only from ref
-+	git -C repo branch my_branch "$A" &&
-+	promise_and_delete "$A" &&
-+
-+	git -C repo config core.repositoryformatversion 1 &&
-+	git -C repo config extensions.partialclone "arbitrary string" &&
-+	git -C repo fsck
-+'
-+
- test_done
 -- 
 2.14.2.822.g60be5d43e6-goog
 
