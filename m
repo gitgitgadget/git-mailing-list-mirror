@@ -6,91 +6,112 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 090F020A10
-	for <e@80x24.org>; Fri, 29 Sep 2017 02:13:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E4A0320A10
+	for <e@80x24.org>; Fri, 29 Sep 2017 02:20:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750857AbdI2CNw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Sep 2017 22:13:52 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62222 "EHLO
+        id S1750951AbdI2CUj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Sep 2017 22:20:39 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54292 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750826AbdI2CNw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Sep 2017 22:13:52 -0400
+        with ESMTP id S1750839AbdI2CUi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Sep 2017 22:20:38 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D2191997F1;
-        Thu, 28 Sep 2017 22:13:51 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0906DAE67D;
+        Thu, 28 Sep 2017 22:20:38 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=tL6P51gLOqNrGbj6Dn3awuXKJzo=; b=Pe5BDu
-        nqY9c6IiaAt9zTgMgSVzsvHdjP3rMCZ2lJBVs4yLT8XbLHkmCDNt+9sop7hZXybR
-        1Ks8f/3nZeALDQHbKRe9s6M87oEF33xaJWbjx6WuN3tEuE755sSsVLmAgSytwxWC
-        Lj5YEgPM7pI9kKngbnlFGaAEQfkslpe35nLPo=
+        :content-type; s=sasl; bh=YqqBZKh+Vl/tHLAOMlFXCZbw/eY=; b=oVfHSy
+        pTvLCSpjrPM5LGgj7FPldxA+JPuWBq40u1G9Pknxv3sOBuv1Lq+t4mgHPP+uTqRP
+        jWvfhYA9EmbhkP01pH43bH5LkAkiE0xIBGuHHMjHhMdl5mJV1bRxWlfDnrT2gy2e
+        oJS7xvfsFece/lvejtrsIPAlKNxhJyE5sC8H0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=LWffKQ/X29ITqxiMbwIKjxthv459njB1
-        tjlkVmDJPjmDXP4ugVGTPLvEoKp0deAL/u7R0Ehcjzi9HFx+guCo7nMzxEDFQj13
-        bsa6ShUe4wZf00UFydMzG3CwIQmtinXaBd3qS652AhXg7iAY/mMQhkXkvqFhGhwh
-        gqVBaOKbh4I=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C9103997F0;
-        Thu, 28 Sep 2017 22:13:51 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=Qofm4wiCf2Ctdw65d5sUM/N5dofFd8Hj
+        iuct/Q902WNNkYdyE9Wikgn/+SL7qJIZkxoVkd80VtGsdP2wqMNII8TLp6izDmhf
+        Vk85Dk8oGqwiBduvv6MyVVMrGp7ES25txb2yFS66a7AhmqOGslVphZ1M/vnwm94k
+        McQrwL3pkXw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id F3CDEAE67C;
+        Thu, 28 Sep 2017 22:20:37 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 357DB997EF;
-        Thu, 28 Sep 2017 22:13:51 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 63422AE67B;
+        Thu, 28 Sep 2017 22:20:37 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
-        Stefan Beller <sbeller@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Brandon Williams <bmwill@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH v3 00/21] Read `packed-refs` using mmap()
-References: <cover.1506325610.git.mhagger@alum.mit.edu>
-        <20170925122221.ntbhwvmyvgm4igxk@sigill.intra.peff.net>
-Date:   Fri, 29 Sep 2017 11:13:49 +0900
-In-Reply-To: <20170925122221.ntbhwvmyvgm4igxk@sigill.intra.peff.net> (Jeff
-        King's message of "Mon, 25 Sep 2017 08:22:21 -0400")
-Message-ID: <xmqqbmluz1ya.fsf@gitster.mtv.corp.google.com>
+To:     Ben Peart <benpeart@microsoft.com>
+Cc:     David.Turner@twosigma.com, avarab@gmail.com,
+        christian.couder@gmail.com, git@vger.kernel.org,
+        johannes.schindelin@gmx.de, pclouds@gmail.com, peff@peff.net
+Subject: Re: [PATCH v8 00/12] Fast git status via a file system watcher
+References: <20170919192744.19224-1-benpeart@microsoft.com>
+        <20170922163548.11288-1-benpeart@microsoft.com>
+Date:   Fri, 29 Sep 2017 11:20:36 +0900
+In-Reply-To: <20170922163548.11288-1-benpeart@microsoft.com> (Ben Peart's
+        message of "Fri, 22 Sep 2017 12:35:36 -0400")
+Message-ID: <xmqq7ewiz1mz.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: D5ED0F0C-A4BB-11E7-9E9E-575F0C78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: C808D672-A4BC-11E7-A263-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Ben Peart <benpeart@microsoft.com> writes:
 
-> On Mon, Sep 25, 2017 at 09:59:57AM +0200, Michael Haggerty wrote:
->
->> This is v3 of a patch series that changes the reading and caching of
->> the `packed-refs` file to use `mmap()`. Thanks to Stefan, Peff, Dscho,
->> and Junio for their comments about v2. I think I have addressed all of
->> the feedback from v1 [1] and v2 [2].
->> 
->> This version has only minor changes relative to v2:
->> 
->> * Fixed a trivial error in the commit message for patch 08.
->> 
->> * In patch 13:
->> 
->>   * In the commit message, explain the appearance of `MMAP_TEMPORARY`
->>     even though it is not yet treated differently than `MMAP_NONE`.
->> 
->>   * In `Makefile`, don't make `USE_WIN32_MMAP` imply
->>     `MMAP_PREVENTS_DELETE`.
->> 
->>   * Correct the type of a local variable from `size_t` to `ssize_t`.
->
-> Thanks, this version addresses all my nits.
+> The only behavioral change from V7 is the removal of unnecessary uses of
+> CE_MATCH_IGNORE_FSMONITOR.  With a better understanding of *why* the
+> CE_MATCH_IGNORE_* flags are used, it is now clear they are not required
+> in most cases where CE_MATCH_IGNORE_FSMONITOR was being passed out of an
+> abundance of caution.
 
-Dscho's <alpine.DEB.2.21.1.1709192047450.219280@virtualbox> "does
-not seem to break windows" was against the previous round, but it
-seems that https://travis-ci.org/git/git/jobs/280305212 passed the
-iteration of 'pu' at 044a672 which contained this version, so let's
-merge this down to 'next'.
+The reviews and updates after this round was posted were to
+
+ * 01/12 had an obvious pointer-vs-pointee thinko, which I think I
+   have locally fixed;
+
+ * 08/12 forgot to add a new test executable to .gitignore file,
+   which I think I have locally fixed, too.
+
+Any other review comments and suggestions for improvements?
+Otherwise I am tempted to declare victory and merge this to 'next'
+soonish.
+
+For reference, here is the interdiff between what was posted as v8
+and what I have on 'pu'.
 
 Thanks.
+
+ compat/bswap.h      | 4 ++--
+ t/helper/.gitignore | 1 +
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git b/compat/bswap.h a/compat/bswap.h
+index 6b22c46214..5078ce5ecc 100644
+--- b/compat/bswap.h
++++ a/compat/bswap.h
+@@ -183,8 +183,8 @@ static inline uint32_t get_be32(const void *ptr)
+ static inline uint64_t get_be64(const void *ptr)
+ {
+ 	const unsigned char *p = ptr;
+-	return	(uint64_t)get_be32(p[0]) << 32 |
+-		(uint64_t)get_be32(p[4]) <<  0;
++	return	(uint64_t)get_be32(&p[0]) << 32 |
++		(uint64_t)get_be32(&p[4]) <<  0;
+ }
+ 
+ static inline void put_be32(void *ptr, uint32_t value)
+diff --git b/t/helper/.gitignore a/t/helper/.gitignore
+index f9328eebdd..87a648a7cf 100644
+--- b/t/helper/.gitignore
++++ a/t/helper/.gitignore
+@@ -5,6 +5,7 @@
+ /test-delta
+ /test-drop-caches
+ /test-dump-cache-tree
++/test-dump-fsmonitor
+ /test-dump-split-index
+ /test-dump-untracked-cache
+ /test-fake-ssh
