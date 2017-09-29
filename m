@@ -2,145 +2,231 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3589020A2A
-	for <e@80x24.org>; Fri, 29 Sep 2017 11:55:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A8D42047F
+	for <e@80x24.org>; Fri, 29 Sep 2017 11:59:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752281AbdI2Lzw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Sep 2017 07:55:52 -0400
-Received: from mout.gmx.net ([212.227.17.22]:63372 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752092AbdI2Lzv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Sep 2017 07:55:51 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LiIgB-1dbiRE0lOd-00nT2W; Fri, 29
- Sep 2017 13:55:47 +0200
-Date:   Fri, 29 Sep 2017 13:55:45 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Jonathan Nieder <jrnieder@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Lars Schneiider <larsxschneider@gmail.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Aug 2017, #05; Tue, 22)
-In-Reply-To: <20170919160753.GA75068@aiede.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.21.1.1709291344220.40514@virtualbox>
-References: <xmqq4lsz2x6r.fsf@gitster.mtv.corp.google.com> <7D99B245-4D22-4C9C-9C43-C8B8656F8E6D@gmail.com> <xmqq1so0wyjd.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.21.1.1709151816390.219280@virtualbox> <xmqqo9qbx14b.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.21.1.1709152214100.219280@virtualbox> <xmqq377nwtbe.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.21.1.1709181637420.219280@virtualbox> <xmqqbmm7s9ja.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.21.1.1709191733450.219280@virtualbox>
- <20170919160753.GA75068@aiede.mtv.corp.google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1752162AbdI2L7K (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Sep 2017 07:59:10 -0400
+Received: from mail-it0-f49.google.com ([209.85.214.49]:53362 "EHLO
+        mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751920AbdI2L7J (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Sep 2017 07:59:09 -0400
+Received: by mail-it0-f49.google.com with SMTP id 85so1784079ith.2
+        for <git@vger.kernel.org>; Fri, 29 Sep 2017 04:59:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=eijFmUrw3Comxg0qhDfsKkX829zgQ2K2EVvoLlvroGY=;
+        b=U5/kOXfvkO5JvhkpT7MeJmUtAD4Mzj1fDCkxkgCI69QRmTe0FEKKAWpO/VjtAHuu9f
+         0Gj/WWYOOY6IS/jvBE/NOhUHRdQxnTxaHtR6z9QQ40g/P2cFOm/AhmFa4A9xKDFK5fWC
+         qxLoTYZHfVloQgJOIVV++H0JKKEcNojJHw5HZWMDJK5bnlDB98AcI9k4+PohcYhIlxDj
+         oHGuwfPHsaTMWMSCVpEpnkIZbJq1CA46FcKJbvO39TA7qczkqi0UybTfPOX8e6WkjVYS
+         91SuPgdeOBm0Imr8kFmJxyBDPzovBEiyBeLsiQKMOeENQXwHZxR14YF0A2TdzBmGXVlb
+         VFgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=eijFmUrw3Comxg0qhDfsKkX829zgQ2K2EVvoLlvroGY=;
+        b=FGS0OpHIs3Qx9nEUM1F3SXBkLmPqKOSv/LtrarH2CVY+GRcbO5B/UY8hEN1BlykJU7
+         ovPVoHp+JtC8gF5rTEuaXcGu/655pOZTu5g36ma3g5rL93J3bxr51wHp/cRbNOUL9x2i
+         jYPQvn4vup+JOVcYI1p/lg8RWDHflRraoGHFNGgGguEpLUP9qJQndum0Ow21MQwbw49Y
+         erI4g9q8U48oamWCAYCjUph/LyCgszeNFKnLeY/7lmGUm4W5YH2hd7dscGWPQZ0rUm2I
+         TfjQ/XiUaTjVtXA5lBgqzVga4fgC7r/47G74UA+YhPecaOw6F1/0PBWZPSrTiHCKfRB0
+         y+tg==
+X-Gm-Message-State: AMCzsaXh2GpIyoFildLUfdfypWwvVDeChNTX8d754TU+jrP7mzK+XBFR
+        XF5caNgZlatHQzK5R4jRl75Ijjux9ohSibjKpjTqGw==
+X-Google-Smtp-Source: AOwi7QB6EN0aaL9JNXh6oYETfIkW+5uWhD+rLAhNUqJdhNR2AGM/h9ski2SoOXY7nnOCdRj3a3XzsY/YJdAzFIDkGAQ=
+X-Received: by 10.36.17.200 with SMTP id 191mr6502980itf.37.1506686348554;
+ Fri, 29 Sep 2017 04:59:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:GLt4o23V7Gwu06c2e45sMAefo5boIGDTHY4YOVmnh1PdN7bPMNH
- xCC6nBYmITKGIMLnGD96vSAwyQ2QQ8/JF2ISI2kKIsItsVTRzWJAuYBuLFP9wKVESWB0A7K
- xGn84PBEHe0NQoKYbBZWvol+hvTmsBivXvcV1MpxKOB9PNJlZ07MLImb81M+MWiNhuSFnYW
- FoAAsqLaMoCgbA4tQsx4A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Jfgr4skuNbw=:JAKEbfHnz7WzriwbAcY1Wi
- QMoJp5yaFP9hUjSujlIVDh7ZOEV7LEUNMjvHqnzv0bARB8d5ANYI28CUWKOO33DhKZvdPLA9c
- ywoCqFqRfnO4HD6DUHUgzBQm5NSoH21JB5EuWTnEuCJkbc1vQu0DJdfvXdpgK881xXpMdU2Cq
- 8k8nMLnOh4/bl0lmWflnItUUYJELoatO/oKt4j+K0awUJ4mAn8az+R9sUwPcI3sx1JIMVpxnT
- z5N+59kaelzvCOFGyFLb3edE3GZ4YWIt/BFv3zCg8M5SKho9VJxI/cIygdLZNCK6EId/mNWO4
- JR4uPjgb/Xy2yea/ZCES7O27AceCyMUqrChrDwaK7Vk2ce156+aFIWFPXOtb2Q5jfKuKiw3is
- ARs9psy8jrNIGHncjN/RWUQXjJjbDJfwahM6loshMnFW45M49CelAF9vkXf4IM4C9QG2+Ds3y
- IHTIHaWosJ5yLu2wgydLrKeXy3NoQ1IPK306qpc+Yry3XlYre7zrOgUL4vkW6Gb+Uulv9cDuh
- RQwrEQNGx+63LPrQYTqzmEhBtQMTrnXVxC+JsiNh7CUV9CgHNqHu5xI+tYU1iIu5yIm4q/6pS
- PBn8/LczU1bkMnekbFYhfSqRDx1OIs9Sj0MvvRu5dyeo1tqBqrYO7MscMGZvw2ZAS0RM6BHDR
- Bx1OCf8p6ziXzi4KP31EFvJ9dIfw67fEN+f7UzWBHpeIwe6R8xYVyXRKfisFDrB1m+rcJqCFV
- wTZ3GROI+VyRMBJFSsrtuifij4vvNrMImSIYtaT7ri0e88J9lJY7gMPzXOvNpU7b/HLQpF3Dh
- vlLr1Q8eqWSdmTHwVKyyVAhyLtoCTGR2PQPVWnMUq4Px7oaZVI=
+Received: by 10.36.175.10 with HTTP; Fri, 29 Sep 2017 04:58:28 -0700 (PDT)
+In-Reply-To: <xmqqh8vmxfoq.fsf@gitster.mtv.corp.google.com>
+References: <20170928223134.GA30744@varnish> <xmqqh8vmxfoq.fsf@gitster.mtv.corp.google.com>
+From:   Dridi Boukelmoune <dridi.boukelmoune@gmail.com>
+Date:   Fri, 29 Sep 2017 13:58:28 +0200
+Message-ID: <CAJYncsiou3WjNhvn4YuzjuyqGknSgWmXewFhgD5M1j+Wsmmefw@mail.gmail.com>
+Subject: Re: [PATCH] git-sh: Avoid sourcing scripts with git --exec-path
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+Hi all,
 
-On Tue, 19 Sep 2017, Jonathan Nieder wrote:
+Thanks for the fast feedback, I'll answer everyone in a single email
+if you don't mind.
 
-> Johannes Schindelin wrote:
-> 
-> > To relate that, you are using a plain text format that is not well
-> > defined and not structured, and certainly not machine-readable, for
-> > information that is crucial for project management.
-> >
-> > What you need is a tool to aggregate this information, to help working
-> > with it, to manage the project, and to be updated automatically. And
-> > to publish this information continuously, without costing you extra
-> > effort.
-> >
-> > I understand that you started before GitHub existed, and before GitHub
-> > was an option, the script-generated What's cooking mail was the best
-> > you could do.
-> 
-> I think you are subtly (but not directly, for some reason?) advocating
-> moving project management for the Git project to GitHub Issues.
+On Fri, Sep 29, 2017 at 5:48 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+snip
+> I wonder if we can make this so intuitive that it doesn't need
+> mentioning in CodingGuidelines.  What if the test harness
+> t/test-lib.sh were to set a GIT_EXEC_PATH with multiple directories in
+> it?  That way, authors of new commands would not have to be careful to
+> look out for this issue proactively because the testsuite would catch
+> it.
 
-No, I don't. I know how cumbersome it would be to move tons of people over
-from one type of project management to another.
+Now that you pointed out that I missed the relevant documentations, I
+don't think this belongs in the guidelines at all.
 
-However, the current situation is not really tenable, is it? It is tedious
-for everybody involved. I know Junio defends the status quo, but I cannot
-imagine that he really likes it, as too much is too manual and
-labor-intensive.
+snip
+> Do git-mergetool--lib.txt, git-parse-remote.txt, git-sh-i18n.txt,
+> and git-sh-setup.txt in Documentation/ need the same treatment?
 
-As I mentioned at the GitMerge (which was a bit pointless, because Junio
-was not there, not even via Skype), I do not advocate one radical change,
-ever.
+That is embarrassing, I thought I had done my research properly...
 
-> For what it's worth:
-> 
->  1. I would be happy to see Git adopt a bug tracker.  As we've
->     discussed on the list before, I suspect the only way that this is
->     going to happen is if some contributors start using a bug tracker
->     and keep up with bugs there, without requiring everyone to use it.
->     That is how the Linux Kernel project started using
->     bugzilla.kernel.org, for example.
+> Summary: I like the goal of this patch but I am nervous about the
+> side-effect it introduces of PATH pollution.  Is there a way around
+> that?  If there isn't, then this needs a few tweaks and then it should
+> be ready to go.
 
-I agree that a bug tracker goes a long way. Personally, I feel Bugzilla is
-way too clunky to use, but I am pampered. However, I could imagine that
-allowing issues to be opened at https://github.com/git/git, and
-encouraging bug submissions there for people who really need to be able to
-find out very, very quickly what the current state of their bug report is,
-would go a long way.
+The PATH is already "polluted" when git-* commands are run via git,
+and in the context of a script using git-sh-setup I wouldn't consider
+that completely irrelevant.
 
-Of course, this would require a commitment by Junio and others to allow
-discussions to move to that bug tracker from the mailing list. Once that
-willingness is there, this should be a viable alternative to reporting
-bugs on the mailing list (and have those reports go unanswered because
-they fell off the radar...).
+On Fri, Sep 29, 2017 at 5:58 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+>
+>> This has been broken for a while, but better late than never to
+>> address it.
+>
+> I am not sure if this is broken in the first place.  We do want to
+> make sure that the scripted porcelains will source the shell helper
+> library from matching Git release.  The proposed patch goes directly
+> against that and I do not see how it could be an improvement.
 
->  2. GitHub Issues is one of my least favorite bug trackers, for what
->     it's worth.  If some sub-project of Git chooses to use it, then
->     that's great and I won't get in their way.  I'm just providing
->     this single data point that approximately any other tracker
->     (Bugzilla, JIRA, debbugs, patchwork) is something I'd be more
->     likely to use.
+But the problem is that just by having a GIT_EXEC_PATH you will source
+an incorrect file name. If there was something like --exec-dir that
+wouldn't take the PATH into account. Before I tried to contribute a
+fix, my local patching of git-sh-setup after git-core upgrades was
+actually this:
 
-My experience with Git for Windows, where I try to live Postel's Law by
-accepting bug reports via mailing list and GitHub issues (and earlier
-Google Code, when that was still alive and kicking), and to a certain
-extent even via Twitter: next to nobody likes sending bug reports via mail.
+    -. "$(git --exec-path)/git-sh-i18n"
+    +. "$(GIT_EXEC_PATH= git --exec-path)/git-sh-i18n"
 
-So to add to your sentiment, I like Bugzilla *less* than GitHub issues,
-and the worst bug tracker is a mailing list.
+That's not pretty, but it gives the guarantee to source from matching
+Git release. Considering the PATH semantics, this is how I would fix
+it after reading your feedback.
 
-Or maybe you have written a shell script that can answer the question
-"which of my reported bugs/submitted patch series are still open?" for
-the Git mailing list?
+On Fri, Sep 29, 2017 at 6:21 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Junio C Hamano wrote:
+>> Jonathan Nieder <jrnieder@gmail.com> writes:
+>
+>>> This has been broken for a while, but better late than never to
+>>> address it.
+>>
+>> I am not sure if this is broken in the first place.  We do want to
+>> make sure that the scripted porcelains will source the shell helper
+>> library from matching Git release.  The proposed patch goes directly
+>> against that and I do not see how it could be an improvement.
+>
+> It used to be that git allowed setting a colon-separated list of paths
+> in GIT_EXEC_PATH.  (Very long ago, I relied on that feature.)  If we
+> can restore that functionality without too much cost, then I think
+> it's worthwhile.
+>
+> But the cost in this patch for that is pretty high.  And
+>
+>         $ git log -S'$(git --exec-path)/'
+>
+> tells me that colon-separated paths in GIT_EXEC_PATH did not work for
+> some use cases as far back as 2006.  Since 2008 the documentation has
+> encouraged using "git --exec-path" in a way that does not work with
+> colon-separated paths, too.  I hadn't realized it was so long.  Given
+> that it hasn't been supported for more than ten years, I was wrong to
+> read this as a bug report --- instead, it's a feature request.
 
->  3. This advice might feel hopeless, because if the maintainer is not
->     involved in the initial pilot, then how does the bug tracker get
->     notified when a patch has been accepted?  But fortunately this is
->     a problem other people have solved: e.g. most bug trackers have an
->     API that can be used to automatically notify the bug when a patch
->     with a certain subject line appears on a certain branch.
+Well, from my perspective it's a bug report, upgrading git caused a
+regression in my setup. I didn't know I was doing it wrong ;)
 
-Yes, I agree. The willingness to see the problem, followed by the
-willingness to discuss possible solutions, those two need to be the first
-steps.
+snip
+> Another possible motivation (the one that led me to use this mechnism
+> long ago) is avoiding providing the dashed form git-$cmd in $PATH.  I
+> think time has shown that having git-$cmd in $PATH is not too painful.
 
-Ciao,
-Dscho
+In my case, yes, I'm maintaining commands but don't really want to
+pollute my general-purpose PATH. But I can live with that and use PATH
+instead.
+
+On Fri, Sep 29, 2017 at 7:00 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Dridi Boukelmoune <dridi.boukelmoune@gmail.com> writes:
+>
+>> For end users making use of a custom exec path many commands will simply
+>> fail. Adding git's exec path to the PATH also allows overriding git-sh-*
+>> scripts, not just adding commands. One can then patch a script without
+>> tainting their system installation of git for example.
+>
+> I think the first sentence is where you went wrong.  It seems that
+> you think this ought to work:
+>
+>     rm -fr $HOME/random-stuff
+>     mkdir $HOME/random-stuff
+>     echo "echo happy" >$HOME/random-stuff/git-happy
+>     chmod +x $HOME/random-stuff/git-happy
+>     GIT_EXEC_PATH=$HOME/random-stuff
+>     export GIT_EXEC_PATH
+>     # then...
+>     git happy
+
+Exactly!
+
+> But that is not the right/officially sanctioned/kosher way to add
+> custom git commands (adding your directory that has git-happy in it
+> to $PATH is).  GIT_EXEC_PATH is for the git-cmd binaries and scripts
+> we ship; it always is used to find non built-in commands, and even
+> for built-in commands, the command found via alias look-up is invoked
+> that way.
+
+The git(1) manual says:
+
+> This can also be controlled by setting the GIT_EXEC_PATH environment
+> variable.
+
+This is why I set up my system like this years ago. The manual could
+say when the envvar usage is appropriate.
+
+> By insisting on overriding GIT_EXEC_PATH and not populating with
+> the stuff we ship, you'd need a workaround like your patch just to
+> make the scripts "work" again.  I have a feeling that even with your
+
+I forgot about that, and I actually had to look at my bashrc to realize that
+GIT_EXEC_PATH completely overrides the exec path. I did this, and
+forgot about it once I was done:
+
+    export GIT_EXEC_PATH=<my-path>:"$(GIT_EXEC_PATH= git --exec-path)"
+
+So for so while I managed to convince myself that git --exec-path
+always includes the local installation path. Today I re-learn.
+
+> patch you wouldn't be able to make non built-in commands, unless you
+> copy them (or write a thin wrapper that exec's the real thing).
+>
+> So, instead of the two GIT_EXEC_PATH steps in the above example,
+> you can do
+>
+>         PATH=$HOME/random-stuff:$PATH
+>
+> and you'll see "git happy" to work, I would think, without breaking
+> other things.
+
+That creates a gap between git-core commands being in libexec outside
+of the PATH and my git-* commands having to be in the PATH even though
+they aren't meant to be executed directly.
+
+Should I attempt a new patch? I'd make sure to source by neutering
+GIT_EXEC_PATH and update the relevant documentation this time.
+
+Thanks for the review, it has been very instructive, even for a simple shell
+problem!
+
+Dridi
