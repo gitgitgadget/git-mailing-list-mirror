@@ -2,104 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8DA6F20A2A
-	for <e@80x24.org>; Fri, 29 Sep 2017 19:26:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD34720281
+	for <e@80x24.org>; Fri, 29 Sep 2017 19:47:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752507AbdI2T03 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Sep 2017 15:26:29 -0400
-Received: from cloud.peff.net ([104.130.231.41]:54698 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752365AbdI2T01 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Sep 2017 15:26:27 -0400
-Received: (qmail 27699 invoked by uid 109); 29 Sep 2017 19:26:27 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 29 Sep 2017 19:26:27 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6432 invoked by uid 111); 29 Sep 2017 19:27:07 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Fri, 29 Sep 2017 15:27:07 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Sep 2017 15:26:25 -0400
-Date:   Fri, 29 Sep 2017 15:26:25 -0400
-From:   Jeff King <peff@peff.net>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
-        git@jeffhostetler.com
-Subject: Re: [PATCH] oidmap: map with OID as key
-Message-ID: <20170929192624.4ukvpjujgiyzgibb@sigill.intra.peff.net>
-References: <20170927221910.164552-1-jonathantanmy@google.com>
- <20170928004137.GD68699@google.com>
- <20170928104616.be61b394b50dc5193be275be@google.com>
- <20170928200556.grysihlj7cbzocfq@sigill.intra.peff.net>
- <20170929120456.3bb8021de1c7aebee7bb5026@google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170929120456.3bb8021de1c7aebee7bb5026@google.com>
+        id S1752330AbdI2TrH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Sep 2017 15:47:07 -0400
+Received: from mail-pf0-f178.google.com ([209.85.192.178]:55785 "EHLO
+        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752280AbdI2TrF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Sep 2017 15:47:05 -0400
+Received: by mail-pf0-f178.google.com with SMTP id r71so299446pfe.12
+        for <git@vger.kernel.org>; Fri, 29 Sep 2017 12:47:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=1ezAyepVFTg9GS99uA7hfWeyv2jiTzgjAsIZk+dAmbs=;
+        b=EQzJpSVTyZQmJB6QYhvQCstUmMFlWjIqoKzJeheMhCE6o8CWgrExTmhOueLTIJTGFs
+         T9ThBC4zLqlx/NLx7C4M0rheIO5JbhjJP8TdjbLqH3wPRz1xUn0BhpR6SbFfBfpqhCER
+         iJv0c8M0WNNlk5F3UwPYTGX0OBbfTObFAysnBQkXiDO42XiAUNsN6Li+4hptpRpO9MUa
+         6K5w/PNW4IMHWM3il+Zy/XTMJgE3yvdIXiMBRJ/Pbx5nKcSf/VxPZ5UXRSKTMg5hiZLh
+         2gl1EFZ3VVZoFibgPKf0et+LdMM4BQnLvI9Ri1La8+PDTUJMTzLNF9qyr2j1vOIA3umD
+         PLDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=1ezAyepVFTg9GS99uA7hfWeyv2jiTzgjAsIZk+dAmbs=;
+        b=GyZ+m0PyGlxyAqiIce5pFZojV72mbiHN8Mz9Pz6S7UuS/J06d/nW/aarQjSBV2mPXO
+         gYtc3cQVq6rmk1i4lHTBxWJJRHzYOa+gKu9vQjhMse0hL7q9SJ6zmU53D/J/5pr9cXZt
+         NSQB/c3hwqDIInNHrS/O58+8vS4TqXGoK7JIUmXUlgEQAi4ebwTnqj+DOMi7yWOQh2ir
+         IlikTSd0s9A8xnrXbjaLWJwgvPNvraGOJPVmft3Tt2rCDQF4mYwGKv0nvGwl9kakb+sv
+         UiPS+FGmaKr4n9IPyRCDZ33m0KkNYWDncSkBRJ8dOKBOdJ/8Rf/4/mDnai11JqU39E7h
+         PbsQ==
+X-Gm-Message-State: AMCzsaUX6zj9AUKisHUzKCZGx9uAgC+uwvlI+rez1QnwrH7m+Cka0mKF
+        ozJGQeB1z3qUrId2pdPfUj73/Q==
+X-Google-Smtp-Source: AOwi7QAfzJ5wJJXdjqPI82biJxE6fi03Y+yaddRD1JCnRO6KG7x2dYep+XV7K612/K3ZpPlnh3D6lQ==
+X-Received: by 10.159.255.9 with SMTP id bi9mr1418362plb.106.1506714425227;
+        Fri, 29 Sep 2017 12:47:05 -0700 (PDT)
+Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:95f1:13e:dc22:c4e5])
+        by smtp.gmail.com with ESMTPSA id b65sm7465789pfg.30.2017.09.29.12.47.04
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 29 Sep 2017 12:47:04 -0700 (PDT)
+Date:   Fri, 29 Sep 2017 12:47:03 -0700
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH 07/13] object-filter: common declarations for object
+ filtering
+Message-Id: <20170929124703.29539de1a7a72c34e7d8ebe5@google.com>
+In-Reply-To: <3cab0259-f20e-5913-d886-e37c4da9fd04@jeffhostetler.com>
+References: <20170922203017.53986-6-git@jeffhostetler.com>
+        <20170922203017.53986-8-git@jeffhostetler.com>
+        <20170926153950.a147c48ce62f73702eff7ebb@google.com>
+        <7774ff8d-3a53-860d-9343-292938d59d12@jeffhostetler.com>
+        <20170927170533.65498396e008fa148a3fda90@google.com>
+        <3cab0259-f20e-5913-d886-e37c4da9fd04@jeffhostetler.com>
+X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 29, 2017 at 12:04:56PM -0700, Jonathan Tan wrote:
+On Thu, 28 Sep 2017 10:33:39 -0400
+Jeff Hostetler <git@jeffhostetler.com> wrote:
 
-> > So depending how you count it, we're wasting between 28% (sha1 and no
-> > extra hash) and 16% (sha256 plus reusing hashmap). That's not great, but
-> > it's probably not breaking the bank.
-> 
-> Hmm...how did you get the 16% figure? The values, as I see it, are:
->  - 32 for the sha256 hash itself
->  - 8 for the "next" chain pointer
->  - 8 for the padded hash
->  - 8 for the "util" pointer
-> 
-> For an oidset, the padded hash and the "util" pointer are wasted, which is
-> 16/56=0.286. (If you assume, say, 8 bytes of malloc bookkeeping overhead, then
-> 16/64=0.25.)
+> Maybe.  What I have here now is the result of adding these arguments to
+> rev-list and pack-objects (in the current patch series), and also to
+> fetch-pack, fetch, clone, upload-pack, index-pack, and the transport and
+> protocol code (in a follow-on patch series that I've omitted for the moment).
+> And there will probably be a few more, such as fsck, gc, and etc.  I hesitate
+> to refine the macros too much further until we've agreement on the overall
+> approach and terms.
 
-Sorry to be unclear. I was just counting the waste for the "util"
-pointer, not the extra padded hash bit (which AFAIK is already wasted in
-oidset). So I computed 48 bytes without the util pointer, which means we
-waste an additional 16% to add it.
+Fair enough. My current opinion on the overall approach (others might
+differ, of course):
+ - Filtering based on a sparse checkout specification in rev-list and
+   pack-objects sounds useful to me, and is worth the filtering
+   mechanism.
+ - Filtering based on size (or based on type) still doesn't seem useful
+   to me in rev-list, but if we're going to implement the filtering
+   mechanism anyway, we might as well use the mechanism.
+ - Besides my comments in [1], I think the API could still be slightly
+   better organized. For example, object-filter probably should be the
+   one to define the traverse_ function that takes in struct
+   object_filter_options, and optionally a set of excluded objects to
+   populate.
 
-Anyway, my point was mostly to say that this is a fractional percentage
-of the total memory. So it falls into the category of "this might help
-in tight situations" and less "this will blow up in our faces".
-
-> In a 100-million-object monorepo, we will probably end up only operating on the
-> "frontier" objects (objects that we do not have but we know about because some
-> object we have reference them) at the worst. I don't have numbers but I think
-> that that is at least an order of magnitude less than 100M.
-
-Agreed.
-
-> > So I think we may be better off going with the solution here that's
-> > simpler and requires introducing less code. If it does turn out to be a
-> > memory problem in the future, this is a _really_ easy thing to optimize
-> > after the fact, because we have these nice abstractions.
-> 
-> Optimizing away the padded hash should be straightforward. Optimizing away the
-> "util" pointer after we have code that uses it is (slightly?) less
-> straightforward, but still doable.
-
-I was thinking here of just oidset. It has a limited API, so swapping
-out the implementation for one that does not depend on oidmap and waste
-the "util" pointer would be the "easy" part.
-
-> I still lean towards saving memory by eliminating the padded hash and
-> not using the "util" pointer, because the complication is contained
-> within only two files (oidmap.{c,h}), and because the constant factors
-> in memory savings might end up mattering. But I don't feel strongly
-> about that - I think any of the oidmaps that we have discussed is an
-> improvement over what we have now.
-
-My main concern is not so much about complexity bleeding out of the
-oidmap code, but that now we have two parallel near-identical hashmap
-implementations.  When one gets an optimization, bugfix, or new feature,
-we have to port it over manually to the other.
-
--Peff
+[1] https://public-inbox.org/git/20170927170533.65498396e008fa148a3fda90@google.com/
