@@ -2,107 +2,350 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 32C7A20281
-	for <e@80x24.org>; Fri, 29 Sep 2017 22:45:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5AF3420281
+	for <e@80x24.org>; Fri, 29 Sep 2017 22:54:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752607AbdI2WpL (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Sep 2017 18:45:11 -0400
-Received: from mail-pg0-f44.google.com ([74.125.83.44]:47576 "EHLO
-        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752603AbdI2WpJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Sep 2017 18:45:09 -0400
-Received: by mail-pg0-f44.google.com with SMTP id d8so505736pgt.4
-        for <git@vger.kernel.org>; Fri, 29 Sep 2017 15:45:09 -0700 (PDT)
+        id S1752551AbdI2Wy2 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Sep 2017 18:54:28 -0400
+Received: from mail-pf0-f173.google.com ([209.85.192.173]:46477 "EHLO
+        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752526AbdI2Wy0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Sep 2017 18:54:26 -0400
+Received: by mail-pf0-f173.google.com with SMTP id r68so496055pfj.3
+        for <git@vger.kernel.org>; Fri, 29 Sep 2017 15:54:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=rxScXq4V5YZdEGRbjTQdaEurB7M2Es3Ew++Z+YgY68M=;
-        b=MyERcLcbUhcgQnDBsVmp9e48g5DdpT4Rs/qb4Z2C7049jFMdG8zU9wxuGI5sBNCwcZ
-         XRKGfdHJs2sEUS5xd4Ue+gwRIs0Mh5OnVdhN7Zl0gEle3GDauoW3s6nxF+QbpUalPFCM
-         NY3vtfVMiQAxXlBGav18mQF2NLSfPeeLTTwEO+Eq5z14JDcJMjrqN1IK4HBeseed7w1w
-         awclsVyTXb902DIV5kIO6jPk6Z2C5Lv5C/7techGd4ipOQyUZZ0+ruWZ6//O5AcwhlbC
-         IhgvUCREvprUoVPputE6Mzu0t+obl6/HQAjsRast+enjwG+TUVY05HrDXuMCqxKMtqqU
-         VgNg==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=0gtSpB0Pir2WhAUWQhIaSTxq8VhgVCe+pfhx3LcTn8M=;
+        b=KScAKaoXAM0tEsldWlf//+2W1LRPh0hiyHeS/rSU3aUX9L4Ifa+c30hP5KRMk4v2lJ
+         K2NNBIT9aDWmznLZDjPvujY/t4IQE9rRJzEN/C5i0L9afcx/oJCIsbkI4QqoKe0aPaID
+         DSY1u1K5taVxMfzhUpnJslUtqHZ9dwY5T/gWO9MudwlH+p40z2CXROrcKuJOAHx8xTT5
+         Bq5c+TPvr++fgqFogo5zOpiYSEEyPfraolVjDzEF5sj0xXHprJUoTukAgxZkdkxzdWhP
+         HyRq00hIZ/4c/ikYJD+TBTfm/FUb3mw0prJucEmp6YMNPbuWXBLKqBnf+Ag/hKdNLGcR
+         CqXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=rxScXq4V5YZdEGRbjTQdaEurB7M2Es3Ew++Z+YgY68M=;
-        b=PRWTk+R7LGjE6u1l1j7EfrjFMoDMfLWx/T083fN15xm1mQBsRuXG+lauTN8WI5DBxN
-         +LjXd584qO+jNnXPWEpD/7qIQYiONZXTPGULd2fM+uIfl8Dmnto9iv5Jk9kOH+iLSK+5
-         csWlOj73l2MUfYEyfcWNbqeuTMy7EMeQJ10Kry1tTQYLYaBAHc23BLEIwjzPRre//bmg
-         vtnHpeWOEIfqFaVwnxFxINpXDvsgCdsK6FsXrx8KZGOONJhrv9Ol9jZMccfDESg1sBYe
-         gco0m/3OsOqMCe/lBbXzoomrbjRTaWnoVFcNjNB58HRiwow2lRPlsXKiVeSw+CVLFIw0
-         dBwg==
-X-Gm-Message-State: AHPjjUg8Ll6teSvFl3EnnSi1ScaVtkpwAytbZ+y0Gt0+yIgdDHEZ+cfm
-        OoMa7jDAB6IJTeg+T7raFbo=
-X-Google-Smtp-Source: AOwi7QCr0/WC3Qn4aYYX0AicRuQYbUq4IebPcNr4cCJdM6G+rrgBOvkBe4pKE7up3E7fAsK9IC/WFw==
-X-Received: by 10.98.0.87 with SMTP id 84mr9094664pfa.177.1506725108441;
-        Fri, 29 Sep 2017 15:45:08 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:c47c:760e:a02b:2eef])
-        by smtp.gmail.com with ESMTPSA id n18sm7839581pgd.69.2017.09.29.15.45.07
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 29 Sep 2017 15:45:07 -0700 (PDT)
-Date:   Fri, 29 Sep 2017 15:45:05 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Stephan Beyer <s-beyer@gmx.net>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Brandon Williams <bmwill@google.com>
-Subject: Re: [PATCH] clang-format: adjust line break penalties
-Message-ID: <20170929224505.GN19555@aiede.mtv.corp.google.com>
-References: <073f00fa11930a3607e34828e7563e1b2dc27d2a.1506709551.git.johannes.schindelin@gmx.de>
- <20170929184032.GK19555@aiede.mtv.corp.google.com>
- <c1230d5b-ff84-8cf4-8ae7-b8387bf4bb04@gmx.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c1230d5b-ff84-8cf4-8ae7-b8387bf4bb04@gmx.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=0gtSpB0Pir2WhAUWQhIaSTxq8VhgVCe+pfhx3LcTn8M=;
+        b=VyI/3ItnSX2ro86q6fw31MIrlNSuJbjRnvswbZG/tONMqWA0mOiQo5ercf0WM4O72y
+         nUoNPrYfXMhkfjDKr5TWY2p32ZpSHuudSgGB5pCGvttovEs1HFpRhu+ajEQleM9mVmtB
+         rjdmJfo7xymOIvRxCE98YtDk59Hk7GNHL6nH+slbT4MjWjVxuuaq03l5GhbIaMbX/LP3
+         YDKLIJzmQxIpLH5UuOqX+qg3zFYlr+2bdb7snes6Gg00Rlz1uZkhZeD3IbkF0t8KS7d/
+         a5nDCipUevkzb/5OglLdWES+tpojKyVQzlNe3ydbeoWvei8/qDbRK16M+avSL+QFU/7D
+         N8tw==
+X-Gm-Message-State: AHPjjUhu1n9esHhsCUuZyqdboLuePpR0d8i09cNO/xW8f3GqR+lMcVTQ
+        I4nDMGCbqHLgsU4gVq7298HC3GYQA6w=
+X-Google-Smtp-Source: AOwi7QDDcp9j99cfcCjIYK0vL2flrRKWu3X0j9mnS8ucTvezrdiSxBaa1ekI4HrXAgdw+8B2f77jGQ==
+X-Received: by 10.84.237.9 with SMTP id s9mr8412902plk.187.1506725665807;
+        Fri, 29 Sep 2017 15:54:25 -0700 (PDT)
+Received: from twelve3.mtv.corp.google.com ([100.96.218.44])
+        by smtp.gmail.com with ESMTPSA id l131sm8372498pga.24.2017.09.29.15.54.24
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 29 Sep 2017 15:54:24 -0700 (PDT)
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, bmwill@google.com,
+        gitster@pobox.com, peff@peff.net
+Subject: [PATCH v2] oidmap: map with OID as key
+Date:   Fri, 29 Sep 2017 15:54:22 -0700
+Message-Id: <20170929225422.81467-1-jonathantanmy@google.com>
+X-Mailer: git-send-email 2.14.2.607.g89a6f60d5.dirty
+In-Reply-To: <20170927221910.164552-1-jonathantanmy@google.com>
+References: <20170927221910.164552-1-jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stephan Beyer wrote:
-> On 09/29/2017 08:40 PM, Jonathan Nieder wrote:
+This is similar to using the hashmap in hashmap.c, but with an
+easier-to-use API. In particular, custom entry comparisons no longer
+need to be written, and lookups can be done without constructing a
+temporary entry structure.
 
->> Going forward, is there an easy way to preview the effect of this kind
->> of change (e.g., to run "make style" on the entire codebase so as to be
->> able to compare the result with two different versions of
->> .clang-format)?
->
-> I just ran clang-format before and after the patch and pushed to github.
-> The resulting diff is quite big:
->
-> https://github.com/sbeyer/git/commit/3d1186c4cf4dd7e40b97453af5fc1170f6868ccd
+This is implemented as a thin wrapper over the hashmap API. In
+particular, this means that there is an additional 4-byte overhead due
+to the fact that the first 4 bytes of the hash is redundantly stored.
+For now, I'm taking the simpler approach, but if need be, we can
+reimplement oidmap without affecting the callers significantly.
 
-Thanks.  The first change I see there is
+oidset has been updated to use oidmap.
 
- -char *strbuf_realpath(struct strbuf *resolved, const char *path, int die_on_error)
- +char *
- +strbuf_realpath(struct strbuf *resolved, const char *path, int die_on_error)
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+Some replies to v1 [1] [2] seem to indicate that simpler non-duplicated
+code should be preferred over optimizing away the storage of the 4-byte
+hash code, and I have no objection to that, so I have updated this code
+to be a thin wrapper over hashmap with the 4-byte overhead.
 
-I understand why the line is broken, but the choice of line break is
-wrong.  Seems like the penalty for putting return type on its own line
-quite high enough.
+After this patch, if the 4-byte overhead is found to be too much, we can
+migrate to something similar to v1 relatively easily.
 
-My Reviewed-by still stands, though.  It gets "make style" to signal
-long lines that should be broken, which is an improvement.
+I decided not to go with the util pointer method because we will not be
+able to migrate away from it so easily if need be.
 
-> PS: There should be a comment at the beginning of the .clang-format file
-> that says what version it is tested with (on my machine it worked with
-> 5.0 but not with 4.0) and there should also probably a remark that the
-> clang-format-based style should only be understood as a hint or guidance
-> and that most of the Git codebase does not conform it.
+[1] https://public-inbox.org/git/xmqqr2ur348z.fsf@gitster.mtv.corp.google.com/
+[2] https://public-inbox.org/git/20170929192624.4ukvpjujgiyzgibb@sigill.intra.peff.net/
+---
+ Makefile     |  1 +
+ fetch-pack.c |  2 +-
+ oidmap.c     | 51 +++++++++++++++++++++++++++++++++++++++++++++
+ oidmap.h     | 68 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ oidset.c     | 36 +++++++-------------------------
+ oidset.h     |  6 ++++--
+ 6 files changed, 133 insertions(+), 31 deletions(-)
+ create mode 100644 oidmap.c
+ create mode 100644 oidmap.h
 
-Sounds good to me.  Care to send it as a patch? :)
+diff --git a/Makefile b/Makefile
+index ed4ca438b..64136dde4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -821,6 +821,7 @@ LIB_OBJS += notes-cache.o
+ LIB_OBJS += notes-merge.o
+ LIB_OBJS += notes-utils.o
+ LIB_OBJS += object.o
++LIB_OBJS += oidmap.o
+ LIB_OBJS += oidset.o
+ LIB_OBJS += packfile.o
+ LIB_OBJS += pack-bitmap.o
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 105506e9a..008b25d3d 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -611,7 +611,7 @@ static int tip_oids_contain(struct oidset *tip_oids,
+ 	 * add to "newlist" between calls, the additions will always be for
+ 	 * oids that are already in the set.
+ 	 */
+-	if (!tip_oids->map.tablesize) {
++	if (!tip_oids->map.map.tablesize) {
+ 		add_refs_to_oidset(tip_oids, unmatched);
+ 		add_refs_to_oidset(tip_oids, newlist);
+ 	}
+diff --git a/oidmap.c b/oidmap.c
+new file mode 100644
+index 000000000..6db4fffcd
+--- /dev/null
++++ b/oidmap.c
+@@ -0,0 +1,51 @@
++#include "cache.h"
++#include "oidmap.h"
++
++static int cmpfn(const void *hashmap_cmp_fn_data,
++		 const void *entry, const void *entry_or_key,
++		 const void *keydata)
++{
++	const struct oidmap_entry *entry_ = entry;
++	if (keydata)
++		return oidcmp(&entry_->oid, (const struct object_id *) keydata);
++	return oidcmp(&entry_->oid,
++		      &((const struct oidmap_entry *) entry_or_key)->oid);
++}
++
++static int hash(const struct object_id *oid)
++{
++	int hash;
++	memcpy(&hash, oid->hash, sizeof(hash));
++	return hash;
++}
++
++void oidmap_init(struct oidmap *map, size_t initial_size)
++{
++	hashmap_init(&map->map, cmpfn, NULL, initial_size);
++}
++
++void oidmap_free(struct oidmap *map, int free_entries)
++{
++	if (!map)
++		return;
++	hashmap_free(&map->map, free_entries);
++}
++
++void *oidmap_get(const struct oidmap *map, const struct object_id *key)
++{
++	return hashmap_get_from_hash(&map->map, hash(key), key);
++}
++
++void *oidmap_remove(struct oidmap *map, const struct object_id *key)
++{
++	struct hashmap_entry entry;
++	hashmap_entry_init(&entry, hash(key));
++	return hashmap_remove(&map->map, &entry, key);
++}
++
++void *oidmap_put(struct oidmap *map, void *entry)
++{
++	struct oidmap_entry *to_put = entry;
++	hashmap_entry_init(&to_put->internal_entry, hash(&to_put->oid));
++	return hashmap_put(&map->map, to_put);
++}
+diff --git a/oidmap.h b/oidmap.h
+new file mode 100644
+index 000000000..18f54cde1
+--- /dev/null
++++ b/oidmap.h
+@@ -0,0 +1,68 @@
++#ifndef OIDMAP_H
++#define OIDMAP_H
++
++#include "hashmap.h"
++
++/*
++ * struct oidmap_entry is a structure representing an entry in the hash table,
++ * which must be used as first member of user data structures.
++ *
++ * Users should set the oid field. oidmap_put() will populate the
++ * internal_entry field.
++ */
++struct oidmap_entry {
++	/* For internal use only */
++	struct hashmap_entry internal_entry;
++
++	struct object_id oid;
++};
++
++struct oidmap {
++	struct hashmap map;
++};
++
++#define OIDMAP_INIT { { NULL } }
++
++/*
++ * Initializes an oidmap structure.
++ *
++ * `map` is the oidmap to initialize.
++ *
++ * If the total number of entries is known in advance, the `initial_size`
++ * parameter may be used to preallocate a sufficiently large table and thus
++ * prevent expensive resizing. If 0, the table is dynamically resized.
++ */
++extern void oidmap_init(struct oidmap *map, size_t initial_size);
++
++/*
++ * Frees an oidmap structure and allocated memory.
++ *
++ * If `free_entries` is true, each oidmap_entry in the map is freed as well
++ * using stdlibs free().
++ */
++extern void oidmap_free(struct oidmap *map, int free_entries);
++
++/*
++ * Returns the oidmap entry for the specified oid, or NULL if not found.
++ */
++extern void *oidmap_get(const struct oidmap *map,
++			const struct object_id *key);
++
++/*
++ * Adds or replaces an oidmap entry.
++ *
++ * ((struct oidmap_entry *) entry)->internal_entry will be populated by this
++ * function.
++ *
++ * Returns the replaced entry, or NULL if not found (i.e. the entry was added).
++ */
++extern void *oidmap_put(struct oidmap *map, void *entry);
++
++/*
++ * Removes an oidmap entry matching the specified oid.
++ *
++ * Returns the removed entry, or NULL if not found.
++ */
++extern void *oidmap_remove(struct oidmap *map, const struct object_id *key);
++
++#endif
+diff --git a/oidset.c b/oidset.c
+index a6a08ba52..f1f874aaa 100644
+--- a/oidset.c
++++ b/oidset.c
+@@ -1,50 +1,30 @@
+ #include "cache.h"
+ #include "oidset.h"
+ 
+-struct oidset_entry {
+-	struct hashmap_entry hash;
+-	struct object_id oid;
+-};
+-
+-static int oidset_hashcmp(const void *unused_cmp_data,
+-			  const void *va, const void *vb,
+-			  const void *vkey)
+-{
+-	const struct oidset_entry *a = va, *b = vb;
+-	const struct object_id *key = vkey;
+-	return oidcmp(&a->oid, key ? key : &b->oid);
+-}
+-
+ int oidset_contains(const struct oidset *set, const struct object_id *oid)
+ {
+-	struct hashmap_entry key;
+-
+-	if (!set->map.cmpfn)
++	if (!set->map.map.tablesize)
+ 		return 0;
+-
+-	hashmap_entry_init(&key, sha1hash(oid->hash));
+-	return !!hashmap_get(&set->map, &key, oid);
++	return !!oidmap_get(&set->map, oid);
+ }
+ 
+ int oidset_insert(struct oidset *set, const struct object_id *oid)
+ {
+-	struct oidset_entry *entry;
+-
+-	if (!set->map.cmpfn)
+-		hashmap_init(&set->map, oidset_hashcmp, NULL, 0);
++	struct oidmap_entry *entry;
+ 
+-	if (oidset_contains(set, oid))
++	if (!set->map.map.tablesize)
++		oidmap_init(&set->map, 0);
++	else if (oidset_contains(set, oid))
+ 		return 1;
+ 
+ 	entry = xmalloc(sizeof(*entry));
+-	hashmap_entry_init(&entry->hash, sha1hash(oid->hash));
+ 	oidcpy(&entry->oid, oid);
+ 
+-	hashmap_add(&set->map, entry);
++	oidmap_put(&set->map, entry);
+ 	return 0;
+ }
+ 
+ void oidset_clear(struct oidset *set)
+ {
+-	hashmap_free(&set->map, 1);
++	oidmap_free(&set->map, 1);
+ }
+diff --git a/oidset.h b/oidset.h
+index b7eaab5b8..f4c9e0f9c 100644
+--- a/oidset.h
++++ b/oidset.h
+@@ -1,6 +1,8 @@
+ #ifndef OIDSET_H
+ #define OIDSET_H
+ 
++#include "oidmap.h"
++
+ /**
+  * This API is similar to sha1-array, in that it maintains a set of object ids
+  * in a memory-efficient way. The major differences are:
+@@ -17,10 +19,10 @@
+  * A single oidset; should be zero-initialized (or use OIDSET_INIT).
+  */
+ struct oidset {
+-	struct hashmap map;
++	struct oidmap map;
+ };
+ 
+-#define OIDSET_INIT { { NULL } }
++#define OIDSET_INIT { OIDMAP_INIT }
+ 
+ /**
+  * Returns true iff `set` contains `oid`.
+-- 
+2.14.2.822.g60be5d43e6-goog
 
-Thanks,
-Jonathan
