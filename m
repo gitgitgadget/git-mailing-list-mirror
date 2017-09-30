@@ -2,88 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A90992047F
-	for <e@80x24.org>; Sat, 30 Sep 2017 18:09:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C9AA2047F
+	for <e@80x24.org>; Sat, 30 Sep 2017 18:41:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751243AbdI3SJN (ORCPT <rfc822;e@80x24.org>);
-        Sat, 30 Sep 2017 14:09:13 -0400
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:33302 "EHLO
-        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751069AbdI3SJM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Sep 2017 14:09:12 -0400
-Received: by mail-qk0-f193.google.com with SMTP id b82so1246469qkc.0
-        for <git@vger.kernel.org>; Sat, 30 Sep 2017 11:09:12 -0700 (PDT)
+        id S1751292AbdI3Sl4 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 30 Sep 2017 14:41:56 -0400
+Received: from mail-pg0-f45.google.com ([74.125.83.45]:51113 "EHLO
+        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751099AbdI3Slz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Sep 2017 14:41:55 -0400
+Received: by mail-pg0-f45.google.com with SMTP id p5so1246599pgn.7
+        for <git@vger.kernel.org>; Sat, 30 Sep 2017 11:41:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ymnt59eWX1kUOcaZH6iXshcm1OYpGkoBs5VbHMNf6Ro=;
-        b=gzpUhp7bU+ZT1cgW7K9j22grYBvTtqsTLw5Gy5Rvys9In4TDvx4saHyqZQrG9bL34y
-         OecjEfcvCk2VB9kTmyQatwYJciJkVfMFWSCHZnPW2IE0sg5K8aVervMp6FY7uFUBmeLy
-         8ShUse6TO/eLORPRzaH5ArlCrZQKUcFJrfymrvAaFMld4CEdVHWZToBJSbhkl9cy4vkX
-         B26rRjx4RIcxTwdKA4EUc8jfqvn8h6Bob2Pa/VMZ4Ey4anhbIrgmGgU/gNw9YoKJuIsN
-         Dwfm4GjoG6XuhYDXII2XV3AaLvh+oRjluBNz3GDeS7sTRsyYJMW0A8y1RZRoNAn6etJq
-         p8Jw==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=UuSDa8bHYA67RKP6j2y5qDBxY6x1R8fX1/+LNwcrXzk=;
+        b=KI+zY059dRbS0CNNfYLaWnWuwpaXdwaC2EXqLHVw3eiME8tFV302w3lt6HVAt5Lj33
+         iWKVEfCrKifcOGast3ilw0rsTvWTK3X0ILUo5v/eUcs07DFrcK9cVOKOQEaXFl6oppRC
+         jBJn6DKe7V7novBCNih2fXogaXXkl2/T6LwbVtqU3Iqo90iljEsBxt2oqQgqxOZ8Tmce
+         tULbC52/k55CxadwHatH4bLPES7yu6mFIFjKPTI3ZJIMxkjJvf3X7itqq0xFPMoxxRDk
+         PC/8tE8iqb6TMaDBEOHu0Tscchh4Wz3n5CquiyBIlk3zAEy9ejLfLohFqTnPZjlhBkGK
+         tpzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ymnt59eWX1kUOcaZH6iXshcm1OYpGkoBs5VbHMNf6Ro=;
-        b=YtebAtZsahMC/VfvaZK8Sq3qg30jVsN/SWUiO8Qdf8CPfiGJoDhxbmIpRgIRvMesf4
-         GGcIO5H7Js7M0Zne8zeCVHKaNWa59yyrHfT9GkhoyNxesgzOnXaQh7ddkHJeh3XdA8ko
-         EOJDp1BjiPQKWCoaru0OIOi1ksSK2xQj7OR2wQFmhLlPmcObHakVvTn+CjZG8z5uzc5p
-         i8MSafJeloGwfcvfpbmVOFtJ9P1+kRY2Nqq92iqUV/IrBH2CxnXqdnosPjLYiX1kp3r6
-         qdmNQNdmYeswAh9SiFs0X/EaWRv40Tt+I/J1MDeyQM1Fqt8JDVjlhrN4AAAJjfbQBUlB
-         uXqg==
-X-Gm-Message-State: AMCzsaUDpDe3utb9kHNGpbhdlMGt30JhedVUKOV8C0W7vk74u5kDv1Mz
-        vrztlwD/m/gjonxmJBTCqtxI9Pysdtd0t5C5j2E=
-X-Google-Smtp-Source: AOwi7QDyolAxFF2fpmZ/ywiw+mRCyhJaD7M5i0TmQbtb/POPlabutHSovGmf7ofWWu1V/6u0GrroLtIsSHVHJSjrW/o=
-X-Received: by 10.55.174.129 with SMTP id x123mr8375902qke.306.1506794951758;
- Sat, 30 Sep 2017 11:09:11 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=UuSDa8bHYA67RKP6j2y5qDBxY6x1R8fX1/+LNwcrXzk=;
+        b=Q7pcbFaLQLiLJWaw1yEoKuVEK61PGdD2dF6OaL9YcxuyfKkcEHoauPEDaEp4IDiFNt
+         8n6hK2pNHtg0B35WhdJnzq2VXSSta7EPQoT2I/wbmmny0fIqslET4Vxv0/645jY89Toi
+         n1gDGY6rYufLRygkD3hHIWPr+C9Qgl/LFrueKzgNZt0KQ4OZCEtnT9XJ9vT2PcGXqVGe
+         F4syIyCTxwTOhO2/mn0aZQzfQLFb/SXblbV6X4Qg7xAcdneYf/lt0DbagSAnr/m+M2Rv
+         4K6dv9oB3D7/G3MsR5YqNEJPJFYCAhR5Bs9SR2EV0hdO68mcffMun77cWiFo/Tnm2DAC
+         klaQ==
+X-Gm-Message-State: AHPjjUh3BDJPnCM6Uiv1/1ziethFzyH42osb+8Lr11L/cK4MNLB22ZFC
+        gkMrQWI4hxieg7SyA69aEuKOMxf+N8M=
+X-Google-Smtp-Source: AOwi7QA3hGize4fJM2z4fk5zZh2U2glTeaFTZzLX59sYqkF0ItRq3X6SfdJhiYn6eNH5xZ1Co7jjhg==
+X-Received: by 10.99.63.74 with SMTP id m71mr4819668pga.207.1506796913998;
+        Sat, 30 Sep 2017 11:41:53 -0700 (PDT)
+Received: from localhost ([205.175.97.239])
+        by smtp.gmail.com with ESMTPSA id f2sm11140325pfg.135.2017.09.30.11.41.51
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 30 Sep 2017 11:41:52 -0700 (PDT)
+Date:   Sat, 30 Sep 2017 11:41:51 -0700
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, peff@peff.net
+Subject: [PATCH v2 0/6] Support %(trailers) arguments in for-each-ref(1)
+Message-ID: <20170930184151.GB43975@D-10-157-251-166.dhcp4.washington.edu>
+References: <20170930062238.87077-1-me@ttaylorr.com>
 MIME-Version: 1.0
-Received: by 10.200.20.23 with HTTP; Sat, 30 Sep 2017 11:09:11 -0700 (PDT)
-In-Reply-To: <20170929234002.3fzaksoarz75p7e2@sigill.intra.peff.net>
-References: <CAP8UFD24A8rxMfLMFmSStWnBMMeB58SqUdNoo3niQuc7LqRMMg@mail.gmail.com>
- <0102015ec7a3424b-529be659-bdb6-42c4-a48f-db264f33d53a-000000@eu-west-1.amazonses.com>
- <20170928224244.pi34zwifnornssqk@sigill.intra.peff.net> <CAP8UFD13obkLWyuCGUpFxryr8DWfQ8W4JNn04ajO50PvF0SnXQ@mail.gmail.com>
- <20170929072354.fw4eclt56dmfj4a5@sigill.intra.peff.net> <CAP8UFD1-9dYSX-VKZSPN9Ei75V8mGC-wusieL45ArxxJ08tO9Q@mail.gmail.com>
- <CAL21BmkcVSEhEK+tAE-RNVabb0pnokYwbagueUrp9giZ3zqT8A@mail.gmail.com>
- <CAL21Bmma8gOYx9u4kxRaHJKcF3YsfrQP9=wdAiQX14f9uSPRAQ@mail.gmail.com> <20170929234002.3fzaksoarz75p7e2@sigill.intra.peff.net>
-From:   =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>
-Date:   Sat, 30 Sep 2017 21:09:11 +0300
-Message-ID: <CAL21Bmk2oN61CxJA0eju=FtAh2Ei9dLqRMPZKonCND4sC504Sg@mail.gmail.com>
-Subject: Re: [PATCH Outreachy] mru: use double-linked list from list.h
-To:     Jeff King <peff@peff.net>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170930062238.87077-1-me@ttaylorr.com>
+User-Agent: Mutt/1.8.3 (2017-05-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I added "v2" after "PATCH", but it does not appeared. Actually it was
-written automatically and it was "PATCH Outreachy v2". I rearranged it
-in the middle of the phrase.
+Hi,
 
->> I forgot about leak. I also need to add checking in mru_clear. That's
->> not beautiful solution but it works reliably.
->
-> I'm not sure what you mean about checking in mru_clear(). It may make
-> sense to just send your v2 patch and I can see there what you do.
+Attached is v2 of my patch-set "Support %(trailers) arguments in
+for-each-ref(1)".
 
-I realized that I said something strange before. I solved the problem
-with leak by deleting INIT in prepare_packed_git and adding init as
-you suggested here:
-https://github.com/telezhnaya/git/commit/7f8995835949f83e54efdfd88445feb6d54cb3e9#commitcomment-24576103
+It includes the following changes since v1:
 
-By the way, I asked to edit FAQ for Linux kernel newbies about linked
-list that confused me a week ago, and that funny picture was deleted.
-https://kernelnewbies.org/FAQ/LinkedLists
-Maybe it will help to someone else :)
+  * Accept "empty-sub-argument" lists, like %(contents:trailers:).
+
+  * Fix incorrect tabs/spaces formatting in t6300.
+
+  * Modern-ize code fencing in Documentation/git-for-each-ref.txt
+
+  * Squash commit adding trailer_opts to used_atom structure.
+
+---
+
+  [1/6]: pretty.c: delimit "%(trailers)" arguments with ","
+  [2/6]: t6300: refactor %(trailers) tests
+  [3/6]: doc: 'trailers' is the preferred way to format trailers
+  [4/6]: doc: use modern "`"-style code fencing
+  [5/6]: ref-filter.c: use trailer_opts to format trailers
+  [6/6]: ref-filter.c: parse trailers arguments with %(contents) atom
+
+Thanks in advance :-).
+
+--
+- Taylor
