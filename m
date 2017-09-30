@@ -6,215 +6,145 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E830E20A10
-	for <e@80x24.org>; Sat, 30 Sep 2017 07:21:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12A5C20A10
+	for <e@80x24.org>; Sat, 30 Sep 2017 07:36:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752862AbdI3HVr (ORCPT <rfc822;e@80x24.org>);
-        Sat, 30 Sep 2017 03:21:47 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55352 "HELO cloud.peff.net"
+        id S1752476AbdI3HgY (ORCPT <rfc822;e@80x24.org>);
+        Sat, 30 Sep 2017 03:36:24 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55366 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752414AbdI3HVq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Sep 2017 03:21:46 -0400
-Received: (qmail 10004 invoked by uid 109); 30 Sep 2017 07:21:45 -0000
+        id S1751345AbdI3HgX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Sep 2017 03:36:23 -0400
+Received: (qmail 10643 invoked by uid 109); 30 Sep 2017 07:36:17 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 30 Sep 2017 07:21:45 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 30 Sep 2017 07:36:17 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11463 invoked by uid 111); 30 Sep 2017 07:22:25 -0000
+Received: (qmail 11487 invoked by uid 111); 30 Sep 2017 07:36:57 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Sat, 30 Sep 2017 03:22:25 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Sat, 30 Sep 2017 03:36:57 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 30 Sep 2017 03:21:43 -0400
-Date:   Sat, 30 Sep 2017 03:21:43 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 30 Sep 2017 03:36:15 -0400
+Date:   Sat, 30 Sep 2017 03:36:15 -0400
 From:   Jeff King <peff@peff.net>
 To:     Taylor Blau <me@ttaylorr.com>
 Cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH 4/5] ref-filter.c: use trailer_opts to format trailers
-Message-ID: <20170930072143.h4mbd5c4hskvcrl3@sigill.intra.peff.net>
+Subject: Re: [PATCH 5/5] ref-filter.c: parse trailers arguments with
+ %(contents) atom
+Message-ID: <20170930073615.js3o57qmxlqnkpp5@sigill.intra.peff.net>
 References: <20170930062238.87077-1-me@ttaylorr.com>
- <20170930062238.87077-5-me@ttaylorr.com>
+ <20170930062238.87077-6-me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170930062238.87077-5-me@ttaylorr.com>
+In-Reply-To: <20170930062238.87077-6-me@ttaylorr.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 29, 2017 at 11:22:37PM -0700, Taylor Blau wrote:
+On Fri, Sep 29, 2017 at 11:22:38PM -0700, Taylor Blau wrote:
 
-> In preparation to support additional sub-arguments given to the "%(trailers)"
-> atom, use 'format_trailers_from_commit' in order to format trailers in the
-> desired manner.
+> The %(contents) atom takes a contents "field" as its argument. Since "trailers"
+> is one of those fields, extend contents_atom_parser to parse "trailers"'s
+> arguments when used through "%(contents)", like:
+> 
+>   %(contents:trailers:unfold,only)
+> 
+> A caveat: trailers_atom_parser expects NULL when no arguments are given (see:
+> `parse_ref_filter_atom`). To simulate this behavior without teaching
+> trailers_atom_parser to accept strings with length zero, conditionally pass
+> NULL to trailers_atom_parser if the arguments portion of the argument to
+> %(contents) is empty.
 
-This isn't just in preparation, is it? It looks like the options are
-here (which I think is fine, but the commit message probably needs
-updated).
+Yeah, this is a weird effect of trailers_atom_parser() doing double-duty
+to parse both "%(contents:trailers)" and "%(trailers)".
 
-> Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> ---
->  Documentation/git-for-each-ref.txt |  6 +++++-
->  ref-filter.c                       | 31 ++++++++++++++++++++---------
->  t/t6300-for-each-ref.sh            | 40 ++++++++++++++++++++++++++++++++++++++
->  3 files changed, 67 insertions(+), 10 deletions(-)
+Though I think trailers_atom_parser() does do the sensible thing with an
+empty string (there are no options, so nothing to parse). I.e., I'd
+expect the same thing out of:
 
-This patch didn't apply for me on top of the others. I get:
+  %(trailers:)
 
-  Applying: ref-filter.c: use trailer_opts to format trailers
-  error: patch failed: ref-filter.c:178
-  error: ref-filter.c: patch does not apply
-  Patch failed at 0004 ref-filter.c: use trailer_opts to format trailers
+and
 
-And then with "am -3":
+  %(trailers)
 
-  Applying: ref-filter.c: use trailer_opts to format trailers
-  error: sha1 information is lacking or useless (ref-filter.c).
-  error: could not build fake ancestor
-  Patch failed at 0004 ref-filter.c: use trailer_opts to format trailers
-
-Did it get corrupted in transit, or did you hand-edit it?
+even though one gets a NULL "arg" field and the other gets an empty
+string.
 
 > diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-> index 03e187a10..b7325a25d 100644
+> index b7325a25d..0aaac8af9 100644
 > --- a/Documentation/git-for-each-ref.txt
 > +++ b/Documentation/git-for-each-ref.txt
-> @@ -213,7 +213,11 @@ line is 'contents:body', where body is all of the lines after the first
->  blank line.  The optional GPG signature is `contents:signature`.  The
+> @@ -214,10 +214,11 @@ blank line.  The optional GPG signature is `contents:signature`.  The
 >  first `N` lines of the message is obtained using `contents:lines=N`.
 >  Additionally, the trailers as interpreted by linkgit:git-interpret-trailers[1]
-> -are obtained as 'contents:trailers'.
-> +are obtained as 'contents:trailers'. Non-trailer lines from the trailer block
-> +can be omitted with 'trailers:only'. Whitespace-continuations can be removed
-> +from trailers so that each trailer appears on a line by itself with its full
-> +content with 'trailers:unfold'. Both can be used together as
-> +'trailers:unfold,only'.
+>  are obtained as 'contents:trailers'. Non-trailer lines from the trailer block
+> -can be omitted with 'trailers:only'. Whitespace-continuations can be removed
+> -from trailers so that each trailer appears on a line by itself with its full
+> -content with 'trailers:unfold'. Both can be used together as
+> -'trailers:unfold,only'.
+> +can be omitted with 'trailers:only', or 'contents:trailers:only'.
+> +Whitespace-continuations can be removed from trailers so that each trailer
+> +appears on a line by itself with its full content with 'trailers:unfold' or
+> +'contents:trailers:unfold'. Both can be used together as 'trailers:unfold,only',
+> +or 'contents:trailers:unfold,only'.
 
-I know you copied the single-quote formatting from the existing line,
-but this may be a good opportunity to switch to backticks, which is what
-we usually prefer these days for literal phrases.
+Rather than enumerate each, we might do better to just say explicitly
+"contents:trailers" and "trailers" are aliases of one another. It looks
+like we don't even document %(trailers) at all here. I'd actually be in
+favor of just declaring %(trailers) the official spelling, and calling
+"%(contents:trailers)" a historical alias.
 
 > diff --git a/ref-filter.c b/ref-filter.c
-> index 84f14093c..8573acbed 100644
+> index 8573acbed..a8d4a52bd 100644
 > --- a/ref-filter.c
 > +++ b/ref-filter.c
-> @@ -178,9 +178,23 @@ static void subject_atom_parser(struct used_atom *atom, const char *arg)
->  
->  static void trailers_atom_parser(struct used_atom *atom, const char *arg)
->  {
-> -	if (arg)
-> -		die(_("%%(trailers) does not take arguments"));
-> +	struct string_list params = STRING_LIST_INIT_DUP;
-> +	int i;
-> +
-> +	if (arg) {
-> +		string_list_split(&params, arg, ',', -1);
-> +		for (i = 0; i < params.nr; i++) {
-> +			const char *s = params.items[i].string;
-> +			if (!strcmp(s, "unfold"))
-> +				atom->u.contents.trailer_opts.unfold = 1;
-> +			else if (!strcmp(s, "only"))
-> +				atom->u.contents.trailer_opts.only_trailers = 1;
-> +			else
-> +				die(_("unknown %%(trailers) argument: %s"), s);
-> +		}
+> @@ -207,8 +207,10 @@ static void contents_atom_parser(struct used_atom *atom, const char *arg)
+>  		atom->u.contents.option = C_SIG;
+>  	else if (!strcmp(arg, "subject"))
+>  		atom->u.contents.option = C_SUB;
+> -	else if (!strcmp(arg, "trailers"))
+> -		atom->u.contents.option = C_TRAILERS;
+> +	else if (skip_prefix(arg, "trailers", &arg)) {
+> +		skip_prefix(arg, ":", &arg);
+> +		trailers_atom_parser(atom, strlen(arg) ? arg : NULL);
 > +	}
->  	atom->u.contents.option = C_TRAILERS;
-> +	string_list_clear(&params, 0);
->  }
 
-This looks good (and so much nicer than the contortions from pretty.c).
-The error behavior matches what we currently do for %(align), which
-makes sense.
+We usually spell "is this an empty string?" as "*arg" rather than
+calling strlen().
 
-The trailer_opts should be zero-initialized to start with due to us
-calling memset on the whole used_atom struct.
+However, I'm not sure we need to check. As I said above, I think
+trailers_atom_parser() does the sensible thing with an empty string.
 
->  static void contents_atom_parser(struct used_atom *atom, const char *arg)
-> @@ -1035,7 +1049,7 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, struct obj
->  			name++;
->  		if (strcmp(name, "subject") &&
->  		    strcmp(name, "body") &&
-> -		    strcmp(name, "trailers") &&
-> +		    !starts_with(name, "trailers") &&
->  		    !starts_with(name, "contents"))
->  			continue;
->  		if (!subpos)
-> @@ -1060,13 +1074,12 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, struct obj
->  			append_lines(&s, subpos, contents_end - subpos, atom->u.contents.nlines);
->  			v->s = strbuf_detach(&s, NULL);
->  		} else if (atom->u.contents.option == C_TRAILERS) {
-> -			struct trailer_info info;
-> +			struct strbuf s = STRBUF_INIT;
->  
-> -			/* Search for trailer info */
-> -			trailer_info_get(&info, subpos);
-> -			v->s = xmemdupz(info.trailer_start,
-> -					info.trailer_end - info.trailer_start);
-> -			trailer_info_release(&info);
-> +			/* Format the trailer info according to the trailer_opts given */
-> +			format_trailers_from_commit(&s, subpos, &atom->u.contents.trailer_opts);
-> +
-> +			v->s = strbuf_detach(&s, NULL);
+And if we _did_ want to distinguish between
 
-And this all looks straightforward and correct.
+  %(contents:trailers:)
+
+and
+
+  %(contents:trailers)
+
+then I don't think this quite does it. It passes NULL for both cases. So
+if we really want to emulate how parse_ref_filter_atom calls it, we'd
+want:
+
+  if (!skip_prefix(arg, ":", &arg))
+	arg = NULL;
+  trailers_atom_parser(atom, arg);
 
 > diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-> index 2a9fcf713..2bd0c5da7 100755
+> index 2bd0c5da7..d9b71589f 100755
 > --- a/t/t6300-for-each-ref.sh
 > +++ b/t/t6300-for-each-ref.sh
-
-The tests are basically an adaptation of the ones from 58311c66fd
-(pretty: support normalization options for %(trailers), 2017-08-15),
-which make sense.
-
-One thing I did notice:
-
-> @@ -610,6 +613,43 @@ test_expect_success 'set up trailers for next test' '
->  	EOF
+> @@ -642,6 +642,35 @@ test_expect_success '%(trailers:only) and %(trailers:unfold) work together' '
+>  	test_cmp expect actual
 >  '
 >  
-> +test_expect_success '%(trailers:unfold) unfolds trailers' '
-> +  git for-each-ref --format="%(trailers:unfold)" refs/heads/master >actual &&
+> +test_expect_success '%(contents:trailers:unfold) unfolds trailers' '
+> +  git for-each-ref --format="%(contents:trailers:unfold)" refs/heads/master >actual &&
 > +  {
-> +    unfold <trailers
-> +    echo
-> +  } >expect &&
-> +  test_cmp expect actual
-> +'
 
-This looks like two-space indentation, when it should be a tab.
-
-> +test_expect_success '%(trailers:only) shows only "key: value" trailers' '
-> +	git for-each-ref --format="%(trailers:only)" refs/heads/master >actual &&
-> +	{
-> +		grep -v patch.description <trailers &&
-> +		echo
-> +	} >expect &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success '%(trailers:only) and %(trailers:unfold) work together' '
-> +	git for-each-ref --format="%(trailers:only,unfold)" refs/heads/master >actual &&
-> +	git for-each-ref --format="%(trailers:unfold,only)" refs/heads/master >reverse &&
-> +	test_cmp actual reverse &&
-> +	{
-> +		grep -v patch.description <trailers | unfold &&
-> +		echo
-> +	} >expect &&
-> +	test_cmp expect actual
-> +'
-
-These ones are tabs. GOod.
-
-
-> +test_expect_success '%(trailers) rejects unknown trailers arguments' '
-> +	cat >expect <<-EOF &&
-> +	fatal: unknown %(trailers) argument: unsupported
-> +	EOF
-> +  test_must_fail git for-each-ref --format="%(trailers:unsupported)" 2>actual &&
-> +  test_cmp expect actual
-> +'
-
-But this one is mixed. :)
+This has the same spaces/tabs thing going on as the previous commit.
 
 -Peff
