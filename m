@@ -2,90 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB4322047F
-	for <e@80x24.org>; Sat, 30 Sep 2017 15:12:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9A6992047F
+	for <e@80x24.org>; Sat, 30 Sep 2017 17:20:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751505AbdI3PME (ORCPT <rfc822;e@80x24.org>);
-        Sat, 30 Sep 2017 11:12:04 -0400
-Received: from mout.gmx.net ([212.227.15.18]:59627 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751048AbdI3PMB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Sep 2017 11:12:01 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LbdE3-1dUjIW0FQZ-00lCLk; Sat, 30
- Sep 2017 17:11:55 +0200
-Date:   Sat, 30 Sep 2017 17:11:53 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Jeff Hostetler <git@jeffhostetler.com>
-cc:     Philip Oakley <philipoakley@iee.org>,
-        Pavel Kretov <firegurafiku@gmail.com>, git@vger.kernel.org
-Subject: Re: [idea] File history tracking hints
-In-Reply-To: <5fb263a8-d83b-64a7-812f-fd8e3748feb6@jeffhostetler.com>
-Message-ID: <alpine.DEB.2.21.1.1709301706170.40514@virtualbox>
-References: <CAOZF3=Ouvk8ccME+fXr_T=GL1j4Gx3Hgj3ao_-GQng-noeOubg@mail.gmail.com> <E8C827ED458648F78F263F2F2712493B@PhilipOakley> <alpine.DEB.2.21.1.1709131322470.4132@virtualbox> <04DDB36236444FFD8C3668AA7B62B154@PhilipOakley> <alpine.DEB.2.21.1.1709300110350.40514@virtualbox>
- <5fb263a8-d83b-64a7-812f-fd8e3748feb6@jeffhostetler.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751406AbdI3RUy (ORCPT <rfc822;e@80x24.org>);
+        Sat, 30 Sep 2017 13:20:54 -0400
+Received: from mail-wr0-f182.google.com ([209.85.128.182]:45623 "EHLO
+        mail-wr0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751243AbdI3RUx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Sep 2017 13:20:53 -0400
+Received: by mail-wr0-f182.google.com with SMTP id m18so1448964wrm.2
+        for <git@vger.kernel.org>; Sat, 30 Sep 2017 10:20:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=vG7mZijtxO8uJfLHsU6ObZMkLWzHUfXoWtf0eYfqDfA=;
+        b=h3WkDj5ZYQAr7Oy8+43GLmq8Cu7h2HN1I6LqiVLHxcJG0vjb/w6FNK7HgIMRdCQ0bT
+         Y82X+6lYsECWE5y6a6IjgWnh+YRhbPomTRl7LCZZzq5hSUz2xhEE6AXXInv6iF81QJUK
+         J3lDS6T7ybcJq2+rcYh/Oc/zZxTPaextBxND5bHfGudktEt9Gj1OOlbeY0cGu8emLy4T
+         k2y8WLOxm6TaR7n/8b4ZhVh2VTemAFcEexQ5gJufngi9I9mCIiIbflrUzqNhj6+HjcOL
+         HQRWWos0cE0T3qLurV68izjWp8RmBiaMevucQ24XoqN2msTo244UU6/6s3JzPODNzwv/
+         oqWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=vG7mZijtxO8uJfLHsU6ObZMkLWzHUfXoWtf0eYfqDfA=;
+        b=dh9Dfx02KBZ8TzSPrXPP+ZUSupqicd7SEAGPK3qin/71Cz2i8PthUOjwc54/P75lk3
+         g0+NnVpgcjR+K4B/kCPOhqgfU5mDCpS4JhJFRWeEObHxZbBlfzM71yaFdEN/jdCdbyss
+         asgNvextypKZR+Hy8Vx683HkJhs/UpHHpARtqD1QGqScAmXnbBEVc+AECkMZ192LdnNi
+         aWi5Jbl+aV3eOTnR3Xmxzw9EJH2OR9WbNEEaJl1FRl4Rp6FKzkaMhAoV93xXBMIjm+WU
+         PhrCImVJDnNWjIrsJfJ0hmaQ36YZkUwIhLiuaYeuqGhfd9xURb27j4fqxo4uaQMmj8Fr
+         nJiw==
+X-Gm-Message-State: AHPjjUjo8LfVmkJ4uF7fOS2Tw/WOoLmgyHot2U7hX0ErUXV20mbri0+0
+        F+oRIFKLIyKHYiG46dI2yeVjoIVigkfsBEgrx0EO4Q==
+X-Google-Smtp-Source: AOwi7QAIg2OxaG173jjYrE3ntZ0eb3HKtXLh2cT2INE8qwgt+1FMYfGEM9xogYtqZL90FW5YSFHupb//JEhCqLKqTQA=
+X-Received: by 10.223.135.58 with SMTP id a55mr10174273wra.109.1506792051728;
+ Sat, 30 Sep 2017 10:20:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:rq7D8zzskp4El4jr/9vewiHolin3HiQPhDtMkTHjNYOWpImZ8fa
- oGU/822VZ5u45pB93lUZ0+Kk0SE2Q14xpV8/U83zrBq9wv4S+BnPFNul0a2t3YMs2W6CNSS
- +HSQ+OeGvHR8hwRQihn2Hp1eVVRhGZbiyYGeboTu7gvUbmSGysZQ/jtsuG86FYEi4QNQ+X5
- hBWqTYqixTl/Lt1KWziIw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Kqlz+TRnodk=:Bx/DGSqGWEwJ5mLNZX01rE
- /scg4yqScjl1IJoEpzyLdSkftE+gEvCXM+Ifpi0lz7VrIVBOTnE9uYoCqFN19bl8VyuQzwP/a
- b49VFy8zlFyUUBUssFVcGqRu9A5Ti3GAedwLSP3lSbclVlPK88pF9YgAoadZGM6Mw9TIzjSED
- /SvOlz92x6SD1ToWKS4eoNwcVt5JRqCkepV+kLWPOuwUH+B19RABy0XIxnrO60wFIhONkoxwz
- daAz7AvPqQ/g/JNY7FgMVtb8ChhKCNzlK6OlwX976SrWE28MaA5nca6ZvBEeeG9ZrcjrBj1Qa
- IHcSI74El3OqJwezzgS27lwdPkcvdraMhz6RTRpSDEpeemplqoRdwBapJ5lsOgu9SY+Fg68VU
- pqbHfqlBSjjEjPwHZNi99Se+YtrwBf0ReDVxZHMZ9YdZOF2heFIVP9aA1Ht8gUpPzYDhcj5Pj
- dYuU8K8aM+zUBdOdVm0tYWiARdckNviOdpL4RDGWws7c07n21seOnHH17tYRQiRPsugfdK5YA
- IFALs/FCga8hIaq1jfB/JI6G2/rwGxUwZwtk3vezQ8jY3EehqQuJyCYrqQnq4516yxxBRM5Ih
- Ae6z3p9tq6OZ1dCJVjlNmRUsEfaJzCZQbNaycLQUoWTh/cxfiQh8yyxdJdbygT8xwaNA8Clxx
- 6gmQtyNRplcw2VE8615vT872BMW3kL+//WEGQuaizmPGJYKxNc8aBPR19G/q4IRl8EmNm/fWE
- hNBFMTryKnJXHDqNyWzk/KWRaJ6kt9V9FCPjz12Y6OpJFsYHARm+4nxXqyid2m8xh68rSxHM/
- 0omOB+VokUyuWGpglSmfoVsuFOrOmiQHOpJmHiqdBEZ3gdyonc=
+Received: by 10.223.162.153 with HTTP; Sat, 30 Sep 2017 10:20:50 -0700 (PDT)
+From:   Thadeus Fleming <thadeus.j.fleming@gmail.com>
+Date:   Sat, 30 Sep 2017 12:20:50 -0500
+Message-ID: <CAA4Wa2sVddG_SS70Dy_womGLKW0ipAjsxR4g+yjMKscjErRjvQ@mail.gmail.com>
+Subject: git submodule add fails when using both --branch and --depth
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jeff,
+I'm running git 2.14.2 on Ubuntu 16.04.
 
-On Sat, 30 Sep 2017, Jeff Hostetler wrote:
+Compare the behavior of
 
-> On 9/29/2017 7:12 PM, Johannes Schindelin wrote:
->
-> > Therefore, it would be good to have a way to tell Git about renames
-> > explicitly so that it does not even need to use its heuristics.
-> 
-> Agreed.
-> 
-> It would be nice if every file (and tree) had a permanent GUID
-> associated with it.  Then the filename/pathname becomes a property
-> of the GUIDs.  Then you can exactly know about moves/renames with
-> minimal effort (and no guessing).  But I suppose that ship has sailed...
+> git clone --branch pu --depth 1 https://github.com/git/git git-pu
 
-Yes, that ship has sailed.
+which clones only the latest commit of the pu branch and
 
-But we still could teach Git to understand certain "hints" (that would be
-really more like "cluebats").
+> mkdir tmp && cd tmp && git init
+> git submodule add --branch pu --depth 1 https://github.com/git/git \
+  git-pu
 
-So while we cannot have any GUIDs that are persistent across renames/moves
-(and which users would probably get wrong all the time by using
-third-party tools that are not Git-rename aware), we have unique
-identifiers: the object names.
+which gives the error
 
-And we could easily have a lookup table of pairs of object names, telling
-Git that they were source and target of a rename. When Git would try to
-figure out whether anything was renamed, it would first look at that
-lookup table and save itself a lot of work (and opportunity to fail) and
-short-cut the rename detection.
+fatal: 'origin/pu' is not a commit and a branch 'pu' cannot be created
+from it
+Unable to checkout submodule 'git-pu'
 
-Ciao,
-Johannes
+Investigating further, there is indeed only one commit in the local repo:
+
+> cd git-pu
+> git log --oneline | wc -l
+1
+
+But that commit is the head of master.
+
+> git branch -a
+* master                                 remotes/origin/master
+  remotes/origin/HEAD -> origin/master
+
+This appears to be because git-submodule--helper does not accept a
+--branch option. Using the --depth N option causes it to only clone N
+commits from the default branch, which generally do not include the
+desired branch. Thus, the next step,
+
+git checkout -f -q -B "$branch" "origin/$branch"
+
+fails, and provides the rather confusing error message above.
+
+I'd suggest that git-submodule--helper learn a --branch option
+consistent with git clone, and if that is impossible, that
+git submodule add rejects the simultaneous use of both the --branch and
+--depth options.
+
+
+
+--tjf
