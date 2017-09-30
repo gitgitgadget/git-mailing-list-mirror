@@ -2,88 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 041CB20281
-	for <e@80x24.org>; Sat, 30 Sep 2017 00:08:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB11D20281
+	for <e@80x24.org>; Sat, 30 Sep 2017 06:22:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752578AbdI3AH6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Sep 2017 20:07:58 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60834 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752505AbdI3AH6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Sep 2017 20:07:58 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3A9D3A8CC5;
-        Fri, 29 Sep 2017 20:07:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=eHUc2iDz67UhpyH8cJSj22jVDmQ=; b=Rsol28
-        24rHfuyuj5ecV3dTdfcmNolLDGg5epgAc4MbVeCZUX8+QbTzZuq3Dw+CpxiKB3tw
-        XLWJtKXiiR3rkjhL4KZtmXsA0XYrH7WTV2U6M9ZeLJsUBkwFbFvFGyV6+PAvWBk9
-        OM53f3f5GVyxTGliuuxkqO1VCULZlH1amGnY8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=xLUpPYXOWfZVjGfAKj3in0+nuiyN1I0s
-        SK5+FeKxFbYf6C2fYkKiNYQlmUoza8ceDZwI5E9Cb1LBoAdUMjOb2OUTpVoBsCPU
-        DltatPlC/zm0HG0KbbI2gADX1Tdrx694OJbsWcXG6dfNyeEE5ecWF+lHpCJkiKVE
-        WdYpMQ30V9o=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3239FA8CC4;
-        Fri, 29 Sep 2017 20:07:55 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A587AA8CC3;
-        Fri, 29 Sep 2017 20:07:54 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>
-Subject: Re: [PATCH Outreachy] mru: use double-linked list from list.h
-References: <CAP8UFD24A8rxMfLMFmSStWnBMMeB58SqUdNoo3niQuc7LqRMMg@mail.gmail.com>
-        <0102015ec7a3424b-529be659-bdb6-42c4-a48f-db264f33d53a-000000@eu-west-1.amazonses.com>
-        <20170928224244.pi34zwifnornssqk@sigill.intra.peff.net>
-        <CAP8UFD13obkLWyuCGUpFxryr8DWfQ8W4JNn04ajO50PvF0SnXQ@mail.gmail.com>
-        <20170929072354.fw4eclt56dmfj4a5@sigill.intra.peff.net>
-        <CAP8UFD1-9dYSX-VKZSPN9Ei75V8mGC-wusieL45ArxxJ08tO9Q@mail.gmail.com>
-        <CAL21BmkcVSEhEK+tAE-RNVabb0pnokYwbagueUrp9giZ3zqT8A@mail.gmail.com>
-        <20170929233723.c7ixg5fb3flbgaom@sigill.intra.peff.net>
-Date:   Sat, 30 Sep 2017 09:07:53 +0900
-In-Reply-To: <20170929233723.c7ixg5fb3flbgaom@sigill.intra.peff.net> (Jeff
-        King's message of "Fri, 29 Sep 2017 19:37:23 -0400")
-Message-ID: <xmqq7ewhvyjq.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 683FFB3C-A573-11E7-85C9-575F0C78B957-77302942!pb-smtp2.pobox.com
+        id S1751582AbdI3GWs (ORCPT <rfc822;e@80x24.org>);
+        Sat, 30 Sep 2017 02:22:48 -0400
+Received: from mail-pg0-f50.google.com ([74.125.83.50]:51137 "EHLO
+        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750984AbdI3GWr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Sep 2017 02:22:47 -0400
+Received: by mail-pg0-f50.google.com with SMTP id p5so819315pgn.7
+        for <git@vger.kernel.org>; Fri, 29 Sep 2017 23:22:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id;
+        bh=baQES85LTl11SUnYq06Z4UrX82XYXOiQ6zD5tW6ceDE=;
+        b=K5apWFAGvenyPKX9GSOWwb//YwKNRY2XwKPOQETUGtHe8pX7ZSvXy/ND1VZqx0ZBZo
+         nl1sZRZbIL35erpd8QinCscHXDyqdmV/apZbvCMPoRkERUAXXsKHpwgizOqOt0OhxUuq
+         jV6561qf1U25DLCm2njUGrR9x1qRNSl1oWBTK+ax7Q9glZEE+M9TqTBwA9CHSNVB55KW
+         nLS4wQ++aHYm/nM+zGkt018mfbem8O45L3KcPJEntf+Azy90N55KFR7qc2/HdR6qCPFr
+         57dFp68mkYfZiVWbMl4jCpr5Uo3dWU2YgSjb+dAna5P2ENbgkfSG8diBCQy9f3cNOaRi
+         Ij8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=baQES85LTl11SUnYq06Z4UrX82XYXOiQ6zD5tW6ceDE=;
+        b=rAB0m/buESuVccGpWt/cKnRvR/2IYYh3Id4CxDiEj68sDi/cUYS4eoxAeOEdjOwACA
+         TbDq28jjkz3KVjFJirAqEfJzczCIwB+iAkbrd1URFQAh2bAvIRVXYVkJz9/Hp5fxeRf+
+         WFbPuRYzhkeVCwWbSV6lFEGKlbt4MjNUMRHvDt7MvpO8dFZ9AUficZzHvYSriWll+mr/
+         EvT7T9lfvSLdy2tPCB15BYnQwgSE4caPJgTSvvN0GMqsGYprcsqbjDS6dNX+x37uxizZ
+         6dH+D4ubFsVkNNMswQAAKnomBGyoTWZLm4GYd0JmFYw7WozViRbEbQByTDShSFlx08PO
+         netQ==
+X-Gm-Message-State: AHPjjUjxFptHzfu9h6JwoCcNX4N5Um8UetyZAve5E48D0NYxddkkDbdP
+        Fe/RhlHD8b6+kY5/hRrB2+j7a36Xwug=
+X-Google-Smtp-Source: AOwi7QB1MMLI3XKl0Ydw3KEwD45vIHVzoOKYHtrxUW8xx7JY7AU1OJ1EEML+QuxWK5xTRc6zG/zJpQ==
+X-Received: by 10.99.99.197 with SMTP id x188mr7702530pgb.90.1506752566493;
+        Fri, 29 Sep 2017 23:22:46 -0700 (PDT)
+Received: from localhost ([205.175.97.239])
+        by smtp.gmail.com with ESMTPSA id 69sm704676pfl.5.2017.09.29.23.22.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 29 Sep 2017 23:22:45 -0700 (PDT)
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, peff@peff.net, Taylor Blau <me@ttaylorr.com>
+Subject: [PATCH 0/5] Support %(trailers) arguments in for-each-ref(1)
+Date:   Fri, 29 Sep 2017 23:22:33 -0700
+Message-Id: <20170930062238.87077-1-me@ttaylorr.com>
+X-Mailer: git-send-email 2.14.1.145.gb3622a4ee
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Hi,
 
-> Yes, I think we could just call this "list_move_to_front()" or
-> something. The fact that it's operating on a list called
-> "packed_git_mru" is probably sufficient to make it clear that the
-> purpose is managing recentness.
+Attached is a patch to extend Peff's recent work of adding parsing options to
+"--pretty=%(trailers)" by supporting those same options in git-for-each-ref(1).
 
-I earlier said I wasn't sure, but I fully agree with your envisioned
-endgame state, my understanding of which is that we will not have an
-API that is only to be used to manage a MRU list (hence there will
-be no mru.[ch] in that future), as there is very small MRU-specific
-operation to be offered anyway.  Namely, mru_mark() that is to be
-used to "mark the fact that the item was used---do whatever necessary
-to maintain the MRU list".
+In summary, this patch adds correct behavior for the following options, when
+given to git-for-each-ref(1):
 
-Instead, everybody understands how the list API works, and the fact
-that one instance of list_head is called MRU is sufficient to see
-that use of "move this to the front of the list" function means we
-are marking the item as most-recently-used.
+  * --format="%(trailers:only)"
 
-Thanks.
+  * --format="%(trailers:unfold,unfold)"
+
+  * --format="%(contents:trailers:only)"
+
+  * --format="%(contents:trailers:unfold,unfold)"
+
+I have changed the syntax for specifying multiple sub-arguments in
+%(contents:trailers) and %(trailers) atoms to be ","-delimited instead of
+%":"-delimited. This is consistent with similar atoms, and is described in
+%greater detail in "pretty.c: delimit "%(trailers)" arguments with ","".
+
+I am also new around here: this is my first patch that I am sending to the
+mailing list, so this process is entirely new to me. My current focus is helping
+maintain Git LFS [1] at GitHub. If I have made any mistakes in formatting these
+patches or sending them, please let me know :-).
+
+Thank you in advance.
+
+--
+- Taylor
+
+[1]: https://git-lfs.github.com
+
+Taylor Blau (5):
+  pretty.c: delimit "%(trailers)" arguments with ","
+  t6300: refactor %(trailers) tests
+  ref-filter.c: add trailer options to used_atom
+  ref-filter.c: use trailer_opts to format trailers
+  ref-filter.c: parse trailers arguments with %(contents) atom
+
+ Documentation/git-for-each-ref.txt |  7 ++-
+ pretty.c                           | 13 +++---
+ ref-filter.c                       | 38 +++++++++++-----
+ t/t4205-log-pretty-formats.sh      |  4 +-
+ t/t6300-for-each-ref.sh            | 88 +++++++++++++++++++++++++++++++++++++-
+ 5 files changed, 129 insertions(+), 21 deletions(-)
+
+--
+2.14.1.145.gb3622a4ee
+
