@@ -2,97 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 29E072047F
-	for <e@80x24.org>; Sat, 30 Sep 2017 15:01:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB4322047F
+	for <e@80x24.org>; Sat, 30 Sep 2017 15:12:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751217AbdI3PBL (ORCPT <rfc822;e@80x24.org>);
-        Sat, 30 Sep 2017 11:01:11 -0400
-Received: from cpanel2.indieserve.net ([199.212.143.6]:42084 "EHLO
-        cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751028AbdI3PBL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Sep 2017 11:01:11 -0400
-Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:54148 helo=localhost.localdomain)
-        by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1dyJGQ-0002QB-08; Sat, 30 Sep 2017 11:01:10 -0400
-Date:   Sat, 30 Sep 2017 11:01:08 -0400 (EDT)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Kevin Daudt <me@ikke.info>
-cc:     Git Mailing list <git@vger.kernel.org>
-Subject: Re: "man git-checkout", man page is inconsistent between SYNOPSIS
- and details
-In-Reply-To: <20170930143258.GA20886@alpha.vpn.ikke.info>
-Message-ID: <alpine.LFD.2.21.1709301100320.2982@localhost.localdomain>
-References: <alpine.LFD.2.21.1709300523190.27819@localhost.localdomain> <20170930143258.GA20886@alpha.vpn.ikke.info>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1751505AbdI3PME (ORCPT <rfc822;e@80x24.org>);
+        Sat, 30 Sep 2017 11:12:04 -0400
+Received: from mout.gmx.net ([212.227.15.18]:59627 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751048AbdI3PMB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Sep 2017 11:12:01 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LbdE3-1dUjIW0FQZ-00lCLk; Sat, 30
+ Sep 2017 17:11:55 +0200
+Date:   Sat, 30 Sep 2017 17:11:53 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Jeff Hostetler <git@jeffhostetler.com>
+cc:     Philip Oakley <philipoakley@iee.org>,
+        Pavel Kretov <firegurafiku@gmail.com>, git@vger.kernel.org
+Subject: Re: [idea] File history tracking hints
+In-Reply-To: <5fb263a8-d83b-64a7-812f-fd8e3748feb6@jeffhostetler.com>
+Message-ID: <alpine.DEB.2.21.1.1709301706170.40514@virtualbox>
+References: <CAOZF3=Ouvk8ccME+fXr_T=GL1j4Gx3Hgj3ao_-GQng-noeOubg@mail.gmail.com> <E8C827ED458648F78F263F2F2712493B@PhilipOakley> <alpine.DEB.2.21.1.1709131322470.4132@virtualbox> <04DDB36236444FFD8C3668AA7B62B154@PhilipOakley> <alpine.DEB.2.21.1.1709300110350.40514@virtualbox>
+ <5fb263a8-d83b-64a7-812f-fd8e3748feb6@jeffhostetler.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel2.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel2.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel2.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Provags-ID: V03:K0:rq7D8zzskp4El4jr/9vewiHolin3HiQPhDtMkTHjNYOWpImZ8fa
+ oGU/822VZ5u45pB93lUZ0+Kk0SE2Q14xpV8/U83zrBq9wv4S+BnPFNul0a2t3YMs2W6CNSS
+ +HSQ+OeGvHR8hwRQihn2Hp1eVVRhGZbiyYGeboTu7gvUbmSGysZQ/jtsuG86FYEi4QNQ+X5
+ hBWqTYqixTl/Lt1KWziIw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Kqlz+TRnodk=:Bx/DGSqGWEwJ5mLNZX01rE
+ /scg4yqScjl1IJoEpzyLdSkftE+gEvCXM+Ifpi0lz7VrIVBOTnE9uYoCqFN19bl8VyuQzwP/a
+ b49VFy8zlFyUUBUssFVcGqRu9A5Ti3GAedwLSP3lSbclVlPK88pF9YgAoadZGM6Mw9TIzjSED
+ /SvOlz92x6SD1ToWKS4eoNwcVt5JRqCkepV+kLWPOuwUH+B19RABy0XIxnrO60wFIhONkoxwz
+ daAz7AvPqQ/g/JNY7FgMVtb8ChhKCNzlK6OlwX976SrWE28MaA5nca6ZvBEeeG9ZrcjrBj1Qa
+ IHcSI74El3OqJwezzgS27lwdPkcvdraMhz6RTRpSDEpeemplqoRdwBapJ5lsOgu9SY+Fg68VU
+ pqbHfqlBSjjEjPwHZNi99Se+YtrwBf0ReDVxZHMZ9YdZOF2heFIVP9aA1Ht8gUpPzYDhcj5Pj
+ dYuU8K8aM+zUBdOdVm0tYWiARdckNviOdpL4RDGWws7c07n21seOnHH17tYRQiRPsugfdK5YA
+ IFALs/FCga8hIaq1jfB/JI6G2/rwGxUwZwtk3vezQ8jY3EehqQuJyCYrqQnq4516yxxBRM5Ih
+ Ae6z3p9tq6OZ1dCJVjlNmRUsEfaJzCZQbNaycLQUoWTh/cxfiQh8yyxdJdbygT8xwaNA8Clxx
+ 6gmQtyNRplcw2VE8615vT872BMW3kL+//WEGQuaizmPGJYKxNc8aBPR19G/q4IRl8EmNm/fWE
+ hNBFMTryKnJXHDqNyWzk/KWRaJ6kt9V9FCPjz12Y6OpJFsYHARm+4nxXqyid2m8xh68rSxHM/
+ 0omOB+VokUyuWGpglSmfoVsuFOrOmiQHOpJmHiqdBEZ3gdyonc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 30 Sep 2017, Kevin Daudt wrote:
+Hi Jeff,
 
-> On Sat, Sep 30, 2017 at 05:27:22AM -0400, Robert P. J. Day wrote:
-> >
-> >   just noticed that in "man git-checkout", the SYNOPSIS contains the
-> > line:
-> >
-> >   git checkout [-p|--patch] [<tree-ish>] [--] [<paths>...]
-> >
-> > implying that <paths> is optional, but further down in the
-> > DESCRIPTION, one reads:
-> >
-> >   git checkout [-p|--patch] [<tree-ish>] [--] <pathspec>...
-> >
-> > suggesting that <pathspec> is required.
-> >
->
-> Hello Robert, thank you for this report.
->
-> Git checkout has 2 major modes of operating:
->
-> 1. Checking out branches (and then update your working tree to match that
->   commit.
-> 2. Checking out 1 or more files from a commit.
->
-> The first four lines of the synopsis match mode nr. 1. The next two
-> belong to mode nr. 2.
->
-> The pathspec in the synopsis line you are quoting is required, because
-> that's how you tell git you want mode nr 2. That's why it's not
-> mentioned between [].  The last section under description explains that
-> mode.
->
-> Do you feel this distinction needs to be made more clear?
+On Sat, 30 Sep 2017, Jeff Hostetler wrote:
 
-  hmmmmm ... let me read it again before i answer that.
+> On 9/29/2017 7:12 PM, Johannes Schindelin wrote:
+>
+> > Therefore, it would be good to have a way to tell Git about renames
+> > explicitly so that it does not even need to use its heuristics.
+> 
+> Agreed.
+> 
+> It would be nice if every file (and tree) had a permanent GUID
+> associated with it.  Then the filename/pathname becomes a property
+> of the GUIDs.  Then you can exactly know about moves/renames with
+> minimal effort (and no guessing).  But I suppose that ship has sailed...
 
-rday
+Yes, that ship has sailed.
 
--- 
+But we still could teach Git to understand certain "hints" (that would be
+really more like "cluebats").
 
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                        http://crashcourse.ca
+So while we cannot have any GUIDs that are persistent across renames/moves
+(and which users would probably get wrong all the time by using
+third-party tools that are not Git-rename aware), we have unique
+identifiers: the object names.
 
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
+And we could easily have a lookup table of pairs of object names, telling
+Git that they were source and target of a rename. When Git would try to
+figure out whether anything was renamed, it would first look at that
+lookup table and save itself a lot of work (and opportunity to fail) and
+short-cut the rename detection.
+
+Ciao,
+Johannes
