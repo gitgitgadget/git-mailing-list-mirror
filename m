@@ -2,85 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 81FDE20281
-	for <e@80x24.org>; Sun,  1 Oct 2017 10:05:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA02920A10
+	for <e@80x24.org>; Sun,  1 Oct 2017 13:23:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751003AbdJAKFt (ORCPT <rfc822;e@80x24.org>);
-        Sun, 1 Oct 2017 06:05:49 -0400
-Received: from cpanel2.indieserve.net ([199.212.143.6]:38815 "EHLO
-        cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750967AbdJAKFs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Oct 2017 06:05:48 -0400
-Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:46030 helo=localhost.localdomain)
-        by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1dyb86-0007lf-MU; Sun, 01 Oct 2017 06:05:46 -0400
-Date:   Sun, 1 Oct 2017 06:05:44 -0400 (EDT)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Kevin Daudt <me@ikke.info>, Git Mailing list <git@vger.kernel.org>
-Subject: Re: "man git-checkout", man page is inconsistent between SYNOPSIS
- and details
-In-Reply-To: <xmqqo9prv86l.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.LFD.2.21.1710010603340.17338@localhost.localdomain>
-References: <alpine.LFD.2.21.1709300523190.27819@localhost.localdomain> <20170930143258.GA20886@alpha.vpn.ikke.info> <alpine.LFD.2.21.1709301800060.7869@localhost.localdomain> <xmqqo9prv86l.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1751281AbdJANXZ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 1 Oct 2017 09:23:25 -0400
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:44805 "EHLO
+        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751087AbdJANXY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Oct 2017 09:23:24 -0400
+Received: by mail-wm0-f46.google.com with SMTP id b82so1815533wmh.1
+        for <git@vger.kernel.org>; Sun, 01 Oct 2017 06:23:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=q3E/Bqm9Gz6D2beKaE/V6ShU8nEwsmDSldR8cKyl500=;
+        b=sB9H0fAY2xjkYCEKPdr/to7C+wb6lM7cW9F8MMCogKTh/FtABzobl5avhw/Z2Y64TA
+         aynvi9LEzJ5pSnLyfMAW+BM/Vj99d+jGAXHAmHfdKoLZUwUIcdRG3LbxLyLuLdo36j7t
+         yZW6kLXUnNgUeSOROznSO3RoE+jiEZXA9HcOk7aHaG52pM2O1xCZCEEzENKCdUxeQY8B
+         GU4SJR+yJwubMVvVFh4QYiHeurcdFRlrzIXW+HJYnJQHEEpdERJSv9Lo4ndpQkiVGp/4
+         b7PIWMECwP3fEwJD9DdwKiW5Wg9V4IAhriG2BycphBAGk9ranjzmCdT+iqQGb3nNb1Vz
+         3Kmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=q3E/Bqm9Gz6D2beKaE/V6ShU8nEwsmDSldR8cKyl500=;
+        b=iYCcUcPBYA9K3HSWMWFS/eVOio9OFftE8sge8qcLXzqYuFrOcbnuDYMYy3bcVXl1cd
+         +HZV9Xqdxx0fgI9xUnBDg7UZ7C0mVz1UZqIQU0MYtyAP1ydFO0IzP1B1uDQ1ViejYRr4
+         0gt29PkGjIeGO1mNajKzrMMpzGhiB1Decumwa+Lv8eE7AmmCuECBnWIS5ThgH0JfHoy7
+         M3S55CZaTB5WG94tMaAFXnzOp0QBqqd1cCwn+f54tmS1PPLz+3mkMv/KKlWwmWuawBxb
+         sMg+GjG+kgk0Xk6EJ9Daa3QrYAFn+BvUhp3OuFhtgV2fTbotaGfzzidzbS4R5Tz4D1In
+         Ka/w==
+X-Gm-Message-State: AHPjjUhAjG+nnXtMDX350OZKEnTkwA4Q21QJgSJCXPciWV8db7dwKjUM
+        AnyK981PJWOh2yZE4tQSqVB14UNisTcCX0w2+g==
+X-Google-Smtp-Source: AOwi7QB0xbG2ySCoOH44xcA1a3DLKOmk8wuygoJ+g6v1uge6kc9qkbHaCA8G0SocwJjYLxt6w2Zz8Vpk23LILz4ufWE=
+X-Received: by 10.80.188.2 with SMTP id j2mr17204943edh.128.1506864203425;
+ Sun, 01 Oct 2017 06:23:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel2.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel2.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel2.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Received: by 10.80.146.166 with HTTP; Sun, 1 Oct 2017 06:23:23 -0700 (PDT)
+From:   Yubin Ruan <ablacktshirt@gmail.com>
+Date:   Sun, 1 Oct 2017 21:23:23 +0800
+Message-ID: <CAJYFCiNj22McSaKcCVMDVgah5cAqHYHja_b2jj6VAaAA=zSM1g@mail.gmail.com>
+Subject: will git rebase has side effect
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 1 Oct 2017, Junio C Hamano wrote:
+Suppose that I have such a history of commit locally:
 
-> "Robert P. J. Day" <rpjday@crashcourse.ca> writes:
->
-> >   it's simply a matter of the forms not matching between the SYNOPSIS
-> > and the DESCRIPTION sections. am i making sense?
->
-> I think the whole thing is wrong and the root cause is because the
-> (relatively newer) description of the "--patch" mode lazily tried to
-> piggy-back the description of existing "check out from the index or
-> tree-ish" mode, ending up in a confusing description...
+A --> B --> C --> D
 
-  ... big snip ...
+If I then add a few more commits locally
 
-ok, i'm going to have to digest all that; pretty sure someone else
-will need to change the man page to clarify the apparent inconsistency
-i was referring to:
+A --> B --> C --> D --> E --> F --> G
 
-  SYNOPSIS
-       git checkout [-p|--patch] [<tree-ish>] [--] [<paths>...]
-  DESCRIPTION
-       git checkout [-p|--patch] [<tree-ish>] [--] <pathspec>...
+And then I do a rebase and squash F and G into one single commit H.
+What side effect will this rebase have? How will this affect "git push
+origin master"?
 
-and on that note, i'll get back to proofreading.
-
-rday
-
--- 
-
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                        http://crashcourse.ca
-
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
+Yubin
