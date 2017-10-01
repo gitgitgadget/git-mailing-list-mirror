@@ -2,95 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 44B2020A10
-	for <e@80x24.org>; Sun,  1 Oct 2017 15:44:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BDD8820A10
+	for <e@80x24.org>; Sun,  1 Oct 2017 16:06:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751118AbdJAPof (ORCPT <rfc822;e@80x24.org>);
-        Sun, 1 Oct 2017 11:44:35 -0400
-Received: from mout.gmx.net ([212.227.17.21]:63821 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750965AbdJAPoe (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Oct 2017 11:44:34 -0400
-Received: from fermat.fritz.box ([92.76.241.219]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MW9TR-1dnWFu3Wnp-00XJJD; Sun, 01
- Oct 2017 17:44:28 +0200
-From:   Stephan Beyer <s-beyer@gmx.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Stephan Beyer <s-beyer@gmx.net>,
-        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v2] Add a comment to .clang-format about the meaning of the file
-Date:   Sun,  1 Oct 2017 17:44:25 +0200
-Message-Id: <20171001154425.5568-1-s-beyer@gmx.net>
-X-Mailer: git-send-email 2.14.2.677.g5a59ab275
-In-Reply-To: <20170929224505.GN19555@aiede.mtv.corp.google.com>
-References: <20170929224505.GN19555@aiede.mtv.corp.google.com>
-X-Provags-ID: V03:K0:DtTJ7Vr7E2Tuh7ROpzXB63YjJt2BW0f6TLc3cWUCRCo5CEpx2t0
- BJMkY6M+3y0NPK2spEycCPv6+azHc5T46zXW/PkvOjIdNwUkyl1cqlglCBAVYhlTF/vvBSQ
- ptDqNWYE1j1rxOOab0rVcJda5lTp2k1IkCEoJQVzE6qLhSByUe9qG35oSk7Z2K4b73sv0qw
- yWoWfYt21pngGpsPml5aw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:wbAUyakwcMM=:kO5veBWzpr6HZJj925DrG6
- bf78tvrCTgezUEfKq5CqEkaDfzlJKDuEbsFltTddew3DSYA+lxHp726PDzj15HV40zL/GAwmu
- okD4dXCpjMmoHcFCJ9ouagWDo6fyVNRoapfHty+ZX3wPnOX4SZe3mq+3EACOKWAecJ8t6BjHN
- VQ1Z9r3HXNeAsbrRydZPiUpvqJA5JuoPmo26vVEsOCaI7FS71nDDCR8yq/wIxhbB5jQwl1/5Y
- trAeH9Z38Uai/FMb2v5EvRMU9l3QLoPUWPi+sxmkk7zbDUYOik2Q978DUb8PHeSpJQ5TBbyik
- id/T/RzDjm93zWnC4ubm+5WQ2dzcVf9wQRn+ExLsDpfbxbsDYTLZfTXs0eWRu43eaEquuWNdL
- L83i71WqlxeiuPKdIUxFdnS4MqkZGUyOatLRz2kawjDxY5HcGXFg7sG3MZ2rnZ8dZHsiAqIh2
- eXtp3RynzrYTx9jt37Gcke5tPNEzj2qJztYN9S6mh/1dEHJkeOJWzk5q0d9cDnGoHdpThg9xl
- UpC/roFAYQIhMmh0+EH/7EQRZPuWswIECGkrcMDqsGeyQJBrP26CAcd3XK3e23pmOLdFqlUaH
- 9AAZ2n/QNPMWWa0CeBj1fMITdHndR5s2ruy2Cee4Z5w0hNJ8gkrOsvJ8b4RJRsYDm25EFNBx7
- 3ckBphLX8NRlc5p3BVvHkH4kL42tgTOTgFVoE0tlkU3TYtUChGMD8Sf2okrExKz+mc9hIoWdq
- Bzv5bSJn9P/DzQPo0zmUhuacEAnzfNU6dMQC9RawX8LoIvgm66/B3mW9WYlQ14D7136FxGxsn
- qgO2EJpEFVdgYVk/jGiEOQLfsnvkg==
+        id S1751128AbdJAQGk (ORCPT <rfc822;e@80x24.org>);
+        Sun, 1 Oct 2017 12:06:40 -0400
+Received: from mail-wm0-f44.google.com ([74.125.82.44]:55201 "EHLO
+        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751093AbdJAQGj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Oct 2017 12:06:39 -0400
+Received: by mail-wm0-f44.google.com with SMTP id i124so6495781wmf.3
+        for <git@vger.kernel.org>; Sun, 01 Oct 2017 09:06:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=2XXs0RKLdO8i9WouQANr9KImNqeg8vgqoqrqbOgD9a4=;
+        b=M/ZdYFE9MIRdQy2hhJbfK4ja2bTXNJSg4e1f7NrCTTHKAfzHKbF9RJhgPkOpq0zET4
+         S4cO+7/W9tl5m9kzK3lxgW2+rno2IQWBoTSfwh0yhcQLqfzxtAJqYLNSfgf/8kwcUS2J
+         +qHua5eBc7jSHzIOW4pxuo9fsLZJLwmkuvLyOVmQe1qJNynmTabtZfU4lcAhQmTNq+J1
+         fFD9XDNWsqqYxRTzXH2P6/p4C06fu5vIYXK0LGO6Scf0dWAiGiZyCx8SHawNSdQw/ztc
+         h8ySDWaeAEbaDY7qetglW20pyr+tp4kFUDHAqfojQCNfWoOojT2Bl4kLFPN6JU4mp4ql
+         JEKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=2XXs0RKLdO8i9WouQANr9KImNqeg8vgqoqrqbOgD9a4=;
+        b=MSr4PYBimqWT60gnjMgrljcxtqbIHHMfpdwIFBSP3THtxc4+IlQYk5+JXERtdg2U3X
+         uM8u2p7yNsn0fHUH/TxUp8sCVhCHNo6kKI54oTEJVHU+WtfiYndNetzF41o3Khtl2yNc
+         I+wi/JgeuV7i1odlMCeO4m6bSbTDgYrVa30wpoqCMpMiZZ+sa9AOmQEwJh+K2caTJCTA
+         96cSpc8Rz+85wdp+Ixx9h2zl9oiJ+JeN+2wmo1O4RNAgu1wRMU8LNGjvG8/XzKxvz1Iv
+         L+wM2QymEaB+5d07g5G184mhy//qeWTmfzRkkfkSXmXhcKAWntJYyQWybmO0YBRcKcGV
+         pfmw==
+X-Gm-Message-State: AHPjjUju9dphNODUVVXztXKV8X3OPQ8q0F1GiogJTW0BqqNvylXbOWTW
+        Iii4CeI2JpreKnwLsFJfLH9V9SC/C6cEIj1mnQ==
+X-Google-Smtp-Source: AOwi7QCivTxXkXdPtQXPH6+uZECnDjuu+Qn5BZzRH7mUHdpvKWrlX+2o6sQBgzGwaXsryhkwJBGr6h12frtyNWuTvAA=
+X-Received: by 10.80.165.141 with SMTP id a13mr16640163edc.200.1506873998464;
+ Sun, 01 Oct 2017 09:06:38 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.80.146.166 with HTTP; Sun, 1 Oct 2017 09:06:38 -0700 (PDT)
+In-Reply-To: <20171001141719.GB20406@alpha.vpn.ikke.info>
+References: <CAJYFCiNj22McSaKcCVMDVgah5cAqHYHja_b2jj6VAaAA=zSM1g@mail.gmail.com>
+ <20171001134155.GA20406@alpha.vpn.ikke.info> <20171001141719.GB20406@alpha.vpn.ikke.info>
+From:   Yubin Ruan <ablacktshirt@gmail.com>
+Date:   Mon, 2 Oct 2017 00:06:38 +0800
+Message-ID: <CAJYFCiNmDpNNdbRsN-F-mOtcOEVruawEKUtA9h3BAFZZWKStsQ@mail.gmail.com>
+Subject: Re: will git rebase has side effect
+To:     Kevin Daudt <me@ikke.info>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Having a .clang-format file in a project can be understood in a way that code
-has to be in the style defined by the .clang-format file, i.e., you just have
-to run clang-format over all code and you are set. This is not the case in the
-Git project, which is now reflected by a comment in the beginning of the file.
+2017-10-01 22:17 GMT+08:00 Kevin Daudt <me@ikke.info>:
+> Forgot to cc the mailing list.
+>
+> On Sun, Oct 01, 2017 at 09:23:23PM +0800, Yubin Ruan wrote:
+>> Suppose that I have such a history of commit locally:
+>>
+>> A --> B --> C --> D
+>>
+>> If I then add a few more commits locally
+>>
+>> A --> B --> C --> D --> E --> F --> G
+>>
+>> And then I do a rebase and squash F and G into one single commit H.
+>> What side effect will this rebase have? How will this affect "git push
+>> origin master"?
+>>
+>> Yubin
+>
+> Hello Yubin,
+>
+> So the situation is this:
+>
+>             [origin/master]
+>                   |
+> A --> B --> C --> D --> E --> F --> G
+>                                     |
+>                                  [master]
+>
+> Then you squash (F' is the result of squashing F and G):
+>
+>             [origin/master]
+>                   |
+> A --> B --> C --> D --> E --> F'
+>                               |
+>                            [master]
+>
+> When you want to push now, it's just as if you just created just two
+> commits in the first place, and you can just push normally (assuming no
+> one else has pushed in the mean time.
 
-Additionally, the working clang-format version is mentioned because the config
-directives change from time to time (in a compatibility-breaking way).
+Hmm..You mean, if I do a squash, it will only affects those commits
+that has been squashed, not any other commits, and their parent-child
+relations remain the same?
 
-Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
----
+Yubin
 
-Notes:
-    On 10/01/2017 04:45 AM, Junio C Hamano wrote:
-    > it makes as if a random patch to "make it
-    > conform" without thinking if the rules make sense were a welcome
-    > addition, which is absolutely the last signal we would want to send
-    > to the readers.
-    
-    Right. I dropped that last sentence and replaced it by a sentence about human
-    aesthetics judgement overruling mechanical rules -- I think that's somehow quoted
-    from a comment of yours on the list.
-
- .clang-format | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
-
-diff --git a/.clang-format b/.clang-format
-index 3ede2628d..041b7be03 100644
---- a/.clang-format
-+++ b/.clang-format
-@@ -1,4 +1,8 @@
--# Defaults
-+# This file is an example configuration for clang-format 5.0.
-+#
-+# Note that this style definition should only be understood as a hint
-+# for writing new code. In the end, human aesthetics judgement overrules
-+# mechanical rules.
- 
- # Use tabs whenever we need to fill whitespace that spans at least from one tab
- # stop to the next one.
--- 
-2.14.2.677.g5a59ab275
-
+> The situation is different when you have pushed already:
+>
+>                               [origin/master]
+>                                     |
+> A --> B --> C --> D --> E --> F --> G
+>                                     |
+>                                  [master]
+>
+> Then after you squash, the history would look as follows:
+>
+>                               [origin/master]
+>                                     |
+> A --> B --> C --> D --> E --> F --> G
+>                          \
+>                           --> F'
+>                               |
+>                            [master]
+>
+> This sitation would look to git like you created F', and someone else
+> had pushed F and G. It will reject the push, saying you would need to
+> merge these changes first (but you don't want this, because you are
+> merging the same changes together).
+>
+> To solve this, you can use git push --force-with-lease=master origin,
+> which will force the push, overwriting the history the remote already
+> had.
+>
+> Hope this helps, Kevin.
+>
+> nb. --force-with-lease is a safer version of just (-f|--force), because
+> it will prevent you from overwriting history you don't have locally, for
+> example when someone else did push already.
+>
+>
