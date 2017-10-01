@@ -7,111 +7,89 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6EAA020A10
-	for <e@80x24.org>; Sun,  1 Oct 2017 14:44:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7FB4C20A10
+	for <e@80x24.org>; Sun,  1 Oct 2017 14:45:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751279AbdJAOox (ORCPT <rfc822;e@80x24.org>);
-        Sun, 1 Oct 2017 10:44:53 -0400
-Received: from mout.web.de ([212.227.15.3]:56890 "EHLO mout.web.de"
+        id S1751043AbdJAOpR (ORCPT <rfc822;e@80x24.org>);
+        Sun, 1 Oct 2017 10:45:17 -0400
+Received: from mout.web.de ([212.227.15.14]:56188 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751028AbdJAOov (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Oct 2017 10:44:51 -0400
+        id S1750981AbdJAOpQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Oct 2017 10:45:16 -0400
 Received: from [192.168.178.36] ([91.20.57.42]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M3jsn-1d7wJ52qSv-00rHvW; Sun, 01
- Oct 2017 16:44:46 +0200
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MgOQQ-1deE7r1zpG-00NkQc; Sun, 01
+ Oct 2017 16:45:13 +0200
 To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Brandon Williams <bmwill@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] repository: use FREE_AND_NULL
-Message-ID: <503c157c-70c8-7902-6170-3847c39ab0e0@web.de>
-Date:   Sun, 1 Oct 2017 16:44:46 +0200
+Subject: [PATCH] tag: avoid NULL pointer arithmetic
+Message-ID: <99e56671-bdf9-a59f-ae7b-758f1b7a8f14@web.de>
+Date:   Sun, 1 Oct 2017 16:45:13 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.3.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:s27RrjUaM+yi9t35g294SGttAUcX8xSd5+77ke0wcdDMiA31sW+
- 0Ts4ntXs6GkZp1eCckqSKz4vM6sC3XuygopfKzHvFk/mGlSZimyNpEvgplbP66spN3s2OBD
- 25MrdENirCpdFbzyy6jASqTncRE3iKfbM9H341xRwz2ucChkgXmlFvtZtgzAcHk9cPxqXus
- mLMpFxjp8c1PZhHnGjRuQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:cxT/Ebm1/mo=:LbW9f/d35mBqlReWzzNOrz
- 96hTh4Tt983GJnJRl6BszwknCELfoz6sP0v2tmejQP6bkKYHztLmCg8T648QtQIN4JSKIna/T
- qs9RVf7pVMpHcoicjDKnRwr4IB0JdNLDgWn6vfO300Q39ceutZOkqOU5uxegVEyj0/MVYoLPO
- EfHeGI3UPUQPDxZkHGav+mgBkbuXrLOfhJ4YtZ5i81a/bfg/WzFZhWTo6WxYT06JbBcxxyc/h
- IRQ/gaDJhtm0Vg+UJmJdREws+r8wc095/VX9ptw2ZyZ+WcI2Up8nA21URTvG13l6fybsgYivN
- EkymZUuZqKEYR5OHZet193MM8kKBZutqxUAkf6otr2BDhY3udFYjZ9M3SAUHMB9rDsPrciZVu
- Pu5gDrL5BOBZjAlRh/w/EohYqugNPnGP4zlJrVLrrBJhyHP1Zm/m7bKVuDxFpFKPxsD9AINXn
- Pz8lBjxh1RHb4oAJM0NqZwdWI/XXlaq/GZfMpw5OU0PWzTjHF8JBnTVDt6OT98HS/qmYasfxe
- fvZdi4qAH30ijgK/854UDlzRLy4IB/rnWDIdUvGYaTfyJBK3GPUKDFYI9Q61ps6a7a7fUWQv+
- Ap171jP272dwof7ILukVppfGK4Rrg6pwtlRHOrPK/njN/8CVmlQT2OzwMeVAilmdVtG8vPX2b
- 9IoWLkEQXaa87xyg66Vc89Q6xk8KPRBBmkocpDxEb/LyVGmfyOfLp8SE1s01YcFnOTOcS8oju
- PNZBO3HG7SDWtR21X5A7H6pFtIkfxBnm4TGFDH9Zy2w0kYXzJgUefq1jWKXEfbv6gAFwP0ZW6
- qHhpHbK7ukeFVnTWuRbVm0iEY67hnSECHfm5HKkXGXjLraoang=
+X-Provags-ID: V03:K0:PxXw5pKm+8jgj+desqX7tsDVBgTrtSC+dP8/W/eRiiL+8lzJg5A
+ r6lkm3pw9Dl0Pv4cJxYXtrhrgBK6gg6xc/6bxW7cnMnIIeM/gl1N3roz5ZXDCsiYOdUlEmj
+ 2av0LXdFM0W17AKRl7vdyMHGotp/g+JzIMOMYAW/OLZcRWUR6EtFCBdyzKETUo0hQqZ4SkN
+ 3k8tU3t+b0uiRzLxAAi1w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:YtuvqtyA7SY=:nAr+9ahHHjIn2RTpWv4TxR
+ Nc4Trw3/cI3oZlL6xkPvfYalwZYCRJ/WLyJ/aJKmOJO+Qmvwb4HSFwbDdiexit30a8JtwzBz+
+ QNnYm8yGyhArwqDNBwwE/YtHwpWddEBu43CNwUKdA4c3Xk2M2wFdRtXeu+05NwPLuAtXcFTdN
+ Vd/eGS0azbSfYDBt/CAFfwAiKtkolNp2IrIw3ctzmv0nj0RLXnCRaJwQBjTvvhWvz2bdo7ouD
+ RHs4VKWdgEAnsDXe0HABY0ETGa1SHL24UmO79OfvOxDAdchHjkkMnTd8LsJ77GZW8464RqsNZ
+ /T7wsWeJje3BMrvF91+2ICg8M3hJYyQDLj9UkcJkj7AWPgBnhAvW6+YTqgm2iAQb/d7gFQeGK
+ BAG2q5UCC8bDaRqIkp9Hmd/bFlz/vyp2rX3wJPY1IIY+cCdgrpwCiDjZw/trlvQMH0nf5vp1Q
+ wxzDKeVuUZkLBKU78nhat0PAvEssfWrqSiV54j0xC6lm65W/tf+qIFGkaxb52bLL4rnCMtxFO
+ Tu5M3XRpQqy+FS90TfIZ3Fdfawz2pPYzViwxQn+2Uyr8jm4cVTY6bIzj8UcsS9H4XPsCVR8BB
+ 9ahA2XY85+3aZz1hSLpm6dkOR/eS6LJdbXoBliTovXt0dvsvdNz7rvy7lC+NAjzNxXGLkiayk
+ uwofV8iCOpJ6NavieahB7EShU7TtBby46oSUh9Yy00858nK1pxf0rvN1uhBw0D3bAsu5IxJhM
+ N35YU7onzQ4rP7dh46ozokWhA7D9i39k0Ag492hyG91I3J/ueo86hm8t8TZprWYnY3bLgM7dU
+ lvdaQv3SEzKvGenD3iHQb/XhUO7tUOazM41Q5fRr2YXo/L4wns=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Use the macro FREE_AND_NULL to release allocated objects and clear their
-pointers.  This is shorter and documents the intent better by combining
-the two related operations into one.
+lookup_blob() etc. can return NULL if the referenced object isn't of the
+expected type.  In theory it's wrong to reference the object member in
+that case.  In practice it's OK because it's located at offset 0 for all
+types, so the pointer arithmetic (NULL + 0) is optimized out by the
+compiler.  The issue is reported by Clang's AddressSanitizer, though.
 
-Patch generated with Coccinelle and contrib/coccinelle/free.cocci.
+Avoid the ASan error by casting the results of the lookup functions to
+struct object pointers.  That works fine with NULL pointers as well.  We
+already rely on the object member being first in all object types in
+other places in the code.
 
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- repository.c | 27 +++++++++------------------
- 1 file changed, 9 insertions(+), 18 deletions(-)
+ tag.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/repository.c b/repository.c
-index 97c732bd48..bb2fae5446 100644
---- a/repository.c
-+++ b/repository.c
-@@ -200,25 +200,17 @@ int repo_submodule_init(struct repository *submodule,
+diff --git a/tag.c b/tag.c
+index 7e10acfb6e..fcbe012f7a 100644
+--- a/tag.c
++++ b/tag.c
+@@ -142,13 +142,13 @@ int parse_tag_buffer(struct tag *item, const void *data, unsigned long size)
+ 	bufptr = nl + 1;
  
- void repo_clear(struct repository *repo)
- {
--	free(repo->gitdir);
--	repo->gitdir = NULL;
--	free(repo->commondir);
--	repo->commondir = NULL;
--	free(repo->objectdir);
--	repo->objectdir = NULL;
--	free(repo->graft_file);
--	repo->graft_file = NULL;
--	free(repo->index_file);
--	repo->index_file = NULL;
--	free(repo->worktree);
--	repo->worktree = NULL;
--	free(repo->submodule_prefix);
--	repo->submodule_prefix = NULL;
-+	FREE_AND_NULL(repo->gitdir);
-+	FREE_AND_NULL(repo->commondir);
-+	FREE_AND_NULL(repo->objectdir);
-+	FREE_AND_NULL(repo->graft_file);
-+	FREE_AND_NULL(repo->index_file);
-+	FREE_AND_NULL(repo->worktree);
-+	FREE_AND_NULL(repo->submodule_prefix);
- 
- 	if (repo->config) {
- 		git_configset_clear(repo->config);
--		free(repo->config);
--		repo->config = NULL;
-+		FREE_AND_NULL(repo->config);
- 	}
- 
- 	if (repo->submodule_cache) {
-@@ -228,8 +220,7 @@ void repo_clear(struct repository *repo)
- 
- 	if (repo->index) {
- 		discard_index(repo->index);
--		free(repo->index);
--		repo->index = NULL;
-+		FREE_AND_NULL(repo->index);
- 	}
- }
- 
+ 	if (!strcmp(type, blob_type)) {
+-		item->tagged = &lookup_blob(&oid)->object;
++		item->tagged = (struct object *)lookup_blob(&oid);
+ 	} else if (!strcmp(type, tree_type)) {
+-		item->tagged = &lookup_tree(&oid)->object;
++		item->tagged = (struct object *)lookup_tree(&oid);
+ 	} else if (!strcmp(type, commit_type)) {
+-		item->tagged = &lookup_commit(&oid)->object;
++		item->tagged = (struct object *)lookup_commit(&oid);
+ 	} else if (!strcmp(type, tag_type)) {
+-		item->tagged = &lookup_tag(&oid)->object;
++		item->tagged = (struct object *)lookup_tag(&oid);
+ 	} else {
+ 		error("Unknown type %s", type);
+ 		item->tagged = NULL;
 -- 
 2.14.2
