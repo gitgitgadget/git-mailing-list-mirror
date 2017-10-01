@@ -7,105 +7,111 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E49120A10
-	for <e@80x24.org>; Sun,  1 Oct 2017 14:44:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6EAA020A10
+	for <e@80x24.org>; Sun,  1 Oct 2017 14:44:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751142AbdJAOo1 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 1 Oct 2017 10:44:27 -0400
-Received: from mout.web.de ([212.227.15.4]:56742 "EHLO mout.web.de"
+        id S1751279AbdJAOox (ORCPT <rfc822;e@80x24.org>);
+        Sun, 1 Oct 2017 10:44:53 -0400
+Received: from mout.web.de ([212.227.15.3]:56890 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751063AbdJAOo0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Oct 2017 10:44:26 -0400
-Received: from [192.168.178.36] ([91.20.57.42]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MFeoH-1e4NzE1qQX-00Eg6m; Sun, 01
- Oct 2017 16:44:21 +0200
+        id S1751028AbdJAOov (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Oct 2017 10:44:51 -0400
+Received: from [192.168.178.36] ([91.20.57.42]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0M3jsn-1d7wJ52qSv-00rHvW; Sun, 01
+ Oct 2017 16:44:46 +0200
 To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Brandon Williams <bmwill@google.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] use strbuf_addstr() for adding strings to strbufs
-Message-ID: <431a993c-fbd4-4bc6-0641-1a69b419cd7f@web.de>
-Date:   Sun, 1 Oct 2017 16:44:20 +0200
+Subject: [PATCH] repository: use FREE_AND_NULL
+Message-ID: <503c157c-70c8-7902-6170-3847c39ab0e0@web.de>
+Date:   Sun, 1 Oct 2017 16:44:46 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.3.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:Tsx04rnIqwCBBTeB+kjoDeJa2x78RE0C9c+JbxqLzVZGRcnK5K8
- MqpGTTxBTDbOi4VXxpEH1UsunRRhkLA0vBShZKpadRo8Kprpbe4oTQQ/AUVJVLGCQ3rjNTa
- lJf3xUQWYrjqgv0S4ViRWkozctqlXRs72GehRW79JpGtu9LO+5dP7HYM9/C9gdYovXWlb7D
- 1cvCzUYzzEIKogpyxaiYg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:MWG8A88WMK4=:zmLYqqB896SuztKs0UVIgf
- C62sqOSceQ+vojoRyvz4zZLjtdvLb9uhX6bFwEnW2LrjS1zJvlAM65jzfEmR0DUwBfDXtS6TH
- SN5735zo+uwdn4bChhKKU/asKTdWcsB1uyeXv+Fs58l8YLmfdp+Tk9EzBzwS5G2nde6+AD3oy
- hyob4cBBOcShGWswv9tPtpp5IjMVEfj2yZR8cDxEDdJtmVJjWgaZeVV8Jb4wELqraiGXxCTs/
- co65m7K6B/IbBraJBFSnxbajl7hCa1MiSGLl6wIOrBlwZeFR8maxrKp9QdZKcDHWibS95pakm
- VDy/eTIVRaH+DKYq44+EpbPfb4S9zzo7DS6pZSdb63y20f9hW+9mr/gW/ewr9Omx+5FDRqo6p
- I9poOIdMcsFA7pUhlqvCRpOjI4GpH04bA3qXO3G8hy41VXo4iLbfI7mrEaYFDW9T+GbAo6kvY
- T7HGLhHjhFFv5dqze56h+/ubfmSWoVpDPxNIiklNfUc4oPv4urmac4xP37s8w/NDHWECtYbFy
- Jg8mvc2wBc/7Z9rMkzr2HGmaHYYi9uNlpALat6KZt7Qs9UhpoLNnc//tXGzpA7XoiJieeV3SZ
- ViwUn116YOpaZ7w/FsF4AgCmelOYv7U7xiUfIbIryktpzrRtBuOoO84ETfwl1m3VnlI3JIj6X
- nAm5wv7V0ymJLHJsko/q96M+8aiDom3OaM25ZbyUvxS5yFG2yt/oAi3ZsrX8FbvjOBSwf8rok
- shfXx7HFDZspT1DkDxTGXYvmKtxxEsJ9qadHo3PaDn7wJ/9ii9qk54qijtT206zyln4ksEYua
- pLCpGVPGktnvJxbCJqo2LsPy70293YCjREg2Mn21Or1M9jd/w4=
+X-Provags-ID: V03:K0:s27RrjUaM+yi9t35g294SGttAUcX8xSd5+77ke0wcdDMiA31sW+
+ 0Ts4ntXs6GkZp1eCckqSKz4vM6sC3XuygopfKzHvFk/mGlSZimyNpEvgplbP66spN3s2OBD
+ 25MrdENirCpdFbzyy6jASqTncRE3iKfbM9H341xRwz2ucChkgXmlFvtZtgzAcHk9cPxqXus
+ mLMpFxjp8c1PZhHnGjRuQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:cxT/Ebm1/mo=:LbW9f/d35mBqlReWzzNOrz
+ 96hTh4Tt983GJnJRl6BszwknCELfoz6sP0v2tmejQP6bkKYHztLmCg8T648QtQIN4JSKIna/T
+ qs9RVf7pVMpHcoicjDKnRwr4IB0JdNLDgWn6vfO300Q39ceutZOkqOU5uxegVEyj0/MVYoLPO
+ EfHeGI3UPUQPDxZkHGav+mgBkbuXrLOfhJ4YtZ5i81a/bfg/WzFZhWTo6WxYT06JbBcxxyc/h
+ IRQ/gaDJhtm0Vg+UJmJdREws+r8wc095/VX9ptw2ZyZ+WcI2Up8nA21URTvG13l6fybsgYivN
+ EkymZUuZqKEYR5OHZet193MM8kKBZutqxUAkf6otr2BDhY3udFYjZ9M3SAUHMB9rDsPrciZVu
+ Pu5gDrL5BOBZjAlRh/w/EohYqugNPnGP4zlJrVLrrBJhyHP1Zm/m7bKVuDxFpFKPxsD9AINXn
+ Pz8lBjxh1RHb4oAJM0NqZwdWI/XXlaq/GZfMpw5OU0PWzTjHF8JBnTVDt6OT98HS/qmYasfxe
+ fvZdi4qAH30ijgK/854UDlzRLy4IB/rnWDIdUvGYaTfyJBK3GPUKDFYI9Q61ps6a7a7fUWQv+
+ Ap171jP272dwof7ILukVppfGK4Rrg6pwtlRHOrPK/njN/8CVmlQT2OzwMeVAilmdVtG8vPX2b
+ 9IoWLkEQXaa87xyg66Vc89Q6xk8KPRBBmkocpDxEb/LyVGmfyOfLp8SE1s01YcFnOTOcS8oju
+ PNZBO3HG7SDWtR21X5A7H6pFtIkfxBnm4TGFDH9Zy2w0kYXzJgUefq1jWKXEfbv6gAFwP0ZW6
+ qHhpHbK7ukeFVnTWuRbVm0iEY67hnSECHfm5HKkXGXjLraoang=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Use strbuf_addstr() instead of strbuf_addf() for adding strings.  That's
-simpler and makes the intent clearer.
+Use the macro FREE_AND_NULL to release allocated objects and clear their
+pointers.  This is shorter and documents the intent better by combining
+the two related operations into one.
 
-Patch generated by Coccinelle and contrib/coccinelle/strbuf.cocci;
-adjusted indentation in refs/packed-backend.c manually.
+Patch generated with Coccinelle and contrib/coccinelle/free.cocci.
 
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- builtin/branch.c      | 2 +-
- refs/packed-backend.c | 4 ++--
- sequencer.c           | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ repository.c | 27 +++++++++------------------
+ 1 file changed, 9 insertions(+), 18 deletions(-)
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 355f9ef5da..a2b7c55427 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -352,7 +352,7 @@ static char *build_format(struct ref_filter *filter, int maxwidth, const char *r
- 			strbuf_addf(&obname, "%%(objectname:short=%d)", filter->abbrev);
+diff --git a/repository.c b/repository.c
+index 97c732bd48..bb2fae5446 100644
+--- a/repository.c
++++ b/repository.c
+@@ -200,25 +200,17 @@ int repo_submodule_init(struct repository *submodule,
  
- 		strbuf_addf(&local, "%%(align:%d,left)%%(refname:lstrip=2)%%(end)", maxwidth);
--		strbuf_addf(&local, "%s", branch_get_color(BRANCH_COLOR_RESET));
-+		strbuf_addstr(&local, branch_get_color(BRANCH_COLOR_RESET));
- 		strbuf_addf(&local, " %s ", obname.buf);
+ void repo_clear(struct repository *repo)
+ {
+-	free(repo->gitdir);
+-	repo->gitdir = NULL;
+-	free(repo->commondir);
+-	repo->commondir = NULL;
+-	free(repo->objectdir);
+-	repo->objectdir = NULL;
+-	free(repo->graft_file);
+-	repo->graft_file = NULL;
+-	free(repo->index_file);
+-	repo->index_file = NULL;
+-	free(repo->worktree);
+-	repo->worktree = NULL;
+-	free(repo->submodule_prefix);
+-	repo->submodule_prefix = NULL;
++	FREE_AND_NULL(repo->gitdir);
++	FREE_AND_NULL(repo->commondir);
++	FREE_AND_NULL(repo->objectdir);
++	FREE_AND_NULL(repo->graft_file);
++	FREE_AND_NULL(repo->index_file);
++	FREE_AND_NULL(repo->worktree);
++	FREE_AND_NULL(repo->submodule_prefix);
  
- 		if (filter->verbose > 1)
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 3bc47ffd5e..2951514f25 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -729,8 +729,8 @@ static int write_with_updates(struct packed_ref_store *refs,
+ 	if (repo->config) {
+ 		git_configset_clear(repo->config);
+-		free(repo->config);
+-		repo->config = NULL;
++		FREE_AND_NULL(repo->config);
  	}
  
- 	if (ok != ITER_DONE) {
--		strbuf_addf(err, "unable to write packed-refs file: "
--			    "error iterating over old contents");
-+		strbuf_addstr(err, "unable to write packed-refs file: "
-+			      "error iterating over old contents");
- 		goto error;
+ 	if (repo->submodule_cache) {
+@@ -228,8 +220,7 @@ void repo_clear(struct repository *repo)
+ 
+ 	if (repo->index) {
+ 		discard_index(repo->index);
+-		free(repo->index);
+-		repo->index = NULL;
++		FREE_AND_NULL(repo->index);
  	}
- 
-diff --git a/sequencer.c b/sequencer.c
-index 60636ce54b..ba95cefc7d 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -203,7 +203,7 @@ int sequencer_remove_state(struct replay_opts *opts)
- 		free(opts->xopts[i]);
- 	free(opts->xopts);
- 
--	strbuf_addf(&dir, "%s", get_dir(opts));
-+	strbuf_addstr(&dir, get_dir(opts));
- 	remove_dir_recursively(&dir, 0);
- 	strbuf_release(&dir);
+ }
  
 -- 
 2.14.2
