@@ -2,149 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C67D20A10
-	for <e@80x24.org>; Sun,  1 Oct 2017 16:19:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD66720A10
+	for <e@80x24.org>; Sun,  1 Oct 2017 17:42:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751383AbdJAQT0 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 1 Oct 2017 12:19:26 -0400
-Received: from mail-pf0-f182.google.com ([209.85.192.182]:47903 "EHLO
-        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751128AbdJAQSz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Oct 2017 12:18:55 -0400
-Received: by mail-pf0-f182.google.com with SMTP id u12so1853623pfl.4
-        for <git@vger.kernel.org>; Sun, 01 Oct 2017 09:18:55 -0700 (PDT)
+        id S1751460AbdJARmW (ORCPT <rfc822;e@80x24.org>);
+        Sun, 1 Oct 2017 13:42:22 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:36099 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751355AbdJARmV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Oct 2017 13:42:21 -0400
+Received: by mail-wr0-f196.google.com with SMTP id k10so2406729wrk.3
+        for <git@vger.kernel.org>; Sun, 01 Oct 2017 10:42:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=rf8K71O/mPM3NUvDIaJfHsy63UXuMyo3Aamu4HS+Xug=;
-        b=Qh7axX/9OeKj7h8oWc4ik2SUAKIXMgzb8iNjRqLSkL9qLzByL8pNARil9/fCZyGcWK
-         K55dXTJWLXiD+9v70e7JLvgeEKLslWzRUCSyqrVP1C7IS3I1l1DF5h44A0NKHf7VbQQG
-         pUDDMhxwHS5VIGj2IH5TTKoFA2Hm3r+RyvhzNztWVOsp+OvSiSRhIVlX3f4Cw3L4wehj
-         VUcPXs0BLUU0u/bproduTyq7uLqL/7/GbxweDbD7XpivzyVSPUi2WQr+Gv6BL8hiXl/o
-         qiY/oqT15JIVa8qJla+ePxxEqR6v06CPV+KBvoDoiNqPL2/LcSsOoO6nhIis22mEQLFX
-         JxBA==
+        d=gmail.com; s=20161025;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NziQrcYl1hRq+5VIwQgAW5Mov3mg3XQunerunwEj0oU=;
+        b=eah+G/1c60KIihqam0Hr01gffsEFK1tpCauGcEbN0HAmtlSkQLn+PWet5fGtwkvKDS
+         h/zc8GXHdG9Se5UTNr/U6jEsxlg21lZwWlmg83Wf71GFFjyWU80YYMHffcFGfpSP6LmG
+         x4u+rCMPsgZqaP/VvGRG31XClBCx+e3fbr6hoBXZyd1hkkKVN36uWpCfvAvPYZhnu7tt
+         vlCsU7XrDjVwvcW/drZaXyLWlENcYbNWm/Ibx3OwOxMzp21GZ/F+G25tgv5fUFAmFsxC
+         3HX/zIjOOvA3+UhS5vcvoZn8buM+SiXSMSCKJ+JGqAQCduylhbWorSpA/kwOKKhrF22Z
+         T+Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=rf8K71O/mPM3NUvDIaJfHsy63UXuMyo3Aamu4HS+Xug=;
-        b=F332ei/sd52wp+HEErLLSMCDueIwChzpIk2jCB4FeJkhSJ3+MwGr6EH4Mywo2g8zxQ
-         DpyLP0p3UtWK5MhoT2Alrq2S0r6qwpS+LKV1GTPcPe1iqF/8bLIgDSyULEQruAw3az0s
-         UKDtgfMBj3eeRcWbekkGZH9woW5BojTvM2ofsxgWFZ/vMmB1kVBplz4I5Ijt7mkE54wD
-         kCabjZ42B5L31I5gJs6zb4NjObu/Akb6P3X1e2htOGVMIuQ9aY2g2wyqgn65urfeSe9Y
-         ijWf668bZpQ941yj0nxu/I46WTOd5JSNs97C8n15SBRfbLl8a53HIBi2lBI3/FO+Nphc
-         DwLQ==
-X-Gm-Message-State: AMCzsaVIQsEoBygavyL08sNBZfWyeiKRTvG9cVsK5aRTd/kYOQv46GMg
-        zk2AtVj6REdeJS1ac73jcBljIBJf2Bo=
-X-Google-Smtp-Source: AOwi7QBn5OTVqoafXwm67p3IVSR/v7LCP1/yJPhMcTuroX3MYT9ejNbzS4U3shhMXXwNv8aYL1P6vw==
-X-Received: by 10.98.218.86 with SMTP id w22mr35946pfl.84.1506874734826;
-        Sun, 01 Oct 2017 09:18:54 -0700 (PDT)
-Received: from localhost ([205.175.97.239])
-        by smtp.gmail.com with ESMTPSA id t17sm14607808pfi.31.2017.10.01.09.18.53
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 01 Oct 2017 09:18:53 -0700 (PDT)
-From:   Taylor Blau <me@ttaylorr.com>
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NziQrcYl1hRq+5VIwQgAW5Mov3mg3XQunerunwEj0oU=;
+        b=EOKs7Z8GBgI7Nm/icIHPAsPX6DGWk3fSZBqaCu6sEth2POOhLgS/X97NTEDRdSswSm
+         B53EIRRG7Qn7ncTjAdfSxniY+d/f0w5weSG+UEhS294VrXQmqX1jH6+Hku7OmTZaJEPr
+         6Nf+tmLemur3V8WzzsBqmrwpjocHtaXplzkFLC2XGagsFQ6lnpBkpWMroqGeESo12ZG+
+         s7rANvnLCLJWTq7vd/hKcxW5ikjjYHI6haolz7pG44h9jBvj++p/ysMLAxm5HJfBbJX7
+         czqfMxi8IuyH3ZHdUT93qmWpAYcLaUNhLkc6QoC3RIbhscjU6Bmi3JcUZ5w7AbZxd84H
+         iKkA==
+X-Gm-Message-State: AHPjjUgaZSpwvDZiW9L3s2IurfTO7gFxNyzHWNOKi7mDWCwESqFVQfoQ
+        pC2OfAMoGeJvjaXDyZ3lfnoTECzr
+X-Google-Smtp-Source: AOwi7QAwuWvuXRBCYH86ughkYSJJ4J3yeGG6/h6m8YszUiB7V0hEnwKEYL3tfizc/8aiPkXNJidItw==
+X-Received: by 10.223.146.37 with SMTP id 34mr7792451wrj.79.1506879740018;
+        Sun, 01 Oct 2017 10:42:20 -0700 (PDT)
+Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
+        by smtp.gmail.com with ESMTPSA id l80sm2949949wrc.21.2017.10.01.10.42.18
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 01 Oct 2017 10:42:19 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH v4 1/6] pretty.c: delimit "%(trailers)" arguments with ","
-Date:   Sun,  1 Oct 2017 09:18:47 -0700
-Message-Id: <20171001161852.84571-1-me@ttaylorr.com>
-X-Mailer: git-send-email 2.14.1.145.gb3622a4ee
-In-Reply-To: <20171001161725.GA66172@D-10-157-251-166.dhcp4.washington.edu>
-References: <20171001161725.GA66172@D-10-157-251-166.dhcp4.washington.edu>
+Subject: [PATCH] builtin/: add UNLEAKs
+Date:   Sun,  1 Oct 2017 19:42:08 +0200
+Message-Id: <20171001174208.1693753-1-martin.agren@gmail.com>
+X-Mailer: git-send-email 2.14.2.666.gea220ee40
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In preparation for adding consistent "%(trailers)" atom options to
-`git-for-each-ref(1)`'s "--format" argument, change "%(trailers)" in
-pretty.c to separate sub-arguments with a ",", instead of a ":".
+Add some UNLEAKs where we are about to return from `cmd_*`. UNLEAK the
+variables in the same order as we've declared them. While addressing
+`msg` in builtin/tag.c, convert the existing `strbuf_release()` calls as
+well.
 
-Multiple sub-arguments are given either as "%(trailers:unfold,only)" or
-"%(trailers:only,unfold)".
-
-This change disambiguates between "top-level" arguments, and arguments
-given to the trailers atom itself. It is consistent with the behavior of
-"%(upstream)" and "%(push)" atoms.
-
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- pretty.c                      | 34 +++++++++++++++++++++++++++++-----
- t/t4205-log-pretty-formats.sh |  4 ++--
- 2 files changed, 31 insertions(+), 7 deletions(-)
+ builtin/checkout.c   | 1 +
+ builtin/diff-index.c | 1 +
+ builtin/diff.c       | 3 +++
+ builtin/name-rev.c   | 1 +
+ builtin/tag.c        | 9 +++++----
+ 5 files changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/pretty.c b/pretty.c
-index 94eab5c89..eec128bc1 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1056,6 +1056,25 @@ static size_t parse_padding_placeholder(struct strbuf *sb,
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 3345a0d16..2daa4412a 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -1298,6 +1298,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 		strbuf_release(&buf);
+ 	}
+ 
++	UNLEAK(opts);
+ 	if (opts.patch_mode || opts.pathspec.nr)
+ 		return checkout_paths(&opts, new.name);
+ 	else
+diff --git a/builtin/diff-index.c b/builtin/diff-index.c
+index 9d772f8f2..522f4fdff 100644
+--- a/builtin/diff-index.c
++++ b/builtin/diff-index.c
+@@ -56,5 +56,6 @@ int cmd_diff_index(int argc, const char **argv, const char *prefix)
+ 		return -1;
+ 	}
+ 	result = run_diff_index(&rev, cached);
++	UNLEAK(rev);
+ 	return diff_result_code(&rev.diffopt, result);
+ }
+diff --git a/builtin/diff.c b/builtin/diff.c
+index 7e3ebcea3..f5bbd4d75 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -464,5 +464,8 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+ 	result = diff_result_code(&rev.diffopt, result);
+ 	if (1 < rev.diffopt.skip_stat_unmatch)
+ 		refresh_index_quietly();
++	UNLEAK(rev);
++	UNLEAK(ent);
++	UNLEAK(blob);
+ 	return result;
+ }
+diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+index 598da6c8b..9e088ebd1 100644
+--- a/builtin/name-rev.c
++++ b/builtin/name-rev.c
+@@ -494,5 +494,6 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
+ 				  always, allow_undefined, data.name_only);
+ 	}
+ 
++	UNLEAK(revs);
  	return 0;
  }
+diff --git a/builtin/tag.c b/builtin/tag.c
+index c62779418..34efba579 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -552,9 +552,10 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	if (force && !is_null_oid(&prev) && oidcmp(&prev, &object))
+ 		printf(_("Updated tag '%s' (was %s)\n"), tag, find_unique_abbrev(prev.hash, DEFAULT_ABBREV));
  
-+static int match_placeholder_arg(const char *to_parse,
-+				const char *candidate,
-+				const char **end)
-+{
-+	const char *p;
-+	if (!(skip_prefix(to_parse, candidate, &p)))
-+		return 0;
-+	if (*p == ',') {
-+		*end = p + 1;
-+		return 1;
-+	}
-+	if (*p == ')') {
-+		*end = p;
-+		return 1;
-+	}
-+	return 0;
-+}
-+
-+
- static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
- 				const char *placeholder,
- 				void *context)
-@@ -1285,11 +1304,16 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
- 
- 	if (skip_prefix(placeholder, "(trailers", &arg)) {
- 		struct process_trailer_options opts = PROCESS_TRAILER_OPTIONS_INIT;
--		while (*arg == ':') {
--			if (skip_prefix(arg, ":only", &arg))
--				opts.only_trailers = 1;
--			else if (skip_prefix(arg, ":unfold", &arg))
--				opts.unfold = 1;
-+		if (*arg == ':') {
-+			arg++;
-+			for (;;) {
-+				if (match_placeholder_arg(arg, "only", &arg))
-+					opts.only_trailers = 1;
-+				else if (match_placeholder_arg(arg, "unfold", &arg))
-+					opts.unfold = 1;
-+				else
-+					break;
-+			}
- 		}
- 		if (*arg == ')') {
- 			format_trailers_from_commit(sb, msg + c->subject_off, &opts);
-diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-index ec5f53010..977472f53 100755
---- a/t/t4205-log-pretty-formats.sh
-+++ b/t/t4205-log-pretty-formats.sh
-@@ -588,8 +588,8 @@ test_expect_success '%(trailers:unfold) unfolds trailers' '
- '
- 
- test_expect_success ':only and :unfold work together' '
--	git log --no-walk --pretty="%(trailers:only:unfold)" >actual &&
--	git log --no-walk --pretty="%(trailers:unfold:only)" >reverse &&
-+	git log --no-walk --pretty="%(trailers:only,unfold)" >actual &&
-+	git log --no-walk --pretty="%(trailers:unfold,only)" >reverse &&
- 	test_cmp actual reverse &&
- 	{
- 		grep -v patch.description <trailers | unfold &&
+-	strbuf_release(&err);
+-	strbuf_release(&buf);
+-	strbuf_release(&ref);
+-	strbuf_release(&reflog_msg);
++	UNLEAK(buf);
++	UNLEAK(ref);
++	UNLEAK(reflog_msg);
++	UNLEAK(msg);
++	UNLEAK(err);
+ 	return 0;
+ }
 -- 
-2.14.1.145.gb3622a4ee
+2.14.2.666.gea220ee40
 
