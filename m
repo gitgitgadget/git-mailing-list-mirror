@@ -6,39 +6,39 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C91520A10
-	for <e@80x24.org>; Sun,  1 Oct 2017 22:09:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 846CC20A10
+	for <e@80x24.org>; Sun,  1 Oct 2017 22:09:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752353AbdJAWJk (ORCPT <rfc822;e@80x24.org>);
+        id S1752351AbdJAWJk (ORCPT <rfc822;e@80x24.org>);
         Sun, 1 Oct 2017 18:09:40 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:54172 "EHLO
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:54196 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751980AbdJAWJD (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 1 Oct 2017 18:09:03 -0400
+        by vger.kernel.org with ESMTP id S1751926AbdJAWJG (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 1 Oct 2017 18:09:06 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id AC80C60DB1;
-        Sun,  1 Oct 2017 22:09:01 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5D2D460DBE;
+        Sun,  1 Oct 2017 22:09:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1506895742;
-        bh=4dzhSBpRahvBj1zbTu6p0MfmHXZc/M7ldQd3lvqGL2M=;
+        s=default; t=1506895745;
+        bh=vn9j42V/PDDxzSwkRDO8pMGkZFYshW3VwtsQx+rUydY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=n8+bj17+6BTfIu34ankZjkq9ssX728zVq7go9IWa4MjOIp27rbYUXoVF2KpUUQqoq
-         3p5BtC+PKZemSsacNuGBIenA+6NeScrBlsUaOMHcWeaaT/7LAMtqVVxcZLdcSlAzrR
-         KWJyp7DkDc1RFReh01j2HIdjnlhLQRhAkxRKb3+JpnTUFo0xBuOhByZ90n9pabmAMF
-         bMA4u41RCq1/vpqInlp1NJOV2GPR5CFj++4wBbJ04Oe28EHltHjnhvVx8ifGDvK9bT
-         +P6juydrRJDawGGgeaNAHHou/goXBfYvKsd7M0GicPfirIRizsM3xxnXAOZ5Lm5nC9
-         dsoJgf4oGKWeS/p3ZskXZADOkMavuKzrmv/xnh8XFoUYy6U2HdiErJbqdteuku33o6
-         zt0/Bx7YBihPUtHKiusyq0RdsWoZPfPu/HJTviNy2j58tu2BOCpOVnk3ByBfLmk7k0
-         cGGBl7XyxLWXqg1oW76qdYDkZjQAm1Gk6rpGEPvNa0MPqyAM36q
+        b=QsHogGwtIc9jSVx9cDvTLGL4Eauua+t3D9eXXZy0JH9sA5wm4Y00BypPQMZJraA/P
+         jchl+KdMoha22jsEPwxfZDLRC0QySGW3D8VPdCw2sdo/Cr2JMEUR//cxCpVzigvin6
+         GXa+cT7d0xR3KgzD8JhiGL19RUZeyYvgiPqbmW1Db9+a877M0uBWNbjMQejlKHd9eu
+         RZTLAWf9Mfe+bFzSp1o0pspu2p107riKnvTbUBlNsDCgGn4kV9fLAUaxRThYFbCOcq
+         uPZUK0JSdUlVAy/iqnTHSP39t7BWJo9nYaSFownAHSX5Vhj7jZOam5z1APxBkWjN0e
+         p2UNg/T4ULnN5SPQXKAvI1GU4YKNLXT/6/XF3HYk6aoYNPa0rXQU/ygoHy+Y7or7x3
+         Lj48ASgKfRAttETu5RcKQGROhtlRijexLbARZt9dtjOamIDwg47k6utg1T3qqQ7GAW
+         TUlXRZTee6WY0eSR/FR2TFWVojLgw01jJNRXufUZ/2NsozPtyqk
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
         Brandon Williams <bmwill@google.com>
-Subject: [PATCH 14/24] refs: convert peel_ref to struct object_id
-Date:   Sun,  1 Oct 2017 22:08:21 +0000
-Message-Id: <20171001220831.214705-15-sandals@crustytoothpaste.net>
+Subject: [PATCH 18/24] Convert remaining callers of resolve_gitlink_ref to object_id
+Date:   Sun,  1 Oct 2017 22:08:25 +0000
+Message-Id: <20171001220831.214705-19-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.14.2.822.g60be5d43e6
 In-Reply-To: <20171001220831.214705-1-sandals@crustytoothpaste.net>
 References: <20171001220831.214705-1-sandals@crustytoothpaste.net>
@@ -48,226 +48,113 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert peel_ref (and its corresponding backend) to struct object_id.
-
-This transformation was done with an update to the declaration,
-definition, and test helper and the following semantic patch:
-
-@@
-expression E1, E2;
-@@
-- peel_ref(E1, E2.hash)
-+ peel_ref(E1, &E2)
-
-@@
-expression E1, E2;
-@@
-- peel_ref(E1, E2->hash)
-+ peel_ref(E1, E2)
-
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/describe.c        | 2 +-
- builtin/pack-objects.c    | 4 ++--
- builtin/show-ref.c        | 2 +-
- refs.c                    | 8 ++++----
- refs.h                    | 4 ++--
- refs/files-backend.c      | 8 ++++----
- refs/packed-backend.c     | 4 ++--
- refs/refs-internal.h      | 2 +-
- t/helper/test-ref-store.c | 6 +++---
- upload-pack.c             | 2 +-
- 10 files changed, 21 insertions(+), 21 deletions(-)
+ diff-lib.c     | 4 ++--
+ dir.c          | 8 ++++----
+ read-cache.c   | 6 +++---
+ unpack-trees.c | 8 ++++----
+ 4 files changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/builtin/describe.c b/builtin/describe.c
-index 29075dbd0f..352f8821fd 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -181,7 +181,7 @@ static int get_name(const char *path, const struct object_id *oid, int flag, voi
+diff --git a/diff-lib.c b/diff-lib.c
+index 4e0980caa8..af4f1b7865 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -36,7 +36,7 @@ static int check_removed(const struct cache_entry *ce, struct stat *st)
+ 	if (has_symlink_leading_path(ce->name, ce_namelen(ce)))
+ 		return 1;
+ 	if (S_ISDIR(st->st_mode)) {
+-		unsigned char sub[20];
++		struct object_id sub;
+ 
+ 		/*
+ 		 * If ce is already a gitlink, we can have a plain
+@@ -50,7 +50,7 @@ static int check_removed(const struct cache_entry *ce, struct stat *st)
+ 		 * a directory --- the blob was removed!
+ 		 */
+ 		if (!S_ISGITLINK(ce->ce_mode) &&
+-		    resolve_gitlink_ref(ce->name, "HEAD", sub))
++		    resolve_gitlink_ref(ce->name, "HEAD", sub.hash))
+ 			return 1;
  	}
- 
- 	/* Is it annotated? */
--	if (!peel_ref(path, peeled.hash)) {
-+	if (!peel_ref(path, &peeled)) {
- 		is_annotated = !!oidcmp(oid, &peeled);
- 	} else {
- 		oidcpy(&peeled, oid);
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index cde4c96f3d..a2c6029750 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -562,7 +562,7 @@ static int mark_tagged(const char *path, const struct object_id *oid, int flag,
- 
- 	if (entry)
- 		entry->tagged = 1;
--	if (!peel_ref(path, peeled.hash)) {
-+	if (!peel_ref(path, &peeled)) {
- 		entry = packlist_find(&to_pack, peeled.hash, NULL);
- 		if (entry)
- 			entry->tagged = 1;
-@@ -2371,7 +2371,7 @@ static int add_ref_tag(const char *path, const struct object_id *oid, int flag,
- 	struct object_id peeled;
- 
- 	if (starts_with(path, "refs/tags/") && /* is a tag? */
--	    !peel_ref(path, peeled.hash)    && /* peelable? */
-+	    !peel_ref(path, &peeled)    && /* peelable? */
- 	    packlist_find(&to_pack, peeled.hash, NULL))      /* object packed? */
- 		add_tag_chain(oid);
  	return 0;
-diff --git a/builtin/show-ref.c b/builtin/show-ref.c
-index cbb8cfc7d2..41e5e71cad 100644
---- a/builtin/show-ref.c
-+++ b/builtin/show-ref.c
-@@ -38,7 +38,7 @@ static void show_one(const char *refname, const struct object_id *oid)
- 	if (!deref_tags)
- 		return;
+diff --git a/dir.c b/dir.c
+index 1d17b800cf..a4198ba7fd 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1390,8 +1390,8 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
+ 		if (dir->flags & DIR_SHOW_OTHER_DIRECTORIES)
+ 			break;
+ 		if (!(dir->flags & DIR_NO_GITLINKS)) {
+-			unsigned char sha1[20];
+-			if (resolve_gitlink_ref(dirname, "HEAD", sha1) == 0)
++			struct object_id oid;
++			if (resolve_gitlink_ref(dirname, "HEAD", oid.hash) == 0)
+ 				return path_untracked;
+ 		}
+ 		return path_recurse;
+@@ -2279,10 +2279,10 @@ static int remove_dir_recurse(struct strbuf *path, int flag, int *kept_up)
+ 	int ret = 0, original_len = path->len, len, kept_down = 0;
+ 	int only_empty = (flag & REMOVE_DIR_EMPTY_ONLY);
+ 	int keep_toplevel = (flag & REMOVE_DIR_KEEP_TOPLEVEL);
+-	unsigned char submodule_head[20];
++	struct object_id submodule_head;
  
--	if (!peel_ref(refname, peeled.hash)) {
-+	if (!peel_ref(refname, &peeled)) {
- 		hex = find_unique_abbrev(peeled.hash, abbrev);
- 		printf("%s %s^{}\n", hex, refname);
- 	}
-diff --git a/refs.c b/refs.c
-index c158a2d107..6cbe2c1c6b 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1676,14 +1676,14 @@ int refs_pack_refs(struct ref_store *refs, unsigned int flags)
- }
+ 	if ((flag & REMOVE_DIR_KEEP_NESTED_GIT) &&
+-	    !resolve_gitlink_ref(path->buf, "HEAD", submodule_head)) {
++	    !resolve_gitlink_ref(path->buf, "HEAD", submodule_head.hash)) {
+ 		/* Do not descend and nuke a nested git work tree. */
+ 		if (kept_up)
+ 			*kept_up = 1;
+diff --git a/read-cache.c b/read-cache.c
+index 65f4fe8375..131485b3a6 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -191,7 +191,7 @@ static int ce_compare_link(const struct cache_entry *ce, size_t expected_size)
  
- int refs_peel_ref(struct ref_store *refs, const char *refname,
--		  unsigned char *sha1)
-+		  struct object_id *oid)
+ static int ce_compare_gitlink(const struct cache_entry *ce)
  {
--	return refs->be->peel_ref(refs, refname, sha1);
-+	return refs->be->peel_ref(refs, refname, oid);
- }
- 
--int peel_ref(const char *refname, unsigned char *sha1)
-+int peel_ref(const char *refname, struct object_id *oid)
- {
--	return refs_peel_ref(get_main_ref_store(), refname, sha1);
-+	return refs_peel_ref(get_main_ref_store(), refname, oid);
- }
- 
- int refs_create_symref(struct ref_store *refs,
-diff --git a/refs.h b/refs.h
-index 8159b7b067..832ade2b13 100644
---- a/refs.h
-+++ b/refs.h
-@@ -120,8 +120,8 @@ extern int refs_init_db(struct strbuf *err);
-  * ultimately resolve to a peelable tag.
-  */
- int refs_peel_ref(struct ref_store *refs, const char *refname,
--		  unsigned char *sha1);
--int peel_ref(const char *refname, unsigned char *sha1);
-+		  struct object_id *oid);
-+int peel_ref(const char *refname, struct object_id *oid);
- 
- /**
-  * Resolve refname in the nested "gitlink" repository in the specified
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 148b98490f..a7e4b9e1e9 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -642,7 +642,7 @@ static int lock_raw_ref(struct files_ref_store *refs,
- }
- 
- static int files_peel_ref(struct ref_store *ref_store,
--			  const char *refname, unsigned char *sha1)
-+			  const char *refname, struct object_id *oid)
- {
- 	struct files_ref_store *refs =
- 		files_downcast(ref_store, REF_STORE_READ | REF_STORE_ODB,
-@@ -655,7 +655,7 @@ static int files_peel_ref(struct ref_store *ref_store,
- 
- 		if (ref_iterator_peel(current_ref_iter, &peeled))
- 			return -1;
--		hashcpy(sha1, peeled.hash);
-+		oidcpy(oid, &peeled);
- 		return 0;
- 	}
- 
-@@ -672,10 +672,10 @@ static int files_peel_ref(struct ref_store *ref_store,
- 	 * have REF_KNOWS_PEELED.
- 	 */
- 	if (flag & REF_ISPACKED &&
--	    !refs_peel_ref(refs->packed_ref_store, refname, sha1))
-+	    !refs_peel_ref(refs->packed_ref_store, refname, oid))
- 		return 0;
- 
--	return peel_object(base.hash, sha1);
-+	return peel_object(base.hash, oid->hash);
- }
- 
- struct files_ref_iterator {
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 3bc47ffd5e..d4bb4ba357 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -341,7 +341,7 @@ static int packed_read_raw_ref(struct ref_store *ref_store,
- }
- 
- static int packed_peel_ref(struct ref_store *ref_store,
--			   const char *refname, unsigned char *sha1)
-+			   const char *refname, struct object_id *oid)
- {
- 	struct packed_ref_store *refs =
- 		packed_downcast(ref_store, REF_STORE_READ | REF_STORE_ODB,
-@@ -351,7 +351,7 @@ static int packed_peel_ref(struct ref_store *ref_store,
- 	if (!r || peel_entry(r, 0))
- 		return -1;
- 
--	hashcpy(sha1, r->u.value.peeled.hash);
-+	oidcpy(oid, &r->u.value.peeled);
- 	return 0;
- }
- 
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 6636a13a62..f0bedbd80b 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -549,7 +549,7 @@ typedef int ref_transaction_commit_fn(struct ref_store *refs,
- 
- typedef int pack_refs_fn(struct ref_store *ref_store, unsigned int flags);
- typedef int peel_ref_fn(struct ref_store *ref_store,
--			const char *refname, unsigned char *sha1);
-+			const char *refname, struct object_id *oid);
- typedef int create_symref_fn(struct ref_store *ref_store,
- 			     const char *ref_target,
- 			     const char *refs_heads_master,
-diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
-index af8dba9560..cea3285ada 100644
---- a/t/helper/test-ref-store.c
-+++ b/t/helper/test-ref-store.c
-@@ -72,12 +72,12 @@ static int cmd_pack_refs(struct ref_store *refs, const char **argv)
- static int cmd_peel_ref(struct ref_store *refs, const char **argv)
- {
- 	const char *refname = notnull(*argv++, "refname");
 -	unsigned char sha1[20];
 +	struct object_id oid;
- 	int ret;
  
--	ret = refs_peel_ref(refs, refname, sha1);
-+	ret = refs_peel_ref(refs, refname, &oid);
- 	if (!ret)
--		puts(sha1_to_hex(sha1));
-+		puts(oid_to_hex(&oid));
- 	return ret;
+ 	/*
+ 	 * We don't actually require that the .git directory
+@@ -201,9 +201,9 @@ static int ce_compare_gitlink(const struct cache_entry *ce)
+ 	 *
+ 	 * If so, we consider it always to match.
+ 	 */
+-	if (resolve_gitlink_ref(ce->name, "HEAD", sha1) < 0)
++	if (resolve_gitlink_ref(ce->name, "HEAD", oid.hash) < 0)
+ 		return 0;
+-	return hashcmp(sha1, ce->oid.hash);
++	return oidcmp(&oid, &ce->oid);
  }
  
-diff --git a/upload-pack.c b/upload-pack.c
-index 030eba5a0c..6d5f3c0d39 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -955,7 +955,7 @@ static int send_ref(const char *refname, const struct object_id *oid,
- 		packet_write_fmt(1, "%s %s\n", oid_to_hex(oid), refname_nons);
+ static int ce_modified_check_fs(const struct cache_entry *ce, struct stat *st)
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 71b70ccb12..0dc76eddfe 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1541,15 +1541,15 @@ static int verify_clean_subdirectory(const struct cache_entry *ce,
+ 	int cnt = 0;
+ 
+ 	if (S_ISGITLINK(ce->ce_mode)) {
+-		unsigned char sha1[20];
+-		int sub_head = resolve_gitlink_ref(ce->name, "HEAD", sha1);
++		struct object_id oid;
++		int sub_head = resolve_gitlink_ref(ce->name, "HEAD", oid.hash);
+ 		/*
+ 		 * If we are not going to update the submodule, then
+ 		 * we don't care.
+ 		 */
+-		if (!sub_head && !hashcmp(sha1, ce->oid.hash))
++		if (!sub_head && !oidcmp(&oid, &ce->oid))
+ 			return 0;
+-		return verify_clean_submodule(sub_head ? NULL : sha1_to_hex(sha1),
++		return verify_clean_submodule(sub_head ? NULL : oid_to_hex(&oid),
+ 					      ce, error_type, o);
  	}
- 	capabilities = NULL;
--	if (!peel_ref(refname, peeled.hash))
-+	if (!peel_ref(refname, &peeled))
- 		packet_write_fmt(1, "%s %s^{}\n", oid_to_hex(&peeled), refname_nons);
- 	return 0;
- }
+ 
 -- 
 2.14.2.822.g60be5d43e6
 
