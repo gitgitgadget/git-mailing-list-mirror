@@ -6,39 +6,39 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8507320A10
-	for <e@80x24.org>; Sun,  1 Oct 2017 22:09:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B0F5F20A10
+	for <e@80x24.org>; Sun,  1 Oct 2017 22:09:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752192AbdJAWJL (ORCPT <rfc822;e@80x24.org>);
-        Sun, 1 Oct 2017 18:09:11 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:54188 "EHLO
+        id S1752223AbdJAWJP (ORCPT <rfc822;e@80x24.org>);
+        Sun, 1 Oct 2017 18:09:15 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:54202 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752114AbdJAWJG (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 1 Oct 2017 18:09:06 -0400
+        by vger.kernel.org with ESMTP id S1752193AbdJAWJN (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 1 Oct 2017 18:09:13 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8B23B60DB9;
-        Sun,  1 Oct 2017 22:09:04 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0B99660DC4;
+        Sun,  1 Oct 2017 22:09:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1506895744;
-        bh=PYrTM79015LL0UlyeZolPkc0cCqIuK1izeJ+Ucw6n38=;
+        s=default; t=1506895751;
+        bh=HgotlBnn57s0vfbi9ReFhoT5MM2gL/fDZhXscGW5R6E=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=djdZeooaBS9VX3J55jpI/9stTocXbNP+1u9QezlTdUl76rQHR7/jmG76+HsqR/YGZ
-         T9OepZ1MMnf8dxmgaEEbzPm7HZmDo7JL3vFDdj5KYb4iNuV4dlC2p7dTSG6m+lEdxi
-         z7ErEpZIZ/e+6VE8cOKKJop68ngPRLKPdlCDrUjGo9R8H6Gmpav3WtgGUZCY+LY6ni
-         lkxhdnzHd/6VipxJJXRwMM0OHFdb+coG2IwiDLJZljC0hu1mUCAgTAc+/sVLvcC49o
-         I6GosJFNA+rV+aeF0xbjQq1T6kiJHIPdx4rtXW288EwidFxXoRJ6qq4EMufky4mB+O
-         Ztb4137i3wUcQfGwdMYXlVA5AbdD/Ps2lxP3hQmEK2JtpeS1fCx+cofEoDAHECYT3e
-         FWRN4atL9Uazxt+I1qT59w4zmifrRfaIp7OmJ3LLlHyxjjWsLQ1AOQAuvKxGmzyA7p
-         /jb+BEHjFy2Of7Hd+M4Hs9DgQC/QFXmWHfBUcrjMB8cKZJGV/IH
+        b=e774HV1WZBmogHt7SWsNM7X7jLY57fWguxH6XlBGJq2VO2HWFUa4HPuCL84Gua9Q3
+         soInsdM9pQTyxPi1LTdC84UwgvzTfGalt20kfC48RZE59ORfGIjwcgCXg19u5iYdkC
+         SGmfSXhK7T32o6drpk6nJIi0Y5cjlCtgbW6fo88Ah+1rkyksfKFsQ+DilpJMc2Wdl6
+         tdGcBXRT62E1unoGkhBbj3qk3apGEx0N4AkMqq1Qy8fw5KJssChSohxjKWxtz2GujF
+         O0B9IDAIHZHGWxAoAJGfS+UbFZUjnkoMkbbTaG4zO3EA6FgR9eq8fDClAbU/o62YQl
+         sdoiJPdisfJkHmZo+RVeraGzVpNCnVGOC5aXoLgAvInWiKRMGXqzVUEt57mtVGcc+f
+         cQ3YaQzVm6MdTfo4u2XHqgeaAqGCNQ3uxRPd+QdBaFCdukejXyqxMxvQ059sdkPsfu
+         4TmHVN4lpL+RFfTAN3bBxtT/gKZs/L25K6/8EnF31rCJ2pNbJdh
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
         Brandon Williams <bmwill@google.com>
-Subject: [PATCH 17/24] sha1_file: convert index_path and index_fd to struct object_id
-Date:   Sun,  1 Oct 2017 22:08:24 +0000
-Message-Id: <20171001220831.214705-18-sandals@crustytoothpaste.net>
+Subject: [PATCH 24/24] refs/files-backend: convert static functions to object_id
+Date:   Sun,  1 Oct 2017 22:08:31 +0000
+Message-Id: <20171001220831.214705-25-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.14.2.822.g60be5d43e6
 In-Reply-To: <20171001220831.214705-1-sandals@crustytoothpaste.net>
 References: <20171001220831.214705-1-sandals@crustytoothpaste.net>
@@ -48,120 +48,141 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert these two functions and the functions that underlie them to take
-pointers to struct object_id.  This is a prerequisite to convert
-resolve_gitlink_ref.  Fix a stray tab in the middle of the index_mem
-call in index_pipe by converting it to a space.
+Convert several static functions to take pointers to struct object_id.
+Change the relevant parameters to write_packed_entry to be const, as we
+don't modify them.  Rename lock_ref_sha1_basic to lock_ref_oid_basic to
+reflect its new argument.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- sha1_file.c | 30 +++++++++++++++---------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+ refs/files-backend.c | 48 ++++++++++++++++++++++++------------------------
+ 1 file changed, 24 insertions(+), 24 deletions(-)
 
-diff --git a/sha1_file.c b/sha1_file.c
-index 5a2014811f..793fd2d194 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1660,7 +1660,7 @@ static void check_tag(const void *buf, size_t size)
- 		die("corrupt tag");
- }
- 
--static int index_mem(unsigned char *sha1, void *buf, size_t size,
-+static int index_mem(struct object_id *oid, void *buf, size_t size,
- 		     enum object_type type,
- 		     const char *path, unsigned flags)
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 7281f27f62..84d8e3da99 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -811,7 +811,7 @@ static struct ref_iterator *files_ref_iterator_begin(
+  * return a negative value.
+  */
+ static int verify_lock(struct ref_store *ref_store, struct ref_lock *lock,
+-		       const unsigned char *old_sha1, int mustexist,
++		       const struct object_id *old_oid, int mustexist,
+ 		       struct strbuf *err)
  {
-@@ -1691,15 +1691,15 @@ static int index_mem(unsigned char *sha1, void *buf, size_t size,
+ 	assert(err);
+@@ -819,7 +819,7 @@ static int verify_lock(struct ref_store *ref_store, struct ref_lock *lock,
+ 	if (refs_read_ref_full(ref_store, lock->ref_name,
+ 			       mustexist ? RESOLVE_REF_READING : 0,
+ 			       &lock->old_oid, NULL)) {
+-		if (old_sha1) {
++		if (old_oid) {
+ 			int save_errno = errno;
+ 			strbuf_addf(err, "can't verify ref '%s'", lock->ref_name);
+ 			errno = save_errno;
+@@ -829,11 +829,11 @@ static int verify_lock(struct ref_store *ref_store, struct ref_lock *lock,
+ 			return 0;
+ 		}
+ 	}
+-	if (old_sha1 && hashcmp(lock->old_oid.hash, old_sha1)) {
++	if (old_oid && oidcmp(&lock->old_oid, old_oid)) {
+ 		strbuf_addf(err, "ref '%s' is at %s but expected %s",
+ 			    lock->ref_name,
+ 			    oid_to_hex(&lock->old_oid),
+-			    sha1_to_hex(old_sha1));
++			    oid_to_hex(old_oid));
+ 		errno = EBUSY;
+ 		return -1;
+ 	}
+@@ -863,22 +863,22 @@ static int create_reflock(const char *path, void *cb)
+  * Locks a ref returning the lock on success and NULL on failure.
+  * On failure errno is set to something meaningful.
+  */
+-static struct ref_lock *lock_ref_sha1_basic(struct files_ref_store *refs,
+-					    const char *refname,
+-					    const unsigned char *old_sha1,
+-					    const struct string_list *extras,
+-					    const struct string_list *skip,
+-					    unsigned int flags, int *type,
+-					    struct strbuf *err)
++static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
++					   const char *refname,
++					   const struct object_id *old_oid,
++					   const struct string_list *extras,
++					   const struct string_list *skip,
++					   unsigned int flags, int *type,
++					   struct strbuf *err)
+ {
+ 	struct strbuf ref_file = STRBUF_INIT;
+ 	struct ref_lock *lock;
+ 	int last_errno = 0;
+-	int mustexist = (old_sha1 && !is_null_sha1(old_sha1));
++	int mustexist = (old_oid && !is_null_oid(old_oid));
+ 	int resolve_flags = RESOLVE_REF_NO_RECURSE;
+ 	int resolved;
+ 
+-	files_assert_main_repository(refs, "lock_ref_sha1_basic");
++	files_assert_main_repository(refs, "lock_ref_oid_basic");
+ 	assert(err);
+ 
+ 	lock = xcalloc(1, sizeof(struct ref_lock));
+@@ -944,7 +944,7 @@ static struct ref_lock *lock_ref_sha1_basic(struct files_ref_store *refs,
+ 		goto error_return;
  	}
  
- 	if (write_object)
--		ret = write_sha1_file(buf, size, typename(type), sha1);
-+		ret = write_sha1_file(buf, size, typename(type), oid->hash);
- 	else
--		ret = hash_sha1_file(buf, size, typename(type), sha1);
-+		ret = hash_sha1_file(buf, size, typename(type), oid->hash);
- 	if (re_allocated)
- 		free(buf);
- 	return ret;
- }
- 
--static int index_stream_convert_blob(unsigned char *sha1, int fd,
-+static int index_stream_convert_blob(struct object_id *oid, int fd,
- 				     const char *path, unsigned flags)
- {
- 	int ret;
-@@ -1714,22 +1714,22 @@ static int index_stream_convert_blob(unsigned char *sha1, int fd,
- 
- 	if (write_object)
- 		ret = write_sha1_file(sbuf.buf, sbuf.len, typename(OBJ_BLOB),
--				      sha1);
-+				      oid->hash);
- 	else
- 		ret = hash_sha1_file(sbuf.buf, sbuf.len, typename(OBJ_BLOB),
--				     sha1);
-+				     oid->hash);
- 	strbuf_release(&sbuf);
- 	return ret;
- }
- 
--static int index_pipe(unsigned char *sha1, int fd, enum object_type type,
-+static int index_pipe(struct object_id *oid, int fd, enum object_type type,
- 		      const char *path, unsigned flags)
- {
- 	struct strbuf sbuf = STRBUF_INIT;
- 	int ret;
- 
- 	if (strbuf_read(&sbuf, fd, 4096) >= 0)
--		ret = index_mem(sha1, sbuf.buf, sbuf.len, type,	path, flags);
-+		ret = index_mem(oid, sbuf.buf, sbuf.len, type, path, flags);
- 	else
- 		ret = -1;
- 	strbuf_release(&sbuf);
-@@ -1738,24 +1738,24 @@ static int index_pipe(unsigned char *sha1, int fd, enum object_type type,
- 
- #define SMALL_FILE_SIZE (32*1024)
- 
--static int index_core(unsigned char *sha1, int fd, size_t size,
-+static int index_core(struct object_id *oid, int fd, size_t size,
- 		      enum object_type type, const char *path,
- 		      unsigned flags)
- {
- 	int ret;
- 
- 	if (!size) {
--		ret = index_mem(sha1, "", size, type, path, flags);
-+		ret = index_mem(oid, "", size, type, path, flags);
- 	} else if (size <= SMALL_FILE_SIZE) {
- 		char *buf = xmalloc(size);
- 		if (size == read_in_full(fd, buf, size))
--			ret = index_mem(sha1, buf, size, type, path, flags);
-+			ret = index_mem(oid, buf, size, type, path, flags);
- 		else
- 			ret = error_errno("short read");
- 		free(buf);
- 	} else {
- 		void *buf = xmmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);
--		ret = index_mem(sha1, buf, size, type, path, flags);
-+		ret = index_mem(oid, buf, size, type, path, flags);
- 		munmap(buf, size);
+-	if (verify_lock(&refs->base, lock, old_sha1, mustexist, err)) {
++	if (verify_lock(&refs->base, lock, old_oid, mustexist, err)) {
+ 		last_errno = errno;
+ 		goto error_return;
  	}
- 	return ret;
-@@ -1793,12 +1793,12 @@ int index_fd(struct object_id *oid, int fd, struct stat *st,
- 	 * die() for large files.
+@@ -1349,8 +1349,8 @@ static int files_rename_ref(struct ref_store *ref_store,
+ 
+ 	logmoved = log;
+ 
+-	lock = lock_ref_sha1_basic(refs, newrefname, NULL, NULL, NULL,
+-				   REF_NODEREF, NULL, &err);
++	lock = lock_ref_oid_basic(refs, newrefname, NULL, NULL, NULL,
++				  REF_NODEREF, NULL, &err);
+ 	if (!lock) {
+ 		error("unable to rename '%s' to '%s': %s", oldrefname, newrefname, err.buf);
+ 		strbuf_release(&err);
+@@ -1369,8 +1369,8 @@ static int files_rename_ref(struct ref_store *ref_store,
+ 	goto out;
+ 
+  rollback:
+-	lock = lock_ref_sha1_basic(refs, oldrefname, NULL, NULL, NULL,
+-				   REF_NODEREF, NULL, &err);
++	lock = lock_ref_oid_basic(refs, oldrefname, NULL, NULL, NULL,
++				  REF_NODEREF, NULL, &err);
+ 	if (!lock) {
+ 		error("unable to lock %s for rollback: %s", oldrefname, err.buf);
+ 		strbuf_release(&err);
+@@ -1769,9 +1769,9 @@ static int files_create_symref(struct ref_store *ref_store,
+ 	struct ref_lock *lock;
+ 	int ret;
+ 
+-	lock = lock_ref_sha1_basic(refs, refname, NULL,
+-				   NULL, NULL, REF_NODEREF, NULL,
+-				   &err);
++	lock = lock_ref_oid_basic(refs, refname, NULL,
++				  NULL, NULL, REF_NODEREF, NULL,
++				  &err);
+ 	if (!lock) {
+ 		error("%s", err.buf);
+ 		strbuf_release(&err);
+@@ -2943,9 +2943,9 @@ static int files_reflog_expire(struct ref_store *ref_store,
+ 	 * reference itself, plus we might need to update the
+ 	 * reference if --updateref was specified:
  	 */
- 	if (type == OBJ_BLOB && path && would_convert_to_git_filter_fd(path))
--		ret = index_stream_convert_blob(oid->hash, fd, path, flags);
-+		ret = index_stream_convert_blob(oid, fd, path, flags);
- 	else if (!S_ISREG(st->st_mode))
--		ret = index_pipe(oid->hash, fd, type, path, flags);
-+		ret = index_pipe(oid, fd, type, path, flags);
- 	else if (st->st_size <= big_file_threshold || type != OBJ_BLOB ||
- 		 (path && would_convert_to_git(&the_index, path)))
--		ret = index_core(oid->hash, fd, xsize_t(st->st_size), type, path,
-+		ret = index_core(oid, fd, xsize_t(st->st_size), type, path,
- 				 flags);
- 	else
- 		ret = index_stream(oid, fd, xsize_t(st->st_size), type, path,
+-	lock = lock_ref_sha1_basic(refs, refname, oid->hash,
+-				   NULL, NULL, REF_NODEREF,
+-				   &type, &err);
++	lock = lock_ref_oid_basic(refs, refname, oid,
++				  NULL, NULL, REF_NODEREF,
++				  &type, &err);
+ 	if (!lock) {
+ 		error("cannot lock ref '%s': %s", refname, err.buf);
+ 		strbuf_release(&err);
 -- 
 2.14.2.822.g60be5d43e6
 
