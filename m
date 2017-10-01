@@ -2,64 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 480F220A10
-	for <e@80x24.org>; Sun,  1 Oct 2017 14:56:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 747C320A10
+	for <e@80x24.org>; Sun,  1 Oct 2017 14:56:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751112AbdJAO4W (ORCPT <rfc822;e@80x24.org>);
-        Sun, 1 Oct 2017 10:56:22 -0400
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:53414 "EHLO
-        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751093AbdJAO4V (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Oct 2017 10:56:21 -0400
-Received: by mail-wm0-f41.google.com with SMTP id q132so6354365wmd.2
-        for <git@vger.kernel.org>; Sun, 01 Oct 2017 07:56:20 -0700 (PDT)
+        id S1751125AbdJAO4d (ORCPT <rfc822;e@80x24.org>);
+        Sun, 1 Oct 2017 10:56:33 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:55427 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751093AbdJAO4c (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Oct 2017 10:56:32 -0400
+Received: by mail-wm0-f67.google.com with SMTP id u138so6342203wmu.4
+        for <git@vger.kernel.org>; Sun, 01 Oct 2017 07:56:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=KuCmziosLbK3S00hZinN09eoUnswNAT5Q3KbSYFBtn4=;
-        b=tv2aV+AEDl3NOe5rTX6VZWYyWo5XCef0vjdfafHYStklcEyUl4YUXlcGllL2hzkcqY
-         VWL4x5Mhd8Ik/Q7Ju+gZlsj9JCfckV6dsosj2uKOzCr44OGDvnikuiuWv7VlkC6LdfQX
-         +oh2075rtG1/Y6fvETsXlhhv0GDURcqFCWfi3KuQeauJXt0/tfNQ3Io5jTHwRbsw+haB
-         Q8cASQP7uku9et5gmL2XtvyBXyXkN/duPBLdHg2xZHpTgAOGB8y0zt9tGFo1LlcwbeMV
-         RHaRY+7LlbdWdY9qoI3lHlBTUadNHbJJpkpHOFUsMKaj+v+uCtMMdfyx9alWHnrdYfOB
-         AFVg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=jMfARSDcgxaPLGiSDs8KjbnH0y3DDFhS5cH9V02UlLg=;
+        b=h8yPdpWeZCZsyJmSCAEYhSUvJTTf0Upr3wcCMLQ/IJsjcW6j2m7ckdCBJ2verfz5cG
+         Ym+VtRUbbqMs+u77Fs+k9eokJv4rv17xp5jSCwe/ZX14zFJG03nNbkxJNceT0L4fFJeq
+         +rbaRfbXeRGgrqPQJRHYFHxYpWRORCU0B0rHfn2EFSvZ+CeFQJi3lOOit0RSMKdwJplx
+         oeH4IGxuSGAtAtbtB5wrlrDxJfv+Q7Ad8b7nu1pUmEfSW2L3eHG5jEk2qQikY5aAuRCd
+         DPkrs6NftJLd+mth03qCR315rSmrhN+eOpSu13emOqRPrGx3CkVqlj86MxndAQCjwVeC
+         +7zA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=KuCmziosLbK3S00hZinN09eoUnswNAT5Q3KbSYFBtn4=;
-        b=iYne1F+1c2JYHu31H5nPCD1/MR+UxzAs1itUiVXCf/Fp6tGXjZKkuiNBldpz6wei3f
-         lMlOlCOUc9R/8JAPssx3l8eg/FNRY81U6jRnmxD5zBmzcg98XL5CXJg1cNoslQfCy0/b
-         iVUK1EdfFkmkN5fEf8B3oksGtmYCoWt74710pygNMSwl3iFkI0cB7Xxz/fIX1ZNZXXYo
-         o/H6E2N5z8sBCqq04IoaYGgrtDqNqr5fwiVWuZjQQ3XULuXgblbaX7qXryzGPxRpAROl
-         aBdBvc5+cT2tmGHO45aoFr9IqypleVS1CGnOKMmagXSbAzAePLg8n2w8k/krhomeMox5
-         6TYA==
-X-Gm-Message-State: AHPjjUgV3J7fKfLrWp2uLmi4boHodc7qADUZd//gVpfw1HmNNgL5MDm8
-        WRK7hXAiQ6eSUPd3yN9Mx/1fTQ==
-X-Google-Smtp-Source: AOwi7QAZylrV5jSC2rM7OZcPlRaVXVW7bbLPxWVqvd8mlZWCh9LdFD9LruF31jCYf5qvYQNb0/gSsg==
-X-Received: by 10.28.173.1 with SMTP id w1mr8239424wme.3.1506869779664;
-        Sun, 01 Oct 2017 07:56:19 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=jMfARSDcgxaPLGiSDs8KjbnH0y3DDFhS5cH9V02UlLg=;
+        b=WvbK0YIvT3T14L4nAt7lcd7me9UuftRESDtYKnlj9px37UCZJwqAYY7gyb3VoMqgfk
+         gCOb7xxpj5Jiv0zCnEtPLvRjh++0e1ledhvo+8psU12ATF/9KZm8xWqEmJw3ZHibUVZP
+         7rxAYMSyh7rR7etuBLORbcdylmj8sf2ulTj8ZWCJqNxJTIQ+O61+6WNnHPiggCUgO+gS
+         QVRqUqozbJqZrsItFdcI1prC1LnJ7/pMDgRLqvlBW0icvd6kXWPRuMapWJcAMj7aINdo
+         WyDytZi71f9d9EtFt87/khKi9TpodXhCQeryUdujZPeTdS8hMHgD/SHqHzbFuMkOjtm8
+         4bXg==
+X-Gm-Message-State: AHPjjUgQ3nXrh/vdGai6K9+9+EAsVsjnGuOrZEmEKhyHXcMWCAuPkM59
+        ZXAK9BH0II73u5jsp0sZu+cEYg==
+X-Google-Smtp-Source: AOwi7QAGHo4L5sKReiCSsnx3uPmNccWSlW9sYjkLqumJ9q7kJQaCC5IPFqsc1box/uCRLHA2Ye3CJQ==
+X-Received: by 10.28.55.209 with SMTP id e200mr8373656wma.72.1506869791491;
+        Sun, 01 Oct 2017 07:56:31 -0700 (PDT)
 Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
-        by smtp.gmail.com with ESMTPSA id w82sm10473516wme.5.2017.10.01.07.56.18
+        by smtp.gmail.com with ESMTPSA id w82sm10473516wme.5.2017.10.01.07.56.30
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 01 Oct 2017 07:56:18 -0700 (PDT)
+        Sun, 01 Oct 2017 07:56:30 -0700 (PDT)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>, Jeff King <peff@peff.net>,
-        Paul Tan <pyokagan@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH 00/11] various lockfile-leaks and -fixes
-Date:   Sun,  1 Oct 2017 16:56:01 +0200
-Message-Id: <cover.1506862824.git.martin.agren@gmail.com>
+Cc:     Jeff King <peff@peff.net>
+Subject: [PATCH 01/11] sha1_file: do not leak `lock_file`
+Date:   Sun,  1 Oct 2017 16:56:02 +0200
+Message-Id: <9725917d9854a54e4daeda70940c3bb0ff5d9201.1506862824.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.14.1.727.g9ddaf86
+In-Reply-To: <cover.1506862824.git.martin.agren@gmail.com>
+References: <cover.1506862824.git.martin.agren@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,75 +66,62 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A recent series allowed `struct lock_file`s to be freed [1], so I wanted
-to get rid of the "simple" leaks of this kind. I found a couple of
-lock-related cleanups along the way and it resulted in this series. It
-feels a bit scary at eleven patches -- especially as this is about
-locking -- but I hope I've managed to put this into understandable and
-reviewable patches. Reviews, thoughts, opinions welcome, as always.
+There is no longer any need to allocate and leak a `struct lock_file`.
+Initialize it on the stack instead.
 
-1-2
+Instead of setting `lock = NULL` to signal that we have already rolled
+back, and that we should not do any more work, check with
+`is_lock_file_locked()`. Since we take the lock with
+`LOCK_DIE_ON_ERROR`, it evaluates to false exactly when we have called
+`rollback_lock_file()`.
 
-Instead of allocating and leaking `struct lock_file`s, initialize them
-on the stack. These instances were identified by simple grepping.
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+ sha1_file.c | 16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
-3-4
-
-Documentation fixes for lockfile and temporary file APIs.
-
-5-7
-
-No need to represent the same information twice. No need for the caller
-to provide a (static) lock for us now that we can safely manage our own.
-
-8-11
-
-Error-handling in read-cache.c was a bit lacking and over-eager at the
-same time. Sometimes we'd leave the lock open when we should commit it,
-sometimes we'd roll it back when we should only close it. We'd also
-crash under rare circumstances. Patch 9 addresses a bug in the API which
-most likely hasn't hit anyone and maybe never would, but if we don't
-have the functionality, I don't think we should pretend like we do.
-
-Martin
-
-[1] https://public-inbox.org/git/20170905121353.62zg3mtextmq5zrs@sigill.intra.peff.net/
-
-Martin Ågren (11):
-  sha1_file: do not leak `lock_file`
-  treewide: prefer lockfiles on the stack
-  lockfile: fix documentation on `close_lock_file_gently()`
-  tempfile: fix documentation on `delete_tempfile()`
-  cache-tree: simplify locking logic
-  apply: move lockfile into `apply_state`
-  apply: remove `newfd` from `struct apply_state`
-  cache.h: document `write_locked_index()`
-  read-cache: require flags for `write_locked_index()`
-  read-cache: don't leave dangling pointer in `do_write_index()`
-  read-cache: roll back lock on error with `COMMIT_LOCK`
-
- apply.c            | 25 ++++++++-----------------
- apply.h            |  8 +++-----
- builtin/am.c       | 27 ++++++++++++---------------
- builtin/apply.c    |  4 +---
- builtin/checkout.c | 14 ++++++--------
- builtin/clone.c    |  7 +++----
- builtin/diff.c     |  7 +++----
- builtin/difftool.c |  1 -
- cache-tree.c       | 12 ++++--------
- cache.h            | 19 +++++++++++++++++++
- config.c           | 17 ++++++++---------
- git-compat-util.h  |  7 ++++++-
- lockfile.h         |  4 ++--
- merge-recursive.c  |  6 +++---
- merge.c            |  8 +++-----
- read-cache.c       | 26 ++++++++++++++------------
- sequencer.c        |  1 -
- sha1_file.c        | 16 +++++++---------
- tempfile.h         |  8 ++++----
- wt-status.c        |  8 ++++----
- 20 files changed, 110 insertions(+), 115 deletions(-)
-
+diff --git a/sha1_file.c b/sha1_file.c
+index 5a2014811..c50d6237e 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -456,12 +456,12 @@ struct alternate_object_database *alloc_alt_odb(const char *dir)
+ 
+ void add_to_alternates_file(const char *reference)
+ {
+-	struct lock_file *lock = xcalloc(1, sizeof(struct lock_file));
++	struct lock_file lock = LOCK_INIT;
+ 	char *alts = git_pathdup("objects/info/alternates");
+ 	FILE *in, *out;
+ 
+-	hold_lock_file_for_update(lock, alts, LOCK_DIE_ON_ERROR);
+-	out = fdopen_lock_file(lock, "w");
++	hold_lock_file_for_update(&lock, alts, LOCK_DIE_ON_ERROR);
++	out = fdopen_lock_file(&lock, "w");
+ 	if (!out)
+ 		die_errno("unable to fdopen alternates lockfile");
+ 
+@@ -481,17 +481,15 @@ void add_to_alternates_file(const char *reference)
+ 		strbuf_release(&line);
+ 		fclose(in);
+ 
+-		if (found) {
+-			rollback_lock_file(lock);
+-			lock = NULL;
+-		}
++		if (found)
++			rollback_lock_file(&lock);
+ 	}
+ 	else if (errno != ENOENT)
+ 		die_errno("unable to read alternates file");
+ 
+-	if (lock) {
++	if (is_lock_file_locked(&lock)) {
+ 		fprintf_or_die(out, "%s\n", reference);
+-		if (commit_lock_file(lock))
++		if (commit_lock_file(&lock))
+ 			die_errno("unable to move new alternates file into place");
+ 		if (alt_odb_tail)
+ 			link_alt_odb_entries(reference, '\n', NULL, 0);
 -- 
 2.14.1.727.g9ddaf86
 
