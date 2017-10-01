@@ -2,149 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E5A0920A2C
-	for <e@80x24.org>; Sun,  1 Oct 2017 00:10:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0090220A2C
+	for <e@80x24.org>; Sun,  1 Oct 2017 00:10:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751604AbdJAAKp (ORCPT <rfc822;e@80x24.org>);
-        Sat, 30 Sep 2017 20:10:45 -0400
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:50060 "EHLO
-        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751202AbdJAAKp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Sep 2017 20:10:45 -0400
-Received: by mail-pf0-f181.google.com with SMTP id l188so1376783pfc.6
-        for <git@vger.kernel.org>; Sat, 30 Sep 2017 17:10:45 -0700 (PDT)
+        id S1751668AbdJAAKt (ORCPT <rfc822;e@80x24.org>);
+        Sat, 30 Sep 2017 20:10:49 -0400
+Received: from mail-pf0-f174.google.com ([209.85.192.174]:56757 "EHLO
+        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750988AbdJAAKr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Sep 2017 20:10:47 -0400
+Received: by mail-pf0-f174.google.com with SMTP id g65so1367367pfe.13
+        for <git@vger.kernel.org>; Sat, 30 Sep 2017 17:10:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=zgKeuT+HofTlfa97BYrXwYiphyS9i52srKYNlKgi0k8=;
-        b=DY+fbINvymvOGNfaALcbc5wQ+XORgZ1l9Gf3HogtGpE7W+4tWOX2JeOe0dK4V8dWcv
-         O7AZmrstsApwH6dfY/znxkN/H2agZRaKVxetFTSrK9SLkyRqA6XV4HSwkO3zqpXNeDJK
-         zq6lLE0l4qFYrUkz7gVEG5IeSwWlBvCWe4mqt7nuwg0IgTItD9gqDzta4LPvVOnp03HA
-         co6CLpjD2oGdeouqeDp1u/xbCsAK9qKuTgly3t3VBsGVlB4oxLglQgXlHrUA1ScutZvh
-         3kBnbzvyv4LsNzdJdwJ1LhTzjPOV86eOL2bJS6UgwQ3oQg7IG1FIgO4Xa2+UqXauhYfs
-         nrCQ==
+        bh=YUO3dGUrWpX3fL+wX6zLM4JPVfIkbgkgp9xP/uMU3D4=;
+        b=F5zo6/Xt5IUQuJBNILrJ8ep0+3K97jsGpi2W8wszPOhNnudrM1LAEPTGmjBP25oJz+
+         ONRM7HKZ2gdA0P1M7IyvkZ0Jz86dTN8NSmEo6DZdtaLC28Ja1wFPygDyIKOtLqh5DX99
+         3DN/C08mnCPDrLl/Wn21fmj5i8hN5OrPZg64MsxUeCc9jOjT1cIzNZCtm3ZIoLHoVFkg
+         h4bzivBGS309xKu2oQvdzDHLWm4UFU3/mn7PbS5l4qo3rdU+qpjoUgSuwuBBCX2NeG6p
+         DTjFpESPqCMIn3xZuh990nIdR9oRuk4XjBV+w1S0vxZ22Z/n4YmhWFJuASMKPyUMnmfI
+         BmbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=zgKeuT+HofTlfa97BYrXwYiphyS9i52srKYNlKgi0k8=;
-        b=cNoD3IHV0HKdvjw3rkEMEwZowHaqvKcOe1brpuIHZGipsh7lPVRROVAoujpCA4SY5I
-         thnN8PMpU3D8vbvyC3sdwWdIMWRtBW08klNLs1XOU2HUTJwMnBgdwNPxQMGsi6fxxYBw
-         ncknsZfR+S/gfmy6tEwlM55JVCeONv7vNy+j3Dbk1ZdGa7qMYMqoPJZ94kRrY80uWtrt
-         SsYSa1k3ZpQeYJCYDQSZhqfnpbOuGwMFYuDkHYjaNYxUDOTLh4h3W0Cf2FjY6RGHJ1T8
-         qvRenLd6ANCgoaNCgaACRxGpNxzOlS59GEXLOmbDzJ4VZ/xTiYCVQZ2i5GKG9+0UD06O
-         GZTA==
-X-Gm-Message-State: AHPjjUhYeAuf0/JjIuu5hrgjckU6YfOwR3CdoDsF9BaHlf/1k8YGAJHi
-        /hsV4BrNrPnk98A6bSCSGFTRE1P6jp0=
-X-Google-Smtp-Source: AOwi7QC4v1AEFlouUqPWc8NRpUq8oeeF0GtBMMdHoqtHy+44Rznm9+yeeoE21P8ccvTwl9ixWnk/bg==
-X-Received: by 10.99.190.3 with SMTP id l3mr9202919pgf.79.1506816643881;
-        Sat, 30 Sep 2017 17:10:43 -0700 (PDT)
+        bh=YUO3dGUrWpX3fL+wX6zLM4JPVfIkbgkgp9xP/uMU3D4=;
+        b=L9N71f7lqLKMxmdsHQGZDwgTYoHT3Mj60UbD+oCG+jozH1v6FZZ+bhknrJYTUQRa+Y
+         e9/3JrVBF66Oa393ksXPnoL+9da44/U2uL4GnDArPTiGfMotr2IsMIAIW7TwgWSPjd04
+         n9I5u0x23+CVnpafVWy+QPSr3lq9QfLnnsKAzcRLgCpTxK63QsmVso8c/q+WtCWWPNsX
+         9nXAdCtM4KTDGds2AmP7IfplLXquysqnFH7OSVNcnty+lERHMm0BIyEiwPyfwIHXe+X9
+         q7GL/Od2QF0nFQeTThVFywwLqTdVVUwrCMWLkaA/6rsqot3re/K0+fKQrfrd4aYU4CrO
+         ydGA==
+X-Gm-Message-State: AHPjjUhtgvKDD0J56zkwhgjzU0vjQ2HY+tQ9GocG/ltNC1/rfoO8aRBd
+        LKXsGhypTq9wa/8RrnftCBTHOd4ygZQ=
+X-Google-Smtp-Source: AOwi7QCuIzdlmAN4HVksUgmoWzn/GE2X356M/bKXG/gbnQR7A7ZM7g/rVREaMKRazrgdDpU2ztoSow==
+X-Received: by 10.98.15.209 with SMTP id 78mr11361706pfp.87.1506816646053;
+        Sat, 30 Sep 2017 17:10:46 -0700 (PDT)
 Received: from localhost ([205.175.97.239])
-        by smtp.gmail.com with ESMTPSA id e66sm11095374pfe.79.2017.09.30.17.10.42
+        by smtp.gmail.com with ESMTPSA id s187sm10395813pgb.82.2017.09.30.17.10.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 30 Sep 2017 17:10:42 -0700 (PDT)
+        Sat, 30 Sep 2017 17:10:44 -0700 (PDT)
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH v3 1/6] pretty.c: delimit "%(trailers)" arguments with ","
-Date:   Sat, 30 Sep 2017 17:10:32 -0700
-Message-Id: <20171001001037.23361-1-me@ttaylorr.com>
+Subject: [PATCH v3 2/6] t6300: refactor %(trailers) tests
+Date:   Sat, 30 Sep 2017 17:10:33 -0700
+Message-Id: <20171001001037.23361-2-me@ttaylorr.com>
 X-Mailer: git-send-email 2.14.1.145.gb3622a4ee
-In-Reply-To: <20171001000647.GA20767@D-10-157-251-166.dhcp4.washington.edu>
+In-Reply-To: <20171001001037.23361-1-me@ttaylorr.com>
 References: <20171001000647.GA20767@D-10-157-251-166.dhcp4.washington.edu>
+ <20171001001037.23361-1-me@ttaylorr.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In preparation for adding consistent "%(trailers)" atom options to
-`git-for-each-ref(1)`'s "--format" argument, change "%(trailers)" in
-pretty.c to separate sub-arguments with a ",", instead of a ":".
+We currently have one test for %(trailers) in `git-for-each-ref(1)`,
+through "%(contents:trailers)". In preparation for more, let's add a few
+things:
 
-Multiple sub-arguments are given either as "%(trailers:unfold,only)" or
-"%(trailers:only,unfold)".
+  - Move the commit creation step to its own test so that it can be
+  re-used.
 
-This change disambiguates between "top-level" arguments, and arguments
-given to the trailers atom itself. It is consistent with the behavior of
-"%(upstream)" and "%(push)" atoms.
+  - Add a non-trailer to the commit's trailers to test that non-trailers
+  aren't shown using "%(trailers:only)".
+
+  - Add a multi-line trailer to ensure that trailers are unfolded
+  correctly using "%(trailers:unfold)".
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pretty.c                      | 34 +++++++++++++++++++++++++++++-----
- t/t4205-log-pretty-formats.sh |  4 ++--
- 2 files changed, 31 insertions(+), 7 deletions(-)
+ t/t6300-for-each-ref.sh | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/pretty.c b/pretty.c
-index 0e23fe3c0..9f8d75a84 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1036,6 +1036,25 @@ static size_t parse_padding_placeholder(struct strbuf *sb,
- 	return 0;
- }
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index 834a9ed16..2a9fcf713 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -592,18 +592,25 @@ test_expect_success 'do not dereference NULL upon %(HEAD) on unborn branch' '
+ cat >trailers <<EOF
+ Reviewed-by: A U Thor <author@example.com>
+ Signed-off-by: A U Thor <author@example.com>
++[ v2 updated patch description ]
++Acked-by: A U Thor
++  <author@example.com>
+ EOF
  
-+static int match_placeholder_arg(const char *to_parse,
-+				const char *candidate,
-+				const char **end)
-+{
-+	const char *p;
-+	if (!(skip_prefix(to_parse, candidate, &p)))
-+		return 0;
-+	if (*p == ',') {
-+		*end = p + 1;
-+		return 1;
-+	}
-+	if (*p == ')') {
-+		*end = p;
-+		return 1;
-+	}
-+	return 0;
-+}
+-test_expect_success 'basic atom: head contents:trailers' '
 +
++test_expect_success 'set up trailers for next test' '
+ 	echo "Some contents" > two &&
+ 	git add two &&
+-	git commit -F - <<-EOF &&
++	git commit -F - <<-EOF
+ 	trailers: this commit message has trailers
+ 
+ 	Some message contents
+ 
+ 	$(cat trailers)
+ 	EOF
++'
 +
- static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
- 				const char *placeholder,
- 				void *context)
-@@ -1265,11 +1284,16 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
- 
- 	if (skip_prefix(placeholder, "(trailers", &arg)) {
- 		struct process_trailer_options opts = PROCESS_TRAILER_OPTIONS_INIT;
--		while (*arg == ':') {
--			if (skip_prefix(arg, ":only", &arg))
--				opts.only_trailers = 1;
--			else if (skip_prefix(arg, ":unfold", &arg))
--				opts.unfold = 1;
-+		if (*arg == ':') {
-+			arg++;
-+			for (;;) {
-+				if (match_placeholder_arg(arg, "only", &arg))
-+					opts.only_trailers = 1;
-+				else if (match_placeholder_arg(arg, "unfold", &arg))
-+					opts.unfold = 1;
-+				else
-+					break;
-+			}
- 		}
- 		if (*arg == ')') {
- 			format_trailers_from_commit(sb, msg + c->subject_off, &opts);
-diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-index ec5f53010..977472f53 100755
---- a/t/t4205-log-pretty-formats.sh
-+++ b/t/t4205-log-pretty-formats.sh
-@@ -588,8 +588,8 @@ test_expect_success '%(trailers:unfold) unfolds trailers' '
- '
- 
- test_expect_success ':only and :unfold work together' '
--	git log --no-walk --pretty="%(trailers:only:unfold)" >actual &&
--	git log --no-walk --pretty="%(trailers:unfold:only)" >reverse &&
-+	git log --no-walk --pretty="%(trailers:only,unfold)" >actual &&
-+	git log --no-walk --pretty="%(trailers:unfold,only)" >reverse &&
- 	test_cmp actual reverse &&
- 	{
- 		grep -v patch.description <trailers | unfold &&
++test_expect_success 'basic atom: head contents:trailers' '
+ 	git for-each-ref --format="%(contents:trailers)" refs/heads/master >actual &&
+ 	sanitize_pgp <actual >actual.clean &&
+ 	# git for-each-ref ends with a blank line
 -- 
 2.14.1.145.gb3622a4ee
 
