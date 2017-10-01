@@ -2,81 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 15EB320A10
-	for <e@80x24.org>; Sun,  1 Oct 2017 15:14:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 44B2020A10
+	for <e@80x24.org>; Sun,  1 Oct 2017 15:44:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751403AbdJAPOh (ORCPT <rfc822;e@80x24.org>);
-        Sun, 1 Oct 2017 11:14:37 -0400
-Received: from mout.web.de ([212.227.15.4]:51374 "EHLO mout.web.de"
+        id S1751118AbdJAPof (ORCPT <rfc822;e@80x24.org>);
+        Sun, 1 Oct 2017 11:44:35 -0400
+Received: from mout.gmx.net ([212.227.17.21]:63821 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751093AbdJAPOg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Oct 2017 11:14:36 -0400
-Received: from [192.168.178.36] ([91.20.57.42]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MRzYo-1dsjek0DXu-00TDLe; Sun, 01
- Oct 2017 17:14:32 +0200
-Subject: [PATCH 2/2] run-command: use ALLOC_ARRAY
-To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
-References: <c4abb7ac-dafd-57f2-8b46-45d610d656c4@web.de>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <6343155c-0986-06b0-8ced-146b23b8a137@web.de>
-Date:   Sun, 1 Oct 2017 17:14:31 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
-MIME-Version: 1.0
-In-Reply-To: <c4abb7ac-dafd-57f2-8b46-45d610d656c4@web.de>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:iVz/HdlOVH2hHaUWgMaffcIPMtg9kVx8PPkRtDKWUloWww335Bq
- 0u3jOhh/RbNy+Itjx08g8rnfcIPhmYS217OYVZmDBHEWD7D8J/cGf8KsVVTb541YsorH60K
- wHakTfkLD7xn08n5SsBSO0DCX87CxwtQASWH3XZCiChalBpc+pXKJNnt34VJ3iZg5DTaV+U
- X62ENM1gOFkE4FbXR9fnw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:SHe6z5D9so0=:J/IQ2cLClbfEP9RdKhEyhT
- 2JFOWyNYcCMhpYBV/akrH0nMHsmWXNm+eALabHdYEXP5Om/WJ7HmMFuCY9ALlDLtimcQeR/kZ
- mRXNrwWmZAjMeYEvVCKd0K6i92Z75ufJumc9U6W+2N6vuYPze1l/AeRvFm4znPk6oJQEvVaat
- Mmw8JA52ZHEs3mVcyrwQrTRH3hUYA/N95IVm5FX4oFkI03qOhvlhLPrO8D9uTKnra2H0ICQ8I
- 2WGxpyahyb8YM11LwI4sNEkoZvnXyvUP6ZaWUatuGoncPfOGHzTGCCt7RN53YMTQIRhUgoc2T
- nMiiyvkWAVPCOoQcg/bshIaduYilmja7PGNSFusqZupJD+R3nCzRqLhCCzIA7hY8B+sf2BaLJ
- RZhXCUBQWjWKgtgQ6cuotLUdcgSszFBICzanwlBY+6zOYYl1tspXLuXM9ZhsCOk8OkKeMbkDJ
- Yycy/uXFTg9GSx2Yh4qYbZPKf2JhtaeH31gZkVHZNTc99oCf9woHUTGq1X8Lo4wtjn4TwOc3/
- FythCGbCiGCiQU9e5Wn51EhCyqcgpGin4m3P4qL9SJ010VRoxi8wiPFScztg5L8+ZaFU6svUD
- 4dbTkhgHFF0IiUH8JxzqFyfXVb1/QX+GB1uVll8o9R4anlHt86Qfkt4zO49xJ0obyWxhub2dE
- 2XoRR3/MRIc+G5uph7uLJjWXunDMHXXJZ2621aZ9tsFK8dseFo6cg7RZI4rMKmhLD1GiNKDtg
- P51AWHM15up6HUCHeypZUfh9qPJ0ZUknlssnOD/zQo3jrqZKTB/myC8wLJjECZjuzOB9z2waB
- HE4Sudw2N+Q0hYM1LLGgH98iUGp/KY5JmpuxiRgz34dVZJxnH0=
+        id S1750965AbdJAPoe (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Oct 2017 11:44:34 -0400
+Received: from fermat.fritz.box ([92.76.241.219]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MW9TR-1dnWFu3Wnp-00XJJD; Sun, 01
+ Oct 2017 17:44:28 +0200
+From:   Stephan Beyer <s-beyer@gmx.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Stephan Beyer <s-beyer@gmx.net>,
+        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH v2] Add a comment to .clang-format about the meaning of the file
+Date:   Sun,  1 Oct 2017 17:44:25 +0200
+Message-Id: <20171001154425.5568-1-s-beyer@gmx.net>
+X-Mailer: git-send-email 2.14.2.677.g5a59ab275
+In-Reply-To: <20170929224505.GN19555@aiede.mtv.corp.google.com>
+References: <20170929224505.GN19555@aiede.mtv.corp.google.com>
+X-Provags-ID: V03:K0:DtTJ7Vr7E2Tuh7ROpzXB63YjJt2BW0f6TLc3cWUCRCo5CEpx2t0
+ BJMkY6M+3y0NPK2spEycCPv6+azHc5T46zXW/PkvOjIdNwUkyl1cqlglCBAVYhlTF/vvBSQ
+ ptDqNWYE1j1rxOOab0rVcJda5lTp2k1IkCEoJQVzE6qLhSByUe9qG35oSk7Z2K4b73sv0qw
+ yWoWfYt21pngGpsPml5aw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:wbAUyakwcMM=:kO5veBWzpr6HZJj925DrG6
+ bf78tvrCTgezUEfKq5CqEkaDfzlJKDuEbsFltTddew3DSYA+lxHp726PDzj15HV40zL/GAwmu
+ okD4dXCpjMmoHcFCJ9ouagWDo6fyVNRoapfHty+ZX3wPnOX4SZe3mq+3EACOKWAecJ8t6BjHN
+ VQ1Z9r3HXNeAsbrRydZPiUpvqJA5JuoPmo26vVEsOCaI7FS71nDDCR8yq/wIxhbB5jQwl1/5Y
+ trAeH9Z38Uai/FMb2v5EvRMU9l3QLoPUWPi+sxmkk7zbDUYOik2Q978DUb8PHeSpJQ5TBbyik
+ id/T/RzDjm93zWnC4ubm+5WQ2dzcVf9wQRn+ExLsDpfbxbsDYTLZfTXs0eWRu43eaEquuWNdL
+ L83i71WqlxeiuPKdIUxFdnS4MqkZGUyOatLRz2kawjDxY5HcGXFg7sG3MZ2rnZ8dZHsiAqIh2
+ eXtp3RynzrYTx9jt37Gcke5tPNEzj2qJztYN9S6mh/1dEHJkeOJWzk5q0d9cDnGoHdpThg9xl
+ UpC/roFAYQIhMmh0+EH/7EQRZPuWswIECGkrcMDqsGeyQJBrP26CAcd3XK3e23pmOLdFqlUaH
+ 9AAZ2n/QNPMWWa0CeBj1fMITdHndR5s2ruy2Cee4Z5w0hNJ8gkrOsvJ8b4RJRsYDm25EFNBx7
+ 3ckBphLX8NRlc5p3BVvHkH4kL42tgTOTgFVoE0tlkU3TYtUChGMD8Sf2okrExKz+mc9hIoWdq
+ Bzv5bSJn9P/DzQPo0zmUhuacEAnzfNU6dMQC9RawX8LoIvgm66/B3mW9WYlQ14D7136FxGxsn
+ qgO2EJpEFVdgYVk/jGiEOQLfsnvkg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Use the macro ALLOC_ARRAY to allocate an array.  This is shorter and
-eaasier, as it automatically infers the size of elements.
+Having a .clang-format file in a project can be understood in a way that code
+has to be in the style defined by the .clang-format file, i.e., you just have
+to run clang-format over all code and you are set. This is not the case in the
+Git project, which is now reflected by a comment in the beginning of the file.
 
-Patch generated with Coccinelle and contrib/coccinelle/array.cocci.
+Additionally, the working clang-format version is mentioned because the config
+directives change from time to time (in a compatibility-breaking way).
 
-Signeg-off-by: Rene Scharfe <l.s.r@web.de>
+Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
 ---
- run-command.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/run-command.c b/run-command.c
-index b5e6eb37c0..014b2165b5 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -452,7 +452,7 @@ static char **prep_childenv(const char *const *deltaenv)
- 	}
+Notes:
+    On 10/01/2017 04:45 AM, Junio C Hamano wrote:
+    > it makes as if a random patch to "make it
+    > conform" without thinking if the rules make sense were a welcome
+    > addition, which is absolutely the last signal we would want to send
+    > to the readers.
+    
+    Right. I dropped that last sentence and replaced it by a sentence about human
+    aesthetics judgement overruling mechanical rules -- I think that's somehow quoted
+    from a comment of yours on the list.
+
+ .clang-format | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/.clang-format b/.clang-format
+index 3ede2628d..041b7be03 100644
+--- a/.clang-format
++++ b/.clang-format
+@@ -1,4 +1,8 @@
+-# Defaults
++# This file is an example configuration for clang-format 5.0.
++#
++# Note that this style definition should only be understood as a hint
++# for writing new code. In the end, human aesthetics judgement overrules
++# mechanical rules.
  
- 	/* Create an array of 'char *' to be used as the childenv */
--	childenv = xmalloc((env.nr + 1) * sizeof(char *));
-+	ALLOC_ARRAY(childenv, env.nr + 1);
- 	for (i = 0; i < env.nr; i++)
- 		childenv[i] = env.items[i].util;
- 	childenv[env.nr] = NULL;
+ # Use tabs whenever we need to fill whitespace that spans at least from one tab
+ # stop to the next one.
 -- 
-2.14.2
+2.14.2.677.g5a59ab275
+
