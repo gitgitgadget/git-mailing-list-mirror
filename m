@@ -6,39 +6,39 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D46720A10
-	for <e@80x24.org>; Sun,  1 Oct 2017 22:09:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E842120A10
+	for <e@80x24.org>; Sun,  1 Oct 2017 22:09:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752050AbdJAWJC (ORCPT <rfc822;e@80x24.org>);
-        Sun, 1 Oct 2017 18:09:02 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:54144 "EHLO
+        id S1752365AbdJAWJw (ORCPT <rfc822;e@80x24.org>);
+        Sun, 1 Oct 2017 18:09:52 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:54166 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751980AbdJAWI4 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 1 Oct 2017 18:08:56 -0400
+        by vger.kernel.org with ESMTP id S1751092AbdJAWJB (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 1 Oct 2017 18:09:01 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 383F160DAE;
-        Sun,  1 Oct 2017 22:08:54 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5D51E60DA9;
+        Sun,  1 Oct 2017 22:09:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1506895734;
-        bh=zOUYm7sBS+ixVdeFUN8phQ0uJZMn17egG7TGjeW44WY=;
+        s=default; t=1506895740;
+        bh=+o8vGP8ZFujcgGx8gJP4Y97LzFV3ElBGn9hLYhuuYvs=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=K4PnWODwu4mDwF3s5kCajopbiHL73dLwQQJ9N8oJFYID/Thk+SXce7ZWa3xyihVxS
-         Ed7lledvg2PVqvnJ8wAmiL2RF/+js5bLTaMVcRRp2GgsCatd3sKJWFkEFEs2y5kkme
-         UFsbeQ60s/bzp/RFbhzJm3iFeF4kLo8USfoomrB0EKF3o3Ss402Idhm5A0oxnTPPcG
-         0lLk+4NkE8MnRo1stch46Z3By/NSb4ka1DJm71r/Z0/q+QeIZIeHDt0sKQS+EPHtbS
-         dxhchfXPi2e0M3mF8KrmGPmDXytKu3Z3FQWFjzS+U6eqVXaOqyRDEvSpOrWqU7Vf1M
-         aY0E1I4xiKumMzjSa9D+UonirFWcipYokA/xv2Htp4mv3voIzL81R00+9/4Gx17t0+
-         FmCapbnHB0mlDCCgOToLQiE6DZlmxnEaPE/99/Tbau6uYF/CHi0BX2Fq9mNvu5pUqK
-         9AyIHj5mNeT4fJdFQphvm2g6vMV8F1Bg3qmACRJorlGJBa851CY
+        b=CAW1RKC2nucimWF/mjjzInf0NLQR4oG6i/8s8vRTzZiN2MPlcWB0WJMa267JSCvMh
+         JDJ/JQz4q298MM4lfQLpVbBbhmEXtHfxAXCIko0+DE+n5rFPlVXA/oS9qdyIRYo1Xr
+         rS8OdyEgHI+te76TkV708wFta+L8TezA18RVji0NZFYx5Y+HsZ7AZaekKjSfB79u3t
+         ImsWOJC63GWTdro/04JdCq32oh/KFPjtwr88Q2se6RxyxRuwSkXrhBvjkaxupNRxUl
+         pzZ8oaPnt+Jmb7sArpfkKENmb+yMLsMr8poso+dnWU6eTPPf63R7CCInpXdlymFzTd
+         nRY7LeiT4nd7/FF31iGNdWNZXxI5yiDyx2IpNFNSo9+/oVaKOZg8U7gmgu+N6TQnJ3
+         kGC7dgOh5CGNTAZKn+UsGaS7LzufEQslhfpAw0PqmjzdJDxqshivIRmDWZKE+UdGz7
+         ReJt5qRedqZbCqwIRcDjD58uVWLrUFSVrriNrQvCU8y3b9Sg5lW
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
         Brandon Williams <bmwill@google.com>
-Subject: [PATCH 09/24] refs: convert dwim_ref and expand_ref to struct object_id
-Date:   Sun,  1 Oct 2017 22:08:16 +0000
-Message-Id: <20171001220831.214705-10-sandals@crustytoothpaste.net>
+Subject: [PATCH 13/24] builtin/pack-objects: convert to struct object_id
+Date:   Sun,  1 Oct 2017 22:08:20 +0000
+Message-Id: <20171001220831.214705-14-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.14.2.822.g60be5d43e6
 In-Reply-To: <20171001220831.214705-1-sandals@crustytoothpaste.net>
 References: <20171001220831.214705-1-sandals@crustytoothpaste.net>
@@ -48,271 +48,489 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-All of the callers of these functions just pass the hash member of a
-struct object_id, so convert them to use a pointer to struct object_id
-directly.
+This is one of the last unconverted callers to peel_ref.  While we're
+fixing that, convert the rest of the file, since it will need to be
+converted at some point anyway.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- archive.c             |  2 +-
- branch.c              |  2 +-
- builtin/fast-export.c |  2 +-
- builtin/log.c         |  2 +-
- builtin/merge-base.c  |  2 +-
- builtin/merge.c       |  2 +-
- builtin/rev-parse.c   |  2 +-
- builtin/show-branch.c |  2 +-
- bundle.c              |  2 +-
- refs.c                | 14 +++++++-------
- refs.h                |  4 ++--
- remote.c              |  3 +--
- sha1_name.c           |  6 +++---
- upload-pack.c         |  2 +-
- wt-status.c           |  2 +-
- 15 files changed, 24 insertions(+), 25 deletions(-)
+ builtin/pack-objects.c | 131 +++++++++++++++++++++++++------------------------
+ 1 file changed, 66 insertions(+), 65 deletions(-)
 
-diff --git a/archive.c b/archive.c
-index 1e41f4bbeb..0b7b62af0c 100644
---- a/archive.c
-+++ b/archive.c
-@@ -371,7 +371,7 @@ static void parse_treeish_arg(const char **argv,
- 		const char *colon = strchrnul(name, ':');
- 		int refnamelen = colon - name;
- 
--		if (!dwim_ref(name, refnamelen, oid.hash, &ref))
-+		if (!dwim_ref(name, refnamelen, &oid, &ref))
- 			die("no such ref: %.*s", refnamelen, name);
- 		free(ref);
- 	}
-diff --git a/branch.c b/branch.c
-index 45029ea142..62f7b0d8c2 100644
---- a/branch.c
-+++ b/branch.c
-@@ -264,7 +264,7 @@ void create_branch(const char *name, const char *start_name,
- 		die(_("Not a valid object name: '%s'."), start_name);
- 	}
- 
--	switch (dwim_ref(start_name, strlen(start_name), oid.hash, &real_ref)) {
-+	switch (dwim_ref(start_name, strlen(start_name), &oid, &real_ref)) {
- 	case 0:
- 		/* Not branching from any existing branch */
- 		if (explicit_tracking)
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 2fb60d6d48..d74c73f777 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -823,7 +823,7 @@ static void get_tags_and_duplicates(struct rev_cmdline_info *info)
- 		if (e->flags & UNINTERESTING)
- 			continue;
- 
--		if (dwim_ref(e->name, strlen(e->name), oid.hash, &full_name) != 1)
-+		if (dwim_ref(e->name, strlen(e->name), &oid, &full_name) != 1)
- 			continue;
- 
- 		if (refspecs) {
-diff --git a/builtin/log.c b/builtin/log.c
-index d81a09051e..ba9d4cd786 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -975,7 +975,7 @@ static char *find_branch_name(struct rev_info *rev)
- 		return NULL;
- 	ref = rev->cmdline.rev[positive].name;
- 	tip_oid = &rev->cmdline.rev[positive].item->oid;
--	if (dwim_ref(ref, strlen(ref), branch_oid.hash, &full_ref) &&
-+	if (dwim_ref(ref, strlen(ref), &branch_oid, &full_ref) &&
- 	    skip_prefix(full_ref, "refs/heads/", &v) &&
- 	    !oidcmp(tip_oid, &branch_oid))
- 		branch = xstrdup(v);
-diff --git a/builtin/merge-base.c b/builtin/merge-base.c
-index 6dbd167d3b..e99f5405ce 100644
---- a/builtin/merge-base.c
-+++ b/builtin/merge-base.c
-@@ -156,7 +156,7 @@ static int handle_fork_point(int argc, const char **argv)
- 	struct commit_list *bases;
- 	int i, ret = 0;
- 
--	switch (dwim_ref(argv[0], strlen(argv[0]), oid.hash, &refname)) {
-+	switch (dwim_ref(argv[0], strlen(argv[0]), &oid, &refname)) {
- 	case 0:
- 		die("No such ref: '%s'", argv[0]);
- 	case 1:
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 99d2df965f..6071dbfe34 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -454,7 +454,7 @@ static void merge_name(const char *remote, struct strbuf *msg)
- 	if (!remote_head)
- 		die(_("'%s' does not point to a commit"), remote);
- 
--	if (dwim_ref(remote, strlen(remote), branch_head.hash, &found_ref) > 0) {
-+	if (dwim_ref(remote, strlen(remote), &branch_head, &found_ref) > 0) {
- 		if (starts_with(found_ref, "refs/heads/")) {
- 			strbuf_addf(msg, "%s\t\tbranch '%s' of .\n",
- 				    oid_to_hex(&branch_head), remote);
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index b9c13d3d9d..ad20a948f0 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -133,7 +133,7 @@ static void show_rev(int type, const struct object_id *oid, const char *name)
- 			struct object_id discard;
- 			char *full;
- 
--			switch (dwim_ref(name, strlen(name), discard.hash, &full)) {
-+			switch (dwim_ref(name, strlen(name), &discard, &full)) {
- 			case 0:
- 				/*
- 				 * Not found -- not a ref.  We could
-diff --git a/builtin/show-branch.c b/builtin/show-branch.c
-index 0237be4975..722a7f4bec 100644
---- a/builtin/show-branch.c
-+++ b/builtin/show-branch.c
-@@ -720,7 +720,7 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 			die(Q_("only %d entry can be shown at one time.",
- 			       "only %d entries can be shown at one time.",
- 			       MAX_REVS), MAX_REVS);
--		if (!dwim_ref(*av, strlen(*av), oid.hash, &ref))
-+		if (!dwim_ref(*av, strlen(*av), &oid, &ref))
- 			die(_("no such ref %s"), *av);
- 
- 		/* Has the base been specified? */
-diff --git a/bundle.c b/bundle.c
-index 12658c5c9f..93290962c9 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -338,7 +338,7 @@ static int write_bundle_refs(int bundle_fd, struct rev_info *revs)
- 
- 		if (e->item->flags & UNINTERESTING)
- 			continue;
--		if (dwim_ref(e->name, strlen(e->name), oid.hash, &ref) != 1)
-+		if (dwim_ref(e->name, strlen(e->name), &oid, &ref) != 1)
- 			goto skip_write_ref;
- 		if (read_ref_full(e->name, RESOLVE_REF_READING, &oid, &flag))
- 			flag = 0;
-diff --git a/refs.c b/refs.c
-index d6f8587b57..db683248c7 100644
---- a/refs.c
-+++ b/refs.c
-@@ -456,15 +456,15 @@ static char *substitute_branch_name(const char **string, int *len)
- 	return NULL;
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 180c17904b..cde4c96f3d 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -151,7 +151,7 @@ static unsigned long do_compress(void **pptr, unsigned long size)
  }
  
--int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref)
-+int dwim_ref(const char *str, int len, struct object_id *oid, char **ref)
+ static unsigned long write_large_blob_data(struct git_istream *st, struct sha1file *f,
+-					   const unsigned char *sha1)
++					   const struct object_id *oid)
  {
- 	char *last_branch = substitute_branch_name(&str, &len);
--	int   refs_found  = expand_ref(str, len, sha1, ref);
-+	int   refs_found  = expand_ref(str, len, oid, ref);
- 	free(last_branch);
- 	return refs_found;
- }
+ 	git_zstream stream;
+ 	unsigned char ibuf[1024 * 16];
+@@ -165,7 +165,7 @@ static unsigned long write_large_blob_data(struct git_istream *st, struct sha1fi
+ 		int zret = Z_OK;
+ 		readlen = read_istream(st, ibuf, sizeof(ibuf));
+ 		if (readlen == -1)
+-			die(_("unable to read %s"), sha1_to_hex(sha1));
++			die(_("unable to read %s"), oid_to_hex(oid));
  
--int expand_ref(const char *str, int len, unsigned char *sha1, char **ref)
-+int expand_ref(const char *str, int len, struct object_id *oid, char **ref)
+ 		stream.next_in = ibuf;
+ 		stream.avail_in = readlen;
+@@ -339,7 +339,7 @@ static unsigned long write_no_reuse_object(struct sha1file *f, struct object_ent
+ 		sha1write(f, header, hdrlen);
+ 	}
+ 	if (st) {
+-		datalen = write_large_blob_data(st, f, entry->idx.oid.hash);
++		datalen = write_large_blob_data(st, f, &entry->idx.oid);
+ 		close_istream(st);
+ 	} else {
+ 		sha1write(f, buf, datalen);
+@@ -557,13 +557,13 @@ static enum write_one_status write_one(struct sha1file *f,
+ static int mark_tagged(const char *path, const struct object_id *oid, int flag,
+ 		       void *cb_data)
  {
- 	const char **p, *r;
- 	int refs_found = 0;
-@@ -472,15 +472,15 @@ int expand_ref(const char *str, int len, unsigned char *sha1, char **ref)
+-	unsigned char peeled[20];
++	struct object_id peeled;
+ 	struct object_entry *entry = packlist_find(&to_pack, oid->hash, NULL);
  
- 	*ref = NULL;
- 	for (p = ref_rev_parse_rules; *p; p++) {
--		unsigned char sha1_from_ref[20];
--		unsigned char *this_result;
-+		struct object_id oid_from_ref;
-+		struct object_id *this_result;
- 		int flag;
+ 	if (entry)
+ 		entry->tagged = 1;
+-	if (!peel_ref(path, peeled)) {
+-		entry = packlist_find(&to_pack, peeled, NULL);
++	if (!peel_ref(path, peeled.hash)) {
++		entry = packlist_find(&to_pack, peeled.hash, NULL);
+ 		if (entry)
+ 			entry->tagged = 1;
+ 	}
+@@ -792,7 +792,7 @@ static void write_pack_file(void)
+ 	write_order = compute_write_order();
  
--		this_result = refs_found ? sha1_from_ref : sha1;
-+		this_result = refs_found ? &oid_from_ref : oid;
- 		strbuf_reset(&fullref);
- 		strbuf_addf(&fullref, *p, len, str);
- 		r = resolve_ref_unsafe(fullref.buf, RESOLVE_REF_READING,
--				       this_result, &flag);
-+				       this_result->hash, &flag);
- 		if (r) {
- 			if (!refs_found++)
- 				*ref = xstrdup(r);
-diff --git a/refs.h b/refs.h
-index a2032b8397..832a77183c 100644
---- a/refs.h
-+++ b/refs.h
-@@ -139,8 +139,8 @@ int resolve_gitlink_ref(const char *submodule, const char *refname,
+ 	do {
+-		unsigned char sha1[20];
++		struct object_id oid;
+ 		char *pack_tmp_name = NULL;
+ 
+ 		if (pack_to_stdout)
+@@ -823,13 +823,13 @@ static void write_pack_file(void)
+ 		 * If so, rewrite it like in fast-import
+ 		 */
+ 		if (pack_to_stdout) {
+-			sha1close(f, sha1, CSUM_CLOSE);
++			sha1close(f, oid.hash, CSUM_CLOSE);
+ 		} else if (nr_written == nr_remaining) {
+-			sha1close(f, sha1, CSUM_FSYNC);
++			sha1close(f, oid.hash, CSUM_FSYNC);
+ 		} else {
+-			int fd = sha1close(f, sha1, 0);
+-			fixup_pack_header_footer(fd, sha1, pack_tmp_name,
+-						 nr_written, sha1, offset);
++			int fd = sha1close(f, oid.hash, 0);
++			fixup_pack_header_footer(fd, oid.hash, pack_tmp_name,
++						 nr_written, oid.hash, offset);
+ 			close(fd);
+ 			if (write_bitmap_index) {
+ 				warning(_(no_split_warning));
+@@ -863,16 +863,16 @@ static void write_pack_file(void)
+ 			strbuf_addf(&tmpname, "%s-", base_name);
+ 
+ 			if (write_bitmap_index) {
+-				bitmap_writer_set_checksum(sha1);
++				bitmap_writer_set_checksum(oid.hash);
+ 				bitmap_writer_build_type_index(written_list, nr_written);
+ 			}
+ 
+ 			finish_tmp_packfile(&tmpname, pack_tmp_name,
+ 					    written_list, nr_written,
+-					    &pack_idx_opts, sha1);
++					    &pack_idx_opts, oid.hash);
+ 
+ 			if (write_bitmap_index) {
+-				strbuf_addf(&tmpname, "%s.bitmap", sha1_to_hex(sha1));
++				strbuf_addf(&tmpname, "%s.bitmap", oid_to_hex(&oid));
+ 
+ 				stop_progress(&progress_state);
+ 
+@@ -887,7 +887,7 @@ static void write_pack_file(void)
+ 
+ 			strbuf_release(&tmpname);
+ 			free(pack_tmp_name);
+-			puts(sha1_to_hex(sha1));
++			puts(oid_to_hex(&oid));
+ 		}
+ 
+ 		/* mark written objects as written to previous pack */
+@@ -928,13 +928,13 @@ static int no_try_delta(const char *path)
+  * found the item, since that saves us from having to look it up again a
+  * few lines later when we want to add the new entry.
   */
- int refname_match(const char *abbrev_name, const char *full_name);
+-static int have_duplicate_entry(const unsigned char *sha1,
++static int have_duplicate_entry(const struct object_id *oid,
+ 				int exclude,
+ 				uint32_t *index_pos)
+ {
+ 	struct object_entry *entry;
  
--int expand_ref(const char *str, int len, unsigned char *sha1, char **ref);
--int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref);
-+int expand_ref(const char *str, int len, struct object_id *oid, char **ref);
-+int dwim_ref(const char *str, int len, struct object_id *oid, char **ref);
- int dwim_log(const char *str, int len, unsigned char *sha1, char **ref);
+-	entry = packlist_find(&to_pack, sha1, index_pos);
++	entry = packlist_find(&to_pack, oid->hash, index_pos);
+ 	if (!entry)
+ 		return 0;
  
- /*
-diff --git a/remote.c b/remote.c
-index 698a890a83..439d3b32f2 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1628,8 +1628,7 @@ static void set_merge(struct branch *ret)
- 		if (!remote_find_tracking(remote, ret->merge[i]) ||
- 		    strcmp(ret->remote_name, "."))
- 			continue;
--		if (dwim_ref(ret->merge_name[i], strlen(ret->merge_name[i]),
--			     oid.hash, &ref) == 1)
-+		if (dwim_ref(ret->merge_name[i], strlen(ret->merge_name[i]), &oid, &ref) == 1)
- 			ret->merge[i]->dst = ref;
+@@ -990,7 +990,7 @@ static int want_found_object(int exclude, struct packed_git *p)
+  * function finds if there is any pack that has the object and returns the pack
+  * and its offset in these variables.
+  */
+-static int want_object_in_pack(const unsigned char *sha1,
++static int want_object_in_pack(const struct object_id *oid,
+ 			       int exclude,
+ 			       struct packed_git **found_pack,
+ 			       off_t *found_offset)
+@@ -998,7 +998,7 @@ static int want_object_in_pack(const unsigned char *sha1,
+ 	struct mru_entry *entry;
+ 	int want;
+ 
+-	if (!exclude && local && has_loose_object_nonlocal(sha1))
++	if (!exclude && local && has_loose_object_nonlocal(oid->hash))
+ 		return 0;
+ 
+ 	/*
+@@ -1019,7 +1019,7 @@ static int want_object_in_pack(const unsigned char *sha1,
+ 		if (p == *found_pack)
+ 			offset = *found_offset;
  		else
- 			ret->merge[i]->dst = xstrdup(ret->merge_name[i]);
-diff --git a/sha1_name.c b/sha1_name.c
-index 134ac9742f..28bad3e74b 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -603,7 +603,7 @@ static int get_oid_basic(const char *str, int len, struct object_id *oid,
+-			offset = find_pack_entry_one(sha1, p);
++			offset = find_pack_entry_one(oid->hash, p);
  
- 	if (len == GIT_SHA1_HEXSZ && !get_oid_hex(str, oid)) {
- 		if (warn_ambiguous_refs && warn_on_object_refname_ambiguity) {
--			refs_found = dwim_ref(str, len, tmp_oid.hash, &real_ref);
-+			refs_found = dwim_ref(str, len, &tmp_oid, &real_ref);
- 			if (refs_found > 0) {
- 				warning(warn_msg, len, str);
- 				if (advice_object_name_warning)
-@@ -654,11 +654,11 @@ static int get_oid_basic(const char *str, int len, struct object_id *oid,
+ 		if (offset) {
+ 			if (!*found_pack) {
+@@ -1039,7 +1039,7 @@ static int want_object_in_pack(const unsigned char *sha1,
+ 	return 1;
+ }
  
- 	if (!len && reflog_len)
- 		/* allow "@{...}" to mean the current branch reflog */
--		refs_found = dwim_ref("HEAD", 4, oid->hash, &real_ref);
-+		refs_found = dwim_ref("HEAD", 4, oid, &real_ref);
- 	else if (reflog_len)
- 		refs_found = dwim_log(str, len, oid->hash, &real_ref);
- 	else
--		refs_found = dwim_ref(str, len, oid->hash, &real_ref);
-+		refs_found = dwim_ref(str, len, oid, &real_ref);
+-static void create_object_entry(const unsigned char *sha1,
++static void create_object_entry(const struct object_id *oid,
+ 				enum object_type type,
+ 				uint32_t hash,
+ 				int exclude,
+@@ -1050,7 +1050,7 @@ static void create_object_entry(const unsigned char *sha1,
+ {
+ 	struct object_entry *entry;
  
- 	if (!refs_found)
- 		return -1;
-diff --git a/upload-pack.c b/upload-pack.c
-index e25f725c0f..030eba5a0c 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -787,7 +787,7 @@ static void receive_needs(void)
- 		if (skip_prefix(line, "deepen-not ", &arg)) {
- 			char *ref = NULL;
- 			struct object_id oid;
--			if (expand_ref(arg, strlen(arg), oid.hash, &ref) != 1)
-+			if (expand_ref(arg, strlen(arg), &oid, &ref) != 1)
- 				die("git upload-pack: ambiguous deepen-not: %s", line);
- 			string_list_append(&deepen_not, ref);
- 			free(ref);
-diff --git a/wt-status.c b/wt-status.c
-index 6d7d675a5b..280518a89b 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1451,7 +1451,7 @@ static void wt_status_get_detached_from(struct wt_status_state *state)
- 		return;
+-	entry = packlist_alloc(&to_pack, sha1, index_pos);
++	entry = packlist_alloc(&to_pack, oid->hash, index_pos);
+ 	entry->hash = hash;
+ 	if (type)
+ 		entry->type = type;
+@@ -1070,17 +1070,17 @@ static const char no_closure_warning[] = N_(
+ "disabling bitmap writing, as some objects are not being packed"
+ );
+ 
+-static int add_object_entry(const unsigned char *sha1, enum object_type type,
++static int add_object_entry(const struct object_id *oid, enum object_type type,
+ 			    const char *name, int exclude)
+ {
+ 	struct packed_git *found_pack = NULL;
+ 	off_t found_offset = 0;
+ 	uint32_t index_pos;
+ 
+-	if (have_duplicate_entry(sha1, exclude, &index_pos))
++	if (have_duplicate_entry(oid, exclude, &index_pos))
+ 		return 0;
+ 
+-	if (!want_object_in_pack(sha1, exclude, &found_pack, &found_offset)) {
++	if (!want_object_in_pack(oid, exclude, &found_pack, &found_offset)) {
+ 		/* The pack is missing an object, so it will not have closure */
+ 		if (write_bitmap_index) {
+ 			warning(_(no_closure_warning));
+@@ -1089,7 +1089,7 @@ static int add_object_entry(const unsigned char *sha1, enum object_type type,
+ 		return 0;
  	}
  
--	if (dwim_ref(cb.buf.buf, cb.buf.len, oid.hash, &ref) == 1 &&
-+	if (dwim_ref(cb.buf.buf, cb.buf.len, &oid, &ref) == 1 &&
- 	    /* sha1 is a commit? match without further lookup */
- 	    (!oidcmp(&cb.noid, &oid) ||
- 	     /* perhaps sha1 is a tag, try to dereference to a commit */
+-	create_object_entry(sha1, type, pack_name_hash(name),
++	create_object_entry(oid, type, pack_name_hash(name),
+ 			    exclude, name && no_try_delta(name),
+ 			    index_pos, found_pack, found_offset);
+ 
+@@ -1104,20 +1104,20 @@ static int add_object_entry_from_bitmap(const struct object_id *oid,
+ {
+ 	uint32_t index_pos;
+ 
+-	if (have_duplicate_entry(oid->hash, 0, &index_pos))
++	if (have_duplicate_entry(oid, 0, &index_pos))
+ 		return 0;
+ 
+-	if (!want_object_in_pack(oid->hash, 0, &pack, &offset))
++	if (!want_object_in_pack(oid, 0, &pack, &offset))
+ 		return 0;
+ 
+-	create_object_entry(oid->hash, type, name_hash, 0, 0, index_pos, pack, offset);
++	create_object_entry(oid, type, name_hash, 0, 0, index_pos, pack, offset);
+ 
+ 	display_progress(progress_state, nr_result);
+ 	return 1;
+ }
+ 
+ struct pbase_tree_cache {
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	int ref;
+ 	int temporary;
+ 	void *tree_data;
+@@ -1125,9 +1125,9 @@ struct pbase_tree_cache {
+ };
+ 
+ static struct pbase_tree_cache *(pbase_tree_cache[256]);
+-static int pbase_tree_cache_ix(const unsigned char *sha1)
++static int pbase_tree_cache_ix(const struct object_id *oid)
+ {
+-	return sha1[0] % ARRAY_SIZE(pbase_tree_cache);
++	return oid->hash[0] % ARRAY_SIZE(pbase_tree_cache);
+ }
+ static int pbase_tree_cache_ix_incr(int ix)
+ {
+@@ -1144,14 +1144,14 @@ static struct pbase_tree {
+ 	struct pbase_tree_cache pcache;
+ } *pbase_tree;
+ 
+-static struct pbase_tree_cache *pbase_tree_get(const unsigned char *sha1)
++static struct pbase_tree_cache *pbase_tree_get(const struct object_id *oid)
+ {
+ 	struct pbase_tree_cache *ent, *nent;
+ 	void *data;
+ 	unsigned long size;
+ 	enum object_type type;
+ 	int neigh;
+-	int my_ix = pbase_tree_cache_ix(sha1);
++	int my_ix = pbase_tree_cache_ix(oid);
+ 	int available_ix = -1;
+ 
+ 	/* pbase-tree-cache acts as a limited hashtable.
+@@ -1160,7 +1160,7 @@ static struct pbase_tree_cache *pbase_tree_get(const unsigned char *sha1)
+ 	 */
+ 	for (neigh = 0; neigh < 8; neigh++) {
+ 		ent = pbase_tree_cache[my_ix];
+-		if (ent && !hashcmp(ent->sha1, sha1)) {
++		if (ent && !oidcmp(&ent->oid, oid)) {
+ 			ent->ref++;
+ 			return ent;
+ 		}
+@@ -1176,7 +1176,7 @@ static struct pbase_tree_cache *pbase_tree_get(const unsigned char *sha1)
+ 	/* Did not find one.  Either we got a bogus request or
+ 	 * we need to read and perhaps cache.
+ 	 */
+-	data = read_sha1_file(sha1, &type, &size);
++	data = read_sha1_file(oid->hash, &type, &size);
+ 	if (!data)
+ 		return NULL;
+ 	if (type != OBJ_TREE) {
+@@ -1202,7 +1202,7 @@ static struct pbase_tree_cache *pbase_tree_get(const unsigned char *sha1)
+ 		free(ent->tree_data);
+ 		nent = ent;
+ 	}
+-	hashcpy(nent->sha1, sha1);
++	oidcpy(&nent->oid, oid);
+ 	nent->tree_data = data;
+ 	nent->tree_size = size;
+ 	nent->ref = 1;
+@@ -1247,7 +1247,7 @@ static void add_pbase_object(struct tree_desc *tree,
+ 		if (cmp < 0)
+ 			return;
+ 		if (name[cmplen] != '/') {
+-			add_object_entry(entry.oid->hash,
++			add_object_entry(entry.oid,
+ 					 object_type(entry.mode),
+ 					 fullname, 1);
+ 			return;
+@@ -1258,7 +1258,7 @@ static void add_pbase_object(struct tree_desc *tree,
+ 			const char *down = name+cmplen+1;
+ 			int downlen = name_cmp_len(down);
+ 
+-			tree = pbase_tree_get(entry.oid->hash);
++			tree = pbase_tree_get(entry.oid);
+ 			if (!tree)
+ 				return;
+ 			init_tree_desc(&sub, tree->tree_data, tree->tree_size);
+@@ -1317,7 +1317,7 @@ static void add_preferred_base_object(const char *name)
+ 	cmplen = name_cmp_len(name);
+ 	for (it = pbase_tree; it; it = it->next) {
+ 		if (cmplen == 0) {
+-			add_object_entry(it->pcache.sha1, OBJ_TREE, NULL, 1);
++			add_object_entry(&it->pcache.oid, OBJ_TREE, NULL, 1);
+ 		}
+ 		else {
+ 			struct tree_desc tree;
+@@ -1327,22 +1327,22 @@ static void add_preferred_base_object(const char *name)
+ 	}
+ }
+ 
+-static void add_preferred_base(unsigned char *sha1)
++static void add_preferred_base(struct object_id *oid)
+ {
+ 	struct pbase_tree *it;
+ 	void *data;
+ 	unsigned long size;
+-	unsigned char tree_sha1[20];
++	struct object_id tree_oid;
+ 
+ 	if (window <= num_preferred_base++)
+ 		return;
+ 
+-	data = read_object_with_reference(sha1, tree_type, &size, tree_sha1);
++	data = read_object_with_reference(oid->hash, tree_type, &size, tree_oid.hash);
+ 	if (!data)
+ 		return;
+ 
+ 	for (it = pbase_tree; it; it = it->next) {
+-		if (!hashcmp(it->pcache.sha1, tree_sha1)) {
++		if (!oidcmp(&it->pcache.oid, &tree_oid)) {
+ 			free(data);
+ 			return;
+ 		}
+@@ -1352,7 +1352,7 @@ static void add_preferred_base(unsigned char *sha1)
+ 	it->next = pbase_tree;
+ 	pbase_tree = it;
+ 
+-	hashcpy(it->pcache.sha1, tree_sha1);
++	oidcpy(&it->pcache.oid, &tree_oid);
+ 	it->pcache.tree_data = data;
+ 	it->pcache.tree_size = size;
+ }
+@@ -2357,7 +2357,7 @@ static void add_tag_chain(const struct object_id *oid)
+ 			die("unable to pack objects reachable from tag %s",
+ 			    oid_to_hex(oid));
+ 
+-		add_object_entry(tag->object.oid.hash, OBJ_TAG, NULL, 0);
++		add_object_entry(&tag->object.oid, OBJ_TAG, NULL, 0);
+ 
+ 		if (tag->tagged->type != OBJ_TAG)
+ 			return;
+@@ -2505,8 +2505,9 @@ static int git_pack_config(const char *k, const char *v, void *cb)
+ 
+ static void read_object_list_from_stdin(void)
+ {
+-	char line[40 + 1 + PATH_MAX + 2];
+-	unsigned char sha1[20];
++	char line[GIT_MAX_HEXSZ + 1 + PATH_MAX + 2];
++	struct object_id oid;
++	const char *p;
+ 
+ 	for (;;) {
+ 		if (!fgets(line, sizeof(line), stdin)) {
+@@ -2520,17 +2521,17 @@ static void read_object_list_from_stdin(void)
+ 			continue;
+ 		}
+ 		if (line[0] == '-') {
+-			if (get_sha1_hex(line+1, sha1))
++			if (get_oid_hex(line+1, &oid))
+ 				die("expected edge sha1, got garbage:\n %s",
+ 				    line);
+-			add_preferred_base(sha1);
++			add_preferred_base(&oid);
+ 			continue;
+ 		}
+-		if (get_sha1_hex(line, sha1))
++		if (parse_oid_hex(line, &oid, &p))
+ 			die("expected sha1, got garbage:\n %s", line);
+ 
+-		add_preferred_base_object(line+41);
+-		add_object_entry(sha1, 0, line+41, 0);
++		add_preferred_base_object(p + 1);
++		add_object_entry(&oid, 0, p + 1, 0);
+ 	}
+ }
+ 
+@@ -2538,7 +2539,7 @@ static void read_object_list_from_stdin(void)
+ 
+ static void show_commit(struct commit *commit, void *data)
+ {
+-	add_object_entry(commit->object.oid.hash, OBJ_COMMIT, NULL, 0);
++	add_object_entry(&commit->object.oid, OBJ_COMMIT, NULL, 0);
+ 	commit->object.flags |= OBJECT_ADDED;
+ 
+ 	if (write_bitmap_index)
+@@ -2548,13 +2549,13 @@ static void show_commit(struct commit *commit, void *data)
+ static void show_object(struct object *obj, const char *name, void *data)
+ {
+ 	add_preferred_base_object(name);
+-	add_object_entry(obj->oid.hash, obj->type, name, 0);
++	add_object_entry(&obj->oid, obj->type, name, 0);
+ 	obj->flags |= OBJECT_ADDED;
+ }
+ 
+ static void show_edge(struct commit *commit)
+ {
+-	add_preferred_base(commit->object.oid.hash);
++	add_preferred_base(&commit->object.oid);
+ }
+ 
+ struct in_pack_object {
+@@ -2601,7 +2602,7 @@ static void add_objects_in_unpacked_packs(struct rev_info *revs)
+ 	memset(&in_pack, 0, sizeof(in_pack));
+ 
+ 	for (p = packed_git; p; p = p->next) {
+-		const unsigned char *sha1;
++		struct object_id oid;
+ 		struct object *o;
+ 
+ 		if (!p->pack_local || p->pack_keep)
+@@ -2614,8 +2615,8 @@ static void add_objects_in_unpacked_packs(struct rev_info *revs)
+ 			   in_pack.alloc);
+ 
+ 		for (i = 0; i < p->num_objects; i++) {
+-			sha1 = nth_packed_object_sha1(p, i);
+-			o = lookup_unknown_object(sha1);
++			nth_packed_object_oid(&oid, p, i);
++			o = lookup_unknown_object(oid.hash);
+ 			if (!(o->flags & OBJECT_ADDED))
+ 				mark_in_pack_object(o, p, &in_pack);
+ 			o->flags |= OBJECT_ADDED;
+@@ -2626,7 +2627,7 @@ static void add_objects_in_unpacked_packs(struct rev_info *revs)
+ 		QSORT(in_pack.array, in_pack.nr, ofscmp);
+ 		for (i = 0; i < in_pack.nr; i++) {
+ 			struct object *o = in_pack.array[i].object;
+-			add_object_entry(o->oid.hash, o->type, "", 0);
++			add_object_entry(&o->oid, o->type, "", 0);
+ 		}
+ 	}
+ 	free(in_pack.array);
+@@ -2642,7 +2643,7 @@ static int add_loose_object(const struct object_id *oid, const char *path,
+ 		return 0;
+ 	}
+ 
+-	add_object_entry(oid->hash, type, "", 0);
++	add_object_entry(oid, type, "", 0);
+ 	return 0;
+ }
+ 
+@@ -2658,7 +2659,7 @@ static void add_unreachable_loose_objects(void)
+ 				      NULL, NULL, NULL);
+ }
+ 
+-static int has_sha1_pack_kept_or_nonlocal(const unsigned char *sha1)
++static int has_sha1_pack_kept_or_nonlocal(const struct object_id *oid)
+ {
+ 	static struct packed_git *last_found = (void *)1;
+ 	struct packed_git *p;
+@@ -2667,7 +2668,7 @@ static int has_sha1_pack_kept_or_nonlocal(const unsigned char *sha1)
+ 
+ 	while (p) {
+ 		if ((!p->pack_local || p->pack_keep) &&
+-			find_pack_entry_one(sha1, p)) {
++			find_pack_entry_one(oid->hash, p)) {
+ 			last_found = p;
+ 			return 1;
+ 		}
+@@ -2718,7 +2719,7 @@ static void loosen_unused_packed_objects(struct rev_info *revs)
+ 		for (i = 0; i < p->num_objects; i++) {
+ 			nth_packed_object_oid(&oid, p, i);
+ 			if (!packlist_find(&to_pack, oid.hash, NULL) &&
+-			    !has_sha1_pack_kept_or_nonlocal(oid.hash) &&
++			    !has_sha1_pack_kept_or_nonlocal(&oid) &&
+ 			    !loosened_object_can_be_discarded(&oid, p->mtime))
+ 				if (force_object_loose(oid.hash, p->mtime))
+ 					die("unable to force loose object");
 -- 
 2.14.2.822.g60be5d43e6
 
