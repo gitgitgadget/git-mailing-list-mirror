@@ -2,156 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 44E4D20A2C
-	for <e@80x24.org>; Sun,  1 Oct 2017 00:11:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 53F2C202A5
+	for <e@80x24.org>; Sun,  1 Oct 2017 02:41:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752628AbdJAAK6 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 30 Sep 2017 20:10:58 -0400
-Received: from mail-pf0-f182.google.com ([209.85.192.182]:51836 "EHLO
-        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752366AbdJAAK4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Sep 2017 20:10:56 -0400
-Received: by mail-pf0-f182.google.com with SMTP id b70so1372943pfl.8
-        for <git@vger.kernel.org>; Sat, 30 Sep 2017 17:10:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=w/gwKbMlGtGPjjQNMNrJg0n4j+5L5+j9Y3uziqYgU6g=;
-        b=qpLQypaxMFrkC9W3S55B4ggQAv2BEbJ0SBrqOKpPKj6GdLgwLfLXel99W39kt5WvTX
-         hAkjqtecMnMYy/7hmAM+WiU1/rqQy4HFOmz+nTONyfeiPlyHBGDXzUCM0FGhm9DBLZWb
-         Ke29hcAM9gKd3ZZa4wvcHRBUaguxxl5yv/CYhmrgmrN+RA9bQJtzgkvG+qeZnTK2aILz
-         0FILMP/eboCQuFvyb3dH6T5An1hKrfU21Eq4cD4c1PqgZ7Zv76kP6Ac83uLUHWXsM/pu
-         +NerRcqtL0QpXYvYSteRwyMtnZlZGQC0/OoQzeZsLq6VrZRVwp22sKp9qQ2hObOHgP3O
-         zZpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=w/gwKbMlGtGPjjQNMNrJg0n4j+5L5+j9Y3uziqYgU6g=;
-        b=FjWYH/0Hhgu/ibuqTg7F+tFz3nwIbjKIqjdxtdtNf28P3I9wFpLzr0pJhF+4Aw1+U7
-         cTDWPcXf+HcoeSRY/l07Ytv2kNNnbOEl6LLJaVrUK0XRe/tgpWrHISdkq7OZHSd5naqi
-         n2tRZkfOzaDUehETdwDq19dbn9KNaLN3VI/bA6RqKzbxeXxZB/KRodBUk44Sb/ULt7EM
-         1gDF4M2tQGSS6xa7geVtsQZo08/tkSUXrOmRa/vwxO1SJrcJb+MHi758ijstPLZMczlj
-         FWeN7pZK8WbYc+fX5GKyIvohk74y8TuBq/zTyHy9KQIb6vVHUK9BesSDG/T2PBTnf2dP
-         HyRA==
-X-Gm-Message-State: AHPjjUglsFGS7jwglEjQ76OyTtJda7JRFrv4bvJMjf13QpKFuXqbhjoY
-        uEapMB7/kazsMLLkX9MFeBhxGkmXyWI=
-X-Google-Smtp-Source: AOwi7QAXtWsBZ0oxF15uRkKIYoygIAz2rDwtndR3yyc+PqJNovBzfz+mF1IsZ1FVjPcS2GJDTJSTBg==
-X-Received: by 10.99.151.2 with SMTP id n2mr9494598pge.315.1506816654933;
-        Sat, 30 Sep 2017 17:10:54 -0700 (PDT)
-Received: from localhost ([205.175.97.239])
-        by smtp.gmail.com with ESMTPSA id y72sm12090108pfa.129.2017.09.30.17.10.53
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 30 Sep 2017 17:10:53 -0700 (PDT)
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH v3 6/6] ref-filter.c: parse trailers arguments with %(contents) atom
-Date:   Sat, 30 Sep 2017 17:10:37 -0700
-Message-Id: <20171001001037.23361-6-me@ttaylorr.com>
-X-Mailer: git-send-email 2.14.1.145.gb3622a4ee
-In-Reply-To: <20171001001037.23361-1-me@ttaylorr.com>
-References: <20171001000647.GA20767@D-10-157-251-166.dhcp4.washington.edu>
- <20171001001037.23361-1-me@ttaylorr.com>
+        id S1751071AbdJAClC (ORCPT <rfc822;e@80x24.org>);
+        Sat, 30 Sep 2017 22:41:02 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64512 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750980AbdJAClB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Sep 2017 22:41:01 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6D7C692F2E;
+        Sat, 30 Sep 2017 22:40:58 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=qpY8NoX5LgbCeCzfsdwg7Z7rCCs=; b=qPRyWM
+        2b+dUkJB4WTTEbYtdopSLvxDwwO8GSAB2XuHRKluyYU0RZ3z9OOTsok1KQkmqLZ8
+        RWAazLyoBGmqkYwVQuFoMS3/39Xa9j15qWtFXFXOkxwRinjkPGMWE5QHYOPFNu+E
+        UllQa5kOMUPsKqUUcGDKzko50f8OkOFAvuTqg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=sFcgePY8Ec3olasS3dNVot2ytvBA2V0d
+        FSrBpeR/iL41kHLTPZRIecFU0an7YXxmMo5yqOSR1rVsR4H4VmiOlxa/vAlBYHIO
+        XQ3BPFPpik0smTbOSew6GD/PEznfC2y/2rj2CZWAze4FrLfJZE01wIYOsrDLGr+t
+        Qm6HTvxRXUE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6506F92F2C;
+        Sat, 30 Sep 2017 22:40:58 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C0EC292F2B;
+        Sat, 30 Sep 2017 22:40:57 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org, Brandon Williams <bmwill@google.com>
+Subject: Re: [PATCH] clang-format: adjust line break penalties
+References: <073f00fa11930a3607e34828e7563e1b2dc27d2a.1506709551.git.johannes.schindelin@gmx.de>
+        <20170929184032.GK19555@aiede.mtv.corp.google.com>
+Date:   Sun, 01 Oct 2017 11:40:56 +0900
+In-Reply-To: <20170929184032.GK19555@aiede.mtv.corp.google.com> (Jonathan
+        Nieder's message of "Fri, 29 Sep 2017 11:40:32 -0700")
+Message-ID: <xmqq3773wpxj.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: F4437968-A651-11E7-86FE-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The %(contents) atom takes a contents "field" as its argument. Since
-"trailers" is one of those fields, extend contents_atom_parser to parse
-"trailers"'s arguments when used through "%(contents)", like:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-  %(contents:trailers:unfold,only)
+> Hi Dscho,
+>
+> Johannes Schindelin wrote:
+>
+>> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> ---
+>>  .clang-format | 12 ++++++------
+>>  1 file changed, 6 insertions(+), 6 deletions(-)
+>
+> Well executed and well explained. Thank you.
+>
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-A caveat: trailers_atom_parser expects NULL when no arguments are given
-(see: `parse_ref_filter_atom`). To simulate this behavior without
-teaching trailers_atom_parser to accept strings with length zero,
-conditionally pass NULL to trailers_atom_parser if the arguments portion
-of the argument to %(contents) is empty.
-
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- ref-filter.c            |  6 ++++--
- t/t6300-for-each-ref.sh | 37 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 41 insertions(+), 2 deletions(-)
-
-diff --git a/ref-filter.c b/ref-filter.c
-index 8573acbed..b5747e969 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -207,8 +207,10 @@ static void contents_atom_parser(struct used_atom *atom, const char *arg)
- 		atom->u.contents.option = C_SIG;
- 	else if (!strcmp(arg, "subject"))
- 		atom->u.contents.option = C_SUB;
--	else if (!strcmp(arg, "trailers"))
--		atom->u.contents.option = C_TRAILERS;
-+	else if (skip_prefix(arg, "trailers", &arg)) {
-+		skip_prefix(arg, ":", &arg);
-+		trailers_atom_parser(atom, *arg ? NULL : arg);
-+	}
- 	else if (skip_prefix(arg, "lines=", &arg)) {
- 		atom->u.contents.option = C_LINES;
- 		if (strtoul_ui(arg, 10, &atom->u.contents.nlines))
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index 6538e7b90..8c960ec24 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -642,6 +642,35 @@ test_expect_success '%(trailers:only) and %(trailers:unfold) work together' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success '%(contents:trailers:unfold) unfolds trailers' '
-+	git for-each-ref --format="%(contents:trailers:unfold)" refs/heads/master >actual &&
-+	{
-+		unfold <trailers
-+		echo
-+	} >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '%(contents:trailers:only) shows only "key: value" trailers' '
-+	git for-each-ref --format="%(contents:trailers:only)" refs/heads/master >actual &&
-+	{
-+		grep -v patch.description <trailers &&
-+		echo
-+	} >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '%(contents:trailers:only) and %(contents:trailers:unfold) work together' '
-+	git for-each-ref --format="%(contents:trailers:only,unfold)" refs/heads/master >actual &&
-+	git for-each-ref --format="%(contents:trailers:unfold,only)" refs/heads/master >reverse &&
-+	test_cmp actual reverse &&
-+	{
-+		grep -v patch.description <trailers | unfold &&
-+		echo
-+	} >expect &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success '%(trailers) rejects unknown trailers arguments' '
- 	cat >expect <<-EOF &&
- 	fatal: unknown %(trailers) argument: unsupported
-@@ -650,6 +679,14 @@ test_expect_success '%(trailers) rejects unknown trailers arguments' '
-   test_cmp expect actual
- '
- 
-+test_expect_success '%(contents:trailers) rejects unknown trailers arguments' '
-+	cat >expect <<-EOF &&
-+	fatal: unknown %(trailers) argument: unsupported
-+	EOF
-+  test_must_fail git for-each-ref --format="%(contents:trailers:unsupported)" 2>actual &&
-+  test_cmp expect actual
-+'
-+
- test_expect_success 'basic atom: head contents:trailers' '
- 	git for-each-ref --format="%(contents:trailers)" refs/heads/master >actual &&
- 	sanitize_pgp <actual >actual.clean &&
--- 
-2.14.1.145.gb3622a4ee
+Thanks, both.  I think the adjustment in the patch makes sense.
 
