@@ -2,84 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A70C20A10
-	for <e@80x24.org>; Sun,  1 Oct 2017 21:29:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 432A920A10
+	for <e@80x24.org>; Sun,  1 Oct 2017 21:30:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751894AbdJAV3b (ORCPT <rfc822;e@80x24.org>);
-        Sun, 1 Oct 2017 17:29:31 -0400
-Received: from mout.gmx.net ([212.227.15.15]:60940 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751437AbdJAV3a (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Oct 2017 17:29:30 -0400
-Received: from [192.168.178.43] ([92.76.241.219]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LpKrt-1dM7Bw152D-00f71G; Sun, 01
- Oct 2017 23:29:25 +0200
-Subject: Re: [PATCH v2] Add a comment to .clang-format about the meaning of
- the file
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <20170929224505.GN19555@aiede.mtv.corp.google.com>
- <20171001154425.5568-1-s-beyer@gmx.net>
- <xmqq3772vce4.fsf@gitster.mtv.corp.google.com>
-From:   Stephan Beyer <s-beyer@gmx.net>
-Message-ID: <5b7dabe3-fbc4-40fe-9d51-2c68c292f11d@gmx.net>
-Date:   Sun, 1 Oct 2017 23:29:23 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        id S1751915AbdJAVaC (ORCPT <rfc822;e@80x24.org>);
+        Sun, 1 Oct 2017 17:30:02 -0400
+Received: from cpanel2.indieserve.net ([199.212.143.6]:35796 "EHLO
+        cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751437AbdJAVaB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Oct 2017 17:30:01 -0400
+Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:50872 helo=localhost.localdomain)
+        by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1dyloG-0001tD-Dm; Sun, 01 Oct 2017 17:30:00 -0400
+Date:   Sun, 1 Oct 2017 17:29:58 -0400 (EDT)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Johannes Sixt <j6t@kdbg.org>
+cc:     Bryan Turner <bturner@atlassian.com>,
+        Git Mailing list <git@vger.kernel.org>
+Subject: Re: what is git's position on "classic" mac <CR>-only end of
+ lines?
+In-Reply-To: <a8cb7c82-4598-5dce-0e0e-b0f18157cc56@kdbg.org>
+Message-ID: <alpine.LFD.2.21.1710011723360.27763@localhost.localdomain>
+References: <alpine.LFD.2.21.1710011349560.23227@localhost.localdomain> <CAGyf7-H+1Djb_dmzfOO3qqM9+2VKvbqVedn4mof9Hq4huDTsqw@mail.gmail.com> <a8cb7c82-4598-5dce-0e0e-b0f18157cc56@kdbg.org>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-In-Reply-To: <xmqq3772vce4.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:XOjb1FrHh6O3XS7ZZhbnIhQuju1pzfn/UOVtKONDMpLr+Z6Wl05
- PBW5/qeNAo0xSETO88VJjHguXnNSWzlIOwRPDWcCrhIkPAvA3SL34ckWBbFllUMnzta7dbP
- 1olqkR+FElzlzI6ykso7zw5u6XpY96CutM6FDdeb7jTgdntw4Rf4c7XsiLhuJ650ZqPLuoN
- nyXnmwj9EbX4C5kjGQpMg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:b/Cx0inTVxo=:G7zZoYWBnaEjmBe2db8OuC
- GxrpBoq0k+FvP4ZD1/SI0PHoet4CEyW1mZ0dWYLCX7Si+HEo63rBg3kb+/OD9D5as8noBLFU1
- pP/Pj4IJZ6m53khnwk4ra7zuvqQ/vkP1CK1aKCeJpqTxbJS+kdXu1VY0f5exzmIiChSTrAplD
- GNJVeSNx3xg0vvWSUVtgWVS1dInG98s4RXh8U3f5bSyNnO/pxsiJpkTLqbum7HHZu2VZt4Loh
- pjVU4YRnJ64BmstviLcx5QSJL6AszgHwJ845Myqbrqsr86MgemtH1fYE9BBkdPB6lJ50hZdsA
- BH3/mA53phben1hvqYFTaeOren7beK5iUnS7L3XnnoxZyo8050ZHcsSuIvbvg3Ux3Gx07uz7m
- GAB5VNhCtG4/rNkE2MjWqSlZ2vSr2Jud0/quMu0T2QvhdkkPNEx6y5rSxtmmpR+YXtKSxiWKN
- L7BWngkHRahnx1QN1zny4XM6vygm3Ruuvhkn1+DH0TSOE7TO44zmBrJg56eq36MOw1nY2b+38
- uPZ3znsTsoXwfvrTJawhUSs8RAyLgCk+e+gJuPPdH7el0K3wduVKtQAOdJbBLcnTvz5rv6eTC
- npxcwbsRSNAJb7GgKvUKjG/PPPNfpslZrLdmMsC7q+noAkCeydPOFduBp5vSUHgQEnc6RZ4A/
- 2M3I2BmvHuj7Pe9QXxN6VTsZTuIBKOC9Hp6kpny6N1fXTpflPJHJWgYsaHAWegFCgFnFfh8N1
- soKppM7asoUvJrw9gLQxwgePjEuU3bV5DA0orDEWVggsnParrEHALt4+bUTMAi/7JPBG+Zdkk
- 37954NaKCgKOskIoi+YtdAj9W8nV76Lx+KkmnJfqGwXGOER/zk=
+Content-Type: text/plain; charset=US-ASCII
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel2.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel2.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel2.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/01/2017 10:30 PM, Junio C Hamano wrote:
-> I think we do want the endgame to be that .clang-format defines how
-> the code should look like.  It's that we are not there yet, and I
-> think that is what we should say in this comment.
-> 
-> 	Note that this style definition does not yet quite reflect
-> 	how we want our code to look like, and adjusting the rules
-> 	to match our style is still work in progress.  Do not
-> 	blindly adjust the style of _existing_ code, without
-> 	checking if the code is styled incorrectly, or the style
-> 	definition in this file is still wrong.
-> 
-> is what I should have suggested when writing my response.
-Pretty long but okay. I tried to be shorter and more implicit (also
-because the CodingGuidelines are already pretty verbose on not changing
-existing code style) and you're heading in the direction that there will
-be some clang-format definition that matches the desired coding style (I
-doubt that at least for the current clang-format versions, but that's
-another topic).
+On Sun, 1 Oct 2017, Johannes Sixt wrote:
 
-Erm, so you're going to replace the comment? Or is it my task now to
-make a v3 patch with your text? (The latter doesn't look useful to me...)
+> Am 01.10.2017 um 21:29 schrieb Bryan Turner:
+> > On Sun, Oct 1, 2017 at 10:52 AM, Robert P. J. Day <rpjday@crashcourse.ca>
+> > wrote:
+> > >
+> > >    sorry for more pedantic nitpickery, but i'm trying to write a
+> > > section on how to properly process mixtures of EOLs in git, and
+> > > when i read "man git-config", everything seems to refer to Mac
+> > > OS X and macOS (and linux, of course) using <LF> for EOL, with
+> > > very little mention of what one does if faced with "classic" mac
+> > > EOL of just <CR>.
+> >
+> >   No command in Git that I'm aware of considers a standalone <CR>
+> > to be a line ending. A file containing only <CR>s is treated as a
+> > single line by every Git command I've used. I'm not sure whether
+> > that behavior is configurable. For files with standalone <CR>s
+> > mixed with other line endings (<CRLF> or <LF>, either or both),
+> > the <CRLF> and <LF> endings are both considered line endings while
+> > the standalone <CR>s are not.
+>
+> That's true, AFAIK. In addition, when Git auto-detects whether a
+> file is binary or text, then a file with a bare CR is treated as
+> binary:
+>
+> https://github.com/git/git/blob/master/convert.c#L91
+>
+> That basically amounts to: "it [is] considered not important enough
+> to deal with" ;)
 
-Stephan
+  that's fine, that's all i was after -- basically, git handles Mac OS
+X and macOS, and if you're dealing with mac "classic" EOLs, well ...
+
+  http://i.imgur.com/z96dZ0x.jpg
+
+rday
+
+-- 
+
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                        http://crashcourse.ca
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
