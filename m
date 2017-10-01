@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0090220A2C
-	for <e@80x24.org>; Sun,  1 Oct 2017 00:10:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D5FA620A2C
+	for <e@80x24.org>; Sun,  1 Oct 2017 00:10:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751668AbdJAAKt (ORCPT <rfc822;e@80x24.org>);
+        id S1752218AbdJAAKu (ORCPT <rfc822;e@80x24.org>);
+        Sat, 30 Sep 2017 20:10:50 -0400
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:51026 "EHLO
+        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750988AbdJAAKt (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 30 Sep 2017 20:10:49 -0400
-Received: from mail-pf0-f174.google.com ([209.85.192.174]:56757 "EHLO
-        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750988AbdJAAKr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Sep 2017 20:10:47 -0400
-Received: by mail-pf0-f174.google.com with SMTP id g65so1367367pfe.13
-        for <git@vger.kernel.org>; Sat, 30 Sep 2017 17:10:47 -0700 (PDT)
+Received: by mail-pf0-f176.google.com with SMTP id m63so1376953pfk.7
+        for <git@vger.kernel.org>; Sat, 30 Sep 2017 17:10:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=YUO3dGUrWpX3fL+wX6zLM4JPVfIkbgkgp9xP/uMU3D4=;
-        b=F5zo6/Xt5IUQuJBNILrJ8ep0+3K97jsGpi2W8wszPOhNnudrM1LAEPTGmjBP25oJz+
-         ONRM7HKZ2gdA0P1M7IyvkZ0Jz86dTN8NSmEo6DZdtaLC28Ja1wFPygDyIKOtLqh5DX99
-         3DN/C08mnCPDrLl/Wn21fmj5i8hN5OrPZg64MsxUeCc9jOjT1cIzNZCtm3ZIoLHoVFkg
-         h4bzivBGS309xKu2oQvdzDHLWm4UFU3/mn7PbS5l4qo3rdU+qpjoUgSuwuBBCX2NeG6p
-         DTjFpESPqCMIn3xZuh990nIdR9oRuk4XjBV+w1S0vxZ22Z/n4YmhWFJuASMKPyUMnmfI
-         BmbQ==
+        bh=Jpny290P78BG3DfdCNXocbfwX/3ftxXLIrFQsdzQjE4=;
+        b=iKicQx4CQTm+bA/5BehrG+1r2GQjeM1TZsd0XNt8PKOT8UHpzVRhKWXvxRT12N6oCu
+         pLMW2+wkg+TgfnHupS2KFpyLRWQSdxdt7vMHmfJxm/AGjl6JCWNpDVUNlSXnq4KFQSQj
+         FQpms7YTtJ9a3w0NJaYsk9oa+mU90KXR7O6NH9B2/NQf7sbqhTtGGREWpkixp5qvJAWI
+         LghRqE7MYtDu+ut5/0ODUA+tIQ6Aa7+mVcnKw9rxADvtD66hjQ1b6bPp8MN7nEgBTYHn
+         GB9tSbrhwPSiXDeyjbab+H4jT+IvoubO7ojttNkyckeFDtQK5H95hy/zpAu8KsNsZjPS
+         q09g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=YUO3dGUrWpX3fL+wX6zLM4JPVfIkbgkgp9xP/uMU3D4=;
-        b=L9N71f7lqLKMxmdsHQGZDwgTYoHT3Mj60UbD+oCG+jozH1v6FZZ+bhknrJYTUQRa+Y
-         e9/3JrVBF66Oa393ksXPnoL+9da44/U2uL4GnDArPTiGfMotr2IsMIAIW7TwgWSPjd04
-         n9I5u0x23+CVnpafVWy+QPSr3lq9QfLnnsKAzcRLgCpTxK63QsmVso8c/q+WtCWWPNsX
-         9nXAdCtM4KTDGds2AmP7IfplLXquysqnFH7OSVNcnty+lERHMm0BIyEiwPyfwIHXe+X9
-         q7GL/Od2QF0nFQeTThVFywwLqTdVVUwrCMWLkaA/6rsqot3re/K0+fKQrfrd4aYU4CrO
-         ydGA==
-X-Gm-Message-State: AHPjjUhtgvKDD0J56zkwhgjzU0vjQ2HY+tQ9GocG/ltNC1/rfoO8aRBd
-        LKXsGhypTq9wa/8RrnftCBTHOd4ygZQ=
-X-Google-Smtp-Source: AOwi7QCuIzdlmAN4HVksUgmoWzn/GE2X356M/bKXG/gbnQR7A7ZM7g/rVREaMKRazrgdDpU2ztoSow==
-X-Received: by 10.98.15.209 with SMTP id 78mr11361706pfp.87.1506816646053;
-        Sat, 30 Sep 2017 17:10:46 -0700 (PDT)
+        bh=Jpny290P78BG3DfdCNXocbfwX/3ftxXLIrFQsdzQjE4=;
+        b=G8AdFUmMqVFVmaZU5w3nm8wU5GpI4ZMyNxzRflVKzfLOAMm1OGCwLsmQZxYBYqKOBI
+         MuKR7pA8JU+MpLQNTXVcmi7QNzYxaP/OypGJ605O0b4yEpBCnS+AA+WNdqmL5OSlxpFX
+         irUwn5j4XmFMNDBR9FmifVarsn+AUVoGF+jST9jhiaoxXebAyeCAPXMU9sAd9DMY6kUV
+         qMiLTtuc7TL8j8e9WXc7ueN4rCd+tEub/Ph6PskiONGnJermkEeQGi+RhhQ2HBc19NZC
+         Z1Yu6nvAh3V/sPJEC/R5wHJaDWsr9JibrCSWZyMX0RekjDhDNc+UBXwLWMt5HO4xCOSo
+         HWzw==
+X-Gm-Message-State: AMCzsaX1FTTav08w0+AzrlCruAKrCEMjUGy3harCgRPGOgpij1mT9HNF
+        M7I2qwBxDDzpPvBEuLwwMXoC/xWLALQ=
+X-Google-Smtp-Source: AOwi7QCnVjdVf5AMOOYEetsQohsDdTfV4XaMPJGvACNEDxszNcv3UrEXv/nTTDSLJfb9/IrnHzE7sA==
+X-Received: by 10.99.60.23 with SMTP id j23mr1354613pga.318.1506816648542;
+        Sat, 30 Sep 2017 17:10:48 -0700 (PDT)
 Received: from localhost ([205.175.97.239])
-        by smtp.gmail.com with ESMTPSA id s187sm10395813pgb.82.2017.09.30.17.10.44
+        by smtp.gmail.com with ESMTPSA id s17sm11002669pgq.25.2017.09.30.17.10.46
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 30 Sep 2017 17:10:44 -0700 (PDT)
+        Sat, 30 Sep 2017 17:10:46 -0700 (PDT)
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH v3 2/6] t6300: refactor %(trailers) tests
-Date:   Sat, 30 Sep 2017 17:10:33 -0700
-Message-Id: <20171001001037.23361-2-me@ttaylorr.com>
+Subject: [PATCH v3 3/6] doc: 'trailers' is the preferred way to format trailers
+Date:   Sat, 30 Sep 2017 17:10:34 -0700
+Message-Id: <20171001001037.23361-3-me@ttaylorr.com>
 X-Mailer: git-send-email 2.14.1.145.gb3622a4ee
 In-Reply-To: <20171001001037.23361-1-me@ttaylorr.com>
 References: <20171001000647.GA20767@D-10-157-251-166.dhcp4.washington.edu>
@@ -62,56 +62,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We currently have one test for %(trailers) in `git-for-each-ref(1)`,
-through "%(contents:trailers)". In preparation for more, let's add a few
-things:
+The documentation makes reference to 'contents:trailers' as an example
+to dig the trailers out of a commit. 'trailers' is an unmentioned
+alternative, which is treated as an alias of 'contents:trailers'.
 
-  - Move the commit creation step to its own test so that it can be
-  re-used.
-
-  - Add a non-trailer to the commit's trailers to test that non-trailers
-  aren't shown using "%(trailers:only)".
-
-  - Add a multi-line trailer to ensure that trailers are unfolded
-  correctly using "%(trailers:unfold)".
+Since 'trailers' is easier to type, prefer that as the designated way to
+dig out trailers information.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- t/t6300-for-each-ref.sh | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ Documentation/git-for-each-ref.txt | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index 834a9ed16..2a9fcf713 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -592,18 +592,25 @@ test_expect_success 'do not dereference NULL upon %(HEAD) on unborn branch' '
- cat >trailers <<EOF
- Reviewed-by: A U Thor <author@example.com>
- Signed-off-by: A U Thor <author@example.com>
-+[ v2 updated patch description ]
-+Acked-by: A U Thor
-+  <author@example.com>
- EOF
+diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+index 03e187a10..6b38d9a22 100644
+--- a/Documentation/git-for-each-ref.txt
++++ b/Documentation/git-for-each-ref.txt
+@@ -213,7 +213,8 @@ line is 'contents:body', where body is all of the lines after the first
+ blank line.  The optional GPG signature is `contents:signature`.  The
+ first `N` lines of the message is obtained using `contents:lines=N`.
+ Additionally, the trailers as interpreted by linkgit:git-interpret-trailers[1]
+-are obtained as 'contents:trailers'.
++are obtained as 'trailers' (or by using the historical alias
++'contents:trailers').
  
--test_expect_success 'basic atom: head contents:trailers' '
-+
-+test_expect_success 'set up trailers for next test' '
- 	echo "Some contents" > two &&
- 	git add two &&
--	git commit -F - <<-EOF &&
-+	git commit -F - <<-EOF
- 	trailers: this commit message has trailers
- 
- 	Some message contents
- 
- 	$(cat trailers)
- 	EOF
-+'
-+
-+test_expect_success 'basic atom: head contents:trailers' '
- 	git for-each-ref --format="%(contents:trailers)" refs/heads/master >actual &&
- 	sanitize_pgp <actual >actual.clean &&
- 	# git for-each-ref ends with a blank line
+ For sorting purposes, fields with numeric values sort in numeric order
+ (`objectsize`, `authordate`, `committerdate`, `creatordate`, `taggerdate`).
 -- 
 2.14.1.145.gb3622a4ee
 
