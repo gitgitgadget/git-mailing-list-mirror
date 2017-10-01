@@ -2,153 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 07E55202A5
-	for <e@80x24.org>; Sun,  1 Oct 2017 03:49:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E69420281
+	for <e@80x24.org>; Sun,  1 Oct 2017 07:29:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750911AbdJADtl (ORCPT <rfc822;e@80x24.org>);
-        Sat, 30 Sep 2017 23:49:41 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51469 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750899AbdJADtk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Sep 2017 23:49:40 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D71C6A9423;
-        Sat, 30 Sep 2017 23:49:39 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Ta06IWaq5neZpDFxDNi+g43S1hE=; b=R6Ix6U
-        15gHqYeKo8MFshsnRfc7C9Kxqj7b9pSi8PYLjeY7GPEixlzzUH+Qp/eq8u8mau05
-        Dj72FrJaRT0hpQjOudnORSR+YUNhRKLZqaAkpnzHDQXVU7SzLRMNPq8iILk0mYfL
-        sZUwWEbFUdCtlabEkJ5kz4jReQ5AspMM4e5/w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=jKMS4N9uyGd6uxxc7Qm2ct2IUGe8DN7a
-        vlihYCDShaplEe2AuUn1KfJ/aeWHI/adCzKp6uePHGqZBqORatvu5EjO/mJ75TgZ
-        DUNWjZzi7ny5PES4kCxiHhHrJi6tfkpTg4GVKCNAHzrnoWVtk00Mg8gnkrAIVHfo
-        czFLcxF8gOo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CC4E5A9422;
-        Sat, 30 Sep 2017 23:49:39 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3FF14A9421;
-        Sat, 30 Sep 2017 23:49:39 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Kevin Daudt <me@ikke.info>, Git Mailing list <git@vger.kernel.org>
-Subject: Re: "man git-checkout", man page is inconsistent between SYNOPSIS and details
-References: <alpine.LFD.2.21.1709300523190.27819@localhost.localdomain>
-        <20170930143258.GA20886@alpha.vpn.ikke.info>
-        <alpine.LFD.2.21.1709301800060.7869@localhost.localdomain>
-Date:   Sun, 01 Oct 2017 12:49:38 +0900
-In-Reply-To: <alpine.LFD.2.21.1709301800060.7869@localhost.localdomain>
-        (Robert P. J. Day's message of "Sat, 30 Sep 2017 18:04:05 -0400
-        (EDT)")
-Message-ID: <xmqqo9prv86l.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1750992AbdJAH3B (ORCPT <rfc822;e@80x24.org>);
+        Sun, 1 Oct 2017 03:29:01 -0400
+Received: from mout.web.de ([217.72.192.78]:53931 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750849AbdJAH3A (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Oct 2017 03:29:00 -0400
+Received: from [192.168.178.36] ([91.20.57.42]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MQNma-1dt9qB3HcC-00TiHx; Sun, 01
+ Oct 2017 09:28:51 +0200
+Subject: [PATCH 4/3] refs: pass NULL to refs_resolve_refdup() if hash is not
+ needed
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>
+References: <b89d36b5-0996-829b-a267-7ee4da9673dc@web.de>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <366c778c-b587-de62-1d19-145d46fb1989@web.de>
+Date:   Sun, 1 Oct 2017 09:28:50 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8CD00D50-A65B-11E7-AD81-8EF31968708C-77302942!pb-smtp1.pobox.com
+In-Reply-To: <b89d36b5-0996-829b-a267-7ee4da9673dc@web.de>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:u7J6CvVT5iE3AAZGUbRvTyb3JhuVH0m+ZhMTAndaQ3Mkdl9Tns6
+ aovT9lSWTi1eYqHvsasrL6+pbbl0KynxRZVURj+4kt4GePl2p+jmxlZ6nWtP13exTj2c8IT
+ X+pQUNOnCurKrv5sLHw8i38UHoVnCHzULuWulIK4rkV2H3t8w4HmZdwDyahbL/RdPm+N1P7
+ fCQFYnA+9S2fA19MQRBbA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:t83tI+W77Nw=:sVI7FgWJwt9wbgFauE/xtp
+ 9weGq90Cx2osDwe27NmDVeBmx60HXUyGT6HtZ0uyiiVI8exHsFOu/3F37XLk9ycCKf5yFiq9d
+ 21d3OTyIZFHiC5BYSGkexwDwMniVXA5tMQX/uaCznus/xZGiH4RFK2YWgMKISiSTaFlhhwFrJ
+ kq9taIVvZySFQ3Bmy6r1d22opQDC/EwUnjUXq+2hffCy9CFLMqIGM+WvZY1q6xGB7oYBUZ9ia
+ SIKkWLeEhe9+oh3JUcCtpghtPjBz36ld3Stwo8G2wC0xhf4u3xpa3m6OrsoYfxxT/azono0/0
+ gSlWcuqo4LtOhddhtzjLYldgn3sKH9KitVX4S2Xtzt+TvxT57qR6dMp8XV45mnUfzVAJe4YxV
+ VkXwAe3p6O0RrJrWNAsenhBeC7RlPXA86nZKNix5BTEeTfaSSF4q95a8y3rviVM80QA/do5Ut
+ MwkiOKp+0LR7aeqcIfomPEqG2sesWD2ytMbD/bqlXM5FNfuQWlwC5Yc+S0Or//quk/Ih5MS5X
+ 2cugp9QNPabiUxx0WK+1cuyiuHTjGzbcVqeDFFRXvqat/sTcxzfQjYqZd7/pd1AgvTJdY3Ccw
+ fFvXyV3cC8f9lmCIy0p/g1DWKy/rzFFdUCo4+b67UGrGBiTjnA2K2UlpWDh/PyCvEBhSHa5Li
+ uo1PztpzfnbM48xbX3p8qu1hD5ZPnJLXKyqZyYKrkCKyfRDY5ZghzQcWDlHFZGwjmDpd7/RF9
+ +mEtonzqpsBFKmvhNbwTQyd726goC6VrcHromTfi0AVoFrlcyHE8ApYjrUuHspdz3H+IRxOH6
+ j6oqhpXll1Z+pIxVAMBp3BJCJiBNAAUg2/nAEAEJt2QItno2vg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Robert P. J. Day" <rpjday@crashcourse.ca> writes:
+This gets us rid of a write-only variable.
 
->   it's simply a matter of the forms not matching between the SYNOPSIS
-> and the DESCRIPTION sections. am i making sense?
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ refs/files-backend.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-I think the whole thing is wrong and the root cause is because the
-(relatively newer) description of the "--patch" mode lazily tried to
-piggy-back the description of existing "check out from the index or
-tree-ish" mode, ending up in a confusing description.
-
-"git checkout [<tree-ish>] -- <pathspec>..." is a way to overwrite
-the working tree files with what is in the object store.  When you
-give <tree-ish>, the paths that match the <pathspec> are grabbed
-from the tree-ish, added to the index, and overwrites the working
-tree files.  In this mode, you need to have at least one pathspec
-element on the command line, so <pathspec> is mandatory.  With no
-pathspec, if <tree-ish> happens to be a commit-ish, then the
-operation is "check out the commit, so that we can prepare to make
-a new commit as its child".
-
-"git checkout -p/--patch [<tree-ish>]" is quite different.  It can
-be used without any <pathspec> to pick and choose from all changes
-treewide, but you can use <pathspec> to limit the changes you need
-to choose from.
-
-Something like the following may be a good starting point.  As I
-didn't spend many brain-cycles to come up with a description for the
-"--patch" mode, that paragraph needs a total rewrite on top, but I
-think the structure to separate the normal "per-path" checkout mode
-and "patch" mode and describe it separately should make it a lot
-clearer to see what is being described.
-
-Short of such a fundamental correction,
-
-	git checkout [-p|--patch] [<tree-ish>] -- [<pathspec>...]
-
-would allow you to give none of -p/--patch/<pathspec>, which is
-totally a different operation from what is being described in the
-text.
-
- Documentation/git-checkout.txt | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index d6399c0af8..3d88f703e9 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -13,7 +13,8 @@ SYNOPSIS
- 'git checkout' [-q] [-f] [-m] [--detach] <commit>
- 'git checkout' [-q] [-f] [-m] [[-b|-B|--orphan] <new_branch>] [<start_point>]
- 'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <paths>...
--'git checkout' [-p|--patch] [<tree-ish>] [--] [<paths>...]
-+'git checkout' [<tree-ish>] [--] <pathspec>...
-+'git checkout' (-p|--patch) [<tree-ish>] [--] [<paths>...]
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index fec77744b4..ed00ddab1a 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -2499,7 +2499,6 @@ static int files_transaction_prepare(struct ref_store *ref_store,
+ 	struct string_list affected_refnames = STRING_LIST_INIT_NODUP;
+ 	char *head_ref = NULL;
+ 	int head_type;
+-	struct object_id head_oid;
+ 	struct files_transaction_backend_data *backend_data;
+ 	struct ref_transaction *packed_transaction = NULL;
  
- DESCRIPTION
- -----------
-@@ -78,10 +79,9 @@ be used to detach HEAD at the tip of the branch (`git checkout
- +
- Omitting <branch> detaches HEAD at the tip of the current branch.
+@@ -2556,7 +2555,7 @@ static int files_transaction_prepare(struct ref_store *ref_store,
+ 	 */
+ 	head_ref = refs_resolve_refdup(ref_store, "HEAD",
+ 				       RESOLVE_REF_NO_RECURSE,
+-				       head_oid.hash, &head_type);
++				       NULL, &head_type);
  
--'git checkout' [-p|--patch] [<tree-ish>] [--] <pathspec>...::
-+'git checkout' [<tree-ish>] [--] <pathspec>...::
- 
--	When <paths> or `--patch` are given, 'git checkout' does *not*
--	switch branches.  It updates the named paths in the working tree
-+	Updates the named paths in the working tree
- 	from the index file or from a named <tree-ish> (most often a
- 	commit).  In this case, the `-b` and `--track` options are
- 	meaningless and giving either of them results in an error.  The
-@@ -89,7 +89,7 @@ Omitting <branch> detaches HEAD at the tip of the current branch.
- 	(i.e.  commit, tag or tree) to update the index for the given
- 	paths before updating the working tree.
- +
--'git checkout' with <paths> or `--patch` is used to restore modified or
-+'git checkout' with <paths> is used to restore modified or
- deleted paths to their original contents from the index or replace paths
- with the contents from a named <tree-ish> (most often a commit-ish).
- +
-@@ -101,6 +101,13 @@ specific side of the merge can be checked out of the index by
- using `--ours` or `--theirs`.  With `-m`, changes made to the working tree
- file can be discarded to re-create the original conflicted merge result.
- 
-+'git checkout' (-p|--patch) [<tree-ish>] [--] [<pathspec>...]::
-+	This is similar to the "check out paths to the working tree"
-+	mode described above, but lets you use the interactive
-+	interface show the "diff" output and choose which hunks to
-+	use in the result.
-+
-+
- OPTIONS
- -------
- -q::
+ 	if (head_ref && !(head_type & REF_ISSYMREF)) {
+ 		FREE_AND_NULL(head_ref);
+-- 
+2.14.2
+
