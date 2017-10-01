@@ -6,39 +6,39 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D347820A10
-	for <e@80x24.org>; Sun,  1 Oct 2017 22:08:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3FC6B20A10
+	for <e@80x24.org>; Sun,  1 Oct 2017 22:08:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751979AbdJAWIw (ORCPT <rfc822;e@80x24.org>);
-        Sun, 1 Oct 2017 18:08:52 -0400
+        id S1751997AbdJAWI4 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 1 Oct 2017 18:08:56 -0400
 Received: from injection.crustytoothpaste.net ([192.241.140.119]:54098 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751895AbdJAWIu (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 1 Oct 2017 18:08:50 -0400
+        by vger.kernel.org with ESMTP id S1751092AbdJAWIw (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 1 Oct 2017 18:08:52 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 19CC660D97;
-        Sun,  1 Oct 2017 22:08:49 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3E72060DA1;
+        Sun,  1 Oct 2017 22:08:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1506895729;
-        bh=4RehEJLta1UvdUqMUNdEQz2a6MoXgXJuAZnJk4iJXVM=;
+        s=default; t=1506895731;
+        bh=LxIOJ4SbmJFkikmDQt0LJ8JppNP/NK8QjVZjp/bBD3g=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=LI/o/HXXi7xqw35NHI34HyDbO7L73pmfKO+2j0hWPtP0MRFm3N+p4PkFFmBV1vVbE
-         AXfnLQYanAZM9taN/w/AWA9xrj8FXVfYX6Y5VbZ5NhJoDxanTOQBWr18QYzKUQ6n73
-         /Dt8vChPyO3ZmqKPvsIapsRhK81jDjSvS4AKK0eZ3UCiU8iGil7kg4r7dz6Hj7qVn1
-         rIiEpb3wZUj7QIyiw+chUWXj1ChQkcqo3lR253rqMHKeCJgExu/3RY4nvXJ2vmryhu
-         8zEewRVUKo2UwuKrojUlk2UuD8rFkYigFzzYm2UVrVx3QcTeATGqbyo0tvZccUbNKX
-         ZACNlvI8iI2nle5295s9M8Ig6z0/BR/OvaKEMmzDl8G/eOJ2/iBpJBswQoL6INaSgu
-         K5BsqDXuaMe6N4dfwEslNNogcom7g9shzTm8hnbma+1VhwtAY8Y3R/DosCzdnDLGUP
-         HrDlC9gteyZYoGhFQ7hBt6OSv9/fUQ0+ste0pgjrjHxvI/X3VTk
+        b=w5M0r0qPycqHc84GL00zwVE4HzOyBuANlhwWGMRtEA7HppHvIvZSEc69VSQ+jyJbs
+         WBNWx36i96IH9JcwVMyzuibjGohWj5cBlRHul66uoPNAQZGUjBD1AgFYt2BNrU1hd4
+         NHLQMERFs5AgkUOWuVu1rWFOaMS0M6f5QOrd0Ln+iaywTv3bITeuLPCqNOkbhWZcgd
+         5UTxc4QBEF1TxqIUDpzfGE4H+N4DTR9E5LxXS/vDTyjPQyWwpRBx7jZCSKnGtG9QfK
+         1FJ/Gyq8m7APvSW1Ndch5DjNlVnFENZz5p3CYwNpT++/dO6i075px2kHXQPtoTRikq
+         drRjwhcZvD7P1OyQV6/uI79Pp8gRYfGQgLkZPnXGTbtgfJkxSLEZbVuetilQMo7jJl
+         f1s6dRXJFPRapGbu5u2ID03RGHF1BhrGZnGc7LBt77fReKRUHwgLCz4FDRBQA89pE8
+         WzR/hMjHnenNHlV09edA81HBGQOz3m/gEnOSw/aQMVzRO/Og1wf
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
         Brandon Williams <bmwill@google.com>
-Subject: [PATCH 05/24] refs: update ref transactions to use struct object_id
-Date:   Sun,  1 Oct 2017 22:08:12 +0000
-Message-Id: <20171001220831.214705-6-sandals@crustytoothpaste.net>
+Subject: [PATCH 07/24] refs: convert resolve_refdup and refs_resolve_refdup to struct object_id
+Date:   Sun,  1 Oct 2017 22:08:14 +0000
+Message-Id: <20171001220831.214705-8-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.14.2.822.g60be5d43e6
 In-Reply-To: <20171001220831.214705-1-sandals@crustytoothpaste.net>
 References: <20171001220831.214705-1-sandals@crustytoothpaste.net>
@@ -48,489 +48,356 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Update the ref transaction code to use struct object_id.  Remove one
-NULL pointer check which was previously inserted around a dereference;
-since we now pass a pointer to struct object_id directly through, the
-code we're calling handles this for us.
+All of the callers already pass the hash member of struct object_id, so
+update them to pass a pointer to the struct directly,
+
+This transformation was done with an update to declaration and
+definition and the following semantic patch:
+
+@@
+expression E1, E2, E3, E4;
+@@
+- resolve_refdup(E1, E2, E3.hash, E4)
++ resolve_refdup(E1, E2, &E3, E4)
+
+@@
+expression E1, E2, E3, E4;
+@@
+- resolve_refdup(E1, E2, E3->hash, E4)
++ resolve_refdup(E1, E2, E3, E4)
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- branch.c               |  2 +-
- builtin/clone.c        |  2 +-
- builtin/commit.c       |  4 ++--
- builtin/fetch.c        |  4 ++--
- builtin/receive-pack.c |  4 ++--
- builtin/replace.c      |  2 +-
- builtin/tag.c          |  2 +-
- builtin/update-ref.c   |  8 ++++----
- fast-import.c          |  4 ++--
- refs.c                 | 44 +++++++++++++++++++++-----------------------
- refs.h                 | 24 ++++++++++++------------
- refs/files-backend.c   | 12 ++++++------
- refs/refs-internal.h   |  4 ++--
- sequencer.c            |  2 +-
- walker.c               |  2 +-
- 15 files changed, 59 insertions(+), 61 deletions(-)
+ builtin/am.c                | 2 +-
+ builtin/branch.c            | 6 +++---
+ builtin/checkout.c          | 4 ++--
+ builtin/clone.c             | 2 +-
+ builtin/fmt-merge-msg.c     | 2 +-
+ builtin/merge.c             | 2 +-
+ builtin/notes.c             | 2 +-
+ builtin/receive-pack.c      | 2 +-
+ builtin/show-branch.c       | 6 +++---
+ builtin/submodule--helper.c | 2 +-
+ ref-filter.c                | 4 ++--
+ reflog-walk.c               | 4 ++--
+ refs.c                      | 8 ++++----
+ refs.h                      | 4 ++--
+ refs/files-backend.c        | 2 +-
+ submodule.c                 | 2 +-
+ transport.c                 | 2 +-
+ wt-status.c                 | 2 +-
+ 18 files changed, 29 insertions(+), 29 deletions(-)
 
-diff --git a/branch.c b/branch.c
-index 4377ce2fb1..45029ea142 100644
---- a/branch.c
-+++ b/branch.c
-@@ -305,7 +305,7 @@ void create_branch(const char *name, const char *start_name,
- 		transaction = ref_transaction_begin(&err);
- 		if (!transaction ||
- 		    ref_transaction_update(transaction, ref.buf,
--					   oid.hash, forcing ? NULL : null_sha1,
-+					   &oid, forcing ? NULL : &null_oid,
- 					   0, msg, &err) ||
- 		    ref_transaction_commit(transaction, &err))
- 			die("%s", err.buf);
+diff --git a/builtin/am.c b/builtin/am.c
+index 32120f42df..c9bb14a6c2 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -2135,7 +2135,7 @@ static void am_abort(struct am_state *state)
+ 
+ 	am_rerere_clear();
+ 
+-	curr_branch = resolve_refdup("HEAD", 0, curr_head.hash, NULL);
++	curr_branch = resolve_refdup("HEAD", 0, &curr_head, NULL);
+ 	has_curr_head = curr_branch && !is_null_oid(&curr_head);
+ 	if (!has_curr_head)
+ 		hashcpy(curr_head.hash, EMPTY_TREE_SHA1_BIN);
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 6031b74d68..75dadd3d93 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -124,7 +124,7 @@ static int branch_merged(int kind, const char *name,
+ 		if (upstream &&
+ 		    (reference_name = reference_name_to_free =
+ 		     resolve_refdup(upstream, RESOLVE_REF_READING,
+-				    oid.hash, NULL)) != NULL)
++				    &oid, NULL)) != NULL)
+ 			reference_rev = lookup_commit_reference(&oid);
+ 	}
+ 	if (!reference_rev)
+@@ -240,7 +240,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ 					RESOLVE_REF_READING
+ 					| RESOLVE_REF_NO_RECURSE
+ 					| RESOLVE_REF_ALLOW_BAD_NAME,
+-					oid.hash, &flags);
++					&oid, &flags);
+ 		if (!target) {
+ 			error(remote_branch
+ 			      ? _("remote-tracking branch '%s' not found.")
+@@ -613,7 +613,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 
+ 	track = git_branch_track;
+ 
+-	head = resolve_refdup("HEAD", 0, head_oid.hash, NULL);
++	head = resolve_refdup("HEAD", 0, &head_oid, NULL);
+ 	if (!head)
+ 		die(_("Failed to resolve HEAD as a valid ref."));
+ 	if (!strcmp(head, "HEAD"))
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index fd0dec401e..b803425bc4 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -826,7 +826,7 @@ static int switch_branches(const struct checkout_opts *opts,
+ 	struct object_id rev;
+ 	int flag, writeout_error = 0;
+ 	memset(&old, 0, sizeof(old));
+-	old.path = path_to_free = resolve_refdup("HEAD", 0, rev.hash, &flag);
++	old.path = path_to_free = resolve_refdup("HEAD", 0, &rev, &flag);
+ 	if (old.path)
+ 		old.commit = lookup_commit_reference_gently(&rev, 1);
+ 	if (!(flag & REF_ISSYMREF))
+@@ -1125,7 +1125,7 @@ static int checkout_branch(struct checkout_opts *opts,
+ 	    !opts->ignore_other_worktrees) {
+ 		struct object_id oid;
+ 		int flag;
+-		char *head_ref = resolve_refdup("HEAD", 0, oid.hash, &flag);
++		char *head_ref = resolve_refdup("HEAD", 0, &oid, &flag);
+ 		if (head_ref &&
+ 		    (!(flag & REF_ISSYMREF) || strcmp(head_ref, new->path)))
+ 			die_if_checked_out(new->path, 1);
 diff --git a/builtin/clone.c b/builtin/clone.c
-index 4135621aa3..665a0e2673 100644
+index 5cd1b02d53..695bdd7046 100644
 --- a/builtin/clone.c
 +++ b/builtin/clone.c
-@@ -588,7 +588,7 @@ static void write_remote_refs(const struct ref *local_refs)
- 	for (r = local_refs; r; r = r->next) {
- 		if (!r->peer_ref)
- 			continue;
--		if (ref_transaction_create(t, r->peer_ref->name, r->old_oid.hash,
-+		if (ref_transaction_create(t, r->peer_ref->name, &r->old_oid,
- 					   0, NULL, &err))
- 			die("%s", err.buf);
- 	}
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 0f8ddb6866..d5fbf404f4 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1785,9 +1785,9 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+@@ -715,7 +715,7 @@ static int checkout(int submodule_progress)
+ 	if (option_no_checkout)
+ 		return 0;
  
- 	transaction = ref_transaction_begin(&err);
- 	if (!transaction ||
--	    ref_transaction_update(transaction, "HEAD", oid.hash,
-+	    ref_transaction_update(transaction, "HEAD", &oid,
- 				   current_head
--				   ? current_head->object.oid.hash : null_sha1,
-+				   ? &current_head->object.oid : &null_oid,
- 				   0, sb.buf, &err) ||
- 	    ref_transaction_commit(transaction, &err)) {
- 		rollback_index_files();
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 225c734924..859be91d6c 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -457,8 +457,8 @@ static int s_update_ref(const char *action,
- 	transaction = ref_transaction_begin(&err);
- 	if (!transaction ||
- 	    ref_transaction_update(transaction, ref->name,
--				   ref->new_oid.hash,
--				   check_old ? ref->old_oid.hash : NULL,
-+				   &ref->new_oid,
-+				   check_old ? &ref->old_oid : NULL,
- 				   0, msg, &err))
- 		goto fail;
+-	head = resolve_refdup("HEAD", RESOLVE_REF_READING, oid.hash, NULL);
++	head = resolve_refdup("HEAD", RESOLVE_REF_READING, &oid, NULL);
+ 	if (!head) {
+ 		warning(_("remote HEAD refers to nonexistent ref, "
+ 			  "unable to checkout.\n"));
+diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
+index e99b5ddbf9..b69f7d3be2 100644
+--- a/builtin/fmt-merge-msg.c
++++ b/builtin/fmt-merge-msg.c
+@@ -603,7 +603,7 @@ int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
+ 
+ 	/* get current branch */
+ 	current_branch = current_branch_to_free =
+-		resolve_refdup("HEAD", RESOLVE_REF_READING, head_oid.hash, NULL);
++		resolve_refdup("HEAD", RESOLVE_REF_READING, &head_oid, NULL);
+ 	if (!current_branch)
+ 		die("No current branch");
+ 	if (starts_with(current_branch, "refs/heads/"))
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 99d4b873f0..99d2df965f 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -1142,7 +1142,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 	 * Check if we are _not_ on a detached HEAD, i.e. if there is a
+ 	 * current branch.
+ 	 */
+-	branch = branch_to_free = resolve_refdup("HEAD", 0, head_oid.hash, NULL);
++	branch = branch_to_free = resolve_refdup("HEAD", 0, &head_oid, NULL);
+ 	if (branch)
+ 		skip_prefix(branch, "refs/heads/", &branch);
+ 	if (!branch || is_null_oid(&head_oid))
+diff --git a/builtin/notes.c b/builtin/notes.c
+index 8276af419b..12afdf1907 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -724,7 +724,7 @@ static int merge_commit(struct notes_merge_options *o)
+ 	init_notes(t, "NOTES_MERGE_PARTIAL", combine_notes_overwrite, 0);
+ 
+ 	o->local_ref = local_ref_to_free =
+-		resolve_refdup("NOTES_MERGE_REF", 0, oid.hash, NULL);
++		resolve_refdup("NOTES_MERGE_REF", 0, &oid, NULL);
+ 	if (!o->local_ref)
+ 		die(_("failed to resolve NOTES_MERGE_REF"));
  
 diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 29a0f3b75f..39defd4e3c 100644
+index 046b600b11..313b224fad 100644
 --- a/builtin/receive-pack.c
 +++ b/builtin/receive-pack.c
-@@ -1139,7 +1139,7 @@ static const char *update(struct command *cmd, struct shallow_info *si)
- 		}
- 		if (ref_transaction_delete(transaction,
- 					   namespaced_name,
--					   old_oid ? old_oid->hash : NULL,
-+					   old_oid,
- 					   0, "push", &err)) {
- 			rp_error("%s", err.buf);
- 			strbuf_release(&err);
-@@ -1156,7 +1156,7 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+@@ -1515,7 +1515,7 @@ static void execute_commands(struct command *commands,
+ 	check_aliased_updates(commands);
  
- 		if (ref_transaction_update(transaction,
- 					   namespaced_name,
--					   new_oid->hash, old_oid->hash,
-+					   new_oid, old_oid,
- 					   0, "push",
- 					   &err)) {
- 			rp_error("%s", err.buf);
-diff --git a/builtin/replace.c b/builtin/replace.c
-index 2854eaa0f3..3099e55307 100644
---- a/builtin/replace.c
-+++ b/builtin/replace.c
-@@ -175,7 +175,7 @@ static int replace_object_oid(const char *object_ref,
+ 	free(head_name_to_free);
+-	head_name = head_name_to_free = resolve_refdup("HEAD", 0, oid.hash, NULL);
++	head_name = head_name_to_free = resolve_refdup("HEAD", 0, &oid, NULL);
  
- 	transaction = ref_transaction_begin(&err);
- 	if (!transaction ||
--	    ref_transaction_update(transaction, ref.buf, repl->hash, prev.hash,
-+	    ref_transaction_update(transaction, ref.buf, repl, &prev,
- 				   0, NULL, &err) ||
- 	    ref_transaction_commit(transaction, &err))
- 		die("%s", err.buf);
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 46ff4ca736..2ededc3fb1 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -543,7 +543,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	if (use_atomic)
+ 		execute_commands_atomic(commands, si);
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index 84547d6fba..0237be4975 100644
+--- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -705,8 +705,8 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 			static const char *fake_av[2];
  
- 	transaction = ref_transaction_begin(&err);
- 	if (!transaction ||
--	    ref_transaction_update(transaction, ref.buf, object.hash, prev.hash,
-+	    ref_transaction_update(transaction, ref.buf, &object, &prev,
- 				   create_reflog ? REF_FORCE_CREATE_REFLOG : 0,
- 				   reflog_msg.buf, &err) ||
- 	    ref_transaction_commit(transaction, &err))
-diff --git a/builtin/update-ref.c b/builtin/update-ref.c
-index f491cf1a92..cf1552b478 100644
---- a/builtin/update-ref.c
-+++ b/builtin/update-ref.c
-@@ -200,7 +200,7 @@ static const char *parse_cmd_update(struct ref_transaction *transaction,
- 		die("update %s: extra input: %s", refname, next);
- 
- 	if (ref_transaction_update(transaction, refname,
--				   new_oid.hash, have_old ? old_oid.hash : NULL,
-+				   &new_oid, have_old ? &old_oid : NULL,
- 				   update_flags | create_reflog_flag,
- 				   msg, &err))
- 		die("%s", err.buf);
-@@ -232,7 +232,7 @@ static const char *parse_cmd_create(struct ref_transaction *transaction,
- 	if (*next != line_termination)
- 		die("create %s: extra input: %s", refname, next);
- 
--	if (ref_transaction_create(transaction, refname, new_oid.hash,
-+	if (ref_transaction_create(transaction, refname, &new_oid,
- 				   update_flags | create_reflog_flag,
- 				   msg, &err))
- 		die("%s", err.buf);
-@@ -269,7 +269,7 @@ static const char *parse_cmd_delete(struct ref_transaction *transaction,
- 		die("delete %s: extra input: %s", refname, next);
- 
- 	if (ref_transaction_delete(transaction, refname,
--				   have_old ? old_oid.hash : NULL,
-+				   have_old ? &old_oid : NULL,
- 				   update_flags, msg, &err))
- 		die("%s", err.buf);
- 
-@@ -298,7 +298,7 @@ static const char *parse_cmd_verify(struct ref_transaction *transaction,
- 	if (*next != line_termination)
- 		die("verify %s: extra input: %s", refname, next);
- 
--	if (ref_transaction_verify(transaction, refname, old_oid.hash,
-+	if (ref_transaction_verify(transaction, refname, &old_oid,
- 				   update_flags, &err))
- 		die("%s", err.buf);
- 
-diff --git a/fast-import.c b/fast-import.c
-index 35bf671f12..2d2d0d98f0 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -1778,7 +1778,7 @@ static int update_branch(struct branch *b)
+ 			fake_av[0] = resolve_refdup("HEAD",
+-						    RESOLVE_REF_READING,
+-						    oid.hash, NULL);
++						    RESOLVE_REF_READING, &oid,
++						    NULL);
+ 			fake_av[1] = NULL;
+ 			av = fake_av;
+ 			ac = 1;
+@@ -775,7 +775,7 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
  	}
- 	transaction = ref_transaction_begin(&err);
- 	if (!transaction ||
--	    ref_transaction_update(transaction, b->name, b->oid.hash, old_oid.hash,
-+	    ref_transaction_update(transaction, b->name, &b->oid, &old_oid,
- 				   0, msg, &err) ||
- 	    ref_transaction_commit(transaction, &err)) {
- 		ref_transaction_free(transaction);
-@@ -1820,7 +1820,7 @@ static void dump_tags(void)
- 		strbuf_addf(&ref_name, "refs/tags/%s", t->name);
  
- 		if (ref_transaction_update(transaction, ref_name.buf,
--					   t->oid.hash, NULL, 0, msg, &err)) {
-+					   &t->oid, NULL, 0, msg, &err)) {
- 			failure |= error("%s", err.buf);
- 			goto cleanup;
- 		}
+ 	head = resolve_refdup("HEAD", RESOLVE_REF_READING,
+-			      head_oid.hash, NULL);
++			      &head_oid, NULL);
+ 
+ 	if (with_current_branch && head) {
+ 		int has_head = 0;
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 06ed02f994..5946a7ca93 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -1144,7 +1144,7 @@ static int push_check(int argc, const char **argv, const char *prefix)
+ 	argv++;
+ 	argc--;
+ 	/* Get the submodule's head ref and determine if it is detached */
+-	head = resolve_refdup("HEAD", 0, head_oid.hash, NULL);
++	head = resolve_refdup("HEAD", 0, &head_oid, NULL);
+ 	if (!head)
+ 		die(_("Failed to resolve HEAD as a valid ref."));
+ 	if (!strcmp(head, "HEAD"))
+diff --git a/ref-filter.c b/ref-filter.c
+index bc591f4f3d..24f3ca1ea3 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -297,7 +297,7 @@ static void head_atom_parser(const struct ref_format *format, struct used_atom *
+ {
+ 	struct object_id unused;
+ 
+-	atom->u.head = resolve_refdup("HEAD", RESOLVE_REF_READING, unused.hash, NULL);
++	atom->u.head = resolve_refdup("HEAD", RESOLVE_REF_READING, &unused, NULL);
+ }
+ 
+ static struct {
+@@ -1319,7 +1319,7 @@ static void populate_value(struct ref_array_item *ref)
+ 	if (need_symref && (ref->flag & REF_ISSYMREF) && !ref->symref) {
+ 		struct object_id unused1;
+ 		ref->symref = resolve_refdup(ref->refname, RESOLVE_REF_READING,
+-					     unused1.hash, NULL);
++					     &unused1, NULL);
+ 		if (!ref->symref)
+ 			ref->symref = "";
+ 	}
+diff --git a/reflog-walk.c b/reflog-walk.c
+index 74ebe5148f..1a602a214d 100644
+--- a/reflog-walk.c
++++ b/reflog-walk.c
+@@ -65,7 +65,7 @@ static struct complete_reflogs *read_complete_reflog(const char *ref)
+ 		const char *name;
+ 		void *name_to_free;
+ 		name = name_to_free = resolve_refdup(ref, RESOLVE_REF_READING,
+-						     oid.hash, NULL);
++						     &oid, NULL);
+ 		if (name) {
+ 			for_each_reflog_ent(name, read_one_reflog, reflogs);
+ 			free(name_to_free);
+@@ -153,7 +153,7 @@ int add_reflog_for_walk(struct reflog_walk_info *info,
+ 		if (*branch == '\0') {
+ 			struct object_id oid;
+ 			free(branch);
+-			branch = resolve_refdup("HEAD", 0, oid.hash, NULL);
++			branch = resolve_refdup("HEAD", 0, &oid, NULL);
+ 			if (!branch)
+ 				die ("No current branch");
+ 
 diff --git a/refs.c b/refs.c
-index 66d66af126..90c2f9ccca 100644
+index 90c2f9ccca..a86dbf9ec1 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -668,8 +668,7 @@ int refs_delete_ref(struct ref_store *refs, const char *msg,
+@@ -194,21 +194,21 @@ int ref_resolves_to_object(const char *refname,
  
- 	transaction = ref_store_transaction_begin(refs, &err);
- 	if (!transaction ||
--	    ref_transaction_delete(transaction, refname,
--				   old_oid ? old_oid->hash : NULL,
-+	    ref_transaction_delete(transaction, refname, old_oid,
- 				   flags, msg, &err) ||
- 	    ref_transaction_commit(transaction, &err)) {
- 		error("%s", err.buf);
-@@ -895,8 +894,8 @@ void ref_transaction_free(struct ref_transaction *transaction)
- struct ref_update *ref_transaction_add_update(
- 		struct ref_transaction *transaction,
- 		const char *refname, unsigned int flags,
--		const unsigned char *new_sha1,
--		const unsigned char *old_sha1,
-+		const struct object_id *new_oid,
-+		const struct object_id *old_oid,
- 		const char *msg)
+ char *refs_resolve_refdup(struct ref_store *refs,
+ 			  const char *refname, int resolve_flags,
+-			  unsigned char *sha1, int *flags)
++			  struct object_id *oid, int *flags)
  {
- 	struct ref_update *update;
-@@ -914,23 +913,23 @@ struct ref_update *ref_transaction_add_update(
- 	update->flags = flags;
+ 	const char *result;
  
- 	if (flags & REF_HAVE_NEW)
--		hashcpy(update->new_oid.hash, new_sha1);
-+		oidcpy(&update->new_oid, new_oid);
- 	if (flags & REF_HAVE_OLD)
--		hashcpy(update->old_oid.hash, old_sha1);
-+		oidcpy(&update->old_oid, old_oid);
- 	update->msg = xstrdup_or_null(msg);
- 	return update;
+ 	result = refs_resolve_ref_unsafe(refs, refname, resolve_flags,
+-					 sha1, flags);
++					 oid->hash, flags);
+ 	return xstrdup_or_null(result);
  }
  
- int ref_transaction_update(struct ref_transaction *transaction,
- 			   const char *refname,
--			   const unsigned char *new_sha1,
--			   const unsigned char *old_sha1,
-+			   const struct object_id *new_oid,
-+			   const struct object_id *old_oid,
- 			   unsigned int flags, const char *msg,
- 			   struct strbuf *err)
+ char *resolve_refdup(const char *refname, int resolve_flags,
+-		     unsigned char *sha1, int *flags)
++		     struct object_id *oid, int *flags)
  {
- 	assert(err);
- 
--	if ((new_sha1 && !is_null_sha1(new_sha1)) ?
-+	if ((new_oid && !is_null_oid(new_oid)) ?
- 	    check_refname_format(refname, REFNAME_ALLOW_ONELEVEL) :
- 	    !refname_is_safe(refname)) {
- 		strbuf_addf(err, "refusing to update ref with bad name '%s'",
-@@ -940,48 +939,48 @@ int ref_transaction_update(struct ref_transaction *transaction,
- 
- 	flags &= REF_TRANSACTION_UPDATE_ALLOWED_FLAGS;
- 
--	flags |= (new_sha1 ? REF_HAVE_NEW : 0) | (old_sha1 ? REF_HAVE_OLD : 0);
-+	flags |= (new_oid ? REF_HAVE_NEW : 0) | (old_oid ? REF_HAVE_OLD : 0);
- 
- 	ref_transaction_add_update(transaction, refname, flags,
--				   new_sha1, old_sha1, msg);
-+				   new_oid, old_oid, msg);
- 	return 0;
+ 	return refs_resolve_refdup(get_main_ref_store(),
+ 				   refname, resolve_flags,
+-				   sha1, flags);
++				   oid, flags);
  }
  
- int ref_transaction_create(struct ref_transaction *transaction,
- 			   const char *refname,
--			   const unsigned char *new_sha1,
-+			   const struct object_id *new_oid,
- 			   unsigned int flags, const char *msg,
- 			   struct strbuf *err)
- {
--	if (!new_sha1 || is_null_sha1(new_sha1))
-+	if (!new_oid || is_null_oid(new_oid))
- 		die("BUG: create called without valid new_sha1");
--	return ref_transaction_update(transaction, refname, new_sha1,
--				      null_sha1, flags, msg, err);
-+	return ref_transaction_update(transaction, refname, new_oid,
-+				      &null_oid, flags, msg, err);
- }
- 
- int ref_transaction_delete(struct ref_transaction *transaction,
- 			   const char *refname,
--			   const unsigned char *old_sha1,
-+			   const struct object_id *old_oid,
- 			   unsigned int flags, const char *msg,
- 			   struct strbuf *err)
- {
--	if (old_sha1 && is_null_sha1(old_sha1))
-+	if (old_oid && is_null_oid(old_oid))
- 		die("BUG: delete called with old_sha1 set to zeros");
- 	return ref_transaction_update(transaction, refname,
--				      null_sha1, old_sha1,
-+				      &null_oid, old_oid,
- 				      flags, msg, err);
- }
- 
- int ref_transaction_verify(struct ref_transaction *transaction,
- 			   const char *refname,
--			   const unsigned char *old_sha1,
-+			   const struct object_id *old_oid,
- 			   unsigned int flags,
- 			   struct strbuf *err)
- {
--	if (!old_sha1)
-+	if (!old_oid)
- 		die("BUG: verify called with old_sha1 set to NULL");
- 	return ref_transaction_update(transaction, refname,
--				      NULL, old_sha1,
-+				      NULL, old_oid,
- 				      flags, NULL, err);
- }
- 
-@@ -1000,8 +999,7 @@ int refs_update_ref(struct ref_store *refs, const char *msg,
- 	} else {
- 		t = ref_store_transaction_begin(refs, &err);
- 		if (!t ||
--		    ref_transaction_update(t, refname, new_oid ? new_oid->hash : NULL,
--					   old_oid ? old_oid->hash : NULL,
-+		    ref_transaction_update(t, refname, new_oid, old_oid,
- 					   flags, msg, &err) ||
- 		    ref_transaction_commit(t, &err)) {
- 			ret = 1;
+ /* The argument to filter_refs */
 diff --git a/refs.h b/refs.h
-index 369614d392..543dcc5956 100644
+index 543dcc5956..9a573a4092 100644
 --- a/refs.h
 +++ b/refs.h
-@@ -519,15 +519,15 @@ struct ref_transaction *ref_transaction_begin(struct strbuf *err);
-  */
- int ref_transaction_update(struct ref_transaction *transaction,
- 			   const char *refname,
--			   const unsigned char *new_sha1,
--			   const unsigned char *old_sha1,
-+			   const struct object_id *new_oid,
-+			   const struct object_id *old_oid,
- 			   unsigned int flags, const char *msg,
- 			   struct strbuf *err);
+@@ -69,9 +69,9 @@ const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
  
- /*
-- * Add a reference creation to transaction. new_sha1 is the value that
-+ * Add a reference creation to transaction. new_oid is the value that
-  * the reference should have after the update; it must not be
-- * null_sha1. It is verified that the reference does not exist
-+ * null_oid. It is verified that the reference does not exist
-  * already.
-  *
-  * See the above comment "Reference transaction updates" for more
-@@ -535,35 +535,35 @@ int ref_transaction_update(struct ref_transaction *transaction,
-  */
- int ref_transaction_create(struct ref_transaction *transaction,
- 			   const char *refname,
--			   const unsigned char *new_sha1,
-+			   const struct object_id *new_oid,
- 			   unsigned int flags, const char *msg,
- 			   struct strbuf *err);
+ char *refs_resolve_refdup(struct ref_store *refs,
+ 			  const char *refname, int resolve_flags,
+-			  unsigned char *sha1, int *flags);
++			  struct object_id *oid, int *flags);
+ char *resolve_refdup(const char *refname, int resolve_flags,
+-		     unsigned char *sha1, int *flags);
++		     struct object_id *oid, int *flags);
  
- /*
-- * Add a reference deletion to transaction. If old_sha1 is non-NULL,
-+ * Add a reference deletion to transaction. If old_oid is non-NULL,
-  * then it holds the value that the reference should have had before
-- * the update (which must not be null_sha1).
-+ * the update (which must not be null_oid).
-  *
-  * See the above comment "Reference transaction updates" for more
-  * information.
-  */
- int ref_transaction_delete(struct ref_transaction *transaction,
- 			   const char *refname,
--			   const unsigned char *old_sha1,
-+			   const struct object_id *old_oid,
- 			   unsigned int flags, const char *msg,
- 			   struct strbuf *err);
- 
- /*
-- * Verify, within a transaction, that refname has the value old_sha1,
-- * or, if old_sha1 is null_sha1, then verify that the reference
-- * doesn't exist. old_sha1 must be non-NULL.
-+ * Verify, within a transaction, that refname has the value old_oid,
-+ * or, if old_oid is null_oid, then verify that the reference
-+ * doesn't exist. old_oid must be non-NULL.
-  *
-  * See the above comment "Reference transaction updates" for more
-  * information.
-  */
- int ref_transaction_verify(struct ref_transaction *transaction,
- 			   const char *refname,
--			   const unsigned char *old_sha1,
-+			   const struct object_id *old_oid,
- 			   unsigned int flags,
- 			   struct strbuf *err);
- 
+ int refs_read_ref_full(struct ref_store *refs, const char *refname,
+ 		       int resolve_flags, unsigned char *sha1, int *flags);
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 0c641f0ad0..46dbcda6a6 100644
+index 46dbcda6a6..1ab91fd346 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -1029,7 +1029,7 @@ static void prune_ref(struct files_ref_store *refs, struct ref_to_prune *r)
+@@ -2556,7 +2556,7 @@ static int files_transaction_prepare(struct ref_store *ref_store,
+ 	 */
+ 	head_ref = refs_resolve_refdup(ref_store, "HEAD",
+ 				       RESOLVE_REF_NO_RECURSE,
+-				       head_oid.hash, &head_type);
++				       &head_oid, &head_type);
  
- 	transaction = ref_store_transaction_begin(&refs->base, &err);
- 	if (!transaction ||
--	    ref_transaction_delete(transaction, r->name, r->oid.hash,
-+	    ref_transaction_delete(transaction, r->name, &r->oid,
- 				   REF_ISPRUNING | REF_NODEREF, NULL, &err) ||
- 	    ref_transaction_commit(transaction, &err)) {
- 		ref_transaction_free(transaction);
-@@ -1114,7 +1114,7 @@ static int files_pack_refs(struct ref_store *ref_store, unsigned int flags)
- 		 * packed-refs transaction:
- 		 */
- 		if (ref_transaction_update(transaction, iter->refname,
--					   iter->oid->hash, NULL,
-+					   iter->oid, NULL,
- 					   REF_NODEREF, NULL, &err))
- 			die("failure preparing to create packed reference %s: %s",
- 			    iter->refname, err.buf);
-@@ -2153,7 +2153,7 @@ static int split_head_update(struct ref_update *update,
- 	new_update = ref_transaction_add_update(
- 			transaction, "HEAD",
- 			update->flags | REF_LOG_ONLY | REF_NODEREF,
--			update->new_oid.hash, update->old_oid.hash,
-+			&update->new_oid, &update->old_oid,
- 			update->msg);
+ 	if (head_ref && !(head_type & REF_ISSYMREF)) {
+ 		FREE_AND_NULL(head_ref);
+diff --git a/submodule.c b/submodule.c
+index f2f30bb488..c4af15c148 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1016,7 +1016,7 @@ int push_unpushed_submodules(struct oid_array *commits,
+ 		char *head;
+ 		struct object_id head_oid;
  
- 	/*
-@@ -2217,7 +2217,7 @@ static int split_symref_update(struct files_ref_store *refs,
+-		head = resolve_refdup("HEAD", 0, head_oid.hash, NULL);
++		head = resolve_refdup("HEAD", 0, &head_oid, NULL);
+ 		if (!head)
+ 			die(_("Failed to resolve HEAD as a valid ref."));
  
- 	new_update = ref_transaction_add_update(
- 			transaction, referent, new_flags,
--			update->new_oid.hash, update->old_oid.hash,
-+			&update->new_oid, &update->old_oid,
- 			update->msg);
+diff --git a/transport.c b/transport.c
+index 09bd06e6e5..093d334e96 100644
+--- a/transport.c
++++ b/transport.c
+@@ -475,7 +475,7 @@ void transport_print_push_status(const char *dest, struct ref *refs,
+ 	char *head;
+ 	int summary_width = transport_summary_width(refs);
  
- 	new_update->parent_update = update;
-@@ -2600,7 +2600,7 @@ static int files_transaction_prepare(struct ref_store *ref_store,
- 			ref_transaction_add_update(
- 					packed_transaction, update->refname,
- 					update->flags & ~REF_HAVE_OLD,
--					update->new_oid.hash, update->old_oid.hash,
-+					&update->new_oid, &update->old_oid,
- 					NULL);
- 		}
- 	}
-@@ -2853,7 +2853,7 @@ static int files_initial_transaction_commit(struct ref_store *ref_store,
- 		 */
- 		ref_transaction_add_update(packed_transaction, update->refname,
- 					   update->flags & ~REF_HAVE_OLD,
--					   update->new_oid.hash, update->old_oid.hash,
-+					   &update->new_oid, &update->old_oid,
- 					   NULL);
- 	}
+-	head = resolve_refdup("HEAD", RESOLVE_REF_READING, head_oid.hash, NULL);
++	head = resolve_refdup("HEAD", RESOLVE_REF_READING, &head_oid, NULL);
  
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index d7d344de73..6636a13a62 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -202,8 +202,8 @@ int ref_update_reject_duplicates(struct string_list *refnames,
- struct ref_update *ref_transaction_add_update(
- 		struct ref_transaction *transaction,
- 		const char *refname, unsigned int flags,
--		const unsigned char *new_sha1,
--		const unsigned char *old_sha1,
-+		const struct object_id *new_oid,
-+		const struct object_id *old_oid,
- 		const char *msg);
- 
- /*
-diff --git a/sequencer.c b/sequencer.c
-index b349474bd3..43a6f14eb3 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -392,7 +392,7 @@ static int fast_forward_to(const struct object_id *to, const struct object_id *f
- 	transaction = ref_transaction_begin(&err);
- 	if (!transaction ||
- 	    ref_transaction_update(transaction, "HEAD",
--				   to->hash, unborn ? null_sha1 : from->hash,
-+				   to, unborn ? &null_oid : from,
- 				   0, sb.buf, &err) ||
- 	    ref_transaction_commit(transaction, &err)) {
- 		ref_transaction_free(transaction);
-diff --git a/walker.c b/walker.c
-index 2d83254bc0..5d4d3733f7 100644
---- a/walker.c
-+++ b/walker.c
-@@ -304,7 +304,7 @@ int walker_fetch(struct walker *walker, int targets, char **target,
- 		strbuf_reset(&refname);
- 		strbuf_addf(&refname, "refs/%s", write_ref[i]);
- 		if (ref_transaction_update(transaction, refname.buf,
--					   oids[i].hash, NULL, 0,
-+					   oids + i, NULL, 0,
- 					   msg ? msg : "fetch (unknown)",
- 					   &err)) {
- 			error("%s", err.buf);
+ 	if (verbose) {
+ 		for (ref = refs; ref; ref = ref->next)
+diff --git a/wt-status.c b/wt-status.c
+index 6f730ee8f2..6d7d675a5b 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -129,7 +129,7 @@ void wt_status_prepare(struct wt_status *s)
+ 	s->show_untracked_files = SHOW_NORMAL_UNTRACKED_FILES;
+ 	s->use_color = -1;
+ 	s->relative_paths = 1;
+-	s->branch = resolve_refdup("HEAD", 0, oid.hash, NULL);
++	s->branch = resolve_refdup("HEAD", 0, &oid, NULL);
+ 	s->reference = "HEAD";
+ 	s->fp = stdout;
+ 	s->index_file = get_index_file();
 -- 
 2.14.2.822.g60be5d43e6
 
