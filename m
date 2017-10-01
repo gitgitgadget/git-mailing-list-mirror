@@ -7,89 +7,90 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7FB4C20A10
-	for <e@80x24.org>; Sun,  1 Oct 2017 14:45:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A137820A10
+	for <e@80x24.org>; Sun,  1 Oct 2017 14:45:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751043AbdJAOpR (ORCPT <rfc822;e@80x24.org>);
-        Sun, 1 Oct 2017 10:45:17 -0400
-Received: from mout.web.de ([212.227.15.14]:56188 "EHLO mout.web.de"
+        id S1751236AbdJAOpt (ORCPT <rfc822;e@80x24.org>);
+        Sun, 1 Oct 2017 10:45:49 -0400
+Received: from mout.web.de ([212.227.15.3]:59375 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750981AbdJAOpQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Oct 2017 10:45:16 -0400
-Received: from [192.168.178.36] ([91.20.57.42]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MgOQQ-1deE7r1zpG-00NkQc; Sun, 01
- Oct 2017 16:45:13 +0200
+        id S1751140AbdJAOps (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Oct 2017 10:45:48 -0400
+Received: from [192.168.178.36] ([91.20.57.42]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MS29q-1dsVO748l8-00TCR9; Sun, 01
+ Oct 2017 16:45:46 +0200
 To:     Git List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] tag: avoid NULL pointer arithmetic
-Message-ID: <99e56671-bdf9-a59f-ae7b-758f1b7a8f14@web.de>
-Date:   Sun, 1 Oct 2017 16:45:13 +0200
+Subject: [PATCH] graph: use strbuf_addchars() to add spaces
+Message-ID: <16d71d5b-6abf-4dcf-0a0b-c09fda7407f7@web.de>
+Date:   Sun, 1 Oct 2017 16:45:45 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.3.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:PxXw5pKm+8jgj+desqX7tsDVBgTrtSC+dP8/W/eRiiL+8lzJg5A
- r6lkm3pw9Dl0Pv4cJxYXtrhrgBK6gg6xc/6bxW7cnMnIIeM/gl1N3roz5ZXDCsiYOdUlEmj
- 2av0LXdFM0W17AKRl7vdyMHGotp/g+JzIMOMYAW/OLZcRWUR6EtFCBdyzKETUo0hQqZ4SkN
- 3k8tU3t+b0uiRzLxAAi1w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:YtuvqtyA7SY=:nAr+9ahHHjIn2RTpWv4TxR
- Nc4Trw3/cI3oZlL6xkPvfYalwZYCRJ/WLyJ/aJKmOJO+Qmvwb4HSFwbDdiexit30a8JtwzBz+
- QNnYm8yGyhArwqDNBwwE/YtHwpWddEBu43CNwUKdA4c3Xk2M2wFdRtXeu+05NwPLuAtXcFTdN
- Vd/eGS0azbSfYDBt/CAFfwAiKtkolNp2IrIw3ctzmv0nj0RLXnCRaJwQBjTvvhWvz2bdo7ouD
- RHs4VKWdgEAnsDXe0HABY0ETGa1SHL24UmO79OfvOxDAdchHjkkMnTd8LsJ77GZW8464RqsNZ
- /T7wsWeJje3BMrvF91+2ICg8M3hJYyQDLj9UkcJkj7AWPgBnhAvW6+YTqgm2iAQb/d7gFQeGK
- BAG2q5UCC8bDaRqIkp9Hmd/bFlz/vyp2rX3wJPY1IIY+cCdgrpwCiDjZw/trlvQMH0nf5vp1Q
- wxzDKeVuUZkLBKU78nhat0PAvEssfWrqSiV54j0xC6lm65W/tf+qIFGkaxb52bLL4rnCMtxFO
- Tu5M3XRpQqy+FS90TfIZ3Fdfawz2pPYzViwxQn+2Uyr8jm4cVTY6bIzj8UcsS9H4XPsCVR8BB
- 9ahA2XY85+3aZz1hSLpm6dkOR/eS6LJdbXoBliTovXt0dvsvdNz7rvy7lC+NAjzNxXGLkiayk
- uwofV8iCOpJ6NavieahB7EShU7TtBby46oSUh9Yy00858nK1pxf0rvN1uhBw0D3bAsu5IxJhM
- N35YU7onzQ4rP7dh46ozokWhA7D9i39k0Ag492hyG91I3J/ueo86hm8t8TZprWYnY3bLgM7dU
- lvdaQv3SEzKvGenD3iHQb/XhUO7tUOazM41Q5fRr2YXo/L4wns=
+X-Provags-ID: V03:K0:CVrmNGtGc7aVuSTsOaLIvugX6CYqrNwIWXQlRaknm/ihnZ9n2rZ
+ /+GhJsqP5D4CWBx/v3d9qo67EQeROdP/gBYz3Q2SWor3zZma5Kpkvm8yw8bfNVu02o33P0d
+ NaYGmJ458UTthGTg7DbDtT7/W9Xf2ssQxr0CZcE+Epw6RYzsJ8tqUDw+NJ2JVjfEL0n3lml
+ HzlCy7eiebdOH4GNqNFrQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:kqKmXSFoPpk=:DuRd6zyenDjgKgRB9yJlDV
+ fSfC73gkRlsBJv6HFNfHGoGskKbXEO2Xviywd974169RHSfqs0BKv49F01x5LKiOH8JpHlmzK
+ C+Vc4VFpb5lXD0nRPy2UFj8Xrpp1FrnlDVyf1Mtf9wGwj4mU7pGii4lToaH6K1n1p8e6rheEs
+ eIWMSp9/xYwqC0/VKDnJZw/glUwIoM3JbHtm5B96SKsnAF5+H4v2flCyf+fah30054204kqFk
+ BkHd8z0B2ZPmd3cZ1vXjyFHDnM/Mzu8Eb5cy58bcbwuNpA19iO+Ezqhmtg7uEtf8eTE0kpy4U
+ ByZWG/dtll70HuvPq0/y/riNIBkbsJqryR5x/MBZ/Z5BA5qBEvzRQCZ93u2GT8HoABaOrSOmC
+ bOd+c+cvdcjvsc/1UbJLGnPW1mj0hwXoLHbxFZYK4U1QzlQdBgw3gC2vPKPQgDgSurDh5DmsD
+ bAdQ5SxrsdYSk+Rcs71hrKz9sLxTesPb+5t1MqJkD+t3RR04+PWB8H7RUzuPTU17HbR0Gj0i2
+ +hG1pkNYtb6FFigSznBIr2Axqju7P1nTOEYvZbRw98TNCTxKx0Lq/1USEBoNtud2rPV8+uUpB
+ gImQvRU+0MOTQblVMFDkjpXJhm4gbi0Xf3MEs4H4pLR9wDhCBsDbeSEOUCUz/QZq80jmT5FJj
+ 8qUktp8AqKfGIoazvc5xUbekjQIjAaW5c4FwJiAf8JY9WrRFYr0gP0r1qwbkq5wy+vVXzvxRf
+ egN5nFQ7psuAfJ0N+bAnJs/MZQnZPNHXe+GYyUuNBogiNO0Uz8XJ+GgMUBBP7Ce8hxIWZDfjc
+ uX2xJEA//O+jX6518WDoW1sn+5Kc1t1GOwGzFFL93wcmsbTiRU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-lookup_blob() etc. can return NULL if the referenced object isn't of the
-expected type.  In theory it's wrong to reference the object member in
-that case.  In practice it's OK because it's located at offset 0 for all
-types, so the pointer arithmetic (NULL + 0) is optimized out by the
-compiler.  The issue is reported by Clang's AddressSanitizer, though.
-
-Avoid the ASan error by casting the results of the lookup functions to
-struct object pointers.  That works fine with NULL pointers as well.  We
-already rely on the object member being first in all object types in
-other places in the code.
+strbuf_addf() can be used to add a specific number of space characters
+by using the format "%*s" with an empty string and specifying the
+desired width.  Use strbuf_addchars() instead as it's shorter, makes the
+intent clearer and is a bit more efficient.
 
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- tag.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ graph.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/tag.c b/tag.c
-index 7e10acfb6e..fcbe012f7a 100644
---- a/tag.c
-+++ b/tag.c
-@@ -142,13 +142,13 @@ int parse_tag_buffer(struct tag *item, const void *data, unsigned long size)
- 	bufptr = nl + 1;
+diff --git a/graph.c b/graph.c
+index e7e20650da..e1f6d3bddb 100644
+--- a/graph.c
++++ b/graph.c
+@@ -696,12 +696,8 @@ static void graph_pad_horizontally(struct git_graph *graph, struct strbuf *sb,
+ 	 * This way, fields printed to the right of the graph will remain
+ 	 * aligned for the entire commit.
+ 	 */
+-	int extra;
+-	if (chars_written >= graph->width)
+-		return;
+-
+-	extra = graph->width - chars_written;
+-	strbuf_addf(sb, "%*s", (int) extra, "");
++	if (chars_written < graph->width)
++		strbuf_addchars(sb, ' ', graph->width - chars_written);
+ }
  
- 	if (!strcmp(type, blob_type)) {
--		item->tagged = &lookup_blob(&oid)->object;
-+		item->tagged = (struct object *)lookup_blob(&oid);
- 	} else if (!strcmp(type, tree_type)) {
--		item->tagged = &lookup_tree(&oid)->object;
-+		item->tagged = (struct object *)lookup_tree(&oid);
- 	} else if (!strcmp(type, commit_type)) {
--		item->tagged = &lookup_commit(&oid)->object;
-+		item->tagged = (struct object *)lookup_commit(&oid);
- 	} else if (!strcmp(type, tag_type)) {
--		item->tagged = &lookup_tag(&oid)->object;
-+		item->tagged = (struct object *)lookup_tag(&oid);
- 	} else {
- 		error("Unknown type %s", type);
- 		item->tagged = NULL;
+ static void graph_output_padding_line(struct git_graph *graph,
+@@ -787,7 +783,7 @@ static void graph_output_pre_commit_line(struct git_graph *graph,
+ 		if (col->commit == graph->commit) {
+ 			seen_this = 1;
+ 			strbuf_write_column(sb, col, '|');
+-			strbuf_addf(sb, "%*s", graph->expansion_row, "");
++			strbuf_addchars(sb, ' ', graph->expansion_row);
+ 			chars_written += 1 + graph->expansion_row;
+ 		} else if (seen_this && (graph->expansion_row == 0)) {
+ 			/*
 -- 
 2.14.2
+
