@@ -6,144 +6,149 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9891E202A5
-	for <e@80x24.org>; Sun,  1 Oct 2017 03:27:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 07E55202A5
+	for <e@80x24.org>; Sun,  1 Oct 2017 03:49:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750981AbdJAD1I (ORCPT <rfc822;e@80x24.org>);
-        Sat, 30 Sep 2017 23:27:08 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59939 "EHLO
+        id S1750911AbdJADtl (ORCPT <rfc822;e@80x24.org>);
+        Sat, 30 Sep 2017 23:49:41 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51469 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750905AbdJAD1G (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Sep 2017 23:27:06 -0400
+        with ESMTP id S1750899AbdJADtk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Sep 2017 23:49:40 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0233BA9004;
-        Sat, 30 Sep 2017 23:27:06 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D71C6A9423;
+        Sat, 30 Sep 2017 23:49:39 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=d4AOB/eg4T4mWfsUnlyzwxGrzxg=; b=yi6aQ4
-        KQzu3I4pg7t9qOnJxXrftkwlwt3VDNdXBxGw3K9wX16b3a5t0eeXzF/xF7PziMf7
-        sdG0obL3wKk+0muwJwUrlXBuGOS/cn2MJeQeS16faPga/ZNjg7fXwfHN/STtjN6g
-        kqrkYBPYQY+C3NNS1PdPldhsTI87CGxNX2uYY=
+        :content-type; s=sasl; bh=Ta06IWaq5neZpDFxDNi+g43S1hE=; b=R6Ix6U
+        15gHqYeKo8MFshsnRfc7C9Kxqj7b9pSi8PYLjeY7GPEixlzzUH+Qp/eq8u8mau05
+        Dj72FrJaRT0hpQjOudnORSR+YUNhRKLZqaAkpnzHDQXVU7SzLRMNPq8iILk0mYfL
+        sZUwWEbFUdCtlabEkJ5kz4jReQ5AspMM4e5/w=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=VObQa1ccKFM4he5gepCBXZx8j+Zq5jur
-        8JSaNF6XjNhY7atnNCuR5bL4EDoF96NNc0sCCYRJsEviyVxBdWhpFNs2YEn2l+f4
-        rQrp5OY2A9075bTpw59GNdl/KHMHDNYX1NU8DgG9B6inI1icTDCOacWMZQyEdBiE
-        RJyYWkpr/Gc=
+        :content-type; q=dns; s=sasl; b=jKMS4N9uyGd6uxxc7Qm2ct2IUGe8DN7a
+        vlihYCDShaplEe2AuUn1KfJ/aeWHI/adCzKp6uePHGqZBqORatvu5EjO/mJ75TgZ
+        DUNWjZzi7ny5PES4kCxiHhHrJi6tfkpTg4GVKCNAHzrnoWVtk00Mg8gnkrAIVHfo
+        czFLcxF8gOo=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id EA552A9003;
-        Sat, 30 Sep 2017 23:27:05 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CC4E5A9422;
+        Sat, 30 Sep 2017 23:49:39 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2E310A9002;
-        Sat, 30 Sep 2017 23:27:05 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3FF14A9421;
+        Sat, 30 Sep 2017 23:49:39 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Philip Oakley <philipoakley@iee.org>,
-        Pavel Kretov <firegurafiku@gmail.com>, git@vger.kernel.org
-Subject: Re: [idea] File history tracking hints
-References: <CAOZF3=Ouvk8ccME+fXr_T=GL1j4Gx3Hgj3ao_-GQng-noeOubg@mail.gmail.com>
-        <E8C827ED458648F78F263F2F2712493B@PhilipOakley>
-        <alpine.DEB.2.21.1.1709131322470.4132@virtualbox>
-        <04DDB36236444FFD8C3668AA7B62B154@PhilipOakley>
-        <alpine.DEB.2.21.1.1709300110350.40514@virtualbox>
-        <5fb263a8-d83b-64a7-812f-fd8e3748feb6@jeffhostetler.com>
-Date:   Sun, 01 Oct 2017 12:27:04 +0900
-In-Reply-To: <5fb263a8-d83b-64a7-812f-fd8e3748feb6@jeffhostetler.com> (Jeff
-        Hostetler's message of "Sat, 30 Sep 2017 04:02:35 -0400")
-Message-ID: <xmqqtvzjv987.fsf@gitster.mtv.corp.google.com>
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
+Cc:     Kevin Daudt <me@ikke.info>, Git Mailing list <git@vger.kernel.org>
+Subject: Re: "man git-checkout", man page is inconsistent between SYNOPSIS and details
+References: <alpine.LFD.2.21.1709300523190.27819@localhost.localdomain>
+        <20170930143258.GA20886@alpha.vpn.ikke.info>
+        <alpine.LFD.2.21.1709301800060.7869@localhost.localdomain>
+Date:   Sun, 01 Oct 2017 12:49:38 +0900
+In-Reply-To: <alpine.LFD.2.21.1709301800060.7869@localhost.localdomain>
+        (Robert P. J. Day's message of "Sat, 30 Sep 2017 18:04:05 -0400
+        (EDT)")
+Message-ID: <xmqqo9prv86l.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 65C25B44-A658-11E7-A0C7-8EF31968708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 8CD00D50-A65B-11E7-AD81-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff Hostetler <git@jeffhostetler.com> writes:
+"Robert P. J. Day" <rpjday@crashcourse.ca> writes:
 
-> On 9/29/2017 7:12 PM, Johannes Schindelin wrote:
->
->> Therefore, it would be good to have a way to tell Git about renames
->> explicitly so that it does not even need to use its heuristics.
->
-> Agreed.
->
-> It would be nice if every file (and tree) had a permanent GUID
-> associated with it.  Then the filename/pathname becomes a property
-> of the GUIDs.  Then you can exactly know about moves/renames with
-> minimal effort (and no guessing).
+>   it's simply a matter of the forms not matching between the SYNOPSIS
+> and the DESCRIPTION sections. am i making sense?
 
-I actually like the idea to have a mechanism where the user can give
-hint to influence, or instruction to dictate, how Git determines
-"this old path moved to this new path" when comparing two trees.  A
-human would not consider a new file (e.g. header file) that begins
-with a few dozen commonly-seen boilerplate lines (e.g. copyright
-statement) followed by several lines unique to the new contents to
-be a rename of a disappearing old file that begins with the same
-boilerplate followed by several lines that are different from what
-is in the new file, but Git's algorithm would give equal weight to
-all of these lines when deciding how similar the new file is to the
-old file, and can misidentify a new file to be a rename of an old
-file that is unrelated.  Even when Git can and does determine the
-pairing correctly, it would be a win if we do not have to recompute
-the same pairing every time.  So both as hint and as cache, such a
-mechanism would make sense [*1*].
+I think the whole thing is wrong and the root cause is because the
+(relatively newer) description of the "--patch" mode lazily tried to
+piggy-back the description of existing "check out from the index or
+tree-ish" mode, ending up in a confusing description.
 
-But "file ID" does not have any place to contribute to such a
-mechanism.  Each of two developers working on the same project in a
-disributed environment can grab the same gist and create a new file
-in his or her tree, perhaps at the same path or at a different
-path.  At the time of such an addition, there is no way for each of
-them to give these two files the same "file ID" (that is how the
-world works in the distributed environment after all)---which "file
-ID" should survive when their two histories finally meet and results
-in a single file after a merge?  A file with "file ID" may not be
-renamed but may be copied and evolve separately and differently.
-Which one should inherit its original "file ID" and how does having
-"file ID" help us identify the other one is equally related to the
-original file?  These two are merely examples that "file ID"s would
-cause while solving "only" what can be expressed in "git diff -M"
-output (the latter illustrates that it does not even help showing
-"git diff -C").
+"git checkout [<tree-ish>] -- <pathspec>..." is a way to overwrite
+the working tree files with what is in the object store.  When you
+give <tree-ish>, the paths that match the <pathspec> are grabbed
+from the tree-ish, added to the index, and overwrites the working
+tree files.  In this mode, you need to have at least one pathspec
+element on the command line, so <pathspec> is mandatory.  With no
+pathspec, if <tree-ish> happens to be a commit-ish, then the
+operation is "check out the commit, so that we can prepare to make
+a new commit as its child".
 
-And when we stop limiting ourselves to the whole-file renames and
-copies (which can be expressed in "git diff" output) but also want
-to help finer-grained operation like "git blame", we'd want to have
-something that helps in situations like a single file's contents
-split into multiple files and multiple files' contents concatenated
-into a single new file, both of which happens during code
-refactoring.  "file ID" would not contribute an iota in helping
-these situations.  
+"git checkout -p/--patch [<tree-ish>]" is quite different.  It can
+be used without any <pathspec> to pick and choose from all changes
+treewide, but you can use <pathspec> to limit the changes you need
+to choose from.
 
-I've said this number of times, and I'll say this again, but one of
-the most important message in our list archive is gmane:217 aka
+Something like the following may be a good starting point.  As I
+didn't spend many brain-cycles to come up with a description for the
+"--patch" mode, that paragraph needs a total rewrite on top, but I
+think the structure to separate the normal "per-path" checkout mode
+and "patch" mode and describe it separately should make it a lot
+clearer to see what is being described.
 
-https://public-inbox.org/git/Pine.LNX.4.58.0504150753440.7211@ppc970.osdl.org/
+Short of such a fundamental correction,
 
-I'd encourge people to read and re-read that message until they can
-recite it by heart.
+	git checkout [-p|--patch] [<tree-ish>] -- [<pathspec>...]
 
-Linus mentions "CVS annotate"; the message was written long before
-we had "git blame", and it served as a guide when desiging how we
-dig contents movement in various parts of the system.
+would allow you to give none of -p/--patch/<pathspec>, which is
+totally a different operation from what is being described in the
+text.
 
+ Documentation/git-checkout.txt | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-[Footnote]
-
-*1* There are many possible implementations; the most obvious would
-    be to record a pair of blob object names and instruct Git when
-    it seems one side of a pair disappearing and the other side of
-    the pair appearing, take the pair as a rename.  And that would
-    be sufficient for "git log -M".  
-
-    Such a cache/hint alone however would not help much in "git
-    merge" without further work, as we merge using only the tree
-    state of the three points in the history (i.e. the common
-    ancestor and two tips).  merge-recursive needs to be taught to
-    find the renames at each commit it finds throughout the history
-    from the ancestor and each tip and carry its finding through if
-    it wants to take advantage of such hint/cache.
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+index d6399c0af8..3d88f703e9 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -13,7 +13,8 @@ SYNOPSIS
+ 'git checkout' [-q] [-f] [-m] [--detach] <commit>
+ 'git checkout' [-q] [-f] [-m] [[-b|-B|--orphan] <new_branch>] [<start_point>]
+ 'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <paths>...
+-'git checkout' [-p|--patch] [<tree-ish>] [--] [<paths>...]
++'git checkout' [<tree-ish>] [--] <pathspec>...
++'git checkout' (-p|--patch) [<tree-ish>] [--] [<paths>...]
+ 
+ DESCRIPTION
+ -----------
+@@ -78,10 +79,9 @@ be used to detach HEAD at the tip of the branch (`git checkout
+ +
+ Omitting <branch> detaches HEAD at the tip of the current branch.
+ 
+-'git checkout' [-p|--patch] [<tree-ish>] [--] <pathspec>...::
++'git checkout' [<tree-ish>] [--] <pathspec>...::
+ 
+-	When <paths> or `--patch` are given, 'git checkout' does *not*
+-	switch branches.  It updates the named paths in the working tree
++	Updates the named paths in the working tree
+ 	from the index file or from a named <tree-ish> (most often a
+ 	commit).  In this case, the `-b` and `--track` options are
+ 	meaningless and giving either of them results in an error.  The
+@@ -89,7 +89,7 @@ Omitting <branch> detaches HEAD at the tip of the current branch.
+ 	(i.e.  commit, tag or tree) to update the index for the given
+ 	paths before updating the working tree.
+ +
+-'git checkout' with <paths> or `--patch` is used to restore modified or
++'git checkout' with <paths> is used to restore modified or
+ deleted paths to their original contents from the index or replace paths
+ with the contents from a named <tree-ish> (most often a commit-ish).
+ +
+@@ -101,6 +101,13 @@ specific side of the merge can be checked out of the index by
+ using `--ours` or `--theirs`.  With `-m`, changes made to the working tree
+ file can be discarded to re-create the original conflicted merge result.
+ 
++'git checkout' (-p|--patch) [<tree-ish>] [--] [<pathspec>...]::
++	This is similar to the "check out paths to the working tree"
++	mode described above, but lets you use the interactive
++	interface show the "diff" output and choose which hunks to
++	use in the result.
++
++
+ OPTIONS
+ -------
+ -q::
