@@ -2,196 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E883220A2C
-	for <e@80x24.org>; Sun,  1 Oct 2017 15:04:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 736A420A10
+	for <e@80x24.org>; Sun,  1 Oct 2017 15:12:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751027AbdJAPEC (ORCPT <rfc822;e@80x24.org>);
-        Sun, 1 Oct 2017 11:04:02 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:34511 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751013AbdJAPEC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Oct 2017 11:04:02 -0400
-Received: by mail-pg0-f66.google.com with SMTP id u27so3278607pgn.1
-        for <git@vger.kernel.org>; Sun, 01 Oct 2017 08:04:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=hnWx8ndwDRHwpvK9wNtiih6n9aj1fFr4NkfxRZuCPP8=;
-        b=rhh+lGOF9vwGMLSlS8zUL+6mLEyGofnqwu74hqZ3tF6u84WK9XiROeBexGcxltCtzr
-         8QtxlnpYieS09yuWUV4PVBkZA+EQZ0hazDaqEcX89AKGsVKwZJw1nIxT1/KOBqBO3Ij9
-         AFxdDskXJj9NMSC4yjvsekrbaWmIsa6bsbFQViOmCHI7VsfIaot7xpGSwBjGPy5mXDbH
-         BKcH77mC60MGTgy6KDk3znFqFrfvjr4X8CdFoM6gT86EshJJhPTtaXTcKX+zEbpNWYFx
-         Ld0trmx6COvIuhzhi6L+6frqXEv++NMmpptswtXbbnptpQ7Wdpfy3irnCrWp3TfbuiOa
-         PhdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=hnWx8ndwDRHwpvK9wNtiih6n9aj1fFr4NkfxRZuCPP8=;
-        b=etcsbsm358X2lnGXBp/8LwrjEs9Li9zCvOTNV1XGkv+cDAd8+IIs1ps8y3lVft0cvt
-         5S6dP40mcdbSW8vR8aW0UHDOAClbP6B446yKmlBTTlhH1Yht1LHfpUi/UBvNYAXqvNFo
-         q1k6MiptChRjlhixLfeFyLQVArYPzyo7d73G69YOMTh5hdQj/JBjkOCZ/yLYjcJA79fz
-         NblSfT7PNm1GGh6YPFp3SJ7bQM+uD203BhaP1zabJbc1ftM+V17/KVNKbOAqRhbE7V2h
-         f/fneBCbXCJwXduy0GGAVDJHNsEhdCOaJuiqFgzIxkacnnr6UAYNW7D2RrstjDQdLsCx
-         ElZQ==
-X-Gm-Message-State: AHPjjUjHtd5J1ctUCUTXS8q0wPEZv2g0CfVjLT2bq8s6AGm7mYbTtBhS
-        99olatmecNkWqzuGGzOQO19H5EaCU6Ey9J8CMFA=
-X-Google-Smtp-Source: AOwi7QAqQ610XbxFOebaeU2i8I9kU3DmSsBe61mhujUPgpBgUP3+ZEc07ABEIY28oTxB4oJIa/bzjZMN2NEtvKcZvl0=
-X-Received: by 10.84.185.106 with SMTP id e39mr11767532plg.333.1506870241470;
- Sun, 01 Oct 2017 08:04:01 -0700 (PDT)
+        id S1751128AbdJAPMN (ORCPT <rfc822;e@80x24.org>);
+        Sun, 1 Oct 2017 11:12:13 -0400
+Received: from mout.web.de ([212.227.15.3]:50292 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751093AbdJAPMM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Oct 2017 11:12:12 -0400
+Received: from [192.168.178.36] ([91.20.57.42]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MQL8O-1dtHaH0jue-00TlWv; Sun, 01
+ Oct 2017 17:12:09 +0200
+X-Mozilla-News-Host: news://news.public-inbox.org:119
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH 1/2] coccinelle: remove parentheses that become unnecessary
+Message-ID: <c4abb7ac-dafd-57f2-8b46-45d610d656c4@web.de>
+Date:   Sun, 1 Oct 2017 17:12:08 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-Received: by 10.100.156.137 with HTTP; Sun, 1 Oct 2017 08:04:00 -0700 (PDT)
-In-Reply-To: <20170925160835.aoomjaqrn2o2aosi@sigill.intra.peff.net>
-References: <20170920200229.bc4yniz6otng2zyz@sigill.intra.peff.net>
- <cover.1506120291.git.martin.agren@gmail.com> <20170923043701.4s3xuytp5hdjwmsy@sigill.intra.peff.net>
- <CAN0heSrPBDi4q9fqr=qoTbjRHpFS_VEL0O8=MFFJ4DLCuJwahA@mail.gmail.com>
- <20170923161316.yntnccqrhv5d3jza@sigill.intra.peff.net> <20170923163817.7ltmkav2ytk7n43k@sigill.intra.peff.net>
- <CAN0heSqQ3Etj1mkGhuft8JzKA8SNhpF0jcnVEdFeKX5NHpyqTw@mail.gmail.com> <20170925160835.aoomjaqrn2o2aosi@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sun, 1 Oct 2017 17:04:00 +0200
-Message-ID: <CAN0heSrZVJpc-usGZZeyF7juKDZOvnS8m5p8pT4fuF1CYoQ9UA@mail.gmail.com>
-Subject: Re: [PATCH v2 0/6] reroll ma/plugleaks; more `object_array`-fixes
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:iFJMQnbAH3yaZ3Bx1ddEahE1PXCsjkKT66pZysIM3V4u95z0wKe
+ aQrnJEjoUCpkRVM3WYYR4kgb7yFMQKbTl0SI8om7LRVFSZbTg/r8ZyFe6w3BYkThrIvarEq
+ ru4PYGU+bx+/Sm+2/A9r/S9tDj6GIGEbA+sRVNDA+2fWynvvXol5s/IonGwNFyLpNt9/7Qk
+ p+FtLgSYk0gRwfIJiPIJA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:g3R3noVYJcI=:gpcR4d1J73BUJmPQW5hIpJ
+ EcdPQrtUv3mg1LrpO4aihF7kBbkmgwWi0tCczVMhl+XETWoLOqv2AA+WZHWn2KSyrCEqtvpFk
+ zDogteQLONkQTP9NyCL2txKAOugBLzi4FHUD06+18DcZZBm/YbE+rPne1QDj15Kqf+Ac603eZ
+ DJLf0SPGhi+J4KORVO/ExOFGP+wyqCziFh0jgZWMwIP8xgA1Xz8vM1K2A5WyUn1tGL9g5KwhA
+ DVdlryDyFvIQzkUbhE2S719KYGkBrwAue6/bL7EsQ2sah/EX0mYhtAJDoA2FNBGGGjuqglSwa
+ RA5zC4rab/AMV/0IzmBTdhoR4XK+XehZ1xT2AGa/wM7EGh8nwBxLn5g+lscbRPNXDJQEhxhBR
+ eX4eypVnh3c+5gsozHXgHe4h1uxkJ5fTaEfAxFfWaKSFHTBNzD5fqIELNLiFHjI5rAjvGGstz
+ UEpzPwjFyDrTPdlDs5vgwAY3kDLuueOaLOmpaaMsYhTMwj2DvHzEAb+aXueFaCiK7Ml10k/V4
+ kNF1rKhsPXsC3QYXbydW9TFJlllNMZ1wbsesVHIePgs1N9I8OoIOQjWuXJ4pKLDxGeh1liT70
+ /ML8IuPkdZhRoUsj57jWJEGEh9ZxEjJ3V3KOqVljOlIOtjzH0QDCf1F2lTTJBmWikUzL2QEOB
+ ku3RI5ZSjKcptVLqjcLWnN08Mvj+3dZzmdn4VgiYS+WXrUOetNSKhh29ke494/1USVnEaxNol
+ ugAdc6IShq6wVzj6liAzYmjBJAz/9Sd60ujxVV6gUZtW/w6ncBRPCR0ykciQBX1yWX3EUbggx
+ IrZqLFw6Oryee1eDU+ZSxJxDNvQZQ/SDp4/bjPtADTWG9ms/1U=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 25 September 2017 at 18:08, Jeff King <peff@peff.net> wrote:
-> On Sun, Sep 24, 2017 at 09:59:28PM +0200, Martin =C3=85gren wrote:
->
->> > I'm not sure of the best way to count things.
->>
->
-> But at least on the topic of "how many unique leaks are there", I wrote
-> the script below to try to give some basic answers. It just finds the
-> first non-boring entry in each stack trace and reports that. Where
-> "boring" is really "this function is not expected to free, but hands off
-> memory ownership to somebody else".
+Transformations that hide multiplications can end up with an pair of
+parentheses that is no longer needed.  E.g. with a rule like this:
 
-Thanks. I combined your script with this:
+  @@
+  expression E;
+  @@
+  - E * 2
+  + double(E)
 
--- >8 --
-#!/usr/bin/perl -w
+... we might get a patch like this:
 
-# Extract the stacktraces and identify them
-# by their SHA hashes (these identifiers are
-# not guaranteed to be stable across
-# re-compilations of the Git binaries).
+  -	x = (a + b) * 2;
+  +	x = double((a + b));
 
-use Digest::SHA qw(sha1 sha1_hex);
+Add a pair of parentheses to the preimage side of such rules.
+Coccinelle will generate patches that remove them if they are present,
+and it will still match expressions that lack them.
 
-my $ctx =3D Digest::SHA->new("SHA-1");
-my $stage =3D 0;
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ contrib/coccinelle/array.cocci | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-while (<>) {
-  my $collect =3D 0;
-  if ($stage =3D=3D 0 && /irect leak of \d+ byte.*allocated from:$/) {
-    $stage++;
-    $collect =3D 1;
-  } elsif($stage =3D=3D 1 && /^\s*\#\d+\s+/) {
-    $collect =3D 1;
-  } elsif ($stage =3D=3D 1 && /^\s*$/) {
-    $digest =3D $ctx->hexdigest;
-    printf "Stacktrace-hash: %s\n", $digest;
-    $ctx =3D Digest::SHA->new("SHA-1");
-    $stage =3D 0;
-  } elsif ($stage =3D=3D 1) {
-    print "warning: unidentified string '$_'\n";
-  }
-  if ($collect) {
-    $ctx->add_bits($_);
-    print;
-  }
-}
--- >8 --
-
-Then I report various ad-hoc metrics:
-
--- >8 --
-#!/bin/bash
-
-for d in "$@"
-do
-  echo $d
-
-  echo -n "  direct leaks: "
-  grep "Direct leak" "$d"/* | wc -l
-
-  echo -n "  indirect leaks: "
-  grep "Indirect leak" "$d"/* | wc -l
-
-  echo -n "  allocating places: "
-  perl leaks.pl "$d"/* | sort -u | wc -l
-
-  echo -n "  most common allocating place: "
-  perl leaks.pl "$d"/* | sort \
-       | uniq -c | sort -nr | head -1 | awk '{print $1;}'
-
-  echo -n "  size of leak-reports: "
-  cat "$d"/* | wc -l
-
-  echo -n "  unique leaking stacktraces: "
-  perl extract-traces.pl "$d"/* | grep "Stacktrace-hash" | sort -u | wc -l
-
-  echo -n "  most common stacktrace: "
-  perl extract-traces.pl "$d"/* | grep "Stacktrace-hash" | sort \
-       | uniq -c | sort -nr | head -1 | awk '{print $1;}'
-done
--- >8 --
-
-If PIDs of leaking processes collide, reports are lost. Something like
-this as root helps: `echo 4194303 > /proc/sys/kernel/pid_max`
-
-Still, the numbers vary for back-to-back runs. Here are two runs on
-master and two runs on master plus the lockfile-patches I just sent.
-(I don't run all tests.)
-
-lsan_ea220ee4
-  direct leaks: 127165
-  indirect leaks: 83897
-  allocating places: 504
-  most common allocating place: 10212
-  size of leak-reports: 3662204
-  unique leaking stacktraces: 83265
-  most common stacktrace: 55
-lsan_ea220ee4-rerun
-  direct leaks: 127172
-  indirect leaks: 83903
-  allocating places: 504
-  most common allocating place: 10212
-  size of leak-reports: 3662334
-  unique leaking stacktraces: 83644
-  most common stacktrace: 57
-lsan_ea220ee4+lockfile_fixes
-  direct leaks: 118678
-  indirect leaks: 83908
-  allocating places: 493
-  most common allocating place: 10212
-  size of leak-reports: 3545563
-  unique leaking stacktraces: 99834
-  most common stacktrace: 32
-lsan_ea220ee4+lockfile_fixes-rerun
-  direct leaks: 118678
-  indirect leaks: 83902
-  allocating places: 491
-  most common allocating place: 10212
-  size of leak-reports: 3545463
-  unique leaking stacktraces: 82171
-  most common stacktrace: 40
-
-> So I don't know how useful any of that will be, but it at least should
-> give _some_ metric that should be diminishing as we fix leaks.
-
-Indeed.
-
-Martin
+diff --git a/contrib/coccinelle/array.cocci b/contrib/coccinelle/array.cocci
+index c61d1ca8dc..01586821dc 100644
+--- a/contrib/coccinelle/array.cocci
++++ b/contrib/coccinelle/array.cocci
+@@ -4,7 +4,7 @@ T *dst;
+ T *src;
+ expression n;
+ @@
+-- memcpy(dst, src, n * sizeof(*dst));
++- memcpy(dst, src, (n) * sizeof(*dst));
+ + COPY_ARRAY(dst, src, n);
+ 
+ @@
+@@ -13,7 +13,7 @@ T *dst;
+ T *src;
+ expression n;
+ @@
+-- memcpy(dst, src, n * sizeof(*src));
++- memcpy(dst, src, (n) * sizeof(*src));
+ + COPY_ARRAY(dst, src, n);
+ 
+ @@
+@@ -22,7 +22,7 @@ T *dst;
+ T *src;
+ expression n;
+ @@
+-- memcpy(dst, src, n * sizeof(T));
++- memcpy(dst, src, (n) * sizeof(T));
+ + COPY_ARRAY(dst, src, n);
+ 
+ @@
+@@ -47,7 +47,7 @@ type T;
+ T *ptr;
+ expression n;
+ @@
+-- ptr = xmalloc(n * sizeof(*ptr));
++- ptr = xmalloc((n) * sizeof(*ptr));
+ + ALLOC_ARRAY(ptr, n);
+ 
+ @@
+@@ -55,5 +55,5 @@ type T;
+ T *ptr;
+ expression n;
+ @@
+-- ptr = xmalloc(n * sizeof(T));
++- ptr = xmalloc((n) * sizeof(T));
+ + ALLOC_ARRAY(ptr, n);
+-- 
+2.14.2
