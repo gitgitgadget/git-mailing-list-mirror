@@ -2,205 +2,206 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C607D20281
-	for <e@80x24.org>; Mon,  2 Oct 2017 14:34:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 865572036B
+	for <e@80x24.org>; Mon,  2 Oct 2017 14:52:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751296AbdJBOen (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Oct 2017 10:34:43 -0400
-Received: from mail-qt0-f171.google.com ([209.85.216.171]:52175 "EHLO
-        mail-qt0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751084AbdJBOem (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Oct 2017 10:34:42 -0400
-Received: by mail-qt0-f171.google.com with SMTP id q4so7478255qtq.8
-        for <git@vger.kernel.org>; Mon, 02 Oct 2017 07:34:42 -0700 (PDT)
+        id S1751296AbdJBOwo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Oct 2017 10:52:44 -0400
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:36924 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751067AbdJBOwm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Oct 2017 10:52:42 -0400
+Received: by mail-qk0-f194.google.com with SMTP id a12so1326713qka.4
+        for <git@vger.kernel.org>; Mon, 02 Oct 2017 07:52:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=FRw6IM6xc3cVNDNYFn9YbEPErfDLvFT2SfFpAgQp8H8=;
-        b=mxB0Wn1xrmCv3MHiZP2RW+j7a+l+rR087hszdiT9wxTB0gBzckFCO0uqmbnHBfIVkT
-         CFI9TRkhwj61kfA5P42Q4Cgbh6X+9nTHrAStPpy5bGcuwySOiLo9POIFUyJK2HjUZoLk
-         72Uy3xwVIR62CQrwpy/X8+sNlbBHQDBaprjCYpkpFjiMrrcxHFdhjhOfWuLxvEEw2gEZ
-         yE8h5pJlPRBeP+1UP3gDvq3/8owrpadrUl4fLzTLJVNG0mjDnzRIdVcp5Mf8avSc1M5z
-         OmRJ+kPT62gYa7FpIMc5sdZ2Nolxic7qxJwbXhb429o6pvkqTjWK4yziFThthSxgGhoZ
-         gZJQ==
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=vNaqhz0THYMQIBdiCrzDIVemaFpXYj4l+jd+yTwgxfc=;
+        b=FOKF4ckRAkECs8xmh1od4tSPzrVR4uBEVMpcPRtj0UjAKNBJcmuRDstQyfKXF/wlvu
+         355XgBg/Fz+us1uJwW42Oc5cdHa3PU9TSSIMEmrcDNzyv1fFzKD8z8plpOl7vmf0oz+O
+         3QZTe67IPlVUl+u7bLSZRzVUYnCXgQBlDdmEe9ensFtxFs+qoMBjC0yHQYUxACDjvksQ
+         DZCSgaasrJ+OFRpGoO4X4AojaLWuVD6q9Q6rHSWeshFETd3VLXS/2YK0DCIyLDovRcmc
+         zbpSFmN4oxbNOGAdPL7GrkxBQENlILyZ1QRvZ9k6bKyu5SLouzlYoNYxJ+Jg2D6g6GMr
+         6oOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=FRw6IM6xc3cVNDNYFn9YbEPErfDLvFT2SfFpAgQp8H8=;
-        b=Ujlee/aPhcIR6QC43uVjD9MLutGm35Tcfdz4oIdp/Nq12+mh7It7rGwYiNzVMRLoam
-         IvJnIhlpBY8CnqijXT3AhdEF2QySle0T3Zgwf3DJWMiOG/8LcgxTKwXsYbyr3u8YMKIi
-         uCTuJ6ZH1qoEHxCM4jtmS8J8Df+47mBB1rqsplcGEJGl1cYcdFnmtVcGG0NAgZHdPSJl
-         3jFiL9dlohk0kJEdTPRnZqWVxbuo5BhCyYPXl9UO+7wSGw32MRIHgKyU4i6UMRvtvuTZ
-         Hadzm00oViC+0//ef0oQYItXBxCXB9sB8WR4txDCXDwQvugtMvT8cJfZUIQF3DZbUMHM
-         G52A==
-X-Gm-Message-State: AMCzsaXOqG3VRgdFMnpq+trOgB/IQ6Tm8mkdOIigfh6ON74wZg5K3c47
-        ygyNJeNLScf1A4V9g3bqzT8=
-X-Google-Smtp-Source: AOwi7QDXislmr/7+sIpR7JrA5yHPTlEPo9mB1rFO9J6PXG0MwijYJff1FsTE+1Wrjt/izqevo0Yrew==
-X-Received: by 10.200.35.67 with SMTP id b3mr1591178qtb.109.1506954881717;
-        Mon, 02 Oct 2017 07:34:41 -0700 (PDT)
-Received: from [192.168.1.13] ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id k37sm1309043qte.64.2017.10.02.07.34.39
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=vNaqhz0THYMQIBdiCrzDIVemaFpXYj4l+jd+yTwgxfc=;
+        b=aabsIRMIz03Hm5PimaWJ7v9gXDG4SKAIaavpxWLh7WWMDueNZ5Wo2veOtaq+1OUgMO
+         tDs+QpvlzZmxBxwgeaS5WQP+NS5H/mGegbRvyKRSNYKEAxlkY0ZK/ozQn3A/lBsmuwWg
+         xBqowKnmihwBoB93oRqAv4tf9//ybEayyUlUhQeCoHeaoMzLhkNehrbT/auO9EzUeKYg
+         uaiXRoJhy15gpCwsScRGOkaXbjv8sj0LXeeGlYrd1JXuaGMgyXxwmU7VFKKh/LrrmQKT
+         r0oYA2grtXdFWpSDmAHVGCxXECIReg3r3J+ynoGxoamYJmtbJ2kQjFqZ/bYiqWvK39Og
+         yhkw==
+X-Gm-Message-State: AMCzsaV8RZw3jkB6VJX1Cp2MrKS78soCBV5W4Ckj0KgxNIdeicn+Ai8T
+        aQ5+OpISCUr8XIk5KWM8CjRxx5G9
+X-Google-Smtp-Source: AOwi7QCTAKtiyLFArwQfuMXHigR2FKE92bnJm18zJW4hGCU8S4SNiS7nuAhMhU5KjaJv3d7l9uX26g==
+X-Received: by 10.55.195.25 with SMTP id a25mr11232976qkj.325.1506955960706;
+        Mon, 02 Oct 2017 07:52:40 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010::7cc])
+        by smtp.gmail.com with ESMTPSA id m66sm6810369qkf.23.2017.10.02.07.52.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 02 Oct 2017 07:34:40 -0700 (PDT)
-Subject: Re: [PATCH v6 09/40] Add initial external odb support
-To:     Jonathan Tan <jonathantanmy@google.com>,
-        Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Ben Peart <Ben.Peart@microsoft.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>
-References: <20170916080731.13925-1-chriscool@tuxfamily.org>
- <20170916080731.13925-10-chriscool@tuxfamily.org>
- <20170919104553.494d7d3b@twelve2.svl.corp.google.com>
- <CAP8UFD2D2NkKKy9oT-1Mwe0Gq6=UG+15t9GENKKbV-PbRf3Kkw@mail.gmail.com>
- <20170929133614.1c0cd68ad80139fafdf68b86@google.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <903cb956-464e-fdab-fac1-00a2b48b942c@gmail.com>
-Date:   Mon, 2 Oct 2017 10:34:39 -0400
+        Mon, 02 Oct 2017 07:52:39 -0700 (PDT)
+Subject: Re: [PATCH v2 4/5] sha1_name: Parse less while finding common prefix
+To:     Stefan Beller <sbeller@google.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff Hostetler <git@jeffhostetler.com>
+References: <20170925095452.66833-1-dstolee@microsoft.com>
+ <20170925095452.66833-5-dstolee@microsoft.com>
+ <CAGZ79kaBGtgBv2OryCO+oc-0nvSyi0vXA2jsLS2=5Xweea1SNg@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <f255961b-754e-5cf1-7641-1951548db362@gmail.com>
+Date:   Mon, 2 Oct 2017 10:52:38 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.3.0
 MIME-Version: 1.0
-In-Reply-To: <20170929133614.1c0cd68ad80139fafdf68b86@google.com>
+In-Reply-To: <CAGZ79kaBGtgBv2OryCO+oc-0nvSyi0vXA2jsLS2=5Xweea1SNg@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+My v3 patch is incoming, but I wanted to respond directly to this message.
 
-
-On 9/29/2017 4:36 PM, Jonathan Tan wrote:
-> On Wed, 27 Sep 2017 18:46:30 +0200
-> Christian Couder <christian.couder@gmail.com> wrote:
-> 
->> I am ok to split the patch series, but I am not sure that 01/40 to
->> 09/40 is the right range for the first patch series.
->> I would say that 01/40 to 07/40 is better as it can be seen as a
->> separate refactoring.
-> 
-> I mentioned 09/40 because this is (as far as I can tell) the first one
-> that introduces a new design.
-> 
->> I don't think single-shot processes would be a huge burden, because
->> the code is simpler, and because for example for filters we already
->> have single shot and long-running processes and no one complains about
->> that. It's code that is useful as it makes it much easier for people
->> to do some things (see the clone bundle example).
+On 9/25/2017 7:42 PM, Stefan Beller wrote:
+> On Mon, Sep 25, 2017 at 2:54 AM, Derrick Stolee <dstolee@microsoft.com> wrote:
+>> Create get_hex_char_from_oid() to parse oids one hex character at a
+>> time. This prevents unnecessary copying of hex characters in
+>> extend_abbrev_len() when finding the length of a common prefix.
 >>
->> In fact in Git development we usually start to by first implementing
->> simpler single-shot solutions, before thinking, when the need arise,
->> to make it faster. So a perhaps an equally valid opinion could be to
->> first only submit the patches for the single-shot protocol and later
->> submit the rest of the series when we start getting feedback about how
->> external odbs are used.
-> 
-> My concern is that, as far as I understand about the Microsoft use case,
-> we already know that we need the faster solution, so the need has
-> already arisen.
-> 
->> And yeah I could change the order of the patch series to implement the
->> long-running processes first and the single-shot process last, so that
->> it could be possible to first get feedback about the long-running
->> processes, before we decide to merge or not the single-shot stuff, but
->> I don't think it would look like the most logical order.
-> 
-> My thinking was that we would just implement the long-running process
-> and not implement the single-shot process at all (besides maybe a script
-> in contrib/). If we are going to do both anyway, I agree that we should
-> do the single-shot process first.
-> 
-
-I agree with Jonathan's feedback.  We already know the performance of 
-single shot requests is insufficient as there are scenarios where there 
-will potentially be many missing objects that need to be retrieved to 
-complete a git operation (ie checkout).  As a results, we will need the 
-long running process model so, overall, it will be simpler to focus 
-entirely on that model and skip the single-shot model.
-
-If the complexity of the process model is considered to be too high, we 
-can provide helper code in both script and native code that can be used 
-to reduce the cost/complexity.  I believe we have most of this already 
-with the existing sub-process.c/h module and the packet.pm refactoring 
-you have done earlier in this series.
-
-Providing high quality working samples of both is another way to reduce 
-the cost and improve the quality.
-
->>> And another possible issue is that we design ourselves into a corner.
->>> Thinking about the use cases that I know about (the Android use case and
->>> the Microsoft GVFS use case), I don't think we are doing that - for
->>> Android, this means that large blob metadata needs to be part of the
->>> design (and this patch series does provide for that), and for Microsoft
->>> GVFS, "get" is relatively cheap, so a configuration option to not invoke
->>> "have" first when loading a missing object might be sufficient.
+>> p0008.1: find_unique_abbrev() for existing objects
+>> --------------------------------------------------
 >>
->> If the helper does not advertise the "have" capability, the "have"
->> instruction will not be sent to the helper, so the current design is
->> already working for that case.
-> 
-> Ah, that's good to know.
-> 
->>> And I think that my design can be extended to support a use case in
->>> which, for example, blobs corresponding to a certain type of filename
->>> (defined by a glob like in gitattributes) can be excluded during
->>> fetch/clone, much like --blob-max-bytes, and they can be fetched either
->>> through the built-in mechanism or through a custom hook.
+>> For 10 repeated tests, each checking 100,000 known objects, we find the
+>> following results when running in a Linux VM:
 >>
->> Sure, we could probably rebuild something equivalent to what I did on
->> top of your design.
->> My opinion though is that if we want to eventually get to the same
->> goal, it is better to first merge something that get us very close to
->> the end goal and then add some improvements on top of it.
-> 
-> I agree - I mentioned that because I personally prefer to review smaller
-> patch sets at a time, and my patch set already includes a lot of the
-> same infrastructure needed by yours - for example, the places in the
-> code to dynamically fetch objects, exclusion of objects when fetching or
-> cloning, configuring the cloned repo when cloning, fsck, and gc.
-> 
-
-I agree here has well.  I think smaller patch sets that we can 
-review/approve independently will be more effective.
-
-I think Jonathan has a lot of the infrastructure support in his partial 
-clone series.  I'd like to take that work, add your external ODB work + 
-Jeff's filtering work and come up with the best of all three solution. :)
-
->>>   - I get compile errors when I "git am" these onto master. I think
->>>     '#include "config.h"' is needed in some places.
+>> |       | Pack  | Packed  | Loose  | Base   | New    |        |
+>> | Repo  | Files | Objects | Objects| Time   | Time   | Rel%   |
+>> |-------|-------|---------|--------|--------|--------|--------|
+>> | Git   |     1 |  230078 |      0 | 0.08 s | 0.08 s |   0.0% |
+>> | Git   |     5 |  230162 |      0 | 0.17 s | 0.16 s | - 5.9% |
+>> | Git   |     4 |  154310 |  75852 | 0.14 s | 0.12 s | -14.3% |
+>> | Linux |     1 | 5606645 |      0 | 0.50 s | 0.25 s | -50.0% |
+>> | Linux |    24 | 5606645 |      0 | 2.41 s | 2.08 s | -13.7% |
+>> | Linux |    23 | 5283204 | 323441 | 1.99 s | 1.69 s | -15.1% |
+>> | VSTS  |     1 | 4355923 |      0 | 0.40 s | 0.22 s | -45.0% |
+>> | VSTS  |    32 | 4355923 |      0 | 2.09 s | 1.99 s | - 4.8% |
+>> | VSTS  |    31 | 4276829 |  79094 | 3.60 s | 3.20 s | -11.1% |
 >>
->> It's strange because I get no compile errors even after a "make clean"
->> from my branch.
->> Could you show the actual errors?
-> 
-> I don't have the error messages with me now, but it was something about
-> a function being implicitly declared. You will probably get these errors
-> if you sync past commit e67a57f ("config: create config.h", 2017-06-15).
-> 
->>> Any reason why you prefer to update the loose object functions than to
->>> update the generic one (sha1_object_info_extended)? My concern with just
->>> updating the loose object functions was that a caller might have
->>> obtained the path by iterating through the loose object dirs, and in
->>> that case we shouldn't query the external ODB for anything.
+>> For the Windows repo running in Windows Subsystem for Linux:
 >>
->> You are thinking about fsck or gc?
->> Otherwise I don't think it would be clean to iterate through loose object dirs.
-> 
-> Yes, fsck and gc (well, prune, I think) do that. I agree that Git
-> typically doesn't do that (except for exceptional cases like fsck and
-> gc), but I was thinking about supporting existing code that does that
-> iteration, not introducing new code that does that.
-> 
+>>      Pack Files: 50
+>> Packed Objects: 22,385,898
+>>   Loose Objects: 492
+>>       Base Time: 4.61 s
+>>        New Time: 4.61 s
+>>           Rel %: 0.0%
+>>
+>> p0008.2: find_unique_abbrev() for missing objects
+>> -------------------------------------------------
+>>
+>> For 10 repeated tests, each checking 100,000 missing objects, we find
+>> the following results when running in a Linux VM:
+>>
+>> |       | Pack  | Packed  | Loose  | Base   | New    |        |
+>> | Repo  | Files | Objects | Objects| Time   | Time   | Rel%   |
+>> |-------|-------|---------|--------|--------|--------|--------|
+>> | Git   |     1 |  230078 |      0 | 0.06 s | 0.05 s | -16.7% |
+>> | Git   |     5 |  230162 |      0 | 0.14 s | 0.15 s | + 7.1% |
+>> | Git   |     4 |  154310 |  75852 | 0.12 s | 0.12 s |   0.0% |
+>> | Linux |     1 | 5606645 |      0 | 0.40 s | 0.17 s | -57.5% |
+>> | Linux |    24 | 5606645 |      0 | 1.59 s | 1.30 s | -18.2% |
+>> | Linux |    23 | 5283204 | 323441 | 1.23 s | 1.10 s | -10.6% |
+>> | VSTS  |     1 | 4355923 |      0 | 0.25 s | 0.12 s | -52.0% |
+>> | VSTS  |    32 | 4355923 |      0 | 1.45 s | 1.34 s | - 7.6% |
+>> | VSTS  |    31 | 4276829 |  79094 | 1.59 s | 1.34 s | -15.7% |
+>>
+>> For the Windows repo running in Windows Subsystem for Linux:
+>>
+>>      Pack Files: 50
+>> Packed Objects: 22,385,898
+>>   Loose Objects: 492
+>>       Base Time: 3.91 s
+>>        New Time: 3.08 s
+>>           Rel %: -21.1%
+>>
+> These number look pretty cool!
+>
+>> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+>>
+>> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> double signoff?
+
+Oops! I'll be more careful with my format-patch in the future.
+
+>
+>> ---
+>>   sha1_name.c | 13 +++++++++++--
+>>   1 file changed, 11 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/sha1_name.c b/sha1_name.c
+>> index f2a1ebe49..bb47b6702 100644
+>> --- a/sha1_name.c
+>> +++ b/sha1_name.c
+>> @@ -480,13 +480,22 @@ struct min_abbrev_data {
+>>          char *hex;
+>>   };
+>>
+>> +static inline char get_hex_char_from_oid(const struct object_id *oid, int i)
+> 'i' is not very descriptive, maybe add a comment?
+> (I realize it is just walking through the char*s one by one)
+I renamed 'i' to 'pos' in my v3.
+
+>
+> Maybe this function (together with the change in the while below)
+> could go into hex.c as "int progressively_cmp_oids" that returns
+> the position at which the given oids differ?
+>
+>> +{
+>> +       static const char hex[] = "0123456789abcdef";
+>> +
+>> +       if ((i & 1) == 0)
+>> +               return hex[oid->hash[i >> 1] >> 4];
+>> +       else
+>> +               return hex[oid->hash[i >> 1] & 0xf];
+>> +}
+> sha1_to_hex_r has very similar code, though it iterates less
+> and covers both cases in the loop body.
+>
+> That is the actual reason I propose moving this function
+> (or a variant thereof) to hex.c as there we can share code.
+
+You're right that sha1_to_hex_r is similar, in fact I based my work on 
+it. There are a few reasons I didn't combine the two implementations:
+
+* I wanted to be sure my patch was only touching the code for 
+disambiguating short-shas. Modifying code in hex.c would touch many more 
+code paths.
+
+* I realize that the extra branch in my version is slower than the 
+branchless loop body in sha1_to_hex_r, so either I would slow that 
+method or make the method call more complicated by returning two chars 
+at a time.
+
+* I wanted to strongly hint that the method should be inlined, but I'm 
+not sure how to guarantee that happens across a linker boundary without 
+doing strange things in header files.
+
+I'm happy to revisit this after my patch is complete, since I think 
+there are interesting trade-offs to consider here. I'd prefer to keep 
+this discussion separate from the focus on disambiguation.
+
+Thanks,
+-Stolee
