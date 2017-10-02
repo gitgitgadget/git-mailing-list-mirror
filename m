@@ -7,59 +7,61 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7063920281
-	for <e@80x24.org>; Mon,  2 Oct 2017 17:19:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 82B8220281
+	for <e@80x24.org>; Mon,  2 Oct 2017 17:20:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751774AbdJBRTz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Oct 2017 13:19:55 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:34084 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751392AbdJBRTy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Oct 2017 13:19:54 -0400
-Received: by mail-pf0-f193.google.com with SMTP id g65so6339447pfe.1
-        for <git@vger.kernel.org>; Mon, 02 Oct 2017 10:19:54 -0700 (PDT)
+        id S1751313AbdJBRUg (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Oct 2017 13:20:36 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:33481 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751247AbdJBRUf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Oct 2017 13:20:35 -0400
+Received: by mail-pg0-f66.google.com with SMTP id u136so6768341pgc.0
+        for <git@vger.kernel.org>; Mon, 02 Oct 2017 10:20:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:subject:from:to:cc:in-reply-to:references:date
          :mime-version:content-transfer-encoding;
-        bh=MYbu1PF8svfqHCntLxLNSxgm0NZK/mWhcuJJhb0FPWg=;
-        b=k8QrcbVQVBn6PpYl3GU8dttr6/9plIK/2tv+4/yPuteRYu7YSbINCyAsR9Qry6qQMw
-         mnPsfcXiiPce+oZ7vfJ3Zx3KHDBZxatFDqKLNQ8oEKVYC5OYI92D5qucmfW67szlrw78
-         3wAUVBQO4JeTpajWIgwRL8xWJU0kgeNQaZI/OJeiLXVgghLZQrOeh0hKyHA/JXrJ7wOw
-         aYfuwREvoH294FkQit2osYnGQMNlgHzEK+zN8zYwQXC+vP0aFWvjTpGXixbATCB6MleY
-         Hyy/dkx7NlUlrfh9Ql5lb8rnucbdULePwxD4KqnLzqFThQD/Xn2FwqEUYBotPDSS0Wkt
-         /N4w==
+        bh=YLXt1iaU0PkWdHXKhN4OrRc8WoBp/gifcBeFgLqcnWU=;
+        b=e2uHHYcCd17fzoFxiR84TIlS9M3jpf+G2wwWIFwWeci6lGJ0OQadN37A+YGusI/z2G
+         HELG4UblMPn/hln0YSmjv56VLifVFm305fvCIbaTW4c5bFJAiP0vqUuHFTPN0Rga7QCI
+         HLDJjMe5qsYmLZFgESH/MiOX/SIbJlkLYVpjJLRWh1J/XMwY7hvlzeWL1+oGNfzrX7/Z
+         ybLQ18sZ/DTeyl5PNV88LJtgeSAR9aYTaL6ISEXu9xGTz2K3HZPOkDuHZeWIW/glggBi
+         Xl9WnG/8VbOPMF+KRqBXE+yeG6YK5FbkNjor5GTeECbReQCUB0R/lzrIS5n/74JcxR6Y
+         TuCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:subject:from:to:cc:in-reply-to
          :references:date:mime-version:content-transfer-encoding;
-        bh=MYbu1PF8svfqHCntLxLNSxgm0NZK/mWhcuJJhb0FPWg=;
-        b=VmLmf4NbduI90FMbC96RNxu4WPYO96BVAXpmyWQNB4dTEnDKTDxvuOeKOkRyTrbCG2
-         iaeJoi2LDfLF0AVzHrUyrEjVfmUJKNe9qH4690aqalaVHnd7mQUyKL4mx64bQrKrXZck
-         A8IaSO1Or8ADl4zfVzPooLukOzVuUtlX2QriArD/bS/6tzZVk6b88muyowV1caixsymS
-         KCCrJ61uoFjdQEmAK15GrqTLZVJik3XX+6Kj7dlHIkI8q8ALzwzGaPSCqrDy6u2fVGHq
-         6a7ZWu1DU9+PKC/P0O7SjG9lTNhF3hnuvjnrx9ao4vJ2t24y8SDYk9QYFpkwzB9UTZfJ
-         nZSw==
-X-Gm-Message-State: AHPjjUiKpyDZuImlT4kUqBKhNF9pk9ipT4Lqy1kob7bp3MFGNox2aEpf
-        PR/L/zXulsSL/Zn/kew9XG0=
-X-Google-Smtp-Source: AOwi7QDG9vjSG4DzIwf2EBHBuFGxw6xesWJIhcEhbXkmx4ZQDYnFFergEYoy5qN3uf+yuZazaMP/ng==
-X-Received: by 10.99.66.196 with SMTP id p187mr13291433pga.0.1506964794106;
-        Mon, 02 Oct 2017 10:19:54 -0700 (PDT)
+        bh=YLXt1iaU0PkWdHXKhN4OrRc8WoBp/gifcBeFgLqcnWU=;
+        b=oMJQeQREPLz1XTTKfLf+QezQ0kfvYRZWEtUjmdd/WrzQHcBX+YK2kIQT3GRmQF2bc6
+         ENuFXFgb/YQ6NJe3J04Tcv9ufesIxr7wmXqz0CV45LE1brV1iAHC6QfqPSdKkO6AdEmG
+         IQ7TC8CPGjPGRQ0F+xaX1oZFqJrAhfPjRyA9rEkz9Sm58QaHf4Ywvmn2tB+D+m2elVZE
+         fLhlvJX6wy/tqi3aGQwPQZ6qYC4fR2H2J2sFnhivqAgh/NP001+49Ws4SKdyMws7n0VZ
+         DiuZwA9xpMAFm8TUJ75OQS4SVRE2krzrj0ZXibnfTgQ9z2z2gUb1qtabFfMYMhNkAHkn
+         c4zg==
+X-Gm-Message-State: AHPjjUiMqfs2QSyZsOZ0yJdGjIZohzRsozG8zzT+c4hBrGWr+sxWmOQE
+        KwwGpF8QwigoUIZt2DHDOBNHzdF5
+X-Google-Smtp-Source: AOwi7QAvWeD4vjaLt8zXyq+mUwmEqXiVRXxsT71NcSzkK5LVTk8kRl2KuarTCa+ZMctaeJHzLIunlQ==
+X-Received: by 10.101.90.68 with SMTP id z4mr13014446pgs.76.1506964835321;
+        Mon, 02 Oct 2017 10:20:35 -0700 (PDT)
 Received: from unique-pc ([2405:204:7287:7232:c31:a746:72c9:9586])
-        by smtp.googlemail.com with ESMTPSA id e133sm18202713pfh.177.2017.10.02.10.19.51
+        by smtp.googlemail.com with ESMTPSA id m13sm16732138pgc.58.2017.10.02.10.20.33
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 02 Oct 2017 10:19:53 -0700 (PDT)
-Message-ID: <1506964786.3504.3.camel@gmail.com>
-Subject: Re: [PATCH v2] branch: change the error messages to be more
- meaningful
+        Mon, 02 Oct 2017 10:20:34 -0700 (PDT)
+Message-ID: <1506964828.3504.5.camel@gmail.com>
+Subject: Re: [PATCH v2/RFC] commit: change the meaning of an empty commit
+ message
 From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     gitster@pobox.com
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
-In-Reply-To: <20170821133608.5652-1-kaarticsivaraam91196@gmail.com>
-References: <20170730115908.13841-1-kaarticsivaraam91196@gmail.com>
-         <20170821133608.5652-1-kaarticsivaraam91196@gmail.com>
+In-Reply-To: <1504186577.1826.9.camel@gmail.com>
+References: <1500107583.1850.4.camel@gmail.com>
+         <20170821140528.7212-1-kaarticsivaraam91196@gmail.com>
+         <xmqqo9r4vhv0.fsf@gitster.mtv.corp.google.com>
+         <1504186577.1826.9.camel@gmail.com>
 Content-Type: text/plain; charset="ISO-8859-15"
-Date:   Mon, 02 Oct 2017 22:49:46 +0530
+Date:   Mon, 02 Oct 2017 22:50:28 +0530
 Mime-Version: 1.0
 X-Mailer: Evolution 3.22.6-1 
 Content-Transfer-Encoding: 7bit
@@ -68,65 +70,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 2017-08-21 at 19:06 +0530, Kaartic Sivaraam wrote:
-> The error messages shown when the branch command is misused
-> by supplying it wrong number of parameters wasn't meaningful.
-> That's because it used the the phrase "too many branches"
-> assuming all parameters to be "valid" branch names. It's not
-> always the case as exemplified below,
+On Thu, 2017-08-31 at 19:06 +0530, Kaartic Sivaraam wrote:
+> On Thu, 2017-08-24 at 13:19 -0700, Junio C Hamano wrote:
+> > 
+> > The latter is easier for me as we do not have to worry about 
+> > breaking people's scripts and tools used in
+> > their established workflows at all.
+> > 
 > 
->         $ git branch
->           foo
->         * master
+> In that case, how about doing something similar to what was done to
+> 'set-upstream' option of branch? We could print a warning notice when
+> the commit message is found to be empty due to the presence of a sign-
+> off line. As usual we could stop warning and stop identifying log
+> messages consisting only signed-off lines as empty after a few years of
+> doing that.
 > 
->         $ git branch -m foo foo old
->         fatal: too many branches for a rename operation
+> Note: I have no idea how good an idea this is. Let me know if it's a
+> bad one.
 > 
-> Change the messages to be more general thus making no assumptions
-> about the "parameters".
-> 
-> Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-> ---
->  Changes in v2:
-> 
->     - changed the wordings of the error message
-> 
->  builtin/branch.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/builtin/branch.c b/builtin/branch.c
-> index a3bd2262b..62981d358 100644
-> --- a/builtin/branch.c
-> +++ b/builtin/branch.c
-> @@ -707,12 +707,12 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
->  		else if (argc == 2)
->  			rename_branch(argv[0], argv[1], rename > 1);
->  		else
-> -			die(_("too many branches for a rename operation"));
-> +			die(_("too many arguments for a rename operation"));
->  	} else if (new_upstream) {
->  		struct branch *branch = branch_get(argv[0]);
->  
->  		if (argc > 1)
-> -			die(_("too many branches to set new upstream"));
-> +			die(_("too many arguments to set new upstream"));
->  
->  		if (!branch) {
->  			if (!argc || !strcmp(argv[0], "HEAD"))
-> @@ -735,7 +735,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
->  		struct strbuf buf = STRBUF_INIT;
->  
->  		if (argc > 1)
-> -			die(_("too many branches to unset upstream"));
-> +			die(_("too many arguments to unset upstream"));
->  
->  		if (!branch) {
->  			if (!argc || !strcmp(argv[0], "HEAD"))
 
 
 I was recently searching to find the patches have gone missing in to
 the void for no obvious reason and found this. Should I consider this
-to be "Dropped" in terms of the "What's cooking" emails? or has this
+to be "Dropped" in terms of the "What's cooking" emails or has this
 just not received the required attention?
 
 ---
