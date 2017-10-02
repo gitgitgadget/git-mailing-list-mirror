@@ -6,84 +6,68 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 70400202A5
-	for <e@80x24.org>; Mon,  2 Oct 2017 06:51:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D40D4202A5
+	for <e@80x24.org>; Mon,  2 Oct 2017 06:56:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750978AbdJBGvD (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Oct 2017 02:51:03 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57314 "HELO cloud.peff.net"
+        id S1751127AbdJBG4Y (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Oct 2017 02:56:24 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57322 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750957AbdJBGvC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Oct 2017 02:51:02 -0400
-Received: (qmail 10326 invoked by uid 109); 2 Oct 2017 06:51:02 -0000
+        id S1751101AbdJBG4X (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Oct 2017 02:56:23 -0400
+Received: (qmail 10546 invoked by uid 109); 2 Oct 2017 06:56:23 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 02 Oct 2017 06:51:02 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 02 Oct 2017 06:56:23 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26361 invoked by uid 111); 2 Oct 2017 06:51:43 -0000
+Received: (qmail 26382 invoked by uid 111); 2 Oct 2017 06:57:04 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Mon, 02 Oct 2017 02:51:43 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Mon, 02 Oct 2017 02:57:04 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Oct 2017 02:51:00 -0400
-Date:   Mon, 2 Oct 2017 02:51:00 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Oct 2017 02:56:21 -0400
+Date:   Mon, 2 Oct 2017 02:56:21 -0400
 From:   Jeff King <peff@peff.net>
 To:     Taylor Blau <me@ttaylorr.com>
 Cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH v6 7/7] ref-filter.c: parse trailers arguments with
- %(contents) atom
-Message-ID: <20171002065100.cjawz6pvxjj2w5nr@sigill.intra.peff.net>
-References: <20171002052326.GA10729@D-10-157-251-166.dhcp4.washington.edu>
- <20171002052524.12627-1-me@ttaylorr.com>
- <20171002052524.12627-7-me@ttaylorr.com>
+Subject: Re: [PATCH v6 0/7] Support %(trailers) arguments in for-each-ref(1)
+Message-ID: <20171002065621.ob3icxhlkefpsm4v@sigill.intra.peff.net>
+References: <20170930062238.87077-1-me@ttaylorr.com>
+ <20170930184151.GB43975@D-10-157-251-166.dhcp4.washington.edu>
+ <20171001000647.GA20767@D-10-157-251-166.dhcp4.washington.edu>
+ <20171001161725.GA66172@D-10-157-251-166.dhcp4.washington.edu>
+ <20171002003116.GA69902@D-10-157-251-166.dhcp4.washington.edu>
+ <20171002052326.GA10729@D-10-157-251-166.dhcp4.washington.edu>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20171002052524.12627-7-me@ttaylorr.com>
+In-Reply-To: <20171002052326.GA10729@D-10-157-251-166.dhcp4.washington.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Oct 01, 2017 at 10:25:24PM -0700, Taylor Blau wrote:
+On Sun, Oct 01, 2017 at 10:23:26PM -0700, Taylor Blau wrote:
 
-> The %(contents) atom takes a contents "field" as its argument. Since
-> "trailers" is one of those fields, extend contents_atom_parser to parse
-> "trailers"'s arguments when used through "%(contents)", like:
+> Attached is the sixth revision of my patch-set "Support %(trailers)
+> arguments in for-each-ref(1)".
 > 
->   %(contents:trailers:unfold,only)
+> In includes the following changes since v5:
 > 
-> A caveat: trailers_atom_parser expects NULL when no arguments are given
-> (see: `parse_ref_filter_atom`). This is because string_list_split (given
-> a maxsplit of -1) returns a 1-ary string_list* containing the given
-> string if the delimiter could not be found using `strchr`.
+>   * Added an additional patch to change t4205 to harden `unfold()`
+>     against multi-line trailer folding.
 > 
-> To simulate this behavior without teaching trailers_atom_parser to
-> accept strings with length zero, conditionally pass NULL to
-> trailers_atom_parser if the arguments portion of the argument to
-> %(contents) is empty.
+>   * Added a missing parameter call in ref-filter.c to
+>     `trailers_atom_parser` through `contents_atom_parser`.
 > 
-> Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> ---
->  ref-filter.c            |  7 ++++---
->  t/t6300-for-each-ref.sh | 37 +++++++++++++++++++++++++++++++++++++
->  2 files changed, 41 insertions(+), 3 deletions(-)
+> I believe that this version of the series should be ready for queueing.
 
-This patch seems to fail a bunch of tests in t6300.
+This looks good to me, modulo the flipped logic in the final patch.
 
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 43ed10a5e..6c26b4733 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -212,9 +212,10 @@ static void contents_atom_parser(const struct ref_format *format, struct used_at
->  		atom->u.contents.option = C_SIG;
->  	else if (!strcmp(arg, "subject"))
->  		atom->u.contents.option = C_SUB;
-> -	else if (!strcmp(arg, "trailers"))
-> -		atom->u.contents.option = C_TRAILERS;
-> -	else if (skip_prefix(arg, "lines=", &arg)) {
-> +	else if (skip_prefix(arg, "trailers", &arg)) {
-> +		skip_prefix(arg, ":", &arg);
-> +		trailers_atom_parser(format, atom, *arg ? NULL : arg);
+Since that's the only thing I noticed, let's hold off on a reroll for
+the moment to see if there are any more comments (and I won't be
+surprised if Junio just picks it up with the tweak, but we'll see).
 
-I think your logic is flipped. You want "*arg ? arg : NULL";
+Please do make sure that "make test" runs clean before posting (I
+usually run it on each commit to catch any "oops, we broke this and then
+refixed it" in the middle of the series, too).
 
 -Peff
