@@ -2,206 +2,234 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 865572036B
-	for <e@80x24.org>; Mon,  2 Oct 2017 14:52:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC50320281
+	for <e@80x24.org>; Mon,  2 Oct 2017 14:57:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751296AbdJBOwo (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Oct 2017 10:52:44 -0400
-Received: from mail-qk0-f194.google.com ([209.85.220.194]:36924 "EHLO
-        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751067AbdJBOwm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Oct 2017 10:52:42 -0400
-Received: by mail-qk0-f194.google.com with SMTP id a12so1326713qka.4
-        for <git@vger.kernel.org>; Mon, 02 Oct 2017 07:52:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=vNaqhz0THYMQIBdiCrzDIVemaFpXYj4l+jd+yTwgxfc=;
-        b=FOKF4ckRAkECs8xmh1od4tSPzrVR4uBEVMpcPRtj0UjAKNBJcmuRDstQyfKXF/wlvu
-         355XgBg/Fz+us1uJwW42Oc5cdHa3PU9TSSIMEmrcDNzyv1fFzKD8z8plpOl7vmf0oz+O
-         3QZTe67IPlVUl+u7bLSZRzVUYnCXgQBlDdmEe9ensFtxFs+qoMBjC0yHQYUxACDjvksQ
-         DZCSgaasrJ+OFRpGoO4X4AojaLWuVD6q9Q6rHSWeshFETd3VLXS/2YK0DCIyLDovRcmc
-         zbpSFmN4oxbNOGAdPL7GrkxBQENlILyZ1QRvZ9k6bKyu5SLouzlYoNYxJ+Jg2D6g6GMr
-         6oOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=vNaqhz0THYMQIBdiCrzDIVemaFpXYj4l+jd+yTwgxfc=;
-        b=aabsIRMIz03Hm5PimaWJ7v9gXDG4SKAIaavpxWLh7WWMDueNZ5Wo2veOtaq+1OUgMO
-         tDs+QpvlzZmxBxwgeaS5WQP+NS5H/mGegbRvyKRSNYKEAxlkY0ZK/ozQn3A/lBsmuwWg
-         xBqowKnmihwBoB93oRqAv4tf9//ybEayyUlUhQeCoHeaoMzLhkNehrbT/auO9EzUeKYg
-         uaiXRoJhy15gpCwsScRGOkaXbjv8sj0LXeeGlYrd1JXuaGMgyXxwmU7VFKKh/LrrmQKT
-         r0oYA2grtXdFWpSDmAHVGCxXECIReg3r3J+ynoGxoamYJmtbJ2kQjFqZ/bYiqWvK39Og
-         yhkw==
-X-Gm-Message-State: AMCzsaV8RZw3jkB6VJX1Cp2MrKS78soCBV5W4Ckj0KgxNIdeicn+Ai8T
-        aQ5+OpISCUr8XIk5KWM8CjRxx5G9
-X-Google-Smtp-Source: AOwi7QCTAKtiyLFArwQfuMXHigR2FKE92bnJm18zJW4hGCU8S4SNiS7nuAhMhU5KjaJv3d7l9uX26g==
-X-Received: by 10.55.195.25 with SMTP id a25mr11232976qkj.325.1506955960706;
-        Mon, 02 Oct 2017 07:52:40 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010::7cc])
-        by smtp.gmail.com with ESMTPSA id m66sm6810369qkf.23.2017.10.02.07.52.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 02 Oct 2017 07:52:39 -0700 (PDT)
-Subject: Re: [PATCH v2 4/5] sha1_name: Parse less while finding common prefix
-To:     Stefan Beller <sbeller@google.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jeff Hostetler <git@jeffhostetler.com>
+        id S1751749AbdJBO5G (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Oct 2017 10:57:06 -0400
+Received: from mail-by2nam03on0130.outbound.protection.outlook.com ([104.47.42.130]:1204
+        "EHLO NAM03-BY2-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1751193AbdJBO5F (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Oct 2017 10:57:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=i+QGzLepKA5pQnwS0bR0LWzamWBUenoawYcQS7iRgLU=;
+ b=FnuvU3n969D+YUbh53VFbiSWxX16rEXN2UzCHnyeDXTLuazUbnDg5ORR4RMysMDbWRX3s6GBoehYgV665/VDY/LUQG1/X4wgGBtDmxutaOfqzPQHntlLFFeXW5qZzhNEwnFXjv2n/UWNnDFLtC2rPCW2jrI3ll4Nrp/XZlkq5bY=
+Received: from stolee-linux.corp.microsoft.com (2001:4898:8010:1::2e) by
+ MWHPR2101MB0731.namprd21.prod.outlook.com (2603:10b6:301:81::37) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id 15.20.77.4; Mon, 2 Oct
+ 2017 14:57:02 +0000
+From:   Derrick Stolee <dstolee@microsoft.com>
+To:     git@vger.kernel.org
+Cc:     stolee@gmail.com, git@jeffhostetler.com, sbeller@google.com,
+        gitster@pobox.com, Derrick Stolee <dstolee@microsoft.com>
+Subject: [PATCH v3 1/5] test-list-objects: List a subset of object ids
+Date:   Mon,  2 Oct 2017 10:56:47 -0400
+Message-Id: <20171002145651.204984-2-dstolee@microsoft.com>
+X-Mailer: git-send-email 2.14.1.538.g56ec8fc98.dirty
+In-Reply-To: <20170925095452.66833-1-dstolee@microsoft.com>
 References: <20170925095452.66833-1-dstolee@microsoft.com>
- <20170925095452.66833-5-dstolee@microsoft.com>
- <CAGZ79kaBGtgBv2OryCO+oc-0nvSyi0vXA2jsLS2=5Xweea1SNg@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <f255961b-754e-5cf1-7641-1951548db362@gmail.com>
-Date:   Mon, 2 Oct 2017 10:52:38 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kaBGtgBv2OryCO+oc-0nvSyi0vXA2jsLS2=5Xweea1SNg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain
+X-Originating-IP: [2001:4898:8010:1::2e]
+X-ClientProxiedBy: MWHPR11CA0041.namprd11.prod.outlook.com
+ (2603:10b6:300:115::27) To MWHPR2101MB0731.namprd21.prod.outlook.com
+ (2603:10b6:301:81::37)
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 46e83d39-28c0-4cde-9330-08d509a5d7a2
+X-MS-Office365-Filtering-HT: Tenant
+X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:(22001)(2017030254152)(48565401081)(2017052603199)(201703131423075)(201703031133081)(201702281549075);SRVR:MWHPR2101MB0731;
+X-Microsoft-Exchange-Diagnostics: 1;MWHPR2101MB0731;3:8GrjyNG4IZZgLriACR2Yxz2P5N+P9Su720j9V6TtchpTGOAy7th0qQ6ovpJGBlNPvg3eVyOv4xbxi1XWYX7ajI025aXRAVwUCWpxQ/QSbtweufut3M9EbwdlH8zqOTTMQEHs2hmA4BUG6B0ZG9gcVUuev7EFe1+r75Q96whDlGCjwqr61UrfVhRy072rCYqwMLh/tZy75Liobw3eLL2+Jt5ie+wMoKVDuZCxoZr77xyOKEDkCBjy7+Wa6NgQaPuL;25:9pytYj17FfbxQfPwnW0fp9k2lDlK9smqtRd2y1EByfBf+AU30XeaHndGBFT1noivIjgxkzKT7/3MpuwSgSXApubqSiCcVG4jfjix6n8J/zuyP4EB7OmV+c1QvhPl8LDpSwPRJPjkRJdZTUCPMlKgj8X0eqvB60lr/7gwclVy20VeIsJCNpBCBrgEW6qygBDwYlApoPWC8BoaYlf3W6eENlefptjsS4xPsJlRHABe09Dk/uFE76Kl8IfXiXpCh5QhRXYPMpjAI5x7LTuv82pJV/WZ3AvFwLD5cwcQVojbwYC1X0gPn+MnitCujUZMI8SGJZT6nih65afmPd9Ne1wg6w==;31:Vd+9Hm9ul0/yfqPsaAbij0I/OiIzYPJ1lBQRBZB5JnJwYAg2eNZ3zw5tu0S6v1vGxtVDMNQVcbxNLccSXdyFwXr8Hc/MDN4b8wqDVd6nXPzMELMk7I1tuSuHGwa6ilA1kKE1BTJR13NZHh9wd45zsxnFiIVMH+aT2l4Zb6oNhcHA12jwCF4bmu9exarcn5ObZggtdD+JHvn0qqwoVbOmweNf2vmJ9eUgoDV95OzAgE0=
+X-MS-TrafficTypeDiagnostic: MWHPR2101MB0731:
+X-Microsoft-Exchange-Diagnostics: 1;MWHPR2101MB0731;20:pmhHd6Pfj7UwS8cvh+y4PPFF0/GvNBuTBvqt7kvjGzGGdxmJRvcSh0alDwUOnEYW9ky9KP5m23fcVOdAngUlN6zpXgxLoLgZnhRd5rWTMTT2eQG8lLmys8tmX1f3tKQ0C72nFhR3QJSdcZZbGBLgEbnXEZqrO+8bxhxxnx5XAbEdtSFjI9sijiK3lc6fQfMsqN0qHUzwhDRYHVmNfb0kBvboq+Vw/O6Df2gjT7bAflD0gtNpNL5LvID1MEAYyO94hMk9HxYyJGtfe0CUI41gGQUX9J5Z3GRuEbFJ8D5M3Sh/l7noFums8sFcD1hN2OXeszFc59VZT2jgqpOPIT2s6GpYWDG4M5GDLOfxxGK6Sjib/6rNliDsy9+DZW0y+e4SLa6x17WcLfOmy4wnKgDTZcVR4GY1eqEwndwwxsoCP+DPX1rYVKETBeYeQGQ0NeqmIOZEu/V3uy4f+iR4yrROc/78pN7XTzklnKj1eDwUzlW9CPeUhxJXAg3wpPt31Pjn;4:NzyoI+gA0Yl91lhLeMd/u0ISeOBjizKUYz0fFThwwLMBRMLR5zZR7UV0OQRJIgJr0QBizWwvcjSgeMtcg4jJNbAQCXaCXcVp8ZDTpmWzra4KCA350CFQ5hXgZSAN9siM+a08qwa5FnPyWuY5QlBRsHsrhicH50J2/InEg2yrfQsi3OAX6OecytX4v2OmEBxFKjFYasLZKpJsi2BC0/Lh/Ms/cNUDE9PK+dGrMWOf5klumhQfQ+YxYYmZ/kg40W1ah7nw0rwx5yafNT5W9o6FQ3e57Kekj7hnDaJ8GxwERPc=
+X-Exchange-Antispam-Report-Test: UriScan:(89211679590171);
+X-Microsoft-Antispam-PRVS: <MWHPR2101MB0731BFDACA9E2FAC328BF7FCA17D0@MWHPR2101MB0731.namprd21.prod.outlook.com>
+X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(100000700101)(100105000095)(100000701101)(100105300095)(100000702101)(100105100095)(61425038)(6040450)(2401047)(8121501046)(5005006)(12181511122)(100000703101)(100105400095)(10201501046)(93006095)(93001095)(3002001)(6055026)(61426038)(61427038)(6041248)(20161123560025)(20161123562025)(201703131423075)(201702281528075)(201703061421075)(201703061406153)(20161123555025)(20161123558100)(20161123564025)(6072148)(201708071742011)(100000704101)(100105200095)(100000705101)(100105500095);SRVR:MWHPR2101MB0731;BCL:0;PCL:0;RULEID:(100000800101)(100110000095)(100000801101)(100110300095)(100000802101)(100110100095)(100000803101)(100110400095)(100000804101)(100110200095)(100000805101)(100110500095);SRVR:MWHPR2101MB0731;
+X-Forefront-PRVS: 0448A97BF2
+X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(6009001)(346002)(39860400002)(376002)(47760400005)(199003)(189002)(36756003)(68736007)(81166006)(10290500003)(50466002)(8936002)(48376002)(5003940100001)(189998001)(25786009)(8676002)(81156014)(8656003)(50986999)(76176999)(1076002)(97736004)(50226002)(2906002)(6116002)(53936002)(2950100002)(105586002)(16586007)(5660300001)(10090500001)(107886003)(106356001)(86612001)(39060400002)(6916009)(316002)(2351001)(47776003)(7736002)(478600001)(2361001)(6486002)(22452003)(86362001)(305945005)(230783001)(4326008)(33646002)(6666003)(101416001);DIR:OUT;SFP:1102;SCL:1;SRVR:MWHPR2101MB0731;H:stolee-linux.corp.microsoft.com;FPR:;SPF:None;PTR:InfoNoRecords;A:1;MX:1;LANG:en;
+Received-SPF: None (protection.outlook.com: microsoft.com does not designate
+ permitted sender hosts)
+Authentication-Results: spf=none (sender IP is )
+ smtp.mailfrom=dstolee@microsoft.com; 
+X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;MWHPR2101MB0731;23:OdPNaYi8bgr0K6MwwFn3EOSNjNkXaS82u8898hw?=
+ =?us-ascii?Q?W1MsLqhJSsPNjWXiOunziYjhWtwPIilGCxfvyhKo5TRjz8CYjqWJ1jIA1tHr?=
+ =?us-ascii?Q?MvwBCbII45SPOqQdMR+dlsmSfiuo4oLRlH0+asfZwCDWbUQYitI5lhWAP+6Y?=
+ =?us-ascii?Q?BJsdlh6dLzcpEL8H+tlt6CdKX3Yq5+J/6QwdI3/R6czKEme/WqRrPuQRLmWI?=
+ =?us-ascii?Q?HFiCmjgFlmkng+5QAtcaQcaM8rldYurLyPRSqzj5rSeQMv30F1yNk7M1HPaI?=
+ =?us-ascii?Q?qSDQ6SfHV+mDSE6xm6oN176nLXcqan4gMlnPZfacc3W24ZBrh/eOrPuEHAsK?=
+ =?us-ascii?Q?bQk3zOErH2NpcQ2DGqrcWTGfMss1dRAG3gGKQduaZQbS/cD22Zg316n3APVr?=
+ =?us-ascii?Q?UUlohh6aNj87UYzpqXJ9fhQ+qg7tTPTCWSCifManLJ+xWh29hdrOhVt/I6Wb?=
+ =?us-ascii?Q?QRVoRnxWWbZ7HFZYYKR4fegWZhaxJ17yJEnQjOZsPb45Wiay2ePRB/Y5vo/c?=
+ =?us-ascii?Q?7aHEm0zN6vp6eLydyMgeJy7qAZbrKNZoITgTiujj4IjsgozfjD//aw7x+3K3?=
+ =?us-ascii?Q?8F9IEaBRr+20qu8J6a4WtMIKA+4hNyx0BSIL7D3gtW+OldQ+sMXT0xHzD46V?=
+ =?us-ascii?Q?JcEB+yZapAiVJrS6A/ogfXm4TQML152DFopPrarE2COfbzT1QO4q3Ou8afeH?=
+ =?us-ascii?Q?JHYn07Qb3YTKSQd1CIuoE2PJsNJTCUPpLpeQ7OcIiRvUw0T8KNig0gw5faKl?=
+ =?us-ascii?Q?vN9//8wcHZXDBKZuOGEIbqK1tllbq65t8eLod54wkzABiowXukZ7SfxtEISb?=
+ =?us-ascii?Q?MUenBJB8ewxgg/1ni9zH5trhSyEVUCR4ISu4MgU7H/yj9DvaQ5aW4MaKHG8t?=
+ =?us-ascii?Q?4m2t6m0oXNvOSBl1N9K14fofdg7llc2CGPGvYQ5/HyqcInx7gDmTw/z0zsn4?=
+ =?us-ascii?Q?0LbMcJU3pNf2l0P9/IYp7rW0pLZdIRA+CkhlarfaTOvbRERH17yQVcjBv4F9?=
+ =?us-ascii?Q?70bMqVY5cT2YvXCy9ZBnC102efbgkrvV7Qxv/H2glux+ckcQH3LsV5uK/mC6?=
+ =?us-ascii?Q?TgoKnGSqGFEKn8nQDebx5ydMC+4HtWGE5SdOGvmy0B6KFvLg/spKdbHQavgV?=
+ =?us-ascii?Q?KDaeFlkdqpmsB57yVglzVjE5zIXsBmdOk+pHNbgsW9UJZLJVzTUiVifB11pH?=
+ =?us-ascii?Q?z14UHGPU+tZK/9bTlBBLRRNNXZ7fq9zfXxrtdtY68m6J6fc77V2RizoRGHZl?=
+ =?us-ascii?Q?bsMlzcer0WZi5ptfHAA0wt5/UAgh1qPct5Hh+iqEO?=
+X-Microsoft-Exchange-Diagnostics: 1;MWHPR2101MB0731;6:MCmKV5dOEAoPOg+q5g7CrSj6MVAx1Umck+i+B/g71EtfSsfHFvxp1Ko3h4qDlQ5pv7xssGApb8RhGHRJdZJiQpOJb8bfLsgsL0InrkYppzAlVofcbsD9GDRJFxyptd2l+CgAYbMFFo/HTcGInyiyxOtNlwxn0W2ETFXDJLyD+JGpfyHmnYWEfNZJ8/uQghwAsV++5DM6/tzIpmzLScXE7pYSiJCo1fXKNiCVWx/OEo9xUidYNligu19ce/VQ2KICzZlEZPDkeDQ0kFEoDuDxAjrNOvrK8spY07FxVetQ3DqWfbH+RarNN3IoZwlqb2e2VYOCGo/qipKRHEJhLGrWxg==;5:aUkuQCCYFll3c+WgfOwWj9nUaXvosfFbjG1sqxRYLGuMd2oLUgCg56FUa/Ve5NT0Y3aAfNB1lRcx+ZHWxhj9Euh6PpiKe0ORND1o5C+Mub/JO1i0F1LiOt7DTjly4AhCSn9eQf/Smt4h7kaxCxJYeg==;24:9Ck6DqL6gmOGKkysH/cIugPiHGsOJ07L7314ol8stFpBqyJ4i7Ay0SBa6TEyIdo/GGniDDIwicyVnLYg3nSGWsCdMZ26P7mwbHPq5KR3W9c=;7:M53WrPbhM+ftZ38GUjX456c+3FLpcK5huNkmsRlLCJispW64YFmFeA7UllKmWrGq03eAf2lDHeT7MdVANSysdblEiaCKg+uT99OPDEQt7mhLb3xhS7i+K5WUJLL4WQ5aDyRrGYrtp/1uOlagUe+SpgECWQdZjrdBCbd/1xCCdnk4T8epdmLQe/3NOJZs3GabhHWphLLdA8zZihE+8OeIKN6sEUKxXDNVH3ovSG/UGL4=
+SpamDiagnosticOutput: 1:99
+SpamDiagnosticMetadata: NSPM
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Oct 2017 14:57:02.6365
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR2101MB0731
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-My v3 patch is incoming, but I wanted to respond directly to this message.
+Create test-list-objects helper program to output a random sample of
+OIDs present in the repo.
 
-On 9/25/2017 7:42 PM, Stefan Beller wrote:
-> On Mon, Sep 25, 2017 at 2:54 AM, Derrick Stolee <dstolee@microsoft.com> wrote:
->> Create get_hex_char_from_oid() to parse oids one hex character at a
->> time. This prevents unnecessary copying of hex characters in
->> extend_abbrev_len() when finding the length of a common prefix.
->>
->> p0008.1: find_unique_abbrev() for existing objects
->> --------------------------------------------------
->>
->> For 10 repeated tests, each checking 100,000 known objects, we find the
->> following results when running in a Linux VM:
->>
->> |       | Pack  | Packed  | Loose  | Base   | New    |        |
->> | Repo  | Files | Objects | Objects| Time   | Time   | Rel%   |
->> |-------|-------|---------|--------|--------|--------|--------|
->> | Git   |     1 |  230078 |      0 | 0.08 s | 0.08 s |   0.0% |
->> | Git   |     5 |  230162 |      0 | 0.17 s | 0.16 s | - 5.9% |
->> | Git   |     4 |  154310 |  75852 | 0.14 s | 0.12 s | -14.3% |
->> | Linux |     1 | 5606645 |      0 | 0.50 s | 0.25 s | -50.0% |
->> | Linux |    24 | 5606645 |      0 | 2.41 s | 2.08 s | -13.7% |
->> | Linux |    23 | 5283204 | 323441 | 1.99 s | 1.69 s | -15.1% |
->> | VSTS  |     1 | 4355923 |      0 | 0.40 s | 0.22 s | -45.0% |
->> | VSTS  |    32 | 4355923 |      0 | 2.09 s | 1.99 s | - 4.8% |
->> | VSTS  |    31 | 4276829 |  79094 | 3.60 s | 3.20 s | -11.1% |
->>
->> For the Windows repo running in Windows Subsystem for Linux:
->>
->>      Pack Files: 50
->> Packed Objects: 22,385,898
->>   Loose Objects: 492
->>       Base Time: 4.61 s
->>        New Time: 4.61 s
->>           Rel %: 0.0%
->>
->> p0008.2: find_unique_abbrev() for missing objects
->> -------------------------------------------------
->>
->> For 10 repeated tests, each checking 100,000 missing objects, we find
->> the following results when running in a Linux VM:
->>
->> |       | Pack  | Packed  | Loose  | Base   | New    |        |
->> | Repo  | Files | Objects | Objects| Time   | Time   | Rel%   |
->> |-------|-------|---------|--------|--------|--------|--------|
->> | Git   |     1 |  230078 |      0 | 0.06 s | 0.05 s | -16.7% |
->> | Git   |     5 |  230162 |      0 | 0.14 s | 0.15 s | + 7.1% |
->> | Git   |     4 |  154310 |  75852 | 0.12 s | 0.12 s |   0.0% |
->> | Linux |     1 | 5606645 |      0 | 0.40 s | 0.17 s | -57.5% |
->> | Linux |    24 | 5606645 |      0 | 1.59 s | 1.30 s | -18.2% |
->> | Linux |    23 | 5283204 | 323441 | 1.23 s | 1.10 s | -10.6% |
->> | VSTS  |     1 | 4355923 |      0 | 0.25 s | 0.12 s | -52.0% |
->> | VSTS  |    32 | 4355923 |      0 | 1.45 s | 1.34 s | - 7.6% |
->> | VSTS  |    31 | 4276829 |  79094 | 1.59 s | 1.34 s | -15.7% |
->>
->> For the Windows repo running in Windows Subsystem for Linux:
->>
->>      Pack Files: 50
->> Packed Objects: 22,385,898
->>   Loose Objects: 492
->>       Base Time: 3.91 s
->>        New Time: 3.08 s
->>           Rel %: -21.1%
->>
-> These number look pretty cool!
->
->> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
->>
->> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> double signoff?
+If no command line arguments are provided, all OIDs are output.
 
-Oops! I'll be more careful with my format-patch in the future.
+The last command line argument specifies how many samples to output.
+Samples are collected across the entire set of available OIDs to avoid
+clustering and therefore quite uniformly distributed.
 
->
->> ---
->>   sha1_name.c | 13 +++++++++++--
->>   1 file changed, 11 insertions(+), 2 deletions(-)
->>
->> diff --git a/sha1_name.c b/sha1_name.c
->> index f2a1ebe49..bb47b6702 100644
->> --- a/sha1_name.c
->> +++ b/sha1_name.c
->> @@ -480,13 +480,22 @@ struct min_abbrev_data {
->>          char *hex;
->>   };
->>
->> +static inline char get_hex_char_from_oid(const struct object_id *oid, int i)
-> 'i' is not very descriptive, maybe add a comment?
-> (I realize it is just walking through the char*s one by one)
-I renamed 'i' to 'pos' in my v3.
+If a command line argument "--missing" is given before the sample count,
+then a list of OIDs is generated without examining the repo.
 
->
-> Maybe this function (together with the change in the while below)
-> could go into hex.c as "int progressively_cmp_oids" that returns
-> the position at which the given oids differ?
->
->> +{
->> +       static const char hex[] = "0123456789abcdef";
->> +
->> +       if ((i & 1) == 0)
->> +               return hex[oid->hash[i >> 1] >> 4];
->> +       else
->> +               return hex[oid->hash[i >> 1] & 0xf];
->> +}
-> sha1_to_hex_r has very similar code, though it iterates less
-> and covers both cases in the loop body.
->
-> That is the actual reason I propose moving this function
-> (or a variant thereof) to hex.c as there we can share code.
+    Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ Makefile                     |  1 +
+ t/helper/.gitignore          |  1 +
+ t/helper/test-list-objects.c | 87 ++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 89 insertions(+)
+ create mode 100644 t/helper/test-list-objects.c
 
-You're right that sha1_to_hex_r is similar, in fact I based my work on 
-it. There are a few reasons I didn't combine the two implementations:
+diff --git a/Makefile b/Makefile
+index ed4ca438b..50a2eab80 100644
+--- a/Makefile
++++ b/Makefile
+@@ -652,6 +652,7 @@ TEST_PROGRAMS_NEED_X += test-hashmap
+ TEST_PROGRAMS_NEED_X += test-index-version
+ TEST_PROGRAMS_NEED_X += test-lazy-init-name-hash
+ TEST_PROGRAMS_NEED_X += test-line-buffer
++TEST_PROGRAMS_NEED_X += test-list-objects
+ TEST_PROGRAMS_NEED_X += test-match-trees
+ TEST_PROGRAMS_NEED_X += test-mergesort
+ TEST_PROGRAMS_NEED_X += test-mktemp
+diff --git a/t/helper/.gitignore b/t/helper/.gitignore
+index 7c9d28a83..9696f54bb 100644
+--- a/t/helper/.gitignore
++++ b/t/helper/.gitignore
+@@ -13,6 +13,7 @@
+ /test-index-version
+ /test-lazy-init-name-hash
+ /test-line-buffer
++/test-list-objects
+ /test-match-trees
+ /test-mergesort
+ /test-mktemp
+diff --git a/t/helper/test-list-objects.c b/t/helper/test-list-objects.c
+new file mode 100644
+index 000000000..22bc9b4e6
+--- /dev/null
++++ b/t/helper/test-list-objects.c
+@@ -0,0 +1,87 @@
++#include "cache.h"
++#include "packfile.h"
++
++struct count {
++	int total;
++	int select_mod;
++};
++
++int count_loose(const struct object_id *oid,
++		const char *path,
++		void *data)
++{
++	((struct count*)data)->total++;
++	return 0;
++}
++
++int count_packed(const struct object_id *oid,
++		 struct packed_git *pack,
++		 uint32_t pos,
++		 void* data)
++{
++	((struct count*)data)->total++;
++	return 0;
++}
++
++void output(const struct object_id *oid,
++	    struct count *c)
++{
++	if (!(c->total % c->select_mod))
++		printf("%s\n", oid_to_hex(oid));
++	c->total--;
++}
++
++int output_loose(const struct object_id *oid,
++		 const char *path,
++		 void *data)
++{
++	output(oid, (struct count*)data);
++	return 0;
++}
++
++int output_packed(const struct object_id *oid,
++		  struct packed_git *pack,
++		  uint32_t pos,
++		  void* data)
++{
++	output(oid, (struct count*)data);
++	return 0;
++}
++
++int cmd_main(int ac, const char **av)
++{
++	uint32_t hash_delt = 0xFDB97531;
++	uint32_t hash_base = 0x01020304;
++	int i, n = -1;
++	struct count c;
++	const int u_per_oid = sizeof(struct object_id) / sizeof(uint32_t);
++
++	c.total = 0;
++	if (ac > 1)
++		n = atoi(av[ac - 1]);
++
++	if (ac > 2 && !strcmp(av[1], "--missing")) {
++		while (c.total++ < n) {
++			for (i = 0; i < u_per_oid; i++) {
++				printf("%08x", hash_base);
++				hash_base += hash_delt;
++			}
++			printf("\n");
++		}
++	} else {
++		setup_git_directory();
++
++		if (n > 0) {
++			for_each_loose_object(count_loose, &c, 0);
++			for_each_packed_object(count_packed, &c, 0);
++			c.select_mod = 1 + c.total / n;
++		} else {
++			c.select_mod = 1;
++		}
++
++		for_each_loose_object(output_loose, &c, 0);
++		for_each_packed_object(output_packed, &c, 0);
++	}
++
++	exit(0);
++}
+-- 
+2.14.1.538.g56ec8fc98.dirty
 
-* I wanted to be sure my patch was only touching the code for 
-disambiguating short-shas. Modifying code in hex.c would touch many more 
-code paths.
-
-* I realize that the extra branch in my version is slower than the 
-branchless loop body in sha1_to_hex_r, so either I would slow that 
-method or make the method call more complicated by returning two chars 
-at a time.
-
-* I wanted to strongly hint that the method should be inlined, but I'm 
-not sure how to guarantee that happens across a linker boundary without 
-doing strange things in header files.
-
-I'm happy to revisit this after my patch is complete, since I think 
-there are interesting trade-offs to consider here. I'd prefer to keep 
-this discussion separate from the focus on disambiguation.
-
-Thanks,
--Stolee
