@@ -2,124 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E19BE202DD
-	for <e@80x24.org>; Mon,  2 Oct 2017 05:53:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12E32202DD
+	for <e@80x24.org>; Mon,  2 Oct 2017 05:54:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751145AbdJBFxV (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Oct 2017 01:53:21 -0400
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:47957 "EHLO
-        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750792AbdJBFxU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Oct 2017 01:53:20 -0400
-Received: by mail-pf0-f177.google.com with SMTP id u12so2423896pfl.4
-        for <git@vger.kernel.org>; Sun, 01 Oct 2017 22:53:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=SKzhyqvNMG2gksHcBI74+/OQHFsYbDQqMzeZFAC7h2A=;
-        b=uFv8ZQ0ve/3RsorRnVcPd1Evx4j6RkvfsJnPJBH1733Epqqe3GZu4oSQ/rR2pyunDL
-         vmTo1/Is0ditlur86+hVmVUJQpAtwPEw5GuC7PBLZmBbICyJe4/jCLSvi52oIZm9y/tC
-         M4Ztp6oUoQxSnyOohiFVwqdVo0a+wVgW/2YkFkcCZJFxr5JVEDNcJfCKzlXR4GrsYpCK
-         KEFyicjfU7exgy3q9c08slzF0bw2ZB0lmkELhaghvh7Uydzx0y8Fs90wurPwfhoUwb91
-         ba7MCXdmUVRj4SAJ7VWdOR9tnmUxusTafVhdNBSpoljVZukeYhNrtX5u1gRt1soIna5s
-         2xfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=SKzhyqvNMG2gksHcBI74+/OQHFsYbDQqMzeZFAC7h2A=;
-        b=DNTe4u/qVhK9OQHFMRQHCtVZyDmrcKgLR4DEu+fZ4nbSuEkhR35gcJZ+bvr7gONq08
-         rLlLtVr2mFir/QED2sJYLyMi8l4I2w6spL0C4KM1CtheiZ85iK6jiiQ+zIPLP1QUO+la
-         rXZolmbY/dEw96ySXAubqKG/lJt+2geDORyX+anUrGH0gh44nQjh6dQeYe3WnWQzgpa6
-         87TT4tVvKkV1z/mxjJr07Q3Q6GSAtbcsxHIhzWzuZUowSpaW+GH8lgA4GoLFJbCeSWdE
-         XgiZ0yEUnxSL3dEq2yHx+ldTdfH0yjiuyz01uI8mtPbvVvc+0aVZJyWW4oc4/4SoAwM3
-         2dxA==
-X-Gm-Message-State: AHPjjUhX7kIKvMi0jyfMUpWQMGV5OmIvPGFnsD/MrekngvMLCh6Txy6J
-        MkYJXcC1Ttt59Szf8rhNoF+bWq3gKyM=
-X-Google-Smtp-Source: AOwi7QBKaEl4G6rptSRw7Ix/67l2Bpzs7y23QjYA5BWpTstYXD0YPU0tJ9iPSDQobCcROUudYPjEcQ==
-X-Received: by 10.84.209.135 with SMTP id y7mr13263963plh.439.1506923599591;
-        Sun, 01 Oct 2017 22:53:19 -0700 (PDT)
-Received: from localhost ([205.175.97.239])
-        by smtp.gmail.com with ESMTPSA id q136sm14959751pfq.10.2017.10.01.22.53.17
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 01 Oct 2017 22:53:18 -0700 (PDT)
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH] ref-filter.c: pass empty-string as NULL to atom parsers
-Date:   Sun,  1 Oct 2017 22:53:11 -0700
-Message-Id: <20171002055311.29681-1-me@ttaylorr.com>
-X-Mailer: git-send-email 2.14.1.145.gb3622a4ee
-In-Reply-To: <20171002055052.GB10729@D-10-157-251-166.dhcp4.washington.edu>
-References: <20171002055052.GB10729@D-10-157-251-166.dhcp4.washington.edu>
+        id S1751195AbdJBFyf (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Oct 2017 01:54:35 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61003 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751104AbdJBFye (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Oct 2017 01:54:34 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6B81394F89;
+        Mon,  2 Oct 2017 01:54:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=4JjtR/bsCG1YsxkJWHsUswB01lk=; b=g4siA9
+        SMFlmaZcjQffBmxIGg8EFY2Ysv+kVlQY8wiu5DsH8ewwmpXBbWbxjAeCQPeZU66Z
+        i1FbdZQlLBSIf9gSPOAcUpT6iadX7jYnSDgrl11sx5p39DRNR9kUQlB0av7AsA8R
+        EvOFcv5NafBAoo777Lyhg5WgCSUJHuzuQ4+0M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Km6pos0lqnpF9T5Rwh7PfBM6uR2uAmMm
+        eISD3kXKTx3RGH3zKeNJOkjNl1flMel0wbspgGqXUeLeLXa+PGNzN1uu+EY8REJT
+        MWgdaiiJoS0PDlONe2PpEubLzHQhf9isqKkJ0kFY9aRagipKffoWjrtDEw7FR04E
+        YQml936eMBU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6386A94F87;
+        Mon,  2 Oct 2017 01:54:33 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D446694F86;
+        Mon,  2 Oct 2017 01:54:32 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Michael J Gruber <git@grubix.eu>
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
+Subject: Re: [PATCH 0/4] pre-merge hook
+References: <cover.1506081120.git.git@grubix.eu>
+Date:   Mon, 02 Oct 2017 14:54:31 +0900
+In-Reply-To: <cover.1506081120.git.git@grubix.eu> (Michael J. Gruber's message
+        of "Fri, 22 Sep 2017 14:04:11 +0200")
+Message-ID: <xmqqfub2p014.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 29C35F2E-A736-11E7-B68B-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Peff points out that different atom parsers handle the empty
-"sub-argument" list differently. An example of this is the format
-"%(refname:)".
+Michael J Gruber <git@grubix.eu> writes:
 
-Since callers often use `string_list_split` (which splits the empty
-string with any delimiter as a 1-ary string_list containing the empty
-string), this makes handling empty sub-argument strings non-ergonomic.
+> Now that f8b863598c ("builtin/merge: honor commit-msg hook for merges",
+> 2017-09-07) has landed, merge is getting closer to behaving like commit,
+> which is important because both are used to complete merges (automatic
+> vs. non-automatic).
 
-Let's fix this by assuming that atom parser implementations don't care
-about distinguishing between the empty string "%(refname:)" and no
-sub-arguments "%(refname)".
+Just a gentle ping to the thread to see if it is still alive.
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- ref-filter.c            | 17 ++++++++++++++++-
- t/t6300-for-each-ref.sh |  1 +
- 2 files changed, 17 insertions(+), 1 deletion(-)
+I think people agree that this is a good thing to do, but it seems
+that the execution leaves a few loose ends, judging from the review
+comments that have yet to be answered.
 
-diff --git a/ref-filter.c b/ref-filter.c
-index bc591f4f3..22be4097a 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -415,8 +415,23 @@ static int parse_ref_filter_atom(const struct ref_format *format,
- 	REALLOC_ARRAY(used_atom, used_atom_cnt);
- 	used_atom[at].name = xmemdupz(atom, ep - atom);
- 	used_atom[at].type = valid_atom[i].cmp_type;
--	if (arg)
-+	if (arg) {
- 		arg = used_atom[at].name + (arg - atom) + 1;
-+		if (!*arg) {
-+			/*
-+			 * string_list_split is often use by atom parsers to
-+			 * split multiple sub-arguments for inspection.
-+			 *
-+			 * Given a string that does not contain a delimiter
-+			 * (example: ""), string_list_split returns a 1-ary
-+			 * string_list that requires adding special cases to
-+			 * atom parsers.
-+			 *
-+			 * Thus, treat the empty argument string as NULL.
-+			 */
-+			arg = NULL;
-+		}
-+	}
- 	memset(&used_atom[at].u, 0, sizeof(used_atom[at].u));
- 	if (valid_atom[i].parser)
- 		valid_atom[i].parser(format, &used_atom[at], arg);
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index 2274a4b73..edc1bd8ea 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -51,6 +51,7 @@ test_atom() {
- }
- 
- test_atom head refname refs/heads/master
-+test_atom head refname: refs/heads/master
- test_atom head refname:short master
- test_atom head refname:lstrip=1 heads/master
- test_atom head refname:lstrip=2 master
--- 
-2.14.1.145.gb3622a4ee
-
+Thanks.
