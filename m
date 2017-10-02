@@ -6,53 +6,59 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F0D4202DD
-	for <e@80x24.org>; Mon,  2 Oct 2017 05:38:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E9A420365
+	for <e@80x24.org>; Mon,  2 Oct 2017 05:41:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750810AbdJBFiY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Oct 2017 01:38:24 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57162 "HELO cloud.peff.net"
+        id S1750940AbdJBFl3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Oct 2017 01:41:29 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57172 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750763AbdJBFiX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Oct 2017 01:38:23 -0400
-Received: (qmail 7038 invoked by uid 109); 2 Oct 2017 05:38:24 -0000
+        id S1750763AbdJBFl3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Oct 2017 01:41:29 -0400
+Received: (qmail 7166 invoked by uid 109); 2 Oct 2017 05:41:29 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 02 Oct 2017 05:38:24 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 02 Oct 2017 05:41:29 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 25813 invoked by uid 111); 2 Oct 2017 05:39:04 -0000
+Received: (qmail 25845 invoked by uid 111); 2 Oct 2017 05:42:09 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Mon, 02 Oct 2017 01:39:04 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Mon, 02 Oct 2017 01:42:09 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Oct 2017 01:38:21 -0400
-Date:   Mon, 2 Oct 2017 01:38:21 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Oct 2017 01:41:27 -0400
+Date:   Mon, 2 Oct 2017 01:41:27 -0400
 From:   Jeff King <peff@peff.net>
 To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 04/11] tempfile: fix documentation on `delete_tempfile()`
-Message-ID: <20171002053821.itkkmi2png3m6gdw@sigill.intra.peff.net>
+Cc:     git@vger.kernel.org, Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH 05/11] cache-tree: simplify locking logic
+Message-ID: <20171002054126.xkvv2zglefxcvbia@sigill.intra.peff.net>
 References: <cover.1506862824.git.martin.agren@gmail.com>
- <17640b932b49cf86d53a0149300f65f01bff9135.1506862824.git.martin.agren@gmail.com>
+ <3475f0eee33ca0c4b2bc928191f0b06576ee29fb.1506862824.git.martin.agren@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <17640b932b49cf86d53a0149300f65f01bff9135.1506862824.git.martin.agren@gmail.com>
+In-Reply-To: <3475f0eee33ca0c4b2bc928191f0b06576ee29fb.1506862824.git.martin.agren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Oct 01, 2017 at 04:56:05PM +0200, Martin Ågren wrote:
+On Sun, Oct 01, 2017 at 04:56:06PM +0200, Martin Ågren wrote:
 
-> The function has always been documented as returning 0 or -1. It is in
-> fact `void`. Correct that. As part of the rearrangements we lose the
-> mention that `delete_tempfile()` might set `errno`. Because there is
-> no return value, the user can't really know whether it did anyway.
+> After we have taken the lock using `LOCK_DIE_ON_ERROR`, we know that
+> `newfd` is non-negative. So when we check for exactly that property
+> before calling `write_locked_index()`, the outcome is guaranteed.
+> 
+> If we write and commit successfully, we set `newfd = -1`, so that we can
+> later avoid calling `rollback_lock_file` on an already-committed lock.
+> But we might just as well unconditionally call `rollback_lock_file()` --
+> it will be a no-op if we have already committed.
+> 
+> All in all, we use `newfd` as a bool and the only benefit we get from it
+> is that we can avoid calling a no-op. Remove `newfd` so that we have one
+> variable less to reason about.
 
-Right, your documentation change makes sense. Thanks for catching this.
+Nice, this looks much simpler and the reasoning above is all sound.
 
-I was curious if this inconsistency was introduced during review, but
-even the initial version to the list returns void. So I guess it
-happened sometime during the writing. :)
+I think cmd_checkout_index() has the exact same thing going on.
 
 -Peff
