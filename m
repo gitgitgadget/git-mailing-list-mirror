@@ -2,161 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 111CB20A10
-	for <e@80x24.org>; Mon,  2 Oct 2017 00:33:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7ACA020A10
+	for <e@80x24.org>; Mon,  2 Oct 2017 00:39:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751880AbdJBAdY (ORCPT <rfc822;e@80x24.org>);
-        Sun, 1 Oct 2017 20:33:24 -0400
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:51812 "EHLO
-        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751641AbdJBAdV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Oct 2017 20:33:21 -0400
-Received: by mail-pf0-f180.google.com with SMTP id n14so243341pfh.8
-        for <git@vger.kernel.org>; Sun, 01 Oct 2017 17:33:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=JPidrjYx10D7zrT2T5114ASefnra/3lNc3Cbszsg0vM=;
-        b=yFmkrC6PTyVc1els2jvyFiXt4dv4+2ODbxa847cseWp43AWKCSnoV0Xs6ktJZpz6Lm
-         7j1OvLW5MP0LXwuJAZTueGUS29DuDdDqMf2If4ZvawJt3LmcuMvRJaTRuhAes/ltivt5
-         dSN9tshmkv+nU3rVsXg9/UjeqVZRC4PR4YXAXBLNc4E2cfii1uBlL0HhiolcEk16ZtUI
-         WWeV4PZ4wx3oN2Q5zh5fn3KyCyZQMQ5Ztb3huzVlMw05SAaXZJXYtScgIbyWspC5DroQ
-         xAA5MDxxr6/aHsIcdCWw7gV7SjDMbrEBwy2A6vrent5lwSDLXsiFc/xmRXAGyFvRojvc
-         rdWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=JPidrjYx10D7zrT2T5114ASefnra/3lNc3Cbszsg0vM=;
-        b=nRnUshbdH+pgRY7Sq5R+lCgA6XOO5Eowatwd2i3uYIXIMx5fzrSyeuAgYYIPjtuEUh
-         asGyTzGHsBV897t2KD60OoSHdg6okKTsw11e8Gu1VOgh2LkFo2d/lo1Ft0RFtp8JG9yJ
-         AwGGk1EAF0WB/B8QuYXoWcnSptAoQapXFp+q8DRV/ovW4qhDc7txOJKhW6JnkyZco0dX
-         YperNEqEneP8AvbLRD1x6bKweW407V8KFcYpwfvo7jXW9C3J1c7KDKMoR38Qcm/ToiEl
-         dEsf1pLABMq+D8coVjGWSoJhAtYVE3fZc3DVYmNeioi2pag2dty9gHSuARJurLwftZUl
-         62Zw==
-X-Gm-Message-State: AHPjjUgCOmcoeXSYJVgl3IRU5viVK5D2ohQgw6NZdI/rV8RbAoKNdhDH
-        ehQGV+xvr8ctPb1VdiRoiKbOOsAI+Eg=
-X-Google-Smtp-Source: AOwi7QDkBGajziqLhwfywoDvnMyRTOlZix95Gr5QUHU4DLJ+NIq4WQ0Z2kTrZDlf4WLo6sR98++tGA==
-X-Received: by 10.98.11.19 with SMTP id t19mr13217763pfi.212.1506904400474;
-        Sun, 01 Oct 2017 17:33:20 -0700 (PDT)
-Received: from localhost ([205.175.97.239])
-        by smtp.gmail.com with ESMTPSA id g16sm8808960pgn.43.2017.10.01.17.33.18
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 01 Oct 2017 17:33:18 -0700 (PDT)
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH v5 6/6] ref-filter.c: parse trailers arguments with %(contents) atom
-Date:   Sun,  1 Oct 2017 17:33:04 -0700
-Message-Id: <20171002003304.77514-6-me@ttaylorr.com>
-X-Mailer: git-send-email 2.14.1.145.gb3622a4ee
-In-Reply-To: <20171002003304.77514-1-me@ttaylorr.com>
-References: <20171002003116.GA69902@D-10-157-251-166.dhcp4.washington.edu>
- <20171002003304.77514-1-me@ttaylorr.com>
+        id S1751075AbdJBAjs (ORCPT <rfc822;e@80x24.org>);
+        Sun, 1 Oct 2017 20:39:48 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52423 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750947AbdJBAjr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Oct 2017 20:39:47 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 07032B6439;
+        Sun,  1 Oct 2017 20:39:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=eE6yau1knUlJ3kQeS/yxS/jhXnM=; b=qILWTM
+        TK8wFXn025WBfL2Ar8FOKM64pQtT3bdP5K0D7cvljaeGDqaBaVHnbtf4qY0dJZwD
+        lQHrBMfS+BtHG5qY/ieFzBkILXZKhIyuEKTkBotxy9bOYPaR9m7oD3B6yA5zreBS
+        wfbW2nQuBaM2Psj69tCCNQzuYjoQPZ9ETNE/o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=lVg9An1QPChDbFmA+jiVA+uIIlieN6wb
+        D2PTCXSwvhUudoIv61C1UdAsuFn0JxOqFD32l9NUVcM7PZvKu37eT9VX4RBl7BiE
+        XIkAfxUqAbq8LtJ+fJTz00CzFEEKE4rTInKOL3QhBAOSgYu2a9i9AesWqpCjiGSO
+        Mn2L/lWeM6s=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id F1306B6438;
+        Sun,  1 Oct 2017 20:39:46 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5F286B6435;
+        Sun,  1 Oct 2017 20:39:46 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Prathamesh Chavan <pc44800@gmail.com>
+Cc:     christian.couder@gmail.com, git@vger.kernel.org, hanwen@google.com,
+        sbeller@google.com
+Subject: Re: [PATCH v6 0/3] Incremental rewrite of git-submodules
+References: <xmqq4lrrfjt9.fsf@gitster.mtv.corp.google.com>
+        <20170929094453.4499-1-pc44800@gmail.com>
+Date:   Mon, 02 Oct 2017 09:39:45 +0900
+In-Reply-To: <20170929094453.4499-1-pc44800@gmail.com> (Prathamesh Chavan's
+        message of "Fri, 29 Sep 2017 15:14:50 +0530")
+Message-ID: <xmqqo9pqs7qm.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3095798A-A70A-11E7-868D-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The %(contents) atom takes a contents "field" as its argument. Since
-"trailers" is one of those fields, extend contents_atom_parser to parse
-"trailers"'s arguments when used through "%(contents)", like:
+Prathamesh Chavan <pc44800@gmail.com> writes:
 
-  %(contents:trailers:unfold,only)
+> * The function get_submodule_displaypath() was modified for the case
+>   when get_super_prefix() returns a non-null value. The condition to check
+>   if the super-prefix ends with a '/' is removed. To accomodate this change
+>   appropriate value of super_prefix is passed instead in the recursive calls
+>   of init_submodule() and status_submodule().
 
-A caveat: trailers_atom_parser expects NULL when no arguments are given
-(see: `parse_ref_filter_atom`). This is because string_list_split (given
-a maxsplit of -1) returns a 1-ary string_list* containing the given
-string if the delimiter could not be found using `strchr`.
+OK.
 
-To simulate this behavior without teaching trailers_atom_parser to
-accept strings with length zero, conditionally pass NULL to
-trailers_atom_parser if the arguments portion of the argument to
-%(contents) is empty.
+> * To accomodate the possiblity of a direct call to the function
+>   init_submodule(), a callback function init_submodule_cb() is introduced
+>   which takes cache_entry and init_cb structures as input params, and
+>   calls init_submodule() with parameters which are more appropriate
+>   for a direct call of this function.
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- ref-filter.c            |  7 ++++---
- t/t6300-for-each-ref.sh | 37 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 41 insertions(+), 3 deletions(-)
+OK.
 
-diff --git a/ref-filter.c b/ref-filter.c
-index 43ed10a5e..5b64de6ea 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -212,9 +212,10 @@ static void contents_atom_parser(const struct ref_format *format, struct used_at
- 		atom->u.contents.option = C_SIG;
- 	else if (!strcmp(arg, "subject"))
- 		atom->u.contents.option = C_SUB;
--	else if (!strcmp(arg, "trailers"))
--		atom->u.contents.option = C_TRAILERS;
--	else if (skip_prefix(arg, "lines=", &arg)) {
-+	else if (skip_prefix(arg, "trailers", &arg)) {
-+		skip_prefix(arg, ":", &arg);
-+		trailers_atom_parser(atom, *arg ? NULL : arg);
-+	} else if (skip_prefix(arg, "lines=", &arg)) {
- 		atom->u.contents.option = C_LINES;
- 		if (strtoul_ui(arg, 10, &atom->u.contents.nlines))
- 			die(_("positive value expected contents:lines=%s"), arg);
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index 54e52d4e9..872973b95 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -655,6 +655,35 @@ test_expect_success '%(trailers:only) and %(trailers:unfold) work together' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success '%(contents:trailers:unfold) unfolds trailers' '
-+	git for-each-ref --format="%(contents:trailers:unfold)" refs/heads/master >actual &&
-+	{
-+		unfold <trailers
-+		echo
-+	} >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '%(contents:trailers:only) shows only "key: value" trailers' '
-+	git for-each-ref --format="%(contents:trailers:only)" refs/heads/master >actual &&
-+	{
-+		grep -v patch.description <trailers &&
-+		echo
-+	} >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '%(contents:trailers:only) and %(contents:trailers:unfold) work together' '
-+	git for-each-ref --format="%(contents:trailers:only,unfold)" refs/heads/master >actual &&
-+	git for-each-ref --format="%(contents:trailers:unfold,only)" refs/heads/master >reverse &&
-+	test_cmp actual reverse &&
-+	{
-+		grep -v patch.description <trailers | unfold &&
-+		echo
-+	} >expect &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success '%(trailers) rejects unknown trailers arguments' '
- 	cat >expect <<-EOF &&
- 	fatal: unknown %(trailers) argument: unsupported
-@@ -663,6 +692,14 @@ test_expect_success '%(trailers) rejects unknown trailers arguments' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success '%(contents:trailers) rejects unknown trailers arguments' '
-+	cat >expect <<-EOF &&
-+	fatal: unknown %(trailers) argument: unsupported
-+	EOF
-+	test_must_fail git for-each-ref --format="%(contents:trailers:unsupported)" 2>actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'basic atom: head contents:trailers' '
- 	git for-each-ref --format="%(contents:trailers)" refs/heads/master >actual &&
- 	sanitize_pgp <actual >actual.clean &&
--- 
-2.14.1.145.gb3622a4ee
+> * Similar changes were even done for status_submodule(). But as it was
+>   observed that the number of params increased a lot due to flags
+>   like quiet, recursive, cached, etc, and keeping in mind the future
+>   subcommand's ported functions as well, a single unsigned int called
+>   cb_flags was introduced to store all of these flags, instead of having
+>   parameter for each one.
 
+Use of a flag word instead of many bit parameter is a very good
+idea.  I do not think it is brilliant to call a field in a structure
+that is used as an interface to the callback interface cb_flags,
+though, especially when it is already clear that it is about the
+callback from the name the structure.  Just name them "flags".
+
+I may or may not leave more detailed comments on individual patches.
+
+Thanks.
