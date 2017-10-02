@@ -2,78 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 497DA20281
-	for <e@80x24.org>; Mon,  2 Oct 2017 17:16:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B0AEA20281
+	for <e@80x24.org>; Mon,  2 Oct 2017 17:18:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751204AbdJBRQg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Oct 2017 13:16:36 -0400
-Received: from mout.gmx.net ([212.227.15.18]:65370 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751065AbdJBRQf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Oct 2017 13:16:35 -0400
-Received: from [192.168.178.43] ([88.70.159.90]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MWk3f-1dngZh1KTj-00Xrh8; Mon, 02
- Oct 2017 19:16:30 +0200
-Subject: Re: [PATCH v3] clang-format: add a comment about the meaning/status
- of the
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <20170929224505.GN19555@aiede.mtv.corp.google.com>
- <20171001154425.5568-1-s-beyer@gmx.net>
- <xmqqpoa6tp79.fsf_-_@gitster.mtv.corp.google.com>
-From:   Stephan Beyer <s-beyer@gmx.net>
-Message-ID: <ce2267e3-21af-dbfc-5b20-45e272a775fb@gmx.net>
-Date:   Mon, 2 Oct 2017 19:16:29 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        id S1751131AbdJBRSF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Oct 2017 13:18:05 -0400
+Received: from mail-io0-f176.google.com ([209.85.223.176]:56172 "EHLO
+        mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751065AbdJBRSE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Oct 2017 13:18:04 -0400
+Received: by mail-io0-f176.google.com with SMTP id z187so5330512ioz.12
+        for <git@vger.kernel.org>; Mon, 02 Oct 2017 10:18:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=fsdL1dqUcCj6l8KL52/0W3LEz1BkVLfBCo46on5PjZ4=;
+        b=CPfcuOMov5eoGnKPm6+fkLSTCq3uPEIxuiq5c+RpN9EvEYu9njRCw01OlNDR7XZzVY
+         f2WwxnRZLFI/RnCVOtvHxAk5UKc0BqVHf9hDiav/0gUH1N2Jwab9/IZ587XbJHZtBaVg
+         aDzzhg/riVgqoMn6VFSqWGSfpL8vUlM2Hw7b3fPuJ8io6hiX1SwMDJXxkoVPp9BgkRaX
+         9xAnRXZQGPAiDkMtaXN4C913Sx5BwNqt06vErRUcICAeURQFywo7gOnHQdSooEmNONJb
+         TgS58t4T+rFT4MfFAZ1HJt2OIIeTdGv7KhSdyomX7OI0uoSCNzJFSiwuMZMtxxQA47/J
+         s2SA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=fsdL1dqUcCj6l8KL52/0W3LEz1BkVLfBCo46on5PjZ4=;
+        b=XrkhsfXgPgtib/B7XfKrC2V5rfPEVjnUxNUXCbgWZ2ZHlZBSWT6IWZl5iQGkKTvzwa
+         w7AY3zrOP8/8TSkjmhr6nodObGhXQ7vh2rIUKfSKv/yIEVlKMBkfQNP9XwhI5/RY71Qt
+         x87Unkzqnui8L3OEb6jecoN/0Jg/+qKDMb3BwSOSAlAi9QHKrJxFU+8qlflcs83uE8qn
+         TolvcQGeWeJGmr/IccvTTw2jmKahRCg6CeOhc9dy9BlPE8OQZFHe29TFlIesfDL0/N1L
+         6p46zYSc3zSaoVvO6ZoFV6v37KxIUInq+lwgK+cJyr3x6fIIxTGLOaxvFnjnFRxrPePM
+         MwhA==
+X-Gm-Message-State: AMCzsaVJxt5x49sNe7mSvKCeRLMe2dNWB1RPrMsO376waHuXTRb33L5r
+        qJmZhpX1gyfLNhCkXpXro7f23oqcEl8Mh65uO34=
+X-Google-Smtp-Source: AOwi7QCZHwMGRCuMHLUKHSASJrdET13J3CezcZ5cdiHSbTDE01VUG8IpIZ0nAQ+JSsqrzWhqy++LgggTcyTGgmrJcyk=
+X-Received: by 10.107.200.86 with SMTP id y83mr25333475iof.24.1506964684121;
+ Mon, 02 Oct 2017 10:18:04 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqqpoa6tp79.fsf_-_@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:n0ufYRYtFdiHHW0VW5kC7XkkPIC7umf+RJXbMG7TpGpXjSUahPT
- bqC3xDsv4OAqwzq0F4+MHBcHLC0Sr+I8H9Snrc5lZG8PUX8YwgCgjfYGZo5rzZ+o1BD658a
- E5IlQ/ZHy3GxDImdEGA8I/Svn0rvfRC2ofB5jlIMbZ8LRAA/BVFMt6lr6rGmLcXfQjgaPRP
- S6SXPiOQYM54CxQH+c1KQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:XZED60GF4T8=:zJYWrs7U527aujp5b3hezK
- wqGE0iDoNwcY61hf3r4Ie4CN2vIJw0phzdlXerWjtYRI6z/CxNJGYbOZvXSK42PjhEpxYHBmU
- 9JA4JgQiwIsbCZTnjvmQHdaFqv4dYziLGxeKf90nZkttuoNcyJJqO70kNF36njKOcVSpXaJes
- DpITvj3bRdm2zqlaCKljppV3Hl9ElTmcygKZ+PBr3uc/+oYrQXkR9UDSo+gnxTs2skuXB+8lX
- THoZki31ZtxbXwlYKuTnCKfp/+reVL4ep8wZsiy9ox7kmBFKyHdA9UEIdSJ4LQEdO8SdIih4A
- 7asmMUC/ndhOXPtj8FFml6FkWXvDYizMr9u2kf/XcXrTGFY4GzduzddXosz+uv3V3ckBdZeW2
- BuyVrjgcNXkLtEJ8bxZfkNzoLIRs2zf54HeoUH8coAmWkjsDORtHZI1V95OeWxb6FOraSCSUv
- B82qQjxMLC90HxJUamRJbTLQC8a+p4Ys+dplzn4ASyA6HmzNwUufJ02fp6ffVlAphBgKmDIFt
- mOMwGH704QzL6EXz/L1P1TcNargl9zBCiRT50p19Bxbjj70iIb6C1riAdRNp//bMbf/gr/H8X
- aTs3ezUcxX5yz8mZGM8WhQZS8qOQ3Ed+qtM4umB73zXuFzvPYgh1CmhPzd8N2MBC7psYv0dgw
- rOBBhM02feXPb79Ol1pC7R8uy7DBvXU/8jLdj8RBf65DcWy+ssah730095+g1aFJR/7u5P2rR
- dDHhKckqsSz5STIvgQGfGI7NncUAZ121N1s2QWNV5vajh12Y3Tvs7gq/jIBwvq6djPPSjVfvj
- BC2/GCr/YlUCiLyXxhYZf9PqFxpgTrh8vGbusp6xfUHReZMeh0=
+Received: by 10.107.164.103 with HTTP; Mon, 2 Oct 2017 10:18:02 -0700 (PDT)
+In-Reply-To: <20171002140011.GE31762@io.lakedaemon.net>
+References: <20170307001709.GC26789@aiede.mtv.corp.google.com>
+ <xmqqa828733s.fsf@gitster.mtv.corp.google.com> <xmqq1snh29re.fsf@gitster.mtv.corp.google.com>
+ <20170911185913.GA5869@google.com> <alpine.DEB.2.21.1.1709131340030.4132@virtualbox>
+ <CANgJU+Wv1nx79DJTDmYE=O7LUNA3LuRTJhXJn+y0L0C3R+YDEA@mail.gmail.com>
+ <CA+55aFwUn0KibpDQK2ZrxzXKOk8-aAub2nJZQqKCpq1ddhDcMQ@mail.gmail.com>
+ <alpine.DEB.2.21.1.1709142037490.4132@virtualbox> <20170926170502.GY31762@io.lakedaemon.net>
+ <alpine.DEB.2.21.1.1709262356360.40514@virtualbox> <20171002140011.GE31762@io.lakedaemon.net>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Mon, 2 Oct 2017 10:18:02 -0700
+X-Google-Sender-Auth: 5Jea3JaUfr65PrGjigZ-qCdjMzQ
+Message-ID: <CA+55aFyb=h1V-3tkESY8jkc356k5rcQRmjr6o_8p6ZgKMp=Jag@mail.gmail.com>
+Subject: Re: RFC v3: Another proposed hash function transition plan
+To:     Jason Cooper <jason@lakedaemon.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        demerphq <demerphq@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jeff King <peff@peff.net>, David Lang <david@lang.hm>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Mon, Oct 2, 2017 at 7:00 AM, Jason Cooper <jason@lakedaemon.net> wrote:
+>
+> Ahhh, so if I understand you correctly, you'd prefer SHA-256 over
+> SHA3-256 because it's more performant for your usecase?  Well, that's a
+> completely different animal that cryptographic suitability.
 
-On 10/02/2017 01:37 AM, Junio C Hamano wrote:
-> diff --git a/.clang-format b/.clang-format
-> index 56822c116b..7670eec8df 100644
-> --- a/.clang-format
-> +++ b/.clang-format
-> @@ -1,4 +1,8 @@
-> -# Defaults
-> +# This file is an example configuration for clang-format 5.0.
-> +#
-> +# Note that this style definition should only be understood as a hint
-> +# for writing new code. The rules are still work-in-progress and does
-> +# not yet exactly match the style we have in the existing code.
+In almost all loads I've seen, zlib inflate() cost is a bigger deal
+than the crypto load. The crypto people talk about cycles per byte,
+but the deflate code is what usually takes the page faults and cache
+misses etc, and has bad branch prediction. That ends up easily being
+tens or thousands of cycles, even for small data.
 
-I'm totally fine with this.
+But it does obviously depend on exactly what you do. The Windows
+people saw SHA1 as costly mainly due to the index file (which is just
+a "fancy crc", and not even cryptographically important, and where the
+cache misses actually happen when doing crypto, not decompressing the
+data).
 
-Stephan
+And fsck and big initial checkins can have a very different profile
+than most "regular use" profiles. Again, there the crypto happens
+first, and takes the cache misses. And the crypto is almost certainly
+_much_ cheaper than just the act of loading the index file contents in
+the first place. It may show up on profiles fairly clearly, but that's
+mostly because crypto is *intensive*, not because crypto takes up most
+of the cycles.
+
+End result: honestly, the real cost on almost any load is not crypto
+or necessarily even (de)compression, even if those are the things that
+show up. It's the cache misses and the "get data into user space"
+(whether using "read()" or page faulting). Worrying about cycles per
+byte of compression speed is almost certainly missing the real issue.
+
+The people who benchmark cryptography tend to intentionally avoid the
+actual real work, because they just want to know the crypto costs. So
+when you see numbers like "9 cycles per byte" vs "12 cycles per byte"
+and think that it's a big deal - 30% performance difference! -  it's
+almost certainly complete garbage. It may be 30%, but it is likely 30%
+out of 10% total, meaning that it's almost in the noise for any but
+some very special case.
+
+                 Linus
