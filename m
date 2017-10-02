@@ -2,104 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 83CCB20281
-	for <e@80x24.org>; Mon,  2 Oct 2017 12:15:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 56E8620281
+	for <e@80x24.org>; Mon,  2 Oct 2017 13:07:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751166AbdJBMPG (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Oct 2017 08:15:06 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62110 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751062AbdJBMPF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Oct 2017 08:15:05 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 881D199455;
-        Mon,  2 Oct 2017 08:15:04 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=D1FQR/SKUeAgPhpy+SggBsgkPno=; b=oRDoPM
-        Fd/UJjh14Eb8FqMSGods090vXM3Gx57LxJnMtAVEN9SfFG09OOBTCSjEgykxsSVc
-        8WSDjWGtuLThOO+VlFgKyjhKZBlC4ygjuaCwEPrxmRM03f/QgbUz7LL05oUMMMmm
-        qknlvIO640V4pb93Xle4Xhh8FiGgf1q1tfecE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=uYNZcI3sC5cF2clOsDDN1lhbXYm95xP3
-        NZAzHCrlhkRHhazxUL0E4mus0Bd88/RRnlai3hX1UVX1iC9Z2ETnj537YRM0XjEO
-        j3vhCZDqbpCPBq2mncnB3GhSg6cPF3JtbGRuE35r4CRQN+x2iYKrf1gmoQ6PR7x5
-        6arpESmRuWY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 68F7E99453;
-        Mon,  2 Oct 2017 08:15:04 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CC9CE9944B;
-        Mon,  2 Oct 2017 08:15:01 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH v6 0/7] Support %(trailers) arguments in for-each-ref(1)
-References: <20170930062238.87077-1-me@ttaylorr.com>
-        <20170930184151.GB43975@D-10-157-251-166.dhcp4.washington.edu>
-        <20171001000647.GA20767@D-10-157-251-166.dhcp4.washington.edu>
-        <20171001161725.GA66172@D-10-157-251-166.dhcp4.washington.edu>
-        <20171002003116.GA69902@D-10-157-251-166.dhcp4.washington.edu>
-        <20171002052326.GA10729@D-10-157-251-166.dhcp4.washington.edu>
-        <xmqq7eweotup.fsf@gitster.mtv.corp.google.com>
-Date:   Mon, 02 Oct 2017 21:15:00 +0900
-In-Reply-To: <xmqq7eweotup.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Mon, 02 Oct 2017 17:07:58 +0900")
-Message-ID: <xmqqy3otn3uj.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751339AbdJBNHO (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Oct 2017 09:07:14 -0400
+Received: from mout.web.de ([212.227.15.14]:50285 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751062AbdJBNHM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Oct 2017 09:07:12 -0400
+Received: from [192.168.178.36] ([91.20.57.42]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MHp7t-1e2Zjy1m1N-003fPL; Mon, 02
+ Oct 2017 15:06:59 +0200
+Subject: Re: [PATCH] tag: avoid NULL pointer arithmetic
+To:     Jeff King <peff@peff.net>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+References: <99e56671-bdf9-a59f-ae7b-758f1b7a8f14@web.de>
+ <20171002050810.ryj4nv3nwqp7gb7p@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <32a8b949-638a-1784-7fba-948ae32206fc@web.de>
+Date:   Mon, 2 Oct 2017 15:06:57 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 50E4112C-A76B-11E7-BC76-8EF31968708C-77302942!pb-smtp1.pobox.com
+In-Reply-To: <20171002050810.ryj4nv3nwqp7gb7p@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:PTbWDxsoUrMH4Yr1m3sBiU8ozSKnyNK2GDDU/doQdHI5rsS9jNQ
+ 6aA1cFQkgqtBR9n883XOTPPVfINtWYv/dvdz821r+xSjj1Q2Ihzy/+OveB1SadwhO3QEHlq
+ zSjfw+727H5xSPee0OlKVzIK1AFLAex8hwdbd9grtSbZZ06hOYTlLlfNlsm9H+OgCvIIO0i
+ 0TXEoXQZeikp6EN6jWSkw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ub6lJt05SY8=:0u/GmERj8ptcNMF4M/CrsI
+ FjCrFyva5SQXcuxz4M49oNofQu+H2vPfknYfyxPqsEDjukb3IG1CcKe/s7tqzT0d4piGgQSG5
+ VihHd3ddY7HChptTeDxLL6xAiGzNKzlOPQSpklVOnKfxqVx6BwXjWmAtQruVHiRUu5t4UokQn
+ KHIxhWVCmWvb/hRopa7Zidu3ifSD1BJKOq++PEO5yY2CEhGttdL0xl1msJf/vsb25MmuoIBaz
+ wVfGE/JTGXGMkxrqvOVWrqD1OHFfQ8CkMu024rzQtHTpHWuTV2YmDDudCqgEZHZFCWJ+q+r8H
+ bCeHmwhm5SXA+VJHwpYXJI6MBBHoip0GbAGl+u/yQn9X2Ad9+aBqKi/3+wkXzs43yO6lOupWc
+ f9Zo/SurhuW21eWLoaHet8KjvDDkHXhr0EtXxR0SjN2oppuqB2NcrYJkiyk9mi5KBVqJI8NM1
+ LaBMrqOrNXiyke/tii+4FEpC5fBHndB9Cwrf71J2YgU3ov0CTIxYORiPLeKohWOI6Q3RvOJWM
+ 0JmeKlzv01gjRq3WwG6GXoCTuGmi8HrQRUAJzo7wu6qWFvmQSwP7+r+E45YIETWUj6udA/oeH
+ HlbfQUW7tSCj6LBhmi7zSF6D8LSGmfltTd/O1bAFHY+uK+z2c+6owriyiKic6XTdlzqc+nubL
+ EkGIroXkyt1UX6vUfDvmYFv8miL/Ivv9VXIfiZlM0vaKWvTD9GgK5n940318h34Iim/MRTPfZ
+ AAJ7nD0f7A/dSBWXxQyrEuniGV+h60ZaKsQrUmkqgdDvs0vFXkNY2nTz8/um3NuWUMchMGH68
+ V4sCDveiRn0eWAmpqdCeLfT/VL81qahAUyvudV6LnpV3snCaSE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Am 02.10.2017 um 07:08 schrieb Jeff King:
+> On Sun, Oct 01, 2017 at 04:45:13PM +0200, René Scharfe wrote:
+> 
+>> lookup_blob() etc. can return NULL if the referenced object isn't of the
+>> expected type.  In theory it's wrong to reference the object member in
+>> that case.  In practice it's OK because it's located at offset 0 for all
+>> types, so the pointer arithmetic (NULL + 0) is optimized out by the
+>> compiler.  The issue is reported by Clang's AddressSanitizer, though.
+>>
+>> Avoid the ASan error by casting the results of the lookup functions to
+>> struct object pointers.  That works fine with NULL pointers as well.  We
+>> already rely on the object member being first in all object types in
+>> other places in the code.
+> 
+> Out of curiosity, did you have to do anything to coax this out of ASan
+> (e.g., a specific version)?  I've been running it pretty regularly and
+> didn't see this one (I did switch from clang to gcc a month or two ago,
+> but this code is pretty old, I think).
 
-> Thanks.  t6300 seems to show that %(contents:trailers:unfold) does
-> not quite work, among other things.
->
->   https://travis-ci.org/git/git/jobs/282126607#L3658
->
-> I didn't have a chance to look into it myself.
+I did "make -j4 SANITIZE=undefined,address BLK_SHA1=1 test" with
+clang version 4.0.1-1 (tags/RELEASE_401/final), and t1450-fsck.sh failed.
 
-Peff's "oops, your logic is backwards" fixes the above failure.
+René
 
-We also need this on top to pass the gettext-poison build.
 
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index 872973b954..3bdfa02559 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -685,19 +685,21 @@ test_expect_success '%(contents:trailers:only) and %(contents:trailers:unfold) w
- '
- 
- test_expect_success '%(trailers) rejects unknown trailers arguments' '
-+	# error message cannot be checked under i18n
- 	cat >expect <<-EOF &&
- 	fatal: unknown %(trailers) argument: unsupported
- 	EOF
- 	test_must_fail git for-each-ref --format="%(trailers:unsupported)" 2>actual &&
--	test_cmp expect actual
-+	test_i18ncmp expect actual
- '
- 
- test_expect_success '%(contents:trailers) rejects unknown trailers arguments' '
-+	# error message cannot be checked under i18n
- 	cat >expect <<-EOF &&
- 	fatal: unknown %(trailers) argument: unsupported
- 	EOF
- 	test_must_fail git for-each-ref --format="%(contents:trailers:unsupported)" 2>actual &&
--	test_cmp expect actual
-+	test_i18ncmp expect actual
- '
- 
- test_expect_success 'basic atom: head contents:trailers' '
