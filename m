@@ -2,76 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 26ECD202A5
-	for <e@80x24.org>; Mon,  2 Oct 2017 08:20:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 59B4E202A5
+	for <e@80x24.org>; Mon,  2 Oct 2017 08:22:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750969AbdJBIUX (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Oct 2017 04:20:23 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57406 "HELO cloud.peff.net"
+        id S1750869AbdJBIWQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Oct 2017 04:22:16 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57414 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750927AbdJBIUW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Oct 2017 04:20:22 -0400
-Received: (qmail 14275 invoked by uid 109); 2 Oct 2017 08:20:21 -0000
+        id S1750715AbdJBIWP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Oct 2017 04:22:15 -0400
+Received: (qmail 14376 invoked by uid 109); 2 Oct 2017 08:22:15 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 02 Oct 2017 08:20:21 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 02 Oct 2017 08:22:15 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27020 invoked by uid 111); 2 Oct 2017 08:21:02 -0000
+Received: (qmail 27040 invoked by uid 111); 2 Oct 2017 08:22:56 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Mon, 02 Oct 2017 04:21:02 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Mon, 02 Oct 2017 04:22:56 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Oct 2017 04:20:20 -0400
-Date:   Mon, 2 Oct 2017 04:20:20 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Oct 2017 04:22:13 -0400
+Date:   Mon, 2 Oct 2017 04:22:13 -0400
 From:   Jeff King <peff@peff.net>
-To:     Olga Telezhnaya <olyatelezhnaya@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2 Outreachy] mru: use double-linked list from list.h
-Message-ID: <20171002082020.c7ravpwgz45osrmz@sigill.intra.peff.net>
-References: <0102015ec7a3424b-529be659-bdb6-42c4-a48f-db264f33d53a-000000@eu-west-1.amazonses.com>
- <0102015ed3e9b1a8-74821a55-aa9a-4e5a-b267-c3d2462e3eed-000000@eu-west-1.amazonses.com>
+To:     =?utf-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+Subject: Re: [PATCH Outreachy] mru: use double-linked list from list.h
+Message-ID: <20171002082213.bpnhql4rfl523p3t@sigill.intra.peff.net>
+References: <CAP8UFD24A8rxMfLMFmSStWnBMMeB58SqUdNoo3niQuc7LqRMMg@mail.gmail.com>
+ <0102015ec7a3424b-529be659-bdb6-42c4-a48f-db264f33d53a-000000@eu-west-1.amazonses.com>
+ <20170928224244.pi34zwifnornssqk@sigill.intra.peff.net>
+ <CAP8UFD13obkLWyuCGUpFxryr8DWfQ8W4JNn04ajO50PvF0SnXQ@mail.gmail.com>
+ <20170929072354.fw4eclt56dmfj4a5@sigill.intra.peff.net>
+ <CAP8UFD1-9dYSX-VKZSPN9Ei75V8mGC-wusieL45ArxxJ08tO9Q@mail.gmail.com>
+ <CAL21BmkcVSEhEK+tAE-RNVabb0pnokYwbagueUrp9giZ3zqT8A@mail.gmail.com>
+ <CAL21Bmma8gOYx9u4kxRaHJKcF3YsfrQP9=wdAiQX14f9uSPRAQ@mail.gmail.com>
+ <20170929234002.3fzaksoarz75p7e2@sigill.intra.peff.net>
+ <CAL21Bmk2oN61CxJA0eju=FtAh2Ei9dLqRMPZKonCND4sC504Sg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <0102015ed3e9b1a8-74821a55-aa9a-4e5a-b267-c3d2462e3eed-000000@eu-west-1.amazonses.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAL21Bmk2oN61CxJA0eju=FtAh2Ei9dLqRMPZKonCND4sC504Sg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Sep 30, 2017 at 05:51:01PM +0000, Olga Telezhnaya wrote:
+On Sat, Sep 30, 2017 at 09:09:11PM +0300, Оля Тележная wrote:
 
-> Simplify mru.[ch] and related code by reusing the double-linked list
-> implementation from list.h instead of a custom one.
-> This commit is an intermediate step. Our final goal is to get rid of
-> mru.[ch] at all and inline all logic.
+> I added "v2" after "PATCH", but it does not appeared. Actually it was
+> written automatically and it was "PATCH Outreachy v2". I rearranged it
+> in the middle of the phrase.
 
-Thanks, this version looks correct to me.
+That looks fine.
 
-I do think there are a few ugly bits in the result (like that
-initializer for packed_git_mru :) ), so I'd prefer not to merge this
-down until we do that final step.
+> > I'm not sure what you mean about checking in mru_clear(). It may make
+> > sense to just send your v2 patch and I can see there what you do.
+> 
+> I realized that I said something strange before. I solved the problem
+> with leak by deleting INIT in prepare_packed_git and adding init as
+> you suggested here:
+> https://github.com/telezhnaya/git/commit/7f8995835949f83e54efdfd88445feb6d54cb3e9#commitcomment-24576103
 
-So the big question is: who wants to do it?
+OK, that makes sense.
 
-I think you've done a good job here, and this would count for your
-Outreachy application's contribution. But if you'd like to do that next
-step, you are welcome to.
+> By the way, I asked to edit FAQ for Linux kernel newbies about linked
+> list that confused me a week ago, and that funny picture was deleted.
+> https://kernelnewbies.org/FAQ/LinkedLists
+> Maybe it will help to someone else :)
 
-We could also consider it a #leftoverbits that perhaps some other
-Outreachy candidate would pick up[1].
+Thank you. :)
 
-In the meantime, Junio, I think we'd want to queue this with the intent
-to graduate it to "pu" or possibly "next", but not "master". Then if
-somebody (Olga or another applicant) produces the endgame patch, we can
-queue it on top and move it further. And if nobody does, I can pick it
-after the application period is over.
+Remember (and this applies to other Outreachy folks, too) to submit your
+application in the Outreachy system:
+
+   https://outreachy.gnome.org
 
 -Peff
-
-[1] For those who find this mail through the archive, there's more
-    discussion in this thread:
-
-      https://public-inbox.org/git/CAL21BmnvJSaN+Tnw7Hdc5P5biAnM5dfWR7gX5FrAG1r_D8th=A@mail.gmail.com/
