@@ -2,65 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4878120281
-	for <e@80x24.org>; Mon,  2 Oct 2017 17:13:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 497DA20281
+	for <e@80x24.org>; Mon,  2 Oct 2017 17:16:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751236AbdJBRNF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Oct 2017 13:13:05 -0400
-Received: from mail-pf0-f170.google.com ([209.85.192.170]:45048 "EHLO
-        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751065AbdJBRNE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Oct 2017 13:13:04 -0400
-Received: by mail-pf0-f170.google.com with SMTP id t62so2008148pfd.1
-        for <git@vger.kernel.org>; Mon, 02 Oct 2017 10:13:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Kc6RAyx915S4Dd4rV12LDn2Bq1uvVuGVrM2K+mCOEkA=;
-        b=uDL+SIOER/ZLdaWlb3HjauV3es1lzdiJoHRFePyUXkLlLQUyTBYJaDw9G3tWXpgdI9
-         WNxIr+Y6IxIzJHFM0vQ3eMBp0oMRFY5K0ZFasF4ffhDrJLdC0qzCCabdbZjUDDIuKlIh
-         2nJFk+ZsNJNTu/tPrPsb15yoeba6tvPYOruG2m1F4S2FMRpbhls5fwWiH6GHncnpqPIf
-         2EOGS8R1Sbj5nXBl/8YzUdDR4VTRp/zUEOgjxSDCWm3H6GbG4Ythprt+J1dsosnE6gX4
-         5F6GbqVEatSjhmmIDuURlRX/bwc5XNz2ZFoSVIIuzEHQch6EkSEU+/4JV13JA4uh9bs8
-         M2Sw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Kc6RAyx915S4Dd4rV12LDn2Bq1uvVuGVrM2K+mCOEkA=;
-        b=fDFVgHh9xZoL1s9A/+1VI5ivga8hVucs2psFmJBPvBCTexabybhZa6VSWHnNF8e65h
-         JoR8iwhoMgO4rdCqu2AzuIpcC8jgeSlvxBYtWcUEvk+u15oDwBaDJzSO1y+EMi/pXMtp
-         RyyyIbhWyXj2VdHI+bNUIrnBHAWBGVR5EX3ezmds2aWQzmJw/fQM3DKFcDroGZlzhqBC
-         9BYBBhTIZHXu3udlBpC/X+UB6B/9m2h7CIaxYB6u4EPZK+1DH2BgAOfSd0v7zg1LpiXI
-         Q+jGzzu9wnw/TAuCnMXCiYO63aH0hifYkHo1Xknkwc4EP1p9kx16HnzLB3IihJZQHLPj
-         evBg==
-X-Gm-Message-State: AHPjjUhwm6f5PAd+7o6GBeKzLHvNdm0c1QhRR7nX0yQWQC4iH9UGiM3Y
-        M9RXP7830880seCn3Eg+YjzSRXDU
-X-Google-Smtp-Source: AOwi7QDPSNmK5PfJiLZ2rRufn1T1DezPP4F7rTnxRWlYoBLq9NaBAMk9fcxRfoqz796pASpuD4Y9gw==
-X-Received: by 10.98.79.157 with SMTP id f29mr15084483pfj.9.1506964383522;
-        Mon, 02 Oct 2017 10:13:03 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:c1fd:a9ac:f156:8142])
-        by smtp.gmail.com with ESMTPSA id a29sm17922355pfj.88.2017.10.02.10.13.02
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 02 Oct 2017 10:13:02 -0700 (PDT)
-Date:   Mon, 2 Oct 2017 10:13:00 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     rpjday@crashcourse.ca
-Cc:     git@vger.kernel.org
-Subject: Re: What means "git config bla ~/"?
-Message-ID: <20171002171300.GP19555@aiede.mtv.corp.google.com>
-References: <20171002061303.Horde.SL92grZCqTRV9oQkBFPELQ7@crashcourse.ca>
+        id S1751204AbdJBRQg (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Oct 2017 13:16:36 -0400
+Received: from mout.gmx.net ([212.227.15.18]:65370 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751065AbdJBRQf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Oct 2017 13:16:35 -0400
+Received: from [192.168.178.43] ([88.70.159.90]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MWk3f-1dngZh1KTj-00Xrh8; Mon, 02
+ Oct 2017 19:16:30 +0200
+Subject: Re: [PATCH v3] clang-format: add a comment about the meaning/status
+ of the
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <20170929224505.GN19555@aiede.mtv.corp.google.com>
+ <20171001154425.5568-1-s-beyer@gmx.net>
+ <xmqqpoa6tp79.fsf_-_@gitster.mtv.corp.google.com>
+From:   Stephan Beyer <s-beyer@gmx.net>
+Message-ID: <ce2267e3-21af-dbfc-5b20-45e272a775fb@gmx.net>
+Date:   Mon, 2 Oct 2017 19:16:29 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171002061303.Horde.SL92grZCqTRV9oQkBFPELQ7@crashcourse.ca>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <xmqqpoa6tp79.fsf_-_@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:n0ufYRYtFdiHHW0VW5kC7XkkPIC7umf+RJXbMG7TpGpXjSUahPT
+ bqC3xDsv4OAqwzq0F4+MHBcHLC0Sr+I8H9Snrc5lZG8PUX8YwgCgjfYGZo5rzZ+o1BD658a
+ E5IlQ/ZHy3GxDImdEGA8I/Svn0rvfRC2ofB5jlIMbZ8LRAA/BVFMt6lr6rGmLcXfQjgaPRP
+ S6SXPiOQYM54CxQH+c1KQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:XZED60GF4T8=:zJYWrs7U527aujp5b3hezK
+ wqGE0iDoNwcY61hf3r4Ie4CN2vIJw0phzdlXerWjtYRI6z/CxNJGYbOZvXSK42PjhEpxYHBmU
+ 9JA4JgQiwIsbCZTnjvmQHdaFqv4dYziLGxeKf90nZkttuoNcyJJqO70kNF36njKOcVSpXaJes
+ DpITvj3bRdm2zqlaCKljppV3Hl9ElTmcygKZ+PBr3uc/+oYrQXkR9UDSo+gnxTs2skuXB+8lX
+ THoZki31ZtxbXwlYKuTnCKfp/+reVL4ep8wZsiy9ox7kmBFKyHdA9UEIdSJ4LQEdO8SdIih4A
+ 7asmMUC/ndhOXPtj8FFml6FkWXvDYizMr9u2kf/XcXrTGFY4GzduzddXosz+uv3V3ckBdZeW2
+ BuyVrjgcNXkLtEJ8bxZfkNzoLIRs2zf54HeoUH8coAmWkjsDORtHZI1V95OeWxb6FOraSCSUv
+ B82qQjxMLC90HxJUamRJbTLQC8a+p4Ys+dplzn4ASyA6HmzNwUufJ02fp6ffVlAphBgKmDIFt
+ mOMwGH704QzL6EXz/L1P1TcNargl9zBCiRT50p19Bxbjj70iIb6C1riAdRNp//bMbf/gr/H8X
+ aTs3ezUcxX5yz8mZGM8WhQZS8qOQ3Ed+qtM4umB73zXuFzvPYgh1CmhPzd8N2MBC7psYv0dgw
+ rOBBhM02feXPb79Ol1pC7R8uy7DBvXU/8jLdj8RBf65DcWy+ssah730095+g1aFJR/7u5P2rR
+ dDHhKckqsSz5STIvgQGfGI7NncUAZ121N1s2QWNV5vajh12Y3Tvs7gq/jIBwvq6djPPSjVfvj
+ BC2/GCr/YlUCiLyXxhYZf9PqFxpgTrh8vGbusp6xfUHReZMeh0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -68,59 +61,19 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi,
 
-rpjday@crashcourse.ca wrote:
+On 10/02/2017 01:37 AM, Junio C Hamano wrote:
+> diff --git a/.clang-format b/.clang-format
+> index 56822c116b..7670eec8df 100644
+> --- a/.clang-format
+> +++ b/.clang-format
+> @@ -1,4 +1,8 @@
+> -# Defaults
+> +# This file is an example configuration for clang-format 5.0.
+> +#
+> +# Note that this style definition should only be understood as a hint
+> +# for writing new code. The rules are still work-in-progress and does
+> +# not yet exactly match the style we have in the existing code.
 
-> i'm sure i'm about to embarrass myself but, in "man git-config",
-> OPTIONS, one reads:
->
->   --path
->
-> git-config will expand leading ~ to the value of $HOME, and ~user
-> to the   home directory for the specified user. This option has no
-> effect when setting the value (but you can use git config bla ~/
-> from the command line to let your shell do the expansion).
->
-> what's with that "git config bla ~/"? is this some config keyword
-> or something?
+I'm totally fine with this.
 
-No need to be embarrased.  Here "bla" is a placeholder.  That is,
-for example, I can run
-
-	git config --global include.path ~/.config/git/more-config
-
-or
-
-	git config --global include.path $HOME/.config/git/more-config
-
-to cause
-
-	[include]
-		path = /home/me/.config/git/more-config
-
-to be added to my global configuration.  The expansion of ~ or $HOME
-is performed by my shell, not Git.  For comparison, if I had run
-
-	git config --global include.path '~/.config/git/more-config'
-
-then that would cause
-
-	[include]
-		path = ~/.config/git/more-config
-
-to be added to my global configuration, but it would still have the
-same effect at run time, since Git is also able to expand ~ to my home
-directory.
-
-The wording comes from
-
-	commit 1349484e341a3ec2ba02a86c8fbd97ea9dc8c756
-	Author: Matthieu Moy <Matthieu.Moy@imag.fr>
-	Date:   Wed Dec 30 17:51:53 2009 +0100
-
-	    builtin-config: add --path option doing ~ and ~user expansion.
-
-I agree with you that it is less clear than it could be.  Ideas for
-clarifying it?
-
-Thanks,
-Jonathan
+Stephan
