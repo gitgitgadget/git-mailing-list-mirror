@@ -2,94 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6858220281
-	for <e@80x24.org>; Mon,  2 Oct 2017 23:34:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E782D20281
+	for <e@80x24.org>; Mon,  2 Oct 2017 23:44:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751204AbdJBXer (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Oct 2017 19:34:47 -0400
-Received: from mail-qt0-f175.google.com ([209.85.216.175]:48814 "EHLO
-        mail-qt0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751084AbdJBXep (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Oct 2017 19:34:45 -0400
-Received: by mail-qt0-f175.google.com with SMTP id d13so9340486qta.5
-        for <git@vger.kernel.org>; Mon, 02 Oct 2017 16:34:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=kENI1KybJwcLBqbDNjj0OzsXFMwOBP2nZI7VFkn81/c=;
-        b=LF6/i34v3IdoTHSctLwuMnTw00f1RwzElXxHlUs+9+HIdgCQsQiT4Ud+rm2VwY39W3
-         Whr0Kc0nIUt84+CZ5tq/u0k9I7hrOYgluWje0+nVS0MCBSWeCp0NgBQeSmL/XFOKuh1t
-         Xk5MhxaagXnwJ0XNbPkRx+bGV+21mmW7fNCCWl8UjC2am9v358s1MurSg7LhKgUHykwM
-         PqX06bB3xjs8pqv7V4KTw+f+L/6axakecpUWE6mY3WOkvwtHuVrdGnrDNQXVSJdRJRk2
-         /qYhaFa56Zl0iFk+MRsQtHNFnzO4UdtXWbmbeNabzrPwYABkt4Wnf2AYI8gi3hD+RtCy
-         qgaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=kENI1KybJwcLBqbDNjj0OzsXFMwOBP2nZI7VFkn81/c=;
-        b=izwu429TofYvc5Oot6pA3zwfGFYycJEqpUHvrYKAzYobY5ooRd1dfkdXB44hBFqdTg
-         PqBIRch+d97GFKo/ZoUfL9p6rxYzGCUFDhNp7fROdFYr7bz/OyRlHHHd0HMFrDFdVOo5
-         zDZ765GoUgRutxBFRCkZvVlgWaPn/xuh9Ys/Qomor7f2QU+enT+viHbjpe0Gdaur4PAm
-         fjlUeRX++dMoouLw49+WjPjpf+/C6CP9VoktyUm/nEZ9KJK5j4F7ZNbv8M2lb+IAjqEJ
-         1504SwgFqO5bwLwNoq5zr9m5QAEgcXOwzYkdMVE25VA2YM+QKLmSAxiwfAVg8JFalsEf
-         r8Zw==
-X-Gm-Message-State: AMCzsaXfKKV/kW9jndHJPiwVm9sYumZy6MwFcR/zwrzNm83dI/d9Cx8a
-        +eY/PPwK2DQ6WnUUKDlUrPqd8Xkiz1PQgd/DN4bXWA==
-X-Google-Smtp-Source: AOwi7QB05unDTagthYH14aUKEI1UkqlhAD75LDjWV4/821XvGgFmK1oqwmrS0ChRgHD9511XKhKhTiAE39UoCnJO9Bs=
-X-Received: by 10.237.60.37 with SMTP id t34mr19967162qte.224.1506987285068;
- Mon, 02 Oct 2017 16:34:45 -0700 (PDT)
+        id S1751059AbdJBXos (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Oct 2017 19:44:48 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52246 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750984AbdJBXos (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Oct 2017 19:44:48 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4658BA43E8;
+        Mon,  2 Oct 2017 19:44:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=9cRLkOmj0hFlbk4FLO+lvo9lzRI=; b=G4uHkp
+        GVcd2MfQffLERBaUhjYwUeBs/Its0SKTz0HQGQINVWF/PFRo+n8qSVGGBrge1ia0
+        MjRxoJA9afn8OP59E4t3CiXWO1DOZ5cP88QDgUuZCd2KieVkGN99KRMjZJ/hM/aS
+        1kUBh+K2BgQWELRkpe9f9wmjy2RcFKNBnvY3w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=rzByMe5pXFJIjuSjEdx5WqDdRLjH4i9O
+        fIReqEM2UF0pi4hdkp6a4/H5kMJxFNRNcZGiJ3LzrF3RPNt6aYw3L19vCqoBa6O4
+        YBe3u1kh6gmnErWoeTBciBX16SgZhcjgK9rGeT9TK/VdB0UzR1Gg4x/eXdeCvpdp
+        AmxgebyKUbA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3DE38A43E6;
+        Mon,  2 Oct 2017 19:44:47 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B4284A43E5;
+        Mon,  2 Oct 2017 19:44:46 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH v6 7/7] ref-filter.c: parse trailers arguments with %(contents) atom
+References: <20171002052326.GA10729@D-10-157-251-166.dhcp4.washington.edu>
+        <20171002052524.12627-1-me@ttaylorr.com>
+        <20171002052524.12627-7-me@ttaylorr.com>
+        <20171002065100.cjawz6pvxjj2w5nr@sigill.intra.peff.net>
+        <20171002154916.GA39723@D-10-157-251-166.dhcp4.washington.edu>
+Date:   Tue, 03 Oct 2017 08:44:45 +0900
+In-Reply-To: <20171002154916.GA39723@D-10-157-251-166.dhcp4.washington.edu>
+        (Taylor Blau's message of "Mon, 2 Oct 2017 08:49:16 -0700")
+Message-ID: <xmqqr2ulm7wy.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.140.102.46 with HTTP; Mon, 2 Oct 2017 16:34:44 -0700 (PDT)
-In-Reply-To: <20171001220831.214705-1-sandals@crustytoothpaste.net>
-References: <20171001220831.214705-1-sandals@crustytoothpaste.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 2 Oct 2017 16:34:44 -0700
-Message-ID: <CAGZ79kaoCEzc-2ZV60J2GEfxJwLMNg1fFZctEctMiGMVSU+74g@mail.gmail.com>
-Subject: Re: [PATCH 00/24] object_id part 10
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Brandon Williams <bmwill@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: AC366C0E-A7CB-11E7-ADE7-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Oct 1, 2017 at 3:08 PM, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> This is the tenth in a series of patches to convert from unsigned char
-> [20] to struct object_id.  This series mostly involves changes to the
-> refs code.  After these changes, there are almost no references to
-> unsigned char in the main refs code.
->
-> I've tried to update the code comments as I've touched them, but if I've
-> missed any, please point them out.  A big thank-you goes out to Ren=C3=A9
-> Scharfe, who did the work to make resolve_ref_unsafe optionally take a
-> NULL pointer; this dramatically reduced the size of one of the patches,
-> and allowed a few others to be dropped during the rebase.
->
-> I apologize for the unintended bounced emails that occurred in late
-> August; my mail server (previously hosted at home) got knocked offline
-> because I was without Internet for over a week after Hurricane Harvey.
-> I've since relocated mail to New York, so that shouldn't happen again.
+Taylor Blau <me@ttaylorr.com> writes:
 
-I hope you are ok. (It's not just mail servers that don't like water, but
-other personal belongings, too)
-
+> Thank you for pointing this out. I should have run "make test" on this
+> patch set (or, as you suggested, `git rebase -x "make test" HEAD~7`)
+> before sending it out. I appreciate you catching my mistake, and I'll
+> make sure to run "make test" more diligently in the future :-).
 >
-> This series is available from the following URL:
-> https://github.com/bk2204/git.git object-id-part10
->
+> It sounds like Junio picked this up while queueing.
 
-The whole series has been
-Reviewed-by: Stefan Beller <sbeller@google.com>
+"Yup" in the sense that "you do not have to worry about it unless
+there are other things you want to fix by rerolling" but I didn't
+spot it myself and noticed the breakage; I tweaked it only after
+Peff pointed out what is wrong.
