@@ -6,113 +6,154 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E67C20281
-	for <e@80x24.org>; Mon,  2 Oct 2017 16:10:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 227E120281
+	for <e@80x24.org>; Mon,  2 Oct 2017 16:13:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751849AbdJBQKk (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Oct 2017 12:10:40 -0400
-Received: from mail-pg0-f54.google.com ([74.125.83.54]:51607 "EHLO
-        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751712AbdJBQKj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Oct 2017 12:10:39 -0400
-Received: by mail-pg0-f54.google.com with SMTP id u144so511750pgb.8
-        for <git@vger.kernel.org>; Mon, 02 Oct 2017 09:10:39 -0700 (PDT)
+        id S1751933AbdJBQNB (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Oct 2017 12:13:01 -0400
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:46290 "EHLO
+        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751746AbdJBQNB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Oct 2017 12:13:01 -0400
+Received: by mail-pf0-f169.google.com with SMTP id r68so3118420pfj.3
+        for <git@vger.kernel.org>; Mon, 02 Oct 2017 09:13:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=sqwEKR++r7F8c9PQZr/Rd/qqQqukbHw53I3fr0TYavQ=;
-        b=RYn5+08UpLqx++pb13fPABTmBhcbpN/Pq5kj3KdZ7SMb/IFj+swF6TkyenoJjhs+f8
-         afpiJyAlHsUr3Id4EKT+Sb8UjX09uHohwefmlWYE3mvTajH77KgDJuTmUyB+2OsbFPPv
-         y4d9CTkpPQ/tAroMeZp6AOo4Cld0TDem7fQQHokRFbshxjnfGVGgYqSUmoN0es7S/oCW
-         Xz7QwIxKFu2/6Q/5Y98Jspd3Kn0+gA9Y1XdJEJzBfc17Xhideguzts1NPQ69DCUs92Uo
-         3oz+r2GQwWbhG+kgDp8Xkn15Tv5RwgOJKyPXwJ7+l3g7HE/wMGXnAJp+7YWI6rwqiwrI
-         GO6g==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Qmm4W9pyuFS1cSyFdTYNNfyNdEhak+hGZ1AyXZCSqbs=;
+        b=EXke3uD69QZc8sIU2T89/g/SZbzo2E7vZTHtTdu+otQseTWLvVcl+XpIdfIXUWNpVy
+         ejufE5AZ1DbLeYpeop7b2Egd3+NNWG92Wqiyqlfb6luj/WmOp7UIvI2FWHUZ8Bh1I9Ou
+         waGgHodPZLQp0nsudbSs3C25zLWHxfP/LOJiH4WsFb9l4dpLa3zJoXESS0DSUaJ0jB2Q
+         EWPmfEQJgGpJgusXHTkGVJWRXzIVjAaLneiKkrqFgof6QKL9HQZb5RLTjbQwnRf4o6Sd
+         G9Hj71uDzffjBUkzWHyTI6eDk4D/Dn7ZPbN4cYljeVDeOqbpqY1z/BsuS+2BEZu/f6gW
+         RSWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=sqwEKR++r7F8c9PQZr/Rd/qqQqukbHw53I3fr0TYavQ=;
-        b=ohwd9UgCXHzS+xyN8kyGsPXtDvAxKixIUYReoS39yiAP4I8uubJ2KGy8L4gfAL6CYx
-         UwNNYXYSsHkHnEMfBEQIWCF7LO5k2RQ/nR+2oIetHpbTfgYU43q/rvH4DDZjhZRsp/1F
-         cVBObuK1JGuohTmp2ZceCzVQ76KrlcGZg96B+gyUK4URmpWYUpYq/Qvim/a6e/ExTTNr
-         1WdsjC43ft4/W1BDx6FS91zcjw/qsqGG46qhW0wOkOB2jmK3Mc4cXyDktumq3//ha1wS
-         xJlv3+oTwdHC4ltL98NLeDHWzcczs4uaHT7wuiUo2mrORhcZrIyIOymBjAYAeZ8tLSRs
-         JGBQ==
-X-Gm-Message-State: AHPjjUgNdp5fELhUFBTE5XlgJMwguR7Ap/5jsvLkd25lcoNTQjLYXCdc
-        JPb19o1cin+9rvM+Cmb0HFgY3YD4ZBo=
-X-Google-Smtp-Source: AOwi7QC3xGM2SK4M3HDF9gfRU6YDnYRE0SyafznKg+yGNOIRjvurPoA3VnjePBnEo9vRq4XVtHHtqw==
-X-Received: by 10.101.77.4 with SMTP id i4mr13072585pgt.119.1506960638743;
-        Mon, 02 Oct 2017 09:10:38 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Qmm4W9pyuFS1cSyFdTYNNfyNdEhak+hGZ1AyXZCSqbs=;
+        b=ruyDLWHauJgOS0WSlSnl6JyFslIOkZf+9ft2We+R8s41828SRUuiZcBN2Vg8gMXgcB
+         K/apZFrh/X5vFw525Y9704JAhqHsnrjX7ooS65xNhdJvM+9hjlZbblHJDtDOUbh7n27R
+         d/Rx1m31Y5Wzx5va2onjw2ls5XKby0T/Dh9y4mW/UcPxGmb49bWmME0U9BgGop6LhJs2
+         l5kgR+Z0CLcwlREVOJ65kr2gRuuhnz9w5RmsMUtw+stsY2I4nPIwuxh8ObIH3kEBNAwH
+         gYxbvPFG9ruAe4ISsBz+hC3CkMADhGhSlHwWRZN+E+f5f3nIoy4oahiR4LXgmJokOwNC
+         wDPA==
+X-Gm-Message-State: AMCzsaXxfIxIQCmdw9aVBf/jnfwYYcG/oDgh5IC0HYomU+qJ9qd9iYl8
+        MySUHuuPcavIIcpO0hTRQruGJ+145D0=
+X-Google-Smtp-Source: AOwi7QCuRPU1a9w6AitO1PYUU+TTpip5+H9/enEGe4UHo8J2xG1XTG82FTs2N6ZxP2dvk+d9R0Ffdw==
+X-Received: by 10.98.200.138 with SMTP id i10mr2803139pfk.222.1506960780341;
+        Mon, 02 Oct 2017 09:13:00 -0700 (PDT)
 Received: from localhost ([205.175.97.239])
-        by smtp.gmail.com with ESMTPSA id d7sm4158919pgf.20.2017.10.02.09.10.36
+        by smtp.gmail.com with ESMTPSA id n2sm17573999pgs.89.2017.10.02.09.12.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 02 Oct 2017 09:10:37 -0700 (PDT)
+        Mon, 02 Oct 2017 09:12:58 -0700 (PDT)
+Date:   Mon, 2 Oct 2017 09:12:58 -0700
 From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH v2] ref-filter.c: pass empty-string as NULL to atom parsers
-Date:   Mon,  2 Oct 2017 09:10:34 -0700
-Message-Id: <20171002161034.44867-1-me@ttaylorr.com>
-X-Mailer: git-send-email 2.14.1.145.gb3622a4ee
-In-Reply-To: <20171002055052.GB10729@D-10-157-251-166.dhcp4.washington.edu>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH] ref-filter.c: pass empty-string as NULL to atom parsers
+Message-ID: <20171002161258.GC39723@D-10-157-251-166.dhcp4.washington.edu>
 References: <20171002055052.GB10729@D-10-157-251-166.dhcp4.washington.edu>
+ <20171002055311.29681-1-me@ttaylorr.com>
+ <20171002064335.vzm3j2dgax4q5bxd@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20171002064335.vzm3j2dgax4q5bxd@sigill.intra.peff.net>
+User-Agent: Mutt/1.8.3 (2017-05-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Peff points out that different atom parsers handle the empty
-"sub-argument" list differently. An example of this is the format
-"%(refname:)".
+On Mon, Oct 02, 2017 at 02:43:35AM -0400, Jeff King wrote:
+> On Sun, Oct 01, 2017 at 10:53:11PM -0700, Taylor Blau wrote:
+>
+> > Peff points out that different atom parsers handle the empty
+> > "sub-argument" list differently. An example of this is the format
+> > "%(refname:)".
+> >
+> > Since callers often use `string_list_split` (which splits the empty
+> > string with any delimiter as a 1-ary string_list containing the empty
+> > string), this makes handling empty sub-argument strings non-ergonomic.
+> >
+> > Let's fix this by assuming that atom parser implementations don't care
+> > about distinguishing between the empty string "%(refname:)" and no
+> > sub-arguments "%(refname)".
+>
+> This looks good to me (both the explanation and the function of the
+> code).
 
-Since callers often use `string_list_split` (which splits the empty
-string with any delimiter as a 1-ary string_list containing the empty
-string), this makes handling empty sub-argument strings non-ergonomic.
+Thanks :-).
 
-Let's fix this by assuming that atom parser implementations don't care
-about distinguishing between the empty string "%(refname:)" and no
-sub-arguments "%(refname)".
+> But let me assume for a moment that your "please let me know" from the
+> earlier series is still in effect, and you wish to be showered with
+> pedantry and subjective advice. ;)
+>
+> I see a lot of newer contributors sending single patches as a 1-patch
+> series with a cover letter. As a reviewer, I think this is mostly just a
+> hassle. The cover letter ends up mostly repeating the same content from
+> the single commit, so readers end up having to go over it twice (and you
+> ended up having to write it twice).
+>
+> Sometimes there _is_ useful information to be conveyed that doesn't
+> belong in the commit message, but that can easily go after the "---" (or
+> before a "-- >8 --" if you really feel it should be read before the
+> commit message.
+>
+> In general, if you find yourself writing a really long cover letter, and
+> especially one that isn't mostly "meta" information (like where this
+> should be applied, or what's changed since the last version), you should
+> consider whether that information ought to go into the commit message
+> instead. The one exception is if you _do_ have a long series and you
+> need to sketch out the approach to help the reader see the big picture
+> (in which case your cover letter should be summarizing what's already in
+> the commit messages).
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- ref-filter.c            | 10 +++++++++-
- t/t6300-for-each-ref.sh |  1 +
- 2 files changed, 10 insertions(+), 1 deletion(-)
+Thank you for this advice. I was worried when writing my cover letter
+last night that it would be considered repetitive, but I wasn't sure how
+much brevity/detail would be desired in a patch series of this length.
 
-diff --git a/ref-filter.c b/ref-filter.c
-index bc591f4f3..f3e53d444 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -415,8 +415,16 @@ static int parse_ref_filter_atom(const struct ref_format *format,
- 	REALLOC_ARRAY(used_atom, used_atom_cnt);
- 	used_atom[at].name = xmemdupz(atom, ep - atom);
- 	used_atom[at].type = valid_atom[i].cmp_type;
--	if (arg)
-+	if (arg) {
- 		arg = used_atom[at].name + (arg - atom) + 1;
-+		if (!*arg) {
-+			/*
-+			 * Treat empty sub-arguments list as NULL (i.e.,
-+			 * "%(atom:)" is equivalent to "%(atom)").
-+			 */
-+			arg = NULL;
-+		}
-+	}
- 	memset(&used_atom[at].u, 0, sizeof(used_atom[at].u));
- 	if (valid_atom[i].parser)
- 		valid_atom[i].parser(format, &used_atom[at], arg);
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index 2274a4b73..edc1bd8ea 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -51,6 +51,7 @@ test_atom() {
- }
- 
- test_atom head refname refs/heads/master
-+test_atom head refname: refs/heads/master
- test_atom head refname:short master
- test_atom head refname:lstrip=1 heads/master
- test_atom head refname:lstrip=2 master
--- 
-2.14.1.145.gb3622a4ee
+I'll keep this in mind for the future.
 
+> And before anybody digs in the list to find my novel-length cover
+> letters to throw back in my face, I know that I'm very guilty of this.
+> I'm trying to get better at it, and passing it on so you can learn from
+> my mistakes. :)
+
+I appreciate your humility ;-).
+
+> > -	if (arg)
+> > +	if (arg) {
+> >  		arg = used_atom[at].name + (arg - atom) + 1;
+> > +		if (!*arg) {
+> > +			/*
+> > +			 * string_list_split is often use by atom parsers to
+> > +			 * split multiple sub-arguments for inspection.
+> > +			 *
+> > +			 * Given a string that does not contain a delimiter
+> > +			 * (example: ""), string_list_split returns a 1-ary
+> > +			 * string_list that requires adding special cases to
+> > +			 * atom parsers.
+> > +			 *
+> > +			 * Thus, treat the empty argument string as NULL.
+> > +			 */
+> > +			arg = NULL;
+> > +		}
+> > +	}
+>
+> I know this is getting _really_ subjective, but IMHO this is a lot more
+> reasoning than the comment needs. The commit message goes into the
+> details of the "why", but here I'd have just written something like:
+>
+>   /* treat "%(foo:)" the same as "%(foo)"; i.e., no arguments */
+
+I sent an updated v2 of this "series" (without a cover-letter) that
+shortens this comment to more or less what you suggested. I've kept the
+commit message longer, since I think that that information is useful
+within "git blame".
+
+
+--
+- Taylor
