@@ -2,128 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D6EB20281
-	for <e@80x24.org>; Mon,  2 Oct 2017 22:08:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E53EE20281
+	for <e@80x24.org>; Mon,  2 Oct 2017 22:37:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751268AbdJBWIt (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Oct 2017 18:08:49 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:34027 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750949AbdJBWIs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Oct 2017 18:08:48 -0400
-Received: by mail-pf0-f196.google.com with SMTP id g65so6972701pfe.1
-        for <git@vger.kernel.org>; Mon, 02 Oct 2017 15:08:48 -0700 (PDT)
+        id S1750949AbdJBWhk (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Oct 2017 18:37:40 -0400
+Received: from mail-qt0-f178.google.com ([209.85.216.178]:55271 "EHLO
+        mail-qt0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750770AbdJBWhj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Oct 2017 18:37:39 -0400
+Received: by mail-qt0-f178.google.com with SMTP id i13so9814113qtc.11
+        for <git@vger.kernel.org>; Mon, 02 Oct 2017 15:37:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=YTH++C49CkpD+E/uiURb3Xzyaguj5MXJXChwIbqJp7s=;
-        b=SfdWTRgippgan/844rFZeSguZhsKulK04VmxnSBfBBzF++6nbp7Q75zXn4+Q8DsItO
-         x4SAK51EIVjpuY2dnCnN+yM8GS7k45/sO2fWil3Bb7WsFkyAjyNZp47EVq4uXIgQq51E
-         lU661vS0ha2BC919YGszm8HFVRvygjrqVjpEb8VyQzx/UJbz2/duCvcyOdDWecpToqmg
-         iMt7uJmHjgAud7KKt05khEYCBUd8zPCO7bq0zcBcMUFds7+vYLjiPA/nfnE2Ar9V+PO/
-         YZe6amxtF6tpF5x9LASALEM9ezIARWBeNeiz8BZ+ghZY4GRLuapsU0OWsOTKLFASYg4+
-         n7YA==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=P98zobRlPgJwnvl0tCu3FU0iBqgRg1RtwUew1bSsHAs=;
+        b=CiC7UUkXZEn9VRVWvOtqQ7WPGhUBl/ZpPQZlc/nx7RLEjwRBkwc5Sljfssh5IIrsbj
+         n95bq9lQ8hMmaa7/SZuvc3lFTnXGToE9blkfkgryQeWcPZXnLpW/8iT/LTuLIxQiUzOf
+         b8oSlIcqLrSpZsC6zxI8p2VItaixwXRJ3DdYgRe+mKBPbqezKHvSQqPiHTBZMLd1MzF/
+         4j8pBKHRbhoVixaX9jWuitjHQgLac5EpjJg6ymvMnOoZqXFJ6Ik3nQ9JakNYYn0oSTxV
+         En309jlo65WhTQ4PytvjwZqlhe94ksfU84w/ndMmzxoLPWsWTU0YjR+U5vFMIADH66XS
+         lGkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=YTH++C49CkpD+E/uiURb3Xzyaguj5MXJXChwIbqJp7s=;
-        b=RmLOX1eseJhJMix0E9vxdlou57asLjNSIhEH/jLVE6vBPfE7Hnlp0x+Qf1B7WJzkI1
-         k6XWHfvIqFtGADJAS3w2K3+2Nn2f/GZFeaadBCKby+3iw8UxKA+GIDbavhMjxznnmTdD
-         yBqET21i5AgY95QhHvpdo5K5u40ysR6od99W9aIZZh7a+IA56ThDwgvRW5WUR1pORkbG
-         dv6sHx2+fk3owdvUkAtfZSpMy5rJtLDHYqsddOjKzQoVU/W7EcMN7C2JQUbewNz4/RKw
-         awmqXAf2DStJV4mJA7+E0fQAyNys0RyHAbjBAVxKdz2l5kpvVWG3gQs2hgS+v2WQdIjD
-         udDQ==
-X-Gm-Message-State: AHPjjUgw4eGYaFyB7Sz+Mg+PjUtfOk7qpnTabiLXFT62LaWmZjgTfZgn
-        edn5k+iWZQWY8ySLUjL41FE=
-X-Google-Smtp-Source: AOwi7QAd4WPqt74x8q0AR3EK4oVcvr2Oxn6WlFhBTyquGfIP8jXl8aGwhLzvJXWtzdz/o/h0y7qKXw==
-X-Received: by 10.98.223.76 with SMTP id u73mr15886171pfg.234.1506982127531;
-        Mon, 02 Oct 2017 15:08:47 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:c1fd:a9ac:f156:8142])
-        by smtp.gmail.com with ESMTPSA id l85sm18087255pfg.155.2017.10.02.15.08.46
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 02 Oct 2017 15:08:46 -0700 (PDT)
-Date:   Mon, 2 Oct 2017 15:08:45 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Thadeus Fleming <thadeus.j.fleming@gmail.com>
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: Re: git submodule add fails when using both --branch and --depth
-Message-ID: <20171002220844.GQ19555@aiede.mtv.corp.google.com>
-References: <CAA4Wa2sVddG_SS70Dy_womGLKW0ipAjsxR4g+yjMKscjErRjvQ@mail.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=P98zobRlPgJwnvl0tCu3FU0iBqgRg1RtwUew1bSsHAs=;
+        b=PSNAqnqOj+/N30paBjC8/WbUuLzWjWHF9CFS9PuOT1wfPvxhpJPp6AGvt+pZM4OUbv
+         qSujpsF/OuJC0W+TXLfevI+GURhIpUfuDKSL9BUt6osohk7gM36FpDeJ1JvhOOF6mU2/
+         bhPzDTn6msr+1gZ293LCORotpr4MvRmSFm51XWKXmGF8E2Y6JSu3FNYFWCweyKxZyoRR
+         P57Kan8on79VIvQRnyd4kFF3Y4ImT7lSd3AfS2w+yHlxojqsR/2WpGQBV4HBJJzZhHz/
+         aPteoSMkWXJB23ZMbVE1X74k3GACycJz3+XNtkyYdHIEtoOfw3dZYnvq6vRQuhCUGlQ/
+         5xKA==
+X-Gm-Message-State: AMCzsaV1+T1rQx/I/Gu2ppIAqAgZPN+xlX99yJFsN2UAxWfNd8foyjFW
+        IGXraB+WFVjcYUg/v/RHm0kqJ+3wLg4s0Lrj/GCdIEzp3i8=
+X-Google-Smtp-Source: AOwi7QBM26RB+Go1ZnBBZh+QtMdIXr9vnvHFogUwCKsLV1p42GjPcYSe2QRLa8rf6D6ScioonlWJ7mYabPlgtgVvRp0=
+X-Received: by 10.200.41.89 with SMTP id z25mr11718562qtz.79.1506983859129;
+ Mon, 02 Oct 2017 15:37:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAA4Wa2sVddG_SS70Dy_womGLKW0ipAjsxR4g+yjMKscjErRjvQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.140.102.46 with HTTP; Mon, 2 Oct 2017 15:37:38 -0700 (PDT)
+In-Reply-To: <20171001220831.214705-5-sandals@crustytoothpaste.net>
+References: <20171001220831.214705-1-sandals@crustytoothpaste.net> <20171001220831.214705-5-sandals@crustytoothpaste.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 2 Oct 2017 15:37:38 -0700
+Message-ID: <CAGZ79kaY36mo2bpohO8cknPShOBbZt_tpi_kjoxLHE=cFJ3ROw@mail.gmail.com>
+Subject: Re: [PATCH 04/24] refs: convert update_ref and refs_update_ref to use
+ struct object_id
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Brandon Williams <bmwill@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-Thadeus Fleming wrote:
-
-> I'm running git 2.14.2 on Ubuntu 16.04.
+> diff --git a/bisect.c b/bisect.c
+> index 96beeb5d13..e8470a2e0f 100644
+> --- a/bisect.c
+> +++ b/bisect.c
+> @@ -685,11 +685,13 @@ static int bisect_checkout(const struct object_id *bisect_rev, int no_checkout)
+>         char bisect_rev_hex[GIT_MAX_HEXSZ + 1];
 >
-> Compare the behavior of
->
->> git clone --branch pu --depth 1 https://github.com/git/git git-pu
->
-> which clones only the latest commit of the pu branch and
+>         memcpy(bisect_rev_hex, oid_to_hex(bisect_rev), GIT_SHA1_HEXSZ + 1);
+> -       update_ref(NULL, "BISECT_EXPECTED_REV", bisect_rev->hash, NULL, 0, UPDATE_REFS_DIE_ON_ERR);
+> +       update_ref(NULL, "BISECT_EXPECTED_REV", bisect_rev, NULL, 0,
+> +                  UPDATE_REFS_DIE_ON_ERR);
 
-Yes.
+The number of characters decrease, yet the line gets an additional
+line break. While I don't mind this, the most interesting question that
+comes to mind is whether you tried the new clang formatting options
+in tree to adapt the indentation? ;)
 
->> mkdir tmp && cd tmp && git init
->> git submodule add --branch pu --depth 1 https://github.com/git/git \
->  git-pu
->
-> which gives the error
->
-> fatal: 'origin/pu' is not a commit and a branch 'pu' cannot be created from it
-> Unable to checkout submodule 'git-pu'
+> --- a/builtin/reset.c
+> +++ b/builtin/reset.c
+> @@ -266,12 +266,12 @@ static int reset_refs(const char *rev, const struct object_id *oid)
+>         if (!get_oid("HEAD", &oid_orig)) {
+>                 orig = &oid_orig;
+>                 set_reflog_message(&msg, "updating ORIG_HEAD", NULL);
+> -               update_ref_oid(msg.buf, "ORIG_HEAD", orig, old_orig, 0,
+> +               update_ref(msg.buf, "ORIG_HEAD", orig, old_orig, 0,
+>                            UPDATE_REFS_MSG_ON_ERR);
+>         } else if (old_orig)
+>                 delete_ref(NULL, "ORIG_HEAD", old_orig, 0);
+>         set_reflog_message(&msg, "updating HEAD", rev);
+> -       update_ref_status = update_ref_oid(msg.buf, "HEAD", oid, orig, 0,
+> +       update_ref_status = update_ref(msg.buf, "HEAD", oid, orig, 0,
+>                                        UPDATE_REFS_MSG_ON_ERR);
 
-As a side note (you are using "git submodule add --depth", not "git
-submodule update --depth"), I suspect that "submodule update --depth"
-may not always do what people expect.
-
-With add --depth, I agree with your expectation and after your fix
-everything should work fine.  But with update --depth, consider the
-following sequence of steps:
-
- 1. I create a repository "super" with submodule "sub" and publish
-    both.
-
- 2. I make a couple commits to "sub" and a commit to "super" making
-    use of those changes and want to publish them.
-
- 3. I use "git push --recurse-submodules" to publish my commits to
-    "sub" and "super":
-
-    a. First it pushes to "sub".
-
-    b. Then it pushes to "super".
-
-Between steps 3(a) and 3(b), a person can still "git clone
---recurse-submodules" the "super" repository.  The repository "super"
-does not have my change yet and "sub" does, but that is not a problem,
-since commands like "git checkout --recurse-submodules" and "git
-submodule update" know to check out the commit *before* my change in
-the submodule.
-
-But between steps 3(a) and 3(b), "git submodule update --depth=1"
-would not work.  It would fetch the submodule with depth 1 and then
-try to check out a commit that is deeper in history.
-
-So I think there's more thinking needed there.
-
-That's all a tangent to your report about add --depth, though.
-
-Thanks,
-Jonathan
+At all the other places (of s/update_ref_oid/update_ref/) so far you re-indented
+the second line to align. This doesn't align in the first place, so it
+shall be good.
