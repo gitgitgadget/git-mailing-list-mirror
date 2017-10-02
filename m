@@ -2,161 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 656CE20281
-	for <e@80x24.org>; Mon,  2 Oct 2017 23:00:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB0CF20281
+	for <e@80x24.org>; Mon,  2 Oct 2017 23:00:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751866AbdJBXAV (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Oct 2017 19:00:21 -0400
-Received: from mail-pg0-f46.google.com ([74.125.83.46]:50008 "EHLO
-        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750949AbdJBXAU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Oct 2017 19:00:20 -0400
-Received: by mail-pg0-f46.google.com with SMTP id v13so3737163pgq.6
-        for <git@vger.kernel.org>; Mon, 02 Oct 2017 16:00:20 -0700 (PDT)
+        id S1751560AbdJBXA5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Oct 2017 19:00:57 -0400
+Received: from mail-qt0-f177.google.com ([209.85.216.177]:45325 "EHLO
+        mail-qt0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751199AbdJBXA4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Oct 2017 19:00:56 -0400
+Received: by mail-qt0-f177.google.com with SMTP id b21so4018826qte.2
+        for <git@vger.kernel.org>; Mon, 02 Oct 2017 16:00:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=hxEZug8AeOlHrJ0PNQgVkn71fj0mmM1nJkqpn/dTYNU=;
-        b=LG+lHCEV6VxoyFDX01or6MVNMktMQX7BKLnSGt2Zu+j3XyS8dc3hkF/Aj5O5XZJ6tP
-         9ZAFkCZOyrbBIEx7LtpG4/Y2i9oq33LgSniUCGkDImkDNhSLwNmm6kde+In2BsSVwF+C
-         SuC2XWDqMT3Sx8E4SDwQyTEbsA+Qx/waF6kvbqJYctS0YDuknpJyC2OwcayDDguax3WI
-         O1af7pI1V04fua+hat9GPibSEbSwDXmCekIldNnrY0gfSuvFitoa1M3D+oiyIrF+SQEX
-         Qyg1zixqoB7LZ++5zbodagBQvCzI1SPNehYovju7h851D8GTdVHs3xbsMLfh/KL7N/TI
-         /g6w==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=6c850NeD+oGlWxoN1DH73ri5uX+M97aTzQBGCn9kE1I=;
+        b=dHbgJDNqu+lJeZBwox6851dzk9iw0bgAJZHweM+T5yVJ+unk54g246y7Gu0/1Hy8tc
+         /fQOaB2FmQ6mYFZ21dOH0kNnYLnf2zyIitslA38EH6l/RLQOnc3z/dhRM1TMWqrEQW7b
+         nPNftlzVkhadvyt9HykFXbVMeo/tpa30ZqfK6qshFVWYwWKNueG/8MFUyJ7ASeOgpKJq
+         Ro3gD2Es+W5hVDWRdDPS0TZi7D1VPcr+PnMLr1JZ7esV+1HRdQCJn8gIs9oKjvxLHx85
+         3ozXFkwnZAmZwaOE+RVI8YmmWZp9u1jjs3q0goXQ2oWHx7uRJGLzWPSXYsHXsAW5aAHW
+         6zhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=hxEZug8AeOlHrJ0PNQgVkn71fj0mmM1nJkqpn/dTYNU=;
-        b=H+gWo+sCfe1P6hUGkXvmos2IZc6WdCmbm11LGkBgfeGdHYeWOn85ab7GOw+Rl5Jwgj
-         35h6zY7ZgwtKfIs8klDvrrlF9rlvTcxV53/s8N/o+z2PA/9RWJDbu0JN2ajVccPmZMTL
-         2oUkTVtZmuEJ9UCzQUvf08Qdu6qpq51OzZwseq0oNSmEfMIFFGwtu+xANHdMkz4ld6j8
-         Nc8yjiFtBzWOxbIrcaGA3bEkvQTT1v9/9AWqaH/rnaIjr1M1ByKGt/UsEOnZKZjy9l5y
-         EcikwaaMGOsYcMdrIe/4MykZMM8tZj/Izk9aHAuuNQuVs6M8/SNHa0E7rdNAUkcL1vRW
-         oajw==
-X-Gm-Message-State: AHPjjUj55DXiw7ZRJOuQfQZ39KylUGQxOR33A/5tEMbgQmqoEKcK3Qi/
-        DQyHF837Q+xC5eppe7YXkfuy9IlX
-X-Google-Smtp-Source: AOwi7QC3qQGAh9q+/1frfnTAgAo6MWoXis4w2YB5wMInOjt5a9ryctUByV+ypMkOYMvQZtoAXh1L6w==
-X-Received: by 10.159.208.69 with SMTP id w5mr15387847plz.381.1506985219945;
-        Mon, 02 Oct 2017 16:00:19 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:c1fd:a9ac:f156:8142])
-        by smtp.gmail.com with ESMTPSA id k67sm15657913pga.46.2017.10.02.16.00.19
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 02 Oct 2017 16:00:19 -0700 (PDT)
-Date:   Mon, 2 Oct 2017 16:00:17 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Toni Uebernickel <tuebernickel@gmail.com>
-Cc:     git@vger.kernel.org, Tsvi Mostovicz <ttmost@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: Updated to v2.14.2 on macOS; git add --patch broken
-Message-ID: <20171002230017.GT19555@aiede.mtv.corp.google.com>
-References: <86D0A377-8AFD-460D-A90E-6327C6934DFC@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=6c850NeD+oGlWxoN1DH73ri5uX+M97aTzQBGCn9kE1I=;
+        b=DSaZodeYDTCUo5ePMWkCNE9APaqPbYykMcIkIpx2/CZxmUEREndF0OuJeBizi2bnu/
+         FiAhqtA0dZ96s6UaVJE55lxyga88GCuZLN/jr2KmSRpNSTT+AxrRNIWyjb1rL/KifVv+
+         ATgOJxKVgncMqBvJnPAlFQnOu68xGZFF4tsXbtT6DrGZRnfovbfiffoWiMOKxxPamJTS
+         YqTsdbmA0XRssXGU80mTJWDkWwKgSfJ1pHDNxOqtIanbMO7GwctGAotiWszg1/DivMZ9
+         YENUxa9u8FmV1z/9kq5nWPWcp88QKSqcT9gLwc0GPxJNsu6fAHT1xNbW+gkPbMttvkLH
+         Ogww==
+X-Gm-Message-State: AMCzsaXBs+cQGFMbKXjfhDjJq0tgqH9F2+No+XsTcAIkFxCT/79Miyu9
+        es3i/7+dtjBPtXWEmsvfNmTiZSHcQ2t2oLVFrmZrKDtEkX4=
+X-Google-Smtp-Source: AOwi7QCG0kCKYjqGlvA84hqGqUAbkgsNipT8/e7MeKcLeknOA7EFGGp+Z0Fuzlhf+tTora5PbdhGgcCNKw6VoHGaJZ4=
+X-Received: by 10.200.17.23 with SMTP id c23mr8576338qtj.198.1506985255369;
+ Mon, 02 Oct 2017 16:00:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <86D0A377-8AFD-460D-A90E-6327C6934DFC@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.140.102.46 with HTTP; Mon, 2 Oct 2017 16:00:54 -0700 (PDT)
+In-Reply-To: <20171001220831.214705-7-sandals@crustytoothpaste.net>
+References: <20171001220831.214705-1-sandals@crustytoothpaste.net> <20171001220831.214705-7-sandals@crustytoothpaste.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 2 Oct 2017 16:00:54 -0700
+Message-ID: <CAGZ79kb1WjUUKV5aUoPf=x=nFqMhJssKudtHm+_LxY5=ky6r4A@mail.gmail.com>
+Subject: Re: [PATCH 06/24] Convert check_connected to use struct object_id
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Brandon Williams <bmwill@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-Toni Uebernickel wrote:
-
-> I updated to git version v2.14.2 on macOS using homebrew.
+On Sun, Oct 1, 2017 at 3:08 PM, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> Convert check_connected and the callbacks it takes to use struct
+> object_id.
 >
-> Since then `git add --patch` and `git stash save --patch` are not
-> working anymore. It's just printing the complete diff without ever
-> stopping to ask for actions. This results in an unusable state, as
-> the whole command option is rendered useless.
 
-Would a patch like the following help?
+> diff --git a/connected.c b/connected.c
+> index f416b05051..4a47f33270 100644
+> --- a/connected.c
+> +++ b/connected.c
+> @@ -16,13 +16,13 @@
+>   *
+>   * Returns 0 if everything is connected, non-zero otherwise.
+>   */
+> -int check_connected(sha1_iterate_fn fn, void *cb_data,
+> +int check_connected(oid_iterate_fn fn, void *cb_data,
+>                     struct check_connected_options *opt)
+>  {
+>         struct child_process rev_list = CHILD_PROCESS_INIT;
+>         struct check_connected_options defaults = CHECK_CONNECTED_INIT;
+> -       char commit[41];
+> -       unsigned char sha1[20];
+> +       char commit[GIT_MAX_HEXSZ + 1];
+> +       struct object_id oid;
+>         int err = 0;
+>         struct packed_git *new_pack = NULL;
+>         struct transport *transport;
 
-I am worried that other scripts using diff-files would need the same
-kind of patch.  So it seems worthwhile to look for alternatives.
+> @@ -77,7 +77,7 @@ int check_connected(sha1_iterate_fn fn, void *cb_data,
+>
+>         sigchain_push(SIGPIPE, SIG_IGN);
+>
+> -       commit[40] = '\n';
+> +       commit[GIT_SHA1_HEXSZ] = '\n';
 
-An alternative would be to partially roll back v2.14.2~61^2~4 (color:
-check color.ui in git_default_config, 2017-07-13) by making it not
-take effect for plumbing commands (i.e., by adding a boolean to
-"struct startup_info" to indicate whether a command is low-level
-plumbing).  That would make the behavior of Git harder to explain so I
-don't particularly like it.  Plus it defeats the point of the patch.
+While we are using SHA1, this and below is correctly using
+GIT_SHA1_HEXSZ, but the array is defined as GIT_MAX_HEXSZ.
 
-Yet another alternative would be to treat color.ui=always as a
-deprecated synonym for color.ui=auto.  I think that's my preferred
-fix.
+Upon switching the hash function, we would plug in the
+GIT_NEWHASH_HEXSZ here, or if we do it dynamically
+(using a vtable for hash functions, to switch at run time)
+we'd need to make the decision based on the hash function.
 
-What do you think?
+Makes sense.
 
-Thanks again for reporting,
-Jonathan
-
-diff --git i/git-add--interactive.perl w/git-add--interactive.perl
-index 28b325d754..4ea69538c7 100755
---- i/git-add--interactive.perl
-+++ w/git-add--interactive.perl
-@@ -101,49 +101,49 @@ sub apply_patch_for_stash;
- 
- my %patch_modes = (
- 	'stage' => {
--		DIFF => 'diff-files -p',
-+		DIFF => 'diff-files --no-color -p',
- 		APPLY => sub { apply_patch 'apply --cached', @_; },
- 		APPLY_CHECK => 'apply --cached',
- 		FILTER => 'file-only',
- 		IS_REVERSE => 0,
- 	},
- 	'stash' => {
--		DIFF => 'diff-index -p HEAD',
-+		DIFF => 'diff-index --no-color -p HEAD',
- 		APPLY => sub { apply_patch 'apply --cached', @_; },
- 		APPLY_CHECK => 'apply --cached',
- 		FILTER => undef,
- 		IS_REVERSE => 0,
- 	},
- 	'reset_head' => {
--		DIFF => 'diff-index -p --cached',
-+		DIFF => 'diff-index --no-color -p --cached',
- 		APPLY => sub { apply_patch 'apply -R --cached', @_; },
- 		APPLY_CHECK => 'apply -R --cached',
- 		FILTER => 'index-only',
- 		IS_REVERSE => 1,
- 	},
- 	'reset_nothead' => {
--		DIFF => 'diff-index -R -p --cached',
-+		DIFF => 'diff-index --no-color -R -p --cached',
- 		APPLY => sub { apply_patch 'apply --cached', @_; },
- 		APPLY_CHECK => 'apply --cached',
- 		FILTER => 'index-only',
- 		IS_REVERSE => 0,
- 	},
- 	'checkout_index' => {
--		DIFF => 'diff-files -p',
-+		DIFF => 'diff-files --no-color -p',
- 		APPLY => sub { apply_patch 'apply -R', @_; },
- 		APPLY_CHECK => 'apply -R',
- 		FILTER => 'file-only',
- 		IS_REVERSE => 1,
- 	},
- 	'checkout_head' => {
--		DIFF => 'diff-index -p',
-+		DIFF => 'diff-index --no-color -p',
- 		APPLY => sub { apply_patch_for_checkout_commit '-R', @_ },
- 		APPLY_CHECK => 'apply -R',
- 		FILTER => undef,
- 		IS_REVERSE => 1,
- 	},
- 	'checkout_nothead' => {
--		DIFF => 'diff-index -R -p',
-+		DIFF => 'diff-index --no-color -R -p',
- 		APPLY => sub { apply_patch_for_checkout_commit '', @_ },
- 		APPLY_CHECK => 'apply',
- 		FILTER => undef,
+>         do {
+>                 /*
+>                  * If index-pack already checked that:
+> @@ -87,17 +87,17 @@ int check_connected(sha1_iterate_fn fn, void *cb_data,
+>                  * are sure the ref is good and not sending it to
+>                  * rev-list for verification.
+>                  */
+> -               if (new_pack && find_pack_entry_one(sha1, new_pack))
+> +               if (new_pack && find_pack_entry_one(oid.hash, new_pack))
+>                         continue;
+>
+> -               memcpy(commit, sha1_to_hex(sha1), 40);
+> -               if (write_in_full(rev_list.in, commit, 41) < 0) {
+> +               memcpy(commit, oid_to_hex(&oid), GIT_SHA1_HEXSZ);
+> +               if (write_in_full(rev_list.in, commit, GIT_SHA1_HEXSZ + 1) < 0) {
+>                         if (errno != EPIPE && errno != EINVAL)
+>                                 error_errno(_("failed write to rev-list"));
+>                         err = -1;
+>                         break;
+>                 }
