@@ -2,92 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2556120281
-	for <e@80x24.org>; Mon,  2 Oct 2017 23:50:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 13DB320281
+	for <e@80x24.org>; Mon,  2 Oct 2017 23:55:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751062AbdJBXun (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Oct 2017 19:50:43 -0400
-Received: from mail-pg0-f48.google.com ([74.125.83.48]:54831 "EHLO
-        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750869AbdJBXum (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Oct 2017 19:50:42 -0400
-Received: by mail-pg0-f48.google.com with SMTP id c137so3786801pga.11
-        for <git@vger.kernel.org>; Mon, 02 Oct 2017 16:50:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=tSiCjKrGKtLDyLyBb/0meNvwVWXdwu1McbWISi++MJQ=;
-        b=nt7xstDNxPpJvIVcCTvfrPN+QxQe8/6WAH9JEK+ygV36wlfMrf8QmMB0Zx9i6lN0Fe
-         2VkEbC2RDzDnJxhCTjxNwjv39RkYg4cmNxaWkUhZonMVxAPqVEZO0WU/Qh7FiumbcJf5
-         GHWl3HO5jZpZUj/bElqa2aELJsjAajGH22u9g11S1UFs+UlUDe3LTgZoiB3c7JN0JODU
-         XJxQiUV7HAGqe9rNhYd1dUfnkKHplCWp0Bn6yF6Y7AbTgXEnVTURlqPoahqrJ7PDnPLL
-         DOoA0hsBv8zdhhI8cg+cX7jQ/ZnFSL9KbKaTT0u32WTOaWmUnjsyjH1ttRSphJ1DHpFf
-         0szw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=tSiCjKrGKtLDyLyBb/0meNvwVWXdwu1McbWISi++MJQ=;
-        b=oxmay12fJWeky6MueP8W5I9CRaeQLGAM+Yav/m3MmRwvhvl5yC1n0VHUuhDcPzAqzs
-         FInKqIjM1E2+mlOQqi1bYoEhlxY46yqG4QcjEu0Us7rW92Ui9cCMasO1DzJfPjBK+G82
-         vcWKqNWFgQqsq/yyBgeXBIcZBkkggbe0aIpJha61TsKp03FVtDbpAIM51Cz9LtaZXpWa
-         ehlxI/LELRdQ3DAnI/wrCo8BfEC0n4WnFuEBRN6PLqLrF4cqWDFPELGegKV5TqdgFcL9
-         qNfL9N0RjlUhWJdbFWNFwdTfqRoGsdkSIvuk0d8fodqEqKU8/mZMzQG8rFaW+vDgYylR
-         X4XQ==
-X-Gm-Message-State: AHPjjUj2rmt16gSAIS2zstJVObWRwmHx/VkMpb1iTi6WQRipOuM6V9OY
-        Xwuwfdxr5sxmxFrLVIKOBDRbCA==
-X-Google-Smtp-Source: AOwi7QBPD4T0clvUL53PbHIq2VeHsGuRyL3Xs//qcE5MwIUTgGaCNPxGPlTjkRVdG2OVXauMEHqXQA==
-X-Received: by 10.84.235.129 with SMTP id p1mr15181753plk.153.1506988242170;
-        Mon, 02 Oct 2017 16:50:42 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:585e:6aa2:d831:b9e9])
-        by smtp.gmail.com with ESMTPSA id l12sm17129483pgr.10.2017.10.02.16.50.40
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 02 Oct 2017 16:50:40 -0700 (PDT)
-Date:   Mon, 2 Oct 2017 16:50:39 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH 0/3] Comment fixes
-Message-ID: <20171002235039.GH5189@google.com>
-References: <20170926112150.21850-1-hanwen@google.com>
+        id S1751195AbdJBXzi (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Oct 2017 19:55:38 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57785 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750927AbdJBXzh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Oct 2017 19:55:37 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B54DEB252D;
+        Mon,  2 Oct 2017 19:55:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=kqWGTrEaxXT0x4s1AzTwAVmhldw=; b=dnJxoj
+        O0HRf6wzX9uZ7L7+TH/uRvGygOqoNozqYlTb4gzDtYXNjAwR+Tw2mm9eqLY/2IFT
+        0T2isUTIlMXB7XN5srSJBBeg8Gujt/xm34SCWOoLJdHqCVAAwjtnXmVeHbgAhAZC
+        DzrJ2BrESf5aSaqjAUpU9FvrNxtQfdbZ3xB8w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=IthJgXz+BV2PjY8bNBZjQiYkJywjCfET
+        hTtmshc1350Jl8Mmrf7fJP6imKgjOl5D0gKsPdn56Tl6iWiFPhc74dqBDrnGXi/B
+        ZFTRqM5ITD09SbOqEr7kvgDGaKHM8KVMf0quBRlVY62Q9GpntcLWMExMA7b/xFRE
+        jZ3LQCsqM6I=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id ABF59B252B;
+        Mon,  2 Oct 2017 19:55:37 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A0816B2460;
+        Mon,  2 Oct 2017 19:55:03 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH v2] ref-filter.c: pass empty-string as NULL to atom parsers
+References: <20171002055052.GB10729@D-10-157-251-166.dhcp4.washington.edu>
+        <20171002161034.44867-1-me@ttaylorr.com>
+        <20171002224052.GR19555@aiede.mtv.corp.google.com>
+Date:   Tue, 03 Oct 2017 08:55:01 +0900
+In-Reply-To: <20171002224052.GR19555@aiede.mtv.corp.google.com> (Jonathan
+        Nieder's message of "Mon, 2 Oct 2017 15:40:52 -0700")
+Message-ID: <xmqqmv59m7fu.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170926112150.21850-1-hanwen@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1BF82C52-A7CD-11E7-8D3A-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/26, Han-Wen Nienhuys wrote:
-> follow more commit log conventions; verified it compiled (yay).
-> 
-> (should I send patches that are in 'pu' again as well?)
-> 
-> Han-Wen Nienhuys (3):
->   real_path: clarify return value ownership
->   read_gitfile_gently: clarify return value ownership.
->   string-list.h: move documentation from Documentation/api/ into header
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-This version looks good to me.
+> The above does a nice job of explaining
+>
+>  - what this change is going to do
+>  - how it's good for the internal code structure / maintainability
+>
+> What it doesn't tell me about is why the user-facing effect won't
+> cause problems.  Is there no atom where %(atom:) was previously
+> accepted and did something meaningful that this may break?
 
-> 
->  Documentation/technical/api-string-list.txt | 209 ----------------------------
->  abspath.c                                   |   4 +
->  setup.c                                     |   3 +-
->  string-list.h                               | 192 +++++++++++++++++++++----
->  4 files changed, 168 insertions(+), 240 deletions(-)
->  delete mode 100644 Documentation/technical/api-string-list.txt
-> 
-> --
-> 2.14.1.821.g8fa685d3b7-goog
+That is, was there any situation where %(atom) and %(atom:) did two
+differnt things and their differences made sense?
 
--- 
-Brandon Williams
+> Looking at the manpage and code, I don't see any, so for what it's
+> worth, this is
+>
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+>
+> but for next time, please remember to discuss regression risk in
+> the commit message, too.
+
+Yes, I agree that it is necessary to make sure somebody looked at
+the issue _and_ record the fact that it happened.  Thanks for doing
+that already ;-)
+
+I also took a look at the code and currently we seem to abort,
+either with "unrecognised arg" (e.g. "refname:") or "does not take
+args" (e.g. "body"), so we should be OK, I'd think.
