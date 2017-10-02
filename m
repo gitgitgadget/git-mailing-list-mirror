@@ -2,96 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 537A220281
-	for <e@80x24.org>; Mon,  2 Oct 2017 18:53:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 70A0120281
+	for <e@80x24.org>; Mon,  2 Oct 2017 19:19:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751336AbdJBSx0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Oct 2017 14:53:26 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:51005 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751268AbdJBSxZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Oct 2017 14:53:25 -0400
-Received: by mail-wm0-f68.google.com with SMTP id u138so12328376wmu.5
-        for <git@vger.kernel.org>; Mon, 02 Oct 2017 11:53:24 -0700 (PDT)
+        id S1751241AbdJBTTB (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Oct 2017 15:19:01 -0400
+Received: from mail-qt0-f182.google.com ([209.85.216.182]:55090 "EHLO
+        mail-qt0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751102AbdJBTTA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Oct 2017 15:19:00 -0400
+Received: by mail-qt0-f182.google.com with SMTP id i13so8839880qtc.11
+        for <git@vger.kernel.org>; Mon, 02 Oct 2017 12:19:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=0rBCG5ODCGkDyXIcyie9QWO3q77swEzqfwkBlKsw1UQ=;
-        b=kF3cjddgWC6WkgA2ymmTD7kJL5ypUIKir+K/EbFJcYqIQOY87+hQMXsRnYoTnC3/OG
-         L4dG4KXaQYeCGP7KFimZsrf1n8qp8hd1gcnvOZ4RD0mXVJBb0P5vlogiYUbJhDWSMq1T
-         zBXw4aClE5G4C8OkW79cFqfElk+ycBOZUqIODj8pDmbE4FQJLG9eDriZufiz+r77ZP3x
-         pqlsx2ewptKRTv4lXJ+NihtY3ry39Gq5pOaFHW+3YRmRSxIT7N6i0QMw5X1XTwMTk9km
-         5E9DRaZ7wCKMXx4gTf2uW7z6ykLm9ddAVeQRuQTMMRLHfcpdnkEp7Tk7Udthkza8xEQd
-         d6hw==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ru0CshZmXasDsG1mwjD7LWRmtOOGsS1lp8Tnww7qfT8=;
+        b=u/yQhuXH6bIhSrYNTgjpCZSlS+PM7c3bFIVC4NKIb2H6pZ4vh4YEL2lC03AwNM2oyL
+         Qwtby/hQ7kG/CtMQmgKyNKJ2uYfQUzqjk16PWoS5Q15MOKz7nUZxqXf9Vf/3C9T1spn1
+         klDN5BXtHz+MjHq7LLK+wFGB2hMj/WREiU0ZD9Egnaqv/g1Mzfqd7Lm4mcL5SvkHbmU5
+         b0EIRHrFZ+uVuU+He/+NT4w/CiRtS4R/ijdl23IRH/PIWIotMPsBqufwwO+AiElSOTDz
+         ngOy5mrfBOhi0G+YmZVyNVrQAruYcJCG/bXAJMWZU4VE3rvcEaE34SZYgQ28zqHNlOOJ
+         QUOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=0rBCG5ODCGkDyXIcyie9QWO3q77swEzqfwkBlKsw1UQ=;
-        b=O2ATnrJG0KNa1OtYVvwIuD7HomM5LF7ycob4nyoS87bv8SChoHVdgahBlWQVU5RwFL
-         GfGnTe0fki28Cqv9NRIbjNnVC9iDFUOZUxZ+A7ThiYZzCd+Zhy3S7H2QGKXNKLfWZfYM
-         0m2EGjf3OExurT2F7TACD1NSMEAkBtNXtHDoP+u58vJyRC/WgqaYfRcYXF2ISW5NuCnr
-         mvHhcU9185KODQ0tTQ4VcGBSTZfe9bvQLCAUaHlXdUIK/RHxI/VqHQ5X0DjijnFBiKmG
-         PtM7H4WHMJttMvAwaVcWKFvpxPqNpXWAm/ac4xVlIN3jY45g30low+gaaKuZ2EVKpYSS
-         NnYA==
-X-Gm-Message-State: AMCzsaVPa6Gv0VvO3qc5Q7AHMkMNIAfz9MIvkGyuBL5oOURj8RCvHMAD
-        AWDQOK6Eg5YYC4Kp9L2jmgw=
-X-Google-Smtp-Source: AOwi7QBf1d1s3+Fg6fHpyEEK6Lc6KCG9GeAGnswwLowSl8js4C/zTl6fE8UrkLDEBDOBT9zkO506+w==
-X-Received: by 10.28.86.67 with SMTP id k64mr12133055wmb.143.1506970403995;
-        Mon, 02 Oct 2017 11:53:23 -0700 (PDT)
-Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id 69sm13824590wmp.11.2017.10.02.11.53.23
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 02 Oct 2017 11:53:23 -0700 (PDT)
-Date:   Mon, 2 Oct 2017 19:54:15 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Tsvi Mostovicz <ttmost@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git add -p stops working when setting color.ui = always
-Message-ID: <20171002185415.GB30301@hank>
-References: <CAB2yay8LLeNbqR4kkTwF1U+oarVDRxgkV4uGXuYcO8mAQmhWQQ@mail.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ru0CshZmXasDsG1mwjD7LWRmtOOGsS1lp8Tnww7qfT8=;
+        b=NneigXFGVlYuOs21mc+TCgL4BSLhlvWeZNz5xkEpEQF+Zr9LRSFezYNfOkPlKyoNDS
+         tLK6aQy7Zzj+t7juGKigkcL3V1IuSfnoEwCVJy8SVgVPDVEFgbT6WGEvIj82q2SjVzWl
+         Eebu3C6p/rs+PAQsfYYW4aXf5bkR2DhB7/yZQdRTw0CYCSguGLIv6KQH0fqTrxuzvzjv
+         dUO+EKNqjt6A9mLAhZTMFl1wV1Pfl9bxuRIZhWrd1BJLHiCHmsQA0x+OrqUkw35B6cv7
+         enDhBawTkVhaX2AJscfy3/b6u3Kgx3ZDc42JX49YLerXZY6yY2X+LpBHJJzBTnEbqctH
+         gYXA==
+X-Gm-Message-State: AMCzsaUBafyVOYbWDkwR2r51xKRQMiP7zhzIP1UI25MczEuli9Q1b704
+        wLoifBeP9+P/YxsyO0R3KtloHcXez5KcjLqb9evN7w==
+X-Google-Smtp-Source: AOwi7QDnNBpDeiSHLQjAR9W8okmQ7YzdU3EUwVJtQtSEsZdFpK1WsNktLuwKMVx7Lh4iKeOESWlPJux37VpYbcrhPL0=
+X-Received: by 10.200.17.23 with SMTP id c23mr7785182qtj.198.1506971939699;
+ Mon, 02 Oct 2017 12:18:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAB2yay8LLeNbqR4kkTwF1U+oarVDRxgkV4uGXuYcO8mAQmhWQQ@mail.gmail.com>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+Received: by 10.140.102.46 with HTTP; Mon, 2 Oct 2017 12:18:59 -0700 (PDT)
+In-Reply-To: <ea1538e3-2b2e-f7eb-9c0e-e29c15bf2ea9@jeffhostetler.com>
+References: <CAOZF3=Ouvk8ccME+fXr_T=GL1j4Gx3Hgj3ao_-GQng-noeOubg@mail.gmail.com>
+ <E8C827ED458648F78F263F2F2712493B@PhilipOakley> <alpine.DEB.2.21.1.1709131322470.4132@virtualbox>
+ <04DDB36236444FFD8C3668AA7B62B154@PhilipOakley> <alpine.DEB.2.21.1.1709300110350.40514@virtualbox>
+ <5fb263a8-d83b-64a7-812f-fd8e3748feb6@jeffhostetler.com> <xmqqtvzjv987.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kbghnWmvQweup=Z79HnVQQCMM65CKgEO3oqDoRp-Bj=2Q@mail.gmail.com> <ea1538e3-2b2e-f7eb-9c0e-e29c15bf2ea9@jeffhostetler.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 2 Oct 2017 12:18:59 -0700
+Message-ID: <CAGZ79kbjfXC3CxMDouUrCUVt-OJXckDtg9U_7=R=FM-eon4ikA@mail.gmail.com>
+Subject: Re: [idea] File history tracking hints
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Philip Oakley <philipoakley@iee.org>,
+        Pavel Kretov <firegurafiku@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Mon, Oct 2, 2017 at 11:51 AM, Jeff Hostetler <git@jeffhostetler.com> wrote:
 
-On 10/02, Tsvi Mostovicz wrote:
-> Hi,
-> 
-> When setting "color.ui = always" in the last few versions (not sure
-> exactly when this started, but definitely exists in 2.14.1 and
-> 2.14.2), git add -p stops working as expected. Instead of prompting
-> the user, it skips through the prompts and doesn't allow selecting a
-> hunk.
+> Sorry to re-re-...-re-stir up such an old topic.
+>
+> I wasn't really thinking about commit-to-commit hints.
+> I think these have lots of problems.  (If commit A->B does
+> "t/* -> tests/*" and commit B->C does "test/*.c -> xyx/*",
+> then you need a way to compute a transitive closure to see
+> the net-net hints for A->C.  I think that quickly spirals
+> out of control.)
 
-This is a known change in behaviour (for more information see the
-thread at
-https://public-inbox.org/git/86D0A377-8AFD-460D-A90E-6327C6934DFC@gmail.com/).
+I agree. Though as a human I can still look at
+A..C giving the hint that t/*.c and xyz/*.c ought to
+be taken into account for rename detection.
+(which is currently done with -M -C --find-copies-harder
+as a generic "there are renamed things", and not the very
+specific rule, that may be cheaper to examine compared to
+these generic rules)
 
-> 
-> Don't know why I had color.ui = always set in my .gitconfig.
+> No, I was going in another direction.  For example, if a
+> tree-entry contains { file-guid, file-name, file-sha, ... }
+> then when diffing any 2 commits, you can match up files
+> (and folders) by their guids.  Renames pop out trivially when
+> their file-names don't match.  File moves pop out when the
+> file-guids appear in different trees.  Adds and deletes pop
+> out when file-guids don't have a peer. (I'm glossing over some
+> of the details, but you get the idea.)
 
-Can you set color.ui = auto instead?  That should give you colored
-output on the terminal, while not breaking git add -p.
+How do you know when a guid needs adaption?
 
-> git version 2.14.2.666.gea220ee40
-> 
-> Thanks,
-> 
-> 
-> Tsvi Mostovicz
-> ttmost@gmail.com
-> www.linkedin.com/in/tsvim
+(c.f. origin/jt/packmigrate)
+If a commit moves a function out of a file into a new file,
+the ideal version control could notice that the function
+was moved into a new file and still attribute the original
+authors by ignoring the move commit.
+
+Another series in flight could have modified that
+function slightly (fixed a bug), such that it's hard to
+reason about these things.
+
+For guids I imagine the new file gets a new guid, such that
+tracking the function becomes harder?
+
+
+> To address Junio's
+> question, independently added files with the same name will
+> have 2 different file-guids.  We amend the merge rules to
+> handle this case and pick one of them (say, the one that
+> is sorts less than the other) as the winner and go on.
+> All-in-all the solution is not trivial (as there are a few
+> edge cases to deal with), but it better matches the (casual)
+> user's perception of what happened to their tree over time.
+
+The GUID would be made up at creation time, I assume?
+Is there any input other than the file itself? (I assumed so
+initially, such that:
+  By having a GUID in the tree, we would divorce from the notion
+  of a "content addressable file system" quickly, as we both could
+  create the same tree locally (containing the same blobs) and
+  yet the trees would have different names due to having different
+  GUIDs in them
+), which I'd find undesirable.
+
+> It also doesn't require expensive code to sniff for renames
+> on every command (which doesn't scale on really large repos).
+
+I wonder if the rename detection could be offloaded to a server
+(which scales) that provides a "hint file" to clients, such that the
+clients can then cheaply make use of these specific hints.
