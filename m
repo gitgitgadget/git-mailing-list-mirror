@@ -6,38 +6,38 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A3A73202A5
-	for <e@80x24.org>; Mon,  2 Oct 2017 08:25:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C2276202A5
+	for <e@80x24.org>; Mon,  2 Oct 2017 09:02:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751263AbdJBIZZ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Oct 2017 04:25:25 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50259 "EHLO
+        id S1751104AbdJBJC3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Oct 2017 05:02:29 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58701 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751206AbdJBIZS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Oct 2017 04:25:18 -0400
+        with ESMTP id S1751090AbdJBJCY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Oct 2017 05:02:24 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D23B3A5F00;
-        Mon,  2 Oct 2017 04:25:17 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D1B3EA6505;
+        Mon,  2 Oct 2017 05:02:22 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=eDqtUAq1kXZmODwfHR+6ajf8WnM=; b=XyECJQ
-        QEd/QYx8+kbiPrLrLO3sPMNhC4gWzg2L5xKYbHGU16HytxUg7g9g2+iMg6AJVeRe
-        eZ0FSE4M/4wZh2mVdNbDsjdcWilsFLUXjWSHyzJZkmerY5RXYKtCNLLVHofY8Lr1
-        8b1cXyHW8Y3C6/4HlBu52aVMpbRe5hTCfizlY=
+        :content-type; s=sasl; bh=X224gj2BZUga4JyJLQOeGbf1ykw=; b=M0IGiF
+        U1XBEbYBE8+36hCR2SrVs7HbnWqG8LtXJfbbwFp9F3OFqqAPrhQcq8x16HGP/hpP
+        lWxNGY1GLwVV33uWSD019eh9GU9vFrCDE6mbDdAJR4WD7KGD5IPLCHjp0N1BKGW1
+        o2cF8KG9G25MKSv2ZWDzYdSUQGug+fgDymjH4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=vtxuEZ/Es5LHPkZhtddLuVTgJDjbf7vE
-        KGDXTwbnjGAqgEq2NsjnqOrKyZUAYY1Fe7OQpDbdMUI55k0knOjhurKEQo1I+nRo
-        5HUCL2AZIQgm8Bt+FbhKQ7Ti/PdiLAXpZQM1RYxBtWhK0fx8kawfTyL8BCE4fSPM
-        5OF8lM7jYDM=
+        :content-type; q=dns; s=sasl; b=DO8ru/KvD1DIylTRoXoqx4hc97vNZaMi
+        Nxjxgq7NvloCeCK+2Jio2Ek9wt83d08GLUZMgZdwL6gL3bljWq04EKZDU4nHZjlx
+        emwGDIriNe36oxkiT7P5H9hKrzGnThnuulCOiwz4nILxQSO5Uom7iYe3bqippnde
+        bYOtsIN4Tpc=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C21FCA5EFF;
-        Mon,  2 Oct 2017 04:25:17 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C788EA6504;
+        Mon,  2 Oct 2017 05:02:22 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C632DA5EFE;
-        Mon,  2 Oct 2017 04:25:16 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 33ACEA6503;
+        Mon,  2 Oct 2017 05:02:22 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jonathan Nieder <jrnieder@gmail.com>
 Cc:     Shawn Pearce <spearce@spearce.org>,
@@ -56,16 +56,14 @@ References: <20170304011251.GA26789@aiede.mtv.corp.google.com>
         <20170307001709.GC26789@aiede.mtv.corp.google.com>
         <CAJo=hJtoX9=AyLHHpUJS7fueV9ciZ_MNpnEPHUz8Whui6g9F0A@mail.gmail.com>
         <20170928044320.GA84719@aiede.mtv.corp.google.com>
-        <xmqqo9puvy1w.fsf@gitster.mtv.corp.google.com>
-        <20170929173413.GI19555@aiede.mtv.corp.google.com>
-Date:   Mon, 02 Oct 2017 17:25:15 +0900
-In-Reply-To: <20170929173413.GI19555@aiede.mtv.corp.google.com> (Jonathan
-        Nieder's message of "Fri, 29 Sep 2017 10:34:13 -0700")
-Message-ID: <xmqq3772ot1w.fsf@gitster.mtv.corp.google.com>
+Date:   Mon, 02 Oct 2017 18:02:21 +0900
+In-Reply-To: <20170928044320.GA84719@aiede.mtv.corp.google.com> (Jonathan
+        Nieder's message of "Wed, 27 Sep 2017 21:43:21 -0700")
+Message-ID: <xmqqefqlorc2.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 386A14CC-A74B-11E7-B5B3-575F0C78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 66DA4994-A750-11E7-A057-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -73,88 +71,146 @@ X-Mailing-List: git@vger.kernel.org
 
 Jonathan Nieder <jrnieder@gmail.com> writes:
 
->>> +6. Skip fetching some submodules of a project into a NewHash
->>> +   repository. (This also depends on NewHash support in Git
->>> +   protocol.)
->>
->> It is unclear what this means.  Around submodule support, one thing
->> I can think of is that a NewHash tree in a superproject would record
->> a gitlink that is a NewHash commit object name in it, therefore it
->> cannot refer to an unconverted SHA-1 submodule repository.  But it
->> is unclear if the above description refers to the same issue, or
->> something else.
->
-> It refers to that issue.
+> +Reading an object's sha1-content
+> +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> +The sha1-content of an object can be read by converting all newhash-names
+> +its newhash-content references to sha1-names using the translation table.
 
-We may want to find a way to make it clear, then.
+Sure.
 
->> It makes me wonder if we want to add the hashname in this object
->> header.  "length" would be different for non-blob objects anyway,
->> and it is not "compat metadata" we want to avoid baked in, yet it
->> would help diagnose a mistake of attempting to use a "mixed" objects
->> in a single repository.  Not a big issue, though.
->
-> Do you mean that adding the hashname into the computation that
-> produces the object name would help in some use case?
+> +Fetch
+> +~~~~~
+> +Fetching from a SHA-1 based server requires translating between SHA-1
+> +and NewHash based representations on the fly.
+> +
+> +SHA-1s named in the ref advertisement that are present on the client
+> +can be translated to NewHash and looked up as local objects using the
+> +translation table.
+> +
+> +Negotiation proceeds as today. Any "have"s generated locally are
+> +converted to SHA-1 before being sent to the server, and SHA-1s
+> +mentioned by the server are converted to NewHash when looking them up
+> +locally.
 
-What I mean is that for SHA-1 objects we keep the object header to
-be "<type> <length> NUL".  For objects in newer world, use the
-object header to "<type> <hash> <length> NUL", and include the
-hashname in the object name computation.
+Any of our alternate object store by definition is a NewHash
+repository--otherwise we'd violate "no mixing" rule.  It may or may
+note have the translation table for its objects.  If it no longer
+has the translation table (because it migrated to NewHash only world
+before we did), then we can still use it as our alternate but we
+cannot use it for the purpose of common ancestore discovery.
 
-> For loose objects, it would be nice to name the hash in the file, so
-> that "file" can understand what is happening if someone accidentally
-> mixes types using "cp".  The only downside is losing the ability to
-> copy blobs (which have the same content despite being named using
-> different hashes) between repositories after determining their new
-> names.  That doesn't seem like a strong downside --- it's pretty
-> harmless to include the hash type in loose object files, too.  I think
-> I would prefer this to be a "magic number" instead of part of the
-> zlib-deflated payload, since this way "file" can discover it more
-> easily.
+> +After negotiation, the server sends a packfile containing the
+> +requested objects.
 
-Yeah, thanks for doing pros-and-cons for me ;-)
+s/objects.$/& These are all SHA-1 contents./
 
->> If it is a goal to eventually be able to lose SHA-1 compatibility
->> metadata from the objects, then we might want to remove SHA-1 based
->> signature bits (e.g. PGP trailer in signed tag, gpgsig header in the
->> commit object) from NewHash contents, and instead have them stored
->> in a side "metadata" table, only to be used while converting back.
->> I dunno if that is desirable.
->
-> I don't consider that desirable.
+> +We convert the packfile to NewHash format using
+> +the following steps:
+> +
+> +1. index-pack: inflate each object in the packfile and compute its
+> +   SHA-1. Objects can contain deltas in OBJ_REF_DELTA format against
+> +   objects the client has locally. These objects can be looked up
+> +   using the translation table and their sha1-content read as
+> +   described above to resolve the deltas.
 
-Agreed.  Let's not go there.
+That procedure would give us the object's SHA-1 contents for
+ref-delta objects.  For an ofs-delta object, by definition, its base
+object should appear in the same packstream, so we should eventually
+be able to get to the SHA-1 contents of the delta base, and from
+there we can apply the delta to obtain the SHA-1 contents.  For a
+non-delta object, we already have its SHA-1 contents in the
+packstream.
 
->> Hmm, as the corresponding packfile stores object data only in
->> NewHash content format, it is somewhat curious that this table that
->> stores CRC32 of the data appears in the "Tables for each object
->> format" section, as they would be identical, no?  Unless I am
->> grossly misleading the spec, the checksum should either go outside
->> the "Tables for each object format" section but still in .idx, or
->> should be eliminated and become part of the packdata stream instead,
->> perhaps?
->
-> It's actually only present for the first object format.  Will find a
-> better way to describe this.
+So we can get SHA-1 names and SHA-1 contents of each and every
+object in the packstream in this step.
 
-I see.  One way to do so is to have it upfront before the "after
-this point, these tables repeat for each of the hashes" part of the
-file.
+Are we actually writing out a .pack/.idx pair that is usable in the
+SHA-1 world at this stage?  Or are we going to read from something
+we keep in-core in the step #3 below?
 
->> Oy.  So we can go from a short prefix to the pack location by first
->> finding it via binsearch in the short-name table, realize that it is
->> nth object in the object name order, and consulting this table.
->> When we know the pack-order of an object, there is no direct way to
->> go to its location (short of reversing the name-order-to-pack-order
->> table)?
->
-> An earlier version of the design also had a pack-order-to-pack-offset
-> table, but we weren't able to think of any cases where that would be
-> used without also looking up the object name that can be used to
-> verify the integrity of the inflated object.
+> +2. topological sort: starting at the "want"s from the negotiation
+> +   phase, walk through objects in the pack and emit a list of them,
+> +   excluding blobs, in reverse topologically sorted order, with each
+> +   object coming later in the list than all objects it references.
+> +   (This list only contains objects reachable from the "wants". If the
+> +   pack from the server contained additional extraneous objects, then
+> +   they will be discarded.)
 
-The primary thing I was interested in knowing was if we tried to
-think of any case where it may be useful and then didn't think of
-any---I couldn't but I know I am not imaginative enough, and I
-wanted to know you guys didn't, either.
+Presumably this is a list of SHA-1 names, as we do not yet have
+enough information to compute NewHash names yet at this point.  May
+want to spell it out here.
+
+Would it discard the auto-followed tags if we do the "traverse from
+wants only"?  Traversing the objects in the packfile to find the
+"tips" that are not referenced from any other object in the pack
+might be necessary, and it shouldn't be too costly, I'd guess.
+
+> +3. convert to newhash: open a new (newhash) packfile. Read the topologically
+> +   sorted list just generated. For each object, inflate its
+> +   sha1-content, convert to newhash-content, and write it to the newhash
+> +   pack. Record the new sha1<->newhash mapping entry for use in the idx.
+
+Are we doing any deltification here?  If we are computing .pack/.idx
+pair that can be usable in the SHA-1 world in step #1, then reusing
+blob deltas should be trivial (a good delta-base in the SHA-1 world
+is a good delta-base in the NewHash world, too).  Things that have
+outgoing references like trees, it might be possible that such a
+heuristic may not give us the absolute best delta-base, but I guess
+it would still be a good approximation to reuse the delta/base
+object relationship in SHA-1 world to NewHash world, assuming that
+the server did a good job choosing the bases.
+
+> +4. sort: reorder entries in the new pack to match the order of objects
+> +   in the pack the server generated and include blobs. Write a newhash idx
+> +   file
+
+OK.
+
+> +5. clean up: remove the SHA-1 based pack file, index, and
+> +   topologically sorted list obtained from the server in steps 1
+> +   and 2.
+
+Ah, OK, so we do write the SHA_1 pack/idx in the first step.  OK.
+
+> +Push
+> +~~~~
+> +Push is simpler than fetch because the objects referenced by the
+> +pushed objects are already in the translation table. The sha1-content
+> +of each object being pushed can be read as described in the "Reading
+> +an object's sha1-content" section to generate the pack written by git
+> +send-pack.
+
+OK.
+
+> +Signed Commits
+> +~~~~~~~~~~~~~~
+> +We add a new field "gpgsig-newhash" to the commit object format to allow
+> +signing commits without relying on SHA-1. It is similar to the
+> +existing "gpgsig" field. Its signed payload is the newhash-content of the
+> +commit object with any "gpgsig" and "gpgsig-newhash" fields removed.
+
+Do we prepare for newerhash, too?  IOW, should the signed payload be
+the newhash-contents with any field whose name is "gpgsig" or begins
+with "gpgsig-" followed by anything?
+
+> +This means commits can be signed
+> +1. using SHA-1 only, as in existing signed commit objects
+> +2. using both SHA-1 and NewHash, by using both gpgsig-newhash and gpgsig
+> +   fields.
+> +3. using only NewHash, by only using the gpgsig-newhash field.
+> +
+> +Old versions of "git verify-commit" can verify the gpgsig signature in
+> +cases (1) and (2) without modifications and view case (3) as an
+> +ordinary unsigned commit.
+
+For old clients to be able to verify (2), signed payload for SHA-1
+is everything in SHA-1 contents minus "gpgsig"; "gpgsig-newhash"
+should not get excluded from the computation.  Am I correct?
+
+I am primarily finding it a bit disturbing that there is a bit of
+asymmetry here.
+
+> +Signed Tags
+> +~~~~~~~~~~~
+
+This message stops here for now.
