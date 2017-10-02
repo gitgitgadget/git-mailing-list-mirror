@@ -6,69 +6,57 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 711C4202DD
-	for <e@80x24.org>; Mon,  2 Oct 2017 05:14:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0160D202DD
+	for <e@80x24.org>; Mon,  2 Oct 2017 05:19:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751036AbdJBFOU (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Oct 2017 01:14:20 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57052 "HELO cloud.peff.net"
+        id S1751174AbdJBFS6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Oct 2017 01:18:58 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57066 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750983AbdJBFOU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Oct 2017 01:14:20 -0400
-Received: (qmail 5951 invoked by uid 109); 2 Oct 2017 05:14:20 -0000
+        id S1751162AbdJBFS6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Oct 2017 01:18:58 -0400
+Received: (qmail 6162 invoked by uid 109); 2 Oct 2017 05:18:58 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 02 Oct 2017 05:14:20 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 02 Oct 2017 05:18:58 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 25247 invoked by uid 111); 2 Oct 2017 05:15:00 -0000
+Received: (qmail 25274 invoked by uid 111); 2 Oct 2017 05:19:38 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Mon, 02 Oct 2017 01:15:00 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Mon, 02 Oct 2017 01:19:38 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Oct 2017 01:14:17 -0400
-Date:   Mon, 2 Oct 2017 01:14:17 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Oct 2017 01:18:56 -0400
+Date:   Mon, 2 Oct 2017 01:18:56 -0400
 From:   Jeff King <peff@peff.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH v5 6/6] ref-filter.c: parse trailers arguments with
- %(contents) atom
-Message-ID: <20171002051417.hrdbxowk7eoczpcd@sigill.intra.peff.net>
-References: <20171002003116.GA69902@D-10-157-251-166.dhcp4.washington.edu>
- <20171002003304.77514-1-me@ttaylorr.com>
- <20171002003304.77514-6-me@ttaylorr.com>
- <20171002050351.imuntcy3xnq4wxux@sigill.intra.peff.net>
- <20171002051216.GB5566@D-10-157-251-166.dhcp4.washington.edu>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] commit: use strbuf_add() to add a buffer to a strbuf
+Message-ID: <20171002051855.f3g2sz32ysjd6xu4@sigill.intra.peff.net>
+References: <85605bc6-2e91-7132-ce63-f6e08a08a768@web.de>
+ <223ef0c8-dac2-747b-41c8-3bad62f4c274@web.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20171002051216.GB5566@D-10-157-251-166.dhcp4.washington.edu>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <223ef0c8-dac2-747b-41c8-3bad62f4c274@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Oct 01, 2017 at 10:12:16PM -0700, Taylor Blau wrote:
+On Sun, Oct 01, 2017 at 04:54:14PM +0200, René Scharfe wrote:
 
-> > Doh, that string_list behavior is what I was missing in my earlier
-> > comments. I agree this is probably the best way of doing it. I'm tempted
-> > to say that parse_ref_filter_atom() should do a similar thing. Right now
-> > we've got:
-> >
-> >   $ git for-each-ref --format='%(refname)' | wc
-> >      2206    2206   79929
-> >   $ git for-each-ref --format='%(refname:short)' | wc
-> >      2206    2206   53622
-> >   $ git for-each-ref --format='%(refname:)' | wc
-> >   fatal: unrecognized %(refname:) argument:
-> >       0       0       0
-> >
-> > which seems a bit unfriendly. As we're on v6 here, I don't want to
-> > suggest it as part of this series. But maybe a #leftoverbits candidate,
-> > if others agree it's a good direction.
+> This is shorter, easier and makes the intent clearer.
 > 
-> I think #leftoverbits is fine here, but I think addressing this before
-> 2.15 is reasonable. I can take a look at this in a future patch series.
+> Patch generated with Coccinelle and contrib/coccinelle/strbuf.cocci.
 
-I think it would be to just do it as a standalone patch immediately. I
-just didn't want to hold your series hostage to a potential
-disagreement.
+Technically this behaves differently if there is a NUL embedded in the
+string. I'd expect that to be unlikely in most cases. And when it is
+possible, I'd venture to say that the new behavior is likely to be the
+correct one.
+
+This case is fine (and any embedded NUL would be cut off by setenv
+anyway).  As a general transformation, this is not as obviously safe as
+many of the others.  But since we eyeball the output of coccinelle
+anyway, it should be fine (and any code which is _relying_ on that
+behavior really ought to be rewritten in a less subtle way).
 
 -Peff
