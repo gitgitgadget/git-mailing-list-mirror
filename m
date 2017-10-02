@@ -2,69 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD019202DD
-	for <e@80x24.org>; Mon,  2 Oct 2017 04:07:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 463CE202DD
+	for <e@80x24.org>; Mon,  2 Oct 2017 04:12:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750792AbdJBEH3 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Oct 2017 00:07:29 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63733 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750740AbdJBEH2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Oct 2017 00:07:28 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 62747A3543;
-        Mon,  2 Oct 2017 00:07:28 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=wbE8xH1XZdJw
-        iYVerMBkYoK7pdc=; b=MV+xSBpkP6TshRF1sDjklYvsBmpqSJLuKxfmVvdHL46h
-        ysjqa3E5hveFbyT3VA20DkZInHukZsj9qbrQOL78vpkdMOfzryh56fMupHWuIuzS
-        /vQ3xF0HCnZZCwIeKGvccWNcO4Cr7Xej3LRjwhbOlA0NnuNmCMdw5zILa9mEB74=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=vjQMge
-        YVSRgelQ4a/pu3sYlr+zAnImQZfa/rTCuYqyu9SICY245qnNpNAM82gW7e7nTvu0
-        olBlaKgCh7VdzjQd2ER4m+n5uubymFCkeqYMNK2dkDzjiGc4KQRvrs302ibesF2h
-        TJWLkCLsZV0S0Ad439QomaXw9+t9m8i4vJy8o=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 598A9A3542;
-        Mon,  2 Oct 2017 00:07:28 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C5397A3541;
-        Mon,  2 Oct 2017 00:07:27 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] builtin/: add UNLEAKs
-References: <20171001174208.1693753-1-martin.agren@gmail.com>
-Date:   Mon, 02 Oct 2017 13:07:26 +0900
-In-Reply-To: <20171001174208.1693753-1-martin.agren@gmail.com> ("Martin
-        =?utf-8?Q?=C3=85gren=22's?= message of "Sun, 1 Oct 2017 19:42:08 +0200")
-Message-ID: <xmqq1smmqjk1.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751027AbdJBEMb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Oct 2017 00:12:31 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:35601 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750760AbdJBEMa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Oct 2017 00:12:30 -0400
+Received: by mail-pf0-f195.google.com with SMTP id i23so4414673pfi.2
+        for <git@vger.kernel.org>; Sun, 01 Oct 2017 21:12:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=WDh1VsgUtYxB0rGIRy2VsyFvyYt/qo3CSqqmArF/nyQ=;
+        b=JR6ywAE3Z11QBm0OKCU2043CSaWc0qBklfVwm+AZlkz/2KXwolN/XXZhoAxWrz/9BG
+         WkkXp+xZabPsNrA6N5taza/YPkEkBI0Y+3laFL5PuuIoxlIeYg0mKSwJkx51CN179Qda
+         iem90EoG48cXao+AcbaKdbVJMXtME1JMXRRYBsxPco3FdQyH1ofZGuSN/tT1W6QMfydi
+         ZRZX42/7brAWHZe7l4pxMhVxLGrV8S5A6qLEXOg4scTLco9SzmsjNb2kEYjYj0LPb+50
+         5L810sPwiTuCSfdAZSmtMgbYMpVcsF9CwBFJQCFnU/Qh1LwiC1LBy9efCPw55UZu38qT
+         bSww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=WDh1VsgUtYxB0rGIRy2VsyFvyYt/qo3CSqqmArF/nyQ=;
+        b=Z6w7HS1gRL2B1Y4bEnIkA7UTQ1sgNwR4R69rxFirVdpKiIU7+azhLceVe5rAkmPWDn
+         GvhD1zDtXfV06PwFTjL8fsf/aNlMiGLehlgSJdAgRvr/Utj27JFKEbMBOOv3Ks++R/6Q
+         7lCWNOCK7v+qSMbmk3tYdunoYskwBqlUMQ9imiDiAoA75Cuc7wjSbHLrtoSnsrPiBzBo
+         vRJ3RGV5qhGzolG/snaoJ4rPtJvqRhamaDyckc+iqYypu8vKzy7EmgFtvnBFNgxujsfn
+         pFwwbK5beSQOxzwzKkOcVmjNzNAmqQSReVq8WkaPHtc+u13IniqoPo6eGL2ZFaN+uTih
+         TXtg==
+X-Gm-Message-State: AHPjjUgpyk/I8dVCMz3wb64Q5VJoyNPvR0fnR5Hj/7kAbCnMT9kA8Ky3
+        6X7bPDfQ+lTzrG/3+nue2MX1TVo3wW4Z7EdUTFs=
+X-Google-Smtp-Source: AOwi7QAt8TDy8zStg7s5AseHWt0xmfDA/b8Uxo4sCAmiT5wqPP0aah+sSPVEdRLU6WA06f91EY494qQ0ivY1NjdUFHI=
+X-Received: by 10.84.185.106 with SMTP id e39mr12897927plg.333.1506917549947;
+ Sun, 01 Oct 2017 21:12:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 3420D12C-A727-11E7-B319-575F0C78B957-77302942!pb-smtp2.pobox.com
+Received: by 10.100.156.137 with HTTP; Sun, 1 Oct 2017 21:12:29 -0700 (PDT)
+In-Reply-To: <xmqqlgkuqkyi.fsf@gitster.mtv.corp.google.com>
+References: <cover.1506862824.git.martin.agren@gmail.com> <f241038eeed0f5f8bb346b394495356c20884a39.1506862824.git.martin.agren@gmail.com>
+ <xmqqlgkuqkyi.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Mon, 2 Oct 2017 06:12:29 +0200
+Message-ID: <CAN0heSq-7CzyRV2KhzvC8CymoyMOWydPDi0kS5cg1BS7=oCELQ@mail.gmail.com>
+Subject: Re: [PATCH 02/11] treewide: prefer lockfiles on the stack
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin =C3=85gren <martin.agren@gmail.com> writes:
+On 2 October 2017 at 05:37, Junio C Hamano <gitster@pobox.com> wrote:
+> Martin =C3=85gren <martin.agren@gmail.com> writes:
+>
+> This is not a show-stopper for this patch series, but just something
+> I noticed, something that used to be unavoidable in the old world
+> order that requires us to leak lockfiles, but now it becomes more
+> obvious.
+>
+> update_index_if_able() calls write_lock_index() with the COMMIT_LOCK
+> option, but it does so conditionally.  When it does not make the call,
+> the lockfile is left behind to be cleaned up by the atexit() handler,
+> but when it does, it is closed and released.
+>
+> Perhaps update_index_if_able() needs to be further cleaned up to
+> always release the resource held by the lockfile structure?  Its
+> caller cannot differentiate (and more importantly, its caller does
+> not want to care) if the _if_able call actually has updated the
+> index or not and act differently afterwards.
 
-> ... While addressing `msg` in builtin/tag.c, convert the existing
-> `strbuf_release()` calls as well.
-
-That part of this patch made me raise eyebrows a bit but only
-slightly.  We are about to leave the function to exit anyway, and
-all the other that got new UNLEAK(var) at the end are doing the same
-thing.
-
-So overall I think this patch makes sense.  Thanks.
+Ah, indeed. I should be able to do that rather easily on top. I tend to
+agree that the caller shouldn't have to worry about it since the
+function is just a one-off "if_able" without any return value. One
+caller actually does roll back the lock, but the others don't.
