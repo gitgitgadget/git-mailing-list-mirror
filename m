@@ -2,74 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E782D20281
-	for <e@80x24.org>; Mon,  2 Oct 2017 23:44:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CBA6720281
+	for <e@80x24.org>; Mon,  2 Oct 2017 23:45:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751059AbdJBXos (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Oct 2017 19:44:48 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52246 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750984AbdJBXos (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Oct 2017 19:44:48 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4658BA43E8;
-        Mon,  2 Oct 2017 19:44:47 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=9cRLkOmj0hFlbk4FLO+lvo9lzRI=; b=G4uHkp
-        GVcd2MfQffLERBaUhjYwUeBs/Its0SKTz0HQGQINVWF/PFRo+n8qSVGGBrge1ia0
-        MjRxoJA9afn8OP59E4t3CiXWO1DOZ5cP88QDgUuZCd2KieVkGN99KRMjZJ/hM/aS
-        1kUBh+K2BgQWELRkpe9f9wmjy2RcFKNBnvY3w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=rzByMe5pXFJIjuSjEdx5WqDdRLjH4i9O
-        fIReqEM2UF0pi4hdkp6a4/H5kMJxFNRNcZGiJ3LzrF3RPNt6aYw3L19vCqoBa6O4
-        YBe3u1kh6gmnErWoeTBciBX16SgZhcjgK9rGeT9TK/VdB0UzR1Gg4x/eXdeCvpdp
-        AmxgebyKUbA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3DE38A43E6;
-        Mon,  2 Oct 2017 19:44:47 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B4284A43E5;
-        Mon,  2 Oct 2017 19:44:46 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH v6 7/7] ref-filter.c: parse trailers arguments with %(contents) atom
-References: <20171002052326.GA10729@D-10-157-251-166.dhcp4.washington.edu>
-        <20171002052524.12627-1-me@ttaylorr.com>
-        <20171002052524.12627-7-me@ttaylorr.com>
-        <20171002065100.cjawz6pvxjj2w5nr@sigill.intra.peff.net>
-        <20171002154916.GA39723@D-10-157-251-166.dhcp4.washington.edu>
-Date:   Tue, 03 Oct 2017 08:44:45 +0900
-In-Reply-To: <20171002154916.GA39723@D-10-157-251-166.dhcp4.washington.edu>
-        (Taylor Blau's message of "Mon, 2 Oct 2017 08:49:16 -0700")
-Message-ID: <xmqqr2ulm7wy.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751106AbdJBXpV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Oct 2017 19:45:21 -0400
+Received: from mail-pg0-f48.google.com ([74.125.83.48]:46382 "EHLO
+        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750981AbdJBXpU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Oct 2017 19:45:20 -0400
+Received: by mail-pg0-f48.google.com with SMTP id v3so3792140pgv.3
+        for <git@vger.kernel.org>; Mon, 02 Oct 2017 16:45:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=ByamBhHcj2eJ4tw27d/MkdMWFcglLDY6FfnPBe2nyBI=;
+        b=cLlGI4nbfKMMg1WNy5TQ2Hr0EfDWp82bejAdTUvPMlhu3y7ZQrTGoCK50ohpTbh6kj
+         IwnI88WfK3KfATPyuhhaNyXn38mErKPyzNLXYWq+9wfVWUjtDt36iFDmI0msT1h9UwTw
+         oamGg6t7bOsMWFe9UcF1zvUEOEagZoR4WYC6VgDLeLvOQXXh+LkcW5k+ImTcMDf6ftMM
+         3BQEK67UU6M1v+JxwwiZPj5dlsUqCAFdN0yOWmxXH6cUUTr9QW8Pm/tCmecC9w88stH6
+         sNorZ+9kHs/ji9a133lPcLdz5izTWNV6PSYWHTgxcX3p6d84H0vaCvSh6NalUFHKDKGD
+         r3RQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=ByamBhHcj2eJ4tw27d/MkdMWFcglLDY6FfnPBe2nyBI=;
+        b=G7CfVhf+XPX+GY4E9RX8ncHUpWSvf+6Afl26PRsPAzuyKWLKEx/jK8reABH/qHxQ9v
+         xbs2r1Qto7H2hb/Tj6o5yP/n59fICKD0/YCnACIjg5Jq+ynIuH/pC9NdItIZ/XP/fiwA
+         35kCAf0DTREaYKJJlTwQE04RMrplf7RtL+ldkICGfjOo43FHkv48cYDnSXkzukz3Vajp
+         if1c8i+PvA7fpN8v0PBFt+li3IwRGnbc/4AmFYhsL//6pDMFE+rpAOaZHgkmjG2gMn9D
+         ncaX7T7izccB3A6KohDe8FFiLDqz1txgTyPTr7kcGhhF8azdVLj7Uyqlkqt6XNbmCZ3e
+         jBPQ==
+X-Gm-Message-State: AHPjjUihFLagenulgFxTLQ6kQ32NCt6t7yQzyV9r9GjQXLVBQHSzTzzt
+        yKB2PFDQZAR8oD02xZkRPTg7XV8M
+X-Google-Smtp-Source: AOwi7QAHBpmBNPjsbV3Wi1GsG3qojW/B/yoWIvnu4ulNGFLeIGRmktFvtEQDbQ205ZdMuJq+5WeXug==
+X-Received: by 10.101.81.10 with SMTP id f10mr13528750pgq.82.1506987919980;
+        Mon, 02 Oct 2017 16:45:19 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:c1fd:a9ac:f156:8142])
+        by smtp.gmail.com with ESMTPSA id e133sm18840467pfh.177.2017.10.02.16.45.19
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 02 Oct 2017 16:45:19 -0700 (PDT)
+Date:   Mon, 2 Oct 2017 16:45:17 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Loic Guelorget <loic@google.com>, Jeff King <peff@peff.net>,
+        Stefan Beller <sbeller@google.com>,
+        Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Security of .git/config and .git/hooks
+Message-ID: <20171002234517.GV19555@aiede.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AC366C0E-A7CB-11E7-ADE7-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+Hi,
 
-> Thank you for pointing this out. I should have run "make test" on this
-> patch set (or, as you suggested, `git rebase -x "make test" HEAD~7`)
-> before sending it out. I appreciate you catching my mistake, and I'll
-> make sure to run "make test" more diligently in the future :-).
->
-> It sounds like Junio picked this up while queueing.
+This topic has been mentioned on this mailing list before but I had
+trouble finding a relevant reference.  Links welcome.
 
-"Yup" in the sense that "you do not have to worry about it unless
-there are other things you want to fix by rerolling" but I didn't
-spot it myself and noticed the breakage; I tweaked it only after
-Peff pointed out what is wrong.
+Suppose that I add the following to .git/config in a repository on a
+shared computer:
+
+	[pager]
+		log = rm -fr /
+		fsck = rm -fr /
+
+("rm -fr /" is of course a placeholder here.)
+
+I then tell a sysadmin that git commands are producing strange output
+and I am having trouble understanding what is going on.  They may run
+"git fsck" or "git log"; in either case, the output is passed to the
+pager I configured, allowing me to run an arbitrary command using the
+sysadmin's credentials.
+
+You might say that this is the sysadmin's fault, that they should have
+read through .git/config before running any Git commands.  But I don't
+find it so easy to blame them.
+
+A few related cases that might not seem so dated:
+
+ 1. I put my repository in a zip file and ask a Git expert to help me
+    recover data from it, or
+
+ 2. My repository is in a shared directory on NFS.  Unless the
+    administrator setting that up is very careful, it is likely that
+    the least privileged user with write access to .git/config or
+    .git/hooks/ may be someone that I don't want to be able to run
+    arbitrary commands on behalf of the most privileged user working
+    in that repository.
+
+A similar case to compare to is Linux's "perf" tool, which used to
+respect a .perfconfig file from the current working directory.
+Fortunately, nowadays "perf" only respects ~/.perfconfig and
+/etc/perfconfig.
+
+Proposed fix: because of case (1), I would like a way to tell Git to
+stop trusting any files in .git.  That is:
+
+ 1. Introduce a (configurable) list of "safe" configuration items that
+    can be set in .git/config and don't respect any others.
+
+ 2. But what if I want to set a different pager per-repository?
+    I think we could do this using configuration "profiles".
+    My ~/.config/git/profiles/ directory would contain git-style
+    config files for repositories to include.  Repositories could
+    then contain
+
+	[include]
+		path = ~/.config/git/profiles/fancy-log-pager
+
+    to make use of those settings.  The facility (1) would
+    special-case this directory to allow it to set "unsafe" settings
+    since files there are assumed not to be under the control of an
+    attacker.
+
+ 3. Likewise for hooks: my ~/.config/git/hooks/ directory would
+    contain hooks for repositories to make use of.  Repositories could
+    symlink to hook files from there to make use of them.
+
+    That would allow the configured hooks in ~/.config/git/hooks/ to
+    be easy to find and to upgrade in one place.
+
+    To help users migrate, when a hook is present and executable in
+    .git/hooks/, Git would print instructions for moving it to
+    ~/.config/git/hooks/ and replacing it with a symlink after
+    inspecting it.
+
+For backward compatibility, this facility would be controlled by a
+global configuration setting.  If that setting is not enabled, then
+the current, less safe behavior would remain.
+
+One downside of (3) is its reliance on symlinks.  Some alternatives:
+
+ 3b. Use core.hooksPath configuration instead.  Rely on (2).
+ 3c. Introduce new hook.* configuration to be used instead of hook
+     scripts.  Rely on (2).
+
+Thoughts?
+Jonathan
