@@ -2,74 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 131A5202DD
-	for <e@80x24.org>; Mon,  2 Oct 2017 04:51:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF118202DD
+	for <e@80x24.org>; Mon,  2 Oct 2017 04:53:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750763AbdJBEvO (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Oct 2017 00:51:14 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58529 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750737AbdJBEvN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Oct 2017 00:51:13 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1D7EF94346;
-        Mon,  2 Oct 2017 00:51:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=tgdQP7hmk+YOd2yDyt/vGSmez2A=; b=R0k9h5
-        l+RGpwbTK8dIq8tPLdamVE7kuaUvZ0hkHSU040rkyo+xO2YggUuObyttJ4Y9pB5G
-        V45Vt/e1bd747cEMJ8K9Y7b/ktfCN2/m7PgwOEfZDy/VbHBNhnzxwNVp+dz4szF/
-        wM352cnEU87XrBxJP0QU0G1a/DUbyY5U9v4bk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=FQdmz+CdSj2Fk+eEP0LILD6+v7FpNj3X
-        1lFSdsRs9Jus08EwnOiKOECF7oJYy219ErXWz+HhuVUaLxKAZLoKhfgPSyojgzUE
-        0nDVY5lNspAbbQVmZJURf06DsO5zTeCnKPzf0BRxO4w1TxSqLgrCFvGydsa+Zmdr
-        f+HAYuUakqA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 154C694344;
-        Mon,  2 Oct 2017 00:51:13 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8CF1894343;
-        Mon,  2 Oct 2017 00:51:12 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH v5 6/6] ref-filter.c: parse trailers arguments with %(contents) atom
-References: <20171002003116.GA69902@D-10-157-251-166.dhcp4.washington.edu>
-        <20171002003304.77514-1-me@ttaylorr.com>
-        <20171002003304.77514-6-me@ttaylorr.com>
-Date:   Mon, 02 Oct 2017 13:51:11 +0900
-In-Reply-To: <20171002003304.77514-6-me@ttaylorr.com> (Taylor Blau's message
-        of "Sun, 1 Oct 2017 17:33:04 -0700")
-Message-ID: <xmqqk20ep2yo.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1750798AbdJBExK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Oct 2017 00:53:10 -0400
+Received: from cloud.peff.net ([104.130.231.41]:56966 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1750737AbdJBExK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Oct 2017 00:53:10 -0400
+Received: (qmail 4982 invoked by uid 109); 2 Oct 2017 04:53:10 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 02 Oct 2017 04:53:10 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 24919 invoked by uid 111); 2 Oct 2017 04:53:50 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Mon, 02 Oct 2017 00:53:50 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Oct 2017 00:53:08 -0400
+Date:   Mon, 2 Oct 2017 00:53:07 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Subject: Re: [PATCH v4 4/6] doc: use modern "`"-style code fencing
+Message-ID: <20171002045307.c66fctdduivicqqm@sigill.intra.peff.net>
+References: <20171001161725.GA66172@D-10-157-251-166.dhcp4.washington.edu>
+ <20171001161852.84571-1-me@ttaylorr.com>
+ <20171001161852.84571-4-me@ttaylorr.com>
+ <xmqqlgkutoc6.fsf@gitster.mtv.corp.google.com>
+ <20171002000630.GA63556@D-10-157-251-166.dhcp4.washington.edu>
+ <xmqqtvziqqku.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 509D19D6-A72D-11E7-B21F-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqtvziqqku.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+On Mon, Oct 02, 2017 at 10:35:45AM +0900, Junio C Hamano wrote:
 
-> @@ -212,9 +212,10 @@ static void contents_atom_parser(const struct ref_format *format, struct used_at
->  		atom->u.contents.option = C_SIG;
->  	else if (!strcmp(arg, "subject"))
->  		atom->u.contents.option = C_SUB;
-> -	else if (!strcmp(arg, "trailers"))
-> -		atom->u.contents.option = C_TRAILERS;
-> -	else if (skip_prefix(arg, "lines=", &arg)) {
-> +	else if (skip_prefix(arg, "trailers", &arg)) {
-> +		skip_prefix(arg, ":", &arg);
-> +		trailers_atom_parser(atom, *arg ? NULL : arg);
+> Taylor Blau <me@ttaylorr.com> writes:
+> 
+> >> Is this just me who wants to do s/fenc/quot/g?  Unless somebody
+> >> objects, I'd do so while queuing.
+> >
+> > I don't object, I think that fencing is less appropriate than quoting.
+> > I couldn't find the term myself when writing this commit :-).
+> >
+> > I am happy to send out v5 of this patch series with this commit
+> > re-written, or you can change it while queuing. Whichever is easier for
+> > you.
+> 
+> Just FYI, here is what I ended up with.  I do not think this is
+> about "modern" vs "old style"; it is more about using the more
+> appropriate mark-up and our desire has always been to use `literal`
+> for things that users need to type literally.
 
-A parameter for the call is missing.  I think you want 'format'
-there.
+I think it was my earlier comment that led to the modern/old notion. A
+lot of the old code does use single-quotes haphazardly. I'm not sure if
+it's "old style" or just "we were less careful" then. Either way, the
+patch looks good to me.
+
+I also think fencing isn't the right word; that word implies to me a
+multi-line block like
+
+---------------------------
+this is fenced
+---------------------------
+
+-Peff
