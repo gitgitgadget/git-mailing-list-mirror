@@ -2,93 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ADBC820A10
-	for <e@80x24.org>; Mon,  2 Oct 2017 00:31:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4514220A10
+	for <e@80x24.org>; Mon,  2 Oct 2017 00:33:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751850AbdJBAbU (ORCPT <rfc822;e@80x24.org>);
-        Sun, 1 Oct 2017 20:31:20 -0400
-Received: from mail-pg0-f47.google.com ([74.125.83.47]:43173 "EHLO
-        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750947AbdJBAbT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Oct 2017 20:31:19 -0400
-Received: by mail-pg0-f47.google.com with SMTP id s184so521248pgc.0
-        for <git@vger.kernel.org>; Sun, 01 Oct 2017 17:31:19 -0700 (PDT)
+        id S1751337AbdJBAdL (ORCPT <rfc822;e@80x24.org>);
+        Sun, 1 Oct 2017 20:33:11 -0400
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:48252 "EHLO
+        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750969AbdJBAdK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Oct 2017 20:33:10 -0400
+Received: by mail-pf0-f180.google.com with SMTP id n24so2137065pfk.5
+        for <git@vger.kernel.org>; Sun, 01 Oct 2017 17:33:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=6i0dbw3N3XaEVKiUj22/8U98mHiF9jD8Ep5Hxw10gfE=;
-        b=dQJEfOOiubOdPyIbhdIbxCueWQEbipeCSEO3WfbY8OK70mz2BTcFmGiBimV6VMryZn
-         pnqgRmrv9wtgTqfhs0ZsxHK6rZb2VRq5DxUoLwkR+68LHQsr3ZaiXljRpyEFyvyBprFU
-         foyUkl5nCrUijx15QKC9wnWRAcIafH3O0AKI4W/FMyUqCo3AUZM/2brEP/2XbOzEcSmB
-         XcatT/shsUmRx//3nWPfzEUpKV9rvAJx/KkNzFzbDEGtwGzQR9qGa92CV8ddDKSJG4/+
-         IuQW3b6CGTW2yReB7pGtO8v4s7ST1e29PgcmXkyVtTq1v8rUkyDFBU1+HnTg1H8KLHCN
-         78Uw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=dtipQPBRpflhXJ53G/njvWk1SM6jwRYbIsMLB4Dq8yQ=;
+        b=nfVGFxaSJ7a2VQFVe0GTC1X3H9PkZ2XF5feOSY8bbfWuk4czWysSpEricLfoppvaMm
+         CQjJdBg45u6BoJzJXCc+bEYd+PebBEamEwcoyXtNw0zbRMwKqOPWgAv+7mKgoEsyFHpD
+         A6e1R50n5upG4C+2DSfutGGhrQlXTO/OeXKkifG6bWwHI7ClpCH6vj6+5ANvptGkZWXr
+         0lMLuRRBJXoNjMyJtZjCnY6+Wc2ubzondTN2gMRWGnp/QFtdboDUovgL3LlLfxDyu/pi
+         z9yM2KdGZ37ZZ/yu6M90jPp0NSnIfej7w6KyCRRXZKK09Hme1TDW9iFrb9ZnaYBFuyME
+         ItkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=6i0dbw3N3XaEVKiUj22/8U98mHiF9jD8Ep5Hxw10gfE=;
-        b=kkm14L5Rd2+TfW47/Glp4u/NI+FicDFdO2sFAyVY+5SA2mQk7AwbWI6WVdLjiNjN8V
-         x4NWEC/gkWMYgtq35cCSViPo6HANTIZ7kZ+ZuzJziG5WRmVKy75/HWPzN1bveLLlynk1
-         5f/BtT0yLUTKzxrsGupFAYXat5okzXSLTRc26j2fssSH0Xxj+Dbn+ZtkuFjKHNu28GgX
-         7XBhnIhw/z9HEtl0kk42V2hRM8l7ZpqT+dyeafeT1vHdYvuxfsnjAEuGKlxkPRr46pVK
-         /yZK8pPFqAx6np655Pdeyj7/hh+aFr2oStfixQhWX69CoNFgbBwNII3ijpZjmBYuXdGc
-         IS9Q==
-X-Gm-Message-State: AHPjjUhQuD0fXz9DyfHYfimbI3RhXTsiZLn1gKYxKZLa9flbcWUjhPVa
-        uuCWvH+Y5pycn3Fb/zV512g61c59+Ds=
-X-Google-Smtp-Source: AOwi7QCzuKVNJ4AFt947hSnhDlhblDdGNKp6j/Ma+dv81dMMGLl8ETftVP/CHZTVxoUibvFK5bEZxA==
-X-Received: by 10.84.129.193 with SMTP id b59mr13084333plb.121.1506904278630;
-        Sun, 01 Oct 2017 17:31:18 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=dtipQPBRpflhXJ53G/njvWk1SM6jwRYbIsMLB4Dq8yQ=;
+        b=R4rj9DRHRWQ+KGHLmPDGhKXIWlEzI9oGr65rFhea6Op3AUN8DfPc9K/1P5gSYNjG7c
+         ADIHlrLP7YPDANmF6UnRfMVOYNuKOT+0B0wsEUUAltOe/mktGg5Sp1VYZbw4chNTGxn5
+         jy/XB7KZ2HA8zgLM9wOFHNYYKqIq7j4kFMVuIPQyte7iaD3B/naEFClhOX7+Oo7nQOEG
+         paW5myzTD5Yg4GBtmTxn45303lzVThkiRuyfEb821o66O5sJ+M95PU15n7qSI8cIjw6v
+         4m/4tM6RKz5Ak4+iG/O1KOLldUNO6r//al3+ST6uwG+olS56lY8cfgqJb4evf9Vdo/g4
+         rsFw==
+X-Gm-Message-State: AHPjjUiOG/TEndbnLRL8Ht8CAdEKO9QK2N6xWrRliqOtgp/2aFkMnmbx
+        ve8qVl0IhoH+wOtkCk1qkvanOAjq/KM=
+X-Google-Smtp-Source: AOwi7QAY1+bjnB9JHgHO8XMsxZwWllElSPjUA5XauBOUm2NFLMdIJ8U5n7JBe/iR9yo6e0kCMg3uQg==
+X-Received: by 10.98.155.76 with SMTP id r73mr13288331pfd.182.1506904389445;
+        Sun, 01 Oct 2017 17:33:09 -0700 (PDT)
 Received: from localhost ([205.175.97.239])
-        by smtp.gmail.com with ESMTPSA id o17sm4776665pfj.93.2017.10.01.17.31.17
+        by smtp.gmail.com with ESMTPSA id p10sm16246947pfd.152.2017.10.01.17.33.07
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 01 Oct 2017 17:31:17 -0700 (PDT)
-Date:   Sun, 1 Oct 2017 17:31:16 -0700
+        Sun, 01 Oct 2017 17:33:07 -0700 (PDT)
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net
-Subject: Re: [PATCH v5 0/6] Support %(trailers) arguments in for-each-ref(1)
-Message-ID: <20171002003116.GA69902@D-10-157-251-166.dhcp4.washington.edu>
-References: <20170930062238.87077-1-me@ttaylorr.com>
- <20170930184151.GB43975@D-10-157-251-166.dhcp4.washington.edu>
- <20171001000647.GA20767@D-10-157-251-166.dhcp4.washington.edu>
- <20171001161725.GA66172@D-10-157-251-166.dhcp4.washington.edu>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171001161725.GA66172@D-10-157-251-166.dhcp4.washington.edu>
-User-Agent: Mutt/1.8.3 (2017-05-23)
+Cc:     gitster@pobox.com, peff@peff.net, Taylor Blau <me@ttaylorr.com>
+Subject: [PATCH v5 1/6] pretty.c: delimit "%(trailers)" arguments with ","
+Date:   Sun,  1 Oct 2017 17:32:59 -0700
+Message-Id: <20171002003304.77514-1-me@ttaylorr.com>
+X-Mailer: git-send-email 2.14.1.145.gb3622a4ee
+In-Reply-To: <20171002003116.GA69902@D-10-157-251-166.dhcp4.washington.edu>
+References: <20171002003116.GA69902@D-10-157-251-166.dhcp4.washington.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+In preparation for adding consistent "%(trailers)" atom options to
+`git-for-each-ref(1)`'s "--format" argument, change "%(trailers)" in
+pretty.c to separate sub-arguments with a ",", instead of a ":".
 
-Attached is the fifth revision of my patch-set "Support %(trailers)
-arguments in for-each-ref(1)".
+Multiple sub-arguments are given either as "%(trailers:unfold,only)" or
+"%(trailers:only,unfold)".
 
-It includes the following changes since v4:
+This change disambiguates between "top-level" arguments, and arguments
+given to the trailers atom itself. It is consistent with the behavior of
+"%(upstream)" and "%(push)" atoms.
 
-  * Clarified "ref-filter.c: parse trailers arguments with %(contents)
-    atom" to include reasoning for passing NULL as "" empty string in
-    contents_atom_parser.
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ pretty.c                      | 32 +++++++++++++++++++++++++++-----
+ t/t4205-log-pretty-formats.sh |  4 ++--
+ 2 files changed, 29 insertions(+), 7 deletions(-)
 
-  * Changed instances "fencing" to "quoting" in "doc: use modern
-    "`"-style code fencing".
+diff --git a/pretty.c b/pretty.c
+index 94eab5c89..7500fe694 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1056,6 +1056,23 @@ static size_t parse_padding_placeholder(struct strbuf *sb,
+ 	return 0;
+ }
+ 
++static int match_placeholder_arg(const char *to_parse, const char *candidate,
++				const char **end)
++{
++	const char *p;
++	if (!(skip_prefix(to_parse, candidate, &p)))
++		return 0;
++	if (*p == ',') {
++		*end = p + 1;
++		return 1;
++	}
++	if (*p == ')') {
++		*end = p;
++		return 1;
++	}
++	return 0;
++}
++
+ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 				const char *placeholder,
+ 				void *context)
+@@ -1285,11 +1302,16 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 
+ 	if (skip_prefix(placeholder, "(trailers", &arg)) {
+ 		struct process_trailer_options opts = PROCESS_TRAILER_OPTIONS_INIT;
+-		while (*arg == ':') {
+-			if (skip_prefix(arg, ":only", &arg))
+-				opts.only_trailers = 1;
+-			else if (skip_prefix(arg, ":unfold", &arg))
+-				opts.unfold = 1;
++		if (*arg == ':') {
++			arg++;
++			for (;;) {
++				if (match_placeholder_arg(arg, "only", &arg))
++					opts.only_trailers = 1;
++				else if (match_placeholder_arg(arg, "unfold", &arg))
++					opts.unfold = 1;
++				else
++					break;
++			}
+ 		}
+ 		if (*arg == ')') {
+ 			format_trailers_from_commit(sb, msg + c->subject_off, &opts);
+diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
+index ec5f53010..977472f53 100755
+--- a/t/t4205-log-pretty-formats.sh
++++ b/t/t4205-log-pretty-formats.sh
+@@ -588,8 +588,8 @@ test_expect_success '%(trailers:unfold) unfolds trailers' '
+ '
+ 
+ test_expect_success ':only and :unfold work together' '
+-	git log --no-walk --pretty="%(trailers:only:unfold)" >actual &&
+-	git log --no-walk --pretty="%(trailers:unfold:only)" >reverse &&
++	git log --no-walk --pretty="%(trailers:only,unfold)" >actual &&
++	git log --no-walk --pretty="%(trailers:unfold,only)" >reverse &&
+ 	test_cmp actual reverse &&
+ 	{
+ 		grep -v patch.description <trailers | unfold &&
+-- 
+2.14.1.145.gb3622a4ee
 
-  * Changed indentation in "pretty.c: delimit "%(trailers)" arguments
-    with ","" to silence the output from `make style`.
-
-  * Fix incorrect indentation in "ref-filter.c: use trailer_opts to
-    format trailers".
-
-Thanks again.
-
-
-- Taylor
