@@ -2,160 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A8DC020281
-	for <e@80x24.org>; Mon,  2 Oct 2017 20:02:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D6EB20281
+	for <e@80x24.org>; Mon,  2 Oct 2017 22:08:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751326AbdJBUCR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Oct 2017 16:02:17 -0400
-Received: from siwi.pair.com ([209.68.5.199]:61209 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751055AbdJBUCQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Oct 2017 16:02:16 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 0343884632;
-        Mon,  2 Oct 2017 16:02:11 -0400 (EDT)
-Received: from [10.160.98.77] (unknown [167.220.148.86])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id A9CD184631;
-        Mon,  2 Oct 2017 16:02:10 -0400 (EDT)
-Subject: Re: [idea] File history tracking hints
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Philip Oakley <philipoakley@iee.org>,
-        Pavel Kretov <firegurafiku@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-References: <CAOZF3=Ouvk8ccME+fXr_T=GL1j4Gx3Hgj3ao_-GQng-noeOubg@mail.gmail.com>
- <E8C827ED458648F78F263F2F2712493B@PhilipOakley>
- <alpine.DEB.2.21.1.1709131322470.4132@virtualbox>
- <04DDB36236444FFD8C3668AA7B62B154@PhilipOakley>
- <alpine.DEB.2.21.1.1709300110350.40514@virtualbox>
- <5fb263a8-d83b-64a7-812f-fd8e3748feb6@jeffhostetler.com>
- <xmqqtvzjv987.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kbghnWmvQweup=Z79HnVQQCMM65CKgEO3oqDoRp-Bj=2Q@mail.gmail.com>
- <ea1538e3-2b2e-f7eb-9c0e-e29c15bf2ea9@jeffhostetler.com>
- <CAGZ79kbjfXC3CxMDouUrCUVt-OJXckDtg9U_7=R=FM-eon4ikA@mail.gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <f9b722d9-cd37-40f3-7ae4-6f7f3d90de83@jeffhostetler.com>
-Date:   Mon, 2 Oct 2017 16:02:09 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        id S1751268AbdJBWIt (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Oct 2017 18:08:49 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:34027 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750949AbdJBWIs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Oct 2017 18:08:48 -0400
+Received: by mail-pf0-f196.google.com with SMTP id g65so6972701pfe.1
+        for <git@vger.kernel.org>; Mon, 02 Oct 2017 15:08:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=YTH++C49CkpD+E/uiURb3Xzyaguj5MXJXChwIbqJp7s=;
+        b=SfdWTRgippgan/844rFZeSguZhsKulK04VmxnSBfBBzF++6nbp7Q75zXn4+Q8DsItO
+         x4SAK51EIVjpuY2dnCnN+yM8GS7k45/sO2fWil3Bb7WsFkyAjyNZp47EVq4uXIgQq51E
+         lU661vS0ha2BC919YGszm8HFVRvygjrqVjpEb8VyQzx/UJbz2/duCvcyOdDWecpToqmg
+         iMt7uJmHjgAud7KKt05khEYCBUd8zPCO7bq0zcBcMUFds7+vYLjiPA/nfnE2Ar9V+PO/
+         YZe6amxtF6tpF5x9LASALEM9ezIARWBeNeiz8BZ+ghZY4GRLuapsU0OWsOTKLFASYg4+
+         n7YA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=YTH++C49CkpD+E/uiURb3Xzyaguj5MXJXChwIbqJp7s=;
+        b=RmLOX1eseJhJMix0E9vxdlou57asLjNSIhEH/jLVE6vBPfE7Hnlp0x+Qf1B7WJzkI1
+         k6XWHfvIqFtGADJAS3w2K3+2Nn2f/GZFeaadBCKby+3iw8UxKA+GIDbavhMjxznnmTdD
+         yBqET21i5AgY95QhHvpdo5K5u40ysR6od99W9aIZZh7a+IA56ThDwgvRW5WUR1pORkbG
+         dv6sHx2+fk3owdvUkAtfZSpMy5rJtLDHYqsddOjKzQoVU/W7EcMN7C2JQUbewNz4/RKw
+         awmqXAf2DStJV4mJA7+E0fQAyNys0RyHAbjBAVxKdz2l5kpvVWG3gQs2hgS+v2WQdIjD
+         udDQ==
+X-Gm-Message-State: AHPjjUgw4eGYaFyB7Sz+Mg+PjUtfOk7qpnTabiLXFT62LaWmZjgTfZgn
+        edn5k+iWZQWY8ySLUjL41FE=
+X-Google-Smtp-Source: AOwi7QAd4WPqt74x8q0AR3EK4oVcvr2Oxn6WlFhBTyquGfIP8jXl8aGwhLzvJXWtzdz/o/h0y7qKXw==
+X-Received: by 10.98.223.76 with SMTP id u73mr15886171pfg.234.1506982127531;
+        Mon, 02 Oct 2017 15:08:47 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:c1fd:a9ac:f156:8142])
+        by smtp.gmail.com with ESMTPSA id l85sm18087255pfg.155.2017.10.02.15.08.46
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 02 Oct 2017 15:08:46 -0700 (PDT)
+Date:   Mon, 2 Oct 2017 15:08:45 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Thadeus Fleming <thadeus.j.fleming@gmail.com>
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+Subject: Re: git submodule add fails when using both --branch and --depth
+Message-ID: <20171002220844.GQ19555@aiede.mtv.corp.google.com>
+References: <CAA4Wa2sVddG_SS70Dy_womGLKW0ipAjsxR4g+yjMKscjErRjvQ@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kbjfXC3CxMDouUrCUVt-OJXckDtg9U_7=R=FM-eon4ikA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAA4Wa2sVddG_SS70Dy_womGLKW0ipAjsxR4g+yjMKscjErRjvQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
+Thadeus Fleming wrote:
 
-On 10/2/2017 3:18 PM, Stefan Beller wrote:
-> On Mon, Oct 2, 2017 at 11:51 AM, Jeff Hostetler <git@jeffhostetler.com> wrote:
-> 
->> Sorry to re-re-...-re-stir up such an old topic.
->>
->> I wasn't really thinking about commit-to-commit hints.
->> I think these have lots of problems.  (If commit A->B does
->> "t/* -> tests/*" and commit B->C does "test/*.c -> xyx/*",
->> then you need a way to compute a transitive closure to see
->> the net-net hints for A->C.  I think that quickly spirals
->> out of control.)
-> 
-> I agree. Though as a human I can still look at
-> A..C giving the hint that t/*.c and xyz/*.c ought to
-> be taken into account for rename detection.
-> (which is currently done with -M -C --find-copies-harder
-> as a generic "there are renamed things", and not the very
-> specific rule, that may be cheaper to examine compared to
-> these generic rules)
-> 
->> No, I was going in another direction.  For example, if a
->> tree-entry contains { file-guid, file-name, file-sha, ... }
->> then when diffing any 2 commits, you can match up files
->> (and folders) by their guids.  Renames pop out trivially when
->> their file-names don't match.  File moves pop out when the
->> file-guids appear in different trees.  Adds and deletes pop
->> out when file-guids don't have a peer. (I'm glossing over some
->> of the details, but you get the idea.)
-> 
-> How do you know when a guid needs adaption?
+> I'm running git 2.14.2 on Ubuntu 16.04.
+>
+> Compare the behavior of
+>
+>> git clone --branch pu --depth 1 https://github.com/git/git git-pu
+>
+> which clones only the latest commit of the pu branch and
 
-I'm not sure I know what you mean by "adaption".
+Yes.
 
-> 
-> (c.f. origin/jt/packmigrate)
-> If a commit moves a function out of a file into a new file,
-> the ideal version control could notice that the function
-> was moved into a new file and still attribute the original
-> authors by ignoring the move commit.
+>> mkdir tmp && cd tmp && git init
+>> git submodule add --branch pu --depth 1 https://github.com/git/git \
+>  git-pu
+>
+> which gives the error
+>
+> fatal: 'origin/pu' is not a commit and a branch 'pu' cannot be created from it
+> Unable to checkout submodule 'git-pu'
 
-I think that's an orthogonal problem.  I could move a function
-from one file to an existing file or to a new file it doesn't
-matter.  Attributing those lines back to the original author
-(rather than the mover) is a bit of a pipe dream IMHO.  And I
-have to wonder if it is always the correct thing to do?  I can
-see scenarios where you'd want the mover.
+As a side note (you are using "git submodule add --depth", not "git
+submodule update --depth"), I suspect that "submodule update --depth"
+may not always do what people expect.
 
-I guess there's nothing from stopping the "ideal VC system"
-doing all this line-based analysis, but that shouldn't make
-file renames expensive to detect (since that is the granularity
-that people and most tools expect the system to work with).
+With add --depth, I agree with your expectation and after your fix
+everything should work fine.  But with update --depth, consider the
+following sequence of steps:
 
-> 
-> Another series in flight could have modified that
-> function slightly (fixed a bug), such that it's hard to
-> reason about these things.
-> 
-> For guids I imagine the new file gets a new guid, such that
-> tracking the function becomes harder?
-> 
+ 1. I create a repository "super" with submodule "sub" and publish
+    both.
 
-Yeah, I'm not thinking about tracking individual functions.
+ 2. I make a couple commits to "sub" and a commit to "super" making
+    use of those changes and want to publish them.
 
-> 
->> To address Junio's
->> question, independently added files with the same name will
->> have 2 different file-guids.  We amend the merge rules to
->> handle this case and pick one of them (say, the one that
->> is sorts less than the other) as the winner and go on.
->> All-in-all the solution is not trivial (as there are a few
->> edge cases to deal with), but it better matches the (casual)
->> user's perception of what happened to their tree over time.
-> 
-> The GUID would be made up at creation time, I assume?
-> Is there any input other than the file itself? (I assumed so
-> initially, such that:
->    By having a GUID in the tree, we would divorce from the notion
->    of a "content addressable file system" quickly, as we both could
->    create the same tree locally (containing the same blobs) and
->    yet the trees would have different names due to having different
->    GUIDs in them
-> ), which I'd find undesirable.
+ 3. I use "git push --recurse-submodules" to publish my commits to
+    "sub" and "super":
 
-Right.  A real solution would store the guid data slightly
-differently so we could preserve the existing SHA properties.
-My example was more conceptual.
+    a. First it pushes to "sub".
 
-> 
->> It also doesn't require expensive code to sniff for renames
->> on every command (which doesn't scale on really large repos).
-> 
-> I wonder if the rename detection could be offloaded to a server
-> (which scales) that provides a "hint file" to clients, such that the
-> clients can then cheaply make use of these specific hints.
-> 
+    b. Then it pushes to "super".
 
-I don't know.  Might be easier to add that computation to the
-occasional client-side housekeeping (somewhat like the commit
-generation number computation we keep talking about).
+Between steps 3(a) and 3(b), a person can still "git clone
+--recurse-submodules" the "super" repository.  The repository "super"
+does not have my change yet and "sub" does, but that is not a problem,
+since commands like "git checkout --recurse-submodules" and "git
+submodule update" know to check out the commit *before* my change in
+the submodule.
 
-Thanks
-Jeff
+But between steps 3(a) and 3(b), "git submodule update --depth=1"
+would not work.  It would fetch the submodule with depth 1 and then
+try to check out a commit that is deeper in history.
+
+So I think there's more thinking needed there.
+
+That's all a tangent to your report about add --depth, though.
+
+Thanks,
+Jonathan
