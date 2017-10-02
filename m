@@ -2,127 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C855620281
-	for <e@80x24.org>; Mon,  2 Oct 2017 17:30:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1729F20281
+	for <e@80x24.org>; Mon,  2 Oct 2017 17:41:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751236AbdJBRaV (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Oct 2017 13:30:21 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:38496 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751082AbdJBRaU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Oct 2017 13:30:20 -0400
-Received: by mail-pf0-f196.google.com with SMTP id a7so6354533pfj.5
-        for <git@vger.kernel.org>; Mon, 02 Oct 2017 10:30:20 -0700 (PDT)
+        id S1751247AbdJBRlo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Oct 2017 13:41:44 -0400
+Received: from mail-qk0-f182.google.com ([209.85.220.182]:56041 "EHLO
+        mail-qk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751131AbdJBRln (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Oct 2017 13:41:43 -0400
+Received: by mail-qk0-f182.google.com with SMTP id q8so5940352qkl.12
+        for <git@vger.kernel.org>; Mon, 02 Oct 2017 10:41:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=2XbSCzX75ioKvL0i2Brkvt/7wtJUvGuZ8nkV7x0rhyI=;
-        b=oPVXKEdhBggO/kwzEZjwiJn4Ktd4fwc4zamgjmCgTQS11ixIMgR3GRoIfJKTdvHCGd
-         pguxY2mArqZLr/fxCNBIIXli5DM2OAPrkf4OXqn1uENFtKZNzshjoewKTF/fp4tNdXwp
-         YhjfY9P3wDVEVriGKNFLsEBfk2yNKklRQa+F5c16tOLFz5ZE0R6LEu6ckIL+5nyny7GO
-         tqHyANzaAq+TBuId06pyTAylvGKUjPmb2ZmLFqsoUjUbTIv3+FAckkQiQb0nIjXLIVnJ
-         t+FeWZBitISIy9zPslEXJlolhG9pM6eHajSKIRrHr1iC/h3Vch/dEsBxE4BvdexDsdKn
-         eBRg==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=/5RkP5Bjm7TimCLuOmIEzCsW+W9WPNcAQV46VELUFn8=;
+        b=YLtuCD/BrdodNJODkXAvOrozyvuLhnatVgpmM5eijgwRCfEt2Bn8SXAlSkjJGnfdfC
+         OMC8Kgi+5Oo/hNS3GoPWDI7WOQiSfSx7NSb2wxSGQepyTDyhDsqH146XVmN2ZQpfIPGE
+         2fmECc+xBcChTjtemBYRZUk2neARqT0UISz/DNph5CyjwIA8BIfAm2r26NKhjK32fsbX
+         uTievShZfL64KgQt0mXAyHt/tia4wRC2AQ6cjUq4MGPdc8S7+Gcync/sM34e3VY5AS7g
+         KCtboQ9ncKgiBPxcgCVLRbFzlMpqFJ/HSxtBPnLHM/fvgxQwn6nJRqom/MSIz+HfVgw4
+         svlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=2XbSCzX75ioKvL0i2Brkvt/7wtJUvGuZ8nkV7x0rhyI=;
-        b=e7HAcquaeaeA3iKhwIntjxpJaF599A1sRmepYucvvhnoSfZ5SJzxQOiy68aGSMNJDa
-         K+vUmrtvkmZFpZzkmOc/U9GrAFoA5+T0O07zhp7BfgWsfRgbr9QsorNTA+3ypY4yWmEJ
-         8P3wuQAYwSZGddUsjQTi2kfuSQxP1jcvN9bVX+F0Noo2BI6fk61l0atCvXrIKh2ffRzs
-         sojx9/gG9RZoGVdcVIA9lRBq/8XxCzgH/lYQj2SdZfX4nnNnuFiRCBif2gSr8hQvp+iw
-         vCPDiuNwtgzs3ys8g4Om9tOIdr6gKgTgv6fIht5NPrtzkgAbDZvdgatJNAFW6VezSs3a
-         FtMA==
-X-Gm-Message-State: AHPjjUjroGtliwFTzVtj/816onZ3SaRPPiak74+ENxVjgLqt+Mcl9Xkp
-        l/SmGj14hF0Xc9nDCGs2z98AOl8z
-X-Google-Smtp-Source: AOwi7QD97u60ehGEikrRkIKJCGXf1/ducIx4GGCd24ixQS5/578sAb3lmda39o/C/Hz+nZgKx803ww==
-X-Received: by 10.99.143.14 with SMTP id n14mr12922971pgd.107.1506965419871;
-        Mon, 02 Oct 2017 10:30:19 -0700 (PDT)
-Received: from localhost.localdomain ([2405:204:7287:7232:c31:a746:72c9:9586])
-        by smtp.gmail.com with ESMTPSA id g25sm17640660pfg.166.2017.10.02.10.30.14
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 02 Oct 2017 10:30:18 -0700 (PDT)
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-X-Google-Original-From: Kaartic Sivaraam <kaarticsivaraam@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Subject: [PATCH v2] setup: update error message to be more meaningful
-Date:   Mon,  2 Oct 2017 23:00:02 +0530
-Message-Id: <20171002173002.4278-1-kaarticsivaraam@gmail.com>
-X-Mailer: git-send-email 2.14.1.935.ge2b2bcd8a
-In-Reply-To: <xmqqlgnbq7sc.fsf@gitster.mtv.corp.google.com>
-References: <xmqqlgnbq7sc.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=/5RkP5Bjm7TimCLuOmIEzCsW+W9WPNcAQV46VELUFn8=;
+        b=Bfb9xqn0j2eKICKAgeoUib5N/Wg0kcwQoYljL0Cmj45m+Hkh2PKrRHC4HvFincRzF4
+         IF5kopCGw+iKiI/p5YCB54fOruJehpbrID6tYe/1sp+LuHdeHX9TdJBHOm9xlrA1A3IR
+         fLHrSo85NGPWW8j1Ke07zP9KPOU1kXaBhvDdrBQbYiEyy2WHRgUNWH8XJanwv5PSOQb+
+         Kbo8RdF4lE/1o2W+/hGQ89gy29RP6CLknEmoIYSuwYdnFxjXZrsv1Wxtikp70RZr0Efr
+         MMppxSX0DK6aAzvOCIyYCLLslMpj0eD9nMBzctQAqbOAbFFIw5Fy2mEtzprr0zs1lsfj
+         Bd1g==
+X-Gm-Message-State: AMCzsaU1UouYyvXFLSv6FK+il3B+Yfb/D+VCUKzZFPemtXxP07yXkGjn
+        E2pFB7gSONMgKan/9IhvStRZvarOtxireEpdZOIp1g==
+X-Google-Smtp-Source: AOwi7QDDuJshzlkEacu6tikWFCJ2wBAv3ZtAvz8Li4cbGG7ZORcysVOvq34YfahdCzeKWbsS7w1Mbn772ZPIqkB4C7o=
+X-Received: by 10.55.33.203 with SMTP id f72mr16556335qki.176.1506966102093;
+ Mon, 02 Oct 2017 10:41:42 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.140.102.46 with HTTP; Mon, 2 Oct 2017 10:41:41 -0700 (PDT)
+In-Reply-To: <xmqqtvzjv987.fsf@gitster.mtv.corp.google.com>
+References: <CAOZF3=Ouvk8ccME+fXr_T=GL1j4Gx3Hgj3ao_-GQng-noeOubg@mail.gmail.com>
+ <E8C827ED458648F78F263F2F2712493B@PhilipOakley> <alpine.DEB.2.21.1.1709131322470.4132@virtualbox>
+ <04DDB36236444FFD8C3668AA7B62B154@PhilipOakley> <alpine.DEB.2.21.1.1709300110350.40514@virtualbox>
+ <5fb263a8-d83b-64a7-812f-fd8e3748feb6@jeffhostetler.com> <xmqqtvzjv987.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 2 Oct 2017 10:41:41 -0700
+Message-ID: <CAGZ79kbghnWmvQweup=Z79HnVQQCMM65CKgEO3oqDoRp-Bj=2Q@mail.gmail.com>
+Subject: Re: [idea] File history tracking hints
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Philip Oakley <philipoakley@iee.org>,
+        Pavel Kretov <firegurafiku@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+>> It would be nice if every file (and tree) had a permanent GUID
+>> associated with it.  Then the filename/pathname becomes a property
+>> of the GUIDs.  Then you can exactly know about moves/renames with
+>> minimal effort (and no guessing).
+>
+...
 
-The error message shown when a flag is found when expecting a
-filename wasn't clear as it didn't communicate what was wrong
-using the 'suitable' words in *all* cases.
+> https://public-inbox.org/git/Pine.LNX.4.58.0504150753440.7211@ppc970.osdl.org/
+>
+> I'd encourge people to read and re-read that message until they can
+> recite it by heart.
 
-        $ git ls-files
-        README.md
-        test-file
+I have rethought about the idea of GUIDs as proposed by Jeff and wanted
+to give a reply. After rereading this message, I think my thoughts are
+already included via:
 
-Correct case,
+  - you're doing the work at the wrong point for _another_ reason. You're
+     freezing your (crappy) algorithm at tree creation time, and basically
+     making it pointless to ever create something better later, because even
+     if hardware and software improves, you've codified that "we have to
+     have crappy information".
 
-        $ git rev-parse README.md --flags
-        README.md
-        --flags
-        fatal: bad flag '--flags' used after filename
+--
+My design proposal for these "rename hints" would be a special trailer,
+roughly:
 
-Incorrect case,
+    Rename: LICENSE -> legal.txt
+    Rename: t/* -> tests/*
 
-        $ git grep "some random regex" -n
-        fatal: bad flag '-n' used after filename
+or more generally:
 
-The above case is incorrect as "some random regex" isn't a filename
-in this case.
+    Rename: <pathspec> <delim> <pathspec>
 
-Change the error message to be general and communicative. This results
-in the following output,
+This however has multiple issues due to potential
+human inaccuracies:
+(A) typos in the trailer key or in the pathspec
+   (resulting in different error modes)
+(B) partial hints (We currently have a world of
+   completely missing hints, so I would not expect it to
+   be worse?)
+(C) wrong hints. This ought to be no problem as Git would
+   take some CPU time to conclude the hint was bogus.
 
-        $ git rev-parse README.md --flags
-        README.md
-        --flags
-        fatal: option '--flags' must come before non-option arguments
+For (A), I would imagine we want a mechanism (e.g. notes)
+to "correct" the hints. This is the similar issue as a typo in a
+commit message, which we currently just ignore if the
+commit has been merged to e.g. master.
 
-        $ git grep "some random regex" -n
-        fatal: option '-n' must come before non-option arguments
+So maybe we'd just design around that, giving the option
+to give the correct hints via command line.
 
-Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
----
- Changes in v2:
+So if the commit has the typo'd hint
 
-    Change in error message.
+    Remame:  t/* -> tests/*
 
- setup.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+the human would see that (and also conclude that by
+the commit message), and then invoke
 
-diff --git a/setup.c b/setup.c
-index 860507e1f..09c793282 100644
---- a/setup.c
-+++ b/setup.c
-@@ -230,7 +230,7 @@ void verify_filename(const char *prefix,
- 		     int diagnose_misspelt_rev)
- {
- 	if (*arg == '-')
--		die("bad flag '%s' used after filename", arg);
-+		die("option '%s' must come before non-option arguments", arg);
- 	if (looks_like_pathspec(arg) || check_filename(prefix, arg))
- 		return;
- 	die_verify_filename(prefix, arg, diagnose_misspelt_rev);
--- 
-2.14.1.935.ge2b2bcd8a
+git log -C -C-hint="t/* -> tests/*" ...
 
+which would have the corrected hint and hence deliver
+the best output.
+
+Maybe the "-C-hint" flag is the best starting point when
+going in that direction?
+
+Thanks,
+Stefan
