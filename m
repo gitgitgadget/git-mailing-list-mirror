@@ -2,112 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6696A202DD
-	for <e@80x24.org>; Mon,  2 Oct 2017 04:13:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 22438202DD
+	for <e@80x24.org>; Mon,  2 Oct 2017 04:14:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751133AbdJBEND (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Oct 2017 00:13:03 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58030 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751085AbdJBENC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Oct 2017 00:13:02 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 227CE93CFE;
-        Mon,  2 Oct 2017 00:13:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=jGMqQDefrJ/C
-        CWRSOG+ESPGKI0E=; b=bPwlbWF58SDtZqeaR6JEj4efatT9+CU/6JF8WMbUNISq
-        31Jm6n7vrSskCm5sCeDLdxyC9mm3nf7Kh9WzVNsyPlwr1WQrkmKzlw5CnLqDv/Sn
-        aDyZekwkSWI45m1UzZshMg29Cvpxyck84s5bUmB8WZCCzkgOPF7luosSAGASXqw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=yPTBfn
-        2l5HLiS1g1VC+Bhz87L0vH1pXDuqqBjq0z3X+8GYh50ukYdZzXDgPz9SRaXzYwmL
-        iLv/0v36BRZKvfTrlAvNGbN7AznFfVA4p+OG3Ig9JAevHRM6pnZFKx2xhRMhbVbB
-        iw+/41kds0n5gvvl/vgRZX6JxMMi3CwwPBVlU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1A4D893CFD;
-        Mon,  2 Oct 2017 00:13:02 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5CE0193CFA;
-        Mon,  2 Oct 2017 00:13:01 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] tag: avoid NULL pointer arithmetic
-References: <99e56671-bdf9-a59f-ae7b-758f1b7a8f14@web.de>
-Date:   Mon, 02 Oct 2017 13:13:00 +0900
-In-Reply-To: <99e56671-bdf9-a59f-ae7b-758f1b7a8f14@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Sun, 1 Oct 2017 16:45:13 +0200")
-Message-ID: <xmqqwp4ep4qb.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751120AbdJBEOF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Oct 2017 00:14:05 -0400
+Received: from mail-pf0-f177.google.com ([209.85.192.177]:49087 "EHLO
+        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750770AbdJBEOE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Oct 2017 00:14:04 -0400
+Received: by mail-pf0-f177.google.com with SMTP id n24so2335014pfk.5
+        for <git@vger.kernel.org>; Sun, 01 Oct 2017 21:14:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=a82NlQiZpDbPHGOAXQaJsTsvSWs/rtfUkIDDcP6z9/M=;
+        b=YdD9orh2Q5EyVIlsR8PVdUaaisz0nJEMnbKHYxAd40E1gDHQcqDQnUyCtSfOP9JJvQ
+         QGNx21TnrP/76mOHCa1r27GpLI0OK8eB8w5rna8l1rbsTQF3YBKvl2vRYYZ2DrIjgdrM
+         JTHBvVzIBoUOYPgkWp7s0Zvu1kA9hCVAWnmhiAczC0PGMDBiTN761KLjFe98+mJB1pkP
+         MgIei3pn65aWQqIXYwIdh0NTiJ7UzqaM0y/Wjas4WhMMEl3eRQyh9Mjhj3hjy123bqvT
+         LFttEfo44+4EyGOadHm/e2zTHMECjL0n99zCj+IrGoTIAlfn5ei6vjixeml1DwBTW/rE
+         +FMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=a82NlQiZpDbPHGOAXQaJsTsvSWs/rtfUkIDDcP6z9/M=;
+        b=U3OKP3eOSGiZe5CAIrQo+goAnQXo3wWYH6pit6+18vL8W7YiDtqGp/pITNLqW/RjRk
+         yO3Fsv5efGilFYIG3GAA4oED6rimeIphI1wuYaCS955hONtbYbdZVm74Dq+xAa+oHToc
+         Le1HbxA8qs3XODt4mmAiWSFi744+ciohSfgQLwCsyq6d2e8CLvF0jCySdPsRQ0NMw8h3
+         ippMfWgs0WGPf5LFQMA3nTZTbfZysPJEsuAEhG3MOjYPAhhqgMTmzi2D5mwYEP828ZLv
+         9XEB/CPKkhdBpgy08OxAdSlXQW0A02Q4HxCI7PE3coqLWwFpwIDQig1miMIxIKrribcK
+         2zPQ==
+X-Gm-Message-State: AHPjjUh9O0nRRg+9UNpHjRaKkMcBlrFIxaIpsfAZ+mlYQ5CrDqKZLrqH
+        KDE/dwrft1g1uSfLN5QtFwdwlu43Ekyk2VvZfHA=
+X-Google-Smtp-Source: AOwi7QCdGOd191EGWhPEv3p0ctGinl4PDvZ6iBldAvZqhJsh9hjp9GfEAxmsR70GJFMAH2qmuU7YrbO6meGVNQ2PbfI=
+X-Received: by 10.101.81.135 with SMTP id h7mr11759843pgq.48.1506917643786;
+ Sun, 01 Oct 2017 21:14:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: FAF4835C-A727-11E7-9DE5-8EF31968708C-77302942!pb-smtp1.pobox.com
+Received: by 10.100.156.137 with HTTP; Sun, 1 Oct 2017 21:14:03 -0700 (PDT)
+In-Reply-To: <xmqqd166qkeg.fsf@gitster.mtv.corp.google.com>
+References: <cover.1506862824.git.martin.agren@gmail.com> <d912e33a1395ff25c1496715d0a537858daa885a.1506862824.git.martin.agren@gmail.com>
+ <xmqqd166qkeg.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Mon, 2 Oct 2017 06:14:03 +0200
+Message-ID: <CAN0heSqPVpgYSfUpmiBaCVtZkMiqWC3rgzFcBu2TVr3m7Gq4UA@mail.gmail.com>
+Subject: Re: [PATCH 09/11] read-cache: require flags for `write_locked_index()`
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
-
-> lookup_blob() etc. can return NULL if the referenced object isn't of th=
-e
-> expected type.  In theory it's wrong to reference the object member in
-> that case.  In practice it's OK because it's located at offset 0 for al=
-l
-> types, so the pointer arithmetic (NULL + 0) is optimized out by the
-> compiler.  The issue is reported by Clang's AddressSanitizer, though.
+On 2 October 2017 at 05:49, Junio C Hamano <gitster@pobox.com> wrote:
+> Martin =C3=85gren <martin.agren@gmail.com> writes:
 >
-> Avoid the ASan error by casting the results of the lookup functions to
-> struct object pointers.  That works fine with NULL pointers as well.  W=
-e
-> already rely on the object member being first in all object types in
-> other places in the code.
+>> ... Instead, require that one of the
+>> flags is set. Adjust documentation and the assert we already have for
+>> checking that we don't have too many flags. Add a macro `HAS_SINGLE_BIT`
+>> (inspired by `HAS_MULTI_BITS`) to simplify this check and similar checks
+>> in the future.
 >
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
-> ---
-
-Yikes, that is tricky.
-
-Taking the address of .object field appears to be a lot cleaner and
-more kosher than casting, but from the compiler's point of view it's
-quite the opposite.  Sigh.
-
-Thanks.  The patch itself looks like the right solution to me.
-
->  tag.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
+> I do not have a strong opinion against this approach, but if
+> something can take only one of two values, wouldn't it make more
+> sense to express it as a single boolean, I wonder.  Then there is no
+> need to invent a cute HAS_SINGLE_BIT() macro, either.
 >
-> diff --git a/tag.c b/tag.c
-> index 7e10acfb6e..fcbe012f7a 100644
-> --- a/tag.c
-> +++ b/tag.c
-> @@ -142,13 +142,13 @@ int parse_tag_buffer(struct tag *item, const void=
- *data, unsigned long size)
->  	bufptr =3D nl + 1;
-> =20
->  	if (!strcmp(type, blob_type)) {
-> -		item->tagged =3D &lookup_blob(&oid)->object;
-> +		item->tagged =3D (struct object *)lookup_blob(&oid);
->  	} else if (!strcmp(type, tree_type)) {
-> -		item->tagged =3D &lookup_tree(&oid)->object;
-> +		item->tagged =3D (struct object *)lookup_tree(&oid);
->  	} else if (!strcmp(type, commit_type)) {
-> -		item->tagged =3D &lookup_commit(&oid)->object;
-> +		item->tagged =3D (struct object *)lookup_commit(&oid);
->  	} else if (!strcmp(type, tag_type)) {
-> -		item->tagged =3D &lookup_tag(&oid)->object;
-> +		item->tagged =3D (struct object *)lookup_tag(&oid);
->  	} else {
->  		error("Unknown type %s", type);
->  		item->tagged =3D NULL;
+> "commit and leave it open" cannot be expressed with such a scheme,
+> but with the HAS_SINGLE_BIT() scheme it can't anyway, so...
+
+I did briefly consider renaming `flags` to `commit` and re-#defining the
+two flags to 0 and 1 (or even updating all the callers to use literal
+zeros and ones). It felt a bit awkward to downgrade `flags` to a bool
+-- normally we'd to the reverse change. But maybe I shouldn't have
+rejected that so easily. If we have a feeling we won't need other flags
+(or the "don't even close the file") any time soon, maybe it'd be good
+to tighten things up a bit. Thanks for looking at these.
