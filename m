@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 566FE2036B
-	for <e@80x24.org>; Tue,  3 Oct 2017 20:15:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF60C2036B
+	for <e@80x24.org>; Tue,  3 Oct 2017 20:15:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751901AbdJCUPi (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Oct 2017 16:15:38 -0400
-Received: from mail-pg0-f49.google.com ([74.125.83.49]:46340 "EHLO
-        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751450AbdJCUPc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Oct 2017 16:15:32 -0400
-Received: by mail-pg0-f49.google.com with SMTP id k7so370349pga.3
-        for <git@vger.kernel.org>; Tue, 03 Oct 2017 13:15:32 -0700 (PDT)
+        id S1751896AbdJCUPh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Oct 2017 16:15:37 -0400
+Received: from mail-pg0-f44.google.com ([74.125.83.44]:52707 "EHLO
+        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751528AbdJCUPZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Oct 2017 16:15:25 -0400
+Received: by mail-pg0-f44.google.com with SMTP id i195so5316784pgd.9
+        for <git@vger.kernel.org>; Tue, 03 Oct 2017 13:15:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=hP1uqKfQ88xiwjwUIu4DLTC1Fcmab537pp1QVZ49NWQ=;
-        b=E9gZW/Wx2mu2Qcpychs4fWblziyIxSxCtDGiiFo2KLZaGWll0WV2LkpPqU8QgIiHq+
-         rdBQ92nkM2YdW2O4SLbQOccH5npsYPGJI8XTAkiyOug3bRahF1Wpa70TBCyKCLHNEmUe
-         k4w4JGfZGFAjPPqKZF6zoUYaMwHD7pLvTkNjufhTz94QyhJ78c8rDH9xU4aHEDvRCjYb
-         0GeOahfxcrEdiG1m+Vo4ymoVq7uiJw/7heWxQd6AxJhqce9M+hgz6bQFAv+EDCSo5M4E
-         3O3IS1/HA7YTWON9wL0Hrk1JXjQcwFTTmr1MWVM22trmaHmwcAjnJAggrO8YweqmMhuQ
-         8UoQ==
+        bh=+YRWLW+ThKE25nknLRqzHKUjcfo0/FgtB/zuv9ZIqV4=;
+        b=qvMX+4fg7wToiqp0prJtM5YtmQiIyuHWoDrOAotVd64+J3bPOGA8jhxzXkaa5bQvWx
+         A4h9wUV8Lrlukq5vTQWG5zX4W5dxvIfNVy4/MftHPJyOXoDKc3SNagjdperISg3fAX0v
+         BnorH6PVRGRW2jBdfzP5KEqf4DpAmj3jHFRUjKVEsXbxoJVIo0KiMy7Mkz84uxSAgm41
+         vtEDhpc5B9wFhLpT20aIlbR3RJ59ROurl/f3acMXnAdUWVi4TSDEvKY+kNnISWDnJEJM
+         oY8aXphh/mQ0KZfkXERQoKWf13Y/a2Gc3CY6P+k4gmmiDYmQWDeAx2VwoWI4d4VPpYGP
+         N39w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=hP1uqKfQ88xiwjwUIu4DLTC1Fcmab537pp1QVZ49NWQ=;
-        b=Slt3DUnEq1rJnMudTmS4KitM0tcOPcUtiIuP658J5KwMYN6i6FmBIFlIG1JyO3ouF5
-         Bog5h/RIA4zlkivvE3xuTbaKuTce8u45QrPnZ0+GSmyTgSG0RpPlm8q+0cPPa5VSD+dX
-         GMbiYN5uF70ruLNEUwiIHlOWjCi7f/2sCRjSnKrbYPcnRQlJIgJq5rJReJHg9hKD4E6C
-         JCh1TRz9gQVe+ETADEGn4gcMHm4Trcn2LfuCivWxkR4ginToqQSrfsjqutVCjI1f6ckx
-         kM8uLmC7559U81sB03iVGwfO+AgUbQoQkHPkqUc8zasf3OByd3qpo4zQLOOxxQfBv+Um
-         +lAw==
-X-Gm-Message-State: AMCzsaWtmVDBbbEcs2VB/w4/LucS9efR5FHjlYLvcfDSY0cRR7qEtHDI
-        LGcx47oa5qYfzJKOjPpfrvP5rixmIFg=
-X-Google-Smtp-Source: AOwi7QDkuW3SdjxI5jCf7iTxbdJCg7iOFvQSu38TMYD7qiwJsRrPwKAumGrmgohW6/mYZhYJcInOeA==
-X-Received: by 10.101.75.2 with SMTP id r2mr5864984pgq.51.1507061731288;
-        Tue, 03 Oct 2017 13:15:31 -0700 (PDT)
+        bh=+YRWLW+ThKE25nknLRqzHKUjcfo0/FgtB/zuv9ZIqV4=;
+        b=iBqafB+g3Z0rs9qtV9BO3M0/XdtQXCqUWUpTHkANp/lxTuHH9MlWOEnmS+Ly5A2STB
+         t34KUUf8/DXdTC29FveF9MfrGW9zJjvFSrrvERiCyGgs7flJqx2j8lHIoD3+EWv7QTsx
+         CC4Wd9ICuZLR0yYHhaT9eOuwvio6uXXlDnzEfuFPgzdvD9Wyduqof5RHc3v8M6dWnxkz
+         EqjddNsl/aHybt6cBnz+ndYKX+wCwAZw5vGNJmLrnn8+u4QivMF7EEDJqH8RZSIKO2HW
+         V2lFXiKnsXr+Nzc9IX+UkYYpz6o12Y8LhXBo4JaHozNUqiyDBPb7gEWcTf3cB/LAHLpJ
+         UHUQ==
+X-Gm-Message-State: AHPjjUhjL6/P6OhMgWTGIg/w4u0Pg0JGDYBeK7HWrpjueRVTWWmfEjDB
+        Klg6+smFZjkgn2+tTv3l2YaR5zX29Pw=
+X-Google-Smtp-Source: AOwi7QBcYe88f3oLfiW8cj2vJ1QPhU+Ylx3kJV979hnvgEu+bWoF1kJHoEfG7NH9lfa8bghAhIpR7g==
+X-Received: by 10.101.67.137 with SMTP id m9mr16742068pgp.63.1507061724837;
+        Tue, 03 Oct 2017 13:15:24 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id 184sm3846262pfd.88.2017.10.03.13.15.29
+        by smtp.gmail.com with ESMTPSA id 184sm3846262pfd.88.2017.10.03.13.15.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 03 Oct 2017 13:15:30 -0700 (PDT)
+        Tue, 03 Oct 2017 13:15:23 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     bturner@atlassian.com, git@jeffhostetler.com, gitster@pobox.com,
         jonathantanmy@google.com, jrnieder@gmail.com, peff@peff.net,
         sbeller@google.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH v3 05/10] upload-pack, receive-pack: introduce protocol version 1
-Date:   Tue,  3 Oct 2017 13:15:02 -0700
-Message-Id: <20171003201507.3589-6-bmwill@google.com>
+Subject: [PATCH v3 01/10] connect: in ref advertisement, shallows are last
+Date:   Tue,  3 Oct 2017 13:14:58 -0700
+Message-Id: <20171003201507.3589-2-bmwill@google.com>
 X-Mailer: git-send-email 2.14.2.920.gcf0c67979c-goog
 In-Reply-To: <20171003201507.3589-1-bmwill@google.com>
 References: <20170926235627.79606-1-bmwill@google.com>
@@ -65,88 +65,245 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach upload-pack and receive-pack to understand and respond using
-protocol version 1, if requested.
+From: Jonathan Tan <jonathantanmy@google.com>
 
-Protocol version 1 is simply the original and current protocol (what I'm
-calling version 0) with the addition of a single packet line, which
-precedes the ref advertisement, indicating the protocol version being
-spoken.
+Currently, get_remote_heads() parses the ref advertisement in one loop,
+allowing refs and shallow lines to intersperse, despite this not being
+allowed by the specification. Refactor get_remote_heads() to use two
+loops instead, enforcing that refs come first, and then shallows.
 
+This also makes it easier to teach get_remote_heads() to interpret other
+lines in the ref advertisement, which will be done in a subsequent
+patch.
+
+As part of this change, this patch interprets capabilities only on the
+first line in the ref advertisement, printing a warning message when
+encountering capabilities on other lines.
+
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/receive-pack.c | 15 +++++++++++++++
- upload-pack.c          | 18 +++++++++++++++++-
- 2 files changed, 32 insertions(+), 1 deletion(-)
+ connect.c | 189 ++++++++++++++++++++++++++++++++++++++++----------------------
+ 1 file changed, 123 insertions(+), 66 deletions(-)
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index dd06b3fb4..94b7d29ea 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -24,6 +24,7 @@
- #include "tmp-objdir.h"
- #include "oidset.h"
- #include "packfile.h"
-+#include "protocol.h"
+diff --git a/connect.c b/connect.c
+index df56c0cbf..8e2e276b6 100644
+--- a/connect.c
++++ b/connect.c
+@@ -11,6 +11,7 @@
+ #include "string-list.h"
+ #include "sha1-array.h"
+ #include "transport.h"
++#include "strbuf.h"
  
- static const char * const receive_pack_usage[] = {
- 	N_("git receive-pack <git-dir>"),
-@@ -1963,6 +1964,20 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 	else if (0 <= receive_unpack_limit)
- 		unpack_limit = receive_unpack_limit;
- 
-+	switch (determine_protocol_version_server()) {
-+	case protocol_v1:
-+		if (advertise_refs || !stateless_rpc)
-+			packet_write_fmt(1, "version 1\n");
-+		/*
-+		 * v1 is just the original protocol with a version string,
-+		 * so just fall through after writing the version string.
-+		 */
-+	case protocol_v0:
-+		break;
-+	default:
-+		BUG("unknown protocol version");
-+	}
-+
- 	if (advertise_refs || !stateless_rpc) {
- 		write_head_info();
- 	}
-diff --git a/upload-pack.c b/upload-pack.c
-index 7efff2fbf..ef438e9c2 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -18,6 +18,7 @@
- #include "parse-options.h"
- #include "argv-array.h"
- #include "prio-queue.h"
-+#include "protocol.h"
- 
- static const char * const upload_pack_usage[] = {
- 	N_("git upload-pack [<options>] <dir>"),
-@@ -1067,6 +1068,21 @@ int cmd_main(int argc, const char **argv)
- 		die("'%s' does not appear to be a git repository", dir);
- 
- 	git_config(upload_pack_config, NULL);
--	upload_pack();
-+
-+	switch (determine_protocol_version_server()) {
-+	case protocol_v1:
-+		if (advertise_refs || !stateless_rpc)
-+			packet_write_fmt(1, "version 1\n");
-+		/*
-+		 * v1 is just the original protocol with a version string,
-+		 * so just fall through after writing the version string.
-+		 */
-+	case protocol_v0:
-+		upload_pack();
-+		break;
-+	default:
-+		BUG("unknown protocol version");
-+	}
-+
- 	return 0;
+ static char *server_capabilities;
+ static const char *parse_feature_value(const char *, const char *, int *);
+@@ -107,6 +108,104 @@ static void annotate_refs_with_symref_info(struct ref *ref)
+ 	string_list_clear(&symref, 0);
  }
+ 
++/*
++ * Read one line of a server's ref advertisement into packet_buffer.
++ */
++static int read_remote_ref(int in, char **src_buf, size_t *src_len,
++			   int *responded)
++{
++	int len = packet_read(in, src_buf, src_len,
++			      packet_buffer, sizeof(packet_buffer),
++			      PACKET_READ_GENTLE_ON_EOF |
++			      PACKET_READ_CHOMP_NEWLINE);
++	const char *arg;
++	if (len < 0)
++		die_initial_contact(*responded);
++	if (len > 4 && skip_prefix(packet_buffer, "ERR ", &arg))
++		die("remote error: %s", arg);
++
++	*responded = 1;
++
++	return len;
++}
++
++#define EXPECTING_FIRST_REF 0
++#define EXPECTING_REF 1
++#define EXPECTING_SHALLOW 2
++
++static void process_capabilities(int *len)
++{
++	int nul_location = strlen(packet_buffer);
++	if (nul_location == *len)
++		return;
++	server_capabilities = xstrdup(packet_buffer + nul_location + 1);
++	*len = nul_location;
++}
++
++static int process_dummy_ref(void)
++{
++	struct object_id oid;
++	const char *name;
++
++	if (parse_oid_hex(packet_buffer, &oid, &name))
++		return 0;
++	if (*name != ' ')
++		return 0;
++	name++;
++
++	return !oidcmp(&null_oid, &oid) && !strcmp(name, "capabilities^{}");
++}
++
++static void check_no_capabilities(int len)
++{
++	if (strlen(packet_buffer) != len)
++		warning("Ignoring capabilities after first line '%s'",
++			packet_buffer + strlen(packet_buffer));
++}
++
++static int process_ref(int len, struct ref ***list, unsigned int flags,
++		       struct oid_array *extra_have)
++{
++	struct object_id old_oid;
++	const char *name;
++
++	if (parse_oid_hex(packet_buffer, &old_oid, &name))
++		return 0;
++	if (*name != ' ')
++		return 0;
++	name++;
++
++	if (extra_have && !strcmp(name, ".have")) {
++		oid_array_append(extra_have, &old_oid);
++	} else if (!strcmp(name, "capabilities^{}")) {
++		die("protocol error: unexpected capabilities^{}");
++	} else if (check_ref(name, flags)) {
++		struct ref *ref = alloc_ref(name);
++		oidcpy(&ref->old_oid, &old_oid);
++		**list = ref;
++		*list = &ref->next;
++	}
++	check_no_capabilities(len);
++	return 1;
++}
++
++static int process_shallow(int len, struct oid_array *shallow_points)
++{
++	const char *arg;
++	struct object_id old_oid;
++
++	if (!skip_prefix(packet_buffer, "shallow ", &arg))
++		return 0;
++
++	if (get_oid_hex(arg, &old_oid))
++		die("protocol error: expected shallow sha-1, got '%s'", arg);
++	if (!shallow_points)
++		die("repository on the other end cannot be shallow");
++	oid_array_append(shallow_points, &old_oid);
++	check_no_capabilities(len);
++	return 1;
++}
++
+ /*
+  * Read all the refs from the other end
+  */
+@@ -123,76 +222,34 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
+ 	 * willing to talk to us.  A hang-up before seeing any
+ 	 * response does not necessarily mean an ACL problem, though.
+ 	 */
+-	int saw_response;
+-	int got_dummy_ref_with_capabilities_declaration = 0;
++	int responded = 0;
++	int len;
++	int state = EXPECTING_FIRST_REF;
+ 
+ 	*list = NULL;
+-	for (saw_response = 0; ; saw_response = 1) {
+-		struct ref *ref;
+-		struct object_id old_oid;
+-		char *name;
+-		int len, name_len;
+-		char *buffer = packet_buffer;
+-		const char *arg;
+-
+-		len = packet_read(in, &src_buf, &src_len,
+-				  packet_buffer, sizeof(packet_buffer),
+-				  PACKET_READ_GENTLE_ON_EOF |
+-				  PACKET_READ_CHOMP_NEWLINE);
+-		if (len < 0)
+-			die_initial_contact(saw_response);
+-
+-		if (!len)
+-			break;
+-
+-		if (len > 4 && skip_prefix(buffer, "ERR ", &arg))
+-			die("remote error: %s", arg);
+-
+-		if (len == GIT_SHA1_HEXSZ + strlen("shallow ") &&
+-			skip_prefix(buffer, "shallow ", &arg)) {
+-			if (get_oid_hex(arg, &old_oid))
+-				die("protocol error: expected shallow sha-1, got '%s'", arg);
+-			if (!shallow_points)
+-				die("repository on the other end cannot be shallow");
+-			oid_array_append(shallow_points, &old_oid);
+-			continue;
+-		}
+ 
+-		if (len < GIT_SHA1_HEXSZ + 2 || get_oid_hex(buffer, &old_oid) ||
+-			buffer[GIT_SHA1_HEXSZ] != ' ')
+-			die("protocol error: expected sha/ref, got '%s'", buffer);
+-		name = buffer + GIT_SHA1_HEXSZ + 1;
+-
+-		name_len = strlen(name);
+-		if (len != name_len + GIT_SHA1_HEXSZ + 1) {
+-			free(server_capabilities);
+-			server_capabilities = xstrdup(name + name_len + 1);
+-		}
+-
+-		if (extra_have && !strcmp(name, ".have")) {
+-			oid_array_append(extra_have, &old_oid);
+-			continue;
+-		}
+-
+-		if (!strcmp(name, "capabilities^{}")) {
+-			if (saw_response)
+-				die("protocol error: unexpected capabilities^{}");
+-			if (got_dummy_ref_with_capabilities_declaration)
+-				die("protocol error: multiple capabilities^{}");
+-			got_dummy_ref_with_capabilities_declaration = 1;
+-			continue;
++	while ((len = read_remote_ref(in, &src_buf, &src_len, &responded))) {
++		switch (state) {
++		case EXPECTING_FIRST_REF:
++			process_capabilities(&len);
++			if (process_dummy_ref()) {
++				state = EXPECTING_SHALLOW;
++				break;
++			}
++			state = EXPECTING_REF;
++			/* fallthrough */
++		case EXPECTING_REF:
++			if (process_ref(len, &list, flags, extra_have))
++				break;
++			state = EXPECTING_SHALLOW;
++			/* fallthrough */
++		case EXPECTING_SHALLOW:
++			if (process_shallow(len, shallow_points))
++				break;
++			die("protocol error: unexpected '%s'", packet_buffer);
++		default:
++			die("unexpected state %d", state);
+ 		}
+-
+-		if (!check_ref(name, flags))
+-			continue;
+-
+-		if (got_dummy_ref_with_capabilities_declaration)
+-			die("protocol error: unexpected ref after capabilities^{}");
+-
+-		ref = alloc_ref(buffer + GIT_SHA1_HEXSZ + 1);
+-		oidcpy(&ref->old_oid, &old_oid);
+-		*list = ref;
+-		list = &ref->next;
+ 	}
+ 
+ 	annotate_refs_with_symref_info(*orig_list);
 -- 
 2.14.2.920.gcf0c67979c-goog
 
