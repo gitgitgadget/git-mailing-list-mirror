@@ -2,94 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC12C2036B
-	for <e@80x24.org>; Tue,  3 Oct 2017 19:14:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C8FED2036B
+	for <e@80x24.org>; Tue,  3 Oct 2017 19:20:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751156AbdJCTOs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Oct 2017 15:14:48 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:33168 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750812AbdJCTOr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Oct 2017 15:14:47 -0400
-Received: by mail-pg0-f67.google.com with SMTP id b11so1751308pgn.0
-        for <git@vger.kernel.org>; Tue, 03 Oct 2017 12:14:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:in-reply-to:references:date
-         :mime-version:content-transfer-encoding;
-        bh=EokrYR/znmBMFnWQ+Vb7aA1tDV3TvPRPTBpeajztOPk=;
-        b=ozHzRsEzbH2xaa0TVZAkmgFqJc68XXxNjeim+VzRRcX1IV8aY96oNC5GX3IOJSdBGD
-         XXgvfm4mXxEbV3I4gFt49zEGFOtcVhVbOf9R4mEZ49U0ksRqLmYmhHugoDR9/SNH87M5
-         un1FvvEN6/IaAbACew+BLLkAsquTqEUIHhehr8wkdifxOOYR2bySHTa3s2P/WcFxDx4i
-         qnfJUTcP2q7XUkMz9gRIXHjYoAENgf4Qsp902VrnWuqac8VpD/WamxRUOCFH+uaArNzW
-         3Nt4eaIgEX8HauQlRNYDJk+k2OtMVxSeJ6ILAi354TiRQKPGpK3sx7LapDd6Qr9ovJf3
-         VkTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:in-reply-to
-         :references:date:mime-version:content-transfer-encoding;
-        bh=EokrYR/znmBMFnWQ+Vb7aA1tDV3TvPRPTBpeajztOPk=;
-        b=I9XWCoyqfp4MUb6+IJdB6N4HPaEaYP4YP0H6pSd6bre87zf9Kv3w8punyy1TJD2wU0
-         u+tXkOSDYMLd3UBBj3Boggf7mmsi7Jj4req8O7qKcjdSWCoGaQaJya9M46ujnMf501WZ
-         uyzaRczye224NgkqLhgo7BSsNlCov3OqTD9ruog8lMwk2yfUDIf/QkUxh08+Uyv+zuLJ
-         K3bRH5U2bMBntISy9JXMLNV5Hew+g5lPlfOcpliI7Rx3Lc+0jNtQnORukAVVOGdgRhd6
-         SHPash436/2tLgwVOe0FMWPY3rMySit0l3XiAsUPChj2MEwCci/ZK4yF6P7Vv47gvEUz
-         iCPQ==
-X-Gm-Message-State: AHPjjUjikFILlJArJNh5FBKSLwVfiqB/o4lc93tl0++9isifjYdVyhKs
-        43OcYsF1kn0FxWfkdkWdhI0=
-X-Google-Smtp-Source: AOwi7QAzBo94Nd3ieZ6gjkKPTD4yAUcG+Y+jl4648z4B7IbYCrK/SIMpDDajdnOAlSWoifN9PMCuMg==
-X-Received: by 10.84.193.131 with SMTP id f3mr17173633pld.90.1507058087062;
-        Tue, 03 Oct 2017 12:14:47 -0700 (PDT)
-Received: from unique-pc ([14.102.72.146])
-        by smtp.googlemail.com with ESMTPSA id a19sm22993191pfa.25.2017.10.03.12.14.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 03 Oct 2017 12:14:46 -0700 (PDT)
-Message-ID: <1507058081.7360.5.camel@gmail.com>
-Subject: Re: [PATCH v2] branch: change the error messages to be more
- meaningful
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-In-Reply-To: <xmqqbmlpm67l.fsf@gitster.mtv.corp.google.com>
-References: <20170730115908.13841-1-kaarticsivaraam91196@gmail.com>
-         <20170821133608.5652-1-kaarticsivaraam91196@gmail.com>
-         <1506964786.3504.3.camel@gmail.com>
-         <xmqqbmlpm67l.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset="ISO-8859-15"
-Date:   Wed, 04 Oct 2017 00:44:41 +0530
-Mime-Version: 1.0
-X-Mailer: Evolution 3.22.6-1 
-Content-Transfer-Encoding: 7bit
-X-Cyberoam-smtpxy-version: 1.0.6.3
-X-Cyberoam-AV-Policy: default
-X-CTCH-Error: Unable to connect local ctasd
+        id S1751115AbdJCTT6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Oct 2017 15:19:58 -0400
+Received: from mout.web.de ([212.227.15.14]:54374 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750812AbdJCTT5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Oct 2017 15:19:57 -0400
+Received: from macce.local ([195.198.252.176]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0M0yvn-1dAwg03N2F-00v7ld; Tue, 03
+ Oct 2017 21:19:55 +0200
+Subject: Re: Line ending normalization doesn't work as expected
+To:     Robert Dailey <rcdailey.lists@gmail.com>
+Cc:     Git <git@vger.kernel.org>
+References: <CAHd499B5hM9ixnsnwWwB2uyDT10dRQpN473m5QjxH9raHtFXiw@mail.gmail.com>
+ <958c9b03-062c-0bea-3b25-939a36659f32@web.de>
+ <CAHd499AD5Kgbp-vxXTnEPkb-Mb5oEeXhaRO5kGniDdqmXwd2QQ@mail.gmail.com>
+From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Message-ID: <88c57b88-ef2c-d7db-15e2-12791d4cb201@web.de>
+Date:   Tue, 3 Oct 2017 21:19:55 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:52.0)
+ Gecko/20100101 Thunderbird/52.3.0
+MIME-Version: 1.0
+In-Reply-To: <CAHd499AD5Kgbp-vxXTnEPkb-Mb5oEeXhaRO5kGniDdqmXwd2QQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:OFxaSrWfTOoEbh2K8CN2MEAKHoS7rG7oCCxrU7hYisi5c8s9YEf
+ dZw+9ENPo01j63O6QPmFPvv8jl1rxlcLfuh7KJ8V5u610sjGlB304cPxQuXKMxgdjaQEKmF
+ RqMMTeCthvD1KS5+Y4ymxB3X05lzBAL6MnjR5TGL5o/NRmZZhv8UrUtAtoqpZRTw+FaX6Ck
+ 9mYcR3mXieHkBFiv/LZZg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:9uuh5AqdXGU=:EmiUJSx7odiVtacDHXxDCG
+ IH8htNz+EmO/EM9wSWdsPtj0FMyAtRR9vsM8/a4dF+vfw+BsH0j+gnpi+80ZPMDEjIOxeu6hF
+ LpxEXG2dORcvCxhjpNpM8Y9RfwPLGW82dvtmRqvCJOeWs3FK+/k80wrIKcev6DkcaEE9LfyMt
+ nleBr7I6k/jyFwqeWnXBlckXXowSzFn/AdvOnI1HhoEdlmektnis4dvSTuqK8hNKQNC5EZotV
+ jqHVXJciRB5ZUW75q+57Mvxp9Dxd9H21LBDr+z2C6LFqVx/mqb/H8Usn5OsKWmfCibiHrrIg9
+ dE87IPSMfBxBgdiVhMLClhE10ep6iENVqkvfRITlIdR1Z3SuLA8rYu5tOjfhFNnxsQRnmAu7l
+ 1IOmvEP3a1NvwlHpquPBAhr3JkXsE6ccqsEVUziekJY+xOKWWQJr5A7p0pfhYed7Fa82f0iV6
+ 2482uYWkOpLpH3vTtNhBx3Gqm7ZAGmSYXElq7ZMxUov2jylG+YIORdUcooP7Zpt/HzIxlM/uH
+ PoEO5rZC6EmLFSMWiEXAWO0KSuAuShqdSik7zUQWwTtcrmOAm1IUzEv7h2NR1lKVoT+RLMgwL
+ DQA+u0MZqi7HnP7hUReHieX+wbSiHJg8Bo5Dj0Fij1z2Nmz9hWCKnrBVkCzRz+C0hsD+8tWih
+ R+O4xTb8WqV14bF4GlDznNjm2lQyAAXMDidFmKBxtBgR6TGrX1Mib6uLsoSaGn0u8/gj4kZsO
+ /aGyAqz9LV5lWc96ARi15Acpu6zCZZATvvaQZQdfYwoFQCWFCAvLsj757g9CHnQap+24TKqz1
+ 87f+qpWW4ZpeMFfs1OQembcXvOvVkxTsFDMAmx60vhTVh+iw3E=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 2017-10-03 at 09:21 +0900, Junio C Hamano wrote:
-> Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
+On 2017-10-03 19:23, Robert Dailey wrote:
+> On Tue, Oct 3, 2017 at 11:26 AM, Torsten Bögershausen <tboegi@web.de> wrote:
+>> The short version is, that the instructions on Github are outdated.
+>> This is the official procedure (since 2016, Git v2.12 or so)
+>> But it should work even with older version of Git.
+>>
+>> $ echo "* text=auto" >.gitattributes
+>> $ git read-tree --empty   # Clean index, force re-scan of working directory
+>> $ git add .
+>> $ git status        # Show files that will be normalized
+>> $ git commit -m "Introduce end-of-line normalization"
 > 
-> I do not even recall what the patches did and if I thought what they
-> wanted to do made sense, 
+> Is the way I did it that worked also a valid solution? Or did it only
+> work accidentally? Again the command I ran that worked is:
+> 
+> $ git rm -r --cached . && git add .
 
+(Both should work)
 
-I thought you did or may be I misinterpreted the following statement,
+To be honest, from the documentation, I can't figure out the difference between
+$ git read-tree --empty
+and
+$ git rm -r --cached .
 
-
-On Thursday 17 August 2017 12:58 AM, Junio C Hamano wrote:
-> I do not find the s/branch/parameter/ too bad (although I would have
-> said "arguments" instead).
->
-
-I interpreted the "not .. too bad" as a "it makes little sense". So,
-pinged the thread.
-
----
-Kaartic
+Does anybody remember the discussion, why we ended up with read-tree ?
