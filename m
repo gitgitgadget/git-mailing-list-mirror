@@ -2,110 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E09E20281
-	for <e@80x24.org>; Tue,  3 Oct 2017 06:15:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5BB4D20281
+	for <e@80x24.org>; Tue,  3 Oct 2017 06:15:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750983AbdJCGPU (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Oct 2017 02:15:20 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58622 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750767AbdJCGPT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Oct 2017 02:15:19 -0400
-Received: (qmail 8520 invoked by uid 109); 3 Oct 2017 06:15:19 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 03 Oct 2017 06:15:19 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5117 invoked by uid 111); 3 Oct 2017 06:15:17 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Tue, 03 Oct 2017 02:15:17 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Oct 2017 02:15:16 -0400
-Date:   Tue, 3 Oct 2017 02:15:16 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Toni Uebernickel <tuebernickel@gmail.com>, git@vger.kernel.org,
-        Tsvi Mostovicz <ttmost@gmail.com>
-Subject: Re: Updated to v2.14.2 on macOS; git add --patch broken
-Message-ID: <20171003061515.72l35fpvcf63vsf6@sigill.intra.peff.net>
-References: <86D0A377-8AFD-460D-A90E-6327C6934DFC@gmail.com>
- <20171002230017.GT19555@aiede.mtv.corp.google.com>
- <xmqqpoa5kp0c.fsf@gitster.mtv.corp.google.com>
- <xmqqinfxklw7.fsf@gitster.mtv.corp.google.com>
+        id S1751117AbdJCGPf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Oct 2017 02:15:35 -0400
+Received: from mail-it0-f47.google.com ([209.85.214.47]:55095 "EHLO
+        mail-it0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750830AbdJCGPe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Oct 2017 02:15:34 -0400
+Received: by mail-it0-f47.google.com with SMTP id e134so10061547ite.3
+        for <git@vger.kernel.org>; Mon, 02 Oct 2017 23:15:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=drKcMUzKcaH6+WK7GR5Ap31KrIm//4t8bQ7IMETCafA=;
+        b=gRDtrliaJ9GsR7jzBfeXrC2nB1FO2lIcxJdczu/Ns5OEAFNMsdTLMF4Ff2wYY4ai5w
+         mFj94g+M4QWazKHDRm7t9ZsGv3UBFN9NBz8MRv79bYDnf9StAqIgZ7INbs8dZjpSHiFm
+         5W3dkMl7ztE65Ojx0MzJGAJcu4xkkuqO88xxkeM7ZwtpjTgyyEy5fv2jSCphJ+MfWuNo
+         972P6uyOzE7TEaoSyNCnJpAEgoSkQ53GkPoHUNB0r9JIHKS4rlMouQgsyyYIoq9euKcg
+         RD2X2qQ+U8hyg8TiCaAG7G+v4zhDwCr3rMgAl6dQ6pcGb/I2UDyf8YvHEKmFWPu2Hk7V
+         Qaug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=drKcMUzKcaH6+WK7GR5Ap31KrIm//4t8bQ7IMETCafA=;
+        b=Ro9ljI9oZM8qjhQDzj5TUK+UtzSFU4BxABweda4gMIlb7HxD9n9SCE5/GDPpygnCwI
+         yADfYFNuZopXBTwRoozsQcMb2p9TOoHNaPlrd1jKBgrccxI5jXxcssMnya1JnJsZOdGs
+         FWynHuBM+F+3IT/rVLJPYBYmNJoXI4a98HghfRSkqYSUNBtFCvvKnMaE9tEQiCK0aKpI
+         cIMVBgb0GMvtDwVK/0DrfdGK8MIG68Np6OQJaoz7VTEXE0fL3KK4sQcHoMK1pQ6IiHj3
+         wSprfIXXN37DO0wAYXga1LX9iIkkZgTEvhGsVtWZ1Z8qaoRL58diaAOJ3FCdXRcO9L9X
+         VbiQ==
+X-Gm-Message-State: AMCzsaVwkqyUDUgws6sYcTagPxf6o8/4i7o5E8OgPs6PYhxnVpul2Jk+
+        WuIJ1IziHtn5pCSgI1lQ+QbdNFvusHsRDcNUuvs=
+X-Google-Smtp-Source: AOwi7QC72W1PUUz+b2VhMktSicojPqsTZGGsU4S/PQCf07VJXqUOtwJDDmqs7dhinTQ7rXaFCcc0cuiaunNT/DDoMes=
+X-Received: by 10.36.11.197 with SMTP id 188mr21089749itd.42.1507011334178;
+ Mon, 02 Oct 2017 23:15:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqinfxklw7.fsf@gitster.mtv.corp.google.com>
+Received: by 10.79.142.216 with HTTP; Mon, 2 Oct 2017 23:15:33 -0700 (PDT)
+In-Reply-To: <cover.1506714999.git.jonathantanmy@google.com>
+References: <cover.1506714999.git.jonathantanmy@google.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 3 Oct 2017 08:15:33 +0200
+Message-ID: <CAP8UFD1WiceKDX9s0hszXXKy+TOxAOvHZyr002HMYkkgbFgD7w@mail.gmail.com>
+Subject: Re: [PATCH 00/18] Partial clone (from clone to lazy fetch in 18 patches)
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Ben Peart <peartben@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 03, 2017 at 11:25:44AM +0900, Junio C Hamano wrote:
+On Fri, Sep 29, 2017 at 10:11 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
+> These patches are also available online:
+> https://github.com/jonathantanmy/git/commits/partialclone3
+>
+> (I've announced it in another e-mail, but am now sending the patches to the
+> mailing list too.)
+>
+> Here's an update of my work so far. Notable features:
+>  - These 18 patches allow a user to clone with --blob-max-bytes=<bytes>,
+>    creating a partial clone that is automatically configured to lazily
+>    fetch missing objects from the origin. The local repo also has fsck
+>    working offline, and GC working (albeit only on locally created
+>    objects).
+>  - Cloning and fetching is currently only able to exclude blobs by a
+>    size threshold, but the local repository is already capable of
+>    fetching missing objects of any type. For example, if a repository
+>    with missing trees or commits is generated by any tool (for example,
+>    a future version of Git), current Git with my patches will still be
+>    able to operate on them, automatically fetching those missing trees
+>    and commits when needed.
+>  - Missing blobs are fetched all at once during checkout.
 
+Could you give a bit more details about the use cases this is designed for?
+It seems that when people review my work they want a lot of details
+about the use cases, so I guess they would also be interesting in
+getting this kind of information for your work too.
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > Jonathan Nieder <jrnieder@gmail.com> writes:
-> >
-> >> Yet another alternative would be to treat color.ui=always as a
-> >> deprecated synonym for color.ui=auto.  I think that's my preferred
-> >> fix.
-> >
-> > It is mine, too.  And I do not think color.ui=absolutely-always for
-> > those who want to keep the current behaviour is unneeded.
-> 
-> Having said that, I do not mind solving what 136c8c8b ("color: check
-> color.ui in git_default_config()", 2017-07-13) tried to do in a
-> different way.  If 4c7f1819b that made even plumbing to default to
-> auto was wrong (because plumbing did not pay attention to color.ui
-> so people could not override that 'auto' default), we can partially
-> revert 4c7f1819 ("make color.ui default to 'auto'", 2013-06-10) to
-> make the default 'auto' not apply to plumbing.
-> 
-> In any case, I think the first step may be to revert 136c8c8b from
-> both 'master' and 2.14.x.  These alternative solutions can come on
-> top.
-> 
-> Thoughts?
-
-I'd prefer not to revert. I think setting any of the color config to
-"always" in an on-disk file is basically a broken config. It was
-exacerbated by 4c7f1819b, but it was already broken for scripts that
-call "git log" or "git diff", or even just something as simple as piping
-those programs on the command line.
-
-The two reasonable paths forward to me are:
-
-  1. Do nothing. Putting "color.ui = always" in your on-disk config is a
-     bad idea, and the right fix is to stop doing it.
-
-  2. Make "always" a synonym for "auto". This has the advantage over (1)
-     that you can't shoot yourself in the foot with it (so the expanded
-     foot-shooting capabilities of 4c7f1819b don't matter). The
-     disadvantage is that you can no longer do:
-
-       git -c color.ui=always foo >not-a-tty
-
-     to ask for color in all sub-programs of "foo". I have no idea if
-     anybody cares. I came up with that example in 4c7f1819b as the most
-     plausible reason somebody might actually care about "always", but
-     I've never used it myself.
-
-     And there _is_ a way to get the same thing, which is:
-
-       GIT_PAGER_IN_USE=1 git foo >not-a-tty
-
-     I.e., stay in "auto" but make the claim that "auto" really ought to
-     be showing color because the output is going to be consumed
-     eventually by a human.  While it looks a bit funny in my made-up
-     example above (because the variables says "pager" but we're not
-     actually piping to a pager directly), I think this is the most
-     plausible reason that an actual program might want to override the
-     auto-color decision.
-
--Peff
+Could this support users who would be interested in lazily cloning
+only one kind of files, for example *.jpeg?
