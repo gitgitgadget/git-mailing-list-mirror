@@ -2,127 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 301052036B
-	for <e@80x24.org>; Tue,  3 Oct 2017 21:51:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9075D2036B
+	for <e@80x24.org>; Tue,  3 Oct 2017 22:17:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751408AbdJCVvJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Oct 2017 17:51:09 -0400
-Received: from avasout07.plus.net ([84.93.230.235]:56667 "EHLO
-        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751226AbdJCVvJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Oct 2017 17:51:09 -0400
-Received: from [10.0.2.15] ([147.147.86.16])
-        by avasout07 with smtp
-        id H9r31w00B0M91Ur019r5ze; Tue, 03 Oct 2017 22:51:05 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=CrLPSjwD c=1 sm=1 tr=0
- a=dubYQqM3tRRTmV8xSh8cXQ==:117 a=dubYQqM3tRRTmV8xSh8cXQ==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=M_GiEyNkICeghournMkA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-To:     dstolee@microsoft.com
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH] test-list-objects: mark file-local symbols as static
-Message-ID: <5b3d8899-d4c5-c145-7128-21c8aaa4f38f@ramsayjones.plus.com>
-Date:   Tue, 3 Oct 2017 22:51:03 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+        id S1751148AbdJCWRo (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Oct 2017 18:17:44 -0400
+Received: from mail-pg0-f42.google.com ([74.125.83.42]:47101 "EHLO
+        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751090AbdJCWRn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Oct 2017 18:17:43 -0400
+Received: by mail-pg0-f42.google.com with SMTP id k7so521831pga.3
+        for <git@vger.kernel.org>; Tue, 03 Oct 2017 15:17:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=wY3NBVwf1g5Q2kKUYWE80nn0hWJdIFecY/u0QpuVt1E=;
+        b=oitoyIJme8UDp0J8u/fLKtDTHsAHFHTZMJGIu+X1mB9moIyzZM6MwJhaVrf9c/w/1f
+         96Z2ygjatL5MXtlCpIaByq7VjA69keiBZe9N+wa7BnEBd7AALDZulXpP3f19Z/AusFDL
+         bmee6BbadH/+p2GMyTvm2XcUiFKsWM5AwzP6U2kGUBAnFlqaYQAjT7dqIe0ea+eU8yUi
+         phaSbG0KSCf3u//eDEzOGpQDg1WxmrIu8D2hqf9ZZFC3CWDDtFyBB5CuOw/1xJNVPgLu
+         aPUl+zdhWf072E+5pdxS+3Jyvri2kM9PvqZzxMLJA7P/XQKfq+KG5JZXypriikQQc0Ol
+         Hgcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=wY3NBVwf1g5Q2kKUYWE80nn0hWJdIFecY/u0QpuVt1E=;
+        b=pXlP8RBzm1Os55+URWtil35+t00vdG+GtbTuvj4n65rKTPK4QnQF6MWVp5RUFIWlPm
+         356U/WkyJuK3S50GF23+LYcx126hPGx7u4r+BS2yGExnn0XKIX/3ty1YbJmRjCMZhkyb
+         p5OFLUwgPcXdUOYqiRJRhOJzhFX2pmXyi5uRc40yWmg47TX+nQ0fN/GTkiUNBeNA+erH
+         NubFFR4Vr9S9e/py4zk13AqV18x8mczD+NKJBvgKc+Ka1Q89MhRh1wZOnZ6zHh85fLEA
+         ElN2oe+8C/hBplzSVFf4M1VvjeqrhuwCDJ37DLfP7u7CgOyd9ltnAhmGP7DfbmQPkksK
+         NFfQ==
+X-Gm-Message-State: AMCzsaVS9o43cfhOZZG8jvhle6JtT+7ySywpsvtufL/ZmpFnOscM6jrE
+        Vn1x1Jargr1U52l9RFZ+hvO/CA==
+X-Google-Smtp-Source: AOwi7QDGkZu9W0ldrn+PJWirOuIv5KJaSbPNuvcmpH9tThh5eK6F9LXPGCo3brf7WaceCp2MC4/Fpw==
+X-Received: by 10.98.214.215 with SMTP id a84mr2322894pfl.27.1507069062742;
+        Tue, 03 Oct 2017 15:17:42 -0700 (PDT)
+Received: from localhost ([2620:0:100e:422:ccd0:dc92:fe68:ce55])
+        by smtp.gmail.com with ESMTPSA id m9sm23261636pgt.49.2017.10.03.15.17.41
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 03 Oct 2017 15:17:42 -0700 (PDT)
+From:   Stefan Beller <sbeller@google.com>
+To:     jrnieder@gmail.com
+Cc:     git@vger.kernel.org, sbeller@google.com
+Subject: [PATCH] branch: reset instead of release a strbuf
+Date:   Tue,  3 Oct 2017 15:17:40 -0700
+Message-Id: <20171003221740.26325-1-sbeller@google.com>
+X-Mailer: git-send-email 2.14.0.rc0.3.g6c2e499285
+In-Reply-To: <20171003214646.GZ19555@aiede.mtv.corp.google.com>
+References: <20171003214646.GZ19555@aiede.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Our documentation advises to not re-use a strbuf, after strbuf_release
+has been called on it. Use the proper reset instead.
 
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Currently 'strbuf_release' releases and re-initializes the strbuf, so it
+is safe, but slow. 'strbuf_reset' only resets the internal length variable,
+such that this could also be accounted for as a micro-optimization.
+
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
+ builtin/branch.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-Hi Derrick,
-
-If you need to re-roll your 'ds/find-unique-abbrev-optim' branch,
-could you please squash this into the relevant patch (commit 3792c78ba0,
-"test-list-objects: list a subset of object ids", 01-10-2017).
-
-Thanks!
-
-ATB,
-Ramsay Jones
-
- t/helper/test-list-objects.c | 32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
-
-diff --git a/t/helper/test-list-objects.c b/t/helper/test-list-objects.c
-index 22bc9b4e6..5c5d3c03f 100644
---- a/t/helper/test-list-objects.c
-+++ b/t/helper/test-list-objects.c
-@@ -6,43 +6,43 @@ struct count {
- 	int select_mod;
- };
+diff --git a/builtin/branch.c b/builtin/branch.c
+index b998e16d0c..71ed1c7036 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -217,7 +217,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ 		if (!head_rev)
+ 			die(_("Couldn't look up commit object for HEAD"));
+ 	}
+-	for (i = 0; i < argc; i++, strbuf_release(&bname)) {
++	for (i = 0; i < argc; i++, strbuf_reset(&bname)) {
+ 		char *target = NULL;
+ 		int flags = 0;
  
--int count_loose(const struct object_id *oid,
--		const char *path,
--		void *data)
-+static int count_loose(const struct object_id *oid,
-+		       const char *path,
-+		       void *data)
- {
- 	((struct count*)data)->total++;
- 	return 0;
+@@ -282,8 +282,9 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ 	}
+ 
+ 	free(name);
++	strbuf_release(&bname);
+ 
+-	return(ret);
++	return ret;
  }
  
--int count_packed(const struct object_id *oid,
--		 struct packed_git *pack,
--		 uint32_t pos,
--		 void* data)
-+static int count_packed(const struct object_id *oid,
-+			struct packed_git *pack,
-+			uint32_t pos,
-+			void* data)
- {
- 	((struct count*)data)->total++;
- 	return 0;
- }
- 
--void output(const struct object_id *oid,
--	    struct count *c)
-+static void output(const struct object_id *oid,
-+		   struct count *c)
- {
- 	if (!(c->total % c->select_mod))
- 		printf("%s\n", oid_to_hex(oid));
- 	c->total--;
- }
- 
--int output_loose(const struct object_id *oid,
--		 const char *path,
--		 void *data)
-+static int output_loose(const struct object_id *oid,
-+			const char *path,
-+			void *data)
- {
- 	output(oid, (struct count*)data);
- 	return 0;
- }
- 
--int output_packed(const struct object_id *oid,
--		  struct packed_git *pack,
--		  uint32_t pos,
--		  void* data)
-+static int output_packed(const struct object_id *oid,
-+			 struct packed_git *pack,
-+			 uint32_t pos,
-+			 void* data)
- {
- 	output(oid, (struct count*)data);
- 	return 0;
+ static int calc_maxwidth(struct ref_array *refs, int remote_bonus)
 -- 
-2.14.0
+2.14.0.rc0.3.g6c2e499285
+
