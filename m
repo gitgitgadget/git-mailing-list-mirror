@@ -6,32 +6,32 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39646202A5
-	for <e@80x24.org>; Tue,  3 Oct 2017 13:42:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E3AC202A5
+	for <e@80x24.org>; Tue,  3 Oct 2017 13:43:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751501AbdJCNmS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Oct 2017 09:42:18 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59092 "HELO cloud.peff.net"
+        id S1751906AbdJCNnc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Oct 2017 09:43:32 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59112 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751238AbdJCNmR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Oct 2017 09:42:17 -0400
-Received: (qmail 29332 invoked by uid 109); 3 Oct 2017 13:42:18 -0000
+        id S1751315AbdJCNnc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Oct 2017 09:43:32 -0400
+Received: (qmail 29420 invoked by uid 109); 3 Oct 2017 13:43:32 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 03 Oct 2017 13:42:18 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 03 Oct 2017 13:43:32 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7861 invoked by uid 111); 3 Oct 2017 13:42:16 -0000
+Received: (qmail 7889 invoked by uid 111); 3 Oct 2017 13:43:31 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Tue, 03 Oct 2017 09:42:16 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Tue, 03 Oct 2017 09:43:31 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Oct 2017 09:42:15 -0400
-Date:   Tue, 3 Oct 2017 09:42:15 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Oct 2017 09:43:29 -0400
+Date:   Tue, 3 Oct 2017 09:43:29 -0400
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jonathan Nieder <jrnieder@gmail.com>,
         Toni Uebernickel <tuebernickel@gmail.com>, git@vger.kernel.org,
         Tsvi Mostovicz <ttmost@gmail.com>
-Subject: [PATCH 04/12] t3701: use test-terminal to collect color output
-Message-ID: <20171003134215.oce7bdemb7cjyg22@sigill.intra.peff.net>
+Subject: [PATCH 05/12] t7508: use test_terminal for color output
+Message-ID: <20171003134329.wtgpwrvdpf2s6ls7@sigill.intra.peff.net>
 References: <20171003133713.ccxv6clrmuuhhc3u@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -42,51 +42,131 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When testing whether "add -p" can generate colors, we set
-color.ui to "always". This isn't a very good test, as in the
-real-world a user typically has "auto" coupled with stdout
-going to a terminal (and it's plausible that this could mask
-a real bug in add--interactive if we depend on plumbing's
-isatty check).
+This script tests the output of status with various formats
+when color is enabled. It uses the "always" setting so that
+the output is valid even though we capture it in a file.
+Using test_terminal gives us a more realistic environment,
+and prepares us for the behavior of "always" changing.
 
-Let's switch to test_terminal, which gives us a more
-realistic environment. This also prepare us for future
-changes to the "always" color option.
+Arguably we are testing less than before, since "auto" is
+already the default, and we can no longer tell if the config
+is actually doing anything.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- t/t3701-add-interactive.sh | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+I noticed that "status" does not have a "--color" option. I think it
+might be worth adding one for completeness, though I still prefer the
+test_terminal solution here.
 
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index 2f3e7cea64..39d0130f88 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -2,6 +2,7 @@
+ t/t7508-status.sh | 41 +++++++++++++++++++++--------------------
+ 1 file changed, 21 insertions(+), 20 deletions(-)
+
+diff --git a/t/t7508-status.sh b/t/t7508-status.sh
+index 43d19a9b22..a3d760e63a 100755
+--- a/t/t7508-status.sh
++++ b/t/t7508-status.sh
+@@ -6,6 +6,7 @@
+ test_description='git status'
  
- test_description='add -i basic tests'
  . ./test-lib.sh
 +. "$TEST_DIRECTORY"/lib-terminal.sh
  
- if ! test_have_prereq PERL
- then
-@@ -380,14 +381,11 @@ test_expect_success 'patch mode ignores unmerged entries' '
- 	test_cmp expected diff
+ test_expect_success 'status -h in broken repository' '
+ 	git config --global advice.statusuoption false &&
+@@ -667,7 +668,7 @@ test_expect_success 'setup unique colors' '
+ 
  '
  
--test_expect_success 'diffs can be colorized' '
-+test_expect_success TTY 'diffs can be colorized' '
- 	git reset --hard &&
+-test_expect_success 'status with color.ui' '
++test_expect_success TTY 'status with color.ui' '
+ 	cat >expect <<\EOF &&
+ On branch <GREEN>master<RESET>
+ Your branch and '\''upstream'\'' have diverged,
+@@ -694,14 +695,14 @@ Untracked files:
+ 	<BLUE>untracked<RESET>
  
--	# force color even though the test script has no terminal
+ EOF
 -	test_config color.ui always &&
--
- 	echo content >test &&
--	printf y | git add -p >output 2>&1 &&
-+	printf y | test_terminal git add -p >output 2>&1 &&
+-	git status | test_decode_color >output &&
++	test_config color.ui auto &&
++	test_terminal git status | test_decode_color >output &&
+ 	test_i18ncmp expect output
+ '
  
- 	# We do not want to depend on the exact coloring scheme
- 	# git uses for diffs, so just check that we saw some kind of color.
+-test_expect_success 'status with color.status' '
+-	test_config color.status always &&
+-	git status | test_decode_color >output &&
++test_expect_success TTY 'status with color.status' '
++	test_config color.status auto &&
++	test_terminal git status | test_decode_color >output &&
+ 	test_i18ncmp expect output
+ '
+ 
+@@ -714,19 +715,19 @@ cat >expect <<\EOF
+ <BLUE>??<RESET> untracked
+ EOF
+ 
+-test_expect_success 'status -s with color.ui' '
++test_expect_success TTY 'status -s with color.ui' '
+ 
+-	git config color.ui always &&
+-	git status -s | test_decode_color >output &&
++	git config color.ui auto &&
++	test_terminal git status -s | test_decode_color >output &&
+ 	test_cmp expect output
+ 
+ '
+ 
+-test_expect_success 'status -s with color.status' '
++test_expect_success TTY 'status -s with color.status' '
+ 
+ 	git config --unset color.ui &&
+-	git config color.status always &&
+-	git status -s | test_decode_color >output &&
++	git config color.status auto &&
++	test_terminal git status -s | test_decode_color >output &&
+ 	test_cmp expect output
+ 
+ '
+@@ -741,9 +742,9 @@ cat >expect <<\EOF
+ <BLUE>??<RESET> untracked
+ EOF
+ 
+-test_expect_success 'status -s -b with color.status' '
++test_expect_success TTY 'status -s -b with color.status' '
+ 
+-	git status -s -b | test_decode_color >output &&
++	test_terminal git status -s -b | test_decode_color >output &&
+ 	test_i18ncmp expect output
+ 
+ '
+@@ -757,20 +758,20 @@ A  dir2/added
+ ?? untracked
+ EOF
+ 
+-test_expect_success 'status --porcelain ignores color.ui' '
++test_expect_success TTY 'status --porcelain ignores color.ui' '
+ 
+ 	git config --unset color.status &&
+-	git config color.ui always &&
+-	git status --porcelain | test_decode_color >output &&
++	git config color.ui auto &&
++	test_terminal git status --porcelain | test_decode_color >output &&
+ 	test_cmp expect output
+ 
+ '
+ 
+-test_expect_success 'status --porcelain ignores color.status' '
++test_expect_success TTY 'status --porcelain ignores color.status' '
+ 
+ 	git config --unset color.ui &&
+-	git config color.status always &&
+-	git status --porcelain | test_decode_color >output &&
++	git config color.status auto &&
++	test_terminal git status --porcelain | test_decode_color >output &&
+ 	test_cmp expect output
+ 
+ '
 -- 
 2.14.2.1079.gce6b466188
 
