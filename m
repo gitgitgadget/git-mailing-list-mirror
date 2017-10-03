@@ -6,32 +6,32 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 82EFF202A5
-	for <e@80x24.org>; Tue,  3 Oct 2017 13:40:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2CFF6202A5
+	for <e@80x24.org>; Tue,  3 Oct 2017 13:41:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751545AbdJCNkW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Oct 2017 09:40:22 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59068 "HELO cloud.peff.net"
+        id S1751313AbdJCNly (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Oct 2017 09:41:54 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59078 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751291AbdJCNkV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Oct 2017 09:40:21 -0400
-Received: (qmail 29166 invoked by uid 109); 3 Oct 2017 13:40:22 -0000
+        id S1751238AbdJCNlx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Oct 2017 09:41:53 -0400
+Received: (qmail 29259 invoked by uid 109); 3 Oct 2017 13:41:54 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 03 Oct 2017 13:40:22 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 03 Oct 2017 13:41:54 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7820 invoked by uid 111); 3 Oct 2017 13:40:20 -0000
+Received: (qmail 7841 invoked by uid 111); 3 Oct 2017 13:41:52 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Tue, 03 Oct 2017 09:40:20 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Tue, 03 Oct 2017 09:41:52 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Oct 2017 09:40:19 -0400
-Date:   Tue, 3 Oct 2017 09:40:19 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Oct 2017 09:41:51 -0400
+Date:   Tue, 3 Oct 2017 09:41:51 -0400
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jonathan Nieder <jrnieder@gmail.com>,
         Toni Uebernickel <tuebernickel@gmail.com>, git@vger.kernel.org,
         Tsvi Mostovicz <ttmost@gmail.com>
-Subject: [PATCH 02/12] t4015: prefer --color to -c color.diff=always
-Message-ID: <20171003134019.3hmpjpkbm4fes36w@sigill.intra.peff.net>
+Subject: [PATCH 03/12] t4015: use --color with --color-moved
+Message-ID: <20171003134151.znylpiijmlmk2akx@sigill.intra.peff.net>
 References: <20171003133713.ccxv6clrmuuhhc3u@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -42,102 +42,140 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-t4015 contains many color-related tests which need to
-override the "is stdout a tty" check. They do so by setting
-the color.diff config, but we can accomplish the same with
-the --color option. Besides being shorter to type, switching
-will prepare us for upcoming changes to "always" when see it
-in config.
+The tests for --color-moved write their output to a file,
+but doing so suppresses color output under "auto". Right now
+this is solved by running the whole script under
+"color.diff=always". In preparation for the behavior of
+"always" changing, let's explicitly enable color.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- t/t4015-diff-whitespace.sh | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+I kind of think `--color-moved` should imply `--color`, as
+`--color-words` seems to. But that seemed like a potential rabbit-hole,
+and this series is already contentious enough.
+
+ t/t4015-diff-whitespace.sh | 25 ++++++++++++-------------
+ 1 file changed, 12 insertions(+), 13 deletions(-)
 
 diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
-index 12d182dc1b..b9df886e37 100755
+index b9df886e37..3bca958863 100755
 --- a/t/t4015-diff-whitespace.sh
 +++ b/t/t4015-diff-whitespace.sh
-@@ -821,7 +821,7 @@ test_expect_success 'diff that introduces a line with only tabs' '
- 	echo "test" >x &&
- 	git commit -m "initial" x &&
- 	echo "{NTN}" | tr "NT" "\n\t" >>x &&
--	git -c color.diff=always diff | test_decode_color >current &&
-+	git diff --color | test_decode_color >current &&
+@@ -802,7 +802,6 @@ test_expect_success 'combined diff with autocrlf conversion' '
+ # Start testing the colored format for whitespace checks
  
+ test_expect_success 'setup diff colors' '
+-	git config color.diff always &&
+ 	git config color.diff.plain normal &&
+ 	git config color.diff.meta bold &&
+ 	git config color.diff.frag cyan &&
+@@ -986,7 +985,7 @@ test_expect_success 'detect moved code, complete file' '
+ 	git mv test.c main.c &&
+ 	test_config color.diff.oldMoved "normal red" &&
+ 	test_config color.diff.newMoved "normal green" &&
+-	git diff HEAD --color-moved=zebra --no-renames | test_decode_color >actual &&
++	git diff HEAD --color-moved=zebra --color --no-renames | test_decode_color >actual &&
  	cat >expected <<-\EOF &&
- 	<BOLD>diff --git a/x b/x<RESET>
-@@ -851,7 +851,7 @@ test_expect_success 'diff that introduces and removes ws breakages' '
- 		echo "2. and a new line "
- 	} >x &&
+ 	<BOLD>diff --git a/main.c b/main.c<RESET>
+ 	<BOLD>new file mode 100644<RESET>
+@@ -1087,7 +1086,7 @@ test_expect_success 'detect malicious moved code, inside file' '
+ 			bar();
+ 		}
+ 	EOF
+-	git diff HEAD --no-renames --color-moved=zebra| test_decode_color >actual &&
++	git diff HEAD --no-renames --color-moved=zebra --color | test_decode_color >actual &&
+ 	cat <<-\EOF >expected &&
+ 	<BOLD>diff --git a/main.c b/main.c<RESET>
+ 	<BOLD>index 27a619c..7cf9336 100644<RESET>
+@@ -1136,7 +1135,7 @@ test_expect_success 'plain moved code, inside file' '
+ 	test_config color.diff.oldMovedAlternative "blue" &&
+ 	test_config color.diff.newMovedAlternative "yellow" &&
+ 	# needs previous test as setup
+-	git diff HEAD --no-renames --color-moved=plain| test_decode_color >actual &&
++	git diff HEAD --no-renames --color-moved=plain --color | test_decode_color >actual &&
+ 	cat <<-\EOF >expected &&
+ 	<BOLD>diff --git a/main.c b/main.c<RESET>
+ 	<BOLD>index 27a619c..7cf9336 100644<RESET>
+@@ -1227,7 +1226,7 @@ test_expect_success 'detect permutations inside moved code -- dimmed_zebra' '
+ 	test_config color.diff.newMovedDimmed "normal cyan" &&
+ 	test_config color.diff.oldMovedAlternativeDimmed "normal blue" &&
+ 	test_config color.diff.newMovedAlternativeDimmed "normal yellow" &&
+-	git diff HEAD --no-renames --color-moved=dimmed_zebra |
++	git diff HEAD --no-renames --color-moved=dimmed_zebra --color |
+ 		grep -v "index" |
+ 		test_decode_color >actual &&
+ 	cat <<-\EOF >expected &&
+@@ -1271,7 +1270,7 @@ test_expect_success 'cmd option assumes configured colored-moved' '
+ 	test_config color.diff.oldMovedAlternativeDimmed "normal blue" &&
+ 	test_config color.diff.newMovedAlternativeDimmed "normal yellow" &&
+ 	test_config diff.colorMoved zebra &&
+-	git diff HEAD --no-renames --color-moved |
++	git diff HEAD --no-renames --color-moved --color |
+ 		grep -v "index" |
+ 		test_decode_color >actual &&
+ 	cat <<-\EOF >expected &&
+@@ -1343,7 +1342,7 @@ line 4
+ EOF
+ 	test_config color.diff.oldMoved "magenta" &&
+ 	test_config color.diff.newMoved "cyan" &&
+-	git diff HEAD --no-renames --color-moved |
++	git diff HEAD --no-renames --color-moved --color |
+ 		grep -v "index" |
+ 		test_decode_color >actual &&
+ 	cat <<-\EOF >expected &&
+@@ -1364,7 +1363,7 @@ EOF
+ 	EOF
+ 	test_cmp expected actual &&
  
--	git -c color.diff=always diff |
-+	git diff --color |
- 	test_decode_color >current &&
+-	git diff HEAD --no-renames -w --color-moved |
++	git diff HEAD --no-renames -w --color-moved --color |
+ 		grep -v "index" |
+ 		test_decode_color >actual &&
+ 	cat <<-\EOF >expected &&
+@@ -1403,7 +1402,7 @@ test_expect_success '--color-moved block at end of diff output respects MIN_ALNU
+ 	irrelevant_line
+ 	EOF
  
+-	git diff HEAD --color-moved=zebra --no-renames |
++	git diff HEAD --color-moved=zebra --color --no-renames |
+ 		grep -v "index" |
+ 		test_decode_color >actual &&
  	cat >expected <<-\EOF &&
-@@ -923,15 +923,15 @@ test_expect_success 'ws-error-highlight test setup' '
+@@ -1442,7 +1441,7 @@ test_expect_success '--color-moved respects MIN_ALNUM_COUNT' '
+ 	nineteen chars 456789
+ 	EOF
  
- test_expect_success 'test --ws-error-highlight option' '
+-	git diff HEAD --color-moved=zebra --no-renames |
++	git diff HEAD --color-moved=zebra --color --no-renames |
+ 		grep -v "index" |
+ 		test_decode_color >actual &&
+ 	cat >expected <<-\EOF &&
+@@ -1485,7 +1484,7 @@ test_expect_success '--color-moved treats adjacent blocks as separate for MIN_AL
+ 	7charsA
+ 	EOF
  
--	git -c color.diff=always diff --ws-error-highlight=default,old |
-+	git diff --color --ws-error-highlight=default,old |
- 	test_decode_color >current &&
- 	test_cmp expect.default-old current &&
+-	git diff HEAD --color-moved=zebra --no-renames | grep -v "index" | test_decode_color >actual &&
++	git diff HEAD --color-moved=zebra --color --no-renames | grep -v "index" | test_decode_color >actual &&
+ 	cat >expected <<-\EOF &&
+ 	<BOLD>diff --git a/bar b/bar<RESET>
+ 	<BOLD>--- a/bar<RESET>
+@@ -1519,7 +1518,7 @@ test_expect_success 'move detection with submodules' '
+ 	echo foul >bananas/recipe &&
+ 	echo ripe >fruit.t &&
  
--	git -c color.diff=always diff --ws-error-highlight=all |
-+	git diff --color --ws-error-highlight=all |
- 	test_decode_color >current &&
- 	test_cmp expect.all current &&
+-	git diff --submodule=diff --color-moved >actual &&
++	git diff --submodule=diff --color-moved --color >actual &&
  
--	git -c color.diff=always diff --ws-error-highlight=none |
-+	git diff --color --ws-error-highlight=none |
- 	test_decode_color >current &&
- 	test_cmp expect.none current
+ 	# no move detection as the moved line is across repository boundaries.
+ 	test_decode_color <actual >decoded_actual &&
+@@ -1527,7 +1526,7 @@ test_expect_success 'move detection with submodules' '
+ 	! grep BRED decoded_actual &&
  
-@@ -939,15 +939,15 @@ test_expect_success 'test --ws-error-highlight option' '
- 
- test_expect_success 'test diff.wsErrorHighlight config' '
- 
--	git -c color.diff=always -c diff.wsErrorHighlight=default,old diff |
-+	git -c diff.wsErrorHighlight=default,old diff --color |
- 	test_decode_color >current &&
- 	test_cmp expect.default-old current &&
- 
--	git -c color.diff=always -c diff.wsErrorHighlight=all diff |
-+	git -c diff.wsErrorHighlight=all diff --color |
- 	test_decode_color >current &&
- 	test_cmp expect.all current &&
- 
--	git -c color.diff=always -c diff.wsErrorHighlight=none diff |
-+	git -c diff.wsErrorHighlight=none diff --color |
- 	test_decode_color >current &&
- 	test_cmp expect.none current
- 
-@@ -955,18 +955,18 @@ test_expect_success 'test diff.wsErrorHighlight config' '
- 
- test_expect_success 'option overrides diff.wsErrorHighlight' '
- 
--	git -c color.diff=always -c diff.wsErrorHighlight=none \
--		diff --ws-error-highlight=default,old |
-+	git -c diff.wsErrorHighlight=none \
-+		diff --color --ws-error-highlight=default,old |
- 	test_decode_color >current &&
- 	test_cmp expect.default-old current &&
- 
--	git -c color.diff=always -c diff.wsErrorHighlight=default \
--		diff --ws-error-highlight=all |
-+	git -c diff.wsErrorHighlight=default \
-+		diff --color --ws-error-highlight=all |
- 	test_decode_color >current &&
- 	test_cmp expect.all current &&
- 
--	git -c color.diff=always -c diff.wsErrorHighlight=all \
--		diff --ws-error-highlight=none |
-+	git -c diff.wsErrorHighlight=all \
-+		diff --color --ws-error-highlight=none |
- 	test_decode_color >current &&
- 	test_cmp expect.none current
+ 	# nor did we mess with it another way
+-	git diff --submodule=diff | test_decode_color >expect &&
++	git diff --submodule=diff --color | test_decode_color >expect &&
+ 	test_cmp expect decoded_actual
+ '
  
 -- 
 2.14.2.1079.gce6b466188
