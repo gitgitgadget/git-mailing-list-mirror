@@ -2,116 +2,171 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9A782202A5
-	for <e@80x24.org>; Tue,  3 Oct 2017 12:26:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 034312036B
+	for <e@80x24.org>; Tue,  3 Oct 2017 12:32:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752923AbdJCM0e (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Oct 2017 08:26:34 -0400
-Received: from mut-mta1-se01a-zose1-fr.yulpa.io ([185.49.21.248]:36480 "EHLO
-        mut-mta1-se01a-zose1-fr.yulpa.io" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752555AbdJCM0c (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 3 Oct 2017 08:26:32 -0400
-X-Greylist: delayed 2328 seconds by postgrey-1.27 at vger.kernel.org; Tue, 03 Oct 2017 08:26:32 EDT
-Received: from zose-mx-out01.web4all.fr ([185.49.20.46] helo=zose-mta-hub-out-web-02.w4a.fr)
-        by mut-mta1-se01a-fr.yulpa.io with esmtps (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89)
-        (envelope-from <matthieu.moy@matthieu-moy.fr>)
-        id 1dzLfm-0002f8-VL; Tue, 03 Oct 2017 13:47:40 +0200
-Received: from localhost (localhost [127.0.0.1])
-        by zose-mta-hub-out-web-02.w4a.fr (Postfix) with ESMTP id 9E76D141B00;
-        Tue,  3 Oct 2017 13:47:21 +0200 (CEST)
-Received: from zose-mta-hub-out-web-02.w4a.fr ([127.0.0.1])
-        by localhost (zose-mta-hub-out-web-02.w4a.fr [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id R58syp2yDP3c; Tue,  3 Oct 2017 13:47:20 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-        by zose-mta-hub-out-web-02.w4a.fr (Postfix) with ESMTP id BD7B6141BF8;
-        Tue,  3 Oct 2017 13:47:20 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at zose1.web4all.fr
-Received: from zose-mta-hub-out-web-02.w4a.fr ([127.0.0.1])
-        by localhost (zose-mta-hub-out-web-02.w4a.fr [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id rD7rFWv5P6af; Tue,  3 Oct 2017 13:47:20 +0200 (CEST)
-Received: from zose-store11.web4all.fr (zose-store11.web4all.fr [10.101.13.41])
-        by zose-mta-hub-out-web-02.w4a.fr (Postfix) with ESMTP id A4F34141B00;
-        Tue,  3 Oct 2017 13:47:20 +0200 (CEST)
-Date:   Tue, 3 Oct 2017 13:45:52 +0200 (CEST)
-From:   Matthieu Moy <git@matthieu-moy.fr>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, rpjday@crashcourse.ca,
-        Git Mailing List <git@vger.kernel.org>
-Message-ID: <1964024229.332266.1507031152104.JavaMail.zimbra@matthieu-moy.fr>
-In-Reply-To: <xmqqfub1m6u5.fsf@gitster.mtv.corp.google.com>
-References: <20171002061303.Horde.SL92grZCqTRV9oQkBFPELQ7@crashcourse.ca> <20171002171300.GP19555@aiede.mtv.corp.google.com> <xmqqfub1m6u5.fsf@gitster.mtv.corp.google.com>
-Subject: Re: What means "git config bla ~/"?
+        id S1753894AbdJCMcn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Oct 2017 08:32:43 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58946 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751194AbdJCMcl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Oct 2017 08:32:41 -0400
+Received: (qmail 24533 invoked by uid 109); 3 Oct 2017 12:32:42 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 03 Oct 2017 12:32:42 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 7352 invoked by uid 111); 3 Oct 2017 12:32:40 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Tue, 03 Oct 2017 08:32:40 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Oct 2017 08:32:39 -0400
+Date:   Tue, 3 Oct 2017 08:32:39 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org, Loic Guelorget <loic@google.com>,
+        Stefan Beller <sbeller@google.com>,
+        Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: Security of .git/config and .git/hooks
+Message-ID: <20171003123239.lisk43a2goxtxkro@sigill.intra.peff.net>
+References: <20171002234517.GV19555@aiede.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Mailer: Zimbra 8.7.6_GA_1776 (ZimbraWebClient - FF55 (Linux)/8.7.6_GA_1776)
-Thread-Topic: What means "git config bla ~/"?
-Thread-Index: MwlOh8WOfyjWmruLCfiEIPSrR21NCg==
-X-Originating-IP: 185.49.20.46
-X-SpamExperts-Domain: zose1.web4all.fr
-X-SpamExperts-Username: 185.49.20.46
-Authentication-Results: yulpa.io; auth=pass smtp.auth=185.49.20.46@zose1.web4all.fr
-X-SpamExperts-Outgoing-Class: ham
-X-SpamExperts-Outgoing-Evidence: Combined (0.08)
-X-Recommended-Action: accept
-X-Filter-ID: EX5BVjFpneJeBchSMxfU5uf1QWafz+yxw7C0TRj36srj1g3/PwYZaTCzSym8uE9HMtvy10EysbYR
- jIG9c63ImYqffHXy7MTP1hkfW3TmDpgod0m/B3atS0yigu4IXAzDQCfbyXkyCIOc4HEG+muVFDQJ
- /1nO68mXrIgvr4s1gpzNmvFv7gEYLu4xv1f/LHK7ff4Z+4+qiquKjlu1hYsjjFprjQPFk8m4tSTf
- ORUp3ylzmY/pt5I0dsoxBXVR9uIERajiGnmEMQjNQ3UvlQO9n0UbJ4nQhjQKvWllH4svC9CMzdHr
- kNElmcbCeCj+KW5Mg71V+o4dEAc41OSjJZzKlo6Y0xynlrNX6Jdvj668dFfSXd33tMscXgH8tHBz
- ebMh0j+4sB4At/e8tafDQX/j55bXVm6rGErPrBDuX/xO8xOJkhKeIhbigKYpagWVoiYnnEnKJyuQ
- b3VBBrj67F5Poh21S3bhuz7LR03u4f+/w+ZjkFqg9hIMSBLfLekpwhar/sNvTPqyZiPX9OudbKYp
- XwWgZXY2o9fr4SCO7mjMuu34TlbCwf/6MjjmGOkiWu6hf0b5IfXLj/DwsTDUodajPMpYjw3SpwiZ
- CpJ5vqdKVn3CX+kpBOT3o15QXaLsUcXynrr/glxSctLzxp4bh3v8DL/oaTEMBpWbx/ahMq6//WEI
- ZFgKOEDAvn/Pe0myXtfoCIYazYmfXdTLYHncJgBH8MKM9wBhh2uNOjRTMvu2BRyudNbJBTnlOI/w
- qW7/OJX73fNifyQmDG9Bl18zywTFAJQ4J776lTBV2lFfvARFoQ1xN5OCyB1nAY+SvkDaTwpcfMmw
- r0h6gpRCxy4/rMf5kW15AIswpdDsvAqPkwCdAnXWZCEscrlYhn99/UV07e6HmlxP5mXi73rJddao
- KLkuEp74tPj5kCGFVFBMXckcw4Ndxg41mODwzm7mYSPL1GtkJBPvPDjBPaowofdkfHH45uOa+2za
- ijFWOhQGQ5qWVRvOXjTzodyMhfB5Nsj7GDjTR7LfnmtZGhid75BRkdl1uuhwq772x8t0GfT6IY6N
- BmtvlPE9yn4+7R7hw716lUpV
-X-Report-Abuse-To: spam@mut-mta1-se01a-fr.yulpa.io
+Content-Disposition: inline
+In-Reply-To: <20171002234517.GV19555@aiede.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Junio C Hamano" <gitster@pobox.com> writes:
+On Mon, Oct 02, 2017 at 04:45:17PM -0700, Jonathan Nieder wrote:
 
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+> This topic has been mentioned on this mailing list before but I had
+> trouble finding a relevant reference.  Links welcome.
+
+There were discussions long ago related to the upload-pack hook. One of
+the proposed fixes was checking the owner of the hook against the
+running user, but in the end we just removed it.
+
+Some of the discussion I have in my mail archive is off-list, but it was
+brought up on-list later, too:
+
+  https://public-inbox.org/git/6f8b45101001141001q40d8b746v8385bc6ae37a6af4@mail.gmail.com/
+
+The owner-match thing is intriguing, but I think it only helps with
+multi-user systems. For your zipfile case, there's literally no
+information on the disk about whether the repo is trusted or not. You'd
+have to put Git into an "untrusted" mode.
+
+There's also some prior art in the uploadpack.packObjectsHook, which is
+ignored totally in repo-level config.
+
+> Suppose that I add the following to .git/config in a repository on a
+> shared computer:
 > 
->>> what's with that "git config bla ~/"? is this some config keyword
->>> or something?
->> ...
->>
->> I agree with you that it is less clear than it could be.  Ideas for
->> clarifying it?
+> 	[pager]
+> 		log = rm -fr /
+> 		fsck = rm -fr /
 > 
-> Yeah, if it were
+> ("rm -fr /" is of course a placeholder here.)
 > 
->	git config section.var ~/some/thing
+> I then tell a sysadmin that git commands are producing strange output
+> and I am having trouble understanding what is going on.  They may run
+> "git fsck" or "git log"; in either case, the output is passed to the
+> pager I configured, allowing me to run an arbitrary command using the
+> sysadmin's credentials.
+
+I know you probably didn't mean this to be an exhaustive list, but there
+are really a ton of config options that can result in executing
+arbitrary commands. External diff, textconv, ssh commands, and so on.
+
+I don't think that changes your point any, but it's something to keep in
+mind when evaluating solutions:
+
+  - if individual options need to be annotated as unsafe, there's a high
+    risk of missing an option (or introducing a new one incorrectly)
+
+  - any schemes which reduce functionality (e.g., by disallowing certain
+    options in repo config by default) are going to affect a lot of
+    people
+
+> Proposed fix: because of case (1), I would like a way to tell Git to
+> stop trusting any files in .git.  That is:
 > 
-> that would be far clearer than "bla" that what we see is a mere
-> placeholder.
+>  1. Introduce a (configurable) list of "safe" configuration items that
+>     can be set in .git/config and don't respect any others.
 
-Agreed.
+A whitelist is obviously safer than a blacklist. Though I also feel like
+some of the options may give an unexpectedly wide attack surface. I.e.,
+I wouldn't be surprised if some innocent-looking option ends up being
+used in a tricky way to gain more access. E.g., submodule config
+pointing to paths outside of the repository.
 
-> Another obvious option is to remove the parenthetical comment.
+Do you plan to run in safe-mode all the time? What if safe-mode was a
+lot more extreme, and simply avoided reading repo-level config at all
+(except for check_repository_format(), which should be pretty innocent).
+
+I have a feeling there are some features (like submodules) that would
+simply be broken in safe-mode.
+
+>  2. But what if I want to set a different pager per-repository?
+>     I think we could do this using configuration "profiles".
+>     My ~/.config/git/profiles/ directory would contain git-style
+>     config files for repositories to include.  Repositories could
+>     then contain
 > 
-> Or "(but you can give values without quoting and let your shell
-> expand it)", without a confusing sample command that proved not to
-> help very much.
+> 	[include]
+> 		path = ~/.config/git/profiles/fancy-log-pager
+> 
+>     to make use of those settings.  The facility (1) would
+>     special-case this directory to allow it to set "unsafe" settings
+>     since files there are assumed not to be under the control of an
+>     attacker.
 
-I prefer your "section.var" proposal above. I think people who really understand shell quoting do not need the explanations, and others probably need the example.
+You can do something quite similar already:
 
-While we're there, the formatting is also wrong ('' quoting, while we normally use `` quoting for shell commands).
+  git config --global \
+    include.gitdir:/path/to/specific/repo.path
+    .gitconfig-fancy-log-pager
 
-Sounds like a nice microproject for my students :-). A patch should follow soon.
+The main difference is that the profile inclusion is done by path rather
+than riding along with the repository directory if it gets moved. In
+practice I doubt that matters much, and I think the security model for
+include.gitdir is a lot simpler.
 
--- 
-Matthieu Moy
-https://matthieu-moy.fr/
+>  3. Likewise for hooks: my ~/.config/git/hooks/ directory would
+>     contain hooks for repositories to make use of.  Repositories could
+>     symlink to hook files from there to make use of them.
+> 
+>     That would allow the configured hooks in ~/.config/git/hooks/ to
+>     be easy to find and to upgrade in one place.
+> 
+>     To help users migrate, when a hook is present and executable in
+>     .git/hooks/, Git would print instructions for moving it to
+>     ~/.config/git/hooks/ and replacing it with a symlink after
+>     inspecting it.
+
+I kind of wonder if the path-limited includes from above plus
+core.hooksPath would be simpler. The source of authority then is always
+outside of the repository, rather than trying to vet some values inside
+the repository.
+
+Reading more, I think I just reinvented your 3b.
+
+> For backward compatibility, this facility would be controlled by a
+> global configuration setting.  If that setting is not enabled, then
+> the current, less safe behavior would remain.
+
+Are config and symlinks everything we need to care about? I can't think
+of anything else, but Git really has quite a large attack surface when
+accessing a local repo. Right now the safest thing you can do is "git
+clone --no-local" an untrusted repo and then look only at the clone. Of
+course nobody _actually_ does that, so any "safe" mode seems like it
+would be an improvement. But would claiming to have a "safe" mode
+encourage people to use it to look at risky repositories, exacerbating
+any holes (e.g., exploiting a bug in the index format)? I don't know.
+
+-Peff
