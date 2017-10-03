@@ -7,55 +7,56 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A13AE2036B
-	for <e@80x24.org>; Tue,  3 Oct 2017 19:56:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F8E12036B
+	for <e@80x24.org>; Tue,  3 Oct 2017 19:56:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751194AbdJCT4c (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Oct 2017 15:56:32 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:34521 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751169AbdJCT4b (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Oct 2017 15:56:31 -0400
-Received: by mail-wr0-f196.google.com with SMTP id z1so6635325wre.1
-        for <git@vger.kernel.org>; Tue, 03 Oct 2017 12:56:30 -0700 (PDT)
+        id S1751232AbdJCT4g (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Oct 2017 15:56:36 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:34964 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751169AbdJCT4d (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Oct 2017 15:56:33 -0400
+Received: by mail-wr0-f193.google.com with SMTP id y44so1552971wry.2
+        for <git@vger.kernel.org>; Tue, 03 Oct 2017 12:56:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=cfBkp2WOQ/TtyqW5PCwuPG0+G0LdzObMfWQXXFvNLbA=;
-        b=c2qz2Pz0l8IRJG75chAohQKWxPCJ0K50ZYuM6eH9xqfsvTN+xH025ljSkQSPQEFACE
-         vWB7eLanKEzV06sPyzt7EzR3NGTkQ3wPUHOFGDqQFTHLE18jkB5hMdpibovey5j9HybJ
-         F82E2y0Qgk5H2Zg2NiS5ptwlWW4Npw2u2j2rDvQ/Zbf7VlZ9fFJumjZtDssvVAqgruwv
-         Nl5yZBPcd5vYwqzl4CeBj5XTv31bmbnLQpDyKq5HH5PjyV1FJR7C8UPCKWJZrYUReheG
-         zkKkSy3wp+axSbxfO35lb28FfMZ+WV2QZlpjVfBZSOHJ/tmZLhk02yo763nQWLS7cxjh
-         4c+w==
+        bh=8I6ACtWJ6+MUxPHL2ZuM3GABT09XyVWqIFoj5hWWk+E=;
+        b=pVyXgETM01q4E6XGD7ttt05s/rTqb8/fiH/3NY9ynrHtOwnNDLCc6HVW6h0+0pIebt
+         1i1upN787iC+UaNkBgr0mGAy5FRxskRPL1qHcljz4b20DD2oIiqhEn3Nfj/hTlF6pDel
+         MumnB5EYW50QUQXzSANM7Sh3YVtL6zvR+9b9eEYL9BwEnuXM8L/mNfku1+/K3MaHfzmO
+         +IXJRXV+HhicSz5bGKCwvlZREKye/0UwCVhHqURnErZqwRpDt7a6b+XnQmtXMzwwEmoP
+         IbhwzXr8MOGqxZ4h/JI5heREw5oBPkdMEiudD57NEjkJYMVcrxlE/zUPOjo0WYlK/BY5
+         FDeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=cfBkp2WOQ/TtyqW5PCwuPG0+G0LdzObMfWQXXFvNLbA=;
-        b=JpTtiO62mEDNMXtXr+APdnJEDeUD1wGgwX3ZtU2ksRwF57y6q4lZed4MvUl0bxn0ps
-         6ALLdP9gRCH4vnmLLq4L8GPQRHj0E9EL7GgBrHGrjMq6WZot1JOkn+Z1JQNPw9y+pukv
-         tiHQD2DhXIPKK0FCOSI9pL782BE7GWXmO+UwyoxgG3jW00YGHPxOcPN/G+UTX4H3LcXR
-         OrHKKRF3anh1ox5MN92+J6QvVJnRVijI/+R8JwjOBdjg1ZvOfghO05s/gkPI3sbvKP8r
-         E/aWEbEpgNr2GiV0G/lAdgOgym+wddTDC4rxnRIhFuLqCv8zip25sks3S9kiI8/lvA3+
-         MVUg==
-X-Gm-Message-State: AHPjjUgQHNARPlGjaGoYoKnINsv10iVurAuNWcfQaZ713Bewdw3oT6kn
-        UtLanXSg742M3azhMc1fuDhkvqXJ
-X-Google-Smtp-Source: AOwi7QAC4Sms/IKAA54PJwohrliObbkRLmvmge4C5v787hPJhlfhzqIUmrpft6jLFVOf4Ytgm0/PqA==
-X-Received: by 10.223.199.136 with SMTP id l8mr13820265wrg.121.1507060589874;
-        Tue, 03 Oct 2017 12:56:29 -0700 (PDT)
+        bh=8I6ACtWJ6+MUxPHL2ZuM3GABT09XyVWqIFoj5hWWk+E=;
+        b=V6bomiNeMSgRadIJekJkUjqB819Pakk1nUxzyjbK01Q0B6TbQ8NtB9+CnxN+2Gsb57
+         Ma6c1GZ0nBgbi2LmdQ7kXJmjBMT+2PqVNlFu1BngubmefKEHC3M0vLqom5eTuRIjKfhn
+         VWTJWjig1INcOD8QMdyAnoT+hDI8dBWecELOk7wtYuTN0blyyetrVCzz03TSRVS/7vc+
+         P2qX26xijJU+p8LGfk8hEpyJgNRHST5UtlKs9wDv1gcz0ofAs+z1s2T3BAFiWOCYllzo
+         8gOrL6nYn8FKTtq7erU6VToGtnVqmA7vfdqm4zgHIBVXtHLRZNZxpYqczL+hovDfV6VV
+         GzKA==
+X-Gm-Message-State: AMCzsaUpZd385giOxGwPOk7h4LULY8pNCk0mammoQnV8DBG5aPOusXO/
+        tJ08Xb/4VO+E8+wdBqKLlVmViRjR
+X-Google-Smtp-Source: AOwi7QAGS3avDtfe48DwcyVUItpeftEwSZ0pMgL1gqe5Z61TYZ8a6E2SxRynFNIj0I6UsqW+LPLrtQ==
+X-Received: by 10.223.171.73 with SMTP id r9mr3859455wrc.118.1507060592331;
+        Tue, 03 Oct 2017 12:56:32 -0700 (PDT)
 Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id w18sm11132196wra.61.2017.10.03.12.56.28
+        by smtp.gmail.com with ESMTPSA id d18sm7777286wra.89.2017.10.03.12.56.31
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 03 Oct 2017 12:56:29 -0700 (PDT)
+        Tue, 03 Oct 2017 12:56:31 -0700 (PDT)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 1/3] path.c: fix uninitialized memory access
-Date:   Tue,  3 Oct 2017 20:57:11 +0100
-Message-Id: <20171003195713.13395-2-t.gummerer@gmail.com>
+        Junio C Hamano <gitster@pobox.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.ath.cx>,
+        Jeff King <peff@peff.net>
+Subject: [PATCH 2/3] http-push: fix construction of hex value from path
+Date:   Tue,  3 Oct 2017 20:57:12 +0100
+Message-Id: <20171003195713.13395-3-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.14.1.480.gb18f417b89
 In-Reply-To: <20171003195713.13395-1-t.gummerer@gmail.com>
 References: <20171003195713.13395-1-t.gummerer@gmail.com>
@@ -64,106 +65,56 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In cleanup_path we're passing in a char array, run a memcmp on it, and
-run through it without ever checking if something is in the array in the
-first place.  This can lead us to access uninitialized memory, for
-example in t5541-http-push-smart.sh test 7, when run under valgrind:
+The get_oid_hex_from_objpath takes care of creating a oid from a
+pathname.  It does this by memcpy'ing the first two bytes of the path to
+the "hex" string, then skipping the '/', and then copying the rest of the
+path to the "hex" string.  Currently it fails to increase the pointer to
+the hex string, so the second memcpy invocation just mashes over what
+was copied in the first one, and leaves the last two bytes in the string
+uninitialized.
 
-==4423== Conditional jump or move depends on uninitialised value(s)
-==4423==    at 0x242FA9: cleanup_path (path.c:35)
-==4423==    by 0x242FA9: mkpath (path.c:456)
-==4423==    by 0x256CC7: refname_match (refs.c:364)
-==4423==    by 0x26C181: count_refspec_match (remote.c:1015)
-==4423==    by 0x26C181: match_explicit_lhs (remote.c:1126)
-==4423==    by 0x26C181: check_push_refs (remote.c:1409)
-==4423==    by 0x2ABB4D: transport_push (transport.c:870)
-==4423==    by 0x186703: push_with_options (push.c:332)
-==4423==    by 0x18746D: do_push (push.c:409)
-==4423==    by 0x18746D: cmd_push (push.c:566)
-==4423==    by 0x1183E0: run_builtin (git.c:352)
-==4423==    by 0x11973E: handle_builtin (git.c:539)
-==4423==    by 0x11973E: run_argv (git.c:593)
-==4423==    by 0x11973E: main (git.c:698)
-==4423==  Uninitialised value was created by a heap allocation
-==4423==    at 0x4C2CD8F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4423==    by 0x4C2F195: realloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4423==    by 0x2C196B: xrealloc (wrapper.c:137)
-==4423==    by 0x29A30B: strbuf_grow (strbuf.c:66)
-==4423==    by 0x29A30B: strbuf_vaddf (strbuf.c:277)
-==4423==    by 0x242F9F: mkpath (path.c:454)
-==4423==    by 0x256CC7: refname_match (refs.c:364)
-==4423==    by 0x26C181: count_refspec_match (remote.c:1015)
-==4423==    by 0x26C181: match_explicit_lhs (remote.c:1126)
-==4423==    by 0x26C181: check_push_refs (remote.c:1409)
-==4423==    by 0x2ABB4D: transport_push (transport.c:870)
-==4423==    by 0x186703: push_with_options (push.c:332)
-==4423==    by 0x18746D: do_push (push.c:409)
-==4423==    by 0x18746D: cmd_push (push.c:566)
-==4423==    by 0x1183E0: run_builtin (git.c:352)
-==4423==    by 0x11973E: handle_builtin (git.c:539)
-==4423==    by 0x11973E: run_argv (git.c:593)
-==4423==    by 0x11973E: main (git.c:698)
-==4423==
+This breaks valgrind in t5540, although the test passes without
+valgrind:
 
-Avoid this by checking passing in the length of the string in the char
-array, and checking that we never run over it.
+==5490== Use of uninitialised value of size 8
+==5490==    at 0x13C6B5: hexval (cache.h:1238)
+==5490==    by 0x13C6DB: hex2chr (cache.h:1247)
+==5490==    by 0x13C734: get_sha1_hex (hex.c:42)
+==5490==    by 0x13C78E: get_oid_hex (hex.c:53)
+==5490==    by 0x118BDA: get_oid_hex_from_objpath (http-push.c:1023)
+==5490==    by 0x118C92: process_ls_object (http-push.c:1038)
+==5490==    by 0x118E5B: handle_remote_ls_ctx (http-push.c:1077)
+==5490==    by 0x118227: xml_end_tag (http-push.c:815)
+==5490==    by 0x50C1448: ??? (in /usr/lib/libexpat.so.1.6.6)
+==5490==    by 0x50C221B: ??? (in /usr/lib/libexpat.so.1.6.6)
+==5490==    by 0x50BFBF2: ??? (in /usr/lib/libexpat.so.1.6.6)
+==5490==    by 0x50C0B24: ??? (in /usr/lib/libexpat.so.1.6.6)
+==5490==  Uninitialised value was created by a stack allocation
+==5490==    at 0x118B63: get_oid_hex_from_objpath (http-push.c:1012)
+==5490==
+
+Fix this by correctly incrementing the pointer to the "hex" variable, so
+the first two bytes are left untouched by the memcpy call, and the last
+two bytes are correctly initialized.
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- path.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ http-push.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/path.c b/path.c
-index b533ec938d..12f41ee877 100644
---- a/path.c
-+++ b/path.c
-@@ -34,20 +34,21 @@ static struct strbuf *get_pathname(void)
- 	return sb;
- }
+diff --git a/http-push.c b/http-push.c
+index e4c9b065ce..e9a01ec4da 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -1018,7 +1018,7 @@ static int get_oid_hex_from_objpath(const char *path, struct object_id *oid)
+ 	memcpy(hex, path, 2);
+ 	path += 2;
+ 	path++; /* skip '/' */
+-	memcpy(hex, path, GIT_SHA1_HEXSZ - 2);
++	memcpy(hex + 2, path, GIT_SHA1_HEXSZ - 2);
  
--static char *cleanup_path(char *path)
-+static char *cleanup_path(char *path, int len)
- {
- 	/* Clean it up */
--	if (!memcmp(path, "./", 2)) {
--		path += 2;
--		while (*path == '/')
--			path++;
-+	int skip = 0;
-+	if (len >= 2 && !memcmp(path, "./", 2)) {
-+		skip += 2;
-+		while (skip < len && *(path + skip) == '/')
-+			skip++;
- 	}
--	return path;
-+	return path + skip;
+ 	return get_oid_hex(hex, oid);
  }
- 
- static void strbuf_cleanup_path(struct strbuf *sb)
- {
--	char *path = cleanup_path(sb->buf);
-+	char *path = cleanup_path(sb->buf, sb->len);
- 	if (path > sb->buf)
- 		strbuf_remove(sb, 0, path - sb->buf);
- }
-@@ -64,7 +65,7 @@ char *mksnpath(char *buf, size_t n, const char *fmt, ...)
- 		strlcpy(buf, bad_path, n);
- 		return buf;
- 	}
--	return cleanup_path(buf);
-+	return cleanup_path(buf, n);
- }
- 
- static int dir_prefix(const char *buf, const char *dir)
-@@ -494,7 +495,7 @@ const char *mkpath(const char *fmt, ...)
- 	va_start(args, fmt);
- 	strbuf_vaddf(pathname, fmt, args);
- 	va_end(args);
--	return cleanup_path(pathname->buf);
-+	return cleanup_path(pathname->buf, pathname->len);
- }
- 
- const char *worktree_git_path(const struct worktree *wt, const char *fmt, ...)
 -- 
 2.14.1.480.gb18f417b89
 
