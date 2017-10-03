@@ -2,88 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AEA762036B
-	for <e@80x24.org>; Tue,  3 Oct 2017 21:47:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 301052036B
+	for <e@80x24.org>; Tue,  3 Oct 2017 21:51:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751296AbdJCVrv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Oct 2017 17:47:51 -0400
-Received: from mail-pg0-f50.google.com ([74.125.83.50]:56070 "EHLO
-        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751120AbdJCVru (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Oct 2017 17:47:50 -0400
-Received: by mail-pg0-f50.google.com with SMTP id b11so5429133pgn.12
-        for <git@vger.kernel.org>; Tue, 03 Oct 2017 14:47:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=WJ1szwqkmGJaCjkrh2yFtd37jmnVR9oE6BqUPPdnr88=;
-        b=iQJRiWKcKNQHzSyXf5eHeQA9kWQT/mxHEBFMNVnIcGjL47OrvzghU1shY412omfS8s
-         7VCX5kH6zQz2K+J77AvUFTArToLFgj5puQiAbCRvWbi035qQULcs6G/Pg8MEXkoicdRg
-         KQGIlZEaMEuKuEUJC8y/rbAAiIWP1WHEZaQciYSb/0TOinmbWxuNdcSG2GIV3vnbloxJ
-         x4Q4J86p0vlmTRPrjOwHvRwWtBPud0EQUJbOu0T0+s4/wdTeaa2w9WRRm75Q75+nIrF+
-         C3lYc95EvaKycO+EZEX7FTf4PDnBU8MqG2OGN4RJJjgoEV9FZ+9B3wH3QC7eckAdJKgl
-         5k/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=WJ1szwqkmGJaCjkrh2yFtd37jmnVR9oE6BqUPPdnr88=;
-        b=K6relOh/QmQtsvEuOoVydMJS1hgj1q64qJ0gCq4Edbwm7FM3+VUo52dt47RDxc5I2N
-         3leLi9WoM5e5auWTEhxIPhq5gl/iUIppHJ5XdYHfppmfdK1OR830EOnOmm1KGrp4yWHp
-         /ZCq3opVqtxqgvc78kKDywq2/fLoUu6xRwP5Pf34qFZZbe8OR77B+wIRsWIv9TlHvONc
-         iybtYb3rCfn/5+d8lGCY+inq8BTSyE+5i017pAZnDbJelH01RNCefM1LiLYbJQQESe6D
-         9RrEZaVlyBpnMK8TtPYUeR5ujcM7WA96y4muEAwcspIGo4wVw/NtwJ8VPjx8YkglNEwg
-         j0tQ==
-X-Gm-Message-State: AHPjjUigneGkLwzuWdhfgQVj+F9GGqTylU3ueHDWA1SOpVsmiZOfOKGc
-        auYV7CYvfkwdefI7NnDvzTM=
-X-Google-Smtp-Source: AOwi7QAuWjtiMV1lihtn15H0bfYicbfcaUESCLqhbWPrBJ6CsB7MuyCIkqU3u+ntLUKG1dbFM26ItQ==
-X-Received: by 10.84.132.78 with SMTP id 72mr18079578ple.185.1507067270365;
-        Tue, 03 Oct 2017 14:47:50 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:3463:ab6b:5863:927c])
-        by smtp.gmail.com with ESMTPSA id a78sm23793106pfl.39.2017.10.03.14.47.49
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 03 Oct 2017 14:47:49 -0700 (PDT)
-Date:   Tue, 3 Oct 2017 14:47:48 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Christian Rebischke <Chris.Rebischke@archlinux.org>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [bug] git version 2.4.12 color.ui = always breaks git add -p
-Message-ID: <20171003214748.GA19555@aiede.mtv.corp.google.com>
-References: <20171003213353.GA9195@motoko>
+        id S1751408AbdJCVvJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Oct 2017 17:51:09 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:56667 "EHLO
+        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751226AbdJCVvJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Oct 2017 17:51:09 -0400
+Received: from [10.0.2.15] ([147.147.86.16])
+        by avasout07 with smtp
+        id H9r31w00B0M91Ur019r5ze; Tue, 03 Oct 2017 22:51:05 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=CrLPSjwD c=1 sm=1 tr=0
+ a=dubYQqM3tRRTmV8xSh8cXQ==:117 a=dubYQqM3tRRTmV8xSh8cXQ==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=M_GiEyNkICeghournMkA:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+To:     dstolee@microsoft.com
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH] test-list-objects: mark file-local symbols as static
+Message-ID: <5b3d8899-d4c5-c145-7128-21c8aaa4f38f@ramsayjones.plus.com>
+Date:   Tue, 3 Oct 2017 22:51:03 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171003213353.GA9195@motoko>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Christian,
 
-Christian Rebischke wrote:
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
 
-> I played around with my gitconfig and I think I found a bug while doing
-> so. I set the following lines in my gitconfig:
->
-> [color]
->     ui = always
->
-> When I try to use `git add -p <filename>` I don't see the 'Stage
-> this hunk'-dialog anymore. First I thought it's some other configuration
-> but now I can definitly say that this configuration breaks `git add -p`
-> interactive mode.
+Hi Derrick,
 
-Do the patches at
-https://public-inbox.org/git/20171003133713.ccxv6clrmuuhhc3u@sigill.intra.peff.net/
-help?
+If you need to re-roll your 'ds/find-unique-abbrev-optim' branch,
+could you please squash this into the relevant patch (commit 3792c78ba0,
+"test-list-objects: list a subset of object ids", 01-10-2017).
 
-Thanks and hope that helps,
-Jonathan
+Thanks!
+
+ATB,
+Ramsay Jones
+
+ t/helper/test-list-objects.c | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
+
+diff --git a/t/helper/test-list-objects.c b/t/helper/test-list-objects.c
+index 22bc9b4e6..5c5d3c03f 100644
+--- a/t/helper/test-list-objects.c
++++ b/t/helper/test-list-objects.c
+@@ -6,43 +6,43 @@ struct count {
+ 	int select_mod;
+ };
+ 
+-int count_loose(const struct object_id *oid,
+-		const char *path,
+-		void *data)
++static int count_loose(const struct object_id *oid,
++		       const char *path,
++		       void *data)
+ {
+ 	((struct count*)data)->total++;
+ 	return 0;
+ }
+ 
+-int count_packed(const struct object_id *oid,
+-		 struct packed_git *pack,
+-		 uint32_t pos,
+-		 void* data)
++static int count_packed(const struct object_id *oid,
++			struct packed_git *pack,
++			uint32_t pos,
++			void* data)
+ {
+ 	((struct count*)data)->total++;
+ 	return 0;
+ }
+ 
+-void output(const struct object_id *oid,
+-	    struct count *c)
++static void output(const struct object_id *oid,
++		   struct count *c)
+ {
+ 	if (!(c->total % c->select_mod))
+ 		printf("%s\n", oid_to_hex(oid));
+ 	c->total--;
+ }
+ 
+-int output_loose(const struct object_id *oid,
+-		 const char *path,
+-		 void *data)
++static int output_loose(const struct object_id *oid,
++			const char *path,
++			void *data)
+ {
+ 	output(oid, (struct count*)data);
+ 	return 0;
+ }
+ 
+-int output_packed(const struct object_id *oid,
+-		  struct packed_git *pack,
+-		  uint32_t pos,
+-		  void* data)
++static int output_packed(const struct object_id *oid,
++			 struct packed_git *pack,
++			 uint32_t pos,
++			 void* data)
+ {
+ 	output(oid, (struct count*)data);
+ 	return 0;
+-- 
+2.14.0
