@@ -2,102 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9075D2036B
-	for <e@80x24.org>; Tue,  3 Oct 2017 22:17:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E022C2036B
+	for <e@80x24.org>; Tue,  3 Oct 2017 22:24:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751148AbdJCWRo (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Oct 2017 18:17:44 -0400
-Received: from mail-pg0-f42.google.com ([74.125.83.42]:47101 "EHLO
-        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751090AbdJCWRn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Oct 2017 18:17:43 -0400
-Received: by mail-pg0-f42.google.com with SMTP id k7so521831pga.3
-        for <git@vger.kernel.org>; Tue, 03 Oct 2017 15:17:43 -0700 (PDT)
+        id S1751115AbdJCWYS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Oct 2017 18:24:18 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:38228 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751174AbdJCWYR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Oct 2017 18:24:17 -0400
+Received: by mail-pg0-f65.google.com with SMTP id y192so11271342pgd.5
+        for <git@vger.kernel.org>; Tue, 03 Oct 2017 15:24:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=wY3NBVwf1g5Q2kKUYWE80nn0hWJdIFecY/u0QpuVt1E=;
-        b=oitoyIJme8UDp0J8u/fLKtDTHsAHFHTZMJGIu+X1mB9moIyzZM6MwJhaVrf9c/w/1f
-         96Z2ygjatL5MXtlCpIaByq7VjA69keiBZe9N+wa7BnEBd7AALDZulXpP3f19Z/AusFDL
-         bmee6BbadH/+p2GMyTvm2XcUiFKsWM5AwzP6U2kGUBAnFlqaYQAjT7dqIe0ea+eU8yUi
-         phaSbG0KSCf3u//eDEzOGpQDg1WxmrIu8D2hqf9ZZFC3CWDDtFyBB5CuOw/1xJNVPgLu
-         aPUl+zdhWf072E+5pdxS+3Jyvri2kM9PvqZzxMLJA7P/XQKfq+KG5JZXypriikQQc0Ol
-         Hgcw==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=X8aqNZv+UekpOMz1zLjgsEi8FpKcxkfm+yMoJ8iq+Ak=;
+        b=kQO8evF1Sr4g3yF1fv0hrDTx62qWjPn6usNxE/aQl1fy20wiqKBuU3No9tmBNR8kR9
+         moCOG7V2ASY4aheJqK7DYtP2EupLgXfY9RUG4qdScU6taYd4TQ1izsjZZvLCwINyjKom
+         6knEDaXD90mjTR5IfFAyJT8wvuUsTCJ+SzHIHpRZCwf8PSRVSNZ5Mlx6I890qbPoWJ6O
+         03a7Ub3MZjSzXHZwewuQ04sZL3owYR9o68bmmTSUZVVBcj/2/gxnH8+OUL3G2AhEgx0+
+         corW5wbtzbwB4dQraFuu0+1FNFhdJtLDlYjLmJaZ/BhihlFr/Au9FQMKAAltavl73TWs
+         kI5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=wY3NBVwf1g5Q2kKUYWE80nn0hWJdIFecY/u0QpuVt1E=;
-        b=pXlP8RBzm1Os55+URWtil35+t00vdG+GtbTuvj4n65rKTPK4QnQF6MWVp5RUFIWlPm
-         356U/WkyJuK3S50GF23+LYcx126hPGx7u4r+BS2yGExnn0XKIX/3ty1YbJmRjCMZhkyb
-         p5OFLUwgPcXdUOYqiRJRhOJzhFX2pmXyi5uRc40yWmg47TX+nQ0fN/GTkiUNBeNA+erH
-         NubFFR4Vr9S9e/py4zk13AqV18x8mczD+NKJBvgKc+Ka1Q89MhRh1wZOnZ6zHh85fLEA
-         ElN2oe+8C/hBplzSVFf4M1VvjeqrhuwCDJ37DLfP7u7CgOyd9ltnAhmGP7DfbmQPkksK
-         NFfQ==
-X-Gm-Message-State: AMCzsaVS9o43cfhOZZG8jvhle6JtT+7ySywpsvtufL/ZmpFnOscM6jrE
-        Vn1x1Jargr1U52l9RFZ+hvO/CA==
-X-Google-Smtp-Source: AOwi7QDGkZu9W0ldrn+PJWirOuIv5KJaSbPNuvcmpH9tThh5eK6F9LXPGCo3brf7WaceCp2MC4/Fpw==
-X-Received: by 10.98.214.215 with SMTP id a84mr2322894pfl.27.1507069062742;
-        Tue, 03 Oct 2017 15:17:42 -0700 (PDT)
-Received: from localhost ([2620:0:100e:422:ccd0:dc92:fe68:ce55])
-        by smtp.gmail.com with ESMTPSA id m9sm23261636pgt.49.2017.10.03.15.17.41
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=X8aqNZv+UekpOMz1zLjgsEi8FpKcxkfm+yMoJ8iq+Ak=;
+        b=H73aSTRk9jnNJiqdQ9mPccBi0Muz0c45cRFyxf2+m6lYCqGBfmfwbO1E7sBwzjdy0D
+         CuPmJ+KLvf4VYEam/881lhxbuHc/o2HZ6ABHM1d/ebHNnoOWczTczAwTxRr1MI1o/3WR
+         RJCc5S3/7DaJZh279Sd11wHN7TNoc3fMHjqBGM+AGvzXNlOUKLha2kNAb8xWqLEtvLAg
+         HMeggFGHBOrCvVsFYEIhXYooKG84c5n4Yn8IHiFgQA2xeYGSUmNojH5vyVD47V4x2tEN
+         7d+Hzwsk28ByHg5haLsRLdFwMNh11NhyWi4xdfrEYO+nJu8uvz/ZuW38OPao5t4HqQTh
+         nV7Q==
+X-Gm-Message-State: AHPjjUiHVKrc0vmGqoddDVqImuwoz03ehhjLL3QQ2uIWZYdIu4VnkGLk
+        PIvSZuwXiKWodXbop0365fo=
+X-Google-Smtp-Source: AOwi7QDznqNlxSNhz82SZYQE///OCw6QBl+jHajK5We2PMbjbnUenE0FGIxPTVdg8jcreklYNrnp4Q==
+X-Received: by 10.84.254.70 with SMTP id a6mr17987325pln.71.1507069457118;
+        Tue, 03 Oct 2017 15:24:17 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:3463:ab6b:5863:927c])
+        by smtp.gmail.com with ESMTPSA id p6sm20949834pga.93.2017.10.03.15.24.16
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 03 Oct 2017 15:17:42 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-To:     jrnieder@gmail.com
-Cc:     git@vger.kernel.org, sbeller@google.com
-Subject: [PATCH] branch: reset instead of release a strbuf
-Date:   Tue,  3 Oct 2017 15:17:40 -0700
-Message-Id: <20171003221740.26325-1-sbeller@google.com>
-X-Mailer: git-send-email 2.14.0.rc0.3.g6c2e499285
-In-Reply-To: <20171003214646.GZ19555@aiede.mtv.corp.google.com>
+        Tue, 03 Oct 2017 15:24:16 -0700 (PDT)
+Date:   Tue, 3 Oct 2017 15:24:14 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] branch: reset instead of release a strbuf
+Message-ID: <20171003222414.GC19555@aiede.mtv.corp.google.com>
 References: <20171003214646.GZ19555@aiede.mtv.corp.google.com>
+ <20171003221740.26325-1-sbeller@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20171003221740.26325-1-sbeller@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Our documentation advises to not re-use a strbuf, after strbuf_release
-has been called on it. Use the proper reset instead.
+Hi,
 
-Currently 'strbuf_release' releases and re-initializes the strbuf, so it
-is safe, but slow. 'strbuf_reset' only resets the internal length variable,
-such that this could also be accounted for as a micro-optimization.
+Stefan Beller wrote:
 
+> Our documentation advises to not re-use a strbuf, after strbuf_release
+> has been called on it. Use the proper reset instead.
+>
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+This is indeed
 Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- builtin/branch.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index b998e16d0c..71ed1c7036 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -217,7 +217,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
- 		if (!head_rev)
- 			die(_("Couldn't look up commit object for HEAD"));
- 	}
--	for (i = 0; i < argc; i++, strbuf_release(&bname)) {
-+	for (i = 0; i < argc; i++, strbuf_reset(&bname)) {
- 		char *target = NULL;
- 		int flags = 0;
+Thank you.
+
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  builtin/branch.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+
+Here's a patch to address the surprising strbuf.h advice.
+
+-- >8 --
+Subject: strbuf: do not encourage init-after-release
+
+strbuf_release already leaves the strbuf in a valid, initialized
+state, so there is not need to call strbuf_init after it.
+
+Moreover, this is not likely to change in the future: strbuf_release
+leaving the strbuf in a valid state has been easy to maintain and has
+been very helpful for Git's robustness and simplicity (e.g.,
+preventing use-after-free vulnerabilities).
+
+It is still not advisable to call strbuf_release until done using a
+strbuf because it is wasteful, so keep that part of the advice.
+
+Reported-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ strbuf.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/strbuf.h b/strbuf.h
+index 7496cb8ec5..6e175c3694 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -83,7 +83,7 @@ extern void strbuf_init(struct strbuf *, size_t);
  
-@@ -282,8 +282,9 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
- 	}
+ /**
+  * Release a string buffer and the memory it used. You should not use the
+- * string buffer after using this function, unless you initialize it again.
++ * string buffer after using this function.
+  */
+ extern void strbuf_release(struct strbuf *);
  
- 	free(name);
-+	strbuf_release(&bname);
- 
--	return(ret);
-+	return ret;
- }
- 
- static int calc_maxwidth(struct ref_array *refs, int remote_bonus)
 -- 
-2.14.0.rc0.3.g6c2e499285
+2.14.2.920.gcf0c67979c
 
