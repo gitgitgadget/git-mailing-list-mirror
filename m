@@ -2,113 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 959A620281
-	for <e@80x24.org>; Tue,  3 Oct 2017 03:37:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E57620281
+	for <e@80x24.org>; Tue,  3 Oct 2017 03:51:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751075AbdJCDhb (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Oct 2017 23:37:31 -0400
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:54430 "EHLO
-        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750846AbdJCDha (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Oct 2017 23:37:30 -0400
-Received: by mail-pf0-f176.google.com with SMTP id d187so3915753pfg.11
-        for <git@vger.kernel.org>; Mon, 02 Oct 2017 20:37:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=jQeKXO/hK+E/mc0TwY0P6/uoar7YE60TpzcS1E2PErA=;
-        b=iAX5bs+n6yaTfGrXTRNYR7pkdsBTKyX7s+/9NQ+Lo/750jAk1kV49dryajK3CONkoO
-         ZwYZhr5l8Db3BXIjv1qDXWXq9FHVccoueYnYx+fCv/xu0NyWQIHcDpqjSe0kR4IeRW9f
-         1gdD7ShIWMrE9FkXmCJr4btjzjBYTT3ycKHdW15bdszegPFV2qdh1ys5tjfHQexNCHlU
-         IxREiTuw2DH9YK6ahuyb8PE3/d5cRFBH0+I87QF7/87vhKLkhyZydM+2Q3/2HFGqN14d
-         0Fdq6clwbW6Vze2ynKMvjVdjZUzx/7vvu/1gYw6HOd/k+LRxYFu2B+ppcOkc6S/OFmPb
-         u8zw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=jQeKXO/hK+E/mc0TwY0P6/uoar7YE60TpzcS1E2PErA=;
-        b=a0jRHmVk1pDPgwsse6SHk+MgVtBHjfGtsW9qpk9ND5Yz32+9LMXB8cISGqerlSolQU
-         S+ZojrZF5dq9v2Y91YBrNh3Oi6wN+W+WQ0sARF7deZP0PU6n8mtBmC4f6xt3WknQug5/
-         rKNKQTvEQWVudzDmgg5+w+nxnWpSC3L3iPzNFy7U1CG0YqMh2sQW5AWnJarjsf7cYCIq
-         KxWB2itN/ceNPtTrosmBddRW2Sxc07Fy4NQkCIVPTVaZQqGlI7TRwLOgR/H7eOgwl9Jo
-         vayswkPKypopTcQtjPuGr7HwUifC6P+sbDGAaNB82DXgOi5mb9HaDUVzko/qgR9HQYu5
-         IGlw==
-X-Gm-Message-State: AMCzsaVjUthFi1q0T36nGbylgGaKaOdGoqVugtMOremF/gIhnA6QZOl3
-        NmdswWifeHbz7Uwp6ooTvGksTg==
-X-Google-Smtp-Source: AOwi7QDaZgneQ0/iPadeDL0IyfqjVLhHWJhiVU80G2knXd66oiOxFnZ6Otdc4xuHE1Z/0gOiGEZ+sg==
-X-Received: by 10.159.242.196 with SMTP id x4mr4290458plw.68.1507001849824;
-        Mon, 02 Oct 2017 20:37:29 -0700 (PDT)
-Received: from localhost ([205.175.97.239])
-        by smtp.gmail.com with ESMTPSA id 138sm5372419pfa.66.2017.10.02.20.37.27
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 02 Oct 2017 20:37:28 -0700 (PDT)
-Date:   Mon, 2 Oct 2017 20:37:26 -0700
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-        peff@peff.net
-Subject: Re: [PATCH v2] ref-filter.c: pass empty-string as NULL to atom
- parsers
-Message-ID: <20171003033726.GA84817@D-10-157-251-166.dhcp4.washington.edu>
-References: <20171002055052.GB10729@D-10-157-251-166.dhcp4.washington.edu>
- <20171002161034.44867-1-me@ttaylorr.com>
- <20171002224052.GR19555@aiede.mtv.corp.google.com>
- <xmqqmv59m7fu.fsf@gitster.mtv.corp.google.com>
+        id S1750986AbdJCDvQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Oct 2017 23:51:16 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53106 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750846AbdJCDvP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Oct 2017 23:51:15 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9348CB4EB3;
+        Mon,  2 Oct 2017 23:51:14 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=fy0T0oSxBR8/oiwwyAl/Krsg94U=; b=TXk1xH
+        PVvvcy05Hl5Ct9XjlGuefQANQgmCKJ8ac989A5sr3axj5E3S9VpAU542yN127vAo
+        J3tkWcKkOyFU1D/bUEjZ6e7Pgxmztbv85qVdCjj41bxjL5iZlmwbbegFI+/qKWVo
+        qRIQ69pRC6mSEfc1gWLTCEImluuDlZBgP2F6o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=JocwCFppnXVPe3iA+wUXq6Ot82VXXtMI
+        QbkBT7+a3JFoks75LYons7C93ABaRzEvyGrpzffRVxjFyqwsqUcuw4HUpys57u+W
+        K+hphMTRaX2agPvT27ec8NOYMuJhOKuPMQ/8B7c2goEiVvYLOqyvTOTl1kPuO4O6
+        6p4wpKUSBjY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8B659B4EB2;
+        Mon,  2 Oct 2017 23:51:14 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 068C7B4EB1;
+        Mon,  2 Oct 2017 23:51:13 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Pranit Bauva <pranit.bauva@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH v16 1/6] bisect--helper: use OPT_CMDMODE instead of OPT_BOOL
+References: <CAFZEwPOjK25m84BgTF7AL72DL_K1dHf7OrYoX=_vky9r3GayNw@mail.gmail.com>
+        <0102015ecc65d695-22151d3b-752b-4c10-a3a3-b8ef52491664-000000@eu-west-1.amazonses.com>
+        <5ca7a863-5b85-23b1-4432-cf74dcc7c4e0@ramsayjones.plus.com>
+        <CAFZEwPN2BeogeVqXp7xh+GPUF6SDJa5JwQ3knZzOD_H6zcEwvQ@mail.gmail.com>
+        <72995d24-d337-39c0-0abd-64bce1c22028@ramsayjones.plus.com>
+Date:   Tue, 03 Oct 2017 12:51:12 +0900
+In-Reply-To: <72995d24-d337-39c0-0abd-64bce1c22028@ramsayjones.plus.com>
+        (Ramsay Jones's message of "Tue, 3 Oct 2017 01:48:17 +0100")
+Message-ID: <xmqqa818lwi7.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqmv59m7fu.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.8.3 (2017-05-23)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1A201964-A7EE-11E7-8406-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 03, 2017 at 08:55:01AM +0900, Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
->
-> > The above does a nice job of explaining
-> >
-> >  - what this change is going to do
-> >  - how it's good for the internal code structure / maintainability
-> >
-> > What it doesn't tell me about is why the user-facing effect won't
-> > cause problems.  Is there no atom where %(atom:) was previously
-> > accepted and did something meaningful that this may break?
->
-> That is, was there any situation where %(atom) and %(atom:) did two
-> differnt things and their differences made sense?
->
-> > Looking at the manpage and code, I don't see any, so for what it's
-> > worth, this is
-> >
-> > Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-> >
-> > but for next time, please remember to discuss regression risk in
-> > the commit message, too.
->
-> Yes, I agree that it is necessary to make sure somebody looked at
-> the issue _and_ record the fact that it happened.  Thanks for doing
-> that already ;-)
->
-> I also took a look at the code and currently we seem to abort,
-> either with "unrecognised arg" (e.g. "refname:") or "does not take
-> args" (e.g. "body"), so we should be OK, I'd think.
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
-Thank you both for the helpful pointers. I will make sure to include a
-more thorough review of potential breakage in existing code given a
-particular change.
+> On 02/10/17 14:44, Pranit Bauva wrote:
+> [snip]
+>>...
+> Yes, I also meant to tidy that up by removing some, now
+> redundant, initialisation later in that function.
+>
+> Note, that wasn't the only bug! (I have probably forgotten
+> some of them, but look at 964f4e2b0, for example).
 
-With respect to this particular patch, I agree with Jonathan and Junio
-that there are no places in ref-filter.c that would be affected by this
-change, and that it should be able to be applied cleanly without
-breakage.
+It seems that Pranit needs a bit more work to take known fixes from
+your efforts and we should wait for the series to be rerolled?
 
---
-- Taylor
+Thanks both for working on this.
