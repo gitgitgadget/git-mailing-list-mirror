@@ -2,89 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27F0420281
-	for <e@80x24.org>; Tue,  3 Oct 2017 00:48:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A30420281
+	for <e@80x24.org>; Tue,  3 Oct 2017 00:52:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751084AbdJCAsV (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Oct 2017 20:48:21 -0400
-Received: from avasout07.plus.net ([84.93.230.235]:56733 "EHLO
-        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750936AbdJCAsU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Oct 2017 20:48:20 -0400
-Received: from [10.0.2.15] ([147.147.86.16])
-        by avasout07 with smtp
-        id GooH1w0030M91Ur01ooJek; Tue, 03 Oct 2017 01:48:19 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=CrLPSjwD c=1 sm=1 tr=0
- a=dubYQqM3tRRTmV8xSh8cXQ==:117 a=dubYQqM3tRRTmV8xSh8cXQ==:17
- a=IkcTkHD0fZMA:10 a=ZdlO4LmE-fkoEcewqMkA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH v16 1/6] bisect--helper: use OPT_CMDMODE instead of
- OPT_BOOL
-To:     Pranit Bauva <pranit.bauva@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-References: <CAFZEwPOjK25m84BgTF7AL72DL_K1dHf7OrYoX=_vky9r3GayNw@mail.gmail.com>
- <0102015ecc65d695-22151d3b-752b-4c10-a3a3-b8ef52491664-000000@eu-west-1.amazonses.com>
- <5ca7a863-5b85-23b1-4432-cf74dcc7c4e0@ramsayjones.plus.com>
- <CAFZEwPN2BeogeVqXp7xh+GPUF6SDJa5JwQ3knZzOD_H6zcEwvQ@mail.gmail.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <72995d24-d337-39c0-0abd-64bce1c22028@ramsayjones.plus.com>
-Date:   Tue, 3 Oct 2017 01:48:17 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        id S1751247AbdJCAwY (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Oct 2017 20:52:24 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57997 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750869AbdJCAwX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Oct 2017 20:52:23 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A00FAB3035;
+        Mon,  2 Oct 2017 20:52:22 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=NJPsotqqobRxCdDbTBIkr6kwgDg=; b=MSs7B1
+        9MDTxNXMRQRCLK/SpE0fPmwfaykC/iiCAe/2IPs+eBho4m6Z3NseCJXegrAlj0du
+        EOKJGJPePSgd1DF51qk+tphBZW7VahVFmtU6G4X8UC2cOV2YNNimdkGnavL/aMYw
+        UmDgvSnLk9YrNgXumzsVt7YKxJ1abWsU8hJQw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=nzJqziKHMC3VjqsFJKZJXKroDqibSUuO
+        nKxQXzkazUGzBiJciXbenY5V+nkmEcjtyVJWpuhSBKo99Z7RSaytOj9r+Z2eVuiT
+        n3ecZ1gwCbahOtUekacfB09VPpyfTRCh3twWSsZr9E9mCMULUVqYt/cSNprUKzUe
+        TcIvjvIOn2U=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 97B82B3034;
+        Mon,  2 Oct 2017 20:52:22 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 001A8B3033;
+        Mon,  2 Oct 2017 20:52:21 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Philip Oakley <philipoakley@iee.org>,
+        Pavel Kretov <firegurafiku@gmail.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [idea] File history tracking hints
+References: <CAOZF3=Ouvk8ccME+fXr_T=GL1j4Gx3Hgj3ao_-GQng-noeOubg@mail.gmail.com>
+        <E8C827ED458648F78F263F2F2712493B@PhilipOakley>
+        <alpine.DEB.2.21.1.1709131322470.4132@virtualbox>
+        <04DDB36236444FFD8C3668AA7B62B154@PhilipOakley>
+        <alpine.DEB.2.21.1.1709300110350.40514@virtualbox>
+        <5fb263a8-d83b-64a7-812f-fd8e3748feb6@jeffhostetler.com>
+        <xmqqtvzjv987.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kbghnWmvQweup=Z79HnVQQCMM65CKgEO3oqDoRp-Bj=2Q@mail.gmail.com>
+        <ea1538e3-2b2e-f7eb-9c0e-e29c15bf2ea9@jeffhostetler.com>
+        <CAGZ79kbjfXC3CxMDouUrCUVt-OJXckDtg9U_7=R=FM-eon4ikA@mail.gmail.com>
+        <f9b722d9-cd37-40f3-7ae4-6f7f3d90de83@jeffhostetler.com>
+Date:   Tue, 03 Oct 2017 09:52:20 +0900
+In-Reply-To: <f9b722d9-cd37-40f3-7ae4-6f7f3d90de83@jeffhostetler.com> (Jeff
+        Hostetler's message of "Mon, 2 Oct 2017 16:02:09 -0400")
+Message-ID: <xmqqy3otkq7v.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CAFZEwPN2BeogeVqXp7xh+GPUF6SDJa5JwQ3knZzOD_H6zcEwvQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1D608E06-A7D5-11E7-87D1-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jeff Hostetler <git@jeffhostetler.com> writes:
 
+>> How do you know when a guid needs adaption?
+>
+> I'm not sure I know what you mean by "adaption".
 
-On 02/10/17 14:44, Pranit Bauva wrote:
-[snip]
->> Look for []-ed comments in the commit messages for a note of
->> the changes I made to your original patches, in patches #2,
->> #4, #7-9, #11-12 and #14.
->>
->> The commits I added, which are just WIP, are as follows:
->>
->>   $ git log --oneline bisect~12..bisect
->>   7d7117040 (raj/bisect, bisect) bisect--helper: convert to struct object_id
->>   188ea5855 bisect--helper: add the get_bad_commit() function
->>   b75f46fb4 bisect--helper: add a log_commit() helper function
->>   4afc34403 bisect--helper: reduce the scope of a variable
->>   62495f6ae bisect--helper: remove useless sub-expression in condition
->>   964f4e2b0 bisect--helper: set correct term from --term-new= option
->>   62efc099f bisect--helper: remove redundant assignment to has_double_dash
->>   d35950b92 bisect--helper: remove redundant goto's
->>   b33f313ac bisect--helper: remove space just before \n in string
->>   3eb407156 bisect--helper: remove some unnecessary braces
->>   c2b89c9b8 bisect--helper: add some vertical whitespace
->>   8c883701c bisect--helper: fix up some coding style issues
->>   $
->>
->> Again IIRC, there are a couple of bug fixes in these commits ...
-> 
-> There is actually a major bug in the later part of previous series
-> mostly in the bisect-next which actually caused delays. I think you
-> have fixed it in your commit 682d0bff0. Although I would need to have
-> a closer look at it. In original series, I did get a sigserv, and as
-> you mention it in the commit that you have fixed it.
+I think he meant adapting, and I think he is referring to what I
+wrote in the message upthread to explain why "file ID" would not
+help.
 
-Yes, I also meant to tidy that up by removing some, now
-redundant, initialisation later in that function.
+It seems to me, from reading the remainder of your message, that it
+is also becoming clear to you that "file ID" would not help and your
+conceptual thing was merely a hand-waving that was dubious how it
+could be made into a concrete working design?  Hopefully we can
+converge on a workable design that does not involve "file ID", and
+that would be a good outcome.
 
-Note, that wasn't the only bug! (I have probably forgotten
-some of them, but look at 964f4e2b0, for example).
-
-ATB,
-Ramsay Jones
 
