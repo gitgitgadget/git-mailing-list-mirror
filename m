@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 83B722036B
-	for <e@80x24.org>; Tue,  3 Oct 2017 20:15:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 566FE2036B
+	for <e@80x24.org>; Tue,  3 Oct 2017 20:15:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751893AbdJCUPg (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Oct 2017 16:15:36 -0400
-Received: from mail-pg0-f47.google.com ([74.125.83.47]:47125 "EHLO
-        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751742AbdJCUP1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Oct 2017 16:15:27 -0400
-Received: by mail-pg0-f47.google.com with SMTP id r25so2933335pgn.4
-        for <git@vger.kernel.org>; Tue, 03 Oct 2017 13:15:27 -0700 (PDT)
+        id S1751901AbdJCUPi (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Oct 2017 16:15:38 -0400
+Received: from mail-pg0-f49.google.com ([74.125.83.49]:46340 "EHLO
+        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751450AbdJCUPc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Oct 2017 16:15:32 -0400
+Received: by mail-pg0-f49.google.com with SMTP id k7so370349pga.3
+        for <git@vger.kernel.org>; Tue, 03 Oct 2017 13:15:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Hxzelyowxzq/znWOViDEwvzv2VZkl56IZfeeiGsHQ3c=;
-        b=eRORDtfYE7pwt+jJTxbL2l1jzp8NUhKFDmTyvMznC128nh5wI8TMo+S+EOvf2m15IG
-         Ay7+9XW6hLaMLCtRDAYt1Inl1/vz8mdNyuLNGQT50yh0vY+BuoP2kldiYu44y+Zlhjvj
-         vypBlHDw/O01Z1vS8wkTQNF1+yhPsKndFNLSbMShAajj/8ACzBgcYABIm9Jf7VcP/VFM
-         ja7zP6SQLo0F26n3cNZtT8JRua+OXvvxk+lmoa8ggdWRH/X7xg7/3QxDy5kms6PoHjuo
-         4/GRedXcOsaqmB1wbhhciJS08oe6K052D3CKwqBkv4tlILH11bcjxKWv/zPOrojDfIM/
-         EtSg==
+        bh=hP1uqKfQ88xiwjwUIu4DLTC1Fcmab537pp1QVZ49NWQ=;
+        b=E9gZW/Wx2mu2Qcpychs4fWblziyIxSxCtDGiiFo2KLZaGWll0WV2LkpPqU8QgIiHq+
+         rdBQ92nkM2YdW2O4SLbQOccH5npsYPGJI8XTAkiyOug3bRahF1Wpa70TBCyKCLHNEmUe
+         k4w4JGfZGFAjPPqKZF6zoUYaMwHD7pLvTkNjufhTz94QyhJ78c8rDH9xU4aHEDvRCjYb
+         0GeOahfxcrEdiG1m+Vo4ymoVq7uiJw/7heWxQd6AxJhqce9M+hgz6bQFAv+EDCSo5M4E
+         3O3IS1/HA7YTWON9wL0Hrk1JXjQcwFTTmr1MWVM22trmaHmwcAjnJAggrO8YweqmMhuQ
+         8UoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Hxzelyowxzq/znWOViDEwvzv2VZkl56IZfeeiGsHQ3c=;
-        b=EE0ykmwU1CAyBvLqT9+Wj10ab7CzbX1/IUSR27HMWf+La3CY0fje1mqnxAY0T44DMu
-         45pBdAxVCDBu+wkUpmFyPtNnuXMA2E5FvSonh4lulwP6FTv3GaIIF6GJ/SVxC646YKJC
-         yVwpdFw5ke5z3I4O1By7r9dDjEh6TWOl+4E5zQfs1RGrCPz1JpUHmsXG8VEbb5LAr8WC
-         +NvPFYhJCsjXcHPi8Qo37eO5q86zzgJfyyD5PRjhL7oinp4/OSp7UTT1NV53NvaDTMrQ
-         AnOdsxHIEs3bqLYJ6PxLVt9F17g5QbrrEkTrP7bwGtPOwn7AHiS5IqtJJjLxpFCFvzdp
-         CxcA==
-X-Gm-Message-State: AHPjjUjR1wn1h2mMq4cJXsg+fODuu+J1V5B0GglDnpFp2wl8yZxTEKei
-        wvZBPYppzfo0dJplzPIdJvRlk6MYu7I=
-X-Google-Smtp-Source: AOwi7QDbKDEOYL3WBoS2HeZMq5u50b2ShS6s8VXtv6AscGoYgRJ2T6synXgtl6i0GTfvdmXWaLrGdQ==
-X-Received: by 10.84.211.144 with SMTP id c16mr18442819pli.233.1507061726450;
-        Tue, 03 Oct 2017 13:15:26 -0700 (PDT)
+        bh=hP1uqKfQ88xiwjwUIu4DLTC1Fcmab537pp1QVZ49NWQ=;
+        b=Slt3DUnEq1rJnMudTmS4KitM0tcOPcUtiIuP658J5KwMYN6i6FmBIFlIG1JyO3ouF5
+         Bog5h/RIA4zlkivvE3xuTbaKuTce8u45QrPnZ0+GSmyTgSG0RpPlm8q+0cPPa5VSD+dX
+         GMbiYN5uF70ruLNEUwiIHlOWjCi7f/2sCRjSnKrbYPcnRQlJIgJq5rJReJHg9hKD4E6C
+         JCh1TRz9gQVe+ETADEGn4gcMHm4Trcn2LfuCivWxkR4ginToqQSrfsjqutVCjI1f6ckx
+         kM8uLmC7559U81sB03iVGwfO+AgUbQoQkHPkqUc8zasf3OByd3qpo4zQLOOxxQfBv+Um
+         +lAw==
+X-Gm-Message-State: AMCzsaWtmVDBbbEcs2VB/w4/LucS9efR5FHjlYLvcfDSY0cRR7qEtHDI
+        LGcx47oa5qYfzJKOjPpfrvP5rixmIFg=
+X-Google-Smtp-Source: AOwi7QDkuW3SdjxI5jCf7iTxbdJCg7iOFvQSu38TMYD7qiwJsRrPwKAumGrmgohW6/mYZhYJcInOeA==
+X-Received: by 10.101.75.2 with SMTP id r2mr5864984pgq.51.1507061731288;
+        Tue, 03 Oct 2017 13:15:31 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id 184sm3846262pfd.88.2017.10.03.13.15.24
+        by smtp.gmail.com with ESMTPSA id 184sm3846262pfd.88.2017.10.03.13.15.29
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 03 Oct 2017 13:15:25 -0700 (PDT)
+        Tue, 03 Oct 2017 13:15:30 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     bturner@atlassian.com, git@jeffhostetler.com, gitster@pobox.com,
         jonathantanmy@google.com, jrnieder@gmail.com, peff@peff.net,
         sbeller@google.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH v3 02/10] pkt-line: add packet_write function
-Date:   Tue,  3 Oct 2017 13:14:59 -0700
-Message-Id: <20171003201507.3589-3-bmwill@google.com>
+Subject: [PATCH v3 05/10] upload-pack, receive-pack: introduce protocol version 1
+Date:   Tue,  3 Oct 2017 13:15:02 -0700
+Message-Id: <20171003201507.3589-6-bmwill@google.com>
 X-Mailer: git-send-email 2.14.2.920.gcf0c67979c-goog
 In-Reply-To: <20171003201507.3589-1-bmwill@google.com>
 References: <20170926235627.79606-1-bmwill@google.com>
@@ -65,46 +65,88 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a function which can be used to write the contents of an arbitrary
-buffer.  This makes it easy to build up data in a buffer before writing
-the packet instead of formatting the entire contents of the packet using
-'packet_write_fmt()'.
+Teach upload-pack and receive-pack to understand and respond using
+protocol version 1, if requested.
+
+Protocol version 1 is simply the original and current protocol (what I'm
+calling version 0) with the addition of a single packet line, which
+precedes the ref advertisement, indicating the protocol version being
+spoken.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- pkt-line.c | 6 ++++++
- pkt-line.h | 1 +
- 2 files changed, 7 insertions(+)
+ builtin/receive-pack.c | 15 +++++++++++++++
+ upload-pack.c          | 18 +++++++++++++++++-
+ 2 files changed, 32 insertions(+), 1 deletion(-)
 
-diff --git a/pkt-line.c b/pkt-line.c
-index 647bbd3bc..c025d0332 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -188,6 +188,12 @@ static int packet_write_gently(const int fd_out, const char *buf, size_t size)
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index dd06b3fb4..94b7d29ea 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -24,6 +24,7 @@
+ #include "tmp-objdir.h"
+ #include "oidset.h"
+ #include "packfile.h"
++#include "protocol.h"
+ 
+ static const char * const receive_pack_usage[] = {
+ 	N_("git receive-pack <git-dir>"),
+@@ -1963,6 +1964,20 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+ 	else if (0 <= receive_unpack_limit)
+ 		unpack_limit = receive_unpack_limit;
+ 
++	switch (determine_protocol_version_server()) {
++	case protocol_v1:
++		if (advertise_refs || !stateless_rpc)
++			packet_write_fmt(1, "version 1\n");
++		/*
++		 * v1 is just the original protocol with a version string,
++		 * so just fall through after writing the version string.
++		 */
++	case protocol_v0:
++		break;
++	default:
++		BUG("unknown protocol version");
++	}
++
+ 	if (advertise_refs || !stateless_rpc) {
+ 		write_head_info();
+ 	}
+diff --git a/upload-pack.c b/upload-pack.c
+index 7efff2fbf..ef438e9c2 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -18,6 +18,7 @@
+ #include "parse-options.h"
+ #include "argv-array.h"
+ #include "prio-queue.h"
++#include "protocol.h"
+ 
+ static const char * const upload_pack_usage[] = {
+ 	N_("git upload-pack [<options>] <dir>"),
+@@ -1067,6 +1068,21 @@ int cmd_main(int argc, const char **argv)
+ 		die("'%s' does not appear to be a git repository", dir);
+ 
+ 	git_config(upload_pack_config, NULL);
+-	upload_pack();
++
++	switch (determine_protocol_version_server()) {
++	case protocol_v1:
++		if (advertise_refs || !stateless_rpc)
++			packet_write_fmt(1, "version 1\n");
++		/*
++		 * v1 is just the original protocol with a version string,
++		 * so just fall through after writing the version string.
++		 */
++	case protocol_v0:
++		upload_pack();
++		break;
++	default:
++		BUG("unknown protocol version");
++	}
++
  	return 0;
  }
- 
-+void packet_write(const int fd_out, const char *buf, size_t size)
-+{
-+	if (packet_write_gently(fd_out, buf, size))
-+		die_errno("packet write failed");
-+}
-+
- void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
- {
- 	va_list args;
-diff --git a/pkt-line.h b/pkt-line.h
-index 66ef610fc..d9e9783b1 100644
---- a/pkt-line.h
-+++ b/pkt-line.h
-@@ -22,6 +22,7 @@
- void packet_flush(int fd);
- void packet_write_fmt(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
- void packet_buf_flush(struct strbuf *buf);
-+void packet_write(const int fd_out, const char *buf, size_t size);
- void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
- int packet_flush_gently(int fd);
- int packet_write_fmt_gently(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
 -- 
 2.14.2.920.gcf0c67979c-goog
 
