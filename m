@@ -2,112 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.3 required=3.0 tests=BAYES_00,DKIM_ADSP_ALL,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	T_DKIM_INVALID shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6CDDA202A5
-	for <e@80x24.org>; Tue,  3 Oct 2017 16:26:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A782E202A5
+	for <e@80x24.org>; Tue,  3 Oct 2017 16:33:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751536AbdJCQ0c (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Oct 2017 12:26:32 -0400
-Received: from mout.web.de ([212.227.15.3]:63528 "EHLO mout.web.de"
+        id S1751691AbdJCQdk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Oct 2017 12:33:40 -0400
+Received: from mail.cvg.de ([193.158.56.148]:49614 "EHLO mail.cvg.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750820AbdJCQ0a (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Oct 2017 12:26:30 -0400
-Received: from macce.local ([195.198.252.176]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lbrk4-1dZxA03XLY-00jHEh; Tue, 03
- Oct 2017 18:26:28 +0200
-Subject: Re: Line ending normalization doesn't work as expected
-To:     Robert Dailey <rcdailey.lists@gmail.com>, Git <git@vger.kernel.org>
-References: <CAHd499B5hM9ixnsnwWwB2uyDT10dRQpN473m5QjxH9raHtFXiw@mail.gmail.com>
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <958c9b03-062c-0bea-3b25-939a36659f32@web.de>
-Date:   Tue, 3 Oct 2017 18:26:28 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:52.0)
- Gecko/20100101 Thunderbird/52.3.0
-MIME-Version: 1.0
-In-Reply-To: <CAHd499B5hM9ixnsnwWwB2uyDT10dRQpN473m5QjxH9raHtFXiw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:tpSGBKYdWB7f/fOF4KpsSProPHAMUI9U4YKY86bsBM4IurHy1WZ
- UxXFWZp6kVp074YyDEEwo1WHdkIzapSX2jyPX+7IZE6/vtMLieQAlyJH2JJ8Z8UlaCKDuKY
- BZQJTELwTmbEHL9f1hf6Y2j+oXe5kxhtIOWGSUnNyExaSiSdt0bGaaRs5YDyTFe6y89K7iu
- ptXTphrueTaT4O+f6JsNw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:hKukepipN+g=:55zffz7VwGym+y3DHnPQmr
- zBuMWiGjcMqn+v2wdLb2H3LnrspO5/om5bvcjio5nh/EWRS9hVOikB+FZJ2FAF9+15vbPk82t
- FQtxqjI5HDgNzG7EtlaKeAOvJN2gT4DVVIN7R8/9o+C/9Us3amsZSzNmFNQpIG6zgBY4GGfnG
- RpeFkJ/q2/juJojclZqFZ2+wSQblCGMCUqeyffEEJopdyfbtqjE1Wotwfey2W9P3erf0Ry47L
- qBd+ULJ7oQYjrvAHTznRftXwGjOSZYLaREWqS8JQm3KRVc+ZTWJgrwqZvc+3VdhlrboTKKoTu
- UtlHnVUemaMRjm0cytuKsJwlTFk9+AJI1F79gcoJtvw726bt+WvGgKlcMvci61Jonik4rBEgN
- B3fyv/TCR8vyNjuS9ADDSXUTTMl0x+GUtHmzjAEgkmX9rbnM9WR/4P6RWto+w7Rf/CuzW4XA8
- TRWkOtxlWYPhbVNCUkTAO+60xH7TUHQ3om7zaR1G+ctKEeNPO++HV0ceP1z8pjX9swzE4A9ae
- vGSIb0pVtnDc1FifmOn1eMKD68omTlwCH4wOTPVeNzpDoMNjMa45z8xtJdfMRGFYbXqpPIVOi
- rpZckTySl3rG4zSDz3vkYP3Fh5EKXSJMQRFcA/rA7T2K4V1PNIUXjixZogULiMYOgpbKwIJsr
- dVCZ9c82xECmXo2//4Ow1bLYiOunk4N4zKW4ii374CsFufXrfSFaTLsrKuZSMlJWNUq+tqnkO
- QS6BQ90Qgx5qNQSLwUfrZXY47qDbIoAZHdpk8zOdF2edyR23ogjT2HNTSDlBVVk83UhY3SKjF
- r4Sf90YtRQAMFJ2qku+OSuismTE/YQCWgdJyU5iSGljSt81Y6U=
+        id S1751208AbdJCQdj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Oct 2017 12:33:39 -0400
+X-Greylist: delayed 556 seconds by postgrey-1.27 at vger.kernel.org; Tue, 03 Oct 2017 12:33:34 EDT
+Received: from mail-mta-0.intern.sigma-chemnitz.de (mail-mta-0.intern.sigma-chemnitz.de [192.168.12.76])
+        by mailout-1.intern.sigma-chemnitz.de (8.14.7/8.14.7) with ESMTP id v93GOCcM014078
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+        for <git@vger.kernel.org>; Tue, 3 Oct 2017 18:24:13 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sigma-chemnitz.de;
+        s=v2012061000; t=1507047853;
+        bh=agv7vfWgGVbo+PfUQPK/E939aiEIrbRoOUFQEer2lm8=;
+        h=From:To:Cc:Subject:Date:Message-Id:Sender;
+        b=CWlajQBSJ5yBp3r7dEHGkxiw9y/7Q1bY76j1u0eG45pefaJBhKIOk1POGftFOXYgm
+         dn96cQpLsc2OGxkDEQj5CQal05sQ6zU5LiqxOppHoEovs5yOzBFJYjiEnw59bWxQAI
+         Hzfav168FsVg2599WLxqiQ8kRzyJ7kBpAT/OGcRs=
+Received: from reddoxx.intern.sigma-chemnitz.de (reddoxx.intern.sigma-chemnitz.de [192.168.0.193])
+        by mail-mta-0.intern.sigma-chemnitz.de (8.14.7/8.14.7) with ESMTP id v93GNx4M012626
+        for <git@vger.kernel.org> from enrico.scholz@sigma-chemnitz.de; Tue, 3 Oct 2017 18:24:00 +0200
+Received: from mail-msa-0.intern.sigma-chemnitz.de ( [192.168.12.77]) by reddoxx.intern.sigma-chemnitz.de
+        (Reddoxx engine) with SMTP id 637ABE88690; Tue, 3 Oct 2017 18:18:28 +0200
+Received: from ensc-virt.intern.sigma-chemnitz.de (ensc-virt.intern.sigma-chemnitz.de [192.168.3.24])
+        by mail-msa-0.intern.sigma-chemnitz.de (8.14.7/8.14.7) with ESMTP id v93GNwdU012623
+        (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256 verify=NO);
+        Tue, 3 Oct 2017 18:23:58 +0200
+Received: from ensc by ensc-virt.intern.sigma-chemnitz.de with local (Exim 4.87)
+        (envelope-from <ensc@sigma-chemnitz.de>)
+        id 1dzPzC-0006cd-AR; Tue, 03 Oct 2017 18:23:58 +0200
+From:   Enrico Scholz <enrico.scholz@sigma-chemnitz.de>
+To:     git@vger.kernel.org
+Cc:     Enrico Scholz <enrico.scholz@sigma-chemnitz.de>
+Subject: [PATCH] emacs: work with remote filesystems
+Date:   Tue,  3 Oct 2017 18:23:48 +0200
+Message-Id: <20171003162348.25376-1-enrico.scholz@sigma-chemnitz.de>
+X-Mailer: git-send-email 2.9.5
+X-DSPAM-Result: Innocent
+X-DSPAM-Probability: 0
+X-DSPAM-Confidence: 0.99
+X-Scanned-By: MIMEDefang 2.81
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2017-10-03 17:00, Robert Dailey wrote:
-> I'm on Windows using Git for Windows v2.13.1. Following github's
-> recommended process for fixing line endings after adding a
-> `.gitattributes` file[1], I run the following:
-> 
-> $ rm .git/index && git reset
-> 
-> Once I run `git status`, I see that no files have changed. Note that I
-> know for a fact in my repository, files were committed using CRLF line
-> endings (the files in question are C# code files, and no
-> .gitattributes was present at the time).
-> 
-> I also tried this:
-> 
-> $ git rm -r --cached . && git reset --hard
-> 
-> However, again `git status` shows no working copy modifications. The
-> one thing that *did* work (and I tried this on accident actually) is:
-> 
-> $ git rm -r --cached . && git add .
-> 
-> This properly showed all files in my index with line ending
-> modifications (I ran `git diff --cached -R` to be sure; the output
-> shows `^M` at the end of each line in the diff in this case). Note
-> that my global git config has `core.autocrlf` set to `false`, but I
-> also tried the top 2 commands above with it set to `true` but it made
-> no difference.
-> 
-> So my question is: Why do the top 2 commands not work, but the third
-> one does? To me this all feels like magic / nondeterministic, so I'm
-> hoping someone here knows what is going on and can explain the logic
-> of it. Also if this is a git config issue, I'm not sure what it could
-> be. Note my `.gitattributes` just has this in it:
+With this patch, it is possible to work on remote filesystems which
+were made accessible by tramp.
 
-The short version is, that the instructions on Github are outdated.
-This is the official procedure (since 2016, Git v2.12 or so)
-But it should work even with older version of Git.
+For example, 'M-x git-status /remote-host:/repository' will show the
+status of /repository on 'remote-host' and usual operations like add
+or commit are supported there.
 
-$ echo "* text=auto" >.gitattributes
-$ git read-tree --empty   # Clean index, force re-scan of working directory
-$ git add .
-$ git status        # Show files that will be normalized
-$ git commit -m "Introduce end-of-line normalization"
+First part of the is patch is trivial and replaces 'call-process' with
+the network transparent 'process-file'.
 
+The second one is more extensive and implements a tramp wrapper for
+'call-process-region'.
 
-Could you open an issue on Github ?
-(Or can someone @github fix this ?)
+Signed-off-by: Enrico Scholz <enrico.scholz@sigma-chemnitz.de>
+---
+ contrib/emacs/git.el | 32 ++++++++++++++++++++++++++------
+ 1 file changed, 26 insertions(+), 6 deletions(-)
 
-> 
-> * text=auto
-> 
-> Thanks in advance.
-> 
-> 
-> [1]: https://help.github.com/articles/dealing-with-line-endings/
-> 
+diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
+index 5ffc506..3d9d691 100644
+--- a/contrib/emacs/git.el
++++ b/contrib/emacs/git.el
+@@ -190,8 +190,8 @@ if there is already one that displays the same directory."
+   (mapcar (lambda (entry) (concat (car entry) "=" (cdr entry))) env))
+ 
+ (defun git-call-process (buffer &rest args)
+-  "Wrapper for call-process that sets environment strings."
+-  (apply #'call-process "git" nil buffer nil args))
++  "Wrapper for process-file that sets environment strings."
++  (apply #'process-file "git" nil buffer nil args))
+ 
+ (defun git-call-process-display-error (&rest args)
+   "Wrapper for call-process that displays error messages."
+@@ -221,14 +221,34 @@ the process output as a string, or nil if the git command failed."
+       (display-message-or-buffer (current-buffer))
+       nil)))
+ 
++(defun git-tramp-call-process-region (start end program
++                                            &optional delete buffer display
++                                            &rest args)
++  "call-process-region variant for tramp"
++  (let ((tmpfile (tramp-compat-make-temp-file "")))
++    (unwind-protect
++        (progn
++          (write-region start end tmpfile)
++          (when delete (delete-region start end))
++          (apply #'process-file program tmpfile buffer display args))
++      (delete-file tmpfile))))
++
+ (defun git-run-process-region (buffer start end program args)
+   "Run a git process with a buffer region as input."
+-  (let ((output-buffer (current-buffer))
+-        (dir default-directory))
++  (let ((dir default-directory)
++        (fh (find-file-name-handler default-directory 'call-process-region))
++        (fnargs (apply 'list start end program
++                       nil (list (current-buffer) t) nil args)))
+     (with-current-buffer buffer
+       (cd dir)
+-      (apply #'call-process-region start end program
+-             nil (list output-buffer t) nil args))))
++      (case fh
++        ;; special handling for tramp
++        (tramp-file-name-handler
++         (apply #'git-tramp-call-process-region fnargs))
++        ;; the default (local-file) handler
++        ((nil) (apply #'call-process-region fnargs))
++        ;; else, when there is a handler, call it
++        (t (apply fh #'call-process-region fnargs))))))
+ 
+ (defun git-run-command-buffer (buffer-name &rest args)
+   "Run a git command, sending the output to a buffer named BUFFER-NAME."
+-- 
+2.9.5
 
