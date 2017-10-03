@@ -2,118 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4FFDA20281
-	for <e@80x24.org>; Tue,  3 Oct 2017 00:45:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 27F0420281
+	for <e@80x24.org>; Tue,  3 Oct 2017 00:48:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751019AbdJCApH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Oct 2017 20:45:07 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62368 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750846AbdJCApG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Oct 2017 20:45:06 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id F0E99A51F7;
-        Mon,  2 Oct 2017 20:45:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ODQyDYAJfCX3ahwuQO3NBV4lwWU=; b=KRkxdR
-        uajoWFfR39dKM3ClLOtF4ftJrAUWjNCdzprm0F2kSpECOwtY22Q9q1zlmtvE+pjO
-        9mZ8Mwluz7CFVahV3t2ew1nRluSSk9OX37dJVUsZGeiemwRx02UNg9i8iBTCbeuf
-        qAzC91dSB6hAIVlDAwGlerEO3fo833jUhPxnA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=assjn+dB54pDkGoY3bpkNZfPZ00BusXm
-        kqUO1wC772s+133BF55lWfWgIG17VUasfTZr2EWQKIcdbo1bnyBwspncYH/yjjGH
-        Q72fL+c0C4I7O+Jv30gVsDyaMXilRrdQKP9FOYqG0wnNAAnZzo2rWLwgtZAnRjJj
-        s7yT91wqdEI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E8C1EA51F5;
-        Mon,  2 Oct 2017 20:45:05 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 484FDA51F4;
-        Mon,  2 Oct 2017 20:45:05 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Jeff Hostetler <git@jeffhostetler.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Philip Oakley <philipoakley@iee.org>,
-        Pavel Kretov <firegurafiku@gmail.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [idea] File history tracking hints
-References: <CAOZF3=Ouvk8ccME+fXr_T=GL1j4Gx3Hgj3ao_-GQng-noeOubg@mail.gmail.com>
-        <E8C827ED458648F78F263F2F2712493B@PhilipOakley>
-        <alpine.DEB.2.21.1.1709131322470.4132@virtualbox>
-        <04DDB36236444FFD8C3668AA7B62B154@PhilipOakley>
-        <alpine.DEB.2.21.1.1709300110350.40514@virtualbox>
-        <5fb263a8-d83b-64a7-812f-fd8e3748feb6@jeffhostetler.com>
-        <xmqqtvzjv987.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kbghnWmvQweup=Z79HnVQQCMM65CKgEO3oqDoRp-Bj=2Q@mail.gmail.com>
-Date:   Tue, 03 Oct 2017 09:45:03 +0900
-In-Reply-To: <CAGZ79kbghnWmvQweup=Z79HnVQQCMM65CKgEO3oqDoRp-Bj=2Q@mail.gmail.com>
-        (Stefan Beller's message of "Mon, 2 Oct 2017 10:41:41 -0700")
-Message-ID: <xmqq3771m54g.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751084AbdJCAsV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Oct 2017 20:48:21 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:56733 "EHLO
+        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750936AbdJCAsU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Oct 2017 20:48:20 -0400
+Received: from [10.0.2.15] ([147.147.86.16])
+        by avasout07 with smtp
+        id GooH1w0030M91Ur01ooJek; Tue, 03 Oct 2017 01:48:19 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=CrLPSjwD c=1 sm=1 tr=0
+ a=dubYQqM3tRRTmV8xSh8cXQ==:117 a=dubYQqM3tRRTmV8xSh8cXQ==:17
+ a=IkcTkHD0fZMA:10 a=ZdlO4LmE-fkoEcewqMkA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH v16 1/6] bisect--helper: use OPT_CMDMODE instead of
+ OPT_BOOL
+To:     Pranit Bauva <pranit.bauva@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+References: <CAFZEwPOjK25m84BgTF7AL72DL_K1dHf7OrYoX=_vky9r3GayNw@mail.gmail.com>
+ <0102015ecc65d695-22151d3b-752b-4c10-a3a3-b8ef52491664-000000@eu-west-1.amazonses.com>
+ <5ca7a863-5b85-23b1-4432-cf74dcc7c4e0@ramsayjones.plus.com>
+ <CAFZEwPN2BeogeVqXp7xh+GPUF6SDJa5JwQ3knZzOD_H6zcEwvQ@mail.gmail.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <72995d24-d337-39c0-0abd-64bce1c22028@ramsayjones.plus.com>
+Date:   Tue, 3 Oct 2017 01:48:17 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 19151E1C-A7D4-11E7-96B9-8EF31968708C-77302942!pb-smtp1.pobox.com
+In-Reply-To: <CAFZEwPN2BeogeVqXp7xh+GPUF6SDJa5JwQ3knZzOD_H6zcEwvQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
 
-> I have rethought about the idea of GUIDs as proposed by Jeff and wanted
-> to give a reply. After rereading this message, I think my thoughts are
-> already included via:
->
->   - you're doing the work at the wrong point for _another_ reason. You're
->      freezing your (crappy) algorithm at tree creation time, and basically
->      making it pointless to ever create something better later, because even
->      if hardware and software improves, you've codified that "we have to
->      have crappy information".
->
-> --
-> My design proposal for these "rename hints" would be a special trailer,
-> roughly:
->
->     Rename: LICENSE -> legal.txt
->     Rename: t/* -> tests/*
->
-> or more generally:
->
->     Rename: <pathspec> <delim> <pathspec>
 
-Yes, it is a non starter to have that baked in the log message of a
-commit object.  The principle Linus lays out in the message does not
-reject such hints stored outside baked-in data structure, which
-allows mistakes to be corrected without affecting the real history,
-though.
+On 02/10/17 14:44, Pranit Bauva wrote:
+[snip]
+>> Look for []-ed comments in the commit messages for a note of
+>> the changes I made to your original patches, in patches #2,
+>> #4, #7-9, #11-12 and #14.
+>>
+>> The commits I added, which are just WIP, are as follows:
+>>
+>>   $ git log --oneline bisect~12..bisect
+>>   7d7117040 (raj/bisect, bisect) bisect--helper: convert to struct object_id
+>>   188ea5855 bisect--helper: add the get_bad_commit() function
+>>   b75f46fb4 bisect--helper: add a log_commit() helper function
+>>   4afc34403 bisect--helper: reduce the scope of a variable
+>>   62495f6ae bisect--helper: remove useless sub-expression in condition
+>>   964f4e2b0 bisect--helper: set correct term from --term-new= option
+>>   62efc099f bisect--helper: remove redundant assignment to has_double_dash
+>>   d35950b92 bisect--helper: remove redundant goto's
+>>   b33f313ac bisect--helper: remove space just before \n in string
+>>   3eb407156 bisect--helper: remove some unnecessary braces
+>>   c2b89c9b8 bisect--helper: add some vertical whitespace
+>>   8c883701c bisect--helper: fix up some coding style issues
+>>   $
+>>
+>> Again IIRC, there are a couple of bug fixes in these commits ...
+> 
+> There is actually a major bug in the later part of previous series
+> mostly in the bisect-next which actually caused delays. I think you
+> have fixed it in your commit 682d0bff0. Although I would need to have
+> a closer look at it. In original series, I did get a sigserv, and as
+> you mention it in the commit that you have fixed it.
 
-Another thing that makes what you wrote above of dubious value is
-that it attaches such hints to "a commit" (whether baked inside the
-log message, or as some form of "notes" that can be associated with
-a specific commit); it adds hints at a wrong place.
+Yes, I also meant to tidy that up by removing some, now
+redundant, initialisation later in that function.
 
-Given identical pair of trees <X,Y> that are wrapped in two pairs of
-commits <A> and <B> where A^{tree}=B^{tree} and A^^{tree}=B^^{tree},
-we do not want to have to give duplicated hints for A and B, to help
-"git show A" and "git show B" to behave the same.
+Note, that wasn't the only bug! (I have probably forgotten
+some of them, but look at 964f4e2b0, for example).
 
-Rather, if we said "these two blobs A and B are similar and we want
-diffcore-rename to pair them, no matter where they appear in any two
-trees", then "git diff -M X Y", where X and Y may not have any
-ancestry relationship (they may not even be commits) can be told
-that the blob A that is in tree X and the blob B that is in tree Y
-are renames or copies, no matter where in these trees the pair of
-blobs appear, and no matter how X and Y are related (or unrelated)
-in the history.
+ATB,
+Ramsay Jones
 
-That is a bigger reason why annotating a commit may be a bad way to
-go.
