@@ -2,93 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5BB4D20281
-	for <e@80x24.org>; Tue,  3 Oct 2017 06:15:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA21020281
+	for <e@80x24.org>; Tue,  3 Oct 2017 06:20:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751117AbdJCGPf (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Oct 2017 02:15:35 -0400
-Received: from mail-it0-f47.google.com ([209.85.214.47]:55095 "EHLO
-        mail-it0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750830AbdJCGPe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Oct 2017 02:15:34 -0400
-Received: by mail-it0-f47.google.com with SMTP id e134so10061547ite.3
-        for <git@vger.kernel.org>; Mon, 02 Oct 2017 23:15:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=drKcMUzKcaH6+WK7GR5Ap31KrIm//4t8bQ7IMETCafA=;
-        b=gRDtrliaJ9GsR7jzBfeXrC2nB1FO2lIcxJdczu/Ns5OEAFNMsdTLMF4Ff2wYY4ai5w
-         mFj94g+M4QWazKHDRm7t9ZsGv3UBFN9NBz8MRv79bYDnf9StAqIgZ7INbs8dZjpSHiFm
-         5W3dkMl7ztE65Ojx0MzJGAJcu4xkkuqO88xxkeM7ZwtpjTgyyEy5fv2jSCphJ+MfWuNo
-         972P6uyOzE7TEaoSyNCnJpAEgoSkQ53GkPoHUNB0r9JIHKS4rlMouQgsyyYIoq9euKcg
-         RD2X2qQ+U8hyg8TiCaAG7G+v4zhDwCr3rMgAl6dQ6pcGb/I2UDyf8YvHEKmFWPu2Hk7V
-         Qaug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=drKcMUzKcaH6+WK7GR5Ap31KrIm//4t8bQ7IMETCafA=;
-        b=Ro9ljI9oZM8qjhQDzj5TUK+UtzSFU4BxABweda4gMIlb7HxD9n9SCE5/GDPpygnCwI
-         yADfYFNuZopXBTwRoozsQcMb2p9TOoHNaPlrd1jKBgrccxI5jXxcssMnya1JnJsZOdGs
-         FWynHuBM+F+3IT/rVLJPYBYmNJoXI4a98HghfRSkqYSUNBtFCvvKnMaE9tEQiCK0aKpI
-         cIMVBgb0GMvtDwVK/0DrfdGK8MIG68Np6OQJaoz7VTEXE0fL3KK4sQcHoMK1pQ6IiHj3
-         wSprfIXXN37DO0wAYXga1LX9iIkkZgTEvhGsVtWZ1Z8qaoRL58diaAOJ3FCdXRcO9L9X
-         VbiQ==
-X-Gm-Message-State: AMCzsaVwkqyUDUgws6sYcTagPxf6o8/4i7o5E8OgPs6PYhxnVpul2Jk+
-        WuIJ1IziHtn5pCSgI1lQ+QbdNFvusHsRDcNUuvs=
-X-Google-Smtp-Source: AOwi7QC72W1PUUz+b2VhMktSicojPqsTZGGsU4S/PQCf07VJXqUOtwJDDmqs7dhinTQ7rXaFCcc0cuiaunNT/DDoMes=
-X-Received: by 10.36.11.197 with SMTP id 188mr21089749itd.42.1507011334178;
- Mon, 02 Oct 2017 23:15:34 -0700 (PDT)
+        id S1750812AbdJCGUv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Oct 2017 02:20:51 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60905 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750720AbdJCGUu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Oct 2017 02:20:50 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1807FB66DC;
+        Tue,  3 Oct 2017 02:20:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=iQ4ItHaGDKaA
+        ziyOeUIAAWen+fw=; b=jqg64IDo+jvS2nSEiI+CnSft89ECwCsoojxaNqsl/Mh+
+        cdwpSmyYcfT/vAf+fdrcpAtUxgnByfbgh6coc9Kvu3OeMC8/AOp3LszT3GHngzhK
+        MIij6yo6xF1cjLEp+ln2dtv3dMbzyQ1IFgzfrm/Y5+Y3a5O9b8+l8Np9Nnx/DgU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=kl1nOy
+        FIUbghK2YRTybI4x12PgARPnp61rZ8iXVOEtxZjnUG34SgJu+TMKPEfpZ1+konyj
+        2SlNXNkIQ7mgWvC8DSUOOTpWoW/pi82wh7NUIplM6qPM0WeuG8xwZEPxYTjs1ufo
+        9L//ICWEIRjEXW0ByNaHoPVsQUdqlDSzi1qG0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0D5ECB66DB;
+        Tue,  3 Oct 2017 02:20:45 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 74315B66DA;
+        Tue,  3 Oct 2017 02:20:44 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] builtin/: add UNLEAKs
+References: <20171001174208.1693753-1-martin.agren@gmail.com>
+        <20171002062528.naa5hrqoao5sifs3@sigill.intra.peff.net>
+        <CAN0heSoson-KkbgVnRPdTmRL2MMDU1+L6XdOHhi6xcZS5rwQcQ@mail.gmail.com>
+Date:   Tue, 03 Oct 2017 15:20:43 +0900
+In-Reply-To: <CAN0heSoson-KkbgVnRPdTmRL2MMDU1+L6XdOHhi6xcZS5rwQcQ@mail.gmail.com>
+        ("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Mon, 2 Oct 2017 12:20:56
+ +0200")
+Message-ID: <xmqq3770kb0k.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.79.142.216 with HTTP; Mon, 2 Oct 2017 23:15:33 -0700 (PDT)
-In-Reply-To: <cover.1506714999.git.jonathantanmy@google.com>
-References: <cover.1506714999.git.jonathantanmy@google.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Tue, 3 Oct 2017 08:15:33 +0200
-Message-ID: <CAP8UFD1WiceKDX9s0hszXXKy+TOxAOvHZyr002HMYkkgbFgD7w@mail.gmail.com>
-Subject: Re: [PATCH 00/18] Partial clone (from clone to lazy fetch in 18 patches)
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Ben Peart <peartben@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: FCED9244-A802-11E7-9F8A-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 29, 2017 at 10:11 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
-> These patches are also available online:
-> https://github.com/jonathantanmy/git/commits/partialclone3
->
-> (I've announced it in another e-mail, but am now sending the patches to the
-> mailing list too.)
->
-> Here's an update of my work so far. Notable features:
->  - These 18 patches allow a user to clone with --blob-max-bytes=<bytes>,
->    creating a partial clone that is automatically configured to lazily
->    fetch missing objects from the origin. The local repo also has fsck
->    working offline, and GC working (albeit only on locally created
->    objects).
->  - Cloning and fetching is currently only able to exclude blobs by a
->    size threshold, but the local repository is already capable of
->    fetching missing objects of any type. For example, if a repository
->    with missing trees or commits is generated by any tool (for example,
->    a future version of Git), current Git with my patches will still be
->    able to operate on them, automatically fetching those missing trees
->    and commits when needed.
->  - Missing blobs are fetched all at once during checkout.
+Martin =C3=85gren <martin.agren@gmail.com> writes:
 
-Could you give a bit more details about the use cases this is designed for?
-It seems that when people review my work they want a lot of details
-about the use cases, so I guess they would also be interesting in
-getting this kind of information for your work too.
+>> Seeing hunks like this makes me happy with the UNLEAK() solution. It
+>> would have been a real pain to do this via actual freeing.
+>
+> Yes, I was very happy to have it handy. :-)
 
-Could this support users who would be interested in lazily cloning
-only one kind of files, for example *.jpeg?
+OK, let's merge this to 'next', then.
