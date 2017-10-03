@@ -2,122 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D4AD620281
-	for <e@80x24.org>; Tue,  3 Oct 2017 03:14:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 959A620281
+	for <e@80x24.org>; Tue,  3 Oct 2017 03:37:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751484AbdJCDOG (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Oct 2017 23:14:06 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62088 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751132AbdJCDOE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Oct 2017 23:14:04 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DFCF7A6FBE;
-        Mon,  2 Oct 2017 23:14:03 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=k7S2EFm1tmNDxcnNBIw/IKwup94=; b=IzTUyt
-        Dw/of5+9hN3ynbAILCGnYUjuqeybFpAOp1uh2Gs2kNuV1YScRC1X1mh17iEtI/4I
-        7LsxGBNlOfLoLn/4kSJQQMJ1EGpbUo4pBe+mw4ZZmOOKNI1Et4FamNHodj9wK44t
-        dov1P+EL9I/xPfFC3q3zEmp9XNwo5Q1qfdQ44=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=HHCXA8/13I6uCeVBErkyxUQ1mVXDMCOA
-        pytCUdI5cfyQpL2d2jybfRn1XGtFaJIiBxAoeSc2oLDEzE3Tm7yWs2hdE/HuwryG
-        W6WMj3AobmjMMZQlXBFYM65Zuvr4nh2tebZH7ed99KwQphG8DvDfU3+lUwk4V6eh
-        5dq+S22obG4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D8271A6FBD;
-        Mon,  2 Oct 2017 23:14:03 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E6A26A6FBA;
-        Mon,  2 Oct 2017 23:14:02 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Toni Uebernickel <tuebernickel@gmail.com>, git@vger.kernel.org,
-        Tsvi Mostovicz <ttmost@gmail.com>, Jeff King <peff@peff.net>
-Subject: Re: Updated to v2.14.2 on macOS; git add --patch broken
-References: <86D0A377-8AFD-460D-A90E-6327C6934DFC@gmail.com>
-        <20171002230017.GT19555@aiede.mtv.corp.google.com>
-        <xmqqpoa5kp0c.fsf@gitster.mtv.corp.google.com>
-        <xmqqinfxklw7.fsf@gitster.mtv.corp.google.com>
-Date:   Tue, 03 Oct 2017 12:14:00 +0900
-In-Reply-To: <xmqqinfxklw7.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Tue, 03 Oct 2017 11:25:44 +0900")
-Message-ID: <xmqqefqkly87.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751075AbdJCDhb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Oct 2017 23:37:31 -0400
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:54430 "EHLO
+        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750846AbdJCDha (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Oct 2017 23:37:30 -0400
+Received: by mail-pf0-f176.google.com with SMTP id d187so3915753pfg.11
+        for <git@vger.kernel.org>; Mon, 02 Oct 2017 20:37:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=jQeKXO/hK+E/mc0TwY0P6/uoar7YE60TpzcS1E2PErA=;
+        b=iAX5bs+n6yaTfGrXTRNYR7pkdsBTKyX7s+/9NQ+Lo/750jAk1kV49dryajK3CONkoO
+         ZwYZhr5l8Db3BXIjv1qDXWXq9FHVccoueYnYx+fCv/xu0NyWQIHcDpqjSe0kR4IeRW9f
+         1gdD7ShIWMrE9FkXmCJr4btjzjBYTT3ycKHdW15bdszegPFV2qdh1ys5tjfHQexNCHlU
+         IxREiTuw2DH9YK6ahuyb8PE3/d5cRFBH0+I87QF7/87vhKLkhyZydM+2Q3/2HFGqN14d
+         0Fdq6clwbW6Vze2ynKMvjVdjZUzx/7vvu/1gYw6HOd/k+LRxYFu2B+ppcOkc6S/OFmPb
+         u8zw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=jQeKXO/hK+E/mc0TwY0P6/uoar7YE60TpzcS1E2PErA=;
+        b=a0jRHmVk1pDPgwsse6SHk+MgVtBHjfGtsW9qpk9ND5Yz32+9LMXB8cISGqerlSolQU
+         S+ZojrZF5dq9v2Y91YBrNh3Oi6wN+W+WQ0sARF7deZP0PU6n8mtBmC4f6xt3WknQug5/
+         rKNKQTvEQWVudzDmgg5+w+nxnWpSC3L3iPzNFy7U1CG0YqMh2sQW5AWnJarjsf7cYCIq
+         KxWB2itN/ceNPtTrosmBddRW2Sxc07Fy4NQkCIVPTVaZQqGlI7TRwLOgR/H7eOgwl9Jo
+         vayswkPKypopTcQtjPuGr7HwUifC6P+sbDGAaNB82DXgOi5mb9HaDUVzko/qgR9HQYu5
+         IGlw==
+X-Gm-Message-State: AMCzsaVjUthFi1q0T36nGbylgGaKaOdGoqVugtMOremF/gIhnA6QZOl3
+        NmdswWifeHbz7Uwp6ooTvGksTg==
+X-Google-Smtp-Source: AOwi7QDaZgneQ0/iPadeDL0IyfqjVLhHWJhiVU80G2knXd66oiOxFnZ6Otdc4xuHE1Z/0gOiGEZ+sg==
+X-Received: by 10.159.242.196 with SMTP id x4mr4290458plw.68.1507001849824;
+        Mon, 02 Oct 2017 20:37:29 -0700 (PDT)
+Received: from localhost ([205.175.97.239])
+        by smtp.gmail.com with ESMTPSA id 138sm5372419pfa.66.2017.10.02.20.37.27
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 02 Oct 2017 20:37:28 -0700 (PDT)
+Date:   Mon, 2 Oct 2017 20:37:26 -0700
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+        peff@peff.net
+Subject: Re: [PATCH v2] ref-filter.c: pass empty-string as NULL to atom
+ parsers
+Message-ID: <20171003033726.GA84817@D-10-157-251-166.dhcp4.washington.edu>
+References: <20171002055052.GB10729@D-10-157-251-166.dhcp4.washington.edu>
+ <20171002161034.44867-1-me@ttaylorr.com>
+ <20171002224052.GR19555@aiede.mtv.corp.google.com>
+ <xmqqmv59m7fu.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E84C3792-A7E8-11E7-AD1C-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqmv59m7fu.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.8.3 (2017-05-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> In any case, I think the first step may be to revert 136c8c8b from
-> both 'master' and 2.14.x.  These alternative solutions can come on
-> top.
+On Tue, Oct 03, 2017 at 08:55:01AM +0900, Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 >
-> Thoughts?
+> > The above does a nice job of explaining
+> >
+> >  - what this change is going to do
+> >  - how it's good for the internal code structure / maintainability
+> >
+> > What it doesn't tell me about is why the user-facing effect won't
+> > cause problems.  Is there no atom where %(atom:) was previously
+> > accepted and did something meaningful that this may break?
+>
+> That is, was there any situation where %(atom) and %(atom:) did two
+> differnt things and their differences made sense?
+>
+> > Looking at the manpage and code, I don't see any, so for what it's
+> > worth, this is
+> >
+> > Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+> >
+> > but for next time, please remember to discuss regression risk in
+> > the commit message, too.
+>
+> Yes, I agree that it is necessary to make sure somebody looked at
+> the issue _and_ record the fact that it happened.  Thanks for doing
+> that already ;-)
+>
+> I also took a look at the code and currently we seem to abort,
+> either with "unrecognised arg" (e.g. "refname:") or "does not take
+> args" (e.g. "body"), so we should be OK, I'd think.
 
-With the attached patch, after reverting 136c8c8b ("color: check
-color.ui in git_default_config()", 2017-07-13) from the tip of
-'master', all tests seem to pass.  More importantly,
+Thank you both for the helpful pointers. I will make sure to include a
+more thorough review of potential breakage in existing code given a
+particular change.
 
-    git -c color.ui=always diff-files -p >not-a-tty
+With respect to this particular patch, I agree with Jonathan and Junio
+that there are no places in ref-filter.c that would be affected by this
+change, and that it should be able to be applied cleanly without
+breakage.
 
-will not get colors on its output file, because it does not pay
-attention to color.ui configuration.
-
-Note that I haven't _decided_ that reverting is the best way to move
-forward (yet).  I am just giving a datapoint for people to use when
-they assess how painful each possible avenues proposed are.
-
- builtin/for-each-ref.c | 3 ++-
- builtin/tag.c          | 2 +-
- 2 files changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 5d7c921a77..238eb00e09 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -5,6 +5,7 @@
- #include "object.h"
- #include "parse-options.h"
- #include "ref-filter.h"
-+#include "color.h"
- 
- static char const * const for_each_ref_usage[] = {
- 	N_("git for-each-ref [<options>] [<pattern>]"),
-@@ -54,7 +55,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
- 
- 	format.format = "%(objectname) %(objecttype)\t%(refname)";
- 
--	git_config(git_default_config, NULL);
-+	git_config(git_color_default_config, NULL);
- 
- 	parse_options(argc, argv, prefix, opts, for_each_ref_usage, 0);
- 	if (maxcount < 0) {
-diff --git a/builtin/tag.c b/builtin/tag.c
-index c627794181..f8bc1393ed 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -158,7 +158,7 @@ static int git_tag_config(const char *var, const char *value, void *cb)
- 
- 	if (starts_with(var, "column."))
- 		return git_column_config(var, value, "tag", &colopts);
--	return git_default_config(var, value, cb);
-+	return git_color_default_config(var, value, cb);
- }
- 
- static void write_tag_body(int fd, const struct object_id *oid)
-
-
+--
+- Taylor
