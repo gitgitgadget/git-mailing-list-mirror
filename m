@@ -2,123 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BF7B820281
-	for <e@80x24.org>; Tue,  3 Oct 2017 01:08:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A11AB20281
+	for <e@80x24.org>; Tue,  3 Oct 2017 01:12:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751727AbdJCBIT (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Oct 2017 21:08:19 -0400
-Received: from avasout07.plus.net ([84.93.230.235]:59952 "EHLO
-        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751072AbdJCBIQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Oct 2017 21:08:16 -0400
-Received: from [10.0.2.15] ([147.147.86.16])
-        by avasout07 with smtp
-        id Gp8D1w0070M91Ur01p8FEg; Tue, 03 Oct 2017 02:08:15 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=CrLPSjwD c=1 sm=1 tr=0
- a=dubYQqM3tRRTmV8xSh8cXQ==:117 a=dubYQqM3tRRTmV8xSh8cXQ==:17
- a=IkcTkHD0fZMA:10 a=VVlED5B4AAAA:8 a=ybZZDoGAAAAA:8 a=b1iREBDN41TqYnP0x0kA:9
- a=QEXdDO2ut3YA:10 a=0RhZnL1DYvcuLYC8JZ5M:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH v3] clang-format: add a comment about the meaning/status
- of the
-To:     Brandon Williams <bmwill@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-        Stephan Beyer <s-beyer@gmx.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <20170929224505.GN19555@aiede.mtv.corp.google.com>
- <20171001154425.5568-1-s-beyer@gmx.net>
- <xmqqpoa6tp79.fsf_-_@gitster.mtv.corp.google.com>
- <20171002172135.GB5189@google.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <57ab6f76-e150-26ab-3671-b14e0247a553@ramsayjones.plus.com>
-Date:   Tue, 3 Oct 2017 02:08:13 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        id S1751090AbdJCBMV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Oct 2017 21:12:21 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53150 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750984AbdJCBMU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Oct 2017 21:12:20 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CCAF2B3455;
+        Mon,  2 Oct 2017 21:12:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=qSUVH0xuXAcVqSmVDClKVifHeUk=; b=i60wkY
+        7hwmRtZynMle1zAjpD++ITBBcdhVnGt1JodbYcAsLpYit/gyURldLjdS2PLWkKAs
+        thc7JcI6NNdp1EaKH5uh2UGA27E6u06wGypI6QfWQcDDHYbm6btNmko6binq6S1h
+        pTR05ZpPE6iEVb2XAQw1eqWcZPFdQYrXWEHlo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=jAtgjn6jJbedo9yaAGZmTGdm/323xOmX
+        yHXOEHUPJNo2XBx0qEHLv4/ftAORANCMiTaBTtndEJl5fNzxWZgZweJ0NpZekVDN
+        0pu80lldysCQVK3t8VgpQGNiOj3WP28gu/n4LzfYw0Zog4EJK5pjcasDD81s3SkG
+        KKWracZYios=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C3FB2B3454;
+        Mon,  2 Oct 2017 21:12:19 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 36F61B3453;
+        Mon,  2 Oct 2017 21:12:19 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org, Loic Guelorget <loic@google.com>,
+        Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
+        Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: Security of .git/config and .git/hooks
+References: <20171002234517.GV19555@aiede.mtv.corp.google.com>
+Date:   Tue, 03 Oct 2017 10:12:18 +0900
+In-Reply-To: <20171002234517.GV19555@aiede.mtv.corp.google.com> (Jonathan
+        Nieder's message of "Mon, 2 Oct 2017 16:45:17 -0700")
+Message-ID: <xmqqtvzhkpal.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20171002172135.GB5189@google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: E6F9C474-A7D7-11E7-8DBA-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
+> Proposed fix: because of case (1), I would like a way to tell Git to
+> stop trusting any files in .git.  That is:
+>
+>  1. Introduce a (configurable) list of "safe" configuration items that
+>     can be set in .git/config and don't respect any others.
 
-On 02/10/17 18:21, Brandon Williams wrote:
-> On 10/02, Junio C Hamano wrote:
->> From: Stephan Beyer <s-beyer@gmx.net>
->>
->> Having a .clang-format file in a project can be understood in a way that
->> code has to be in the style defined by the .clang-format file, i.e., you
->> just have to run clang-format over all code and you are set.
->>
->> This unfortunately is not yet the case in the Git project, as the
->> format file is still work in progress.  Explain it with a comment in
->> the beginning of the file.
->>
->> Additionally, the working clang-format version is mentioned because the
->> config directives change from time to time (in a compatibility-breaking way).
->>
->> Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->> ---
->>
->>  * So here is a counter-proposal in a patch form.  I agree that my
->>    earlier suggestion was unnecessarily verbose; this one spends
->>    just as many lines and not more than the v2 round of Stephan's
->>    patch.
->>
->>  .clang-format | 6 +++++-
->>  1 file changed, 5 insertions(+), 1 deletion(-)
->>
->> diff --git a/.clang-format b/.clang-format
->> index 56822c116b..7670eec8df 100644
->> --- a/.clang-format
->> +++ b/.clang-format
->> @@ -1,4 +1,8 @@
->> -# Defaults
->> +# This file is an example configuration for clang-format 5.0.
->> +#
->> +# Note that this style definition should only be understood as a hint
->> +# for writing new code. The rules are still work-in-progress and does
->> +# not yet exactly match the style we have in the existing code.
-> 
-> Thanks for writing up this header comment to the .clang-format file,
-> it's something I definitely should have included when I introduced it.
-> 
-> And I like the wording that you've both settled on, as it reflects our
-> intentions (of having the code eventually conform to the format rules)
-> and making note that this set of rules still needs to be tuned.
+The list of "safe" things are configurable by having something in
+~/.gitconfig, perhaps?
 
-Just for the record, I have 'clang-format version 3.8.0-2ubuntu4
- (tags/RELEASE_380/final)' on Linux Mint 18.2, which requires me
-to comment out:
+How would this work, from the end-user's point of view, with "git
+config --global" and "git config --local"?
 
-    AlignEscapedNewlines: Left
-    BreakStringLiterals: false
-    PenaltyBreakAssignment: 100
+>  2. But what if I want to set a different pager per-repository?
+>     I think we could do this using configuration "profiles".
+>     My ~/.config/git/profiles/ directory would contain git-style
+>     config files for repositories to include.  Repositories could
+>     then contain
+>
+> 	[include]
+> 		path = ~/.config/git/profiles/fancy-log-pager
+>
+>     to make use of those settings.  The facility (1) would
+>     special-case this directory to allow it to set "unsafe" settings
+>     since files there are assumed not to be under the control of an
+>     attacker.
 
-And on cygwin, I have 'clang-format version 4.0.1
- (tags/RELEASE_401/final)', which requires me to
-comment out:
+Meaning, "include" is not in "safe" category, but a value that
+begins with "~/.config/git/" are excempt???
 
-    AlignEscapedNewlines: Left
-    PenaltyBreakAssignment: 100
+>  3. Likewise for hooks: my ~/.config/git/hooks/ directory would
+>     contain hooks for repositories to make use of.  Repositories could
+>     symlink to hook files from there to make use of them.
 
-So, I don't think I can play along! :(
+I am not sure what this means.  .git/hooks/pre-commit being a
+symbolic link to "~/.config/git/hooks/pre-commit-fancy"
+(i.e. readlink gives the path with tilde unexpanded), so that the
+attacked sysadmin will not run it from ~attacker/.config/git/hooks?  
 
-[When playing with 3.8 on Linux, I noted that clang-format
-seemed to ignore *all* settings in .clang-format, if it found
-*any* config that it didn't know about! Not very friendly. :-P ]
+And the code that finds a hook to run sees .git/hooks/pre-commit,
+resolves the symlink manually and makes sure it leads to somewhere
+inside ~/.config/...  (otherwise it rejects) and then uses the
+pointed-at copy?
 
-ATB,
-Ramsay Jones
+At that point, we are not taking any advantage of symbolic-link-ness
+of the entity, so .git/hooks/pre-commit being a text file that has a
+single like, e.g.
 
+	# safe-hook: pre-commit-fancy
+
+may be sufficient (and we do not have to worry about systems without
+symbolic links)?  The machinery that used to manually resolved symlink
+instead reads it, finds "pre-commit-fancy" in ~/.config/git/hooks/
+and runs it, and you get the same behaviour, no?
+
+> One downside of (3) is its reliance on symlinks.  Some alternatives:
+>
+>  3b. Use core.hooksPath configuration instead.  Rely on (2).
+>  3c. Introduce new hook.* configuration to be used instead of hook
+>      scripts.  Rely on (2).
+
+I guess I invented 3d. without reading ahead X-<.  None of the 3x
+variants other than 3 proper will not work for scripts and existing
+code that sees that .git/hooks/pre-commit is an executable and runs
+it, and 3 proper will not work without symbolic links, so this means
+we'd need "git locate-hook pre-commit" (and underlying locate_hook()
+helper API) that returns "/home/me/.git/config/hook/pre-commit-fancy"
+or fails when we do this transition.  In an unconverted repository,
+it may return $PWD/.git/hooks/pre-commit, or failure if we are
+running under the paranoid mode.
+
+Sounds workable.
