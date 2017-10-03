@@ -2,121 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2690C20365
-	for <e@80x24.org>; Tue,  3 Oct 2017 10:59:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E61020365
+	for <e@80x24.org>; Tue,  3 Oct 2017 11:00:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751571AbdJCK7j (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Oct 2017 06:59:39 -0400
-Received: from a7-18.smtp-out.eu-west-1.amazonses.com ([54.240.7.18]:45746
-        "EHLO a7-18.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751121AbdJCK7j (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 3 Oct 2017 06:59:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1507028377;
-        h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=Z0vFvaUODKgoFwbh4D37grkP192nxqgYFR/vJoiWqpY=;
-        b=CyHvuf8BHlfeou3VzJGH/EyJTDGgL3NiFeSZbnN617BbjNkh41QaOS3lW8iUNeNM
-        62mnZel5E1Hrpk6rKLZ4zBQ7Fe7Mkhfv3Il5JqkMlo0BnIi0CxKuhNhaNemqCi7PpSe
-        hI+Iu376dRSDnIoDqH2S94BvlZp/xwOioIcSewgE=
-From:   Damien <damien@dam.io>
-To:     git@vger.kernel.org
-Message-ID: <0102015ee1e41f17-927a8da1-ac14-4399-8424-fee8a82c2b0a-000000@eu-west-1.amazonses.com>
-Subject: [PATCH] run-command.c: add hint when hook is not executable
+        id S1751484AbdJCLAA (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Oct 2017 07:00:00 -0400
+Received: from mail-io0-f173.google.com ([209.85.223.173]:48438 "EHLO
+        mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751548AbdJCK77 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Oct 2017 06:59:59 -0400
+Received: by mail-io0-f173.google.com with SMTP id f72so781066ioj.5
+        for <git@vger.kernel.org>; Tue, 03 Oct 2017 03:59:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=3Idqp/zQiuojKV9gQmMhn2biahSCg2Uz6d+m4hafG6E=;
+        b=c3Q6Ed1/XMeXRX4m7PMMeOqGClVV5dERvBdmQoMNB0hvQzot2V3UIGE5laRvAqkhRB
+         5bagfeIZbiBWIden53Qd8hAMi0NZAkLGYPMXynkEFq7J9DuAXXeR/i2wQoRjf412Ouvy
+         XCeS9a+23nG7oPSaKHilV+CkTi0dFMe5w27B6l4PrdOBoapq1o6xTm0UvliS/0lOeWQr
+         zDQSELdb2iGD71WbRUb8GeG/vGY7RhH17uC/OERjQabkgGbuD5Qw8GJggcQCRkHUEE0t
+         Nf6GqySjJ9Vpy0ZhEJFw5nKZkW3txOQXXI7/GnTOu1sr0L5s+58LshTGS87rgKmGPcN6
+         DlCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=3Idqp/zQiuojKV9gQmMhn2biahSCg2Uz6d+m4hafG6E=;
+        b=fEtb+orvDZHUG/RPQPkMhD2umbHIu5TtO/LpKq7Tsxw01NJy2ih+a9YJA9ADzEhzs1
+         WaN557eqHmkTvn+dVMBiXqRR40wNRL2LYL4lOMylJ2W5olDEjG3y5js7n97tx7PAEAkm
+         MkNZHsBD7CfxsCj3QgCBHkLablwH1roSmiSGZnqiD5sbo8ARMorZlup4IwFZV+6AwS5d
+         UDgtuQxjChSPJ4QXLAOd5ezxJlZaJ+HRb4ieZK9Lfj3OR0MTWwecuLvnkE9wzDM8cKct
+         98N4fqMuJHneYd0G/fzst/r6LQiQ6Y/rZLn5e15yeC7r1/zt6eZiY1FZ4FocWtkxD2Lz
+         FqmA==
+X-Gm-Message-State: AMCzsaX859avM7vnjR5fwuyiNnKY7vanVNHnbCXnskqv+Gf2FLaCR5PX
+        9gOfIQuRllbNRhWVtS2/UCedclMez95FUICqyxc=
+X-Google-Smtp-Source: AOwi7QCA+c5Q3Y574eLBi5O7d+GP2kCcIRDBWKkG4vIX9bC7bpO8qjP+QOsHJhkSMoUGnsgaD38q8GY7Ibrlz/EBvlM=
+X-Received: by 10.107.137.96 with SMTP id l93mr27584838iod.138.1507028399179;
+ Tue, 03 Oct 2017 03:59:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 3 Oct 2017 10:59:37 +0000
-X-SES-Outgoing: 2017.10.03-54.240.7.18
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+Received: by 10.79.142.216 with HTTP; Tue, 3 Oct 2017 03:59:58 -0700 (PDT)
+In-Reply-To: <20171002234517.GV19555@aiede.mtv.corp.google.com>
+References: <20171002234517.GV19555@aiede.mtv.corp.google.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 3 Oct 2017 12:59:58 +0200
+Message-ID: <CAP8UFD3FJBns+dnJz94SN6htboDt1aKi5FZCLQMGc39+yORH0A@mail.gmail.com>
+Subject: Re: Security of .git/config and .git/hooks
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git <git@vger.kernel.org>, Loic Guelorget <loic@google.com>,
+        Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
+        Sitaram Chamarty <sitaramc@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
----
- Documentation/config.txt               | 2 ++
- advice.c                               | 2 ++
- advice.h                               | 1 +
- contrib/completion/git-completion.bash | 1 +
- run-command.c                          | 4 ++++
- 5 files changed, 10 insertions(+)
+Hi,
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 1ac0ae6adb046..83b1884cf22fc 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -351,6 +351,8 @@ advice.*::
- 	addEmbeddedRepo::
- 		Advice on what to do when you've accidentally added one
- 		git repo inside of another.
-+	hookNotExecutable::
-+		Shown when an hook is there but not executable.
- --
- 
- core.fileMode::
-diff --git a/advice.c b/advice.c
-index d81e1cb7425b0..969ba149daeec 100644
---- a/advice.c
-+++ b/advice.c
-@@ -17,6 +17,7 @@ int advice_set_upstream_failure = 1;
- int advice_object_name_warning = 1;
- int advice_rm_hints = 1;
- int advice_add_embedded_repo = 1;
-+int advice_hook_not_executable = 1;
- 
- static struct {
- 	const char *name;
-@@ -38,6 +39,7 @@ static struct {
- 	{ "objectnamewarning", &advice_object_name_warning },
- 	{ "rmhints", &advice_rm_hints },
- 	{ "addembeddedrepo", &advice_add_embedded_repo },
-+	{ "hooknotexecutable", &advice_hook_not_executable},
- 
- 	/* make this an alias for backward compatibility */
- 	{ "pushnonfastforward", &advice_push_update_rejected }
-diff --git a/advice.h b/advice.h
-index c84a44531c7d8..061492976b362 100644
---- a/advice.h
-+++ b/advice.h
-@@ -19,6 +19,7 @@ extern int advice_set_upstream_failure;
- extern int advice_object_name_warning;
- extern int advice_rm_hints;
- extern int advice_add_embedded_repo;
-+extern int advice_hook_not_executable;
- 
- int git_default_advice_config(const char *var, const char *value);
- __attribute__((format (printf, 1, 2)))
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index d93441747523a..6324db0c44f17 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2350,6 +2350,7 @@ _git_config ()
- 		advice.rmHints
- 		advice.statusHints
- 		advice.statusUoption
-+		advice.hookNotExecutable
- 		alias.
- 		am.keepcr
- 		am.threeWay
-diff --git a/run-command.c b/run-command.c
-index b5e6eb37c0eb3..95d93a23bf87e 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -1174,6 +1174,10 @@ const char *find_hook(const char *name)
- 		if (access(path.buf, X_OK) >= 0)
- 			return path.buf;
- #endif
-+		if (advice_hook_not_executable) {
-+			advise(_("The '%s' hook was ignored because it's not set as executable."
-+				"\nYou can disable this warning with `git config advice.hookNotExecutable false`"), name);
-+		}
- 		return NULL;
- 	}
- 	return path.buf;
+On Tue, Oct 3, 2017 at 1:45 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
 
---
-https://github.com/git/git/pull/411
+> Proposed fix: because of case (1), I would like a way to tell Git to
+> stop trusting any files in .git.  That is:
+>
+>  1. Introduce a (configurable) list of "safe" configuration items that
+>     can be set in .git/config and don't respect any others.
+
+Maybe we can already add a --list-security or --check-security or
+--unsafe to `git config` to list the unsafe options and their values
+as well as the active hooks, so that admins/users can already easily
+take a quick look at the config before they start playing with a
+potentially unsafe repo.
