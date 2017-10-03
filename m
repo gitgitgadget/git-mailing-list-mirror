@@ -7,62 +7,62 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D2C522036B
-	for <e@80x24.org>; Tue,  3 Oct 2017 22:45:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B56A32036B
+	for <e@80x24.org>; Tue,  3 Oct 2017 22:53:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751190AbdJCWpF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Oct 2017 18:45:05 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:37425 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750865AbdJCWpE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Oct 2017 18:45:04 -0400
-Received: by mail-pf0-f194.google.com with SMTP id e69so10501667pfg.4
-        for <git@vger.kernel.org>; Tue, 03 Oct 2017 15:45:04 -0700 (PDT)
+        id S1751255AbdJCWxU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Oct 2017 18:53:20 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:34565 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750865AbdJCWxT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Oct 2017 18:53:19 -0400
+Received: by mail-pg0-f66.google.com with SMTP id u27so11181073pgn.1
+        for <git@vger.kernel.org>; Tue, 03 Oct 2017 15:53:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=S4fTqs5uItpNpsH9e8G37tV0gSK1DUFTv6pMjzDx4B0=;
-        b=fX0Gft7l7V8VwJuCjNHYPmnVbdaSYe6VnxIcOLDBk2C71a5/WELiSo/qREgAuKRs2J
-         IPpGSAtyZnNZ/bpHfbs/m9UJ3YCC2ocWj6OvGM1b263pqLpNP9aJFQuLTKTr+RzmJMX/
-         BWrQYzl7NNlxDtBDx01HeI44nzmsCkklaB4LEuTNJ5To9Pw8n1GOUt2fuJchRKs/pp50
-         6LoknTzas1VpAVyHcg2M3wW4+g8P+pZIfFiyyCHlvY0C5lV5BRiiMrf3L92j4BUTpSlw
-         42MNmO+7cNUtEPM+zQdVu76EVl2IGSuXlxL/aiYhO5tw4hma/m4mWDdtwaNl5wkgY3Sa
-         Gq/Q==
+        bh=nshmywg+uJmL+Eu9hD5czttHk+QNJZjShAlfjqPS2/c=;
+        b=hS9y4iJUs9zm2aic8xfkQg6aSkS6KbYkVcmwUtJ614SlI+uakKIVa5gxnTGSCb9Dh1
+         zD481UTVZU0ftZadhN/fBxAUudu748ThagTEeUlqCXUIiFoGbvFX4y9Jb+wj/op7ediF
+         /cqQRJO9Nz/A7uW9R5pwn7PYzMQib5VmJy5dFaUEEGo7hWOfrTkok1+OK7qPvd1cMP+g
+         LHxFrWRHW1qZEf4WPVMiL+MOhLGxAoRwN7ucJJYJriX5+HFGq6vNHdnb58FpX7XIL2np
+         AvX80dxl3bXw+AajeV0kQ/cCwfbZR3kPSoqLQtT+ZQSKSbcbXMXLRZ1GLvR801cKi5pA
+         Krew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=S4fTqs5uItpNpsH9e8G37tV0gSK1DUFTv6pMjzDx4B0=;
-        b=W/ukn5ATQGFRHqt5Fu7Yaky41LIJDQpASRxxF0S26HTkdepW7BwF0mwLKCinmlnjYR
-         kseekjANxpyFHUpvbPXB821Gp2hqkQdMnwuLV6G4BdkLTXodbqTD5Uvy5U+21RR/Wy0q
-         EzLGMusp/nfquygSPPnPQD7JCyK+yDoQ+fIcd9WjKBrAocnQydxoVRyOtu+UOu7eEl/v
-         GuUwbPwkGh/9itAeck61Ovjkk/vvqpa8klpXXvkknk8fK+KplgT/VvIF9ygCuKyWL9jE
-         HWSTAa31ItqTFXKHCknVEiPv8lJlwc4TKyi/f3ELNAa4yEfcUobNaF0jXh0GOGIeTw8D
-         aC7g==
-X-Gm-Message-State: AMCzsaUG7kAeXOGNNR1ftCKNJ1jOJl8nrTGLAnBJbvBil9GTjYAimTYk
-        +ebw7TBGU1u0SFte/w60swI=
-X-Google-Smtp-Source: AOwi7QDPNm7W0cuobhmNaZfCetGdn90cu2o3nBoeLheREjWJSy/T8GLx0rN0WNEi6QYAKwPvSRXY1Q==
-X-Received: by 10.84.245.137 with SMTP id j9mr11314766pll.423.1507070704216;
-        Tue, 03 Oct 2017 15:45:04 -0700 (PDT)
+        bh=nshmywg+uJmL+Eu9hD5czttHk+QNJZjShAlfjqPS2/c=;
+        b=SUgfzzCz1bdA6JwlIk5CEk33gOQkNcVcAP3WMUCPqB7vAX13Sbjr4lRmvJdm7AhazW
+         nnPbQUXjU1/PIcs0GP6blWq+/czKjDTqB8YpTYs2LH3Np+qXA3DnByGvt7q/FfBCbJGh
+         CA+beqzZeRAkQmh0GyeQZI2ESFhM4f6B82/OkWz/Itid+jB3Iiq+foygHu1Jaa4x0Lcj
+         PJNKobHxjB0JiTOUeei7MYzSeyRl6Gt+MBdAaMpzNG27cs2BeCUhIVFKpMcdZtqTYaCX
+         a1VPvajzVnUJiQYKVwLrwagYOAMpFmS9uuG5Mr5ACF1oWzoQOJd+4aXrf9MWabDqaeqc
+         S2ew==
+X-Gm-Message-State: AHPjjUi6cpPc69xSRGVPXM9Pd+wW6v0Z+COoubMr8sL9TCMOu8ooh0ib
+        7jMdpK9vwzZM2H4qASguouUuOViF
+X-Google-Smtp-Source: AOwi7QCUAh2LLonY5xx1lb5+7k8w4SxxKF9HdTNn0+qnmZvuYqdzuzgYlkNloMqygPV+hYaPty90ew==
+X-Received: by 10.98.102.82 with SMTP id a79mr19033298pfc.109.1507071199066;
+        Tue, 03 Oct 2017 15:53:19 -0700 (PDT)
 Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:3463:ab6b:5863:927c])
-        by smtp.gmail.com with ESMTPSA id k67sm19690474pga.46.2017.10.03.15.45.03
+        by smtp.gmail.com with ESMTPSA id w12sm23976199pfk.83.2017.10.03.15.53.18
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 03 Oct 2017 15:45:03 -0700 (PDT)
-Date:   Tue, 3 Oct 2017 15:45:01 -0700
+        Tue, 03 Oct 2017 15:53:18 -0700 (PDT)
+Date:   Tue, 3 Oct 2017 15:53:15 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] path.c: fix uninitialized memory access
-Message-ID: <20171003224501.GD19555@aiede.mtv.corp.google.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.ath.cx>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/3] http-push: fix construction of hex value from path
+Message-ID: <20171003225315.GE19555@aiede.mtv.corp.google.com>
 References: <20171003195713.13395-1-t.gummerer@gmail.com>
- <20171003195713.13395-2-t.gummerer@gmail.com>
+ <20171003195713.13395-3-t.gummerer@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20171003195713.13395-2-t.gummerer@gmail.com>
+In-Reply-To: <20171003195713.13395-3-t.gummerer@gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -73,45 +73,59 @@ Hi,
 
 Thomas Gummerer wrote:
 
-> In cleanup_path we're passing in a char array, run a memcmp on it, and
-> run through it without ever checking if something is in the array in the
-> first place.  This can lead us to access uninitialized memory, for
-> example in t5541-http-push-smart.sh test 7, when run under valgrind:
+> The get_oid_hex_from_objpath takes care of creating a oid from a
+> pathname.  It does this by memcpy'ing the first two bytes of the path to
+> the "hex" string, then skipping the '/', and then copying the rest of the
+> path to the "hex" string.  Currently it fails to increase the pointer to
+> the hex string, so the second memcpy invocation just mashes over what
+> was copied in the first one, and leaves the last two bytes in the string
+> uninitialized.
+
+Wow.  The fix is obviously correct.
+
+> This breaks valgrind in t5540, although the test passes without
+> valgrind:
 [...]
-> Avoid this by checking passing in the length of the string in the char
-> array, and checking that we never run over it.
->
 > Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 > ---
->  path.c | 19 ++++++++++---------
->  1 file changed, 10 insertions(+), 9 deletions(-)
+>  http-push.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-When I first read the above, I thought it was going to be about a
-NUL-terminated string that was missing a NUL.  But in fact, the issue
-is that strlen(path) can be < 2.
+Would it be straightforward to add a correctness test for this?  It
+seems like this code path didn't work at all and no one noticed.
 
-In other words, an alternative fix would be
+This is the code path in http-push.c which says
 
-	if (*path == '.' && path[1] == '/') {
-		...
-	}
+ /*
+  * NEEDSWORK: remote_ls() ignores info/refs on the remote side.  But it
+  * should _only_ heed the information from that file, instead of trying to
+  * determine the refs from the remote file system (badly: it does not even
+  * know about packed-refs).
+  */
+ static void remote_ls(const char *path, int flags,
 
-which would not require passing in 'len' or switching to index-based
-arithmetic.  I think I prefer it.  What do you think?
+I think the problem is that when it fails, we end up thinking that
+there are *fewer* objects than are actually present remotely so the
+only ill effect is pushing too much.  So this should be observable in
+server logs (i.e. it is testable) but it's not a catastrophic failure
+which means it's harder to test than it would be otherwise.
 
-Thanks and hope that helps,
+Moreover, this is in the webdav-based "dumb http" push code path,
+which I do not trust much at all.  I wonder if we could retire it
+completely (or at least provide an option to turn it off).
+
+> diff --git a/http-push.c b/http-push.c
+> index e4c9b065ce..e9a01ec4da 100644
+> --- a/http-push.c
+> +++ b/http-push.c
+> @@ -1018,7 +1018,7 @@ static int get_oid_hex_from_objpath(const char *path, struct object_id *oid)
+>  	memcpy(hex, path, 2);
+>  	path += 2;
+>  	path++; /* skip '/' */
+> -	memcpy(hex, path, GIT_SHA1_HEXSZ - 2);
+> +	memcpy(hex + 2, path, GIT_SHA1_HEXSZ - 2);
+>  
+>  	return get_oid_hex(hex, oid);
+
+Thanks,
 Jonathan
-
-diff --git i/path.c w/path.c
-index b533ec938d..3a1fbee1e0 100644
---- i/path.c
-+++ w/path.c
-@@ -37,7 +37,7 @@ static struct strbuf *get_pathname(void)
- static char *cleanup_path(char *path)
- {
- 	/* Clean it up */
--	if (!memcmp(path, "./", 2)) {
-+	if (*path == '.' && path[1] == '/') {
- 		path += 2;
- 		while (*path == '/')
- 			path++;
