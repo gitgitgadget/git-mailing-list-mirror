@@ -2,89 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A30420281
-	for <e@80x24.org>; Tue,  3 Oct 2017 00:52:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF7B820281
+	for <e@80x24.org>; Tue,  3 Oct 2017 01:08:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751247AbdJCAwY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Oct 2017 20:52:24 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57997 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750869AbdJCAwX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Oct 2017 20:52:23 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A00FAB3035;
-        Mon,  2 Oct 2017 20:52:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=NJPsotqqobRxCdDbTBIkr6kwgDg=; b=MSs7B1
-        9MDTxNXMRQRCLK/SpE0fPmwfaykC/iiCAe/2IPs+eBho4m6Z3NseCJXegrAlj0du
-        EOKJGJPePSgd1DF51qk+tphBZW7VahVFmtU6G4X8UC2cOV2YNNimdkGnavL/aMYw
-        UmDgvSnLk9YrNgXumzsVt7YKxJ1abWsU8hJQw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=nzJqziKHMC3VjqsFJKZJXKroDqibSUuO
-        nKxQXzkazUGzBiJciXbenY5V+nkmEcjtyVJWpuhSBKo99Z7RSaytOj9r+Z2eVuiT
-        n3ecZ1gwCbahOtUekacfB09VPpyfTRCh3twWSsZr9E9mCMULUVqYt/cSNprUKzUe
-        TcIvjvIOn2U=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 97B82B3034;
-        Mon,  2 Oct 2017 20:52:22 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 001A8B3033;
-        Mon,  2 Oct 2017 20:52:21 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Philip Oakley <philipoakley@iee.org>,
-        Pavel Kretov <firegurafiku@gmail.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [idea] File history tracking hints
-References: <CAOZF3=Ouvk8ccME+fXr_T=GL1j4Gx3Hgj3ao_-GQng-noeOubg@mail.gmail.com>
-        <E8C827ED458648F78F263F2F2712493B@PhilipOakley>
-        <alpine.DEB.2.21.1.1709131322470.4132@virtualbox>
-        <04DDB36236444FFD8C3668AA7B62B154@PhilipOakley>
-        <alpine.DEB.2.21.1.1709300110350.40514@virtualbox>
-        <5fb263a8-d83b-64a7-812f-fd8e3748feb6@jeffhostetler.com>
-        <xmqqtvzjv987.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kbghnWmvQweup=Z79HnVQQCMM65CKgEO3oqDoRp-Bj=2Q@mail.gmail.com>
-        <ea1538e3-2b2e-f7eb-9c0e-e29c15bf2ea9@jeffhostetler.com>
-        <CAGZ79kbjfXC3CxMDouUrCUVt-OJXckDtg9U_7=R=FM-eon4ikA@mail.gmail.com>
-        <f9b722d9-cd37-40f3-7ae4-6f7f3d90de83@jeffhostetler.com>
-Date:   Tue, 03 Oct 2017 09:52:20 +0900
-In-Reply-To: <f9b722d9-cd37-40f3-7ae4-6f7f3d90de83@jeffhostetler.com> (Jeff
-        Hostetler's message of "Mon, 2 Oct 2017 16:02:09 -0400")
-Message-ID: <xmqqy3otkq7v.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751727AbdJCBIT (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Oct 2017 21:08:19 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:59952 "EHLO
+        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751072AbdJCBIQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Oct 2017 21:08:16 -0400
+Received: from [10.0.2.15] ([147.147.86.16])
+        by avasout07 with smtp
+        id Gp8D1w0070M91Ur01p8FEg; Tue, 03 Oct 2017 02:08:15 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=CrLPSjwD c=1 sm=1 tr=0
+ a=dubYQqM3tRRTmV8xSh8cXQ==:117 a=dubYQqM3tRRTmV8xSh8cXQ==:17
+ a=IkcTkHD0fZMA:10 a=VVlED5B4AAAA:8 a=ybZZDoGAAAAA:8 a=b1iREBDN41TqYnP0x0kA:9
+ a=QEXdDO2ut3YA:10 a=0RhZnL1DYvcuLYC8JZ5M:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH v3] clang-format: add a comment about the meaning/status
+ of the
+To:     Brandon Williams <bmwill@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+        Stephan Beyer <s-beyer@gmx.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <20170929224505.GN19555@aiede.mtv.corp.google.com>
+ <20171001154425.5568-1-s-beyer@gmx.net>
+ <xmqqpoa6tp79.fsf_-_@gitster.mtv.corp.google.com>
+ <20171002172135.GB5189@google.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <57ab6f76-e150-26ab-3671-b14e0247a553@ramsayjones.plus.com>
+Date:   Tue, 3 Oct 2017 02:08:13 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1D608E06-A7D5-11E7-87D1-575F0C78B957-77302942!pb-smtp2.pobox.com
+In-Reply-To: <20171002172135.GB5189@google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff Hostetler <git@jeffhostetler.com> writes:
 
->> How do you know when a guid needs adaption?
->
-> I'm not sure I know what you mean by "adaption".
 
-I think he meant adapting, and I think he is referring to what I
-wrote in the message upthread to explain why "file ID" would not
-help.
+On 02/10/17 18:21, Brandon Williams wrote:
+> On 10/02, Junio C Hamano wrote:
+>> From: Stephan Beyer <s-beyer@gmx.net>
+>>
+>> Having a .clang-format file in a project can be understood in a way that
+>> code has to be in the style defined by the .clang-format file, i.e., you
+>> just have to run clang-format over all code and you are set.
+>>
+>> This unfortunately is not yet the case in the Git project, as the
+>> format file is still work in progress.  Explain it with a comment in
+>> the beginning of the file.
+>>
+>> Additionally, the working clang-format version is mentioned because the
+>> config directives change from time to time (in a compatibility-breaking way).
+>>
+>> Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>> ---
+>>
+>>  * So here is a counter-proposal in a patch form.  I agree that my
+>>    earlier suggestion was unnecessarily verbose; this one spends
+>>    just as many lines and not more than the v2 round of Stephan's
+>>    patch.
+>>
+>>  .clang-format | 6 +++++-
+>>  1 file changed, 5 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/.clang-format b/.clang-format
+>> index 56822c116b..7670eec8df 100644
+>> --- a/.clang-format
+>> +++ b/.clang-format
+>> @@ -1,4 +1,8 @@
+>> -# Defaults
+>> +# This file is an example configuration for clang-format 5.0.
+>> +#
+>> +# Note that this style definition should only be understood as a hint
+>> +# for writing new code. The rules are still work-in-progress and does
+>> +# not yet exactly match the style we have in the existing code.
+> 
+> Thanks for writing up this header comment to the .clang-format file,
+> it's something I definitely should have included when I introduced it.
+> 
+> And I like the wording that you've both settled on, as it reflects our
+> intentions (of having the code eventually conform to the format rules)
+> and making note that this set of rules still needs to be tuned.
 
-It seems to me, from reading the remainder of your message, that it
-is also becoming clear to you that "file ID" would not help and your
-conceptual thing was merely a hand-waving that was dubious how it
-could be made into a concrete working design?  Hopefully we can
-converge on a workable design that does not involve "file ID", and
-that would be a good outcome.
+Just for the record, I have 'clang-format version 3.8.0-2ubuntu4
+ (tags/RELEASE_380/final)' on Linux Mint 18.2, which requires me
+to comment out:
 
+    AlignEscapedNewlines: Left
+    BreakStringLiterals: false
+    PenaltyBreakAssignment: 100
+
+And on cygwin, I have 'clang-format version 4.0.1
+ (tags/RELEASE_401/final)', which requires me to
+comment out:
+
+    AlignEscapedNewlines: Left
+    PenaltyBreakAssignment: 100
+
+So, I don't think I can play along! :(
+
+[When playing with 3.8 on Linux, I noted that clang-format
+seemed to ignore *all* settings in .clang-format, if it found
+*any* config that it didn't know about! Not very friendly. :-P ]
+
+ATB,
+Ramsay Jones
 
