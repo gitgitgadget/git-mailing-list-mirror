@@ -2,139 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 757302036B
-	for <e@80x24.org>; Wed,  4 Oct 2017 02:40:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 961B32036B
+	for <e@80x24.org>; Wed,  4 Oct 2017 03:00:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751072AbdJDCj6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Oct 2017 22:39:58 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:38604 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750787AbdJDCj5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Oct 2017 22:39:57 -0400
-Received: by mail-pg0-f68.google.com with SMTP id y192so11791305pgd.5
-        for <git@vger.kernel.org>; Tue, 03 Oct 2017 19:39:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=P6s50Qy4FY8/bYyHCJixmAvQF6rJFm/2mXiwc0hre9U=;
-        b=S5FoKCiIZVtYaFdpq+yKx1ZNur6sq4e5TxG6WsW9pJ4kLbwIu0TdvNAPyDG4A9Ku14
-         LAfeqTqFpTxkmoIzY7DvX46AW/dIYYuDfGhWRJpPMjRLUbfW+7a1qe/fYsRpg+oCaQGz
-         Uw6/T4WDUpEzZ4RiJkbiQ3V+RXJc01T66LOl+V3yT/QVEa9o2AdbmXTK/CMQG28QDcps
-         OCxaupJAFtJuuLz3vVWIJCw9JKE6+s5GSBgK8wGDir3pAj9LI75qiyo1lhrq+pVl1DwL
-         iYql14UMm/OPB66urqdEuu3yr4ANrtx7OOsh1hqpjRsMlAnff2B5DJY0cK8CO+fAy2fs
-         /nwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=P6s50Qy4FY8/bYyHCJixmAvQF6rJFm/2mXiwc0hre9U=;
-        b=iLZ512eFeLXNUzMXyrzP5B0Ict6cQmwrYUBHVko/lbXN7kjBYnHrkzfGF+4xTaIeaV
-         5kOcUOZGQ8pdW1pJfrIIbkqwtj0DcLkyXnOqAOAhELpFzzBIONNY+AE3dzZuSWoMJ8oh
-         YtI2tzWTGdNI92JQE2OBALJPX6jzmxaxVvJPfI9kwNiK3iXnYqDCXnw/aw2hZNxGWzVH
-         1QsbrrN2PwcnugC1IaflufsrRKw5ZjaU3tAD9lpeVTDtu/cOyheLkfIBe3hPynhfWMKh
-         ISTz/7ftjhFRq54Ivl1J4pf3SlG+pTKeYJ0TiDaMwFkBYu9mCzjyEnyyUr8DEB0b7Nfw
-         Emgw==
-X-Gm-Message-State: AMCzsaXu5Eo2YhkFXWgQMKCxNzlLMwrhdF/2Js1CN8APxPO1b2J026yf
-        O+bo/VUPqEGA5AwYMyHWYJ8=
-X-Google-Smtp-Source: AOwi7QBWJ5k28TIRAvnXqIvqP+HWJ4CmFjF48RuilJ913PCwAsoB1LkU308YgZkQVh50B1eD8M8E0w==
-X-Received: by 10.101.77.74 with SMTP id j10mr11020458pgt.324.1507084796557;
-        Tue, 03 Oct 2017 19:39:56 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:e14c:b8fa:a887:14e1])
-        by smtp.gmail.com with ESMTPSA id n76sm15133962pfk.96.2017.10.03.19.39.55
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 03 Oct 2017 19:39:56 -0700 (PDT)
-Date:   Tue, 3 Oct 2017 19:39:54 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
+        id S1751132AbdJDDAB (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Oct 2017 23:00:01 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57984 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750797AbdJDDAA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Oct 2017 23:00:00 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7826E94159;
+        Tue,  3 Oct 2017 22:59:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=WZmIFU3IyaDjY6ZmfFVBy2feAuM=; b=iBWzeT
+        Ae4C6cym2GMczf4isE4P6dc1Jco9rfUWRR5YBxo0ao/AplcagfFLAJ4mEs7FEZqH
+        vXeWJhnaRAf0h/wYWnxGB7ldj4+ttGWjyd73UQfHI4OL89uY/6gR2D/c95x7eH72
+        txJLMGXJdbL6jyFsgPeACDww5XZ3ZMqz3Cj4E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=v+VFBj3zM0Xtf7CbYSq3iFD2jStv6WK7
+        RJJTWrZu1RYgLfmOd2nzNsqWK4Sl7xR38jYAETs44qJ/zAasZ5AtUxT94nBs2UPv
+        LhHUyMC145pLEA9MBUDAMwF2p55ExfsOxooImLPxn/AK77Lc/zHhHETD+XIsxc7Y
+        4Vmz5f80cnQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6F43794158;
+        Tue,  3 Oct 2017 22:59:59 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D032094157;
+        Tue,  3 Oct 2017 22:59:58 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2] strbuf doc: reuse after strbuf_release is fine
-Message-ID: <20171004023954.GK19555@aiede.mtv.corp.google.com>
-References: <20171003214646.GZ19555@aiede.mtv.corp.google.com>
- <20171003221740.26325-1-sbeller@google.com>
- <20171003222414.GC19555@aiede.mtv.corp.google.com>
- <20171003234919.qsr54ncmw6cihowi@sigill.intra.peff.net>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Toni Uebernickel <tuebernickel@gmail.com>, git@vger.kernel.org,
+        Tsvi Mostovicz <ttmost@gmail.com>
+Subject: Re: Updated to v2.14.2 on macOS; git add --patch broken
+References: <xmqqpoa5kp0c.fsf@gitster.mtv.corp.google.com>
+        <xmqqinfxklw7.fsf@gitster.mtv.corp.google.com>
+        <20171003061515.72l35fpvcf63vsf6@sigill.intra.peff.net>
+        <xmqqinfwiu5n.fsf@gitster.mtv.corp.google.com>
+        <20171003071622.el6zqibfyrjc2mra@sigill.intra.peff.net>
+        <xmqqefqkiq8v.fsf@gitster.mtv.corp.google.com>
+        <20171003084506.lwmnrym4oyf66icz@sigill.intra.peff.net>
+        <xmqq4lrgip7u.fsf@gitster.mtv.corp.google.com>
+        <20171003091049.jb46pyi3obtwkzsa@sigill.intra.peff.net>
+        <xmqqpoa4h5y7.fsf@gitster.mtv.corp.google.com>
+        <20171003133713.ccxv6clrmuuhhc3u@sigill.intra.peff.net>
+Date:   Wed, 04 Oct 2017 11:59:57 +0900
+In-Reply-To: <20171003133713.ccxv6clrmuuhhc3u@sigill.intra.peff.net> (Jeff
+        King's message of "Tue, 3 Oct 2017 09:37:13 -0400")
+Message-ID: <xmqqr2ujfwia.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171003234919.qsr54ncmw6cihowi@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1B975FBA-A8B0-11E7-8313-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-strbuf_release leaves the strbuf in a valid, initialized state, so
-there is no need to call strbuf_init after it.
+Jeff King <peff@peff.net> writes:
 
-Moreover, this is not likely to change in the future: strbuf_release
-leaving the strbuf in a valid state has been easy to maintain and has
-been very helpful for Git's robustness and simplicity (e.g.,
-preventing use-after-free vulnerabilities).
-
-Document the semantics so the next generation of Git developers can
-become familiar with them without reading the implementation.  It is
-still not advisable to call strbuf_release too often because it is
-wasteful, so add a note pointing to strbuf_reset for that.
-
-The same semantics apply to strbuf_detach.  Add a similar note to its
-docstring to make that clear.
-
-Improved-by: Jeff King <peff@peff.net>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Jeff King wrote:
-
-> I think it's actually OK to use the string buffer after this function.
-> It's just an empty string.
+> Here's what I came up with on the "color.ui=always is nonsense that we
+> should not offer" front. The number of patches may be a little daunting,
+> but most of them are just removing cases of "git -c color.ui=always"
+> from the tests.
 >
-> Perhaps we should be more explicit: this releases any resources and
-> resets to a pristine, empty state. I suspect strbuf_detach() probably
-> should make the same claim.
+>   [01/12]: test-terminal: set TERM=vt100
+>   [02/12]: t4015: prefer --color to -c color.diff=always
+>   [03/12]: t4015: use --color with --color-moved
+>   [04/12]: t3701: use test-terminal to collect color output
+>   [05/12]: t7508: use test_terminal for color output
+>   [06/12]: t7502: use diff.noprefix for --verbose test
+>   [07/12]: t6006: drop "always" color config tests
+>   [08/12]: t3203: drop "always" color test
+>   [09/12]: t7301: use test_terminal to check color
+>   [10/12]: t3205: use --color instead of color.branch=always
+>   [11/12]: provide --color option for all ref-filter users
+>   [12/12]: color: make "always" the same as "auto" in config
 
-Like this?
+I'm shuffling these so that everything except 03/12 and 09/12 goes
+on top of jk/ref-filter-colors (to be merged later for v2.14.x) to
+create jk/ui-color-always-to-auto-maint branch.
 
-Thanks,
-Jonathan
+Another branch jk/ui-color-always-to-auto would fork from 'master'
+and have 03/12 and 09/12 (with a tweak to use vt100 explicitly, as
+we lack 01/12 at that point) applied, and then merge the above one.
+And then queuing another one that drops "env TERM=vt100" tweak added
+to 09/12 would bring us to the same state as applying your 12 patches
+directly on top.  That will cook in 'next' down to 'master' to make
+sure we do not regress in 2.15.
 
- strbuf.h | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
-
-diff --git a/strbuf.h b/strbuf.h
-index 7496cb8ec5..249df86711 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -82,8 +82,12 @@ extern char strbuf_slopbuf[];
- extern void strbuf_init(struct strbuf *, size_t);
- 
- /**
-- * Release a string buffer and the memory it used. You should not use the
-- * string buffer after using this function, unless you initialize it again.
-+ * Release a string buffer and the memory it used. After this call, the
-+ * strbuf points to an empty string that does not need to be free()ed, as
-+ * if it had been set to `STRBUF_INIT` and never modified.
-+ *
-+ * To clear a strbuf in preparation for further use without the overhead
-+ * of free()ing and malloc()ing again, use strbuf_reset() instead.
-  */
- extern void strbuf_release(struct strbuf *);
- 
-@@ -91,6 +95,9 @@ extern void strbuf_release(struct strbuf *);
-  * Detach the string from the strbuf and returns it; you now own the
-  * storage the string occupies and it is your responsibility from then on
-  * to release it with `free(3)` when you are done with it.
-+ *
-+ * The strbuf that previously held the string is reset to `STRBUF_INIT` so
-+ * it can be reused after calling this function.
-  */
- extern char *strbuf_detach(struct strbuf *, size_t *);
- 
--- 
-2.14.2.920.gcf0c67979c
-
+Thanks.
