@@ -7,153 +7,90 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6559620365
-	for <e@80x24.org>; Wed,  4 Oct 2017 13:40:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B7D120365
+	for <e@80x24.org>; Wed,  4 Oct 2017 14:18:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752314AbdJDNkS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Oct 2017 09:40:18 -0400
-Received: from mail-qk0-f194.google.com ([209.85.220.194]:37333 "EHLO
-        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752288AbdJDNkR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Oct 2017 09:40:17 -0400
-Received: by mail-qk0-f194.google.com with SMTP id a12so5342292qka.4
-        for <git@vger.kernel.org>; Wed, 04 Oct 2017 06:40:17 -0700 (PDT)
+        id S1752386AbdJDOSu (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Oct 2017 10:18:50 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:35989 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752351AbdJDOSs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Oct 2017 10:18:48 -0400
+Received: by mail-pg0-f66.google.com with SMTP id i195so4987580pgd.3
+        for <git@vger.kernel.org>; Wed, 04 Oct 2017 07:18:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=AF8neOkWpNHxeg9pDgxUKnIoItYSGA3DHCcxnB7U4ME=;
-        b=ZOBBTDHs3tgcC9l/O87jfYL+r4I69r8TdZSzmlqQSNqQV2WEfWLDildFK7UhLhoVgx
-         TIBsgvlISMfKlI5dgZXkVXYAUZ3utah5sCUXWV4kNFZbVh9luF7A7lmGlc3GxYmCWytX
-         7N995hfXKArTzHiIcq+td7mf8ZpeCanE/8qdf7HyL9j/3OZ+sKKnxsr39oysD1JUkMt0
-         IYW0zRS8RKr2fKzndDI4RnNO2wy1miC8/eYaSqsmzJ6BzssJRn2KjbbqUaAbSnClHWe3
-         5MtZZH/hor59TYyqzoujsaLxRCzmExiD9pDUC4NbeZTuu4Wq4y5Cy76vNobkQsu6z/lO
-         XO2Q==
+        h=from:message-id:subject:to:cc:in-reply-to:references:date
+         :mime-version:content-transfer-encoding;
+        bh=VIl6k55APe7juxATOY43HGZnOVLDXpcQcjMvR3t1Nlk=;
+        b=eH/Ra7iZg1Mw4aXGF30uHRgwaiQnUJOd2vzRskuy/AwceaYfpcWe6d4qwi4eB3IrwZ
+         tgjqEkRV2HgkvII+yvWjfZe0aCBroD/HN/sa3cgihU4K7E/+Kpaaw5i4iEUiGeSi77DN
+         1J090enxswBSBL2ln+DNc7lIdy9uSvEBBMBVy6K0fvRLMiobh846L9JUErCvZdmS0LNe
+         xvD+5No/TU/pRR5aqiO0pJwuCsKvlV+koQ5cDCPXoNfeBe9VSSMwRF78RjBUYm9z5xRF
+         dhmTxldhtY3lm4eet+Q98Tclql2deEQomWQs7QPw5A5PqrmM3JGR327MTnOgJJ5OzZF9
+         te4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=AF8neOkWpNHxeg9pDgxUKnIoItYSGA3DHCcxnB7U4ME=;
-        b=jZSqcqncDukb10OJMDKokdAv5JgKJnnMJTx0qUnP4+9oPWnTi0ve0TvrcY55QypHgt
-         mTvF3aTi8Aq7uK1i1v3zBLcTXgbllLKOMUPTBpQ8VOBtUBEicIwWBYkpnDKJZwQ++JnN
-         X7Iu22RVn4HVtdECymZwvIfxm9mBIlnmOuLVEJR6JPVw1xuAq+A2NqA4PfZA2lJ0qtyA
-         kC17Qni8RjJHobJIvL+lgmwUWQxyxL76AfGmVlf0VkyKdlKnMX/oIBU9ZTTllhkTA7NB
-         GWkwq10mdOCL3a2M7eYW93hHHMgj34btyAKsE+WxEnmdEimfhKlayHm0D3PhiG9iQmbS
-         NZBQ==
-X-Gm-Message-State: AMCzsaXUJXJB1vhP/4kQKCeqwu4fmPRapxBcxi+yOBlUQrW6nhW78fDm
-        SPDAtOKfxQY3+sgpuW2VQZOP0f3Z
-X-Google-Smtp-Source: AOwi7QDHDt0nuGx6OHLdX1AZXISLwaB9Ua8Dc6bIs3HU2hX7cE1IcqJT9NfmrvObeiqzsY8QkqyC3Q==
-X-Received: by 10.55.31.163 with SMTP id n35mr25622542qkh.279.1507124416466;
-        Wed, 04 Oct 2017 06:40:16 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010::7cc])
-        by smtp.gmail.com with ESMTPSA id t9sm3168047qti.47.2017.10.04.06.40.15
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 04 Oct 2017 06:40:15 -0700 (PDT)
-Subject: Re: [PATCH] test-list-objects: mark file-local symbols as static
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>, dstolee@microsoft.com
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-References: <5b3d8899-d4c5-c145-7128-21c8aaa4f38f@ramsayjones.plus.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <de2c43ca-2b5c-62e5-80a7-a8513a946558@gmail.com>
-Date:   Wed, 4 Oct 2017 09:40:15 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
-MIME-Version: 1.0
-In-Reply-To: <5b3d8899-d4c5-c145-7128-21c8aaa4f38f@ramsayjones.plus.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+        h=x-gm-message-state:from:message-id:subject:to:cc:in-reply-to
+         :references:date:mime-version:content-transfer-encoding;
+        bh=VIl6k55APe7juxATOY43HGZnOVLDXpcQcjMvR3t1Nlk=;
+        b=mbalzzsy2+l9+8NfzUqf1lF0CbzGzkeTZo5/L8yVxqiiczHV+0g0bGrcNPYoZMKCMS
+         cOEBtNx5CIKcwrM8VRDt5mxpYBzQFYmHQQ7xo6zyTMrymaQSI83Pslwihjlb8wxdA/Zs
+         9wP53rGUIWQdnqE5xKnWOkQd0bbgYbi7u8f3c5U0PiSafF6HVhPLmr/9ycbgOsV85u8n
+         PXaRrxxxV/qpBNzgRtoNb4WGkanF8LvBE9xguEX6P1VKvC5RDqDTbn7S0anS6sPDcjzc
+         NcvigRgq2RW8dEM0BGg1AvKOQkGsspVG+PTsp/8+Ygx5EcEgyAJcn0wicNJXv+1Iv/YV
+         HrZg==
+X-Gm-Message-State: AMCzsaXmTgVnGXVYNYjTdY0dqqiYsluSxncX9x8Xm02wLkSP6HDVm+o/
+        wd1W0w9Fj6NDIX4poxJw6DA=
+X-Google-Smtp-Source: AOwi7QA4IyYQXC9kSxUdjYW3roJHMPOWZMVgjDmoPDJpwZ62XOiwa8S1ydzxwbrich8oaBnLc8hfHg==
+X-Received: by 10.99.127.26 with SMTP id a26mr12480998pgd.385.1507126727723;
+        Wed, 04 Oct 2017 07:18:47 -0700 (PDT)
+Received: from unique-pc ([14.102.72.146])
+        by smtp.gmail.com with ESMTPSA id u12sm27402281pfa.153.2017.10.04.07.18.40
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 04 Oct 2017 07:18:46 -0700 (PDT)
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+X-Google-Original-From: Kaartic Sivaraam <kaarticsivaraam@gmail.com>
+Message-ID: <1507126687.4204.6.camel@gmail.com>
+Subject: Re: [PATCH v2] setup: update error message to be more meaningful
+To:     Junio C Hamano <gitster@pobox.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+In-Reply-To: <xmqq7ewdm5pm.fsf@gitster.mtv.corp.google.com>
+References: <xmqqlgnbq7sc.fsf@gitster.mtv.corp.google.com>
+         <20171002173002.4278-1-kaarticsivaraam@gmail.com>
+         <xmqq7ewdm5pm.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset="ISO-8859-15"
+Date:   Wed, 04 Oct 2017 19:48:07 +0530
+Mime-Version: 1.0
+X-Mailer: Evolution 3.22.6-1 
+Content-Transfer-Encoding: 8bit
+X-Cyberoam-smtpxy-version: 1.0.6.3
+X-Cyberoam-AV-Policy: default
+X-CTCH-Error: Unable to connect local ctasd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/3/2017 5:51 PM, Ramsay Jones wrote:
-> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
-> ---
->
-> Hi Derrick,
->
-> If you need to re-roll your 'ds/find-unique-abbrev-optim' branch,
-> could you please squash this into the relevant patch (commit 3792c78ba0,
-> "test-list-objects: list a subset of object ids", 01-10-2017).
->
-> Thanks!
->
-> ATB,
-> Ramsay Jones
->
->   t/helper/test-list-objects.c | 32 ++++++++++++++++----------------
->   1 file changed, 16 insertions(+), 16 deletions(-)
->
-> diff --git a/t/helper/test-list-objects.c b/t/helper/test-list-objects.c
-> index 22bc9b4e6..5c5d3c03f 100644
-> --- a/t/helper/test-list-objects.c
-> +++ b/t/helper/test-list-objects.c
-> @@ -6,43 +6,43 @@ struct count {
->   	int select_mod;
->   };
->   
-> -int count_loose(const struct object_id *oid,
-> -		const char *path,
-> -		void *data)
-> +static int count_loose(const struct object_id *oid,
-> +		       const char *path,
-> +		       void *data)
->   {
->   	((struct count*)data)->total++;
->   	return 0;
->   }
->   
-> -int count_packed(const struct object_id *oid,
-> -		 struct packed_git *pack,
-> -		 uint32_t pos,
-> -		 void* data)
-> +static int count_packed(const struct object_id *oid,
-> +			struct packed_git *pack,
-> +			uint32_t pos,
-> +			void* data)
->   {
->   	((struct count*)data)->total++;
->   	return 0;
->   }
->   
-> -void output(const struct object_id *oid,
-> -	    struct count *c)
-> +static void output(const struct object_id *oid,
-> +		   struct count *c)
->   {
->   	if (!(c->total % c->select_mod))
->   		printf("%s\n", oid_to_hex(oid));
->   	c->total--;
->   }
->   
-> -int output_loose(const struct object_id *oid,
-> -		 const char *path,
-> -		 void *data)
-> +static int output_loose(const struct object_id *oid,
-> +			const char *path,
-> +			void *data)
->   {
->   	output(oid, (struct count*)data);
->   	return 0;
->   }
->   
-> -int output_packed(const struct object_id *oid,
-> -		  struct packed_git *pack,
-> -		  uint32_t pos,
-> -		  void* data)
-> +static int output_packed(const struct object_id *oid,
-> +			 struct packed_git *pack,
-> +			 uint32_t pos,
-> +			 void* data)
->   {
->   	output(oid, (struct count*)data);
->   	return 0;
-Thanks, Ramsay. I applied these changes locally. I'll remember "static" 
-in the future.
+On Tue, 2017-10-03 at 09:32 +0900, Junio C Hamano wrote:
+> 
+> As an aside, I wonder if we want to _() the message.  It's outside
+> the scope of this fix, obviously.
+> 
 
-Thanks,
--Stolee
+I'm surprised it isn't already! I think it should.
+
+
+As an aside, I wanted to know whether we should add
+'test_expect_failure's for commands of the following sort,
+
+    git log -p --full-diff master --stat
+     
+    git commit -v Makefile --amend
+
+just to keep us reminded that these are accepted not by design but by
+accident ?
+
+---
+Kaartic
