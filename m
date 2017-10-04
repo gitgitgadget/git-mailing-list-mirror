@@ -2,81 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 24C8520281
-	for <e@80x24.org>; Wed,  4 Oct 2017 10:10:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6D2AF20281
+	for <e@80x24.org>; Wed,  4 Oct 2017 10:19:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751393AbdJDKK2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Oct 2017 06:10:28 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51218 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751268AbdJDKK1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Oct 2017 06:10:27 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 80C6FA42E5;
-        Wed,  4 Oct 2017 06:10:26 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=FMoTNbGPZ8qK
-        rb1gLp66ez4TbsU=; b=dEIyIV50wbWXSZVbh877iBThZZXb4oxOZG3xF6FZrANA
-        ick++BpaU69ISmGHanMoCsXi/VQBlv+OE6BrTwxCybTjqLibv+TbuMRr2lE0j5tD
-        guuv68wfk0oukGx1CXgUI1SuYJHTTD8YrEENWv+2/aC2UvqhsFjhbzIKPECiBiQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=qxu1XV
-        RHkRZYvSxhQ8N2tRcnb9Y1Z0IlO97SrEUhg6bb6yLV12Rk6BgLQAg1HRkAyyjC6a
-        AMRjFYzllN6kjxXiUWZEgu0Wq1tlqKZ3o73GP8vM3FzH7jYEWeIVUzIdAP5TkniZ
-        kQeuH4vuKTguuhzZ56iLTvv/2YH9Y0R9qeZ04=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 73E55A42E3;
-        Wed,  4 Oct 2017 06:10:26 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BB69BA42D2;
-        Wed,  4 Oct 2017 06:10:14 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Florian Weimer <fweimer@redhat.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Is git am supposed to decode MIME?
-References: <24940e12-3f72-1ef0-0983-58523d8dec51@redhat.com>
-Date:   Wed, 04 Oct 2017 19:10:13 +0900
-In-Reply-To: <24940e12-3f72-1ef0-0983-58523d8dec51@redhat.com> (Florian
-        Weimer's message of "Wed, 4 Oct 2017 10:44:31 +0200")
-Message-ID: <xmqqzi979qbe.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751363AbdJDKTg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Oct 2017 06:19:36 -0400
+Received: from cloud.peff.net ([104.130.231.41]:60312 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751327AbdJDKTe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Oct 2017 06:19:34 -0400
+Received: (qmail 21130 invoked by uid 109); 4 Oct 2017 10:19:34 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 04 Oct 2017 10:19:34 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16829 invoked by uid 111); 4 Oct 2017 10:19:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Wed, 04 Oct 2017 06:19:34 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Oct 2017 06:19:32 -0400
+Date:   Wed, 4 Oct 2017 06:19:32 -0400
+From:   Jeff King <peff@peff.net>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+Subject: playing with MSan, was Re: [PATCH 0/3] fixes for running the test
+ suite with --valgrind
+Message-ID: <20171004101932.pai6wzcv2eohsicr@sigill.intra.peff.net>
+References: <20171003195713.13395-1-t.gummerer@gmail.com>
+ <20171003234153.pmslizidgbifl6en@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 37136C0C-A8EC-11E7-9964-575F0C78B957-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <20171003234153.pmslizidgbifl6en@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Florian Weimer <fweimer@redhat.com> writes:
+On Tue, Oct 03, 2017 at 07:41:54PM -0400, Jeff King wrote:
 
-> The git am documentation talks about =E2=80=9Cmailboxes=E2=80=9D.  I su=
-ppose these
-> contain messages in Internet Mail syntax.  Is git am supposed to
-> decode MIME?
->
-> I'm asking because I have a message whose body is encoded as
-> quoted-printable, but git am does not parse the patch contained in it.
->
-> If git am is supposed to deal with this, I'll dig deeper and try to
-> figure out where things go wrong.
+> I think using SANITIZE=memory would catch these, but it needs some
+> suppressions tuning. The weird "zlib reads uninitialized memory" error
+> is a problem (valgrind sees this, too, but we have suppressions).
 
-The code to check should be in <mailinfo.c>.  As its comment says,
-the code was not designed to be a full MIME parser--we just have a
-code that (empirically) works in practice on messages produced when
-a patch is attached to a message via popular MUAs, not written from
-the MIME RFC spec.
+I dug into this a little more. You can blacklist certain functions from
+getting MSan treatment, but that's not quite what we want. We want to
+mark bytes from certain _sources_ as being initialized, even if MSan
+doesn't agree.
 
-Thanks for your interest in making the world a better place ;-)
-Very much appreciated.
+And indeed, you can do that. As far as I can tell, MSan works by keeping
+a shadow map of memory and setting flags when it believes it has been
+initialized, and then checking that map when we make decisions based on
+the memory. But it can only do that if it instruments all writes. So the
+MSan documentation recommends that you build _everything_, including
+libraries, with it. Which obviously we don't do if we're using a system
+zlib. Or a system libc for that matter (though they intercept many
+common libc functions to handle this).
 
+So one strategy is to "cheat" a bit at the library interfaces, and claim
+whatever they send us is properly initialized. The patch below tries
+that with zlib, and it does seem to work. It would fail to notice a real
+problem with any input we send _to_ the library (since the library isn't
+instrumented, and we claim that whatever comes out of it is legitimate).
+I could probably live with that.
 
+But there are quite a few test failures that would still need
+investigating and annotating:
+
+  - Certainly it's confused by looking at regmatch_t results from
+    regexec(). We can fix that by building with NO_REGEX. But pcre has
+    a similar problem.
+
+  - Ditto curl and openssl, whose exit points would need annotations.
+
+  - For some reason test-sigchain segfaults when it raise()s in the
+    signal handler and recurses. Not sure if this is an MSan bug or
+    what.
+
+So I dunno. This approach is a _lot_ more convenient than trying to
+rebuild all the dependencies from scratch, and it runs way faster than
+valgrind. It did find the cases that led to the patches in this
+series, and at least one more: if the lstat() at the end of
+entry.c:write_entry() fails, we write nonsense into the cache_entry.
+
+I think we could probably get it to zero false positives without _too_
+much effort. I'll stop here for tonight, but I may pick it up again
+later (of course anybody else is welcome to fool around with it, too).
+
+Below is the patch that let me run:
+
+  make SANITIZE=memory CC=clang-6.0 NO_REGEX=1
+
+and get a tractable number of errors.
+
+-- >8 --
+diff --git a/Makefile b/Makefile
+index b143e4eea3..1da5c01211 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1047,6 +1047,9 @@ endif
+ ifneq ($(filter leak,$(SANITIZERS)),)
+ BASIC_CFLAGS += -DSUPPRESS_ANNOTATED_LEAKS
+ endif
++ifneq ($(filter memory,$(SANITIZERS)),)
++BASIC_CFLAGS += -DENABLE_MSAN_UNPOISON
++endif
+ endif
+ 
+ ifndef sysconfdir
+diff --git a/git-compat-util.h b/git-compat-util.h
+index cedad4d581..836a4c0b54 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -1191,4 +1191,11 @@ extern void unleak_memory(const void *ptr, size_t len);
+ #define UNLEAK(var) do {} while (0)
+ #endif
+ 
++#ifdef ENABLE_MSAN_UNPOISON
++#include <sanitizer/msan_interface.h>
++#define msan_unpoison(ptr, len) __msan_unpoison(ptr, len)
++#else
++#define msan_unpoison(ptr, len) do {} while (0)
++#endif
++
+ #endif
+diff --git a/zlib.c b/zlib.c
+index 4223f1a8c5..5fa8f12507 100644
+--- a/zlib.c
++++ b/zlib.c
+@@ -56,6 +56,8 @@ static void zlib_post_call(git_zstream *s)
+ 	if (s->z.total_in != s->total_in + bytes_consumed)
+ 		die("BUG: total_in mismatch");
+ 
++	msan_unpoison(s->next_out, bytes_produced);
++
+ 	s->total_out = s->z.total_out;
+ 	s->total_in = s->z.total_in;
+ 	s->next_in = s->z.next_in;
