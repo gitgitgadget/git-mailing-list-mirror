@@ -2,63 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD3CF20365
-	for <e@80x24.org>; Wed,  4 Oct 2017 17:09:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7AB272036C
+	for <e@80x24.org>; Wed,  4 Oct 2017 17:46:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751505AbdJDRJc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Oct 2017 13:09:32 -0400
-Received: from mail-pg0-f45.google.com ([74.125.83.45]:54247 "EHLO
-        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751240AbdJDRJb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Oct 2017 13:09:31 -0400
-Received: by mail-pg0-f45.google.com with SMTP id j70so6816485pgc.10
-        for <git@vger.kernel.org>; Wed, 04 Oct 2017 10:09:31 -0700 (PDT)
+        id S1750951AbdJDRqK (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Oct 2017 13:46:10 -0400
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:55477 "EHLO
+        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750787AbdJDRqJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Oct 2017 13:46:09 -0400
+Received: by mail-pf0-f170.google.com with SMTP id g62so1015253pfk.12
+        for <git@vger.kernel.org>; Wed, 04 Oct 2017 10:46:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=Q2WatHD7TWmcrDQKxmLgb6W6YfDKE0KKFUah3q7qvtk=;
-        b=f8rfy0k4MY4ratA/BUkQjJ+JgE2l5fw21FOiJzvtCrhzipQW+73wm3FXhhAniT5mB/
-         8WPitgmZnB8oEtlhY2SAfOJye2Osn4FEF+CW5RG6yNYP/idPdQp1dWdBKHT9bbhkjhTO
-         E07fWxNxgMhDlDATVCIyHk9FDGOpuVMrSHEYokFIda/uQ9DGuj1CTasOou+zEgsowhkQ
-         Rjejt3mPAvxnYr7ja+6EXpBW/oJlN93p6RNLlpArzGoH0DsspUu6b3mgZFaUACRiiwKj
-         Xek6dk6Xjw4lpxJG4zE3pOM9HgBQcGev+SodK+HI/Uh8KOp2/FJ2jL3w4kHJE1sI+HSU
-         bZrg==
+        bh=SzdbeaA5wbPtKRwN2aZ2kVKzeusn78sjEajdLJsCWuU=;
+        b=LPizYeouKKsPDp74uHnxdafo4KoDFbSZAH42kl7nRbux60e/2rpARZRvRx4+IchRv3
+         g5DeyLNcSv13ppNzeb9h4B1sneoBqlj377/q4kmu4ugg6iffF9yte9K22cCsjKu1TvqS
+         2EdQKitiBmyqiK1fk8sVskxghFwpbU5ILlH/uUztq4jnCTl1PrDa01p/bC5pPQucUo2h
+         hEjz71uelA8ulrge4qLVqcDgcppWLA9RHPKG6bo30OI8RMlIXYz6ycVpGjIHFwlUKVZX
+         iTp2TgWFHeaypKsv3V44olGogPdLBuu8OQXbFC2WDwG2ikZWBO6xfvFJHNW6w/AC/WQz
+         Mw0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
          :message-id:user-agent:mime-version;
-        bh=Q2WatHD7TWmcrDQKxmLgb6W6YfDKE0KKFUah3q7qvtk=;
-        b=HV/17Twp7I//T4VMSxPr+zSTqLz7XXVupV3NJUUFDvShdUvF5SyC7q4qqSso1SJpBJ
-         EYdNtRYzKUVjLpz8nMoeQW6i7nKs/yn5PQ/BkQLeoe8ayYeDGJWsP2fFHoLN5IoKkBCN
-         lEPOLRqk3kJo1krmkxSHwMXIjrbiUhNqkbHqZsWAPbHhcZCxPsCXmzYxrZEIceOiKMVz
-         ofu1gjPB2pOKujcy8zKvV9QxG0DQ4p7UX9wWREDXn995SiFVNYPC6M+C/GJ2VCNS5ZZ7
-         En4tolrfb7UpbD3Lf56aKs4Zp/A8Cyf67PEr+Y4qxjDtW9djE1yp2/St8Lp1AbFXMWpY
-         iB6w==
-X-Gm-Message-State: AHPjjUgGbrM/GZ4LZ9Zbn4zB1p4lorg+ayS6DjGzO4DvGx0ai4Aq2c/s
-        zniNEmHPRrDmRvbzIarNy0v/dCcM
-X-Google-Smtp-Source: AOwi7QC6btNEaAGaRSYARYFJoTOLuAv9OA1ZPBoYnb0yq2eJkAR5KBkPtDY2p76H+n9nh0YsKzzwqQ==
-X-Received: by 10.98.178.80 with SMTP id x77mr20393353pfe.12.1507136970511;
-        Wed, 04 Oct 2017 10:09:30 -0700 (PDT)
+        bh=SzdbeaA5wbPtKRwN2aZ2kVKzeusn78sjEajdLJsCWuU=;
+        b=qSwr3tb7Cs9LW4hPNzZqYQSmWv/KQOrEKETVcDL3DEIjlYIphtY2BUe71k1Bt/IR8D
+         rYafqJB3nxnIHAFEoUMr66OlVdcRFAl5vjq9GeAGi5mSwcFoWWrtLxDZToINux+CuGGj
+         jOSIhKnpHC/VVUWw9gda3IJ4iYc+Vfkd+5vMgi2mXf1FUey/gHvqUvwX60GrYMcorMa5
+         mmsE3cbIUEJavBkyUcHh7x/UCE7h5TEKCN+iQn1h04mySN17THpGt1hbElmJeuNKBV9c
+         QrNrJuMayKzF/L6kZOvDRvO2BibMV5r5wMoTLunHMRkgGIhuoJU9it1tZDRILpg7oUsh
+         WIpA==
+X-Gm-Message-State: AHPjjUjaObrUP/doyXLlzkcb9vSrMFpjlTMZNtzco3bGQ4/mpavJi8e6
+        BTQgQTJWGD9MuWNsc1AhtUCDsNUo
+X-Google-Smtp-Source: AOwi7QDBkuru3iAjaDG5IVfnbhS4cAuvWr29jFU3kHVFtLN/vjWnZQQoSjYSH6TMb/aNH8DASOZXoQ==
+X-Received: by 10.84.133.98 with SMTP id 89mr20887932plf.294.1507139168692;
+        Wed, 04 Oct 2017 10:46:08 -0700 (PDT)
 Received: from mix-director-10 (astound-69-42-0-111.ca.astound.net. [69.42.0.111])
-        by smtp.gmail.com with ESMTPSA id u73sm27225735pfi.58.2017.10.04.10.09.29
+        by smtp.gmail.com with ESMTPSA id h70sm27852852pfc.51.2017.10.04.10.46.07
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 04 Oct 2017 10:09:29 -0700 (PDT)
+        Wed, 04 Oct 2017 10:46:08 -0700 (PDT)
 From:   Ernesto Alfonso <erjoalgo@gmail.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
 Subject: Re: disable interactive prompting
 References: <87tvzehp13.fsf@gmail.com>
-        <20171004170119.GO19555@aiede.mtv.corp.google.com>
-Date:   Wed, 04 Oct 2017 10:09:26 -0700
-In-Reply-To: <20171004170119.GO19555@aiede.mtv.corp.google.com> (Jonathan
-        Nieder's message of "Wed, 4 Oct 2017 10:01:19 -0700")
-Message-ID: <87mv56hmbd.fsf@gmail.com>
+        <20171004170532.6pjcwdurcokpvcop@sigill.intra.peff.net>
+Date:   Wed, 04 Oct 2017 10:46:04 -0700
+In-Reply-To: <20171004170532.6pjcwdurcokpvcop@sigill.intra.peff.net> (Jeff
+        King's message of "Wed, 4 Oct 2017 13:05:32 -0400")
+Message-ID: <878tgqhkmb.fsf@gmail.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,55 +67,53 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Thanks for pointing out the option. 
 
-The prompt asks for my https username/password:
+I tried "git help push" and searched for "prompt", "interactive",
+"credentials"...
 
+I don't think I would have figured to try
+ "git help git" from "git help" even after reading it carefully.
 
-> $ grv
-> origin	https://github.com/user/dotemacs (fetch)
-> origin	https://github.com/user/dotemacs (push)
-> $ gpom
-> [1] 22549
-> $ Username for 'https://github.com': 
-> $ fg
-> { git push origin master &>/dev/null < /dev/null; LAST=$?; test 0 -eq $LAST || echo "gpom failed with $LAST !"; }
-> Password for 'https://asd,csd@github.com': 
-> gpom failed with 128 !
-> $ 
+I'd suggest adding a hint in "git help".
 
+I also don't seem have the GIT_TERMINAL_PROMPT in "git version 1.8.3.1" but I can fix this.
 
 Thanks,
 
 Ernesto
+Jeff King <peff@peff.net> writes:
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
-
-> Hi Ernesto,
->
-> Ernesto Alfonso wrote:
+> On Wed, Oct 04, 2017 at 09:10:48AM -0700, Ernesto Alfonso wrote:
 >
 >> Waiting for git-push synchronously slows me down, so I have a bash
 >> alias/function to do this in the background. But when my origin is https, I
 >> get an undesired interactive prompt. I've tried to disable by
 >> redirecting stdin:
->>
+>> 
 >> git push ${REMOTE} ${BRANCH} &>/dev/null </dev/null
->>
+>> 
 >> but I still get an interactive prompt.
->>
+>> 
 >> Is there a way to either
->>
+>> 
 >> 1. disable interactive prompting
 >> 2. programmatically determine whether a git command (or at least a git
 >> push) would interactively prompt
 >
-> You left out an important detail: what does the interactive prompt in
-> question say?
+> I assume the prompt is for credentials, since that's generally the only
+> thing git-push will prompt for.
 >
-> The general question is also interesting, but seeing the particular
-> prompt would make it easy to look into the specific case at the same
-> time.
+> Try:
 >
-> Thanks,
-> Jonathan
+>   $ git help git | sed -ne '/PROMPT/,/^$/p'
+>          GIT_TERMINAL_PROMPT
+>            If this environment variable is set to 0, git will not prompt on
+>            the terminal (e.g., when asking for HTTP authentication).
+>
+> Of course that just stops the prompting. If Git needs a credential and
+> you don't provide it, then the push will fail.
+>
+> For advice on that that, try "git help credentials".
+>
+> -Peff
