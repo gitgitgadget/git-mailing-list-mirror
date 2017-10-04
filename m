@@ -2,83 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 220582036B
-	for <e@80x24.org>; Wed,  4 Oct 2017 05:20:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9A9C2036B
+	for <e@80x24.org>; Wed,  4 Oct 2017 05:21:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751171AbdJDFUO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Oct 2017 01:20:14 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64486 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750909AbdJDFUN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Oct 2017 01:20:13 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CD3AD9608E;
-        Wed,  4 Oct 2017 01:20:07 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=533BBZjLISkI27RWh+2JMvLWKtA=; b=rNdtOS
-        b7HhhkSSoi2PkdlE3pK/CfKbYD0lGUxKExLRk2mh43ZWX3P6Kf0uxmHqt5gNFgJu
-        oTIRLp/5WxveMLQKWCGIj8fvk9O5bxJdPYrPhN2PCYwg+hj5QazFNJ0mD0BCsY7V
-        rd08Rgdx/d8wpIJIexIrepY2YBChs7tkFVkD0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=POJe4KXuGL2+ma+i/sbS9+LH8zG4mrp8
-        wPUh9oLQxHXtEBHQ5/o+s4hOGPj6a3XZJyM4U/rBGSHWBdNybn6i01zqpltNeIVl
-        keHNoxXJ0jBY1IHDIWXKAyNBStwvCl3IdL8TxnGJf8jfUxW5vFZg/y3/KKItmrSp
-        9vwG4+MTFfs=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C30659608C;
-        Wed,  4 Oct 2017 01:20:07 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 312E69608A;
-        Wed,  4 Oct 2017 01:20:07 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
+        id S1751342AbdJDFVy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Oct 2017 01:21:54 -0400
+Received: from cloud.peff.net ([104.130.231.41]:60024 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1750909AbdJDFVy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Oct 2017 01:21:54 -0400
+Received: (qmail 9117 invoked by uid 109); 4 Oct 2017 05:21:55 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 04 Oct 2017 05:21:55 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14918 invoked by uid 111); 4 Oct 2017 05:21:53 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Wed, 04 Oct 2017 01:21:53 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Oct 2017 01:21:52 -0400
+Date:   Wed, 4 Oct 2017 01:21:52 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jonathan Nieder <jrnieder@gmail.com>,
         Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org,
-        "brian m. carlson" <sandals@crustytoothpaste.ath.cx>
-Subject: Re: [PATCH 2/3] http-push: fix construction of hex value from path
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 1/3] path.c: fix uninitialized memory access
+Message-ID: <20171004052151.4ntqmqe7wdbkbvx7@sigill.intra.peff.net>
 References: <20171003195713.13395-1-t.gummerer@gmail.com>
-        <20171003195713.13395-3-t.gummerer@gmail.com>
-        <20171003225315.GE19555@aiede.mtv.corp.google.com>
-        <20171003233638.fq6lgls2qsucfbn3@sigill.intra.peff.net>
-        <xmqqbmlnecxd.fsf@gitster.mtv.corp.google.com>
-Date:   Wed, 04 Oct 2017 14:20:05 +0900
-In-Reply-To: <xmqqbmlnecxd.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Wed, 04 Oct 2017 13:48:14 +0900")
-Message-ID: <xmqqy3orcwvu.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+ <20171003195713.13395-2-t.gummerer@gmail.com>
+ <20171003224501.GD19555@aiede.mtv.corp.google.com>
+ <20171003233040.2ws6kny3e4kypfub@sigill.intra.peff.net>
+ <20171003233706.GH19555@aiede.mtv.corp.google.com>
+ <xmqqfuazecym.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AF5AF00A-A8C3-11E7-964A-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqfuazecym.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Oct 04, 2017 at 01:47:29PM +0900, Junio C Hamano wrote:
 
-> Jeff King <peff@peff.net> writes:
->
->>> Moreover, this is in the webdav-based "dumb http" push code path,
->>> which I do not trust much at all.  I wonder if we could retire it
->>> completely (or at least provide an option to turn it off).
->>
->> I would really like that, too. It has been the cause of a lot of pain
->> when working with the smart code, and I am not at all surprised to find
->> a bug of this magnitude lurking in it. I'd _hoped_ this could show that
->> the system has been unusably broken for years, which would give us
->> confidence to turn it off. :) But per your paragraph above, people could
->> very easily still have been happily using it in the meantime.
->
-> Same here.  Perhaps we should deliberately and silently break it and
-> see who screams?
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+> 
+> > Jeff King wrote:
+> >> On Tue, Oct 03, 2017 at 03:45:01PM -0700, Jonathan Nieder wrote:
+> >
+> >>> In other words, an alternative fix would be
+> >>> 
+> >>> 	if (*path == '.' && path[1] == '/') {
+> >>> 		...
+> >>> 	}
+> >>> 
+> >>> which would not require passing in 'len' or switching to index-based
+> >>> arithmetic.  I think I prefer it.  What do you think?
+> >>
+> >> Yes, I think that approach is much nicer. I think you could even use
+> >> skip_prefix. Unfortunately you have to play a few games with const-ness,
+> >> but I think the resulting signature for cleanup_path() is an
+> >> improvement:
+> 
+> To tie the loose end, here is what I'll queue.
 
-Hopefully it should be obvious but just for people with unreasonable
-expectations, I should clarify that the above needs a smiley ;-).
+Thank you, I was planning to get to this later tonight, but now I don't
+have to. :)
+
+FWIW, I wondered if we could get rid of the extra cast by switching
+cleanup_path() to return an offset rather than a string (which also
+makes its interface more foolproof, since it's clear that the return
+value is a subset of the original string).
+
+But it ends up being a bit clunky I think (patch below for reference).
+
+I guess it's possible that `cleanup_path` could learn to do other
+cleanup, too (e.g., to clean up doubled slashes in the middle of the
+path), in which case it really would want a non-const buffer. But since
+it has remained unchanged since 26c8a533af (Add "mkpath()" helper
+function, 2005-07-08), I'm happy to assume it will remain so for another
+12 years.
+
+All of which is to say:
+
+> -- >8 --
+> From: Jeff King <peff@peff.net>
+> Date: Tue, 3 Oct 2017 19:30:40 -0400
+> Subject: [PATCH] path.c: fix uninitialized memory access
+
+Looks good to me.
+
+-Peff
+
+-- >8 --
+diff --git a/path.c b/path.c
+index 5aa9244eb2..eaeb9d9a17 100644
+--- a/path.c
++++ b/path.c
+@@ -34,22 +34,24 @@ static struct strbuf *get_pathname(void)
+ 	return sb;
+ }
+ 
+-static char *cleanup_path(char *path)
++static size_t cleanup_path(const char *path)
+ {
+-	/* Clean it up */
+-	if (!memcmp(path, "./", 2)) {
+-		path += 2;
+-		while (*path == '/')
+-			path++;
+-	}
+-	return path;
++	const char *clean;
++
++	if (!skip_prefix(path, "./", &clean))
++		return 0;
++
++	while (*clean == '/')
++		clean++;
++
++	return clean - path;
+ }
+ 
+ static void strbuf_cleanup_path(struct strbuf *sb)
+ {
+-	char *path = cleanup_path(sb->buf);
+-	if (path > sb->buf)
+-		strbuf_remove(sb, 0, path - sb->buf);
++	size_t s = cleanup_path(sb->buf);
++	if (s)
++		strbuf_remove(sb, 0, s);
+ }
+ 
+ char *mksnpath(char *buf, size_t n, const char *fmt, ...)
+@@ -64,7 +66,7 @@ char *mksnpath(char *buf, size_t n, const char *fmt, ...)
+ 		strlcpy(buf, bad_path, n);
+ 		return buf;
+ 	}
+-	return cleanup_path(buf);
++	return buf + cleanup_path(buf);
+ }
+ 
+ static int dir_prefix(const char *buf, const char *dir)
