@@ -6,95 +6,116 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 275902036B
-	for <e@80x24.org>; Wed,  4 Oct 2017 02:01:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 638002036B
+	for <e@80x24.org>; Wed,  4 Oct 2017 02:09:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751148AbdJDCBD (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Oct 2017 22:01:03 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50915 "EHLO
+        id S1751505AbdJDCJx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Oct 2017 22:09:53 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57073 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751117AbdJDCBD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Oct 2017 22:01:03 -0400
+        with ESMTP id S1751117AbdJDCJw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Oct 2017 22:09:52 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A29FE9EB15;
-        Tue,  3 Oct 2017 22:01:02 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 68E409ECDB;
+        Tue,  3 Oct 2017 22:09:52 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=/J+GpWO56tLk
-        oxb4h5I88LDOlLc=; b=oH8kzZdd6HM0WYVXEhYc+52aZQHUVw7z+Mg2/faaqvXi
-        5VJUMJY7nQV9+NG5bq9mi6iT+JkvKFov0Tuy5WZ+O83bR1iSZZDkJCnQ/2OLIu0J
-        zF0Mz7FjvJWG1tzaMySeswBx8aoCKvvPeXfoyCHl2z7UM2L8syuclMu/2R3UqIY=
+        :content-type; s=sasl; bh=7aSm6kVyOc+m4IPLNEuni7AXdNI=; b=rQiRwc
+        VhjHHlQ3S4c10Br+c/ruO59hLQOnjFWJc9v2lnTK2tWEyAWfdhtzIkadoN34Nydy
+        vuHViQa+lMZ1cLeGKXvXDzKAbnqiLci2ivEOJHXiTl+fu7h0+hqhExq8A0fVN+pv
+        IhX/dd0/s9R/tAepJum8t694wQy7huJnTnH+0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=mHxLt8
-        yIyn5AqNLdn4uWbP6Ai8+C9ujCkFTSLYeDqfb3+ipZCkQq/sEprWKMfzfIgW3dKh
-        QgFrfhYSas2BPRKj0OWaO0cRKgq4apqHXx2RIILj3BoQc/YQpQof4gCp+k90k2c/
-        aMgJyc4QSL/9WSD0vMjFTf/cv6zeXJpgLZA/8=
+        :content-type; q=dns; s=sasl; b=H4OSwRGr+UBNCP30XIR6Pu5kyfHOmoLa
+        GLEiJ7YngGgrGoH5GrGBjLq5dRrdgEbs+tAyzYcakkySdPG3FFzhA0bwHmUlWo63
+        l2vW5XhBP4k1jQC1uKh7QYcB0bjX1qiNiQ7wBqt+/Ed/Lvkpjt6HJKmlh6XZVfG8
+        Q4BG6g9lK+c=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9A3939EB14;
-        Tue,  3 Oct 2017 22:01:02 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 607D89ECDA;
+        Tue,  3 Oct 2017 22:09:52 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 997039EB10;
-        Tue,  3 Oct 2017 22:01:01 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C17D49ECD7;
+        Tue,  3 Oct 2017 22:09:51 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     Robert Dailey <rcdailey.lists@gmail.com>, Git <git@vger.kernel.org>
-Subject: Re: Line ending normalization doesn't work as expected
-References: <CAHd499B5hM9ixnsnwWwB2uyDT10dRQpN473m5QjxH9raHtFXiw@mail.gmail.com>
-        <958c9b03-062c-0bea-3b25-939a36659f32@web.de>
-        <CAHd499AD5Kgbp-vxXTnEPkb-Mb5oEeXhaRO5kGniDdqmXwd2QQ@mail.gmail.com>
-        <88c57b88-ef2c-d7db-15e2-12791d4cb201@web.de>
-Date:   Wed, 04 Oct 2017 11:00:59 +0900
-In-Reply-To: <88c57b88-ef2c-d7db-15e2-12791d4cb201@web.de> ("Torsten
-        =?utf-8?Q?B=C3=B6gershausen=22's?= message of "Tue, 3 Oct 2017 21:19:55
- +0200")
-Message-ID: <xmqq8tgrhdt0.fsf@gitster.mtv.corp.google.com>
+To:     Ben Peart <peartben@gmail.com>
+Cc:     Ben Peart <Ben.Peart@microsoft.com>,
+        "David.Turner\@twosigma.com" <David.Turner@twosigma.com>,
+        "avarab\@gmail.com" <avarab@gmail.com>,
+        "christian.couder\@gmail.com" <christian.couder@gmail.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        "johannes.schindelin\@gmx.de" <johannes.schindelin@gmx.de>,
+        "pclouds\@gmail.com" <pclouds@gmail.com>,
+        "peff\@peff.net" <peff@peff.net>
+Subject: Re: [PATCH v8 00/12] Fast git status via a file system watcher
+References: <20170919192744.19224-1-benpeart@microsoft.com>
+        <20170922163548.11288-1-benpeart@microsoft.com>
+        <xmqq7ewiz1mz.fsf@gitster.mtv.corp.google.com>
+        <MWHPR21MB0478B8D1C5442B2FCE1ED465F47E0@MWHPR21MB0478.namprd21.prod.outlook.com>
+        <xmqqk20fuvg7.fsf@gitster.mtv.corp.google.com>
+        <fd972756-4ad3-4b96-23d0-e2c9e59189d1@gmail.com>
+Date:   Wed, 04 Oct 2017 11:09:50 +0900
+In-Reply-To: <fd972756-4ad3-4b96-23d0-e2c9e59189d1@gmail.com> (Ben Peart's
+        message of "Tue, 3 Oct 2017 15:48:06 -0400")
+Message-ID: <xmqqzi97fytt.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: DF63D3BE-A8A7-11E7-8E81-575F0C78B957-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1B47CB8C-A8A9-11E7-A1DD-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+Ben Peart <peartben@gmail.com> writes:
 
->> $ git rm -r --cached . && git add .
->
-> (Both should work)
->
-> To be honest, from the documentation, I can't figure out the difference=
- between
-> $ git read-tree --empty
-> and
-> $ git rm -r --cached .
->
-> Does anybody remember the discussion, why we ended up with read-tree ?
+> Well, rats. I found one more issue that applies to two of the
+> commits. Can you squash this in as well or do you want it in some
+> other form?
 
-We used to use neither, and considered it fine to "rm .git/index" if
-you wanted to empty the on-disk index file in the old world.  In the
-modern world, folks want you to avoid touching filesystem directly
-and instead want you to use Git tools, and the above are two obvious
-ways to do so.
+Rats indeed.  Let's go incremental as promised, perhaps like this
+(but please supply a better description if you have one).
 
-"git read-tree" (without any parameter, i.e. "read these 0 trees and
-populate the index with it") and its modern and preferred synonym
-"git read-tree --empty" (i.e. "I am giving 0 trees and I know the
-sole effect of this command is to empty the index.") are more direct
-ways to express "I want the index emptied" between the two.
+-- >8 --
+From: Ben Peart <benpeart@microsoft.com>
+Subject: fsmonitor: MINGW support for watchman integration
 
-The other one, "git rm -r --cached .", in the end gives you the same
-state because it tells Git to "iterate over all the entries in the
-index, find the ones that match pathspec '.', and remove them from
-the index.".  It is not wrong per-se, but conceptually it is a bit
-roundabout way to say that "I want the index emptied", I would
-think.
+Instead of just taking $ENV{'PWD'}, use the same logic that converts
+PWD to $git_work_tree on MSYS_NT in the watchman integration hook
+script also on MINGW.
 
-I wouldn't be surprised if the "rm -r --cached ." were a lot slower,
-due to the overhead of having to do the pathspec filtering that ends
-up to be a no-op, but there shouldn't be a difference in the end
-result.
+Signed-off-by: Ben Peart <benpeart@microsoft.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/t7519/fsmonitor-watchman                 | 2 +-
+ templates/hooks--fsmonitor-watchman.sample | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/t/t7519/fsmonitor-watchman b/t/t7519/fsmonitor-watchman
+index 7ceb32dc18..cca3d71e90 100755
+--- a/t/t7519/fsmonitor-watchman
++++ b/t/t7519/fsmonitor-watchman
+@@ -36,7 +36,7 @@ my $system = `uname -s`;
+ $system =~ s/[\r\n]+//g;
+ my $git_work_tree;
+ 
+-if ($system =~ m/^MSYS_NT/) {
++if ($system =~ m/^MSYS_NT/ || $system =~ m/^MINGW/) {
+ 	$git_work_tree = `cygpath -aw "\$PWD"`;
+ 	$git_work_tree =~ s/[\r\n]+//g;
+ 	$git_work_tree =~ s,\\,/,g;
+diff --git a/templates/hooks--fsmonitor-watchman.sample b/templates/hooks--fsmonitor-watchman.sample
+index 870a59d237..c68038ef00 100755
+--- a/templates/hooks--fsmonitor-watchman.sample
++++ b/templates/hooks--fsmonitor-watchman.sample
+@@ -35,7 +35,7 @@ my $system = `uname -s`;
+ $system =~ s/[\r\n]+//g;
+ my $git_work_tree;
+ 
+-if ($system =~ m/^MSYS_NT/) {
++if ($system =~ m/^MSYS_NT/ || $system =~ m/^MINGW/) {
+ 	$git_work_tree = `cygpath -aw "\$PWD"`;
+ 	$git_work_tree =~ s/[\r\n]+//g;
+ 	$git_work_tree =~ s,\\,/,g;
+
