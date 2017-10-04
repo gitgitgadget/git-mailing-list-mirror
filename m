@@ -6,141 +6,76 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 001082036B
-	for <e@80x24.org>; Wed,  4 Oct 2017 04:00:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC8AC2036B
+	for <e@80x24.org>; Wed,  4 Oct 2017 04:01:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751347AbdJDEAn (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Oct 2017 00:00:43 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60876 "EHLO
+        id S1751960AbdJDEBo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Oct 2017 00:01:44 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53345 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751330AbdJDEAk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Oct 2017 00:00:40 -0400
+        with ESMTP id S1751931AbdJDEBl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Oct 2017 00:01:41 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AC54094EBC;
-        Wed,  4 Oct 2017 00:00:39 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0A0A4A02BE;
+        Wed,  4 Oct 2017 00:01:41 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=bXXKaltCi1W7
-        t81H8uCNbtVgET0=; b=eimKqEdv6iE6/SULC+Z1hZk0M0CuwKq+jJcKpErRyoiY
-        LO5nhBxy+0lz6WyG13z5IJifsDD4Q/NQwNFbsvklZ6/mHX+SNtsD1DkiLtrYTKVU
-        Z+6lT8GWbcEcKnGo7AtbWWhTGf/JJ8iaDMKoDIEyRjyszdN9kUm8hpSP4Igqyog=
+        :content-type; s=sasl; bh=papxTPdkD+qatzf2Dcr0OvPtiGw=; b=n3i0sK
+        mur8BuRGjLU8L7csUMEBLbmdDb7/cwpu0lpEQu4v425MWOlKAAUf9P0R15YnoBqd
+        4ork2MQNF3AVY8lNjJH7T+58CBF88UqQV5toqbQIDbvvV5benbqd5XmxchS1AWgd
+        eWPLZli7dLqFGocqhUpi8Jdm4RK+yUgXV/yP8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=qWicqe
-        c2zSmfY2WxVOC4/x/p/yX5xoAo/0FeAqSYAkyG2a3Km+Z9tLiUo9DfYdBQgrNuWN
-        AIOwyfxsRcx4CUedR80mxu9wfjs4FQ3/+V4/wAEyuXxQDNQ/uxlY6sOLK5yedBkz
-        gS+djppI8r+R4go09itIV0rv+0QSlaxFACrpM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A3F3D94EBA;
-        Wed,  4 Oct 2017 00:00:39 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=h2VadxQo8qx9f0Eqjn5/Jv5t1FAiT4FM
+        acRE3n2c9TTcyY8nkPMI9OvWKbd6joVmpJMYJFZ5pR+xjBeIB+AYKvMscCRKlwLH
+        PS7j4B+z2R8Z8qyz3QywLaUfORbW8m6/ARXqtsP2YUwjG53gYwNiH2RP0bDJ45Xt
+        7BsQOBzvIV0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 01E77A02BD;
+        Wed,  4 Oct 2017 00:01:41 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2001394EB9;
-        Wed,  4 Oct 2017 00:00:38 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6D2E4A02BC;
+        Wed,  4 Oct 2017 00:01:40 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Martin Koegler <martin.koegler@chello.at>
-Subject: Re: [PATCH] fsck: check results of lookup_blob() and lookup_tree() for NULL
-References: <20171003102215.9952-1-szeder.dev@gmail.com>
-        <19a08fb1-2fb3-f368-772b-36646a179975@web.de>
-        <54f5877b-a143-11c2-d8f6-ff28ed9e7e38@web.de>
-Date:   Wed, 04 Oct 2017 13:00:36 +0900
-In-Reply-To: <54f5877b-a143-11c2-d8f6-ff28ed9e7e38@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Tue, 3 Oct 2017 15:47:56 +0200")
-Message-ID: <xmqqh8vfftp7.fsf@gitster.mtv.corp.google.com>
+To:     Matthieu Moy <git@matthieu-moy.fr>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, rpjday@crashcourse.ca,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: What means "git config bla ~/"?
+References: <20171002061303.Horde.SL92grZCqTRV9oQkBFPELQ7@crashcourse.ca>
+        <20171002171300.GP19555@aiede.mtv.corp.google.com>
+        <xmqqfub1m6u5.fsf@gitster.mtv.corp.google.com>
+        <1964024229.332266.1507031152104.JavaMail.zimbra@matthieu-moy.fr>
+Date:   Wed, 04 Oct 2017 13:01:39 +0900
+In-Reply-To: <1964024229.332266.1507031152104.JavaMail.zimbra@matthieu-moy.fr>
+        (Matthieu Moy's message of "Tue, 3 Oct 2017 13:45:52 +0200 (CEST)")
+Message-ID: <xmqqd163ftng.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 94C49788-A8B8-11E7-A129-8EF31968708C-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: B9EA4FBC-A8B8-11E7-A01C-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+Matthieu Moy <git@matthieu-moy.fr> writes:
 
-> Am 03.10.2017 um 14:51 schrieb Ren=C3=A9 Scharfe:
->> Am 03.10.2017 um 12:22 schrieb SZEDER G=C3=A1bor:
->>> Furthermore, fsck.c:fsck_walk_tree() does the same "immediately
->>> reference the object member in lookup_blob()'s and lookup_tree()'s
->>> return value" thing.  I think those should receive the same treatment
->>> as well.
->>=20
->> Hmm, are put_object_name() and all the walk() implementations ready fo=
-r
->> a NULL object handed to them?  Or would we rather need to error out
->> right there?
-> How about this?
+> "Junio C Hamano" <gitster@pobox.com> writes:
 >
-> -- >8 --
-> lookup_blob() and lookup_tree() can return NULL if they find an object
-> of an unexpected type.  Error out of fsck_walk_tree() in that case, lik=
-e
-> we do when encountering a bad file mode.  An error message is already
-> shown by object_as_type(), which gets called by the lookup functions.
-
-The result from options->walk() is checked, and among the callbacks
-that are assigned to the .walk field:
-
- - mark_object() in builtin/fsck.c gives its own error message to diagnos=
-e broken link
-   and returns 1;
-
- - mark_used() in builtin/fsck.c silently returns 1;
-
- - mark_link() in builtin/index-pack.c does the same; and
-
- - check_object() in builtin/unpack-objects.c does the same,
-
-when they see a NULL object.
-
-This patch may avoid the "unexpected behaviour" coming from
-expecting that &((struct tree *)NULL)->object =3D=3D NULL the current
-code does, but it also changes the behaviour.  The loop used to
-diagnose a fishy entry in the tree we are walking, and kept checking
-the remaining entries in the tree.  You now immediately return, not
-seeing if the later entries in the tree are good and losing objects
-that are referenced by these entries as dangling.
-
-I am not sure if this is a good change.  I suspect that the "bad
-mode" handling should be made less severe instead.
-
+>> Jonathan Nieder <jrnieder@gmail.com> writes:
+>> 
+>>>> what's with that "git config bla ~/"? is this some config keyword
+>>>> or something?
+>>> ...
+>>	git config section.var ~/some/thing
+>> ...
 >
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
-> ---
->  fsck.c | 10 ++++++++--
->  1 file changed, 8 insertions(+), 2 deletions(-)
+> I prefer your "section.var" proposal above. I think people who really understand shell quoting do not need the explanations, and others probably need the example.
 >
-> diff --git a/fsck.c b/fsck.c
-> index 2ad00fc4d0..561a13ac27 100644
-> --- a/fsck.c
-> +++ b/fsck.c
-> @@ -358,14 +358,20 @@ static int fsck_walk_tree(struct tree *tree, void=
- *data, struct fsck_options *op
->  			continue;
-> =20
->  		if (S_ISDIR(entry.mode)) {
-> -			obj =3D &lookup_tree(entry.oid)->object;
-> +			struct tree *tree =3D lookup_tree(entry.oid);
-> +			if (!tree)
-> +				return -1;
-> +			obj =3D &tree->object;
->  			if (name)
->  				put_object_name(options, obj, "%s%s/", name,
->  					entry.path);
->  			result =3D options->walk(obj, OBJ_TREE, data, options);
->  		}
->  		else if (S_ISREG(entry.mode) || S_ISLNK(entry.mode)) {
-> -			obj =3D &lookup_blob(entry.oid)->object;
-> +			struct blob *blob =3D lookup_blob(entry.oid);
-> +			if (!blob)
-> +				return -1;
-> +			obj =3D &blob->object;
->  			if (name)
->  				put_object_name(options, obj, "%s%s", name,
->  					entry.path);
+> While we're there, the formatting is also wrong ('' quoting, while we normally use `` quoting for shell commands).
+>
+> Sounds like a nice microproject for my students :-). A patch should follow soon.
+
+OK, thanks.  Lest we forget, this is #leftoverbits for now.
