@@ -6,59 +6,71 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1ECFD2036B
-	for <e@80x24.org>; Wed,  4 Oct 2017 06:20:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A28F2036C
+	for <e@80x24.org>; Wed,  4 Oct 2017 06:26:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751156AbdJDGUx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Oct 2017 02:20:53 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50090 "EHLO
+        id S1751249AbdJDG0S (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Oct 2017 02:26:18 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54102 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751148AbdJDGUw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Oct 2017 02:20:52 -0400
+        with ESMTP id S1751234AbdJDG0R (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Oct 2017 02:26:17 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 476B496B5C;
-        Wed,  4 Oct 2017 02:20:52 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DBF9DA1B16;
+        Wed,  4 Oct 2017 02:26:16 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=2pYldjvPfQLZszQ6odBLeWPq9C8=; b=LNZ1m5
-        4kXMQM2HEbF8Mjd+tPHejVQTDPh2CbWh8+Kh1UbJVTEk4B16YetWHWR9AjQMQBk7
-        Ly+U+DYKAcbJO9qhkwyGId3GrVuUsigmxf43uhNNwlfW/MrhDKcnSptm8QP+Eiv+
-        3bUukf3ogpMR24Fdd+evqOM5TCBcnGOBqGrKg=
+        :content-type; s=sasl; bh=hwQf6O+S9K4ocu2raycgnxbzb5w=; b=ozhNWE
+        GHI3Y4uAfW0srJHY4yf1WyBw/Zo+rYhxVsLIfJUBmt+9qPIKWRjooPnexkfqHf3C
+        vsxi/0rOsdgazIhq8NLSuSP8iUdSUZyEw8zgY23bDz95Zg/pejGkKDTG3915tfWd
+        jnEWdV5qBV6r6mkfTnq9oBixh9DHMXUEZbVaw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=D7Ms2CE6kYGCsOdh8fqc678khZvaQtPG
-        uzZNWr+pGTRnxvh5tgp1+y7ttEVkb2ZTdxsYQpH2Ca2dKJXXd9RDMcfymsoRHCHe
-        01CHfNIAB5gidOwkdZlIOl2uXDMJGGdRQ2TWPRAGim2FxAnYKyt82khfcHm/0L04
-        G7bmYTYdRjY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2E74A96B5B;
-        Wed,  4 Oct 2017 02:20:52 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=aaj2kACWK/HHg7HRiXj1uUMbtia1LPIJ
+        IEJpMESbWhAjy3RrkBfll+tCwrgVEe7CAviUqgmYgDVo0kwzoIRFzXgg8zmWQ7Oh
+        CVMHnbWQ2a0GThbbwq/TaY86eLFU7v2beOzK54LsaMxYz0wc9yOQxznesMbTrdz8
+        D1sPQdTVLlk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D2F5FA1B15;
+        Wed,  4 Oct 2017 02:26:16 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8315396B5A;
-        Wed,  4 Oct 2017 02:20:51 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 29500A1B13;
+        Wed,  4 Oct 2017 02:26:16 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, bturner@atlassian.com, git@jeffhostetler.com,
-        jonathantanmy@google.com, jrnieder@gmail.com, peff@peff.net,
-        sbeller@google.com
-Subject: Re: [PATCH v3 00/10] protocol transition
-References: <20170926235627.79606-1-bmwill@google.com>
-        <20171003201507.3589-1-bmwill@google.com>
-Date:   Wed, 04 Oct 2017 15:20:50 +0900
-In-Reply-To: <20171003201507.3589-1-bmwill@google.com> (Brandon Williams's
-        message of "Tue, 3 Oct 2017 13:14:57 -0700")
-Message-ID: <xmqqh8vfcu2l.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org,
+        "brian m. carlson" <sandals@crustytoothpaste.ath.cx>
+Subject: Re: [PATCH 2/3] http-push: fix construction of hex value from path
+References: <20171003195713.13395-1-t.gummerer@gmail.com>
+        <20171003195713.13395-3-t.gummerer@gmail.com>
+        <20171003225315.GE19555@aiede.mtv.corp.google.com>
+        <20171003233638.fq6lgls2qsucfbn3@sigill.intra.peff.net>
+        <xmqqbmlnecxd.fsf@gitster.mtv.corp.google.com>
+        <xmqqy3orcwvu.fsf@gitster.mtv.corp.google.com>
+        <20171004052640.3sxpluokhcyh4c2y@sigill.intra.peff.net>
+Date:   Wed, 04 Oct 2017 15:26:14 +0900
+In-Reply-To: <20171004052640.3sxpluokhcyh4c2y@sigill.intra.peff.net> (Jeff
+        King's message of "Wed, 4 Oct 2017 01:26:40 -0400")
+Message-ID: <xmqqd163cttl.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 2B962E0C-A8CC-11E7-8B30-8EF31968708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: ED0B9DC4-A8CC-11E7-9544-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks.  All of my review comments from the previous round seem to
-have been addressed, so this is Reviewed-by: me ;-)
+Jeff King <peff@peff.net> writes:
 
+> More seriously, is there any interest in marking it as deprecated in the
+> release notes and issuing a warning when it's used for a few cycles?
+
+No objection from me.
+
+I do not object with such a well designed deprecation plan for any
+other features, if there are other "favourite" ones people would
+want to deprecate and eventually remove, by the way.
