@@ -2,83 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39D2C20365
-	for <e@80x24.org>; Wed,  4 Oct 2017 16:11:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3286C20365
+	for <e@80x24.org>; Wed,  4 Oct 2017 16:27:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751304AbdJDQLW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Oct 2017 12:11:22 -0400
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:54738 "EHLO
-        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751148AbdJDQLU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Oct 2017 12:11:20 -0400
-Received: by mail-pf0-f179.google.com with SMTP id m28so1546878pfi.11
-        for <git@vger.kernel.org>; Wed, 04 Oct 2017 09:11:20 -0700 (PDT)
+        id S1751342AbdJDQ06 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Oct 2017 12:26:58 -0400
+Received: from mail-qt0-f171.google.com ([209.85.216.171]:57247 "EHLO
+        mail-qt0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751248AbdJDQ05 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Oct 2017 12:26:57 -0400
+Received: by mail-qt0-f171.google.com with SMTP id 34so3134056qtb.13
+        for <git@vger.kernel.org>; Wed, 04 Oct 2017 09:26:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:subject:user-agent:date:message-id:mime-version;
-        bh=TUi3fjzjHdIwgOG62Imi9QIuR8xj6yDHgh1NbjzueGc=;
-        b=RPQWHg0MRk/sgdiuAfQaw5eRFkY6AtpC0aWFJhm/sVcpIqlV+woXclrOgEykM04GRI
-         bca8Rx+r/2tBRucwh6kf+E5HgvvFHvn43GAJ5xxV4b3fiEDmeldDzMjsvPMLM3FklOXv
-         eGiphUGPlOeCdw9XcBxvmKCW/W8woqMb17c59J2anv9t9XrmoMRE7MxYcu5jBtdlWSo8
-         Z0rCewgQNzy1ECBX/6eFLfqsGePcQ6nRBMYQX0wJe8xMbLHGVWUA3drDjYHKtGYvcsEe
-         XM8qjj3EuMD3eYTGnh62eAhTqsKMXvRHvypqTG1qtiIDw58rp/ci4GaPdRU2+Mfz6I5O
-         fIzA==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=NuJW2Ncj69k6KF48dVzV9nD5/qrUyNNq5N9TyXgeJJ0=;
+        b=CJj1/7XvRu4uAAyTwLn4nxgQv7oyMYJQLv5YBawEOzysDXNEHWawqZ6WHqfPAwmYfq
+         CedD1c8MvXyZnSe7jAfpUTQCXiywZh9ZrGKgm329PdkkYdA55hOoZY6qUZDdjpK/9p5d
+         ezU/A/6ofkJH8ocrImsTB0zIMgNmLhuoo3QpryZonPwYQaJMxfTwHgMar+2xwMjI5Zsj
+         SttM6Np8h9aOgW3beUHUxEOKWSR0qQHDAOg4lQ4A4+zt5lIAeaMgxM9mdj8nisDDUUir
+         M+tMGtKGKHXakonc5i1eTYucovML69c4Zx/kbRieggW+sE4fIEw/yWy1RgzhwA8jNo4d
+         +C6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:user-agent:date:message-id
-         :mime-version;
-        bh=TUi3fjzjHdIwgOG62Imi9QIuR8xj6yDHgh1NbjzueGc=;
-        b=ZJrySX0vsgNs5rxj9/QhqPgsT1z+b3C8k0Ebn6jpbvip+kUz9m2vNCN5dqTA9244Ms
-         bDnyh4I8gaAFVdzknI/0uoGG26tyFrK+ZyMtkFgNsBilGoOamUYgnIAJTE/ecO3Ll6kr
-         m311FUOw1Mhr9hRKrB+Iqo0Y1slrg7fJ0PCBSghnY3BHF/S7qO4L0K1VQbIA4Pl4N3Sn
-         p0HrzVInItzuA51HrX1GMPvo87fuuPGmeZg7HVu/CRblEEPnoDvFoGtrBBTPwlx4Z3O4
-         ogqdO1iTjgmVvo/wO3DQsj9IkhzuVMuDFktNjvp9OWQ+5j8ADdj/h0+00t1vVroxkrKk
-         2e9Q==
-X-Gm-Message-State: AMCzsaXFdOQWELwak3kW3LjOS7k8IeN02fFA1wlgX2Txrr5vH6TIVV7M
-        363wPDaDlTbtPj9UT3KH8QyY5NcY
-X-Google-Smtp-Source: AOwi7QCIks1nrKkx7u7GciO6wX+DV27BWO4B+u525427KRbNGGAJYpcnjXizs4OE+vwxiRp/B/pR6w==
-X-Received: by 10.98.60.21 with SMTP id j21mr6420515pfa.312.1507133479608;
-        Wed, 04 Oct 2017 09:11:19 -0700 (PDT)
-Received: from mix-director-10 (astound-69-42-0-111.ca.astound.net. [69.42.0.111])
-        by smtp.gmail.com with ESMTPSA id b22sm25249326pfh.175.2017.10.04.09.11.18
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 04 Oct 2017 09:11:18 -0700 (PDT)
-From:   Ernesto Alfonso <erjoalgo@gmail.com>
-To:     git@vger.kernel.org
-Subject: disable interactive prompting
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
-Date:   Wed, 04 Oct 2017 09:10:48 -0700
-Message-ID: <87tvzehp13.fsf@gmail.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=NuJW2Ncj69k6KF48dVzV9nD5/qrUyNNq5N9TyXgeJJ0=;
+        b=YQ8re3KbYmdyMBACi7gUmyic4+iRxI+58SapdVKKHSs+3N/+YUioFbMV7vYavLEUuB
+         PxLW0MdXSSQJin4YagF6fuRY/tQuKsYRr0tnC11vMcJ3UGq+G+3AHdaGnO+Sr4WfE5FM
+         hLVfH1fSTeIEvSJmTF5Jx6AxDcGahLgaf8Y/wQxdd5OYt2StTk5yDBLmH5lzFzEabxSn
+         EhtUgMfCMaQI71JwdJoZx6CM1NtpSN/l8XUYJUHr+5tk1F/+xwxZen3c/SduZc8fjZs7
+         zhjEjnKsQBohlV8FloIKLodc4mIn23Gm2McPOgISWyEyxCKk7aX+3VSvdnlQiRw2Gqf8
+         Ffzw==
+X-Gm-Message-State: AHPjjUgp+zgoiMQuZNqPP2EPY8uMlgSXOhJjF0fKGpLIlsNLjqJ1NXOn
+        X4E5i7X76JjqkeRllwMw/9YWyy4Mc3CLpBo8dQI=
+X-Google-Smtp-Source: AOwi7QAduvXdzFRLdR65XZCTyxXMuGqEdCmlthGdBvbwfTKPrJ+5NHW8SAa21LlxtrEnXph09yWepfARRxPVp2FoAxs=
+X-Received: by 10.13.245.198 with SMTP id e189mr18569968ywf.58.1507134416298;
+ Wed, 04 Oct 2017 09:26:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.129.40.214 with HTTP; Wed, 4 Oct 2017 09:26:55 -0700 (PDT)
+In-Reply-To: <xmqq8tgrhdt0.fsf@gitster.mtv.corp.google.com>
+References: <CAHd499B5hM9ixnsnwWwB2uyDT10dRQpN473m5QjxH9raHtFXiw@mail.gmail.com>
+ <958c9b03-062c-0bea-3b25-939a36659f32@web.de> <CAHd499AD5Kgbp-vxXTnEPkb-Mb5oEeXhaRO5kGniDdqmXwd2QQ@mail.gmail.com>
+ <88c57b88-ef2c-d7db-15e2-12791d4cb201@web.de> <xmqq8tgrhdt0.fsf@gitster.mtv.corp.google.com>
+From:   Robert Dailey <rcdailey.lists@gmail.com>
+Date:   Wed, 4 Oct 2017 11:26:55 -0500
+X-Google-Sender-Auth: 8nTX-7apwb7matpdwTaaiz_18wQ
+Message-ID: <CAHd499BCMOcur6NRbKfwd81zpnyzoiVCY54d=UmGpAhbD7AVTA@mail.gmail.com>
+Subject: Re: Line ending normalization doesn't work as expected
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+        Git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Tue, Oct 3, 2017 at 9:00 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+>
+>>> $ git rm -r --cached . && git add .
+>>
+>> (Both should work)
+>>
+>> To be honest, from the documentation, I can't figure out the difference =
+between
+>> $ git read-tree --empty
+>> and
+>> $ git rm -r --cached .
+>>
+>> Does anybody remember the discussion, why we ended up with read-tree ?
+>
+> We used to use neither, and considered it fine to "rm .git/index" if
+> you wanted to empty the on-disk index file in the old world.  In the
+> modern world, folks want you to avoid touching filesystem directly
+> and instead want you to use Git tools, and the above are two obvious
+> ways to do so.
+>
+> "git read-tree" (without any parameter, i.e. "read these 0 trees and
+> populate the index with it") and its modern and preferred synonym
+> "git read-tree --empty" (i.e. "I am giving 0 trees and I know the
+> sole effect of this command is to empty the index.") are more direct
+> ways to express "I want the index emptied" between the two.
+>
+> The other one, "git rm -r --cached .", in the end gives you the same
+> state because it tells Git to "iterate over all the entries in the
+> index, find the ones that match pathspec '.', and remove them from
+> the index.".  It is not wrong per-se, but conceptually it is a bit
+> roundabout way to say that "I want the index emptied", I would
+> think.
+>
+> I wouldn't be surprised if the "rm -r --cached ." were a lot slower,
+> due to the overhead of having to do the pathspec filtering that ends
+> up to be a no-op, but there shouldn't be a difference in the end
+> result.
 
-Waiting for git-push synchronously slows me down, so I have a bash
-alias/function to do this in the background. But when my origin is https, I
-get an undesired interactive prompt. I've tried to disable by
-redirecting stdin:
+You guys are obviously worlds ahead of me on the internals of things,
+but from my perspective I like to avoid the "plumbing" commands as
+much as I can. Even if I used them, if I have to tell the rest of my
+team "this is the way to do it", they're going to give me dirty looks
+if I ask them to run things like this that make no sense to them.
+That's the argument I have to deal with when it comes to Git's
+usability within the team I manage. So based on this, I'd favor the
+`git rm -r --cached` approach because this is the more common result
+you see in Google, and also makes a little more sense from a high
+level of thought perspective. However, this is just my personal
+opinion. `read-tree --empty` is far less self explanatory IMHO.
 
-git push ${REMOTE} ${BRANCH} &>/dev/null </dev/null
-
-but I still get an interactive prompt.
-
-Is there a way to either
-
-1. disable interactive prompting
-2. programmatically determine whether a git command (or at least a git
-push) would interactively prompt
-
-Thanks,
-
-Ernesto
+Also let's not forget the second part of the command chain that
+results in the different behavior. In one case, I use `git add` which
+results in proper line ending normalization. In the other case, I do
+`git reset --hard` which does *NOT* result in the line endings
+normalized (`git status` shows no results). In both cases, I'm still
+doing `git rm -r --cached`, so I am doubtful that is the root cause
+for the line ending normalization piece. I'm still trying to
+understand why both give different results (root cause) and also get
+an understanding of what the correct (modern) solution is for line
+ending normalization (not necessarily which is the right way to
+clear/delete the index, which is really AFAIK just a means to this end
+and an implementation detail of sorts for this specific task).
