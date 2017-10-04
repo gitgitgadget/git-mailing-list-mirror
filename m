@@ -2,95 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B7D120365
-	for <e@80x24.org>; Wed,  4 Oct 2017 14:18:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E57820365
+	for <e@80x24.org>; Wed,  4 Oct 2017 15:03:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752386AbdJDOSu (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Oct 2017 10:18:50 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:35989 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752351AbdJDOSs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Oct 2017 10:18:48 -0400
-Received: by mail-pg0-f66.google.com with SMTP id i195so4987580pgd.3
-        for <git@vger.kernel.org>; Wed, 04 Oct 2017 07:18:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:message-id:subject:to:cc:in-reply-to:references:date
-         :mime-version:content-transfer-encoding;
-        bh=VIl6k55APe7juxATOY43HGZnOVLDXpcQcjMvR3t1Nlk=;
-        b=eH/Ra7iZg1Mw4aXGF30uHRgwaiQnUJOd2vzRskuy/AwceaYfpcWe6d4qwi4eB3IrwZ
-         tgjqEkRV2HgkvII+yvWjfZe0aCBroD/HN/sa3cgihU4K7E/+Kpaaw5i4iEUiGeSi77DN
-         1J090enxswBSBL2ln+DNc7lIdy9uSvEBBMBVy6K0fvRLMiobh846L9JUErCvZdmS0LNe
-         xvD+5No/TU/pRR5aqiO0pJwuCsKvlV+koQ5cDCPXoNfeBe9VSSMwRF78RjBUYm9z5xRF
-         dhmTxldhtY3lm4eet+Q98Tclql2deEQomWQs7QPw5A5PqrmM3JGR327MTnOgJJ5OzZF9
-         te4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:message-id:subject:to:cc:in-reply-to
-         :references:date:mime-version:content-transfer-encoding;
-        bh=VIl6k55APe7juxATOY43HGZnOVLDXpcQcjMvR3t1Nlk=;
-        b=mbalzzsy2+l9+8NfzUqf1lF0CbzGzkeTZo5/L8yVxqiiczHV+0g0bGrcNPYoZMKCMS
-         cOEBtNx5CIKcwrM8VRDt5mxpYBzQFYmHQQ7xo6zyTMrymaQSI83Pslwihjlb8wxdA/Zs
-         9wP53rGUIWQdnqE5xKnWOkQd0bbgYbi7u8f3c5U0PiSafF6HVhPLmr/9ycbgOsV85u8n
-         PXaRrxxxV/qpBNzgRtoNb4WGkanF8LvBE9xguEX6P1VKvC5RDqDTbn7S0anS6sPDcjzc
-         NcvigRgq2RW8dEM0BGg1AvKOQkGsspVG+PTsp/8+Ygx5EcEgyAJcn0wicNJXv+1Iv/YV
-         HrZg==
-X-Gm-Message-State: AMCzsaXmTgVnGXVYNYjTdY0dqqiYsluSxncX9x8Xm02wLkSP6HDVm+o/
-        wd1W0w9Fj6NDIX4poxJw6DA=
-X-Google-Smtp-Source: AOwi7QA4IyYQXC9kSxUdjYW3roJHMPOWZMVgjDmoPDJpwZ62XOiwa8S1ydzxwbrich8oaBnLc8hfHg==
-X-Received: by 10.99.127.26 with SMTP id a26mr12480998pgd.385.1507126727723;
-        Wed, 04 Oct 2017 07:18:47 -0700 (PDT)
-Received: from unique-pc ([14.102.72.146])
-        by smtp.gmail.com with ESMTPSA id u12sm27402281pfa.153.2017.10.04.07.18.40
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 04 Oct 2017 07:18:46 -0700 (PDT)
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-X-Google-Original-From: Kaartic Sivaraam <kaarticsivaraam@gmail.com>
-Message-ID: <1507126687.4204.6.camel@gmail.com>
-Subject: Re: [PATCH v2] setup: update error message to be more meaningful
-To:     Junio C Hamano <gitster@pobox.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-In-Reply-To: <xmqq7ewdm5pm.fsf@gitster.mtv.corp.google.com>
-References: <xmqqlgnbq7sc.fsf@gitster.mtv.corp.google.com>
-         <20171002173002.4278-1-kaarticsivaraam@gmail.com>
-         <xmqq7ewdm5pm.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset="ISO-8859-15"
-Date:   Wed, 04 Oct 2017 19:48:07 +0530
-Mime-Version: 1.0
-X-Mailer: Evolution 3.22.6-1 
-Content-Transfer-Encoding: 8bit
-X-Cyberoam-smtpxy-version: 1.0.6.3
-X-Cyberoam-AV-Policy: default
-X-CTCH-Error: Unable to connect local ctasd
+        id S1752553AbdJDPDt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Oct 2017 11:03:49 -0400
+Received: from ikke.info ([178.21.113.177]:60360 "EHLO vps892.directvps.nl"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752390AbdJDPDr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Oct 2017 11:03:47 -0400
+Received: by vps892.directvps.nl (Postfix, from userid 1008)
+        id 9176044039C; Wed,  4 Oct 2017 17:03:45 +0200 (CEST)
+Date:   Wed, 4 Oct 2017 17:03:45 +0200
+From:   Kevin Daudt <me@ikke.info>
+To:     rpjday@crashcourse.ca
+Cc:     git@vger.kernel.org
+Subject: Re: distinguishing between staged and unstaged content in a stash?
+Message-ID: <20171004150345.GC1667@alpha.vpn.ikke.info>
+References: <20171004071046.Horde.89FTNuoUz8wPxhsuejrB03G@crashcourse.ca>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20171004071046.Horde.89FTNuoUz8wPxhsuejrB03G@crashcourse.ca>
+User-Agent: Mutt/1.8.3 (2017-05-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 2017-10-03 at 09:32 +0900, Junio C Hamano wrote:
+On Wed, Oct 04, 2017 at 07:10:46AM -0400, rpjday@crashcourse.ca wrote:
 > 
-> As an aside, I wonder if we want to _() the message.  It's outside
-> the scope of this fix, obviously.
+>   couple (admittedly trivial) questions about stashing. first, can i
+> clarify that when one stashes content, a stash *always* distinguishes
+> between what was staged, and what was unstaged? that is, when one is
+> stashing, the "--keep-index" option relates to whether or not staged
+> changes are left in the index (and, consequently, in the working
+> directory as well), but that option has no effect on the final content
+> of the stash, yes? even if "--keep-index" is used, staged content
+> still ends up in the stash.
+> 
+>   also, is there a simple way to distinguish between the staged and
+> unstaged contents of a stash (or, more basically, is this even a
+> useful question to ask)? out of curiosity, i tried to figure out
+> how to do this, and came up with the following.
+> 
+> to see staged portion of stash@{0}:
+> 
+>   $ git show stash@{0}^2
+> 
+> to see unstaged portion:
+> 
+>   $ git diff stash@{0}^2 stash@{0}
+> 
+> it's not like i have a pressing need to do that, i was just curious
+> if there's a simpler way to do this, or if this is just not something
+> people should need to do on a regular basis.
+> 
+> rday
+> 
+> 
 > 
 
-I'm surprised it isn't already! I think it should.
+There was a recent thread about this[0]. The conclusion is that it's
+seen as a good change, someone just needs to supply the patch to do
+this. A possible solution was also provided (from before that thread)
+here [1]
 
-
-As an aside, I wanted to know whether we should add
-'test_expect_failure's for commands of the following sort,
-
-    git log -p --full-diff master --stat
-     
-    git commit -v Makefile --amend
-
-just to keep us reminded that these are accepted not by design but by
-accident ?
-
----
-Kaartic
+[0]:https://public-inbox.org/git/1505626069.9625.6.camel@gmail.com/
+[1]:https://public-inbox.org/git/20170317141417.g2oenl67k74nlqrq@sigill.intra.peff.net/
