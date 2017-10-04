@@ -2,105 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D3952036C
-	for <e@80x24.org>; Wed,  4 Oct 2017 19:36:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E67672036C
+	for <e@80x24.org>; Wed,  4 Oct 2017 21:17:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751156AbdJDTgW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Oct 2017 15:36:22 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:34617 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750787AbdJDTgV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Oct 2017 15:36:21 -0400
-Received: by mail-pg0-f68.google.com with SMTP id u27so13891643pgn.1
-        for <git@vger.kernel.org>; Wed, 04 Oct 2017 12:36:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=+bMt0T7GcjL3KUzTXu2KoZGoLoOv5umnab+53sBCSL4=;
-        b=TJ2+CBK93N2O859owz/45B4mJJEIPPBb6Bgmu/TxVkFc+D5XDssZ/r+gvCwU1bCYoW
-         ldCGTeWnzj+wYqTfyt0U3DJTNEEF8zq29yaJAzyy3pk77fzcSnMOIGfqdZlTKAfyFb5D
-         0w/yrginF/H1tcGdl5YW7ZGMRsMYMaAHNvkwuqO0hOlhJA3aiATQUJ97nXGBdd7pWP8y
-         1bYCFuLH2knGnGrC7mqzALwpFUhWBkDkooFqFEqRQfsoT+GzIupZyG2QfuDQVK5488uV
-         leuxeIixnxvp3ITXhquKh2A3Ur3SzGjtubaVvBr0QbT1szi92xMKwC+iBuDzbOhCOicP
-         8kjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=+bMt0T7GcjL3KUzTXu2KoZGoLoOv5umnab+53sBCSL4=;
-        b=LWB5SOb3wdL1whdJkgayqloEDGh0o5zAlqPdDkxfO4VGIiyfm5l4lkOy/ffvKtxBeh
-         mpyPnMKmWw7K4tZNBCWRKyzE78zDbJm9PkanVUlVtb9+is46QJJzKJTXYPcz3Jev6IO4
-         7WxxgosaEDmL0JsKq7GgN6/jQCR+bWYTfcVRI8ElmubT7gApyDCHIFGZrXyk9Gay23fq
-         jaqQtTzNxb9E+Jl59gzF8T/Gi+0vROqVHp6I8K70y/0r9EDFD65ZKqxIzn2+KOZ4cfAD
-         r8j+9CPbDOE+XIRsO/PKgdpGawqCYsCfkqILGGpV4L7eOG0vIpQwbIC1nK8rwMatfL/S
-         Ab6g==
-X-Gm-Message-State: AHPjjUjz490AxD5JP7OFaa8Ap2Bqhnka5WFcE/6u+rh0erk9NkwiE2ZY
-        WuqW0WVaMT4+zdw2KHFt3p4=
-X-Google-Smtp-Source: AOwi7QCEOKydZgwz1jZgsBvV6enLdXbjgcOjQv2DgnaFd6/v5N+LcwRqadbrCh4tibfw1WVekgP34g==
-X-Received: by 10.101.70.138 with SMTP id h10mr19469474pgr.8.1507145780574;
-        Wed, 04 Oct 2017 12:36:20 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:e14c:b8fa:a887:14e1])
-        by smtp.gmail.com with ESMTPSA id d7sm12722598pgf.20.2017.10.04.12.36.19
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 04 Oct 2017 12:36:19 -0700 (PDT)
-Date:   Wed, 4 Oct 2017 12:36:17 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Thomas Gummerer <t.gummerer@gmail.com>,
-        git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 1/3] path.c: fix uninitialized memory access
-Message-ID: <20171004193617.GR19555@aiede.mtv.corp.google.com>
-References: <20171003195713.13395-1-t.gummerer@gmail.com>
- <20171003195713.13395-2-t.gummerer@gmail.com>
- <20171003224501.GD19555@aiede.mtv.corp.google.com>
- <20171003233040.2ws6kny3e4kypfub@sigill.intra.peff.net>
- <20171003233706.GH19555@aiede.mtv.corp.google.com>
- <xmqqfuazecym.fsf@gitster.mtv.corp.google.com>
+        id S1751441AbdJDVRl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Oct 2017 17:17:41 -0400
+Received: from mout.web.de ([212.227.15.3]:56843 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751195AbdJDVRk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Oct 2017 17:17:40 -0400
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0M6V2p-1d7CrM02WJ-00yMlB; Wed, 04
+ Oct 2017 23:17:35 +0200
+Date:   Wed, 4 Oct 2017 23:17:34 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Robert Dailey <rcdailey.lists@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>
+Subject: Re: Line ending normalization doesn't work as expected
+Message-ID: <20171004211734.GA25379@tor.lan>
+References: <CAHd499B5hM9ixnsnwWwB2uyDT10dRQpN473m5QjxH9raHtFXiw@mail.gmail.com>
+ <958c9b03-062c-0bea-3b25-939a36659f32@web.de>
+ <CAHd499AD5Kgbp-vxXTnEPkb-Mb5oEeXhaRO5kGniDdqmXwd2QQ@mail.gmail.com>
+ <88c57b88-ef2c-d7db-15e2-12791d4cb201@web.de>
+ <xmqq8tgrhdt0.fsf@gitster.mtv.corp.google.com>
+ <CAHd499BCMOcur6NRbKfwd81zpnyzoiVCY54d=UmGpAhbD7AVTA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <xmqqfuazecym.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAHd499BCMOcur6NRbKfwd81zpnyzoiVCY54d=UmGpAhbD7AVTA@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K0:NkUS65xuNNW42sFX4EUUUWYgGy6dR3qV22twgqGO/r+tXNHq0Kg
+ fV66LOu545Fpvmtpm8E5XVgHDvNiqR3SXM+YazYJ7zj6TQoRsrXE1qi+it1gs+Ii1tssVpY
+ 0SQOaRsRCyEBjZ4sgi5oIhT+GXrJIctn1Z8+i1pEBNuklR1/1wS/JI53F9y/0XbgR90yd2R
+ YUhm6Ck4HPDw6y6Z4ZlGQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:sUpn2I8PQoY=:w96SFUc27TQEC9IP8K0CdD
+ GFN9tnfr75j9x+f5NsPAvgSs/FcI2ONuz9nBsv6CVFWrvBoenebv07XMYOVfJAvKtHT7/dFW4
+ Mjcg+59i1jWitie2mJm747rPMsdMiujndgJwHb6hYJ/LlbffqLhWgsPq0zTcLxoIiXUDpdwUG
+ vNTXigj/WGjNNsiWLe7G8UW4yOaEg2uP7MvsNkfRXs81hZYHluLn62mUV3VAySlb2AIc064iB
+ KcUlVztw5TCTdxBMfBjN6XT0IMWyusaYKKEADn2sWoMCrgkEIUGjqXa4dMB6/ZnSsVTuxhl/O
+ R97xqkon3seKNRKQGxC8porqwnR90IICDvtAskX+yJJDT0Xg47MjHyKCzJR9YnKmodGFwiX+x
+ 7Irv7qfJ8SGXFxGTsgzOBTj3cVJVE0r8GosmCF3fKtBhecyYkbBoxUc8bcMoSDVM0KGqemkr1
+ HkGJoligD7EIwB9yR4wsxrR/MYUWY+bTOrLksyTxJzC1WCYNQ6a/d9H8MOoWM+M1D26ZjVwKR
+ /Lkry0omm0+WvrB84cPJKqMzke6Cn70da3EATiwwWowyUSktgFqv2Z803dMzoWliVXe7/trfN
+ mSuKJXjoQXyY0gdbpu2v5iGgqiw0guHVt1qKHMOsiOS4EpWaoLp/yTgOZDji4HV2rqpxzfZI7
+ vicipDlqMLC0f1SW43qA5n1tEe9SwphNbi18xg5TqOye6crSd1UHADpBzKU3hwp9mYbNVpMZI
+ ifCiTvw46kY6OosWBfHIvxOaR6q1uha9VfwBiYkbM5z3AlmzhhKZzOW8e8D1fJvNnA7ka34Jt
+ Jlxk5998ZJVR0AzkFr1RTbToqgmtw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-
-> From: Jeff King <peff@peff.net>
-> Date: Tue, 3 Oct 2017 19:30:40 -0400
-> Subject: [PATCH] path.c: fix uninitialized memory access
+On Wed, Oct 04, 2017 at 11:26:55AM -0500, Robert Dailey wrote:
+> On Tue, Oct 3, 2017 at 9:00 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> > Torsten Bögershausen <tboegi@web.de> writes:
+> >
+> >>> $ git rm -r --cached . && git add .
+> >>
+> >> (Both should work)
+> >>
+> >> To be honest, from the documentation, I can't figure out the difference between
+> >> $ git read-tree --empty
+> >> and
+> >> $ git rm -r --cached .
+> >>
+> >> Does anybody remember the discussion, why we ended up with read-tree ?
+> >
+> > We used to use neither, and considered it fine to "rm .git/index" if
+> > you wanted to empty the on-disk index file in the old world.  In the
+> > modern world, folks want you to avoid touching filesystem directly
+> > and instead want you to use Git tools, and the above are two obvious
+> > ways to do so.
+> >
+> > "git read-tree" (without any parameter, i.e. "read these 0 trees and
+> > populate the index with it") and its modern and preferred synonym
+> > "git read-tree --empty" (i.e. "I am giving 0 trees and I know the
+> > sole effect of this command is to empty the index.") are more direct
+> > ways to express "I want the index emptied" between the two.
+> >
+> > The other one, "git rm -r --cached .", in the end gives you the same
+> > state because it tells Git to "iterate over all the entries in the
+> > index, find the ones that match pathspec '.', and remove them from
+> > the index.".  It is not wrong per-se, but conceptually it is a bit
+> > roundabout way to say that "I want the index emptied", I would
+> > think.
+> >
+> > I wouldn't be surprised if the "rm -r --cached ." were a lot slower,
+> > due to the overhead of having to do the pathspec filtering that ends
+> > up to be a no-op, but there shouldn't be a difference in the end
+> > result.
 > 
-> In cleanup_path we're passing in a char array, run a memcmp on it, and
-> run through it without ever checking if something is in the array in the
-> first place.  This can lead us to access uninitialized memory, for
-> example in t5541-http-push-smart.sh test 7, when run under valgrind:
->
-> ==4423== Conditional jump or move depends on uninitialised value(s)
-> ==4423==    at 0x242FA9: cleanup_path (path.c:35)
-[...]
-> ==4423==  Uninitialised value was created by a heap allocation
-[...]
-> ==4423==    by 0x29A30B: strbuf_grow (strbuf.c:66)
-> ==4423==    by 0x29A30B: strbuf_vaddf (strbuf.c:277)
-> ==4423==    by 0x242F9F: mkpath (path.c:454)
-[...]
-> Avoid this by using skip_prefix(), which knows not to go beyond the
-> end of the string.
->
-> Reported-by: Thomas Gummerer <t.gummerer@gmail.com>
-> Signed-off-by: Jeff King <peff@peff.net>
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+> You guys are obviously worlds ahead of me on the internals of things,
+> but from my perspective I like to avoid the "plumbing" commands as
+> much as I can. Even if I used them, if I have to tell the rest of my
+> team "this is the way to do it", they're going to give me dirty looks
+> if I ask them to run things like this that make no sense to them.
+> That's the argument I have to deal with when it comes to Git's
+> usability within the team I manage. So based on this, I'd favor the
+> `git rm -r --cached` approach because this is the more common result
+> you see in Google, and also makes a little more sense from a high
+> level of thought perspective. However, this is just my personal
+> opinion. `read-tree --empty` is far less self explanatory IMHO.
+> 
+> Also let's not forget the second part of the command chain that
+> results in the different behavior. In one case, I use `git add` which
+> results in proper line ending normalization. In the other case, I do
+> `git reset --hard` which does *NOT* result in the line endings
+> normalized (`git status` shows no results). In both cases, I'm still
+> doing `git rm -r --cached`, so I am doubtful that is the root cause
+> for the line ending normalization piece. I'm still trying to
+> understand why both give different results (root cause) and also get
+> an understanding of what the correct (modern) solution is for line
+> ending normalization (not necessarily which is the right way to
+> clear/delete the index, which is really AFAIK just a means to this end
+> and an implementation detail of sorts for this specific task).
 
-This is indeed
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Hopefully I am able to give a useful answer.
 
-Thanks.
+"git reset --hard" works like a hammer
+and may destroy work that has been done,
+in our case the cleaning of the index,
+which is needed for normalization since Git 2.10 (or so)
+
+Back to the question:
+One solution, which you can tell your team, is this one:
+$ git rm -r --cached . && git add .
+
+And as Junio pointed out, this may be slower than needed.
+And we don't want "slow" solutions in the official documentation ;-)
+
+Whatever you find on search engines may get stale after a while,
+so that we appreciate direct questions here.
+
+(And I will open an issue on Github the next days)
+
+The background is that the CRLF handling in Git changed over the years,
+and one effect is that "git reset" is not "allowed" any more.
+
+For the interested reader:
+https://github.com/git-for-windows/git/issues/954
+
