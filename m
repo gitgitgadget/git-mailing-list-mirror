@@ -2,140 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C13AA20365
-	for <e@80x24.org>; Wed,  4 Oct 2017 12:27:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2BE552036D
+	for <e@80x24.org>; Wed,  4 Oct 2017 12:47:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751962AbdJDM1v (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Oct 2017 08:27:51 -0400
-Received: from mail-qk0-f180.google.com ([209.85.220.180]:45319 "EHLO
-        mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751947AbdJDM1u (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Oct 2017 08:27:50 -0400
-Received: by mail-qk0-f180.google.com with SMTP id c67so10616675qkg.2
-        for <git@vger.kernel.org>; Wed, 04 Oct 2017 05:27:50 -0700 (PDT)
+        id S1752050AbdJDMr1 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Oct 2017 08:47:27 -0400
+Received: from mail-io0-f196.google.com ([209.85.223.196]:37194 "EHLO
+        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751278AbdJDMr0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Oct 2017 08:47:26 -0400
+Received: by mail-io0-f196.google.com with SMTP id m201so2447373iom.4
+        for <git@vger.kernel.org>; Wed, 04 Oct 2017 05:47:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=eeFHC/64/EqoJujmwvXzFNdLIXwF3Qt0BEBqia6AG/g=;
-        b=MjYqBSJG9x8B3hpo1a0QwzLnDgUJfWzAl5VB4Xkaw3RboJ4OwLFjvRNX01pc5lVU+R
-         Pc6eZZlOFzNEMpp7GmpYewZC6vgi3WCVUekBIGc3brVuc2JzsA9GheoJ1OR8RSvAhHSm
-         uz3WYtc6S5bE1b99nuIquA3lqU+0ku3voLcepUCvE3LhxQfYY4WdICHJP8gj8VwPlcS/
-         cqD1nVGnU7DkaiPqLDezNfdmsblLgaqhMuw/ubxFa6JeMrIm3rhhBhbc0EQ/C2z9xn4M
-         Z7/K19ueOWJOxX5RlJem7N+9T9xaMHELCIb9N3OxhHpRTUjo/sLslX4KxC9mrO+3BgUx
-         5l3w==
+        h=message-id:subject:from:to:cc:in-reply-to:references:date
+         :mime-version:content-transfer-encoding;
+        bh=NhqsA6yxNwEsoUB2oxau0kb38NatpAOgspfd1Eejsrc=;
+        b=Y2oPh7iOvtklUx+GRWeGfhYSrgv8tqHE+V5ZObG2XnuFMQ586P8RlmKEeZnD+spTMw
+         QRiMmaNTwREn3ldEHikFJIYM7vcE5a6gFlewhOg/aFZnzI7AaDz8C0HUInI7Y66BM/S8
+         XhetYtwP20TCv1yxf3cl6TO+kytqJtvdU+lmY8hlpWKktu8IUZ1dMHQL6vVHAQc8f9qc
+         XQ/a4frX+7fNMWq+6/vINdZGh9zashw+Xdr7YKNrMc0quEA69CGdpIrWJVe9Mv6I83dg
+         2dtn6d4vT58khEImEFwdGw9lOoUgMewcvCdPLpBcZ1/FS4WaL3iDyx2+aNrvVfGqtyTD
+         gJJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=eeFHC/64/EqoJujmwvXzFNdLIXwF3Qt0BEBqia6AG/g=;
-        b=HTOy+CwdYWBtf1j81CYvO+J7oSh1lFw/55qpF8yHcJpFkd7MEgmegCHaOC8i07Bth+
-         bkqRJOJezIUMl01MUYaTSQxP8gWrJdbxVA3TOoAcsXyl1B82FYnm5HjSQveaNu5AElGT
-         ZHRaHuPu96QhK2gl8cS/0jeBjp/5QrACPGghJsGUCKfJIyY0nKNZtqGuxr77PferYiJG
-         LH85XXj4j4kgJf4w3ECqsTudL0oI7QZpJ204WAdRZ+2uqCdbf88828rZLwC0PX7XSgo6
-         BVBfHYagJ/lTAFB3rOcMcP8Xh9b8Uws5ywgcBw3FjIGDHmOm7T4DHZNetSH++ErV1qph
-         bqyA==
-X-Gm-Message-State: AMCzsaUJEUkOp08VnN/uMzR+tXEdGodoxjI3CFOUKD6Lz6wFF6ux5pC8
-        g0yBysTjk1PyTaJfdLut8zI=
-X-Google-Smtp-Source: AOwi7QCRNMHoDoO04/6eoSvb96ja58xq21A2II7vZOtrEk026UDTVqKiwocbdeDUhsvf5+h+QSz8Lg==
-X-Received: by 10.55.198.209 with SMTP id s78mr22397444qkl.143.1507120069485;
-        Wed, 04 Oct 2017 05:27:49 -0700 (PDT)
-Received: from [192.168.1.13] ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id m31sm10296802qtf.55.2017.10.04.05.27.47
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 04 Oct 2017 05:27:48 -0700 (PDT)
-Subject: Re: [PATCH v8 00/12] Fast git status via a file system watcher
+        h=x-gm-message-state:message-id:subject:from:to:cc:in-reply-to
+         :references:date:mime-version:content-transfer-encoding;
+        bh=NhqsA6yxNwEsoUB2oxau0kb38NatpAOgspfd1Eejsrc=;
+        b=mySBZa7zurSYYVFgsn/6gjh/PEeqKeZFafNDE/jbLEdw/uaMTYURMnBvEyLLj1ByxM
+         N5Ig7ednLB8YsLGqDr/jZvPGZTZT5QD6KWiRvvzB7uxmAw0aGPBUwcpbx0L/oGiCvzR2
+         eYSf0X1utwr1aOi438cTOeOMJLufB2FpGEABa+2haK1Gy8789h+B5wB6J9qDYAzl0eGx
+         /nT/3x4Ojjp+vE8KSfLxT3wKDSZUO62LDjWfCAXhMJJLt68397zJqEipqWVylfo0zWPd
+         oxVZDHeEFQpdXkG0wFpMFpKX519310tTv1CQnA72hlkSX+HraLdbb7A9xsT1IihBCAQv
+         XYfw==
+X-Gm-Message-State: AMCzsaXvLv8dXSBH06C6lhMLes2UTw3lejNZ8ZvJLfw15fGDDtfwyXNt
+        udYZg3S7mYZbP8CDFdGNPi7fnezg
+X-Google-Smtp-Source: AOwi7QAdLlyV0sE3r6yRaf4Rk/1ggvo0O33rKGqWzdIT22bFHTO8joDcZc2TGV4+T/VT2V5BLFfQLw==
+X-Received: by 10.107.166.206 with SMTP id p197mr32410254ioe.63.1507121245265;
+        Wed, 04 Oct 2017 05:47:25 -0700 (PDT)
+Received: from unique-pc ([14.102.72.146])
+        by smtp.googlemail.com with ESMTPSA id b126sm3983113iti.31.2017.10.04.05.47.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 04 Oct 2017 05:47:24 -0700 (PDT)
+Message-ID: <1507121174.2245.3.camel@gmail.com>
+Subject: Re: [PATCH v2] branch: change the error messages to be more
+ meaningful
+From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Ben Peart <Ben.Peart@microsoft.com>,
-        "David.Turner@twosigma.com" <David.Turner@twosigma.com>,
-        "avarab@gmail.com" <avarab@gmail.com>,
-        "christian.couder@gmail.com" <christian.couder@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "johannes.schindelin@gmx.de" <johannes.schindelin@gmx.de>,
-        "pclouds@gmail.com" <pclouds@gmail.com>,
-        "peff@peff.net" <peff@peff.net>
-References: <20170919192744.19224-1-benpeart@microsoft.com>
- <20170922163548.11288-1-benpeart@microsoft.com>
- <xmqq7ewiz1mz.fsf@gitster.mtv.corp.google.com>
- <MWHPR21MB0478B8D1C5442B2FCE1ED465F47E0@MWHPR21MB0478.namprd21.prod.outlook.com>
- <xmqqk20fuvg7.fsf@gitster.mtv.corp.google.com>
- <fd972756-4ad3-4b96-23d0-e2c9e59189d1@gmail.com>
- <xmqqzi97fytt.fsf@gitster.mtv.corp.google.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <a7e5d944-7ff0-9c80-17db-7802607d4087@gmail.com>
-Date:   Wed, 4 Oct 2017 08:27:47 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
-MIME-Version: 1.0
-In-Reply-To: <xmqqzi97fytt.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Cc:     git@vger.kernel.org
+In-Reply-To: <xmqqwp4beemb.fsf@gitster.mtv.corp.google.com>
+References: <20170730115908.13841-1-kaarticsivaraam91196@gmail.com>
+         <20170821133608.5652-1-kaarticsivaraam91196@gmail.com>
+         <1506964786.3504.3.camel@gmail.com>
+         <xmqqbmlpm67l.fsf@gitster.mtv.corp.google.com>
+         <1507058081.7360.5.camel@gmail.com>
+         <xmqqwp4beemb.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset="ISO-8859-15"
+Date:   Wed, 04 Oct 2017 18:16:14 +0530
+Mime-Version: 1.0
+X-Mailer: Evolution 3.22.6-1 
 Content-Transfer-Encoding: 7bit
+X-Cyberoam-smtpxy-version: 1.0.6.3
+X-Cyberoam-AV-Policy: default
+X-CTCH-Error: Unable to connect local ctasd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, 2017-10-04 at 13:11 +0900, Junio C Hamano wrote:
+> 
+> It is a bit dissapointing that we do not need to touch tests, as it
+> indicates that the logic to diagnose extra arguments as an error has
+> no coverage.
 
+Even if there were tests I don't think they would have needed any
+updation as most of the tests (at least those that I came across) that
+check for failure seem not to be checking for what error message gets
+printed. They seem to test only if the command fails (using
+test_must_fail in most cases, I guess).
 
-On 10/3/2017 10:09 PM, Junio C Hamano wrote:
-> Ben Peart <peartben@gmail.com> writes:
-> 
->> Well, rats. I found one more issue that applies to two of the
->> commits. Can you squash this in as well or do you want it in some
->> other form?
-> 
-> Rats indeed.  Let's go incremental as promised, perhaps like this
-> (but please supply a better description if you have one).
+Moreover, as a consequence of my assumption that the tests don't check
+for the error messages themselves; I haven't even thought of checking
+whether the tests or the travis-ci build succeeded as a consequence of
+my patches that touch "only" the error messages!
 
-Thank you.  Looks good.
-
-> 
-> -- >8 --
-> From: Ben Peart <benpeart@microsoft.com>
-> Subject: fsmonitor: MINGW support for watchman integration
-> 
-> Instead of just taking $ENV{'PWD'}, use the same logic that converts
-> PWD to $git_work_tree on MSYS_NT in the watchman integration hook
-> script also on MINGW.
-> 
-> Signed-off-by: Ben Peart <benpeart@microsoft.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->   t/t7519/fsmonitor-watchman                 | 2 +-
->   templates/hooks--fsmonitor-watchman.sample | 2 +-
->   2 files changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/t/t7519/fsmonitor-watchman b/t/t7519/fsmonitor-watchman
-> index 7ceb32dc18..cca3d71e90 100755
-> --- a/t/t7519/fsmonitor-watchman
-> +++ b/t/t7519/fsmonitor-watchman
-> @@ -36,7 +36,7 @@ my $system = `uname -s`;
->   $system =~ s/[\r\n]+//g;
->   my $git_work_tree;
->   
-> -if ($system =~ m/^MSYS_NT/) {
-> +if ($system =~ m/^MSYS_NT/ || $system =~ m/^MINGW/) {
->   	$git_work_tree = `cygpath -aw "\$PWD"`;
->   	$git_work_tree =~ s/[\r\n]+//g;
->   	$git_work_tree =~ s,\\,/,g;
-> diff --git a/templates/hooks--fsmonitor-watchman.sample b/templates/hooks--fsmonitor-watchman.sample
-> index 870a59d237..c68038ef00 100755
-> --- a/templates/hooks--fsmonitor-watchman.sample
-> +++ b/templates/hooks--fsmonitor-watchman.sample
-> @@ -35,7 +35,7 @@ my $system = `uname -s`;
->   $system =~ s/[\r\n]+//g;
->   my $git_work_tree;
->   
-> -if ($system =~ m/^MSYS_NT/) {
-> +if ($system =~ m/^MSYS_NT/ || $system =~ m/^MINGW/) {
->   	$git_work_tree = `cygpath -aw "\$PWD"`;
->   	$git_work_tree =~ s/[\r\n]+//g;
->   	$git_work_tree =~ s,\\,/,g;
-> 
+---
+Kaartic
