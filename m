@@ -2,119 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 588A12036C
-	for <e@80x24.org>; Wed,  4 Oct 2017 21:25:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C3F7F2036C
+	for <e@80x24.org>; Wed,  4 Oct 2017 23:29:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752097AbdJDVWc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Oct 2017 17:22:32 -0400
-Received: from mail-qk0-f171.google.com ([209.85.220.171]:55914 "EHLO
-        mail-qk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752094AbdJDVVe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Oct 2017 17:21:34 -0400
-Received: by mail-qk0-f171.google.com with SMTP id x82so3006563qkb.12
-        for <git@vger.kernel.org>; Wed, 04 Oct 2017 14:21:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=duJ6L0AEanJPmh6jlWO7UXgMLG860BiNp40s7jswcI8=;
-        b=Z61y1jaanQcoEu/wTMjP4J4ZIJVs+5b779wZR0ZaAvYBfNhFW5186WXB7SBkwt0G7F
-         N8UeFeQgzJiEkwj+51eD4PGNxtPPUJ8ModM/Dib49r5F2BuPlspJlkGHlXyZLJtAGkq/
-         tXE33roQCoElRw7tFhnkHseFA6EgchHRPS99zzMxaKZ0fX5u6zT/uynVf4fsFVLZbUzs
-         s0iGXkoWE43GNU6mv73IClT9pbKGSmrKLYGUiNgiUdgA1XZoJNPDlg0wlCB9PU5SSoah
-         vfQN+m4/WWo54WaWhRefqk8cLr3tleDGr/VUQZ8uR6Jcpj/kAcQpu4gyg+gWtQ+2+XHe
-         v+UA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=duJ6L0AEanJPmh6jlWO7UXgMLG860BiNp40s7jswcI8=;
-        b=YiPtIxPztnEnBuzeGc4SRn8QaZgNxuL3sWVe6BFQ3+OHSzN1sMtkrSexeezrbeJOPf
-         SFAT4RUDrvujUihb2gaKGjd4zCOLfw2yYDtmnQ6RJXH48gUQcyQxhovRUdo6K7n5LoTC
-         JC/xwxoQYOAdHymhr8ZizaVoyybeKPX2h9XbK3T6aVcDrjLbSEuJl9PeVgypfsJswXZM
-         VCSQZcKxT8SqWZD3jlMweVUSedn5bdCZ+bYLbk2EJWKeFeJ/J4CwVH3h3Idb0sxP4Iys
-         FawTaSHxW+Jz4FcP/cMkbBSkdP3IWoC1LLlfGzJ8UuAJD5i0J0C5cy1NzY/FyXXaJdxL
-         SDrQ==
-X-Gm-Message-State: AMCzsaVjSjqELytFrUwZGnnxhrQBq3fLbGvQeNHuEKO9RFBwYJ5Nyr4y
-        siA1sJa3cUoUySwu4G+S5kBPsCzQjCGp+K7do0sk1HGv
-X-Google-Smtp-Source: AOwi7QDffKPJbVFcyLWWD3lGcjdifDC+bpwGZWDjAbsoGYLvDJVJKVPXh0cVDSfGqz0UNLwx/kvSWQMxOQlIFX3qtUo=
-X-Received: by 10.55.144.69 with SMTP id s66mr27618405qkd.111.1507152093580;
- Wed, 04 Oct 2017 14:21:33 -0700 (PDT)
+        id S1751413AbdJDX3h (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Oct 2017 19:29:37 -0400
+Received: from mout.gmx.net ([212.227.17.22]:64874 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751169AbdJDX3f (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Oct 2017 19:29:35 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MPD8G-1dvVNt0PmC-004VDU; Thu, 05
+ Oct 2017 01:29:33 +0200
+Date:   Thu, 5 Oct 2017 01:29:32 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     =?UTF-8?Q?Andr=C3=A9_Netzeband?= <andre@netzeband.eu>
+cc:     git@vger.kernel.org
+Subject: Re: cmd.exe Terminal is closing when cloning a repository on windows
+ 10 (64.bit)
+In-Reply-To: <5aa837bb-04ae-d80d-3a91-53d06fd7456f@netzeband.eu>
+Message-ID: <alpine.DEB.2.21.1.1710050128410.40514@virtualbox>
+References: <5aa837bb-04ae-d80d-3a91-53d06fd7456f@netzeband.eu>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.237.35.12 with HTTP; Wed, 4 Oct 2017 14:20:53 -0700 (PDT)
-In-Reply-To: <20170928211859.uw7dep6gypsifivy@sigill.intra.peff.net>
-References: <CAPMsMoBK+EQZQx4FUs_EqN+BE+93-mtu9kzViqQ6B=LUOFESbw@mail.gmail.com>
- <20170928211859.uw7dep6gypsifivy@sigill.intra.peff.net>
-From:   pedro rijo <pedrorijo91@gmail.com>
-Date:   Wed, 4 Oct 2017 22:20:53 +0100
-Message-ID: <CAPMsMoCCE=tux5Pi=eC8_YtFb93TYOgrZdOS9CXnuLyRr+1v=w@mail.gmail.com>
-Subject: Re: hacktoberfest
-To:     Jeff King <peff@peff.net>
-Cc:     Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/mixed; boundary="8323329-391630432-1507159773=:40514"
+X-Provags-ID: V03:K0:n4i8R0lx0s2jh5FLiDkg0eJX3nqzL56BSYretmN1ogWnQDIqEU9
+ m+hCdZFC2me1XVPxOP3O9Lmt1X2ucjyICrqtUs7+8mql+FF8luza+jIpDpzp/bw9EdgwwTl
+ 4hIHLz3mei1nAJha8zs8HqKldD7wl6/NHOiHqpCiJOx7KOFgt6sKQqmbOvYlknA3dl2AAD6
+ DHRcB/IAtdcbamiu25ujw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:oIXPcbIICwM=:TTvmLdyfpPRXMH8ufbRW8a
+ Uai/kbQzcReg/FjFViU1UViFVmYJid+M3+3dkay3ycH1HYOv9CTG2Ybwpkkro+nv/7tMUnAsE
+ M+SMa6+Og7ezOvSu/tA4ZUlC/7NsDKwJVgqZyeDfLgQITmTco7/hUXWghdCWA0yRPKZrK1aH3
+ OxwIOlcGlSn6eFGx908MLH0IIy0tzGRoMDmku7U8EgWRMkoE5ZfOiR3mkvwae7XmlhSSw1gVF
+ ChKRisIilr+C26AYe8YLFpr4SMIEo+ivT8fi6Psh3kpXecWh39H3d6340DHy6pUI7BfICQ4Cm
+ rB2+Exqho9g3OC2kIjacaY9dRz1oX1/hlFhkaNCbZOYYVtoyJmKfUUFlfD9JcSbAWVv5Xf3bi
+ I0vxS2frxcBvBt8toX8Wj3f+9BsYatqsukBsvittsBk4oSC4HmSDUTn3C/rDeqyNit0WSuA0l
+ 2oG/C795y8Q7wEaKsdPu/wc16BWL7vM52Zrue9cEOmEkQb5FhlmWvwzfUP+wkouSBS1XQ2PAc
+ BOcS5dGVs+gdQjN/osTSWGwsaMHD78+3nTcBUvSchuElPBWHz2xDaK9RbRcWCROKkEha4SAwW
+ bqMhKMZqEGPTSET0OLVYQThyz3m0rcqQuOiArowjf+hlRHOaasfSsZVKeecTGQzSQzOX/jWmE
+ AQ0luSnPEUbaC+cEyJHQky6gGOSnRnpcksxboGXSWi0B5Y2H5ny4gI9Mx9vqY0KjbXOdfxUZP
+ RaFZQ+1/2RDXuUsaTO3elQVRYCRw2WHz133fP+YEDLorNgyp7f2sQipZZ0eQL44jVhn55h2fn
+ FY1MRfKLEsgD2ugDEdGPAHMXC2Ei/nvfYIfy9JNYXiFRIBiuXo=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-seems my last answer was blocked due to HTML :(
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-here's the answer: Seems a nice start yes. I've been on vacations, but
-next week I will go trough the current issues and add the
-hacktoberfest label to some issues if you agree.
+--8323329-391630432-1507159773=:40514
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-I went through the open issues a few moments ago. Some were closed
-(solved or not applicable anymore), and some got an hacktoberfest
-label, hoping new contributors pop up. Feel free to have a look and
-add new issues to the label, as well as remove some of those I thought
-it could be a good fit. There are easy issue, and some not so easy
-(not very hard, but a bit more work) probably.
+Hi Andr=C3=A9,
 
-Issues labeled:
-https://github.com/git/git-scm.com/issues?q=is%3Aopen+is%3Aissue+label%3Ahacktoberfest
+On Mon, 2 Oct 2017, Andr=C3=A9 Netzeband wrote:
 
-Thanks,
-Pedro
+> I installed git for windows 2.14.2 (64bit) and was trying to clone a
+> repository from a command terminal (cmd.exe):
+>=20
+> git clone https://Netzeband@bitbucket.org/Netzeband/deep-speeddreams.git
+>=20
+> First everything went well, but after the repository was downloaded the L=
+FS
+> download started. At this point the terminal window just closed and I was=
+ not
+> able to see anything related on the terminal. There was no error message.
+> However several git processes (and git lfs) were running in the backgroun=
+d and
+> downloaded everything for the repository (all lfs files).
+>=20
+> The same happens if I use the git-bash.
+>=20
+> After switching back to 2.13.0 with the same settings during installation=
+,
+> this error did not occur again.
+>=20
+> I'm using Windows 10 (b4 bit) which all current updates installed.
 
-2017-09-28 22:19 GMT+01:00 Jeff King <peff@peff.net>:
-> On Wed, Sep 27, 2017 at 11:05:49PM +0100, pedro rijo wrote:
->
->> While the git repository itself is not hosted under GitHub, the Pro
->> Git book, git for Windows, and git-scm website (at least) projects
->> are, and could use this movement to get some more contributions, and
->> eventually more maintainers (at least git-scm website had some
->> maintainers problem some time ago).
->>
->> I've been helping on the git-scm repository (mostly filtering issues
->> and PRs), and I know there are still some issues which need to be
->> addressed. If the remaining maintainers agree, we could filter and
->> provide more instructions to some easy (or not so easy) issues, adding
->> the 'hacktoberfest' label and try to use this movement to solve some
->> problems
->
-> I'd love it if more people wanted to contribute to the git-scm
-> repository. I think one can probably find some low-hanging fruit by
-> looking at the open issues list (though I'd be happy, too, if people
-> with bug or feature suggestions opened new issues).
->
-> Here are a couple small-to-moderate bugs that have been languishing:
->
->   https://github.com/git/git-scm.com/issues/701
->
->   https://github.com/git/git-scm.com/issues/987
->
->   https://github.com/git/git-scm.com/issues/994
->
-> -Peff
+This is most likely the same issue as reported at
+https://github.com/git-lfs/git-lfs/issues/2631 and at
+https://github.com/git-for-windows/git/issues/1312.
 
-
-
--- 
-Obrigado,
-
-Pedro Rijo
+Ciao,
+Johannes
+--8323329-391630432-1507159773=:40514--
