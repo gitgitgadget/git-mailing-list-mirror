@@ -2,143 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D2AF20281
-	for <e@80x24.org>; Wed,  4 Oct 2017 10:19:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8120520281
+	for <e@80x24.org>; Wed,  4 Oct 2017 10:52:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751363AbdJDKTg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Oct 2017 06:19:36 -0400
-Received: from cloud.peff.net ([104.130.231.41]:60312 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751327AbdJDKTe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Oct 2017 06:19:34 -0400
-Received: (qmail 21130 invoked by uid 109); 4 Oct 2017 10:19:34 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 04 Oct 2017 10:19:34 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16829 invoked by uid 111); 4 Oct 2017 10:19:34 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Wed, 04 Oct 2017 06:19:34 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Oct 2017 06:19:32 -0400
-Date:   Wed, 4 Oct 2017 06:19:32 -0400
-From:   Jeff King <peff@peff.net>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-Subject: playing with MSan, was Re: [PATCH 0/3] fixes for running the test
- suite with --valgrind
-Message-ID: <20171004101932.pai6wzcv2eohsicr@sigill.intra.peff.net>
-References: <20171003195713.13395-1-t.gummerer@gmail.com>
- <20171003234153.pmslizidgbifl6en@sigill.intra.peff.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20171003234153.pmslizidgbifl6en@sigill.intra.peff.net>
+        id S1751486AbdJDKwa (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Oct 2017 06:52:30 -0400
+Received: from mail-wr0-f170.google.com ([209.85.128.170]:47203 "EHLO
+        mail-wr0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751413AbdJDKw3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Oct 2017 06:52:29 -0400
+Received: by mail-wr0-f170.google.com with SMTP id y44so3013940wrd.4
+        for <git@vger.kernel.org>; Wed, 04 Oct 2017 03:52:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=IAwd/yM9XNLR45Oy2zKr1GhFLRBhJ2TOM8ANjlphgEo=;
+        b=jKb/Hnb01ruo0CvBpDsnGiqT3TClGsG6zN31lYKVuGximemTlQOkM3zg4GjDoxMUzB
+         9tlk5syS8fISxfKL0TW0JVjDVGiJ/dwVVFagmg8a6NodP0RF7c+dMTXtpzbyfHWoBQ0A
+         sOidxIKh9WsYjJ0ZMe1Yce8t6MV6IpGKaDuZtBOFro2UMrr/AnUu4Wp1S4wGdeDQndt+
+         WbKLBPEyKdlMn5OZmMxvheFOYfVYtdw+lVhtHt/CXks6E/cgmNbTqIiEoTOYCiSrj2By
+         6yeOb0ERE7Ph3x5gGqtSupTL6M6vfQmOQVTBX8nuYP4ZxaSAkhaW/m+P+8G2LNDbbU6r
+         cqFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=IAwd/yM9XNLR45Oy2zKr1GhFLRBhJ2TOM8ANjlphgEo=;
+        b=P/vvCw0GOV92oK8OXjJH7yY+FtHgIvGKTJAu+lhEWXHQcufimXKqnIZWczy48J7gJH
+         SPv0FraxINqC8edppmUIsARBUtpY/cLCQ47UVcZusrBD3VYxiRR/NU95Uj2s594c89Av
+         eEeK/wr/KjGWDNm03IbWr486Q8OIB1SRxLn4CW6KASHVPfZks8VlWecE90inGSAnVjN3
+         e2hGCltQTWAXgetPuRE6Zo697UmJiwhPInE7cFCLAVoVi+Edk8FEx27XGlSDUu5OCSbG
+         wVj6fNRBUCKtQgo0MMcJzOTwnihZSLcn1tylMGR32zXOnfzTUKrUCSkrWj9J7myEWXli
+         HMYQ==
+X-Gm-Message-State: AHPjjUjbYDH3ZtYxNs5eZ/Nz/ybM9ww1uWLRz8ineW8fPLQpP2qJm8Hz
+        b4pXB5HVy1KOMKWSKO8dJ3g=
+X-Google-Smtp-Source: AOwi7QDCNocLPbMFzNsH/vPy7qj4Y+MRYS9zpXVSi0deKcVKIidgkrLVFdc2qkKfbi4Fnm4yD5g7xg==
+X-Received: by 10.223.170.214 with SMTP id i22mr18884613wrc.271.1507114348126;
+        Wed, 04 Oct 2017 03:52:28 -0700 (PDT)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id r44sm3501684wrb.37.2017.10.04.03.52.26
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 04 Oct 2017 03:52:26 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v1] convert: display progress for filtered objects that have been delayed
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <xmqqwp5svjne.fsf@gitster.mtv.corp.google.com>
+Date:   Wed, 4 Oct 2017 12:52:25 +0200
+Cc:     git@vger.kernel.org, me@ttaylorr.com
+Content-Transfer-Encoding: 7bit
+Message-Id: <1AD84BB7-5BCA-4982-B157-944890F796EE@gmail.com>
+References: <20170820154720.32259-1-larsxschneider@gmail.com> <xmqqwp5svjne.fsf@gitster.mtv.corp.google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 03, 2017 at 07:41:54PM -0400, Jeff King wrote:
 
-> I think using SANITIZE=memory would catch these, but it needs some
-> suppressions tuning. The weird "zlib reads uninitialized memory" error
-> is a problem (valgrind sees this, too, but we have suppressions).
+> On 24 Aug 2017, at 21:40, Junio C Hamano <gitster@pobox.com> wrote:
+> 
+> Lars Schneider <larsxschneider@gmail.com> writes:
+> 
+>> In 2841e8f ("convert: add "status=delayed" to filter process protocol",
+>> 2017-06-30) we taught the filter process protocol to delayed responses.
+>> These responses are processed after the "Checking out files" phase.
+>> If the processing takes noticeable time, then the user might think Git
+>> is stuck.
+>> 
+>> Display the progress of the delayed responses to let the user know that
+>> Git is still processing objects. This works very well for objects that
+>> can be filtered quickly. If filtering of an individual object takes
+>> noticeable time, then the user might still think that Git is stuck.
+>> However, in that case the user would at least know what Git is doing.
+>> 
+>> It would be technical more correct to display "Checking out files whose
+>> content filtering has been delayed". For brevity we only print
+>> "Filtering content".
+>> 
+>> The finish_delayed_checkout() call was moved below the stop_progress()
+>> call in unpack-trees.c to ensure that the "Checking out files" progress
+>> is properly stopped before the "Filtering content" progress starts in
+>> finish_delayed_checkout().
+>> 
+>> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+>> Suggested-by: Taylor Blau <me@ttaylorr.com>
+>> ---
+> 
+> Makes sense.  The only thing that made me wonder was if we want the
+> change in unpack-trees.c in this patch.  After all, the procedure to
+> finish up the delayed checkout _is_ a part of the work need to be
+> done to populate the working tree files, so stopping the progress
+> before feels somewhat wrong at the phylosophical level.
+> 
+> I think our output cannot express nested progress bars, and I think
+> that is the reason why this patch tweaks unpack-trees.c; so I am
+> fine with the end result (and that is why I said "made me wonder
+> was", not "makes me wonder", the latter would imply "this we might
+> want fix before applying", but I do not think we want to change
+> anything this patch does to unpack-trees.c in this case).
+> 
+> The delayed progress API is being simplified so I'll probably do a
+> bit of evil merge while merging this to 'pu'.
+> 
+> Thanks.
 
-I dug into this a little more. You can blacklist certain functions from
-getting MSan treatment, but that's not quite what we want. We want to
-mark bytes from certain _sources_ as being initialized, even if MSan
-doesn't agree.
+Hi Junio,
 
-And indeed, you can do that. As far as I can tell, MSan works by keeping
-a shadow map of memory and setting flags when it believes it has been
-initialized, and then checking that map when we make decisions based on
-the memory. But it can only do that if it instruments all writes. So the
-MSan documentation recommends that you build _everything_, including
-libraries, with it. Which obviously we don't do if we're using a system
-zlib. Or a system libc for that matter (though they intercept many
-common libc functions to handle this).
+I just realized that this patch got lost :-(
+That means 2.14.2 supports the delayed filters but does not show
+progress to the user. To the user Git will appear hanging.
 
-So one strategy is to "cheat" a bit at the library interfaces, and claim
-whatever they send us is properly initialized. The patch below tries
-that with zlib, and it does seem to work. It would fail to notice a real
-problem with any input we send _to_ the library (since the library isn't
-instrumented, and we claim that whatever comes out of it is legitimate).
-I could probably live with that.
+Can you merge this this topic for 2.14.3 / 2.15 ?
 
-But there are quite a few test failures that would still need
-investigating and annotating:
-
-  - Certainly it's confused by looking at regmatch_t results from
-    regexec(). We can fix that by building with NO_REGEX. But pcre has
-    a similar problem.
-
-  - Ditto curl and openssl, whose exit points would need annotations.
-
-  - For some reason test-sigchain segfaults when it raise()s in the
-    signal handler and recurses. Not sure if this is an MSan bug or
-    what.
-
-So I dunno. This approach is a _lot_ more convenient than trying to
-rebuild all the dependencies from scratch, and it runs way faster than
-valgrind. It did find the cases that led to the patches in this
-series, and at least one more: if the lstat() at the end of
-entry.c:write_entry() fails, we write nonsense into the cache_entry.
-
-I think we could probably get it to zero false positives without _too_
-much effort. I'll stop here for tonight, but I may pick it up again
-later (of course anybody else is welcome to fool around with it, too).
-
-Below is the patch that let me run:
-
-  make SANITIZE=memory CC=clang-6.0 NO_REGEX=1
-
-and get a tractable number of errors.
-
--- >8 --
-diff --git a/Makefile b/Makefile
-index b143e4eea3..1da5c01211 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1047,6 +1047,9 @@ endif
- ifneq ($(filter leak,$(SANITIZERS)),)
- BASIC_CFLAGS += -DSUPPRESS_ANNOTATED_LEAKS
- endif
-+ifneq ($(filter memory,$(SANITIZERS)),)
-+BASIC_CFLAGS += -DENABLE_MSAN_UNPOISON
-+endif
- endif
- 
- ifndef sysconfdir
-diff --git a/git-compat-util.h b/git-compat-util.h
-index cedad4d581..836a4c0b54 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -1191,4 +1191,11 @@ extern void unleak_memory(const void *ptr, size_t len);
- #define UNLEAK(var) do {} while (0)
- #endif
- 
-+#ifdef ENABLE_MSAN_UNPOISON
-+#include <sanitizer/msan_interface.h>
-+#define msan_unpoison(ptr, len) __msan_unpoison(ptr, len)
-+#else
-+#define msan_unpoison(ptr, len) do {} while (0)
-+#endif
-+
- #endif
-diff --git a/zlib.c b/zlib.c
-index 4223f1a8c5..5fa8f12507 100644
---- a/zlib.c
-+++ b/zlib.c
-@@ -56,6 +56,8 @@ static void zlib_post_call(git_zstream *s)
- 	if (s->z.total_in != s->total_in + bytes_consumed)
- 		die("BUG: total_in mismatch");
- 
-+	msan_unpoison(s->next_out, bytes_produced);
-+
- 	s->total_out = s->z.total_out;
- 	s->total_in = s->z.total_in;
- 	s->next_in = s->z.next_in;
+Thank you,
+Lars
