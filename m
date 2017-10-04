@@ -2,85 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A5CC32036C
-	for <e@80x24.org>; Wed,  4 Oct 2017 08:02:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7DE3A20281
+	for <e@80x24.org>; Wed,  4 Oct 2017 08:23:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751449AbdJDICQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Oct 2017 04:02:16 -0400
-Received: from cloud.peff.net ([104.130.231.41]:60192 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751388AbdJDICP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Oct 2017 04:02:15 -0400
-Received: (qmail 15537 invoked by uid 109); 4 Oct 2017 08:02:14 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 04 Oct 2017 08:02:14 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15854 invoked by uid 111); 4 Oct 2017 08:02:14 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Wed, 04 Oct 2017 04:02:14 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Oct 2017 04:02:13 -0400
-Date:   Wed, 4 Oct 2017 04:02:13 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Oct 2017, #01; Wed, 4)
-Message-ID: <20171004080212.jatd4clbjlctazun@sigill.intra.peff.net>
-References: <xmqqy3orbcrr.fsf@gitster.mtv.corp.google.com>
+        id S1751534AbdJDIXm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Oct 2017 04:23:42 -0400
+Received: from smtprelay07.ispgateway.de ([134.119.228.101]:29192 "EHLO
+        smtprelay07.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751398AbdJDIXk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Oct 2017 04:23:40 -0400
+X-Greylist: delayed 1590 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 Oct 2017 04:23:40 EDT
+Received: from [91.113.179.170] (helo=[192.168.92.24])
+        by smtprelay07.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
+        (Exim 4.89)
+        (envelope-from <marc.strapetz@syntevo.com>)
+        id 1dzeYF-0006Uo-N3; Wed, 04 Oct 2017 09:57:07 +0200
+Subject: Re: Git for Windows: mingw.c's strange usage of creation time as
+ ctime?
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     GIT Mailing-list <git@vger.kernel.org>,
+        git-for-windows@googlegroups.com
+References: <08983090-07d2-cfe4-dd90-ab4887b83893@syntevo.com>
+ <20171004022352.GJ19555@aiede.mtv.corp.google.com>
+From:   Marc Strapetz <marc.strapetz@syntevo.com>
+Message-ID: <6e1afdc2-2edb-8060-87b0-7d2ced201e02@syntevo.com>
+Date:   Wed, 4 Oct 2017 09:57:10 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqy3orbcrr.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <20171004022352.GJ19555@aiede.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Df-Sender: bWFyYy5zdHJhcGV0ekBzeW50ZXZvLmNvbQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 04, 2017 at 04:19:52PM +0900, Junio C Hamano wrote:
+Hello Jonathan,
 
-> * jt/partial-clone-lazy-fetch (2017-10-02) 18 commits
->  - fetch-pack: restore save_commit_buffer after use
->  - unpack-trees: batch fetching of missing blobs
->  - clone: configure blobmaxbytes in created repos
->  - clone: support excluding large blobs
->  - fetch: support excluding large blobs
->  - fetch: refactor calculation of remote list
->  - fetch-pack: support excluding large blobs
->  - pack-objects: support --blob-max-bytes
->  - pack-objects: rename want_.* to ignore_.*
->  - gc: do not repack promisor packfiles
->  - rev-list: support termination at promisor objects
->  - sha1_file: support lazily fetching missing objects
->  - introduce fetch-object: fetch one promisor object
->  - index-pack: refactor writing of .keep files
->  - fsck: support promisor objects as CLI argument
->  - fsck: support referenced promisor objects
->  - fsck: support refs pointing to promisor objects
->  - fsck: introduce partialclone extension
+On 04.10.2017 04:23, Jonathan Nieder wrote:
+> +git-for-windows
+> Hi Marc,
 > 
->  A journey for "git clone" and "git fetch" to become "lazier" by
->  depending more on its remote repository---this is the beginning of
->  it.
+> Marc Strapetz wrote:
 > 
->  Needs review.
+>> compat/mingw.c assigns the Windows file creation time [1] to Git's
+>> ctime fields at line 591 and at line 705:
+>>
+>> buf->st_ctime = filetime_to_time_t(&(fdata.ftCreationTime));
+>>
+>> ftCreationTime > ftLastWriteTime is actually possible after copying
+>> a file, so it makes sense to include this timestamp somehow in the
+>> Index, but I think it would be better to use the maximum of
+>> ftLastWriteTime and ftCreationTime here which is less confusing and
+>> closer to Unix's ctime:
+>>
+>> buf->st_ctime = max(buf->st_mtime,
+>>                      filetime_to_time_t(&(fdata.ftCreationTime));
+> 
+> Can you say more about the practical effect?  Is this causing a bug in
+> practice, is it a bug waiting to happen, or is it making the code
+> difficult to understand without any ill effect expected at run time?
 
-The merge of this topic into jch (at 766f92478b0) causes the test suite
-to fail when compiled with ASan/UBSan. The simplest reproduction I could
-come up with is:
+It's mainly about understanding: as a Windows guy it is quite tempting 
+to read "ctime" as "creationTime" and getting this confirmed in code 
+above. (I guess) based on this understanding I wrote wrong Java code 8 
+years ago for all platforms. My bad of course that I was not digging 
+into Unix sources here.
 
-   $ make SANITIZE=address,undefined BLK_SHA1=1 &&
-     GIT_DIR=nope ./git shortlog </dev/null >/dev/null
-   repository.c:69:31: runtime error: index 1869098813 out of bounds for type 'git_hash_algo [1]'
+In practice, .git/index timestamps will become more similar to Linux, 
+getting rid of "strange" old ctime values.
 
-Note that the series is fine by itself, it's only the merge which fails.
-Which implies to me it's some funny interaction with bc/hash-algo (which
-introduces the hash_algo concept). But I didn't dig further.
+Drawback will be that after such a code update every Index entry will 
+appear as outdated and the initial "git status" will have to compare all 
+file contents. If this is not acceptable, a comment for the two 
+offending lines would make sense.
 
-+cc brian and Jonathan.
+> By the way, do you have core.trustctime set to true or false?
 
--Peff
+It seems to be set to true by default on Windows and usually I'm not 
+changing it.
+
+-Marc
+
+
+
