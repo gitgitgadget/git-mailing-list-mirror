@@ -2,88 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 303401FA21
-	for <e@80x24.org>; Thu,  5 Oct 2017 21:12:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 127C51FA21
+	for <e@80x24.org>; Thu,  5 Oct 2017 21:16:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751649AbdJEVMw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Oct 2017 17:12:52 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59710 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751381AbdJEVMv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Oct 2017 17:12:51 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CC122A2342;
-        Thu,  5 Oct 2017 17:12:50 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:date:message-id; s=sasl; bh=vb97T9aPMunqiE8gxp9P1tH9bTw
-        =; b=l4Dfbbt941NrBIwWy3Ft3wTEsVcFU+e2ttbd3n9iVCncNVWg8MH2/yiJ6PD
-        Cl1U4Ydvy+MzX1EvbpHaTF6kzOKqYT7MI1LVNopNEk0sK3eIxq659aBbdhTI71rk
-        vB0yZXr5s3gkvWsYEZbbrhIkH9hQs/fulwYli7PEScSqAKdE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:date:message-id; q=dns; s=sasl; b=jY4ZaTu4ZEtiMROtkzy/+
-        a4Yhhu8YYSXLgBPOt2WdfR5SM7QhdirwD68LqZzx6LeQZpLMRej/zNHPIBIS/90h
-        RpBtyjgyyGVw3uuCnX27kopvrooMXTQ1v8J8q95Rb/oqZmMIMP1Zw7lwUdnOdlDf
-        Pby4tiLZoILeqI1nEHOCc4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C0AA1A2341;
-        Thu,  5 Oct 2017 17:12:50 -0400 (EDT)
-Received: from morphine.paradise.teonanacatl.net (unknown [47.202.94.182])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2ADDBA2340;
-        Thu,  5 Oct 2017 17:12:50 -0400 (EDT)
-From:   Todd Zullinger <tmz@pobox.com>
-To:     git@vger.kernel.org
-Cc:     Han-Wen Nienhuys <hanwen@google.com>
-Subject: [PATCH] api-argv-array.txt: Update link to string-list API
-Date:   Thu,  5 Oct 2017 17:12:03 -0400
-Message-Id: <20171005211203.11913-1-tmz@pobox.com>
-X-Mailer: git-send-email 2.15.0.rc0
-X-Pobox-Relay-ID: F19C1B20-AA11-11E7-90CD-575F0C78B957-09356542!pb-smtp2.pobox.com
+        id S1752128AbdJEVQs (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Oct 2017 17:16:48 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:38798 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751408AbdJEVQr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Oct 2017 17:16:47 -0400
+Received: by mail-pg0-f66.google.com with SMTP id j3so912170pga.5
+        for <git@vger.kernel.org>; Thu, 05 Oct 2017 14:16:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=+MIW9pegJeq0jDBaCgpFFSKpUIySl6pg5p/vuIdGHZU=;
+        b=tGlIxoNbALS+R9y9whwP4ZoVGNJRUagRkVBh1weiim3wl1mCKK1UModIb46xtGkqtu
+         BJ9TeqZrwLRuYGp/utL3ZyQUkciSLuwz995mpNT4R14gpGU4h+sPkYeYbzIBT00UtCv7
+         ZG8D1wn7nJHRpo18Mr4+RB2p9Q7Ji07lGIZG9hh2PNIH6bEDk+NNMoL8/GpWqsnAHs5O
+         tCKCj2fNaqarSIfcVp7wRWY9BQiQwCjMTD/qfZ0D3gJThaZAtgCXDaD0OxlqsR80VLlk
+         Z68w2NkimTUtL1WOkn5KZ/qpVmxxFivlwo0jcqInS38jIljKnQPQReEVv6rrx67L1B3N
+         QDwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=+MIW9pegJeq0jDBaCgpFFSKpUIySl6pg5p/vuIdGHZU=;
+        b=c5TvU+HNFYODrwJZGFM5EEOIEMvzIiKFIlXg4UnZzNoFWy6ToGh7o6EAG8cvqWHIff
+         Oo0RLPNKxqYPNvfX8T+RLNuvKjxHu4x+VgYoADvhJulyD+mLTD7YJA0LuzngYlARsfo0
+         4xOvaVSTxY8hM0/HF9jRCHbjnJrYWZH3RQDLf9mUQi7dxUOPwts5RtikeN/vn7fcnaNz
+         szZ/UEzt8NGl2FlfgTdv1UAuPzttaDkehzj1ftNdoNx8c+ZYrmirHLKg/SkN+9k7KHiO
+         mrUij8enC6PB8yo/2enHImsCi85JT/LsQ+gL1s0Ur6leb+E8efFwPYBqyS2PSC/MC03R
+         sQEQ==
+X-Gm-Message-State: AMCzsaUrpu3w3OxUF2bvbkzx9fJV2nbjjxRSC2d9wopeiEW7dzMl/Wl/
+        AiVC64YyaF7uyPx+4dz5FV7zYj/i
+X-Google-Smtp-Source: AOwi7QBSujMCUO4ureFTOrNISGLzhSGufffPbDFnwaeRqCGPI6XBrSGHfSHaKH69xFT9lI12/kvOtw==
+X-Received: by 10.98.34.130 with SMTP id p2mr42160pfj.108.1507238206738;
+        Thu, 05 Oct 2017 14:16:46 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:960:8965:26b6:313])
+        by smtp.gmail.com with ESMTPSA id r9sm14063770pfd.6.2017.10.05.14.16.45
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 05 Oct 2017 14:16:45 -0700 (PDT)
+Date:   Thu, 5 Oct 2017 14:16:43 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     jameson.miller81@gmail.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        bmwill@google.com, sbeller@google.com,
+        Jameson Miller <jamill@microsoft.com>
+Subject: Re: [PATCH 0/6] Teach Status options around showing ignored files
+Message-ID: <20171005211643.GC88769@aiede.mtv.corp.google.com>
+References: <20171005205443.206900-1-jameson.miller81@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20171005205443.206900-1-jameson.miller81@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 4f665f2cf3 (string-list.h: move documentation from Documentation/api/
-into header, 2017-09-26) the string-list API documentation was moved
-into string-list.h.  Fix the link from the argv-array API documentation.
-
-Signed-off-by: Todd Zullinger <tmz@pobox.com>
----
-
 Hi,
 
-I noticed this broken link in the html documentation while building
-2.15.0-rc0.  I'm not sure whether it's better to point the link to the
-string-list.h file on Git Hub, remove the link, or drop the entire
-paragraph.
+jameson.miller81@gmail.com wrote:
 
-The change I made to remove the link was simply:
+> This patch series is the second part of [1], which was split into 2
+> parts. The first part, added an optimization in the directory listing
+> logic to not scan the contents of ignored directories and was merged
+> to master with commit 5aaa7fd3. This patch series includes the second
+> part to expose additional arguments to the --ignored option on the
+> status command.
 
--The link:api-string-list.html[string-list API] is similar, but cannot be
-+The string-list API (documented in string-list.h) is similar, but cannot be
+Thanks.
 
- Documentation/technical/api-argv-array.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> This patch series teaches the status command more options to control
+> which ignored files are reported independently of the which untracked
+[...]
+> Our application (Visual Studio) has a specific set of requirements
+> about how it wants untracked / ignored files reported by git status.
+[...]
+> The reason for controlling these behaviors separately is that there
+> can be a significant performance impact to scanning the contents of
+[....]
+> As a more concrete example, on Windows, Visual Studio creates a bin/
+> and obj/ directory inside of the project where it writes all .obj and
+[...]
 
-diff --git a/Documentation/technical/api-argv-array.txt b/Documentation/technical/api-argv-array.txt
-index cfc063018c..1603f4a941 100644
---- a/Documentation/technical/api-argv-array.txt
-+++ b/Documentation/technical/api-argv-array.txt
-@@ -8,7 +8,7 @@ always NULL-terminated at the element pointed to by `argv[argc]`. This
- makes the result suitable for passing to functions expecting to receive
- argv from main(), or the link:api-run-command.html[run-command API].
- 
--The link:api-string-list.html[string-list API] is similar, but cannot be
-+The https://raw.githubusercontent.com/git/git/master/string-list.h[string-list API] is similar, but cannot be
- used for these purposes; instead of storing a straight string pointer,
- it contains an item structure with a `util` field that is not compatible
- with the traditional argv interface.
--- 
-2.14.2
+I see this information is also in patch 1/6.  That's a very good
+thing, since that makes performance numbers involved more concrete
+about which patch brings them about and it becomes part of permanent
+history that way --- thanks.
 
+But it took me a while to notice, and before then, I was trying to
+read through the cover letter to get an overview of which patches I am
+supposed to look at.  For next time, could the cover letter say
+something like "See patches 1 and 2 for more details about the
+motivation" instead of repeating the commit message content?  That
+would save reviewers some time.
+
+Thanks,
+Jonathan
