@@ -2,78 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E180C2036C
-	for <e@80x24.org>; Thu,  5 Oct 2017 06:09:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 56C3A2036B
+	for <e@80x24.org>; Thu,  5 Oct 2017 08:17:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751267AbdJEGJZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Oct 2017 02:09:25 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33072 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751116AbdJEGJZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Oct 2017 02:09:25 -0400
-Received: (qmail 7817 invoked by uid 109); 5 Oct 2017 06:09:25 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 05 Oct 2017 06:09:25 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24470 invoked by uid 111); 5 Oct 2017 06:09:25 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Thu, 05 Oct 2017 02:09:25 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Oct 2017 02:09:23 -0400
-Date:   Thu, 5 Oct 2017 02:09:23 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Git v2.15.0-rc0
-Message-ID: <20171005060922.o2wzccm4uqq5o74e@sigill.intra.peff.net>
-References: <xmqq7ewa87fw.fsf@gitster.mtv.corp.google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq7ewa87fw.fsf@gitster.mtv.corp.google.com>
+        id S1751339AbdJEIRj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Oct 2017 04:17:39 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:44830 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751315AbdJEIRh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Oct 2017 04:17:37 -0400
+Received: by mail-wm0-f67.google.com with SMTP id 196so819530wma.1
+        for <git@vger.kernel.org>; Thu, 05 Oct 2017 01:17:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=DA2IPM4uwaBNmENfBu61nsEwSTbkDnZFlOGtdk5yL+A=;
+        b=WT0IXs1aP8hVnv6xLpQJguU1m/ZAix0ZLTodcfYDkWdWjp25YhA1sbrB/Jse643rFk
+         bFfXyvtjNvWi7Iger2c6FhYTBXps6h4pEVOXjIt67OIpXeViv5OvUcjh26V6Pgs7aIKw
+         te+09hnDL0/TKZJNLv6ay/VeFPdRs+ZMLjDRiY8H+u8zQZHb7YSzOBEI7N8xi6QN17G5
+         HV4F8fpxKMeAIUeCKFBjipWxDQFghfZGiwRn/ukF33cd2ebnQWWri4SE92Kd0tXiIo/0
+         pLt3Helk2IljGzsHxu6ys9T8aQ/0BgGu5wLR/2NydHvjBUwjcxJ/r66h9yw4rzE9T/H6
+         AsIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=DA2IPM4uwaBNmENfBu61nsEwSTbkDnZFlOGtdk5yL+A=;
+        b=p6g/sTEfW0CdD99Rm3eS3vzRw1mLA5KVhAOJcpi17UUHW7ToEkRY3wnko2sUDBcH1E
+         4wZW6hPytsq0J6RKeAY5P0KlfynKau1QXR7wbbi3JZiQrqIIvsBm8ywUOvUuIMquHxBw
+         YFpebY4tm75T17zGoU1IgO7HPVaibkzq4QBnx1sq/U+aDXKwBgqUOmjdzilSpOSluayl
+         XkoOfQMw+X+CnVsWlH7N7Ip0OT+Hu5/ukdi8M84gygHxKH0RMoC+MFBhKavaUyphsz2/
+         4vd9HEcmwZj+s1/xiwp/X0umJ8u8LdY/h1Kkk/IUEykbb3c5EnEfeitD+v1QrXJK32tu
+         YhZQ==
+X-Gm-Message-State: AMCzsaWSsX7sauBdFtRrEGw2Rj2zU1WqFoJACzfBv2dst24cwtySkhOT
+        SvOXAXYDjUToyaZO6WRS7Lni5U7d
+X-Google-Smtp-Source: AOwi7QAam34uMzkQRIMYmpfiYQFeCzFe0RREDaeejii/Po7CQDMPnFF0IEAeLb9GG7Sbt2XRJbT4FQ==
+X-Received: by 10.28.191.131 with SMTP id o3mr16424880wmi.113.1507191455736;
+        Thu, 05 Oct 2017 01:17:35 -0700 (PDT)
+Received: from Laptops-nathan.univ-lyon1.fr (wifi-ext-0213.univ-lyon1.fr. [134.214.214.214])
+        by smtp.gmail.com with ESMTPSA id y144sm2654972wmd.18.2017.10.05.01.17.34
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 05 Oct 2017 01:17:35 -0700 (PDT)
+From:   PAYRE NATHAN p1508475 <second.payre@gmail.com>
+X-Google-Original-From: PAYRE NATHAN p1508475 <nathan.payre@etu.univ-lyon1.fr>
+To:     git@vger.kernel.org
+Cc:     daniel.bensoussan--bohm@etu.univ-lyon1.fr,
+        timothee.albertin@etu.univ-lyon1.fr, rpjday@crashcourse.ca,
+        matthieu.moy@univ-lyon1.fr, gitster@pobox.com,
+        PAYRE NATHAN p1508475 <nathan.payre@etu.univ-lyon1.fr>
+Subject: [PATCH] Documentation/git-config.txt: reword missleading sentence
+Date:   Thu,  5 Oct 2017 10:17:33 +0200
+Message-Id: <20171005081733.18529-1-nathan.payre@etu.univ-lyon1.fr>
+X-Mailer: git-send-email 2.14.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 05, 2017 at 02:55:31PM +0900, Junio C Hamano wrote:
+Change the word "bla" to "section.variable" to make it clear that it's a placeholder for a variable name.
 
-> Git 2.15 Release Notes (draft)
-> ==============================
-> 
-> Backward compatibility notes and other notable changes.
-> 
->  * Use of an empty string as a pathspec element that is used for
->    'everything matches' is still warned and Git asks users to use a
->    more explicit '.' for that instead.  The hope is that existing
->    users will not mind this change, and eventually the warning can be
->    turned into a hard error, upgrading the deprecation into removal of
->    this (mis)feature.  That is now scheduled to happen in the upcoming
->    release.
+See discussion at: https://public-inbox.org/git/20171002061303.Horde.SL92grZCqTRV9oQkBFPELQ7@crashcourse.ca/
 
-I wasn't sure if this "upcoming" meant v2.15 ("the upcoming release that
-we're about to tag") or v2.16. Judging from "What's cooking" it's the
-latter, but perhaps we should be more explicit. I don't know if you are
-hesitant to name it "v2.16" at this point, but maybe:
+Noticed-by: rpjday@crashcourse.ca
+---
+ Documentation/git-config.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-  ...in the upcoming release (i.e., the one after v2.15).
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index 83f86b923..f9808d7ad 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -177,8 +177,8 @@ See also <<FILES>>.
+ 	'git-config' will expand leading '{tilde}' to the value of
+ 	'$HOME', and '{tilde}user' to the home directory for the
+ 	specified user.  This option has no effect when setting the
+-	value (but you can use 'git config bla {tilde}/' from the
+-	command line to let your shell do the expansion).
++	value (but you can use 'git config section.variable {tilde}/'
++	from the command line to let your shell do the expansion).
+ 
+ -z::
+ --null::
+-- 
+2.14.2
 
-would help.
-
->  * Git now avoids blindly falling back to ".git" when the setup
->    sequence said we are _not_ in Git repository.  A corner case that
->    happens to work right now may be broken by a call to die("BUG").
-
-An even more minor nit. This is now BUG(). :)
-
-I don't think it matters for our purposes here, of course. But I did
-wonder how long we'd want to carry this warning in the notes. I think it
-goes back to v2.13. Of course people sometimes jump several versions
-without necessarily reading the interim release notes, so it makes sense
-to carry it for a while.
-
--Peff
