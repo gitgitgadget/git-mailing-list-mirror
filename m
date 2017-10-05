@@ -6,108 +6,90 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 56DA12036C
-	for <e@80x24.org>; Thu,  5 Oct 2017 01:26:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D70E72036D
+	for <e@80x24.org>; Thu,  5 Oct 2017 01:31:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751259AbdJEB0b (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Oct 2017 21:26:31 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58233 "EHLO
+        id S1751303AbdJEBbG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Oct 2017 21:31:06 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58909 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751219AbdJEB0a (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Oct 2017 21:26:30 -0400
+        with ESMTP id S1751223AbdJEBbF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Oct 2017 21:31:05 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9D9DBB21FA;
-        Wed,  4 Oct 2017 21:26:29 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 394D4A8897;
+        Wed,  4 Oct 2017 21:31:05 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=46isykH6A6m2ZKLZ/cLbymxj2vY=; b=DFjxKi
-        TQZ4N4L24BRpZQsAJ+TQiY2EDRe57sRDT/xuqOMHBknc/EKaR/ZCml5e4iu++wYC
-        x44SJ6THnweERmULxWbXuT8DKODICGRmm+4B0UFU9lihEbQrNzLYO+uPKmI5fpgA
-        uPzTw0TxMTaImhuY/2qXZAMZOTPe9v0OOqPGk=
+        :content-type; s=sasl; bh=tBWB6F9ZUeh/vMAj+/7QX6AN6qQ=; b=ejMMEb
+        Qjrpg/3xzAuFmwynZFFr5dMDJghUqc00zPp9/Qz8orzsfy+HyJUJhFHYHBQY1h24
+        LhObzhtnGG1N2C8/y5K8/+8UCXpj8nv0yUDm1gvdNWybtG3sxS4PTKJbivxwTBIX
+        TNcPG8W0pDRa5hT5bgkf3Dyynf0FmkkV06y3Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=kPiE78Yq8eDCB22oH/WdaqGziUK+TSPU
-        ZvQZH2NX4PoMb5MwnOJbQbyzu376x4jgmiPlhOsB6IS8IfsZhuljpE7KNKgKRfx9
-        ECdiL6S7FDd0vtC/sRHZpOD8v31RMdEXYd+xqutVSrS0k45TGCNgPIjlCWosG3tv
-        KNMxTZd2NNw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 957EAB21F9;
-        Wed,  4 Oct 2017 21:26:29 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=uwtchB6+WDOrWgJ02Q9DAhCrKABtZRFS
+        VjgAq7LntJYpiBSOmJdjMc6zNphqu9FT4GZaqAdbX4dd2tRlAHbzQSKQJfsY9/LO
+        +h1nIU45qO+4VnNr6L2moRvVv14SUNrGj0eSGHy14H8fchJd7jVQhl1FZd8tYt4J
+        9hgB1TV02qQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 29C9AA8896;
+        Wed,  4 Oct 2017 21:31:05 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 07924B21F8;
-        Wed,  4 Oct 2017 21:26:29 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 96061A8895;
+        Wed,  4 Oct 2017 21:31:04 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org,
-        git@jeffhostetler.com, sbeller@google.com,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 3/5] sha1_name: Unroll len loop in find_unique_abbrev_r
-References: <20170925095452.66833-1-dstolee@microsoft.com>
-        <20171002145651.204984-4-dstolee@microsoft.com>
-        <xmqqtvzfcuoy.fsf@gitster.mtv.corp.google.com>
-        <a6653525-94f2-fd7d-8c27-9334d473a556@gmail.com>
-Date:   Thu, 05 Oct 2017 10:26:27 +0900
-In-Reply-To: <a6653525-94f2-fd7d-8c27-9334d473a556@gmail.com> (Derrick
-        Stolee's message of "Wed, 4 Oct 2017 09:19:59 -0400")
-Message-ID: <xmqqfuay9ygs.fsf@gitster.mtv.corp.google.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Robert Dailey <rcdailey.lists@gmail.com>,
+        Torsten =?utf-8?Q?B=C3=B6ge?= =?utf-8?Q?rshausen?= 
+        <tboegi@web.de>, Git <git@vger.kernel.org>
+Subject: Re: Line ending normalization doesn't work as expected
+References: <CAHd499B5hM9ixnsnwWwB2uyDT10dRQpN473m5QjxH9raHtFXiw@mail.gmail.com>
+        <958c9b03-062c-0bea-3b25-939a36659f32@web.de>
+        <CAHd499AD5Kgbp-vxXTnEPkb-Mb5oEeXhaRO5kGniDdqmXwd2QQ@mail.gmail.com>
+        <88c57b88-ef2c-d7db-15e2-12791d4cb201@web.de>
+        <xmqq8tgrhdt0.fsf@gitster.mtv.corp.google.com>
+        <CAHd499BCMOcur6NRbKfwd81zpnyzoiVCY54d=UmGpAhbD7AVTA@mail.gmail.com>
+        <20171004165947.GN19555@aiede.mtv.corp.google.com>
+Date:   Thu, 05 Oct 2017 10:31:03 +0900
+In-Reply-To: <20171004165947.GN19555@aiede.mtv.corp.google.com> (Jonathan
+        Nieder's message of "Wed, 4 Oct 2017 09:59:47 -0700")
+Message-ID: <xmqqbmlm9y94.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 36537C46-A96C-11E7-AF32-575F0C78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: DA8C7970-A96C-11E7-99C9-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> On 10/4/2017 2:07 AM, Junio C Hamano wrote:
->> Derrick Stolee <dstolee@microsoft.com> writes:
->>
->>> -	exists = has_sha1_file(sha1);
->>> -	while (len < GIT_SHA1_HEXSZ) {
->>> -		struct object_id oid_ret;
->>> -		status = get_short_oid(hex, len, &oid_ret, GET_OID_QUIETLY);
->>> -		if (exists
->>> -		    ? !status
->>> -		    : status == SHORT_NAME_NOT_FOUND) {
->>> -			hex[len] = 0;
->>> -			return len;
->>> -		}
->>> -		len++;
->>> -	}
->>> -	return len;
->> The "always_call_fn" thing is a big sledgehammer that overrides
->> everything else in update_candidates().  It bypasses the careful
->> machinery set up to avoid having to open ambiguous object to learn
->> their types as much as possible.  One narrow exception when it is OK
->> to use is if we never limit our candidates with type.
+> I suspect what we are dancing around is the need for some command like
 >
-> I do not modify get_short_oid, which uses these advanced options,
-> depending on the flags given. find_unique_abbrev_r() does not use
-> these advanced options.
+> 	git checkout --renormalize .
+>
+> which would shorten the sequence to
+>
+> 	git checkout --renormalize .
+> 	git status; # Show files that will be normalized
+> 	git commit; # Commit the result
+>
+> What do you think?  Would you be interested in writing a patch for it?
+> ("No" is as always an acceptable answer.)
 
-It is true that the function no longer even calls get_short_oid().
+I actually think what is being requested is the opposite, i.e. "the
+object registered in the index have wrong line endings, and the
+safe-crlf is getting in the way to prevent me from correcting by
+hashing the working tree contents again to register contents with
+corrected line endings, even with 'git add .'".
 
-When it called get_short_oid() before this patch, it not pass "I
-want to favor committish" in the old code, as we can see in the
-above removed code.  In get_short_oid(), ds.fn would have been set
-to default_disambigutate_hint, and that would have been used in the
-update_candidates() function.
+So I would understand if your suggestion were for
 
-Now, unless the user has core.disambiguate configuration set, this
-"default" thing becomes NULL, so overriding ds.fn like this patch
-does and bypass major parts of update_candidates() is probably fine.
-After all, update_candidates() wouldn't have inspected the object
-types and made the candidate management anyway with ds.fn set to
-NULL.
+	git checkin --renormalize .
 
-But having the configuration set would mean that the user wants to
-set default_disambigutate_hint to some non-default value, e.g.
-telling us to find disambiguation only among committishes; the patch
-however overrides ds.fn and essentially makes the code ignore it
-altogether, no?  That change in behaviour was what I was wondering
-about.
+but not "git checkout".  And it probably is more familiar to lay
+people if we spelled that as "git add --renormalize ." ;-)
+
 
