@@ -2,76 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 298892036B
-	for <e@80x24.org>; Thu,  5 Oct 2017 09:43:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 963352036B
+	for <e@80x24.org>; Thu,  5 Oct 2017 09:44:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751402AbdJEJnX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Oct 2017 05:43:23 -0400
-Received: from mail-vk0-f54.google.com ([209.85.213.54]:47538 "EHLO
-        mail-vk0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751278AbdJEJnW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Oct 2017 05:43:22 -0400
-Received: by mail-vk0-f54.google.com with SMTP id h63so7748972vka.4
-        for <git@vger.kernel.org>; Thu, 05 Oct 2017 02:43:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=CNGgrwLaoMPWq8U3CwzH4K6+v8StxKAb8IbUqbmRmEw=;
-        b=hhf57P+Skc3qGuCHJ4/K5/zMgan+PZCfNcuqTKw/kG+usU44Rbvmg1Zu0BSO6UXpHY
-         39mDh6onSxOkoDRsFlN0VR7UOvSMJTvZ45jBcp6960qivbETMtN0WPXvoE9BpDXmIOzn
-         qbeWgBSi7+Zxbx5bU+0a1IF/nWqlnuKyx9tr146i79u/r0GfON1eWbudECZALu7x/ddc
-         SZX/wVns8pvKx3U4Ns5bsHV6X1JJL8HsPSSHhraIu9p+4TqGy5Ys3yDW60UFZbmgX9da
-         oJ2b/NTDFPPG/KhrEzBTJsfIYOnZmrEukjFSN+s+SaXhqFxlXy2XKIDlHaeUigQybDH3
-         kjxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=CNGgrwLaoMPWq8U3CwzH4K6+v8StxKAb8IbUqbmRmEw=;
-        b=OV1+Ip5vzCQ3dA4DKMO3Db0BvBR/fzJi6sK9bItpkqfLohXJsKP4Ah17gC07JtUukH
-         2pFu074hZR1zrlp63i2iIKsef0PJ+m7KcEFGC2VDZ2ePiiGBLiKwa/t0tQiS6PvaeJz5
-         uubn/8+vyWoEXt262rJkLBEZLUiq7nu9sHfbpcwXhPjZUj/huGckgONM2ozvw0DxUz5w
-         IyWD0QpzrwALh2zELJ7tSaaBrIsrPIwC1EuVJcrN4+uDwV2m0a02S9/RH73GYq/AtkNc
-         MmaOji/SHd0hrPNZY8J2PQ+t2Dp4/X32jtX0+mpH0yh0vT/2N37RjocKDJxoXzYXkds6
-         Wn+A==
-X-Gm-Message-State: AHPjjUiYFvXBr3Gi4tvnBjy6sfo/GTBKCftsgdk5SpKleMUX6XRFmEOs
-        QFvzoX+O5sLHysxvv8IzkNfTlV+u1X/skMI1uQQ=
-X-Google-Smtp-Source: AOwi7QCzYhBpFWqxhfMuNMBNt2gC7sjsRNEyNHaMWUx+yL0GYxqXifHHE6OhUb7avl9PwvmyOor6P2x45+m0h2fyK+Y=
-X-Received: by 10.31.214.71 with SMTP id n68mr13771119vkg.31.1507196601811;
- Thu, 05 Oct 2017 02:43:21 -0700 (PDT)
+        id S1751415AbdJEJoV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Oct 2017 05:44:21 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33284 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751278AbdJEJoU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Oct 2017 05:44:20 -0400
+Received: (qmail 15677 invoked by uid 109); 5 Oct 2017 09:44:20 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 05 Oct 2017 09:44:20 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25747 invoked by uid 111); 5 Oct 2017 09:44:20 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Thu, 05 Oct 2017 05:44:20 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Oct 2017 05:44:18 -0400
+Date:   Thu, 5 Oct 2017 05:44:18 -0400
+From:   Jeff King <peff@peff.net>
+To:     Derrick Stolee <dstolee@microsoft.com>
+Cc:     git@vger.kernel.org, stolee@gmail.com, git@jeffhostetler.com,
+        sbeller@google.com, gitster@pobox.com
+Subject: Re: [PATCH v3 5/5] sha1_name: Minimize OID comparisons during
+ disambiguation
+Message-ID: <20171005094418.irm6omly67bgyvo7@sigill.intra.peff.net>
+References: <20170925095452.66833-1-dstolee@microsoft.com>
+ <20171002145651.204984-6-dstolee@microsoft.com>
 MIME-Version: 1.0
-Received: by 10.31.16.157 with HTTP; Thu, 5 Oct 2017 02:43:01 -0700 (PDT)
-In-Reply-To: <20171005093052.3uefgby6a57udoqy@sigill.intra.peff.net>
-References: <165c9648-e7f0-66de-b3b9-023c48c49d95@free.fr> <20171005093052.3uefgby6a57udoqy@sigill.intra.peff.net>
-From:   Junio C Hamano <gitster@pobox.com>
-Date:   Thu, 5 Oct 2017 18:43:01 +0900
-X-Google-Sender-Auth: nQNVq6ZuWHkOAFJXhLKE9_ICXUM
-Message-ID: <CAPc5daX+N_Z6v-NxOb5cHh1V3Ctu7uQ+QFHzN9ATTQ22pVAfQw@mail.gmail.com>
-Subject: Re: Quoted-printable support in git am
-To:     Jeff King <peff@peff.net>
-Cc:     Mason <slash.tmp@free.fr>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20171002145651.204984-6-dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 5, 2017 at 6:30 PM, Jeff King <peff@peff.net> wrote:
->
->> The patch header contains:
->>
->> Content-Type: text/plain; charset=UTF-8; format=flowed
->> Content-Transfer-Encoding: quoted-printable
->
-> That looks right. Though I wouldn't be surprised if whatever generated
-> the "flowed" also screwed up patch whitespace.
-> ...
-> If it does have the qp bits decoded, then I'd suspect that maybe there's
-> whitespace damage caused by the MUA.
+On Mon, Oct 02, 2017 at 10:56:51AM -0400, Derrick Stolee wrote:
 
-I would be surprised if MUA that says format=flawed did _not_ mangle the patch.
+> +static void find_abbrev_len_for_pack(struct packed_git *p,
+> +				     struct min_abbrev_data *mad)
+> +{
+> +	int match = 0;
+> +	uint32_t num, last, first = 0;
+> +	struct object_id oid;
+> +
+> +	open_pack_index(p);
+> +	num = p->num_objects;
+> +	last = num;
+> +	while (first < last) {
+> +		uint32_t mid = (first + last) / 2;
+
+This can overflow if we are looking past 2^31. Probably not very common
+(things seem to get pretty painful at hundreds of millions of objects).
+But it can be written as:
+
+  uint32_t mid = lo + (hi - lo) / 2;
+
+Sadly, this overflow case seems to be present in many of our binary
+searches.
+
+> +		const unsigned char *current;
+> +		int cmp;
+> +
+> +		current = nth_packed_object_sha1(p, mid);
+
+nth_packed_object_sha1() has to do some minor computation to come up
+with the correct pointer. The normal packfile lookup precomputes the
+initial offset and stride outside the loop. I have no idea if that
+micro-optimization is actually noticeable, but I thought I'd mention it
+as a possible avenue for investigation since you're obviously interested
+in squeezing out performance. ;)
+
+-Peff
