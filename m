@@ -2,103 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C1C3C20370
-	for <e@80x24.org>; Thu,  5 Oct 2017 20:33:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D7B1A1FA21
+	for <e@80x24.org>; Thu,  5 Oct 2017 20:49:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751649AbdJEUcr (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Oct 2017 16:32:47 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:51086 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751469AbdJEUcn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Oct 2017 16:32:43 -0400
-Received: by mail-wm0-f68.google.com with SMTP id u138so4143463wmu.5
-        for <git@vger.kernel.org>; Thu, 05 Oct 2017 13:32:42 -0700 (PDT)
+        id S1751459AbdJEUtP (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Oct 2017 16:49:15 -0400
+Received: from mail-qk0-f173.google.com ([209.85.220.173]:57263 "EHLO
+        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751441AbdJEUtO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Oct 2017 16:49:14 -0400
+Received: by mail-qk0-f173.google.com with SMTP id l194so6053154qke.13
+        for <git@vger.kernel.org>; Thu, 05 Oct 2017 13:49:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=0NkX3UXctAgczppqMQaTbVP5jGMzhl5x1Ww44e1UIpw=;
-        b=PlXVUCAHvzfgb0UCKW6ymPev4DtgkR7TTTlECzZvOU6T+FO8vl8U5ragjwJd2ouXlh
-         oDbyrm+RnGsrlaka7JT2FuO6ODNA97R0lJtAZHqICGt5mc9c9EqO31fMzJNm6HdtvoT1
-         oe0Wk/fn05UB69LEmsLur0mzOoPILN4Yh6t4Trq1Z2dcLNU4GyThKhJXzFHK74GMvrd4
-         JDc+jzUiFtnIghf9Ox/OP5CgRcWZbYoA/BII8o2IjNGEWJCBT39vgrl/MeJou9sSQ+cD
-         BhGs1MJOtk0AladzxUgVNyHS2v/ocr8+VjFYNclSHhVeiytVYSTQcqYuSNbDeCky4hri
-         K4xQ==
+        d=dam.io; s=arbre;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Eg660KGx3aZ6+SblyFKKB2NnSGf7CzlDRpTsqSp9rV8=;
+        b=Xns/RMYTZ3ThYj2LsKyZDjNTuleVKYK/iHhvGzZEsv24vYxe52AkLIX8v95AQQ5/Nr
+         ZgG3c/V7VOsPHkmy5OiaULNiCw8tsj9mLZMSMJNVY4r9Hjh9fOmwDeHl57KHh5dUq1Of
+         ubpGEgtIJDdSiGxDt2zy7iBUpcnfqbDDUjA3U=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=0NkX3UXctAgczppqMQaTbVP5jGMzhl5x1Ww44e1UIpw=;
-        b=BqG93lnOOmK0pXpovWweDPQitcGVlPx+okBR+j305qHMLYec2QlaqC56htAMiOrom2
-         u8U6sN5UpV47PWEubvcqxCy8TThOfDUZ6VyA+3lLPUtIFifid+FdibGwtHdUEHtFl8A7
-         OuKhdpgEYZGodFT9u+2/fOTLJP9ZmsM1fjc/dHb0N2VWkqVpzpQJX8CZz+XrQiKDPhQv
-         VCbALJTGBOhEkPpNJ2jHiXFLFRFtCfMlfwTo8oy0IpdQz/zVDwuJNXzrou9W4sVEaeHF
-         mblGsgAiMYxg1uxiDt0358ldTmyRs9QOht9LeF4c1O0xktro0ycJyYdp/xdKeV/EJYyx
-         Xjqg==
-X-Gm-Message-State: AMCzsaU6tdcivO24rVyjOAE75Ad6d4yzL8+8gmu5TRWwUJ3An7fmhddz
-        8XZ8QYfXqzhQ71wyohFhIpx/oBSN
-X-Google-Smtp-Source: AOwi7QDZwyz33HbtdJlTcOotNyofAL72UClNq0ijl63OM8Z5id8/75edg6SQvLHihvCiYEmYSpJAcg==
-X-Received: by 10.28.139.72 with SMTP id n69mr281246wmd.29.1507235561705;
-        Thu, 05 Oct 2017 13:32:41 -0700 (PDT)
-Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
-        by smtp.gmail.com with ESMTPSA id i76sm698424wmd.2.2017.10.05.13.32.40
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 05 Oct 2017 13:32:40 -0700 (PDT)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 04/12] tempfile: fix documentation on `delete_tempfile()`
-Date:   Thu,  5 Oct 2017 22:32:06 +0200
-Message-Id: <d7837015eb5706a32918b6a87688d9ac895ecb81.1507228170.git.martin.agren@gmail.com>
-X-Mailer: git-send-email 2.14.2.666.gea220ee40
-In-Reply-To: <cover.1507228170.git.martin.agren@gmail.com>
-References: <xmqqy3osiwe6.fsf@gitster.mtv.corp.google.com> <cover.1507228170.git.martin.agren@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Eg660KGx3aZ6+SblyFKKB2NnSGf7CzlDRpTsqSp9rV8=;
+        b=U/nZZ5FtqNV5Fbqa/XDiJ+IrCzOFznkWGx2dTftYTQaqoNmNkFm9iIW9JLPOfzURz8
+         tvkhjxnsOywrPbbgRCExMHeKxVQ9qTs25PhSYRHX6yEqwV/YuLJGwS6OwTuVDl4IjPt1
+         Xj3aqwa4M6bGKFS32qVrbxrH76NmYht9MdJ5aAfyXubLoFlwxPTgCaL220LBDCcpML8d
+         4vleJp7t7k9tkYiNAsO3qqitd0fAMD1j4JHacFsl9kwvtGPOXBlXc9NxK98Nxy9cHfig
+         krFn9T8Qu4v7LD/mhu+6uy+m4SaG0HpJtv4gzk2zdQ5BKm86GJ34fPIaSI49KI69zHXO
+         ylPQ==
+X-Gm-Message-State: AMCzsaUNF6Slr9N1cBVDGYrB2BbO3EgfQDKGZjBQTiIwt7xDxTQ0JeCC
+        BrLHCEU1Ss4u0DXffBO4jHDDxmEG
+X-Received: by 10.55.78.76 with SMTP id c73mr21583068qkb.320.1507236553666;
+        Thu, 05 Oct 2017 13:49:13 -0700 (PDT)
+Received: from mail-qt0-f174.google.com (mail-qt0-f174.google.com. [209.85.216.174])
+        by smtp.gmail.com with ESMTPSA id c7sm12246884qtg.30.2017.10.05.13.49.13
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 05 Oct 2017 13:49:13 -0700 (PDT)
+Received: by mail-qt0-f174.google.com with SMTP id 34so10780525qtb.13
+        for <git@vger.kernel.org>; Thu, 05 Oct 2017 13:49:13 -0700 (PDT)
+X-Google-Smtp-Source: AOwi7QA2Qm85c0W7GXc9gZRu4zogQb2aoBpArIqzyUVgC43nLgsJJlAaUzmWpnY7hzxbWSPSvI+GNd0FEHIiDSgncUI=
+X-Received: by 10.237.36.125 with SMTP id s58mr16132625qtc.24.1507236552841;
+ Thu, 05 Oct 2017 13:49:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.12.149.67 with HTTP; Thu, 5 Oct 2017 13:48:52 -0700 (PDT)
+In-Reply-To: <xmqqo9pnedar.fsf@gitster.mtv.corp.google.com>
+References: <0102015ee1e41f17-927a8da1-ac14-4399-8424-fee8a82c2b0a-000000@eu-west-1.amazonses.com>
+ <xmqqo9pnedar.fsf@gitster.mtv.corp.google.com>
+From:   Damien <damien@dam.io>
+Date:   Thu, 5 Oct 2017 22:48:52 +0200
+X-Gmail-Original-Message-ID: <CAAQ5yihCj2uM00bYO2ipEDkh5mT4F7CwbQ48Fae5XFRebO=nRA@mail.gmail.com>
+Message-ID: <CAAQ5yihCj2uM00bYO2ipEDkh5mT4F7CwbQ48Fae5XFRebO=nRA@mail.gmail.com>
+Subject: Re: [PATCH] run-command.c: add hint when hook is not executable
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The function has always been documented as returning 0 or -1. It is in
-fact `void`. Correct that. As part of the rearrangements we lose the
-mention that `delete_tempfile()` might set `errno`. Because there is
-no return value, the user can't really know whether it did anyway.
+On Wed, Oct 4, 2017 at 6:40 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Damien <damien@dam.io> writes:
+>
+>> ---
+>
+> Please explain why this change makes sense to those who find this
+> commit in "git log" output six months down the line, without having
+> read the original thread that motivated you to add this feature
+> above this line with three dashes.  Use your full name on the From:
+> header of your mail (or alternatively, you can use an in-body "From:"
+> to override what your MUA places there) and add sign-off with the
+> same name (cf. Documentation/SubmittingPatches).
 
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-v2: Identical.
+Thanks, I'm gonna post another version via submitGit. I'm not sure
+how to send the "cover letter" via submitGit so I'm just gonna explain
+the patch here and then send it in another message.
 
- tempfile.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+First, I changed the name of the config to "advice.ignoredHook"
+since it's more generic and it will allow us to add other cases
+such as the bad permission case..
 
-diff --git a/tempfile.h b/tempfile.h
-index b8f4b5e14..450908b2e 100644
---- a/tempfile.h
-+++ b/tempfile.h
-@@ -68,10 +68,10 @@
-  * `create_tempfile()` returns an allocated tempfile on success or NULL
-  * on failure. On errors, `errno` describes the reason for failure.
-  *
-- * `delete_tempfile()`, `rename_tempfile()`, and `close_tempfile_gently()`
-- * return 0 on success. On failure they set `errno` appropriately and return
-- * -1. `delete` and `rename` (but not `close`) do their best to delete the
-- * temporary file before returning.
-+ * `rename_tempfile()` and `close_tempfile_gently()` return 0 on success.
-+ * On failure they set `errno` appropriately and return -1.
-+ * `delete_tempfile()` and `rename` (but not `close`) do their best to
-+ * delete the temporary file before returning.
-  */
- 
- struct tempfile {
--- 
-2.14.2.666.gea220ee40
+> But for the purpose of your patch, you now do care.  access(X_OK)
+> may have failed with EACCESS (i.e. you have no permission to run the
+> script), in which case your new advise() call may make sense.  But
+> it may have failed with ENOENT or ENOTDIR.  And your new advise()
+> call is a disaster, if the user didn't even have such a hook.
 
+For sure, the previous version was really broken. I've now added a
+EACCES check. But I see two shortcomings left:
+
+  - the message is shown twice (for a "pre-commit" hook at least)
+  - I tried to take into account the STRIP_EXTENSION case but
+    it's not tested yet
+
+> Writing a test would have helped notice this, I would think.  You'd
+> need at least the following variations to cover possibilities:
+
+As you will see, I've added tests but my scripting skills are a bit
+lacking and I used a simple "if...then false else true". I've tried
+`grep -v` and similar things but this solution is the only one that
+I found that really works.
+
+Thanks for the review, see PATCH in a coming email.
