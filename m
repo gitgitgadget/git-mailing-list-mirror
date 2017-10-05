@@ -2,95 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C3F7F2036C
-	for <e@80x24.org>; Wed,  4 Oct 2017 23:29:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5ED732036C
+	for <e@80x24.org>; Thu,  5 Oct 2017 01:13:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751413AbdJDX3h (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Oct 2017 19:29:37 -0400
-Received: from mout.gmx.net ([212.227.17.22]:64874 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751169AbdJDX3f (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Oct 2017 19:29:35 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MPD8G-1dvVNt0PmC-004VDU; Thu, 05
- Oct 2017 01:29:33 +0200
-Date:   Thu, 5 Oct 2017 01:29:32 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     =?UTF-8?Q?Andr=C3=A9_Netzeband?= <andre@netzeband.eu>
-cc:     git@vger.kernel.org
-Subject: Re: cmd.exe Terminal is closing when cloning a repository on windows
- 10 (64.bit)
-In-Reply-To: <5aa837bb-04ae-d80d-3a91-53d06fd7456f@netzeband.eu>
-Message-ID: <alpine.DEB.2.21.1.1710050128410.40514@virtualbox>
-References: <5aa837bb-04ae-d80d-3a91-53d06fd7456f@netzeband.eu>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751221AbdJEBNl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Oct 2017 21:13:41 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61387 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751177AbdJEBNk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Oct 2017 21:13:40 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 06E75B1F8A;
+        Wed,  4 Oct 2017 21:13:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=gGP8WAZaOBCjGMnSRj7M8+PGrNU=; b=DH/fHM
+        70Ajr1M9Bg7dHX3iJ5ovGTBxDqQSKyoZQdzrCsB3ToXTpdSVAwFb3iOuLqwnn7af
+        ga0CVw4+aksth0ZeB0hVhZuoYwr+avpTpBoFzc8jQ4xToyYk9CquioKsac/RMt7w
+        +6CgaaG+pGaZWWSIRCVNujOZ2B5P482LvRyXA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=iNVUmagNV55jq5Wojw7We2mG21Y5n8zZ
+        VQgPGXWcQ+TD8RRpr+INi3B7mQzBgnyEpBjbFj/oebMVa0c5oDa7kNpFkSW7hn9n
+        WySSzoZsrg9akpUQ59/azAWjGW0TTT/nou8SZBPChsLQogkkfgpRUKGQZtFwCcVQ
+        xoF2tdBr11s=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id F1F7DB1F89;
+        Wed,  4 Oct 2017 21:13:39 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6B667B1F88;
+        Wed,  4 Oct 2017 21:13:39 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2] branch: change the error messages to be more meaningful
+References: <20170730115908.13841-1-kaarticsivaraam91196@gmail.com>
+        <20170821133608.5652-1-kaarticsivaraam91196@gmail.com>
+        <1506964786.3504.3.camel@gmail.com>
+        <xmqqbmlpm67l.fsf@gitster.mtv.corp.google.com>
+        <1507058081.7360.5.camel@gmail.com>
+        <xmqqwp4beemb.fsf@gitster.mtv.corp.google.com>
+        <1507121174.2245.3.camel@gmail.com>
+Date:   Thu, 05 Oct 2017 10:13:38 +0900
+In-Reply-To: <1507121174.2245.3.camel@gmail.com> (Kaartic Sivaraam's message
+        of "Wed, 04 Oct 2017 18:16:14 +0530")
+Message-ID: <xmqqmv569z25.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-391630432-1507159773=:40514"
-X-Provags-ID: V03:K0:n4i8R0lx0s2jh5FLiDkg0eJX3nqzL56BSYretmN1ogWnQDIqEU9
- m+hCdZFC2me1XVPxOP3O9Lmt1X2ucjyICrqtUs7+8mql+FF8luza+jIpDpzp/bw9EdgwwTl
- 4hIHLz3mei1nAJha8zs8HqKldD7wl6/NHOiHqpCiJOx7KOFgt6sKQqmbOvYlknA3dl2AAD6
- DHRcB/IAtdcbamiu25ujw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:oIXPcbIICwM=:TTvmLdyfpPRXMH8ufbRW8a
- Uai/kbQzcReg/FjFViU1UViFVmYJid+M3+3dkay3ycH1HYOv9CTG2Ybwpkkro+nv/7tMUnAsE
- M+SMa6+Og7ezOvSu/tA4ZUlC/7NsDKwJVgqZyeDfLgQITmTco7/hUXWghdCWA0yRPKZrK1aH3
- OxwIOlcGlSn6eFGx908MLH0IIy0tzGRoMDmku7U8EgWRMkoE5ZfOiR3mkvwae7XmlhSSw1gVF
- ChKRisIilr+C26AYe8YLFpr4SMIEo+ivT8fi6Psh3kpXecWh39H3d6340DHy6pUI7BfICQ4Cm
- rB2+Exqho9g3OC2kIjacaY9dRz1oX1/hlFhkaNCbZOYYVtoyJmKfUUFlfD9JcSbAWVv5Xf3bi
- I0vxS2frxcBvBt8toX8Wj3f+9BsYatqsukBsvittsBk4oSC4HmSDUTn3C/rDeqyNit0WSuA0l
- 2oG/C795y8Q7wEaKsdPu/wc16BWL7vM52Zrue9cEOmEkQb5FhlmWvwzfUP+wkouSBS1XQ2PAc
- BOcS5dGVs+gdQjN/osTSWGwsaMHD78+3nTcBUvSchuElPBWHz2xDaK9RbRcWCROKkEha4SAwW
- bqMhKMZqEGPTSET0OLVYQThyz3m0rcqQuOiArowjf+hlRHOaasfSsZVKeecTGQzSQzOX/jWmE
- AQ0luSnPEUbaC+cEyJHQky6gGOSnRnpcksxboGXSWi0B5Y2H5ny4gI9Mx9vqY0KjbXOdfxUZP
- RaFZQ+1/2RDXuUsaTO3elQVRYCRw2WHz133fP+YEDLorNgyp7f2sQipZZ0eQL44jVhn55h2fn
- FY1MRfKLEsgD2ugDEdGPAHMXC2Ei/nvfYIfy9JNYXiFRIBiuXo=
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6B933588-A96A-11E7-A2E0-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
 
---8323329-391630432-1507159773=:40514
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+> Moreover, as a consequence of my assumption that the tests don't check
+> for the error messages themselves; I haven't even thought of checking
+> whether the tests or the travis-ci build succeeded as a consequence of
+> my patches that touch "only" the error messages!
 
-Hi Andr=C3=A9,
-
-On Mon, 2 Oct 2017, Andr=C3=A9 Netzeband wrote:
-
-> I installed git for windows 2.14.2 (64bit) and was trying to clone a
-> repository from a command terminal (cmd.exe):
->=20
-> git clone https://Netzeband@bitbucket.org/Netzeband/deep-speeddreams.git
->=20
-> First everything went well, but after the repository was downloaded the L=
-FS
-> download started. At this point the terminal window just closed and I was=
- not
-> able to see anything related on the terminal. There was no error message.
-> However several git processes (and git lfs) were running in the backgroun=
-d and
-> downloaded everything for the repository (all lfs files).
->=20
-> The same happens if I use the git-bash.
->=20
-> After switching back to 2.13.0 with the same settings during installation=
-,
-> this error did not occur again.
->=20
-> I'm using Windows 10 (b4 bit) which all current updates installed.
-
-This is most likely the same issue as reported at
-https://github.com/git-lfs/git-lfs/issues/2631 and at
-https://github.com/git-for-windows/git/issues/1312.
-
-Ciao,
-Johannes
---8323329-391630432-1507159773=:40514--
+That's a bad thing, right?
