@@ -2,89 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C73F32036C
-	for <e@80x24.org>; Thu,  5 Oct 2017 01:38:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0543E2036C
+	for <e@80x24.org>; Thu,  5 Oct 2017 01:44:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751347AbdJEBiw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Oct 2017 21:38:52 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63297 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751275AbdJEBiv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Oct 2017 21:38:51 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 56EE3B254A;
-        Wed,  4 Oct 2017 21:38:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=RzGbNCjUvyi4
-        3v5lUDfzNtBNbsk=; b=kaqMe5GiJGdPHfZiOzSPwnK80ISCe3VRHr79N8EbcUP4
-        HfDsOhUc6ca5w7M3cIzntmxKUqgVp4F262KBcBB4WsB/Ambb096dxgPxq7OJmIg5
-        gGaQY2MGhQafii57NDws46v4XQQbNpw+xDyHGj56X+Rq5RxKC8V9UokH9ox4Wo0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=dGJefW
-        18z+EmnnHyQlQRUNtbfirAs8ZPn4EBAjG/djVi5rXu05P8QQllJqjEQyHa1LZ5dm
-        w3aZMc5GEGM0ob7ZrukJz8UMBm64hb+I01NuuR5LyAHuFios/agrGKnSx7k2MhjK
-        IY264KKpDD+QyOr5Z2K91MSsTOKwHDyB+pBWk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4D571B2549;
-        Wed,  4 Oct 2017 21:38:51 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BAC6CB2548;
-        Wed,  4 Oct 2017 21:38:50 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     Robert Dailey <rcdailey.lists@gmail.com>, Git <git@vger.kernel.org>
-Subject: Re: Line ending normalization doesn't work as expected
-References: <CAHd499B5hM9ixnsnwWwB2uyDT10dRQpN473m5QjxH9raHtFXiw@mail.gmail.com>
-        <958c9b03-062c-0bea-3b25-939a36659f32@web.de>
-        <CAHd499AD5Kgbp-vxXTnEPkb-Mb5oEeXhaRO5kGniDdqmXwd2QQ@mail.gmail.com>
-        <88c57b88-ef2c-d7db-15e2-12791d4cb201@web.de>
-        <xmqq8tgrhdt0.fsf@gitster.mtv.corp.google.com>
-        <CAHd499BCMOcur6NRbKfwd81zpnyzoiVCY54d=UmGpAhbD7AVTA@mail.gmail.com>
-        <20171004211734.GA25379@tor.lan>
-Date:   Thu, 05 Oct 2017 10:38:49 +0900
-In-Reply-To: <20171004211734.GA25379@tor.lan> ("Torsten =?utf-8?Q?B=C3=B6g?=
- =?utf-8?Q?ershausen=22's?=
-        message of "Wed, 4 Oct 2017 23:17:34 +0200")
-Message-ID: <xmqq7ewa9xw6.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751259AbdJEBov (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Oct 2017 21:44:51 -0400
+Received: from mout.gmx.net ([212.227.15.19]:62985 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751201AbdJEBov (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Oct 2017 21:44:51 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MRGTX-1dsaS73G5H-00UZ3I; Thu, 05
+ Oct 2017 03:44:48 +0200
+Date:   Thu, 5 Oct 2017 03:44:43 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     =?UTF-8?Q?Andr=C3=A9_Netzeband?= <andre@netzeband.eu>
+cc:     git@vger.kernel.org
+Subject: Re: cmd.exe Terminal is closing when cloning a repository on windows
+ 10 (64.bit)
+In-Reply-To: <alpine.DEB.2.21.1.1710050128410.40514@virtualbox>
+Message-ID: <alpine.DEB.2.21.1.1710050328330.40514@virtualbox>
+References: <5aa837bb-04ae-d80d-3a91-53d06fd7456f@netzeband.eu> <alpine.DEB.2.21.1.1710050128410.40514@virtualbox>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: F0656A62-A96D-11E7-918A-575F0C78B957-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; BOUNDARY="8323329-547730543-1507166918=:40514"
+Content-ID: <alpine.DEB.2.21.1.1710050332150.40514@virtualbox>
+X-Provags-ID: V03:K0:r98SF9MZa6vAzzEuJX/Hnrcoe9dk8QXr9hkkonAm7XqG93VqXr0
+ t9Fsh0fBHy30Pjv14Rsh3iNkFwlBo8P3noU1ZNJPUP9X4EWX5w1KT1gpAeilheWwJdj6YUb
+ L6+QXjYxdTQpoQn0/Yt2dI+UPgAqD8RqJQAqQ0Km5xHppDuG2pgzXnpnCpEDYDACjIF9B5i
+ qm3y3le/Q/mHZmGmpqsWQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:hK//M9l6g/A=:A0iyIF3aqUqKqsHQ4Xk1qx
+ yT74fKlOWBWiZjlD9bRrIuxKZ34OQSTFMh0hOd1zKwF5jmtHr2FALxFQlOoJUWwyjraTv+3MQ
+ lRrlbe6xqdZVmqCrloOZYmvhMjid552AmkHFCrNt4VU61RGEkqwxf6NrQWdGXHUt+TgXbBx+f
+ IWLI5w5uZocPpxF1LEWF4oZuv4HybBOBlJfhaalQGAdgcZrik12FzG9HrMd4l+zdfmqFd1sGb
+ cGAe4ZD8IkyQuGV/k2+eryiIhq358a+YW4J/6IEA1Kg9aOCvGDJXVBE3RRrS1lEPPm1uTqhhy
+ gPcHRbc3F8d/tyWdVjoROMESFw2C21hl+QWiSEa9seN3L2lHIRf9jfXz8HY/oTDbOep+5C4+C
+ yGuEWLFBay4IIiYgWduZc/VZUovyVMIPAiVz+N30w/yPCuZnmydM84BwqDA3X3asxHghf+qai
+ 5mHveuUAasIOAcgoXbd1mRxSzGHDOmGCwUyVdSOKorlZ/JxnRDmPUpsjVAJ0vMR4n88g7BiHQ
+ y9z9xBl/7LixoWVNXnZ86atHi97uSC+Zeqx/bTDDxeECCbUWmCw/9+RRnUZc0g749xlBF4NWg
+ Zm6VGu87ZXO1ZKvOpC9ivo4/oo76kr06atNYcN/6crS6Br6x5g8+C7wkawxQBcXtSspBR72QS
+ EQt/ueGT2yde3G669Sus0R2+dMCWEtW92vOe4sWolPaGBqatpAwpU9WQnpD0aAHWgMDJ8mv+6
+ nOJa3jUZAaNqsikDADbNyEVvhpvMZD6UCksi+WIfFZLDiCu9qQr1DdGREJaridnmP2Uw51Nzy
+ uOGZooEzHPw+qhDuA5VkHZFyuZI0AnTjXelGVHZj052i8sGaJM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> One solution, which you can tell your team, is this one:
-> $ git rm -r --cached . && git add .
+--8323329-547730543-1507166918=:40514
+Content-Type: text/plain; CHARSET=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-ID: <alpine.DEB.2.21.1.1710050332151.40514@virtualbox>
 
-Both this and its "git read-tree --empty" cousin share a grave
-issue.  The "git add ." step would mean that before doing these
-commands, your working tree must be truly clean, i.e. the paths
-in the filesystem known to the index must match what is in the
-index (modulo the line-ending gotcha you are trying to correct),=20
-*AND* there must be *NO* untracked paths you do not want to add
-in the working tree.
+Hi,
 
-That is a reason why we should solve it differently.  Perhaps adding
-a new option "git add --rehash" to tell Git "Hey, you may think some
-paths in the index and in the working tree are identical and no need
-to re-register, but you are WRONG.  For each path in the index,
-remove it and then register the object by hashing the contents from
-the filesystem afresh!" would be the best way to go.  That will not
-pick up untracked paths left in the filesystem, and does not limit
-our solution to the "eol normalization is screwey" issue by not
-calling the option "renormalize" or any other words that imply "why"
-we are hashing again anew.
+On Thu, 5 Oct 2017, Johannes Schindelin wrote:
 
+> On Mon, 2 Oct 2017, Andr=C3=A9 Netzeband wrote:
+>=20
+> > I installed git for windows 2.14.2 (64bit) and was trying to clone a
+> > repository from a command terminal (cmd.exe):
+> >=20
+> > git clone
+> > https://Netzeband@bitbucket.org/Netzeband/deep-speeddreams.git
+> >=20
+> > First everything went well, but after the repository was downloaded
+> > the LFS download started. At this point the terminal window just
+> > closed and I was not able to see anything related on the terminal.
+> > There was no error message.  However several git processes (and git
+> > lfs) were running in the background and downloaded everything for the
+> > repository (all lfs files).
+>=20
+> This is most likely the same issue as reported at
+> https://github.com/git-lfs/git-lfs/issues/2631 and at
+> https://github.com/git-for-windows/git/issues/1312.
+
+I think this is solved by
+https://github.com/git-for-windows/MSYS2-packages/commit/e9d0a2be272.
+
+If everything goes according to plan, a new snapshot will land at
+https://wingit.blob.core.windows.net/files/index.html within the next half
+hour.
+
+When it does, can you please test?
+
+Thank you,
+Johannes
+--8323329-547730543-1507166918=:40514--
